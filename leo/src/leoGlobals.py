@@ -3405,21 +3405,22 @@ class Bunch:
 #@+node:12::collectGarbage & printGarbage
 #@+body
 lastObjectCount = 0
-lastObjectList = []
+lastObjectsDict = {}
 debugGC = false
 
 # gc may not exist everywhere.
 try: 
 	import gc
-	if debugGC:
-		gc.set_debug(
-			gc.DEBUG_STATS |# prints statistics.
-			# gc.DEBUG_LEAK | # Same as all below.
-			gc.DEBUG_COLLECTABLE |
-			gc.DEBUG_UNCOLLECTABLE |
-			gc.DEBUG_INSTANCES |
-			gc.DEBUG_OBJECTS |
-			gc.DEBUG_SAVEALL)
+	if 0:
+		if debugGC:
+			gc.set_debug(
+				gc.DEBUG_STATS |# prints statistics.
+				# gc.DEBUG_LEAK | # Same as all below.
+				gc.DEBUG_COLLECTABLE |
+				gc.DEBUG_UNCOLLECTABLE |
+				gc.DEBUG_INSTANCES |
+				gc.DEBUG_OBJECTS |
+				gc.DEBUG_SAVEALL)
 except:
 	traceback.print_exc()
 
@@ -3432,27 +3433,19 @@ def collectGarbage():
 	if debugGC: # This just slows everything down.
 		try: gc.collect()
 		except: pass
-		
-		if 0: # This doesn't work
-			
-			#@<< print new objects >>
-			#@+node:1::<< print new objects >>
-			#@+body
 
-			global lastObjectList
+		global lastObjectsDict
+		objects = gc.get_objects()
+		
+		newObjects = [o for o in objects if not lastObjectsDict.has_key(id(o))]
+				
+		lastObjectsDict = {}
+		for o in objects:
+			lastObjectsDict[id(o)]=o
 			
-			gc.disable()
-			objects = gc.get_objects()[:]
-			gc.enable()
-			
-			if lastObjectList:
-				for o in objects: # This can fail!
-					if o not in lastObjectList:
-						print id(o)
-						
-			lastObjectList = objects
-			#@-body
-			#@-node:1::<< print new objects >>
+		print "%d new, %d total objects" % (len(newObjects),len(objects))
+	
+		printGarbage()
 #@-body
 #@-node:1::collectGarbage
 #@+node:2::printGarbage

@@ -133,8 +133,8 @@ class leoTree:
 		# Recycling bindings.
 		self.bindings = [] # List of bindings to be unbound when redrawing.
 		self.tagBindings = [] # List of tag bindings to be unbound when redrawing.
-		self.icon_id_dict = {} # New in 4.0: keys are icon id's, values are vnodes.
-		self.edit_text_dict = {} # New in 4.0: keys vnodes, values are edit_text (Tk.Text widgets)
+		self.icon_id_dict = {} # New in 3.12: keys are icon id's, values are vnodes.
+		self.edit_text_dict = {} # New in 3.12: keys vnodes, values are edit_text (Tk.Text widgets)
 		self.widgets = [] # Widgets that must be destroyed when redrawing.
 	
 		# Controlling redraws
@@ -216,8 +216,7 @@ class leoTree:
 	#@+body
 	def destroy (self):
 	
-		# Can't trace while destroying.
-		# print "tree.destroy"
+		# print "tree.destroy" # Don't use trace.
 	
 		self.iconimages = None
 		del self.colorizer
@@ -564,7 +563,7 @@ class leoTree:
 			if self.trace:
 				self.redrawCount += 1
 				print "idle_redraw allocated:",self.redrawCount, self.allocatedNodes
-			# collectGarbage()
+			collectGarbage()
 			doHook("after_redraw-outline")
 	
 		self.canvas['cursor'] = oldcursor

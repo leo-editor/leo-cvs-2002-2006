@@ -23,12 +23,10 @@ class LeoApp:
 		self.idle_imported = false # true: we have done an import idle
 		self.idleTimeDelay = 100 # Delay in msec between calls to "idle time" hook.
 		self.idleTimeHook = false # true: the global idleTimeHookHandler will reshedule itself.
-		self.leoID = None # Set by setLeoID().  The id for all global node indices.
 		self.loadDir = None # The directory from which Leo was loaded.
 		self.log = None # The LeoFrame containing the present log.
 		self.logWaiting = [] # List of messages waiting to go to a log.
 		self.menuWarningsGiven = false # true: supress warnings in menu code.
-		self.nodeIndices = None # Initialized in finishCreate.
 		self.numberOfWindows = 0 # Number of opened windows.
 		self.openWithFiles = [] # List of data used by Open With command.
 		self.openWithFileNum = 0 # Used to generate temp file names for Open With command.
@@ -36,11 +34,9 @@ class LeoApp:
 		self.quitting = false # True if quitting.  Locks out some events.
 		self.realMenuNameDict = {} # Contains translations of menu names and menu item names.
 		self.root = root # The hidden main window
-		self.sectionDialogs = []
 		self.trace_list = [] # "Sherlock" argument list for tracing().
 		self.tkEncoding = "utf-8" # Set by finishCreate
 		self.unicodeErrorGiven = false # true: suppres unicode tracebacks.
-		self.use_gnx = false # true: enable 4.x code.
 		self.windowList = [] # Global list of all frames.  Does not include hidden root window.
 	
 		# Global panels.  Destroyed when Leo ends.
@@ -226,8 +222,6 @@ class LeoApp:
 		#@-node:3::<< set the default Leo icon >>
 
 		self.config = leoConfig.config()
-		self.setLeoID()
-		self.nodeIndices = leoNodes.nodeIndices()
 		
 		#@<< set app.tkEncoding >>
 		#@+node:4::<< set app.tkEncoding >>
@@ -289,94 +283,7 @@ class LeoApp:
 	
 	#@-body
 	#@-node:4::app.get/setRealMenuName & setRealMenuNamesFromTable
-	#@+node:5::app.setLeoID
-	#@+body
-	def setLeoID (self):
-		
-		if not self.use_gnx:
-			return # Used only in 4.x.
-			
-		tag = ".leoID.txt"
-		loadDir = app().loadDir
-		configDir = app().config.configDir
-		
-		#@<< return if we can set self.leoID from sys.leoID >>
-		#@+node:1::<< return if we can set self.leoID from sys.leoID>>
-		#@+body
-		# This would be set by in Python's sitecustomize.py file.
-		try:
-			self.leoID = sys.leoID
-			es("leoID = " + self.leoID, color="blue")
-			return
-		except:
-			self.leoID = None
-		#@-body
-		#@-node:1::<< return if we can set self.leoID from sys.leoID>>
-
-		
-		#@<< return if we can set self.leoID from "leoID.txt" >>
-		#@+node:2::<< return if we can set self.leoID from "leoID.txt" >>
-		#@+body
-		for dir in (configDir,loadDir):
-			try:
-				fn = os.path.join(dir, tag)
-				f = open(fn,'r')
-				if f:
-					s = f.readline()
-					f.close()
-					if s and len(s) > 0:
-						self.leoID = s
-						es("leoID = " + self.leoID, color="blue")
-						return
-					else:
-						es("empty " + tag + " in " + dir, color = "red")
-			except: self.leoID = None
-				
-		if configDir == loadDir:
-			es(tag + " not found in " + loadDir, color="red")
-		else:
-			es(tag + " not found in " + configDir + " or " + loadDir, color="red")
-		
-		#@-body
-		#@-node:2::<< return if we can set self.leoID from "leoID.txt" >>
-
-		
-		#@<< put up a dialog requiring a valid id >>
-		#@+node:3::<< put up a dialog requiring a valid id >>
-		#@+body
-		self.leoID = leoDialog.askLeoID().run(modal=true)
-		
-		es("leoID = " + `self.leoID`, color="blue")
-		#@-body
-		#@-node:3::<< put up a dialog requiring a valid id >>
-
-		
-		#@<< attempt to create leoID.txt >>
-		#@+node:4::<< attempt to create leoID.txt >>
-		#@+body
-		for dir in (configDir,loadDir):
-			try:
-				# Look in configDir first.
-				fn = os.path.join(dir, tag)
-				f = open(fn,'w')
-				if f:
-					f.write(self.leoID)
-					f.close()
-					es("created leoID.txt in " + dir, color="red")
-					return
-			except: pass
-			
-		if configDir == loadDir:
-			es("can not create leoID.txt in " + loadDir, color="red")
-		else:
-			es("can not create leoID.txt in " + configDir + " or " + loadDir, color="red")
-		
-		
-		#@-body
-		#@-node:4::<< attempt to create leoID.txt >>
-	#@-body
-	#@-node:5::app.setLeoID
-	#@+node:6::app.handleOpenTempFiles
+	#@+node:5::app.handleOpenTempFiles
 	#@+body
 	#@+at
 	#  Try to remove temp files created with the Open With command.  This may 
@@ -398,8 +305,8 @@ class LeoApp:
 				except:
 					print "can not delete temp file:", path
 	#@-body
-	#@-node:6::app.handleOpenTempFiles
-	#@+node:7::app.quit
+	#@-node:5::app.handleOpenTempFiles
+	#@+node:6::app.quit
 	#@+body
 	def quit(self):
 	
@@ -414,8 +321,8 @@ class LeoApp:
 		else: # closes Python window.
 			self.root.quit()
 	#@-body
-	#@-node:7::app.quit
-	#@+node:8::app.writeWaitingLog
+	#@-node:6::app.quit
+	#@+node:7::app.writeWaitingLog
 	#@+body
 	def writeWaitingLog (self):
 	
@@ -425,7 +332,7 @@ class LeoApp:
 			self.logWaiting = []
 	
 	#@-body
-	#@-node:8::app.writeWaitingLog
+	#@-node:7::app.writeWaitingLog
 	#@-others
 #@-body
 #@-node:0::@file leoApp.py

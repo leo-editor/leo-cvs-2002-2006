@@ -61,11 +61,10 @@ class fileCommands:
 		self.outputString = None # String for pasting
 		self.openDirectory = None
 		self.usingClipboard = false
-		# New in 4.0
+		# New in 3.12
 		self.a = app()
 		self.copiedTree = None
-		self.nodeIndices = self.a.nodeIndices
-		self.tnodesDict = {} # In 4.0 this dict is only initialized here!
+		self.tnodesDict = {}
 	
 	#@-body
 	#@-node:1::leoFileCommands._init_
@@ -420,13 +419,6 @@ class fileCommands:
 		self.getTag("<global_log_window_position")
 		self.getPosition() ;
 		self.getTag("/>") # no longer used.
-		
-		# New in 4.0.
-		if self.matchTag("<default_gnx_id="):
-			id = self.getDqString() ; self.getTag("/>")
-			if self.a.use_gnx:
-				es("default id = " + id,color="blue")
-			self.a.nodeIndices.setDefaultId(id)
 	
 		self.getTag("</globals>")
 	#@-body
@@ -457,8 +449,7 @@ class fileCommands:
 		#@-node:1::<< warn on read-only files >>
 
 		self.mFileName = frame.mFileName
-		if not self.a.use_gnx: # 5/30/03: file indices can not be assumed to be distinct!
-			self.tnodesDict = {}
+		self.tnodesDict = {}
 		ok = true
 		try:
 			c.tree.initing = true # inhibit endEditLabel from marking the file changed.
@@ -508,8 +499,7 @@ class fileCommands:
 		c.initAllCloneBits() # 5/3/03
 		c.selectVnode(c.tree.currentVnode) # load body pane
 		c.tree.initing = false # Enable changes in endEditLabel
-		if not self.a.use_gnx: # 5/30/03: file indices can not be assumed to be distinct!
-			self.tnodesDict = {}
+		self.tnodesDict = {}
 		return ok, self.ratio
 	#@-body
 	#@-node:7::getLeoFile (calls setAllJoinLinks, initAllCloneBits)
@@ -545,8 +535,8 @@ class fileCommands:
 	
 		self.usingClipboard = true
 		self.fileBuffer = s ; self.fileIndex = 0
-		if not self.a.use_gnx: # 5/30/03: file indices can not be assumed to be distinct!
-			self.tnodesDict = {}
+		self.tnodesDict = {}
+	
 		try:
 			self.getXmlVersionTag() # leo.py 3.0
 			self.getXmlStylesheetTag() # 10/25/02
@@ -558,11 +548,11 @@ class fileCommands:
 			v = self.finishPaste()
 		except BadLeoFile:
 			v = None
+	
 		# Clean up.
 		self.fileBuffer = None ; self.fileIndex = 0
 		self.usingClipboard = false
-		if not self.a.use_gnx: # 5/30/03: file indices can not be assumed to be distinct!
-			self.tnodesDict = {}
+		self.tnodesDict = {}
 		return v
 	#@-body
 	#@-node:9::getLeoOutline (from clipboard) (changed from 3.11.1)
@@ -678,13 +668,10 @@ class fileCommands:
 	def getTnode (self):
 	
 		# we have already matched <t.
-		index = -1 ; gnxString = None 
+		index = -1
 		# New in version 1.7: attributes may appear in any order.
 		while 1:
-			if self.matchTag("tnx="): # New in 4.0
-				index = gnxString = self.getDqString()
-			elif self.matchTag("tx=\"T"): # Pre 4.0
-				# tx overrides tnx for compatibility with pre 4.0 files.
+			if self.matchTag("tx=\"T"):
 				index = self.getIndex() ; self.getDquote()
 				# if self.usingClipboard: trace(index)
 			elif self.matchTag("rtf=\"1\""): pass # ignored
@@ -699,7 +686,7 @@ class fileCommands:
 				#@+node:2::<< handle read from clipboard >>
 				#@+body
 				if t:
-					s = self.getEscapedString() # Ignore the gnx.
+					s = self.getEscapedString()
 					t.setTnodeText(s,encoding=self.leo_file_encoding)
 					trace(`index`,`len(s)`)
 				#@-body
@@ -712,17 +699,6 @@ class fileCommands:
 				#@+body
 				s = self.getEscapedString()
 				t.setTnodeText(s,encoding=self.leo_file_encoding)
-				
-				if gnxString and self.a.use_gnx: # New in 4.0.
-					gnx = self.nodeIndices.scanGnx(gnxString,0)
-					if t.gnx:
-						if not self.nodeIndices.areEqual(gnx,t.gnx):
-							print "conflicting gnx values",
-							print gnxString, self.nodeIndices.toString(t.gnx)
-					else:
-						# print "tnode gnx from .leo file:", gnxString
-						t.gnx = gnx
-				
 				#@-body
 				#@-node:1::<< handle read from file >>
 
@@ -745,7 +721,7 @@ class fileCommands:
 	
 	#@-body
 	#@-node:14::getTnodes (no change from 3.11.1)
-	#@+node:15::getVnode (changed from 3.11.1) (removed dummy logic)(Revise this again for 4.0??)
+	#@+node:15::getVnode (changed from 3.11.1)
 	#@+body
 	def getVnode (self,parent,back):
 	
@@ -755,16 +731,14 @@ class fileCommands:
 		tref = -1 ; headline = "" ; gnxString = None
 		# we have already matched <v.
 		while 1:
-			if self.matchTag("tnx="): # New in 4.0
-				tref = self.getDqString()
-			elif self.matchTag("a=\""):
+			if self.matchTag("a=\""):
 				
 				#@<< Handle vnode attribute bits >>
 				#@+node:1::<< Handle vnode attribute bits  >>
 				#@+body
 				# The a=" has already been seen.
 				while 1:
-					if   self.matchChar('C'): pass # Not used 4.0:clone bits are recomputed later.
+					if   self.matchChar('C'): pass # Not used: clone bits are recomputed later.
 					elif self.matchChar('D'): pass # Not used.
 					elif self.matchChar('E'): setExpanded = true
 					elif self.matchChar('M'): setMarked = true
@@ -776,13 +750,10 @@ class fileCommands:
 				#@-body
 				#@-node:1::<< Handle vnode attribute bits  >>
 
-			elif self.matchTag("t=\"T"): # Pre-4.0.
-				# tx overrides tnx for compatibility with pre 4.0 files.
+			elif self.matchTag("t=\"T"):
 				tref = self.getIndex() ; self.getDquote()
-			elif self.matchTag("vtag=\"V"): # Pre-3.0
+			elif self.matchTag("vtag=\"V"):
 				self.getIndex() ; self.getDquote() # ignored
-			## elif self.matchTag("vnx="): # To be deleted.
-			##	self.getDqString() #ignored
 			else: break
 		self.getTag(">")
 		# Headlines are optional.
@@ -820,7 +791,7 @@ class fileCommands:
 		self.getTag("</v>")
 		return v
 	#@-body
-	#@-node:15::getVnode (changed from 3.11.1) (removed dummy logic)(Revise this again for 4.0??)
+	#@-node:15::getVnode (changed from 3.11.1)
 	#@+node:16::getVnodes  (no change from 3.11.1)
 	#@+body
 	def getVnodes (self):
@@ -1069,81 +1040,58 @@ class fileCommands:
 	#@-node:9::xmlUnescape
 	#@-node:2::Reading
 	#@+node:3::Writing
-	#@+node:1::assignAllGnx
-	#@+body
-	def assignAllGnx (self,root=None):
-		
-		"""Assign a gnx to tnodes that don't have one"""
-		
-		c = self.commands ; v = c.rootVnode()
-		nodeIndices = self.nodeIndices
-		
-		# Set the time for all tnodes requiring a new gnx field.
-		nodeIndices.setTimestamp()
-	
-		while v:
-			if not v.t.gnx:
-				v.t.gnx = nodeIndices.getNewIndex()
-			v = v.threadNext()
-	#@-body
-	#@-node:1::assignAllGnx
-	#@+node:2::assignFileIndices (no change from 3.11.1)
+	#@+node:1::assignFileIndices (no change from 3.11.1)
 	#@+body
 	def assignFileIndices (self,root=None):
 		
-		"""Assign a gnx or file index to all tnodes"""
+		"""Assign a file index to all tnodes"""
 		
 		c=self.commands
 		
-		if root == None: root = c.rootVnode()
-		
-		if self.a.use_gnx:
-			self.assignAllGnx(root=root)
-		else:
-			v = root
-			while v:
-				t = v.t
-				# 8/28/99.  Write shared tnodes even if they are empty.
-				if t.hasBody() or len(v.t.joinList) > 0:
-					if t.fileIndex == 0:
-						self.maxTnodeIndex += 1
-						t.setFileIndex(self.maxTnodeIndex)
-				else:
-					t.setFileIndex(0)
-					
-				# if self.usingClipboard: trace(t.fileIndex)
+		if root == None:
+			root = c.rootVnode()
+		v = root
+		while v:
+			t = v.t
 	
-				v = v.threadNext()
+			# 8/28/99.  Write shared tnodes even if they are empty.
+			if t.hasBody() or len(v.t.joinList) > 0:
+				if t.fileIndex == 0:
+					self.maxTnodeIndex += 1
+					t.setFileIndex(self.maxTnodeIndex)
+			else:
+				t.setFileIndex(0)
+				
+			# if self.usingClipboard: trace(t.fileIndex)
+			v = v.threadNext()
 	#@-body
-	#@-node:2::assignFileIndices (no change from 3.11.1)
-	#@+node:3::compactFileIndices (changed from 3.11.1)
+	#@-node:1::assignFileIndices (no change from 3.11.1)
+	#@+node:2::compactFileIndices (changed from 3.11.1)
 	#@+body
 	def compactFileIndices (self):
 		
-		"""Assign a gnx or file index to all tnodes, compacting all file indices"""
+		"""Assign a file index to all tnodes, compacting all file indices"""
 		
 		c = self.commands ; root = c.rootVnode()
 		
-		if self.a.use_gnx:
-			self.assignAllGnx(root=root)
-		else:
-			v = root
-			self.maxTnodeIndex = 0
-			while v: # Clear all indices.
-				v.t.setFileIndex(0)
-				v = v.threadNext()
-			v = c.rootVnode()
-			while v: # Set indices for all tnodes that will be written.
-				t = v.t
-				#### old code was: if t.hasBody() or v.getJoinList():
-				if t.hasBody() or len(v.t.joinList) > 0: # Write shared tnodes even if they are empty.
-					if t.fileIndex == 0:
-						self.maxTnodeIndex += 1
-						t.setFileIndex(self.maxTnodeIndex)
-				v = v.threadNext()
+		v = root
+		self.maxTnodeIndex = 0
+		while v: # Clear all indices.
+			v.t.setFileIndex(0)
+			v = v.threadNext()
+	
+		v = c.rootVnode()
+		while v: # Set indices for all tnodes that will be written.
+			t = v.t
+			#### old code was: if t.hasBody() or v.getJoinList():
+			if t.hasBody() or len(v.t.joinList) > 0: # Write shared tnodes even if they are empty.
+				if t.fileIndex == 0:
+					self.maxTnodeIndex += 1
+					t.setFileIndex(self.maxTnodeIndex)
+			v = v.threadNext()
 	#@-body
-	#@-node:3::compactFileIndices (changed from 3.11.1)
-	#@+node:4::put routines
+	#@-node:2::compactFileIndices (changed from 3.11.1)
+	#@+node:3::put routines
 	#@+node:1::putClipboardHeader
 	#@+body
 	def putClipboardHeader (self):
@@ -1331,20 +1279,6 @@ class fileCommands:
 		#@-body
 		#@-node:3::<< put the position of the log window >>
 
-		
-		#@<< put default gnx >>
-		#@+node:4::<< put default gnx >>
-		#@+body
-		# New in 4.0.
-		if self.a.use_gnx:
-			id = self.nodeIndices.getDefaultId()
-			if id and len(id) > 0:
-				self.put_tab()
-				self.put("<default_gnx_id=")
-				self.put_in_dquotes(id) ; self.put("/>") ; self.put_nl()
-		#@-body
-		#@-node:4::<< put default gnx >>
-
 	
 		self.put("</globals>") ; self.put_nl()
 	#@-body
@@ -1371,8 +1305,7 @@ class fileCommands:
 	
 		self.outputString = "" ; self.outputFile = None
 		self.usingClipboard = true
-		if not self.a.use_gnx: # New in 4.0: putVnodes does this after copying the tree.
-			self.assignFileIndices() # 6/11/03: Must do this for 3.x code.
+		self.assignFileIndices() # 6/11/03: Must do this for 3.x code.
 		self.putProlog()
 		self.putClipboardHeader()
 		self.putVnodes()
@@ -1498,44 +1431,27 @@ class fileCommands:
 			v = c.rootVnode() ; after = None
 	
 		self.put("<tnodes>") ; self.put_nl()
-		if self.a.use_gnx:
-			
-			#@<< write all visited tnodes >>
-			#@+node:1::<< write all visited tnodes >>
-			#@+body
-			# putVnodes sets the visited bit in all tnodes that should be written.
-			while v and v != after:
-				t = v.t
-				if t.isVisited():
-					self.putTnode(t)
-					t.clearVisited() # Don't write the tnode again.
-				v = v.threadNext()
-			
-			#@-body
-			#@-node:1::<< write all visited tnodes >>
-
-		else:
-			
-			#@<< write only those tnodes that were referenced >>
-			#@+node:2::<< write only those tnodes that were referenced >>
-			#@+body
-			# Populate tnodes
-			tnodes = {}
-			while v and v != after:
-				index = v.t.fileIndex
-				if index > 0 and not tnodes.has_key(index):
-					tnodes[index] = v.t
-				v = v.threadNext()
-			
-			# Put all tnodes in index order.
-			keys = tnodes.keys() ; keys.sort()
-			for index in keys:
-				t = tnodes[index]
-				assert(t)
-				# Write only those tnodes whose vnodes were written.
-				if t.isVisited(): self.putTnode(t)
-			#@-body
-			#@-node:2::<< write only those tnodes that were referenced >>
+		
+		#@<< write only those tnodes that were referenced >>
+		#@+node:1::<< write only those tnodes that were referenced >>
+		#@+body
+		# Populate tnodes
+		tnodes = {}
+		while v and v != after:
+			index = v.t.fileIndex
+			if index > 0 and not tnodes.has_key(index):
+				tnodes[index] = v.t
+			v = v.threadNext()
+		
+		# Put all tnodes in index order.
+		keys = tnodes.keys() ; keys.sort()
+		for index in keys:
+			t = tnodes[index]
+			assert(t)
+			# Write only those tnodes whose vnodes were written.
+			if t.isVisited(): self.putTnode(t)
+		#@-body
+		#@-node:1::<< write only those tnodes that were referenced >>
 
 		self.put("</tnodes>") ; self.put_nl()
 	#@-body
@@ -1544,16 +1460,10 @@ class fileCommands:
 	#@+body
 	def putTnode (self,t):
 		
-		# trace(`t.fileIndex`)
+		# if self.usingClipboard: trace(t.fileIndex)
 	
 		self.put("<t")
-		if self.a.use_gnx:
-			assert(t.gnx) # assignAllGnx has set all indices.
-			gnxString = self.nodeIndices.toString(t.gnx,removeDefaultId=true)
-			self.put(" tnx=") ; self.put_in_dquotes(gnxString)
-		else:
-			# if self.usingClipboard: trace(t.fileIndex)
-			self.put(" tx=") ; self.put_in_dquotes("T" + `t.fileIndex`)
+		self.put(" tx=") ; self.put_in_dquotes("T" + `t.fileIndex`)
 		self.put(">")
 	
 		if t.bodyString and len(t.bodyString) > 0:
@@ -1571,9 +1481,6 @@ class fileCommands:
 	#@-at
 	#@@c
 	def putVnodes (self):
-	
-		# 5/30/03: Reverted to 3.11.1 code.
-		# The old code probably broke because self.tnodesDict wasn't cleared when self.a.use_gnx was false.
 	
 		c=self.commands
 		c.clearAllVisited()
@@ -1606,39 +1513,24 @@ class fileCommands:
 	
 		c = self.commands
 		self.put("<v")
-		if self.a.use_gnx:
-			
-			#@<< put v.t.gnx >>
-			#@+node:1::<< Put v.t.gnx >>
-			#@+body
-			t = v.t
-			assert(t.gnx)
-			tnxString = self.nodeIndices.toString(t.gnx,removeDefaultId=true)
-			self.put(" tnx=") ; self.put_in_dquotes(tnxString)
-			
-			t.setVisited() # Indicate we wrote the body text.
-			#@-body
-			#@-node:1::<< Put v.t.gnx >>
-
-		else:
-			
-			#@<< Put tnode index if this vnode has body text >>
-			#@+node:2::<< Put tnode index if this vnode has body text >>
-			#@+body
-			t = v.t
-			if t and (t.hasBody() or len(v.t.joinList) > 0):
-				if t.fileIndex > 0:
-					self.put(" t=") ; self.put_in_dquotes("T" + `t.fileIndex`)
-					v.t.setVisited() # Indicate we wrote the body text.
-				else:
-					es("error writing file(bad vnode)!")
-					es("try using the Save To command")
-			#@-body
-			#@-node:2::<< Put tnode index if this vnode has body text >>
+		
+		#@<< Put tnode index if this vnode has body text >>
+		#@+node:1::<< Put tnode index if this vnode has body text >>
+		#@+body
+		t = v.t
+		if t and (t.hasBody() or len(v.t.joinList) > 0):
+			if t.fileIndex > 0:
+				self.put(" t=") ; self.put_in_dquotes("T" + `t.fileIndex`)
+				v.t.setVisited() # Indicate we wrote the body text.
+			else:
+				es("error writing file(bad vnode)!")
+				es("try using the Save To command")
+		#@-body
+		#@-node:1::<< Put tnode index if this vnode has body text >>
 
 		
 		#@<< Put attribute bits >>
-		#@+node:3::<< Put attribute bits >>
+		#@+node:2::<< Put attribute bits >>
 		#@+body
 		# Dummy vnodes carry all attributes.
 		current = c.currentVnode()
@@ -1654,12 +1546,12 @@ class fileCommands:
 			if v == current: self.put("V")
 			self.put_dquote()
 		#@-body
-		#@-node:3::<< Put attribute bits >>
+		#@-node:2::<< Put attribute bits >>
 
 		self.put(">")
 		
 		#@<< write the head text >>
-		#@+node:4::<< write the head text >>
+		#@+node:3::<< write the head text >>
 		#@+body
 		headString = v.headString()
 		if len(headString) > 0:
@@ -1667,7 +1559,7 @@ class fileCommands:
 			self.putEscapedString(headString)
 			self.put("</vh>")
 		#@-body
-		#@-node:4::<< write the head text >>
+		#@-node:3::<< write the head text >>
 
 		child = v.firstChild()
 		if child:
@@ -1678,8 +1570,8 @@ class fileCommands:
 		self.put("</v>") ; self.put_nl()
 	#@-body
 	#@-node:14::putVnode (no change from 3.11.1) (generates error)
-	#@-node:4::put routines
-	#@+node:5::save
+	#@-node:3::put routines
+	#@+node:4::save
 	#@+body
 	def save(self,fileName):
 	
@@ -1711,8 +1603,8 @@ class fileCommands:
 			c.endUpdate()
 		doHook("save2",c=c,v=v,fileName=fileName)
 	#@-body
-	#@-node:5::save
-	#@+node:6::saveAs
+	#@-node:4::save
+	#@+node:5::saveAs
 	#@+body
 	def saveAs(self,fileName):
 	
@@ -1728,8 +1620,8 @@ class fileCommands:
 			c.endUpdate()
 		doHook("save2",c=c,v=v,fileName=fileName)
 	#@-body
-	#@-node:6::saveAs
-	#@+node:7::saveTo
+	#@-node:5::saveAs
+	#@+node:6::saveTo
 	#@+body
 	def saveTo (self,fileName):
 	
@@ -1745,8 +1637,8 @@ class fileCommands:
 		doHook("save2",c=c,v=v,fileName=fileName)
 	
 	#@-body
-	#@-node:7::saveTo
-	#@+node:8::xmlEscape
+	#@-node:6::saveTo
+	#@+node:7::xmlEscape
 	#@+body
 	# Surprisingly, this is a time critical routine.
 	
@@ -1759,15 +1651,15 @@ class fileCommands:
 		s = string.replace(s, '>', "&gt;")
 		return s
 	#@-body
-	#@-node:8::xmlEscape
-	#@+node:9::writeAtFileNodes
+	#@-node:7::xmlEscape
+	#@+node:8::writeAtFileNodes
 	#@+body
 	def writeAtFileNodes (self):
 	
 		self.commands.atFileCommands.writeAll(writeAtFileNodesFlag=true)
 	#@-body
-	#@-node:9::writeAtFileNodes
-	#@+node:10::writeDirtyAtFileNodes
+	#@-node:8::writeAtFileNodes
+	#@+node:9::writeDirtyAtFileNodes
 	#@+body
 	def writeDirtyAtFileNodes (self): # fileCommands
 	
@@ -1775,8 +1667,8 @@ class fileCommands:
 	
 		self.commands.atFileCommands.writeAll(writeDirtyAtFileNodesFlag=true)
 	#@-body
-	#@-node:10::writeDirtyAtFileNodes
-	#@+node:11::writeMissingAtFileNodes
+	#@-node:9::writeDirtyAtFileNodes
+	#@+node:10::writeMissingAtFileNodes
 	#@+body
 	def writeMissingAtFileNodes (self):
 	
@@ -1785,8 +1677,8 @@ class fileCommands:
 			at = c.atFileCommands
 			at.writeMissing(v)
 	#@-body
-	#@-node:11::writeMissingAtFileNodes
-	#@+node:12::writeOutlineOnly
+	#@-node:10::writeMissingAtFileNodes
+	#@+node:11::writeOutlineOnly
 	#@+body
 	def writeOutlineOnly (self):
 	
@@ -1795,8 +1687,8 @@ class fileCommands:
 		self.compactFileIndices()
 		self.write_LEO_file(self.mFileName,true) # outlineOnlyFlag
 	#@-body
-	#@-node:12::writeOutlineOnly
-	#@+node:13::write_LEO_file
+	#@-node:11::writeOutlineOnly
+	#@+node:12::write_LEO_file
 	#@+body
 	def write_LEO_file(self,fileName,outlineOnlyFlag):
 	
@@ -1962,7 +1854,7 @@ class fileCommands:
 
 			return false
 	#@-body
-	#@-node:13::write_LEO_file
+	#@-node:12::write_LEO_file
 	#@-node:3::Writing
 	#@-others
 #@-body

@@ -17,7 +17,7 @@ This version fixes two bugs:
 - Leo threw an exception at startup on some Linux systems.
 - Creating clones by control dragging did not always work.
 
-This code contains permanently disabled 4.0 code. That is, the use_pre_4pt0_file_formats setting is non-functional and Leo acts as if use_pre_4pt0_file_formats = 1
+This code contains permanently disabled 4.0 code.
 
 leo.py 3.11                         April 27, 2003
 

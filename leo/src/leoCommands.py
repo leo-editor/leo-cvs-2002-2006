@@ -71,7 +71,7 @@ class Commands:
 		
 		self.setIvarsFromFind()
 		
-		# New in 4.0
+		# New in 3.12
 		# These are defined here, and updated by the tree.select()
 		self.beadList = [] # list of vnodes for the Back and Forward commands.
 		self.beadPointer = -1 # present item in the list.
@@ -95,8 +95,7 @@ class Commands:
 	#@+body
 	def destroy (self):
 	
-		# Can't trace while destroying.
-		# print "c.destroy:", self.frame
+		# print "c.destroy:", self.frame # Don't use trace.
 	
 		# Remove all links from this object to other objects.
 		self.frame = None

@@ -185,13 +185,14 @@ class leoFind (leoFindBase):
 	
 		
 		#@<< Create the Find and Change panes >>
-		#@+node:1::<< Create the Find and Change panes >>
+		#@+node:2::<< Create the Find and Change panes >>
 		#@+body
 		fc = Tk.Frame(outer, bd="1m")
 		fc.pack(anchor="n", fill="x", expand=1)
 		
-		fpane = Tk.Frame(fc, borderwidth=1, height="0.95i", width="1.5i")
-		cpane = Tk.Frame(fc, borderwidth=1, height="0.95i", width="1.5i")
+		# Removed unused height/width params: using fractions causes problems in some locales!
+		fpane = Tk.Frame(fc, bd=1)
+		cpane = Tk.Frame(fc, bd=1)
 		
 		fpane.pack(anchor="n", expand=1, fill="x")
 		cpane.pack(anchor="s", expand=1, fill="x")
@@ -218,11 +219,11 @@ class leoFind (leoFindBase):
 		ctxt.pack(side="right", expand=1, fill="both")
 		ftxt.pack(side="right", expand=1, fill="both")
 		#@-body
-		#@-node:1::<< Create the Find and Change panes >>
+		#@-node:2::<< Create the Find and Change panes >>
 
 		
 		#@<< Create four columns of radio and checkboxes >>
-		#@+node:2::<< Create four columns of radio and checkboxes >>
+		#@+node:1::<< Create four columns of radio and checkboxes >>
 		#@+body
 		columnsFrame = Tk.Frame(outer,relief="groove",bd=2)
 		columnsFrame.pack(anchor="e",expand=1,padx="7m",pady="2m") # Don't fill.
@@ -272,7 +273,7 @@ class leoFind (leoFindBase):
 				box.bind("<1>", self.resetWrap)
 				if var == None: box.configure(state="disabled")
 		#@-body
-		#@-node:2::<< Create four columns of radio and checkboxes >>
+		#@-node:1::<< Create four columns of radio and checkboxes >>
 
 		
 		#@<< Create two rows of buttons >>

@@ -295,134 +295,7 @@ class aboutLeo (leoDialog):
 
 #@-body
 #@-node:2::class aboutLeo
-#@+node:3::class askLeoID (tested)
-#@+body
-class askLeoID (leoDialog):
-	
-	"""A class to create and run a dialog that asks for Id for gnx's."""
-	
-
-	#@+others
-	#@+node:1::askLeoID.__init__
-	#@+body
-	def __init__(self):
-		
-		"""Create the Leo Id dialog."""
-		
-		leoDialog.__init__(self,"Enter unique id",resizeable=false) # Initialize the base class.
-		self.id_entry = None
-		self.answer = None
-	
-		self.createTopFrame()
-		self.top.protocol("WM_DELETE_WINDOW", self.onCloseWindow)
-		self.top.bind("<Key>", self.onKey)
-		
-		message = (
-			"leoID.txt not found\n\n" +
-			"Please enter an id that identifies you uniquely.\n" +
-			"Your cvs login name is a good choice.\n\n" +
-			"Your id must contain only letters and numbers\n" +
-			"and must be at least 4 characters in length.")
-		self.createFrame(message)
-		self.focus_widget = self.id_entry
-	
-		buttons = {"text":"OK","command":self.onButton,"default":true}, # Singleton tuple.
-		buttonList = self.createButtons(buttons)
-		self.ok_button = buttonList[0]
-	#@-body
-	#@-node:1::askLeoID.__init__
-	#@+node:2::askLeoID.createFrame
-	#@+body
-	def createFrame(self,message):
-		
-		"""Create the frame for the Leo Id dialog."""
-		
-		f = self.frame
-	
-		label = Tk.Label(f,text=message)
-		label.pack(pady=10)
-	
-		self.id_entry = text = Tk.Entry(f,width=20)
-		text.pack()
-	#@-body
-	#@-node:2::askLeoID.createFrame
-	#@+node:3::onCloseWindow
-	#@+body
-	def onCloseWindow (self):
-		
-		"""Prevent the Leo Id dialog from closing by ignoring close events."""
-	
-		pass
-	#@-body
-	#@-node:3::onCloseWindow
-	#@+node:4::onButton
-	#@+body
-	def onButton(self):
-		
-		"""Handle clicks in the Leo Id close button."""
-	
-		s = self.id_entry.get().strip()
-		if len(s) < 4:  # Require at least 4 characters in an id.
-			return
-	
-		self.answer = s
-		self.top.destroy() # terminates wait_window
-	#@-body
-	#@-node:4::onButton
-	#@+node:5::onKey
-	#@+body
-	def onKey(self,event):
-		
-		"""Handle keystrokes in the Leo Id dialog."""
-		
-		
-		#@<< eliminate invalid characters >>
-		#@+node:1::<< eliminate invalid characters >>
-		#@+body
-		e = self.id_entry
-		s = e.get().strip()
-		i = 0 ; ok = true
-		while i < len(s):
-			ch = s[i]
-			if ch not in string.letters and ch not in string.digits:
-				e.delete(`i`)
-				s = e.get()
-				ok = false
-			else:
-				i += 1
-		if not ok: return
-		#@-body
-		#@-node:1::<< eliminate invalid characters >>
-
-		
-		#@<< enable the ok button if there are 4 or more valid characters >>
-		#@+node:2::<< enable the ok button if there are 4 or more valid characters >>
-		#@+body
-		e = self.id_entry
-		b = self.ok_button
-		
-		if len(e.get().strip()) >= 4:
-			b.configure(state="normal")
-		else:
-			b.configure(state="disabled")
-		#@-body
-		#@-node:2::<< enable the ok button if there are 4 or more valid characters >>
-
-		
-		ch = event.char.lower()
-		if ch in ('\n','\r'):
-			self.onButton()
-		return "break"
-	
-	
-	#@-body
-	#@-node:5::onKey
-	#@-others
-
-
-#@-body
-#@-node:3::class askLeoID (tested)
-#@+node:4::class askOkCancelNumber (tested)
+#@+node:3::class askOkCancelNumber (tested)
 #@+body
 class  askOkCancelNumber (leoDialog):
 	
@@ -528,8 +401,8 @@ class  askOkCancelNumber (leoDialog):
 
 
 #@-body
-#@-node:4::class askOkCancelNumber (tested)
-#@+node:5::class askOk (tested)
+#@-node:3::class askOkCancelNumber (tested)
+#@+node:4::class askOk (tested)
 #@+body
 class askOk(leoDialog):
 	
@@ -572,8 +445,8 @@ class askOk(leoDialog):
 	#@-node:2::askOk.onKey
 	#@-others
 #@-body
-#@-node:5::class askOk (tested)
-#@+node:6::class askOkCancel (tested)
+#@-node:4::class askOk (tested)
+#@+node:5::class askOkCancel (tested)
 #@+body
 class askOkCancel (leoDialog):
 	
@@ -618,8 +491,8 @@ class askOkCancel (leoDialog):
 	#@-node:2::askOkCancel.onKey
 	#@-others
 #@-body
-#@-node:6::class askOkCancel (tested)
-#@+node:7::class askYesNo (tested)
+#@-node:5::class askOkCancel (tested)
+#@+node:6::class askYesNo (tested)
 #@+body
 class askYesNo (leoDialog):
 	
@@ -667,8 +540,8 @@ class askYesNo (leoDialog):
 
 
 #@-body
-#@-node:7::class askYesNo (tested)
-#@+node:8::class askYesNoCancel (tested)
+#@-node:6::class askYesNo (tested)
+#@+node:7::class askYesNoCancel (tested)
 #@+body
 class askYesNoCancel(leoDialog):
 	
@@ -751,8 +624,8 @@ class askYesNoCancel(leoDialog):
 
 
 #@-body
-#@-node:8::class askYesNoCancel (tested)
-#@+node:9::class listboxDialog
+#@-node:7::class askYesNoCancel (tested)
+#@+node:8::class listboxDialog
 #@+body
 class listBoxDialog (leoDialog):
 	
@@ -890,8 +763,8 @@ class listBoxDialog (leoDialog):
 	#@-node:7::go
 	#@-others
 #@-body
-#@-node:9::class listboxDialog
-#@+node:10::class recentSectionsDialog (listBoxDialog)
+#@-node:8::class listboxDialog
+#@+node:9::class recentSectionsDialog (listBoxDialog)
 #@+body
 class recentSectionsDialog (listBoxDialog):
 	
@@ -1065,8 +938,8 @@ class recentSectionsDialog (listBoxDialog):
 	#@-node:8::synchNavButtons
 	#@-others
 #@-body
-#@-node:10::class recentSectionsDialog (listBoxDialog)
-#@+node:11::class marksDialog methods (listBoxDialog)
+#@-node:9::class recentSectionsDialog (listBoxDialog)
+#@+node:10::class marksDialog methods (listBoxDialog)
 #@+body
 class marksDialog (listBoxDialog):
 	
@@ -1130,7 +1003,7 @@ class marksDialog (listBoxDialog):
 	#@-node:4::fillbox
 	#@-others
 #@-body
-#@-node:11::class marksDialog methods (listBoxDialog)
+#@-node:10::class marksDialog methods (listBoxDialog)
 #@-others
 #@-body
 #@-node:0::@file leoDialog.py

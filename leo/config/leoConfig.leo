@@ -16,7 +16,7 @@
 <v t="T1" a="E"><vh>leoConfig.leo</vh>
 <v t="T2" a="E"><vh>@root leoConfig.txt</vh>
 <v t="T3"><vh>&lt;&lt; general comments and warnings &gt;&gt;</vh></v>
-<v t="T4"><vh>&lt;&lt; General configuration options, especially read-only mode &gt;&gt;</vh></v>
+<v t="T4" a="V"><vh>&lt;&lt; General configuration options, especially read-only mode &gt;&gt;</vh></v>
 <v t="T5"><vh>&lt;&lt; The "Recent Files" menu &gt;&gt;</vh></v>
 <v t="T6"><vh>&lt;&lt; Compare Panel settings &gt;&gt;</vh></v>
 <v t="T7"><vh>&lt;&lt; Find/Change Panel settings &gt;&gt;</vh></v>
@@ -29,7 +29,7 @@
 <v t="T14"><vh>&lt;&lt; None &gt;&gt;</vh></v>
 </v>
 <v t="T15"><vh>&lt;&lt; Preferences Panel settings &gt;&gt;</vh></v>
-<v t="T16" a="V"><vh>&lt;&lt; Syntax coloring options and colors &gt;&gt;</vh></v>
+<v t="T16"><vh>&lt;&lt; Syntax coloring options and colors &gt;&gt;</vh></v>
 <v t="T17" a="E"><vh>&lt;&lt; Window options &gt;&gt;</vh>
 <v t="T18"><vh>&lt;&lt; body pane options &gt;&gt;</vh></v>
 <v t="T19"><vh>&lt;&lt; outline pane options&gt;&gt;</vh></v>
@@ -211,12 +211,7 @@ use_plugins = 1
 #      Naive or hostile hooks may execute HOSTILE CODE contained in .leo files.
 #	   See the warnings in LeoDocs.leo.
 #
-#   0: (The default) Leo disables all plugins.
-
-use_pre_4pt0_file_formats = 1
-#	1: Use pre 4.0 formats for .leo files and derived files.
-#	0: Use 4.0 formats for .leo files and derived files.
-#	This setting should be 0 if you intend to upload files to Leo's cvs repository.</t>
+#   0: (The default) Leo disables all plugins.</t>
 <t tx="T5"># The list of files in the "Recent Files" menu at startup.
 
 [recent files]
@@ -473,6 +468,7 @@ ShowInvisibles   = Alt+V
 # Reserved         Alt+W  (Opens Window Menu)
 
 # EKR: I set the following in customizeLeo.py
+CheckSpelling    = Alt+Shift+A
 # Idle           = Alt+Shift+I
 # Word           = Alt+Shift+W
 # WordPad        = Alt+Shift+T
@@ -847,7 +843,7 @@ initial_window_height = 75
 #	Height of window, Tk grid units, that is, pixels. (must be an integer).
 #	Grid units must be specified because Leo windows are gridded.
 	
-initial_window_width = 200
+initial_window_width = 150
 #	Width window, in Tk grid units, that is, pixels. (must be an integer).
 #	Grid units must be specified because Leo windows are gridded.
 
