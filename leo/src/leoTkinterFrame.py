@@ -71,10 +71,8 @@ class leoTkinterFrame (leoFrame.leoFrame):
 		scrolls = config.getBoolWindowPref('outline_pane_scrolls_horizontally')
 		scrolls = choose(scrolls,1,0)
 	
-		frame.canvas = canvas = Tk.Canvas(parentFrame,name="canvas",
+		canvas = Tk.Canvas(parentFrame,name="canvas",
 			bd=0,bg="white",relief="flat")
-			
-		frame.setTreeColorsFromConfig()
 	
 		frame.treeBar = treeBar = Tk.Scrollbar(parentFrame,name="treeBar")
 		
@@ -101,7 +99,8 @@ class leoTkinterFrame (leoFrame.leoFrame):
 		if sys.platform == "linux2": # This crashes tcl83.dll
 			canvas.bind("<MouseWheel>", frame.OnMouseWheel)
 			
-		# print_bindings("canvas",frame.tree.canvas)
+		# print_bindings("canvas",canvas)
+		return canvas
 	#@nonl
 	#@-node:f.createCanvas
 	#@+node:f.finishCreate
@@ -155,18 +154,18 @@ class leoTkinterFrame (leoFrame.leoFrame):
 		#@-node:<< create both splitters >>
 		#@nl
 		
-		# Create the canvas.
-		self.createCanvas(self.split2Pane1)
-		# Create the log class.
-		frame.log = leoTkinterLog(frame,self.split2Pane2)
-		# Create the body class.
-		frame.body = leoTkinterBody(frame,self.split1Pane2)
+		# Create the canvas, tree, log and body.
+		frame.canvas   = self.createCanvas(self.split2Pane1)
+		frame.tree     = leoTkinterTree.leoTkinterTree(c,frame,frame.canvas)
+		frame.log      = leoTkinterLog(frame,self.split2Pane2)
+		frame.body     = leoTkinterBody(frame,self.split1Pane2)
 		frame.bodyCtrl = frame.body.bodyCtrl
-		# Create the tree class.
-		frame.tree = leoTkinterTree.leoTkinterTree(c,frame,frame.canvas)
+		
 		# Configure.
 		frame.setTabWidth(c.tab_width)
+		frame.tree.setTreeColorsFromConfig()
 		self.reconfigurePanes()
+		
 		# Create the status line.
 		self.createStatusLine()
 		self.putStatusLine("Welcome to Leo")
@@ -726,11 +725,11 @@ class leoTkinterFrame (leoFrame.leoFrame):
 		# Without them the text settings get applied to the wrong widget!
 		# Moreover, only this order seems to work on Windows XP...
 		frame.tree.setFontFromConfig()
-		frame.setTreeColorsFromConfig()
+		frame.tree.setTreeColorsFromConfig()
 		frame.configureBarsFromConfig()
 		c.redraw()
-		frame.setBodyFontFromConfig()
-		frame.setTabWidth(c.tab_width)
+		frame.body.setBodyFontFromConfig()
+		frame.body.setTabWidth(c.tab_width)
 		c.redraw()
 		frame.log.setFontFromConfig()
 		c.redraw()
@@ -773,14 +772,6 @@ class leoTkinterFrame (leoFrame.leoFrame):
 			es_exception()
 			pass
 	#@-node:setTabWidth
-	#@+node:setTreeColorsFromConfig
-	def setTreeColorsFromConfig (self):
-	
-		bg = app.config.getWindowPref("outline_pane_background_color")
-		if bg:
-			try: self.canvas.configure(bg=bg)
-			except: pass
-	#@-node:setTreeColorsFromConfig
 	#@+node:setWrap
 	def setWrap (self,v):
 		
@@ -958,7 +949,7 @@ class leoTkinterFrame (leoFrame.leoFrame):
 		
 		# Make sure the event sticks.
 		frame.body.forceFullRecolor()
-		frame.onHeadChanged(v) # Works even if it wasn't the headline that changed.
+		frame.tree.onHeadChanged(v) # Works even if it wasn't the headline that changed.
 	#@nonl
 	#@-node:frame.OnCut, OnCutFrom Menu
 	#@+node:frame.OnCopy, OnCopyFromMenu
@@ -994,7 +985,7 @@ class leoTkinterFrame (leoFrame.leoFrame):
 		
 		# Make sure the event sticks.
 		frame.body.forceFullRecolor()
-		frame.onHeadChanged(v) # Works even if it wasn't the headline that changed.
+		frame.tree.onHeadChanged(v) # Works even if it wasn't the headline that changed.
 	#@nonl
 	#@-node:frame.OnPaste, OnPasteNode, OnPasteFromMenu
 	#@+node:insertHeadlineTime
@@ -1321,7 +1312,7 @@ class leoTkinterBody (leoFrame.leoBody):
 	#@-node:tkBody.createControl
 	#@+node:tkBody.setBodyFontFromConfig
 	def setBodyFontFromConfig (self):
-		
+	
 		config = app.config ; body = self.bodyCtrl
 		
 		font = config.getFontFromParams(

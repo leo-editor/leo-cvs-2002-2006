@@ -952,6 +952,14 @@ class leoTkinterTree (leoFrame.leoTree):
 			es_exception()
 	#@nonl
 	#@-node:setLineHeight
+	#@+node:setTreeColorsFromConfig
+	def setTreeColorsFromConfig (self):
+	
+		bg = app.config.getWindowPref("outline_pane_background_color")
+		if bg:
+			try: self.canvas.configure(bg=bg)
+			except: pass
+	#@-node:setTreeColorsFromConfig
 	#@+node:Event handers (tree)
 	#@+at 
 	#@nonl
@@ -1209,8 +1217,7 @@ class leoTkinterTree (leoFrame.leoTree):
 		"""Handle a change to headline text."""
 	
 		self.c.frame.bodyCtrl.after_idle(self.idle_head_key,v)
-	
-	
+	#@nonl
 	#@-node:onHeadChanged
 	#@+node:OnHeadlineKey
 	def OnHeadlineKey (self,v,event):

@@ -365,7 +365,7 @@ class leoFind:
 		c.endUpdate()
 		# Make sure the headline and body text are updated.
 		v = c.currentVnode()
-		c.frame.onHeadChanged(v)
+		c.frame.tree.onHeadChanged(v)
 		c.frame.body.onBodyChanged(v,"Can't Undo")
 		if count > 0:
 			# A change was made.  Tag the end of the Change All command.
