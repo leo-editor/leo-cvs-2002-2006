@@ -126,6 +126,33 @@ def checkClones2Links (c=None,verbose=false):
 	#@nl
 #@nonl
 #@-node:checkClones2Links
+#@+node:checkTopologyOfAllClones
+def checkTopologyOfAllClones (c=None):
+	
+	if c == None: c = top()
+	root = v = c.rootVnode()
+	c.clearAllVisited()
+	count = 0
+	s = "Testing topology of all clones"
+	es(s) ; print s
+	while v:
+		if not v.t.isVisited():
+			v.t.setVisited()
+			if v.isCloned:
+				count += 1
+				tlist = createTopologyList (c,v,useHeadlines=true)
+			for v2 in v.t.joinList:
+				if v2 != v:
+					tlist2 = createTopologyList (c,v2,useHeadlines=true)
+					if tlist != tlist2:
+						s = "topology mismatch for %s" % v.headString()
+						print s ; es(s)
+						break
+		v = v.threadNext()
+	s = "Testing complete: %d clones tested" % count
+	es(s) ; print s
+#@nonl
+#@-node:checkTopologyOfAllClones
 #@+node:CheckVersion (Dave Hein)
 #@+at
 # CheckVersion() is a generic version checker.  Assumes a
@@ -751,10 +778,14 @@ def openWithFileName(fileName,old_c=None):
 		else:
 			es("can not open: " + fileName,color="red")
 			return false, None
+	except IOError:
+		es("can not open: " + fileName, color="blue")
+		return false, None
 	except:
 		es("exceptions opening: " + fileName,color="red")
 		es_exception()
-		if frame: app.gui.destroyLeoFrame(frame)
+		if 0: # Do not do this here!
+			if frame: app.gui.destroyLeoFrame(frame)
 		return false, None
 #@-node:openWithFileName (leoGlobals)
 #@+node:wrap_lines
