@@ -1916,6 +1916,7 @@ class baseFileCommands:
             #@+node:ekr.20040702085529:<< issue informational messages >>
             if p.isAtThinFileNode and p.isOrphan():
                 g.es("Writing erroneous: %s" % p.headString(),color="blue")
+                p.clearOrphan()
             
             if 0: # For testing.
                 if p.isAtIgnoreNode():
