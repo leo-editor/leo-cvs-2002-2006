@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="68" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="70" clone_windows="0"/>
 <globals body_outline_ratio="0.5">
 	<global_window_position top="63" left="468" height="734" width="662"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
@@ -12,12 +12,12 @@
 	<change_string></change_string>
 </find_panel_settings>
 <vnodes>
-<v t="T1"><vh>Notes</vh>
-<v t="T2"><vh>Quote from Alex Martelli</vh></v>
-<v t="T3"><vh>Singleton sequences</vh></v>
-<v t="T4"><vh>How to get screenshots</vh></v>
+<v t="T1"><vh>Distribution scripts</vh></v>
+<v t="T2"><vh>Notes</vh>
+<v t="T3"><vh>Quote from Alex Martelli</vh></v>
+<v t="T4"><vh>Singleton sequences</vh></v>
+<v t="T5"><vh>How to get screenshots</vh></v>
 </v>
-<v t="T5"><vh>Distribution scripts</vh></v>
 <v t="T6"><vh>Previous tests</vh>
 <v t="T7"><vh>@file c:\prog\test\tab_test.txt</vh></v>
 <v t="T8"><vh>@image Icons/Leoapp.GIF</vh></v>
@@ -98,27 +98,42 @@
 </v>
 <v t="T55"><vh>timeit (in 2.3b1)</vh></v>
 <v t="T56"><vh>Trailing newline in body</vh></v>
-<v t="T57"><vh>Use xml.sax</vh></v>
-<v t="T58"><vh>v.__repr__ and v.__str___</vh></v>
-<v t="T59"><vh>wrap test</vh>
-<v t="T60" a="E"><vh>@file c:\prog\test\wrap_test.txt</vh>
-<v t="T61"><vh>wrap node</vh></v>
-<v t="T62"><vh>nowrap node</vh></v>
+<v t="T57"><vh>v.__repr__ and v.__str___</vh></v>
+<v t="T58"><vh>wrap test</vh>
+<v t="T59" a="E"><vh>@file c:\prog\test\wrap_test.txt</vh>
+<v t="T60"><vh>wrap node</vh></v>
+<v t="T61"><vh>nowrap node</vh></v>
 </v>
 </v>
-<v t="T63"><vh>Write Missing @file nodes test</vh>
-<v t="T64"><vh>@file ../test/missing_test.txt</vh></v>
+<v t="T62"><vh>Write Missing @file nodes test</vh>
+<v t="T63"><vh>@file ../test/missing_test.txt</vh></v>
 </v>
 </v>
-<v t="T65" a="V"><vh>Spell test </vh>
-<v t="T66"><vh>node two</vh></v>
-<v t="T67"><vh>node two no misspellings</vh></v>
+<v t="T64"><vh>Spell test </vh>
+<v t="T65"><vh>node two</vh></v>
+<v t="T66"><vh>node two no misspellings</vh></v>
 </v>
-<v t="T68"><vh>Undo typing tests</vh></v>
+<v t="T67"><vh>Undo typing tests</vh></v>
+<v t="T68"><vh>Use xml.sax</vh></v>
+<v t="T69" a="E"><vh>@encoding test</vh>
+<v t="T70" a="E"><vh>@file c:\prog\test\encodingTest.txt</vh>
+<v a="V"><vh>Umlaut in headline ë</vh></v>
+</v>
+</v>
 </vnodes>
 <tnodes>
-<t tx="T1"></t>
-<t tx="T2">@nocolor
+<t tx="T1">@color
+
+if 1: # Save all files and tangle leoConfig.leo
+	from leoGlobals import importFromPath
+	preSetup = importFromPath("preSetup","c:\prog\leoCvs\leo")
+	preSetup.setup()
+
+if 1: # Replace config settings and create .zip file.
+	import os
+	os.system(r"c:\python22\python c:\prog\leoCvs\leo\setup.py sdist --formats=zip")</t>
+<t tx="T2"></t>
+<t tx="T3">@nocolor
 
 Personally, I nominate timeit.py as THE outstanding enhancement of Python 2.3
 -- I love many of the others (the performance improvement in particular), but
@@ -127,7 +142,7 @@ innocuous way for programmers' typical obsession with performance and
 micro-optimization to discharge itself harmlessly, cleansing their souls to
 choose idioms on the basis of clarity, maintainability and readability, as of
 course SHOULD be done :-)</t>
-<t tx="T3"># Empty tuples are constructed by an empty pair of parentheses.
+<t tx="T4"># Empty tuples are constructed by an empty pair of parentheses.
 # tuple with one item is constructed by following a value with a comma.
 # Examples:
 
@@ -143,22 +158,12 @@ s = {"x":1, "y":2},
 
 for i in s:
 	print `i`</t>
-<t tx="T4">import ImageGrab,os # requires PIL 1.1.3 or later
+<t tx="T5">import ImageGrab,os # requires PIL 1.1.3 or later
 
 path = os.path.join(app().loadDir,"../","test","screenshot.gif")
 
 ImageGrab.grab().save(path)
 </t>
-<t tx="T5">@color
-
-if 1: # Save all files and tangle leoConfig.leo
-	from leoGlobals import importFromPath
-	preSetup = importFromPath("preSetup","c:\prog\leoCvs\leo")
-	preSetup.setup()
-
-if 1: # Replace config settings and create .zip file.
-	import os
-	os.system(r"c:\python22\python c:\prog\leoCvs\leo\setup.py sdist --formats=zip")</t>
 <t tx="T6"></t>
 <t tx="T7">----*---*---*---*---*---*
 	.	.	.	.	.	
@@ -484,21 +489,49 @@ a
 <t tx="T56">ab
 </t>
 <t tx="T57">from leoGlobals import *
+c = top() ; v = c.currentVnode()
+print v
+print `v`</t>
+<t tx="T58"></t>
+<t tx="T59">@others</t>
+<t tx="T60">@wrap
+
+this should wrap aaaaaaaaaaaaaaaaaaa bbbbbbbbbbbbbbbbbbbbb cccccccccccccccccc ddddddddddddddddddd eeeeeeeeeeeeeeeeeeeeee ffffffffffffffffffff</t>
+<t tx="T61">@nowrap
+
+this should NOT wrap aaaaaaaaaaaaaaaaaaa bbbbbbbbbbbbbbbbbbbbb cccccccccccccccccc ddddddddddddddddddd eeeeeeeeeeeeeeeeeeeeee ffffffffffffffffffff</t>
+<t tx="T62">@ignore</t>
+<t tx="T63"></t>
+<t tx="T64">a b leoDialogs leoFind leoAtFile leoFileCommands leoGlobals modal end
+line tooo changed 9
+</t>
+<t tx="T65">this is another test.
+
+hello there jkk this is werg
+		
+the cht sat on the marh
+the cat was sitting phew, another day. by zz z z 
+two initabc
+</t>
+<t tx="T66">everything good.</t>
+<t tx="T67">test one</t>
+<t tx="T68">from leoGlobals import *
 import gc,os,time,leoNodes
 from xml.sax import saxutils, make_parser
 from xml.sax.xmlreader import InputSource
 
 path = os.path.join(app().loadDir,"../","test","test2.leo")
-path = os.path.join(app().loadDir,"LeoPy.leo")
+# path = os.path.join(app().loadDir,"LeoPy.leo")
 path = os.path.normpath(path)
 
-verbose = false
+verbose = true
 tnodes = vnodes = 0
 start = None
 
 def clean(s): return toEncodedString(s,"ascii")
 
 class trace_parse(saxutils.XMLGenerator):
+	lastContent = None
 	def startDocument(self):
 		if 0: # Doesn't smooth things out.
 			gc.collect() 
@@ -509,18 +542,40 @@ class trace_parse(saxutils.XMLGenerator):
 	def endDocument(self):
 		global start ; print "total time" + "%6.3f" % (time.clock()-start)
 		if verbose: trace()
-	def startElement(self,name,atts):
+	def startElement(self,name,attrs):
 		global vnodes,tnodes
-		if verbose: print '&lt;' + clean(name).strip() + '&gt;',
+		self.lastContent = None
+		if verbose:
+			name = clean(name).strip()
+			self.lastName = name
+			a = []
+			keys = attrs.keys()
+			keys.sort()
+			for key in keys:
+				a.append("%s=%s" % (key,attrs.getValue(key)))
+			if name not in (("vh"),):
+				print
+			if a:
+				print '&lt;%s %s&gt;' % (name, string.join(a,' ')),
+			else:
+				print '&lt;%s&gt;' % name,
+			# if name in (("t"),): print
 		if name == "v":
 			vnodes += 1 ; v = leoNodes.vnode(top(),leoNodes.tnode())
 		elif name == "t":
 			tnodes += 1 ; t = leoNodes.tnode()
 	def endElement(self,name):
-		if verbose: print '&lt;/' + clean(name).strip() + '&gt;'
+		name = clean(name).strip()
+		if verbose:
+			if self.lastContent and name not in (("vh"),):
+				print
+			print '&lt;/%s&gt;' % name,
+		self.lastName = name
 	def characters(self,content):
-		content = content.replace('\r','')
-		if verbose and content.strip(): print clean(content)
+		self.lastContent = content = content.replace('\r','')
+		if verbose and content.strip():
+			if self.lastName != "vh": print
+			print clean(content),
 	def ignorableWhitespace(self):                trace()
 	def processingInstruction (self,target,data): trace()
 	def skippedEntity(self,name):                 trace(name)
@@ -543,32 +598,9 @@ try:
 	except: es_exception()
 finally:
 	if f: f.close()</t>
-<t tx="T58">from leoGlobals import *
-c = top() ; v = c.currentVnode()
-print v
-print `v`</t>
-<t tx="T59"></t>
-<t tx="T60">@others</t>
-<t tx="T61">@wrap
+<t tx="T69">@encoding iso-8859-1</t>
+<t tx="T70">@others
 
-this should wrap aaaaaaaaaaaaaaaaaaa bbbbbbbbbbbbbbbbbbbbb cccccccccccccccccc ddddddddddddddddddd eeeeeeeeeeeeeeeeeeeeee ffffffffffffffffffff</t>
-<t tx="T62">@nowrap
-
-this should NOT wrap aaaaaaaaaaaaaaaaaaa bbbbbbbbbbbbbbbbbbbbb cccccccccccccccccc ddddddddddddddddddd eeeeeeeeeeeeeeeeeeeeee ffffffffffffffffffff</t>
-<t tx="T63">@ignore</t>
-<t tx="T64"></t>
-<t tx="T65">a b leoDialogs leoFind leoAtFile leoFileCommands leoGlobals modal end
-line tooo changed 9
-</t>
-<t tx="T66">this is another test.
-
-hello there jkk this is werg
-		
-the cht sat on the marh
-the cat was sitting phew, another day. by zz z z 
-two initabc
-</t>
-<t tx="T67">everything good.</t>
-<t tx="T68">test one</t>
+This is an umlaute ë</t>
 </tnodes>
 </leo_file>

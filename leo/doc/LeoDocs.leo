@@ -81,7 +81,7 @@
 <v t="T61" a="C"><vh>Quick start</vh></v>
 </v>
 <v t="T62" a="E"><vh>Latest version</vh>
-<v t="T63" a="CMV"><vh>3.12 beta 1</vh>
+<v t="T63" a="CM"><vh>3.12 beta 1</vh>
 <v t="T64"><vh>Bugs</vh>
 <v t="T65"><vh>Fixed bug affecting encoding in headlines</vh></v>
 <v t="T66"><vh>Fixed bug affecting log pane</vh></v>
@@ -1392,7 +1392,7 @@
 </v>
 </v>
 </v>
-<v t="T961"><vh>FAQ</vh>
+<v t="T961" a="E"><vh>FAQ</vh>
 <v t="T962"><vh>Learning Leo</vh>
 <v t="T963"><vh>What's the best way to learn to use Leo?</vh></v>
 <v t="T964"><vh>Where are the simple examples?</vh></v>
@@ -1510,6 +1510,7 @@
 <v t="T1015"><vh>How can I create a template .leo file?</vh></v>
 <v t="T1016"><vh>Help! I can't seem to generate files after using the Import commands.</vh></v>
 </v>
+<v a="V"><vh>Unicode and special characters</vh></v>
 </v>
 <v t="T1017"><vh>Glossary</vh>
 <v t="T1018"><vh>@file node, @others node, @root node, etc.</vh></v>
