@@ -1047,6 +1047,7 @@ class LeoFrame:
 		
 		table = (
 			("&Contract All","Alt+Shift+0",self.OnContractAll),
+			("Contract &Node","Alt+[",self.OnContractNode),
 			("Contract &Parent","Alt+0",self.OnContractParent),
 			("-",None,None),
 			("Expand To Level &1","Alt+1",self.OnExpandToLevel1),
@@ -1059,7 +1060,8 @@ class LeoFrame:
 			("Expand To Level &8","Alt+8",self.OnExpandToLevel8),
 			("-",None,None),
 			("Expand &All","Alt+9",self.OnExpandAll),
-			("Expand &Next Level","Alt+=",self.OnExpandNextLevel))
+			("Expand N&ode","Alt+]",self.OnExpandNode),
+			("Expand N&ext &Level","Alt+=",self.OnExpandNextLevel))
 		
 		self.createMenuEntries(expandMenu,table)
 		#@-body
@@ -3074,142 +3076,102 @@ class LeoFrame:
 	#@-node:7::OnSortChildren, OnSortSiblings
 	#@-node:1::top level
 	#@+node:2::Expand/Contract
-	#@+node:1::OnContractParent
-	#@+body
-	def OnContractParent(self,event=None):
-	
-		self.commands.contractParent()
-	
-	#@-body
-	#@-node:1::OnContractParent
-	#@+node:2::OnExpandAll
-	#@+body
-	def OnExpandAll(self,event=None):
-	
-		self.commands.expandAllHeadlines()
-	
-	#@-body
-	#@-node:2::OnExpandAll
-	#@+node:3::OnExpandAllChildren
-	#@+body
-	def OnExpandAllChildren(self,event=None):
-	
-		self.commands.expandAllSubheads()
-	
-	#@-body
-	#@-node:3::OnExpandAllChildren
-	#@+node:4::OnExpandChildren
-	#@+body
-	def OnExpandChildren(self,event=None):
-	
-		self.commands.expandSubheads()
-	
-	#@-body
-	#@-node:4::OnExpandChildren
-	#@+node:5::OnContractAll
-	#@+body
-	def OnContractAll(self,event=None):
-	
-		self.commands.contractAllHeadlines()
-	
-	#@-body
-	#@-node:5::OnContractAll
-	#@+node:6::OnContractAllChildren
-	#@+body
-	def OnContractAllChildren(self,event=None):
-	
-		self.commands.contractAllSubheads()
-	
-	#@-body
-	#@-node:6::OnContractAllChildren
-	#@+node:7::OnContractChildren
+	#@+node:1::No longer used
+	#@+node:1::OnContractChildren (no longer used)
 	#@+body
 	def OnContractChildren(self,event=None):
 	
 		self.commands.contractSubheads()
 	
 	#@-body
-	#@-node:7::OnContractChildren
-	#@+node:8::OnExpandNextLevel
+	#@-node:1::OnContractChildren (no longer used)
+	#@+node:2::OnContractAllChildren (no longer used)
+	#@+body
+	def OnContractAllChildren(self,event=None):
+	
+		self.commands.contractAllSubheads()
+	
+	#@-body
+	#@-node:2::OnContractAllChildren (no longer used)
+	#@+node:3::OnExpandAllChildren (no longer used)
+	#@+body
+	def OnExpandAllChildren(self,event=None):
+	
+		self.commands.expandAllSubheads()
+	
+	#@-body
+	#@-node:3::OnExpandAllChildren (no longer used)
+	#@+node:4::OnExpandChildren (no longer used)
+	#@+body
+	def OnExpandChildren(self,event=None):
+	
+		self.commands.expandSubheads()
+	
+	#@-body
+	#@-node:4::OnExpandChildren (no longer used)
+	#@-node:1::No longer used
+	#@+node:2::OnContractAll
+	#@+body
+	def OnContractAll(self,event=None):
+	
+		self.commands.contractAllHeadlines()
+	
+	#@-body
+	#@-node:2::OnContractAll
+	#@+node:3::OnContractNode
+	#@+body
+	def OnContractNode(self,event=None):
+	
+		self.commands.contractNode()
+	
+	#@-body
+	#@-node:3::OnContractNode
+	#@+node:4::OnContractParent
+	#@+body
+	def OnContractParent(self,event=None):
+	
+		self.commands.contractParent()
+	
+	#@-body
+	#@-node:4::OnContractParent
+	#@+node:5::OnExpandAll
+	#@+body
+	def OnExpandAll(self,event=None):
+	
+		self.commands.expandAllHeadlines()
+	
+	#@-body
+	#@-node:5::OnExpandAll
+	#@+node:6::OnExpandNextLevel
 	#@+body
 	def OnExpandNextLevel(self,event=None):
 	
 		self.commands.expandNextLevel()
 	
 	#@-body
-	#@-node:8::OnExpandNextLevel
-	#@+node:9::OnExpandToLevel1
+	#@-node:6::OnExpandNextLevel
+	#@+node:7::OnExpandNode
 	#@+body
-	def OnExpandToLevel1(self,event=None):
+	def OnExpandNode(self,event=None):
 	
-		self.commands.expandLevel1()
+		self.commands.expandNode()
 	
 	#@-body
-	#@-node:9::OnExpandToLevel1
-	#@+node:10::OnExpandToLevel2
+	#@-node:7::OnExpandNode
+	#@+node:8::OnExpandToLevel1..9
 	#@+body
-	def OnExpandToLevel2(self,event=None):
-	
-		self.commands.expandLevel2()
+	def OnExpandToLevel1(self,event=None): self.commands.expandLevel1()
+	def OnExpandToLevel2(self,event=None): self.commands.expandLevel2()
+	def OnExpandToLevel3(self,event=None): self.commands.expandLevel3()
+	def OnExpandToLevel4(self,event=None): self.commands.expandLevel4()
+	def OnExpandToLevel5(self,event=None): self.commands.expandLevel5()
+	def OnExpandToLevel6(self,event=None): self.commands.expandLevel6()
+	def OnExpandToLevel7(self,event=None): self.commands.expandLevel7()
+	def OnExpandToLevel8(self,event=None): self.commands.expandLevel8()
+	def OnExpandToLevel9(self,event=None): self.commands.expandLevel9()
 	
 	#@-body
-	#@-node:10::OnExpandToLevel2
-	#@+node:11::OnExpandToLevel3
-	#@+body
-	def OnExpandToLevel3(self,event=None):
-	
-		self.commands.expandLevel3()
-	
-	#@-body
-	#@-node:11::OnExpandToLevel3
-	#@+node:12::OnExpandToLevel4
-	#@+body
-	def OnExpandToLevel4(self,event=None):
-	
-		self.commands.expandLevel4()
-	
-	#@-body
-	#@-node:12::OnExpandToLevel4
-	#@+node:13::OnExpandToLevel5
-	#@+body
-	def OnExpandToLevel5(self,event=None):
-	
-		self.commands.expandLevel5()
-	
-	#@-body
-	#@-node:13::OnExpandToLevel5
-	#@+node:14::OnExpandToLevel6
-	#@+body
-	def OnExpandToLevel6(self,event=None):
-	
-		self.commands.expandLevel6()
-	
-	#@-body
-	#@-node:14::OnExpandToLevel6
-	#@+node:15::OnExpandToLevel7
-	#@+body
-	def OnExpandToLevel7(self,event=None):
-	
-		self.commands.expandLevel7()
-	
-	#@-body
-	#@-node:15::OnExpandToLevel7
-	#@+node:16::OnExpandToLevel8
-	#@+body
-	def OnExpandToLevel8(self,event=None):
-	
-		self.commands.expandLevel8()
-	
-	#@-body
-	#@-node:16::OnExpandToLevel8
-	#@+node:17::OnExpandToLevel9
-	#@+body
-	def OnExpandToLevel9(self,event=None):
-	
-		self.commands.expandLevel9()
-	
-	#@-body
-	#@-node:17::OnExpandToLevel9
+	#@-node:8::OnExpandToLevel1..9
 	#@-node:2::Expand/Contract
 	#@+node:3::Move/Select
 	#@+node:1::OnMoveDownwn
@@ -3955,6 +3917,11 @@ class LeoFrame:
 		# Expand/Contract submenu...
 		menu = self.getMenu("Expand/Contract...")
 		enableMenu(menu,"Contract Parent",c.canContractParent())
+		enableMenu(menu,"Contract Node",v.hasChildren() and v.isExpanded())
+		enableMenu(menu,"Expand Node",v.hasChildren() and not v.isExpanded())
+		enableMenu(menu,"Expand To Level 1",v.hasChildren() and v.isExpanded())
+		for i in xrange(2,9):
+			enableMenu(menu,"Expand To Level " + str(i), v.hasChildren())
 		# Move submenu...
 		menu = self.getMenu("Move...")
 		enableMenu(menu,"Move Down",c.canMoveOutlineDown())
