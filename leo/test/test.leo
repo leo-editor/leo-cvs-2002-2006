@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="4449" clone_windows="0"/>
-<globals body_outline_ratio="0.414301929625">
-	<global_window_position top="10" left="263" height="881" width="1011"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="4461" clone_windows="0"/>
+<globals body_outline_ratio="0.644721906924">
+	<global_window_position top="10" left="199" height="881" width="1011"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences>
@@ -19,6 +19,291 @@
 <v t="ekr.20040309095121"><vh>3/9: created more position mini tests</vh></v>
 <v t="ekr.20040303080938.1"><vh>3/3: created position tests</vh></v>
 </v>
+</v>
+<v t="EKR.20040619133116"><vh>Unit testing...</vh>
+<v t="ekr.20040327114250" tnodeList="ekr.20040327114250"><vh>@file c:\prog\test\unittest\batchTest.py</vh></v>
+<v t="EKR.20040623200709"><vh>@thin ../src/leoTest.py</vh></v>
+<v t="ekr.20040303063549"><vh>Unit test scripts (Must be located here)</vh>
+<v t="ekr.20040126105605"><vh>cloneTestData (not used yet)</vh>
+<v t="ekr.20040302092753"><vh>aa</vh></v>
+<v t="ekr.20040126105605.2"><vh>a</vh>
+<v t="ekr.20040126105605.3"><vh>b</vh>
+<v t="ekr.20040301191933"><vh>c</vh>
+<v t="ekr.20040302092753.1"><vh>c2</vh>
+<v t="ekr.20040302092753.2"><vh>c3</vh></v>
+<v t="ekr.20040302092753.3"><vh>c4</vh></v>
+</v>
+</v>
+</v>
+<v t="ekr.20040126105605.3"><vh>b</vh>
+<v t="ekr.20040301191933"><vh>c</vh>
+<v t="ekr.20040302092753.1"><vh>c2</vh>
+<v t="ekr.20040302092753.2"><vh>c3</vh></v>
+<v t="ekr.20040302092753.3"><vh>c4</vh></v>
+</v>
+</v>
+</v>
+</v>
+<v t="ekr.20040301191933.1"><vh>d</vh>
+<v t="ekr.20040126105605.2"><vh>a</vh>
+<v t="ekr.20040126105605.3"><vh>b</vh>
+<v t="ekr.20040301191933"><vh>c</vh>
+<v t="ekr.20040302092753.1"><vh>c2</vh>
+<v t="ekr.20040302092753.2"><vh>c3</vh></v>
+<v t="ekr.20040302092753.3"><vh>c4</vh></v>
+</v>
+</v>
+</v>
+<v t="ekr.20040126105605.3"><vh>b</vh>
+<v t="ekr.20040301191933"><vh>c</vh>
+<v t="ekr.20040302092753.1"><vh>c2</vh>
+<v t="ekr.20040302092753.2"><vh>c3</vh></v>
+<v t="ekr.20040302092753.3"><vh>c4</vh></v>
+</v>
+</v>
+</v>
+</v>
+</v>
+<v t="ekr.20040301191933.2"><vh>e</vh></v>
+<v t="ekr.20040302092753.4"><vh>z</vh></v>
+</v>
+<v t="ekr.20040303063549.1"><vh>tempNode</vh></v>
+<v t="EKR.20040621100553"><vh>@  file c:\prog\test\tempOutput.txt</vh></v>
+<v t="EKR.20040619134504" a="M"><vh>atFileTests (revised)</vh>
+<v t="EKR.20040624112329"><vh>Script to create expected output</vh></v>
+<v t="EKR.20040624103339.1"><vh>testAtLast1 no newline</vh>
+<v t="EKR.20040624103339.2"><vh>@@file</vh></v>
+<v t="EKR.20040624103339.3"><vh>Output</vh></v>
+</v>
+<v t="EKR.20040623201322.4"><vh>testAtLast2 one newline</vh>
+<v t="EKR.20040624111917"><vh>@@file</vh></v>
+<v t="EKR.20040624111917.1"><vh>Output</vh></v>
+</v>
+<v t="EKR.20040623201322.7"><vh>testAtLast3 two newlines</vh>
+<v t="EKR.20040624112329.1"><vh>@@file</vh></v>
+<v t="EKR.20040624112329.2"><vh>Output</vh></v>
+</v>
+<v t="EKR.20040623201322.10"><vh>testAtLast4 @thin</vh>
+<v t="EKR.20040624112329.3"><vh>@@thin</vh></v>
+<v t="EKR.20040624112329.4"><vh>Output</vh></v>
+</v>
+</v>
+<v t="ekr.20040327115825.1"><vh>batchModeTests</vh></v>
+<v t="ekr.20040303063549.45"><vh>colorizerTests</vh>
+<v t="ekr.20040303063549.46"><vh>Actionscript</vh></v>
+<v t="ekr.20040303063549.47"><vh>C</vh></v>
+<v t="ekr.20040303063549.48"><vh>C#</vh></v>
+<v t="ekr.20040401104620"><vh>css</vh></v>
+<v t="ekr.20040303063549.49"><vh>CWEB</vh>
+<v t="ekr.20040303063549.50"><vh>&lt;&lt; section ref &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20040303063549.51"><vh>elisp</vh></v>
+<v t="ekr.20040303063549.52"><vh>HTML1</vh></v>
+<v t="ekr.20040303063549.53"><vh>HTML2</vh></v>
+<v t="ekr.20040303063549.54"><vh>LaTex</vh></v>
+<v t="ekr.20040303063549.55"><vh>Mixed</vh></v>
+<v t="ekr.20040303063549.56"><vh>PHP</vh></v>
+<v t="ekr.20040303063549.57"><vh>Python1</vh></v>
+<v t="ekr.20040303063549.58"><vh>Python2</vh></v>
+<v t="ekr.20040401113911"><vh>rapidq</vh></v>
+<v t="ekr.20040303063549.59"><vh>Rebol</vh></v>
+<v t="ekr.20040401111417"><vh>shell</vh></v>
+<v t="ekr.20040303063549.60"><vh>wikiTest1</vh></v>
+<v t="ekr.20040303063549.61"><vh>wikiTest2</vh></v>
+<v t="ekr.20040303063549.62"><vh>wikiTest3</vh></v>
+</v>
+<v t="ekr.20040303063549.63"><vh>editBodyTests</vh>
+<v t="ekr.20040303063549.64"><vh>dedentBody</vh>
+<v t="ekr.20040303063549.65"><vh>before</vh></v>
+<v t="ekr.20040303063549.66"><vh>after</vh></v>
+<v t="ekr.20040303063549.67"><vh>selection</vh></v>
+</v>
+<v t="ekr.20040303063549.68"><vh>indentBody</vh>
+<v t="ekr.20040303063549.69"><vh>before</vh></v>
+<v t="ekr.20040303063549.70"><vh>after</vh></v>
+<v t="ekr.20040303063549.71"><vh>selection</vh></v>
+</v>
+<v t="ekr.20040303063549.72"><vh>extractSection</vh>
+<v t="ekr.20040303063549.73"><vh>before</vh></v>
+<v t="ekr.20040303063549.74"><vh>after</vh>
+<v t="ekr.20040303063549.75"><vh>&lt;&lt; section &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20040303063549.76"><vh>selection</vh></v>
+</v>
+</v>
+<v t="ekr.20040303063549.77"><vh>exportTests</vh>
+<v t="ekr.20040303063549.78"><vh>exportHeadlines</vh>
+<v t="ekr.20040303063549.79"><vh>dialog</vh></v>
+</v>
+<v t="ekr.20040303063549.80"><vh>flattenOutline</vh>
+<v t="ekr.20040303063549.81"><vh>dialog</vh></v>
+</v>
+<v t="ekr.20040303063549.82"><vh>weave</vh>
+<v t="ekr.20040303063549.83"><vh>dialog</vh></v>
+</v>
+<v t="ekr.20040303063549.84"><vh>outlineToNoweb</vh>
+<v t="ekr.20040303063549.85"><vh>dialog</vh></v>
+</v>
+<v t="ekr.20040303063549.86"><vh>outlineToCWEB</vh>
+<v t="ekr.20040303063549.87"><vh>dialog</vh></v>
+</v>
+<v t="ekr.20040303063549.88"><vh>removeSentinels</vh>
+<v t="ekr.20040303063549.89"><vh>dialog</vh></v>
+</v>
+</v>
+<v t="ekr.20040303063549.120"><vh>leoFileTests (revised)</vh></v>
+<v t="ekr.20040315202718.2"><vh>findCommandTests</vh></v>
+<v t="ekr.20040303063549.90"><vh>importTests</vh>
+<v t="ekr.20040303063549.91"><vh>importAtRoot</vh>
+<v t="ekr.20040303063549.92"><vh>dialog</vh></v>
+</v>
+<v t="ekr.20040303063549.93"><vh>importAtFile</vh>
+<v t="ekr.20040303063549.94"><vh>dialog</vh></v>
+</v>
+<v t="ekr.20040303063549.95"><vh>importNowebFiles</vh>
+<v t="ekr.20040303063549.96"><vh>dialog</vh></v>
+</v>
+<v t="ekr.20040303063549.97"><vh>importFlattenedOutline</vh>
+<v t="ekr.20040303063549.98"><vh>dialog</vh></v>
+</v>
+<v t="ekr.20040303063549.99"><vh>importCWEBFiles</vh>
+<v t="ekr.20040303063549.100"><vh>dialog</vh></v>
+</v>
+</v>
+<v t="ekr.20040303063549.101"><vh>outlineTests</vh>
+<v t="ekr.20040303063549.102"><vh>moveOutlineDown</vh>
+<v t="ekr.20040303063549.103"><vh>before</vh>
+<v t="ekr.20040303063549.104"><vh>a</vh></v>
+<v t="ekr.20040303063549.105"><vh>move</vh></v>
+<v t="ekr.20040303063549.106"><vh>b</vh></v>
+</v>
+<v t="ekr.20040303063549.107"><vh>after</vh>
+<v t="ekr.20040303063549.108"><vh>a</vh></v>
+<v t="ekr.20040303063549.109"><vh>b</vh></v>
+<v t="ekr.20040303063549.110"><vh>move</vh></v>
+</v>
+<v t="ekr.20040303063549.111"><vh>ref</vh>
+<v t="ekr.20040303063549.112"><vh>a</vh></v>
+<v t="ekr.20040303063549.113"><vh>move</vh></v>
+<v t="ekr.20040303063549.114"><vh>b</vh></v>
+</v>
+</v>
+<v t="ekr.20040303063549.115"><vh>moveOutlineLeft</vh></v>
+<v t="ekr.20040303063549.116"><vh>moveOutlineRight</vh></v>
+<v t="ekr.20040303063549.117"><vh>moveOutlineUp</vh></v>
+</v>
+<v t="ekr.20040303063549.118"><vh>pluginsTests</vh></v>
+<v t="ekr.20040303063549.119"><vh>positionTests</vh></v>
+<v t="ekr.20040303063549.2"><vh>reformatParagraphsTests</vh>
+<v t="ekr.20040303063549.3"><vh>testNoTrailingNewline</vh>
+<v t="ekr.20040303063549.4"><vh>before</vh></v>
+<v t="ekr.20040303063549.5"><vh>after</vh></v>
+</v>
+<v t="ekr.20040303063549.6"><vh>testTrailingNewline</vh>
+<v t="ekr.20040303063549.7"><vh>before</vh></v>
+<v t="ekr.20040303063549.8"><vh>after</vh></v>
+</v>
+<v t="ekr.20040303063549.9"><vh>testMixedLineLengths</vh>
+<v t="ekr.20040303063549.10"><vh>before</vh></v>
+<v t="ekr.20040303063549.11"><vh>after</vh></v>
+</v>
+<v t="ekr.20040303063549.12"><vh>testMixedLinesWithLeadingWS</vh>
+<v t="ekr.20040303063549.13"><vh>before</vh></v>
+<v t="ekr.20040303063549.14"><vh>after</vh></v>
+</v>
+<v t="ekr.20040303063549.15"><vh>testNoChangeRequired</vh>
+<v t="ekr.20040303063549.16"><vh>before</vh></v>
+<v t="ekr.20040303063549.17"><vh>after</vh></v>
+</v>
+<v t="ekr.20040303063549.18"><vh>testHonorLeadingWS</vh>
+<v t="ekr.20040303063549.19"><vh>before</vh></v>
+<v t="ekr.20040303063549.20"><vh>after</vh></v>
+</v>
+<v t="ekr.20040303063549.21"><vh>testHonorLeadingWSVar1</vh>
+<v t="ekr.20040303063549.22"><vh>before</vh></v>
+<v t="ekr.20040303063549.23"><vh>after</vh></v>
+</v>
+<v t="ekr.20040303063549.24"><vh>testSimpleHangingIndent</vh>
+<v t="ekr.20040303063549.25"><vh>before</vh></v>
+<v t="ekr.20040303063549.26"><vh>after</vh></v>
+</v>
+<v t="ekr.20040303063549.27"><vh>testSimpleHangingIndentVar1</vh>
+<v t="ekr.20040303063549.28"><vh>before</vh></v>
+<v t="ekr.20040303063549.29"><vh>after</vh></v>
+</v>
+<v t="ekr.20040303063549.30"><vh>testSimpleHangingIndentVar2</vh>
+<v t="ekr.20040303063549.31"><vh>before</vh></v>
+<v t="ekr.20040303063549.32"><vh>after</vh></v>
+</v>
+<v t="ekr.20040303063549.33"><vh>testMultiParagraph</vh>
+<v t="ekr.20040303063549.34"><vh>before</vh></v>
+<v t="ekr.20040303063549.35"><vh>after</vh></v>
+</v>
+<v t="ekr.20040303063549.36"><vh>testMultiParagraphWithList</vh>
+<v t="ekr.20040303063549.37"><vh>before</vh></v>
+<v t="ekr.20040303063549.38"><vh>after</vh></v>
+</v>
+<v t="ekr.20040303063549.39"><vh>testDirectiveBreaksParagraph</vh>
+<v t="ekr.20040303063549.40"><vh>before</vh></v>
+<v t="ekr.20040303063549.41"><vh>after</vh></v>
+</v>
+<v t="ekr.20040303063549.42"><vh>testWithLeadingWSOnEmptyLines</vh>
+<v t="ekr.20040303063549.43"><vh>before</vh></v>
+<v t="ekr.20040303063549.44"><vh>after</vh></v>
+</v>
+</v>
+<v t="ekr.20040303063549.125"><vh>Run all tests</vh></v>
+<v t="ekr.20040303080010"><vh>Run all non-file tests</vh></v>
+</v>
+</v>
+<v t="EKR.20040612095237"><vh>Prototypes of new commands</vh>
+<v t="ekr.20040402043516"><vh>A pretty printer for Leo</vh>
+<v t="ekr.20040402084155"><vh>prettyPrintNode</vh></v>
+<v t="ekr.20040402064301"><vh>class prettyPrinter</vh>
+<v t="ekr.20040402064301.1"><vh>__init__</vh></v>
+<v t="ekr.20040402093822"><vh>get</vh></v>
+<v t="ekr.20040402072335"><vh>put</vh></v>
+<v t="ekr.20040402081135"><vh>putOperator</vh></v>
+<v t="ekr.20040402080311"><vh>putToken</vh></v>
+<v t="ekr.20040402074431"><vh>putNormalToken</vh></v>
+<v t="ekr.20040402074431.1"><vh>dumpToken</vh></v>
+</v>
+</v>
+<v t="EKR.20040610201941"><vh>Check Syntax prototype</vh>
+<v t="EKR.20040610192622"><vh>Check Syntax script</vh></v>
+<v t="EKR.20040610192622.1"><vh>Check Syntax data</vh></v>
+</v>
+<v t="EKR.20040610201236"><vh>Tabnanny prototype</vh>
+<v t="EKR.20040610194209"><vh>TabNanny script</vh>
+<v t="EKR.20040610195543"><vh>checkString</vh></v>
+</v>
+<v t="EKR.20040610195543.1"><vh>tabnanny.py (reference only)</vh>
+<v t="EKR.20040610195543.2"><vh>&lt;&lt; tabnanny declarations &gt;&gt;</vh></v>
+<v t="EKR.20040610195543.3"><vh>errprint</vh></v>
+<v t="EKR.20040610195543.4"><vh>main</vh></v>
+<v t="EKR.20040610195543.5"><vh>class NannyNag</vh>
+<v t="EKR.20040610195543.6"><vh>__init__</vh></v>
+<v t="EKR.20040610195543.7"><vh>get_lineno</vh></v>
+<v t="EKR.20040610195543.8"><vh>get_msg</vh></v>
+<v t="EKR.20040610195543.9"><vh>get_line</vh></v>
+</v>
+<v t="EKR.20040610195543.10"><vh>check</vh></v>
+<v t="EKR.20040610195543.11"><vh>class Whitespace</vh>
+<v t="EKR.20040610195543.12"><vh>&lt;&lt; class Whitespace declarations &gt;&gt;</vh></v>
+<v t="EKR.20040610195543.13"><vh>__init__</vh></v>
+<v t="EKR.20040610195543.14"><vh>longest_run_of_spaces</vh></v>
+<v t="EKR.20040610195543.15"><vh>indent_level</vh></v>
+<v t="EKR.20040610195543.16"><vh>equal</vh></v>
+<v t="EKR.20040610195543.17"><vh>not_equal_witness</vh></v>
+<v t="EKR.20040610195543.18"><vh>less</vh></v>
+<v t="EKR.20040610195543.19"><vh>not_less_witness</vh></v>
+</v>
+<v t="EKR.20040610195543.20"><vh>format_witnesses</vh></v>
+<v t="EKR.20040610195543.21"><vh>process_tokens</vh></v>
+</v>
+<v t="EKR.20040610194209.1"><vh>TabNanny data</vh></v>
+</v>
+<v t="EKR.20040611083703"><vh>Using a generator instead of readLinesClass</vh></v>
 </v>
 <v t="EKR.20040623202054.1"><vh>Others...</vh>
 <v t="ekr.20040303071432"><vh>Mini tests, scripts &amp; experiments</vh>
@@ -427,471 +712,25 @@
 </v>
 </v>
 </v>
-<v t="EKR.20040612095237"><vh>Prototypes of new commands</vh>
-<v t="ekr.20040402043516"><vh>A pretty printer for Leo</vh>
-<v t="ekr.20040402084155"><vh>prettyPrintNode</vh></v>
-<v t="ekr.20040402064301"><vh>class prettyPrinter</vh>
-<v t="ekr.20040402064301.1"><vh>__init__</vh></v>
-<v t="ekr.20040402093822"><vh>get</vh></v>
-<v t="ekr.20040402072335"><vh>put</vh></v>
-<v t="ekr.20040402081135"><vh>putOperator</vh></v>
-<v t="ekr.20040402080311"><vh>putToken</vh></v>
-<v t="ekr.20040402074431"><vh>putNormalToken</vh></v>
-<v t="ekr.20040402074431.1"><vh>dumpToken</vh></v>
-</v>
-</v>
-<v t="EKR.20040610201941"><vh>Check Syntax prototype</vh>
-<v t="EKR.20040610192622"><vh>Check Syntax script</vh></v>
-<v t="EKR.20040610192622.1"><vh>Check Syntax data</vh></v>
-</v>
-<v t="EKR.20040610201236"><vh>Tabnanny prototype</vh>
-<v t="EKR.20040610194209"><vh>TabNanny script</vh>
-<v t="EKR.20040610195543"><vh>checkString</vh></v>
-</v>
-<v t="EKR.20040610195543.1"><vh>tabnanny.py (reference only)</vh>
-<v t="EKR.20040610195543.2"><vh>&lt;&lt; tabnanny declarations &gt;&gt;</vh></v>
-<v t="EKR.20040610195543.3"><vh>errprint</vh></v>
-<v t="EKR.20040610195543.4"><vh>main</vh></v>
-<v t="EKR.20040610195543.5"><vh>class NannyNag</vh>
-<v t="EKR.20040610195543.6"><vh>__init__</vh></v>
-<v t="EKR.20040610195543.7"><vh>get_lineno</vh></v>
-<v t="EKR.20040610195543.8"><vh>get_msg</vh></v>
-<v t="EKR.20040610195543.9"><vh>get_line</vh></v>
-</v>
-<v t="EKR.20040610195543.10"><vh>check</vh></v>
-<v t="EKR.20040610195543.11"><vh>class Whitespace</vh>
-<v t="EKR.20040610195543.12"><vh>&lt;&lt; class Whitespace declarations &gt;&gt;</vh></v>
-<v t="EKR.20040610195543.13"><vh>__init__</vh></v>
-<v t="EKR.20040610195543.14"><vh>longest_run_of_spaces</vh></v>
-<v t="EKR.20040610195543.15"><vh>indent_level</vh></v>
-<v t="EKR.20040610195543.16"><vh>equal</vh></v>
-<v t="EKR.20040610195543.17"><vh>not_equal_witness</vh></v>
-<v t="EKR.20040610195543.18"><vh>less</vh></v>
-<v t="EKR.20040610195543.19"><vh>not_less_witness</vh></v>
-</v>
-<v t="EKR.20040610195543.20"><vh>format_witnesses</vh></v>
-<v t="EKR.20040610195543.21"><vh>process_tokens</vh></v>
-</v>
-<v t="EKR.20040610194209.1"><vh>TabNanny data</vh></v>
-</v>
-<v t="EKR.20040611083703"><vh>Using a generator instead of readLinesClass</vh></v>
-</v>
 <v t="EKR.20040612150543"><vh>Test of better error messages in Execute Script command</vh>
 <v t="EKR.20040612215136"><vh>Contains error</vh></v>
 </v>
 <v t="EKR.20040613162717"><vh>Report newlines</vh></v>
 <v t="EKR.20040615070332"><vh>Test print</vh></v>
-<v t="EKR.20040622074004.1"><vh>a</vh>
+<v t="EKR.20040625110032"><vh>@ thin c:\prog\test\mixedCommentDelims.txt</vh>
+<v t="EKR.20040625110032.1"><vh>node 1</vh></v>
+<v t="EKR.20040625110032.2" a="E"><vh>node 2</vh>
+<v t="EKR.20040625110032.3"><vh>Node 3</vh></v>
+</v>
+</v>
+</v>
+<v t="EKR.20040622074004" a="E"><vh>Test of conflicting node defs</vh>
+<v t="EKR.20040622074004.1" a="TV"><vh>a</vh>
 <v t="EKR.20040622074004.2"><vh>b</vh></v>
 <v t="EKR.20040622074004.3"><vh>c</vh></v>
 </v>
-<v t="EKR.20040622074004"><vh>Test of conflicting node defs</vh>
-<v t="EKR.20040622102618"><vh>@thin c:\prog\test\cloneConflicts.txt</vh></v>
+<v t="EKR.20040622102618" a="E"><vh>@thin c:\prog\test\cloneConflicts.txt</vh></v>
 </v>
-<v t="ekr.20040303062846.2"><vh>leoTestOLD.py</vh>
-<v t="ekr.20040303062846.1"><vh>&lt;&lt; to do &gt;&gt;</vh></v>
-<v t="EKR.20040619133501"><vh>&lt;&lt; leoTest imports &gt;&gt;</vh></v>
-<v t="ekr.20040303062846.3"><vh> class testUtils</vh>
-<v t="ekr.20040303062846.4"><vh>compareOutlines</vh></v>
-<v t="EKR.20040621095514"><vh>Finding nodes...</vh>
-<v t="ekr.20040303062846.5"><vh>fundChildrenOf</vh></v>
-<v t="EKR.20040621095514.1"><vh>findSubnodesOf TO DO: Replace this</vh></v>
-<v t="ekr.20040303062846.6"><vh>findNodeInRootTree</vh></v>
-<v t="EKR.20040621095514.2"><vh>findNodeInTree</vh></v>
-<v t="EKR.20040621095514.3"><vh>findNodeAnywhere</vh></v>
-<v t="EKR.20040621095514.4"><vh>findUnitTestNode</vh></v>
-</v>
-<v t="EKR.20040621101000"><vh>numberOfClonesInOutline</vh></v>
-<v t="ekr.20040303062846.7"><vh>numberOfNodesInOutline</vh></v>
-<v t="ekr.20040303062846.8"><vh>replaceOutline</vh></v>
-</v>
-<v t="ekr.20040303062846.10"><vh> fail</vh></v>
-<v t="EKR.20040623201302"><vh>atFile tests</vh>
-<v t="EKR.20040623200709.17"><vh>makeAtFileSuite</vh></v>
-<v t="EKR.20040621080031"><vh>class atFile</vh>
-<v t="EKR.20040621080031.3"><vh>__init__</vh></v>
-<v t="EKR.20040621155439"><vh>compareDerivedFiles (Not used)</vh></v>
-<v t="EKR.20040621080031.4"><vh>runTest</vh></v>
-<v t="EKR.20040621080031.5"><vh>setUp</vh></v>
-</v>
-</v>
-<v t="ekr.20040327115825"><vh>Batch mode tests</vh>
-<v t="ekr.20040327115832.1"><vh> makeBatchModeSuite</vh></v>
-<v t="ekr.20040327115832.2"><vh>class batchModeTestCase</vh>
-<v t="ekr.20040327120228"><vh>test_1</vh></v>
-</v>
-</v>
-<v t="ekr.20040303062846.11"><vh>Colorizer tests</vh>
-<v t="ekr.20040303062846.12"><vh> makeColorSuite</vh></v>
-<v t="ekr.20040303062846.13"><vh>class colorTestCase</vh>
-<v t="ekr.20040303062846.14"><vh>__init__</vh></v>
-<v t="ekr.20040303062846.15"><vh>color</vh></v>
-<v t="ekr.20040303062846.16"><vh>setUp</vh></v>
-<v t="ekr.20040303062846.17"><vh>tearDown</vh></v>
-<v t="ekr.20040303062846.18"><vh>runTest</vh></v>
-</v>
-</v>
-<v t="ekr.20040303062846.19"><vh>Edit body tests</vh>
-<v t="ekr.20040303062846.20"><vh> makeEditBodySuite</vh></v>
-<v t="ekr.20040303062846.21"><vh>class editBodyTestCase</vh>
-<v t="ekr.20040303062846.22"><vh>__init__</vh></v>
-<v t="ekr.20040303062846.23"><vh>editBody</vh>
-<v t="EKR.20040527145121"><vh>&lt;&lt; compare new, ref trees &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20040303062846.24"><vh>tearDown</vh></v>
-<v t="ekr.20040303062846.25"><vh>setUp</vh></v>
-<v t="ekr.20040303062846.26"><vh>runTest</vh></v>
-</v>
-</v>
-<v t="ekr.20040315202201"><vh>Find Command tests</vh>
-<v t="ekr.20040315202250"><vh> makeFindCommandSuite</vh></v>
-<v t="ekr.20040315202314"><vh>class findCommandTestCase</vh>
-<v t="ekr.20040315202314.1"><vh>setUp</vh></v>
-<v t="ekr.20040315202347"><vh>testFindCommand</vh></v>
-<v t="ekr.20040315202718"><vh>testFindWordCommand</vh></v>
-<v t="ekr.20040315202718.1"><vh>testFindIgnoreCaseCommand</vh></v>
-</v>
-</v>
-<v t="ekr.20040303062846.27"><vh>Import/Export tests</vh>
-<v t="ekr.20040303062846.28"><vh>makeImportExportSuite</vh></v>
-<v t="ekr.20040303062846.29"><vh>class importExportTestCase</vh>
-<v t="ekr.20040303062846.30"><vh>__init__</vh></v>
-<v t="ekr.20040303062846.31"><vh>importExport</vh></v>
-<v t="ekr.20040303062846.32"><vh>runTest</vh></v>
-<v t="ekr.20040303062846.33"><vh>setUp</vh></v>
-<v t="ekr.20040303062846.34"><vh>shortDescription</vh></v>
-<v t="ekr.20040303062846.35"><vh>tearDown</vh></v>
-</v>
-</v>
-<v t="ekr.20040303062846.36"><vh>LeoFiles tests</vh>
-<v t="ekr.20040303062846.37"><vh>makeLeoFilesSuite</vh></v>
-<v t="ekr.20040303062846.38"><vh>class leoFileTestCase</vh>
-<v t="ekr.20040303062846.39"><vh>__init__</vh></v>
-<v t="ekr.20040303062846.40"><vh>runTest</vh></v>
-<v t="ekr.20040303062846.41"><vh>setUp</vh></v>
-<v t="ekr.20040303062846.42"><vh>tearDown</vh></v>
-</v>
-</v>
-<v t="ekr.20040303062846.63"><vh>Outline tests (tests undo)</vh>
-<v t="ekr.20040303062846.64"><vh> makeOutlineSuite</vh></v>
-<v t="ekr.20040303062846.65"><vh>class outlineTestCase</vh>
-<v t="ekr.20040303062846.66"><vh>__init__</vh></v>
-<v t="ekr.20040303062846.67"><vh>outlineCommand</vh></v>
-<v t="ekr.20040303062846.68"><vh>runTest</vh></v>
-<v t="ekr.20040303062846.69"><vh>setUp</vh></v>
-<v t="ekr.20040303062846.70"><vh>tearDown</vh></v>
-</v>
-</v>
-<v t="ekr.20040303062846.72"><vh>Plugin tests</vh>
-<v t="ekr.20040303062846.71"><vh> makePluginsSuite</vh></v>
-<v t="ekr.20040303062846.73"><vh>class pluginTestCase</vh>
-<v t="ekr.20040303062846.74"><vh>__init__</vh></v>
-<v t="ekr.20040303062846.75"><vh>pluginTest</vh></v>
-<v t="ekr.20040303062846.76"><vh>runTest</vh></v>
-<v t="ekr.20040303062846.77"><vh>setUp</vh></v>
-<v t="ekr.20040303062846.78"><vh>shortDescription</vh></v>
-<v t="ekr.20040303062846.79"><vh>tearDown</vh></v>
-</v>
-</v>
-<v t="ekr.20040303063644"><vh>Position tests</vh>
-<v t="ekr.20040303064013"><vh> makePositionSuite</vh></v>
-<v t="ekr.20040303063118"><vh>class positionTestCase</vh>
-<v t="ekr.20040303063118.4"><vh>setUp</vh></v>
-<v t="ekr.20040309105731"><vh>testComparisons</vh></v>
-<v t="ekr.20040323163413"><vh>testThatClonesShareSubtrees</vh></v>
-<v t="ekr.20040312101853"><vh>Consistency tests...</vh>
-<v t="ekr.20040309101454.15"><vh>testConsistencyOfAllNodesThreadNext</vh></v>
-<v t="ekr.20040309101454.17"><vh>testConsistencyOfFirstChildAndChildrenIter</vh></v>
-<v t="ekr.20040309101454.13"><vh>testConsistencyOfLevel</vh></v>
-<v t="ekr.20040303064020.5"><vh>testConsistencyOfNextBack</vh></v>
-<v t="ekr.20040309101454.16"><vh>testConsistencyOfParentAndParentsIter</vh></v>
-<v t="ekr.20040309101454.14"><vh>testConsistencyOfParentChild</vh></v>
-<v t="ekr.20040303064020.7"><vh>testConsistencyOfThreadBackNext</vh></v>
-<v t="ekr.20040323163643"><vh>testConsistencyOfVnodeListAndParents</vh></v>
-<v t="ekr.20040303091606"><vh>testHasNextBack</vh></v>
-<v t="ekr.20040303092153"><vh>testHasParentChild</vh></v>
-<v t="ekr.20040303092153.1"><vh>testHasThreadNextBack</vh></v>
-<v t="ekr.20040303064020.6"><vh>testVnodeList</vh></v>
-</v>
-</v>
-</v>
-<v t="ekr.20040303062846.80"><vh>Reformat Paragraph tests</vh>
-<v t="ekr.20040303062846.81"><vh>makeReformatParagraphSuite</vh></v>
-<v t="ekr.20040303062846.82"><vh>class reformatParagraphTestCase</vh>
-<v t="ekr.20040303062846.83"><vh>setUp</vh></v>
-<v t="ekr.20040303062846.84"><vh>tearDown</vh></v>
-<v t="ekr.20040303062846.85"><vh>testNoTrailingNewline</vh></v>
-<v t="ekr.20040303062846.86"><vh>testTrailingNewline</vh></v>
-<v t="ekr.20040303062846.87"><vh>testMixedLineLengths</vh></v>
-<v t="ekr.20040303062846.88"><vh>testMixedLinesWithLeadingWS</vh></v>
-<v t="ekr.20040303062846.89"><vh>testNoChangeRequired</vh></v>
-<v t="ekr.20040303062846.90"><vh>testHonorLeadingWS</vh></v>
-<v t="ekr.20040303062846.91"><vh>testHonorLeadingWSVar1</vh></v>
-<v t="ekr.20040303062846.92"><vh>testSimpleHangingIndent</vh></v>
-<v t="ekr.20040303062846.93"><vh>testSimpleHangingIndentVar1</vh></v>
-<v t="ekr.20040303062846.94"><vh>testSimpleHangingIndentVar2</vh></v>
-<v t="ekr.20040303062846.95"><vh>testMultiParagraph</vh></v>
-<v t="ekr.20040303062846.96"><vh>testMultiParagraphWithList</vh></v>
-<v t="ekr.20040303062846.97"><vh>testDirectiveBreaksParagraph</vh></v>
-<v t="ekr.20040303062846.98"><vh>testWithLeadingWSOnEmptyLines</vh></v>
-<v t="ekr.20040303062846.99"><vh>singleParagraphTest</vh></v>
-<v t="ekr.20040303062846.100"><vh>checkPosition</vh></v>
-<v t="ekr.20040303062846.101"><vh>checkText</vh></v>
-<v t="ekr.20040303062846.102"><vh>copyBeforeToTemp</vh></v>
-<v t="ekr.20040303062846.103"><vh>getCaseDataNodes</vh></v>
-<v t="ekr.20040303062846.104"><vh>getRowCol</vh></v>
-</v>
-</v>
-</v>
-<v t="EKR.20040623213443"><vh>Other atFile test cases</vh>
-<v t="EKR.20040623201322.13"><vh>NOT YET test @asis plain text</vh>
-<v t="EKR.20040623201322.14"><vh>@@asis</vh></v>
-<v t="EKR.20040623201322.15"><vh>Output</vh></v>
-</v>
-<v t="EKR.20040623201322.16"><vh>NOT YET test @asis ignored references, directives</vh>
-<v t="EKR.20040623201322.17"><vh>@@asis</vh></v>
-<v t="EKR.20040623201322.18"><vh>output</vh></v>
-</v>
-</v>
-<v t="EKR.20040623200709.20"><vh>compareDerivedFiles (Not used)</vh></v>
-</v>
-<v t="EKR.20040619133116" a="TV"><vh>Unit testing...</vh>
-<v t="ekr.20040327114250" tnodeList="ekr.20040327114250"><vh>@file c:\prog\test\unittest\batchTest.py</vh></v>
-<v t="EKR.20040623200709"><vh>@thin ../src/leoTest.py</vh></v>
-<v t="ekr.20040303063549"><vh>Unit test scripts (Must be located here)</vh>
-<v t="ekr.20040126105605"><vh>cloneTestData (not used yet)</vh>
-<v t="ekr.20040302092753"><vh>aa</vh></v>
-<v t="ekr.20040126105605.2"><vh>a</vh>
-<v t="ekr.20040126105605.3"><vh>b</vh>
-<v t="ekr.20040301191933"><vh>c</vh>
-<v t="ekr.20040302092753.1"><vh>c2</vh>
-<v t="ekr.20040302092753.2"><vh>c3</vh></v>
-<v t="ekr.20040302092753.3"><vh>c4</vh></v>
-</v>
-</v>
-</v>
-<v t="ekr.20040126105605.3"><vh>b</vh>
-<v t="ekr.20040301191933"><vh>c</vh>
-<v t="ekr.20040302092753.1"><vh>c2</vh>
-<v t="ekr.20040302092753.2"><vh>c3</vh></v>
-<v t="ekr.20040302092753.3"><vh>c4</vh></v>
-</v>
-</v>
-</v>
-</v>
-<v t="ekr.20040301191933.1"><vh>d</vh>
-<v t="ekr.20040126105605.2"><vh>a</vh>
-<v t="ekr.20040126105605.3"><vh>b</vh>
-<v t="ekr.20040301191933"><vh>c</vh>
-<v t="ekr.20040302092753.1"><vh>c2</vh>
-<v t="ekr.20040302092753.2"><vh>c3</vh></v>
-<v t="ekr.20040302092753.3"><vh>c4</vh></v>
-</v>
-</v>
-</v>
-<v t="ekr.20040126105605.3"><vh>b</vh>
-<v t="ekr.20040301191933"><vh>c</vh>
-<v t="ekr.20040302092753.1"><vh>c2</vh>
-<v t="ekr.20040302092753.2"><vh>c3</vh></v>
-<v t="ekr.20040302092753.3"><vh>c4</vh></v>
-</v>
-</v>
-</v>
-</v>
-</v>
-<v t="ekr.20040301191933.2"><vh>e</vh></v>
-<v t="ekr.20040302092753.4"><vh>z</vh></v>
-</v>
-<v t="ekr.20040303063549.1"><vh>tempNode</vh></v>
-<v t="EKR.20040621100553"><vh>@  file c:\prog\test\tempOutput.txt</vh></v>
-<v t="EKR.20040619134504" a="M"><vh>atFileTests</vh>
-<v t="EKR.20040624112329"><vh>Script to create expected output</vh></v>
-<v t="EKR.20040624103339.1"><vh>testAtLast1 no newline</vh>
-<v t="EKR.20040624103339.2"><vh>@@file</vh></v>
-<v t="EKR.20040624103339.3"><vh>Output</vh></v>
-</v>
-<v t="EKR.20040623201322.4"><vh>testAtLast2 one newline</vh>
-<v t="EKR.20040624111917"><vh>@@file</vh></v>
-<v t="EKR.20040624111917.1"><vh>Output</vh></v>
-</v>
-<v t="EKR.20040623201322.7"><vh>testAtLast3 two newlines</vh>
-<v t="EKR.20040624112329.1"><vh>@@file</vh></v>
-<v t="EKR.20040624112329.2"><vh>Output</vh></v>
-</v>
-<v t="EKR.20040623201322.10"><vh>testAtLast4 @thin</vh>
-<v t="EKR.20040624112329.3"><vh>@@thin</vh></v>
-<v t="EKR.20040624112329.4"><vh>Output</vh></v>
-</v>
-</v>
-<v t="ekr.20040327115825.1"><vh>batchModeTests</vh></v>
-<v t="ekr.20040303063549.45"><vh>colorizerTests</vh>
-<v t="ekr.20040303063549.46"><vh>Actionscript</vh></v>
-<v t="ekr.20040303063549.47"><vh>C</vh></v>
-<v t="ekr.20040303063549.48"><vh>C#</vh></v>
-<v t="ekr.20040401104620"><vh>css</vh></v>
-<v t="ekr.20040303063549.49"><vh>CWEB</vh>
-<v t="ekr.20040303063549.50"><vh>&lt;&lt; section ref &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20040303063549.51"><vh>elisp</vh></v>
-<v t="ekr.20040303063549.52"><vh>HTML1</vh></v>
-<v t="ekr.20040303063549.53"><vh>HTML2</vh></v>
-<v t="ekr.20040303063549.54"><vh>LaTex</vh></v>
-<v t="ekr.20040303063549.55"><vh>Mixed</vh></v>
-<v t="ekr.20040303063549.56"><vh>PHP</vh></v>
-<v t="ekr.20040303063549.57"><vh>Python1</vh></v>
-<v t="ekr.20040303063549.58"><vh>Python2</vh></v>
-<v t="ekr.20040401113911"><vh>rapidq</vh></v>
-<v t="ekr.20040303063549.59"><vh>Rebol</vh></v>
-<v t="ekr.20040401111417"><vh>shell</vh></v>
-<v t="ekr.20040303063549.60"><vh>wikiTest1</vh></v>
-<v t="ekr.20040303063549.61"><vh>wikiTest2</vh></v>
-<v t="ekr.20040303063549.62"><vh>wikiTest3</vh></v>
-</v>
-<v t="ekr.20040303063549.63"><vh>editBodyTests</vh>
-<v t="ekr.20040303063549.64"><vh>dedentBody</vh>
-<v t="ekr.20040303063549.65"><vh>before</vh></v>
-<v t="ekr.20040303063549.66"><vh>after</vh></v>
-<v t="ekr.20040303063549.67"><vh>selection</vh></v>
-</v>
-<v t="ekr.20040303063549.68"><vh>indentBody</vh>
-<v t="ekr.20040303063549.69"><vh>before</vh></v>
-<v t="ekr.20040303063549.70"><vh>after</vh></v>
-<v t="ekr.20040303063549.71"><vh>selection</vh></v>
-</v>
-<v t="ekr.20040303063549.72"><vh>extractSection</vh>
-<v t="ekr.20040303063549.73"><vh>before</vh></v>
-<v t="ekr.20040303063549.74"><vh>after</vh>
-<v t="ekr.20040303063549.75"><vh>&lt;&lt; section &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20040303063549.76"><vh>selection</vh></v>
-</v>
-</v>
-<v t="ekr.20040303063549.77"><vh>exportTests</vh>
-<v t="ekr.20040303063549.78"><vh>exportHeadlines</vh>
-<v t="ekr.20040303063549.79"><vh>dialog</vh></v>
-</v>
-<v t="ekr.20040303063549.80"><vh>flattenOutline</vh>
-<v t="ekr.20040303063549.81"><vh>dialog</vh></v>
-</v>
-<v t="ekr.20040303063549.82"><vh>weave</vh>
-<v t="ekr.20040303063549.83"><vh>dialog</vh></v>
-</v>
-<v t="ekr.20040303063549.84"><vh>outlineToNoweb</vh>
-<v t="ekr.20040303063549.85"><vh>dialog</vh></v>
-</v>
-<v t="ekr.20040303063549.86"><vh>outlineToCWEB</vh>
-<v t="ekr.20040303063549.87"><vh>dialog</vh></v>
-</v>
-<v t="ekr.20040303063549.88"><vh>removeSentinels</vh>
-<v t="ekr.20040303063549.89"><vh>dialog</vh></v>
-</v>
-</v>
-<v t="ekr.20040303063549.120"><vh>leoFileTests (revised)</vh></v>
-<v t="ekr.20040315202718.2"><vh>findCommandTests</vh></v>
-<v t="ekr.20040303063549.90"><vh>importTests</vh>
-<v t="ekr.20040303063549.91"><vh>importAtRoot</vh>
-<v t="ekr.20040303063549.92"><vh>dialog</vh></v>
-</v>
-<v t="ekr.20040303063549.93"><vh>importAtFile</vh>
-<v t="ekr.20040303063549.94"><vh>dialog</vh></v>
-</v>
-<v t="ekr.20040303063549.95"><vh>importNowebFiles</vh>
-<v t="ekr.20040303063549.96"><vh>dialog</vh></v>
-</v>
-<v t="ekr.20040303063549.97"><vh>importFlattenedOutline</vh>
-<v t="ekr.20040303063549.98"><vh>dialog</vh></v>
-</v>
-<v t="ekr.20040303063549.99"><vh>importCWEBFiles</vh>
-<v t="ekr.20040303063549.100"><vh>dialog</vh></v>
-</v>
-</v>
-<v t="ekr.20040303063549.101"><vh>outlineTests</vh>
-<v t="ekr.20040303063549.102"><vh>moveOutlineDown</vh>
-<v t="ekr.20040303063549.103"><vh>before</vh>
-<v t="ekr.20040303063549.104"><vh>a</vh></v>
-<v t="ekr.20040303063549.105"><vh>move</vh></v>
-<v t="ekr.20040303063549.106"><vh>b</vh></v>
-</v>
-<v t="ekr.20040303063549.107"><vh>after</vh>
-<v t="ekr.20040303063549.108"><vh>a</vh></v>
-<v t="ekr.20040303063549.109"><vh>b</vh></v>
-<v t="ekr.20040303063549.110"><vh>move</vh></v>
-</v>
-<v t="ekr.20040303063549.111"><vh>ref</vh>
-<v t="ekr.20040303063549.112"><vh>a</vh></v>
-<v t="ekr.20040303063549.113"><vh>move</vh></v>
-<v t="ekr.20040303063549.114"><vh>b</vh></v>
-</v>
-</v>
-<v t="ekr.20040303063549.115"><vh>moveOutlineLeft</vh></v>
-<v t="ekr.20040303063549.116"><vh>moveOutlineRight</vh></v>
-<v t="ekr.20040303063549.117"><vh>moveOutlineUp</vh></v>
-</v>
-<v t="ekr.20040303063549.118"><vh>pluginsTests</vh></v>
-<v t="ekr.20040303063549.119"><vh>positionTests</vh></v>
-<v t="ekr.20040303063549.2"><vh>reformatParagraphsTests</vh>
-<v t="ekr.20040303063549.3"><vh>testNoTrailingNewline</vh>
-<v t="ekr.20040303063549.4"><vh>before</vh></v>
-<v t="ekr.20040303063549.5"><vh>after</vh></v>
-</v>
-<v t="ekr.20040303063549.6"><vh>testTrailingNewline</vh>
-<v t="ekr.20040303063549.7"><vh>before</vh></v>
-<v t="ekr.20040303063549.8"><vh>after</vh></v>
-</v>
-<v t="ekr.20040303063549.9"><vh>testMixedLineLengths</vh>
-<v t="ekr.20040303063549.10"><vh>before</vh></v>
-<v t="ekr.20040303063549.11"><vh>after</vh></v>
-</v>
-<v t="ekr.20040303063549.12"><vh>testMixedLinesWithLeadingWS</vh>
-<v t="ekr.20040303063549.13"><vh>before</vh></v>
-<v t="ekr.20040303063549.14"><vh>after</vh></v>
-</v>
-<v t="ekr.20040303063549.15"><vh>testNoChangeRequired</vh>
-<v t="ekr.20040303063549.16"><vh>before</vh></v>
-<v t="ekr.20040303063549.17"><vh>after</vh></v>
-</v>
-<v t="ekr.20040303063549.18"><vh>testHonorLeadingWS</vh>
-<v t="ekr.20040303063549.19"><vh>before</vh></v>
-<v t="ekr.20040303063549.20"><vh>after</vh></v>
-</v>
-<v t="ekr.20040303063549.21"><vh>testHonorLeadingWSVar1</vh>
-<v t="ekr.20040303063549.22"><vh>before</vh></v>
-<v t="ekr.20040303063549.23"><vh>after</vh></v>
-</v>
-<v t="ekr.20040303063549.24"><vh>testSimpleHangingIndent</vh>
-<v t="ekr.20040303063549.25"><vh>before</vh></v>
-<v t="ekr.20040303063549.26"><vh>after</vh></v>
-</v>
-<v t="ekr.20040303063549.27"><vh>testSimpleHangingIndentVar1</vh>
-<v t="ekr.20040303063549.28"><vh>before</vh></v>
-<v t="ekr.20040303063549.29"><vh>after</vh></v>
-</v>
-<v t="ekr.20040303063549.30"><vh>testSimpleHangingIndentVar2</vh>
-<v t="ekr.20040303063549.31"><vh>before</vh></v>
-<v t="ekr.20040303063549.32"><vh>after</vh></v>
-</v>
-<v t="ekr.20040303063549.33"><vh>testMultiParagraph</vh>
-<v t="ekr.20040303063549.34"><vh>before</vh></v>
-<v t="ekr.20040303063549.35"><vh>after</vh></v>
-</v>
-<v t="ekr.20040303063549.36"><vh>testMultiParagraphWithList</vh>
-<v t="ekr.20040303063549.37"><vh>before</vh></v>
-<v t="ekr.20040303063549.38"><vh>after</vh></v>
-</v>
-<v t="ekr.20040303063549.39"><vh>testDirectiveBreaksParagraph</vh>
-<v t="ekr.20040303063549.40"><vh>before</vh></v>
-<v t="ekr.20040303063549.41"><vh>after</vh></v>
-</v>
-<v t="ekr.20040303063549.42"><vh>testWithLeadingWSOnEmptyLines</vh>
-<v t="ekr.20040303063549.43"><vh>before</vh></v>
-<v t="ekr.20040303063549.44"><vh>after</vh></v>
-</v>
-</v>
-<v t="ekr.20040303063549.125"><vh>Run all tests</vh></v>
-<v t="ekr.20040303080010"><vh>Run all non-file tests</vh></v>
-</v>
-</v>
-<v t="EKR.20040624085716" tnodeList="EKR.20040624085716"><vh>@file c:\prog\test\writeMissing.txt</vh></v>
 </vnodes>
 <tnodes>
 <t tx="EKR.20040424065452">import leoGlobals as g
@@ -2227,39 +2066,6 @@ if 0: # subtree of root node:
 if 0: # child1's tree.  child2 should not be included.
     for v in child.vnodes_iter(): print v
     for t in child.tnodes_iter(): print t</t>
-<t tx="EKR.20040527145121">temp_v = self.temp_v ; after = self.after
-
-# Compare the computed result to the reference result.
-new_text = temp_v.bodyString().rstrip()
-ref_text = after.bodyString().rstrip()
-
-if new_text != ref_text:
-    print ; print "test failed", commandName
-    g.trace("new",new_text)
-    g.trace("ref",ref_text)
-    
-assert(new_text == ref_text)
-
-# Compare subtrees.
-
-assert(temp_v.numberOfChildren() == after.numberOfChildren())
-
-ref_child = after.firstChild()
-new_child = temp_v.firstChild()
-
-while new_child:
-    new_text = new_child.bodyString().rstrip()
-    ref_text = ref_child.bodyString().rstrip()
-
-    if new_text != ref_text:
-        print ; print "test failed", commandName
-        g.trace("new",new_text)
-        g.trace("ref",ref_text)
-    
-    assert(new_text == ref_text)
-    
-    new_child = new_child.next()
-    ref_child = ref_child.next()</t>
 <t tx="EKR.20040527154402">line 1
 
 &lt;&lt; sec &gt;&gt;
@@ -2394,7 +2200,7 @@ a   b   c   d
 aa  b   c   d
 aaa b   c   d
 end</t>
-<t tx="EKR.20040604143253"></t>
+<t tx="EKR.20040604143253">@ignore</t>
 <t tx="EKR.20040604170105">import leoGlobals as g
 import os
 
@@ -2413,7 +2219,7 @@ __add__
 def test(a,b): pass
 
 v.copyTree(self,root)</t>
-<t tx="EKR.20040606204316"></t>
+<t tx="EKR.20040606204316">@ignore</t>
 <t tx="EKR.20040608092841">@tabwidth -4
 
     a
@@ -2967,20 +2773,6 @@ except IOError:
 <t tx="EKR.20040615144735"></t>
 <t tx="EKR.20040615144810">d</t>
 <t tx="EKR.20040619133116"></t>
-<t tx="EKR.20040619133501">
-import leoGlobals as g
-
-import leoColor
-import leoCommands
-import leoFrame
-import leoGui
-import leoNodes
-import leoTkinterGui
-
-import glob
-import os
-import sys
-import unittest</t>
 <t tx="EKR.20040619134504">import unittest
 import leoTest
 import leoGlobals as g
@@ -2989,239 +2781,17 @@ reload(leoTest)
 # We need real nodes to pass to the tests.
 suite = leoTest.makeLeoFilesSuite("atFileTests")
 unittest.TextTestRunner().run(suite)</t>
-<t tx="EKR.20040621080031">class atFileTestCase(unittest.TestCase):
-    
-    """Data-driven unit tests to test .leo files."""
-    
-    @others</t>
-<t tx="EKR.20040621080031.3">def __init__ (self,c,atatNode,outputNode):
-    
-    # Init the base class.
-    unittest.TestCase.__init__(self)
-
-    self.c = c
-    self.atatNode = atatNode.copy()
-    self.outputNode = outputNode.copy()
-    self.type = None</t>
-<t tx="EKR.20040621080031.4">def runTest(self):
-    
-    """Run a test of @file, @thin, etc."""
-
-    at = self.c.atFileCommands
-    root = self.atatNode
-    
-    thinFile = self.type == "thin"
-    nosentinels = self.type in ("asis","nosent")
-    
-    assert (self.type in ("file","thin","nosent","noref","asis"))
-    
-    if self.type == "asis":
-        assert 0, "asis not ready yet"
-        pass # Not ready yet.
-        at.asisWrite(p,toString=toString)
-        result = "asis tests not ready yet"
-    else:
-        at.write(root,thinFile=thinFile,nosentinels=nosentinels,toString=True)
-        result = g.toUnicode(at.new_df.stringOutput,"ascii")
-
-    expected = self.outputNode.bodyString()
-    
-    if result == expected:
-        if 0:
-            print len(result),len(expected)
-            print "result file == expected file"
-    else:
-        print ; print '-' * 20
-        print "result..."
-        for line in g.splitLines(result):
-            print "%3d" % len(line),repr(line)
-        print '-' * 20
-        print "expected..."
-        for line in g.splitLines(expected):
-            print "%3d" % len(line),repr(line)
-        print '-' * 20
-    
-    assert result==expected, "expected does not match result."</t>
-<t tx="EKR.20040621080031.5">def setUp(self):
-    
-    h = self.atatNode.headString().strip().lower()
-    assert(g.match(h,0,"@@"))
-
-    self.type = None ;  i = 2
-    for type in ("file","thin","nosent","noref","asis"):
-        if g.match(h,i,type):
-            self.type = type
-            break</t>
-<t tx="EKR.20040621095514"></t>
-<t tx="EKR.20040621095514.1">def findSubnodesOf (self,headline):
-    
-    u = self ; c = g.top() ; v = c.currentVnode()
-    
-    root = u.findRootNode(v)
-    parent = u.findNodeInTree(root,headline)
-    
-    v = parent.firstChild()
-    vList = []
-    after = parent.nodeAfterTree()
-    while v and v != after:
-        vList.append(v)
-        v = v.threadNext()
-
-    return vList</t>
-<t tx="EKR.20040621095514.2">def findNodeInTree(self,p,headline):
-
-    """Search for a node in p's tree matching the given headline."""
-    
-    c = p.c
-    for p in p.subtree_iter():
-        if p.headString().strip().lower() == headline.strip().lower():
-            return p
-    return c.nullPosition()</t>
-<t tx="EKR.20040621095514.3">def findNodeAnywhere(self,c,headline):
-    
-    for p in c.allNodes_iter():
-        if p.headString().strip() == headline.strip():
-            return p.copy()
-    return c.nullPosition()</t>
-<t tx="EKR.20040621095514.4">def findUnitTestNode (self,unitTestName):
-    
-    c = g.top() ; root = c.rootPosition()
-    
-    for p in root.self_and_siblings_iter():
-        h = p.headString().lower()
-        if g.match(h,0,"unit testing"):
-            break
-
-    if p:
-        for p in p.children_iter():
-            h = p.headString()
-            if g.match(h,0,"Unit test scripts"):
-                break
-                
-    if p:
-        for p in p.children_iter():
-            h = p.headString()
-            if g.match(h,0,unitTestName):
-                return p
-
-    return c.nullPosition()</t>
 <t tx="EKR.20040621100553">Line 1
 
 @last last line 1: no newline</t>
-<t tx="EKR.20040621101000">def numberOfClonesInOutline (self):
-    
-    """Returns the number of cloned nodes in an outline"""
-
-    c = g.top() ; n = 0
-    for p in c.allNodes_iter():
-        if v.isCloned():
-            n += 1
-    return n</t>
-<t tx="EKR.20040621155439">def compareDerivedFiles (self,result,expected):
-    
-    lines1 = g.splitLines(result)
-    lines2 = g.splitLines(expected)
-    
-    kinds = ("@file","@thin","@nosent","@noref","@asis")
-    
-    if len(lines1) != len(lines2):
-        print "length mismatch"
-        return False
-        
-    for i in xrange(len(lines1)):
-        line1 = lines1[i]
-        line2 = lines2[i]
-        if line1 == line2:
-            continue
-        for kind in kinds:
-            found = False
-            if (
-                line1.find("node:@%s" % kind) &gt; -1 and
-                line2.find("node:%s" % kind) &gt; -1
-            ):
-                found = True ; break
-        if found: continue
-        else: return False
-
-    return True</t>
 <t tx="EKR.20040622074004"></t>
 <t tx="EKR.20040622074004.1"></t>
-<t tx="EKR.20040622074004.2">node b, line 1 (changed 6)</t>
+<t tx="EKR.20040622074004.2">node b, line 1 (changed 11)</t>
 <t tx="EKR.20040622074004.3"></t>
-<t tx="EKR.20040623200709.17">@
-
-For each @@thin, @@file, @noref, @nosent, @asis node found under test_xxx, do the following:
-    - Simulate the write to a file.
-    - Compare the results with the contents of the output node.
-@c
-
-def makeAtFileSuite(testParentHeadline,unused=None):
-    
-    """Create a .leo file test for every descendant of testParentHeadline.."""
-    
-    u = testUtils() ; c = g.top() ; current = c.currentPosition()
-
-    # Create the suite and add all test cases.
-    suite = unittest.makeSuite(unittest.TestCase)
-    
-    p = u.findUnitTestNode("atFileTests")
-    for child in p.children_iter():
-        h = child.headString().strip()
-        if g.match(h,0,"test"):
-            output = u.findNodeInTree(child,"output")
-            assert(output)
-            for child2 in child.children_iter():
-                h2 = child2.headString().strip()
-                if g.match(h2,0,"@@"):
-                    test = atFileTestCase(c,child2,output)
-                    suite.addTest(test)
-    return suite
-</t>
-<t tx="EKR.20040623200709.20">def compareDerivedFiles (self,result,expected):
-    
-    lines1 = g.splitLines(result)
-    lines2 = g.splitLines(expected)
-    
-    kinds = ("@file","@thin","@nosent","@noref","@asis")
-    
-    if len(lines1) != len(lines2):
-        print "length mismatch"
-        return False
-        
-    for i in xrange(len(lines1)):
-        line1 = lines1[i]
-        line2 = lines2[i]
-        if line1 == line2:
-            continue
-        for kind in kinds:
-            found = False
-            if (
-                line1.find("node:@%s" % kind) &gt; -1 and
-                line2.find("node:%s" % kind) &gt; -1
-            ):
-                found = True ; break
-        if found: continue
-        else: return False
-
-    return True</t>
-<t tx="EKR.20040623201302"></t>
 <t tx="EKR.20040623201322.4"></t>
 <t tx="EKR.20040623201322.7"></t>
 <t tx="EKR.20040623201322.10"></t>
-<t tx="EKR.20040623201322.13"></t>
-<t tx="EKR.20040623201322.14">line 1
-line 2 no newline</t>
-<t tx="EKR.20040623201322.15">line 1
-line 2 no newline</t>
-<t tx="EKR.20040623201322.16"></t>
-<t tx="EKR.20040623201322.17">@color
-last line
-</t>
-<t tx="EKR.20040623201322.18">last line
-</t>
 <t tx="EKR.20040623202054.1"></t>
-<t tx="EKR.20040623213443"></t>
-<t tx="EKR.20040624085716">test</t>
 <t tx="EKR.20040624103339.1"></t>
 <t tx="EKR.20040624103339.2">Line 1
 
@@ -3274,6 +2844,12 @@ Line 1
 #@-node:EKR.20040624112329.3:@@thin
 #@-leo
 last line 1: no newline</t>
+<t tx="EKR.20040625110032">@others</t>
+<t tx="EKR.20040625110032.1"></t>
+<t tx="EKR.20040625110032.2"># @language html
+
+@comment &lt;!-- --&gt;</t>
+<t tx="EKR.20040625110032.3"></t>
 <t tx="ekr.20040126105605"></t>
 <t tx="ekr.20040126105605.2"></t>
 <t tx="ekr.20040126105605.3"></t>
@@ -3298,967 +2874,6 @@ print "after ", v, p.v, v is p.v</t>
 <t tx="ekr.20040302092753.2"></t>
 <t tx="ekr.20040302092753.3"></t>
 <t tx="ekr.20040302092753.4"></t>
-<t tx="ekr.20040303062846.1">@
-
-- Have log classes increment a count.
-    Can be used to ensure that messages did or did not occcur.
-
-- Have the nullGui create a nullUndoer by default
-    But allow the possibility of leaving the full undoer in place.</t>
-<t tx="ekr.20040303062846.2">"""
-
-Classes used for Leo's unit testing.
-
-Run the unit tests in test.leo using the Execute Script command.
-
-"""
-
-@language python
-@tabwidth -4
-
-&lt;&lt; to do &gt;&gt;
-&lt;&lt; leoTest imports &gt;&gt;
-
-@others</t>
-<t tx="ekr.20040303062846.3">class testUtils:
-    
-    """Common utility routines used by unit tests."""
-
-    @others</t>
-<t tx="ekr.20040303062846.4">def compareOutlines (self,root1,root2):
-    
-    """Compares two outlines, making sure that their topologies,
-    content and join lists are equivent"""
-    
-    v1,v2 = root1,root2
-    after1 = v1.nodeAfterTree()
-    after2 = v2.nodeAfterTree()
-    v1 = v1.firstChild()
-    v2 = v2.firstChild()
-    ok = True
-    while v2 and v1 != after1 and v2 != after2:
-        ok = (
-            v1.numberOfChildren() == v2.numberOfChildren() and
-            v1.headString() == v2.headString() and
-            v1.bodyString() == v2.bodyString() and
-            v1.isCloned()   == v2.isCloned()
-        )
-        if not ok: break
-        v1 = v1.threadNext()
-        v2 = v2.threadNext()
-
-    ok = ok and ((not v1 and not v2) or (v1 == after1 and v2 == after2))
-    if not ok:
-        g.trace(v1,v2)
-    return ok</t>
-<t tx="ekr.20040303062846.5">def findChildrenOf (self,headline):
-    
-    u = self ; c = g.top() ; v = c.currentPosition()
-    
-    root = u.findRootNode(v)
-    parent = u.findNodeInTree(root,headline)
-    
-    v = parent.firstChild()
-    vList = []
-    while v:
-        vList.append(v)
-        v = v.next()
-    return vList</t>
-<t tx="ekr.20040303062846.6">def findRootNode (self,p):
-
-    """Return the root of p's tree."""
-
-    while p and p.hasParent():
-        p.moveToParent()
-    return p</t>
-<t tx="ekr.20040303062846.7">def numberOfNodesInOutline (self):
-    
-    """Returns the total number of nodes in an outline"""
-    
-    c = g.top() ; n = 0
-    for p in c.allNodes_iter():
-        n += 1
-    return n
-    
-</t>
-<t tx="ekr.20040303062846.8">def replaceOutline (self,c,outline1,outline2):
-    
-    u = self
-    
-    """Replace outline1 by a copy of outline 2 if not equal."""
-    
-    g.trace()
-    
-    copy = outline2.copyTreeWithNewTnodes()
-    copy.linkAfter(outline1)
-    outline1.doDelete(newVnode=copy)</t>
-<t tx="ekr.20040303062846.10">def fail ():
-    
-    """Mark a unit test as having failed."""
-    
-    g.app.unitTestDict["fail"] = g.callerName(2)</t>
-<t tx="ekr.20040303062846.11"></t>
-<t tx="ekr.20040303062846.12">def makeColorSuite(testParentHeadline,tempHeadline):
-    
-    """Create a colorizer test for every descendant of testParentHeadline.."""
-    
-    u = testUtils() ; c = g.top() ; v = c.currentVnode()
-    root = u.findRootNode(v)
-    temp_v = u.findNodeInTree(root,tempHeadline)
-    vList = u.findSubnodesOf(testParentHeadline)
-    
-    # Create the suite and add all test cases.
-    suite = unittest.makeSuite(unittest.TestCase)
-    for v in vList:
-        test = colorTestCase(c,v,temp_v)
-        suite.addTest(test)
-
-    return suite
-</t>
-<t tx="ekr.20040303062846.13">class colorTestCase(unittest.TestCase):
-    
-    """Data-driven unit tests for Leo's colorizer."""
-    
-    @others</t>
-<t tx="ekr.20040303062846.14">def __init__ (self,c,v,temp_v):
-    
-    # Init the base class.
-    unittest.TestCase.__init__(self)
-
-    self.c = c
-    self.v = v
-    self.temp_v = temp_v
-    
-    self.old_v = c.currentVnode()</t>
-<t tx="ekr.20040303062846.15">def color (self):
-    
-    c = self.c
-    val = c.frame.body.colorizer.colorize(self.temp_v,incremental=False)
-    assert(val=="ok")</t>
-<t tx="ekr.20040303062846.16">def setUp(self,*args,**keys):
-
-    # g.trace(args,keys)
-
-    # Initialize the text in the temp node.
-    text = self.v.bodyString()
-    self.c.selectVnode(self.temp_v)
-    self.temp_v.setTnodeText(text,g.app.tkEncoding)
-    self.c.frame.body.setSelectionAreas(None,text,None)</t>
-<t tx="ekr.20040303062846.17">def tearDown (self):
-    
-    self.temp_v.setTnodeText("",g.app.tkEncoding)
-    self.c.selectVnode(self.old_v)</t>
-<t tx="ekr.20040303062846.18">def runTest(self):
-
-    self.color()</t>
-<t tx="ekr.20040303062846.19"></t>
-<t tx="ekr.20040303062846.20">def makeEditBodySuite(testParentHeadline,tempHeadline):
-    
-    """Create an Edit Body test for every descendant of testParentHeadline.."""
-    
-    u = testUtils() ; c = g.top() ; v = c.currentVnode()
-    root = u.findRootNode(v)
-    temp_v = u.findNodeInTree(root,tempHeadline)
-    vList = u.findChildrenOf(testParentHeadline)
-
-    # Create the suite and add all test cases.
-    suite = unittest.makeSuite(unittest.TestCase)
-    for v in vList:
-        before = u.findNodeInTree(v,"before")
-        after  = u.findNodeInTree(v,"after")
-        sel    = u.findNodeInTree(v,"selection")
-        ins    = u.findNodeInTree(v,"insert")
-        if before and after:
-            test = editBodyTestCase(c,v,before,after,sel,ins,temp_v)
-            suite.addTest(test)
-        else:
-            print 'missing "before" or "after" for', v.headString()
-
-    return suite
-</t>
-<t tx="ekr.20040303062846.21">class editBodyTestCase(unittest.TestCase):
-    
-    """Data-driven unit tests for Leo's edit body commands."""
-    
-    @others</t>
-<t tx="ekr.20040303062846.22">def __init__ (self,c,parent,before,after,sel,ins,temp_v):
-    
-    # Init the base class.
-    unittest.TestCase.__init__(self)
-
-    self.c = c
-    self.parent = parent
-    self.before = before
-    self.after  = after
-    self.sel    = sel # Two lines giving the selection range in tk coordinates.
-    self.ins    = ins # One line giveing the insert point in tk coordinate.
-    self.temp_v = temp_v
-    
-    self.old_v = c.currentVnode()
-    
-    self.wasChanged = c.changed
-    
-    self.u = testUtils()</t>
-<t tx="ekr.20040303062846.23">def editBody (self):
-    
-    c = self.c ; u = self.u
-
-    # Compute the result in temp_v.bodyString()
-    commandName = self.parent.headString()
-    command = getattr(c,commandName)
-    command()
-    
-    if 1:
-        assert(u.compareOutlines(self.temp_v,self.after))
-        c.undoer.undo()
-        assert(u.compareOutlines(self.temp_v,self.before))
-        c.undoer.redo()
-        assert(u.compareOutlines(self.temp_v,self.after))
-        c.undoer.undo()
-        assert(u.compareOutlines(self.temp_v,self.before))
-    else:
-        &lt;&lt; compare new, ref trees &gt;&gt;</t>
-<t tx="ekr.20040303062846.24">def tearDown (self):
-    
-    c = self.c ; temp_v = self.temp_v
-    
-    temp_v.setTnodeText("",g.app.tkEncoding)
-    temp_v.clearDirty()
-    
-    if not self.wasChanged:
-        c.setChanged (False)
-        
-    # Delete all children of temp node.
-    while temp_v.firstChild():
-        temp_v.firstChild().doDelete(temp_v)
-
-    c.selectVnode(self.old_v)</t>
-<t tx="ekr.20040303062846.25"># Warning: this is Tk-specific code.
-
-def setUp(self,*args,**keys):
-    
-    c = self.c ; temp_v = self.temp_v
-    
-    # Delete all children of temp node.
-    while temp_v.firstChild():
-        temp_v.firstChild().doDelete(temp_v)
-
-    text = self.before.bodyString()
-    
-    temp_v.setTnodeText(text,g.app.tkEncoding)
-    c.selectVnode(self.temp_v)
-    
-    t = c.frame.body.bodyCtrl
-    if self.sel:
-        s = str(self.sel.bodyString()) # Can't be unicode.
-        lines = s.split('\n')
-        g.app.gui.setTextSelection(t,lines[0],lines[1])
-
-    if self.ins:
-        s = str(self.ins.bodyString()) # Can't be unicode.
-        lines = s.split('\n')
-        g.trace(lines)
-        g.app.gui.setInsertPoint(t,lines[0])
-        
-    if not self.sel and not self.ins:
-        g.app.gui.setInsertPoint(t,"1.0")
-        g.app.gui.setTextSelection(t,"1.0","1.0")</t>
-<t tx="ekr.20040303062846.26">def runTest(self):
-
-    self.editBody()</t>
-<t tx="ekr.20040303062846.27"></t>
-<t tx="ekr.20040303062846.28">def makeImportExportSuite(testParentHeadline,tempHeadline):
-    
-    """Create an Import/Export test for every descendant of testParentHeadline.."""
-    
-    u = testUtils() ; c = g.top() ; v = c.currentVnode()
-    root = u.findRootNode(v)
-    temp_v = u.findNodeInTree(root,tempHeadline)
-    vList = u.findChildrenOf(testParentHeadline)
-
-    # Create the suite and add all test cases.
-    suite = unittest.makeSuite(unittest.TestCase)
-    for v in vList:
-        dialog = u.findNodeInTree(v,"dialog")
-        test = importExportTestCase(c,v,dialog,temp_v)
-        suite.addTest(test)
-
-    return suite
-</t>
-<t tx="ekr.20040303062846.29">class importExportTestCase(unittest.TestCase):
-    
-    """Data-driven unit tests for Leo's edit body commands."""
-    
-    @others</t>
-<t tx="ekr.20040303062846.30">def __init__ (self,c,v,dialog,temp_v):
-    
-    # Init the base class.
-    unittest.TestCase.__init__(self)
-    
-    self.c = c
-    self.dialog = dialog
-    self.v = v
-    self.temp_v = temp_v
-    
-    self.gui = None
-    self.wasChanged = c.changed
-    self.fileName = ""
-
-    self.old_v = c.currentVnode()
-
-</t>
-<t tx="ekr.20040303062846.31">def importExport (self):
-    
-    c = self.c ; v = self.v
-    
-    g.app.unitTestDict = {}
-
-    commandName = v.headString()
-    command = getattr(c,commandName) # Will fail if command does not exist.
-    command()
-
-    failedMethod = g.app.unitTestDict.get("fail")
-    self.failIf(failedMethod,failedMethod)</t>
-<t tx="ekr.20040303062846.32">def runTest(self):
-    
-    # """Import Export Test Case"""
-
-    self.importExport()</t>
-<t tx="ekr.20040303062846.33">def setUp(self,*args,**keys):
-    
-    c = self.c ; temp_v = self.temp_v ; d = self.dialog
-    
-    temp_v.setTnodeText('',g.app.tkEncoding)
-
-    # Create a node under temp_v.
-    child = temp_v.insertAsLastChild()
-    assert(child)
-    child.setHeadString("import test: " + self.v.headString())
-    c.selectVnode(child)
-
-    assert(d)
-    s = d.bodyString()
-    lines = s.split('\n')
-    name = lines[0]
-    val = lines[1]
-    self.fileName = val
-    dict = {name: val}
-    self.gui = leoGui.unitTestGui(dict,trace=False)
-    
-    </t>
-<t tx="ekr.20040303062846.34">def shortDescription (self):
-    
-    try:
-        return "ImportExportTestCase: %s %s" % (self.v.headString(),self.fileName)
-    except:
-        return "ImportExportTestCase"</t>
-<t tx="ekr.20040303062846.35">def tearDown (self):
-    
-    c = self.c ; temp_v = self.temp_v
-    
-    if self.gui:
-        self.gui.destroySelf()
-        self.gui = None
-    
-    temp_v.setTnodeText("",g.app.tkEncoding)
-    temp_v.clearDirty()
-    
-    if not self.wasChanged:
-        c.setChanged (False)
-        
-    if 1: # Delete all children of temp node.
-        while temp_v.firstChild():
-            temp_v.firstChild().doDelete(temp_v)
-
-    c.selectVnode(self.old_v)</t>
-<t tx="ekr.20040303062846.36"></t>
-<t tx="ekr.20040303062846.37">def makeLeoFilesSuite(testParentHeadline,unused=None):
-    
-    """Create a .leo file test for every descendant of testParentHeadline.."""
-    
-    u = testUtils() ; c = g.top()
-    
-    vList = u.findChildrenOf(testParentHeadline)
-
-    # Create the suite and add all test cases.
-    suite = unittest.makeSuite(unittest.TestCase)
-    for v in vList:
-        test = leoFileTestCase(c,v.headString().strip())
-        suite.addTest(test)
-
-    return suite
-
-</t>
-<t tx="ekr.20040303062846.38">class leoFileTestCase(unittest.TestCase):
-    
-    """Data-driven unit tests to test .leo files."""
-    
-    @others</t>
-<t tx="ekr.20040303062846.39">def __init__ (self,c,fileName):
-    
-    # Init the base class.
-    unittest.TestCase.__init__(self)
-
-    self.old_c = c
-    self.c = None # set by setUp.
-    self.fileName = fileName
-    self.gui = None # set by setUp
-    self.openFrames = g.app.windowList[:]</t>
-<t tx="ekr.20040303062846.40">def runTest(self):
-    
-    """Run the Check Outline command."""
-
-    errors = self.c.checkOutline(verbose=False,unittest=True)
-    assert(errors == 0)</t>
-<t tx="ekr.20040303062846.41">def setUp(self):
-
-    """Open the .leo file."""
-    
-
-    c = self.old_c ; fileName = self.fileName
-    assert(g.os_path_exists(fileName))
-    
-    self.oldGui = g.app.gui
-    # g.app.gui = leoGui.nullGui("nullGui")
-
-    ok, frame = g.openWithFileName(fileName,c,enableLog=False)
-    assert(ok)
-    self.c = frame.c</t>
-<t tx="ekr.20040303062846.42">def tearDown (self):
-
-    """Close the .leo file if it was not already open."""
-
-    frame = self.c.frame
-    if frame not in self.openFrames:
-        g.app.closeLeoWindow(frame)
-
-    g.app.gui = self.oldGui</t>
-<t tx="ekr.20040303062846.63"></t>
-<t tx="ekr.20040303062846.64">def makeOutlineSuite(testParentHeadline,unused=None):
-    
-    """Create an outline test for every descendant of testParentHeadline.."""
-    
-    u = testUtils() ; c = g.top() ; v = c.currentVnode()
-    
-    vList = u.findChildrenOf(testParentHeadline)
-
-    # Create the suite and add all test cases.
-    suite = unittest.makeSuite(unittest.TestCase)
-    for v in vList:
-        before = u.findNodeInTree(v,"before")
-        after  = u.findNodeInTree(v,"after")
-        ref    = u.findNodeInTree(v,"ref")
-        if before and after and ref:
-            test = outlineTestCase(c,v,before,after,ref)
-            suite.addTest(test)
-
-    return suite
-</t>
-<t tx="ekr.20040303062846.65">class outlineTestCase(unittest.TestCase):
-    
-    """Data-driven unit tests for Leo's outline commands."""
-    
-    @others</t>
-<t tx="ekr.20040303062846.66">def __init__ (self,c,parent,before,after,ref):
-    
-    # Init the base class.
-    unittest.TestCase.__init__(self)
-
-    self.c = c
-    self.parent = parent
-    self.before = before
-    self.after = after
-    self.ref    = ref
-    
-    self.old_v = c.currentVnode()
-    
-    self.u = testUtils()</t>
-<t tx="ekr.20040303062846.67">def outlineCommand (self):
-    
-    c = self.c ; u = self.u ; tree = c.frame.tree
-    
-    move = u.findNodeInTree(self.before,"move")
-    assert(move)
-    
-    c.selectVnode(move)
-    
-    commandName = self.parent.headString()
-    command = getattr(c,commandName)
-    command()
-
-    assert(u.compareOutlines(self.before,self.after))
-    c.undoer.undo()
-    assert(u.compareOutlines(self.before,self.ref))
-    c.undoer.redo()
-    assert(u.compareOutlines(self.before,self.after))
-    c.undoer.undo()
-    assert(u.compareOutlines(self.before,self.ref))</t>
-<t tx="ekr.20040303062846.68">def runTest(self):
-
-    self.outlineCommand()</t>
-<t tx="ekr.20040303062846.69">def setUp(self,*args,**keys):
-
-    assert(self.before)
-    assert(self.after)
-    assert(self.ref)
-    assert(self.u.compareOutlines(self.before,self.ref))
-    
-    # Batch mode bugs: meaning of move may depend on visibility.
-    self.parent.parent().expand()
-    self.parent.expand()
-    self.before.expand()
-    self.after.expand()</t>
-<t tx="ekr.20040303062846.70">def tearDown (self):
-
-    c = self.c ; u = self.u
-
-    if not u.compareOutlines(self.before,self.ref):
-        u.replaceOutline(c,self.before,self.ref)
-
-    self.before.contract()
-    self.after.contract()
-    self.parent.contract()
-    self.parent.parent().contract()
-
-    self.c.selectVnode(self.old_v)</t>
-<t tx="ekr.20040303062846.71">def makePluginsSuite(verbose=False,*args,**keys):
-    
-    """Create an plugins test for every .py file in the plugins directory."""
-    
-    plugins_path = g.os_path_join(g.app.loadDir,"..","plugins")
-    
-    files = glob.glob(g.os_path_join(plugins_path,"*.py"))
-    files = [g.os_path_abspath(file) for file in files]
-    files.sort()
-
-    # Create the suite and add all test cases.
-    suite = unittest.makeSuite(unittest.TestCase)
-    
-    for file in files:
-        test = pluginTestCase(file,verbose)
-        suite.addTest(test)
-
-    return suite
-</t>
-<t tx="ekr.20040303062846.72"></t>
-<t tx="ekr.20040303062846.73">class pluginTestCase(unittest.TestCase):
-    
-    """Unit tests for one Leo plugin."""
-    
-    @others</t>
-<t tx="ekr.20040303062846.74">def __init__ (self,fileName,verbose):
-    
-    # Init the base class.
-    unittest.TestCase.__init__(self)
-
-    self.fileName = fileName
-    self.oldGui = None
-    self.verbose = verbose</t>
-<t tx="ekr.20040303062846.75">def pluginTest (self):
-    
-    # Duplicate the import logic in leoPlugins.py.
-    
-    fileName = g.toUnicode(self.fileName,g.app.tkEncoding)
-    path = g.os_path_join(g.app.loadDir,"..","plugins")
-    
-    if self.verbose:
-        g.trace(str(g.shortFileName(fileName)))
-
-    module = g.importFromPath(fileName,path)
-    assert(module)
-    
-    # Run any unit tests in the module itself.
-    if hasattr(module,"unitTest"):
-        
-        if self.verbose:
-            g.trace("Executing unitTest in %s..." % str(g.shortFileName(fileName)))
-
-        module.unitTest()</t>
-<t tx="ekr.20040303062846.76">def runTest(self):
-
-    self.pluginTest()</t>
-<t tx="ekr.20040303062846.77">def setUp(self,*args,**keys):
-
-    self.oldGui = g.app.gui
-    # g.app.gui = leoTkinterGui.tkinterGui()</t>
-<t tx="ekr.20040303062846.78">def shortDescription (self):
-    
-    return "pluginTestCase: " + self.fileName</t>
-<t tx="ekr.20040303062846.79">def tearDown (self):
-
-    g.app.gui = self.oldGui</t>
-<t tx="ekr.20040303062846.80"># DTHEIN 2004.01.11: Added unit tests for reformatParagraph</t>
-<t tx="ekr.20040303062846.81"># DTHEIN 2004.01.11: Added method
-def makeReformatParagraphSuite(*args,**keys):
-    
-    """makeReformatParagraphSuite() -&gt; suite
-    
-    Create a Reformat Paragraph test for each of the 
-    unit tests in the reformatParagraphTestCase class."""
-    
-    suite = unittest.TestSuite()
-    suite.addTest(reformatParagraphTestCase("testNoTrailingNewline"))
-    suite.addTest(reformatParagraphTestCase("testTrailingNewline"))
-    suite.addTest(reformatParagraphTestCase("testMixedLineLengths"))
-    suite.addTest(reformatParagraphTestCase("testMixedLinesWithLeadingWS"))
-    suite.addTest(reformatParagraphTestCase("testNoChangeRequired"))
-    suite.addTest(reformatParagraphTestCase("testHonorLeadingWS"))
-    suite.addTest(reformatParagraphTestCase("testHonorLeadingWSVar1"))
-    suite.addTest(reformatParagraphTestCase("testSimpleHangingIndent"))
-    suite.addTest(reformatParagraphTestCase("testSimpleHangingIndentVar1"))
-    suite.addTest(reformatParagraphTestCase("testSimpleHangingIndentVar2"))
-    suite.addTest(reformatParagraphTestCase("testMultiParagraph"))
-    suite.addTest(reformatParagraphTestCase("testMultiParagraphWithList"))
-    suite.addTest(reformatParagraphTestCase("testDirectiveBreaksParagraph"))
-    suite.addTest(reformatParagraphTestCase("testWithLeadingWSOnEmptyLines"))
-    return suite
-    #	suite = reformatParagraphTestCase().suite();
-    #return suite</t>
-<t tx="ekr.20040303062846.82"># DTHEIN 2004.01.11: Added class
-class reformatParagraphTestCase(unittest.TestCase):
-    
-    """Unit tests for Leo's reformat paragraph command."""
-    
-    @others</t>
-<t tx="ekr.20040303062846.83"># DTHEIN 2004.01.11: Added method
-def setUp(self):
-
-    self.u = testUtils()
-    self.c = g.top()
-    self.current_v = self.c.currentVnode()
-    self.old_v = self.c.currentVnode()
-    root = self.u.findRootNode(self.current_v)
-    self.temp_v = self.u.findNodeInTree(root,"tempNode")
-    assert(self.temp_v)
-    self.tempChild_v = None
-    self.dataParent_v = self.u.findNodeInTree(root,"reformatParagraphsTests")
-    assert(self.dataParent_v)
-    self.before_v = None
-    self.after_v = None
-    self.case_v = None
-    self.wasChanged = self.c.changed
-    
-
-
-</t>
-<t tx="ekr.20040303062846.84"># DTHEIN 2004.01.11: Added method
-def tearDown(self):
-    
-    # local variables for class fields, for ease
-    # of reading and ease of typeing.
-    #	
-    c = self.c ; temp_v = self.temp_v
-    
-    # clear the temp node and mark it unchanged
-    #
-    temp_v.setTnodeText("",g.app.tkEncoding)
-    temp_v.clearDirty()
-    
-    if not self.wasChanged:
-        c.setChanged (False)
-        
-    # Delete all children of temp node.
-    #
-    while temp_v.firstChild():
-        temp_v.firstChild().doDelete(temp_v)
-
-    # make the original node the current node
-    #
-    c.selectVnode(self.old_v)</t>
-<t tx="ekr.20040303062846.85"># DTHEIN 2004.01.11: Added method
-def testNoTrailingNewline(self):
-    
-    self.singleParagraphTest("testNoTrailingNewline",2,24)
-</t>
-<t tx="ekr.20040303062846.86"># DTHEIN 2004.01.11: Added method
-def testTrailingNewline(self):
-    
-    self.singleParagraphTest("testTrailingNewline",3,0)
-</t>
-<t tx="ekr.20040303062846.87"># DTHEIN 2004.01.11: Added method
-def testMixedLineLengths(self):
-    
-    self.singleParagraphTest("testMixedLineLengths",4,10)
-</t>
-<t tx="ekr.20040303062846.88"># DTHEIN 2004.01.11: Added method
-def testMixedLinesWithLeadingWS(self):
-    
-    self.singleParagraphTest("testMixedLinesWithLeadingWS",4,12)
-</t>
-<t tx="ekr.20040303062846.89"># DTHEIN 2004.01.11: Added method
-def testNoChangeRequired(self):
-    
-    self.singleParagraphTest("testNoChangeRequired",1,28)
-</t>
-<t tx="ekr.20040303062846.90"># DTHEIN 2004.01.11: Added method
-def testHonorLeadingWS(self):
-    
-    self.singleParagraphTest("testHonorLeadingWS",5,16)
-</t>
-<t tx="ekr.20040303062846.91"># DTHEIN 2004.01.11: Added method
-def testHonorLeadingWSVar1(self):
-    
-    self.singleParagraphTest("testHonorLeadingWSVar1",5,16)
-</t>
-<t tx="ekr.20040303062846.92"># DTHEIN 2004.01.11: Added method
-def testSimpleHangingIndent(self):
-    
-    self.singleParagraphTest("testSimpleHangingIndent",5,8)
-</t>
-<t tx="ekr.20040303062846.93"># DTHEIN 2004.01.11: Added method
-def testSimpleHangingIndentVar1(self):
-    
-    self.singleParagraphTest("testSimpleHangingIndentVar1",5,8)
-</t>
-<t tx="ekr.20040303062846.94"># DTHEIN 2004.01.11: Added method
-def testSimpleHangingIndentVar2(self):
-    
-    self.singleParagraphTest("testSimpleHangingIndentVar2",5,8)
-</t>
-<t tx="ekr.20040303062846.95"># DTHEIN 2004.01.11: Added method
-def testMultiParagraph(self):
-    
-    # Locate the test data
-    #
-    self.getCaseDataNodes("testMultiParagraph")
-    
-    # Setup the temp node
-    #
-    self.copyBeforeToTemp()
-    
-    # reformat the paragraph and check insertion cursor position
-    #
-    self.c.reformatParagraph()
-    self.checkPosition(13,0)
-    
-    # Keep going, in the same manner
-    #
-    self.c.reformatParagraph()
-    self.checkPosition(25,0)
-    self.c.reformatParagraph()
-    self.checkPosition(32,11)
-    
-    # Compare the computed result to the reference result.
-    self.checkText()
-</t>
-<t tx="ekr.20040303062846.96"># DTHEIN 2004.01.11: Added method
-def testMultiParagraphWithList(self):
-    
-    # Locate the test data
-    #
-    self.getCaseDataNodes("testMultiParagraphWithList")
-    
-    # Setup the temp node
-    #
-    self.copyBeforeToTemp()
-    
-    # reformat the paragraph and check insertion cursor position
-    #
-    self.c.reformatParagraph()
-    self.checkPosition(4,0)
-    
-    # Keep going, in the same manner
-    #
-    self.c.reformatParagraph()
-    self.checkPosition(7,0)
-    self.c.reformatParagraph()
-    self.checkPosition(10,0)
-    self.c.reformatParagraph()
-    self.checkPosition(13,0)
-    self.c.reformatParagraph()
-    self.checkPosition(14,18)
-    
-    # Compare the computed result to the reference result.
-    self.checkText()
-</t>
-<t tx="ekr.20040303062846.97"># DTHEIN 2004.01.11: Added method
-def testDirectiveBreaksParagraph(self):
-    
-    # Locate the test data
-    #
-    self.getCaseDataNodes("testDirectiveBreaksParagraph")
-    
-    # Setup the temp node
-    #
-    self.copyBeforeToTemp()
-    
-    # reformat the paragraph and check insertion cursor position
-    #
-    self.c.reformatParagraph()
-    self.checkPosition(13,0) # at next paragraph
-    
-    # Keep going, in the same manner
-    #
-    self.c.reformatParagraph()
-    self.checkPosition(25,0) # at next paragraph
-
-    self.c.reformatParagraph()
-    self.checkPosition(32,11)
-    
-    # Compare the computed result to the reference result.
-    self.checkText()
-</t>
-<t tx="ekr.20040303062846.98"># DTHEIN 2004.01.11: Added method
-def testWithLeadingWSOnEmptyLines(self):
-    
-    # Locate the test data
-    #
-    self.getCaseDataNodes("testWithLeadingWSOnEmptyLines")
-    
-    # Setup the temp node
-    #
-    self.copyBeforeToTemp()
-    
-    # reformat the paragraph and check insertion cursor position
-    #
-    self.c.reformatParagraph()
-    self.checkPosition(4,0)
-    
-    # Keep going, in the same manner
-    #
-    self.c.reformatParagraph()
-    self.checkPosition(7,0)
-    self.c.reformatParagraph()
-    self.checkPosition(10,0)
-    self.c.reformatParagraph()
-    self.checkPosition(13,0)
-    self.c.reformatParagraph()
-    self.checkPosition(14,18)
-    
-    # Compare the computed result to the reference result.
-    self.checkText()
-</t>
-<t tx="ekr.20040303062846.99"># DTHEIN 2004.01.11: Added method
-def singleParagraphTest(self,caseName,finalRow,finalCol):
-    
-    # Locate the test data
-    #
-    self.getCaseDataNodes(caseName)
-    
-    # Setup the temp node
-    #
-    self.copyBeforeToTemp()
-    
-    # reformat the paragraph
-    #
-    self.c.reformatParagraph()
-    
-    # Compare the computed result to the reference result.
-    self.checkText()
-    self.checkPosition(finalRow,finalCol)
-
-</t>
-<t tx="ekr.20040303062846.100"># DTHEIN 2004.01.11: Added method
-def checkPosition(self,expRow,expCol):
-
-    row,col = self.getRowCol()
-    self.failUnlessEqual(expCol,col,
-        "Current position is (" + str(row) + "," + str(col) 
-        + ");  expected cursor to be at column " + str(expCol) + ".")
-    self.failUnlessEqual(expRow,row,
-        "Current position is (" + str(row) + "," + str(col) 
-        + ");  expected cursor to be at line " + str(expRow) + ".")
-</t>
-<t tx="ekr.20040303062846.101"># DTHEIN 2004.01.11: Added method
-def checkText(self):
-
-    new_text = self.tempChild_v.bodyString()
-    ref_text = self.after_v.bodyString()
-    newLines = new_text.splitlines(1)
-    refLines = ref_text.splitlines(1)
-    newLinesCount = len(newLines)
-    refLinesCount = len(refLines)
-    for i in range(min(newLinesCount,refLinesCount)):
-        self.failUnlessEqual(newLines[i],refLines[i],
-            "Mismatch on line " + str(i) + "."
-            + "\nExpected text: " + `refLines[i]`
-            + "\n  Actual text: "	+ `newLines[i]`)
-    self.failUnlessEqual(newLinesCount,refLinesCount,
-        "Expected " + str(refLinesCount) + " lines, but "
-        + "received " + str(newLinesCount) + " lines.")</t>
-<t tx="ekr.20040303062846.102"># DTHEIN 2004.01.11: Added method
-# Warning: this is Tk-specific code.
-#
-def copyBeforeToTemp(self):
-
-    # local variables for class fields, for ease
-    # of reading and ease of typeing.
-    #	
-    c = self.c ; temp_v = self.temp_v
-
-    # Delete all children of temp node.
-    #
-    while temp_v.firstChild():
-        temp_v.firstChild().doDelete(temp_v)
-
-    # Copy the test case node text to the temp node
-    #
-    text = self.case_v.bodyString()
-    temp_v.setTnodeText(text,g.app.tkEncoding)
-    
-    # create the child node that holds the text
-    #
-    t = leoNodes.tnode(headString="tempChildNode")
-    self.tempChild_v = self.temp_v.insertAsNthChild(0,t)
-
-    # copy the before text to the temp text
-    #
-    text = self.before_v.bodyString()
-    self.tempChild_v.setTnodeText(text,g.app.tkEncoding)
-    
-    # make the temp child node current, and put the
-    # cursor at the beginning
-    #
-    c.selectVnode(self.tempChild_v)
-    c.frame.body.setInsertPointToStartOfLine( 0 )
-    c.frame.body.setTextSelection(None,None)
-    #g.app.gui.setInsertPoint(t,"1.0")
-    #g.app.gui.setTextSelection(t,"1.0","1.0")
-</t>
-<t tx="ekr.20040303062846.103"># DTHEIN 2004.01.11: Added method
-def getCaseDataNodes(self,caseNodeName):
-
-    self.case_v = self.u.findNodeInTree(self.dataParent_v,caseNodeName)
-    self.before_v = self.u.findNodeInTree(self.case_v,"before")
-    self.after_v  = self.u.findNodeInTree(self.case_v,"after")
-</t>
-<t tx="ekr.20040303062846.104"># DTHEIN 2004.01.11: Added method
-def getRowCol(self):
-    
-    # local variables for class fields, for ease
-    # of reading and ease of typeing.
-    #	
-    c = self.c ; body = c.frame.body.bodyCtrl ; gui = g.app.gui
-    tab_width = c.frame.tab_width
-
-    # Get the Tkinter row col position of the insert cursor
-    #	
-    index = body.index("insert")
-    row,col = gui.getindex(body,index)
-    
-    # Adjust col position for tabs
-    #
-    if col &gt; 0:
-        s = body.get("%d.0" % (row),index)
-        s = g.toUnicode(s,g.app.tkEncoding)
-        col = g.computeWidth(s,tab_width)
-
-    return (row,col)
-</t>
-<t tx="ekr.20040303063118">class positionTestCase(unittest.TestCase):
-    
-    """Unit tests for Leo's position class."""
-    
-    @others</t>
-<t tx="ekr.20040303063118.4">def setUp(self,*args,**keys):
-    
-    import leoGlobals as g
-    
-    self.c = c = g.top()
-
-    self.verbose = True
-    
-    self.root = c.rootPosition()</t>
 <t tx="ekr.20040303063549"></t>
 <t tx="ekr.20040303063549.1"></t>
 <t tx="ekr.20040303063549.2">@ 
@@ -5293,65 +3908,6 @@ for f,arg in (
     mainSuite.addTest(suite)
     
 unittest.TextTestRunner().run(mainSuite)</t>
-<t tx="ekr.20040303063644"></t>
-<t tx="ekr.20040303064013">def makePositionSuite(arg=None,all=True,verbose=False):
-    
-    if all: # Include everything.
-    
-        suite = unittest.makeSuite(positionTestCase,'test')
-        
-    else: # Include listed testss.
-
-        names = (
-            "testFullTraverse",
-            "testParentChildLinks",
-            "testNextBack",
-            "testVnodeList",
-            "testThreadBackNext",
-            "testParentChildLevel")
-        
-        suite = unittest.makeSuite(unittest.TestCase)
-        for name in names:
-            suite.addTest(positionTestCase(name))
-
-    return suite</t>
-<t tx="ekr.20040303064020.5">def testConsistencyOfNextBack (self):
-    
-    """Test consistency of p.next and p.back."""
-
-    for p in self.root.allNodes_iter():
-        
-        back = p.back()
-        next = p.next()
-        if back: assert(back.getNext() == p)
-        if next: assert(next.getBack() == p)</t>
-<t tx="ekr.20040303064020.6">def testVnodeList (self):
-    
-    for p in self.root.allNodes_iter():
-
-        vnodeList = p.v.t.vnodeList
-    
-        for v in vnodeList:
-
-            assert(v.t == p.v.t)
-            if p.v.isCloned():
-                assert(v.isCloned())
-                assert(len(vnodeList) &gt; 1)
-            else:
-                assert(not v.isCloned())
-                assert(len(vnodeList) == 1)</t>
-<t tx="ekr.20040303064020.7">def testConsistencyOfThreadBackNext (self):
-
-    for p in self.root.allNodes_iter():
-
-        threadBack = p.threadBack()
-        threadNext = p.threadNext()
-
-        if threadBack:
-            assert(p == threadBack.getThreadNext())
-    
-        if threadNext:
-            assert(p == threadNext.getThreadBack())</t>
 <t tx="ekr.20040303071432">@language python
 @tabwidth -4</t>
 <t tx="ekr.20040303080010">import leoGlobals as g
@@ -5382,160 +3938,7 @@ for f,arg in (
 unittest.TextTestRunner().run(mainSuite)</t>
 <t tx="ekr.20040303080938"></t>
 <t tx="ekr.20040303080938.1"></t>
-<t tx="ekr.20040303091606">def testHasNextBack (self):
-    
-    for p in self.root.allNodes_iter():
-
-        back = p.back()
-        next = p.next()
-
-        assert(
-            (back and p.hasBack()) or
-            (not back and not p.hasBack()))
-                
-        assert(
-            (next and p.hasNext()) or
-            (not next and not p.hasNext()))</t>
-<t tx="ekr.20040303092153">def testHasParentChild (self):
-    
-    for p in self.root.allNodes_iter():
-
-        child = p.firstChild()
-        parent = p.parent()
-
-        assert(
-            (child and p.hasFirstChild()) or
-            (not child and not p.hasFirstChild()))
-                
-        assert(
-            (parent and p.hasParent()) or
-            (not parent and not p.hasParent()))</t>
-<t tx="ekr.20040303092153.1">def testHasThreadNextBack(self):
-
-    for p in self.root.allNodes_iter():
-
-        threadBack = p.getThreadBack()
-        threadNext = p.getThreadNext()
-
-        assert(
-            (threadBack and p.hasThreadBack()) or
-            (not threadBack and not p.hasThreadBack()))
-                
-        assert(
-            (threadNext and p.hasThreadNext()) or
-            (not threadNext and not p.hasThreadNext()))</t>
 <t tx="ekr.20040309095121"></t>
-<t tx="ekr.20040309101454.13">def testConsistencyOfLevel (self):
-    
-    """Test consistency of p.level."""
-
-    for p in self.root.allNodes_iter():
-        
-        if p.hasParent():
-            assert(p.parent().level() == p.level() - 1)
-    
-        if p.hasChildren():
-            assert(p.firstChild().level() == p.level() + 1)
-            
-        if p.hasNext():
-            assert(p.next().level() == p.level())
-    
-        if p.hasBack():
-            assert(p.back().level() == p.level())
-</t>
-<t tx="ekr.20040309101454.14">def testConsistencyOfParentChild (self):
-    
-    """Test consistency of p.parent, p.next, p.back and p.firstChild."""
-    
-    root = self.c.rootPosition()
-
-    for p in root.allNodes_iter():
-        
-        if p.hasParent():
-            n = p.childIndex()
-            assert(p == p.parent().moveToNthChild(n))
-            
-        for child in p.children_iter():
-            assert(p == child.parent())
-    
-        if p.hasNext():
-            assert(p.next().parent() == p.parent())
-            
-        if p.hasBack():
-            assert(p.back().parent() == p.parent())</t>
-<t tx="ekr.20040309101454.15">def testConsistencyOfAllNodesThreadNextWithCopy(self):
-    self.doConsistencyOfAllNodesThreadNext(True)
-    
-def testConsistencyOfAllNodesThreadNext(self):
-    self.doConsistencyOfAllNodesThreadNext(False)
-
-def doConsistencyOfAllNodesThreadNext (self,copy):
-    
-    """Test consistency of p.moveToThreadNext and p.allNodes_iter."""
-
-    root = self.c.rootPosition()
-    p2 = root.copy()
-
-    for p in root.allNodes_iter(copy=copy):
-
-        if p != p2: print p,p2
-        assert(p==p2)
-        p2.moveToThreadNext()
-        
-    if p2: print p2
-    assert(not p2)
-</t>
-<t tx="ekr.20040309101454.16">def testConsistencyOfParentAndParentsIterWithCopy(self):
-    self.doConsistencyOfParentAndParentsIter(True)
-    
-def testConsistencyOfParentAndParentsIter(self):
-    self.doConsistencyOfParentAndParentsIter(False)
-
-def doConsistencyOfParentAndParentsIter (self,copy):
-    
-    """Test consistency of p.parent and p.parents_iter."""
-
-    root = self.c.rootPosition()
-
-    for p in root.allNodes_iter():
-        
-        p2 = p.parent()
-        for p3 in p.parents_iter(copy=copy):
-            
-            if p3 != p2: print p3,p2
-            assert(p3==p2)
-            p2.moveToParent()
-    
-        if p2: print p2
-        assert(not p2)</t>
-<t tx="ekr.20040309101454.17">def testConsistencyOfFirstChildAndChildrenIterWithCopy(self):
-    self.doConsistencyOfFirstChildAndChildrenIter(True)
-    
-def testConsistencyOfFirstChildAndChildrenIter(self):
-    self.doConsistencyOfFirstChildAndChildrenIter(False)
-
-def doConsistencyOfFirstChildAndChildrenIter (self,copy):
-    
-    """Test consistency of p.moveToFirstChild/Next and p.children_iter."""
-
-    root = self.c.rootPosition()
-
-    for p in root.allNodes_iter(copy=copy):
-        
-        p2 = p.firstChild()
-        for p3 in p.children_iter(copy=copy):
-            
-            if p3 != p2: print p3,p2
-            assert(p3==p2)
-            p2.moveToNext()
-
-    if p2: print p2
-    assert(not p2)</t>
-<t tx="ekr.20040309105731">def testComparisons (self):
-    
-    p = self.root
-    assert(p == p.copy())
-    assert(p != p.threadNext())</t>
 <t tx="ekr.20040309111054">import leoGlobals as g
 import leoNodes
 
@@ -5616,7 +4019,6 @@ s = "%d nodes" % count
 print s ; g.es(s)</t>
 <t tx="ekr.20040312101720"></t>
 <t tx="ekr.20040312101720.1"></t>
-<t tx="ekr.20040312101853"></t>
 <t tx="ekr.20040315025315">@
 - convertTreeToString and moreHead can't be vnode methods because they uses level().
 - moreBody could be anywhere: it may as well be a postion method.
@@ -5682,49 +4084,13 @@ c = g.top() ; p = c.currentPosition()
 p = p.firstChild()
 assert(p.headString()=="File Conversion")
 print p.convertTreeToString()</t>
-<t tx="ekr.20040315202201"></t>
-<t tx="ekr.20040315202250">def makeFindCommandSuite(arg=None,all=True,verbose=False):
-    
-    return unittest.makeSuite(findCommandTestCase,'test')</t>
-<t tx="ekr.20040315202314">class findCommandTestCase(unittest.TestCase):
-    
-    """Unit tests for Leo's find commands."""
-    
-    @others</t>
-<t tx="ekr.20040315202314.1">def setUp(self,*args,**keys):
-    
-    import leoGlobals as g
-    
-    u = testUtils()
-    
-    self.c = c = g.top()
-
-    self.verbose = True
-    
-    self.root = c.rootPosition()
-    
-    self.find_p = u.findNodeAnywhere(c,"findTests")
-    
-    assert(self.find_p)
-    
-    c.selectPosition(self.find_p)
-</t>
-<t tx="ekr.20040315202347">def testFindCommand (self):
-    
-    g.trace(self.find_p)</t>
-<t tx="ekr.20040315202718">def testFindWordCommand (self):
-    
-    pass</t>
-<t tx="ekr.20040315202718.1">def testFindIgnoreCaseCommand (self):
-    
-    pass</t>
 <t tx="ekr.20040315202718.2">import unittest
 import leoTest
 reload(leoTest) # Allows us to rerun this script when leoTest.py changes.
 
 # Make sure this is the selected node.
 u = leoTest.testUtils()
-p = u.findUnitTestNode("fileCommandTests")
+p = u.findUnitTestNode("findCommandTests")
 p.c.selectVnode(p)
 
 suite = leoTest.makeFindCommandSuite()
@@ -5735,7 +4101,7 @@ unittest.TextTestRunner().run(suite)</t>
 
 - Used iterators in test utils.
 - Used "import leoGlobals as g" style.</t>
-<t tx="ekr.20040317101155" lineYOffset="4b032e" icons="5d7100287d710128550577686572657102550a6265666f726549636f6e710355047870616471044b025504747970657105550466696c6571066806582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286805680668084afdffffff6806582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6802550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">import leoGlobals as g
+<t tx="ekr.20040317101155" lineYOffset="4b032e" icons="5d7100287d7101285504747970657102550466696c65710355047870616471044b02550577686572657105550a6265666f726549636f6e71066803582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286802680368084afdffffff6803582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6805550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">import leoGlobals as g
 
 c = g.top()
 
@@ -6152,30 +4518,6 @@ for p in c.allNodes_iter():
             assert(id(v.t._firstChild) == id(childv))
             
 print "done"</t>
-<t tx="ekr.20040323163413">def testThatClonesShareSubtrees (self):
-    
-    """Test that cloned nodes actually share subtrees."""
-
-    for p in self.root.allNodes_iter():
-        if p.isCloned() and p.hasChildren():
-            childv = p.firstChild().v
-            assert(childv == p.v.t._firstChild)
-            assert(id(childv) == id(p.v.t._firstChild))
-            for v in p.v.t.vnodeList:
-                assert(v.t._firstChild == childv)
-                assert(id(v.t._firstChild) == id(childv))</t>
-<t tx="ekr.20040323163643">def testConsistencyOfVnodeListAndParents (self):
-
-    for p in self.root.allNodes_iter():
-        if p.isCloned():
-            parents = p.v.t.vnodeList
-            for child in p.children_iter():
-                vparents = child.v.directParents()
-                assert(len(parents) == len(vparents))
-                for parent in parents:
-                    assert(parent in vparents)
-                for parent in vparents:
-                    assert(parent in parents)</t>
 <t tx="ekr.20040325073120">@ignore</t>
 <t tx="ekr.20040325082811">import leoGlobals as g
 
@@ -6245,7 +4587,6 @@ try:
     f.write("This is a test")
 finally:
     if f: f.close()</t>
-<t tx="ekr.20040327115825"></t>
 <t tx="ekr.20040327115825.1">@color
 
 import unittest
@@ -6259,28 +4600,6 @@ p.c.selectVnode(p)
 
 suite = leoTest.makeBatchModeSuite()
 unittest.TextTestRunner().run(suite)</t>
-<t tx="ekr.20040327115832.1">def makeBatchModeSuite (*args,**keys):
-    
-    """Create a colorizer test for every descendant of testParentHeadline.."""
-    
-    return unittest.makeSuite(batchModeTestCase,'test')</t>
-<t tx="ekr.20040327115832.2">class batchModeTestCase(unittest.TestCase):
-    
-    """unit tests for batch mode (--script)."""
-    
-    @others</t>
-<t tx="ekr.20040327120228">def test_1 (self):
-
-    path = r"c:\prog\test\unittest\createdFile.txt"
-    
-    s = r"c:\python23\python c:\prog\LeoCVS\leo\src\leo.py -script c:\prog\test\unittest\batchTest.py"
-    
-    if os.path.exists(path):
-        os.remove(path)
-    
-    os.system(s)
-    
-    assert(os.path.exists(path))</t>
 <t tx="ekr.20040330095252">import leoGlobals as g
 c = g.top()
 t = c.frame.log.logCtrl

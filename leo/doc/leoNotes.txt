@@ -6076,6 +6076,36 @@ if j < i:
 	line_delim = None
 #@nonl
 #@-node:EKR.20040604162138:<< old code from removeSentinelsCommand >>
+#@+node:EKR.20040625082852:compareDerivedFiles (Not used)
+def compareDerivedFiles (self,result,expected):
+    
+    lines1 = g.splitLines(result)
+    lines2 = g.splitLines(expected)
+    
+    kinds = ("@file","@thin","@nosent","@noref","@asis")
+    
+    if len(lines1) != len(lines2):
+        print "length mismatch"
+        return False
+        
+    for i in xrange(len(lines1)):
+        line1 = lines1[i]
+        line2 = lines2[i]
+        if line1 == line2:
+            continue
+        for kind in kinds:
+            found = False
+            if (
+                line1.find("node:@%s" % kind) > -1 and
+                line2.find("node:%s" % kind) > -1
+            ):
+                found = True ; break
+        if found: continue
+        else: return False
+
+    return True
+#@nonl
+#@-node:EKR.20040625082852:compareDerivedFiles (Not used)
 #@-node:ekr.20040311143141:No longer used in 4.2
 #@-node:ekr.20031218072017.434:Unused code
 #@-all
