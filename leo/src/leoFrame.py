@@ -382,12 +382,13 @@ class leoFrame:
         self.startupWindow=False # True if initially opened window
         self.stylesheet = None # The contents of <?xml-stylesheet...?> line.
     
-        # Colors of log pane.
+        # Colors of status pane.
         self.statusColorTags = [] # list of color names used as tags in status window.
     
         # Previous row and column shown in the status area.
         self.lastStatusRow = self.lastStatusCol = 0
         self.tab_width = 0 # The tab width in effect in this pane.
+        self.statusIsEnabled = False
     #@nonl
     #@-node:ekr.20031218072017.3679:  leoFrame.__init__
     #@+node:ekr.20031218072017.3680: Must be defined in subclasses
