@@ -172,14 +172,8 @@ class atFile:
 			else:
 				# Use absolute node indices.
 				node_s = str(index)
-		
-		# 10/23/02: The cweb hack: double @ signs if the opening comment delim ends in '@'.
-		head = v.headString()
-		start = self.startSentinelComment
-		if start and len(start) > 0 and start[-1] == '@':
-			head = string.replace(head,'@','@@')
 	
-		return node_s + ':' + clone_s + ':' + head
+		return node_s + ':' + clone_s + ':' +  v.headString()
 	#@-body
 	#@-node:1::nodeSentinelText
 	#@+node:2::putCloseNodeSentinel
@@ -264,7 +258,7 @@ class atFile:
 			last = node
 	#@-body
 	#@-node:6::putOpenSentinels
-	#@+node:7::putSentinel
+	#@+node:7::putSentinel (applies cweb hack to all sentinels)
 	#@+body
 	#@+at
 	#  All sentinels are eventually output by this method.
@@ -292,6 +286,12 @@ class atFile:
 		self.newline_pending = false # discard any pending newline.
 		self.onl() ; self.putIndent(self.indent) # Start of sentinel.
 		self.os(self.startSentinelComment)
+	
+		if 1: # 10/30/02: The cweb hack: double @ signs if the opening comment delim ends in '@'.
+			start = self.startSentinelComment
+			if start and len(start) > 0 and start[-1] == '@':
+				s = string.replace(s,'@','@@')
+		
 		self.os(s)
 		self.os(self.endSentinelComment)
 		if self.suppress_newlines:
@@ -299,7 +299,7 @@ class atFile:
 		else:
 			self.onl() # End of sentinel.
 	#@-body
-	#@-node:7::putSentinel
+	#@-node:7::putSentinel (applies cweb hack to all sentinels)
 	#@+node:8::sentinelKind
 	#@+body
 	#@+at
@@ -334,6 +334,12 @@ class atFile:
 			i += len(self.startSentinelComment)
 		else:
 			return atFile.noSentinel
+	
+		# 10/30/02: locally undo cweb hack here
+		start = self.startSentinelComment
+		if start and len(start) > 0 and start[-1] == '@':
+			s = s[:i] + string.replace(s[i:],'@@','@')
+	
 		# Do not skip whitespace here!
 		if match(s,i,"@<<"): return atFile.startRef
 		if match(s,i,"@@"): return atFile.startDirective
@@ -377,14 +383,22 @@ class atFile:
 	#@+body
 	def skipSentinelStart(self,s,i):
 	
+		start = self.startSentinelComment
+		assert(start and len(start)>0)
+	
 		if is_nl(s,i): i = skip_nl(s,i)
 		i = skip_ws(s,i)
-		assert(match(s,i,self.startSentinelComment))
-		i += len(self.startSentinelComment)
+		assert(match(s,i,start))
+		i += len(start)
 		# 7/8/02: Support for REM hack
 		i = skip_ws(s,i)
 		assert(i < len(s) and s[i] == '@')
+		# 10/31/02: Support for cweb hack.
+		if start[-1] == '@':
+			assert(match(s,i,"@@"))
+			i += 1
 		return i + 1
+	
 	#@-body
 	#@-node:10::skipSentinelStart
 	#@-node:3::Sentinels
@@ -1637,6 +1651,7 @@ class atFile:
 				#@+node:7::unpaired sentinels
 				#@+node:1::<< scan @@ >>
 				#@+body
+				# The first '@' has already been eaten.
 				assert(match(s,i,"@"))
 				
 				if match_word(s,i,"@raw"):
@@ -1644,17 +1659,18 @@ class atFile:
 				elif match_word(s,i,"@end_raw"):
 					self.raw = false
 				
-				# The first '@' has already been eaten.
-				if len(self.endSentinelComment) == 0:
-					out.append(s[i:])
-				else:
-					# 10/2/04: changed find to rfind, per suggestion of Rich Ries
-					k = string.rfind(s,self.endSentinelComment,i)
-					if k == -1:
-						out.append(s[i:])
-					else:
-						out.append(s[i:k] + '\n')
-				
+				e = self.endSentinelComment
+				s2 = s[i:]
+				if len(e) > 0:
+					k = string.rfind(s,e,i)
+					if k != -1:
+						s2 = s[i:k] + '\n'
+					
+				start = self.startSentinelComment
+				if start and len(start) > 0 and start[-1] == '@':
+					s2 = string.replace(s2,'@@','@')
+				out.append(s2)
+				# trace(`s2`)
 				#@-body
 				#@-node:1::<< scan @@ >>
 				#@-node:7::unpaired sentinels
@@ -1870,9 +1886,13 @@ class atFile:
 				else:
 					k = string.find(s,self.endSentinelComment,i)
 					line = s[i:k] # No trailing newline, whatever k is.
-					
-				out.append(line)
+						
+				# 10/30/02: undo cweb hack here
+				start = self.startSentinelComment
+				if start and len(start) > 0 and start[-1] == '@':
+					line = string.replace(line,'@@','@')
 				
+				out.append(line)
 				#@-body
 				#@-node:4::<< scan @ref >>
 				#@-node:7::unpaired sentinels
@@ -2409,26 +2429,7 @@ class atFile:
 	#@-body
 	#@-node:7::putRef
 	#@-node:3::putCodePart & allies
-	#@+node:4::atFile.putCWEB (no longer used)
-	#@+body
-	def putCWEB (self,root):
-	
-		next = root.nodeAfterTree()
-		v = root
-		while v and v != next:
-			self.putOpenNodeSentinel(v)
-			self.putSentinel("@+body")
-			s = v.bodyString()
-			for ch in s:
-				if ch == '\n': self.onl()
-				else: self.os(ch)
-			self.putSentinel("@-body")
-			self.putCloseNodeSentinel(v)
-			v = v.threadNext()
-	
-	#@-body
-	#@-node:4::atFile.putCWEB (no longer used)
-	#@+node:5::putDirective  (handles @delims)
+	#@+node:4::putDirective  (handles @delims)
 	#@+body
 	# This method outputs s, a directive or reference, in a sentinel.
 	
@@ -2472,8 +2473,8 @@ class atFile:
 		i = skip_line(s,k)
 		return i
 	#@-body
-	#@-node:5::putDirective  (handles @delims)
-	#@+node:6::putEmptyDirective (Dave Hein)
+	#@-node:4::putDirective  (handles @delims)
+	#@+node:5::putEmptyDirective (Dave Hein)
 	#@+body
 	# 14-SEP-2002 DTHEIN
 	# added for use by putBodyPart()
@@ -2494,8 +2495,8 @@ class atFile:
 		i = skip_line(s,i)
 		return i
 	#@-body
-	#@-node:6::putEmptyDirective (Dave Hein)
-	#@+node:7::putDoc
+	#@-node:5::putEmptyDirective (Dave Hein)
+	#@+node:6::putDoc
 	#@+body
 	#@+at
 	#  This method outputs a doc section terminated by @code or end-of-text.  
@@ -2522,8 +2523,8 @@ class atFile:
 		self.putSentinel("@-" + tag)
 		return j
 	#@-body
-	#@-node:7::putDoc
-	#@+node:8::putDocPart
+	#@-node:6::putDoc
+	#@+node:7::putDocPart
 	#@+body
 	# Puts a comment part in comments.
 	
@@ -2592,8 +2593,8 @@ class atFile:
 			self.os(self.endSentinelComment)
 			self.onl() # Note: no trailing whitespace.
 	#@-body
-	#@-node:8::putDocPart
-	#@+node:9::putIndent
+	#@-node:7::putDocPart
+	#@+node:8::putIndent
 	#@+body
 	# Puts tabs and spaces corresponding to n spaces, assuming that we are at the start of a line.
 	
@@ -2608,8 +2609,8 @@ class atFile:
 		else:
 			self.oblanks(n)
 	#@-body
-	#@-node:9::putIndent
-	#@+node:10::atFile.closeWriteFile
+	#@-node:8::putIndent
+	#@+node:9::atFile.closeWriteFile
 	#@+body
 	def closeWriteFile (self):
 		
@@ -2622,8 +2623,8 @@ class atFile:
 			self.outputFile = None
 	
 	#@-body
-	#@-node:10::atFile.closeWriteFile
-	#@+node:11::atFile.handleWriteException
+	#@-node:9::atFile.closeWriteFile
+	#@+node:10::atFile.handleWriteException
 	#@+body
 	def handleWriteException (self,root=None):
 		
@@ -2647,8 +2648,8 @@ class atFile:
 			root.setOrphan()
 			root.setDirty()
 	#@-body
-	#@-node:11::atFile.handleWriteException
-	#@+node:12::atFile.openWriteFile
+	#@-node:10::atFile.handleWriteException
+	#@+node:11::atFile.openWriteFile
 	#@+body
 	# Open files.  Set root.orphan and root.dirty flags and return on errors.
 	
@@ -2709,8 +2710,8 @@ class atFile:
 		
 		return valid
 	#@-body
-	#@-node:12::atFile.openWriteFile
-	#@+node:13::atFile.replaceTargetFileIfDifferent
+	#@-node:11::atFile.openWriteFile
+	#@+node:12::atFile.replaceTargetFileIfDifferent
 	#@+body
 	def replaceTargetFileIfDifferent (self):
 		
@@ -2776,8 +2777,8 @@ class atFile:
 
 	
 	#@-body
-	#@-node:13::atFile.replaceTargetFileIfDifferent
-	#@+node:14::atFile.write
+	#@-node:12::atFile.replaceTargetFileIfDifferent
+	#@+node:13::atFile.write
 	#@+body
 	# This is the entry point to the write code.  root should be an @file vnode.
 	
@@ -2938,8 +2939,8 @@ class atFile:
 			self.handleWriteException()
 	
 	#@-body
-	#@-node:14::atFile.write
-	#@+node:15::atFile.rawWrite
+	#@-node:13::atFile.write
+	#@+node:14::atFile.rawWrite
 	#@+body
 	def rawWrite(self,root):
 	
@@ -3066,8 +3067,8 @@ class atFile:
 		except:
 			self.handleWriteException(root)
 	#@-body
-	#@-node:15::atFile.rawWrite
-	#@+node:16::atFile.silentWrite
+	#@-node:14::atFile.rawWrite
+	#@+node:15::atFile.silentWrite
 	#@+body
 	def silentWrite(self,root):
 	
@@ -3112,8 +3113,8 @@ class atFile:
 		except:
 			self.handleWriteException(root)
 	#@-body
-	#@-node:16::atFile.silentWrite
-	#@+node:17::atFile.writeAll
+	#@-node:15::atFile.silentWrite
+	#@+node:16::atFile.writeAll
 	#@+body
 	#@+at
 	#  This method scans all vnodes, calling write for every @file node 
@@ -3174,7 +3175,7 @@ class atFile:
 			else:
 				es("no @file, @rawfile or @silentfile nodes in the selected tree")
 	#@-body
-	#@-node:17::atFile.writeAll
+	#@-node:16::atFile.writeAll
 	#@-node:6::Writing
 	#@+node:7::Testing
 	#@+node:1::scanAll
