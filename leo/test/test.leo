@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="145" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="123" clone_windows="0"/>
 <globals body_outline_ratio="0.5">
-	<global_window_position top="201" left="155" height="478" width="621"/>
+	<global_window_position top="40" left="105" height="802" width="916"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences allow_rich_text="0">
@@ -13,7 +13,7 @@
 </find_panel_settings>
 <vnodes>
 <v t="T1"><vh>Distribution checklist</vh></v>
-<v t="T2"><vh>Distribution scripts</vh></v>
+<v t="T2" a="V"><vh>Distribution scripts</vh></v>
 <v t="T3"><vh>Notes</vh>
 <v t="T4"><vh>Quote from Alex Martelli</vh></v>
 <v t="T5"><vh>Singleton sequences</vh></v>
@@ -21,109 +21,109 @@
 </v>
 <v t="T7"><vh>Previous tests</vh>
 <v t="T8"><vh> Colorizer tests</vh>
-<v t="T9"><vh>tests</vh></v>
-<v t="T10"><vh>php test</vh></v>
-<v t="T11"><vh>(Incremental Syntax Coloring)</vh>
-<v t="T12"><vh> Tests</vh>
-<v t="T13"><vh> Long text for tests</vh></v>
-<v t="T14"><vh>Dave Hein</vh>
+<v t="T9"><vh>(colorizing bug)</vh>
+<v t="T10"><vh>report</vh></v>
+<v t="T11"><vh>@file c:\prog\test\Enroll SerNum.c</vh>
+<v t="T12"><vh>&lt;&lt; Defines &gt;&gt;</vh></v>
+<v t="T13"><vh>&lt;&lt; Head &gt;&gt;</vh></v>
+</v>
+</v>
+<v t="T14"><vh>(Fixed syntax coloring bugs when language/comments change)</vh>
 <v t="T15"><vh>Test</vh></v>
 </v>
-<v t="T16"><vh>Dave Hein2</vh>
-<v t="T17"><vh>NewHeadline</vh></v>
+<v t="T16"><vh>(html syntax coloring)</vh>
+<v t="T17"><vh>test</vh></v>
 </v>
-<v t="T18"><vh>Long test</vh></v>
-<v t="T19"><vh>problems</vh></v>
+<v t="T18"><vh>(Incremental Syntax Coloring)</vh>
+<v t="T19"><vh> Tests</vh>
+<v t="T20"><vh> Long text for tests</vh></v>
+<v t="T21"><vh>Dave Hein</vh>
+<v t="T22"><vh>Test</vh></v>
 </v>
+<v t="T23"><vh>Dave Hein2</vh>
+<v t="T24"><vh>NewHeadline</vh></v>
 </v>
-<v t="T20"><vh>(html syntax coloring)</vh>
-<v t="T21"><vh>test</vh></v>
-</v>
-<v t="T22"><vh>(Fixed syntax coloring bugs when language/comments change)</vh>
-<v t="T23"><vh>Test</vh></v>
-</v>
-<v t="T24"><vh>(colorizing bug)</vh>
-<v t="T25"><vh>report</vh></v>
-<v t="T26"><vh>@file c:\prog\test\Enroll SerNum.c</vh>
-<v t="T27"><vh>&lt;&lt; Defines &gt;&gt;</vh></v>
-<v t="T28"><vh>&lt;&lt; Head &gt;&gt;</vh></v>
+<v t="T25"><vh>Long test</vh></v>
+<v t="T26"><vh>problems</vh></v>
 </v>
 </v>
-</v>
-<v t="T29" a="E"><vh>@encoding test</vh>
-<v t="T30"><vh>@file c:\prog\test\encodingTest.txt</vh>
-<v t="T31"><vh>Umlaut in headline ë</vh></v>
-</v>
-</v>
-<v t="T32"><vh>@file c:\prog\test\tab_test.txt</vh></v>
-<v t="T33"><vh>@image Icons/Leoapp.GIF</vh></v>
-<v t="T34"><vh>Actionscript keywords</vh></v>
-<v t="T35"><vh>alloc tests</vh></v>
-<v t="T36"><vh>Assignment tests</vh></v>
-<v t="T37"><vh>clone tests</vh>
-<v t="T38" a="C"><vh>A</vh>
-<v t="T39" a="C"><vh>B</vh>
-<v t="T40" a="C"><vh>C</vh>
-<v t="T41"><vh>D</vh></v>
-</v>
-<v t="T40" a="C"><vh>C</vh>
-<v t="T41"><vh>D</vh></v>
+<v t="T27"><vh>php test</vh></v>
+<v t="T28"><vh>tests</vh></v>
+<v t="T29"><vh>wiki tests</vh>
+<v t="T30"><vh>test 1</vh></v>
+<v t="T31"><vh>test 2</vh></v>
+<v t="T32"><vh>test 3</vh></v>
 </v>
 </v>
-<v t="T39" a="C"><vh>B</vh>
-<v t="T40" a="C"><vh>C</vh>
-<v t="T41"><vh>D</vh></v>
-</v>
-<v t="T40" a="C"><vh>C</vh>
-<v t="T41"><vh>D</vh></v>
+<v t="T33"><vh>@encoding test</vh>
+<v t="T34"><vh>@file c:\prog\test\encodingTest.txt</vh>
+<v t="T35"><vh>Umlaut in headline ë</vh></v>
 </v>
 </v>
+<v t="T36"><vh>@file c:\prog\test\tab_test.txt</vh></v>
+<v t="T37"><vh>@image Icons/Leoapp.GIF</vh></v>
+<v t="T38"><vh>Actionscript keywords</vh></v>
+<v t="T39"><vh>alloc tests</vh></v>
+<v t="T40"><vh>Assignment tests</vh></v>
+<v t="T41"><vh>clone tests</vh>
+<v t="T42" a="C"><vh>A</vh>
+<v t="T43" a="C"><vh>B</vh>
+<v t="T44" a="C"><vh>C</vh>
+<v t="T45"><vh>D</vh></v>
 </v>
-<v t="T42" a="C"><vh>New root</vh>
-<v t="T38" a="CE"><vh>A</vh>
-<v t="T39" a="C"><vh>B</vh>
-<v t="T40" a="C"><vh>C</vh>
-<v t="T41"><vh>D</vh></v>
-</v>
-<v t="T40" a="C"><vh>C</vh>
-<v t="T41"><vh>D</vh></v>
+<v t="T44" a="C"><vh>C</vh>
+<v t="T45"><vh>D</vh></v>
 </v>
 </v>
-<v t="T39" a="C"><vh>B</vh>
-<v t="T40" a="C"><vh>C</vh>
-<v t="T41"><vh>D</vh></v>
+<v t="T43" a="C"><vh>B</vh>
+<v t="T44" a="C"><vh>C</vh>
+<v t="T45"><vh>D</vh></v>
 </v>
-<v t="T40" a="C"><vh>C</vh>
-<v t="T41"><vh>D</vh></v>
+<v t="T44" a="C"><vh>C</vh>
+<v t="T45"><vh>D</vh></v>
 </v>
 </v>
 </v>
+<v t="T46" a="C"><vh>New root</vh>
+<v t="T42" a="C"><vh>A</vh>
+<v t="T43" a="C"><vh>B</vh>
+<v t="T44" a="C"><vh>C</vh>
+<v t="T45"><vh>D</vh></v>
 </v>
-<v t="T42" a="C"><vh>New root</vh>
-<v t="T38" a="C"><vh>A</vh>
-<v t="T39" a="C"><vh>B</vh>
-<v t="T40" a="C"><vh>C</vh>
-<v t="T41"><vh>D</vh></v>
-</v>
-<v t="T40" a="C"><vh>C</vh>
-<v t="T41"><vh>D</vh></v>
+<v t="T44" a="C"><vh>C</vh>
+<v t="T45"><vh>D</vh></v>
 </v>
 </v>
-<v t="T39" a="C"><vh>B</vh>
-<v t="T40" a="C"><vh>C</vh>
-<v t="T41"><vh>D</vh></v>
+<v t="T43" a="C"><vh>B</vh>
+<v t="T44" a="C"><vh>C</vh>
+<v t="T45"><vh>D</vh></v>
 </v>
-<v t="T40" a="C"><vh>C</vh>
-<v t="T41"><vh>D</vh></v>
+<v t="T44" a="C"><vh>C</vh>
+<v t="T45"><vh>D</vh></v>
 </v>
 </v>
 </v>
 </v>
+<v t="T46" a="C"><vh>New root</vh>
+<v t="T42" a="C"><vh>A</vh>
+<v t="T43" a="C"><vh>B</vh>
+<v t="T44" a="C"><vh>C</vh>
+<v t="T45"><vh>D</vh></v>
 </v>
-<v t="T43"><vh>Coloring Test</vh>
-<v t="T44"><vh>Colorizing Test</vh></v>
-<v t="T45"><vh>Color test without images</vh></v>
-<v t="T46"><vh>Color names test</vh></v>
+<v t="T44" a="C"><vh>C</vh>
+<v t="T45"><vh>D</vh></v>
+</v>
+</v>
+<v t="T43" a="C"><vh>B</vh>
+<v t="T44" a="C"><vh>C</vh>
+<v t="T45"><vh>D</vh></v>
+</v>
+<v t="T44" a="C"><vh>C</vh>
+<v t="T45"><vh>D</vh></v>
+</v>
+</v>
+</v>
+</v>
 </v>
 <v t="T47"><vh>Copy/Clones test</vh>
 <v t="T48" a="C"><vh>a Å</vh>
@@ -176,121 +176,88 @@
 </v>
 <v t="T76"><vh>Check clones links</vh></v>
 </v>
-<v t="T77"><vh>Line break problems</vh>
-<v t="T78"><vh>Error</vh>
-<v t="T79"><vh>@nosentinelsfile c:\prog\test\lineBreakError.txt</vh>
-<v t="T80"><vh>functions</vh>
-<v t="T81"><vh>objects</vh>
-<v t="T82" a="M"><vh>class shape</vh>
-<v t="T83"><vh>&lt;&lt; class shape declarations &gt;&gt;</vh></v>
+<v t="T77"><vh>Leo Unit Tests</vh></v>
+<v t="T78"><vh>Line break problems</vh>
+<v t="T79"><vh>Error</vh>
+<v t="T80"><vh>@nosentinelsfile c:\prog\test\lineBreakError.txt</vh>
+<v t="T81"><vh>functions</vh>
+<v t="T82"><vh>objects</vh>
+<v t="T83" a="M"><vh>class shape</vh>
+<v t="T84"><vh>&lt;&lt; class shape declarations &gt;&gt;</vh></v>
 </v>
 </v>
 </v>
 </v>
 </v>
 </v>
-<v t="T84"><vh>New import</vh></v>
-<v t="T85"><vh>Overriding core classes</vh></v>
-<v t="T86"><vh>Read @file nodes</vh>
-<v t="T87"><vh>@file c:\prog\test\atFileTest.txt</vh>
-<v t="T88"><vh>Node 1</vh></v>
+<v t="T85"><vh>New import</vh></v>
+<v t="T86"><vh>Overriding core classes</vh></v>
+<v t="T87"><vh>Read @file nodes</vh>
+<v t="T88"><vh>@file c:\prog\test\atFileTest.txt</vh>
+<v t="T89"><vh>Node 1</vh></v>
 </v>
 </v>
-<v t="T89"><vh>Rebol keywords (- ? ~ ! recognized as a part of a keyword)</vh></v>
-<v t="T90"><vh>reformatParagraph test</vh></v>
-<v t="T91"><vh>Spell test </vh>
-<v t="T92"><vh>node two</vh></v>
-<v t="T93"><vh>node two no misspellings</vh></v>
+<v t="T90"><vh>Rebol keywords (- ? ~ ! recognized as a part of a keyword)</vh></v>
+<v t="T91"><vh>reformatParagraph test</vh></v>
+<v t="T92"><vh>Spell test </vh>
+<v t="T93"><vh>node two</vh></v>
+<v t="T94"><vh>node two no misspellings</vh></v>
 </v>
-<v t="T94"><vh>Status line</vh>
-<v t="T95"><vh>put message</vh></v>
-<v t="T96"><vh>clear</vh></v>
-<v t="T97"><vh>tab width tests</vh>
-<v t="T98"><vh>2</vh></v>
-<v t="T99"><vh>4</vh></v>
-<v t="T100"><vh>6</vh></v>
-<v t="T101"><vh>8</vh></v>
-</v>
-</v>
-<v t="T102"><vh>Test of recent sections &amp; clones</vh>
-<v t="T103" a="C"><vh>&lt;&lt; section a &gt;&gt;</vh></v>
-<v t="T104" a="C"><vh>hyper link test</vh>
-<v t="T103" a="C"><vh>&lt;&lt; section a &gt;&gt;</vh></v>
-<v t="T105"><vh>&lt;&lt; section b &gt;&gt;</vh></v>
-</v>
-<v t="T104" a="C"><vh>hyper link test</vh>
-<v t="T103" a="C"><vh>&lt;&lt; section a &gt;&gt;</vh></v>
-<v t="T105"><vh>&lt;&lt; section b &gt;&gt;</vh></v>
+<v t="T95"><vh>Status line</vh>
+<v t="T96"><vh>put message</vh></v>
+<v t="T97"><vh>clear</vh></v>
+<v t="T98"><vh>tab width tests</vh>
+<v t="T99"><vh>2</vh></v>
+<v t="T100"><vh>4</vh></v>
+<v t="T101"><vh>6</vh></v>
+<v t="T102"><vh>8</vh></v>
 </v>
 </v>
-<v t="T106"><vh>timeit (in 2.3b1)</vh></v>
-<v t="T107"><vh>Trailing newline in body</vh></v>
-<v t="T108"><vh>Undo replace tests</vh>
-<v t="T109" a="C"><vh>A</vh>
-<v t="T110" a="C"><vh>B</vh>
-<v t="T111"><vh>C</vh></v>
-<v t="T112"><vh>C2</vh></v>
+<v t="T103"><vh>Test of recent sections &amp; clones</vh>
+<v t="T104" a="C"><vh>&lt;&lt; section a &gt;&gt;</vh></v>
+<v t="T105" a="C"><vh>hyper link test</vh>
+<v t="T104" a="C"><vh>&lt;&lt; section a &gt;&gt;</vh></v>
+<v t="T106"><vh>&lt;&lt; section b &gt;&gt;</vh></v>
 </v>
-<v t="T110" a="C"><vh>B</vh>
-<v t="T111"><vh>C</vh></v>
-<v t="T112"><vh>C2</vh></v>
+<v t="T105" a="C"><vh>hyper link test</vh>
+<v t="T104" a="C"><vh>&lt;&lt; section a &gt;&gt;</vh></v>
+<v t="T106"><vh>&lt;&lt; section b &gt;&gt;</vh></v>
 </v>
 </v>
-<v t="T109" a="C"><vh>A</vh>
-<v t="T110" a="C"><vh>B</vh>
-<v t="T111"><vh>C</vh></v>
-<v t="T112"><vh>C2</vh></v>
-</v>
-<v t="T110" a="C"><vh>B</vh>
-<v t="T111"><vh>C</vh></v>
-<v t="T112"><vh>C2</vh></v>
-</v>
-</v>
-</v>
-<v t="T113"><vh>Undo typing tests</vh></v>
-<v t="T114"><vh>v.__repr__ and v.__str___</vh></v>
-<v t="T115"><vh>wrap test</vh>
-<v t="T116"><vh>@file c:\prog\test\wrap_test.txt</vh>
-<v t="T117"><vh>wrap node</vh></v>
-<v t="T118"><vh>nowrap node</vh></v>
+<v t="T107"><vh>timeit (in 2.3b1)</vh></v>
+<v t="T108"><vh>Trailing newline in body</vh></v>
+<v t="T109"><vh>Use xml.sax</vh></v>
+<v t="T110"><vh>v.__repr__ and v.__str___</vh></v>
+<v t="T111"><vh>wrap test</vh>
+<v t="T112"><vh>@file c:\prog\test\wrap_test.txt</vh>
+<v t="T113"><vh>wrap node</vh></v>
+<v t="T114"><vh>nowrap node</vh></v>
 </v>
 </v>
-<v t="T119"><vh>Write Missing @file nodes test</vh>
-<v t="T120"><vh>@file ../test/missing_test.txt</vh></v>
+<v t="T115"><vh>Write Missing @file nodes test</vh>
+<v t="T116"><vh>@file ../test/missing_test.txt</vh></v>
+</v>
+<v t="T117"><vh>wx Leo</vh></v>
+<v t="T118"><vh>Undo typing tests</vh></v>
+<v t="T119"><vh>Undo replace tests</vh>
+<v t="T120" a="CE"><vh>B</vh>
+<v t="T121"><vh>C</vh></v>
+<v t="T122"><vh>C2</vh></v>
+</v>
+<v t="T123" a="CE"><vh>A</vh>
+<v t="T120" a="CE"><vh>B</vh>
+<v t="T121"><vh>C</vh></v>
+<v t="T122"><vh>C2</vh></v>
 </v>
 </v>
-<v t="T121" a="E"><vh>To do</vh>
-<v t="T122"><vh>Use xml.sax</vh></v>
-</v>
-<v t="T123"><vh>TDD experiments</vh>
-<v t="T124"><vh>To do</vh>
-<v t="T125"><vh>Invoke test method</vh></v>
-<v t="T126"><vh>INvoke setUp first</vh></v>
-<v t="T127"><vh>Invoke tearDown afterward</vh></v>
-<v t="T128"><vh>Invoke tearDown even if the test method fails</vh></v>
-<v t="T129"><vh>Run multiple tests</vh></v>
-<v t="T130"><vh>Report collected results</vh></v>
-</v>
-<v t="T131"><vh>Run tdd tests</vh></v>
-<v t="T132"><vh>@file c:\prog\test\tddTest.py</vh>
-<v t="T133"><vh>main</vh></v>
-<v t="T134" a="E"><vh>class TestCase</vh>
-<v t="T135"><vh>__init__</vh></v>
-<v t="T136"><vh>run</vh></v>
-<v t="T137"><vh>setup</vh></v>
-</v>
-<v t="T138" a="E"><vh>class TestCaseTest(TestCase)</vh>
-<v t="T139"><vh>testRunning</vh></v>
-<v t="T140"><vh>testSetup</vh></v>
-</v>
-<v t="T141" a="E"><vh>classWasRun(TestCase)</vh>
-<v t="T142"><vh>__init__</vh></v>
-<v t="T143"><vh>testMethod</vh></v>
+<v t="T123" a="CE"><vh>A</vh>
+<v t="T120" a="CE"><vh>B</vh>
+<v t="T121"><vh>C</vh></v>
+<v t="T122"><vh>C2</vh></v>
 </v>
 </v>
 </v>
-<v t="T144"><vh>Leo Unit Tests</vh></v>
-<v t="T145" a="V"><vh>wx Leo</vh></v>
+</v>
 </vnodes>
 <tnodes>
 <t tx="T1">@color
@@ -382,48 +349,173 @@ ImageGrab.grab().save(path)
 </t>
 <t tx="T7"></t>
 <t tx="T8"></t>
-<t tx="T9">@ignore
-@ doc
-@c
-@language c
-	@others
+<t tx="T9"></t>
+<t tx="T10">@nocolor
 
-abc
-for # comment
-# pp
-@q comment @&gt; after
-// comment
-&lt;!-- comment --&gt; after
-/* java comment */
-{ pascal comment }
-% latex comment
-xor php keyword
-fblocked tcl keyword
-synchronized java keyword
-\acute latex keyword
-alarm perl keyword
+Read and respond to this message at: 
+http://sourceforge.net/forum/message.php?msg_id=1719215
+By: nobody
 
-# Python single-line comment
-// C single-line comment
-xx /* C block comment */ yy
-xxx """ triple string """ zzz
-a 'string' b
-c "string" d
-// C keywords
-switch, case
+Ok, it seems to be in the code I copied in. I tried it with a second Node, and
+don't have the trouble.
+
+Console Mode gives the following:
+
+Traceback (most recent call last):
+File "d:\language\literate programming\Leo\leoColor.py", line 830,
+in colorizeAnyLanguage
+    i,state = func(s,i,n)
+
+File "d:\language\literate programming\Leo\leoColor.py", line 934,
+in continueBlockComment
+    j = string.find(s,self.block_comment_end,i)
+
+File "D:\LANGUAGE\PYTHON\lib\string.py", line 174, in find
+    return s.find(*args)
+
+TypeError: expected a character buffer object
+
+The line, "#define WIPEOUT 0 /* " seems to be the problem child -- if I move
+the start-of-comment marker to the next line, the error message goes away; however,
+the lines between the '/*' and '*/' are NOT comment-colored...
+
+--Rich
 </t>
-<t tx="T10">@language php
-@ doc
+<t tx="T11">@language c
+@comment /* */
+@path .
+@ignore
+
+&lt;&lt; Defines &gt;&gt;
+&lt;&lt; Head &gt;&gt;</t>
+<t tx="T12">@
 @c
 
-and or
-array
-array()
-this is a test.
-__CLASS__
-&lt;?php and or array() ?&gt;
+#define WIPEOUT 0 /* 
+                   * Causes database card number &amp; flags to be set to zero. 
+                   * This is so I don't need an infinite supply of cards!
+                   */
+// Not colored (because of @language /* */)
+#include "equ.h"
+#include "cmn.h"
+#include "ramdef.h"
+#include "eeprom.h"
+#include &lt;hpc_ram.h&gt;
+#include &lt;rlydef.h&gt;</t>
+<t tx="T13"></t>
+<t tx="T14">@ Enabling or disabling @language or @comment now recolors entire text.</t>
+<t tx="T15">@language c
+ @comment /* */
+
+/* comment */
+# test</t>
+<t tx="T16">@language html
+@
+To do:
+
+done: use self.tag routine everywhere.
+done: convert index to be a method.
+done: create self.line_index ivar.  Use it in self.index().
+done: remove n param from most routines, especially calls to self.add_tag!
+done: complete test of syntax coloring.
+
+- add @language html when importing html file.
 </t>
-<t tx="T11">@ignore
+<t tx="T17">@color
+@ignore
+&lt;HTML&gt;
+&lt;!-- Author: Edward K. Ream, edream@tds.net --&gt;
+&lt;HEAD&gt;
+  &lt;META NAME="GENERATOR" CONTENT="Microsoft FrontPage 4.0"&gt;
+  &lt;TITLE&gt; Leo's Home Page &lt;/TITLE&gt;
+  &lt;META NAME="description" CONTENT="This page describes Leo.
+Leo adds powerful outlines to the noweb and CWEB literate programming languages."&gt;
+  &lt;META NAME="keywords" CONTENT="LEO, LITERATE PROGRAMMING, OUTLINES, CWEB,
+NOWEB, OUTLINES, EDWARD K. REAM, DONALD E. KNUTH, SILVIO LEVY, OPEN SOFTWARE"&gt;
+&lt;/HEAD&gt;
+&lt;!-- Last Modified: May 12, 2002 --&gt;
+&lt;BODY BGCOLOR="#fffbdc"&gt;
+
+&lt;H1 ALIGN=CENTER&gt;&lt;a NAME="top"&gt;&lt;/a&gt;&lt;IMG SRC="Blank.gif" width=
+"32" height="32" ALIGN="BOTTOM" NATURALSIZEFLAG="3"&gt;&lt;IMG SRC="leo.gif" 
+WIDTH="32" HEIGHT="32" ALIGN="BOTTOM" NATURALSIZEFLAG="3"&gt;&lt;a href="leo_TOC.html#top"&gt;&lt;IMG SRC=
+"arrow_rt.gif" WIDTH="32" HEIGHT="32" ALIGN="BOTTOM" NATURALSIZEFLAG="3"&gt;&lt;/a&gt; &amp;nbsp;&lt;/H1&gt;
+
+&lt;H1 ALIGN=CENTER&gt; Leo's Home Page&lt;/H1&gt;
+
+&lt;p align="center"&gt;&lt;a href="http://www.python.org/"&gt;&lt;img border="0" src="PythonPowered.gif" width="110" height="44"&gt; &lt;/a&gt; &lt;A HREF="http://sourceforge.net/"&gt;&lt;IMG SRC="http://sourceforge.net/sflogo.php?group_id=3458&amp;type=1" NATURALSIZEFLAG="0" ALT="SourceForge Logo"&gt;&lt;/A&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;
+&lt;A HREF="http://sourceforge.net/project/?group_id=3458"&gt;Leo at SourceForge&lt;/A&gt;&amp;nbsp;&amp;nbsp;
+&lt;a href="icons.html"&gt;&lt;img border="0" src="LeoCodeGray.gif" width="77" height="42"&gt;&lt;/a&gt;&amp;nbsp;&amp;nbsp;
+&lt;a href="icons.html"&gt;&lt;img border="0" src="LeoProse.gif" width="81" height="42"&gt;&lt;/a&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;
+
+&lt;H3&gt;&lt;A NAME="anchor127554"&gt;&lt;/A&gt;Summary&lt;/H3&gt;
+
+&lt;UL&gt;
+  &lt;LI&gt;Leo is a &lt;i&gt; programmer's editor&lt;/i&gt;  and a flexible &lt;i&gt;browser&lt;/i&gt; for
+    projects, programs, classes or data. Leo clarifies design, coding, debugging, testing
+  and maintenance.
+  &lt;LI&gt;Leo is an &lt;i&gt;outlining editor&lt;/i&gt;. Outlines clarify the big picture while
+    providing unlimited space for details.
+  &lt;LI&gt;Leo
+    is a &lt;a HREF="http://www.literateprogramming.com/"&gt;&lt;i&gt;literate
+    programming&lt;/i&gt;&lt;/a&gt; tool, compatible with &lt;A HREF="http://www.eecs.harvard.edu/~nr/noweb/"&gt;noweb&lt;/A&gt;
+    and &lt;a HREF="http://www-cs-faculty.stanford.edu/~knuth/cweb.html"&gt;CWEB&lt;/a&gt;.
+    Leo enhances any text-based
+programming language, from assembly language and C to Java, Python and XML.
+  &lt;LI&gt;Leo is also a &lt;i&gt;data organizer&lt;/i&gt;. A single Leo outline can generate complex
+    data spanning many different files.&amp;nbsp; Leo has been used to manage web sites.
+  &lt;LI&gt;Leo is a &lt;i&gt; project manager&lt;/i&gt;. Leo provides multiple views
+of a project within a single outline. Leo naturally represents tasks that remain
+    up-to-date.
+  &lt;LI&gt;Leo is fully &lt;i&gt; scriptable&lt;/i&gt; using &lt;A HREF="http://www.python.org/"&gt;Python&lt;/A&gt;
+  and saves its files in &lt;A HREF="http://www.w3.org/XML/"&gt;XML&lt;/A&gt; format.
+  &lt;LI&gt;Leo is &lt;i&gt;portable&lt;/i&gt;.&amp;nbsp; Leo.py is 100% pure Python and will run on
+    any platform supporting &lt;A HREF="http://www.python.org/"&gt;Python&lt;/A&gt;
+    and &lt;a href="http://tcl.activestate.com/"&gt;Tk/tcl&lt;/a&gt;, including Windows,
+    Linux and MacOS X.&amp;nbsp; Leo.exe runs on any Windows platform.
+  &lt;LI&gt;Leo is &lt;a href="http://www.opensource.org/"&gt; &lt;i&gt; Open Software&lt;/i&gt;&lt;/a&gt;, distributed under
+    the &lt;a href="http://www.python.org/doc/Copyright.html"&gt; Python License&lt;/a&gt;.
+&lt;/UL&gt;
+
+&lt;H3&gt;More Information and downloads&lt;/H3&gt;
+
+&lt;ul&gt;
+  &lt;LI&gt;An excellent &lt;a href="http://www.3dtree.com/ev/e/sbooks/leo/sbframetoc_ie.htm"&gt;online
+    tutorial&lt;/a&gt; and &lt;A HREF="http://www.jserv.com/jk_orr/xml/leo.htm"&gt;Leo resource
+  page&lt;/A&gt;, both written by &lt;a href="http://www.jserv.com/jk_orr"&gt;Joe Orr&lt;/a&gt;.
+  &lt;LI&gt;My brother's &lt;a href="SpeedReam.html"&gt;slashdot
+    article about Leo&lt;/a&gt;, the best description about why Leo is special.
+  &lt;LI&gt;&lt;A HREF="testimonials.html#anchor104391"&gt;What people are saying about Leo&lt;/A&gt;
+  &lt;LI&gt;&lt;A HREF="leo_TOC.html#anchor964914"&gt;Complete users guide&lt;/A&gt;
+    and
+    &lt;A HREF="intro.html#anchor887874"&gt;tutorial introduction&lt;/A&gt;  with
+  screen shots.
+  &lt;li&gt;&lt;a href="FAQ.html"&gt;FAQ&lt;/a&gt; and &lt;a href="http://sourceforge.net/forum/?group_id=3458"&gt;help and discussion
+    forums&lt;/a&gt;, preferable to &lt;A HREF="mailto:edream@tds.net"&gt;email&lt;/A&gt; so others may join
+    in.&lt;/li&gt;
+  &lt;li&gt;&lt;a href="icons.html"&gt;Icons&lt;/a&gt; for bragging about Leo.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;a href="http://sourceforge.net/project/showfiles.php?group_id=3458"&gt;Download
+    Leo&lt;/a&gt; from &lt;A HREF="http://sourceforge.net/project/?group_id=3458"&gt;Leo's SourceForge
+site&lt;/A&gt;.
+
+&lt;P ALIGN=left&gt;Leo's author is &lt;A HREF="http://personalpages.tds.net/~edream/index.html"&gt;Edward
+  K. Ream&lt;/A&gt; email: &lt;A HREF="mailto:edream@tds.net"&gt;edream@tds.net&lt;/A&gt; voice: (608) 231-0766
+
+&lt;HR ALIGN=LEFT&gt;
+
+&lt;p align="center"&gt;
+
+&lt;IMG SRC="Blank.gif" ALIGN="left" NATURALSIZEFLAG=
+"3" width="34" height="34"&gt;&lt;IMG SRC="leo.gif" ALIGN="left" NATURALSIZEFLAG=
+"3" width="32" height="32"&gt;&lt;a HREF="leo_TOC.html"&gt;&lt;IMG SRC="arrow_rt.gif" WIDTH="32"
+HEIGHT="32" ALIGN="left" NATURALSIZEFLAG="3"&gt;
+
+&lt;/BODY&gt;
+&lt;/HTML&gt;
+</t>
+<t tx="T18">@ignore
 
 @
 
@@ -434,8 +526,8 @@ We must do a _full_ recoloring when selecting any node, even for two cloned node
 Furthermore, at present undo must always do a full recoloring because setBodyStringOrPane just replaces the old text with the new, and that destroys all the coloring tags.  The only possible solution would be to do an "incremental update" in setBodyStringOrPane.  It would also be good to do that in tree.select.
 
 The present code _is_ faster than the old code because it avoids redundant drawing.</t>
-<t tx="T12"></t>
-<t tx="T13"># This creates a free-floating copy of v's tree for undo.
+<t tx="T19"></t>
+<t tx="T20"># This creates a free-floating copy of v's tree for undo.
 # The copied trees must use different tnodes than the original.
 
 def copyTree(self,root):
@@ -472,8 +564,8 @@ def copyTree(self,root):
         v.t = leoNodes.tnode(0, v.t.bodyString)
         v = v.threadNext()
     return result</t>
-<t tx="T14">@language c</t>
-<t tx="T15">@
+<t tx="T21">@language c</t>
+<t tx="T22">@
 This is just a test
 @c
 aprocedure(
@@ -517,7 +609,7 @@ int main()
 {
   return 0
 }</t>
-<t tx="T16">Here's another issue
+<t tx="T23">Here's another issue
 
 Create a @file node[snip]
 
@@ -532,12 +624,12 @@ black.
 
 This is a nit, really.
 </t>
-<t tx="T17">@language html
+<t tx="T24">@language html
 &lt;? xml version="1.0"&gt;
 &lt;!-- test --&gt;
 &lt;project name="Converter" default="dist"&gt;
 &lt;/project&gt;</t>
-<t tx="T18">def colorizeAnyLanguage (self,v,body,language,flag):
+<t tx="T25">def colorizeAnyLanguage (self,v,body,language,flag):
 	
 	try:		
 		self.incremental = 1
@@ -900,189 +992,134 @@ def colorizeAnyLanguage (self,v,body,language,flag):
 
 
 </t>
-<t tx="T19">"""python
+<t tx="T26">"""python
 string"""d
 
 'this\
 is</t>
-<t tx="T20">@language html
-@
-To do:
-
-done: use self.tag routine everywhere.
-done: convert index to be a method.
-done: create self.line_index ivar.  Use it in self.index().
-done: remove n param from most routines, especially calls to self.add_tag!
-done: complete test of syntax coloring.
-
-- add @language html when importing html file.
-</t>
-<t tx="T21">@color
-@ignore
-&lt;HTML&gt;
-&lt;!-- Author: Edward K. Ream, edream@tds.net --&gt;
-&lt;HEAD&gt;
-  &lt;META NAME="GENERATOR" CONTENT="Microsoft FrontPage 4.0"&gt;
-  &lt;TITLE&gt; Leo's Home Page &lt;/TITLE&gt;
-  &lt;META NAME="description" CONTENT="This page describes Leo.
-Leo adds powerful outlines to the noweb and CWEB literate programming languages."&gt;
-  &lt;META NAME="keywords" CONTENT="LEO, LITERATE PROGRAMMING, OUTLINES, CWEB,
-NOWEB, OUTLINES, EDWARD K. REAM, DONALD E. KNUTH, SILVIO LEVY, OPEN SOFTWARE"&gt;
-&lt;/HEAD&gt;
-&lt;!-- Last Modified: May 12, 2002 --&gt;
-&lt;BODY BGCOLOR="#fffbdc"&gt;
-
-&lt;H1 ALIGN=CENTER&gt;&lt;a NAME="top"&gt;&lt;/a&gt;&lt;IMG SRC="Blank.gif" width=
-"32" height="32" ALIGN="BOTTOM" NATURALSIZEFLAG="3"&gt;&lt;IMG SRC="leo.gif" 
-WIDTH="32" HEIGHT="32" ALIGN="BOTTOM" NATURALSIZEFLAG="3"&gt;&lt;a href="leo_TOC.html#top"&gt;&lt;IMG SRC=
-"arrow_rt.gif" WIDTH="32" HEIGHT="32" ALIGN="BOTTOM" NATURALSIZEFLAG="3"&gt;&lt;/a&gt; &amp;nbsp;&lt;/H1&gt;
-
-&lt;H1 ALIGN=CENTER&gt; Leo's Home Page&lt;/H1&gt;
-
-&lt;p align="center"&gt;&lt;a href="http://www.python.org/"&gt;&lt;img border="0" src="PythonPowered.gif" width="110" height="44"&gt; &lt;/a&gt; &lt;A HREF="http://sourceforge.net/"&gt;&lt;IMG SRC="http://sourceforge.net/sflogo.php?group_id=3458&amp;type=1" NATURALSIZEFLAG="0" ALT="SourceForge Logo"&gt;&lt;/A&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;
-&lt;A HREF="http://sourceforge.net/project/?group_id=3458"&gt;Leo at SourceForge&lt;/A&gt;&amp;nbsp;&amp;nbsp;
-&lt;a href="icons.html"&gt;&lt;img border="0" src="LeoCodeGray.gif" width="77" height="42"&gt;&lt;/a&gt;&amp;nbsp;&amp;nbsp;
-&lt;a href="icons.html"&gt;&lt;img border="0" src="LeoProse.gif" width="81" height="42"&gt;&lt;/a&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;
-
-&lt;H3&gt;&lt;A NAME="anchor127554"&gt;&lt;/A&gt;Summary&lt;/H3&gt;
-
-&lt;UL&gt;
-  &lt;LI&gt;Leo is a &lt;i&gt; programmer's editor&lt;/i&gt;  and a flexible &lt;i&gt;browser&lt;/i&gt; for
-    projects, programs, classes or data. Leo clarifies design, coding, debugging, testing
-  and maintenance.
-  &lt;LI&gt;Leo is an &lt;i&gt;outlining editor&lt;/i&gt;. Outlines clarify the big picture while
-    providing unlimited space for details.
-  &lt;LI&gt;Leo
-    is a &lt;a HREF="http://www.literateprogramming.com/"&gt;&lt;i&gt;literate
-    programming&lt;/i&gt;&lt;/a&gt; tool, compatible with &lt;A HREF="http://www.eecs.harvard.edu/~nr/noweb/"&gt;noweb&lt;/A&gt;
-    and &lt;a HREF="http://www-cs-faculty.stanford.edu/~knuth/cweb.html"&gt;CWEB&lt;/a&gt;.
-    Leo enhances any text-based
-programming language, from assembly language and C to Java, Python and XML.
-  &lt;LI&gt;Leo is also a &lt;i&gt;data organizer&lt;/i&gt;. A single Leo outline can generate complex
-    data spanning many different files.&amp;nbsp; Leo has been used to manage web sites.
-  &lt;LI&gt;Leo is a &lt;i&gt; project manager&lt;/i&gt;. Leo provides multiple views
-of a project within a single outline. Leo naturally represents tasks that remain
-    up-to-date.
-  &lt;LI&gt;Leo is fully &lt;i&gt; scriptable&lt;/i&gt; using &lt;A HREF="http://www.python.org/"&gt;Python&lt;/A&gt;
-  and saves its files in &lt;A HREF="http://www.w3.org/XML/"&gt;XML&lt;/A&gt; format.
-  &lt;LI&gt;Leo is &lt;i&gt;portable&lt;/i&gt;.&amp;nbsp; Leo.py is 100% pure Python and will run on
-    any platform supporting &lt;A HREF="http://www.python.org/"&gt;Python&lt;/A&gt;
-    and &lt;a href="http://tcl.activestate.com/"&gt;Tk/tcl&lt;/a&gt;, including Windows,
-    Linux and MacOS X.&amp;nbsp; Leo.exe runs on any Windows platform.
-  &lt;LI&gt;Leo is &lt;a href="http://www.opensource.org/"&gt; &lt;i&gt; Open Software&lt;/i&gt;&lt;/a&gt;, distributed under
-    the &lt;a href="http://www.python.org/doc/Copyright.html"&gt; Python License&lt;/a&gt;.
-&lt;/UL&gt;
-
-&lt;H3&gt;More Information and downloads&lt;/H3&gt;
-
-&lt;ul&gt;
-  &lt;LI&gt;An excellent &lt;a href="http://www.3dtree.com/ev/e/sbooks/leo/sbframetoc_ie.htm"&gt;online
-    tutorial&lt;/a&gt; and &lt;A HREF="http://www.jserv.com/jk_orr/xml/leo.htm"&gt;Leo resource
-  page&lt;/A&gt;, both written by &lt;a href="http://www.jserv.com/jk_orr"&gt;Joe Orr&lt;/a&gt;.
-  &lt;LI&gt;My brother's &lt;a href="SpeedReam.html"&gt;slashdot
-    article about Leo&lt;/a&gt;, the best description about why Leo is special.
-  &lt;LI&gt;&lt;A HREF="testimonials.html#anchor104391"&gt;What people are saying about Leo&lt;/A&gt;
-  &lt;LI&gt;&lt;A HREF="leo_TOC.html#anchor964914"&gt;Complete users guide&lt;/A&gt;
-    and
-    &lt;A HREF="intro.html#anchor887874"&gt;tutorial introduction&lt;/A&gt;  with
-  screen shots.
-  &lt;li&gt;&lt;a href="FAQ.html"&gt;FAQ&lt;/a&gt; and &lt;a href="http://sourceforge.net/forum/?group_id=3458"&gt;help and discussion
-    forums&lt;/a&gt;, preferable to &lt;A HREF="mailto:edream@tds.net"&gt;email&lt;/A&gt; so others may join
-    in.&lt;/li&gt;
-  &lt;li&gt;&lt;a href="icons.html"&gt;Icons&lt;/a&gt; for bragging about Leo.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;a href="http://sourceforge.net/project/showfiles.php?group_id=3458"&gt;Download
-    Leo&lt;/a&gt; from &lt;A HREF="http://sourceforge.net/project/?group_id=3458"&gt;Leo's SourceForge
-site&lt;/A&gt;.
-
-&lt;P ALIGN=left&gt;Leo's author is &lt;A HREF="http://personalpages.tds.net/~edream/index.html"&gt;Edward
-  K. Ream&lt;/A&gt; email: &lt;A HREF="mailto:edream@tds.net"&gt;edream@tds.net&lt;/A&gt; voice: (608) 231-0766
-
-&lt;HR ALIGN=LEFT&gt;
-
-&lt;p align="center"&gt;
-
-&lt;IMG SRC="Blank.gif" ALIGN="left" NATURALSIZEFLAG=
-"3" width="34" height="34"&gt;&lt;IMG SRC="leo.gif" ALIGN="left" NATURALSIZEFLAG=
-"3" width="32" height="32"&gt;&lt;a HREF="leo_TOC.html"&gt;&lt;IMG SRC="arrow_rt.gif" WIDTH="32"
-HEIGHT="32" ALIGN="left" NATURALSIZEFLAG="3"&gt;
-
-&lt;/BODY&gt;
-&lt;/HTML&gt;
-</t>
-<t tx="T22">@ Enabling or disabling @language or @comment now recolors entire text.</t>
-<t tx="T23">@language c
- @comment /* */
-
-/* comment */
-# test</t>
-<t tx="T24"></t>
-<t tx="T25">@nocolor
-
-Read and respond to this message at: 
-http://sourceforge.net/forum/message.php?msg_id=1719215
-By: nobody
-
-Ok, it seems to be in the code I copied in. I tried it with a second Node, and
-don't have the trouble.
-
-Console Mode gives the following:
-
-Traceback (most recent call last):
-File "d:\language\literate programming\Leo\leoColor.py", line 830,
-in colorizeAnyLanguage
-    i,state = func(s,i,n)
-
-File "d:\language\literate programming\Leo\leoColor.py", line 934,
-in continueBlockComment
-    j = string.find(s,self.block_comment_end,i)
-
-File "D:\LANGUAGE\PYTHON\lib\string.py", line 174, in find
-    return s.find(*args)
-
-TypeError: expected a character buffer object
-
-The line, "#define WIPEOUT 0 /* " seems to be the problem child -- if I move
-the start-of-comment marker to the next line, the error message goes away; however,
-the lines between the '/*' and '*/' are NOT comment-colored...
-
---Rich
-</t>
-<t tx="T26">@language c
-@comment /* */
-@path .
-@ignore
-
-&lt;&lt; Defines &gt;&gt;
-&lt;&lt; Head &gt;&gt;</t>
-<t tx="T27">@
+<t tx="T27">@language php
+@ doc
 @c
 
-#define WIPEOUT 0 /* 
-                   * Causes database card number &amp; flags to be set to zero. 
-                   * This is so I don't need an infinite supply of cards!
-                   */
-// Not colored (because of @language /* */)
-#include "equ.h"
-#include "cmn.h"
-#include "ramdef.h"
-#include "eeprom.h"
-#include &lt;hpc_ram.h&gt;
-#include &lt;rlydef.h&gt;</t>
-<t tx="T28"></t>
-<t tx="T29">@encoding iso-8859-1</t>
-<t tx="T30">@others
+and or
+array
+array()
+this is a test.
+__CLASS__
+&lt;?php and or array() ?&gt;
+</t>
+<t tx="T28">@ignore
+@ doc
+@c
+@language c
+	@others
+
+abc
+for # comment
+# pp
+@q comment @&gt; after
+// comment
+&lt;!-- comment --&gt; after
+/* java comment */
+{ pascal comment }
+% latex comment
+xor php keyword
+fblocked tcl keyword
+synchronized java keyword
+\acute latex keyword
+alarm perl keyword
+
+# Python single-line comment
+// C single-line comment
+xx /* C block comment */ yy
+xxx """ triple string """ zzz
+a 'string' b
+c "string" d
+// C keywords
+switch, case
+</t>
+<t tx="T29">@markup wiki</t>
+<t tx="T30">@language python
+
+""" {picture file=../Icons/Leoapp.GIF}this """ # Problems with correct indexing following a graphic.
+
+""" {picture file=../Icons/Leoapp.GIF}this """ # two copies work.
+
+abc
+
+""" {picture file=../Icons/Leodoc.GIF} """ # xyz
+
+
+""" continued
+string"""
+
+@ ''ab'' __xxx__ ''wx'' __xyz__
+@c
+
+# /* ''ab'' __xxx__ ''wx'' __xyz__ */
+
+# Test
+
+""" ''' """ ''' """'''  # Leo handles the common cases correctly.
+
+''' ''ab'' __xxx__ ''wx'' __xyz__ ''' # No wiki markup in ''' strings.
+
+""" ''ab'' __xxx__ ''wx'' __xyz__ """
+
+# ''ab'' __xxx__ ''wx'' __xyz__
+
+""" ''y'' """
+
+""" text~~#ff00ff:some text~~more text""
+
+and if
+
+from leoGlobals import * ; print app().loadDir</t>
+<t tx="T31">""" continued
+string"""
+
+@ ''ab'' __xxx__ ''wx'' __xyz__  __''bolditalic''__ and ''__italicbold__''
+@c
+
+# /* ''ab'' __xxx__ ''wx'' __xyz__ */
+
+__abc__ 
+
+# Test
+
+""" ''' """ ''' """'''  # Leo handles the __b__ common cases correctly.
+
+''' ''ab'' __xxx__ ''wx'' __xyz__ ''' # No wiki markup in ''' strings.
+
+""" ''ab'' __xxx__ ''wx'' __xyz__ """
+
+# ''ab'' __xxx__ ''wx'' __xyz__
+
+""" ''y'' """
+
+""" text~~#ee00ff:some text~~more text"""
+
+
+
+and if
+
+from leoGlobals import * ; print app().loadDir
+</t>
+<t tx="T32">""" text~~red:some text~~more text"""
+
+""" text~~#ee0ff:some text~~more text"""</t>
+<t tx="T33">@encoding iso-8859-1</t>
+<t tx="T34">@others
 
 This is an umlaute ë</t>
-<t tx="T31"></t>
-<t tx="T32">----*---*---*---*---*---*
+<t tx="T35"></t>
+<t tx="T36">----*---*---*---*---*---*
 	.	.	.	.	.	
                         
 .   ..  ... ....    .   
         .   ..</t>
-<t tx="T33"></t>
-<t tx="T34">@language actionscript
+<t tx="T37"></t>
+<t tx="T38">@language actionscript
 
 break
 call, continue
@@ -1139,7 +1176,7 @@ _width
 _x, _xmouse, _xscale
 _y, _ymouse, _yscale
 and, add, eq, ge, gt, le, lt, ne, not, or, Array, Boolean, Color, Date, Key, Math, MovieClip, Mouse, Number, Object, Selection, Sound, String, XML, XMLSocket</t>
-<t tx="T35">import gc,Tkinter
+<t tx="T39">import gc,Tkinter
 
 # gc.set_debug(gc.DEBUG_STATS)
 
@@ -1179,7 +1216,7 @@ printGarbage("end 2")
 top = frame = canvas = None
 gc.collect()
 printGarbage("end 3")</t>
-<t tx="T36"># The output of this is 5 5 6
+<t tx="T40"># The output of this is 5 5 6
 # This shows that o2 is merely an alias for o.
 
 class obj:
@@ -1189,10 +1226,10 @@ class obj:
 o = obj(5) ; print o.n,
 o2  = o    ; print o2.n,
 o.n = 6    ; print o2.n</t>
-<t tx="T37"># The following corrupts the outline: extract section (in B), undo.
+<t tx="T41"># The following corrupts the outline: extract section (in B), undo.
 </t>
-<t tx="T38"></t>
-<t tx="T39"># The following used to corrupt the outline: extract section, undo.
+<t tx="T42"></t>
+<t tx="T43"># The following used to corrupt the outline: extract section, undo.
 
 &lt;&lt; test &gt;&gt;
 line 1
@@ -1200,79 +1237,9 @@ line 2
 
 after
 </t>
-<t tx="T40"></t>
-<t tx="T41"></t>
-<t tx="T42"></t>
-<t tx="T43">@markup wiki</t>
-<t tx="T44">@language python
-
-""" {picture file=../Icons/Leoapp.GIF}this """ # Problems with correct indexing following a graphic.
-
-""" {picture file=../Icons/Leoapp.GIF}this """ # two copies work.
-
-abc
-
-""" {picture file=../Icons/Leodoc.GIF} """ # xyz
-
-
-""" continued
-string"""
-
-@ ''ab'' __xxx__ ''wx'' __xyz__
-@c
-
-# /* ''ab'' __xxx__ ''wx'' __xyz__ */
-
-# Test
-
-""" ''' """ ''' """'''  # Leo handles the common cases correctly.
-
-''' ''ab'' __xxx__ ''wx'' __xyz__ ''' # No wiki markup in ''' strings.
-
-""" ''ab'' __xxx__ ''wx'' __xyz__ """
-
-# ''ab'' __xxx__ ''wx'' __xyz__
-
-""" ''y'' """
-
-""" text~~#ff00ff:some text~~more text""
-
-and if
-
-from leoGlobals import * ; print app().loadDir</t>
-<t tx="T45">""" continued
-string"""
-
-@ ''ab'' __xxx__ ''wx'' __xyz__  __''bolditalic''__ and ''__italicbold__''
-@c
-
-# /* ''ab'' __xxx__ ''wx'' __xyz__ */
-
-__abc__ 
-
-# Test
-
-""" ''' """ ''' """'''  # Leo handles the __b__ common cases correctly.
-
-''' ''ab'' __xxx__ ''wx'' __xyz__ ''' # No wiki markup in ''' strings.
-
-""" ''ab'' __xxx__ ''wx'' __xyz__ """
-
-# ''ab'' __xxx__ ''wx'' __xyz__
-
-""" ''y'' """
-
-""" text~~#ee00ff:some text~~more text"""
-
-
-
-and if
-
-from leoGlobals import * ; print app().loadDir
-</t>
-<t tx="T46">""" text~~red:some text~~more text"""
-
-""" text~~#ee0ff:some text~~more text"""</t>
+<t tx="T44"></t>
+<t tx="T45"></t>
+<t tx="T46"></t>
 <t tx="T47"></t>
 <t tx="T48"></t>
 <t tx="T49"></t>
@@ -1408,27 +1375,42 @@ top().frame.showIconBar()</t>
 <t tx="T76">from leoGlobals import *
 
 checkClones2Links(verbose=true)</t>
-<t tx="T77"></t>
-<t tx="T78">@ EKR: the doc string in class shape is improperly indented.
+<t tx="T77">import unittest
+import leoTest
+reload(leoTest)
+
+colorSuite = unittest.makeSuite(leoTest.colorTests)
+
+if 1:
+	suite = colorSuite
+else:
+	suite = unittest.TestSuite()
+	suite.addTest(leoTest.colorTests("testC"))
+	# suite.addTest(leoTest.colorSuite)
+
+runner = unittest.TextTestRunner()
+runner.run(suite)</t>
+<t tx="T78"></t>
+<t tx="T79">@ EKR: the doc string in class shape is improperly indented.
 @c
 
 @language Python
 @tabwidth -4</t>
-<t tx="T79">@first #!/usr/bin/python
+<t tx="T80">@first #!/usr/bin/python
 
 @others
 </t>
-<t tx="T80">@others
-</t>
 <t tx="T81">@others
 </t>
-<t tx="T82">class shape(object):
+<t tx="T82">@others
+</t>
+<t tx="T83">class shape(object):
   	&lt;&lt; class shape declarations &gt;&gt;
   	# after decls</t>
-<t tx="T83">"""Parent class of all shapes."""
+<t tx="T84">"""Parent class of all shapes."""
 pass
 </t>
-<t tx="T84"># This shows that Python programs _could_ use .xpy files (xml files containing Leo/Python code).
+<t tx="T85"># This shows that Python programs _could_ use .xpy files (xml files containing Leo/Python code).
 
 from leoGlobals import *
 import imp
@@ -1451,14 +1433,14 @@ def leo_import(name,old_import,globals=None, locals=None, fromlist=None):
 		
 m = leo_import("leoTest",__import__)
 es(m,color="red")</t>
-<t tx="T85">import leoFrame
+<t tx="T86">import leoFrame
 print "%d leoFrame instances" % leoFrame.LeoFrame.instances</t>
-<t tx="T86">@ignore</t>
-<t tx="T87">@nocolor
+<t tx="T87">@ignore</t>
+<t tx="T88">@nocolor
 This is a test file
 @others</t>
-<t tx="T88">Node one text.  changed 2.</t>
-<t tx="T89">@language rebol
+<t tx="T89">Node one text.  changed 2.</t>
+<t tx="T90">@language rebol
 
 ; a comment
 about abs absolute add alert alias all alter and and~ any append arccosine arcsine arctangent array ask at  
@@ -1524,7 +1506,7 @@ unset? url?
 value? view? 
 within? word?  
 zero?</t>
-<t tx="T90">@language plain
+<t tx="T91">@language plain
 @pagewidth 72
 @tabwidth 2
 
@@ -1539,10 +1521,10 @@ to be able to recreate a chunk of
 text in your head or on paper, and perhaps verbally.
 
 The steps might be as follows:</t>
-<t tx="T91">a b leoDialogs leoFind leoAtFile leoFileCommands leoGlobals modal end
+<t tx="T92">a b leoDialogs leoFind leoAtFile leoFileCommands leoGlobals modal end
 line tooo changed 9
 </t>
-<t tx="T92">this is another test.
+<t tx="T93">this is another test.
 
 hello there jkk this is werg
 		
@@ -1550,9 +1532,9 @@ the cht sat on the marh
 the cat was sitting phew, another day. by zz z z 
 two initabc
 </t>
-<t tx="T93">everything good.</t>
-<t tx="T94"></t>
-<t tx="T95">from leoGlobals import *
+<t tx="T94">everything good.</t>
+<t tx="T95"></t>
+<t tx="T96">from leoGlobals import *
 f = top().frame
 
 f.clearStatusLine()
@@ -1563,67 +1545,40 @@ for color in ("red","blue","yellow","green","orange"):
 	f.putStatusLine (" %s " % (color),color=color)
 
 f.putStatusLine(" World")</t>
-<t tx="T96">from leoGlobals import *
+<t tx="T97">from leoGlobals import *
 f = top().frame
 
 f.clearStatusLine()
 </t>
-<t tx="T97"></t>
-<t tx="T98">@tabwidth 2
+<t tx="T98"></t>
+<t tx="T99">@tabwidth 2
 
 a
 	b
 		c	d</t>
-<t tx="T99">@tabwidth 4
+<t tx="T100">@tabwidth 4
 
 a
 	b
 		c	d</t>
-<t tx="T100">@tabwidth 6
+<t tx="T101">@tabwidth 6
 
 a
 	b
 		c	d</t>
-<t tx="T101">@tabwidth 8
+<t tx="T102">@tabwidth 8
 
 a
 	b
 		c	d</t>
-<t tx="T102"></t>
-<t tx="T103">This is section a.</t>
-<t tx="T104">&lt;&lt; section a &gt;&gt;</t>
-<t tx="T105"></t>
-<t tx="T106">import timeit</t>
-<t tx="T107">ab
+<t tx="T103"></t>
+<t tx="T104">This is section a.</t>
+<t tx="T105">&lt;&lt; section a &gt;&gt;</t>
+<t tx="T106"></t>
+<t tx="T107">import timeit</t>
+<t tx="T108">ab
 </t>
-<t tx="T108"></t>
-<t tx="T109"></t>
-<t tx="T110"># The following corrupts the outline: extract section, undo.
-
-&lt;&lt; test &gt;&gt;
-line 1
-	line 2
-
-	after</t>
-<t tx="T111"></t>
-<t tx="T112"></t>
-<t tx="T113">test one</t>
-<t tx="T114">from leoGlobals import *
-c = top() ; v = c.currentVnode()
-print v
-print `v`</t>
-<t tx="T115"></t>
-<t tx="T116">@others</t>
-<t tx="T117">@wrap
-
-this should wrap aaaaaaaaaaaaaaaaaaa bbbbbbbbbbbbbbbbbbbbb cccccccccccccccccc ddddddddddddddddddd eeeeeeeeeeeeeeeeeeeeee ffffffffffffffffffff</t>
-<t tx="T118">@nowrap
-
-this should NOT wrap aaaaaaaaaaaaaaaaaaa bbbbbbbbbbbbbbbbbbbbb cccccccccccccccccc ddddddddddddddddddd eeeeeeeeeeeeeeeeeeeeee ffffffffffffffffffff</t>
-<t tx="T119">@ignore</t>
-<t tx="T120"></t>
-<t tx="T121"></t>
-<t tx="T122">from leoGlobals import *
+<t tx="T109">from leoGlobals import *
 import gc,os,time,leoNodes
 from xml.sax import saxutils, make_parser
 from xml.sax.xmlreader import InputSource
@@ -1706,109 +1661,42 @@ try:
 	except: es_exception()
 finally:
 	if f: f.close()</t>
-<t tx="T123"># I ran these from idle:
-	
-def r():
-	import tddTest
-	reload(tddTest)
-	tddTest.main()
-	
-# To rerun the tests in idle just do:
-	
-r()
+<t tx="T110">from leoGlobals import *
+c = top() ; v = c.currentVnode()
+print v
+print `v`</t>
+<t tx="T111"></t>
+<t tx="T112">@others</t>
+<t tx="T113">@wrap
 
-# It would probably be possible to create a class with a __call__ method so one could just do:
-	
-r = aClass()
+this should wrap aaaaaaaaaaaaaaaaaaa bbbbbbbbbbbbbbbbbbbbb cccccccccccccccccc ddddddddddddddddddd eeeeeeeeeeeeeeeeeeeeee ffffffffffffffffffff</t>
+<t tx="T114">@nowrap
 
-# and then do r to run the tests.
-</t>
-<t tx="T124"></t>
-<t tx="T125"></t>
-<t tx="T126"></t>
-<t tx="T127"></t>
-<t tx="T128"></t>
-<t tx="T129"></t>
-<t tx="T130"></t>
-<t tx="T131">import os
-os.system(r"c:\python22\python.exe -i c:\prog\test\tddTest.py")</t>
-<t tx="T132">true = True ; false = False
-
-@others
-
-</t>
-<t tx="T133">def main():
-	
-	TestCaseTest("testRunning").run()
-	TestCaseTest("testSetup").run()
-	
-	if 0:
-	
-		test = WasRun("testMethod")
-		print test.wasRun
-		test.run()
-		print test.wasRun</t>
-<t tx="T134">class TestCase:
-	
-	@others</t>
-<t tx="T135">def __init__ (self,name):
-	
-	self.name = name</t>
-<t tx="T136">def run(self):
-	
-	self.setup()
-	method = getattr(self,self.name)
-	method()
-	
-
-</t>
-<t tx="T137">def setup (self):
-	
-	self.wasRun = false
-	self.wasSetup = true</t>
-<t tx="T138">class TestCaseTest(TestCase):
-	
-	@others</t>
-<t tx="T139">def testRunning(self):
-	
-	test = WasRun("testMethod")
-	assert(not test.wasRun)
-	print "running",self.name
-	test.run()
-	assert(test.wasRun)
-</t>
-<t tx="T140">def testSetup(self):
-	test = WasRun("testMethod")
-	test.run()
-	assert(test.wasSetup)</t>
-<t tx="T141">class WasRun(TestCase):
-
-	@others</t>
-<t tx="T142">def __init__(self,name):
-	
-	self.wasRun = false
-	self.wasSetup = false
-	TestCase.__init__(self,name)
-</t>
-<t tx="T143">def testMethod(self):
-
-	self.wasRun = true</t>
-<t tx="T144">import unittest
-import leoTest
-reload(leoTest)
-
-colorSuite = unittest.makeSuite(leoTest.colorTests)
-
-if 1:
-	suite = colorSuite
-else:
-	suite = unittest.TestSuite()
-	suite.addTest(leoTest.colorTests("testC"))
-	# suite.addTest(leoTest.colorSuite)
-
-runner = unittest.TextTestRunner()
-runner.run(suite)</t>
-<t tx="T145">import wxLeo
+this should NOT wrap aaaaaaaaaaaaaaaaaaa bbbbbbbbbbbbbbbbbbbbb cccccccccccccccccc ddddddddddddddddddd eeeeeeeeeeeeeeeeeeeeee ffffffffffffffffffff</t>
+<t tx="T115">@ignore</t>
+<t tx="T116"></t>
+<t tx="T117">import wxLeo
 reload(wxLeo)</t>
+<t tx="T118">test one</t>
+<t tx="T119"></t>
+<t tx="T120"># The following corrupts the outline: extract section, undo.
+
+&lt;&lt; test &gt;&gt;
+line 1
+	line 2
+
+	after
+</t>
+<t tx="T121"># The following corrupts the outline: extract section, undo.
+
+&lt;&lt; test &gt;&gt;
+line 1
+	line 2
+
+	after
+
+</t>
+<t tx="T122"></t>
+<t tx="T123"></t>
 </tnodes>
 </leo_file>

@@ -4,6 +4,11 @@ leo.py is available at:  http://sourceforge.net/projects/leo/
 leo.py requires Python 2.1 or above and tcl/tk 8.3 or above.
 leo.py will work on Linux, Windows and MacOs X Jaguar.
 
+
+leo.py 3.12.1 beta                       July 25, 2003
+
+This version exists to test the new Linux install scripts and the related distribution stuff.
+
 leo.py 3.12                              July 17, 2003
 
 Window sizes are now in pixels rather than grid units, so you must resize existing outlines (.leo files) when opening them for the first time using this version of Leo.  Don't panic!
