@@ -370,14 +370,14 @@ class config:
 	#@+body
 	def initConfigParam (self,name,defaultVal):
 		try:
-			val = self.config.get(self.configSection,name)
+			val = self.config.get(self.configSection,name,raw=1) # 2/4/03
 		except:
 			val = defaultVal
 		return val
 	
 	def initBooleanConfigParam (self,name,defaultVal):
 		try:
-			val = self.config.getboolean(self.configSection,name)
+			val = self.config.getboolean(self.configSection,name,raw=1) # 2/4/03
 		except:
 			val = defaultVal
 		return val
@@ -487,17 +487,11 @@ class config:
 		
 		a = app()
 		
-		if 1: # new 
-			if c.target_language and a.language_delims_dict.get(c.target_language):
-				language = c.target_language
-			else:
-				language = "plain"
-		else: # old ???? what does this do ???????
-			if c.target_language and c.target_language in self.languageNameDict.keys():
-				language = self.languageNameDict[c.target_language]
-			else:
-				language = "Plain"
-	
+		
+		if c.target_language and a.language_delims_dict.get(c.target_language):
+			language = c.target_language
+		else:
+			language = "plain"
 		self.setPref("default_tangle_directory",c.tangle_directory)
 		self.setPref("default_target_language",language)
 		self.setPref("output_doc_chunks",`c.output_doc_flag`)
@@ -629,11 +623,11 @@ class config:
 			section = self.recentFilesSection
 			
 			if 0: # elegant, but may be a security hole.
-				self.recentFiles = eval(config.get(section, "recentFiles"))
+				self.recentFiles = eval(config.get(section,"recentFiles",raw=1)) # 2/4/03
 			else: # easier to read in the config file.
 				try:
 					for i in xrange(10):
-						self.recentFiles.append(config.get(section, "file" + `i`))
+						self.recentFiles.append(config.get(section,"file" + `i`,raw=1)) # 2/4/03
 				except: pass
 			#@-body
 			#@-node:2::<< get recent files >>
@@ -642,7 +636,7 @@ class config:
 				if dict != None:
 					try:
 						for opt in config.options(section):
-							dict[string.lower(opt)]=config.get(section,opt)
+							dict[string.lower(opt)]=config.get(section,opt,raw=1) # 2/4/03
 					except: pass
 			
 			#@<< convert find/change options to unicode >>
