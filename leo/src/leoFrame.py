@@ -991,7 +991,7 @@ class leoCoreFrame:
 			return self.body
 	#@-body
 	#@-node:8::getFocus
-	#@+node:9::Menus
+	#@+node:9:: Menus
 	#@+node:1::canonicalizeShortcut
 	#@+body
 	#@+at
@@ -1692,9 +1692,11 @@ class leoCoreFrame:
 				#@-node:1::<< get menu and bind shortcuts >>
 
 				if openWith:
-					callback=lambda self=self,path=command:self.OnOpenWith(path)
+					# print "createMenuEntries callback = OnOpenWith(%s)" % (`command`)
+					callback=lambda self=self,command=command:self.OnOpenWith(data=command)
 				else:
 					callback=lambda self=self,cmd=command,label=name:self.doCommand(cmd,label)
+	
 				realLabel = app().getRealMenuName(label)
 				amp_index = realLabel.find("&")
 				realLabel = realLabel.replace("&","")
@@ -1711,11 +1713,11 @@ class leoCoreFrame:
 						try:
 							# The self and event params must be unbound.
 							if openWith:
-								f = self.OnOpenWith
-								callback=lambda event,f=f,path=command:f(path)
+								# print "createMenuEntries callback = OnOpenWith(%s)" % (`command`)
+								callback=lambda event,command=command:self.OnOpenWith(data=command)
 							else:
-								f = self.doCommand
-								callback=lambda event,f=f,cmd=command,label=name:f(cmd,label,event)
+								callback=lambda event,cmd=command,label=name:self.doCommand(cmd,label,event)
+	
 							self.body.bind(bind_shortcut,callback) # To override defaults in body.
 							self.top.bind (bind_shortcut,callback)
 						except: # could be a user error
@@ -1901,13 +1903,14 @@ class leoCoreFrame:
 		if not data: return
 		if len(data) != 3: return # 6/22/03
 		try:
+			# print "OnOpenWith:",`data`
 			openType,arg,ext=data
 			if not doHook("openwith1",c=c,v=v,openType=openType,arg=arg,ext=ext):
 				
 				#@<< set ext based on the present language >>
 				#@+node:1::<< set ext based on the present language >>
 				#@+body
-				if ext == None or len(ext) == 0:
+				if not ext:
 					dict = scanDirectives(c)
 					language = dict.get("language")
 					ext = a.language_extension_dict.get(language)
@@ -1917,6 +1920,8 @@ class leoCoreFrame:
 					
 				if ext[0] != ".":
 					ext = "."+ext
+					
+				# print "ext",`ext`
 				#@-body
 				#@-node:1::<< set ext based on the present language >>
 
@@ -1924,17 +1929,19 @@ class leoCoreFrame:
 				#@<< create or reopen temp file, testing for conflicting changes >>
 				#@+node:2::<< create or reopen temp file, testing for conflicting changes >>
 				#@+body
-				path = None
+				dict = None ; path = None
 				
 				#@<< set dict and path if a temp file already refers to v.t >>
 				#@+node:1::<<set dict and path if a temp file already refers to v.t >>
 				#@+body
-				for dict in a.openWithFiles:
-					v2 = dict.get("v")
-					if v.t == v2.t:
-						path = dict.get("path")
-						if os.path.exists(path):
+				searchPath = self.openWithTempFilePath(v,ext)
+				
+				if os.path.exists(searchPath):
+					for dict in a.openWithFiles:
+						if v.t == dict.get("v") and searchPath == dict.get("path"):
+							path = searchPath
 							break
+				
 				#@-body
 				#@-node:1::<<set dict and path if a temp file already refers to v.t >>
 
@@ -2054,9 +2061,7 @@ class leoCoreFrame:
 	def createOpenWithTempFile (self, v, ext):
 		
 		c = self.commands ; a = app()
-		name = "LeoTemp_" + str(id(v.t)) + '_' + sanitize_filename(v.headString()) + ext
-		td = os.path.abspath(tempfile.gettempdir())
-		path = os.path.join(td,name)
+		path = self.openWithTempFilePath(v,ext)
 		try:
 			if os.path.exists(path):
 				es("recreating:  " + shortFileName(path),color="red")
@@ -2099,6 +2104,20 @@ class leoCoreFrame:
 			return None
 	#@-body
 	#@-node:4::frame.createOpenWithTempFile
+	#@+node:5::frame.openWithTempFilePath
+	#@+body
+	def openWithTempFilePath (self,v,ext):
+		
+		"""Return the path to the temp file corresponding to v and ext."""
+	
+		name = "LeoTemp_" + str(id(v.t)) + '_' + sanitize_filename(v.headString()) + ext
+		td = os.path.abspath(tempfile.gettempdir())
+		path = os.path.join(td,name)
+		
+		# print "openWithTempFilePath",path
+		return path
+	#@-body
+	#@-node:5::frame.openWithTempFilePath
 	#@-node:3::frame.OnOpenWith and allies
 	#@+node:4::frame.OpenWithFileName
 	#@+body
@@ -2701,7 +2720,8 @@ class leoCoreFrame:
 	
 	#@-body
 	#@-node:2::OnRedo
-	#@+node:3::frame.OnCut, OnCutFrom Menu
+	#@+node:3::Cut/Copy/Paste body text
+	#@+node:1::frame.OnCut, OnCutFrom Menu
 	#@+body
 	def OnCut (self,event=None):
 	
@@ -2719,8 +2739,8 @@ class leoCoreFrame:
 		c.tree.onHeadChanged(v) # Works even if it wasn't the headline that changed.
 	
 	#@-body
-	#@-node:3::frame.OnCut, OnCutFrom Menu
-	#@+node:4::frame.OnCopy, OnCopyFromMenu
+	#@-node:1::frame.OnCut, OnCutFrom Menu
+	#@+node:2::frame.OnCopy, OnCopyFromMenu
 	#@+body
 	def OnCopy (self,event=None):
 	
@@ -2734,8 +2754,8 @@ class leoCoreFrame:
 		w.event_generate(virtual_event_name("Copy"))
 	
 	#@-body
-	#@-node:4::frame.OnCopy, OnCopyFromMenu
-	#@+node:5::frame.OnPaste, OnPasteNode, OnPasteFromMenu
+	#@-node:2::frame.OnCopy, OnCopyFromMenu
+	#@+node:3::frame.OnPaste, OnPasteNode, OnPasteFromMenu
 	#@+body
 	def OnPaste (self,event=None):
 	
@@ -2758,8 +2778,9 @@ class leoCoreFrame:
 		c.tree.onHeadChanged(v) # Works even if it wasn't the headline that changed.
 	
 	#@-body
-	#@-node:5::frame.OnPaste, OnPasteNode, OnPasteFromMenu
-	#@+node:6::OnDelete
+	#@-node:3::frame.OnPaste, OnPasteNode, OnPasteFromMenu
+	#@-node:3::Cut/Copy/Paste body text
+	#@+node:4::OnDelete
 	#@+body
 	def OnDelete(self,event=None):
 	
@@ -2770,8 +2791,8 @@ class leoCoreFrame:
 			c.tree.onBodyChanged(v,"Delete")
 	
 	#@-body
-	#@-node:6::OnDelete
-	#@+node:7::OnExecuteScript
+	#@-node:4::OnDelete
+	#@+node:5::OnExecuteScript
 	#@+body
 	#@+at
 	#  This executes body text as a Python script.  We execute the selected 
@@ -2807,8 +2828,8 @@ class leoCoreFrame:
 		else:
 			es("no script selected")
 	#@-body
-	#@-node:7::OnExecuteScript
-	#@+node:8::OnGoToLineNumber & allies
+	#@-node:5::OnExecuteScript
+	#@+node:6::OnGoToLineNumber & allies
 	#@+body
 	def OnGoToLineNumber (self,event=None):
 	
@@ -3089,16 +3110,16 @@ class leoCoreFrame:
 		return n
 	#@-body
 	#@-node:9::skipToMatchingSentinel
-	#@-node:8::OnGoToLineNumber & allies
-	#@+node:9::OnSelectAll
+	#@-node:6::OnGoToLineNumber & allies
+	#@+node:7::OnSelectAll
 	#@+body
 	def OnSelectAll(self,event=None):
 	
 		setTextSelection(self.body,"1.0","end")
 	
 	#@-body
-	#@-node:9::OnSelectAll
-	#@+node:10::OnFontPanel
+	#@-node:7::OnSelectAll
+	#@+node:8::OnFontPanel
 	#@+body
 	def OnFontPanel(self,event=None):
 	
@@ -3110,8 +3131,8 @@ class leoCoreFrame:
 			fp.run()
 	
 	#@-body
-	#@-node:10::OnFontPanel
-	#@+node:11::OnColorPanel
+	#@-node:8::OnFontPanel
+	#@+node:9::OnColorPanel
 	#@+body
 	def OnColorPanel(self,event=None):
 		
@@ -3124,8 +3145,8 @@ class leoCoreFrame:
 	
 	
 	#@-body
-	#@-node:11::OnColorPanel
-	#@+node:12::OnViewAllCharacters
+	#@-node:9::OnColorPanel
+	#@+node:10::OnViewAllCharacters
 	#@+body
 	def OnViewAllCharacters (self, event=None):
 	
@@ -3143,8 +3164,8 @@ class leoCoreFrame:
 		c.tree.recolor_now(v)
 	
 	#@-body
-	#@-node:12::OnViewAllCharacters
-	#@+node:13::OnPreferences
+	#@-node:10::OnViewAllCharacters
+	#@+node:11::OnPreferences
 	#@+body
 	def OnPreferences(self,event=None):
 		
@@ -3163,7 +3184,7 @@ class leoCoreFrame:
 				app().root.wait_window(top)
 	
 	#@-body
-	#@-node:13::OnPreferences
+	#@-node:11::OnPreferences
 	#@-node:1::Edit top level
 	#@+node:2::Edit Body submenu
 	#@+node:1::OnConvertBlanks & OnConvertAllBlanks
@@ -4552,7 +4573,7 @@ class leoCoreFrame:
 	#@-body
 	#@-node:5::updateOutlineMenu
 	#@-node:9::Menu enablers (Frame)
-	#@-node:9::Menus
+	#@-node:9:: Menus
 	#@+node:10::Splitter stuff
 	#@+body
 	#@+at

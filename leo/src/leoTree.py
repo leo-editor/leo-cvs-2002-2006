@@ -868,15 +868,13 @@ class leoTree:
 		c = self.commands
 		if not v: v = c.currentVnode()
 		if not oldSel:
-			first,last = getTextSelection(c.body)
-			oldSel = (first,last) # trace(`oldSel`)
+			oldSel = getTextSelection(c.body)
 		self.commands.body.after_idle(self.idle_body_key,v,oldSel,undoType,oldYview)
 	
 	# Bound to any key press..
 	def OnBodyKey (self,event):
 		c = self.commands ; v = c.currentVnode() ; ch = event.char
-		first,last = getTextSelection(c.body)
-		oldSel = (first,last)
+		oldSel = getTextSelection(c.body)
 		if 0:
 			self.keyCount += 1
 			if ch and len(ch)>0: print "%4d %s" % (self.keyCount,repr(ch))

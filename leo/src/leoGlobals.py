@@ -2084,7 +2084,6 @@ def printGcRefs (verbose=true):
 
 	import leoFrame
 
-	
 	refs = gc.get_referrers(app().windowList[0])
 	print '-' * 30
 	
