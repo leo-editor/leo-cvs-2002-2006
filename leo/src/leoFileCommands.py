@@ -114,7 +114,7 @@ class baseFileCommands:
         return None
     #@nonl
     #@-node:ekr.20040326052245:convertStackToPosition
-    #@+node:ekr.20031218072017.1860:createVnode (changed for 4.2)
+    #@+node:ekr.20031218072017.1860:createVnode (changed for 4.2) sets skip
     def createVnode (self,parent,back,tref,headline,attrDict):
         
         # g.trace(parent,headline)
@@ -138,7 +138,6 @@ class baseFileCommands:
             v.t.vnodeList.append(v) # New in 4.2.
     
         skip = len(v.t.vnodeList) > 1
-    
         v.initHeadString(headline,encoding=self.leo_file_encoding)
         #@    << handle unknown vnode attributes >>
         #@+node:ekr.20031218072017.1861:<< handle unknown vnode attributes >>
@@ -155,16 +154,23 @@ class baseFileCommands:
         #@nonl
         #@-node:ekr.20031218072017.1861:<< handle unknown vnode attributes >>
         #@nl
+        # g.trace(skip,tref,v,v.t,len(v.t.vnodeList))
         return v,skip
     #@nonl
-    #@-node:ekr.20031218072017.1860:createVnode (changed for 4.2)
+    #@-node:ekr.20031218072017.1860:createVnode (changed for 4.2) sets skip
     #@+node:ekr.20040326063413:getExistingVnode
     def getExistingVnode (self,tref):
     
+        tref1 = tref
         assert(tref > -1)
         tref = self.canonicalTnodeIndex(tref)
         t = self.tnodesDict.get(tref)
-        return t.vnodeList[0]
+        try:
+            return t.vnodeList[0]
+        except IndexError:
+            g.trace(tref1,t,t.vnodeList)
+            # import traceback ; traceback.print_stack()
+            return None
     #@nonl
     #@-node:ekr.20040326063413:getExistingVnode
     #@+node:ekr.20031218072017.1557:finishPaste
@@ -900,6 +906,7 @@ class baseFileCommands:
             headline = self.getEscapedString() ; self.getTag("</vh>")
         
         # g.trace("skip:",skip,"parent:",parent,"back:",back,"headline:",headline)
+        # g.trace(skip,tref,headline)
         if skip:
             v = self.getExistingVnode(tref)
         else:
