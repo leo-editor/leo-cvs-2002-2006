@@ -33,7 +33,8 @@ def set_delims_from_language(language):
 		(plain_text_language, "#"), # 7/8/02: we have to pick something.
 		(shell_language, "#"),
 		(python_language, "#"),
-		(tcltk_language, "#") ]: # 7/18/02
+		(tcltk_language, "#"), # 7/18/02
+		(php_language, "//") ]:  #DTHEIN
 		if lang == language:
 			# trace(`val`)
 			delim1,delim2,delim3 = set_delims_from_string(val)
@@ -132,7 +133,8 @@ def set_language(s,i,issue_errors_flag):
 			("plain", plain_text_language), # 7/8/02
 			("python", python_language),
 			("shell", shell_language),
-			("tcl", tcltk_language) ]: # 7/18/02.  Note: this also matches tcl/tk.
+			("tcl", tcltk_language), # 7/18/02.  Note: this also matches tcl/tk.
+			("php", php_language) ]: # 08-SEP-2002 DTHEIN
 		
 			if arg == name:
 				delim1, delim2, delim3 = set_delims_from_language(language)
