@@ -3234,6 +3234,7 @@ class mulderUpdateAlgorithm:
         """
     
         st = os.stat(sourcefilename)
+    
         if hasattr(os, 'utime'):
             os.utime(targetfilename, (st.st_atime, st.st_mtime))
         elif hasattr(os, 'mtime'):
@@ -3256,18 +3257,23 @@ class mulderUpdateAlgorithm:
         for all i in range(len(result))
     
         """
+        
+        if not lines:
+            return [],[]
     
-        mapping = [] ; result = []
+        # Create mapping and set i to the index of the last non-sentinel line.
+        mapping = []
         for i in xrange(len(lines)):
-            line = lines[i]
-            if not self.is_sentinel(line,marker):
-                result.append(line)
+            if not self.is_sentinel(lines[i],marker):
                 mapping.append(i)
     
         # Create a last mapping entry for copy_sentinels.
         mapping.append(i)
+        
+        # Use removeSentinelsFromLines to handle @nonl properly.
+        stripped_lines = self.removeSentinelsFromLines(lines,marker)
     
-        return result, mapping
+        return stripped_lines, mapping
     #@nonl
     #@-node:EKR.20040504150046.6:create_mapping
     #@+node:EKR.20040504154039:is_sentinel NOT CORRECT
@@ -3341,7 +3347,38 @@ class mulderUpdateAlgorithm:
     
         """Return a copy of lines with all sentinels removed."""
         
-        return [line for line in lines if not self.is_sentinel(line,marker)]
+        if 0: # Doesn't handle trailing @nonl properly.
+            return [line for line in lines if not self.is_sentinel(line,marker)]
+        else:
+            result = [] ; last_nosent_i = -1
+            for i in xrange(len(lines)):
+                if not self.is_sentinel(lines[i],marker):
+                    result.append(lines[i])
+                    last_nosent_i = i
+            #@        << remove the newline from result[-1] if line[i] is followed by @nonl >>
+            #@+node:ekr.20040716105102:<< remove the newline from result[-1] if line[i] is followed by @nonl >>
+            i = last_nosent_i
+            
+            if i + 1 < len(lines):
+                
+                # The mu.marker probably ends in '@'
+                if marker[-1] == '@': marker = marker[:-1]
+            
+                line = lines[i+1]
+                j = g.skip_ws(line,0)
+            
+                if match(line,j,marker):
+                    j += len(marker)
+            
+                    if g.match(line,j,"@nonl"):
+                        line = lines[i]
+                        if line[-1] == '\n':
+                            assert(result[-1] == line)
+                            result[-1] = line[:-1]
+            #@nonl
+            #@-node:ekr.20040716105102:<< remove the newline from result[-1] if line[i] is followed by @nonl >>
+            #@nl
+            return result
     #@nonl
     #@-node:EKR.20040505080156.2:removeSentinelsFromFile/Lines
     #@+node:EKR.20040505080156.3:getSentinelsFromFile/Lines
@@ -3421,8 +3458,9 @@ class mulderUpdateAlgorithm:
             #@nl
     #@nonl
     #@-node:EKR.20040504150046.10:propagateDiffsToSentinelsFile
-    #@+node:EKR.20040504145804.1:propagateDiffsToSentinelsLines
-    def propagateDiffsToSentinelsLines (self,i_lines,j_lines,fat_lines,mapping):
+    #@+node:EKR.20040504145804.1:propagateDiffsToSentinelsLines (called from perfect import)
+    def propagateDiffsToSentinelsLines (self,
+        i_lines,j_lines,fat_lines,mapping):
         
         """Compare the 'i_lines' with 'j_lines' and propagate the diffs back into
         'write_lines' making sure that all sentinels of 'fat_lines' are copied.
@@ -3450,11 +3488,12 @@ class mulderUpdateAlgorithm:
         #@    << copy the sentinels at the beginning of the file >>
         #@+node:EKR.20040504145804.3:<< copy the sentinels at the beginning of the file >>
         while fat_pos < mapping[0]:
+        
             line = fat_lines[fat_pos]
             write_lines.append(line)
-            if testing and verbose: print "copy initial line",fat_pos,line,
+            if testing:
+                print "copy initial line",fat_pos,line,
             fat_pos += 1
-        #@nonl
         #@-node:EKR.20040504145804.3:<< copy the sentinels at the beginning of the file >>
         #@nl
         for tag, i1, i2, j1, j2 in matcher.get_opcodes():
@@ -3575,16 +3614,17 @@ class mulderUpdateAlgorithm:
         #@    << copy the sentinels at the end of the file >>
         #@+node:EKR.20040504145804.9:<< copy the sentinels at the end of the file >>
         while fat_pos < len(fat_lines):
+        
             line = fat_lines[fat_pos]
             write_lines.append(line)
-            if testing and verbose: print "Append last line",line
+            if testing:
+                print "Append last line",line
             fat_pos += 1
-        #@nonl
         #@-node:EKR.20040504145804.9:<< copy the sentinels at the end of the file >>
         #@nl
         return write_lines
     #@nonl
-    #@-node:EKR.20040504145804.1:propagateDiffsToSentinelsLines
+    #@-node:EKR.20040504145804.1:propagateDiffsToSentinelsLines (called from perfect import)
     #@+node:EKR.20040504150046.5:report_mismatch
     def report_mismatch (self,lines1,lines2,message,lines1_message,lines2_message):
     
@@ -3810,7 +3850,7 @@ class fileLikeObject:
     def flush (self): pass
 
     def get (self):
-        return string.join(self.list,'')
+        return ''.join(self.list)
 
     def write (self,s):
         if s: self.list.append(s)
