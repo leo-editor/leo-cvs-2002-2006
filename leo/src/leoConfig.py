@@ -16,7 +16,7 @@ if 1: # Used by settings controller.
     import leoTkinterFrame
     import leoTkinterTree
 
-    Pmw = g.importExtension("Pmw",verbose=False)
+    Pmw = g.importExtension("Pmw",pluginName="leoConfig.py",verbose=False)
 
     import Tkinter as Tk
     import tkColorChooser
