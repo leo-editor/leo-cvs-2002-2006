@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet ekr_stylesheet?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="91" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="95" clone_windows="0"/>
 <globals body_outline_ratio="0.5">
 	<global_window_position top="64" left="279" height="704" width="857"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
@@ -147,16 +147,17 @@
 <v t="ekr.20041119052015"><vh>@color log_error_color = red</vh></v>
 <v t="ekr.20041119052015.2"><vh>@color log_text_foreground_color = None</vh></v>
 <v t="ekr.20041119053445"><vh>@color log_text_background_color = None</vh></v>
+<v t="ekr.20041217184352.2"><vh>@color log_pane_background_color = #f2fdff</vh></v>
 </v>
 <v t="ekr.20041213105007.2"><vh>@page Body pane colors</vh>
 <v t="ekr.20041119034357.41"><vh>@color body_cursor_background_color = None</vh></v>
 <v t="ekr.20041119034357.40"><vh>@color body_cursor_foreground_color = None</vh></v>
 <v t="ekr.20041119034357.50"><vh>@color body_insertion_cursor_color = None</vh></v>
-<v t="ekr.20041119034357.49"><vh>@color body_text_background_color = None</vh></v>
+<v t="ekr.20041119034357.49"><vh>@color body_text_background_color = #ffecea</vh></v>
 <v t="ekr.20041119034357.48"><vh>@color body_text_foreground_color = None</vh></v>
 </v>
 <v t="ekr.20041119051246.1" a="E"><vh>@page Outline pane colors</vh>
-<v t="ekr.20041119051246.2"><vh>@color headline_text_unselected_background_color = </vh></v>
+<v t="ekr.20041119051246.2" a="TV"><vh>@color headline_text_unselected_background_color = #ffffe1</vh></v>
 <v t="ekr.20041119050749.6"><vh>@color headline_text_unselected_foreground_color = None</vh></v>
 <v t="ekr.20041119051246.3"><vh>@color headline_text_selected_background_color = None</vh></v>
 <v t="ekr.20041119050749.7"><vh>@color headline_text_selected_foreground_color = None</vh></v>
@@ -164,7 +165,7 @@
 <v t="ekr.20041119050749.8"><vh>@color headline_text_editing_foreground_color = None</vh></v>
 <v t="ekr.20041119050749.9"><vh>@color headline_text_editing_selection_foreground_color = None</vh></v>
 <v t="ekr.20041119051901.1"><vh>@color headline_text_editing_selection_background_color = None</vh></v>
-<v t="ekr.20041119050749.12" a="TV"><vh>@color outline_pane_background_color = None</vh></v>
+<v t="ekr.20041119050749.12"><vh>@color outline_pane_background_color = #ffffe1</vh></v>
 </v>
 <v t="ekr.20041119034357.70"><vh>@page Syntax colors &amp; options</vh>
 <v t="ekr.20041119034357.78"><vh>@color comment_color=firebrick3</vh></v>
@@ -550,7 +551,9 @@ body_text_font_slant = None
 body_text_font_weight = None
 </t>
 <t tx="ekr.20041119034357.48">Foreground colors of body text.</t>
-<t tx="ekr.20041119034357.49">Background color of body text.</t>
+<t tx="ekr.20041119034357.49">Background color of body text.
+
+#ffecea</t>
 <t tx="ekr.20041119034357.50">Color of insertion cursor
 
 </t>
@@ -908,7 +911,8 @@ Thu, 30 Jan 2003 16:57:12
 False: use local time.</t>
 <t tx="ekr.20041119050749.12">Background color of outline pane itself.
 
-LavenderBlush1</t>
+LavenderBlush1
+#ffffe1</t>
 <t tx="ekr.20041119050749.17">This option controls the interpretation of the control key when dragging nodes in the outline pane.
 
 True: A drag is a control-drag if the control key is down at the start of the drag.
@@ -1036,5 +1040,8 @@ log_text_font_weight = normal
 Warning: the number of pixels per inch varies...</t>
 <t tx="ekr.20041213105954.1"></t>
 <t tx="ekr.20041213105954.2"></t>
+<t tx="ekr.20041217184352.2">LightYellow1
+
+#f2fdff</t>
 </tnodes>
 </leo_file>
