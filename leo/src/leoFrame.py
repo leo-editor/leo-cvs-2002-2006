@@ -5,7 +5,7 @@
 These classes should be overridden to create frames for a particular gui."""
 
 from leoGlobals import *
-import leoColor
+import leoColor,leoMenu
 import os,string,sys,time
 
 #@<< About handling events >>
@@ -62,15 +62,21 @@ class leoBody:
 		self.frame = frame
 		self.c = c = frame.c
 		self.forceFullRecolorFlag = false
-		
-		self.bodyCtrl = self.createControl(frame,parentFrame)
 		frame.body = self
-	
-		self.setBodyFontFromConfig()
 		
-		self.colorizer = leoColor.colorizer(c)
+		# May be overridden in subclasses...
+		self.bodyCtrl = self
+		
+		# Must be overridden in subclasses...
+		self.colorizer = None
 	#@nonl
 	#@-node:leoBody.__init__
+	#@+node:oops
+	def oops (self):
+		
+		trace("leoBody oops:", callerName(2), "should be overridden in subclass")
+	#@nonl
+	#@-node:oops
 	#@+node:Must be overriden in subclasses
 	def createBindings (self,frame):
 		self.oops()
@@ -87,10 +93,225 @@ class leoBody:
 	def setBodyFontFromConfig (self):
 		self.oops()
 		
-	def oops (self):
-		print "leoBody oops:", callerName(2), "should be overridden in subclass"
-	#@nonl
 	#@-node:Must be overriden in subclasses
+	#@+node:Bounding box (Tk spelling)
+	def bbox(self,index):
+	
+		self.oops()
+	#@nonl
+	#@-node:Bounding box (Tk spelling)
+	#@+node:Color tags (Tk spelling)
+	def tag_add (self,tagName,index1,index2):
+	
+		self.oops()
+	
+	def tag_bind (self,tagName,event,callback):
+	
+		self.oops()
+	
+	def tag_configure (self,colorName,**keys):
+	
+		self.oops()
+	
+	def tag_delete(self,tagName):
+	
+		self.oops()
+	
+	def tag_remove (self,tagName,index1,index2):
+		self.oops()
+	#@nonl
+	#@-node:Color tags (Tk spelling)
+	#@+node:Configuration (Tk spelling)
+	def cget(self,*args,**keys):
+		
+		self.oops()
+		
+	def configure (self,*args,**keys):
+		
+		self.oops()
+	#@nonl
+	#@-node:Configuration (Tk spelling)
+	#@+node:Focus
+	def hasFocus (self):
+		
+		self.oops()
+		
+	def setFocus (self):
+		
+		self.oops()
+	#@nonl
+	#@-node:Focus
+	#@+node:Height & width
+	def getBodyPaneHeight (self):
+		
+		self.oops()
+	
+	def getBodyPaneWidth (self):
+		
+		self.oops()
+	#@nonl
+	#@-node:Height & width
+	#@+node:Idle time...
+	def scheduleIdleTimeRoutine (self,function,*args,**keys):
+	
+		self.oops()
+	#@nonl
+	#@-node:Idle time...
+	#@+node:Indices
+	def adjustIndex (self,index,offset):
+		
+		self.oops()
+		
+	def compareIndices(self,i,rel,j):
+	
+		self.oops()
+		
+	def convertRowColumnToIndex (self,row,column):
+		
+		self.oops()
+		
+	def convertIndexToRowColumn (self,index):
+		
+		self.oops()
+		
+	def getImageIndex (self,image):
+		
+		self.oops()
+	#@nonl
+	#@-node:Indices
+	#@+node:Insert point
+	def getBeforeInsertionPoint (self):
+		self.oops()
+	
+	def getInsertionPoint (self):
+		self.oops()
+		
+	def getCharAtInsertPoint (self):
+		self.oops()
+	
+	def getCharBeforeInsertPoint (self):
+		self.oops()
+		
+	def makeInsertPointVisible (self):
+		self.oops()
+		
+	def setInsertionPoint (self,index):
+		self.oops()
+	
+	def setInsertionPointToEnd (self):
+		self.oops()
+		
+	def setInsertPointToStartOfLine (self,lineNumber): # zero-based line number
+		self.oops()
+	#@nonl
+	#@-node:Insert point
+	#@+node:Menus
+	def bind (self,*args,**keys):
+		
+		self.oops()
+	#@-node:Menus
+	#@+node:Selection
+	def deleteTextSelection (self):
+		self.oops()
+		
+	def getSelectedText (self):
+		self.oops()
+		
+	def getTextSelection (self):
+		self.oops()
+		
+	def hasTextSelection (self):
+		self.oops()
+		
+	def selectAllText (self):
+		self.oops()
+		
+	def setTextSelection (self,i,j=None):
+		self.oops()
+	#@nonl
+	#@-node:Selection
+	#@+node:delete...
+	def deleteAllText(self):
+		self.oops()
+	
+	def deleteCharacter (self,index):
+		self.oops()
+		
+	def deleteLastChar (self):
+		self.oops()
+		
+	def deleteLine (self,lineNumber): # zero based line number.
+		self.oops()
+		
+	def deleteLines (self,line1,numberOfLines): # zero based line numbers.
+		self.oops()
+		
+	def deleteRange (self,index1,index2):
+		self.oops()
+	#@nonl
+	#@-node:delete...
+	#@+node:get...
+	def getAllText (self):
+		self.oops()
+		
+	def getCharAtIndex (self,index):
+		self.oops()
+		
+	def getInsertLines (self):
+		self.oops()
+		return None,None,None
+		
+	def getSelectionAreas (self):
+		self.oops()
+		return None,None,None
+		
+	def getSelectionLines (self):
+		self.oops()
+		return None,None,None
+		
+	def getTextRange (self,index1,index2):
+		self.oops()
+	#@nonl
+	#@-node:get...
+	#@+node:Insert...
+	def insertAtInsertPoint (self,s):
+		
+		self.oops()
+		
+	def insertAtEnd (self,s):
+		
+		self.oops()
+		
+	def insertAtStartOfLine (self,lineNumber,s):
+		
+		self.oops()
+	#@nonl
+	#@-node:Insert...
+	#@+node:setSelectionAreas
+	def setSelectionAreas (self,before,sel,after):
+		self.oops()
+	#@nonl
+	#@-node:setSelectionAreas
+	#@+node:Visibility & scrolling
+	def makeIndexVisible (self,index):
+		self.oops()
+		
+	def setFirstVisibleIndex (self,index):
+		self.oops()
+		
+	def getYScrollPosition (self):
+		self.oops()
+		
+	def setYScrollPosition (self,scrollPosition):
+		self.oops()
+		
+	def scrollUp (self):
+		self.oops()
+		
+	def scrollDown (self):
+		self.oops()
+	#@nonl
+	#@-node:Visibility & scrolling
 	#@+node:Coloring 
 	# It's weird to have the tree class be responsible for coloring the body pane!
 	
@@ -129,7 +350,7 @@ class leoFrame:
 	instances = 0
 	
 	#@	@+others
-	#@+node: leoFrame.__init__
+	#@+node:  leoFrame.__init__
 	def __init__ (self):
 		
 		self.c = None # Must be created by subclasses.
@@ -148,7 +369,7 @@ class leoFrame:
 		self.openDirectory = ""
 		self.outlineToNowebDefaultFileName = "noweb.nw" # For Outline To Noweb dialog.
 		self.saved=false # True if ever saved
-		self.splitVerticalFlag,self.ratio,self.secondary_ratio = self.initialRatios()
+		self.splitVerticalFlag,self.ratio, self.secondary_ratio = self.initialRatios()
 		self.startupWindow=false # True if initially opened window
 		self.stylesheet = None # The contents of <?xml-stylesheet...?> line.
 	
@@ -159,9 +380,9 @@ class leoFrame:
 		self.lastStatusRow = self.lastStatusCol = 0
 		self.tab_width = 0 # The tab width in effect in this pane.
 	#@nonl
-	#@-node: leoFrame.__init__
-	#@+node:gui-dependent commands (must be defined  in subclasses)
-	# Gui-dependent commands in the Edit menu...
+	#@-node:  leoFrame.__init__
+	#@+node: gui-dependent commands
+	# In the Edit menu...
 	def OnCopy  (self,event=None): self.oops()
 	def OnCut   (self,event=None): self.oops()
 	def OnPaste (self,event=None): self.oops()
@@ -170,16 +391,92 @@ class leoFrame:
 	def OnCopyFromMenu (self):     self.oops()
 	def OnPasteFromMenu (self):    self.oops()
 	
-	def insertHeadlineTime (self): self.oops()
+	def abortEditLabelCommand (self): self.oops()
+	def endEditLabelCommand (self):   self.oops()
+	def insertHeadlineTime (self):    self.oops()
 	
-	# Gui-dependent commands in the Window menu...
+	# In the Window menu...
 	def cascade(self):              self.oops()
 	def equalSizedPanes(self):      self.oops()
 	def hideLogWindow (self):       self.oops()
 	def minimizeAll(self):          self.oops()
+	def toggleActivePane(self):     self.oops()
 	def toggleSplitDirection(self): self.oops()
+	
+	# In help menu...
+	def leoHelp (self): self.oops()
 	#@nonl
-	#@-node:gui-dependent commands (must be defined  in subclasses)
+	#@-node: gui-dependent commands
+	#@+node:deiconify, lift & update
+	def deiconify (self):
+		
+		self.oops()
+		
+	def lift (self):
+		
+		self.oops()
+		
+	def update (self):
+		
+		self.oops()
+	#@nonl
+	#@-node:deiconify, lift & update
+	#@+node:resizePanesToRatio
+	def resizePanesToRatio (self,ratio,secondary_ratio):
+		
+		pass
+	#@nonl
+	#@-node:resizePanesToRatio
+	#@+node:setInitialWindowGeometry
+	def setInitialWindowGeometry (self):
+		
+		self.oops()
+	#@nonl
+	#@-node:setInitialWindowGeometry
+	#@+node:setTopGeometry
+	def setTopGeometry (self,geom):
+		
+		self.oops()
+	#@nonl
+	#@-node:setTopGeometry
+	#@+node:setTabWidth
+	def setTabWidth (self,w):
+		
+		# Subclasses may override this to affect drawing.
+		self.tab_width = w
+	#@nonl
+	#@-node:setTabWidth
+	#@+node:getTitle & setTitle
+	def getTitle (self):
+		return self.title
+		
+	def setTitle (self,title):
+		self.title = title
+	#@nonl
+	#@-node:getTitle & setTitle
+	#@+node:initialRatios
+	def initialRatios (self):
+	
+		config = app.config
+	
+		s = config.getWindowPref("initial_splitter_orientation")
+		verticalFlag = s == None or (s != "h" and s != "horizontal")
+	
+		if verticalFlag:
+			r = config.getFloatWindowPref("initial_vertical_ratio")
+			if r == None or r < 0.0 or r > 1.0: r = 0.5
+			r2 = config.getFloatWindowPref("initial_vertical_secondary_ratio")
+			if r2 == None or r2 < 0.0 or r2 > 1.0: r2 = 0.8
+		else:
+			r = config.getFloatWindowPref("initial_horizontal_ratio")
+			if r == None or r < 0.0 or r > 1.0: r = 0.3
+			r2 = config.getFloatWindowPref("initial_horizontal_secondary_ratio")
+			if r2 == None or r2 < 0.0 or r2 > 1.0: r2 = 0.8
+	
+		# print (`r`,`r2`)
+		return verticalFlag,r,r2
+	#@nonl
+	#@-node:initialRatios
 	#@+node:longFileName & shortFileName
 	def longFileName (self):
 	
@@ -497,6 +794,523 @@ class leoTree:
 	#@-others
 #@nonl
 #@-node:class leoTree
+#@+node:class nullBody
+class nullBody (leoBody):
+
+	#@	@+others
+	#@+node: nullBody.__init__
+	def __init__ (self,frame,parentFrame):
+		
+		leoBody.__init__ (self,frame,parentFrame) # Init the base class.
+	
+		self.insertPoint = 0
+		self.selection = 0,0
+		self.s = "" # The body text
+		
+		self.colorizer = leoColor.nullColorizer(self.c)
+	#@nonl
+	#@-node: nullBody.__init__
+	#@+node:findStartOfLine
+	def findStartOfLine (self,lineNumber):
+		
+		lines = splitLines(self.s)
+		i = 0 ; index = 0
+		for line in lines:
+			if i == lineNumber: break
+			i += 1
+			index += len(line)
+		return index
+	#@nonl
+	#@-node:findStartOfLine
+	#@+node:scanToStartOfLine
+	def scanToStartOfLine (self,index):
+		
+		if index <= 0:
+			return 0
+			
+		assert(self.s[i] != '\n')
+		
+		while i >= 0:
+			if s[i] == '\n':
+				return i + 1
+		
+		return 0
+	#@nonl
+	#@-node:scanToStartOfLine
+	#@+node:scanToEndOfLine
+	def scanToEndOfLine (self,i):
+		
+		if index >= len(self.s):
+			return len(self.s)
+			
+		assert(self.s[i] != '\n')
+		
+		while i < len(s):
+			if s[i] == '\n':
+				return i - 1
+		
+		return i
+	#@nonl
+	#@-node:scanToEndOfLine
+	#@+node:Must be overriden in subclasses
+	def createBindings (self,frame):
+		self.oops()
+	
+	def createControl (self,frame,parentFrame):
+		self.oops()
+		
+	def initialRatios (self):
+		self.oops()
+		
+	def onBodyChanged (self,v,undoType,oldSel=None,oldYview=None,newSel=None,oldText=None):
+		self.oops()
+		
+	def setBodyFontFromConfig (self):
+		self.oops()
+	#@nonl
+	#@-node:Must be overriden in subclasses
+	#@+node:Bounding box
+	def bbox(self,index):
+		return (0,0)
+	#@nonl
+	#@-node:Bounding box
+	#@+node:Color tags
+	def tag_add (self,tagName,index1,index2):
+		pass
+	
+	def tag_bind (self,tagName,event,callback):
+		pass
+	
+	def tag_configure (self,colorName,**keys):
+		pass
+	
+	def tag_delete(self,tagName):
+		pass
+	
+	def tag_remove (self,tagName,index1,index2):
+		pass
+	#@nonl
+	#@-node:Color tags
+	#@+node:Configuration
+	def cget(self,*args,**keys):
+		pass
+		
+	def configure (self,*args,**keys):
+		pass
+	#@nonl
+	#@-node:Configuration
+	#@+node:Focus
+	def hasFocus (self):
+		return true
+		
+	def setFocus (self):
+		pass
+	#@nonl
+	#@-node:Focus
+	#@+node:Height & width (use dummy values...)
+	def getBodyPaneHeight (self):
+		
+		return 500
+	
+	def getBodyPaneWidth (self):
+	
+		return 600
+	#@nonl
+	#@-node:Height & width (use dummy values...)
+	#@+node:Idle time...
+	def scheduleIdleTimeRoutine (self,function,*args,**keys):
+	
+		trace()
+	#@nonl
+	#@-node:Idle time...
+	#@+node:Indices
+	def adjustIndex (self,index,offset):
+		return index + offset
+		
+	def compareIndices(self,i,rel,j):
+	
+		return eval("%d %s %d" % (i,rel,j))
+		
+	def convertRowColumnToIndex (self,row,column):
+		
+		# Probably not used.
+		n = self.findStartOfLine(row)
+		trace(n + column)
+		return n + column
+		
+	def convertIndexToRowColumn (self,index):
+		
+		# Probably not used.
+		trace(index)
+		return index
+		
+	def getImageIndex (self,image):
+		self.oops()
+	#@-node:Indices
+	#@+node:Insert point
+	def getBeforeInsertionPoint (self):
+		return self.insertPoint - 1
+	
+	def getInsertionPoint (self):
+		return self.insertPoint
+		
+	def getCharAtInsertPoint (self):
+		try: return self.s[self.insertPoint]
+		except: return None
+	
+	def getCharBeforeInsertPoint (self):
+		try: return self.s[self.insertPoint - 1]
+		except: return None
+		
+	def makeInsertPointVisible (self):
+		pass
+		
+	def setInsertionPoint (self,index):
+		self.insertPoint = index
+	
+	def setInsertionPointToEnd (self):
+		self.insertPoint = len(self.s)
+		
+	def setInsertPointToStartOfLine (self,lineNumber): # zero-based line number
+		self.insertPoint = self.findStartOfLine(lineNumber)
+	#@nonl
+	#@-node:Insert point
+	#@+node:Menus
+	def bind (self,*args,**keys):
+		pass
+	#@-node:Menus
+	#@+node:Selection
+	def deleteTextSelection (self):
+		i,j = self.selection
+		self.s = self.s[:i] + self.s[j:]
+		
+	def getSelectedText (self):
+		i,j = self.selection
+		trace(self.s[i:j])
+		return self.s[i:j]
+		
+	def getTextSelection (self):
+		trace(self.selection)
+		return self.selection
+		
+	def hasTextSelection (self):
+		i,j = self.selection
+		return i != j
+		
+	def selectAllText (self):
+		self.selection = 0,len(self.s)
+		
+	def setTextSelection (self,i,j=None):
+		trace(i,j)
+		if i is None:
+			self.selection = 0,0
+		elif j is None:
+			self.selection = i # a tuple
+		else:
+			self.selection = i,j
+	#@nonl
+	#@-node:Selection
+	#@+node:delete...
+	def deleteAllText(self):
+		self.insertPoint = 0
+		self.selection = 0,0
+		self.s = "" # The body text
+	
+	def deleteCharacter (self,index):
+		self.s = self.s[:index] + self.s[index+1:]
+		
+	def deleteLastChar (self):
+		if self.s:
+			del self.s[-1]
+		
+	def deleteLine (self,lineNumber): # zero based line number.
+		self.deleteLines(lineNumber,1)
+		
+	def deleteLines (self,line1,numberOfLines): # zero based line numbers.
+		n1 = self.findStartOfLine(lineNumber)
+		n2 = self.findStartOfLine(lineNumber+numberOfLines+1)
+		if n2:
+			self.s = self.s[:n1] + self.s[n2:]
+		else:
+			self.s = self.s[:n1]
+		
+	def deleteRange (self,index1,index2):
+		del self.s[index1:index2]
+	#@nonl
+	#@-node:delete...
+	#@+node:get...
+	def getAllText (self):
+		return toUnicode(self.s,app.tkEncoding)
+		
+	def getCharAtIndex (self,index):
+		
+		try:
+			s = self.s[index]
+			return toUnicode(s,app.tkEncoding)
+		except: return None
+		
+	def getTextRange (self,index1,index2):
+	
+		s = self.s[index1:index2]
+		return toUnicode(s,app.tkEncoding)
+	#@nonl
+	#@-node:get...
+	#@+node:getInsertLines
+	def getInsertLines (self):
+		
+		"""Return before,after where:
+			
+		before is all the lines before the line containing the insert point.
+		sel is the line containing the insert point.
+		after is all the lines after the line containing the insert point.
+		
+		All lines end in a newline, except possibly the last line."""
+	
+		n1 = self.scanToStartOfLine(self.insertPoint)
+		n2 = self.scanToEndOfLine(self.insertPoint)
+		
+		before = self.s[:n1]
+		sel    = self.s[n1:n2+1]
+		after  = self.s[n2+1:]
+	
+		before = toUnicode(before,app.tkEncoding)
+		ins    = toUnicode(ins,   app.tkEncoding)
+		after  = toUnicode(after ,app.tkEncoding)
+	
+		return before,ins,after
+	#@-node:getInsertLines
+	#@+node:getSelectionAreas
+	def getSelectionAreas (self):
+		
+		"""Return before,sel,after where:
+			
+		before is the text before the selected text
+		(or the text before the insert point if no selection)
+		sel is the selected text (or "" if no selection)
+		after is the text after the selected text
+		(or the text after the insert point if no selection)"""
+		
+		if not self.hasTextSelection():
+			n1,n2 = self.insertPoint,self.insertPoint
+		else:
+			n2,n2 = self.selection
+	
+		before = self.s[:n1]
+		sel    = self.s[n1:n2+1]
+		after  = self.s[n2+1:]
+		
+		before = toUnicode(before,app.tkEncoding)
+		sel    = toUnicode(sel,   app.tkEncoding)
+		after  = toUnicode(after ,app.tkEncoding)
+		return before,sel,after
+	#@nonl
+	#@-node:getSelectionAreas
+	#@+node:getSelectionLines
+	def getSelectionLines (self):
+		
+		"""Return before,sel,after where:
+			
+		before is the all lines before the selected text
+		(or the text before the insert point if no selection)
+		sel is the selected text (or "" if no selection)
+		after is all lines after the selected text
+		(or the text after the insert point if no selection)"""
+		
+		# At present, called only by c.getBodyLines.
+		if not self.hasTextSelection():
+			start,end = self.insertPoint,self.insertPOint
+		else:
+			start,end = self.selection
+	
+		n1 = self.scanToStartOfLine(start)
+		n2 = self.scanToEndOfLine(end)
+	
+		before = self.s[:n1]
+		sel    = self.s[n1:n2+1]
+		after  = self.s[n2+1:]
+		
+		before = toUnicode(before,app.tkEncoding)
+		sel    = toUnicode(sel,   app.tkEncoding)
+		after  = toUnicode(after ,app.tkEncoding)
+		return before,sel,after
+	#@nonl
+	#@-node:getSelectionLines
+	#@+node:Insert...
+	def insertAtInsertPoint (self,s):
+		
+		i = self.insertPoint
+		self.s = self.s[:i] + s + self.s[i:]
+		
+	def insertAtEnd (self,s):
+		
+		self.s = self.s + s
+		
+	def insertAtStartOfLine (self,lineNumber,s):
+		
+		i = self.findStartOfLine(lineNumber)
+		self.s = self.s[:i] + s + self.s[i:]
+	#@nonl
+	#@-node:Insert...
+	#@+node:setSelectionAreas
+	def setSelectionAreas (self,before,sel,after):
+		
+		if before is None: before = ""
+		if sel    is None: sel = ""
+		if after  is None: after = ""
+		
+		self.s = before + sel + after
+		
+		self.selection = len(before), len(before) + len(sel)
+	#@nonl
+	#@-node:setSelectionAreas
+	#@+node:Visibility & scrolling
+	def makeIndexVisible (self,index):
+		pass
+		
+	def setFirstVisibleIndex (self,index):
+		pass
+		
+	def getYScrollPosition (self):
+		return 0
+		
+	def setYScrollPosition (self,scrollPosition):
+		pass
+		
+	def scrollUp (self):
+		pass
+		
+	def scrollDown (self):
+		pass
+	#@nonl
+	#@-node:Visibility & scrolling
+	#@+node:oops
+	def oops(self):
+	
+		trace("nullBody:", callerName(2))
+		pass
+	#@nonl
+	#@-node:oops
+	#@-others
+#@nonl
+#@-node:class nullBody
+#@+node:class nullFrame
+class nullFrame (leoFrame):
+	
+	"""A null frame class for tests and batch execution."""
+	
+	def __init__ (self,title):
+
+		leoFrame.__init__(self) # Init the base class.
+		assert(self.c is None)
+		self.title = title
+
+	def finishCreate(self,c):
+
+		self.c = c
+		# Create do-nothing component objects.
+		self.tree = nullTree(frame=self)
+		self.body = nullBody(frame=self,parentFrame=None)
+		self.log  = nullLog (frame=self,parentFrame=None)
+		self.menu = leoMenu.nullMenu(frame=self)
+		
+	def oops(self):
+		# trace("nullFrame:", callerName(2))
+		pass # This is NOT an error.
+#@nonl
+#@-node:class nullFrame
+#@+node:class nullLog
+class nullLog (leoLog):
+
+	def oops(self):
+		# trace("nullLog:", callerName(2))
+		pass
+		
+	def put (self,s,color=None):
+		print s
+
+	def putnl (self):
+		pass
+#@nonl
+#@-node:class nullLog
+#@+node:class nullTree
+class nullTree (leoTree):
+
+	#@	@+others
+	#@+node: nullTree.__init__
+	def __init__ (self,frame):
+		
+		leoTree.__init__(self,frame) # Init the base class.
+		
+		assert(self.frame)
+		self.font = None
+		self.fontName = None
+		
+	#@nonl
+	#@-node: nullTree.__init__
+	#@+node:oops
+	def oops(self):
+			
+		# It is not an error to call this routine...
+		trace("nullTree:", callerName(2))
+		pass
+	#@nonl
+	#@-node:oops
+	#@+node:Drawing
+	def drawIcon(self,v,x=None,y=None):
+		pass
+	
+	def redraw(self,event=None):
+		pass
+	
+	def redraw_now(self):
+		pass
+	#@nonl
+	#@-node:Drawing
+	#@+node:Edit label
+	def editLabel(self,v):
+		pass
+	
+	def endEditLabel(self):
+		pass
+	
+	def setNormalLabelState(self,v):
+		pass
+	#@nonl
+	#@-node:Edit label
+	#@+node:Scrolling
+	def scrollTo(self,v):
+		pass
+	
+	def idle_scrollTo(self,v):
+		pass
+	#@-node:Scrolling
+	#@+node:Tree operations
+	def expandAllAncestors(self,v):
+	
+		pass
+	#@nonl
+	#@-node:Tree operations
+	#@+node:getFont & setFont
+	def getFont(self):
+	
+		return self.font
+		
+	def setFont(self,font=None,fontName=None):
+	
+		self.font = font
+		self.fontName = fontName
+	#@nonl
+	#@-node:getFont & setFont
+	#@+node:select
+	def select(self,v,updateBeadList=true):
+		
+		self.setCurrentVnode(v)
+		self.frame.scanForTabWidth(v)
+	#@nonl
+	#@-node:select
+	#@-others
+#@nonl
+#@-node:class nullTree
 #@-others
 #@nonl
 #@-node:@file leoFrame.py
