@@ -604,7 +604,7 @@ class leoFrame:
         name = g.choose(c.mFileName,c.mFileName,self.title)
         theType = g.choose(g.app.quitting, "quitting?", "closing?")
     
-        answer = g.app.gui.runAskYesNoCancelDialog(
+        answer = g.app.gui.runAskYesNoCancelDialog(c,
             "Confirm",
             'Save changes to %s before %s' % (name,theType))
             

@@ -92,7 +92,9 @@ class leoTkinterFind (leoFind.leoFind,leoTkinterDialog.leoTkinterDialog):
         
         # Init the base classes...
         leoFind.leoFind.__init__(self,c,title=title)
-        leoTkinterDialog.leoTkinterDialog.__init__(self,self.title,resizeable)
+        leoTkinterDialog.leoTkinterDialog.__init__(self,c,self.title,resizeable)
+        
+        if g.app.unitTesting:return
     
         #@    << create the tkinter intVars >>
         #@+node:ekr.20031218072017.3900:<< create the tkinter intVars >>

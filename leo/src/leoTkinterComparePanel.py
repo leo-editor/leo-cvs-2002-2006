@@ -23,7 +23,10 @@ class leoTkinterComparePanel (leoCompare.leoCompare,leoTkinterDialog.leoTkinterD
         
         # Init the base class.
         leoCompare.leoCompare.__init__ (self,c)
-        leoTkinterDialog.leoTkinterDialog.__init__(self,"Compare files and directories",resizeable=False)
+        leoTkinterDialog.leoTkinterDialog.__init__(self,c,"Compare files and directories",resizeable=False)
+    
+        if g.app.unitTesting: return
+    
         self.c = c
     
         #@    << init tkinter compare ivars >>

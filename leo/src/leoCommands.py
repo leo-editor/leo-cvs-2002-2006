@@ -416,7 +416,7 @@ class baseCommands:
                             "Conflicting changes in outline and temp file\n\n" +
                             "Do you want to use the code in the outline or the temp file?\n\n")
                         
-                        result = g.app.gui.runAskYesNoCancelDialog(
+                        result = g.app.gui.runAskYesNoCancelDialog(c,
                             "Conflict!", message,
                             yesMessage = "Outline",
                             noMessage = "File",
@@ -657,7 +657,7 @@ class baseCommands:
         if not c.mFileName:
             return
             
-        reply = g.app.gui.runAskYesNoDialog("Revert",
+        reply = g.app.gui.runAskYesNoDialog(c,"Revert",
             "Revert to previous version of " + c.mFileName + "?")
     
         if reply=="no":
@@ -1293,7 +1293,7 @@ class baseCommands:
         if n is None:
             #@        << get n, the line number, from a dialog >>
             #@+node:ekr.20031218072017.2867:<< get n, the line number, from a dialog >>
-            n = g.app.gui.runAskOkCancelNumberDialog("Enter Line Number","Line number:")
+            n = g.app.gui.runAskOkCancelNumberDialog(c,"Enter Line Number","Line number:")
             if n == -1:
                 return
             #@nonl
@@ -2653,7 +2653,7 @@ class baseCommands:
                 'Are you sure you want to Paste As Clone?\n\n'
                 'This operation can not be undone; it will clear the Undo stack.')
             
-            response = g.app.gui.runAskYesNoDialog('Paste As Clone?',message=message)
+            response = g.app.gui.runAskYesNoDialog(c,'Paste As Clone?',message=message)
         
             if response == 'yes':
                 val = c.pasteOutline(reassignIndices=False)
@@ -4517,7 +4517,7 @@ class baseCommands:
         url = "http://webpages.charter.net/edreamleo/front.html"
         email = "edreamleo@charter.net"
     
-        g.app.gui.runAboutLeoDialog(version,theCopyright,url,email)
+        g.app.gui.runAboutLeoDialog(c,version,theCopyright,url,email)
     #@nonl
     #@-node:ekr.20031218072017.2939:about (version number & date)
     #@+node:ekr.20031218072017.2943:leoConfig
