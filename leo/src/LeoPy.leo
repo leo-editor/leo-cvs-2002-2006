@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="4507" clone_windows="0"/>
-<globals body_outline_ratio="0.566995768688">
-	<global_window_position top="44" left="220" height="709" width="919"/>
+<globals body_outline_ratio="0.441466854725">
+	<global_window_position top="28" left="40" height="709" width="919"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences>
@@ -1745,7 +1745,12 @@
 </v>
 <v t="ekr.20031218072017.1471"><vh>Log</vh>
 <v t="ekr.20031218072017.1472"><vh>log encoding</vh></v>
-<v t="ekr.20031218072017.1473"><vh>tkLog.put &amp; putnl</vh></v>
+<v t="ekr.20031218072017.1473"><vh>tkLog.put &amp; putnl &amp; forceLogUpdate</vh>
+<v t="EKR.20040423082910"><vh>&lt;&lt; put s to log control &gt;&gt;</vh></v>
+<v t="EKR.20040423082910.1"><vh>&lt;&lt; put s to logWaiting and print s &gt;&gt;</vh></v>
+<v t="EKR.20040423082910.2"><vh>&lt;&lt; put newline to log control &gt;&gt;</vh></v>
+<v t="EKR.20040423082910.3"><vh>&lt;&lt; put newline to logWaiting and print newline &gt;&gt;</vh></v>
+</v>
 <v t="ekr.20031218072017.1474"><vh>es, enl, ecnl</vh></v>
 </v>
 <v t="ekr.20031218072017.1475"><vh>Nodes</vh>
@@ -2278,7 +2283,12 @@
 <v t="ekr.20031218072017.1845"><vh>Problem 2: the app.log should be cleared when switching windows</vh>
 <v t="ekr.20031218072017.1846"><vh>Traceback: Opening leoConfig.leo</vh></v>
 <v t="ekr.20031218072017.1624"><vh>createFrame (leo.py)</vh></v>
-<v t="ekr.20031218072017.1473"><vh>tkLog.put &amp; putnl</vh></v>
+<v t="ekr.20031218072017.1473"><vh>tkLog.put &amp; putnl &amp; forceLogUpdate</vh>
+<v t="EKR.20040423082910"><vh>&lt;&lt; put s to log control &gt;&gt;</vh></v>
+<v t="EKR.20040423082910.1"><vh>&lt;&lt; put s to logWaiting and print s &gt;&gt;</vh></v>
+<v t="EKR.20040423082910.2"><vh>&lt;&lt; put newline to log control &gt;&gt;</vh></v>
+<v t="EKR.20040423082910.3"><vh>&lt;&lt; put newline to logWaiting and print newline &gt;&gt;</vh></v>
+</v>
 <v t="ekr.20031218072017.1847"><vh>app.setLog, lockLog, unlocklog</vh></v>
 </v>
 </v>
@@ -5417,7 +5427,12 @@
 <v t="ekr.20031218072017.1555"><vh>&lt;&lt; scan all the xml elements &gt;&gt;</vh></v>
 <v t="ekr.20031218072017.1556"><vh>&lt;&lt; raise an alert &gt;&gt;</vh></v>
 </v>
-<v t="ekr.20031218072017.1473"><vh>tkLog.put &amp; putnl</vh></v>
+<v t="ekr.20031218072017.1473"><vh>tkLog.put &amp; putnl &amp; forceLogUpdate</vh>
+<v t="EKR.20040423082910"><vh>&lt;&lt; put s to log control &gt;&gt;</vh></v>
+<v t="EKR.20040423082910.1"><vh>&lt;&lt; put s to logWaiting and print s &gt;&gt;</vh></v>
+<v t="EKR.20040423082910.2"><vh>&lt;&lt; put newline to log control &gt;&gt;</vh></v>
+<v t="EKR.20040423082910.3"><vh>&lt;&lt; put newline to logWaiting and print newline &gt;&gt;</vh></v>
+</v>
 <v t="ekr.20031218072017.1019"><vh>tree.select</vh>
 <v t="ekr.20031218072017.1020"><vh>&lt;&lt; define vars and stop editing &gt;&gt;</vh></v>
 <v t="ekr.20031218072017.1021"><vh>&lt;&lt; unselect the old node &gt;&gt; (changed in 4.2)</vh></v>
@@ -6170,7 +6185,18 @@
 <v t="ekr.20040414093055"><vh>Shadow files plugin</vh></v>
 <v t="ekr.20040414093758"><vh>Suggestions</vh></v>
 </v>
-<v t="ekr.20031218072017.2406" a="TV"><vh>Code</vh>
+<v t="EKR.20040422132037"><vh>Mac/Linux bugs</vh>
+<v t="EKR.20040422132037.2"><vh>Install Leo in the site-packages directory</vh></v>
+<v t="EKR.20040422132037.3"><vh>small bug in install script</vh></v>
+<v t="EKR.20040422132037.4"><vh>config problem on Linux</vh></v>
+<v t="EKR.20040422132037.5"><vh>Backspace problems on Linux</vh>
+<v t="EKR.20040422132037.6"><vh>Dave Hein: fix</vh></v>
+</v>
+<v t="EKR.20040422132037.7"><vh>Bug: vpython and mac</vh></v>
+<v t="EKR.20040422132037.8"><vh>Mouse / Paste Anomalies  </vh></v>
+<v t="EKR.20040422091601.1"><vh>Syntax Colouring Bug - html mode   </vh></v>
+</v>
+<v t="ekr.20031218072017.2406"><vh>Code</vh>
 <v t="ekr.20031218072017.2407"><vh>  Overview of code</vh>
 <v t="ekr.20031218072017.2408"><vh>&lt;&lt; About clones &gt;&gt;</vh></v>
 <v t="ekr.20031218072017.2409"><vh>&lt;&lt; About drawing &gt;&gt;</vh></v>
@@ -6867,109 +6893,6 @@
 <v t="ekr.20031218072017.3319"><vh>undentBody</vh></v>
 </v>
 </v>
-<v t="ekr.20031218072017.3749" tnodeList="ekr.20031218072017.3749,ekr.20031218072017.3750,ekr.20031218072017.3751,ekr.20031218072017.3752,ekr.20031218072017.3753,ekr.20031218072017.839,ekr.20031218072017.3754,ekr.20031218072017.3755,ekr.20031218072017.3756,ekr.20031218072017.3757,ekr.20031218072017.3758,ekr.20031218072017.3759,ekr.20031218072017.3760,ekr.20031218072017.3761,ekr.20031218072017.3762,ekr.20031218072017.3763,ekr.20031218072017.3764,ekr.20031218072017.3765,ekr.20031218072017.3766,ekr.20031218072017.3767,ekr.20031218072017.3768,ekr.20031218072017.3769,ekr.20031218072017.3770,ekr.20031218072017.3771,ekr.20031218072017.3772,ekr.20031218072017.3773,ekr.20031218072017.3774,ekr.20031218072017.3775,ekr.20031218072017.3777,ekr.20031218072017.3778,ekr.20031218072017.836,ekr.20040130164211,ekr.20031218072017.3779,ekr.20040131171020,ekr.20040131171020.1,ekr.20040131171020.2,ekr.20040131171020.3,ekr.20040131171020.4,ekr.20031218072017.3780,ekr.20031218072017.3782,ekr.20031218072017.3783,ekr.20031218072017.2098,ekr.20031218072017.2102,ekr.20031218072017.2099,ekr.20031218072017.2100,ekr.20031218072017.2101,ekr.20031218072017.2103,ekr.20031218072017.1723,ekr.20031218072017.1724,ekr.20031218072017.1725,ekr.20031218072017.1726,ekr.20031218072017.1727,ekr.20031218072017.1728,ekr.20031218072017.1729,ekr.20031218072017.3784,ekr.20031218072017.3785,ekr.20031218072017.3790,ekr.20031218072017.3791,ekr.20031218072017.3792,ekr.20031218072017.3793,ekr.20031218072017.3794,ekr.20031218072017.3795,ekr.20031218072017.3796,ekr.20031218072017.3786,ekr.20031218072017.3787,ekr.20031218072017.3788,ekr.20031218072017.3789,ekr.20031218072017.3797,ekr.20031218072017.3798,ekr.20031218072017.3799,ekr.20031218072017.3800,ekr.20031218072017.3801,ekr.20031218072017.3802,ekr.20031218072017.3803,ekr.20031218072017.3804,ekr.20031218072017.2078,ekr.20031218072017.3805,ekr.20031218072017.3806,ekr.20031218072017.3807,ekr.20031218072017.3809,ekr.20031218072017.3810,ekr.20031218072017.3811"><vh>@file leoMenu.py</vh>
-<v t="ekr.20031218072017.3750"><vh>class leoMenu</vh>
-<v t="ekr.20031218072017.3751"><vh> leoMenu.__init__</vh></v>
-<v t="ekr.20031218072017.3752"><vh>defineMenuTables</vh>
-<v t="ekr.20031218072017.3753"><vh>&lt;&lt; define edit menu tables &gt;&gt;</vh>
-<v t="ekr.20031218072017.839"><vh>&lt;&lt; define editMenuTopTable &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.3754"><vh>&lt;&lt; define editMenuEditBodyTable &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.3755"><vh>&lt;&lt; define editMenuEditHeadlineTable &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.3756"><vh>&lt;&lt; define editMenuFindMenuTable &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.3757"><vh>&lt;&lt; define editMenuTop2Table &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20031218072017.3758"><vh>&lt;&lt; define file menu tables &gt;&gt;</vh>
-<v t="ekr.20031218072017.3759"><vh>&lt;&lt; define fileMenuTopTable &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.3760"><vh>&lt;&lt; define fileMenuTop2Table &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.3761"><vh>&lt;&lt; define fileMenuReadWriteMenuTable &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.3762"><vh>&lt;&lt; define fileMenuTangleMenuTable &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.3763"><vh>&lt;&lt; define fileMenuUntangleMenuTable &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.3764"><vh>&lt;&lt; define fileMenuImportMenuTable &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.3765"><vh>&lt;&lt; define fileMenuExportMenuTable &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.3766"><vh>&lt;&lt; define fileMenuTop3MenuTable &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20031218072017.3767"><vh>&lt;&lt; define outline menu tables &gt;&gt;</vh>
-<v t="ekr.20031218072017.3768"><vh>&lt;&lt; define outlineMenuTopMenuTable &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.3769"><vh>&lt;&lt; define outlineMenuExpandContractMenuTable &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.3770"><vh>&lt;&lt; define outlineMenuMoveMenuTable &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.3771"><vh>&lt;&lt; define outlineMenuMarkMenuTable &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.3772"><vh>&lt;&lt; define outlineMenuGoToMenuTable &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20031218072017.3773"><vh>&lt;&lt; define window menu tables &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.3774"><vh>&lt;&lt; define help menu tables &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20031218072017.3775"><vh>oops</vh></v>
-<v t="ekr.20031218072017.3776"><vh>Gui-independent menu enablers</vh>
-<v t="ekr.20031218072017.3777"><vh>updateAllMenus</vh></v>
-<v t="ekr.20031218072017.3778"><vh>updateFileMenu</vh></v>
-<v t="ekr.20031218072017.836"><vh>updateEditMenu</vh>
-<v t="ekr.20040130164211"><vh>&lt;&lt; enable cut/paste &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20031218072017.3779"><vh>updateOutlineMenu</vh>
-<v t="ekr.20040131171020"><vh>&lt;&lt; enable top level outline menu &gt;&gt;</vh></v>
-<v t="ekr.20040131171020.1"><vh>&lt;&lt; enable expand/Contract submenu &gt;&gt;</vh></v>
-<v t="ekr.20040131171020.2"><vh>&lt;&lt; enable move submenu &gt;&gt;</vh></v>
-<v t="ekr.20040131171020.3"><vh>&lt;&lt; enable go to submenu &gt;&gt;</vh></v>
-<v t="ekr.20040131171020.4"><vh>&lt;&lt; enable mark submenu &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20031218072017.3780"><vh>hasSelection</vh></v>
-</v>
-<v t="ekr.20031218072017.3781"><vh>Gui-independent menu routines</vh>
-<v t="ekr.20031218072017.3782"><vh>get/setRealMenuName &amp; setRealMenuNamesFromTable</vh></v>
-<v t="ekr.20031218072017.3783"><vh>canonicalizeMenuName &amp; cononicalizeTranslatedMenuName</vh></v>
-<v t="ekr.20031218072017.2098"><vh>canonicalizeShortcut</vh>
-<v t="ekr.20031218072017.2099"><vh>&lt;&lt; canonicalize the last field &gt;&gt;</vh>
-<v t="ekr.20031218072017.2100"><vh>&lt;&lt; define dict of Tk bind names &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.2101"><vh>&lt;&lt; define dict of special names &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20031218072017.2102"><vh>&lt;&lt; set the last field, preserving case &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.2103"><vh>&lt;&lt; synthesize the shortcuts from the information &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20031218072017.1723"><vh>createMenuEntries</vh>
-<v t="ekr.20031218072017.1724"><vh>&lt;&lt; set name to the label for doCommand &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.1725"><vh>&lt;&lt; set accel to the shortcut for name &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.1726"><vh>&lt;&lt; set bind_shortcut and menu_shortcut using accel &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.1727"><vh>&lt;&lt; define callback function &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.1728"><vh>&lt;&lt; set realLabel, amp_index and menu_shortcut &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.1729"><vh>&lt;&lt; handle bind_shorcut &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20031218072017.3784"><vh>createMenuItemsFromTable</vh></v>
-<v t="ekr.20031218072017.3785"><vh>createMenusFromTables</vh>
-<v t="ekr.20031218072017.3786"><vh>&lt;&lt; create the edit menu &gt;&gt;</vh>
-<v t="ekr.20031218072017.3787"><vh>&lt;&lt; create the edit body submenu &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.3788"><vh>&lt;&lt; create the edit headline submenu &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.3789"><vh>&lt;&lt; create the find submenu &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20031218072017.3790"><vh>&lt;&lt; create the file menu &gt;&gt;</vh>
-<v t="ekr.20031218072017.3791"><vh>&lt;&lt; create the recent files submenu &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.3792"><vh>&lt;&lt; create the read/write submenu &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.3793"><vh>&lt;&lt; create the tangle submenu &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.3794"><vh>&lt;&lt; create the untangle submenu &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.3795"><vh>&lt;&lt; create the import submenu &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.3796"><vh>&lt;&lt; create the export submenu &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20031218072017.3797"><vh>&lt;&lt; create the outline menu &gt;&gt;</vh>
-<v t="ekr.20031218072017.3798"><vh>&lt;&lt; create expand/contract submenu &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.3799"><vh>&lt;&lt; create move submenu &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.3800"><vh>&lt;&lt; create mark submenu &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.3801"><vh>&lt;&lt; create goto submenu &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20031218072017.3802"><vh>&lt;&lt; create the window menu &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.3803"><vh>&lt;&lt; create the help menu &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20031218072017.3804"><vh>createNewMenu</vh></v>
-<v t="ekr.20031218072017.2078"><vh>createRecentFilesMenuItems (leoMenu)</vh></v>
-<v t="ekr.20031218072017.3805"><vh>deleteMenu</vh></v>
-<v t="ekr.20031218072017.3806"><vh>deleteMenuItem</vh></v>
-<v t="ekr.20031218072017.3807"><vh>getMenu, setMenu, destroyMenu</vh></v>
-</v>
-<v t="ekr.20031218072017.3808"><vh>Must be overridden in menu subclasses</vh>
-<v t="ekr.20031218072017.3809"><vh>9 Routines with Tk spellings</vh></v>
-<v t="ekr.20031218072017.3810"><vh>7 Routines with new spellings</vh></v>
-</v>
-</v>
-<v t="ekr.20031218072017.3811"><vh>class nullMenu</vh></v>
-</v>
 <v t="ekr.20031218072017.3439" tnodeList="ekr.20031218072017.3439,ekr.20031218072017.3440,ekr.20031218072017.3441,ekr.20031218072017.3442,ekr.20031218072017.3443,ekr.20031218072017.3444"><vh>@file leoPlugins.py</vh>
 <v t="ekr.20031218072017.3440"><vh>loadHandlers</vh>
 <v t="ekr.20031218072017.3441"><vh>&lt;&lt; set enabled_files from pluginsManager.txt &gt;&gt;</vh></v>
@@ -7618,195 +7541,6 @@
 <v t="ekr.20031218072017.3937"><vh>&lt;&lt; insert the new text in the size box &gt;&gt;</vh></v>
 <v t="ekr.20031218072017.3938"><vh>&lt;&lt; set the fonts in all panes &gt;&gt;</vh></v>
 </v>
-</v>
-</v>
-<v t="ekr.20031218072017.3939" tnodeList="ekr.20031218072017.3939,ekr.20031218072017.3940,ekr.20031218072017.1801,ekr.20031218072017.1802,ekr.20031218072017.3942,ekr.20031218072017.3944,ekr.20031218072017.2176,ekr.20031218072017.2177,ekr.20031218072017.2178,ekr.20031218072017.2179,ekr.20031218072017.2180,ekr.20031218072017.3945,ekr.20031218072017.3946,ekr.20031218072017.3947,ekr.20031218072017.3948,ekr.20031218072017.3949,ekr.20031218072017.3950,ekr.20031218072017.3951,ekr.20031218072017.3952,ekr.20031218072017.3954,ekr.20031218072017.3955,ekr.20031218072017.3956,ekr.20031218072017.3957,ekr.20031218072017.3958,ekr.20031218072017.3959,ekr.20031218072017.3960,ekr.20031218072017.3961,ekr.20031218072017.3962,ekr.20031218072017.3963,ekr.20031218072017.1733,ekr.20031218072017.1975,ekr.20031218072017.1976,ekr.20031218072017.3965,ekr.20031218072017.1974,ekr.20031218072017.3966,ekr.20031218072017.3968,ekr.20031218072017.3969,ekr.20031218072017.2246,ekr.20031218072017.1625,ekr.20031218072017.722,ekr.20031218072017.1540,ekr.20031218072017.2307,ekr.20031218072017.3970,ekr.20031218072017.3972,ekr.20031218072017.3973,ekr.20031218072017.3974,ekr.20031218072017.3975,ekr.20031218072017.2253,ekr.20031218072017.3976,ekr.20031218072017.3977,ekr.20031218072017.3978,ekr.20031218072017.1803,ekr.20031218072017.3981,ekr.20031218072017.841,ekr.20031218072017.842,ekr.20031218072017.843,ekr.20031218072017.3982,ekr.20031218072017.3983,ekr.20031218072017.3985,ekr.20031218072017.3986,ekr.20031218072017.3987,ekr.20031218072017.3988,ekr.20031218072017.3989,ekr.20031218072017.3990,EKR.20040422130619,ekr.20031218072017.3992,ekr.20031218072017.3993,ekr.20031218072017.3994,ekr.20031218072017.998,ekr.20031218072017.3995,ekr.20031218072017.3996,ekr.20031218072017.2182,ekr.20031218072017.838,ekr.20031218072017.3998,ekr.20031218072017.2183,ekr.20031218072017.1320,ekr.20031218072017.1321,ekr.20031218072017.1322,ekr.20031218072017.1323,ekr.20031218072017.1324,ekr.20031218072017.1325,ekr.20031218072017.1326,ekr.20031218072017.1327,ekr.20031218072017.1328,ekr.20031218072017.1329,ekr.20031218072017.1330,ekr.20040105223536,ekr.20040105223536.1,ekr.20031218072017.1331,ekr.20031218072017.3999,ekr.20031218072017.4000,ekr.20031218072017.4001,ekr.20031218072017.4002,ekr.20031218072017.2184,ekr.20031218072017.4003,ekr.20031218072017.4004,ekr.20031218072017.4005,ekr.20031218072017.4007,ekr.20031218072017.4008,ekr.20031218072017.4009,ekr.20031218072017.4010,ekr.20031218072017.4011,ekr.20031218072017.4012,ekr.20031218072017.495,ekr.20031218072017.4014,ekr.20031218072017.4015,ekr.20031218072017.4016,ekr.20031218072017.4017,ekr.20031218072017.4019,ekr.20031218072017.4020,ekr.20031218072017.4021,ekr.20031218072017.4022,ekr.20031218072017.4023,ekr.20031218072017.4024,ekr.20031218072017.4026,ekr.20031218072017.4028,ekr.20031218072017.4029,ekr.20031218072017.4030,ekr.20031218072017.4031,ekr.20031218072017.2377,ekr.20031218072017.4032,ekr.20031218072017.4034,ekr.20031218072017.4035,ekr.20031218072017.4036,ekr.20031218072017.4037,ekr.20031218072017.4038,ekr.20031218072017.4039,ekr.20031218072017.4040,ekr.20031218072017.4041,ekr.20031218072017.4042,ekr.20031218072017.4043,ekr.20031218072017.4044,ekr.20031218072017.4045,ekr.20031218072017.1473,ekr.20031218072017.4046"><vh>@file leoTkinterFrame.py</vh>
-<v t="ekr.20031218072017.3940"><vh>class leoTkinterFrame</vh>
-<v t="ekr.20031218072017.3941"><vh> frame.Birth &amp; Death</vh>
-<v t="ekr.20031218072017.1801"><vh>f.__init__</vh>
-<v t="ekr.20031218072017.1802"><vh>&lt;&lt; set the leoTkinterFrame ivars &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20031218072017.3942"><vh>f.__repr__</vh></v>
-<v t="ekr.20031218072017.3943"><vh>Creating the frame</vh>
-<v t="ekr.20031218072017.3944" a="M"><vh>f.createCanvas</vh></v>
-<v t="ekr.20031218072017.2176"><vh>f.finishCreate</vh>
-<v t="ekr.20031218072017.2177"><vh>&lt;&lt; create the toplevel frame &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.2178"><vh>&lt;&lt; create all the subframes &gt;&gt;</vh>
-<v t="ekr.20031218072017.2179"><vh>&lt;&lt; create both splitters &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20031218072017.2180"><vh>&lt;&lt; create the first tree node &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20031218072017.3945"><vh>Creating the splitter</vh>
-<v t="ekr.20031218072017.3946"><vh>resizePanesToRatio</vh></v>
-<v t="ekr.20031218072017.3947"><vh>bindBar</vh></v>
-<v t="ekr.20031218072017.3948"><vh>createLeoSplitter</vh></v>
-<v t="ekr.20031218072017.3949"><vh>divideAnySplitter</vh></v>
-<v t="ekr.20031218072017.3950"><vh>divideLeoSplitter</vh></v>
-<v t="ekr.20031218072017.3951"><vh>onDrag...</vh></v>
-<v t="ekr.20031218072017.3952"><vh>placeSplitter</vh></v>
-</v>
-<v t="ekr.20031218072017.3953"><vh>Creating the icon area</vh>
-<v t="ekr.20031218072017.3954"><vh>createIconBar</vh></v>
-<v t="ekr.20031218072017.3955"><vh>hideIconBar</vh></v>
-<v t="ekr.20031218072017.3956"><vh>clearIconBar</vh></v>
-<v t="ekr.20031218072017.3957"><vh>showIconBar</vh></v>
-<v t="ekr.20031218072017.3958"><vh>addIconButton</vh>
-<v t="ekr.20031218072017.3959"><vh>&lt;&lt; create a picture &gt;&gt;</vh></v>
-</v>
-</v>
-<v t="ekr.20031218072017.3960"><vh>Creating the status area</vh>
-<v t="ekr.20031218072017.3961"><vh>createStatusLine</vh></v>
-<v t="ekr.20031218072017.3962"><vh>clearStatusLine</vh></v>
-<v t="ekr.20031218072017.3963"><vh>putStatusLine</vh></v>
-<v t="ekr.20031218072017.1733"><vh>updateStatusRowCol</vh></v>
-</v>
-</v>
-<v t="ekr.20031218072017.3964"><vh>Destroying the frame</vh>
-<v t="ekr.20031218072017.1975"><vh>destroyAllObjects</vh>
-<v t="ekr.20031218072017.1976"><vh>&lt;&lt; clear all vnodes and tnodes in the tree&gt;&gt;</vh></v>
-</v>
-<v t="ekr.20031218072017.3965"><vh>destroyAllPanels</vh></v>
-<v t="ekr.20031218072017.1974"><vh>destroySelf</vh></v>
-</v>
-</v>
-<v t="ekr.20031218072017.3966"><vh>bringToFront</vh></v>
-<v t="ekr.20031218072017.3967"><vh>Configuration</vh>
-<v t="ekr.20031218072017.3968"><vh>configureBar</vh></v>
-<v t="ekr.20031218072017.3969"><vh>configureBarsFromConfig</vh></v>
-<v t="ekr.20031218072017.2246"><vh>reconfigureFromConfig</vh></v>
-<v t="ekr.20031218072017.1625"><vh>setInitialWindowGeometry</vh></v>
-<v t="ekr.20031218072017.722"><vh>setTabWidth</vh></v>
-<v t="ekr.20031218072017.1540"><vh>setWrap</vh></v>
-<v t="ekr.20031218072017.2307"><vh>setTopGeometry</vh></v>
-<v t="ekr.20031218072017.3970"><vh>reconfigurePanes (use config bar_width)</vh></v>
-</v>
-<v t="ekr.20031218072017.3971"><vh>Event handlers (Frame)</vh>
-<v t="ekr.20031218072017.3972"><vh>frame.OnCloseLeoEvent</vh></v>
-<v t="ekr.20031218072017.3973"><vh>frame.OnControlKeyUp/Down</vh></v>
-<v t="ekr.20031218072017.3974"><vh>frame.OnVisibility</vh></v>
-<v t="ekr.20031218072017.3975"><vh>OnActivateBody</vh></v>
-<v t="ekr.20031218072017.2253"><vh>OnActivateLeoEvent, OnDeactivateLeoEvent</vh></v>
-<v t="ekr.20031218072017.3976"><vh>OnActivateTree</vh></v>
-<v t="ekr.20031218072017.3977"><vh>OnBodyClick, OnBodyRClick (Events)</vh></v>
-<v t="ekr.20031218072017.3978"><vh>OnBodyDoubleClick (Events)</vh></v>
-<v t="ekr.20031218072017.1803"><vh>OnMouseWheel (Tomaz Ficko)</vh></v>
-</v>
-<v t="ekr.20031218072017.3979"><vh>Gui-dependent commands</vh>
-<v t="ekr.20031218072017.3980"><vh>Edit Menu...</vh>
-<v t="ekr.20031218072017.3981"><vh>abortEditLabelCommand</vh></v>
-<v t="ekr.20031218072017.840"><vh>Cut/Copy/Paste body text</vh>
-<v t="ekr.20031218072017.841"><vh>frame.OnCut, OnCutFrom Menu</vh></v>
-<v t="ekr.20031218072017.842"><vh>frame.OnCopy, OnCopyFromMenu</vh></v>
-<v t="ekr.20031218072017.843"><vh>frame.OnPaste, OnPasteNode, OnPasteFromMenu</vh></v>
-</v>
-<v t="ekr.20031218072017.3982"><vh>endEditLabelCommand</vh></v>
-<v t="ekr.20031218072017.3983"><vh>insertHeadlineTime</vh></v>
-</v>
-<v t="ekr.20031218072017.3984"><vh>Window Menu...</vh>
-<v t="ekr.20031218072017.3985"><vh>toggleActivePane</vh></v>
-<v t="ekr.20031218072017.3986"><vh>cascade</vh></v>
-<v t="ekr.20031218072017.3987"><vh>equalSizedPanes</vh></v>
-<v t="ekr.20031218072017.3988"><vh>hideLogWindow</vh></v>
-<v t="ekr.20031218072017.3989"><vh>minimizeAll</vh></v>
-<v t="ekr.20031218072017.3990"><vh>toggleSplitDirection</vh></v>
-<v t="EKR.20040422130619"><vh>resizeToScreen</vh></v>
-</v>
-<v t="ekr.20031218072017.3991"><vh>Help Menu...</vh>
-<v t="ekr.20031218072017.3992"><vh>leoHelp</vh>
-<v t="ekr.20031218072017.3993"><vh>showProgressBar</vh>
-<v t="ekr.20031218072017.3994"><vh>&lt;&lt; create the scale widget &gt;&gt;</vh></v>
-</v>
-</v>
-</v>
-</v>
-<v t="ekr.20031218072017.998"><vh>Scrolling callbacks (frame)</vh></v>
-<v t="ekr.20031218072017.3995"><vh>Tk bindings...</vh></v>
-</v>
-<v t="ekr.20031218072017.3996"><vh>class leoTkinterBody</vh>
-<v t="ekr.20031218072017.3997"><vh> Birth &amp; death</vh>
-<v t="ekr.20031218072017.2182"><vh>tkBody. __init__</vh></v>
-<v t="ekr.20031218072017.838"><vh>tkBody.createBindings</vh></v>
-<v t="ekr.20031218072017.3998"><vh>tkBody.createControl</vh></v>
-</v>
-<v t="ekr.20031218072017.2183"><vh>tkBody.setFontFromConfig</vh></v>
-<v t="ekr.20031218072017.1320"><vh>body key handlers</vh>
-<v t="ekr.20031218072017.1321"><vh>idle_body_key</vh>
-<v t="ekr.20031218072017.1322"><vh>&lt;&lt; return if nothing has changed &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.1323"><vh>&lt;&lt; set removeTrailing &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.1324"><vh>&lt;&lt; Do auto indent &gt;&gt; (David McNab)</vh></v>
-<v t="ekr.20031218072017.1325"><vh>&lt;&lt; convert tab to blanks &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.1326"><vh>&lt;&lt; set s to widget text, removing trailing newlines if necessary &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.1327"><vh>&lt;&lt; recolor the body &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.1328"><vh>&lt;&lt; redraw the screen if necessary &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20031218072017.1329"><vh>onBodyChanged (called from core)</vh></v>
-<v t="ekr.20031218072017.1330"><vh>onBodyKey</vh>
-<v t="ekr.20040105223536"><vh>handleStatusLineKey</vh>
-<v t="ekr.20040105223536.1"><vh>&lt;&lt; trace the key event &gt;&gt;</vh></v>
-</v>
-</v>
-<v t="ekr.20031218072017.1331"><vh>onBodyWillChange</vh></v>
-</v>
-<v t="ekr.20031218072017.3999"><vh>forceRecolor</vh></v>
-<v t="ekr.20031218072017.4000"><vh>Tk bindings (leoTkinterBody)</vh>
-<v t="ekr.20031218072017.4001"><vh>Bounding box (Tk spelling)</vh></v>
-<v t="ekr.20031218072017.4002"><vh>Color tags (Tk spelling)</vh></v>
-<v t="ekr.20031218072017.2184"><vh>Configuration (Tk spelling)</vh></v>
-<v t="ekr.20031218072017.4003"><vh>Focus</vh></v>
-<v t="ekr.20031218072017.4004"><vh>Height &amp; width</vh></v>
-<v t="ekr.20031218072017.4005"><vh>Idle time...</vh></v>
-<v t="ekr.20031218072017.4006"><vh>Indices</vh>
-<v t="ekr.20031218072017.4007"><vh>adjustIndex</vh></v>
-<v t="ekr.20031218072017.4008"><vh>compareIndices</vh></v>
-<v t="ekr.20031218072017.4009"><vh>convertRowColumnToIndex</vh></v>
-<v t="ekr.20031218072017.4010"><vh>convertIndexToRowColumn</vh></v>
-<v t="ekr.20031218072017.4011"><vh>getImageIndex</vh></v>
-<v t="ekr.20031218072017.4012"><vh>tkIndex (internal use only)</vh></v>
-</v>
-<v t="ekr.20031218072017.4013"><vh>Insert point</vh>
-<v t="ekr.20031218072017.495"><vh>getInsertionPoint &amp; getBeforeInsertionPoint</vh></v>
-<v t="ekr.20031218072017.4014"><vh>getCharAtInsertPoint &amp; getCharBeforeInsertPoint</vh></v>
-<v t="ekr.20031218072017.4015"><vh>makeInsertPointVisible</vh></v>
-<v t="ekr.20031218072017.4016"><vh>setInsertionPointTo...</vh></v>
-</v>
-<v t="ekr.20031218072017.4017"><vh>Menus</vh></v>
-<v t="ekr.20031218072017.4018"><vh>Selection</vh>
-<v t="ekr.20031218072017.4019"><vh>deleteTextSelection</vh></v>
-<v t="ekr.20031218072017.4020"><vh>getSelectedText</vh></v>
-<v t="ekr.20031218072017.4021"><vh>getTextSelection</vh></v>
-<v t="ekr.20031218072017.4022"><vh>hasTextSelection</vh></v>
-<v t="ekr.20031218072017.4023"><vh>selectAllText</vh></v>
-<v t="ekr.20031218072017.4024"><vh>setTextSelection</vh></v>
-</v>
-<v t="ekr.20031218072017.4025"><vh>Text</vh>
-<v t="ekr.20031218072017.4026"><vh>delete...</vh></v>
-<v t="ekr.20031218072017.4027"><vh>get...</vh>
-<v t="ekr.20031218072017.4028"><vh>getAllText</vh></v>
-<v t="ekr.20031218072017.4029"><vh>getCharAtIndex</vh></v>
-<v t="ekr.20031218072017.4030"><vh>getInsertLines</vh></v>
-<v t="ekr.20031218072017.4031"><vh>getSelectionAreas</vh></v>
-<v t="ekr.20031218072017.2377"><vh>getSelectionLines (tkBody)</vh></v>
-<v t="ekr.20031218072017.4032"><vh>getTextRange</vh></v>
-</v>
-<v t="ekr.20031218072017.4033"><vh>Insert...</vh>
-<v t="ekr.20031218072017.4034"><vh>insertAtInsertPoint</vh></v>
-<v t="ekr.20031218072017.4035"><vh>insertAtEnd</vh></v>
-<v t="ekr.20031218072017.4036"><vh>insertAtStartOfLine</vh></v>
-</v>
-<v t="ekr.20031218072017.4037"><vh>setSelectionAreas</vh></v>
-</v>
-<v t="ekr.20031218072017.4038"><vh>Visibility &amp; scrolling</vh></v>
-</v>
-</v>
-<v t="ekr.20031218072017.4039"><vh>class leoTkinterLog</vh>
-<v t="ekr.20031218072017.4040"><vh>tkLog.__init__</vh></v>
-<v t="ekr.20031218072017.4041"><vh>tkLog.configureBorder &amp; configureFont</vh></v>
-<v t="ekr.20031218072017.4042"><vh>tkLog.createControl</vh></v>
-<v t="ekr.20031218072017.4043"><vh>tkLog.getFontConfig</vh></v>
-<v t="ekr.20031218072017.4044"><vh>tkLog.hasFocus</vh></v>
-<v t="ekr.20031218072017.4045"><vh>tkLog.onActivateLog</vh></v>
-<v t="ekr.20031218072017.1473"><vh>tkLog.put &amp; putnl</vh></v>
-<v t="ekr.20031218072017.4046"><vh>tkLog.setFontFromConfig</vh></v>
 </v>
 </v>
 <v t="ekr.20031218072017.4047" tnodeList="ekr.20031218072017.4047,ekr.20031218072017.837,ekr.20031218072017.4049,ekr.20031218072017.1856,ekr.20031218072017.2186,ekr.20031218072017.4050,ekr.20031218072017.4051,ekr.20031218072017.4052,ekr.20031218072017.4053,ekr.20031218072017.4054,ekr.20031218072017.4055,ekr.20031218072017.4056,ekr.20031218072017.4057,ekr.20031218072017.4058,ekr.20031218072017.845,ekr.20031218072017.846,ekr.20031218072017.4061,ekr.20031218072017.4062,ekr.20031218072017.4063,ekr.20031218072017.4065,ekr.20031218072017.2373,ekr.20031218072017.2187,ekr.20031218072017.4068,ekr.20031218072017.4069,ekr.20031218072017.4070,ekr.20031218072017.4072,ekr.20031218072017.4073,ekr.20031218072017.4075,ekr.20031218072017.4076,ekr.20031218072017.4077,ekr.20031218072017.4078,ekr.20031218072017.4079,ekr.20031218072017.4080,ekr.20031218072017.4082,ekr.20031218072017.4083,ekr.20031218072017.4085,ekr.20031218072017.4086,ekr.20031218072017.4087,ekr.20031218072017.4088,ekr.20031218072017.4089,ekr.20031218072017.4091,ekr.20031218072017.4092,ekr.20031218072017.4093,ekr.20031218072017.4094,ekr.20031218072017.4095,ekr.20031218072017.4096,ekr.20031218072017.4098"><vh>@file leoTkinterGui.py</vh>
@@ -9459,24 +9193,323 @@
 </v>
 </v>
 </v>
-<v t="EKR.20040422132037"><vh>Mac/Linux bugs</vh>
-<v t="EKR.20040422131023" a="M"><vh>(Force update of log pane when reading derived files)</vh></v>
-<v t="EKR.20040422132037.1" a="M"><vh>Use clover keys for Mac</vh></v>
-<v t="EKR.20040422132037.2"><vh>Install Leo in the site-packages directory</vh></v>
-<v t="EKR.20040422132037.3"><vh>small bug in install script</vh></v>
-<v t="EKR.20040422132037.4"><vh>config problem on Linux</vh></v>
-<v t="EKR.20040422132037.5"><vh>Backspace problems on Linux</vh>
-<v t="EKR.20040422132037.6"><vh>Dave Hein: fix</vh></v>
+<v t="ekr.20031218072017.3749" tnodeList="ekr.20031218072017.3749,ekr.20031218072017.3750,ekr.20031218072017.3751,ekr.20031218072017.3752,ekr.20031218072017.3753,ekr.20031218072017.839,ekr.20031218072017.3754,ekr.20031218072017.3755,ekr.20031218072017.3756,ekr.20031218072017.3757,ekr.20031218072017.3758,ekr.20031218072017.3759,ekr.20031218072017.3760,ekr.20031218072017.3761,ekr.20031218072017.3762,ekr.20031218072017.3763,ekr.20031218072017.3764,ekr.20031218072017.3765,ekr.20031218072017.3766,ekr.20031218072017.3767,ekr.20031218072017.3768,ekr.20031218072017.3769,ekr.20031218072017.3770,ekr.20031218072017.3771,ekr.20031218072017.3772,ekr.20031218072017.3773,ekr.20031218072017.3774,ekr.20031218072017.3775,ekr.20031218072017.3777,ekr.20031218072017.3778,ekr.20031218072017.836,ekr.20040130164211,ekr.20031218072017.3779,ekr.20040131171020,ekr.20040131171020.1,ekr.20040131171020.2,ekr.20040131171020.3,ekr.20040131171020.4,ekr.20031218072017.3780,ekr.20031218072017.3782,ekr.20031218072017.3783,ekr.20031218072017.2098,ekr.20031218072017.2102,ekr.20031218072017.2099,ekr.20031218072017.2100,ekr.20031218072017.2101,ekr.20031218072017.2103,ekr.20031218072017.1723,ekr.20031218072017.1724,ekr.20031218072017.1725,ekr.20031218072017.1726,ekr.20031218072017.1727,ekr.20031218072017.1728,ekr.20031218072017.1729,ekr.20031218072017.3784,ekr.20031218072017.3785,ekr.20031218072017.3790,ekr.20031218072017.3791,ekr.20031218072017.3792,ekr.20031218072017.3793,ekr.20031218072017.3794,ekr.20031218072017.3795,ekr.20031218072017.3796,ekr.20031218072017.3786,ekr.20031218072017.3787,ekr.20031218072017.3788,ekr.20031218072017.3789,ekr.20031218072017.3797,ekr.20031218072017.3798,ekr.20031218072017.3799,ekr.20031218072017.3800,ekr.20031218072017.3801,ekr.20031218072017.3802,ekr.20031218072017.3803,ekr.20031218072017.3804,ekr.20031218072017.2078,ekr.20031218072017.3805,ekr.20031218072017.3806,ekr.20031218072017.3807,ekr.20031218072017.3809,ekr.20031218072017.3810,ekr.20031218072017.3811"><vh>@file leoMenu.py</vh>
+<v t="ekr.20031218072017.3750"><vh>class leoMenu</vh>
+<v t="ekr.20031218072017.3751"><vh> leoMenu.__init__</vh></v>
+<v t="ekr.20031218072017.3752"><vh>defineMenuTables</vh>
+<v t="ekr.20031218072017.3753"><vh>&lt;&lt; define edit menu tables &gt;&gt;</vh>
+<v t="ekr.20031218072017.839"><vh>&lt;&lt; define editMenuTopTable &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.3754"><vh>&lt;&lt; define editMenuEditBodyTable &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.3755"><vh>&lt;&lt; define editMenuEditHeadlineTable &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.3756"><vh>&lt;&lt; define editMenuFindMenuTable &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.3757"><vh>&lt;&lt; define editMenuTop2Table &gt;&gt;</vh></v>
 </v>
-<v t="EKR.20040422132037.7"><vh>Bug: vpython and mac</vh></v>
-<v t="EKR.20040422132037.8"><vh>Mouse / Paste Anomalies  </vh></v>
+<v t="ekr.20031218072017.3758"><vh>&lt;&lt; define file menu tables &gt;&gt;</vh>
+<v t="ekr.20031218072017.3759"><vh>&lt;&lt; define fileMenuTopTable &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.3760"><vh>&lt;&lt; define fileMenuTop2Table &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.3761"><vh>&lt;&lt; define fileMenuReadWriteMenuTable &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.3762"><vh>&lt;&lt; define fileMenuTangleMenuTable &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.3763"><vh>&lt;&lt; define fileMenuUntangleMenuTable &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.3764"><vh>&lt;&lt; define fileMenuImportMenuTable &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.3765"><vh>&lt;&lt; define fileMenuExportMenuTable &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.3766"><vh>&lt;&lt; define fileMenuTop3MenuTable &gt;&gt;</vh></v>
 </v>
-<v t="EKR.20040422091601"><vh>New bugs</vh>
-<v t="EKR.20040422091601.1"><vh>Syntax Colouring Bug - html mode   </vh></v>
+<v t="ekr.20031218072017.3767"><vh>&lt;&lt; define outline menu tables &gt;&gt;</vh>
+<v t="ekr.20031218072017.3768"><vh>&lt;&lt; define outlineMenuTopMenuTable &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.3769"><vh>&lt;&lt; define outlineMenuExpandContractMenuTable &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.3770"><vh>&lt;&lt; define outlineMenuMoveMenuTable &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.3771"><vh>&lt;&lt; define outlineMenuMarkMenuTable &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.3772"><vh>&lt;&lt; define outlineMenuGoToMenuTable &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20031218072017.3773"><vh>&lt;&lt; define window menu tables &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.3774"><vh>&lt;&lt; define help menu tables &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20031218072017.3775"><vh>oops</vh></v>
+<v t="ekr.20031218072017.3776"><vh>Gui-independent menu enablers</vh>
+<v t="ekr.20031218072017.3777"><vh>updateAllMenus</vh></v>
+<v t="ekr.20031218072017.3778"><vh>updateFileMenu</vh></v>
+<v t="ekr.20031218072017.836"><vh>updateEditMenu</vh>
+<v t="ekr.20040130164211"><vh>&lt;&lt; enable cut/paste &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20031218072017.3779"><vh>updateOutlineMenu</vh>
+<v t="ekr.20040131171020"><vh>&lt;&lt; enable top level outline menu &gt;&gt;</vh></v>
+<v t="ekr.20040131171020.1"><vh>&lt;&lt; enable expand/Contract submenu &gt;&gt;</vh></v>
+<v t="ekr.20040131171020.2"><vh>&lt;&lt; enable move submenu &gt;&gt;</vh></v>
+<v t="ekr.20040131171020.3"><vh>&lt;&lt; enable go to submenu &gt;&gt;</vh></v>
+<v t="ekr.20040131171020.4"><vh>&lt;&lt; enable mark submenu &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20031218072017.3780"><vh>hasSelection</vh></v>
+</v>
+<v t="ekr.20031218072017.3781"><vh>Gui-independent menu routines</vh>
+<v t="ekr.20031218072017.3782"><vh>get/setRealMenuName &amp; setRealMenuNamesFromTable</vh></v>
+<v t="ekr.20031218072017.3783"><vh>canonicalizeMenuName &amp; cononicalizeTranslatedMenuName</vh></v>
+<v t="ekr.20031218072017.2098"><vh>canonicalizeShortcut</vh>
+<v t="ekr.20031218072017.2099"><vh>&lt;&lt; canonicalize the last field &gt;&gt;</vh>
+<v t="ekr.20031218072017.2100"><vh>&lt;&lt; define dict of Tk bind names &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.2101"><vh>&lt;&lt; define dict of special names &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20031218072017.2102"><vh>&lt;&lt; set the last field, preserving case &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.2103"><vh>&lt;&lt; synthesize the shortcuts from the information &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20031218072017.1723"><vh>createMenuEntries</vh>
+<v t="ekr.20031218072017.1724"><vh>&lt;&lt; set name to the label for doCommand &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.1725"><vh>&lt;&lt; set accel to the shortcut for name &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.1726"><vh>&lt;&lt; set bind_shortcut and menu_shortcut using accel &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.1727"><vh>&lt;&lt; define callback function &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.1728"><vh>&lt;&lt; set realLabel, amp_index and menu_shortcut &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.1729"><vh>&lt;&lt; handle bind_shorcut &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20031218072017.3784"><vh>createMenuItemsFromTable</vh></v>
+<v t="ekr.20031218072017.3785"><vh>createMenusFromTables</vh>
+<v t="ekr.20031218072017.3786"><vh>&lt;&lt; create the edit menu &gt;&gt;</vh>
+<v t="ekr.20031218072017.3787"><vh>&lt;&lt; create the edit body submenu &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.3788"><vh>&lt;&lt; create the edit headline submenu &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.3789"><vh>&lt;&lt; create the find submenu &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20031218072017.3790"><vh>&lt;&lt; create the file menu &gt;&gt;</vh>
+<v t="ekr.20031218072017.3791"><vh>&lt;&lt; create the recent files submenu &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.3792"><vh>&lt;&lt; create the read/write submenu &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.3793"><vh>&lt;&lt; create the tangle submenu &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.3794"><vh>&lt;&lt; create the untangle submenu &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.3795"><vh>&lt;&lt; create the import submenu &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.3796"><vh>&lt;&lt; create the export submenu &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20031218072017.3797"><vh>&lt;&lt; create the outline menu &gt;&gt;</vh>
+<v t="ekr.20031218072017.3798"><vh>&lt;&lt; create expand/contract submenu &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.3799"><vh>&lt;&lt; create move submenu &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.3800"><vh>&lt;&lt; create mark submenu &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.3801"><vh>&lt;&lt; create goto submenu &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20031218072017.3802"><vh>&lt;&lt; create the window menu &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.3803"><vh>&lt;&lt; create the help menu &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20031218072017.3804"><vh>createNewMenu</vh></v>
+<v t="ekr.20031218072017.2078"><vh>createRecentFilesMenuItems (leoMenu)</vh></v>
+<v t="ekr.20031218072017.3805"><vh>deleteMenu</vh></v>
+<v t="ekr.20031218072017.3806"><vh>deleteMenuItem</vh></v>
+<v t="ekr.20031218072017.3807"><vh>getMenu, setMenu, destroyMenu</vh></v>
+</v>
+<v t="ekr.20031218072017.3808"><vh>Must be overridden in menu subclasses</vh>
+<v t="ekr.20031218072017.3809"><vh>9 Routines with Tk spellings</vh></v>
+<v t="ekr.20031218072017.3810"><vh>7 Routines with new spellings</vh></v>
+</v>
+</v>
+<v t="ekr.20031218072017.3811"><vh>class nullMenu</vh></v>
+</v>
+<v t="ekr.20031218072017.3939" tnodeList="ekr.20031218072017.3939,ekr.20031218072017.3940,ekr.20031218072017.1801,ekr.20031218072017.1802,ekr.20031218072017.3942,ekr.20031218072017.3944,ekr.20031218072017.2176,ekr.20031218072017.2177,ekr.20031218072017.2178,ekr.20031218072017.2179,ekr.20031218072017.2180,ekr.20031218072017.3945,ekr.20031218072017.3946,ekr.20031218072017.3947,ekr.20031218072017.3948,ekr.20031218072017.3949,ekr.20031218072017.3950,ekr.20031218072017.3951,ekr.20031218072017.3952,ekr.20031218072017.3954,ekr.20031218072017.3955,ekr.20031218072017.3956,ekr.20031218072017.3957,ekr.20031218072017.3958,ekr.20031218072017.3959,ekr.20031218072017.3960,ekr.20031218072017.3961,ekr.20031218072017.3962,ekr.20031218072017.3963,ekr.20031218072017.1733,ekr.20031218072017.1975,ekr.20031218072017.1976,ekr.20031218072017.3965,ekr.20031218072017.1974,ekr.20031218072017.3966,ekr.20031218072017.3968,ekr.20031218072017.3969,ekr.20031218072017.2246,ekr.20031218072017.1625,ekr.20031218072017.722,ekr.20031218072017.1540,ekr.20031218072017.2307,ekr.20031218072017.3970,ekr.20031218072017.3972,ekr.20031218072017.3973,ekr.20031218072017.3974,ekr.20031218072017.3975,ekr.20031218072017.2253,ekr.20031218072017.3976,ekr.20031218072017.3977,ekr.20031218072017.3978,ekr.20031218072017.1803,ekr.20031218072017.3981,ekr.20031218072017.841,ekr.20031218072017.842,ekr.20031218072017.843,ekr.20031218072017.3982,ekr.20031218072017.3983,ekr.20031218072017.3985,ekr.20031218072017.3986,ekr.20031218072017.3987,ekr.20031218072017.3988,ekr.20031218072017.3989,ekr.20031218072017.3990,EKR.20040422130619,ekr.20031218072017.3992,ekr.20031218072017.3993,ekr.20031218072017.3994,ekr.20031218072017.998,ekr.20031218072017.3995,ekr.20031218072017.3996,ekr.20031218072017.2182,ekr.20031218072017.838,ekr.20031218072017.3998,ekr.20031218072017.2183,ekr.20031218072017.1320,ekr.20031218072017.1321,ekr.20031218072017.1322,ekr.20031218072017.1323,ekr.20031218072017.1324,ekr.20031218072017.1325,ekr.20031218072017.1326,ekr.20031218072017.1327,ekr.20031218072017.1328,ekr.20031218072017.1329,ekr.20031218072017.1330,ekr.20040105223536,ekr.20040105223536.1,ekr.20031218072017.1331,ekr.20031218072017.3999,ekr.20031218072017.4000,ekr.20031218072017.4001,ekr.20031218072017.4002,ekr.20031218072017.2184,ekr.20031218072017.4003,ekr.20031218072017.4004,ekr.20031218072017.4005,ekr.20031218072017.4007,ekr.20031218072017.4008,ekr.20031218072017.4009,ekr.20031218072017.4010,ekr.20031218072017.4011,ekr.20031218072017.4012,ekr.20031218072017.495,ekr.20031218072017.4014,ekr.20031218072017.4015,ekr.20031218072017.4016,ekr.20031218072017.4017,ekr.20031218072017.4019,ekr.20031218072017.4020,ekr.20031218072017.4021,ekr.20031218072017.4022,ekr.20031218072017.4023,ekr.20031218072017.4024,ekr.20031218072017.4026,ekr.20031218072017.4028,ekr.20031218072017.4029,ekr.20031218072017.4030,ekr.20031218072017.4031,ekr.20031218072017.2377,ekr.20031218072017.4032,ekr.20031218072017.4034,ekr.20031218072017.4035,ekr.20031218072017.4036,ekr.20031218072017.4037,ekr.20031218072017.4038,ekr.20031218072017.4039,ekr.20031218072017.4040,ekr.20031218072017.4041,ekr.20031218072017.4042,ekr.20031218072017.4043,ekr.20031218072017.4044,ekr.20031218072017.4045,ekr.20031218072017.1473,EKR.20040423082910,EKR.20040423082910.1,EKR.20040423082910.2,EKR.20040423082910.3,ekr.20031218072017.4046"><vh>@file leoTkinterFrame.py</vh>
+<v t="ekr.20031218072017.3940"><vh>class leoTkinterFrame</vh>
+<v t="ekr.20031218072017.3941"><vh> frame.Birth &amp; Death</vh>
+<v t="ekr.20031218072017.1801"><vh>f.__init__</vh>
+<v t="ekr.20031218072017.1802"><vh>&lt;&lt; set the leoTkinterFrame ivars &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20031218072017.3942"><vh>f.__repr__</vh></v>
+<v t="ekr.20031218072017.3943"><vh>Creating the frame</vh>
+<v t="ekr.20031218072017.3944"><vh>f.createCanvas</vh></v>
+<v t="ekr.20031218072017.2176"><vh>f.finishCreate</vh>
+<v t="ekr.20031218072017.2177"><vh>&lt;&lt; create the toplevel frame &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.2178"><vh>&lt;&lt; create all the subframes &gt;&gt;</vh>
+<v t="ekr.20031218072017.2179"><vh>&lt;&lt; create both splitters &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20031218072017.2180"><vh>&lt;&lt; create the first tree node &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20031218072017.3945"><vh>Creating the splitter</vh>
+<v t="ekr.20031218072017.3946"><vh>resizePanesToRatio</vh></v>
+<v t="ekr.20031218072017.3947"><vh>bindBar</vh></v>
+<v t="ekr.20031218072017.3948"><vh>createLeoSplitter</vh></v>
+<v t="ekr.20031218072017.3949"><vh>divideAnySplitter</vh></v>
+<v t="ekr.20031218072017.3950"><vh>divideLeoSplitter</vh></v>
+<v t="ekr.20031218072017.3951"><vh>onDrag...</vh></v>
+<v t="ekr.20031218072017.3952"><vh>placeSplitter</vh></v>
+</v>
+<v t="ekr.20031218072017.3953"><vh>Creating the icon area</vh>
+<v t="ekr.20031218072017.3954"><vh>createIconBar</vh></v>
+<v t="ekr.20031218072017.3955"><vh>hideIconBar</vh></v>
+<v t="ekr.20031218072017.3956"><vh>clearIconBar</vh></v>
+<v t="ekr.20031218072017.3957"><vh>showIconBar</vh></v>
+<v t="ekr.20031218072017.3958"><vh>addIconButton</vh>
+<v t="ekr.20031218072017.3959"><vh>&lt;&lt; create a picture &gt;&gt;</vh></v>
+</v>
+</v>
+<v t="ekr.20031218072017.3960"><vh>Creating the status area</vh>
+<v t="ekr.20031218072017.3961"><vh>createStatusLine</vh></v>
+<v t="ekr.20031218072017.3962"><vh>clearStatusLine</vh></v>
+<v t="ekr.20031218072017.3963"><vh>putStatusLine</vh></v>
+<v t="ekr.20031218072017.1733"><vh>updateStatusRowCol</vh></v>
+</v>
+</v>
+<v t="ekr.20031218072017.3964"><vh>Destroying the frame</vh>
+<v t="ekr.20031218072017.1975"><vh>destroyAllObjects</vh>
+<v t="ekr.20031218072017.1976"><vh>&lt;&lt; clear all vnodes and tnodes in the tree&gt;&gt;</vh></v>
+</v>
+<v t="ekr.20031218072017.3965"><vh>destroyAllPanels</vh></v>
+<v t="ekr.20031218072017.1974"><vh>destroySelf</vh></v>
+</v>
+</v>
+<v t="ekr.20031218072017.3966"><vh>bringToFront</vh></v>
+<v t="ekr.20031218072017.3967"><vh>Configuration</vh>
+<v t="ekr.20031218072017.3968"><vh>configureBar</vh></v>
+<v t="ekr.20031218072017.3969"><vh>configureBarsFromConfig</vh></v>
+<v t="ekr.20031218072017.2246"><vh>reconfigureFromConfig</vh></v>
+<v t="ekr.20031218072017.1625"><vh>setInitialWindowGeometry</vh></v>
+<v t="ekr.20031218072017.722"><vh>setTabWidth</vh></v>
+<v t="ekr.20031218072017.1540"><vh>setWrap</vh></v>
+<v t="ekr.20031218072017.2307"><vh>setTopGeometry</vh></v>
+<v t="ekr.20031218072017.3970"><vh>reconfigurePanes (use config bar_width)</vh></v>
+</v>
+<v t="ekr.20031218072017.3971"><vh>Event handlers (Frame)</vh>
+<v t="ekr.20031218072017.3972"><vh>frame.OnCloseLeoEvent</vh></v>
+<v t="ekr.20031218072017.3973"><vh>frame.OnControlKeyUp/Down</vh></v>
+<v t="ekr.20031218072017.3974"><vh>frame.OnVisibility</vh></v>
+<v t="ekr.20031218072017.3975"><vh>OnActivateBody</vh></v>
+<v t="ekr.20031218072017.2253"><vh>OnActivateLeoEvent, OnDeactivateLeoEvent</vh></v>
+<v t="ekr.20031218072017.3976"><vh>OnActivateTree</vh></v>
+<v t="ekr.20031218072017.3977"><vh>OnBodyClick, OnBodyRClick (Events)</vh></v>
+<v t="ekr.20031218072017.3978"><vh>OnBodyDoubleClick (Events)</vh></v>
+<v t="ekr.20031218072017.1803"><vh>OnMouseWheel (Tomaz Ficko)</vh></v>
+</v>
+<v t="ekr.20031218072017.3979"><vh>Gui-dependent commands</vh>
+<v t="ekr.20031218072017.3980"><vh>Edit Menu...</vh>
+<v t="ekr.20031218072017.3981"><vh>abortEditLabelCommand</vh></v>
+<v t="ekr.20031218072017.840"><vh>Cut/Copy/Paste body text</vh>
+<v t="ekr.20031218072017.841"><vh>frame.OnCut, OnCutFrom Menu</vh></v>
+<v t="ekr.20031218072017.842"><vh>frame.OnCopy, OnCopyFromMenu</vh></v>
+<v t="ekr.20031218072017.843"><vh>frame.OnPaste, OnPasteNode, OnPasteFromMenu</vh></v>
+</v>
+<v t="ekr.20031218072017.3982"><vh>endEditLabelCommand</vh></v>
+<v t="ekr.20031218072017.3983"><vh>insertHeadlineTime</vh></v>
+</v>
+<v t="ekr.20031218072017.3984"><vh>Window Menu...</vh>
+<v t="ekr.20031218072017.3985"><vh>toggleActivePane</vh></v>
+<v t="ekr.20031218072017.3986"><vh>cascade</vh></v>
+<v t="ekr.20031218072017.3987"><vh>equalSizedPanes</vh></v>
+<v t="ekr.20031218072017.3988"><vh>hideLogWindow</vh></v>
+<v t="ekr.20031218072017.3989"><vh>minimizeAll</vh></v>
+<v t="ekr.20031218072017.3990"><vh>toggleSplitDirection</vh></v>
+<v t="EKR.20040422130619"><vh>resizeToScreen</vh></v>
+</v>
+<v t="ekr.20031218072017.3991"><vh>Help Menu...</vh>
+<v t="ekr.20031218072017.3992"><vh>leoHelp</vh>
+<v t="ekr.20031218072017.3993"><vh>showProgressBar</vh>
+<v t="ekr.20031218072017.3994"><vh>&lt;&lt; create the scale widget &gt;&gt;</vh></v>
+</v>
+</v>
+</v>
+</v>
+<v t="ekr.20031218072017.998"><vh>Scrolling callbacks (frame)</vh></v>
+<v t="ekr.20031218072017.3995"><vh>Tk bindings...</vh></v>
+</v>
+<v t="ekr.20031218072017.3996"><vh>class leoTkinterBody</vh>
+<v t="ekr.20031218072017.3997"><vh> Birth &amp; death</vh>
+<v t="ekr.20031218072017.2182"><vh>tkBody. __init__</vh></v>
+<v t="ekr.20031218072017.838"><vh>tkBody.createBindings</vh></v>
+<v t="ekr.20031218072017.3998"><vh>tkBody.createControl</vh></v>
+</v>
+<v t="ekr.20031218072017.2183"><vh>tkBody.setFontFromConfig</vh></v>
+<v t="ekr.20031218072017.1320"><vh>body key handlers</vh>
+<v t="ekr.20031218072017.1321"><vh>idle_body_key</vh>
+<v t="ekr.20031218072017.1322"><vh>&lt;&lt; return if nothing has changed &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.1323"><vh>&lt;&lt; set removeTrailing &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.1324"><vh>&lt;&lt; Do auto indent &gt;&gt; (David McNab)</vh></v>
+<v t="ekr.20031218072017.1325"><vh>&lt;&lt; convert tab to blanks &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.1326"><vh>&lt;&lt; set s to widget text, removing trailing newlines if necessary &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.1327"><vh>&lt;&lt; recolor the body &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.1328"><vh>&lt;&lt; redraw the screen if necessary &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20031218072017.1329"><vh>onBodyChanged (called from core)</vh></v>
+<v t="ekr.20031218072017.1330"><vh>onBodyKey</vh>
+<v t="ekr.20040105223536"><vh>handleStatusLineKey</vh>
+<v t="ekr.20040105223536.1"><vh>&lt;&lt; trace the key event &gt;&gt;</vh></v>
+</v>
+</v>
+<v t="ekr.20031218072017.1331"><vh>onBodyWillChange</vh></v>
+</v>
+<v t="ekr.20031218072017.3999"><vh>forceRecolor</vh></v>
+<v t="ekr.20031218072017.4000"><vh>Tk bindings (leoTkinterBody)</vh>
+<v t="ekr.20031218072017.4001"><vh>Bounding box (Tk spelling)</vh></v>
+<v t="ekr.20031218072017.4002"><vh>Color tags (Tk spelling)</vh></v>
+<v t="ekr.20031218072017.2184"><vh>Configuration (Tk spelling)</vh></v>
+<v t="ekr.20031218072017.4003"><vh>Focus</vh></v>
+<v t="ekr.20031218072017.4004"><vh>Height &amp; width</vh></v>
+<v t="ekr.20031218072017.4005"><vh>Idle time...</vh></v>
+<v t="ekr.20031218072017.4006"><vh>Indices</vh>
+<v t="ekr.20031218072017.4007"><vh>adjustIndex</vh></v>
+<v t="ekr.20031218072017.4008"><vh>compareIndices</vh></v>
+<v t="ekr.20031218072017.4009"><vh>convertRowColumnToIndex</vh></v>
+<v t="ekr.20031218072017.4010"><vh>convertIndexToRowColumn</vh></v>
+<v t="ekr.20031218072017.4011"><vh>getImageIndex</vh></v>
+<v t="ekr.20031218072017.4012"><vh>tkIndex (internal use only)</vh></v>
+</v>
+<v t="ekr.20031218072017.4013"><vh>Insert point</vh>
+<v t="ekr.20031218072017.495"><vh>getInsertionPoint &amp; getBeforeInsertionPoint</vh></v>
+<v t="ekr.20031218072017.4014"><vh>getCharAtInsertPoint &amp; getCharBeforeInsertPoint</vh></v>
+<v t="ekr.20031218072017.4015"><vh>makeInsertPointVisible</vh></v>
+<v t="ekr.20031218072017.4016"><vh>setInsertionPointTo...</vh></v>
+</v>
+<v t="ekr.20031218072017.4017"><vh>Menus</vh></v>
+<v t="ekr.20031218072017.4018"><vh>Selection</vh>
+<v t="ekr.20031218072017.4019"><vh>deleteTextSelection</vh></v>
+<v t="ekr.20031218072017.4020"><vh>getSelectedText</vh></v>
+<v t="ekr.20031218072017.4021"><vh>getTextSelection</vh></v>
+<v t="ekr.20031218072017.4022"><vh>hasTextSelection</vh></v>
+<v t="ekr.20031218072017.4023"><vh>selectAllText</vh></v>
+<v t="ekr.20031218072017.4024"><vh>setTextSelection</vh></v>
+</v>
+<v t="ekr.20031218072017.4025"><vh>Text</vh>
+<v t="ekr.20031218072017.4026"><vh>delete...</vh></v>
+<v t="ekr.20031218072017.4027"><vh>get...</vh>
+<v t="ekr.20031218072017.4028"><vh>getAllText</vh></v>
+<v t="ekr.20031218072017.4029"><vh>getCharAtIndex</vh></v>
+<v t="ekr.20031218072017.4030"><vh>getInsertLines</vh></v>
+<v t="ekr.20031218072017.4031"><vh>getSelectionAreas</vh></v>
+<v t="ekr.20031218072017.2377"><vh>getSelectionLines (tkBody)</vh></v>
+<v t="ekr.20031218072017.4032"><vh>getTextRange</vh></v>
+</v>
+<v t="ekr.20031218072017.4033"><vh>Insert...</vh>
+<v t="ekr.20031218072017.4034"><vh>insertAtInsertPoint</vh></v>
+<v t="ekr.20031218072017.4035"><vh>insertAtEnd</vh></v>
+<v t="ekr.20031218072017.4036"><vh>insertAtStartOfLine</vh></v>
+</v>
+<v t="ekr.20031218072017.4037"><vh>setSelectionAreas</vh></v>
+</v>
+<v t="ekr.20031218072017.4038"><vh>Visibility &amp; scrolling</vh></v>
+</v>
+</v>
+<v t="ekr.20031218072017.4039"><vh>class leoTkinterLog</vh>
+<v t="ekr.20031218072017.4040"><vh>tkLog.__init__</vh></v>
+<v t="ekr.20031218072017.4041"><vh>tkLog.configureBorder &amp; configureFont</vh></v>
+<v t="ekr.20031218072017.4042"><vh>tkLog.createControl</vh></v>
+<v t="ekr.20031218072017.4043"><vh>tkLog.getFontConfig</vh></v>
+<v t="ekr.20031218072017.4044"><vh>tkLog.hasFocus</vh></v>
+<v t="ekr.20031218072017.4045"><vh>tkLog.onActivateLog</vh></v>
+<v t="ekr.20031218072017.1473"><vh>tkLog.put &amp; putnl &amp; forceLogUpdate</vh>
+<v t="EKR.20040423082910"><vh>&lt;&lt; put s to log control &gt;&gt;</vh></v>
+<v t="EKR.20040423082910.1"><vh>&lt;&lt; put s to logWaiting and print s &gt;&gt;</vh></v>
+<v t="EKR.20040423082910.2"><vh>&lt;&lt; put newline to log control &gt;&gt;</vh></v>
+<v t="EKR.20040423082910.3"><vh>&lt;&lt; put newline to logWaiting and print newline &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20031218072017.4046"><vh>tkLog.setFontFromConfig</vh></v>
+</v>
+</v>
+<v t="EKR.20040422131023"><vh>(Force update of log pane when reading derived files)</vh>
+<v t="ekr.20031218072017.1473"><vh>tkLog.put &amp; putnl &amp; forceLogUpdate</vh>
+<v t="EKR.20040423082910"><vh>&lt;&lt; put s to log control &gt;&gt;</vh></v>
+<v t="EKR.20040423082910.1"><vh>&lt;&lt; put s to logWaiting and print s &gt;&gt;</vh></v>
+<v t="EKR.20040423082910.2"><vh>&lt;&lt; put newline to log control &gt;&gt;</vh></v>
+<v t="EKR.20040423082910.3"><vh>&lt;&lt; put newline to logWaiting and print newline &gt;&gt;</vh></v>
+</v>
+</v>
+<v t="EKR.20040422132037.1" a="MTV"><vh>(Use clover keys for Mac)</vh>
+<v t="ekr.20031218072017.2098"><vh>canonicalizeShortcut</vh>
+<v t="ekr.20031218072017.2099"><vh>&lt;&lt; canonicalize the last field &gt;&gt;</vh>
+<v t="ekr.20031218072017.2100"><vh>&lt;&lt; define dict of Tk bind names &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.2101"><vh>&lt;&lt; define dict of special names &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20031218072017.2102"><vh>&lt;&lt; set the last field, preserving case &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.2103"><vh>&lt;&lt; synthesize the shortcuts from the information &gt;&gt;</vh></v>
+</v>
 </v>
 </vnodes>
 <tnodes>
-<t tx="EKR.20040422091601"></t>
 <t tx="EKR.20040422091601.1">@nocolor
 
 By: David McNab - davidmcnab
@@ -9627,7 +9660,6 @@ Date:  2003/12/30 Tue PM 05:50:51 EST
 To:  edreamleo@charter.net 
 Subject:  Leo, Mac OS X 10.3, and VPython 
              
-
 I've been evaluating leo or vpython programming on  Mac OS X 10.3, and 
 have some observations and a suggestion.
 
@@ -9725,6 +9757,48 @@ A: hilite text in Xemacs window; hilite headline; middle click
 R: hilited text appended to headline rather than replacing
 
 This last anomaly seems to persist regardless of how the headline is hilited and regardless of pasting method (middle click or Control-V)</t>
+<t tx="EKR.20040423082910">if type(s) == type(u""): # 3/18/03
+	s = g.toEncodedString(s,g.app.tkEncoding)
+	
+if sys.platform == "darwin":
+	print s,
+
+if color:
+	if color not in self.colorTags:
+		self.colorTags.append(color)
+		self.logCtrl.tag_config(color,foreground=color)
+	self.logCtrl.insert("end",s)
+	self.logCtrl.tag_add(color,"end-%dc" % (len(s)+1),"end-1c")
+	if "black" not in self.colorTags:
+		self.colorTags.append("black")
+		self.logCtrl.tag_config("black",foreground="black")
+	self.logCtrl.tag_add("black","end")
+else:
+	self.logCtrl.insert("end",s)
+
+self.logCtrl.see("end")
+	
+self.forceLogUpdate()</t>
+<t tx="EKR.20040423082910.1">g.app.logWaiting.append((s,color),)
+
+print "Null tkinter log"
+if type(s) == type(u""): # 3/18/03
+	s = g.toEncodedString(s,"ascii")
+print s</t>
+<t tx="EKR.20040423082910.2">if sys.platform == "darwin":
+	print
+	
+self.logCtrl.insert("end",'\n')
+self.logCtrl.see("end")
+
+self.frame.tree.disableRedraw = true
+self.logCtrl.update_idletasks()
+#self.frame.outerFrame.update_idletasks() # 4/23/04
+#self.frame.top.update_idletasks()
+self.frame.tree.disableRedraw = false</t>
+<t tx="EKR.20040423082910.3">g.app.logWaiting.append(('\n',"black"),)
+print "Null tkinter log"
+print</t>
 <t tx="ekr.20031218072017">@ignore
 @nocolor
 
@@ -23918,47 +23992,28 @@ the string?
 if 0: #test
 	from leoGlobals import es ; es(u"this is a test")</t>
 <t tx="ekr.20031218072017.1473"># All output to the log stream eventually comes here.
-
 def put (self,s,color=None):
+	
 	if g.app.quitting: return
-	if self.logCtrl:
-		if type(s) == type(u""): # 3/18/03
-			s = g.toEncodedString(s,g.app.tkEncoding)
-		if color:
-			if color not in self.colorTags:
-				self.colorTags.append(color)
-				self.logCtrl.tag_config(color,foreground=color)
-			self.logCtrl.insert("end",s)
-			self.logCtrl.tag_add(color,"end-%dc" % (len(s)+1),"end-1c")
-			if "black" not in self.colorTags:
-				self.colorTags.append("black")
-				self.logCtrl.tag_config("black",foreground="black")
-			self.logCtrl.tag_add("black","end")
-		else:
-			self.logCtrl.insert("end",s)
-		self.logCtrl.see("end")
-		self.frame.tree.disableRedraw = true
-		self.logCtrl.update_idletasks()
-		self.frame.tree.disableRedraw = false
+	elif self.logCtrl:
+		&lt;&lt; put s to log control &gt;&gt;
 	else:
-		g.app.logWaiting.append((s,color),) # 2/25/03
-		print "Null tkinter log"
-		if type(s) == type(u""): # 3/18/03
-			s = g.toEncodedString(s,"ascii")
-		print s
+		&lt;&lt; put s to logWaiting and print s &gt;&gt;
 
 def putnl (self):
 	if g.app.quitting: return
-	if self.logCtrl:
-		self.logCtrl.insert("end",'\n')
-		self.logCtrl.see("end")
+	elif self.logCtrl:
+		&lt;&lt; put newline to log control &gt;&gt;
+	else:
+		&lt;&lt; put newline to logWaiting and print newline &gt;&gt;
+		
+def forceLogUpdate (self):
+	if sys.platform != "darwin": # Does not work on darwin.
 		self.frame.tree.disableRedraw = true
 		self.logCtrl.update_idletasks()
-		self.frame.tree.disableRedraw = false
-	else:
-		g.app.logWaiting.append(('\n',"black"),) # 6/28/03
-		print "Null tkinter log"
-		print</t>
+		#self.frame.outerFrame.update_idletasks() # 4/23/04
+		#self.frame.top.update_idletasks()
+		self.frame.tree.disableRedraw = false</t>
 <t tx="ekr.20031218072017.1474">def ecnl():
 	g.ecnls(1)
 
@@ -32581,10 +32636,15 @@ def canonicalizeShortcut (self,shortcut):
 	if shortcut == None or len(shortcut) == 0:
 		return None,None
 	s = shortcut.strip().lower()
+	
 	has_cmd   = s.find("cmd") &gt;= 0     or s.find("command") &gt;= 0 # 11/18/03
-	has_alt   = s.find("alt") &gt;= 0
 	has_ctrl  = s.find("control") &gt;= 0 or s.find("ctrl") &gt;= 0
+	has_alt   = s.find("alt") &gt;= 0
 	has_shift = s.find("shift") &gt;= 0   or s.find("shft") &gt;= 0
+	if sys.platform == "darwin":
+		if has_ctrl and not has_cmd:
+			has_cmd = true ; has_ctrl = false
+
 	&lt;&lt; set the last field, preserving case &gt;&gt;
 	&lt;&lt; canonicalize the last field &gt;&gt;
 	&lt;&lt; synthesize the shortcuts from the information &gt;&gt;
@@ -32697,15 +32757,10 @@ if last == None or len(last) == 0:
 	return None,None</t>
 <t tx="ekr.20031218072017.2103">bind_head = menu_head = ""
 
-if has_cmd: # 11/18/03
-	bind_head = bind_head + "Command-"
-	menu_head = menu_head + "Command+"
-
 if has_shift:
 	menu_head = "Shift+"
 	if len(last) &gt; 1 or (len(last)==1 and last[0] not in string.ascii_letters):
 		bind_head = "Shift-"
-
 if has_alt:
 	bind_head = bind_head + "Alt-"
 	menu_head = menu_head + "Alt+"
@@ -32713,6 +32768,10 @@ if has_alt:
 if has_ctrl:
 	bind_head = bind_head + "Control-"
 	menu_head = menu_head + "Ctrl+"
+	
+if has_cmd: # 11/18/03
+	bind_head = bind_head + "Command-"
+	menu_head = menu_head + "Command+"
 	
 bind_shortcut = "&lt;" + bind_head + bind_last + "&gt;"
 menu_shortcut = menu_head + menu_last</t>
@@ -57883,7 +57942,8 @@ import os,string,sys,time
 
 Tk = Tkinter
 
-@others</t>
+@others
+</t>
 <t tx="ekr.20031218072017.3940">class leoTkinterFrame (leoFrame.leoFrame):
 	
 	"""A class that represents a Leo window."""
@@ -57903,7 +57963,7 @@ Tk = Tkinter
 	scrolls = g.choose(scrolls,1,0)
 
 	canvas = Tk.Canvas(parentFrame,name="canvas",
-		bd=0,bg="white",relief="flat",highlightthickness=0) # Solves border problem.
+		bd=0,bg="white",relief="flat")
 
 	frame.treeBar = treeBar = Tk.Scrollbar(parentFrame,name="treeBar")
 	
