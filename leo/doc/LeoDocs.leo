@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="1523" clone_windows="0"/>
-<globals body_outline_ratio="0.49770290964777947">
-	<global_window_position top="56" left="283" height="26" width="88"/>
+<globals body_outline_ratio="0.5">
+	<global_window_position top="51" left="444" height="76" width="111"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences allow_rich_text="0">
@@ -12,7 +12,7 @@
 	<change_string></change_string>
 </find_panel_settings>
 <vnodes>
-<v t="T1"><vh>Short summary</vh></v>
+<v t="T1" a="V"><vh>Short summary</vh></v>
 <v t="T2"><vh>About Leo's panes and icons (for newbies)</vh>
 <v t="T3"><vh>This node contains text</vh></v>
 <v t="T4" a="M"><vh>This headline is marked</vh></v>
@@ -80,7 +80,7 @@
 <v t="T60" a="C"><vh>Putting the Leo icon in Leo windows</vh></v>
 <v t="T61" a="C"><vh>Quick start</vh></v>
 </v>
-<v t="T62" a="EV"><vh>Latest version</vh>
+<v t="T62" a="E"><vh>Latest version</vh>
 <v t="T63" a="C"><vh>3.11.1</vh></v>
 <v t="T64" a="C"><vh>3.11</vh>
 <v t="T65"><vh>New in 3.11 final</vh>
@@ -414,11 +414,11 @@
 <v t="T239"><vh>Fixed bugs</vh>
 <v t="T240"><vh>Crashers</vh>
 <v t="T241"><vh>Fixed another crasher in scanAllDirectives</vh></v>
-<v t="T242"><vh>Other representations of trees</vh></v>
-<v t="T243"><vh>Part 1</vh></v>
+<v t="T242" a="C"><vh>Other representations of trees</vh></v>
+<v t="T243" a="C"><vh>Part 1</vh></v>
 </v>
 <v t="T244"><vh>Bugs involving paths &amp; derived files</vh>
-<v t="T245"><vh>Part 2</vh></v>
+<v t="T245" a="C"><vh>Part 2</vh></v>
 <v t="T246"><vh>Fixed @delims "round trip" bug</vh></v>
 <v t="T247"><vh>Fixed cweb sentinel bug</vh></v>
 <v t="T248"><vh>Fixed import to @root problems</vh></v>
@@ -863,7 +863,7 @@
 </v>
 </v>
 </v>
-<v t="T612"><vh>Users Guide</vh>
+<v t="T612" a="E"><vh>Users Guide</vh>
 <v t="T613"><vh>An overview of Leo</vh></v>
 <v t="T614"><vh>Front material</vh>
 <v t="T615"><vh>Title Page &amp; Summary</vh></v>
@@ -1211,7 +1211,7 @@
 </v>
 </v>
 </v>
-<v t="T198" a="C"><vh>Chapter 8: Customizing Leo</vh>
+<v t="T198" a="CE"><vh>Chapter 8: Customizing Leo</vh>
 <v t="T199" a="C"><vh>Using leoConfig.leo and leoConfig.txt</vh></v>
 <v t="T200" a="E"><vh>Using plugins and hooks</vh>
 <v t="T201"><vh>New plugin architecture</vh>
@@ -1276,9 +1276,9 @@
 <v t="T824"><vh>Tangle and Untangle commands</vh></v>
 <v t="T825"><vh>Unicode theory of operation</vh></v>
 <v t="T826"><vh>Unlimited undo</vh></v>
-<v t="T242"><vh>Other representations of trees</vh>
-<v t="T243"><vh>Part 1</vh></v>
-<v t="T245"><vh>Part 2</vh></v>
+<v t="T242" a="C"><vh>Other representations of trees</vh>
+<v t="T243" a="C"><vh>Part 1</vh></v>
+<v t="T245" a="C"><vh>Part 2</vh></v>
 </v>
 </v>
 <v t="T827"><vh>Appendices</vh>
@@ -2174,7 +2174,7 @@
 </v>
 </v>
 </v>
-<v t="T1514" a="E"><vh>White papers</vh>
+<v t="T1514"><vh>White papers</vh>
 <v t="T1515"><vh>Recovering from Read Errors</vh></v>
 <v t="T1516"><vh>CVS postings</vh>
 <v t="T1517"><vh>How to use Leo with CVS</vh></v>
@@ -4099,6 +4099,30 @@ tag argument                                              keys in keywords
 "@url1"        yes      before double-click @url node     c,v (note 5)
 "@url2"                 after  double-click @url node     c,v (note 5)
 
+The following hooks are a new breed of hook, called "stub hooks". Conceptually,
+these hooks are like calls to stub routines that can be filled in by code in
+plugins.
+
+tag argument                                                   keys in keywords
+(hook name)           overrides    when called               dictionary argument
+---------             ---------    -----------               -------------------
+
+"create-optional-menus"  no        (note 8)                  (note 8)
+
+"draw-outine-box"        yes       start of drawBox          tree,v,x,y (note 6)
+"draw-outline-icon"      yes       start of tree.drawIcon    tree,v,x,y (note 6)
+"draw-outline-node"      yes       start of tree.drawNode    tree,v,x,y (note 6)
+"draw-outline-text-box"  yes       start of tree.drawText    tree,v,x,y (note 6)
+"draw-sub-outline"       yes       start of tree.drawTree    tree,v,x,y,h,level (note 6)
+"redraw-entire-outline"  yes       start of tree.redraw      c (note 6)
+
+"color-optional-markup"  yes *     (note 7)                  colorer,v (note 7)
+"init-color-markup"      no        (note 7)                  colorer,v,s,i,j,colortag (note 7)
+
+"new"                    no        start of New command      old_c,new_c (note 9)
+
+"scan-directives"        no        in scanDirectives         c,v,s,old_dict,dict,pluginsList (note 10)
+
 Notes:
 
 (1) "activate" and "deactivate" hooks: These have been removed because they do
@@ -4134,7 +4158,44 @@ a) a file is opened using the Recent Files menu and
 b) the file is not already open.
 
 (5) "@url1" and "@url2" hooks are only executed if "icondclick1" hook returns
-None.</t>
+None.
+
+(6) These stub hooks allow plugins to revise or completely replace how Leo
+draws outlines. For example, you could change tree.drawIcon to add additional
+icons. These stub hooks are really methods of the leoTree class, with the
+"tree" keyword corresponding to the "self" parameter. These stub hooks are
+called at the beginning of the indicated method. See the method themselves for
+a description of the paramters.
+
+(7) These stub hooks allow plugins to parse and handle markup withing doc
+parts, comments and Python """ strings. Note that these hooks are _not_ called
+in Python ''' strings. See the color_markup plugin for a complete example of
+how to use these hooks.
+
+(8) The "create-optional-menus" stub hook is called when Leo is creating menus,
+at the place at which creating new menus is appropriate. Therefore, this hook
+need only create new menus in the correct order, without worrying about the
+placement of the menus in the menu bar. See the plugins_menu and scripts_menu
+plugins for examples of how to use this hook. Leo now executes hooks in
+alphabetical order, so that the Plugins menu will be created before the Scripts
+menu.
+
+(9) The "new" stub hook is called at the beginning of the code that implements
+the New command. This provides a much easier way of recognizing when Leo is
+about to create a new Leo window.
+
+(10) The "scan-directives" stub hooks is called inside the scanDirectives
+global function. The dictionary returned by scanDirectives now contains an item
+whose key is "pluginsList". The value of this item is a list of tuples
+(d,v,s,k) where:
+
+- d is the spelling of the @directive, without the leading @.
+- v is the vnode containing the directive, _not_ the original vnode.
+- s[k:] is a string containing whatever follows the @directive. k has already
+been moved past any whitespace that follows the @directive.
+
+See the add_directives plugins directive for a complete example of how to use
+the "scan-directives" stub hook.</t>
 <t tx="T210">Naively using hooks can expose you and your .leo files to malicious attacks.  You will be safe as long as you follow these basic principles:
 
 1. Hooks should _never_ blindly execute Python scripts in .leo files. Blindly executing scripts in .leo files runs the extreme risk of executing malicious code if you ever share any .leo file with someone else.  Moreover, using rexec instead of exec WILL NOT PROTECT YOU.  See the children of this node for further discussion of this important topic.
