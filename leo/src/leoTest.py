@@ -113,13 +113,14 @@ class generalTestCase(unittest.TestCase):
     
         c = self.c ; p = self.p
     
+        g.app.unitTesting = True
         c.selectVnode(p)
     #@nonl
     #@-node:ekr.20040707073029.2:setUp
     #@+node:ekr.20040707073029.3:tearDown
     def tearDown (self):
     
-        pass
+        g.app.unitTesting = False
         # To do: restore the outline.
     #@nonl
     #@-node:ekr.20040707073029.3:tearDown
@@ -259,7 +260,7 @@ def set_debugGc ():
 #@+node:ekr.20040721144439.3:makeObjectList
 def makeObjectList(message):
 
-    # WARNING: this id trick is not proper: newly allocated objects can have the same address as old objets.
+    # WARNING: this id trick is not proper: newly allocated objects can have the same address as old objects.
     global lastObjectsDict
     objects = gc.get_objects()
 
@@ -361,7 +362,7 @@ def printGcRefs (verbose=True):
         for ref in refs:
             print type(ref)
     else:
-        print "%d referers" % len(refs)
+        print "%d referrers" % len(refs)
 #@nonl
 #@-node:ekr.20040721144439.8:printGcRefs
 #@-node:ekr.20040721144439:run gc
@@ -375,7 +376,7 @@ class testUtils:
     def compareOutlines (self,root1,root2,compareHeadlines=True):
     
         """Compares two outlines, making sure that their topologies,
-        content and join lists are equivent"""
+        content and join lists are equivalent"""
     
         p2 = root2.copy() ; ok = True
         for p1 in root1.self_and_subtree_iter():
@@ -616,6 +617,7 @@ def runLeoTest(path,verbose=False,full=False):
     old_gui = g.app.gui
 
     try:
+        g.app.unitTesting = True
         ok, frame = g.openWithFileName(path,c,enableLog=False)
         assert(ok and frame)
         errors = frame.c.checkOutline(verbose=verbose,unittest=True,full=full)
@@ -625,6 +627,7 @@ def runLeoTest(path,verbose=False,full=False):
         g.app.gui = old_gui
         if frame and frame.c != c:
             g.app.closeLeoWindow(frame.c.frame)
+        g.app.unitTesting = True
 
     if not ok: raise
 #@nonl
@@ -1017,7 +1020,7 @@ class reformatParagraphTestCase(unittest.TestCase):
     def copyBeforeToTemp(self):
     
         # local variables for class fields, for ease
-        # of reading and ease of typeing.
+        # of reading and ease of typing.
         #	
         c = self.c ; temp_v = self.temp_v
     
@@ -1063,7 +1066,7 @@ class reformatParagraphTestCase(unittest.TestCase):
     def getRowCol(self):
     
         # local variables for class fields, for ease
-        # of reading and ease of typeing.
+        # of reading and ease of typing.
         #	
         c = self.c ; body = c.frame.body.bodyCtrl ; gui = g.app.gui
         tab_width = c.frame.tab_width
@@ -1136,7 +1139,7 @@ class editBodyTestCase(unittest.TestCase):
         self.before = before.copy()
         self.after  = after.copy()
         self.sel    = sel.copy() # Two lines giving the selection range in tk coordinates.
-        self.ins    = ins.copy() # One line giveing the insert point in tk coordinate.
+        self.ins    = ins.copy() # One line giving the insert point in tk coordinate.
         self.temp_v = temp_v.copy()
     #@nonl
     #@+node:ekr.20040809073457: fail
@@ -1333,6 +1336,7 @@ class importExportTestCase(unittest.TestCase):
             val = [val]
         self.fileName = val
         dict = {name: val}
+        g.app.unitTesting = True
         self.gui = leoGui.unitTestGui(dict,trace=False)
     
     #@-node:ekr.20040707140849.32:setUp
@@ -1365,6 +1369,7 @@ class importExportTestCase(unittest.TestCase):
                 temp_v.firstChild().doDelete(temp_v)
     
         c.selectVnode(self.old_v)
+        g.app.unitTesting = False
     #@nonl
     #@-node:ekr.20040707140849.34:tearDown
     #@-others
@@ -1388,7 +1393,7 @@ class importExportTestCase(unittest.TestCase):
 # follows:
 # 
 # -output-sent        The result of writing the -input tree, with sentinels.
-# -ouput-after-sent   The result of writing the -input-after tree, with 
+# -output-after-sent  The result of writing the -input-after tree, with 
 # sentinels.
 # -i_lines            The i_lines list created by mu.create_mapping
 # -j_lines            The j_lines list created by stripping sentinels from 
@@ -1397,7 +1402,7 @@ class importExportTestCase(unittest.TestCase):
 # containing sentinels.
 # 
 # A test passes if and only if the body of -result matches the body of 
-# ouput-after-sent, ignoring the details of @+node and @-node sentinels.
+# output-after-sent, ignoring the details of @+node and @-node sentinels.
 #@-at
 #@nonl
 #@-node:ekr.20040717074817:About the Perfect Import tests

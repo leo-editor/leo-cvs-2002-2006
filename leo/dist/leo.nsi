@@ -171,6 +171,7 @@ ok:
   File c:\prog\leoCVS\leo\plugins\*.py
   File c:\prog\leoCVS\leo\plugins\*.ini
   File c:\prog\leoCVS\leo\plugins\*.txt
+  File c:\prog\leoCVS\leo\plugins\aspell.pyd
   
   SetOutPath $INSTDIR\scripts
   File c:\prog\leoCVS\leo\scripts\leoScripts.txt
