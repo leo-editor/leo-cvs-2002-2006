@@ -612,15 +612,12 @@ class LeoFrame:
 		menu.add_cascade(label="Help", menu=helpMenu)
 		
 		helpMenu.add_command(label="About Leo...", command=self.OnAbout)
-		helpMenu.add_separator()
-		
-		helpMenu.add_command(label="Online Tutorial (Start Here)...", command=self.OnLeoTutorial)
 		helpMenu.add_command(label="Online Home Page...", command=self.OnLeoHome)
-		
 		helpMenu.add_separator()
-		helpMenu.add_command(label="Open LeoDocs.leo...", command=self.OnLeoDocumentation)
+		helpMenu.add_command(label="Online Tutorial (Start Here)...", command=self.OnLeoTutorial)
 		if sys.platform=="win32": # Windows
-			helpMenu.add_command(label="Open Help File...", command=self.OnLeoHelp)
+			helpMenu.add_command(label="Tutorial...", command=self.OnLeoHelp)
+		helpMenu.add_command(label="Reference...", command=self.OnLeoDocumentation)
 
 		#@-body
 		#@-node:5::<< create the help menu >>
@@ -2483,7 +2480,7 @@ class LeoFrame:
 		tkMessageBox.showinfo("About Leo",
 		# Don't use triple-quoted strings or continued strings here.
 		# Doing so would add unwanted leading tabs.
-		" leo.py 3.5 b1, August 13, 2002\n\n" +
+		" leo.py 3.5, August 14, 2002\n\n" +
 	
 		"Copyright 1999-2002 by\n" +
 		"Edward K. Ream, edream@tds.net\n" +
@@ -2505,6 +2502,7 @@ class LeoFrame:
 			self.OpenWithFileName(fileName)
 		except:
 			es("not found: LeoDocs.leo")
+	
 		return "break" # inhibit further command processing
 	#@-body
 	#@-node:2::OnLeoDocumentation
@@ -2527,11 +2525,22 @@ class LeoFrame:
 	#@+body
 	def OnLeoHelp (self,event=None):
 		
-		try:
-			os.system('start sbooks.chm')
-		except:
-			es("not found: sbooks.chm")
-		
+		f = os.path.join(app().loadDir,"sbooks.chm")
+		if os.path.exists(f):
+			os.system("start " + f)
+		else:
+			d = leoDialog.leoDialog()
+			answer = d.askYesNo(
+				"Download Tutorial?",
+				"Download tutorial (sbooks.chm) from SourceForge?")
+			if answer == "yes":
+				import webbrowser
+				url = "http://sourceforge.net/project/showfiles.php?group_id=3458"
+				try:
+					webbrowser.open(url)
+				except:
+					es("not found: " + url)
+	
 		return "break" # inhibit further command processing
 	#@-body
 	#@-node:4::OnLeoHelp

@@ -1423,7 +1423,7 @@ def setTextSelection (t,start,end):
 #@-body
 #@-node:3:C=17:setTextSelection
 #@-node:18:C=16:Tk.Text selection (utils)
-#@+node:19::update_file_if_changed
+#@+node:19:C=18:update_file_if_changed
 #@+body
 #@+at
 #  This function compares two files. If they are different, we replace file_name with temp_name. Otherwise, we just delete 
@@ -1457,7 +1457,7 @@ def update_file_if_changed(file_name,temp_name):
 			es("Rename failed: no file created! (file may be read-only)")
 			traceback.print_exc()
 #@-body
-#@-node:19::update_file_if_changed
+#@-node:19:C=18:update_file_if_changed
 #@-others
 #@-body
 #@-node:0::@file leoUtils.py

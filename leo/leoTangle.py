@@ -3076,7 +3076,7 @@ class tangleCommands:
 	def pathError (self,s):
 		if not self.path_warning_given:
 			self.path_warning_given = true
-			self.error("invalid " + kind + " directory: " + dir)
+			self.error(s)
 		
 	def warning (self,s):
 		es(s)
@@ -3685,21 +3685,16 @@ class tangleCommands:
 		#@@c
 		
 		if c.frame and require_path_flag and not self.tangle_directory:
-			for dir,kind in (
+			for dir, kind in (
 				(self.root_name,"@root"),
 				(c.tangle_directory,"default tangle"),
 				(c.frame.openDirectory,"open")):
-					
-				if dir and len(dir) > 0:
-					if os.path.isabs(dir):
-						if os.path.exists(dir):
-							self.tangle_directory = dir ; break
-						elif issue_error_flag:
-							self.warning("ignoring invalid " + kind + " directory: " + dir)
-					else:
-						path,f = os.path.split(dir)
-						if path and len(path) > 0 and issue_error_flag:
-							self.warning("ignoring relative path: " + dir)
+		
+				if dir and len(dir) > 0 and os.path.isabs(dir):
+					if os.path.exists(dir):
+						self.tangle_directory = dir ; break
+					elif issue_error_flag:
+						self.warning("ignoring invalid " + kind + " directory: " + dir)
 		
 		if not self.tangle_directory and issue_error_flag:
 			self.pathError("No directory specified by @root, @path or Preferences.")
