@@ -67,12 +67,13 @@ class LeoApp:
 		#@-node:<< define global constants >>
 		#@nl
 		#@	<< Define global data structures >>
-		#@+node:<< define global data structures >>
+		#@+node:<< define global data structures >> app
 		# Internally, lower case is used for all language names.
 		self.language_delims_dict = {
 			"actionscript" : "// /* */", #jason 2003-07-03
 			"c" : "// /* */", # C, C++ or objective C.
 			"cweb" : "@q@ @>", # Use the "cweb hack"
+			"elisp" : ";",
 			"forth" : "_\\_ _(_ _)_", # Use the "REM hack"
 			"fortran" : "C",
 			"fortran90" : "!",
@@ -94,6 +95,7 @@ class LeoApp:
 			"actionscript" : "as", #jason 2003-07-03
 			"c" : "c", 
 			"cweb" : "w",
+			"elisp" : "el",
 			"forth" : "forth",
 			"fortran" : "f",
 			"fortran90" : "f",
@@ -112,7 +114,8 @@ class LeoApp:
 			"tex" : "tex",
 			"tcltk" : "tcl",
 			"unknown" : "txt" } # Set when @comment is seen.
-		#@-node:<< define global data structures >>
+		#@nonl
+		#@-node:<< define global data structures >> app
 		#@nl
 	#@nonl
 	#@-node:app.__init__

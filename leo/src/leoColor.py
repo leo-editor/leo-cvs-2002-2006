@@ -459,7 +459,7 @@ class leoColorNamePanel(baseLeoColorNamePanel):
 class baseColorizer:
 	"""The base class for Leo's syntax colorer."""
 	#@	<< define colorizer keywords >>
-	#@+node:<< define colorizer keywords >>
+	#@+node:<< define colorizer keywords >> colorizer
 	#@<< actionscript keywords >>
 	#@+node:<< actionscript keywords >>
 	actionscript_keywords = (
@@ -490,6 +490,31 @@ class baseColorizer:
 	#@-node:<< c keywords >>
 	#@nl
 	cweb_keywords = c_keywords
+	#@<< elisp keywords>>
+	#@+node:<< elisp keywords>>
+	# EKR: needs more work.
+	elisp_keywords = (
+		# Maybe...
+		"error","princ",
+		# More typical of other lisps...
+		"apply","eval",
+		"t","nil",
+		"and","or","not",
+		"cons","car","cdr",
+		"cond",
+		"defconst","defun","defvar",
+		"eq","ne","equal","gt","ge","lt","le",
+		"if",
+		"let",
+		"mapcar",
+		"prog","progn",
+		"set","setq",
+		"type-of",
+		"unless",
+		"when","while")
+	#@nonl
+	#@-node:<< elisp keywords>>
+	#@nl
 	#@<< html keywords >>
 	#@+node:<< html keywords >>
 	# No longer used by syntax colorer.
@@ -897,7 +922,8 @@ class baseColorizer:
 	#@nonl
 	#@-node:<< rebol keywords >>
 	#@nl
-	#@-node:<< define colorizer keywords >>
+	#@nonl
+	#@-node:<< define colorizer keywords >> colorizer
 	#@nl
 	#@	@+others
 	#@+node:color.__init__
@@ -1207,7 +1233,7 @@ class baseColorizer:
 			#@-node:<< configure tags >>
 			#@nl
 			#@<< configure language-specific settings >>
-			#@+node:<< configure language-specific settings >>
+			#@+node:<< configure language-specific settings >> colorizer
 			# Define has_string, keywords, single_comment_start, block_comment_start, block_comment_end.
 			
 			if self.language == "cweb": # Use C comments, not cweb sentinel comments.
@@ -1228,7 +1254,7 @@ class baseColorizer:
 			self.has_string = self.language != "plain"
 			if self.language == "plain":
 				self.string_delims = ()
-			elif self.language == "html":
+			elif self.language in ("elisp","html"):
 				self.string_delims = ('"')
 			else:
 				self.string_delims = ("'",'"')
@@ -1237,7 +1263,7 @@ class baseColorizer:
 			# The list of languages for which keywords exist.
 			# Eventually we might just use language_delims_dict.keys()
 			languages = [
-				"actionscript","c","cweb","html","java","latex",
+				"actionscript","c","cweb","elisp","html","java","latex",
 				"pascal","perl","perlpod","php","python","rebol","tcltk"]
 			
 			self.keywords = []
@@ -1263,7 +1289,7 @@ class baseColorizer:
 				self.lb = choose(self.language == "cweb","@<","<<")
 				self.rb = choose(self.language == "cweb","@>",">>")
 			#@nonl
-			#@-node:<< configure language-specific settings >>
+			#@-node:<< configure language-specific settings >> colorizer
 			#@nl
 			
 			self.hyperCount = 0 # Number of hypertext tags
@@ -1623,7 +1649,7 @@ class baseColorizer:
 	# Similar to skip_string.
 	def continueString (self,s,i,delim,continueState):
 		# trace(delim + s[i:])
-		continueFlag = choose(self.language=="html",true,false)
+		continueFlag = choose(self.language in ("elisp","html"),true,false)
 		j = i
 		while i < len(s) and s[i] != delim:
 			if s[i:] == "\\":
@@ -1881,6 +1907,8 @@ class baseColorizer:
 				#@+node:<< handle general keyword >>
 				if self.language == "rebol":
 					j = self.skip_id(s,i+1,chars="-~!?")
+				elif self.language == "elisp":
+					j = self.skip_id(s,i+1,chars="-")
 				else:
 					j = self.skip_id(s,i)
 				word = s[i:j]
@@ -2364,7 +2392,7 @@ class baseColorizer:
 			else: i += 1
 	
 		if i >= n:
-			if self.language=="html":
+			if self.language in ("elisp","html"):
 				return n,"doubleString"
 			else:
 				return n, "normal"

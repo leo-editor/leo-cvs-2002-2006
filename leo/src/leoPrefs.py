@@ -125,7 +125,7 @@ class baseLeoPrefs:
 		#@-node:<< Create the Tangle Options frame >>
 		#@nl
 		#@	<< Create the Target Language frame >>
-		#@+node:<< Create the Target Language frame >>
+		#@+node:<< Create the Target Language frame >> frame
 		# Frame and title
 		w,target = create_labeled_frame (outer,caption="Default Target Language")
 		w.pack(padx=2,pady=2,expand=1,fill="x")
@@ -141,6 +141,7 @@ class baseLeoPrefs:
 			("ActionScript", "actionscript"),
 			("C/C++","c"),
 			("CWEB", "cweb"),
+			("elisp","elisp"),
 			("HTML", "html"),
 			("Java", "java"),
 			("LaTeX", "latex"),
@@ -165,7 +166,7 @@ class baseLeoPrefs:
 			button = Tk.Radiobutton(rt,anchor="w",text=text,
 				variable=self.lang_var,value=value,command=self.set_lang)
 			button.pack(fill="x")
-		#@-node:<< Create the Target Language frame >>
+		#@-node:<< Create the Target Language frame >> frame
 		#@nl
 		#@	<< Create the Ok, Cancel & Revert buttons >>
 		#@+node:<< Create the Ok, Cancel & Revert buttons >>
