@@ -2,7 +2,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="5959" clone_windows="0"/>
 <globals body_outline_ratio="0.635416666667">
-	<global_window_position top="45" left="185" height="864" width="907"/>
+	<global_window_position top="43" left="310" height="864" width="907"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences>
@@ -23,7 +23,7 @@
 <v t="ekr.20040804052804"><vh>Set tracing</vh></v>
 <v t="ekr.20040901065642"><vh>test of new timit script</vh></v>
 </v>
-<v t="ekr.20040708205841"><vh>Other tests...</vh>
+<v t="ekr.20040708205841" a="TV"><vh>Other tests...</vh>
 <v t="ekr.20040414082806"><vh>Clone test</vh>
 <v t="ekr.20040409140301"><vh>clone test</vh>
 <v t="ekr.20040409140301.1"><vh>b</vh>
@@ -353,6 +353,10 @@
 <v t="ekr.20040909123122.5"><vh>node 2.2</vh></v>
 </v>
 </v>
+<v t="ekr.20040914072438"><vh>Tests of @root</vh>
+<v t="ekr.20040914072438.1"><vh>atRootTest1.txt</vh></v>
+<v t="ekr.20040914072438.2" a="M"><vh>atRootTest2.txt</vh></v>
+</v>
 </v>
 <v t="ekr.20040312021734"><vh>Scripts</vh>
 <v t="ekr.20040318091620"><vh>Clear all unknown attributes</vh></v>
@@ -653,7 +657,7 @@
 </v>
 </v>
 </v>
-<v t="EKR.20040613162717"><vh>Report newlines</vh></v>
+<v t="EKR.20040613162717" a="M"><vh>Report newlines</vh></v>
 <v t="ekr.20040312021734.1"><vh>Script to clean unused tnodeLists</vh></v>
 <v t="ekr.20040330095252"><vh>script to clear log frame</vh></v>
 <v t="ekr.20040322120331"><vh>script to print tnodeList's</vh></v>
@@ -1153,7 +1157,7 @@
 </v>
 <v t="ekr.20040707081532.1"><vh>Do @test</vh></v>
 </v>
-<v t="ekr.20040910094343" a="TV"><vh>Tests of @run</vh>
+<v t="ekr.20040910094343"><vh>Tests of @run</vh>
 <v t="ekr.20040910094343.1"><vh>Note:  windows cd does not affect value of os.getcwd</vh></v>
 <v t="ekr.20040910092950"><vh>@run # open leoDocs.leo</vh>
 <v t="ekr.20040910092950.3"><vh>@run c:\python23\python c:\prog\leoCVS\leo\src\leo.py c:\prog\leoCVS\leo\doc\LeoDocs.leo</vh></v>
@@ -1699,10 +1703,7 @@ c = b
 </t>
 <t tx="EKR.20040613162717">import leoGlobals as g
 
-path = r"c:\prog\leoScripts(before).txt"
-path = r"c:\prog\leoScripts(after).txt"
-
-print g.top().currentPosition()
+path = r"c:\prog\leoCVS\leo\install-test"
 
 try:
     f = open(path,"rb")
@@ -1714,7 +1715,8 @@ try:
         if ch == '\r': cr += 1
         if ch == '\n': nl += 1
         
-    g.es("cr %d, nl %d %s" % (cr,nl,path))
+    m = "cr %d, nl %d %s" % (cr,nl,path)
+    print m ; g.es(m)
 
 except IOError:
     print "can not open",path</t>
@@ -1823,7 +1825,7 @@ print '
 import leoGlobals as g
 print g.app.config.redirect_execute_script_output_to_log_pane</t>
 <t tx="EKR.20040627103732">@ignore</t>
-<t tx="EKR.20040627103902" lineYOffset="4b032e" icons="5d7100287d710128550577686572657102550a6265666f726549636f6e710355047870616471044b025504747970657105550466696c6571066806582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286805680668084afdffffff6806582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6802550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e"></t>
+<t tx="EKR.20040627103902" lineYOffset="4b032e" icons="5d7100287d7101285504747970657102550466696c65710355047870616471044b02550577686572657105550a6265666f726549636f6e71066803582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286802680368084afdffffff6803582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6805550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e"></t>
 <t tx="EKR.20040627121836">import leoGlobals as g
 
 c = g.top() ; p = c.currentPosition()
@@ -1952,7 +1954,7 @@ for p in c.rootPosition().allNodes_iter():
 s = "%d nodes" % count
 print s ; g.es(s)</t>
 <t tx="ekr.20040312101720"></t>
-<t tx="ekr.20040317101155" lineYOffset="4b032e" icons="5d7100287d7101285504747970657102550466696c65710355047870616471044b02550577686572657105550a6265666f726549636f6e71066803582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286802680368084afdffffff6803582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6805550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">import leoGlobals as g
+<t tx="ekr.20040317101155" lineYOffset="4b032e" icons="5d7100287d710128550577686572657102550a6265666f726549636f6e710355047870616471044b025504747970657105550466696c6571066806582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286805680668084afdffffff6806582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6802550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">import leoGlobals as g
 
 c = g.top()
 
@@ -9527,5 +9529,12 @@ This is a test of the rst plugin.</t>
 <t tx="ekr.20040910094546"></t>
 <t tx="ekr.20040910094546.1">c:\prog\leoCVS\leo\src\leo.py</t>
 <t tx="ekr.20040910094546.2"></t>
+<t tx="ekr.20040914072438">@path c:\prog\test</t>
+<t tx="ekr.20040914072438.1">@root atRootTest1.txt
+
+atRootTest1.txt</t>
+<t tx="ekr.20040914072438.2">@root atRootTest2.txt
+
+atRootTest2.txt</t>
 </tnodes>
 </leo_file>
