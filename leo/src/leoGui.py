@@ -125,7 +125,9 @@ class leoGui:
         # Create the commander and its subcommanders.
         c = leoCommands.Commands(frame,fileName)
         
-        # Finish creating the frame
+        if not g.app.initing:
+            g.doHook("onCreate",c=c)
+        
         frame.finishCreate(c)
         
         # Finish initing the subcommanders.
@@ -134,7 +136,9 @@ class leoGui:
         if updateRecentFiles:
             c.updateRecentFiles(fileName)
         
-        g.doHook("after-create-leo-frame",c=c)
+        if not g.app.initing:
+            g.doHook("after-create-leo-frame",c=c)
+    
         return c,frame
     #@nonl
     #@-node:ekr.20031218072017.2188:newLeoCommanderAndFrame (gui-independent)
