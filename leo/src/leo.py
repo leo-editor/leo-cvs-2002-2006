@@ -35,7 +35,7 @@ if 0: # Set to 1 for lint-like testing.  This can also be done in idle.
 #@nl
 
 from leoGlobals import *
-import leoApp,leoConfig,leoNodes
+import leoApp,leoConfig,leoGui,leoNodes
 import os,string,sys
 
 #@+others
@@ -48,11 +48,14 @@ def run(fileName=None,*args,**keywords):
 	# Create the application object.
 	import leoGlobals
 	leoGlobals.gApp = leoApp.LeoApp()
-
 	app.loadDir = computeLoadDir() # Depends on app.tkEncoding: uses utf-8 for now.
 	app.config = leoConfig.config()
 	app.setEncoding() # 10/20/03: do this earlier
-	
+	if 0: # Testing
+		sys.argv.append("--script")
+		sys.argv.append(r"..\test\batchScript.py")
+	script = getBatchScript()
+	if script: createNullGuiWithScript(script)
 	# Load plugins. Plugins may create app.gui.
 	doHook("start1")
 	if app.killed: return # Support for app.forceShutdown.
@@ -159,6 +162,41 @@ def createFrame (fileName):
 	return c,frame
 #@nonl
 #@-node:createFrame (leo.py)
+#@+node:createNullGuiWithScript (leo.py)
+def createNullGuiWithScript (script):
+	
+	app.gui = leoGui.nullGui("nullGui")
+	app.root = app.gui.createRootWindow()
+	app.gui.finishCreate()
+	app.gui.setScript(script)
+#@nonl
+#@-node:createNullGuiWithScript (leo.py)
+#@+node:getBatchScript
+def getBatchScript ():
+	
+	name = None ; i = 1 # Skip the dummy first arg.
+	while i + 1 < len(sys.argv):
+		arg = sys.argv[i].strip().lower()
+		if arg in ("--script","--script"):
+			name = sys.argv[i+1].strip() ; break
+		i += 1
+
+	if not name: return None	
+	name = os_path_join(app.loadDir,name)
+	try:
+		f = None
+		try:
+			f = open(name,'r')
+			script = f.read()
+			# trace("script",script)
+		except IOError:
+			es("can not open script file: " + name, color="red")
+			script = None
+	finally:
+		if f: f.close()
+		return script
+#@nonl
+#@-node:getBatchScript
 #@+node:profile
 #@+at 
 #@nonl
