@@ -3227,7 +3227,7 @@ except:
 		# On the Mac, it should return the system encoding;
 		# it might return "ascii" instead.
 		
-		def getpreferredencoding(do_setlocale = True):
+		def getpreferredencoding(do_setlocale = true):
 		    """Return the charset that the user is likely using."""
 		    import _locale
 		    return _locale._getdefaultlocale()[1]
@@ -3244,12 +3244,12 @@ except:
 		    CODESET
 		except NameError:
 		    # Fall back to parsing environment variables :-(
-		    def getpreferredencoding(do_setlocale = True):
+		    def getpreferredencoding(do_setlocale = true):
 		        """Return the charset that the user is likely using,
 		        by looking at environment variables."""
 		        return getdefaultlocale()[1]
 		else:
-		    def getpreferredencoding(do_setlocale = True):
+		    def getpreferredencoding(do_setlocale = true):
 		        """Return the charset that the user is likely using,
 		        according to the system configuration."""
 		        if do_setlocale:
