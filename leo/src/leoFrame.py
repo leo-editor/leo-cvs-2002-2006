@@ -2850,7 +2850,7 @@ class baseLeoFrame:
 	
 		# Assume any selected body text is a script.
 		start,end = getTextSelection(body)
-		if start and end:
+		if start and end and start != end:
 			s = body.get(start,end)
 		else:
 			s = body.get("1.0","end")
