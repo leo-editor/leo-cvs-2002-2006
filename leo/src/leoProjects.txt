@@ -2143,7 +2143,7 @@ message = (
     "Conflicting changes in outline and temp file\n\n" +
     "Do you want to use the code in the outline or the temp file?\n\n")
 
-result = g.app.gui.runAskYesNoCancelDialog(
+result = g.app.gui.runAskYesNoCancelDialog(c,
     "Conflict!", message,
     yesMessage = "Outline",
     noMessage = "File",
@@ -2442,7 +2442,7 @@ def pasteOutlineRetainingClones (self):
             'Are you sure you want to Paste As Clone?\n\n'
             'This operation can not be undone; it will clear the Undo stack.')
         
-        response = g.app.gui.runAskYesNoDialog('Paste As Clone?',message=message)
+        response = g.app.gui.runAskYesNoDialog(c,'Paste As Clone?',message=message)
     
         if response == 'yes':
             val = c.pasteOutline(reassignIndices=False)
@@ -14067,7 +14067,7 @@ self.xWantsFocus. This defers to idle-time code in the status-line class.
 
 N.B.  This code never calls select, so there can be no race condition here that alters text improperly.
 #@nonl
-#@+node:ekr.20050120092028:xWantsFocus
+#@+node:ekr.20050120092028:xWantsFocus (tkFrame)
 @ All these do the same thing, but separate names are good for tracing and
 makes the intent of the code clearer.
 @c 
@@ -14087,8 +14087,12 @@ def statusLineWantsFocus(self,widget,later=True,tag=''):
 def treeWantsFocus(self,widget,later=True,tag=''):
     # g.trace(tag,repr(widget))
     self.set_focus(widget,later=later,tag=tag)
+    
+def widgetWantsFocus(self,widget,later=True,tag=''):
+    # g.trace(tag,repr(widget))
+    self.set_focus(widget,later=later,tag=tag)
 #@nonl
-#@-node:ekr.20050120092028:xWantsFocus
+#@-node:ekr.20050120092028:xWantsFocus (tkFrame)
 #@+node:ekr.20050120092028.1:set_focus (tkFrame)
 @
 Very tricky code:
@@ -15336,7 +15340,7 @@ You may download Python from http://python.org/download/
         ok = g.CheckVersion(sys.version, "2.2.1")
         if not ok:
             print message
-            g.app.gui.runAskOkDialog("Python version error",message=message,text="Exit")
+            g.app.gui.runAskOkDialog(None,"Python version error",message=message,text="Exit")
         return ok
     except:
         print "isValidPython: unexpected exception: g.CheckVersion"
@@ -15398,11 +15402,11 @@ def computeHomeDir():
     import leoGlobals as g
 
     encoding = startupEncoding()
-    dotDir = g.os_path_abspath('./',encoding)
-    home = os.getenv('HOME',default=dotDir)
-    if len(home) > 1 and home[0]=='%' and home[-1]=='%':
+    # dotDir = g.os_path_abspath('./',encoding)
+    home = os.getenv('HOME',default=None)
+    if home and len(home) > 1 and home[0]=='%' and home[-1]=='%':
 	    # Get the indirect reference to the true home.
-	    home = os.getenv(home[1:-1],default=dotDir)
+	    home = os.getenv(home[1:-1],default=None)
     
     home = g.os_path_abspath(home,encoding)
     
@@ -22138,12 +22142,13 @@ This is important, the settings node found by findSettingsPosition may be a clon
 #@nonl
 #@-node:ekr.20050122104754.1:What I did
 #@+node:ekr.20041122162610:@recent_files
-c:\prog\leoCVS\leo\plugins\leoPlugins.leo
 C:\prog\leoCVS\leo\config\leoSettings.leo
-C:\prog\Leo Stuff\oldLeoFiles.leo
+C:\Documents and Settings\Ed\My Documents\ekr.leo
 C:\prog\leoCVS\leo\test\test.leo
 C:\prog\leoCVS\leo\src\LeoPy.leo
 c:\prog\leoCVS\leo\doc\LeoDocs.leo
+c:\prog\leoCVS\leo\plugins\leoPlugins.leo
+C:\prog\Leo Stuff\oldLeoFiles.leo
 #@nonl
 #@-node:ekr.20041122162610:@recent_files
 #@+node:ekr.20040305223522:p.setBodyStringOrPane & p.setBodyTextOrPane
@@ -23304,7 +23309,9 @@ def __init__(self,c,resizeable=False,title=None):
     
     # Init the base classes...
     leoFind.leoFind.__init__(self,c,title=title)
-    leoTkinterDialog.leoTkinterDialog.__init__(self,self.title,resizeable)
+    leoTkinterDialog.leoTkinterDialog.__init__(self,c,self.title,resizeable)
+    
+    if g.app.unitTesting:return
 
     << create the tkinter intVars >>
     
@@ -24694,7 +24701,7 @@ except:
 #@nonl
 #@-node:ekr.20031218072017.2866:<< read the file into lines >>
 #@+node:ekr.20031218072017.2867:<< get n, the line number, from a dialog >>
-n = g.app.gui.runAskOkCancelNumberDialog("Enter Line Number","Line number:")
+n = g.app.gui.runAskOkCancelNumberDialog(c,"Enter Line Number","Line number:")
 if n == -1:
     return
 #@nonl
@@ -25785,7 +25792,7 @@ You may download Python from http://python.org/download/
         ok = g.CheckVersion(sys.version, "2.2.1")
         if not ok:
             print message
-            g.app.gui.runAskOkDialog("Python version error",message=message,text="Exit")
+            g.app.gui.runAskOkDialog(None,"Python version error",message=message,text="Exit")
         return ok
     except:
         print "isValidPython: unexpected exception: g.CheckVersion"
@@ -25847,11 +25854,11 @@ def computeHomeDir():
     import leoGlobals as g
 
     encoding = startupEncoding()
-    dotDir = g.os_path_abspath('./',encoding)
-    home = os.getenv('HOME',default=dotDir)
-    if len(home) > 1 and home[0]=='%' and home[-1]=='%':
+    # dotDir = g.os_path_abspath('./',encoding)
+    home = os.getenv('HOME',default=None)
+    if home and len(home) > 1 and home[0]=='%' and home[-1]=='%':
 	    # Get the indirect reference to the true home.
-	    home = os.getenv(home[1:-1],default=dotDir)
+	    home = os.getenv(home[1:-1],default=None)
     
     home = g.os_path_abspath(home,encoding)
     
@@ -26047,11 +26054,11 @@ def computeHomeDir():
     import leoGlobals as g
 
     encoding = startupEncoding()
-    dotDir = g.os_path_abspath('./',encoding)
-    home = os.getenv('HOME',default=dotDir)
-    if len(home) > 1 and home[0]=='%' and home[-1]=='%':
+    # dotDir = g.os_path_abspath('./',encoding)
+    home = os.getenv('HOME',default=None)
+    if home and len(home) > 1 and home[0]=='%' and home[-1]=='%':
 	    # Get the indirect reference to the true home.
-	    home = os.getenv(home[1:-1],default=dotDir)
+	    home = os.getenv(home[1:-1],default=None)
     
     home = g.os_path_abspath(home,encoding)
     
@@ -30414,24 +30421,23 @@ g.app.createTkGui("startup")
 g.app.leoID = g.app.gui.runAskLeoIDDialog()
 g.app.gui = None
 
-g.trace(g.app.leoID)
-g.es("leoID=",repr(g.app.leoID),color="blue")
+# g.trace(g.app.leoID)
+g.es("leoID = %s" % (repr(g.app.leoID)),color="blue")
 #@nonl
 #@-node:ekr.20031218072017.1981:<< put up a dialog requiring a valid id >>
 #@+node:ekr.20031218072017.1982:<< attempt to create leoID.txt >>
 dirs = []
 
 for theDir in (homeDir,globalConfigDir,loadDir):
-    cant = "can not create leoID.txt in %s" % theDir
+    cant = "can not create %s in %s" % (tag,theDir)
     try:
-        # Look in globalConfigDir first.
-        fn = g.os_path_join(theDir, tag)
+        fn = g.os_path_join(theDir,tag)
         f = open(fn,'w')
         if f:
             f.write(g.app.leoID)
             f.close()
             if g.os_path_exists(fn):
-                g.es("created leoID.txt in %s" % (theDir), color="red")
+                g.es("created %s in %s" % (tag,theDir), color="red")
                 return
             else:
                 g.es(cant,color='red')
@@ -31224,6 +31230,641 @@ def forceLogUpdate (self,s):
 #@-node:ekr.20050208133438:forceLogUpdate
 #@-node:ekr.20031218072017.1473:tkLog.put & putnl & forceLogUpdate
 #@-node:ekr.20050208133438.1:(Fixed unicode problems on the Mac)
+#@+node:ekr.20050210080438:(Made sure Go To Line Number dialog is brought to the front)
+#@+node:ekr.20050210080438.1:Report
+@killcolor
+
+http://sourceforge.net/forum/message.php?msg_id=2987569
+By: e
+
+goto linenumber popup gets hidden behind the leo.
+
+EKR: This happens when focus is in body pane.
+
+Arrrrrgh.  The delayed focus logic requires a commander to work.
+
+What I did:
+
+- Added a c argument to all dialogs except runAskLeoIDDialog.
+- Added tk.gui.widget_wants_focus.
+- Added unit tests to test ctors for all dialogs and panels.
+    - All dialog ctors return after initing the base class when unit testing.
+#@-node:ekr.20050210080438.1:Report
+#@+node:ekr.20050210084744:Added c to all dialog ctors!
+#@+node:ekr.20031218072017.3730:app.gui dialogs
+def runAboutLeoDialog(self,c,version,theCopyright,url,email):
+    """Create and run Leo's About Leo dialog."""
+    self.oops()
+    
+def runAskLeoIDDialog(self):
+    """Create and run a dialog to get g.app.LeoID."""
+    self.oops()
+
+def runAskOkDialog(self,c,title,message=None,text="Ok"):
+    """Create and run an askOK dialog ."""
+    self.oops()
+
+def runAskOkCancelNumberDialog(self,c,title,message):
+    """Create and run askOkCancelNumber dialog ."""
+    self.oops()
+
+def runAskYesNoDialog(self,c,title,message=None):
+    """Create and run an askYesNo dialog."""
+    self.oops()
+
+def runAskYesNoCancelDialog(self,c,title,
+    message=None,yesMessage="Yes",noMessage="No",defaultButton="Yes"):
+    """Create and run an askYesNoCancel dialog ."""
+    self.oops()
+#@nonl
+#@-node:ekr.20031218072017.3730:app.gui dialogs
+#@+node:ekr.20031218072017.3744:dialogs (unitTestGui)
+def runAboutLeoDialog(self,c,version,theCopyright,url,email):
+    return self.simulateDialog("aboutLeoDialog")
+    
+def runAskLeoIDDialog(self):
+    return self.simulateDialog("leoIDDialog")
+
+def runAskOkDialog(self,c,title,message=None,text="Ok"):
+    return self.simulateDialog("okDialog","Ok")
+
+def runAskOkCancelNumberDialog(self,c,title,message):
+    return self.simulateDialog("numberDialog",-1)
+    
+def runOpenFileDialog(self,title,filetypes,defaultextension,multiple=False):
+    return self.simulateDialog("openFileDialog")
+
+def runSaveFileDialog(self,initialfile,title,filetypes,defaultextension):
+    return self.simulateDialog("saveFileDialog")
+
+def runAskYesNoDialog(self,c,title,message=None):
+    return self.simulateDialog("yesNoDialog","no")
+
+def runAskYesNoCancelDialog(self,c,title,
+    message=None,yesMessage="Yes",noMessage="No",defaultButton="Yes"):
+    return self.simulateDialog("yesNoCancelDialog","cancel")
+#@nonl
+#@-node:ekr.20031218072017.3744:dialogs (unitTestGui)
+#@+node:ekr.20031218072017.4056:app.gui.Tkinter dialogs
+def runAboutLeoDialog(self,c,version,theCopyright,url,email):
+    """Create and run a Tkinter About Leo dialog."""
+    d = leoTkinterDialog.tkinterAboutLeo(c,version,theCopyright,url,email)
+    return d.run(modal=False)
+    
+def runAskLeoIDDialog(self):
+    """Create and run a dialog to get g.app.LeoID."""
+    d = leoTkinterDialog.tkinterAskLeoID()
+    return d.run(modal=True)
+
+def runAskOkDialog(self,c,title,message=None,text="Ok"):
+    """Create and run a Tkinter an askOK dialog ."""
+    d = leoTkinterDialog.tkinterAskOk(c,title,message,text)
+    return d.run(modal=True)
+
+def runAskOkCancelNumberDialog(self,c,title,message):
+    """Create and run askOkCancelNumber dialog ."""
+    d = leoTkinterDialog.tkinterAskOkCancelNumber(c,title,message)
+    return d.run(modal=True)
+
+def runAskYesNoDialog(self,c,title,message=None):
+    """Create and run an askYesNo dialog."""
+    d = leoTkinterDialog.tkinterAskYesNo(c,title,message)
+    return d.run(modal=True)
+
+def runAskYesNoCancelDialog(self,c,title,
+    message=None,yesMessage="Yes",noMessage="No",defaultButton="Yes"):
+    """Create and run an askYesNoCancel dialog ."""
+    d = leoTkinterDialog.tkinterAskYesNoCancel(
+        c,title,message,yesMessage,noMessage,defaultButton)
+    return d.run(modal=True)
+#@nonl
+#@-node:ekr.20031218072017.4056:app.gui.Tkinter dialogs
+#@-node:ekr.20050210084744:Added c to all dialog ctors!
+#@+node:ekr.20031218072017.2864:goToLineNumber & allies
+def goToLineNumber (self,root=None,lines=None,n=None,scriptFind=False):
+
+    c = self ; p = c.currentPosition()
+    root1 = root
+    if root is None:
+        << set root >>
+    if lines is None:
+        << read the file into lines >>
+    if n is None:
+        << get n, the line number, from a dialog >>
+        n = self.applyLineNumberMappingIfAny(n) #bwm
+    if n==1:
+        p = root ; n2 = 1 ; found = True
+    elif n >= len(lines):
+        p = root ; found = False
+        n2 = p.bodyString().count('\n')
+    elif root.isAtAsisFileNode():
+        << count outline lines, setting p,n2,found >>
+    else:
+        vnodeName,childIndex,gnx,n2,delim = self.convertLineToVnodeNameIndexLine(lines,n,root,scriptFind)
+        found = True
+        if not vnodeName:
+            g.es("error handling: " + root.headString())
+            return
+        << set p to the node given by vnodeName, etc. >>
+    << select p and make it visible >>
+    << put the cursor on line n2 of the body text >>
+#@nonl
+#@+node:ekr.20031218072017.2865:<< set root >>
+# First look for ancestor @file node.
+fileName = None
+for p in p.self_and_parents_iter():
+    fileName = p.anyAtFileNodeName()
+    if fileName: break
+
+# New in 4.2: Search the entire tree for joined nodes.
+if not fileName:
+    p1 = c.currentPosition()
+    for p in c.all_positions_iter():
+        if p.v.t == p1.v.t and p != p1:
+            # Found a joined position.
+            for p in p.self_and_parents_iter():
+                fileName = p.anyAtFileNodeName()
+                # New in 4.2 b3: ignore @all nodes.
+                if fileName and not p.isAtAllNode(): break
+        if fileName: break
+
+if fileName:
+    root = p.copy()
+else:
+    # New in 4.2.1: assume the c.currentPosition is the root of a script.
+    root = c.currentPosition()
+    g.es("No ancestor @file node: using script line numbers", color="blue")
+    scriptFind = True
+    lines = g.getScript (c,root,useSelectedText=False)
+    lines = g.splitLines(lines)
+    if 0:
+        for line in lines:
+            print line,
+#@nonl
+#@-node:ekr.20031218072017.2865:<< set root >>
+#@+node:ekr.20031218072017.2866:<< read the file into lines >>
+# 1/26/03: calculate the full path.
+d = g.scanDirectives(c)
+path = d.get("path")
+
+fileName = g.os_path_join(path,fileName)
+
+try:
+    lines=self.gotoLineNumberOpen(fileName) # bwm
+except:
+    g.es("not found: " + fileName)
+    return
+#@nonl
+#@-node:ekr.20031218072017.2866:<< read the file into lines >>
+#@+node:ekr.20031218072017.2867:<< get n, the line number, from a dialog >>
+n = g.app.gui.runAskOkCancelNumberDialog(c,"Enter Line Number","Line number:")
+if n == -1:
+    return
+#@nonl
+#@-node:ekr.20031218072017.2867:<< get n, the line number, from a dialog >>
+#@+node:ekr.20031218072017.2868:<< count outline lines, setting p,n2,found >> (@file-nosent only)
+p = lastv = root
+prev = 0 ; found = False
+
+for p in p.self_and_subtree_iter():
+    lastv = p.copy()
+    s = p.bodyString()
+    lines = s.count('\n')
+    if len(s) > 0 and s[-1] != '\n':
+        lines += 1
+    # print lines,prev,p
+    if prev + lines >= n:
+        found = True ; break
+    prev += lines
+
+p = lastv
+n2 = max(1,n-prev)
+#@nonl
+#@-node:ekr.20031218072017.2868:<< count outline lines, setting p,n2,found >> (@file-nosent only)
+#@+node:ekr.20031218072017.2869:<< set p to the node given by vnodeName, etc. >>
+if scriptFind:
+    << just scan for the node name >>
+elif gnx:
+    << 4.2: get node from gnx >>
+elif childIndex == -1:
+    << 4.x: scan for the node using tnodeList and n >>
+else:
+    << 3.x: scan for the node with the given childIndex >>
+#@nonl
+#@+node:ekr.20041111093404:<< just scan for the node name >>
+# This is safe enough because clones are not much of an issue.
+found = False
+for p in root.self_and_subtree_iter():
+    if p.matchHeadline(vnodeName):
+        found = True ; break
+#@nonl
+#@-node:ekr.20041111093404:<< just scan for the node name >>
+#@+node:EKR.20040609110138:<< 4.2: get node from gnx >>
+found = False
+gnx = g.app.nodeIndices.scanGnx(gnx,0)
+
+# g.trace(vnodeName)
+# g.trace(gnx)
+
+for p in root.self_and_subtree_iter():
+    if p.matchHeadline(vnodeName):
+        # g.trace(p.v.t.fileIndex)
+        if p.v.t.fileIndex == gnx:
+            found = True ; break
+
+if not found:
+    g.es("not found: " + vnodeName, color="red")
+    return
+#@nonl
+#@-node:EKR.20040609110138:<< 4.2: get node from gnx >>
+#@+node:ekr.20031218072017.2870:<< 4.x: scan for the node using tnodeList and n >>
+# This is about the best that can be done without replicating the entire atFile write logic.
+
+ok = True
+
+if not hasattr(root.v.t,"tnodeList"):
+    s = "no child index for " + root.headString()
+    print s ; g.es(s, color="red")
+    ok = False
+
+if ok:
+    tnodeList = root.v.t.tnodeList
+    << set tnodeIndex to the number of +node sentinels before line n >>
+    tnodeIndex = max(0,tnodeIndex)
+    << set p to the first vnode whose tnode is tnodeList[tnodeIndex] or set ok = False >>
+            
+if not ok:
+    # Fall back to the old logic.
+    << set p to the first node whose headline matches vnodeName >>
+#@nonl
+#@+node:ekr.20031218072017.2871:<< set tnodeIndex to the number of +node sentinels before line n >>
+tnodeIndex = -1 # Don't count the @file node.
+scanned = 0 # count of lines scanned.
+
+for s in lines:
+    if scanned >= n:
+        break
+    i = g.skip_ws(s,0)
+    if g.match(s,i,delim):
+        i += len(delim)
+        if g.match(s,i,"+node"):
+            # g.trace(tnodeIndex,s.rstrip())
+            tnodeIndex += 1
+    scanned += 1
+#@nonl
+#@-node:ekr.20031218072017.2871:<< set tnodeIndex to the number of +node sentinels before line n >>
+#@+node:ekr.20031218072017.2872:<< set p to the first vnode whose tnode is tnodeList[tnodeIndex] or set ok = false >>
+@ We use the tnodeList to find a _tnode_ corresponding to the proper node, so the user will for sure be editing the proper text, even if several nodes happen to have the same headline.  This is really all that we need.
+
+However, this code has no good way of distinguishing between different cloned vnodes in the file: they all have the same tnode.  So this code just picks p = t.vnodeList[0] and leaves it at that.
+
+The only way to do better is to scan the outline, replicating the write logic to determine which vnode created the given line.  That's way too difficult, and it would create an unwanted dependency in this code.
+@c
+
+# g.trace("tnodeIndex",tnodeIndex)
+if tnodeIndex < len(tnodeList):
+    t = tnodeList[tnodeIndex]
+    # Find the first vnode whose tnode is t.
+    found = False
+    for p in root.self_and_subtree_iter():
+        if p.v.t == t:
+            found = True ; break
+    if not found:
+        s = "tnode not found for " + vnodeName
+        print s ; g.es(s, color="red") ; ok = False
+    elif p.headString().strip() != vnodeName:
+        if 0: # Apparently this error doesn't prevent a later scan for working properly.
+            s = "Mismatched vnodeName\nExpecting: %s\n got: %s" % (p.headString(),vnodeName)
+            print s ; g.es(s, color="red")
+        ok = False
+else:
+    if root1 is None: # Kludge: disable this message when called by goToScriptLineNumber.
+        s = "Invalid computed tnodeIndex: %d" % tnodeIndex
+        print s ; g.es(s, color = "red")
+    ok = False
+#@nonl
+#@-node:ekr.20031218072017.2872:<< set p to the first vnode whose tnode is tnodeList[tnodeIndex] or set ok = false >>
+#@+node:ekr.20031218072017.2873:<< set p to the first node whose headline matches vnodeName >>
+found = False
+for p in root.self_and_subtree_iter():
+    if p.matchHeadline(vnodeName):
+        found = True ; break
+
+if not found:
+    s = "not found: " + vnodeName
+    print s ; g.es(s, color="red")
+    return
+#@nonl
+#@-node:ekr.20031218072017.2873:<< set p to the first node whose headline matches vnodeName >>
+#@-node:ekr.20031218072017.2870:<< 4.x: scan for the node using tnodeList and n >>
+#@+node:ekr.20031218072017.2874:<< 3.x: scan for the node with the given childIndex >>
+found = False
+for p in root.self_and_subtree_iter():
+    if p.matchHeadline(vnodeName):
+        if childIndex <= 0 or p.childIndex() + 1 == childIndex:
+            found = True ; break
+
+if not found:
+    g.es("not found: " + vnodeName, color="red")
+    return
+#@nonl
+#@-node:ekr.20031218072017.2874:<< 3.x: scan for the node with the given childIndex >>
+#@-node:ekr.20031218072017.2869:<< set p to the node given by vnodeName, etc. >>
+#@+node:ekr.20031218072017.2875:<< select p and make it visible >>
+c.beginUpdate()
+c.frame.tree.expandAllAncestors(p)
+c.selectVnode(p)
+c.endUpdate()
+#@nonl
+#@-node:ekr.20031218072017.2875:<< select p and make it visible >>
+#@+node:ekr.20031218072017.2876:<< put the cursor on line n2 of the body text >>
+if found:
+    c.frame.body.setInsertPointToStartOfLine(n2-1)
+else:
+    c.frame.body.setInsertionPointToEnd()
+    g.es("%d lines" % len(lines), color="blue")
+
+c.frame.body.makeInsertPointVisible()
+#@nonl
+#@-node:ekr.20031218072017.2876:<< put the cursor on line n2 of the body text >>
+#@+node:ekr.20031218072017.2877:convertLineToVnodeNameIndexLine
+@ We count "real" lines in the derived files, ignoring all sentinels that do not arise from source lines.  When the indicated line is found, we scan backwards for an @+body line, get the vnode's name from that line and set p to the indicated vnode.  This will fail if vnode names have been changed, and that can't be helped.
+
+Returns (vnodeName,offset)
+
+vnodeName: the name found in the previous @+body sentinel.
+offset: the offset within p of the desired line.
+@c
+
+def convertLineToVnodeNameIndexLine (self,lines,n,root,scriptFind):
+    
+    """Convert a line number n to a vnode name, (child index or gnx) and line number."""
+    
+    c = self ; at = c.atFileCommands
+    childIndex = 0 ; gnx = None ; newDerivedFile = False
+    thinFile = root.isAtThinFileNode()
+    << set delim, leoLine from the @+leo line >>
+    if not delim:
+        g.es("bad @+leo sentinel")
+        return None,None,None,None,None
+    << scan back to @+node, setting offset,nodeSentinelLine >>
+    if nodeSentinelLine == -1:
+        # The line precedes the first @+node sentinel
+        # g.trace("before first line")
+        return root.headString(),0,gnx,1,delim # 10/13/03
+    s = lines[nodeSentinelLine]
+    # g.trace(s)
+    << set vnodeName and (childIndex or gnx) from s >>
+    # g.trace("childIndex,offset",childIndex,offset,vnodeName)
+    return vnodeName,childIndex,gnx,offset,delim
+#@+node:ekr.20031218072017.2878:<< set delim, leoLine from the @+leo line >>
+# Find the @+leo line.
+tag = "@+leo"
+i = 0 
+while i < len(lines) and lines[i].find(tag)==-1:
+    i += 1
+leoLine = i # Index of the line containing the leo sentinel
+
+if leoLine < len(lines):
+    s = lines[leoLine]
+    valid,newDerivedFile,start,end,derivedFileIsThin = at.parseLeoSentinel(s)
+    if valid: delim = start + '@'
+    else:     delim = None
+else:
+    delim = None
+#@-node:ekr.20031218072017.2878:<< set delim, leoLine from the @+leo line >>
+#@+node:ekr.20031218072017.2879:<< scan back to  @+node, setting offset,nodeSentinelLine >>
+offset = 0 # This is essentially the Tk line number.
+nodeSentinelLine = -1
+line = n - 1
+while line >= 0:
+    s = lines[line]
+    # g.trace(s)
+    i = g.skip_ws(s,0)
+    if g.match(s,i,delim):
+        << handle delim while scanning backward >>
+    else:
+        offset += 1 # Assume the line is real.  A dubious assumption.
+    line -= 1
+#@nonl
+#@+node:ekr.20031218072017.2880:<< handle delim while scanning backward >>
+if line == n:
+    g.es("line "+str(n)+" is a sentinel line")
+i += len(delim)
+
+if g.match(s,i,"-node"):
+    # The end of a nested section.
+    line = self.skipToMatchingNodeSentinel(lines,line,delim)
+elif g.match(s,i,"+node"):
+    nodeSentinelLine = line
+    break
+elif g.match(s,i,"<<") or g.match(s,i,"@first"):
+    offset += 1 # Count these as a "real" lines.
+#@nonl
+#@-node:ekr.20031218072017.2880:<< handle delim while scanning backward >>
+#@-node:ekr.20031218072017.2879:<< scan back to  @+node, setting offset,nodeSentinelLine >>
+#@+node:ekr.20031218072017.2881:<< set vnodeName and (childIndex or gnx) from s >>
+if scriptFind:
+    # The vnode name follows the first ':'
+    i = s.find(':',i)
+    if i > -1:
+        vnodeName = s[i+1:].strip()
+    childIndex = -1
+elif newDerivedFile:
+    i = 0
+    if thinFile:
+        # gnx is lies between the first and second ':':
+        i = s.find(':',i)
+        if i > 0:
+            i += 1
+            j = s.find(':',i)
+            if j > 0:
+                gnx = s[i:j]
+            else: i = len(s)
+        else: i = len(s)
+    # vnode name is everything following the first or second':'
+    # childIndex is -1 as a flag for later code.
+    i = s.find(':',i)
+    if i > -1: vnodeName = s[i+1:].strip()
+    else: vnodeName = None
+    childIndex = -1
+else:
+    # vnode name is everything following the third ':'
+    i = 0 ; colons = 0
+    while i < len(s) and colons < 3:
+        if s[i] == ':':
+            colons += 1
+            if colons == 1 and i+1 < len(s) and s[i+1] in string.digits:
+                junk,childIndex = g.skip_long(s,i+1)
+        i += 1
+    vnodeName = s[i:].strip()
+    
+# g.trace("gnx",gnx,"vnodeName:",vnodeName)
+if not vnodeName:
+    vnodeName = None
+    g.es("bad @+node sentinel")
+#@nonl
+#@-node:ekr.20031218072017.2881:<< set vnodeName and (childIndex or gnx) from s >>
+#@-node:ekr.20031218072017.2877:convertLineToVnodeNameIndexLine
+#@+node:ekr.20031218072017.2882:skipToMatchingNodeSentinel
+def skipToMatchingNodeSentinel (self,lines,n,delim):
+    
+    s = lines[n]
+    i = g.skip_ws(s,0)
+    assert(g.match(s,i,delim))
+    i += len(delim)
+    if g.match(s,i,"+node"):
+        start="+node" ; end="-node" ; delta=1
+    else:
+        assert(g.match(s,i,"-node"))
+        start="-node" ; end="+node" ; delta=-1
+    # Scan to matching @+-node delim.
+    n += delta ; level = 0
+    while 0 <= n < len(lines):
+        s = lines[n] ; i = g.skip_ws(s,0)
+        if g.match(s,i,delim):
+            i += len(delim)
+            if g.match(s,i,start):
+                level += 1
+            elif g.match(s,i,end):
+                if level == 0: break
+                else: level -= 1
+        n += delta
+        
+    # g.trace(n)
+    return n
+#@nonl
+#@-node:ekr.20031218072017.2882:skipToMatchingNodeSentinel
+#@-node:ekr.20031218072017.2864:goToLineNumber & allies
+#@+node:ekr.20031218072017.3866:run (tkDialog)
+def run (self,modal):
+    
+    """Run a leoTkinterDialog."""
+    
+    if g.app.unitTesting: return None
+
+    c = self.c
+    self.modal = modal
+    
+    self.center() # Do this after all packing complete.
+    self.top.lift() # 7/31/04
+
+    if self.modal:
+        self.top.grab_set() # Make the dialog a modal dialog.
+        if self.focus_widget == None:
+            self.focus_widget = self.top
+            
+        self.focus_widget.focus_set() # Get all keystrokes.
+        if c:
+             g.app.gui.widget_wants_focus(c,self.focus_widget)
+           
+        self.root.wait_window(self.top)
+        return self.answer
+    else:
+        self.root.wait_window(self.top)
+        return None
+#@nonl
+#@-node:ekr.20031218072017.3866:run (tkDialog)
+#@+node:ekr.20050210082320:widget_wants_focus (tk.gui)
+def widget_wants_focus(self,c,widget,tag=''):
+
+    """Indicate that a widget want to get focus."""
+    
+    if c:
+        c.frame.widgetWantsFocus(widget,True,tag=tag)
+#@nonl
+#@-node:ekr.20050210082320:widget_wants_focus (tk.gui)
+#@+node:ekr.20050120083053:Delayed Focus (tkFrame)
+@
+
+New in 4.3
+
+Rather than calling g.app.gui.set_focus directly, the code calls
+self.xWantsFocus. This defers to idle-time code in the status-line class.
+
+N.B.  This code never calls select, so there can be no race condition here that alters text improperly.
+#@nonl
+#@+node:ekr.20050120092028:xWantsFocus (tkFrame)
+@ All these do the same thing, but separate names are good for tracing and
+makes the intent of the code clearer.
+@c 
+
+def bodyWantsFocus(self,widget,later=True,tag=''):
+    # g.trace(tag,self.c.shortFileName())
+    self.set_focus(widget,later=later,tag=tag)
+    
+def logWantsFocus(self,widget,later=True,tag=''):
+    # g.trace(tag)
+    self.set_focus(widget,later=later,tag=tag)
+    
+def statusLineWantsFocus(self,widget,later=True,tag=''):
+    # g.trace(tag)
+    self.set_focus(widget,later=later,tag=tag)
+    
+def treeWantsFocus(self,widget,later=True,tag=''):
+    # g.trace(tag,repr(widget))
+    self.set_focus(widget,later=later,tag=tag)
+    
+def widgetWantsFocus(self,widget,later=True,tag=''):
+    # g.trace(tag,repr(widget))
+    self.set_focus(widget,later=later,tag=tag)
+#@nonl
+#@-node:ekr.20050120092028:xWantsFocus (tkFrame)
+#@+node:ekr.20050120092028.1:set_focus (tkFrame)
+@
+Very tricky code:
+Many Tk calls can mess with the focus, so we must always set the focus,
+regardless of what we did previously.
+
+Alas, because of bugs in Tk and/or window managers, we can not call method at
+idle time: that would interfere with switching between windows. Instead, the
+xWnatFocus routines call this with later=True, to queue up a ONE-SHOT later call
+to g.app.g.app.gui.set_focus.
+@c
+
+def set_focus(self,widget,later=False,tag=''):
+    
+    '''Set the focus to the widget specified in the xWantsFocus methods.'''
+
+    c = self.c
+    
+    # g.trace(c.shortFileName())
+
+    if widget and not g.app.unitTesting:
+        # Messing with focus may be dangerous in unit tests.
+        if later:
+            # Queue up the call (just once) for later.
+            def setFocusCallback(c=c):
+                self.wantedCallbackScheduled = False
+                if c == g.app.wantedCommander and c.frame.wantedWidget:
+                    # g.trace(c.frame.wantedWidget)
+                    g.app.gui.set_focus(
+                        g.app.wantedCommander,
+                        c.frame.wantedWidget,
+                        tag='frame.setFocus')
+                self.wantedWidget = None
+                g.app.wantedCommander = None
+                    
+            # Crucial: This may change what the callback does.
+            self.wantedWidget = widget
+            g.app.wantedCommander = c
+            if not self.wantedCallbackScheduled:
+                # g.trace(tag,c.shortFileName())
+                self.wantedCallbackScheduled = True
+                # We don't have to wait so long now that we don't call this so often.
+                # The difference between 500 msec. and 100 msec. is significant.
+                self.outerFrame.after(100,setFocusCallback)
+        else:
+            # g.trace(tag,c.shortFileName())
+            g.app.gui.set_focus(c,widget,tag='frame.setFocus')
+            # Crucial: cancel any previous callback.
+            # It may be re-enabled later, but that doesn't matter.
+            self.wantedWidget = None
+            g.app.wantedCommander = None
+#@nonl
+#@-node:ekr.20050120092028.1:set_focus (tkFrame)
+#@-node:ekr.20050120083053:Delayed Focus (tkFrame)
+#@-node:ekr.20050210080438:(Made sure Go To Line Number dialog is brought to the front)
 #@-node:ekr.20050125203059.1:Bugs
 #@+node:ekr.20050125203059.2:New features...
 #@+node:ekr.20050125170349:(Added new undo granularities & undo_granularity setting)

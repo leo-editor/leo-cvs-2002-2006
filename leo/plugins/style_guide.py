@@ -1,8 +1,8 @@
 #@+leo-ver=4-thin
 #@+node:ekr.20040919081244:@thin style_guide.py
-"""This docstring should be a clear, concise description of
+'''This docstring should be a clear, concise description of
 what the plugin does and how to use it.
-"""
+'''
 
 #@@language python
 #@@tabwidth -4
@@ -82,6 +82,40 @@ Pmw = g.importExtension("Pmw",pluginName=__name__,verbose=True)
 #@nl
 
 #@+others
+#@+node:ekr.20050210114022:init (Leo looks for this when loading plugins)
+#@+at 
+#@nonl
+# When loading plugins, the Leo checks to see if the plugin has an init 
+# function
+# at the top level (the module level). If so, Leo calls the init function. 
+# This
+# function should return True (or equivalent) if the module loaded correctly.
+# 
+# If the top-level init function does not exist, Leo assumes the module loaded 
+# correctly.'''
+#@-at
+#@@c
+def init ():
+    if 1: # Use something like this if the plugin might not load properly.
+        ok = Tk and Pmw 
+    else: # Just set ok to True if the plugin will always load properly.
+        ok = True
+
+    if ok:
+        g.trace('style_guide')
+        # The following three lines needed only if the plugin uses a gui.
+        if g.app.gui is None: 
+            g.app.createTkGui(__file__)
+        if g.app.gui.guiName() == "tkinter":
+            # Shows how to create a class that binds self.c properly.
+            leoPlugins.registerHandler("after-create-leo-frame", onCreate)
+            # Shows how to create a hook that doesn't access commanders.
+            leoPlugins.registerHandler("start2", onStart2)
+            g.plugin_signon(__name__)
+            
+    return ok # Indicate whether the plugin loaded properly.
+#@nonl
+#@-node:ekr.20050210114022:init (Leo looks for this when loading plugins)
 #@+node:ekr.20040919084039:onCreate
 #@+at
 # 
@@ -168,19 +202,6 @@ def onStart2 (tag, keywords):
 #@nonl
 #@-node:ekr.20040919085752:onStart2
 #@-others
-
-# This statement needed only if the plugin uses modules that are not always available.
-if Tk and Pmw and not g.app.unitTesting:
-    g.trace('style_guide')
-    # The following three lines needed only if the plugin uses a gui.
-    if g.app.gui is None: 
-        g.app.createTkGui(__file__)
-    if g.app.gui.guiName() == "tkinter":
-        # Shows how to create a class that binds self.c properly.
-        leoPlugins.registerHandler("after-create-leo-frame", onCreate)
-        # Shows how to create a hook that doesn't access commanders.
-        leoPlugins.registerHandler("start2", onStart2)
-        g.plugin_signon(__name__)
 #@nonl
 #@-node:ekr.20040919081244:@thin style_guide.py
 #@-leo

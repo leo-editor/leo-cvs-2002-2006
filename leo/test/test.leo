@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet ekr_stylesheet?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="6601" clone_windows="0"/>
-<globals body_outline_ratio="0.494382022472">
-	<global_window_position top="24" left="81" height="738" width="827"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="6602" clone_windows="0"/>
+<globals body_outline_ratio="0.440677966102">
+	<global_window_position top="48" left="264" height="708" width="914"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -34,7 +34,7 @@
 <v t="ekr.20050123143337"><vh>@bool redirect_execute_script_output_to_log_pane = None</vh></v>
 </v>
 <v t="EKR.20040623200709"
-expanded="ekr.20040721114839,ekr.20040707210849,ekr.20040707073029,"><vh>@thin ../src/leoTest.py</vh></v>
+expanded="ekr.20040707210849,"><vh>@thin ../src/leoTest.py</vh></v>
 <v t="ekr.20040721153143"><vh>Gc/Profile/Timeit/Tracing scripts</vh>
 <v t="ekr.20040721113934"><vh>runProfile</vh></v>
 <v t="ekr.20040901065642.2"><vh>runTimeit</vh>
@@ -961,7 +961,7 @@ expanded="ekr.20040721114839,ekr.20040707210849,ekr.20040707073029,"><vh>@thin .
 </v>
 <v t="ekr.20050124065111"><vh>Prototype for Pretty Print command</vh></v>
 </v>
-<v t="ekr.20041001211817"><vh>Startup...</vh>
+<v t="ekr.20041001211817" a="TV"><vh>Startup...</vh>
 <v t="ekr.20041001203411"><vh>@ plugin ___proto_atFile.py</vh></v>
 <v t="ekr.20041001203411.1"><vh>@ script hi</vh></v>
 <v t="ekr.20041113113555"><vh>@button check spelling...</vh></v>
@@ -969,8 +969,9 @@ expanded="ekr.20040721114839,ekr.20040707210849,ekr.20040707073029,"><vh>@thin .
 <v t="ekr.20041125145818.1"><vh>@button settings...</vh></v>
 <v t="ekr.20041230121429"><vh>@ button pydoc</vh></v>
 <v t="ekr.20041230143535"><vh>@ button help</vh></v>
+<v t="ekr.20050210180937"><vh>@button jython</vh></v>
 </v>
-<v t="EKR.20040619133116" a="TV"><vh>Unit testing...</vh>
+<v t="EKR.20040619133116"><vh>Unit testing...</vh>
 <v t="bwmulder.20050108100437.1"><vh>How to run unit tests</vh></v>
 <v t="ekr.20040723064143.1"><vh>To do...</vh>
 <v t="ekr.20040723064143.3"><vh>Test error recovery when reading descendentTnodeUa's</vh></v>
@@ -1081,6 +1082,10 @@ expanded="ekr.20040721114839,ekr.20040707210849,ekr.20040707073029,"><vh>@thin .
 <v t="ekr.20040712101754.186"><vh>@test batch mode</vh>
 <v t="ekr.20041012084201"><vh>removeFile</vh></v>
 </v>
+</v>
+<v t="ekr.20050210093857"><vh>Dialogs</vh>
+<v t="ekr.20050210085211"><vh>@test ctors for all dialogs</vh></v>
+<v t="ekr.20050210092742"><vh>@test ctors for all panels</vh></v>
 </v>
 <v t="ekr.20050112095306"><vh>g.utils tests...</vh>
 <v t="ekr.20050105084757.1"><vh>@test g.utils_remove</vh></v>
@@ -1570,6 +1575,7 @@ expanded="ekr.20040721114839,ekr.20040707210849,ekr.20040707073029,"><vh>@thin .
 </v>
 <v t="ekr.20050120095423.21"><vh>print all loaded plugins</vh></v>
 </v>
+<v t="ekr.20050210180034" a="E"><vh>jython script</vh></v>
 </vnodes>
 <tnodes>
 <t tx="EKR.20040424065452">import leoGlobals as g
@@ -2190,7 +2196,7 @@ import leoGlobals as g
 print g.app.config.redirect_execute_script_output_to_log_pane</t>
 <t tx="EKR.20040627103732">@ignore</t>
 <t tx="EKR.20040627103801"></t>
-<t tx="EKR.20040627103902" lineYOffset="4b032e" icons="5d7100287d710128550577686572657102550a6265666f726549636f6e710355047870616471044b025504747970657105550466696c6571066806582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286805680668084afdffffff6806582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6802550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e"></t>
+<t tx="EKR.20040627103902" lineYOffset="4b032e" icons="5d7100287d7101285504747970657102550466696c65710355047870616471044b02550577686572657105550a6265666f726549636f6e71066803582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286802680368084afdffffff6803582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6805550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e"></t>
 <t tx="EKR.20040627121836">import leoGlobals as g
 
 c = g.top() ; p = c.currentPosition()
@@ -2345,7 +2351,7 @@ for p in c.rootPosition().allNodes_iter():
 s = "%d nodes" % count
 print s ; g.es(s)</t>
 <t tx="ekr.20040312101720"></t>
-<t tx="ekr.20040317101155" lineYOffset="4b032e" icons="5d7100287d7101285504747970657102550466696c65710355047870616471044b02550577686572657105550a6265666f726549636f6e710668035834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286802680368084afdffffff68035834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6805550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">import leoGlobals as g
+<t tx="ekr.20040317101155" lineYOffset="4b032e" icons="5d7100287d710128550577686572657102550a6265666f726549636f6e710355047870616471044b025504747970657105550466696c65710668065834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286805680668084afdffffff68065834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6802550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">import leoGlobals as g
 
 c = g.top()
 
@@ -10889,10 +10895,11 @@ if not spellpyx or not spellFrame:
     g.app.scriptDict['removeMe'] = True</t>
 <t tx="ekr.20041121151002">@nocolor</t>
 <t tx="ekr.20041121151002.1">/Users/edream/leoCVS/leo/plugins/leoPlugins.leo
-/Users/edream/leoCVS/leo/config/leoSettings.leo
 /Users/edream/leoCVS/leo/test/test.leo
-/Users/edream/leoCVS/leo/doc/LeoDocs.leo
-/Users/edream/leoCVS/leo/src/LeoPy.leo</t>
+/Users/edream/leoCVS/leo/src/LeoPy.leo
+/Users/edream/leoCVS/leo/config/leoSettings.leo
+C:\prog\leoCVS\leo\test\test.leo
+/Users/edream/leoCVS/leo/doc/LeoDocs.leo</t>
 <t tx="ekr.20041124063401"></t>
 <t tx="ekr.20041124144944">import os
 import sys
@@ -13498,5 +13505,78 @@ for ivar in ('c','g','p'):
     assert ivar in dir()
 
 assert hasattr(g.app,'tkEncoding')</t>
+<t tx="ekr.20050210085211"># For some reason these don't select the dialog properly when run as a script.
+# However, the main reason for the tests is to make sure the ctors don't crash.
+# Also, for unit testing the value of c doesn't matter.
+
+oldGui = g.app.gui ; guis = [g.app.gui]
+
+if g.app.unitTesting:
+    import leoGui
+    guis.append(leoGui.unitTestGui({}))
+
+for gui in guis:
+    gui.runAboutLeoDialog(c,'version','copyright','url','email')
+    gui.runAskLeoIDDialog()
+    gui.runAskOkDialog(c,'title','message')
+    gui.runAskOkCancelNumberDialog(c,'title','message')
+    gui.runAskYesNoDialog(c,'title','message')
+    gui.runAskYesNoCancelDialog(c,'title','message')
+
+g.app.gui = oldGui</t>
+<t tx="ekr.20050210092742">import leoTkinterComparePanel
+
+leoTkinterComparePanel.leoTkinterComparePanel(c)
+
+import leoTkinterFind
+
+leoTkinterFind.leoTkinterFind(c)</t>
+<t tx="ekr.20050210093857"></t>
+<t tx="ekr.20050210180034"># The first script in Jython Essentials, by Pedroni &amp; Rappin.
+import javax.swing as swing
+import java.awt as awt
+import java.lang as lang
+
+def exit(event):
+    lang.System.exit(0)
+    
+def onButtonPressed(event):
+    field.text=quotes[event.source.text]
+    
+def createButton(name):
+    return swing.JButton(name,preferredSize=(100,20),
+        actionPerformed=onButtonPressed)
+        
+names = [ 'Groucho','Chico','Harpo']
+quotes = {'Groucho':'Say the secret word','Chico':'Viaduct?','Harpo':'Honk!'}
+
+w = swing.JFrame('Welcome to jython!',size=(200,200),windowClosing=exit)
+w.contentPane.layout = awt.FlowLayout()
+
+field = swing.JTextField(preferredSize=(200,20))
+w.contentPane.add(field)
+
+buttons = [createButton(name) for name in names]
+for button in buttons:
+    w.contentPane.add(button)
+
+w.pack()
+w.show()</t>
+<t tx="ekr.20050210180937"># **** Change these as needed ***
+jython = r'C:\Jython-21\jython.bat'
+tempFileName = g.os_path_abspath(
+    g.os_path_join(g.app.testDir,'jythonScript.py'))
+
+script = g.getScript(c,p).strip()
+if not script:
+    s = "no script in %s" % p.headString()
+    g.es(s) ; print s
+else:
+    f = file(tempFileName,'w')
+    f.write(script + '\n')
+    f.close()
+    command = '%s "%s"' % (jython,tempFileName)
+    print command
+    import os ; os.system(command)</t>
 </tnodes>
 </leo_file>

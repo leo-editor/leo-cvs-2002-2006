@@ -3,147 +3,8 @@
 #@@nocolor
 
 #@+all
-#@+node:ekr.20050202052911.2:Figure out what is going on with tnodeLists (!!!)
-#@-node:ekr.20050202052911.2:Figure out what is going on with tnodeLists (!!!)
-#@+node:ekr.20050119072551:4.3 a2 To do
-  
-#@nonl
-#@+node:ekr.20050206042705:Distribution 4...
-@killcolor
-#@nonl
-#@+node:ekr.20050125075513:Distribute Pmw in extensions folder
-#@+node:ekr.20050125040057.1:Document that Pmw is required for some extensions
-#@-node:ekr.20050125040057.1:Document that Pmw is required for some extensions
-#@+node:ekr.20050125040057:Distribute Pmw in extensions folder
-#@-node:ekr.20050125040057:Distribute Pmw in extensions folder
-#@+node:ekr.20050125075513.1:Fix crash in plugins manager plugin
-#@-node:ekr.20050125075513.1:Fix crash in plugins manager plugin
-#@-node:ekr.20050125075513:Distribute Pmw in extensions folder
-#@+node:ekr.20050201175949:Make .leo files double-clickable (and document how to do this)
-http://sourceforge.net/forum/message.php?msg_id=2980056
-By: jgleeson
-
-To make .leo files double-clickable, you need to set CFBundleTypeExtensions to
-"leo" in the info.plist file.
-
-It would also be useful to set CFBundleTypeName, which shows up as "Kind" in
-file descriptions.
-
-Here's an example from the setup.py script I use with py2app
-
-<html://pythonmac.org/wiki/py2app>:
-
-    CFBundleTypeExtensions=["leo"],
-    CFBundleTypeName="Leo Outline File",
-#@nonl
-#@-node:ekr.20050201175949:Make .leo files double-clickable (and document how to do this)
-#@+node:ekr.20041130125213.1:(Create Mac package for Leo)
-#@+node:ekr.20041130125213.2:Requests & follow up
-@killcolor
-
-http://sourceforge.net/forum/message.php?msg_id=2859149
-By: genthaler
-
-I'd really like to have Mac OS X packages available as a download option, rather
-than doing it by hand every time a new version comes out.
-
-http://sourceforge.net/forum/message.php?msg_id=2859156
-By: genthaler
-
-BTW, I wasn't the first to do this and publish it - heres a link to an older
-version - http://www.wordtech-software.com/leo.html
- 
-http://sourceforge.net/forum/message.php?msg_id=2859153
-By: genthaler
-
-On Mac OS X, it's quite easy to have a double-clickable application bundle with
-its own private Python and TclTk frameworks, but it's huge; about 20MB unpacked
-IIRC. More sensible to use the OS's version, but that requires Tkinter to be
-installed in /System/Library/Frameworks/Python.framework, and that requires
-an installer package and admin privileges.
-
-Günther
-#@nonl
-#@-node:ekr.20041130125213.2:Requests & follow up
-#@-node:ekr.20041130125213.1:(Create Mac package for Leo)
-#@+node:ekr.20050206210832.2:Create better download pages
-http://sourceforge.net/forum/message.php?msg_id=2928991
-By: jasonic
-
-Even Clicking on the hompage link download and and people face a huge list of
-files to choose from.
-
-http://sourceforge.net/project/showfiles.php?group_id=3458
-
-I suggest changing  the dedicated link on Leo homepage where it says
-
-"Download Leo[4.2 final]"
-
-Insead of linking directly to the sourceforge page, better to go to a small page
-with precise links for the correct packages needed for each OS. And include from
-there a link to an freshly updated Installatian page in the Users Guide. to
-http://prdownloads.sourceforge.net/leo/leosetup-4-2.exe?download
-#@nonl
-#@-node:ekr.20050206210832.2:Create better download pages
-#@+node:ekr.20050207101928:Posting re Cool Mac stuff
-#@+node:ekr.20050207101928.1:Native Max OS X Leo app
-@killcolor
-
-http://sourceforge.net/forum/message.php?msg_id=2630116
-By: genthaler
-
-Hi Mac OS X users,
-
-I've put a native Mac OS X Leo application at
-
-http://idisk.mac.com/genthaler-Public/Leo.zip
-
-Just unzip it and put it in /Applications or ~/Applications
-
-The Leo version I've used is 4.2a3 i.e. the latest version on SF. Living on
-the edge...
-
-It includes application and document icons (just the 32*32 ones, I don't have
-time to create 128*128) as well as .leo extension associations.
-
-AFAIK, it requires 10.3 (it uses the python in
-/System/Library/Frameworks/Python.framework) and the MacPython-Panther addon
-(http://ftp.cwi.nl/jack/python/mac/MacPython-Panther-2.3-2.dmg).
-It also requires Aqua Tcl/Tk - I used the BI version from
-http://prdownloads.sourceforge.net/tcltkaqua/TclTkAquaBI-8.4.6.1.dmg?download
-The standard version should work, though.
-
-Once they're installed, use /Applications/MacPython-2.3/PackageManager to install
-_tkinter.
-
-The control -> command key swapping announced above works nicely too. I changed
-EditHeadline in leoConfig.leo (<< F-keys and others >>) to Ctrl+Command+H so
-that Command-H still hides the application in standard fashion.
-
-An accidental goodness is that the Leo plugins folder coincides with the standard
-Mac OS X application bundle plugins folder - this means that you can use the
-Finder's Get Info window to add, delete, enable & disable Leo plugins!
-
-One minor unpleasantness is that you can only double-click or drag-drop a document
-icon when Leo isn't open, and Leo closes when the last document is closed. You
-can still use Leo's File->Open to open multiple documents, though.
-
-Ed, feel free to copy this into the download area.
-
-Guenther.
-#@nonl
-#@+node:ekr.20050207101928.2:@url http://idisk.mac.com/genthaler-Public/Leo.zip (download)
-#@-node:ekr.20050207101928.2:@url http://idisk.mac.com/genthaler-Public/Leo.zip (download)
-#@-node:ekr.20050207101928.1:Native Max OS X Leo app
-#@+node:ekr.20050207101928.3:@url http://www.wordtech-software.com/leo.html  (Mac Bundle)
-#@-node:ekr.20050207101928.3:@url http://www.wordtech-software.com/leo.html  (Mac Bundle)
-#@-node:ekr.20050207101928:Posting re Cool Mac stuff
-#@-node:ekr.20050206042705:Distribution 4...
-#@+node:ekr.20050209095131:Get spellpyx plugin working
-#@-node:ekr.20050209095131:Get spellpyx plugin working
-#@-node:ekr.20050119072551:4.3 a2 To do
-#@+node:ekr.20050126101301:4.3 a3 Plugins & config...
-#@+node:ekr.20050209094854:Remove unreferenced clone nodes when reading thin derived files
+#@+node:ekr.20050126101301:4.3 a3...
+#@+node:ekr.20050209094854:First: Remove unreferenced clone nodes when reading thin derived files
 RE: bizarre data loss: no big deal
 
 http://sourceforge.net/forum/forum.php?thread_id=1214682&forum_id=10228
@@ -175,7 +36,28 @@ this a long time ago; it may have been an oversight, but I have some dim memory
 of this issue. I suspect the reason I didn't do anything is that removing
 unreferenced nodes must be done in a post-pass, after all nodes have been read.
 This will slow down reading a bit, but that can't be helped.
-#@-node:ekr.20050209094854:Remove unreferenced clone nodes when reading thin derived files
+#@-node:ekr.20050209094854:First: Remove unreferenced clone nodes when reading thin derived files
+#@+node:ekr.20050202052911.2:First: Figure out what is going on with tnodeLists (!!!)
+#@-node:ekr.20050202052911.2:First: Figure out what is going on with tnodeLists (!!!)
+#@+node:ekr.20050210103758:Create better download pages
+http://sourceforge.net/forum/message.php?msg_id=2928991
+By: jasonic
+
+Even Clicking on the hompage link download and and people face a huge list of
+files to choose from.
+
+http://sourceforge.net/project/showfiles.php?group_id=3458
+
+I suggest changing  the dedicated link on Leo homepage where it says
+
+"Download Leo[4.2 final]"
+
+Insead of linking directly to the sourceforge page, better to go to a small page
+with precise links for the correct packages needed for each OS. And include from
+there a link to an freshly updated Installatian page in the Users Guide. to
+http://prdownloads.sourceforge.net/leo/leosetup-4-2.exe?download
+#@nonl
+#@-node:ekr.20050210103758:Create better download pages
 #@+node:ekr.20050207063254:Plugins...
 #@+node:ekr.20050128065405:Study Leo2Ascii
 @killcolor
@@ -381,7 +263,7 @@ def pasteOutlineRetainingClones (self):
             'Are you sure you want to Paste As Clone?\n\n'
             'This operation can not be undone; it will clear the Undo stack.')
         
-        response = g.app.gui.runAskYesNoDialog('Paste As Clone?',message=message)
+        response = g.app.gui.runAskYesNoDialog(c,'Paste As Clone?',message=message)
     
         if response == 'yes':
             val = c.pasteOutline(reassignIndices=False)
@@ -587,7 +469,7 @@ By: jasonic
 @nosent is an abbreviation for @file-nosentinels.
 Very hadny very cool but does not seem be much docs anywhere on this.
 #@-node:ekr.20050206210832.1:Put @nosent and similar abbreviations in glossary
-#@-node:ekr.20050126101301:4.3 a3 Plugins & config...
+#@-node:ekr.20050126101301:4.3 a3...
 #@+node:ekr.20050104083128:4.3 b1 drawing and uA's
 #@+node:ekr.20041231102453:Design new uA scheme
 #@-node:ekr.20041231102453:Design new uA scheme
