@@ -421,16 +421,20 @@ class leoTree:
 			return self.iconimages[name]
 			
 		try:
-			dir = app().loadDir
-			file, ext = os.path.splitext(name)
-			fullname = os.path.join(dir, file + ext)
-			fullname = os.path.normpath(fullname)
+			if 1: # 8/15/02
+				fullname = os.path.join(app().loadDir,name)
+				fullname = os.path.normpath(fullname)
+			else:
+				dir = app().loadDir
+				file, ext = os.path.splitext(name)
+				fullname = os.path.join(dir, file + ext)
+				fullname = os.path.normpath(fullname)
+	
 			image = Tkinter.PhotoImage(master=self.canvas, file=fullname)
 			self.iconimages[name] = image
 			return image
 		except:
 			es("Exception loading: " + fullname)
-			es("dir:" + `dir` + ", file:" + `file` + ", ext:" + `ext`)
 			traceback.print_exc()
 			return None
 	#@-body

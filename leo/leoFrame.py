@@ -2474,20 +2474,25 @@ class LeoFrame:
 	#@+node:1:C=42:OnAbout (version number)
 	#@+body
 	def OnAbout(self,event=None):
-	
-		import tkMessageBox
-	
-		tkMessageBox.showinfo("About Leo",
+		
 		# Don't use triple-quoted strings or continued strings here.
 		# Doing so would add unwanted leading tabs.
-		" leo.py 3.5, August 14, 2002\n\n" +
+		version = "leo.py 3.5, August 14, 2002\n\n"
+		copyright = (
+			"Copyright © 1999-2002 by Edward K. Ream\n" +
+			"All Rights Reserved\n" +
+			"Leo is distributed under the Python License")
+		url = "http://personalpages.tds.net/~edream/front.html"
+		email = "edream@tds.net"
 	
-		"Copyright 1999-2002 by\n" +
-		"Edward K. Ream, edream@tds.net\n" +
-		"All Rights Reserved\n" +
-		"Leo is distributed under the Python License\n\n" +
-		
-		"http://personalpages.tds.net/~edream/front.html")
+		if 1: # Much better looking and includes icon.
+			import leoDialog
+			d = leoDialog.leoDialog()
+			d.aboutLeo(version,copyright,url,email)
+		else:
+			import tkMessageBox
+			tkMessageBox.showinfo("About Leo",
+				version + copyright + '\n' + url + '\n' + email)
 	
 		return "break" # inhibit further command processing
 	#@-body
@@ -2532,11 +2537,12 @@ class LeoFrame:
 			d = leoDialog.leoDialog()
 			answer = d.askYesNo(
 				"Download Tutorial?",
-				"Download tutorial (sbooks.chm) from SourceForge?")
+				"Download tutorial (sbooks.chm) from SourceForge?\n\n" +
+				"Please download this file to the directory containing leo.py")
 			if answer == "yes":
-				import webbrowser
 				url = "http://sourceforge.net/project/showfiles.php?group_id=3458"
 				try:
+					import webbrowser
 					webbrowser.open(url)
 				except:
 					es("not found: " + url)
