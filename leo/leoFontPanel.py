@@ -294,32 +294,28 @@ class leoFontPanel:
 		#@+body
 		set = app().config.setWindowPref
 		
-		if self.bodyVar.get():
-			fn = c.body.cget("font")
-			font = tkFont.Font(font=fn)
-			name,size,slant,weight = self.getFontSettings(font)
-			set("body_text_font_family",name)
-			set("body_text_font_size",`size`)
-			set("body_text_font_slant",slant)
-			set("body_text_font_weight",weight)
+		fn = c.body.cget("font")
+		font = tkFont.Font(font=fn)
+		name,size,slant,weight = self.getFontSettings(font)
+		set("body_text_font_family",name)
+		set("body_text_font_size",size)
+		set("body_text_font_slant",slant)
+		set("body_text_font_weight",weight)
 			
-		if self.logVar.get():
-			fn = c.log.cget("font")
-			font = tkFont.Font(font=fn)
-			name,size,slant,weight = self.getFontSettings(font)
-			set("log_text_font_family",name)
-			set("log_text_font_size",`size`)
-			set("log_text_font_slant",slant)
-			set("log_text_font_weight",weight)
+		fn = c.log.cget("font")
+		font = tkFont.Font(font=fn)
+		name,size,slant,weight = self.getFontSettings(font)
+		set("log_text_font_family",name)
+		set("log_text_font_size",size)
+		set("log_text_font_slant",slant)
+		set("log_text_font_weight",weight)
 			
-		if self.treeVar.get():
-			font = c.tree.getFont()
-			name,size,slant,weight = self.getFontSettings(font)
-			set("headline_text_font_family",name)
-			set("headline_text_font_size",`size`)
-			set("headline_text_font_slant",slant)
-			set("headline_text_font_weight",weight)
-
+		font = c.tree.getFont()
+		name,size,slant,weight = self.getFontSettings(font)
+		set("headline_text_font_family",name)
+		set("headline_text_font_size",size)
+		set("headline_text_font_slant",slant)
+		set("headline_text_font_weight",weight)
 		#@-body
 		#@-node:1::<< update the configuration settings >>
 

@@ -332,12 +332,7 @@ class config:
 	def setDict (self,name,val,dict):
 	
 		# print `name`, `val`
-		if name in dict:
-			old_val = dict [name]
-			if old_val != "ignore":
-				dict [name] = val
-		else:
-			dict [name] = val
+		dict [name] = val
 			
 	getStringFromDict = getFromDict
 	#@-body
@@ -469,6 +464,7 @@ class config:
 		return self.getFromDict(name,self.windowDict,self.defaultWindowDict)
 	
 	def setWindowPref (self,name,val):
+		#print "setWindowPref:", `name`, `val`
 		self.setDict(name,val,self.windowDict)
 		
 	getStringWindowPref = getWindowPref
