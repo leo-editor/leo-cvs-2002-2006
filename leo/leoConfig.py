@@ -928,7 +928,7 @@ class config:
 		self.config = config
 		try:
 			# 9/1/02: apparently Linux requires w+ and XP requires w.
-			mode = choose(sys.platform=="win32","w","w+")
+			mode = choose(sys.platform=="win32","wb","wb+")
 			cf = open(self.configFileName,mode)
 			if cf:
 				config.readfp(cf)

@@ -469,8 +469,9 @@ class leoCompare:
 	#@+node:4::isLeoHeader & isSentinel
 	#@+body
 	#@+at
-	#  These methods are based on atFile.scanHeader().  They are simpler because we only care about the starting sentinel comment: 
-	# any line starting with the starting sentinel comment is presumed to be a sentinel line.
+	#  These methods are based on atFile.scanHeader().  They are simpler 
+	# because we only care about the starting sentinel comment: any line 
+	# starting with the starting sentinel comment is presumed to be a sentinel line.
 
 	#@-at
 	#@@c
@@ -512,10 +513,10 @@ class leoCompare:
 			try:
 				if self.appendOutput:
 					self.show("appending to " + self.outputFileName)
-					self.outputFile = open(self.outputFileName,"a")
+					self.outputFile = open(self.outputFileName,"ab")
 				else:
 					self.show("writing to " + self.outputFileName)
-					self.outputFile = open(self.outputFileName,"w")
+					self.outputFile = open(self.outputFileName,"wb")
 			except:
 				self.outputFile = None
 				self.show("exception opening output file")

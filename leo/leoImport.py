@@ -154,7 +154,8 @@ class leoImportCommands:
 				#@+node:1::<< Create a parent for two files having a common prefix >>
 				#@+body
 				#@+at
-				#  The two filenames have a common prefix everything before the last period is the same.  For example, x.h and x.cpp.
+				#  The two filenames have a common prefix everything before 
+				# the last period is the same.  For example, x.h and x.cpp.
 
 				#@-at
 				#@@c
@@ -639,7 +640,8 @@ class leoImportCommands:
 	#@+node:1::cstCanonicalize
 	#@+body
 	#@+at
-	#  We canonicalize strings before looking them up, but strings are entered in the form they are first encountered.
+	#  We canonicalize strings before looking them up, but strings are entered 
+	# in the form they are first encountered.
 
 	#@-at
 	#@@c
@@ -718,7 +720,8 @@ class leoImportCommands:
 	#@+node:1::scanPythonClass
 	#@+body
 	#@+at
-	#  Creates a child node c of parent for the class, and children of c for each def in the class.
+	#  Creates a child node c of parent for the class, and children of c for 
+	# each def in the class.
 
 	#@-at
 	#@@c
@@ -962,8 +965,8 @@ class leoImportCommands:
 	#@+node:4::scanPythonText
 	#@+body
 	#@+at
-	#  This code creates a child of parent for each Python function definition seen.  See the comments for scanCText for what the 
-	# text looks like.
+	#  This code creates a child of parent for each Python function definition 
+	# seen.  See the comments for scanCText for what the text looks like.
 
 	#@-at
 	#@@c
@@ -1128,9 +1131,11 @@ class leoImportCommands:
 				#@+node:5::<< handle possible class or function >>
 				#@+body
 				#@+at
-				#  In PHP, all functions are typeless and start with the keyword "function;  all classes start with the keyword class.
+				#  In PHP, all functions are typeless and start with the 
+				# keyword "function;  all classes start with the keyword class.
 				# 
-				# Functions can be nested, but we don't handle that right now (I don't think it is a common practice anyway).
+				# Functions can be nested, but we don't handle that right now 
+				# (I don't think it is a common practice anyway).
 
 				#@-at
 				#@@c
@@ -1300,8 +1305,9 @@ class leoImportCommands:
 				#@+node:2::<< handle equal sign in C or Java >>
 				#@+body
 				#@+at
-				#  We can not be seeing a function definition when we find an equal sign at the top level. Equal signs inside 
-				# parentheses are handled by the open paren logic.
+				#  We can not be seeing a function definition when we find an 
+				# equal sign at the top level. Equal signs inside parentheses 
+				# are handled by the open paren logic.
 
 				#@-at
 				#@@c
@@ -1341,8 +1347,10 @@ class leoImportCommands:
 				#@+node:4::<< handle semicolon in C or Java >>
 				#@+body
 				#@+at
-				#  A semicolon signals the end of a declaration, thereby potentially starting the _next_ function defintion.   
-				# Declarations end a function definition unless we have already seen a parenthesis, in which case we are seeing an 
+				#  A semicolon signals the end of a declaration, thereby 
+				# potentially starting the _next_ function defintion.   
+				# Declarations end a function definition unless we have 
+				# already seen a parenthesis, in which case we are seeing an 
 				# old-style function definition.
 
 				#@-at
@@ -1508,8 +1516,10 @@ class leoImportCommands:
 					#@+node:1::<< create children for the namespace >>
 					#@+body
 					#@+at
-					#  Namesspaces change the self.moduleName and recursively call self function with a text covering only the 
-					# range of the namespace. This effectively changes the definition line of any created child nodes. The 
+					#  Namesspaces change the self.moduleName and recursively 
+					# call self function with a text covering only the range 
+					# of the namespace. This effectively changes the 
+					# definition line of any created child nodes. The 
 					# namespace is written to the top level.
 
 					#@-at
@@ -1640,8 +1650,9 @@ class leoImportCommands:
 				#@+node:2::<< handle equal sign in C or Java >>
 				#@+body
 				#@+at
-				#  We can not be seeing a function definition when we find an equal sign at the top level. Equal signs inside 
-				# parentheses are handled by the open paren logic.
+				#  We can not be seeing a function definition when we find an 
+				# equal sign at the top level. Equal signs inside parentheses 
+				# are handled by the open paren logic.
 
 				#@-at
 				#@@c
@@ -1681,8 +1692,10 @@ class leoImportCommands:
 				#@+node:4::<< handle semicolon in C or Java >>
 				#@+body
 				#@+at
-				#  A semicolon signals the end of a declaration, thereby potentially starting the _next_ function defintion.   
-				# Declarations end a function definition unless we have already seen a parenthesis, in which case we are seeing an 
+				#  A semicolon signals the end of a declaration, thereby 
+				# potentially starting the _next_ function defintion.   
+				# Declarations end a function definition unless we have 
+				# already seen a parenthesis, in which case we are seeing an 
 				# old-style function definition.
 
 				#@-at
@@ -2019,7 +2032,8 @@ class leoImportCommands:
 	#@+node:1::convertCodePartToWeb
 	#@+body
 	#@+at
-	#  Headlines not containing a section reference are ignored in noweb and generate index index in cweb.
+	#  Headlines not containing a section reference are ignored in noweb and 
+	# generate index index in cweb.
 
 	#@-at
 	#@@c
@@ -2036,7 +2050,8 @@ class leoImportCommands:
 		#@+node:1::<< put v's headline ref in head_ref>>
 		#@+body
 		#@+at
-		#  We look for either noweb or cweb brackets. head_ref does not include these brackets.
+		#  We look for either noweb or cweb brackets. head_ref does not 
+		# include these brackets.
 
 		#@-at
 		#@@c
@@ -2218,7 +2233,8 @@ class leoImportCommands:
 	#  This code converts a vnode to noweb text as follows:
 	# 
 	# Convert @doc to @
-	# Convert @root or @code to << name >>=, assuming the headline contains << name >>
+	# Convert @root or @code to << name >>=, assuming the headline contains << 
+	# name >>
 	# Ignore other directives
 	# Format doc parts so they fit in pagewidth columns.
 	# Output code parts as is.
@@ -2324,7 +2340,7 @@ class leoImportCommands:
 		after = v.nodeAfterTree()
 		firstLevel = v.level()
 		try:
-			file = open(fileName,'w')
+			file = open(fileName,'wb')
 			while v and v != after:
 				head = v.moreHead(firstLevel)
 				file.write( head + '\n')
@@ -2347,7 +2363,7 @@ class leoImportCommands:
 		self.webType = webType
 		after = v.nodeAfterTree()
 		try: # This can fail if the file is open by another app.
-			file = open(fileName,'w')
+			file = open(fileName,'wb')
 			self.treeType = "@file"
 			# Set self.treeType to @root if v or an ancestor is an @root node.
 			while v:
@@ -2440,10 +2456,10 @@ class leoImportCommands:
 			newFileName = os.path.join(path,fileName+".txt") # 8/4/02: use txt, not tmp.
 			
 			#@<< Write s into newFileName >>
-			#@+node:3::<< Write s into newFileName >>
+			#@+node:3:C=18:<< Write s into newFileName >>
 			#@+body
 			try:
-				file = open(newFileName,"w")
+				file = open(newFileName,"wb")
 				file.write(s)
 				file.close()
 				es("creating: " + newFileName)
@@ -2451,13 +2467,14 @@ class leoImportCommands:
 				es("exception creating: " + newFileName)
 				traceback.print_exc()
 			#@-body
-			#@-node:3::<< Write s into newFileName >>
+			#@-node:3:C=18:<< Write s into newFileName >>
 	#@-body
 	#@-node:7::removeSentinelsCommand
 	#@+node:8::removeSentinelLines
 	#@+body
 	#@+at
-	#  Properly removes all sentinel lines in s.  Only leading single-line comments may be sentinels.
+	#  Properly removes all sentinel lines in s.  Only leading single-line 
+	# comments may be sentinels.
 	# 
 	# line_delim, start_delim and end_delim are the comment delimiters.
 
@@ -2506,7 +2523,7 @@ class leoImportCommands:
 		return result
 	#@-body
 	#@-node:8::removeSentinelLines
-	#@+node:9:C=18:weave
+	#@+node:9:C=19:weave
 	#@+body
 	def weave (self,filename):
 		
@@ -2514,17 +2531,17 @@ class leoImportCommands:
 		if not v: return
 		
 		#@<< open filename to f, or return >>
-		#@+node:1::<< open filename to f, or return >>
+		#@+node:1:C=20:<< open filename to f, or return >>
 		#@+body
 		try:
-			f = open(filename,'w')
+			f = open(filename,'wb')
 			if not f: return
 		except:
 			es("exception opening:" + filename)
 			traceback.print_exc()
 			return
 		#@-body
-		#@-node:1::<< open filename to f, or return >>
+		#@-node:1:C=20:<< open filename to f, or return >>
 
 		after = v.nodeAfterTree()
 		while v and v != after:
@@ -2560,10 +2577,10 @@ class leoImportCommands:
 		f.flush()
 		f.close()
 	#@-body
-	#@-node:9:C=18:weave
+	#@-node:9:C=19:weave
 	#@-node:4::Export
 	#@+node:5::Utilities
-	#@+node:1:C=19:createHeadline
+	#@+node:1:C=21:createHeadline
 	#@+body
 	def createHeadline (self,parent,body,headline):
 	
@@ -2576,7 +2593,7 @@ class leoImportCommands:
 			v.setBodyStringOrPane(body)
 		return v
 	#@-body
-	#@-node:1:C=19:createHeadline
+	#@-node:1:C=21:createHeadline
 	#@+node:2::error
 	#@+body
 	def error (self,s): es(s)
@@ -2585,7 +2602,8 @@ class leoImportCommands:
 	#@+node:3::getLeadingIndent
 	#@+body
 	#@+at
-	#  This code returns the leading whitespace of a line, ignoring blank and comment lines.
+	#  This code returns the leading whitespace of a line, ignoring blank and 
+	# comment lines.
 
 	#@-at
 	#@@c
@@ -2635,7 +2653,7 @@ class leoImportCommands:
 
 	#@-body
 	#@-node:4::isDocStart and isModuleStart
-	#@+node:5:C=20:massageBody
+	#@+node:5:C=22:massageBody
 	#@+body
 	def massageBody (self,s,methodKind):
 		
@@ -2672,11 +2690,12 @@ class leoImportCommands:
 				else:
 					return intro + newLine + newBody
 	#@-body
-	#@-node:5:C=20:massageBody
+	#@-node:5:C=22:massageBody
 	#@+node:6::massageComment
 	#@+body
 	#@+at
-	#  Returns s with all runs of whitespace and newlines converted to a single blank.  It also removes leading and trailing whitespace.
+	#  Returns s with all runs of whitespace and newlines converted to a 
+	# single blank.  It also removes leading and trailing whitespace.
 
 	#@-at
 	#@@c
@@ -2762,10 +2781,11 @@ class leoImportCommands:
 		return s
 	#@-body
 	#@-node:7::massageWebBody
-	#@+node:8:C=21:skipLeadingComments
+	#@+node:8:C=23:skipLeadingComments
 	#@+body
 	#@+at
-	#  This skips all leading comments in s, returning the remaining body text and the massaged comment text.
+	#  This skips all leading comments in s, returning the remaining body text 
+	# and the massaged comment text.
 	# Returns (body, comment)
 
 	#@-at
@@ -2855,11 +2875,12 @@ class leoImportCommands:
 		else:
 			return s[i:], "@ " + comment + "\n"
 	#@-body
-	#@-node:8:C=21:skipLeadingComments
+	#@-node:8:C=23:skipLeadingComments
 	#@+node:9::undentBody
 	#@+body
 	#@+at
-	#  Removes extra leading indentation from all lines.  We look at the first line to determine how much leading whitespace to delete.
+	#  Removes extra leading indentation from all lines.  We look at the first 
+	# line to determine how much leading whitespace to delete.
 
 	#@-at
 	#@@c
