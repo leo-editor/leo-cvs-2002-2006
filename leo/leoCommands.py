@@ -652,7 +652,7 @@ class Commands:
 		else: return
 		
 		# Compute the leading whitespace.
-		indents = [0,0] ; leading_ws = [0,0]
+		indents = [0,0] ; leading_ws = ["",""] # Bug fix: 11/16/02
 		for i in (0,1):
 			if firstLine + i < len(lines):
 				# Use the original, non-optimized leading whitespace.
@@ -665,8 +665,6 @@ class Commands:
 			result.append(lines[i])
 			
 		# Wrap the lines, decreasing the page width by indent.
-		# DTHEIN 3-NOV-2002: pass in length of first line so hanging indent lines are
-		#                    allowed their full length.
 		wrapped_lines = \
 		    wrap_lines(lines[firstLine:lastLine],pageWidth-indents[1],pageWidth-indents[0])
 		lineCount = len(wrapped_lines)
