@@ -1403,7 +1403,7 @@ class baseCommands:
 		if not v: return
 		c.beginUpdate()
 		clone = v.clone(v)
-		c.initAllCloneBits() # 10/10/03
+		c.initAllCloneBitsInTree(v) # 10/14/03
 		clone.setDirty() # essential in Leo2
 		c.setChanged(true)
 		if c.validateOutline():
@@ -1412,11 +1412,10 @@ class baseCommands:
 		c.endUpdate() # updates all icons
 	#@nonl
 	#@-node:c.clone
-	#@+node:initAllCloneBits (changed in 4.0)
+	#@+node:initAllCloneBits & initAllCloneBitsInTree
 	def initAllCloneBits (self):
 		
 		"""Initialize all clone bits in the entire outline"""
-		# trace()
 	
 		c=self
 		c.clearAllVisited()
@@ -1428,7 +1427,23 @@ class baseCommands:
 				c.initJoinedCloneBits(v)
 			v = v.threadNext()
 		c.endUpdate()
-	#@-node:initAllCloneBits (changed in 4.0)
+		
+	def initAllCloneBitsInTree (self,v):
+		
+		"""Initialize all clone bits in the v's subtree"""
+	
+		c=self
+		v.clearAllVisitedInTree()
+		after = v.nodeAfterTree()
+		c.beginUpdate()
+		while v and v != after:
+			if not v.t.isVisited():
+				v.t.setVisited() # Inhibit visits to all joined nodes.
+				c.initJoinedCloneBits(v)
+			v = v.threadNext()
+		c.endUpdate()
+	#@nonl
+	#@-node:initAllCloneBits & initAllCloneBitsInTree
 	#@+node:c.initJoinedClonedBits (changed in 3.11.1)
 	# Initializes all clone bits in the all nodes joined to v.
 	
