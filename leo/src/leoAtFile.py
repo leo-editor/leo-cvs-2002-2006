@@ -1879,6 +1879,9 @@ class atFile:
                 s = s[:-len(end)]
             else:
                 at.readError("Missing close block comment")
+                g.trace(s)
+                g.trace(end)
+                g.trace(start)
                 return
     
         at.out.append(tag + s)
@@ -1981,7 +1984,7 @@ class atFile:
             at.out.append("@delims")
     #@nonl
     #@-node:ekr.20041005105605.105:readDelims
-    #@+node:ekr.20041005105605.106:readDirective
+    #@+node:ekr.20041005105605.106:readDirective (@@)
     def readDirective (self,s,i):
         
         """Read an @@sentinel."""
@@ -1989,11 +1992,13 @@ class atFile:
         at = self
         assert(g.match(s,i,"@")) # The first '@' has already been eaten.
         
+        # g.trace(g.get_line(s,i))
+        
         if g.match_word(s,i,"@raw"):
             at.raw = True
         elif g.match_word(s,i,"@end_raw"):
             at.raw = False
-        
+            
         e = at.endSentinelComment
         s2 = s[i:]
         if len(e) > 0:
@@ -2005,60 +2010,61 @@ class atFile:
         if start and len(start) > 0 and start[-1] == '@':
             s2 = s2.replace('@@','@')
             
-        if g.match_word(s,i,"@language"):
-            #@        << handle @language >>
-            #@+node:ekr.20041005105605.107:<< handle @language >>
-            # Skip the keyword and whitespace.
-            i += len("@language")
-            i = g.skip_ws(s,i)
-            j = g.skip_c_id(s,i)
-            language = s[i:j]
-            
-            delim1,delim2,delim3 = g.set_delims_from_language(language)
-            
-            #g.trace(g.get_line(s,i))
-            #g.trace(delim1,delim2,delim3)
-            
-            # Returns a tuple (single,start,end) of comment delims
-            if delim1:
-                at.startSentinelComment = delim1
-                at.endSentinelComment = "" # Must not be None.
-            elif delim2 and delim3:
-                at.startSentinelComment = delim2
-                at.endSentinelComment = delim3
-            else:
-                line = g.get_line(s,i)
-                g.es("Ignoring bad @@language sentinel: %s" % line,color="red")
-            #@nonl
-            #@-node:ekr.20041005105605.107:<< handle @language >>
-            #@nl
-        elif g.match_word(s,i,"@comment"):
-            #@        << handle @comment >>
-            #@+node:ekr.20041005105605.108:<< handle @comment >>
-            j = g.skip_line(s,i)
-            line = s[i:j]
-            delim1,delim2,delim3 = g.set_delims_from_string(line)
-            
-            #g.trace(g.get_line(s,i))
-            #g.trace(delim1,delim2,delim3)
-            
-            # Returns a tuple (single,start,end) of comment delims
-            if delim1:
-                self.startSentinelComment = delim1
-                self.endSentinelComment = "" # Must not be None.
-            elif delim2 and delim3:
-                self.startSentinelComment = delim2
-                self.endSentinelComment = delim3
-            else:
-                line = g.get_line(s,i)
-                g.es("Ignoring bad @comment sentinel: %s" % line,color="red")
-            #@nonl
-            #@-node:ekr.20041005105605.108:<< handle @comment >>
-            #@nl
+        if 0: # New in 4.2.1: never change comment delims here...
+            if g.match_word(s,i,"@language"):
+                #@            << handle @language >>
+                #@+node:ekr.20041005105605.107:<< handle @language >>
+                # Skip the keyword and whitespace.
+                i += len("@language")
+                i = g.skip_ws(s,i)
+                j = g.skip_c_id(s,i)
+                language = s[i:j]
+                
+                delim1,delim2,delim3 = g.set_delims_from_language(language)
+                
+                g.trace(g.get_line(s,i))
+                g.trace(delim1,delim2,delim3)
+                
+                # Returns a tuple (single,start,end) of comment delims
+                if delim1:
+                    at.startSentinelComment = delim1
+                    at.endSentinelComment = "" # Must not be None.
+                elif delim2 and delim3:
+                    at.startSentinelComment = delim2
+                    at.endSentinelComment = delim3
+                else:
+                    line = g.get_line(s,i)
+                    g.es("Ignoring bad @@language sentinel: %s" % line,color="red")
+                #@nonl
+                #@-node:ekr.20041005105605.107:<< handle @language >>
+                #@nl
+            elif g.match_word(s,i,"@comment"):
+                #@            << handle @comment >>
+                #@+node:ekr.20041005105605.108:<< handle @comment >>
+                j = g.skip_line(s,i)
+                line = s[i:j]
+                delim1,delim2,delim3 = g.set_delims_from_string(line)
+                
+                #g.trace(g.get_line(s,i))
+                #g.trace(delim1,delim2,delim3)
+                
+                # Returns a tuple (single,start,end) of comment delims
+                if delim1:
+                    self.startSentinelComment = delim1
+                    self.endSentinelComment = "" # Must not be None.
+                elif delim2 and delim3:
+                    self.startSentinelComment = delim2
+                    self.endSentinelComment = delim3
+                else:
+                    line = g.get_line(s,i)
+                    g.es("Ignoring bad @comment sentinel: %s" % line,color="red")
+                #@nonl
+                #@-node:ekr.20041005105605.108:<< handle @comment >>
+                #@nl
     
         at.out.append(s2)
     #@nonl
-    #@-node:ekr.20041005105605.106:readDirective
+    #@-node:ekr.20041005105605.106:readDirective (@@)
     #@+node:ekr.20041005105605.109:readNl
     def readNl (self,s,i):
         
@@ -3390,9 +3396,8 @@ class atFile:
     
         ref = g.findReference(name,p)
         if not ref:
-            if not at.perfectImportRoot: # A kludge: we shouldn't be importing derived files here!
-                at.writeError(
-                    "undefined section: %s\n\treferenced from: %s" %
+            at.writeError(
+                "undefined section: %s\n\treferenced from: %s" %
                     ( name,p.headString()))
             return None
         
