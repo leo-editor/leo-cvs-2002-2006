@@ -3,6 +3,8 @@
 #@@nocolor
 
 #@+all
+#@+node:ekr.20050201105619:A change to test cvs-commit
+#@-node:ekr.20050201105619:A change to test cvs-commit
 #@+node:ekr.20050128065405:Study Leo2Ascii
 @killcolor
 
@@ -83,8 +85,110 @@ the rest is in the headline!! This is user-hostile, in my opinion.
 (Still exploring)
 --Rich
 
-#@+node:ekr.20050127090959:STILL NOT REMOVING DUPLICATES from recent files
-#@-node:ekr.20050127090959:STILL NOT REMOVING DUPLICATES from recent files
+#@+node:ekr.20050127090959:(Made sure to remove duplicates from recent files)
+#@+node:ekr.20041201080436:config.appendToRecentFiles
+def appendToRecentFiles (self,files):
+    
+    def munge(name):
+        name = name or ''
+        return g.os_path_normpath(name).lower()
+    
+    for name in files:
+        # Remove all variants of name.
+        for name2 in self.recentFiles:
+            if munge(name) == munge(name2):
+                self.recentFiles.remove(name2)
+
+        self.recentFiles.append(name)
+#@nonl
+#@-node:ekr.20041201080436:config.appendToRecentFiles
+#@+node:ekr.20031218072017.2083:c.updateRecentFiles
+def updateRecentFiles (self,fileName):
+    
+    """Create the RecentFiles menu.  May be called with Null fileName."""
+    
+    if g.app.unitTesting: return
+    
+    def munge(name):
+        name = name or ''
+        return g.os_path_normpath(name).lower()
+
+    # Update the recent files list in all windows.
+    if fileName:
+        compareFileName = munge(fileName)
+        # g.trace(fileName)
+        for frame in g.app.windowList:
+            c = frame.c
+            # Remove all versions of the file name.
+            for name in c.recentFiles:
+                if compareFileName == munge(name):
+                    c.recentFiles.remove(name)
+            c.recentFiles.insert(0,fileName)
+            # g.trace(fileName)
+            # Recreate the Recent Files menu.
+            frame.menu.createRecentFilesMenuItems()
+    else:
+        for frame in g.app.windowList:
+            frame.menu.createRecentFilesMenuItems()
+#@nonl
+#@-node:ekr.20031218072017.2083:c.updateRecentFiles
+#@+node:ekr.20031218072017.2052:g.openWithFileName
+def openWithFileName(fileName,old_c,enableLog=True,readAtFileNodesFlag=True):
+    
+    """Create a Leo Frame for the indicated fileName if the file exists."""
+
+    if not fileName or len(fileName) == 0:
+        return False, None
+        
+    def munge(name):
+        name = name or ''
+        return g.os_path_normpath(name).lower()
+
+    # Create a full normalized path name, preserving case.
+    fileName = g.os_path_normpath(g.os_path_abspath(fileName))
+
+    # If the file is already open just bring its window to the front.
+    list = app.windowList
+    for frame in list:
+        if munge(fileName) == munge(frame.c.mFileName):
+            frame.bringToFront()
+            app.setLog(frame.log,"openWithFileName")
+            # g.es("This window already open")
+            return True, frame
+    try:
+        # Open the file in binary mode to allow 0x1a in bodies & headlines.
+        theFile = open(fileName,'rb')
+        if theFile:
+            c,frame = app.gui.newLeoCommanderAndFrame(fileName)
+            frame.log.enable(enableLog)
+            g.app.writeWaitingLog() # New in 4.3: write queued log first.
+            if not g.doHook("open1",old_c=old_c,new_c=c,fileName=fileName):
+                app.setLog(frame.log,"openWithFileName")
+                app.lockLog()
+                frame.c.fileCommands.open(theFile,fileName,readAtFileNodesFlag=readAtFileNodesFlag) # closes file.
+                app.unlockLog()
+                for frame in g.app.windowList:
+                    # The recent files list has been updated by menu.updateRecentFiles.
+                    frame.c.config.setRecentFiles(g.app.config.recentFiles)
+            frame.openDirectory = g.os_path_dirname(fileName)
+            g.doHook("open2",old_c=old_c,new_c=frame.c,fileName=fileName)
+            return True, frame
+        else:
+            g.es("can not open: " + fileName,color="red")
+            return False, None
+    except IOError:
+        g.es("can not open: " + fileName, color="blue")
+        return False, None
+    except:
+        if 1:
+            print "exceptions opening:", fileName
+            traceback.print_exc()
+        else:
+            g.es("exceptions opening: " + fileName,color="red")
+            g.es_exception()
+        return False, None
+#@-node:ekr.20031218072017.2052:g.openWithFileName
+#@-node:ekr.20050127090959:(Made sure to remove duplicates from recent files)
 #@+node:ekr.20050126102846:Fix Unicode problems
 #@+node:ekr.20050126102846.1:Report
 http://sourceforge.net/forum/message.php?msg_id=2959696
@@ -151,7 +255,7 @@ Thanks,
 -Tyndal
 #@-node:ekr.20050126102846.1:Report
 #@-node:ekr.20050126102846:Fix Unicode problems
-#@+node:ekr.20050126102846.2:Better messages for missing modules
+#@+node:ekr.20050126102846.2:(Improved queuing of log messages)
 Read and respond to this message at: 
 https://sourceforge.net/forum/message.php?msg_id=2960328
 By: nobody
@@ -202,7 +306,354 @@ Thanks,
 
 (I'm also testing to see if [i]&[/i] work in the e-mail that gets sent from SF)
 
-#@-node:ekr.20050126102846.2:Better messages for missing modules
+#@+node:ekr.20050130113848.2:What I did
+#@-node:ekr.20050130113848.2:What I did
+#@+node:ekr.20050130134313:es & related logic...
+#@+node:ekr.20031218072017.2052:g.openWithFileName
+def openWithFileName(fileName,old_c,enableLog=True,readAtFileNodesFlag=True):
+    
+    """Create a Leo Frame for the indicated fileName if the file exists."""
+
+    if not fileName or len(fileName) == 0:
+        return False, None
+        
+    def munge(name):
+        name = name or ''
+        return g.os_path_normpath(name).lower()
+
+    # Create a full normalized path name, preserving case.
+    fileName = g.os_path_normpath(g.os_path_abspath(fileName))
+
+    # If the file is already open just bring its window to the front.
+    list = app.windowList
+    for frame in list:
+        if munge(fileName) == munge(frame.c.mFileName):
+            frame.bringToFront()
+            app.setLog(frame.log,"openWithFileName")
+            # g.es("This window already open")
+            return True, frame
+    try:
+        # Open the file in binary mode to allow 0x1a in bodies & headlines.
+        theFile = open(fileName,'rb')
+        if theFile:
+            c,frame = app.gui.newLeoCommanderAndFrame(fileName)
+            frame.log.enable(enableLog)
+            g.app.writeWaitingLog() # New in 4.3: write queued log first.
+            if not g.doHook("open1",old_c=old_c,new_c=c,fileName=fileName):
+                app.setLog(frame.log,"openWithFileName")
+                app.lockLog()
+                frame.c.fileCommands.open(theFile,fileName,readAtFileNodesFlag=readAtFileNodesFlag) # closes file.
+                app.unlockLog()
+                for frame in g.app.windowList:
+                    # The recent files list has been updated by menu.updateRecentFiles.
+                    frame.c.config.setRecentFiles(g.app.config.recentFiles)
+            frame.openDirectory = g.os_path_dirname(fileName)
+            g.doHook("open2",old_c=old_c,new_c=frame.c,fileName=fileName)
+            return True, frame
+        else:
+            g.es("can not open: " + fileName,color="red")
+            return False, None
+    except IOError:
+        g.es("can not open: " + fileName, color="blue")
+        return False, None
+    except:
+        if 1:
+            print "exceptions opening:", fileName
+            traceback.print_exc()
+        else:
+            g.es("exceptions opening: " + fileName,color="red")
+            g.es_exception()
+        return False, None
+#@-node:ekr.20031218072017.2052:g.openWithFileName
+#@+node:ekr.20031218072017.1473:tkLog.put & putnl & forceLogUpdate
+# All output to the log stream eventually comes here.
+def put (self,s,color=None):
+    
+    # print 'tkLog.put',self.c.shortFileName(),s,
+
+    if g.app.quitting: return
+    elif self.logCtrl:
+        << put s to log control >>
+    else:
+        << put s to logWaiting and print s >>
+
+def putnl (self):
+    if g.app.quitting: return
+    elif self.logCtrl:
+        << put newline to log control >>
+    else:
+        << put newline to logWaiting and print newline >>
+        
+def forceLogUpdate (self):
+    if sys.platform != "darwin": # Does not work on darwin.
+        self.frame.tree.disableRedraw = True
+        self.logCtrl.update_idletasks()
+        #self.frame.outerFrame.update_idletasks() # 4/23/04
+        #self.frame.top.update_idletasks()
+        self.frame.tree.disableRedraw = False
+#@nonl
+#@+node:EKR.20040423082910:<< put s to log control >>
+if type(s) == type(u""): # 3/18/03
+    s = g.toEncodedString(s,g.app.tkEncoding)
+    
+if sys.platform == "darwin":
+    print s,
+
+if color:
+    if color not in self.colorTags:
+        self.colorTags.append(color)
+        self.logCtrl.tag_config(color,foreground=color)
+    self.logCtrl.insert("end",s)
+    self.logCtrl.tag_add(color,"end-%dc" % (len(s)+1),"end-1c")
+    if "black" not in self.colorTags:
+        self.colorTags.append("black")
+        self.logCtrl.tag_config("black",foreground="black")
+    self.logCtrl.tag_add("black","end")
+else:
+    self.logCtrl.insert("end",s)
+
+self.logCtrl.see("end")
+    
+self.forceLogUpdate()
+#@nonl
+#@-node:EKR.20040423082910:<< put s to log control >>
+#@+node:EKR.20040423082910.1:<< put s to logWaiting and print s >>
+g.app.logWaiting.append((s,color),)
+
+print "Null tkinter log"
+if type(s) == type(u""): # 3/18/03
+    s = g.toEncodedString(s,"ascii")
+print s
+#@nonl
+#@-node:EKR.20040423082910.1:<< put s to logWaiting and print s >>
+#@+node:EKR.20040423082910.2:<< put newline to log control >>
+if sys.platform == "darwin":
+    print
+    
+self.logCtrl.insert("end",'\n')
+self.logCtrl.see("end")
+
+self.frame.tree.disableRedraw = True
+self.logCtrl.update_idletasks()
+#self.frame.outerFrame.update_idletasks() # 4/23/04
+#self.frame.top.update_idletasks()
+self.frame.tree.disableRedraw = False
+#@nonl
+#@-node:EKR.20040423082910.2:<< put newline to log control >>
+#@+node:EKR.20040423082910.3:<< put newline to logWaiting and print newline >>
+g.app.logWaiting.append(('\n',"black"),)
+print "Null tkinter log"
+print
+#@nonl
+#@-node:EKR.20040423082910.3:<< put newline to logWaiting and print newline >>
+#@-node:ekr.20031218072017.1473:tkLog.put & putnl & forceLogUpdate
+#@+node:ekr.20031218072017.1474:es, enl, ecnl
+def ecnl():
+    g.ecnls(1)
+
+def ecnls(n):
+    log = app.log
+    if log:
+        while log.newlines < n:
+            g.enl()
+
+def enl():
+    log = app.log
+    if log:
+        log.newlines += 1
+        log.putnl()
+
+def es(s,*args,**keys):
+    if app.killed:
+        return
+    newline = keys.get("newline",True)
+    color = keys.get("color",None)
+    if type(s) != type("") and type(s) != type(u""): # 1/20/03
+        s = repr(s)
+    for arg in args:
+        if type(arg) != type("") and type(arg) != type(u""): # 1/20/03
+            arg = repr(arg)
+        s = s + ", " + arg
+    if app.batchMode:
+        if app.log:
+            app.log.put(s)
+    else:
+        log = app.log
+        if log and not log.isNull:
+            # print 'g.es',log,s
+            log.put(s,color=color)
+            for ch in s:
+                if ch == '\n': log.newlines += 1
+                else: log.newlines = 0
+            if newline:
+                g.ecnl() # only valid here
+        elif newline:
+            app.logWaiting.append((s+'\n',color),)
+            # print s
+        else:
+            app.logWaiting.append((s,color),)
+            # print s,
+#@nonl
+#@-node:ekr.20031218072017.1474:es, enl, ecnl
+#@+node:ekr.20031218072017.2619:app.writeWaitingLog
+def writeWaitingLog (self):
+
+    if self.log:
+        for s,color in self.logWaiting:
+            g.es(s,color=color,newline=0) # The caller must write the newlines.
+        self.logWaiting = []
+    else:
+        print 'writeWaitingLog: still no log!'
+#@nonl
+#@-node:ekr.20031218072017.2619:app.writeWaitingLog
+#@-node:ekr.20050130134313:es & related logic...
+#@+node:ekr.20050130133731:Added silent keyword to severl methods
+#@+node:ekr.20031218072017.2297:open
+def open(self,theFile,fileName,readAtFileNodesFlag=True,silent=False):
+
+    c = self.c ; frame = c.frame
+    # Read the entire file into the buffer
+    self.fileBuffer = theFile.read() ; theFile.close()
+    self.fileIndex = 0
+    << Set the default directory >>
+    self.topPosition = None
+    c.beginUpdate()
+    ok, ratio = self.getLeoFile(fileName,readAtFileNodesFlag=readAtFileNodesFlag,silent=silent)
+    frame.resizePanesToRatio(ratio,frame.secondary_ratio)
+    if 0: # 1/30/04: this is useless.
+        if self.topPosition: 
+            c.setTopVnode(self.topPosition)
+    c.endUpdate()
+    # delete the file buffer
+    self.fileBuffer = ""
+    return ok
+#@nonl
+#@+node:ekr.20031218072017.2298:<< Set the default directory >> in fileCommands.readOutlineOnly
+@ The most natural default directory is the directory containing the .leo file that we are about to open.  If the user has specified the "Default Directory" preference that will over-ride what we are about to set.
+@c
+
+theDir = g.os_path_dirname(fileName)
+
+if len(theDir) > 0:
+    c.openDirectory = theDir
+#@nonl
+#@-node:ekr.20031218072017.2298:<< Set the default directory >> in fileCommands.readOutlineOnly
+#@-node:ekr.20031218072017.2297:open
+#@+node:ekr.20031218072017.1553:getLeoFile
+# The caller should enclose this in begin/endUpdate.
+
+def getLeoFile (self,fileName,readAtFileNodesFlag=True,silent=False):
+
+    c = self.c
+    c.setChanged(False) # 10/1/03: May be set when reading @file nodes.
+    << warn on read-only files >>
+    self.mFileName = c.mFileName
+    self.tnodesDict = {}
+    self.descendentExpandedList = []
+    self.descendentMarksList = []
+    self.descendentUnknownAttributesDictList = []
+    ok = True
+    c.loading = True # disable c.changed
+    
+    try:
+        << scan all the xml elements >>
+    except BadLeoFile, message:
+        << raise an alert >>
+        ok = False
+
+    c.frame.tree.redraw_now(scroll=False)
+    
+    # g.trace(readAtFileNodesFlag,c.mFileName)
+    
+    if ok and readAtFileNodesFlag:
+        c.atFileCommands.readAll(c.rootVnode(),partialFlag=False)
+
+    if not c.currentPosition():
+        c.setCurrentPosition(c.rootPosition())
+
+    c.selectVnode(c.currentPosition()) # load body pane
+    c.loading = False # reenable c.changed
+    c.setChanged(c.changed) # Refresh the changed marker.
+    << restore attributes in descendent tnodes >>
+    self.descendentUnknownAttributesDictList = []
+    self.descendentExpandedList = []
+    self.descendentMarksList = []
+    self.tnodesDict = {}
+    return ok, self.ratio
+#@nonl
+#@+node:ekr.20031218072017.1554:<< warn on read-only files >>
+# os.access may not exist on all platforms.
+
+try:
+    self.read_only = not os.access(fileName,os.W_OK)
+except AttributeError:
+    self.read_only = False
+        
+if self.read_only:
+    g.es("read only: " + fileName,color="red")
+#@nonl
+#@-node:ekr.20031218072017.1554:<< warn on read-only files >>
+#@+node:ekr.20031218072017.1555:<< scan all the xml elements >>
+self.getXmlVersionTag()
+self.getXmlStylesheetTag()
+
+self.getTag("<leo_file>") # Must match exactly.
+self.getLeoHeader()
+self.getGlobals()
+self.getPrefs()
+self.getFindPanelSettings()
+
+# Causes window to appear.
+c.frame.resizePanesToRatio(c.frame.ratio,c.frame.secondary_ratio)
+if not silent:
+    g.es("reading: " + fileName)
+
+self.getVnodes()
+self.getTnodes()
+self.getCloneWindows()
+self.getTag("</leo_file>")
+#@nonl
+#@-node:ekr.20031218072017.1555:<< scan all the xml elements >>
+#@+node:ekr.20031218072017.1556:<< raise an alert >>
+# All other exceptions are Leo bugs.
+
+g.es_exception()
+g.alert(self.mFileName + " is not a valid Leo file: " + str(message))
+#@nonl
+#@-node:ekr.20031218072017.1556:<< raise an alert >>
+#@+node:EKR.20040627120120:<< restore attributes in descendent tnodes >>
+for resultDict in self.descendentUnknownAttributesDictList:
+    for gnx in resultDict.keys():
+        tref = self.canonicalTnodeIndex(gnx)
+        t = self.tnodesDict.get(tref)
+        if t: t.unknownAttributes = resultDict[gnx]
+        # else: g.trace("can not find tnode: gnx = %s" % gnx,color="red")
+            
+marks = {} ; expanded = {}
+for gnx in self.descendentExpandedList:
+    t = self.tnodesDict.get(gnx)
+    if t: expanded[t]=t
+    # else: g.trace("can not find tnode: gnx = %s" % gnx,color="red")
+    
+for gnx in self.descendentMarksList:
+    t = self.tnodesDict.get(gnx)
+    if t: marks[t]=t
+    # else: g.trace("can not find tnode: gnx = %s" % gnx,color="red")
+
+if marks or expanded:
+    # g.trace("marks",len(marks),"expanded",len(expanded))
+    for p in c.all_positions_iter():
+        if marks.get(p.v.t):
+            p.v.initMarkedBit()
+                # This was the problem: was p.setMark.
+                # There was a big performance bug in the mark hook in the Node Navigator plugin.
+        if expanded.get(p.v.t):
+            p.expand()
+#@nonl
+#@-node:EKR.20040627120120:<< restore attributes in descendent tnodes >>
+#@-node:ekr.20031218072017.1553:getLeoFile
+#@-node:ekr.20050130133731:Added silent keyword to severl methods
+#@-node:ekr.20050126102846.2:(Improved queuing of log messages)
 #@+node:ekr.20050125172204:Remove unused files
 #@-node:ekr.20050125172204:Remove unused files
 #@+node:ekr.20050125075513:Fix Pmw problems
@@ -303,19 +754,57 @@ Basically it seems that headline text is not properly handled by undo nor by
 find/change.
 #@nonl
 #@-node:ekr.20050127083933:Fix url/find problems
-#@+node:ekr.20050127090442:Fix indentation problems
+#@+node:ekr.20050127090442:Fixed indentation problems in leoTkinterFind.py
 > leo\src\leoTkinterFind.py:  
 inconsistent use of tabs and spaces in indentation.
  
 much of PMW has inconsistent use of tabs and spaces in indentation in various files .py 
 #@nonl
-#@-node:ekr.20050127090442:Fix indentation problems
+#@-node:ekr.20050127090442:Fixed indentation problems in leoTkinterFind.py
 #@+node:ekr.20050127090442.1:Fix redirect script
 redirect script IO to log pane setting isn't working, 
 #@nonl
 #@-node:ekr.20050127090442.1:Fix redirect script
-#@+node:ekr.20050127091201:open leoConfig is still an option under help
-#@-node:ekr.20050127091201:open leoConfig is still an option under help
+#@+node:ekr.20050127091201:(Changed Help menu & related code to handle leoSettings.leo instead of leoConfig.leo)
+#@+node:ekr.20041219072416:<< compute directories >>
+g.app.loadDir = computeLoadDir()
+    # Depends on g.app.tkEncoding: uses utf-8 for now.
+
+g.app.homeDir = computeHomeDir()
+
+g.app.extensionsDir = g.os_path_abspath(
+    g.os_path_join(g.app.loadDir,'..','extensions'))
+
+g.app.globalConfigDir = computeGlobalConfigDir()
+
+g.app.testDir = g.os_path_abspath(
+    g.os_path_join(g.app.loadDir,'..','test'))
+#@nonl
+#@-node:ekr.20041219072416:<< compute directories >>
+#@+node:ekr.20031218072017.2943:leoConfig
+def leoConfig (self):
+
+    c = self
+    name = 'leoSettings.leo'
+    homeDir = g.app.homeDir
+    configDir = g.app.globalConfigDir
+
+    # Look in configDir first.
+    fileName = g.os_path_join(configDir,name)
+
+    # Look in homeDir second.
+    ok, frame = g.openWithFileName(fileName,c)
+    if not ok:
+        if configDir == loadDir:
+            g.es("%s not found in %s" % (name,configDir))
+        else:
+            fileName = g.os_path_join(homeDir,name)
+            ok, frame = g.openWithFileName(fileName,c)
+            if not ok:
+                g.es("%s not found in %s or %s" % (name,configDir,homeDir))
+#@nonl
+#@-node:ekr.20031218072017.2943:leoConfig
+#@-node:ekr.20050127091201:(Changed Help menu & related code to handle leoSettings.leo instead of leoConfig.leo)
 #@+node:ekr.20050128081226:buttons work in toolbars when settings dialog is open
 @killcolor
 
@@ -326,7 +815,7 @@ When in settings all commands are disabled but toolbar buttons (eg hoist, script
 button) do seem to function to some extent.
 
 #@-node:ekr.20050128081226:buttons work in toolbars when settings dialog is open
-#@+node:ekr.20050128081422:Change name of Paste Retaining Clones to Paste as clone
+#@+node:ekr.20050128081422:(Changed name of Paste Retaining Clones to Paste Node As Clone)
 @killcolor
 
 https://sourceforge.net/forum/message.php?msg_id=2963461
@@ -343,7 +832,40 @@ Retaining Clones'
 It would make more sense to me if it was called
 "Paste As Clone" 
 Maybe it could be given a hotkey, such as Shft+Ctrl+Z
-#@-node:ekr.20050128081422:Change name of Paste Retaining Clones to Paste as clone
+#@+node:ekr.20050130102241:Request
+#@-node:ekr.20050130102241:Request
+#@+node:ekr.20031218072017.3768:<< define outlineMenuTopMenuTable >>
+self.outlineMenuTopMenuTable = (
+    ("C&ut Node","Shift+Ctrl+X",c.cutOutline),
+    ("C&opy Node","Shift+Ctrl+C",c.copyOutline),
+    ("&Paste Node","Shift+Ctrl+V",c.pasteOutline),
+    ("Paste Node &As Clone",None,c.pasteOutlineRetainingClones),
+    ("&Delete Node","Shift+Ctrl+BkSp",c.deleteOutline),
+    ("-",None,None),
+    ("&Insert Node","Ctrl+I",c.insertHeadline),
+    ("&Clone Node","Ctrl+`",c.clone),
+    ("Sort Childre&n",None,c.sortChildren), # Conflicted with Hoist.
+    ("&Sort Siblings","Alt+A",c.sortSiblings),
+    ("-",None,None),
+    ("&Hoist",None,c.hoist),
+    ("D&e-Hoist",None,f.c.dehoist),
+    ("-",None,None))
+    
+# Ampersand bindings:  a,c,d,e,h,i,k,m,n,o,p,s,u
+#@-node:ekr.20031218072017.3768:<< define outlineMenuTopMenuTable >>
+#@+node:ekr.20040131171020:<< enable top level outline menu >>
+menu = frame.menu.getMenu("Outline")
+enable(menu,"Cut Node",c.canCutOutline())
+enable(menu,"Delete Node",c.canDeleteHeadline())
+enable(menu,"Paste Node",c.canPasteOutline())
+enable(menu,"Paste Node As Clone",c.canPasteOutline())
+enable(menu,"Clone Node",c.canClone()) # 1/31/04
+enable(menu,"Sort Siblings",c.canSortSiblings())
+enable(menu,"Hoist",c.canHoist())
+enable(menu,"De-Hoist",c.canDehoist())
+#@nonl
+#@-node:ekr.20040131171020:<< enable top level outline menu >>
+#@-node:ekr.20050128081422:(Changed name of Paste Retaining Clones to Paste Node As Clone)
 #@+node:ekr.20050128081550:Paste Retaing clones can't be undone
 @killcolor
 
@@ -10857,7 +11379,7 @@ if headString:
 #@-node:ekr.20031218072017.1866:<< Write the head text >>
 #@-node:ekr.20031218072017.1863:putVnode (3.x and 4.x)
 #@+node:ekr.20031218072017.2297:open
-def open(self,theFile,fileName,readAtFileNodesFlag=True):
+def open(self,theFile,fileName,readAtFileNodesFlag=True,silent=False):
 
     c = self.c ; frame = c.frame
     # Read the entire file into the buffer
@@ -10866,7 +11388,7 @@ def open(self,theFile,fileName,readAtFileNodesFlag=True):
     << Set the default directory >>
     self.topPosition = None
     c.beginUpdate()
-    ok, ratio = self.getLeoFile(fileName,readAtFileNodesFlag=readAtFileNodesFlag)
+    ok, ratio = self.getLeoFile(fileName,readAtFileNodesFlag=readAtFileNodesFlag,silent=silent)
     frame.resizePanesToRatio(ratio,frame.secondary_ratio)
     if 0: # 1/30/04: this is useless.
         if self.topPosition: 
