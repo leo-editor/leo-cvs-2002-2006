@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet ekr_stylesheet?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="6433" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="6435" clone_windows="0"/>
 <globals body_outline_ratio="0.550925925926">
-	<global_window_position top="25" left="111" height="864" width="907"/>
+	<global_window_position top="23" left="275" height="864" width="907"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -1432,12 +1432,14 @@
 <v t="ekr.20041001194357"><vh>@button unit test</vh></v>
 </v>
 <v t="ekr.20041125145818.1" a="EM"><vh>Pmw dialog</vh>
-<v t="ekr.20041127231319" a="TV"><vh>To do</vh></v>
-<v t="ekr.20041126110057"><vh>class settingsController</vh>
-<v t="ekr.20041126110158"><vh> ctor</vh>
+<v t="ekr.20041127231319" a="ETV"><vh>To do</vh></v>
+<v t="ekr.20041128225703"><vh>Notes</vh></v>
+<v t="ekr.20041126110057" a="E"><vh>class settingsController</vh>
+<v t="ekr.20041126110158" a="E"><vh> ctor</vh>
 <v t="ekr.20041126113848"><vh>&lt;&lt; create the dialog d &gt;&gt;</vh></v>
 <v t="ekr.20041126113848.1"><vh>&lt;&lt; create paneFrame, a paned widget &gt;&gt;</vh></v>
-<v t="ekr.20041126113848.2"><vh>&lt;&lt; put a settingsTree in paneFrame's outline pane&gt;&gt;</vh></v>
+<v t="ekr.20041128225055"><vh>&lt;&lt; create paneFrame2, a second paned widget &gt;&gt;</vh></v>
+<v t="ekr.20041126113848.2"><vh>&lt;&lt; create outline and log panes in paneFrame2 &gt;&gt;</vh></v>
 <v t="ekr.20041127132947"><vh>&lt;&lt; put setterCanvas in paneFrame's setter pane&gt;&gt;</vh></v>
 <v t="ekr.20041126133120"><vh>&lt;&lt; put a Text widget in the comment pane &gt;&gt;</vh></v>
 </v>
@@ -1474,6 +1476,8 @@
 <v t="ekr.20041128081018"><vh>printChangedVars</vh></v>
 <v t="ekr.20041128081018.1"><vh>writeChangedVars</vh></v>
 </v>
+<v t="ekr.20041128225703.1"><vh>center</vh></v>
+<v t="ekr.20041128230425"><vh>get_window_info</vh></v>
 <v t="ekr.20041126124710"><vh>handleTreeClick</vh></v>
 <v t="ekr.20041127112806"><vh>printWidgets</vh></v>
 <v t="ekr.20041127144346"><vh>onPaneResize</vh></v>
@@ -12564,29 +12568,32 @@ for fileName in fileNames:
     self.colorSettingDict = {} # Contains entries for all changed colors.
     self.initValueDict = {} # Initial value of settings in present pane.
     self.fileValueDict = {} # Values of settings written to file.
+    self.modal = False
     self.parser = parserClass(c,p,self)
     self.setterLabel = None
     self.suppressComments = None # position for which to suppress comments.
 
     &lt;&lt; create the dialog d &gt;&gt;
     &lt;&lt; create paneFrame, a paned widget &gt;&gt;
-    &lt;&lt; put a settingsTree in paneFrame's outline pane &gt;&gt;
+    &lt;&lt; create paneFrame2, a second paned widget &gt;&gt;
+    &lt;&lt; create outline and log panes in paneFrame2 &gt;&gt;
     &lt;&lt; put setterCanvas in paneFrame's setter pane&gt;&gt;
     &lt;&lt; put a Text widget in the comment pane &gt;&gt;
 
     tree.redraw_now() # To allocate widgets.
     tree.select(p)
-    d.activate()</t>
+    self.center()
+    if self.modal: d.activate()</t>
 <t tx="ekr.20041126113848">self.dialog = d = Pmw.Dialog(
     c.frame.top,
     title=title,
-    buttons = ('OK', 'Cancel','Apply','Revert'),
-    defaultbutton = 'OK',
+    buttons = ('OK', 'Cancel','Apply','Revert','Refresh','Check'),
+    # It's too upsetting to have a dialog go away on a return key.
+    # defaultbutton = 'OK',
     command = self.onAnyButton
 )
 
-d.withdraw()
-hull = d.component('hull')
+self.top = hull = d.component('hull')
 hull.minsize(800,800)
 
 interior = d.interior()
@@ -12606,7 +12613,7 @@ paneFrame.pack(expand = 1, fill='both')
 
 self.panes = {}
 for name,minsize,size,label,isSetterLabel in (
-    ("outline",50,300,None,False),
+    ("splitter2",50,300,None,False),
     ("setter",50,300,"",False),
     ("comments",50,200,None,False),
 ):
@@ -12638,7 +12645,11 @@ treeCanvas = scrolledTreeCanvas.component('canvas')
 treeCanvas.configure(background='white')
 
 # Create the tree.
-self.tree = tree = settingsTree(c,c.frame,treeCanvas,self)</t>
+self.tree = tree = settingsTree(c,c.frame,treeCanvas,self)
+
+logPane = self.panes.get('log')
+self.logText = logText = Tk.Text(logPane)
+logText.pack(expand=1,fill="both")</t>
 <t tx="ekr.20041126124710">def onTreeClick (self,p):
     
     self.p = p.copy()
@@ -12716,6 +12727,9 @@ text.configure(background=background,borderwidth=0)</t>
 <t tx="ekr.20041126153101.1">def createSettingsTree (self):
     
     """Create a tree of vnodes representing all settings."""
+    
+    createSummaryNode = False # Dithering whether to do this.
+    createEmptyNodes = False
 
     c = self.c ; config = g.app.config
     root_p = None ; last_p = None
@@ -12730,13 +12744,12 @@ text.configure(background=background,borderwidth=0)</t>
             root2 = config.settingsRoot(c2)
         else:
             root2 = None
-        &lt;&lt; create a node p for kind &amp; root2 &gt;&gt;
+        if root2 or createEmptyNodes:
+            &lt;&lt; create a node p for kind &amp; root2 &gt;&gt;
     root_p.expand()
     return root_p
 </t>
-<t tx="ekr.20041127055009.1">createSummaryNode = True # Dithering whether to do this.
-
-if not root_p:
+<t tx="ekr.20041127055009.1">if not root_p:
     t = leoNodes.tnode()
     root_v = leoNodes.vnode(c,t) # Using c2 --&gt; oops: nullTree.
     root_p = leoNodes.position(root_v,[])
@@ -13221,21 +13234,15 @@ self.setterLabel = sc.component('label')
 <t tx="ekr.20041127231319">@
 @killcolor
 
-- set dialog geometry.
+- Create self.es, self.es_exception, self.error.
 
-- Disable window close box: just do nothing if button type is None.
+- Finish font stuff.
 
-** Aha: use non-modal dialog.
-    - Much more convenient for user.
-    - Can write to c.log.
-    - Code must check for changed tree in underlying outline.
-    - Add refresh button: self.refresh recreates and redraws dialog's outline.
-    - Add check settings button:  checks for duplicate shortcuts, bad settings, etc.
-    - Create self.es, self.es_exception, self.error write to underlying log.
+- Support new buttons:
+    - Refresh recreates and redraws dialog's outline.
+    - Check button checks for duplicate shortcuts, bad settings, etc.
 
-- Don't create overall root node or non-existent files.
-
-** Replace injected ivars with filesInfoDict.
+- Replace injected ivars with filesInfoDict.
     - Associate nodes with commanders and (open?) files.
 
 - Actually write settings to the proper @settings tree.
@@ -13244,7 +13251,7 @@ self.setterLabel = sc.component('label')
         - writeSettingToHead(setting,kind,val,p)
         - writeSettingToBody(setting,kind,val,p)
 
-- Move code into Leo's core:  remove old dialogParser class.</t>
+- (last) Move code into Leo's core.</t>
 <t tx="ekr.20041128042051">@ These keep track of the original and changed values of all items in the present setter pane.</t>
 <t tx="ekr.20041128042051.1">def initValue (self,p,name,kind,val,getValueCallback):
     
@@ -13359,5 +13366,71 @@ b.pack(side="left")</t>
 
     self.updateSetter(self.p,updateDicts=False)
     </t>
+<t tx="ekr.20041128225055">splitter2 = self.panes.get('splitter2')
+
+self.paneFrame2 = paneFrame2 = Pmw.PanedWidget(splitter2,
+    separatorthickness = 4, # default is 2
+    handlesize = 8, # default is 8
+    orient='horizontal',
+    command = self.onPaneResize
+)
+paneFrame2.pack(expand = 1, fill='both')
+
+for name,minsize,size, in (
+    ('outline',50,500),
+    ('log',50,300),
+):
+    self.panes[name] = pane = paneFrame2.add(name,min=minsize,size=size)
+    
+# Set the colors of the separator and handle.
+i = 1
+bar = paneFrame2.component('separator-%d' % i)
+bar.configure(background='LightSteelBlue2')
+handle = paneFrame2.component('handle-%d' % i)
+handle.configure(background='SteelBlue2')</t>
+<t tx="ekr.20041128225703">@
+@killcolor
+
+** Aha: non-modal dialog is more convenient for user.
+    - Code must check for changed tree in underlying outline.
+
+** Possibility: don't use separate dialog at all.
+    - However, we would still need a different outline.
+    - If changes to the outline were allowed in the dialog it would be sorta like old clone windows.</t>
+<t tx="ekr.20041128225703.1">def center(self):
+    
+    top = self.top
+
+    """Center the dialog on the screen.
+
+    WARNING: Call this routine _after_ creating a dialog.
+    (This routine inhibits the grid and pack geometry managers.)"""
+
+    sw = top.winfo_screenwidth()
+    sh = top.winfo_screenheight()
+    w,h,x,y = self.get_window_info()
+    
+    # Set the new window coordinates, leaving w and h unchanged.
+    x = (sw - w)/2
+    y = (sh - h)/2
+    top.geometry("%dx%d%+d%+d" % (w,h,x,y))
+    
+    return w,h,x,y</t>
+<t tx="ekr.20041128230425"># WARNING: Call this routine _after_ creating a dialog.
+# (This routine inhibits the grid and pack geometry managers.)
+
+def get_window_info (self):
+    
+    top = self.top
+    
+    top.update_idletasks() # Required to get proper info.
+
+    # Get the information about top and the screen.
+    geom = top.geometry() # geom = "WidthxHeight+XOffset+YOffset"
+    dim,x,y = geom.split('+')
+    w,h = dim.split('x')
+    w,h,x,y = int(w),int(h),int(x),int(y)
+    
+    return w,h,x,y</t>
 </tnodes>
 </leo_file>
