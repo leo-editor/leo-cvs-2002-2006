@@ -9,9 +9,11 @@
 __pychecker__ = 'argumentsused=0' # Pychecker param.
 
 from leoGlobals import *
-import leoColor,leoCommands,leoCompare,leoDialog,leoFontPanel,leoNodes,leoPrefs,leoTree
+import leoColor,leoCommands,leoCompare,leoDialog,leoFontPanel,leoNodes,leoPlugins,leoPrefs,leoTree
 import os,string,sys,Tkinter,tkFileDialog,tkFont
 import tempfile
+
+Tk = Tkinter
 
 class LeoFrame:
 
@@ -64,8 +66,11 @@ class LeoFrame:
 		self.canvas = None ; self.treeBar = None
 		self.splitter1 = self.splitter2 = None
 		self.icon = None
+		self.outerFrame = None # 5/20/02
 		self.iconFrame = None # 5/20/02
+		self.statusFrame = None # 5/20/02
 		self.statusText = None # 5/20/02
+		self.statusLabel = None # 5/20/02
 		
 		self.menus = {} # Menu dictionary.
 		self.menuShortcuts = None # List of menu shortcuts for warnings.
@@ -78,7 +83,11 @@ class LeoFrame:
 		self.controlKeyIsDown = false # For control-drags
 		
 		# Colors of log pane.
-		self.logColorTags = [] # list of color names used as tags.
+		self.logColorTags = [] # list of color names used as tags in log window.
+		self.statusColorTags = [] # list of color names used as tags in status window.
+		
+		# Previous row and column shown in the status area.
+		self.lastStatusRow = self.lastStatusCol = 0
 		#@-body
 		#@-node:1::<< set the LeoFrame ivars >>
 
@@ -196,16 +205,15 @@ class LeoFrame:
 	def createLeoFrame (self,top):
 	
 		Tk = Tkinter ; config = app().config
-	
-		new_frames = true
 		
-		if new_frames:
-			outerFrame = Tk.Frame(top)
-			outerFrame.pack(expand=1,fill="both")
-			self.iconFrame = Tk.Frame(outerFrame,height="5m",bd=2,relief="groove")
-			self.iconFrame.pack(fill="x",pady=2)
-		else: outerFrame = top
+		self.outerFrame = outerFrame = Tk.Frame(top)
+		self.outerFrame.pack(expand=1,fill="both")
 	
+		self.createIconBar()
+		
+		#@<< create both splitters >>
+		#@+node:1::<< create both splitters >>
+		#@+body
 		# Splitter 1 is the main splitter containing splitter2 and the body pane.
 		f1,bar1,split1Pane1,split1Pane2 = self.createLeoSplitter(outerFrame, self.splitVerticalFlag)
 		self.f1,self.bar1 = f1,bar1
@@ -214,9 +222,12 @@ class LeoFrame:
 		f2,bar2,split2Pane1,split2Pane2 = self.createLeoSplitter(split1Pane1, not self.splitVerticalFlag)
 		self.f2,self.bar2 = f2,bar2
 		self.split2Pane1,self.split2Pane2 = split2Pane1,split2Pane2
+		#@-body
+		#@-node:1::<< create both splitters >>
+
 		
 		#@<< create the body pane >>
-		#@+node:1::<< create the body pane >>
+		#@+node:2::<< create the body pane >>
 		#@+body
 		# A light selectbackground value is needed to make syntax coloring look good.
 		wrap = config.getBoolWindowPref('body_pane_wraps')
@@ -242,11 +253,11 @@ class LeoFrame:
 			
 		body.pack(expand=1, fill="both")
 		#@-body
-		#@-node:1::<< create the body pane >>
+		#@-node:2::<< create the body pane >>
 
 		
 		#@<< create the tree pane >>
-		#@+node:2::<< create the tree pane >>
+		#@+node:3::<< create the tree pane >>
 		#@+body
 		scrolls = config.getBoolWindowPref('outline_pane_scrolls_horizontally')
 		scrolls = choose(scrolls,1,0)
@@ -278,11 +289,11 @@ class LeoFrame:
 			treeXBar.pack(side="bottom", fill="x")
 		tree.pack(expand=1,fill="both")
 		#@-body
-		#@-node:2::<< create the tree pane >>
+		#@-node:3::<< create the tree pane >>
 
 		
 		#@<< create the log pane >>
-		#@+node:3::<< create the log pane >>
+		#@+node:4::<< create the log pane >>
 		#@+body
 		wrap = config.getBoolWindowPref('log_pane_wraps')
 		wrap = choose(wrap,"word","none")
@@ -307,19 +318,10 @@ class LeoFrame:
 			logXBar.pack(side="bottom", fill="x")
 		log.pack(expand=1, fill="both")
 		#@-body
-		#@-node:3::<< create the log pane >>
+		#@-node:4::<< create the log pane >>
 
-		# Give the log and body panes the proper borders.
 		self.reconfigurePanes()
-		
-		if new_frames:
-			statusFrame = Tk.Frame(outerFrame,bd=2)
-			lab = Tk.Label(statusFrame,text="status")
-			lab.pack(side="left")
-			self.statusText = Tk.Text(statusFrame,height=1) # Text panes are much more flexible.
-			self.statusText.pack(side="left",expand=1,fill="x")
-			statusFrame.pack(fill="x",pady=1)
-	
+		self.createStatusLine()
 	#@-body
 	#@-node:5::createLeoFrame
 	#@-node:1::Birth & Death
@@ -655,6 +657,7 @@ class LeoFrame:
 		except:
 			es_event_exception("activate body")
 	
+	
 	#@-body
 	#@-node:4::OnActivateBody
 	#@+node:5::OnActivateLeoEvent, OnDeactivateLeoEvent
@@ -705,6 +708,7 @@ class LeoFrame:
 	#@+node:8::OnBodyClick, OnBodyRClick (Events)
 	#@+body
 	def OnBodyClick (self,event=None):
+	
 		try:
 			c = self.commands ; v = c.currentVnode()
 			if not doHook("bodyclick1",c=c,v=v,event=event):
@@ -712,8 +716,9 @@ class LeoFrame:
 			doHook("bodyclick2",c=c,v=v,event=event)
 		except:
 			es_event_exception("bodyclick")
-			
+	
 	def OnBodyRClick(self,event=None):
+		
 		try:
 			c = self.commands ; v = c.currentVnode()
 			if not doHook("bodyrclick1",c=c,v=v,event=event):
@@ -762,7 +767,168 @@ class LeoFrame:
 	#@-body
 	#@-node:10::OnMouseWheel (Tomaz Ficko)
 	#@-node:3::Event handlers (Frame)
-	#@+node:4::Menus
+	#@+node:4::Icon area: convenience routines
+	#@+node:1::createIconBar
+	#@+body
+	def createIconBar (self):
+	
+		if not self.iconFrame:
+			self.iconFrame = Tk.Frame(self.outerFrame,height="5m",bd=2,relief="groove")
+			self.iconFrame.pack(fill="x",pady=2)
+	#@-body
+	#@-node:1::createIconBar
+	#@+node:2::hideIconBar
+	#@+body
+	def hideIconBar (self):
+		
+		if self.iconFrame:
+			self.iconFrame.pack_forget()
+			
+			if 0:
+				# Remove all references to images.
+				try:
+					app().iconImageRefs = []
+				except:
+					pass
+	#@-body
+	#@-node:2::hideIconBar
+	#@+node:3::clearIconBar
+	#@+body
+	def clearIconBar(self):
+		
+		a = app() ; f = self.iconFrame
+		if f:
+			for slave in f.pack_slaves():
+				slave.destroy()
+			f.configure(height="5m") # The default height.
+			a.iconWidgetCount = 0
+			a. iconImageRefs = []
+	
+	#@-body
+	#@-node:3::clearIconBar
+	#@+node:4::showIconBar
+	#@+body
+	def showIconBar(self):
+	
+		self.iconFrame.pack(fill="x",pady=2)
+	#@-body
+	#@-node:4::showIconBar
+	#@+node:5::addIconButton
+	#@+body
+	def addIconButton(self,text=None,picture=None,command=None):
+		
+		a = app() ; f = self.iconFrame
+		if not picture and not text: return
+	
+		# First define n.	
+		try:
+			a.iconWidgetCount += 1
+			n = a.iconWidgetCount
+		except:
+			n = a.iconWidgetCount = 1
+	
+		if not command:
+			def command(n=n):
+				print "command for widget %s" % (n)
+	
+		if picture:
+			
+			#@<< create a picture >>
+			#@+node:1::<< create a picture >>
+			#@+body
+			try:
+				# Create the image.  Throws an exception if file not found
+				photo = Tkinter.PhotoImage(master=app().root, file=picture)
+				
+				# Must keep a reference to the image!
+				try:
+					refs = a.iconImageRefs
+				except:
+					refs = a.iconImageRefs = []
+				refs.append(photo)
+			
+				b = Tk.Button(f,image=photo,relief="raised",command=command)
+				b.pack(side="left",fill="y")
+				
+			except:
+				print "not found:", picture
+				picture = None
+			#@-body
+			#@-node:1::<< create a picture >>
+
+	
+		if not picture and text:
+			b = Tk.Button(f,text=text,relief="raised",command=command)
+			b.pack(side="left",fill="y")
+	#@-body
+	#@-node:5::addIconButton
+	#@-node:4::Icon area: convenience routines
+	#@+node:5::frame.longFileName & shortFileName
+	#@+body
+	def longFileName (self):
+		return self.mFileName
+		
+	def shortFileName (self):
+		return shortFileName(self.mFileName)
+	#@-body
+	#@-node:5::frame.longFileName & shortFileName
+	#@+node:6::frame.put, putnl
+	#@+body
+	# All output to the log stream eventually comes here.
+	
+	def put (self,s,color=None):
+		# print `app().quitting`,`self.log`
+		if app().quitting > 0: return
+		if self.log:
+			if type(s) == type(u""): # 3/18/03
+				s = toEncodedString(s,app().tkEncoding)
+			if color:
+				if color not in self.logColorTags:
+					self.logColorTags.append(color)
+					self.log.tag_config(color,foreground=color)
+				self.log.insert("end",s)
+				self.log.tag_add(color,"end-%dc" % (len(s)+1),"end-1c")
+				if "black" not in self.logColorTags:
+					self.logColorTags.append("black")
+					self.log.tag_config("black",foreground="black")
+				self.log.tag_add("black","end")
+			else:
+				self.log.insert("end",s)
+			self.log.see("end")
+			self.log.update_idletasks()
+		else:
+			app().logWaiting.append((s,color),) # 2/25/03
+			print "Null log"
+			if type(s) == type(u""): # 3/18/03
+				s = toEncodedString(s,"ascii")
+			print s
+	
+	def putnl (self):
+		if app().quitting > 0: return
+		if self.log:
+			self.log.insert("end",'\n')
+			self.log.see("end")
+			self.log.update_idletasks()
+		else:
+			a.logWaiting.append(('\n',"black"),) # 2/16/03
+			print "Null log"
+			print
+	#@-body
+	#@-node:6::frame.put, putnl
+	#@+node:7::getFocus
+	#@+body
+	# Returns the frame that has focus, or body if None.
+	
+	def getFocus(self):
+	
+		f = self.top.focus_displayof()
+		if f:
+			return f
+		else:
+			return self.body
+	#@-body
+	#@-node:7::getFocus
+	#@+node:8::Menus
 	#@+node:1::canonicalizeShortcut
 	#@+body
 	#@+at
@@ -2911,7 +3077,7 @@ class LeoFrame:
 		#@<< scan back to @+node, setting offset,nodeSentinelLine >>
 		#@+node:2::<< scan back to  @+node, setting offset,nodeSentinelLine >>
 		#@+body
-		offset = 0 # This is essentially the tk line number.
+		offset = 0 # This is essentially the Tk line number.
 		nodeSentinelLine = -1
 		line = n - 1
 		while line >= 0:
@@ -4430,8 +4596,16 @@ class LeoFrame:
 	#@-body
 	#@-node:5::updateOutlineMenu
 	#@-node:9::Menu enablers (Frame)
-	#@-node:4::Menus
-	#@+node:5::Splitter stuff
+	#@-node:8::Menus
+	#@+node:9::notYet
+	#@+body
+	def notYet(self,name):
+	
+		es(name + " not ready yet")
+	
+	#@-body
+	#@-node:9::notYet
+	#@+node:10::Splitter stuff
 	#@+body
 	#@+at
 	#  The key invariants used throughout this code:
@@ -4614,80 +4788,92 @@ class LeoFrame:
 			bar.place  (rely=0.5, relx = adj, anchor="c", relheight=1.0)
 	#@-body
 	#@-node:8::placeSplitter
-	#@-node:5::Splitter stuff
-	#@+node:6::frame.longFileName & shortFileName
+	#@-node:10::Splitter stuff
+	#@+node:11::Status line: convenience routines
+	#@+node:1::createStatusLine
 	#@+body
-	def longFileName (self):
-		return self.mFileName
+	def createStatusLine (self):
 		
-	def shortFileName (self):
-		return shortFileName(self.mFileName)
+		if self.statusFrame and self.statusLabel:
+			return
+		
+		self.statusFrame = statusFrame = Tk.Frame(self.outerFrame,bd=2)
+		statusFrame.pack(fill="x",pady=1)
+		
+		text = "row 0, col 0"
+		width = len(text) + 4
+		self.statusLabel = Tk.Label(statusFrame,text=text,width=width,anchor="w")
+		self.statusLabel.pack(side="left",padx=1)
+		
+		bg = statusFrame.cget("background")
+		self.statusText = Tk.Text(statusFrame,height=1,state="disabled",bg=bg,relief="groove") # Text panes are much more flexible.
+		self.statusText.pack(side="left",expand=1,fill="x")
+		
+		def idleStatusUpdateCallback(tag,keywords):
+			c=keywords.get("c")
+			if c: c.frame.updateStatusRowCol()
+		
+		# Register an idle-time handler to update the row and column indicators.
+		leoPlugins.registerHandler("idle",idleStatusUpdateCallback)
+	
 	#@-body
-	#@-node:6::frame.longFileName & shortFileName
-	#@+node:7::frame.put, putnl
+	#@-node:1::createStatusLine
+	#@+node:2::clearStatusLine
 	#@+body
-	# All output to the log stream eventually comes here.
+	def clearStatusLine (self):
+		
+		t = self.statusText
+		t.configure(state="normal")
+		t.delete("1.0","end")
+		t.configure(state="disabled")
 	
-	def put (self,s,color=None):
-		# print `app().quitting`,`self.log`
-		if app().quitting > 0: return
-		if self.log:
-			if type(s) == type(u""): # 3/18/03
-				s = toEncodedString(s,app().tkEncoding)
-			if color:
-				if color not in self.logColorTags:
-					self.logColorTags.append(color)
-					self.log.tag_config(color,foreground=color)
-				self.log.insert("end",s)
-				self.log.tag_add(color,"end-%dc" % (len(s)+1),"end-1c")
-				if "black" not in self.logColorTags:
-					self.logColorTags.append("black")
-					self.log.tag_config("black",foreground="black")
-				self.log.tag_add("black","end")
-			else:
-				self.log.insert("end",s)
-			self.log.see("end")
-			self.log.update_idletasks()
-		else:
-			app().logWaiting.append((s,color),) # 2/25/03
-			print "Null log"
-			if type(s) == type(u""): # 3/18/03
-				s = toEncodedString(s,"ascii")
-			print s
-	
-	def putnl (self):
-		if app().quitting > 0: return
-		if self.log:
-			self.log.insert("end",'\n')
-			self.log.see("end")
-			self.log.update_idletasks()
-		else:
-			a.logWaiting.append(('\n',"black"),) # 2/16/03
-			print "Null log"
-			print
 	#@-body
-	#@-node:7::frame.put, putnl
-	#@+node:8::getFocus
+	#@-node:2::clearStatusLine
+	#@+node:3::putStatusLine
 	#@+body
-	# Returns the frame that has focus, or body if None.
+	def putStatusLine (self,s,color=None):
+		
+		t = self.statusText ; tags = self.statusColorTags
+		t.configure(state="normal")
+		
+		if "black" not in self.logColorTags:
+			tags.append("black")
+			
+		if color and color not in tags:
+			tags.append(color)
+			t.tag_config(color,foreground=color)
 	
-	def getFocus(self):
-	
-		f = self.top.focus_displayof()
-		if f:
-			return f
+		if color:
+			t.insert("end",s)
+			t.tag_add(color,"end-%dc" % (len(s)+1),"end-1c")
+			t.tag_config("black",foreground="black")
+			t.tag_add("black","end")
 		else:
-			return self.body
+			t.insert("end",s)
+		
+		t.configure(state="disabled")
 	#@-body
-	#@-node:8::getFocus
-	#@+node:9::notYet
+	#@-node:3::putStatusLine
+	#@+node:4::updateStatusRowCol()
 	#@+body
-	def notYet(self,name):
+	# This is a hook routine, so it must have the tag and keyword arguments.
 	
-		es(name + " not ready yet")
+	def updateStatusRowCol (self):
+		
+		body = self.body ; lab = self.statusLabel
 	
+		index = body.index("insert")
+		row,col = getindex(body,index)
+		
+		if row != self.lastStatusRow or col != self.lastStatusCol:
+			s = "row %d, col %d " % (row,col)
+			lab.configure(text=s)
+			# trace(`index`)
+			self.lastStatusRow = row
+			self.lastStatusCol = col
 	#@-body
-	#@-node:9::notYet
+	#@-node:4::updateStatusRowCol()
+	#@-node:11::Status line: convenience routines
 	#@-others
 #@-body
 #@-node:0::@file leoFrame.py

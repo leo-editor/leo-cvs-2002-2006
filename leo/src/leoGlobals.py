@@ -1955,7 +1955,13 @@ def windows():
 #@-node:6::windows
 #@-node:6::Most common functions
 #@+node:7::Scanning, selection & whitespace...
-#@+node:1::scanAtFileOptions
+#@+node:1::getindex
+#@+body
+def getindex(text, index):
+		return tuple(map(int,string.split(text.index(index), ".")))
+#@-body
+#@-node:1::getindex
+#@+node:2::scanAtFileOptions
 #@+body
 def scanAtFileOptions (h,err_flag=false):
 	
@@ -2017,8 +2023,8 @@ def scanAtFileOptions (h,err_flag=false):
 
 	return i,atFileType,optionsList
 #@-body
-#@-node:1::scanAtFileOptions
-#@+node:2::scanAtRootOptions
+#@-node:2::scanAtFileOptions
+#@+node:3::scanAtRootOptions
 #@+body
 def scanAtRootOptions (s,i,err_flag=false):
 	
@@ -2056,8 +2062,8 @@ def scanAtRootOptions (s,i,err_flag=false):
 		mode = choose(doc,"doc","code")
 	return i,mode
 #@-body
-#@-node:2::scanAtRootOptions
-#@+node:3::scanError
+#@-node:3::scanAtRootOptions
+#@+node:4::scanError
 #@+body
 #@+at
 #  It seems dubious to bump the Tangle error count here.  OTOH, it really 
@@ -2073,8 +2079,8 @@ def scanError(s):
 
 	es(s)
 #@-body
-#@-node:3::scanError
-#@+node:4::scanf
+#@-node:4::scanError
+#@+node:5::scanf
 #@+body
 # A quick and dirty sscanf.  Understands only %s and %d.
 
@@ -2095,8 +2101,8 @@ if 0: # testing
 	from leoGlobals import trace
 	scanf("1.0","%d.%d",)
 #@-body
-#@-node:4::scanf
-#@+node:5::Scanners: calling scanError
+#@-node:5::scanf
+#@+node:6::Scanners: calling scanError
 #@+body
 #@+at
 #  These scanners all call scanError() directly or indirectly, so they will 
@@ -2483,8 +2489,8 @@ def skip_typedef(s,i):
 	return i
 #@-body
 #@-node:15::skip_typedef
-#@-node:5::Scanners: calling scanError
-#@+node:6::Scanners: no error messages
+#@-node:6::Scanners: calling scanError
+#@+node:7::Scanners: no error messages
 #@+node:1::escaped
 #@+body
 # Returns true if s[i] is preceded by an odd number of backslashes.
@@ -2776,8 +2782,8 @@ def skip_ws_and_nl(s,i):
 	return i
 #@-body
 #@-node:21::skip_ws, skip_ws_and_nl
-#@-node:6::Scanners: no error messages
-#@+node:7::Tk.Text selection (utils)
+#@-node:7::Scanners: no error messages
+#@+node:8::Tk.Text selection (utils)
 #@+node:1::bound_paragraph
 #@+body
 def bound_paragraph(t=None):
@@ -2885,8 +2891,8 @@ def setTextSelection (t,start,end):
 
 #@-body
 #@-node:4::setTextSelection
-#@-node:7::Tk.Text selection (utils)
-#@+node:8::Whitespace...
+#@-node:8::Tk.Text selection (utils)
+#@+node:9::Whitespace...
 #@+node:1::computeLeadingWhitespace
 #@+body
 # Returns optimized whitespace corresponding to width with the indicated tab_width.
@@ -3021,7 +3027,7 @@ def skip_leading_ws_with_indent(s,i,tab_width):
 	return i, count
 #@-body
 #@-node:8::skip_leading_ws_with_indent
-#@-node:8::Whitespace...
+#@-node:9::Whitespace...
 #@-node:7::Scanning, selection & whitespace...
 #@+node:8::Unicode utils...
 #@+node:1::isValidEncoding
