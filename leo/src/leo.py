@@ -43,19 +43,59 @@ def run(fileName=None,*args,**keywords):
     """Initialize and run Leo"""
     
     if not isValidPython(): return
+    #@    << import leoGlobals and leoApp >>
+    #@+node:ekr.20041219072112:<< import leoGlobals and leoApp >>
     # Import leoGlobals, but do NOT set g.
-    import leoGlobals
+    try:
+        import leoGlobals
+    except ImportError:
+        print "Error importing leoGlobals.py"
+    
     # Create the application object.
-    import leoApp ; leoGlobals.app = leoApp.LeoApp()
-    g = leoGlobals ; assert(g.app) # NOW we can set g.
-    g.app.loadDir = computeLoadDir() # Depends on g.app.tkEncoding: uses utf-8 for now.
+    try:
+        import leoApp
+        leoGlobals.app = leoApp.LeoApp()
+    except ImportError:
+        print "Error importing leoApp.py"
+        
+    # NOW we can set g.
+    g = leoGlobals
+    assert(g.app)
+    #@nonl
+    #@-node:ekr.20041219072112:<< import leoGlobals and leoApp >>
+    #@nl
+    #@    << compute directories >>
+    #@+node:ekr.20041219072416:<< compute directories >>
+    g.app.loadDir = computeLoadDir()
+        # Depends on g.app.tkEncoding: uses utf-8 for now.
+    
     g.app.homeDir = computeHomeDir()
+    
+    g.app.extensionsDir = g.os_path_abspath(
+        g.os_path_join(g.app.loadDir,'..','extensions'))
+    
     g.app.globalConfigDir = computeGlobalConfigDir()
-    script = getBatchScript() # Do early to compute verbose.
+    #@nonl
+    #@-node:ekr.20041219072416:<< compute directories >>
+    #@nl
+    script = getBatchScript() # Do early so we can compute verbose next.
     verbose = script is None
     g.app.setLeoID(verbose=verbose) # Force the user to set g.app.leoID.
-    import leoNodes ; g.app.nodeIndices = leoNodes.nodeIndices(g.app.leoID)
-    import leoConfig ; g.app.config = leoConfig.config()
+    #@    << import leoNodes and leoConfig >>
+    #@+node:ekr.20041219072416.1:<< import leoNodes and leoConfig >>
+    try:
+        import leoNodes
+    except ImportError:
+         print "Error importing leoNodes.py"
+    
+    try:
+        import leoConfig
+    except ImportError:
+        print "Error importing leoConfig.py"
+    #@-node:ekr.20041219072416.1:<< import leoNodes and leoConfig >>
+    #@nl
+    g.app.nodeIndices = leoNodes.nodeIndices(g.app.leoID)
+    g.app.config = leoConfig.config()
     fileName = completeFileName(fileName)
     reportDirectories(verbose)
     g.app.config.readSettingsFiles(fileName,verbose) # Must be done after setting g.app.config.
@@ -113,22 +153,26 @@ def isValidPython():
 Leo requires Python 2.2.1 or higher.
 You may download Python from http://python.org/download/
 """
-    
     try:
         # This will fail if True/False are not defined.
         import leoGlobals as g
+    except ImportError:
+        print "isValidPython: can not import leoGlobals"
+        return 0
     except:
-        print message
+        print "isValidPytyhon: unexpected exception: import leoGlobals.py as g"
+        import traceback ; traceback.print_exc()
         return 0
     try:
         ok = g.CheckVersion(sys.version, "2.2.1")
         if not ok:
+            print message
             g.app.gui.runAskOkDialog("Python version error",message=message,text="Exit")
         return ok
     except:
-        print "exception getting Python version"
+        print "isValidPython: unexpected exception: g.CheckVersion"
         import traceback ; traceback.print_exc()
-        return False
+        return 0
 #@nonl
 #@-node:ekr.20031218072017.1936:isValidPython
 #@+node:ekr.20041124083125:completeFileName (leo.py)
