@@ -4833,11 +4833,9 @@ class baseLeoFrame:
 		def idleStatusUpdateCallback(tag,keywords):
 			c=keywords.get("c")
 			if c: c.frame.updateStatusRowCol()
-		
-		# Register an idle-time handler to update the row and column indicators.
-		enableIdleTimeHook(idleTimeDelay=10) # 10 ms is more responsive.
-		leoPlugins.registerHandler("idle",idleStatusUpdateCallback)
 	
+		# Register an idle-time handler to update the row and column indicators.
+		self.statusFrame.after_idle(self.updateStatusRowCol)
 	#@-body
 	#@-node:1::createStatusLine
 	#@+node:2::clearStatusLine
@@ -4895,6 +4893,10 @@ class baseLeoFrame:
 			lab.configure(text=s)
 			self.lastStatusRow = row
 			self.lastStatusCol = col
+			
+		# Reschedule this routine 10 ms. later.
+		# Don't use after_idle: it hangs Leo.
+		self.statusFrame.after(10,self.updateStatusRowCol)
 	
 	#@-body
 	#@-node:4::updateStatusRowCol()
