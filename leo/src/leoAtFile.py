@@ -5726,6 +5726,7 @@ class baseNewDerivedFile(oldDerivedFile):
                 self.startSentinelComment = delim2
                 self.endSentinelComment = delim3
             else:
+                line = g.get_line(s,i)
                 g.es("Ignoring bad @language directive: %s" % line,color="blue")
             #@nonl
             #@-node:EKR.20040625103148:<< handle @language >>
