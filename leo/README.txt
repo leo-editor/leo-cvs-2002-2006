@@ -1,7 +1,13 @@
-Note: leo.py requires Python 2.2 or greater and tk/tcl 8.3 or greater.
+Please Note:
+
+1. leo.py requires Python 2.2 or greater and tk/tcl 8.3 or greater.
 
 Download Python from http://www.python.org/download/
 Download tk/tcl from http://www.tcl.tk/software/tcltk/downloadnow83.tml
+
+2. You may set many preferences in Leo.
+To do this, you will need to leoConfig.txt from leoConfig.leo.
+
 
 leo.py 3.6 beta 1                             September 10, 2002
 
