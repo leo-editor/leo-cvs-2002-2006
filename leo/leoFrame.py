@@ -2586,7 +2586,34 @@ class LeoFrame:
 	#@+node:7:C=44:OnOpenPythonWindow
 	#@+body
 	def OnOpenPythonWindow(self,event=None):
-	
+
+		# 07-SEP-2002 DHEIN: Open Python window under linux
+		# NOTE: is this platform test valid, or should it
+		#       be != "win32" or whatever?
+		# NOTE2: Is there any reason to set app().idle_imported
+		#        to true and not do the import if true??
+		if sys.platform == "linux2":
+			try:
+				from idlelib import IdleConf
+			except:
+				es("idlelib could not be imported.")
+				es("Probably IDLE is not installed.")
+				es("Run Tools/idle/setup.py to build idlelib.")
+				return
+			
+			idle_dir = os.path.dirname(IdleConf.__file__)
+			IdleConf.load(idle_dir)
+
+			# defer importing Pyshell until IdleConf is loaded
+			from idlelib import PyShell
+			pathToLeo = os.path.join(app().loadDir,"leo.py")
+			# first arg is required but ignored by PyShell.main()
+			# "-d" means debug
+			# "-t" means title
+			sys.argv = ["leo","-d","-t", pathToLeo, pathToLeo]
+			PyShell.main()
+			return
+
 		try:
 			executable_dir = os.path.dirname(sys.executable)
 			idle_dir=os.path.join(executable_dir,"Tools","idle")
