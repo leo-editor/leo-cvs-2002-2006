@@ -26,30 +26,30 @@ __version__ = ".2"
 #@nl
 #@<< imports >>
 #@+node:ekr.20040915075530.2:<< imports >>
-import leoPlugins
 import leoGlobals as g
+import leoPlugins
 import leoTkinterFrame
 import re
 
 try:
     import TabbedLog
 except ImportError:
-    TabbedLog = cantImport("TabbedLog")
+    TabbedLog = g.cantImport("TabbedLog")
 
 try:
     import Tkinter as Tk
 except ImportError:
-    Tk = cantImport("Tk")
+    Tk = g.cantImport("Tk")
 
 try:
     import Pmw
 except ImportError:
-    Pmw = cantImport("Pmw")
+    Pmw = g.cantImport("Pmw")
     
 try:
     import weakref
 except ImportError:
-    weakref = cantImport("weakref")
+    weakref = g.cantImport("weakref")
 
 #@-node:ekr.20040915075530.2:<< imports >>
 #@nl
@@ -101,14 +101,6 @@ def addPMenu( tag, keywords ):
     #@nl
     b.bind( '<Button-1>', firesearch )
 #@-node:ekr.20040915075530.3:addPMenu
-#@+node:ekr.20040915075918:cantImport
-def cantImport (s):
-    
-    message = "Can not import " + s
-    print message
-    g.es(message,color="blue")
-    return None # So caller can do x = cantImport("x")
-#@-node:ekr.20040915075918:cantImport
 #@+node:ekr.20040915081837:found
 def found (porv,name):
     

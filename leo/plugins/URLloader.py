@@ -29,17 +29,17 @@ import weakref
 try:
     import Tkinter as Tk
 except ImportError:
-    Tk = cantImport("Tk")
+    Tk = g.cantImport("Tk")
 
 try:
     import Pmw
 except ImportError:
-    Pmw = cantImport("Pmw")
+    Pmw = g.cantImport("Pmw")
 
 try:
     import TabbedLog
 except ImportError:
-    TabbedLog = cantImport("TabbedLog")
+    TabbedLog = g.cantImport("TabbedLog")
 #@nonl
 #@-node:ekr.20040831115918.1:<< URLloader imports >>
 #@nl
@@ -62,14 +62,6 @@ def addURLPane( tag, keywords ):
     b.bind( '<Button-1>', lambda event , entry = e , c = c: load( event, entry, c ) )
 #@nonl
 #@-node:ekr.20040831115238.1:addURLPane
-#@+node:ekr.20040915102019:cantImport
-def cantImport (s):
-    
-    message = "Can not import " + s
-    print message
-    g.es(message,color="blue")
-    return None # So caller can do x = cantImport("x")
-#@-node:ekr.20040915102019:cantImport
 #@+node:ekr.20040831115238.2:load
 def load( event, entry, c ):
 

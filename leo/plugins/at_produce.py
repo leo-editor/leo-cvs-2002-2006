@@ -54,26 +54,18 @@ import time
 try:
     import Tkinter as Tk
 except ImportError:
-    Tk = cantImport("Tk")
+    Tk = g.cantImport("Tk")
     
 try:
     import weakref
 except ImportError:
-    weakref = cantImport("weakref")
+    weakref = g.cantImport("weakref")
 #@-node:ekr.20040915085715:<< imports >>
 #@nl
 
 pr = '@' + 'produce'
 
 #@+others
-#@+node:ekr.20040915085814:cantImport
-def cantImport (s):
-    
-    message = "Can not import " + s
-    print message
-    g.es(message,color="blue")
-    return None # So caller can do x = cantImport("x")
-#@-node:ekr.20040915085814:cantImport
 #@+node:ekr.20040915085351.2:makeProduceList & allies
 def makeProduceList( c, root = True ):
 

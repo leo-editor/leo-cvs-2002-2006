@@ -50,11 +50,11 @@ import leoTkinterFind
 try:
     import Tkinter as Tk
 except ImportError:
-    Tk = cantImport("Tk")
+    Tk = g.cantImport("Tk")
   
 aspell = g.importFromPath("aspell",aspell_dir,verbose=False)
 if not aspell:
-    cantImport("aspell from %s" % aspell_dir)
+    g.cantImport("aspell from %s" % aspell_dir)
     
 import ConfigParser
 import os
@@ -69,14 +69,6 @@ import traceback
 if Tk and aspell and not g.app.unitTesting:
     #@    @+others
     #@+node:ekr.20040809151600.6:Functions
-    #@+node:ekr.20040914165143:cantImport
-    def cantImport (s):
-        
-        message = "Can not import " + s
-        print message
-        g.es(message,color="blue")
-        return None # So caller can do x = cantImport("x")
-    #@-node:ekr.20040914165143:cantImport
     #@+node:ekr.20040809151600.7:createSpellMenu
     def createSpellMenu(tag, keywords):
     

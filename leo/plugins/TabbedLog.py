@@ -40,36 +40,28 @@ __version__ = ".2"
 #@nl
 #@<< imports >>
 #@+node:ekr.20040915074133.1:<< imports >>
-import leoPlugins
 import leoGlobals as g
+import leoPlugins
 import leoTkinterFrame
 
 try:
     import Tkinter as Tk
 except ImportError:
-    Tk = cantImport("Tk")
+    Tk = g.cantImport("Tk")
 
 try:
     import Pmw
 except ImportError:
-    Pmw = cantImport("Pmw")
+    Pmw = g.cantImport("Pmw")
     
 try:
     import weakref
 except ImportError:
-    weakref = cantImport("weakref")
+    weakref = g.cantImport("weakref")
 #@-node:ekr.20040915074133.1:<< imports >>
 #@nl
 
 #@+others
-#@+node:ekr.20040915074510:cantImport
-def cantImport (s):
-    
-    message = "Can not import " + s
-    print message
-    g.es(message,color="blue")
-    return None # So caller can do x = cantImport("x")
-#@-node:ekr.20040915074510:cantImport
 #@+node:ekr.20040915074510.1:createLog
 def createLog( self, parentframe ):
 
