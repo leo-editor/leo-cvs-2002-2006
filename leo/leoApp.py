@@ -243,7 +243,7 @@ class LeoApp:
 			if path and os.path.exists(path):
 				try:
 					os.remove(path)
-					print "deleting temp file:", path
+					print "deleting temp file:", shortFileName(path)
 				except:
 					print "can not delete temp file:", path
 	#@-body
