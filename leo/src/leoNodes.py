@@ -227,7 +227,6 @@ if g.app.config.use_psyco:
     except ImportError: pass
 
 import string
-import sys
 import time
 
 #@+others
