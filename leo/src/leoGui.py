@@ -403,6 +403,12 @@ class nullGui(leoGui):
         self.lastFrame = leoFrame.nullFrame(title,gui)
         return self.lastFrame
     #@-node:ekr.20031218072017.2226:nullGui.createLeoFrame
+    #@+node:ekr.20050328144031:attachLeoIcon
+    def attachLeoIcon (self,w):
+        
+        pass
+    #@nonl
+    #@-node:ekr.20050328144031:attachLeoIcon
     #@+node:ekr.20031218072017.2227:createRootWindow
     def createRootWindow(self):
         pass
