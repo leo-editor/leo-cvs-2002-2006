@@ -2,6 +2,10 @@
 #@+node:ekr.20041117062700:@thin leoConfig.py
 #@@language python
 #@@tabwidth -4
+#@@pagewidth 80
+
+#@<< imports >>
+#@+node:ekr.20041227063801:<< imports >>
 
 import leoGlobals as g
 import leoGui
@@ -22,6 +26,9 @@ import exceptions
 import os
 import string
 import sys
+#@nonl
+#@-node:ekr.20041227063801:<< imports >>
+#@nl
 
 #@<< class parserBaseClass >>
 #@+node:ekr.20041119203941.2:<< class parserBaseClass >>
@@ -234,9 +241,9 @@ class parserBaseClass:
     #@-node:ekr.20041121151924:doRecentFiles
     #@+node:ekr.20041120113848:doShortcut
     def doShortcut(self,p,kind,name,val):
-        
-        # At present no checking is done.
+    
         self.set(p,kind,name,val)
+        self.setShortcut(name,val)
     #@nonl
     #@-node:ekr.20041120113848:doShortcut
     #@+node:ekr.20041120105609:doShortcuts
@@ -253,6 +260,7 @@ class parserBaseClass:
                 # g.trace(name,val)
                 if val is not None:
                     self.set(p,"shortcut",name,val)
+                    self.setShortcut(name,val)
     #@nonl
     #@-node:ekr.20041120105609:doShortcuts
     #@+node:ekr.20041217132028:doString
@@ -404,33 +412,38 @@ class parserBaseClass:
     #@nonl
     #@-node:ekr.20041120112043:parseShortcutLine
     #@-node:ekr.20041213082558:parsers
-    #@+node:ekr.20041120094940.9:set (settingsParser)
+    #@+node:ekr.20041120094940.9:set (parseBaseClass)
     # p used in subclasses, not here.
     
     def set (self,p,kind,name,val):
         
         """Init the setting for name to val."""
         
-        c = self.c
+        c = self.c ; key = self.munge(name)
         # g.trace("settingsParser %10s %15s %s" %(kind,val,name))
         d = self.settingsDict
-        bunch = d.get(self.munge(name))
+        bunch = d.get(key)
         if bunch:
             path = bunch.path
             if g.os_path_abspath(c.mFileName) != g.os_path_abspath(path):
                 g.es("over-riding setting: %s from %s" % (name,path))
     
         # N.B.  We can't use c here: it may be destroyed!
-        d[self.munge(name)] = bunch = g.Bunch(path=c.mFileName,kind=kind,val=val,tag='setting')
-        # g.trace(bunch.toString())
-    
-        bunch = g.app.config.ivarsDict.get(self.munge(name))
-        if bunch:
-            ivar = bunch.ivar # Don't use the values in bunch!
-            # g.trace("g.app.%s = %s" % (ivar,val))
-            setattr(g.app.config,ivar,val)
+        d[key] = g.Bunch(path=c.mFileName,kind=kind,val=val,tag='setting')
+        # g.trace(d.get(key).toString())
     #@nonl
-    #@-node:ekr.20041120094940.9:set (settingsParser)
+    #@-node:ekr.20041120094940.9:set (parseBaseClass)
+    #@+node:ekr.20041227071423:setShortcut (ParserBaseClass)
+    def setShortcut (self,name,val):
+        
+        c = self.c
+        
+        # None is a valid value for val.
+        key = c.frame.menu.canonicalizeMenuName(name)
+        rawKey = key.replace('&','')
+        self.set(c,rawKey,"shortcut",val)
+    #@nonl
+    #@-node:ekr.20041227071423:setShortcut (ParserBaseClass)
     #@+node:ekr.20041119204700.1:traverse
     def traverse (self):
         
@@ -598,14 +611,10 @@ class baseConfig:
     #@nonl
     #@-node:ekr.20041117072055:ivarsDict
     #@-others
-    
-    # Shortcut stuff.
-    keysDict = {}
-    rawKeysDict = {}
         
     # List of dictionaries to search.  Order not too important.
     dictList = [ivarsDict,encodingIvarsDict,defaultsDict]
-        
+    
     # Keys are commanders.  Values are optionsDicts.
     localOptionsDict = {}
     
@@ -618,69 +627,40 @@ class baseConfig:
     #@nl
     #@    @+others
     #@+node:ekr.20041117083202:Birth...
-    #@+node:ekr.20041117062717.2:ctor & init
+    #@+node:ekr.20041117062717.2:ctor
     def __init__ (self):
-    
-        for key,kind,val in self.defaultsData:
-            self.defaultsDict[self.munge(key)] = g.Bunch(setting=key,kind=kind,val=val,tag='defaults')
-            
-        for key,kind,val in self.ivarsData:
-            self.ivarsDict[self.munge(key)] = g.Bunch(ivar=key,kind=kind,val=val,tag='ivars')
-    
-        for key,kind,val in self.encodingIvarsData:
-            self.encodingIvarsDict[self.munge(key)] = g.Bunch(ivar=key,kind=kind,encoding=val,tag='encodings')
-    
-        self.init()
-    
-    def init (self):
-    
+        
         self.configsExist = False # True when we successfully open a setting file.
         self.defaultFont = None # Set in gui.getDefaultConfigFont.
         self.defaultFontFamily = None # Set in gui.getDefaultConfigFont.
-        self.dictList = [self.defaultsDict]
-            ### self.ivarsDict,self.encodingIvarsDict,self.defaultsDict] # List of dictionaries.
         self.inited = False
     
+        self.initDicts()
         self.initIvarsFromSettings()
         self.initSettingsFiles()
         self.initRecentFiles()
-        self.initRawKeysDict()
-        
-        self.use_plugins = True ### Testing??
     #@nonl
-    #@-node:ekr.20041117062717.2:ctor & init
-    #@+node:ekr.20041117065611.1:initEncoding
-    def initEncoding (self,encodingName):
+    #@-node:ekr.20041117062717.2:ctor
+    #@+node:ekr.20041227063801.2:initDicts
+    def initDicts (self):
         
-        bunch = self.encodingIvarsDict.get(self.munge(encodingName))
-        encoding = bunch.encoding ; ivar = bunch.ivar
-        
-        # ivarName,theType,encoding = data
+        # Only the settings parser needs to search all dicts.
+        self.dictList = [self.defaultsDict]
     
-        # g.trace(ivarName,encodingName,encoding)
+        for key,kind,val in self.defaultsData:
+            self.defaultsDict[self.munge(key)] = g.Bunch(
+                setting=key,kind=kind,val=val,tag='defaults')
+            
+        for key,kind,val in self.ivarsData:
+            self.ivarsDict[self.munge(key)] = g.Bunch(
+                ivar=key,kind=kind,val=val,tag='ivars')
     
-        if ivar:
-            setattr(self,ivar,encoding)
-    
-        if encoding and not g.isValidEncoding(encoding):
-            g.es("bad %s: %s" % (encodingName,encoding))
+        for key,kind,val in self.encodingIvarsData:
+            self.encodingIvarsDict[self.munge(key)] = g.Bunch(
+                ivar=key,kind=kind,encoding=val,tag='encodings')
     #@nonl
-    #@-node:ekr.20041117065611.1:initEncoding
-    #@+node:ekr.20041117065611:initIvar
-    def initIvar(self,ivarName):
-        
-        bunch = self.ivarsDict.get(self.munge(ivarName))
-        ivar = bunch.ivar
-        val = bunch.val
-        
-        # ivarName,theType,val = data
-    
-        # g.trace(ivarName,val)
-    
-        setattr(self,ivar,val)
-    #@nonl
-    #@-node:ekr.20041117065611:initIvar
-    #@+node:ekr.20041117065611.2:initIvarsFromSettings
+    #@-node:ekr.20041227063801.2:initDicts
+    #@+node:ekr.20041117065611.2:initIvarsFromSettings & helpers
     def initIvarsFromSettings (self):
         
         for ivar in self.encodingIvarsDict.keys():
@@ -691,22 +671,41 @@ class baseConfig:
             if ivar != '_hash':
                 self.initIvar(ivar)
     #@nonl
-    #@-node:ekr.20041117065611.2:initIvarsFromSettings
-    #@+node:ekr.20041117062717.24:initRawKeysDict
-    def initRawKeysDict (self):
+    #@+node:ekr.20041117065611.1:initEncoding
+    def initEncoding (self,key):
+        
+        '''Init g.app.config encoding ivars during initialization.'''
+        
+        bunch = self.encodingIvarsDict.get(key)
+        encoding = bunch.encoding
+        ivar = bunch.ivar
     
-        for key in self.keysDict.keys():
-            if key != '_hash':
-                newKey = key.replace('&','')
-                self.rawKeysDict[newKey] = key,self.keysDict[key]
+        if ivar:
+            # g.trace(ivar,encodingName,encoding)
+            setattr(self,ivar,encoding)
     
-        if 0: #trace
-            keys = self.rawKeysDict.keys()
-            keys.sort()
-            for key in keys:
-                print self.rawKeysDict[key]
+        if encoding and not g.isValidEncoding(encoding):
+            g.es("bad %s: %s" % (encodingName,encoding))
     #@nonl
-    #@-node:ekr.20041117062717.24:initRawKeysDict
+    #@-node:ekr.20041117065611.1:initEncoding
+    #@+node:ekr.20041117065611:initIvar
+    def initIvar(self,key):
+        
+        '''Init g.app.config ivars during initialization.
+        
+        This does NOT init the corresponding commander ivars.
+        
+        Such initing must be done in setIvarsFromSettings.'''
+        
+        bunch = self.ivarsDict.get(key)
+        ivar = bunch.ivar # The actual name of the ivar.
+        val = bunch.val
+    
+        # g.trace(ivar,val)
+        setattr(self,ivar,val)
+    #@nonl
+    #@-node:ekr.20041117065611:initIvar
+    #@-node:ekr.20041117065611.2:initIvarsFromSettings & helpers
     #@+node:ekr.20041117083202.2:initRecentFiles
     def initRecentFiles (self):
     
@@ -777,7 +776,7 @@ class baseConfig:
     #@nonl
     #@-node:ekr.20041123092357:config.findSettingsPosition
     #@+node:ekr.20041117083141:get & allies
-    def get (self,c,setting,theType):
+    def get (self,c,setting,kind):
         
         """Get the setting and make sure its type matches the expected type."""
         
@@ -785,20 +784,20 @@ class baseConfig:
         if c:
             d = self.localOptionsDict.get(c.hash())
             if d:
-                val,found = self.getValFromDict(d,setting,theType,found)
+                val,found = self.getValFromDict(d,setting,kind,found)
                 if val is not None:
                     # g.trace(c.hash(),setting,val)
                     return val
                     
         for d in self.localOptionsList:
-            val,found = self.getValFromDict(d,setting,theType,found)
+            val,found = self.getValFromDict(d,setting,kind,found)
             if val is not None:
                 kind = d.get('_hash','<no hash>')
                 #  g.trace(kind,setting,val)
                 return val
     
         for d in self.dictList:
-            val,found = self.getValFromDict(d,setting,theType,found)
+            val,found = self.getValFromDict(d,setting,kind,found)
             if val is not None:
                 kind = d.get('_hash','<no hash>')
                 # g.trace(kind,setting,val)
@@ -953,19 +952,21 @@ class baseConfig:
         return self.recentFiles
     #@nonl
     #@-node:ekr.20041117062717.11:getRecentFiles
-    #@+node:ekr.20041117062717.14:getShortcut
-    def getShortcut (self,c,name):
+    #@+node:ekr.20041117062717.14:getShortcut (config)
+    def getShortcut (self,c,shortcutName):
         
-        # Allow '&' in keys.
-        val = self.rawKeysDict.get(name.replace('&',''))
-    
-        if val:
-            rawKey,shortcut = val
-            return rawKey,shortcut
+        '''Return rawKey,accel for shortcutName'''
+        
+        key = c.frame.menu.canonicalizeMenuName(shortcutName)
+        rawKey = key.replace('&','') # Allow '&' in names.
+        val = self.get(c,rawKey,"shortcut")
+        if val is None:
+             return rawKey,None
         else:
-            return None,None
+            # g.trace(key,val)
+            return rawKey,val
     #@nonl
-    #@-node:ekr.20041117062717.14:getShortcut
+    #@-node:ekr.20041117062717.14:getShortcut (config)
     #@+node:ekr.20041117081009.4:getString
     def getString (self,c,setting):
         
@@ -1014,25 +1015,25 @@ class baseConfig:
     #@+node:ekr.20041118084146.1:set (g.app.config)
     def set (self,c,setting,kind,val):
         
-        """Set the setting and make sure its type matches the given type."""
+        '''Set the setting.  Not called during initialization.'''
     
-        found = False
+        found = False ;  key = self.munge(setting)
         if c:
             d = self.localOptionsDict.get(c.hash())
             if d: found = True
-            
+    
         if not found:
             hash = c.hash()
             for d in self.localOptionsList:
                 hash2 = d.get('_hash')
                 if hash == hash2:
                     found = True ; break
-                    
+    
         if not found:
             d = self.dictList [0]
     
-        d[self.munge(setting)] = bunch = g.Bunch(setting=setting,kind=kind,val=val,tag='setting')
-        # g.trace(bunch.toString())
+        d[key] = g.Bunch(setting=setting,kind=kind,val=val,tag='setting')
+        # g.trace(d.get(key).toString())
     
         if 0:
             dkind = d.get('_hash','<no hash: %s>' % c.hash())
@@ -1045,6 +1046,34 @@ class baseConfig:
         self.set(c,setting,"string",val)
     #@nonl
     #@-node:ekr.20041118084241:setString
+    #@+node:ekr.20041228042224:setIvarsFromSettings (g.app.config)
+    def setIvarsFromSettings (self,c):
+    
+        '''Init g.app.config ivars or c's ivars from settings.
+        
+        - Called from readSettingsFiles with c = None to init g.app.config ivars.
+        - Called from c.__init__ to init corresponding commmander ivars.'''
+        
+        # Ingore temporary commanders created by readSettingsFiles.
+        if not self.inited: return
+    
+        # g.trace(c)
+        d = self.ivarsDict
+        for key in d:
+            if key != '_hash':
+                bunch = d.get(key)
+                if bunch:
+                    ivar = bunch.ivar # The actual name of the ivar.
+                    kind = bunch.kind
+                    val = self.get(c,key,kind) # Don't use bunch.val!
+                    if c:
+                        # g.trace("%20s %s = %s" % (g.shortFileName(c.mFileName),ivar,val))
+                        setattr(c,ivar,val)
+                    else:
+                        # g.trace("%20s %s = %s" % ('g.app.config',ivar,val))
+                        setattr(self,ivar,val)
+    #@nonl
+    #@-node:ekr.20041228042224:setIvarsFromSettings (g.app.config)
     #@+node:ekr.20041201080436:config.appendToRecentFiles
     def appendToRecentFiles (self,files):
         
@@ -1085,9 +1114,7 @@ class baseConfig:
     #@+node:ekr.20041120064303:config.readSettingsFiles
     def readSettingsFiles (self,fileName,verbose=True):
         
-        munge = self.munge
-        
-        seen = []
+        munge = self.munge ; seen = []
         
         # Init settings from leoSettings.leo files.
         for path,setOptionsFlag in (
@@ -1103,6 +1130,7 @@ class baseConfig:
                 c = self.openSettingsFile(path)
                 if c:
                     d = self.readSettings(c)
+                    # g.trace(c)
                     if d:
                         hash = c.hash()
                         d['_hash'] = hash
@@ -1132,6 +1160,8 @@ class baseConfig:
                     g.app.destroyWindow(c.frame)
     
         self.inited = True
+        self.setIvarsFromSettings(None)
+    #@nonl
     #@-node:ekr.20041120064303:config.readSettingsFiles
     #@+node:ekr.20041117083857.1:readSettings
     # Called to read all leoSettings.leo files.
@@ -1712,7 +1742,7 @@ class settingsController:
         self.h += 30
     #@nonl
     #@-node:ekr.20041225063637.33:createFloat
-    #@+node:ekr.20041225063637.34:createFont 
+    #@+node:ekr.20041225063637.34:createFont
     def createFont (self,parent,p,kind,fontName,val):
         
         """Create a font picker.  val is a dict containing the specified values."""
@@ -1838,7 +1868,7 @@ class settingsController:
         self.sc.create_window(15,self.h,anchor='w',window = f)
         self.h += 30
     #@nonl
-    #@-node:ekr.20041225063637.34:createFont 
+    #@-node:ekr.20041225063637.34:createFont
     #@+node:ekr.20041225063637.40:createInt
     def createInt (self,parent,p,kind,name,val):
     
@@ -1976,7 +2006,7 @@ class settingsController:
         self.suppressComments = p.copy()
     #@nonl
     #@-node:ekr.20041225063637.44:createRecentFiles
-    #@+node:ekr.20041225063637.45:createShortcut 
+    #@+node:ekr.20041225063637.45:createShortcut
     def createShortcut (self,parent,p,kind,name,val):
         
         g.trace(name,val)
@@ -1984,7 +2014,7 @@ class settingsController:
         if name:
             self.createString(parent,p,kind,name,val)
     #@nonl
-    #@-node:ekr.20041225063637.45:createShortcut 
+    #@-node:ekr.20041225063637.45:createShortcut
     #@+node:ekr.20041225063637.46:createShortcuts
     def createShortcuts (self,parent,p,kind,name,vals):
         
@@ -2263,7 +2293,8 @@ class settingsController:
     #@+node:ekr.20041225063637.63:value handlers...
     #@+at 
     #@nonl
-    # These keep track of the original and changed values of all items in the present setter pane.
+    # These keep track of the original and changed values of all items in the 
+    # present setter pane.
     #@-at
     #@nonl
     #@+node:ekr.20041225063637.64:initValue
