@@ -773,9 +773,9 @@ class parserBaseClass:
     def doBool (self,p,kind,name,val):
     
         if val in ('True','true','1'):
-            self.set(kind,name,True)
+            self.set(p,kind,name,True)
         elif val in ('False','false','0'):
-            self.set(kind,name,False)
+            self.set(p,kind,name,False)
         else:
             self.valueError(p,kind,name,val)
     #@nonl
@@ -784,7 +784,7 @@ class parserBaseClass:
     def doColor (self,p,kind,name,val):
         
         # At present no checking is done.
-        self.set(kind,name,val)
+        self.set(p,kind,name,val)
     #@nonl
     #@-node:ekr.20041120094940.2:doColor
     #@+node:ekr.20041120094940.3:doDirectory & doPath
@@ -801,7 +801,7 @@ class parserBaseClass:
         
         try:
             val = float(val)
-            self.set(kind,name,val)
+            self.set(p,kind,name,val)
         except ValueError:
             self.valueError(p,kind,name,val)
     #@nonl
@@ -817,7 +817,7 @@ class parserBaseClass:
             if data is not None:
                 name,val = data
                 setKind = key
-                self.set(setKind,name,val)
+                self.set(p,setKind,name,val)
     #@nonl
     #@-node:ekr.20041120094940.4:doFont
     #@+node:ekr.20041120103933:doIf
@@ -856,7 +856,7 @@ class parserBaseClass:
         
         try:
             val = int(val)
-            self.set(kind,name,val)
+            self.set(p,kind,name,val)
         except ValueError:
             self.valueError(p,kind,name,val)
     #@nonl
@@ -877,12 +877,12 @@ class parserBaseClass:
                 items = []
                 self.valueError(p,kind,name,val)
         
-            name = name[:i].strip()
+            name = name[j+1:].strip()
             kind = "ints[%s]" % (','.join([str(item) for item in items]))
-            g.trace(kind,name,val)
+            g.trace(repr(kind),repr(name),val)
     
             # At present no checking is done.
-            self.set(kind,name,val)
+            self.set(p,kind,name,val)
     #@nonl
     #@-node:ekr.20041217132253:doInts
     #@+node:ekr.20041120104215.2:doPage
@@ -897,7 +897,7 @@ class parserBaseClass:
         try:
             val = float(val)
             if 0.0 <= val <= 1.0:
-                self.set(kind,name,val)
+                self.set(p,kind,name,val)
             else:
                 self.valueError(p,kind,name,val)
         except ValueError:
@@ -910,14 +910,14 @@ class parserBaseClass:
         s = p.bodyString().strip()
         if s:
             lines = g.splitLines(s)
-            self.set("recent-files","recent-files",lines)
+            self.set(p,"recent-files","recent-files",lines)
     #@nonl
     #@-node:ekr.20041121151924:doRecentFiles
     #@+node:ekr.20041120113848:doShortcut
     def doShortcut(self,p,kind,name,val):
         
         # At present no checking is done.
-        self.set(kind,name,val)
+        self.set(p,kind,name,val)
     #@nonl
     #@-node:ekr.20041120113848:doShortcut
     #@+node:ekr.20041120105609:doShortcuts
@@ -933,14 +933,14 @@ class parserBaseClass:
                 name,val = self.parseShortcutLine(line)
                 # g.trace(name,val)
                 if val is not None:
-                    self.set("shortcut",name,val)
+                    self.set(p,"shortcut",name,val)
     #@nonl
     #@-node:ekr.20041120105609:doShortcuts
     #@+node:ekr.20041217132028:doString
     def doString (self,p,kind,name,val):
         
         # At present no checking is done.
-        self.set(kind,name,val)
+        self.set(p,kind,name,val)
     #@-node:ekr.20041217132028:doString
     #@+node:ekr.20041120094940.8:doStrings
     def doStrings (self,p,kind,name,val):
@@ -954,12 +954,12 @@ class parserBaseClass:
             items = items.split(',')
             items = [item.strip() for item in items]
     
-            name = name[:i].strip()
+            name = name[j+1:].strip()
             kind = "strings[%s]" % (','.join(items))
-            g.trace(kind,name,val)
+            g.trace(repr(kind),repr(name),val)
     
             # At present no checking is done.
-            self.set(kind,name,val)
+            self.set(p,kind,name,val)
     #@nonl
     #@-node:ekr.20041120094940.8:doStrings
     #@-node:ekr.20041120094940:kind handlers
@@ -1086,9 +1086,11 @@ class parserBaseClass:
     #@-node:ekr.20041120112043:parseShortcutLine
     #@-node:ekr.20041213082558:parsers
     #@+node:ekr.20041120094940.9:set (settingsParser)
-    def set (self,kind,name,val):
+    def set (self,p,kind,name,val):
         
         """Init the setting for name to val."""
+        
+        # p used in subclasses, not here.
         
         c = self.c
         
@@ -1183,7 +1185,7 @@ class settingsTreeParser (parserBaseClass):
             pass
         elif kind not in self.control_types and val in (u'None',u'none','None','none','',None):
             # None is valid for all data types.
-            self.set(kind,name,None)
+            self.set(p,kind,name,None)
         elif kind in self.control_types or kind in self.basic_types:
             f = self.dispatchDict.get(kind)
             try:
@@ -1194,7 +1196,7 @@ class settingsTreeParser (parserBaseClass):
         elif name:
             # self.error("unknown type %s for setting %s" % (kind,name))
             # Just assume the type is a string.
-            self.set(kind,name,val)
+            self.set(p,kind,name,val)
     #@nonl
     #@-node:ekr.20041119204714:visitNode
     #@-others

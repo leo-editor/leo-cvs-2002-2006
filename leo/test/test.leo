@@ -1,26 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet ekr_stylesheet?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="6450" clone_windows="0"/>
-<globals body_outline_ratio="0.590643274854">
-	<global_window_position top="31" left="83" height="839" width="907"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="6453" clone_windows="0"/>
+<globals body_outline_ratio="0.410011918951">
+	<global_window_position top="37" left="307" height="839" width="907"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
 <find_panel_settings/>
 <vnodes>
-<v t="ekr.20041121151002"><vh>@settings</vh>
+<v t="ekr.20041121151002" a="E"><vh>@settings</vh>
 <v t="ekr.20041121151002.1"><vh>@recent-files</vh></v>
+<v t="ekr.20041218110904"><vh>@page local options</vh>
 <v t="ekr.20041124063401"><vh>@bool use_plugins = True</vh></v>
 <v t="ekr.20041211044607"><vh>@int page_width = 80</vh></v>
-<v t="ekr.20041213075902" a="E"><vh>@font log font</vh></v>
-<v t="ekr.20041217042849" a="E"><vh>@font body font</vh></v>
-<v t="ekr.20041217132317" a="E"><vh>@strings [a,b, c] test = a</vh></v>
-<v t="ekr.20041217132338"><vh>@ints [1, 2, 3] test = 3</vh></v>
+<v t="ekr.20041213075902"><vh>@font log font</vh></v>
+<v t="ekr.20041217042849"><vh>@font body font</vh></v>
+<v t="ekr.20041217132317"><vh>@strings[a,b,c] test = b</vh></v>
+<v t="ekr.20041217132338"><vh>@ints[1,2,3] test = 3</vh></v>
+</v>
 <v t="ekr.20041217144914"><vh>@page colors</vh>
-<v t="ekr.20041217135841"><vh>@color outline_pane_background_color = #ffffe1</vh></v>
-<v t="ekr.20041217142026"><vh>@color log_pane_background_color = #f2fdff</vh></v>
-<v t="ekr.20041217143421"><vh>@color body_text_background_color = #ffecea</vh></v>
+<v t="ekr.20041217135841"><vh>@color outline_pane_background_color = None</vh></v>
+<v t="ekr.20041217142026"><vh>@color log_pane_background_color = None</vh></v>
+<v t="ekr.20041217143421"><vh>@color body_text_background_color = None</vh></v>
+<v t="ekr.20041218100259"><vh>@color headline_text_selected_background_color = #dbdbdb</vh></v>
 </v>
 </v>
 <v t="EKR.20040623200709"><vh>@thin ../src/leoTest.py</vh></v>
@@ -582,7 +585,7 @@
 <v t="ekr.20040319111213.4"><vh>filterHoist</vh></v>
 <v t="ekr.20040319111213.5"><vh>addMenu</vh></v>
 </v>
-<v t="ekr.20040715105834" a="E"><vh>Fun...</vh>
+<v t="ekr.20040715105834"><vh>Fun...</vh>
 <v t="EKR.20040626212434"><vh>Drawing experiments</vh>
 <v t="EKR.20040626212434.1"><vh>Rectangles &amp; ovals</vh></v>
 <v t="EKR.20040626212434.2"><vh>Lines &amp; arcs</vh></v>
@@ -988,7 +991,7 @@
 </v>
 </v>
 </v>
-<v t="ekr.20040712101754" a="E"><vh>Unit Tests</vh>
+<v t="ekr.20040712101754"><vh>Unit Tests</vh>
 <v t="ekr.20041012101944"><vh>@thin ../test/unittest/errorTest.py</vh></v>
 <v t="ekr.20040712101754.102"><vh>atFileTests...</vh>
 <v t="ekr.20040707140849.5"><vh>at-File test code (leoTest.py)</vh>
@@ -1443,16 +1446,16 @@
 </v>
 <v t="ekr.20040707081532.1"><vh>Do @test</vh></v>
 </v>
-<v t="ekr.20041213074603" a="TV"><vh>Settings dialog To do</vh>
+<v t="ekr.20041213074603"><vh>Settings dialog To do</vh>
 <v t="ekr.20041211053412"><vh>Fix recent files problems</vh></v>
 <v t="ekr.20041211053412.1"><vh>Fix bug: findSettingsRoot doesn't work if no summary node</vh></v>
 <v t="ekr.20041211053412.2"><vh>Support new buttons</vh></v>
 <v t="ekr.20041211053539.1"><vh>Copy expansion state when writing @settings trees</vh></v>
 <v t="ekr.20041217033348"><vh>Handle undo/redo properly</vh></v>
 <v t="ekr.20041217140915"><vh>Unit tests</vh></v>
-<v t="ekr.20041213115848"><vh>Later or never...</vh></v>
+<v t="ekr.20041213115848"><vh>Later ...</vh></v>
 </v>
-<v t="ekr.20041125145818.1" a="M"><vh>Settings dialog</vh>
+<v t="ekr.20041125145818.1" a="MTV"><vh>Settings dialog</vh>
 <v t="ekr.20041213090929"><vh>&lt;&lt; imports &gt;&gt;</vh></v>
 <v t="ekr.20041126110057"><vh>class settingsController</vh>
 <v t="ekr.20041216085206"><vh>class logClass</vh>
@@ -1492,6 +1495,7 @@
 <v t="ekr.20041217072951"><vh>&lt;&lt; create the sample area &gt;&gt;</vh></v>
 </v>
 <v t="ekr.20041127134208.5"><vh>createInt</vh></v>
+<v t="ekr.20041218100021"><vh>createInts</vh></v>
 <v t="ekr.20041127134208.7"><vh>createPath</vh></v>
 <v t="ekr.20041127134208.8"><vh>createRatio</vh></v>
 <v t="ekr.20041127134208.9"><vh>createRecentFiles (finish)</vh></v>
@@ -1499,7 +1503,7 @@
 <v t="ekr.20041127134613"><vh>createShortcuts</vh></v>
 <v t="ekr.20041128061452"><vh>createSpacerFrame</vh></v>
 <v t="ekr.20041127134613.1"><vh>createString</vh></v>
-<v t="ekr.20041127134613.2"><vh>createType   ??</vh></v>
+<v t="ekr.20041218100121"><vh>createStrings</vh></v>
 </v>
 <v t="ekr.20041130061955"><vh>callbacks...</vh>
 <v t="ekr.20041126104958"><vh>onAnyButton</vh></v>
@@ -1565,30 +1569,42 @@
 <v t="ekr.20041127110245"><vh>set</vh></v>
 <v t="ekr.20041127103503"><vh>visitNode</vh></v>
 <v t="ekr.20041127103503.1"><vh>kind handlers</vh>
-<v t="ekr.20041127111750"><vh>Not used</vh>
-<v t="ekr.20041127103503.2"><vh>doBool</vh></v>
-<v t="ekr.20041127103503.3"><vh>doColor</vh></v>
-<v t="ekr.20041127103503.7"><vh>doDirectory &amp; doPath</vh></v>
-<v t="ekr.20041127103503.11"><vh>doFloat</vh></v>
-<v t="ekr.20041127103503.4"><vh>doIf</vh></v>
-<v t="ekr.20041127103503.5"><vh>doIfGui</vh></v>
-<v t="ekr.20041127103503.6"><vh>doIfPlatform</vh></v>
-<v t="ekr.20041127103503.9"><vh>doIgnore</vh></v>
-<v t="ekr.20041127103503.10"><vh>doInt</vh></v>
-<v t="ekr.20041127103503.13"><vh>doRatio</vh></v>
-<v t="ekr.20041127103503.14"><vh>doRecentFiles</vh></v>
-<v t="ekr.20041127103503.15"><vh>doShortcut</vh></v>
-<v t="ekr.20041127103503.17"><vh>doString</vh></v>
-</v>
 <v t="ekr.20041127103503.8"><vh>doFont</vh></v>
 <v t="ekr.20041127103503.12"><vh>doPage</vh></v>
 <v t="ekr.20041127103503.16"><vh>doRecentFiles &amp; doBodyPaneList</vh></v>
 <v t="ekr.20041127113719"><vh>doShortcuts</vh></v>
-<v t="ekr.20041127103503.18"><vh>doType</vh></v>
 </v>
 </v>
 </v>
-<v t="ekr.20041130062919" a="E"><vh>updateConfig</vh></v>
+<v t="ekr.20041127112925"><vh>createWidgets &amp; helpers</vh>
+<v t="ekr.20041127134208"><vh>&lt;&lt; define creatorDispatchDict &gt;&gt;</vh></v>
+<v t="ekr.20041127134208.1"><vh>createBool</vh></v>
+<v t="ekr.20041127134208.2"><vh>createColor</vh>
+<v t="ekr.20041128062141"><vh>&lt;&lt; munge val and add val to colorNamesList &gt;&gt;</vh></v>
+<v t="ekr.20041128062902"><vh>&lt;&lt; create optionMenu and callback &gt;&gt;</vh></v>
+<v t="ekr.20041128062902.1"><vh>&lt;&lt; create picker button and callback &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20041127134208.3"><vh>createDirectory</vh></v>
+<v t="ekr.20041127134208.6"><vh>createFloat</vh></v>
+<v t="ekr.20041127134208.4"><vh>createFont </vh>
+<v t="ekr.20041213090401.4"><vh>&lt;&lt; create the family option menu &gt;&gt;</vh></v>
+<v t="ekr.20041213163519"><vh>&lt;&lt; create the size entry &gt;&gt;</vh></v>
+<v t="ekr.20041213090401.5"><vh>&lt;&lt; create the weight option menu &gt;&gt;</vh></v>
+<v t="ekr.20041213163519.1"><vh>&lt;&lt; create the slant option menu &gt;&gt;</vh></v>
+<v t="ekr.20041216110712"><vh>&lt;&lt; define fontCallback &gt;&gt;</vh></v>
+<v t="ekr.20041217072951"><vh>&lt;&lt; create the sample area &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20041127134208.5"><vh>createInt</vh></v>
+<v t="ekr.20041218100021"><vh>createInts</vh></v>
+<v t="ekr.20041127134208.7"><vh>createPath</vh></v>
+<v t="ekr.20041127134208.8"><vh>createRatio</vh></v>
+<v t="ekr.20041127134208.9"><vh>createRecentFiles (finish)</vh></v>
+<v t="ekr.20041127134208.10"><vh>createShortcut </vh></v>
+<v t="ekr.20041127134613"><vh>createShortcuts</vh></v>
+<v t="ekr.20041128061452"><vh>createSpacerFrame</vh></v>
+<v t="ekr.20041127134613.1"><vh>createString</vh></v>
+<v t="ekr.20041218100121"><vh>createStrings</vh></v>
+</v>
 </vnodes>
 <tnodes>
 <t tx="EKR.20040424065452">import leoGlobals as g
@@ -2209,7 +2225,7 @@ import leoGlobals as g
 print g.app.config.redirect_execute_script_output_to_log_pane</t>
 <t tx="EKR.20040627103732">@ignore</t>
 <t tx="EKR.20040627103801"></t>
-<t tx="EKR.20040627103902" lineYOffset="4b032e" icons="5d7100287d710128550577686572657102550a6265666f726549636f6e710355047870616471044b025504747970657105550466696c6571066806582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286805680668084afdffffff6806582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6802550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e"></t>
+<t tx="EKR.20040627103902" lineYOffset="4b032e" icons="5d7100287d7101285504747970657102550466696c65710355047870616471044b02550577686572657105550a6265666f726549636f6e71066803582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286802680368084afdffffff6803582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6805550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e"></t>
 <t tx="EKR.20040627121836">import leoGlobals as g
 
 c = g.top() ; p = c.currentPosition()
@@ -2340,7 +2356,7 @@ for p in c.rootPosition().allNodes_iter():
 s = "%d nodes" % count
 print s ; g.es(s)</t>
 <t tx="ekr.20040312101720"></t>
-<t tx="ekr.20040317101155" lineYOffset="4b032e" icons="5d7100287d7101285504747970657102550466696c65710355047870616471044b02550577686572657105550a6265666f726549636f6e710668035834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286802680368084afdffffff68035834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6805550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">import leoGlobals as g
+<t tx="ekr.20040317101155" lineYOffset="4b032e" icons="5d7100287d710128550577686572657102550a6265666f726549636f6e710355047870616471044b025504747970657105550466696c65710668065834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286805680668084afdffffff68065834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6802550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">import leoGlobals as g
 
 c = g.top()
 
@@ -11225,15 +11241,15 @@ Bigger projects:
     root.wait_window(top)</t>
 <t tx="ekr.20041121151002">@nocolor</t>
 <t tx="ekr.20041121151002.1">C:\prog\leoCVS\leo\src\LeoPy.leo
-C:\prog\leoCVS\leo\plugins\leoplugins.leo
-C:\prog\leoCVS\leo\plugins\leoPlugins.leo
-C:\prog\leoCVS\leo\test\unittest\minimalLeoFile3.leo
-C:\prog\leoCVS\leo\test\unittest\minimalLeoFile.leo
 C:\prog\leoCVS\leo\dist\leoDist.leo
+C:\prog\leoCVS\leo\plugins\leoplugins.leo
+C:\prog\leoCVS\leo\doc\LeoDocs.leo
+C:\prog\leoCVS\leo\plugins\leoPlugins.leo
 C:\prog\leoCVS\leo\doc\leodocs.leo
+C:\prog\leoCVS\leo\test\unittest\minimalLeoFile3.leo
 C:\prog\leoCVS\leo\test\test.leo
 C:\prog\leoCVS\leo\test\unittest\minimalLeoFile2.leo
-C:\prog\leoCVS\leo\doc\LeoDocs.leo</t>
+C:\prog\leoCVS\leo\test\unittest\minimalLeoFile.leo</t>
 <t tx="ekr.20041124063401"></t>
 <t tx="ekr.20041124102349">class tixDialog (leoTkinterDialog.leoTkinterDialog):
     
@@ -12919,6 +12935,7 @@ last_p = p</t>
         'ifplatform':   None,
         'ignore':       None,
         'int':          self.set,
+        'ints':         self.doInts,
         'float':        self.set,
         'font':         self.doFont,
         'path':         self.doPath,
@@ -12928,7 +12945,7 @@ last_p = p</t>
         'shortcut':     None,
         'shortcuts':    self.doShortcuts,
         'string':       self.set,
-        'type':         self.doType,
+        'strings':      self.doStrings,
     }</t>
 <t tx="ekr.20041127103503">def visitNode (self,p):
     
@@ -12947,63 +12964,18 @@ last_p = p</t>
         except TypeError:
             g.es_exception()
             print "*** no handler",kind</t>
-<t tx="ekr.20041127103503.1"></t>
-<t tx="ekr.20041127103503.2">def doBool (self,p,kind,name,val):
-    
-    self.set(p,kind,name,val)</t>
-<t tx="ekr.20041127103503.3">def doColor (self,p,kind,name,val):
-    
-    self.set(p,kind,name,val)</t>
-<t tx="ekr.20041127103503.4">def doIf(self,p,kind,name,val):
-    
-    pass</t>
-<t tx="ekr.20041127103503.5">def doIfGui (self,p,kind,name,val):
-    
-    pass</t>
-<t tx="ekr.20041127103503.6">def doIfPlatform (self,p,kind,name,val):
-    
-    pass</t>
-<t tx="ekr.20041127103503.7">def doDirectory (self,p,kind,name,val):
-    
-     self.set(p,kind,name,val)
-    
-doPath = doDirectory</t>
+<t tx="ekr.20041127103503.1"># Most of the work is done by base class methods.</t>
 <t tx="ekr.20041127103503.8">def doFont (self,p,kind,name,val):
 
     d = self.parseFont(p)
     # g.trace("\n\nfont dict...\n%s" % g.dictToString(d))
     self.set(p,kind,name,d)</t>
-<t tx="ekr.20041127103503.9">def doIgnore(self,p,kind,name,val):
-
-   pass # do nothing</t>
-<t tx="ekr.20041127103503.10">def doInt (self,p,kind,name,val):
-    
-     self.set(p,kind,name,val)</t>
-<t tx="ekr.20041127103503.11">def doFloat (self,p,kind,name,val):
-    
-     self.set(p,kind,name,val)</t>
 <t tx="ekr.20041127103503.12">def doPage(self,p,kind,name,val):
     
     """Create a widget for each setting in the subtree."""
 
     for p in p.subtree_iter():
         self.visitNode(p)</t>
-<t tx="ekr.20041127103503.13">def doRatio (self,p,kind,name,val):
-    
-     self.set(p,kind,name,val)</t>
-<t tx="ekr.20041127103503.14">def doRecentFiles (self,p,kind,name,val):
-    
-    s = p.bodyString().strip()
-    
-    g.trace(s)
-
-    if s: lines = g.splitLines(s)
-    else: lines = []
-
-    self.set(p,kind,name,lines)</t>
-<t tx="ekr.20041127103503.15">def doShortcut(self,p,kind,name,val):
-    
-    self.set(p,kind,name,val)</t>
 <t tx="ekr.20041127103503.16">def doBodyPaneList (self,p,kind,name,val):
 
     s = p.bodyString()
@@ -13019,22 +12991,9 @@ doPath = doDirectory</t>
 
 doRecentFiles = doBodyPaneList
 </t>
-<t tx="ekr.20041127103503.17">def doString (self,p,kind,name,val):
-    
-    self.set(p,kind,name,val)</t>
-<t tx="ekr.20041127103503.18">def doType (self,p,kind,name,val):
-    
-    if val:
-        self.set(p,kind,name,val)
-    else:
-        doBodyPaneList(p,kind,name,val)</t>
 <t tx="ekr.20041127110245">def set (self,p,kind,name,val):
     
     self.widgets.append((p.copy(),kind,name,val),)</t>
-<t tx="ekr.20041127111750"># Almost all the work is done by parseHeadline.
-
-if 0:
-    @others</t>
 <t tx="ekr.20041127112806">def printWidgets (self,widgets):
 
     print '-'*20
@@ -13060,13 +13019,18 @@ if 0:
             
     for data in widgets:
         p,kind,name,vals = data
-        f = creatorDispatchDict.get(munge(kind))
-        if f is not None:
-            try:
-                f(parent,p,kind,name,vals)
-            except TypeError:
-                g.es_exception()
-                g.trace("***No handler***",kind)</t>
+        if kind.startswith('ints'):
+            self.createInts(parent,p,kind,name,vals)
+        if kind.startswith('strings'):
+            self.createStrings(parent,p,kind,name,vals)
+        else:
+            f = creatorDispatchDict.get(munge(kind))
+            if f is not None:
+                try:
+                    f(parent,p,kind,name,vals)
+                except TypeError:
+                    g.es_exception()
+                    g.trace("***No handler***",kind)</t>
 <t tx="ekr.20041127113719">def doShortcuts(self,p,kind,name,val):
 
     s = p.bodyString()
@@ -13100,6 +13064,7 @@ self.setterLabel = sc.component('label')
     'directory':    self.createDirectory,
     'font':         self.createFont,
     'int':          self.createInt,
+    'ints':         self.createInts,
     'float':        self.createFloat,
     'path':         self.createPath,
     'ratio':        self.createRatio,
@@ -13107,7 +13072,7 @@ self.setterLabel = sc.component('label')
     'shortcut':     self.createShortcut,
     'shortcuts':    self.createShortcuts,
     'string':       self.createString,
-    'type':         self.createType,
+    'strings':      self.createStrings,
 }</t>
 <t tx="ekr.20041127134208.1">def createBool (self,parent,p,kind,name,val):
     
@@ -13128,7 +13093,7 @@ self.setterLabel = sc.component('label')
     box = Tk.Checkbutton(parent,text=name,variable=var)
 
     self.sc.create_window(10,self.h,anchor='w',window=box)
-    self.h += 20</t>
+    self.h += 30</t>
 <t tx="ekr.20041127134208.2">def createColor (self,parent,p,kind,name,val):
     
     munge = g.app.config.munge
@@ -13195,7 +13160,7 @@ self.setterLabel = sc.component('label')
     self.initValue(p,name,kind,val,intCallback)
     
     self.sc.create_window(10,self.h,anchor='w',window=f)
-    self.h += 20</t>
+    self.h += 30</t>
 <t tx="ekr.20041127134208.6">def createFloat (self,parent,p,kind,name,val):
 
     # Inits the entry widget.
@@ -13219,7 +13184,7 @@ self.setterLabel = sc.component('label')
     self.initValue(p,name,kind,val,floatCallback)
     
     self.sc.create_window(10,self.h,anchor='w',window=f)
-    self.h += 20</t>
+    self.h += 30</t>
 <t tx="ekr.20041127134208.7">def createPath (self,parent,p,kind,name,val):
     
     self.createString(parent,p,kind,name,val)</t>
@@ -13246,7 +13211,7 @@ self.setterLabel = sc.component('label')
     self.initValue(p,name,kind,val,ratioCallback)
     
     self.sc.create_window(10,self.h,anchor='w',window=f)
-    self.h += 20</t>
+    self.h += 30</t>
 <t tx="ekr.20041127134208.9">def createRecentFiles (self,parent,p,kind,name,vals):
     
     s = p.bodyString()
@@ -13298,9 +13263,7 @@ self.setterLabel = sc.component('label')
     self.initValue(p,name,kind,val,stringCallback)
     
     self.sc.create_window(15,self.h,anchor='w',window=f)
-    self.h += 22</t>
-<t tx="ekr.20041127134613.2">def createType (self,parent,p,kind,name,vals):
-    pass</t>
+    self.h += 30</t>
 <t tx="ekr.20041127144346">def onPaneResize (self,sizes=None):
 
     self.sc.resizescrollregion()</t>
@@ -13714,9 +13677,8 @@ if name in ("OK","Cancel"):</t>
 <t tx="ekr.20041213074603">@ignore
 @killcolor
 
-- Force all tree widgets to new color scheme when colors change.
-
-- Create widgets for @strings and @ints.</t>
+- Create widgets for @strings and @ints.
+</t>
 <t tx="ekr.20041213075902"># The font for the log pane. Default is default font for Tk.Text widgets.
 # Tk translates invalid font names to another font in a system-dependent way.
 # 
@@ -13786,10 +13748,11 @@ import tkColorChooser
 import tkFont
 
 import sys</t>
-<t tx="ekr.20041213115848">- (last) Move code into Leo's core.
+<t tx="ekr.20041213115848">- Move code into Leo's core.
     - move findCorrespondingNode into leoNodes class.
 
-** Don't use separate dialog at all??
+- Don't use separate dialog at all
+    - This create a way of cutting &amp; pasting colors.
     - However, we would still need a different outline.
     - If changes to the outline were allowed in the dialog it would be sorta like old clone windows.</t>
 <t tx="ekr.20041213163519">Tk.Label(f,text="Size:").pack(side="left")
@@ -13936,8 +13899,94 @@ body_text_font_weight = None
 <t tx="ekr.20041217132338"></t>
 <t tx="ekr.20041217135841"></t>
 <t tx="ekr.20041217140915">There are too many cases to test by hand.</t>
-<t tx="ekr.20041217142026">LightYellow1</t>
-<t tx="ekr.20041217143421">ivory1</t>
+<t tx="ekr.20041217142026">LightYellow1
+#f2fdff</t>
+<t tx="ekr.20041217143421">ivory1
+#ffecea</t>
 <t tx="ekr.20041217144914"></t>
+<t tx="ekr.20041218100021">def createInts (self,parent,p,kind,name,val):
+    
+    # g.trace(repr(kind),repr(name),val)
+    
+    i = kind.find('[')
+    j = kind.find(']')
+    if not (-1 &lt; i &lt; j):
+        return
+    
+    items = kind[i+1:j].split(',')
+    items.sort()
+    items.insert(0,'&lt;none&gt;')
+    
+    if val in items:
+        initialitem = items.index(val)
+    else:
+        initialitem = 0
+        
+    f = Tk.Frame(parent)
+
+    intsMenu = Pmw.OptionMenu(f,
+        labelpos="ew",label_text=name,
+        items=items,initialitem=initialitem)
+    intsMenu.pack(side="left",padx=2)
+
+    intsVar = Tk.StringVar()
+    intsVar.set(str(items[initialitem]))
+    
+    intsButton = intsMenu.component('menubutton')
+    intsButton.configure(width=20,textvariable=intsVar)
+    
+    def intsCallback():
+        val2 = intsVar.get()
+        try:
+            int(val2)
+            return val2
+        except TypeError:
+            g.trace("bad val:",val2)
+            return val
+
+    self.initValue(p,name,kind,val,intsCallback)
+
+    self.sc.create_window(10,self.h,anchor='w',window=f)
+    self.h += 30</t>
+<t tx="ekr.20041218100121">def createStrings (self,parent,p,kind,name,val):
+    
+    # g.trace(repr(kind),repr(name),val)
+    
+    i = kind.find('[')
+    j = kind.find(']')
+    if not (-1 &lt; i &lt; j):
+        return
+    
+    items = kind[i+1:j].split(',')
+    items.sort()
+    items.insert(0,'&lt;none&gt;')
+    if val in items:
+        initialitem = items.index(val)
+    else:
+        initialitem = 0
+        
+    f = Tk.Frame(parent)
+
+    stringsMenu = Pmw.OptionMenu(f,
+        labelpos="ew",label_text=name,
+        items=items,initialitem=initialitem)
+    stringsMenu.pack(side="left",padx=2)
+
+    stringsVar = Tk.StringVar()
+    stringsVar.set(items[initialitem])
+
+    stringsButton = stringsMenu.component('menubutton')
+    stringsButton.configure(width=20,textvariable=stringsVar)
+    
+    def stringsCallback():
+        val2 = stringsVar.get()
+        return val2
+
+    self.initValue(p,name,kind,val,stringsCallback)
+
+    self.sc.create_window(10,self.h,anchor='w',window=f)
+    self.h += 30</t>
+<t tx="ekr.20041218100259"></t>
+<t tx="ekr.20041218110904"></t>
 </tnodes>
 </leo_file>
