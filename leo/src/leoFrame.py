@@ -47,9 +47,10 @@ class componentBaseClass:
     def __init__ (self,c,name,frame,obj=None,packer=None,unpacker=None):
         
         self.c = c
-        self.frame = frame  # The Tk.Frame containing the component.
-        self.name = name    # The component's name: the key for c.frame.componentsDict.
-        self.obj = obj      # Optional object (typically not a Tk.Frame.)
+        self.frame = frame    # The Tk.Frame containing the component.
+        self.isVisible = False # True if the component is visible.
+        self.name = name      # The component's name: the key for c.frame.componentsDict.
+        self.obj = obj        # Optional object (typically not a Tk.Frame.)
         self.packer = packer
         self.unpacker = unpacker
     
@@ -81,6 +82,27 @@ class componentBaseClass:
         self.oops()
     #@nonl
     #@-node:ekr.20041223154028.3:must be defined in subclasses
+    #@+node:ekr.20041224072245:show & hide, pack & unpack
+    # Pack always packs the widget, which can make it visble in two places.
+    # Show packs a new widget only if it is not visible.
+    
+    def hide (self):
+        if self.isVisible:
+            self.isVisible = False
+            self.unpack()
+    
+    def pack (self):
+        self.oops()
+        
+    def show (self):
+        if not self.isVisible:
+            self.isVisible = True
+            self.pack()
+        
+    def unpack (self):
+        self.oops()
+        
+    #@-node:ekr.20041224072245:show & hide, pack & unpack
     #@-others
 #@nonl
 #@-node:ekr.20041223130609:class componentBaseClass
