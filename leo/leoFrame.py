@@ -938,7 +938,7 @@ class LeoFrame:
 			("Convert All T&abs",None,self.OnConvertAllTabs),
 			("Convert &Blanks","Shift+Ctrl+B",self.OnConvertBlanks),
 			("Convert &Tabs","Shift+Ctrl+J",self.OnConvertTabs),
-			("Insert Time/&Date","Shift+Ctrl+G",self.OnInsertTime),
+			("Insert Body Time/&Date","Shift+Ctrl+G",self.OnInsertBodyTime),
 			("&Reformat Paragraph","Shift+Ctrl+P",self.OnReformatParagraph),
 			("-",None,None),
 			("&Indent","Ctrl+]",self.OnIndent),
@@ -963,7 +963,7 @@ class LeoFrame:
 			("Edit &Headline","Ctrl+H",self.OnEditHeadline),
 			("&End Edit Headline","Escape",self.OnEndEditHeadline),
 			("&Abort Edit Headline","Shift-Escape",self.OnAbortEditHeadline),
-			("Append Time/&Date","Shift+Ctrl+H",self.OnAppendTime))
+			("Insert Headline Time/&Date","Shift+Ctrl+H",self.OnInsertHeadlineTime))
 			
 		self.createMenuEntries(editHeadlineMenu,table)
 		
@@ -2866,27 +2866,32 @@ class LeoFrame:
 	
 	#@-body
 	#@-node:9::OnInsertGraphicFile
-	#@+node:10::OnInsertTime & OnInsertTimeInHeadline & allies
+	#@+node:10::OnInsertBody/HeadlineTime & allies
 	#@+body
-	def OnInsertTime (self,event=None):
+	def OnInsertBodyTime (self,event=None):
 		
 		c = self.commands ; v = c.currentVnode()
+		sel1,sel2 = getTextSelection(c.body)
+		if sel1 and sel2:
+			c.body.delete(sel1,sel2)
 		c.body.insert("insert",self.getTime(body=true))
 		c.tree.onBodyChanged(v,"Typing")
 		
-	def OnAppendTime (self,event=None):
+	def OnInsertHeadlineTime (self,event=None):
 	
 		c = self.commands ; v = c.currentVnode()
 		s = v.headString() # Remember the old value.
 	
 		if v.edit_text:
+			sel1,sel2 = getTextSelection(v.edit_text)
+			if sel1 and sel2:
+				v.edit_text.delete(sel1,sel2)
 			v.edit_text.insert("insert",self.getTime(body=false))
 			c.tree.idle_head_key(v)
 			
 		# A kludge to get around not knowing whether we are editing or not.
 		if s.strip() == v.headString().strip():
 			es("Edit headline to append date/time")
-	
 	#@-body
 	#@+node:1::getTime
 	#@+body
@@ -2915,7 +2920,7 @@ class LeoFrame:
 	
 	#@-body
 	#@-node:1::getTime
-	#@-node:10::OnInsertTime & OnInsertTimeInHeadline & allies
+	#@-node:10::OnInsertBody/HeadlineTime & allies
 	#@-node:2::Edit Body submenu
 	#@+node:3::Edit Headline submenu
 	#@+node:1::OnEditHeadline

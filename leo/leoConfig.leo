@@ -522,8 +522,8 @@ CopyNode        = Shift+Ctrl+C
 Extract         = Shift+Ctrl+D
 ExtractSection  = Shift+Ctrl+E
 ImportTofile    = Shift+Ctrl+F
-InsertTimeDate  = Shift+Ctrl+G
-AppendTimeDate  = Shift+Ctrl+H
+InsertBodyTimeDate      = Shift+Ctrl+G
+InsertHeadlineTimeDate  = Shift+Ctrl+H
 # Unused        = Shift+Ctrl+I
 ConvertTabs     = Shift+Ctrl+J
 # Unused        = Shift+Ctrl+K
@@ -761,12 +761,12 @@ headline_text_editing_selection_background_color = DarkBlue
 #	Foreground and background colors of selected text headline text in a headline that is being edited.
 #	Both must be specified for either to take effect.
 
-headline_time_format_string = %m/%d/%y
+headline_time_format_string = %m/%d
 #	The format string used when creating the Time/Date string for the Insert Time/Date command.
 #	See the Python documentation for time.strftime for full details.
 #	Examples:
-#	1/30/03
-#		%m/%d/%y
+#	1/30
+#		%m/%d
 #	1/30/03 8:31:02
 #		%m/%d/%y %H:%M:%S
 #	Thu, 30 Jan 2003 16:57:12
