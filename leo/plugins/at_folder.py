@@ -1,4 +1,4 @@
-#@+leo-ver=4-thin-encoding=iso-8859-15,.
+#@+leo-ver=4-thin
 #@+node:edream.110203113231.873:@thin at_folder.py
 """Synchronize @folder nodes with folders"""
 

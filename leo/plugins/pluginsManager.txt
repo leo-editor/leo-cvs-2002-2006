@@ -135,6 +135,9 @@
 #@nonl
 #@-node:ekr.20040919091615:Example code
 #@+node:ekr.20040722121404:Experimental plugins
+# new atFile class.
+    ___proto_atFile.py
+
 # PRE_ALPHA QUALITY: MAY BE DANGEROUS
     # __wx_gui.py
     
