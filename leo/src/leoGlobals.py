@@ -1858,7 +1858,10 @@ def importFromPath (name,path):
 			fn = shortFileName(name)
 			mod_name,ext = os_path_splitext(fn)
 			path = os_path_normpath(path)
-			path = toEncodedString(path,app.tkEncoding) # 12/01/03
+			if CheckVersion(sys.version,"2.3"):
+				path = toEncodedString(path,app.tkEncoding) # 12/01/03
+			else:
+				path = str(path) # 1/29/04: May throw exception.
 			# trace(path)
 			data = imp.find_module(mod_name,[path]) # This can open the file.
 			if data:
