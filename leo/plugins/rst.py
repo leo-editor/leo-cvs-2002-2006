@@ -13,24 +13,21 @@ docutils installed, it will generate HTML or LaTeX, respectively."""
 # By Josef Dalcolmo: contributed under the same licensed as Leo.py itself.
 
 # EKR: The code now lets other plugins handle @folder and @url nodes.
+
 import leoGlobals as g
 import leoPlugins
+
 import os
 
 #@<< about this plugin >>
 #@+node:edream.111803100242.1:<<about this plugin >>
 #@+at 
 #@nonl
-# This plugin writes out @rst nodes as a reStructuredText file.
+# This plugin writes out @text nodes as a reStructuredText file.
 # 
 # If the filename ends in .html, .htm or .tex and if you have docutils_ (a 
 # Python
-# module) installed, then it will be written as HTML or LaTeX, respectively. 
-# The HTML converter is far
-# from bug-free, but remember, docutils is alpha software. (Perhaps a future
-# version will allow automatic translation to other formats, like 
-# OpenOffice.org
-# as well).
+# module) installed, then it will be written as HTML or LaTeX, respectively.
 # 
 # Headlines are translated into reStructuredText headlines, e.g. underlined
 # depending on the level and empty line separated from body text otherwise, 
@@ -82,7 +79,11 @@ import os
 # - 2003-11-02 Added generation of LaTeX files, just make the extension of the 
 # filename '.tex'. --Timo Honkasalo
 # 
-# - EKR 2004-9-9 Minor mods to support 4.2 code base.
+# - JD 2004-09-09 changed 'v' to 'p' in onIconDoubleClick to support the new 
+# plugin API of Leo 4.2.
+# 
+# - JD 2004-09-09 changed headline directive from @rst to @text to become 
+# compatible with the rst2 plugin.
 #@-at
 #@nonl
 #@-node:edream.111803100242.2:<< change log >>
@@ -101,7 +102,7 @@ def onIconDoubleClick(tag,keywords):
     v = keywords.get("p") or keywords.get("v")
     c = keywords.get("c")
     h = v.headString().strip()
-    if g.match_word(h,0,"@rst"):
+    if g.match_word(h,0,"@text"):
         fname = h[5:]
         ext = os.path.splitext(fname)[1].lower()
         if ext in ('.htm','.html','.tex'):
@@ -145,7 +146,7 @@ def onIconDoubleClick(tag,keywords):
                 convertedFile.write(output)
                 convertedFile.close()
                 rstFile.close()
-                writeFullFileName(fname)
+                g.es('written: '+str(fname))
             #@nonl
             #@-node:edream.111803100242.4:<< write rST as HTML/LaTeX >>
             #@nl
@@ -155,20 +156,11 @@ def onIconDoubleClick(tag,keywords):
             rstFile = file(fname,'w')
             writeTreeAsRst(rstFile, fname, v, c)
             rstFile.close()
-            writeFullFileName(fname)
+            g.es('written: '+str(fname))
             #@nonl
             #@-node:edream.111803100242.6:<< write rST file >>
             #@nl
 #@-node:edream.111803100242.3:onIconDoubleClick
-#@+node:ekr.20040811065353:writeFullFileName
-def writeFullFileName (fname):
-    
-    path = g.os_path_join(os.getcwd(),fname)
-    path = g.os_path_abspath(path)
-    
-    g.es('rst written: ' + path,color="blue")
-#@nonl
-#@-node:ekr.20040811065353:writeFullFileName
 #@+node:edream.111803100242.7:writeTreeAsRst
 def writeTreeAsRst(rstFile, fname, vnode, c):
     'Writes the tree under vnode to the file rstFile (fname is the filename)'
@@ -224,7 +216,7 @@ if not g.app.unitTesting:
     # Register the handlers...
     leoPlugins.registerHandler("icondclick1",onIconDoubleClick)
         
-    __version__ = "1.5" # Set version for the plugin handler.
+    __version__ = "1.6" # Set version for the plugin handler.
     g.plugin_signon(__name__)
 #@nonl
 #@-node:edream.111803100242:@thin rst.py
