@@ -482,9 +482,6 @@ class vnode:
 		self.iconx, self.icony = 0,0 # Coords of icon so icon can be redrawn separately.
 		self.edit_text = None # Essential: used by many parts of tree code.
 		self.icon_id = None
-		
-		# New in 4.0.
-		self.gnx = None # Will be set later, if needed.
 		#@-body
 		#@-node:1::<< initialize vnode data members >>
 
@@ -1040,22 +1037,14 @@ class vnode:
 	
 	#@-body
 	#@-node:4::findRoot
-	#@+node:5::v.getGnx
-	#@+body
-	def getGnx(self):
-		
-		return self.gnx
-	
-	#@-body
-	#@-node:5::v.getGnx
-	#@+node:6::getJoinList
+	#@+node:5::getJoinList
 	#@+body
 	def getJoinList (self):
 	
 		return self.joinList
 	#@-body
-	#@-node:6::getJoinList
-	#@+node:7::headString
+	#@-node:5::getJoinList
+	#@+node:6::headString
 	#@+body
 	# Compatibility routine for scripts
 	
@@ -1068,8 +1057,8 @@ class vnode:
 	
 	
 	#@-body
-	#@-node:7::headString
-	#@+node:8::isAncestorOf
+	#@-node:6::headString
+	#@+node:7::isAncestorOf
 	#@+body
 	def isAncestorOf (self, v):
 	
@@ -1082,15 +1071,15 @@ class vnode:
 			v = v.parent()
 		return false
 	#@-body
-	#@-node:8::isAncestorOf
-	#@+node:9::isRoot
+	#@-node:7::isAncestorOf
+	#@+node:8::isRoot
 	#@+body
 	def isRoot (self):
 	
 		return not self.parent() and not self.back()
 	#@-body
-	#@-node:9::isRoot
-	#@+node:10::Status Bits
+	#@-node:8::isRoot
+	#@+node:9::Status Bits
 	#@+node:1::isCloned
 	#@+body
 	def isCloned (self):
@@ -1168,8 +1157,8 @@ class vnode:
 		return self.statusBits
 	#@-body
 	#@-node:10::status
-	#@-node:10::Status Bits
-	#@+node:11::Structure Links
+	#@-node:9::Status Bits
+	#@+node:10::Structure Links
 	#@+node:1::back
 	#@+body
 	# Compatibility routine for scripts
@@ -1307,7 +1296,7 @@ class vnode:
 		return v
 	#@-body
 	#@-node:10::visNext
-	#@-node:11::Structure Links
+	#@-node:10::Structure Links
 	#@-node:9::Getters
 	#@+node:10::Setters
 	#@+node:1::Head and body text
@@ -2501,10 +2490,24 @@ class vnode:
 #@+body
 # Indices are Python dicts containing 'id','loc','time' and 'n' keys.
 
+import time
+
 class nodeIndices:
 
 	#@+others
-	#@+node:1::areEqual
+	#@+node:1::nodeIndices.__init__
+	#@+body
+	def __init__ (self):
+		
+		"""ctor for nodeIndices class"""
+		
+		self.userId = app().leoID # 5/1/03: This never changes.
+		self.defaultId = app().leoID # This probably will change.
+		self.lastIndex = None
+		self.timeString = None
+	#@-body
+	#@-node:1::nodeIndices.__init__
+	#@+node:2::areEqual
 	#@+body
 	def areEqual (self,gnx1,gnx2):
 		
@@ -2514,39 +2517,32 @@ class nodeIndices:
 		id2,time2,n2 = gnx2
 		return id1==id2 and time1==time2 and n1==n2
 	#@-body
-	#@-node:1::areEqual
-	#@+node:2::nodeIndices.__init__
+	#@-node:2::areEqual
+	#@+node:3::get/setDefaultId
 	#@+body
-	def __init__ (self):
+	# These are used by the fileCommands read/write code.
+	
+	def getDefaultId (self):
 		
-		self.defaultId = app().leoID
-		self.lastIndex = None
-	#@-body
-	#@-node:2::nodeIndices.__init__
-	#@+node:3::toString
-	#@+body
-	def toString (self,index,removeDefaultId=false):
+		"""Return the id to be used by default in all gnx's"""
+		return self.defaultId
 		
-		"""convert a gnx (a tuple) to its string representation"""
+	def setDefaultId (self,id):
+		
+		"""Set the id to be used by default in all gnx's"""
+		self.defaultId = id
 	
-		id,t,n = index
-	
-		if removeDefaultId and id == self.defaultId:
-			id = ""
-	
-		if n == None:
-			return "%s.%s" % (id,t)
-		else:
-			return "%s.%s.%d" % (id,t,n)
 	#@-body
-	#@-node:3::toString
+	#@-node:3::get/setDefaultId
 	#@+node:4::getNewIndex
 	#@+body
-	def getNewIndex (self,id=None,tag=""):
+	def getNewIndex (self):
 		
-		import time
-		if id == None: id=self.defaultId
-		t = time.strftime("%m%d%y%H%M%S",time.localtime()) # compact timestamp is best
+		"""Create a new gnx using self.timeString and self.lastIndex"""
+		
+		id = self.userId # Bug fix 5/1/03: always use the user's id for new ids!
+		t = self.timeString
+		assert(t)
 		n = None
 	
 		# Set n if id and time match the previous index.
@@ -2556,26 +2552,18 @@ class nodeIndices:
 			if id==lastId and t==lastTime:
 				if lastN == None: n = 1
 				else: n = lastN + 1
-				
+	
 		d = (id,t,n)
 		self.lastIndex = d
-		trace(tag,d)
+		trace(d)
 		return d
 	#@-body
 	#@-node:4::getNewIndex
-	#@+node:5::get/setDefaultId
-	#@+body
-	def getDefaultId (self):
-		return self.defaultId
-		
-	def setDefaultId (self,id):
-		self.defaultId = id
-	
-	#@-body
-	#@-node:5::get/setDefaultId
-	#@+node:6::scanGnx
+	#@+node:5::scanGnx
 	#@+body
 	def scanGnx (self,s,i):
+		
+		"""Create a gnx from its string representation"""
 	
 		if len(s) > 0 and s[-1] == '\n':
 			s = s[:-1]
@@ -2597,7 +2585,35 @@ class nodeIndices:
 	
 		return d
 	#@-body
-	#@-node:6::scanGnx
+	#@-node:5::scanGnx
+	#@+node:6::setTimeString
+	#@+body
+	def setTimestamp (self):
+	
+		"""Set the timestamp string to be used by getNewIndex until further notice"""
+	
+		self.timeString = time.strftime(
+			"%m%d%y%H%M%S",  # compact timestamp is best
+			time.localtime())
+	#@-body
+	#@-node:6::setTimeString
+	#@+node:7::toString
+	#@+body
+	def toString (self,index,removeDefaultId=false):
+		
+		"""Convert a gnx (a tuple) to its string representation"""
+	
+		id,t,n = index
+	
+		if removeDefaultId and id == self.defaultId:
+			id = ""
+	
+		if n == None:
+			return "%s.%s" % (id,t)
+		else:
+			return "%s.%s.%d" % (id,t,n)
+	#@-body
+	#@-node:7::toString
 	#@-others
 #@-body
 #@-node:5::class nodeIndices

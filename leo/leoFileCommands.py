@@ -79,7 +79,7 @@ class fileCommands:
 		v = None ; c = self.commands
 		# Shared tnodes are placed in the file even if empty.
 		if tref == -1:
-			t = leoNodes.tnode() # Was reverted in previous commit.
+			t = leoNodes.tnode()
 		else:
 			t = self.tnodesDict.get(tref)
 			if not t:
@@ -777,9 +777,7 @@ class fileCommands:
 		tref = -1 ; headline = "" ; gnxString = None
 		# we have already matched <v.
 		while 1:
-			if self.matchTag("vnx="): # New in 4.0.
-				gnxString = self.getDqString() 
-			elif self.matchTag("tnx="): # New in 4.0
+			if self.matchTag("tnx="): # New in 4.0
 				tref = self.getDqString()
 			elif self.matchTag("a=\""):
 				
@@ -805,6 +803,8 @@ class fileCommands:
 				tref = self.getIndex() ; self.getDquote()
 			elif self.matchTag("vtag=\"V"): # Pre-3.0
 				self.getIndex() ; self.getDquote() # ignored
+			## elif self.matchTag("vnx="): # To be deleted.
+			##	self.getDqString() #ignored
 			else: break
 		self.getTag(">")
 		# Headlines are optional.
@@ -812,8 +812,6 @@ class fileCommands:
 			headline = self.getEscapedString() ; self.getTag("</vh>")
 		# Link v into the outline using parent and back.
 		v = self.createVnode(parent,back,tref,headline)
-		if gnxString and self.a.use_gnx: # New in 4.0.
-			v.gnx = self.nodeIndices.scanGnx(gnxString,0)
 		v.statusBits = self.dummy_v.statusBits
 		# Remember various info that may have been specified.
 		if currentVnodeFlag:
@@ -1051,67 +1049,70 @@ class fileCommands:
 	#@-node:8::xmlUnescape
 	#@-node:2::Reading
 	#@+node:3::Writing
-	#@+node:1::assignFileIndices
+	#@+node:1::assignAllGnx
+	#@+body
+	def assignAllGnx (self):
+		
+		"""Assign a gnx to tnodes that don't have one"""
+		
+		c = self.commands ; v = c.rootVnode()
+		nodeIndices = self.nodeIndices
+		
+		# Set the time for all tnodes requiring a new gnx field.
+		nodeIndices.setTimestamp()
+	
+		while v:
+			if not v.t.gnx:
+				v.t.gnx = nodeIndices.getNewIndex()
+			v = v.threadNext()
+	#@-body
+	#@-node:1::assignAllGnx
+	#@+node:2::assignFileIndices
 	#@+body
 	def assignFileIndices (self):
-	
-		c=self.commands ; v = c.rootVnode()
-		while v:
-			t = v.t
-			# 8/28/99.  Write shared tnodes even if they are empty.
-			if t.hasBody() or v.getJoinList():
-				if t.fileIndex == 0:
-					self.maxTnodeIndex += 1
-					t.setFileIndex(self.maxTnodeIndex)
-			else:
-				t.setFileIndex(0)
-			v = v.threadNext()
+		
+		"""Assign a gnx or file index to all tnodes"""
+		
+		if self.a.use_gnx:
+			self.assignAllGnx()
+		else:
+			c=self.commands ; v = c.rootVnode()
+			while v:
+				t = v.t
+				# 8/28/99.  Write shared tnodes even if they are empty.
+				if t.hasBody() or v.getJoinList():
+					if t.fileIndex == 0:
+						self.maxTnodeIndex += 1
+						t.setFileIndex(self.maxTnodeIndex)
+				else:
+					t.setFileIndex(0)
+				v = v.threadNext()
 	#@-body
-	#@-node:1::assignFileIndices
-	#@+node:2::compactFileIndices
+	#@-node:2::assignFileIndices
+	#@+node:3::compactFileIndices
 	#@+body
 	def compactFileIndices (self):
-	
-		c = self.commands ; v = c.rootVnode()
-		self.maxTnodeIndex = 0
-		while v: # Clear all indices.
-			v.t.setFileIndex(0)
-			v = v.threadNext()
-		v = c.rootVnode()
-		while v: # Set indices for all tnodes that will be written.
-			t = v.t
-			if t.hasBody() or v.getJoinList(): # 8/28/99. Write shared tnodes even if they are empty.
-				if t.fileIndex == 0:
-					self.maxTnodeIndex += 1
-					t.setFileIndex(self.maxTnodeIndex)
-			v = v.threadNext()
+		
+		"""Assign a gnx or file index to all tnodes, compacting all file indices"""
+		
+		if self.a.use_gnx:
+			self.assignAllGnx()
+		else:
+			c = self.commands ; v = c.rootVnode()
+			self.maxTnodeIndex = 0
+			while v: # Clear all indices.
+				v.t.setFileIndex(0)
+				v = v.threadNext()
+			v = c.rootVnode()
+			while v: # Set indices for all tnodes that will be written.
+				t = v.t
+				if t.hasBody() or v.getJoinList(): # 8/28/99. Write shared tnodes even if they are empty.
+					if t.fileIndex == 0:
+						self.maxTnodeIndex += 1
+						t.setFileIndex(self.maxTnodeIndex)
+				v = v.threadNext()
 	#@-body
-	#@-node:2::compactFileIndices
-	#@+node:3::shouldCompactOnSave
-	#@+body
-	#@+at
-	#  This method sets policy for when we should compact a file before doing 
-	# a Save Command.
-
-	#@-at
-	#@@c
-
-	def shouldCompactOnSave (self):
-	
-		c=self.commands
-		# Count the number of tnodes used
-		c.clearAllVisited()
-		v = c.rootVnode() ; tnodesUsed = 0
-		while v:
-			t = v.t
-			if t and not t.isVisited():
-				tnodesUsed += 1
-				t.setVisited()
-			v = v.threadNext()
-		tnodesUnused = self.maxTnodeIndex - tnodesUsed
-		return tnodesUnused > 100
-	#@-body
-	#@-node:3::shouldCompactOnSave
+	#@-node:3::compactFileIndices
 	#@+node:4::put routines
 	#@+node:1::putClipboardHeader
 	#@+body
@@ -1517,24 +1518,16 @@ class fileCommands:
 	
 		self.put("<t")
 		if self.a.use_gnx:
-			
-			#@<< put t.gnx, assigning it if needed >>
-			#@+node:1::<< put t.gnx, assigning it if needed >>
-			#@+body
-			if not t.gnx:
-				t.gnx = self.nodeIndices.getNewIndex(tag="putTnode")
-			
+			assert(t.gnx) # assignAllGnx has set all indices.
 			gnxString = self.nodeIndices.toString(t.gnx,removeDefaultId=true)
-				
 			self.put(" tnx=") ; self.put_in_dquotes(gnxString)
-			#@-body
-			#@-node:1::<< put t.gnx, assigning it if needed >>
-
 		else:
 			self.put(" tx=") ; self.put_in_dquotes("T" + `t.fileIndex`)
 		self.put(">")
+	
 		if t.bodyString and len(t.bodyString) > 0:
 			self.putEscapedString(t.bodyString)
+	
 		self.put("</t>") ; self.put_nl()
 	#@-body
 	#@-node:12::putTnode (changed in 4.0)
@@ -1581,27 +1574,17 @@ class fileCommands:
 		self.put("<v")
 		if self.a.use_gnx:
 			
-			#@<< put v.gnx and v.t.gnx, assigning them if needed >>
-			#@+node:1::<< put v.gnx and v.t.gnx, assigning them if needed >>
+			#@<< put v.t.gnx >>
+			#@+node:1::<< Put v.t.gnx >>
 			#@+body
-			if not v.gnx:
-				tag = "putVnode v " + v.headString()
-				v.gnx = self.nodeIndices.getNewIndex(tag=tag)
-			
-			gnxString = self.nodeIndices.toString(v.gnx,removeDefaultId=true)
-			self.put(" vnx=") ; self.put_in_dquotes(gnxString)
-			
 			t = v.t
-			if not t.gnx:
-				tag = "putVnode t " + v.headString()
-				t.gnx = self.nodeIndices.getNewIndex(tag=tag)
-			
+			assert(t.gnx)
 			tnxString = self.nodeIndices.toString(t.gnx,removeDefaultId=true)
 			self.put(" tnx=") ; self.put_in_dquotes(tnxString)
 			
 			t.setVisited() # Indicate we wrote the body text.
 			#@-body
-			#@-node:1::<< put v.gnx and v.t.gnx, assigning them if needed >>
+			#@-node:1::<< Put v.t.gnx >>
 
 		else:
 			

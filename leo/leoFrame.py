@@ -2518,10 +2518,9 @@ class LeoFrame:
 		c = self.commands ; root = c.rootVnode()
 		v = root
 		while v:
-			v.gnx = None
 			v.t.gnx = None
 			v = v.threadNext()
-		es("all node indices cleared",color="red")
+		es("all tnode indices cleared",color="red")
 	#@-body
 	#@-node:8::OnClearAllNodeIndices
 	#@-node:3::Read/Write submenu

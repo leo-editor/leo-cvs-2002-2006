@@ -179,10 +179,24 @@ class atFile:
 	#@+body
 	# Indices are Python dicts containing 'id','loc','time' and 'n' keys.
 	
+	import time
+	
 	class nodeIndices:
 
 		#@+others
-		#@+node:1::areEqual
+		#@+node:1::nodeIndices.__init__
+		#@+body
+		def __init__ (self):
+			
+			"""ctor for nodeIndices class"""
+			
+			self.userId = app().leoID # 5/1/03: This never changes.
+			self.defaultId = app().leoID # This probably will change.
+			self.lastIndex = None
+			self.timeString = None
+		#@-body
+		#@-node:1::nodeIndices.__init__
+		#@+node:2::areEqual
 		#@+body
 		def areEqual (self,gnx1,gnx2):
 			
@@ -192,39 +206,32 @@ class atFile:
 			id2,time2,n2 = gnx2
 			return id1==id2 and time1==time2 and n1==n2
 		#@-body
-		#@-node:1::areEqual
-		#@+node:2::nodeIndices.__init__
+		#@-node:2::areEqual
+		#@+node:3::get/setDefaultId
 		#@+body
-		def __init__ (self):
+		# These are used by the fileCommands read/write code.
+		
+		def getDefaultId (self):
 			
-			self.defaultId = app().leoID
-			self.lastIndex = None
-		#@-body
-		#@-node:2::nodeIndices.__init__
-		#@+node:3::toString
-		#@+body
-		def toString (self,index,removeDefaultId=false):
+			"""Return the id to be used by default in all gnx's"""
+			return self.defaultId
 			
-			"""convert a gnx (a tuple) to its string representation"""
+		def setDefaultId (self,id):
+			
+			"""Set the id to be used by default in all gnx's"""
+			self.defaultId = id
 		
-			id,t,n = index
-		
-			if removeDefaultId and id == self.defaultId:
-				id = ""
-		
-			if n == None:
-				return "%s.%s" % (id,t)
-			else:
-				return "%s.%s.%d" % (id,t,n)
 		#@-body
-		#@-node:3::toString
+		#@-node:3::get/setDefaultId
 		#@+node:4::getNewIndex
 		#@+body
-		def getNewIndex (self,id=None,tag=""):
+		def getNewIndex (self):
 			
-			import time
-			if id == None: id=self.defaultId
-			t = time.strftime("%m%d%y%H%M%S",time.localtime()) # compact timestamp is best
+			"""Create a new gnx using self.timeString and self.lastIndex"""
+			
+			id = self.userId # Bug fix 5/1/03: always use the user's id for new ids!
+			t = self.timeString
+			assert(t)
 			n = None
 		
 			# Set n if id and time match the previous index.
@@ -234,26 +241,18 @@ class atFile:
 				if id==lastId and t==lastTime:
 					if lastN == None: n = 1
 					else: n = lastN + 1
-					
+		
 			d = (id,t,n)
 			self.lastIndex = d
-			trace(tag,d)
+			trace(d)
 			return d
 		#@-body
 		#@-node:4::getNewIndex
-		#@+node:5::get/setDefaultId
-		#@+body
-		def getDefaultId (self):
-			return self.defaultId
-			
-		def setDefaultId (self,id):
-			self.defaultId = id
-		
-		#@-body
-		#@-node:5::get/setDefaultId
-		#@+node:6::scanGnx
+		#@+node:5::scanGnx
 		#@+body
 		def scanGnx (self,s,i):
+			
+			"""Create a gnx from its string representation"""
 		
 			if len(s) > 0 and s[-1] == '\n':
 				s = s[:-1]
@@ -275,7 +274,35 @@ class atFile:
 		
 			return d
 		#@-body
-		#@-node:6::scanGnx
+		#@-node:5::scanGnx
+		#@+node:6::setTimeString
+		#@+body
+		def setTimestamp (self):
+		
+			"""Set the timestamp string to be used by getNewIndex until further notice"""
+		
+			self.timeString = time.strftime(
+				"%m%d%y%H%M%S",  # compact timestamp is best
+				time.localtime())
+		#@-body
+		#@-node:6::setTimeString
+		#@+node:7::toString
+		#@+body
+		def toString (self,index,removeDefaultId=false):
+			
+			"""Convert a gnx (a tuple) to its string representation"""
+		
+			id,t,n = index
+		
+			if removeDefaultId and id == self.defaultId:
+				id = ""
+		
+			if n == None:
+				return "%s.%s" % (id,t)
+			else:
+				return "%s.%s.%d" % (id,t,n)
+		#@-body
+		#@-node:7::toString
 		#@-others
 	
 	#@-body
@@ -345,19 +372,14 @@ class atFile:
 	#@-node:2::completeLastDirectives (Dave Hein)
 	#@+node:3::createChild (4.0)
 	#@+body
-	def createChild (self,parent,headline,gnx):
+	def createChild (self,parent,headline):
 		
-		""" Create a 4.0 child vnode of parent with the given gnx if necessary.
-		
-		A placeholder tnode is created without a gnx.
-		If the node isn't shared a new gnx will be allocated later.
-		Otherwise the temporary tnode will be replaced by the shared tnode.
+		""" Create a 4.0 child vnode of parent.
 		"""
 	
-		# trace("parent,headline,gnx:",`parent`,`headline`,`gnx`)
+		# trace("parent,headline:",`parent`,`headline`)
 		t = leoNodes.tnode()
 		v = parent.insertAsLastChild(t=t)
-		v.gnx = gnx
 		v.initHeadString(headline)
 		return v
 	#@-body
@@ -479,8 +501,10 @@ class atFile:
 			#@+node:1::<< remove the comment delims from s >>
 			#@+body
 			# Remove the starting comment and the blank.
-			if match(s,0,start + ' '):
-				s = s[len(start)+1:]
+			# 5/1/03: The starting comment now looks like a sentinel, to warn users from changing it.
+			comment = start + '@ '
+			if match(s,0,comment):
+				s = s[len(comment):]
 			else:
 				self.readError("expecting comment" + m)
 			
@@ -551,22 +575,28 @@ class atFile:
 	#@+body
 	# We expect only a single line, and more may exist if cvs detects a conflict.
 	# We accept the first line even if it looks like a sentinel.
+	# 5/1/03: The starting comment now looks like a sentinel, to warn users from changing it.
 	
 	def readLinesToNextSentinel (self,file):
 		
-		"""	read nonsentinel lines following multiline sentinels"""
+		"""	read lines following multiline sentinels"""
 		
 		lines = []
+		start = self.startSentinelComment + '@ '
 		nextLine = self.readLine(file)
 		while nextLine and len(nextLine) > 0:
-			if len(lines) == 0 or self.sentinelKind(nextLine) == atFile.noSentinel:
+			if len(lines) == 0:
 				lines.append(nextLine)
 				nextLine = self.readLine(file)
-			else: break
+			else:
+				# 5/1/03: looser test then calling sentinelKind.
+				s = nextLine ; i = skip_ws(s,0)
+				if match(s,i,start):
+					lines.append(nextLine)
+					nextLine = self.readLine(file)
+				else: break
 	
 		return nextLine,lines
-	
-	
 	#@-body
 	#@-node:8::readLinesToNextSentinel
 	#@+node:9::scanDoc
@@ -1242,9 +1272,7 @@ class atFile:
 				#@+body
 				assert(match(s,i,"+v"))
 				i += 2 ; i = skip_ws(s,i)
-				# set gnx from the sentinel.
-				gnx = a.nodeIndices.scanGnx(s,i)
-				print "scanning v:gnx:", gnx
+				
 				# Get the headline from the line following the +v sentinel.
 				next,lines = self.readLinesToNextSentinel(file)
 				headline = self.handleLinesFollowingSentinel(lines,"+v")
@@ -1279,7 +1307,7 @@ class atFile:
 					self.scanText(file,v,out,atFile.endV,nextLine=next)
 				else:
 					# NB: this call to createChild is the bottleneck!
-					child = self.createChild(v,headline,gnx)
+					child = self.createChild(v,headline)
 					self.scanText(file,child,out,atFile.endV,nextLine=next)
 				
 				
@@ -1760,7 +1788,7 @@ class atFile:
 				root.clearAllVisitedInTree()
 				
 				#@<< Handle clone bits >>
-				#@+node:5::<< Handle clone bits >>
+				#@+node:5::<< Handle clone bits >> (no longer used)
 				#@+body
 				h = {}
 				v = root
@@ -1791,11 +1819,11 @@ class atFile:
 							t.setCloneIndex(0) # t is no longer cloned.
 					v = v.threadNext()
 				#@-body
-				#@-node:5::<< Handle clone bits >>
+				#@-node:5::<< Handle clone bits >> (no longer used)
 
 				
 				#@<< Join cloned trees >>
-				#@+node:6::<< Join cloned trees >>
+				#@+node:6::<< Join cloned trees >> (no longer used)
 				#@+body
 				#@+at
 				#  In most cases, this code is not needed, because the outline 
@@ -1826,7 +1854,7 @@ class atFile:
 						h[cloneIndex] = v
 					v = v.threadNext()
 				#@-body
-				#@-node:6::<< Join cloned trees >>
+				#@-node:6::<< Join cloned trees >> (no longer used)
 
 			
 			#@<< Handle all status bits >>
@@ -1848,6 +1876,23 @@ class atFile:
 			
 			#@-body
 			#@-node:7::<< Handle all status bits >>
+
+			if app().use_gnx and self.using_gnx:
+				
+				#@<< Update join links and clone bits for 4.0 derived file >>
+				#@+node:8::<< Update join links and clone bits for 4.0 derived file >>
+				#@+body
+				v = root ; after = v.nodeAfterTree()
+				
+				# Add v to the join list.  How to do this???
+				
+				# Update the clone bits.
+				print "recomputing clone bits"
+				while v and v != after:
+					c.initJoinedCloneBits(v)
+					v = v.threadNext()
+				#@-body
+				#@-node:8::<< Update join links and clone bits for 4.0 derived file >>
 
 		if self.errors > 0:
 			# A serious error has occured that has not been corrected.
@@ -1969,8 +2014,8 @@ class atFile:
 			return
 		
 		if self.using_gnx:
-			self.putSentinelAndGnx(v,"@+v")
-			self.putSentinel(' ' + v.headString())
+			self.putSentinel("@+v")
+			self.putSentinel('@ ' + v.headString()) # 5/1/03: make the line look like a real sentinel.
 		else:
 			s = self.nodeSentinelText(v)
 			self.putSentinel("@+node:" + s)
@@ -2047,13 +2092,13 @@ class atFile:
 	#@-node:7::putSentinel (applies cweb hack)
 	#@+node:8::putSentinelAndGnx (4.0)
 	#@+body
-	def putSentinelAndGnx (self,vt,s):
+	def putSentinelAndGnx (self,t,s):
 	
 		# Allocate the gnx if necessary.
-		if vt.gnx == None:
-			vt.gnx = self.nodeIndices.getNewIndex("putSentinelAndGnx")
+		if t.gnx == None:
+			t.gnx = self.nodeIndices.getNewIndex()
 	
-		self.putSentinel(s + ' ' + self.nodeIndices.toString(vt.gnx))
+		self.putSentinel(s + ' ' + self.nodeIndices.toString(t.gnx))
 	#@-body
 	#@-node:8::putSentinelAndGnx (4.0)
 	#@+node:9::sentinelKind
@@ -2830,10 +2875,11 @@ class atFile:
 		self.root = root
 		self.raw = false
 		c.endEditing() # Capture the current headline.
-		
 		#@-body
 		#@-node:1::<< initialize >>
 
+		# Set the time for all nodes requiring a new gnx field.
+		self.nodeIndices.setTimestamp()
 		try:
 			
 			#@<< open the file; return on error >>
@@ -3719,19 +3765,8 @@ class atFile:
 					isSection, j = self.isSectionName(s, i)
 					
 					if isSection:
-						if 0: # 1/27/03:  This is complex and doesn't always work.
-							if self.sentinels:
-								# Output the buffered characters and clear the buffer.
-								self.os(s[buf:i]) ; buf = i
-							else:
-								# Remove any leading whitespace before the section ref.
-								old_i = i ; i -= 1
-								while i >= 0 and s[i] in (' ','\t'):
-									i -= 1
-								self.os(s[buf:i]) ; buf = i = old_i
-						else: # The old way...
-							# Output the buffered characters and clear the buffer.
-							self.os(s[buf:i]) ; buf = i
+						# Output the buffered characters and clear the buffer.
+						self.os(s[buf:i]) ; buf = i
 						# Output the expansion.
 						name = s[i:j]
 						j,newlineSeen = self.putRef(name,v,s,j,delta)
@@ -3863,7 +3898,7 @@ class atFile:
 		
 		if self.using_gnx:
 			self.putSentinel("@+ref")
-			self.putSentinel(' ' + name)
+			self.putSentinel('@ ' + name) # 5/1/03: Make the reference name look like a real sentinel.
 			self.putOpenSentinels(v,ref)
 			self.putBodyPart(ref)
 			self.putCloseSentinels(v,ref)
