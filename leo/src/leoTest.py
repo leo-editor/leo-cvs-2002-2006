@@ -538,8 +538,7 @@ class testUtils:
     
         """Return an atFile.write of the input tree to a string."""
     
-        if newAtFile:   df = c.atFileCommands
-        else:           df = c.atFileCommands.new_df
+        df = c.atFileCommands
         nodeIndices = g.app.nodeIndices
     
         # Assign input.v.t.fileIndex
@@ -667,10 +666,7 @@ def runAtFileTest(c,p):
         # at.asisWrite(child1,toString=toString)
     else:
         at.write(child1,thinFile=thinFile,nosentinels=nosentinels,toString=True)
-        if newAtFile:
-            result = g.toUnicode(at.stringOutput,"ascii")
-        else:
-            result = g.toUnicode(at.new_df.stringOutput,"ascii")
+        result = g.toUnicode(at.stringOutput,"ascii")
     try:
         assert(result == expected)
     except AssertionError:

@@ -4004,13 +4004,15 @@ def getScript (c,p,useSelectedText=True):
     
         if s.strip():
             g.app.scriptDict["script1"]=s
-            df = c.atFileCommands.new_df
-            df.scanAllDirectives(p,scripting=True)
-            # Force Python comment delims.
-            df.startSentinelComment = "#"
-            df.endSentinelComment = None
-            df.write(p.copy(),nosentinels=False,toString=True)
-            script = df.stringOutput
+            # df = c.atFileCommands.new_df
+            at = c.atFileCommands
+            if 0: # now done in 
+                # Force Python comment delims.
+                at.scanAllDirectives(p,scripting=True)
+                at.startSentinelComment = "#"
+                at.endSentinelComment = None
+            at.write(p.copy(),nosentinels=False,toString=True,scriptWrite=True)
+            script = at.stringOutput
             assert(p)
             g.app.scriptDict["script2"]=script
             error = len(script) == 0

@@ -15,6 +15,9 @@
     
 # FileAction nodes specify scripts to be run when Leo writes dirty @file, @thin etc. nodes
     # FileActions.py
+    
+# Use Python's anydbm module to store Leo files.
+    Library.py
 
 # Automatically executes Save commands every so often.
     # mod_autosave.py
@@ -134,9 +137,6 @@
 #@nonl
 #@-node:ekr.20040919091615:Example code
 #@+node:ekr.20040722121404:Experimental plugins
-# new atFile class.
-    ___proto_atFile.py
-
 # PRE_ALPHA QUALITY: MAY BE DANGEROUS
     # __wx_gui.py
     
