@@ -104,37 +104,17 @@
 <v t="EKR.20040519082027.23"><vh>@thin ../createLeoDist.py</vh></v>
 <v t="EKR.20040519082027.29"><vh>@thin postSetup.py</vh></v>
 </v>
-<v t="ekr.20040629175400" a="TV"><vh>Pychecker stuff</vh>
+<v t="ekr.20040629175400" a="E"><vh>Pychecker stuff</vh>
 <v t="ekr.20040701160830"><vh>@url http://pychecker.sourceforge.net/</vh></v>
-<v t="ekr.20040701160830.1"><vh>Long argument names for use in suppressions</vh></v>
-<v t="ekr.20040629173419.1" a="M" tnodeList="ekr.20040629173419.1"><vh>@file-nosent c:\prog\leoCVS\.pycheckrc</vh></v>
-<v t="ekr.20040629180414"><vh>pycheckrc (ref)</vh></v>
-<v t="ekr.20040629173538"><vh>@url http://pychecker.sourceforge.net/</vh></v>
-<v t="ekr.20040629183539"><vh>Warnings (all major problems fixed)</vh>
-<v t="ekr.20040629183539.1"><vh>leo.py</vh></v>
-<v t="ekr.20040629183539.2"><vh>leoAtFile.py</vh></v>
-<v t="ekr.20040629183539.3"><vh>leoColor.py</vh></v>
-<v t="ekr.20040629183539.4"><vh>leoCommands.py</vh></v>
-<v t="ekr.20040629183539.5"><vh>leoCompare.py</vh></v>
-<v t="ekr.20040629183539.6"><vh>leoFileCommands.py</vh></v>
-<v t="ekr.20040629183539.7"><vh>leoFind.py</vh></v>
-<v t="ekr.20040629183539.8"><vh>leoFontPanel.py</vh></v>
-<v t="ekr.20040629183539.9"><vh>leoFrame.py</vh></v>
-<v t="ekr.20040629183539.10"><vh>leoImport.py</vh></v>
-<v t="ekr.20040629183539.11"><vh>leoMenu.py</vh></v>
-<v t="ekr.20040629183539.12"><vh>leoNodes.py</vh></v>
-<v t="ekr.20040629183539.13"><vh>leoPlugins.py</vh></v>
-<v t="ekr.20040629183539.14"><vh>leoPrefs.py</vh></v>
-<v t="ekr.20040629183539.15"><vh>leoTangle.py</vh></v>
-<v t="ekr.20040629183539.16"><vh>leoTkinterColorPanels.py</vh></v>
-<v t="ekr.20040629183539.17"><vh>leoTkinterDialog.py</vh></v>
-<v t="ekr.20040629183539.18"><vh>leoTkinterFind.py</vh></v>
-<v t="ekr.20040629183539.19"><vh>leoTkinterFontPanel.py</vh></v>
-<v t="ekr.20040629183539.20"><vh>leoTkinterFrame.py</vh></v>
-<v t="ekr.20040629183539.21"><vh>leoTkinterGui.py</vh></v>
-<v t="ekr.20040629183539.22"><vh>leoTkinterPrefs.py</vh></v>
-<v t="ekr.20040629183539.23"><vh>leoTkinterTree.py</vh></v>
-<v t="ekr.20040629183539.24"><vh>leoUndo.py</vh></v>
+<v t="ekr.20040701160830.1"><vh>names for use in suppressions</vh></v>
+<v t="ekr.20040629180414"><vh>pycheckrc (reference)</vh></v>
+<v t="ekr.20040629173419.1" a="EMTV" tnodeList="ekr.20040629173419.1,ekr.20040701193853,ekr.20040701193853.1,ekr.20040701193853.2,ekr.20040701193853.3,ekr.20040701193853.4,ekr.20040701193853.5"><vh>@file c:\prog\leoCVS\.pycheckrc</vh>
+<v t="ekr.20040701193853"><vh>blacklist</vh></v>
+<v t="ekr.20040701193853.1"><vh>defaults</vh></v>
+<v t="ekr.20040701193853.2"><vh>max...</vh></v>
+<v t="ekr.20040701193853.3"><vh>suppressions</vh></v>
+<v t="ekr.20040701193853.4"><vh>unusedNames</vh></v>
+<v t="ekr.20040701193853.5"><vh>variablesToIgnore</vh></v>
 </v>
 </v>
 </vnodes>
@@ -2350,233 +2330,47 @@ Wiki:     http://leo.hd1.org/
 Edward K. Ream
 </t>
 <t tx="EKR.20040519100230"></t>
-<t tx="ekr.20040629173419.1"># Sample defaults file for PyChecker 0.8.14
+<t tx="ekr.20040629173419.1">@comment #
+
+@others
+
+# Sample defaults file for PyChecker 0.8.14
 # This file should be called:  .pycheckrc
 # It should be placed in your home directory (value of $HOME).
 # If $HOME is not set, it will look in the current directory.
 
-# Disabled tests...
+# Enabled tests...
+checkObjectAttrs = 1        # True: check that attributes of objects exist
+checkReturnValues = 1       # True: check consistent return values
+checkImplicitReturns = 1    # True: check if using implict and explicit return values
+classAttrExists = 1     # True: warn when the class attribute does not exist
+mixImport = 1               # True: warn when import and from ... import are used for same module
+moduleImportErrors = 1      # True: warn when a module reimports another module (import &amp; from/import)
+reimportSelf = 1            # True: warn when modules import themselves
+shadows = 1                 # bool: check if local variables shadow a global variable with same name
 
-checkReturnValues = 0 # bool: check consistent return values
-checkImplicitReturns = 0 # bool: check if using implict and explicit return values
-classAttrExists = 0 # bool: warn when the class attribute does not exist
-constantConditions = 0 # bool: warn when a constant is used in a conditional statement (if '':)
-constant1 = 0 # bool: warn when 1 is used in a conditional statement, (if 1: while 1: etc)
-shadows = 1 # bool: check if local variables shadow a global variable with same name
-shadowBuiltins = 0 # EKR: (Not in ref file)
-
-# bool: warnings for Doc Strings
-noDocModule = 0
-noDocClass = 0
-noDocFunc = 0
-
-# bool: when checking if class data members (attributes) are set
-#       check all members or __init__() only
-onlyCheckInitForMembers = 0
-
-# bool: warn when all module variables are not used (including private vars)
-allVariablesUsed = 0
-
-# bool: produce warnings for each occurrence of a warning for global (xxx)
-reportAllGlobals = 0
-
-# bool: warn when private module variables are not used (_var)
-privateVariableUsed = 1
-
-# bool: warn when imports are not used
-importUsed = 1
-
-# bool: warn when import and from ... import are used for same module
-mixImport = 0 # EKR
-
-# bool: warn when imports are not used in __init__.py
-packageImportUsed = 1
-
-# bool: warn when a module reimports another module (import &amp; from/import)
-moduleImportErrors = 0 # EKR
-
-# bool: warn when modules import themselves
-reimportSelf = 0 # EKR
-
-# bool: warn when local variables are not used
-localVariablesUsed = 0 # EKR
-
-# bool:  assume a, b, and c are used in this case:  a, b, c = func()
-unusedLocalTuple = 0
-
-# bool:  warn when class attributes (data members) are unused
-membersUsed = 0
-
-# bool: warn when Subclass.__init__ is not called in a subclass
-baseClassInitted = 1
-
-# bool: warn when Subclass needs to override methods that only throw exceptions
-abstractClasses = 1
-
-# bool: warn when __init__ is defined in a subclass
-initDefinedInSubclass = 0
-
-# bool: warn when __init__ returns None
-returnNoneFromInit = 1
-
-# bool: warn when code is not reachable
-unreachableCode = 0
-
-# bool: warn when a constant is used in a conditional statement (if '':)
-constantConditions = 0 # EKR
-
-# bool: warn when 1 is used in a conditional statement, (if 1: while 1: etc)
-constant1 = 0
-
-# bool: warn when iterating over a string in a for loop
-stringIteration = 1
-
-# bool: warn when setting a variable to different types
-inconsistentTypes = 0
-
-# bool: warn when setting a tuple of variables to a non-sequence (a, b = None)
-unpackNonSequence = 1
-
-# bool: warn when setting a tuple of variables to the wrong length (a, b = 1,)
-unpackLength = 1
-
-# bool: warn when using strings exceptions or 
-#       other classes not derived from Exception to raise/catch exceptions
-badExceptions = 1
-
-# bool: warn when statements appear to have no effect
-noEffect = 1
-
-# bool: warn when using (expr % 1), it has no effect on integers and strings
-modulo1 = 1
-
-# bool: warn if using (expr is const-literal), 
-# doesn't always work on integers and strings
-isLiteral = 0 # EKR
-
-# bool: warn when using a deprecated module or function
-deprecated = 1
-
-# bool: warn when calling an attribute not a method
-callingAttribute = 0
-
-# bool: warn when using named arguments: func(a=1, b=2), where def func(a, b):
-#       def func2(a, b, **kw): doesn't generate a warning
-namedArgs = 0 # EKR
-
-# str: name of 'self' parameter
-methodArgName = 'self'
-
-# list of str: names of first parameter to classmethods
-## classmethodArgNames = ['cls', 'klass']
-
-# bool: warn when method/function arguments are unused
-argumentsUsed = 0 # EKR
-
-# bool: ignore if self is unused in methods
-ignoreSelfUnused = 0
-
-# bool: warn if functions/classes/methods names are redefined in same scope
-redefiningFunction = 1
-
-# bool:  check if an overriden method has the same signature
-#	 as base class method (__init__() methods are not checked)
-checkOverridenMethods = 0 # EKR
-
-# bool:  check if a special (reserved) method has the correct signature
-#	 and is known (these are methods that begin and end with __
-## checkSpecialMethods = 1
-
-# int: warnings for code complexity, max value before generating a warning
-maxLines = 2000
-maxBranches = 500
-maxReturns = 100
-maxArgs = 100
-maxLocals = 250
-maxReferences = 500
+# Disabled by EKR...
+argumentsUsed = 0       # True: warn when method/function arguments are unused
+isLiteral = 0           # True: warn if using (expr is const-literal), doesn't always work on ints and strings
+localVariablesUsed = 0  # True: warn when local variables are not used
+shadowBuiltins = 0      # EKR: Not in ref file.
 
 # bool:  ignore all warnings from standard library components
 #	 (this includes anything under the standard library, eg, site-packages)
 ignoreStandardLibrary = 1 # EKR
 
-# list of strings: ignore unused locals/arguments if name is one of
-unusedNames = [
-	'_', 'empty', 'unused', 'dummy', 'event', 'commander',
-	'c', 'i', 'j', 'k', 's',
-	'tag', 'args', 'keys', 'keywords']
+# bool:  check if an overriden method has the same signature
+#	 as base class method (__init__() methods are not checked)
+checkOverridenMethods = 0 # EKR
 
-# list of strings: ignore warnings generated from these modules
-blacklist = [
-	'leoConfig', # Pychecker has lots of problems with this file...
-	'Tkinter', 'wxPython', 'gtk', 'GTK', 'GDK', ]
+# Won't enable...
+constantConditions = 0  # bool: warn when a constant is used in a conditional statement (if '':)
+constant1 = 0           # bool: warn when 1 is used in a conditional statement, (if 1: while 1: etc)
 
-# list of strings: ignore global variables not used if name is one of
-variablesToIgnore = [ '__all__', '__version__', '__copyright__', ]
-
-# bool: print the PyChecker parse of modules, classes, etc.
-printParse = 0
-
-# bool: turn debugging of PyChecker on
-debug = 0
-
-# bool: check that attributes of objects exist
-checkObjectAttrs = 1
-
-# bool: various warnings about incorrect usage of __slots__
-slots = 1
-
-# bool: check if __slots__ is empty
-emptySlots = 1
-
-# bool: check for using properties in classic classes
-classicProperties = 1
-
-# bool: check for integer division (may be problem between Python versions)
-intDivide = 1
-
-# bool: check if input() is used, which is a security problem, use raw_input()
-usesInput = 1
-
-# bool: check if using a constant string to getattr()/setattr()
-# Doesn't exist.
-## constAttr = 1
-
-# bool: check for using +variable, since it is almost always has no effect
-unaryPositive = 1
-
-# bool: check for modifying a parameter with a default value
-#       (value must be: list, dict, instance)
-#       modifying the value may have undesirable/unexpected side-effects
-modifyDefaultValue = 1
-
-# bool: check if the exec statement is used (possible security problem)
-usesExec = 0
-
-# dict: suppress warnings, key is module.class.method or module.function
-#	value is a string of command line arguments (can omit -- for long args)
-#       { 'module1': 'no-namedargs maxlines=0',
-#	  'module2.my_func': 'argsused',
-#	  'module3.my_class': 'no-initreturn', }
-
-suppressions = {
-
-    # Works: BOTH must be specified!
-        #'leoImport.baseLeoImportCommands' : '--no-objattrs', 
-        #'leoImport.leoImportCommands'     : '--no-objattrs',
-        
-    # Fix erroneous report about lastVnode.  BOTH MUST BE SPECIFIED
-        'leoImport.baseLeoImportCommands.convertMoreStringsToOutlineAfter' : '--no-objattrs', 
-        'leoImport.leoImportCommands.convertMoreStringsToOutlineAfter'     : '--no-objattrs',
-        
-    # Base classes have lots of unused params.
-        'leoFrame' : '--no-argsused',
-        'leoMenu'  : '--no-argsused',
-        'leoGui'   : '--no-argsused',
-}
-
-# dict: suppress warnings where keys can be regular expressions
-suppressionRegexs = {}</t>
-<t tx="ekr.20040629173538"></t>
+# bool: warn when using named arguments: func(a=1, b=2), where def func(a, b):
+#       def func2(a, b, **kw): doesn't generate a warning
+namedArgs = 0 # EKR
+</t>
 <t tx="ekr.20040629175400"></t>
 <t tx="ekr.20040629180414"># Sample defaults file for PyChecker 0.8.13
 # This file should be called:  .pycheckrc
@@ -2788,260 +2582,6 @@ suppressions = {}
 # dict: suppress warnings where keys can be regular expressions
 suppressionRegexs = {}
 </t>
-<t tx="ekr.20040629183539"></t>
-<t tx="ekr.20040629183539.1">c:\prog\leoCVS\leo\src\leoApp.py:209: (dict) shadows builtin
-c:\prog\leoCVS\leo\src\leoApp.py:224: (dict) shadows builtin
-
-c:\prog\leoCVS\leo\src\leoApp.py:368: (dir) shadows builtin
-c:\prog\leoCVS\leo\src\leoApp.py:401: (dir) shadows builtin</t>
-<t tx="ekr.20040629183539.2">(removed) C:\prog\leoCVS\leo\src\leoAtFile.py:19: Imported module (filecmp) not used
-
-c:\prog\leoCVS\leo\src\leoAtFile.py:337: (file) shadows builtin
-c:\prog\leoCVS\leo\src\leoAtFile.py:474: (dir) shadows builtin
-c:\prog\leoCVS\leo\src\leoAtFile.py:491: (dict) shadows builtin
-c:\prog\leoCVS\leo\src\leoAtFile.py:550: (dir) shadows builtin
-c:\prog\leoCVS\leo\src\leoAtFile.py:552: (dir) shadows builtin
-c:\prog\leoCVS\leo\src\leoAtFile.py:2143: (dir) shadows builtin
-c:\prog\leoCVS\leo\src\leoAtFile.py:2158: (dict) shadows builtin
-c:\prog\leoCVS\leo\src\leoAtFile.py:2279: (dir) shadows builtin
-c:\prog\leoCVS\leo\src\leoAtFile.py:2281: (dir) shadows builtin
-c:\prog\leoCVS\leo\src\leoAtFile.py:2551: Local variable (next) not used
-c:\prog\leoCVS\leo\src\leoAtFile.py:3581: Local variable (v) not used
-
-c:\prog\leoCVS\leo\src\leoAtFile.py:399: Local variable (after) not used
-c:\prog\leoCVS\leo\src\leoAtFile.py:4978: Parameter (putCloseSentinel) not used
-c:\prog\leoCVS\leo\src\leoAtFile.py:5084: Parameter (putCloseSentinel) not used
-
-# Potential real problems.
-(fixed) c:\prog\leoCVS\leo\src\leoAtFile.py:5731: Variable (line) used before being set
-
-# Not real problems...
-c:\prog\leoCVS\leo\src\leoAtFile.py:4516: Overridden method (putCloseNodeSentinel)
- doesnt match signature in class (leoAtFile.oldDerivedFile)
-c:\prog\leoCVS\leo\src\leoAtFile.py:4550: Overridden method (putOpenNodeSentinel)
-  doesnt match signature in class (leoAtFile.oldDerivedFile)
-c:\prog\leoCVS\leo\src\leoAtFile.py:4697: Overridden method (write)
-  doesnt match signature in class (leoAtFile.oldDerivedFile)</t>
-<t tx="ekr.20040629183539.3">
-c:\prog\leoCVS\leo\src\leoColor.py:1948: (dict) shadows builtin
-c:\prog\leoCVS\leo\src\leoColor.py:2059: (dict) shadows builtin
-c:\prog\leoCVS\leo\src\leoColor.py:2139: Local variable (first) not used
-c:\prog\leoCVS\leo\src\leoColor.py:2173: Base class (leoColor.colorizer) __init__() not called
-
-# Real bug
-(fixed) c:\prog\leoCVS\leo\src\leoColor.py:654: No global (false) found</t>
-<t tx="ekr.20040629183539.4">
-C:\prog\leoCVS\leo\src\leoCommands.py:324: (dict) shadows builtin
-C:\prog\leoCVS\leo\src\leoCommands.py:340: (dict) shadows builtin
-C:\prog\leoCVS\leo\src\leoCommands.py:346: (dict) shadows builtin
-C:\prog\leoCVS\leo\src\leoCommands.py:465: (file) shadows builtin
-C:\prog\leoCVS\leo\src\leoCommands.py:468: (dict) shadows builtin
-C:\prog\leoCVS\leo\src\leoCommands.py:480: (dict) shadows builtin
-C:\prog\leoCVS\leo\src\leoCommands.py:495: (file) shadows builtin
-
-C:\prog\leoCVS\leo\src\leoCommands.py:290: Comparisons with False are not necessary and may not work as expected
-C:\prog\leoCVS\leo\src\leoCommands.py:290: Comparisons with True are not necessary and may not work as expected
-C:\prog\leoCVS\leo\src\leoCommands.py:674: Comparisons with False are not necessary and may not work as expected
-C:\prog\leoCVS\leo\src\leoCommands.py:674: Comparisons with True are not necessary and may not work as expected
-
-C:\prog\leoCVS\leo\src\leoCommands.py:734: (file) shadows builtin
-C:\prog\leoCVS\leo\src\leoCommands.py:771: Local variable (frame) not used
-C:\prog\leoCVS\leo\src\leoCommands.py:1238: (file) shadows builtin
-C:\prog\leoCVS\leo\src\leoCommands.py:1677: (dict) shadows builtin
-C:\prog\leoCVS\leo\src\leoCommands.py:1721: (dict) shadows builtin
-C:\prog\leoCVS\leo\src\leoCommands.py:1760: Local variable (body) not used
-C:\prog\leoCVS\leo\src\leoCommands.py:1770: (dict) shadows builtin
-C:\prog\leoCVS\leo\src\leoCommands.py:1790: Local variable (body) not used
-C:\prog\leoCVS\leo\src\leoCommands.py:1800: (dict) shadows builtin
-C:\prog\leoCVS\leo\src\leoCommands.py:2280: (dict) shadows builtin
-C:\prog\leoCVS\leo\src\leoCommands.py:3804: (copyright) shadows builtin
-C:\prog\leoCVS\leo\src\leoCommands.py:4195: No global (current) found
-
-# Potential real problems
-(fixed) C:\prog\leoCVS\leo\src\leoCommands.py:1529: Function return types are inconsistent
-(bad message) C:\prog\leoCVS\leo\src\leoCommands.py:4223: Function returns a value and also implicitly returns None
-</t>
-<t tx="ekr.20040629183539.5">(removed) C:\prog\leoCVS\leo\src\leoCompare.py:9: Imported module (difflib) not used
-
-c:\prog\leoCVS\leo\src\leoCompare.py:67: Parameter (makeWhitespaceVisible) not used
-
-c:\prog\leoCVS\leo\src\leoCompare.py:45: (cmp) shadows builtin
-c:\prog\leoCVS\leo\src\leoCompare.py:398: (cmp) shadows builtin
-c:\prog\leoCVS\leo\src\leoCompare.py:469: (dir) shadows builtin</t>
-<t tx="ekr.20040629183539.6">(removed) C:\prog\leoCVS\leo\src\leoFileCommands.py:18: Imported module (time) not used
-
-c:\prog\leoCVS\leo\src\leoFileCommands.py:89: (id) shadows builtin
-c:\prog\leoCVS\leo\src\leoFileCommands.py:167: Local variable (tref1) not used
-c:\prog\leoCVS\leo\src\leoFileCommands.py:834: (id) shadows builtin
-c:\prog\leoCVS\leo\src\leoFileCommands.py:899: Parameter (nodeType) not used
-c:\prog\leoCVS\leo\src\leoFileCommands.py:958: (dict) shadows builtin
-c:\prog\leoCVS\leo\src\leoFileCommands.py:1153: (id) shadows builtin
-c:\prog\leoCVS\leo\src\leoFileCommands.py:1190: (dir) shadows builtin
-c:\prog\leoCVS\leo\src\leoFileCommands.py:1231: (dir) shadows builtin
-c:\prog\leoCVS\leo\src\leoFileCommands.py:1280: (id) shadows builtin
-c:\prog\leoCVS\leo\src\leoFileCommands.py:1693: (id) shadows builtin
-c:\prog\leoCVS\leo\src\leoFileCommands.py:1718: Local variable (root) not used
-c:\prog\leoCVS\leo\src\leoFileCommands.py:1743: Parameter (toString) not used
-c:\prog\leoCVS\leo\src\leoFileCommands.py:1747: Local variable (result) not used
-c:\prog\leoCVS\leo\src\leoFileCommands.py:1945: (dir) shadows builtin
-c:\prog\leoCVS\leo\src\leoFileCommands.py:1977: No class attribute (targetFileName) found
-c:\prog\leoCVS\leo\src\leoFileCommands.py:1977: No class attribute (writeError) found
-</t>
-<t tx="ekr.20040629183539.7">c:\prog\leoCVS\leo\src\leoFind.py:864: (type) shadows builtin
-c:\prog\leoCVS\leo\src\leoFind.py:960: Parameter (t) not used
-
-# Potential real problem.
-(bad message) c:\prog\leoCVS\leo\src\leoFind.py:694: Function returns a value and also implicitly returns None</t>
-<t tx="ekr.20040629183539.8">(removed) C:\prog\leoCVS\leo\src\leoFontPanel.py:7: Imported module (sys) not used
-(removed) C:\prog\leoCVS\leo\src\leoFontPanel.py:8: Imported module (string) not used
-</t>
-<t tx="ekr.20040629183539.9">c:\prog\leoCVS\leo\src\leoFrame.py:727: Parameter (v) not used
-
-c:\prog\leoCVS\leo\src\leoFrame.py:522: (type) shadows builtin
-c:\prog\leoCVS\leo\src\leoFrame.py:566: (dict) shadows builtin
-</t>
-<t tx="ekr.20040629183539.10">c:\prog\leoCVS\leo\src\leoImport.py:52: (file) shadows builtin
-c:\prog\leoCVS\leo\src\leoImport.py:272: (file) shadows builtin
-c:\prog\leoCVS\leo\src\leoImport.py:472: (type) shadows builtin
-c:\prog\leoCVS\leo\src\leoImport.py:1625: (id) shadows builtin
-c:\prog\leoCVS\leo\src\leoImport.py:1647: (id) shadows builtin
-c:\prog\leoCVS\leo\src\leoImport.py:1649: (id) shadows builtin
-c:\prog\leoCVS\leo\src\leoImport.py:2302: (type) shadows builtin
-c:\prog\leoCVS\leo\src\leoImport.py:2347: (file) shadows builtin
-c:\prog\leoCVS\leo\src\leoImport.py:2370: (file) shadows builtin
-c:\prog\leoCVS\leo\src\leoImport.py:2397: (file) shadows builtin
-c:\prog\leoCVS\leo\src\leoImport.py:2425: (file) shadows builtin
-c:\prog\leoCVS\leo\src\leoImport.py:2475: (file) shadows builtin
-c:\prog\leoCVS\leo\src\leoImport.py:2726: (type) shadows builtin
-c:\prog\leoCVS\leo\src\leoImport.py:2791: (dict) shadows builtin
-
-c:\prog\leoCVS\leo\src\leoImport.py:190: Object (lastVnode) has no attribute (insertAfter)
-c:\prog\leoCVS\leo\src\leoImport.py:192: Object (lastVnode) has no attribute (insertAsNthChild)
-c:\prog\leoCVS\leo\src\leoImport.py:197: Object (lastVnode) has no attribute (parent)
-
-c:\prog\leoCVS\leo\src\leoImport.py:334: Comparisons with False are not necessary and may not work as expected
-c:\prog\leoCVS\leo\src\leoImport.py:336: Comparisons with True are not necessary and may not work as expected
-
-c:\prog\leoCVS\leo\src\leoImport.py:688: Local variable (write_lines) not used
-</t>
-<t tx="ekr.20040629183539.11">c:\prog\leoCVS\leo\src\leoMenu.py:656: (dict) shadows builtin
-c:\prog\leoCVS\leo\src\leoMenu.py:700: (dict) shadows builtin
-
-c:\prog\leoCVS\leo\src\leoMenu.py:1114: Local variable (frame) not used</t>
-<t tx="ekr.20040629183539.12">(removed) C:\prog\leoCVS\leo\src\leoNodes.py:231: Imported module (types) not used
-
-c:\prog\leoCVS\leo\src\leoNodes.py:579: (type) shadows builtin
-c:\prog\leoCVS\leo\src\leoNodes.py:1379: (id) shadows builtin
-c:\prog\leoCVS\leo\src\leoNodes.py:1401: (id) shadows builtin
-c:\prog\leoCVS\leo\src\leoNodes.py:1418: (id) shadows builtin
-c:\prog\leoCVS\leo\src\leoNodes.py:1419: (id) shadows builtin
-c:\prog\leoCVS\leo\src\leoNodes.py:1426: (id) shadows builtin
-c:\prog\leoCVS\leo\src\leoNodes.py:1450: (id) shadows builtin
-c:\prog\leoCVS\leo\src\leoNodes.py:1453: (id) shadows builtin
-
-c:\prog\leoCVS\leo\src\leoNodes.py:1958: Local variable (parent) not used
-c:\prog\leoCVS\leo\src\leoNodes.py:2245: Parameter (useVerticalBar) not used
-c:\prog\leoCVS\leo\src\leoNodes.py:2520: Local variable (p) not used
-C:\prog\leoCVS\leo\src\leoUndo.py:699: Redefining attribute (saveTree) original line (628)
-
-# Potential real problems.
-(fixed) c:\prog\leoCVS\leo\src\leoNodes.py:1976: Format string argument count (1) doesnt match arguments (2)
-(fixed) c:\prog\leoCVS\leo\src\leoNodes.py:1978: Format string argument count (1) doesnt match arguments (2)
-(bad message) c:\prog\leoCVS\leo\src\leoNodes.py:1981: Function returns a value and also implicitly returns None
-(bad message) c:\prog\leoCVS\leo\src\leoNodes.py:1936: Function returns a value and also implicitly returns None
-(fixed) C:\prog\leoCVS\leo\src\leoNodes.py:753: Redefining attribute (hasChildren) original line (747)
-(fixed) C:\prog\leoCVS\leo\src\leoNodes.py:2143: Redefining attribute (isDirty) original line (1704)
-(fixed) C:\prog\leoCVS\leo\src\leoNodes.py:3212: Redefining attribute (invalidOutline) original line (2847)
-</t>
-<t tx="ekr.20040629183539.13">(removed) C:\prog\leoCVS\leo\src\leoPlugins.py:34: Local variable (os) not used
-
-C:\prog\leoCVS\leo\src\leoPlugins.py:40: (file) shadows builtin
-C:\prog\leoCVS\leo\src\leoPlugins.py:53: (file) shadows builtin
-C:\prog\leoCVS\leo\src\leoPlugins.py:67: (file) shadows builtin
-C:\prog\leoCVS\leo\src\leoPlugins.py:72: (file) shadows builtin
-C:\prog\leoCVS\leo\src\leoPlugins.py:74: (file) shadows builtin</t>
-<t tx="ekr.20040629183539.14">(removed) C:\prog\leoCVS\leo\src\leoPrefs.py:7: Imported module (string) not used</t>
-<t tx="ekr.20040629183539.15">c:\prog\leoCVS\leo\src\leoTangle.py:540: (dir) shadows builtin
-c:\prog\leoCVS\leo\src\leoTangle.py:541: (dir) shadows builtin
-c:\prog\leoCVS\leo\src\leoTangle.py:666: (dict) shadows builtin
-c:\prog\leoCVS\leo\src\leoTangle.py:718: (dict) shadows builtin
-c:\prog\leoCVS\leo\src\leoTangle.py:911: (dict) shadows builtin
-c:\prog\leoCVS\leo\src\leoTangle.py:924: (dict) shadows builtin
-c:\prog\leoCVS\leo\src\leoTangle.py:2038: (type) shadows builtin
-c:\prog\leoCVS\leo\src\leoTangle.py:2388: Parameter (name) not used
-c:\prog\leoCVS\leo\src\leoTangle.py:2388: Parameter (part) not used
-c:\prog\leoCVS\leo\src\leoTangle.py:2815: Comparisons with True are not necessary and may not work as expected
-c:\prog\leoCVS\leo\src\leoTangle.py:3563: (dict) shadows builtin
-c:\prog\leoCVS\leo\src\leoTangle.py:3656: (dir) shadows builtin
-c:\prog\leoCVS\leo\src\leoTangle.py:3667: (dir) shadows builtin
-c:\prog\leoCVS\leo\src\leoTangle.py:3780: (dir) shadows builtin
-c:\prog\leoCVS\leo\src\leoTangle.py:3865: (type) shadows builtin
-</t>
-<t tx="ekr.20040629183539.16">(removed) C:\prog\leoCVS\leo\src\leoTkinterColorPanels.py:5: Imported module (string) not used</t>
-<t tx="ekr.20040629183539.17">c:\prog\leoCVS\leo\src\leoTkinterDialog.py:182: (copyright) shadows builtin</t>
-<t tx="ekr.20040629183539.18">(removed) C:\prog\leoCVS\leo\src\leoTkinterFind.py:6: Imported module (string) not used
-(removed) C:\prog\leoCVS\leo\src\leoTkinterFind.py:7: Imported module (sys) not used
-(removed) C:\prog\leoCVS\leo\src\leoTkinterFind.py:9: Imported module (types) not used
-
-# Potential real problems.
-(fixed) c:\prog\leoCVS\leo\src\leoTkinterFind.py:295: Function returns a value and also implicitly returns None
-</t>
-<t tx="ekr.20040629183539.19">(removed) C:\prog\leoCVS\leo\src\leoTkinterFontPanel.py:10: Imported module (sys) not used
-(removed) C:\prog\leoCVS\leo\src\leoTkinterFontPanel.py:11: Imported module (string) not used
-</t>
-<t tx="ekr.20040629183539.20">(removed) C:\prog\leoCVS\leo\src\leoTkinterFrame.py:21: Imported module (time) not used
-
-c:\prog\leoCVS\leo\src\leoTkinterFrame.py:807: (dict) shadows builtin
-c:\prog\leoCVS\leo\src\leoTkinterFrame.py:1233: (file) shadows builtin
-
-# Potential real problem.
-(not a problem) c:\prog\leoCVS\leo\src\leoTkinterFrame.py:2022: Overridden method (deleteTextSelection)
-    doesnt match signature in class(leoFrame.leoBody)
-</t>
-<t tx="ekr.20040629183539.21">c:\prog\leoCVS\leo\src\leoTkinterGui.py:78: (file) shadows builtin
-c:\prog\leoCVS\leo\src\leoTkinterGui.py:189: Parameter (defaultextension) not used
-c:\prog\leoCVS\leo\src\leoTkinterGui.py:200: Parameter (defaultextension) not used
-c:\prog\leoCVS\leo\src\leoTkinterGui.py:395: Parameter (defaultSize) not used
-c:\prog\leoCVS\leo\src\leoTkinterGui.py:444: Local variable (_tkicon) not used
-c:\prog\leoCVS\leo\src\leoTkinterGui.py:474: Local variable (tkIcon) not used
-c:\prog\leoCVS\leo\src\leoTkinterGui.py:511: Parameter (delay) not used</t>
-<t tx="ekr.20040629183539.22">c:\prog\leoCVS\leo\src\leoTkinterPrefs.py:295: (dir) shadows builtin</t>
-<t tx="ekr.20040629183539.23">(removed) C:\prog\leoCVS\leo\src\leoTkinterTree.py:33: Imported module (os) not used
-(removed) C:\prog\leoCVS\leo\src\leoTkinterTree.py:33: Imported module (string) not used
-(removed) C:\prog\leoCVS\leo\src\leoTkinterTree.py:33: Imported module (types) not used
-
-c:\prog\leoCVS\leo\src\leoTkinterTree.py:161: (id) shadows builtin
-c:\prog\leoCVS\leo\src\leoTkinterTree.py:166: (id) shadows builtin
-c:\prog\leoCVS\leo\src\leoTkinterTree.py:585: (id) shadows builtin
-c:\prog\leoCVS\leo\src\leoTkinterTree.py:638: (id) shadows builtin
-c:\prog\leoCVS\leo\src\leoTkinterTree.py:782: (id) shadows builtin
-c:\prog\leoCVS\leo\src\leoTkinterTree.py:843: (id) shadows builtin
-c:\prog\leoCVS\leo\src\leoTkinterTree.py:882: (type) shadows builtin
-c:\prog\leoCVS\leo\src\leoTkinterTree.py:892: (file) shadows builtin
-c:\prog\leoCVS\leo\src\leoTkinterTree.py:910: (id) shadows builtin
-c:\prog\leoCVS\leo\src\leoTkinterTree.py:918: Local variable (url) not used
-c:\prog\leoCVS\leo\src\leoTkinterTree.py:948: (dict) shadows builtin
-c:\prog\leoCVS\leo\src\leoTkinterTree.py:1343: Local variable (v) not used
-c:\prog\leoCVS\leo\src\leoTkinterTree.py:1373: Local variable (v) not used
-c:\prog\leoCVS\leo\src\leoTkinterTree.py:1389: (id) shadows builtin
-c:\prog\leoCVS\leo\src\leoTkinterTree.py:1587: (id) shadows builtin
-c:\prog\leoCVS\leo\src\leoTkinterTree.py:1589: (id) shadows builtin
-c:\prog\leoCVS\leo\src\leoTkinterTree.py:1876: Local variable (ylast) not used
-
-# Potential real problem.
-c:\prog\leoCVS\leo\src\leoTkinterTree.py:445: Overridden method (redraw_now) doesnt match signature in class (leoFrame.
-leoTree)
-</t>
-<t tx="ekr.20040629183539.24">c:\prog\leoCVS\leo\src\leoUndo.py:692: Local variable (u) not used
-c:\prog\leoCVS\leo\src\leoUndo.py:703: Local variable (u) not used
-c:\prog\leoCVS\leo\src\leoUndo.py:725: Local variable (u) not used
-c:\prog\leoCVS\leo\src\leoUndo.py:1180: Parameter (newNewlines) not used
-c:\prog\leoCVS\leo\src\leoUndo.py:1437: Parameter (n) not used
-c:\prog\leoCVS\leo\src\leoUndo.py:1440: Parameter (n) not used
-c:\prog\leoCVS\leo\src\leoUndo.py:1443: Parameter (n) not used
-
-# Potential real problem
-(fixed) c:\prog\leoCVS\leo\src\leoUndo.py:220: Format string argument count (2) doesn't match arguments (3)</t>
 <t tx="ekr.20040630103409">Leo 4.2 Beta 1 is now available at
 http://sourceforge.net/projects/leo/
 
@@ -3292,5 +2832,183 @@ no-varargsused
 no-varlist=
 no-version
 </t>
+<t tx="ekr.20040701193853"># list of strings: ignore warnings generated from these modules
+blacklist = [
+	'leoConfig', # Pychecker has lots of problems with this file...
+	'Tkinter', 'wxPython', 'gtk', 'GTK', 'GDK',\
+]
+</t>
+<t tx="ekr.20040701193853.1"># bool: warnings for Doc Strings
+noDocModule = 0
+noDocClass = 0
+noDocFunc = 0
+
+# bool: when checking if class data members (attributes) are set
+#       check all members or __init__() only
+onlyCheckInitForMembers = 0
+
+# bool: warn when all module variables are not used (including private vars)
+allVariablesUsed = 0
+
+# bool: produce warnings for each occurrence of a warning for global (xxx)
+reportAllGlobals = 0
+
+# bool: warn when private module variables are not used (_var)
+privateVariableUsed = 1
+
+# bool: warn when imports are not used
+importUsed = 1
+
+# bool: warn when imports are not used in __init__.py
+packageImportUsed = 1
+
+# bool:  assume a, b, and c are used in this case:  a, b, c = func()
+unusedLocalTuple = 0
+
+# bool:  warn when class attributes (data members) are unused
+membersUsed = 0
+
+# bool: warn when Subclass.__init__ is not called in a subclass
+baseClassInitted = 1
+
+# bool: warn when Subclass needs to override methods that only throw exceptions
+abstractClasses = 1
+
+# bool: warn when __init__ is defined in a subclass
+initDefinedInSubclass = 0
+
+# bool: warn when __init__ returns None
+returnNoneFromInit = 1
+
+# bool: warn when code is not reachable
+unreachableCode = 0
+
+# bool: warn when iterating over a string in a for loop
+stringIteration = 1
+
+# bool: warn when setting a variable to different types
+inconsistentTypes = 0
+
+# bool: warn when setting a tuple of variables to a non-sequence (a, b = None)
+unpackNonSequence = 1
+
+# bool: warn when setting a tuple of variables to the wrong length (a, b = 1,)
+unpackLength = 1
+
+# bool: warn when using strings exceptions or 
+#       other classes not derived from Exception to raise/catch exceptions
+badExceptions = 1
+
+# bool: warn when statements appear to have no effect
+noEffect = 1
+
+# bool: warn when using (expr % 1), it has no effect on integers and strings
+modulo1 = 1
+
+# bool: warn when using a deprecated module or function
+deprecated = 1
+
+# bool: warn when calling an attribute not a method
+callingAttribute = 0
+
+# str: name of 'self' parameter
+methodArgName = 'self'
+
+# list of str: names of first parameter to classmethods
+## classmethodArgNames = ['cls', 'klass']
+
+# bool: ignore if self is unused in methods
+ignoreSelfUnused = 0
+
+# bool: warn if functions/classes/methods names are redefined in same scope
+redefiningFunction = 1
+
+# bool:  check if a special (reserved) method has the correct signature
+#	 and is known (these are methods that begin and end with __
+## checkSpecialMethods = 1
+
+# bool: print the PyChecker parse of modules, classes, etc.
+printParse = 0
+
+# bool: turn debugging of PyChecker on
+debug = 0
+
+# bool: various warnings about incorrect usage of __slots__
+slots = 1
+
+# bool: check if __slots__ is empty
+emptySlots = 1
+
+# bool: check for using properties in classic classes
+classicProperties = 1
+
+# bool: check for integer division (may be problem between Python versions)
+intDivide = 1
+
+# bool: check if input() is used, which is a security problem, use raw_input()
+usesInput = 1
+
+# bool: check if using a constant string to getattr()/setattr()
+# Doesn't exist.
+## constAttr = 1
+
+# bool: check for using +variable, since it is almost always has no effect
+unaryPositive = 1
+
+# bool: check for modifying a parameter with a default value
+#       (value must be: list, dict, instance)
+#       modifying the value may have undesirable/unexpected side-effects
+modifyDefaultValue = 1
+
+# bool: check if the exec statement is used (possible security problem)
+usesExec = 0</t>
+<t tx="ekr.20040701193853.2"># Max value before generating a complexity warning.
+
+maxLines = 2000
+maxBranches = 500
+maxReturns = 100
+maxArgs = 100
+maxLocals = 250
+maxReferences = 500</t>
+<t tx="ekr.20040701193853.3"># dict: suppress warnings, key is module.class.method or module.function
+#	value is a string of command line arguments (can omit -- for long args)
+#       { 'module1': 'no-namedargs maxlines=0',
+#	  'module2.my_func': 'argsused',
+#	  'module3.my_class': 'no-initreturn', }
+
+suppressions = {
+        
+    # Base classes have lots of unused params.
+        'leoFrame' : '--no-argsused',
+        'leoMenu'  : '--no-argsused',
+        'leoGui'   : '--no-argsused',
+    # leo.py must do strange things with imports.
+        'leo' : '--no-import --no-reimportself --no-reimport ',  # --no-miximport
+    # A bad warning following while(1)...
+        'leoFind.leoFind.search'               : '--no-implicitreturns',
+        'leoTkinterFind.leoTkinterFind.search' : '--no-implicitreturns',
+    # A bad warning...
+        'leoCommands.Commands.canExtractSection' : '--no-implicitreturns',
+    # A bad warning about lastVnode.  BOTH MUST BE SPECIFIED
+        'leoImport.baseLeoImportCommands.convertMoreStringsToOutlineAfter' : '--no-objattrs', 
+        'leoImport.leoImportCommands.convertMoreStringsToOutlineAfter'     : '--no-objattrs',
+}
+
+# dict: suppress warnings where keys can be regular expressions
+suppressionRegexs = {}</t>
+<t tx="ekr.20040701193853.4"># Ignore unused locals/arguments if name is one of the following:
+
+unusedNames = [
+	'_', 'empty', 'unused', 'dummy', 'event', 'commander',
+	'c', 'i', 'j', 'k', 's',
+	'tag', 'args', 'keys', 'keywords',
+]
+</t>
+<t tx="ekr.20040701193853.5"># list of strings: ignore global variables not used if name is one of
+
+variablesToIgnore = [
+    '__all__', '__version__', '__copyright__',
+    '__revision__', # Suppress an warning about a library module.
+]</t>
 </tnodes>
 </leo_file>
