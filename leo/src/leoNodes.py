@@ -219,6 +219,11 @@
 import leoGlobals as g
 from leoGlobals import true,false
 
+if g.app.config.use_psyco:
+	# print "enabled psyco classes",__file__
+	try: from psyco.classes import *
+	except ImportError: pass
+
 import string,time,types
 
 #@+others

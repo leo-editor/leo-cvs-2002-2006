@@ -2,7 +2,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="4479" clone_windows="0"/>
 <globals body_outline_ratio="0.577008928571">
-	<global_window_position top="12" left="217" height="896" width="901"/>
+	<global_window_position top="10" left="312" height="896" width="901"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences>
@@ -619,7 +619,6 @@
 <v t="ekr.20031218072017.736"><vh>Use xml parser to read .leo files</vh></v>
 </v>
 <v t="ekr.20040329182535.5"><vh>1 day projects</vh>
-<v t="ekr.20031218072017.794"><vh>LeoDocs.leo -&gt; html or latex</vh></v>
 <v t="ekr.20031218072017.801"><vh>Zipped .leo files</vh>
 <v t="ekr.20040226092546"><vh>Saving .leo files with file compression</vh></v>
 </v>
@@ -2451,6 +2450,7 @@
 </v>
 <v t="ekr.20031218072017.1933"><vh>(Calling forceShutdown in an "idle" hook)</vh>
 <v t="ekr.20031218072017.1934"><vh>run &amp; allies</vh>
+<v t="ekr.20040411081633"><vh>&lt;&lt; start psycho &gt;&gt;</vh></v>
 <v t="ekr.20031218072017.1935"><vh>&lt;&lt; print encoding info &gt;&gt;</vh></v>
 <v t="ekr.20031218072017.1936"><vh>isValidPython</vh></v>
 <v t="ekr.20031218072017.1937"><vh>computeLoadDir</vh></v>
@@ -2566,6 +2566,7 @@
 </v>
 <v t="ekr.20031218072017.1977"><vh>(Use gnx's in .leo files)</vh>
 <v t="ekr.20031218072017.1934"><vh>run &amp; allies</vh>
+<v t="ekr.20040411081633"><vh>&lt;&lt; start psycho &gt;&gt;</vh></v>
 <v t="ekr.20031218072017.1935"><vh>&lt;&lt; print encoding info &gt;&gt;</vh></v>
 <v t="ekr.20031218072017.1936"><vh>isValidPython</vh></v>
 <v t="ekr.20031218072017.1937"><vh>computeLoadDir</vh></v>
@@ -4432,7 +4433,7 @@
 <v t="ekr.20040325203859.1"><vh>3/21</vh>
 <v t="ekr.20040312024615"><vh>(Fixed bug in sortTopLevel)</vh>
 <v t="ekr.20040312145256"><vh>v.dump</vh></v>
-<v t="ekr.20040310153624"><vh>p.dump</vh></v>
+<v t="ekr.20040310153624"><vh>p.dump &amp; p.vnodeListIds</vh></v>
 <v t="ekr.20031218072017.2029"><vh>drawTopTree</vh></v>
 <v t="ekr.20031218072017.1008"><vh>drawTree</vh>
 <v t="ekr.20031218072017.1009"><vh>&lt;&lt; draw vertical line &gt;&gt;</vh></v>
@@ -5485,6 +5486,23 @@
 </v>
 </v>
 </v>
+<v t="ekr.20040411091047"><vh>4/11</vh>
+<v t="ekr.20040411081633.1"><vh>(Installed psyco &amp; added use_psyco option)</vh>
+<v t="ekr.20031218072017.2140"><vh>executeScript</vh>
+<v t="ekr.20031218072017.2142"><vh>&lt;&lt; get script into s &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.2143"><vh>&lt;&lt; redirect output if redirect_execute_script_output_to_log_pane &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20031218072017.1934"><vh>run &amp; allies</vh>
+<v t="ekr.20040411081633"><vh>&lt;&lt; start psycho &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.1935"><vh>&lt;&lt; print encoding info &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.1936"><vh>isValidPython</vh></v>
+<v t="ekr.20031218072017.1937"><vh>computeLoadDir</vh></v>
+<v t="ekr.20031218072017.1624"><vh>createFrame (leo.py)</vh></v>
+<v t="ekr.20031218072017.1938"><vh>createNullGuiWithScript (leo.py)</vh></v>
+<v t="ekr.20031218072017.1939"><vh>getBatchScript</vh></v>
+</v>
+</v>
+</v>
 </v>
 </v>
 <v t="ekr.20040117181936"><vh>To do: 4.2</vh>
@@ -5495,6 +5513,7 @@
 <v t="ekr.20031218072017.368"><vh>&lt;&lt; define global data structures &gt;&gt; app</vh></v>
 </v>
 <v t="ekr.20031218072017.1934"><vh>run &amp; allies</vh>
+<v t="ekr.20040411081633"><vh>&lt;&lt; start psycho &gt;&gt;</vh></v>
 <v t="ekr.20031218072017.1935"><vh>&lt;&lt; print encoding info &gt;&gt;</vh></v>
 <v t="ekr.20031218072017.1936"><vh>isValidPython</vh></v>
 <v t="ekr.20031218072017.1937"><vh>computeLoadDir</vh></v>
@@ -5504,7 +5523,7 @@
 </v>
 <v t="ekr.20031218072017.3341"><vh>class vnode</vh>
 <v t="ekr.20031218072017.951"><vh>&lt;&lt; vnode constants &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.3342" a="E"><vh>Birth &amp; death</vh>
+<v t="ekr.20031218072017.3342"><vh>Birth &amp; death</vh>
 <v t="ekr.20031218072017.3343"><vh>v.__cmp__ (not used)</vh></v>
 <v t="ekr.20031218072017.3344"><vh>v.__init__</vh>
 <v t="ekr.20031218072017.1968"><vh>&lt;&lt; initialize vnode data members &gt;&gt;</vh></v>
@@ -5595,7 +5614,7 @@
 <v t="ekr.20040117170612"><vh>p.__getattr__  ON:  must be ON if use_plugins</vh></v>
 <v t="ekr.20040117173448"><vh>p.__nonzero__</vh></v>
 <v t="ekr.20040301205720"><vh>p.__str__ and p.__repr__</vh></v>
-<v t="ekr.20040310153624"><vh>p.dump</vh></v>
+<v t="ekr.20040310153624"><vh>p.dump &amp; p.vnodeListIds</vh></v>
 </v>
 <v t="ekr.20031218072017.890"><vh>&lt;&lt; about the position class &gt;&gt;</vh></v>
 <v t="ekr.20040306212636"><vh>Getters</vh>
@@ -5718,8 +5737,8 @@
 <v t="ekr.20040228060340"><vh>p.vParentWithStack</vh>
 <v t="ekr.20040228060340.1"><vh>&lt;&lt; about the vParentWithStack utility method &gt;&gt;</vh></v>
 </v>
-<v t="ekr.20040409203454"><vh>p.restoreLinksInTree/Suibtree</vh></v>
-<v t="ekr.20040409203454.1" a="E"><vh>p.deleteLinksInTree &amp; allies</vh>
+<v t="ekr.20040409203454"><vh>p.restoreLinksInTree</vh></v>
+<v t="ekr.20040409203454.1"><vh>p.deleteLinksInTree &amp; allies</vh>
 <v t="ekr.20040410170806"><vh>p.deleteLinksInSubtree</vh></v>
 <v t="ekr.20040410170806.1"><vh>p.adjustParentLinksInSubtree</vh></v>
 </v>
@@ -6319,9 +6338,10 @@
 </v>
 </v>
 <v t="ekr.20031218072017.2604"><vh>Core classes...</vh>
-<v t="ekr.20031218072017.2605" tnodeList="ekr.20031218072017.2605,ekr.20031218072017.2606,ekr.20031218072017.1934,ekr.20031218072017.1935,ekr.20031218072017.1936,ekr.20031218072017.1937,ekr.20031218072017.1624,ekr.20031218072017.1938,ekr.20031218072017.1939,ekr.20031218072017.2607"><vh>@file leo.py </vh>
+<v t="ekr.20031218072017.2605" tnodeList="ekr.20031218072017.2605,ekr.20031218072017.2606,ekr.20031218072017.1934,ekr.20031218072017.1935,ekr.20040411081633,ekr.20031218072017.1936,ekr.20031218072017.1937,ekr.20031218072017.1624,ekr.20031218072017.1938,ekr.20031218072017.1939,ekr.20031218072017.2607"><vh>@file leo.py </vh>
 <v t="ekr.20031218072017.2606"><vh>&lt;&lt; Import pychecker &gt;&gt;</vh></v>
 <v t="ekr.20031218072017.1934"><vh>run &amp; allies</vh>
+<v t="ekr.20040411081633"><vh>&lt;&lt; start psycho &gt;&gt;</vh></v>
 <v t="ekr.20031218072017.1935"><vh>&lt;&lt; print encoding info &gt;&gt;</vh></v>
 <v t="ekr.20031218072017.1936"><vh>isValidPython</vh></v>
 <v t="ekr.20031218072017.1937"><vh>computeLoadDir</vh></v>
@@ -8681,7 +8701,7 @@
 <v t="ekr.20031218072017.3105"><vh>alert</vh></v>
 <v t="ekr.20031218072017.3106"><vh>angleBrackets &amp; virtual_event_name</vh></v>
 <v t="ekr.20031218072017.3107"><vh>callerName</vh></v>
-<v t="ekr.20031218072017.3108" a="E"><vh>Dumps</vh>
+<v t="ekr.20031218072017.3108"><vh>Dumps</vh>
 <v t="ekr.20031218072017.3109"><vh>dump</vh></v>
 <v t="ekr.20031218072017.3110"><vh>es_error</vh></v>
 <v t="ekr.20031218072017.3111"><vh>es_event_exception</vh></v>
@@ -8882,7 +8902,7 @@
 </v>
 <v t="ekr.20031218072017.3341"><vh>class vnode</vh>
 <v t="ekr.20031218072017.951"><vh>&lt;&lt; vnode constants &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.3342" a="E"><vh>Birth &amp; death</vh>
+<v t="ekr.20031218072017.3342"><vh>Birth &amp; death</vh>
 <v t="ekr.20031218072017.3343"><vh>v.__cmp__ (not used)</vh></v>
 <v t="ekr.20031218072017.3344"><vh>v.__init__</vh>
 <v t="ekr.20031218072017.1968"><vh>&lt;&lt; initialize vnode data members &gt;&gt;</vh></v>
@@ -8983,7 +9003,7 @@
 <v t="ekr.20040117170612"><vh>p.__getattr__  ON:  must be ON if use_plugins</vh></v>
 <v t="ekr.20040117173448"><vh>p.__nonzero__</vh></v>
 <v t="ekr.20040301205720"><vh>p.__str__ and p.__repr__</vh></v>
-<v t="ekr.20040310153624"><vh>p.dump</vh></v>
+<v t="ekr.20040310153624"><vh>p.dump &amp; p.vnodeListIds</vh></v>
 </v>
 <v t="ekr.20031218072017.890"><vh>&lt;&lt; about the position class &gt;&gt;</vh></v>
 <v t="ekr.20040306212636"><vh>Getters</vh>
@@ -9106,8 +9126,8 @@
 <v t="ekr.20040228060340"><vh>p.vParentWithStack</vh>
 <v t="ekr.20040228060340.1"><vh>&lt;&lt; about the vParentWithStack utility method &gt;&gt;</vh></v>
 </v>
-<v t="ekr.20040409203454"><vh>p.restoreLinksInTree/Suibtree</vh></v>
-<v t="ekr.20040409203454.1" a="E"><vh>p.deleteLinksInTree &amp; allies</vh>
+<v t="ekr.20040409203454"><vh>p.restoreLinksInTree</vh></v>
+<v t="ekr.20040409203454.1"><vh>p.deleteLinksInTree &amp; allies</vh>
 <v t="ekr.20040410170806"><vh>p.deleteLinksInSubtree</vh></v>
 <v t="ekr.20040410170806.1"><vh>p.adjustParentLinksInSubtree</vh></v>
 </v>
@@ -9329,10 +9349,10 @@
 </v>
 </v>
 </v>
-<v t="ekr.20040409083211" a="E"><vh>(Fixed problems deleting cloned nodes &amp; trees)</vh>
+<v t="ekr.20040409083211"><vh>(Fix problems deleting cloned nodes &amp; trees) (RESTORE PARENT LINKS IN UNDO?)</vh>
 <v t="ekr.20040409083211.1"><vh>tracebacks</vh></v>
 <v t="ekr.20040409160021"><vh>Notes</vh></v>
-<v t="ekr.20040409130322" a="E"><vh>commands &amp; fileCommands methods...</vh>
+<v t="ekr.20040409130322"><vh>commands &amp; fileCommands methods...</vh>
 <v t="ekr.20031218072017.1863"><vh>putVnode (3.x and 4.x)</vh>
 <v t="ekr.20031218072017.1864"><vh>&lt;&lt; Put tnode index &gt;&gt;</vh></v>
 <v t="ekr.20031218072017.1865" a="M"><vh>&lt;&lt; Put attribute bits &gt;&gt;</vh></v>
@@ -9369,20 +9389,20 @@
 </v>
 <v t="ekr.20040303175026.2" a="M"><vh>p.doDelete</vh></v>
 <v t="ekr.20031218072017.4146"><vh>p.lastVisible &amp; oldLastVisible</vh></v>
-<v t="ekr.20040310153624"><vh>p.dump</vh></v>
-<v t="ekr.20040228094013.1" a="E"><vh>p.utils...</vh>
+<v t="ekr.20040310153624"><vh>p.dump &amp; p.vnodeListIds</vh></v>
+<v t="ekr.20040228094013.1"><vh>p.utils...</vh>
 <v t="ekr.20040117171654"><vh>p.copy</vh></v>
 <v t="ekr.20040228060340"><vh>p.vParentWithStack</vh>
 <v t="ekr.20040228060340.1"><vh>&lt;&lt; about the vParentWithStack utility method &gt;&gt;</vh></v>
 </v>
-<v t="ekr.20040409203454"><vh>p.restoreLinksInTree/Suibtree</vh></v>
-<v t="ekr.20040409203454.1" a="E"><vh>p.deleteLinksInTree &amp; allies</vh>
+<v t="ekr.20040409203454"><vh>p.restoreLinksInTree</vh></v>
+<v t="ekr.20040409203454.1"><vh>p.deleteLinksInTree &amp; allies</vh>
 <v t="ekr.20040410170806"><vh>p.deleteLinksInSubtree</vh></v>
 <v t="ekr.20040410170806.1"><vh>p.adjustParentLinksInSubtree</vh></v>
 </v>
 </v>
 </v>
-<v t="ekr.20040409163052" a="E"><vh>Undo</vh>
+<v t="ekr.20040409163052"><vh>Undo</vh>
 <v t="ekr.20031218072017.2034"><vh>&lt;&lt; redo insert cases &gt;&gt;</vh></v>
 <v t="ekr.20031218072017.2041"><vh>&lt;&lt; undo delete cases &gt;&gt;</vh></v>
 </v>
@@ -15079,24 +15099,6 @@ on right, I sometimes need to increase the width of the window.
 When I do the resize, the tree/log panes grow in proportion. I don't know about
 others, but I'd much prefer if the tree/log panes stayed at the same width,
 and only the view pane grew.
-</t>
-<t tx="ekr.20031218072017.794">@nocolor
-Open Discussion
-https://sourceforge.net/forum/message.php?msg_id=2012136
-By: dalcolmo
-
-rST would be a good choice, at least for static HTML pages. It provides
-a minimalistic markup language, which is very well readable (much less distracting
-than LaTeX), and can in principle also be translated to LaTeX, OpenOffice.org
-etc.
-
-I say in principle, because only the HTML generator is in the current distribution,
-the others are "sandboxes", with little or no documentation, not even an istallation
-description (at least not for Windows). See
-
-http://docutils.sourceforge.net
-
-- Josef
 </t>
 <t tx="ekr.20031218072017.795">@nocolor
 
@@ -22924,6 +22926,9 @@ g.app.use_gnx = self.initBooleanConfigParam(
 	
 self.use_plugins = self.initBooleanConfigParam(
 	"use_plugins",self.use_plugins)
+
+self.use_psyco = self.initBooleanConfigParam(
+	"use_psyco",self.use_psyco)
 	
 self.undo_granularity = self.initConfigParam(
 	"undo_granularity",self.undo_granularity)
@@ -30123,6 +30128,7 @@ getStringFromDict = getFromDict</t>
 	# Initialize tracing and statistics.
 	g.init_sherlock(args)
 	g.clear_stats()
+	&lt;&lt; start psycho &gt;&gt;
 	# Create the main frame.  Show it and all queued messages.
 	c,frame = createFrame(fileName)
 	if not frame: return
@@ -30134,7 +30140,8 @@ getStringFromDict = getFromDict</t>
 	frame.tree.redraw()
 	frame.body.setFocus()
 	g.app.initing = false # "idle" hooks may now call g.app.forceShutdown.
-	g.app.gui.runMainLoop()</t>
+	g.app.gui.runMainLoop()
+</t>
 <t tx="ekr.20031218072017.1935">g.es("leoConfig.txt encoding: " + g.app.config.config_encoding, color="blue")
 
 if 0: # This is just confusing for users.
@@ -30144,7 +30151,7 @@ if 0: # This is just confusing for users.
 	import leoGlobals as g
 	from leoGlobals import true,false
 	
-	message = """
+	message = """\
 Leo requires Python 2.2 or higher.
 You may download Python 2.2 and Python 2.3 from http://python.org/download/
 """
@@ -40034,6 +40041,11 @@ def setEncoding (self):
 import leoGlobals as g
 from leoGlobals import true,false
 
+if g.app.config.use_psyco:
+	# print "enabled psyco classes",__file__
+	try: from psyco.classes import *
+	except ImportError: pass
+
 import leoColor,leoNodes
 import filecmp,os,string,time
 
@@ -40058,7 +40070,8 @@ class baseNewDerivedFile(oldDerivedFile):
 	&lt;&lt; class baseNewDerivedFile methods &gt;&gt;
 
 class newDerivedFile(baseNewDerivedFile):
-	pass # May be overridden in plugins.</t>
+	pass # May be overridden in plugins.
+</t>
 <t tx="ekr.20031218072017.2621"># These constants must be global to this module because they are shared by several classes.
 
 # The kind of at_directives.
@@ -42859,6 +42872,11 @@ def updateSyntaxColorer (self,p):
 import leoGlobals as g
 from leoGlobals import true,false
 
+if g.app.config.use_psyco:
+	# print "enabled psyco classes",__file__
+	try: from psyco.classes import *
+	except ImportError: pass
+
 import leoAtFile,leoFileCommands,leoImport,leoNodes,leoTangle,leoUndo
 import string
 import sys
@@ -45061,6 +45079,7 @@ self.save_clears_undo_buffer = false
 self.stylesheet = None
 self.tkEncoding = None # Defaults to None so it doesn't override better defaults.
 self.use_plugins = false # Should never be true here!
+self.use_psyco = false
 self.undo_granularity = "word" # "char","word","line","node"
 self.write_old_format_derived_files = false # Use new format if leoConfig.txt does not exist.</t>
 <t tx="ekr.20031218072017.3005"></t>
@@ -45273,6 +45292,11 @@ def setConfigIvars (self,c):
 
 import leoGlobals as g
 from leoGlobals import true,false
+
+if g.app.config.use_psyco:
+	# print "enabled psyco classes",__file__
+	try: from psyco.classes import *
+	except ImportError: pass
 
 import leoNodes
 import os,string,time
@@ -49813,6 +49837,11 @@ def undentBody (self,s):
 
 import leoGlobals as g
 from leoGlobals import true,false
+
+if g.app.config.use_psyco:
+	# print "enabled psyco classes",__file__
+	try: from psyco.classes import *
+	except ImportError: pass
 
 import string,time,types
 
@@ -59534,6 +59563,11 @@ self.target_language = self.lang_var.get()
 import leoGlobals as g
 from leoGlobals import true,false
 
+if g.app.config.use_psyco:
+	# print "enabled psyco classes",__file__
+	try: from psyco.classes import *
+	except ImportError: pass
+
 import leoFrame
 import Tkinter,tkFont
 import os,string,sys,types
@@ -64458,7 +64492,12 @@ def dump (self,label=""):
 	print '-'*10,label,p
 
 	if p.v:
-		p.v.dump() # Don't print a label</t>
+		p.v.dump() # Don't print a label
+		
+def vnodeListIds (self):
+	
+	p = self
+	return [id(v) for v in p.v.t.vnodeList]</t>
 <t tx="ekr.20040311022923"></t>
 <t tx="ekr.20040311075229">This allows the user to choose a "safe mode".  It is off by default.</t>
 <t tx="ekr.20040311080500"></t>
@@ -66816,13 +66855,17 @@ Rather than mess with unlink, I put the new code in p.doDelete.
 
 While I was at it, I improved the p.dump method.
 
-By luck I realized that unlinking a tree leaves most vnodeLists unchanged.  They must be cleared by doDelete and restored in the corresponding undo/redo methods.</t>
+By luck I realized that unlinking a tree leaves most vnodeLists unchanged.  They must be cleared by doDelete and restored in the corresponding undo/redo methods.
+
+----
+
+Most code now works.  However, moving a node right destroyed part of the outline...</t>
 <t tx="ekr.20040409163052"></t>
 <t tx="ekr.20040409164648"></t>
 <t tx="ekr.20040409164648.1"></t>
 <t tx="ekr.20040409203454">def restoreLinksInTree (self):
 
-	"""Restore and otherwise adjust links when undoing a delete node operation."""
+	"""Restore links when undoing a delete node operation."""
 	
 	root = p = self
 
@@ -66830,26 +66873,15 @@ By luck I realized that unlinking a tree leaves most vnodeLists unchanged.  They
 		p.v.t.vnodeList.append(p.v)
 		
 	for p in root.children_iter():
-		p.restoreLinksInSubtree()
-		
-def restoreLinksInSubtree (self):
-	
-	p = self
-
-	if p.v not in p.v.t.vnodeList:
-		p.v.t.vnodeList.append(p.v)</t>
+		p.restoreLinksInTree()</t>
 <t tx="ekr.20040409203454.1">def deleteLinksInTree (self):
 	
 	"""Delete and otherwise adjust links when deleting node."""
 	
 	root = self
+
+	root.deleteLinksInSubtree()
 	
-	# The root has been unlinked.
-	assert(root.v not in root.v.t.vnodeList)
-	
-	for p in root.children_iter():
-		p.deleteLinksInSubtree()
-		
 	for p in root.children_iter():
 		p.adjustParentLinksInSubtree(parent=root)</t>
 <t tx="ekr.20040410170806">def deleteLinksInSubtree (self):
@@ -66860,12 +66892,13 @@ def restoreLinksInSubtree (self):
 	if p.v in p.v.t.vnodeList:
 		p.v.t.vnodeList.remove(p.v)
 		assert(p.v not in p.v.t.vnodeList)
-
-	if len(p.v.t.vnodeList) &gt; 0:
-		# This node is shared by other nodes. Don't delete anything more.
-		# g.trace("stopping deletes at",p)
-		return
+		g.trace("deleted",p.v,p.vnodeListIds())
 	else:
+		g.trace("not in vnodeList",p.v,p.vnodeListIds())
+		pass
+
+	if len(p.v.t.vnodeList) == 0:
+		# This node is not shared by other nodes.
 		for p in root.children_iter():
 			p.deleteLinksInSubtree()</t>
 <t tx="ekr.20040410170806.1">def adjustParentLinksInSubtree (self,parent):
@@ -66879,5 +66912,22 @@ def restoreLinksInSubtree (self):
 		
 	for p in root.children_iter():
 		p.adjustParentLinksInSubtree(parent=root)</t>
+<t tx="ekr.20040411081633">if g.app.config.use_psyco:
+	try:
+		import psyco
+		if 0:
+			file = r"c:\prog\test\psycoLog.txt"
+			g.es("psyco now logging to",file,color="blue")
+			psyco.log(file)
+			psyco.profile()
+		psyco.full()
+		g.es("psyco now running",color="blue")
+	except ImportError:
+		pass
+	except:
+		print "unexpected exception importing psyco"
+		g.es_exception()</t>
+<t tx="ekr.20040411081633.1"></t>
+<t tx="ekr.20040411091047"></t>
 </tnodes>
 </leo_file>

@@ -84,6 +84,26 @@ def run(fileName=None,*args,**keywords):
 	# Initialize tracing and statistics.
 	g.init_sherlock(args)
 	g.clear_stats()
+	#@	<< start psycho >>
+	#@+node:<< start psycho >>
+	if g.app.config.use_psyco:
+		try:
+			import psyco
+			if 0:
+				file = r"c:\prog\test\psycoLog.txt"
+				g.es("psyco now logging to",file,color="blue")
+				psyco.log(file)
+				psyco.profile()
+			psyco.full()
+			g.es("psyco now running",color="blue")
+		except ImportError:
+			pass
+		except:
+			print "unexpected exception importing psyco"
+			g.es_exception()
+	#@nonl
+	#@-node:<< start psycho >>
+	#@nl
 	# Create the main frame.  Show it and all queued messages.
 	c,frame = createFrame(fileName)
 	if not frame: return
@@ -96,7 +116,6 @@ def run(fileName=None,*args,**keywords):
 	frame.body.setFocus()
 	g.app.initing = false # "idle" hooks may now call g.app.forceShutdown.
 	g.app.gui.runMainLoop()
-#@nonl
 #@-node:run & allies
 #@+node:isValidPython
 def isValidPython():
@@ -104,7 +123,7 @@ def isValidPython():
 	import leoGlobals as g
 	from leoGlobals import true,false
 	
-	message = """
+	message = """\
 Leo requires Python 2.2 or higher.
 You may download Python 2.2 and Python 2.3 from http://python.org/download/
 """

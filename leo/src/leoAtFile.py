@@ -7,6 +7,11 @@
 import leoGlobals as g
 from leoGlobals import true,false
 
+if g.app.config.use_psyco:
+	# print "enabled psyco classes",__file__
+	try: from psyco.classes import *
+	except ImportError: pass
+
 import leoColor,leoNodes
 import filecmp,os,string,time
 
@@ -5136,6 +5141,5 @@ class baseNewDerivedFile(oldDerivedFile):
 
 class newDerivedFile(baseNewDerivedFile):
 	pass # May be overridden in plugins.
-#@nonl
 #@-node:@file leoAtFile.py 
 #@-leo

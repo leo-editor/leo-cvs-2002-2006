@@ -150,6 +150,7 @@ class baseConfig:
 		self.stylesheet = None
 		self.tkEncoding = None # Defaults to None so it doesn't override better defaults.
 		self.use_plugins = false # Should never be true here!
+		self.use_psyco = false
 		self.undo_granularity = "word" # "char","word","line","node"
 		self.write_old_format_derived_files = false # Use new format if leoConfig.txt does not exist.
 		#@nonl
@@ -586,6 +587,9 @@ class baseConfig:
 				
 			self.use_plugins = self.initBooleanConfigParam(
 				"use_plugins",self.use_plugins)
+			
+			self.use_psyco = self.initBooleanConfigParam(
+				"use_psyco",self.use_psyco)
 				
 			self.undo_granularity = self.initConfigParam(
 				"undo_granularity",self.undo_granularity)
