@@ -1030,7 +1030,7 @@ class colorizer:
 			# print "recolor_range:leading,trailing",leading,trailing
 			self.incremental=true
 			self.updateSyntaxColorer(v)
-			sself.colorizeAnyLanguage(v,body,leading=leading,trailing=trailing)
+			self.colorizeAnyLanguage(v,body,leading=leading,trailing=trailing)
 	
 	#@-body
 	#@-node:3::colorize & recolor_range

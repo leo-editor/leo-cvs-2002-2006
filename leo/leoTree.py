@@ -160,6 +160,7 @@ class leoTree:
 		self.dragging = false # true: presently dragging.
 		self.controlDrag = false # true: control was down when drag started.
 		self.drag_id = None # To reset bindings after drag
+		self.keyCount = 0 # For debugging.
 		
 		# 20-SEP-2002 DTHEIN: keep track of popup menu so we can handle
 		#                     behavior better on Linux
@@ -837,7 +838,10 @@ class leoTree:
 		c = self.commands ; v = c.currentVnode() ; ch = event.char
 		first,last = getTextSelection(c.body)
 		oldSel = (first,last)
-		# if ch and len(ch)>0: trace(`oldSel`)
+		if 0:
+			self.keyCount += 1
+			if ch and len(ch)>0: print "%4d %s" % (self.keyCount,repr(ch))
+		# Warning: we must execute this even if len(ch) > 0 to delete spurious trailing newlines.
 		self.commands.body.after_idle(self.idle_body_key,v,oldSel,"Typing",ch)
 	
 	# Does the real work of updating the body pane.
@@ -992,7 +996,6 @@ class leoTree:
 		# Call the post-key hook.
 		handleLeoHook("bodykey2",c=c,v=v,ch=ch,oldSel=oldSel,undoType=undoType)
 		return "break"
-	
 	#@-body
 	#@-node:5::tree.onBodyChanged, onBodyWillChange, OnBodyKey, idle_body_key
 	#@+node:6::tree.OnContinueDrag

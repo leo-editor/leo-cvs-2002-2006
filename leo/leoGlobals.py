@@ -1454,7 +1454,7 @@ def handleLeoHook(tag,**keywords):
 
 	a = app() ; c = top() # c may be None during startup.
 	
-	if not app().config.use_customizeLeo_dot_py:
+	if not a.config.use_customizeLeo_dot_py:
 		return None # not enabled.
 
 	if a.hookError:
@@ -1478,7 +1478,7 @@ def handleLeoHook(tag,**keywords):
 				return customizeLeo(tag,keywords)
 			except:
 				a.hookFunction = None
-				es("exception in customizeLeo")
+				es("exception in customizeLeo.py")
 		except exceptions.ImportError:
 			# print "import customizeLeo failed"
 			# Import failed.  This is not an error.
@@ -1486,7 +1486,7 @@ def handleLeoHook(tag,**keywords):
 			a.idleTimeHook = false # Supress idle-time hook
 			return None
 		except:
-			es("error error in customizeLeo")
+			es("error error in customizeLeo.py")
 
 	# Handle all exceptions except import failure.
 	es_exception()
@@ -1495,6 +1495,29 @@ def handleLeoHook(tag,**keywords):
 	return None # No return value
 #@-body
 #@-node:2::handleLeoHook
+#@+node:3::issueHookWarning
+#@+body
+#@+at
+#  This global function issues a warning if customizeLeo.py exists but 
+# use_customizeLeo.py = 0.
+# 
+# This should be called after creating the first window so the message appears 
+# in the log pane.
+
+#@-at
+#@@c
+
+def issueHookWarning ():
+
+	if not app().config.use_customizeLeo_dot_py:
+		try:
+			from customizeLeo import customizeLeo
+			es("ignoring customizeLeo.py:")
+			es("use_customizeLeo_dot_py = 0")
+		except:
+			pass # customizeLeo.py not found: no warning needed.
+#@-body
+#@-node:3::issueHookWarning
 #@-node:6::Hooks
 #@+node:7::Lists...
 #@+node:1::appendToList

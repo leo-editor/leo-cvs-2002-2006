@@ -110,6 +110,7 @@ def leoOpen(fileName=None,*args):
 		frame1.top.title(fileName)
 		frame1.commands.redraw() # Bug fix: 12/12/02
 	init_sherlock(args)
+	issueHookWarning()
 	handleLeoHook("start2",fileName=fileName)
 	root.mainloop()
 #@-body
@@ -151,6 +152,7 @@ def run(*args):
 	frame.commands.redraw() # 9/1/02
 	frame.startupWindow = true
 	init_sherlock(args)
+	issueHookWarning()
 	handleLeoHook("start2")
 	root.mainloop()
 #@-body

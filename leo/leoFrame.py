@@ -156,6 +156,7 @@ class LeoFrame:
 		# Handle mouse wheel in the outline pane.
 		if sys.platform == "linux2": # This crashes tcl83.dll
 			self.tree.canvas.bind("<MouseWheel>", self.OnMouseWheel)
+	
 	#@-body
 	#@-node:2::frame.__init__
 	#@+node:3::frame.__repr__

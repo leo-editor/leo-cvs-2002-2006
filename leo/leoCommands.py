@@ -1394,9 +1394,13 @@ class Commands:
 		s = c.frame.top.title()
 		if len(s) > 2 and not c.loading: # don't update while loading.
 			if changedFlag:
+				# import traceback ; traceback.print_stack()
 				if s [0] != '*': c.frame.top.title("* " + s)
 			else:
 				if s[0:2]=="* ": c.frame.top.title(s[2:])
+	
+	
+	
 	#@-body
 	#@-node:7::setChanged
 	#@-node:12::Getters & Setters
