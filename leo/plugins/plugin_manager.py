@@ -18,7 +18,8 @@ __plugin_requires__ = ["plugin_menu"]
 #@+node:pap.20041006184225.2:<< version history >>
 #@+at
 # 
-# 0.1 Paul Paterson: - Initial version
+# 0.1 Paul Paterson:
+#     - Initial version
 # 
 # 0.2 EKR:
 #     - The check for .ini files looks for the actual x.ini file.
@@ -33,8 +34,13 @@ __plugin_requires__ = ["plugin_menu"]
 #       Furthermore, this plugin preserves that order.
 # 0.5 EKR:
 #     - Make sure to do nothing if Pmw is not defined.
+# 0.6 Paul Paterson:
+#     - Fixed incorrect detection of version if single quotes used
+#     - Now always detects a file as a plugin (previously only did this if it 
+# imported leoPlugins)
+#     - Fixed incorrect detection of handlers if single quotes used
+#     - Fixed incorrect detection of multiple handlers in a single line
 #@-at
-#@nonl
 #@-node:pap.20041006184225.2:<< version history >>
 #@nl
 #@<< imports >>
@@ -816,8 +822,10 @@ class Plugin:
             config
             commands
         """
-        self.is_plugin = self.hasImport(text, "leoPlugins") 
-        self.version = self.getPattern(text, r'__version__\s*=\s*"(.*?)"', "-")
+        # The following line tried to detect plugins by looking 
+        # for self.hasImport(text, "leoPlugins") - now we assume all .py are plugins
+        self.is_plugin = True 
+        self.version = self.getPattern(text, r'__version__\s*=\s*[\'"](.*?)[\'"]', "-")
         # Allow both single and double triple-quoted strings.
         match1 = self.getMatch(text, r'"""(.*?)"""')
         match2 = self.getMatch(text, r"'''(.*?)'''")
@@ -831,7 +839,12 @@ class Plugin:
             self.description = pat1 or pat2 or 'Unknown'
         # g.trace('%4d %s' % (len(self.description),self.name))
         self.commands = sets.Set(self.getPatterns(text, "def cmd_(\w*?)\("))
-        self.handlers = sets.Set(self.getPatterns(text, r'registerHandler\("(.*?)"'))
+        # Get a list of the handlers
+        handler_list = self.getPattern(text, r'registerHandler\((.*?)\)')
+        if handler_list:
+            self.handlers = sets.Set(self.getPatterns(handler_list, r'["\'](.*?)["\']'))
+        else:
+            self.handlers = sets.Set()
         # Look for the matching .ini file.
         ini_file_name = g.os_path_join(
             g.app.loadDir,"..","plugins",
@@ -902,7 +915,10 @@ class Plugin:
         """Return a string representation"""
     
         if not detail:
-            return "%(enabled)s - %(name)s (v%(version)s)" % self.__dict__
+            if self.version <> "-":
+                return "%(enabled)s - %(name)s (v%(version)s)" % self.__dict__
+            else:
+                return "%(enabled)s - %(name)s" % self.__dict__                        
         else:
             return (
                 "Name: %(name)s\n"
