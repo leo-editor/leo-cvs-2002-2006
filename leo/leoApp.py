@@ -49,7 +49,7 @@ class LeoApp:
 		#@+node:1::<< return false if not v2.2 or above >>
 		#@+body
 		try:
-			version = self.root.getvar("tk_patchLevel")
+			version = sys.version
 			vlist = string.split(version,".")
 			v0 = int(vlist[0])
 			v1 = int(vlist[1])
@@ -112,13 +112,18 @@ class LeoApp:
 			#@+node:1::<< set v834 if version is 8.3.4 or greater >>
 			#@+body
 			# A compare version utility would be good.
-			
+
+			# Tk version is of the form 9.9.9, or 9.9b9,
+			# or 9.9.9b9.  The "9b9" form is used for beta
+			# releases.  This string splitting logic handles
+			# both normal and beta releases.
 			vlist = string.split(version,".")
-			
 			v0 = int(vlist[0])
-			v1 =  int(vlist[1])
+			vlistb = string.split(vlist[1], "b")
+			v1 = int(vlistb[0])
 			if len(vlist) > 2: 
-				v2 = int(vlist[2])
+				vlistb = string.split(vlist[2], "b")
+				v2 = int(vlistb[0])
 			else:
 				v2 = 0
 			
