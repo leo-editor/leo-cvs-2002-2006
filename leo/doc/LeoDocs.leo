@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="11560" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="11561" clone_windows="0"/>
 <globals body_outline_ratio="0.452928870293">
 	<global_window_position top="21" left="359" height="860" width="872"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
@@ -69,7 +69,7 @@
 <v t="edream.110203163054.26"><vh>Travers A. Hough</vh></v>
 <v t="edream.110203163054.23"><vh>Zak Greant</vh></v>
 </v>
-<v t="edream.110203163054.46"><vh>Release Notes</vh>
+<v t="edream.110203163054.46" a="E"><vh>Release Notes</vh>
 <v t="edream.110203163054.47"><vh>Warnings</vh></v>
 <v t="edream.110203163054.48"><vh>Installation notes</vh>
 <v t="edream.110203163054.49"><vh>System requirements</vh></v>
@@ -82,7 +82,7 @@
 <v t="edream.110203163054.62"><vh>Quick start</vh></v>
 </v>
 <v t="edream.110203163054.63" a="E"><vh>Latest versions</vh>
-<v t="ekr.20040713110718"><vh>4.2 beta 3</vh>
+<v t="ekr.20040713110718" a="TV"><vh>4.2 beta 3</vh>
 <v t="ekr.20040804165258.1"><vh>Bug fixes</vh>
 <v t="ekr.20040804164600.16"><vh>Leo gives the user a chance to save read-only files</vh></v>
 <v t="ekr.20040804164600.36"><vh>Fixed some unit-test bugs</vh></v>
@@ -1550,6 +1550,7 @@
 <v t="EKR.20040524104904.187"><vh>Redirecting output from scripts</vh></v>
 <v t="EKR.20040524104904.188"><vh>Getting the headline and body text of the presently selected node</vh></v>
 <v t="EKR.20040524104904.189"><vh>Setting the headline and body text of the presently selected node</vh></v>
+<v t="ekr.20040903095817"><vh>Testing whether a position is valid</vh></v>
 <v t="EKR.20040524104904.190"><vh>Traversing all nodes of an outline</vh></v>
 <v t="EKR.20040524104904.191"><vh>Iterators</vh>
 <v t="EKR.20040524104904.192"><vh>allNodes_iter</vh>
@@ -2072,6 +2073,9 @@
 <v t="ekr.20040403173920.16"><vh>p.subtree_iter and p.self_and_subtree_iter</vh>
 <v t="ekr.20040403185803.3"><vh>@rst</vh></v>
 </v>
+<v t="ekr.20040903100514"><vh>Testing whether a position is valid</vh>
+<v t="ekr.20040903100514.1"><vh>@rst</vh></v>
+</v>
 </v>
 </v>
 <v t="ekr.20040403173920.17"><vh>Updating the screen</vh>
@@ -2117,7 +2121,7 @@
 </v>
 </v>
 </v>
-<v t="ekr.20040829091910" a="MTV"><vh>TO DO:  Revise MacOS install notes</vh></v>
+<v t="ekr.20040829091910" a="M"><vh>TO DO:  Revise MacOS install notes</vh></v>
 </vnodes>
 <tnodes>
 <t tx="EKR.20040518070558">Leo 4.2 alpha 2           May 18, 2004
@@ -15183,5 +15187,45 @@ to be, or install it to wherever you would like it to have.
 
 Konrad.
 </t>
+<t tx="ekr.20040903095817">The tests:
+
+@color
+if p:
+    
+or
+
+if not p:
+@nocolor
+
+are the _only_ correct ways to test whether a position p is valid. In particular, the following will not work:
+    
+@color
+if p is None: # Wrong
+
+if p is not None:  # Wrong
+</t>
+<t tx="ekr.20040903100514"></t>
+<t tx="ekr.20040903100514.1">@ignore
+@wrap
+
+The tests:
+    
+.. code-block:: Python
+
+    if p:
+        
+or
+
+.. code-block:: Python
+    
+    if not p:
+
+are the _only_ correct ways to test whether a position p is valid. In particular, the following will not work:
+
+.. code-block:: Python
+
+    if p is None: # Wrong
+    
+    if p is not None:  # Wrong</t>
 </tnodes>
 </leo_file>
