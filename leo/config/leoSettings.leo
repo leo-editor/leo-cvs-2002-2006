@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet ekr_stylesheet?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="89" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="90" clone_windows="0"/>
 <globals body_outline_ratio="0.448863636364">
-	<global_window_position top="136" left="257" height="704" width="857"/>
+	<global_window_position top="143" left="367" height="704" width="857"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
 <find_panel_settings/>
 <vnodes>
-<v t="ekr.20041119035137"><vh>About this file</vh>
-<v t="ekr.20041119035704"><vh> Basic setting nodes</vh>
+<v t="ekr.20041119035137" a="TV"><vh>About this file</vh>
+<v t="ekr.20041119035704"><vh> Basic setting nodes: @type-name setting-name = value</vh>
 <v t="ekr.20041119042929"><vh>@bool</vh></v>
 <v t="ekr.20041119042929.1"><vh>@color</vh></v>
 <v t="ekr.20041119044139"><vh>@directory</vh></v>
@@ -18,20 +18,22 @@
 <v t="ekr.20041119042929.4"><vh>@int</vh></v>
 <v t="ekr.20041119042929.5"><vh>@font</vh></v>
 <v t="ekr.20041119042929.6"><vh>@shortcut</vh></v>
+<v t="ekr.20041120155431.1"><vh>@shortcuts</vh></v>
 <v t="ekr.20041119042929.2"><vh>@path</vh></v>
 <v t="ekr.20041119042929.7"><vh>@string</vh></v>
 </v>
 <v t="ekr.20041119035704.1"><vh> Organizer nodes</vh></v>
-<v t="ekr.20041119035931"><vh>@if nodes</vh></v>
-<v t="ekr.20041119035704.2"><vh>@ignore nodes</vh></v>
-<v t="ekr.20041119035931.1"><vh>@page nodes</vh></v>
-<v t="ekr.20041119035931.2"><vh>@platform nodes</vh></v>
-<v t="ekr.20041119035704.3"><vh>@type nodes</vh></v>
+<v t="ekr.20041119035931"><vh>@if expression</vh></v>
+<v t="ekr.20041119110141"><vh>@if-platform platform-name</vh></v>
+<v t="ekr.20041119035704.2"><vh>@ignore comment</vh></v>
+<v t="ekr.20041119035931.1"><vh>@page comment</vh></v>
+<v t="ekr.20041119105509"><vh>@set name = value</vh></v>
+<v t="ekr.20041119035704.3"><vh>@type type-name: base-type = [list of valid values]</vh></v>
+<v t="ekr.20041120155431.2"><vh>@type type-name: script: script-name</vh></v>
 </v>
 <v t="ekr.20041119034357.1" a="E"><vh>@settings</vh>
-<v t="ekr.20041119034357.3" a="TV"><vh>General configuration options</vh>
+<v t="ekr.20041119034357.3"><vh>General configuration options</vh>
 <v t="ekr.20041119034357.5"><vh>@bool read_only = False</vh></v>
-<v t="ekr.20041119034357.6"><vh>@bool use_psyco = False</vh></v>
 <v t="ekr.20041119034357.13"><vh>@bool use_plugins = False</vh></v>
 <v t="ekr.20041119034357.7"><vh>@page .leo file options</vh>
 <v t="ekr.20041119034357.8"><vh>@string output_initial_comment = None</vh></v>
@@ -94,16 +96,21 @@
 <v t="ekr.20041119050105.5"><vh>@bool ignore_case = False</vh></v>
 <v t="ekr.20041119050105.6"><vh>@bool mark_changes = False</vh></v>
 <v t="ekr.20041119050105.7"><vh>@bool mark_finds = False</vh></v>
-<v t="ekr.20041119050105.8"><vh>@bool pattern_match = False</vh></v>
-<v t="ekr.20041119050105.9"><vh>@bool reverse = False</vh></v>
-<v t="ekr.20041119050105.10"><vh>@bool whole_word = True</vh></v>
-<v t="ekr.20041119050105.11"><vh>@bool wrap = False</vh></v>
 <v t="ekr.20041119050105.12"><vh>@bool node_only = False</vh></v>
-</v>
-<v t="ekr.20041119050105.13"><vh>search extent radio buttons</vh>
+<v t="ekr.20041119050105.9"><vh>@bool reverse = False</vh></v>
+<v t="ekr.20041120152657"><vh>@bool script_change = None</vh></v>
 <v t="ekr.20041119050105.14"><vh>@bool search_body = True</vh></v>
 <v t="ekr.20041119050105.15"><vh>@bool search_headline = False</vh></v>
+<v t="ekr.20041119050105.10"><vh>@bool whole_word = True</vh></v>
+<v t="ekr.20041119050105.11"><vh>@bool wrap = False</vh></v>
+</v>
+<v t="ekr.20041119050105.13"><vh>search extent radio buttons</vh>
+<v t="ekr.20041120152900"><vh>@bool selection_only = False</vh></v>
 <v t="ekr.20041119050105.16"><vh>@bool suboutline_only = False</vh></v>
+</v>
+<v t="ekr.20041120152900.1"><vh>search kind radio buttons</vh>
+<v t="ekr.20041119050105.8"><vh>@bool pattern_match = False</vh></v>
+<v t="ekr.20041120152900.2"><vh>@bool script_search = None</vh></v>
 </v>
 </v>
 <v t="ekr.20041119034357.28"><vh>@page Preferences panel (done)</vh>
@@ -140,6 +147,7 @@
 <v t="ekr.20041119034357.80"><vh>@tk-color directive_color=blue</vh></v>
 <v t="ekr.20041119034357.81"><vh>@tk-color doc_part_color=firebrick3</vh></v>
 <v t="ekr.20041119034357.82"><vh>@tk-color keyword_color=blue</vh></v>
+<v t="ekr.20041120152508"><vh>@tk-color latex_background_color = None</vh></v>
 <v t="ekr.20041119034357.83"><vh>@tk-color leo_keyword_color=#00aa00</vh></v>
 <v t="ekr.20041119034357.84"><vh>@tk-color section_name_color=red</vh></v>
 <v t="ekr.20041119034357.85"><vh>@tk-color section_name_brackets_color=blue</vh></v>
@@ -165,7 +173,7 @@
 <v t="ekr.20041119034357.49"><vh>@tk-color body_text_background_color = None</vh></v>
 <v t="ekr.20041119034357.50"><vh>@tk-color body_insertion_cursor_color = None</vh></v>
 </v>
-<v t="ekr.20041119034357.45"><vh>@font body text font</vh>
+<v t="ekr.20041119034357.45"><vh>@page body text font</vh>
 <v t="ekr.20041119034357.47"><vh>@family body_text_font_family = Courier New</vh></v>
 <v t="ekr.20041119034357.51"><vh>@int body_text_font_size = None</vh></v>
 <v t="ekr.20041119034357.46"><vh>@slant body_text_font_slant = roman</vh></v>
@@ -189,7 +197,7 @@
 <v t="ekr.20041119050749.8"><vh>@color headline_text_editing_foreground_color = black</vh></v>
 <v t="ekr.20041119050749.9"><vh>@color headline_text_editing_selection_foreground_color = white</vh></v>
 <v t="ekr.20041119051901.1"><vh>@color headline_text_editing_selection_background_color = DarkBlue</vh></v>
-<v t="ekr.20041119050749.12"><vh>outline_pane_background_color = None</vh></v>
+<v t="ekr.20041119050749.12"><vh>@color outline_pane_background_color = None</vh></v>
 </v>
 <v t="ekr.20041119051246.4"><vh>@font outline font</vh>
 <v t="ekr.20041119050749.13"><vh>@family headline_text_font_family = None</vh></v>
@@ -203,7 +211,7 @@
 <v t="ekr.20041119052015"><vh>@color log_error_color = red</vh></v>
 <v t="ekr.20041119052015.2"><vh>@color log_text_foreground_color = None</vh></v>
 <v t="ekr.20041119053445"><vh>@color log_text_background_color = None</vh></v>
-<v t="ekr.20041119052015.3"><vh>@font log font</vh>
+<v t="ekr.20041119052015.3"><vh>@page log font</vh>
 <v t="ekr.20041119052015.4"><vh>@family log_text_font_family = None</vh></v>
 <v t="ekr.20041119052015.5"><vh>@int log_text_font_size = None</vh></v>
 <v t="ekr.20041119052015.6"><vh>@slant log_text_font_slant = roman</vh></v>
@@ -233,7 +241,6 @@
 <t tx="ekr.20041119034357.1">@nocolor</t>
 <t tx="ekr.20041119034357.3"></t>
 <t tx="ekr.20041119034357.5">False: Leo writes leoSettings.leo files.</t>
-<t tx="ekr.20041119034357.6">True: use pscho module if it has been installed.</t>
 <t tx="ekr.20041119034357.7"></t>
 <t tx="ekr.20041119034357.8">Example:
 
@@ -660,34 +667,58 @@ For example, the color of "if", "try" and "except" in Python.</t>
 
 </t>
 <t tx="ekr.20041119034357.89">The color of name in &lt;&lt; name &gt;&gt; when name is undefined.</t>
-<t tx="ekr.20041119035137">@ignore
+<t tx="ekr.20041119035137">@nocolor
+@pagewidth 80
 
 This is Leo's main settings file.  It specifies all the settings that Leo supports.
 
-Headlines that start with @setting form the root of a tree of settings nodes.
+@settings trees are composed of various kinds of nodes. The _headline_ of each
+node indicates its type. The body text of most nodes contain comments used by
+the dialog creator. The body text of other nodes contain scripts. See the
+children of this node for more details.
 
-The children of this node describes the format of these settings nodes.</t>
-<t tx="ekr.20041119035704">Basic settings nodes describe the type, name and value of a single setting.
+Important:  Leo uses the @settings tree in two different ways.
 
-Headlines
+1. During startup, a "Settings Parser" scans the @settings tree to set
+configuration options.
 
-The headlines of basic settings nodes have the form: @type-name setting-name = value
+2. When executing the Change Settings command a "Dialog Creator" creates a
+dialog from the @settings tree. This dialog has an outline pane on the left.
+Selecting an item in this outline will show a settings page on the right of the
+dialog.</t>
+<t tx="ekr.20041119035704">These nodes describe the type, name and value of a single setting.  Headlines have the form:
 
-type-name is one of: @bool, @color, @directory, @encoding, @font, @int, @shortcut, @string.
+@type-name setting-name = value
 
-type-name may also be a user-defined type defined by @type nodes.
+The basic types are: @bool, @color, @directory, @encoding, @font, @int, @path, @shortcut, @string.  However, @type nodes can define other types.  The body text of basic nodes contains comments to be displayed in the settings dialog.
 
-value is a type-specific value.  None is a valid string or type derived from string.
+None is a valid value for all types.  It indicates that the setting node has no effect.
 
-Body text
+The dialog creator uses the type when creating the "picker" for the setting in the settings page.
 
-Body text of basic settings nodes contains comments to be displayed in the settings dialog.</t>
-<t tx="ekr.20041119035704.1">Organizer nodes have headlines that do no start with @.</t>
+N.B.  The dialog code will change the @settings tree when the user changes the setting in the dialog.
+
+Some more work needs to be done with @font nodes because fonts are described (in Tk) as a tuple of four values.</t>
+<t tx="ekr.20041119035704.1">Organizer nodes have headlines that do no start with @.
+
+Organizer nodes may be inserted freely without changing the meaning of an @setting tree.</t>
 <t tx="ekr.20041119035704.2">Leo ignores subtrees of @settings trees whose headline starts with @ignore.</t>
-<t tx="ekr.20041119035704.3"></t>
-<t tx="ekr.20041119035931"></t>
-<t tx="ekr.20041119035931.1"></t>
-<t tx="ekr.20041119035931.2"></t>
+<t tx="ekr.20041119035704.3">Not implemented yet.
+
+Creates a user-defined type. For example:
+
+@tk-relief: string = [raised, sunken, flat, ridge, solid, groove]
+
+This is much better than using a base type because the dialog creator can
+present the user with a listbox containing only the valid options.</t>
+<t tx="ekr.20041119035931">Acts like an organizer node if the expression evaluates to True, otherwise acts like an @ignore node. If the expression is empty the
+body text should contain a script that will be evaluated (in an empty context).
+
+This is a completely general method of creating different classes of settings. For example, editing modes could be implemented this
+way.</t>
+<t tx="ekr.20041119035931.1">Acts like an organizer node for the settings parser.
+
+Tells the dialog creator to place all descendent nodes in a single page.  The page will be scrollable to accommodate arbitrarily many entries. </t>
 <t tx="ekr.20041119041019">False: Print sends its output to stdout (console) when doing Execute Script command.
 True:  Print redirected to Leo's log pane when doing Execute Script command.
 </t>
@@ -754,7 +785,7 @@ one:  Leo ends each non-empty body text with exactly one trailing newline.</t>
 <t tx="ekr.20041119042929.3"></t>
 <t tx="ekr.20041119042929.4"></t>
 <t tx="ekr.20041119042929.5"></t>
-<t tx="ekr.20041119042929.6">The dialog creator will scan for @shortcuts nodes and will create dialogs automatically without having to specify the exact details.  This will save a huge amount of work.</t>
+<t tx="ekr.20041119042929.6">Not supported at present.</t>
 <t tx="ekr.20041119042929.7"></t>
 <t tx="ekr.20041119042929.9">
 The encoding used for derived files if no @encoding directive is in effect.
@@ -1008,5 +1039,27 @@ UntangleAll             = None
 UntangleMarked          = None
 Weave                   = None
 WriteOutlineOnly        = None</t>
+<t tx="ekr.20041119105509">Not implemented yet.
+
+Creates a permanent value that can be tested later with @if. That is, it alters
+the environment in which @if code is executed.</t>
+<t tx="ekr.20041119110141">Same as "@if sys.platform = = platform-name", except that it isn't necessary to import sys.
+
+This would be the natural way to implement platform-dependent settings.</t>
+<t tx="ekr.20041120152508"></t>
+<t tx="ekr.20041120152657"></t>
+<t tx="ekr.20041120152900"></t>
+<t tx="ekr.20041120152900.1"></t>
+<t tx="ekr.20041120152900.2"></t>
+<t tx="ekr.20041120155431.1">The body text of @shortcut nodes contain the specification for zero or more shortcuts.
+
+Lines starting with # are ignored.
+
+All other non-blank lines should have the form:
+
+commandName = shortcut specifier.</t>
+<t tx="ekr.20041120155431.2">Not implemented yet.
+
+Autments the settings parser and the dialog creator with scripts.</t>
 </tnodes>
 </leo_file>
