@@ -770,10 +770,10 @@ class listBoxDialog (leoDialog):
 			n = items[0]
 			v = self.vnodeList[n]
 			c.beginUpdate()
-			c.tree.expandAllAncestors(v)
+			c.frame.expandAllAncestors(v)
 			c.selectVnode(v,updateBeadList=true) # A case could be made for updateBeadList=false
 			c.endUpdate()
-			c.tree.idle_scrollTo(v)
+			c.frame.idle_scrollTo(v)
 	#@-node:go
 	#@-others
 #@nonl

@@ -8,7 +8,7 @@
 Plugins may define their own gui classes by setting app.gui."""
 
 from leoGlobals import *
-import leoFind,leoFrame
+import leoCommands,leoFind,leoFrame,leoTree
 import os,sys,tkFont,Tkinter,traceback
 
 Tk = Tkinter
@@ -57,7 +57,27 @@ class leoGui:
 			return "invalid gui name"
 	#@nonl
 	#@-node:guiName
-	#@+node:do-nothing methods
+	#@+node:interface to Leo's core
+	#@+at 
+	#@nonl
+	# Leo's core code calls these routine to create commanders and the 
+	# corresponding frame objects.
+	#@-at
+	#@nonl
+	#@-node:interface to Leo's core
+	#@+node:newLeoCommanderAndFrame
+	def newLeoCommanderAndFrame(self,title=None):
+		
+		"""Create a commander and its view frame for the Leo main window."""
+		
+		c = leoCommands.Commands(title) # title is new arg.
+		trace(c)
+		frame = self.newLeoFrame(c,title) # This code should _not_ create a commander.
+		trace(frame)
+		c.finishCreate(frame)
+		return c,frame
+	#@-node:newLeoCommanderAndFrame
+	#@+node:base-class methods: overridden in subclasses
 	#@+at 
 	#@nonl
 	# Subclasses are expected to subclass all of the following methods.
@@ -70,120 +90,122 @@ class leoGui:
 	# of its subcommanders.
 	#@-at
 	#@nonl
-	#@-node:do-nothing methods
+	#@-node:base-class methods: overridden in subclasses
 	#@+node:Birth, death & rebirth
 	def createRootWindow(self):
-		"""A do-nothing base class to create the hidden root window for a gui.
+		"""Create the hidden root window for the gui.
 		
 		Nothing needs to be done if the root window need not exist."""
-		pass
+		pass # Overridden in subclasses
+		
+	def finishCreate (self):
+		"""Do any remaining chores after the root window has been created."""
+		pass # Overridden in subclasses
 	
 	def killGui(self,exitFlag=true):
-		"""A do-nothing base class to destroy a gui.
+		"""Destroy the gui.
 		
 		The entire Leo application should terminate if exitFlag is true."""
-		pass
+		pass # Overridden in subclasses
 	
 	def recreateRootWindow(self):
-		"""A do-nothing base class to create the hidden root window of a gui
-	
-		after a previous gui has terminated with killGui(false)."""
-		pass
-	
+		"""Create the hidden root window of the gui
+	    after a previous gui has terminated with killGui(false)."""
+		pass # Overridden in subclasses
 	#@-node:Birth, death & rebirth
 	#@+node:runMainLoop
 	def runMainLoop(self):
 	
-		"""A do-nothing base class to run the gui's main loop."""
+		"""Run the gui's main loop."""
 		
-		pass
+		pass # Overridden in subclasses
 	#@nonl
 	#@-node:runMainLoop
-	#@+node:Creating Frames
+	#@+node:Creating frames
 	def newColorFrame(self,commander):
-		"""A do-nothing base class to create a colorFrame."""
-		pass
+		"""Create a colorFrame."""
+		pass # Overridden in subclasses
 	
 	def newColorNameFrame(self,commander):
-		"""A do-nothing base class to create a colorNameFrame."""
-		pass
+		"""Create a colorNameFrame."""
+		pass # Overridden in subclasses
 	
 	def newCompareFrame(self,commander):
-		"""A do-nothing base class to create a compareFrame."""
-		pass
+		"""Create a compareFrame."""
+		pass # Overridden in subclasses
 	
 	def newFindFrame(self,commander):
-		"""A do-nothing base class to create a findFrame."""
-		pass
+		"""Create a findFrame."""
+		pass # Overridden in subclasses
 	
 	def newFontFrame(self,commander):
-		"""A do-nothing base class to create a fondFrame."""
-		pass
+		"""Create a fontFrame."""
+		pass # Overridden in subclasses
 	
 	def newLeoFrame(self,commander):
-		"""A do-nothing base class to create a view frame for the Leo main window."""
-		pass
+		"""Create a view frame for the Leo main window."""
+		pass # Overridden in subclasses
 	
 	def newPrefsFrame(self,commander):
-		"""A do-nothing base class to create a prefsFrame."""
-		pass
+		"""Create a prefsFrame."""
+		pass # Overridden in subclasses
 	#@nonl
-	#@-node:Creating Frames
+	#@-node:Creating frames
 	#@+node:Creating and running dialogs
 	def newAboutLeoDialog(self,commander):
-		"""A do-nothing base class to create an About Leo dialog."""
-		pass
+		"""Create an About Leo dialog."""
+		pass # Overridden in subclasses
 	
 	def newAskOkDialog(self,commander):
-		"""A do-nothing base class to create an askOK dialog ."""
-		pass
+		"""Create an askOK dialog ."""
+		pass # Overridden in subclasses
 	
 	def newAskOkCancelDialog(self,commander):
-		"""A do-nothing base class to create an askOkCancel dialog."""
-		pass
+		"""Create an askOkCancel dialog."""
+		pass # Overridden in subclasses
 	
 	def newAskOkCancelNumberDialog(self,commander):
-		"""A do-nothing base class to create an askOkCancelNumber dialog ."""
-		pass
+		"""Create an askOkCancelNumber dialog ."""
+		pass # Overridden in subclasses
 	
 	def newAskYesNoDialog(self,commander):
-		"""A do-nothing base class to create an askYesNo dialog."""
-		pass
+		"""Create an askYesNo dialog."""
+		pass # Overridden in subclasses
 	
 	def newAskYesNoCancelDialg(self,commander):
-		"""A do-nothing base class to create an askYesNoCancel dialog ."""
-		pass
+		"""Create an askYesNoCancel dialog ."""
+		pass # Overridden in subclasses
 	#@nonl
 	#@-node:Creating and running dialogs
 	#@+node:Dialog utils
 	def attachLeoIcon (self,window):
 		"""Attach the Leo icon to a window."""
-		pass
+		pass # Overridden in subclasses
 		
 	def center_dialog(self,dialog):
 		"""Center a dialog."""
-		pass
+		pass # Overridden in subclasses
 		
 	def create_labeled_frame (self,parent,caption=None,relief="groove",bd=2,padx=0,pady=0):
 		"""Create a labeled frame."""
-		pass
+		pass # Overridden in subclasses
 		
 	def get_window_info (self,window):
 		"""Return the window information."""
-		pass
+		pass # Overridden in subclasses
 	#@-node:Dialog utils
 	#@+node:Focus utils
 	def get_focus(self,top):
 		"""Return the widget that has focus, or the body widget if None."""
-		pass
+		pass # Overridden in subclasses
 		
 	def set_focus(self,commander,widget):
 		"""Set the focus of the widget in the given commander if it needs to be changed."""
-		pass
+		pass # Overridden in subclasses
 		
 	def force_focus(self,commander,widget):
 		"""Set the focus of the widget in the given commander if it needs to be changed."""
-		pass
+		pass # Overridden in subclasses
 	#@nonl
 	#@-node:Focus utils
 	#@-others
@@ -300,6 +322,12 @@ class tkinterGui(leoGui):
 		widget.destroy()
 	#@nonl
 	#@-node:destroy
+	#@+node:finishCreate
+	def finishCreate (self):
+		
+		pass
+		
+	#@-node:finishCreate
 	#@+node:killGui (not used)
 	def killGui(self,exitFlag=true):
 		
@@ -362,33 +390,33 @@ class tkinterGui(leoGui):
 	#@-node:Creating and running dialogs
 	#@+node:Creating Frames
 	def newColorFrame(self,commander):
-		"""A do-nothing base class to create a colorFrame."""
-		pass
+		"""Create a colorFrame."""
+		pass # To do
 	
 	def newColorNameFrame(self,commander):
-		"""A do-nothing base class to create a colorNameFrame."""
-		pass
+		"""Create a colorNameFrame."""
+		pass # To do
 	
 	def newCompareFrame(self,commander):
-		"""A do-nothing base class to create a compareFrame."""
-		pass
+		"""Create a compareFrame."""
+		pass # To do
 	
 	def newFindFrame(self,commander):
-		"""A do-nothing base class to create a findFrame."""
-		pass
+		"""Create a findFrame."""
+		pass # To do
 	
 	def newFontFrame(self,commander):
-		"""A do-nothing base class to create a fondFrame."""
-		pass
+		"""Create a fontFrame."""
+		pass # To do
 	
-	def newLeoFrame(self,commander):
-		"""A do-nothing base class to create a view frame for the Leo main window."""
+	def newLeoFrame(self,commander,title):
+		"""Create a view frame for the Leo main window."""
 		trace()
-		return leoFrame.LeoFrame(commander)
+		return leoFrame.LeoFrame(commander,title)
 	
 	def newPrefsFrame(self,commander):
-		"""A do-nothing base class to create a prefsFrame."""
-		pass
+		"""Create a prefsFrame."""
+		pass # To do
 	#@nonl
 	#@-node:Creating Frames
 	#@+node:get_focus

@@ -378,7 +378,10 @@ class baseTangleCommands:
 		self.tangling = true # true if tangling, false if untangling.
 		self.path_warning_given = false # true: suppress duplicate warnings.
 		self.tangle_indent = 0 # Level of indentation during pass 2, in spaces.
-		self.file_name = c.frame.mFileName # The file name (was a bridge function)
+		if c.frame:
+			self.file_name = c.mFileName # The file name (was a bridge function)
+		else:
+			self.file_name = "<unknown file name>"
 		self.v = None # vnode being processed.
 		self.output_file = None # The file descriptor of the output file.
 		self.start_mode = "doc" # "code" or "doc".  Use "doc" for compatibility.
@@ -1389,7 +1392,7 @@ class baseTangleCommands:
 	
 	def put_all_roots(self):
 	
-		c = self.commands ; outline_name = c.frame.mFileName
+		c = self.commands ; outline_name = c.mFileName
 	
 		for section in self.root_list:
 		

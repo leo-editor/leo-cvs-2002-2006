@@ -546,8 +546,8 @@ class leoFind (leoFindBase):
 		c.endUpdate() # self.restore
 		# Make sure the headline and body text are updated.
 		v = c.currentVnode()
-		c.tree.onHeadChanged(v)
-		c.tree.onBodyChanged(v,"Can't Undo")
+		c.frame.onHeadChanged(v)
+		c.frame.onBodyChanged(v,"Can't Undo")
 		if count > 0:
 			# A change was made.  Tag the end of the Change All command.
 			c.undoer.setUndoParams("Change All",v)
@@ -588,12 +588,12 @@ class leoFind (leoFindBase):
 		c.beginUpdate()
 		if c.mark_changes_flag:
 			v.setMarked()
-			c.tree.drawIcon(v,v.iconx,v.icony) # redraw only the icon.
+			c.frame.drawIcon(v,v.iconx,v.icony) # redraw only the icon.
 		# update node, undo status, dirty flag, changed mark & recolor
 		if self.in_headline:
-			c.tree.idle_head_key(v)
+			c.frame.idle_head_key(v)
 		else:
-			c.tree.onBodyChanged(v,"Change",oldSel=oldSel,newSel=newSel)
+			c.frame.onBodyChanged(v,"Change",oldSel=oldSel,newSel=newSel)
 		c.endUpdate(false) # No redraws here: they would destroy the headline selection.
 		# trace(c.body.index("insert")+":"+c.body.get("insert linestart","insert lineend"))
 		return true
@@ -682,7 +682,7 @@ class leoFind (leoFindBase):
 			if pos:
 				if c.mark_finds_flag:
 					v.setMarked()
-					c.tree.drawIcon(v,v.iconx,v.icony) # redraw only the icon.
+					c.frame.drawIcon(v,v.iconx,v.icony) # redraw only the icon.
 				return pos, newpos
 			elif c.node_only_flag:
 				# We are only searching one node.
@@ -906,7 +906,7 @@ class leoFind (leoFindBase):
 		
 		if c.search_headline_flag and c.search_body_flag:
 			# Do not change this line without careful thought and extensive testing!
-			self.in_headline = (v == c.tree.editVnode)
+			self.in_headline = (v == c.frame.editVnode())
 		else:
 			self.in_headline = c.search_headline_flag
 	#@nonl
@@ -920,9 +920,9 @@ class leoFind (leoFindBase):
 		
 		if self.in_headline:
 			t = v.edit_text()
-			c.tree.editVnode = v
+			c.frame.setEditVnode(v)
 			pos = t.index("insert")
-			# trace(`pos` + ":" + `self.in_headline` + ":" + `v==c.tree.editVnode` + ":" + `v`)
+			# trace(`pos` + ":" + `self.in_headline` + ":" + `v==c.frame.editVnode()` + ":" + `v`)
 		else:
 			t = c.body
 			pos = t.index("insert")
@@ -1004,14 +1004,14 @@ class leoFind (leoFindBase):
 	
 		c = self.commands ; v = self.v
 		
-		c.beginUpdate() # Prevent all redraws except c.tree.redraw_now()
+		c.beginUpdate()
 		if 1: # range of update...
 			c.selectVnode(v)
-			c.tree.redraw_now() # Redraw now so selections are not destroyed.
+			c.frame.redraw_now() # Redraw now so selections are not destroyed.
 			# Select the found vnode again after redraw.
 			if self.in_headline:
 				c.editVnode(v)
-				c.tree.setNormalLabelState(v)
+				c.frame.setNormalLabelState(v)
 				assert(v.edit_text())
 			else:
 				c.selectVnode(v)

@@ -545,7 +545,7 @@ class baseUndoer:
 				else:
 					# 3/16/02: Moving up is the only case that can do this.
 					parent = u.v.parent()
-					u.v.moveToRoot(c.tree.rootVnode) # 5/27/02
+					u.v.moveToRoot(c.frame.rootVnode()) # 5/27/02
 					if parent: # We could assert(parent)
 						parent.moveAfter(u.v)
 				c.initJoinedCloneBits(u.v) # 7/6/02
@@ -761,7 +761,7 @@ class baseUndoer:
 				else:
 					# 3/16/02: Moving up is the only case that can do this.
 					parent = u.v.parent()
-					u.v.moveToRoot(c.tree.rootVnode) # 5/27/02
+					u.v.moveToRoot(c.frame.rootVnode())
 					if parent: # We could assert(parent)
 						parent.moveAfter(u.v)
 				
@@ -1109,7 +1109,7 @@ class baseUndoer:
 		#@nl
 		if textResult == result:
 			# print "incremental undo:",leading,trailing
-			c.tree.recolor_range(v,leading,trailing)
+			c.frame.recolor_range(v,leading,trailing)
 		else: # 11/19/02: # Rewrite the pane and do a full recolor.
 			if u.debug_print:
 				#@			<< print mismatch trace >>

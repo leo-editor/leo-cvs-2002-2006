@@ -156,6 +156,7 @@ class LeoApp:
 		app = self
 		app.gui = leoGui.tkinterGui()
 		app.root = app.gui.createRootWindow()
+		app.gui.finishCreate()
 	#@nonl
 	#@-node:app.createTkGui
 	#@+node:app.destroyAllGlobalWindows
@@ -227,18 +228,16 @@ class LeoApp:
 		#@-node:<< clear all vnodes and tnodes in the tree>>
 		#@nl
 		
-		# Destroy all subcommanders.
+		# Destroy all subcommanders & the commander.
 		clearAllIvars(frame.commands.atFileCommands)
 		clearAllIvars(frame.commands.fileCommands)
 		clearAllIvars(frame.commands.importCommands)
 		clearAllIvars(frame.commands.tangleCommands)
 		clearAllIvars(frame.commands.undoer)
-		
-		# Destroy the commander.
 		clearAllIvars(frame.commands)
 	
-		clearAllIvars(frame.tree.colorizer)
-		clearAllIvars(frame.tree)
+		# Destroy the all ivars in the Leo frame and all helper classes.
+		frame.clearAllIvars()
 		
 		# Finally, destroy the frame itself.
 		frame.destroyAllPanels()

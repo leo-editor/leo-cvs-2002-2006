@@ -81,7 +81,7 @@ class baseFileCommands:
 		else: # create a root vnode
 			v = leoNodes.vnode(c,t)
 			v.moveToRoot()
-			c.tree.rootVnode = v
+			c.frame.setRootVnode(v)
 		v.initHeadString(headline,encoding=self.leo_file_encoding)
 		return v
 	#@nonl
@@ -414,10 +414,10 @@ class baseFileCommands:
 		#@nonl
 		#@-node:<< warn on read-only files >>
 		#@nl
-		self.mFileName = frame.mFileName
+		self.mFileName = c.mFileName
 		self.tnodesDict = {}
 		ok = true
-		c.tree.initing = true # Disable changes in endEditLabel
+		c.frame.setTreeIniting(true) # Disable changes in endEditLabel
 		c.loading = true # disable c.changed
 		try:
 			#@		<< scan all the xml elements >>
@@ -456,10 +456,10 @@ class baseFileCommands:
 		c.initAllCloneBits() # 9/23/03
 		if ok and atFileNodesFlag:
 			c.atFileCommands.readAll(c.rootVnode(),partialFlag=false)
-		if not c.tree.currentVnode:
-			c.tree.currentVnode = c.tree.rootVnode
-		c.selectVnode(c.tree.currentVnode) # load body pane
-		c.tree.initing = false # Enable changes in endEditLabel
+		if not c.frame.currentVnode():
+			c.frame.setCurrentVnode(c.frame.rootVnode())
+		c.selectVnode(c.frame.currentVnode()) # load body pane
+		c.frame.setTreeIniting(false) # Enable changes in endEditLabel
 		c.loading = false # reenable c.changed
 		c.setChanged(c.changed) # Refresh the changed marker.
 		self.tnodesDict = {}
@@ -713,7 +713,7 @@ class baseFileCommands:
 		#@	<< Set the remembered status bits >>
 		#@+node:<< Set the remembered status bits >>
 		if setCurrent:
-			c.tree.currentVnode = v
+			c.frame.setCurrentVnode(v)
 		
 		if setExpanded:
 			v.initExpandedBit()
@@ -726,6 +726,7 @@ class baseFileCommands:
 		
 		if setTop:
 			c.mTopVnode = v  # Not used at present.
+		
 		#@-node:<< Set the remembered status bits >>
 		#@nl
 		# Recursively create all nested nodes.
@@ -874,7 +875,7 @@ class baseFileCommands:
 		
 		# 7/8/03: force an update of the body pane.
 		current.setBodyStringOrPane(current.bodyString())
-		c.tree.onBodyChanged(current,undoType=None)
+		c.frame.onBodyChanged(current,undoType=None)
 	#@nonl
 	#@-node:readAtFileNodes
 	#@+node:fileCommands.readOutlineOnly
@@ -910,8 +911,8 @@ class baseFileCommands:
 		# This should be done after the pane size has been set.
 		if 0: # This can not be done at present.
 			if self.topVnode:
-				c.tree.scrollTo(self.topVnode)
-				c.tree.Refresh()
+				c.frame.scrollTo(self.topVnode)
+				c.frame.Refresh()
 		# delete the file buffer
 		self.fileBuffer = ""
 		return ok
@@ -948,8 +949,8 @@ class baseFileCommands:
 		if 0: # This can't be done directly.
 		
 			# This should be done after the pane size has been set.
-			top = c.tree.topVnode
-			if top: c.tree.scrollTo(top)
+			top = c.frame.topVnode()
+			if top: c.frame.scrollTo(top)
 		#@nonl
 		#@-node:<< Make the top node visible >>
 		#@nl
@@ -1487,7 +1488,7 @@ class baseFileCommands:
 			while v:
 				self.putVnode(
 					v, # Write the next top-level node.
-					c.tree.topVnode) # Write the top-vnode status bit.
+					c.frame.topVnode()) # Write the top-vnode status bit.
 				v = v.next()
 		self.put("</vnodes>") ; self.put_nl()
 	#@nonl

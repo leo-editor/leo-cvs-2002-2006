@@ -405,7 +405,8 @@ class baseVnode:
 		# Structure links
 		self.mParent = self.mFirstChild = self.mNext = self.mBack = None
 		
-		# To be moved to vxnodes...
+		# The following are used by the tree class.
+		# Eventually they should be injected into vnodes by the tkingerGui class.
 		
 		self.iconVal = -1 # The icon index.  -1 forces an update of icon.
 		self.iconx, self.icony = 0,0 # Coords of icon so icon can be redrawn separately.
@@ -423,13 +424,13 @@ class baseVnode:
 			
 	__str__ = __repr__
 	#@-node:v.__repr__ & v.__str__
-	#@+node:v.Callbacks (handles event hooks)
+	#@+node:v.Callbacks (handles event hooks)(to be eliminated)
 	#@+at 
 	#@nonl
 	# These callbacks are vnode methods so we can pass the vnode back to the 
 	# tree class.
 	#@-at
-	#@-node:v.Callbacks (handles event hooks)
+	#@-node:v.Callbacks (handles event hooks)(to be eliminated)
 	#@+node:OnBoxClick
 	# Called when the box is clicked.
 	
@@ -438,7 +439,7 @@ class baseVnode:
 		try:
 			v = self ; c = v.commands
 			if not doHook("boxclick1",c=c,v=v,event=event):
-				self.commands.tree.OnBoxClick(self)
+				self.commands.frame.OnBoxClick(v)
 			doHook("boxclick2",c=c,v=v,event=event)
 		except:
 			es_event_exception("boxclick")
@@ -451,13 +452,13 @@ class baseVnode:
 		
 		try:
 			v = self ; c = v.commands
-			if c.frame.tree.dragging:
+			if c.frame.dragging():
 				if not doHook("dragging1",c=c,v=v,event=event):
-					self.commands.tree.OnDrag(self,event)
+					c.frame.OnDrag(v,event)
 				doHook("dragging2",c=c,v=v,event=event)
 			else:
 				if not doHook("drag1",c=c,v=v,event=event):
-					self.commands.tree.OnDrag(self,event)
+					c.frame.OnDrag(v,event)
 				doHook("drag2",c=c,v=v,event=event)
 		except:
 			es_event_exception("drag")
@@ -472,9 +473,9 @@ class baseVnode:
 	
 		try:
 			v = self ; c = v.commands
-			# 7/10/03: Always call tree.OnEndDrag, regardless of state.
+			# 7/10/03: Always call frame.OnEndDrag, regardless of state.
 			if not doHook("enddrag1",c=c,v=v,event=event):
-				self.commands.tree.OnEndDrag(self,event)
+				c.frame.OnEndDrag(v,event)
 			doHook("enddrag2",c=c,v=v,event=event)
 		except:
 			es_event_exception("enddrag")
@@ -485,7 +486,7 @@ class baseVnode:
 		try:
 			v = self ; c = v.commands
 			if not doHook("headclick1",c=c,v=v,event=event):
-				self.commands.tree.OnActivate(self)
+				c.frame.OnActivateHeadline(v)
 			doHook("headclick2",c=c,v=v,event=event)
 		except:
 			es_event_exception("headclick")
@@ -494,8 +495,8 @@ class baseVnode:
 		try:
 			v = self ; c = v.commands
 			if not doHook("headrclick1",c=c,v=v,event=event):
-				self.commands.tree.OnActivate(self)
-				self.commands.tree.OnPopup(self,event)
+				c.frame.OnActivateHeadline(v)
+				c.frame.OnPopup(self,event)
 			doHook("headrclick2",c=c,v=v,event=event)
 		except:
 			es_event_exception("headrclick")
@@ -507,7 +508,7 @@ class baseVnode:
 		try:
 			v = self ; c = v.commands
 			if not doHook("headkey1",c=c,v=v,event=event):
-				self.commands.tree.OnHeadlineKey(self,event)
+				c.frame.OnHeadlineKey(v,event)
 			doHook("headkey2",c=c,v=v,event=event)
 		except:
 			es_event_exception("headkey")
@@ -559,7 +560,7 @@ class baseVnode:
 		try:
 			v = self ; c = v.commands
 			if not doHook("iconclick1",c=c,v=v,event=event):
-				self.commands.tree.OnIconClick(self,event)
+				c.frame.OnIconClick(v,event)
 			doHook("iconclick2",c=c,v=v,event=event)
 		except:
 			es_event_exception("iconclick")
@@ -568,7 +569,7 @@ class baseVnode:
 		try:
 			v = self ; c = v.commands
 			if not doHook("iconrclick1",c=c,v=v,event=event):
-				self.commands.tree.OnIconRightClick(self,event)
+				c.frame.OnIconRightClick(v,event)
 			doHook("iconrclick2",c=c,v=v,event=event)
 		except:
 			es_event_exception("iconrclick")
@@ -579,7 +580,7 @@ class baseVnode:
 		try:
 			v = self ; c = v.commands
 			if not doHook("icondclick1",c=c,v=v,event=event):
-				self.commands.tree.OnIconDoubleClick(self)
+				c.frame.OnIconDoubleClick(self)
 			doHook("icondclick2",c=c,v=v,event=event)
 		except:
 			es_event_exception("icondclick")
@@ -940,13 +941,14 @@ class baseVnode:
 	
 	def currentVnode (self):
 	
-		return self.commands.tree.currentVnode
+		return self.commands.frame.currentVnode()
 	#@nonl
 	#@-node:currentVnode (vnode)
 	#@+node:edit_text
 	def edit_text (self):
-		
-		return self.commands.tree.edit_text_dict.get(self)
+	
+		v = self
+		return self.commands.frame.getEditTextDict(v)
 	#@nonl
 	#@-node:edit_text
 	#@+node:findRoot
@@ -954,7 +956,7 @@ class baseVnode:
 	
 	def findRoot (self):
 	
-		return self.commands.tree.rootVnode
+		return self.commands.frame.rootVnode()
 	#@-node:findRoot
 	#@+node:headString & cleanHeadString
 	def headString (self):
@@ -1651,7 +1653,7 @@ class baseVnode:
 	#@@c
 	def linkAsRoot(self, oldRoot = None):
 	
-		v = self ; c = v.commands ; tree = c.tree
+		v = self ; c = v.commands
 		# stat() ; # trace(`v`)
 		# Bug fix 3/16/02:
 		# Clear all links except the child link.
@@ -1662,7 +1664,8 @@ class baseVnode:
 		# 5/27/02
 		if oldRoot: oldRoot.mBack = v
 		v.mNext = oldRoot
-		tree.rootVnode = v
+		c.frame.setRootVnode(v)
+	#@nonl
 	#@-node:v.linkAsRoot
 	#@+node:v.moveAfter
 	# Used by scripts
@@ -1679,7 +1682,7 @@ class baseVnode:
 		
 		# 5/27/02: Moving a node after another node can create a new root node.
 		if not a.parent() and not a.back():
-			c.tree.rootVnode = a
+			c.frame.setRootVnode(a)
 	#@nonl
 	#@-node:v.moveAfter
 	#@+node:v.moveToNthChildOf
@@ -1698,7 +1701,7 @@ class baseVnode:
 		
 		# 5/27/02: Moving a node can create a new root node.
 		if not p.parent() and not p.back():
-			c.tree.rootVnode = p
+			c.frame.setRootVnode(p)
 	#@nonl
 	#@-node:v.moveToNthChildOf
 	#@+node:v.sortChildren
@@ -2009,14 +2012,14 @@ class baseVnode:
 		
 		The mFistChild link is not affected in the receiver."""
 	
-		v = self ; c = v.commands ; tree = c.tree
+		v = self ; c = v.commands
 	
 		# stat() # trace(`v.mParent`+", child:"+`v.mFirstChild`+", back:"+`v.mBack`+", next:"+`v.mNext`)
 		
 		# Special case the root
-		if v == tree.rootVnode:
+		if v == c.frame.rootVnode():
 			if not v.mNext: return # Should never happen.
-			tree.rootVnode = v.mNext
+			c.frame.setRootVnode(v.mNext)
 	
 		# Clear the links in other nodes
 		if v.mBack:

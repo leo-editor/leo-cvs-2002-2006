@@ -708,7 +708,7 @@ def openWithFileName(fileName,old_c=None):
 	# If the file is already open just bring its window to the front.
 	list = app.windowList
 	for frame in list:
-		fn = os.path.normcase(frame.mFileName)
+		fn = os.path.normcase(frame.commands.mFileName)
 		fn = os.path.normpath(fn)
 		if fileName == fn:
 			frame.top.deiconify()
@@ -721,9 +721,13 @@ def openWithFileName(fileName,old_c=None):
 	try:
 		file = open(fileName,'r')
 		if file:
-			frame = LeoFrame(fileName)
+			if 0: # Not ready yet.
+				c,frame = app.gui.newLeoCommanderAndFrame(fileName)
+			else:
+				frame = LeoFrame(commander=None,title=fileName)
+				c = frame.commands
 			if not doHook("open1",
-				old_c=old_c,new_c=frame.commands,fileName=fileName):
+				old_c=old_c,new_c=c,fileName=fileName):
 				app.setLog(frame,"OpenWithFileName") # 5/12/03
 				app.lockLog() # 6/30/03
 				frame.commands.fileCommands.open(file,fileName) # closes file.

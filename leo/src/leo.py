@@ -128,8 +128,10 @@ def createFrame (fileName):
 				return frame
 	
 	# Create a new frame & indicate it is the startup window.
-	frame = leoFrame.LeoFrame()
-	## frame = app.gui.newLeoFrame(None) # Right now the frame creates the commander.
+	if 0: # Not ready yet.
+		commander,frame = app.gui.newLeoCommanderAndFrame()
+	else:
+		frame = leoFrame.LeoFrame(commander=None,title=None)
 	frame.setInitialWindowGeometry()
 	frame.startupWindow = true
 	

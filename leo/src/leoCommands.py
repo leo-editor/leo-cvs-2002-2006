@@ -8,10 +8,11 @@ import leoAtFile,leoFileCommands,leoImport,leoNodes,leoTangle,leoUndo
 class baseCommands:
 	"""The base class for Leo's main commander."""
 	#@	@+others
-	#@+node:c.__init__ & initIvars
+	#@+node:c.__init__, initIvars, finishCreate: Problems initing before frame is created.
 	def __init__(self,frame):
+		
+		trace("Commands",frame)
 	
-		# trace("__init__", "c.__init__")
 		self.frame = frame
 		self.initIvars(frame)
 	
@@ -20,11 +21,27 @@ class baseCommands:
 		self.atFileCommands = leoAtFile.atFile(self)
 		self.importCommands = leoImport.leoImportCommands(self)
 		self.tangleCommands = leoTangle.tangleCommands(self)
+			# tangle subcommander uses self.frame.mFilename
 		self.undoer = leoUndo.undoer(self)
+			# undoer subcommander uses self.frame.getMenu
 	
 	def initIvars(self, frame):
 		#@	<< initialize ivars >>
 		#@+node:<< initialize ivars >>
+		# Set the window title and fileName
+		title = frame.getWindowTitle()
+		if title:
+			self.mFileName = title
+			self.frame.setWindowTitle(title)
+		else:
+			title = "untitled"
+			n = app.numberOfWindows
+			if n > 0:
+				title += `n`
+			self.frame.setWindowTitle(title)
+			app.numberOfWindows = n+1
+			self.mFileName = ""
+		
 		# per-document info...
 		self.hookFunction = None
 		self.openDirectory = None # 7/2/02
@@ -35,10 +52,11 @@ class baseCommands:
 		self.loading = false # true if we are loading a file: disables c.setChanged()
 		
 		# copies of frame info
-		self.body = frame.body
-		self.log = frame.log
-		self.tree = frame.tree
-		self.canvas = frame.canvas
+		if frame: # To be moved into c.finishCreate...
+			self.body = frame.body
+			# self.canvas = frame.canvas
+		else:
+			self.body = None
 		
 		# For tangle/untangle
 		self.tangle_errrors = 0
@@ -57,7 +75,6 @@ class baseCommands:
 		
 		self.setIvarsFromFind()
 		
-		# New in 3.12
 		# These are defined here, and updated by the tree.select()
 		self.beadList = [] # list of vnodes for the Back and Forward commands.
 		self.beadPointer = -1 # present item in the list.
@@ -65,13 +82,17 @@ class baseCommands:
 		#@nonl
 		#@-node:<< initialize ivars >>
 		#@nl
+		
+	def finishCreate(self,frame):
+		trace(frame)
+		self.body = frame.body
 	#@nonl
-	#@-node:c.__init__ & initIvars
+	#@-node:c.__init__, initIvars, finishCreate: Problems initing before frame is created.
 	#@+node:c.__repr__ & __str__
 	def __repr__ (self):
 		
 		try:
-			return "Commander: " + self.frame.mFileName
+			return "Commander: " + self.mFileName
 		except:
 			return "Commander: bad mFileName"
 			
@@ -174,7 +195,7 @@ class baseCommands:
 	#@+node:beginUpdate
 	def beginUpdate(self):
 	
-		self.tree.beginUpdate()
+		self.frame.beginUpdate()
 		
 	BeginUpdate = beginUpdate # Compatibility with old scripts
 	#@nonl
@@ -190,7 +211,7 @@ class baseCommands:
 	#@+node:endUpdate
 	def endUpdate(self, flag=true):
 		
-		self.tree.endUpdate(flag)
+		self.frame.endUpdate(flag)
 		
 	EndUpdate = endUpdate # Compatibility with old scripts
 	#@nonl
@@ -198,14 +219,13 @@ class baseCommands:
 	#@+node:recolor
 	def recolor(self):
 	
-		tree = self.tree
-		tree.recolor(tree.currentVnode)
+		self.frame.recolor(self.frame.currentVnode())
 	#@nonl
 	#@-node:recolor
 	#@+node:redraw & repaint
 	def redraw(self):
 	
-		self.tree.redraw()
+		self.frame.redraw()
 		
 	# Compatibility with old scripts
 	Redraw = redraw 
@@ -713,7 +733,7 @@ class baseCommands:
 		if tail and len(tail) > 0:
 			c.body.insert("end",tail)
 		# Activate the body key handler by hand.
-		c.tree.onBodyChanged(v,undoType,oldSel=oldSel,oldYview=oldYview)
+		c.frame.onBodyChanged(v,undoType,oldSel=oldSel,oldYview=oldYview)
 		# Update the changed mark.
 		if not c.isChanged():
 			c.setChanged(true)
@@ -991,8 +1011,7 @@ class baseCommands:
 	
 		# c.mFileName will be "untitled" for unsaved files.
 		c = self
-		return (c.frame and c.frame.mFileName and
-			len(c.frame.mFileName) > 0 and c.isChanged())
+		return (c.frame and c.mFileName and c.isChanged())
 	#@nonl
 	#@-node:canRevert
 	#@+node:canSelect....
@@ -1207,7 +1226,7 @@ class baseCommands:
 		while v and v != last:
 			v.expand()
 			v = v.threadNext()
-		c.tree.redraw()
+		c.frame.redraw()
 	#@nonl
 	#@-node:expandSubtree
 	#@+node:expandToLevel
@@ -1242,7 +1261,7 @@ class baseCommands:
 	
 	def currentVnode (self):
 	
-		return self.tree.currentVnode
+		return self.frame.currentVnode()
 	#@-node:c.currentVnode
 	#@+node:clearAllMarked
 	def clearAllMarked (self):
@@ -1272,7 +1291,7 @@ class baseCommands:
 	
 	def fileName (self):
 	
-		return self.frame.mFileName
+		return self.mFileName
 	#@-node:fileName
 	#@+node:isChanged
 	def isChanged (self):
@@ -1285,7 +1304,7 @@ class baseCommands:
 	
 	def rootVnode (self):
 	
-		return self.tree.rootVnode
+		return self.frame.rootVnode()
 	#@-node:rootVnode
 	#@+node:setChanged
 	def setChanged (self,changedFlag):
@@ -1417,7 +1436,7 @@ class baseCommands:
 	
 		c=self
 		c.clearAllVisited()
-		v = self.tree.rootVnode
+		v = self.frame.rootVnode()
 		c.beginUpdate()
 		while v:
 			if not v.t.isVisited():
@@ -1965,7 +1984,7 @@ class baseCommands:
 			
 			if not back2:
 				# v will be the new root node
-				v.moveToRoot(c.tree.rootVnode) # 3/16/02, 5/17/02
+				v.moveToRoot(c.frame.rootVnode()) # 3/16/02, 5/17/02
 				c.undoer.setUndoParams("Move Up",v,
 					oldBack=oldBack,oldParent=oldParent,oldN=oldN)
 			elif back2.hasChildren() and back2.isExpanded():
@@ -2049,7 +2068,7 @@ class baseCommands:
 		# trace(v)
 		if v:
 			c.selectVnode(v)
-			c.tree.editLabel(v)
+			c.frame.editLabel(v)
 	#@nonl
 	#@-node:editVnode (calls tree.editLabel)
 	#@+node:endEditing (calls tree.endEditLabel)
@@ -2057,7 +2076,7 @@ class baseCommands:
 	
 	def endEditing(self):
 	
-		self.tree.endEditLabel()
+		self.frame.endEditLabel()
 	#@-node:endEditing (calls tree.endEditLabel)
 	#@+node:selectThreadBack
 	def selectThreadBack(self):
@@ -2118,8 +2137,8 @@ class baseCommands:
 	
 		# All updating and "synching" of nodes are now done in the event handlers!
 		c = self
-		c.tree.endEditLabel()
-		c.tree.select(v,updateBeadList)
+		c.frame.endEditLabel()
+		c.frame.select(v,updateBeadList)
 		# trace(v)
 		set_focus(c,c.body)
 		self.editing = false
@@ -2145,7 +2164,7 @@ class baseCommands:
 	#@+node:updateSyntaxColorer
 	def updateSyntaxColorer(self,v):
 	
-		self.tree.colorizer.updateSyntaxColorer(v)
+		self.frame.updateSyntaxColorer(v)
 	#@-node:updateSyntaxColorer
 	#@-others
 

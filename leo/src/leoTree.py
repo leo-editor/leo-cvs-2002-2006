@@ -106,6 +106,7 @@ line_height = 17 + 2 # To be replaced by Font height
 
 class baseLeoTree:
 	"""The base class of the Leo's tree class."""
+	callbacksInjected = false
 	#@	@+others
 	#@+node:tree.__init__
 	def __init__(self,commands,canvas):
@@ -167,6 +168,10 @@ class baseLeoTree:
 			
 		if self.allocateOnlyVisibleNodes:
 			self.commands.frame.bar1.bind("<B1-ButtonRelease>", self.redraw)
+		
+		if not leoTree.callbacksInjected:
+			leoTree.callbacksInjected = true
+			self.injectCallbacks()
 	#@nonl
 	#@-node:tree.__init__
 	#@+node:tree.deleteBindings
@@ -206,6 +211,209 @@ class baseLeoTree:
 		self.widgets = []
 	#@nonl
 	#@-node:tree.deleteWidgets
+	#@+node:tree.injectCallbacks (class method)
+	def injectCallbacks(self):
+		
+		if 0: # Works:  It's not clear that we really want to do this.
+		
+			import leoNodes
+			#@		<< define callbacks to be injected in the vnode class >>
+			#@+node:<< define callbacks to be injected in the vnode class >>
+			# N.B. These vnode methods are entitled to know about details of the leoTree class.
+			
+			#@+others
+			#@+node:OnBoxClick
+			# Called when the box is clicked.
+			
+			def OnBoxClick(self,event=None):
+				
+				"""Callback injected into vnode class."""
+			
+				# trace()
+				try:
+					v = self ; c = v.commands
+					if not doHook("boxclick1",c=c,v=v,event=event):
+						c.frame.tree.OnBoxClick(v)
+					doHook("boxclick2",c=c,v=v,event=event)
+				except:
+					es_event_exception("boxclick")
+			#@nonl
+			#@-node:OnBoxClick
+			#@+node:OnDrag
+			def OnDrag(self,event=None):
+				
+				"""Callback injected into vnode class."""
+			
+				# trace()
+				try:
+					v = self ; c = v.commands
+					if c.frame.dragging():
+						if not doHook("dragging1",c=c,v=v,event=event):
+							c.frame.tree.OnDrag(v,event)
+						doHook("dragging2",c=c,v=v,event=event)
+					else:
+						if not doHook("drag1",c=c,v=v,event=event):
+							c.frame.tree.OnDrag(v,event)
+						doHook("drag2",c=c,v=v,event=event)
+				except:
+					es_event_exception("drag")
+			#@nonl
+			#@-node:OnDrag
+			#@+node:OnEndDrag
+			def OnEndDrag(self,event=None):
+				
+				"""Callback injected into vnode class."""
+				
+				# trace()
+			
+				try:
+					v = self ; c = v.commands
+					# 7/10/03: Always call frame.OnEndDrag, regardless of state.
+					if not doHook("enddrag1",c=c,v=v,event=event):
+						c.frame.tree.OnEndDrag(v,event)
+					doHook("enddrag2",c=c,v=v,event=event)
+				except:
+					es_event_exception("enddrag")
+			#@nonl
+			#@-node:OnEndDrag
+			#@+node:OnHeadlineClick & OnHeadlineRightClick
+			def OnHeadlineClick(self,event=None):
+				"""Callback injected into vnode class."""
+				#trace()
+				try:
+					v = self ; c = v.commands
+					if not doHook("headclick1",c=c,v=v,event=event):
+						c.frame.tree.OnActivate(v)
+					doHook("headclick2",c=c,v=v,event=event)
+				except:
+					es_event_exception("headclick")
+				
+			def OnHeadlineRightClick(self,event=None):
+				"""Callback injected into vnode class."""
+				#trace()
+				try:
+					v = self ; c = v.commands
+					if not doHook("headrclick1",c=c,v=v,event=event):
+						c.frame.tree.OnActivate(v)
+						c.frame.tree.OnPopup(self,event)
+					doHook("headrclick2",c=c,v=v,event=event)
+				except:
+					es_event_exception("headrclick")
+			#@nonl
+			#@-node:OnHeadlineClick & OnHeadlineRightClick
+			#@+node:OnHeadlineKey
+			def OnHeadlineKey (self,event=None):
+			
+				"""Callback injected into vnode class."""
+			
+				try:
+					v = self ; c = v.commands
+					if not doHook("headkey1",c=c,v=v,event=event):
+						c.frame.tree.OnHeadlineKey(v,event)
+					doHook("headkey2",c=c,v=v,event=event)
+				except:
+					es_event_exception("headkey")
+			#@nonl
+			#@-node:OnHeadlineKey
+			#@+node:OnHyperLinkControlClick
+			def OnHyperLinkControlClick (self,event):
+				
+				"""Callback injected into vnode class."""
+			
+				# trace()
+				try:
+					v = self ; c = v.commands
+					if not doHook("hypercclick1",c=c,v=v,event=event):
+						c.beginUpdate()
+						c.selectVnode(v)
+						c.endUpdate()
+						c.body.mark_set("insert","1.0")
+					doHook("hypercclick2",c=c,v=v,event=event)
+				except:
+					es_event_exception("hypercclick")
+			#@nonl
+			#@-node:OnHyperLinkControlClick
+			#@+node:OnHyperLinkEnter
+			def OnHyperLinkEnter (self,event=None):
+				
+				"""Callback injected into vnode class."""
+			
+				try:
+					v = self ; c = v.commands
+					if not doHook("hyperenter1",c=c,v=v,event=event):
+						if 0: # This works, and isn't very useful.
+							c.body.tag_config(v.tagName,background="green")
+					doHook("hyperenter2",c=c,v=v,event=event)
+				except:
+					es_event_exception("hyperenter")
+			#@nonl
+			#@-node:OnHyperLinkEnter
+			#@+node:OnHyperLinkLeave
+			def OnHyperLinkLeave (self,event=None):
+				
+				"""Callback injected into vnode class."""
+			
+				try:
+					v = self ; c = v.commands
+					if not doHook("hyperleave1",c=c,v=v,event=event):
+						if 0: # This works, and isn't very useful.
+							c.body.tag_config(v.tagName,background="white")
+					doHook("hyperleave2",c=c,v=v,event=event)
+				except:
+					es_event_exception("hyperleave")
+			#@nonl
+			#@-node:OnHyperLinkLeave
+			#@+node:OnIconClick & OnIconRightClick
+			def OnIconClick(self,event=None):
+				
+				"""Callback injected into vnode class."""
+			
+				try:
+					v = self ; c = v.commands
+					if not doHook("iconclick1",c=c,v=v,event=event):
+						c.frame.tree.OnIconClick(v,event)
+					doHook("iconclick2",c=c,v=v,event=event)
+				except:
+					es_event_exception("iconclick")
+				
+			def OnIconRightClick(self,event=None):
+				
+				"""Callback injected into vnode class."""
+			
+				try:
+					v = self ; c = v.commands
+					if not doHook("iconrclick1",c=c,v=v,event=event):
+						c.frame.tree.OnIconRightClick(v,event)
+					doHook("iconrclick2",c=c,v=v,event=event)
+				except:
+					es_event_exception("iconrclick")
+			#@-node:OnIconClick & OnIconRightClick
+			#@+node:OnIconDoubleClick
+			def OnIconDoubleClick(self,event=None):
+				
+				"""Callback injected into vnode class."""
+			
+				try:
+					v = self ; c = v.commands
+					if not doHook("icondclick1",c=c,v=v,event=event):
+						c.frame.tree.OnIconDoubleClick(self)
+					doHook("icondclick2",c=c,v=v,event=event)
+				except:
+					es_event_exception("icondclick")
+			#@-node:OnIconDoubleClick
+			#@-others
+			#@nonl
+			#@-node:<< define callbacks to be injected in the vnode class >>
+			#@nl
+			for f in (
+				OnBoxClick,OnDrag,OnEndDrag,
+				OnHeadlineClick,OnHeadlineRightClick,OnHeadlineKey,
+				OnHyperLinkControlClick,OnHyperLinkEnter,OnHyperLinkLeave,
+				OnIconClick,OnIconDoubleClick,OnIconRightClick):
+				# trace(f)
+				funcToMethod(f,leoNodes.vnode)
+	#@nonl
+	#@-node:tree.injectCallbacks (class method)
 	#@+node:About drawing and updating
 	#@+at 
 	#@nonl
@@ -246,22 +454,41 @@ class baseLeoTree:
 		
 		y += 7 # draw the box at x, y+7
 	
+		tree = self
 		iconname = choose(v.isExpanded(),"minusnode.gif", "plusnode.gif")
 		image = self.getIconImage(iconname)
 		id = self.canvas.create_image(x,y,image=image)
-	
-		id1 = self.canvas.tag_bind(id, "<1>", v.OnBoxClick)
+		
+		if 1: # use vnode callbacks
+			id1 = self.canvas.tag_bind(id, "<1>", v.OnBoxClick)
+		else:
+			#@		<< define onBoxClickCallback >>
+			#@+node:<< define onBoxClickCallback >>
+			def onBoxClickCallback(event,tree=tree,v=v):
+				try:
+					c = v.commands
+					if not doHook("boxclick1",c=c,v=v,event=event):
+						tree.OnBoxClick(v)
+					doHook("boxclick2",c=c,v=v,event=event)
+				except:
+					es_event_exception("boxclick")
+			#@nonl
+			#@-node:<< define onBoxClickCallback >>
+			#@nl
+			id1 = self.canvas.tag_bind(id, "<1>", onBoxClickCallback)
 		id2 = self.canvas.tag_bind(id, "<Double-1>", lambda x: None)
 		
 		# Remember the bindings so deleteBindings can delete them.
 		self.tagBindings.append((id,id1,"<1>"),)
 		self.tagBindings.append((id,id2,"<Double-1>"),)
+	#@nonl
 	#@-node:drawBox (tag_bind)
 	#@+node:drawIcon (tag_bind)
 	# Draws icon for v at x,y
 	
 	def drawIcon(self,v,x,y):
 	
+		tree = self
 		v.iconx, v.icony = x,y
 		y += 2 # draw icon at y + 2
 	
@@ -278,10 +505,45 @@ class baseLeoTree:
 		image = self.getIconImage(imagename + ".GIF")
 		id = self.canvas.create_image(x,y,anchor="nw",image=image)
 		self.icon_id_dict[id] = v # Remember which vnode belongs to the icon.
-	
-		id1 = self.canvas.tag_bind(id,"<1>",v.OnIconClick)
-		id2 = self.canvas.tag_bind(id,"<Double-1>",v.OnIconDoubleClick)
-		id3 = self.canvas.tag_bind(id,"<3>",v.OnIconRightClick)
+		
+		if 1: # use vnode callbacks.
+			id1 = self.canvas.tag_bind(id,"<1>",v.OnIconClick)
+			id2 = self.canvas.tag_bind(id,"<Double-1>",v.OnIconDoubleClick)
+			id3 = self.canvas.tag_bind(id,"<3>",v.OnIconRightClick)
+		else:
+			#@		<< define icon click callbacks >>
+			#@+node:<< define icon click callbacks >>
+			def onIconClickCallback(event,tree=tree,v=v):
+				try:
+					c = v.commands
+					if not doHook("iconclick1",c=c,v=v,event=event):
+						tree.OnIconClick(v,event)
+					doHook("iconclick2",c=c,v=v,event=event)
+				except:
+					es_event_exception("iconclick")
+					
+			def onIconDoubleClickCallback(event,tree=tree,v=v):
+				try:
+					c = v.commands
+					if not doHook("icondclick1",c=c,v=v,event=event):
+						tree.OnIconDoubleClick(self)
+					doHook("icondclick2",c=c,v=v,event=event)
+				except:
+					es_event_exception("icondclick")
+				
+			def onIconRightClickCallback(event,tree=tree,v=v):
+				try:
+					c = v.commands
+					if not doHook("iconrclick1",c=c,v=v,event=event):
+						tree.OnIconRightClick(v,event)
+					doHook("iconrclick2",c=c,v=v,event=event)
+				except:
+					es_event_exception("iconrclick")
+			#@-node:<< define icon click callbacks >>
+			#@nl
+			id1 = self.canvas.tag_bind(id,"<1>",onIconClickCallback)
+			id2 = self.canvas.tag_bind(id,"<Double-1>",onIconDoubleClickCallback)
+			id3 = self.canvas.tag_bind(id,"<3>",onIconRightClickCallback)
 		
 		# Remember the bindings so deleteBindings can delete them.
 		self.tagBindings.append((id,id1,"<1>"),)
@@ -357,6 +619,7 @@ class baseLeoTree:
 			x0, y0, x1, y1 = self.canvas.bbox("all")
 			self.canvas.configure(scrollregion=(0, 0, x1, y1))
 			# Do a scrolling operation after the scrollbar is redrawn
+			# printGc()
 			self.canvas.after_idle(self.idle_scrollTo)
 			if self.trace:
 				self.redrawCount += 1
@@ -411,6 +674,7 @@ class baseLeoTree:
 	
 	def drawText(self,v,x,y):
 		
+		tree = self
 		x += text_indent
 	
 		t = Tkinter.Text(self.canvas,
@@ -435,8 +699,35 @@ class baseLeoTree:
 		#@-node:<< configure the text depending on state >>
 		#@nl
 	
-		id1 = t.bind("<1>", v.OnHeadlineClick)
-		id2 = t.bind("<3>", v.OnHeadlineRightClick) # 9/11/02.
+		if 1: # Use vnode callbacks.
+			id1 = t.bind("<1>",v.OnHeadlineClick)
+			id2 = t.bind("<3>",v.OnHeadlineRightClick)
+		else:
+			#@		<< define the headline click callbacks >>
+			#@+node:<< define the headline click callbacks >>
+			def onHeadlineClickCallback(event,tree=tree,v=v):
+				try:
+					c = v.commands
+					if not doHook("headclick1",c=c,v=v,event=event):
+						tree.OnActivate(v)
+					doHook("headclick2",c=c,v=v,event=event)
+				except:
+					es_event_exception("headclick")
+				
+			def onHeadlineRightClickCallback(event,tree=tree,v=v):
+				try:
+					c = v.commands
+					if not doHook("headrclick1",c=c,v=v,event=event):
+						tree.OnActivate(v)
+						tree.OnPopup(v,event)
+					doHook("headrclick2",c=c,v=v,event=event)
+				except:
+					es_event_exception("headrclick")
+			#@nonl
+			#@-node:<< define the headline click callbacks >>
+			#@nl
+			id1 = t.bind("<1>",onHeadlineClickCallback)
+			id2 = t.bind("<3>",onHeadlineRightClickCallback)
 		if 0: # 6/15/02: Bill Drissel objects to this binding.
 			t.bind("<Double-1>", v.OnBoxClick)
 		id3 = t.bind("<Key>", v.OnHeadlineKey)
@@ -484,7 +775,7 @@ class baseLeoTree:
 	#@nonl
 	#@-node:drawTree
 	#@+node:endUpdate
-	def endUpdate (self, flag=true):
+	def endUpdate (self,flag=true):
 	
 		assert(self.updateCount > 0)
 		self.updateCount -= 1
@@ -736,7 +1027,6 @@ class baseLeoTree:
 			#@		<< activate this window >>
 			#@+node:<< activate this window >>
 			c = self.commands
-			# trace(`v`)
 			
 			if v == self.currentVnode:
 				if self.active:
@@ -1362,9 +1652,7 @@ class baseLeoTree:
 	#@+node:tree.OnIconClick & OnIconRightClick
 	def OnIconClick (self,v,event):
 	
-		# Note: "iconclick" hooks handled by vnode callback routine.
-	
-		canvas = self.canvas
+		tree = self ; canvas = tree.canvas
 		if event:
 			canvas_x = canvas.canvasx(event.x)
 			canvas_y = canvas.canvasy(event.y)
@@ -1372,17 +1660,46 @@ class baseLeoTree:
 			if id != None:
 				try: id = id[0]
 				except: pass
-				# trace("drag_v",v)
 				self.drag_v = v
 				self.drag_id = id
-				id4 = canvas.tag_bind(id,"<B1-Motion>", v.OnDrag)
-				id5 = canvas.tag_bind(id,"<Any-ButtonRelease-1>", v.OnEndDrag)
-				
+				if 1: # Use vnode callbacks.
+					id4 = canvas.tag_bind(id,"<B1-Motion>", v.OnDrag)
+					id5 = canvas.tag_bind(id,"<Any-ButtonRelease-1>", v.OnEndDrag)
+				else:
+					#@				<< define drag callbacks >>
+					#@+node:<< define drag callbacks >>
+					def onDragCallback(event,tree=tree,v=v):
+						try:
+							c = v.commands
+							if tree.dragging:
+								if not doHook("dragging1",c=c,v=v,event=event):
+									tree.OnDrag(v,event)
+								doHook("dragging2",c=c,v=v,event=event)
+							else:
+								if not doHook("drag1",c=c,v=v,event=event):
+									tree.OnDrag(v,event)
+								doHook("drag2",c=c,v=v,event=event)
+						except:
+							es_event_exception("drag")
+							
+					def onEndDragCallback(event,tree=tree,v=v):
+						try:
+							c = v.commands
+							if not doHook("enddrag1",c=c,v=v,event=event):
+								tree.OnEndDrag(v,event)
+							doHook("enddrag2",c=c,v=v,event=event)
+						except:
+							es_event_exception("enddrag")
+							
+							
+					#@-node:<< define drag callbacks >>
+					#@nl
+					id4 = canvas.tag_bind(id,"<B1-Motion>", onDragCallback)
+					id5 = canvas.tag_bind(id,"<Any-ButtonRelease-1>", onEndDragCallback)
 				# Remember the bindings so deleteBindings can delete them.
 				self.tagBindings.append((id,id4,"<B1-Motion>"),)
 				self.tagBindings.append((id,id5,"<Any-ButtonRelease-1>"),)
-	
-		self.select(v)
+		tree.select(v)
 		
 	def OnIconRightClick (self,v,event):
 	
@@ -1856,8 +2173,6 @@ class baseLeoTree:
 	# Warning: do not try to "optimize" this by returning if v==tree.currentVnode.
 	
 	def select (self,v,updateBeadList=true):
-		
-		# trace(v)
 	
 		#@	<< define vars and stop editing >>
 		#@+node:<< define vars and stop editing >>

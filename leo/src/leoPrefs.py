@@ -295,7 +295,7 @@ class baseLeoPrefs:
 		
 		c = top() ; v = c.currentVnode()
 		self.top.after_idle(self.set_ivars,c)
-		c.tree.recolor(v)
+		c.frame.recolor(v)
 		# print self.print_ivars()
 		
 	def print_ivars (self):
@@ -312,7 +312,7 @@ class baseLeoPrefs:
 		c = top() ; v = c.currentVnode()
 		language = self.lang_var.get()
 		c.target_language = self.target_language = language
-		c.tree.recolor(v)
+		c.frame.recolor(v)
 		# print "set_lang",language
 	#@nonl
 	#@-node:set_lang

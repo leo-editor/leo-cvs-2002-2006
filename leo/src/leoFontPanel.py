@@ -183,7 +183,7 @@ class baseLeoFontPanel:
 		set("log_text_font_slant",slant)
 		set("log_text_font_weight",weight)
 			
-		font = c.tree.getFont()
+		font = c.frame.getFont()
 		name,size,slant,weight = self.getFontSettings(font)
 		set("headline_text_font_family",name)
 		set("headline_text_font_size",size)
@@ -203,7 +203,7 @@ class baseLeoFontPanel:
 		c = self.commands
 		c.body.configure(font=self.revertBodyFont)
 		c.log.configure (font=self.revertLogFont)
-		c.tree.setFont  (font=self.revertTreeFont)
+		c.frame.setFont (font=self.revertTreeFont)
 		c.redraw()
 		self.revertIvars()
 		# Don't call update here.
@@ -327,7 +327,7 @@ class baseLeoFontPanel:
 		bodyFont = tkFont.Font(font=fn)
 		fn = c.log.cget("font")
 		logFont = tkFont.Font(font=fn)
-		treeFont = c.tree.getFont()
+		treeFont = c.frame.getFont()
 		
 		if log and not body and not tree:
 			font = logFont
@@ -366,7 +366,7 @@ class baseLeoFontPanel:
 		font = self.revertLogFont
 		c.log.configure(font=font)
 		font = self.revertTreeFont
-		c.tree.setFont(font=font)
+		c.frame.setFont(font=font)
 		# Revert the setting of the items in the font panel
 		self.last_selected_font = None # Use the font for the selected panes.
 		font = self.getImpliedFont()
@@ -422,7 +422,7 @@ class baseLeoFontPanel:
 		fn = c.log.cget("font")
 		self.revertLogFont = tkFont.Font(font=fn)
 		
-		self.revertTreeFont = c.tree.getFont()
+		self.revertTreeFont = c.frame.getFont()
 	#@nonl
 	#@-node:setRevertVars
 	#@+node:showSettings
@@ -443,7 +443,7 @@ class baseLeoFontPanel:
 		name,size,slant,weight = self.getFontSettings(font)
 		es("log font:" + name + "," + `size` + "," + slant + "," + weight)
 		# Tree pane.
-		font = c.tree.getFont()
+		font = c.frame.getFont()
 		name,size,slant,weight = self.getFontSettings(font)
 		es("headline font:" + name + "," + `size` + "," + slant + "," + weight)
 	#@nonl
@@ -484,7 +484,7 @@ class baseLeoFontPanel:
 		c.log.configure(font=font)
 		
 		font = choose(treeChecked,activeFont,self.revertTreeFont)
-		c.tree.setFont(font=font)
+		c.frame.setFont(font=font)
 		#@nonl
 		#@-node:<< set the fonts in all panes >>
 		#@nl

@@ -18,23 +18,15 @@ class baseLeoFrame:
 	instances = 0
 	#@	@+others
 	#@+node:f.__init__
-	def __init__(self,title=None):
+	def __init__(self,commander=None,title=None): # new commander arg.
+	
+		trace("LeoFrame",commander,title)
 	
 		Tk = Tkinter
 		LeoFrame.instances += 1
 		#@	<< set the LeoFrame ivars >>
 		#@+node:<< set the LeoFrame ivars >>
-		# Set title and fileName
-		if title:
-			self.mFileName = title
-			title = self.setWindowTitle(title)
-		else:
-			title = "untitled"
-			n = app.numberOfWindows
-			if n > 0: title += `n`
-			app.numberOfWindows = n+1
-			self.mFileName = ""
-			
+		self.title = title
 		self.stylesheet = None # The contents of <?xml-stylesheet...?> line.
 		
 		# These are set the first time a panel is opened.
@@ -99,11 +91,12 @@ class baseLeoFrame:
 		top.title(title)
 		top.minsize(30,10) # In grid units. This doesn't work as I expect.
 		
-		c = None # Make sure we don't mess with c yet.
 		self.createLeoFrame(top)
-		self.commands = c = leoCommands.Commands(self)
+		if commander is None:
+			self.commands = c = leoCommands.Commands(self)
+		else:
+			self.commands = c = commander
 		self.tree = leoTree.leoTree(self.commands, self.canvas)
-		c.tree = self.tree
 		self.setTabWidth(c.tab_width)
 		#@	<< create the first tree node >>
 		#@+node:<< create the first tree node >>
@@ -113,8 +106,8 @@ class baseLeoFrame:
 		v.moveToRoot()
 		
 		c.beginUpdate()
-		c.tree.redraw()
-		c.tree.canvas.focus_get()
+		c.frame.redraw()
+		c.frame.focus_get()
 		c.editVnode(v)
 		c.endUpdate(false)
 		#@nonl
@@ -146,8 +139,8 @@ class baseLeoFrame:
 		self.tree.canvas.bind("<Button-1>", self.OnActivateTree)
 		self.log.bind("<Button-1>", self.OnActivateLog)
 		
-		self.body.bind("<Button-1>", self.OnBodyClick) # 2/8/03
-		self.body.bind("<Button-3>", self.OnBodyRClick) # 2/8/03
+		self.body.bind("<Button-1>", self.OnBodyClick)
+		self.body.bind("<Button-3>", self.OnBodyRClick)
 		self.body.bind("<Double-Button-1>", self.OnBodyDoubleClick)
 		self.body.bind("<Key>", self.tree.OnBodyKey)
 	
@@ -161,6 +154,7 @@ class baseLeoFrame:
 		if sys.platform == "linux2": # This crashes tcl83.dll
 			self.tree.canvas.bind("<MouseWheel>", self.OnMouseWheel)
 			
+		## Should be in commander...
 		# Remove the initially selected node from the list.
 		c.beadPointer = -1
 		c.beadList = []
@@ -173,17 +167,29 @@ class baseLeoFrame:
 	
 		return "<leoFrame: %s>" % (self.title)
 	#@-node:f.__repr__
-	#@+node:f.setWindowTitle
+	#@+node:f.get/setWindowTitle
+	def getWindowTitle (self):
+		return self.title
+	
 	def setWindowTitle (self,fileName):
 		
 		path,fn = os.path.split(fileName)
-		if path and len(path) > 0:
-			title = fn + " in " + path
+		if path:
+			self.title = fn + " in " + path
 		else:
-			title = fn
-		return title
+			self.title = fn
 	#@nonl
-	#@-node:f.setWindowTitle
+	#@-node:f.get/setWindowTitle
+	#@+node:f.clearAllIvars
+	def clearAllIvars(self):
+		
+		"""Clear all ivars in helper classes."""
+	
+		frame = self
+		clearAllIvars(frame.tree.colorizer)
+		clearAllIvars(frame.tree)
+	#@nonl
+	#@-node:f.clearAllIvars
 	#@+node:f.createLeoFrame
 	def createLeoFrame (self,top):
 	
@@ -327,7 +333,7 @@ class baseLeoFrame:
 		Return true if the user vetos the quit or save operation."""
 		
 		c = self.commands
-		name = choose(self.mFileName, self.mFileName, self.title)
+		name = choose(c.mFileName,c.mFileName,self.title)
 		type = choose(app.quitting, "quitting?", "closing?")
 		
 		answer = leoDialog.askYesNoCancel("Confirm",
@@ -339,23 +345,23 @@ class baseLeoFrame:
 		elif answer == "no":
 			return false # Don't save and don't veto.
 		else:
-			if not self.mFileName:
+			if not c.mFileName:
 				#@			<< Put up a file save dialog to set mFileName >>
 				#@+node:<< Put up a file save dialog to set mFileName >>
 				# Make sure we never pass None to the ctor.
 				if not self.title:
 					self.title = ""
 					
-				self.mFileName = tkFileDialog.asksaveasfilename(
-					initialfile = self.mFileName,
+				c.mFileName = tkFileDialog.asksaveasfilename(
+					initialfile = c.mFileName,
 					title="Save",
 					filetypes=[("Leo files", "*.leo")],
 					defaultextension=".leo")
 				#@-node:<< Put up a file save dialog to set mFileName >>
 				#@nl
-			if self.mFileName:
-				# print "saving", self.mFileName
-				c.fileCommands.save(self.mFileName)
+			if c.mFileName:
+				# print "saving", c.mFileName
+				c.fileCommands.save(c.mFileName)
 				return false # Don't veto.
 			else:
 				return true # Veto.
@@ -579,6 +585,75 @@ class baseLeoFrame:
 		self.log.configure(bd=border)
 	#@nonl
 	#@-node:reconfigurePanes (use config bar_width)
+	#@+node:The interface with the tree class
+	# Coloring...
+	def getColorizer(self): return self.tree.colorizer
+	def recolor_now(self,v): return self.tree.recolor_now(v)
+	def recolor_range(self,leading,trailing): return self.tree.recolor_range(leading,trailing)
+	def recolor(self,v): return self.tree.recolor(v)
+	def updateSyntaxColorer(self,v): return self.tree.colorizer.updateSyntaxColorer(v)
+	
+	# Drawing.
+	def beginUpdate(self): return self.tree.beginUpdate()
+	def endUpdate(self,flag=true): return self.tree.endUpdate(flag)
+	def drawIcon(self,v,x,y): return self.tree.drawIcon(v,x,y)
+	def redraw(self): return self.tree.redraw()
+	def redraw_now(self): return self.tree.redraw_now()
+	
+	# Editing...
+	def editLabel(self,v): return self.tree.editLabel(v)
+	def editVnode(self): return self.tree.editVnode  
+	def endEditLabel(self): return self.tree.endEditLabel()
+	def setEditVnode(self,v): self.tree.editVnode = v
+	def setNormalLabelSTate(self,v): return self.tree.setNormalLabelState(v)
+	
+	# Focus...
+	def focus_get(self): return self.tree.canvas.focus_get()
+	
+	# Fonts...
+	def getFont(self): return self.tree.getFont()
+	def setFont(self,font): return self.tree.setFont(font)  
+	
+	# Scrolling... 
+	def scrollTo(self,v): return self.tree.scrollTo(v)
+	def idle_scrollTo(self,v): return self.tree.idle_scrollTo(v)
+	
+	# Selecting...
+	def select(self,v,updateBeadList=true): return self.tree.select(v,updateBeadList)
+	
+	# Getters and setters...
+	def currentVnode(self): return self.tree.currentVnode
+	def dragging(self): return self.tree.dragging
+	def rootVnode(self): return self.tree.rootVnode
+	def topVnode(self): return self.tree.topVnode
+	def setCurrentVnode(self,v): self.tree.currentVnode = v
+	def setRootVnode(self,v): 	self.tree.rootVnode = v
+	def setTreeIniting(self,flag): self.tree.initing = flag
+	
+	# vnode callbacks: to be removed.
+	if 1: # No longer needed if the tree class injects the vnode callbacks.
+		def OnBoxClick(self,v): return self.tree.OnBoxClick(v)
+		def OnIconClick(self,v,event): return self.tree.OnIconClick(v,event)
+		def OnIconDoubleClick(self,v,event): return self.tree.OnIconDoubleClick(v,event)
+		def OnIconRightClick(self,v,event): return self.tree.OnIconRightClick(v,event)
+		def OnDrag(self,v,event): return self.tree.OnDrag(v,event)
+		def OnEndDrag(self,v,event): return self.tree.OnEndDrag(v,event)
+		def OnPopup(self,v,event): return self.tree.OnPopup(v,event)
+	# OnHeadlineClick
+	# OnHeadlineRightClick
+	def OnActivateHeadline(self,v): return self.tree.OnActivate(v)
+	
+	# Notifications. Can these be folded into convenience routines??
+	def onBodyChanged(self,*args,**keys): return self.tree.onBodyChanged(*args,**keys)
+	def onHeadChanged(self,*args,**keys): return self.tree.onHeadChanged(*args,**keys)
+	def OnHeadlineKey(self,v,event): return self.tree.OnHeadlineKey(v,event)
+	def idle_head_key(self,v): return self.tree.idle_head_key(v)
+	
+	# Others...
+	def expandAllAncestors(self,v): return self.tree.expandAllAncestors(v)
+	def getEditTextDict(self,v): return self.tree.edit_text_dict.get(v)
+	#@nonl
+	#@-node:The interface with the tree class
 	#@+node:Scrolling callbacks (frame)
 	def setCallback (self,*args,**keys):
 		
@@ -850,10 +925,10 @@ class baseLeoFrame:
 	#@-node:addIconButton
 	#@+node:f.longFileName & shortFileName
 	def longFileName (self):
-		return self.mFileName
+		return self.commands.mFileName
 		
 	def shortFileName (self):
-		return shortFileName(self.mFileName)
+		return shortFileName(self.commands.mFileName)
 	#@nonl
 	#@-node:f.longFileName & shortFileName
 	#@+node:f.put, putnl
@@ -1301,7 +1376,7 @@ class baseLeoFrame:
 		#@nl
 		#@<< create the last top-level edit entries >>
 		#@+node:<< create the last top-level edit entries >>
-		label = choose(c.tree.colorizer.showInvisibles,"Hide In&visibles","Show In&visibles")
+		label = choose(c.frame.getColorizer().showInvisibles,"Hide In&visibles","Show In&visibles")
 		
 		table = (
 			("&Go To Line Number","Alt+G",self.OnGoToLineNumber),
@@ -1531,19 +1606,22 @@ class baseLeoFrame:
 	#@+node:OnNew
 	def OnNew (self,event=None):
 	
-		frame = LeoFrame() # Create another Leo window.
-		## frame = app.gui.newLeoFrame(None) # Right now the frame creates the commander.
+		if 0: # Not ready yet.
+			c,frame = app.gui.newLeoCommanderAndFrame()
+		else:
+			frame = LeoFrame(commander=None,title=None)
+			c = frame.commands
 		top = frame.top
 		
 		# 5/16/03: Needed for hooks.
-		doHook("new",old_c=self,new_c=frame.commands)
+		doHook("new",old_c=self,new_c=c)
 		
 		# Use the config params to set the size and location of the window.
 		frame.setInitialWindowGeometry()
 		top.deiconify()
 		top.lift()
 		frame.resizePanesToRatio(frame.ratio,frame.secondary_ratio) # Resize the _new_ frame.
-		c = frame.commands # Use the commander of the _new_ frame.
+		
 		c.beginUpdate()
 		if 1: # within update
 			t = leoNodes.tnode()
@@ -1821,62 +1899,66 @@ class baseLeoFrame:
 		c = self.commands
 		
 		# Make sure we never pass None to the ctor.
-		if not self.mFileName:
+		if not c.mFileName:
 			self.title = ""
-			self.mFileName = ""
+			c.mFileName = ""
 	
-		if self.mFileName != "":
-			c.fileCommands.save(self.mFileName)
+		if c.mFileName != "":
+			c.fileCommands.save(c.mFileName)
 			c.setChanged(false)
 			return
 	
 		fileName = tkFileDialog.asksaveasfilename(
-			initialfile = self.mFileName,
+			initialfile = c.mFileName,
 			title="Save",
 			filetypes=[("Leo files", "*.leo")],
 			defaultextension=".leo")
 	
 		if len(fileName) > 0:
 			# 7/2/02: don't change mFileName until the dialog has suceeded.
-			self.mFileName = ensure_extension(fileName, ".leo")
-			self.title = self.mFileName
-			self.top.title(self.setWindowTitle(self.mFileName)) # 3/25/03
-			c.fileCommands.save(self.mFileName)
-			self.updateRecentFiles(self.mFileName)
+			c.mFileName = ensure_extension(fileName, ".leo")
+			self.title = c.mFileName
+			self.top.title(self.setWindowTitle(c.mFileName)) # 3/25/03
+			c.fileCommands.save(c.mFileName)
+			self.updateRecentFiles(c.mFileName)
 	#@nonl
 	#@-node:OnSave
 	#@+node:OnSaveAs
 	def OnSaveAs(self,event=None):
+		
+		c = self.commands
 	
 		# Make sure we never pass None to the ctor.
-		if not self.mFileName:
+		if not c.mFileName:
 			self.title = ""
 			
 		fileName = tkFileDialog.asksaveasfilename(
-			initialfile = self.mFileName,
+			initialfile = c.mFileName,
 			title="Save As",
 			filetypes=[("Leo files", "*.leo")],
 			defaultextension=".leo")
 	
 		if len(fileName) > 0:
 			# 7/2/02: don't change mFileName until the dialog has suceeded.
-			self.mFileName = ensure_extension(fileName, ".leo")
-			self.title = self.mFileName
-			self.top.title(self.setWindowTitle(self.mFileName)) # 3/25/03
-			self.commands.fileCommands.saveAs(self.mFileName)
-			self.updateRecentFiles(self.mFileName)
+			c.mFileName = ensure_extension(fileName, ".leo")
+			self.title = c.mFileName
+			self.top.title(self.setWindowTitle(c.mFileName)) # 3/25/03
+			self.commands.fileCommands.saveAs(c.mFileName)
+			self.updateRecentFiles(c.mFileName)
 	#@nonl
 	#@-node:OnSaveAs
 	#@+node:OnSaveTo
 	def OnSaveTo(self,event=None):
+		
+		c = self.commands
 	
 		# Make sure we never pass None to the ctor.
-		if not self.mFileName:
+		if not c.mFileName:
 			self.title = ""
 	
-		# set local fileName, _not_ self.mFileName
+		# set local fileName, _not_ c.mFileName
 		fileName = tkFileDialog.asksaveasfilename(
-			initialfile = self.mFileName,
+			initialfile = c.mFileName,
 			title="Save To",
 			filetypes=[("Leo files", "*.leo")],
 			defaultextension=".leo")
@@ -1884,25 +1966,27 @@ class baseLeoFrame:
 		if len(fileName) > 0:
 			fileName = ensure_extension(fileName, ".leo")
 			self.commands.fileCommands.saveTo(fileName)
-			self.updateRecentFiles(self.mFileName)
+			self.updateRecentFiles(c.mFileName)
 	#@-node:OnSaveTo
 	#@+node:frame.OnRevert
 	def OnRevert(self,event=None):
+		
+		c = self.commands
 	
 		# Make sure the user wants to Revert.
-		if not self.mFileName:
-			self.mFileName = ""
-		if len(self.mFileName)==0:
+		if not c.mFileName:
+			c.mFileName = ""
+		if len(c.mFileName)==0:
 			return
 	
 		reply = leoDialog.askYesNo("Revert",
-			"Revert to previous version of " + self.mFileName + "?").run(modal=true)
+			"Revert to previous version of " + c.mFileName + "?").run(modal=true)
 	
 		if reply=="no":
 			return
 	
 		# Kludge: rename this frame so OpenWithFileName won't think it is open.
-		fileName = self.mFileName ; self.mFileName = ""
+		fileName = c.mFileName ; c.mFileName = ""
 	
 		# Create a new frame before deleting this frame.
 		ok, frame = self.OpenWithFileName(fileName)
@@ -1910,7 +1994,7 @@ class baseLeoFrame:
 			frame.top.deiconify()
 			app.destroyWindow(self)
 		else:
-			self.mFileName = fileName
+			c.mFileName = fileName
 	#@-node:frame.OnRevert
 	#@+node:frame.OnQuit
 	def OnQuit(self,event=None):
@@ -1948,13 +2032,13 @@ class baseLeoFrame:
 		
 		"""Clear the recent files list, then add the present file."""
 		
-		f = self
+		f = self ; c = f.commands
 		
 		recentFilesMenu = f.getMenu("Recent Files...")
 		recentFilesMenu.delete(0,len(f.recentFiles))
 		f.recentFiles = []
 		f.createRecentFilesMenuItems()
-		f.updateRecentFiles(f.mFileName)
+		f.updateRecentFiles(c.mFileName)
 	#@nonl
 	#@-node:OnClearRecentFiles
 	#@+node:frame.OnOpenRecentFile
@@ -2023,16 +2107,20 @@ class baseLeoFrame:
 			filetypes=[("Leo files", "*.leo"), ("All files", "*")],
 			defaultextension=".leo")
 	
-		if not fileName or len(fileName) == 0:
+		if not fileName:
 			return
 			
-		try: # 11/18/02
+		try:
 			file = open(fileName,'r')
-			frame = LeoFrame(fileName)
+			if 0: # Not ready yet.
+				c,frame = app.gui.newLeoCommanderAndFrame(fileName)
+			else:
+				frame = LeoFrame(commander=None,title=fileName)
+				c = frame.commands
 			frame.top.deiconify()
 			frame.top.lift()
 			app.root.update() # Force a screen redraw immediately.
-			frame.commands.fileCommands.readOutlineOnly(file,fileName) # closes file.
+			c.fileCommands.readOutlineOnly(file,fileName) # closes file.
 		except:
 			es("can not open:" + fileName)
 	#@nonl
@@ -2339,7 +2427,7 @@ class baseLeoFrame:
 	
 		# Activate the body key handler by hand.
 		c = self.commands ; v = c.currentVnode()
-		self.commands.tree.onBodyWillChange(v,"Cut")
+		self.tree.onBodyWillChange(v,"Cut")
 	
 	def OnCutFromMenu (self,event=None):
 	
@@ -2348,7 +2436,7 @@ class baseLeoFrame:
 		
 		# 11/2/02: Make sure the event sticks.
 		c = self.commands ; v = c.currentVnode()
-		c.tree.onHeadChanged(v) # Works even if it wasn't the headline that changed.
+		c.frame.onHeadChanged(v) # Works even if it wasn't the headline that changed.
 	#@-node:frame.OnCut, OnCutFrom Menu
 	#@+node:frame.OnCopy, OnCopyFromMenu
 	def OnCopy (self,event=None):
@@ -2367,7 +2455,7 @@ class baseLeoFrame:
 	
 		# Activate the body key handler by hand.
 		c = self.commands ; v = c.currentVnode()
-		self.commands.tree.onBodyWillChange(v,"Paste")
+		self.tree.onBodyWillChange(v,"Paste")
 		
 	def OnPasteNode (self,event=None):
 	
@@ -2381,7 +2469,7 @@ class baseLeoFrame:
 		
 		# 10/23/02: Make sure the event sticks.
 		c = self.commands ; v = c.currentVnode()
-		c.tree.onHeadChanged(v) # Works even if it wasn't the headline that changed.
+		c.frame.onHeadChanged(v) # Works even if it wasn't the headline that changed.
 	#@-node:frame.OnPaste, OnPasteNode, OnPasteFromMenu
 	#@+node:OnDelete
 	def OnDelete(self,event=None):
@@ -2390,7 +2478,7 @@ class baseLeoFrame:
 		first, last = oldSel = getTextSelection(self.body)
 		if first and last and first != last:
 			self.body.delete(first,last)
-			c.tree.onBodyChanged(v,"Delete",oldSel=oldSel)
+			c.frame.onBodyChanged(v,"Delete",oldSel=oldSel)
 	#@-node:OnDelete
 	#@+node:OnExecuteScript
 	#@+at 
@@ -2548,7 +2636,7 @@ class baseLeoFrame:
 		#@	<< select v and make it visible >>
 		#@+node:<< select v and make it visible >>
 		c.beginUpdate()
-		c.tree.expandAllAncestors(v)
+		c.frame.expandAllAncestors(v)
 		c.selectVnode(v)
 		c.endUpdate()
 		#@nonl
@@ -2744,7 +2832,7 @@ class baseLeoFrame:
 	#@+node:OnViewAllCharacters
 	def OnViewAllCharacters (self, event=None):
 	
-		c = self.commands ; v = c.currentVnode() ; colorizer = c.tree.colorizer
+		c = self.commands ; v = c.currentVnode() ; colorizer = c.frame.getColorizer()
 		colorizer.showInvisibles = choose(colorizer.showInvisibles,0,1)
 		# print `colorizer.showInvisibles`
 	
@@ -2755,7 +2843,7 @@ class baseLeoFrame:
 		else:
 			setMenuLabel(menu,"Hide Invisibles","Show Invisibles")
 	
-		c.tree.recolor_now(v)
+		c.frame.recolor_now(v)
 	#@-node:OnViewAllCharacters
 	#@+node:OnPreferences
 	def OnPreferences(self,event=None):
@@ -2895,7 +2983,7 @@ class baseLeoFrame:
 		if sel1 and sel2 and sel1 != sel2: # 7/7/03
 			c.body.delete(sel1,sel2)
 		c.body.insert("insert",self.getTime(body=true))
-		c.tree.onBodyChanged(v,"Typing",oldSel=oldSel)
+		c.frame.onBodyChanged(v,"Typing",oldSel=oldSel)
 		
 	def OnInsertHeadlineTime (self,event=None):
 	
@@ -2907,7 +2995,7 @@ class baseLeoFrame:
 			if sel1 and sel2 and sel1 != sel2: # 7/7/03
 				v.edit_text().delete(sel1,sel2)
 			v.edit_text().insert("insert",self.getTime(body=false))
-			c.tree.idle_head_key(v)
+			c.frame.idle_head_key(v)
 			
 		# A kludge to get around not knowing whether we are editing or not.
 		if s.strip() == v.headString().strip():
@@ -2944,7 +3032,7 @@ class baseLeoFrame:
 	#@+node:OnEditHeadline
 	def OnEditHeadline(self,event=None):
 	
-		tree = self.commands.tree
+		tree = self.tree
 		tree.editLabel(tree.currentVnode)
 	#@nonl
 	#@-node:OnEditHeadline
@@ -2973,11 +3061,11 @@ class baseLeoFrame:
 		else:
 			s = angleBrackets(' ' + s + ' ')
 		
-		c.tree.editLabel(v)
+		c.frame.editLabel(v)
 		if v.edit_text():
 			v.edit_text().delete("1.0","end")
 			v.edit_text().insert("1.0",s)
-			c.tree.onHeadChanged(v)
+			c.frame.onHeadChanged(v)
 	#@-node:OnToggleAngleBrackets
 	#@+node:OnFindPanel
 	def OnFindPanel(self,event=None):
@@ -3187,10 +3275,10 @@ class baseLeoFrame:
 			v = c.beadList[c.beadPointer]
 			if v.exists(c):
 				c.beginUpdate()
-				c.tree.expandAllAncestors(v)
+				c.frame.expandAllAncestors(v)
 				c.selectVnode(v,updateBeadList=false)
 				c.endUpdate()
-				c.tree.idle_scrollTo(v)
+				c.frame.idle_scrollTo(v)
 				return
 	#@-node:OnGoPrevVisitedNode
 	#@+node:OnGoNextVisitedNode
@@ -3203,10 +3291,10 @@ class baseLeoFrame:
 			v = c.beadList[c.beadPointer]
 			if v.exists(c):
 				c.beginUpdate()
-				c.tree.expandAllAncestors(v)
+				c.frame.expandAllAncestors(v)
 				c.selectVnode(v,updateBeadList=false)
 				c.endUpdate()
-				c.tree.idle_scrollTo(v)
+				c.frame.idle_scrollTo(v)
 				return
 	#@nonl
 	#@-node:OnGoNextVisitedNode
@@ -3230,9 +3318,10 @@ class baseLeoFrame:
 			v = v.threadNext()
 		if v:
 			c.beginUpdate()
-			c.tree.expandAllAncestors(v)
+			c.frame.expandAllAncestors(v)
 			c.selectVnode(v)
 			c.endUpdate()
+	
 	#@-node:OnGoToLastNode
 	#@+node:OnGoToNextChanged
 	def OnGoToNextChanged(self,event=None):
