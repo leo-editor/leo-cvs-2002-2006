@@ -7,10 +7,10 @@ autocompletion and calltips plugin.  Special characters:
 ( summons the calltips
 Escape closes either box.
 Ctrl selects an item.
-alt-up_arrow, alt-down_arrow moves up or down in the list.
-This plugin scans the complete outline at startup if autocompletion is enabled.
+alt-up_arrow, alt-down_arrow moves up or down in the list.  The mouse will work for this as well.
+This plugin scans the complete outline at startup..
 
-You many enable or disable features in autocomplete.ini.
+You many enable or disable features in autocomplete.ini( see configuration section ).
 """
 
 #@@language python 
@@ -24,6 +24,7 @@ import leoTkinterFrame
 
 import leoColor 
 import ConfigParser 
+import os
 import os.path  
 
 import re 
@@ -48,7 +49,7 @@ except ImportError:
 #@nonl
 #@-node:ekr.20041017043622.26:<< imports >>
 #@nl
-__version__ = ".6"
+__version__ = ".71"
 #@<<version history>>
 #@+node:ekr.20041017102904:<<version history>>
 #@+at
@@ -81,23 +82,142 @@ __version__ = ".6"
 # turn off autobox and calltip label.
 #     - waiting for Chapters( or chapters ) to have its walkChapters def fixed 
 # up, so we can walk the chapters on startup.
+#  .7 Lu( The placer revolution!)
+#    -migrated to the placer!  This got rid of Canvas based drawing.  The 
+# placer may be a good tool to know in the future.  This seemed to
+#    be about an even replacement codewise, but I think it gives us an 
+# efficiency boost.
+#    -changed some lambdas to defs, more for clarities sake then anything.
+#    -made global changes to how objects are referred to
+#    -got rid of factory defs, autobox and calltip label are created at Editor 
+# creation time
+#    -dependency between this and Chapters eliminated.
+#    -added code to automatically create the .ini file and the autocompleter 
+# directory if they do not exist.
+#    -added a section about how to configure autocompleter
+#    -switched the patterns from using '+' to add pieces together to using 
+# '%s'.
+#  .71
+#     investigated and hopefully fixed startup bug on Windows. Changes that 
+# appear to have fixed it:
+#     1. We synchronize with an threading Event object.  IO acting screw on 
+# windows in a thread.
+#     2. There is a global flag indicating whether the config file needs to be 
+# read again.
+#     3. Explicitly set the file type to 't'.  This could all be attributed to 
+# a bug in ConfigParser.  I looked at the source and it doesnt write its data 
+# with a 't'.  This indicates trouble with windows.
+#     4. Make the 'aini' path composed of os.sep instead of the char '/'.  Im 
+# uncertain if the config file ever got read on Windows at this point because 
+# of the explicit '/' , instead of using os.path.
+#     5. Moved createConfig part out of thread.
+#     problems seems centered on Windows/IO/Threading.
 #@-at
-#@nonl
 #@-node:ekr.20041017102904:<<version history>>
+#@nl
+#@<<a note on newCreateControl>>
+#@+node:mork.20041030091443:<<a note on newCreateControl>>
+#@+at
+# 
+# the function newCreateControl decorates the 
+# leoTkinterFrame.leoTkinterBody.createControl method.
+# It does so to intercept the point where the editor is created.  By doing so, 
+# autocompleter is able
+# to ensure that the placer is used instead of the packer.  By using the 
+# placer autocompleter is able
+# to put the autobox and calltip label over the editor when the appropiate 
+# time is reached.  In versions
+# prior to .7, this was achieved by using a Tk Canvas as the background of the 
+# Editor.  The placer is simpler
+# and from what I see more efficient.
+# 
+#@-at
+#@-node:mork.20041030091443:<<a note on newCreateControl>>
 #@nl
 #@<<load notes>>
 #@+node:mork.20041020122041:<<load notes>>
 #@+at 
+# 
+# switching to the placer appears to have gotten rid of this dependency
+# 
+# --no longer true---
 # Autocompleter needs to be loaded before Chapters/chapters or the autobox and 
-# the calltip lable do
+# the calltip label do
 # not appear in the correct place.
+# --no longer true---
 # 
 # 
 #@-at
 #@@c 
 #@-node:mork.20041020122041:<<load notes>>
 #@nl
-useauto = 1
+#@<<coding conventions>>
+#@+node:mork.20041027154248:<<coding conventions>>
+#@+at
+# 
+# context - means the widget that backs the editor.  In versions before .7 it 
+# was called c and was a canvas.  context is the
+# new name, and it is no longer a canvas. c, now means commander.
+# 
+# context.autobox - means the Pmw.ScrolledListBox that offers the 
+# autocompletion options.
+# 
+# The autobox contains other widgets that can be accessed by 
+# autobox.component( 'widgetname' )
+# 
+# context.calltip - means the Tk.Label that offers calltip information
+# 
+# 
+# context.which = 0 indicates its in autocompleter mode
+# context.which = 1 indicates its in calltip mode
+# 
+# 
+#@-at
+#@-node:mork.20041027154248:<<coding conventions>>
+#@nl
+#@<< configuration >>
+#@+node:mork.20041029162412:<< configuration >>
+#@+at
+# Autocompleter looks in the plugin directory for a file called 
+# autocompleter.ini
+# 
+# This file contains two options under the [ autocompleter ] section:
+#     useauto
+#     usecalltips
+#     setting either to 1 will turn on the feature. 0 means off.
+# If there is a section called [ newlanguages ] it will read each option as a 
+# new language for autocompleter to recognize,
+# and compile its value as a regex pattern for the autocompleter system to 
+# recognize as a calltip.  This has relevance for the .ato
+# system described below.
+# 
+# languages that currently have patterns:
+#     python, java, c++, c and perl
+# This file will automatically be generated for the user if it does not exist 
+# at startup time.
+# 
+# 
+# Autocompleter looks in the plugin directory for a directory called 
+# autocompleter.  If it doesnt find one
+# it will attempt to create this directory.  This directory should contain 
+# what are called .ato files ( pronounced auto ).
+# Autocompleter will scan each .ato file that has a first part that matches a 
+# languages name.  For example:
+#     python.ato
+#     autocompleter recognizes python, and will scan this file.  The contents 
+# are read with the same mechanism that
+#     reads the information in the nodes, so calltip and autocompleter 
+# information is added to autocompleters runtime database.
+# If a new language has been added in the autocompleter.ini file then an .ato 
+# file that starts with the new languages name will be recognized and read 
+# in.  Note, this language needs to be recognizable to Leo.
+# Used correctly an .ato file is a mechanism by which a user can carry 
+# autocompletion and calltip information between .leo files/sessions.
+# 
+#@-at
+#@-node:mork.20041029162412:<< configuration >>
+#@nl
+useauto = 1 #These two global determine if the autocompleter and calltip systems are used.  Default is on.
 usecall = 1
 #@<<globals>>
 #@+node:ekr.20041017100522:<< globals >>
@@ -107,8 +227,7 @@ orig_CreateControl = leoTkinterFrame.leoTkinterBody.createControl
 #@+node:mork.20041020141804:<<DictSet>>
 class DictSet( dict ):
     '''A dictionary that always returns either a fresh sets.Set or one that has been stored from a previous call.
-    a different datatype can be used by setting the factory keyword in __init__ to a different class.  This is an experimental
-    class but worth the attempt as it gets rid of some ugly code.'''
+    a different datatype can be used by setting the factory keyword in __init__ to a different class.'''
     
     def __init__( self , factory = sets.Set ):
         dict.__init__( self )
@@ -116,7 +235,7 @@ class DictSet( dict ):
         
     def __getitem__( self, key ):
         try:
-            return dict.__getitem__( self, key )
+            return dict.__getitem__( self, key ) # EAFTP
         except:
             dict.__setitem__( self, key, self.factory() )
             return dict.__getitem__( self, key )
@@ -124,16 +243,13 @@ class DictSet( dict ):
 #@-node:mork.20041020141804:<<DictSet>>
 #@nl
 #watchwords ={} switched to DictSet
-watchwords = DictSet()
+watchwords = DictSet() # a DictSet that is the autocompleter database.
 #calltips ={} switched to DictSet
-calltips = DictSet( factory = DictSet)
-pats ={}
-lang = None 
-
-haveseen = weakref.WeakKeyDictionary()
-autoboxes = weakref.WeakKeyDictionary()
-clabels = weakref.WeakKeyDictionary()
-#@nonl
+calltips = DictSet( factory = DictSet) # a DictSet that is the calltip database
+pats ={} #used to hold regex patterns to find defintions for calltips
+lang = None #determines what language is in effect.  Though its global, only one autobox or calltip label should be visible for the entire leo instance.
+configfilesread = False #Determines if the config files need to be read
+haveseen = weakref.WeakKeyDictionary()# a dict that tracks the commanders that have been seen without stopping garbage collection of that commander.
 #@-node:ekr.20041017100522:<< globals >>
 #@nl
 #@<<patterns>>
@@ -142,16 +258,16 @@ clabels = weakref.WeakKeyDictionary()
 space = r'[ \t\r\f\v ]+'
 end = r'\w+\s*\([^)]*\)'
 
-pats['python'] = re.compile(r'def\s+'+end)
+pats['python'] = re.compile(r'def\s+%s' % end)
 
 pats['java'] = re.compile(
-    r'((public\s+|private\s+|protected\s+)?(static'+space+'|\w+'+space+'){1,2}'+end+')')
+    r'((public\s+|private\s+|protected\s+)?(static%s|\w+%s){1,2}%s)' % ( space, space, end ) )
     
-pats['perl'] = re.compile(r'sub\s+'+end)
+pats['perl'] = re.compile(r'sub\s+%s' % end)
 
-pats['c++'] = re.compile(r'((virtual\s+)?\w+'+space+end+')')
+pats['c++'] = re.compile(r'((virtual\s+)?\w+%s%s)' %( space, end ))
 
-pats['c'] = re.compile(r'\w+'+space+end)
+pats['c'] = re.compile(r'\w+%s%s' % ( space ,end ))
 
 r = string.punctuation.replace('(','').replace('.','')
 pt = string.digits+string.letters+r 
@@ -172,7 +288,8 @@ okchars['_'] = '_'
 watchitems = ( '.',')' )
 txt_template = '%s%s%s'
 def watcher (event):
-    
+    '''A function that tracks what chars are typed in the Text Editor.  Certain chars activate the text scanning
+       code.'''
     global lang 
     if event.char.isspace() or event.char in watchitems:
         bCtrl = event.widget
@@ -196,8 +313,7 @@ def watcher (event):
 #@-node:ekr.20041017043622.3:watcher
 #@+node:ekr.20041017043622.4:scanText
 def scanText (txt):
-    
-    # This function guides what gets scanned.
+    '''This function guides what gets scanned.'''
 
     if useauto:
         scanForAutoCompleter(txt)
@@ -206,8 +322,7 @@ def scanText (txt):
 #@-node:ekr.20041017043622.4:scanText
 #@+node:ekr.20041017043622.5:scanForAutoCompleter
 def scanForAutoCompleter (txt):
-
-    # This function scans text for the autocompleter database.
+    '''This function scans text for the autocompleter database.'''
     t1 = txt.split('.')
     g =[]
     reduce(lambda a,b:makeAutocompletionList(a,b,g),t1)
@@ -223,7 +338,7 @@ def scanForAutoCompleter (txt):
 #@-node:ekr.20041017043622.5:scanForAutoCompleter
 #@+node:ekr.20041017043622.6:scanForCallTip
 def scanForCallTip (txt):
-    #this function scans text for calltip info
+    '''this function scans text for calltip info'''
     pat2 = pats['python']
     if lang!=None:
         if pats.has_key(lang):
@@ -249,6 +364,7 @@ def scanForCallTip (txt):
 #@-node:ekr.20041017043622.6:scanForCallTip
 #@+node:ekr.20041017043622.7:makeAutocompletionList
 def makeAutocompletionList (a,b,glist):
+    '''A helper function for autocompletion'''
     a1 = _reverseFindWhitespace(a)
     if a1:
         b2 = _getCleanString(b)
@@ -283,47 +399,122 @@ def initialScan (tag,keywords):
 
     haveseen[c] = None 
 
+    pth = os.path.split(g.app.loadDir)  
+    aini = pth[0]+r"%splugins%sautocompleter.ini" % ( os.sep, os.sep )    
+    ev = threading.Event()
+    
     def scan ():
-        pth = os.path.split(g.app.loadDir)   
-        aini = pth[0]+r"/plugins/autocompleter.ini"
-        if os.path.exists(aini):
-            readConfigFile(aini)
-        bankpath = pth[0]+r"/plugins/autocompleter/"
-        readLanguageFiles(bankpath)
+        #pth = os.path.split(g.app.loadDir)  
+        #aini = pth[0]+r"%splugins%sautocompleter.ini" % ( os.sep, os.sep )
+
+        try:
+            if not hasReadConfig():
+                if os.path.exists(aini):
+                    readConfigFile(aini) 
+                #else: #Weird errors on windows if done here.  IO writing + windows + thread == hang.
+                #    createConfigFile( aini )
+
+                bankpath = pth[0]+r"%splugins%sautocompleter%s" % ( os.sep, os.sep, os.sep )
+                readLanguageFiles(bankpath)
+        finally:
+            setReadConfig()
+            ev.set()
+
         readOutline(c)
+
+    if not os.path.exists(aini):
+        createConfigFile( aini )
     
     # Use a thread to do the initial scan so as not to interfere with the user.            
     t = threading.Thread(target=scan)
     t.setDaemon(True)
     t.start()
+    ev.wait() #Wait for IO reading to finish.
+
 #@-node:ekr.20041017043622.10:initialScan
+#@+node:mork.20041105115626:has read config file meths
+#These functions determine if the config file has been read or not.  No need to read it more than once.
+def hasReadConfig():
+    return configfilesread
+    
+
+def setReadConfig():
+    global configfilesread
+    configfilesread = True
+#@-node:mork.20041105115626:has read config file meths
 #@+node:ekr.20041017043622.11:readConfigFile
 def readConfigFile (aini):
-
-    global usecall, useauto, pat 
-    #reads the autocompleter config file in.
-    cp = ConfigParser.ConfigParser()
-    cp.read(aini)
+    '''reads the autocompleter config file in.'''
+    global usecall, useauto 
+    
+    try:
+        cp = ConfigParser.ConfigParser()
+        fp = open( aini, 'rt' )
+        cp.readfp( fp )
+        fp.close()
+    except Exception, x:
+        g.es( "Could not open %s because of %s" % ( aini, x ), color = 'red' )
     ac = None 
+    
     for z in cp.sections():
         if z.strip()=='autocompleter':
             ac = z 
-            continue 
-        ipats = r''+cp.get(z,'pat').strip()
-        z = z.strip()
-        pats[z] = re.compile(ipats)
+        else:
+            continue
         if cp.has_section(ac):
             if cp.has_option(ac,'useauto'):
                 useauto = int(cp.get(ac,'useauto'))
+                if useauto:
+                    g.es( "autocompleter enabled", color = 'blue' )
             if cp.has_option(ac,'usecalltips'):
                 usecall = int(cp.get(ac,'usecalltips'))
-            if cp.has_option(ac,'autopattern'):
-                pat = re.compile(cp.get(ac,'autopattern'))
+                if usecall:
+                    g.es( "calltips enabled" , color = 'blue' )
+        break
+
+    nl = None
+    for z in cp.sections():
+        if z.strip()=='newlanguages':
+            nl = z 
+        else:
+            continue
+        if nl and cp.has_section( nl ):
+            for z in cp.options( nl ):
+                try:
+                    pats[ z ] = re.compile( cp.get( nl, z ) )
+                    g.es( 'added %s to autocompleter languages' % z , color = 'blue' )
+                except Exception, x:
+                    g.es( "Could not add %s pattern, because of %s " %( z, x ) , color = 'red')
+                    
+        break
 #@-node:ekr.20041017043622.11:readConfigFile
+#@+node:mork.20041029160807:createConfigFile
+def createConfigFile( aini ):
+    '''This function creates a config file identified by the parameter aini'''
+    cp = ConfigParser.ConfigParser()
+    cp.add_section( 'autocompleter' )
+    cp.set( 'autocompleter', 'useauto', '1' )
+    cp.set( 'autocompleter', 'usecalltips', '1' )
+    cp.add_section( 'newlanguages' )
+    try:
+        ini = open( aini, 'wt' )
+        cp.write( ini )
+        ini.close()
+        g.es( "autocompleter .ini file created in %s" % aini, color = 'blue' )
+    except Exception, x:
+        g.es( "Error in creating %s, caused by %s" % ( aini, x ) , color = 'red' )
+
+
+#@-node:mork.20041029160807:createConfigFile
 #@+node:ekr.20041017043622.12:readLanguageFiles
 def readLanguageFiles (bankpath):
-    global lang 
-    #reads language files in directory specified by bankpath
+    '''reads language files in directory specified by the bankpath parameter'''
+    global lang
+    if not os.path.exists( bankpath ):
+        try:
+            os.mkdir( bankpath )
+        except Exception, x:
+            g.es( "Could not make %s because of %s" %( bankpath, x ) )
     for z in pats:
         bpath = bankpath+z+'.ato'
         if os.path.exists(bpath):
@@ -337,10 +528,10 @@ def readLanguageFiles (bankpath):
 #@-node:ekr.20041017043622.12:readLanguageFiles
 #@+node:ekr.20041017043622.13:readOutline
 def readOutline (c):
-    global lang 
-    #This method walks the Outline(s) and builds the database from which
-    #autocompleter draws its autocompletion options
-    #c is a commander in this case
+    '''This method walks the Outline(s) and builds the database from which
+    autocompleter draws its autocompletion options
+    c is a commander in this case'''
+    global lang
     if 'Chapters'in g.app.loadedPlugins:
         import chapters 
         it = chapters.walkChapters()
@@ -360,28 +551,29 @@ def reducer (lis,pat):
     return[x for x in lis if x.startswith(pat)]
 #@-node:ekr.20041017043622.14:reducer
 #@+node:ekr.20041017043622.15:unbind
-def unbind (canvas):
+def unbind ( context ):
     '''This method turns everything off and removes the calltip and autobox from the canvas.'''
-    if canvas.on: #no need to do this stuff, if were not 'on'
-        canvas.on = False
-        canvas.delete( 'autocompleter' )
-        map( canvas.unbind, ( "<Control_L>", "<Control_R>", "<Alt-Up>", "<Alt-Down>", "<Alt_L>" , "<Alt_R>" ) )
-        canvas.unbind_all( '<Button>' )
-        canvas.update_idletasks()
+    if context.on: #no need to do this stuff, if were not 'on'
+        context.on = False
+        context.clean_editor()
+        map( context.unbind, ( "<Control_L>", "<Control_R>", "<Alt-Up>", "<Alt-Down>", "<Alt_L>" , "<Alt_R>" ) )
+        context.unbind_all( '<Button>' )
+        context.update_idletasks()
 #@nonl
 #@-node:ekr.20041017043622.15:unbind
-#@+node:ekr.20041017043622.16:moveSelItem
-def moveSelItem (event,c):
-    '''c in this def is not a commander but a Tk Canvas.
-       This def moves the selection in the autobox up or down.'''
-    i = c.sl.curselection()
+#@+node:mork.20041027103154:moveSelItem
+def moveSelItem (event, context ):
+    '''This def moves the selection in the autobox up or down.'''
+
+    autobox = context.autobox
+    i = autobox.curselection()
     if len(i)==0:
         return None 
     i = int(i[0])
     # g.trace(event.keysym,i)
     try:
         if event.keysym=='Down':
-            if c.sl.size()-1>c.sl.index(i):
+            if autobox.size() - 1 > autobox.index( i ):
                 i += 1
             elif i!=0:
                 i -1
@@ -389,17 +581,19 @@ def moveSelItem (event,c):
             if i > 0:
                 i -= 1
     finally:
-        c.sl.select_clear(0,'end')
-        c.sl.select_set(i)
-        c.sl.see(i)
+
+        autobox.select_clear( 0, 'end' )
+        autobox.select_set( i )
+        autobox.see( i )
+        context.update_idletasks()
         return "break"
-#@-node:ekr.20041017043622.16:moveSelItem
-#@+node:ekr.20041017043622.17:processKeyStroke
-def processKeyStroke (event,c,body):
+#@-node:mork.20041027103154:moveSelItem
+#@+node:mork.20041027103154.1:processKeyStroke
+def processKeyStroke (event,context ,body):
     '''c in this def is not a commander but a Tk Canvas.  This def determine what action to take dependent upon
        the state of the canvas and what information is in the Event'''
     #if not c.on:return None #nothing on, might as well return
-    if not c.on or event.keysym in ( "??", "Shift_L","Shift_R" ):
+    if not context.on or event.keysym in ( "??", "Shift_L","Shift_R" ):
         return None 
     #if event.keysym=='Escape':
     #    #turn everything off
@@ -408,47 +602,51 @@ def processKeyStroke (event,c,body):
     #if c.which and event.keysym in('parenright','Control_L','Control_R'):
     #    unbind( c )
     #    c.on = False 
-    elif testForUnbind( event, c ): #all of the commented out code is being tested in the new testForUnbind def or moved above.
-        unbind( c )
+    elif testForUnbind( event, context ): #all of the commented out code is being tested in the new testForUnbind def or moved above.
+        unbind( context )
         return None
     #elif event.keysym in("Shift_L","Shift_R"):
     #    #so the user can use capital letters.
     #    return None 
     #elif not c.which and event.char in ripout:
     #    unbind( c )
-    elif c.which==1:
+    elif context.which==1:
         #no need to add text if its calltip time.
         return None 
     ind = body.index('insert-1c wordstart')
     pat = body.get(ind,'insert')+event.char 
     pat = pat.lstrip('.')
-    ww = list(c.sl.get(0,'end'))
+
+    autobox = context.autobox
+    ww = list( autobox.get( 0, 'end' ) )
     lis = reducer(ww,pat)
     if len(lis)==0:return None #in this section we are selecting which item to select based on what the user has typed.
     i = ww.index(lis[0])
-    c.sl.select_clear(0,'end')
-    c.sl.select_set(i)
-    c.sl.see(i)
+
+    autobox.select_clear( 0, 'end' ) #This section sets the current selection to match what the user has typed
+    autobox.select_set( i )
+    autobox.see( i )
+    return 'break'
 #@nonl
-#@-node:ekr.20041017043622.17:processKeyStroke
+#@-node:mork.20041027103154.1:processKeyStroke
 #@+node:mork.20041023153836:testForUnbind
-def testForUnbind( event, c ):
+def testForUnbind( event, context ):
     '''c in this case is a Tkinter Canvas.
       This def checks if the autobox or calltip label needs to be turned off'''
+
     if event.keysym in ('parenright','Control_L','Control_R', 'Escape' ):
         return True
-    elif not c.which and event.char in ripout:
+    elif not context.which and event.char in ripout:
         return True
     return False
 #@-node:mork.20041023153836:testForUnbind
 #@+node:ekr.20041017043622.18:processAutoBox
-def processAutoBox(event,c,body,scrllistbx):
-    '''c in this def is not a commander but a Tk Canvas.
-       This method processes the selection from the autobox.'''
+def processAutoBox(event, context , body ):
+    '''This method processes the selection from the autobox.'''
     if event.keysym in("Alt_L","Alt_R"):
         return None 
 
-    a = scrllistbx.getvalue()
+    a = context.autobox.getvalue()
     if len(a)==0:return None 
     try:
         a = a[0]
@@ -461,109 +659,88 @@ def processAutoBox(event,c,body,scrllistbx):
         body.event_generate("<Key>")
         body.update_idletasks()
     finally:
-        unbind( c )
+        unbind( context )
 #@-node:ekr.20041017043622.18:processAutoBox
-#@+node:ekr.20041017043622.19:add_item
-def add_item (event,c,body,colorizer):
-    '''c in this def is not a commander but a Tk Canvas.
-       This def will add the autobox or the calltip label.'''
-    if not event.char in('.','(')or c.on:return None 
+#@+node:mork.20041027103154.2:add_item
+def add_item (event, context ,body,colorizer):
+    '''This function will add the autobox or the calltip label.'''
+    if not event.char in('.','(')or context.on:return None 
     txt = body.get('insert linestart','insert')
     txt = _reverseFindWhitespace(txt)
     if event.char!='('and not watchwords.has_key(txt):
          return None 
 
-    if event.char=='.':
-        c.on = True 
+    if event.char=='.' and useauto:
+
         ww = list(watchwords[txt])
         ww.sort()
-        # f is a Frame, b is the AutoBox
-        f, b = getAutoBox(c,ww)
-        calculatePlace(body,c.sl,c,f)
-        c.sl.select_set(0)
-        c.which = 0 #indicates it's in autocompletion mode
-        add_bindings( c, body, b )
-        return
-    elif event.char=='(':
+        autobox = context.autobox
+        configureAutoBox( autobox, ww )
+        autolist = autobox.component( 'listbox' )
+        #We have to hand the listbox in, its the only thing providing accuracy of size and position.
+        calculatePlace( body, autolist, context, autobox )
+        autobox.select_set( 0 )
+        context.which = 0 #indicates it's in autocompletion mode
+        add_bindings( context, body )
+    
+    elif event.char=='(' and usecall:
         language = colorizer.language 
         if calltips.has_key(language):
             if calltips[language].has_key(txt):
-                c.on = True 
-                ct = getCtipLabel(c)
+
                 s = list(calltips[language][txt])
                 t = '\n'.join(s)
-                ct.configure(text=t)
-                calculatePlace(body,ct,c,ct)
-                c.which = 1 #indicates it's in calltip mode
+                calltip = context.calltip 
+                calltip.configure(text=t)
+                #The calltip provides sufficient size information to calculate its place on top of the context. 
+                calculatePlace(body, calltip ,context, calltip  )
+                context.which = 1 #indicates it's in calltip mode
+        
         else:
-            c.on = False 
+            context.on = False 
             return None 
-#@-node:ekr.20041017043622.19:add_item
+
+#@-node:mork.20041027103154.2:add_item
 #@+node:mork.20041020110810:add_bindings
-def add_bindings( c, body, b ):
-    '''c in this case is a Tk Canvas not a commander.
-       This def adds bindings to the Canvas so it can work with the autobox properly.'''           
+def add_bindings( context, body ):
+    '''This def adds bindings to the Canvas so it can work with the autobox properly.'''
+            
     event = Tk.Event()
     event.keysym = ''
-    pab = lambda event = event , c = c, body = body, scrllistbx = b : processAutoBox( event, c, body, scrllistbx )
-    b.configure( selectioncommand = pab )
-    msi = lambda event, c = c :moveSelItem( event, c )
-    bindings = ( ( "<Control_L>", pab ), ( "<Control_R>", pab ),
-                 ( "<Alt-Up>", msi ), ( "<Alt-Down>", msi ),
-                 ( "<Alt_L>", pab ), ( "<Alt_R>", pab ) )
-    map( lambda b: c.bind( *b ) , bindings )
-#@-node:mork.20041020110810:add_bindings
-#@+node:ekr.20041017043622.20:getAutoBox
-def getAutoBox (c,ww):
-    ''' a factory method that returns either a new box or one that was created previously.
-        c in this case is a canvas not a commander.'''
-    if autoboxes.has_key(c):
-        f = autoboxes[c]
-        configureAutoBox(f.b,ww)
-        return f, f.b 
-    f = Tk.Frame(c)
-    f.b = b = Pmw.ScrolledListBox(f,hscrollmode='none',
-                listbox_selectbackground='#FFE7C6',
-                listbox_selectforeground='blue',
-                listbox_background='white',
-                listbox_foreground='blue',
-                vertscrollbar_background='#FFE7C6',
-                vertscrollbar_width=10)
-    c.sl = b.component('listbox')
-    b.pack()
-    autoboxes[c] = f 
-    configureAutoBox(b,ww)
-    return f, b 
-#@-node:ekr.20041017043622.20:getAutoBox
-#@+node:ekr.20041017043622.21:configureAutoBox
-def configureAutoBox (sl,ww):
+    
+    def processAutoBoxHandler( event = event , context = context, body = body  ): 
+        processAutoBox( event, context , body  )
+        
+    context.autobox.configure( selectioncommand = processAutoBoxHandler )
+    
+    def moveSelItemHandler( event, context = context ): 
+        moveSelItem( event, context )
+    
+    bindings = ( ( "<Control_L>", processAutoBoxHandler ), ( "<Control_R>", processAutoBoxHandler ),
+                 ( "<Alt-Up>", moveSelItemHandler, '+' ), ( "<Alt-Down>", moveSelItemHandler , '+'),
+                 ( "<Alt_L>", processAutoBoxHandler ), ( "<Alt_R>", processAutoBoxHandler ) )
+         
+    def bind2( args ): context.bind( *args )
+    map( bind2, bindings )
 
-    #sets data and size of autobox
-    sl.setlist(ww)
-    lb = sl.component('listbox')
+#@-node:mork.20041020110810:add_bindings
+#@+node:ekr.20041017043622.21:configureAutoBox
+def configureAutoBox ( autobox ,ww):
+    '''sets data and size of autobox.'''
+    autobox.setlist(ww)
+    lb = autobox.component('listbox')
     height = len(ww)
     if height>5:height = 5
     lb.configure(height=height)
 #@-node:ekr.20041017043622.21:configureAutoBox
-#@+node:ekr.20041017043622.22:getCtipLabel
-def getCtipLabel (c):
-    '''c in this case is a canvas not a commander.
-    This def is a factory of Tk Labels for a canvas, saves the
-    plugin from generating a new one each time a calltip is needed.'''
-    if clabels.has_key(c):
-        ct = clabels[c]
-        return ct 
-    ct = Tk.Label(c,background='lightyellow',
-                    foreground='black')
-    clabels[c] = ct 
-    return ct  
-#@nonl
-#@-node:ekr.20041017043622.22:getCtipLabel
 #@+node:ekr.20041017043622.23:calculatePlace
-def calculatePlace (body,cwidg,c,f):
-     '''c in this def is not a commander but a Tk Canvas.
-       This def determines where the autobox or calltip label goes on the canvas.
-       And then it puts it on the canvas.'''
+def calculatePlace (body,cwidg, context ,toBePlaced):
+     '''This def determines where the autobox or calltip label goes on the canvas.
+       And then it puts it on the canvas.
+       body is the Tk Text instance.
+       cwidg is the widget from which we derive the calculations.
+       context is the parent of the cwidg, we bind the context in this function.
+       toBePlaced is the widget that is placed with the calculatsions performed.'''
      try:
         x, y, lww, lwh = body.bbox('insert -1c')
         x, y = x+lww, y+lwh 
@@ -578,60 +755,121 @@ def calculatePlace (body,cwidg,c,f):
         h2 = rheight 
         h3 = h2+lwh 
         y = y-h3 
-     c.create_window(x,y,window=f,anchor='nw', tag = 'autocompleter' )
-     c.bind_all( '<Button>', c.do_unbind )
+
+     toBePlaced.place( x = x, y = y )
+     context.on = True
+     context.bind_all( '<Button>', context.do_unbind )
 #@-node:ekr.20041017043622.23:calculatePlace
 #@+node:ekr.20041017043622.24:setLanguage
-def setLanguage (vnd):
+def setLanguage ( pos ):
+    '''This method checks a node for the current language in effect
+       and accends the parent line until it finds a language.'''
     global lang 
-    #This def goes up and determines what language is in effect.
-    while vnd:
-        xs1 = vnd.bodyString()
+    while pos:
+        xs1 = pos.bodyString()
         dict = g.get_directives_dict(xs1)
         if dict.has_key('language'):
             lang = g.set_language(xs1,dict['language'])[0]
             break 
-        vnd = vnd.parent()
+        pos = pos.parent()
 #@-node:ekr.20041017043622.24:setLanguage
 #@+node:ekr.20041017043622.25:newCreateControl
 def newCreateControl (self,frame,parentFrame):
     '''This def is a decoration of the createControl def.  We set up the ancestory of the control so we can draw
        Widgets over the Text editor without disturbing the text.'''
     #creating background
-    #we have to put a canvas behind the Text instance so the autobox can appear in front without disturbing the text.
-    #It might be conceivable that the gridder could be used for this as well.  But I think that would entail a complete
-    #rewrite without as good as results.  For example, I dont think we can calculate the coords of where the autobox
-    #and calltip label should appear.  The grider just says, put item in column x, row y.  Not as good as actual coords.
-    c = Tk.Canvas(parentFrame,background='white')
-    c.pack(expand=1,fill='both')
-    f = Tk.Frame(c)
-    c.create_window(0,0,window=f,anchor='nw')
-    f.pack_configure(fill='both',expand=1)
-    #finished creating background
+    #We have moved to using the placer, this is simpler to use and more efficient.  We have to decorate the Tk.Text
+    #widget with a constructor that creates an intermediate Frame for the Text to be placed instead of packed.  Had no
+    #idea that the placer could do this so nicely.  With a couple changes in 3 places, we are using the placer!
+    orig_init = Tk.Text.__init__ #We stash the original init of Tk.Text
+    def pre_init( self, master, *args, **kwords ):
+        
+        context = Tk.Frame( master ) #This is what we need to put in before the text to make place work.
+        orig_init( self, context, *args, **kwords )
     
-    body = orig_CreateControl(self,frame,f)#orig_CreatControl is the method this one decorates
-    body.commander = self.c
-    c.on = False 
+    Tk.Text.__init__ = pre_init #We restore the original init of Tk.Text
+    body = orig_CreateControl(self,frame, parentFrame )#orig_CreatControl is the method this def decorates
+    Tk.Text.__init__ = orig_init
     
+    context = body.master #This is the Frame we created to intercept the passed in master.
+    context.pack( expand = 1, fill = 'both', after = frame.bodyBar )  #We have to add it to the environment, since we pass on it in the __init__   
+    body.place( relwidth = 1.0, relheight = 1.0 )
+    body.commander = self.c #used in watcher
+    context.on = False #determines if the system is autocompleting or calltiping
+    addAutoboxAndCalltipWidgets( context )
     #These used to be lambdas, but I think this is clearer.
-    def processKeyStrokeHandler( event, c= c, body = body ): processKeyStroke( event, c, body )
-    def addItemHandler( event, c = c, body = body, colorizer = frame.body ): add_item( event, c, body, colorizer.getColorizer() )
+    def processKeyStrokeHandler( event, context= context, body = body ): 
+        processKeyStroke( event, context, body )
+    def addItemHandler( event, context = context, body = body, colorizer = frame.body ): 
+        add_item( event, context, body, colorizer.getColorizer() )
                 
     for z in ( watcher, processKeyStrokeHandler, addItemHandler ):
-        c.bind( "<Key>", z, '+' )
+        context.bind( "<Key>", z, '+' )
     
-    def do_unbind( event, c = c ): unbind( c ) #This def is for doing the unbind on any <Button> events, it is only in play when an autobox or caltip label is in effect.
-    c.do_unbind = do_unbind
+    ignore = [] #ignore items added to this list when a Button event occurs.
+    if hasattr( context, 'autobox' ):
+        ignore.append(  context.autobox.component( 'listbox' ) )
+        ignore.append( context.autobox.component( 'vertscrollbar' ) )
+    def do_unbind( event ):
+        '''This def is for doing the unbind on any <Button> events.
+           It only is in effect when the autobox or calltip label are showing.'''            
+        if event.widget not in ignore: #This ensures a click or scroll in the autobox takes effect.
+                unbind( context )
 
+    context.do_unbind = do_unbind
+    
+    #This part protects this plugin from others that use Alt-Up, Alt-Down, an example being temacs.py
+    #The frame didnt seem to work.  Im assuming it was not appropiate enought in the bindtag order for the event.
+    context.block_alt = Tk.Entry()
+    def block_alt( event ):
+        '''This def blocks specific keyboard commands from reaching the Text editor.  'breaking' in
+           the context does not occur before the event reaches the Text editor, so it has no effect'''
+        if context.on: return 'break'
+    for z in ( '<Alt-Up>', '<Alt-Down>' ): context.block_alt.bind( z, block_alt ) 
+    
     #set the bindtags for the body, protects the autocompleter from other plugins unbinding this plugins bindings.
-    ctags = [ c.bindtags()[ 0 ] , ]
-    btags = body.bindtags()
-    ctags.extend( btags ) 
+    ctags = []
+    ctags.append( context.bindtags()[ 0 ] )
+    ctags.append( context.block_alt.bindtags()[ 0 ] )
+    ctags.extend( body.bindtags() ) 
     body.bindtags( tuple( ctags ))
     
     return body  
 
+
+
+
+
+
+
 #@-node:ekr.20041017043622.25:newCreateControl
+#@+node:mork.20041027100425:addAutoboxAndCalltipWidgets
+def addAutoboxAndCalltipWidgets( context ):
+    '''This builds the autobox and the calltip label for the editor.
+      It should be called once for every editor created.'''
+    
+    call_pack_forget = []
+    
+    if useauto:
+        context.autobox = Pmw.ScrolledListBox( context ,hscrollmode='none',
+                                         listbox_selectbackground='#FFE7C6',
+                                         listbox_selectforeground='blue',
+                                         listbox_background='white',
+                                         listbox_foreground='blue',
+                                         vertscrollbar_background='#FFE7C6',
+                                         vertscrollbar_width=10)
+        call_pack_forget.append( context.autobox.component( 'hull' ) )
+    
+    if usecall:            
+        context.calltip = Tk.Label(context,background='lightyellow',
+                         foreground='black')
+        call_pack_forget.append( context.calltip )
+    
+    def clean_editor( ca = call_pack_forget ):#This def makes removing the autobox or calltip label easy.  No need for an intermediate variable like 'current'.
+        for z in ca: z.place_forget()
+    context.clean_editor = clean_editor
+
+#@-node:mork.20041027100425:addAutoboxAndCalltipWidgets
 #@+node:ekr.20041017105122.2:onOpenWindow
 def onOpenWindow ():
     #what does this do?
@@ -647,9 +885,8 @@ def onOpenWindow ():
 if Pmw and Tk and weakref:
 
     leoTkinterFrame.leoTkinterBody.createControl = newCreateControl 
-    leoPlugins.registerHandler(('start2','open2'),initialScan)
-   
+    leoPlugins.registerHandler(('start2','open2'),initialScan)   
     g.plugin_signon(__name__)
-#@nonl
+    
 #@-node:ekr.20041017043622:@thin autocompleter.py
 #@-leo
