@@ -3,7 +3,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="23" clone_windows="0"/>
 <globals body_outline_ratio="0.5">
-	<global_window_position top="-5" left="139" height="25" width="95"/>
+	<global_window_position top="0" left="139" height="25" width="95"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences allow_rich_text="0">
@@ -186,17 +186,15 @@ stylesheet =
 #	Note 2: Please set this field empty when uploading to CVS.
 #	Note 3: This field must be empty for compatibility with older versions of Leo.
 
-use_customizeLeo_dot_py = 1
+use_customizeLeo_dot_py = 0
+#	No longer used.
 
+use_plugins = 1
 #	1: Leo enables plugins.
 #      Naive or hostile hooks may execute HOSTILE CODE contained in .leo files.
+#	   See the warnings in LeoDocs.leo.
+#
 #   0: (The default) Leo disables all plugins.
-#
-#	Very important SECURITY WARNINGS:
-#
-#   - Setting use_configureLeo_dot_py = 1 enables plugin code that could,
-#     if not well thought out, create SECURITY ISSUES.
-#     See the warnings in the @file customizeLeo.py node in LeoPy.py.
 
 use_relative_node_indices = 0
 #	No longer used.

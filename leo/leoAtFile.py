@@ -2133,21 +2133,7 @@ class atFile:
 	
 	def checkForLeoCustomize (self,v=None):
 	
-		if v: fn = v.atFileNodeName()
-		else: fn = self.targetFileName
-		if not fn: return
-		
-		fn = os.path.basename(fn)
-	
-		if shortFileName(fn) != "customizeLeo.py":
-			return true
-		elif app().config.use_customizeLeo_dot_py:
-			return true
-		else:
-			es("customizeLeo.py not written:")
-			es("use_customizeLeo_dot_py = 0")
-			return false
-	
+		return true # This routine is no longer needed.
 	#@-body
 	#@-node:1::atFile.checkForLeoCustomize
 	#@+node:2::atFile.closeWriteFile

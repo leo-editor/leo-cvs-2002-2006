@@ -158,7 +158,7 @@ class config:
 		self.remove_sentinels_extension = ".txt"
 		self.save_clears_undo_buffer = false
 		self.stylesheet = None
-		self.use_customizeLeo_dot_py = 0 # Should _never_ be 1 here (!!)
+		self.use_plugins = 0 # Should _never_ be 1 here!
 		
 		if 1: # To be deleted
 			self.use_relative_node_indices = 1 # Not used. 
@@ -575,8 +575,7 @@ class config:
 				self.output_initial_comment)
 			
 			self.output_newline = self.initConfigParam(
-				"output_newline",
-				self.output_newline)
+				"output_newline",self.output_newline)
 			
 			self.create_nonexistent_directories = self.initBooleanConfigParam(
 				"create_nonexistent_directories",
@@ -594,24 +593,20 @@ class config:
 				self.save_clears_undo_buffer)
 				
 			self.stylesheet = self.initConfigParam(
-				"stylesheet",
-				self.stylesheet)
+				"stylesheet",self.stylesheet)
 			
 			self.use_relative_node_indices = self.initBooleanConfigParam(
-				"use_relative_node_indices",
-				self.use_relative_node_indices)
+				"use_relative_node_indices",self.use_relative_node_indices)
 			
 			self.remove_sentinels_extension = self.initConfigParam(
 				"remove_sentinels_extension",
 				self.remove_sentinels_extension)
 				
-			self.use_customizeLeo_dot_py = self.initBooleanConfigParam(
-				"use_customizeLeo_dot_py",
-				self.use_customizeLeo_dot_py)
+			self.use_plugins = self.initBooleanConfigParam(
+				"use_plugins",self.use_plugins)
 			
 			self.write_clone_indices = self.initBooleanConfigParam(
-				"write_clone_indices",
-				self.write_clone_indices)
+				"write_clone_indices",self.write_clone_indices)
 			
 			#@-body
 			#@-node:1::<< get config options >>
@@ -680,7 +675,7 @@ class config:
 
 			cf.close()
 			self.configsExist = true
-		except exceptions.IOError:
+		except IOError:
 			pass
 		except:
 			es("Exception opening " + self.configFileName)

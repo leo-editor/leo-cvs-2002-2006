@@ -137,7 +137,7 @@ class LeoFrame:
 		ver1 = "Python %d.%d.%d" % (n1,n2,n3)
 		ver2 = ", Tk " + self.top.getvar("tk_patchLevel")
 		es(ver1 + ver2) ; enl()
-	
+		
 		self.top.protocol("WM_DELETE_WINDOW", self.OnCloseLeoEvent)
 		self.top.bind("<Button-1>", self.OnActivateLeoEvent)
 		
@@ -1377,8 +1377,8 @@ class LeoFrame:
 	#  Executes the given command, invoking hooks and catching exceptions.
 	# Command handlers no longer need to return "break".  Yippee!
 	# 
-	# The code assumes that customizeLeo("command1") has completely handled 
-	# the command if customizeLeo("command1") returns false.  This provides a 
+	# The code assumes that the "command1" hook has completely handled the 
+	# command if handleLeoHook("command1") returns false.  This provides a 
 	# very simple mechanism for overriding commands.
 
 	#@-at
@@ -2463,7 +2463,6 @@ class LeoFrame:
 		n = d.askOkCancelNumber("Enter Line Number","Line number:")
 		if n == -1:
 			return
-		n0 = n = max(n,1)
 		#@-body
 		#@-node:3::<< get n, the line number, from a dialog >>
 
@@ -3838,8 +3837,8 @@ class LeoFrame:
 	#@+at
 	#  The following convenience routines make creating menus easier.
 	# 
-	# The file customizeLeo.py shows gives examples of how to use these 
-	# routines to create custom menus and to add items to the Open With menu.
+	# The Plugins section gives examples of how to use these routines to 
+	# create custom menus and to add items to the Open With menu.
 
 	#@-at
 	#@-body
@@ -4442,6 +4441,7 @@ class LeoFrame:
 			self.log.see("end")
 			self.log.update_idletasks()
 		else:
+			a.logWaiting.append((),) # 2/16/03
 			print "Null log"
 			print s
 	
@@ -4452,6 +4452,7 @@ class LeoFrame:
 			self.log.see("end")
 			self.log.update_idletasks()
 		else:
+			a.logWaiting.append(('\n'),) # 2/16/03
 			print "Null log"
 			print
 	#@-body

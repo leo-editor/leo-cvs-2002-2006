@@ -1171,7 +1171,6 @@ class leoTree:
 	#@@c
 
 	def onHeadChanged (self,v):
-		forceUpdate = true
 		self.commands.body.after_idle(self.idle_head_key,v)
 	
 	def OnHeadlineKey (self,v,event):
@@ -1244,7 +1243,7 @@ class leoTree:
 			c.beginUpdate()
 			self.endEditLabel()
 			c.endUpdate()
-		elif changed or forceUpdate:
+		elif changed:
 			# update v immediately.  Joined nodes are redrawn later by endEditLabel.
 			# Redrawing the whole screen now messes up the cursor in the headline.
 			self.drawIcon(v,v.iconx,v.icony) # just redraw the icon.
