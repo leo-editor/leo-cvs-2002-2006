@@ -15,13 +15,16 @@
 # See pycheckrc file in leoDist.leo for a list of erroneous warnings to be suppressed.
 
 if 0: # Set to 1 for lint-like testing.
+
+    # Note:  Pychecker presently works only on Python 2.3.
+
     try:
         import pychecker.checker
         # This works.  We may want to set options here...
         # from pychecker import Config 
         print ; print "Warning: pychecker.checker running..." ; print
     except:
-        pass
+        print ; print 'Can not import pychecker' ; print
 #@nonl
 #@-node:ekr.20031218072017.2606:<< Import pychecker >>
 #@nl
@@ -199,6 +202,9 @@ def completeFileName (fileName):
 #@+node:ekr.20041117155521:computeGlobalConfigDir
 def computeGlobalConfigDir():
     
+    # None of these suppresses warning about sys.leo_config_directory
+    # __pychecker__ = '--no-objattrs --no-modulo1 --no-moddefvalue'
+    
     import leoGlobals as g
     
     encoding = startupEncoding()
@@ -370,11 +376,11 @@ def reportDirectories(verbose):
     import leoGlobals as g
    
     if verbose:
-        for kind,dir in (
+        for kind,theDir in (
             ("global config",g.app.globalConfigDir),
             ("home",g.app.homeDir),
         ):
-            g.es("%s dir: %s" % (kind,dir),color="blue")
+            g.es("%s dir: %s" % (kind,theDir),color="blue")
 #@nonl
 #@-node:ekr.20041130093254:reportDirectories
 #@-node:ekr.20031218072017.1934:run & allies

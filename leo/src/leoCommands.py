@@ -46,18 +46,20 @@ class baseCommands:
     def __init__(self,frame,fileName):
     
         c = self
-        c.frame = frame
-        c.mFileName = fileName
+        
+        # Init ivars with self.x instead of c.x to keep Pychecker happy
+        self.frame = frame
+        self.mFileName = fileName
             # Do _not_ use os_path_norm: it converts an empty path to '.' (!!)
     
         # g.trace(c) # Do this after setting c.mFileName.
         c.initIvars()
     
         # initialize the sub-commanders
-        c.fileCommands = leoFileCommands.fileCommands(c)
-        c.atFileCommands = leoAtFile.atFile(c)
-        c.importCommands = leoImport.leoImportCommands(c)
-        c.tangleCommands = leoTangle.tangleCommands(c)
+        self.fileCommands = leoFileCommands.fileCommands(c)
+        self.atFileCommands = leoAtFile.atFile(c)
+        self.importCommands = leoImport.leoImportCommands(c)
+        self.tangleCommands = leoTangle.tangleCommands(c)
     
         if 0 and g.debugGC:
             print ; print "*** using Null undoer ***" ; print
@@ -5553,48 +5555,6 @@ class configSettings:
     #@nonl
     #@-node:ekr.20041118053731:Getters
     #@+node:ekr.20041118195812:Setters...
-    #@+node:ekr.20041117062717.20:setConfigIvars  (Not used: Called only from prefs code)
-    # Sets config ivars from c.
-    def setConfigIvars (self):
-        
-        c = self.c
-        config = g.app.config
-        
-        g.trace()
-        
-        if c.target_language and g.app.language_delims_dict.get(c.target_language):
-            language = c.target_language
-        else:
-            language = "plain"
-    
-        self.setPref("default_tangle_directory",c.tangle_directory)
-        self.setPref("default_target_language",language)
-        self.setPref("output_doc_chunks",str(c.output_doc_flag))
-        self.setPref("page_width",str(c.page_width))
-        self.setPref("run_tangle_done.py",str(c.tangle_batch_flag))
-        self.setPref("run_untangle_done.py",str(c.untangle_batch_flag))
-        self.setPref("tab_width",str(c.tab_width))
-        self.setPref("tangle_outputs_header",str(c.use_header_flag))
-        
-        self.setPref("batch",str(c.batch_flag))
-        self.setPref("ignore_case",str(c.ignore_case_flag))
-        self.setPref("mark_changes",str(c.mark_changes_flag))
-        self.setPref("mark_finds",str(c.mark_finds_flag))
-        self.setPref("pattern_match",str(c.pattern_match_flag))
-        self.setPref("reverse",str(c.reverse_flag))
-        self.setPref("script_change",str(c.script_change_flag))
-        self.setPref("script_search",str(c.script_search_flag))
-        self.setPref("search_body",str(c.search_body_flag))
-        self.setPref("search_headline",str(c.search_headline_flag))
-        self.setPref("selection_only",str(c.selection_only_flag))
-        self.setPref("suboutline_only",str(c.suboutline_only_flag))
-        self.setPref("wrap",str(c.wrap_flag))
-        self.setPref("whole_word",str(c.whole_word_flag))
-        
-        self.setPref("change_string",c.change_text)
-        self.setPref("find_string",c.find_text)
-    #@nonl
-    #@-node:ekr.20041117062717.20:setConfigIvars  (Not used: Called only from prefs code)
     #@+node:ekr.20041118195812.3:setRecentFiles (configSettings)
     def setRecentFiles (self,files):
         

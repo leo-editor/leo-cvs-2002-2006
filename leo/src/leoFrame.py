@@ -716,12 +716,16 @@ class leoLog:
         print "leoLog oops:", g.callerName(2), "should be overridden in subclass"
     #@nonl
     #@-node:ekr.20031218072017.3700:leoLog.oops
-    #@+node:ekr.20031218072017.3701:leoLog.setFontFromConfig
+    #@+node:ekr.20031218072017.3701:leoLog.setFontFromConfig & setColorFromConfig
     def setFontFromConfig (self):
         
         self.oops()
+        
+    def setColorFromConfig (self):
+        
+        self.oops()
     #@nonl
-    #@-node:ekr.20031218072017.3701:leoLog.setFontFromConfig
+    #@-node:ekr.20031218072017.3701:leoLog.setFontFromConfig & setColorFromConfig
     #@+node:ekr.20031218072017.3702:leoLog.onActivateLog
     def onActivateLog (self,event=None):
     
@@ -764,7 +768,6 @@ class leoTree:
             # New in 4.2: keys are vnodes, values are pairs (p,Tk.Text).
         
         # "public" ivars: correspond to setters & getters.
-        self._dragging = False
         self._editPosition = None
     
         # Controlling redraws
@@ -775,6 +778,9 @@ class leoTree:
     #@-node:ekr.20031218072017.3705:  tree.__init__ (base class)
     #@+node:ekr.20031218072017.3706: Must be defined in subclasses
     #@+node:ekr.20031218072017.3709:Colors & Fonts
+    def setColorFromConfig (self):
+        self.oops()
+    
     def getFont(self):
         self.oops()
         
@@ -865,18 +871,12 @@ class leoTree:
     #@nonl
     #@-node:ekr.20031218072017.3715:endUpdate
     #@+node:ekr.20031218072017.3716:Getters/Setters (tree)
-    def dragging(self):
-        return self._dragging
-    
     def getEditTextDict(self,v):
         # New in 4.2: the default is an empty list.
         return self.edit_text_dict.get(v,[])
     
     def editPosition(self):
         return self._editPosition
-        
-    def setDragging(self,flag):
-        self._dragging = flag
     
     def setEditPosition(self,p):
         self._editPosition = p

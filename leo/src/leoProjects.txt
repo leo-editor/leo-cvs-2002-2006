@@ -1687,13 +1687,16 @@ ref line 2
 # See pycheckrc file in leoDist.leo for a list of erroneous warnings to be suppressed.
 
 if 0: # Set to 1 for lint-like testing.
+
+    # Note:  Pychecker presently works only on Python 2.3.
+
     try:
         import pychecker.checker
         # This works.  We may want to set options here...
         # from pychecker import Config 
         print ; print "Warning: pychecker.checker running..." ; print
     except:
-        pass
+        print ; print 'Can not import pychecker' ; print
 #@nonl
 #@-node:ekr.20031218072017.2606:<< Import pychecker >>
 #@-node:ekr.20040803100035:Run Pychecker
@@ -1860,45 +1863,46 @@ canvas.bind("<ButtonPress>",mapWheel,add=1)
 #@nonl
 #@-node:ekr.20050119210541:<< workaround for mouse-wheel problems >>
 #@+node:ekr.20040709081208:<< do scrolling by hand in a separate thread >>
-import threading
-import time
-
-way = 'Down' # global.
+# New in 4.3: replaced global way with scrollWay ivar.
 ev = threading.Event()
 
-def run(ev = ev):
-    global way
+def run(self=self,canvas=canvas,ev=ev):
+
     while 1:
         ev.wait()
-        if way=='Down': canvas.yview("scroll", 1,"units")
-        else:           canvas.yview("scroll",-1,"units")
+        if self.scrollWay =='Down': canvas.yview("scroll", 1,"units")
+        else:                       canvas.yview("scroll",-1,"units")
         time.sleep(.1)
 
 t = threading.Thread(target = run)
 t.setDaemon(True)
 t.start()
+
+def scrollUp(event): scrollUpOrDown(event,'Down')
+def scrollDn(event): scrollUpOrDown(event,'Up')
     
-def exe(event,ev=ev,theWay='Down',canvas=canvas):
-    global way
+def scrollUpOrDown(event,theWay):
     if event.widget!=canvas: return
-    if canvas.find_overlapping(event.x,event.y,event.x,event.y): return
+    if 0: # This seems to interfere with scrolling.
+        if canvas.find_overlapping(event.x,event.y,event.x,event.y): return
     ev.set()
-    way = theWay
+    self.scrollWay = theWay
         
 def off(event,ev=ev,canvas=canvas):
     if event.widget!=canvas: return
     ev.clear()
 
 if 1: # Use shift-click
-    canvas.bind_all('<Shift Button-3>',exe)
-    canvas.bind_all('<Shift Button-1>',lambda event,way='Up': exe(event,theWay=way))
-    canvas.bind_all('<Shift ButtonRelease-1>', off)
-    canvas.bind_all('<Shift ButtonRelease-3>', off)
+    # Shift-button-1 scrolls up, Shift-button-2 scrolls down
+    canvas.bind_all('<Shift Button-3>',scrollDn)
+    canvas.bind_all('<Shift Button-1>',scrollUp)
+    canvas.bind_all('<Shift ButtonRelease-1>',off)
+    canvas.bind_all('<Shift ButtonRelease-3>',off)
 else: # Use plain click.
-    canvas.bind_all( '<Button-3>', exe)
-    canvas.bind_all( '<Button-1>', lambda event,way='Up': exe(event,theWay=way))
-    canvas.bind_all( '<ButtonRelease-1>', off)
-    canvas.bind_all( '<ButtonRelease-3>', off)
+    canvas.bind_all( '<Button-3>',scrollDn)
+    canvas.bind_all( '<Button-1>',scrollUp)
+    canvas.bind_all( '<ButtonRelease-1>',off)
+    canvas.bind_all( '<ButtonRelease-3>',off)
 #@nonl
 #@-node:ekr.20040709081208:<< do scrolling by hand in a separate thread >>
 #@-node:ekr.20041221071131.1:createTkTreeCanvas
@@ -5902,49 +5906,49 @@ sentinelDict = {
 #@+node:ekr.20041005105605.8:atFile.__init__ & initIvars
 def __init__(self,c):
     
-    at = self
+    # Note: Pychecker complains if about module attributes if we assign at.x instead of self.x.
     
-    at.c = c
-    at.debug = False
-    at.fileCommands = c.fileCommands
-    at.testing = True # True: enable additional checks.
+    self.c = c
+    self.debug = False
+    self.fileCommands = c.fileCommands
+    self.testing = True # True: enable additional checks.
 
     << define the dispatch dictionary used by scanText4 >>
 #@nonl
 #@+node:ekr.20041005105605.9:<< define the dispatch dictionary used by scanText4 >>
-at.dispatch_dict = {
+self.dispatch_dict = {
     # Plain line.
-    at.noSentinel: at.readNormalLine,
+    self.noSentinel: self.readNormalLine,
     # Starting sentinels...
-    at.startAll:    at.readStartAll,
-    at.startAt:     at.readStartAt,
-    at.startDoc:    at.readStartDoc,
-    at.startLeo:    at.readStartLeo,
-    at.startMiddle: at.readStartMiddle,
-    at.startNode:   at.readStartNode,
-    at.startOthers: at.readStartOthers,
+    self.startAll:    self.readStartAll,
+    self.startAt:     self.readStartAt,
+    self.startDoc:    self.readStartDoc,
+    self.startLeo:    self.readStartLeo,
+    self.startMiddle: self.readStartMiddle,
+    self.startNode:   self.readStartNode,
+    self.startOthers: self.readStartOthers,
     # Ending sentinels...
-    at.endAll:    at.readEndAll,
-    at.endAt:     at.readEndAt,
-    at.endDoc:    at.readEndDoc,
-    at.endLeo:    at.readEndLeo,
-    at.endMiddle: at.readEndMiddle,
-    at.endNode:   at.readEndNode,
-    at.endOthers: at.readEndOthers,
+    self.endAll:    self.readEndAll,
+    self.endAt:     self.readEndAt,
+    self.endDoc:    self.readEndDoc,
+    self.endLeo:    self.readEndLeo,
+    self.endMiddle: self.readEndMiddle,
+    self.endNode:   self.readEndNode,
+    self.endOthers: self.readEndOthers,
     # Non-paired sentinels.
-    at.startAfterRef:  at.readAfterRef,
-    at.startClone:     at.readClone,
-    at.startComment:   at.readComment,
-    at.startDelims:    at.readDelims,
-    at.startDirective: at.readDirective,
-    at.startNl:        at.readNl,
-    at.startNonl:      at.readNonl,
-    at.startRef:       at.readRef,
-    at.startVerbatim:  at.readVerbatim,
+    self.startAfterRef:  self.readAfterRef,
+    self.startClone:     self.readClone,
+    self.startComment:   self.readComment,
+    self.startDelims:    self.readDelims,
+    self.startDirective: self.readDirective,
+    self.startNl:        self.readNl,
+    self.startNonl:      self.readNonl,
+    self.startRef:       self.readRef,
+    self.startVerbatim:  self.readVerbatim,
     # Ignored 3.x sentinels
-    at.endBody:               at.ignoreOldSentinel,
-    at.startBody:             at.ignoreOldSentinel,
-    at.startVerbatimAfterRef: at.ignoreOldSentinel }
+    self.endBody:               self.ignoreOldSentinel,
+    self.startBody:             self.ignoreOldSentinel,
+    self.startVerbatimAfterRef: self.ignoreOldSentinel }
 #@nonl
 #@-node:ekr.20041005105605.9:<< define the dispatch dictionary used by scanText4 >>
 #@-node:ekr.20041005105605.8:atFile.__init__ & initIvars
@@ -5955,19 +5959,21 @@ def initCommonIvars (self):
     
     The defaults set here may be changed later."""
     
-    at = self ; c = at.c
+    # Note: Pychecker complains if about module attributes if we assign at.x instead of self.x.
+    
+    c = self.c
     
     if self.testing:
         # Save "permanent" ivars
-        fileCommands = at.fileCommands
-        dispatch_dict = at.dispatch_dict
+        fileCommands = self.fileCommands
+        dispatch_dict = self.dispatch_dict
         # Clear all ivars.
         g.clearAllIvars(self)
         # Restore permanent ivars
-        at.testing = True
-        at.c = c
-        at.fileCommands = fileCommands
-        at.dispatch_dict = dispatch_dict
+        self.testing = True
+        self.c = c
+        self.fileCommands = fileCommands
+        self.dispatch_dict = dispatch_dict
 
     << set defaults for arguments and options >>
     << init common ivars >>
@@ -8378,7 +8384,7 @@ def openFileForWritingHelper (self,fileName,toString):
             at.writeError("path does not exist: " + path)
             return
     except:
-        at.exception("exception creating path:" + fn)
+        at.exception("exception creating path:" + path)
         return
 
     if g.os_path_exists(at.targetFileName):
@@ -9913,6 +9919,8 @@ file.
 #@-node:ekr.20050104131929.2:<< about os.rename >>
 #@+node:ekr.20050107085710:test_atFile_rename
 def test_atFile_rename (self):
+    
+    __pychecker__ = '--no-reimport' # Reimports needed in test methods.
 
     import leoGlobals as g
     import os
@@ -9959,6 +9967,8 @@ def remove (self,fileName,verbose=True):
 #@nonl
 #@+node:ekr.20050107090156:test_atFile_remove
 def test_atFile_remove(self):
+    
+    __pychecker__ = '--no-reimport' # Reimports needed in test methods.
     
     import leoGlobals as g
     import os
@@ -11866,6 +11876,65 @@ to File > Exit. My attempts to override it have failed.
 #@nonl
 #@-node:ekr.20050121075634:(Investigated Control-Q binding)
 #@-node:ekr.20050104122244.4:Startup
+#@+node:ekr.20050123190323:(Simplified and improved shift-click scrolling code)
+#@+node:ekr.20050123190323.1:Notes
+@killcolor
+
+My attention was brought to this code because pychecker rigthly complained about global vars.
+
+- replaced global way with scrollWay ivar.  This keeps pychecker happy.
+
+- Replaced lambda's with trivial functions.
+    - The old code was absurdly and needlessly confusing.
+
+- Disabled code in scrollUpOrDown that returned if find_overlapping was True.
+    - The scrolling code works much better without it.
+#@nonl
+#@-node:ekr.20050123190323.1:Notes
+#@+node:ekr.20040709081208:<< do scrolling by hand in a separate thread >>
+# New in 4.3: replaced global way with scrollWay ivar.
+ev = threading.Event()
+
+def run(self=self,canvas=canvas,ev=ev):
+
+    while 1:
+        ev.wait()
+        if self.scrollWay =='Down': canvas.yview("scroll", 1,"units")
+        else:                       canvas.yview("scroll",-1,"units")
+        time.sleep(.1)
+
+t = threading.Thread(target = run)
+t.setDaemon(True)
+t.start()
+
+def scrollUp(event): scrollUpOrDown(event,'Down')
+def scrollDn(event): scrollUpOrDown(event,'Up')
+    
+def scrollUpOrDown(event,theWay):
+    if event.widget!=canvas: return
+    if 0: # This seems to interfere with scrolling.
+        if canvas.find_overlapping(event.x,event.y,event.x,event.y): return
+    ev.set()
+    self.scrollWay = theWay
+        
+def off(event,ev=ev,canvas=canvas):
+    if event.widget!=canvas: return
+    ev.clear()
+
+if 1: # Use shift-click
+    # Shift-button-1 scrolls up, Shift-button-2 scrolls down
+    canvas.bind_all('<Shift Button-3>',scrollDn)
+    canvas.bind_all('<Shift Button-1>',scrollUp)
+    canvas.bind_all('<Shift ButtonRelease-1>',off)
+    canvas.bind_all('<Shift ButtonRelease-3>',off)
+else: # Use plain click.
+    canvas.bind_all( '<Button-3>',scrollDn)
+    canvas.bind_all( '<Button-1>',scrollUp)
+    canvas.bind_all( '<ButtonRelease-1>',off)
+    canvas.bind_all( '<ButtonRelease-3>',off)
+#@nonl
+#@-node:ekr.20040709081208:<< do scrolling by hand in a separate thread >>
+#@-node:ekr.20050123190323:(Simplified and improved shift-click scrolling code)
 #@-node:ekr.20041228052527:Bug fixes...
 #@+node:ekr.20041228052527.1:Cleanup...
 #@+node:ekr.20040917080403.1:(Cleaned up code in runOpenFileDialog)
@@ -12509,13 +12578,16 @@ The following are all Python global functions:
 # See pycheckrc file in leoDist.leo for a list of erroneous warnings to be suppressed.
 
 if 0: # Set to 1 for lint-like testing.
+
+    # Note:  Pychecker presently works only on Python 2.3.
+
     try:
         import pychecker.checker
         # This works.  We may want to set options here...
         # from pychecker import Config 
         print ; print "Warning: pychecker.checker running..." ; print
     except:
-        pass
+        print ; print 'Can not import pychecker' ; print
 #@nonl
 #@-node:ekr.20031218072017.2606:<< Import pychecker >>
 #@+node:ekr.20040701152235.2:leoApp (done)
@@ -13170,6 +13242,8 @@ file.
 #@-node:ekr.20050104131929.2:<< about os.rename >>
 #@+node:ekr.20050107085710:test_atFile_rename
 def test_atFile_rename (self):
+    
+    __pychecker__ = '--no-reimport' # Reimports needed in test methods.
 
     import leoGlobals as g
     import os
@@ -13216,6 +13290,8 @@ def remove (self,fileName,verbose=True):
 #@nonl
 #@+node:ekr.20050107090156:test_atFile_remove
 def test_atFile_remove(self):
+    
+    __pychecker__ = '--no-reimport' # Reimports needed in test methods.
     
     import leoGlobals as g
     import os
@@ -14166,6 +14242,46 @@ def update (self):
 #@-node:ekr.20031218072017.1733:update
 #@-node:ekr.20041223104933:class statusLineClass
 #@-node:ekr.20050119225135:(Implemented delayed focus scheme)
+#@+node:ekr.20050123162958:(Fixed Pychecker warnings)
+#@+node:ekr.20050123192629:Real bugs in leoConfig.py
+@killcolor
+
+C:\prog\leoCVS\leo\src\leoConfig.py:691: No global (encodingName) found
+
+changed encodingName to ivar.
+#@nonl
+#@-node:ekr.20050123192629:Real bugs in leoConfig.py
+#@+node:ekr.20050123184116:Warnings
+@killcolor
+
+(wrong warning)
+    C:\prog\leoCVS\leo\src\leoCommands.py:33: Imported module (token) not used
+
+(not a real problem: cant be suppressed)
+    C:\prog\leoCVS\leo\src\leo.py:210: No module attribute (leo_config_directory) found
+
+C:\prog\leoCVS\leo\src\leoTkinterFrame.py:320: No class attribute (yview) found
+C:\prog\leoCVS\leo\src\leoTkinterFrame.py:321: No class attribute (yview) found
+#@-node:ekr.20050123184116:Warnings
+#@+node:ekr.20031218072017.2606:<< Import pychecker >>
+@color
+
+# See pycheckrc file in leoDist.leo for a list of erroneous warnings to be suppressed.
+
+if 0: # Set to 1 for lint-like testing.
+
+    # Note:  Pychecker presently works only on Python 2.3.
+
+    try:
+        import pychecker.checker
+        # This works.  We may want to set options here...
+        # from pychecker import Config 
+        print ; print "Warning: pychecker.checker running..." ; print
+    except:
+        print ; print 'Can not import pychecker' ; print
+#@nonl
+#@-node:ekr.20031218072017.2606:<< Import pychecker >>
+#@-node:ekr.20050123162958:(Fixed Pychecker warnings)
 #@-node:ekr.20041228052527.1:Cleanup...
 #@+node:ekr.20041115111203:Config...
 # 2004
@@ -14337,10 +14453,10 @@ def set (self,c,setting,kind,val):
         if d: found = True
 
     if not found:
-        hash = c.hash()
+        theHash = c.hash()
         for d in self.localOptionsList:
             hash2 = d.get('_hash')
-            if hash == hash2:
+            if theHash == hash2:
                 found = True ; break
 
     if not found:
@@ -14757,48 +14873,6 @@ def getString    (self,setting): return g.app.config.getString   (self.c,setting
 #@nonl
 #@-node:ekr.20041118053731:Getters
 #@+node:ekr.20041118195812:Setters...
-#@+node:ekr.20041117062717.20:setConfigIvars  (Not used: Called only from prefs code)
-# Sets config ivars from c.
-def setConfigIvars (self):
-    
-    c = self.c
-    config = g.app.config
-    
-    g.trace()
-    
-    if c.target_language and g.app.language_delims_dict.get(c.target_language):
-        language = c.target_language
-    else:
-        language = "plain"
-
-    self.setPref("default_tangle_directory",c.tangle_directory)
-    self.setPref("default_target_language",language)
-    self.setPref("output_doc_chunks",str(c.output_doc_flag))
-    self.setPref("page_width",str(c.page_width))
-    self.setPref("run_tangle_done.py",str(c.tangle_batch_flag))
-    self.setPref("run_untangle_done.py",str(c.untangle_batch_flag))
-    self.setPref("tab_width",str(c.tab_width))
-    self.setPref("tangle_outputs_header",str(c.use_header_flag))
-    
-    self.setPref("batch",str(c.batch_flag))
-    self.setPref("ignore_case",str(c.ignore_case_flag))
-    self.setPref("mark_changes",str(c.mark_changes_flag))
-    self.setPref("mark_finds",str(c.mark_finds_flag))
-    self.setPref("pattern_match",str(c.pattern_match_flag))
-    self.setPref("reverse",str(c.reverse_flag))
-    self.setPref("script_change",str(c.script_change_flag))
-    self.setPref("script_search",str(c.script_search_flag))
-    self.setPref("search_body",str(c.search_body_flag))
-    self.setPref("search_headline",str(c.search_headline_flag))
-    self.setPref("selection_only",str(c.selection_only_flag))
-    self.setPref("suboutline_only",str(c.suboutline_only_flag))
-    self.setPref("wrap",str(c.wrap_flag))
-    self.setPref("whole_word",str(c.whole_word_flag))
-    
-    self.setPref("change_string",c.change_text)
-    self.setPref("find_string",c.find_text)
-#@nonl
-#@-node:ekr.20041117062717.20:setConfigIvars  (Not used: Called only from prefs code)
 #@+node:ekr.20041118195812.3:setRecentFiles (configSettings)
 def setRecentFiles (self,files):
     
@@ -14928,11 +15002,11 @@ def readSettingsFiles (self,fileName,verbose=True):
                 d = self.readSettings(c)
                 # g.trace(c)
                 if d:
-                    hash = c.hash()
-                    d['_hash'] = hash
+                    theHash = c.hash()
+                    d['_hash'] = theHash
                     # g.trace('*****',hash)
                     if setOptionsFlag:
-                        self.localOptionsDict[hash] = d
+                        self.localOptionsDict[theHash] = d
                         << update recent files from d >>
                     else:
                         self.localOptionsList.insert(0,d)
@@ -14949,11 +15023,11 @@ for key in d.keys():
         # Entries were created by parserBaseClass.set.
         bunch = d.get(key)
         files = bunch.val
-        files = [file.strip() for file in files]
+        files = [theFile.strip() for theFile in files]
         if 0:
             print "config.readSettingsFiles.  recent files..."
-            for file in files:
-                print file
+            for theFile in files:
+                print theFile
         self.appendToRecentFiles(files)
 #@nonl
 #@-node:ekr.20041201081440:<< update recent files from d >>
@@ -15223,6 +15297,9 @@ def completeFileName (fileName):
 #@+node:ekr.20041117155521:computeGlobalConfigDir
 def computeGlobalConfigDir():
     
+    # None of these suppresses warning about sys.leo_config_directory
+    # __pychecker__ = '--no-objattrs --no-modulo1 --no-moddefvalue'
+    
     import leoGlobals as g
     
     encoding = startupEncoding()
@@ -15394,11 +15471,11 @@ def reportDirectories(verbose):
     import leoGlobals as g
    
     if verbose:
-        for kind,dir in (
+        for kind,theDir in (
             ("global config",g.app.globalConfigDir),
             ("home",g.app.homeDir),
         ):
-            g.es("%s dir: %s" % (kind,dir),color="blue")
+            g.es("%s dir: %s" % (kind,theDir),color="blue")
 #@nonl
 #@-node:ekr.20041130093254:reportDirectories
 #@-node:ekr.20031218072017.1934:run & allies
@@ -15598,6 +15675,7 @@ def createRootWindow(self):
     """Create a hidden Tk root window."""
 
     if 0: # Use Tix.
+        import Tix
         self.root = root = Tix.Tk()
         << fix problems with menus (XP) >>
     else: # Use Tkinter.
@@ -16770,18 +16848,20 @@ def setTopGeometry(self,w,h,x,y):
 def __init__(self,frame,fileName):
 
     c = self
-    c.frame = frame
-    c.mFileName = fileName
+    
+    # Init ivars with self.x instead of c.x to keep Pychecker happy
+    self.frame = frame
+    self.mFileName = fileName
         # Do _not_ use os_path_norm: it converts an empty path to '.' (!!)
 
     # g.trace(c) # Do this after setting c.mFileName.
     c.initIvars()
 
     # initialize the sub-commanders
-    c.fileCommands = leoFileCommands.fileCommands(c)
-    c.atFileCommands = leoAtFile.atFile(c)
-    c.importCommands = leoImport.leoImportCommands(c)
-    c.tangleCommands = leoTangle.tangleCommands(c)
+    self.fileCommands = leoFileCommands.fileCommands(c)
+    self.atFileCommands = leoAtFile.atFile(c)
+    self.importCommands = leoImport.leoImportCommands(c)
+    self.tangleCommands = leoTangle.tangleCommands(c)
 
     if 0 and g.debugGC:
         print ; print "*** using Null undoer ***" ; print
@@ -16874,10 +16954,10 @@ def set (self,c,setting,kind,val):
         if d: found = True
 
     if not found:
-        hash = c.hash()
+        theHash = c.hash()
         for d in self.localOptionsList:
             hash2 = d.get('_hash')
-            if hash == hash2:
+            if theHash == hash2:
                 found = True ; break
 
     if not found:
@@ -17040,48 +17120,6 @@ def getString    (self,setting): return g.app.config.getString   (self.c,setting
 #@nonl
 #@-node:ekr.20041118053731:Getters
 #@+node:ekr.20041118195812:Setters...
-#@+node:ekr.20041117062717.20:setConfigIvars  (Not used: Called only from prefs code)
-# Sets config ivars from c.
-def setConfigIvars (self):
-    
-    c = self.c
-    config = g.app.config
-    
-    g.trace()
-    
-    if c.target_language and g.app.language_delims_dict.get(c.target_language):
-        language = c.target_language
-    else:
-        language = "plain"
-
-    self.setPref("default_tangle_directory",c.tangle_directory)
-    self.setPref("default_target_language",language)
-    self.setPref("output_doc_chunks",str(c.output_doc_flag))
-    self.setPref("page_width",str(c.page_width))
-    self.setPref("run_tangle_done.py",str(c.tangle_batch_flag))
-    self.setPref("run_untangle_done.py",str(c.untangle_batch_flag))
-    self.setPref("tab_width",str(c.tab_width))
-    self.setPref("tangle_outputs_header",str(c.use_header_flag))
-    
-    self.setPref("batch",str(c.batch_flag))
-    self.setPref("ignore_case",str(c.ignore_case_flag))
-    self.setPref("mark_changes",str(c.mark_changes_flag))
-    self.setPref("mark_finds",str(c.mark_finds_flag))
-    self.setPref("pattern_match",str(c.pattern_match_flag))
-    self.setPref("reverse",str(c.reverse_flag))
-    self.setPref("script_change",str(c.script_change_flag))
-    self.setPref("script_search",str(c.script_search_flag))
-    self.setPref("search_body",str(c.search_body_flag))
-    self.setPref("search_headline",str(c.search_headline_flag))
-    self.setPref("selection_only",str(c.selection_only_flag))
-    self.setPref("suboutline_only",str(c.suboutline_only_flag))
-    self.setPref("wrap",str(c.wrap_flag))
-    self.setPref("whole_word",str(c.whole_word_flag))
-    
-    self.setPref("change_string",c.change_text)
-    self.setPref("find_string",c.find_text)
-#@nonl
-#@-node:ekr.20041117062717.20:setConfigIvars  (Not used: Called only from prefs code)
 #@+node:ekr.20041118195812.3:setRecentFiles (configSettings)
 def setRecentFiles (self,files):
     
@@ -17213,11 +17251,11 @@ def findSettingsPosition (self,c,setting):
 #@+node:ekr.20041201080436:config.appendToRecentFiles
 def appendToRecentFiles (self,files):
     
-    for file in files:
-        if file in self.recentFiles:
-            self.recentFiles.remove(file)
-        # g.trace(file)
-        self.recentFiles.append(file)
+    for theFile in files:
+        if theFile in self.recentFiles:
+            self.recentFiles.remove(theFile)
+        # g.trace(theFile)
+        self.recentFiles.append(theFile)
 #@nonl
 #@-node:ekr.20041201080436:config.appendToRecentFiles
 #@+node:ekr.20041120064303:config.readSettingsFiles
@@ -17241,11 +17279,11 @@ def readSettingsFiles (self,fileName,verbose=True):
                 d = self.readSettings(c)
                 # g.trace(c)
                 if d:
-                    hash = c.hash()
-                    d['_hash'] = hash
+                    theHash = c.hash()
+                    d['_hash'] = theHash
                     # g.trace('*****',hash)
                     if setOptionsFlag:
-                        self.localOptionsDict[hash] = d
+                        self.localOptionsDict[theHash] = d
                         << update recent files from d >>
                     else:
                         self.localOptionsList.insert(0,d)
@@ -17262,11 +17300,11 @@ for key in d.keys():
         # Entries were created by parserBaseClass.set.
         bunch = d.get(key)
         files = bunch.val
-        files = [file.strip() for file in files]
+        files = [theFile.strip() for theFile in files]
         if 0:
             print "config.readSettingsFiles.  recent files..."
-            for file in files:
-                print file
+            for theFile in files:
+                print theFile
         self.appendToRecentFiles(files)
 #@nonl
 #@-node:ekr.20041201081440:<< update recent files from d >>
@@ -17505,11 +17543,11 @@ def readSettingsFiles (self,fileName,verbose=True):
                 d = self.readSettings(c)
                 # g.trace(c)
                 if d:
-                    hash = c.hash()
-                    d['_hash'] = hash
+                    theHash = c.hash()
+                    d['_hash'] = theHash
                     # g.trace('*****',hash)
                     if setOptionsFlag:
-                        self.localOptionsDict[hash] = d
+                        self.localOptionsDict[theHash] = d
                         << update recent files from d >>
                     else:
                         self.localOptionsList.insert(0,d)
@@ -17526,11 +17564,11 @@ for key in d.keys():
         # Entries were created by parserBaseClass.set.
         bunch = d.get(key)
         files = bunch.val
-        files = [file.strip() for file in files]
+        files = [theFile.strip() for theFile in files]
         if 0:
             print "config.readSettingsFiles.  recent files..."
-            for file in files:
-                print file
+            for theFile in files:
+                print theFile
         self.appendToRecentFiles(files)
 #@nonl
 #@-node:ekr.20041201081440:<< update recent files from d >>
@@ -17588,10 +17626,10 @@ def set (self,c,setting,kind,val):
         if d: found = True
 
     if not found:
-        hash = c.hash()
+        theHash = c.hash()
         for d in self.localOptionsList:
             hash2 = d.get('_hash')
-            if hash == hash2:
+            if theHash == hash2:
                 found = True ; break
 
     if not found:
@@ -17720,10 +17758,10 @@ def set (self,c,setting,kind,val):
         if d: found = True
 
     if not found:
-        hash = c.hash()
+        theHash = c.hash()
         for d in self.localOptionsList:
             hash2 = d.get('_hash')
-            if hash == hash2:
+            if theHash == hash2:
                 found = True ; break
 
     if not found:
@@ -18044,10 +18082,10 @@ def set (self,c,setting,kind,val):
         if d: found = True
 
     if not found:
-        hash = c.hash()
+        theHash = c.hash()
         for d in self.localOptionsList:
             hash2 = d.get('_hash')
-            if hash == hash2:
+            if theHash == hash2:
                 found = True ; break
 
     if not found:
@@ -18082,11 +18120,11 @@ def readSettingsFiles (self,fileName,verbose=True):
                 d = self.readSettings(c)
                 # g.trace(c)
                 if d:
-                    hash = c.hash()
-                    d['_hash'] = hash
+                    theHash = c.hash()
+                    d['_hash'] = theHash
                     # g.trace('*****',hash)
                     if setOptionsFlag:
-                        self.localOptionsDict[hash] = d
+                        self.localOptionsDict[theHash] = d
                         << update recent files from d >>
                     else:
                         self.localOptionsList.insert(0,d)
@@ -18103,11 +18141,11 @@ for key in d.keys():
         # Entries were created by parserBaseClass.set.
         bunch = d.get(key)
         files = bunch.val
-        files = [file.strip() for file in files]
+        files = [theFile.strip() for theFile in files]
         if 0:
             print "config.readSettingsFiles.  recent files..."
-            for file in files:
-                print file
+            for theFile in files:
+                print theFile
         self.appendToRecentFiles(files)
 #@nonl
 #@-node:ekr.20041201081440:<< update recent files from d >>
@@ -18343,10 +18381,10 @@ def set (self,c,setting,kind,val):
         if d: found = True
 
     if not found:
-        hash = c.hash()
+        theHash = c.hash()
         for d in self.localOptionsList:
             hash2 = d.get('_hash')
-            if hash == hash2:
+            if theHash == hash2:
                 found = True ; break
 
     if not found:
@@ -18387,11 +18425,11 @@ for key in d.keys():
         # Entries were created by parserBaseClass.set.
         bunch = d.get(key)
         files = bunch.val
-        files = [file.strip() for file in files]
+        files = [theFile.strip() for theFile in files]
         if 0:
             print "config.readSettingsFiles.  recent files..."
-            for file in files:
-                print file
+            for theFile in files:
+                print theFile
         self.appendToRecentFiles(files)
 #@nonl
 #@-node:ekr.20041201081440:<< update recent files from d >>
@@ -19056,45 +19094,46 @@ canvas.bind("<ButtonPress>",mapWheel,add=1)
 #@nonl
 #@-node:ekr.20050119210541:<< workaround for mouse-wheel problems >>
 #@+node:ekr.20040709081208:<< do scrolling by hand in a separate thread >>
-import threading
-import time
-
-way = 'Down' # global.
+# New in 4.3: replaced global way with scrollWay ivar.
 ev = threading.Event()
 
-def run(ev = ev):
-    global way
+def run(self=self,canvas=canvas,ev=ev):
+
     while 1:
         ev.wait()
-        if way=='Down': canvas.yview("scroll", 1,"units")
-        else:           canvas.yview("scroll",-1,"units")
+        if self.scrollWay =='Down': canvas.yview("scroll", 1,"units")
+        else:                       canvas.yview("scroll",-1,"units")
         time.sleep(.1)
 
 t = threading.Thread(target = run)
 t.setDaemon(True)
 t.start()
+
+def scrollUp(event): scrollUpOrDown(event,'Down')
+def scrollDn(event): scrollUpOrDown(event,'Up')
     
-def exe(event,ev=ev,theWay='Down',canvas=canvas):
-    global way
+def scrollUpOrDown(event,theWay):
     if event.widget!=canvas: return
-    if canvas.find_overlapping(event.x,event.y,event.x,event.y): return
+    if 0: # This seems to interfere with scrolling.
+        if canvas.find_overlapping(event.x,event.y,event.x,event.y): return
     ev.set()
-    way = theWay
+    self.scrollWay = theWay
         
 def off(event,ev=ev,canvas=canvas):
     if event.widget!=canvas: return
     ev.clear()
 
 if 1: # Use shift-click
-    canvas.bind_all('<Shift Button-3>',exe)
-    canvas.bind_all('<Shift Button-1>',lambda event,way='Up': exe(event,theWay=way))
-    canvas.bind_all('<Shift ButtonRelease-1>', off)
-    canvas.bind_all('<Shift ButtonRelease-3>', off)
+    # Shift-button-1 scrolls up, Shift-button-2 scrolls down
+    canvas.bind_all('<Shift Button-3>',scrollDn)
+    canvas.bind_all('<Shift Button-1>',scrollUp)
+    canvas.bind_all('<Shift ButtonRelease-1>',off)
+    canvas.bind_all('<Shift ButtonRelease-3>',off)
 else: # Use plain click.
-    canvas.bind_all( '<Button-3>', exe)
-    canvas.bind_all( '<Button-1>', lambda event,way='Up': exe(event,theWay=way))
-    canvas.bind_all( '<ButtonRelease-1>', off)
-    canvas.bind_all( '<ButtonRelease-3>', off)
+    canvas.bind_all( '<Button-3>',scrollDn)
+    canvas.bind_all( '<Button-1>',scrollUp)
+    canvas.bind_all( '<ButtonRelease-1>',off)
+    canvas.bind_all( '<ButtonRelease-3>',off)
 #@nonl
 #@-node:ekr.20040709081208:<< do scrolling by hand in a separate thread >>
 #@-node:ekr.20041221071131.1:createTkTreeCanvas
@@ -19815,6 +19854,7 @@ self.redrawCount = 0
 self.revertHeadline = None # Previous headline text for abortEditLabel.
 self.wantedWidget = None
 self.wantedCallbackScheduled = False
+self.scrollWay = None
 #@nonl
 #@-node:ekr.20031218072017.1802:<< set the leoTkinterFrame ivars >>
 #@-node:ekr.20031218072017.1801:__init__ (tkFrame)
@@ -20041,45 +20081,46 @@ canvas.bind("<ButtonPress>",mapWheel,add=1)
 #@nonl
 #@-node:ekr.20050119210541:<< workaround for mouse-wheel problems >>
 #@+node:ekr.20040709081208:<< do scrolling by hand in a separate thread >>
-import threading
-import time
-
-way = 'Down' # global.
+# New in 4.3: replaced global way with scrollWay ivar.
 ev = threading.Event()
 
-def run(ev = ev):
-    global way
+def run(self=self,canvas=canvas,ev=ev):
+
     while 1:
         ev.wait()
-        if way=='Down': canvas.yview("scroll", 1,"units")
-        else:           canvas.yview("scroll",-1,"units")
+        if self.scrollWay =='Down': canvas.yview("scroll", 1,"units")
+        else:                       canvas.yview("scroll",-1,"units")
         time.sleep(.1)
 
 t = threading.Thread(target = run)
 t.setDaemon(True)
 t.start()
+
+def scrollUp(event): scrollUpOrDown(event,'Down')
+def scrollDn(event): scrollUpOrDown(event,'Up')
     
-def exe(event,ev=ev,theWay='Down',canvas=canvas):
-    global way
+def scrollUpOrDown(event,theWay):
     if event.widget!=canvas: return
-    if canvas.find_overlapping(event.x,event.y,event.x,event.y): return
+    if 0: # This seems to interfere with scrolling.
+        if canvas.find_overlapping(event.x,event.y,event.x,event.y): return
     ev.set()
-    way = theWay
+    self.scrollWay = theWay
         
 def off(event,ev=ev,canvas=canvas):
     if event.widget!=canvas: return
     ev.clear()
 
 if 1: # Use shift-click
-    canvas.bind_all('<Shift Button-3>',exe)
-    canvas.bind_all('<Shift Button-1>',lambda event,way='Up': exe(event,theWay=way))
-    canvas.bind_all('<Shift ButtonRelease-1>', off)
-    canvas.bind_all('<Shift ButtonRelease-3>', off)
+    # Shift-button-1 scrolls up, Shift-button-2 scrolls down
+    canvas.bind_all('<Shift Button-3>',scrollDn)
+    canvas.bind_all('<Shift Button-1>',scrollUp)
+    canvas.bind_all('<Shift ButtonRelease-1>',off)
+    canvas.bind_all('<Shift ButtonRelease-3>',off)
 else: # Use plain click.
-    canvas.bind_all( '<Button-3>', exe)
-    canvas.bind_all( '<Button-1>', lambda event,way='Up': exe(event,theWay=way))
-    canvas.bind_all( '<ButtonRelease-1>', off)
-    canvas.bind_all( '<ButtonRelease-3>', off)
+    canvas.bind_all( '<Button-3>',scrollDn)
+    canvas.bind_all( '<Button-1>',scrollUp)
+    canvas.bind_all( '<ButtonRelease-1>',off)
+    canvas.bind_all( '<ButtonRelease-3>',off)
 #@nonl
 #@-node:ekr.20040709081208:<< do scrolling by hand in a separate thread >>
 #@-node:ekr.20041221071131.1:createTkTreeCanvas
@@ -20690,48 +20731,6 @@ def getString    (self,setting): return g.app.config.getString   (self.c,setting
 #@nonl
 #@-node:ekr.20041118053731:Getters
 #@+node:ekr.20041118195812:Setters...
-#@+node:ekr.20041117062717.20:setConfigIvars  (Not used: Called only from prefs code)
-# Sets config ivars from c.
-def setConfigIvars (self):
-    
-    c = self.c
-    config = g.app.config
-    
-    g.trace()
-    
-    if c.target_language and g.app.language_delims_dict.get(c.target_language):
-        language = c.target_language
-    else:
-        language = "plain"
-
-    self.setPref("default_tangle_directory",c.tangle_directory)
-    self.setPref("default_target_language",language)
-    self.setPref("output_doc_chunks",str(c.output_doc_flag))
-    self.setPref("page_width",str(c.page_width))
-    self.setPref("run_tangle_done.py",str(c.tangle_batch_flag))
-    self.setPref("run_untangle_done.py",str(c.untangle_batch_flag))
-    self.setPref("tab_width",str(c.tab_width))
-    self.setPref("tangle_outputs_header",str(c.use_header_flag))
-    
-    self.setPref("batch",str(c.batch_flag))
-    self.setPref("ignore_case",str(c.ignore_case_flag))
-    self.setPref("mark_changes",str(c.mark_changes_flag))
-    self.setPref("mark_finds",str(c.mark_finds_flag))
-    self.setPref("pattern_match",str(c.pattern_match_flag))
-    self.setPref("reverse",str(c.reverse_flag))
-    self.setPref("script_change",str(c.script_change_flag))
-    self.setPref("script_search",str(c.script_search_flag))
-    self.setPref("search_body",str(c.search_body_flag))
-    self.setPref("search_headline",str(c.search_headline_flag))
-    self.setPref("selection_only",str(c.selection_only_flag))
-    self.setPref("suboutline_only",str(c.suboutline_only_flag))
-    self.setPref("wrap",str(c.wrap_flag))
-    self.setPref("whole_word",str(c.whole_word_flag))
-    
-    self.setPref("change_string",c.change_text)
-    self.setPref("find_string",c.find_text)
-#@nonl
-#@-node:ekr.20041117062717.20:setConfigIvars  (Not used: Called only from prefs code)
 #@+node:ekr.20041118195812.3:setRecentFiles (configSettings)
 def setRecentFiles (self,files):
     
@@ -20864,10 +20863,10 @@ def set (self,c,setting,kind,val):
         if d: found = True
 
     if not found:
-        hash = c.hash()
+        theHash = c.hash()
         for d in self.localOptionsList:
             hash2 = d.get('_hash')
-            if hash == hash2:
+            if theHash == hash2:
                 found = True ; break
 
     if not found:
@@ -21068,30 +21067,14 @@ It's surprisingly hard to pick a good color. Neither 'white' nor dark colors loo
 #@-node:ekr.20050121094515.1:What I did
 #@+node:ekr.20041225063637.13: ctor
 def __init__ (self,c,replaceBody=True):
+
+    << init ivars >>
     
+    # Do this after defining ivars to keep pychecker happy.
     if not Pmw:
         g.trace("Setting dialog requires Pmw",color='blue')
         return
-    
-    self.alterComments = None # position for which to alter comments.
-    self.alteredCommentsString = None
-    self.c = c
-    self.buttonNames = ('OK', 'Cancel','Apply','Revert')
-    self.colorSettingDict = {} # Contains entries for all changed colors.
-    self.commentWidget = None
-    self.initValueDict = {} # Initial value of settings in present pane.
-    self.fileValueDict = {} # Values of settings written to file.
-    self.filesInfoDict = {} # Info about all settings file in the settings outline.
-        # Keys are positions, values are dicts giving info for a setting file.
-    self.fontRefs = {} # A dict to retain references to fonts.
-    self.modal = False
-    self.old_p = c.currentPosition()
-    self.old_root = c.rootPosition()
-    self.p = None # Used to revert settings.
-    self.replaceBody = replaceBody
-    self.setterLabel = None
-    self.suppressComments = None # position for which to suppress comments.
-    self.title = title = "Settings for %s" % g.shortFileName(c.fileName())
+
     self._settingsPosition = p = self.createSettingsTree()
     self.parser = settingsDialogParserClass(c,p,self)
 
@@ -21118,6 +21101,36 @@ def __init__ (self,c,replaceBody=True):
         self.center()
         if self.modal: d.activate()
 #@nonl
+#@+node:ekr.20050123194330:<< init ivars >>
+self._settingsPosition = None
+self.alterComments = None # position for which to alter comments.
+self.alteredCommentsString = None
+self.c = c
+self.buttonNames = ('OK', 'Cancel','Apply','Revert')
+self.colorSettingDict = {} # Contains entries for all changed colors.
+self.commentWidget = None
+self.commonBackground = None
+self.dialog = None
+self.initValueDict = {} # Initial value of settings in present pane.
+self.fileValueDict = {} # Values of settings written to file.
+self.filesInfoDict = {} # Info about all settings file in the settings outline.
+    # Keys are positions, values are dicts giving info for a setting file.
+self.fontRefs = {} # A dict to retain references to fonts.
+self.modal = False
+self.old_p = c.currentPosition()
+self.old_root = c.rootPosition()
+self.p = None # Used to revert settings.
+self.panes = {}
+self.parser = None
+self.replaceBody = replaceBody
+self.sc = None
+self.setterLabel = None
+self.suppressComments = None # position for which to suppress comments.
+self.title = title = "Settings for %s" % g.shortFileName(c.fileName())
+self.top = None
+self.tree = None
+#@nonl
+#@-node:ekr.20050123194330:<< init ivars >>
 #@+node:ekr.20050121105232:<< set background color for widgets >>
 if 0:
     # Get the color from the background color of the body text widget.
@@ -21247,7 +21260,6 @@ self.paneFrame = paneFrame = Pmw.PanedWidget(interior,
 )
 paneFrame.pack(expand = 1, fill='both')
 
-self.panes = {}
 for name,minsize,size,label,isSetterLabel in (
     ("splitter2",50,300,None,False),
     ("setter",50,300,"",False),
@@ -21998,10 +22010,10 @@ This is important, the settings node found by findSettingsPosition may be a clon
 #@-node:ekr.20050122104754.1:What I did
 #@+node:ekr.20041122162610:@recent_files
 C:\prog\leoCVS\leo\plugins\leoPlugins.leo
-C:\prog\leoCVS\leo\doc\leoDocs.leo
 c:\prog\leoCVS\leo\doc\LeoDocs.leo
-C:\prog\leoCVS\leo\config\leoSettings.leo
 C:\prog\leoCVS\leo\src\LeoPy.leo
+C:\prog\leoCVS\leo\config\leoSettings.leo
+C:\prog\leoCVS\leo\doc\leoDocs.leo
 #@nonl
 #@-node:ekr.20041122162610:@recent_files
 #@+node:ekr.20040305223522:p.setBodyStringOrPane & p.setBodyTextOrPane
@@ -22353,30 +22365,14 @@ def doCommand (self,command,label,event=None):
 #@-node:ekr.20031218072017.2817: doCommand
 #@+node:ekr.20041225063637.13: ctor
 def __init__ (self,c,replaceBody=True):
+
+    << init ivars >>
     
+    # Do this after defining ivars to keep pychecker happy.
     if not Pmw:
         g.trace("Setting dialog requires Pmw",color='blue')
         return
-    
-    self.alterComments = None # position for which to alter comments.
-    self.alteredCommentsString = None
-    self.c = c
-    self.buttonNames = ('OK', 'Cancel','Apply','Revert')
-    self.colorSettingDict = {} # Contains entries for all changed colors.
-    self.commentWidget = None
-    self.initValueDict = {} # Initial value of settings in present pane.
-    self.fileValueDict = {} # Values of settings written to file.
-    self.filesInfoDict = {} # Info about all settings file in the settings outline.
-        # Keys are positions, values are dicts giving info for a setting file.
-    self.fontRefs = {} # A dict to retain references to fonts.
-    self.modal = False
-    self.old_p = c.currentPosition()
-    self.old_root = c.rootPosition()
-    self.p = None # Used to revert settings.
-    self.replaceBody = replaceBody
-    self.setterLabel = None
-    self.suppressComments = None # position for which to suppress comments.
-    self.title = title = "Settings for %s" % g.shortFileName(c.fileName())
+
     self._settingsPosition = p = self.createSettingsTree()
     self.parser = settingsDialogParserClass(c,p,self)
 
@@ -22403,6 +22399,36 @@ def __init__ (self,c,replaceBody=True):
         self.center()
         if self.modal: d.activate()
 #@nonl
+#@+node:ekr.20050123194330:<< init ivars >>
+self._settingsPosition = None
+self.alterComments = None # position for which to alter comments.
+self.alteredCommentsString = None
+self.c = c
+self.buttonNames = ('OK', 'Cancel','Apply','Revert')
+self.colorSettingDict = {} # Contains entries for all changed colors.
+self.commentWidget = None
+self.commonBackground = None
+self.dialog = None
+self.initValueDict = {} # Initial value of settings in present pane.
+self.fileValueDict = {} # Values of settings written to file.
+self.filesInfoDict = {} # Info about all settings file in the settings outline.
+    # Keys are positions, values are dicts giving info for a setting file.
+self.fontRefs = {} # A dict to retain references to fonts.
+self.modal = False
+self.old_p = c.currentPosition()
+self.old_root = c.rootPosition()
+self.p = None # Used to revert settings.
+self.panes = {}
+self.parser = None
+self.replaceBody = replaceBody
+self.sc = None
+self.setterLabel = None
+self.suppressComments = None # position for which to suppress comments.
+self.title = title = "Settings for %s" % g.shortFileName(c.fileName())
+self.top = None
+self.tree = None
+#@nonl
+#@-node:ekr.20050123194330:<< init ivars >>
 #@+node:ekr.20050121105232:<< set background color for widgets >>
 if 0:
     # Get the color from the background color of the body text widget.
@@ -22532,7 +22558,6 @@ self.paneFrame = paneFrame = Pmw.PanedWidget(interior,
 )
 paneFrame.pack(expand = 1, fill='both')
 
-self.panes = {}
 for name,minsize,size,label,isSetterLabel in (
     ("splitter2",50,300,None,False),
     ("setter",50,300,"",False),
@@ -23006,7 +23031,7 @@ To do next:  allow all search settings and commands to be activated from the sta
 #@nonl
 #@-node:ekr.20041025145856.1:What I did
 #@+node:ekr.20041025152343:class underlinedTkButton
-class underlinedTkButton(Tk.Checkbutton):
+class underlinedTkButton:
     
     @others
 #@nonl
@@ -23355,6 +23380,7 @@ def createRootWindow(self):
     """Create a hidden Tk root window."""
 
     if 0: # Use Tix.
+        import Tix
         self.root = root = Tix.Tk()
         << fix problems with menus (XP) >>
     else: # Use Tkinter.
@@ -25568,6 +25594,9 @@ def completeFileName (fileName):
 #@+node:ekr.20041117155521:computeGlobalConfigDir
 def computeGlobalConfigDir():
     
+    # None of these suppresses warning about sys.leo_config_directory
+    # __pychecker__ = '--no-objattrs --no-modulo1 --no-moddefvalue'
+    
     import leoGlobals as g
     
     encoding = startupEncoding()
@@ -25739,11 +25768,11 @@ def reportDirectories(verbose):
     import leoGlobals as g
    
     if verbose:
-        for kind,dir in (
+        for kind,theDir in (
             ("global config",g.app.globalConfigDir),
             ("home",g.app.homeDir),
         ):
-            g.es("%s dir: %s" % (kind,dir),color="blue")
+            g.es("%s dir: %s" % (kind,theDir),color="blue")
 #@nonl
 #@-node:ekr.20041130093254:reportDirectories
 #@-node:ekr.20031218072017.1934:run & allies
@@ -26677,6 +26706,7 @@ self.redrawCount = 0
 self.revertHeadline = None # Previous headline text for abortEditLabel.
 self.wantedWidget = None
 self.wantedCallbackScheduled = False
+self.scrollWay = None
 #@nonl
 #@-node:ekr.20031218072017.1802:<< set the leoTkinterFrame ivars >>
 #@-node:ekr.20031218072017.1801:__init__ (tkFrame)
@@ -26903,45 +26933,46 @@ canvas.bind("<ButtonPress>",mapWheel,add=1)
 #@nonl
 #@-node:ekr.20050119210541:<< workaround for mouse-wheel problems >>
 #@+node:ekr.20040709081208:<< do scrolling by hand in a separate thread >>
-import threading
-import time
-
-way = 'Down' # global.
+# New in 4.3: replaced global way with scrollWay ivar.
 ev = threading.Event()
 
-def run(ev = ev):
-    global way
+def run(self=self,canvas=canvas,ev=ev):
+
     while 1:
         ev.wait()
-        if way=='Down': canvas.yview("scroll", 1,"units")
-        else:           canvas.yview("scroll",-1,"units")
+        if self.scrollWay =='Down': canvas.yview("scroll", 1,"units")
+        else:                       canvas.yview("scroll",-1,"units")
         time.sleep(.1)
 
 t = threading.Thread(target = run)
 t.setDaemon(True)
 t.start()
+
+def scrollUp(event): scrollUpOrDown(event,'Down')
+def scrollDn(event): scrollUpOrDown(event,'Up')
     
-def exe(event,ev=ev,theWay='Down',canvas=canvas):
-    global way
+def scrollUpOrDown(event,theWay):
     if event.widget!=canvas: return
-    if canvas.find_overlapping(event.x,event.y,event.x,event.y): return
+    if 0: # This seems to interfere with scrolling.
+        if canvas.find_overlapping(event.x,event.y,event.x,event.y): return
     ev.set()
-    way = theWay
+    self.scrollWay = theWay
         
 def off(event,ev=ev,canvas=canvas):
     if event.widget!=canvas: return
     ev.clear()
 
 if 1: # Use shift-click
-    canvas.bind_all('<Shift Button-3>',exe)
-    canvas.bind_all('<Shift Button-1>',lambda event,way='Up': exe(event,theWay=way))
-    canvas.bind_all('<Shift ButtonRelease-1>', off)
-    canvas.bind_all('<Shift ButtonRelease-3>', off)
+    # Shift-button-1 scrolls up, Shift-button-2 scrolls down
+    canvas.bind_all('<Shift Button-3>',scrollDn)
+    canvas.bind_all('<Shift Button-1>',scrollUp)
+    canvas.bind_all('<Shift ButtonRelease-1>',off)
+    canvas.bind_all('<Shift ButtonRelease-3>',off)
 else: # Use plain click.
-    canvas.bind_all( '<Button-3>', exe)
-    canvas.bind_all( '<Button-1>', lambda event,way='Up': exe(event,theWay=way))
-    canvas.bind_all( '<ButtonRelease-1>', off)
-    canvas.bind_all( '<ButtonRelease-3>', off)
+    canvas.bind_all( '<Button-3>',scrollDn)
+    canvas.bind_all( '<Button-1>',scrollUp)
+    canvas.bind_all( '<ButtonRelease-1>',off)
+    canvas.bind_all( '<ButtonRelease-3>',off)
 #@nonl
 #@-node:ekr.20040709081208:<< do scrolling by hand in a separate thread >>
 #@-node:ekr.20041221071131.1:createTkTreeCanvas

@@ -1267,7 +1267,7 @@ class leoMenu:
     #@-node:ekr.20031218072017.3809:9 Routines with Tk spellings
     #@+node:ekr.20031218072017.3810:8 Routines with new spellings
     def clearAccel (self,menu,name):
-        self.oops
+        self.oops()
     
     def createMenuBar (self,frame):
         self.oops()

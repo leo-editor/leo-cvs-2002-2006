@@ -21,6 +21,8 @@ import tkFont
 import os
 import string
 import sys
+import threading
+import time
 
 Pmw = g.importExtension("Pmw",pluginName="leoTkinterFrame.py",verbose=False)
 #@nonl
@@ -78,6 +80,7 @@ class leoTkinterFrame (leoFrame.leoFrame):
         self.revertHeadline = None # Previous headline text for abortEditLabel.
         self.wantedWidget = None
         self.wantedCallbackScheduled = False
+        self.scrollWay = None
         #@nonl
         #@-node:ekr.20031218072017.1802:<< set the leoTkinterFrame ivars >>
         #@nl
@@ -307,45 +310,46 @@ class leoTkinterFrame (leoFrame.leoFrame):
         if 1:
             #@        << do scrolling by hand in a separate thread >>
             #@+node:ekr.20040709081208:<< do scrolling by hand in a separate thread >>
-            import threading
-            import time
-            
-            way = 'Down' # global.
+            # New in 4.3: replaced global way with scrollWay ivar.
             ev = threading.Event()
             
-            def run(ev = ev):
-                global way
+            def run(self=self,canvas=canvas,ev=ev):
+            
                 while 1:
                     ev.wait()
-                    if way=='Down': canvas.yview("scroll", 1,"units")
-                    else:           canvas.yview("scroll",-1,"units")
+                    if self.scrollWay =='Down': canvas.yview("scroll", 1,"units")
+                    else:                       canvas.yview("scroll",-1,"units")
                     time.sleep(.1)
             
             t = threading.Thread(target = run)
             t.setDaemon(True)
             t.start()
+            
+            def scrollUp(event): scrollUpOrDown(event,'Down')
+            def scrollDn(event): scrollUpOrDown(event,'Up')
                 
-            def exe(event,ev=ev,theWay='Down',canvas=canvas):
-                global way
+            def scrollUpOrDown(event,theWay):
                 if event.widget!=canvas: return
-                if canvas.find_overlapping(event.x,event.y,event.x,event.y): return
+                if 0: # This seems to interfere with scrolling.
+                    if canvas.find_overlapping(event.x,event.y,event.x,event.y): return
                 ev.set()
-                way = theWay
+                self.scrollWay = theWay
                     
             def off(event,ev=ev,canvas=canvas):
                 if event.widget!=canvas: return
                 ev.clear()
             
             if 1: # Use shift-click
-                canvas.bind_all('<Shift Button-3>',exe)
-                canvas.bind_all('<Shift Button-1>',lambda event,way='Up': exe(event,theWay=way))
-                canvas.bind_all('<Shift ButtonRelease-1>', off)
-                canvas.bind_all('<Shift ButtonRelease-3>', off)
+                # Shift-button-1 scrolls up, Shift-button-2 scrolls down
+                canvas.bind_all('<Shift Button-3>',scrollDn)
+                canvas.bind_all('<Shift Button-1>',scrollUp)
+                canvas.bind_all('<Shift ButtonRelease-1>',off)
+                canvas.bind_all('<Shift ButtonRelease-3>',off)
             else: # Use plain click.
-                canvas.bind_all( '<Button-3>', exe)
-                canvas.bind_all( '<Button-1>', lambda event,way='Up': exe(event,theWay=way))
-                canvas.bind_all( '<ButtonRelease-1>', off)
-                canvas.bind_all( '<ButtonRelease-3>', off)
+                canvas.bind_all( '<Button-3>',scrollDn)
+                canvas.bind_all( '<Button-1>',scrollUp)
+                canvas.bind_all( '<ButtonRelease-1>',off)
+                canvas.bind_all( '<ButtonRelease-3>',off)
             #@nonl
             #@-node:ekr.20040709081208:<< do scrolling by hand in a separate thread >>
             #@nl

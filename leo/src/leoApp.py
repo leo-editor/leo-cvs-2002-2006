@@ -449,7 +449,7 @@ class LeoApp:
         #@+node:ekr.20031218072017.1982:<< attempt to create leoID.txt >>
         for theDir in (homeDir,globalConfigDir,loadDir):
             try:
-                # Look in configDir first.
+                # Look in globalConfigDir first.
                 fn = g.os_path_join(theDir, tag)
                 f = open(fn,'w')
                 if f:
@@ -461,7 +461,7 @@ class LeoApp:
         
         dirs = []
         
-        for theDir in (configDir,homeDir,loadDir):
+        for theDir in (globalConfigDir,homeDir,loadDir):
             if theDir not in dirs:
                 dirs.append(theDir)
         

@@ -124,48 +124,48 @@ class atFile:
     #@+node:ekr.20041005105605.8:atFile.__init__ & initIvars
     def __init__(self,c):
         
-        at = self
+        # Note: Pychecker complains if about module attributes if we assign at.x instead of self.x.
         
-        at.c = c
-        at.debug = False
-        at.fileCommands = c.fileCommands
-        at.testing = True # True: enable additional checks.
+        self.c = c
+        self.debug = False
+        self.fileCommands = c.fileCommands
+        self.testing = True # True: enable additional checks.
     
         #@    << define the dispatch dictionary used by scanText4 >>
         #@+node:ekr.20041005105605.9:<< define the dispatch dictionary used by scanText4 >>
-        at.dispatch_dict = {
+        self.dispatch_dict = {
             # Plain line.
-            at.noSentinel: at.readNormalLine,
+            self.noSentinel: self.readNormalLine,
             # Starting sentinels...
-            at.startAll:    at.readStartAll,
-            at.startAt:     at.readStartAt,
-            at.startDoc:    at.readStartDoc,
-            at.startLeo:    at.readStartLeo,
-            at.startMiddle: at.readStartMiddle,
-            at.startNode:   at.readStartNode,
-            at.startOthers: at.readStartOthers,
+            self.startAll:    self.readStartAll,
+            self.startAt:     self.readStartAt,
+            self.startDoc:    self.readStartDoc,
+            self.startLeo:    self.readStartLeo,
+            self.startMiddle: self.readStartMiddle,
+            self.startNode:   self.readStartNode,
+            self.startOthers: self.readStartOthers,
             # Ending sentinels...
-            at.endAll:    at.readEndAll,
-            at.endAt:     at.readEndAt,
-            at.endDoc:    at.readEndDoc,
-            at.endLeo:    at.readEndLeo,
-            at.endMiddle: at.readEndMiddle,
-            at.endNode:   at.readEndNode,
-            at.endOthers: at.readEndOthers,
+            self.endAll:    self.readEndAll,
+            self.endAt:     self.readEndAt,
+            self.endDoc:    self.readEndDoc,
+            self.endLeo:    self.readEndLeo,
+            self.endMiddle: self.readEndMiddle,
+            self.endNode:   self.readEndNode,
+            self.endOthers: self.readEndOthers,
             # Non-paired sentinels.
-            at.startAfterRef:  at.readAfterRef,
-            at.startClone:     at.readClone,
-            at.startComment:   at.readComment,
-            at.startDelims:    at.readDelims,
-            at.startDirective: at.readDirective,
-            at.startNl:        at.readNl,
-            at.startNonl:      at.readNonl,
-            at.startRef:       at.readRef,
-            at.startVerbatim:  at.readVerbatim,
+            self.startAfterRef:  self.readAfterRef,
+            self.startClone:     self.readClone,
+            self.startComment:   self.readComment,
+            self.startDelims:    self.readDelims,
+            self.startDirective: self.readDirective,
+            self.startNl:        self.readNl,
+            self.startNonl:      self.readNonl,
+            self.startRef:       self.readRef,
+            self.startVerbatim:  self.readVerbatim,
             # Ignored 3.x sentinels
-            at.endBody:               at.ignoreOldSentinel,
-            at.startBody:             at.ignoreOldSentinel,
-            at.startVerbatimAfterRef: at.ignoreOldSentinel }
+            self.endBody:               self.ignoreOldSentinel,
+            self.startBody:             self.ignoreOldSentinel,
+            self.startVerbatimAfterRef: self.ignoreOldSentinel }
         #@nonl
         #@-node:ekr.20041005105605.9:<< define the dispatch dictionary used by scanText4 >>
         #@nl
@@ -178,19 +178,21 @@ class atFile:
         
         The defaults set here may be changed later."""
         
-        at = self ; c = at.c
+        # Note: Pychecker complains if about module attributes if we assign at.x instead of self.x.
+        
+        c = self.c
         
         if self.testing:
             # Save "permanent" ivars
-            fileCommands = at.fileCommands
-            dispatch_dict = at.dispatch_dict
+            fileCommands = self.fileCommands
+            dispatch_dict = self.dispatch_dict
             # Clear all ivars.
             g.clearAllIvars(self)
             # Restore permanent ivars
-            at.testing = True
-            at.c = c
-            at.fileCommands = fileCommands
-            at.dispatch_dict = dispatch_dict
+            self.testing = True
+            self.c = c
+            self.fileCommands = fileCommands
+            self.dispatch_dict = dispatch_dict
     
         #@    << set defaults for arguments and options >>
         #@+node:ekr.20041005105605.11:<< set defaults for arguments and options >>
@@ -2740,7 +2742,7 @@ class atFile:
                 at.writeError("path does not exist: " + path)
                 return
         except:
-            at.exception("exception creating path:" + fn)
+            at.exception("exception creating path:" + path)
             return
     
         if g.os_path_exists(at.targetFileName):
@@ -4351,6 +4353,8 @@ class atFile:
     #@nonl
     #@+node:ekr.20050107085710:test_atFile_rename
     def test_atFile_rename (self):
+        
+        __pychecker__ = '--no-reimport' # Reimports needed in test methods.
     
         import leoGlobals as g
         import os
@@ -4397,6 +4401,8 @@ class atFile:
     #@nonl
     #@+node:ekr.20050107090156:test_atFile_remove
     def test_atFile_remove(self):
+        
+        __pychecker__ = '--no-reimport' # Reimports needed in test methods.
         
         import leoGlobals as g
         import os

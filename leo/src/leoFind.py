@@ -96,15 +96,39 @@ class leoFind:
         # (hurray!)
         # - These ivars are inited (in the subclass by init) when this class 
         # is created.
-        # - These ivars are updated (in the subclass by by update_ivars) just 
+        # - These ivars are updated (in the subclass by update_ivars) just 
         # before doing any find.
         #@-at
         #@@c
+        
+        #@<< do dummy initialization to keep Pychecker happy >>
+        #@+node:ekr.20050123164539:<< do dummy initialization to keep Pychecker happy >>
+        self.batch = None
+        self.ignore_case = None
+        self.node_only = None
+        self.pattern_match = None
+        self.search_headline = None
+        self.search_body = None
+        self.suboutline_only = None
+        self.mark_changes = None
+        self.mark_finds = None
+        self.reverse = None
+        self.script_search = None
+        self.script_change = None
+        self.selection_only = None
+        self.wrap = None
+        self.whole_word = None
+        #@nonl
+        #@-node:ekr.20050123164539:<< do dummy initialization to keep Pychecker happy >>
+        #@nl
+        
         self.intKeys = [
-            "batch", "wrap", "whole_word", "ignore_case", "node_only",
+            "batch", "ignore_case", "node_only",
             "pattern_match", "search_headline", "search_body",
             "suboutline_only", "mark_changes", "mark_finds", "reverse",
-            "script_search","script_change","selection_only"]
+            "script_search","script_change","selection_only",
+            "wrap", "whole_word",
+        ]
         
         self.newStringKeys = ["radio-find-type", "radio-search-scope"]
         
@@ -1010,6 +1034,10 @@ class leoFind:
         print ("leoFind oops:",
             g.callerName(2),
             "should be overridden in subclass")
+            
+    def update_ivars(self):
+        self.oops()
+    #@nonl
     #@-node:ekr.20031218072017.3092:Must be overridden in subclasses
     #@-others
 #@-node:ekr.20031218072017.3052:@thin leoFind.py

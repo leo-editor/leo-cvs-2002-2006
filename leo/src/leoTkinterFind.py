@@ -12,7 +12,7 @@ import Tkinter as Tk
 
 #@+others
 #@+node:ekr.20041025152343:class underlinedTkButton
-class underlinedTkButton(Tk.Checkbutton):
+class underlinedTkButton:
     
     #@    @+others
     #@+node:ekr.20041025152712:__init__

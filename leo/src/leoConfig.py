@@ -6,14 +6,12 @@
 
 #@<< imports >>
 #@+node:ekr.20041227063801:<< imports >>
-
 import leoGlobals as g
 import leoGui
 
 if 1: # Used by settings controller.
     import leoNodes
     import leoTkinterColorPanels
-    import leoTkinterFrame
     import leoTkinterTree
 
     Pmw = g.importExtension("Pmw",pluginName="leoConfig.py",verbose=False)
@@ -22,9 +20,6 @@ if 1: # Used by settings controller.
     import tkColorChooser
     import tkFont
 
-import exceptions
-import os
-import string
 import sys
 #@nonl
 #@-node:ekr.20041227063801:<< imports >>
@@ -636,6 +631,8 @@ class baseConfig:
         self.configsExist = False # True when we successfully open a setting file.
         self.defaultFont = None # Set in gui.getDefaultConfigFont.
         self.defaultFontFamily = None # Set in gui.getDefaultConfigFont.
+        self.globalConfigFile = None # Set in initSettingsFiles
+        self.homeFile = None # Set in initSettingsFiles
         self.inited = False
     
         self.initDicts()
@@ -684,11 +681,11 @@ class baseConfig:
         ivar = bunch.ivar
     
         if ivar:
-            # g.trace(ivar,encodingName,encoding)
+            # g.trace(ivar,encoding)
             setattr(self,ivar,encoding)
     
         if encoding and not g.isValidEncoding(encoding):
-            g.es("bad %s: %s" % (encodingName,encoding))
+            g.es("bad %s: %s" % (ivar,encoding))
     #@nonl
     #@-node:ekr.20041117065611.1:initEncoding
     #@+node:ekr.20041117065611:initIvar
@@ -722,22 +719,22 @@ class baseConfig:
     
         dirs = [] # Directories that have already been searched.
         
-        for ivar,dir in (
+        for ivar,theDir in (
             ("globalConfigFile",g.app.globalConfigDir),
             ("homeFile",g.app.homeDir),
         ):
     
-            if dir not in dirs:
-                dirs.append(dir)
-                path = g.os_path_join(dir,"leoSettings.leo")
+            if theDir not in dirs:
+                dirs.append(theDir)
+                path = g.os_path_join(theDir,"leoSettings.leo")
                 if g.os_path_exists(path):
                     setattr(self,ivar,path)
                 else:
                     setattr(self,ivar,None)
                  
         if 0:   
-            g.trace("globalConfigFile",self.globalConfigFile)
-            g.trace("homeFile",self.homeFile)
+            g.trace("globalConfigFile",g.app.globalConfigDir)
+            g.trace("homeFile",g.app.homeDir)
     #@nonl
     #@-node:ekr.20041117083857:initSettingsFiles
     #@-node:ekr.20041117083202:Birth...
@@ -917,21 +914,16 @@ class baseConfig:
             return None
     #@nonl
     #@-node:ekr.20041117081513:getInt
-    #@+node:ekr.20041117093009.2:getLanguage FINISH
+    #@+node:ekr.20041117093009.2:getLanguage
     def getLanguage (self,c,setting):
         
         """Return the setting whose value should be a language known to Leo."""
         
         language = self.getString(c,setting)
         
-        return language ###
-    
-        if language in xxx:
-            return language
-        else:
-            return None
+        return language
     #@nonl
-    #@-node:ekr.20041117093009.2:getLanguage FINISH
+    #@-node:ekr.20041117093009.2:getLanguage
     #@+node:ekr.20041122070752:getRatio
     def getRatio (self,c,setting):
         
@@ -1026,10 +1018,10 @@ class baseConfig:
             if d: found = True
     
         if not found:
-            hash = c.hash()
+            theHash = c.hash()
             for d in self.localOptionsList:
                 hash2 = d.get('_hash')
-                if hash == hash2:
+                if theHash == hash2:
                     found = True ; break
     
         if not found:
@@ -1080,11 +1072,11 @@ class baseConfig:
     #@+node:ekr.20041201080436:config.appendToRecentFiles
     def appendToRecentFiles (self,files):
         
-        for file in files:
-            if file in self.recentFiles:
-                self.recentFiles.remove(file)
-            # g.trace(file)
-            self.recentFiles.append(file)
+        for theFile in files:
+            if theFile in self.recentFiles:
+                self.recentFiles.remove(theFile)
+            # g.trace(theFile)
+            self.recentFiles.append(theFile)
     #@nonl
     #@-node:ekr.20041201080436:config.appendToRecentFiles
     #@-node:ekr.20041118084146:Setters
@@ -1135,11 +1127,11 @@ class baseConfig:
                     d = self.readSettings(c)
                     # g.trace(c)
                     if d:
-                        hash = c.hash()
-                        d['_hash'] = hash
+                        theHash = c.hash()
+                        d['_hash'] = theHash
                         # g.trace('*****',hash)
                         if setOptionsFlag:
-                            self.localOptionsDict[hash] = d
+                            self.localOptionsDict[theHash] = d
                             #@                        << update recent files from d >>
                             #@+node:ekr.20041201081440:<< update recent files from d >>
                             for key in d.keys():
@@ -1147,11 +1139,11 @@ class baseConfig:
                                     # Entries were created by parserBaseClass.set.
                                     bunch = d.get(key)
                                     files = bunch.val
-                                    files = [file.strip() for file in files]
+                                    files = [theFile.strip() for theFile in files]
                                     if 0:
                                         print "config.readSettingsFiles.  recent files..."
-                                        for file in files:
-                                            print file
+                                        for theFile in files:
+                                            print theFile
                                     self.appendToRecentFiles(files)
                             #@nonl
                             #@-node:ekr.20041201081440:<< update recent files from d >>
@@ -1200,17 +1192,18 @@ class settingsController:
     #@    @+others
     #@+node:ekr.20041225063637.13: ctor
     def __init__ (self,c,replaceBody=True):
-        
-        if not Pmw:
-            g.trace("Setting dialog requires Pmw",color='blue')
-            return
-        
+    
+        #@    << init ivars >>
+        #@+node:ekr.20050123194330:<< init ivars >>
+        self._settingsPosition = None
         self.alterComments = None # position for which to alter comments.
         self.alteredCommentsString = None
         self.c = c
         self.buttonNames = ('OK', 'Cancel','Apply','Revert')
         self.colorSettingDict = {} # Contains entries for all changed colors.
         self.commentWidget = None
+        self.commonBackground = None
+        self.dialog = None
         self.initValueDict = {} # Initial value of settings in present pane.
         self.fileValueDict = {} # Values of settings written to file.
         self.filesInfoDict = {} # Info about all settings file in the settings outline.
@@ -1220,10 +1213,24 @@ class settingsController:
         self.old_p = c.currentPosition()
         self.old_root = c.rootPosition()
         self.p = None # Used to revert settings.
+        self.panes = {}
+        self.parser = None
         self.replaceBody = replaceBody
+        self.sc = None
         self.setterLabel = None
         self.suppressComments = None # position for which to suppress comments.
         self.title = title = "Settings for %s" % g.shortFileName(c.fileName())
+        self.top = None
+        self.tree = None
+        #@nonl
+        #@-node:ekr.20050123194330:<< init ivars >>
+        #@nl
+        
+        # Do this after defining ivars to keep pychecker happy.
+        if not Pmw:
+            g.trace("Setting dialog requires Pmw",color='blue')
+            return
+    
         self._settingsPosition = p = self.createSettingsTree()
         self.parser = settingsDialogParserClass(c,p,self)
     
@@ -1383,7 +1390,6 @@ class settingsController:
             )
             paneFrame.pack(expand = 1, fill='both')
             
-            self.panes = {}
             for name,minsize,size,label,isSetterLabel in (
                 ("splitter2",50,300,None,False),
                 ("setter",50,300,"",False),
@@ -1527,7 +1533,7 @@ class settingsController:
             if path:
                 if otherFileFlag: c2 = config.openSettingsFile(path)
                 else: c2 = c
-                root2 = config.settingsRoot(c2)
+                root2 = g.app.config.settingsRoot(c2)
             else:
                 root2 = None
             if root2 or createEmptyNodes:
@@ -2743,6 +2749,8 @@ class settingsDialogParserClass (parserBaseClass):
     #@+node:ekr.20041225063637.97:ctor
     def __init__ (self,c,p,dialogController):
         
+        # There is no need to call the base class ctor.
+        
         self.c = c
         self.root = p.copy()
         self.widgets = [] # A list of widgets to create in the setter pane.
@@ -2953,7 +2961,7 @@ class settingsTree (leoTkinterTree.leoTkinterTree):
         if data:
             data = data[0] # A list of one element.
             # g.trace(len(data),data)
-            p2,t,id = data
+            p2,t,theId = data
             return t
         else:
             return None

@@ -164,10 +164,6 @@ class leoTkinterTree (leoFrame.leoTree):
     # - Fixed blunder 1: Fixed a number of bugs in the dragging code.
     #     - I had never looked at this code!
     #     - Eliminating false drags greatly simplifies matters.
-    #     - One of the blunders was the confusion between self.dragging and 
-    # self._dragging.
-    #         - self.setDragging sets self._dragging.
-    #         - self._dragging is TOTALLY USELESS!!
     # 
     # - Fixed blunder 2: Added the following to eventToPosition:
     #         x = canvas.canvasx(x)
