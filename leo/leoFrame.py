@@ -583,7 +583,7 @@ class LeoFrame:
 		markGotoMenu.add_command(label="Go To Next Marked",
 			accelerator="Alt+M",command=self.OnGoToNextMarked)
 		markGotoMenu.add_command(label="Go To Next Changed",
-			accelerator="Alt+C",command=self.OnGoToNextChanged)
+			accelerator="Alt+D",command=self.OnGoToNextChanged)
 		#@-body
 		#@-node:3::<< create mark/goto submenu >>
 		#@-body
