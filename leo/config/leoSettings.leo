@@ -1025,10 +1025,12 @@ Warning: the number of pixels per inch varies...</t>
 <t tx="ekr.20041217184352.2">LightYellow1
 
 #f2fdff</t>
-<t tx="ekr.20050126083026">word granularity: start a new undo unit when typing starts a new word.
+<t tx="ekr.20050126083026">node granularity: start a new undo unit when typing moves to a new node.
 line granularity: start a new undo unit when typing moves to new line.
-node granularity: start a new undo unit when typing moves to a new node.
+word granularity: start a new undo unit when typing starts a new word.
 char granularity: start a new undo unit for each character typed.
+
+'line' granularity is the default used if no valid setting is specified.
 
 Leo used char granularity for all version prior to 4.3. char granularity is not
 recommended; it is clumsy and wasteful of computer memory.</t>
