@@ -1078,6 +1078,44 @@ ftp://ftp.scriptics.com/pub/tcl/misc/html_library-0.3.tar.gz
 or just google for htmllib.tcl
 #@-node:EKR.20040512082621.1:htmllib.tcl
 #@-node:EKR.20040512082621:HTML widgets
+#@+node:ekr.20040226085005:Java notes
+@nocolor
+http://sourceforge.net/forum/message.php?msg_id=2442609
+By: nobody
+
+>>Anyway, I can import java, javax, javax.swing. And I just created my first
+JTree.
+
+good man.  You will probably be subclassing JApplet.  You subclass a Java class
+like this:
+
+class EdwardsApplet(JApplet):
+   pass
+
+Id recommend getting the SDK javadoc on your PC or have a good link to the SDK
+javadoc.  Read the JApplet doc in the Swing package.  The thing to keep in mind
+is that you will be adding things to the JApplet's content pane, which will
+be using a Layout Manager.  I believe the default for it is the BorderLayout.
+This means after you get a reference to the ContentPane, you should be able
+to add your components with:
+
+cp = getContentPane()
+cp.add( JTree() , BorderLayout.EAST )
+
+Ill have to look at how Jython should package applets but you will be using,
+I believe, a program called appletviewer that comes with the JDK to view your
+applet.  Remember that Jython is a couple of versions behind CPython, so stick
+to only features available in 2.1.  As is, you will be calling things like you
+did in Python.  The Jython home page might have tips on building an applet.
+
+What would be cool is if Leo could be totally packaged as a Jython applet, then
+a demoer could test a pretty full fledged Leo throught there browser. :)
+
+______________________________________________________________________
+You are receiving this email because you elected to monitor this forum.
+To stop monitoring this forum, login to SourceForge.net and visit: 
+https://sourceforge.net/forum/unmonitor.php?forum_id=10226
+#@-node:ekr.20040226085005:Java notes
 #@+node:ekr.20040125121407:Leo & Emacs
 @nocolor
 #@nonl

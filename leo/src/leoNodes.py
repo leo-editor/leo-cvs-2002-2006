@@ -247,7 +247,7 @@ class baseTnode (object):
 	
 	def __init__ (self,bodyString=None,headString=None):
 	
-		self.cloneIndex = 0 # or Pre-3.12 files.  Zero for @file nodes
+		self.cloneIndex = 0 # For Pre-3.12 files.  Zero for @file nodes
 		self.fileIndex = None # The immutable file index for this tnode.
 		self.insertSpot = None # Location of previous insert point.
 		self.scrollBarSpot = None # Previous value of scrollbar position.
