@@ -14,7 +14,7 @@ Written by Paul Paterson and 'e'.
 #@@language python
 #@@tabwidth -4
 
-visibleInitially = True # True: open spell dialog initially.
+visibleInitially = False # True: open spell dialog initially.
 
 # Specify the path to the top-level Aspell directory.
 # This directory should contain aspell.pyd.

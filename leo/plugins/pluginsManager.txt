@@ -119,7 +119,11 @@
     # mod_tempfname.py
 #@nonl
 #@-node:ekr.20040722140105:Files
-#@+node:ekr.20040722135618:Menus
+#@+node:ekr.20040722135618:Menus & translations
+#T ranslate a few menu items into Simplified Chinese
+# 本插件将部分Leo菜单翻译成简体中文
+    # chinese_menu.py
+
 # Traduit les menus en Français.
     # french_fm.py
 
@@ -129,7 +133,7 @@
 # Creates a scripts menu.
     # scripts_menu.py
 #@nonl
-#@-node:ekr.20040722135618:Menus
+#@-node:ekr.20040722135618:Menus & translations
 #@+node:ekr.20040722140829:New kinds of nodes
 # The predecessor to rst2.py
     # rst.py
@@ -140,7 +144,10 @@
     # ** Will use SilverCity syntax styline if present: http://silvercity.sourceforge.net/
     # See also, rst3.py
     rst2.py
-#@nonl
+    
+# Lauches (starts) a file with the name of the headline on double-clicking it.
+    # This does not work on Linux because os.startfile does not exist.
+    # startfile.py
 #@-node:ekr.20040722140829:New kinds of nodes
 #@+node:ekr.20040722121404.1:Other plugins
 # Adds #line directives in perl and perlpod programs.
@@ -167,7 +174,7 @@
     
 # Newer, faster.  Requires aspell.pyd configured for Python and aspell.
 # Present version of aspell.py works only with Python 2.3.
-    # spellpyx.py
+    spellpyx.py
 #@nonl
 #@-node:ekr.20040810065413:Spell checking
 #@-others

@@ -6,6 +6,7 @@ AttributeError
 Autosaves
 Avec
 BadLeoFile
+Bolden
 Borland
 CDATA
 COMMENT1
@@ -30,6 +31,7 @@ EXCLUDE_MATCH
 Esc
 FAQ_
 FilterHoist
+FrameMaker
 Fredrik
 FrontPage
 FunctionType
@@ -47,6 +49,7 @@ Init
 JEdit
 Javadoc
 Javascript
+Jtobler
 Jython
 LPT1
 LaTex
@@ -63,8 +66,13 @@ Lundh
 M2C
 MARK_PREVIOUS
 MacOS
+MacOSXTk8
+MaxOS
+Merenda
+Metadata
 ModuleType
 MouseWheel
+Mulvany
 NannyNag
 NewHeadline
 OLDconvert
@@ -83,10 +91,12 @@ Online
 Ouvre
 OverflowError
 PCDATA
+PDF
 PIL
 PRN
 PY_COMPILED
 PY_SOURCE
+PageMaker
 Prefs
 Prepass
 Pychecker
@@ -117,6 +127,7 @@ TextTestRunner
 Textpad
 Tk
 Tkinter
+Tobler
 TokenError
 Toplevel
 TreePad
@@ -128,6 +139,7 @@ Unmark
 ValueError
 WXUNUSED
 Word97
+WordPerfert
 XAlways
 XP
 XPrompt
@@ -295,8 +307,10 @@ boundp
 boxclick1
 boxclick2
 br
+bruceb
 btags
 bytecode
+bz2
 c2py
 c_language
 callerName
@@ -331,6 +345,7 @@ childIndex
 child_index
 children_iter
 childv
+chmod
 classList
 class_var
 clearAllVisited
@@ -386,6 +401,7 @@ cr
 cr1
 cr2
 createFrame
+createLeoDist
 createMenuEntries
 createNewMenu
 createNthChild
@@ -443,6 +459,7 @@ directParents
 directiveKind
 dired
 disposableTokens
+distutils
 doAtKeyword
 doCommand
 doDelete
@@ -543,11 +560,13 @@ firstLevel
 firstOpen
 firstPart
 flattenOutline
+fmerenda
 fn
 focus_set
 font_size
 forceShutdown
 foreach
+forum_id
 forwards
 freebsd4
 freebsd5
@@ -767,7 +786,9 @@ leoCompare
 leoComparePanel
 leoConfig
 leoDialog
+leoDiary
 leoDist
+leoDistRef
 leoFAQ
 leoFileCommands
 leoFindScript
@@ -784,6 +805,7 @@ leoLeaps
 leoMenu
 leoNode
 leoNodes
+leoNotes
 leoOpen
 leoPlugins
 leoPrefs
@@ -803,6 +825,7 @@ leo_TOC
 leo_file
 leo_header
 leopath
+leosetup
 level1
 levelSpaces
 lf
@@ -850,6 +873,8 @@ mUndoN
 mUndoParent
 mUndoVnode
 mVisible
+macosx
+mailarchive
 mailto
 mainloop
 makeOutlineSuite
@@ -989,6 +1014,7 @@ outlineTests
 outlineToCweb
 outlineToNoweb
 outliner
+outliners
 outputList
 outputPath
 output_newline
@@ -1037,6 +1063,7 @@ positions2
 postSetup
 pprint
 pre
+preSetup
 prefsPanel
 prepended
 preprocesses
@@ -1056,8 +1083,10 @@ process_tokens
 prog
 progn
 programmatically
+prolog
 prolog_string
 proven
+ps
 pstats
 putDirective
 putDocPart
@@ -1065,6 +1094,9 @@ putOperator
 putTnodes
 putVnode
 py
+pyc
+pyd
+pypi
 python22
 python_keywords
 python_language
@@ -1095,6 +1127,7 @@ recentfiles2
 redoBletch
 redraw_flag
 refLinesCount
+refactor
 reformatParagraph
 regex
 registerHandler
@@ -1148,7 +1181,9 @@ saveFileDialog
 saveListOfNodes
 saveNode
 saveTree
+sbeards
 sbm
+sbook
 sbooks
 sbyte
 scanDirectives
@@ -1229,6 +1264,7 @@ skip_parens
 skip_string
 skip_to_char
 skip_ws
+slashdot
 sn
 someScan
 some_proc
@@ -1273,6 +1309,7 @@ subcommanders
 subdictionary
 subheadlines
 submenu
+submit_form
 subnodes
 suboutline
 suboutlines
@@ -1289,6 +1326,7 @@ tabwidth
 tangleCommands
 tanglePass1
 tangleTree
+tangle_done
 target_language
 targetdir
 targetfilename
@@ -1323,6 +1361,7 @@ theType
 thinFile
 threadBack
 threadNext
+thread_id
 time1
 time2
 timeit
@@ -1362,6 +1401,7 @@ typeList
 typeName
 typeof
 typesDict
+uidaho
 uint
 ulong
 un
@@ -1374,6 +1414,7 @@ unhexlify
 unibyte
 unicode
 unignored
+uninstall
 unique_tnodes_iter
 unique_vnodes_iter
 unitTestDict
@@ -1427,6 +1468,7 @@ vtag
 walkback
 wasChanged
 wb
+weblogs
 webpages
 whatsnew
 whilest
