@@ -2048,6 +2048,7 @@ class LeoFrame:
 		c.atFileCommands.using_gnx = true # Flag to add ".txt" to file name.
 		c.atFileCommands.read(v)
 		c.atFileCommands.using_gnx = false
+		c.redraw()
 		es("finished")
 	
 	#@-body

@@ -52,8 +52,9 @@ class atFile:
 	endLeo			 = 25 # @-leo
 	endNode			 = 26 # @-node (3.0)
 	endOthers		  = 27 # @-others
-	endT         = 28 # @-t (4.0)
-	endV         = 29 # @-v (4.0)
+	endRef       = 28 # @-ref (4.0)
+	endT         = 29 # @-t (4.0)
+	endV         = 30 # @-v (4.0)
 	
 	startAfterref  = 40 # @+afterref (4.0)
 	startAt			   = 41 # @+at
@@ -62,17 +63,16 @@ class atFile:
 	startLeo		     = 44 # @+leo
 	startNode		    = 45 # @+node (3.0)
 	startOthers		  = 46 # @+others
-	startT         = 47 # @+t (4.0)
-	startV         = 48 # @+v (4.0)
+	startRef       = 47 # @+ref (4.0)
+	startT         = 48 # @+t (4.0)
+	startV         = 49 # @+v (4.0)
 	
 	startComment   = 60 # @comment
 	startDelims		  = 61 # @delims
 	startDirective	= 62 # @@
-	startRef		     = 63 # @< < ... > >
+	startOldRef		  = 63 # @< < ... > > (3.0)
 	startVerbatim	 = 64 # @verbatim
-	startVerbatimAfterRef = 65 # @verbatimAfterRef
-	
-	
+	startVerbatimAfterRef = 65 # @verbatimAfterRef (3.0)
 	#@-body
 	#@-node:1::<< atFile constants >>
 
@@ -156,15 +156,17 @@ class atFile:
 		self.raw = false # true: in @raw mode
 		self.sentinels = true # true: output sentinels while expanding refs.
 		
-		# Enables tracing.
+		# Enables tracing (debugging only).
 		self.trace = false
 		
 		# The encoding used to convert from unicode to a byte stream.
 		self.encoding = app().config.default_derived_file_encoding
 		
-		# New in 4.0...
+		# New in 4.x...
+		# Note: app().use_gnx enables/disables 4.x code.
 		self.using_gnx = false # true: present derived file uses gnxs.
 		self.root_seen = false # true: root vnode has been handled in this file.
+		
 		#@-body
 		#@-node:1::<< init atFile ivars >>
 
@@ -267,7 +269,1198 @@ class atFile:
 	#@-body
 	#@-node:3::class nodeIndices
 	#@+node:4::Reading
-	#@+node:1::Top level
+	#@+node:1::completeFirstDirectives (Dave Hein)
+	#@+body
+	# 14-SEP-2002 DTHEIN: added for use by atFile.read()
+	
+	# this function scans the lines in the list 'out' for @first directives
+	# and appends the corresponding line from 'firstLines' to each @first 
+	# directive found.  NOTE: the @first directives must be the very first
+	# lines in 'out'.
+	def completeFirstDirectives(self,out,firstLines):
+	
+		tag = "@first"
+		foundAtFirstYet = 0
+		outRange = range(len(out))
+		j = 0
+		for k in outRange:
+			# skip leading whitespace lines
+			if (not foundAtFirstYet) and (len(out[k].strip()) == 0): continue
+			# quit if something other than @first directive
+			i = 0
+			if not match(out[k],i,tag): break;
+			foundAtFirstYet = 1
+			# quit if no leading lines to apply
+			if j >= len(firstLines): break
+			# make the new @first directive
+			#18-SEP-2002 DTHEIN: remove trailing newlines because they are inserted later
+			# 21-SEP-2002 DTHEIN: no trailing whitespace on empty @first directive
+			leadingLine = " " + firstLines[j]
+			out[k] = tag + leadingLine.rstrip() ; j += 1
+	
+	#@-body
+	#@-node:1::completeFirstDirectives (Dave Hein)
+	#@+node:2::completeLastDirectives (Dave Hein)
+	#@+body
+	# 14-SEP-2002 DTHEIN: added for use by atFile.read()
+	
+	# this function scans the lines in the list 'out' for @last directives
+	# and appends the corresponding line from 'lastLines' to each @last 
+	# directive found.  NOTE: the @first directives must be the very last
+	# lines in 'out'.
+	def completeLastDirectives(self,out,lastLines):
+	
+		tag = "@last"
+		foundAtLastYet = 0
+		outRange = range(-1,-len(out),-1)
+		j = -1
+		for k in outRange:
+			# skip trailing whitespace lines
+			if (not foundAtLastYet) and (len(out[k].strip()) == 0): continue
+			# quit if something other than @last directive
+			i = 0
+			if not match(out[k],i,tag): break;
+			foundAtLastYet = 1
+			# quit if no trailing lines to apply
+			if j < -len(lastLines): break
+			# make the new @last directive
+			#18-SEP-2002 DTHEIN: remove trailing newlines because they are inserted later
+			# 21-SEP-2002 DTHEIN: no trailing whitespace on empty @last directive
+			trailingLine = " " + lastLines[j]
+			out[k] = tag + trailingLine.rstrip() ; j -= 1
+	
+	#@-body
+	#@-node:2::completeLastDirectives (Dave Hein)
+	#@+node:3::createChild (4.0)
+	#@+body
+	# Creates a child node of parent with the given gnx if necessary.
+	
+	def createChild (self,parent,headline,gnx):
+		
+		# trace("parent,headline,gnx:",`parent`,`headline`,`gnx`)
+	
+		v = parent.insertAsLastChild(leoNodes.tnode())
+		v.initHeadString(headline)
+		return v
+	#@-body
+	#@-node:3::createChild (4.0)
+	#@+node:4::createNthChild (3.0)
+	#@+body
+	#@+at
+	#  Sections appear in the derived file in reference order, not tree 
+	# order.  Therefore, when we insert the nth child of the parent there is 
+	# no guarantee that the previous n-1 children have already been inserted. 
+	# And it won't work just to insert the nth child as the last child if 
+	# there aren't n-1 previous siblings.  For example, if we insert the third 
+	# child followed by the second child followed by the first child the 
+	# second and third children will be out of order.
+	# 
+	# To ensure that nodes are placed in the correct location we create 
+	# "dummy" children as needed as placeholders.  In the example above, we 
+	# would insert two dummy children when inserting the third child.  When 
+	# inserting the other two children we replace the previously inserted 
+	# dummy child with the actual children.
+	# 
+	# vnode child indices are zero-based.  Here we use 1-based indices.
+	# 
+	# With the "mirroring" scheme it is a structure error if we ever have to 
+	# create dummy vnodes.  Such structure errors cause a second pass to be 
+	# made, with an empty root.  This second pass will generate other 
+	# structure errors, which are ignored.
+
+	#@-at
+	#@@c
+	def createNthChild(self,n,parent,headline):
+	
+		assert(n > 0)
+	
+		# Create any needed dummy children.
+		dummies = n - parent.numberOfChildren() - 1
+		if dummies > 0:
+			if 0: # CVS produces to many errors for this to be useful.
+				es("dummy created")
+			self.structureErrors += 1
+		while dummies > 0:
+			dummies -= 1
+			dummy = parent.insertAsLastChild(leoNodes.tnode())
+			# The user should never see this headline.
+			dummy.initHeadString("Dummy")
+	
+		if n <= parent.numberOfChildren():
+			
+			#@<< check the headlines >>
+			#@+node:1::<< check the headlines >>
+			#@+body
+			#@+at
+			#  1/24/03: A kludgy fix to the problem of headlines containing 
+			# comment delims.
+			# 
+			# The comparisons of headlines will disappear in 4.0.  However, 
+			# the problems created by having block comment delimiters in 
+			# headlines will remain: they can't be allowed to interfere with 
+			# the block comment delimiters in sentinels.
+
+			#@-at
+			#@@c
+			result = parent.nthChild(n-1)
+			resulthead = result.headString()
+			
+			if headline.strip() != resulthead.strip():
+				start = self.startSentinelComment
+				end = self.endSentinelComment
+				if end and len(end) > 0:
+					# 1/25/03: The kludgy fix.
+					# Compare the headlines without the delims.
+					h1 =   headline.replace(start,"").replace(end,"")
+					h2 = resulthead.replace(start,"").replace(end,"")
+					if h1.strip() == h2.strip():
+						# 1/25/03: Another kludge: use the headline from the outline, not the derived file.
+						headline = resulthead
+					else:
+						self.structureErrors += 1
+				else:
+					self.structureErrors += 1
+			
+			#@-body
+			#@-node:1::<< check the headlines >>
+
+		else:
+			# This is using a dummy; we should already have bumped structureErrors.
+			result = parent.insertAsLastChild(leoNodes.tnode())
+		result.initHeadString(headline)
+		
+		result.setVisited() # Suppress all other errors for this node.
+		return result
+	#@-body
+	#@-node:4::createNthChild (3.0)
+	#@+node:5::handleLinesFollowingSentinel
+	#@+body
+	def handleLinesFollowingSentinel (self,lines,sentinel,comments = true):
+		
+		"""convert lines following a sentinel to a single line"""
+		
+		m = " following" + sentinel + " sentinel"
+		start = self.startSentinelComment
+		end   = self.endSentinelComment
+		
+		if len(lines) == 1: # The expected case.
+			s = lines[0]
+		elif len(lines) == 5:
+			self.readError("potential cvs conflict" + m)
+			s = lines[1]
+			es("using " + s)
+		else:
+			self.readError("unexpected lines" + m)
+			es(len(lines), " lines" + m)
+			s = "bad " + sentinel
+			if comments: s = start + ' ' + s
+	
+		if comments:
+			
+			#@<< remove the comment delims from s >>
+			#@+node:1::<< remove the comment delims from s >>
+			#@+body
+			# Remove the starting comment and the blank.
+			if match(s,0,start + ' '):
+				s = s[len(start)+1:]
+			else:
+				self.readError("expecting comment" + m)
+			
+			# Remove the trailing comment.
+			if len(end) == 0:
+				s = string.strip(s[:-1])
+			else:
+				k = s.rfind(end,i)
+				s = string.strip(s[:k]) # works even if k == -1
+			#@-body
+			#@-node:1::<< remove the comment delims from s >>
+
+			
+		# Undo the cweb hack: undouble @ signs if the opening comment delim ends in '@'.
+		if start[-1:] == '@':
+			s = s.replace('@@','@')
+	
+		return s
+	#@-body
+	#@-node:5::handleLinesFollowingSentinel
+	#@+node:6::joinTrees
+	#@+body
+	#@+at
+	#  This function joins all nodes in the two trees which should have the 
+	# same topology. This code makes no other assumptions about the two trees; 
+	# some or all of the nodes may already have been joined.
+	# 
+	# There are several differences between this method and the similar 
+	# vnode:joinTreeTo method.  First, we can not assert that the two trees 
+	# have the same topology because the derived file could have been edited 
+	# outside of Leo.  Second, this method also merges the tnodes of all 
+	# joined nodes.
+
+	#@-at
+	#@@c
+	def joinTrees(self,tree1,tree2):
+	
+		assert(tree1 and tree2)
+		# Use a common tnode for both nodes.
+		if tree1.t != tree2.t:
+			tree1.setT(tree2.t)
+		# Join the roots using the vnode class.
+		tree1.joinNodeTo(tree2)
+		# Recursively join all subtrees.
+		child1 = tree1.firstChild()
+		child2 = tree2.firstChild()
+		while child1 and child2:
+			self.joinTrees(child1, child2)
+			child1 = child1.next()
+			child2 = child2.next()
+		if child1 or child2:
+			self.readError("cloned nodes have different topologies")
+	#@-body
+	#@-node:6::joinTrees
+	#@+node:7::readLine
+	#@+body
+	def readLine (self,file):
+		"""Reads one line from file using the present encoding"""
+		
+		s = readlineForceUnixNewline(file)
+		u = toUnicode(s,self.encoding)
+		return u
+	
+	
+	#@-body
+	#@-node:7::readLine
+	#@+node:8::readLinesToNextSentinel
+	#@+body
+	# We expect only a single line, and more may exist if cvs detects a conflict.
+	# We accept the first line even if it looks like a sentinel.
+	
+	def readLinesToNextSentinel (self,file):
+		
+		"""	read nonsentinel lines following multiline sentinels"""
+		
+		lines = []
+		nextLine = self.readLine(file)
+		while nextLine and len(nextLine) > 0:
+			if len(lines) == 0 or self.sentinelKind(nextLine) == atFile.noSentinel:
+				lines.append(nextLine)
+				nextLine = self.readLine(file)
+			else: break
+	
+		return nextLine,lines
+	
+	
+	#@-body
+	#@-node:8::readLinesToNextSentinel
+	#@+node:9::scanDoc
+	#@+body
+	# Scans the doc part and appends the text out.
+	# s,i point to the present line on entry.
+	
+	def scanDoc(self,file,s,i,out,kind):
+	
+		endKind = choose(kind == atFile.startDoc, atFile.endDoc, atFile.endAt)
+		single = len(self.endSentinelComment) == 0
+		
+		#@<< Skip the opening sentinel >>
+		#@+node:1::<< Skip the opening sentinel >>
+		#@+body
+		assert(match(s,i,choose(kind == atFile.startDoc, "+doc", "+at")))
+		
+		out.append(choose(kind == atFile.startDoc, "@doc", "@"))
+		s = self.readLine(file)
+		
+		#@-body
+		#@-node:1::<< Skip the opening sentinel >>
+
+		
+		#@<< Skip an opening block delim >>
+		#@+node:2::<< Skip an opening block delim >>
+		#@+body
+		if not single:
+			j = skip_ws(s,0)
+			if match(s,j,self.startSentinelComment):
+				s = self.readLine(file)
+		#@-body
+		#@-node:2::<< Skip an opening block delim >>
+
+		nextLine = None ; kind = atFile.noSentinel
+		while len(s) > 0:
+			
+			#@<< set kind, nextLine >>
+			#@+node:3::<< set kind, nextLine >>
+			#@+body
+			#@+at
+			#  For non-sentinel lines we look ahead to see whether the next 
+			# line is a sentinel.
+
+			#@-at
+			#@@c
+
+			assert(nextLine==None)
+			
+			kind = self.sentinelKind(s)
+			
+			if kind == atFile.noSentinel:
+				j = skip_ws(s,0)
+				blankLine = s[j] == '\n'
+				nextLine = self.readLine(file)
+				nextKind = self.sentinelKind(nextLine)
+				if blankLine and nextKind == endKind:
+					kind = endKind # stop the scan now
+			
+			#@-body
+			#@-node:3::<< set kind, nextLine >>
+
+			if kind == endKind: break
+			
+			#@<< Skip the leading stuff >>
+			#@+node:4::<< Skip the leading stuff >>
+			#@+body
+			# Point i to the start of the real line.
+			
+			if single: # Skip the opening comment delim and a blank.
+				i = skip_ws(s,0)
+				if match(s,i,self.startSentinelComment):
+					i += len(self.startSentinelComment)
+					if match(s,i," "): i += 1
+			else:
+				i = self.skipIndent(s,0, self.indent)
+			
+			#@-body
+			#@-node:4::<< Skip the leading stuff >>
+
+			
+			#@<< Append s to out >>
+			#@+node:5::<< Append s to out >>
+			#@+body
+			# Append the line with a newline if it is real
+			
+			line = s[i:-1] # remove newline for rstrip.
+			
+			if line == line.rstrip():
+				# no trailing whitespace: the newline is real.
+				out.append(line + '\n')
+			else:
+				# trailing whitespace: the newline is not real.
+				out.append(line)
+			
+			#@-body
+			#@-node:5::<< Append s to out >>
+
+			if nextLine:
+				s = nextLine ; nextLine = None
+			else: s = self.readLine(file)
+		if kind != endKind:
+			self.readError("Missing " + self.sentinelName(endKind) + " sentinel")
+		
+		#@<< Remove a closing block delim from out >>
+		#@+node:6::<< Remove a closing block delim from out >>
+		#@+body
+		# This code will typically only be executed for HTML files.
+		
+		if not single:
+		
+			delim = self.endSentinelComment
+			n = len(delim)
+			
+			# Remove delim and possible a leading newline.
+			s = string.join(out,"")
+			s = s.rstrip()
+			if s[-n:] == delim:
+				s = s[:-n]
+			if s[-1] == '\n':
+				s = s[:-1]
+				
+			# Rewrite out in place.
+			del out[:]
+			out.append(s)
+		
+		#@-body
+		#@-node:6::<< Remove a closing block delim from out >>
+	#@-body
+	#@-node:9::scanDoc
+	#@+node:10::scanHeader
+	#@+body
+	#@+at
+	#  This method sets self.startSentinelComment and self.endSentinelComment 
+	# based on the first @+leo sentinel line of the file.  We can not call 
+	# sentinelKind here because that depends on the comment delimiters we set 
+	# here.  @first lines are written "verbatim", so nothing more needs to be done!
+	# 
+	# 7/8/02: Leading whitespace is now significant here before the @+leo.  
+	# This is part of the "REM hack".  We do this so that sentinelKind need 
+	# not skip whitespace following self.startSentinelComment.  This is 
+	# correct: we want to be as restrictive as possible about what is 
+	# recognized as a sentinel.  This minimizes false matches.
+	# 
+	# 14-SEP-2002 DTHEIN:  Queue up the lines before the @+leo.  These will be 
+	# used to add as parameters to the @first directives, if any.  Empty lines 
+	# are ignored (because empty @first directives are ignored). NOTE: the 
+	# function now returns a list of the lines before @+leo.
+
+	#@-at
+	#@@c
+	def scanHeader(self,file):
+	
+		valid = true ; self.using_gnx = false
+		tag = "@+leo"
+		encoding_tag = "-encoding="
+		version_tag = "-ver="
+		
+		#@<< skip any non @+leo lines >>
+		#@+node:1::<< skip any non @+leo lines >>
+		#@+body
+		firstLines = [] # The lines before @+leo.
+		s = self.readLine(file)
+		while len(s) > 0:
+			j = s.find(tag)
+			if j != -1: break
+			firstLines.append(s) # Queue the line
+			s = self.readLine(file)
+		n = len(s)
+		valid = n > 0
+		# s contains the tag
+		i = j = skip_ws(s,0)
+		# The opening comment delim is the initial non-whitespace.
+		# 7/8/02: The opening comment delim is the initial non-tag
+		while i < n and not match(s,i,tag) and not is_nl(s,i):
+			i += 1
+		if j < i:
+			self.startSentinelComment = s[j:i]
+		else: valid = false
+		#@-body
+		#@-node:1::<< skip any non @+leo lines >>
+
+		
+		#@<< make sure we have @+leo >>
+		#@+node:2::<< make sure we have @+leo >>
+		#@+body
+		if 0:# 7/8/02: make leading whitespace significant.
+			i = skip_ws(s,i)
+		
+		if match(s,i,tag):
+			i += len(tag)
+		else: valid = false
+		#@-body
+		#@-node:2::<< make sure we have @+leo >>
+
+		
+		#@<< read optional version param >>
+		#@+node:3::<< read optional version param >>
+		#@+body
+		self.using_gnx = match(s,i,version_tag)
+		
+		if self.using_gnx:
+			trace("reading gnx file")
+			i += len(version_tag)
+			# Skip to the next minus sign or end-of-line
+			j = i
+			while i < len(s) and not is_nl(s,i) and s[i] != '-':
+				i += 1
+			if j < i:
+				version = s[j:i]
+			else:
+				valid = false
+		
+			
+		
+		#@-body
+		#@-node:3::<< read optional version param >>
+
+		
+		#@<< read optional encoding param >>
+		#@+node:4::<< read optional encoding param >>
+		#@+body
+		# 1/20/03: EKR: Read optional encoding param, e.g., -encoding=utf-8,
+		
+		# Set the default encoding
+		self.encoding = app().config.default_derived_file_encoding
+		
+		if match(s,i,encoding_tag):
+			i += len(encoding_tag)
+			# Skip to the next comma
+			j = i
+			while i < len(s) and not is_nl(s,i) and s[i] not in (',','.'):
+				i += 1
+			if match(s,i,',') or match(s,i,'.'):
+				encoding = s[j:i]
+				i += 1
+				# print "@+leo-encoding=",encoding
+				if isValidEncoding(encoding):
+					self.encoding = encoding
+				else:
+					es("bad encoding in derived file:",encoding)
+			else:
+				valid = false
+		
+		#@-body
+		#@-node:4::<< read optional encoding param >>
+
+		
+		#@<< set the closing comment delim >>
+		#@+node:5::<< set the closing comment delim >>
+		#@+body
+		# The closing comment delim is the trailing non-whitespace.
+		i = j = skip_ws(s,i)
+		while i < n and not is_ws(s[i]) and not is_nl(s,i):
+			i += 1
+		self.endSentinelComment = s[j:i]
+		#@-body
+		#@-node:5::<< set the closing comment delim >>
+
+		if not valid:
+			self.readError("Bad @+leo sentinel in " + self.targetFileName)
+		return firstLines
+	#@-body
+	#@-node:10::scanHeader
+	#@+node:11::scanText
+	#@+body
+	#@+at
+	#  This method is the heart of both the 3.x and 4.0 read code.
+	# We are reading a 4.0 file if self.using_gnx is true.
+	# 
+	# scanText reads lines from the file until the given ending sentinel is 
+	# found, and warns if any other ending sentinel is found instead.  It 
+	# calls itself recursively to handle most nested sentinels.
+	# 
+
+	#@-at
+	#@@c
+	def scanText (self,file,v,out,endSentinelKind,nextLine=None):
+	
+		c = self.commands ; config = app().config
+		lastLines = [] # The lines after @-leo
+		lineIndent = 0 ; linep = 0 # Changed only for sentinels.
+		while 1:
+			
+			#@<< put the next line into s >>
+			#@+node:1::<< put the next line into s >>
+			#@+body
+			if nextLine:
+				s = nextLine ; nextLine = None
+			else:
+				s = self.readLine(file)
+				if len(s) == 0: break
+			
+			# trace(`s`)
+			#@-body
+			#@-node:1::<< put the next line into s >>
+
+			
+			#@<< set kind, nextKind >>
+			#@+node:2::<< set kind, nextKind >>
+			#@+body
+			#@+at
+			#  For non-sentinel lines we look ahead to see whether the next 
+			# line is a sentinel.  If so, the newline that ends a non-sentinel 
+			# line belongs to the next sentinel.
+
+			#@-at
+			#@@c
+
+			assert(nextLine==None)
+			
+			kind = self.sentinelKind(s)
+			
+			if kind == atFile.noSentinel:
+				nextLine = self.readLine(file)
+				nextKind = self.sentinelKind(nextLine)
+			else:
+				nextLine = nextKind = None
+			
+			# nextLine != None only if we have a non-sentinel line.
+			# Therefore, nextLine == None whenever scanText returns.
+			#@-body
+			#@-node:2::<< set kind, nextKind >>
+
+			if kind != atFile.noSentinel:
+				
+				#@<< set lineIndent, linep and leading_ws >>
+				#@+node:3::<< Set lineIndent, linep and leading_ws >>
+				#@+body
+				#@+at
+				#  lineIndent is the total indentation on a sentinel line.  
+				# The first "self.indent" portion of that must be removed when 
+				# recreating text.  leading_ws is the remainder of the leading 
+				# whitespace.  linep points to the first "real" character of a 
+				# line, the character following the "indent" whitespace.
+
+				#@-at
+				#@@c
+
+				# Point linep past the first self.indent whitespace characters.
+				if self.raw: # 10/15/02
+					linep =0
+				else:
+					linep = self.skipIndent(s,0,self.indent)
+				
+				# Set lineIndent to the total indentation on the line.
+				lineIndent = 0 ; i = 0
+				while i < len(s):
+					if s[i] == '\t': lineIndent += (abs(self.tab_width) - (lineIndent % abs(self.tab_width)))
+					elif s[i] == ' ': lineIndent += 1
+					else: break
+					i += 1
+				# trace("lineIndent:" +`lineIndent` + ", " + `s`)
+				
+				# Set leading_ws to the additional indentation on the line.
+				leading_ws = s[linep:i]
+				#@-body
+				#@-node:3::<< Set lineIndent, linep and leading_ws >>
+
+				i = self.skipSentinelStart(s,0)
+			
+			#@<< handle the line in s >>
+			#@+node:5::<< handle the line in s >>
+			#@+body
+			if kind == atFile.noSentinel:
+				
+				#@<< append non-sentinel line >>
+				#@+node:1::<< append non-sentinel line >>
+				#@+body
+				# We don't output the trailing newline if the next line is a sentinel.
+				if self.raw: # 10/15/02
+					i = 0
+				else:
+					i = self.skipIndent(s,0,self.indent)
+				
+				assert(nextLine != None)
+				
+				if nextKind == atFile.noSentinel:
+					line = s[i:]
+					out.append(line)
+				else:
+					line = s[i:-1] # don't output the newline
+					out.append(line)
+				
+				#@-body
+				#@-node:1::<< append non-sentinel line >>
+
+			
+			#@<< handle common sentinels >>
+			#@+node:2::<< handle common sentinels >>
+			#@+body
+			elif kind in (
+				atFile.endAfterref,
+				atFile.endAt,  atFile.endBody, atFile.endDoc,
+				atFile.endLeo, atFile.endNode, atFile.endOthers,
+				atFile.endRef, atFile.endT,    atFile.endV ):
+					
+					#@<< handle an ending sentinel >>
+					#@+node:1::<< handle an ending sentinel >>
+					#@+body
+					# trace("end sentinel:", self.sentinelName(kind))
+					
+					if kind == endSentinelKind:
+						if kind == atFile.endLeo:
+							# Ignore everything after @-leo.
+							# Such lines were presumably written by @last.
+							while 1:
+								s = self.readLine(file)
+								if len(s) == 0: break
+								lastLines.append(s) # Capture all trailing lines, even if empty.
+						elif kind in (atFile.endBody, atFile.endT):
+							self.raw = false
+						# nextLine != None only if we have a non-sentinel line.
+						# Therefore, nextLine == None whenever scanText returns.
+						assert(nextLine==None)
+						return lastLines # End the call to scanText.
+					else:
+						# Tell of the structure error.
+						name = self.sentinelName(kind)
+						expect = self.sentinelName(endSentinelKind)
+						self.readError("Ignoring " + name + " sentinel.  Expecting " + expect)
+					#@-body
+					#@-node:1::<< handle an ending sentinel >>
+
+			elif kind == atFile.startBody and not self.using_gnx:
+				
+				#@<< scan @+body >>
+				#@+node:4::<< scan @+body >>
+				#@+body
+				assert(match(s,i,"+body"))
+				
+				child_out = [] ; child = v # Do not change out or v!
+				oldIndent = self.indent ; self.indent = lineIndent
+				self.scanText(file,child,child_out,atFile.endBody)
+				
+				if child.isOrphan():
+					self.readError("Replacing body text of orphan: " + child.headString())
+				
+				# Set the body, removing cursed newlines.
+				# Note:  This code must be done here, not in the @+node logic.
+				body = string.join(child_out, "")
+				body = body.replace('\r', '')
+				child.t.setTnodeText(body)
+				self.indent = oldIndent
+				#@-body
+				#@-node:4::<< scan @+body >>
+
+			elif kind == atFile.startNode and not self.using_gnx:
+				
+				#@<< scan @+node >>
+				#@+node:6::<< scan @+node >>
+				#@+body
+				assert(match(s,i,"+node:"))
+				i += 6
+				
+				childIndex = 0 ; cloneIndex = 0
+				
+				#@<< Set childIndex >>
+				#@+node:1::<< Set childIndex >>
+				#@+body
+				i = skip_ws(s,i) ; j = i
+				while i < len(s) and s[i] in string.digits:
+					i += 1
+				
+				if j == i:
+					self.readError("Implicit child index in @+node")
+					childIndex = 0
+				else:
+					childIndex = int(s[j:i])
+				
+				if match(s,i,':'):
+					i += 1 # Skip the ":".
+				else:
+					self.readError("Bad child index in @+node")
+				#@-body
+				#@-node:1::<< Set childIndex >>
+
+				
+				#@<< Set cloneIndex >>
+				#@+node:2::<< Set cloneIndex >>
+				#@+body
+				while i < len(s) and s[i] != ':' and not is_nl(s,i):
+					if match(s,i,"C="):
+						# set cloneIndex from the C=nnn, field
+						i += 2 ; j = i
+						while i < len(s) and s[i] in string.digits:
+							i += 1
+						if j < i:
+							cloneIndex = int(s[j:i])
+					else: i += 1 # Ignore unknown status bits.
+				
+				if match(s,i,":"):
+					i += 1
+				else:
+					self.readError("Bad attribute field in @+node")
+				#@-body
+				#@-node:2::<< Set cloneIndex >>
+
+				headline = ""
+				
+				#@<< Set headline and ref >>
+				#@+node:3::<< Set headline and ref >>
+				#@+body
+				# Set headline to the rest of the line.
+				if len(self.endSentinelComment) == 0:
+					headline = string.strip(s[i:-1])
+				else:
+					# 10/24/02: search from the right, not the left.
+					k = s.rfind(self.endSentinelComment,i)
+					headline = string.strip(s[i:k]) # works if k == -1
+					
+				# 10/23/02: The cweb hack: undouble @ signs if the opening comment delim ends in '@'.
+				if self.startSentinelComment[-1:] == '@':
+					headline = headline.replace('@@','@')
+				
+				# Set reference if it exists.
+				i = skip_ws(s,i)
+				
+				if 0: # no longer used
+					if match(s,i,"<<"):
+						k = s.find(">>",i)
+						if k != -1: ref = s[i:k+2]
+				#@-body
+				#@-node:3::<< Set headline and ref >>
+
+				
+				# print childIndex,headline
+				
+				if childIndex == 0: # The root node.
+					
+					#@<< Check the filename in the sentinel >>
+					#@+node:4::<< Check the filename in the sentinel >>
+					#@+body
+					h = headline.strip()
+					
+					if h[:5] == "@file":
+						i,junk = scanAtFileOptions(h)
+						fileName = string.strip(h[i:])
+						if fileName != self.targetFileName:
+							self.readError("File name in @node sentinel does not match file's name")
+					elif h[:8] == "@rawfile":
+						fileName = string.strip(h[8:])
+						if fileName != self.targetFileName:
+							self.readError("File name in @node sentinel does not match file's name")
+					else:
+						self.readError("Missing @file in root @node sentinel")
+					
+					#@-body
+					#@-node:4::<< Check the filename in the sentinel >>
+
+					# Put the text of the root node in the current node.
+					self.scanText(file,v,out,atFile.endNode)
+					v.t.setCloneIndex(cloneIndex)
+					# if cloneIndex > 0: trace("clone index:" + `cloneIndex` + ", " + `v`)
+				else:
+					# NB: this call to createNthChild is the bottleneck!
+					child = self.createNthChild(childIndex,v,headline)
+					child.t.setCloneIndex(cloneIndex)
+					# if cloneIndex > 0: trace("clone index:" + `cloneIndex` + ", " + `child`)
+					self.scanText(file,child,out,atFile.endNode)
+				
+				
+				#@<< look for sentinels that may follow a reference >>
+				#@+node:5::<< look for sentinels that may follow a reference >>
+				#@+body
+				s = self.readLine(file)
+				kind = self.sentinelKind(s)
+				
+				if len(s) > 1 and kind == atFile.startVerbatimAfterRef:
+					s = self.readLine(file)
+					# trace("verbatim:"+`s`)
+					out.append(s)
+				elif len(s) > 1 and self.sentinelKind(s) == atFile.noSentinel:
+					out.append(s)
+				else:
+					nextLine = s # Handle the sentinel or blank line later.
+				
+				#@-body
+				#@-node:5::<< look for sentinels that may follow a reference >>
+				#@-body
+				#@-node:6::<< scan @+node >>
+
+			elif kind == atFile.startOldRef and not self.using_gnx:
+				
+				#@<< scan old ref >>
+				#@+node:2::<< scan old ref >> (3.0)
+				#@+body
+				#@+at
+				#  The sentinel contains an @ followed by a section name in 
+				# angle brackets.  This code is different from the code for 
+				# the @@ sentinel: the expansion of the reference does not 
+				# include a trailing newline.
+
+				#@-at
+				#@@c
+
+				assert(match(s,i,"<<"))
+				
+				if len(self.endSentinelComment) == 0:
+					line = s[i:-1] # No trailing newline
+				else:
+					k = s.find(self.endSentinelComment,i)
+					line = s[i:k] # No trailing newline, whatever k is.
+						
+				# 10/30/02: undo cweb hack here
+				start = self.startSentinelComment
+				if start and len(start) > 0 and start[-1] == '@':
+					line = line.replace('@@','@')
+				
+				out.append(line)
+				#@-body
+				#@-node:2::<< scan old ref >> (3.0)
+
+			elif kind == atFile.startRef and self.using_gnx:
+				
+				#@<< scan @+ref >>
+				#@+node:8::<< scan @+ref >>
+				#@+body
+				assert(match(s,i,"+ref"))
+				
+				next,lines = self.readLinesToNextSentinel(file)
+				ref = self.handleLinesFollowingSentinel(lines,"+ref")
+				out.append(ref)
+				self.scanText(file,v,out,atFile.endRef,nextLine=next)
+				#@-body
+				#@-node:8::<< scan @+ref >>
+
+			elif kind == atFile.startT and self.using_gnx:
+				
+				#@<< scan @+t >>
+				#@+node:9::<< scan @+t >> (was body)  Done ??
+				#@+body
+				assert(match(s,i,"+t"))
+				assert(nextLine == None)
+				
+				child_out = [] ; child = v # Do not change out or v!
+				oldIndent = self.indent ; self.indent = lineIndent
+				self.scanText(file,child,child_out,atFile.endT)
+				
+				# Set the body, removing cursed newlines.
+				# This code must be done here, not in the @+v logic.
+				body = string.join(child_out, "")
+				body = body.replace('\r', '')
+				child.t.setTnodeText(body)
+				self.indent = oldIndent
+				#@-body
+				#@-node:9::<< scan @+t >> (was body)  Done ??
+
+			elif kind == atFile.startV and self.using_gnx:
+				
+				#@<< scan @+v >>
+				#@+node:10::<< scan @+v >> (was node)
+				#@+body
+				assert(match(s,i,"+v"))
+				i += 2
+				
+				#@<< set gnx from the sentinel >>
+				#@+node:1::<< set gnx from the sentinel >>
+				#@+body
+				i = skip_ws(s,i)
+				dict = app().nodeIndices.scanGnx(s,i)
+				gnx = dict.get("id")
+				print "gnx:",gnx
+				# print `dict`
+				#@-body
+				#@-node:1::<< set gnx from the sentinel >>
+
+				next,lines = self.readLinesToNextSentinel(file)
+				headline = self.handleLinesFollowingSentinel(lines,"+v")
+				
+				if not self.root_seen: # The root node.
+					self.root_seen = true
+					
+					#@<< Check the filename >>
+					#@+node:2::<< Check the filename >>
+					#@+body
+					h = headline.strip()
+					
+					if h[:5] == "@file":
+						i,junk = scanAtFileOptions(h)
+						fileName = string.strip(h[i:])
+						if 1:  ### testing only
+							fileName += ".txt"
+						if fileName != self.targetFileName:
+							print `fileName`,`self.targetFileName`
+							self.readError("File name in @node sentinel does not match file's name")
+					elif h[:8] == "@rawfile":
+						fileName = string.strip(h[8:])
+						if fileName != self.targetFileName:
+							self.readError("File name in @node sentinel does not match file's name")
+					else:
+						self.readError("Missing @file in root @node sentinel")
+					
+					#@-body
+					#@-node:2::<< Check the filename >>
+
+					# Put the text in the current node.
+					self.scanText(file,v,out,atFile.endV,nextLine=next)
+				else:
+					# NB: this call to createChild is the bottleneck!
+					child = self.createChild(v,headline,gnx)
+					self.scanText(file,child,out,atFile.endV,nextLine=next)
+				
+				
+				#@<< look for sentinels that may follow a reference >>
+				#@+node:3::<< look for sentinels that may follow a reference >>
+				#@+body
+				# Get the next line.
+				s = self.readLine(file)
+				kind = self.sentinelKind(s)
+				
+				if len(s) > 1 and kind == atFile.startAfterref:
+					next,lines = self.readLinesToNextSentinel(file)
+					after = self.handleLinesFollowingSentinel(lines,"+afterref",comments=false)
+					if len(after) > 0:
+						if after[-1] == '\n':
+							after = after[:-1]
+						out.append(after)
+					# Call scanText to handle @-afterref sentinel.
+					self.scanText(file,v,out,atFile.endAfterref,nextLine=next)
+				##elif len(s) > 1 and self.sentinelKind(s) == atFile.noSentinel:
+				##	out.append(s)
+				else:
+					nextLine = s # Handle the sentinel or blank line later.
+				#@-body
+				#@-node:3::<< look for sentinels that may follow a reference >>
+				#@-body
+				#@-node:10::<< scan @+v >> (was node)
+
+			elif kind == atFile.startAt:
+				
+				#@<< scan @+at >>
+				#@+node:3::<< scan @+at >>
+				#@+body
+				assert(match(s,i,"+at"))
+				self.scanDoc(file,s,i,out,kind)
+				#@-body
+				#@-node:3::<< scan @+at >>
+
+			elif kind == atFile.startDoc:
+				
+				#@<< scan @+doc >>
+				#@+node:5::<< scan @+doc >>
+				#@+body
+				assert(match(s,i,"+doc"))
+				self.scanDoc(file,s,i,out,kind)
+				#@-body
+				#@-node:5::<< scan @+doc >>
+
+			elif kind == atFile.startOthers:
+				
+				#@<< scan @+others >>
+				#@+node:7::<< scan @+others >>
+				#@+body
+				assert(match(s,i,"+others"))
+				
+				# Make sure that the generated at-others is properly indented.
+				out.append(leading_ws + "@others")
+				
+				self.scanText(file,v,out,atFile.endOthers)
+				#@-body
+				#@-node:7::<< scan @+others >>
+			#@-body
+			#@-node:2::<< handle common sentinels >>
+
+			
+			#@<< handle rare sentinels >>
+			#@+node:3::<< handle rare sentinels >>
+			#@+body
+			elif kind == atFile.startComment:
+				
+				#@<< scan @comment >>
+				#@+node:3::<< scan @comment >>
+				#@+body
+				assert(match(s,i,"comment"))
+				
+				# We need do nothing more to ignore the comment line!
+				
+				#@-body
+				#@-node:3::<< scan @comment >>
+
+			elif kind == atFile.startDelims:
+				
+				#@<< scan @delims >>
+				#@+node:4::<< scan @delims >>
+				#@+body
+				assert(match(s,i-1,"@delims"));
+				
+				# Skip the keyword and whitespace.
+				i0 = i-1
+				i = skip_ws(s,i-1+7)
+					
+				# Get the first delim.
+				j = i
+				while i < len(s) and not is_ws(s[i]) and not is_nl(s,i):
+					i += 1
+				
+				if j < i:
+					self.startSentinelComment = s[j:i]
+					# print "delim1:", self.startSentinelComment
+				
+					# Get the optional second delim.
+					j = i = skip_ws(s,i)
+					while i < len(s) and not is_ws(s[i]) and not is_nl(s,i):
+						i += 1
+					end = choose(j<i,s[j:i],"")
+					i2 = skip_ws(s,i)
+					if end == self.endSentinelComment and (i2 >= len(s) or is_nl(s,i2)):
+						self.endSentinelComment = "" # Not really two params.
+						line = s[i0:j]
+						line = line.rstrip()
+						out.append(line+'\n')
+					else:
+						self.endSentinelComment = end
+						# print "delim2:",end
+						line = s[i0:i]
+						line = line.rstrip()
+						out.append(line+'\n')
+				else:
+					self.readError("Bad @delims")
+					# Append the bad @delims line to the body text.
+					out.append("@delims")
+				#@-body
+				#@-node:4::<< scan @delims >>
+
+			elif kind == atFile.startDirective:
+				
+				#@<< scan @@ >>
+				#@+node:2::<< scan @@ >>
+				#@+body
+				# The first '@' has already been eaten.
+				assert(match(s,i,"@"))
+				
+				if match_word(s,i,"@raw"):
+					self.raw = true
+				elif match_word(s,i,"@end_raw"):
+					self.raw = false
+				
+				e = self.endSentinelComment
+				s2 = s[i:]
+				if len(e) > 0:
+					k = s.rfind(e,i)
+					if k != -1:
+						s2 = s[i:k] + '\n'
+					
+				start = self.startSentinelComment
+				if start and len(start) > 0 and start[-1] == '@':
+					s2 = s2.replace('@@','@')
+				out.append(s2)
+				# trace(`s2`)
+				#@-body
+				#@-node:2::<< scan @@ >>
+
+			elif kind == atFile.startLeo:
+				
+				#@<< scan @+leo >>
+				#@+node:1::<< scan @+leo >>
+				#@+body
+				assert(match(s,i,"+leo"))
+				self.readError("Ignoring unexpected @+leo sentinel")
+				#@-body
+				#@-node:1::<< scan @+leo >>
+
+			elif kind == atFile.startVerbatim:
+				
+				#@<< scan @verbatim >>
+				#@+node:5::<< scan @verbatim >>
+				#@+body
+				assert(match(s,i,"verbatim"))
+				
+				# Skip the sentinel.
+				s = self.readLine(file) 
+				
+				# Append the next line to the text.
+				i = self.skipIndent(s,0,self.indent)
+				out.append(s[i:])
+				
+				#@-body
+				#@-node:5::<< scan @verbatim >>
+			#@-body
+			#@-node:3::<< handle rare sentinels >>
+
+			else:
+				
+				#@<< warn about unknown sentinel >>
+				#@+node:4::<< warn about unknown sentinel >>
+				#@+body
+				j = i
+				i = skip_line(s,i)
+				line = s[j:i]
+				self.readError("Unknown sentinel: " + line)
+				#@-body
+				#@-node:4::<< warn about unknown sentinel >>
+			#@-body
+			#@-node:5::<< handle the line in s >>
+
+		
+		#@<< handle unexpected end of text >>
+		#@+node:4::<< handle unexpected end of text >>
+		#@+body
+		# Issue the error.
+		name = self.sentinelName(endSentinelKind)
+		self.readError("Unexpected end of file. Expecting " + name + "sentinel" )
+		
+		#@-body
+		#@-node:4::<< handle unexpected end of text >>
+
+		assert(len(s)==0 and nextLine==None) # We get here only if readline fails.
+		return lastLines # We get here only if there are problems.
+	#@-body
+	#@-node:11::scanText
+	#@+node:12::Top level
 	#@+node:1::atFile.readAll
 	#@+body
 	#@+at
@@ -585,1143 +1778,54 @@ class atFile:
 		return self.errors == 0
 	#@-body
 	#@-node:2::atFile.read
-	#@-node:1::Top level
-	#@+node:2::joinTrees
-	#@+body
-	#@+at
-	#  This function joins all nodes in the two trees which should have the 
-	# same topology. This code makes no other assumptions about the two trees; 
-	# some or all of the nodes may already have been joined.
-	# 
-	# There are several differences between this method and the similar 
-	# vnode:joinTreeTo method.  First, we can not assert that the two trees 
-	# have the same topology because the derived file could have been edited 
-	# outside of Leo.  Second, this method also merges the tnodes of all 
-	# joined nodes.
-
-	#@-at
-	#@@c
-	def joinTrees(self,tree1,tree2):
-	
-		assert(tree1 and tree2)
-		# Use a common tnode for both nodes.
-		if tree1.t != tree2.t:
-			tree1.setT(tree2.t)
-		# Join the roots using the vnode class.
-		tree1.joinNodeTo(tree2)
-		# Recursively join all subtrees.
-		child1 = tree1.firstChild()
-		child2 = tree2.firstChild()
-		while child1 and child2:
-			self.joinTrees(child1, child2)
-			child1 = child1.next()
-			child2 = child2.next()
-		if child1 or child2:
-			self.readError("cloned nodes have different topologies")
-	#@-body
-	#@-node:2::joinTrees
-	#@+node:3::completeFirstDirectives (Dave Hein)
-	#@+body
-	# 14-SEP-2002 DTHEIN: added for use by atFile.read()
-	
-	# this function scans the lines in the list 'out' for @first directives
-	# and appends the corresponding line from 'firstLines' to each @first 
-	# directive found.  NOTE: the @first directives must be the very first
-	# lines in 'out'.
-	def completeFirstDirectives(self,out,firstLines):
-	
-		tag = "@first"
-		foundAtFirstYet = 0
-		outRange = range(len(out))
-		j = 0
-		for k in outRange:
-			# skip leading whitespace lines
-			if (not foundAtFirstYet) and (len(out[k].strip()) == 0): continue
-			# quit if something other than @first directive
-			i = 0
-			if not match(out[k],i,tag): break;
-			foundAtFirstYet = 1
-			# quit if no leading lines to apply
-			if j >= len(firstLines): break
-			# make the new @first directive
-			#18-SEP-2002 DTHEIN: remove trailing newlines because they are inserted later
-			# 21-SEP-2002 DTHEIN: no trailing whitespace on empty @first directive
-			leadingLine = " " + firstLines[j]
-			out[k] = tag + leadingLine.rstrip() ; j += 1
-	
-	#@-body
-	#@-node:3::completeFirstDirectives (Dave Hein)
-	#@+node:4::completeLastDirectives (Dave Hein)
-	#@+body
-	# 14-SEP-2002 DTHEIN: added for use by atFile.read()
-	
-	# this function scans the lines in the list 'out' for @last directives
-	# and appends the corresponding line from 'lastLines' to each @last 
-	# directive found.  NOTE: the @first directives must be the very last
-	# lines in 'out'.
-	def completeLastDirectives(self,out,lastLines):
-	
-		tag = "@last"
-		foundAtLastYet = 0
-		outRange = range(-1,-len(out),-1)
-		j = -1
-		for k in outRange:
-			# skip trailing whitespace lines
-			if (not foundAtLastYet) and (len(out[k].strip()) == 0): continue
-			# quit if something other than @last directive
-			i = 0
-			if not match(out[k],i,tag): break;
-			foundAtLastYet = 1
-			# quit if no trailing lines to apply
-			if j < -len(lastLines): break
-			# make the new @last directive
-			#18-SEP-2002 DTHEIN: remove trailing newlines because they are inserted later
-			# 21-SEP-2002 DTHEIN: no trailing whitespace on empty @last directive
-			trailingLine = " " + lastLines[j]
-			out[k] = tag + trailingLine.rstrip() ; j -= 1
-	
-	#@-body
-	#@-node:4::completeLastDirectives (Dave Hein)
-	#@+node:5::readLine
-	#@+body
-	def readLine (self,file):
-		"""Reads one line from file using the present encoding"""
-		
-		s = readlineForceUnixNewline(file)
-		u = toUnicode(s,self.encoding)
-		return u
-	
-	
-	#@-body
-	#@-node:5::readLine
-	#@+node:6::scanHeader
-	#@+body
-	#@+at
-	#  This method sets self.startSentinelComment and self.endSentinelComment 
-	# based on the first @+leo sentinel line of the file.  We can not call 
-	# sentinelKind here because that depends on the comment delimiters we set 
-	# here.  @first lines are written "verbatim", so nothing more needs to be done!
-	# 
-	# 7/8/02: Leading whitespace is now significant here before the @+leo.  
-	# This is part of the "REM hack".  We do this so that sentinelKind need 
-	# not skip whitespace following self.startSentinelComment.  This is 
-	# correct: we want to be as restrictive as possible about what is 
-	# recognized as a sentinel.  This minimizes false matches.
-	# 
-	# 14-SEP-2002 DTHEIN:  Queue up the lines before the @+leo.  These will be 
-	# used to add as parameters to the @first directives, if any.  Empty lines 
-	# are ignored (because empty @first directives are ignored). NOTE: the 
-	# function now returns a list of the lines before @+leo.
-
-	#@-at
-	#@@c
-	def scanHeader(self,file):
-	
-		valid = true ; self.using_gnx = false
-		tag = "@+leo"
-		encoding_tag = "-encoding="
-		version_tag = "-ver="
-		
-		#@<< skip any non @+leo lines >>
-		#@+node:1::<< skip any non @+leo lines >>
-		#@+body
-		firstLines = [] # The lines before @+leo.
-		s = self.readLine(file)
-		while len(s) > 0:
-			j = s.find(tag)
-			if j != -1: break
-			firstLines.append(s) # Queue the line
-			s = self.readLine(file)
-		n = len(s)
-		valid = n > 0
-		# s contains the tag
-		i = j = skip_ws(s,0)
-		# The opening comment delim is the initial non-whitespace.
-		# 7/8/02: The opening comment delim is the initial non-tag
-		while i < n and not match(s,i,tag) and not is_nl(s,i):
-			i += 1
-		if j < i:
-			self.startSentinelComment = s[j:i]
-		else: valid = false
-		#@-body
-		#@-node:1::<< skip any non @+leo lines >>
-
-		
-		#@<< make sure we have @+leo >>
-		#@+node:2::<< make sure we have @+leo >>
-		#@+body
-		if 0:# 7/8/02: make leading whitespace significant.
-			i = skip_ws(s,i)
-		
-		if match(s,i,tag):
-			i += len(tag)
-		else: valid = false
-		#@-body
-		#@-node:2::<< make sure we have @+leo >>
-
-		
-		#@<< read optional version param >>
-		#@+node:3::<< read optional version param >>
-		#@+body
-		self.using_gnx = match(s,i,version_tag)
-		
-		if self.using_gnx:
-			trace("reading gnx file")
-			i += len(version_tag)
-			# Skip to the next minus sign or end-of-line
-			j = i
-			while i < len(s) and not is_nl(s,i) and s[i] != '-':
-				i += 1
-			if j < i:
-				version = s[j:i]
-			else:
-				valid = false
-		
-			
-		
-		#@-body
-		#@-node:3::<< read optional version param >>
-
-		
-		#@<< read optional encoding param >>
-		#@+node:4::<< read optional encoding param >>
-		#@+body
-		# 1/20/03: EKR: Read optional encoding param, e.g., -encoding=utf-8,
-		
-		# Set the default encoding
-		self.encoding = app().config.default_derived_file_encoding
-		
-		if match(s,i,encoding_tag):
-			i += len(encoding_tag)
-			# Skip to the next comma
-			j = i
-			while i < len(s) and not is_nl(s,i) and s[i] not in (',','.'):
-				i += 1
-			if match(s,i,',') or match(s,i,'.'):
-				encoding = s[j:i]
-				i += 1
-				# print "@+leo-encoding=",encoding
-				if isValidEncoding(encoding):
-					self.encoding = encoding
-				else:
-					es("bad encoding in derived file:",encoding)
-			else:
-				valid = false
-		
-		#@-body
-		#@-node:4::<< read optional encoding param >>
-
-		
-		#@<< set the closing comment delim >>
-		#@+node:5::<< set the closing comment delim >>
-		#@+body
-		# The closing comment delim is the trailing non-whitespace.
-		i = j = skip_ws(s,i)
-		while i < n and not is_ws(s[i]) and not is_nl(s,i):
-			i += 1
-		self.endSentinelComment = s[j:i]
-		#@-body
-		#@-node:5::<< set the closing comment delim >>
-
-		if not valid:
-			self.readError("Bad @+leo sentinel in " + self.targetFileName)
-		return firstLines
-	#@-body
-	#@-node:6::scanHeader
-	#@+node:7::scanDoc
-	#@+body
-	# Scans the doc part and appends the text out.
-	# s,i point to the present line on entry.
-	
-	def scanDoc(self,file,s,i,out,kind):
-	
-		endKind = choose(kind == atFile.startDoc, atFile.endDoc, atFile.endAt)
-		single = len(self.endSentinelComment) == 0
-		
-		#@<< Skip the opening sentinel >>
-		#@+node:1::<< Skip the opening sentinel >>
-		#@+body
-		assert(match(s,i,choose(kind == atFile.startDoc, "+doc", "+at")))
-		
-		out.append(choose(kind == atFile.startDoc, "@doc", "@"))
-		s = self.readLine(file)
-		
-		#@-body
-		#@-node:1::<< Skip the opening sentinel >>
-
-		
-		#@<< Skip an opening block delim >>
-		#@+node:2::<< Skip an opening block delim >>
-		#@+body
-		if not single:
-			j = skip_ws(s,0)
-			if match(s,j,self.startSentinelComment):
-				s = self.readLine(file)
-		#@-body
-		#@-node:2::<< Skip an opening block delim >>
-
-		nextLine = None ; kind = atFile.noSentinel
-		while len(s) > 0:
-			
-			#@<< set kind, nextLine >>
-			#@+node:3::<< set kind, nextLine >>
-			#@+body
-			#@+at
-			#  For non-sentinel lines we look ahead to see whether the next 
-			# line is a sentinel.
-
-			#@-at
-			#@@c
-
-			assert(nextLine==None)
-			
-			kind = self.sentinelKind(s)
-			
-			if kind == atFile.noSentinel:
-				j = skip_ws(s,0)
-				blankLine = s[j] == '\n'
-				nextLine = self.readLine(file)
-				nextKind = self.sentinelKind(nextLine)
-				if blankLine and nextKind == endKind:
-					kind = endKind # stop the scan now
-			
-			#@-body
-			#@-node:3::<< set kind, nextLine >>
-
-			if kind == endKind: break
-			
-			#@<< Skip the leading stuff >>
-			#@+node:4::<< Skip the leading stuff >>
-			#@+body
-			# Point i to the start of the real line.
-			
-			if single: # Skip the opening comment delim and a blank.
-				i = skip_ws(s,0)
-				if match(s,i,self.startSentinelComment):
-					i += len(self.startSentinelComment)
-					if match(s,i," "): i += 1
-			else:
-				i = self.skipIndent(s,0, self.indent)
-			
-			#@-body
-			#@-node:4::<< Skip the leading stuff >>
-
-			
-			#@<< Append s to out >>
-			#@+node:5::<< Append s to out >>
-			#@+body
-			# Append the line with a newline if it is real
-			
-			line = s[i:-1] # remove newline for rstrip.
-			
-			if line == line.rstrip():
-				# no trailing whitespace: the newline is real.
-				out.append(line + '\n')
-			else:
-				# trailing whitespace: the newline is not real.
-				out.append(line)
-			
-			#@-body
-			#@-node:5::<< Append s to out >>
-
-			if nextLine:
-				s = nextLine ; nextLine = None
-			else: s = self.readLine(file)
-		if kind != endKind:
-			self.readError("Missing " + self.sentinelName(endKind) + " sentinel")
-		
-		#@<< Remove a closing block delim from out >>
-		#@+node:6::<< Remove a closing block delim from out >>
-		#@+body
-		# This code will typically only be executed for HTML files.
-		
-		if not single:
-		
-			delim = self.endSentinelComment
-			n = len(delim)
-			
-			# Remove delim and possible a leading newline.
-			s = string.join(out,"")
-			s = s.rstrip()
-			if s[-n:] == delim:
-				s = s[:-n]
-			if s[-1] == '\n':
-				s = s[:-1]
-				
-			# Rewrite out in place.
-			del out[:]
-			out.append(s)
-		
-		#@-body
-		#@-node:6::<< Remove a closing block delim from out >>
-	#@-body
-	#@-node:7::scanDoc
-	#@+node:8::scanText
-	#@+body
-	#@+at
-	#  This method is the heart of both the 3.x and 4.0 read code.
-	# We are reading a 4.0 file if self.using_gnx is true.
-	# 
-	# scanText reads lines from the file until the given ending sentinel is 
-	# found, and warns if any other ending sentinel is found instead.  It 
-	# calls itself recursively to handle most nested sentinels.
-	# 
-
-	#@-at
-	#@@c
-	def scanText (self,file,v,out,endSentinelKind):
-	
-		c = self.commands ; config = app().config
-		lastLines = [] # The last lines, after @-leo
-		lineIndent = 0 ; linep = 0 # Changed only for sentinels.
-		nextLine = None
-	
-		while 1:
-			if nextLine:
-				s = nextLine ; nextLine = None
-			else:
-				s = self.readLine(file)
-				if len(s) == 0: break
-			# trace(`s`)
-			
-			#@<< set kind, nextKind >>
-			#@+node:1::<< set kind, nextKind >>
-			#@+body
-			#@+at
-			#  For non-sentinel lines we look ahead to see whether the next 
-			# line is a sentinel.  If so, the newline that ends a non-sentinel 
-			# line belongs to the next sentinel.
-
-			#@-at
-			#@@c
-
-			assert(nextLine==None)
-			
-			kind = self.sentinelKind(s)
-			
-			if kind == atFile.noSentinel:
-				nextLine = self.readLine(file)
-				nextKind = self.sentinelKind(nextLine)
-			else:
-				nextLine = nextKind = None
-			
-			# nextLine != None only if we have a non-sentinel line.
-			# Therefore, nextLine == None whenever scanText returns.
-			#@-body
-			#@-node:1::<< set kind, nextKind >>
-
-			if kind != atFile.noSentinel:
-				
-				#@<< set lineIndent, linep and leading_ws >>
-				#@+node:2::<< Set lineIndent, linep and leading_ws >>
-				#@+body
-				#@+at
-				#  lineIndent is the total indentation on a sentinel line.  
-				# The first "self.indent" portion of that must be removed when 
-				# recreating text.  leading_ws is the remainder of the leading 
-				# whitespace.  linep points to the first "real" character of a 
-				# line, the character following the "indent" whitespace.
-
-				#@-at
-				#@@c
-
-				# Point linep past the first self.indent whitespace characters.
-				if self.raw: # 10/15/02
-					linep =0
-				else:
-					linep = self.skipIndent(s,0,self.indent)
-				
-				# Set lineIndent to the total indentation on the line.
-				lineIndent = 0 ; i = 0
-				while i < len(s):
-					if s[i] == '\t': lineIndent += (abs(self.tab_width) - (lineIndent % abs(self.tab_width)))
-					elif s[i] == ' ': lineIndent += 1
-					else: break
-					i += 1
-				# trace("lineIndent:" +`lineIndent` + ", " + `s`)
-				
-				# Set leading_ws to the additional indentation on the line.
-				leading_ws = s[linep:i]
-				#@-body
-				#@-node:2::<< Set lineIndent, linep and leading_ws >>
-
-				i = self.skipSentinelStart(s,0)
-			# All cases must appear here so we can set the next line properly below.
-			# Part 1: Frequently seen sentinels...
-			if kind == atFile.noSentinel:
-				
-				#@<< append non-sentinel line >>
-				#@+node:3::<< append non-sentinel line >>
-				#@+body
-				# We don't output the trailing newline if the next line is a sentinel.
-				if self.raw: # 10/15/02
-					i = 0
-				else:
-					i = self.skipIndent(s,0,self.indent)
-				
-				assert(nextLine != None)
-				
-				if nextKind == atFile.noSentinel:
-					line = s[i:]
-					out.append(line)
-				else:
-					line = s[i:-1] # don't output the newline
-					out.append(line)
-				
-				#@-body
-				#@-node:3::<< append non-sentinel line >>
-
-			elif kind in (
-				atFile.endAt,  atFile.endDoc,
-				atFile.endBody,atFile.endNode,
-				atFile.endLeo, atFile.endOthers,
-				atFile.endT,   atFile.endV ):
-					
-					#@<< handle an ending sentinel >>
-					#@+node:4::<< handle an ending sentinel >>
-					#@+body
-					if kind == endSentinelKind:
-						if kind == atFile.endLeo:
-							# Ignore everything after @-leo.
-							# Such lines were presumably written by @last.
-							while 1:
-								s = self.readLine(file)
-								if len(s) == 0: break
-								lastLines.append(s) # Capture all trailing lines, even if empty.
-						elif kind in (atFile.endBody, atFile.endT):
-							self.raw = false
-						# nextLine != None only if we have a non-sentinel line.
-						# Therefore, nextLine == None whenever scanText returns.
-						assert(nextLine==None)
-						return lastLines # End the call to scanText.
-					else:
-						# Tell of the structure error.
-						name = self.sentinelName(kind)
-						expect = self.sentinelName(endSentinelKind)
-						self.readError("Ignoring " + name + " sentinel.  Expecting " + expect)
-					#@-body
-					#@-node:4::<< handle an ending sentinel >>
-
-			elif kind == atFile.startBody and not self.using_gnx:
-				
-				#@<< scan @+body >>
-				#@+node:6::start sentinels
-				#@+node:2::<< scan @+body >>
-				#@+body
-				assert(match(s,i,"+body"))
-				
-				child_out = [] ; child = v # Do not change out or v!
-				oldIndent = self.indent ; self.indent = lineIndent
-				self.scanText(file,child,child_out,atFile.endBody)
-				
-				if child.isOrphan():
-					self.readError("Replacing body text of orphan: " + child.headString())
-				
-				# Set the body, removing cursed newlines.
-				# Note:  This code must be done here, not in the @+node logic.
-				body = string.join(child_out, "")
-				body = body.replace('\r', '')
-				child.t.setTnodeText(body)
-				self.indent = oldIndent
-				#@-body
-				#@-node:2::<< scan @+body >>
-				#@-node:6::start sentinels
-
-			elif kind == atFile.startNode and not self.using_gnx:
-				
-				#@<< scan @+node >>
-				#@+node:6::start sentinels
-				#@+node:5::<< scan @+node >>
-				#@+body
-				assert(match(s,i,"+node:"))
-				i += 6
-				
-				childIndex = 0 ; cloneIndex = 0
-				
-				#@<< Set childIndex >>
-				#@+node:1::<< Set childIndex >>
-				#@+body
-				i = skip_ws(s,i) ; j = i
-				while i < len(s) and s[i] in string.digits:
-					i += 1
-				
-				if j == i:
-					self.readError("Implicit child index in @+node")
-					childIndex = 0
-				else:
-					childIndex = int(s[j:i])
-				
-				if match(s,i,':'):
-					i += 1 # Skip the ":".
-				else:
-					self.readError("Bad child index in @+node")
-				#@-body
-				#@-node:1::<< Set childIndex >>
-
-				
-				#@<< Set cloneIndex >>
-				#@+node:2::<< Set cloneIndex >>
-				#@+body
-				while i < len(s) and s[i] != ':' and not is_nl(s,i):
-					if match(s,i,"C="):
-						# set cloneIndex from the C=nnn, field
-						i += 2 ; j = i
-						while i < len(s) and s[i] in string.digits:
-							i += 1
-						if j < i:
-							cloneIndex = int(s[j:i])
-					else: i += 1 # Ignore unknown status bits.
-				
-				if match(s,i,":"):
-					i += 1
-				else:
-					self.readError("Bad attribute field in @+node")
-				#@-body
-				#@-node:2::<< Set cloneIndex >>
-
-				headline = ""
-				
-				#@<< Set headline and ref >>
-				#@+node:3::<< Set headline and ref >>
-				#@+body
-				# Set headline to the rest of the line.
-				if len(self.endSentinelComment) == 0:
-					headline = string.strip(s[i:-1])
-				else:
-					# 10/24/02: search from the right, not the left.
-					k = s.rfind(self.endSentinelComment,i)
-					headline = string.strip(s[i:k]) # works if k == -1
-					
-				# 10/23/02: The cweb hack: undouble @ signs if the opening comment delim ends in '@'.
-				if self.startSentinelComment[-1:] == '@':
-					headline = headline.replace('@@','@')
-				
-				# Set reference if it exists.
-				i = skip_ws(s,i)
-				
-				if 0: # no longer used
-					if match(s,i,"<<"):
-						k = s.find(">>",i)
-						if k != -1: ref = s[i:k+2]
-				#@-body
-				#@-node:3::<< Set headline and ref >>
-
-				
-				# print childIndex,headline
-				
-				if childIndex == 0: # The root node.
-					
-					#@<< Check the filename in the sentinel >>
-					#@+node:4::<< Check the filename in the sentinel >>
-					#@+body
-					h = headline.strip()
-					
-					if h[:5] == "@file":
-						i,junk = scanAtFileOptions(h)
-						fileName = string.strip(h[i:])
-						if fileName != self.targetFileName:
-							self.readError("File name in @node sentinel does not match file's name")
-					elif h[:8] == "@rawfile":
-						fileName = string.strip(h[8:])
-						if fileName != self.targetFileName:
-							self.readError("File name in @node sentinel does not match file's name")
-					else:
-						self.readError("Missing @file in root @node sentinel")
-					
-					#@-body
-					#@-node:4::<< Check the filename in the sentinel >>
-
-					# Put the text of the root node in the current node.
-					self.scanText(file,v,out,atFile.endNode)
-					v.t.setCloneIndex(cloneIndex)
-					# if cloneIndex > 0: trace("clone index:" + `cloneIndex` + ", " + `v`)
-				else:
-					# NB: this call to createNthChild is the bottleneck!
-					child = self.createNthChild(childIndex,v,headline)
-					child.t.setCloneIndex(cloneIndex)
-					# if cloneIndex > 0: trace("clone index:" + `cloneIndex` + ", " + `child`)
-					self.scanText(file,child,out,atFile.endNode)
-				
-				
-				#@<< look for sentinels that may follow a reference >>
-				#@+node:5::<< look for sentinels that may follow a reference >>
-				#@+body
-				s = self.readLine(file)
-				kind = self.sentinelKind(s)
-				
-				if len(s) > 1 and kind == atFile.startVerbatimAfterRef:
-					s = self.readLine(file)
-					# trace("verbatim:"+`s`)
-					out.append(s)
-				elif len(s) > 1 and self.sentinelKind(s) == atFile.noSentinel:
-					out.append(s)
-				else:
-					nextLine = s # Handle the sentinel or blank line later.
-				
-				#@-body
-				#@-node:5::<< look for sentinels that may follow a reference >>
-				#@-body
-				#@-node:5::<< scan @+node >>
-				#@-node:6::start sentinels
-
-			elif kind == atFile.startT and self.using_gnx:
-				
-				#@<< scan @+t >>
-				#@+node:6::start sentinels
-				#@+node:7::<< scan @+t >> (was body)  Done ??
-				#@+body
-				assert(match(s,i,"+t"))
-				
-				child_out = [] ; child = v # Do not change out or v!
-				oldIndent = self.indent ; self.indent = lineIndent
-				self.scanText(file,child,child_out,atFile.endBody)
-				
-				## if child.isOrphan():
-				##	self.readError("Replacing body text of orphan: " + child.headString())
-				
-				# Set the body, removing cursed newlines.
-				# This code must be done here, not in the @+v logic.
-				body = string.join(child_out, "")
-				body = body.replace('\r', '')
-				child.t.setTnodeText(body)
-				self.indent = oldIndent
-				#@-body
-				#@-node:7::<< scan @+t >> (was body)  Done ??
-				#@-node:6::start sentinels
-
-			elif kind == atFile.startV and self.using_gnx:
-				
-				#@<< scan @+v >>
-				#@+node:6::start sentinels
-				#@+node:8::<< scan @+v >> (was node) TODO
-				#@+body
-				assert(match(s,i,"+v"))
-				i += 2
-				
-				headline = ""
-				
-				#@<< set gnx from the sentinel >>
-				#@+node:1::<< set gnx from the sentinel >>
-				#@+body
-				i = skip_ws(s,i)
-				dict = app().nodeIndices.scanGnx(s,i)
-				gnx = dict.get("id")
-				print "gnx:",gnx
-				# print `dict`
-				#@-body
-				#@-node:1::<< set gnx from the sentinel >>
-
-				
-				#@<< Set headline from the following lines >>
-				#@+node:2::<< Set headline from the following lines >> TODO
-				#@+body
-				# Set headline to the rest of the line.
-				if len(self.endSentinelComment) == 0:
-					headline = string.strip(s[i:-1])
-				else:
-					# 10/24/02: search from the right, not the left.
-					k = s.rfind(self.endSentinelComment,i)
-					headline = string.strip(s[i:k]) # works if k == -1
-					
-				# 10/23/02: The cweb hack: undouble @ signs if the opening comment delim ends in '@'.
-				if self.startSentinelComment[-1:] == '@':
-					headline = headline.replace('@@','@')
-				
-				
-				#@-body
-				#@-node:2::<< Set headline from the following lines >> TODO
-
-				# trace("headlline:",headline)
-				
-				if not self.root_seen: # The root node.
-					self.root_seen = true
-					
-					#@<< Check the filename >>
-					#@+node:3::<< Check the filename >>
-					#@+body
-					h = headline.strip()
-					
-					if h[:5] == "@file":
-						i,junk = scanAtFileOptions(h)
-						fileName = string.strip(h[i:])
-						if fileName != self.targetFileName:
-							self.readError("File name in @node sentinel does not match file's name")
-					elif h[:8] == "@rawfile":
-						fileName = string.strip(h[8:])
-						if fileName != self.targetFileName:
-							self.readError("File name in @node sentinel does not match file's name")
-					else:
-						self.readError("Missing @file in root @node sentinel")
-					
-					#@-body
-					#@-node:3::<< Check the filename >>
-
-					# Put the text in the current node.
-					self.scanText(file,v,out,atFile.endNode)
-				else:
-					# NB: this call to createChild is the bottleneck!
-					child = self.createChild(v,headline,gnx)
-					self.scanText(file,child,out,atFile.endNode)
-				
-				
-				#@<< look for sentinels that may follow a reference >>
-				#@+node:4::<< look for sentinels that may follow a reference >> TODO
-				#@+body
-				s = self.readLine(file)
-				kind = self.sentinelKind(s)
-				
-				if len(s) > 1 and kind == atFile.startAfterref:
-					s = self.readLine(file)
-					# trace("verbatim:"+`s`)
-					out.append(s)
-					s = self.readLine(file)
-					kind = self.sentinelKind(s)
-					if len(s) > 1 and kind == atFile.endAfterref:
-						s = self.readLine(file)
-				
-				## elif len(s) > 1 and self.sentinelKind(s) == atFile.noSentinel:
-				##	out.append(s)
-				## else:
-				##	nextLine = s # Handle the sentinel or blank line later.
-				
-				#@-body
-				#@-node:4::<< look for sentinels that may follow a reference >> TODO
-				#@-body
-				#@-node:8::<< scan @+v >> (was node) TODO
-				#@-node:6::start sentinels
-
-			elif kind == atFile.startAt:
-				
-				#@<< scan @+at >>
-				#@+node:6::start sentinels
-				#@+node:1::<< scan @+at >>
-				#@+body
-				assert(match(s,i,"+at"))
-				self.scanDoc(file,s,i,out,kind)
-				#@-body
-				#@-node:1::<< scan @+at >>
-				#@-node:6::start sentinels
-
-			elif kind == atFile.startDoc:
-				
-				#@<< scan @+doc >>
-				#@+node:6::start sentinels
-				#@+node:3::<< scan @+doc >>
-				#@+body
-				assert(match(s,i,"+doc"))
-				self.scanDoc(file,s,i,out,kind)
-				#@-body
-				#@-node:3::<< scan @+doc >>
-				#@-node:6::start sentinels
-
-			elif kind == atFile.startOthers:
-				
-				#@<< scan @+others >>
-				#@+node:6::start sentinels
-				#@+node:6::<< scan @+others >>
-				#@+body
-				assert(match(s,i,"+others"))
-				
-				# Make sure that the generated at-others is properly indented.
-				out.append(leading_ws + "@others")
-				
-				self.scanText(file,v,out,atFile.endOthers)
-				#@-body
-				#@-node:6::<< scan @+others >>
-				#@-node:6::start sentinels
-
-			elif kind == atFile.startRef:
-				
-				#@<< scan @ref >>
-				#@+node:7::unpaired sentinels
-				#@+node:4::<< scan @ref >>
-				#@+body
-				#@+at
-				#  The sentinel contains an @ followed by a section name in 
-				# angle brackets.  This code is different from the code for 
-				# the @@ sentinel: the expansion of the reference does not 
-				# include a trailing newline.
-
-				#@-at
-				#@@c
-
-				assert(match(s,i,"<<"))
-				
-				if len(self.endSentinelComment) == 0:
-					line = s[i:-1] # No trailing newline
-				else:
-					k = s.find(self.endSentinelComment,i)
-					line = s[i:k] # No trailing newline, whatever k is.
-						
-				# 10/30/02: undo cweb hack here
-				start = self.startSentinelComment
-				if start and len(start) > 0 and start[-1] == '@':
-					line = line.replace('@@','@')
-				
-				out.append(line)
-				#@-body
-				#@-node:4::<< scan @ref >>
-				#@-node:7::unpaired sentinels
-
-			# Part 2: Rarely seen sentinels.
-			elif kind == atFile.startComment:
-				
-				#@<< scan @comment >>
-				#@+node:7::unpaired sentinels
-				#@+node:2::<< scan @comment >>
-				#@+body
-				assert(match(s,i,"comment"))
-				
-				# We need do nothing more to ignore the comment line!
-				
-				#@-body
-				#@-node:2::<< scan @comment >>
-				#@-node:7::unpaired sentinels
-
-			elif kind == atFile.startDelims:
-				
-				#@<< scan @delims >>
-				#@+node:7::unpaired sentinels
-				#@+node:3::<< scan @delims >>
-				#@+body
-				assert(match(s,i-1,"@delims"));
-				
-				# Skip the keyword and whitespace.
-				i0 = i-1
-				i = skip_ws(s,i-1+7)
-					
-				# Get the first delim.
-				j = i
-				while i < len(s) and not is_ws(s[i]) and not is_nl(s,i):
-					i += 1
-				
-				if j < i:
-					self.startSentinelComment = s[j:i]
-					# print "delim1:", self.startSentinelComment
-				
-					# Get the optional second delim.
-					j = i = skip_ws(s,i)
-					while i < len(s) and not is_ws(s[i]) and not is_nl(s,i):
-						i += 1
-					end = choose(j<i,s[j:i],"")
-					i2 = skip_ws(s,i)
-					if end == self.endSentinelComment and (i2 >= len(s) or is_nl(s,i2)):
-						self.endSentinelComment = "" # Not really two params.
-						line = s[i0:j]
-						line = line.rstrip()
-						out.append(line+'\n')
-					else:
-						self.endSentinelComment = end
-						# print "delim2:",end
-						line = s[i0:i]
-						line = line.rstrip()
-						out.append(line+'\n')
-				else:
-					self.readError("Bad @delims")
-					# Append the bad @delims line to the body text.
-					out.append("@delims")
-				#@-body
-				#@-node:3::<< scan @delims >>
-				#@-node:7::unpaired sentinels
-
-			elif kind == atFile.startDirective:
-				
-				#@<< scan @@ >>
-				#@+node:7::unpaired sentinels
-				#@+node:1::<< scan @@ >>
-				#@+body
-				# The first '@' has already been eaten.
-				assert(match(s,i,"@"))
-				
-				if match_word(s,i,"@raw"):
-					self.raw = true
-				elif match_word(s,i,"@end_raw"):
-					self.raw = false
-				
-				e = self.endSentinelComment
-				s2 = s[i:]
-				if len(e) > 0:
-					k = s.rfind(e,i)
-					if k != -1:
-						s2 = s[i:k] + '\n'
-					
-				start = self.startSentinelComment
-				if start and len(start) > 0 and start[-1] == '@':
-					s2 = s2.replace('@@','@')
-				out.append(s2)
-				# trace(`s2`)
-				#@-body
-				#@-node:1::<< scan @@ >>
-				#@-node:7::unpaired sentinels
-
-			elif kind == atFile.startLeo:
-				
-				#@<< scan @+leo >>
-				#@+node:6::start sentinels
-				#@+node:4::<< scan @+leo >>
-				#@+body
-				assert(match(s,i,"+leo"))
-				self.readError("Ignoring unexpected @+leo sentinel")
-				#@-body
-				#@-node:4::<< scan @+leo >>
-				#@-node:6::start sentinels
-
-			elif kind == atFile.startVerbatim:
-				
-				#@<< scan @verbatim >>
-				#@+node:7::unpaired sentinels
-				#@+node:5::<< scan @verbatim >>
-				#@+body
-				assert(match(s,i,"verbatim"))
-				
-				# Skip the sentinel.
-				s = self.readLine(file) 
-				
-				# Append the next line to the text.
-				i = self.skipIndent(s,0,self.indent)
-				out.append(s[i:])
-				
-				#@-body
-				#@-node:5::<< scan @verbatim >>
-				#@-node:7::unpaired sentinels
-
-			else:
-				
-				#@<< warn about unknown sentinel >>
-				#@+node:8::<< warn about unknown sentinel >>
-				#@+body
-				j = i
-				i = skip_line(s,i)
-				line = s[j:i]
-				self.readError("Unknown sentinel: " + line)
-				#@-body
-				#@-node:8::<< warn about unknown sentinel >>
-
-		
-		#@<< handle unexpected end of text >>
-		#@+node:5::<< handle unexpected end of text >>
-		#@+body
-		# Issue the error.
-		name = self.sentinelName(endSentinelKind)
-		self.readError("Unexpected end of file. Expecting " + name + "sentinel" )
-		
-		#@-body
-		#@-node:5::<< handle unexpected end of text >>
-
-		assert(len(s)==0 and nextLine==None) # We get here only if readline fails.
-		return lastLines # 14-SEP-2002 DTHEIN: shouldn't get here unless problems
-	#@-body
-	#@+node:6::start sentinels
-	#@-node:6::start sentinels
-	#@+node:7::unpaired sentinels
-	#@-node:7::unpaired sentinels
-	#@-node:8::scanText
-	#@+node:9::createNthChild (3.0)
-	#@+body
-	#@+at
-	#  Sections appear in the derived file in reference order, not tree 
-	# order.  Therefore, when we insert the nth child of the parent there is 
-	# no guarantee that the previous n-1 children have already been inserted. 
-	# And it won't work just to insert the nth child as the last child if 
-	# there aren't n-1 previous siblings.  For example, if we insert the third 
-	# child followed by the second child followed by the first child the 
-	# second and third children will be out of order.
-	# 
-	# To ensure that nodes are placed in the correct location we create 
-	# "dummy" children as needed as placeholders.  In the example above, we 
-	# would insert two dummy children when inserting the third child.  When 
-	# inserting the other two children we replace the previously inserted 
-	# dummy child with the actual children.
-	# 
-	# vnode child indices are zero-based.  Here we use 1-based indices.
-	# 
-	# With the "mirroring" scheme it is a structure error if we ever have to 
-	# create dummy vnodes.  Such structure errors cause a second pass to be 
-	# made, with an empty root.  This second pass will generate other 
-	# structure errors, which are ignored.
-
-	#@-at
-	#@@c
-	def createNthChild(self,n,parent,headline):
-	
-		assert(n > 0)
-	
-		# Create any needed dummy children.
-		dummies = n - parent.numberOfChildren() - 1
-		if dummies > 0:
-			if 0: # CVS produces to many errors for this to be useful.
-				es("dummy created")
-			self.structureErrors += 1
-		while dummies > 0:
-			dummies -= 1
-			dummy = parent.insertAsLastChild(leoNodes.tnode())
-			# The user should never see this headline.
-			dummy.initHeadString("Dummy")
-	
-		if n <= parent.numberOfChildren():
-			
-			#@<< check the headlines >>
-			#@+node:1::<< check the headlines >>
-			#@+body
-			#@+at
-			#  1/24/03: A kludgy fix to the problem of headlines containing 
-			# comment delims.
-			# 
-			# The comparisons of headlines will disappear in 4.0.  However, 
-			# the problems created by having block comment delimiters in 
-			# headlines will remain: they can't be allowed to interfere with 
-			# the block comment delimiters in sentinels.
-
-			#@-at
-			#@@c
-			result = parent.nthChild(n-1)
-			resulthead = result.headString()
-			
-			if headline.strip() != resulthead.strip():
-				start = self.startSentinelComment
-				end = self.endSentinelComment
-				if end and len(end) > 0:
-					# 1/25/03: The kludgy fix.
-					# Compare the headlines without the delims.
-					h1 =   headline.replace(start,"").replace(end,"")
-					h2 = resulthead.replace(start,"").replace(end,"")
-					if h1.strip() == h2.strip():
-						# 1/25/03: Another kludge: use the headline from the outline, not the derived file.
-						headline = resulthead
-					else:
-						self.structureErrors += 1
-				else:
-					self.structureErrors += 1
-			
-			#@-body
-			#@-node:1::<< check the headlines >>
-
-		else:
-			# This is using a dummy; we should already have bumped structureErrors.
-			result = parent.insertAsLastChild(leoNodes.tnode())
-		result.initHeadString(headline)
-		
-		result.setVisited() # Suppress all other errors for this node.
-		return result
-	#@-body
-	#@-node:9::createNthChild (3.0)
-	#@+node:10::createChild (4.0)
-	#@+body
-	# Creates a child node of parent with the given gnx if necessary.
-	
-	def createChild (self,parent,headline,gnx):
-		
-		trace("parent,headline,gnx:",`parent`,`headline`,`gnx`)
-	
-		v = parent.insertAsLastChild(leoNodes.tnode())
-		v.initHeadString(headline)
-		return v
-	#@-body
-	#@-node:10::createChild (4.0)
+	#@-node:12::Top level
 	#@-node:4::Reading
 	#@+node:5::Sentinels
-	#@+node:1::Common Sentinels
-	#@+node:1::putCloseNodeSentinel
+	#@+node:1::nodeSentinelText
+	#@+body
+	def nodeSentinelText(self,v):
+	
+		config = app().config
+	
+		if config.write_clone_indices:
+			cloneIndex = v.t.cloneIndex
+			clone_s = choose(cloneIndex > 0, "C=" + `cloneIndex`, "")
+		else: clone_s = ""
+		
+		if v == self.root or not v.parent():
+			index = 0
+		else:
+			index = v.childIndex() + 1
+	
+		h = v.headString()
+		
+		#@<< remove comment delims from h if necessary >>
+		#@+node:1::<< remove comment delims from h if necessary >>
+		#@+body
+		#@+at
+		#  Bug fix 1/24/03:
+		# 
+		# If the present @language/@comment settings do not specify a 
+		# single-line comment we remove all block comment delims from h.  This 
+		# prevents headline text from interfering with the parsing of node sentinels.
+
+		#@-at
+		#@@c
+
+		start = self.startSentinelComment
+		end = self.endSentinelComment
+		
+		if end and len(end) > 0:
+			h = h.replace(start,"")
+			h = h.replace(end,"")
+		#@-body
+		#@-node:1::<< remove comment delims from h if necessary >>
+
+	
+		return str(index) + ':' + clone_s + ':' + h
+	#@-body
+	#@-node:1::nodeSentinelText
+	#@+node:2::putCloseNodeSentinel
 	#@+body
 	def putCloseNodeSentinel(self,v):
 	
@@ -1731,8 +1835,8 @@ class atFile:
 			s = self.nodeSentinelText(v)
 			self.putSentinel("@-node:" + s)
 	#@-body
-	#@-node:1::putCloseNodeSentinel
-	#@+node:2::putCloseSentinels
+	#@-node:2::putCloseNodeSentinel
+	#@+node:3::putCloseSentinels
 	#@+body
 	#@+at
 	#  root is an ancestor of v, or root == v.  We call putCloseSentinel for v 
@@ -1749,8 +1853,8 @@ class atFile:
 			if  v == root: break
 			self.putCloseNodeSentinel(v)
 	#@-body
-	#@-node:2::putCloseSentinels
-	#@+node:3::putOpenLeoSentinel
+	#@-node:3::putCloseSentinels
+	#@+node:4::putOpenLeoSentinel
 	#@+body
 	#@+at
 	#  This method is the same as putSentinel except we don't put an opening 
@@ -1775,8 +1879,8 @@ class atFile:
 		else:
 			self.onl() # End of sentinel.
 	#@-body
-	#@-node:3::putOpenLeoSentinel
-	#@+node:4::putOpenNodeSentinel
+	#@-node:4::putOpenLeoSentinel
+	#@+node:5::putOpenNodeSentinel
 	#@+body
 	#@+at
 	#  This method puts an open node sentinel for node v.
@@ -1796,8 +1900,8 @@ class atFile:
 			s = self.nodeSentinelText(v)
 			self.putSentinel("@+node:" + s)
 	#@-body
-	#@-node:4::putOpenNodeSentinel
-	#@+node:5::putOpenSentinels
+	#@-node:5::putOpenNodeSentinel
+	#@+node:6::putOpenSentinels
 	#@+body
 	#@+at
 	#  root is an ancestor of v, or root == v.  We call putOpenNodeSentinel on 
@@ -1817,8 +1921,8 @@ class atFile:
 			self.putOpenNodeSentinel(node)
 			last = node
 	#@-body
-	#@-node:5::putOpenSentinels
-	#@+node:6::putSentinel (applies cweb hack)
+	#@-node:6::putOpenSentinels
+	#@+node:7::putSentinel (applies cweb hack)
 	#@+body
 	#@+at
 	#  All sentinels are eventually output by this method.
@@ -1865,8 +1969,117 @@ class atFile:
 		else:
 			self.onl() # End of sentinel.
 	#@-body
-	#@-node:6::putSentinel (applies cweb hack)
-	#@+node:7::skipSentinelStart
+	#@-node:7::putSentinel (applies cweb hack)
+	#@+node:8::putSentinelAndGnx (4.0)
+	#@+body
+	def putSentinelAndGnx (self,vt,s):
+		
+		try:
+			gnx = vt.gnx
+		except:
+			if 0: # not ready yet: self.indices does not exist
+				vt.gnx = gnx = self.indices.getNewIndex()
+			else:
+				gnx = ' ' + `id(vt)`
+	
+		self.putSentinel(s + gnx)
+	
+	#@-body
+	#@-node:8::putSentinelAndGnx (4.0)
+	#@+node:9::sentinelKind
+	#@+body
+	#@+at
+	#  This method tells what kind of sentinel appears in line s.  Typically s 
+	# will be an empty line before the actual sentinel, but it is also valid 
+	# for s to be an actual sentinel line.
+	# 
+	# Returns (kind, s, emptyFlag), where emptyFlag is true if kind == 
+	# noSentinel and s was an empty line on entry.
+
+	#@-at
+	#@@c
+
+	sentinelDict = {
+		"@comment" : startComment,
+		"@delims" :  startDelims,
+		"@verbatim": startVerbatim,
+		"@verbatimAfterRef": startVerbatimAfterRef,
+		"@+afterref": startAfterref, # 4.0
+		"@-afterref": endAfterref,   # 4.0
+		"@+at":     startAt,     "@-at":     endAt,
+		"@+body":   startBody,   "@-body":   endBody, # 3.0
+		"@+doc":    startDoc,    "@-doc":    endDoc,
+		"@+leo":    startLeo,    "@-leo":    endLeo,
+		"@+node":   startNode,   "@-node":   endNode, # 3.0
+		"@+others": startOthers, "@-others": endOthers,
+		"@+ref":    startRef,    "@-ref":    endRef,  # 4.0
+		"@+t":      startT,      "@-t":      endT,  # 4.0
+		"@+v":      startV,      "@-v":      endV } # 4.0
+	
+	def sentinelKind(self,s):
+	
+		# trace(s)
+		i = skip_ws(s,0)
+		if match(s,i,self.startSentinelComment): 
+			i += len(self.startSentinelComment)
+		else:
+			return atFile.noSentinel
+	
+		# 10/30/02: locally undo cweb hack here
+		start = self.startSentinelComment
+		if start and len(start) > 0 and start[-1] == '@':
+			s = s[:i] + string.replace(s[i:],'@@','@')
+	
+		# Do not skip whitespace here!
+		if match(s,i,"@<<"): return atFile.startOldRef
+		if match(s,i,"@@"):   return atFile.startDirective
+		if not match(s,i,'@'): return atFile.noSentinel
+		j = i # start of lookup
+		i += 1 # skip the at sign.
+		if match(s,i,'+') or match(s,i,'-'):
+			i += 1
+		i = skip_c_id(s,i)
+		key = s[j:i]
+		if len(key) > 0 and atFile.sentinelDict.has_key(key):
+			# trace("found:",key)
+			return atFile.sentinelDict[key]
+		else:
+			# trace("not found:",key)
+			return atFile.noSentinel
+	#@-body
+	#@-node:9::sentinelKind
+	#@+node:10::sentinelName
+	#@+body
+	# Returns the name of the sentinel for warnings.
+	
+	sentinelNameDict = {
+		noSentinel: "<no sentinel>",
+		startAfterref:  "@+afterref", # 4.0
+		endAfterref:    "@-afterref", # 4.0
+		startAt:     "@+at",     endAt:     "@-at",
+		startBody:   "@+body",   endBody:   "@-body", # 3.0
+		startDoc:    "@+doc",    endDoc:    "@-doc",
+		startLeo:    "@+leo",    endLeo:    "@-leo",
+		startNode:   "@+node",   endNode:   "@-node", # 3.0
+		startOthers: "@+others", endOthers: "@-others",
+		startRef:    "@+ref",    endRef:    "@-ref", # 4.0
+		startT:      "@+t",      endT:      "@-t", # 4.0
+		startV:      "@+v",      endV:      "@-v", # 4.0
+		startComment:   "@comment",
+		startDelims:    "@delims",
+		startDirective: "@@",
+		startOldRef:    "@<<",
+		startVerbatim:  "@verbatim",
+		startVerbatimAfterRef: "@verbatimAfterRef" }
+	
+	def sentinelName(self, kind):
+		if atFile.sentinelNameDict.has_key(kind):
+			return atFile.sentinelNameDict[kind]
+		else:
+			return "<unknown sentinel!>"
+	#@-body
+	#@-node:10::sentinelName
+	#@+node:11::skipSentinelStart
 	#@+body
 	def skipSentinelStart(self,s,i):
 	
@@ -1883,200 +2096,7 @@ class atFile:
 		return i + 1
 	
 	#@-body
-	#@-node:7::skipSentinelStart
-	#@-node:1::Common Sentinels
-	#@+node:2::Sentinels 3.x
-	#@+node:1::nodeSentinelText
-	#@+body
-	def nodeSentinelText(self,v):
-	
-		config = app().config
-	
-		if config.write_clone_indices:
-			cloneIndex = v.t.cloneIndex
-			clone_s = choose(cloneIndex > 0, "C=" + `cloneIndex`, "")
-		else: clone_s = ""
-		
-		if v == self.root or not v.parent():
-			index = 0
-		else:
-			index = v.childIndex() + 1
-	
-		h = v.headString()
-		
-		#@<< remove comment delims from h if necessary >>
-		#@+node:1::<< remove comment delims from h if necessary >>
-		#@+body
-		#@+at
-		#  Bug fix 1/24/03:
-		# 
-		# If the present @language/@comment settings do not specify a 
-		# single-line comment we remove all block comment delims from h.  This 
-		# prevents headline text from interfering with the parsing of node sentinels.
-
-		#@-at
-		#@@c
-
-		start = self.startSentinelComment
-		end = self.endSentinelComment
-		
-		if end and len(end) > 0:
-			h = h.replace(start,"")
-			h = h.replace(end,"")
-		#@-body
-		#@-node:1::<< remove comment delims from h if necessary >>
-
-	
-		return str(index) + ':' + clone_s + ':' + h
-	#@-body
-	#@-node:1::nodeSentinelText
-	#@+node:2::sentinelKind
-	#@+body
-	#@+at
-	#  This method tells what kind of sentinel appears in line s.  Typically s 
-	# will be an empty line before the actual sentinel, but it is also valid 
-	# for s to be an actual sentinel line.
-	# 
-	# Returns (kind, s, emptyFlag), where emptyFlag is true if kind == 
-	# noSentinel and s was an empty line on entry.
-
-	#@-at
-	#@@c
-
-	sentinelDict = {
-		"@comment" : startComment,
-		"@delims" : startDelims,
-		"@verbatim": startVerbatim,
-		"@verbatimAfterRef": startVerbatimAfterRef,
-		"@+afterref": startAfterref, # 4.0
-		"@-afterref": endAfterref,   # 4.0
-		"@+at":     startAt,     "@-at":     endAt,
-		"@+body":   startBody,   "@-body":   endBody, # 3.0
-		"@+doc":    startDoc,    "@-doc":    endDoc,
-		"@+leo":    startLeo,    "@-leo":    endLeo,
-		"@+node":   startNode,   "@-node":   endNode, # 3.0
-		"@+others": startOthers, "@-others": endOthers,
-		"@+t":      startT,      "@-t:":     endT,  # 4.0
-		"@+v":      startV,      "@-v:":     endV } # 4.0
-	
-	def sentinelKind(self,s):
-	
-		i = skip_ws(s,0)
-		if match(s,i,self.startSentinelComment): 
-			i += len(self.startSentinelComment)
-		else:
-			return atFile.noSentinel
-	
-		# 10/30/02: locally undo cweb hack here
-		start = self.startSentinelComment
-		if start and len(start) > 0 and start[-1] == '@':
-			s = s[:i] + string.replace(s[i:],'@@','@')
-	
-		# Do not skip whitespace here!
-		if match(s,i,"@<<"): return atFile.startRef
-		if match(s,i,"@@"): return atFile.startDirective
-		if not match(s,i,'@'): return atFile.noSentinel
-		j = i # start of lookup
-		i += 1 # skip the at sign.
-		if match(s,i,'+') or match(s,i,'-'):
-			i += 1
-		i = skip_c_id(s,i)
-		# trace(`s[j:i]`)
-		key = s[j:i]
-		if len(key) > 0 and atFile.sentinelDict.has_key(key):
-			return atFile.sentinelDict[key]
-		else:
-			return atFile.noSentinel
-	#@-body
-	#@-node:2::sentinelKind
-	#@+node:3::sentinelName
-	#@+body
-	# Returns the name of the sentinel for warnings.
-	
-	sentinelNameDict = {
-		noSentinel: "<no sentinel>",
-		startAfterref:  "@+afterref", # 4.0
-		endAfterref:    "@-afterref", # 4.0
-		startAt:     "@+at",     endAt:     "@-at",
-		startBody:   "@+body",   endBody:   "@-body", # 3.0
-		startDoc:    "@+doc",    endDoc:    "@-doc",
-		startLeo:    "@+leo",    endLeo:    "@-leo",
-		startNode:   "@+node",   endNode:   "@-node", # 3.0
-		startOthers: "@+others", endOthers: "@-others",
-		startT:      "@+t",      endT:      "@-t", # 4.0
-		startV:      "@+v",      endV:      "@-v", # 4.0
-		startComment:   "@comment",
-		startDelims:    "@delims",
-		startDirective: "@@",
-		startRef:       "@<<",
-		startVerbatim:  "@verbatim",
-		startVerbatimAfterRef: "@verbatimAfterRef" }
-	
-	def sentinelName(self, kind):
-		if atFile.sentinelNameDict.has_key(kind):
-			return atFile.sentinelNameDict[kind]
-		else:
-			return "<unknown sentinel!>"
-	#@-body
-	#@-node:3::sentinelName
-	#@-node:2::Sentinels 3.x
-	#@+node:3::Sentinels 4.x
-	#@+node:1::gnxSentinelKind (needed??)
-	#@+body
-	#@+at
-	#  This method tells what kind of sentinel appears in line s.  Typically s 
-	# will be an empty line before the actual sentinel, but it is also valid 
-	# for s to be an actual sentinel line.
-	# 
-
-	#@-at
-	#@@c
-
-	def gnxSentinelKind(self,s):
-	
-		i = skip_ws(s,0)
-		if match(s,i,self.startSentinelComment): 
-			i += len(self.startSentinelComment)
-		else:
-			return None
-	
-		# Locally undo cweb hack here
-		start = self.startSentinelComment
-		if start and len(start) > 0 and start[-1] == '@':
-			s = s[:i] + string.replace(s[i:],'@@','@')
-		# Do not skip whitespace here!
-		if match(s,i,"@@"): return atFile.startDirective
-		if not match(s,i,'@'): return None
-		j = i # start of lookup
-		i += 1 # skip the at sign.
-		if match(s,i,'+') or match(s,i,'-'):
-			i += 1
-		i = skip_c_id(s,i)
-		# trace(`s[j:i]`)
-		key = s[j:i]
-		if len(key) > 0 and self.gnxSentinelDict.has_key(key):
-			return key
-		else:
-			return None
-	#@-body
-	#@-node:1::gnxSentinelKind (needed??)
-	#@+node:2::putSentinelAndGnx
-	#@+body
-	def putSentinelAndGnx (self,vt,s):
-		
-		try:
-			gnx = vt.gnx
-		except:
-			if 0: # not ready yet: self.indices does not exist
-				vt.gnx = gnx = self.indices.getNewIndex()
-			else:
-				gnx = ' ' + `id(vt)`
-	
-		self.putSentinel(s + gnx)
-	
-	#@-body
-	#@-node:2::putSentinelAndGnx
-	#@-node:3::Sentinels 4.x
+	#@-node:11::skipSentinelStart
 	#@-node:5::Sentinels
 	#@+node:6::Testing
 	#@+node:1::scanAll
