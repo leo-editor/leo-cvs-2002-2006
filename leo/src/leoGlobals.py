@@ -185,7 +185,13 @@ def get_directives_dict(s,root=None):
             j = g.skip_c_id(s,i+1)
             word = s[i+1:j]
             if word in g.globalDirectiveList:
-                dict [word] = i
+                if dict.has_key(word):
+                    # Ignore second value.
+                    pass
+                    # g.es("Warning: conflicting values for %s" % (word), color="blue")
+                else:
+                    dict [word] = i
+            #@nonl
             #@-node:ekr.20031218072017.1261:<< set dict for @ directives >>
             #@nl
         elif root and g.match(s,i,"<<"):
@@ -1358,25 +1364,27 @@ def utils_rename(src,dst):
 #@-node:ekr.20031218072017.1263:utils_rename
 #@-node:ekr.20031218072017.3116:Files & Directories...
 #@+node:ekr.20031218072017.1588:Garbage Collection
+debugGC = False # Must be true to enable traces below.
+
 lastObjectCount = 0
 lastObjectsDict = {}
-debugGC = False
+lastTypesDict = {}
+lastFunctionsDict = {}
 
-# gc may not exist everywhere.
-try: 
-    import gc
-    if 0:
-        if debugGC:
-            gc.set_debug(
-                gc.DEBUG_STATS |# prints statistics.
-                # gc.DEBUG_LEAK | # Same as all below.
-                gc.DEBUG_COLLECTABLE |
-                gc.DEBUG_UNCOLLECTABLE |
-                gc.DEBUG_INSTANCES |
-                gc.DEBUG_OBJECTS |
-                gc.DEBUG_SAVEALL)
-except:
-    traceback.print_exc()
+if debugGC:
+    try: 
+        import gc
+        gc.set_debug(
+            gc.DEBUG_STATS | # prints statistics.
+            # gc.DEBUG_LEAK | # Same as all below.
+            # gc.DEBUG_COLLECTABLE
+            # gc.DEBUG_UNCOLLECTABLE
+            gc.DEBUG_INSTANCES |
+            gc.DEBUG_OBJECTS
+            # gc.DEBUG_SAVEALL
+        )
+    except ImportError:
+        traceback.print_exc()
 
 #@+others
 #@+node:ekr.20031218072017.1589:clearAllIvars
@@ -1397,10 +1405,10 @@ def collectGarbage(message=None):
     try: gc.collect()
     except: pass
     
-    if 1:
+    if 0:
         g.printGc(message)
     
-    if 0: # This isn't needed unless we want to look at individual objects.
+    if 1: # This isn't needed unless we want to look at individual objects.
     
         #@        << make a list of the new objects >>
         #@+node:ekr.20031218072017.1591:<< make a list of the new objects >>
@@ -1433,11 +1441,67 @@ def printGc(message=None,onlyPrintChanges=False):
         n = len(gc.garbage)
         n2 = len(gc.get_objects())
         delta = n2-lastObjectCount
-        if not onlyPrintChanges or delta:
-            if n:
-                print "garbage: %d, objects: %+6d =%7d %s" % (n,delta,n2,message)
-            else:
-                print "objects: %+6d =%7d %s" % (n2-lastObjectCount,n2,message)
+
+        print '-' * 30
+        print "garbage: %d, objects: %+6d =%7d %s" % (n,delta,n2,message)
+        
+        #@        << print number of each type of object >>
+        #@+node:ekr.20040703054646:<< print number of each type of object >>
+        global lastTypesDict
+        typesDict = {}
+        
+        for obj in gc.get_objects():
+            n = typesDict.get(type(obj),0)
+            typesDict[type(obj)] = n + 1
+            
+        # Create the union of all the keys.
+        keys = typesDict.keys()
+        for key in lastTypesDict.keys():
+            if key not in keys:
+                keys.append(key)
+        
+        keys.sort()
+        for key in keys:
+            n1 = lastTypesDict.get(key,0)
+            n2 = typesDict.get(key,0)
+            delta2 = n2-n1
+            if delta2 != 0:
+                print "%+6d =%7d %s" % (delta2,n2,key)
+            
+        lastTypesDict = typesDict
+        typesDict = {}
+        #@nonl
+        #@-node:ekr.20040703054646:<< print number of each type of object >>
+        #@nl
+        if 0:
+            #@            << print added functions >>
+            #@+node:ekr.20040703065638:<< print added functions >>
+            import types
+            import inspect
+            
+            global lastFunctionsDict
+            
+            funcDict = {}
+            
+            for obj in gc.get_objects():
+                if type(obj) == types.FunctionType:
+                    key = repr(obj) # Don't create a pointer to the object!
+                    funcDict[key]=None 
+                    if not lastFunctionsDict.has_key(key):
+                        print ; print obj
+                        args, varargs, varkw,defaults  = inspect.getargspec(obj)
+                        print "args", args
+                        if varargs: print "varargs",varargs
+                        if varkw: print "varkw",varkw
+                        if defaults:
+                            print "defaults..."
+                            for s in defaults: print s
+            
+            lastFunctionsDict = funcDict
+            funcDict = {}
+            #@nonl
+            #@-node:ekr.20040703065638:<< print added functions >>
+            #@nl
 
         lastObjectCount = n2
         return delta
@@ -1461,6 +1525,7 @@ def printGcRefs (verbose=True):
 #@nonl
 #@-node:ekr.20031218072017.1593:printGcRefs
 #@-others
+#@nonl
 #@-node:ekr.20031218072017.1588:Garbage Collection
 #@+node:ekr.20031218072017.3139:Hooks & plugins (leoGlobals)
 #@+node:ekr.20031218072017.1315:idle time functions (leoGlobals)
