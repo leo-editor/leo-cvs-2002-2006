@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="738" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="770" clone_windows="0"/>
 <globals body_outline_ratio="0.522639068564">
-	<global_window_position top="50" left="215" height="833" width="987"/>
+	<global_window_position top="29" left="192" height="833" width="987"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences>
@@ -12,14 +12,14 @@
 	<change_string></change_string>
 </find_panel_settings>
 <vnodes>
-<v t="EKR.20040519091259"><vh>Annoucnements</vh>
+<v t="EKR.20040519091259" a="E"><vh>Annoucnements</vh>
 <v t="EKR.20040519091259.1"><vh>Download statistics</vh></v>
 <v t="EKR.20040519091259.2"><vh>Quotes of the month</vh>
 <v t="ekr.20040630210818"><vh>July 2004</vh></v>
 <v t="EKR.20040519091259.3"><vh>November 2003</vh></v>
 <v t="EKR.20040519091259.4"><vh>October 2003</vh></v>
 </v>
-<v t="ekr.20040630103409"><vh>ANN: Leo 4.2 Beta 1: An outlining editor</vh></v>
+<v t="ekr.20040810104041" a="TV"><vh>ANN: Leo 4.2 Beta 3: An outlining editor</vh></v>
 <v t="EKR.20040519091259.5"><vh>FAQ for comp.prog.literate</vh></v>
 <v t="EKR.20040519091259.7"><vh>Previous readme files</vh>
 <v t="EKR.20040519091259.8"><vh>4.2 a1</vh></v>
@@ -48,6 +48,7 @@
 </v>
 </v>
 <v t="EKR.20040519091259.30"><vh>Previous announcements</vh>
+<v t="ekr.20040630103409"><vh>ANN: Leo 4.2 Beta 1: An outlining editor</vh></v>
 <v t="EKR.20040519091259.6"><vh>ANN: Leo 4.1 final: An outlining editor</vh></v>
 <v t="EKR.20040519091259.31"><vh>ANN: Leo 4.1 rc4: An outlining editor</vh></v>
 <v t="EKR.20040519091259.32"><vh>ANN: Leo 4.1 rc3: An outlining editor</vh></v>
@@ -74,7 +75,7 @@
 </v>
 </v>
 </v>
-<v t="EKR.20040519080201.1"><vh>Checklist for 4.2</vh>
+<v t="EKR.20040519080201.1"><vh>Distribution checklist</vh>
 <v t="EKR.20040519080201.2" tnodeList="EKR.20040519080201.2"><vh>@file-nosent c:\prog\leoCVS\.pycheckrc</vh></v>
 <v t="EKR.20040519080201.3"><vh>@url http://www.python.org/pypi?:action=submit_form</vh></v>
 </v>
@@ -97,8 +98,8 @@
 </v>
 </v>
 </v>
-<v t="EKR.20040519082027" a="TV"><vh>Distribution scripts</vh>
-<v t="EKR.20040519082027.28"><vh>&lt;&lt; setup info for createLeoDist.py &gt;&gt; (no spaces in file names)</vh></v>
+<v t="EKR.20040519082027"><vh>Distribution scripts</vh>
+<v t="EKR.20040519082027.28" a="M"><vh>&lt;&lt; setup info for createLeoDist.py &gt;&gt; (no spaces in file names)</vh></v>
 <v t="EKR.20040519083717"><vh>@thin leo.nsi</vh></v>
 <v t="EKR.20040519082027.20"><vh>@thin preSetup.py</vh></v>
 <v t="EKR.20040519082027.23"
@@ -117,11 +118,9 @@ marks="EKR.20040519082027.28,"><vh>@thin ../createLeoDist.py</vh></v>
 <v t="ekr.20040701193853.4"><vh>unusedNames</vh></v>
 <v t="ekr.20040701193853.5"><vh>variablesToIgnore</vh></v>
 </v>
+<v t="ekr.20040809102948"><vh>Wrong warnings: not suppressed</vh></v>
 </v>
-<v t="EKR.20040519080201.1"><vh>Checklist for 4.2</vh>
-<v t="EKR.20040519080201.2" tnodeList="EKR.20040519080201.2"><vh>@file-nosent c:\prog\leoCVS\.pycheckrc</vh></v>
-<v t="EKR.20040519080201.3"><vh>@url http://www.python.org/pypi?:action=submit_form</vh></v>
-</v>
+<v t="ekr.20040810080902" a="E"><vh>Checklist for 4.2 beta 3</vh></v>
 </vnodes>
 <tnodes>
 <t tx="EKR.20040519080201.1">@color
@@ -396,7 +395,7 @@ if 1: # Replace config settings and create .zip file.
 	os.chdir(r"c:\prog\leoCvs\leo")
 	os.system(r"c:\python23\python c:\prog\leoCvs\leo\createLeoDist.py sdist --formats=zip")</t>
 <t tx="EKR.20040519082027.28">name="leo",
-version="4.2-b2",
+version="4.2-b3",
 author="Edward K. Ream",
 author_email="edreamleo@charter.net",
 url="http://webpages.charter.net/edreamleo/front.html",
@@ -540,7 +539,7 @@ c:\python22\python &lt;leopath&gt;leo.py %1
 </t>
 <t tx="EKR.20040519090846.8">Metadata-Version: 1.0
 Name: leo
-Version: 4.2-b1
+Version: 4.2-b3
 Summary: Leo: Literate Editor with Outlines
 Home-page: http://webpages.charter.net/edreamleo/front.html
 Author: Edward K. Ream
@@ -560,11 +559,13 @@ Description: Leo is an outline-oriented editor written in 100% pure Python.
 		Download tkIcon from http://www.effbot.org/downloads/#tkIcon
 Platform: Windows, Linux, Macintosh
 </t>
-<t tx="EKR.20040519090846.9">Leo 4.2 beta 1           June 30, 2004
+<t tx="EKR.20040519090846.9">Leo 4.2 beta 3           August 10, 2004
 
-Beta 1 completes all fundamental work in the 4.2 code base. All essential code
-is complete. Dozens of bugs have been fixed since the Alpha 3 release about a
-month ago.
+Leo 4.2 Beta 3 is now available at http://sourceforge.net/projects/leo/
+
+This version of Leo is feature complete.  Leo's core code has been stable for several months.
+
+To do: most plugins work with the new code base, but other plugins need some more work.
 
 The highlights of Leo 4.2:
 
@@ -579,11 +580,20 @@ Leo's data structures must now use a positions rather than vnodes. Old scripts
 that appear to use vnodes will still work because methods like c.currentVnode
 that appear to return vnodes actually return positions.
 
-Still to do:
+- A new mod_scripting plugin is a big advance in scripting and testing.
+test.leo now uses @test and @script nodes to define unit tests without
+explicitly creating subclasses of unittest.TestCase. Converting scripts to unit
+tests now takes a few seconds!
 
-- Perfect import and @import. These will allow people to use Leo without having
-to convert source files.
-</t>
+- A much faster and more robust spell checker plugin. (requires Python 2.3)
+
+- Leo is now much more friendly to using spaces instead of tabs.
+
+- The Execute Script command reports erroneous lines more clearly.
+
+- The Perfect Import feature guarantee that Leo imports file exactly.
+
+- Dozens of minor improvements.</t>
 <t tx="EKR.20040519090846.10"># The manifest template: specifies all files to be included in the distribution.
 
 # Note: these are glob patterns.
@@ -620,6 +630,7 @@ include Icons/*.*
 include plugins/*.*
 exclude plugins/leoPluginsRef.leo
 exclude plugins/*.pyc
+include plugins/aspell.pyd
 
 include src/LeoPy.leo
 # Exclude LeoPyRef.leo.
@@ -802,7 +813,7 @@ This main feature of this release is that Leo represents clones as nodes that
 share trees of vnodes. To make this work Leo introduces _positions_. A position
 is a location in the traversal of an outline.
 
-This code appears stable.  I have been using the 4.2 code base for several weeks for all my work with no significant problems.  Nevertheless, this _is_ alpha (or even pre-alpha) quality code.  Use at your own risk.  Make frequent backups.
+This code appears stable.  I have been using the 4.2 code base for several weeks for all my work with no significant problems.  Nevertheless, this is alpha (or even pre-alpha) quality code.  Use at your own risk.  Make frequent backups.
 
 See the "4.2 Projects" node in LeoPy.leo for details of what has been done so far.  I shall be updating documentation more fully for the first beta release.</t>
 <t tx="EKR.20040519091259.9">Leo 4.1 Final              February 20, 2004
@@ -938,7 +949,7 @@ The Highlights of 3.11:
   - Added "Replace tabs with spaces" checkbox in Prefs panel.
 - New settings in leoConfig.leo/.txt.
   - Added "tk_encoding" setting and related logic.
-  - Colors for Show Invisibibles command and body_insertion_cursor
+  - Colors for Show Invisibles command and body_insertion_cursor
   - Settings affecting when control-drags start.
   - Defaults for unicode (see above).
 - Many other bug fixes and improvements.</t>
@@ -1335,7 +1346,7 @@ For the first time in months there are no serious bugs outstanding.
 
 Warning: By default Leo 4.1 creates .leo files that can not be read by older versions of Leo.
 
-Warning: Use the __wx_gui.py plugin with _extreme_ caution until further notice:
+Warning: Use the __wx_gui.py plugin with extreme caution until further notice:
 bugs in this plugin could cause body text to be lost when changing nodes.
 
 Beta 5:
@@ -2336,7 +2347,8 @@ Wiki:     http://leo.hd1.org/
 Edward K. Ream
 </t>
 <t tx="EKR.20040519100230"></t>
-<t tx="ekr.20040629173419.1">@comment #
+<t tx="ekr.20040629173419.1">@tabwidth -4
+@comment #
 
 @others
 
@@ -2836,8 +2848,7 @@ no-unusednames=
 no-var
 no-varargsused
 no-varlist=
-no-version
-</t>
+no-version</t>
 <t tx="ekr.20040701193853"># list of strings: ignore warnings generated from these modules
 blacklist = [
 	'leoConfig', # Pychecker has lots of problems with this file...
@@ -2983,7 +2994,6 @@ maxReferences = 500</t>
 #	  'module3.my_class': 'no-initreturn', }
 
 suppressions = {
-        
     # Base classes have lots of unused params.
         'leoFrame' : '--no-argsused',
         'leoMenu'  : '--no-argsused',
@@ -3011,5 +3021,96 @@ variablesToIgnore = [
     '__all__', '__version__', '__copyright__',
     '__revision__', # Suppress an warning about a library module.
 ]</t>
+<t tx="ekr.20040809102948">(wrong) C:\prog\leoCVS\leo\src\leoTkinterTree.py:1930: Using method (dragging) as an attribute (not invoked)
+
+(wrong) c:\prog\LeoCVS\leo\src\leoImport.py:59: No module attribute (fail) found
+(wrong) c:\prog\LeoCVS\leo\src\leoImport.py:290: No module attribute (fail) found
+(wrong) c:\prog\LeoCVS\leo\src\leoImport.py:823: No module attribute (fail) found
+(wrong) c:\prog\LeoCVS\leo\src\leoImport.py:868: No module attribute (fail) found
+(wrong) c:\prog\LeoCVS\leo\src\leoImport.py:2591: No module attribute (fail) found</t>
+<t tx="ekr.20040810080902">@nocolor
+
+Announcements
+	- Announce to comp.lang.python
+	- Announce to comp.programming.literate</t>
+<t tx="ekr.20040810104041">Leo 4.2 beta 3           August 10, 2004
+
+Leo 4.2 Beta 3 is now available at http://sourceforge.net/projects/leo/
+
+This version of Leo is feature complete.  Leo's core code has been stable for several months.
+
+To do: most plugins work with the new code base, but other plugins need some more work.
+
+The highlights of Leo 4.2:
+
+- @thin trees make Leo much more friendly to cvs. Files derived from @thin can
+be committed to cvs and updated from cvs without having to commit or update the
+corresponding .leo file. There is no longer any need to keep .leo files and
+derived files in synch.
+
+- Leo's data structures have been reorganized to mke outline
+operations significantly faster. To support this organization, scripts
+that traverse Leo's data structures must now use a positions rather
+than vnodes. Old scripts that appear to use vnodes will still work
+because methods like c.currentVnode that appear to return vnodes
+actually return positions.
+
+- A new mod_scripting plugin is a big advance in scripting and testing.
+test.leo now uses @test and @script nodes to define unit tests without
+explicitly creating subclasses of unittest.TestCase. Converting scripts to unit
+tests now takes a few seconds!
+
+- A much faster and more robust spell checker plugin. (requires Python 2.3)
+
+- Leo is now much more friendly to using spaces instead of tabs.
+
+- The Execute Script command reports erroneous lines more clearly.
+
+- The Perfect Import feature guarantee that Leo imports file exactly.
+
+- Dozens of minor improvements.
+
+Quotes of the month
+-------------------
+
+"I'm a newbie to Leo(a couple of weeks) and I feel addicted to
+programming again...in fact it has resurrected a dead project of mine :)
+The outline has proven most liberating in terms of testing ideas out.
+Thanks a lot!" -- anon
+
+"Wow, wow, and wow. I just started using Leo about a month ago..Now I
+finally understand how to use clones and I realized that this is
+exactly how I want to organize my information.  Multiple views on my
+data, fully interlinkable just like my thoughts...Thanks for a great
+tool! -- anon
+
+"I *LIKE* it; I was amazed at how [different the Leo] experience was
+compared to flat-filing. It was almost Forth-like in the way that it
+was possible to work top-down or bottom-up at will (I believe this is
+the key to its strength, btw)." --Tarvin Rhodes
+
+What is Leo?
+------------
+- A programmer's editor, an outlining editor and a flexible browser.
+- A literate programming tool, compatible with noweb and CWEB.
+- A data organizer and project manager. Leo provides multiple views
+   of projects within a single outline.
+- Fully scriptable using Python. Leo saves its files in XML format.
+- Portable. leo.py is 100% pure Python.
+- Open Software, distributed under the Python License.
+
+Leo requires Python 2.2.1 or above and tcl/tk 8.4 or above.
+Leo works on Linux, Windows and MacOs X.
+
+Links:
+------
+Leo:      http://webpages.charter.net/edreamleo/front.html
+Home:     http://sourceforge.net/projects/leo/
+Download: http://sourceforge.net/project/showfiles.php?group_id=3458
+CVS:      http://sourceforge.net/cvs/?group_id=3458
+Wiki:     http://leo.hd1.org/
+
+Edward K. Ream
+August 10, 2004</t>
 </tnodes>
 </leo_file>
