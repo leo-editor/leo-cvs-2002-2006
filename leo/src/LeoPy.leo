@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="4479" clone_windows="0"/>
-<globals body_outline_ratio="0.577008928571">
-	<global_window_position top="10" left="312" height="896" width="901"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="4507" clone_windows="0"/>
+<globals body_outline_ratio="0.566995768688">
+	<global_window_position top="25" left="10" height="709" width="919"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences>
@@ -3701,8 +3701,8 @@
 <v t="ekr.20040106121339"><vh>(Improved the find panel)</vh>
 <v t="ekr.20040107064101.2"><vh>What I did</vh></v>
 <v t="ekr.20031218072017.3902"><vh>find.createFrame</vh>
-<v t="ekr.20031218072017.3903"><vh>&lt;&lt; Create four columns of radio and checkboxes &gt;&gt;</vh></v>
 <v t="ekr.20031218072017.3904"><vh>&lt;&lt; Create the Find and Change panes &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.3903"><vh>&lt;&lt; Create four columns of radio and checkboxes &gt;&gt;</vh></v>
 <v t="ekr.20031218072017.3905"><vh>&lt;&lt; Create two rows of buttons &gt;&gt;</vh></v>
 </v>
 </v>
@@ -4205,7 +4205,7 @@
 </v>
 </v>
 </v>
-<v t="ekr.20040107064101.1" a="TV"><vh>4.2 Projects</vh>
+<v t="ekr.20040107064101.1"><vh>4.2 Projects</vh>
 <v t="ekr.20040326032652"><vh> Notes</vh>
 <v t="ekr.20040301192211"><vh> What I did</vh>
 <v t="ekr.20040311124726"><vh>Features of 4.2</vh></v>
@@ -6120,7 +6120,7 @@
 <v t="ekr.20040414093055"><vh>Shadow files plugin</vh></v>
 <v t="ekr.20040414093758"><vh>Suggestions</vh></v>
 </v>
-<v t="ekr.20031218072017.2406"><vh>Code</vh>
+<v t="ekr.20031218072017.2406" a="TV"><vh>Code</vh>
 <v t="ekr.20031218072017.2407"><vh>  Overview of code</vh>
 <v t="ekr.20031218072017.2408"><vh>&lt;&lt; About clones &gt;&gt;</vh></v>
 <v t="ekr.20031218072017.2409"><vh>&lt;&lt; About drawing &gt;&gt;</vh></v>
@@ -7517,8 +7517,8 @@
 </v>
 <v t="ekr.20031218072017.3901"><vh>destroySelf</vh></v>
 <v t="ekr.20031218072017.3902"><vh>find.createFrame</vh>
-<v t="ekr.20031218072017.3903"><vh>&lt;&lt; Create four columns of radio and checkboxes &gt;&gt;</vh></v>
 <v t="ekr.20031218072017.3904"><vh>&lt;&lt; Create the Find and Change panes &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.3903"><vh>&lt;&lt; Create four columns of radio and checkboxes &gt;&gt;</vh></v>
 <v t="ekr.20031218072017.3905"><vh>&lt;&lt; Create two rows of buttons &gt;&gt;</vh></v>
 </v>
 <v t="ekr.20031218072017.2059"><vh>find.init</vh>
@@ -7570,7 +7570,7 @@
 </v>
 </v>
 </v>
-<v t="ekr.20031218072017.3939" tnodeList="ekr.20031218072017.3939,ekr.20031218072017.3940,ekr.20031218072017.1801,ekr.20031218072017.1802,ekr.20031218072017.3942,ekr.20031218072017.3944,ekr.20031218072017.2176,ekr.20031218072017.2177,ekr.20031218072017.2178,ekr.20031218072017.2179,ekr.20031218072017.2180,ekr.20031218072017.3945,ekr.20031218072017.3946,ekr.20031218072017.3947,ekr.20031218072017.3948,ekr.20031218072017.3949,ekr.20031218072017.3950,ekr.20031218072017.3951,ekr.20031218072017.3952,ekr.20031218072017.3954,ekr.20031218072017.3955,ekr.20031218072017.3956,ekr.20031218072017.3957,ekr.20031218072017.3958,ekr.20031218072017.3959,ekr.20031218072017.3960,ekr.20031218072017.3961,ekr.20031218072017.3962,ekr.20031218072017.3963,ekr.20031218072017.1733,ekr.20031218072017.1975,ekr.20031218072017.1976,ekr.20031218072017.3965,ekr.20031218072017.1974,ekr.20031218072017.3966,ekr.20031218072017.3968,ekr.20031218072017.3969,ekr.20031218072017.2246,ekr.20031218072017.1625,ekr.20031218072017.722,ekr.20031218072017.1540,ekr.20031218072017.2307,ekr.20031218072017.3970,ekr.20031218072017.3972,ekr.20031218072017.3973,ekr.20031218072017.3974,ekr.20031218072017.3975,ekr.20031218072017.2253,ekr.20031218072017.3976,ekr.20031218072017.3977,ekr.20031218072017.3978,ekr.20031218072017.1803,ekr.20031218072017.3981,ekr.20031218072017.841,ekr.20031218072017.842,ekr.20031218072017.843,ekr.20031218072017.3982,ekr.20031218072017.3983,ekr.20031218072017.3985,ekr.20031218072017.3986,ekr.20031218072017.3987,ekr.20031218072017.3988,ekr.20031218072017.3989,ekr.20031218072017.3990,ekr.20031218072017.3992,ekr.20031218072017.3993,ekr.20031218072017.3994,ekr.20031218072017.998,ekr.20031218072017.3995,ekr.20031218072017.3996,ekr.20031218072017.2182,ekr.20031218072017.838,ekr.20031218072017.3998,ekr.20031218072017.2183,ekr.20031218072017.1320,ekr.20031218072017.1321,ekr.20031218072017.1322,ekr.20031218072017.1323,ekr.20031218072017.1324,ekr.20031218072017.1325,ekr.20031218072017.1326,ekr.20031218072017.1327,ekr.20031218072017.1328,ekr.20031218072017.1329,ekr.20031218072017.1330,ekr.20040105223536,ekr.20040105223536.1,ekr.20031218072017.1331,ekr.20031218072017.3999,ekr.20031218072017.4000,ekr.20031218072017.4001,ekr.20031218072017.4002,ekr.20031218072017.2184,ekr.20031218072017.4003,ekr.20031218072017.4004,ekr.20031218072017.4005,ekr.20031218072017.4007,ekr.20031218072017.4008,ekr.20031218072017.4009,ekr.20031218072017.4010,ekr.20031218072017.4011,ekr.20031218072017.4012,ekr.20031218072017.495,ekr.20031218072017.4014,ekr.20031218072017.4015,ekr.20031218072017.4016,ekr.20031218072017.4017,ekr.20031218072017.4019,ekr.20031218072017.4020,ekr.20031218072017.4021,ekr.20031218072017.4022,ekr.20031218072017.4023,ekr.20031218072017.4024,ekr.20031218072017.4026,ekr.20031218072017.4028,ekr.20031218072017.4029,ekr.20031218072017.4030,ekr.20031218072017.4031,ekr.20031218072017.2377,ekr.20031218072017.4032,ekr.20031218072017.4034,ekr.20031218072017.4035,ekr.20031218072017.4036,ekr.20031218072017.4037,ekr.20031218072017.4038,ekr.20031218072017.4039,ekr.20031218072017.4040,ekr.20031218072017.4041,ekr.20031218072017.4042,ekr.20031218072017.4043,ekr.20031218072017.4044,ekr.20031218072017.4045,ekr.20031218072017.1473,ekr.20031218072017.4046"><vh>@file leoTkinterFrame.py</vh>
+<v t="ekr.20031218072017.3939" tnodeList="ekr.20031218072017.3939,ekr.20031218072017.3940,ekr.20031218072017.1801,ekr.20031218072017.1802,ekr.20031218072017.3942,ekr.20031218072017.3944,ekr.20031218072017.2176,ekr.20031218072017.2177,ekr.20031218072017.2178,ekr.20031218072017.2179,ekr.20031218072017.2180,ekr.20031218072017.3945,ekr.20031218072017.3946,ekr.20031218072017.3947,ekr.20031218072017.3948,ekr.20031218072017.3949,ekr.20031218072017.3950,ekr.20031218072017.3951,ekr.20031218072017.3952,ekr.20031218072017.3954,ekr.20031218072017.3955,ekr.20031218072017.3956,ekr.20031218072017.3957,ekr.20031218072017.3958,ekr.20031218072017.3959,ekr.20031218072017.3960,ekr.20031218072017.3961,ekr.20031218072017.3962,ekr.20031218072017.3963,ekr.20031218072017.1733,ekr.20031218072017.1975,ekr.20031218072017.1976,ekr.20031218072017.3965,ekr.20031218072017.1974,ekr.20031218072017.3966,ekr.20031218072017.3968,ekr.20031218072017.3969,ekr.20031218072017.2246,ekr.20031218072017.1625,ekr.20031218072017.722,ekr.20031218072017.1540,ekr.20031218072017.2307,ekr.20031218072017.3970,ekr.20031218072017.3972,ekr.20031218072017.3973,ekr.20031218072017.3974,ekr.20031218072017.3975,ekr.20031218072017.2253,ekr.20031218072017.3976,ekr.20031218072017.3977,ekr.20031218072017.3978,ekr.20031218072017.1803,ekr.20031218072017.3981,ekr.20031218072017.841,ekr.20031218072017.842,ekr.20031218072017.843,ekr.20031218072017.3982,ekr.20031218072017.3983,ekr.20031218072017.3985,ekr.20031218072017.3986,ekr.20031218072017.3987,ekr.20031218072017.3988,ekr.20031218072017.3989,ekr.20031218072017.3990,EKR.20040422130619,ekr.20031218072017.3992,ekr.20031218072017.3993,ekr.20031218072017.3994,ekr.20031218072017.998,ekr.20031218072017.3995,ekr.20031218072017.3996,ekr.20031218072017.2182,ekr.20031218072017.838,ekr.20031218072017.3998,ekr.20031218072017.2183,ekr.20031218072017.1320,ekr.20031218072017.1321,ekr.20031218072017.1322,ekr.20031218072017.1323,ekr.20031218072017.1324,ekr.20031218072017.1325,ekr.20031218072017.1326,ekr.20031218072017.1327,ekr.20031218072017.1328,ekr.20031218072017.1329,ekr.20031218072017.1330,ekr.20040105223536,ekr.20040105223536.1,ekr.20031218072017.1331,ekr.20031218072017.3999,ekr.20031218072017.4000,ekr.20031218072017.4001,ekr.20031218072017.4002,ekr.20031218072017.2184,ekr.20031218072017.4003,ekr.20031218072017.4004,ekr.20031218072017.4005,ekr.20031218072017.4007,ekr.20031218072017.4008,ekr.20031218072017.4009,ekr.20031218072017.4010,ekr.20031218072017.4011,ekr.20031218072017.4012,ekr.20031218072017.495,ekr.20031218072017.4014,ekr.20031218072017.4015,ekr.20031218072017.4016,ekr.20031218072017.4017,ekr.20031218072017.4019,ekr.20031218072017.4020,ekr.20031218072017.4021,ekr.20031218072017.4022,ekr.20031218072017.4023,ekr.20031218072017.4024,ekr.20031218072017.4026,ekr.20031218072017.4028,ekr.20031218072017.4029,ekr.20031218072017.4030,ekr.20031218072017.4031,ekr.20031218072017.2377,ekr.20031218072017.4032,ekr.20031218072017.4034,ekr.20031218072017.4035,ekr.20031218072017.4036,ekr.20031218072017.4037,ekr.20031218072017.4038,ekr.20031218072017.4039,ekr.20031218072017.4040,ekr.20031218072017.4041,ekr.20031218072017.4042,ekr.20031218072017.4043,ekr.20031218072017.4044,ekr.20031218072017.4045,ekr.20031218072017.1473,ekr.20031218072017.4046"><vh>@file leoTkinterFrame.py</vh>
 <v t="ekr.20031218072017.3940"><vh>class leoTkinterFrame</vh>
 <v t="ekr.20031218072017.3941"><vh> frame.Birth &amp; Death</vh>
 <v t="ekr.20031218072017.1801"><vh>f.__init__</vh>
@@ -7659,6 +7659,7 @@
 <v t="ekr.20031218072017.3988"><vh>hideLogWindow</vh></v>
 <v t="ekr.20031218072017.3989"><vh>minimizeAll</vh></v>
 <v t="ekr.20031218072017.3990"><vh>toggleSplitDirection</vh></v>
+<v t="EKR.20040422130619"><vh>resizeToScreen</vh></v>
 </v>
 <v t="ekr.20031218072017.3991"><vh>Help Menu...</vh>
 <v t="ekr.20031218072017.3992"><vh>leoHelp</vh>
@@ -9408,23 +9409,72 @@
 </v>
 </v>
 </v>
-<v t="ekr.20040129080202"><vh>Mac/Linux  bugs</vh>
-<v t="ekr.20040106122602"><vh>Install Leo in the site-packages directory</vh></v>
-<v t="ekr.20040212094121"><vh>Fit window on screen command</vh></v>
-<v t="ekr.20040105080119.1"><vh>Linux bug: paste does not work in find panel</vh></v>
-<v t="ekr.20040105070616.2"><vh>Mac bugs</vh></v>
-<v t="ekr.20040206080140"><vh>Make sure find panel goes to background</vh></v>
-<v t="ekr.20040117112808.1"><vh>small bug in install script</vh></v>
-<v t="ekr.20040117112213"><vh>config problem on Linux</vh></v>
-<v t="ekr.20040115162445.1"><vh>Backspace problems on Linux</vh>
-<v t="ekr.20040115162445.2"><vh>Dave Hein: fix</vh></v>
+<v t="EKR.20040422132037"><vh>Mac/Linux bugs</vh>
+<v t="EKR.20040422132037.1" a="M"><vh>Use clover keys for Mac</vh></v>
+<v t="EKR.20040422132037.2"><vh>Install Leo in the site-packages directory</vh></v>
+<v t="EKR.20040422132037.3"><vh>small bug in install script</vh></v>
+<v t="EKR.20040422132037.4"><vh>config problem on Linux</vh></v>
+<v t="EKR.20040422132037.5"><vh>Backspace problems on Linux</vh>
+<v t="EKR.20040422132037.6"><vh>Dave Hein: fix</vh></v>
 </v>
-<v t="ekr.20040104162835.18"><vh>Bug: vpython and mac</vh></v>
-<v t="ekr.20040207170503"><vh>double-paste in searchbox</vh></v>
-<v t="ekr.20040414051834"><vh>Mouse / Paste Anomalies  </vh></v>
+<v t="EKR.20040422132037.7"><vh>Bug: vpython and mac</vh></v>
+<v t="EKR.20040422132037.8"><vh>Mouse / Paste Anomalies  </vh></v>
 </v>
-<v t="EKR.20040422091601" a="E"><vh>New bugs</vh>
+<v t="EKR.20040422091601"><vh>New bugs</vh>
 <v t="EKR.20040422091601.1"><vh>Syntax Colouring Bug - html mode   </vh></v>
+</v>
+<v t="EKR.20040422130257"><vh>to be committed to cvs</vh>
+<v t="EKR.20040422131023"><vh>(Force update of log pane when reading derived files)</vh></v>
+<v t="EKR.20040422130619.1"><vh>(ResizeToScreen command)</vh>
+<v t="ekr.20031218072017.3979"><vh>Gui-dependent commands</vh>
+<v t="ekr.20031218072017.3980"><vh>Edit Menu...</vh>
+<v t="ekr.20031218072017.3981"><vh>abortEditLabelCommand</vh></v>
+<v t="ekr.20031218072017.840"><vh>Cut/Copy/Paste body text</vh>
+<v t="ekr.20031218072017.841"><vh>frame.OnCut, OnCutFrom Menu</vh></v>
+<v t="ekr.20031218072017.842"><vh>frame.OnCopy, OnCopyFromMenu</vh></v>
+<v t="ekr.20031218072017.843"><vh>frame.OnPaste, OnPasteNode, OnPasteFromMenu</vh></v>
+</v>
+<v t="ekr.20031218072017.3982"><vh>endEditLabelCommand</vh></v>
+<v t="ekr.20031218072017.3983"><vh>insertHeadlineTime</vh></v>
+</v>
+<v t="ekr.20031218072017.3984"><vh>Window Menu...</vh>
+<v t="ekr.20031218072017.3985"><vh>toggleActivePane</vh></v>
+<v t="ekr.20031218072017.3986"><vh>cascade</vh></v>
+<v t="ekr.20031218072017.3987"><vh>equalSizedPanes</vh></v>
+<v t="ekr.20031218072017.3988"><vh>hideLogWindow</vh></v>
+<v t="ekr.20031218072017.3989"><vh>minimizeAll</vh></v>
+<v t="ekr.20031218072017.3990"><vh>toggleSplitDirection</vh></v>
+<v t="EKR.20040422130619"><vh>resizeToScreen</vh></v>
+</v>
+<v t="ekr.20031218072017.3991"><vh>Help Menu...</vh>
+<v t="ekr.20031218072017.3992"><vh>leoHelp</vh>
+<v t="ekr.20031218072017.3993"><vh>showProgressBar</vh>
+<v t="ekr.20031218072017.3994"><vh>&lt;&lt; create the scale widget &gt;&gt;</vh></v>
+</v>
+</v>
+</v>
+</v>
+</v>
+<v t="EKR.20040422131742"><vh>(Improve Find dialog)</vh>
+<v t="EKR.20040422131742.1"><vh>Linux bug: paste does not work in find panel</vh></v>
+<v t="EKR.20040422131742.2" a="M"><vh>double-paste in searchbox</vh></v>
+<v t="ekr.20031218072017.3082"><vh>Initing &amp; finalizing</vh>
+<v t="ekr.20031218072017.3083"><vh>checkArgs</vh></v>
+<v t="ekr.20031218072017.3084"><vh>initBatchCommands</vh></v>
+<v t="ekr.20031218072017.3085"><vh>initBatchText &amp; initNextText</vh></v>
+<v t="ekr.20031218072017.3086"><vh>initInHeadline</vh></v>
+<v t="ekr.20031218072017.3087"><vh>initInteractiveCommands</vh></v>
+<v t="ekr.20031218072017.3088"><vh>printLine</vh></v>
+<v t="ekr.20031218072017.3089"><vh>restore</vh></v>
+<v t="ekr.20031218072017.3090"><vh>save</vh></v>
+<v t="ekr.20031218072017.3091"><vh>showSuccess</vh></v>
+</v>
+<v t="ekr.20031218072017.3902"><vh>find.createFrame</vh>
+<v t="ekr.20031218072017.3904"><vh>&lt;&lt; Create the Find and Change panes &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.3903"><vh>&lt;&lt; Create four columns of radio and checkboxes &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.3905"><vh>&lt;&lt; Create two rows of buttons &gt;&gt;</vh></v>
+</v>
+</v>
 </v>
 </vnodes>
 <tnodes>
@@ -9445,6 +9495,239 @@ David
 </t>
 <t tx="EKR.20040422101256"></t>
 <t tx="EKR.20040422101256.1"></t>
+<t tx="EKR.20040422130257"></t>
+<t tx="EKR.20040422130619">def resizeToScreen (self):
+	
+	top = self.top
+	
+	w = top.winfo_screenwidth()
+	h = top.winfo_screenheight()
+	
+	geom = "%dx%d%+d%+d" % (w-20,h-55,10,25)
+
+	top.geometry(geom)</t>
+<t tx="EKR.20040422130619.1"></t>
+<t tx="EKR.20040422131023">Make sure beginUpdate inhibits redraw!</t>
+<t tx="EKR.20040422131742">@nocolor
+
+What I did:
+	
+- Put frame around find/change text areas:  added relief setting.
+- Reduced height and width of find/change text areas.
+- Reduced padding around buttons and checkboxes.
+- It turns out that _clover_ v and p work in checkboxes.
+- Bring outline to front after sucessful search.
+
+@color</t>
+<t tx="EKR.20040422131742.1">@nocolor
+
+http://sourceforge.net/forum/message.php?msg_id=2355852
+By: rodrigo_b
+
+On Linux, if you copy some leo headline or body text, and try to paste it in
+the Find/Change panel (as a string to search), it does not work.
+
+I suspect the problem is due that Ctrl+V (paste) is not define in the Find panel.
+
+RodrigoB.</t>
+<t tx="EKR.20040422131742.2">@nocolor
+
+By: dthein ( Dave Hein ) 
+ BUG: double-paste in searchbox.py plugin   
+2004-02-06 16:59  
+
+ Leo 4.1 rc4, build 1.76 , February 3, 2004
+Python 2.3.3, Tk 8.4.2, linux2
+
+When I Ctrl-C copy a string from a body and Ctlr-V paste it into the searchbox it gets pasted twice (e.g. the string "image" gets pasted as "imageimage").
+
+I'll try to track this down, but if anyone has a clue right away, please post the solution.
+
+--
+Dave Hein  
+</t>
+<t tx="EKR.20040422132037">@nocolor</t>
+<t tx="EKR.20040422132037.1"></t>
+<t tx="EKR.20040422132037.2"></t>
+<t tx="EKR.20040422132037.3">@nocolor
+
+https://sourceforge.net/forum/message.php?msg_id=2370629
+By: tyndal
+
+I found a small bug in the leo install script.
+It doesnt check to see that the $LEO_PREFIX/bin exists before trying to install
+the "leo" script into it, giving an error.
+
+you just need to make a small check similar to the one for the lib directory..
+(i've included it below)
+
+Thanks,
+-Tyndal
+
+#------------------------------
+echo ""
+echo Making directory structure $LEO_PREFIX/bin
+
+RESULTS=`mkdir -p $LEO_PREFIX/bin 2&gt;&amp;1`
+if [ $? -ne 0 ]; then
+    echo Failure making directory $LEO_PREFIX/bin
+    exit 0;
+fi
+#
+#-----------------------------
+</t>
+<t tx="EKR.20040422132037.4">@nocolor
+
+http://sourceforge.net/forum/message.php?msg_id=2373816
+By: sbeards
+
+A related issue is that leoConfig.txt gets auto-tangled and overwritten on startup.
+This will be a problem if Leo is run by a non-root user or the file is not readable.
+For example, I get the following traceback after starting Leo (when leoConfig.txt
+is read-only):
+
+Traceback (most recent call last):
+  File "/usr/local/share/leo-4.1-rc3/src/leoConfig.py", line 672, in update
+    cf = open(self.configFileName,mode)
+IOError: [Errno 13] Permission denied:
+'/usr/local/share/leo-4.1-rc3/src/../config/leoConfig.txt'
+
+Is there a reason leoConfig.txt gets auto-tangled on startup? Is there anyway
+to disable this? Is this by design?
+</t>
+<t tx="EKR.20040422132037.5">Shift+Ctrl+BkSp doesn't delete node   </t>
+<t tx="EKR.20040422132037.6">By: dthein ( Dave Hein ) 
+ RE: BUG: Shift+Ctrl+BkSp doesn't delete node   
+2004-01-15 03:30  
+
+ OK, the cause of the keymapping problem is a issue with the X11 keyboard mapping, not with Tk.
+
+If you have this problem on your system, issue the command:
+
+xmodmap -pke 
+
+and look in the results for the line for keycode 22. I'll bet it shows something like:
+
+keycode 22 = BackSpace Terminate_Server
+
+That second token ("Terminate_Server") is what is supposed to be mapped to Shift-Backspace. You want this second token to be either not present or to be BackSpace.
+
+To fix this, create a file (e.g. .Xmodmap) and give it the content:
+
+keycode 22 = BackSpace
+
+then run the command:
+
+xmodmap .Xmodmap
+
+And you'll have fixed the problem.
+
+Now, on my system this also disables the ability to terminate the X server using Ctrl-Alt-BackSpace ... this is because of some conflict with xdb (xdb is the newer keyboard mapping facility in XFree86 ... xmodmap is the old original X11 keyboard mapping facility). I'm still working on that.
+
+I'm also not able to get xmodmap to make this change during X11 startup (again because of conflicts with xdb). But I'm working on that as well.</t>
+<t tx="EKR.20040422132037.7">Jon Schull &lt;jschull@softlock.com&gt;  
+Date:  2003/12/30 Tue PM 05:50:51 EST 
+To:  edreamleo@charter.net 
+Subject:  Leo, Mac OS X 10.3, and VPython 
+             
+
+I've been evaluating leo or vpython programming on  Mac OS X 10.3, and 
+have some observations and a suggestion.
+
+Observations.
+		Leo runs under X11 as well as under OS X.
+		My X11 python configuration was created using the recipe at XXX 
+(which enables vpython).
+		The OS X configuration is vanilla MacPython from MacPython.org, along 
+with AquaTclTk batteries included XXX.
+		In both environments I can run leo under python leo.py and under idle.
+		Under OS X we get font smoothing, but we can't run visual python 
+programs (python crashes;  this is a known incompatibility with 
+MacPython.)
+	
+		Under X11 we can run visual python programs like this one
+			#box.py
+			from visual import *
+			box()
+			
+    And we can even run them under leo (under X11). HOWEVER, when the 
+visual python program is terminated, leo vanishes (leo and the vp 
+program apparently run in the same space)
+	
+	Under x11, we can keep leo alive by putting the vp program in its own 
+space:
+	
+		os.popen3('/sw/bin/python /Users/jis/box.py')
+	
+	However,  this doesn't let us see the output of stderr and stdout.  
+Those text streams are available...
+		
+		def do(cmd='ls'):
+			from os import popen3
+			pIn,pOut,pErr=0,1,2
+			popenResults=popen3(cmd)
+			print popenResults[pOut].read()
+			print popenResults[pErr].read()
+		
+		import os	
+		do('/sw/bin/python /Users/jis/box.py')
+		
+	...but only when the vpython program terminates.
+	
+	Here's the good news:  if we execute our vp program with 
+/sw/bin/idle.py rather than with python, we get to see the program 
+output in real time (under idle, under X11).
+	
+		import os	
+		os.chdir('/sw/lib/python2.3/idlelib')
+		os.popen3('/sw/bin/python idle.py -r /Users/jis/box.py')
+		
+		#this runs as an executed script in leo, and produces a live idle 
+with real time ongoing output.
+	
+	Now, while idle is running, leo sits in suspended animation.  But when 
+the vpython program terminates, we are left in idle, and when idle is 
+terminated, leo becomes active again.
+	
+	It would be even better if leo were not suspended (using os.spawn, 
+perhaps) but the real point is that I would really really like leo's 
+"Execute script" command to execute code this way and spare me having 
+to  hard-write the path to box.py.  It ought to be possible to 
+eliminate os.chdir as well.
+
+------------------
+Jon Schull, Ph.D.
+Associate Professor
+Information Technology
+Rochester Institute of Technology
+schull@digitalgoods.com 585-738-6696
+</t>
+<t tx="EKR.20040422132037.8">@nocolor
+
+By: Bill Drissel - drissel
+2004-04-13 19:43  
+
+Xserver (XFree86 under Cygwin) on PC (W2000); controlling Linux Red Hat;
+buncha windows up including one Leo window and many xterms and Xemacs.
+
+A: means action, R: means result
+
+A: hilite text in Xemacs window; move mouse symbol to Leo body pane; middle click
+R: text shows in body pane; headline is not marked with blue square; text is not colorized; text is not saved to file
+
+A: hilite text in Xemacs window; move mouse symbol to Leo body pane; middle click; locate mouse symbol in text
+R: text shows in body pane; headline is not marked with blue square; text is not colorized; text is not saved to file
+
+A: hilite text in Xemacs window; move mouse symbol to Leo body pane; middle click; up arrow to locate Ibeam in text
+R: Joy! colorizes, marks headline and saves!
+
+A: hilite headline text; type on KB
+R: keystrokes replace hilited text
+
+A: hilite text in Xemacs window; hilite headline; middle click
+R: hilited text appended to headline rather than replacing
+
+This last anomaly seems to persist regardless of how the headline is hilited and regardless of pasting method (middle click or Control-V)</t>
 <t tx="ekr.20031218072017">@ignore
 @nocolor
 
@@ -36069,7 +36352,7 @@ I solved the issue playing with the bodyCtrl but I think you should take a look
 to see if the setTextSelection methods do what you want them to do.
 
 RodrigoB.</t>
-<t tx="ekr.20031218072017.2406">w@language python
+<t tx="ekr.20031218072017.2406">@language python
 @pagewidth 80
 
 @ This section contains all the source code of leo.py.
@@ -46382,7 +46665,9 @@ def restore (self,data):
 
 		gui.setInsertPoint(t,insert)
 		gui.makeIndexVisible(t,insert)
-		gui.set_focus(c,t)</t>
+		gui.set_focus(c,t)
+
+	c.frame.bringToFront() # Needed on the Mac</t>
 <t tx="ekr.20031218072017.3090">def save (self):
 
 	c = self.c ; v = self.v ; gui = g.app.gui
@@ -46426,7 +46711,7 @@ def restore (self,data):
 	gui.set_focus(c,t)
 	if c.wrap_flag and not self.wrapVnode:
 		self.wrapVnode = self.v
-</t>
+	c.frame.bringToFront() # Needed on the Mac</t>
 <t tx="ekr.20031218072017.3092">def init_s_text (self,s):
 	self.oops()
 
@@ -55268,6 +55553,7 @@ self.editMenuTop2Table = (
 	("Toggle &amp;Active Pane","Ctrl-T",f.toggleActivePane),
 	("Toggle &amp;Split Direction",None,f.toggleSplitDirection),
 	("-",None,None),
+	("Resize To Screen",None,f.resizeToScreen),
 	("Casca&amp;de",None,f.cascade),
 	("&amp;Minimize All",None,f.minimizeAll),
 	("-",None,None),
@@ -57049,7 +57335,7 @@ self.s_text = Tk.Text() # Used by find.search()</t>
 	
 	self.top.protocol("WM_DELETE_WINDOW", self.onCloseWindow)</t>
 <t tx="ekr.20031218072017.3903">columnsFrame = Tk.Frame(outer,relief="groove",bd=2)
-columnsFrame.pack(anchor="e",expand=1,padx="7m",pady="2m") # Don't fill.
+columnsFrame.pack(anchor="e",expand=1,padx="7p",pady="2p") # Don't fill.
 
 numberOfColumns = 4 # Number of columns
 columns = [] ; radioLists = [] ; checkLists = []
@@ -57059,7 +57345,7 @@ for i in xrange(numberOfColumns):
 	checkLists.append([])
 
 for i in xrange(numberOfColumns):
-	columns[i].pack(side="left",padx="1m") # fill="y" Aligns to top. padx expands columns.
+	columns[i].pack(side="left",padx="1p") # fill="y" Aligns to top. padx expands columns.
 
 radioLists[0] = [
 	(self.dict["radio-find-type"],"Plain Search","plain-search"),  
@@ -57111,8 +57397,8 @@ flab = Tk.Label(fpane, width=8, text="Find:")
 clab = Tk.Label(cpane, width=8, text="Change:")
 
 # Use bigger boxes for scripts.
-self.find_text   = ftxt = Tk.Text(fpane, height=10, width=80)
-self.change_text = ctxt = Tk.Text(cpane, height=10, width=80)
+self.find_text   = ftxt = Tk.Text(fpane,bd=1,relief="groove",height=4,width=20)
+self.change_text = ctxt = Tk.Text(cpane,bd=1,relief="groove",height=4,width=20)
 
 fBar = Tk.Scrollbar(fpane,name='findBar')
 cBar = Tk.Scrollbar(cpane,name='changeBar')
@@ -57138,18 +57424,18 @@ findButton=Tk.Button(buttons,width=8,text="Find",bd=4,command=self.findButton) #
 contextBox=Tk.Checkbutton(buttons,anchor="w",text="Show Context",variable=self.dict["batch"])
 findAllButton=Tk.Button(buttons,width=8,text="Find All",command=self.findAllButton)
 
-findButton.pack   (pady="1m",padx="25m",side="left")
-contextBox.pack   (pady="1m",          side="left",expand=1)
-findAllButton.pack(pady="1m",padx="25m",side="right",fill="x",)
+findButton.pack   (pady="1p",padx="25p",side="left")
+contextBox.pack   (pady="1p",           side="left",expand=1)
+findAllButton.pack(pady="1p",padx="25p",side="right",fill="x",)
 
 # Create the second row of buttons
 changeButton    =Tk.Button(buttons2,width=8,text="Change",command=self.changeButton)
 changeFindButton=Tk.Button(buttons2,        text="Change, Then Find",command=self.changeThenFindButton)
 changeAllButton =Tk.Button(buttons2,width=8,text="Change All",command=self.changeAllButton)
 
-changeButton.pack    (pady="1m",padx="25m",side="left")
-changeFindButton.pack(pady="1m",          side="left",expand=1)
-changeAllButton.pack (pady="1m",padx="25m",side="right")</t>
+changeButton.pack    (pady="1p",padx="25p",side="left")
+changeFindButton.pack(pady="1p",           side="left",expand=1)
+changeAllButton.pack (pady="1p",padx="25p",side="right")</t>
 <t tx="ekr.20031218072017.3906">def onCloseWindow(self,event=None):
 
 	self.top.withdraw()</t>
@@ -60254,83 +60540,6 @@ in subfolders.
 people can add it to their sources.list or you can talk to the people 
 who run the default servers and get Leo hosted there (better).
 </t>
-<t tx="ekr.20040104162835.18">Jon Schull &lt;jschull@softlock.com&gt;  
-Date:  2003/12/30 Tue PM 05:50:51 EST 
-To:  edreamleo@charter.net 
-Subject:  Leo, Mac OS X 10.3, and VPython 
-             
-
-I've been evaluating leo or vpython programming on  Mac OS X 10.3, and 
-have some observations and a suggestion.
-
-Observations.
-		Leo runs under X11 as well as under OS X.
-		My X11 python configuration was created using the recipe at XXX 
-(which enables vpython).
-		The OS X configuration is vanilla MacPython from MacPython.org, along 
-with AquaTclTk batteries included XXX.
-		In both environments I can run leo under python leo.py and under idle.
-		Under OS X we get font smoothing, but we can't run visual python 
-programs (python crashes;  this is a known incompatibility with 
-MacPython.)
-	
-		Under X11 we can run visual python programs like this one
-			#box.py
-			from visual import *
-			box()
-			
-    And we can even run them under leo (under X11). HOWEVER, when the 
-visual python program is terminated, leo vanishes (leo and the vp 
-program apparently run in the same space)
-	
-	Under x11, we can keep leo alive by putting the vp program in its own 
-space:
-	
-		os.popen3('/sw/bin/python /Users/jis/box.py')
-	
-	However,  this doesn't let us see the output of stderr and stdout.  
-Those text streams are available...
-		
-		def do(cmd='ls'):
-			from os import popen3
-			pIn,pOut,pErr=0,1,2
-			popenResults=popen3(cmd)
-			print popenResults[pOut].read()
-			print popenResults[pErr].read()
-		
-		import os	
-		do('/sw/bin/python /Users/jis/box.py')
-		
-	...but only when the vpython program terminates.
-	
-	Here's the good news:  if we execute our vp program with 
-/sw/bin/idle.py rather than with python, we get to see the program 
-output in real time (under idle, under X11).
-	
-		import os	
-		os.chdir('/sw/lib/python2.3/idlelib')
-		os.popen3('/sw/bin/python idle.py -r /Users/jis/box.py')
-		
-		#this runs as an executed script in leo, and produces a live idle 
-with real time ongoing output.
-	
-	Now, while idle is running, leo sits in suspended animation.  But when 
-the vpython program terminates, we are left in idle, and when idle is 
-terminated, leo becomes active again.
-	
-	It would be even better if leo were not suspended (using os.spawn, 
-perhaps) but the real point is that I would really really like leo's 
-"Execute script" command to execute code this way and spare me having 
-to  hard-write the path to box.py.  It ought to be possible to 
-eliminate os.chdir as well.
-
-------------------
-Jon Schull, Ph.D.
-Associate Professor
-Information Technology
-Rochester Institute of Technology
-schull@digitalgoods.com 585-738-6696
-</t>
 <t tx="ekr.20040104184644"># An example of running this script:
 import leoGlobals as g
 from leoGlobals import true,false
@@ -60447,14 +60656,6 @@ I hope this is a Leo bug and not a Tk bug.
 
 Dave Hein </t>
 <t tx="ekr.20040105070616">This may be the result of excessive string concatenation.</t>
-<t tx="ekr.20040105070616.2">- beginUpdate does not inhibit redraw!!
-
-- put leo window in front when find succeeds or fails.
-
-- get trace to work
-
-- Use Clover key on mac.
-	How can we use platform-specific keystrokes.</t>
 <t tx="ekr.20040105080119">@nocolor
 
 https://sourceforge.net/forum/message.php?msg_id=2355843
@@ -60472,19 +60673,6 @@ $HOME/.leo/plugins/pluginManager.txt
 $HOME/.leo/plugins/&lt;myplugins&gt;.py
 
 look for .leoConfig.txt, then leoConfig.txt</t>
-<t tx="ekr.20040105080119.1">Read and respond to this message at: 
-https://sourceforge.net/forum/message.php?msg_id=2355852
-By: rodrigo_b
-
-On Linux, if you copy some leo headline or body text, and try to paste it in
-the Find/Change panel (as a string to search), it does not work.
-
-I suspect the problem is due that Ctrl+V (paste) is not define in the Find
-panel.
-
-RodrigoB.
-
-</t>
 <t tx="ekr.20040105080119.4">Read and respond to this message at: 
 https://sourceforge.net/forum/message.php?msg_id=2342120
 By: rodrigo_b
@@ -60634,7 +60822,6 @@ Text encoding: cp1252
 <t tx="ekr.20040106115311"></t>
 <t tx="ekr.20040106121339"></t>
 <t tx="ekr.20040106121339.1"></t>
-<t tx="ekr.20040106122602"></t>
 <t tx="ekr.20040106145421"></t>
 <t tx="ekr.20040106183213"></t>
 <t tx="ekr.20040107064101"></t>
@@ -60807,39 +60994,6 @@ This is annoying because I need to move to somewhere above the @file node to
 use write @file nodes and I'm usually working on a clone that's somewhere else
 in the outline.
 </t>
-<t tx="ekr.20040115162445.1">@nocolor
-
-
-BUG: Shift+Ctrl+BkSp doesn't delete node   </t>
-<t tx="ekr.20040115162445.2">By: dthein ( Dave Hein ) 
- RE: BUG: Shift+Ctrl+BkSp doesn't delete node   
-2004-01-15 03:30  
-
- OK, the cause of the keymapping problem is a issue with the X11 keyboard mapping, not with Tk.
-
-If you have this problem on your system, issue the command:
-
-xmodmap -pke 
-
-and look in the results for the line for keycode 22. I'll bet it shows something like:
-
-keycode 22 = BackSpace Terminate_Server
-
-That second token ("Terminate_Server") is what is supposed to be mapped to Shift-Backspace. You want this second token to be either not present or to be BackSpace.
-
-To fix this, create a file (e.g. .Xmodmap) and give it the content:
-
-keycode 22 = BackSpace
-
-then run the command:
-
-xmodmap .Xmodmap
-
-And you'll have fixed the problem.
-
-Now, on my system this also disables the ability to terminate the X server using Ctrl-Alt-BackSpace ... this is because of some conflict with xdb (xdb is the newer keyboard mapping facility in XFree86 ... xmodmap is the old original X11 keyboard mapping facility). I'm still working on that.
-
-I'm also not able to get xmodmap to make this change during X11 startup (again because of conflicts with xdb). But I'm working on that as well.</t>
 <t tx="ekr.20040115163454"></t>
 <t tx="ekr.20040115165036">@language html
 @ignore
@@ -60955,52 +61109,6 @@ What exactly we want to create ?
 rodrigob
 </t>
 <t tx="ekr.20040117111755"></t>
-<t tx="ekr.20040117112213">@nocolor
-
-http://sourceforge.net/forum/message.php?msg_id=2373816
-By: sbeards
-
-A related issue is that leoConfig.txt gets auto-tangled and overwritten on startup.
-This will be a problem if Leo is run by a non-root user or the file is not readable.
-For example, I get the following traceback after starting Leo (when leoConfig.txt
-is read-only):
-
-Traceback (most recent call last):
-  File "/usr/local/share/leo-4.1-rc3/src/leoConfig.py", line 672, in update
-    cf = open(self.configFileName,mode)
-IOError: [Errno 13] Permission denied:
-'/usr/local/share/leo-4.1-rc3/src/../config/leoConfig.txt'
-
-Is there a reason leoConfig.txt gets auto-tangled on startup? Is there anyway
-to disable this? Is this by design?
-</t>
-<t tx="ekr.20040117112808.1">@nocolor
-
-https://sourceforge.net/forum/message.php?msg_id=2370629
-By: tyndal
-
-I found a small bug in the leo install script.
-It doesnt check to see that the $LEO_PREFIX/bin exists before trying to install
-the "leo" script into it, giving an error.
-
-you just need to make a small check similar to the one for the lib directory..
-(i've included it below)
-
-Thanks,
--Tyndal
-
-#------------------------------
-echo ""
-echo Making directory structure $LEO_PREFIX/bin
-
-RESULTS=`mkdir -p $LEO_PREFIX/bin 2&gt;&amp;1`
-if [ $? -ne 0 ]; then
-    echo Failure making directory $LEO_PREFIX/bin
-    exit 0;
-fi
-#
-#-----------------------------
-</t>
 <t tx="ekr.20040117112808.2"></t>
 <t tx="ekr.20040117113539.1"></t>
 <t tx="ekr.20040117162509.16">def isVisible (self):
@@ -61579,7 +61687,6 @@ The solution:
 - Call scanAllDirectives from top_df_read instead of the two versions of readOpenFile.
 - Pass an importing arg to scanAllDirectives which inhibits setting the comment delims.</t>
 <t tx="ekr.20040129074950"></t>
-<t tx="ekr.20040129080202"></t>
 <t tx="ekr.20040129080256.1"></t>
 <t tx="ekr.20040129081333">@nocolor
 
@@ -62217,23 +62324,6 @@ Scott</t>
 	"where","while",
 	"yield"]</t>
 <t tx="ekr.20040206075634.1"></t>
-<t tx="ekr.20040206080140"></t>
-<t tx="ekr.20040207170503">@nocolor
-
-By: dthein ( Dave Hein ) 
- BUG: double-paste in searchbox.py plugin   
-2004-02-06 16:59  
-
- Leo 4.1 rc4, build 1.76 , February 3, 2004
-Python 2.3.3, Tk 8.4.2, linux2
-
-When I Ctrl-C copy a string from a body and Ctlr-V paste it into the searchbox it gets pasted twice (e.g. the string "image" gets pasted as "imageimage").
-
-I'll try to track this down, but if anyone has a clue right away, please post the solution.
-
---
-Dave Hein  
-</t>
 <t tx="ekr.20040208095208">@nocolor
 
 http://sourceforge.net/forum/message.php?msg_id=2415033
@@ -62329,7 +62419,6 @@ pluginsManager.txt
 I believe, these should also be configuration settings.
 
 Best regards - Josef Dalcolmo</t>
-<t tx="ekr.20040212094121"></t>
 <t tx="ekr.20040213060739">@nocolor
 
 By: nobody ( Nobody/Anonymous ) 
@@ -66990,37 +67079,6 @@ Most code now works.  However, moving a node right destroyed part of the outline
 		p.dump()</t>
 <t tx="ekr.20040412061129"></t>
 <t tx="ekr.20040412061129.1"></t>
-<t tx="ekr.20040414051834">@nocolor
-
-By: Bill Drissel - drissel
- Mouse / Paste Anomalies   
-2004-04-13 19:43  
-
- Configuration: Running Xserver (XFree86 under Cygwin) on PC (W2000); controlling Linux Red Hat; buncha windows up including one Leo window and many xterms and Xemacs.
-
-A: means action, R: means result
-
-A: hilite text in Xemacs window; move mouse symbol to Leo body pane; middle click
-R: text shows in body pane; headline is not marked with blue square; text is not colorized; text is not saved to file
-
-A: hilite text in Xemacs window; move mouse symbol to Leo body pane; middle click; locate mouse symbol in text
-R: text shows in body pane; headline is not marked with blue square; text is not colorized; text is not saved to file
-
-A: hilite text in Xemacs window; move mouse symbol to Leo body pane; middle click; up arrow to locate Ibeam in text
-R: Joy! colorizes, marks headline and saves!
-
-A: hilite headline text; type on KB
-R: keystrokes replace hilited text
-
-A: hilite text in Xemacs window; hilite headline; middle click
-R: hilited text appended to headline rather than replacing
-
-This last anomaly seems to persist regardless of how the headline is hilited and regardless of pasting method (middle click or Control-V)
-
-Regards,
-Bill Drissel
- 
-</t>
 <t tx="ekr.20040414073612"></t>
 <t tx="ekr.20040414073612.1"></t>
 <t tx="ekr.20040414093055">@nocolor

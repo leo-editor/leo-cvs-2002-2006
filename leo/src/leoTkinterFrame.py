@@ -1163,6 +1163,19 @@ class leoTkinterFrame (leoFrame.leoFrame):
 		self.resizePanesToRatio(ratio,secondary_ratio)
 	#@nonl
 	#@-node:toggleSplitDirection
+	#@+node:resizeToScreen
+	def resizeToScreen (self):
+		
+		top = self.top
+		
+		w = top.winfo_screenwidth()
+		h = top.winfo_screenheight()
+		
+		geom = "%dx%d%+d%+d" % (w-20,h-55,10,25)
+	
+		top.geometry(geom)
+	#@nonl
+	#@-node:resizeToScreen
 	#@+node:leoHelp
 	def leoHelp (self):
 		

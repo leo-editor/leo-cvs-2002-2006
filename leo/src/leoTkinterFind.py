@@ -70,8 +70,8 @@ class leoTkinterFind (leoFind.leoFind,leoTkinterDialog.leoTkinterDialog):
 		clab = Tk.Label(cpane, width=8, text="Change:")
 		
 		# Use bigger boxes for scripts.
-		self.find_text   = ftxt = Tk.Text(fpane, height=10, width=80)
-		self.change_text = ctxt = Tk.Text(cpane, height=10, width=80)
+		self.find_text   = ftxt = Tk.Text(fpane,bd=1,relief="groove",height=4,width=20)
+		self.change_text = ctxt = Tk.Text(cpane,bd=1,relief="groove",height=4,width=20)
 		
 		fBar = Tk.Scrollbar(fpane,name='findBar')
 		cBar = Tk.Scrollbar(cpane,name='changeBar')
@@ -92,7 +92,7 @@ class leoTkinterFind (leoFind.leoFind,leoTkinterDialog.leoTkinterDialog):
 		#@	<< Create four columns of radio and checkboxes >>
 		#@+node:<< Create four columns of radio and checkboxes >>
 		columnsFrame = Tk.Frame(outer,relief="groove",bd=2)
-		columnsFrame.pack(anchor="e",expand=1,padx="7m",pady="2m") # Don't fill.
+		columnsFrame.pack(anchor="e",expand=1,padx="7p",pady="2p") # Don't fill.
 		
 		numberOfColumns = 4 # Number of columns
 		columns = [] ; radioLists = [] ; checkLists = []
@@ -102,7 +102,7 @@ class leoTkinterFind (leoFind.leoFind,leoTkinterDialog.leoTkinterDialog):
 			checkLists.append([])
 		
 		for i in xrange(numberOfColumns):
-			columns[i].pack(side="left",padx="1m") # fill="y" Aligns to top. padx expands columns.
+			columns[i].pack(side="left",padx="1p") # fill="y" Aligns to top. padx expands columns.
 		
 		radioLists[0] = [
 			(self.dict["radio-find-type"],"Plain Search","plain-search"),  
@@ -153,18 +153,18 @@ class leoTkinterFind (leoFind.leoFind,leoTkinterDialog.leoTkinterDialog):
 		contextBox=Tk.Checkbutton(buttons,anchor="w",text="Show Context",variable=self.dict["batch"])
 		findAllButton=Tk.Button(buttons,width=8,text="Find All",command=self.findAllButton)
 		
-		findButton.pack   (pady="1m",padx="25m",side="left")
-		contextBox.pack   (pady="1m",          side="left",expand=1)
-		findAllButton.pack(pady="1m",padx="25m",side="right",fill="x",)
+		findButton.pack   (pady="1p",padx="25p",side="left")
+		contextBox.pack   (pady="1p",           side="left",expand=1)
+		findAllButton.pack(pady="1p",padx="25p",side="right",fill="x",)
 		
 		# Create the second row of buttons
 		changeButton    =Tk.Button(buttons2,width=8,text="Change",command=self.changeButton)
 		changeFindButton=Tk.Button(buttons2,        text="Change, Then Find",command=self.changeThenFindButton)
 		changeAllButton =Tk.Button(buttons2,width=8,text="Change All",command=self.changeAllButton)
 		
-		changeButton.pack    (pady="1m",padx="25m",side="left")
-		changeFindButton.pack(pady="1m",          side="left",expand=1)
-		changeAllButton.pack (pady="1m",padx="25m",side="right")
+		changeButton.pack    (pady="1p",padx="25p",side="left")
+		changeFindButton.pack(pady="1p",           side="left",expand=1)
+		changeAllButton.pack (pady="1p",padx="25p",side="right")
 		#@nonl
 		#@-node:<< Create two rows of buttons >>
 		#@nl

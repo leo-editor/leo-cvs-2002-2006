@@ -313,6 +313,7 @@ class leoMenu:
 			("Toggle &Active Pane","Ctrl-T",f.toggleActivePane),
 			("Toggle &Split Direction",None,f.toggleSplitDirection),
 			("-",None,None),
+			("Resize To Screen",None,f.resizeToScreen),
 			("Casca&de",None,f.cascade),
 			("&Minimize All",None,f.minimizeAll),
 			("-",None,None),

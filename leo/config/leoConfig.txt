@@ -220,15 +220,7 @@ expandtolevel1 = Alt+1
 expandtolevel8 = Alt+8
 
 [recent files]
-file3 = C:\prog\leoCVS\leo\src\LeoPy.leo
-file2 = C:\prog\leoCVS\leo\doc\LeoDocs.leo
-file1 = C:\prog\leoCVS\leo\test\test.leo
-file0 = C:\prog\leoCVS\leo\plugins\leoPlugins.leo
-file7 = C:\prog\leoCVS\leo\config\leoConfig.leo
-file6 = C:\prog\leoCVS\leo\doc\LeoDiary.leo
-file5 = C:\Documents and Settings\default\My Documents\ekr.leo
-file4 = C:\Documents and Settings\default\Desktop\sentinel.leo
-file8 = C:\Documents and Settings\default\Local Settings\Temp\Temporary Directory 1 for leo-4.2-a1.zip\leo-4.2-alpha-1\doc\LeoDocs.leo
+file0 = /Users/edream/leoCVS/leo/src/LeoPy.leo
 
 [find/change options]
 mark_changes = 0

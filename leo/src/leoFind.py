@@ -868,6 +868,8 @@ class leoFind:
 			gui.setInsertPoint(t,insert)
 			gui.makeIndexVisible(t,insert)
 			gui.set_focus(c,t)
+	
+		c.frame.bringToFront() # Needed on the Mac
 	#@nonl
 	#@-node:restore
 	#@+node:save
@@ -917,6 +919,8 @@ class leoFind:
 		gui.set_focus(c,t)
 		if c.wrap_flag and not self.wrapVnode:
 			self.wrapVnode = self.v
+		c.frame.bringToFront() # Needed on the Mac
+	#@nonl
 	#@-node:showSuccess
 	#@+node:Must be overridden in subclasses
 	def init_s_text (self,s):
