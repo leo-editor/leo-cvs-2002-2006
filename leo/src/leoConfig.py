@@ -450,15 +450,10 @@ class baseConfig:
 		if val:
 			try:
 				val = string.lower(val)
-				if 1: # new
-					val = string.replace(val,"/","")
-					if a.language_delims_dict.get(val):
-						c.target_language = val
-				else: #old
-					for language,name in self.languageNameDict.items():
-						# print language, name
-						if string.lower(name) == val:
-							c.target_language = language
+				val = string.replace(val,"/","")
+				if a.language_delims_dict.get(val):
+					c.target_language = val
+				
 			except: pass
 		#@-body
 		#@-node:1::<< set prefs ivars >>
