@@ -126,7 +126,12 @@ class Navigator:
         menu = menu["menu"]
     
         name = p.headString().strip()
-        menu.delete(name)
+        try:
+            # 9/7/04: The headline may be in the process of being changed.
+            # If so, there is no way to clear the old entry.
+            menu.delete(name)
+        except Tk.TclError:
+            pass
         marks.remove(p.v.t)
     
         # Unlike the recent menu, which gets recreated each time, we remember the marks.
