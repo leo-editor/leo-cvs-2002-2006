@@ -53,8 +53,8 @@ class baseConfig:
 		"log_text_font_size" : 12,
 		"log_text_font_slant" : "roman",
 		"log_text_font_weight" : "normal",
-		"initial_window_height" : 20, # In grid units.  These are just a guess.
-		"initial_window_width" :  60,
+		"initial_window_height" : 600, # 7/24/03: In pixels.
+		"initial_window_width" :  800, # 7/24/03: In pixels.
 		"initial_window_left" : 10,
 		"initial_window_top" : 10,
 		"initial_splitter_orientation" : "vertical",
