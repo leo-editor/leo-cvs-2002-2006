@@ -3,7 +3,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="11734" clone_windows="0"/>
 <globals body_outline_ratio="0.5">
-	<global_window_position top="54" left="369" height="860" width="988"/>
+	<global_window_position top="52" left="210" height="860" width="988"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -17,10 +17,10 @@
 <v t="edream.110203163054.4"><vh>This is a cloned headline</vh></v>
 <v t="edream.110203163054.5"><vh>This node contains no text</vh></v>
 </v>
-<v t="ekr.20041226081019" a="TV"><vh>@button check spelling...</vh></v>
+<v t="ekr.20041226081019"><vh>@button check spelling...</vh></v>
 <v t="edream.110203163054.6"><vh>Please use SourceForge to ask questions and make comments</vh></v>
 <v t="edream.110203163054.7"><vh>Acknowledgements</vh></v>
-<v t="edream.110203163054.8"><vh>What people are saying about Leo</vh>
+<v t="edream.110203163054.8" a="TV"><vh>What people are saying about Leo</vh>
 <v t="edream.110203163054.15"><vh> Open Software award nominations</vh></v>
 <v t="edream.110203163054.14"><vh> Speed Ream's slashdot article (Why Leo is interesting)</vh></v>
 <v t="edream.110203163054.16"><vh>Alex Abacus</vh></v>
@@ -6951,8 +6951,8 @@ pasting it into a lisp interpreter and then copying the result back into
 the same Leo node for LaTeX to process.
 
 -- Dan</t>
-<t tx="edream.110203163054.13">Leo has simplifyed updating and creating new scripts and .bats keeping similar
-information in the same place. there is almost an addictive withdrawl effect
+<t tx="edream.110203163054.13">Leo has simplified updating and creating new scripts and .bats keeping similar
+information in the same place. there is almost an addictive withdrawal effect
 when I can complete an operation in so much less time with leo &amp; python than I
 had become used to.
 </t>
@@ -7008,7 +7008,7 @@ Again, this is a great tool!
 <t tx="edream.110203163054.20">I want first to thank you for Leo. This is a very useful and interesting tool. </t>
 <t tx="edream.110203163054.21">Thank you very much for leo. I think my way of working with data will change forever.
 
-I have just tried leo for 2-3 days, yet I am certain this will be a revolution. The revolution is as important as the change from sequencial linear organization of a book into a web-like hyperlinked pages.
+I have just tried leo for 2-3 days, yet I am certain this will be a revolution. The revolution is as important as the change from sequential linear organization of a book into a web-like hyperlinked pages.
 
 The main concept that impress me is that the source listing isn't the main focus any more. You focus on the "non-linear", hierarchical, collapsible outline of the source code. </t>
 <t tx="edream.110203163054.22">Leo is amazingly stable. Docs are often weak with Open Source Software. Not so
@@ -7063,7 +7063,7 @@ Seriously, it should be renamed "Crack Cocaine" because it's that addictive.
 I'm ready to start a 12-Step group.
 </t>
 <t tx="edream.110203163054.27">I wanted to thank you for the effort you've put into Leo.  It looks fantastic.  I've always though that Literate Programming was a good idea, but the tools were completely un-workable. </t>
-<t tx="edream.110203163054.28">I was turned on too a very cool tool written in Python. Leo is a marrage of outlining and literate programming. Pure genious. The main reason I am impressed with this tool is that it doesn't affect your choice of tools. You can use whatever IDE for whatever language and switch back and forth between leo and it. </t>
+<t tx="edream.110203163054.28">I was turned on too a very cool tool written in Python. Leo is a marriage of outlining and literate programming. Pure genius. The main reason I am impressed with this tool is that it doesn't affect your choice of tools. You can use whatever IDE for whatever language and switch back and forth between leo and it. </t>
 <t tx="edream.110203163054.29">And yes, I've been using Leo a few hours every day for more than a week, now. :^) Actually, it's become my main development platform, and I do this for a living. </t>
 <t tx="edream.110203163054.30">&lt;tomlee@bigpond.net.au&gt;
 
@@ -7165,7 +7165,7 @@ complain about the lack of a project manager for the free/standard Python IDE's
 like Idle.  Leo clearly solves that problem and in a way that commercial tools
 can't touch.  I suggest we reply to future such postings with that gentle nudge.
 </t>
-<t tx="edream.110203163054.37">Hi, I have been interested in creation of a heirarchal text-editor for a while and I just came across Leo, which I found to be almost exactly what I had in mind, which is fantastic because I don't have to code anything!</t>
+<t tx="edream.110203163054.37">Hi, I have been interested in creation of a hierarchical text-editor for a while and I just came across Leo, which I found to be almost exactly what I had in mind, which is fantastic because I don't have to code anything!</t>
 <t tx="edream.110203163054.38">I am an amateur photographer. I use plain old 35mm. film for my pictures. Over the weekend, I used LEO to organize my lists of pictures. It is quite helpful -- I can have separate nodes for pictures I have enlarged, as well as pictures I have submitted to our local camera club. Thanks!</t>
 <t tx="edream.110203163054.39">Just as structured programming reveals and disciplines the flow control of a program, [Leo] allows the designer to reveal and discipline structure at many layers simultaneously: data structures, object structure, entity-relationship structure, client-server structure, design pattern structure, temporal structure, project management structure, and any other structure relevant to the system. </t>
 <t tx="edream.110203163054.40">LEO reminds me a great deal of things I loved when I used Userland's Frontier
@@ -15203,7 +15203,7 @@ All output from pdb goes to stdout, which is the console window.
 It would be good to create a subclass of pdb.Pdb that uses Leo's log pane rather than a console window, but I haven't done that.  It could be done easily enough in a plugin...</t>
 <t tx="ekr.20040828084113">Leo is the best IDE that I have had the pleasure to use. I have been using it
 now for about 2 -- 3 months. It has totally changed not only the way that I
-program, but also the way that I store and organise all of the information that
+program, but also the way that I store and organize all of the information that
 I need for the job that I do. -- Ian Mulvany
 </t>
 <t tx="ekr.20040903095817">The tests:

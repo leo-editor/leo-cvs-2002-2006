@@ -4,8 +4,6 @@
 
 #@+all
 #@+node:ekr.20041228093733:First (Top Roti)
-#@+node:ekr.20041228093733.1:Work on book query
-#@-node:ekr.20041228093733.1:Work on book query
 #@+node:ekr.20041201072431:(Can hoist plugin cause a hang?)
 @nocolor
 
@@ -25,10 +23,55 @@ Anyway, I'm not sure about this, but it is kind of frustrating to have leo lock
 up totally, so hopefully this small data tidbit will help flush out this bug.
 #@nonl
 #@-node:ekr.20041201072431:(Can hoist plugin cause a hang?)
-#@+node:ekr.20041022083005.8:Catch mixed tab & space in derived files
-add python -t to test suite to catch mixed tab & space in derived files.
+#@+node:ekr.20041231102453:Design new uA scheme
+#@-node:ekr.20041231102453:Design new uA scheme
+#@+node:ekr.20041231102453.1:Move emacs commands into core
+#@-node:ekr.20041231102453.1:Move emacs commands into core
+#@+node:ekr.20041231110704:Release new installer for Leo 4.2, test with Python 2.4
+#@-node:ekr.20041231110704:Release new installer for Leo 4.2, test with Python 2.4
+#@+node:ekr.20050102092149:Fix problems with Control-E
+@killcolor
+
+http://sourceforge.net/forum/message.php?msg_id=2918938
+By: ktenney
+
+Any idea what might prevent the Control-E shortcut key from working? 
+
+Edit -> Execute Script works fine
+
+current cvs, Win2000, Python 2.3
 #@nonl
-#@-node:ekr.20041022083005.8:Catch mixed tab & space in derived files
+#@-node:ekr.20050102092149:Fix problems with Control-E
+#@+node:ekr.20041231104531:Remove duplicate entries in recent files list
+Add traces...
+#@nonl
+#@-node:ekr.20041231104531:Remove duplicate entries in recent files list
+#@+node:ekr.20050101093544:Investigate whether it is still necessary to use distutils in utils_rename
+# apparently distutils.file_util is not present in all Python distributions!
+#@nonl
+#@+node:ekr.20031218072017.1263:utils_rename
+# os.rename may fail on some Unix flavors if src and dst are on different filesystems.
+
+def utils_rename(src,dst):
+
+    """Platform-independent rename."""
+    
+    head,tail=g.os_path_split(dst)
+    if head and len(head) > 0:
+        g.makeAllNonExistentDirectories(head)
+    
+    if sys.platform=="win32":
+        os.rename(src,dst)
+    else:
+        from distutils.file_util import move_file
+        move_file(src,dst)
+#@nonl
+#@-node:ekr.20031218072017.1263:utils_rename
+#@-node:ekr.20050101093544:Investigate whether it is still necessary to use distutils in utils_rename
+#@+node:ekr.20050101100208:Fix Pretty Printer: unit test fails
+#@+node:ekr.20050101100856:Create pythonParser class
+#@-node:ekr.20050101100856:Create pythonParser class
+#@-node:ekr.20050101100208:Fix Pretty Printer: unit test fails
 #@-node:ekr.20041228093733:First (Top Roti)
 #@+node:EKR.20040609091327: To do: 4.3
 Send book query after 4.3 alpha 1.
@@ -564,10 +607,14 @@ def putUnknownAttributes (self,torv,toString=False):
     for key in attrDict.keys():
         try:
             val = attrDict[key]
-            s = pickle.dumps(val,bin=True)
+            try:
+                # Protocol argument is new in Python 2.3
+                # Use protocol 1 for compatibility with bin.
+                s = pickle.dumps(val,protocol=1)
+            except TypeError:
+                s = pickle.dumps(val,bin=True)
             attr = ' %s="%s"' % (key,binascii.hexlify(s))
             self.put(attr)
-
         except pickle.PicklingError:
             # New in 4.2 beta 1: keep going after error.
             g.es("ignoring non-pickleable attribute %s in %s" % (
@@ -600,6 +647,12 @@ It is possible to do pretty much anything you want but you will have to provide 
 #@-node:EKR.20040517090625.1:@url http://komodo.nique.net/~grayrest/leoUIproposal.txt
 #@-node:ekr.20041228092223.1:Used tabbed log for find dialog?
 #@-node:ekr.20041228074125:Drawing...
+#@+node:ekr.20041231102453.3:Easy
+#@+node:ekr.20041022083005.8:Catch mixed tab & space in derived files
+add python -t to test suite to catch mixed tab & space in derived files.
+#@nonl
+#@-node:ekr.20041022083005.8:Catch mixed tab & space in derived files
+#@-node:ekr.20041231102453.3:Easy
 #@+node:ekr.20041018195347:Docs
 #@+node:ekr.20041018195347.1:Improve MacOS Docs
 I just succeeded at installing Leo under os x (10.2.8) by folliwing  
@@ -2647,7 +2700,6 @@ def __init__(self):
         # 1: full traces in g.es_exception.
         # 2: call pdb.set_trace in g.es_exception, etc.
     self.disableSave = False
-    self.failedPlugins = [] # List of loaded plugins that have failed to load.
     self.globalConfigDir = None # The directory that is assumed to contain the global configuration files.
     self.gui = None # The gui class.
     self.hasOpenWithMenu = False # True: open with plugin has been loaded.

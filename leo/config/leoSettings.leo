@@ -115,23 +115,22 @@
 <v t="ekr.20041120152900.2"><vh>@bool script_search = None</vh></v>
 </v>
 </v>
-<v t="ekr.20041119034357.28" a="E"><vh>@page Preferences panel options</vh>
+<v t="ekr.20041119034357.28"><vh>@page Preferences panel options</vh>
 <v t="ekr.20041119034357.29"><vh>@directory default_tangle_directory = None</vh></v>
 <v t="ekr.20041119034357.30"><vh>@language default_target_language = Python</vh></v>
 <v t="ekr.20041119034357.31"><vh>@int tab_width = -4</vh></v>
-<v t="ekr.20041119034357.32" a="TV"><vh>@int page_width = 80</vh></v>
+<v t="ekr.20041119034357.32"><vh>@int page_width = 80</vh></v>
 <v t="ekr.20041119034357.33"><vh>@bool output_doc_chunks = True</vh></v>
 <v t="ekr.20041119034357.34"><vh>@bool tangle_outputs_header = True</vh></v>
 <v t="ekr.20041119034357.35"><vh>@bool run_tangle_done.py = False</vh></v>
 <v t="ekr.20041119034357.36"><vh>@bool run_untangle_done.py = False</vh></v>
 </v>
-<v t="ekr.20041119034357.21"><vh>Keyboard shortcuts</vh>
+<v t="ekr.20041119034357.21" a="TV"><vh>Keyboard shortcuts</vh>
 <v t="ekr.20041119034357.22"><vh>About keyboard shortcuts</vh></v>
 <v t="ekr.20041119034357.23"><vh>@shortcuts Alt and Shift-Alt</vh></v>
 <v t="ekr.20041119034357.24"><vh>@shortcuts Control</vh></v>
 <v t="ekr.20041119034357.25"><vh>@shortcuts Shift-Control</vh></v>
 <v t="ekr.20041119034357.26"><vh>@shortcuts F-keys and Esc</vh></v>
-<v t="ekr.20041119034357.27"><vh>@shortcuts override defaults</vh></v>
 <v t="ekr.20041119054938"><vh>@shortcuts No shortcut specified</vh></v>
 </v>
 <v t="ekr.20041213105007"><vh>@page Fonts</vh>
@@ -488,10 +487,6 @@ FindPrevious = F2
 
 AbortEditHeadline   = Shift+Esc
 EndEditHeadline     = Esc</t>
-<t tx="ekr.20041119034357.27"># These entries explicitly overrides whatever default exists.\
-
-AboutLeo        = None
-EqualSizedPanes = None</t>
 <t tx="ekr.20041119034357.28">@nocolor</t>
 <t tx="ekr.20041119034357.29">DEPRECATED
 
@@ -935,7 +930,8 @@ Foreground must also be specified for either setting to take effect.</t>
 
 </t>
 <t tx="ekr.20041119053445">Background color of log text.</t>
-<t tx="ekr.20041119054938">ApplySettings           = None
+<t tx="ekr.20041119054938">AboutLeo                = None
+ApplySettings           = None
 Cascade                 = None
 ContractAllChildren     = None
 ContractChildren        = None
