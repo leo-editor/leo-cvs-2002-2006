@@ -627,201 +627,201 @@ class colorizer:
 	
 	def colorizeAnyLanguage(self,v,body,language,flag):
 	
-		
-		#@<< initialize ivars, tags, dispatching tables >>
-		#@+node:1::<< initialize ivars, tags, dispatching tables >>
-		#@+body
-		# Copy the arguments.
-		self.v = v
-		self.body = body
-		self.language = language
-		self.flag = flag
-		
-		s = body.get("1.0", "end")
-		sel = body.index("insert") # get the location of the insert point
-		start, end = string.split(sel,'.')
-		start = int(start)
-		
-		# trace(`self.language`)
-		# trace(`self.count` + `self.v`)
-		# trace(`body.tag_names()`)
-		
-		
-		#@<< remove tags >>
-		#@+node:1::<< remove tags >>
-		#@+body
-		if 0: # Remove all tags from the selected line.
-			for tag in self.tags:
-				body.tag_remove(tag, index(start,0), index(start,"end"))
-		else: # Remove all tags from body.
-			body.tag_delete(
-				"blank", "comment", "cwebName", "docPart", "keyword", "leoKeyword",
-				"link", "name", "nameBrackets", "pp", "string", "tab")
-		#@-body
-		#@-node:1::<< remove tags >>
-
-		
-		#@<< configure tags >>
-		#@+node:2::<< configure tags >>
-		#@+body
-		config = app().config
-		assert(config)
-		
-		for name in default_colors_dict.keys(): # Python 2.1 support.
-			option_name,default_color = default_colors_dict[name]
-			option_color = config.getColorsPref(option_name)
-			color = choose(option_color,option_color,default_color)
-			# Must use foreground, not fg.
-			try:
-				body.tag_config(name, foreground=color)
-			except: # Recover after a user error.
-				body.tag_config(name, foreground=default_color)
-		
-		underline_undefined = config.getBoolColorsPref("underline_undefined_section_names")
-		use_hyperlinks      = config.getBoolColorsPref("use_hyperlinks")
-		self.use_hyperlinks = use_hyperlinks
-		
-		# underline=var doesn't seem to work.
-		if use_hyperlinks: 
-			body.tag_config("link",underline=1) # defined
-			body.tag_config("name",underline=0) # undefined
-		else:
-			body.tag_config("link",underline=0)
-			if underline_undefined:
-				body.tag_config("name",underline=1)
-			else:
-				body.tag_config("name",underline=0)
-				
-		# 8/4/02: we only create tags for whitespace when showing invisibles.
-		if self.showInvisibles:
-			body.tag_config("blank",background="Gray90")
-			body.tag_config("tab",background="Gray80")
-		#@-body
-		#@-node:2::<< configure tags >>
-
-		
-		#@<< configure language-specific settings >>
-		#@+node:3::<< configure language-specific settings >>
-		#@+body
-		# Define has_string, keywords, single_comment_start, block_comment_start, block_comment_end.
-		
-		if self.language == "plain": # 9/12/02
-			delim1,delim2,delim3 = None,None,None
-		elif self.comment_string: # 8/11/02
-			delim1,delim2,delim3 = set_delims_from_string(self.comment_string)
-		else:
-			delim1,delim2,delim3 = set_delims_from_language(self.language)
-		
-		# 8/1/02: this now works as expected.
-		self.single_comment_start = delim1
-		self.block_comment_start = delim2
-		self.block_comment_end = delim3
-		
-		# A strong case can be made for making this code as fast as possible.
-		# Whether this is compatible with general language descriptions remains to be seen.
-		self.has_string = self.language != "plain"
-		self.has_pp_directives = self.language in ["c","cweb"]
-		
-		# The list of languages for which keywords exist.
-		# Eventually we might just use language_delims_dict.keys()
-		languages = ["c","cweb","html","java","latex", "pascal","perl","perlpod","python","tcltk","php"]
-		
-		self.keywords = []
-		if self.language == "cweb":
-			for i in c_keywords:
-				self.keywords.append(i)
-			for i in cweb_keywords:
-				self.keywords.append(i)
-		else:
-			for name in languages:
-				exec("if self.language==name: self.keywords=%s_keywords" % name)
-		
-		# Color plain text unless we are under the control of @nocolor.
-		state = choose(self.flag,normalState,nocolorState)
-		
-		self.lb = choose(self.language == "cweb","@<","<<")
-		self.rb = choose(self.language == "cweb","@>",">>")
-		#@-body
-		#@-node:3::<< configure language-specific settings >>
-
-		
-		#@<< define dispatch dicts >>
-		#@+node:4::<< define dispatch dicts >>
-		#@+body
-		state_dict = {
-			normalState : self.doNormalState,
-			string3State : self.continuePythonString,
-			docState : self.continueDocPart,
-			nocolorState : self.continueNocolor,
-			continueCommentState : self.continueString,
-			blockCommentState : self.continueBlockComment }
-			
-		# Eventually all entries in these dicts will be entered dynamically
-		# under the control of the XML description of the present language.
-		
-		if 0: # not ready yet.
-		
-			dict1 = { # 1-character patterns.
-				'"' : self.doString,
-				"'" : self.doString,
-				'@' : self.doPossibleLeoKeyword,
-				' ' : self.doBlank,
-				'\t': self.doTab }
-		
-			dict2 = {} # 2-character patterns
-			
-			# Searching this list might be very slow!
-			mutli_list = [] # Multiple character patterns.
-			
-			# Enter single-character patterns...
-			if self.has_pp_directives:
-				dict1 ["#"] = self.doPPDirective
-						
-			for ch in string.letters:
-				dict1 [ch] = self.doPossibleKeyword
-			dict1 ['_'] = self.doPossibleKeyword
-			
-			if self.language == "latex":
-				dict1 ['\\'] = self.doPossibleKeyword
-				
-			if self.language == "php":
-				dict1 ['<'] = self.doSpecialPHPKeyword
-				dict1 ['?'] = self.doSpecialPHPKeyword
-			
-			# Enter potentially multi-character patterns.  (or should this be just 2-character patterns)
-			if self.language == "cweb":
-				dict2 ["@("] = self.doPossibleSectionRefOrDef
-			else:
-				dict2 ["<<"] = self.doPossibleSectionRefOrDef
-				
-			if self.single_comment_start:
-				n = len(self.single_comment_start)
-				if n == 1:
-					dict1 [self.single_comment_start] = self.doSingleCommentLine
-				elif n == 2:
-					dict2 [self.single_comment_start] = self.doSingleCommentLine
-				else:
-					mutli_list.append((self.single_comment_start,self.doSingleCommentLine),)
-			
-			if self.block_comment_start:
-				n = len(self.block_comment_start)
-				if n == 1:
-					dict1 [self.block_comment_start] = self.doBlockComment
-				elif n == 2:
-					ddict2 [self.block_comment_start] = self.doBlockComment
-				else:
-					mutli_list.append((self.block_comment_start,self.doBlockComment),)
-		#@-body
-		#@-node:4::<< define dispatch dicts >>
-
-		
-		self.hyperCount = 0 # Number of hypertext tags
-		self.count += 1
-		lines = string.split(s,'\n')
-		#@-body
-		#@-node:1::<< initialize ivars, tags, dispatching tables >>
-
 		try:
+			
+			#@<< initialize ivars, tags, dispatching tables >>
+			#@+node:1::<< initialize ivars, tags, dispatching tables >>
+			#@+body
+			# Copy the arguments.
+			self.v = v
+			self.body = body
+			self.language = language
+			self.flag = flag
+			
+			s = body.get("1.0", "end")
+			sel = body.index("insert") # get the location of the insert point
+			start, end = string.split(sel,'.')
+			start = int(start)
+			
+			# trace(`self.language`)
+			# trace(`self.count` + `self.v`)
+			# trace(`body.tag_names()`)
+			
+			
+			#@<< remove tags >>
+			#@+node:1::<< remove tags >>
+			#@+body
+			if 0: # Remove all tags from the selected line.
+				for tag in self.tags:
+					body.tag_remove(tag, index(start,0), index(start,"end"))
+			else: # Remove all tags from body.
+				body.tag_delete(
+					"blank", "comment", "cwebName", "docPart", "keyword", "leoKeyword",
+					"link", "name", "nameBrackets", "pp", "string", "tab")
+			#@-body
+			#@-node:1::<< remove tags >>
+
+			
+			#@<< configure tags >>
+			#@+node:2::<< configure tags >>
+			#@+body
+			config = app().config
+			assert(config)
+			
+			for name in default_colors_dict.keys(): # Python 2.1 support.
+				option_name,default_color = default_colors_dict[name]
+				option_color = config.getColorsPref(option_name)
+				color = choose(option_color,option_color,default_color)
+				# Must use foreground, not fg.
+				try:
+					body.tag_config(name, foreground=color)
+				except: # Recover after a user error.
+					body.tag_config(name, foreground=default_color)
+			
+			underline_undefined = config.getBoolColorsPref("underline_undefined_section_names")
+			use_hyperlinks      = config.getBoolColorsPref("use_hyperlinks")
+			self.use_hyperlinks = use_hyperlinks
+			
+			# underline=var doesn't seem to work.
+			if use_hyperlinks: 
+				body.tag_config("link",underline=1) # defined
+				body.tag_config("name",underline=0) # undefined
+			else:
+				body.tag_config("link",underline=0)
+				if underline_undefined:
+					body.tag_config("name",underline=1)
+				else:
+					body.tag_config("name",underline=0)
+					
+			# 8/4/02: we only create tags for whitespace when showing invisibles.
+			if self.showInvisibles:
+				body.tag_config("blank",background="Gray90")
+				body.tag_config("tab",background="Gray80")
+			#@-body
+			#@-node:2::<< configure tags >>
+
+			
+			#@<< configure language-specific settings >>
+			#@+node:3::<< configure language-specific settings >>
+			#@+body
+			# Define has_string, keywords, single_comment_start, block_comment_start, block_comment_end.
+			
+			if self.language == "plain": # 9/12/02
+				delim1,delim2,delim3 = None,None,None
+			elif self.comment_string: # 8/11/02
+				delim1,delim2,delim3 = set_delims_from_string(self.comment_string)
+			else:
+				delim1,delim2,delim3 = set_delims_from_language(self.language)
+			
+			# 8/1/02: this now works as expected.
+			self.single_comment_start = delim1
+			self.block_comment_start = delim2
+			self.block_comment_end = delim3
+			
+			# A strong case can be made for making this code as fast as possible.
+			# Whether this is compatible with general language descriptions remains to be seen.
+			self.has_string = self.language != "plain"
+			self.has_pp_directives = self.language in ["c","cweb"]
+			
+			# The list of languages for which keywords exist.
+			# Eventually we might just use language_delims_dict.keys()
+			languages = ["c","cweb","html","java","latex", "pascal","perl","perlpod","python","tcltk","php"]
+			
+			self.keywords = []
+			if self.language == "cweb":
+				for i in c_keywords:
+					self.keywords.append(i)
+				for i in cweb_keywords:
+					self.keywords.append(i)
+			else:
+				for name in languages:
+					exec("if self.language==name: self.keywords=%s_keywords" % name)
+			
+			# Color plain text unless we are under the control of @nocolor.
+			state = choose(self.flag,normalState,nocolorState)
+			
+			self.lb = choose(self.language == "cweb","@<","<<")
+			self.rb = choose(self.language == "cweb","@>",">>")
+			#@-body
+			#@-node:3::<< configure language-specific settings >>
+
+			
+			#@<< define dispatch dicts >>
+			#@+node:4::<< define dispatch dicts >>
+			#@+body
+			state_dict = {
+				normalState : self.doNormalState,
+				string3State : self.continuePythonString,
+				docState : self.continueDocPart,
+				nocolorState : self.continueNocolor,
+				continueCommentState : self.continueString,
+				blockCommentState : self.continueBlockComment }
+				
+			# Eventually all entries in these dicts will be entered dynamically
+			# under the control of the XML description of the present language.
+			
+			if 0: # not ready yet.
+			
+				dict1 = { # 1-character patterns.
+					'"' : self.doString,
+					"'" : self.doString,
+					'@' : self.doPossibleLeoKeyword,
+					' ' : self.doBlank,
+					'\t': self.doTab }
+			
+				dict2 = {} # 2-character patterns
+				
+				# Searching this list might be very slow!
+				mutli_list = [] # Multiple character patterns.
+				
+				# Enter single-character patterns...
+				if self.has_pp_directives:
+					dict1 ["#"] = self.doPPDirective
+							
+				for ch in string.letters:
+					dict1 [ch] = self.doPossibleKeyword
+				dict1 ['_'] = self.doPossibleKeyword
+				
+				if self.language == "latex":
+					dict1 ['\\'] = self.doPossibleKeyword
+					
+				if self.language == "php":
+					dict1 ['<'] = self.doSpecialPHPKeyword
+					dict1 ['?'] = self.doSpecialPHPKeyword
+				
+				# Enter potentially multi-character patterns.  (or should this be just 2-character patterns)
+				if self.language == "cweb":
+					dict2 ["@("] = self.doPossibleSectionRefOrDef
+				else:
+					dict2 ["<<"] = self.doPossibleSectionRefOrDef
+					
+				if self.single_comment_start:
+					n = len(self.single_comment_start)
+					if n == 1:
+						dict1 [self.single_comment_start] = self.doSingleCommentLine
+					elif n == 2:
+						dict2 [self.single_comment_start] = self.doSingleCommentLine
+					else:
+						mutli_list.append((self.single_comment_start,self.doSingleCommentLine),)
+				
+				if self.block_comment_start:
+					n = len(self.block_comment_start)
+					if n == 1:
+						dict1 [self.block_comment_start] = self.doBlockComment
+					elif n == 2:
+						ddict2 [self.block_comment_start] = self.doBlockComment
+					else:
+						mutli_list.append((self.block_comment_start,self.doBlockComment),)
+			#@-body
+			#@-node:4::<< define dispatch dicts >>
+
+			
+			self.hyperCount = 0 # Number of hypertext tags
+			self.count += 1
+			lines = string.split(s,'\n')
+			#@-body
+			#@-node:1::<< initialize ivars, tags, dispatching tables >>
+
 			n = 0 # The line number for indices, as in n.i
 			for s in lines:
 				n += 1 ; i = 0 ; sLen = len(s)
