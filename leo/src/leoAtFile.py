@@ -185,7 +185,7 @@ class baseAtFile:
 		#@+node:<< open file or return false >>
 		fn = os.path.join(at.default_directory,fileName)
 		fn = os.path.normpath(fn)
-		fn = toUnicode(fn,"ascii")
+		fn = toUnicode(fn,app.tkEncoding) # 10/20/03
 		
 		try:
 			file = open(fn,'r')
@@ -295,7 +295,7 @@ class baseAtFile:
 		at = self ; c = at.commands
 		at.default_directory = None
 		#@	<< Set path from @file node >>
-		#@+node:<< Set path from @file node >>
+		#@+node:<< Set path from @file node >>  in df.scanDeafaultDirectory in leoAtFile.py
 		# An absolute path in an @file node over-rides everything else.
 		# A relative path gets appended to the relative path by the open logic.
 		
@@ -310,6 +310,8 @@ class baseAtFile:
 			name = ""
 		
 		dir = choose(name,os.path.dirname(name),None)
+		dir = toUnicode(dir,app.tkEncoding) # 10/20/03
+		
 		if dir and os.path.isabs(dir):
 			if os.path.exists(dir):
 				at.default_directory = dir
@@ -318,7 +320,7 @@ class baseAtFile:
 				if not at.default_directory:
 					at.error("Directory \"" + dir + "\" does not exist")
 		#@nonl
-		#@-node:<< Set path from @file node >>
+		#@-node:<< Set path from @file node >>  in df.scanDeafaultDirectory in leoAtFile.py
 		#@nl
 		if at.default_directory:
 			return
@@ -328,7 +330,7 @@ class baseAtFile:
 			dict = get_directives_dict(s)
 			if dict.has_key("path"):
 				#@			<< handle @path >>
-				#@+node:<< handle @path >>
+				#@+node:<< handle @path >> in df.scanDeafaultDirectory in leoAtFile.py
 				# We set the current director to a path so future writes will go to that directory.
 				
 				k = dict["path"]
@@ -352,6 +354,8 @@ class baseAtFile:
 				if path and len(path) > 0:
 					base = getBaseDirectory() # returns "" on error.
 					path = os.path.join(base,path)
+					path = toUnicode(path,app.tkEncoding) # 10/20/03
+					
 					if os.path.isabs(path):
 						#@		<< handle absolute path >>
 						#@+node:<< handle absolute path >>
@@ -370,8 +374,8 @@ class baseAtFile:
 						at.error("ignoring bad @path: " + path)
 				else:
 					at.error("ignoring empty @path")
-				#@nonl
-				#@-node:<< handle @path >>
+				
+				#@-node:<< handle @path >> in df.scanDeafaultDirectory in leoAtFile.py
 				#@nl
 				return
 			v = v.parent()
@@ -387,12 +391,13 @@ class baseAtFile:
 			for dir in (c.tangle_directory,c.frame.openDirectory,c.openDirectory):
 				if dir and len(dir) > 0:
 					dir = os.path.join(base,dir)
+					dir = toUnicode(dir,app.tkEncoding) # 10/20/03
+		
 					if os.path.isabs(dir): # Errors may result in relative or invalid path.
 						if os.path.exists(dir):
 							at.default_directory = dir ; break
 						else:
 							at.default_directory = makeAllNonExistentDirectories(dir)
-		#@nonl
 		#@-node:<< Set current directory >>
 		#@nl
 		if not at.default_directory:
@@ -706,6 +711,8 @@ class baseAtFile:
 						df.shortFileName = fn # name to use in status messages.
 						df.targetFileName = os.path.join(df.default_directory,fn)
 						df.targetFileName = os.path.normpath(df.targetFileName)
+						df.targetFileName = toUnicode(df.targetFileName,app.tkEncoding) # 10/20/03
+				
 						path = df.targetFileName # Look for the full name, not just the directory.
 						valid = path and len(path) > 0
 						if valid:
@@ -2027,7 +2034,7 @@ class baseOldDerivedFile:
 		#@-node:<< Set ivars >>
 		#@nl
 		#@	<< Set path from @file node >>
-		#@+node:<< Set path from @file node >>
+		#@+node:<< Set path from @file node >> in scanDirectory in leoGlobals.py
 		# An absolute path in an @file node over-rides everything else.
 		# A relative path gets appended to the relative path by the open logic.
 		
@@ -2042,6 +2049,8 @@ class baseOldDerivedFile:
 			name = ""
 		
 		dir = choose(name,os.path.dirname(name),None)
+		dir = toUnicode(dir,app.tkEncoding) # 10/20/03
+		
 		if dir and len(dir) > 0 and os.path.isabs(dir):
 			if os.path.exists(dir):
 				self.default_directory = dir
@@ -2050,7 +2059,7 @@ class baseOldDerivedFile:
 				if not self.default_directory:
 					self.error("Directory \"" + dir + "\" does not exist")
 					
-		#@-node:<< Set path from @file node >>
+		#@-node:<< Set path from @file node >> in scanDirectory in leoGlobals.py
 		#@nl
 		old = {}
 		while v:
@@ -2257,7 +2266,7 @@ class baseOldDerivedFile:
 			#@		<< write root's tree >>
 			#@+node:<< write root's tree >>
 			#@<< put all @first lines in root >>
-			#@+node:<< put all @first lines in root >>
+			#@+node:<< put all @first lines in root >> (3.x)
 			#@+at 
 			#@nonl
 			# Write any @first lines.  These lines are also converted to 
@@ -2279,7 +2288,7 @@ class baseOldDerivedFile:
 				self.putBuffered(line) ; self.onl()
 				i = skip_nl(s,i)
 			#@nonl
-			#@-node:<< put all @first lines in root >>
+			#@-node:<< put all @first lines in root >> (3.x)
 			#@nl
 			self.putOpenLeoSentinel("@+leo")
 			#@<< put optional @comment sentinel lines >>
@@ -2317,7 +2326,7 @@ class baseOldDerivedFile:
 			
 			self.putSentinel("@-leo")
 			#@<< put all @last lines in root >>
-			#@+node:<< put all @last lines in root >>
+			#@+node:<< put all @last lines in root >> (3.x)
 			#@+at 
 			#@nonl
 			# Write any @last lines.  These lines are also converted to 
@@ -2342,7 +2351,7 @@ class baseOldDerivedFile:
 				i = len(tag) ; i = skip_ws(line,i)
 				self.putBuffered(line[i:]) ; self.onl()
 			#@nonl
-			#@-node:<< put all @last lines in root >>
+			#@-node:<< put all @last lines in root >> (3.x)
 			#@nl
 			#@nonl
 			#@-node:<< write root's tree >>
@@ -2438,7 +2447,7 @@ class baseOldDerivedFile:
 			next = root.nodeAfterTree()
 			
 			#@<< put all @first lines in root >>
-			#@+node:<< put all @first lines in root >>
+			#@+node:<< put all @first lines in root >> (3.x)
 			#@+at 
 			#@nonl
 			# Write any @first lines.  These lines are also converted to 
@@ -2460,7 +2469,7 @@ class baseOldDerivedFile:
 				self.putBuffered(line) ; self.onl()
 				i = skip_nl(s,i)
 			#@nonl
-			#@-node:<< put all @first lines in root >>
+			#@-node:<< put all @first lines in root >> (3.x)
 			#@nl
 			#@<< write the derived file >>
 			#@+node:<< write the derived file>>
@@ -2476,7 +2485,7 @@ class baseOldDerivedFile:
 			#@-node:<< write the derived file>>
 			#@nl
 			#@<< put all @last lines in root >>
-			#@+node:<< put all @last lines in root >>
+			#@+node:<< put all @last lines in root >> (3.x)
 			#@+at 
 			#@nonl
 			# Write any @last lines.  These lines are also converted to 
@@ -2501,7 +2510,7 @@ class baseOldDerivedFile:
 				i = len(tag) ; i = skip_ws(line,i)
 				self.putBuffered(line[i:]) ; self.onl()
 			#@nonl
-			#@-node:<< put all @last lines in root >>
+			#@-node:<< put all @last lines in root >> (3.x)
 			#@nl
 			
 			root.setVisited()
@@ -2602,7 +2611,9 @@ class baseOldDerivedFile:
 				self.shortFileName = fn # name to use in status messages.
 				self.targetFileName = os.path.join(self.default_directory,fn)
 				self.targetFileName = os.path.normpath(self.targetFileName)
+				self.targetFileName = toUnicode(self.targetFileName,app.tkEncoding) # 10/20/03
 				path = os.path.dirname(self.targetFileName)
+				path = toUnicode(path,app.tkEncoding) # 10/20/03
 				if not path or not os.path.exists(path):
 					self.writeError("path does not exist: " + path)
 					valid = false
@@ -2727,7 +2738,7 @@ class baseOldDerivedFile:
 		self.os(s.replace('\n',self.output_newline))
 	#@nonl
 	#@-node:atFile.outputStringWithLineEndings
-	#@+node:putBodyPart
+	#@+node:putBodyPart (3.x)
 	def putBodyPart(self,v):
 		
 		""" Generate the body enclosed in sentinel lines."""
@@ -2739,7 +2750,7 @@ class baseOldDerivedFile:
 		s = removeTrailingWs(s) # don't use string.rstrip!
 		self.putSentinel("@+body")
 		#@	<< put code/doc parts and sentinels >>
-		#@+node:<< put code/doc parts and sentinels >>
+		#@+node:<< put code/doc parts and sentinels >> (3.x)
 		i = 0 ; n = len(s)
 		firstLastHack = 1
 		
@@ -2830,11 +2841,11 @@ class baseOldDerivedFile:
 			#@-node:<< put out the last directives, if any >>
 			#@nl
 		#@nonl
-		#@-node:<< put code/doc parts and sentinels >>
+		#@-node:<< put code/doc parts and sentinels >> (3.x)
 		#@nl
 		self.putSentinel("@-body")
 	#@nonl
-	#@-node:putBodyPart
+	#@-node:putBodyPart (3.x)
 	#@+node:putDoc
 	#@+at 
 	#@nonl
@@ -3248,7 +3259,7 @@ class baseOldDerivedFile:
 		self.os('\t' * abs(n))
 	#@nonl
 	#@-node:os, onl, etc. (leoAtFile)
-	#@+node:putDirective  (handles @delims)
+	#@+node:putDirective  (handles @delims) 3.x
 	# This method outputs s, a directive or reference, in a sentinel.
 	
 	def putDirective(self,s,i):
@@ -3289,7 +3300,7 @@ class baseOldDerivedFile:
 		i = skip_line(s,k)
 		return i
 	#@nonl
-	#@-node:putDirective  (handles @delims)
+	#@-node:putDirective  (handles @delims) 3.x
 	#@+node:putEmptyDirective (Dave Hein)
 	# 14-SEP-2002 DTHEIN
 	# added for use by putBodyPart()
@@ -3456,7 +3467,7 @@ class baseNewDerivedFile(oldDerivedFile):
 		try:
 			v = t.joinList[0]
 		except:
-			at.readError("No joinList for tnode")
+			at.readError("No joinList for tnode: %s" % `t`)
 			trace(at.tnodeListIndex,len(at.root.tnodeList))
 			return None
 	
@@ -3566,28 +3577,43 @@ class baseNewDerivedFile(oldDerivedFile):
 			#@nl
 	#@nonl
 	#@-node:readNormalLine
-	#@+node:readStartAt, readStartDoc & readStartDocLine
+	#@+node:readStartAt & readStartDoc
 	def readStartAt (self,s,i):
-		
 		"""Read an @+at sentinel."""
-		
 		at = self ; assert(match(s,i,"+at"))
-		i += 3 ; j = skip_ws(s,i) ; ws = s[i:j]
-		at.docOut = ['@' + ws + '\n'] # This newline may be removed by a following @nonl
+		if 0:# new code: append whatever follows the sentinel.
+			i += 3 ; j = self.skipToEndSentinel(s,i) ; follow = s[i:j]
+			at.out.append('@' + follow) ; at.docOut = []
+		else:
+			i += 3 ; j = skip_ws(s,i) ; ws = s[i:j]
+			at.docOut = ['@' + ws + '\n'] # This newline may be removed by a following @nonl
 		at.inCode = false
 		at.endSentinelStack.append(endAt)
 		
 	def readStartDoc (self,s,i):
-		
 		"""Read an @+doc sentinel."""
-	
 		at = self ; assert(match(s,i,"+doc"))
-		i += 4 ; j = skip_ws(s,i) ; ws = s[i:j]
-		at.docOut = ["@doc" + ws + '\n'] # This newline may be removed by a following @nonl
+		if 0: # new code: append whatever follows the sentinel.
+			i += 4 ; j = self.skipToEndSentinel(s,i) ; follow = s[i:j]
+			at.out.append('@' + follow) ; at.docOut = []
+		else:
+			i += 4 ; j = skip_ws(s,i) ; ws = s[i:j]
+			at.docOut = ["@doc" + ws + '\n'] # This newline may be removed by a following @nonl
 		at.inCode = false
 		at.endSentinelStack.append(endDoc)
+		
+	def skipToEndSentinel(self,s,i):
+		end = self.endSentinelComment
+		if end:
+			j = s.find(end,i)
+			if j == -1:
+				return skip_to_end_of_line(s,i)
+			else:
+				return j
+		else:
+			return skip_to_end_of_line(s,i)
 	#@nonl
-	#@-node:readStartAt, readStartDoc & readStartDocLine
+	#@-node:readStartAt & readStartDoc
 	#@+node:readStartLeo
 	def readStartLeo (self,s,i):
 		
@@ -3751,39 +3777,77 @@ class baseNewDerivedFile(oldDerivedFile):
 	#@+node:readLastDocLine
 	def readLastDocLine (self,tag):
 		
+		"""Read the @c line that terminates the doc part.
+		tag is @doc or @."""
+		
 		at = self
 		end = at.endSentinelComment
 		start = at.startSentinelComment
 		s = ''.join(at.docOut)
 		
-		# Remove the @doc or @space.  We'll add it back at the end.
-		if match(s,0,tag):
-			s = s[len(tag):]
+		if 0: # new code.
+			#@		<< new code >>
+			#@+node:<< new code >>
+			if end:
+				# Remove opening block delim.
+				if match(s,0,start):
+					s = s[len(start):]
+				else:
+					at.readError("Missing open block comment")
+					trace(s)
+					return
+					
+				# Remove trailing newline.
+				if s[-1] == '\n':
+					s = s[:-1]
+			
+				# Remove closing block delim.
+				if s[-len(end):] == end:
+					s = s[:-len(end)]
+				else:
+					at.readError("Missing close block comment")
+					return
+			
+			at.out.append(s) # The tag has already been removed.
+			at.docOut = []
+			#@nonl
+			#@-node:<< new code >>
+			#@nl
 		else:
-			at.readError("Missing start of doc part")
-			return
-	
-		if end:
-			# Remove opening block delim.
-			if match(s,0,start):
-				s = s[len(start):]
+			#@		<< old code >>
+			#@+node:<< old code >>
+			# Remove the @doc or @space.  We'll add it back at the end.
+			if match(s,0,tag):
+				s = s[len(tag):]
 			else:
-				at.readError("Missing open block comment")
+				at.readError("Missing start of doc part")
 				return
-				
-			# Remove trailing newline.
-			if s[-1] == '\n':
-				s = s[:-1]
-		
-			# Remove closing block delim.
-			if s[-len(end):] == end:
-				s = s[:-len(end)]
-			else:
-				at.readError("Missing close block comment")
-				return
-	
-		at.out.append(tag + s)
-		at.docOut = []
+			
+			if end:
+				# Remove opening block delim.
+				if match(s,0,start):
+					s = s[len(start):]
+				else:
+					at.readError("Missing open block comment")
+					trace(s)
+					return
+					
+				# Remove trailing newline.
+				if s[-1] == '\n':
+					s = s[:-1]
+			
+				# Remove closing block delim.
+				if s[-len(end):] == end:
+					s = s[:-len(end)]
+				else:
+					at.readError("Missing close block comment")
+					return
+			
+			at.out.append(tag + s)
+			at.docOut = []
+			#@nonl
+			#@-node:<< old code >>
+			#@nl
 	#@nonl
 	#@-node:readLastDocLine
 	#@+node:ignoreOldSentinel
@@ -4050,16 +4114,9 @@ class baseNewDerivedFile(oldDerivedFile):
 		k = skip_ws(s,i)
 		if j == k:
 			# Only whitespace before the @others or ref.
-			if 1: # new code
-				at.leadingWs = s[i:j] # Remember the leading whitespace, including its spelling.
-			else:
-				# The @ws sentinel contributs the _delta_ of the whitespace that precedes it.
-				at.putIndent(at.indent) ; at.os(s[i:j]) # Put the whitespace, preserving its spelling.
-				oldIndent = at.indent ; at.indent = 0 # Put the @ws sentinel with no more leading whitespace.
-				at.putSentinel("@ws")
-				at.indent = oldIndent
+			at.leadingWs = s[i:j] # Remember the leading whitespace, including its spelling.
 		else:
-			at.os(s[i:j]) ; at.onl() # 10/21/03: changed s[k:j] to s[i:j].
+			at.os(s[i:j]) ; at.onl() # 10/21/03
 			at.indent += delta # Align the @nonl with the following line.
 			at.putSentinel("@nonl")
 			at.indent -= delta # Let the caller set at.indent permanently.
@@ -4292,7 +4349,7 @@ class baseNewDerivedFile(oldDerivedFile):
 			root.setVisited()
 			
 			#@<< put all @last lines in root >>
-			#@+node:<< put all @last lines in root >>
+			#@+node:<< put all @last lines in root >> (4.x)
 			#@+at 
 			#@nonl
 			# Write any @last lines.  These lines are also converted to 
@@ -4317,7 +4374,7 @@ class baseNewDerivedFile(oldDerivedFile):
 				i = len(tag) ; i = skip_ws(line,i)
 				self.os(line[i:]) ; self.onl()
 			#@nonl
-			#@-node:<< put all @last lines in root >>
+			#@-node:<< put all @last lines in root >> (4.x)
 			#@nl
 			
 			
@@ -4479,7 +4536,7 @@ class baseNewDerivedFile(oldDerivedFile):
 			at.handleWriteException(root)
 	#@nonl
 	#@-node:new_df.rawWrite
-	#@+node:putBody
+	#@+node:putBody (4.x)
 	def putBody(self,v):
 		
 		""" Generate the body enclosed in sentinel lines."""
@@ -4548,7 +4605,7 @@ class baseNewDerivedFile(oldDerivedFile):
 			at.putSentinel("@nonl")
 		at.putCloseNodeSentinel(v)
 	#@nonl
-	#@-node:putBody
+	#@-node:putBody (4.x)
 	#@+node:inAtOthers
 	def inAtOthers(self,v):
 		
@@ -4698,49 +4755,40 @@ class baseNewDerivedFile(oldDerivedFile):
 		sentinel = choose(kind == docDirective,"@+doc","@+at")
 		directive = choose(kind == docDirective,"@doc","@")
 		
-		# Skip past the directive.
-		i += len(directive)
+		if 0: # New code: put whatever follows the directive in the sentinel
+			# Skip past the directive.
+			i += len(directive)
+			j = skip_to_end_of_line(s,i)
+			follow = s[i:j]
 		
-		# Get the trailing whitespace.
-		j = skip_ws(s,i)
-		ws = s[i:j]
+			# Put the opening @+doc or @-doc sentinel, including whatever follows the directive.
+			at.putSentinel(sentinel + follow)
+	
+			# Put the opening comment if we are using block comments.
+			if at.endSentinelComment:
+				at.putIndent(at.indent)
+				at.os(at.startSentinelComment) ; at.onl()
+		else: # old code.
+			# Skip past the directive.
+			i += len(directive)
 		
-		# Put the opening @+doc or @-doc sentinel, including trailing whitespace.
-		at.putSentinel(sentinel + ws)
-	
-		# Put the opening comment.
-		if at.endSentinelComment:
-			at.putIndent(at.indent)
-			at.os(at.startSentinelComment) ; at.onl()
-	
-		# Put an @nonl sentinel if there is significant text following @doc or @.
-		if not is_nl(s,j):
-			at.putSentinel("@nonl")
-			at.putDocLine(s,j)
-	
-		if 0: # old code
-			# put the opening @+doc or @-doc sentinel, including trailing whitespace.
-			sentinel = choose(kind == docDirective,"@+doc","@+at")
-			at.putSentinel(sentinel)
+			# Get the trailing whitespace.
+			j = skip_ws(s,i)
+			ws = s[i:j]
 			
+			# Put the opening @+doc or @-doc sentinel, including trailing whitespace.
+			at.putSentinel(sentinel + ws)
+		
 			# Put the opening comment.
 			if at.endSentinelComment:
 				at.putIndent(at.indent)
 				at.os(at.startSentinelComment) ; at.onl()
 		
-			# Skip past the directive
-			directive = choose(kind == docDirective,"@doc","@")
-			i += len(directive)
-			
-			# 9/21/03: Looking ahead here helps preserve intended whitespace.
-			if match(s,i,' ') or match(s,i,'\t'):
-				i += 1
-			j = skip_ws(s,i)
-			
 			# Put an @nonl sentinel if there is significant text following @doc or @.
 			if not is_nl(s,j):
+				# Doesn't work if we are using block comments.
 				at.putSentinel("@nonl")
-				at.putDocLine(s,i)
+				at.putDocLine(s,j)
 	#@nonl
 	#@-node:putStartDocLine
 	#@+node:putDocLine
