@@ -235,14 +235,13 @@ class LeoApp:
 
 	def handleOpenTempFiles (self):
 		
-		for f,path in self.openWithFiles:
+		for c,v,f,path,time in self.openWithFiles:
 			if os.path.exists(path):
 				try:
 					os.remove(path)
 					print "deleting temp file:", path
 				except:
 					print "can not delete temp file:", path
-	
 	#@-body
 	#@-node:4::app.handleOpenTempFiles
 	#@+node:5::app.quit

@@ -15,7 +15,23 @@ import os,string,sys,Tkinter,tkFileDialog,tkFont
 class LeoFrame:
 
 	#@+others
-	#@+node:1::frame.__init__
+	#@+node:1::Birth & Death
+	#@+node:1::frame.__del__
+	#@+body
+	# Warning:  calling del self will not necessarily call this routine.
+	
+	def __del__ (self):
+		
+		# Can't trace while destroying.
+		# print "frame.__del__"
+		
+		self.log = self.body = self.tree = None
+		self.treeBar = self.canvas = self.splitter1 = self.splitter2 = None
+		# Menu bars.
+		del self.menus ; self.menus = None
+	#@-body
+	#@-node:1::frame.__del__
+	#@+node:2::frame.__init__
 	#@+body
 	def __init__(self, title = None):
 	
@@ -167,22 +183,7 @@ class LeoFrame:
 		if sys.platform == "linux2": # This crashes tcl83.dll
 			self.tree.canvas.bind("<MouseWheel>", self.OnMouseWheel)
 	#@-body
-	#@-node:1::frame.__init__
-	#@+node:2::frame.__del__
-	#@+body
-	# Warning:  calling del self will not necessarily call this routine.
-	
-	def __del__ (self):
-		
-		# Can't trace while destroying.
-		# print "frame.__del__"
-		
-		self.log = self.body = self.tree = None
-		self.treeBar = self.canvas = self.splitter1 = self.splitter2 = None
-		# Menu bars.
-		del self.menus ; self.menus = None
-	#@-body
-	#@-node:2::frame.__del__
+	#@-node:2::frame.__init__
 	#@+node:3::frame.__repr__
 	#@+body
 	def __repr__ (self):
@@ -205,7 +206,153 @@ class LeoFrame:
 		self.top = None
 	#@-body
 	#@-node:4::frame.destroy
-	#@+node:5::f.setTabWidth
+	#@-node:1::Birth & Death
+	#@+node:2::Configuration
+	#@+node:1::f.configureBar
+	#@+body
+	def configureBar (self, bar, verticalFlag):
+		
+		config = app().config
+	
+		# Get configuration settings.
+		w = config.getWindowPref("split_bar_width")
+		if not w or w < 1: w = 7
+		relief = config.getWindowPref("split_bar_relief")
+		if not relief: relief = "flat"
+		color = config.getWindowPref("split_bar_color")
+		if not color: color = "LightSteelBlue2"
+	
+		try:
+			if verticalFlag:
+				# Panes arranged vertically; horizontal splitter bar
+				bar.configure(relief=relief,height=w,bg=color,cursor="sb_v_double_arrow")
+			else:
+				# Panes arranged horizontally; vertical splitter bar
+				bar.configure(relief=relief,width=w,bg=color,cursor="sb_h_double_arrow")
+		except: # Could be a user error. Use all defaults
+			es("exception in user configuration for splitbar")
+			es_exception()
+			if verticalFlag:
+				# Panes arranged vertically; horizontal splitter bar
+				bar.configure(height=7,cursor="sb_v_double_arrow")
+			else:
+				# Panes arranged horizontally; vertical splitter bar
+				bar.configure(width=7,cursor="sb_h_double_arrow")
+	#@-body
+	#@-node:1::f.configureBar
+	#@+node:2::f.configureBarsFromConfig
+	#@+body
+	def configureBarsFromConfig (self):
+		
+		config = app().config
+	
+		w = config.getWindowPref("split_bar_width")
+		if not w or w < 1: w = 7
+		
+		relief = config.getWindowPref("split_bar_relief")
+		if not relief or relief == "": relief = "flat"
+	
+		color = config.getWindowPref("split_bar_color")
+		if not color or color == "": color = "LightSteelBlue2"
+	
+		if self.splitVerticalFlag:
+			bar1,bar2=self.bar1,self.bar2
+		else:
+			bar1,bar2=self.bar2,self.bar1
+			
+		try:
+			bar1.configure(relief=relief,height=w,bg=color)
+			bar2.configure(relief=relief,width=w,bg=color)
+		except: # Could be a user error.
+			es("exception in user configuration for splitbar")
+			es_exception()
+	#@-body
+	#@-node:2::f.configureBarsFromConfig
+	#@+node:3::f.reconfigureFromConfig
+	#@+body
+	def reconfigureFromConfig (self):
+		
+		f = self ; c = f.commands
+		
+		# Not ready yet: just reset the width and color.
+		# We need self.bar1 and self.bar2 ivars.
+		# self.reconfigureBar(...)
+		
+		# The calls to redraw are workarounds for an apparent Tk bug.
+		# Without them the text settings get applied to the wrong widget!
+		# Moreover, only this order seems to work on Windows XP...
+		f.tree.setFontFromConfig()
+		f.setTreeColorsFromConfig()
+		f.configureBarsFromConfig()
+		c.redraw()
+		f.setBodyFontFromConfig()
+		f.setTabWidth(c.tab_width)
+		c.redraw()
+		f.setLogFontFromConfig()
+		c.redraw()
+	#@-body
+	#@-node:3::f.reconfigureFromConfig
+	#@+node:4::f.setBodyFontFromConfig
+	#@+body
+	def setBodyFontFromConfig (self):
+		
+		config = app().config ; body = self.body
+		#print "body",`self.body`
+		
+		font = config.getFontFromParams(
+			"body_text_font_family", "body_text_font_size",
+			"body_text_font_slant",  "body_text_font_weight")
+	
+		body.configure(font=font)
+		
+		bg = config.getWindowPref("body_text_background_color")
+		if bg:
+			try: body.configure(bg=bg)
+			except: pass
+		
+		fg = config.getWindowPref("body_text_foreground_color")
+		if fg:
+			try: body.configure(fg=fg)
+			except: pass
+			
+		if sys.platform != "win32": # Maybe a Windows bug.
+			fg = config.getWindowPref("body_cursor_foreground_color")
+			bg = config.getWindowPref("body_cursor_background_color")
+			# print `fg`, `bg`
+			if fg and bg:
+				cursor="xterm" + " " + fg + " " + bg
+				try: body.configure(cursor=cursor)
+				except:
+					import traceback
+					traceback.print_exc()
+	#@-body
+	#@-node:4::f.setBodyFontFromConfig
+	#@+node:5::f.setLogFontFromConfig
+	#@+body
+	def setLogFontFromConfig (self):
+	
+		log = self.log ; config = app().config
+		#print "log",`self.log`
+	
+		font = config.getFontFromParams(
+			"log_text_font_family", "log_text_font_size",
+			"log_text_font_slant",  "log_text_font_weight")
+		
+		log.configure(font=font)
+		
+		bg = config.getWindowPref("log_text_background_color")
+		if bg:
+			try: log.configure(bg=bg)
+			except: pass
+		
+		fg = config.getWindowPref("log_text_foreground_color")
+		if fg:
+			try: log.configure(fg=fg)
+			except: pass
+	
+	#@-body
+	#@-node:5::f.setLogFontFromConfig
+	#@+node:6::f.setTabWidth
 	#@+body
 	def setTabWidth (self, w):
 		
@@ -221,8 +368,199 @@ class LeoFrame:
 			pass
 	
 	#@-body
-	#@-node:5::f.setTabWidth
-	#@+node:6::canonicalizeShortcut
+	#@-node:6::f.setTabWidth
+	#@+node:7::f.setTreeColorsFromConfig
+	#@+body
+	def setTreeColorsFromConfig (self):
+		
+		config = app().config ; tree = self.tree
+	
+		bg = config.getWindowPref("outline_pane_background_color")
+		if bg:
+			try: self.canvas.configure(bg=bg)
+			except: pass
+	
+	#@-body
+	#@-node:7::f.setTreeColorsFromConfig
+	#@+node:8::reconfigurePanes (use config bar_width)
+	#@+body
+	def reconfigurePanes (self):
+		
+		border = app().config.getIntWindowPref('additional_body_text_border')
+		if border == None: border = 0
+		
+		# The body pane needs a _much_ bigger border when tiling horizontally.
+		border = choose(self.splitVerticalFlag,2+border,6+border)
+		self.body.configure(bd=border)
+		
+		# The log pane needs a slightly bigger border when tiling vertically.
+		border = choose(self.splitVerticalFlag,4,2) 
+		self.log.configure(bd=border)
+	#@-body
+	#@-node:8::reconfigurePanes (use config bar_width)
+	#@-node:2::Configuration
+	#@+node:3::Event handlers
+	#@+node:1::frame.OnCloseLeoEvent
+	#@+body
+	# Called from quit logic and when user closes the window.
+	# Returns true if the close happened.
+	
+	def OnCloseLeoEvent(self):
+	
+		# trace(`self in app().windowList` + ":" + `self`)
+		veto=false
+		c = self.commands ; frame = c.frame
+		if c.changed:
+			
+			#@<< Prompt for change.  Set veto if the user cancels >>
+			#@+node:1::<< Prompt for change.  Set veto if the user cancels >>
+			#@+body
+			name = choose(self.mFileName, self.mFileName, self.title)
+			type = choose(app().quitting, "quitting?", "closing?")
+			
+			d = leoDialog.leoDialog()
+			answer = d.askYesNoCancel("Confirm",
+				'Save changes to "' + name + '" before ' + type)
+			
+			if answer=="yes":
+				if not self.mFileName or self.mFileName == "":
+					
+					#@<< Put up a file save dialog; set veto if the user cancels >>
+					#@+node:1::<< Put up a file save dialog; set veto if the user cancels >>
+					#@+body
+					# Make sure we never pass None to the ctor.
+					if not self.title:
+						self.title = ""
+						
+					self.mFileName = tkFileDialog.asksaveasfilename(
+						initialfile = self.mFileName,
+						title="Save",
+						filetypes=[("Leo files", "*.leo")],
+						defaultextension=".leo")
+						
+					if not self.mFileName:
+						veto = true
+					
+					#@-body
+					#@-node:1::<< Put up a file save dialog; set veto if the user cancels >>
+
+				if veto==false and self.mFileName and self.mFileName != "":
+					self.commands.fileCommands.save( self.mFileName )
+			
+			elif answer=="cancel":
+				veto = true #The user wants to cancel the close.
+			
+			else: veto = false # The user wants to close without saving.
+			#@-body
+			#@-node:1::<< Prompt for change.  Set veto if the user cancels >>
+
+		if veto: return false
+		app().log = None # no log until we reactive a window.
+		# Destroy all windows attached to this windows.
+		# This code will be executed if we haven't explicitly closed the windows.
+		if self.comparePanel:
+			self.comparePanel.top.destroy()
+		if self.colorPanel:
+			self.colorPanel.top.destroy()
+		if self.fontPanel:
+			self.fontPanel.top.destroy()
+		if self.prefsPanel:
+			self.prefsPanel.top.destroy()
+	
+		if self in app().windowList:
+			app().windowList.remove(self)
+			self.destroy() # force the window to go away now.
+		if app().windowList:
+			# Pick a window to activate so we can set the log.
+			w = app().windowList[0]
+			w.top.deiconify()
+			w.top.lift()
+			app().log = w
+		else:
+			app().quit()
+		return true
+	#@-body
+	#@-node:1::frame.OnCloseLeoEvent
+	#@+node:2::OnActivateBody & OnBodyDoubleClick
+	#@+body
+	def OnActivateBody (self,event=None):
+	
+		app().log = self
+		self.tree.OnDeactivate()
+		# trace(`app().log`)
+	
+	def OnBodyDoubleClick (self,event=None):
+	
+		if event: # 8/4/02: prevent wandering insertion point.
+			index = "@%d,%d" % (event.x, event.y) # Find where we clicked
+		body = self.body
+		start = body.index(index + " wordstart")
+		end = body.index(index + " wordend")
+		setTextSelection(self.body,start,end)
+		return "break" # Inhibit all further event processing.
+	#@-body
+	#@-node:2::OnActivateBody & OnBodyDoubleClick
+	#@+node:3::OnActivateLeoEvent, OnDeactivateLeoEvent
+	#@+body
+	def OnActivateLeoEvent(self,event=None):
+	
+		app().log = self
+		# trace(`app().log`)
+	
+	def OnDeactivateLeoEvent(self,event=None):
+		
+		app().log = None
+		# trace(`app().log`)
+	#@-body
+	#@-node:3::OnActivateLeoEvent, OnDeactivateLeoEvent
+	#@+node:4::OnActivateLog
+	#@+body
+	def OnActivateLog (self,event=None):
+	
+		app().log = self
+		self.tree.OnDeactivate()
+		# trace(`app().log`)
+	#@-body
+	#@-node:4::OnActivateLog
+	#@+node:5::OnActivateTree
+	#@+body
+	def OnActivateTree (self,event=None):
+	
+		app().log = self
+		self.tree.undimEditLabel()
+		self.tree.canvas.focus_set()
+		# trace(`app().log`)
+	#@-body
+	#@-node:5::OnActivateTree
+	#@+node:6::OnMouseWheel (Tomaz Ficko)
+	#@+body
+	# Contributed by Tomaz Ficko.  This works on some systems.
+	# On XP it causes a crash in tcl83.dll.  Clearly a Tk bug.
+	
+	def OnMouseWheel(self, event=None):
+	
+		if event.delta < 1:
+			self.canvas.yview(Tkinter.SCROLL, 1, Tkinter.UNITS)
+		else:
+			self.canvas.yview(Tkinter.SCROLL, -1, Tkinter.UNITS)
+	#@-body
+	#@-node:6::OnMouseWheel (Tomaz Ficko)
+	#@+node:7::frame.OnVisibility
+	#@+body
+	# Handle the "visibility" event and attempt to attach the Leo icon.
+	# This code must be executed whenever the window is redrawn.
+	
+	def OnVisibility (self,event):
+	
+		if self.icon and event.widget is self.top:
+	
+			# print "OnVisibility"
+			self.icon.attach(self.top)
+	#@-body
+	#@-node:7::frame.OnVisibility
+	#@-node:3::Event handlers
+	#@+node:4::Menus, Commands & Shortcuts
+	#@+node:1::canonicalizeShortcut
 	#@+body
 	#@+at
 	#  This code "canonicalizes" both the shortcuts that appear in menus and 
@@ -410,8 +748,8 @@ class LeoFrame:
 		# print `shortcut`,`bind_shortcut`,`menu_shortcut`
 		return bind_shortcut,menu_shortcut
 	#@-body
-	#@-node:6::canonicalizeShortcut
-	#@+node:7::createMenuBar
+	#@-node:1::canonicalizeShortcut
+	#@+node:2::createMenuBar
 	#@+body
 	def createMenuBar(self, top):
 	
@@ -818,8 +1156,8 @@ class LeoFrame:
 		top.config(menu=topMenu) # Display the menu.
 		app().menuWarningsGiven = true
 	#@-body
-	#@-node:7::createMenuBar
-	#@+node:8::createMenuEntries
+	#@-node:2::createMenuBar
+	#@+node:3::createMenuEntries
 	#@+body
 	#@+at
 	#  The old, non-user-configurable code bound shortcuts in createMenuBar.  
@@ -833,7 +1171,7 @@ class LeoFrame:
 	#@-at
 	#@@c
 
-	def createMenuEntries (self,menu,table):
+	def createMenuEntries (self,menu,table,openWith=0):
 		
 		for label,accel,command in table:
 			if label == None or command == None or label == "-":
@@ -870,8 +1208,12 @@ class LeoFrame:
 				#@-body
 				#@-node:1::<< get menu and bind shortcuts >>
 
-				f = self.doCommand # Removes warning in Python 2.1
-				callback=lambda f=f,cmd=command,label=name:f(cmd,label)
+				if openWith:
+					f = self.OnOpenWith
+					callback=lambda f=f,path=command:f(path)
+				else:
+					f = self.doCommand # Removes warning in Python 2.1
+					callback=lambda f=f,cmd=command,label=name:f(cmd,label)
 				realLabel = app().realMenuName(label)
 				if menu_shortcut:
 					menu.add_command(label=realLabel,accelerator=menu_shortcut,command=callback)
@@ -886,8 +1228,12 @@ class LeoFrame:
 						self.menuShortcuts.append(bind_shortcut)
 						try:
 							# The self and event params must be unbound.
-							f = self.doCommand # More compatible with Python 2.1
-							callback=lambda event,f=f,cmd=command,label=name:f(cmd,label,event)
+							if openWith:
+								f = self.OnOpenWith
+								callback=lambda event,f=f,path=command:f(path)
+							else:
+								f = self.doCommand # More compatible with Python 2.1
+								callback=lambda event,f=f,cmd=command,label=name:f(cmd,label,event)
 							# The 2.2 code.  Must be a comment or Python 2.1 will complain.
 							# callback=lambda event,cmd=command,label=name:self.doCommand(cmd,label,event)
 							self.body.bind(bind_shortcut,callback) # Necessary to override defaults in body.
@@ -899,8 +1245,8 @@ class LeoFrame:
 								es_exception()
 								app().menuWarningsGive = true
 	#@-body
-	#@-node:8::createMenuEntries
-	#@+node:9::frame.doCommand
+	#@-node:3::createMenuEntries
+	#@+node:4::frame.doCommand
 	#@+body
 	#@+at
 	#  Executes the given command, invoking hooks and catching exceptions.
@@ -931,367 +1277,8 @@ class LeoFrame:
 			handleLeoHook("command2",label=label)
 		return "break" # Inhibit all other handlers.
 	#@-body
-	#@-node:9::frame.doCommand
-	#@+node:10::frame.longFileName & shortFileName
-	#@+body
-	def longFileName (self):
-		return self.mFileName
-		
-	def shortFileName (self):
-		return shortFileName(self.mFileName)
-	#@-body
-	#@-node:10::frame.longFileName & shortFileName
-	#@+node:11::initialRatios
-	#@+body
-	def initialRatios (self):
-	
-		config = app().config
-		s = config.getWindowPref("initial_splitter_orientation")
-		verticalFlag = s == None or (s != "h" and s != "horizontal")
-	
-		if verticalFlag:
-			r = config.getFloatWindowPref("initial_vertical_ratio")
-			if r == None or r < 0.0 or r > 1.0: r = 0.5
-			r2 = config.getFloatWindowPref("initial_vertical_secondary_ratio")
-			if r2 == None or r2 < 0.0 or r2 > 1.0: r2 = 0.8
-		else:
-			r = config.getFloatWindowPref("initial_horizontal_ratio")
-			if r == None or r < 0.0 or r > 1.0: r = 0.3
-			r2 = config.getFloatWindowPref("initial_horizontal_secondary_ratio")
-			if r2 == None or r2 < 0.0 or r2 > 1.0: r2 = 0.8
-	
-		# print (`r`,`r2`)
-		return verticalFlag,r,r2
-	#@-body
-	#@-node:11::initialRatios
-	#@+node:12::getFocus
-	#@+body
-	# Returns the frame that has focus, or body if None.
-	
-	def getFocus(self):
-	
-		f = self.top.focus_displayof()
-		if f:
-			return f
-		else:
-			return self.body
-	#@-body
-	#@-node:12::getFocus
-	#@+node:13::notYet
-	#@+body
-	def notYet(self,name):
-	
-		es(name + " not ready yet")
-	
-	#@-body
-	#@-node:13::notYet
-	#@+node:14::frame.put, putnl
-	#@+body
-	# All output to the log stream eventually comes here.
-	
-	def put (self,s):
-		if app().quitting > 0: return
-		if self.log:
-				self.log.insert("end",s)
-				self.log.see("end")
-				self.log.update_idletasks()
-		else:
-			print "Null log"
-			print s
-	
-	def putnl (self):
-		if app().quitting > 0: return
-		if self.log:
-			self.log.insert("end",'\n')
-			self.log.see("end")
-			self.log.update_idletasks()
-		else:
-			print "Null log"
-			print
-	#@-body
-	#@-node:14::frame.put, putnl
-	#@+node:15::resizePanesToRatio
-	#@+body
-	def resizePanesToRatio(self,ratio,secondary_ratio):
-	
-		self.divideLeoSplitter(self.splitVerticalFlag, ratio)
-		self.divideLeoSplitter(not self.splitVerticalFlag, secondary_ratio)
-		# trace(`ratio`)
-	
-	#@-body
-	#@-node:15::resizePanesToRatio
-	#@+node:16::Event handlers
-	#@+node:1::frame.OnCloseLeoEvent
-	#@+body
-	# Called from quit logic and when user closes the window.
-	# Returns true if the close happened.
-	
-	def OnCloseLeoEvent(self):
-	
-		# trace(`self in app().windowList` + ":" + `self`)
-		veto=false
-		c = self.commands ; frame = c.frame
-		if c.changed:
-			
-			#@<< Prompt for change.  Set veto if the user cancels >>
-			#@+node:1::<< Prompt for change.  Set veto if the user cancels >>
-			#@+body
-			name = choose(self.mFileName, self.mFileName, self.title)
-			type = choose(app().quitting, "quitting?", "closing?")
-			
-			d = leoDialog.leoDialog()
-			answer = d.askYesNoCancel("Confirm",
-				'Save changes to "' + name + '" before ' + type)
-			
-			if answer=="yes":
-				if not self.mFileName or self.mFileName == "":
-					
-					#@<< Put up a file save dialog; set veto if the user cancels >>
-					#@+node:1::<< Put up a file save dialog; set veto if the user cancels >>
-					#@+body
-					# Make sure we never pass None to the ctor.
-					if not self.title:
-						self.title = ""
-						
-					self.mFileName = tkFileDialog.asksaveasfilename(
-						initialfile = self.mFileName,
-						title="Save",
-						filetypes=[("Leo files", "*.leo")],
-						defaultextension=".leo")
-						
-					if not self.mFileName:
-						veto = true
-					
-					#@-body
-					#@-node:1::<< Put up a file save dialog; set veto if the user cancels >>
-
-				if veto==false and self.mFileName and self.mFileName != "":
-					self.commands.fileCommands.save( self.mFileName )
-			
-			elif answer=="cancel":
-				veto = true #The user wants to cancel the close.
-			
-			else: veto = false # The user wants to close without saving.
-			#@-body
-			#@-node:1::<< Prompt for change.  Set veto if the user cancels >>
-
-		if veto: return false
-		app().log = None # no log until we reactive a window.
-		# Destroy all windows attached to this windows.
-		# This code will be executed if we haven't explicitly closed the windows.
-		if self.comparePanel:
-			self.comparePanel.top.destroy()
-		if self.colorPanel:
-			self.colorPanel.top.destroy()
-		if self.fontPanel:
-			self.fontPanel.top.destroy()
-		if self.prefsPanel:
-			self.prefsPanel.top.destroy()
-	
-		if self in app().windowList:
-			app().windowList.remove(self)
-			self.destroy() # force the window to go away now.
-		if app().windowList:
-			# Pick a window to activate so we can set the log.
-			w = app().windowList[0]
-			w.top.deiconify()
-			w.top.lift()
-			app().log = w
-		else:
-			app().quit()
-		return true
-	#@-body
-	#@-node:1::frame.OnCloseLeoEvent
-	#@+node:2::OnActivateBody & OnBodyDoubleClick
-	#@+body
-	def OnActivateBody (self,event=None):
-	
-		app().log = self
-		self.tree.OnDeactivate()
-		# trace(`app().log`)
-	
-	def OnBodyDoubleClick (self,event=None):
-	
-		if event: # 8/4/02: prevent wandering insertion point.
-			index = "@%d,%d" % (event.x, event.y) # Find where we clicked
-		body = self.body
-		start = body.index(index + " wordstart")
-		end = body.index(index + " wordend")
-		setTextSelection(self.body,start,end)
-		return "break" # Inhibit all further event processing.
-	#@-body
-	#@-node:2::OnActivateBody & OnBodyDoubleClick
-	#@+node:3::OnActivateLeoEvent, OnDeactivateLeoEvent
-	#@+body
-	def OnActivateLeoEvent(self,event=None):
-	
-		app().log = self
-		# trace(`app().log`)
-	
-	def OnDeactivateLeoEvent(self,event=None):
-		
-		app().log = None
-		# trace(`app().log`)
-	#@-body
-	#@-node:3::OnActivateLeoEvent, OnDeactivateLeoEvent
-	#@+node:4::OnActivateLog
-	#@+body
-	def OnActivateLog (self,event=None):
-	
-		app().log = self
-		self.tree.OnDeactivate()
-		# trace(`app().log`)
-	#@-body
-	#@-node:4::OnActivateLog
-	#@+node:5::OnActivateTree
-	#@+body
-	def OnActivateTree (self,event=None):
-	
-		app().log = self
-		self.tree.undimEditLabel()
-		self.tree.canvas.focus_set()
-		# trace(`app().log`)
-	#@-body
-	#@-node:5::OnActivateTree
-	#@+node:6::OnMouseWheel (Tomaz Ficko)
-	#@+body
-	# Contributed by Tomaz Ficko.  This works on some systems.
-	# On XP it causes a crash in tcl83.dll.  Clearly a Tk bug.
-	
-	def OnMouseWheel(self, event=None):
-	
-		if event.delta < 1:
-			self.canvas.yview(Tkinter.SCROLL, 1, Tkinter.UNITS)
-		else:
-			self.canvas.yview(Tkinter.SCROLL, -1, Tkinter.UNITS)
-	#@-body
-	#@-node:6::OnMouseWheel (Tomaz Ficko)
-	#@+node:7::frame.OnVisibility
-	#@+body
-	# Handle the "visibility" event and attempt to attach the Leo icon.
-	# This code must be executed whenever the window is redrawn.
-	
-	def OnVisibility (self,event):
-	
-		if self.icon and event.widget is self.top:
-	
-			# print "OnVisibility"
-			self.icon.attach(self.top)
-	#@-body
-	#@-node:7::frame.OnVisibility
-	#@-node:16::Event handlers
-	#@+node:17::Menu enablers (Frame)
-	#@+node:1::frame.OnMenuClick (enables and disables all menu items)
-	#@+body
-	# This is the Tk "postcommand" callback.  It should update all menu items.
-	
-	def OnMenuClick (self):
-		
-		# A horrible kludge: set app().log to cover for a possibly missing activate event.
-		app().log = self
-		
-		# Allow the user first crack at updating menus.
-		flag = handleLeoHook("menu2")
-		
-		if flag == None or flag != false:
-			self.updateFileMenu()
-			self.updateEditMenu()
-			self.updateOutlineMenu()
-	#@-body
-	#@-node:1::frame.OnMenuClick (enables and disables all menu items)
-	#@+node:2::hasSelection
-	#@+body
-	# Returns true if text in the outline or body text is selected.
-	
-	def hasSelection (self):
-	
-		if self.body:
-			first, last = getTextSelection(self.body)
-			return first != last
-		else:
-			return false
-	#@-body
-	#@-node:2::hasSelection
-	#@+node:3::updateFileMenu
-	#@+body
-	def updateFileMenu (self):
-	
-		c = self.commands
-		if not c: return
-		v = c.currentVnode()
-		
-		menu = self.menus.get("File")
-		enableMenu(menu,"Revert To Saved", c.canRevert())
-	
-	#@-body
-	#@-node:3::updateFileMenu
-	#@+node:4::updateEditMenu
-	#@+body
-	def updateEditMenu (self):
-	
-		c = self.commands
-		if not c: return
-		menu = self.menus.get("Edit")
-		# Top level entries.
-		c.undoer.enableMenuItems()
-		if 0: # Always on for now.
-			enableMenu(menu,"Cut",c.canCut())
-			enableMenu(menu,"Copy",c.canCut()) # delete
-			enableMenu(menu,"Paste",c.canPaste())
-		if 0: # Always on for now.
-			menu = self.menus.get("Find...")
-			enableMenu(menu,"Find Next",c.canFind())
-			flag = c.canReplace()
-			enableMenu(menu,"Replace",flag)
-			enableMenu(menu,"Replace, Then Find",flag)
-		# Edit Body submenu
-		menu = self.menus.get("Edit Body...")
-		enableMenu(menu,"Extract Section",c.canExtractSection())
-		enableMenu(menu,"Extract Names",c.canExtractSectionNames())
-		enableMenu(menu,"Extract",c.canExtract())
-		enableMenu(menu,"Match Brackets",c.canFindMatchingBracket())
-	#@-body
-	#@-node:4::updateEditMenu
-	#@+node:5::updateOutlineMenu
-	#@+body
-	def updateOutlineMenu (self):
-	
-		c = self.commands ; v = c.currentVnode()
-		if not c: return
-	
-		menu = self.menus.get("Outline")
-		enableMenu(menu,"Cut Node",c.canCutOutline())
-		enableMenu(menu,"Delete Node",c.canDeleteHeadline())
-		enableMenu(menu,"Paste Node",c.canPasteOutline())
-		enableMenu(menu,"Sort Siblings",c.canSortSiblings())
-		# Expand/Contract submenu
-		menu = self.menus.get("Expand/Contract...")
-		enableMenu(menu,"Contract Parent",c.canContractParent())
-		# Move/Select submenu
-		menu = self.menus.get("Move/Select...")
-		enableMenu(menu,"Move Down",c.canMoveOutlineDown())
-		enableMenu(menu,"Move Left",c.canMoveOutlineLeft())
-		enableMenu(menu,"Move Right",c.canMoveOutlineRight())
-		enableMenu(menu,"Move Up",c.canMoveOutlineUp())
-		enableMenu(menu,"Promote",c.canPromote())
-		enableMenu(menu,"Demote",c.canDemote())
-		enableMenu(menu,"Go Prev Visible",c.canSelectVisBack())
-		enableMenu(menu,"Go Next Visible",c.canSelectVisNext())
-		enableMenu(menu,"Go Back",c.canSelectThreadBack())
-		enableMenu(menu,"Go Next",c.canSelectThreadNext())
-		# Mark/Go To submenu
-		menu = self.menus.get("Mark/Go To...")
-		label = choose(v and v.isMarked(),"Unmark","Mark")
-		setMenuLabel(menu,0,label)
-		enableMenu(menu,"Mark Subheads",(v and v.hasChildren()))
-		enableMenu(menu,"Mark Changed Items",c.canMarkChangedHeadlines())
-		enableMenu(menu,"Mark Changed Roots",c.canMarkChangedRoots())
-		enableMenu(menu,"Go To Next Marked",c.canGoToNextMarkedHeadline())
-		enableMenu(menu,"Go To Next Changed",c.canGoToNextDirtyHeadline())
-	#@-body
-	#@-node:5::updateOutlineMenu
-	#@-node:17::Menu enablers (Frame)
-	#@+node:18::Menu Command Handlers
+	#@-node:4::frame.doCommand
+	#@+node:5::Menu Command Handlers
 	#@+node:1::File Menu
 	#@+node:1::top level
 	#@+node:1::OnNew
@@ -1374,101 +1361,91 @@ class LeoFrame:
 	#@+node:3::frame.OnOpenWith
 	#@+body
 	#@+at
-	#  To do:
-	# 
-	# 1. handle @path and default tangle directory similar to scanAllDirectives.
-	# 2. Use leoConfig.txt to determine which editor to open for various file types.
-	# 	Figure out how config module can create list of association.
+	#  This routine handles the items in the Open With... menu.
+	# These items can only be created by createOpenWithMenuFromTable().
+	# Typically this would be done from the "open2" hook.
 
 	#@-at
 	#@@c
 
-	def OnOpenWith(self,event=None):
+	def OnOpenWith(self,data=None,event=None):
 		
 		a = app() ; c = self.commands ; v = c.currentVnode()
+		if not data: return
 		
+		openType,arg,ext=data
 		
 		#@<< set ext based on the present language >>
 		#@+node:1::<< set ext based on the present language >>
 		#@+body
-		dict = scanDirectives(c)
-		language = dict.get("language")
-		ext = a.language_extension_dict.get(language)
-		if ext == None: ext = "txt"
-		ext = "." + ext
-		# trace(language)
-		
+		if ext == None or len(ext) == 0:
+			dict = scanDirectives(c)
+			language = dict.get("language")
+			ext = a.language_extension_dict.get(language)
+			if ext == None:
+				ext = "txt"
+			
+		if ext[0] != ".":
+			ext = "."+ext
 		#@-body
 		#@-node:1::<< set ext based on the present language >>
 
 		
-		#@<< open a temp file f with extension ext >>
-		#@+node:2::<< open a temp file f with extension ext >>
+		#@<< set path to the full pathname of a temp file using ext >>
+		#@+node:2::<< set path to the full pathname of a temp file using ext >>
 		#@+body
 		f = None
 		while f == None:
-		
 			a.openWithFileNum += 1
 			name = "LeoTemp" + str(a.openWithFileNum) + ext
 			path = os.path.join(a.loadDir,name)
-			
 			if not os.path.exists(path):
 				try:
 					f = open(path,"w")
+					f.write(v.bodyString())
+					f.flush()
+					f.close()
+					try:
+						time=os.path.getmtime(path)
+					except:
+						time=None
 					es("creating: " + path)
-					data = (f,path)
+					es("time: " + str(time))
+					data = (c,v,f,path,time)
 					a.openWithFiles.append(data)
 				except:
 					f = None
 					es("exception opening temp file")
 					es_exception()
-		
+		if not f: return
 		#@-body
-		#@-node:2::<< open a temp file f with extension ext >>
+		#@-node:2::<< set path to the full pathname of a temp file using ext >>
 
-		if f:
-			f.write(v.bodyString())
-			f.flush()
-			f.close()
 		
-		#@<< open f in the external editor >>
-		#@+node:3::<< open f in the external editor >>
+		#@<< execute a command to open path >>
+		#@+node:3::<< execute a command to open path >>
 		#@+body
-		# Double clicking python files executes them.
-		
 		try:
-			if ext == ".py":
-				# open idle in edit mode.  This does not work well.
-				os.system("c:/python22/tools/idle/idle.py -e " + path)
-				# os.system("idle.py -e " + path)
+			if arg == None: arg = ""
+			if openType == "os.system":
+				command  = "os.system("+arg+path+")"
+				os.system(arg+path)
+			elif openType == "os.startfile":
+				command    = "os.startfile("+arg+path+")"
+				os.startfile(arg+path)
+			elif openType == "exec":
+				command    = "exec("+arg+path+")"
+				exec(arg+path)
 			else:
-				os.startfile(path)
+				command="bad command:"+str(openType)
+			es(command)
 		except:
-			es("exception opening " + path)
+			es("exception executing: "+command)
 			es_exception()
-		
 		#@-body
-		#@-node:3::<< open f in the external editor >>
+		#@-node:3::<< execute a command to open path >>
 
-		
-		if 0: # old code
-			isAtFile = v.isAtFileNode()
-			if not isAtFile: return  "break"
-			
-			name = v.atFileNodeName()
-			if name == None or len(name) == 0: return  "break"
-			
-			## To do: 
-			name = string.strip(name)
-			f = os.path.join(app().loadDir,name)
-			print f
-		
-			# This doesn't work for .py files or .bat files.
-			# Probably not too swift for other files either.
-			if 0:
-				os.startfile(f)
-	
-	
+		return "break"
 	#@-body
 	#@-node:3::frame.OnOpenWith
 	#@+node:4::frame.OpenWithFileName
@@ -1561,10 +1538,11 @@ class LeoFrame:
 	def OnClose(self,event=None):
 		
 		u = self.commands.undoer
-		if u and u.new_undo and u.debug:
-			print "old undo mem:",`u.old_mem`
-			print "new undo mem:",`u.new_mem`
-			print "ratio new/old:",`float(u.new_mem)/float(u.old_mem)`
+		if 0:
+			if u and u.new_undo and u.debug:
+				print "old undo mem:",`u.old_mem`
+				print "new undo mem:",`u.new_mem`
+				print "ratio new/old:",`float(u.new_mem)/float(u.old_mem)`
 		
 		self.OnCloseLeoEvent() # Destroy the frame unless the user cancels.
 	#@-body
@@ -3459,15 +3437,32 @@ class LeoFrame:
 	#@-body
 	#@-node:6::OnLeoConfig, OnApplyConfig
 	#@-node:5::Help Menu
-	#@-node:18::Menu Command Handlers
-	#@+node:19::Menu Convenience Routines
+	#@-node:5::Menu Command Handlers
+	#@+node:6::Menu Convenience Routines
 	#@+body
 	#@+at
 	#  These are intended for use by scripts, and some are used by Leo.
 
 	#@-at
 	#@-body
-	#@+node:1::createNewMenu
+	#@+node:1::createMenuItemsFromTable
+	#@+body
+	def createMenuItemsFromTable (self,menuName,table,openWith=0):
+		
+		try:
+			menu = self.menus.get(menuName)
+			if menu == None:
+				print "menu does not exist: ", `menuName`
+				es("menu does not exist: " + `menuName`)
+				return
+			self.createMenuEntries(menu,table,openWith)
+		except:
+			print "exception creating items for ",`menuName`," menu"
+			es("exception creating items for " + `menuName` + " menu")
+			es_exception()
+	#@-body
+	#@-node:1::createMenuItemsFromTable
+	#@+node:2::createNewMenu
 	#@+body
 	def createNewMenu (self,menuName,parentName="top"):
 		
@@ -3494,24 +3489,35 @@ class LeoFrame:
 	
 	
 	#@-body
-	#@-node:1::createNewMenu
-	#@+node:2::createMenuItemsFromTable
+	#@-node:2::createNewMenu
+	#@+node:3::createOpenWithMenuFromTable
 	#@+body
-	def createMenuItemsFromTable (self,menuName,table):
+	def createOpenWithMenuFromTable (self,table):
 		
-		try:
-			menu = self.menus.get(menuName)
-			if menu == None:
-				es("menu does not exist: " + menuName)
-				return
-			self.createMenuEntries(menu,table)
-		except:
-			es("exception creating items for " + menuName + " menu")
-			es_exception()
+		menuName = "Open With..."
+		
+		# for s in table: print s
+		parent = self.menus.get("File")
+		# print "parent:",`parent`
 	
+		# Delete the previous entry.
+		index = parent.index(menuName)
+		parent.delete(index)
+		# Create the "Open With..." menu.
+		openWithMenu = Tkinter.Menu(parent,tearoff=0)
+		self.menus[menuName] = openWithMenu
+		label=app().realMenuName(menuName)
+		parent.insert_cascade(index,label=label,menu=openWithMenu)
+		# Populate the "Open With..." menu.
+		shortcut_table = []
+		for name,shortcut,data in table:
+			data2 = (name,shortcut,data)
+			shortcut_table.append(data2)
+		# for i in shortcut_table: print i
+		self.createMenuItemsFromTable("Open With...",shortcut_table,openWith=1)
 	#@-body
-	#@-node:2::createMenuItemsFromTable
-	#@+node:3::deleteMenu
+	#@-node:3::createOpenWithMenuFromTable
+	#@+node:4::deleteMenu
 	#@+body
 	def deleteMenu (self,menuName):
 	
@@ -3526,8 +3532,8 @@ class LeoFrame:
 			es("exception deleting " + menuName + " menu")
 			es_exception()
 	#@-body
-	#@-node:3::deleteMenu
-	#@+node:4::deleteMenuItem
+	#@-node:4::deleteMenu
+	#@+node:5::deleteMenuItem
 	#@+body
 	def deleteMenuItem (self,itemName,menuName="top"):
 	
@@ -3543,184 +3549,122 @@ class LeoFrame:
 			es("exception deleting " + itemName + " from " + menuName + " menu")
 			es_exception()
 	#@-body
-	#@-node:4::deleteMenuItem
-	#@-node:19::Menu Convenience Routines
-	#@+node:20::Configuration
-	#@+node:1::f.configureBar
+	#@-node:5::deleteMenuItem
+	#@-node:6::Menu Convenience Routines
+	#@+node:7::Menu enablers (Frame)
+	#@+node:1::frame.OnMenuClick (enables and disables all menu items)
 	#@+body
-	def configureBar (self, bar, verticalFlag):
+	# This is the Tk "postcommand" callback.  It should update all menu items.
+	
+	def OnMenuClick (self):
 		
-		config = app().config
-	
-		# Get configuration settings.
-		w = config.getWindowPref("split_bar_width")
-		if not w or w < 1: w = 7
-		relief = config.getWindowPref("split_bar_relief")
-		if not relief: relief = "flat"
-		color = config.getWindowPref("split_bar_color")
-		if not color: color = "LightSteelBlue2"
-	
-		try:
-			if verticalFlag:
-				# Panes arranged vertically; horizontal splitter bar
-				bar.configure(relief=relief,height=w,bg=color,cursor="sb_v_double_arrow")
-			else:
-				# Panes arranged horizontally; vertical splitter bar
-				bar.configure(relief=relief,width=w,bg=color,cursor="sb_h_double_arrow")
-		except: # Could be a user error. Use all defaults
-			es("exception in user configuration for splitbar")
-			es_exception()
-			if verticalFlag:
-				# Panes arranged vertically; horizontal splitter bar
-				bar.configure(height=7,cursor="sb_v_double_arrow")
-			else:
-				# Panes arranged horizontally; vertical splitter bar
-				bar.configure(width=7,cursor="sb_h_double_arrow")
+		# A horrible kludge: set app().log to cover for a possibly missing activate event.
+		app().log = self
+		
+		# Allow the user first crack at updating menus.
+		flag = handleLeoHook("menu2")
+		
+		if flag == None or flag != false:
+			self.updateFileMenu()
+			self.updateEditMenu()
+			self.updateOutlineMenu()
 	#@-body
-	#@-node:1::f.configureBar
-	#@+node:2::f.configureBarsFromConfig
+	#@-node:1::frame.OnMenuClick (enables and disables all menu items)
+	#@+node:2::hasSelection
 	#@+body
-	def configureBarsFromConfig (self):
-		
-		config = app().config
+	# Returns true if text in the outline or body text is selected.
 	
-		w = config.getWindowPref("split_bar_width")
-		if not w or w < 1: w = 7
-		
-		relief = config.getWindowPref("split_bar_relief")
-		if not relief or relief == "": relief = "flat"
+	def hasSelection (self):
 	
-		color = config.getWindowPref("split_bar_color")
-		if not color or color == "": color = "LightSteelBlue2"
-	
-		if self.splitVerticalFlag:
-			bar1,bar2=self.bar1,self.bar2
+		if self.body:
+			first, last = getTextSelection(self.body)
+			return first != last
 		else:
-			bar1,bar2=self.bar2,self.bar1
-			
-		try:
-			bar1.configure(relief=relief,height=w,bg=color)
-			bar2.configure(relief=relief,width=w,bg=color)
-		except: # Could be a user error.
-			es("exception in user configuration for splitbar")
-			es_exception()
+			return false
 	#@-body
-	#@-node:2::f.configureBarsFromConfig
-	#@+node:3::f.reconfigureFromConfig
+	#@-node:2::hasSelection
+	#@+node:3::updateFileMenu
 	#@+body
-	def reconfigureFromConfig (self):
+	def updateFileMenu (self):
+	
+		c = self.commands
+		if not c: return
+		v = c.currentVnode()
 		
-		f = self ; c = f.commands
+		menu = self.menus.get("File")
+		enableMenu(menu,"Revert To Saved", c.canRevert())
 		
-		# Not ready yet: just reset the width and color.
-		# We need self.bar1 and self.bar2 ivars.
-		# self.reconfigureBar(...)
-		
-		# The calls to redraw are workarounds for an apparent Tk bug.
-		# Without them the text settings get applied to the wrong widget!
-		# Moreover, only this order seems to work on Windows XP...
-		f.tree.setFontFromConfig()
-		f.setTreeColorsFromConfig()
-		f.configureBarsFromConfig()
-		c.redraw()
-		f.setBodyFontFromConfig()
-		f.setTabWidth(c.tab_width)
-		c.redraw()
-		f.setLogFontFromConfig()
-		c.redraw()
+		enableMenu(menu,"Open With...", self.menus.has_key("Open With..."))
 	#@-body
-	#@-node:3::f.reconfigureFromConfig
-	#@+node:4::f.setBodyFontFromConfig
+	#@-node:3::updateFileMenu
+	#@+node:4::updateEditMenu
 	#@+body
-	def setBodyFontFromConfig (self):
-		
-		config = app().config ; body = self.body
-		#print "body",`self.body`
-		
-		font = config.getFontFromParams(
-			"body_text_font_family", "body_text_font_size",
-			"body_text_font_slant",  "body_text_font_weight")
+	def updateEditMenu (self):
 	
-		body.configure(font=font)
-		
-		bg = config.getWindowPref("body_text_background_color")
-		if bg:
-			try: body.configure(bg=bg)
-			except: pass
-		
-		fg = config.getWindowPref("body_text_foreground_color")
-		if fg:
-			try: body.configure(fg=fg)
-			except: pass
-			
-		if sys.platform != "win32": # Maybe a Windows bug.
-			fg = config.getWindowPref("body_cursor_foreground_color")
-			bg = config.getWindowPref("body_cursor_background_color")
-			# print `fg`, `bg`
-			if fg and bg:
-				cursor="xterm" + " " + fg + " " + bg
-				try: body.configure(cursor=cursor)
-				except:
-					import traceback
-					traceback.print_exc()
+		c = self.commands
+		if not c: return
+		menu = self.menus.get("Edit")
+		# Top level entries.
+		c.undoer.enableMenuItems()
+		if 0: # Always on for now.
+			enableMenu(menu,"Cut",c.canCut())
+			enableMenu(menu,"Copy",c.canCut()) # delete
+			enableMenu(menu,"Paste",c.canPaste())
+		if 0: # Always on for now.
+			menu = self.menus.get("Find...")
+			enableMenu(menu,"Find Next",c.canFind())
+			flag = c.canReplace()
+			enableMenu(menu,"Replace",flag)
+			enableMenu(menu,"Replace, Then Find",flag)
+		# Edit Body submenu
+		menu = self.menus.get("Edit Body...")
+		enableMenu(menu,"Extract Section",c.canExtractSection())
+		enableMenu(menu,"Extract Names",c.canExtractSectionNames())
+		enableMenu(menu,"Extract",c.canExtract())
+		enableMenu(menu,"Match Brackets",c.canFindMatchingBracket())
 	#@-body
-	#@-node:4::f.setBodyFontFromConfig
-	#@+node:5::f.setLogFontFromConfig
+	#@-node:4::updateEditMenu
+	#@+node:5::updateOutlineMenu
 	#@+body
-	def setLogFontFromConfig (self):
+	def updateOutlineMenu (self):
 	
-		log = self.log ; config = app().config
-		#print "log",`self.log`
+		c = self.commands ; v = c.currentVnode()
+		if not c: return
 	
-		font = config.getFontFromParams(
-			"log_text_font_family", "log_text_font_size",
-			"log_text_font_slant",  "log_text_font_weight")
-		
-		log.configure(font=font)
-		
-		bg = config.getWindowPref("log_text_background_color")
-		if bg:
-			try: log.configure(bg=bg)
-			except: pass
-		
-		fg = config.getWindowPref("log_text_foreground_color")
-		if fg:
-			try: log.configure(fg=fg)
-			except: pass
-	
+		menu = self.menus.get("Outline")
+		enableMenu(menu,"Cut Node",c.canCutOutline())
+		enableMenu(menu,"Delete Node",c.canDeleteHeadline())
+		enableMenu(menu,"Paste Node",c.canPasteOutline())
+		enableMenu(menu,"Sort Siblings",c.canSortSiblings())
+		# Expand/Contract submenu
+		menu = self.menus.get("Expand/Contract...")
+		enableMenu(menu,"Contract Parent",c.canContractParent())
+		# Move/Select submenu
+		menu = self.menus.get("Move/Select...")
+		enableMenu(menu,"Move Down",c.canMoveOutlineDown())
+		enableMenu(menu,"Move Left",c.canMoveOutlineLeft())
+		enableMenu(menu,"Move Right",c.canMoveOutlineRight())
+		enableMenu(menu,"Move Up",c.canMoveOutlineUp())
+		enableMenu(menu,"Promote",c.canPromote())
+		enableMenu(menu,"Demote",c.canDemote())
+		enableMenu(menu,"Go Prev Visible",c.canSelectVisBack())
+		enableMenu(menu,"Go Next Visible",c.canSelectVisNext())
+		enableMenu(menu,"Go Back",c.canSelectThreadBack())
+		enableMenu(menu,"Go Next",c.canSelectThreadNext())
+		# Mark/Go To submenu
+		menu = self.menus.get("Mark/Go To...")
+		label = choose(v and v.isMarked(),"Unmark","Mark")
+		setMenuLabel(menu,0,label)
+		enableMenu(menu,"Mark Subheads",(v and v.hasChildren()))
+		enableMenu(menu,"Mark Changed Items",c.canMarkChangedHeadlines())
+		enableMenu(menu,"Mark Changed Roots",c.canMarkChangedRoots())
+		enableMenu(menu,"Go To Next Marked",c.canGoToNextMarkedHeadline())
+		enableMenu(menu,"Go To Next Changed",c.canGoToNextDirtyHeadline())
 	#@-body
-	#@-node:5::f.setLogFontFromConfig
-	#@+node:6::f.setTreeColorsFromConfig
-	#@+body
-	def setTreeColorsFromConfig (self):
-		
-		config = app().config ; tree = self.tree
-	
-		bg = config.getWindowPref("outline_pane_background_color")
-		if bg:
-			try: self.canvas.configure(bg=bg)
-			except: pass
-	
-	#@-body
-	#@-node:6::f.setTreeColorsFromConfig
-	#@+node:7::reconfigurePanes (use config bar_width)
-	#@+body
-	def reconfigurePanes (self):
-		
-		border = app().config.getIntWindowPref('additional_body_text_border')
-		if border == None: border = 0
-		
-		# The body pane needs a _much_ bigger border when tiling horizontally.
-		border = choose(self.splitVerticalFlag,2+border,6+border)
-		self.body.configure(bd=border)
-		
-		# The log pane needs a slightly bigger border when tiling vertically.
-		border = choose(self.splitVerticalFlag,4,2) 
-		self.log.configure(bd=border)
-	#@-body
-	#@-node:7::reconfigurePanes (use config bar_width)
-	#@-node:20::Configuration
-	#@+node:21::Splitter stuff
+	#@-node:5::updateOutlineMenu
+	#@-node:7::Menu enablers (Frame)
+	#@-node:4::Menus, Commands & Shortcuts
+	#@+node:5::Splitter stuff
 	#@+body
 	#@+at
 	#  The key invariants used throughout this code:
@@ -3735,7 +3679,17 @@ class LeoFrame:
 
 	#@-at
 	#@-body
-	#@+node:1::bindBar
+	#@+node:1::resizePanesToRatio
+	#@+body
+	def resizePanesToRatio(self,ratio,secondary_ratio):
+	
+		self.divideLeoSplitter(self.splitVerticalFlag, ratio)
+		self.divideLeoSplitter(not self.splitVerticalFlag, secondary_ratio)
+		# trace(`ratio`)
+	
+	#@-body
+	#@-node:1::resizePanesToRatio
+	#@+node:2::bindBar
 	#@+body
 	def bindBar (self, bar, verticalFlag):
 		
@@ -3744,8 +3698,8 @@ class LeoFrame:
 		else:
 			bar.bind("<B1-Motion>", self.onDragSecondarySplitBar)
 	#@-body
-	#@-node:1::bindBar
-	#@+node:2::createBothLeoSplitters
+	#@-node:2::bindBar
+	#@+node:3::createBothLeoSplitters
 	#@+body
 	def createBothLeoSplitters (self,top):
 	
@@ -3857,8 +3811,8 @@ class LeoFrame:
 		# Give the log and body panes the proper borders.
 		self.reconfigurePanes()
 	#@-body
-	#@-node:2::createBothLeoSplitters
-	#@+node:3::createLeoSplitter
+	#@-node:3::createBothLeoSplitters
+	#@+node:4::createLeoSplitter
 	#@+body
 	# Create a splitter window and panes into which the caller packs widgets.
 	# Returns (f, bar, pane1, pane2)
@@ -3879,8 +3833,8 @@ class LeoFrame:
 		
 		return f, bar, pane1, pane2
 	#@-body
-	#@-node:3::createLeoSplitter
-	#@+node:4::divideAnySplitter
+	#@-node:4::createLeoSplitter
+	#@+node:5::divideAnySplitter
 	#@+body
 	# This is the general-purpose placer for splitters.
 	# It is the only general-purpose splitter code in Leo.
@@ -3898,8 +3852,8 @@ class LeoFrame:
 			pane1.place(relwidth=frac)
 			pane2.place(relwidth=1-frac)
 	#@-body
-	#@-node:4::divideAnySplitter
-	#@+node:5::divideLeoSplitter
+	#@-node:5::divideAnySplitter
+	#@+node:6::divideLeoSplitter
 	#@+body
 	# Divides the main or secondary splitter, using the key invariant.
 	def divideLeoSplitter (self, verticalFlag, frac):
@@ -3920,8 +3874,31 @@ class LeoFrame:
 		self.divideAnySplitter (frac, verticalFlag,
 			self.bar2, self.split2Pane1, self.split2Pane2)
 	#@-body
-	#@-node:5::divideLeoSplitter
-	#@+node:6::onDrag...
+	#@-node:6::divideLeoSplitter
+	#@+node:7::initialRatios
+	#@+body
+	def initialRatios (self):
+	
+		config = app().config
+		s = config.getWindowPref("initial_splitter_orientation")
+		verticalFlag = s == None or (s != "h" and s != "horizontal")
+	
+		if verticalFlag:
+			r = config.getFloatWindowPref("initial_vertical_ratio")
+			if r == None or r < 0.0 or r > 1.0: r = 0.5
+			r2 = config.getFloatWindowPref("initial_vertical_secondary_ratio")
+			if r2 == None or r2 < 0.0 or r2 > 1.0: r2 = 0.8
+		else:
+			r = config.getFloatWindowPref("initial_horizontal_ratio")
+			if r == None or r < 0.0 or r > 1.0: r = 0.3
+			r2 = config.getFloatWindowPref("initial_horizontal_secondary_ratio")
+			if r2 == None or r2 < 0.0 or r2 > 1.0: r2 = 0.8
+	
+		# print (`r`,`r2`)
+		return verticalFlag,r,r2
+	#@-body
+	#@-node:7::initialRatios
+	#@+node:8::onDrag...
 	#@+body
 	def onDragMainSplitBar (self, event):
 		self.onDragSplitterBar(event,self.splitVerticalFlag)
@@ -3958,8 +3935,8 @@ class LeoFrame:
 		# trace(`frac`)
 		self.divideLeoSplitter(verticalFlag, frac)
 	#@-body
-	#@-node:6::onDrag...
-	#@+node:7::placeSplitter
+	#@-node:8::onDrag...
+	#@+node:9::placeSplitter
 	#@+body
 	def placeSplitter (self,bar,pane1,pane2,verticalFlag):
 	
@@ -3976,8 +3953,63 @@ class LeoFrame:
 			pane2.place(rely=0.5, relx = 1.0, anchor="e", relheight=1.0, relwidth=1.0-adj)
 			bar.place  (rely=0.5, relx = adj, anchor="c", relheight=1.0)
 	#@-body
-	#@-node:7::placeSplitter
-	#@-node:21::Splitter stuff
+	#@-node:9::placeSplitter
+	#@-node:5::Splitter stuff
+	#@+node:6::frame.longFileName & shortFileName
+	#@+body
+	def longFileName (self):
+		return self.mFileName
+		
+	def shortFileName (self):
+		return shortFileName(self.mFileName)
+	#@-body
+	#@-node:6::frame.longFileName & shortFileName
+	#@+node:7::frame.put, putnl
+	#@+body
+	# All output to the log stream eventually comes here.
+	
+	def put (self,s):
+		if app().quitting > 0: return
+		if self.log:
+				self.log.insert("end",s)
+				self.log.see("end")
+				self.log.update_idletasks()
+		else:
+			print "Null log"
+			print s
+	
+	def putnl (self):
+		if app().quitting > 0: return
+		if self.log:
+			self.log.insert("end",'\n')
+			self.log.see("end")
+			self.log.update_idletasks()
+		else:
+			print "Null log"
+			print
+	#@-body
+	#@-node:7::frame.put, putnl
+	#@+node:8::getFocus
+	#@+body
+	# Returns the frame that has focus, or body if None.
+	
+	def getFocus(self):
+	
+		f = self.top.focus_displayof()
+		if f:
+			return f
+		else:
+			return self.body
+	#@-body
+	#@-node:8::getFocus
+	#@+node:9::notYet
+	#@+body
+	def notYet(self,name):
+	
+		es(name + " not ready yet")
+	
+	#@-body
+	#@-node:9::notYet
 	#@-others
 #@-body
 #@-node:0::@file leoFrame.py

@@ -472,18 +472,22 @@ def findReference(name,root):
 #@-node:2::Directives...
 #@+node:3::enableMenu & disableMenu & setMenuLabel
 #@+body
+# 11/17/02: Fail gracefully if the item name does not exist.
 def enableMenu (menu,name,val):
-
-	state = choose(val,"normal","disabled")
-	menu.entryconfig(name,state=state)
+	try:
+		state = choose(val,"normal","disabled")
+		menu.entryconfig(name,state=state)
+	except: pass
 
 def disableMenu (menu,name):
-
-	menu.entryconfig(name,state="disabled")
+	try:
+		menu.entryconfig(name,state="disabled")
+	except: pass
 
 def setMenuLabel (menu,name,label):
-
-	menu.entryconfig(name,label=label)
+	try:
+		menu.entryconfig(name,label=label)
+	except: pass
 #@-body
 #@-node:3::enableMenu & disableMenu & setMenuLabel
 #@+node:4::sortSequence
