@@ -8,7 +8,7 @@
 Plugins may define their own gui classes by setting app.gui."""
 
 from leoGlobals import *
-import leoFind
+import leoFind,leoFrame
 import os,sys,tkFont,Tkinter,traceback
 
 Tk = Tkinter
@@ -331,7 +331,7 @@ class tkinterGui(leoGui):
 			es("family,size,slant,weight:"+
 				`family`+':'+`size`+':'+`slant`+':'+`weight`)
 			es_exception()
-			return self.defaultFont
+			return app.config.defaultFont
 	#@nonl
 	#@-node:getFontFromParams
 	#@+node:Creating and running dialogs

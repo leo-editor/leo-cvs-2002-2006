@@ -99,8 +99,6 @@ class baseAtFile:
 	#@+node:atFile.__init__ & initIvars
 	def __init__(self,theCommander):
 		
-		# trace("topLevelDerivedFile.__init__")
-		
 		self.commands = theCommander
 		self.fileCommands = self.commands.fileCommands
 		
@@ -506,7 +504,7 @@ class baseAtFile:
 				i += 1
 		
 			if j < i:
-				version = s[j:i]
+				pass # version = s[j:i]
 			else:
 				valid = false
 		#@-node:<< read optional version param >>
@@ -600,7 +598,6 @@ class baseAtFile:
 		#@-node:<< Clear all orphan bits >>
 		#@nl
 		while v and v != after:
-			# trace(`v`)
 			if v.isAnyAtFileNode() or v.isAtIgnoreNode():
 				#@			<< handle v's tree >>
 				#@+node:<< handle v's tree >>
@@ -692,10 +689,10 @@ class baseAtFile:
 	#@-node:top_df.writeOld/NewDerivedFiles
 	#@+node:top_df.writeMissing
 	def writeMissing(self,v):
-		
-		trace("old_df",v)
 	
 		at = self
+		if at.trace: trace("old_df",v)
+	
 		write_new = not app.config.write_old_format_derived_files
 		df = choose(write_new,at.new_df,at.old_df)
 		df.initIvars()
@@ -796,9 +793,7 @@ class baseOldDerivedFile:
 	#@+node:<< class baseOldDerivedFile methods >>
 	#@+others
 	#@+node: old_df.__init__& initIvars
-	def __init__(self,theCommander): 
-	
-		# trace("oldDerivedFile.__init__")
+	def __init__(self,theCommander):
 	
 		self.commands = theCommander # The commander for the current window.
 		self.fileCommands = self.commands.fileCommands
@@ -876,9 +871,8 @@ class baseOldDerivedFile:
 		
 		"""Read an open 3.x derived file."""
 		
-		trace("old_df",root)
-	
-		at = self ; c = at.commands
+		at = self
+		if at.trace: trace("old_df",root)
 	
 		# Scan the file buffer
 		at.scanAllDirectives(root)
@@ -1235,7 +1229,6 @@ class baseOldDerivedFile:
 	#@@c
 	def scanText (self,file,v,out,endSentinelKind,nextLine=None):
 	
-		c = self.commands ; config = app.config
 		lastLines = [] # The lines after @-leo
 		lineIndent = 0 ; linep = 0 # Changed only for sentinels.
 		while 1:
@@ -1246,8 +1239,6 @@ class baseOldDerivedFile:
 			else:
 				s = self.readLine(file)
 				if len(s) == 0: break
-			
-			# trace(`s`)
 			#@nonl
 			#@-node:<< put the next line into s >>
 			#@nl
@@ -1878,7 +1869,6 @@ class baseOldDerivedFile:
 	
 	def sentinelKind(self,s):
 	
-		# trace(s)
 		i = skip_ws(s,0)
 		if match(s,i,self.startSentinelComment): 
 			i += len(self.startSentinelComment)
@@ -2085,8 +2075,6 @@ class baseOldDerivedFile:
 			#@+node:<< Test for @path >>
 			# We set the current director to a path so future writes will go to that directory.
 			
-			loadDir = app.loadDir
-			
 			if not self.default_directory and not old.has_key("path") and dict.has_key("path"):
 			
 				k = dict["path"]
@@ -2104,7 +2092,7 @@ class baseOldDerivedFile:
 				path = path.strip()
 				
 				if 0: # 11/14/02: we want a _relative_ path, not an absolute path.
-					path = os.path.join(loadDir,path)
+					path = os.path.join(app.loadDir,path)
 				#@nonl
 				#@-node:<< compute relative path from s[k:] >>
 				#@nl
@@ -2270,7 +2258,7 @@ class baseOldDerivedFile:
 	#@+node:old_df.rawWrite
 	def rawWrite(self,root):
 	
-		trace("old_df",root)
+		if self.trace: trace("old_df",root)
 		
 		c = self.commands ; self.root = root
 		self.errors = 0
@@ -2382,7 +2370,7 @@ class baseOldDerivedFile:
 	#@+node:old_df.silentWrite
 	def silentWrite(self,root):
 	
-		trace("old_df",root)
+		if self.trace: trace("old_df",root)
 	
 		c = self.commands ; self.root = root
 		self.errors = 0
@@ -2426,11 +2414,11 @@ class baseOldDerivedFile:
 	
 	def write(self,root,nosentinels=false):
 		
-		trace("old_df",root)
+		if self.trace: trace("old_df",root)
 		
 		# Remove any old tnodeList.
 		if hasattr(root,"tnodeList"):
-			trace("removing tnodeList for " + `root`)
+			if self.trace: trace("removing tnodeList for " + `root`)
 			delattr(root,"tnodeList")
 	
 		c = self.commands
@@ -2763,7 +2751,6 @@ class baseOldDerivedFile:
 		
 		""" Generate the body enclosed in sentinel lines."""
 	
-		# trace(`v`)
 		s = v.t.bodyString
 		i = skip_ws_and_nl(s, 0)
 		if i >= len(s): return
@@ -2902,7 +2889,6 @@ class baseOldDerivedFile:
 	def putDocPart(self,s):
 	
 		# j = skip_line(s,0) ; trace(`s[:j]`)
-		c = self.commands
 		single = len(self.endSentinelComment) == 0
 		if not single:
 			self.putIndent(self.indent)
@@ -2973,7 +2959,6 @@ class baseOldDerivedFile:
 	#@@c
 	def putCodePart(self,s,i,v):
 	
-		c = self.commands
 		atOthersSeen = false # true: at-others has been expanded.
 		while i < len(s):
 			#@		<< handle the start of a line >>
@@ -3238,7 +3223,6 @@ class baseOldDerivedFile:
 		if s:
 			w = self.tab_width
 			if w < 0:
-				#trace(s)
 				lines = s.split('\n')
 				for i in xrange(len(lines)):
 					line = lines[i]
@@ -3253,7 +3237,6 @@ class baseOldDerivedFile:
 							line2 += ch
 					lines[i] = line2
 				s = string.join(lines,'\n')
-			#trace(s)
 			self.os(s)
 	#@nonl
 	#@-node:putBuffered
@@ -3353,7 +3336,6 @@ class baseOldDerivedFile:
 		"""Put tabs and spaces corresponding to n spaces, assuming that we are at the start of a line."""
 	
 		if n != 0:
-			# trace(n)
 			w = self.tab_width
 			if w > 1:
 				q,r = divmod(n,w) 
@@ -3382,8 +3364,6 @@ class baseNewDerivedFile(oldDerivedFile):
 		"""Ctor for 4.x atFile class."""
 		
 		at = self
-		
-		# trace("newDerivedFile.__init__")
 	
 		# Initialize the base class.
 		oldDerivedFile.__init__(self,theCommander) 
@@ -3446,10 +3426,9 @@ class baseNewDerivedFile(oldDerivedFile):
 		
 		"""Read an open 4.x derived file."""
 		
-		trace("new_df",root)
+		at = self
+		if at.trace: trace("new_df",root)
 	
-		at = self ; c = at.commands
-		
 		# Scan the 4.x file.
 		at.scanAllDirectives(root)
 		at.tnodeListIndex = 0
@@ -3503,7 +3482,6 @@ class baseNewDerivedFile(oldDerivedFile):
 	
 		# Check the headline.
 		if headline.strip() == v.headString().strip():
-			# trace(t)
 			t.setVisited() # Supress warning about unvisited node.
 			return t
 		else:
@@ -3578,7 +3556,6 @@ class baseNewDerivedFile(oldDerivedFile):
 		if at.inCode:
 			if not at.raw:
 				s = removeLeadingWhitespace(s,at.indent,at.tab_width)
-			# trace(`s`)
 			at.out.append(s)
 		else:
 			#@		<< Skip the leading stuff >>
@@ -4048,7 +4025,7 @@ class baseNewDerivedFile(oldDerivedFile):
 		
 		"""Return the text of a @+node or @-node sentinel for v."""
 		
-		at = self ; t = v.t ; h = v.headString()
+		at = self ; h = v.headString()
 		#@	<< remove comment delims from h if necessary >>
 		#@+node:<< remove comment delims from h if necessary >>
 		#@+at 
@@ -4269,9 +4246,9 @@ class baseNewDerivedFile(oldDerivedFile):
 		
 		"""Write a 4.x derived file."""
 		
-		trace("new_df",root)
-	
 		at = self ; c = at.commands
+		if at.trace: trace("new_df",root)
+	
 		at.sentinels = not nosentinels
 		#@	<< initialize >>
 		#@+node:<< initialize >>
@@ -4301,7 +4278,6 @@ class baseNewDerivedFile(oldDerivedFile):
 			#@+node:<< write then entire @file tree >> (4.x)
 			# unvisited nodes will be orphans, except in cweb trees.
 			root.clearVisitedInTree()
-			next = root.nodeAfterTree()
 			
 			#@<< put all @first lines in root >>
 			#@+node:<< put all @first lines in root >>
@@ -4413,9 +4389,9 @@ class baseNewDerivedFile(oldDerivedFile):
 	#@+node:new_df.rawWrite (needs testing)
 	def rawWrite(self,root):
 	
-		trace("new_df",root)
-	
 		at = self
+		if at.trace: trace("new_df",root)
+	
 		c = at.commands ; at.root = root
 		at.errors = 0
 		at.root.tnodeList = [] # 9/26/03: after beta 1 release.
@@ -4796,7 +4772,6 @@ class baseNewDerivedFile(oldDerivedFile):
 		at = self
 		j = skip_line(s,i)
 		s = s[i:j]
-		# trace(`s`)
 	
 		if at.endSentinelComment:
 			leading = at.indent
@@ -4849,7 +4824,6 @@ class baseNewDerivedFile(oldDerivedFile):
 			#@nonl
 			#@-node:<< append words to pending line, splitting the line if needed >>
 			#@nl
-	#@nonl
 	#@-node:putDocLine
 	#@+node:putEndDocLine
 	def putEndDocLine (self):

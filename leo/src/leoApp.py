@@ -46,7 +46,7 @@ class LeoApp:
 		self.realMenuNameDict = {} # Contains translations of menu names and menu item names.
 		self.root = None # The hidden main window. Set later.
 		self.trace_list = [] # "Sherlock" argument list for tracing().
-		self.tkEncoding = "utf-8" # Set by finishCreate
+		self.tkEncoding = "utf-8"
 		self.unicodeErrorGiven = false # true: suppres unicode tracebacks.
 		self.windowList = [] # Global list of all frames.  Does not include hidden root window.
 	
@@ -294,19 +294,6 @@ class LeoApp:
 		top.destroy() # force the window to go away now.
 	#@nonl
 	#@-node:app.destroyWindow
-	#@+node:app.finishCreate
-	# Called when the gApp global has been defined.
-	
-	def finishCreate(self):
-		
-		app = self
-		
-		# New 4.0 stuff.
-		if 0: # Not using leoID.txt is more convenient for the user.
-			app.setLeoID()
-			app.nodeIndices = leoNodes.nodeIndices()
-	#@nonl
-	#@-node:app.finishCreate
 	#@+node:app.finishQuit
 	def finishQuit(self):
 		

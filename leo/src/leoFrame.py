@@ -8,8 +8,8 @@ __pychecker__ = 'argumentsused=0' # Pychecker param.
 
 from leoGlobals import *
 import leoColor,leoCommands,leoCompare,leoDialog,leoFontPanel,leoNodes,leoPlugins,leoPrefs,leoTree
-import os,string,sys,Tkinter,tkFileDialog,tkFont
-import tempfile
+import os,string,sys,tempfile,time,traceback
+import Tkinter,tkFileDialog,tkFont
 
 Tk = Tkinter
 
@@ -478,7 +478,6 @@ class baseLeoFrame:
 				cursor="xterm" + " " + fg + " " + bg
 				try: body.configure(cursor=cursor)
 				except:
-					import traceback
 					traceback.print_exc()
 	#@nonl
 	#@-node:f.setBodyFontFromConfig
@@ -544,10 +543,8 @@ class baseLeoFrame:
 	#@-node:f.setTabWidth
 	#@+node:f.setTreeColorsFromConfig
 	def setTreeColorsFromConfig (self):
-		
-		config = app.config ; tree = self.tree
 	
-		bg = config.getWindowPref("outline_pane_background_color")
+		bg = app.config.getWindowPref("outline_pane_background_color")
 		if bg:
 			try: self.canvas.configure(bg=bg)
 			except: pass
@@ -643,7 +640,7 @@ class baseLeoFrame:
 	def OnActivateBody (self,event=None):
 	
 		try:
-			c = self.commands ; v = c.currentVnode()
+			c = self.commands
 			app.setLog(self,"OnActivateBody")
 			self.tree.OnDeactivate()
 			set_focus(c,c.body)
@@ -1131,7 +1128,7 @@ class baseLeoFrame:
 		#@nl
 		#@<< create the recent files submenu >>
 		#@+node:<< create the recent files submenu >>
-		recentFilesMenu = self.createNewMenu("Recent &Files...","File")
+		self.createNewMenu("Recent &Files...","File")
 		self.recentFiles = app.config.getRecentFiles()
 		self.createRecentFilesMenuItems()
 		
@@ -1533,7 +1530,6 @@ class baseLeoFrame:
 	#@+node:OnNew
 	def OnNew (self,event=None):
 	
-		config = app.config
 		frame = LeoFrame() # Create another Leo window.
 		## frame = app.gui.newLeoFrame(None) # Right now the frame creates the commander.
 		top = frame.top
@@ -1543,20 +1539,6 @@ class baseLeoFrame:
 		
 		# Use the config params to set the size and location of the window.
 		frame.setInitialWindowGeometry()
-	
-		if 0:
-			# Set the size of the new window.
-			h = config.getIntWindowPref("initial_window_height")
-			w = config.getIntWindowPref("initial_window_width")
-			x = config.getIntWindowPref("initial_window_left")
-			y = config.getIntWindowPref("initial_window_top")
-			# print h,w,x,y
-			if h == None or h < 5: h = 5
-			if w == None or w < 5: w = 10
-			y = max(y,0) ; x = max(x,0)
-			geom = "%dx%d%+d%+d" % (w,h,x,y)
-			top.geometry(geom)
-	
 		top.deiconify()
 		top.lift()
 		frame.resizePanesToRatio(frame.ratio,frame.secondary_ratio) # Resize the _new_ frame.
@@ -1762,7 +1744,7 @@ class baseLeoFrame:
 	#@+node:frame.createOpenWithTempFile
 	def createOpenWithTempFile (self, v, ext):
 		
-		c = self.commands ; a = app
+		c = self.commands
 		path = self.openWithTempFilePath(v,ext)
 		try:
 			if os.path.exists(path):
@@ -1905,8 +1887,6 @@ class baseLeoFrame:
 	#@-node:OnSaveTo
 	#@+node:frame.OnRevert
 	def OnRevert(self,event=None):
-		
-		a = app
 	
 		# Make sure the user wants to Revert.
 		if not self.mFileName:
@@ -2485,8 +2465,6 @@ class baseLeoFrame:
 		#@nl
 		#@	<< get n, the line number, from a dialog >>
 		#@+node:<< get n, the line number, from a dialog >>
-		import leoDialog
-		
 		d = leoDialog.askOkCancelNumber("Enter Line Number","Line number:")
 		n = d.run(modal=true)
 		if n == -1:
@@ -2913,9 +2891,7 @@ class baseLeoFrame:
 	#@-node:OnInsertBody/HeadlineTime & allies
 	#@+node:getTime
 	def getTime (self,body=true):
-		
-		import time
-		
+	
 		config = app.config
 		default_format =  "%m/%d/%Y %H:%M:%S" # E.g., 1/30/2003 8:31:55
 		
@@ -3365,7 +3341,7 @@ class baseLeoFrame:
 	#@+node:OnCascade
 	def OnCascade(self,event=None):
 		
-		c = self ; x,y,delta = 10,10,10
+		x,y,delta = 10,10,10
 		for frame in app.windowList:
 			top = frame.top
 			# Compute w,h
@@ -3509,7 +3485,6 @@ class baseLeoFrame:
 		url = "http://webpages.charter.net/edreamleo/front.html"
 		email = "edreamleo@charter.net"
 	
-		import leoDialog
 		leoDialog.aboutLeo(version,copyright,url,email).run(modal=false)
 	#@-node:OnAbout (version number & date)
 	#@+node:OnLeoDocumentation
@@ -3774,9 +3749,7 @@ class baseLeoFrame:
 	#@-node:createMenuItemsFromTable
 	#@+node:createNewMenu
 	def createNewMenu (self,menuName,parentName="top",before=None):
-		
-		import Tkinter
-		from leoGlobals import app
+	
 		try:
 			parent = self.getMenu(parentName)
 			if parent == None:
@@ -3878,7 +3851,6 @@ class baseLeoFrame:
 	# Delete itemName from the menu whose name is menuName.
 	def deleteMenuItem (self,itemName,menuName="top"):
 	
-		from leoGlobals import app
 		try:
 			menu = self.getMenu(menuName)
 			if menu:
@@ -3938,9 +3910,9 @@ class baseLeoFrame:
 			menu = self.getMenu("File")
 			enableMenu(menu,"Revert To Saved", c.canRevert())
 	
-			openWithMenu = self.getMenu("Open With...")
+			# openWithMenu = self.getMenu("Open With...")
 			enableMenu(menu,"Open With...", app.hasOpenWithMenu)
-			
+	
 		except:
 			es("exception updating File menu")
 			es_exception()
@@ -4227,10 +4199,6 @@ class baseLeoFrame:
 		bg = statusFrame.cget("background")
 		self.statusText = Tk.Text(statusFrame,height=1,state="disabled",bg=bg,relief="groove")
 		self.statusText.pack(side="left",expand=1,fill="x")
-		
-		def idleStatusUpdateCallback(tag,keywords):
-			c=keywords.get("c")
-			if c: c.frame.updateStatusRowCol()
 	
 		# Register an idle-time handler to update the row and column indicators.
 		self.statusFrame.after_idle(self.updateStatusRowCol)
@@ -4273,7 +4241,7 @@ class baseLeoFrame:
 	#@+node:updateStatusRowCol
 	def updateStatusRowCol (self):
 		
-		c = self.commands ; body = self.body ; lab = self.statusLabel
+		body = self.body ; lab = self.statusLabel
 		
 		# New for Python 2.3: may be called during shutdown.
 		if app.killed:

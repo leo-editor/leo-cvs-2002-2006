@@ -59,7 +59,6 @@ class baseFileCommands:
 		self.openDirectory = None
 		self.usingClipboard = false
 		# New in 3.12
-		self.a = app
 		self.copiedTree = None
 		self.tnodesDict = {}
 	#@-node:leoFileCommands._init_
@@ -573,8 +572,7 @@ class baseFileCommands:
 				
 				for name in app.language_delims_dict.keys():
 					if self.matchTagWordIgnoringCase(name):
-						s = string.lower(name)
-						language = string.replace(name,"/","")
+						language = name.replace(name,"/","")
 						self.getDquote()
 						break
 				
@@ -1364,7 +1362,7 @@ class baseFileCommands:
 	
 		fc = self
 		if v.tnodeList:
-			trace("%4d" % len(v.tnodeList),v)
+			# trace("%4d" % len(v.tnodeList),v)
 			fc.put(" tnodeList=") ; fc.put_dquote()
 			s = ','.join([str(t.fileIndex) for t in v.tnodeList])
 			fc.put(s) ; fc.put_dquote()

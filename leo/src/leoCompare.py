@@ -704,8 +704,6 @@ class baseLeoComparePanel:
 	#@+node:run
 	def run (self):
 	
-		import leoApp, leoCommands
-	
 		c = self.commands ; cmp = self.cmp ; Tk = Tkinter
 		self.top = top = Tk.Toplevel(app.root)
 		top.title("Leo Compare files and directories")

@@ -533,7 +533,7 @@ def scanAtTabwidthDirective(s,dict,issue_error_flag=false):
 	"""
 	
 	k = dict["tabwidth"]
-	j = i = k + len("@tabwidth")
+	i = k + len("@tabwidth")
 	i, val = skip_long(s, i)
 	if val != None and val != 0:
 		# trace(`val`)
@@ -575,8 +575,6 @@ def scanDirectives(c,v=None):
 	# trace(`v`)
 	#@	<< Set local vars >>
 	#@+node:<< Set local vars >>
-	loadDir = app.loadDir
-	
 	page_width = c.page_width
 	tab_width  = c.tab_width
 	language = c.target_language
@@ -656,7 +654,7 @@ def scanDirectives(c,v=None):
 			
 			path = string.strip(path)
 			if 0: # 11/14/02: we want a _relative_ path, not an absolute path.
-				path = os.path.join(loadDir,path)
+				path = os.path.join(app.loadDir,path)
 			#@nonl
 			#@-node:<< compute relative path from s[k:] >>
 			#@nl
@@ -1733,11 +1731,11 @@ def printGcRefs (verbose=true):
 #@+node:Dialog utils...
 def attachLeoIcon (w):
 	"""Attach the Leo icon to window w."""
-	app.gui.attachLeoIcon(w)
+	return app.gui.attachLeoIcon(w)
 	
 def center_dialog(dialog):
 	"""Center the dialog."""
-	app.gui.center_dialog(dialog)
+	return app.gui.center_dialog(dialog)
 	
 def create_labeled_frame (parent,caption=None,relief="groove",bd=2,padx=0,pady=0):
 	"""Create a labeled frame."""
@@ -1757,11 +1755,11 @@ def get_focus(top):
 	
 def set_focus(commands,widget):
 	"""Set the focus of the widget in the given commander if it needs to be changed."""
-	app.gui.set_focus(commands,widget)
+	return app.gui.set_focus(commands,widget)
 	
 def force_focus(commands,widget):
 	"""Set the focus of the widget in the given commander if it needs to be changed."""
-	app.gui.force_focus(commands,widget)
+	return app.gui.force_focus(commands,widget)
 #@-node:Focus (leoGlobals)
 #@+node:canonicalizeMenuName & cononicalizeTranslatedMenuName
 def canonicalizeMenuName (name):
@@ -2269,7 +2267,7 @@ def skip_block_comment (s,i):
 
 def skip_braces(s,i):
 
-	start = get_line(s,i)
+	# start = get_line(s,i)
 	assert(match(s,i,'{'))
 	level = 0 ; n = len(s)
 	while i < n:
@@ -2304,7 +2302,7 @@ def skip_braces(s,i):
 
 def skip_php_braces(s,i):
 
-	start = get_line(s,i)
+	# start = get_line(s,i)
 	assert(match(s,i,'{'))
 	level = 0 ; n = len(s)
 	while i < n:
@@ -2511,10 +2509,9 @@ def skip_pp_if(s,i):
 # Skip to an #else or #endif.  The caller has eaten the #if, #ifdef, #ifndef or #else
 
 def skip_pp_part(s,i):
-		
-	start_line = get_line(s,i) # used for error messages.
-	# trace(start_line)
-	
+
+	# trace(get_line(s,i))
+
 	delta = 0
 	while i < len(s):
 		c = s[i]
@@ -3124,7 +3121,7 @@ def isValidEncoding (encoding):
 	try:
 		if len(encoding) == 0:
 			return false
-		u = unicode("a",encoding)
+		unicode("a",encoding)
 		return true
 	except:
 		return false

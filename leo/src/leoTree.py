@@ -1080,7 +1080,6 @@ class baseLeoTree:
 			# trace(`v`)
 			assert(v == self.drag_v)
 			
-			c = self.commands 
 			canvas = self.canvas
 			frame = self.commands.frame
 			
@@ -1090,10 +1089,10 @@ class baseLeoTree:
 				x,y = frame.top.winfo_pointerx(),frame.top.winfo_pointery()
 				if x == -1 or y == -1: return # Stop the scrolling if we go outside the entire window.
 			
-			canvas_x = canvas.canvasx(x)
-			canvas_y = canvas.canvasy(y)
-			
-			id = self.canvas.find_closest(canvas_x,canvas_y)
+			if 0: # no longer used.
+				canvas_x = canvas.canvasx(x)
+				canvas_y = canvas.canvasy(y)
+				id = self.canvas.find_closest(canvas_x,canvas_y)
 			
 			# OnEndDrag() halts the scrolling by clearing self.drag_id when the mouse button goes up.
 			if self.drag_id: # This gets cleared by OnEndDrag()

@@ -348,8 +348,6 @@ class baseLeoColorNamePanel:
 		self.revertColor = color
 		
 		Tk = Tkinter
-		config = app.config
-	
 		self.top = top = Tk.Toplevel(app.root)
 		top.title("Color names for " + '"' + name + '"')
 		top.protocol("WM_DELETE_WINDOW", self.onOk)

@@ -224,11 +224,11 @@ class baseCommands:
 		v_copy = v.copyTree()
 		oldText = getAllText(c.body)
 		oldSel = getTextSelection(c.body)
-		anyChanged = false
+		count = 0
 		while v and v != next:
 			if v == current:
 				if c.convertBlanks():
-					anyChanged = true
+					count += 1
 			else:
 				result = [] ; changed = false
 				text = v.t.bodyString
@@ -237,22 +237,21 @@ class baseCommands:
 				for line in lines:
 					s = optimizeLeadingWhitespace(line,tabWidth)
 					if s != line:
-						changed = true ; anyChanged = true
+						changed = true ; count += 1
 					result.append(s)
 				if changed:
 					result = string.join(result,'\n')
 					v.t.setTnodeText(result)
 			v.setDirty()
 			v = v.threadNext()
-		if anyChanged:
+		if count > 0:
 			newText = getAllText(c.body)
 			newSel = getTextSelection(c.body)
 			c.undoer.setUndoParams("Convert All Blanks",
 				current,select=current,oldTree=v_copy,
 				oldText=oldText,newText=newText,
 				oldSel=oldSel,newSel=newSel)
-		else:
-			es("nothing changed")
+		es("blanks converted to tabs in %d nodes" % count)
 	#@nonl
 	#@-node:convertAllBlanks
 	#@+node:convertAllTabs
@@ -266,11 +265,11 @@ class baseCommands:
 		v_copy = v.copyTree()
 		oldText = getAllText(c.body)
 		oldSel = getTextSelection(c.body)
-		anyChanged = false
+		count = 0
 		while v and v != next:
 			if v == current:
 				if self.convertTabs():
-					anyChanged = true # 7/11/03
+					count += 1
 			else:
 				result = [] ; changed = false
 				text = v.t.bodyString
@@ -280,28 +279,27 @@ class baseCommands:
 					i,w = skip_leading_ws_with_indent(line,0,tabWidth)
 					s = computeLeadingWhitespace(w,-abs(tabWidth)) + line[i:] # use negative width.
 					if s != line:
-						changed = true ; anyChanged = true
+						changed = true ; count += 1
 					result.append(s)
 				if changed:
 					result = string.join(result,'\n')
 					v.t.setTnodeText(result)
 			v.setDirty()
 			v = v.threadNext()
-		if anyChanged:
+		if count > 0:
 			newText = getAllText(c.body)
 			newSel = getTextSelection(c.body) # 7/11/03
 			c.undoer.setUndoParams("Convert All Tabs",
 				current,select=current,oldTree=v_copy,
 				oldText=oldText,newText=newText,
 				oldSel=oldSel,newSel=newSel)
-		else:
-			es("nothing changed")
+		es("tabs converted to blanks in %d nodes" % count)
 	#@nonl
 	#@-node:convertAllTabs
 	#@+node:convertBlanks
 	def convertBlanks (self):
 	
-		c = self ; v = current = c.currentVnode()
+		c = self
 		head,lines,tail,oldSel,oldYview = c.getBodyLines()
 		result = [] ; changed = false
 	
@@ -610,7 +608,6 @@ class baseCommands:
 	cursor."""
 	
 		c = self ; body = c.frame.body
-		x = body.index("current")
 		head,lines,tail,oldSel,oldYview = self.getBodyLines()
 		result = []
 	

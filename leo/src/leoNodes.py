@@ -237,7 +237,6 @@ class baseTnode:
 	
 	def __init__ (self,index=0,bodyString=None,headString=None):
 	
-		a = app
 		self.statusBits = 0 # status bits
 		self.selectionStart = 0 # The start of the selected body text.
 		self.selectionLength = 0 # The length of the selected body text.
@@ -392,7 +391,6 @@ class baseVnode:
 	#@+node:v.__init__
 	def __init__ (self,commands,t):
 	
-		a = app
 		assert(t)
 		
 		# commands may be None for testing.
@@ -1020,7 +1018,7 @@ class baseVnode:
 	#@+node:appendStringToBody
 	def appendStringToBody (self,s,encoding="utf-8"):
 	
-		if s is none or len(s) == 0: return
+		if not s: return
 		
 		# Make sure the following concatenation doesn't fail.
 		assert(isUnicode(self.t.bodyString)) # 9/28/03
@@ -1862,7 +1860,7 @@ class baseVnode:
 	# This method creates all nodes that depend on the receiver.
 	def createDependents (self):
 	
-		v = self ; t = v.t ; parent = v.parent()
+		v = self ; parent = v.parent()
 		if not parent: return
 	
 		# Copy v as the nth child of all nodes joined to parent.

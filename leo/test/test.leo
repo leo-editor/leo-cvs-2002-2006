@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="2173" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="2174" clone_windows="0"/>
 <globals body_outline_ratio="0.5">
 	<global_window_position top="18" left="213" height="835" width="981"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
@@ -271,7 +271,7 @@
 <v t="T169"><vh>@@ node2 headline  d</vh></v>
 <v t="T170"><vh>node3</vh></v>
 </v>
-<v t="T171" a="E" tnodeList="171,172,173,174"><vh>@rawfile c:\prog\test\rawFile.txt </vh>
+<v t="T171" tnodeList="171,172,173,174"><vh>@rawfile c:\prog\test\rawFile.txt </vh>
 <v t="T172"><vh>node1</vh></v>
 <v t="T173"><vh>@@ node2 headline  d</vh></v>
 <v t="T174"><vh>node3</vh></v>
@@ -284,7 +284,7 @@
 <v t="T179" tnodeList="179,178,180,182,183,185,178"><vh>@file c:\prog\test\gnxText.txt</vh>
 <v t="T178" a="C"><vh>&lt;&lt; ref &gt;&gt; (cloned)</vh></v>
 <v t="T180"><vh>&lt;&lt; ref2 &gt;&gt;</vh></v>
-<v t="T181" a="E"><vh>Organizer node</vh>
+<v t="T181"><vh>Organizer node</vh>
 <v t="T182"><vh>node 1</vh>
 <v t="T183"><vh>&lt;&lt; indented ref &gt;&gt;</vh></v>
 </v>
@@ -292,7 +292,7 @@
 </v>
 <v t="T185"><vh>Node 2</vh></v>
 </v>
-<v t="T186" a="V" tnodeList="186,187,188,189,190,191,192,193,194,195"><vh>@file c:\prog\test\leo.py </vh>
+<v t="T186" tnodeList="186,187,188,189,190,191,192,193,194,195"><vh>@file c:\prog\test\leo.py </vh>
 <v t="T187"><vh>&lt;&lt; Import pychecker &gt;&gt;</vh></v>
 <v t="T188"><vh>runMainLoop</vh></v>
 <v t="T189"><vh>run &amp; allies</vh>
@@ -305,7 +305,7 @@
 </v>
 <v t="T195"><vh>profile</vh></v>
 </v>
-<v t="T196" tnodeList="196,197,198,199,200,201,202,203,204,205,206,207,208,209,210,211,212,213,214,215,216,217,218,219,220,221,222,223"><vh>@file c:\prog\test\leoApp.py</vh>
+<v t="T196" a="V" tnodeList="196,197,198,199,200,201,202,203,204,205,206,207,208,209,210,211,212,213,214,215,216,217,218,219,220,221,222,223"><vh>@file c:\prog\test\leoApp.py</vh>
 <v t="T197"><vh>app.__init__</vh>
 <v t="T198"><vh>&lt;&lt; define global constants &gt;&gt;</vh></v>
 <v t="T199"><vh>&lt;&lt; define global data structures &gt;&gt;</vh></v>
@@ -697,7 +697,7 @@
 <v t="T504"><vh>onOk, onCancel, onRevert, OnApply</vh></v>
 <v t="T505"><vh>select</vh></v>
 </v>
-<v t="T506" a="E"><vh>class colorizer</vh>
+<v t="T506"><vh>class colorizer</vh>
 <v t="T507"><vh>&lt;&lt; define colorizer keywords &gt;&gt;</vh>
 <v t="T508"><vh>&lt;&lt; actionscript keywords &gt;&gt;</vh></v>
 <v t="T509"><vh>&lt;&lt; c keywords &gt;&gt;</vh></v>
@@ -722,7 +722,7 @@
 <v t="T526"><vh>OnHyperLinkLeave</vh></v>
 </v>
 <v t="T527"><vh>colorize &amp; recolor_range</vh></v>
-<v t="T528" a="E"><vh>colorizeAnyLanguage &amp; allies</vh>
+<v t="T528"><vh>colorizeAnyLanguage &amp; allies</vh>
 <v t="T529"><vh>&lt;&lt; initialize ivars &amp; tags &gt;&gt; colorizeAnyLanguage</vh>
 <v t="T530"><vh>&lt;&lt; configure tags &gt;&gt;</vh></v>
 <v t="T531"><vh>&lt;&lt; configure language-specific settings &gt;&gt;</vh></v>
@@ -2726,10 +2726,11 @@
 </v>
 </v>
 </v>
-<v t="T2171" a="E"><vh>unicode test for find all</vh>
+<v t="T2171"><vh>unicode test for find all</vh>
 <v t="T2172"><vh>a</vh></v>
 <v t="T2173"><vh>Ý</vh></v>
 </v>
+<v t="T2174"><vh>Reformat paragraph test</vh></v>
 </vnodes>
 <tnodes>
 <t tx="T1">@color
@@ -33791,5 +33792,9 @@ print "actual  :",`textResult`
 <t tx="T2171"></t>
 <t tx="T2172">def a</t>
 <t tx="T2173">def Ý</t>
+<t tx="T2174">this
+is
+a stangely
+formatted paragraph</t>
 </tnodes>
 </leo_file>

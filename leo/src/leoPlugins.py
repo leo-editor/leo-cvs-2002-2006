@@ -30,7 +30,7 @@ def doPlugins(tag,keywords):
 def loadHandlers():
 
 	"""Load all plugins from the plugins directory"""
-	import glob,os,sys
+	import glob,os
 	global count
 	
 	path = os.path.join(app.loadDir,"..","plugins")

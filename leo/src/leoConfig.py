@@ -430,9 +430,6 @@ class baseConfig:
 	
 	def setConfigIvars (self,c):
 		
-		a = app
-		
-		
 		if c.target_language and app.language_delims_dict.get(c.target_language):
 			language = c.target_language
 		else:

@@ -35,8 +35,8 @@ if 0: # Set to 1 for lint-like testing.  This can also be done in idle.
 #@nl
 
 from leoGlobals import *
-import leoApp,leoConfig,leoFrame,leoGui
-import os,string,sys
+import leoApp,leoConfig,leoDialog,leoFrame,leoGui
+import os,string,sys,traceback
 
 #@+others
 #@+node:run & allies
@@ -56,11 +56,11 @@ def run(fileName=None,*args,**keywords):
 	doHook("start1")
 	# Create the default gui if needed.
 	if app.gui == None: app.createTkGui()
-	app.finishCreate()
-	# Initialize tracing.
-	initSherlock(app,args)
+	# Initialize tracing and statistics.
+	init_sherlock(args)
+	clear_stats()
 	# Create the main frame.  Show it and all queued messages.
-	frame = createFrame(app,fileName)
+	frame = createFrame(fileName)
 	if not frame: return
 	app.writeWaitingLog()
 	c = frame.commands ; v = c.currentVnode()
@@ -85,7 +85,6 @@ You may download Python 2.1 and Python 2.2 from http://python.org/download/
 			return true
 	except:
 		print "exception getting Python version"
-		import traceback
 		traceback.print_exc()
 		return false
 #@nonl
@@ -108,12 +107,12 @@ def computeLoadDir():
 			loadDir = "LeoPy"
 		print "Setting load directory to:", loadDir
 	
-	print "loadDir:",`loadDir`
+	# trace("loadDir:",`loadDir`)
 	return loadDir
 #@nonl
 #@-node:computeLoadDir
 #@+node:createFrame (leo.py)
-def createFrame (app,fileName):
+def createFrame (fileName):
 	
 	"""Create a LeoFrame during Leo's startup process."""
 	
@@ -140,16 +139,6 @@ def createFrame (app,fileName):
 	return frame
 #@nonl
 #@-node:createFrame (leo.py)
-#@+node:initSherlock
-def initSherlock (app,args):
-	
-	"""Initialize Sherlock."""
-	
-	# Initialze Sherlock & stats.
-	init_sherlock(args)
-	clear_stats()
-#@nonl
-#@-node:initSherlock
 #@+node:profile
 #@+at 
 #@nonl
