@@ -362,6 +362,9 @@ class atFile:
 		
 		self.default_directory = None # 8/2: will be set later.
 		
+		
+		path_directory = None # 8/13: set when @file contains a path, possibly a partial path.
+		
 		delim1, delim2, delim3 = set_delims_from_language(c.target_language)
 		#@-body
 		#@-node:1:C=5:<< Set ivars >>
@@ -375,10 +378,14 @@ class atFile:
 		name = v.atFileNodeName()
 		dir = os.path.dirname(name)
 		if dir and len(dir) > 0:
-			if os.path.exists(dir):
-				self.default_directory = dir
+			
+			if 1: # 8/13/02
+				path_directory = dir # This may be a partial path.
 			else:
-				self.error("Directory \"" + dir + "\" does not exist")
+				if os.path.exists(dir):
+					self.default_directory = dir
+				else:
+					self.error("Directory \"" + dir + "\" does not exist")
 		#@-body
 		#@-node:2::<< Set path from @file node >>
 
@@ -390,6 +397,8 @@ class atFile:
 			#@+node:4::<< Test for @path >>
 			#@+body
 			# We set the current director to a path so future writes will go to that directory.
+			
+			loadDir = app().loadDir
 			
 			if self.btest(path_bits, bits) and not self.default_directory and not self.btest(path_bits, old_bits):
 				k = dict["path"]
@@ -403,6 +412,7 @@ class atFile:
 					(path[0]=='"' and path[-1] == '"') ):
 					path = path[1:-1]
 				path = string.strip(path)
+				path = os.path.join(loadDir,path)
 				if len(path) > 0:
 					if os.path.exists(path):
 						self.default_directory = path
@@ -465,7 +475,8 @@ class atFile:
 
 			old_bits |= bits
 			v = v.parent()
-		if c.frame and not self.default_directory: # No path in @file headline and no @path directive.
+		if c.frame and not self.default_directory and not path_directory:
+			# No path in @file headline and no @path directive.
 			
 			#@<< Set current directory >>
 			#@+node:6::<< Set current directory >>
@@ -504,6 +515,9 @@ class atFile:
 				self.default_directory = ""
 			#@-body
 			#@-node:6::<< Set current directory >>
+
+		if self.default_directory == None:
+			self.default_directory = ""
 
 		
 		#@<< Set comment Strings from delims >>
