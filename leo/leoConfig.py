@@ -58,7 +58,8 @@ stringPrefsNames = (
 # Syntax coloring section...
 boolColoringNames = (
 	"color_directives_in_plain_text",
-	"underline_undefined_section_names" )
+	"underline_undefined_section_names",
+	"use_hyperlinks" )
 	
 stringColoringNames = (
 	# Tk color values also allowed.
@@ -399,10 +400,11 @@ class config:
 				print "\n\nwindowDict:\n\n" + `self.windowDict`
 			cf.close()
 		except exceptions.IOError:
-			traceback.print_exc()
+			# traceback.print_exc()
 			# es("Can not open " + self.configFileName)
 			pass
 		except:
+			es("Exception opening " + self.configFileName)
 			traceback.print_exc()
 			pass
 		self.config = None

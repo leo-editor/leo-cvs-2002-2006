@@ -50,7 +50,7 @@ class leoFontPanel:
 		family.grid(row=1,col=1)
 		
 		style = Tk.Frame(g)
-		style.grid(row=1,col=2)
+		style.grid(row=1,col=2,sticky="n",)
 		
 		buttons = Tk.Frame(g)
 		buttons.grid(row=1,col=3)
@@ -70,12 +70,12 @@ class leoFontPanel:
 		
 		# Create the Style frame.
 		w,f = create_labeled_frame(style,caption="Style")
-		w.pack(padx=2)
+		w.pack(padx=2,anchor="n")
 		
 		styles = Tk.Frame(f)
 		styles.pack()
 		i = 1
-		for name in ("Bold","Italic","Underline","OverStrike"):
+		for name in ("Bold","Italic"): # "Underline","OverStrike"
 			b = Tk.Checkbutton(styles,text=name)
 			b.pack(anchor="w",pady=1)
 			i += 1

@@ -117,8 +117,15 @@ run_untangle_done.py = 0
 color_directives_in_plain_text = 1
 # 	1/0: Color Leo directives for @language plain
 
-underline_undefined_section_names = 1:
+underline_undefined_section_names = 1
 # 	1/0: Undeline undefined section names
+#	Only functional if use_hyperlinks = 0
+
+use_hyperlinks = 0
+# 	1: use hyperlinks.       Underline "live" links.
+#		Cute, but disorienting and _not_ recommended.
+#		Control-clicking moves to indicated node.
+#	0: don't use hyperlinks and allow underlining of undefined section names.
 
 
 # The following may be any valid Tk color name or color value.
@@ -126,24 +133,28 @@ underline_undefined_section_names = 1:
 # 	For Tk color names see: http://www.tcl.tk/man/tcl8.3/TkCmd/colors.htm
 # 	These names are case sensitive, for example: BlanchedAlmond
 
-comment_color = red
-# The color of comments in code parts.
+# You can add your own names here...
 
-cweb_section_name_color = DarkRed
-# The color of name in @<name@>
+
+
+comment_color = firebrick3
+#	The color of comments in code parts.
+
+cweb_section_name_color = red
+#	The color of name in @<name@>
 
 directive_color = blue
-	# The color of C/C++ preprocessor directive lines.
+#	The color of C/C++ preprocessor directive lines.
 
-doc_part_color = red
+doc_part_color = firebrick3
 #	The color of text in doc parts.
 
 keyword_color = blue
 #	The color of keywords of the present language.
 #	For example, the color of "if", "try" and "except" in Python.
 
-leo_keyword_color = blue
-#	The color of Leo keywords
+leo_keyword_color = #00aa00
+#	The color of Leo keywords.
 #	For example, the color of @ignore, @color, etc.
 
 section_name_color = red

@@ -1742,7 +1742,7 @@ class LeoFrame:
 		return "break" # inhibit further command processing
 	#@-body
 	#@-node:8::OnEditHeadline
-	#@+node:9:C=30:OnFontPanel
+	#@+node:9::OnFontPanel
 	#@+body
 	def OnFontPanel(self,event=None):
 	
@@ -1751,8 +1751,8 @@ class LeoFrame:
 	
 		return "break" # inhibit further command processing
 	#@-body
-	#@-node:9:C=30:OnFontPanel
-	#@+node:10:C=31:OnColorPanel
+	#@-node:9::OnFontPanel
+	#@+node:10::OnColorPanel
 	#@+body
 	def OnColorPanel(self,event=None):
 		
@@ -1762,8 +1762,8 @@ class LeoFrame:
 		return "break" # inhibit further command processing
 
 	#@-body
-	#@-node:10:C=31:OnColorPanel
-	#@+node:11:C=32:OnViewAllCharacters
+	#@-node:10::OnColorPanel
+	#@+node:11:C=30:OnViewAllCharacters
 	#@+body
 	def OnViewAllCharacters (self, event=None):
 	
@@ -1779,8 +1779,8 @@ class LeoFrame:
 		c.tree.recolor_now(v)
 		return "break" # inhibit further command processing
 	#@-body
-	#@-node:11:C=32:OnViewAllCharacters
-	#@+node:12:C=33:OnPreferences
+	#@-node:11:C=30:OnViewAllCharacters
+	#@+node:12:C=31:OnPreferences
 	#@+body
 	def OnPreferences(self,event=None):
 		
@@ -1793,7 +1793,7 @@ class LeoFrame:
 	
 		return "break" # inhibit further command processing
 	#@-body
-	#@-node:12:C=33:OnPreferences
+	#@-node:12:C=31:OnPreferences
 	#@-node:1::Edit top level
 	#@+node:2::Edit Body submenu
 	#@+node:1::OnConvertBlanks & OnConvertAllBlanks
@@ -2116,14 +2116,14 @@ class LeoFrame:
 	#@-node:17::OnExpandToLevel9
 	#@-node:2::Expand/Contract
 	#@+node:3::Move/Select
-	#@+node:1:C=34:OnMoveDownwn
+	#@+node:1:C=32:OnMoveDownwn
 	#@+body
 	def OnMoveDown(self,event=None):
 	
 		self.commands.moveOutlineDown()
 		return "break" # inhibit further command processing
 	#@-body
-	#@-node:1:C=34:OnMoveDownwn
+	#@-node:1:C=32:OnMoveDownwn
 	#@+node:2::OnMoveLeft
 	#@+body
 	def OnMoveLeft(self,event=None):
@@ -2265,7 +2265,7 @@ class LeoFrame:
 		return "break" # inhibit further command processing
 	#@-body
 	#@-node:1::OnEqualSizedPanes
-	#@+node:2:C=35:OnToggleActivePane
+	#@+node:2:C=33:OnToggleActivePane
 	#@+body
 	def OnToggleActivePane (self,event=None):
 	
@@ -2276,8 +2276,8 @@ class LeoFrame:
 			self.body.focus_force()
 		return "break" # inhibit further command processing
 	#@-body
-	#@-node:2:C=35:OnToggleActivePane
-	#@+node:3:C=36:OnToggleSplitDirection
+	#@-node:2:C=33:OnToggleActivePane
+	#@+node:3:C=34:OnToggleSplitDirection
 	#@+body
 	# The key invariant: self.splitVerticalFlag tells the alignment of the main splitter.
 	
@@ -2304,8 +2304,8 @@ class LeoFrame:
 		self.resizePanesToRatio(ratio)
 		return "break" # inhibit further command processing
 	#@-body
-	#@-node:3:C=36:OnToggleSplitDirection
-	#@+node:4:C=37:OnCascade
+	#@-node:3:C=34:OnToggleSplitDirection
+	#@+node:4:C=35:OnCascade
 	#@+body
 	def OnCascade(self,event=None):
 		
@@ -2329,7 +2329,7 @@ class LeoFrame:
 		return "break" # inhibit further command processing
 
 	#@-body
-	#@-node:4:C=37:OnCascade
+	#@-node:4:C=35:OnCascade
 	#@+node:5::OnMinimizeAll
 	#@+body
 	def OnMinimizeAll(self,event=None):
@@ -2346,7 +2346,7 @@ class LeoFrame:
 			frame.top.iconify()
 	#@-body
 	#@-node:5::OnMinimizeAll
-	#@+node:6:C=38:OnOpenPythonWindow
+	#@+node:6:C=36:OnOpenPythonWindow
 	#@+body
 	def OnOpenPythonWindow(self,event=None):
 	
@@ -2364,10 +2364,10 @@ class LeoFrame:
 			es("Please add \Python2x\Tools\idle to sys.paths")
 		return "break" # inhibit further command processing
 	#@-body
-	#@-node:6:C=38:OnOpenPythonWindow
+	#@-node:6:C=36:OnOpenPythonWindow
 	#@-node:4::Window Menu
 	#@+node:5::Help Menu
-	#@+node:1:C=39:OnAbout (version number)
+	#@+node:1:C=37:OnAbout (version number)
 	#@+body
 	def OnAbout(self,event=None):
 	
@@ -2384,7 +2384,7 @@ class LeoFrame:
 	
 		return "break" # inhibit further command processing
 	#@-body
-	#@-node:1:C=39:OnAbout (version number)
+	#@-node:1:C=37:OnAbout (version number)
 	#@+node:2::OnLeoDocumentation
 	#@+body
 	def OnLeoDocumentation (self,event=None):
@@ -2400,7 +2400,7 @@ class LeoFrame:
 	#@-node:2::OnLeoDocumentation
 	#@-node:5::Help Menu
 	#@-node:14:C=14:Menu Command Handlers
-	#@+node:15:C=40:Splitter stuff
+	#@+node:15:C=38:Splitter stuff
 	#@+body
 	#@+at
 	#  The key invariants used throughout this code:
@@ -2656,7 +2656,7 @@ class LeoFrame:
 		self.log.configure(bd=border)
 	#@-body
 	#@-node:9::reconfigurePanes (use config bar_width)
-	#@-node:15:C=40:Splitter stuff
+	#@-node:15:C=38:Splitter stuff
 	#@-others
 #@-body
 #@-node:0::@file leoFrame.py

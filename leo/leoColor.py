@@ -8,7 +8,7 @@
 
 from leoGlobals import *
 from leoUtils import *
-import keyword, string, Tkinter
+import keyword, string, Tkinter,tkColorChooser
 
 
 #@<< define colorizer constants >>
@@ -16,6 +16,21 @@ import keyword, string, Tkinter
 #@+body
 # We only define states that can continue across lines.
 normalState, docState, nocolorState, string3State, blockCommentState = 1,2,3,4,5
+
+# These defaults are sure to exist.
+default_colors_dict = {
+	# tag name     :(     option name,           default color),
+	"comment"      :("comment_color",               "red"),
+	"cwebName"     :("cweb_section_name_color",     "red"),
+	"pp"           :("directive_color",             "blue"),
+	"docPart"      :("doc_part_color",              "red"),
+	"keyword"      :("keyword_color",               "blue"),
+	"leoKeyword"   :("leo_keyword_color",           "blue"),
+	"link"         :("section_name_color",          "red"),
+	"nameBrackets" :("section_name_brackets_color", "blue"),
+	"string"       :("string_color",                "#00aa00"), # Used by IDLE.
+	"name"         :("undefined_section_name_color","red") }
+
 #@-body
 #@-node:1::<< define colorizer constants >>
 
@@ -206,7 +221,7 @@ def index(i,j):
 class colorizer:
 	
 	#@<< class colorizer methods >>
-	#@+node:4::<< class colorizer methods >>
+	#@+node:5::<< class colorizer methods >>
 	#@+body
 	#@+others
 	#@+node:1:C=2:color.__init__
@@ -287,28 +302,35 @@ class colorizer:
 				"link", "name", "nameBrackets", "pp", "string", "tab")
 		
 		#@<< configure tags >>
-		#@+node:1::<< configure tags >>
+		#@+node:1:C=5:<< configure tags >>
 		#@+body
-		# Must use foreground, not fg
-		body.tag_config("comment", foreground="red")
-		body.tag_config("cwebName", foreground="DarkRed")
-		body.tag_config("docPart", foreground="red")
-		body.tag_config("keyword", foreground="blue")
-		body.tag_config("pp", foreground="blue")
-		if self.use_hyperlinks: # underline=self.use_hyperlinks doesn't seem to work.
-			body.tag_config("link", foreground="red",underline=1) # Defined section name
+		config = app().config
+		assert(config)
+		
+		for name in default_colors_dict:
+			option_name,default_color = default_colors_dict[name]
+			option_color = config.getColorsPref(option_name)
+			color = choose(option_color,option_color,default_color)
+			# Must use foreground, not fg.
+			try:
+				body.tag_config(name, foreground=color)
+			except: # Recover after a user error.
+				body.tag_config(name, foreground=default_color)
+		
+		underline_undefined = config.getBoolColorsPref("underline_undefined_section_names")
+		use_hyperlinks      = config.getBoolColorsPref("use_hyperlinks")
+		self.use_hyperlinks = use_hyperlinks
+		
+		# underline=var doesn't seem to work.
+		if use_hyperlinks: 
+			body.tag_config("link",underline=1) # defined
+			body.tag_config("name",underline=0) # undefined
 		else:
-			body.tag_config("link", foreground="red",underline=0) # Defined section name
-		body.tag_config("leoKeyword", foreground="blue")
-		if 0: # Looks good, but problems when text is selected.
-			body.tag_config("name", foreground="red", background="gray90") # Undefined section name
-		else: # Reverse the underlining used for defined section names.
-			if self.use_hyperlinks: # underline=(not self.use_hyperlinks) doesn't seem to work.
-				body.tag_config("name", foreground="red", underline=0) # Undefined section name
+			body.tag_config("link",underline=0)
+			if underline_undefined:
+				body.tag_config("name",underline=1)
 			else:
-				body.tag_config("name", foreground="red", underline=1) # Undefined section name
-		body.tag_config("nameBrackets", foreground="blue")
-		body.tag_config("string", foreground="#00aa00") # "gray50") # a dark green.
+				body.tag_config("name",underline=0)
 		
 		if self.showInvisibles:
 			if 1: # Very poor, and vaguely usable.
@@ -320,10 +342,8 @@ class colorizer:
 		else:
 			body.tag_config("blank",background="white")
 			body.tag_config("tab",background="white")
-		
-		# body.tag_config("normal", foreground="black")
 		#@-body
-		#@-node:1::<< configure tags >>
+		#@-node:1:C=5:<< configure tags >>
 
 		
 		#@<< configure language-specific settings >>
@@ -478,11 +498,9 @@ class colorizer:
 					
 					if word == "@color" and language != plain_text_language:
 						# End of the nocolor part.
-						## body.tag_remove("normal", index(n,0), index(n,j))
 						body.tag_add("leoKeyword", index(n,0), index(n,j))
 						i = j ; state = normalState
 					else:
-						## body.tag_add("normal", index(n,0), index(n,sLen))
 						# The entire line is in the nocolor part.
 						# Add tags for blanks and tabs to make "Show Invisibles" work.
 						for ch in s[i:]:
@@ -491,7 +509,6 @@ class colorizer:
 							elif ch == '\t':
 								body.tag_add("tab", index(n,i))
 							i += 1
-						## i = sLen # skipt the rest of the line.
 					#@-body
 					#@-node:4::<< continue nocolor state >>
 					#@-node:3::Multiline State Handlers
@@ -660,26 +677,21 @@ class colorizer:
 						if i != 0 and word != "@others":
 							word = "" # can't be a Leo keyword, even if it looks like it.
 						
-						# to do: the keyword should start the line.
 						# 7/8/02: don't color doc parts in plain text.
 						if language != plain_text_language and (word == "@" or word == "@doc"):
 							# at-space starts doc part
-							## body.tag_remove("normal", index(n,i), index(n,j))
 							body.tag_add("leoKeyword", index(n,i), index(n,j))
 							# Everything on the line is in the doc part.
 							body.tag_add("docPart", index(n,j), index(n,sLen))
 							i = sLen ; state = docState
 						elif word == "@nocolor":
 							# Nothing on the line is colored.
-							## body.tag_add("normal", index(n,j), index(n,sLen))
-							body.tag_add("keyword", index(n,i), index(n,j))
+							body.tag_add("leoKeyword", index(n,i), index(n,j))
 							i = j ; state = nocolorState
 						elif word in leoKeywords:
-							## body.tag_remove("normal", index(n,i), index(n,j))
-							body.tag_add("keyword", index(n,i), index(n,j))
+							body.tag_add("leoKeyword", index(n,i), index(n,j))
 							i = j
 						else:
-							## body.tag_add("normal", index(n,i), index(n,j+1))
 							i = j
 						#@-body
 						#@-node:2::<< Handle non-cweb @keywords >>
@@ -694,10 +706,7 @@ class colorizer:
 					j = self.skip_id(s,i)
 					word = s[i:j]
 					if word in keywords:
-						## body.tag_remove("normal", index(n,i), index(n,j))
 						body.tag_add("keyword", index(n,i), index(n,j))
-					else:
-						pass # body.tag_add("normal", index(n,i), index(n,j))
 					i = j
 					#@-body
 					#@-node:10::<< handle possible  keyword >>
@@ -736,7 +745,7 @@ class colorizer:
 	#@+node:3::Multiline State Handlers
 	#@-node:3::Multiline State Handlers
 	#@-node:4:C=4:colorizeAnyLanguage
-	#@+node:5:C=5:scanColorDirectives
+	#@+node:5:C=6:scanColorDirectives
 	#@+body
 	#@+at
 	#  This code scans the node v and all of v's ancestors looking for @color and @nocolor directives.
@@ -781,7 +790,7 @@ class colorizer:
 		# trace(`language`)
 		return language
 	#@-body
-	#@-node:5:C=5:scanColorDirectives
+	#@-node:5:C=6:scanColorDirectives
 	#@+node:6::color.schedule
 	#@+body
 	def schedule(self,v,body):
@@ -825,7 +834,7 @@ class colorizer:
 		return word
 	#@-body
 	#@-node:7::getCwebWord
-	#@+node:8:C=6:updateSyntaxColorer
+	#@+node:8:C=7:updateSyntaxColorer
 	#@+body
 	# Returns (flag,language)
 	# flag is true unless an unambiguous @nocolor is seen.
@@ -838,7 +847,7 @@ class colorizer:
 		return flag,language
 
 	#@-body
-	#@-node:8:C=6:updateSyntaxColorer
+	#@-node:8:C=7:updateSyntaxColorer
 	#@+node:9::useSyntaxColoring
 	#@+body
 	# Return true if v unless v is unambiguously under the control of @nocolor.
@@ -925,21 +934,50 @@ class colorizer:
 	#@-others
 	
 	#@-body
-	#@-node:4::<< class colorizer methods >>
+	#@-node:5::<< class colorizer methods >>
+
+	
+
+#@<< define color panel data >>
+#@+node:4::<< define color panel data >>
+#@+body
+colorPanelData = (
+	#Dialog name,             option name,         default color),
+	("Brackets",       "section_name_brackets_color", "blue"),
+	("Comments",       "comment_color",               "red"),
+	("Directives",     "directive_color",             "blue"),
+	("Doc parts",      "doc_part_color",              "red"),
+	("Keywords" ,      "keyword_color",               "blue"),
+	("Leo Keywords",   "leo_keyword_color",           "blue"),
+	("Section Names",  "section_name_color",          "red"),
+	("Strings",        "string_color",                "#00aa00"), # Used by IDLE.
+	("Undefined Names","undefined_section_name_color","red") )
+	
+# This is too seldom used to take up space here.
+	# "cwebName"     :("cweb_section_name_color",     "red"),
+#@-body
+#@-node:4::<< define color panel data >>
 
 	
 class leoColorPanel:
 	
 	#@<< class leoColorPanel methods >>
-	#@+node:5:C=7:<< class leoColorPanel methods >>
+	#@+node:6:C=8:<< class leoColorPanel methods >>
 	#@+body
 	#@+others
 	#@+node:1::colorPanel.__init__
 	#@+body
 	def __init__ (self,c):
 		
-		self.command = c
+		self.commands = c
 		self.frame = c.frame
+		# Set by run.
+		self.top = None
+		# Options provisionally set by callback.
+		self.changed_options = []
+		# For communication with callback.
+		self.buttons = {}
+		self.option_names = {}
 	#@-body
 	#@-node:1::colorPanel.__init__
 	#@+node:2::run
@@ -951,45 +989,45 @@ class leoColorPanel:
 		#@+node:1::<< create color panel >>
 		#@+body
 		Tk = Tkinter
+		config = app().config
 		
-		top = Tk.Toplevel(app().root)
+		self.top = top = Tk.Toplevel(app().root)
 		top.title("Select syntax colors")
 		
 		outer = Tk.Frame(top,bd=2,relief="groove")
 		outer.pack(anchor="n",pady=2,ipady=1,expand=1,fill="x")
 		
-		data = (
-			("Comments:","red"),
-			("Directives:","blue"),("Doc parts:","red"),
-			("Keywords:","blue"),
-			("Section names:","red"),("Strings:","green"),
-			("Undefined names:","orange"))
-		
-		for name,color in data:
+		# Create all the rows.
+		for name,option_name,default_color in colorPanelData:
+			# Get the color.
+			option_color = config.getColorsPref(option_name)
+			color = choose(option_color,option_color,default_color)
+			# Create the row.
 			f = Tk.Frame(outer,bd=2)
 			f.pack()
 			lab=Tk.Label(f,text=name,width=14,anchor="e")
 			b1 = Tk.Button(f,text="",state="disabled",bg=color,width=4)
-			callback = lambda name=name,color=color: self.showColorPicker(name,color)
+			self.buttons[name]=b1 # For callback.
+			self.option_names[name]=option_name # For callback.
+			callback = lambda name=name,color=color:self.showColorPicker(name,color)
 			b2 = Tk.Button(f,text="Set...",command=callback)
 			lab.pack(side="left",padx=3)
 			b1.pack (side="left",padx=3)
 			b2.pack (side="left",padx=3)
 			
+		# Create the Ok, Cancel & Revert buttons
 		f = Tk.Frame(outer,bd=2)
 		f.pack()
-		
-		b = Tk.Button(f,width=6,text="OK")
-		b.pack(side="left",padx=6)
-		b = Tk.Button(f,width=6,text="Cancel")
-		b.pack(side="right",padx=6)
-
+		b = Tk.Button(f,width=6,text="OK",command=self.onOk)
+		b.pack(side="left",padx=4)
+		b = Tk.Button(f,width=6,text="Cancel",command=self.onCancel)
+		b.pack(side="left",padx=4,expand=1,fill="x")
+		b = Tk.Button(f,width=6,text="Revert",command=self.onRevert)
+		b.pack(side="right",padx=4)
 		#@-body
 		#@-node:1::<< create color panel >>
 
-	
-		# This must be done _after_ the dialog has been built!
-		center_dialog(top)
+		center_dialog(top) # Do this _after_ building the dialog!
 		top.resizable(0,0)
 		top.grab_set() # Make the dialog a modal dialog.
 		top.focus_force() # Get all keystrokes.
@@ -999,16 +1037,43 @@ class leoColorPanel:
 	#@+body
 	def showColorPicker (self,name,color):
 		
-		trace(`name` + "," + `color`)
-		import tkColorChooser
+		config = app().config
+		# Put the new color in val.
 		rgb,val = tkColorChooser.askcolor(color=color)
 		es(`val`)
+		# Put the new color in the button.
+		b = self.buttons[name]
+		b.configure(bg=val)
+		option_name = self.option_names[name]
+		# Save the old value for revert.
+		old = config.getColorsPref(option_name)
+		self.changed_options.append((option_name,old))
+		# Set the new value and recolor.
+		config.setColorsPref(option_name,val)
+		self.commands.recolor()
+
 	#@-body
 	#@-node:3::showColorPicker
+	#@+node:4::onOk, onCancel, onRevert
+	#@+body
+	def onOk (self):
+		self.top.destroy()
+		
+	def onCancel (self):
+		self.onRevert()
+		self.top.destroy()
+		
+	def onRevert (self):
+		for option_name,old_val in self.changed_options:
+			app().config.setColorsPref(option_name,old_val)
+		self.changed_options = []
+		self.commands.recolor()
+	#@-body
+	#@-node:4::onOk, onCancel, onRevert
 	#@-others
 	
 	#@-body
-	#@-node:5:C=7:<< class leoColorPanel methods >>
+	#@-node:6:C=8:<< class leoColorPanel methods >>
 #@-body
 #@-node:0::@file leoColor.py
 #@-leo
