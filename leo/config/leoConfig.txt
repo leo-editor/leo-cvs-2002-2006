@@ -220,11 +220,8 @@ expandtolevel1 = Alt+1
 expandtolevel8 = Alt+8
 
 [recent files]
-file3 = C:\prog\leoCVS\leo\test\test.leo
-file2 = C:\prog\leoCVS\leo\plugins\leoPlugins.leo
-file1 = c:\prog\leoCVS\leo\doc\LeoDocs.leo
+file1 = C:\prog\leoCVS\leo\test\test.leo
 file0 = C:\prog\leoCVS\leo\src\LeoPy.leo
-file4 = C:\Documents and Settings\default\My Documents\ekr.leo
 
 [find/change options]
 mark_changes = 0
@@ -238,7 +235,7 @@ batch = 0
 search_headline = 1
 script_change = 0
 search_body = 1
-find_string = << set headline for extractSection >>
+find_string = def setFontFromConfig
 pattern_match = 0
 wrap = 0
 mark_finds = 0

@@ -4,11 +4,22 @@ Leo is available at:  http://sourceforge.net/projects/leo/
 Leo requires Python 2.1 or above and tcl/tk 8.3 or above.
 Leo will work on Linux, Windows and MacOs X Jaguar.
 
-Leo 4.1 beta 5                   November 23, 2003
+Leo 4.1 beta 6                   December 5, 2003
 
-This is the fifth release of the reorganized 4.1 code base, but please use caution when using this code. Warning: By default Leo 4.1 creates .leo files that can not be read by older versions of Leo.
+This is the sixth release of the reorganized 4.1 code base.
 
-Note: there have been problems reported with using plugins on Linux.  As far as I know those problems have _not_ been fixed.
+Warning: By default Leo 4.1 creates .leo files that older versions of Leo can not read.
+
+Beta 6:
+  - Fixed problems loading plugins on Linux.
+  - Fixed a problem that prevented the Find panel from working on the Mac.
+  - Fixed numerous other minor bugs resulting from the 4.1 reorg.
+  - Fixed long-standing problems with the Extract Section and Import commands.
+  - Leo now supports Unicode characters (like Chinese) in path and file names.
+  - Improved @url handling so that @url file:\\path\x.leo works properly.
+  - Improved support for @lineending platform.
+  - Leo honors outline/body pane ratio when opening .leo files.
+  - Leo now ensures that newly-opened windows fit entirely on the screen.
 
 Beta 5:
   - Leo will run in batch mode it the command line contains --script scriptFile.

@@ -2014,8 +2014,8 @@ class nullColorizer (colorizer):
 	#@+node:__init__
 	def __init__ (self,c):
 		
+		
 		self.c = c
-	#@nonl
 	#@-node:__init__
 	#@+node:entry points
 	def colorize(self,v,incremental=false):

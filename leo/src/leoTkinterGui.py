@@ -237,10 +237,8 @@ class tkinterGui(leoGui.leoGui):
 				wcb.EmptyClipboard()
 				wcb.SetClipboardText(s)
 				wcb.CloseClipboard()
-				return s
 			except:
 				es_exception()
-				return None
 		else:
 			self.root.clipboard_clear()
 			self.root.clipboard_append(s)

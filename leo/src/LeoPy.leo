@@ -2,7 +2,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="3986" clone_windows="0"/>
 <globals body_outline_ratio="0.49655172413793103">
-	<global_window_position top="32" left="317" height="870" width="827"/>
+	<global_window_position top="29" left="176" height="870" width="827"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences>
@@ -14,7 +14,13 @@
 <vnodes>
 <v t="edream.110203160744"><vh> Diary</vh>
 <v t="edream.120103054230"><vh>December 2003</vh>
-<v t="edream.120403062934"><vh>12/04</vh></v>
+<v t="edream.120503070828"><vh>12/05</vh>
+<v t="edream.120503070828.1"><vh>Ran pychecker</vh></v>
+</v>
+<v t="edream.120403062934"><vh>12/04</vh>
+<v t="edream.120403143937"><vh>Created and read paths with chinese characters in folder and file names</vh></v>
+<v t="edream.120503070828.2"><vh>Fixed all remaining bugs (except duplicate tnode index)</vh></v>
+</v>
 <v t="edream.120303101759"><vh>12/03</vh>
 <v t="edream.120303153525"><vh>Replaced c.OpenWithFileName by global openWithFileName</vh></v>
 <v t="edream.120303110224"><vh>Fixed dangerous bug in Convert Blanks command</vh></v>
@@ -761,6 +767,20 @@
 <v t="edream.110203160744.429"><vh>Cleanup Pychecker stuff</vh></v>
 <v t="edream.110203160744.430"><vh>Cleanup undo logic</vh></v>
 </v>
+<v t="edream.120203105455"><vh> Next</vh>
+<v t="edream.110203160744.2445"><vh>Find in status area</vh></v>
+<v t="edream.110203160744.2457"><vh>Scroll improvement</vh></v>
+<v t="edream.120103072109"><vh>More intelligent untangling of clones</vh></v>
+<v t="edream.112403065048"><vh>Put tips in LeoDocs.leo</vh></v>
+</v>
+<v t="edream.110903125318"><vh>Later</vh>
+<v t="edream.120103074439"><vh>button context menu in body panel</vh></v>
+<v t="edream.120103060252"><vh>Study SPE editor</vh></v>
+<v t="edream.110703160555"><vh>Use Emacs style input to avoid difficult key combinations</vh></v>
+<v t="edream.111303073523.6"><vh>Should mouse up cancel a drag?</vh></v>
+<v t="edream.110703024557"><vh>What does the scripts menu do ?</vh></v>
+<v t="edream.110503100058"><vh>Add option to allow incremental screen redraws? And shared tnodes?</vh></v>
+</v>
 </v>
 <v t="edream.110203160744.436"><vh>  Schedule</vh></v>
 <v t="edream.110203160744.437"><vh> Help wanted</vh>
@@ -1000,64 +1020,13 @@
 </v>
 </v>
 </v>
-<v t="edream.110403112538"><vh>To do: 4.1</vh>
-<v t="edream.120203124941"><vh> 1. Fix all bugs</vh>
-<v t="edream.110203160744.3805"><vh>(Fix copy/paste bug involving clones)</vh>
-<v t="edream.110203160744.2978" a=""><vh>fileCommands.setAllJoinLinks</vh></v>
-<v t="edream.110203160744.2976" a=""><vh>newTnode</vh></v>
-<v t="edream.110203160744.1555" a=""><vh>getTnode</vh>
-<v t="edream.110203160744.1556"><vh>&lt;&lt; handle read from file &gt;&gt;</vh></v>
-<v t="edream.110203160744.1557"><vh>&lt;&lt; handle read from clipboard &gt;&gt;</vh></v>
-<v t="edream.110203160744.1558"><vh>&lt;&lt; handle unknown attributes &gt;&gt;</vh></v>
-</v>
-<v t="edream.110203160744.1560" a=""><vh>getVnode</vh>
-<v t="edream.110203160744.1561"><vh>&lt;&lt; Handle vnode attribute bits  &gt;&gt;</vh></v>
-<v t="edream.110203160744.1562"><vh>&lt;&lt; Set the remembered status bits &gt;&gt;</vh></v>
-</v>
-<v t="edream.110203160744.2060" a=""><vh>createVnode</vh>
-<v t="edream.110203160744.2061"><vh>&lt;&lt; handle unknown vnode attributes &gt;&gt;</vh></v>
-</v>
-<v t="edream.110203160744.1551" a=""><vh>finishPaste</vh>
-<v t="edream.110203160744.1552"><vh>&lt;&lt; reassign tnode indices and clear all clone links &gt;&gt;</vh></v>
-</v>
-</v>
-<v t="edream.111003111536"><vh>Investigate No tnode list</vh></v>
-<v t="edream.110203160744.2358"><vh>(Support Unicode file &amp; directory names)</vh>
-<v t="edream.110203160744.1479" a=""><vh>Unicode utils...</vh>
-<v t="edream.110203160744.1480"><vh>isUnicode</vh></v>
-<v t="edream.110203160744.1481"><vh>isValidEncoding</vh></v>
-<v t="edream.110203160744.1482"><vh>reportBadChars</vh></v>
-<v t="edream.110203160744.1483"><vh>toUnicode &amp; toEncodedString</vh></v>
-<v t="edream.110203160744.1484"><vh>getpreferredencoding from 2.3a2</vh>
-<v t="edream.110203160744.1485"><vh>&lt;&lt; define getpreferredencoding using _locale &gt;&gt;</vh></v>
-<v t="edream.110203160744.1486"><vh>&lt;&lt; define getpreferredencoding for *nix &gt;&gt;</vh></v>
-</v>
-</v>
-<v t="edream.110203160744.2360"><vh>New Unicode crash</vh></v>
-</v>
-</v>
-<v t="edream.120203124941.1"><vh> 2. Unit tests</vh>
+<v t="edream.110403112538" a="V"><vh>To do: 4.1</vh>
 <v t="edream.110203160744.2419"><vh>Improve how plugins are loaded</vh></v>
-<v t="edream.111303073523.4"><vh>UnitTests</vh></v>
+<v t="edream.120203124941.1"><vh>Unit tests</vh>
 <v t="edream.112303032011"><vh>New unit test ideas</vh></v>
 <v t="edream.110703024557.1"><vh>More checks in CheckOutline command</vh></v>
-<v t="edream.120203125626"><vh>Unit tests for all plugins</vh></v>
 </v>
-<v t="edream.120303071612"><vh> 3. Finish wx plugin &amp; improve how Leo uses indices</vh></v>
-<v t="edream.120203105455"><vh> Next</vh>
-<v t="edream.110203160744.2445"><vh>Find in status area</vh></v>
-<v t="edream.110203160744.2457"><vh>Scroll improvement</vh></v>
-<v t="edream.120103072109"><vh>More intelligent untangling of clones</vh></v>
-<v t="edream.112403065048"><vh>Put tips in LeoDocs.leo</vh></v>
-</v>
-<v t="edream.110903125318"><vh>Later</vh>
-<v t="edream.120103074439"><vh>button context menu in body panel</vh></v>
-<v t="edream.120103060252"><vh>Study SPE editor</vh></v>
-<v t="edream.110703160555"><vh>Use Emacs style input to avoid difficult key combinations</vh></v>
-<v t="edream.111303073523.6"><vh>Should mouse up cancel a drag?</vh></v>
-<v t="edream.110703024557"><vh>What does the scripts menu do ?</vh></v>
-<v t="edream.110503100058"><vh>Add option to allow incremental screen redraws? And shared tnodes?</vh></v>
-</v>
+<v t="edream.120303071612"><vh>Finish wx plugin &amp; improve how Leo uses indices</vh></v>
 </v>
 <v t="edream.110203160744.601"><vh>(Project Views)</vh>
 <v t="edream.110203160744.602"><vh>  Reports</vh>
@@ -3440,60 +3409,6 @@
 </v>
 </v>
 <v t="edream.112303174924.1"><vh>beta 6 projects</vh>
-<v t="edream.120103075217"><vh>(Fix apply settings bug)</vh>
-<v t="edream.120103075217.1"><vh>Report</vh></v>
-<v t="edream.110203160744.2264" a=""><vh>reconfigureFromConfig</vh></v>
-</v>
-<v t="edream.111803100627"><vh>(Fix problems with @first/@last)</vh>
-<v t="edream.111803100627.1"><vh>Reports</vh></v>
-</v>
-<v t="edream.120103073624"><vh>(Fix Toggle Angle Brackets)</vh>
-<v t="edream.120103073624.1"><vh>Report</vh></v>
-<v t="edream.110203160744.1194" a=""><vh>toggleAngleBrackets</vh></v>
-</v>
-<v t="edream.120203075836"><vh>(Fixed Find panel bug on the Mac)</vh>
-<v t="edream.120203080733"><vh>Trace</vh></v>
-<v t="edream.110203160744.1687" a=""><vh>OnActivateLeoEvent, OnDeactivateLeoEvent</vh></v>
-</v>
-<v t="edream.111403200430"><vh>(Fixed line ending problem)</vh>
-<v t="edream.120203163222" tnodeList="edream.120203163222"><vh>test</vh></v>
-<v t="edream.120203162331"><vh>Report</vh></v>
-<v t="edream.110203160744.2858" a=""><vh>putCodeLine</vh></v>
-<v t="edream.110203160744.1368" a=""><vh>getOutputNewline</vh></v>
-</v>
-<v t="edream.120103080032"><vh>(Fixed Linux import problem)</vh>
-<v t="edream.110203160744.2380" a=""><vh>importFromPath</vh></v>
-</v>
-<v t="edream.112403065412"><vh>(Fixed Recent files bug)</vh>
-<v t="edream.110203160744.1846" a=""><vh>newLeoCommanderAndFrame (gui-independent)</vh>
-<v t="edream.110203160744.1847"><vh>&lt;&lt; compute the window title &gt;&gt;</vh></v>
-</v>
-<v t="edream.110203160744.1106" a=""><vh>updateRecentFiles</vh></v>
-</v>
-<v t="edream.120203084427"><vh>(Honor outline/body pane ratio when opening files)</vh>
-<v t="edream.110203160744.1957" a=""><vh>fileCommands.open</vh>
-<v t="edream.110203160744.1958" a=""><vh>&lt;&lt; Set the default directory &gt;&gt; in fileCommands.readOutlineOnly</vh></v>
-<v t="edream.110203160744.1959"><vh>&lt;&lt; Make the top node visible &gt;&gt;</vh></v>
-</v>
-</v>
-<v t="edream.120103091913"><vh>(Icon bug in Linux)</vh>
-<v t="edream.120103091913.1"><vh>Report</vh></v>
-<v t="edream.110203160744.1853" a=""><vh>setDefaultIcon</vh></v>
-</v>
-<v t="edream.120203135439"><vh>(Use @url nodes to open .leo files)</vh>
-<v t="edream.110203160744.1706" a=""><vh>openWithFileName</vh></v>
-<v t="edream.110203160744.1754" a=""><vh>tree.OnIconDoubleClick (@url)</vh>
-<v t="edream.110203160744.1755"><vh>&lt;&lt; stop the url after any whitespace  &gt;&gt;</vh></v>
-<v t="edream.110203160744.1756"><vh>&lt;&lt; check the url; return if bad &gt;&gt;</vh></v>
-<v t="edream.110203160744.1757"><vh>&lt;&lt; pass the url to the web browser &gt;&gt;</vh></v>
-</v>
-</v>
-<v t="edream.120303103648"><vh>(Made sure Leo doesn't put windows off the screen)</vh>
-<v t="edream.120403060637"><vh>Report</vh></v>
-<v t="edream.110203160744.2969" a=""><vh>getGlobals</vh></v>
-<v t="edream.110203160744.1629" a=""><vh>setInitialWindowGeometry</vh></v>
-<v t="edream.120403060759" a=""><vh>setTopGeometry</vh></v>
-</v>
 <v t="edream.112203132842" a="M"><vh>(Bold body pane bug)</vh>
 <v t="edream.120203130055"><vh>Scripts</vh>
 <v t="edream.120203140055" tnodeList="edream.120203140055,edream.120203140210"><vh>Show settings</vh>
@@ -3535,6 +3450,56 @@
 <v t="edream.110203160744.1706" a=""><vh>openWithFileName</vh></v>
 </v>
 </v>
+<v t="edream.120103075217"><vh>(Fixed apply settings bug)</vh>
+<v t="edream.120103075217.1"><vh>Report</vh></v>
+<v t="edream.110203160744.2264" a=""><vh>reconfigureFromConfig</vh></v>
+</v>
+<v t="edream.120203075836"><vh>(Fixed Find panel bug on the Mac)</vh>
+<v t="edream.120203080733"><vh>Trace</vh></v>
+<v t="edream.110203160744.1687" a=""><vh>OnActivateLeoEvent, OnDeactivateLeoEvent</vh></v>
+</v>
+<v t="edream.110203160744.2441"><vh>(Fixed Import backslash-newline bug)</vh>
+<v t="edream.120403122144"><vh>Report</vh></v>
+<v t="edream.110203160744.1977" a=""><vh>Python scanners</vh>
+<v t="edream.110203160744.1978"><vh>scanPythonClass</vh>
+<v t="edream.110203160744.1979"><vh>&lt;&lt; set classname and headline, or return i &gt;&gt;</vh></v>
+<v t="edream.110203160744.1980"><vh>&lt;&lt; create class_vnode  &gt;&gt;</vh></v>
+<v t="edream.110203160744.1981" a="M"><vh>&lt;&lt; create nodes for all defs of the class &gt;&gt;</vh>
+<v t="edream.110203160744.1982"><vh>&lt;&lt; create parent_vnode &gt;&gt;</vh></v>
+</v>
+<v t="edream.110203160744.1983"><vh>&lt;&lt; append any other class material &gt;&gt;</vh></v>
+</v>
+<v t="edream.110203160744.1984"><vh>scanPythonDef</vh>
+<v t="edream.110203160744.1985"><vh>&lt;&lt; set headline or return i &gt;&gt;</vh></v>
+<v t="edream.110203160744.1986" a="M"><vh>&lt;&lt; skip the Python def &gt;&gt;</vh></v>
+<v t="edream.110203160744.1987"><vh>&lt;&lt; Create def node &gt;&gt;</vh></v>
+</v>
+<v t="edream.110203160744.1988" a="M"><vh>scanPythonDecls</vh>
+<v t="edream.110203160744.1989"><vh>&lt;&lt; break on def or class &gt;&gt;</vh></v>
+<v t="edream.110203160744.1990"><vh>&lt;&lt; Create a child node for declarations &gt;&gt;</vh></v>
+</v>
+<v t="edream.110203160744.1991"><vh>scanPythonText</vh>
+<v t="edream.110203160744.1992"><vh>&lt;&lt; handle possible Python function or class &gt;&gt;</vh></v>
+<v t="edream.110203160744.1993"><vh>&lt;&lt; Append a reference to the methods of this file &gt;&gt;</vh></v>
+<v t="edream.110203160744.1994"><vh>&lt;&lt; Append any unused python text to the parent's body text &gt;&gt;</vh></v>
+</v>
+</v>
+</v>
+<v t="edream.111403200430"><vh>(Fixed line ending problem)</vh>
+<v t="edream.120203163222" tnodeList="edream.120203163222"><vh>test</vh></v>
+<v t="edream.120203162331"><vh>Report</vh></v>
+<v t="edream.110203160744.2858" a=""><vh>putCodeLine</vh></v>
+<v t="edream.110203160744.1368" a=""><vh>getOutputNewline</vh></v>
+</v>
+<v t="edream.120103080032"><vh>(Fixed Linux import problem)</vh>
+<v t="edream.110203160744.2380" a=""><vh>importFromPath</vh></v>
+</v>
+<v t="edream.112403065412"><vh>(Fixed Recent files bug)</vh>
+<v t="edream.110203160744.1846" a=""><vh>newLeoCommanderAndFrame (gui-independent)</vh>
+<v t="edream.110203160744.1847"><vh>&lt;&lt; compute the window title &gt;&gt;</vh></v>
+</v>
+<v t="edream.110203160744.1106" a=""><vh>updateRecentFiles</vh></v>
+</v>
 <v t="edream.120303100236"><vh>(Fixed Replace Blanks command)</vh>
 <v t="edream.112103153646.3" a=""><vh>getSelectionLines</vh></v>
 <v t="edream.110203160744.2010" a=""><vh>Edit Body Text</vh>
@@ -3573,31 +3538,60 @@
 <v t="edream.110203160744.2023"><vh>updateBodyPane (handles undo)</vh></v>
 </v>
 </v>
-<v t="edream.110203160744.2441"><vh>(Fixed Import backslash-newline bug)</vh>
-<v t="edream.120403122144"><vh>Report</vh></v>
-<v t="edream.110203160744.1977" a=""><vh>Python scanners</vh>
-<v t="edream.110203160744.1978"><vh>scanPythonClass</vh>
-<v t="edream.110203160744.1979"><vh>&lt;&lt; set classname and headline, or return i &gt;&gt;</vh></v>
-<v t="edream.110203160744.1980"><vh>&lt;&lt; create class_vnode  &gt;&gt;</vh></v>
-<v t="edream.110203160744.1981" a="M"><vh>&lt;&lt; create nodes for all defs of the class &gt;&gt;</vh>
-<v t="edream.110203160744.1982"><vh>&lt;&lt; create parent_vnode &gt;&gt;</vh></v>
+<v t="edream.110203160744.2446"><vh>(Fixed several bugs related to Extract commands)</vh>
+<v t="edream.110203160744.2447"><vh>Reports</vh>
+<v t="edream.110203160744.2448"><vh>(fixed) Leading slashes are removed</vh></v>
+<v t="edream.110203160744.2449"><vh>(fixed) Extract Section is enabled when it should not be</vh></v>
+<v t="edream.110203160744.2450"><vh>(fixed) Documentation problem</vh></v>
+<v t="edream.110203160744.2451"><vh>(fixed) Doesn't check for complete section name</vh></v>
 </v>
-<v t="edream.110203160744.1983"><vh>&lt;&lt; append any other class material &gt;&gt;</vh></v>
+<v t="edream.110203160744.1293" a=""><vh>updateEditMenu</vh></v>
+<v t="edream.110203160744.2885" a=""><vh>canExtract, canExtractSection &amp; canExtractSectionNames</vh></v>
+<v t="edream.110203160744.1805" a=""><vh>extractSection</vh>
+<v t="edream.110203160744.1806"><vh>&lt;&lt; Set headline for extractSection &gt;&gt;</vh></v>
 </v>
-<v t="edream.110203160744.1984"><vh>scanPythonDef</vh>
-<v t="edream.110203160744.1985"><vh>&lt;&lt; set headline or return i &gt;&gt;</vh></v>
-<v t="edream.110203160744.1986" a="M"><vh>&lt;&lt; skip the Python def &gt;&gt;</vh></v>
-<v t="edream.110203160744.1987"><vh>&lt;&lt; Create def node &gt;&gt;</vh></v>
 </v>
-<v t="edream.110203160744.1988" a="M"><vh>scanPythonDecls</vh>
-<v t="edream.110203160744.1989"><vh>&lt;&lt; break on def or class &gt;&gt;</vh></v>
-<v t="edream.110203160744.1990"><vh>&lt;&lt; Create a child node for declarations &gt;&gt;</vh></v>
+<v t="edream.120103073624"><vh>(Fixed Toggle Angle Brackets)</vh>
+<v t="edream.120103073624.1"><vh>Report</vh></v>
+<v t="edream.110203160744.1194" a=""><vh>toggleAngleBrackets</vh></v>
 </v>
-<v t="edream.110203160744.1991"><vh>scanPythonText</vh>
-<v t="edream.110203160744.1992"><vh>&lt;&lt; handle possible Python function or class &gt;&gt;</vh></v>
-<v t="edream.110203160744.1993"><vh>&lt;&lt; Append a reference to the methods of this file &gt;&gt;</vh></v>
-<v t="edream.110203160744.1994"><vh>&lt;&lt; Append any unused python text to the parent's body text &gt;&gt;</vh></v>
+<v t="edream.120203084427"><vh>(Honor outline/body pane ratio when opening files)</vh>
+<v t="edream.110203160744.1957" a=""><vh>fileCommands.open</vh>
+<v t="edream.110203160744.1958" a=""><vh>&lt;&lt; Set the default directory &gt;&gt; in fileCommands.readOutlineOnly</vh></v>
+<v t="edream.110203160744.1959"><vh>&lt;&lt; Make the top node visible &gt;&gt;</vh></v>
 </v>
+</v>
+<v t="edream.120103091913"><vh>(Icon bug in Linux)</vh>
+<v t="edream.120103091913.1"><vh>Report</vh></v>
+<v t="edream.110203160744.1853" a=""><vh>setDefaultIcon</vh></v>
+</v>
+<v t="edream.120303103648"><vh>(Made sure Leo doesn't put windows off the screen)</vh>
+<v t="edream.120403060637"><vh>Report</vh></v>
+<v t="edream.110203160744.2969" a=""><vh>getGlobals</vh></v>
+<v t="edream.110203160744.1629" a=""><vh>setInitialWindowGeometry</vh></v>
+<v t="edream.120403060759" a=""><vh>setTopGeometry</vh></v>
+</v>
+<v t="edream.111803100627"><vh>(Tested reports of problems with @first/@last)</vh>
+<v t="edream.111803100627.1"><vh>Reports</vh></v>
+</v>
+<v t="edream.110203160744.2358"><vh>(Tested support for Unicode file &amp; directory names)</vh>
+<v t="edream.110203160744.1479" a=""><vh>Unicode utils...</vh>
+<v t="edream.110203160744.1480"><vh>isUnicode</vh></v>
+<v t="edream.110203160744.1481"><vh>isValidEncoding</vh></v>
+<v t="edream.110203160744.1482"><vh>reportBadChars</vh></v>
+<v t="edream.110203160744.1483"><vh>toUnicode &amp; toEncodedString</vh></v>
+<v t="edream.110203160744.1484"><vh>getpreferredencoding from 2.3a2</vh>
+<v t="edream.110203160744.1485"><vh>&lt;&lt; define getpreferredencoding using _locale &gt;&gt;</vh></v>
+<v t="edream.110203160744.1486"><vh>&lt;&lt; define getpreferredencoding for *nix &gt;&gt;</vh></v>
+</v>
+</v>
+</v>
+<v t="edream.120203135439"><vh>(Use @url nodes to open .leo files)</vh>
+<v t="edream.110203160744.1706" a=""><vh>openWithFileName</vh></v>
+<v t="edream.110203160744.1754" a=""><vh>tree.OnIconDoubleClick (@url)</vh>
+<v t="edream.110203160744.1755"><vh>&lt;&lt; stop the url after any whitespace  &gt;&gt;</vh></v>
+<v t="edream.110203160744.1756"><vh>&lt;&lt; check the url; return if bad &gt;&gt;</vh></v>
+<v t="edream.110203160744.1757"><vh>&lt;&lt; pass the url to the web browser &gt;&gt;</vh></v>
 </v>
 </v>
 </v>
@@ -6789,17 +6783,25 @@
 </v>
 </v>
 </v>
-<v t="edream.110203160744.2446" a="V"><vh>(Fixed several bugs related to Extract commands)</vh>
-<v t="edream.110203160744.2447" a="E"><vh>Reports</vh>
-<v t="edream.110203160744.2448"><vh>(fixed) Leading slashes are removed</vh></v>
-<v t="edream.110203160744.2449"><vh>(fixed) Extract Section is enabled when it should not be</vh></v>
-<v t="edream.110203160744.2450"><vh>(fixed) Documentation problem</vh></v>
-<v t="edream.110203160744.2451"><vh>(fixed) Doesn't check for complete section name</vh></v>
+<v t="edream.110203160744.3805"><vh>(Fix possible copy/paste bugs involving clones)</vh>
+<v t="edream.120403144310"><vh>Report</vh></v>
+<v t="edream.111003111536"><vh>Investigate No tnode list</vh></v>
+<v t="edream.110203160744.2978" a=""><vh>fileCommands.setAllJoinLinks</vh></v>
+<v t="edream.110203160744.2976" a=""><vh>newTnode</vh></v>
+<v t="edream.110203160744.1555" a=""><vh>getTnode</vh>
+<v t="edream.110203160744.1556"><vh>&lt;&lt; handle read from file &gt;&gt;</vh></v>
+<v t="edream.110203160744.1557"><vh>&lt;&lt; handle read from clipboard &gt;&gt;</vh></v>
+<v t="edream.110203160744.1558"><vh>&lt;&lt; handle unknown attributes &gt;&gt;</vh></v>
 </v>
-<v t="edream.110203160744.1293" a=""><vh>updateEditMenu</vh></v>
-<v t="edream.110203160744.2885" a=""><vh>canExtract, canExtractSection &amp; canExtractSectionNames</vh></v>
-<v t="edream.110203160744.1805" a="E"><vh>extractSection</vh>
-<v t="edream.110203160744.1806"><vh>&lt;&lt; Set headline for extractSection &gt;&gt;</vh></v>
+<v t="edream.110203160744.1560" a=""><vh>getVnode</vh>
+<v t="edream.110203160744.1561"><vh>&lt;&lt; Handle vnode attribute bits  &gt;&gt;</vh></v>
+<v t="edream.110203160744.1562"><vh>&lt;&lt; Set the remembered status bits &gt;&gt;</vh></v>
+</v>
+<v t="edream.110203160744.2060" a=""><vh>createVnode</vh>
+<v t="edream.110203160744.2061"><vh>&lt;&lt; handle unknown vnode attributes &gt;&gt;</vh></v>
+</v>
+<v t="edream.110203160744.1551" a=""><vh>finishPaste</vh>
+<v t="edream.110203160744.1552"><vh>&lt;&lt; reassign tnode indices and clear all clone links &gt;&gt;</vh></v>
 </v>
 </v>
 </vnodes>
@@ -24451,7 +24453,7 @@ This is exactly the same behaviour as in beta3.</t>
 	self.root = None # The hidden main window. Set later.
 	self.searchDict = {} # For communication between find/change scripts.
 	self.scriptDict = {} # For communication between Execute Script command and scripts.
-	self.trace = true # True: enable debugging traces.
+	self.trace = false # True: enable debugging traces.
 	self.trace_list = [] # "Sherlock" argument list for tracing().
 	self.tkEncoding = "utf-8"
 	self.unicodeErrorGiven = true # true: suppres unicode tracebacks.
@@ -31593,7 +31595,7 @@ c.endUpdate(false)</t>
 
 def getSignOnLine (self):
 	c = self
-	return "Leo 4.1 beta 5, build %s, November 23, 2003" % c.getBuildNumber()
+	return "Leo 4.1 beta 6, build %s, December 5, 2003" % c.getBuildNumber()
 	
 def initVersion (self):
 	c = self
@@ -36947,33 +36949,7 @@ while v and v != after:
 - References to frame.top do not matter in the following classes:
 	
 LeoColorPanel, LeoColorNamePanel, leoCompare, leoDialog, leoFind, leoFont, leoPrefs</t>
-<t tx="edream.110203160744.2358">@nocolor
-
-** Where are non-unicode filenames coming from?
-	- Create directory &amp; test files containing Unicode characters.
-		- Find out exactly how we are taking exceptions:
-		- It may be easy to fix!!
-		
-** Test unicode file names.
-	- Add os.path wrappers: os_split, os_join, etc.
-
-- Resolve the circular dependencies during startup.
-
-@color</t>
-<t tx="edream.110203160744.2360">
-Text encoding = cp936
-exception executing command
-Traceback (most recent call last):
-  File "d:\Program Files\Leo\src\leoFrame.py", line 1597, in doCommand
-    command(event)
-  File "d:\Program Files\Leo\src\leoFrame.py", line 1936, in OnSave
-    self.updateRecentFiles(c.mFileName)
-  File "d:\Program Files\Leo\src\leoFrame.py", line 2030, in updateRecentFiles
-    if normFileName == name2:
-UnicodeDecodeError: 'ascii' codec can't decode byte 0xd7 in position 29:
-ordinal
- not in range(128)
-</t>
+<t tx="edream.110203160744.2358"></t>
 <t tx="edream.110203160744.2361"></t>
 <t tx="edream.110203160744.2362">def os_path_abspath(path,encoding=None):
 	
@@ -38627,7 +38603,7 @@ c:\python22\python &lt;leopath&gt;leo.py %1
 </t>
 <t tx="edream.110203160744.2491">Metadata-Version: 1.0
 Name: leo
-Version: 4.1-beta-5
+Version: 4.1-beta-6
 Summary: Leo: Literate Editor with Outlines
 Home-page: http://webpages.charter.net/edreamleo/front.html
 Author: Edward K. Ream
@@ -38653,11 +38629,22 @@ Leo is available at:  http://sourceforge.net/projects/leo/
 Leo requires Python 2.1 or above and tcl/tk 8.3 or above.
 Leo will work on Linux, Windows and MacOs X Jaguar.
 
-Leo 4.1 beta 5                   November 23, 2003
+Leo 4.1 beta 6                   December 5, 2003
 
-This is the fifth release of the reorganized 4.1 code base, but please use caution when using this code. Warning: By default Leo 4.1 creates .leo files that can not be read by older versions of Leo.
+This is the sixth release of the reorganized 4.1 code base.
 
-Note: there have been problems reported with using plugins on Linux.  As far as I know those problems have _not_ been fixed.
+Warning: By default Leo 4.1 creates .leo files that older versions of Leo can not read.
+
+Beta 6:
+  - Fixed problems loading plugins on Linux.
+  - Fixed a problem that prevented the Find panel from working on the Mac.
+  - Fixed numerous other minor bugs resulting from the 4.1 reorg.
+  - Fixed long-standing problems with the Extract Section and Import commands.
+  - Leo now supports Unicode characters (like Chinese) in path and file names.
+  - Improved @url handling so that @url file:\\path\x.leo works properly.
+  - Improved support for @lineending platform.
+  - Leo honors outline/body pane ratio when opening .leo files.
+  - Leo now ensures that newly-opened windows fit entirely on the screen.
 
 Beta 5:
   - Leo will run in batch mode it the command line contains --script scriptFile.
@@ -38827,7 +38814,7 @@ setup (
 if sys.argv[1] == "sdist":
 	print "setup complete"</t>
 <t tx="edream.110203160744.2499">name="leo",
-version="4.1-beta-4",
+version="4.1-beta-6",
 author="Edward K. Ream",
 author_email="edream@tds.net",
 url="http://personalpages.tds.net/~edream/front.html",
@@ -50304,7 +50291,7 @@ def setDefaultId (self,id):
 	"""Create a gnx from its string representation"""
 	
 	if type(s) not in (type(""),type(u"")):
-		es("scanGnx: unexpected index type:"+`type(index)`+`index`,color="red")
+		es("scanGnx: unexpected index type:"+`type(s)`+`s`,color="red")
 		return None,None,None
 		
 	s = s.strip()
@@ -56271,37 +56258,7 @@ class leoNodeError(Exception):
 <t tx="edream.110203160744.3804">def undo (self):
 	
 	pass</t>
-<t tx="edream.110203160744.3805">@ The 4.0.x paste code (and all previous versions) may be buggy: pasted nodes can share tnodes.  This never happens when cutting and pasting in the same outline, because the indices are reassigned when _cutting_.
-
-finishPaste must create _new_ tnodes for all indices.  But notice, new_tnodes already warns if there are "overlap" problems, and this rarely if ever happens.  So maybe the code isn't buggy?  Or maybe the bug only happens very rarely???
-
-At any rate, is it crucial that all possibilities of a bug be stamped out completely.  But how to reassign a tnode once vnodes point to it?  It's a little tricky.
-
-Read and respond to this message at: 
-https://sourceforge.net/forum/message.php?msg_id=2285457
-By: billp9619
-
-Assume a node with two child clones representing the same T node.
-
-If I paste this somewhere else in the outline the clones are maintained as clones
-...except they now associate with a new T node.
-
-This makes sense since the clipboard might not be from the current outline and
-there would be the possibility of pasting a clone into itself, etc.
-
-PROBLEM/BUG?: The pasted clones do not get a red symbol identifying them as
-clones. If I save and reload the outline then the red clone symbols appear.
-This is the behavior of both 4.0.3 and 4.1.
-
-ENHANCEMENT/IDEA: How to keep original clones after paste.
-Why not add a command to "cut and paste to end" command that would copy AND
-paste a selected node in one step ... to the end of the outline..retaining original
-T node references of clones? The the user could then drag this somewhere else.
-
-regards,
-
-bill p
-</t>
+<t tx="edream.110203160744.3805"></t>
 <t tx="edream.110203160744.3806"></t>
 <t tx="edream.110203160744.3807"></t>
 <t tx="edream.110203160744.3808"></t>
@@ -58039,11 +57996,6 @@ def runAskYesNoCancelDialog(self,title,
 
 - Eliminated Focus routines in leoGlobals.py (now in app.gui class).</t>
 <t tx="edream.111303073523.2"></t>
-<t tx="edream.111303073523.4">
-- Changes to the find classes affect the spell dialog.
-
-- Unit tests: how can we test each command???
-- Unit tests: run snippets of code (like the About Leo Dialog) without crashing.</t>
 <t tx="edream.111303073523.6"></t>
 <t tx="edream.111303082442">def firstIndex (self):
 
@@ -58101,10 +58053,8 @@ def runSaveFileDialog(self,initialfile,title,filetypes,defaultextension):
 			wcb.EmptyClipboard()
 			wcb.SetClipboardText(s)
 			wcb.CloseClipboard()
-			return s
 		except:
 			es_exception()
-			return None
 	else:
 		self.root.clipboard_clear()
 		self.root.clipboard_append(s)</t>
@@ -59624,7 +59574,9 @@ def OnHyperLinkLeave (self,v):
 	pass</t>
 <t tx="edream.112103141921">def __init__ (self,c):
 	
-	self.c = c</t>
+	
+	self.c = c
+</t>
 <t tx="edream.112103141921.1">def colorize(self,v,incremental=false):
 	pass
 	
@@ -60503,9 +60455,7 @@ tk/Tkinter.py", line 1345, in __call__
 AttributeError: 'NoneType' object has no attribute 'commands'</t>
 <t tx="edream.120203084427"></t>
 <t tx="edream.120203105455"></t>
-<t tx="edream.120203124941"></t>
-<t tx="edream.120203124941.1"></t>
-<t tx="edream.120203125626"></t>
+<t tx="edream.120203124941.1"># Test each command and plugin.</t>
 <t tx="edream.120203130055"></t>
 <t tx="edream.120203130055.1">from leoGlobals import *
 import leoConfig
@@ -60689,5 +60639,37 @@ line-continuation backslash character problem
 Help Forum
 
 I imported as @file a python file, and there's a line with a line-continuation backslash that gets split in two parts, and then this causes a syntax error when running the program.</t>
+<t tx="edream.120403143937"></t>
+<t tx="edream.120403144310">@nocolor
+
+The 4.0.x paste code (and all previous versions) may be buggy: pasted nodes can share tnodes.  This never happens when cutting and pasting in the same outline, because the indices are reassigned when _cutting_.
+
+finishPaste must create _new_ tnodes for all indices.  But notice, new_tnodes already warns if there are "overlap" problems, and this rarely if ever happens.  So maybe the code isn't buggy?  Or maybe the bug only happens very rarely???
+
+At any rate, is it crucial that all possibilities of a bug be stamped out completely.  But how to reassign a tnode once vnodes point to it?  It's a little tricky.
+
+Read and respond to this message at: 
+https://sourceforge.net/forum/message.php?msg_id=2285457
+By: billp9619
+
+Assume a node with two child clones representing the same T node.
+
+If I paste this somewhere else in the outline the clones are maintained as clones
+...except they now associate with a new T node.
+
+This makes sense since the clipboard might not be from the current outline and
+there would be the possibility of pasting a clone into itself, etc.
+
+PROBLEM/BUG?: The pasted clones do not get a red symbol identifying them as
+clones. If I save and reload the outline then the red clone symbols appear.
+This is the behavior of both 4.0.3 and 4.1.
+
+ENHANCEMENT/IDEA: How to keep original clones after paste.
+Why not add a command to "cut and paste to end" command that would copy AND
+paste a selected node in one step ... to the end of the outline..retaining original
+T node references of clones? The the user could then drag this somewhere else.</t>
+<t tx="edream.120503070828"></t>
+<t tx="edream.120503070828.1">The only change was that replaceClipboardWith now no longer returns a value.</t>
+<t tx="edream.120503070828.2"></t>
 </tnodes>
 </leo_file>

@@ -51,7 +51,7 @@ class LeoApp:
 		self.root = None # The hidden main window. Set later.
 		self.searchDict = {} # For communication between find/change scripts.
 		self.scriptDict = {} # For communication between Execute Script command and scripts.
-		self.trace = true # True: enable debugging traces.
+		self.trace = false # True: enable debugging traces.
 		self.trace_list = [] # "Sherlock" argument list for tracing().
 		self.tkEncoding = "utf-8"
 		self.unicodeErrorGiven = true # true: suppres unicode tracebacks.

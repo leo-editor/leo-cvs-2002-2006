@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="3031" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="3164" clone_windows="0"/>
 <globals body_outline_ratio="0.5">
-	<global_window_position top="29" left="528" height="836" width="632"/>
+	<global_window_position top="43" left="103" height="836" width="837"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences>
@@ -62,7 +62,7 @@
 <v t="edream.110203163054.44"><vh>Dan Winkler 1</vh></v>
 <v t="edream.110203163054.45"><vh>Dan Winkler 2</vh></v>
 </v>
-<v t="edream.110203163054.46"><vh>Release Notes</vh>
+<v t="edream.110203163054.46" a="E"><vh>Release Notes</vh>
 <v t="edream.110203163054.47"><vh>Warnings</vh></v>
 <v t="edream.110203163054.48"><vh>Installation notes</vh>
 <v t="edream.110203163054.49" a=""><vh>System requirements</vh></v>
@@ -82,8 +82,29 @@
 <v t="edream.110203163054.61" a=""><vh>Putting the Leo icon in Leo windows</vh></v>
 <v t="edream.110203163054.62" a=""><vh>Quick start</vh></v>
 </v>
-<v t="edream.110203163054.63"><vh>Latest version</vh>
-<v t="edream.110603185805" a=""><vh>4.1 beta 5</vh>
+<v t="edream.110203163054.63" a="E"><vh>Latest version</vh>
+<v t="edream.110603185805" a="V"><vh>4.1 beta 6</vh>
+<v t="edream.120403174147"><vh>Changes made in 4.1 beta 6</vh>
+<v t="edream.120403180443"><vh>New and improved features in 4.1 beta 6</vh>
+<v t="edream.120403174147.105"><vh>Honor outline/body pane ratio when opening files</vh></v>
+<v t="edream.120403174147.112"><vh>Leo now adjusts newly opened windows so they fit on the screen</vh></v>
+<v t="edream.120403174147.119"><vh>Tested support for Unicode file &amp; directory names</vh></v>
+<v t="edream.120403174147.128"><vh>Added code so @url nodes may open .leo files</vh></v>
+<v t="edream.120403174147.56"><vh>Fixed problems with @lineending platform</vh></v>
+</v>
+<v t="edream.120403174241"><vh>Bugs fixed in 4.1 beta 6</vh>
+<v t="edream.120403174147.30"><vh>Fixed crasher in Apply Settings command</vh></v>
+<v t="edream.120403174147.102"><vh>Fixed crasher in Toggle Angle Brackets command</vh></v>
+<v t="edream.120403174147.109"><vh>Fixed crasher when setting Icon in Linux)</vh></v>
+<v t="edream.120403174147.33"><vh>Fixed Find panel bug on the Mac</vh></v>
+<v t="edream.120403174147.36"><vh>Fixed Import backslash-newline bug</vh></v>
+<v t="edream.120403174147.61"><vh>Fixed Linux import problem</vh></v>
+<v t="edream.120403174147.63"><vh>Fixed Recent files crasher</vh></v>
+<v t="edream.120403174147.65"><vh>Fixed Replace Blanks command</vh></v>
+<v t="edream.120403174147.94"><vh>Fixed several long-standing bugs related to Extract commands</vh></v>
+</v>
+</v>
+<v t="edream.120403180443.1"><vh>Changes made in earlier 4.1 betas</vh>
 <v t="edream.110603190234.1"><vh>Code-level features</vh>
 <v t="edream.110603190125.3"><vh>Regression tests started</vh></v>
 <v t="edream.110603190125.4"><vh>Code reorganized to support other guis</vh></v>
@@ -116,11 +137,33 @@
 <v t="edream.111803062437"><vh>Shift commands now shift single line if no selection</vh></v>
 </v>
 <v t="edream.110303182719"><vh>New config settings</vh></v>
+</v>
 </v>
 <v t="edream.110203163054.66" a=""><vh>4.0.1, 4.0.2, 4.0.3 &amp; 4.0.4</vh></v>
 </v>
 <v t="edream.110203163054.117"><vh>leo.py versions</vh>
-<v t="edream.110603185805" a=""><vh>4.1 beta 5</vh>
+<v t="edream.110603185805" a=""><vh>4.1 beta 6</vh>
+<v t="edream.120403174147"><vh>Changes made in 4.1 beta 6</vh>
+<v t="edream.120403180443"><vh>New and improved features in 4.1 beta 6</vh>
+<v t="edream.120403174147.105"><vh>Honor outline/body pane ratio when opening files</vh></v>
+<v t="edream.120403174147.112"><vh>Leo now adjusts newly opened windows so they fit on the screen</vh></v>
+<v t="edream.120403174147.119"><vh>Tested support for Unicode file &amp; directory names</vh></v>
+<v t="edream.120403174147.128"><vh>Added code so @url nodes may open .leo files</vh></v>
+<v t="edream.120403174147.56"><vh>Fixed problems with @lineending platform</vh></v>
+</v>
+<v t="edream.120403174241"><vh>Bugs fixed in 4.1 beta 6</vh>
+<v t="edream.120403174147.30"><vh>Fixed crasher in Apply Settings command</vh></v>
+<v t="edream.120403174147.102"><vh>Fixed crasher in Toggle Angle Brackets command</vh></v>
+<v t="edream.120403174147.109"><vh>Fixed crasher when setting Icon in Linux)</vh></v>
+<v t="edream.120403174147.33"><vh>Fixed Find panel bug on the Mac</vh></v>
+<v t="edream.120403174147.36"><vh>Fixed Import backslash-newline bug</vh></v>
+<v t="edream.120403174147.61"><vh>Fixed Linux import problem</vh></v>
+<v t="edream.120403174147.63"><vh>Fixed Recent files crasher</vh></v>
+<v t="edream.120403174147.65"><vh>Fixed Replace Blanks command</vh></v>
+<v t="edream.120403174147.94"><vh>Fixed several long-standing bugs related to Extract commands</vh></v>
+</v>
+</v>
+<v t="edream.120403180443.1"><vh>Changes made in earlier 4.1 betas</vh>
 <v t="edream.110603190234.1"><vh>Code-level features</vh>
 <v t="edream.110603190125.3"><vh>Regression tests started</vh></v>
 <v t="edream.110603190125.4"><vh>Code reorganized to support other guis</vh></v>
@@ -153,6 +196,7 @@
 <v t="edream.111803062437"><vh>Shift commands now shift single line if no selection</vh></v>
 </v>
 <v t="edream.110303182719"><vh>New config settings</vh></v>
+</v>
 </v>
 <v t="edream.110203163054.64"><vh>4.1 alpha 1</vh></v>
 <v t="edream.110203163054.66" a=""><vh>4.0.1, 4.0.2, 4.0.3 &amp; 4.0.4</vh></v>
@@ -968,7 +1012,7 @@
 </v>
 </v>
 </v>
-<v t="edream.110203163054.735" a="V"><vh>Users Guide</vh>
+<v t="edream.110203163054.735"><vh>Users Guide</vh>
 <v t="edream.110203163054.736"><vh>An overview of Leo</vh></v>
 <v t="edream.110203163054.737"><vh>Front material</vh>
 <v t="edream.110203163054.738"><vh>Title Page &amp; Summary</vh></v>
@@ -24110,11 +24154,22 @@ Still to do:
 
 The use_gnx setting in leoConfig.txt determines whether uses gnx's (cvs friendly) or ints.  No version of Leo before 4.1 can read .leo files containing gnx.   Only gnx's are immutable.  Leo recomputes all non-gnx indices from scratch whenever writing a .leo file. It is possible to convert between 3.x and 4.1 file formats by changing the use_gnx setting.
 </t>
-<t tx="edream.110603185805">Leo 4.1 beta 5                   November 23, 2003
+<t tx="edream.110603185805">Leo 4.1 beta 6                   December 5, 2003
 
-This is the fifth release of the reorganized 4.1 code base. The code appears solid, but please use caution when using this code. Warning: By default Leo 4.1 creates .leo files that can not be read by older versions of Leo.
+This is the sixth release of the reorganized 4.1 code base.
 
-Note: there have been problems reported with using plugins on Linux.  As far as I know those problems have _not_ been fixed.
+Warning: By default Leo 4.1 creates .leo files that can not be read by older versions of Leo.
+
+Beta 6:
+  - Fixed problems loading plugins on Linux.
+  - Fixed problem that prevent the Find panel from working on the Mac.
+  - Fixed numerous other minor bugs resulting from the 4.1 reorg.
+  - Fixed long-standing problems with the Extract Section and Import commands.
+  - Leo now supports Unicode characters (like Chinese) in path and file names.
+  - Improved @url handling so that @url file:\\path\x.leo works properly.
+  - Improved support for @lineending platform.
+  - Leo honors outline/body pane ratio when opening .leo files.
+  - Leo now ensures that newly-opened windows fit entirely on the screen.
 
 Beta 5:
   - Leo will run in batch mode it the command line contains --script scriptFile.
@@ -24313,5 +24368,25 @@ c = newFrame.c ; root = c.rootVnode()
 while v:
 	print v.headString()
 	v = v.threadNext()</t>
+<t tx="edream.120403174147"></t>
+<t tx="edream.120403174147.30">Another 4.1 reorg bug.</t>
+<t tx="edream.120403174147.33">This was due to a missing activate event.</t>
+<t tx="edream.120403174147.36">Continuation lines caused the import command to terminate functions, methods and classes prematurely.</t>
+<t tx="edream.120403174147.56"></t>
+<t tx="edream.120403174147.61">This was causing Leo not to load plugins properly on Linux.  The problem was that the imp module does not handle Unicode file names properly.</t>
+<t tx="edream.120403174147.63">This was a reorg bug.</t>
+<t tx="edream.120403174147.65">Another bug caused by the 4.1 reorg.</t>
+<t tx="edream.120403174147.94">- Leo now properly enables and disables the Extract Section menu item.
+- Leo no longer removes leading forward slashes in section names in headlines.
+- Corrected the documentation for the Extract Section command.</t>
+<t tx="edream.120403174147.102">Another 4.1 reorg bug.</t>
+<t tx="edream.120403174147.105">This bug has been around for a long time.</t>
+<t tx="edream.120403174147.109">The new code attempts to use bitmap files only on Windows.</t>
+<t tx="edream.120403174147.112">Leo makes sure that opened files or newly-created outlines fit entirely on the screen.  The Cascade commands leaves the sizes of windows unchanged: it merely ensures that the top left corner of a window is visible on the screen.</t>
+<t tx="edream.120403174147.119"></t>
+<t tx="edream.120403174147.128">@ A problem: the new window gets put behind the old.  This is probably because Tk thinks that the mouse-down event should select then new window...</t>
+<t tx="edream.120403174241"></t>
+<t tx="edream.120403180443"></t>
+<t tx="edream.120403180443.1"></t>
 </tnodes>
 </leo_file>
