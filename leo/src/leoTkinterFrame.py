@@ -349,7 +349,7 @@ class baseLeoTkinterFrame:
 	#@-node:f.promptForSave
 	#@+node:f.version & signon stuff
 	def getBuildNumber(self):
-		return self.ver[10:-1] # Strip off "$Reversion" and the trailing "$"
+		return self.ver[10:-1] # Strip off "(dollar)Revision" and the trailing "$"
 	
 	def getSignOnLine (self):
 		return "Leo 4.1 beta 1, build %s, November 7, 2003" % self.getBuildNumber()

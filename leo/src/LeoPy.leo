@@ -2,7 +2,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="3812" clone_windows="0"/>
 <globals body_outline_ratio="0.5">
-	<global_window_position top="50" left="387" height="872" width="731"/>
+	<global_window_position top="50" left="387" height="872" width="787"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences>
@@ -792,7 +792,7 @@
 </v>
 </v>
 </v>
-<v t="edream.110403112538" a="MV"><vh>To do: 4.1 beta 2</vh>
+<v t="edream.110403112538" a="M"><vh>To do: 4.1 beta 2</vh>
 <v t="edream.110703024332"><vh>Clean up pychecker stuff</vh>
 <v t="edream.110703024332.1"><vh>Pychecker report</vh></v>
 </v>
@@ -5351,7 +5351,7 @@
 </v>
 </v>
 </v>
-<v t="edream.110203160744.2458"><vh>Code</vh>
+<v t="edream.110203160744.2458" a="V"><vh>Code</vh>
 <v t="edream.110203160744.2459"><vh>  Overview of code</vh>
 <v t="edream.110203160744.2460" a=""><vh>&lt;&lt; About clones &gt;&gt;</vh></v>
 <v t="edream.110203160744.2461" a=""><vh>&lt;&lt; About drawing and events &gt;&gt;</vh></v>
@@ -33907,7 +33907,7 @@ c.frame.focus_get()
 c.editVnode(v)
 c.endUpdate(false)</t>
 <t tx="edream.110203160744.1885">def getBuildNumber(self):
-	return self.ver[10:-1] # Strip off "$Reversion" and the trailing "$"
+	return self.ver[10:-1] # Strip off "(dollar)Revision" and the trailing "$"
 
 def getSignOnLine (self):
 	return "Leo 4.1 beta 1, build %s, November 7, 2003" % self.getBuildNumber()
@@ -41924,6 +41924,8 @@ Leo will work on Linux, Windows and MacOs X Jaguar.
 Leo 4.1 beta 1                   November 7, 2003
 
 This is the first official release of the reorganized 4.1 code base.  The code appears solid, and has not been widely tested.  Please use caution when using this code.
+
+N.B. By default Leo 4.1 creates .leo files that can not be read by older versions of Leo.  Please read the following carefully if that concerns you.
 
 Highlights of 4.1:
 -----------------

@@ -2,7 +2,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="2933" clone_windows="0"/>
 <globals body_outline_ratio="0.5">
-	<global_window_position top="128" left="363" height="836" width="833"/>
+	<global_window_position top="19" left="330" height="836" width="833"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences>
@@ -62,7 +62,7 @@
 <v t="edream.110203163054.44"><vh>Dan Winkler 1</vh></v>
 <v t="edream.110203163054.45"><vh>Dan Winkler 2</vh></v>
 </v>
-<v t="edream.110203163054.46" a="E"><vh>Release Notes</vh>
+<v t="edream.110203163054.46" a="V"><vh>Release Notes</vh>
 <v t="edream.110203163054.47"><vh>Warnings</vh></v>
 <v t="edream.110203163054.48"><vh>Installation notes</vh>
 <v t="edream.110203163054.49" a=""><vh>System requirements</vh></v>
@@ -82,8 +82,8 @@
 <v t="edream.110203163054.61" a=""><vh>Putting the Leo icon in Leo windows</vh></v>
 <v t="edream.110203163054.62" a=""><vh>Quick start</vh></v>
 </v>
-<v t="edream.110203163054.63" a="E"><vh>Latest version</vh>
-<v t="edream.110603185805" a="V"><vh>4.1 beta 1</vh>
+<v t="edream.110203163054.63"><vh>Latest version</vh>
+<v t="edream.110603185805" a=""><vh>4.1 beta 1</vh>
 <v t="edream.110603190404"><vh>Fixed bugs</vh>
 <v t="edream.110603190322.8"><vh>Fixed Serious Undo Change All bug</vh></v>
 <v t="edream.110603190322.13"><vh>Fixed bug involving 0x1a characters in body text.</vh></v>
@@ -111,7 +111,33 @@
 </v>
 <v t="edream.110203163054.66" a=""><vh>4.0.1, 4.0.2, 4.0.3 &amp; 4.0.4</vh></v>
 </v>
-<v t="edream.110203163054.117" a="E"><vh>leo.py versions</vh>
+<v t="edream.110203163054.117"><vh>leo.py versions</vh>
+<v t="edream.110603185805" a=""><vh>4.1 beta 1</vh>
+<v t="edream.110603190404"><vh>Fixed bugs</vh>
+<v t="edream.110603190322.8"><vh>Fixed Serious Undo Change All bug</vh></v>
+<v t="edream.110603190322.13"><vh>Fixed bug involving 0x1a characters in body text.</vh></v>
+<v t="edream.110603190322.11"><vh>Fixed first node-only find bug</vh></v>
+<v t="edream.110603190322.3"><vh>Fixed bug in idle_body_key</vh></v>
+</v>
+<v t="edream.110603192009"><vh>Improved format of .leo files</vh>
+<v t="edream.110603190322.9"><vh>Leo now ignores unknown prefs and find prefs</vh></v>
+<v t="edream.110603190322.10"><vh>Leo now writes node_only find prefs</vh></v>
+<v t="edream.110603190125.1"><vh>.leo files are now cvs-friendly</vh></v>
+</v>
+<v t="edream.110603192009.1"><vh>New &amp; improved commands</vh>
+<v t="edream.110603190322.14"><vh>Added Check Outline command</vh></v>
+<v t="edream.110603190322.15"><vh>Added Hoist/De-Hoist commands</vh></v>
+<v t="edream.110603190322.6"><vh>Added script search/change</vh></v>
+<v t="edream.110303182253.3"><vh>Leo now does an auto-save only if files have actually been changed.</vh></v>
+</v>
+<v t="edream.110303182719"><vh>New config settings</vh></v>
+<v t="edream.110603190234.1"><vh>New scripts &amp; code-level features</vh>
+<v t="edream.110603190322.2"><vh>Create initScriptFind</vh></v>
+<v t="edream.110603190125.3"><vh>Regression tests started</vh></v>
+<v t="edream.110603190125.4"><vh>Code reorganized to support other guis</vh></v>
+<v t="edream.110303182253.39"><vh>Made app.forceShutdown work in "idle" hook</vh></v>
+</v>
+</v>
 <v t="edream.110203163054.64"><vh>4.1 alpha 1</vh></v>
 <v t="edream.110203163054.66" a=""><vh>4.0.1, 4.0.2, 4.0.3 &amp; 4.0.4</vh></v>
 <v t="edream.110203163054.67"><vh>4.0 final</vh>
@@ -24722,6 +24748,8 @@ The use_gnx setting in leoConfig.txt determines whether uses gnx's (cvs friendly
 
 This is the first official release of the reorganized 4.1 code base.  The code appears solid, and has not been widely tested.  Please use caution when using this code.
 
+N.B. By default Leo 4.1 creates .leo files that can not be read by older versions of Leo.  Please read the following carefully if that concerns you.
+
 Highlights of 4.1:
 -----------------
 
@@ -24744,6 +24772,8 @@ Highlights of 4.1:
 <t tx="edream.110603190125.1">Leo 4.1 uses immutable gnx's (id:timestamp:n) by default to associate tnodes with vnodes in .leo files.  This makes Leo as cvs friendly as possible.  From now on .leo files will be checked in to cvs with the -ko (text/keywords off) option.</t>
 <t tx="edream.110603190125.3">The file test.leo in the test directory contains real regression tests for syntax coloring.   Regression testing scripts create regression tests dynamically from data in Leo's outline.  Very cool, very easy, very general.  In particular, regression tests may use temporary nodes in test.leo rather than creating separate Tk windows for testing.</t>
 <t tx="edream.110603190125.4">The 4.1 code base has been reorganized to support gui's other than tkinter.  Leo's src directory contains several new source files.
+
+This reorg affects almost all plugins.  Considerably more work and testing will be done before 4.1 final.
 
 The __wx_gui.py plugin is uses the newly reoganized code.  At present it is only partly functional.</t>
 <t tx="edream.110603190234.1"></t>

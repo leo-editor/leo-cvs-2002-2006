@@ -15,7 +15,7 @@
 <v t="edream.110203161858"><vh>Distribution checklist</vh>
 <v t="edream.110203161858.1"><vh>@url http://www.python.org/pypi?:action=submit_form</vh></v>
 </v>
-<v t="edream.110203161858.2" a="V"><vh>Notes</vh>
+<v t="edream.110203161858.2"><vh>Notes</vh>
 <v t="edream.110203161858.3"><vh>Quote from Alex Martelli</vh></v>
 <v t="edream.110203161858.4"><vh>How to get screenshots</vh></v>
 <v t="edream.110203161858.103"><vh>Python related...</vh>
@@ -27,7 +27,7 @@
 </v>
 </v>
 <v t="edream.110203161858.5" tnodeList="edream.110203161858.5"><vh>@file-nosent c:\prog\leoCVS\.pycheckrc</vh></v>
-<v t="edream.110203161858.6" a="E"><vh>Tests...</vh>
+<v t="edream.110203161858.6"><vh>Tests...</vh>
 <v t="edream.110203161858.25"><vh>Body pane &amp; typing</vh>
 <v t="edream.110203161858.26"><vh>@file c:\prog\test\wrap_test.txt</vh>
 <v t="edream.110203161858.27"><vh>wrap node</vh></v>
@@ -2678,7 +2678,7 @@
 <v t="edream.110503215752.1"><vh>re tests</vh></v>
 <v t="edream.110503161232"><vh>early find script</vh></v>
 </v>
-<v t="edream.110703023327" a="E"><vh>Distribution checklist for 4.1 beta 1</vh>
+<v t="edream.110703023327" a="EV"><vh>Distribution checklist for 4.1 beta 1</vh>
 <v t="edream.110703023327.2"><vh>@url http://www.python.org/pypi?:action=submit_form</vh></v>
 </v>
 </vnodes>
@@ -34097,15 +34097,7 @@ if m:
 	oldText = v.bodyString()
 	v.setBodyStringOrPane(s,encoding=app.tkEncoding)
 	c.frame.onBodyChanged(v,"Change",oldText=oldText) # Handles undo.</t>
-<t tx="edream.110703023327">@nocolor
-Documentation
-	- Update readme.txt
-	- Update LeoDocs.leo
-	- Update web site.
-Version numbers
-	- Update version number in Help menu.
-	- Update version number in setup.py (@ignore'd!!)
-@color
+<t tx="edream.110703023327">@color
 
 if 1: # Save all files and tangle leoConfig.leo
 	from leoGlobals import importFromPath

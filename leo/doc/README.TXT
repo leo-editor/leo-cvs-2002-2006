@@ -8,6 +8,8 @@ Leo 4.1 beta 1                   November 7, 2003
 
 This is the first official release of the reorganized 4.1 code base.  The code appears solid, and has not been widely tested.  Please use caution when using this code.
 
+N.B. By default Leo 4.1 creates .leo files that can not be read by older versions of Leo.  Please read the following carefully if that concerns you.
+
 Highlights of 4.1:
 -----------------
 
