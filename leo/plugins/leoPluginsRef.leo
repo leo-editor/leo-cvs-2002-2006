@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="2289" clone_windows="0"/>
-<globals body_outline_ratio="0.675352877307">
+<globals body_outline_ratio="0.57003257329">
 	<global_window_position top="10" left="376" height="921" width="869"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
@@ -548,80 +548,39 @@
 <v t="ekr.20040722134333.1"><vh>To do: install latest xemacs</vh></v>
 </v>
 <v t="ekr.20040723171510" a="E"><vh>New tree code</vh>
-<v t="ekr.20040725173253" a="M"><vh>Changes made since last update</vh></v>
-<v t="ekr.20040725213526"><vh>TO DO: FIX CRASHER IN EXECUTE SCRIPT</vh></v>
+<v t="ekr.20040725173253"><vh>Changes made since first update</vh></v>
+<v t="ekr.20040726152305"><vh>Changes made since second update</vh></v>
+<v t="ekr.20040728143724"><vh>Most recent changes</vh></v>
 <v t="ekr.20040726085214"><vh>TO DO: undo headline doesn't work</vh></v>
 <v t="ekr.20040725172753"><vh>To do: user icons weren't being hidden, and that messed up scrolling</vh></v>
 <v t="ekr.20040725190459"><vh>dumpIds script</vh></v>
-<v t="ekr.20040725171859.1" a="E"><vh>Scrolling...</vh>
-<v t="ekr.20040723101121.26"><vh>idle_scrollTo</vh>
-<v t="ekr.20040723101121.27"><vh>&lt;&lt; compute approximate line height &gt;&gt;</vh></v>
-<v t="ekr.20040723101121.28"><vh>&lt;&lt; Compute the fractions to scroll down/up &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20040723101121.29"><vh>numberOfVisibleNodes</vh></v>
-</v>
-<v t="ekr.20040724163004"><vh>Text...</vh>
-<v t="ekr.20040723171712"><vh>__init__</vh>
+<v t="ekr.20040728094707"><vh>Creation</vh>
+<v t="ekr.20040723171712" a="E"><vh>__init__</vh>
 <v t="ekr.20040723171712.1"><vh>&lt;&lt; old ivars &gt;&gt;</vh></v>
 <v t="ekr.20040725051437"><vh>&lt;&lt; inject callbacks into the position class &gt;&gt;</vh></v>
 </v>
+<v t="ekr.20040723141142"><vh>eventToPosition</vh></v>
+<v t="ekr.20040723101121.7"><vh>drawNode &amp; force_draw_node (good trace)</vh>
+<v t="ekr.20040723101121.8"><vh>force_draw_node</vh></v>
+</v>
+<v t="ekr.20040723101121.4"><vh>drawBox</vh></v>
+<v t="ekr.20040723184305"><vh>newBox</vh></v>
+<v t="ekr.20040723101121.24"><vh>drawClickBox</vh>
+<v t="ekr.20040724072523"><vh>&lt;&lt; change the appearance of headlines &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20040724072523.1"><vh>newClickBox </vh></v>
+<v t="ekr.20040723101121.5"><vh>drawIcon</vh>
+<v t="ekr.20040723101121.6"><vh>&lt;&lt; compute x,y and iconVal &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20040723184305.1"><vh>newIcon</vh></v>
 <v t="ekr.20040723101121.10"><vh>drawText</vh>
 <v t="ekr.20040723101121.12"><vh>&lt;&lt; highlight text widget on enter events &gt;&gt;</vh></v>
 </v>
 <v t="ekr.20040723184305.4"><vh>newText</vh></v>
-<v t="ekr.20040723142845"><vh>Text Box...</vh>
-<v t="ekr.20040724083359"><vh>configureTextState</vh></v>
-<v t="ekr.20040723104427.5"><vh>onCtontrolT</vh></v>
-<v t="ekr.20040723142710.4"><vh>onHeadlineClick</vh></v>
-<v t="ekr.20040723142710.6"><vh>onHeadlineKey</vh></v>
-<v t="ekr.20040723142710.5"><vh>onHeadlineRightClick</vh></v>
-<v t="ekr.20040724100003"><vh>virtual event handlers: called from core</vh>
-<v t="ekr.20040723104427.18"><vh>idle_head_key</vh>
-<v t="ekr.20040723104427.19"><vh>&lt;&lt; set head to vnode text &gt;&gt;</vh></v>
-<v t="ekr.20040723104427.20"><vh>&lt;&lt; set the widget text to head &gt;&gt;</vh></v>
-<v t="ekr.20040723104427.21"><vh>&lt;&lt; set s to the widget text &gt;&gt;</vh></v>
-<v t="ekr.20040723104427.22"><vh>&lt;&lt; update v and all nodes joined to v &gt;&gt;</vh></v>
-<v t="ekr.20040723104427.23"><vh>&lt;&lt; reconfigure v and all nodes joined to v &gt;&gt;</vh></v>
-<v t="ekr.20040723104427.24"><vh>&lt;&lt; update the screen &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20040723104427.16"><vh>onHeadChanged</vh></v>
-</v>
-</v>
-<v t="ekr.20040725114147"><vh>setText</vh></v>
-<v t="ekr.20040725072304"><vh>getTextStats</vh></v>
-<v t="ekr.20040725212636"><vh>ids...</vh>
-<v t="ekr.20040724125005"><vh>edit_text</vh></v>
-<v t="ekr.20040723141142"><vh>eventToPosition</vh></v>
-<v t="ekr.20040724102927"><vh>findEditWidget</vh></v>
-<v t="ekr.20040723101121.13"><vh>drawTopTree</vh></v>
-</v>
-</v>
-<v t="ekr.20040726080609"><vh>Race conditions...</vh>
-<v t="ekr.20040726072427"><vh>Notes</vh></v>
-<v t="ekr.20040725052606"><vh>tree.set...LabelState RACE CONDITIONS?</vh>
-<v t="ekr.20040725133545.1"><vh>setNormalLabelState</vh></v>
-<v t="ekr.20040725133545.2"><vh>setDisabledLabelState</vh></v>
-<v t="ekr.20040725133545.3"><vh>setSelectedLabelState</vh></v>
-<v t="ekr.20040725133545.4"><vh>setUnselectedLabelState</vh></v>
-<v t="ekr.20040723173301.17"><vh>setDisabledHeadlineColors</vh></v>
-<v t="ekr.20040723173301.16"><vh>setEditHeadlineColors</vh></v>
-<v t="ekr.20040723173301.18"><vh>setUnselectedHeadlineColors</vh></v>
-</v>
-<v t="ekr.20040725052452"><vh>tree.select</vh>
-<v t="ekr.20040725052452.1"><vh>&lt;&lt; define vars and stop editing &gt;&gt;</vh></v>
-<v t="ekr.20040725052452.2"><vh>&lt;&lt; unselect the old node &gt;&gt; (changed in 4.2)</vh></v>
-<v t="ekr.20040725052452.3"><vh>&lt;&lt; select the new node &gt;&gt;</vh></v>
-<v t="ekr.20040725052452.4"><vh>&lt;&lt; update c.beadList or c.beadPointer &gt;&gt;</vh></v>
-<v t="ekr.20040725052452.5"><vh>&lt;&lt; update c.visitedList &gt;&gt;</vh></v>
-<v t="ekr.20040725052452.6"><vh>&lt;&lt; set the current node &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20040723104637"><vh>onClickBoxClick</vh></v>
-<v t="ekr.20040725053107.1"><vh>endEditLabel</vh></v>
-<v t="ekr.20040724083359"><vh>configureTextState</vh></v>
-<v t="ekr.20040725050101.6"><vh>onHyperLinkControlClick</vh></v>
 </v>
 <v t="ekr.20040723100651" a="TV"
-expanded="ekr.20040723142710.3,ekr.20040723142710,ekr.20040723104427.2,"><vh>@thin __outlineExperiments.py</vh></v>
+marks="ekr.20040723104637,"
+expanded="ekr.20040723173301.2,ekr.20040723171712,ekr.20040723101121.2,ekr.20040723104427.8,ekr.20040723104427.13,ekr.20040725052452,ekr.20040725052606,"><vh>@thin __outlineExperiments.py</vh></v>
 </v>
 </vnodes>
 <tnodes>
@@ -6986,7 +6945,110 @@ used. Maybe this information can be centralized.
 <t tx="ekr.20040722135402"></t>
 <t tx="ekr.20040722135402.1"></t>
 <t tx="ekr.20040722141148"></t>
-<t tx="ekr.20040723101121.10">def drawText(self,p,x,y,box_id=None):
+<t tx="ekr.20040723101121.4">def drawBox (self,p,x,y):
+
+    tree = self ; canvas = self.canvas
+    y += 7 # draw the box at x, y+7
+    
+    id = g.doHook("draw-outline-box",tree=tree,p=p,v=p.v,x=x,y=y)
+        
+    if id is None:
+        iconname = g.choose(p.isExpanded(),"minusnode.gif", "plusnode.gif")
+        image = self.getIconImage(iconname)
+        id = self.newBox(p,x,y+self.lineyoffset,image)
+        return id
+    else:
+        return id</t>
+<t tx="ekr.20040723101121.5">def drawIcon(self,p,x=None,y=None):
+    
+    """Draws icon for position p at x,y, or at p.v.iconx,p.v.icony if x,y = None,None"""
+
+    canvas = self.canvas
+    &lt;&lt; compute x,y and iconVal &gt;&gt;
+
+    if not g.doHook("draw-outline-icon",tree=self,p=p,v=p.v,x=x,y=y):
+
+        # Get the image.
+        imagename = "box%02d.GIF" % val
+        image = self.getIconImage(imagename)
+        id = self.newIcon(p,x,y+self.lineyoffset,image)
+        
+    return 0,icon_width # dummy icon height,width</t>
+<t tx="ekr.20040723101121.6">v = p.v
+
+if x is None and y is None:
+    try:
+        x,y = v.iconx, v.icony
+    except:
+        # Inject the ivars.
+        x,y = v.iconx, v.icony = 0,0
+else:
+    # Inject the ivars.
+    v.iconx, v.icony = x,y
+
+y += 2 # draw icon at y + 2
+
+# Always recompute v.iconVal.
+# This is an important drawing optimization.
+val = v.iconVal = v.computeIcon()
+assert(0 &lt;= val &lt;= 15)</t>
+<t tx="ekr.20040723101121.7">def drawNode(self,p,x,y):
+    
+    canvas = self.canvas
+    
+    data = g.doHook("draw-outline-node",tree=self,p=p,v=p.v,x=x,y=y)
+    if data is not None: return data
+    
+    if self.trace and self.verbose:
+        print # Helps format traces
+
+    if 1:
+        self.lineyoffset = 0
+    else:
+        if hasattr(p.v.t,"unknownAttributes"):
+            self.lineyoffset = p.v.t.unknownAttributes.get("lineYOffset",0)
+        else:
+            self.lineyoffset = 0
+    
+    # Draw the horizontal line.
+    self.drawLine(
+        x,y+7+self.lineyoffset,
+        x+box_width,y+7+self.lineyoffset)
+    
+    if self.inVisibleArea(y):
+        return self.force_draw_node(p,x,y)
+    else:
+        return self.line_height,0</t>
+<t tx="ekr.20040723101121.8">def force_draw_node(self,p,x,y):
+
+    h,w = self.drawUserIcons(p,"beforeBox",x,y)
+    xw = w # The extra indentation before the icon box.
+    if p.hasChildren():
+        self.drawBox(p,x+w,y)
+
+    w += box_width # even if box isn't drawn.
+
+    h2,w2 = self.drawUserIcons(p,"beforeIcon",x+w,y)
+    h = max(h,h2) ; w += w2 ; xw += w2
+
+    h2,w2 = self.drawIcon(p,x+w,y)
+    h = max(h,h2) ; w += w2
+
+    h2,w2 = self.drawUserIcons(p,"beforeHeadline",x+w,y)
+    h = max(h,h2) ; w += w2
+
+    expand_x = x+w # save this for later.
+    h2 = self.drawText(p,x+w,y)
+    h = max(h,h2)
+    w += self.widthInPixels(p.headString())
+
+    h2,w2 = self.drawUserIcons(p,"afterHeadline",x+w,y)
+    h = max(h,h2)
+    
+    self.drawClickBox(p,y)
+
+    return h,xw</t>
+<t tx="ekr.20040723101121.10">def drawText(self,p,x,y):
     
     """draw text for position p at nominal coordinates x,y."""
     
@@ -6999,19 +7061,13 @@ used. Maybe this information can be centralized.
     data = g.doHook("draw-outline-text-box",tree=self,p=p,v=p.v,x=x,y=y)
     if data is not None: return data
     
-    t = self.newText(p)
-    id = t.leo_window_id
+    t = self.newText(p,x,y+self.lineyoffset)
 
-    self.ids[id] = p.copy()
-    t.configure(width=self.headWidth(p))
-    canvas.coords(id,x,y+self.lineyoffset)
-
-    if 0:
+    if 0: # old, experimental code.
         &lt;&lt; highlight text widget on enter events &gt;&gt;
    
-    if 1: # Something very bizarre is going on.
-        self.configureTextState(p)
-    
+    self.configureTextState(p)
+
     return self.line_height</t>
 <t tx="ekr.20040723101121.12">if 0: # Define a rect to colorize.
 
@@ -7049,295 +7105,40 @@ if 0: # Colorize only the headline.
     
     bind_enter = t.bind( '&lt;Enter&gt;', enterRect, '+' )
     self.bindings.append((t,bind_enter,"&lt;Enter&gt;"),)</t>
-<t tx="ekr.20040723101121.13">def drawTopTree (self):
-    
-    """Draws the top-level tree, taking into account the hoist state."""
-    
-    c = self.c ; canvas = self.canvas
-    
-    if 0:
-        try: self.redrawCount += 1
-        except: self.radrawCount = 1
-        g.trace(self.redrawCount)
-        
-    # g.trace("begin %s" % self.getTextStats())
-    self.redrawing = True
-    
-    # Recycle widgets, especially visibleText so findEditWdiget will work properly.
-    self.recycleWidgets()
-    # Clear all ids so invisible id's don't confuse eventToPosition &amp; findVnodeWithIconId
-    self.ids = {}
-    self.iconIds = {}
-    print "**** clear ids ***"
-    
-    
-    
-    if c.hoistStack:
-        p,junk = c.hoistStack[-1]
-        self.drawTree(p.copy(),root_left,root_top,0,0,hoistFlag=True)
-    else:
-        self.drawTree(c.rootPosition(),root_left,root_top,0,0)
-    
-    canvas.lower("textBox") # This is not the Tk.Text widget, so it should be low.
-    canvas.lower("plusBox") 
-    canvas.lower("lines")   # Lowest.
-    canvas.lift("clickBox")
-    canvas.lift("iconBox") # Higest.
-    
-    # canvas.update_idletasks() # So recent changes will take.
+<t tx="ekr.20040723101121.24">def drawClickBox (self,p,y):
 
-    # g.trace("end   %s" % self.getTextStats())
-    self.redrawing = False</t>
-<t tx="ekr.20040723101121.26">def idle_scrollTo(self,p=None):
-
-    """Scrolls the canvas so that v is in view.
+    canvas = self.canvas ; h = self.line_height
     
-    This is done at idle time after a redraw so that treeBar.get() will return proper values."""
-
-    c = self.c ; frame = c.frame
-    if not p: p = self.c.currentPosition()
-    if not p: p = self.c.rootPosition() # 4/8/04.
-    try:
-        last = p.lastVisible()
-        nextToLast = last.visBack()
-        h1 = self.yoffset(p)
-        h2 = self.yoffset(last)
-        &lt;&lt; compute approximate line height &gt;&gt;
-        &lt;&lt; Compute the fractions to scroll down/up &gt;&gt;
-        if frac &lt;= lo:
-            if self.prevMoveToFrac != frac:
-                self.prevMoveToFrac = frac
-                self.canvas.yview("moveto",frac)
-        elif frac2 + (hi - lo) &gt;= hi:
-            if self.prevMoveToFrac != frac2:
-                self.prevMoveToFrac = frac2
-                self.canvas.yview("moveto",frac2)
-
-        if self.allocateOnlyVisibleNodes:
-            self.canvas.after_idle(self.idle_second_redraw)
-            
-        c.setTopVnode(p) # 1/30/04: remember a pseudo "top" node.
-        # g.trace("%3d %3d %1.3f %1.3f %1.3f %1.3f" % (h1,h2,frac,frac2,lo,hi))
-    except:
-        g.es_exception()</t>
-<t tx="ekr.20040723101121.27">if nextToLast: # 2/2/03: compute approximate line height.
-    lineHeight = h2 - self.yoffset(nextToLast)
-else:
-    lineHeight = 20 # A reasonable default.</t>
-<t tx="ekr.20040723101121.28">data = frame.treeBar.get()
-try: lo, hi = data
-except: lo,hi = 0.0,1.0
-if h2 &gt; 0.1:
-    frac = float(h1)/float(h2) # For scrolling down.
-    frac2 = float(h1+lineHeight/2)/float(h2) # For scrolling up.
-    frac2 = frac2 - (hi - lo)
-else:
-    frac = frac2 = 0.0 # probably any value would work here.
+    # Define a slighly larger rect to catch clicks.
+    id = self.newClickBox(p,0,y,1000,y+h-2)
     
-frac =  max(min(frac,1.0),0.0)
-frac2 = max(min(frac2,1.0),0.0)</t>
-<t tx="ekr.20040723101121.29">def numberOfVisibleNodes(self):
-    
-    n = 0 ; p = self.c.rootPosition()
-    while p:
-        n += 1
-        p.moveToVisNext()
-    return n</t>
-<t tx="ekr.20040723104427.5"># This works around an apparent Tk bug.
-
-def onControlT (self,event=None):
-
-    # If we don't inhibit further processing the Tx.Text widget switches characters!
-    return "break"</t>
-<t tx="ekr.20040723104427.16"># The &lt;Key&gt; event generates the event before the headline text is changed!
-# We register an idle-event handler to do the work later.
-
-def onHeadChanged (self,p):
-
-    """Handle a change to headline text."""
-    
-    g.trace()
-    
-    self.c.frame.bodyCtrl.after_idle(self.idle_head_key,p)</t>
-<t tx="ekr.20040723104427.18">def idle_head_key (self,p,ch=None):
-    
-    """Update headline text at idle time."""
-    
-    c = self.c ; v = p.v
-
-    if not p or p != c.currentPosition():
-        return "break"
-        
-    edit_text = self.edit_text(p)
-    index = edit_text.index("insert")
-
-    if g.doHook("headkey1",c=c,p=p,ch=ch):
-        return "break" # The hook claims to have handled the event.
-        
-    &lt;&lt; set head to vnode text &gt;&gt;
-    done = ch in ('\r','\n')
-    if done:
-        &lt;&lt; set the widget text to head &gt;&gt;
-    &lt;&lt; set s to the widget text &gt;&gt;
-    changed = s != head
-    if changed:
-        c.undoer.setUndoParams("Change Headline",p,newText=s,oldText=head)
-        &lt;&lt; update v and all nodes joined to v &gt;&gt;
-    if done or changed:
-        &lt;&lt; reconfigure v and all nodes joined to v &gt;&gt;
-        &lt;&lt; update the screen &gt;&gt;
-
-    g.doHook("headkey2",c=c,p=p,ch=ch)
-    return "break"</t>
-<t tx="ekr.20040723104427.19">head = p.headString()
-if head == None:
-    head = u""
-head = g.toUnicode(head,"utf-8")</t>
-<t tx="ekr.20040723104427.20">self.setText(edit_text,head,tag="idle_head_key")
-edit_text.mark_set("insert",index)</t>
-<t tx="ekr.20040723104427.21">s = edit_text.get("1.0","end")
-
-# Don't truncate if the user is hitting return.
-# That should just end editing.
-if 1:
-    # Truncate headline text to workaround Tk problems...
-    # Another kludge: remove one or two trailing newlines before warning of truncation.
-    if s and s[-1] == '\n': s = s[:-1]
-    if s and s[-1] == '\n': s = s[:-1]
-    i = s.find('\n')
-    if i &gt; -1:
-        # g.trace(i,len(s),repr(s))
-        g.es("Truncating headline to one line",color="blue")
-        s = s[:i]
-    if len(s) &gt; 250:
-        g.es("Truncating headline to 250 characters",color="blue")
-        s = s[:250]
-
-s = g.toUnicode(s,g.app.tkEncoding)
-
-if not s:
-    s = u""
-    
-if 0: # 6/10/04: No longer needed.  This was stressing Tk needlessly.
-    s = s.replace('\n','')
-    s = s.replace('\r','')</t>
-<t tx="ekr.20040723104427.22">c.beginUpdate()
-if 1: # update...
-    # Update changed bit.
-    if not c.changed:
-        c.setChanged(True)
-    # Update all dirty bits.
-    if not p.isDirty():
-        p.setDirty()
-    # Update v.
-    v.initHeadString(s)
-    self.setText(edit_text,s,tag="idle_head_key2")
-    edit_text.mark_set("insert",index)
-c.endUpdate(False) # do not redraw now.</t>
-<t tx="ekr.20040723104427.23"># Reconfigure v's headline.
-if done:
-    self.setDisabledLabelState(p)
-
-edit_text.configure(width=self.headWidth(v))</t>
-<t tx="ekr.20040723104427.24">if done:
-    c.beginUpdate()
-    self.endEditLabel()
-    c.endUpdate()
-
-elif changed:
-    # Update v immediately.  Joined nodes are redrawn later by endEditLabel.
-    # Redrawing the whole screen now messes up the cursor in the headline.
-    self.drawIcon(p) # just redraw the icon.</t>
-<t tx="ekr.20040723104637">def onClickBoxClick (self,event):
-    
-    c = self.c ; gui = g.app.gui
-    
-    p = self.eventToPosition(event)
-    
-    if p:
-        if p.isExpanded(): p.contract()
-        else:              p.expand()
-    
-        self.active = True
-        # Schedule the redraw _before_ calling select.
-        # This disables any call that would configure old text widgets.
-        self.redraw()
-        self.select(p)
-        g.app.findFrame.handleUserClick(p)
-        gui.set_focus(c,c.frame.bodyCtrl)
-
-        </t>
+    if 0: # A major change to the user interface.
+        &lt;&lt; change the appearance of headlines &gt;&gt;</t>
 <t tx="ekr.20040723141142">def eventToPosition (self,event):
 
     canvas = self.canvas
     x,y = event.x,event.y
-    
+    x = canvas.canvasx(x) ### 7/28/04
+    y = canvas.canvasy(y) ### 7/28/04
     item = canvas.find_overlapping(x,y,x,y)
     if not item: return None
 
     # Item may be a tuple, possibly empty.
-    try:    id = item[0]
-    except: id = item
-    if not id: return None
+    try:    theId = item[0]
+    except: theId = item
+    if not theId: return None
 
-    p = self.ids.get(id)
+    p = self.ids.get(theId)
     
-    if 1:
-        if p: g.trace("%3d" % (id),p.headString())
-        else: g.trace("%3d" % (id),None)
+    if self.trace:
+        if p:
+            w = self.findEditWidget(p)
+            g.trace("%3d %3d %3d %d" % (theId,x,y,id(w)),p.headString())
+        else:
+            g.trace("%3d %3d %3d" % (theId,x,y),None)
         
     if p: return p.copy() # Make _sure_ nobody changes this table!
     else: return None</t>
-<t tx="ekr.20040723142710.4">def onHeadlineClick (self,event):
-    
-    c = self.c ; w = event.widget
-    
-    try:
-        p = w.leo_position
-    except AttributeError:
-        return "continue"
-    
-    try:
-        if not g.doHook("headclick1",c=c,p=p,event=event):
-            self.OnActivate(p)
-        g.doHook("headclick2",c=c,p=p,event=event)
-    except:
-        g.es_event_exception("headclick")
-        
-    return "continue"</t>
-<t tx="ekr.20040723142710.5">def onHeadlineRightClick (self,event):
-
-    c = self.c ; w = event.widget
-    
-    try:
-        p = w.leo_position
-    except AttributeError:
-        return "continue"
-
-    try:
-        if not g.doHook("headrclick1",c=c,p=p,event=event):
-            self.OnActivate(p)
-            self.OnPopup(p,event)
-        g.doHook("headrclick2",c=c,p=p,event=event)
-    except:
-        g.es_event_exception("headrclick")
-        
-    return "continue"</t>
-<t tx="ekr.20040723142710.6">def onHeadlineKey (self,event):
-    
-    """Handle a key event in a headline."""
-    
-    w = event.widget ; ch = event.char
-
-    try:
-        p = w.leo_position
-    except AttributeError:
-        return "continue"
-
-    self.c.frame.bodyCtrl.after_idle(self.idle_head_key,p,ch)
-    
-    return "continue"</t>
-<t tx="ekr.20040723142845"></t>
 <t tx="ekr.20040723171510"></t>
 <t tx="ekr.20040723171712">def __init__(self,c,frame,canvas):
     
@@ -7351,7 +7152,11 @@ elif changed:
     &lt;&lt; inject callbacks into the position class &gt;&gt;
     
     self.redrawing = False # Used only to disable traces.
-    self.useBindtags = False
+    self.trace = False
+    self.verbose = True
+    self.useBindtags = True
+    self.generation = 0
+    self.dragging = False
     
     self.createPermanentBindings()
     self.setEditPosition(None) # Set positions returned by leoTree.editPosition()
@@ -7360,21 +7165,19 @@ elif changed:
     self.ids = {}
     self.iconIds = {}
 
-    # Keys are p.headString(), values are unchanging Tk.Text widgets...
-    self.freeText = {} # The Bwahahaha hack.
-    
     # Lists of visible (in-use) widgets...
     self.visibleBoxes = []
     self.visibleClickBoxes = []
     self.visibleIcons = []
     self.visibleLines = []
-    self.visibleText  = []
+    self.visibleText  = {} # Keys are vnodes, values are Tk.Text widgets
 
     # Lists of free, hidden widgets...
     self.freeBoxes = []
     self.freeClickBoxes = []
     self.freeIcons = []
-    self.freeLines = []</t>
+    self.freeLines = []
+    self.freeText = {} # Keys are vnodes, values are Tk.Text widgets</t>
 <t tx="ekr.20040723171712.1"># Miscellaneous info.
 self.iconimages = {} # Image cache set by getIconImage().
 self.active = False # True if tree is active
@@ -7387,370 +7190,186 @@ self.lastColoredText = None # last colored text widget.
 # Set self.font and self.fontName.
 self.setFontFromConfig()
 
-# Recycling bindings.
-if 0: # no longer used
-    self.bindings = [] # List of bindings to be unbound when redrawing.
-    self.tagBindings = [] # List of tag bindings to be unbound when redrawing.
-    self.widgets = [] # Widgets that must be destroyed when redrawing.
-
 # Drag and drop
 self.drag_p = None
 self.controlDrag = False # True: control was down when drag started.
-self.drag_id = None # To reset bindings after drag
 
 # Keep track of popup menu so we can handle behavior better on Linux Context menu
 self.popupMenu = None
 
 # Incremental redraws:
 self.allocateOnlyVisibleNodes = False # True: enable incremental redraws.
-self.trace = False # True enabling of various traces.
 self.prevMoveToFrac = None
 self.visibleArea = None
 self.expandedVisibleArea = None
 
 if self.allocateOnlyVisibleNodes:
     self.frame.bar1.bind("&lt;B1-ButtonRelease&gt;", self.redraw)</t>
-<t tx="ekr.20040723173301.16">def setEditHeadlineColors (self,p):
+<t tx="ekr.20040723184305">def newBox (self,p,x,y,image):
+    
+    canvas = self.canvas ; tag = "plugBox"
 
-    config = g.app.config ; w = p.edit_text()
-    
-    print "%10s %d %s" % ("edit",id(2),p.headString())
-    
-    fg   = config.getWindowPref("headline_text_editing_foreground_color")
-    bg   = config.getWindowPref("headline_text_editing_background_color")
-    selfg = config.getWindowPref("headline_text_editing_selection_foreground_color")
-    selbg = config.getWindowPref("headline_text_editing_selection_background_color")
-    
-    if not fg or not bg:
-        fg,bg = "black","white"
-    
-    try:
-        if selfg and selbg:
-            w.configure(
-                selectforeground=selfg,selectbackground=selbg,
-                state="normal",highlightthickness=1,fg=fg,bg=bg)
-        else:
-            w.configure(
-                state="normal",highlightthickness=1,fg=fg,bg=bg)
-    except:
-        g.es_exception()</t>
-<t tx="ekr.20040723173301.17">def setDisabledHeadlineColors (self,p):
-
-    config = g.app.config ; w = p.edit_text()
-    
-    # g.trace(p,g.callerName(3),g.callerName(4))
-    print "%10s %d %s" % ("disabled",id(w),p.headString())
-
-    fg = config.getWindowPref("headline_text_selected_foreground_color")
-    bg = config.getWindowPref("headline_text_selected_background_color")
-    
-    if not fg or not bg:
-        fg,bg = "black","gray80"
-    
-    try:
-        w.configure(state="disabled",highlightthickness=0,fg=fg,bg=bg)
-    except:
-        g.es_exception()</t>
-<t tx="ekr.20040723173301.18">def setUnselectedHeadlineColors (self,p):
-    
-    config = g.app.config ; w = p.edit_text()
-    
-    if not self.redrawing:
-        print "%10s %d %s" % ("unselect",id(w),p.headString())
-    
-    fg = config.getWindowPref("headline_text_unselected_foreground_color")
-    bg = config.getWindowPref("headline_text_unselected_background_color")
-    
-    if not fg or not bg:
-        fg,bg = "black","white"
-    
-    try:
-        w.configure(state="disabled",highlightthickness=0,fg=fg,bg=bg)
-    except:
-        g.es_exception()</t>
-<t tx="ekr.20040723184305.4">def newText (self,p):
-    
-    key = p.headString()
-    pList = self.freeText.get(key,[])
-    # Return only Tk.Text widgets with an exact match with p.
-    for i in xrange(len(pList)):
-        t = pList[i]
-        if p == t.leo_position:
-            del pList[i]
-            assert(t.leo_window_id)
-            self.visibleText.append(t)
-            return t
-            
-        if 0: # old code.
-            # The old code ensured only that p.headStrings matched.
-            self.freeText[key] = pList.pop()
-            t.leo_position = p.copy()
-            assert(t.leo_window_id)
-            self.visibleText.append(t)
-            # t.configure(bg="red")
-            return t
-            
-    # No t found.
-    # Tags are not valid in Tk.Text widgets, so we use class bindings instead.
-    t = Tk.Text(self.canvas,state="normal",font=self.font,bd=0,relief="flat",height=1)
-    # t.configure(bg="yellow")
-    if self.useBindtags:
-        t.bindtags(self.textBindings)
+    if self.freeBoxes:
+        id = self.freeBoxes.pop(0)
+        canvas.coords(id,x,y)
+        canvas.itemconfigure(id,image=image)
     else:
-        t.bind("&lt;Button-1&gt;", self.onHeadlineClick)
-        t.bind("&lt;Button-3&gt;", self.onHeadlineRightClick)
-        t.bind("&lt;Key&gt;",      self.onHeadlineKey)
-        t.bind("&lt;Control-t&gt;",self.onControlT)
-    id = self.canvas.create_window(0,0,anchor="nw",window=t,tag="textBox")
-    self.setText(t,p.headString(),tag="newText")
-
-    t.leo_window_id = id # Never changes.
-    t.leo_position = p.copy() # Never changes.
-    self.visibleText.append(t)
-    return t</t>
-<t tx="ekr.20040724083359">def configureTextState (self,p):
-    
-    c = self.c
-    
-    if not p:
-        g.trace("Can't happen")
-        return
-    
-    if p == c.currentPosition():
-        if p == self.editPosition():
-            self.setNormalLabelState(p)
-        else:
-            self.setDisabledLabelState(p) # selected, disabled
-    else:
-        self.setUnselectedLabelState(p) # unselected</t>
-<t tx="ekr.20040724100003"></t>
-<t tx="ekr.20040724102927"># Search the widget list for widget t with t.leo_position == p.
-
-def findEditWidget (self,p,tag=""):
-    
-    """Return the Tk.Text item corresponding to p."""
-
-    if not p: return None
-    
-    n = len(self.visibleText)
-
-    for i in xrange(n):
-        t = self.visibleText[i]
-        assert(t.leo_position)
-        if t.leo_position == p:
-            if 1: # Report any other potential matches.  Might cause problems.
-                count = 0; i += 1
-                for j in xrange(i+1,n):
-                    if self.visibleText[j].leo_position == p:
-                        count += 1
-                if count:
-                    g.trace("***** %d other matches for p *****" % (count,p.headString()))
-            return t
-
-    return None</t>
-<t tx="ekr.20040724125005">def edit_text (self,p):
-    
-    if self.editPosition:
-        return self.findEditWidget(p,tag="tree:edit_text")
-    else:
-        return None</t>
-<t tx="ekr.20040724163004"></t>
-<t tx="ekr.20040725050101.6">def OnHyperLinkControlClick (self,event):
-    
-    """Callback injected into position class."""
-
-    #g.trace(self)
-    try:
-        p = self ; c = p.c
-        if not g.doHook("hypercclick1",c=c,p=p,event=event):
-            # New in recycled nodes code:
-            # Call self.redraw to inhibit calls to setLabelState.
-            self.redraw()
-            c.beginUpdate()
-            c.selectVnode(p)
-            c.endUpdate()
-            c.frame.bodyCtrl.mark_set("insert","1.0")
-        g.doHook("hypercclick2",c=c,p=p,event=event)
-    except:
-        g.es_event_exception("hypercclick")
+        id = canvas.create_image(x,y,image=image,tag=tag)
         
-onHyperLinkControlClick = OnHyperLinkControlClick</t>
+    if self.trace and self.verbose:
+        g.trace("%3d %3d %3d %8s" % (id,x,y,' '),p.headString(),align=-20)
+
+    assert(id not in self.visibleBoxes)
+    self.visibleBoxes.append(id)
+
+    assert(not self.ids.get(id))
+    assert(p)
+    self.ids[id] = p.copy()  ####### Enough??????
+
+    return id</t>
+<t tx="ekr.20040723184305.1">def newIcon (self,p,x,y,image):
+    
+    canvas = self.canvas ; tag = "iconBox"
+
+    if self.freeIcons:
+        id = self.freeIcons.pop(0)
+        canvas.itemconfigure(id,image=image)
+        canvas.coords(id,x,y)
+    else:
+        id = canvas.create_image(x,y,image=image,anchor="nw",tag=tag)
+        assert(not self.ids.get(id))
+        
+    if self.trace and self.verbose:
+        g.trace("%3d %3d %3d %8s" % (id,x,y,' '),p.headString(),align=-20)
+        
+    assert(id not in self.visibleIcons)
+    self.visibleIcons.append(id)
+    
+    assert(p)
+    p = p.copy()
+    assert(not self.iconIds.get(id))
+    assert(not self.ids.get(id))
+    data = p,self.generation
+    self.iconIds[id] = data # Remember which vnode belongs to the icon.
+    self.ids[id] = p
+
+    return id</t>
+<t tx="ekr.20040723184305.4">def newText (self,p,x,y):
+    
+    canvas = self.canvas ; tag = "textBox"
+    
+    d = self.freeText
+    key = p.v ; assert key
+    pList = d.get(key,[])
+    
+    # Return only Tk.Text widgets with an exact match with p.
+    found = False
+    for i in xrange(len(pList)):
+        p2,t,id = pList[i]
+        if p2 == p:
+            # if self.trace: g.trace("allocating from freeText")
+            del pList[i]
+            id = t.leo_window_id
+            assert(id)
+            assert(t.leo_position == p2)
+            canvas.coords(id,x,y)
+            found = True ; break
+            
+    if not found:
+        # Tags are not valid in Tk.Text widgets.
+        t = Tk.Text(canvas,state="normal",font=self.font,bd=0,relief="flat",height=1)
+    
+        if self.useBindtags:
+            t.bindtags(self.textBindings)
+        else:
+            t.bind("&lt;Button-1&gt;", self.onHeadlineClick)
+            t.bind("&lt;Button-3&gt;", self.onHeadlineRightClick)
+            t.bind("&lt;Key&gt;",      self.onHeadlineKey)
+            t.bind("&lt;Control-t&gt;",self.onControlT)
+    
+        id = canvas.create_window(x,y,anchor="nw",window=t,tag=tag)
+        self.setText(t,p.headString(),tag="newText")
+        t.leo_window_id = id # Never changes.
+        
+    if self.trace and self.verbose:
+        g.trace("%3d %3d %3d %8s" % (id,x,y,' '),p.headString(),self.textAddr(t),align=-20)
+
+    # Common configuration
+    t.configure(width=self.headWidth(p.copy()))
+    t.leo_position = p.copy() # Never changes.
+    t.leo_generation = self.generation
+
+    assert(id == t.leo_window_id)
+    assert(not self.ids.get(id))
+    self.ids[id] = p.copy()
+    
+    # New in 4.2 b3: entries are pairs (p,t,id) indexed by v.
+    key = p.v ; assert key
+    pList = self.visibleText.get(key,[])
+    pList.append((p,t,id),)
+    self.visibleText[key] = pList
+
+    return t</t>
+<t tx="ekr.20040724072523">
+# Define a slighly smaller rect to colorize.
+color_rect = self.canvas.create_rectangle(0,y,1000,y+h-4,tag="colorBox")
+self.canvas.itemconfig(color_rect,fill=defaultColor,outline=defaultColor)
+
+# Color the click box or the headline
+def enterRect(event,id=color_rect,p=p,t=self.lastText):
+    if 1: # Color or underline the headline
+        t2 = self.lastColoredText
+        if t2: # decolor the old headline.
+            if 1: # deunderline
+                t2.tag_delete('underline')
+            else: # decolor
+                t2.configure(background="white")
+        if t and p != self.editPosition():
+            if 1: # underline
+                t.tag_add('underline','1.0','end')
+                t.tag_configure('underline',underline=True)
+            else: # color
+                t.configure(background="LightSteelBlue1")
+            self.lastColoredText = t
+        else: self.lastColoredText = None
+    else: # Color the click box.
+        if self.lastClickFrameId:
+            self.canvas.itemconfig(self.lastClickFrameId,fill=defaultColor,outline=defaultColor)
+        self.lastClickFrameId = id
+        color = "LightSteelBlue1"
+        self.canvas.itemconfig(id,fill=color,outline=color)
+
+bind_id = self.canvas.tag_bind(click_rect, "&lt;Enter&gt;", enterRect) # , '+')
+self.tagBindings.append((click_rect,bind_id,"&lt;Enter&gt;"),)</t>
+<t tx="ekr.20040724072523.1">def newClickBox (self,p,x1,y1,x2,y2):
+    
+    canvas = self.canvas ; defaultColor = "" ; tag="clickBox" 
+
+    if self.freeClickBoxes:
+        id = self.freeClickBoxes.pop(0)
+        canvas.coords(id,x1,y1,x2,y2)
+    else:
+        # Was this the bug ?? was (x1,y2**,x2,y2)
+        id = self.canvas.create_rectangle(x1,y1,x2,y2,tag=tag)
+        canvas.itemconfig(id,fill=defaultColor,outline=defaultColor)
+        
+    if self.trace and self.verbose:
+        g.trace("%3d %3d %3d %3d %3d" % (id,x1,y1,x2,y2),p.headString(),align=-20)
+
+    assert(id not in self.visibleClickBoxes)
+    self.visibleClickBoxes.append(id)
+    
+    assert(p)
+    assert(not self.ids.get(id))
+    self.ids[id] = p.copy()
+    
+    return id</t>
 <t tx="ekr.20040725051437"># The new code injects 3 callbacks for the colorizer.
 
 if not myLeoTkinterTree.callbacksInjected: # Class var.
     leoTkinterTree.callbacksInjected = True
     self.injectCallbacks()</t>
-<t tx="ekr.20040725052452"># Warning: do not try to "optimize" this by returning if v==tree.currentVnode.
-
-def select (self,p,updateBeadList=True):
-
-    if not p: return
-    
-    &lt;&lt; define vars and stop editing &gt;&gt;
-
-    if not g.doHook("unselect1",c=c,new_v=p,old_v=old_p):
-        &lt;&lt; unselect the old node &gt;&gt;
-
-    g.doHook("unselect2",c=c,new_v=p,old_v=old_p)
-    
-    if not g.doHook("select1",c=c,new_v=p,old_v=old_p):
-        &lt;&lt; select the new node &gt;&gt;
-        if p and p != old_p: # 3/26/03: Suppress duplicate call.
-            try: # may fail during initialization
-                self.idle_scrollTo(p)
-            except: pass
-        &lt;&lt; update c.beadList or c.beadPointer &gt;&gt;
-        &lt;&lt; update c.visitedList &gt;&gt;
-
-    &lt;&lt; set the current node &gt;&gt;
-    
-    g.doHook("select2",c=c,new_v=p,old_v=old_p)
-    g.doHook("select3",c=c,new_v=p,old_v=old_p)
-    
-    # g.printGc()</t>
-<t tx="ekr.20040725052452.1">c = self.c
-frame = c.frame ; body = frame.bodyCtrl
-
-old_p = c.currentPosition()
-
-# Unselect any previous selected but unedited label.
-self.endEditLabel()
-self.setUnselectedLabelState(old_p)</t>
-<t tx="ekr.20040725052452.2"># Remember the position of the scrollbar before making any changes.
-yview=body.yview()
-insertSpot = c.frame.body.getInsertionPoint()
-
-if old_p and old_p != p:
-    # g.trace("different node")
-    self.endEditLabel()
-    self.setUnselectedLabelState(old_p)
-
-if old_p and old_p.edit_text():
-    old_p.v.t.scrollBarSpot = yview
-    old_p.v.t.insertSpot = insertSpot</t>
-<t tx="ekr.20040725052452.3">frame.setWrap(p)
-
-# 6/14/04: Always do this.  Otherwise there can be problems with trailing hewlines.
-s = g.toUnicode(p.v.t.bodyString,"utf-8")
-
-self.setText(body,s,tag="select:set body",isHeadline=False)
-
-# We must do a full recoloring: we may be changing context!
-self.frame.body.recolor_now(p)
-
-if p.v and p.v.t.scrollBarSpot != None:
-    first,last = p.v.t.scrollBarSpot
-    body.yview("moveto",first)
-
-if p.v.t.insertSpot != None: # 9/21/02: moved from c.selectVnode
-    c.frame.bodyCtrl.mark_set("insert",p.v.t.insertSpot)
-    c.frame.bodyCtrl.see(p.v.t.insertSpot)
-else:
-    c.frame.bodyCtrl.mark_set("insert","1.0")</t>
-<t tx="ekr.20040725052452.4">if updateBeadList:
-    
-    if c.beadPointer &gt; -1:
-        present_p = c.beadList[c.beadPointer]
-    else:
-        present_p = c.nullPosition()
-    
-    if p != present_p:
-        # Replace the tail of c.beadList by c and make c the present node.
-        # print "updating c.beadList"
-        c.beadPointer += 1
-        c.beadList[c.beadPointer:] = []
-        c.beadList.append(p)
-        
-    # g.trace(c.beadPointer,p,present_p)</t>
-<t tx="ekr.20040725052452.5"># Make p the most recently visited position on the list.
-if p in c.visitedList:
-    c.visitedList.remove(p)
-
-c.visitedList.insert(0,p)</t>
-<t tx="ekr.20040725052452.6">self.c.setCurrentPosition(p)
-self.setSelectedLabelState(p)
-self.frame.scanForTabWidth(p) #GS I believe this should also get into the select1 hook
-g.app.gui.set_focus(c,c.frame.bodyCtrl)</t>
-<t tx="ekr.20040725052606"></t>
-<t tx="ekr.20040725053107.1">def endEditLabel (self):
-    
-    """End editing for self.editText."""
-
-    c = self.c ; gui = g.app.gui
-    
-    p = self.editPosition()
-
-    if p and p.edit_text():
-        if 0: # New in recycled widgets scheme: this could cause a race condition.
-            # This will be done in the redraw code becaused editPosition will be None.
-            self.setUnselectedLabelState(p)
-        self.setEditPosition(None)
-
-        # force a redraw of joined and ancestor headlines.
-        self.force_redraw() 
-
-    gui.set_focus(c,c.frame.bodyCtrl) # 10/14/02</t>
-<t tx="ekr.20040725072304">def getTextStats (self):
-    
-    # Count the number of individual items in each list in freeText.
-    free = 0
-    for val in self.freeText.values():
-        free += len(val)
-        
-    visible = len(self.visibleText)
-    
-    return "%3d %3d tot: %4d" % (visible,free,visible+free)</t>
-<t tx="ekr.20040725114147">def setText (self,t,s,tag="",isHeadline=True):
-    
-    """All changes to text widgets should come here."""
-    
-    if 0: # A good trace to have...
-        if isHeadline:
-            g.trace(self.textAddr(t),tag,s)
-        else:
-            g.trace(self.textAddr(t),tag,len(s))
-    
-    t.delete("1.0","end")
-    t.insert("end",s)</t>
-<t tx="ekr.20040725133545.1">def setNormalLabelState (self,p): # selected, editing
-
-    # Do nothing if a redraw is already sheduled.
-    # This prevents race conditions.
-    if self.redrawScheduled: return 
-    
-    if p and p.edit_text():
-        self.setEditHeadlineColors(p)
-        p.edit_text().tag_remove("sel","1.0","end")
-        p.edit_text().tag_add("sel","1.0","end")
-        g.app.gui.set_focus(self.c,p.edit_text())</t>
-<t tx="ekr.20040725133545.2">def setDisabledLabelState (self,p): # selected, disabled
-
-    # Do nothing if a redraw is already sheduled.
-    # This prevents race conditions.
-    if self.redrawScheduled: return 
-
-    if p and p.edit_text():
-        self.setDisabledHeadlineColors(p)</t>
-<t tx="ekr.20040725133545.3">def setSelectedLabelState (self,p): # selected, not editing
-
-    # Do nothing if a redraw is already sheduled.
-    # This prevents race conditions.
-    if self.redrawScheduled: return 
-
-    # g.trace(p)
-    self.setDisabledLabelState(p)
-
-</t>
-<t tx="ekr.20040725133545.4">def setUnselectedLabelState (self,p): # not selected.
-
-    # Do nothing if a redraw is already sheduled.
-    # This prevents race conditions.
-    if self.redrawScheduled: return 
-
-    if p and p.edit_text():
-        self.setUnselectedHeadlineColors(p)</t>
 <t tx="ekr.20040725171859"></t>
-<t tx="ekr.20040725171859.1"></t>
 <t tx="ekr.20040725172753"></t>
 <t tx="ekr.20040725173253">@killcolor
 
@@ -7776,41 +7395,71 @@ g.app.gui.set_focus(c,c.frame.bodyCtrl)</t>
     - In fact, though, only drawTree changes position.
 
 - Fixed the race conditions that caused drawing sometimes to fail.  The essential idea is that we must not call w.config if we are about to do a redraw.  For full details, see the Notes node in the Race Conditions section.</t>
-<t tx="ekr.20040725190459">import leoGlobals as g
+<t tx="ekr.20040725190459"># This isn't too useful: by the time we dump the id's the damage has been done.
+
+import leoGlobals as g
 
 c = g.top()
 
 c.frame.tree.traceIds(full=False)</t>
-<t tx="ekr.20040725212636"></t>
-<t tx="ekr.20040725213526">File "C:\prog\leoCVS\leo\plugins\mod_scripting.py", line 80, in commandCallback
-    exec script.strip() + '\n' in {}
+<t tx="ekr.20040726085214"># It's a problems with key bindings.</t>
+<t tx="ekr.20040726152305">@killcolor
 
-AttributeError: 'NoneType' object has no attribute 'strip'
-</t>
-<t tx="ekr.20040726072427">@killcolor
+- Removed code in leoTkinterFrame.OnActivateTree:
+    self.tree.undimEditLabel()
 
-w.config won't happen until the next idle time.  But by then the w may have moved!
+I have no idea why this was originally there.  It seems to be pure duplication.
 
-In other words, we should not disable setLabelState methods if we are going to do an immediate redraw.
+- Removed code from self.OnActivate:
+    self.undimEditLabel()
 
-The traces can show whether this is true as follows:
-    ** There should be no traces from set...HeadlineColors between a call to
-       eventToPositiion that is followed immediately by a redraw.
+Again, needless duplication.  The OnActivate logic might be simplified further...
 
-The fixes:
+- Removed duplicate code in tree.select.  The following code was being called twice (!!):
+    self.endEditLabel()
+    self.setUnselectedLabelState(old_p)
 
-- setLabelState do nothing if a redraw is scheduled.
-- onClickBoxClick calls self.redraw _before_ calling self.select.
-    This disables any calls to the setLabelState methods.
-- endEditLabel no longer calls setUnselectedLabelState(p)
-    - It doesn't need to: it does
-        self.setEditPosition(None)
-        self.force_redraw()
-    so self.configureTextState will call setUnselectedLabelState.
-- The OnHyperLinkControlClick calls self.redraw before calling c.beginUpdate.
+- Add p.copy() instead of p when inserting nodes into data structures in select.
 
-</t>
-<t tx="ekr.20040726080609"></t>
-<t tx="ekr.20040726085214"></t>
+- Fixed a _major_ bug in Leo's core.  c.setCurrentPosition must COPY the position given to it!  It's _not_ enough to return a copy of position: it may already have changed!!
+
+- Fixed a another (lesser??) bug in Leo's core.  handleUserClick should also make a copy.
+
+- Fixed bug in mod_scripting.py.  The callback was failing if the script was empty.
+
+- Put in the self.recycle ivar AND THE CODE STILL FAILS.
+    It seems to me that this shows there is a bug in my code somewhere, but where ???????????????????</t>
+<t tx="ekr.20040728094707"></t>
+<t tx="ekr.20040728143724">@killcolor
+
+- Added generation count.
+    - Incremented on each redraw.
+    - Potentially a barrior to race conditions, but it never seemed to do anything.
+    - This code is a candidate for elimination.
+
+- Used vnodes rather than positions in several places.
+    - I actually don't think this was involved in the real problem, and it doesn't hurt.
+
+- Added much better traces: the beginning of the end for the bugs :-)
+    - Added self.verbose option.
+    - Added align keyword option to g.trace.
+    - Separate each set of traces by a blank line.
+        - This makes clear the grouping of id's.
+
+- Defensive code: Disable dragging at start of redraw code.
+    - This protects against race conditions.
+
+- Fixed blunder 1: Fixed a number of bugs in the dragging code.
+    - I had never looked at this code!
+    - Eliminating false drags greatly simplifies matters.
+    - One of the blunders was the confusion between self.dragging and self._dragging.
+        - self.setDragging sets self._dragging.
+        - self._dragging is TOTALLY USELESS!!
+
+- Fixed blunder 2: Added the following to eventToPosition:
+        x = canvas.canvasx(x)
+        y = canvas.canvasy(y)
+    - Apparently this was the cause of false associations between icons and id's.
+    - It's amazing that the code didn't fail earlier without these!</t>
 </tnodes>
 </leo_file>
