@@ -428,15 +428,21 @@ class leoMenu:
 		if not c: return
 		try:
 			enable = frame.menu.enableMenu
-			# Top level outline menu...
+			#@		<< enable top level outline menu >>
+			#@+node:<< enable top level outline menu >>
 			menu = frame.menu.getMenu("Outline")
 			enable(menu,"Cut Node",c.canCutOutline())
 			enable(menu,"Delete Node",c.canDeleteHeadline())
 			enable(menu,"Paste Node",c.canPasteOutline())
+			enable(menu,"Clone Node",c.canClone()) # 1/31/04
 			enable(menu,"Sort Siblings",c.canSortSiblings())
 			enable(menu,"Hoist",c.canHoist())
 			enable(menu,"De-Hoist",c.canDehoist())
-			# Expand/Contract submenu...
+			#@nonl
+			#@-node:<< enable top level outline menu >>
+			#@nl
+			#@		<< enable expand/contract submenu >>
+			#@+node:<< enable expand/Contract submenu >>
 			menu = frame.menu.getMenu("Expand/Contract...")
 			hasChildren = v.hasChildren()
 			isExpanded = v.isExpanded()
@@ -448,7 +454,11 @@ class leoMenu:
 			enable(menu,"Expand To Level 1",hasChildren and isExpanded)
 			for i in xrange(2,9):
 				frame.menu.enableMenu(menu,"Expand To Level " + str(i), hasChildren)
-			# Move submenu...
+			#@nonl
+			#@-node:<< enable expand/Contract submenu >>
+			#@nl
+			#@		<< enable move submenu >>
+			#@+node:<< enable move submenu >>
 			menu = frame.menu.getMenu("Move...")
 			enable(menu,"Move Down",c.canMoveOutlineDown())
 			enable(menu,"Move Left",c.canMoveOutlineLeft())
@@ -456,7 +466,11 @@ class leoMenu:
 			enable(menu,"Move Up",c.canMoveOutlineUp())
 			enable(menu,"Promote",c.canPromote())
 			enable(menu,"Demote",c.canDemote())
-			# Go To submenu
+			#@nonl
+			#@-node:<< enable move submenu >>
+			#@nl
+			#@		<< enable go to submenu >>
+			#@+node:<< enable go to submenu >>
 			menu = frame.menu.getMenu("Go To...")
 			enable(menu,"Go Back",c.beadPointer > 1)
 			enable(menu,"Go Forward",c.beadPointer + 1 < len(c.beadList))
@@ -470,7 +484,11 @@ class leoMenu:
 			enable(menu,"Go To Parent",v.parent() != None)
 			enable(menu,"Go To Prev Sibling",v.back() != None)
 			enable(menu,"Go To Next Sibling",v.next() != None)
-			# Mark submenu
+			#@nonl
+			#@-node:<< enable go to submenu >>
+			#@nl
+			#@		<< enable mark submenu >>
+			#@+node:<< enable mark submenu >>
 			menu = frame.menu.getMenu("Mark/Unmark...")
 			label = choose(v and v.isMarked(),"Unmark","Mark")
 			frame.menu.setMenuLabel(menu,0,label)
@@ -478,6 +496,9 @@ class leoMenu:
 			enable(menu,"Mark Changed Items",c.canMarkChangedHeadlines())
 			enable(menu,"Mark Changed Roots",c.canMarkChangedRoots())
 			enable(menu,"Mark Clones",v.isCloned())
+			#@nonl
+			#@-node:<< enable mark submenu >>
+			#@nl
 		except:
 			es("exception updating Outline menu")
 			es_exception()
