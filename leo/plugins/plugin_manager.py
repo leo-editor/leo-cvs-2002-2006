@@ -9,7 +9,7 @@ A plugin to manage Leo's Plugins:
 - Checks for and updates plugins from the web.
 """
 
-__version__ = "0.9"
+__version__ = "0.10"
 __plugin_name__ = "Plugin Manager"
 __plugin_priority__ = 10000
 __plugin_requires__ = ["plugin_menu"]
@@ -65,34 +65,56 @@ __plugin_group__ = "Core"
 #     - Renamed active/inactive to on/off as this works better with the groups
 #     - Added version history display to plugin view
 # 
+# 0.10 Paul Paterson:
+#     - Changed the names in the plugin list view to remove at_, mod_ and 
+# capitalized
+#     - Remove dblClick event from plugin list - it wasn't doing anything
+#     - Can now be run stand-alone to aid in debugging problems
 # 
 #@-at
 #@-node:pap.20041006184225.2:<< version history >>
 #@nl
 #@<< imports >>
 #@+node:pap.20041006184225.3:<< imports >>
+#
+# If these don't import then your Python install is hosed anyway so we don't
+# protect the import statements
+import fnmatch
+import os
+import re
+import sha
+import sys
+import urllib
+import threading
+import webbrowser
+import traceback
+
+#
+# Try to import Leo - if this doesn't work then we are stand-alone
 try:
     import leoGlobals as g
     import leoPlugins
-    Pmw = g.importExtension("Pmw",    pluginName=__name__,verbose=True)
-    Tk  = g.importExtension('Tkinter',pluginName=__name__,verbose=True)
-    sets = g.importExtension('sets',  pluginName=__name__,verbose=True)
-    import fnmatch
-    import os
-    import re
-    import sha
-    import sys
-    import urllib
-    import threading
-    import webbrowser
-    import traceback
+except ImportError:
+    # Standalone!
+    import Pmw
+    import Tkinter as Tk
+    import sets
     ok = True
-except Exception:
-    import sys
-    s = 'plugins_manager.py: %s: %s' % (sys.exc_type,sys.exc_value)
-    print s ; g.es(s,color='blue')
-    ok = False
-#@nonl
+    standalone = True
+else:
+    # Inside Leo!
+    standalone = False
+    try:
+        Pmw = g.importExtension("Pmw",    pluginName=__name__,verbose=True)
+        Tk  = g.importExtension('Tkinter',pluginName=__name__,verbose=True)
+        sets = g.importExtension('sets',  pluginName=__name__,verbose=True)
+        ok = True
+    except Exception:
+        import sys
+        s = 'plugins_manager.py: %s: %s' % (sys.exc_type,sys.exc_value)
+        print s ; g.es(s,color='blue')
+        ok = False
+
 #@-node:pap.20041006184225.3:<< imports >>
 #@nl
 #@<< todo >>
@@ -169,6 +191,71 @@ def inColumns(data, columnwidths):
     #
     return format % data
 #@-node:pap.20050305144720:inColumns
+#@+node:pap.20050317185409:Standalone Operation
+#@+node:pap.20050317185716:class NameSpace
+class NameSpace:
+    """Just an object to dump properties in"""
+    
+    #@    @+others
+    #@+node:pap.20050317190909:__init__
+    def __init__(self, **kw):
+        self.__dict__.update(kw)
+    #@nonl
+    #@-node:pap.20050317190909:__init__
+    #@-others
+#@nonl
+#@-node:pap.20050317185716:class NameSpace
+#@+node:pap.20050317190014:class BlackHole
+class BlackHole:
+    """Try to call a method on this and it will just dissapear into the void!"""
+    
+    #@    @+others
+    #@+node:pap.20050317190014.1:__getattr__
+    def __getattr__(self, name):
+        """Return a black hole!"""
+        return BlackHole()
+    #@nonl
+    #@-node:pap.20050317190014.1:__getattr__
+    #@+node:pap.20050317190014.2:__call__
+    def __call__(self, *args, **kw):
+        """Call this .... """
+        return None
+    #@nonl
+    #@-node:pap.20050317190014.2:__call__
+    #@-others
+#@nonl
+#@-node:pap.20050317190014:class BlackHole
+#@+node:pap.20050317185409.1:class FakeLeoGlobals
+class FakeLeoGlobals:
+    """A class to represent leoGlobals when were are running in standalone mode"""
+    
+    #@    @+others
+    #@+node:pap.20050317185716.1:__init__
+    def __init__(self):
+        """Initialize the fake object"""
+        self.app = NameSpace()
+        self.app.root = Tk.Tk()
+        self.app.gui = BlackHole()  
+        self.app.loadDir = os.path.join(os.path.split(__file__)[0], "..", "src")
+    
+        self.Bunch = NameSpace
+        
+        for name in dir(os.path):
+            setattr(self, "os_path_%s" % name, getattr(os.path, name))
+        
+    #@nonl
+    #@-node:pap.20050317185716.1:__init__
+    #@+node:pap.20050317191929:choose
+    def choose(self, cond, a, b): # warning: evaluates all arguments
+    
+        if cond: return a
+        else: return b
+    #@nonl
+    #@-node:pap.20050317191929:choose
+    #@-others
+#@nonl
+#@-node:pap.20050317185409.1:class FakeLeoGlobals
+#@-node:pap.20050317185409:Standalone Operation
 #@+node:pap.20041009140132:UI
 #@+node:pap.20041008224318:class PluginView
 class PluginView(Tk.Frame):
@@ -398,7 +485,6 @@ class PluginList(Tk.Frame):
                 label_text='Plugins:',
                 listbox_height = 6,
                 selectioncommand=self.onClick,
-                dblclickcommand=self.onDblClick,
                 usehullsize = 1,
                 hull_width = 300,
                 hull_height = 200,
@@ -444,16 +530,6 @@ class PluginList(Tk.Frame):
             self.plugin_view.showPlugin(self.local_dict[sels[0]])
     #@nonl
     #@-node:pap.20041006215903:onClick
-    #@+node:pap.20041006220101:onDblClick
-    def onDblClick(self):
-        """Double click an item in the list"""
-        sels = self.box.getcurselection()
-        if len(sels) == 0:
-            g.es('No selection')
-        else:
-            g.es('DoubleClick:', sels[0]) 
-    #@nonl
-    #@-node:pap.20041006220101:onDblClick
     #@+node:pap.20041008223406:populateList
     def populateList(self, filter=None):
         """Populate the plugin list"""
@@ -536,10 +612,12 @@ class ManagerDialog:
         #@    << create top level window >>
         #@+node:ekr.20041010110321:<< create top level window >>
         root = g.app.root
-        self.top = top = Tk.Toplevel(root)
+        if standalone:
+            self.top = top = root
+        else:
+            self.top = top = Tk.Toplevel(root)
         g.app.gui.attachLeoIcon(self.top)
         top.title("Plugin Manager")
-        #@nonl
         #@-node:ekr.20041010110321:<< create top level window >>
         #@nl
         self.initLocalCollection()
@@ -630,9 +708,12 @@ class ManagerDialog:
         #@nl
         self.plugin_list.populateList("All")
         
-        top.grab_set() # Make the dialog a modal dialog.
-        top.focus_force() # Get all keystrokes.
-        root.wait_window(top)
+        if not standalone:
+            top.grab_set() # Make the dialog a modal dialog.
+            top.focus_force() # Get all keystrokes.
+            root.wait_window(top)
+        else:
+            root.mainloop()
     #@nonl
     #@-node:pap.20041006215108.1:ManagerDialog._init__
     #@+node:pap.20041006224151:enablePlugin
@@ -921,6 +1002,7 @@ class Plugin:
         # Initial properties
         self.filename = location
         self.name = self.getName(location)
+        self.nicename = self.getNiceName(self.name)
     
         # Get the contents of the file
         try:
@@ -952,6 +1034,23 @@ class Plugin:
     #@nonl
     #@-node:pap.20041006193239:getContents
     #@-node:ekr.20041113095851:Must be overridden in subclasses...
+    #@+node:pap.20050317183038:getNiceName
+    def getNiceName(self, name):
+        """Return a nice version of the plugin name
+        
+        Historically some plugins had "at_" and "mod_" prefixes to their
+        name which makes the name look a little ugly in the lists. There is
+        no real reason why the majority of users need to know the underlying
+        name so here we create a nice readable version.
+        
+        """
+        lname = name.lower()
+        if lname.startswith("at_"):
+            name = name[3:]
+        elif lname.startswith("mod_"):
+            name = name[4:]
+        return name.capitalize()
+    #@-node:pap.20050317183038:getNiceName
     #@+node:pap.20041006194759:getDetails
     def getDetails(self, text):
         """Get the details of the plugin
@@ -1058,13 +1157,13 @@ class Plugin:
     
         if not detail:
             if self.version <> "-":
-                body = "%(name)s (v%(version)s)" % self.__dict__
+                body = "%(nicename)s (v%(version)s)" % self.__dict__
             else:
-                body = "%(name)s" % self.__dict__                        
+                body = "%(nicename)s" % self.__dict__                        
             return inColumns((body, self.group, self.enabled), [self.max_name_width, self.max_group_width])
         else:
             return (
-                "Name: %(name)s\n"
+                "Name: %(nicename)s\n"
                 "Version: %(version)s\n"
                 "Active: %(enabled)s\n"
                 "File: %(filename)s\n"
@@ -1327,12 +1426,15 @@ class PluginCollection(dict):
     #@+node:pap.20041006221438:sortedNames
     def sortedNames(self):
     
-        """Return a list of the plugin names sorted alphabetically"""
+        """Return a list of the plugin names sorted alphabetically
+        
+        We use decorate, sort, undecorate to sort by the nice name!
+        
+        """
     
-        names = [item.name for item in self.values()]
+        names = [(item.nicename, item.name) for item in self.values()]
         names.sort()
-        return names
-    #@nonl
+        return [name[1] for name in names]
     #@-node:pap.20041006221438:sortedNames
     #@+node:pap.20041008220723:setEnabledStateFrom
     def setEnabledStateFrom(self, enabler):
@@ -1604,6 +1706,11 @@ class EnableManager:
 #@-node:pap.20041006232717:class EnableManager
 #@-node:pap.20041009140132.1:Implementation
 #@-others
+
+if __name__ == "__main__":
+    if standalone:
+        g = FakeLeoGlobals()
+        topLevelMenu()
 #@nonl
 #@-node:pap.20041006184225:@thin plugin_manager.py
 #@-leo
