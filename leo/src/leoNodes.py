@@ -1280,6 +1280,7 @@ class baseVnode:
 	def clearMarked (self):
 	
 		self.statusBits &= ~ self.markedBit
+		doHook("clear-mark",c=self.commands,v=self)
 	#@-body
 	#@-node:5::clearMarked
 	#@+node:6::clearOrphan
@@ -1480,6 +1481,7 @@ class baseVnode:
 	def setMarked (self):
 	
 		self.statusBits |= self.markedBit
+		doHook("set-mark",c=self.commands,v=self)
 	
 	def initMarkedBit (self):
 	

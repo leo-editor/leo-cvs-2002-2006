@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="291" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="306" clone_windows="0"/>
 <globals body_outline_ratio="0.5">
-	<global_window_position top="65" left="188" height="791" width="1037"/>
+	<global_window_position top="74" left="217" height="791" width="1037"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences allow_rich_text="0">
@@ -176,7 +176,7 @@
 <v t="T129"><vh>scanPluginDirectives</vh></v>
 </v>
 </v>
-<v t="T130"><vh>Drawing, graphics &amp; styled text</vh>
+<v t="T130" a="E"><vh>Drawing, graphics &amp; styled text</vh>
 <v t="T131"><vh>@file color_markup.py</vh>
 <v t="T132"><vh>initAnyMarkup</vh></v>
 <v t="T133"><vh>colorWikiMarkup</vh></v>
@@ -196,211 +196,229 @@
 <v t="T143"><vh>&lt;&lt; Unselect Image &gt;&gt;</vh></v>
 </v>
 </v>
-<v t="T144"><vh>@file nav_buttons.py</vh>
-<v t="T145"><vh>&lt;&lt; globalInfoClass members &gt;&gt;</vh>
-<v t="T146"><vh>__init__ ( globalInfoClass)</vh></v>
-<v t="T147"><vh>addNavWidgets</vh></v>
-<v t="T148"><vh>destroyFrame, destroyAllFrames, destroyOneFrame</vh></v>
-<v t="T149"><vh>updateRecentSections</vh></v>
-<v t="T150"><vh>updateMarks</vh></v>
-<v t="T151"><vh>updateNavButtons</vh></v>
+<v t="T144" a="EV"><vh>@file nav_buttons.py</vh>
+<v t="T145"><vh>class commanderInfoClass</vh>
+<v t="T146"><vh>__init__ (commanderInfoClass)</vh></v>
+<v t="T147"><vh>addWidgets</vh>
+<v t="T148"><vh>&lt;&lt; define callbacks &gt;&gt;</vh></v>
 </v>
-<v t="T152"><vh>&lt;&lt; commanderInfoClass members &gt;&gt;</vh>
-<v t="T153"><vh>__init__ (commanderInfoClass)</vh></v>
-<v t="T154"><vh>addWidgets</vh>
-<v t="T155"><vh>&lt;&lt; define callbacks &gt;&gt;</vh></v>
-</v>
-<v t="T156"><vh>createImage</vh></v>
-<v t="T157"><vh>updateNavButtons (nav_buttons.py)</vh></v>
-<v t="T158"><vh>Callbacks</vh>
-<v t="T159"><vh>marksButtonCallback</vh></v>
-<v t="T160"><vh>recentButtonCallback</vh></v>
+<v t="T149"><vh>createImage</vh></v>
+<v t="T150"><vh>updateNavButtons (nav_buttons.py)</vh></v>
+<v t="T151"><vh>Callbacks</vh>
+<v t="T152"><vh>marksButtonCallback</vh></v>
+<v t="T153"><vh>recentButtonCallback</vh></v>
 </v>
 </v>
+<v t="T154"><vh>class globalInfoClass</vh>
+<v t="T155"><vh>__init__ ( globalInfoClass)</vh></v>
+<v t="T156"><vh>addNavWidgets</vh></v>
+<v t="T157"><vh>destroyFrame, destroyAllFrames, destroyOneFrame</vh></v>
+<v t="T158"><vh>updateRecentSections</vh></v>
+<v t="T159"><vh>updateMarks &amp; updateMarksAfterCommand</vh></v>
+<v t="T160"><vh>updateNavButtons</vh></v>
 </v>
+<v t="T161"><vh>class marksDialog (listBoxDialog)</vh>
+<v t="T162"><vh>marksDialog.__init__</vh></v>
+<v t="T163"><vh>createFrame</vh></v>
+<v t="T164"><vh>addbuttons</vh></v>
+<v t="T165"><vh>fillbox</vh></v>
 </v>
-<v t="T161"><vh>External editors &amp; Open With</vh>
-<v t="T162"><vh>@file open_with.py</vh>
-<v t="T163"><vh>on_idle</vh>
-<v t="T164"><vh>&lt;&lt; update v's body text &gt;&gt;</vh>
-<v t="T165"><vh>&lt;&lt; set s to the file text &gt;&gt;</vh></v>
+<v t="T166"><vh>class recentSectionsDialog (listBoxDialog)</vh>
+<v t="T167"><vh>__init__  recentSectionsDialog</vh></v>
+<v t="T168"><vh>addButtons</vh></v>
+<v t="T169"><vh>clearAll</vh></v>
+<v t="T170"><vh>createFrame</vh></v>
+<v t="T171"><vh>deleteEntry</vh></v>
+<v t="T172"><vh>destroy</vh></v>
+<v t="T173"><vh>fillbox (recent sections)</vh>
+<v t="T174"><vh>&lt;&lt; reconstruct the contents of self.box &gt;&gt;&gt;</vh></v>
 </v>
-</v>
-<v t="T166"><vh>create_open_with_menu</vh>
-<v t="T167"><vh>&lt;&lt; create the Open With menu &gt;&gt;</vh></v>
-</v>
-</v>
-<v t="T168"><vh>@file vim.py</vh>
-<v t="T169"><vh>open_in_vim</vh></v>
-</v>
-<v t="T170"><vh>@file xemacs.py</vh></v>
-</v>
-<v t="T171" a="E"><vh>Files</vh>
-<v t="T172"><vh>@file empty_leo_file.py</vh>
-<v t="T173"><vh>&lt;&lt; define minimal .leo file &gt;&gt;</vh></v>
-<v t="T174"><vh>onOpen</vh></v>
-</v>
-<v t="T175" a="V"><vh>@file open_shell.py</vh>
-<v t="T176"><vh>&lt;&lt; about the open shell plugin &gt;&gt;</vh></v>
-<v t="T177"><vh>load_menu</vh></v>
-<v t="T178"><vh>_getpath</vh></v>
-<v t="T179"><vh>_getcurrentnodepath</vh></v>
-<v t="T180"><vh>launchCmd</vh></v>
-<v t="T181"><vh>launchExplorer</vh></v>
-<v t="T182"><vh>launchxTerm</vh></v>
-</v>
-</v>
-<v t="T183"><vh>Foreign languages</vh>
-<v t="T184"><vh>@file french.py</vh>
-<v t="T185"><vh>onMenu</vh></v>
-</v>
-<v t="T186"><vh>@file french_fm.py</vh>
-<v t="T187"><vh>onMenu</vh></v>
-</v>
-</v>
-<v t="T188"><vh>Key bindings</vh>
-<v t="T189"><vh>@file arrows.py</vh>
-<v t="T190"><vh>onOpen</vh></v>
-</v>
-</v>
-<v t="T191"><vh>Menus</vh>
-<v t="T192"><vh> Plugins menu</vh>
-<v t="T193"><vh>@file plugins_menu.py</vh>
-<v t="T194"><vh>class Plugin</vh>
-<v t="T195"><vh>__init__</vh>
-<v t="T196"><vh>&lt;&lt; Check if this can be configured &gt;&gt;</vh></v>
-<v t="T197"><vh>&lt;&lt; Check if this has an apply &gt;&gt;</vh></v>
-<v t="T198"><vh>&lt;&lt; Look for additional commands &gt;&gt;</vh></v>
-</v>
-<v t="T199"><vh>about</vh></v>
-<v t="T200"><vh>properties</vh></v>
-</v>
-<v t="T201"><vh>class PropertiesWindow</vh>
-<v t="T202"><vh>__init__</vh>
-<v t="T203"><vh>&lt;&lt; initialize all ivars &gt;&gt;</vh></v>
-<v t="T204"><vh>&lt;&lt; create the frame from the configuration data &gt;&gt;</vh>
-<v t="T205"><vh>&lt;&lt; Create the top level and the main frame &gt;&gt;</vh></v>
-<v t="T206"><vh>&lt;&lt; Create widgets for each section and option &gt;&gt;</vh></v>
-<v t="T207"><vh>&lt;&lt; Create Ok, Cancel and Apply buttons &gt;&gt;</vh></v>
-</v>
-</v>
-<v t="T208"><vh>Event Handlers</vh></v>
-<v t="T209"><vh>writeConfiguration</vh></v>
-</v>
-<v t="T210"><vh>class PluginAbout</vh>
-<v t="T211"><vh>__init__</vh>
-<v t="T212"><vh>&lt;&lt; Create the contents of the about box &gt;&gt;</vh></v>
-<v t="T213"><vh>&lt;&lt; Create the close button &gt;&gt;</vh></v>
-</v>
-</v>
-<v t="T214"><vh>createPluginsMenu</vh>
-<v t="T215"><vh>&lt;&lt; add items to the plugins menu &gt;&gt;</vh></v>
-</v>
-</v>
-<v t="T216"><vh>@file test.py</vh>
-<v t="T217"><vh>applyConfiguration</vh></v>
-<v t="T218"><vh>cmd_fn1/2/3</vh></v>
-<v t="T219"><vh>onSelect</vh>
-<v t="T220"><vh>&lt;&lt; Select Image &gt;&gt;</vh></v>
-</v>
-<v t="T221"><vh>onUnselect</vh>
-<v t="T222"><vh>&lt;&lt; Unselect Image &gt;&gt;</vh></v>
-</v>
-</v>
-<v t="T223"><vh>Notes re plugins menu</vh>
-<v t="T224"><vh> Changes made by E.K.Ream</vh></v>
-<v t="T225"><vh> Design</vh></v>
-<v t="T226"><vh> Initial suggestion from Paul Paterson</vh></v>
-</v>
-</v>
-<v t="T227"><vh>@file scripts_menu.py</vh>
-<v t="T228"><vh>createScriptsMenu</vh>
-<v t="T229"><vh>&lt;&lt; Return if no scripts exist anywhere &gt;&gt;</vh></v>
-<v t="T230"><vh>&lt;&lt; Create top-level entries for every script in top_scripts &gt;&gt;</vh></v>
-<v t="T231"><vh>&lt;&lt; Create a submenu for dir containing each file in files &gt;&gt;</vh></v>
+<v t="T175"><vh>synchNavButtons</vh></v>
 </v>
 </v>
 </v>
-<v t="T232"><vh>New kinds of nodes</vh>
-<v t="T233"><vh>@file at_folder.py</vh>
-<v t="T234"><vh>&lt;&lt; about this plugin &gt;&gt;</vh></v>
-<v t="T235"><vh>sync_node_to_folder</vh></v>
-</v>
-<v t="T236"><vh>@file read_only_nodes.py</vh>
-<v t="T237"><vh>documentation for @read-only nodes</vh>
-<v t="T238"><vh>ftp/http access</vh></v>
-</v>
-<v t="T239"><vh>class FTPurl</vh>
-<v t="T240"><vh>__init__</vh></v>
-<v t="T241"><vh>Getters</vh>
-<v t="T242"><vh>read</vh></v>
-<v t="T243"><vh>readline</vh></v>
-</v>
-<v t="T244"><vh>Setters</vh>
-<v t="T245"><vh>write</vh></v>
-</v>
-<v t="T246"><vh>Utilities</vh>
-<v t="T247"><vh>seek</vh></v>
-<v t="T248"><vh>flush</vh></v>
-<v t="T249"><vh>dir</vh></v>
-<v t="T250"><vh>exists</vh></v>
-<v t="T251"><vh>checkParams</vh></v>
-</v>
-<v t="T252"><vh>close</vh></v>
-</v>
-<v t="T253"><vh>enable/disable_body</vh></v>
-<v t="T254"><vh>insert_read_only_node (FTP version)</vh>
-<v t="T255"><vh>&lt;&lt; convert HTML to text &gt;&gt;</vh></v>
-</v>
-<v t="T256"><vh>on_open2</vh></v>
-<v t="T257"><vh>on_bodykey1</vh></v>
-<v t="T258"><vh>on_headkey2</vh></v>
-<v t="T259"><vh>on_select1</vh></v>
-<v t="T260"><vh>on_select2</vh></v>
-</v>
-<v t="T261"><vh>@file rst.py</vh>
-<v t="T262"><vh>&lt;&lt;about this plugin &gt;&gt;</vh></v>
-<v t="T263"><vh>&lt;&lt; change log &gt;&gt;</vh></v>
-<v t="T264"><vh>onIconDoubleClick</vh>
-<v t="T265"><vh>&lt;&lt; write rST as HTML &gt;&gt;</vh>
-<v t="T266"><vh>&lt;&lt; convert rST to HTML &gt;&gt;</vh></v>
-</v>
-<v t="T267"><vh>&lt;&lt; write rST file &gt;&gt;</vh></v>
-</v>
-<v t="T268"><vh>writeTreeAsRst</vh></v>
-<v t="T269"><vh>underline</vh></v>
-</v>
-<v t="T270"><vh>@file startfile.py</vh>
-<v t="T271"><vh>&lt;&lt;about this plugin &gt;&gt;</vh></v>
-<v t="T272"><vh>&lt;&lt; change log &gt;&gt;</vh></v>
-<v t="T273"><vh>onIconDoubleClick</vh>
-<v t="T274"><vh>&lt;&lt; find path and start file &gt;&gt;</vh></v>
+<v t="T176"><vh>External editors &amp; Open With</vh>
+<v t="T177"><vh>@file open_with.py</vh>
+<v t="T178"><vh>on_idle</vh>
+<v t="T179"><vh>&lt;&lt; update v's body text &gt;&gt;</vh>
+<v t="T180"><vh>&lt;&lt; set s to the file text &gt;&gt;</vh></v>
 </v>
 </v>
-</v>
-<v t="T275"><vh>Overriding functions, methods &amp; classes</vh>
-<v t="T276"><vh>@file __overrideClasses.py</vh>
-<v t="T277"><vh>&lt;&lt; override the LeoFrame class &gt;&gt;</vh></v>
-<v t="T278"><vh>&lt;&lt; override methods of the LeoApp class &gt;&gt;</vh></v>
-</v>
-<v t="T279"><vh>@file override_commands.py</vh>
-<v t="T280"><vh>onCommand</vh></v>
-</v>
-<v t="T281"><vh>@file redefine_put.py</vh>
-<v t="T282"><vh>onStart</vh></v>
-<v t="T283"><vh>newPut and newPutNl</vh></v>
-</v>
-<v t="T284"><vh>@file redirect_to_log.py</vh></v>
-<v t="T285"><vh>@file script_io_to_body.py</vh>
-<v t="T286"><vh>onStart</vh></v>
-<v t="T287"><vh>newExecuteScript</vh></v>
-<v t="T288"><vh>newPut and newPutNl</vh></v>
-<v t="T289"><vh>newEs, etc.</vh></v>
+<v t="T181"><vh>create_open_with_menu</vh>
+<v t="T182"><vh>&lt;&lt; create the Open With menu &gt;&gt;</vh></v>
 </v>
 </v>
+<v t="T183"><vh>@file vim.py</vh>
+<v t="T184"><vh>open_in_vim</vh></v>
 </v>
-<v t="T290" a="E"><vh>To do</vh>
-<v t="T291" a="E"><vh>(Improve Spell Checking)</vh></v>
+<v t="T185"><vh>@file xemacs.py</vh></v>
+</v>
+<v t="T186"><vh>Files</vh>
+<v t="T187"><vh>@file empty_leo_file.py</vh>
+<v t="T188"><vh>&lt;&lt; define minimal .leo file &gt;&gt;</vh></v>
+<v t="T189"><vh>onOpen</vh></v>
+</v>
+<v t="T190"><vh>@file open_shell.py</vh>
+<v t="T191"><vh>&lt;&lt; about the open shell plugin &gt;&gt;</vh></v>
+<v t="T192"><vh>load_menu</vh></v>
+<v t="T193"><vh>_getpath</vh></v>
+<v t="T194"><vh>_getcurrentnodepath</vh></v>
+<v t="T195"><vh>launchCmd</vh></v>
+<v t="T196"><vh>launchExplorer</vh></v>
+<v t="T197"><vh>launchxTerm</vh></v>
+</v>
+</v>
+<v t="T198"><vh>Foreign languages</vh>
+<v t="T199"><vh>@file french.py</vh>
+<v t="T200"><vh>onMenu</vh></v>
+</v>
+<v t="T201"><vh>@file french_fm.py</vh>
+<v t="T202"><vh>onMenu</vh></v>
+</v>
+</v>
+<v t="T203"><vh>Key bindings</vh>
+<v t="T204"><vh>@file arrows.py</vh>
+<v t="T205"><vh>onOpen</vh></v>
+</v>
+</v>
+<v t="T206"><vh>Menus</vh>
+<v t="T207"><vh> Plugins menu</vh>
+<v t="T208"><vh>@file plugins_menu.py</vh>
+<v t="T209"><vh>class Plugin</vh>
+<v t="T210"><vh>__init__</vh>
+<v t="T211"><vh>&lt;&lt; Check if this can be configured &gt;&gt;</vh></v>
+<v t="T212"><vh>&lt;&lt; Check if this has an apply &gt;&gt;</vh></v>
+<v t="T213"><vh>&lt;&lt; Look for additional commands &gt;&gt;</vh></v>
+</v>
+<v t="T214"><vh>about</vh></v>
+<v t="T215"><vh>properties</vh></v>
+</v>
+<v t="T216"><vh>class PropertiesWindow</vh>
+<v t="T217"><vh>__init__</vh>
+<v t="T218"><vh>&lt;&lt; initialize all ivars &gt;&gt;</vh></v>
+<v t="T219"><vh>&lt;&lt; create the frame from the configuration data &gt;&gt;</vh>
+<v t="T220"><vh>&lt;&lt; Create the top level and the main frame &gt;&gt;</vh></v>
+<v t="T221"><vh>&lt;&lt; Create widgets for each section and option &gt;&gt;</vh></v>
+<v t="T222"><vh>&lt;&lt; Create Ok, Cancel and Apply buttons &gt;&gt;</vh></v>
+</v>
+</v>
+<v t="T223"><vh>Event Handlers</vh></v>
+<v t="T224"><vh>writeConfiguration</vh></v>
+</v>
+<v t="T225"><vh>class PluginAbout</vh>
+<v t="T226"><vh>__init__</vh>
+<v t="T227"><vh>&lt;&lt; Create the contents of the about box &gt;&gt;</vh></v>
+<v t="T228"><vh>&lt;&lt; Create the close button &gt;&gt;</vh></v>
+</v>
+</v>
+<v t="T229"><vh>createPluginsMenu</vh>
+<v t="T230"><vh>&lt;&lt; add items to the plugins menu &gt;&gt;</vh></v>
+</v>
+</v>
+<v t="T231"><vh>@file test.py</vh>
+<v t="T232"><vh>applyConfiguration</vh></v>
+<v t="T233"><vh>cmd_fn1/2/3</vh></v>
+<v t="T234"><vh>onSelect</vh>
+<v t="T235"><vh>&lt;&lt; Select Image &gt;&gt;</vh></v>
+</v>
+<v t="T236"><vh>onUnselect</vh>
+<v t="T237"><vh>&lt;&lt; Unselect Image &gt;&gt;</vh></v>
+</v>
+</v>
+<v t="T238"><vh>Notes re plugins menu</vh>
+<v t="T239"><vh> Changes made by E.K.Ream</vh></v>
+<v t="T240"><vh> Design</vh></v>
+<v t="T241"><vh> Initial suggestion from Paul Paterson</vh></v>
+</v>
+</v>
+<v t="T242"><vh>@file scripts_menu.py</vh>
+<v t="T243"><vh>createScriptsMenu</vh>
+<v t="T244"><vh>&lt;&lt; Return if no scripts exist anywhere &gt;&gt;</vh></v>
+<v t="T245"><vh>&lt;&lt; Create top-level entries for every script in top_scripts &gt;&gt;</vh></v>
+<v t="T246"><vh>&lt;&lt; Create a submenu for dir containing each file in files &gt;&gt;</vh></v>
+</v>
+</v>
+</v>
+<v t="T247"><vh>New kinds of nodes</vh>
+<v t="T248"><vh>@file at_folder.py</vh>
+<v t="T249"><vh>&lt;&lt; about this plugin &gt;&gt;</vh></v>
+<v t="T250"><vh>sync_node_to_folder</vh></v>
+</v>
+<v t="T251"><vh>@file read_only_nodes.py</vh>
+<v t="T252"><vh>documentation for @read-only nodes</vh>
+<v t="T253"><vh>ftp/http access</vh></v>
+</v>
+<v t="T254"><vh>class FTPurl</vh>
+<v t="T255"><vh>__init__</vh></v>
+<v t="T256"><vh>Getters</vh>
+<v t="T257"><vh>read</vh></v>
+<v t="T258"><vh>readline</vh></v>
+</v>
+<v t="T259"><vh>Setters</vh>
+<v t="T260"><vh>write</vh></v>
+</v>
+<v t="T261"><vh>Utilities</vh>
+<v t="T262"><vh>seek</vh></v>
+<v t="T263"><vh>flush</vh></v>
+<v t="T264"><vh>dir</vh></v>
+<v t="T265"><vh>exists</vh></v>
+<v t="T266"><vh>checkParams</vh></v>
+</v>
+<v t="T267"><vh>close</vh></v>
+</v>
+<v t="T268"><vh>enable/disable_body</vh></v>
+<v t="T269"><vh>insert_read_only_node (FTP version)</vh>
+<v t="T270"><vh>&lt;&lt; convert HTML to text &gt;&gt;</vh></v>
+</v>
+<v t="T271"><vh>on_open2</vh></v>
+<v t="T272"><vh>on_bodykey1</vh></v>
+<v t="T273"><vh>on_headkey2</vh></v>
+<v t="T274"><vh>on_select1</vh></v>
+<v t="T275"><vh>on_select2</vh></v>
+</v>
+<v t="T276"><vh>@file rst.py</vh>
+<v t="T277"><vh>&lt;&lt;about this plugin &gt;&gt;</vh></v>
+<v t="T278"><vh>&lt;&lt; change log &gt;&gt;</vh></v>
+<v t="T279"><vh>onIconDoubleClick</vh>
+<v t="T280"><vh>&lt;&lt; write rST as HTML &gt;&gt;</vh>
+<v t="T281"><vh>&lt;&lt; convert rST to HTML &gt;&gt;</vh></v>
+</v>
+<v t="T282"><vh>&lt;&lt; write rST file &gt;&gt;</vh></v>
+</v>
+<v t="T283"><vh>writeTreeAsRst</vh></v>
+<v t="T284"><vh>underline</vh></v>
+</v>
+<v t="T285"><vh>@file startfile.py</vh>
+<v t="T286"><vh>&lt;&lt;about this plugin &gt;&gt;</vh></v>
+<v t="T287"><vh>&lt;&lt; change log &gt;&gt;</vh></v>
+<v t="T288"><vh>onIconDoubleClick</vh>
+<v t="T289"><vh>&lt;&lt; find path and start file &gt;&gt;</vh></v>
+</v>
+</v>
+</v>
+<v t="T290"><vh>Overriding functions, methods &amp; classes</vh>
+<v t="T291"><vh>@file __overrideClasses.py</vh>
+<v t="T292"><vh>&lt;&lt; override the LeoFrame class &gt;&gt;</vh></v>
+<v t="T293"><vh>&lt;&lt; override methods of the LeoApp class &gt;&gt;</vh></v>
+</v>
+<v t="T294"><vh>@file override_commands.py</vh>
+<v t="T295"><vh>onCommand</vh></v>
+</v>
+<v t="T296"><vh>@file redefine_put.py</vh>
+<v t="T297"><vh>onStart</vh></v>
+<v t="T298"><vh>newPut and newPutNl</vh></v>
+</v>
+<v t="T299"><vh>@file redirect_to_log.py</vh></v>
+<v t="T300"><vh>@file script_io_to_body.py</vh>
+<v t="T301"><vh>onStart</vh></v>
+<v t="T302"><vh>newExecuteScript</vh></v>
+<v t="T303"><vh>newPut and newPutNl</vh></v>
+<v t="T304"><vh>newEs, etc.</vh></v>
+</v>
+</v>
+</v>
+<v t="T305"><vh>To do</vh>
+<v t="T306" a="E"><vh>(Improve Spell Checking)</vh></v>
 </v>
 </vnodes>
 <tnodes>
@@ -2472,14 +2490,10 @@ a.gsphoto = None
 
 from leoPlugins import *
 from leoGlobals import *
-import leoDialog
+from leoDialog import listBoxDialog
 import os, Tkinter
 
-class globalInfoClass:
-	&lt;&lt; globalInfoClass members &gt;&gt;
-
-class commanderInfoClass:
-	&lt;&lt; commanderInfoClass members &gt;&gt;
+@others
 	
 globalInfo = globalInfoClass()
 
@@ -2489,86 +2503,18 @@ if 1: # Register the handlers...
 
 	registerHandler("after-create-leo-frame", globalInfo.addNavWidgets)
 	registerHandler("select2",globalInfo.updateRecentSections)
-	registerHandler("command2",globalInfo.updateMarks)
+	registerHandler("command2",globalInfo.updateMarksAfterCommand)
+	registerHandler(("set-mark","clear-mark"),globalInfo.updateMarks)
 	registerHandler("close-frame",globalInfo.destroyFrame)
 	registerHandler("destroy-all-global-windows",globalInfo.destroyAllFrames)
 
-	__version__ = "1.1"
+	# 7/12/03: Moved marksDialog and recentSectionsDialog into this plugin.
+	# 7/12/03: Handled "set-mark" and "clear-mark" hooks.
+	__version__ = "1.2"
 	plugin_signon(__name__)</t>
-<t tx="T145">@others</t>
-<t tx="T146">def __init__ (self):
-	
-	self.commanderInfo = {} # keys are commanders, values are navCommanderInfo objects
-</t>
-<t tx="T147">def addNavWidgets(self,tag,keywords):
-	
-	c = keywords.get("c")
-	
-	# Create the commanderInfo object.
-	d = commanderInfoClass(c,self)
-	self.commanderInfo[c] = d
-	
-	# Add the widgets.
-	d.addWidgets()
-	
-</t>
-<t tx="T148">def destroyAllFrames(self,tag,keywords):
-	
-	for d in self.commanderInfo.values():
-		self.destroyOneFrame(d)
-		
-def destroyFrame(self,tag,keywords):
-
-	c = keywords.get("c")
-	d = self.commanderInfo.get(c)
-	if d:
-		self.destroyOneFrame(d)
-		
-def destroyOneFrame(self,d):
-
-	if d.marksDialog:
-		d.marksDialog.top.destroy()
-	if d.recentSectionsDialog:
-		d.recentSectionsDialog.top.destroy()
-	del self.commanderInfo[d.c]</t>
-<t tx="T149">def updateRecentSections (self,tag,keywords):
-	
-	c = keywords.get("c")
-	info = self.commanderInfo.get(c)
-
-	if info:
-		info.updateNavButtons()
-		d = info.recentSectionsDialog
-		if d:
-			d.fillbox()
-</t>
-<t tx="T150">def updateMarks (self,tag,keywords):
-	
-	c = keywords.get("c")
-	v = keywords.get("v")
-	name = keywords.get("label")
-	
-	if name.lower() in ("mark","unmark","unmarkall",
-		"marksubheads","markchangeditems","markclones"):
-
-		info = self.commanderInfo.get(c)
-		if info:
-			d = info.marksDialog
-			if d:
-				d.fillbox()
-</t>
-<t tx="T151">def updateNavButtons (self,tag,keywords):
-
-	"""Update the colors of c's nav buttons"""
-	
-	c = keywords.get("c")
-	info = self.commanderInfo.get(c)
-	
-	if info:
-		info.updateNavButtons()
-</t>
-<t tx="T152">@others</t>
-<t tx="T153">def __init__ (self,c,globalInfo):
+<t tx="T145">class commanderInfoClass:
+	@others</t>
+<t tx="T146">def __init__ (self,c,globalInfo):
 	
 	self.c = c
 	self.globalInfo = globalInfo
@@ -2590,7 +2536,7 @@ def destroyOneFrame(self,d):
 	
 	self.nav_buttons = None
 </t>
-<t tx="T154">def addWidgets (self):
+<t tx="T147">def addWidgets (self):
 	
 	c = self.c ; d = self
 	
@@ -2630,7 +2576,7 @@ def destroyOneFrame(self,d):
 		
 	# Package these buttons for the recentSectionsDialog class in leoDialog.py
 	self.nav_buttons = (self.lt_nav_button, self.rt_nav_button)</t>
-<t tx="T155"># These are functions, not methods, so we must bind self at definition time.
+<t tx="T148"># These are functions, not methods, so we must bind self at definition time.
 
 def onMarksButton(self=self):
 
@@ -2639,7 +2585,7 @@ def onMarksButton(self=self):
 def onRecentButton(self=self):
 
 	self.recentButtonCallback()</t>
-<t tx="T156">def createImage (self,path):
+<t tx="T149">def createImage (self,path):
 	
 	path = os.path.join(app().loadDir,path)
 	path = os.path.normpath(path)
@@ -2652,7 +2598,7 @@ def onRecentButton(self=self):
 	return image
 
 </t>
-<t tx="T157">def updateNavButtons (self):	
+<t tx="T150">def updateNavButtons (self):	
 
 	d = self ; c = self.c
 	
@@ -2681,8 +2627,8 @@ def onRecentButton(self=self):
 		state = "normal" # "disabled" makes the icon look bad.
 	b.configure(image=image,state=state)
 </t>
-<t tx="T158"></t>
-<t tx="T159">def marksButtonCallback(self,event=None):
+<t tx="T151"></t>
+<t tx="T152">def marksButtonCallback(self,event=None):
 	
 	c = self.c ; d = self.marksDialog
 
@@ -2692,11 +2638,11 @@ def onRecentButton(self=self):
 		# Create and run the dialog.
 		title = "Marks"
 		label = "Marks: " + shortFileName(c.frame.mFileName)
-		d = leoDialog.marksDialog(c,title,label)
+		d = marksDialog(c,title,label)
 		self.marksDialog = d
 		d.root.wait_window(d.top)
 </t>
-<t tx="T160">def recentButtonCallback(self,event=None):
+<t tx="T153">def recentButtonCallback(self,event=None):
 	
 	c = self.c ; d = self.recentSectionsDialog
 	
@@ -2707,12 +2653,262 @@ def onRecentButton(self=self):
 		# Create and run the dialog.]
 		title = "Recent Nodes"
 		label = "Recent nodes: " + shortFileName(c.frame.mFileName)
-		d = leoDialog.recentSectionsDialog(c,self.nav_buttons,title,label)
+		d = recentSectionsDialog(c,self.nav_buttons,title,label)
 		self.recentSectionsDialog = d
 		d.root.wait_window(d.top)
 </t>
-<t tx="T161"></t>
-<t tx="T162">"""Create menu for Open With command and handle the resulting commands"""
+<t tx="T154">class globalInfoClass:
+	@others</t>
+<t tx="T155">def __init__ (self):
+	
+	self.commanderInfo = {} # keys are commanders, values are navCommanderInfo objects
+</t>
+<t tx="T156">def addNavWidgets(self,tag,keywords):
+	
+	c = keywords.get("c")
+	
+	# Create the commanderInfo object.
+	d = commanderInfoClass(c,self)
+	self.commanderInfo[c] = d
+	
+	# Add the widgets.
+	d.addWidgets()
+	
+</t>
+<t tx="T157">def destroyAllFrames(self,tag,keywords):
+	
+	for d in self.commanderInfo.values():
+		self.destroyOneFrame(d)
+		
+def destroyFrame(self,tag,keywords):
+
+	c = keywords.get("c")
+	d = self.commanderInfo.get(c)
+	if d:
+		self.destroyOneFrame(d)
+		
+def destroyOneFrame(self,d):
+
+	if d.marksDialog:
+		d.marksDialog.top.destroy()
+	if d.recentSectionsDialog:
+		d.recentSectionsDialog.top.destroy()
+	del self.commanderInfo[d.c]</t>
+<t tx="T158">def updateRecentSections (self,tag,keywords):
+	
+	c = keywords.get("c")
+	info = self.commanderInfo.get(c)
+
+	if info:
+		info.updateNavButtons()
+		d = info.recentSectionsDialog
+		if d:
+			d.fillbox()
+</t>
+<t tx="T159">def updateMarksAfterCommand (self,tag,keywords):
+	
+	"""Update the marks dialog when a new window is opened."""
+	
+	name = keywords.get("label")
+	
+	if name and name.lower() in ("open","new"):
+		self.updateMarks(tag,keywords)
+	
+def updateMarks (self,tag,keywords):
+	
+	"""Update the marks dialog."""
+	
+	c = keywords.get("c")
+	# trace()
+	info = self.commanderInfo.get(c)
+	if info and info.marksDialog:
+		info.marksDialog.fillbox()</t>
+<t tx="T160">def updateNavButtons (self,tag,keywords):
+
+	"""Update the colors of c's nav buttons"""
+	
+	c = keywords.get("c")
+	info = self.commanderInfo.get(c)
+	
+	if info:
+		info.updateNavButtons()
+</t>
+<t tx="T161">class marksDialog (listBoxDialog):
+	
+	"""A class to create the marks dialog"""
+
+	@others</t>
+<t tx="T162">def __init__ (self,c,title,label):
+	
+	"""Create a Marks listbox dialog."""
+
+	listBoxDialog.__init__(self,c,title,label)
+</t>
+<t tx="T163">def createFrame(self):
+	
+	"""Create the frame for a Marks listbox dialog."""
+
+	listBoxDialog.createFrame(self)
+	self.addButtons()</t>
+<t tx="T164">def addButtons (self):
+	
+	"""Add buttons to a Marks listbox dialog."""
+	
+	f = Tk.Frame(self.outerFrame)
+	f.pack()
+	self.addStdButtons(f)</t>
+<t tx="T165">def fillbox(self,event=None):
+
+	"""Update a Marks listbox dialog and update the listbox and update vnodeList &amp; tnodeList ivars"""
+
+	self.box.delete(0,"end")
+	self.vnodeList = []
+	self.tnodeList = []
+
+	# Make sure the node still exists.
+	# Insert only the last cloned node.
+	c = self.c ; v = c.rootVnode()
+	i = 0
+	while v:
+		if v.isMarked() and v.t not in self.tnodeList:
+			self.box.insert(i,v.headString().strip())
+			self.tnodeList.append(v.t)
+			self.vnodeList.append(v)
+			i += 1
+		v = v.threadNext()</t>
+<t tx="T166">class recentSectionsDialog (listBoxDialog):
+	
+	"""A class to create the recent sections dialog"""
+
+	@others</t>
+<t tx="T167">def __init__ (self,c,buttons,title,label):
+	
+	"""Create a Recent Sections listbox dialog."""
+	
+	self.lt_nav_iconFrame_button, self.rt_nav_iconFrame_button = buttons
+
+	listBoxDialog.__init__(self,c,title,label)
+
+</t>
+<t tx="T168">def addButtons (self):
+	
+	"""Add buttons for a Recent Sections listbox dialog."""
+
+	self.buttonFrame = f = Tk.Frame(self.outerFrame)
+	f.pack()
+	
+	row1 = Tk.Frame(f)
+	row1.pack()
+	
+	# Create the back and forward buttons, cloning the images &amp; commands of the already existing buttons.
+	image   = self.lt_nav_iconFrame_button.cget("image")
+	command = self.lt_nav_iconFrame_button.cget("command")
+
+	self.lt_nav_button = b = Tk.Button(row1,image=image,command=command)
+	b.pack(side="left",pady=2,padx=5)
+	
+	image   = self.rt_nav_iconFrame_button.cget("image")
+	command = self.rt_nav_iconFrame_button.cget("command")
+
+	self.rt_nav_button = b = Tk.Button(row1,image=image,command=command)
+	b.pack(side="left",pady=2,padx=5)
+	
+	row2 = Tk.Frame(f)
+	row2.pack()
+	self.addStdButtons(row2)
+	
+	row3 = Tk.Frame(f)
+	row3.pack()
+	
+	self.clear_button = b =  Tk.Button(row3,text="Clear All",
+		width=6,command=self.clearAll)
+	b.pack(side="left",pady=2,padx=5)
+	
+	self.delete_button = b =  Tk.Button(row3,text="Delete",
+		width=6,command=self.deleteEntry)
+	b.pack(side="left",pady=2,padx=5)
+</t>
+<t tx="T169">def clearAll (self,event=None):
+
+	"""Handle clicks in the "Delete" button of the Recent Sections listbox dialog."""
+
+	self.c.visitedList = []
+	self.vnodeList = []
+	self.fillbox()
+</t>
+<t tx="T170">def createFrame(self):
+	
+	"""Create the frame of a Recent Sections listbox dialog."""
+	
+	listBoxDialog.createFrame(self)	
+	self.addButtons()
+</t>
+<t tx="T171">def deleteEntry (self,event=None):
+
+	"""Handle clicks in the "Delete" button of a Recent Sections listbox dialog."""
+	
+	c = self.c ; box = self.box
+	
+	# Work around an old Python bug.  Convert strings to ints.
+	items = box.curselection()
+	try:
+		items = map(int, items)
+	except ValueError: pass
+
+	if items:
+		n = items[0]
+		v = self.vnodeList[n]
+		del self.vnodeList[n]
+		if v in c.visitedList:
+			c.visitedList.remove(v)
+		self.fillbox()
+</t>
+<t tx="T172">def destroy (self,event=None):
+	
+	"""Hide a Recent Sections listbox dialog and mark it inactive.
+	
+	This is an escape from possible performace penalties"""
+		
+	# This is enough to disable fillbox.
+	self.top.withdraw()
+</t>
+<t tx="T173">def fillbox(self,event=None):
+
+	"""Update a Recent Sections listbox dialog and update vnodeList &amp; tnodeList ivars"""
+
+	# Only fill the box if the dialog is visible.
+	# This is an important protection against bad performance.
+
+	if self.top.state() == "normal":
+		&lt;&lt; reconstruct the contents of self.box &gt;&gt;
+		self.synchButtons()</t>
+<t tx="T174">c = self.c
+
+self.box.delete(0,"end")
+self.vnodeList = []
+self.tnodeList = []
+
+# Make sure the node still exists.
+# Insert only the last cloned node.
+i = 0
+for v in c.visitedList:
+	if v.exists(self.c) and v.t not in self.tnodeList:
+		self.box.insert(i,v.headString().strip())
+		self.tnodeList.append(v.t)
+		self.vnodeList.append(v)
+		i += 1
+</t>
+<t tx="T175">def synchButtons (self):
+	
+	"""Synchronize the arrow boxes of a Recent Sections listbox dialog."""
+
+	image = self.lt_nav_iconFrame_button.cget("image")
+	self.lt_nav_button.configure(image=image)
+	
+	image = self.rt_nav_iconFrame_button.cget("image")
+	self.rt_nav_button.configure(image=image)</t>
+<t tx="T176"></t>
+<t tx="T177">"""Create menu for Open With command and handle the resulting commands"""
 
 from leoPlugins import *
 from leoGlobals import *
@@ -2727,7 +2923,7 @@ if 1: # Register the handlers...
 
 	__version__ = "1.4" # Set version for the plugin handler.
 	plugin_signon(__name__)</t>
-<t tx="T163"># frame.OnOpenWith creates the dict with the following entries:
+<t tx="T178"># frame.OnOpenWith creates the dict with the following entries:
 # "body", "c", "encoding", "f", "path", "time" and "v".
 
 def on_idle (tag,keywords):
@@ -2750,7 +2946,7 @@ def on_idle (tag,keywords):
 			except:
 				es_exception() ## testing
 				pass</t>
-<t tx="T164">&lt;&lt; set s to the file text &gt;&gt;
+<t tx="T179">&lt;&lt; set s to the file text &gt;&gt;
 
 # Convert body to whatever encoding is in effect.
 body = v.bodyString()
@@ -2776,7 +2972,7 @@ if update:
 	dict["body"] = s
 elif conflict:
 	es("not updated from: " + shortFileName(path),color="blue")</t>
-<t tx="T165">try:
+<t tx="T180">try:
 	# Update v from the changed temp file.
 	f=open(path)
 	s=f.read()
@@ -2785,7 +2981,7 @@ except:
 	es("can not open " + shortFileName(path))
 	break
 </t>
-<t tx="T166">def create_open_with_menu (tag,keywords):
+<t tx="T181">def create_open_with_menu (tag,keywords):
 
 	if  (tag in ("start2","open2") or
 		(tag=="command2" and keywords.get("label")=="new")):
@@ -2795,7 +2991,7 @@ except:
 		from leoGlobals import enableIdleTimeHook
 		enableIdleTimeHook(idleTimeDelay=500)
 </t>
-<t tx="T167">@ Entries in the following table are the tuple (commandName,shortcut,data).
+<t tx="T182">@ Entries in the following table are the tuple (commandName,shortcut,data).
 
 - data is the tuple (command,arg,ext).
 - command is one of "os.system", "os.startfile", "os.spawnl", "os.spawnv" or "exec".
@@ -2819,7 +3015,7 @@ else: # David McNab's table.
 	table = ("X&amp;Emacs", "Ctrl+E", ("os.spawnl","/usr/bin/gnuclient", None)),
 
 top().frame.createOpenWithMenuFromTable(table)</t>
-<t tx="T168">"""vim handler"""
+<t tx="T183">"""vim handler"""
 
 # Contributed by Andrea Galimberti.
 
@@ -2843,7 +3039,7 @@ if 0: # Register the handlers...
 	__version__ = "1.3" # Set version for the plugin handler.
 	plugin_signon(__name__)
 </t>
-<t tx="T169">def open_in_vim (tag,keywords):
+<t tx="T184">def open_in_vim (tag,keywords):
 	if not top():
 		return
 
@@ -2873,7 +3069,7 @@ if 0: # Register the handlers...
 		v.OpenWithOldBody=v.bodyString()
 		# open the node in vim (note the space after --remote)
 		top().frame.OnOpenWith(("os.system", "vim --remote ", None),) # 6/27/03: add comma.</t>
-<t tx="T170">"""emacs handler"""
+<t tx="T185">"""emacs handler"""
 
 from leoPlugins import *
 from leoGlobals import *
@@ -2887,8 +3083,8 @@ if 0: # Register the handlers...
 	
 	__version__ = "1.2" # Set version for the plugin handler.
 	plugin_signon(__name__)</t>
-<t tx="T171"></t>
-<t tx="T172">"""Open any empty file as a minimal .leo file"""
+<t tx="T186"></t>
+<t tx="T187">"""Open any empty file as a minimal .leo file"""
 
 from leoPlugins import *
 from leoGlobals import *
@@ -2901,7 +3097,7 @@ if 0: # Register the handlers...
 	
 	__version__ = "1.2" # Set version for the plugin handler.
 	plugin_signon(__name__)</t>
-<t tx="T173">empty_leo_file = """&lt;?xml version="1.0" encoding="iso-8859-1"?&gt;
+<t tx="T188">empty_leo_file = """&lt;?xml version="1.0" encoding="iso-8859-1"?&gt;
 &lt;leo_file&gt;
 &lt;leo_header file_format="2" tnodes="0" max_tnode_index="0" clone_windows="0"/&gt;
 &lt;globals body_outline_ratio="0.5"&gt;
@@ -2920,7 +3116,7 @@ if 0: # Register the handlers...
 &lt;tnodes&gt;
 &lt;/tnodes&gt;
 &lt;/leo_file&gt;"""</t>
-<t tx="T174">def onOpen (tag,keywords):
+<t tx="T189">def onOpen (tag,keywords):
 
 	import os
 	file_name = keywords.get('fileName')
@@ -2934,7 +3130,7 @@ if 0: # Register the handlers...
 		file.close()
 
 </t>
-<t tx="T175">@language python
+<t tx="T190">@language python
 
 """Opens up cmd and explorer window to same directory 
 as @file nodes or children ..."""
@@ -2955,7 +3151,7 @@ if 0: # Register the plugin
 	registerHandler("after-create-leo-frame", load_menu)
 	__version__ = "1.3"
 	plugin_signon(__name__)</t>
-<t tx="T176">@ Written by Ed Taekema.  Modified by E.K.Ream
+<t tx="T191">@ Written by Ed Taekema.  Modified by E.K.Ream
 
 Please submit bugs / feature requests to etaekema@earthlink.net"""
 
@@ -2967,7 +3163,7 @@ Current limitations ...
 2. On win32, the cmd window will not open in the right directory if the @file location is on a different drive than the .leo file that is being edited.
 3. On linux, xterm must be in your path.
 </t>
-<t tx="T177">def load_menu(tag,keywords):
+<t tx="T192">def load_menu(tag,keywords):
 	
 	if sys.platform=="win32":
 		table = (
@@ -2979,7 +3175,7 @@ Current limitations ...
 	top().frame.createNewMenu("E&amp;xtensions","top")
 	top().frame.createMenuItemsFromTable("Extensions",table)
 </t>
-<t tx="T178">def _getpath(c,v):
+<t tx="T193">def _getpath(c,v):
 	dict = scanDirectives(c,v)
 	d = dict.get("path")
 
@@ -2999,21 +3195,21 @@ Current limitations ...
 	d = os.path.normpath(d)
 	return d
 </t>
-<t tx="T179">def _getCurrentNodePath():
+<t tx="T194">def _getCurrentNodePath():
 	c = leo.top()
 	v = c.currentVnode()
 	f = v.atFileNodeName()
 	d = _getpath(c,v)
 	return d
 </t>
-<t tx="T180">def launchCmd(not_used):
+<t tx="T195">def launchCmd(not_used):
 	
 	global pathToCmd
 
 	d = _getCurrentNodePath()
 	myCmd = 'cd ' + d
 	os.spawnl(os.P_NOWAIT, pathToCmd, '/k ', myCmd)</t>
-<t tx="T181">def launchExplorer(not_used):
+<t tx="T196">def launchExplorer(not_used):
 	
 	global pathToExplorer
 
@@ -3021,15 +3217,15 @@ Current limitations ...
 	os.spawnl(os.P_NOWAIT,pathToExplorer, ' ', d)
 
 </t>
-<t tx="T182">def launchxTerm(not_used):
+<t tx="T197">def launchxTerm(not_used):
 
 	d = _getCurrentNodePath()
 	curdir = os.getcwd()
 	os.chdir(d)
 	os.spawnlp(os.P_NOWAIT, 'xterm', '-title Leo')
 	os.chdir(curdir)</t>
-<t tx="T183"></t>
-<t tx="T184">"""Translate a few menu items into French"""
+<t tx="T198"></t>
+<t tx="T199">"""Translate a few menu items into French"""
 
 from leoPlugins import *
 from leoGlobals import *
@@ -3041,7 +3237,7 @@ if 0: # Register the handlers...
 	
 	__version__ = "1.2"
 	plugin_signon(__name__)</t>
-<t tx="T185">@ The translation table used by setRealMenuNamesFromTable has entries of the form:
+<t tx="T200">@ The translation table used by setRealMenuNamesFromTable has entries of the form:
 
 	("official name","translated name"),
 
@@ -3064,7 +3260,7 @@ def onMenu (tag,keywords):
 	# Call the convenience routine to do the work.
 	app().setRealMenuNamesFromTable(table)
 </t>
-<t tx="T186">@language python
+<t tx="T201">@language python
 
 """traduit les menus en Français"""
 
@@ -3081,7 +3277,7 @@ if 0: # Register the handlers...
 	__version__ = "1.4" # Set version for the plugin handler.
 	plugin_signon(__name__)
 </t>
-<t tx="T187">def onMenu (tag,keywords):
+<t tx="T202">def onMenu (tag,keywords):
 	table = (
 		("File","&amp;Fichier"),
 			("New","&amp;Nouveau"),
@@ -3233,8 +3429,8 @@ if 0: # Register the handlers...
 	# Call the convenience routine to do the work.
 	app().setRealMenuNamesFromTable(table)
 </t>
-<t tx="T188"></t>
-<t tx="T189">"""Rebind up/down arrow keys"""
+<t tx="T203"></t>
+<t tx="T204">"""Rebind up/down arrow keys"""
 
 from leoPlugins import *
 from leoGlobals import *
@@ -3247,7 +3443,7 @@ if 0: # Register the handlers...
 	__version__ = "1.2" # Set version for the plugin handler.
 	plugin_signon(__name__)
 </t>
-<t tx="T190"># Warning: the bindings created this way conflict with shift-arrow keys.
+<t tx="T205"># Warning: the bindings created this way conflict with shift-arrow keys.
 
 def onOpen (tag,keywords):
 
@@ -3264,9 +3460,9 @@ def onOpen (tag,keywords):
 	if len(old_binding) == 0:
 		body.bind("&lt;Down&gt;",tree.OnDownKey)
 </t>
-<t tx="T191"></t>
-<t tx="T192"></t>
-<t tx="T193">"""Create a Plugins menu"""
+<t tx="T206"></t>
+<t tx="T207"></t>
+<t tx="T208">"""Create a Plugins menu"""
 
 # Written by Paul A. Paterson.  Revised by Edward K. Ream.
 
@@ -3288,14 +3484,14 @@ if 1: # Register the handlers...
 	
 	__version__ = "1.2"
 	plugin_signon(__name__)</t>
-<t tx="T194">class PlugIn:
+<t tx="T209">class PlugIn:
 
 	"""A class to hold information about one plugin"""
 
 	@others
 	
 </t>
-<t tx="T195">def __init__(self, filename):
+<t tx="T210">def __init__(self, filename):
 
 	"""Initialize the plug-in"""
 
@@ -3315,18 +3511,18 @@ if 1: # Register the handlers...
 	&lt;&lt; Check if this can be configured &gt;&gt;
 	&lt;&lt; Check if this has an apply &gt;&gt;
 	&lt;&lt; Look for additional commands &gt;&gt;</t>
-<t tx="T196"># Look for a configuration file
+<t tx="T211"># Look for a configuration file
 self.configfilename = "%s.ini" % os.path.splitext(filename)[0]
 self.hasconfig = os.path.isfile(self.configfilename)
 </t>
-<t tx="T197">@ Look for an apply function ("applyConfiguration") in the module.
+<t tx="T212">@ Look for an apply function ("applyConfiguration") in the module.
 
 This is used to apply changes in configuration from the properties window
 @c
 
 self.hasapply = hasattr(self.mod, "applyConfiguration")
 </t>
-<t tx="T198">@ Additional commands can be added to the plugin menu by having functions in the module called "cmd_whatever". These are added to the main menu and will be called when clicked
+<t tx="T213">@ Additional commands can be added to the plugin menu by having functions in the module called "cmd_whatever". These are added to the main menu and will be called when clicked
 @c
 
 self.othercmds = {}
@@ -3335,29 +3531,29 @@ for item in self.mod.__dict__.keys():
 	if item.startswith("cmd_"):
 		self.othercmds[item[4:]] = self.mod.__dict__[item]
 </t>
-<t tx="T199">def about(self, arg):
+<t tx="T214">def about(self, arg):
 	
 	"""Put up an "about" dialog for this plugin"""
 
 	PluginAbout(self.name, self.version, self.doc)</t>
-<t tx="T200">def properties(self, arg):
+<t tx="T215">def properties(self, arg):
 	
 	"""Create a modal properties dialog for this plugin"""
 
 	PropertiesWindow(self.configfilename, self)
 </t>
-<t tx="T201">class PropertiesWindow:
+<t tx="T216">class PropertiesWindow:
 
 	"""A class to create and run a Properties dialog for a plugin"""
 
 	@others</t>
-<t tx="T202">def __init__(self, filename, plugin):
+<t tx="T217">def __init__(self, filename, plugin):
 
 	"""Initialize the property window"""
 	
 	&lt;&lt; initialize all ivars &gt;&gt;
 	&lt;&lt; create the frame from the configuration data &gt;&gt;</t>
-<t tx="T203"># config stuff.
+<t tx="T218"># config stuff.
 config = ConfigParser.ConfigParser()
 config.read(filename)
 self.filename = filename
@@ -3369,7 +3565,7 @@ self.plugin = plugin
 # This list is used by writeConfiguration to write all settings.
 self.entries = []
 </t>
-<t tx="T204">root = app().root
+<t tx="T219">root = app().root
 
 &lt;&lt; Create the top level and the main frame &gt;&gt;
 &lt;&lt; Create widgets for each section and option &gt;&gt;
@@ -3379,14 +3575,14 @@ center_dialog(top) # Do this after packing.
 top.grab_set() # Make the dialog a modal dialog.
 top.focus_force() # Get all keystrokes.
 root.wait_window(top)</t>
-<t tx="T205">self.top = top = Tk.Toplevel(root)
+<t tx="T220">self.top = top = Tk.Toplevel(root)
 attachLeoIcon(self.top)
 top.title("Properties of "+ plugin.name)
 top.resizable(0,0) # neither height or width is resizable.
 	
 self.frame = frame = Tk.Frame(top)
 frame.pack(side="top")</t>
-<t tx="T206"># Create all the entry boxes on the screen to allow the user to edit the properties
+<t tx="T221"># Create all the entry boxes on the screen to allow the user to edit the properties
 sections = config.sections()
 sections.sort()
 for section in sections:
@@ -3408,7 +3604,7 @@ for section in sections:
 		e.grid(row=row, col=1, sticky="ew", pady = 4)
 		row += 1
 		self.entries.append((section, option, e))</t>
-<t tx="T207">box = Tk.Frame(top, borderwidth=5)
+<t tx="T222">box = Tk.Frame(top, borderwidth=5)
 box.pack(side="bottom")
 
 list = [("OK",self.onOk),("Cancel",top.destroy)]
@@ -3417,7 +3613,7 @@ if plugin.hasapply:
 
 for text,f in list:
 	Tk.Button(box,text=text,width=6,command=f).pack(side="left",padx=5)</t>
-<t tx="T208">def onApply(self):
+<t tx="T223">def onApply(self):
 	
 	"""Event handler for Apply button"""
 	self.writeConfiguration()
@@ -3428,7 +3624,7 @@ def onOk(self):
 	"""Event handler for Ok button"""
 	self.writeConfiguration()
 	self.top.destroy()</t>
-<t tx="T209">def writeConfiguration(self):
+<t tx="T224">def writeConfiguration(self):
 	
 	"""Write the configuration to disk"""
 
@@ -3441,13 +3637,13 @@ def onOk(self):
 	self.config.write(f)
 	f.close()
 </t>
-<t tx="T210">class PluginAbout:
+<t tx="T225">class PluginAbout:
 	
 	"""A class to create and run an About Plugin dialog"""
 	
 	@others
 </t>
-<t tx="T211">def __init__(self, name, version, about):
+<t tx="T226">def __init__(self, name, version, about):
 	
 	"""# Create and run a modal dialog giving the name,
 	version and description of a plugin.
@@ -3468,7 +3664,7 @@ def onOk(self):
 	top.grab_set() # Make the dialog a modal dialog.
 	top.focus_force() # Get all keystrokes.
 	root.wait_window(top)</t>
-<t tx="T212">if 0: # The name is now in the window's title.
+<t tx="T227">if 0: # The name is now in the window's title.
 	Tk.Label(frame, text="Name:").grid(row=0, col=0, sticky="E")
 	Tk.Label(frame, text=name).grid(row=0, col=1, sticky="W")
 	Tk.Label(frame, text="Version").grid(row=1, col=0, sticky="E")
@@ -3477,12 +3673,12 @@ def onOk(self):
 else:
 	Tk.Label(frame, text="Version " + version).pack()
 	Tk.Label(frame, text=about, borderwidth=10).pack()</t>
-<t tx="T213">buttonbox = Tk.Frame(top, borderwidth=5)
+<t tx="T228">buttonbox = Tk.Frame(top, borderwidth=5)
 buttonbox.pack(side="bottom")
 
 self.button = Tk.Button(buttonbox, text="Close", command=top.destroy)
 self.button.pack(side="bottom")</t>
-<t tx="T214">def createPluginsMenu (tag,keywords):
+<t tx="T229">def createPluginsMenu (tag,keywords):
 
 	c = keywords.get("c")
 	old_path = sys.path[:] # Make a _copy_ of the path.
@@ -3505,7 +3701,7 @@ self.button.pack(side="bottom")</t>
 
 
 </t>
-<t tx="T215">for name,p in items:
+<t tx="T230">for name,p in items:
 	if p.hasconfig:
 		m = c.frame.createNewMenu(p.name, "&amp;Plugins")
 		table = [("About...", None, p.about),
@@ -3519,7 +3715,7 @@ self.button.pack(side="bottom")</t>
 	else:
 		table = ((p.name, None, p.about),)
 		c.frame.createMenuEntries(pluginMenu, table)</t>
-<t tx="T216">@ignore
+<t tx="T231">@ignore
 @language python
 
 """Test file for Plugins menu protocols"""
@@ -3536,7 +3732,7 @@ if 0: # Register the handlers...
 	
 	__version__ = "1.1"
 	plugin_signon(__name__)</t>
-<t tx="T217">def applyConfiguration(config):
+<t tx="T232">def applyConfiguration(config):
 	
 	sections = config.sections()
 	sections.sort()
@@ -3547,7 +3743,7 @@ if 0: # Register the handlers...
 		for option in options:
 			print section, option, config.get(section, option)
 </t>
-<t tx="T218">def cmd_fn1(x):
+<t tx="T233">def cmd_fn1(x):
 	es("Fn1",color="blue")
 
 def cmd_fn2(x):
@@ -3556,7 +3752,7 @@ def cmd_fn2(x):
 def cmd_fn3(x):
 	es("Fn3",color="blue")
 </t>
-<t tx="T219">def onSelect (tag,keywords):
+<t tx="T234">def onSelect (tag,keywords):
 
 	import Tkinter,os
 
@@ -3565,7 +3761,7 @@ def cmd_fn3(x):
 	if h[:7] == "@image ":
 		filename = h[7:]
 		&lt;&lt; Select Image &gt;&gt;</t>
-<t tx="T220"># Display the image file in the text pane, if you can find the file
+<t tx="T235"># Display the image file in the text pane, if you can find the file
 a = app()
 c = keywords.get("c")
 body = c.frame.body
@@ -3586,7 +3782,7 @@ if os.path.isfile(filename):
 	a.gsimage = body.image_create("1.0",image=photo,padx=padding)
 else:
 	es("warning: missing image file")</t>
-<t tx="T221">def onUnselect (tag,keywords):
+<t tx="T236">def onUnselect (tag,keywords):
 
 	import Tkinter, os.path
 	a = app()
@@ -3600,7 +3796,7 @@ else:
 	else: # Leo is initializing.
 		a.gsphoto = None # Holds our photo file
 		a.gsimage = None # Holds our image instance within the text pane</t>
-<t tx="T222"># Erase image if it was previously displayed
+<t tx="T237"># Erase image if it was previously displayed
 if a.gsimage:
 	try:
 		 c.frame.body.delete(a.gsimage)
@@ -3611,8 +3807,8 @@ if a.gsimage:
 a.gsimage = None
 a.gsphoto = None
 </t>
-<t tx="T223">@nocolor</t>
-<t tx="T224">Reorganized the code so I can find various classes more easily.
+<t tx="T238">@nocolor</t>
+<t tx="T239">Reorganized the code so I can find various classes more easily.
 Used @others to simply the outline.
 
 Sorted all entries in dialogs.
@@ -3626,7 +3822,7 @@ For all dialogs:
 Ctors now run all dialogs as modal dialogs: this could easily be undone.
 
 Used a grid in the properties dialog to align widgets.</t>
-<t tx="T225">- We will use a new settings file called leoSettings.txt:
+<t tx="T240">- We will use a new settings file called leoSettings.txt:
 - Each setting will have its _own section_ in leoSettings.txt with the following items (most optional)
 	val = present value of settings: Use parent setting if this does not exist.
 	help = help string (displayed near setting if it exists)
@@ -3649,7 +3845,7 @@ Notes:
 - We will want a Create Options file command (useful for converting old leoConfig.txt files)
 - All options may have a use parent settings (for all widgets?)
 - The separate "Groups" section may indicate which groups are subgroups of other groups for multi-level displays.</t>
-<t tx="T226">I wrote myself a plug-in which would automatically save the Leo file every so often and in doing so realized that it would be useful to be able to configure the interval between saves. Anyway, to cut a long story short, I generalized the idea and came up with the attached patch. 
+<t tx="T241">I wrote myself a plug-in which would automatically save the Leo file every so often and in doing so realized that it would be useful to be able to configure the interval between saves. Anyway, to cut a long story short, I generalized the idea and came up with the attached patch. 
  
 All code resides under the "Plug in changes" node. The additions are all under the "create the plug-in menu" node with another couple of lines in "createMenuBar". Structurally this is ugly - but it helps keep all the changes in one place!
  
@@ -3689,7 +3885,7 @@ Ok, here's what it does....
  
 7. If the module contains an "applyConfiguration" function then there is also an "Apply" button on the form. The apply configuration function is called with the current configuration when the "Apply" button is pressed.
 </t>
-<t tx="T227">"""Create a Scripts menu for LeoPy.leo"""
+<t tx="T242">"""Create a Scripts menu for LeoPy.leo"""
 
 from leoPlugins import *
 from leoGlobals import *
@@ -3702,7 +3898,7 @@ if 1: # Register the handlers...
 	
 	__version__ = "1.4"
 	plugin_signon(__name__)</t>
-<t tx="T228">def createScriptsMenu (tag,keywords):
+<t tx="T243">def createScriptsMenu (tag,keywords):
 
 	c = keywords.get("c")
 	path = os.path.join(app().loadDir,"..","scripts")
@@ -3722,7 +3918,7 @@ if 1: # Register the handlers...
 			files = glob.glob(os.path.join(dir,"*.py"))
 			if files:
 				&lt;&lt; Create a submenu for dir containing each file in files &gt;&gt;</t>
-<t tx="T229">if not top_scripts:
+<t tx="T244">if not top_scripts:
 	found = false
 	for dir in dirs:
 		scripts = glob.glob(os.path.join(dir,"*.py"))
@@ -3731,7 +3927,7 @@ if 1: # Register the handlers...
 	if not found:
 		return
 </t>
-<t tx="T230">table = []
+<t tx="T245">table = []
 top_scripts.sort()
 for script in top_scripts:
 	name = shortFileName(script)
@@ -3741,7 +3937,7 @@ for script in top_scripts:
 	
 c.frame.createMenuEntries(scriptsMenu, table)
 </t>
-<t tx="T231"># Create the submenu.
+<t tx="T246"># Create the submenu.
 name = os.path.join("scripts",shortFileName(dir))
 menu = c.frame.createNewMenu(name,"&amp;Scripts")
 
@@ -3755,8 +3951,8 @@ for file in files:
 	table.append((name,None,doScript),)
 
 c.frame.createMenuEntries(menu, table)</t>
-<t tx="T232"></t>
-<t tx="T233">"""Synchronize @folder nodes with folders"""
+<t tx="T247"></t>
+<t tx="T248">"""Synchronize @folder nodes with folders"""
 
 from leoPlugins import *
 from leoGlobals import *
@@ -3775,7 +3971,7 @@ if 0: # Register the handlers...
 
 	__version__ = "1.2" # Set version for the plugin handler.
 	plugin_signon(__name__)</t>
-<t tx="T234">@ If a node is named '@folder path_to_folder', the content (filenames) of the
+<t tx="T249">@ If a node is named '@folder path_to_folder', the content (filenames) of the
 folder and the children of that node will be sync. Whenever a new file is put
 there, a new node will appear on top of the children list (with mark). So that
 I can put my description (ie. annotation) as the content of that node. In this
@@ -3786,7 +3982,7 @@ children of another group. This will help when there are many files in that
 folder. You can logically group it in leo (or even clone it to many groups),
 while keep every files in a flat/single directory on your computer.
 </t>
-<t tx="T235">def sync_node_to_folder(parent,d):
+<t tx="T250">def sync_node_to_folder(parent,d):
 
 	oldlist = {}
 	newlist = []
@@ -3814,7 +4010,7 @@ while keep every files in a flat/single directory on your computer.
 	if len(oldlist)&gt;0:
 		es('missing: '+','.join(oldlist.keys()))
 </t>
-<t tx="T236">"""Inhibit changes to @read-only nodes"""
+<t tx="T251">"""Inhibit changes to @read-only nodes"""
 
 # Contributed by Davide Salomoni &lt;dsalomoni@yahoo.com&gt;
 
@@ -3837,7 +4033,7 @@ if 0: # Register the handlers...
 	__version__ = "1.5" # Set version for the plugin handler.
 	plugin_signon(__name__)
 </t>
-<t tx="T237">@ Dear Leo users,
+<t tx="T252">@ Dear Leo users,
 
 Here's my first attempt at customizing leo. I wanted to have the ability to
 import files in "read-only" mode, that is, in a mode where files could only
@@ -3871,7 +4067,7 @@ a "change" message is sent to the log window.
 
 Davide Salomoni
 </t>
-<t tx="T238">@ The syntax to access files in @read-only via ftp/http is the following:
+<t tx="T253">@ The syntax to access files in @read-only via ftp/http is the following:
 
 @read-only http://www.ietf.org/rfc/rfc0791.txt
 @read-only ftp://ftp.someserver.org/filepath
@@ -3882,7 +4078,7 @@ If FTP authentication (username/password) is required, it can be specified as fo
 
 For more details, see the doc string for the class FTPurl.
 </t>
-<t tx="T239">class FTPurl:
+<t tx="T254">class FTPurl:
 	"""An FTP wrapper class to store/retrieve files using an FTP URL.
 
     To create a connection, call the class with the constructor:
@@ -3903,7 +4099,7 @@ For more details, see the doc string for the class FTPurl.
 	
 	@others
 </t>
-<t tx="T240">def __init__(self, ftpURL, mode=''):
+<t tx="T255">def __init__(self, ftpURL, mode=''):
 	parse = urlparse.urlparse(ftpURL)
 	if parse[0] != 'ftp':
 		raise IOError, "error reading %s: malformed ftp URL" % ftpURL
@@ -3934,8 +4130,8 @@ For more details, see the doc string for the class FTPurl.
 	self.isConnectionOpen = 1
 	self.currentLine = 0
 </t>
-<t tx="T241"></t>
-<t tx="T242">def read(self):
+<t tx="T256"></t>
+<t tx="T257">def read(self):
 	"""Read the filename specified in the constructor and return it as a string.
     If the constructor specifies no filename, or if the URL ends with '/',
     return the list of files in the URL directory.
@@ -3960,7 +4156,7 @@ For more details, see the doc string for the class FTPurl.
 		raise IOError, msg
 
 </t>
-<t tx="T243">def readline(self):
+<t tx="T258">def readline(self):
 	"""Read one entire line from the remote file."""
 	try:
 		self.lst
@@ -3974,8 +4170,8 @@ For more details, see the doc string for the class FTPurl.
 	else:
 		return ''
 </t>
-<t tx="T244"></t>
-<t tx="T245">def write(self, s):
+<t tx="T259"></t>
+<t tx="T260">def write(self, s):
 	"""write(s) stores the string s to the filename specified in the
     constructor."""
 	self.checkParams()
@@ -3993,13 +4189,13 @@ For more details, see the doc string for the class FTPurl.
 		exception, msg, tb = sys.exc_info()
 		raise IOError, msg
 </t>
-<t tx="T246"></t>
-<t tx="T247">def seek(offset=0):
+<t tx="T261"></t>
+<t tx="T262">def seek(offset=0):
 	self.currentLine = 0  # we don't support fancy seeking via FTP
 </t>
-<t tx="T248">def flush():
+<t tx="T263">def flush():
 	pass # no fancy stuff here.</t>
-<t tx="T249">def dir(self, path=None):
+<t tx="T264">def dir(self, path=None):
 	"""Issue a LIST command passing the specified argument and return output as a string."""
 	s = []
 
@@ -4013,7 +4209,7 @@ For more details, see the doc string for the class FTPurl.
 		exception, msg, tb = sys.exc_info()
 		raise IOError, msg
 </t>
-<t tx="T250">def exists(self, path=None):
+<t tx="T265">def exists(self, path=None):
 	"""Return 1 if the specified path exists. If path is omitted, the current file name is tried."""
 	if path == None:
 		path = self.filename
@@ -4024,13 +4220,13 @@ For more details, see the doc string for the class FTPurl.
 	else:
 		return 0
 </t>
-<t tx="T251">def checkParams(self):
+<t tx="T266">def checkParams(self):
 	if self.mode not in ('','b'):
 		raise IOError, 'invalid mode: %s' % self.mode
 	if not self.isConnectionOpen:
 		raise IOError, 'ftp connection closed'
 </t>
-<t tx="T252">def close(self):
+<t tx="T267">def close(self):
 	"""Close an existing FTPurl connection."""
 	try:
 		self.ftp.quit()
@@ -4038,7 +4234,7 @@ For more details, see the doc string for the class FTPurl.
 		self.ftp.close()
 	del self.ftp
 	self.isConnectionOpen = 0</t>
-<t tx="T253"># Alas, these do not seem to work on XP:
+<t tx="T268"># Alas, these do not seem to work on XP:
 # disabling the body text _permanently_ stops the cursor from blinking.
 
 def enable_body(body):
@@ -4062,7 +4258,7 @@ def disable_body(body):
 			body.configure(state="disabled")
 		except: es_exception()
 </t>
-<t tx="T254"># Sets v's body text from the file with the given name.
+<t tx="T269"># Sets v's body text from the file with the given name.
 # Returns true if the body text changed.
 def insert_read_only_node (c,v,name):
 	if name=="":
@@ -4102,7 +4298,7 @@ def insert_read_only_node (c,v,name):
 
 
 </t>
-<t tx="T255">fh = cStringIO.StringIO()
+<t tx="T270">fh = cStringIO.StringIO()
 fmt = AbstractFormatter(DumbWriter(fh))
 # the parser stores parsed data into fh (file-like handle)
 parser = HTMLParser(fmt)
@@ -4123,7 +4319,7 @@ if numlinks &gt; 0:
 	for i in xrange(numlinks):
 		hyperlist.append("\n[%d]: %s" % (i+1,hyperlinks[i])) # 3/26/03: was i.
 	new = new + ''.join(hyperlist)</t>
-<t tx="T256">#  scan the outline and process @read-only nodes.
+<t tx="T271">#  scan the outline and process @read-only nodes.
 def on_open2 (tag,keywords):
 	
 	
@@ -4147,7 +4343,7 @@ def on_open2 (tag,keywords):
 		v = v.threadNext()
 	c.endUpdate()
 </t>
-<t tx="T257"># override the body key handler if we are in an @read-only node.
+<t tx="T272"># override the body key handler if we are in an @read-only node.
 
 def on_bodykey1 (tag,keywords):
 
@@ -4164,7 +4360,7 @@ def on_bodykey1 (tag,keywords):
 			body.delete("1.0","end")
 			body.insert("1.0",v.bodyString())
 		return 1 # Override the body key event handler.</t>
-<t tx="T258"># update the body text when we press enter
+<t tx="T273"># update the body text when we press enter
 
 def on_headkey2 (tag,keywords):
 
@@ -4176,14 +4372,14 @@ def on_headkey2 (tag,keywords):
 		# on-the-fly update of @read-only directives
 		changed = insert_read_only_node(c,v,h[11:])
 		c.setChanged(changed)</t>
-<t tx="T259">def on_select1 (tag,keywords):
+<t tx="T274">def on_select1 (tag,keywords):
 
 	# Doesn't work: the cursor doesn't start blinking.
 	# Enable the body text so select will work properly.
 	c = keywords.get("c")
 	enable_body(c.frame.body)
 </t>
-<t tx="T260">def on_select2 (tag,keywords):
+<t tx="T275">def on_select2 (tag,keywords):
 
 	c = keywords.get("c")
 	v = c.currentVnode()
@@ -4193,7 +4389,7 @@ def on_headkey2 (tag,keywords):
 	else:
 		enable_body(c.frame.body)
 </t>
-<t tx="T261">"""If a headline starts with @rst &lt;filename&gt;, double-clicking on it will 
+<t tx="T276">"""If a headline starts with @rst &lt;filename&gt;, double-clicking on it will 
 write a file in outline order, with the headlines converted to reStructuredText 
 section headings.
 If the name of the &lt;filename&gt; has the extension .html or .htm, and if you have
@@ -4217,7 +4413,7 @@ if 0: # Register the handlers...
 	__version__ = "1.5" # Set version for the plugin handler.
 	plugin_signon(__name__)
 </t>
-<t tx="T262">@ This plugin writes out @rst nodes as a reStructuredText file.
+<t tx="T277">@ This plugin writes out @rst nodes as a reStructuredText file.
 
 If the filename ends in .html or .htm and if you have docutils_ (a Python
 module) installed, then it will be written as HTML. The HTML converter is far
@@ -4238,7 +4434,7 @@ Otherwise, section underlining is discouraged, since it is automatically generat
 
 .. _docutils: http://docutils.sourceforge.net
 </t>
-<t tx="T263">@ Change log:
+<t tx="T278">@ Change log:
 
 - New tree types: @rst has been added.
 
@@ -4260,7 +4456,7 @@ Otherwise, section underlining is discouraged, since it is automatically generat
 
 
 </t>
-<t tx="T264"># by Josef Dalcolmo 2003-01-13
+<t tx="T279"># by Josef Dalcolmo 2003-01-13
 #
 # this does not check for proper filename syntax.
 # path is the current dir, or the place @folder points to
@@ -4280,7 +4476,7 @@ def onIconDoubleClick(tag,keywords):
 		else:
 			&lt;&lt; write rST file &gt;&gt;
 </t>
-<t tx="T265">try:
+<t tx="T280">try:
 	import docutils
 except:
 	docutils = None
@@ -4296,7 +4492,7 @@ if docutils:
 	htmlFile.close()
 	rstFile.close()
 	es('written: '+`fname`)</t>
-<t tx="T266"># this code snipped has been taken from code contributed by Paul Paterson 2002-12-05
+<t tx="T281"># this code snipped has been taken from code contributed by Paul Paterson 2002-12-05
 from docutils.core import Publisher
 from docutils.io import StringOutput, StringInput
 
@@ -4307,11 +4503,11 @@ pub.destination = StringOutput(pub.settings, encoding="utf-8")
 pub.set_reader('standalone', None, 'restructuredtext')
 pub.set_writer('html')
 output = pub.publish()</t>
-<t tx="T267">rstFile = file(fname,'w')
+<t tx="T282">rstFile = file(fname,'w')
 writeTreeAsRst(rstFile, fname, v, commands)
 rstFile.close()
 es('written: '+`fname`)</t>
-<t tx="T268">def writeTreeAsRst(rstFile, fname, vnode, commands):
+<t tx="T283">def writeTreeAsRst(rstFile, fname, vnode, commands):
 	'Writes the tree under vnode to the file rstFile (fname is the filename)'
 	# we don't write a title, so the titlepage can be customized
 	# use '#' for title under/overline
@@ -4347,12 +4543,12 @@ es('written: '+`fname`)</t>
 		rstFile.write(s+'\n')
 		rstFile.write('\n')
 		v = v.threadNext()</t>
-<t tx="T269"># note the first character is intentionally unused, to serve as the underline
+<t tx="T284"># note the first character is intentionally unused, to serve as the underline
 # character in a title (in the body of the @rst node)
 def underline(h,level):
 	str = """#=+*^~"'`-:&gt;&lt;_"""[level]
 	return str*max(len(h),4)+'\n'</t>
-<t tx="T270">"""Lauches (starts) a file with the name of the headline on double-clicking it.
+<t tx="T285">"""Lauches (starts) a file with the name of the headline on double-clicking it.
 Uses the @folder path if the headline is under an @folder headline.
 Otherwise the path is relative to the Leo file.
 Headlines starting with an '@' are ignored.
@@ -4373,18 +4569,18 @@ if 0: # Register the handlers...
 	
 	__version__ = "1.1" # Set version for the plugin handler.
 	plugin_signon(__name__)</t>
-<t tx="T271">@ This plugin starts a file with the name of a headline.
+<t tx="T286">@ This plugin starts a file with the name of a headline.
 
 
 </t>
-<t tx="T272">@ Change log
+<t tx="T287">@ Change log
 
 - JD: 2003-03-11 separated out from rst plugin
 
 
 
 </t>
-<t tx="T273"># @folder behavior after an idea and sample code by:
+<t tx="T288"># @folder behavior after an idea and sample code by:
 # korakot ( Korakot Chaovavanich ) @folder for files annotation 2002-11-27 02:39
 # 
 # open file (double-click = startfile) behavior added 
@@ -4407,7 +4603,7 @@ def onIconDoubleClick(tag,keywords):
 	else:
 		# open file with associated application
 		&lt;&lt; find path and start file &gt;&gt;</t>
-<t tx="T274"># Set the base directory by searching for @folder directives in ancestors.
+<t tx="T289"># Set the base directory by searching for @folder directives in ancestors.
 try:
 	basedir = os.curdir	# use current dir as default.
 	parv = v.parent()	# start with parent
@@ -4424,8 +4620,8 @@ except:
 	es(os.path.join(os.getcwd(),fname)+' - file or application not found')
 	es_exception()
 </t>
-<t tx="T275"></t>
-<t tx="T276">from leoPlugins import *
+<t tx="T290"></t>
+<t tx="T291">from leoPlugins import *
 from leoGlobals import *
 
 Tk = Tkinter
@@ -4442,7 +4638,7 @@ if 0: # Override classes &amp; methods...
 
 	__version__ = "1.2"
 	plugin_signon(__name__)</t>
-<t tx="T277"># print "overriding LeoFrame class"
+<t tx="T292"># print "overriding LeoFrame class"
 
 import leoFrame
 
@@ -4458,7 +4654,7 @@ class myLeoFrame(leoFrame.leoCoreFrame):
 			leoFrame.leoCoreFrame.__init__(self,title)
 
 leoFrame.LeoFrame = myLeoFrame</t>
-<t tx="T278">import leoApp
+<t tx="T293">import leoApp
 
 # print "overriding app.closeLeoWindow"
 
@@ -4472,7 +4668,7 @@ def myAppCloseLeoWindow(self,frame):
 	print "after closeLeoWindow"
 
 funcToMethod(myAppCloseLeoWindow,leoApp.LeoApp,"closeLeoWindow")</t>
-<t tx="T279">"""Override the Equal Sized Pane command"""
+<t tx="T294">"""Override the Equal Sized Pane command"""
 
 from leoPlugins import *
 from leoGlobals import *
@@ -4484,12 +4680,12 @@ if 0: # Register the handlers...
 	
 	__version__ = "1.2"
 	plugin_signon(__name__)</t>
-<t tx="T280">def onCommand (tag,keywords):
+<t tx="T295">def onCommand (tag,keywords):
 
 	if keywords.get("label")=="equalsizedpanes":
 		es("over-riding Equal Sized Panes")
 		return "override" # Anything other than None overrides.</t>
-<t tx="T281">"""Redefine the "put" and "put_nl" methods"""
+<t tx="T296">"""Redefine the "put" and "put_nl" methods"""
 
 from leoPlugins import *
 from leoGlobals import *
@@ -4501,7 +4697,7 @@ if 0: # Register the handlers...
 	
 	__version__ = "1.2"
 	plugin_signon(__name__)</t>
-<t tx="T282">@ This code illustrates how to redefine _any_ method of Leo.
+<t tx="T297">@ This code illustrates how to redefine _any_ method of Leo.
 Python makes this is almost too easy :-)
 @c
 
@@ -4515,7 +4711,7 @@ def onStart (tag,keywords):
 	# Replace frame.putnl with newPutNl.
 	funcToMethod(newPutNl,leoFrame.LeoFrame,"putnl")
 </t>
-<t tx="T283"># Contrived examples of how to redefine frame.put and frame.putnl
+<t tx="T298"># Contrived examples of how to redefine frame.put and frame.putnl
 
 # Same as frame.put except converts everything to upper case.
 def newPut (self,s,color="black"):
@@ -4537,7 +4733,7 @@ def newPutNl (self):
 		self.log.see("end")
 		self.log.update_idletasks()
 	else: print</t>
-<t tx="T284">"""Send all output to the log pane"""
+<t tx="T299">"""Send all output to the log pane"""
 
 from leoPlugins import *
 from leoGlobals import *
@@ -4554,7 +4750,7 @@ if 0: # Register the handlers...
 	plugin_signon(__name__)
 
 </t>
-<t tx="T285">"""Send output from the Execute Script command to the end of the body pane"""
+<t tx="T300">"""Send output from the Execute Script command to the end of the body pane"""
 
 from leoPlugins import *
 from leoGlobals import *
@@ -4567,14 +4763,14 @@ if 0: # Register the handlers...
 	__version__ = "1.2" # Set version for the plugin handler.
 	plugin_signon(__name__)
 </t>
-<t tx="T286">def onStart (tag,keywords):
+<t tx="T301">def onStart (tag,keywords):
 	
 	import leoFrame
 	
 	# Replace frame.put with newPut.
 	funcToMethod(newExecuteScript,leoFrame.LeoFrame,"OnExecuteScript")
 </t>
-<t tx="T287"># Execute the _selected_ body text as a Python script and sends the output to the end of the body pane.
+<t tx="T302"># Execute the _selected_ body text as a Python script and sends the output to the end of the body pane.
 
 def newExecuteScript(self,event=None,v=None):
 	
@@ -4624,7 +4820,7 @@ def newExecuteScript(self,event=None,v=None):
 	else:
 		es("no script selected")
 </t>
-<t tx="T288"># Same as frame.put except sends output to the end of the body text.
+<t tx="T303"># Same as frame.put except sends output to the end of the body text.
 def newPut (self,s):
 	if self.body:
 			self.body.insert("end",s)
@@ -4636,7 +4832,7 @@ def newPut (self,s):
 # Same as frame.putnl exceptsends output to the end of the body text.
 def newPutNl (self):
 	newPut (self,'\n')</t>
-<t tx="T289">def newEnl():
+<t tx="T304">def newEnl():
 	print
 	
 def newEcnl():
@@ -4660,8 +4856,8 @@ def newEs(s,*args,**keys):
 	else:
 		print s,
 </t>
-<t tx="T290">@nocolor</t>
-<t tx="T291">- (done) Make sure the selected node is visible.
+<t tx="T305">@nocolor</t>
+<t tx="T306">- (done) Make sure the selected node is visible.
 - (done) Force the focus to the body pane after undo/redo so the selection is visible.
 
 - Bind Fkeys to buttons.
