@@ -21,6 +21,26 @@ visibleInitially = False # True: open spell dialog initially.
 # Change this path in setup.py if you recompile the pyd.
 aspell_dir = r'c:/Aspell'
 
+__version__ = "0.6"
+#@<< version history >>
+#@+node:<< version history >>
+#@+at
+# 
+# 0.4 EKR: Use the new leoTkinterFind class.
+# 
+# 0.4.1 e:
+#     Use Pyrex wrapper and aspell.pyd.
+#     No longer uses pipes: much faster and more reliable.
+#     Uses the existing mod_spelling.ini and txt local word list.
+# 0.5 EKR: Various minor mods, including support for unit testing.
+# 
+# 0.6 EKR: Hacked findNextWord so contractions are handled properly.
+#     tcl_wordchars defines the characters in a word, but I don't know how to 
+# set this.
+#@-at
+#@nonl
+#@-node:<< version history >>
+#@nl
 #@<< spellpx imports >>
 #@+node:<< spellpx imports >>
 import leoGlobals as g
@@ -31,13 +51,11 @@ try:
     import Tkinter as Tk
 except ImportError:
     Tk = None
-    s = "Can not import Tk"
-    print s ; g.es(s,color="blue")
-
+    cantImport("Tk")
+  
 aspell = g.importFromPath("aspell",aspell_dir,verbose=False)
 if not aspell:
-    s = "Can not import aspell from %s" % aspell_dir
-    print s ; g.es(s,color="blue")
+    cantImport("aspell from %s" % aspell_dir)
     
 import ConfigParser
 import os
@@ -50,11 +68,15 @@ import traceback
 #@nl
 
 if Tk and aspell and not g.app.unitTesting:
-
-    # print "spellpy loaded",aspell
-
     #@    @+others
     #@+node:Functions
+    #@+node:cantImport
+    def cantImport (s):
+        
+        message = "Can not import " + s
+        print message
+        g.es(message,color="blue")
+    #@-node:cantImport
     #@+node:createSpellMenu
     def createSpellMenu(tag, keywords):
     
@@ -158,22 +180,11 @@ if Tk and aspell and not g.app.unitTesting:
             # «original» «offset» 
             simplifyed to not create the string then make a list from it    
             """
-            
-            # print "processWord",`word`
-            #ret = "*\n"
-            retl = None
         
-            if not self.sc.check(word):
-                retl = self.sc.suggest(word)
-                #if not retl:
-                #    ret = "& %s %d 0: %s\n"%(word, len(retl), ','.join(retl))
-        
-            # print "processWord ret", `retl`  #`ret`
-            #the pipe was returning a coma delimited string
-        
-            #why make a string then reprocess to strip it back out?
-            #if ret == "*\n": return None
-            return retl #self.listAlternates(ret)  
+            if self.sc.check(word):
+                return None
+            else:
+                return self.sc.suggest(word)
         #@nonl
         #@-node:processWord
         #@+node:updateDictionary
@@ -181,7 +192,7 @@ if Tk and aspell and not g.app.unitTesting:
         
             """Update the aspell dictionary from a list of words.
             
-            Return True if the dictionary was update correctly."""
+            Return True if the dictionary was updated correctly."""
         
             try:
                 # Create master list
@@ -662,14 +673,15 @@ if Tk and aspell and not g.app.unitTesting:
         #@nonl
         #@-node:findNextMisspelledWord
         #@+node:findNextWord
-        def findNextWord(self, v):
+        def findNextWord(self,v):
+        
             """Scan for the next word, leaving the result in the work widget"""
         
             t = self.workCtrl
             word_start = string.letters + '_'
             t.mark_set("insert", "insert wordend + 1c")
             while 1:
-                # print `t.index("insert")`, `t.index("end-1c")`
+                # gtrace(t.index("insert"),t.index("end-1c"))
                 if t.compare("insert",">=", "end - 1c"):
                     v = v.threadNext()
                     if not v: return None,None
@@ -682,9 +694,15 @@ if Tk and aspell and not g.app.unitTesting:
                     ch = t.get("insert")
                     if ch in word_start:
                         word = t.get("insert wordstart", "insert wordend")
-                        g.app.gui.setTextSelection(
-                                    t, "insert wordstart", "insert wordend")
-                        # print "findNextWord:",`word`
+                        ch2 = t.get("insert wordend")
+                        if ch2 in "'`":
+                            word = t.get("insert wordstart", "insert wordend + 1c wordend")
+                            g.app.gui.setTextSelection(
+                                t, "insert wordstart", "insert wordend + 1c wordend")
+                        else:
+                            g.app.gui.setTextSelection(
+                                t, "insert wordstart", "insert wordend")
+                        # g.trace(word)
                         return v, word
                     elif ch:
                         t.mark_set("insert", "insert + 1c")
@@ -767,7 +785,6 @@ if Tk and aspell and not g.app.unitTesting:
     #@nonl
     #@-node:class spellDialog (leoTkinterFind)
     #@-others
-
     if g.app.gui is None:
         g.app.createTkGui(__file__)
 
@@ -779,13 +796,6 @@ if Tk and aspell and not g.app.unitTesting:
         leoPlugins.registerHandler("command2", onCommand) 
         leoPlugins.registerHandler(
                 ("bodyclick2","bodydclick2","bodyrclick2","bodykey2","select2"),onSelect)
-        
-        __version__ = "0.5"
-            # 0.4: EKR: Use the new leoTkinterFind class.
-            # 0.4.1: e: Use Pyrex wrapper and aspell.pyd.
-                # No longer uses pipes: much faster and more reliable.
-                # Uses the existing mod_spelling.ini and txt local word list.
-            # 0.5: EKR: Various minor mods, including support for unit testing.
         g.plugin_signon(__name__)
 #@nonl
 #@-node:@file spellpyx.py
