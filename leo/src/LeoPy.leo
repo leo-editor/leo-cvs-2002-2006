@@ -12,7 +12,7 @@
 	<change_string></change_string>
 </find_panel_settings>
 <vnodes>
-<v t="edream.110203160744" a="E"><vh> Diary</vh>
+<v t="edream.110203160744"><vh> Diary</vh>
 <v t="edream.120103054230" a="E"><vh>December 2003</vh>
 <v t="edream.120103054230.1" a="E"><vh>12/01</vh>
 <v t="edream.120103054230.2"><vh>Update recent files in newLeoCommanderAndFrame</vh></v>
@@ -971,6 +971,9 @@
 </v>
 </v>
 <v t="edream.110403112538"><vh>To do: 4.1 beta</vh>
+<v t="edream.120103074439"><vh>button context menu in body panel</vh></v>
+<v t="edream.120103060252"><vh>Study SPE editor</vh></v>
+<v t="edream.120103072109"><vh>More intelligent untangling of clones</vh></v>
 <v t="edream.112303120320"><vh>(Bold font in body)</vh>
 <v t="edream.110203160744.2289" a=""><vh>tkBody.setBodyFontFromConfig</vh></v>
 <v t="edream.110203160744.2956" a=""><vh>config.getFontFromParams</vh></v>
@@ -4726,7 +4729,7 @@
 </v>
 <v t="edream.111203134839"><vh>Must be overridden in subclasses</vh></v>
 </v>
-<v t="edream.110203160744.3000" tnodeList="edream.110203160744.3000,edream.110203160744.3001,edream.110203160744.596,edream.110203160744.1576,edream.110203160744.1577,edream.110203160744.1579,edream.110203160744.1578,edream.110203160744.2114,edream.110203160744.3003,edream.110203160744.3004,edream.110203160744.1364,edream.110203160744.1365,edream.110203160744.1366,edream.110203160744.1367,edream.110203160744.998,edream.110203160744.999,edream.110203160744.1000,edream.110203160744.1368,edream.110203160744.1369,edream.110203160744.1370,edream.110203160744.1371,edream.110203160744.1372,edream.110203160744.1373,edream.110203160744.1374,edream.110203160744.1375,edream.110203160744.1376,edream.110203160744.1377,edream.110203160744.1378,edream.110203160744.1379,edream.110203160744.1380,edream.110203160744.1381,edream.110203160744.1382,edream.110203160744.1706,edream.110203160744.2150,edream.110203160744.2151,edream.110203160744.2152,edream.110203160744.1870,edream.110203160744.3025,edream.110203160744.3026,edream.110203160744.3027,edream.110203160744.3028,edream.110203160744.3029,edream.110203160744.3030,edream.110203160744.2126,edream.110203160744.3034,edream.110203160744.3035,edream.110203160744.3036,edream.110203160744.1298,edream.110203160744.3008,edream.110203160744.3009,edream.110203160744.1002,edream.110203160744.2378,edream.110203160744.3010,edream.110203160744.3011,edream.110203160744.1658,edream.110203160744.3012,edream.110203160744.3013,edream.110203160744.3014,edream.110203160744.3015,edream.110203160744.979,edream.110203160744.1001,edream.110203160744.3031,edream.110203160744.3032,edream.110203160744.3033,edream.110203160744.3016,edream.110203160744.3017,edream.110203160744.2379,edream.110203160744.3018,edream.110203160744.1774,edream.110203160744.3019,edream.110203160744.3021,edream.110203160744.3022,edream.110203160744.3023,edream.110203160744.3024,edream.110203160744.3037,edream.110203160744.2362,edream.111903073836,edream.111903073836.1,edream.111903072321,edream.111903073836.2,edream.111903073836.3,edream.111903072321.1,edream.111903074628,edream.110203160744.2365,edream.111903080554,edream.111903080048,edream.110203160744.2363,edream.110203160744.2364,edream.111903072321.2,edream.111903080048.1,edream.110203160744.1594,edream.110203160744.1595,edream.110203160744.1596,edream.110203160744.1597,edream.110203160744.1598,edream.110203160744.1599,edream.110203160744.1297,edream.110203160744.1602,edream.110203160744.1299,edream.110203160744.2380,edream.110203160744.3045,edream.110203160744.3046,edream.110203160744.3047,edream.110203160744.3048,edream.110203160744.3049,edream.110203160744.1887,edream.110203160744.3050,edream.110203160744.1456,edream.110203160744.1973,edream.110203160744.3052,edream.110203160744.3054,edream.110203160744.3055,edream.110203160744.3056,edream.110203160744.3057,edream.110203160744.3058,edream.110203160744.3059,edream.110203160744.3060,edream.110203160744.3061,edream.110203160744.3062,edream.110203160744.3063,edream.110203160744.3064,edream.110203160744.3065,edream.110203160744.3066,edream.110203160744.3067,edream.110203160744.3068,edream.110203160744.3069,edream.110203160744.3070,edream.110203160744.3071,edream.110203160744.3072,edream.110203160744.3073,edream.110203160744.3074,edream.110203160744.3075,edream.110203160744.3077,edream.110203160744.3078,edream.110203160744.3079,edream.110203160744.3080,edream.110203160744.3081,edream.110203160744.3082,edream.110203160744.3083,edream.110203160744.3084,edream.110203160744.3085,edream.110203160744.3086,edream.110203160744.3087,edream.110203160744.3088,edream.110203160744.3089,edream.110203160744.3090,edream.110203160744.3091,edream.110203160744.3092,edream.110203160744.3093,edream.110203160744.3094,edream.110203160744.3095,edream.110203160744.3096,edream.110203160744.3097,edream.110203160744.2149,edream.110603105919.1,edream.110203160744.1480,edream.110203160744.1481,edream.110203160744.1482,edream.110203160744.1483,edream.110203160744.1484,edream.110203160744.1485,edream.110203160744.1486,edream.110203160744.3099,edream.110203160744.3100,edream.110203160744.3101,edream.110203160744.3102,edream.110203160744.3103,edream.110203160744.3104,edream.110203160744.3105,edream.110203160744.3106"><vh>@file leoGlobals.py</vh>
+<v t="edream.110203160744.3000" a="E" tnodeList="edream.110203160744.3000,edream.110203160744.3001,edream.110203160744.596,edream.110203160744.1576,edream.110203160744.1577,edream.110203160744.1579,edream.110203160744.1578,edream.110203160744.2114,edream.110203160744.3003,edream.110203160744.3004,edream.110203160744.1364,edream.110203160744.1365,edream.110203160744.1366,edream.110203160744.1367,edream.110203160744.998,edream.110203160744.999,edream.110203160744.1000,edream.110203160744.1368,edream.110203160744.1369,edream.110203160744.1370,edream.110203160744.1371,edream.110203160744.1372,edream.110203160744.1373,edream.110203160744.1374,edream.110203160744.1375,edream.110203160744.1376,edream.110203160744.1377,edream.110203160744.1378,edream.110203160744.1379,edream.110203160744.1380,edream.110203160744.1381,edream.110203160744.1382,edream.110203160744.1706,edream.110203160744.2150,edream.110203160744.2151,edream.110203160744.2152,edream.110203160744.1870,edream.110203160744.3025,edream.110203160744.3026,edream.110203160744.3027,edream.110203160744.3028,edream.110203160744.3029,edream.110203160744.3030,edream.110203160744.2126,edream.110203160744.3034,edream.110203160744.3035,edream.110203160744.3036,edream.110203160744.1298,edream.110203160744.3008,edream.110203160744.3009,edream.110203160744.1002,edream.110203160744.2378,edream.110203160744.3010,edream.110203160744.3011,edream.110203160744.1658,edream.110203160744.3012,edream.110203160744.3013,edream.110203160744.3014,edream.110203160744.3015,edream.110203160744.979,edream.110203160744.1001,edream.110203160744.3031,edream.110203160744.3032,edream.110203160744.3033,edream.110203160744.3016,edream.110203160744.3017,edream.110203160744.2379,edream.110203160744.3018,edream.110203160744.1774,edream.110203160744.3019,edream.110203160744.3021,edream.110203160744.3022,edream.110203160744.3023,edream.110203160744.3024,edream.110203160744.3037,edream.110203160744.2362,edream.111903073836,edream.111903073836.1,edream.111903072321,edream.111903073836.2,edream.111903073836.3,edream.111903072321.1,edream.111903074628,edream.110203160744.2365,edream.111903080554,edream.111903080048,edream.110203160744.2363,edream.110203160744.2364,edream.111903072321.2,edream.111903080048.1,edream.110203160744.1594,edream.110203160744.1595,edream.110203160744.1596,edream.110203160744.1597,edream.110203160744.1598,edream.110203160744.1599,edream.110203160744.1297,edream.110203160744.1602,edream.110203160744.1299,edream.110203160744.2380,edream.110203160744.3045,edream.110203160744.3046,edream.110203160744.3047,edream.110203160744.3048,edream.110203160744.3049,edream.110203160744.1887,edream.110203160744.3050,edream.110203160744.1456,edream.110203160744.1973,edream.110203160744.3052,edream.110203160744.3054,edream.110203160744.3055,edream.110203160744.3056,edream.110203160744.3057,edream.110203160744.3058,edream.110203160744.3059,edream.110203160744.3060,edream.110203160744.3061,edream.110203160744.3062,edream.110203160744.3063,edream.110203160744.3064,edream.110203160744.3065,edream.110203160744.3066,edream.110203160744.3067,edream.110203160744.3068,edream.110203160744.3069,edream.110203160744.3070,edream.110203160744.3071,edream.110203160744.3072,edream.110203160744.3073,edream.110203160744.3074,edream.110203160744.3075,edream.110203160744.3077,edream.110203160744.3078,edream.110203160744.3079,edream.110203160744.3080,edream.110203160744.3081,edream.110203160744.3082,edream.110203160744.3083,edream.110203160744.3084,edream.110203160744.3085,edream.110203160744.3086,edream.110203160744.3087,edream.110203160744.3088,edream.110203160744.3089,edream.110203160744.3090,edream.110203160744.3091,edream.110203160744.3092,edream.110203160744.3093,edream.110203160744.3094,edream.110203160744.3095,edream.110203160744.3096,edream.110203160744.3097,edream.110203160744.2149,edream.110603105919.1,edream.110203160744.1480,edream.110203160744.1481,edream.110203160744.1482,edream.110203160744.1483,edream.110203160744.1484,edream.110203160744.1485,edream.110203160744.1486,edream.110203160744.3099,edream.110203160744.3100,edream.110203160744.3101,edream.110203160744.3102,edream.110203160744.3103,edream.110203160744.3104,edream.110203160744.3105,edream.110203160744.3106"><vh>@file leoGlobals.py</vh>
 <v t="edream.110203160744.3001"><vh>&lt;&lt; define general constants &gt;&gt;</vh></v>
 <v t="edream.110203160744.3002"><vh>Checking Leo Files...</vh>
 <v t="edream.110203160744.596" a=""><vh>createTopologyList</vh></v>
@@ -6710,11 +6713,20 @@
 </v>
 </v>
 <v t="edream.112403065048"><vh>Tip</vh></v>
-<v t="edream.112403065412" a="EV"><vh>(Recent files bug)</vh>
+<v t="edream.112403065412"><vh>(Fixed Recent files bug)</vh>
 <v t="edream.110203160744.1846" a=""><vh>newLeoCommanderAndFrame (gui-independent)</vh>
 <v t="edream.110203160744.1847"><vh>&lt;&lt; compute the window title &gt;&gt;</vh></v>
 </v>
 <v t="edream.110203160744.1106" a=""><vh>updateRecentFiles</vh></v>
+</v>
+<v t="edream.120103080032" a="V"><vh>(Fixed Linux import problem)</vh>
+<v t="edream.110203160744.2380" a=""><vh>importFromPath</vh></v>
+</v>
+<v t="edream.120103073624"><vh>(Fix Toggle Angle Brackets)</vh>
+<v t="edream.120103073624.1"><vh>Report</vh></v>
+</v>
+<v t="edream.120103075217"><vh>(Fix apply settings bug)</vh>
+<v t="edream.120103075217.1"><vh>Report</vh></v>
 </v>
 </vnodes>
 <tnodes>
@@ -37168,6 +37180,8 @@ def get_Sherlock_args (args):
 			fn = shortFileName(name)
 			mod_name,ext = os_path_splitext(fn)
 			path = os_path_normpath(path)
+			path = toEncodedString(path,app.tkEncoding) # 12/01/03
+			# trace(path)
 			data = imp.find_module(mod_name,[path]) # This can open the file.
 			if data:
 				file,pathname,description = data
@@ -60363,5 +60377,64 @@ bolt
 <t tx="edream.120103054230"></t>
 <t tx="edream.120103054230.1"></t>
 <t tx="edream.120103054230.2">This fixes several related bugs:  updateRecentFiles was not being called except when openWithFileName was called.</t>
+<t tx="edream.120103060252">http://spe.pycs.net/</t>
+<t tx="edream.120103072109">By: nobody ( Nobody/Anonymous ) 
+ About "@file" untangling and clones   
+2003-11-24 23:55  
+
+ I really like generating source code with the @file directive. I like even most to see it untangle all my changes back to the outline! 
+
+I only wish the untangler would not _only_ use the last instance of a clone in the untangling process...
+
+I understand the difficulty of making it otherwise, but hey, here is my algo anyways...:
+0-before untangling:save a reference copy of a found clone for each clone in the outline!
+1-Start untangling,
+2- once you reach a clone node: compare, if changed update all instances of outline
+3-later in untangling, if same is found but no change in regards to reference copy, leave it as last found. ---END OF ALGORITHM
+
+so you see, only the last _Changed_ instance of a clone would have precedence in the untangling process. I understand it would need some memory &amp; more process time for each clone in an outline! but I dont care if untangle takes 3 minutes instead of 3 seconds... and it just doubles the memory requirements... but untangling is a killer-Feature.
+--
+bolt  </t>
+<t tx="edream.120103073624"></t>
+<t tx="edream.120103073624.1">I just installed Leo - if I hit Ctrl+B to toggle brackets on a headline I get
+the following traceback:
+
+Traceback (most recent call last):
+  File "D:\bin\Leo414beta\leo-4.1-beta-4\src\leoCommands.py", line 127,
+in doCommand
+    command()
+  File "D:\bin\Leo414beta\leo-4.1-beta-4\src\leoCommands.py", line 2140, in
+toggleAngleBrackets
+    c.frame.editLabel(v)
+AttributeError: leoTkinterFrame instance has no attribute 'editLabel'
+
+</t>
+<t tx="edream.120103074439">Read and respond to this message at: 
+https://sourceforge.net/forum/message.php?msg_id=2311537
+By: ejoy
+
+Hello delevepers:
+  I think add a right button context menu in body panel is useful. Especially
+for cut&amp;copy&amp;paste operations.
+</t>
+<t tx="edream.120103075217"></t>
+<t tx="edream.120103075217.1">Read and respond to this message at: 
+https://sourceforge.net/forum/message.php?msg_id=2311532
+By: ejoy
+
+on a win2k box with python 2.3.2 and a win98 box with python 2.2.2. When click
+Help-&gt;Apply Settings I get:
+leoConfig.txt encoding: utf-8
+exception executing command
+Traceback (most recent call last):
+  File "F:\Program Files\Leo\src\leoCommands.py", line 127, in doCommand
+    command()
+  File "F:\Program Files\Leo\src\leoCommands.py", line 3434, in applyConfig
+    c.frame.reconfigureFromConfig()
+  File "F:\Program Files\Leo\src\leoTkinterFrame.py", line 732, in
+reconfigureFromConfig
+    frame.body.setTabWidth(c.tab_width)
+AttributeError: leoTkinterBody instance has no attribute 'setTabWidth'</t>
+<t tx="edream.120103080032"></t>
 </tnodes>
 </leo_file>
