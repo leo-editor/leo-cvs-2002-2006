@@ -331,7 +331,7 @@ class tkinterGui(leoGui.leoGui):
 			widget.focus_set()
 	#@nonl
 	#@-node:set_focus
-	#@+node:getFontFromParams
+	#@+node:tkGui.getFontFromParams
 	def getFontFromParams(self,family,size,slant,weight):
 		
 		family_name = family
@@ -348,7 +348,7 @@ class tkinterGui(leoGui.leoGui):
 			es_exception()
 			return app.config.defaultFont
 	#@nonl
-	#@-node:getFontFromParams
+	#@-node:tkGui.getFontFromParams
 	#@+node:attachLeoIcon & createLeoIcon
 	def attachLeoIcon (self,w):
 		
