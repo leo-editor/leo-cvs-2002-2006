@@ -688,16 +688,35 @@ def es_event_exception (eventName,full=False):
 def es_exception (full=True,c=None):
     
     typ,val,tb = sys.exc_info()
-    errList = traceback.format_exception(typ,val,tb)
-    
+   
+    n = None ; lines = []
+
     if full:
-        lines = errList
+        lines = traceback.format_exception(typ,val,tb)
     else:
+        # Kludgy, but it seems to work.
+        errList = traceback.format_exception(typ,val,tb)
         # Strip cruft lines.
         s1 = "Traceback (most recent call last):"
-        s2 = "exec s in {}"
+        s2 = "exec script in {}"
         lines = []
         for line in errList[-4:]:
+            if n is None:
+                tag = 'File "<string>", line'
+                i = line.find(tag)
+                if i > -1:
+                    #@                    << compute n from the line >>
+                    #@+node:EKR.20040612223431:<< compute n from the line >>
+                    i += len(tag)
+                    j = line.find(',',i)
+                    if j > i: n = line[i:j]
+                    else:     n = line[i:].strip()
+                    # g.trace(n)
+                    try: n = int(n)
+                    except (TypeError,ValueError): n = None
+                    #@nonl
+                    #@-node:EKR.20040612223431:<< compute n from the line >>
+                    #@nl
             if not g.match(line,0,s1) and line.find(s2) == -1:
                 lines.append(line)
 
@@ -705,6 +724,8 @@ def es_exception (full=True,c=None):
         g.es_error(line)
         if not g.stdErrIsRedirected():
             print line
+
+    return n
 #@nonl
 #@-node:ekr.20031218072017.3112:es_exception
 #@+node:ekr.20031218072017.3113:printBindings
