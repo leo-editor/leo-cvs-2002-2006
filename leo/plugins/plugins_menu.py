@@ -57,7 +57,7 @@ import sys
 #@nonl
 #@-node:ekr.20050101090207.10:<< imports >>
 #@nl
-__version__ = "1.4"
+__version__ = "1.5"
 #@<< version history >>
 #@+node:ekr.20050101100033:<< version history >>
 #@+at
@@ -65,6 +65,13 @@ __version__ = "1.4"
 # 1.4 EKR:
 #     - Check at runtime to make sure that the plugin has been loaded before 
 # calling topLevelMenu function.
+# 
+# 1.5 EKR:
+#     - Check for ImportError directly in Plugin.__init__.
+#       Alas, this can not report import problems without more work.
+#       This _really_ should be done, but it will have to wait.
+#       As a workaround, plugins_manager.py now has an init method and reports 
+# its own import problems.
 #@-at
 #@nonl
 #@-node:ekr.20050101100033:<< version history >>
@@ -91,8 +98,8 @@ class PlugIn:
         self.filename = g.os_path_abspath(filename)
         try:
             self.mod = __import__(g.os_path_splitext(g.os_path_basename(filename))[0])
-            if not self.mod:
-                return
+            if not self.mod: return
+            # g.trace('Plugin',self.mod)
             try:
                 self.name = self.mod.__plugin_name__
             except AttributeError:
@@ -105,7 +112,14 @@ class PlugIn:
             self.doc = self.mod.__doc__
             self.version = self.mod.__dict__.get("__version__") # "<unknown>")
             # if self.version: print self.version,g.shortFileName(filename)
-        except: return
+        except ImportError:
+            # s = 'Can not import %s in plugins_menu plugin' % g.shortFileName(filename)
+            # print s ; g.es(s,color='blue')
+            return
+        except Exception:
+            s = 'Unexpected exception in plugins_menu plugin importing %s' % filename
+            print s ; g.es(s,color='red')
+            return
     
         #@    << Check if this can be configured >>
         #@+node:EKR.20040517080555.5:<< Check if this can be configured >>

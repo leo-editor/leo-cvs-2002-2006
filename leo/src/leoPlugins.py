@@ -229,14 +229,13 @@ def loadOnePlugin (moduleOrFileName, verbose=False):
             # Guess that the module was loaded correctly.
             loadedModules[moduleName] = result
         loadingModuleNameStack.pop()
-    
-    if verbose:
-        if result is None:
-            s = 'can not load %s plugin' % moduleName
-            print s ; g.es(s,color="blue")
-        else:
-            s = 'loaded %s plugin' % moduleName
-            print s ; g.es(s,color="blue")
+        
+    if result is None:
+        s = 'can not load enabled %s plugin' % moduleName
+        print s ; g.es(s,color="red")
+    elif verbose:
+        s = 'loaded %s plugin' % moduleName
+        print s ; g.es(s,color="blue")
     
     return result
 #@-node:ekr.20041113113140:loadOnePlugin
