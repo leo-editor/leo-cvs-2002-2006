@@ -304,6 +304,10 @@ class baseLeoFrame:
 		
 		self.createStatusLine()
 		self.putStatusLine("Welcome to Leo")
+		
+		if 0: # Causes the cursor not to blink.
+			self.body.configure(insertofftime=0)
+	#@nonl
 	#@-node:f.createLeoFrame
 	#@+node:frame.destroyAllPanels
 	def destroyAllPanels (self):

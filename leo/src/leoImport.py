@@ -87,7 +87,7 @@ class baseLeoImportCommands:
 		# Note: we should _not_ import header files using this code.
 		ext = ext.lower()
 		appendFileFlag = ext not in (
-			".c", ".cpp", ".cxx", ".java", ".pas", ".py", ".pyw", ".php")
+			".c", ".cpp", ".cxx", ".el", ".java", ".pas", ".py", ".pyw", ".php")
 		#@	<< Read file into s >>
 		#@+node:<< Read file into s >>
 		try:
@@ -116,6 +116,8 @@ class baseLeoImportCommands:
 			v.setBodyStringOrPane("@ignore\n" + self.rootLine + s)
 		elif ext in (".c", ".cpp", ".cxx"):
 			self.scanCText(s,v)
+		elif ext == ".el":
+			self.scanElispText(s,v)
 		elif ext == ".java":
 			self.scanJavaText(s,v,true) #outer level
 		elif ext == ".pas":
@@ -1490,6 +1492,110 @@ class baseLeoImportCommands:
 		#@nl
 	#@nonl
 	#@-node:scanCText
+	#@+node:scanElispText & allies
+	def scanElispText(self,s,v):
+		
+		c = self.commands
+		v.appendStringToBody("@ignore\n@language elisp\n")
+		i = 0 ; start = 0
+		while i < len(s):
+			progress = i
+			ch = s[i] ; # trace(get_line(s,i))
+			if ch == ';':
+				i = skip_line(s,i)
+			elif ch == '(':
+				j = self.skipElispParens(s,i)
+				k = skip_ws(s,i+1)
+				if match_word(s,k,"defun") or match_word(s,k,"defconst") or match_word(s,k,"defvar"):
+					data = s[start:i]
+					if data.strip():
+						self.createElispDataNode(v,data)
+					self.createElispFunction(v,s[i:j+1])
+					start = j+1
+				i = j
+			else:
+				i += 1
+			assert(progress < i)
+		data = s[start:len(s)]
+		if data.strip():
+			self.createElispDataNode(v,data)
+	#@nonl
+	#@-node:scanElispText & allies
+	#@+node:skipElispParens
+	def skipElispParens (self,s,i):
+		
+		level = 0 ; n = len(s)
+		assert(match(s,i,'('))
+		
+		while i < n:
+			c = s[i]
+			if c == '(':
+				level += 1 ; i += 1
+			elif c == ')':
+				level -= 1
+				if level <= 0:
+					return i
+				i += 1
+			elif c == '"': i = skip_string(s,i) # Single-quotes are not strings.
+			elif match(s,i,";"):  i = skip_line(s,i)
+			else: i += 1
+		return i
+	#@-node:skipElispParens
+	#@+node:skipElispId
+	def skipElispId (self,s,i):
+	
+		n = len(s)
+		while i < n:
+			c = s[i]
+			if c in string.letters or c in string.digits or c == '-':
+				i += 1
+			else: break
+		return i
+	#@nonl
+	#@-node:skipElispId
+	#@+node:createElispFunction
+	def createElispFunction (self,v,s):
+		
+		body = s
+		# trace(body)
+	
+		i = 1 # Skip the "(defun" or "(defconst" or "(defvar"
+		i = skip_ws(s,i)
+		assert(match(s,i,"defun") or match_word(s,i,"defconst") or match_word(s,i,"defvar"))
+		i = self.skipElispId(s,i)
+		
+		# Get the following id.
+		i = skip_ws(s,i)
+		j = self.skipElispId(s,i)
+		id = s[i:j]
+		
+		self.createHeadline(v,body,id)
+	#@-node:createElispFunction
+	#@+node:createElispDataNode
+	def createElispDataNode (self,v,s):
+		
+		data = s
+		# trace(len(data))
+		
+		# Skip blank lines and comment lines.
+		i = 0
+		while i < len(s):
+			i = skip_ws_and_nl(s,i)
+			if match(s,i,';'):
+				i = skip_line(s,i)
+			else: break
+	
+		# Find the next id, probably prefixed by an open paren.
+		if match(s,i,"("):
+			i = skip_ws(s,i+1)
+		j = self.skipElispId(s,i)
+		id = s[i:j]
+		if not id:
+			id = "unnamed data"
+	
+		self.createHeadline(v,data,id)
+	#@nonl
+	#@-node:createElispDataNode
 	#@+node:scanJavaText
 	# Creates a child of parent for each Java function definition seen.
 	
