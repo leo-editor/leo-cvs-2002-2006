@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet ekr_stylesheet?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="11734" clone_windows="0"/>
-<globals body_outline_ratio="0.5">
-	<global_window_position top="13" left="34" height="860" width="1102"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="11740" clone_windows="0"/>
+<globals body_outline_ratio="0.501162790698">
+	<global_window_position top="19" left="242" height="860" width="891"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -68,7 +68,7 @@
 <v t="edream.110203163054.26"><vh>Travers A. Hough</vh></v>
 <v t="edream.110203163054.23"><vh>Zak Greant</vh></v>
 </v>
-<v t="edream.110203163054.46"><vh>Release Notes</vh>
+<v t="edream.110203163054.46" a="E"><vh>Release Notes</vh>
 <v t="edream.110203163054.47"><vh>Warnings</vh></v>
 <v t="edream.110203163054.48"><vh>Installation notes</vh>
 <v t="edream.110203163054.49"><vh>System requirements</vh></v>
@@ -80,10 +80,17 @@
 <v t="edream.110203163054.61"><vh>Putting the Leo icon in Leo windows</vh></v>
 <v t="edream.110203163054.62"><vh>Quick start</vh></v>
 </v>
-<v t="edream.110203163054.63"><vh>Latest versions</vh>
-<v t="ekr.20040922074200"><vh>4.2 final</vh></v>
+<v t="edream.110203163054.63" a="E"><vh>Latest versions</vh>
+<v t="ekr.20050122090311" a="E"><vh>4.3-a1</vh>
+<v t="ekr.20050122091036" a="TV"><vh>Unfinished configuration features</vh></v>
+<v t="ekr.20050122084954"><vh>Using leoSettings.leo and @settings trees</vh></v>
+</v>
 </v>
 <v t="edream.110203163054.117"><vh>leo.py versions</vh>
+<v t="ekr.20050122090311"><vh>4.3-a1</vh>
+<v t="ekr.20050122091036"><vh>Unfinished configuration features</vh></v>
+<v t="ekr.20050122084954"><vh>Using leoSettings.leo and @settings trees</vh></v>
+</v>
 <v t="ekr.20040922074200"><vh>4.2 final</vh></v>
 <v t="ekr.20040914103359"><vh>4.2 rc1</vh>
 <v t="ekr.20040914103743.1"><vh>Added new features</vh>
@@ -1230,7 +1237,7 @@
 </v>
 </v>
 </v>
-<v t="EKR.20040524104904" a="E"><vh>Users Guide</vh>
+<v t="EKR.20040524104904"><vh>Users Guide</vh>
 <v t="EKR.20040524104904.2"><vh>An overview of Leo</vh></v>
 <v t="EKR.20040524104904.3"><vh>Front material</vh>
 <v t="EKR.20040524104904.4"><vh>Title Page &amp; Summary</vh></v>
@@ -1254,15 +1261,15 @@
 <v t="EKR.20040524104904.19"><vh>Outlines generate derived files</vh></v>
 <v t="EKR.20040524104904.20"><vh>A recommended workflow for using Leo</vh></v>
 </v>
-<v t="EKR.20040524104904.21" a="E"><vh>Chapter 2: Installing Leo</vh>
+<v t="EKR.20040524104904.21"><vh>Chapter 2: Installing Leo</vh>
 <v t="EKR.20040524104904.22"><vh>System requirements</vh></v>
 <v t="EKR.20040524104904.23"><vh>How to install leo.py on Windows</vh></v>
 <v t="EKR.20040524104904.24"><vh>How to associate leo.py with .leo files on Windows</vh></v>
-<v t="EKR.20040524104904.25" a="E"><vh>Quick start</vh>
+<v t="EKR.20040524104904.25"><vh>Quick start</vh>
 <v t="EKR.20040524104904.50"><vh>Overview</vh></v>
 <v t="EKR.20040524104904.51"><vh>Sections and section references</vh></v>
 <v t="EKR.20040524104904.52" a="E"><vh>Organizing @file trees.</vh>
-<v t="EKR.20040524104904.53" a="TV"><vh>Examples</vh>
+<v t="EKR.20040524104904.53"><vh>Examples</vh>
 <v t="EKR.20040524104904.54"><vh>@file f.c</vh>
 <v t="EKR.20040524104904.55"><vh>&lt;&lt; constants &gt;&gt;</vh></v>
 <v t="EKR.20040524104904.56"><vh>&lt;&lt; declarations &gt;&gt;</vh></v>
@@ -1633,8 +1640,11 @@
 <v t="ekr.20040906100024"><vh>Unit testing with @test, @suite</vh></v>
 </v>
 <v t="EKR.20040524104904.211"><vh>Chapter 8: Customizing Leo</vh>
-<v t="EKR.20040524104904.212"><vh>Using leoConfig.leo and leoConfig.txt</vh></v>
-<v t="EKR.20040524104904.213" a="E"><vh>Using plugins and hooks</vh>
+<v t="ekr.20050122090016"><vh>Setting options...</vh>
+<v t="ekr.20050122084954"><vh>Using leoSettings.leo and @settings trees</vh></v>
+<v t="EKR.20040524104904.212"><vh>Obsolete: Using leoConfig.leo and leoConfig.txt</vh></v>
+</v>
+<v t="EKR.20040524104904.213"><vh>Using plugins and hooks</vh>
 <v t="EKR.20040524104904.214"><vh>Overview of plugins and hooks</vh></v>
 <v t="EKR.20040524104904.215"><vh>New plugin architecture</vh>
 <v t="EKR.20040524104904.216"><vh>@file plugins/mod_open_with.py</vh>
@@ -4528,6 +4538,8 @@ IV. Setting app().realMenuNameDict inside hooks to translate menus into other la
 
 This is discussed below.</t>
 <t tx="EKR.20040524104904.212">@nocolor
+
+Warning:  The following information applies only to versions of Leo before Leo 4.3.  Leo 4.3 uses an entirely different mechanism.
 
 Leo will override settings in .leo files if it finds a file called leoConfig.txt in the config subdirectory.  Leo works just as before if it does not find a leoConfig.txt file.
 
@@ -15714,5 +15726,82 @@ if spellpyx:
         spellFrame.createSpellMenu('tag',keys)
     if spellFrame:
         spellFrame.checkSpelling()</t>
+<t tx="ekr.20050122084954">@killcolor
+
+The following information discusses how Leo 4.3 and all later versions handle user configuration settings.  For all previous versions, see the node called 'Obsolete: Using leoConfig.leo and leoConfig.txt'
+
+Leo stores options in @settings trees, that is, parts of Leo outlines whose root node has the headline @settings.  When opening a .leo file, Leo looks for @settings trees in the following places:
+
+- The file called leoSettings.leo in the leo/config directory.
+- The file called leoSettings.leo in the users home directory.
+- The file being loaded.
+
+Settings that later in the above list override settings found earlier.  For example, any setting specified in an @settings tree in the file being loaded overrides any setting seen in any leoSettings.leo file.
+
+In Leo 4.3 the Preferences command temporarily replaces the outline pane with an outline showing only the @settings trees that were found when loading the Outline.  The Preferences command also replaces the body pane with a "settings dialog" pane.   This settings dialog pane allows you to change the settings selected in the outline pane. 
+
+The format of nodes in @settings trees are as follows:
+
+1. "Simple settings nodes" have headlines of the form:
+
+@&lt;type&gt; name = val
+
+set the value of name to val, with the indicated type.
+
+&lt;type&gt; may be one of the following, with valid values shown:
+
+&lt;type&gt;      Valid values
+-----       ------------
+@bool       True, False, 0, 1
+@color      A Tk color name or value, such as 'red' or 'xf2fddff'
+@directory  A path to a directory
+@float      A floating point number of the form nn.ff.
+@int        An integet
+@path       A path to a directroy or file
+@ratio      A floating point number between 0.0 and 1.0, inclusive.
+@shortcut   A valid shortcut specifier.
+@string     A string
+
+2. "Complex settings nodes" have headlines of the form:
+
+@&lt;type&gt; description
+
+The actual settings are specified in the body text.  At present, there are two such kinds of complex settings nodes:
+
+- @font
+
+The body text contains a list of settings for a font.  For example:
+
+body_text_font_family = Courier New
+body_text_font_size = None
+body_text_font_slant = None
+body_text_font_weight = None
+
+- @recentFiles
+
+The body text contains a list of paths of recently opened files, one path per line.
+
+3. "Page nodes" have headlines of the form @page &lt;description&gt;
+
+Such nodes have the effect of gathering all descendent settings nodes into a single settings page.
+
+4.  All other nodes are "Organizer" nodes.  Such nodes have no effect on the settings shown in the dialog.  You may use them as you please to organize settings.
+
+Notes:
+
+A.  At present, you can not change @settings trees while executing the Preferences command.  You can, however, change any @settings tree normally when not executing the Preferences command.
+
+B. Other kinds of settings nodes are planned for future releases.</t>
+<t tx="ekr.20050122090016"></t>
+<t tx="ekr.20050122090311"></t>
+<t tx="ekr.20050122091036">The essential features of @settings trees and the settings dialog appear to be stable.  However, many improvements can be imagined, including the following:
+
+- Allow searching for nodes while in the settings dialog.
+
+- Allow adding, deleting, rearranging nodes while in the settings dialog.
+
+- Allow adding, deleting, rearranging recent files while in the settings dialog.
+
+These will be added as time permits and people request.</t>
 </tnodes>
 </leo_file>

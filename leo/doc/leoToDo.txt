@@ -4,170 +4,96 @@
 
 #@+all
 #@+node:ekr.20050102180943.1:4.3 a1
-#@+node:ekr.20041228090344.1:Fix minor config problems
+#@+node:ekr.20050121074152:Fix bug: search in hoisted outline can stop outside the hoisted area
+#@+node:ekr.20050121074152.1:Report
 @killcolor
 
-- Remove label in settings pane.
+http://sourceforge.net/forum/message.php?msg_id=2934617
+By: bwmulder
 
-- Make sure comment area is always visible.
+According to various notes in the Leo documentation, "hoist" should restrict
+you a subtree of the outline.
+
+With the version I am using (CVS, a few days old), searching for strings stops
+at nodes outside this subtree. The nodes where the string was found remains
+invisible.
+#@-node:ekr.20050121074152.1:Report
+#@-node:ekr.20050121074152:Fix bug: search in hoisted outline can stop outside the hoisted area
+#@+node:ekr.20050121075634:Investigate Control-Q binding
+#@+node:ekr.20050121075634.1:Report
+@killcolor
+
+http://sourceforge.net/forum/message.php?msg_id=2944234
+By: nobody
+
+I am unable to remap the CTRL+Q keyboard shortcut. It seems to be hardwired
+to File > Exit. My attempts to override it have failed.
+
+I want to remap it to reformat paragraph. I have remapped several keys. They
+worked. When I did CTRL+Q it still does File > Exit.
+
+Any suggestions? What's so special about this one or I just missing something?
+#@-node:ekr.20050121075634.1:Report
+#@-node:ekr.20050121075634:Investigate Control-Q binding
+#@+node:ekr.20041118135306.1:Unit tests for settings dialog
+@killcolor
+
+- Create unit tests for essential features.
+    - There are too many cases to test by hand.
+    - Make sure proper values from Prefs panel are used in Tangle/Untangle commands.
+#@nonl
+#@-node:ekr.20041118135306.1:Unit tests for settings dialog
+#@+node:ekr.20041228090344.1:Fix minor config problems
+@killcolor
 
 - Disable all commands while in dialog.
 
 - Print changes to log.
+#@nonl
+#@-node:ekr.20041228090344.1:Fix minor config problems
+#@+node:ekr.20050122092221:Do release notes
+@killcolor
 
-Later...
+- This really is an alpha release.  Be careful.
 
+- Files must have @recent-files (or @recentFiles, etc.) nodes to keep track of recent files.
+#@nonl
+#@-node:ekr.20050122092221:Do release notes
+#@+node:ekr.20050122105757:Implement 'Undo Clear Recent Files'
+#@+node:ekr.20041118195812.3:setRecentFiles (configSettings)
+def setRecentFiles (self,files):
+    
+    c = self.c
+    
+    # Append the files to the global list.
+    g.app.config.appendToRecentFiles(files)
+    
+    # Do nothing if there is no @settings tree or no @recent-files node.
+    p = g.app.config.findSettingsPosition(c,"@recent-files")
+    if not p:
+        # g.trace("no @recent-files node for ",c.mFileName)
+        return
+
+    # g.trace("updating @recent-files for ",c.mFileName)
+
+    # Update the @recent-files entry, leaving c's changed status untouched.
+    changed = c.isChanged()
+    body = '\n'.join(files)
+    p.setBodyStringOrPane(body,encoding=g.app.tkEncoding)
+    c.setChanged(changed)
+#@nonl
+#@-node:ekr.20041118195812.3:setRecentFiles (configSettings)
+#@-node:ekr.20050122105757:Implement 'Undo Clear Recent Files'
+#@-node:ekr.20050102180943.1:4.3 a1
+#@+node:ekr.20050119072551:4.3 a2 config
+#@+node:ekr.20050122091016:Minor
 - move findCorrespondingNode into leoNodes class.
 
 - Fix bug: findSettingsRoot doesn't work if no summary node.
 
 - findSettingsPostion should honor if-gui and if-platform nodes.
 #@nonl
-#@-node:ekr.20041228090344.1:Fix minor config problems
-#@+node:ekr.20041118135306.1:Testing
-@killcolor
-
-- Create unit tests for essential features. There are too many cases to test by hand.
-
-- Test all dialogs.
-
-- Make sure proper values from Prefs panel are used in Tangle/Untangle commands.
-#@nonl
-#@-node:ekr.20041118135306.1:Testing
-#@+node:ekr.20041117163258:Document format of leoSettings.leo
-@nocolor
-#@nonl
-#@+node:ekr.20050119211822.1:@url file:./../doc/LeoDocs.leo#Users Guide-->Chapter 8: Customizing Leo
-#@-node:ekr.20050119211822.1:@url file:./../doc/LeoDocs.leo#Users Guide-->Chapter 8: Customizing Leo
-#@+node:ekr.20041116125049:Improvements
-- @page creates a single dialog page.
-
-- Use @int:name=val in headline.
-
-The advantage is that the body text will contain only comment text.
-The disadvantage is that parsing the headline is a little harder.
-
-Similarly for @string, @color, etc.
-
-- Allow @trans translation in child nodes
-
-- Non-@ headlines just create nodes in outline mega-widget.
-#@nonl
-#@-node:ekr.20041116125049:Improvements
-#@+node:ekr.20041116091233.2:Key principle & corollaries
-The fundamental design principle underlying the new configuration manager is this:
-
-** Settings must be infinitely flexible **
-
-There is no way that I can predict what people and plugins are going to want to do.  Rather than trying to "figure it all out" Leo must let people and plugins do whatever they want.  This turns out to be the easiest way.  You could say it is the only way.
-
-There are several direct corollaries of this principle:
-
-- Only outlines can structure settings.  Tabbed notebooks are not general enough.
-
-- We must be able to add any kind of new setting without changing the format of .leo files.  The xml structure of .leo files must not depend on settings.  In particular, the <preferences> element must become vestigial.
-
-- Leo can not use flat configuration files.  There is no way flat configuration files can do what is required.  Say bye bye to ConfigParser and all it's spawn.
-
-I understand some people like flat config files.  Plugins can still use them.  However, using flat config files is simply not feasible if Leo is to have an extensible structure.
-
-- Leo's configuration manager must be entirely rewritten and substantial changes to Leo's core may be coming.  This can't be helped; much of the structure of leoConfig.txt is hard-wired into leoConfig.py.
-
-- The new configuration manager must allow plugins to create and reorganize settings.  As we shall see in a later posting, this will be surprisingly easy to do.
-
-- Leo must use Leo outlines in a new way to organize settings.
-
-It would be extremely foolish not to take advantage of Leo's organizational capabilities.  However, using leoConfig.leo to create leoConfig.txt created endless problems.  Something _much_ better is needed.  As we shall see in the next posting, there is, in fact, a much better way.
-
-Edward
-#@nonl
-#@-node:ekr.20041116091233.2:Key principle & corollaries
-#@+node:ekr.20041116091233.10:The shape of the new design
-The shape of the 4.3 design
-
-Given the fundamental design principle for the new configuration manager, viz., settings must be infinitely flexible, the shape of a powerful and flexible design starts to emerge from the shadows:
-
-- Leo will support at least the local, user and per-Leo-file settings.
-
-Plugins may create other kinds of settings.  The new configuration manager will support this.
-
-- Settings must be contained _in Leo outlines_.
-
-It would be extremely wasteful and foolish not to use Leo's superb data organizing features.  Flat configuration files can not begin to do what must be done.  I shall have no further use for ConfigParser.  Plugins can, of course, use ConfigParser if they like.
-
-Global and user settings will be contained in files called leoSettings.leo.  The big difference between leoSettings.leo and leoConfig.leo is that the leoSettings.leo files never get tangled.  Instead, Leo will _parse_ these files on startup to create settings.  As we shall see, this parsing is trivial to do.
-
-Per-file settings will be contained _in the outline to which the settings apply_.  These settings will be contained in an @settings tree.
-
-N.B. This @settings tree is just part of the outline. In particular:
-
-a) all nodes of this tree will be easily accessible to scripts and plugins.  For example, c.settingsRoot() will return the root of this tree.
-
-b) no part of Leo's xml file format needs to change in order to create additional settings.
-
-- The @settings tree will normally be hidden.
-
-The Show @settings command will hide the "regular" outline and show only the @settings outline.  This command will work pretty much like the hoist command.  The corresponding Hide @settings command will work like the De-Hoist command.  leoSettings.leo files will contain nothing but the @settings tree, so this tree will be visible by default.
-
-- Users will usually view and change settings using a _settings dialog_.
-
-The supremely valuable Configurator.py script is the inspiration for this idea.
-
-The Edit Global Prefs, Edit User Prefs, and Edit Local Prefs commands will bring up these dialogs.  These settings dialog will (and must) be organized as in jEdit.  There will be an extensible outline to organize settings and a separate page area to examine and change settings.   Selecting an item in the outline will select a page.
-
-BTW, Leo will change settings files _only_ as the result of such commands.  In particular, Leo will no longer change settings when saving a .leo file. 
-
-- User _will_ be able to view and change the @settings tree.
-
-So there are two views of the @settings tree.  The normal view is the gui view.  The "expert" view is the @settings outline itself.  The expert view allows users to create new settings, to reorganize settings, and to do other things that can't be done in the gui view.
-
-The outline part of the settings dialog will be a Tix or Pmw megawidget.  There will be no need to use the leoTkinterTree class.  However, the @settings tree _is_ part of a regular Leo outline, so the @settings tree itself can use clones.  The megawidget outline won't allow changes, but that does not make the scheme any less flexible; changes can be made in the @settings "view".  Do you see how clever this is?
-
-- Leo will create settings dialogs _using information contained in the @settings trees_. 
-
-Again, this idea comes from the Configurator.py script.  Parsing @settings trees is trivial because the parser has full access to @settings tree, just as any script does.  Furthermore, the structure of settings is mirrored in the structure of this tree, so discovering hierarchical relationships in the settings is also trivial.
-
-I'll discuss the actual format of @settings tree in a later posting.  Suffice it to say here that
-
-a) The format is simple, yet powerful and flexible;
-b) plugins could easily extend this format.
-
-- The Open Global Settings and Open User Settings commands will open the appropriate leoSettings.leo files and automatically show the @settings trees. (There is nothing else to show).
-
-- Leo will update settings only in response to saving leoSettings.leo files or .leo files containing @settings trees.  There will be no _derived_ settings files to update.  This will eliminate all the confusion arising from leoConfig.txt getting out of synch with leoConfig.leo.
-
-Conclusion
-
-I am pleased with this design.  It is simple, powerful, flexible.  
-
-Just as one example of what can be done, this design makes translating Leo into foreign languages about as easy as can be imagined.  I haven't discussed all the details of this, but clearly translating @settings dialog entries can be done without fuss.  The "infinitely extensible" principle guarantees that plugins can create whatever translation data is needed in an @setting tree somewhere.  Because this tree is an regular part of the Leo outline, a plugin could create this tree from other data.
-
-Acknowledgments
-
-Besides the Configurator.py script, another crucial influence on my thinking was the plugin_manager plugin.  This showed that it is indeed possible to have a "dual" view of data, both as text (or outline) and as a dialog.  RodrigoB's suggestion concerning @config-file nodes is the direct precursor of @settings trees.  However, I probably would not have been able to understand Rodrigo's suggestion without Configurator.py script and plugin_manager.py.  Also, Tom Fetherston's long postings convinced me that configuration must be infinitely extensible.  This was another key aha.  So thanks to you all; this would not have happened without you.
-
-Edward
-#@nonl
-#@-node:ekr.20041116091233.10:The shape of the new design
-#@+node:ekr.20041116091233.11:Format of the @settings tree
-Some nodes in the @setting tree will organize the settings.  All other nodes nodes will represent individual settings in a very simple way as follows:
-
-- The headline contains the name of the setting, optionally followed by its translation for other languages.
-
-- The body text contains the expected type of the settings, its present value, and comments.  Leo will use these fields to create an area in the gui dialog in which the user can examine and change the setting.
-
-The first line of the body text contains type:value.  The type determines the type of the option and thus the kind of widget used to show the setting in the dialog.  Typical types will be bool, int, string, color, font, directory etc.
-
-All other lines of the body text contains comments that will appear in the dialog.
-
-Leo can easily use this information to create dialog entries.  Bool settings create radio buttons, string entries, create Text boxes, color entries create color pickers, etc.
-
-There will be other details forthcoming, but this is enough to show that a simple scheme can be extremely powerful in an outline context.
-#@nonl
-#@-node:ekr.20041116091233.11:Format of the @settings tree
-#@-node:ekr.20041117163258:Document format of leoSettings.leo
-#@-node:ekr.20050102180943.1:4.3 a1
-#@+node:ekr.20050119072551:4.3 a2 config
+#@-node:ekr.20050122091016:Minor
 #@+node:ekr.20041228090344:Major
 - Cancel should revert all settings.
     (Revert doesn't work after a node changes:this is confusing and dangerous.)
@@ -178,6 +104,17 @@ There will be other details forthcoming, but this is enough to show that a simpl
 
 - Handle undo/redo properly.
 #@nonl
+#@+node:ekr.20050122083704:Config improvements
+@killcolor
+
+- Allow searching while in config dialog.
+- Allow adding, deleting, rearranging nodes while in config dialog.
+- Allow adding, deleting, rearranging recent files.
+- Support @if-platform, @if-gui.
+- Document, test and use @ints, @strings
+- Support @fixedRecentFiles.
+#@nonl
+#@-node:ekr.20050122083704:Config improvements
 #@+node:ekr.20041123100100:support @fixed-recent-files in Leo's core
 The config classes do nothing special.
 
@@ -206,60 +143,6 @@ g.setGeneralTkSetting(widget,setting_name) would do the following:
     - safely set the widget's setting using the settings list as is done in the prototype code.
 #@nonl
 #@-node:ekr.20041228100139:Support for general component settings
-#@+node:ekr.20041231104531:(Fix problems with the recent files list)
-#@+node:ekr.20050104083804:Clear Recent Files command should clear @recentfiles nodes
-#@-node:ekr.20050104083804:Clear Recent Files command should clear @recentfiles nodes
-#@+node:ekr.20031218072017.2083:c.updateRecentFiles
-def updateRecentFiles (self,fileName):
-    
-    """Create the RecentFiles menu.  May be called with Null fileName."""
-    
-    if g.app.unitTesting: return
-    
-    # Update the recent files list in all windows.
-    if fileName:
-        absFileName = g.os_path_abspath(fileName)
-        # g.trace(fileName)
-        for frame in g.app.windowList:
-            c = frame.c
-            # Remove all versions of the file name.
-            for name in c.recentFiles:
-                if absFileName == g.os_path_abspath(name):
-                    c.recentFiles.remove(name)
-            c.recentFiles.insert(0,fileName)
-            # Recreate the Recent Files menu.
-            frame.menu.createRecentFilesMenuItems()
-    else:
-        for frame in g.app.windowList:
-            frame.menu.createRecentFilesMenuItems()
-#@nonl
-#@-node:ekr.20031218072017.2083:c.updateRecentFiles
-#@+node:ekr.20041117085625:openSettingsFile
-def openSettingsFile (self,path):
-    
-    try:
-        # Open the file in binary mode to allow 0x1a in bodies & headlines.
-        theFile = open(path,'rb')
-    except IOError:
-        g.es("can not open: " + path, color="blue")
-        return None
-        
-    # Similar to g.openWithFileName except it uses a null gui.
-    # Changing g.app.gui here is a major hack.
-    oldGui = g.app.gui
-    g.app.gui = leoGui.nullGui("nullGui")
-    c,frame = g.app.gui.newLeoCommanderAndFrame(path,updateRecentFiles=False)
-    frame.log.enable(False)
-    g.app.setLog(frame.log,"openWithFileName")
-    g.app.lockLog()
-    frame.c.fileCommands.open(theFile,path,readAtFileNodesFlag=False) # closes theFile.
-    g.app.unlockLog()
-    frame.openDirectory = g.os_path_dirname(path)
-    g.app.gui = oldGui
-    return c
-#@nonl
-#@-node:ekr.20041117085625:openSettingsFile
-#@-node:ekr.20041231104531:(Fix problems with the recent files list)
 #@-node:ekr.20041228090344:Major
 #@+node:EKR.20040606193130:(Fix problems with negative tab width in prefs)
 #@+node:EKR.20040606193323:Report
@@ -547,6 +430,33 @@ HTML code (e.g. an image link gets mapped to an <img> HTML tag, a link to a
 Flash file gets mapped to an <embed> tag, etc).
 #@-node:ekr.20050105065157:Tip
 #@-node:ekr.20050119072551.1:Docs
+#@+node:ekr.20050121081635:Request:  cumulative @path directives
+@killcolor
+https://sourceforge.net/forum/message.php?msg_id=2936513
+By: ktenney
+
+In the @view plugin is a method, currentPath() which examines the current headline
+and body, and the headlines and bodies of it's parents, looking for @path and
+@view directives. It builds a path from them and checks for validity.
+
+if a top level node contains;
+@path /home/ktenney
+
+and a descendant of that node contains;
+@path projects/myproject
+
+Then a node further down the tree which contains;
+@view readme.txt
+
+will display /home/ktenney/projects/myproject/readme.txt
+
+I like this principle of cumulative paths, and would like other plugins to work
+the same way ... @image, @url etc.
+
+This brings me to my question, would it make sense for Leo to offer a 'Plugin'
+class to inherit from? It seems that there are some operations that are being
+re-written in many plugins.
+#@-node:ekr.20050121081635:Request:  cumulative @path directives
 #@-node:ekr.20050119072551:4.3 a2 config
 #@+node:ekr.20041228084018.1:4.3.a3 plugins & dist
 Edit and commit all plugins.

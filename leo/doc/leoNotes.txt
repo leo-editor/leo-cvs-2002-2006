@@ -2666,6 +2666,27 @@ def createGlobalWindows (self):
 #@nonl
 #@-node:ekr.20031218072017.4050:tkGui.createGlobalWindows
 #@-node:ekr.20041121111018:Unused (find initing)
+#@+node:ekr.20041225063637.61:updateComments
+def updateComments (self,p):
+    
+    # No longer needed now that we put the comments in the canvas.
+
+    if self.commentWidget:
+        self.commentWidget.clear()
+        
+        if not p or p == self.suppressComments:
+            comments = ''
+        elif p == self.alterComments:
+            comments = self.alteredCommentsString
+        else:
+            comments = p.bodyString()
+        
+        self.commentWidget.setvalue(comments)
+    
+    self.suppressComments = None
+    self.alterComments = None
+#@nonl
+#@-node:ekr.20041225063637.61:updateComments
 #@-node:ekr.20041228094801:Config...
 #@+node:ekr.20050104131343.1:From replaceTargetFileIfDifferent
 #@+node:ekr.20041005105605.213:<< delete the output file >>
