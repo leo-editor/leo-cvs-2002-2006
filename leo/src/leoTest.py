@@ -650,14 +650,14 @@ def runAtFileTest(c,p):
 
     # Compute the type from child1's headline.
     j = g.skip_c_id(h1,2)
-    type = h1[1:j]
-    assert type in ("@file","@thin","@nosent","@noref","@asis"),\
+    theType = h1[1:j]
+    assert theType in ("@file","@thin","@nosent","@noref","@asis"),\
         "bad type: %s" % type
 
-    thinFile = type == "@thin"
-    nosentinels = type in ("@asis","@nosent")
+    thinFile = theType == "@thin"
+    nosentinels = theType in ("@asis","@nosent")
 
-    if type == "@asis":
+    if theType == "@asis":
         assert 0, "@asis test not ready yet"
         # at.asisWrite(child1,toString=toString)
     else:

@@ -348,10 +348,10 @@ class baseUndoer:
     #@-node:ekr.20031218072017.3613:redoMenuName, undoMenuName
     #@+node:ekr.20031218072017.3614:setRedoType, setUndoType
     # These routines update both the ivar and the menu label.
-    def setRedoType (self,type):
+    def setRedoType (self,theType):
         u = self ; frame = u.c.frame
         menu = frame.menu.getMenu("Edit")
-        name = u.redoMenuName(type)
+        name = u.redoMenuName(theType)
         if name != u.redoMenuLabel:
             # Update menu using old name.
             realLabel = frame.menu.getRealMenuName(name)
@@ -364,10 +364,10 @@ class baseUndoer:
             u.redoMenuLabel = name
             u.realRedoMenuLabel = realLabel
     
-    def setUndoType (self,type):
+    def setUndoType (self,theType):
         u = self ; frame = u.c.frame
         menu = frame.menu.getMenu("Edit")
-        name = u.undoMenuName(type)
+        name = u.undoMenuName(theType)
         if name != u.undoMenuLabel:
             # Update menu using old name.
             realLabel = frame.menu.getRealMenuName(name)
@@ -377,7 +377,7 @@ class baseUndoer:
                 underline = realLabel.find("&")
             realLabel = realLabel.replace("&","")
             frame.menu.setMenuLabel(menu,u.realUndoMenuLabel,realLabel,underline=underline)
-            u.undoType = type
+            u.undoType = theType
             u.undoMenuLabel = name
             u.realUndoMenuLabel = realLabel
     #@nonl

@@ -1073,8 +1073,8 @@ class leoTkinterTree (leoFrame.leoTree):
         #@nonl
         #@-node:ekr.20040803072955.48:<< set offsets and pads >>
         #@nl
-        type = dict.get("type")
-        if type == "icon":
+        theType = dict.get("type")
+        if theType == "icon":
             s = dict.get("icon")
             #@        << draw the icon in string s >>
             #@+node:ekr.20040803072955.49:<< draw the icon in string s >>
@@ -1082,7 +1082,7 @@ class leoTkinterTree (leoFrame.leoTree):
             #@nonl
             #@-node:ekr.20040803072955.49:<< draw the icon in string s >>
             #@nl
-        elif type == "file":
+        elif theType == "file":
             theFile = dict.get("file")
             #@        << draw the icon at file >>
             #@+node:ekr.20040803072955.50:<< draw the icon at file >>
@@ -1111,7 +1111,7 @@ class leoTkinterTree (leoFrame.leoTree):
                 w = image.width()  + xoffset + xpad
             #@-node:ekr.20040803072955.50:<< draw the icon at file >>
             #@nl
-        elif type == "url":
+        elif theType == "url":
             url = dict.get("url")
             #@        << draw the icon at url >>
             #@+node:ekr.20040803072955.51:<< draw the icon at url >>

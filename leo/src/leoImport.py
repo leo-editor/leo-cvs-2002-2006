@@ -481,9 +481,9 @@ class baseLeoImportCommands:
     #@+node:ekr.20031218072017.3231:scanWebFile (handles limbo)
     def scanWebFile (self,fileName,parent):
     
-        type = self.webType
-        lb = g.choose(type=="cweb","@<","<<")
-        rb = g.choose(type=="cweb","@>",">>")
+        theType = self.webType
+        lb = g.choose(theType=="cweb","@<","<<")
+        rb = g.choose(theType=="cweb","@>",">>")
     
         try: # Read the file into s.
             f = open(fileName)
@@ -499,9 +499,9 @@ class baseLeoImportCommands:
             i = g.skip_ws_and_nl(s,i)
             # line = g.get_line(s,i) ; g.trace(line)
             if self.isDocStart(s,i):
-                if type == "cweb": i += 2
+                if theType == "cweb": i += 2
                 else: i = g.skip_line(s,i)
-            elif type == "cweb" and g.match(s,i,"@@"):
+            elif theType == "cweb" and g.match(s,i,"@@"):
                 i += 2
             elif g.match(s,i,lb):
                 i += 2 ; j = i ; k = g.find_on_line(s,j,rb)
@@ -542,7 +542,7 @@ class baseLeoImportCommands:
             progress = i
             #@        << Create a node for the next module >>
             #@+node:ekr.20031218072017.3234:<< Create a node for the next module >>
-            if type=="cweb":
+            if theType=="cweb":
                 assert(self.isModuleStart(s,i))
                 start = i
                 if self.isDocStart(s,i):
@@ -2459,7 +2459,7 @@ class baseLeoImportCommands:
         # g.trace(g.get_line(s,i))
         lb = g.choose(self.webType=="cweb","@<","<<")
         rb = g.choose(self.webType=="cweb","@>",">>")
-        type = self.webType
+        theType = self.webType
         while i < len(s):
             progress = j = i # We should be at the start of a line here.
             i = g.skip_nl(s,i) ; i = g.skip_ws(s,i)
@@ -2477,7 +2477,7 @@ class baseLeoImportCommands:
                 # Copy the entire line, escaping '@' and
                 # Converting @others to < < @ others > >
                 i = g.skip_line(s,j) ; line = s[j:i]
-                if type == "cweb":
+                if theType == "cweb":
                     line = string.replace(line,"@","@@")
                 else:
                     j = g.skip_ws(line,0)
@@ -2885,9 +2885,9 @@ class baseLeoImportCommands:
     #@+node:ekr.20031218072017.3312:massageWebBody
     def massageWebBody (self,s):
     
-        type = self.webType
-        lb = g.choose(type=="cweb","@<","<<")
-        rb = g.choose(type=="cweb","@>",">>")
+        theType = self.webType
+        lb = g.choose(theType=="cweb","@<","<<")
+        rb = g.choose(theType=="cweb","@>",">>")
         #@    << Remove most newlines from @space and @* sections >>
         #@+node:ekr.20031218072017.3313:<< Remove most newlines from @space and @* sections >>
         i = 0
@@ -2904,7 +2904,7 @@ class baseLeoImportCommands:
                     i = g.skip_ws_and_nl(s,i)
                     if self.isModuleStart(s,i) or g.match(s,i,lb):
                         end = i ; break
-                    elif type == "cweb": i += 1
+                    elif theType == "cweb": i += 1
                     else: i = g.skip_to_end_of_line(s,i)
                 # Remove newlines from start to end.
                 doc = s[start:end]

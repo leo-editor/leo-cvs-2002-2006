@@ -2036,8 +2036,8 @@ class baseTangleCommands:
             if verbose_flag:
                 s += self.st_dump_node(section)
             else:
-                type = g.choose(len(section.parts)>0,"  ","un")
-                s += ("\n" + type + "defined:[" + section.name + "]")
+                theType = g.choose(len(section.parts)>0,"  ","un")
+                s += ("\n" + theType + "defined:[" + section.name + "]")
         return s
     #@nonl
     #@-node:ekr.20031218072017.3530:st_dump
@@ -3863,14 +3863,14 @@ class baseTangleCommands:
                 # 10/30/02: Only @code starts a code section in raw cweb mode.
                 kind = g.choose(self.raw_cweb_flag,plain_line,at_code)
             else:
-                for name, type in [
+                for name, theType in [
                     ("@chapter", at_chapter),
                     ("@code", at_code),
                     ("@doc", at_doc),
                     ("@root", at_root),
                     ("@section", at_section) ]:
                     if g.match_word(s,i,name):
-                        kind = type ; break
+                        kind = theType ; break
                     
             if self.raw_cweb_flag and kind == at_other:
                 # 10/30/02: Everything else is plain text in raw cweb mode.

@@ -868,8 +868,8 @@ class leoFind:
     
         if allFlag and both and context:
             g.es(self.v)
-            type = g.choose(self.in_headline,"head: ","body: ")
-            g.es(type + line)
+            theType = g.choose(self.in_headline,"head: ","body: ")
+            g.es(theType + line)
         elif allFlag and context and not self.v.isVisited():
             # We only need to print the context once.
             g.es(self.v)
