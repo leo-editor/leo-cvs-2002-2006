@@ -4,8 +4,8 @@
 #@+node:ekr.20041231104454:<< docstring >>
 '''A plugin that supports @clip, @view and @strip nodes.
 
-- Selecting a headline containing @clip places the contents of the clipboard in
-the body pane.
+- Selecting a headline containing @clip appends the contents of the clipboard to
+the end of the body pane.
 
 - Double clicking the icon box of a node whose headline contains @view <path-to-file>
 places the contents of the file in the body pane.
