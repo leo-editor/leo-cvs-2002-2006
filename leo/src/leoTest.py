@@ -376,7 +376,7 @@ class colorTestCase(unittest.TestCase):
 #@+node:makeImportExportSuite
 def makeImportExportSuite(testParentHeadline,tempHeadline):
 	
-	"""Create an Edit Body test for every descendant of testParentHeadline.."""
+	"""Create an Import/Export test for every descendant of testParentHeadline.."""
 	
 	u = testUtils() ; c = top() ; v = c.currentVnode()
 	root = u.findRootNode(v)
@@ -636,7 +636,7 @@ class editBodyTestCase(unittest.TestCase):
 #@+node: makeOutlineSuite
 def makeOutlineSuite(testParentHeadline):
 	
-	"""Create a colorizer test for every descendant of testParentHeadline.."""
+	"""Create an outline test for every descendant of testParentHeadline.."""
 	
 	u = testUtils() ; c = top() ; v = c.currentVnode()
 	
@@ -713,10 +713,10 @@ class outlineTestCase(unittest.TestCase):
 	#@-others
 #@nonl
 #@-node:class outlineTestCase
-#@+node: makeOutlineSuite
-def makeTestLeoFilesSuite(testParentHeadline):
+#@+node:makeTestLeoFilesSuite
+def makeTestLeoFilesSuite(testParentHeadline,tempNode=None):
 	
-	"""Create a colorizer test for every descendant of testParentHeadline.."""
+	"""Create a .leo file test for every descendant of testParentHeadline.."""
 	
 	u = testUtils() ; c = top()
 	
@@ -729,7 +729,7 @@ def makeTestLeoFilesSuite(testParentHeadline):
 		suite.addTest(test)
 
 	return suite
-#@-node: makeOutlineSuite
+#@-node:makeTestLeoFilesSuite
 #@+node:class leoFileTestCase
 class leoFileTestCase(unittest.TestCase):
 	
@@ -745,6 +745,7 @@ class leoFileTestCase(unittest.TestCase):
 		self.old_c = c
 		self.c = None # set by setUp.
 		self.fileName = fileName
+		self.gui = None # set by setUp
 		self.openFrames = app.windowList[:]
 	#@nonl
 	#@-node:__init__
@@ -761,10 +762,15 @@ class leoFileTestCase(unittest.TestCase):
 	def setUp(self):
 	
 		"""Open the .leo file."""
+		
 	
 		c = self.old_c ; fileName = self.fileName
 		assert(os_path_exists(fileName))
-		ok, frame = openWithFileName(fileName,c)
+		
+		self.oldGui = app.gui
+		app.gui = leoGui.nullGui("nullGui")
+	
+		ok, frame = openWithFileName(fileName,c,enableLog=false)
 		assert(ok)
 		self.c = frame.c
 	#@nonl
@@ -777,6 +783,8 @@ class leoFileTestCase(unittest.TestCase):
 		frame = self.c.frame
 		if frame not in self.openFrames:
 			app.closeLeoWindow(frame)
+	
+		app.gui = self.oldGui
 	#@nonl
 	#@-node:tearDown
 	#@-others

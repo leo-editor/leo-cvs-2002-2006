@@ -2,7 +2,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="2284" clone_windows="0"/>
 <globals body_outline_ratio="0.5">
-	<global_window_position top="46" left="356" height="784" width="842"/>
+	<global_window_position top="63" left="180" height="784" width="842"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences>
@@ -28,7 +28,7 @@
 <v t="edream.112003031953"><vh>tuple unpacking test</vh></v>
 </v>
 </v>
-<v t="edream.110203161858.6" a="E"><vh>Tests...</vh>
+<v t="edream.110203161858.6"><vh>Tests...</vh>
 <v t="edream.110203161858.25"><vh>Body pane &amp; typing</vh>
 <v t="edream.110203161858.26"><vh>@file c:\prog\test\wrap_test.txt</vh>
 <v t="edream.110203161858.27"><vh>wrap node</vh></v>
@@ -2663,7 +2663,7 @@
 </v>
 <v t="edream.120403143517" tnodeList="edream.120403143517"><vh>@file c:\prog\test\chinese脖folder\chinese脖test.txt</vh></v>
 </v>
-<v t="edream.120603125057" a="V"><vh>4.1 beta 6 tests</vh>
+<v t="edream.120603125057"><vh>4.1 beta 6 tests</vh>
 <v t="edream.120603112201"><vh>clone-drag bug</vh>
 <v t="edream.120603112201.1" a=""><vh>a</vh>
 <v t="edream.120603112201.3"><vh>f</vh></v>
@@ -2784,15 +2784,16 @@
 </v>
 </v>
 <v t="edream.120803091715"><vh>using pdb</vh></v>
+<v t="edream.121303072722"><vh>tnode cleaning</vh></v>
 <v t="edream.110203161858.2119" a="E"><vh>Unit Tests</vh>
 <v t="edream.110203161858.2120"><vh>Bug reports</vh>
 <v t="edream.110203161858.2121" a="E"><vh>Colorizer</vh>
 <v t="edream.110203161858.2122"><vh> Report</vh></v>
 </v>
 </v>
-<v t="edream.110203161858.2123"><vh>Tests and data</vh>
+<v t="edream.110203161858.2123" a="E"><vh>Tests and data</vh>
 <v t="edream.110203161858.2124" a="E"><vh>tempNode</vh></v>
-<v t="edream.110203161858.2125" tnodeList="edream.110203161858.2125"><vh>colorizerTests</vh>
+<v t="edream.110203161858.2125"><vh>colorizerTests</vh>
 <v t="edream.110203161858.2126"><vh>Actionscript</vh></v>
 <v t="edream.110203161858.2127"><vh>C</vh></v>
 <v t="edream.110203161858.2128"><vh>CWEB</vh>
@@ -2810,7 +2811,7 @@
 <v t="edream.110203161858.2139"><vh>wikiTest2</vh></v>
 <v t="edream.110203161858.2140"><vh>wikiTest3</vh></v>
 </v>
-<v t="edream.110203161858.2141" tnodeList="edream.110203161858.2141"><vh>editBodyTests</vh>
+<v t="edream.110203161858.2141"><vh>editBodyTests</vh>
 <v t="edream.110203161858.2142"><vh>dedentBody</vh>
 <v t="edream.110203161858.2143"><vh>before</vh></v>
 <v t="edream.110203161858.2144"><vh>after</vh></v>
@@ -2834,7 +2835,7 @@
 <v t="edream.121003103729.3"><vh>selection</vh></v>
 </v>
 </v>
-<v t="edream.121103114537" tnodeList="edream.121103114537"><vh>exportTests</vh>
+<v t="edream.121103114537"><vh>exportTests</vh>
 <v t="edream.121103115910.1"><vh>exportHeadlines</vh>
 <v t="edream.121103120126.1"><vh>dialog</vh></v>
 </v>
@@ -2854,7 +2855,7 @@
 <v t="edream.121103175314"><vh>dialog</vh></v>
 </v>
 </v>
-<v t="edream.121103175121" tnodeList="edream.121103175121"><vh>importTests</vh>
+<v t="edream.121103175121"><vh>importTests</vh>
 <v t="edream.121103114537.1"><vh>importAtRoot</vh>
 <v t="edream.121103114537.2"><vh>dialog</vh></v>
 </v>
@@ -2877,14 +2878,14 @@
 <v t="edream.110203161858.2151"><vh>moveOutlineRight</vh></v>
 <v t="edream.110203161858.2152"><vh>moveOutlineUp</vh></v>
 </v>
-<v t="edream.110903064653"><vh>testLeoFiles (ERRORS)</vh>
+<v t="edream.110903064653"><vh>testLeoFiles</vh>
 <v t="edream.110903064653.1"><vh>c:\prog\leoCvs\leo\test\test.leo</vh></v>
 <v t="edream.110903064653.2"><vh>c:\prog\leoCvs\leo\src\LeoPy.leo</vh></v>
 <v t="edream.110903064653.3"><vh>c:\prog\leoCvs\leo\plugins\leoPlugins.leo</vh></v>
 <v t="edream.110903064653.4"><vh>c:\prog\leoCvs\leo\doc\LeoDocs.leo</vh></v>
 </v>
 </v>
-<v t="edream.110203161858.2153" a="E" tnodeList="edream.110203161858.2153"><vh>Run all tests</vh></v>
+<v t="edream.110203161858.2153" a="EV"><vh>Run all tests</vh></v>
 </v>
 </vnodes>
 <tnodes>
@@ -34203,20 +34204,18 @@ reload(leoTest) # Allows us to rerun this script when leoTest.py changes.
 
 mainSuite = unittest.makeSuite(unittest.TestCase)
 
-for makeTestSuiteFunction,headline in (
+for f,headline in (
 	(leoTest.makeColorSuite,"colorizerTests"),
 	(leoTest.makeEditBodySuite,"editBodyTests"),
 	(leoTest.makeImportExportSuite,"exportTests"),
-	(leoTest.makeImportExportSuite,"importTests")):
-
-	suite = makeTestSuiteFunction(headline,"tempNode")
+	(leoTest.makeImportExportSuite,"importTests"),
+	(leoTest.makeTestLeoFilesSuite,"testLeoFiles")
+):
+	suite = f(headline,"tempNode")
 	mainSuite.addTest(suite)
 
 runner = unittest.TextTestRunner()
 runner.run(mainSuite)
-
-if 0: # generates errors
-	(leoTest.makeTestLeoFilesSuite,"cloneTestLeoFiles")
 
 if 0: # not ready yet.
 	(leoTest.makeOutlineSuite,"outlineTests")</t>
@@ -34255,9 +34254,7 @@ pages = ((nodes * 10) + lines) / 50
 print "nodes,lines,pages",nodes,lines,pages
 es("nodes,lines,pages",nodes,lines,pages)
 </t>
-<t tx="edream.110903064653"># To do: use a null-gui to open the .leo files.
-
-import unittest
+<t tx="edream.110903064653">import unittest
 import leoTest
 reload(leoTest) # Allows us to rerun this script when leoTest.py changes.
 
@@ -35818,5 +35815,6 @@ c:\\prog\\test\\unittest\\input\\leoAtFile.py</t>
 c:\\prog\\test\\unittest\\output\\outlineToCweb.txt</t>
 <t tx="edream.121103180347">saveFileDialog
 c:\\prog\\test\\unittest\\output\\outlineToNoweb.txt</t>
+<t tx="edream.121303072722">print "hello"</t>
 </tnodes>
 </leo_file>

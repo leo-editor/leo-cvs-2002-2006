@@ -961,11 +961,11 @@
 </v>
 </v>
 <v t="edream.120203141341"><vh>(Scripts to debug font problem)</vh>
-<v t="edream.120203141341.1" tnodeList="edream.120203141341.1"><vh>Show font</vh></v>
-<v t="edream.120203140328.1" tnodeList="edream.120203140328.1,edream.120203140328.2"><vh>Show settings</vh>
+<v t="edream.120203141341.1"><vh>Show font</vh></v>
+<v t="edream.120203140328.1"><vh>Show settings</vh>
 <v t="edream.120203140328.2"><vh>getFontSettings</vh></v>
 </v>
-<v t="edream.120203141927" tnodeList="edream.120203141927"><vh>Print default font</vh></v>
+<v t="edream.120203141927"><vh>Print default font</vh></v>
 </v>
 <v t="edream.120103084310"><vh>(Load plugins only from plugins menu)</vh>
 <v t="edream.120103084310.1"><vh>Report</vh></v>

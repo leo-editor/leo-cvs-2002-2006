@@ -2,7 +2,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="3994" clone_windows="0"/>
 <globals body_outline_ratio="0.49655172413793103">
-	<global_window_position top="10" left="400" height="870" width="818"/>
+	<global_window_position top="34" left="377" height="870" width="816"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences>
@@ -14,6 +14,10 @@
 <vnodes>
 <v t="edream.110203160744"><vh> Diary</vh>
 <v t="edream.120103054230"><vh>December 2003</vh>
+<v t="edream.121303061952"><vh>12/13</vh>
+<v t="edream.121303065449"><vh>Autoclean outline on save &amp; executeScript does not set tnodeList</vh></v>
+<v t="edream.121303061952.1"><vh>Patched scanPythonClass to put class docstrings in class nodes</vh></v>
+</v>
 <v t="edream.121103121956"><vh>12/11</vh>
 <v t="edream.121103220800"><vh>Fixed big performance bug in removeSentinelLines</vh></v>
 <v t="edream.121103220800.1"><vh>Call leoTest.fail in when import/export routines can't open a file</vh></v>
@@ -770,10 +774,11 @@
 <v t="edream.121103150801"><vh>Urgent: improve the config manager</vh></v>
 <v t="edream.120603055749"><vh>gui interface for plugins manager</vh></v>
 <v t="edream.120303071612"><vh>Finish wx plugin &amp; improve how Leo uses indices</vh></v>
+<v t="edream.121303054612"><vh>Better support for TeX coloring</vh></v>
 <v t="edream.110203160744.425"><vh>Best minor improvements</vh>
 <v t="edream.110203160744.426"><vh>Use @file extension by default if no @language</vh></v>
 <v t="edream.110203160744.427"><vh>Secondary icons: use for marks?</vh></v>
-<v t="edream.110203160744.2439" tnodeList="edream.110203160744.2439"><vh>(Use pywin extensions to improve cut/paste between apps)</vh>
+<v t="edream.110203160744.2439"><vh>(Use pywin extensions to improve cut/paste between apps)</vh>
 <v t="edream.110203160744.1293" a=""><vh>updateEditMenu</vh></v>
 <v t="edream.110203160744.3684" a=""><vh> tkinterGui.__init__</vh></v>
 <v t="edream.110203160744.2287" a=""><vh>tkBody.createBindings</vh></v>
@@ -807,6 +812,7 @@
 <v t="edream.110703024557"><vh>What does the scripts menu do ?</vh></v>
 <v t="edream.110503100058"><vh>Add option to allow incremental screen redraws? And shared tnodes?</vh></v>
 </v>
+<v t="edream.121103044318"><vh>Cleanup</vh></v>
 </v>
 <v t="edream.110203160744.436"><vh>  Schedule</vh></v>
 <v t="edream.110203160744.437"><vh> Help wanted</vh>
@@ -1047,11 +1053,7 @@
 </v>
 </v>
 </v>
-<v t="edream.110403112538" a="V"><vh>To do: 4.1</vh>
-<v t="edream.121103044318"><vh>Cleanup</vh></v>
-<v t="edream.120803170142.2"><vh>Document recent changes</vh></v>
-<v t="edream.121203134946"><vh>Import should put class strings with the class node</vh></v>
-</v>
+<v t="edream.110403112538" a="EV"><vh>To do: 4.1 final</vh></v>
 <v t="edream.110203160744.601"><vh>(Project Views)</vh>
 <v t="edream.110203160744.602"><vh>  Reports</vh>
 <v t="edream.110203160744.603"><vh>(Translation problems)</vh>
@@ -3323,12 +3325,12 @@
 </v>
 <v t="edream.112203132842" a="M"><vh>(Bold body pane bug)</vh>
 <v t="edream.120203130055"><vh>Scripts</vh>
-<v t="edream.120203140055" tnodeList="edream.120203140055,edream.120203140210"><vh>Show settings</vh>
+<v t="edream.120203140055"><vh>Show settings</vh>
 <v t="edream.120203140210"><vh>getFontSettings</vh></v>
 </v>
-<v t="edream.120203132327" tnodeList="edream.120203132327"><vh>Set tracing var</vh></v>
-<v t="edream.120203130055.1" tnodeList="edream.120203130055.1"><vh>Print font</vh></v>
-<v t="edream.120203130901" tnodeList="edream.120203130901"><vh>Print default font</vh></v>
+<v t="edream.120203132327"><vh>Set tracing var</vh></v>
+<v t="edream.120203130055.1"><vh>Print font</vh></v>
+<v t="edream.120203130901"><vh>Print default font</vh></v>
 </v>
 <v t="edream.120203130055.2"><vh>Code</vh>
 <v t="edream.110203160744.1398" a=""><vh>app.__init__</vh>
@@ -3485,7 +3487,7 @@
 </v>
 </v>
 <v t="edream.111403200430"><vh>(Fixed line ending problem)</vh>
-<v t="edream.120203163222" tnodeList="edream.120203163222"><vh>test</vh></v>
+<v t="edream.120203163222"><vh>test</vh></v>
 <v t="edream.120203162331"><vh>Report</vh></v>
 <v t="edream.110203160744.2858" a=""><vh>putCodeLine</vh></v>
 <v t="edream.110203160744.1368" a=""><vh>getOutputNewline</vh></v>
@@ -3681,6 +3683,25 @@
 <v t="edream.110203160744.2023"><vh>updateBodyPane (handles undo)</vh></v>
 </v>
 </v>
+<v t="edream.121303072054"><vh>(Don't write tnodeList when executing scripts)</vh>
+<v t="edream.110403150047.1" a=""><vh>c.checkOutline</vh></v>
+<v t="edream.110203160744.1151" a=""><vh>executeScript</vh>
+<v t="edream.111903142522"><vh>&lt;&lt; define class fileLikeObject &gt;&gt;</vh></v>
+<v t="edream.110203160744.1152"><vh>&lt;&lt; get script into s &gt;&gt;</vh></v>
+<v t="edream.110203160744.1153"><vh>&lt;&lt; redirect output if redirect_execute_script_output_to_log_pane &gt;&gt;</vh></v>
+</v>
+<v t="edream.110203160744.2836" a=""><vh>putOpenNodeSentinel (sets tnodeList)</vh></v>
+<v t="edream.110203160744.2844" a=""><vh>new_df.write (inits root.tnodeList)</vh>
+<v t="edream.110203160744.2845"><vh>&lt;&lt; initialize &gt;&gt;</vh></v>
+<v t="edream.110203160744.2846"><vh>&lt;&lt; open the file; return on error &gt;&gt;</vh></v>
+<v t="edream.110203160744.2847"><vh>&lt;&lt; write then entire @file tree &gt;&gt; (4.x)</vh>
+<v t="edream.110203160744.2848"><vh>&lt;&lt; put all @first lines in root &gt;&gt;</vh></v>
+<v t="edream.110203160744.2849"><vh>&lt;&lt; put all @last lines in root &gt;&gt; (4.x)</vh></v>
+</v>
+<v t="edream.110203160744.2850"><vh>&lt;&lt; Warn about @ignored and orphans  &gt;&gt;</vh></v>
+<v t="edream.110203160744.2851"><vh>&lt;&lt; finish writing &gt;&gt;</vh></v>
+</v>
+</v>
 <v t="edream.120703061418"><vh>(Fixed 2 new reorg bugs)</vh>
 <v t="edream.110203160744.1110" a=""><vh>&lt;&lt; Set closeFlag if the only open window is empty &gt;&gt;</vh></v>
 </v>
@@ -3779,25 +3800,15 @@
 <v t="edream.110203160744.3453" a=""><vh>&lt;&lt; set the private global matching vars &gt;&gt;</vh></v>
 <v t="edream.110203160744.3073" a=""><vh>skip_string : called by tangle</vh></v>
 </v>
-<v t="edream.111003111536"><vh>(Investigated No tnode list)</vh>
-<v t="edream.120803164637"><vh>Report</vh></v>
-<v t="edream.120803164637.1"><vh>Writing</vh>
-<v t="edream.110203160744.2844" a=""><vh>new_df.write (inits root.tnodeList)</vh>
-<v t="edream.110203160744.2845"><vh>&lt;&lt; initialize &gt;&gt;</vh></v>
-<v t="edream.110203160744.2846"><vh>&lt;&lt; open the file; return on error &gt;&gt;</vh></v>
-<v t="edream.110203160744.2847"><vh>&lt;&lt; write then entire @file tree &gt;&gt; (4.x)</vh>
-<v t="edream.110203160744.2848"><vh>&lt;&lt; put all @first lines in root &gt;&gt;</vh></v>
-<v t="edream.110203160744.2849"><vh>&lt;&lt; put all @last lines in root &gt;&gt; (4.x)</vh></v>
+<v t="edream.120803102832"><vh>(Fixed Recent files bug)</vh>
+<v t="edream.121203202534"><vh>Discussion</vh></v>
+<v t="edream.121203093714"><vh>Menu activation traceback</vh></v>
+<v t="edream.111303093945.3" a=""><vh>set_focus</vh></v>
 </v>
-<v t="edream.110203160744.2850"><vh>&lt;&lt; Warn about @ignored and orphans  &gt;&gt;</vh></v>
-<v t="edream.110203160744.2851"><vh>&lt;&lt; finish writing &gt;&gt;</vh></v>
-</v>
-<v t="edream.110203160744.2836" a=""><vh>putOpenNodeSentinel (sets tnodeList)</vh></v>
-<v t="edream.110203160744.2992" a=""><vh>putTnodeList (4.0)</vh></v>
-</v>
-<v t="edream.120803164637.2"><vh>Reading</vh>
-<v t="edream.110203160744.1842" a=""><vh>findChild</vh></v>
-<v t="edream.110203160744.2973" a=""><vh>getTnodeList (4.0)</vh></v>
+<v t="edream.121203135541"><vh>(Fixed reorg bug in openRecentFiles)</vh>
+<v t="edream.121203135541.1"><vh>Traceback</vh></v>
+<v t="edream.110203160744.1109" a=""><vh>openRecentFile</vh>
+<v t="edream.110203160744.1110" a=""><vh>&lt;&lt; Set closeFlag if the only open window is empty &gt;&gt;</vh></v>
 </v>
 </v>
 <v t="edream.121003065108"><vh>(Indent/dedent move one extra line when there is no selected text)</vh>
@@ -3839,16 +3850,61 @@
 <v t="edream.112103153646.3" a=""><vh>getSelectionLines (nullBody)</vh></v>
 <v t="edream.110203160744.2302" a=""><vh>getSelectionLines (tkBody)</vh></v>
 </v>
-<v t="edream.121203135541"><vh>(Fixed reorg bug in openRecentFiles)</vh>
-<v t="edream.121203135541.1"><vh>Traceback</vh></v>
-<v t="edream.110203160744.1109" a=""><vh>openRecentFile</vh>
-<v t="edream.110203160744.1110" a=""><vh>&lt;&lt; Set closeFlag if the only open window is empty &gt;&gt;</vh></v>
+<v t="edream.111003111536"><vh>(Investigated No tnode list)</vh>
+<v t="edream.120803164637"><vh>Report</vh></v>
+<v t="edream.120803164637.1"><vh>Writing</vh>
+<v t="edream.110203160744.2844" a=""><vh>new_df.write (inits root.tnodeList)</vh>
+<v t="edream.110203160744.2845"><vh>&lt;&lt; initialize &gt;&gt;</vh></v>
+<v t="edream.110203160744.2846"><vh>&lt;&lt; open the file; return on error &gt;&gt;</vh></v>
+<v t="edream.110203160744.2847"><vh>&lt;&lt; write then entire @file tree &gt;&gt; (4.x)</vh>
+<v t="edream.110203160744.2848"><vh>&lt;&lt; put all @first lines in root &gt;&gt;</vh></v>
+<v t="edream.110203160744.2849"><vh>&lt;&lt; put all @last lines in root &gt;&gt; (4.x)</vh></v>
+</v>
+<v t="edream.110203160744.2850"><vh>&lt;&lt; Warn about @ignored and orphans  &gt;&gt;</vh></v>
+<v t="edream.110203160744.2851"><vh>&lt;&lt; finish writing &gt;&gt;</vh></v>
+</v>
+<v t="edream.110203160744.2836" a=""><vh>putOpenNodeSentinel (sets tnodeList)</vh></v>
+<v t="edream.110203160744.2992" a=""><vh>putTnodeList (4.0)</vh></v>
+</v>
+<v t="edream.120803164637.2"><vh>Reading</vh>
+<v t="edream.110203160744.1842" a=""><vh>findChild</vh></v>
+<v t="edream.110203160744.2973" a=""><vh>getTnodeList (4.0)</vh></v>
 </v>
 </v>
-<v t="edream.120803102832"><vh>(Fixed Recent files bug)</vh>
-<v t="edream.121203202534"><vh>Discussion</vh></v>
-<v t="edream.121203093714"><vh>Menu activation traceback</vh></v>
-<v t="edream.111303093945.3" a=""><vh>set_focus</vh></v>
+<v t="edream.121203134946"><vh>(Patched scanPythonClass to put class docstrings in class nodes)</vh>
+<v t="edream.121303060602"><vh>Report</vh></v>
+<v t="edream.110203160744.1977" a=""><vh>Python scanners</vh>
+<v t="edream.110203160744.1978"><vh>scanPythonClass</vh>
+<v t="edream.110203160744.1979"><vh>&lt;&lt; set classname and headline, or return i &gt;&gt;</vh></v>
+<v t="edream.110203160744.1980" a="M"><vh>&lt;&lt; create class_vnode  &gt;&gt;</vh></v>
+<v t="edream.110203160744.1981"><vh>&lt;&lt; create nodes for all defs of the class &gt;&gt;</vh>
+<v t="edream.110203160744.1982"><vh>&lt;&lt; create parent_vnode &gt;&gt;</vh></v>
+</v>
+<v t="edream.110203160744.1983"><vh>&lt;&lt; append any other class material &gt;&gt;</vh></v>
+</v>
+<v t="edream.110203160744.1984"><vh>scanPythonDef</vh>
+<v t="edream.110203160744.1985"><vh>&lt;&lt; set headline or return i &gt;&gt;</vh></v>
+<v t="edream.110203160744.1986"><vh>&lt;&lt; skip the Python def &gt;&gt;</vh></v>
+<v t="edream.110203160744.1987"><vh>&lt;&lt; Create def node &gt;&gt;</vh></v>
+</v>
+<v t="edream.110203160744.1988"><vh>scanPythonDecls</vh>
+<v t="edream.110203160744.1989"><vh>&lt;&lt; break on def or class &gt;&gt;</vh></v>
+<v t="edream.110203160744.1990"><vh>&lt;&lt; Create a child node for declarations &gt;&gt;</vh></v>
+</v>
+<v t="edream.110203160744.1991"><vh>scanPythonText</vh>
+<v t="edream.110203160744.1992"><vh>&lt;&lt; handle possible Python function or class &gt;&gt;</vh></v>
+<v t="edream.110203160744.1993"><vh>&lt;&lt; Append a reference to the methods of this file &gt;&gt;</vh></v>
+<v t="edream.110203160744.1994"><vh>&lt;&lt; Append any unused python text to the parent's body text &gt;&gt;</vh></v>
+</v>
+</v>
+</v>
+<v t="edream.121303064022"><vh>(Write tnodeList only for @file nodes)</vh>
+<v t="edream.110203160744.2119" a=""><vh>putVnode (3.x and 4.x)</vh>
+<v t="edream.110203160744.2120"><vh>&lt;&lt; Put tnode index &gt;&gt;</vh></v>
+<v t="edream.110203160744.2121"><vh>&lt;&lt; Put attribute bits &gt;&gt;</vh></v>
+<v t="edream.110203160744.2122"><vh>&lt;&lt; write the head text &gt;&gt;</vh></v>
+<v t="edream.110203160744.2123"><vh>&lt;&lt; put unknown vnode attributes &gt;&gt;</vh></v>
+</v>
 </v>
 </v>
 </v>
@@ -3867,11 +3923,11 @@
 <v t="edream.111203151648"><vh>Editing scripts</vh>
 <v t="edream.110503223808" a=""><vh>doChange...Script</vh></v>
 <v t="edream.110603105919.1" a=""><vh>initScriptFind</vh></v>
-<v t="edream.112003212118" tnodeList="edream.112003212118"><vh>Find script to clean whitespace</vh>
+<v t="edream.112003212118"><vh>Find script to clean whitespace</vh>
 <v t="edream.112003212118.1"><vh>Find script</vh></v>
 <v t="edream.112003212118.2"><vh>Change script</vh></v>
 </v>
-<v t="edream.111803170916" tnodeList="edream.111803170916"><vh>Find scripts to convert @doc comments to doc strings</vh>
+<v t="edream.111803170916"><vh>Find scripts to convert @doc comments to doc strings</vh>
 <v t="edream.111803170916.1"><vh>Find script</vh></v>
 <v t="edream.111803170916.2"><vh>Change script</vh></v>
 <v t="edream.111803170916.3"><vh>re tests</vh></v>
@@ -4417,7 +4473,7 @@
 <v t="edream.110203160744.2841" a=""><vh>Writing (4.x)</vh>
 <v t="edream.110203160744.2842"><vh>Top level</vh>
 <v t="edream.110203160744.2843"><vh>new_df.closeWriteFile</vh></v>
-<v t="edream.110203160744.2844" a=""><vh>new_df.write (inits root.tnodeList)</vh>
+<v t="edream.110203160744.2844" a="M"><vh>new_df.write (inits root.tnodeList)</vh>
 <v t="edream.110203160744.2845"><vh>&lt;&lt; initialize &gt;&gt;</vh></v>
 <v t="edream.110203160744.2846"><vh>&lt;&lt; open the file; return on error &gt;&gt;</vh></v>
 <v t="edream.110203160744.2847"><vh>&lt;&lt; write then entire @file tree &gt;&gt; (4.x)</vh>
@@ -6056,7 +6112,7 @@
 <v t="edream.110203160744.2192"><vh>fontPanel.__init__</vh></v>
 <v t="edream.111203092853"><vh>Must be overridden in subclasses</vh></v>
 </v>
-<v t="edream.110203160744.3540" tnodeList="edream.110203160744.3540,edream.111803052025.1,edream.110203160744.2278,edream.110203160744.2280,edream.112103092157,edream.120203144804,edream.111003091448,edream.112103092005.1,edream.112103092005.2,edream.112103092005.3,edream.112103092005.4,edream.112103092005.5,edream.112103092005.6,edream.112103092005.7,edream.112103092005.14,edream.112103092005.19,edream.112103092005.20,edream.112103093105,edream.112103092005.29,edream.112103092005.36,edream.112103092005.40,edream.112103092005.41,edream.111603115116,edream.110203160744.3541,edream.110903190535,edream.111603110756.2,edream.112103094829,edream.112103095020.1,edream.112103094326.1,edream.112103094744,edream.112103162800,edream.112103094636,edream.110203160744.2275,edream.110203160744.2268,edream.111603110756,edream.110203160744.1592,edream.110203160744.1593,edream.110203160744.1357,edream.110203160744.1358,edream.110203160744.2323,edream.110203160744.2324,edream.110203160744.2325,edream.110203160744.2326,edream.110203160744.2327,edream.110203160744.2328,edream.110203160744.2329,edream.110203160744.2330,edream.110203160744.2331,edream.110203160744.3546,edream.111603161937,edream.111603161937.2,edream.111603161937.3,edream.111603121021,edream.111603120940.1,edream.111603115116.5,edream.111603115820.1,edream.111603120940,edream.110203160744.3705,edream.110203160744.3706,edream.111603115820,edream.111603173312,edream.111603161937.4,edream.110203160744.1754,edream.110203160744.1755,edream.110203160744.1756,edream.110203160744.1757,edream.112103083853,edream.112103141343.1,edream.112103144659,edream.112103153646.1,edream.112103153646.2,edream.112103142020,edream.112103142020.1,edream.112103142020.2,edream.112103142020.3,edream.112103142020.4,edream.112103142020.5,edream.112103142020.6,edream.112103142020.7,edream.112103142020.8,edream.112103142020.9,edream.112103142020.10,edream.112103142020.12,edream.112103142020.13,edream.112103151727,edream.112103151733,edream.112103153646.3,edream.112103142020.14,edream.112103142020.15,edream.112103142020.16,edream.112103141343.2,edream.112103083614,edream.112103100651,edream.112103100651.1,edream.112103160822.1,edream.112103160822,edream.112103160840.1,edream.112103160840.2,edream.112103160840.5,edream.112103160840.7,edream.112103160840.3,edream.112103160840.6"><vh>@file leoFrame.py</vh>
+<v t="edream.110203160744.3540" tnodeList="edream.110203160744.3540,edream.111803052025.1,edream.110203160744.2278,edream.110203160744.2280,edream.112103092157,edream.120203144804,edream.111003091448,edream.112103092005.1,edream.112103092005.2,edream.112103092005.3,edream.112103092005.4,edream.112103092005.5,edream.112103092005.6,edream.112103092005.7,edream.112103092005.14,edream.112103092005.19,edream.112103092005.20,edream.112103093105,edream.112103092005.29,edream.112103092005.36,edream.112103092005.40,edream.112103092005.41,edream.111603115116,edream.110203160744.3541,edream.110903190535,edream.111603110756.2,edream.112103094829,edream.112103095020.1,edream.112103094326.1,edream.112103094744,edream.112103162800,edream.112103094636,edream.110203160744.2275,edream.110203160744.2268,edream.111603110756,edream.110203160744.1592,edream.110203160744.1593,edream.110203160744.1357,edream.110203160744.1358,edream.110203160744.2323,edream.110203160744.2324,edream.110203160744.2325,edream.110203160744.2326,edream.110203160744.2327,edream.121303081006,edream.110203160744.2328,edream.110203160744.2329,edream.110203160744.2330,edream.110203160744.2331,edream.110203160744.3546,edream.111603161937,edream.111603161937.2,edream.111603161937.3,edream.111603121021,edream.111603120940.1,edream.111603115116.5,edream.111603115820.1,edream.111603120940,edream.110203160744.3705,edream.110203160744.3706,edream.111603115820,edream.111603173312,edream.111603161937.4,edream.110203160744.1754,edream.110203160744.1755,edream.110203160744.1756,edream.110203160744.1757,edream.112103083853,edream.112103141343.1,edream.112103144659,edream.112103153646.1,edream.112103153646.2,edream.112103142020,edream.112103142020.1,edream.112103142020.2,edream.112103142020.3,edream.112103142020.4,edream.112103142020.5,edream.112103142020.6,edream.112103142020.7,edream.112103142020.8,edream.112103142020.9,edream.112103142020.10,edream.112103142020.12,edream.112103142020.13,edream.112103151727,edream.112103151733,edream.112103153646.3,edream.112103142020.14,edream.112103142020.15,edream.112103142020.16,edream.112103141343.2,edream.112103083614,edream.112103100651,edream.112103100651.1,edream.112103160822.1,edream.112103160822,edream.112103160840.1,edream.112103160840.2,edream.112103160840.5,edream.112103160840.7,edream.112103160840.3,edream.112103160840.6"><vh>@file leoFrame.py</vh>
 <v t="edream.111803052025.1" a=""><vh>&lt;&lt; About handling events &gt;&gt;</vh></v>
 <v t="edream.110203160744.2278"><vh>class leoBody</vh>
 <v t="edream.110203160744.2280"><vh>leoBody.__init__</vh></v>
@@ -6111,6 +6167,7 @@
 <v t="edream.110203160744.2325"><vh>leoLog.configure</vh></v>
 <v t="edream.110203160744.2326"><vh>leoLog.configureBorder</vh></v>
 <v t="edream.110203160744.2327"><vh>leoLog.createControl</vh></v>
+<v t="edream.121303081006"><vh>leoLog.enable &amp; disable</vh></v>
 <v t="edream.110203160744.2328"><vh>leoLog.oops</vh></v>
 <v t="edream.110203160744.2329"><vh>leoLog.setFontFromConfig</vh></v>
 <v t="edream.110203160744.2330"><vh>leoLog.onActivateLog</vh></v>
@@ -6952,7 +7009,6 @@
 <v t="edream.110203160744.879" a=""><vh>tree.moveUpDown</vh></v>
 </v>
 </v>
-</v>
 <v t="edream.110203160744.3717"><vh>Unit Testing &amp; leoTest.py</vh>
 <v t="edream.121103110000" a=""><vh>class unitTestGui</vh>
 <v t="edream.121103111146"><vh> test.gui.__init__&amp; destroySelf</vh></v>
@@ -7054,12 +7110,13 @@
 </v>
 </v>
 <v t="edream.110903064812"><vh>LeoFiles tests</vh>
-<v t="edream.110903064923"><vh> makeOutlineSuite</vh></v>
+<v t="edream.110903064923"><vh>makeTestLeoFilesSuite</vh></v>
 <v t="edream.110903065210"><vh>class leoFileTestCase</vh>
 <v t="edream.110903065210.1"><vh>__init__</vh></v>
 <v t="edream.110903065210.3"><vh>runTest</vh></v>
 <v t="edream.110903065210.4"><vh>setUp</vh></v>
 <v t="edream.110903065210.5"><vh>tearDown</vh></v>
+</v>
 </v>
 </v>
 </v>
@@ -29247,7 +29304,7 @@ try:
 		state="disabled",highlightthickness=0,fg=fg,bg=bg)
 except:
 	es_exception()</t>
-<t tx="edream.110203160744.1706">def openWithFileName(fileName,old_c):
+<t tx="edream.110203160744.1706">def openWithFileName(fileName,old_c,enableLog=true):
 	
 	"""Create a Leo Frame for the indicated fileName if the file exists."""
 
@@ -29282,6 +29339,7 @@ except:
 		file = open(fileName,'rb')
 		if file:
 			c,frame = app.gui.newLeoCommanderAndFrame(fileName)
+			frame.log.enable(enableLog)
 			if not doHook("open1",old_c=old_c,new_c=c,fileName=fileName):
 				app.setLog(frame.log,"openWithFileName")
 				app.lockLog()
@@ -33339,10 +33397,19 @@ else:
 	self.methodsSeen = true
 
 # i points just after the class line.
+
+# Add a docstring to the class node.
+docStringSeen = false
+j = skip_ws_and_nl(s,i)
+if match(s,j,'"""') or match(s,j,"'''"):
+	j = skip_python_string(s,j)
+	if j != len(s): # No scanning error.
+		i = j ; docStringSeen = true
+
 body = s[start:i]
 body = self.undentBody(body)
-class_vnode = self.createHeadline(parent,prefix + body,headline)
-</t>
+if docStringSeen: body = body + '\n'
+class_vnode = self.createHeadline(parent,prefix + body,headline)</t>
 <t tx="edream.110203160744.1981">indent =  self.getLeadingIndent(s,i)
 start = i = skip_blank_lines(s,i)
 parent_vnode = None # 7/6/02
@@ -35069,7 +35136,8 @@ checkTopologyOfAllClones()</t>
 	fc.put("&lt;v")
 	&lt;&lt; Put tnode index &gt;&gt;
 	&lt;&lt; Put attribute bits &gt;&gt;
-	if hasattr(v,"tnodeList") and len(v.tnodeList) &gt; 0:
+	# 12/13/03 Write tnodeList only for @file nodes.
+	if hasattr(v,"tnodeList") and len(v.tnodeList) &gt; 0 and v.isAnyAtFileNode():
 		fc.putTnodeList(v) # New in 4.0
 	if hasattr(v,"unknownAttributes"): # New in 4.0
 		&lt;&lt; put unknown vnode attributes &gt;&gt;
@@ -36882,6 +36950,7 @@ def scrollDown (self):
 	
 	self.frame = frame
 	self.c = frame.c
+	self.enabled = true
 	self.newlines = 0
 
 	self.logCtrl = self.createControl(parentFrame)
@@ -44131,7 +44200,6 @@ def putEmptyDirective(self,s,i):
 
 	# For 4.x reading &amp; writing...
 	at.inCode = true
-	## at.nodeIndices = app.nodeIndices
 
 	# For 4.x writing...
 	at.docKind = None
@@ -44710,7 +44778,9 @@ def write(self,root,nosentinels=false,scriptFile=None):
 		&lt;&lt; open the file; return on error &gt;&gt;
 		root.clearVisitedInTree()
 		&lt;&lt; write then entire @file tree &gt;&gt;
-		if not scriptFile:
+		if scriptFile != None:
+			at.root.tnodeList = [] # 12/13/03
+		else:
 			at.closeWriteFile()
 			if not nosentinels:
 				&lt;&lt; warn about @ignored and orphans &gt;&gt;
@@ -44720,6 +44790,7 @@ def write(self,root,nosentinels=false,scriptFile=None):
 			es("exception preprocessing script",color="blue")
 			es_exception(full=false)
 			scriptFile.clear()
+			at.root.tnodeList = [] # 12/13/03
 		else:
 			at.handleWriteException()</t>
 <t tx="edream.110203160744.2845">at.errors = 0
@@ -56560,7 +56631,7 @@ def setUp(self,*args,**keys):
 <t tx="edream.110203160744.3796"></t>
 <t tx="edream.110203160744.3797">def makeOutlineSuite(testParentHeadline):
 	
-	"""Create a colorizer test for every descendant of testParentHeadline.."""
+	"""Create an outline test for every descendant of testParentHeadline.."""
 	
 	u = testUtils() ; c = top() ; v = c.currentVnode()
 	
@@ -56626,13 +56697,13 @@ def setUp(self,*args,**keys):
 c = top()
 v = c.rootVnode()
 while v:
-	if hasattr(v,"tnodeList") and not v.isAnyAtFileNode():
+	# 12/13/03: Empty tnodeLists are not errors because they never get written to the .leo file.
+	if hasattr(v,"tnodeList") and len(v.tnodeList) &gt; 0 and not v.isAnyAtFileNode():
 		es("deleting tnodeList for " + `v`,color="blue")
 		delattr(v,"tnodeList")
-
+		c.setChanged(true)
 	v = v.threadNext()
-es("tnodeList script complete")
-</t>
+es("tnodeList script complete")</t>
 <t tx="edream.110303152216"></t>
 <t tx="edream.110303152216.1"></t>
 <t tx="edream.110303154904.1"></t>
@@ -56729,7 +56800,17 @@ elif undoType == "De-Hoist":
 
 - These commands eat one too many characters.
 - The selection is not set properly afterwards.</t>
-<t tx="edream.110403112538">@nocolor</t>
+<t tx="edream.110403112538">@nocolor
+
+Document recent changes:
+	- pluginsManager.text
+	- Import Derived File command now puts up a dialog.
+	- @ignored and orphan nodes now valid in @file-nosent trees.
+	- Created app.unitTestDict for communication between tests and between tests and code.
+
+Unit tests:
+	- For all plugins.
+	- For read/write commands.</t>
 <t tx="edream.110403150047">def OnCheckOutline (self):
 	
 	self.c.checkOutline()</t>
@@ -56746,7 +56827,8 @@ elif undoType == "De-Hoist":
 	nodes = 0 ; errors = 0
 	while v:
 		nodes += 1
-		if hasattr(v,"tnodeList") and not v.isAnyAtFileNode():
+		# 12/13/03: Empty tnodeLists are not errors.
+		if hasattr(v,"tnodeList") and len(v.tnodeList) &gt; 0 and not v.isAnyAtFileNode():
 			s = "deleting tnodeList for " + `v`
 			print s ; es(s,color="blue")
 			delattr(v,"tnodeList")
@@ -57006,9 +57088,9 @@ LeoDocs.leo:  Users Guide
 
 nodes,lines,pages, 379, 44606, 967</t>
 <t tx="edream.110903064812"></t>
-<t tx="edream.110903064923">def makeTestLeoFilesSuite(testParentHeadline):
+<t tx="edream.110903064923">def makeTestLeoFilesSuite(testParentHeadline,tempNode=None):
 	
-	"""Create a colorizer test for every descendant of testParentHeadline.."""
+	"""Create a .leo file test for every descendant of testParentHeadline.."""
 	
 	u = testUtils() ; c = top()
 	
@@ -57035,6 +57117,7 @@ nodes,lines,pages, 379, 44606, 967</t>
 	self.old_c = c
 	self.c = None # set by setUp.
 	self.fileName = fileName
+	self.gui = None # set by setUp
 	self.openFrames = app.windowList[:]</t>
 <t tx="edream.110903065210.3">def runTest(self):
 	
@@ -57045,10 +57128,15 @@ nodes,lines,pages, 379, 44606, 967</t>
 <t tx="edream.110903065210.4">def setUp(self):
 
 	"""Open the .leo file."""
+	
 
 	c = self.old_c ; fileName = self.fileName
 	assert(os_path_exists(fileName))
-	ok, frame = openWithFileName(fileName,c)
+	
+	self.oldGui = app.gui
+	app.gui = leoGui.nullGui("nullGui")
+
+	ok, frame = openWithFileName(fileName,c,enableLog=false)
 	assert(ok)
 	self.c = frame.c</t>
 <t tx="edream.110903065210.5">def tearDown (self):
@@ -57057,7 +57145,9 @@ nodes,lines,pages, 379, 44606, 967</t>
 
 	frame = self.c.frame
 	if frame not in self.openFrames:
-		app.closeLeoWindow(frame)</t>
+		app.closeLeoWindow(frame)
+
+	app.gui = self.oldGui</t>
 <t tx="edream.110903072034"></t>
 <t tx="edream.110903072034.1"></t>
 <t tx="edream.110903072034.2"></t>
@@ -59776,12 +59866,6 @@ def update (self):
 	def createControl (self,parentFrame):
 		pass
 		
-	def disable (self):
-		self.enabled = false
-		
-	def enable (self):
-		self.enabled = true
-
 	def oops(self):
 		trace("nullLog:", callerName(2))
 		
@@ -61197,14 +61281,6 @@ This is the behavior of both 4.0.3 and 4.1.</t>
 - The copy/paste code had a few bugs that I corrected today.  I doubt whether these would have caused major problems.
 
 In short, the present code appears to be reasonably solid.  I should withdraw the 4.0.4 code asap.</t>
-<t tx="edream.120803170142.2">- pluginsManager.text
-
-- Import Derived File command now puts up a dialog.
-
-- @ignored and orphan nodes now valid in @file-nosent trees.
-
-- Created app.unitTestDict for communication between tests and between tests and code.
-</t>
 <t tx="edream.120903094900"></t>
 <t tx="edream.120903112324"># Line 1108: _multiples = [(2., Numeric.log10(2.)), (5., Numeric.log10(5.))]
 
@@ -61213,9 +61289,7 @@ I suspect this was a file that contained both tabs and spaces.</t>
 <t tx="edream.120903131550"></t>
 <t tx="edream.120903131550.1">The set font dialog would only come up once.</t>
 <t tx="edream.121003065108"></t>
-<t tx="edream.121103044318">- Support enable/disable in base leoLog class.
-
-- nullFrame class must have option to add nullUndoer (don't do this by default).
+<t tx="edream.121103044318">- nullFrame class must have option to add nullUndoer (don't do this by default).
 	
 Do we need a nullConfig class?
 
@@ -61287,7 +61361,7 @@ def destroySelf (self):
 <t tx="edream.121103112414"></t>
 <t tx="edream.121103112414.1">def makeImportExportSuite(testParentHeadline,tempHeadline):
 	
-	"""Create an Edit Body test for every descendant of testParentHeadline.."""
+	"""Create an Import/Export test for every descendant of testParentHeadline.."""
 	
 	u = testUtils() ; c = top() ; v = c.currentVnode()
 	root = u.findRootNode(v)
@@ -61463,20 +61537,7 @@ Traceback (most recent call last):
     w = w.children[name]
 KeyError: #135503820#139072620
 #----- activate File menu --------------------------------------------------</t>
-<t tx="edream.121203134946">@nocolor
-https://sourceforge.net/forum/message.php?msg_id=2330944
-By: rodrigo_b
-
-Now that unittests are ongoing some interfaces and concepts are being fixed.
-
-Using Leo for other one project study and ordering, I have be dissapointed to
-see that during "import to @file" the docustring of the class definitions are
-put in the subnode "class X declarations" (or something like that). The class
-node being almost void "class X():\n @others".
-
-I consider that the class docustring should be keept in the class node, not
-in another subnode.
-</t>
+<t tx="edream.121203134946"></t>
 <t tx="edream.121203135541"></t>
 <t tx="edream.121203135541.1">@nocolor
 
@@ -61510,5 +61571,43 @@ Davide
 <t tx="edream.121203202534">@nocolor
 
 It turns out that this bug has existed since at least 3.12.  I solved it by brute force: I removed the call to focus_displayof in set_focus.</t>
+<t tx="edream.121303054612"></t>
+<t tx="edream.121303060602">@nocolor
+
+http://sourceforge.net/forum/message.php?msg_id=2330944
+By: rodrigo_b
+
+Now that unittests are ongoing some interfaces and concepts are being fixed.
+
+Using Leo for other one project study and ordering, I have be dissapointed to
+see that during "import to @file" the docustring of the class definitions are
+put in the subnode "class X declarations" (or something like that). The class
+node being almost void "class X():\n @others".
+
+I consider that the class docustring should be keept in the class node, not
+in another subnode.
+</t>
+<t tx="edream.121303061952"></t>
+<t tx="edream.121303061952.1"></t>
+<t tx="edream.121303064022"># Doing this automatically should avoid confusion.</t>
+<t tx="edream.121303065449">It turns out that executing a script was setting the tnodeList for the node if the node had section refs!  This was the source of the ongoing mystery about why some nodes had tnodeLists.  Resolving this mystery puts Leo's read/write code on a firmer foundation.
+
+This was tricky to make sure that tnodeList's are created and written only when necessary:
+
+- The fileCommands.putVnode writes tnodeList only for @file nodes.
+  (and only non-empty tnodeList's)
+
+- new_df.write clears at.root.tnodeList when writing a script.
+
+- c.checkOutline (and the related script) does not consider that an empty tnodeList is an error.</t>
+<t tx="edream.121303072054">print "hello" # Should not create a tnodeList!</t>
+<t tx="edream.121303081006">def enable (self,enabled=true):
+	
+	self.enabled = enabled
+	
+def disable (self):
+	
+	self.enabled = false
+</t>
 </tnodes>
 </leo_file>
