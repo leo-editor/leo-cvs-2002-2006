@@ -106,7 +106,16 @@ class leoTkinterMenu (leoMenu.leoMenu):
     #@nonl
     #@-node:ekr.20031218072017.4113:new_menu
     #@-node:ekr.20031218072017.4104:9 Routines with Tk spellings
-    #@+node:ekr.20031218072017.4114:7 Routines with other spellings
+    #@+node:ekr.20031218072017.4114:8 Routines with other spellings
+    #@+node:ekr.20041228063406:clearAccel
+    def clearAccel(self,menu,name):
+        
+        realName = self.getRealMenuName(name)
+        realName = realName.replace("&","")
+    
+        menu.entryconfig(realName,accelerator='')
+    #@nonl
+    #@-node:ekr.20041228063406:clearAccel
     #@+node:ekr.20031218072017.4115:createMenuBar
     def createMenuBar(self,frame):
     
@@ -247,7 +256,7 @@ class leoTkinterMenu (leoMenu.leoMenu):
             pass
     #@nonl
     #@-node:ekr.20031218072017.4121:setMenuLabel
-    #@-node:ekr.20031218072017.4114:7 Routines with other spellings
+    #@-node:ekr.20031218072017.4114:8 Routines with other spellings
     #@-node:ekr.20031218072017.4103:Tkinter menu bindings
     #@-others
 #@nonl
