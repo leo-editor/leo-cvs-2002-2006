@@ -707,12 +707,16 @@ class leoFind:
     
         # Start suboutline only searches.
         if c.suboutline_only_flag and not self.onlyVnode:
-            self.onlyVnode = v.copy()
+            # v.copy not needed because the find code never calls p.moveToX.
+            # Furthermore, v might be None, so v.copy() would be wrong!
+            self.onlyVnode = v 
     
         # Start wrapped searches.
         if self.wrapping and not self.wrapVnode:
             assert(self.wrapPos != None)
-            self.wrapVnode = v.copy()
+            # v.copy not needed because the find code never calls p.moveToX.
+            # Furthermore, v might be None, so v.copy() would be wrong!
+            self.wrapVnode = v 
     
         if self.in_headline and c.search_body_flag:
             # just switch to body pane.
@@ -744,7 +748,8 @@ class leoFind:
             # g.trace("end outline-only")
             v = None ; self.onlyVnode = None
     
-        # No copy is needed here because v.threadNext/Back makes a copy.
+        # v.copy not needed because the find code never calls p.moveToX.
+        # Furthermore, v might be None, so v.copy() would be wrong!
         self.v = v # used in initNextText().
         if v: # select v and set the search point within v.
             self.in_headline = c.search_headline_flag
