@@ -804,13 +804,14 @@ class baseCommands:
             ("Pascal files","*.pas"),
             ("Python files","*.py") ]
         
-        fileName = g.app.gui.runOpenFileDialog(
+        names = g.app.gui.runOpenFileDialog(
             title="Import Derived File",
             filetypes=types,
-            defaultextension=".leo")
+            defaultextension=".py",
+            multiple=True)
     
-        if fileName:
-            c.importCommands.importDerivedFiles(v,fileName)
+        if names:
+            c.importCommands.importDerivedFiles(v,names)
     #@nonl
     #@-node:ekr.20031218072017.1809:importDerivedFile
     #@+node:ekr.20031218072017.2014:writeNew/OldDerivedFiles
