@@ -4043,31 +4043,30 @@ class baseCommands:
     #@+node:ekr.20031218072017.2923:markChangedHeadlines
     def markChangedHeadlines (self): 
     
-        c = self ; v = c.rootVnode()
+        c = self
         c.beginUpdate()
-        while v:
-            if v.isDirty()and not v.isMarked():
-                v.setMarked()
+        for p in c.allNodes_iter():
+            if p.isDirty()and not p.isMarked():
+                p.setMarked()
                 c.setChanged(True)
-            v = v.threadNext()
-        c.endUpdate()
         g.es("done",color="blue")
+        c.endUpdate()
+    #@nonl
     #@-node:ekr.20031218072017.2923:markChangedHeadlines
     #@+node:ekr.20031218072017.2924:markChangedRoots
     def markChangedRoots (self):
     
-        c = self ; v = c.rootVnode()
+        c = self
         c.beginUpdate()
-        while v:
-            if v.isDirty()and not v.isMarked():
-                s = v.bodyString()
+        for p in c.allNodes_iter():
+            if p.isDirty()and not p.isMarked():
+                s = p.bodyString()
                 flag, i = g.is_special(s,0,"@root")
                 if flag:
-                    v.setMarked()
+                    p.setMarked()
                     c.setChanged(True)
-            v = v.threadNext()
-        c.endUpdate()
         g.es("done",color="blue")
+        c.endUpdate()
     #@nonl
     #@-node:ekr.20031218072017.2924:markChangedRoots
     #@+node:ekr.20031218072017.2925:markAllAtFileNodesDirty
@@ -4802,14 +4801,22 @@ class baseCommands:
     BringToFront = bringToFront # Compatibility with old scripts
     #@nonl
     #@-node:ekr.20031218072017.2951:bringToFront
-    #@+node:ekr.20031218072017.2952:endUpdate
+    #@+node:ekr.20031218072017.2952:c.endUpdate
     def endUpdate(self, flag=True):
+        
+        '''End a beginUpdate/endUpdate region.
+        
+        Redraw the tree if this is the outermost endUpdate.
+        
+        Note that calls to g.es() will disable redraws, so calls to endUpdate
+        should follow all such writes to the log pane.'''
+        
         
         self.frame.tree.endUpdate(flag)
         
     EndUpdate = endUpdate # Compatibility with old scripts
     #@nonl
-    #@-node:ekr.20031218072017.2952:endUpdate
+    #@-node:ekr.20031218072017.2952:c.endUpdate
     #@+node:ekr.20031218072017.2953:recolor
     def recolor(self):
     
