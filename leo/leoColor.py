@@ -1517,12 +1517,10 @@ class colorizer:
 			
 			if dict.has_key("language"):
 				i = dict["language"]
-				issue_error_flag = false
-				language, junk, junk, junk = set_language(s,i,issue_error_flag)
+				language,junk,junk,junk = set_language(s,i)
 			
 			if dict.has_key("comment") or dict.has_key("language"):
 				break
-			
 			#@-body
 			#@-node:1::<< Test for @comment or @language >>
 

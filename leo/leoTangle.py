@@ -3860,7 +3860,7 @@ class tangleCommands:
 			elif dict.has_key("comment"):
 			
 				i = dict["comment"]
-				(delim1,delim2,delim3) = set_delims_from_string(s[i:])
+				delim1,delim2,delim3 = set_delims_from_string(s[i:])
 				if delim1 or delim2:
 					self.single_comment_string = delim1
 					self.start_comment_string = delim2
@@ -3873,9 +3873,8 @@ class tangleCommands:
 			
 			elif dict.has_key("language"):
 			
-				issue_error_flag = false
 				i = dict["language"]
-				language,delim1,delim2,delim3 = set_language(s,i,issue_error_flag)
+				language,delim1,delim2,delim3 = set_language(s,i)
 				self.language = language
 				self.single_comment_string = delim1
 				self.start_comment_string = delim2
@@ -3890,8 +3889,6 @@ class tangleCommands:
 				self.use_noweb_flag = true
 				self.use_cweb_flag = false # Only raw cweb mode is ever used.
 				self.raw_cweb_flag = self.language == "cweb" # A new ivar.
-			
-			
 			
 			#@-body
 			#@-node:2::<< Test for @comment and @language >>

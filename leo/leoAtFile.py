@@ -543,19 +543,13 @@ class atFile:
 			
 			if not old.has_key("comment") and dict.has_key("comment"):
 				k = dict["comment"]
-				d1, d2, d3 = set_delims_from_string(s[k:])
-				if delim1:
-					# @comment effectively disables Untangle.
-					delim1, delim2, delim3 = d1, d2, d3
+				# 11/14/02: Similar to fix below.
+				delim1, delim2, delim3 = set_delims_from_string(s[k:])
 			
 			if not old.has_key("language") and dict.has_key("language"):
 				k = dict["language"]
-				issue_error_flag = false
-				language, d1, d2, d3 = set_language(s,k,issue_error_flag)
-				if delim1:
-					delim1, delim2, delim3 = d1, d2, d3
-					self.language = language # 10/18/02
-			
+				# 11/14/02: Fix bug reported by J.M.Gilligan.
+				self.language,delim1,delim2,delim3 = set_language(s,k)
 			#@-body
 			#@-node:3::<< Test for @comment and @language >>
 

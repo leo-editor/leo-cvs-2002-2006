@@ -296,7 +296,7 @@ def set_delims_from_string(s):
 #@-at
 #@@c
 
-def set_language(s,i,issue_errors_flag):
+def set_language(s,i,issue_errors_flag=false):
 
 	a = app()
 	tag = "@language"
@@ -367,12 +367,11 @@ def scanDirectives(c,v=None):
 		
 		if not old.has_key("comment") and dict.has_key("comment"):
 			k = dict["comment"]
-			delim1, delim2, delim3 = set_delims_from_string(s[k:])
+			delim1,delim2,delim3 = set_delims_from_string(s[k:])
 		
 		if not old.has_key("language") and dict.has_key("language"):
 			k = dict["language"]
-			issue_error_flag = false # DTHEIN 3-NOV-2002: define var before function call
-			language, delim1, delim2, delim3 = set_language(s,k,issue_error_flag)
+			language,delim1,delim2,delim3 = set_language(s,k)
 		#@-body
 		#@-node:2::<< Test for @comment and @language >>
 

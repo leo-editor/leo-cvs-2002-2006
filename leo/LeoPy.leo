@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="2637" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="2641" clone_windows="0"/>
 <globals body_outline_ratio="0.5">
 	<global_window_position top="0" left="256" height="28" width="71"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
@@ -1110,6 +1110,7 @@
 <v t="T624"><vh>Caps lock affects shortcuts</vh></v>
 <v><vh>Control-T can't be overridden in canvas text.</vh></v>
 </v>
+<v><vh>Fix cweb prefs bug</vh></v>
 <v><vh>Bugs</vh>
 <v t="T625"><vh>bug: exec environment</vh></v>
 <v t="T626"><vh>Fix Python import bug</vh></v>
@@ -4320,24 +4321,60 @@
 <v t="T1773"><vh>(Execute script )</vh>
 <v t="T1477" a="C"><vh>OnExecuteScript</vh></v>
 </v>
-<v t="T1774"><vh>(Incremental Syntax Coloring)</vh>
+<v t="T1774"><vh>(Hooks and leoCustomize.py)</vh>
+<v t="T1775" a="CM"><vh>handleLeoHook</vh></v>
+<v t="T910" a="C"><vh>c.__init__</vh>
+<v t="T911"><vh>&lt;&lt; initialize ivars &gt;&gt;</vh></v>
+</v>
+<v t="T1258" a="C"><vh>app.__init__</vh>
+<v t="T487" a="C"><vh>&lt;&lt; define global constants &gt;&gt;</vh></v>
+<v t="T1259"><vh>&lt;&lt; define global data structures &gt;&gt;</vh></v>
+</v>
+<v><vh>Code containing hooks</vh>
+<v t="T879" a="C"><vh>app.quit</vh></v>
+<v t="T906" a="C"><vh>frame.__init__</vh>
+<v t="T907" a="C"><vh>&lt;&lt; set the LeoFrame ivars &gt;&gt;</vh></v>
+<v t="T908"><vh>&lt;&lt; create the first tree node &gt;&gt;</vh></v>
+</v>
+<v t="T1762" a="C"><vh>frame.doCommand</vh></v>
+<v t="T1557" a="C"><vh>frame.OnMenuClick (enables and disables all menu items)</vh></v>
+<v t="T902" a="C"><vh>frame.OpenWithFileName</vh>
+<v t="T903"><vh>&lt;&lt; make fileName the most recent file of frame &gt;&gt;</vh></v>
+</v>
+<v t="T1184" a="C"><vh>leo.leoOpen</vh>
+<v t="T1185" a="C"><vh>&lt;&lt; set the icon image &gt;&gt;</vh></v>
+</v>
+<v t="T1186" a="C"><vh>leo.run</vh>
+<v t="T1185" a="C"><vh>&lt;&lt; set the icon image &gt;&gt;</vh></v>
+</v>
+<v t="T798" a="CM"><vh>tree.onBodyChanged, onBodyWillChange, OnBodyKey, idle_body_key</vh>
+<v t="T799"><vh>&lt;&lt; set removeTrailing &gt;&gt;</vh></v>
+<v t="T800"><vh>&lt;&lt; Do Auto indent &gt;&gt;</vh></v>
+<v t="T801"><vh>&lt;&lt; convert leading tab to blanks &gt;&gt;</vh></v>
+<v t="T802"><vh>&lt;&lt; Make sure s is valid in the encoding &gt;&gt;</vh></v>
+<v t="T803"><vh>&lt;&lt; Make sure body is valid in the encoding &gt;&gt;</vh></v>
+</v>
+<v t="T784" a="CM"><vh>tree.select</vh></v>
+</v>
+</v>
+<v t="T1776"><vh>(Incremental Syntax Coloring)</vh>
 <v><vh> Tests</vh>
-<v t="T1775"><vh>Dave Hein</vh>
-<v t="T1776"><vh>Test</vh></v>
+<v t="T1777"><vh>Dave Hein</vh>
+<v t="T1778"><vh>Test</vh></v>
 </v>
-<v t="T1777"><vh>Dave Hein2</vh>
-<v t="T1778"><vh>NewHeadline</vh></v>
+<v t="T1779"><vh>Dave Hein2</vh>
+<v t="T1780"><vh>NewHeadline</vh></v>
 </v>
-<v t="T1779"><vh>Long test</vh></v>
+<v t="T1781"><vh>Long test</vh></v>
 <v><vh>Test 1</vh>
 <v t="T784" a="C"><vh>tree.select</vh></v>
-<v t="T1780"><vh>nocolor</vh>
+<v t="T1782"><vh>nocolor</vh>
 <v t="T784" a="C"><vh>tree.select</vh></v>
 </v>
 </v>
-<v t="T1781"><vh>problems</vh></v>
+<v t="T1783"><vh>problems</vh></v>
 </v>
-<v t="T1782"><vh>Setting self.incremental</vh>
+<v t="T1784"><vh>Setting self.incremental</vh>
 <v t="T1591" a="C"><vh>setBodyStringOrPane &amp; setBodyTextOrPane</vh></v>
 <v t="T784" a="C"><vh>tree.select</vh></v>
 <v t="T804" a="C"><vh>tree.redraw , force_redraw, redraw_now</vh></v>
@@ -4361,8 +4398,8 @@
 <v t="T750"><vh>&lt;&lt; undo sort cases &gt;&gt;</vh></v>
 <v t="T751" a="C"><vh>&lt;&lt; undo typing cases &gt;&gt;</vh></v>
 </v>
-<v t="T1783" a="C"><vh>color.schedule</vh></v>
-<v t="T1784" a="C"><vh>colorize &amp; recolor_range</vh></v>
+<v t="T1785" a="C"><vh>color.schedule</vh></v>
+<v t="T1786" a="C"><vh>colorize &amp; recolor_range</vh></v>
 <v t="T798" a="C"><vh>tree.onBodyChanged, onBodyWillChange, OnBodyKey, idle_body_key</vh>
 <v t="T799"><vh>&lt;&lt; set removeTrailing &gt;&gt;</vh></v>
 <v t="T800"><vh>&lt;&lt; Do Auto indent &gt;&gt;</vh></v>
@@ -4376,7 +4413,7 @@
 <v t="T1232"><vh>&lt;&lt; ivars for communication between colorAllDirectives and its allies &gt;&gt;</vh></v>
 <v t="T1233"><vh>&lt;&lt; define dispatch dicts &gt;&gt;</vh></v>
 </v>
-<v t="T1784" a="C"><vh>colorize &amp; recolor_range</vh></v>
+<v t="T1786" a="C"><vh>colorize &amp; recolor_range</vh></v>
 <v t="T505" a="C"><vh>colorizeAnyLanguage &amp; allies</vh>
 <v t="T506"><vh>&lt;&lt; initialize ivars &amp; tags &gt;&gt;</vh>
 <v t="T507"><vh>&lt;&lt; configure tags &gt;&gt;</vh></v>
@@ -4419,50 +4456,50 @@
 </v>
 </v>
 </v>
-<v t="T1785"><vh>(Java import problems problems)</vh>
-<v t="T1786"><vh>Originals</vh>
-<v t="T1787"><vh>Adventure.java (formatting problems)</vh></v>
-<v t="T1788"><vh>Bath.java (no @language)</vh></v>
-<v t="T1789"><vh>HelloDate.java (javascript problems)</vh></v>
+<v t="T1787"><vh>(Java import problems problems)</vh>
+<v t="T1788"><vh>Originals</vh>
+<v t="T1789"><vh>Adventure.java (formatting problems)</vh></v>
+<v t="T1790"><vh>Bath.java (no @language)</vh></v>
+<v t="T1791"><vh>HelloDate.java (javascript problems)</vh></v>
 </v>
-<v t="T1790"><vh>New tests</vh>
-<v t="T1791"><vh>@file Adventure.java</vh>
-<v t="T1792"><vh>&lt;&lt; Adventure declarations &gt;&gt;</vh></v>
-<v t="T1793"><vh>interface CanFight</vh></v>
-<v t="T1794"><vh>interface CanSwim</vh></v>
-<v t="T1795"><vh>interface CanFly</vh></v>
-<v t="T1796"><vh>class ActionCharacter</vh>
-<v t="T1797"><vh>fight</vh></v>
+<v t="T1792"><vh>New tests</vh>
+<v t="T1793"><vh>@file Adventure.java</vh>
+<v t="T1794"><vh>&lt;&lt; Adventure declarations &gt;&gt;</vh></v>
+<v t="T1795"><vh>interface CanFight</vh></v>
+<v t="T1796"><vh>interface CanSwim</vh></v>
+<v t="T1797"><vh>interface CanFly</vh></v>
+<v t="T1798"><vh>class ActionCharacter</vh>
+<v t="T1799"><vh>fight</vh></v>
 </v>
-<v t="T1798"><vh>class Hero</vh>
-<v t="T1799"><vh>swim</vh></v>
-<v t="T1800"><vh>fly</vh></v>
+<v t="T1800"><vh>class Hero</vh>
+<v t="T1801"><vh>swim</vh></v>
+<v t="T1802"><vh>fly</vh></v>
 </v>
-<v t="T1801"><vh>class Adventure</vh>
-<v t="T1802"><vh>t</vh></v>
-<v t="T1803"><vh>u</vh></v>
-<v t="T1804"><vh>v</vh></v>
-<v t="T1805"><vh>w</vh></v>
-<v t="T1806"><vh>main</vh></v>
-</v>
-</v>
-<v t="T1807"><vh>@file Bath.java</vh>
-<v t="T1808"><vh>class Soap</vh>
-<v t="T1809"><vh>&lt;&lt; class Soap declarations &gt;&gt;</vh></v>
-<v t="T1810"><vh>Soap</vh></v>
-<v t="T1811"><vh>toString</vh></v>
-</v>
-<v t="T1812"><vh>class Bath</vh>
-<v t="T1813"><vh>&lt;&lt; class Bath declarations &gt;&gt;</vh></v>
-<v t="T1814"><vh>Bath</vh></v>
-<v t="T1815"><vh>print</vh></v>
-<v t="T1816"><vh>main</vh></v>
+<v t="T1803"><vh>class Adventure</vh>
+<v t="T1804"><vh>t</vh></v>
+<v t="T1805"><vh>u</vh></v>
+<v t="T1806"><vh>v</vh></v>
+<v t="T1807"><vh>w</vh></v>
+<v t="T1808"><vh>main</vh></v>
 </v>
 </v>
-<v t="T1817"><vh>@file HelloDate.java</vh>
-<v t="T1818"><vh>&lt;&lt; HelloDate declarations &gt;&gt;</vh></v>
-<v t="T1819"><vh>class HelloDate</vh>
-<v t="T1820"><vh>main</vh></v>
+<v t="T1809"><vh>@file Bath.java</vh>
+<v t="T1810"><vh>class Soap</vh>
+<v t="T1811"><vh>&lt;&lt; class Soap declarations &gt;&gt;</vh></v>
+<v t="T1812"><vh>Soap</vh></v>
+<v t="T1813"><vh>toString</vh></v>
+</v>
+<v t="T1814"><vh>class Bath</vh>
+<v t="T1815"><vh>&lt;&lt; class Bath declarations &gt;&gt;</vh></v>
+<v t="T1816"><vh>Bath</vh></v>
+<v t="T1817"><vh>print</vh></v>
+<v t="T1818"><vh>main</vh></v>
+</v>
+</v>
+<v t="T1819"><vh>@file HelloDate.java</vh>
+<v t="T1820"><vh>&lt;&lt; HelloDate declarations &gt;&gt;</vh></v>
+<v t="T1821"><vh>class HelloDate</vh>
+<v t="T1822"><vh>main</vh></v>
 </v>
 </v>
 </v>
@@ -4481,36 +4518,36 @@
 <v t="T865" a="C"><vh>&lt;&lt; Append any unused text to the parent's body text &gt;&gt;</vh></v>
 </v>
 <v t="T847" a="C"><vh>skip_braces</vh></v>
-<v t="T1821" a="C"><vh>find_line_start</vh></v>
-<v t="T1822" a="C"><vh>Utilities</vh>
+<v t="T1823" a="C"><vh>find_line_start</vh></v>
+<v t="T1824" a="C"><vh>Utilities</vh>
 <v t="T1353" a="C"><vh>createHeadline</vh></v>
-<v t="T1823"><vh>error</vh></v>
-<v t="T1824"><vh>getLeadingIndent</vh></v>
-<v t="T1825"><vh>isDocStart and isModuleStart</vh></v>
+<v t="T1825"><vh>error</vh></v>
+<v t="T1826"><vh>getLeadingIndent</vh></v>
+<v t="T1827"><vh>isDocStart and isModuleStart</vh></v>
 <v t="T1352" a="C"><vh>massageBody</vh></v>
-<v t="T1826"><vh>massageComment</vh></v>
-<v t="T1827"><vh>massageWebBody</vh>
-<v t="T1828"><vh>&lt;&lt; Remove most newlines from @space and @* sections &gt;&gt;</vh></v>
-<v t="T1829"><vh>&lt;&lt; Replace abbreviated names with full names &gt;&gt;</vh></v>
+<v t="T1828"><vh>massageComment</vh></v>
+<v t="T1829"><vh>massageWebBody</vh>
+<v t="T1830"><vh>&lt;&lt; Remove most newlines from @space and @* sections &gt;&gt;</vh></v>
+<v t="T1831"><vh>&lt;&lt; Replace abbreviated names with full names &gt;&gt;</vh></v>
 </v>
 <v t="T1354" a="C"><vh>skipLeadingComments</vh>
 <v t="T1355"><vh>&lt;&lt; scan for C-style comments &gt;&gt;</vh></v>
 <v t="T1356"><vh>&lt;&lt; scan for Pascal comments &gt;&gt;</vh></v>
 <v t="T1357"><vh>&lt;&lt; scan for Python comments &gt;&gt;</vh></v>
 </v>
-<v t="T1830"><vh>undentBody</vh></v>
+<v t="T1832"><vh>undentBody</vh></v>
 </v>
 </v>
-<v t="T1831"><vh>(reducing name polution)</vh></v>
-<v t="T1832"><vh>(reformatParagraph)</vh>
-<v t="T1833"><vh>test</vh></v>
+<v t="T1833"><vh>(reducing name polution)</vh></v>
+<v t="T1834"><vh>(reformatParagraph)</vh>
+<v t="T1835"><vh>test</vh></v>
 <v><vh>Utilities...</vh>
 <v t="T706" a="C"><vh>computeWidth</vh></v>
 <v t="T707" a="C"><vh>get_leading_ws</vh></v>
-<v t="T1834" a="C"><vh>skip_non_ws</vh></v>
-<v t="T1835" a="C"><vh>wrap_lines</vh>
-<v t="T1836"><vh>&lt;&lt; place blank and word on the present line &gt;&gt;</vh></v>
-<v t="T1837"><vh>&lt;&lt; place word on a new line &gt;&gt;</vh></v>
+<v t="T1836" a="C"><vh>skip_non_ws</vh></v>
+<v t="T1837" a="C"><vh>wrap_lines</vh>
+<v t="T1838"><vh>&lt;&lt; place blank and word on the present line &gt;&gt;</vh></v>
+<v t="T1839"><vh>&lt;&lt; place word on a new line &gt;&gt;</vh></v>
 </v>
 </v>
 <v t="T735" a="C"><vh>getBodyLines</vh></v>
@@ -4518,14 +4555,14 @@
 <v t="T738" a="C"><vh>reformatParagraph</vh>
 <v t="T739"><vh>&lt;&lt; Set the new insert at the start of the next paragraph &gt;&gt;</vh></v>
 </v>
-<v t="T1838" a="C"><vh>scanDirectives (utils)</vh>
-<v t="T1839"><vh>&lt;&lt; Set local vars &gt;&gt;</vh></v>
-<v t="T1840"><vh>&lt;&lt; Test for @comment and @language &gt;&gt;</vh></v>
-<v t="T1841"><vh>&lt;&lt; Test for @pagewidth &gt;&gt;</vh></v>
-<v t="T1842"><vh>&lt;&lt; Test for @path &gt;&gt;</vh>
-<v t="T1843"><vh>&lt;&lt; compute path from s[k:] &gt;&gt;</vh></v>
+<v t="T1840" a="C"><vh>scanDirectives (utils)</vh>
+<v t="T1841"><vh>&lt;&lt; Set local vars &gt;&gt;</vh></v>
+<v t="T1842"><vh>&lt;&lt; Test for @comment and @language &gt;&gt;</vh></v>
+<v t="T1843"><vh>&lt;&lt; Test for @pagewidth &gt;&gt;</vh></v>
+<v t="T1844"><vh>&lt;&lt; Test for @path &gt;&gt;</vh>
+<v t="T1845"><vh>&lt;&lt; compute path from s[k:] &gt;&gt;</vh></v>
 </v>
-<v t="T1844"><vh>&lt;&lt; Test for @tabwidth &gt;&gt;</vh></v>
+<v t="T1846"><vh>&lt;&lt; Test for @tabwidth &gt;&gt;</vh></v>
 </v>
 </v>
 <v><vh>(scanDirectives utility)</vh>
@@ -4556,42 +4593,42 @@
 <v t="T738" a="C"><vh>reformatParagraph</vh>
 <v t="T739"><vh>&lt;&lt; Set the new insert at the start of the next paragraph &gt;&gt;</vh></v>
 </v>
-<v t="T1838" a="C"><vh>scanDirectives (utils)</vh>
-<v t="T1839"><vh>&lt;&lt; Set local vars &gt;&gt;</vh></v>
-<v t="T1840"><vh>&lt;&lt; Test for @comment and @language &gt;&gt;</vh></v>
-<v t="T1841"><vh>&lt;&lt; Test for @pagewidth &gt;&gt;</vh></v>
-<v t="T1842"><vh>&lt;&lt; Test for @path &gt;&gt;</vh>
-<v t="T1843"><vh>&lt;&lt; compute path from s[k:] &gt;&gt;</vh></v>
+<v t="T1840" a="C"><vh>scanDirectives (utils)</vh>
+<v t="T1841"><vh>&lt;&lt; Set local vars &gt;&gt;</vh></v>
+<v t="T1842"><vh>&lt;&lt; Test for @comment and @language &gt;&gt;</vh></v>
+<v t="T1843"><vh>&lt;&lt; Test for @pagewidth &gt;&gt;</vh></v>
+<v t="T1844"><vh>&lt;&lt; Test for @path &gt;&gt;</vh>
+<v t="T1845"><vh>&lt;&lt; compute path from s[k:] &gt;&gt;</vh></v>
 </v>
-<v t="T1844"><vh>&lt;&lt; Test for @tabwidth &gt;&gt;</vh></v>
+<v t="T1846"><vh>&lt;&lt; Test for @tabwidth &gt;&gt;</vh></v>
 </v>
 </v>
-<v t="T1845"><vh>(Undo typing)</vh>
-<v t="T1846"><vh> test</vh></v>
-<v t="T1847"><vh> test2</vh></v>
+<v t="T1847"><vh>(Undo typing)</vh>
+<v t="T1848"><vh> test</vh></v>
+<v t="T1849"><vh> test2</vh></v>
 <v><vh>Main undo code...</vh>
-<v t="T1848" a="C"><vh> undo.__init__</vh>
-<v t="T1849"><vh>clearUndoState &amp; clearIvars</vh></v>
+<v t="T1850" a="C"><vh> undo.__init__</vh>
+<v t="T1851"><vh>clearUndoState &amp; clearIvars</vh></v>
 </v>
 <v t="T760" a="C"><vh>&lt;&lt; redo typing cases &gt;&gt;</vh></v>
 <v t="T751" a="C"><vh>&lt;&lt; undo typing cases &gt;&gt;</vh></v>
-<v t="T1850" a="C"><vh>setUndoTypes</vh></v>
-<v t="T1851" a="C"><vh>setUndoTypingParams</vh>
-<v t="T1852"><vh>&lt;&lt; compute leading, middle &amp; trailing  lines &gt;&gt;</vh></v>
-<v t="T1853" a="C"><vh>&lt;&lt; save undo text info &gt;&gt;</vh></v>
+<v t="T1852" a="C"><vh>setUndoTypes</vh></v>
+<v t="T1853" a="C"><vh>setUndoTypingParams</vh>
+<v t="T1854"><vh>&lt;&lt; compute leading, middle &amp; trailing  lines &gt;&gt;</vh></v>
+<v t="T1855" a="C"><vh>&lt;&lt; save undo text info &gt;&gt;</vh></v>
 </v>
-<v t="T1854" a="C"><vh>undoRedoText</vh>
-<v t="T1855"><vh>&lt;&lt; Incrementally update the Tk.Text widget &gt;&gt;</vh></v>
-<v t="T1856"><vh>&lt;&lt; Compute the result using v's body text &gt;&gt;</vh></v>
-<v t="T1857"><vh>&lt;&lt; Compare the result with the expected result &gt;&gt;</vh></v>
+<v t="T1856" a="C"><vh>undoRedoText</vh>
+<v t="T1857"><vh>&lt;&lt; Incrementally update the Tk.Text widget &gt;&gt;</vh></v>
+<v t="T1858"><vh>&lt;&lt; Compute the result using v's body text &gt;&gt;</vh></v>
+<v t="T1859"><vh>&lt;&lt; Compare the result with the expected result &gt;&gt;</vh></v>
 </v>
 </v>
 <v><vh>Statistics...</vh>
-<v t="T1853" a="C"><vh>&lt;&lt; save undo text info &gt;&gt;</vh></v>
+<v t="T1855" a="C"><vh>&lt;&lt; save undo text info &gt;&gt;</vh></v>
 <v t="T1442" a="C"><vh>OnClose</vh></v>
-<v t="T1858"><vh>Test</vh></v>
+<v t="T1860"><vh>Test</vh></v>
 </v>
-<v t="T1859"><vh>Trailing newline problems...</vh>
+<v t="T1861"><vh>Trailing newline problems...</vh>
 <v t="T1591" a="C"><vh>setBodyStringOrPane &amp; setBodyTextOrPane</vh></v>
 <v t="T1207" a="C"><vh>setTnodeText</vh></v>
 <v t="T798" a="CM"><vh>tree.onBodyChanged, onBodyWillChange, OnBodyKey, idle_body_key</vh>
@@ -4605,7 +4642,7 @@
 </v>
 <v t="T1161" a="C"><vh>tree.recolor, recolor_now, recolor_range</vh></v>
 </v>
-<v t="T1860"><vh>(Undo)</vh>
+<v t="T1862"><vh>(Undo)</vh>
 <v t="T767" a="C"><vh>Tk.Text selection (utils)</vh>
 <v t="T768" a="C"><vh>bound_paragraph</vh></v>
 <v t="T769"><vh>getTextSelection</vh></v>
@@ -4622,46 +4659,46 @@
 <v t="T802"><vh>&lt;&lt; Make sure s is valid in the encoding &gt;&gt;</vh></v>
 <v t="T803"><vh>&lt;&lt; Make sure body is valid in the encoding &gt;&gt;</vh></v>
 </v>
-<v t="T1861" a="C"><vh>State routines...</vh>
-<v t="T1862"><vh>canRedo &amp; canUndo</vh></v>
-<v t="T1863"><vh>enableMenuItems</vh></v>
-<v t="T1864" a="M"><vh>getBead, peekBead, setBead</vh></v>
-<v t="T1865"><vh>redoMenuName, undoMenuName</vh></v>
-<v t="T1866"><vh>setRedoType, setUndoType</vh></v>
-<v t="T1867"><vh>setUndoParams</vh></v>
-<v t="T1851" a="C"><vh>setUndoTypingParams</vh>
-<v t="T1852"><vh>&lt;&lt; compute leading, middle &amp; trailing  lines &gt;&gt;</vh></v>
-<v t="T1853" a="C"><vh>&lt;&lt; save undo text info &gt;&gt;</vh></v>
+<v t="T1863" a="C"><vh>State routines...</vh>
+<v t="T1864"><vh>canRedo &amp; canUndo</vh></v>
+<v t="T1865"><vh>enableMenuItems</vh></v>
+<v t="T1866" a="M"><vh>getBead, peekBead, setBead</vh></v>
+<v t="T1867"><vh>redoMenuName, undoMenuName</vh></v>
+<v t="T1868"><vh>setRedoType, setUndoType</vh></v>
+<v t="T1869"><vh>setUndoParams</vh></v>
+<v t="T1853" a="C"><vh>setUndoTypingParams</vh>
+<v t="T1854"><vh>&lt;&lt; compute leading, middle &amp; trailing  lines &gt;&gt;</vh></v>
+<v t="T1855" a="C"><vh>&lt;&lt; save undo text info &gt;&gt;</vh></v>
 </v>
-<v t="T1850" a="C"><vh>setUndoTypes</vh></v>
+<v t="T1852" a="C"><vh>setUndoTypes</vh></v>
 </v>
 <v t="T1283" a="C"><vh>Cut &amp; Paste Outlines</vh>
 <v t="T1284"><vh>cutOutline</vh></v>
 <v t="T1285"><vh>copyOutline</vh></v>
 <v t="T1286"><vh>pasteOutline</vh></v>
 </v>
-<v t="T1868" a="C"><vh>Moving, Dragging, Promote, Demote, Sort</vh>
+<v t="T1870" a="C"><vh>Moving, Dragging, Promote, Demote, Sort</vh>
 <v t="T1225" a="C"><vh>c.dragAfter</vh></v>
 <v t="T1226" a="C"><vh>c.dragToNthChildOf</vh></v>
 <v t="T1333" a="C"><vh>c.sortChildren, sortSiblings</vh>
 <v t="T1334"><vh>&lt;&lt; Set the undo info for sortChildren &gt;&gt;</vh></v>
 <v t="T1335"><vh>&lt;&lt; Set the undo info for sortSiblings &gt;&gt;</vh></v>
 </v>
-<v t="T1869"><vh>demote</vh></v>
-<v t="T1870"><vh>moveOutlineDown</vh>
-<v t="T1871"><vh>&lt;&lt; Move v down &gt;&gt;</vh></v>
+<v t="T1871"><vh>demote</vh></v>
+<v t="T1872"><vh>moveOutlineDown</vh>
+<v t="T1873"><vh>&lt;&lt; Move v down &gt;&gt;</vh></v>
 </v>
-<v t="T1872"><vh>moveOutlineLeft</vh></v>
-<v t="T1873"><vh>moveOutlineRight</vh></v>
-<v t="T1874"><vh>moveOutlineUp</vh>
-<v t="T1875"><vh>&lt;&lt; Move v up &gt;&gt;</vh></v>
+<v t="T1874"><vh>moveOutlineLeft</vh></v>
+<v t="T1875"><vh>moveOutlineRight</vh></v>
+<v t="T1876"><vh>moveOutlineUp</vh>
+<v t="T1877"><vh>&lt;&lt; Move v up &gt;&gt;</vh></v>
 </v>
-<v t="T1876"><vh>promote</vh></v>
+<v t="T1878"><vh>promote</vh></v>
 </v>
 <v t="T1193" a="C"><vh>c.insertHeadline</vh></v>
 <v t="T1338" a="C"><vh>c.deleteHeadline</vh></v>
-<v t="T1877" a="C"><vh>undoPromote</vh></v>
-<v t="T1878" a="C"><vh>undoDemote</vh></v>
+<v t="T1879" a="C"><vh>undoPromote</vh></v>
+<v t="T1880" a="C"><vh>undoDemote</vh></v>
 <v><vh>Find/Change</vh>
 <v t="T831" a="C"><vh>changeSelection</vh></v>
 <v t="T830" a="C"><vh>changeAll</vh></v>
@@ -4693,76 +4730,40 @@
 </v>
 </v>
 </v>
-<v t="T1879"><vh>(Open with)</vh>
-<v t="T1880"><vh>Notes</vh>
+<v t="T1881"><vh>(Open with)</vh>
+<v t="T1882"><vh>Notes</vh>
 <v><vh>Where should temp files be placed?</vh></v>
-<v t="T1881"><vh>latest note</vh></v>
-<v t="T1882"><vh>(done) Open the temp file with the correct extension</vh></v>
-<v t="T1883"><vh>Open with menu, plus text command</vh></v>
-<v t="T1884"><vh>Command line params</vh></v>
-<v t="T1885"><vh>DDE</vh></v>
-<v t="T1886"><vh>Environment vars</vh></v>
-<v t="T1887"><vh>Create temp file</vh></v>
-<v t="T1888"><vh>Check temp file for mods</vh></v>
-<v t="T1889"><vh>Console-based option</vh></v>
-<v t="T1890"><vh>How zope does it</vh></v>
+<v t="T1883"><vh>latest note</vh></v>
+<v t="T1884"><vh>(done) Open the temp file with the correct extension</vh></v>
+<v t="T1885"><vh>Open with menu, plus text command</vh></v>
+<v t="T1886"><vh>Command line params</vh></v>
+<v t="T1887"><vh>DDE</vh></v>
+<v t="T1888"><vh>Environment vars</vh></v>
+<v t="T1889"><vh>Create temp file</vh></v>
+<v t="T1890"><vh>Check temp file for mods</vh></v>
+<v t="T1891"><vh>Console-based option</vh></v>
+<v t="T1892"><vh>How zope does it</vh></v>
 </v>
-<v t="T1891"><vh>Prog notes</vh>
-<v t="T1892"><vh>os.system</vh></v>
-<v t="T1893"><vh>os.startfile</vh></v>
-<v t="T1894"><vh>os.spawn...</vh></v>
+<v t="T1893"><vh>Prog notes</vh>
+<v t="T1894"><vh>os.system</vh></v>
+<v t="T1895"><vh>os.startfile</vh></v>
+<v t="T1896"><vh>os.spawn...</vh></v>
 </v>
 <v t="T1258" a="C"><vh>app.__init__</vh>
 <v t="T487" a="C"><vh>&lt;&lt; define global constants &gt;&gt;</vh></v>
 <v t="T1259"><vh>&lt;&lt; define global data structures &gt;&gt;</vh></v>
 </v>
-<v t="T1895" a="C"><vh>app.handleOpenTempFiles</vh></v>
+<v t="T1897" a="C"><vh>app.handleOpenTempFiles</vh></v>
 <v t="T1438" a="C"><vh>frame.OnOpenWith</vh>
 <v t="T1439"><vh>&lt;&lt; set ext based on the present language &gt;&gt;</vh></v>
 <v t="T1440"><vh>&lt;&lt; open a temp file f with extension ext &gt;&gt;</vh></v>
 <v t="T1441" a="M"><vh>&lt;&lt; open f in the external editor &gt;&gt;</vh></v>
 </v>
-<v t="T1896"><vh>Open With test</vh>
-<v t="T1897"><vh>A c file?</vh></v>
+<v t="T1898"><vh>Open With test</vh>
+<v t="T1899"><vh>A c file?</vh></v>
 </v>
 </v>
-<v t="T1898"><vh>(Hooks and leoCustomize.py)</vh>
-<v t="T1899" a="CM"><vh>handleLeoHook</vh></v>
-<v t="T910" a="C"><vh>c.__init__</vh>
-<v t="T911"><vh>&lt;&lt; initialize ivars &gt;&gt;</vh></v>
-</v>
-<v t="T1258" a="C"><vh>app.__init__</vh>
-<v t="T487" a="C"><vh>&lt;&lt; define global constants &gt;&gt;</vh></v>
-<v t="T1259"><vh>&lt;&lt; define global data structures &gt;&gt;</vh></v>
-</v>
-<v><vh>Code containing hooks</vh>
-<v t="T879" a="C"><vh>app.quit</vh></v>
-<v t="T906" a="C"><vh>frame.__init__</vh>
-<v t="T907" a="C"><vh>&lt;&lt; set the LeoFrame ivars &gt;&gt;</vh></v>
-<v t="T908"><vh>&lt;&lt; create the first tree node &gt;&gt;</vh></v>
-</v>
-<v t="T1762" a="C"><vh>frame.doCommand</vh></v>
-<v t="T1557" a="C"><vh>frame.OnMenuClick (enables and disables all menu items)</vh></v>
-<v t="T902" a="C"><vh>frame.OpenWithFileName</vh>
-<v t="T903"><vh>&lt;&lt; make fileName the most recent file of frame &gt;&gt;</vh></v>
-</v>
-<v t="T1184" a="C"><vh>leo.leoOpen</vh>
-<v t="T1185" a="C"><vh>&lt;&lt; set the icon image &gt;&gt;</vh></v>
-</v>
-<v t="T1186" a="C"><vh>leo.run</vh>
-<v t="T1185" a="C"><vh>&lt;&lt; set the icon image &gt;&gt;</vh></v>
-</v>
-<v t="T798" a="CM"><vh>tree.onBodyChanged, onBodyWillChange, OnBodyKey, idle_body_key</vh>
-<v t="T799"><vh>&lt;&lt; set removeTrailing &gt;&gt;</vh></v>
-<v t="T800"><vh>&lt;&lt; Do Auto indent &gt;&gt;</vh></v>
-<v t="T801"><vh>&lt;&lt; convert leading tab to blanks &gt;&gt;</vh></v>
-<v t="T802"><vh>&lt;&lt; Make sure s is valid in the encoding &gt;&gt;</vh></v>
-<v t="T803"><vh>&lt;&lt; Make sure body is valid in the encoding &gt;&gt;</vh></v>
-</v>
-<v t="T784" a="CM"><vh>tree.select</vh></v>
-</v>
-</v>
-<v t="T1900" a="V"><vh>Code</vh>
+<v t="T1900"><vh>Code</vh>
 <v t="T1901"><vh>  Overview of code</vh>
 <v t="T1902" a="C"><vh>&lt;&lt; About clones &gt;&gt;</vh></v>
 <v t="T1903" a="C"><vh>&lt;&lt; About drawing and events &gt;&gt;</vh></v>
@@ -4968,7 +4969,7 @@
 <v t="T2034"><vh>@file customizeLeo.py</vh>
 <v t="T2035" a="M"><vh>&lt;&lt; about tags &gt;&gt;</vh></v>
 <v t="T2036"><vh>&lt;&lt; intro to scripts &gt;&gt;</vh></v>
-<v t="T2037" a="E"><vh>customizeLeo</vh>
+<v t="T2037"><vh>customizeLeo</vh>
 <v t="T2038"><vh>&lt;&lt; Create Scripts menu for LeoPy.leo &gt;&gt;</vh></v>
 <v t="T2039"><vh>&lt;&lt; unused code &gt;&gt;</vh></v>
 <v t="T2040"><vh>importFiles</vh></v>
@@ -5004,7 +5005,7 @@
 <v t="T1318"><vh>&lt;&lt; set v834 if version is 8.3.4 or greater &gt;&gt;</vh></v>
 </v>
 </v>
-<v t="T1895" a="C"><vh>app.handleOpenTempFiles</vh></v>
+<v t="T1897" a="C"><vh>app.handleOpenTempFiles</vh></v>
 <v t="T879" a="C"><vh>app.quit</vh></v>
 <v t="T1767" a="C"><vh>app.realMenuName</vh></v>
 <v t="T2052"><vh>app.testDialogs</vh></v>
@@ -5210,7 +5211,7 @@
 <v t="T2080"><vh>OnHyperLinkEnter</vh></v>
 <v t="T2081"><vh>OnHyperLinkLeave</vh></v>
 </v>
-<v t="T1784" a="C"><vh>colorize &amp; recolor_range</vh></v>
+<v t="T1786" a="C"><vh>colorize &amp; recolor_range</vh></v>
 <v t="T505" a="C"><vh>colorizeAnyLanguage &amp; allies</vh>
 <v t="T506"><vh>&lt;&lt; initialize ivars &amp; tags &gt;&gt;</vh>
 <v t="T507"><vh>&lt;&lt; configure tags &gt;&gt;</vh></v>
@@ -5255,7 +5256,7 @@
 <v t="T970" a="C"><vh>scanColorDirectives</vh>
 <v t="T971"><vh>&lt;&lt; Test for @comment or @language &gt;&gt;</vh></v>
 </v>
-<v t="T1783" a="C"><vh>color.schedule</vh></v>
+<v t="T1785" a="C"><vh>color.schedule</vh></v>
 <v t="T1694" a="C"><vh>getCwebWord</vh></v>
 <v t="T972" a="C"><vh>updateSyntaxColorer</vh></v>
 <v t="T2082"><vh>useSyntaxColoring</vh></v>
@@ -5420,23 +5421,23 @@
 <v t="T2144"><vh>markSubheads</vh></v>
 <v t="T2145"><vh>unmarkAll</vh></v>
 </v>
-<v t="T1868" a="C"><vh>Moving, Dragging, Promote, Demote, Sort</vh>
+<v t="T1870" a="C"><vh>Moving, Dragging, Promote, Demote, Sort</vh>
 <v t="T1225" a="C"><vh>c.dragAfter</vh></v>
 <v t="T1226" a="C"><vh>c.dragToNthChildOf</vh></v>
 <v t="T1333" a="C"><vh>c.sortChildren, sortSiblings</vh>
 <v t="T1334"><vh>&lt;&lt; Set the undo info for sortChildren &gt;&gt;</vh></v>
 <v t="T1335"><vh>&lt;&lt; Set the undo info for sortSiblings &gt;&gt;</vh></v>
 </v>
-<v t="T1869"><vh>demote</vh></v>
-<v t="T1870"><vh>moveOutlineDown</vh>
-<v t="T1871"><vh>&lt;&lt; Move v down &gt;&gt;</vh></v>
+<v t="T1871"><vh>demote</vh></v>
+<v t="T1872"><vh>moveOutlineDown</vh>
+<v t="T1873"><vh>&lt;&lt; Move v down &gt;&gt;</vh></v>
 </v>
-<v t="T1872"><vh>moveOutlineLeft</vh></v>
-<v t="T1873"><vh>moveOutlineRight</vh></v>
-<v t="T1874"><vh>moveOutlineUp</vh>
-<v t="T1875"><vh>&lt;&lt; Move v up &gt;&gt;</vh></v>
+<v t="T1874"><vh>moveOutlineLeft</vh></v>
+<v t="T1875"><vh>moveOutlineRight</vh></v>
+<v t="T1876"><vh>moveOutlineUp</vh>
+<v t="T1877"><vh>&lt;&lt; Move v up &gt;&gt;</vh></v>
 </v>
-<v t="T1876"><vh>promote</vh></v>
+<v t="T1878"><vh>promote</vh></v>
 </v>
 <v><vh>Selecting &amp; Updating (commands)</vh>
 <v t="T1194" a="C"><vh>editVnode (calls tree.editLabel)</vh></v>
@@ -6037,22 +6038,22 @@
 <v t="T969" a="C"><vh>set_delims_from_string</vh></v>
 <v t="T504" a="C"><vh>set_language</vh></v>
 </v>
-<v t="T1838" a="C"><vh>scanDirectives (utils)</vh>
-<v t="T1839"><vh>&lt;&lt; Set local vars &gt;&gt;</vh></v>
-<v t="T1840"><vh>&lt;&lt; Test for @comment and @language &gt;&gt;</vh></v>
-<v t="T1841"><vh>&lt;&lt; Test for @pagewidth &gt;&gt;</vh></v>
-<v t="T1842"><vh>&lt;&lt; Test for @path &gt;&gt;</vh>
-<v t="T1843"><vh>&lt;&lt; compute path from s[k:] &gt;&gt;</vh></v>
+<v t="T1840" a="C"><vh>scanDirectives (utils)</vh>
+<v t="T1841"><vh>&lt;&lt; Set local vars &gt;&gt;</vh></v>
+<v t="T1842"><vh>&lt;&lt; Test for @comment and @language &gt;&gt;</vh></v>
+<v t="T1843"><vh>&lt;&lt; Test for @pagewidth &gt;&gt;</vh></v>
+<v t="T1844"><vh>&lt;&lt; Test for @path &gt;&gt;</vh>
+<v t="T1845"><vh>&lt;&lt; compute path from s[k:] &gt;&gt;</vh></v>
 </v>
-<v t="T1844"><vh>&lt;&lt; Test for @tabwidth &gt;&gt;</vh></v>
+<v t="T1846"><vh>&lt;&lt; Test for @tabwidth &gt;&gt;</vh></v>
 </v>
 <v t="T1256" a="C"><vh>findReference</vh></v>
 </v>
 <v t="T2308"><vh>enableMenu &amp; disableMenu &amp; setMenuLabel</vh></v>
 <v t="T2309"><vh>sortSequence</vh></v>
-<v t="T1835" a="C"><vh>wrap_lines</vh>
-<v t="T1836"><vh>&lt;&lt; place blank and word on the present line &gt;&gt;</vh></v>
-<v t="T1837"><vh>&lt;&lt; place word on a new line &gt;&gt;</vh></v>
+<v t="T1837" a="C"><vh>wrap_lines</vh>
+<v t="T1838"><vh>&lt;&lt; place blank and word on the present line &gt;&gt;</vh></v>
+<v t="T1839"><vh>&lt;&lt; place word on a new line &gt;&gt;</vh></v>
 </v>
 </v>
 <v><vh>Dumping, Timing, Tracing &amp; Sherlock</vh>
@@ -6111,7 +6112,7 @@
 </v>
 <v><vh>Scanners: no error messages</vh>
 <v t="T2343"><vh>escaped</vh></v>
-<v t="T1821" a="C"><vh>find_line_start</vh></v>
+<v t="T1823" a="C"><vh>find_line_start</vh></v>
 <v t="T2344"><vh>find_on_line</vh></v>
 <v t="T2345"><vh>is_c_id</vh></v>
 <v t="T2346"><vh>is_nl</vh></v>
@@ -6127,7 +6128,7 @@
 <v t="T2356"><vh>skip_long</vh></v>
 <v t="T2357"><vh>skip_matching_delims</vh></v>
 <v t="T2358"><vh>skip_nl</vh></v>
-<v t="T1834" a="C"><vh>skip_non_ws</vh></v>
+<v t="T1836" a="C"><vh>skip_non_ws</vh></v>
 <v t="T2359"><vh>skip_pascal_braces</vh></v>
 <v t="T2360"><vh>skip_ws, skip_ws_and_nl</vh></v>
 </v>
@@ -6155,7 +6156,7 @@
 </v>
 <v><vh>Startup &amp; initialization...</vh>
 <v t="T2361"><vh>CheckVersion (Dave Hein)</vh></v>
-<v t="T1899" a="C"><vh>handleLeoHook</vh></v>
+<v t="T1775" a="C"><vh>handleLeoHook</vh></v>
 <v t="T2362"><vh>unloadAll</vh></v>
 </v>
 </v>
@@ -6315,23 +6316,23 @@
 <v t="T1587"><vh>&lt;&lt; write the context of v to f &gt;&gt;</vh></v>
 </v>
 </v>
-<v t="T1822" a="C"><vh>Utilities</vh>
+<v t="T1824" a="C"><vh>Utilities</vh>
 <v t="T1353" a="C"><vh>createHeadline</vh></v>
-<v t="T1823"><vh>error</vh></v>
-<v t="T1824"><vh>getLeadingIndent</vh></v>
-<v t="T1825"><vh>isDocStart and isModuleStart</vh></v>
+<v t="T1825"><vh>error</vh></v>
+<v t="T1826"><vh>getLeadingIndent</vh></v>
+<v t="T1827"><vh>isDocStart and isModuleStart</vh></v>
 <v t="T1352" a="C"><vh>massageBody</vh></v>
-<v t="T1826"><vh>massageComment</vh></v>
-<v t="T1827"><vh>massageWebBody</vh>
-<v t="T1828"><vh>&lt;&lt; Remove most newlines from @space and @* sections &gt;&gt;</vh></v>
-<v t="T1829"><vh>&lt;&lt; Replace abbreviated names with full names &gt;&gt;</vh></v>
+<v t="T1828"><vh>massageComment</vh></v>
+<v t="T1829"><vh>massageWebBody</vh>
+<v t="T1830"><vh>&lt;&lt; Remove most newlines from @space and @* sections &gt;&gt;</vh></v>
+<v t="T1831"><vh>&lt;&lt; Replace abbreviated names with full names &gt;&gt;</vh></v>
 </v>
 <v t="T1354" a="C"><vh>skipLeadingComments</vh>
 <v t="T1355"><vh>&lt;&lt; scan for C-style comments &gt;&gt;</vh></v>
 <v t="T1356"><vh>&lt;&lt; scan for Pascal comments &gt;&gt;</vh></v>
 <v t="T1357"><vh>&lt;&lt; scan for Python comments &gt;&gt;</vh></v>
 </v>
-<v t="T1830"><vh>undentBody</vh></v>
+<v t="T1832"><vh>undentBody</vh></v>
 </v>
 </v>
 <v t="T2424"><vh>@file leoNodes.py</vh>
@@ -6862,21 +6863,21 @@
 <v t="T2633"><vh>@file leoUndo.py</vh>
 <v t="T1906" a="C"><vh>&lt;&lt; How Leo implements unlimited undo &gt;&gt;</vh></v>
 <v t="T2634"><vh>&lt;&lt; Define optionl ivars &gt;&gt;</vh></v>
-<v t="T1848" a="C"><vh>undo.__init__</vh>
-<v t="T1849"><vh>clearUndoState &amp; clearIvars</vh></v>
+<v t="T1850" a="C"><vh>undo.__init__</vh>
+<v t="T1851"><vh>clearUndoState &amp; clearIvars</vh></v>
 </v>
-<v t="T1861" a="C"><vh>State routines...</vh>
-<v t="T1862"><vh>canRedo &amp; canUndo</vh></v>
-<v t="T1863"><vh>enableMenuItems</vh></v>
-<v t="T1864"><vh>getBead, peekBead, setBead</vh></v>
-<v t="T1865"><vh>redoMenuName, undoMenuName</vh></v>
-<v t="T1866"><vh>setRedoType, setUndoType</vh></v>
-<v t="T1867"><vh>setUndoParams</vh></v>
-<v t="T1851" a="C"><vh>setUndoTypingParams</vh>
-<v t="T1852"><vh>&lt;&lt; compute leading, middle &amp; trailing  lines &gt;&gt;</vh></v>
-<v t="T1853" a="C"><vh>&lt;&lt; save undo text info &gt;&gt;</vh></v>
+<v t="T1863" a="C"><vh>State routines...</vh>
+<v t="T1864"><vh>canRedo &amp; canUndo</vh></v>
+<v t="T1865"><vh>enableMenuItems</vh></v>
+<v t="T1866"><vh>getBead, peekBead, setBead</vh></v>
+<v t="T1867"><vh>redoMenuName, undoMenuName</vh></v>
+<v t="T1868"><vh>setRedoType, setUndoType</vh></v>
+<v t="T1869"><vh>setUndoParams</vh></v>
+<v t="T1853" a="C"><vh>setUndoTypingParams</vh>
+<v t="T1854"><vh>&lt;&lt; compute leading, middle &amp; trailing  lines &gt;&gt;</vh></v>
+<v t="T1855" a="C"><vh>&lt;&lt; save undo text info &gt;&gt;</vh></v>
 </v>
-<v t="T1850" a="C"><vh>setUndoTypes</vh></v>
+<v t="T1852" a="C"><vh>setUndoTypes</vh></v>
 </v>
 <v t="T752" a="C"><vh>redo</vh>
 <v t="T753"><vh>&lt;&lt; redo clone cases &gt;&gt;</vh></v>
@@ -6900,17 +6901,42 @@
 </v>
 <v><vh>Undo helpers</vh>
 <v t="T2635"><vh>findSharedVnode</vh></v>
-<v t="T1878" a="C"><vh>undoDemote</vh></v>
-<v t="T1877" a="C"><vh>undoPromote</vh></v>
+<v t="T1880" a="C"><vh>undoDemote</vh></v>
+<v t="T1879" a="C"><vh>undoPromote</vh></v>
 <v t="T742" a="C"><vh>undoReplace</vh></v>
-<v t="T1854" a="C"><vh>undoRedoText</vh>
-<v t="T1855"><vh>&lt;&lt; Incrementally update the Tk.Text widget &gt;&gt;</vh></v>
-<v t="T1856"><vh>&lt;&lt; Compute the result using v's body text &gt;&gt;</vh></v>
-<v t="T1857"><vh>&lt;&lt; Compare the result with the expected result &gt;&gt;</vh></v>
+<v t="T1856" a="C"><vh>undoRedoText</vh>
+<v t="T1857"><vh>&lt;&lt; Incrementally update the Tk.Text widget &gt;&gt;</vh></v>
+<v t="T1858"><vh>&lt;&lt; Compute the result using v's body text &gt;&gt;</vh></v>
+<v t="T1859"><vh>&lt;&lt; Compare the result with the expected result &gt;&gt;</vh></v>
 </v>
 <v t="T2636"><vh>undoSortChildren</vh></v>
 <v t="T2637"><vh>undoSortSiblings</vh></v>
 </v>
+</v>
+</v>
+<v t="T2638"><vh>(Rich Ries: @run)</vh>
+<v t="T2639"><vh>OnActivate</vh></v>
+</v>
+<v t="T2640" a="V"><vh>(cweb prefs bug)</vh>
+<v t="T2641"><vh>Initial bug report</vh></v>
+<v t="T978" a="C"><vh>atFile.scanAllDirectives (calls writeError on errors)</vh>
+<v t="T979" a="C"><vh>&lt;&lt; Set ivars &gt;&gt;</vh></v>
+<v t="T980"><vh>&lt;&lt; Set path from @file node &gt;&gt;</vh></v>
+<v t="T981"><vh>&lt;&lt; Test for @comment and @language &gt;&gt;</vh></v>
+<v t="T982"><vh>&lt;&lt; Test for @header and @noheader &gt;&gt;</vh></v>
+<v t="T983"><vh>&lt;&lt; Test for @path &gt;&gt;</vh>
+<v t="T984"><vh>&lt;&lt; compute path from s[k:] &gt;&gt;</vh></v>
+<v t="T985"><vh>&lt;&lt; handle absolute path &gt;&gt;</vh></v>
+</v>
+<v t="T986" a="C"><vh>&lt;&lt; Test for @pagewidth &gt;&gt;</vh></v>
+<v t="T987"><vh>&lt;&lt; Test for @tabwidth &gt;&gt;</vh></v>
+<v t="T988"><vh>&lt;&lt; Set current directory &gt;&gt;</vh></v>
+<v t="T989"><vh>&lt;&lt; Set comment Strings from delims &gt;&gt;</vh></v>
+</v>
+<v t="T968" a="CE"><vh>@language and @comment directives (leoUtils)</vh>
+<v t="T503" a="C"><vh>set_delims_from_language</vh></v>
+<v t="T969" a="C"><vh>set_delims_from_string</vh></v>
+<v t="T504" a="C"><vh>set_language</vh></v>
 </v>
 </v>
 </vnodes>
@@ -9765,7 +9791,7 @@ def set_delims_from_language(language):
 Returns (language, delim1, delim2, delim3)
 @c
 
-def set_language(s,i,issue_errors_flag):
+def set_language(s,i,issue_errors_flag=false):
 
 	a = app()
 	tag = "@language"
@@ -18371,12 +18397,10 @@ if dict.has_key("comment"):
 
 if dict.has_key("language"):
 	i = dict["language"]
-	issue_error_flag = false
-	language, junk, junk, junk = set_language(s,i,issue_error_flag)
+	language,junk,junk,junk = set_language(s,i)
 
 if dict.has_key("comment") or dict.has_key("language"):
-	break
-</t>
+	break</t>
 <t tx="T972"># Returns (flag,language)
 # flag is true unless an unambiguous @nocolor is seen.
 
@@ -18530,19 +18554,13 @@ if dir and len(dir) &gt; 0 and os.path.isabs(dir):
 
 if not old.has_key("comment") and dict.has_key("comment"):
 	k = dict["comment"]
-	d1, d2, d3 = set_delims_from_string(s[k:])
-	if delim1:
-		# @comment effectively disables Untangle.
-		delim1, delim2, delim3 = d1, d2, d3
+	# 11/14/02: Similar to fix below.
+	delim1, delim2, delim3 = set_delims_from_string(s[k:])
 
 if not old.has_key("language") and dict.has_key("language"):
 	k = dict["language"]
-	issue_error_flag = false
-	language, d1, d2, d3 = set_language(s,k,issue_error_flag)
-	if delim1:
-		delim1, delim2, delim3 = d1, d2, d3
-		self.language = language # 10/18/02
-</t>
+	# 11/14/02: Fix bug reported by J.M.Gilligan.
+	self.language,delim1,delim2,delim3 = set_language(s,k)</t>
 <t tx="T982"># EKR: 10/10/02: perform the sames checks done by tangle.scanAllDirectives.
 if dict.has_key("header") and dict.has_key("noheader"):
 	es("conflicting @header and @noheader directives")</t>
@@ -18705,7 +18723,7 @@ while 1:
 elif dict.has_key("comment"):
 
 	i = dict["comment"]
-	(delim1,delim2,delim3) = set_delims_from_string(s[i:])
+	delim1,delim2,delim3 = set_delims_from_string(s[i:])
 	if delim1 or delim2:
 		self.single_comment_string = delim1
 		self.start_comment_string = delim2
@@ -18718,9 +18736,8 @@ elif dict.has_key("comment"):
 
 elif dict.has_key("language"):
 
-	issue_error_flag = false
 	i = dict["language"]
-	language,delim1,delim2,delim3 = set_language(s,i,issue_error_flag)
+	language,delim1,delim2,delim3 = set_language(s,i)
 	self.language = language
 	self.single_comment_string = delim1
 	self.start_comment_string = delim2
@@ -18735,8 +18752,6 @@ elif dict.has_key("language"):
 	self.use_noweb_flag = true
 	self.use_cweb_flag = false # Only raw cweb mode is ever used.
 	self.raw_cweb_flag = self.language == "cweb" # A new ivar.
-
-
 </t>
 <t tx="T993">@ It is valid to have more than one of these directives in the same body text: the more verbose directive takes precedence.
 @c
@@ -29249,6 +29264,63 @@ def realMenuName (self, menuName):
 <t tx="T1773">@ignore</t>
 <t tx="T1774">@ignore
 
+@ Add "select" and keystroke hooks.
+
+handleLeoHook("name")
+
+Allow keyword params to handleLeoHook; pass these to the user hook routines.</t>
+<t tx="T1775">@ This global function calls a hook routine.  Hooks are identified by the tag param.
+Returns the value returned by the hook routine, or None if the there is an exception.
+
+We look for a hook routine in three places:
+1. top().hookFunction
+2. app().hookFunction
+3. customizeLeo.customizeLeo()
+We set app().hookError on all exceptions.  Scripts that reset app().hookError to try again.
+@c
+
+def handleLeoHook(tag,**keywords):
+
+	a = app() ; c = top() # c may be None during startup.
+	
+	if not app().config.use_configureLeo_dot_py:
+		return None # not enabled.
+
+	if a.hookError:
+		return None
+	elif c and c.hookFunction:
+		try:
+			title = c.frame.top.title()
+			return c.hookFunction(tag)
+		except:
+			es("exception in hook function for " + title)
+	elif a.hookFunction:
+		try:
+			return a.hookFunction(tag,keywords)
+		except:
+			es("exception in app().hookFunction")
+	else:
+		try:
+			from customizeLeo import customizeLeo
+			try:
+				a.hookFunction = customizeLeo
+				return customizeLeo(tag,keywords)
+			except:
+				a.hookFunction = None
+				es("exception in customizeLeo")
+		except exceptions.SyntaxError:
+			es("syntax error in customizeLeo")
+		except:
+			# Import failed.  This is not an error.
+			a.hookError = true # Supress this function.
+			return None
+
+	# Handle all exceptions except import failure.
+	es_exception()
+	a.hookError = true # Supress this function.
+	return None # No return value</t>
+<t tx="T1776">@ignore
+
 @
 
 We need both incremental and full syntax coloring...
@@ -29258,8 +29330,8 @@ We must do a _full_ recoloring when selecting any node, even for two cloned node
 Furthermore, at present undo must always do a full recoloring because setBodyStringOrPane just replaces the old text with the new, and that destroys all the coloring tags.  The only possible solution would be to do an "incremental update" in setBodyStringOrPane.  It would also be good to do that in tree.select.
 
 The present code _is_ faster than the old code because it avoids redundant drawing.</t>
-<t tx="T1775">@language c</t>
-<t tx="T1776">@
+<t tx="T1777">@language c</t>
+<t tx="T1778">@
 This is just a test
 @c
 aprocedure(
@@ -29303,7 +29375,7 @@ int main()
 {
   return 0
 }</t>
-<t tx="T1777">Here's another issue
+<t tx="T1779">Here's another issue
 
 Create a @file node[snip]
 
@@ -29318,12 +29390,12 @@ black.
 
 This is a nit, really.
 </t>
-<t tx="T1778">@language html
+<t tx="T1780">@language html
 &lt;? xml version="1.0"&gt;
 &lt;!-- test --&gt;
 &lt;project name="Converter" default="dist"&gt;
 &lt;/project&gt;</t>
-<t tx="T1779">def colorizeAnyLanguage (self,v,body,language,flag):
+<t tx="T1781">def colorizeAnyLanguage (self,v,body,language,flag):
 	
 	try:		
 		self.incremental = 1
@@ -29686,14 +29758,14 @@ def colorizeAnyLanguage (self,v,body,language,flag):
 
 
 </t>
-<t tx="T1780">@nocolor</t>
-<t tx="T1781">"""python
+<t tx="T1782">@nocolor</t>
+<t tx="T1783">"""python
 string"""d
 
 'this\
 is</t>
-<t tx="T1782">@ We do incremental colorizing only in the body key handler.</t>
-<t tx="T1783">def schedule(self,v,body,incremental=0):
+<t tx="T1784">@ We do incremental colorizing only in the body key handler.</t>
+<t tx="T1785">def schedule(self,v,body,incremental=0):
 
 	if self.enabled:
 		self.incremental=incremental
@@ -29704,7 +29776,7 @@ def idle_colorize(self,v,body):
 	# trace(`v` + ", " + `body`)
 	if v and body and self.enabled:
 		self.colorize(v,body,self.incremental)</t>
-<t tx="T1784"># The main colorizer entry point.
+<t tx="T1786"># The main colorizer entry point.
 
 def colorize(self,v,body,incremental=false):
 
@@ -29725,14 +29797,14 @@ def recolor_range(self,v,body,leading,trailing):
 			v,body,language,flag,
 			leading=leading,trailing=trailing)
 </t>
-<t tx="T1785">@ignore
+<t tx="T1787">@ignore
 </t>
-<t tx="T1786">@ignore
+<t tx="T1788">@ignore
 @language java
 
 @ Reported by Chris P. Jobling, University of Wales Swansea, UK. C.P.Jobling@Swansea.ac.uk.
 </t>
-<t tx="T1787">//: c08:Adventure.java
+<t tx="T1789">//: c08:Adventure.java
 // From 'Thinking in Java, 2nd ed.' by Bruce Eckel
 // www.BruceEckel.com. See copyright notice in CopyRight.txt.
 // Multiple interfaces.
@@ -29773,7 +29845,7 @@ public class Adventure {
     w(h); // Treat it as an ActionCharacter
   }
 } ///:~</t>
-<t tx="T1788">//: c06:Bath.java
+<t tx="T1790">//: c06:Bath.java
 // From 'Thinking in Java, 2nd ed.' by Bruce Eckel
 // www.BruceEckel.com. See copyright notice in CopyRight.txt.
 // Constructor initialization with composition.
@@ -29820,7 +29892,7 @@ public class Bath {
     b.print();
   }
 } ///:~</t>
-<t tx="T1789">//: c02:HelloDate.java
+<t tx="T1791">//: c02:HelloDate.java
 // From 'Thinking in Java, 2nd ed.' by Bruce Eckel
 // www.BruceEckel.com. See copyright notice in CopyRight.txt.
 import java.util.*;
@@ -29842,59 +29914,59 @@ public class HelloDate {
     System.out.println(new Date());
   }
 } ///:~</t>
-<t tx="T1790">@ignore
+<t tx="T1792">@ignore
 </t>
-<t tx="T1791">@ignore
+<t tx="T1793">@ignore
 @language java
 &lt;&lt; Adventure declarations &gt;&gt;
 
 @others
  ///:~</t>
-<t tx="T1792">//: c08:Adventure.java
+<t tx="T1794">//: c08:Adventure.java
 // From 'Thinking in Java, 2nd ed.' by Bruce Eckel
 // www.BruceEckel.com. See copyright notice in CopyRight.txt.
 // Multiple interfaces.
 import java.util.*;
 </t>
-<t tx="T1793">interface CanFight {
+<t tx="T1795">interface CanFight {
   void fight();
 }</t>
-<t tx="T1794">
+<t tx="T1796">
 interface CanSwim {
   void swim();
 }</t>
-<t tx="T1795">
+<t tx="T1797">
 interface CanFly {
   void fly();
 }</t>
-<t tx="T1796">
+<t tx="T1798">
 class ActionCharacter {
 	@others
 }</t>
-<t tx="T1797">public void fight() {}
+<t tx="T1799">public void fight() {}
 </t>
-<t tx="T1798">
+<t tx="T1800">
 class Hero extends ActionCharacter 
     implements CanFight, CanSwim, CanFly {
 	@others
 }</t>
-<t tx="T1799">public void swim() {}
+<t tx="T1801">public void swim() {}
 </t>
-<t tx="T1800">public void fly() {}
+<t tx="T1802">public void fly() {}
 </t>
-<t tx="T1801">
+<t tx="T1803">
 public class Adventure {
 	@others
 }</t>
-<t tx="T1802">static void t(CanFight x) { x.fight(); }
+<t tx="T1804">static void t(CanFight x) { x.fight(); }
 </t>
-<t tx="T1803">static void u(CanSwim x) { x.swim(); }
+<t tx="T1805">static void u(CanSwim x) { x.swim(); }
 </t>
-<t tx="T1804">static void v(CanFly x) { x.fly(); }
+<t tx="T1806">static void v(CanFly x) { x.fly(); }
 </t>
-<t tx="T1805">static void w(ActionCharacter x) { x.fight(); }
+<t tx="T1807">static void w(ActionCharacter x) { x.fight(); }
 </t>
-<t tx="T1806">public static void main(String[] args) {
+<t tx="T1808">public static void main(String[] args) {
   Hero h = new Hero();
   t(h); // Treat it as a CanFight
   u(h); // Treat it as a CanSwim
@@ -29902,12 +29974,12 @@ public class Adventure {
   w(h); // Treat it as an ActionCharacter
 }
 </t>
-<t tx="T1807">@ignore
+<t tx="T1809">@ignore
 @language java
 
 @others
  ///:~</t>
-<t tx="T1808">//: c06:Bath.java
+<t tx="T1810">//: c06:Bath.java
 // From 'Thinking in Java, 2nd ed.' by Bruce Eckel
 // www.BruceEckel.com. See copyright notice in CopyRight.txt.
 // Constructor initialization with composition.
@@ -29917,22 +29989,22 @@ class Soap {
 
 	@others
 }</t>
-<t tx="T1809">private String s;
+<t tx="T1811">private String s;
 </t>
-<t tx="T1810">Soap() {
+<t tx="T1812">Soap() {
   System.out.println("Soap()");
   s = new String("Constructed");
 }
 </t>
-<t tx="T1811">public String toString() { return s; }
+<t tx="T1813">public String toString() { return s; }
 </t>
-<t tx="T1812">
+<t tx="T1814">
 public class Bath {
 	&lt;&lt; class Bath declarations &gt;&gt;
 
 	@others
 }</t>
-<t tx="T1813">private String 
+<t tx="T1815">private String 
   // Initializing at point of definition:
   s1 = new String("Happy"), 
   s2 = "Happy", 
@@ -29941,7 +30013,7 @@ Soap castille;
 int i;
 float toy;
 </t>
-<t tx="T1814">Bath() {
+<t tx="T1816">Bath() {
   System.out.println("Inside Bath()");
   s3 = new String("Joy");
   i = 47;
@@ -29949,7 +30021,7 @@ float toy;
   castille = new Soap();
 }
 </t>
-<t tx="T1815">void print() {
+<t tx="T1817">void print() {
   // Delayed initialization:
   if(s4 == null)
     s4 = new String("Joy");
@@ -29962,23 +30034,23 @@ float toy;
   System.out.println("castille = " + castille);
 }
 </t>
-<t tx="T1816">public static void main(String[] args) {
+<t tx="T1818">public static void main(String[] args) {
   Bath b = new Bath();
   b.print();
 }
 </t>
-<t tx="T1817">@ignore
+<t tx="T1819">@ignore
 @language java
 &lt;&lt; HelloDate declarations &gt;&gt;
 
 @others
  ///:~</t>
-<t tx="T1818">//: c02:HelloDate.java
+<t tx="T1820">//: c02:HelloDate.java
 // From 'Thinking in Java, 2nd ed.' by Bruce Eckel
 // www.BruceEckel.com. See copyright notice in CopyRight.txt.
 import java.util.*;
 </t>
-<t tx="T1819">/** The first Thinking in Java example program.
+<t tx="T1821">/** The first Thinking in Java example program.
  * Displays a string and today's date.
  * @author Bruce Eckel
  * @author www.BruceEckel.com
@@ -29987,7 +30059,7 @@ import java.util.*;
 public class HelloDate {
 	@others
 }</t>
-<t tx="T1820">/** Sole entry point to class &amp; application
+<t tx="T1822">/** Sole entry point to class &amp; application
  * @param args array of string arguments
  * @return No return value
  * @exception exceptions No exceptions thrown
@@ -29997,15 +30069,15 @@ public static void main(String[] args) {
   System.out.println(new Date());
 }
 </t>
-<t tx="T1821">def find_line_start(s,i):
+<t tx="T1823">def find_line_start(s,i):
 
 	# bug fix: 11/2/02: change i to i+1 in rfind
 	i = string.rfind(s,'\n',0,i+1) # Finds the highest index in the range.
 	if i == -1: return 0
 	else: return i + 1</t>
-<t tx="T1822"></t>
-<t tx="T1823">def error (self,s): es(s)</t>
-<t tx="T1824">@ This code returns the leading whitespace of a line, ignoring blank and comment lines.
+<t tx="T1824"></t>
+<t tx="T1825">def error (self,s): es(s)</t>
+<t tx="T1826">@ This code returns the leading whitespace of a line, ignoring blank and comment lines.
 @c
 
 def getLeadingIndent (self,s,i):
@@ -30022,7 +30094,7 @@ def getLeadingIndent (self,s,i):
 			return width
 	# trace("returns:0")
 	return 0</t>
-<t tx="T1825"># The start of a document part or module in a noweb or cweb file.
+<t tx="T1827"># The start of a document part or module in a noweb or cweb file.
 # Exporters may have to test for @doc as well.
 
 def isDocStart (self,s,i):
@@ -30047,7 +30119,7 @@ def isModuleStart (self,s,i):
 			match(s,i,"@c") or match(s,i,"@p") or
 			match(s,i,"@d") or match(s,i,"@f"))
 </t>
-<t tx="T1826">@ Returns s with all runs of whitespace and newlines converted to a single blank.  It also removes leading and trailing whitespace.
+<t tx="T1828">@ Returns s with all runs of whitespace and newlines converted to a single blank.  It also removes leading and trailing whitespace.
 @c
 
 def massageComment (self,s):
@@ -30060,7 +30132,7 @@ def massageComment (self,s):
 	s = string.replace(s,"  "," ")
 	s = string.strip(s)
 	return s</t>
-<t tx="T1827">def massageWebBody (self,s):
+<t tx="T1829">def massageWebBody (self,s):
 
 	type = self.webType
 	lb = choose(type=="cweb","@&lt;","&lt;&lt;")
@@ -30069,7 +30141,7 @@ def massageComment (self,s):
 	&lt;&lt; Replace abbreviated names with full names &gt;&gt;
 	s = string.rstrip(s)
 	return s</t>
-<t tx="T1828">i = 0
+<t tx="T1830">i = 0
 while i &lt; len(s):
 	i = skip_ws_and_nl(s,i)
 	if self.isDocStart(s,i):
@@ -30099,7 +30171,7 @@ while i &lt; len(s):
 			s = s[:start] + doc + s[end:]
 			i = start + len(doc)
 	else: i = skip_line(s,i)</t>
-<t tx="T1829">i = 0
+<t tx="T1831">i = 0
 while i &lt; len(s):
 	# trace(`get_line(s,i)`)
 	if match(s,i,lb):
@@ -30113,7 +30185,7 @@ while i &lt; len(s):
 				s = s[:j] + name2 + s[k:]
 				i = j + len(name2)
 	i = skip_line(s,i)</t>
-<t tx="T1830">@ Removes extra leading indentation from all lines.  We look at the first line to determine how much leading whitespace to delete.
+<t tx="T1832">@ Removes extra leading indentation from all lines.  We look at the first line to determine how much leading whitespace to delete.
 @c
 
 def undentBody (self,s):
@@ -30135,7 +30207,7 @@ def undentBody (self,s):
 		line = removeLeadingWhitespace(line,undent,c.tab_width)
 		result += line
 	return result</t>
-<t tx="T1831">@ What I did:
+<t tx="T1833">@ What I did:
 	
 - Changed g to geom or glob.
 - Removed print_stack.
@@ -30157,8 +30229,8 @@ This will allow us to say the following:
 
 
 </t>
-<t tx="T1832">@ignore</t>
-<t tx="T1833">@nocolor
+<t tx="T1834">@ignore</t>
+<t tx="T1835">@nocolor
 @pagewidth 40
 
 An @rawfile tree is a tree whose root headline starts with
@@ -30186,13 +30258,13 @@ There are several difference between @rawfile and @silentfile trees:
   3. This is an exxxxxxxxxxxxxxxxxxxxxxxxtrrrrrrrrrrrrrrreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeemlylong
      word.
 And it too has a hanging indentation.</t>
-<t tx="T1834">def skip_non_ws (s,i):
+<t tx="T1836">def skip_non_ws (s,i):
 
 	n = len(s)
 	while i &lt; n and not is_ws(s[i]):
 		i += 1
 	return i</t>
-<t tx="T1835">@ Returns a list of lines, consisting of the input lines wrapped to the given pageWidth.
+<t tx="T1837">@ Returns a list of lines, consisting of the input lines wrapped to the given pageWidth.
 
 Important note: this routine need not deal with leading whitespace.  Instead, the caller should simply reduce pageWidth by the width of leading whitespace wanted, then add that whitespace to the lines returned here.
 
@@ -30233,13 +30305,13 @@ def wrap_lines (lines,pageWidth,firstLineWidth=None):
 		result.append(line)
 	# trace(`result`)
 	return result</t>
-<t tx="T1836">if len(line) == 0:
+<t tx="T1838">if len(line) == 0:
 	# Just add the word to the start of the line.
 	line = word
 else:
 	# Add the word, preceeded by a blank.
 	line = string.join((line,' ',word),'')</t>
-<t tx="T1837"># End the previous line.
+<t tx="T1839"># End the previous line.
 if len(line) &gt; 0:
 	result.append(line)
 	outputLineWidth = pageWidth # DTHEIN 3-NOV-2002: width for remaining lines
@@ -30253,7 +30325,7 @@ if len(line) &gt;= pageWidth:
 	outputLineWidth = pageWidth # DTHEIN 3-NOV-2002: width for remaining lines
 	line = ""
 </t>
-<t tx="T1838">@ A general-purpose routine that scans v and its ancestors for directives.  It returns a dict containing the settings in effect as the result of the @comment, @language, @pagewidth, @path and @tabwidth directives.  This code does not check on the existence of paths, and issues no error messages.
+<t tx="T1840">@ A general-purpose routine that scans v and its ancestors for directives.  It returns a dict containing the settings in effect as the result of the @comment, @language, @pagewidth, @path and @tabwidth directives.  This code does not check on the existence of paths, and issues no error messages.
 
 Perhaps this routine should be the basis of atFile.scanAllDirectives and tangle.scanAllDirectives, but I am loath to make any further to these two already-infamous routines.  Also, this code does not check for @color and @nocolor directives: leoColor.useSyntaxColoring does that.
 @c
@@ -30279,7 +30351,7 @@ def scanDirectives(c,v=None):
 		"path"      : path,
 		"tabwidth"  : tab_width }
 </t>
-<t tx="T1839">loadDir = app().loadDir
+<t tx="T1841">loadDir = app().loadDir
 
 page_width = c.page_width
 tab_width  = c.tab_width
@@ -30287,32 +30359,31 @@ language = c.target_language
 delim1, delim2, delim3 = set_delims_from_language(c.target_language)
 path = None
 </t>
-<t tx="T1840"># @language and @comment may coexist in @file trees.
+<t tx="T1842"># @language and @comment may coexist in @file trees.
 # For this to be effective the @comment directive should follow the @language directive.
 
 if not old.has_key("comment") and dict.has_key("comment"):
 	k = dict["comment"]
-	delim1, delim2, delim3 = set_delims_from_string(s[k:])
+	delim1,delim2,delim3 = set_delims_from_string(s[k:])
 
 if not old.has_key("language") and dict.has_key("language"):
 	k = dict["language"]
-	issue_error_flag = false # DTHEIN 3-NOV-2002: define var before function call
-	language, delim1, delim2, delim3 = set_language(s,k,issue_error_flag)</t>
-<t tx="T1841">if dict.has_key("pagewidth") and not old.has_key("pagewidth"):
+	language,delim1,delim2,delim3 = set_language(s,k)</t>
+<t tx="T1843">if dict.has_key("pagewidth") and not old.has_key("pagewidth"):
 
 	k = dict["pagewidth"]
 	j = i = k + len("@pagewidth")
 	i, val = skip_long(s,i)
 	if val != None and val &gt; 0:
 		page_width = val</t>
-<t tx="T1842">if not path and not old.has_key("path") and dict.has_key("path"):
+<t tx="T1844">if not path and not old.has_key("path") and dict.has_key("path"):
 
 	k = dict["path"]
 	&lt;&lt; compute path from s[k:] &gt;&gt;
 	if path and len(path) &gt; 0:
 		base = getBaseDirectory() # returns "" on error.
 		path = os.path.join(base,path)</t>
-<t tx="T1843">j = i = k + len("@path")
+<t tx="T1845">j = i = k + len("@path")
 i = skip_to_end_of_line(s,i)
 path = string.strip(s[j:i])
 
@@ -30324,23 +30395,23 @@ if len(path) &gt; 2 and (
 
 path = string.strip(path)
 path = os.path.join(loadDir,path)</t>
-<t tx="T1844">if dict.has_key("tabwidth") and not old.has_key("tabwidth"):
+<t tx="T1846">if dict.has_key("tabwidth") and not old.has_key("tabwidth"):
 
 	k = dict["tabwidth"]
 	j = i = k + len("@tabwidth")
 	i, val = skip_long(s, i)
 	if val != None and val != 0:
 		tab_width = val</t>
-<t tx="T1845">@ignore</t>
-<t tx="T1846">node 1
+<t tx="T1847">@ignore</t>
+<t tx="T1848">node 1
 a
 b
 c
 d
 e</t>
-<t tx="T1847">node 2
+<t tx="T1849">node 2
 </t>
-<t tx="T1848">def __init__ (self,commands):
+<t tx="T1850">def __init__ (self,commands):
 	
 	self.commands = commands
 	
@@ -30363,7 +30434,7 @@ e</t>
 	self.redoing = false # True if executing a Redo command.
 
 	self.clearUndoState()</t>
-<t tx="T1849">@ This method clears then entire Undo state.  All non-undoable commands should call this method.
+<t tx="T1851">@ This method clears then entire Undo state.  All non-undoable commands should call this method.
 @c
 
 def clearUndoState (self):
@@ -30389,7 +30460,7 @@ def clearIvars (self):
 		self.parent = self.back = self.lastChild = self.n = None
 		self.select = None
 		self.newText = None</t>
-<t tx="T1850">def setUndoTypes (self):
+<t tx="T1852">def setUndoTypes (self):
 	
 	u = self
 	# trace(`u.bead` + ":" + `len(u.beads)`)
@@ -30411,7 +30482,7 @@ def clearIvars (self):
 
 
 </t>
-<t tx="T1851">@ This routine saves enough information so a typing operation can be undone and redone.
+<t tx="T1853">@ This routine saves enough information so a typing operation can be undone and redone.
 
 We do nothing when called from the undo/redo logic because the Undo and Redo commands merely reset the bead pointer.
 @c
@@ -30444,7 +30515,7 @@ def setUndoTypingParams (self,v,undo_type,oldText,newText,oldSel,newSel):
 	# trace(`u.bead` + ":" + `len(u.beads)`)
 	u.setUndoTypes() # Recalculate the menu labels.
 	return d</t>
-<t tx="T1852">@ Incremental undo typing is similar to incremental syntax coloring.  We compute the number of leading and trailing lines that match, and save both the old and new middle lines.
+<t tx="T1854">@ Incremental undo typing is similar to incremental syntax coloring.  We compute the number of leading and trailing lines that match, and save both the old and new middle lines.
 
 NB: the number of old and new middle lines may be different.
 @c
@@ -30502,7 +30573,7 @@ if self.debug_print:
 	#print "old mid:",`old_middle_lines`
 	#print "new mid:",`new_middle_lines`
 	print "---------------------"</t>
-<t tx="T1853">@ This is the start of the incremental undo algorithm.
+<t tx="T1855">@ This is the start of the incremental undo algorithm.
 
 We must save enough info to do _both_ of the following:
 
@@ -30533,7 +30604,7 @@ self.oldMiddleLines = old_middle_lines
 self.newMiddleLines = new_middle_lines
 self.oldNewlines = old_newlines
 self.newNewlines = new_newlines</t>
-<t tx="T1854"># Handle text undo and redo.
+<t tx="T1856"># Handle text undo and redo.
 # The terminology is for undo: converts _new_ text into _old_ text.
 
 def undoRedoText (self, v,
@@ -30559,7 +30630,7 @@ def undoRedoText (self, v,
 
 	else: # Rewrite the body pane and do a full recolor.
 		v.setBodyStringOrPane(expectedResult)</t>
-<t tx="T1855"># Only update the changed lines.
+<t tx="T1857"># Only update the changed lines.
 mid_text = string.join(oldMidLines,'\n')
 old_mid_len = len(oldMidLines)
 new_mid_len = len(newMidLines)
@@ -30589,7 +30660,7 @@ while newlines &gt; oldNewlines:
 if oldNewlines &gt; newlines:
 	c.frame.body.insert("end",'\n'*(oldNewlines-newlines))
 </t>
-<t tx="T1856"># Recreate the text using the present body text.
+<t tx="T1858"># Recreate the text using the present body text.
 body = v.bodyString()
 body_lines = body.split('\n')
 s = []
@@ -30611,7 +30682,7 @@ result = s
 if self.debug_print:
 	print "body:  ",`body`
 	print "result:",`result`</t>
-<t tx="T1857">if self.debug and expectedResult != result:
+<t tx="T1859">if self.debug and expectedResult != result:
 
 	print "----- result computed using Tk.Text != expectedResult in", tag
 	print "expected:",`expectedResult`
@@ -30620,7 +30691,7 @@ if self.debug_print:
 	#print "newMidLines",new_mid_len,`newMidLines`
 	#print "oldMidLines",old_mid_len,`oldMidLines`
 	#print "midText",`mid_text`</t>
-<t tx="T1858"># Handle text undo and redo.
+<t tx="T1860"># Handle text undo and redo.
 # The terminology is for undo: converts _new_ text into _old_ text.
 # Some more tests of statistics.
 # And some more.
@@ -30648,22 +30719,22 @@ def ----- Testing----- (self, v,
 
 	else: # Rewrite the body pane and do a full recolor.
 		v.setBodyStringOrPane(expectedResult)</t>
-<t tx="T1859">@ Trailing newlines must be handled with _extreme_ care.</t>
-<t tx="T1860">@ignore</t>
-<t tx="T1861"></t>
-<t tx="T1862">def canRedo (self):
+<t tx="T1861">@ Trailing newlines must be handled with _extreme_ care.</t>
+<t tx="T1862">@ignore</t>
+<t tx="T1863"></t>
+<t tx="T1864">def canRedo (self):
 
 	return self.redoMenuLabel != "Can't Redo"
 
 def canUndo (self):
 
 	return self.undoMenuLabel != "Can't Undo"</t>
-<t tx="T1863">def enableMenuItems (self):
+<t tx="T1865">def enableMenuItems (self):
 
 	u = self ; c = u.commands ; menu = c.frame.menus.get("Edit")
 	enableMenu(menu,u.redoMenuLabel,u.canRedo())
 	enableMenu(menu,u.undoMenuLabel,u.canUndo())</t>
-<t tx="T1864">def getBead (self,n):
+<t tx="T1866">def getBead (self,n):
 	
 	u = self
 	if n &lt; 0 or n &gt;= len(u.beads): return false
@@ -30722,7 +30793,7 @@ def setBead (self,n,keywords=None):
 				# trace(`u.oldText`)
 	# trace(`d`)
 	return d</t>
-<t tx="T1865">def redoMenuName (self,name):
+<t tx="T1867">def redoMenuName (self,name):
 
 	if name=="Can't Redo":
 		return name
@@ -30735,7 +30806,7 @@ def undoMenuName (self,name):
 		return name
 	else:
 		return "Undo " + name</t>
-<t tx="T1866"># These routines update both the ivar and the menu label.
+<t tx="T1868"># These routines update both the ivar and the menu label.
 def setRedoType (self,type):
 
 	u = self ; c = u.commands ; menu = c.frame.menus.get("Edit")
@@ -30754,7 +30825,7 @@ def setUndoType (self,type):
 		setMenuLabel(menu,u.undoMenuLabel,name)
 		u.undoType = type
 		u.undoMenuLabel = name</t>
-<t tx="T1867">@ This routine saves enough information so an operation can be undone and redone.  We do nothing when called from the undo/redo logic because the Undo and Redo commands merely reset the bead pointer.
+<t tx="T1869">@ This routine saves enough information so an operation can be undone and redone.  We do nothing when called from the undo/redo logic because the Undo and Redo commands merely reset the bead pointer.
 @c
 
 def setUndoParams (self,undo_type,v,**keywords):
@@ -30780,8 +30851,8 @@ def setUndoParams (self,undo_type,v,**keywords):
 	# Recalculate the menu labels.
 	u.setUndoTypes()
 	return d</t>
-<t tx="T1868"></t>
-<t tx="T1869">def demote(self):
+<t tx="T1870"></t>
+<t tx="T1871">def demote(self):
 
 	c = self ; v = c.currentVnode()
 	if not v or not v.next(): return
@@ -30809,7 +30880,7 @@ def setUndoParams (self,undo_type,v,**keywords):
 	c.endUpdate()
 	c.undoer.setUndoParams("Demote",v,lastChild=last)
 	c.updateSyntaxColorer(v) # Moving can change syntax coloring.</t>
-<t tx="T1870">@ Moving down is more tricky than moving up; we can't move v to be a child of itself.  An important optimization:  we don't have to call checkMoveWithParentWithWarning() if the parent of the moved node remains the same.
+<t tx="T1872">@ Moving down is more tricky than moving up; we can't move v to be a child of itself.  An important optimization:  we don't have to call checkMoveWithParentWithWarning() if the parent of the moved node remains the same.
 @c
 
 def moveOutlineDown(self):
@@ -30832,7 +30903,7 @@ def moveOutlineDown(self):
 		c.setChanged(true)
 	c.endUpdate()
 	c.updateSyntaxColorer(v) # Moving can change syntax coloring.</t>
-<t tx="T1871"># Remember both the before state and the after state for undo/redo
+<t tx="T1873"># Remember both the before state and the after state for undo/redo
 oldBack = v.back()
 oldParent = v.parent()
 oldN = v.childIndex()
@@ -30849,7 +30920,7 @@ else:
 		v.moveAfter(next)
 		c.undoer.setUndoParams("Move Down",v,
 			oldBack=oldBack,oldParent=oldParent,oldN=oldN)</t>
-<t tx="T1872">def moveOutlineLeft(self):
+<t tx="T1874">def moveOutlineLeft(self):
 
 	c = self
 	v = c.currentVnode()
@@ -30872,7 +30943,7 @@ else:
 		c.setChanged(true)
 	c.endUpdate()
 	c.updateSyntaxColorer(v) # Moving can change syntax coloring.</t>
-<t tx="T1873">def moveOutlineRight(self):
+<t tx="T1875">def moveOutlineRight(self):
 
 	c = self
 	v = c.currentVnode()
@@ -30898,7 +30969,7 @@ else:
 		c.initJoinedCloneBits(v) # 7/6/02
 	c.endUpdate()
 	c.updateSyntaxColorer(v) # Moving can change syntax coloring.</t>
-<t tx="T1874">def moveOutlineUp(self):
+<t tx="T1876">def moveOutlineUp(self):
 
 	c = self
 	v = c.currentVnode()
@@ -30917,7 +30988,7 @@ else:
 		c.setChanged(true)
 	c.endUpdate()
 	c.updateSyntaxColorer(v) # Moving can change syntax coloring.</t>
-<t tx="T1875"># Remember both the before state and the after state for undo/redo
+<t tx="T1877"># Remember both the before state and the after state for undo/redo
 oldBack = v.back()
 oldParent = v.parent()
 oldN = v.childIndex()
@@ -30937,7 +31008,7 @@ elif c.checkMoveWithParentWithWarning(v,back2.parent(),true):
 	v.moveAfter(back2)
 	c.undoer.setUndoParams("Move Up",v,
 		oldBack=oldBack,oldParent=oldParent,oldN=oldN)</t>
-<t tx="T1876">def promote(self):
+<t tx="T1878">def promote(self):
 
 	c = self
 	v = c.currentVnode()
@@ -30957,7 +31028,7 @@ elif c.checkMoveWithParentWithWarning(v,back2.parent(),true):
 	c.endUpdate()
 	c.undoer.setUndoParams("Promote",v,lastChild=last)
 	c.updateSyntaxColorer(v) # Moving can change syntax coloring.</t>
-<t tx="T1877"># Undoes the previous promote operation.
+<t tx="T1879"># Undoes the previous promote operation.
 def undoPromote (self):
 
 	u = self ; c = u.commands
@@ -30977,7 +31048,7 @@ def undoPromote (self):
 		if v == last: break
 	c.selectVnode(v1)
 	c.endUpdate()</t>
-<t tx="T1878"># undoes the previous demote operation.
+<t tx="T1880"># undoes the previous demote operation.
 def undoDemote (self):
 
 	u = self ; c = u.commands
@@ -30996,8 +31067,8 @@ def undoDemote (self):
 		if ins == last: break
 	c.selectVnode(u.v)
 	c.endUpdate()</t>
-<t tx="T1879">@ignore</t>
-<t tx="T1880">@nocolor
+<t tx="T1881">@ignore</t>
+<t tx="T1882">@nocolor
 
 Notes:
 
@@ -31015,7 +31086,7 @@ _ xedit_ext =
 	xedit_py = path
 	exdit_line_py = command line
 	xedit_w = path</t>
-<t tx="T1881">Read and respond to this message at: 
+<t tx="T1883">Read and respond to this message at: 
 https://sourceforge.net/forum/message.php?msg_id=1743592
 By: nobody
 
@@ -31051,7 +31122,7 @@ it works just fine. (EDITOR is set to  "c:\windows\editors\editplus\editplus.exe
 ???
 --Rich
 </t>
-<t tx="T1882">By: derwisch ( Johannes Hüsing ) 
+<t tx="T1884">By: derwisch ( Johannes Hüsing ) 
  RE: Time to design "Open With" command   
 2002-10-30 16:39
 
@@ -31059,7 +31130,7 @@ it works just fine. (EDITOR is set to  "c:\windows\editors\editplus\editplus.exe
 For Emacs, it would be nice if the node were opened in the correct mode. Normally the mode is communicated via file extension. Thus, a python node would be saved as a temporary file whose name ends in *.py. I presume other editors work similarly. Is the choice of an appropriate extension feasible? 
  
 </t>
-<t tx="T1883">Read and respond to this message at: 
+<t tx="T1885">Read and respond to this message at: 
 https://sourceforge.net/forum/message.php?msg_id=1738904
 By: riotnrrrd
 
@@ -31079,7 +31150,7 @@ like when it's sent to the printer spooler or a mail transport agent. Then just
 the body text of a node, or even just a selection of it, could be operated on,
 and just needed to be piped out to an external program.
 </t>
-<t tx="T1884">By: jmgilligan ( Jonathan M. Gilligan ) 
+<t tx="T1886">By: jmgilligan ( Jonathan M. Gilligan ) 
  RE: Time to design "Open With" command   
 2002-11-01 08:54  
 For opening in a third-party editor, the command used to invoke the editor should allow replaceable command-line parameters so the editor can be told to jump to a particular line in the file. 
@@ -31088,13 +31159,13 @@ e.g., several other applications I use invoke the editor with '%f' for the file 
 
 Getting leo to generate a "line number" is not completely trivial. It would require some (possibly complicated) plumbing inside leo to keep track of what line in the output file corresponds to a headline in the tree or the current cursor position in the body window, but it would be invaluable for the user.  
 </t>
-<t tx="T1885">For some Windows applications (e.g., msdev), it's better to invoke them via
+<t tx="T1887">For some Windows applications (e.g., msdev), it's better to invoke them via
 DDE rather than the command line. DDE allows multiple invocations to use the
 same process rather than starting a new process for each file opened.
 
 It would be nice, under Windows, to allow the user to specify a DDE command for an Open With... action.
 </t>
-<t tx="T1886">I don't know if this is consistent with what you are
+<t tx="T1888">I don't know if this is consistent with what you are
 envisioning, but here is the method that most Unix/Linux
 applications use to define external editors that they
 fork: they use user defined environment variables.
@@ -31127,14 +31198,14 @@ of Leo, the @file name may be passed.
 
 _BruceR
 </t>
-<t tx="T1887">&gt; You'd only need to make sure you create the /tmp file with an
+<t tx="T1889">&gt; You'd only need to make sure you create the /tmp file with an
 &gt; extension matching the @language directive - so if the view pane is
 &gt; displaying Perl code (say), you'd create a file like
 &gt; /tmp/leo_0145385.pl.
 
 * When user navigates to a node, Leo creates a file /tmp/Leo_3847582397.ext (or c:\windows\temp\Leo_9874987397.ext), where 'ext' is the appropriate file extension to signal the editor. For example, when editing chunks of C, the extension would be .c, or .pl for perl code etc 
 </t>
-<t tx="T1888">* If editor is external, then Leo can keep track of writes to the temporary file. Whenever the editor writes out to the temp file, Leo can pick this up and update the node within the .leo file accordingly. That way, if the user navigates to another Leo node, then Leo will keep track of all files which are open in the external editor, and absorb changes automatically.
+<t tx="T1890">* If editor is external, then Leo can keep track of writes to the temporary file. Whenever the editor writes out to the temp file, Leo can pick this up and update the node within the .leo file accordingly. That way, if the user navigates to another Leo node, then Leo will keep track of all files which are open in the external editor, and absorb changes automatically.
 
 &gt; Also, it should be easy for you to create a temporary file from
 &gt; just the edit pane contents, and sit there noticing each time the file
@@ -31147,10 +31218,10 @@ _BruceR
 &gt; It would be unwise to wait for an external editor task to terminate -
 &gt; this would kill flexibility, because people wouldn't be able to load
 &gt; viewpane contents into an existing editor instance.</t>
-<t tx="T1889">* OPTIONAL - User can opt for editor to be console-based. Very handy for Linux, where all the decent editors have a console mode available.
+<t tx="T1891">* OPTIONAL - User can opt for editor to be console-based. Very handy for Linux, where all the decent editors have a console mode available.
 
 If console-mode is specified, then Leo opens up a console in the view pane and runs the editor in the console within that pane.</t>
-<t tx="T1890">With external editor installed, there is a component on the Zope server and a component on the client (windows, linux, etc).
+<t tx="T1892">With external editor installed, there is a component on the Zope server and a component on the client (windows, linux, etc).
 
 When the user selects the 'edit' link, Zope sends the document to the web browser as a ".zope" file.
 
@@ -31170,14 +31241,14 @@ would let you put a hook on the file to call some code when the file is updated.
 
 -Rob
 </t>
-<t tx="T1891">@nocolor</t>
-<t tx="T1892">system(command)
+<t tx="T1893">@nocolor</t>
+<t tx="T1894">system(command)
 
 Execute the command (a string) in a subshell. This is implemented by calling the Standard C function system(), and has the same limitations. Changes to posix.environ, sys.stdin, etc. are not reflected in the environment of the executed command.
 
 The return value is the exit status of the process encoded in the format specified for wait(), except on Windows 95 and 98, where it is always 0. Note that POSIX does not specify the meaning of the return value of the C system() function, so the return value of the Python function is system-dependent. Availability: Unix, Windows. 
 </t>
-<t tx="T1893">startfile(path) 
+<t tx="T1895">startfile(path) 
 
 Start a file with its associated application. This acts like double-clicking the file in Windows Explorer, or giving the file name as an argument to the start command from the interactive command shell: the file is opened with whatever application (if any) its extension is associated.
 
@@ -31186,7 +31257,7 @@ startfile() returns as soon as the associated application is launched. There is 
 Use the os.path.normpath() function to ensure that the path is properly encoded for Win32. Availability: Windows. New in version 2.0.
 
 </t>
-<t tx="T1894">spawnl(mode, path, ...) 
+<t tx="T1896">spawnl(mode, path, ...) 
 spawnle(mode, path, ..., env) 
 spawnlp(mode, file, ...) 
 spawnlpe(mode, file, ..., env) 
@@ -31215,7 +31286,7 @@ L = ['cp', 'index.html', '/dev/null']
 os.spawnvpe(os.P_WAIT, 'cp', L, os.environ)
 
 Availability: Unix, Windows. spawnlp(), spawnlpe(), spawnvp() and spawnvpe() are not available on Windows. New in version 1.6. </t>
-<t tx="T1895">@ Try to remove temp files created with the Open With command.  This may fail if the files are still open.
+<t tx="T1897">@ Try to remove temp files created with the Open With command.  This may fail if the files are still open.
 
 We can't use es here because the log stream no longer exists.
 @c 
@@ -31230,67 +31301,10 @@ def handleOpenTempFiles (self):
 			except:
 				print "can not delete temp file:", path
 </t>
-<t tx="T1896">@language c
+<t tx="T1898">@language c
 
 </t>
-<t tx="T1897">This is a c file.</t>
-<t tx="T1898">@ignore
-
-@ Add "select" and keystroke hooks.
-
-handleLeoHook("name")
-
-Allow keyword params to handleLeoHook; pass these to the user hook routines.</t>
-<t tx="T1899">@ This global function calls a hook routine.  Hooks are identified by the tag param.
-Returns the value returned by the hook routine, or None if the there is an exception.
-
-We look for a hook routine in three places:
-1. top().hookFunction
-2. app().hookFunction
-3. customizeLeo.customizeLeo()
-We set app().hookError on all exceptions.  Scripts that reset app().hookError to try again.
-@c
-
-def handleLeoHook(tag,**keywords):
-
-	a = app() ; c = top() # c may be None during startup.
-	
-	if not app().config.use_configureLeo_dot_py:
-		return None # not enabled.
-
-	if a.hookError:
-		return None
-	elif c and c.hookFunction:
-		try:
-			title = c.frame.top.title()
-			return c.hookFunction(tag)
-		except:
-			es("exception in hook function for " + title)
-	elif a.hookFunction:
-		try:
-			return a.hookFunction(tag,keywords)
-		except:
-			es("exception in app().hookFunction")
-	else:
-		try:
-			from customizeLeo import customizeLeo
-			try:
-				a.hookFunction = customizeLeo
-				return customizeLeo(tag,keywords)
-			except:
-				a.hookFunction = None
-				es("exception in customizeLeo")
-		except exceptions.SyntaxError:
-			es("syntax error in customizeLeo")
-		except:
-			# Import failed.  This is not an error.
-			a.hookError = true # Supress this function.
-			return None
-
-	# Handle all exceptions except import failure.
-	es_exception()
-	a.hookError = true # Supress this function.
-	return None # No return value</t>
+<t tx="T1899">This is a c file.</t>
 <t tx="T1900">@language python
 
 @ This section contains all the source code of leo.py.
@@ -42038,5 +42052,80 @@ optionalIvars = (
 		parent.setDirty()
 		c.setChanged(true)
 	c.endUpdate()</t>
+<t tx="T2638">@ 
+Marked with "ACTION_NODE"
+
+1 node is affected:
+	Code::@file leoTree.py::EventHandlers::OnActivate
+
+
+----------------------------------------------------------------------
+NOTES:
+
+  If the node is named "@run name" -- where 'name' is a path-and-file,
+and there's a double-click on a node, then run webbrowse on the file.
+This allows access to e-mail, URLs, and files. The files are opened 
+with the associated program.
+	
+To Access:		Use:	
+E-MAIL			mailto:
+FTP:			ftp://  
+SECURE URL:	https:// 
+URL			http://
+FILE:			file://  -- file:// seems to be the default.
+  
+@c</t>
+<t tx="T2639">def OnActivate (self,v):
+	ACTION_NODE = 1
+	c=self.commands
+	# trace(`v`)
+
+	if v == self.currentVnode:
+		# w = self.commands.frame.getFocus()
+		if self.active:
+			if ACTION_NODE == 1:
+				import os
+				nodeStr = `v`
+				nodeStr = string.strip(nodeStr[3:])
+#				print "Node String is: " + nodeStr
+
+				if nodeStr[:4] == "@run":
+					fileName = string.strip(nodeStr[4:])
+#					print "The File is: " + fileName
+
+					try:
+						import webbrowser
+						os.chdir(app().loadDir)
+						webbrowser.open(fileName)
+					except:
+						es("exception opening " + fileName)
+						traceback.print_exc()
+				else:
+					self.editLabel(v)
+			else:
+				self.editLabel(v)
+		else:
+			self.undimEditLabel()
+			self.canvas.focus_set()
+	else:
+		self.select(v)
+		if v.t.insertSpot != None: # 9/1/02
+			c.body.mark_set("insert",v.t.insertSpot)
+			c.body.see(v.t.insertSpot)
+		else:
+			c.body.mark_set("insert","1.0")
+		c.body.focus_force()
+
+	self.active = true</t>
+<t tx="T2640">@ What I did:
+	
+- Fixed bug in &lt;&lt; Test for @comment and @language &gt;&gt; in atFile.scanAllDirectives so it always sets self.language and the delims.  This bug was a carryover from the days that set_language didn't adjust the position of delims.
+
+- Made the issue_errors_flag a keyword param in set_language, which allows us to remove it from all present calls!
+</t>
+<t tx="T2641">@nocolor
+
+Try writing the @files with the default language (leo preferences) set to CWEB.  @file nodes with @language python in effect get cweb sentinels.
+</t>
 </tnodes>
 </leo_file>
