@@ -672,8 +672,8 @@ class atFile:
 			return choose(self.language=="cweb",
 				atFile.noDirective,atFile.atDirective)
 	
-		# 10/25/02: @c is not recognized in cweb mode.
-		if self.language=="cweb" and match_word(s,i,"@c"):
+		# 10/28/02: @c and @* are not recognized in cweb mode.
+		if self.language=="cweb" and (match_word(s,i,"@c") or match(s,i,"@*")):
 			return atFile.noDirective
 	
 		for name,directive in table:

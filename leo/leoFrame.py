@@ -2195,6 +2195,7 @@ class LeoFrame:
 					return index
 			index = index + choose(forward,"+1c","-1c")
 			index = body.index(index)
+		return 0 # unreachable: keeps pychecker happy.
 	# Test  (
 	# ([(x){y}]))
 	# Test  ((x)(unmatched
@@ -2896,7 +2897,7 @@ class LeoFrame:
 		# Doing so would add unwanted leading tabs.
 		ver = "$Revision$" # CVS will update this.
 		build = ver[10:-1] # Strip off "$Reversion" and "$"
-		version = "leo.py 3.7, Build " + build + ", October 9, 2002\n\n"
+		version = "leo.py 3.8, Build " + build + ", October 29, 2002\n\n"
 		copyright = (
 			"Copyright 1999-2002 by Edward K. Ream\n" +
 			"All Rights Reserved\n" +

@@ -1,5 +1,23 @@
 Important note: See INSTALL.TXT for installation instructions.
 
+leo.py 3.8                                 October 29, 2002
+
+Many major improvements have been made to Leo, all made as the result of user requests:
+
+- New @rawfile and @silentfile trees complement @file trees.
+  @rawfile and @silentfile trees create derived files without using sections.
+  @rawfile files contain only those sentinels needed to automatically untangle them.
+  @silentfile trees contain no sentinels at all.
+- New @raw and @end_raw directives allow unformatted code within @file trees.
+- Much better support for CWEB.  You may organize .w files using noweb!
+- The @comment and @language directives may now apply simultaneously.
+- Leo can now read, remember and write <?xml-stylesheet...?> lines,
+  under control of the new stylesheet option.
+- The new output_newline option specifies the line endings used when writing files.
+- The new output_initial_comment option secifies the text to appear
+  in an @comment sentinel at the start of each derived file.
+- New commands in the help menu make it much easier to change configuration options.
+- Dozens of minor improvements and bug fixes.
 
 leo.py 3.7                                 October 9, 2002
 

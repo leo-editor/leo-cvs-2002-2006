@@ -895,6 +895,7 @@ class leoTree:
 			v.iconVal = val
 			redraw_flag = true
 		c.endUpdate(redraw_flag) # redraw only if necessary
+		return "break"
 	#@-body
 	#@-node:4::tree.onBodyChanged, onBodyWillChange, OnBodyKey, idle_body_key
 	#@+node:5::tree.OnContinueDrag
@@ -1151,6 +1152,7 @@ class leoTree:
 			# update v immediately.  Joined nodes are redrawn later by endEditLabel.
 			# Redrawing the whole screen now messes up the cursor in the headline.
 			self.drawIcon(v,v.iconx,v.icony) # just redraw the icon.
+		return "break"
 	#@-body
 	#@-node:9::tree.OnHeadlineKey, onHeadlineChanged, idle_head_key
 	#@+node:10::tree.OnIconClick
