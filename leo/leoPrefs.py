@@ -38,6 +38,7 @@ class LeoPrefs:
 		self.tangle_batch_flag = 0
 		self.untangle_batch_flag = 0
 		
+		self.replace_tabs_var = Tk.IntVar() # 1/30/03
 		self.tangle_batch_var = Tk.IntVar()
 		self.untangle_batch_var = Tk.IntVar()
 		
@@ -89,15 +90,18 @@ class LeoPrefs:
 		txt2.bind("<Key>", self.idle_set_ivars)
 		
 		# Batch Checkbuttons...
-		# Can't easily use a list becasue we use different variables.
+		self.replaceTabsBox = replaceBox = Tk.Checkbutton(glob,anchor="w",
+			text="Replace tabs with spaces",
+			variable=self.replace_tabs_var,command=self.idle_set_ivars)
 		self.doneBox = doneBox = Tk.Checkbutton(glob,anchor="w",
 			text="Run tangle_done.py after Tangle",
 			variable=self.tangle_batch_var,command=self.idle_set_ivars)
 		self.unBox = unBox = Tk.Checkbutton(glob,anchor="w",
 			text="Run untangle_done.py after Untangle",
 			variable=self.untangle_batch_var,command=self.idle_set_ivars)
-		doneBox.pack(fill="x")
-		unBox.pack(fill="x")
+		
+		for box in (replaceBox, doneBox, unBox):
+			box.pack(fill="x")
 		#@-body
 		#@-node:2::<< Create the Global Options frame >>
 
@@ -156,9 +160,8 @@ class LeoPrefs:
 		# Right column of radio buttons.
 		right_data = [
 			("Perl", "perl"), ("Perl+POD", "perlpod"),
-			("PHP", "php"),
-			("Plain Text", "plain"), ("Python", "python"),
-			("tcl/tk", "tcltk") ]
+			("PHP", "php"), ("Plain Text", "plain"),
+			("Python", "python"), ("tcl/tk", "tcltk") ]
 			
 		for text,value in right_data:
 			button = Tk.Radiobutton(rt,anchor="w",text=text,
@@ -228,12 +231,13 @@ class LeoPrefs:
 		#@+node:2::<< set widgets >>
 		#@+body
 		# Global options
+		self.replace_tabs_var.set(choose(c.tab_width<0,1,0)) # 1/30/03
 		self.tangle_batch_var.set(c.tangle_batch_flag)
 		self.untangle_batch_var.set(c.untangle_batch_flag)
 		self.pageWidthText.delete("1.0","end")
 		self.pageWidthText.insert("end",`c.page_width`)
 		self.tabWidthText.delete("1.0","end")
-		self.tabWidthText.insert("end",`c.tab_width`)
+		self.tabWidthText.insert("end",`abs(c.tab_width)`) # 1/30/03
 		# Default Tangle Options
 		self.tangleDirectoryText.delete("1.0","end")
 		self.tangleDirectoryText.insert("end",c.tangle_directory)
@@ -264,14 +268,17 @@ class LeoPrefs:
 		w = self.pageWidthText.get("1.0","end")
 		w = string.strip(w)
 		try:
-			self.page_width = int(w)
+			self.page_width = abs(int(w))
 		except:
 			self.page_width = default_page_width
 			
 		w = self.tabWidthText.get("1.0","end")
 		w = string.strip(w)
 		try:
-			self.tab_width = int(w)
+			self.tab_width = abs(int(w))
+			if self.replace_tabs_var.get(): # 1/30/03
+				self.tab_width = - abs(self.tab_width)
+			# print self.tab_width
 		except:
 			self.tab_width = default_tab_width
 		
@@ -287,6 +294,7 @@ class LeoPrefs:
 		
 		# Default Target Language
 		self.target_language = self.lang_var.get()
+		
 		#@-body
 		#@-node:1::<< update ivars >>
 
