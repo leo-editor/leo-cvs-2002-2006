@@ -901,7 +901,8 @@ class leoTree:
 			s = toUnicode(s,app().tkEncoding) # 2/25/03
 			# if len(ch) > 0: print `s`
 		# Do nothing if nothing has changed.
-		if ch not in ('\n','\r'):
+		# 6/22/03: Make sure we handle delete key properly.
+		if ch not in ('\n','\r',chr(8)):
 			if s == body: return "break"
 			# Do nothing for control characters.
 			if (ch == None or len(ch) == 0) and body == s[:-1]: return "break"
@@ -934,7 +935,7 @@ class leoTree:
 			removeTrailing = ch != '\n' # false
 		elif old == new[:-1]:
 			# A single trailing character has been added.
-			# trace("false: only changed trailing.)
+			trace("false: only changed trailing.")
 			removeTrailing = false
 		else:
 			# The text didn't have a newline, and now it does.
@@ -944,6 +945,7 @@ class leoTree:
 			removeTrailing = true
 			
 		# trace(`ch`+","+`removeTrailing`)
+		
 		
 		
 		#@-body
