@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="5960" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="5965" clone_windows="0"/>
 <globals body_outline_ratio="0.635416666667">
 	<global_window_position top="64" left="210" height="864" width="907"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
@@ -23,7 +23,7 @@
 <v t="ekr.20040804052804"><vh>Set tracing</vh></v>
 <v t="ekr.20040901065642"><vh>test of new timit script</vh></v>
 </v>
-<v t="ekr.20040708205841"><vh>Other tests...</vh>
+<v t="ekr.20040708205841" a="TV"><vh>Other tests...</vh>
 <v t="ekr.20040414082806"><vh>Clone test</vh>
 <v t="ekr.20040409140301"><vh>clone test</vh>
 <v t="ekr.20040409140301.1"><vh>b</vh>
@@ -357,6 +357,20 @@
 <v t="ekr.20040914072438.1"><vh>atRootTest1.txt</vh></v>
 <v t="ekr.20040914072438.2" a="M"><vh>atRootTest2.txt</vh></v>
 </v>
+<v t="ekr.20040910094343"><vh>Tests of @run</vh>
+<v t="ekr.20040910094343.1"><vh>Note:  windows cd does not affect value of os.getcwd</vh></v>
+<v t="ekr.20040910092950"><vh>@run # open leoDocs.leo</vh>
+<v t="ekr.20040910092950.3"><vh>@run c:\python23\python c:\prog\leoCVS\leo\src\leo.py c:\prog\leoCVS\leo\doc\LeoDocs.leo</vh></v>
+</v>
+<v t="ekr.20040910094546"><vh>@run c:\python23\python #open leoDocs.leo using args</vh>
+<v t="ekr.20040910094546.1"><vh>leo.py</vh></v>
+<v t="ekr.20040910094546.2"><vh>@arg c:\prog\leoCVS\leo\doc\LeoDocs.leo</vh></v>
+</v>
+</v>
+<v t="ekr.20040915045847"><vh>Test of spelling contraction</vh></v>
+<v t="ekr.20040915111739" a="E"><vh>FileActions</vh>
+<v t="ekr.20040915111853"><vh>leo*.py</vh></v>
+</v>
 </v>
 <v t="ekr.20040312021734"><vh>Scripts</vh>
 <v t="ekr.20040318091620"><vh>Clear all unknown attributes</vh></v>
@@ -687,13 +701,21 @@
 <v t="ekr.20040805101759"><vh>How to use pdb</vh>
 <v t="ekr.20040805102453"><vh>@url http://docs.python.org/lib/debugger-commands.html</vh></v>
 </v>
+<v t="ekr.20040918093738"><vh>Prototypes for Python-to-Tk indices</vh>
+<v t="ekr.20040918093738.1" a="E"><vh>py2tkIndex</vh>
+<v t="ekr.20040918093738.2"><vh>test</vh></v>
+</v>
+<v t="ekr.20040918093738.3" a="E"><vh>pyRowColToTkIndex</vh>
+<v t="ekr.20040918093738.4"><vh>test</vh></v>
+</v>
+</v>
 </v>
 <v t="ekr.20040723064143.1"><vh>To do (when file tests are easier)</vh>
 <v t="ekr.20040723064143.2"><vh>Finish unit tests for @asis</vh></v>
 <v t="ekr.20040723064143.3"><vh>Test error recovery when reading descendentTnodeUa's</vh></v>
 <v t="ekr.20040903102217"><vh>Test multi-line @doc parts with @language html</vh></v>
 </v>
-<v t="EKR.20040619133116" a="TV"><vh>Unit testing...</vh>
+<v t="EKR.20040619133116"><vh>Unit testing...</vh>
 <v t="ekr.20040327114250" tnodeList="ekr.20040327114250"><vh>@file c:\prog\test\unittest\batchTest.py</vh></v>
 <v t="ekr.20040712101754" a="E"><vh>Unit Tests</vh>
 <v t="ekr.20040716144017"><vh>Perfect Import tests</vh>
@@ -1158,20 +1180,6 @@
 </v>
 </v>
 <v t="ekr.20040707081532.1"><vh>Do @test</vh></v>
-</v>
-<v t="ekr.20040910094343"><vh>Tests of @run</vh>
-<v t="ekr.20040910094343.1"><vh>Note:  windows cd does not affect value of os.getcwd</vh></v>
-<v t="ekr.20040910092950"><vh>@run # open leoDocs.leo</vh>
-<v t="ekr.20040910092950.3"><vh>@run c:\python23\python c:\prog\leoCVS\leo\src\leo.py c:\prog\leoCVS\leo\doc\LeoDocs.leo</vh></v>
-</v>
-<v t="ekr.20040910094546"><vh>@run c:\python23\python #open leoDocs.leo using args</vh>
-<v t="ekr.20040910094546.1"><vh>leo.py</vh></v>
-<v t="ekr.20040910094546.2"><vh>@arg c:\prog\leoCVS\leo\doc\LeoDocs.leo</vh></v>
-</v>
-</v>
-<v t="ekr.20040915045847"><vh>Test of spelling contraction</vh></v>
-<v t="ekr.20040915111739" a="E"><vh>FileActions</vh>
-<v t="ekr.20040915111853"><vh>leo*.py</vh></v>
 </v>
 </vnodes>
 <tnodes>
@@ -1831,7 +1839,7 @@ print '
 import leoGlobals as g
 print g.app.config.redirect_execute_script_output_to_log_pane</t>
 <t tx="EKR.20040627103732">@ignore</t>
-<t tx="EKR.20040627103902" lineYOffset="4b032e" icons="5d7100287d710128550577686572657102550a6265666f726549636f6e710355047870616471044b025504747970657105550466696c6571066806582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286805680668084afdffffff6806582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6802550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e"></t>
+<t tx="EKR.20040627103902" lineYOffset="4b032e" icons="5d7100287d7101285504747970657102550466696c65710355047870616471044b02550577686572657105550a6265666f726549636f6e71066803582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286802680368084afdffffff6803582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6805550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e"></t>
 <t tx="EKR.20040627121836">import leoGlobals as g
 
 c = g.top() ; p = c.currentPosition()
@@ -1960,7 +1968,7 @@ for p in c.rootPosition().allNodes_iter():
 s = "%d nodes" % count
 print s ; g.es(s)</t>
 <t tx="ekr.20040312101720"></t>
-<t tx="ekr.20040317101155" lineYOffset="4b032e" icons="5d7100287d7101285504747970657102550466696c65710355047870616471044b02550577686572657105550a6265666f726549636f6e71066803582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286802680368084afdffffff6803582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6805550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">import leoGlobals as g
+<t tx="ekr.20040317101155" lineYOffset="4b032e" icons="5d7100287d710128550577686572657102550a6265666f726549636f6e710355047870616471044b025504747970657105550466696c6571066806582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286805680668084afdffffff6806582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6802550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">import leoGlobals as g
 
 c = g.top()
 
@@ -9575,5 +9583,86 @@ c = g.top()
 print "filename", filename</t>
 <t tx="ekr.20040917062206">import leoGlobals as g
 assert(g.cantImport("xyzzy") is None)</t>
+<t tx="ekr.20040918093738"></t>
+<t tx="ekr.20040918093738.1">import leoGlobals as g
+
+def py2tkIndex (s,n):
+    """Convert n, a Python index into s, into a Tk index.
+    This must be as fast as possible and must not allocate any memory."""
+    if n &gt;= len(s): return "end"
+    if n &lt;= -len(s): return "1.0"
+    if n &lt; 0: n += len(s)
+    n1 = s.count('\n',0,n)
+    if n1 == 0:
+        return "%d.%d" % (n1+1,n)
+    else:
+        n2 = s.rfind('\n',0,n)
+        return "%d.%d" % (n1+1,n-n2-1)
+
+# Test script.
+c = g.top() ; p = c.currentPosition()
+s = p.firstChild().bodyString()
+print '=' * 20
+for i in xrange(len(s)):
+    print "%3d" % (i),repr(str(s[i])),py2tkIndex(s,i)
+i = len(s)
+print "%3d" % (i),py2tkIndex(s,i)
+print '-' * 20
+for i in xrange(-1,-len(s)-1,-1):
+    print "%3d" % (i),repr(str(s[i])),py2tkIndex(s,i)
+i = -len(s)-1
+print "%3d" % (i),py2tkIndex(s,i)</t>
+<t tx="ekr.20040918093738.2">line 1
+two
+three
+</t>
+<t tx="ekr.20040918093738.3">import leoGlobals as g
+
+def pyRowColToTkIndex (s,n1,n2):
+    """Convert n, a Python index into s, into a Tk index.
+    This must be as fast as possible and must not allocate any memory.
+    """
+    assert(n1 &gt;= 0)
+    
+    if 0: # Let Tk complain about bad indices.
+        if n1 &gt; s.count('\n'):
+            return "end"
+        else:
+            return "%d.%d" % (n1+1,n2)
+    else: # Check both indices.
+        line = 0 ; index = 0 ; limit = len(s)
+        while index &lt; limit and line != n1:
+            i = s.find('\n',index,limit)
+            if i == -1:
+                return "end"
+            else:
+                line += 1
+                index = i + 1
+        if index + n2 &gt; limit:
+            return "end"
+        else:
+            i = s.find('\n',index,limit)
+            if -1 &lt; i &lt; index + n2:
+                return "bad" # n2 out of range.
+            else:
+                return "%d.%d" % (line+1,n2)
+    
+# Test script.
+c = g.top() ; p = c.currentPosition()
+s = p.firstChild().bodyString()
+print '-' * 20
+lines = s.split('\n')
+for n1 in xrange(len(lines)):
+    line = lines[n1] + '\n'
+    for n2 in xrange(len(line)):
+        ch = line[n2]
+        print "%3d.%-3d %-4s" % (n1,n2,repr(str(ch))),pyRowColToTkIndex(s,n1,n2)
+        
+n1,n2 = len(lines),0
+print "%3d.%-3d %4s" % (n1,n2,' '),pyRowColToTkIndex(s,n1,n2)</t>
+<t tx="ekr.20040918093738.4">line 1
+two
+three
+</t>
 </tnodes>
 </leo_file>
