@@ -184,8 +184,10 @@ class tkinterGui(leoGui.leoGui):
 	
 		return tkFileDialog.askopenfilename(
 			title=title,
-			filetypes=filetypes,
-			defaultextension=defaultextension)
+			filetypes=filetypes)
+		# DTHEIN 2004.01.31: remove default extension on open, so that we can
+		#                    open files without extensions
+		# defaultextension=defaultextension)
 	
 	def runSaveFileDialog(self,initialfile,title,filetypes,defaultextension):
 	
@@ -194,8 +196,9 @@ class tkinterGui(leoGui.leoGui):
 		return tkFileDialog.asksaveasfilename(
 			initialfile=initialfile,
 			title=title,
-			filetypes=filetypes,
-			defaultextension=defaultextension)
+			filetypes=filetypes)
+		# EKR: 2004.01.31: remove default extensions on save too.
+		# defaultextension=defaultextension)
 	#@nonl
 	#@-node:app.gui.Tkinter file dialogs
 	#@+node:app.gui.Tkinter panels
