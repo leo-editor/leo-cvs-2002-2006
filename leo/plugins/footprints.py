@@ -101,7 +101,6 @@ def installDrawMethod(tags, kw):
 #@nonl
 #@-node:pap.20041020001800:installDrawMethod
 #@+node:pap.20041020001841:doFootprint
- 
 def doFootprint(self, p):  
     """Do the colouring""" 
     if p and p.edit_text(): 
@@ -120,11 +119,10 @@ def doFootprint(self, p):
             p.edit_text().configure( 
                 state="disabled",highlightthickness=0, fg=fg, bg=bg) 
         except: 
-         g.es_exception() 
+         g.es_exception()
 #@nonl
 #@-node:pap.20041020001841:doFootprint
 #@+node:pap.20041020002741:storeHeadlineClick
- 
 def storeHeadlineClick(tag, keywords): 
     """A node headline was clicked""" 
     lock.acquire() 
@@ -137,7 +135,6 @@ def storeHeadlineClick(tag, keywords):
 #@nonl
 #@-node:pap.20041020002741:storeHeadlineClick
 #@+node:pap.20041020004243:updateNodes
- 
 def updateNodes(): 
     """Update the colour of nodes""" 
     config = g.app.config 
