@@ -316,15 +316,17 @@ class atFile:
             # Force Python comment delims for g.getScript.
             self.startSentinelComment = "#"
             self.endSentinelComment = None
-        if self.errors:
-            return
+    
         # Init state from arguments.
         self.targetFileName = targetFileName
         self.sentinels = not nosentinels
         self.thinFile = thinFile
         self.toString = toString
         self.root = root
-        self.root.v.t.tnodeList = []
+        
+        # Bug fix: 12/31/04: Init all other ivars even if there is an error.
+        if not self.errors: 
+            self.root.v.t.tnodeList = []
     #@nonl
     #@-node:ekr.20041005105605.15:initWriteIvars
     #@-node:ekr.20041005105605.7:Birth & init
@@ -1400,7 +1402,7 @@ class atFile:
     #@nonl
     #@-node:ekr.20041005105605.73:findChild4
     #@+node:ekr.20041005105605.74:scanText4 & allies
-    def scanText4 (self,theFile,p):
+    def scanText4 (self,theFile,p,verbose=False):
         
         """Scan a 4.x derived file non-recursively."""
     
@@ -1438,7 +1440,8 @@ class atFile:
             s = at.readLine(theFile)
             if len(s) == 0: break
             kind = at.sentinelKind4(s)
-            # g.trace(at.sentinelName(kind),s.strip())
+            if verbose:
+                g.trace(at.sentinelName(kind),s.strip())
             if kind == at.noSentinel:
                 i = 0
             else:
@@ -2165,9 +2168,10 @@ class atFile:
     
         at = self
         assert(at.endSentinelStack)
-        at.readError("Ignoring %s sentinel.  Expecting %s" %
-            (at.sentinelName(at.endSentinelStack[-1]),
-             at.sentinelName(expectedKind)))
+        s = "Ignoring %s sentinel.  Expecting %s" % (
+            at.sentinelName(at.endSentinelStack[-1]),
+            at.sentinelName(expectedKind))
+        at.readError(s)
              
     def popSentinelStack (self,expectedKind):
         
@@ -2446,8 +2450,8 @@ class atFile:
         if self.errors == 0:
             g.es_error("----- error reading @file " + self.targetFileName)
             self.error(message) # 9/10/02: we must increment self.errors!
-            
-        print message
+        else:
+            print message
     
         if 0: # CVS conflicts create too many messages.
             self.error(message)
@@ -3112,6 +3116,8 @@ class atFile:
                         at.putDocLine(s,i)
             elif kind in (at.docDirective,at.atDirective):
                 assert(not at.pending)
+                if not inCode: # Bug fix 12/31/04: handle adjacent doc parts.
+                    at.putEndDocLine() 
                 at.putStartDocLine(s,i,kind)
                 inCode = False
             elif kind in (at.cDirective,at.codeDirective):
@@ -4269,6 +4275,9 @@ class atFile:
     def error(self,message):
     
         g.es_error(message)
+        # print
+        print message
+        # print
         self.errors += 1
     #@nonl
     #@-node:ekr.20041005105605.220:error
