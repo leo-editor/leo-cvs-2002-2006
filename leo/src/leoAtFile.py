@@ -428,29 +428,32 @@ class atFile:
             #@-node:ekr.20041005105605.23:<< warn about non-empty unvisited nodes >>
             #@nl
         if at.errors == 0 and not at.importing:
-            #@        << copy all tempBodyStrings to tnodes >>
-            #@+node:ekr.20041005105605.24:<< copy all tempBodyStrings to tnodes >>
-            for p in root.self_and_subtree_iter():
-                try: s = p.v.t.tempBodyString
-                except: s = ""
-                if s != p.bodyString():
-                    if 0: # For debugging.
-                        print ; print "changed: " + p.headString()
-                        print ; print "new:",s
-                        print ; print "old:",p.bodyString()
-                    if thinFile:
-                        p.v.setTnodeText(s)
-                        if p.v.isDirty():
-                            p.setAllAncestorAtFileNodesDirty()
-                    else:
-                        p.setBodyStringOrPane(s) # Sets v and v.c dirty.
-                        
-                    if not thinFile or (thinFile and p.v.isDirty()):
-                        g.es("changed: " + p.headString(),color="blue")
-                        p.setMarked()
-            #@nonl
-            #@-node:ekr.20041005105605.24:<< copy all tempBodyStrings to tnodes >>
-            #@nl
+            if 1: # Package this as a method for use by mod_labels plugin.
+                self.copyAllTempBodyStringsToTnodes(root,thinFile)
+            else:
+                #@            << copy all tempBodyStrings to tnodes >>
+                #@+node:ekr.20041005105605.24:<< copy all tempBodyStrings to tnodes >>
+                for p in root.self_and_subtree_iter():
+                    try: s = p.v.t.tempBodyString
+                    except: s = ""
+                    if s != p.bodyString():
+                        if 0: # For debugging.
+                            print ; print "changed: " + p.headString()
+                            print ; print "new:",s
+                            print ; print "old:",p.bodyString()
+                        if thinFile:
+                            p.v.setTnodeText(s)
+                            if p.v.isDirty():
+                                p.setAllAncestorAtFileNodesDirty()
+                        else:
+                            p.setBodyStringOrPane(s) # Sets v and v.c dirty.
+                            
+                        if not thinFile or (thinFile and p.v.isDirty()):
+                            g.es("changed: " + p.headString(),color="blue")
+                            p.setMarked()
+                #@nonl
+                #@-node:ekr.20041005105605.24:<< copy all tempBodyStrings to tnodes >>
+                #@nl
         #@    << delete all tempBodyStrings >>
         #@+node:ekr.20041005105605.25:<< delete all tempBodyStrings >>
         for p in c.allNodes_iter():
@@ -2354,6 +2357,33 @@ class atFile:
             out[k] = tag + trailingLine.rstrip() ; j -= 1
     #@nonl
     #@-node:ekr.20041005105605.118:completeLastDirectives
+    #@+node:ekr.20050301105854:copyAllTempBodyStringsToTnodes
+    def  copyAllTempBodyStringsToTnodes (self,root,thinFile):
+        
+        c = self.c
+        for p in root.self_and_subtree_iter():
+            try: s = p.v.t.tempBodyString
+            except: s = ""
+            old_body = p.bodyString()
+            if s != old_body:
+                if 0: # For debugging.
+                    print ; print "changed: " + p.headString()
+                    print ; print "new:",s
+                    print ; print "old:",p.bodyString()
+                if thinFile:
+                    p.v.setTnodeText(s)
+                    if p.v.isDirty():
+                        p.setAllAncestorAtFileNodesDirty()
+                else:
+                    p.setBodyStringOrPane(s) # Sets v and v.c dirty.
+    
+                if not thinFile or (thinFile and p.v.isDirty()):
+                    # New in Leo 4.3: support for mod_labels plugin:
+                    c.mod_label_controller.add_label(p,"before change:",old_body)
+                    g.es("changed: " + p.headString(),color="blue")
+                    p.setMarked()
+    #@nonl
+    #@-node:ekr.20050301105854:copyAllTempBodyStringsToTnodes
     #@+node:ekr.20041005105605.119:createImportedNode
     def createImportedNode (self,root,c,headline):
         
