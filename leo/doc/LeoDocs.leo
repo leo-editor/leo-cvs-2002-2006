@@ -2,7 +2,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="3164" clone_windows="0"/>
 <globals body_outline_ratio="0.5">
-	<global_window_position top="43" left="103" height="836" width="837"/>
+	<global_window_position top="10" left="297" height="836" width="837"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences>
@@ -24,6 +24,7 @@
 <v t="edream.110203163054.7" a=""><vh>Acknowledgements</vh></v>
 <v t="edream.110203163054.8"><vh>What people are saying about Leo</vh>
 <v t="edream.110203163054.9" a="M"><vh>Quote of the Month</vh>
+<v t="edream.120703081642"><vh>Anon</vh></v>
 <v t="edream.120503073304"><vh>From Michael Dawson</vh></v>
 <v t="edream.110203163054.10"><vh>From David Nichols</vh></v>
 <v t="edream.110203163054.11"><vh>From William A. Stapp</vh></v>
@@ -63,7 +64,7 @@
 <v t="edream.110203163054.44"><vh>Dan Winkler 1</vh></v>
 <v t="edream.110203163054.45"><vh>Dan Winkler 2</vh></v>
 </v>
-<v t="edream.110203163054.46" a="E"><vh>Release Notes</vh>
+<v t="edream.110203163054.46"><vh>Release Notes</vh>
 <v t="edream.110203163054.47"><vh>Warnings</vh></v>
 <v t="edream.110203163054.48"><vh>Installation notes</vh>
 <v t="edream.110203163054.49" a=""><vh>System requirements</vh></v>
@@ -84,7 +85,7 @@
 <v t="edream.110203163054.62" a=""><vh>Quick start</vh></v>
 </v>
 <v t="edream.110203163054.63" a="E"><vh>Latest versions</vh>
-<v t="edream.110603185805" a="V"><vh>4.1 beta 5</vh>
+<v t="edream.110603185805" a=""><vh>4.1 beta 5</vh>
 <v t="edream.120403174147"><vh>Changes made in 4.1 beta 5</vh>
 <v t="edream.120403180443"><vh>New and improved features</vh>
 <v t="edream.120403174147.105"><vh>Honor outline/body pane ratio when opening files</vh></v>
@@ -539,6 +540,8 @@
 </v>
 <v t="edream.110203163054.61" a=""><vh>Putting the Leo icon in Leo windows</vh></v>
 <v t="edream.110203163054.348"><vh>Extending the format of .leo files</vh></v>
+<v t="edream.120703073611"><vh>Attaching temporary attributes to vnodes and tnodes</vh></v>
+<v t="edream.120703073611.1"><vh>Recommended conventions for plugins</vh></v>
 </v>
 <v t="edream.110203163054.349" a=""><vh>More flexible creation of non-existent directories</vh></v>
 </v>
@@ -1013,7 +1016,7 @@
 </v>
 </v>
 </v>
-<v t="edream.110203163054.735"><vh>Users Guide</vh>
+<v t="edream.110203163054.735" a="E"><vh>Users Guide</vh>
 <v t="edream.110203163054.736"><vh>An overview of Leo</vh></v>
 <v t="edream.110203163054.737"><vh>Front material</vh>
 <v t="edream.110203163054.738"><vh>Title Page &amp; Summary</vh></v>
@@ -1022,7 +1025,7 @@
 <v t="edream.110203163054.7" a=""><vh>Acknowledgements</vh></v>
 <v t="edream.110203163054.741"><vh>Legal Notices: Leo uses the Python license</vh></v>
 </v>
-<v t="edream.110203163054.742"><vh>Chapter 1: Introducing Leo</vh>
+<v t="edream.110203163054.742" a="E"><vh>Chapter 1: Introducing Leo</vh>
 <v t="edream.110203163054.743"><vh>Overview</vh></v>
 <v t="edream.110203163054.744"><vh>Leo's main window</vh></v>
 <v t="edream.110203163054.745"><vh>Body text and sections</vh></v>
@@ -1035,6 +1038,7 @@
 </v>
 <v t="edream.110203163054.751"><vh>Clones manage tasks</vh></v>
 <v t="edream.110203163054.752"><vh>Outlines generate derived files</vh></v>
+<v t="edream.120703113515" a="V"><vh>A recommended workflow for using Leo</vh></v>
 </v>
 <v t="edream.110203163054.753"><vh>Chapter 2: Installing Leo</vh>
 <v t="edream.110203163054.49" a=""><vh>System requirements</vh></v>
@@ -1412,6 +1416,8 @@
 </v>
 <v t="edream.110203163054.61" a=""><vh>Putting the Leo icon in Leo windows</vh></v>
 <v t="edream.110203163054.348"><vh>Extending the format of .leo files</vh></v>
+<v t="edream.120703073611"><vh>Attaching temporary attributes to vnodes and tnodes</vh></v>
+<v t="edream.120703073611.1"><vh>Recommended conventions for plugins</vh></v>
 </v>
 <v t="edream.110203163054.930"><vh>Chapter 9: History of Leo</vh>
 <v t="edream.110203163054.931"><vh>Beginnings</vh></v>
@@ -1644,6 +1650,8 @@
 </v>
 <v t="edream.110203163054.61" a=""><vh>Putting the Leo icon in Leo windows</vh></v>
 <v t="edream.110203163054.348"><vh>Extending the format of .leo files</vh></v>
+<v t="edream.120703073611"><vh>Attaching temporary attributes to vnodes and tnodes</vh></v>
+<v t="edream.120703073611.1"><vh>Recommended conventions for plugins</vh></v>
 </v>
 </v>
 <v t="edream.110203163054.1071"><vh>Other topics</vh>
@@ -6633,7 +6641,9 @@ Another way:
 	try:
 		v.unknownAttributes["vnodeIcon"] = pathToIcon
 	except AttributeError:
-		v.unknownAttributes = {"vnodeIcon" : pathToIcon}</t>
+		v.unknownAttributes = {"vnodeIcon" : pathToIcon}
+
+See the section called "Recommended conventions for plugins" for advice about how to avoid potential conflicts in naming new attributes.</t>
 <t tx="edream.110203163054.349">Leo creates nonexistent directories only if create_nonexistent_directories = 1 in leoConfig.txt.
 
 Previous versions of Leo created a new directory only if its parent directory already existed.  Now, Leo will create all non-existing directories as required.
@@ -24400,5 +24410,70 @@ Writing the documentation and the code in the same outline at
 the same time improves the whole product. Being able to
 automatically export both with just two key presses (tangle and
 export-to-DocBook) is a real luxury. -- Michael Dawson</t>
+<t tx="edream.120703073611">Plugins may create (or add to) v.tempAttributes (for vnodes) or t.tempAttributes (for tnodes).  These will work just like the corresponding unknownAttributes dicts except that Leo will _not_ read or write these dictionaries when reading or writing files.  Note: nothing needs to change in Leo to support this convention.</t>
+<t tx="edream.120703073611.1">@nocolor
+
+We wish to avoid the possibility that two plugins might unwittingly choose the same name for attributes in the unknownAttributes or tempAttributes dictionaries.  The following convention eliminates that possibility.
+
+Each plugin should create its own dictionary _inside_ any tempAttributes or unknownAttributes dictionaries that it intends to create or modify.  Something like this:
+
+@color
+
+# Create the tempAttributes dict for this vnode.
+if not v.hasattr("tempAttributes"):
+	v.tempAttributes = {}
+
+# Create a subdictionary for the private use of my plugin.
+d = v.tempAttributes.get("myPluginName")
+if d is None:
+	v.tempAttributes["myPluginName"] = d = {}
+
+@nocolor
+
+Now the plugin can set and get fields in d.  Similar code would be used for the t.tempAttributes, v.unknownAttributes and t.unknownAttributes dictionaries.</t>
+<t tx="edream.120703081642">ED, you continue to push the envelope. the amazing thing is that the footprint
+isn't doubling every few months like it would be in another designers hands.
+adding features by removing constraints, hot refactoring while adding unit tests.
+forget the book. I would pay to see the movie.</t>
+<t tx="edream.120703113515">There is a trick that makes it very easy to develop Leo using Leo itself. The
+trick is to create a workflow that separates editing from testing.
+
+Putting test code in LeoPy.leo would waste a lot of time. To run tests I would
+have to exit Leo and reload LeoPy. A much quicker way is to put all test code
+in a test.leo file. So to change and test code, just do the following:
+
+1. Save LeoPy.leo but do NOT exit Leo. 
+
+2. Quit the copy of Leo running test.leo, then reload test.leo.
+
+3. Run test scripts from test.leo.
+
+That's all. Python will recompile any changed .py files in the new copy of Leo.
+
+BTW, I use a batch file called t.bat that runs test.leo, so my
+"edit-reload-test" cycle is just:
+
+1. Control-S (to save the .leo file)
+2. t (to run load test.leo)
+3. Control-E (to run the test script)
+
+The benefits of the new workflow:
+
+1. test.leo loads _much_ more quickly than LeoPy.leo does. This new approach
+can increase the speed of the edit-reload-test cycle by more than a factor of
+10. Hitting Control-S, t, Control-E takes about 5 seconds.
+
+2. LeoPy.leo continues to run with the _old_ code, so it is much easier to fix
+syntax errors or exceptions in the _new_ code: just fix the problem and save
+LeoPy.leo _without_ closing LeoPy.leo., then restart test.leo. Tests are run on
+new code; editing is done on old, stable code.
+
+3. test.leo is the perfect place to develop test. I can create and organize
+those tests and when I am done, test.leo is a log of my work.
+
+BTW, I have long wondered whether there was a way to recompile Leo's .py files
+without leaving Leo. Theoretically this is possible using reload, but in
+practice it doesn't work when objects contain state information. The new
+workflow neatly solves the problem while sidestepping the problems.</t>
 </tnodes>
 </leo_file>
