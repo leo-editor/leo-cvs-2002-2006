@@ -1,0 +1,20 @@
+#include "wx\msw\wx.rc"
+
+LeoIcon ICON icons/LeoApp.ico
+
+box0  BITMAP icons/box00.bmp
+box1  BITMAP icons/box01.bmp
+box2  BITMAP icons/box02.bmp
+box3  BITMAP icons/box03.bmp
+box4  BITMAP icons/box04.bmp
+box5  BITMAP icons/box05.bmp
+box6  BITMAP icons/box06.bmp
+box7  BITMAP icons/box07.bmp
+box8  BITMAP icons/box08.bmp
+box9  BITMAP icons/box09.bmp
+box10 BITMAP icons/box10.bmp
+box11 BITMAP icons/box11.bmp
+box12 BITMAP icons/box12.bmp
+box13 BITMAP icons/box13.bmp
+box14 BITMAP icons/box14.bmp
+box15 BITMAP icons/box15.bmp

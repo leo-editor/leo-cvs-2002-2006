@@ -1,0 +1,9 @@
+include LeoPy.leo
+include LeoDocs.leo
+include leo*.py
+include readme*.*
+include Icons/*.*
+include leo.rc
+include leo.res
+include sdist.bat
+include manifest.in
