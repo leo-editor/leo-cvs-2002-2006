@@ -101,14 +101,15 @@ xml_version_string = UTF-8
 #	Important:  Use UTF-8 (case is significant) to write leo.py 2.x files.
 
 output_initial_comment =
-
 #	Example:
 #		Created by Leo at @date
 #	A comment to be iserted in derived files just after the initial @+leo line.
 #	The comment will appear in an @comment sentinel.
-#	This must be empty or None for compatibility with older versions of Leo.
-#	Leo replaces @date with the date and time that the derived file was created.
-#	Use \n to separate lines.
+#	Notes:
+#	1. Leo replaces @date with the date and time that the derived file was created.
+#	2. Use \n to separate lines.
+#	3. This must be empty for compatibility with older versions of Leo.
+#	4. Please use an empty comment when updating to CVS!
 
 output_newline = nl
 #	Valid values for this option:
