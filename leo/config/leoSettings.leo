@@ -2,16 +2,15 @@
 <?xml-stylesheet ekr_stylesheet?>
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="89" clone_windows="0"/>
-<globals body_outline_ratio="0.673295454545">
+<globals body_outline_ratio="0.448863636364">
 	<global_window_position top="136" left="257" height="704" width="857"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
 <find_panel_settings/>
 <vnodes>
-<v t="ekr.20041119034357.1" a="E"><vh>@settings</vh>
 <v t="ekr.20041119035137"><vh>About this file</vh>
-<v t="ekr.20041119035704" a="E"><vh> Basic setting nodes</vh>
+<v t="ekr.20041119035704"><vh> Basic setting nodes</vh>
 <v t="ekr.20041119042929"><vh>@bool</vh></v>
 <v t="ekr.20041119042929.1"><vh>@color</vh></v>
 <v t="ekr.20041119044139"><vh>@directory</vh></v>
@@ -29,12 +28,11 @@
 <v t="ekr.20041119035931.2"><vh>@platform nodes</vh></v>
 <v t="ekr.20041119035704.3"><vh>@type nodes</vh></v>
 </v>
-<v t="ekr.20041119034357.3"><vh>General configuration options</vh>
-<v t="ekr.20041119034357.4"><vh>@page general options</vh>
+<v t="ekr.20041119034357.1" a="E"><vh>@settings</vh>
+<v t="ekr.20041119034357.3" a="TV"><vh>General configuration options</vh>
 <v t="ekr.20041119034357.5"><vh>@bool read_only = False</vh></v>
 <v t="ekr.20041119034357.6"><vh>@bool use_psyco = False</vh></v>
 <v t="ekr.20041119034357.13"><vh>@bool use_plugins = False</vh></v>
-</v>
 <v t="ekr.20041119034357.7"><vh>@page .leo file options</vh>
 <v t="ekr.20041119034357.8"><vh>@string output_initial_comment = None</vh></v>
 <v t="ekr.20041119034357.9"><vh>@string stylesheet = None</vh></v>
@@ -54,7 +52,7 @@
 <v t="ekr.20041119042929.11"><vh>@encoding tk_encoding = None</vh></v>
 </v>
 </v>
-<v t="ekr.20041119034357.10"><vh>@page command options</vh>
+<v t="ekr.20041119034357.10"><vh>@page Command options</vh>
 <v t="ekr.20041119034357.14"><vh>@bool at_root_bodies_start_in_doc_mode = True</vh></v>
 <v t="ekr.20041119041019"><vh>@bool redirect_execute_script_output_to_log_pane = False</vh></v>
 <v t="ekr.20041119041019.1"><vh>@string remove_sentinels_extension = .txt</vh></v>
@@ -117,6 +115,38 @@
 <v t="ekr.20041119034357.34"><vh>@bool tangle_outputs_header = True</vh></v>
 <v t="ekr.20041119034357.35"><vh>@bool run_tangle_done.py = False</vh></v>
 <v t="ekr.20041119034357.36"><vh>@bool run_untangle_done.py = False</vh></v>
+</v>
+</v>
+<v t="ekr.20041119034357.21"><vh>Keyboard shortcuts</vh>
+<v t="ekr.20041119034357.22"><vh>About keyboard shortcuts</vh></v>
+<v t="ekr.20041119034357.23"><vh>@shortcuts Alt and Shift-Alt</vh></v>
+<v t="ekr.20041119034357.24"><vh>@shortcuts Control</vh></v>
+<v t="ekr.20041119034357.25"><vh>@shortcuts Shift-Control</vh></v>
+<v t="ekr.20041119034357.26"><vh>@shortcuts F-keys and Esc</vh></v>
+<v t="ekr.20041119034357.27"><vh>@shortcuts override defaults</vh></v>
+<v t="ekr.20041119054938"><vh>@ignore No shortcut specified</vh></v>
+</v>
+<v t="ekr.20041119034357.70"><vh>Syntax coloring</vh>
+<v t="ekr.20041119034357.71"><vh>@page syntax coloring options</vh>
+<v t="ekr.20041119034357.72"><vh>@bool color_cweb_doc_parts_with_latex=True</vh></v>
+<v t="ekr.20041119034357.73"><vh>@bool color_cweb_comments_with_latex=True</vh></v>
+<v t="ekr.20041119034357.74"><vh>@bool color_directives_in_plain_text=True</vh></v>
+<v t="ekr.20041119034357.75"><vh>@bool underline_undefined_section_names=True</vh></v>
+<v t="ekr.20041119034357.76"><vh>@bool use_hyperlinks=False</vh></v>
+</v>
+<v t="ekr.20041119034357.77"><vh>@page syntax colors</vh>
+<v t="ekr.20041119034357.78"><vh>@tk-color comment_color=firebrick3</vh></v>
+<v t="ekr.20041119034357.79"><vh>@tk-color cweb_section_name_color=red</vh></v>
+<v t="ekr.20041119034357.80"><vh>@tk-color directive_color=blue</vh></v>
+<v t="ekr.20041119034357.81"><vh>@tk-color doc_part_color=firebrick3</vh></v>
+<v t="ekr.20041119034357.82"><vh>@tk-color keyword_color=blue</vh></v>
+<v t="ekr.20041119034357.83"><vh>@tk-color leo_keyword_color=#00aa00</vh></v>
+<v t="ekr.20041119034357.84"><vh>@tk-color section_name_color=red</vh></v>
+<v t="ekr.20041119034357.85"><vh>@tk-color section_name_brackets_color=blue</vh></v>
+<v t="ekr.20041119034357.86"><vh>@tk-color show_invisibles_space_background_color=Gray90</vh></v>
+<v t="ekr.20041119034357.87"><vh>@tk-color show_invisibles_tab_foreground_color=Gray80</vh></v>
+<v t="ekr.20041119034357.88"><vh>@tk-color string_color=#00aa00</vh></v>
+<v t="ekr.20041119034357.89"><vh>@tk-color undefined_section_name_color=red</vh></v>
 </v>
 </v>
 <v t="ekr.20041119034357.37"><vh>Window options</vh>
@@ -197,45 +227,11 @@
 <v t="ekr.20041119034357.69"><vh>@int split_bar_width = 6</vh></v>
 </v>
 </v>
-<v t="ekr.20041119034357.70"><vh>Syntax coloring</vh>
-<v t="ekr.20041119034357.71"><vh>@page syntax coloring options</vh>
-<v t="ekr.20041119034357.72"><vh>@bool color_cweb_doc_parts_with_latex=True</vh></v>
-<v t="ekr.20041119034357.73"><vh>@bool color_cweb_comments_with_latex=True</vh></v>
-<v t="ekr.20041119034357.74"><vh>@bool color_directives_in_plain_text=True</vh></v>
-<v t="ekr.20041119034357.75"><vh>@bool underline_undefined_section_names=True</vh></v>
-<v t="ekr.20041119034357.76"><vh>@bool use_hyperlinks=False</vh></v>
-</v>
-<v t="ekr.20041119034357.77"><vh>@page syntax colors</vh>
-<v t="ekr.20041119034357.78"><vh>@tk-color comment_color=firebrick3</vh></v>
-<v t="ekr.20041119034357.79"><vh>@tk-color cweb_section_name_color=red</vh></v>
-<v t="ekr.20041119034357.80"><vh>@tk-color directive_color=blue</vh></v>
-<v t="ekr.20041119034357.81"><vh>@tk-color doc_part_color=firebrick3</vh></v>
-<v t="ekr.20041119034357.82"><vh>@tk-color keyword_color=blue</vh></v>
-<v t="ekr.20041119034357.83"><vh>@tk-color leo_keyword_color=#00aa00</vh></v>
-<v t="ekr.20041119034357.84"><vh>@tk-color section_name_color=red</vh></v>
-<v t="ekr.20041119034357.85"><vh>@tk-color section_name_brackets_color=blue</vh></v>
-<v t="ekr.20041119034357.86"><vh>@tk-color show_invisibles_space_background_color=Gray90</vh></v>
-<v t="ekr.20041119034357.87"><vh>@tk-color show_invisibles_tab_foreground_color=Gray80</vh></v>
-<v t="ekr.20041119034357.88"><vh>@tk-color string_color=#00aa00</vh></v>
-<v t="ekr.20041119034357.89"><vh>@tk-color undefined_section_name_color=red</vh></v>
-</v>
-</v>
-<v t="ekr.20041119034357.21" a="TV"><vh>Keyboard shortcuts TO DO</vh>
-<v t="ekr.20041119034357.22"><vh>About keyboard shortcuts</vh></v>
-<v t="ekr.20041119050749" a="E"><vh>@ignore  shortcuts ordered by shortcut value</vh>
-<v t="ekr.20041119034357.23"><vh>Alt and Shift-Alt</vh></v>
-<v t="ekr.20041119034357.24"><vh>Control</vh></v>
-<v t="ekr.20041119034357.25"><vh>Shift-Control</vh></v>
-<v t="ekr.20041119034357.26"><vh>F-keys and others</vh></v>
-<v t="ekr.20041119034357.27"><vh>None</vh></v>
-</v>
-</v>
 </v>
 </vnodes>
 <tnodes>
 <t tx="ekr.20041119034357.1">@nocolor</t>
 <t tx="ekr.20041119034357.3"></t>
-<t tx="ekr.20041119034357.4"></t>
 <t tx="ekr.20041119034357.5">False: Leo writes leoSettings.leo files.</t>
 <t tx="ekr.20041119034357.6">True: use pscho module if it has been installed.</t>
 <t tx="ekr.20041119034357.7"></t>
@@ -284,9 +280,7 @@ None  Compares all files when comparing directories.
 .py   Compares only .py files when comparing directories.</t>
 <t tx="ekr.20041119034357.19">These options have no effect when comparing directories.</t>
 <t tx="ekr.20041119034357.20"></t>
-<t tx="ekr.20041119034357.21">@nocolor
-
-Keyboard shortcuts for menu commands.
+<t tx="ekr.20041119034357.21">Keyboard shortcuts for menu commands.
 
 A shortcut specification has the form:
     
@@ -501,55 +495,12 @@ CantRedo        = Shift+Ctrl+Z</t>
 FindNext     = F3
 FindPrevious = F2
 
-AbortEditHeadline = Shift+Esc
-EndEditHeadline = Esc
-</t>
-<t tx="ekr.20041119034357.27"># These entries explicitly overrides whatever default exists.
+AbortEditHeadline   = Shift+Esc
+EndEditHeadline     = Esc</t>
+<t tx="ekr.20041119034357.27"># These entries explicitly overrides whatever default exists.\
 
-AboutLeo                = None
-EqualSizedPanes         = None
-
-@ These are all comments.  They don't override any defaults...
-
-ApplySettings           = None
-Cascade                 = None
-ContractAllChildren     = None
-ContractChildren        = None
-DeHoist                 = None
-ExpandAllChildren       = None
-ExpandChildren          = None
-ExpandToLevel1          = None
-FlattenOutline          = None
-GoBack                  = None
-GoForward               = None
-Hoist                   = None
-ImportCWEBFiles         = None
-ImportFlattenedOutline  = None
-ImportNowebFiles        = None
-ImportToroot            = None
-MinimizeAll             = None
-OnlineHomePage          = None
-OpenLeoConfigLeo        = None
-OpenLeoDocsLeo          = None
-OpenOfflineTutorial     = None
-OpenOnlineTutorial      = None
-OpenCompareWindow       = None
-OpenfileWith            = None
-OutlineToCWEB           = None
-OutlineToNoweb          = None
-PasteRetainingClones    = None
-ReadfileNodes           = None
-ReferenceLeoDocsleo     = None
-RemoveSentinels         = None
-RevertToSaved           = None
-SaveTo                  = None
-SortChildren            = None
-ToggleAngleBrackets     = None
-ToggleSplitDirection    = None
-UntangleAll             = None
-UntangleMarked          = None
-Weave                   = None
-WriteOutlineOnly        = None</t>
+AboutLeo        = None
+EqualSizedPanes = None</t>
 <t tx="ekr.20041119034357.28">@nocolor</t>
 <t tx="ekr.20041119034357.29">DEPRECATED
 
@@ -571,9 +522,7 @@ Valid values: any nonzero positive integer.</t>
 <t tx="ekr.20041119034357.34">True: Explicit Tangle commands output file header.</t>
 <t tx="ekr.20041119034357.35">True: Run tangle_done.py after explicit Tangle commands.</t>
 <t tx="ekr.20041119034357.36">True: Run tangle_done.py after explicit Untangle commands.</t>
-<t tx="ekr.20041119034357.37">@nocolor
-
-Options that affect the appearance of windows.
+<t tx="ekr.20041119034357.37">Options that affect the appearance of windows.
 
 Options that require pixel values can be any Python expression that yields an int.
 Warning: the number of pixels per inch varies...</t>
@@ -668,7 +617,7 @@ Valid values: 0.0 to 1.0.</t>
 <t tx="ekr.20041119034357.67">The color of the split bar. gray90 also looks good.</t>
 <t tx="ekr.20041119034357.68">The Tk -relief option for the split bar.</t>
 <t tx="ekr.20041119034357.69">The width of the split bar, in pixels (must be an integer).</t>
-<t tx="ekr.20041119034357.70">@nocolor</t>
+<t tx="ekr.20041119034357.70"></t>
 <t tx="ekr.20041119034357.71"></t>
 <t tx="ekr.20041119034357.72">True:  Leo colors @space, @* and @** sections in cweb mode as black with LaTeX keywords highlighted.
 False: Leo colors @space, @* and @** sections in cweb mode as comments (default is red).
@@ -711,7 +660,9 @@ For example, the color of "if", "try" and "except" in Python.</t>
 
 </t>
 <t tx="ekr.20041119034357.89">The color of name in &lt;&lt; name &gt;&gt; when name is undefined.</t>
-<t tx="ekr.20041119035137">This is Leo's main settings file.  It specifies all the settings that Leo supports.
+<t tx="ekr.20041119035137">@ignore
+
+This is Leo's main settings file.  It specifies all the settings that Leo supports.
 
 Headlines that start with @setting form the root of a tree of settings nodes.
 
@@ -803,7 +754,7 @@ one:  Leo ends each non-empty body text with exactly one trailing newline.</t>
 <t tx="ekr.20041119042929.3"></t>
 <t tx="ekr.20041119042929.4"></t>
 <t tx="ekr.20041119042929.5"></t>
-<t tx="ekr.20041119042929.6"></t>
+<t tx="ekr.20041119042929.6">The dialog creator will scan for @shortcuts nodes and will create dialogs automatically without having to specify the exact details.  This will save a huge amount of work.</t>
 <t tx="ekr.20041119042929.7"></t>
 <t tx="ekr.20041119042929.9">
 The encoding used for derived files if no @encoding directive is in effect.
@@ -911,7 +862,6 @@ N.B. Leo requires utf-8 encoding for any non-ascii characters.
 <t tx="ekr.20041119050105.14"></t>
 <t tx="ekr.20041119050105.15"></t>
 <t tx="ekr.20041119050105.16"></t>
-<t tx="ekr.20041119050749"></t>
 <t tx="ekr.20041119050749.1"></t>
 <t tx="ekr.20041119050749.2"></t>
 <t tx="ekr.20041119050749.3">
@@ -1019,5 +969,44 @@ Default is 12 for Linux, 8 otherwise.
 </t>
 <t tx="ekr.20041119052015.7">The Tk -weight setting: normal or bold.</t>
 <t tx="ekr.20041119053445">Background color of log text.</t>
+<t tx="ekr.20041119054938">ApplySettings           = None
+Cascade                 = None
+ContractAllChildren     = None
+ContractChildren        = None
+DeHoist                 = None
+ExpandAllChildren       = None
+ExpandChildren          = None
+ExpandToLevel1          = None
+FlattenOutline          = None
+GoBack                  = None
+GoForward               = None
+Hoist                   = None
+ImportCWEBFiles         = None
+ImportFlattenedOutline  = None
+ImportNowebFiles        = None
+ImportToroot            = None
+MinimizeAll             = None
+OnlineHomePage          = None
+OpenLeoConfigLeo        = None
+OpenLeoDocsLeo          = None
+OpenOfflineTutorial     = None
+OpenOnlineTutorial      = None
+OpenCompareWindow       = None
+OpenfileWith            = None
+OutlineToCWEB           = None
+OutlineToNoweb          = None
+PasteRetainingClones    = None
+ReadfileNodes           = None
+ReferenceLeoDocsleo     = None
+RemoveSentinels         = None
+RevertToSaved           = None
+SaveTo                  = None
+SortChildren            = None
+ToggleAngleBrackets     = None
+ToggleSplitDirection    = None
+UntangleAll             = None
+UntangleMarked          = None
+Weave                   = None
+WriteOutlineOnly        = None</t>
 </tnodes>
 </leo_file>
