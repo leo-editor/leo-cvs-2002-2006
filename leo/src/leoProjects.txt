@@ -876,32 +876,47 @@ def idle_head_key (self,p,ch=None):
         return "break"
         
     edit_text = p.edit_text()
+    index = edit_text.index("insert")
 
     if g.doHook("headkey1",c=c,p=p,ch=ch):
         return "break" # The hook claims to have handled the event.
-
-    << set s to the widget text >>
+        
     << set head to vnode text >>
+    done = ch in ('\r','\n')
+    if done:
+        << set the widget text to head >>
+    << set s to the widget text >>
     changed = s != head
-    done = ch and (ch == '\r' or ch == '\n')
-    if not changed and not done:
-        return "break"
-
     if changed:
         c.undoer.setUndoParams("Change Headline",p,newText=s,oldText=head)
-    index = edit_text.index("insert")
-    if changed:
         << update v and all nodes joined to v >>
-    << reconfigure v and all nodes joined to v >>
-    << update the screen >>
+    if done or changed:
+        << reconfigure v and all nodes joined to v >>
+        << update the screen >>
 
     g.doHook("headkey2",c=c,p=p,ch=ch)
     return "break"
-
+#@nonl
+#@+node:ekr.20031218072017.1337:<< set head to vnode text >>
+head = p.headString()
+if head == None:
+    head = u""
+head = g.toUnicode(head,"utf-8")
+#@nonl
+#@-node:ekr.20031218072017.1337:<< set head to vnode text >>
+#@+node:EKR.20040614075003:<< set the widget text to head >>
+edit_text.delete("1.0","end")
+edit_text.insert("end",head)
+edit_text.mark_set("insert",index)
+#@nonl
+#@-node:EKR.20040614075003:<< set the widget text to head >>
 #@+node:ekr.20031218072017.1336:<< set s to the widget text >>
 s = edit_text.get("1.0","end")
 
-if 1: # 6/10/04: Truncate headline text to workaround Tk problems...
+# Don't truncate if the user is hitting return.
+# That should just end editing.
+if 1:
+    # Truncate headline text to workaround Tk problems...
     # Another kludge: remove one or two trailing newlines before warning of truncation.
     if s and s[-1] == '\n': s = s[:-1]
     if s and s[-1] == '\n': s = s[:-1]
@@ -914,7 +929,7 @@ if 1: # 6/10/04: Truncate headline text to workaround Tk problems...
         g.es("Truncating headline to 250 characters",color="blue")
         s = s[:250]
 
-s = g.toUnicode(s,g.app.tkEncoding) # 2/25/03
+s = g.toUnicode(s,g.app.tkEncoding)
 
 if not s:
     s = u""
@@ -924,12 +939,6 @@ if 0: # 6/10/04: No longer needed.  This was stressing Tk needlessly.
     s = s.replace('\r','')
 #@nonl
 #@-node:ekr.20031218072017.1336:<< set s to the widget text >>
-#@+node:ekr.20031218072017.1337:<< set head to vnode text >>
-head = p.headString()
-if head == None:
-    head = u""
-head = g.toUnicode(head,"utf-8")
-#@-node:ekr.20031218072017.1337:<< set head to vnode text >>
 #@+node:ekr.20031218072017.1338:<< update v and all nodes joined to v >>
 c.beginUpdate()
 if 1: # update...
@@ -961,7 +970,7 @@ if done:
     c.endUpdate()
 
 elif changed:
-    # update v immediately.  Joined nodes are redrawn later by endEditLabel.
+    # Update v immediately.  Joined nodes are redrawn later by endEditLabel.
     # Redrawing the whole screen now messes up the cursor in the headline.
     self.drawIcon(p) # just redraw the icon.
 #@nonl
@@ -8434,32 +8443,47 @@ def idle_head_key (self,p,ch=None):
         return "break"
         
     edit_text = p.edit_text()
+    index = edit_text.index("insert")
 
     if g.doHook("headkey1",c=c,p=p,ch=ch):
         return "break" # The hook claims to have handled the event.
-
-    << set s to the widget text >>
+        
     << set head to vnode text >>
+    done = ch in ('\r','\n')
+    if done:
+        << set the widget text to head >>
+    << set s to the widget text >>
     changed = s != head
-    done = ch and (ch == '\r' or ch == '\n')
-    if not changed and not done:
-        return "break"
-
     if changed:
         c.undoer.setUndoParams("Change Headline",p,newText=s,oldText=head)
-    index = edit_text.index("insert")
-    if changed:
         << update v and all nodes joined to v >>
-    << reconfigure v and all nodes joined to v >>
-    << update the screen >>
+    if done or changed:
+        << reconfigure v and all nodes joined to v >>
+        << update the screen >>
 
     g.doHook("headkey2",c=c,p=p,ch=ch)
     return "break"
-
+#@nonl
+#@+node:ekr.20031218072017.1337:<< set head to vnode text >>
+head = p.headString()
+if head == None:
+    head = u""
+head = g.toUnicode(head,"utf-8")
+#@nonl
+#@-node:ekr.20031218072017.1337:<< set head to vnode text >>
+#@+node:EKR.20040614075003:<< set the widget text to head >>
+edit_text.delete("1.0","end")
+edit_text.insert("end",head)
+edit_text.mark_set("insert",index)
+#@nonl
+#@-node:EKR.20040614075003:<< set the widget text to head >>
 #@+node:ekr.20031218072017.1336:<< set s to the widget text >>
 s = edit_text.get("1.0","end")
 
-if 1: # 6/10/04: Truncate headline text to workaround Tk problems...
+# Don't truncate if the user is hitting return.
+# That should just end editing.
+if 1:
+    # Truncate headline text to workaround Tk problems...
     # Another kludge: remove one or two trailing newlines before warning of truncation.
     if s and s[-1] == '\n': s = s[:-1]
     if s and s[-1] == '\n': s = s[:-1]
@@ -8472,7 +8496,7 @@ if 1: # 6/10/04: Truncate headline text to workaround Tk problems...
         g.es("Truncating headline to 250 characters",color="blue")
         s = s[:250]
 
-s = g.toUnicode(s,g.app.tkEncoding) # 2/25/03
+s = g.toUnicode(s,g.app.tkEncoding)
 
 if not s:
     s = u""
@@ -8482,12 +8506,6 @@ if 0: # 6/10/04: No longer needed.  This was stressing Tk needlessly.
     s = s.replace('\r','')
 #@nonl
 #@-node:ekr.20031218072017.1336:<< set s to the widget text >>
-#@+node:ekr.20031218072017.1337:<< set head to vnode text >>
-head = p.headString()
-if head == None:
-    head = u""
-head = g.toUnicode(head,"utf-8")
-#@-node:ekr.20031218072017.1337:<< set head to vnode text >>
 #@+node:ekr.20031218072017.1338:<< update v and all nodes joined to v >>
 c.beginUpdate()
 if 1: # update...
@@ -8519,7 +8537,7 @@ if done:
     c.endUpdate()
 
 elif changed:
-    # update v immediately.  Joined nodes are redrawn later by endEditLabel.
+    # Update v immediately.  Joined nodes are redrawn later by endEditLabel.
     # Redrawing the whole screen now messes up the cursor in the headline.
     self.drawIcon(p) # just redraw the icon.
 #@nonl
@@ -10202,7 +10220,7 @@ else: # Emergency!
 #@nonl
 #@-node:ekr.20031218072017.2400:<< Set comment strings from delims >>
 #@-node:ekr.20031218072017.2387:old_df.scanAllDirectives
-#@+node:ekr.20031218072017.2140:executeScript
+#@+node:ekr.20031218072017.2140:c.executeScript
 def executeScript(self,p=None,script=None):
 
     """This executes body text as a Python script.
@@ -10212,9 +10230,10 @@ def executeScript(self,p=None,script=None):
     c = self ; error = False ; s = None ; script1 = script
 
     if not script:
-        << get script into script >>
+        script = g.getScript(c,p)
     << redirect output if redirect_execute_script_output_to_log_pane >>
-    script = script.strip()
+    if script:
+        script = script.strip()
     if script:
         script += '\n' # Make sure we end the script properly.
         try:
@@ -10235,44 +10254,6 @@ def executeScript(self,p=None,script=None):
     # Force a redraw _after_ all messages have been output.
     c.redraw() 
 #@nonl
-#@+node:ekr.20031218072017.2142:<< get script into script >>
-try:
-    try:
-        if not p:
-            p = c.currentPosition()
-    
-        old_body = p.bodyString()
-
-        if c.frame.body.hasTextSelection():
-            # Temporarily replace v's body text with just the selected text.
-            s = c.frame.body.getSelectedText()
-            p.v.setTnodeText(s) 
-        else:
-            s = c.frame.body.getAllText()
-    
-        if s.strip():
-            g.app.scriptDict["script1"]=s
-            df = c.atFileCommands.new_df
-            df.scanAllDirectives(p,scripting=True)
-            # Force Python comment delims.
-            df.startSentinelComment = "#"
-            df.endSentinelComment = None
-            # Write the "derived file" into fo.
-            fo = g.fileLikeObject()
-            # nosentinels=False makes it much easier to find the proper line.
-            df.write(p.copy(),nosentinels=False,scriptFile=fo) 
-            assert(p)
-            script = fo.get()
-            g.app.scriptDict["script2"]=s
-            error = len(script) == 0
-    except:
-        s = "unexpected exception"
-        print s ; g.es(s)
-        g.es_exception()
-finally:
-    p.v.setTnodeText(old_body)
-#@nonl
-#@-node:ekr.20031218072017.2142:<< get script into script >>
 #@+node:ekr.20031218072017.2143:<< redirect output if redirect_execute_script_output_to_log_pane >>
 if g.app.config.redirect_execute_script_output_to_log_pane:
 
@@ -10301,7 +10282,7 @@ else:
         i += 1
 #@nonl
 #@-node:EKR.20040612215018:<< dump the lines of script near the error >>
-#@-node:ekr.20031218072017.2140:executeScript
+#@-node:ekr.20031218072017.2140:c.executeScript
 #@+node:ekr.20031218072017.1570:assignFileIndices & compactFileIndices
 def assignFileIndices (self):
     
@@ -21745,32 +21726,47 @@ def idle_head_key (self,p,ch=None):
         return "break"
         
     edit_text = p.edit_text()
+    index = edit_text.index("insert")
 
     if g.doHook("headkey1",c=c,p=p,ch=ch):
         return "break" # The hook claims to have handled the event.
-
-    << set s to the widget text >>
+        
     << set head to vnode text >>
+    done = ch in ('\r','\n')
+    if done:
+        << set the widget text to head >>
+    << set s to the widget text >>
     changed = s != head
-    done = ch and (ch == '\r' or ch == '\n')
-    if not changed and not done:
-        return "break"
-
     if changed:
         c.undoer.setUndoParams("Change Headline",p,newText=s,oldText=head)
-    index = edit_text.index("insert")
-    if changed:
         << update v and all nodes joined to v >>
-    << reconfigure v and all nodes joined to v >>
-    << update the screen >>
+    if done or changed:
+        << reconfigure v and all nodes joined to v >>
+        << update the screen >>
 
     g.doHook("headkey2",c=c,p=p,ch=ch)
     return "break"
-
+#@nonl
+#@+node:ekr.20031218072017.1337:<< set head to vnode text >>
+head = p.headString()
+if head == None:
+    head = u""
+head = g.toUnicode(head,"utf-8")
+#@nonl
+#@-node:ekr.20031218072017.1337:<< set head to vnode text >>
+#@+node:EKR.20040614075003:<< set the widget text to head >>
+edit_text.delete("1.0","end")
+edit_text.insert("end",head)
+edit_text.mark_set("insert",index)
+#@nonl
+#@-node:EKR.20040614075003:<< set the widget text to head >>
 #@+node:ekr.20031218072017.1336:<< set s to the widget text >>
 s = edit_text.get("1.0","end")
 
-if 1: # 6/10/04: Truncate headline text to workaround Tk problems...
+# Don't truncate if the user is hitting return.
+# That should just end editing.
+if 1:
+    # Truncate headline text to workaround Tk problems...
     # Another kludge: remove one or two trailing newlines before warning of truncation.
     if s and s[-1] == '\n': s = s[:-1]
     if s and s[-1] == '\n': s = s[:-1]
@@ -21783,7 +21779,7 @@ if 1: # 6/10/04: Truncate headline text to workaround Tk problems...
         g.es("Truncating headline to 250 characters",color="blue")
         s = s[:250]
 
-s = g.toUnicode(s,g.app.tkEncoding) # 2/25/03
+s = g.toUnicode(s,g.app.tkEncoding)
 
 if not s:
     s = u""
@@ -21793,12 +21789,6 @@ if 0: # 6/10/04: No longer needed.  This was stressing Tk needlessly.
     s = s.replace('\r','')
 #@nonl
 #@-node:ekr.20031218072017.1336:<< set s to the widget text >>
-#@+node:ekr.20031218072017.1337:<< set head to vnode text >>
-head = p.headString()
-if head == None:
-    head = u""
-head = g.toUnicode(head,"utf-8")
-#@-node:ekr.20031218072017.1337:<< set head to vnode text >>
 #@+node:ekr.20031218072017.1338:<< update v and all nodes joined to v >>
 c.beginUpdate()
 if 1: # update...
@@ -21830,7 +21820,7 @@ if done:
     c.endUpdate()
 
 elif changed:
-    # update v immediately.  Joined nodes are redrawn later by endEditLabel.
+    # Update v immediately.  Joined nodes are redrawn later by endEditLabel.
     # Redrawing the whole screen now messes up the cursor in the headline.
     self.drawIcon(p) # just redraw the icon.
 #@nonl
@@ -23378,7 +23368,7 @@ The problem was that the calls to put in execute script were disabling the redra
 The solution is for the execute script command always to redraw the screen.
 #@nonl
 #@-node:ekr.20040403095129:Notes
-#@+node:ekr.20031218072017.2140:executeScript
+#@+node:ekr.20031218072017.2140:c.executeScript
 def executeScript(self,p=None,script=None):
 
     """This executes body text as a Python script.
@@ -23388,9 +23378,10 @@ def executeScript(self,p=None,script=None):
     c = self ; error = False ; s = None ; script1 = script
 
     if not script:
-        << get script into script >>
+        script = g.getScript(c,p)
     << redirect output if redirect_execute_script_output_to_log_pane >>
-    script = script.strip()
+    if script:
+        script = script.strip()
     if script:
         script += '\n' # Make sure we end the script properly.
         try:
@@ -23411,44 +23402,6 @@ def executeScript(self,p=None,script=None):
     # Force a redraw _after_ all messages have been output.
     c.redraw() 
 #@nonl
-#@+node:ekr.20031218072017.2142:<< get script into script >>
-try:
-    try:
-        if not p:
-            p = c.currentPosition()
-    
-        old_body = p.bodyString()
-
-        if c.frame.body.hasTextSelection():
-            # Temporarily replace v's body text with just the selected text.
-            s = c.frame.body.getSelectedText()
-            p.v.setTnodeText(s) 
-        else:
-            s = c.frame.body.getAllText()
-    
-        if s.strip():
-            g.app.scriptDict["script1"]=s
-            df = c.atFileCommands.new_df
-            df.scanAllDirectives(p,scripting=True)
-            # Force Python comment delims.
-            df.startSentinelComment = "#"
-            df.endSentinelComment = None
-            # Write the "derived file" into fo.
-            fo = g.fileLikeObject()
-            # nosentinels=False makes it much easier to find the proper line.
-            df.write(p.copy(),nosentinels=False,scriptFile=fo) 
-            assert(p)
-            script = fo.get()
-            g.app.scriptDict["script2"]=s
-            error = len(script) == 0
-    except:
-        s = "unexpected exception"
-        print s ; g.es(s)
-        g.es_exception()
-finally:
-    p.v.setTnodeText(old_body)
-#@nonl
-#@-node:ekr.20031218072017.2142:<< get script into script >>
 #@+node:ekr.20031218072017.2143:<< redirect output if redirect_execute_script_output_to_log_pane >>
 if g.app.config.redirect_execute_script_output_to_log_pane:
 
@@ -23477,7 +23430,7 @@ else:
         i += 1
 #@nonl
 #@-node:EKR.20040612215018:<< dump the lines of script near the error >>
-#@-node:ekr.20031218072017.2140:executeScript
+#@-node:ekr.20031218072017.2140:c.executeScript
 #@-node:ekr.20040403091954:(Problems with marking nodes in a script)
 #@-node:ekr.20040403104315.3:4/3
 #@+node:ekr.20040409081506:4/8
@@ -23964,7 +23917,7 @@ frac2 = max(min(frac2,1.0),0.0)
 #@-node:ekr.20040409081506:4/8
 #@+node:ekr.20040411091047:4/11
 #@+node:ekr.20040411081633.1:(Installed psyco & added use_psyco option)
-#@+node:ekr.20031218072017.2140:executeScript
+#@+node:ekr.20031218072017.2140:c.executeScript
 def executeScript(self,p=None,script=None):
 
     """This executes body text as a Python script.
@@ -23974,9 +23927,10 @@ def executeScript(self,p=None,script=None):
     c = self ; error = False ; s = None ; script1 = script
 
     if not script:
-        << get script into script >>
+        script = g.getScript(c,p)
     << redirect output if redirect_execute_script_output_to_log_pane >>
-    script = script.strip()
+    if script:
+        script = script.strip()
     if script:
         script += '\n' # Make sure we end the script properly.
         try:
@@ -23997,44 +23951,6 @@ def executeScript(self,p=None,script=None):
     # Force a redraw _after_ all messages have been output.
     c.redraw() 
 #@nonl
-#@+node:ekr.20031218072017.2142:<< get script into script >>
-try:
-    try:
-        if not p:
-            p = c.currentPosition()
-    
-        old_body = p.bodyString()
-
-        if c.frame.body.hasTextSelection():
-            # Temporarily replace v's body text with just the selected text.
-            s = c.frame.body.getSelectedText()
-            p.v.setTnodeText(s) 
-        else:
-            s = c.frame.body.getAllText()
-    
-        if s.strip():
-            g.app.scriptDict["script1"]=s
-            df = c.atFileCommands.new_df
-            df.scanAllDirectives(p,scripting=True)
-            # Force Python comment delims.
-            df.startSentinelComment = "#"
-            df.endSentinelComment = None
-            # Write the "derived file" into fo.
-            fo = g.fileLikeObject()
-            # nosentinels=False makes it much easier to find the proper line.
-            df.write(p.copy(),nosentinels=False,scriptFile=fo) 
-            assert(p)
-            script = fo.get()
-            g.app.scriptDict["script2"]=s
-            error = len(script) == 0
-    except:
-        s = "unexpected exception"
-        print s ; g.es(s)
-        g.es_exception()
-finally:
-    p.v.setTnodeText(old_body)
-#@nonl
-#@-node:ekr.20031218072017.2142:<< get script into script >>
 #@+node:ekr.20031218072017.2143:<< redirect output if redirect_execute_script_output_to_log_pane >>
 if g.app.config.redirect_execute_script_output_to_log_pane:
 
@@ -24063,7 +23979,7 @@ else:
         i += 1
 #@nonl
 #@-node:EKR.20040612215018:<< dump the lines of script near the error >>
-#@-node:ekr.20031218072017.2140:executeScript
+#@-node:ekr.20031218072017.2140:c.executeScript
 #@+node:ekr.20031218072017.1934:run & allies
 def run(fileName=None,*args,**keywords):
     
@@ -32830,7 +32746,7 @@ def getUnknownAttribute(self):
     try:
         bin = binascii.unhexlify(val) # Throws a TypeError if val is not a hex string.
         val2 = pickle.loads(bin)
-    except (TypeError, pickle.UnpicklingError):
+    except (TypeError,pickle.UnpicklingError,ImportError):
         # The unknownAtrribute was written before 4.2.
         val2 = val
         
@@ -40710,32 +40626,47 @@ def idle_head_key (self,p,ch=None):
         return "break"
         
     edit_text = p.edit_text()
+    index = edit_text.index("insert")
 
     if g.doHook("headkey1",c=c,p=p,ch=ch):
         return "break" # The hook claims to have handled the event.
-
-    << set s to the widget text >>
+        
     << set head to vnode text >>
+    done = ch in ('\r','\n')
+    if done:
+        << set the widget text to head >>
+    << set s to the widget text >>
     changed = s != head
-    done = ch and (ch == '\r' or ch == '\n')
-    if not changed and not done:
-        return "break"
-
     if changed:
         c.undoer.setUndoParams("Change Headline",p,newText=s,oldText=head)
-    index = edit_text.index("insert")
-    if changed:
         << update v and all nodes joined to v >>
-    << reconfigure v and all nodes joined to v >>
-    << update the screen >>
+    if done or changed:
+        << reconfigure v and all nodes joined to v >>
+        << update the screen >>
 
     g.doHook("headkey2",c=c,p=p,ch=ch)
     return "break"
-
+#@nonl
+#@+node:ekr.20031218072017.1337:<< set head to vnode text >>
+head = p.headString()
+if head == None:
+    head = u""
+head = g.toUnicode(head,"utf-8")
+#@nonl
+#@-node:ekr.20031218072017.1337:<< set head to vnode text >>
+#@+node:EKR.20040614075003:<< set the widget text to head >>
+edit_text.delete("1.0","end")
+edit_text.insert("end",head)
+edit_text.mark_set("insert",index)
+#@nonl
+#@-node:EKR.20040614075003:<< set the widget text to head >>
 #@+node:ekr.20031218072017.1336:<< set s to the widget text >>
 s = edit_text.get("1.0","end")
 
-if 1: # 6/10/04: Truncate headline text to workaround Tk problems...
+# Don't truncate if the user is hitting return.
+# That should just end editing.
+if 1:
+    # Truncate headline text to workaround Tk problems...
     # Another kludge: remove one or two trailing newlines before warning of truncation.
     if s and s[-1] == '\n': s = s[:-1]
     if s and s[-1] == '\n': s = s[:-1]
@@ -40748,7 +40679,7 @@ if 1: # 6/10/04: Truncate headline text to workaround Tk problems...
         g.es("Truncating headline to 250 characters",color="blue")
         s = s[:250]
 
-s = g.toUnicode(s,g.app.tkEncoding) # 2/25/03
+s = g.toUnicode(s,g.app.tkEncoding)
 
 if not s:
     s = u""
@@ -40758,12 +40689,6 @@ if 0: # 6/10/04: No longer needed.  This was stressing Tk needlessly.
     s = s.replace('\r','')
 #@nonl
 #@-node:ekr.20031218072017.1336:<< set s to the widget text >>
-#@+node:ekr.20031218072017.1337:<< set head to vnode text >>
-head = p.headString()
-if head == None:
-    head = u""
-head = g.toUnicode(head,"utf-8")
-#@-node:ekr.20031218072017.1337:<< set head to vnode text >>
 #@+node:ekr.20031218072017.1338:<< update v and all nodes joined to v >>
 c.beginUpdate()
 if 1: # update...
@@ -40795,7 +40720,7 @@ if done:
     c.endUpdate()
 
 elif changed:
-    # update v immediately.  Joined nodes are redrawn later by endEditLabel.
+    # Update v immediately.  Joined nodes are redrawn later by endEditLabel.
     # Redrawing the whole screen now messes up the cursor in the headline.
     self.drawIcon(p) # just redraw the icon.
 #@nonl
@@ -41641,7 +41566,7 @@ goToLineNumber needs sentinels to work properly.
 - Created goToScriptLineNumber, which just calls goToLineNumber.
 #@nonl
 #@-node:EKR.20040613000310:What I did
-#@+node:ekr.20031218072017.2140:executeScript
+#@+node:ekr.20031218072017.2140:c.executeScript
 def executeScript(self,p=None,script=None):
 
     """This executes body text as a Python script.
@@ -41651,9 +41576,10 @@ def executeScript(self,p=None,script=None):
     c = self ; error = False ; s = None ; script1 = script
 
     if not script:
-        << get script into script >>
+        script = g.getScript(c,p)
     << redirect output if redirect_execute_script_output_to_log_pane >>
-    script = script.strip()
+    if script:
+        script = script.strip()
     if script:
         script += '\n' # Make sure we end the script properly.
         try:
@@ -41674,44 +41600,6 @@ def executeScript(self,p=None,script=None):
     # Force a redraw _after_ all messages have been output.
     c.redraw() 
 #@nonl
-#@+node:ekr.20031218072017.2142:<< get script into script >>
-try:
-    try:
-        if not p:
-            p = c.currentPosition()
-    
-        old_body = p.bodyString()
-
-        if c.frame.body.hasTextSelection():
-            # Temporarily replace v's body text with just the selected text.
-            s = c.frame.body.getSelectedText()
-            p.v.setTnodeText(s) 
-        else:
-            s = c.frame.body.getAllText()
-    
-        if s.strip():
-            g.app.scriptDict["script1"]=s
-            df = c.atFileCommands.new_df
-            df.scanAllDirectives(p,scripting=True)
-            # Force Python comment delims.
-            df.startSentinelComment = "#"
-            df.endSentinelComment = None
-            # Write the "derived file" into fo.
-            fo = g.fileLikeObject()
-            # nosentinels=False makes it much easier to find the proper line.
-            df.write(p.copy(),nosentinels=False,scriptFile=fo) 
-            assert(p)
-            script = fo.get()
-            g.app.scriptDict["script2"]=s
-            error = len(script) == 0
-    except:
-        s = "unexpected exception"
-        print s ; g.es(s)
-        g.es_exception()
-finally:
-    p.v.setTnodeText(old_body)
-#@nonl
-#@-node:ekr.20031218072017.2142:<< get script into script >>
 #@+node:ekr.20031218072017.2143:<< redirect output if redirect_execute_script_output_to_log_pane >>
 if g.app.config.redirect_execute_script_output_to_log_pane:
 
@@ -41740,7 +41628,7 @@ else:
         i += 1
 #@nonl
 #@-node:EKR.20040612215018:<< dump the lines of script near the error >>
-#@-node:ekr.20031218072017.2140:executeScript
+#@-node:ekr.20031218072017.2140:c.executeScript
 #@+node:ekr.20031218072017.3112:es_exception
 def es_exception (full=True,c=None):
     

@@ -1261,8 +1261,10 @@ class reformatParagraphTestCase(unittest.TestCase):
         self.old_v = self.c.currentVnode()
         root = self.u.findRootNode(self.current_v)
         self.temp_v = self.u.findNodeInTree(root,"tempNode")
+        assert(self.temp_v)
         self.tempChild_v = None
         self.dataParent_v = self.u.findNodeInTree(root,"reformatParagraphsTests")
+        assert(self.dataParent_v)
         self.before_v = None
         self.after_v = None
         self.case_v = None

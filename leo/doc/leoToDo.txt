@@ -1682,7 +1682,7 @@ if os.path.exists(targetfilename):
 #@-node:EKR.20040504160820.1:<< make backup file >>
 #@-node:EKR.20040504160820:write_if_changed
 #@-node:EKR.20040504150046:class mulderUpdateAlgorithm (leoGlobals)
-#@+node:ekr.20040331083824.1:fileLikeObject
+#@+node:ekr.20040331083824.1:g.fileLikeObject
 class fileLikeObject:
     
     """Define a file-like object for redirecting i/o."""
@@ -1701,7 +1701,7 @@ class fileLikeObject:
         if s:
             self.s = self.s + s
 #@nonl
-#@-node:ekr.20040331083824.1:fileLikeObject
+#@-node:ekr.20040331083824.1:g.fileLikeObject
 #@+node:ekr.20031218072017.3212:importFilesCommand
 def importFilesCommand (self,files,treeType):
 
@@ -7342,32 +7342,47 @@ def idle_head_key (self,p,ch=None):
         return "break"
         
     edit_text = p.edit_text()
+    index = edit_text.index("insert")
 
     if g.doHook("headkey1",c=c,p=p,ch=ch):
         return "break" # The hook claims to have handled the event.
-
-    << set s to the widget text >>
+        
     << set head to vnode text >>
+    done = ch in ('\r','\n')
+    if done:
+        << set the widget text to head >>
+    << set s to the widget text >>
     changed = s != head
-    done = ch and (ch == '\r' or ch == '\n')
-    if not changed and not done:
-        return "break"
-
     if changed:
         c.undoer.setUndoParams("Change Headline",p,newText=s,oldText=head)
-    index = edit_text.index("insert")
-    if changed:
         << update v and all nodes joined to v >>
-    << reconfigure v and all nodes joined to v >>
-    << update the screen >>
+    if done or changed:
+        << reconfigure v and all nodes joined to v >>
+        << update the screen >>
 
     g.doHook("headkey2",c=c,p=p,ch=ch)
     return "break"
-
+#@nonl
+#@+node:ekr.20031218072017.1337:<< set head to vnode text >>
+head = p.headString()
+if head == None:
+    head = u""
+head = g.toUnicode(head,"utf-8")
+#@nonl
+#@-node:ekr.20031218072017.1337:<< set head to vnode text >>
+#@+node:EKR.20040614075003:<< set the widget text to head >>
+edit_text.delete("1.0","end")
+edit_text.insert("end",head)
+edit_text.mark_set("insert",index)
+#@nonl
+#@-node:EKR.20040614075003:<< set the widget text to head >>
 #@+node:ekr.20031218072017.1336:<< set s to the widget text >>
 s = edit_text.get("1.0","end")
 
-if 1: # 6/10/04: Truncate headline text to workaround Tk problems...
+# Don't truncate if the user is hitting return.
+# That should just end editing.
+if 1:
+    # Truncate headline text to workaround Tk problems...
     # Another kludge: remove one or two trailing newlines before warning of truncation.
     if s and s[-1] == '\n': s = s[:-1]
     if s and s[-1] == '\n': s = s[:-1]
@@ -7380,7 +7395,7 @@ if 1: # 6/10/04: Truncate headline text to workaround Tk problems...
         g.es("Truncating headline to 250 characters",color="blue")
         s = s[:250]
 
-s = g.toUnicode(s,g.app.tkEncoding) # 2/25/03
+s = g.toUnicode(s,g.app.tkEncoding)
 
 if not s:
     s = u""
@@ -7390,12 +7405,6 @@ if 0: # 6/10/04: No longer needed.  This was stressing Tk needlessly.
     s = s.replace('\r','')
 #@nonl
 #@-node:ekr.20031218072017.1336:<< set s to the widget text >>
-#@+node:ekr.20031218072017.1337:<< set head to vnode text >>
-head = p.headString()
-if head == None:
-    head = u""
-head = g.toUnicode(head,"utf-8")
-#@-node:ekr.20031218072017.1337:<< set head to vnode text >>
 #@+node:ekr.20031218072017.1338:<< update v and all nodes joined to v >>
 c.beginUpdate()
 if 1: # update...
@@ -7427,7 +7436,7 @@ if done:
     c.endUpdate()
 
 elif changed:
-    # update v immediately.  Joined nodes are redrawn later by endEditLabel.
+    # Update v immediately.  Joined nodes are redrawn later by endEditLabel.
     # Redrawing the whole screen now messes up the cursor in the headline.
     self.drawIcon(p) # just redraw the icon.
 #@nonl

@@ -58,6 +58,7 @@
 	# fastgotonode.py
 	# xemacs_a.py
     # dyna_menu.py
+    # mod_scripting.py
 #@nonl
 #@-node:edream.120603093808:@file-thin pluginsManager.txt
 #@-leo

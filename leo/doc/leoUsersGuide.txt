@@ -52,12 +52,41 @@ voice: (608) 231-0766
 #@nonl
 #@-node:EKR.20040524104904.4:Title Page & Summary
 #@+node:EKR.20040524104904.5:Preface
-Leo creates a better way of programming by making clear the relationships between parts of programs. The larger the program, the more valuable Leo becomes. I would never willing program without Leo again.
+Using Leo quickly becomes completely addicting.  I would never willing program in Leo again; many of Leo's users say the same.
 
-Leo has hundreds of users. They use Leo to create programs in all kinds of languages, from assembly language, C and C++ to Java, Python and Tk. They use Leo to build and maintain web sites and to manage large amounts of other data. Leo's users have extended Leo in directions I never imagined. See the Acknowledgments below.
+What makes Leo special?
 
-Inventing and building Leo, and completely re-visioning Leo to add @file trees has been the happiest and most creative part of my professional life. Leo grew out of my attempts to understand and use Donald Knuth's CWEB system of "literate programming". Chapter 6 discusses how Leo relates to traditional literate programming. Chapter 8 contains a history of Leo and a detailed account of how I invented Leo2.
-#@nonl
+Leo creates a powerful new world: a new way of programming, a new way of organizing data, and a new way of managing projects.  The following paragraphs discuss specific reasons why Leo works so well.
+
+1. Outlines clarify and make explicit the relationships between parts of a project, regardless of whether those parts are computer programs, pages in a web site, pages in a document or tasks of a project.   Leo excels in handling complex projects: it shows you the big pictures at all times, while providing unlimited places to hide details.  Once you experience this way of seeing, you will never be satisfied with anything less.
+   
+2. A single outline can contain multiple kinds of data: programs, documentation, project management tasks, test data, whatever.  This means, for example, that the relationships between a program, its documentation and its tests suites can be shown directly within the same outline. Clones provide a way of relating and organizing all these kinds of data, and clones can create multiple views of these data within the _same_ outline.
+
+3. Leo's users can use plugins to add literally any conceivable feature to Leo.  Several significant improvements to Leo started out as started out as plugins and later migrated into Leo's core.
+
+4. Leo unifies outline structure, code and data:  
+
+- Outlines organize the code and data within them.
+- Leo's markup language (noweb) understands and uses outline structure.
+- Leo's Execute script command understands outline structure, section references and Leo's directives.
+- Scripts have full access to the outline structure of the outlines in which the are embedded.
+
+The outline structure _is_ data, scripts are data _within_ this structure, and scripts may _use_ this structure to access their own data.
+
+The unification of code, data and outline structure has great practical significance.  For example, a Leo outline is a natural way to organize the unit testing code and test cases.  Moreover,  test cases can access data using the outline structure.  The possibilities are endless.  For example, some unit tests create, test and then destroy other parts of the outline.  Finally, Leo's Execute Script command is a most convenient way of executing and debugging test code.
+
+The history of Leo
+
+Inventing and reinventing Leo has been the happiest and most creative part of my professional life.  Work on Leo accelerated significantly when a community of Leo's users became established on SourceForge.  For that I am truly grateful.  Suggestions (and plugins!) from users continue to drive Leo in excellent new directions.  Leo has come a long way since the early prototypes more than 9 years ago.  But in all that time, Leo's look and feel have remained almost completely unchanged--there has been no need to do so.
+
+Leo grew out of my attempts to understand and use Donald Knuth's CWEB system of "literate programming".  I had great difficulty the original CWEB. The design and organization of my own literate programs were a mystery to me. I couldn't keep the parts of a literate program clear in my mind.  I easily became confused about what I had done or what remained to do.  It was too difficult to remember the names of sections or where I had defined functions and variables.  Leo eliminates all these problems and makes Knuth's original idea truly useful.  Chapter 6 discusses these ideas in much greater detail.
+
+March 5, 1996 is Leo's true birthday.  On that day I started using the MORE outlining program to organize literate programs.  I had been lead to do this by the (gradual!) realization that webs are "outlines in disguise".  Within an hour of writing code in MORE, I knew that using outlines to organize literate programs would work spectacularly well.  March 5, 1996 was the day that changed my programming life forever.
+
+There have been many changes and improvements to Leo since that first prototype, and Leo continues to evolve and grow.  Leo's plugins provide excellent test beds for experimentation and development.  Who knows what the next spectacular plugin will bring?
+
+Edward K. Ream
+June, 2004
 #@-node:EKR.20040524104904.5:Preface
 #@+node:EKR.20040524104904.6:Leo's Design Goals
 This is what I wanted when I started this project.

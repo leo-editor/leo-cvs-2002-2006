@@ -2,7 +2,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="4256" clone_windows="0"/>
 <globals body_outline_ratio="0.414301929625">
-	<global_window_position top="130" left="330" height="881" width="1011"/>
+	<global_window_position top="28" left="234" height="881" width="1011"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences>
@@ -12,7 +12,7 @@
 	<change_string></change_string>
 </find_panel_settings>
 <vnodes>
-<v t="ekr.20040303080938" a="E"><vh>Diary</vh>
+<v t="ekr.20040303080938"><vh>Diary</vh>
 <v t="ekr.20040315210314"><vh>March 2004</vh>
 <v t="ekr.20040315210314.1"><vh>3/15: Created stubs for Find Commands tests</vh></v>
 <v t="ekr.20040315210314.2"><vh>3/15: Convert this file to 4.2 format</vh></v>
@@ -642,9 +642,9 @@
 </v>
 </v>
 <v t="EKR.20040612095237"><vh>Prototypes of new commands</vh>
-<v t="ekr.20040402043516" a="E"><vh>A pretty printer for Leo</vh>
+<v t="ekr.20040402043516"><vh>A pretty printer for Leo</vh>
 <v t="ekr.20040402084155"><vh>prettyPrintNode</vh></v>
-<v t="ekr.20040402064301" a="E"><vh>class prettyPrinter</vh>
+<v t="ekr.20040402064301"><vh>class prettyPrinter</vh>
 <v t="ekr.20040402064301.1"><vh>__init__</vh></v>
 <v t="ekr.20040402093822"><vh>get</vh></v>
 <v t="ekr.20040402072335"><vh>put</vh></v>
@@ -688,12 +688,12 @@
 </v>
 <v t="EKR.20040610194209.1"><vh>TabNanny data</vh></v>
 </v>
-<v t="EKR.20040611083703" a="E"><vh>Using a generator instead of readLinesClass</vh></v>
+<v t="EKR.20040611083703"><vh>Using a generator instead of readLinesClass</vh></v>
 </v>
 <v t="EKR.20040612150543"><vh>Test of better error messages in Execute Script command</vh>
 <v t="EKR.20040612215136"><vh>Contains error</vh></v>
 </v>
-<v t="EKR.20040613162717" a="TV"><vh>gtk test</vh></v>
+<v t="EKR.20040613162717" a="TV"><vh>Report newlines</vh></v>
 </vnodes>
 <tnodes>
 <t tx="EKR.20040424065452">import leoGlobals as g
@@ -2699,7 +2699,25 @@ print ; print '-' * 20</t>
 print "hello"
 c = b
 </t>
-<t tx="EKR.20040613162717">import gtk</t>
+<t tx="EKR.20040613162717">import leoGlobals as g
+
+path = r"c:\prog\leoScripts(before).txt"
+path = r"c:\prog\leoScripts(after).txt"
+
+try:
+    f = open(path,"rb")
+    s = f.read()
+    f.close()
+    
+    cr = 0 ; nl = 0
+    for ch in s:
+        if ch == '\r': cr += 1
+        if ch == '\n': nl += 1
+        
+    g.es("cr %d, nl %d %s" % (cr,nl,path))
+
+except IOError:
+    print "can not open",path</t>
 <t tx="ekr.20040126105605"></t>
 <t tx="ekr.20040126105605.2"></t>
 <t tx="ekr.20040126105605.3"></t>
