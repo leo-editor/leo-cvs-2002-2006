@@ -294,6 +294,7 @@ class atFile:
         #@@c
         
         self.docKind = None
+        self.explicitLineEnding = False # True: an @lineending directive specifies the ending.
         self.fileChangedFlag = False # True: the file has actually been updated.
         self.shortFileName = "" # short version of file name used for messages.
         self.thinFile = False
@@ -3823,23 +3824,25 @@ class atFile:
     #@-node:ekr.20041005105605.194:putSentinel (applies cweb hack) 4.x
     #@-node:ekr.20041005105605.187:Writing 4,x sentinels...
     #@+node:ekr.20041005105605.196:Writing 4.x utils...
-    #@+node:ekr.20041005105605.197:compareFilesIgnoringLineEndings
+    #@+node:ekr.20041005105605.197:compareFiles
     # This routine is needed to handle cvs stupidities.
     
-    def compareFilesIgnoringLineEndings (self,path1,path2):
+    def compareFiles (self,path1,path2,ignoreLineEndings):
     
         """Compare two text files ignoring line endings."""
         
         try:
             # Opening both files in text mode converts all line endings to '\n'.
-            f1 = open(path1) ; f2 = open(path2)
+            mode = g.choose(ignoreLineEndings,"r","rb")
+            f1 = open(path1,mode)
+            f2 = open(path2,mode)
             equal = f1.read() == f2.read()
             f1.close() ; f2.close()
             return equal
-        except:
-            return False
+        except IOError:
+            return False # Should never happen
     #@nonl
-    #@-node:ekr.20041005105605.197:compareFilesIgnoringLineEndings
+    #@-node:ekr.20041005105605.197:compareFiles
     #@+node:ekr.20041005105605.198:directiveKind4
     def directiveKind4(self,s,i):
         
@@ -4114,8 +4117,8 @@ class atFile:
         
         self.fileChangedFlag = False
         if g.os_path_exists(self.targetFileName):
-            if self.compareFilesIgnoringLineEndings(
-                self.outputFileName,self.targetFileName):
+            if self.compareFiles(
+                self.outputFileName,self.targetFileName,not self.explicitLineEnding):
                 #@            << delete the output file >>
                 #@+node:ekr.20041005105605.213:<< delete the output file >>
                 try: # Just delete the temp file.
@@ -4129,6 +4132,19 @@ class atFile:
                 #@-node:ekr.20041005105605.213:<< delete the output file >>
                 #@nl
             else:
+                #@            << report if the files differ only in line endings >>
+                #@+node:ekr.20041019090322:<< report if the files differ only in line endings >>
+                if (
+                    self.explicitLineEnding and
+                    self.compareFiles(
+                        self.outputFileName,
+                        self.targetFileName,
+                        ignoreLineEndings=True)):
+                
+                    g.es("correcting line endings in: " + self.targetFileName,color="blue")
+                #@nonl
+                #@-node:ekr.20041019090322:<< report if the files differ only in line endings >>
+                #@nl
                 #@            << replace the target file with the output file >>
                 #@+node:ekr.20041005105605.214:<< replace the target file with the output file >>
                 try:
@@ -4257,7 +4273,7 @@ class atFile:
         g.es_exception()
     #@nonl
     #@-node:ekr.20041005105605.221:exception
-    #@+node:ekr.20041005105605.222:scanAllDirectives
+    #@+node:ekr.20041005105605.222:atFile.scanAllDirectives
     #@+at 
     #@nonl
     # Once a directive is seen, no other related directives in nodes further 
@@ -4405,6 +4421,7 @@ class atFile:
                 
                 lineending = g.scanAtLineendingDirective(s,theDict)
                 if lineending:
+                    self.explicitLineEnding = True
                     self.output_newline = lineending
             #@-node:ekr.20041005105605.231:<< Test for @lineending >>
             #@nl
@@ -4482,7 +4499,7 @@ class atFile:
             #@-node:ekr.20041005105605.235:<< Set comment strings from delims >>
             #@nl
     #@nonl
-    #@-node:ekr.20041005105605.222:scanAllDirectives
+    #@-node:ekr.20041005105605.222:atFile.scanAllDirectives
     #@+node:ekr.20041005105605.236:scanDefaultDirectory
     def scanDefaultDirectory(self,p,importing=False):
         
