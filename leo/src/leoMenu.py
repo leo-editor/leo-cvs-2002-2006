@@ -1031,13 +1031,13 @@ class leoMenu:
         
         self.createMenuEntries(outlineMenu,self.outlineMenuTopMenuTable)
         
-        #@<< create check outline submenu >>
-        #@+node:ekr.20040711140738.1:<< create check outline submenu >>
-        checkOutlineMenu = self.createNewMenu("Chec&k Outline...","Outline")
+        #@<< create check submenu >>
+        #@+node:ekr.20040711140738.1:<< create check submenu >>
+        checkOutlineMenu = self.createNewMenu("Chec&k...","Outline")
         
         self.createMenuEntries(checkOutlineMenu,self.outlineMenuCheckOutlineMenuTable)
         #@nonl
-        #@-node:ekr.20040711140738.1:<< create check outline submenu >>
+        #@-node:ekr.20040711140738.1:<< create check submenu >>
         #@nl
         #@<< create expand/contract submenu >>
         #@+node:ekr.20031218072017.3798:<< create expand/contract submenu >>
