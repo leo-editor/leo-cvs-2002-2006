@@ -7,7 +7,11 @@
 import leoGlobals as g
 from leoGlobals import true,false
 
+import re
 import string
+
+# php_re = re.compile("<?(\s|=|[pP][hH][pP])")
+php_re = re.compile("<?(\s[pP][hH][pP])")
 
 #@<< define leo keywords >>
 #@+node:<< define leo keywords >>
@@ -53,38 +57,16 @@ class baseColorizer:
 	"""The base class for Leo's syntax colorer."""
 	#@	<< define colorizer keywords >>
 	#@+node:<< define colorizer keywords >> colorizer
-	#@<< actionscript keywords >>
-	#@+node:<< actionscript keywords >>
+	#@+others
+	#@+node:actionscript keywords
 	actionscript_keywords = [
 	#Jason 2003-07-03 
 	#Actionscript keywords for Leo adapted from UltraEdit syntax highlighting
 	"break", "call", "continue", "delete", "do", "else", "false", "for", "function", "goto", "if", "in", "new", "null", "return", "true", "typeof", "undefined", "var", "void", "while", "with", "#include", "catch", "constructor", "prototype", "this", "try", "_parent", "_root", "__proto__", "ASnative", "abs", "acos", "appendChild", "asfunction", "asin", "atan", "atan2", "attachMovie", "attachSound", "attributes", "BACKSPACE", "CAPSLOCK", "CONTROL", "ceil", "charAt", "charCodeAt", "childNodes", "chr", "cloneNode", "close", "concat", "connect", "cos", "createElement", "createTextNode", "DELETEKEY", "DOWN", "docTypeDecl", "duplicateMovieClip", "END", "ENTER", "ESCAPE", "enterFrame", "entry", "equal", "eval", "evaluate", "exp", "firstChild", "floor", "fromCharCode", "fscommand", "getAscii", "getBeginIndex", "getBounds", "getBytesLoaded", "getBytesTotal", "getCaretIndex", "getCode", "getDate", "getDay", "getEndIndex", "getFocus", "getFullYear", "getHours", "getMilliseconds", "getMinutes", "getMonth", "getPan", "getProperty", "getRGB", "getSeconds", "getTime", "getTimer", "getTimezoneOffset", "getTransform", "getURL", "getUTCDate", "getUTCDay", "getUTCFullYear", "getUTCHours", "getUTCMilliseconds", "getUTCMinutes", "getUTCMonth", "getUTCSeconds", "getVersion", "getVolume", "getYear", "globalToLocal", "gotoAndPlay", "gotoAndStop", "HOME", "haschildNodes", "hide", "hitTest", "INSERT", "Infinity", "ifFrameLoaded", "ignoreWhite", "indexOf", "insertBefore", "int", "isDown", "isFinite", "isNaN", "isToggled", "join", "keycode", "keyDown", "keyUp", "LEFT", "LN10", "LN2", "LOG10E", "LOG2E", "lastChild", "lastIndexOf", "length", "load", "loaded", "loadMovie", "loadMovieNum", "loadVariables", "loadVariablesNum", "localToGlobal", "log", "MAX_VALUE", "MIN_VALUE", "max", "maxscroll", "mbchr", "mblength", "mbord", "mbsubstring", "min", "NEGATIVE_INFINITY", "NaN", "newline", "nextFrame", "nextScene", "nextSibling", "nodeName", "nodeType", "nodeValue", "on", "onClipEvent", "onClose", "onConnect", "onData", "onLoad", "onXML", "ord", "PGDN", "PGUP", "PI", "POSITIVE_INFINITY", "parentNode", "parseFloat", "parseInt", "parseXML", "play", "pop", "pow", "press", "prevFrame", "previousSibling", "prevScene", "print", "printAsBitmap", "printAsBitmapNum", "printNum", "push", "RIGHT", "random", "release", "removeMovieClip", "removeNode", "reverse", "round", "SPACE", "SQRT1_2", "SQRT2", "scroll", "send", "sendAndLoad", "set", "setDate", "setFocus", "setFullYear", "setHours", "setMilliseconds", "setMinutes", "setMonth", "setPan", "setProperty", "setRGB", "setSeconds", "setSelection", "setTime", "setTransform", "setUTCDate", "setUTCFullYear", "setUTCHours", "setUTCMilliseconds", "setUTCMinutes", "setUTCMonth", "setUTCSeconds", "setVolume", "setYear", "shift", "show", "sin", "slice", "sort", "start", "startDrag", "status", "stop", "stopAllSounds", "stopDrag", "substr", "substring", "swapDepths", "splice", "split", "sqrt", "TAB", "tan", "targetPath", "tellTarget", "toggleHighQuality", "toLowerCase", "toString", "toUpperCase", "trace", "UP", "UTC", "unescape", "unloadMovie", "unLoadMovieNum", "unshift", "updateAfterEvent", "valueOf", "xmlDecl", "_alpha", "_currentframe", "_droptarget", "_focusrect", "_framesloaded", "_height", "_highquality", "_name", "_quality", "_rotation", "_soundbuftime", "_target", "_totalframes", "_url", "_visible", "_width", "_x", "_xmouse", "_xscale", "_y", "_ymouse", "_yscale", "and", "add", "eq", "ge", "gt", "le", "lt", "ne", "not", "or", "Array", "Boolean", "Color", "Date", "Key", "Math", "MovieClip", "Mouse", "Number", "Object", "Selection", "Sound", "String", "XML", "XMLSocket"
 	]
 	#@nonl
-	#@-node:<< actionscript keywords >>
-	#@nl
-	#@<< c keywords >>
-	#@+node:<< c keywords >>
-	c_keywords = [
-		# C keywords
-		"auto","break","case","char","continue",
-		"default","do","double","else","enum","extern",
-		"float","for","goto","if","int","long","register","return",
-		"short","signed","sizeof","static","struct","switch",
-		"typedef","union","unsigned","void","volatile","while",
-		# C++ keywords
-		"asm","bool","catch","class","const","const_cast",
-		"delete","dynamic_cast","explicit","false","friend",
-		"inline","mutable","namespace","new","operator",
-		"private","protected","public","reinterpret_cast","static_cast",
-		"template","this","throw","true","try",
-		"typeid","typename","using","virtual","wchar_t"]
-	#@nonl
-	#@-node:<< c keywords >>
-	#@nl
-	cweb_keywords = c_keywords
-	#@<< csharp keywords >>
-	#@+node:<< csharp keywords >>
+	#@-node:actionscript keywords
+	#@+node:c# keywords
 	csharp_keywords = [
 		"abstract","as",
 		"base","bool","break","byte",
@@ -107,10 +89,94 @@ class baseColorizer:
 		"where","while",
 		"yield"]
 	#@nonl
-	#@-node:<< csharp keywords >>
-	#@nl
-	#@<< elisp keywords>>
-	#@+node:<< elisp keywords>>
+	#@-node:c# keywords
+	#@+node:c/c++ keywords
+	c_keywords = [
+		# C keywords
+		"auto","break","case","char","continue",
+		"default","do","double","else","enum","extern",
+		"float","for","goto","if","int","long","register","return",
+		"short","signed","sizeof","static","struct","switch",
+		"typedef","union","unsigned","void","volatile","while",
+		# C++ keywords
+		"asm","bool","catch","class","const","const_cast",
+		"delete","dynamic_cast","explicit","false","friend",
+		"inline","mutable","namespace","new","operator",
+		"private","protected","public","reinterpret_cast","static_cast",
+		"template","this","throw","true","try",
+		"typeid","typename","using","virtual","wchar_t"]
+	#@nonl
+	#@-node:c/c++ keywords
+	#@+node:css keywords
+	css_keywords = [
+	#html tags
+	"address", "applet", "area", "a", "base", "basefont",
+	"big", "blockquote", "body", "br", "b", "caption", "center",
+	"cite", "code", "dd", "dfn", "dir", "div", "dl", "dt", "em", "font",
+	"form", "h1", "h2", "h3", "h4", "h5", "h6", "head", "hr", "html", "img",
+	"input", "isindex", "i", "kbd", "link", "li", "link", "map", "menu",
+	"meta", "ol", "option", "param", "pre", "p", "samp",
+	"select", "small", "span", "strike", "strong", "style", "sub", "sup",
+	"table", "td", "textarea", "th", "title", "tr", "tt", "ul", "u", "var",
+	#units
+	"mm", "cm", "in", "pt", "pc", "em", "ex", "px",
+	#colors
+	"aqua", "black", "blue", "fuchsia", "gray", "green", "lime", "maroon", "navy", "olive", "purple", "red", "silver", "teal", "yellow", "white",
+	#important directive
+	"!important",
+	#font rules
+	"font", "font-family", "font-style", "font-variant", "font-weight", "font-size",
+	#font values
+	"cursive", "fantasy", "monospace", "normal", "italic", "oblique", "small-caps",
+	"bold", "bolder", "lighter", "medium", "larger", "smaller",
+	"serif", "sans-serif",
+	#background rules
+	"background", "background-color", "background-image", "background-repeat", "background-attachment", "background-position",
+	#background values
+	"contained", "none", "top", "center", "bottom", "left", "right", "scroll", "fixed",
+	"repeat", "repeat-x", "repeat-y", "no-repeat",
+	#text rules
+	"word-spacing", "letter-spacing", "text-decoration", "vertical-align", "text-transform", "text-align", "text-indent", "text-transform", "text-shadow", "unicode-bidi", "line-height",
+	#text values
+	"normal", "none", "underline", "overline", "blink", "sub", "super", "middle", "top", "text-top", "text-bottom",
+	"capitalize", "uppercase", "lowercase", "none", "left", "right", "center", "justify",
+	"line-through",
+	#box rules
+	"margin", "margin-top", "margin-bottom", "margin-left", "margin-right",
+	"margin", "padding-top", "padding-bottom", "padding-left", "padding-right",
+	"border", "border-width", "border-style", "border-top", "border-top-width", "border-top-style", "border-bottom", "border-bottom-width", "border-bottom-style", "border-left", "border-left-width", "border-left-style", "border-right", "border-right-width", "border-right-style", "border-color",
+	#box values
+	"width", "height", "float", "clear",
+	"auto", "thin", "medium", "thick", "left", "right", "none", "both",
+	"none", "dotted", "dashed", "solid", "double", "groove", "ridge", "inset", "outset",
+	#display rules
+	"display", "white-space", 
+	"min-width", "max-width", "min-height", "max-height",
+	"outline-color", "outline-style", "outline-width",
+	#display values
+	"run-in", "inline-block", "list-item", "block", "inline", "none", "normal", "pre", "nowrap", "table-cell", "table-row", "table-row-group", "table-header-group", "inline-table", "table-column", "table-column-group", "table-cell", "table-caption"
+	#list rules
+	"list-style", "list-style-type", "list-style-image", "list-style-position",
+	#list values
+	"disc", "circle", "square", "decimal", "decimal-leading-zero", "none",
+	"lower-roman", "upper-roman", "lower-alpha", "upper-alpha", "lower-latin", "upper-latin",
+	#table rules
+	"border-collapse", "caption-side",
+	#table-values
+	"empty-cells", "table-layout",
+	#misc values/rules
+	"counter-increment", "counter-reset",
+	"marker-offset", "z-index",
+	"cursor", "direction", "marks", "quotes",
+	"clip", "content", "orphans", "overflow", "visibility",
+	#aural rules
+	"pitch", "range", "pitch-during", "cue-after", "pause-after", "cue-before", "pause-before", "speak-header", "speak-numeral", "speak-punctuation", "speed-rate", "play-during", "voice-family",
+	#aural values
+	"stress", "azimuth", "elevation", "pitch", "richness", "volume",
+	"page-break", "page-after", "page-inside"]
+	#@nonl
+	#@-node:css keywords
+	#@+node:elisp keywords
 	# EKR: needs more work.
 	elisp_keywords = [
 		# Maybe...
@@ -132,10 +198,8 @@ class baseColorizer:
 		"unless",
 		"when","while"]
 	#@nonl
-	#@-node:<< elisp keywords>>
-	#@nl
-	#@<< html keywords >>
-	#@+node:<< html keywords >>
+	#@-node:elisp keywords
+	#@+node:html keywords
 	# No longer used by syntax colorer.
 	html_keywords = []
 	
@@ -154,10 +218,8 @@ class baseColorizer:
 	
 		html_specials = [ "<%","%>" ]
 	#@nonl
-	#@-node:<< html keywords >>
-	#@nl
-	#@<< java keywords >>
-	#@+node:<< java keywords >>
+	#@-node:html keywords
+	#@+node:java keywords
 	java_keywords = [
 		"abstract","boolean","break","byte","byvalue",
 		"case","cast","catch","char","class","const","continue",
@@ -171,10 +233,8 @@ class baseColorizer:
 		"this","throw","transient","true","try",
 		"var","void","volatile","while"]
 	#@nonl
-	#@-node:<< java keywords >>
-	#@nl
-	#@<< latex keywords >>
-	#@+node:<< latex keywords >>
+	#@-node:java keywords
+	#@+node:latex keywords
 	#If you see two idenitical words, with minor capitalization differences
 	#DO NOT ASSUME that they are the same word. For example \vert produces
 	#a single vertical line and \Vert produces a double vertical line
@@ -304,10 +364,8 @@ class baseColorizer:
 		#Z
 		"\\zeta" ]
 	#@nonl
-	#@-node:<< latex keywords >>
-	#@nl
-	#@<< pascal keywords >>
-	#@+node:<< pascal keywords >>
+	#@-node:latex keywords
+	#@+node:pascal keywords
 	pascal_keywords = [
 		"and","array","as","begin",
 		"case","const","class","constructor","cdecl"
@@ -331,10 +389,8 @@ class baseColorizer:
 		# limited contexts
 		"exports","property","default","write","stored","index","name" ]
 	#@nonl
-	#@-node:<< pascal keywords >>
-	#@nl
-	#@<< perl keywords >>
-	#@+node:<< perl keywords >>
+	#@-node:pascal keywords
+	#@+node:perl keywords
 	perl_keywords = [
 		"continue","do","else","elsif","format","for","format","for","foreach",
 		"if","local","package","sub","tr","unless","until","while","y",
@@ -399,57 +455,8 @@ class baseColorizer:
 		"print","printf","return","reverse",
 		"sort","system","syscall","unlink","utime","warn"]
 	#@nonl
-	#@-node:<< perl keywords >>
-	#@nl
-	perlpod_keywords = perl_keywords
-	#@<< python keywords >>
-	#@+node:<< python keywords >>
-	python_keywords = [
-		"and",       "del",       "for",       "is",        "raise",    
-		"assert",    "elif",      "from",      "lambda",    "return",   
-		"break",     "else",      "global",    "not",       "try",      
-		"class",     "except",    "if",        "or",        "yield",   
-		"continue",  "exec",      "import",    "pass",      "while",
-		"def",       "finally",   "in",        "print"]
-	#@nonl
-	#@-node:<< python keywords >>
-	#@nl
-	#@<< tcl/tk keywords >>
-	#@+node:<< tcl/tk keywords >>
-	tcltk_keywords = [ # Only the tcl keywords are here.
-		"after",     "append",    "array",
-		"bgerror",   "binary",    "break",
-		"catch",     "cd",        "clock",
-		"close",     "concat",    "continue",
-		"dde",
-		"encoding",  "eof",       "eval",
-		"exec",      "exit",      "expr",
-		"fblocked",  "fconfigure","fcopy",     "file",      "fileevent",
-		"filename",  "flush",     "for",       "foreach",   "format",
-		"gets",      "glob",      "global",
-		"history",
-		"if",        "incr",      "info",      "interp",
-		"join",
-		"lappend",   "lindex",    "linsert",   "list",      "llength",
-		"load",      "lrange",    "lreplace",  "lsearch",   "lsort",
-		"memory",    "msgcat",
-		"namespace",
-		"open",
-		"package",   "parray",    "pid",
-		"proc",      "puts",      "pwd",
-		"read",      "regexp",    "registry",   "regsub",
-		"rename",    "resource",  "return",
-		"scan",      "seek",      "set",        "socket",   "source",
-		"split",     "string",    "subst",      "switch",
-		"tell",      "time",      "trace",
-		"unknown",   "unset",     "update",     "uplevel",   "upvar",
-		"variable",  "vwait",
-		"while" ]
-	#@nonl
-	#@-node:<< tcl/tk keywords >>
-	#@nl
-	#@<< php keywords >>
-	#@+node:<< php keywords >>
+	#@-node:perl keywords
+	#@+node:php keywords
 	php_keywords = [ # 08-SEP-2002 DTHEIN
 		"__CLASS__", "__FILE__", "__FUNCTION__", "__LINE__",
 		"and", "as", "break",
@@ -470,10 +477,49 @@ class baseColorizer:
 		
 	# The following are handled by special case code:
 	# "<?php", "?>"
-	#@-node:<< php keywords >>
-	#@nl
-	#@<< rebol keywords >>
-	#@+node:<< rebol keywords >>
+	#@-node:php keywords
+	#@+node:python keywords
+	python_keywords = [
+		"and",       "del",       "for",       "is",        "raise",    
+		"assert",    "elif",      "from",      "lambda",    "return",   
+		"break",     "else",      "global",    "not",       "try",      
+		"class",     "except",    "if",        "or",        "yield",   
+		"continue",  "exec",      "import",    "pass",      "while",
+		"def",       "finally",   "in",        "print"]
+	#@nonl
+	#@-node:python keywords
+	#@+node:rapidq keywords
+	rapidq_keywords = [
+	# Syntax file for RapidQ
+	"$APPTYPE","$DEFINE","$ELSE","$ENDIF","$ESCAPECHARS","$IFDEF","$IFNDEF",
+	"$INCLUDE","$MACRO","$OPTIMIZE","$OPTION","$RESOURCE","$TYPECHECK","$UNDEF",
+	"ABS","ACOS","ALIAS","AND","AS","ASC","ASIN","ATAN","ATN","BIN$","BIND","BYTE",
+	"CALL","CALLBACK","CALLFUNC","CASE","CEIL","CHDIR","CHDRIVE","CHR$","CINT",
+	"CLNG","CLS","CODEPTR","COMMAND$","COMMANDCOUNT","CONSOLE","CONST","CONSTRUCTOR",
+	"CONVBASE$","COS","CREATE","CSRLIN","CURDIR$","DATA","DATE$","DEC","DECLARE",
+	"DEFBYTE","DEFDBL","DEFDWORD","DEFINT","DEFLNG","DEFSHORT","DEFSNG","DEFSTR",
+	"DEFWORD","DELETE$","DIM","DIR$","DIREXISTS","DO","DOEVENTS","DOUBLE","DWORD",
+	"ELSE","ELSEIF","END","ENVIRON","ENVIRON$","EVENT","EXIT","EXP","EXTENDS",
+	"EXTRACTRESOURCE","FIELD$","FILEEXISTS","FIX","FLOOR","FOR","FORMAT$","FRAC",
+	"FUNCTION","FUNCTIONI","GET$","GOSUB","GOTO","HEX$","IF","INC","INITARRAY",
+	"INKEY$","INP","INPUT","INPUT$","INPUTHANDLE","INSERT$","INSTR","INT","INTEGER",
+	"INV","IS","ISCONSOLE","KILL","KILLMESSAGE","LBOUND","LCASE$","LEFT$","LEN",
+	"LFLUSH","LIB","LIBRARYINST","LOCATE","LOG","LONG","LOOP","LPRINT","LTRIM$",
+	"MEMCMP","MESSAGEBOX","MESSAGEDLG","MID$","MKDIR","MOD","MOUSEX","MOUSEY",
+	"NEXT","NOT","OFF","ON","OR","OUT","OUTPUTHANDLE","PARAMSTR$","PARAMSTRCOUNT",
+	"PARAMVAL","PARAMVALCOUNT","PCOPY","PEEK","PLAYWAV","POKE","POS","POSTMESSAGE",
+	"PRINT","PROPERTY","QUICKSORT","RANDOMIZE","REDIM","RENAME","REPLACE$",
+	"REPLACESUBSTR$","RESOURCE","RESOURCECOUNT","RESTORE","RESULT","RETURN",
+	"REVERSE$","RGB","RIGHT$","RINSTR","RMDIR","RND","ROUND","RTRIM$","RUN",
+	"SCREEN","SELECT","SENDER","SENDMESSAGE","SETCONSOLETITLE","SGN","SHELL",
+	"SHL","SHORT","SHOWMESSAGE","SHR","SIN","SINGLE","SIZEOF","SLEEP","SOUND",
+	"SPACE$","SQR","STACK","STATIC","STEP","STR$","STRF$","STRING","STRING$",
+	"SUB","SUBI","SWAP","TALLY","TAN","THEN","TIME$","TIMER","TO","TYPE","UBOUND",
+	"UCASE$","UNLOADLIBRARY","UNTIL","VAL","VARIANT","VARPTR","VARPTR$","VARTYPE",
+	"WEND","WHILE","WITH","WORD","XOR"]
+	#@nonl
+	#@-node:rapidq keywords
+	#@+node:rebol keywords
 	rebol_keywords = [
 	#Jason 2003-07-03 
 	#based on UltraEdit syntax highlighting
@@ -542,8 +588,55 @@ class baseColorizer:
 	"zero?"
 	]
 	#@nonl
-	#@-node:<< rebol keywords >>
-	#@nl
+	#@-node:rebol keywords
+	#@+node:shell keywords
+	shell_keywords = [
+		# reserved keywords
+		"case","do","done","elif","else","esac","fi",
+		"for","if","in","then",
+		"until","while",
+		"break","cd","chdir","continue","eval","exec",
+		"exit","kill","newgrp","pwd","read","readonly",
+		"return","shift","test","trap","ulimit",
+		"umask","wait" ]
+	#@nonl
+	#@-node:shell keywords
+	#@+node:tcl/tk keywords
+	tcltk_keywords = [ # Only the tcl keywords are here.
+		"after",     "append",    "array",
+		"bgerror",   "binary",    "break",
+		"catch",     "cd",        "clock",
+		"close",     "concat",    "continue",
+		"dde",
+		"encoding",  "eof",       "eval",
+		"exec",      "exit",      "expr",
+		"fblocked",  "fconfigure","fcopy",     "file",      "fileevent",
+		"filename",  "flush",     "for",       "foreach",   "format",
+		"gets",      "glob",      "global",
+		"history",
+		"if",        "incr",      "info",      "interp",
+		"join",
+		"lappend",   "lindex",    "linsert",   "list",      "llength",
+		"load",      "lrange",    "lreplace",  "lsearch",   "lsort",
+		"memory",    "msgcat",
+		"namespace",
+		"open",
+		"package",   "parray",    "pid",
+		"proc",      "puts",      "pwd",
+		"read",      "regexp",    "registry",   "regsub",
+		"rename",    "resource",  "return",
+		"scan",      "seek",      "set",        "socket",   "source",
+		"split",     "string",    "subst",      "switch",
+		"tell",      "time",      "trace",
+		"unknown",   "unset",     "update",     "uplevel",   "upvar",
+		"variable",  "vwait",
+		"while" ]
+	#@nonl
+	#@-node:tcl/tk keywords
+	#@-others
+	
+	cweb_keywords = c_keywords
+	perlpod_keywords = perl_keywords
 	#@nonl
 	#@-node:<< define colorizer keywords >> colorizer
 	#@nl
@@ -874,8 +967,8 @@ class baseColorizer:
 			# The list of languages for which keywords exist.
 			# Eventually we might just use language_delims_dict.keys()
 			languages = [
-				"actionscript","c","csharp","cweb","elisp","html","java","latex",
-				"pascal","perl","perlpod","php","python","rebol","tcltk"]
+				"actionscript","c","csharp","css","cweb","elisp","html","java","latex",
+				"pascal","perl","perlpod","php","python","rapidq","rebol","shell","tcltk"]
 			
 			self.keywords = []
 			if self.language == "cweb":
@@ -1453,7 +1546,9 @@ class baseColorizer:
 	
 		if ch in string.ascii_letters or ch == '_' or (
 			(ch == '\\' and self.language=="latex") or
-			(ch in '/&<>' and self.language=="html")):
+			(ch in '/&<>' and self.language=="html") or
+			(ch == '$' and self.language=="rapidq")
+		):
 			#@		<< handle possible keyword >>
 			#@+node:<< handle possible  keyword >>
 			if self.language == "latex":
@@ -1501,12 +1596,15 @@ class baseColorizer:
 			else:
 				#@	<< handle general keyword >>
 				#@+node:<< handle general keyword >>
-				if self.language == "rebol":
+				if self.language == "rapidq":
+					j = self.skip_id(s,i+1,chars="$")
+				elif self.language == "rebol":
 					j = self.skip_id(s,i+1,chars="-~!?")
-				elif self.language == "elisp":
+				elif self.language in ("elisp","css"):
 					j = self.skip_id(s,i+1,chars="-")
 				else:
 					j = self.skip_id(s,i)
+				
 				word = s[i:j]
 				if word in self.keywords:
 					self.tag("keyword",i,j)
@@ -1514,6 +1612,7 @@ class baseColorizer:
 					if word in self.php_paren_keywords and g.match(s,j,"()"):
 						self.tag("keyword",i,j+2)
 						j += 2
+				#@nonl
 				#@-node:<< handle general keyword >>
 				#@nl
 			i = j
@@ -1587,6 +1686,8 @@ class baseColorizer:
 				self.tag("comment",i,j)
 				self.doLatexLine(s,j,len(s))
 				i = len(s)
+			elif self.language == "shell" and (i>0 and s[i-1]=='$'):
+				i += 1 # '$#' in shell should not start a comment (DS 040113)
 			else:
 				j = len(s)
 				if not g.doHook("color-optional-markup",
@@ -1668,9 +1769,10 @@ class baseColorizer:
 			#@-node:<< handle C preprocessor line >>
 			#@nl
 		elif self.language == "php" and (g.match(s,i,"<") or g.match(s,i,"?")):
+			# g.trace("%3d" % i,php_re.match(s,i),s)
 			#@		<< handle special php keywords >>
 			#@+node:<< handle special php keywords >>
-			if g.match(s,i,"<?php"):
+			if g.match(s.lower(),i,"<?php"):
 				self.tag("keyword",i,i+5)
 				i += 5
 			elif g.match(s,i,"?>"):
@@ -1678,6 +1780,7 @@ class baseColorizer:
 				i += 2
 			else:
 				i += 1
+			
 			#@-node:<< handle special php keywords >>
 			#@nl
 		elif ch == ' ':
@@ -1711,6 +1814,8 @@ class baseColorizer:
 			g.trace(self.progress,i,state)
 			assert(self.progress < i)
 		return i,state
+	
+	
 	#@-node:doNormalState
 	#@+node:doNowebSecRef
 	def doNowebSecRef (self,s,i):

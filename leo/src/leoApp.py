@@ -88,6 +88,7 @@ class LeoApp:
 			"actionscript" : "// /* */", #jason 2003-07-03
 			"c" : "// /* */", # C, C++ or objective C.
 			"csharp" : "// /* */",	# C#
+			"css" : "/* */", # 4/1/04
 			"cweb" : "@q@ @>", # Use the "cweb hack"
 			"elisp" : ";",
 			"forth" : "_\\_ _(_ _)_", # Use the "REM hack"
@@ -102,7 +103,8 @@ class LeoApp:
 			"php" : "//",
 			"plain" : "#", # We must pick something.
 			"python" : "#",
-			"rebol" : ";", #jason 2003-07-03
+			"rapidq" : "'", # fil 2004-march-11
+			"rebol" : ";",  # jason 2003-07-03
 			"shell" : "#",  # shell scripts
 			"tcltk" : "#",
 			"unknown" : "#" } # Set when @comment is seen.
@@ -110,6 +112,7 @@ class LeoApp:
 		self.language_extension_dict = {
 			"actionscript" : "as", #jason 2003-07-03
 			"c" : "c",
+			"css" : "css", # 4/1/04
 			"cweb" : "w",
 			"elisp" : "el",
 			"forth" : "forth",
@@ -125,8 +128,9 @@ class LeoApp:
 			"php" : "php",
 			"plain" : "txt",
 			"python" : "py",
-			"rebol" : "r",  #jason 2003-07-03
-			"shell" : "txt",
+			"rapidq" : "bas", # fil 2004-march-11
+			"rebol" : "r",    # jason 2003-07-03
+			"shell" : "sh",   # DS 4/1/04
 			"tex" : "tex",
 			"tcltk" : "tcl",
 			"unknown" : "txt" } # Set when @comment is seen.
