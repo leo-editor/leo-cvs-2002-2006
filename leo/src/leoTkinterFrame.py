@@ -28,6 +28,8 @@ Pmw = g.importExtension("Pmw")
 #@-node:ekr.20041221070525:<< imports >>
 #@nl
 
+use_Pmw = False
+
 #@+others
 #@+node:ekr.20031218072017.3940:class leoTkinterFrame
 class leoTkinterFrame (leoFrame.leoFrame):
@@ -89,24 +91,24 @@ class leoTkinterFrame (leoFrame.leoFrame):
     #@-node:ekr.20041221122440:f.component
     #@+node:ekr.20031218072017.3943:Creating the frame
     #@+node:ekr.20031218072017.3944:f.createCanvas & helpers
-    def createCanvas (self,parentFrame):
+    def createCanvas (self,parentFrame,pack=True):
         
         c = self.c
         
         scrolls = c.config.getBool('outline_pane_scrolls_horizontally')
         scrolls = g.choose(scrolls,1,0)
         
-        if Pmw:
-            canvas = self.createPmwTreeCanvas(parentFrame,scrolls)
+        if use_Pmw and Pmw:
+            canvas = self.createPmwTreeCanvas(parentFrame,scrolls,pack)
         else:
-            canvas = self.createTkTreeCanvas(parentFrame,scrolls)
+            canvas = self.createTkTreeCanvas(parentFrame,scrolls,pack)
             
         self.canvas = canvas
     
         return canvas
     #@nonl
     #@+node:ekr.20041221071131:createPmwTreeCanvas
-    def createPmwTreeCanvas (self,parentFrame,hScrollMode):
+    def createPmwTreeCanvas (self,parentFrame,hScrollMode,pack):
         
         hscrollmode = g.choose(hScrollMode,'dynamic','none')
         
@@ -115,7 +117,8 @@ class leoTkinterFrame (leoFrame.leoFrame):
             hscrollmode=hscrollmode,
             vscrollmode='dynamic')
     
-        scrolledCanvas.pack(side='top',expand=1,fill="both")
+        if pack:
+            scrolledCanvas.pack(side='top',expand=1,fill="both")
     
         self.treeBar = scrolledCanvas.component('vertscrollbar')
         
@@ -126,7 +129,7 @@ class leoTkinterFrame (leoFrame.leoFrame):
     #@nonl
     #@-node:ekr.20041221071131:createPmwTreeCanvas
     #@+node:ekr.20041221071131.1:createTkTreeCanvas
-    def createTkTreeCanvas (self,parentFrame,scrolls):
+    def createTkTreeCanvas (self,parentFrame,scrolls,pack):
         
         frame = self ; c = frame.c
         
@@ -150,7 +153,8 @@ class leoTkinterFrame (leoFrame.leoFrame):
             treeXBar['command'] = canvas.xview 
             treeXBar.pack(side="bottom", fill="x")
         
-        canvas.pack(expand=1,fill="both")
+        if pack:
+            canvas.pack(expand=1,fill="both")
     
         canvas.bind("<Button-1>", frame.OnActivateTree)
     
@@ -319,6 +323,52 @@ class leoTkinterFrame (leoFrame.leoFrame):
         self.body.createBindings(frame)
     #@nonl
     #@-node:ekr.20031218072017.2176:f.finishCreate
+    #@+node:ekr.20041222060024:tkFrame.unpack/repack...
+    #@+node:ekr.20041222061439:repackBodyPane
+    def repackBodyPane (self):
+        
+        pass
+    #@nonl
+    #@-node:ekr.20041222061439:repackBodyPane
+    #@+node:ekr.20041222061331:repackFrameWidgets
+    def repackFrameWidgets (self):
+        
+        d = self.componentsDict
+        
+        # First unpack the status area.
+        statusFrame = d.get('statusFrame')
+        if statusFrame:
+            statusFrame.pack_forget()
+        
+        for name in ('splitter1','splitter2'):
+            splitter = d.get(name)
+            splitter.pack(expand = 1, fill='both')
+            
+        if statusFrame:
+            statusFrame.pack(fill="x",pady=1)
+    
+    #@-node:ekr.20041222061331:repackFrameWidgets
+    #@+node:ekr.20041222061331.1:unpackFrameWidgets
+    def unpackFrameWidgets (self):
+        
+        for name in ('splitter1','splitter2'):
+            w = self.componentsDict.get(name)
+            w.pack_forget()
+    #@nonl
+    #@-node:ekr.20041222061331.1:unpackFrameWidgets
+    #@+node:ekr.20041222061331.2:unpackBodyPane
+    def unpackBodyPane (self):
+        
+        d = self.componentsDict
+        
+        splitter = d.get('splitter1')
+        body = splitter.pane('body')
+        if body:
+            g.trace(body)
+            body.pack_forget()
+    #@nonl
+    #@-node:ekr.20041222061331.2:unpackBodyPane
+    #@-node:ekr.20041222060024:tkFrame.unpack/repack...
     #@+node:ekr.20031218072017.3945:Creating the splitter
     #@+at 
     #@nonl
@@ -333,7 +383,7 @@ class leoTkinterFrame (leoFrame.leoFrame):
     #@+node:ekr.20041221123325:createLeoSplitters & helpers
     def createLeoSplitters (self,parentFrame):
         
-        if Pmw:
+        if use_Pmw and Pmw:
             # Create splitter1 and its components.
             splitter1 = self.createLeoPmwSplitter(parentFrame,self.splitVerticalFlag,'splitter1')
             self.componentsDict['splitter1'] = splitter1
@@ -385,10 +435,10 @@ class leoTkinterFrame (leoFrame.leoFrame):
         panedFrame = Pmw.PanedWidget(parent,
             orient=orient,
             separatorthickness = 6, # default is 2
-            handlesize = 8, # default is 8
+            handlesize = 8,         # default is 8
             command = command)
     
-        panedFrame.pack(expand = 1, fill='both')
+        panedFrame.pack(expand=1,fill='both')
     
         return panedFrame
     #@nonl
@@ -416,7 +466,7 @@ class leoTkinterFrame (leoFrame.leoFrame):
     #@+node:ekr.20031218072017.3946:resizePanesToRatio
     def resizePanesToRatio(self,ratio,ratio2):
         
-        if Pmw:
+        if use_Pmw and Pmw:
             # g.trace(ratio,ratio2)
             self.ratio = ratio
             self.secondary_ratio = ratio2
@@ -529,7 +579,7 @@ class leoTkinterFrame (leoFrame.leoFrame):
     #@+node:ekr.20031218072017.3952:placeSplitter
     def placeSplitter (self,bar,pane1,pane2,verticalFlag):
     
-        if Pmw:
+        if use_Pmw and Pmw:
             return
     
         if verticalFlag:
@@ -664,6 +714,7 @@ class leoTkinterFrame (leoFrame.leoFrame):
             return
         
         self.statusFrame = statusFrame = Tk.Frame(self.outerFrame,bd=2)
+        self.componentsDict['statusFrame'] = statusFrame
         statusFrame.pack(fill="x",pady=1)
         
         text = "line 0, col 0"
@@ -1033,7 +1084,8 @@ class leoTkinterFrame (leoFrame.leoFrame):
     #@+node:ekr.20031218072017.3970:reconfigurePanes (use config bar_width)
     def reconfigurePanes (self):
         
-        if Pmw: return
+        if use_Pmw and Pmw:
+            return
         
         c = self.c
         
@@ -1047,7 +1099,6 @@ class leoTkinterFrame (leoFrame.leoFrame):
         # The log pane needs a slightly bigger border when tiling vertically.
         border = g.choose(self.splitVerticalFlag,4,2) 
         self.log.configureBorder(border)
-    #@nonl
     #@-node:ekr.20031218072017.3970:reconfigurePanes (use config bar_width)
     #@-node:ekr.20031218072017.3967:Configuration (tkFrame)
     #@+node:ekr.20031218072017.3971:Event handlers (tkFrame)
@@ -1402,7 +1453,7 @@ class leoTkinterFrame (leoFrame.leoFrame):
         orientation = g.choose(self.splitVerticalFlag,"vertical","horizontal")
         c.config.set("initial_splitter_orientation","orientation",orientation)
         
-        if Pmw:
+        if use_Pmw and Pmw:
             self.togglePmwSplitDirection(self.splitVerticalFlag)
         else:
             self.toggleTkSplitDirection(self.splitVerticalFlag)
