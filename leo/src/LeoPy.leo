@@ -2,7 +2,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="4425" clone_windows="0"/>
 <globals body_outline_ratio="0.5">
-	<global_window_position top="7" left="356" height="44" width="98"/>
+	<global_window_position top="7" left="356" height="44" width="97"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences allow_rich_text="0">
@@ -12,9 +12,10 @@
 	<change_string></change_string>
 </find_panel_settings>
 <vnodes>
-<v t="T1" a="V"><vh>Diary</vh>
+<v t="T1"><vh>Diary</vh>
 <v t="T2"><vh>May 2003</vh>
 <v t="T3"><vh>5/18</vh>
+<v><vh>Added support for bolditalic and italicbold</vh></v>
 <v t="T4"><vh>Rewrote logic involving images.</vh></v>
 </v>
 <v t="T5"><vh>5/17</vh>
@@ -6110,7 +6111,7 @@
 </v>
 <v t="T3607"><vh>Document new hooks</vh></v>
 </v>
-<v t="T3608"><vh>Code</vh>
+<v t="T3608" a="V"><vh>Code</vh>
 <v t="T3609"><vh>  Overview of code</vh>
 <v t="T3610" a="C"><vh>&lt;&lt; About clones &gt;&gt;</vh></v>
 <v t="T3611" a="C"><vh>&lt;&lt; About drawing and events &gt;&gt;</vh></v>
@@ -8503,7 +8504,7 @@
 <v t="T3378"><vh>&lt;&lt; parse and handle color field &gt;&gt;</vh></v>
 </v>
 </v>
-<v t="T3379" a="M"><vh>insertWikiPicture</vh></v>
+<v t="T3379"><vh>insertWikiPicture</vh></v>
 </v>
 <v t="T4425"><vh> Colorizing Test</vh></v>
 </v>
@@ -13872,6 +13873,7 @@ else:
 	body.tag_configure("elide",elide="1")
 body.tag_configure("bold",font=self.bold_font)
 body.tag_configure("italic",font=self.italic_font)
+body.tag_configure("bolditalic",font=self.bolditalic_font)
 for name in self.color_tags_list:
 	self.body.tag_configure(name,foreground=name)</t>
 <t tx="T1091"># Define has_string, keywords, single_comment_start, block_comment_start, block_comment_end.
@@ -44927,10 +44929,27 @@ if tag =="picture":
 elif tag == "color":
 	&lt;&lt; parse and handle color field &gt;&gt;
 else:
-	colorer.tag("elide",n1,n1+len(delim1))
-	colorer.tag("elide",n2,n2+len(delim2))
-	colorer.tag(colortag,n1+len(delim1),n2)
-	# print colortag,`n1+len(delim1)`,`n2`</t>
+	# look for nested bold or italic.
+	if tag == "bold":
+		delim3,delim4 = "''","''" # Look for nested italic.
+	else:
+		delim3,delim4 = "__","__" # Look for nested bold.
+	n3 = s.find(delim3,n1+len(delim1),n2) ; n4 = -1
+	if n3 &gt; -1:
+		n4 = s.find(delim4,n3+len(delim3),n2+len(delim2))
+	if n3 &gt; -1 and n4 &gt; -1:
+		colorer.tag("elide",n1,n1+len(delim1))
+		colorer.tag("elide",n2,n2+len(delim2))
+		colorer.tag("elide",n3,n3+len(delim3))
+		colorer.tag("elide",n4,n4+len(delim4))
+		colorer.tag(tag,n1+len(delim1),n3)
+		colorer.tag("bolditalic",n3+len(delim3),n4)
+		colorer.tag(tag,n4+len(delim4),n2)
+	else:
+		# No nested tag.
+		colorer.tag("elide",n1,n1+len(delim1))
+		colorer.tag("elide",n2,n2+len(delim2))
+		colorer.tag(tag,n1+len(delim1),n2)</t>
 <t tx="T3378"># Parse the color value.
 j = n1+len(delim1)
 n = s.find(":",j,n2)
@@ -51609,7 +51628,7 @@ def __init__(self, commands):
 		"latexModeBackground","latexModeKeyword",
 		"latexBackground","latexKeyword",
 		"link","name","nameBrackets","pp","string","tab",
-		"elide","bold","italic") # new for wiki styling.
+		"elide","bold","bolditalic","italic") # new for wiki styling.
 	self.color_pass = 0
 	self.incremental = false
 	self.redoColoring = false
@@ -51723,8 +51742,14 @@ self.bold_font.configure(weight="bold")
 self.italic_font = config.getFontFromParams(
 	"body_text_font_family", "body_text_font_size",
 	"body_text_font_slant",  "body_text_font_weight")
-
+	
 self.italic_font.configure(slant="italic")
+	
+self.bolditalic_font = config.getFontFromParams(
+	"body_text_font_family", "body_text_font_size",
+	"body_text_font_slant",  "body_text_font_weight")
+	
+self.bolditalic_font.configure(weight="bold",slant="italic")
 
 self.color_tags_list = []
 self.image_references = []
@@ -59755,13 +59780,7 @@ class undoer:
 		parent.setDirty()
 		c.setChanged(true)
 	c.endUpdate()</t>
-<t tx="T4422">@ To do:
-	
-- Allow nested markup ''__ab__'' and __''ab''__
-
-@c
-
-@markup wiki
+<t tx="T4422">@markup wiki
 </t>
 <t tx="T4423"></t>
 <t tx="T4424"></t>

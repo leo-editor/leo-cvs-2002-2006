@@ -879,7 +879,7 @@ class colorizer:
 			"latexModeBackground","latexModeKeyword",
 			"latexBackground","latexKeyword",
 			"link","name","nameBrackets","pp","string","tab",
-			"elide","bold","italic") # new for wiki styling.
+			"elide","bold","bolditalic","italic") # new for wiki styling.
 		self.color_pass = 0
 		self.incremental = false
 		self.redoColoring = false
@@ -1008,8 +1008,14 @@ class colorizer:
 		self.italic_font = config.getFontFromParams(
 			"body_text_font_family", "body_text_font_size",
 			"body_text_font_slant",  "body_text_font_weight")
-		
+			
 		self.italic_font.configure(slant="italic")
+			
+		self.bolditalic_font = config.getFontFromParams(
+			"body_text_font_family", "body_text_font_size",
+			"body_text_font_slant",  "body_text_font_weight")
+			
+		self.bolditalic_font.configure(weight="bold",slant="italic")
 		
 		self.color_tags_list = []
 		self.image_references = []
@@ -1167,6 +1173,7 @@ class colorizer:
 				body.tag_configure("elide",elide="1")
 			body.tag_configure("bold",font=self.bold_font)
 			body.tag_configure("italic",font=self.italic_font)
+			body.tag_configure("bolditalic",font=self.bolditalic_font)
 			for name in self.color_tags_list:
 				self.body.tag_configure(name,foreground=name)
 			#@-body
