@@ -1258,16 +1258,12 @@ class vnode:
 		if v == c.currentVnode():
 			# This code destoys all tags, so we must recolor.
 			c.frame.body.delete("1.0","end")
-			c.frame.body.insert("1.0", s) # Replace the body text with s.
+			c.frame.body.insert("1.0",s) # Replace the body text with s.
 			c.recolor()
 			
-		if type(s) == types.UnicodeType: # 10/9/02
-			xml_encoding = app().config.xml_version_string
-			s = s.encode(xml_encoding) # result is a string.
-		assert(type(s)==types.StringType)
-	
 		# Keep the body text in the tnode up-to-date.
-		if v.t.bodyString != s: # 3/4/02
+		s = unicode(s,"utf-8","replace") # 1/21/03
+		if v.t.bodyString != s:
 			v.t.setTnodeText(s)
 			v.t.setSelection(0,0)
 			v.setDirty()
@@ -1279,13 +1275,16 @@ class vnode:
 	#@-node:2::setBodyStringOrPane & setBodyTextOrPane
 	#@+node:3::setHeadString & initHeadString
 	#@+body
-	def setHeadString(self, s):
-		s,junk = convertUnicodeToString(s)
-		self.mHeadString = s
+	def setHeadString (self,s,encoding="utf-8"):
+	
+		self.initHeadString(s)
 		self.setDirty()
 	
-	def initHeadString (self, s):
-		s,junk = convertUnicodeToString(s)
+	def initHeadString (self,s,encoding="utf-8"):
+	
+		if type(s) == type(""):
+			s = unicode(s,encoding,"replace")
+		
 		self.mHeadString = s
 	
 	#@-body

@@ -1,7 +1,7 @@
 #line1
 #line2
 #@+leo
-#@+node:0::@file leoAtFile.py
+#@+node:0::@file leoAtFile.py 
 #@+body
 #@@first
 #@@first
@@ -74,7 +74,7 @@ class atFile:
 	#@+others
 	#@+node:2::atFile ctor
 	#@+body
-	def __init__(self,theCommander):
+	def __init__(self,theCommander): 
 	
 		# trace("__init__", "atFile.__init__")
 		self.commands = theCommander # The commander for the current window.
@@ -119,10 +119,8 @@ class atFile:
 		#@-at
 		#@@c
 		self.shortFileName = "" # short version of file name used for messages.
-		self.targetFileName = ""
-		self.targetFileNameW = "" #GS 12/15/02: unicode name
-		self.outputFileName = ""
-		self.outputFileNameW = "" #GS 12/15/02: unicode name
+		self.targetFileName = u"" # EKR 1/21/03: now a unicode string
+		self.outputFileName = u"" # EKR 1/21/03: now a unicode string
 		self.outputFile = None # The temporary output file.
 		
 
@@ -224,6 +222,11 @@ class atFile:
 	
 		self.os(self.startSentinelComment)
 		self.os(s)
+		encoding = self.encoding.lower()
+		if encoding != "utf-8":
+			self.os("-encoding=")
+			self.os(encoding)
+			self.os(",")
 		self.os(self.endSentinelComment)
 		if self.suppress_newlines: # 9/27/02
 			self.newline_pending = true # Schedule a newline.
@@ -447,6 +450,8 @@ class atFile:
 		
 		delim1, delim2, delim3 = set_delims_from_language(c.target_language)
 		self.language = c.target_language
+		
+		self.encoding = app().config.xml_version_string
 		#@-body
 		#@-node:1::<< Set ivars >>
 
@@ -552,7 +557,7 @@ class atFile:
 				j = len("@encoding")
 				i = skip_to_end_of_line(s,k)
 				encoding = s[k+j:i].strip()
-				trace("encoding:",encoding)
+				# trace("encoding:",encoding)
 			
 				try: # Make sure the encoding is known.
 					u = unicode("a",encoding)
@@ -940,20 +945,22 @@ class atFile:
 			# print self.default_directory, self.targetFileName
 			fn = os.path.join(self.default_directory, self.targetFileName)
 			fn = os.path.normpath(fn)
-			fnW = unicode(fn, app().config.xml_version_string) #GS 12/15/02
+			if type(fn) == type(""):
+				fn = unicode(fn,"ascii","ignore")
 			try:
-				file = open(fnW,'r') #GS 12/15/02
+				file = open(fn,'r')
 				if file:
 					
 					#@<< warn on read-only file >>
 					#@+node:1::<< warn on read-only file >>
 					#@+body
-					# 8/13/02
 					try:
-						read_only = not os.access(fnW,os.W_OK) #GS 12/15/02
+						read_only = not os.access(fn,os.W_OK)
 						if read_only:
 							es("read only: " + fn)
-					except: pass # os.access() may not exist on all platforms.
+					except:
+						pass # os.access() may not exist on all platforms.
+					
 					#@-body
 					#@-node:1::<< warn on read-only file >>
 
@@ -1213,7 +1220,19 @@ class atFile:
 			es("no @file nodes in the selected tree")
 	#@-body
 	#@-node:4::readAll (Leo2)
-	#@+node:5::scanDoc
+	#@+node:5::readLine
+	#@+body
+	def readLine (self,file):
+		"""Reads one line from file using the present encoding"""
+		
+		s = readlineForceUnixNewline(file)
+		u = unicode(s,self.encoding,"replace")
+		return u
+	
+	
+	#@-body
+	#@-node:5::readLine
+	#@+node:6::scanDoc
 	#@+body
 	# Scans the doc part and appends the text out.
 	# s,i point to the present line on entry.
@@ -1229,7 +1248,7 @@ class atFile:
 		assert(match(s,i,choose(kind == atFile.startDoc, "+doc", "+at")))
 		
 		out.append(choose(kind == atFile.startDoc, "@doc", "@"))
-		s = readlineForceUnixNewline(file)
+		s = self.readLine(file)
 		
 		#@-body
 		#@-node:1::<< Skip the opening sentinel >>
@@ -1241,7 +1260,7 @@ class atFile:
 		if not single:
 			j = skip_ws(s,0)
 			if match(s,j,self.startSentinelComment):
-				s = readlineForceUnixNewline(file)
+				s = self.readLine(file)
 		#@-body
 		#@-node:2::<< Skip an opening block delim >>
 
@@ -1265,7 +1284,7 @@ class atFile:
 			if kind == atFile.noSentinel:
 				j = skip_ws(s,0)
 				blankLine = s[j] == '\n'
-				nextLine = readlineForceUnixNewline(file)
+				nextLine = self.readLine(file)
 				nextKind = self.sentinelKind(nextLine)
 				if blankLine and nextKind == endKind:
 					kind = endKind # stop the scan now
@@ -1311,7 +1330,7 @@ class atFile:
 
 			if nextLine:
 				s = nextLine ; nextLine = None
-			else: s = readlineForceUnixNewline(file)
+			else: s = self.readLine(file)
 		if kind != endKind:
 			self.readError("Missing " + self.sentinelName(endKind) + " sentinel")
 		
@@ -1340,8 +1359,8 @@ class atFile:
 		#@-body
 		#@-node:6::<< Remove a closing block delim from out >>
 	#@-body
-	#@-node:5::scanDoc
-	#@+node:6::scanHeader
+	#@-node:6::scanDoc
+	#@+node:7::scanHeader
 	#@+body
 	#@+at
 	#  This method sets self.startSentinelComment and self.endSentinelComment 
@@ -1372,12 +1391,12 @@ class atFile:
 		#@+node:1::<< skip any non @+leo lines >>
 		#@+body
 		firstLines = [] # The lines before @+leo.
-		s = readlineForceUnixNewline(file)
+		s = self.readLine(file)
 		while len(s) > 0:
 			j = s.find(tag)
 			if j != -1: break
 			firstLines.append(s) # Queue the line
-			s = readlineForceUnixNewline(file)
+			s = self.readLine(file)
 		n = len(s)
 		valid = n > 0
 		# s contains the tag
@@ -1411,18 +1430,27 @@ class atFile:
 		#@+body
 		# 1/20/03: EKR: Read optional encoding param, e.g., -encoding=utf-8,
 		
+		# Set the default encoding
+		self.encoding = app().config.xml_version_string
+		
 		if match(s,i,encoding_tag):
 			i += len(encoding_tag)
 			# Skip to the next comma
-			j = i ;
+			j = i
 			while i < len(s) and not is_nl(s,i) and s[i] != ',':
 				i += 1
 			if match(s,i,','):
-				self.encoding = s[j:i]
-				print "encoding:",self.encoding
+				encoding = s[j:i]
 				i += 1
+				print "@+leo-encoding=",encoding
+				try:
+					u = unicode("a",encoding)
+					self.encoding = encoding
+				except:
+					es("bad encoding in derived file:",encoding)
 			else:
 				valid = false
+		
 		#@-body
 		#@-node:3::<< read optional encoding param >>
 
@@ -1442,8 +1470,8 @@ class atFile:
 			self.readError("Bad @+leo sentinel in " + self.targetFileName)
 		return firstLines
 	#@-body
-	#@-node:6::scanHeader
-	#@+node:7::completeFirstDirectives (Dave Hein)
+	#@-node:7::scanHeader
+	#@+node:8::completeFirstDirectives (Dave Hein)
 	#@+body
 	# 14-SEP-2002 DTHEIN: added for use by atFile.read()
 	
@@ -1473,8 +1501,8 @@ class atFile:
 			out[k] = tag + leadingLine.rstrip() ; j += 1
 	
 	#@-body
-	#@-node:7::completeFirstDirectives (Dave Hein)
-	#@+node:8::completeLastDirectives (Dave Hein)
+	#@-node:8::completeFirstDirectives (Dave Hein)
+	#@+node:9::completeLastDirectives (Dave Hein)
 	#@+body
 	# 14-SEP-2002 DTHEIN: added for use by atFile.read()
 	
@@ -1504,8 +1532,8 @@ class atFile:
 			out[k] = tag + trailingLine.rstrip() ; j -= 1
 	
 	#@-body
-	#@-node:8::completeLastDirectives (Dave Hein)
-	#@+node:9::scanText
+	#@-node:9::completeLastDirectives (Dave Hein)
+	#@+node:10::scanText
 	#@+body
 	#@+at
 	#  This method is the heart of the new read code.  It reads lines from the 
@@ -1527,7 +1555,7 @@ class atFile:
 			if nextLine:
 				s = nextLine ; nextLine = None
 			else:
-				s = readlineForceUnixNewline(file)
+				s = self.readLine(file) # EKR: 1/21/03
 				if len(s) == 0: break
 			# trace(`s`)
 			
@@ -1547,7 +1575,7 @@ class atFile:
 			kind = self.sentinelKind(s)
 			
 			if kind == atFile.noSentinel:
-				nextLine = readlineForceUnixNewline(file)
+				nextLine = self.readLine(file)
 				nextKind = self.sentinelKind(nextLine)
 			else:
 				nextLine = nextKind = None
@@ -1873,20 +1901,20 @@ class atFile:
 				#@<< look for sentinels that may follow a reference >>
 				#@+node:5::<< look for sentinels that may follow a reference >>
 				#@+body
-				s = readlineForceUnixNewline(file)
+				s = self.readLine(file)
 				kind = self.sentinelKind(s)
 				
 				if len(s) > 1 and kind == atFile.startVerbatimAfterRef:
-					s = readlineForceUnixNewline(file)
+					s = self.readLine(file)
 					# trace("verbatim:"+`s`)
 					out.append(s)
 				elif kind == atFile.startNewline:
 					out.append('\n')
-					s = readlineForceUnixNewline(file)
+					s = self.readLine(file)
 					nextline = s
 					# trace(`s`)
 				elif kind == atFile.startNoNewline:
-					s = readlineForceUnixNewline(file)
+					s = self.readLine(file)
 					nextline = s
 				elif len(s) > 1 and self.sentinelKind(s) == atFile.noSentinel:
 					out.append(s)
@@ -1963,7 +1991,7 @@ class atFile:
 				assert(match(s,i,"verbatim"))
 				
 				# Skip the sentinel.
-				s = readlineForceUnixNewline(file) 
+				s = self.readLine(file) 
 				
 				# Append the next line to the text.
 				i = self.skipIndent(s,0,self.indent)
@@ -1999,7 +2027,7 @@ class atFile:
 						# 9/11/02: ignore everything after @-leo.
 						# Such lines were presumably written by @last
 						while 1:
-							s = readlineForceUnixNewline(file)
+							s = self.readLine(file)
 							if len(s) == 0: break
 							# 21-SEP-2002 DTHEIN: capture _all_ the trailing lines, even if empty
 							lastLines.append(s) # 14-SEP-2002 DTHEIN: capture the trailing lines
@@ -2047,7 +2075,7 @@ class atFile:
 	#@-node:6::start sentinels
 	#@+node:7::unpaired sentinels
 	#@-node:7::unpaired sentinels
-	#@-node:9::scanText
+	#@-node:10::scanText
 	#@-node:5::Reading
 	#@+node:6::Writing
 	#@+node:1::os, onl, etc. (leoAtFile)
@@ -2069,12 +2097,9 @@ class atFile:
 			s = self.output_newline + s
 		if self.outputFile:
 			try:
-				try:
-					self.outputFile.write(s)
-				except UnicodeError: # This might never happen.
-					xml_encoding = app().config.xml_version_string
-					s = s.encode(xml_encoding)
-					self.outputFile.write(s)
+				if type(s) == type(u""):
+					s = s.encode(self.encoding,"replace")
+				self.outputFile.write(s)
 			except:
 				es("exception writing:" + `s`)
 				es_exception()
@@ -2745,7 +2770,7 @@ class atFile:
 		
 		if self.outputFileName != None:
 			try: # Just delete the temp file.
-				os.remove(self.outputFileNameW) #GS 12/15/02
+				os.remove(self.outputFileName)
 			except:
 				es("exception deleting:" + self.outputFileName)
 				es_exception()
@@ -2777,11 +2802,10 @@ class atFile:
 				self.shortFileName = fn # name to use in status messages.
 				self.targetFileName = os.path.join(self.default_directory,fn)
 				self.targetFileName = os.path.normpath(self.targetFileName)
-				self.targetFileNameW = unicode(self.targetFileName,encoding) #GS 12/15/02
+				assert(type(self.targetFileName) == type(u"")) # EKR: 1/21/03
 				path = os.path.dirname(self.targetFileName)
-				pathW = unicode(path,encoding) #GS 12/15/02
 				if path and len(path) > 0:
-					valid = os.path.exists(pathW) #GS 12/15/02
+					valid = os.path.exists(path)
 					if not valid:
 						self.writeError("path does not exist: " + path)
 				else:
@@ -2792,19 +2816,19 @@ class atFile:
 				valid = false
 		
 		if valid:
-			if os.path.exists(self.targetFileNameW): #GS 12/15/02
+			if os.path.exists(self.targetFileName):
 				try:
-					read_only = not os.access(self.targetFileNameW,os.W_OK) #GS 12/15/02
+					read_only = not os.access(self.targetFileName,os.W_OK)
 					if read_only:
 						es("read only: " + self.targetFileName)
 						valid = false
-				except: pass # os.access() may not exist on all platforms.
+				except:
+					pass # os.access() may not exist on all platforms.
 			
 		if valid:
 			try:
 				self.outputFileName = self.targetFileName + ".tmp"
-				self.outputFileNameW = unicode(self.outputFileName,encoding) #GS 12/15/02
-				self.outputFile = open(self.outputFileNameW,'wb') #GS 12/15/02
+				self.outputFile = open(self.outputFileName,'wb')
 				valid = self.outputFile != None
 				if not valid:
 					self.writeError("can not open " + self.outputFileName)
@@ -2818,6 +2842,7 @@ class atFile:
 			root.setDirty()
 		
 		return valid
+	
 	#@-body
 	#@-node:12::atFile.openWriteFile
 	#@+node:13::atFile.replaceTargetFileIfDifferent
@@ -2826,14 +2851,14 @@ class atFile:
 		
 		assert(self.outputFile == None)
 		
-		if os.path.exists(self.targetFileNameW): #GS 12/15/02
-			if filecmp.cmp(self.outputFileNameW, self.targetFileNameW): #GS 12/15/02
+		if os.path.exists(self.targetFileName):
+			if filecmp.cmp(self.outputFileName,self.targetFileName):
 				
 				#@<< delete the output file >>
 				#@+node:1::<< delete the output file >>
 				#@+body
 				try: # Just delete the temp file.
-					os.remove(self.outputFileNameW) #GS 12/15/02
+					os.remove(self.outputFileName)
 				except:
 					es("exception deleting:" + self.outputFileName)
 					es_exception()
@@ -2852,15 +2877,15 @@ class atFile:
 				try:
 					# 10/6/02: retain the access mode of the previous file,
 					# removing any setuid, setgid, and sticky bits.
-					mode = (os.stat(self.targetFileNameW))[0] & 0777 #GS 12/15/02
+					mode = (os.stat(self.targetFileName))[0] & 0777
 				except:
 					mode = None
 				
 				try: # Replace target file with temp file.
-					os.remove(self.targetFileNameW) #GS 12/15/02
-					utils_rename(self.outputFileNameW, self.targetFileNameW) #GS 12/15/02
+					os.remove(self.targetFileName)
+					utils_rename(self.outputFileName,self.targetFileName)
 					if mode: # 10/3/02: retain the access mode of the previous file.
-						os.chmod(self.targetFileNameW,mode) #GS 12/15/02
+						os.chmod(self.targetFileName,mode)
 					es("writing: " + self.shortFileName)
 				except:
 					self.writeError("exception removing and renaming:" + self.outputFileName +
@@ -2878,10 +2903,8 @@ class atFile:
 			#@+node:3::<< rename the output file to be the target file >>
 			#@+body
 			try:
-				# os.rename(self.outputFileName, self.targetFileName)
-				utils_rename(self.outputFileNameW, self.targetFileNameW) #GS 12/15/02
+				utils_rename(self.outputFileName,self.targetFileName)
 				es("creating: " + self.targetFileName)
-			
 			except:
 				self.writeError("exception renaming:" + self.outputFileName +
 					" to " + self.targetFileName)
@@ -3051,7 +3074,7 @@ class atFile:
 			if self.errors > 0 or self.root.isOrphan():
 				root.setOrphan()
 				root.setDirty() # 2/9/02: make _sure_ we try to rewrite this file.
-				os.remove(self.outputFileNameW) # Delete the temp file. #GS 12/15/02
+				os.remove(self.outputFileName) # Delete the temp file.
 				es("Not written: " + self.outputFileName)
 			else:
 				root.clearOrphan()
@@ -3374,7 +3397,7 @@ class atFile:
 #@@last
 #@@last
 #@-body
-#@-node:0::@file leoAtFile.py
+#@-node:0::@file leoAtFile.py 
 #@-leo
 #last1
 #last2

@@ -336,7 +336,7 @@ class undoer:
 			u.clearUndoState()
 			return None
 		if oldText == newText:
-			trace("no change")
+			# trace("no change")
 			return None
 		# Clear all optional params.
 		for ivar in optionalIvars:
@@ -1116,6 +1116,8 @@ class undoer:
 		# This may be off by one, and we don't care because
 		# we never use body text to compute undo results!
 		s = c.frame.body.get("1.0","end")
+		if type(s) == type(""):
+			s = unicode(s,"utf-8","replace")
 		newlines = 0 ; i = len(s) - 1
 		while i >= 0 and s[i] == '\n':
 			newlines += 1 ; i -= 1
@@ -1134,6 +1136,8 @@ class undoer:
 		#@+body
 		# Recreate the text using the present body text.
 		body = v.bodyString()
+		if type(body) == type(""):
+			body = unicode(body,"utf-8","replace")
 		body_lines = body.split('\n')
 		s = []
 		if leading > 0:
@@ -1149,9 +1153,7 @@ class undoer:
 		# Add oldNewlines newlines.
 		if oldNewlines > 0:
 			s = s + '\n' * oldNewlines
-		
-		result,junk = convertUnicodeToString(s)
-		
+		result = s
 		if u.debug_print:
 			print "body:  ",`body`
 			print "result:",`result`
@@ -1167,7 +1169,8 @@ class undoer:
 		#@+node:3::<< Get textResult from the Tk.Text widget >>
 		#@+body
 		textResult = c.frame.body.get("1.0","end")
-		textResult,junk = convertUnicodeToString(textResult)
+		if type(textResult) == type(""):
+			textResult = unicode(textResult,"utf-8","replace")
 		
 		if textResult != result:
 			# Remove the newline from textResult if that is the only difference.

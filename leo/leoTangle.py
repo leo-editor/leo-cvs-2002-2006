@@ -555,7 +555,7 @@ class tangleCommands:
 		# Stephen P. Schaefer 9/13/2002
 		# support @first directive
 		self.first_lines = ""
-		self.encoding = "utf-8" # 2/21/03
+		self.encoding = app().config.xml_version_string # 2/21/03
 		#@-body
 		#@-node:3::<< init directive ivars >> (tangle)
 	#@-body

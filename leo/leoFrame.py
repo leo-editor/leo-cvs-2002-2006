@@ -2292,11 +2292,6 @@ class LeoFrame:
 			s = ""
 			
 		s = s.strip()
-		
-		# Neither of these helps with the unicode problems.
-		# s,u = convertUnicodeToString(s)
-		# s,u = convertStringToUnicode(s)
-	
 		if s and len(s) > 0:
 			s += '\n' # Make sure we end the script properly.
 			try:

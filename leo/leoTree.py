@@ -852,7 +852,8 @@ class leoTree:
 		s = c.body.get("1.0", "end")
 		first,last = getTextSelection(c.body)
 		newSel = (first,last)
-		if type(s) != type(u""):
+		if s == None: s = u""
+		if type(s) == type(""):
 			s = unicode(s,"UTF-8","replace")
 		# Do nothing if nothing has changed.
 		if s == body: return "break"
@@ -966,11 +967,8 @@ class leoTree:
 			#@-node:3::<< convert leading tab to blanks >>
 
 		s = c.body.get("1.0", "end")
-		if app().use_unicode:
-			if type(s) != type(u""):
-				s = unicode(s,"UTF-8","replace")
-		else:
-			s,junk = convertUnicodeToString(s)
+		if type(s) == type(""):
+			s = unicode(s,"UTF-8","replace")
 		if len(s) > 0 and s[-1] == '\n' and removeTrailing:
 			s = s[:-1]
 		c.undoer.setUndoTypingParams(v,undoType,body,s,oldSel,newSel,oldYview=oldYview)
@@ -1160,40 +1158,17 @@ class leoTree:
 		if handleLeoHook("headkey1",c=c,v=v,ch=ch) != None:
 			return "break" # The hook claims to have handled the event.
 		s = v.edit_text.get("1.0","end")
-		
-		#@<< Make sure that the headline text is valid in the encoding >>
-		#@+node:1::<< Make sure that the headline text is valid in the encoding >>
-		#@+body
-		xml_encoding = app().config.xml_version_string
-		
-		if type(s) == types.UnicodeType:
-			try: # This can fail, e.g., if character > 256 used in Latin-1 encoding.
-				s2 = s.encode(xml_encoding) # result is a string.
-				s = s2 # don't destroy s until we know that all is well.
-			except:
-				es_exception()
-				es_nonEncodingChars(s,xml_encoding)
-				u = replaceNonEncodingChars(s,"?",xml_encoding)
-				s = u.encode(xml_encoding) # result is a string.
-				ins = v.edit_text.index("insert")
-				v.edit_text.delete("1.0","end")
-				v.edit_text.insert("end",u) # Always put unicode in the Tk.Text widget!
-				v.edit_text.mark_set("insert",ins)
-				return "break"
-		#@-body
-		#@-node:1::<< Make sure that the headline text is valid in the encoding >>
-
-				
+		if type(s) == type(""):
+			s = unicode(s,"utf-8","replace")
+	
 		# remove all newlines and update the vnode
-		if not s: s = ""
+		if not s: s = u""
 		s = string.replace(s,'\n','')
 		s = string.replace(s,'\r','')
-		
 		head = v.headString()
-		if type(head) == types.UnicodeType:
-			# vnode strings are encoded using the xml_encoding.
-			head = head.encode(xml_encoding)
-		
+		if head == None: head = u""
+		if type(head) == type(""):
+			head = unicode(head,"utf-8","replace")
 		changed = s != head
 		done = ch and (ch == '\r' or ch == '\n')
 		if not changed and not done:
@@ -1597,199 +1572,91 @@ class leoTree:
 	#@-node:6::tree.scanForTabWidth
 	#@+node:7::tree.select
 	#@+body
-	#@+at
-	#  Warning: do not try to "optimize" this by returning if v==tree.currentVnode.
-
-	#@-at
-	#@@c
-
+	# Warning: do not try to "optimize" this by returning if v==tree.currentVnode.
+	
 	def select (self,v):
 	
-		if 1: # GS
+		
+		#@<< define vars and stop editing >>
+		#@+node:1::<< define vars and stop editing >>
+		#@+body
+		c = self.commands ; frame = c.frame ; body = frame.body
+		old_v = c.currentVnode()
+		
+		# Unselect any previous selected but unedited label.
+		self.endEditLabel()
+		old = self.currentVnode
+		self.setUnselectedLabelState(old)
+		#@-body
+		#@-node:1::<< define vars and stop editing >>
+
+	
+		if handleLeoHook("unselect1",c=c,new_v=v,old_v=old_v) == None:
 			
-			#@<< new select code >>
-			#@+node:1::<< new select code >>
+			#@<< unselect the old node >>
+			#@+node:2::<< unselect the old node >>
 			#@+body
-			
-			#@<< define vars and stop editing >>
-			#@+node:1::<< define vars and stop editing >>
-			#@+body
-			# trace(`v`)
-			c = self.commands ; frame = c.frame ; body = frame.body
-			old_v = c.currentVnode()
-			
-			#GS Always get out of edit label state - moved from the bottom !!!!!
-			# Unselect any previous selected but unedited label.
-			
-			self.endEditLabel()
-			old = self.currentVnode
-			self.setUnselectedLabelState(old) #GS Took this out of (*) "if old and .." (Always)
-			#@-body
-			#@-node:1::<< define vars and stop editing >>
-
-			
-			if handleLeoHook("unselect1",c=c,new_v=v,old_v=old_v) == None:
-				
-				#@<< unselect the old node >>
-				#@+node:2::<< unselect the old node >>
-				#@+body
-				#GS Standard Leo unselect processing
-				
-				# Remember the position of the scrollbar before making any changes.
-				yview=body.yview()
-				insertSpot = c.body.index("insert") # 9/21/02
-				# Remember the old body text
-				old_body = body.get("1.0","end")
-				
-				#GS (*) moved from the bottom !!!!!
-				
-				if old and old != v and old.edit_text:
-					old.t.scrollBarSpot = yview
-					old.t.insertSpot = insertSpot # 9/21/02
-					# print yview,old
-				#@-body
-				#@-node:2::<< unselect the old node >>
-
-			else:
-				old_body = "" #GS Create dummy values for select.
-			handleLeoHook("unselect2",c=c,new_v=v,old_v=old_v)
-			
-			if handleLeoHook("select1",c=c,new_v=v,old_v=old_v) == None:
-				
-				#@<< select the new node >>
-				#@+node:3::<< select the new node >>
-				#@+body
-				xml_encoding = app().config.xml_version_string
-				s = v.t.bodyString
-				if type(s) != types.UnicodeType:
-					try: # Tk expects utf-8 encoding, and converting to unicode is safe.
-						s2 = unicode(s,xml_encoding)
-						s = s2 # don't destroy s until we know that all is well.
-					except:
-						s = v.t.bodyString #GS Isn't this redundent (can't see how s=s2 can fail)
-						es("can't convert to " + xml_encoding)
-						es_exception()
-						es_nonEncodingChars(s,xml_encoding)
-						s = replaceNonEncodingChars(s,"?",xml_encoding)
-						v.setBodyStringOrPane(s)
-				
-				# Delete only if necessary: this may reduce flicker slightly.
-				if old_body != s:
-					body.delete("1.0","end")
-					body.insert("1.0",s)
-					if 0: # This is too drastic.
-						# Make sure what we get is what we expect.
-						s2 = body.get("1.0","end")
-						if s == s2[:-1]:
-							body.delete("end-1c")
-				
-				# We must do a full recoloring: we may be changing context!
-				self.recolor_now(v)
-				
-				if v and v.t.scrollBarSpot != None:
-					first,last = v.t.scrollBarSpot
-					body.yview("moveto",first)
-					# print first,last,v
-				
-				#GS There is a redundent code in onActivate which is duplicate of this one
-				if v.t.insertSpot != None: # 9/21/02: moved from c.selectVnode
-					# print v.t.insertSpot,v
-					c.body.mark_set("insert",v.t.insertSpot)
-					c.body.see(v.t.insertSpot)
-				else:
-					c.body.mark_set("insert","1.0")
-				#@-body
-				#@-node:3::<< select the new node >>
-
-				
-			#GS Must be done regardless of hooks.
-			
-			#@<< set the current node and redraw >>
-			#@+node:4::<< set the current node and redraw >>
-			#@+body
-			self.currentVnode = v
-			self.setSelectedLabelState(v)
-			self.scanForTabWidth(v) # 9/13/02 #GS I believe this should also get into the select1 hook
-			self.commands.body.focus_set()
-			#@-body
-			#@-node:4::<< set the current node and redraw >>
-
-			
-			# Call the post-select hook.
-			handleLeoHook("select2",c=c,new_v=v,old_v=old_v)
-			#@-body
-			#@-node:1::<< new select code >>
-
-		else: # EKR
-			
-			#@<< old select code >>
-			#@+node:2::<< old select code >>
-			#@+body
-			c = self.commands ; frame = c.frame ; body = frame.body
-			old_v = c.currentVnode()
-			if handleLeoHook("select1",c=c,old_v=old_v,new_v=v) != None:
-				return
 			# Remember the position of the scrollbar before making any changes.
 			yview=body.yview()
-			insertSpot = c.body.index("insert") # 9/21/02
+			insertSpot = c.body.index("insert")
+			
 			# Remember the old body text
 			old_body = body.get("1.0","end")
-			xml_encoding = app().config.xml_version_string
-			s = v.t.bodyString
-			if type(s) != types.UnicodeType:
-				try: # Tk expects utf-8 encoding, and converting to unicode is safe.
-					s2 = unicode(s,xml_encoding)
-					s = s2 # don't destroy s until we know that all is well.
-				except:
-					s = v.t.bodyString
-					es("can't convert to " + xml_encoding)
-					es_exception()
-					es_nonEncodingChars(s,xml_encoding)
-					s = replaceNonEncodingChars(s,"?",xml_encoding)
-					v.setBodyStringOrPane(s)
 			
+			if old and old != v and old.edit_text:
+				old.t.scrollBarSpot = yview
+				old.t.insertSpot = insertSpot
+			
+			#@-body
+			#@-node:2::<< unselect the old node >>
+
+		else: old_body = u""
+	
+		handleLeoHook("unselect2",c=c,new_v=v,old_v=old_v)
+		
+		if handleLeoHook("select1",c=c,new_v=v,old_v=old_v) == None:
+			
+			#@<< select the new node >>
+			#@+node:3::<< select the new node >>
+			#@+body
 			# Delete only if necessary: this may reduce flicker slightly.
+			s = v.t.bodyString
+			if type(s) == type(""): # EKR: 1/21/03
+				s = unicode(s,"utf-8","replace")
+			if type(old_body) == type(""):
+				old_body = unicode(old_body,"utf-8","replace") # EKR: 1/21/03
 			if old_body != s:
 				body.delete("1.0","end")
 				body.insert("1.0",s)
-				if 0: # This is too drastic.
-					# Make sure what we get is what we expect.
-					s2 = body.get("1.0","end")
-					if s == s2[:-1]:
-						body.delete("end-1c")
 			
 			# We must do a full recoloring: we may be changing context!
 			self.recolor_now(v)
 			
-			# Unselect any previous selected but unedited label.
-			self.endEditLabel()
-			old = self.currentVnode
-			if old and old != v and old.edit_text:
-				self.setUnselectedLabelState(old)
-				old.t.scrollBarSpot = yview
-				old.t.insertSpot = insertSpot # 9/21/02
-				# print yview,old
 			if v and v.t.scrollBarSpot != None:
 				first,last = v.t.scrollBarSpot
 				body.yview("moveto",first)
-				# print first,last,v
+			
 			if v.t.insertSpot != None: # 9/21/02: moved from c.selectVnode
-				# print v.t.insertSpot,v
 				c.body.mark_set("insert",v.t.insertSpot)
 				c.body.see(v.t.insertSpot)
 			else:
 				c.body.mark_set("insert","1.0")
-			self.currentVnode = v
-			self.setSelectedLabelState(v)
-			self.scanForTabWidth(v) # 9/13/02
-			# Set focus.
-			self.commands.body.focus_set()
-			# Call the post-select hook.
-			handleLeoHook("select2",c=c,old_v=old_v,new_v=v)
 			#@-body
-			#@-node:2::<< old select code >>
+			#@-node:3::<< select the new node >>
 
 	
+		
+		#@<< set the current node and redraw >>
+		#@+node:4::<< set the current node and redraw >>
+		#@+body
+		self.currentVnode = v
+		self.setSelectedLabelState(v)
+		self.scanForTabWidth(v) # 9/13/02 #GS I believe this should also get into the select1 hook
+		self.commands.body.focus_set()
+		#@-body
+		#@-node:4::<< set the current node and redraw >>
+
+		handleLeoHook("select2",c=c,new_v=v,old_v=old_v)
 	#@-body
 	#@-node:7::tree.select
 	#@+node:8::tree.set...LabelState
