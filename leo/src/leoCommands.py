@@ -1027,19 +1027,21 @@ class baseCommands:
 		else:
 			#@		<< define class fileLikeObject >>
 			#@+node:<< define class fileLikeObject >>
-			class fileLikeObject:
-				
-				def __init__(self): self.s = ""
-				def clear (self):   self.s = ""
-				def close (self):   pass
-				def flush (self):   pass
+			if 0: # Now defined in leoGlobals.py
+			
+				class fileLikeObject:
 					
-				def get (self):
-					return self.s
-					
-				def write (self,s):
-					if s:
-						self.s = self.s + s
+					def __init__(self): self.s = ""
+					def clear (self):   self.s = ""
+					def close (self):   pass
+					def flush (self):   pass
+						
+					def get (self):
+						return self.s
+						
+					def write (self,s):
+						if s:
+							self.s = self.s + s
 			#@nonl
 			#@-node:<< define class fileLikeObject >>
 			#@nl
@@ -1067,7 +1069,7 @@ class baseCommands:
 						df.startSentinelComment = "#"
 						df.endSentinelComment = None
 						# Write the "derived file" into fo.
-						fo = fileLikeObject()
+						fo = g.fileLikeObject()
 						df.write(p.copy(),nosentinels=true,scriptFile=fo)
 						assert(p)
 						s = fo.get()
@@ -1097,7 +1099,8 @@ class baseCommands:
 			s += '\n' # Make sure we end the script properly.
 			try:
 				exec s in {} # Use {} to get a pristine environment!
-				g.es("end of script",color="purple")
+				if not script:
+					g.es("end of script",color="purple")
 			except:
 				g.es("exception executing script")
 				g.es_exception(full=false,c=c)
@@ -1169,7 +1172,7 @@ class baseCommands:
 		elif n >= len(lines):
 			p = root ; found = false
 			n2 = p.bodyString().count('\n')
-		elif root.isAtSilentFileNode():
+		elif root.isAtAsisFileNode():
 			#@		<< count outline lines, setting p,n2,found >>
 			#@+node:<< count outline lines, setting p,n2,found >> (@file-nosent only)
 			p = lastv = root
@@ -1486,17 +1489,8 @@ class baseCommands:
 	#@-node:skipToMatchingNodeSentinel
 	#@+node:getGoToFileName
 	def getGoToFileName (self,p):
-	
-		if p.isAtFileNode():
-			fileName = p.atFileNodeName()
-		elif p.isAtSilentFileNode():
-			fileName = p.atSilentFileNodeName()
-		elif p.isAtRawFileNode():
-			fileName = p.atRawFileNodeName()
-		else:
-			fileName = None
-			
-		return fileName
+		
+		return p.anyAtFileNodeName() # 4/28/04
 	#@nonl
 	#@-node:getGoToFileName
 	#@+node:fontPanel
@@ -2538,50 +2532,53 @@ class baseCommands:
 			#@nonl
 			#@-node:<< give test failed message >>
 			#@nl
-		#@	<< print summary message >>
-		#@+node:<<print summary message >>
-		if full:
-			print
-			g.enl()
-		
-		s = "%d nodes checked, %d errors" % (count,errors)
-		if errors or verbose:
-			print s ; g.es(s,color="red")
-		elif verbose:
-			g.es(s,color="green")
-		#@nonl
-		#@-node:<<print summary message >>
-		#@nl
+		if not unittest:
+			#@		<< print summary message >>
+			#@+node:<<print summary message >>
+			if full:
+				print
+				g.enl()
+			
+			s = "%d nodes checked, %d errors" % (count,errors)
+			if errors or verbose:
+				print s ; g.es(s,color="red")
+			elif verbose:
+				g.es(s,color="green")
+			#@nonl
+			#@-node:<<print summary message >>
+			#@nl
 		return errors
+	#@nonl
 	#@-node:c.checkOutline
 	#@+node:Hoist & dehoist & enablers
 	def dehoist(self):
 	
-		c = self ; v = c.currentVnode()
-		if v and c.canDehoist():
-			c.undoer.setUndoParams("De-Hoist",v)
+		c = self ; p = c.currentPosition()
+		g.trace(p)
+		if p and c.canDehoist():
+			c.undoer.setUndoParams("De-Hoist",p)
 			h,expanded = c.hoistStack.pop()
-			if expanded: v.expand()
-			else:        v.contract()
+			if expanded: p.expand()
+			else:        p.contract()
 			c.redraw()
 			c.frame.clearStatusLine()
 			if c.hoistStack:
 				p,junk = c.hoistStack[-1]
-				c.frame.putStatusLine("Hoist: " + h.headString())
+				c.frame.putStatusLine("Hoist: " + p.headString())
 			else:
 				c.frame.putStatusLine("No hoist")
 	
 	def hoist(self):
 	
-		c = self ; v = c.currentVnode()
-		if v and c.canHoist():
-			c.undoer.setUndoParams("Hoist",v)
+		c = self ; p = c.currentPosition()
+		if p and c.canHoist():
+			c.undoer.setUndoParams("Hoist",p)
 			# New in 4.2: remember expansion state.
-			c.hoistStack.append((v,v.isExpanded()),)
-			v.expand()
+			c.hoistStack.append((p,p.isExpanded()),)
+			p.expand()
 			c.redraw()
 			c.frame.clearStatusLine()
-			c.frame.putStatusLine("Hoist: " + v.headString())
+			c.frame.putStatusLine("Hoist: " + p.headString())
 	#@nonl
 	#@-node:Hoist & dehoist & enablers
 	#@+node:c.checkMoveWithParentWithWarning
@@ -3392,7 +3389,7 @@ class baseCommands:
 		back2 = back.visBack()
 		# A weird special case: just select back2.
 		if back2 and p.v in back2.v.t.vnodeList:
-			g.trace('-'*20,"no move, selecting visBack")
+			# g.trace('-'*20,"no move, selecting visBack")
 			c.selectVnode(back2)
 			return
 		c = self
@@ -4293,7 +4290,7 @@ class baseCommands:
 		if not changedFlag:
 			# g.trace("clearing all dirty bits")
 			for p in c.allNodes_iter():
-				if p.isDirty() and not (p.isAtFileNode() or p.isAtRawFileNode()):
+				if p.isDirty() and not (p.isAtFileNode() or p.isAtNorefFileNode()):
 					p.clearDirty()
 		# Update all derived changed markers.
 		c.changed = changedFlag
