@@ -191,7 +191,7 @@ class tnode:
 
 
 	#@+others
-	#@+node:2::t.__init__
+	#@+node:2:C=1:t.__init__
 	#@+body
 	# All params have defaults, so t = tnode() is valid.
 	
@@ -205,8 +205,9 @@ class tnode:
 		self.selectionLength = 0 # The length of the selected body text.
 		self.cloneIndex = 0 # Zero for @file nodes
 		self.insertSpot = None # Location of previous insert point.
+		self.scrollBarSpot = None # Previous value of scrollbar position.
 	#@-body
-	#@-node:2::t.__init__
+	#@-node:2:C=1:t.__init__
 	#@+node:3::t.__del__
 	#@+body
 	def __del__ (self):
@@ -231,7 +232,7 @@ class tnode:
 		return self.bodyString and len(self.bodyString) > 0
 	#@-body
 	#@-node:1::hasBody
-	#@+node:2:C=1:loadBodyPaneFromTnode
+	#@+node:2:C=2:loadBodyPaneFromTnode
 	#@+body
 	def loadBodyPaneFromTnode(self, body):
 	
@@ -242,7 +243,7 @@ class tnode:
 		else:
 			body.delete(1,"end")
 	#@-body
-	#@-node:2:C=1:loadBodyPaneFromTnode
+	#@-node:2:C=2:loadBodyPaneFromTnode
 	#@+node:3::Status bits
 	#@+node:1::isDirty
 	#@+body
@@ -268,7 +269,7 @@ class tnode:
 	#@-node:3::Status bits
 	#@-node:5::Getters
 	#@+node:6::Setters
-	#@+node:1:C=2:Setting body text
+	#@+node:1:C=3:Setting body text
 	#@+node:1::saveBodyPaneToTnode
 	#@+body
 	def saveBodyPaneToTnode (self, body):
@@ -284,7 +285,7 @@ class tnode:
 		self.selectionLength = j - i
 	#@-body
 	#@-node:1::saveBodyPaneToTnode
-	#@+node:2:C=3:setTnodeText
+	#@+node:2:C=4:setTnodeText
 	#@+body
 	# This sets the text in the tnode from the given string.
 	
@@ -297,7 +298,7 @@ class tnode:
 		assert(type(s)==types.StringType)
 		self.bodyString = s
 	#@-body
-	#@-node:2:C=3:setTnodeText
+	#@-node:2:C=4:setTnodeText
 	#@+node:3::setSelection
 	#@+body
 	def setSelection (self, start, length):
@@ -306,7 +307,7 @@ class tnode:
 		self.selectionLength = length
 	#@-body
 	#@-node:3::setSelection
-	#@-node:1:C=2:Setting body text
+	#@-node:1:C=3:Setting body text
 	#@+node:2::Status bits
 	#@+node:1::clearDirty
 	#@+body
@@ -401,7 +402,7 @@ class vnode:
 
 
 	#@+others
-	#@+node:2:C=4:v.__init__
+	#@+node:2:C=5:v.__init__
 	#@+body
 	def __init__ (self, commands, t):
 	
@@ -436,7 +437,7 @@ class vnode:
 		if app().deleteOnClose:
 			self.commands.tree.vnode_alloc_list.append(self)
 	#@-body
-	#@-node:2:C=4:v.__init__
+	#@-node:2:C=5:v.__init__
 	#@+node:3::v.__del__
 	#@+body
 	def __del__ (self):
@@ -464,7 +465,7 @@ class vnode:
 			return not (self is other) # Must return 0, 1 or -1
 	#@-body
 	#@-node:5::vnode.__cmp__ (not used)
-	#@+node:6:C=5:v.destroy
+	#@+node:6:C=6:v.destroy
 	#@+body
 	#@+at
 	#  This routine immediately removes all links from this node to other objects.  We expect this routine to be called only from 
@@ -486,8 +487,8 @@ class vnode:
 		if 0: # These no longer exist
 			self.box_id = self.icon_id = self.edit_text_id = None
 	#@-body
-	#@-node:6:C=5:v.destroy
-	#@+node:7:C=6:v.Callbacks
+	#@-node:6:C=6:v.destroy
+	#@+node:7:C=7:v.Callbacks
 	#@+body
 	#@+at
 	#  These callbacks are vnode methods so we can pass the vnode back to the tree class.
@@ -570,7 +571,7 @@ class vnode:
 
 	#@-body
 	#@-node:9::v.OnIconClick
-	#@-node:7:C=6:v.Callbacks
+	#@-node:7:C=7:v.Callbacks
 	#@+node:8::Comparisons
 	#@+node:1::atFileNodeName
 	#@+body
@@ -687,7 +688,7 @@ class vnode:
 		return s
 	#@-body
 	#@-node:2::moreHead
-	#@+node:3:C=7:v.moreBody
+	#@+node:3:C=8:v.moreBody
 	#@+body
 	#@+at
 	#  Returns the body string in MORE format.  It inserts a backslash before any leading plus, minus or backslash.
@@ -727,7 +728,7 @@ class vnode:
 				list.append(ch)
 			return string.join(list,'')
 	#@-body
-	#@-node:3:C=7:v.moreBody
+	#@-node:3:C=8:v.moreBody
 	#@-node:9::File Conversion (vnode)
 	#@+node:10::Getters
 	#@+node:1::bodyString
@@ -1271,7 +1272,7 @@ class vnode:
 		self.statusBits = status
 	#@-body
 	#@-node:10::initStatus
-	#@+node:11:C=8:setAncestorsOfClonedNodesInTreeDirty
+	#@+node:11:C=9:setAncestorsOfClonedNodesInTreeDirty
 	#@+body
 	#@+at
 	#  This is called from the key-event handler, so we must not force a redraw of the screen here. We avoid redraw in most cases 
@@ -1308,8 +1309,8 @@ class vnode:
 	
 		return redraw_flag
 	#@-body
-	#@-node:11:C=8:setAncestorsOfClonedNodesInTreeDirty
-	#@+node:12:C=9:setAncestorAtFileNodeDirty
+	#@-node:11:C=9:setAncestorsOfClonedNodesInTreeDirty
+	#@+node:12:C=10:setAncestorAtFileNodeDirty
 	#@+body
 	#@+at
 	#  This is called from the key-event handler, so we must not force a redraw of the screen here. We avoid redraw in most cases 
@@ -1336,7 +1337,7 @@ class vnode:
 		c.endUpdate(redraw_flag) # A crucial optimization!
 		return redraw_flag # Allow caller to do the same optimization.
 	#@-body
-	#@-node:12:C=9:setAncestorAtFileNodeDirty
+	#@-node:12:C=10:setAncestorAtFileNodeDirty
 	#@+node:13::setClonedBit & initClonedBit
 	#@+body
 	def setClonedBit (self):
@@ -1351,7 +1352,7 @@ class vnode:
 			self.statusBits &= ~ self.clonedBit
 	#@-body
 	#@-node:13::setClonedBit & initClonedBit
-	#@+node:14:C=10:setDirty, setDirtyDeleted & initDirtyBit
+	#@+node:14:C=11:setDirty, setDirtyDeleted & initDirtyBit
 	#@+body
 	#@+at
 	#  v.setDirty now ensures that all cloned nodes are marked dirty and that all ancestor @file nodes are marked dirty.  It is 
@@ -1413,7 +1414,7 @@ class vnode:
 	def initDirtyBit (self):
 		self.t.setDirty()
 	#@-body
-	#@-node:14:C=10:setDirty, setDirtyDeleted & initDirtyBit
+	#@-node:14:C=11:setDirty, setDirtyDeleted & initDirtyBit
 	#@+node:15::setMarked & initMarkedBit
 	#@+body
 	def setMarked (self):
@@ -1475,7 +1476,7 @@ class vnode:
 			self.t = t
 	#@-body
 	#@-node:6::setT
-	#@+node:7:C=11:v.sortChildren
+	#@+node:7:C=12:v.sortChildren
 	#@+body
 	def sortChildren (self):
 		
@@ -1494,7 +1495,7 @@ class vnode:
 			child.moveToNthChildOf(v,index)
 			index += 1
 	#@-body
-	#@-node:7:C=11:v.sortChildren
+	#@-node:7:C=12:v.sortChildren
 	#@+node:8::trimTrailingLines
 	#@+body
 	#@+at
@@ -1570,7 +1571,7 @@ class vnode:
 		return self # We no longer need dvnodes: vnodes contain all needed info.
 	#@-body
 	#@-node:2::doDelete
-	#@+node:3:C=12:insertAfter
+	#@+node:3:C=13:insertAfter
 	#@+body
 	def insertAfter (self, t = None):
 	
@@ -1583,7 +1584,7 @@ class vnode:
 		v.linkAfter(self)
 		return v
 	#@-body
-	#@-node:3:C=12:insertAfter
+	#@-node:3:C=13:insertAfter
 	#@+node:4::insertAsLastChild
 	#@+body
 	def insertAsLastChild (self,t = None):
@@ -1612,7 +1613,7 @@ class vnode:
 		return v
 	#@-body
 	#@-node:5::insertAsNthChild
-	#@+node:6:C=13:moveAfter
+	#@+node:6:C=14:moveAfter
 	#@+body
 	# Used by scripts
 	
@@ -1631,8 +1632,8 @@ class vnode:
 		if not a.parent() and not a.back():
 			c.tree.rootVnode = a
 	#@-body
-	#@-node:6:C=13:moveAfter
-	#@+node:7:C=14:moveToRoot
+	#@-node:6:C=14:moveAfter
+	#@+node:7:C=15:moveToRoot
 	#@+body
 	def moveToRoot (self, oldRoot = None):
 	
@@ -1645,8 +1646,8 @@ class vnode:
 		v.linkAsRoot(oldRoot)
 		v.createDependents()
 	#@-body
-	#@-node:7:C=14:moveToRoot
-	#@+node:8:C=15:moveToNthChildOf
+	#@-node:7:C=15:moveToRoot
+	#@+node:8:C=16:moveToNthChildOf
 	#@+body
 	# Compatibility routine for scripts
 	
@@ -1665,7 +1666,7 @@ class vnode:
 		if not p.parent() and not p.back():
 			c.tree.rootVnode = p
 	#@-body
-	#@-node:8:C=15:moveToNthChildOf
+	#@-node:8:C=16:moveToNthChildOf
 	#@+node:9::restoreOutlineFromDVnodes (test)
 	#@+body
 	# Restores (relinks) the dv tree in the position described by back and parent.
@@ -1681,7 +1682,7 @@ class vnode:
 		return dv
 	#@-body
 	#@-node:9::restoreOutlineFromDVnodes (test)
-	#@+node:10:C=16:swap_links
+	#@+node:10:C=17:swap_links
 	#@+body
 	# 7/5/02: New for undo.
 	# On entry, linked is linked into a tree and unlinked is not.
@@ -1716,10 +1717,10 @@ class vnode:
 		# Clear links in linked.
 		linked.mParent = linked.mBack = linked.mNext = linked.joinList = None
 	#@-body
-	#@-node:10:C=16:swap_links
+	#@-node:10:C=17:swap_links
 	#@-node:1::Entry Points (vnode)
 	#@+node:2::Public helper functions
-	#@+node:1:C=17:v.copyTree
+	#@+node:1:C=18:v.copyTree
 	#@+body
 	#@+at
 	#  This method copies all subtrees of oldRoot to the subtrees of newRoot.  The caller is responsible for copying the headline 
@@ -1753,7 +1754,7 @@ class vnode:
 			new_v = new_v.next()
 		assert(new_v == None)
 	#@-body
-	#@-node:1:C=17:v.copyTree
+	#@-node:1:C=18:v.copyTree
 	#@+node:2::joinTreeTo
 	#@+body
 	#@+at
@@ -1923,14 +1924,14 @@ class vnode:
 		assert(child2 == None)
 	#@-body
 	#@-node:2::copyCloneBitsTo
-	#@+node:3:C=18:v.copyNode
+	#@+node:3:C=19:v.copyNode
 	#@+body
 	def copyNode (self, old_node, new_node):
 	
 		new_node.mHeadString = old_node.mHeadString
 		new_node.iconVal = old_node.iconVal
 	#@-body
-	#@-node:3:C=18:v.copyNode
+	#@-node:3:C=19:v.copyNode
 	#@+node:4::createDependents (bug fix: 4/22/01)
 	#@+body
 	# This method creates all nodes that depend on the receiver.
@@ -2105,7 +2106,7 @@ class vnode:
 				v.mNext.mBack = v
 	#@-body
 	#@-node:12::linkAsNthChild
-	#@+node:13:C=19:linkAsRoot
+	#@+node:13:C=20:linkAsRoot
 	#@+body
 	#@+at
 	#  Bug fix: 5/27/02.  We link in the rest of the tree only when oldRoot != None.  Otherwise, we are calling this routine from 
@@ -2129,7 +2130,7 @@ class vnode:
 		tree.rootVnode = v
 
 	#@-body
-	#@-node:13:C=19:linkAsRoot
+	#@-node:13:C=20:linkAsRoot
 	#@+node:14::unlink
 	#@+body
 	def unlink (self):

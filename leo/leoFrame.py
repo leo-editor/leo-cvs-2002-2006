@@ -2728,7 +2728,7 @@ class LeoFrame:
 		self.split2Pane1,self.split2Pane2 = split2Pane1,split2Pane2
 		
 		#@<< create the body pane >>
-		#@+node:1::<< create the body pane >>
+		#@+node:1:C=49:<< create the body pane >>
 		#@+body
 		# A light selectbackground value is needed to make syntax coloring look good.
 		wrap = config.getBoolWindowPref('body_pane_wraps')
@@ -2761,7 +2761,7 @@ class LeoFrame:
 			
 		body.pack(expand=1, fill="both")
 		#@-body
-		#@-node:1::<< create the body pane >>
+		#@-node:1:C=49:<< create the body pane >>
 
 		
 		#@<< create the tree pane >>

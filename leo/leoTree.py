@@ -972,7 +972,7 @@ class leoTree:
 		if s == None: s = ""
 		c.undoer.setUndoTypingParams(v,undoType,body,s,oldSel,newSel)
 		v.t.bodyString = s
-		v.t.insertSpot = c.body.index("insert")
+		v.t.insertSpot = c.body.index("insert") # 9/1/02
 		# Recolor the body.
 		self.recolor_now(v) # We are already at idle time, so this doesn't help much.
 		# Update dirty bits and changed bit.
@@ -1094,7 +1094,7 @@ class leoTree:
 	#@-body
 	#@-node:9:C=26:tree.OnHeadlineKey, onHeadlineChanged, idle_head_key
 	#@-node:11::Event handers
-	#@+node:12::Selecting & editing (tree)
+	#@+node:12:C=27:Selecting & editing (tree)
 	#@+node:1::dimEditLabel, undimEditLabel
 	#@+body
 	# Convenience methods so the caller doesn't have to know the present edit node.
@@ -1110,7 +1110,7 @@ class leoTree:
 		self.setSelectedLabelState(v)
 	#@-body
 	#@-node:1::dimEditLabel, undimEditLabel
-	#@+node:2:C=27:editLabel
+	#@+node:2:C=28:editLabel
 	#@+body
 	# Start editing v.edit_text
 	
@@ -1131,8 +1131,8 @@ class leoTree:
 		else:
 			self.editVnode = None
 	#@-body
-	#@-node:2:C=27:editLabel
-	#@+node:3:C=28:endEditLab (es here helps set focus properly!)
+	#@-node:2:C=28:editLabel
+	#@+node:3:C=29:endEditLab (es here helps set focus properly!)
 	#@+body
 	# End editing for self.editText
 	
@@ -1148,8 +1148,8 @@ class leoTree:
 		if v and v.joinList:
 			self.redraw_now() # force a redraw of joined headlines.
 	#@-body
-	#@-node:3:C=28:endEditLab (es here helps set focus properly!)
-	#@+node:4:C=29:tree.select
+	#@-node:3:C=29:endEditLab (es here helps set focus properly!)
+	#@+node:4:C=30:tree.select
 	#@+body
 	#@+at
 	#  Warning: do not try to "optimize" this be returning if v==tree.currentVnode.
@@ -1158,9 +1158,11 @@ class leoTree:
 	#@@c
 	
 	def select (self, v):
-	
+		
+		c = self.commands ; frame = c.frame ; body = frame.body
+		# Remember the position of the scrollbar before making any changes.
+		yview=body.yview()
 		# Replace body text
-		body = self.commands.frame.body
 		body.delete("1.0", "end")
 		body.insert("1.0", v.t.bodyString)
 		self.recolor_now(v)
@@ -1169,6 +1171,12 @@ class leoTree:
 		old = self.currentVnode
 		if old and old != v and old.edit_text:
 			self.setUnselectedLabelState(old)
+			old.t.scrollBarSpot = yview
+			# print yview,`old`
+		if v and v.t.scrollBarSpot != None:
+			first,last = v.t.scrollBarSpot
+			body.yview("moveto",first)
+			# print first,last,`v`
 		self.currentVnode = v
 		self.setSelectedLabelState(v)
 		# Set focus.
@@ -1177,8 +1185,8 @@ class leoTree:
 		else:
 			self.canvas.focus_set()
 	#@-body
-	#@-node:4:C=29:tree.select
-	#@+node:5:C=30:tree.set...LabelState
+	#@-node:4:C=30:tree.select
+	#@+node:5:C=31:tree.set...LabelState
 	#@+body
 	def setNormalLabelState (self,v): # selected, editing
 		if v and v.edit_text:
@@ -1198,8 +1206,8 @@ class leoTree:
 		if v and v.edit_text:
 			v.edit_text.configure(state="disabled",highlightthickness=0,fg="black",bg="white")
 	#@-body
-	#@-node:5:C=30:tree.set...LabelState
-	#@-node:12::Selecting & editing (tree)
+	#@-node:5:C=31:tree.set...LabelState
+	#@-node:12:C=27:Selecting & editing (tree)
 	#@-others
 #@-body
 #@-node:0::@file leoTree.py
