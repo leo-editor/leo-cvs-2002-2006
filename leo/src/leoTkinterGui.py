@@ -199,6 +199,7 @@ class tkinterGui(leoGui.leoGui):
                 g.CheckVersion(self.root.getvar("tk_patchLevel"),"8.4")
             ):
                 files = tkFileDialog.askopenfilenames(title=title,filetypes=filetypes)
+                # g.trace(files)
                 return list(files)
             else:
                 # Get one file and return it as a list.
