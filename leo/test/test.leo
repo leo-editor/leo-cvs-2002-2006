@@ -3,7 +3,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="6450" clone_windows="0"/>
 <globals body_outline_ratio="0.590643274854">
-	<global_window_position top="110" left="201" height="839" width="907"/>
+	<global_window_position top="31" left="83" height="839" width="907"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -18,9 +18,9 @@
 <v t="ekr.20041217132317" a="E"><vh>@strings [a,b, c] test = a</vh></v>
 <v t="ekr.20041217132338"><vh>@ints [1, 2, 3] test = 3</vh></v>
 <v t="ekr.20041217144914"><vh>@page colors</vh>
-<v t="ekr.20041217135841"><vh>@color outline_pane_background_color = None</vh></v>
-<v t="ekr.20041217142026"><vh>@color log_pane_background_color = None</vh></v>
-<v t="ekr.20041217143421"><vh>@color body_text_background_color = None</vh></v>
+<v t="ekr.20041217135841"><vh>@color outline_pane_background_color = #ffffe1</vh></v>
+<v t="ekr.20041217142026"><vh>@color log_pane_background_color = #f2fdff</vh></v>
+<v t="ekr.20041217143421"><vh>@color body_text_background_color = #ffecea</vh></v>
 </v>
 </v>
 <v t="EKR.20040623200709"><vh>@thin ../src/leoTest.py</vh></v>
@@ -988,7 +988,7 @@
 </v>
 </v>
 </v>
-<v t="ekr.20040712101754"><vh>Unit Tests</vh>
+<v t="ekr.20040712101754" a="E"><vh>Unit Tests</vh>
 <v t="ekr.20041012101944"><vh>@thin ../test/unittest/errorTest.py</vh></v>
 <v t="ekr.20040712101754.102"><vh>atFileTests...</vh>
 <v t="ekr.20040707140849.5"><vh>at-File test code (leoTest.py)</vh>
@@ -1443,7 +1443,7 @@
 </v>
 <v t="ekr.20040707081532.1"><vh>Do @test</vh></v>
 </v>
-<v t="ekr.20041213074603" a="ETV"><vh>Settings dialog To do</vh>
+<v t="ekr.20041213074603" a="TV"><vh>Settings dialog To do</vh>
 <v t="ekr.20041211053412"><vh>Fix recent files problems</vh></v>
 <v t="ekr.20041211053412.1"><vh>Fix bug: findSettingsRoot doesn't work if no summary node</vh></v>
 <v t="ekr.20041211053412.2"><vh>Support new buttons</vh></v>
@@ -2209,7 +2209,7 @@ import leoGlobals as g
 print g.app.config.redirect_execute_script_output_to_log_pane</t>
 <t tx="EKR.20040627103732">@ignore</t>
 <t tx="EKR.20040627103801"></t>
-<t tx="EKR.20040627103902" lineYOffset="4b032e" icons="5d7100287d7101285504747970657102550466696c65710355047870616471044b02550577686572657105550a6265666f726549636f6e71066803582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286802680368084afdffffff6803582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6805550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e"></t>
+<t tx="EKR.20040627103902" lineYOffset="4b032e" icons="5d7100287d710128550577686572657102550a6265666f726549636f6e710355047870616471044b025504747970657105550466696c6571066806582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286805680668084afdffffff6806582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6802550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e"></t>
 <t tx="EKR.20040627121836">import leoGlobals as g
 
 c = g.top() ; p = c.currentPosition()
@@ -2340,7 +2340,7 @@ for p in c.rootPosition().allNodes_iter():
 s = "%d nodes" % count
 print s ; g.es(s)</t>
 <t tx="ekr.20040312101720"></t>
-<t tx="ekr.20040317101155" lineYOffset="4b032e" icons="5d7100287d710128550577686572657102550a6265666f726549636f6e710355047870616471044b025504747970657105550466696c65710668065834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286805680668084afdffffff68065834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6802550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">import leoGlobals as g
+<t tx="ekr.20040317101155" lineYOffset="4b032e" icons="5d7100287d7101285504747970657102550466696c65710355047870616471044b02550577686572657105550a6265666f726549636f6e710668035834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286802680368084afdffffff68035834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6805550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">import leoGlobals as g
 
 c = g.top()
 
@@ -11224,16 +11224,16 @@ Bigger projects:
     top.focus_force() # Get all keystrokes.
     root.wait_window(top)</t>
 <t tx="ekr.20041121151002">@nocolor</t>
-<t tx="ekr.20041121151002.1">C:\prog\leoCVS\leo\plugins\leoplugins.leo
-C:\prog\leoCVS\leo\doc\leodocs.leo
-C:\prog\leoCVS\leo\src\LeoPy.leo
-C:\prog\leoCVS\leo\test\unittest\minimalLeoFile2.leo
-C:\prog\leoCVS\leo\test\unittest\minimalLeoFile.leo
+<t tx="ekr.20041121151002.1">C:\prog\leoCVS\leo\src\LeoPy.leo
+C:\prog\leoCVS\leo\plugins\leoplugins.leo
+C:\prog\leoCVS\leo\plugins\leoPlugins.leo
 C:\prog\leoCVS\leo\test\unittest\minimalLeoFile3.leo
-C:\prog\leoCVS\leo\doc\LeoDocs.leo
-C:\prog\leoCVS\leo\test\test.leo
+C:\prog\leoCVS\leo\test\unittest\minimalLeoFile.leo
 C:\prog\leoCVS\leo\dist\leoDist.leo
-C:\prog\leoCVS\leo\plugins\leoPlugins.leo</t>
+C:\prog\leoCVS\leo\doc\leodocs.leo
+C:\prog\leoCVS\leo\test\test.leo
+C:\prog\leoCVS\leo\test\unittest\minimalLeoFile2.leo
+C:\prog\leoCVS\leo\doc\LeoDocs.leo</t>
 <t tx="ekr.20041124063401"></t>
 <t tx="ekr.20041124102349">class tixDialog (leoTkinterDialog.leoTkinterDialog):
     
@@ -13714,7 +13714,9 @@ if name in ("OK","Cancel"):</t>
 <t tx="ekr.20041213074603">@ignore
 @killcolor
 
-- Force all tree widgets to new color scheme when colors change.</t>
+- Force all tree widgets to new color scheme when colors change.
+
+- Create widgets for @strings and @ints.</t>
 <t tx="ekr.20041213075902"># The font for the log pane. Default is default font for Tk.Text widgets.
 # Tk translates invalid font names to another font in a system-dependent way.
 # 
