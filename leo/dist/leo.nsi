@@ -128,12 +128,7 @@ ok:
   
   SetOutPath $INSTDIR
   File c:\prog\leoCVS\leo\__init__.py
-  File c:\prog\leoCVS\leo\install
-  File c:\prog\leoCVS\leo\manifest.in
-  File c:\prog\leoCVS\leo\preSetup.py
-  File c:\prog\leoCVS\leo\setup.py
-  File c:\prog\leoCVS\leo\postSetup.py
-  File c:\prog\leoCVS\leo\uninstall
+
   
   CreateShortCut "$INSTDIR\Shortcut to leo.py.lnk" "$INSTDIR\src\leo.py" "" "$INSTDIR\src\leo.py" 0
 
@@ -143,6 +138,12 @@ ok:
   
   SetOutPath $INSTDIR\dist
   File c:\prog\leoCVS\leo\dist\leo.nsi
+  File c:\prog\leoCVS\leo\dist\install
+  File c:\prog\leoCVS\leo\dist\manifest.in
+  File c:\prog\leoCVS\leo\dist\preSetup.py
+  File c:\prog\leoCVS\leo\dist\setup.py
+  File c:\prog\leoCVS\leo\dist\postSetup.py
+  File c:\prog\leoCVS\leo\dist\uninstall
  
   SetOutPath $INSTDIR\doc
   File c:\prog\leoCVS\leo\doc\LeoDocs.leo
