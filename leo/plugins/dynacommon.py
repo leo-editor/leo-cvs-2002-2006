@@ -1,5 +1,5 @@
 #@+leo-ver=4-thin
-#@+node:ekr.20050328091952.93:@thin dynacommon.py
+#@+node:ekr.20050329114605.95:@thin dynacommon.py
 """not needed in pluginManager.txt
 generate this file to exist in the Leo plugins directory.
 you have to edit in your correct paths. < set filenames > section 
@@ -35,20 +35,18 @@ except NameError:
 false = False
 true = True
 
-#import StringIO
 #possibly there are unicode anomalies in cStringIO?
 try:
     import cStringIO as StringIO
 except ImportError:
     import StringIO
 
-
-__version__ = '0.0139c'  #m05328a03:50
+__version__ = '0.0139d'  #m05328p12:48
 __not_a_plugin__ = True
 #@+others
-#@+node:ekr.20050328091952.94:others
+#@+node:ekr.20050329114605.96:others
 
-#@+node:ekr.20050328091952.95:_caller_symbols
+#@+node:ekr.20050329114605.97:_caller_symbols
 def _caller_symbols():
     """aspncookbook/52278
     Print an expression and its value, 
@@ -62,12 +60,12 @@ def _caller_symbols():
     except StandardError:
         t = sys.exc_info()[2].tb_frame
         return (t.f_back.f_back.f_globals, t.f_back.f_back.f_locals)
-#@-node:ekr.20050328091952.95:_caller_symbols
-#@-node:ekr.20050328091952.94:others
-#@+node:ekr.20050328091952.96:functs w/doctest
+#@-node:ekr.20050329114605.97:_caller_symbols
+#@-node:ekr.20050329114605.96:others
+#@+node:ekr.20050329114605.98:functs w/doctest
 
 #@+others
-#@+node:ekr.20050328091952.97:deangle
+#@+node:ekr.20050329114605.99:deangle
 def deangle(s, repl=  '+'):
     """
     use repl so output can be pasted w/o appearing as named nodes to leo
@@ -84,8 +82,8 @@ def deangle(s, repl=  '+'):
         return '<%s%s'%(repl, s[1:])
     return s
 #@nonl
-#@-node:ekr.20050328091952.97:deangle
-#@+node:ekr.20050328091952.98:commafy
+#@-node:ekr.20050329114605.99:deangle
+#@+node:ekr.20050329114605.100:commafy
 def commafy(val, sep= ','):
     """Bengt , added sep
     mod to use leading seperator if . maybe
@@ -103,8 +101,8 @@ def commafy(val, sep= ','):
     while val: val, rest = val[:-3], '%s%s%s'%(val[-3:], sep, rest)
     return '%s%s%s' %(sign, rest[:-1], dec)
 #@nonl
-#@-node:ekr.20050328091952.98:commafy
-#@+node:ekr.20050328091952.99:stripSentinels
+#@-node:ekr.20050329114605.100:commafy
+#@+node:ekr.20050329114605.101:stripSentinels
 def stripSentinels(s, stripsentinals=1,
            stripcomments=0, stripnodesents=1, stripdirectives=1, **ignored):
     r""" r for doctest, ignored so can pass **hopts from htmlize
@@ -116,7 +114,7 @@ def stripSentinels(s, stripsentinals=1,
       lstrip instead of strip, no excess strip.
       save users newlines and join with '' instead of /n
       break out early if not a comment and stripping everything anyway.
-      added raw/end_raw in addition to verbatium
+      added raw/end_raw in addition to verbatim
 
     and not create a superfluous lines list. wherever it is found.
     OTOH, splitlines in the forloop still creates a list, so is a style point I guess.
@@ -124,7 +122,7 @@ def stripSentinels(s, stripsentinals=1,
     is startswith Unicode safe? is slice? slice over *with next up.
 
   #@  << the essential doctesting >>
-  #@+node:ekr.20050328091952.100:<< the essential doctesting >>
+  #@+node:ekr.20050329114605.102:<< the essential doctesting >>
   >>> s = '#@+leo=4\n#@+node:sent\nhay\n#@nonl\n#@-node: chk \n#@verbatim\n@deco\n#@  @others\n#cmt'
   >>> stripSentinels(s,0,0,0,0)
   '#@+leo=4\n#@+sent\nhay\n#@nonl\n#@- chk \n#@verbatim\n@deco\n#@  @others\n#cmt'
@@ -158,7 +156,7 @@ def stripSentinels(s, stripsentinals=1,
   '#@@raw\nbetween raw\n#@@end_raw\n'
   >>> #
   
-  #@-node:ekr.20050328091952.100:<< the essential doctesting >>
+  #@-node:ekr.20050329114605.102:<< the essential doctesting >>
   #@nl
   not every possible corner case.
 
@@ -242,8 +240,8 @@ def stripSentinels(s, stripsentinals=1,
 
     return ''.join(result)  #user might have other ideas about \n
 #@nonl
-#@-node:ekr.20050328091952.99:stripSentinels
-#@+node:ekr.20050328091952.101:sanitize_
+#@-node:ekr.20050329114605.101:stripSentinels
+#@+node:ekr.20050329114605.103:sanitize_
 
 def sanitize_(s):
     """ Leo's sanitize_filename is too aggressive and too lax
@@ -252,7 +250,7 @@ def sanitize_(s):
     strips most characters, space and replaces with underscore, len<128
     the doctest is in a subnode to allow syntax highlighting
     #@    << chk sanitize >>
-    #@+node:ekr.20050328091952.102:<< chk sanitize >>
+    #@+node:ekr.20050329114605.104:<< chk sanitize >>
     the best of both worlds, doctest with syntax highlighting!
     >>> sanitize_("|\\ /!@=#$%,^&?:;.\\"'<>`~*+")
     '_____________'
@@ -261,7 +259,7 @@ def sanitize_(s):
     >>> #one comment line required when use subnode this way 
     >>> #to avoid doctest seeing node sentinals. don't ask...
     #@nonl
-    #@-node:ekr.20050328091952.102:<< chk sanitize >>
+    #@-node:ekr.20050329114605.104:<< chk sanitize >>
     #@nl
     """
     if not s: return
@@ -275,8 +273,8 @@ def sanitize_(s):
     #should test for unicode before str()
     return res.sub('_', str(s.strip())).replace('__','_')[:128]
 #@nonl
-#@-node:ekr.20050328091952.101:sanitize_
-#@+node:ekr.20050328091952.103:leotmp
+#@-node:ekr.20050329114605.103:sanitize_
+#@+node:ekr.20050329114605.105:leotmp
 def leotmp(name = None, tmp= None):
     """ attempt to divine the user tmp dir add to input name
     later prepend leoID unless no leoID flag or something
@@ -300,7 +298,7 @@ def leotmp(name = None, tmp= None):
         return tmp
     return g.os_path_join(tmp, name)
 
-#@-node:ekr.20050328091952.103:leotmp
+#@-node:ekr.20050329114605.105:leotmp
 #@-others
 #@+at
 # others not required except to enable du_test for all these subnodes
@@ -311,8 +309,8 @@ def leotmp(name = None, tmp= None):
 # 
 # 23 passed and 0 failed.
 #@-at
-#@-node:ekr.20050328091952.96:functs w/doctest
-#@+node:ekr.20050328091952.104:dynastuff
+#@-node:ekr.20050329114605.98:functs w/doctest
+#@+node:ekr.20050329114605.106:dynastuff
 
 
 #@+at
@@ -326,7 +324,7 @@ def leotmp(name = None, tmp= None):
 # 
 # 
 #@-at
-#@+node:ekr.20050328091952.105:fixbody
+#@+node:ekr.20050329114605.107:fixbody
 #ripe for consolidation. executeScript & getScript changed since this
 #stripSentinals better than adhockduplications in 3 functions here
 #they will stop working eventually. and better unicode support is mandatory
@@ -514,8 +512,8 @@ def fixbody(data, c= g.top()):
 
     return data
 #@nonl
-#@-node:ekr.20050328091952.105:fixbody
-#@+node:ekr.20050328091952.106:AskYesNo
+#@-node:ekr.20050329114605.107:fixbody
+#@+node:ekr.20050329114605.108:AskYesNo
 
 #file leoTkinterGui.py
 #import tkFont,Tkinter,tkFileDialog leoTkinterDialog
@@ -535,8 +533,8 @@ def runAskYesNoCancelDialog(c,title,
 
     return d.run(modal=True)
 #@nonl
-#@-node:ekr.20050328091952.106:AskYesNo
-#@+node:ekr.20050328091952.107:dynaBunch
+#@-node:ekr.20050329114605.108:AskYesNo
+#@+node:ekr.20050329114605.109:dynaBunch
 import operator
 
 def init_dyna(c, *a, **k):
@@ -623,8 +621,8 @@ class dynaBunch(object):
 
     def save(self, outfile):"""
 #@nonl
-#@-node:ekr.20050328091952.107:dynaBunch
-#@+node:ekr.20050328091952.108:names and colors
+#@-node:ekr.20050329114605.109:dynaBunch
+#@+node:ekr.20050329114605.110:names and colors
 #Leo log Tk names & HTML names and colors
 dycolors = dynaBunch( 
     gAqua = 'aquamarine3',
@@ -663,8 +661,8 @@ dycolors = dynaBunch(
     hYellow = '#FFFF00',
     )
 #print dycolors.gYellow
-#@-node:ekr.20050328091952.108:names and colors
-#@+node:ekr.20050328091952.109:quiet warnings
+#@-node:ekr.20050329114605.110:names and colors
+#@+node:ekr.20050329114605.111:quiet warnings
 
 #quiet warnings from pychecker and tim1 about regex
 #this should be part of init rather than module level.
@@ -687,8 +685,8 @@ C:\C\PY\PYTHON233\lib\regsub.py:15: DeprecationWarning: the regsub module is dep
 recated; please use re.sub()
   DeprecationWarning)'''
 
-#@-node:ekr.20050328091952.109:quiet warnings
-#@+node:ekr.20050328091952.110:dynaerrout
+#@-node:ekr.20050329114605.111:quiet warnings
+#@+node:ekr.20050329114605.112:dynaerrout
 #maybe can turn on full exception reporting 
 #rather than rolling my own
 # es_event_exception (eventName,full=false):
@@ -719,8 +717,8 @@ def dynaerrout(err, msg):
         #c.goToLineNumber(n=int(newSel))
         g.es(line, color= dycolors.gError)
 #@nonl
-#@-node:ekr.20050328091952.110:dynaerrout
-#@+node:ekr.20050328091952.111:dynaerrline
+#@-node:ekr.20050329114605.112:dynaerrout
+#@+node:ekr.20050329114605.113:dynaerrline
 
 def dynaerrline():
     """for debuggin, return just the error string on one line
@@ -743,8 +741,8 @@ def dynaerrline():
 
     return '%s %s %s '%(exc_type_name, value, el)
 
-#@-node:ekr.20050328091952.111:dynaerrline
-#@+node:ekr.20050328091952.112:getsubnodes
+#@-node:ekr.20050329114605.113:dynaerrline
+#@+node:ekr.20050329114605.114:getsubnodes
 
 #code to operate dynamenu, no user code
 
@@ -786,8 +784,8 @@ def dyna_getsubnodes(c, globs= {}):
     #es('dynamenu macros %s'%(lst,) )
     return lst
 #@nonl
-#@-node:ekr.20050328091952.112:getsubnodes
-#@+node:ekr.20050328091952.113:captureStd
+#@-node:ekr.20050329114605.114:getsubnodes
+#@+node:ekr.20050329114605.115:captureStd
 class captureStd(object):
     """the typical redirect stdout
     add stderr and stdin later
@@ -815,8 +813,8 @@ class captureStd(object):
         captured = sys.stdout.getvalue()
         sys.stdout = sys.__stdout__
         return captured
-#@-node:ekr.20050328091952.113:captureStd
-#@+node:ekr.20050328091952.114:runcmd
+#@-node:ekr.20050329114605.115:captureStd
+#@+node:ekr.20050329114605.116:runcmd
 
 def runcmd(cmdlst):
     """cmdlst is either a list or string for subprocess
@@ -871,8 +869,8 @@ def runcmd(cmdlst):
     return outstd, outerr
     
 #@nonl
-#@-node:ekr.20050328091952.114:runcmd
-#@+node:ekr.20050328091952.115:dynadoc
+#@-node:ekr.20050329114605.116:runcmd
+#@+node:ekr.20050329114605.117:dynadoc
 
 def dynadoc(c, sub= 'all' , globs= {}):
     """read dynadeflst and createdoc for them
@@ -953,6 +951,7 @@ def dynadoc(c, sub= 'all' , globs= {}):
         #try to get len of unsized object or unscriptable object
         #hasattr(f, '__doc__') always true for a function
         if f.__doc__:
+            #add a doc[:find('~END') so not included extransious stuff
             doc = f.__doc__[:coln]
             if len(f.__doc__) > coln: elip = ' ...'
             else: elip = ''
@@ -983,9 +982,9 @@ def dynadoc(c, sub= 'all' , globs= {}):
     #g.es(text.docroutine(f, x))
     
 #@nonl
-#@-node:ekr.20050328091952.115:dynadoc
-#@-node:ekr.20050328091952.104:dynastuff
-#@+node:ekr.20050328091952.116:dynaput
+#@-node:ekr.20050329114605.117:dynadoc
+#@-node:ekr.20050329114605.106:dynastuff
+#@+node:ekr.20050329114605.118:dynaput
 
 def dynaput(c, slst):
     """return the text selection or put it if slst is not None
@@ -1074,8 +1073,8 @@ def dynaput(c, slst):
                          cg.dynapasteFlag.get() )
 
     else: g.es("no text selected", color= 'orangered' )
-#@-node:ekr.20050328091952.116:dynaput
-#@+node:ekr.20050328091952.117:dynaplayer
+#@-node:ekr.20050329114605.118:dynaput
+#@+node:ekr.20050329114605.119:dynaplayer
 
 def dynaplayer(c, splst):
     """playback commands from a list into the selected or body text
@@ -1129,7 +1128,7 @@ def dynaplayer(c, splst):
     sx[0:0] = ' ' #make it base1
     for ix in xrange(len(sx)):  #sx[:]
         #@        << splst >>
-        #@+node:ekr.20050328091952.118:<< splst >>
+        #@+node:ekr.20050329114605.120:<< splst >>
         for x in splst:
             if x.startswith('%%C,'): #command
                 comd = x[4:].lower()
@@ -1160,15 +1159,15 @@ def dynaplayer(c, splst):
         
             #g.es('ip=%r, x=%r'%(ip, x))
         #@nonl
-        #@-node:ekr.20050328091952.118:<< splst >>
+        #@-node:ekr.20050329114605.120:<< splst >>
         #@nl
 
     dynaput(c, sx[1:])
     c.frame.body.setInsertionPoint(ip)
     c.frame.body.see('insert')
 #@nonl
-#@-node:ekr.20050328091952.117:dynaplayer
-#@+node:ekr.20050328091952.119:python -O
+#@-node:ekr.20050329114605.119:dynaplayer
+#@+node:ekr.20050329114605.121:python -O
 #make part of a larger basic python sanity check
 import leoGlobals as g
 
@@ -1212,12 +1211,12 @@ except AssertionError:
     pass
 del x
 #@nonl
-#@-node:ekr.20050328091952.119:python -O
+#@-node:ekr.20050329114605.121:python -O
 #@-others
 
 #depandance on sanitize_ and leoID
 #@<< set filenames >>
-#@+node:ekr.20050328091952.120:<< set filenames >>
+#@+node:ekr.20050329114605.122:<< set filenames >>
 #note, these changes are at the time the button or menu is created
 #to effect these changes you have to 
 #write the plugin and start a new python and leo. maybe reload
@@ -1318,9 +1317,9 @@ if sys.platform[:3] == 'win':
 
 #should calculate from @lineending,  does python handle conversion?
 EOLN = '\n'  #have to try and use this everywhere
-#@-node:ekr.20050328091952.120:<< set filenames >>
+#@-node:ekr.20050329114605.122:<< set filenames >>
 #@nl
 #
 #@nonl
-#@-node:ekr.20050328091952.93:@thin dynacommon.py
+#@-node:ekr.20050329114605.95:@thin dynacommon.py
 #@-leo
