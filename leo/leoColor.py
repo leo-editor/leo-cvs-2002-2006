@@ -584,6 +584,8 @@ class colorizer:
 		self.keywords = None
 		self.lb = None
 		self.rb = None
+		self.latex_cweb_docs = true
+		self.latex_cweb_comments = true
 		#@-body
 		#@-node:1::<< ivars for communication between colorAllDirectives and its allies >>
 
@@ -594,7 +596,6 @@ class colorizer:
 		self.state_dict = {
 			"blockComment" : self.continueBlockComment,
 			"doubleString" : self.continueSingleString,
-			"latexNormal"  : self.doLatexNormalState,
 			"nocolor"      : self.continueNocolor,
 			"normal"       : self.doNormalState,
 			"singleString" : self.continueDoubleString,
@@ -843,8 +844,6 @@ class colorizer:
 			# Color plain text unless we are under the control of @nocolor.
 			state = choose(self.flag,"normal","nocolor")
 			
-			self.latex_mode = self.language=="latex" # Cweb doc parts also use this mode.
-			
 			if 1: # 10/25/02: we color both kinds of references in cweb mode.
 				self.lb = "<<"
 				self.rb = ">>"
@@ -1040,7 +1039,7 @@ class colorizer:
 	#@+body
 	def colorizeLine (self,s,n,state):
 	
-		# print "inc,state,latex,s:",`self.incremental`,state,`self.latex_mode`,s
+		# print "inc,state,s:",`self.incremental`,state,s
 	
 		if self.incremental:
 			self.removeTagsFromLine(n)
@@ -1061,13 +1060,19 @@ class colorizer:
 	
 		if j == -1:
 			# The entire line is part of the block comment.
-			self.body.tag_add("comment", index(n,i), index(n,"end"))
+			if self.language=="cweb":
+				self.doLatexLine(s,i,len(s),n)
+			else:
+				self.body.tag_add("comment", index(n,i), index(n,"end"))
 			return len(s),"blockComment" # skipt the rest of the line.
-	
 		else:
 			# End the block comment.
 			k = len(self.block_comment_end)
-			self.body.tag_add("comment", index(n,i), index(n,j+k))
+			if self.language=="cweb" and self.latex_cweb_comments:
+				self.doLatexLine(s,i,j,n)
+				self.body.tag_add("comment", index(n,j), index(n,j+k))
+			else:
+				self.body.tag_add("comment", index(n,i), index(n,j+k))
 			i = j + k
 			return i,"normal"
 	#@-body
@@ -1107,7 +1112,6 @@ class colorizer:
 		
 		state = "doc"
 		if self.language == "cweb":
-			assert(not "cweb doc mode does not exist")
 			
 			#@<< handle cweb doc part >>
 			#@+node:1::<< handle cweb doc part >>
@@ -1127,6 +1131,17 @@ class colorizer:
 							self.body.tag_add("cwebName", index(n,i), index(n,j))
 							self.body.tag_add("nameBrackets", index(n,j), index(n,j+2))
 							i = j + 2
+			elif match(s,i,self.lb):
+				j = self.doNowebSecRef(s,i,n)
+				if j == i + 2: # not a section ref.
+					self.body.tag_add("docPart", index(n,i), index(n,j))
+				i = j
+			elif self.latex_cweb_docs:
+				# Everything up to the next "@" is latex colored.
+				j = string.find(s,"@",i+1)
+				if j == -1: j = len(s)
+				self.doLatexLine(s,i,j,n)
+				i = j
 			else:
 				# Everthing up to the next "@" is in the doc part.
 				j = string.find(s,"@",i+1)
@@ -1247,47 +1262,48 @@ class colorizer:
 			return j,"normal"
 	#@-body
 	#@-node:6::doAtKeyword: NOT for cweb keywords
-	#@+node:7::doLatexNormal
+	#@+node:7::doLatexLine
 	#@+body
-	def doLatexNormalState (self,s,i,n):
-		
-		self.latex_mode = true
-		return self.doNormalState(s,i,n)
+	# Colorize the line from i to j.
+	
+	def doLatexLine (self,s,i,j,n):
+	
+		while i < j:
+			if match(s,i,"\\"):
+				k = self.skip_id(s,i+1)
+				word = s[i:k]
+				if word in latex_keywords:
+					self.body.tag_add("latexModeKeyword",index(n,i),index(n,k))
+				i = k
+			else:
+				self.body.tag_add("latexModeBackground",index(n,i),index(n,i+1))
+				i += 1
 	#@-body
-	#@-node:7::doLatexNormal
+	#@-node:7::doLatexLine
 	#@+node:8::doNormalState
 	#@+body
 	## To do: rewrite using dynamically generated tables.
 	
 	def doNormalState (self,s,i,n):
 	
-		ch = s[i] ; state = choose(self.latex_mode,"latexNormal","normal")
+		ch = s[i] ; state = "normal"
 	
-		if ch in string.letters or ch == '_' or (ch == '\\' and self.latex_mode):
+		if ch in string.letters or ch == '_' or (ch == '\\' and self.language=="latex"):
 			
 			#@<< handle possible keyword >>
 			#@+node:1::Valid regardless of latex mode
 			#@+node:1::<< handle possible  keyword >>
 			#@+body
-			if self.latex_mode:
+			if self.language == "latex":
 				if match(s,i,"\\"):
 					j = self.skip_id(s,i+1)
 					word = s[i:j]
 					if word in latex_keywords:
-						if self.language=="cweb":
-							self.body.tag_add("latexModeKeyword", index(n,i), index(n,j))
-						else:
-							self.body.tag_add("latexKeyword", index(n,i), index(n,j))
+						self.body.tag_add("latexKeyword", index(n,i), index(n,j))
 					else:
-						if self.language=="cweb":
-							self.body.tag_add("latexModeBackground", index(n,i), index(n,j))
-						else:
-							self.body.tag_add("latexBackground", index(n,i), index(n,j))
+						self.body.tag_add("latexBackground", index(n,i), index(n,j))
 				else:
-					if self.language=="cweb":
-						self.body.tag_add("latexModeBackground", index(n,i), index(n,i+1))
-					else:
-						self.body.tag_add("latexBackground", index(n,i), index(n,i+1))
+					self.body.tag_add("latexBackground", index(n,i), index(n,i+1))
 					j = i + 1 # skip the character.
 			else:
 				j = self.skip_id(s,i)
@@ -1304,56 +1320,7 @@ class colorizer:
 			#@-node:1::Valid regardless of latex mode
 
 		elif match(s,i,self.lb):
-			
-			#@<< handle possible noweb section ref or def >>
-			#@+node:1::Valid regardless of latex mode
-			#@+node:3::<< handle possible noweb section ref or def >>
-			#@+body
-			self.body.tag_add("nameBrackets", index(n,i), index(n,i+2))
-			
-			# See if the line contains the right name bracket.
-			j = string.find(s,self.rb+"=",i+2)
-			k = choose(j==-1,2,3)
-			if j == -1:
-				j = string.find(s,self.rb,i+2)
-			
-			if j == -1:
-				i += 2
-			else:
-				searchName = self.body.get(index(n,i), index(n,j+k)) # includes brackets
-				ref = findReference(searchName,self.v)
-				if ref:
-					self.body.tag_add("link", index(n,i+2), index(n,j))
-					if self.use_hyperlinks:
-						
-						#@<< set the hyperlink >>
-						#@+node:1::<< set the hyperlink >>
-						#@+body
-						# Set the bindings to vnode callbacks.
-						# Create the tag.
-						# Create the tag name.
-						tagName = "hyper" + `self.hyperCount`
-						self.hyperCount += 1
-						self.body.tag_delete(tagName)
-						self.body.tag_add(tagName, index(n,i+2), index(n,j))
-						ref.tagName = tagName
-						self.body.tag_bind(tagName,"<Control-1>",ref.OnHyperLinkControlClick)
-						self.body.tag_bind(tagName,"<Any-Enter>",ref.OnHyperLinkEnter)
-						self.body.tag_bind(tagName,"<Any-Leave>",ref.OnHyperLinkLeave)
-						#@-body
-						#@-node:1::<< set the hyperlink >>
-
-				elif k == 3: # a section definition
-					self.body.tag_add("link", index(n,i+2), index(n,j))
-				else:
-					self.body.tag_add("name", index(n,i+2), index(n,j))
-				self.body.tag_add("nameBrackets", index(n,j), index(n,j+k))
-				i = j + k
-			
-			#@-body
-			#@-node:3::<< handle possible noweb section ref or def >>
-			#@-node:1::Valid regardless of latex mode
-
+			i = self.doNowebSecRef(s,i,n)
 		elif ch == '@':
 			
 			#@<< handle at keyword >>
@@ -1399,10 +1366,8 @@ class colorizer:
 						i = j
 						
 						if word in ("@ ","@\t","@\n","@*","@**"):
-							self.latex_mode = true
-							state = "latexNormal"
+							state = "doc"
 						elif word in ("@<","@(","@c","@d","@f","@p"):
-							self.latex_mode = false
 							state = "normal"
 						elif word in ("@^","@.","@:","@="): # Ended by "@>"
 							j = string.find(s,"@>",i)
@@ -1421,7 +1386,54 @@ class colorizer:
 			#@-node:2::<< handle at keyword >>
 			#@-node:1::Valid regardless of latex mode
 
-		elif self.latex_mode:
+		elif match(s,i,self.single_comment_start):
+			
+			#@<< handle single-line comment >>
+			#@+node:1::Valid regardless of latex mode
+			#@+node:3::<< handle single-line comment >>
+			#@+body
+			# print "single-line comment n,i,s:",`n`,`i`,`s`
+			
+			if self.language == "cweb" and self.latex_cweb_comments:
+				j = i + len(self.single_comment_start)
+				self.body.tag_add("comment", index(n,i), index(n,j))
+				self.doLatexLine(s,j,len(s),n)
+				i = len(s)
+			else:
+				self.body.tag_add("comment", index(n,i), index(n,"end"))
+			i = len(s)
+			#@-body
+			#@-node:3::<< handle single-line comment >>
+			#@-node:1::Valid regardless of latex mode
+
+		elif match(s,i,self.block_comment_start):
+			
+			#@<< start block comment >>
+			#@+node:1::Valid regardless of latex mode
+			#@+node:4::<< start block comment >>
+			#@+body
+			k = len(self.block_comment_start)
+			self.body.tag_add("comment", index(n,i), index(n,i+k))
+			i += k ; state = "blockComment"
+			#@-body
+			#@-node:4::<< start block comment >>
+			#@-node:1::Valid regardless of latex mode
+
+		elif ch == '%' and self.language=="cweb":
+			
+			#@<< handle latex line >>
+			#@+node:1::Valid regardless of latex mode
+			#@+node:5::<< handle latex line >>
+			#@+body
+			self.body.tag_add("keyword", index(n,i), index(n,i+1))
+			i += 1 # Skip the %
+			self.doLatexLine(s,i,len(s),n)
+			i = len(s)
+			#@-body
+			#@-node:5::<< handle latex line >>
+			#@-node:1::Valid regardless of latex mode
+
+		elif self.language=="latex":
 			
 			#@<< handle latex normal character >>
 			#@+node:2::Vaid only in latex mode
@@ -1436,6 +1448,7 @@ class colorizer:
 			#@-node:1::<< handle latex normal character >>
 			#@-node:2::Vaid only in latex mode
 
+		# ---- From here on self.language != "latex" -----
 		elif self.has_string and (ch == '"' or ch == "'"):
 			
 			#@<< handle string >>
@@ -1455,61 +1468,11 @@ class colorizer:
 			#@-node:1::<< handle string >>
 			#@-node:3::Valid when not in latex_mode
 
-		elif match(s,i,self.single_comment_start):
-			
-			#@<< handle single-line comment >>
-			#@+node:3::Valid when not in latex_mode
-			#@+node:3::<< handle single-line comment >>
-			#@+body
-			# print "single-line comment n,i,s:",`n`,`i`,`s`
-			
-			self.body.tag_add("comment", index(n,i), index(n,"end"))
-			i = len(s)
-			#@-body
-			#@-node:3::<< handle single-line comment >>
-			#@-node:3::Valid when not in latex_mode
-
-		elif self.language=="cweb" and ch == '%':
-			
-			#@<< handle latex line in cweb mode >>
-			#@+node:3::Valid when not in latex_mode
-			#@+node:4::<< handle latex line in cweb mode >>
-			#@+body
-			self.body.tag_add("keyword", index(n,i), index(n,i+1))
-			i += 1 # Skip the %
-			
-			while i < len(s):
-				if match(s,i,"\\"):
-					j = self.skip_id(s,i+1)
-					word = s[i:j]
-					if word in latex_keywords:
-						self.body.tag_add("latexModeKeyword", index(n,i), index(n,j))
-					i = j
-				else:
-					self.body.tag_add("latexModeBackground", index(n,i), index(n,i+1))
-					i += 1
-			#@-body
-			#@-node:4::<< handle latex line in cweb mode >>
-			#@-node:3::Valid when not in latex_mode
-
-		elif match(s,i,self.block_comment_start):
-			
-			#@<< start block comment >>
-			#@+node:3::Valid when not in latex_mode
-			#@+node:2::<< start block comment >>
-			#@+body
-			k = len(self.block_comment_start)
-			self.body.tag_add("comment", index(n,i), index(n,i+k))
-			i += k ; state = "blockComment"
-			#@-body
-			#@-node:2::<< start block comment >>
-			#@-node:3::Valid when not in latex_mode
-
 		elif ch == '#' and self.has_pp_directives:
 			
 			#@<< handle C preprocessor line >>
 			#@+node:3::Valid when not in latex_mode
-			#@+node:5::<< handle C preprocessor line >>
+			#@+node:2::<< handle C preprocessor line >>
 			#@+body
 			# 10/17/02: recognize comments in preprocessor lines.
 			j = i
@@ -1520,14 +1483,14 @@ class colorizer:
 			
 			self.body.tag_add("pp", index(n,j), index(n,i))
 			#@-body
-			#@-node:5::<< handle C preprocessor line >>
+			#@-node:2::<< handle C preprocessor line >>
 			#@-node:3::Valid when not in latex_mode
 
 		elif self.language == "php" and (match(s,i,"<") or match(s,i,"?")):
 			
 			#@<< handle special php keywords >>
 			#@+node:3::Valid when not in latex_mode
-			#@+node:6::<< handle special php keywords >>
+			#@+node:3::<< handle special php keywords >>
 			#@+body
 			if match(s,i,"<?php"):
 				self.body.tag_add("keyword", index(n,i), index(n,i+5))
@@ -1539,45 +1502,45 @@ class colorizer:
 				i += 1
 			
 			#@-body
-			#@-node:6::<< handle special php keywords >>
+			#@-node:3::<< handle special php keywords >>
 			#@-node:3::Valid when not in latex_mode
 
 		elif ch == ' ':
 			
 			#@<< handle blank >>
 			#@+node:3::Valid when not in latex_mode
-			#@+node:7::<< handle blank >>
+			#@+node:4::<< handle blank >>
 			#@+body
 			if self.showInvisibles:
 				self.body.tag_add("blank", index(n,i))
 			i += 1
 			#@-body
-			#@-node:7::<< handle blank >>
+			#@-node:4::<< handle blank >>
 			#@-node:3::Valid when not in latex_mode
 
 		elif ch == '\t':
 			
 			#@<< handle tab >>
 			#@+node:3::Valid when not in latex_mode
-			#@+node:8::<< handle tab >>
+			#@+node:5::<< handle tab >>
 			#@+body
 			if self.showInvisibles:
 				self.body.tag_add("tab", index(n,i))
 			i += 1
 			#@-body
-			#@-node:8::<< handle tab >>
+			#@-node:5::<< handle tab >>
 			#@-node:3::Valid when not in latex_mode
 
 		else:
 			
 			#@<< handle normal character >>
 			#@+node:3::Valid when not in latex_mode
-			#@+node:9::<< handle normal character >>
+			#@+node:6::<< handle normal character >>
 			#@+body
 			# self.body.tag_add("normal", index(n,i))
 			i += 1
 			#@-body
-			#@-node:9::<< handle normal character >>
+			#@-node:6::<< handle normal character >>
 			#@-node:3::Valid when not in latex_mode
 
 	
@@ -1591,7 +1554,52 @@ class colorizer:
 	#@+node:3::Valid when not in latex_mode
 	#@-node:3::Valid when not in latex_mode
 	#@-node:8::doNormalState
-	#@+node:9::removeAllTags & removeTagsFromLines
+	#@+node:9::doNowebSecRef
+	#@+body
+	def doNowebSecRef (self,s,i,n):
+	
+		self.body.tag_add("nameBrackets", index(n,i), index(n,i+2))
+		
+		# See if the line contains the right name bracket.
+		j = string.find(s,self.rb+"=",i+2)
+		k = choose(j==-1,2,3)
+		if j == -1:
+			j = string.find(s,self.rb,i+2)
+		if j == -1:
+			return i + 2
+		else:
+			searchName = self.body.get(index(n,i), index(n,j+k)) # includes brackets
+			ref = findReference(searchName,self.v)
+			if ref:
+				self.body.tag_add("link", index(n,i+2), index(n,j))
+				if self.use_hyperlinks:
+					
+					#@<< set the hyperlink >>
+					#@+node:1::<< set the hyperlink >>
+					#@+body
+					# Set the bindings to vnode callbacks.
+					# Create the tag.
+					# Create the tag name.
+					tagName = "hyper" + `self.hyperCount`
+					self.hyperCount += 1
+					self.body.tag_delete(tagName)
+					self.body.tag_add(tagName, index(n,i+2), index(n,j))
+					ref.tagName = tagName
+					self.body.tag_bind(tagName,"<Control-1>",ref.OnHyperLinkControlClick)
+					self.body.tag_bind(tagName,"<Any-Enter>",ref.OnHyperLinkEnter)
+					self.body.tag_bind(tagName,"<Any-Leave>",ref.OnHyperLinkLeave)
+					#@-body
+					#@-node:1::<< set the hyperlink >>
+
+			elif k == 3: # a section definition
+				self.body.tag_add("link", index(n,i+2), index(n,j))
+			else:
+				self.body.tag_add("name", index(n,i+2), index(n,j))
+			self.body.tag_add("nameBrackets", index(n,j), index(n,j+k))
+			return j + k
+	#@-body
+	#@-node:9::doNowebSecRef
+	#@+node:10::removeAllTags & removeTagsFromLines
 	#@+body
 	def removeAllTags (self):
 	
@@ -1606,7 +1614,7 @@ class colorizer:
 		for tag in self.tags:
 			self.body.tag_remove(tag,index(n,0),index(n,"end"))
 	#@-body
-	#@-node:9::removeAllTags & removeTagsFromLines
+	#@-node:10::removeAllTags & removeTagsFromLines
 	#@-node:3::colorizeLine & allies
 	#@-node:4::colorizeAnyLanguage & allies
 	#@+node:5::scanColorDirectives
