@@ -1528,12 +1528,13 @@ class baseColorizer:
                 word = word.lower()
             else:
                 word = ""
-            
+                
             if word in ["@c","@code","@unit","@root","@root-code","@root-doc","@color","@nocolor"]:
                 # End of the doc part.
                 self.body.tag_remove("docPart",self.index(i),self.index(j)) # 10/27/03
                 self.tag("leoKeyword",i,j)
-                i = j ; state = "normal"
+                state = "normal"
+                if word != '@nocolor': i = j # 3/8/05: Rescan @nocolor.
             else:
                 # The entire line is in the doc part.
                 j = len(s)
