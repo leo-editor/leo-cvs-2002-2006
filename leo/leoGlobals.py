@@ -1292,7 +1292,7 @@ def sanitize_filename(s):
 	import re
 	s = s.strip()
 	ws = re.compile('[ \t]')
-	bad_chars = re.compile('[\\/&<>\'"`@|?*]')
+	bad_chars = re.compile('[\\/&<>\'"`@|?*:]') # 1/7/03 Rich Ries: make colon a bad char.
 	s = bad_chars.sub('',s)
 	s = s.strip()
 	s = ws.sub('_',s)
