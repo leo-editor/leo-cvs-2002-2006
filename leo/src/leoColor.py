@@ -938,12 +938,12 @@ class baseColorizer:
 	"binary?", "bitset?", "block?",  
 	"char?", "connected?", "crypt-strength?", 
 	"datatype?", "date?", "decimal?", "dir?",  
-	"email?", "empty?", "equal?", "error?", "even?", "event?", "exists?", "exists-key?"
+	"email?", "empty?", "equal?", "error?", "even?", "event?", "exists?", "exists-key?",
 	"file?", "flag-face?", "found?", "function?",  
 	"get-word?", "greater-or-equal?", "greater?",  
 	"hash?", "head?",  
 	"image?", "in-window?", "index?", "info?", "input?", "inside?", "integer?", "issue?",  
-	"length?", "lesser-or-equal?", "lesser?", "library?", "link-app?", "link?", "list?", "lit-path?", "lit-word? logic?",  
+	"length?", "lesser-or-equal?", "lesser?", "library?", "link-app?", "link?", "list?", "lit-path?", "lit-word?", "logic?",  
 	"modified?", "money?",  
 	"native?", "negative?", "none?", "not-equal?", "number?",  
 	"object?", "odd?", "offset?", "op?", "outside?",  
@@ -2012,7 +2012,10 @@ class baseColorizer:
 				#@<< handle general keyword >>
 				#@+node:3::<< handle general keyword >>
 				#@+body
-				j = self.skip_id(s,i)
+				if self.language == "rebol":
+					j = self.skip_id(s,i+1,chars="-~!?")
+				else:
+					j = self.skip_id(s,i)
 				word = s[i:j]
 				if word in self.keywords:
 					self.tag("keyword",i,j)

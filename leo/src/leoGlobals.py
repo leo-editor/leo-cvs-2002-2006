@@ -781,7 +781,8 @@ def scanDirectives(c,v=None):
 	Returns a dict containing the results, including defaults.
 	"""
 
-	if c == None or top() == None: return None
+	if c == None or top() == None:
+		return {} # 7/16/03: for unit tests.
 	if v == None: v = c.currentVnode()
 	a = app()
 	# trace(`v`)

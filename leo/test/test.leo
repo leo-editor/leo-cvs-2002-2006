@@ -257,9 +257,9 @@
 <v t="T118"><vh>@file ../test/missing_test.txt</vh></v>
 </v>
 </v>
-<v t="T119"><vh>To do</vh>
+<v t="T119" a="E"><vh>To do</vh>
 <v t="T120"><vh>Use xml.sax</vh></v>
-<v t="T121"><vh>Rebol keywords (- ? ~ ! not recognized as a part of a keyword)</vh></v>
+<v t="T121" a="V"><vh>Rebol keywords (- ? ~ ! recognized as a part of a keyword)</vh></v>
 <v t="T122"><vh>Actionscript keywords</vh></v>
 </v>
 <v t="T123"><vh>TDD experiments</vh>
@@ -272,7 +272,7 @@
 <v t="T130"><vh>Report collected results</vh></v>
 </v>
 <v t="T131"><vh>Run tdd tests</vh></v>
-<v t="T132" a="E"><vh>@file c:\prog\test\tddTest.py</vh>
+<v t="T132"><vh>@file c:\prog\test\tddTest.py</vh>
 <v t="T133"><vh>main</vh></v>
 <v t="T134" a="E"><vh>class TestCase</vh>
 <v t="T135"><vh>__init__</vh></v>
@@ -289,7 +289,7 @@
 </v>
 </v>
 </v>
-<v t="T144" a="V"><vh>Leo Unit Tests</vh></v>
+<v t="T144"><vh>Leo Unit Tests</vh></v>
 </vnodes>
 <tnodes>
 <t tx="T1">@color
