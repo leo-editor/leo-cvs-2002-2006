@@ -118,10 +118,21 @@ class config:
 		"initial_vertical_secondary_ratio")
 		
 	stringWindowNames = (
+		"body_cursor_foreground_color",
+		"body_cursor_background_color",
+		"body_text_foreground_color",
+		"body_text_background_color",
 		"body_text_font_family",
 		"body_text_font_slant",
 		"body_text_font_weight",
 		
+		"headline_text_unselected_foreground_color",
+		"headline_text_unselected_background_color",
+		"headline_text_selected_foreground_color",
+		"headline_text_selected_background_color",
+		"headline_text_editing_foreground_color",
+		"headline_text_editing_background_color",
+	
 		"headline_text_font_family",
 		"headline_text_font_slant",
 		"headline_text_font_weight",
@@ -132,9 +143,13 @@ class config:
 		"initial_window_top",
 		"initial_window_width",
 		
+		"log_text_foreground_color",
+		"log_text_background_color",
 		"log_text_font_family",
 		"log_text_font_slant",
 		"log_text_font_weight",
+		
+		"outline_pane_background_color",
 		
 		"split_bar_color",
 		"split_bar_relief",
@@ -217,17 +232,32 @@ class config:
 	defaultBodyFontSize = choose(sys.platform=="win32",9,12)
 	
 	defaultWindowDict = {
-		"body_pane_wraps" : 1,
+		"body_cursor_foreground_color" : None,
+		"body_cursor_background_color" : None,
 		"additional_body_text_border" : 0,
+		"body_pane_wraps" : 1,
 		"body_text_font_family" : "Courier",
+		"body_text_foreground_color": None,
+		"body_text_background_color": None,
 		"body_text_font_size" : defaultBodyFontSize,
 		"body_text_font_slant" : "roman",
 		"body_text_font_weight" : "normal",
+		
+		"headline_text_unselected_foreground_color" : None,
+		"headline_text_unselected_background_color" : None,
+		"headline_text_selected_foreground_color" : None,
+		"headline_text_selected_background_color" : None,
+		"headline_text_editing_foreground_color" : None,
+		"headline_text_editing_background_color" : None,
+		
 		"headline_text_font_family" : None,
 		"headline_text_font_size" : 12,
 		"headline_text_font_slant" : "roman",
 		"headline_text_font_weight" : "normal",
+		"outline_pane_background_color" : None,
 		"log_pane_wraps" : 0,
+		"log_text_foreground_color": None,
+		"log_text_background_color": None,
 		"log_text_font_family" : None,
 		"log_text_font_size" : 12,
 		"log_text_font_slant" : "roman",
@@ -720,9 +750,10 @@ class config:
 		#@+node:1::<< set prefs ivars >>
 		#@+body
 		val = config.getIntPref("tab_width")
-		
-		if val: c.tab_width = val
-		c.frame.setTabWidth(c.tab_width)
+		if val:
+			c.tab_width = val
+			if 0: # 9/20/02: don't actually redraw.
+				c.frame.setTabWidth(c.tab_width)
 		
 		val = config.getIntPref("page_width")
 		if val: c.page_width = val
@@ -821,7 +852,7 @@ class config:
 
 	#@-body
 	#@-node:17:C=10:setConfigIvars
-	#@+node:18:C=11:update
+	#@+node:18:C=11:update (config)
 	#@+body
 	# Rewrites the entire config file from ivars.
 	# This is called when a .leo file is written and when the preferences panel changes.
@@ -906,7 +937,7 @@ class config:
 			traceback.print_exc()
 		self.config = None
 	#@-body
-	#@-node:18:C=11:update
+	#@-node:18:C=11:update (config)
 	#@+node:19::update_section
 	#@+body
 	def update_section (self,config,section,dict):

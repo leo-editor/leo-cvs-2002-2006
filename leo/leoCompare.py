@@ -493,7 +493,7 @@ class leoCompare:
 		return match(s,i,sentinelComment)
 	#@-body
 	#@-node:4::isLeoHeader & isSentinel
-	#@+node:5:C=2:openOutputFile
+	#@+node:5:C=2:openOutputFile (compare)
 	#@+body
 	def openOutputFile (self):
 		
@@ -521,7 +521,7 @@ class leoCompare:
 				self.show("exception opening output file")
 				traceback.print_exc()
 	#@-body
-	#@-node:5:C=2:openOutputFile
+	#@-node:5:C=2:openOutputFile (compare)
 	#@+node:6::show
 	#@+body
 	def show (self,s):

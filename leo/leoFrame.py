@@ -180,16 +180,16 @@ class LeoFrame:
 	def setTabWidth (self, w):
 		
 		try: # 8/11/02: This can fail when called from scripts.
-			# 2/28/02: made code size platform dependent.
-			if sys.platform=="win32": # Windows
-				font = tkFont.Font(family="Courier",size=9)
-			else:
-				font = tkFont.Font(family="Courier",size=12)
-				
+			# 9/20/22: Use the present font for computations.
+			font = self.body.cget("font")
+			font = font = tkFont.Font(font=font)
 			tabw = font.measure(" " * abs(w)) # 7/2/02
 			# print "frame.setTabWidth:" + `w` + "," + `tabw`
 			self.body.configure(tabs=tabw)
-		except: pass
+		except:
+			# print traceback.print_exc()
+			pass
+
 	#@-body
 	#@-node:5:C=5:frame.setTabWidth
 	#@+node:6:C=6:createMenuBar
@@ -786,11 +786,11 @@ class LeoFrame:
 			#@+at
 			#  7/29/02: It's too confusing to have arrow keys mean different things in different panes.
 			# 
-			# For one thing, we want to leave the focus in the body pane after the first click in the outline pane, but that means 
-			# that the arrow keys must still be functional in the _body_ pane!
+			# For one thing, we want to leave the focus in the body pane after the first click in the outline pane, but that means that 
+			# the arrow keys must still be functional in the _body_ pane!
 			# 
-			# Alas, all the various combinations of key bindings of arrow keys appear to do something; there are none left to use 
-			# for moving around in the outline pane.  So we are stuck with poor shortcuts.
+			# Alas, all the various combinations of key bindings of arrow keys appear to do something; there are none left to use for 
+			# moving around in the outline pane.  So we are stuck with poor shortcuts.
 
 			#@-at
 			#@@c
@@ -1189,8 +1189,8 @@ class LeoFrame:
 		#@+node:1::<< Set closeFlag if the only open window is empty >>
 		#@+body
 		#@+at
-		#  If this is the only open window was opened when the app started, and the window has never been written to or saved, 
-		# then we will automatically close that window if this open command completes successfully.
+		#  If this is the only open window was opened when the app started, and the window has never been written to or saved, then we 
+		# will automatically close that window if this open command completes successfully.
 
 		#@-at
 		#@@c
@@ -2978,9 +2978,27 @@ class LeoFrame:
 		font = config.getFontFromParams(
 			"body_text_font_family", "body_text_font_size",
 			"body_text_font_slant",  "body_text_font_weight")
+		if font: body.configure(font=font)
 		
-		if font:
-			body.configure(font=font)
+		bg = config.getWindowPref("body_text_background_color")
+		if bg:
+			try: body.configure(bg=bg)
+			except: pass
+		
+		fg = config.getWindowPref("body_text_foreground_color")
+		if fg:
+			try: body.configure(fg=fg)
+			except: pass
+			
+		if 0: # not ready yet
+			fg = config.getWindowPref("body_cursor_foreground_color")
+			bg = config.getWindowPref("body_cursor_background_color")
+			print `fg`, `bg`
+			if fg and bg:
+				cursor="xterm" # + " " + fg + " " + bg
+				try: body.configure(cursor=cursor)
+				except:
+					traceback.print_exc()
 		
 		self.bodyBar = bodyBar = Tk.Scrollbar(split1Pane2,name='bodyBar')
 		body['yscrollcommand'] = bodyBar.set
@@ -3007,6 +3025,11 @@ class LeoFrame:
 		
 		self.canvas = tree = Tk.Canvas(split2Pane1,name="tree",
 			bd=0,bg="white",relief="flat")
+			
+		bg = config.getWindowPref("outline_pane_background_color")
+		if bg:
+			try: tree.configure(bg=bg)
+			except: pass
 		
 		# The font is set in the tree code.
 		
@@ -3045,9 +3068,17 @@ class LeoFrame:
 		font = config.getFontFromParams(
 			"log_text_font_family", "log_text_font_size",
 			"log_text_font_slant",  "log_text_font_weight")
+		if font: log.configure(font=font)
 		
-		if font:
-			log.configure(font=font)
+		bg = config.getWindowPref("log_text_background_color")
+		if bg:
+			try: log.configure(bg=bg)
+			except: pass
+		
+		fg = config.getWindowPref("log_text_foreground_color")
+		if fg:
+			try: log.configure(fg=fg)
+			except: pass
 		
 		self.logBar = logBar = Tk.Scrollbar(split2Pane2,name="logBar")
 		

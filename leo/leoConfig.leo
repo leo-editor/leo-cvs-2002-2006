@@ -2,12 +2,12 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="16" clone_windows="0"/>
 <globals body_outline_ratio="0.5">
-	<global_window_position top="0" left="148" height="20" width="77"/>
+	<global_window_position top="0" left="148" height="26" width="77"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
-<preferences allow_rich_text="0">
+<preferences allow_rich_text="0" tab_width="4" page_width="132" tangle_bat="0" untangle_bat="0" output_doc_chunks="1" use_header_flag="1" defaultTargetLanguage="Python">
 </preferences>
-<find_panel_settings>
+<find_panel_settings search_body="1" whole_word="1">
 	<find_string></find_string>
 	<change_string></change_string>
 </find_panel_settings>
@@ -22,11 +22,11 @@
 <v t="T8"><vh>&lt;&lt; Preferences Panel settings &gt;&gt;</vh></v>
 <v t="T9"><vh>&lt;&lt; Syntax coloring options and colors &gt;&gt;</vh></v>
 <v t="T10" a="E"><vh>&lt;&lt; Window options &gt;&gt;</vh>
-<v t="T11"><vh>&lt;&lt; body pane options &gt;&gt;</vh></v>
+<v t="T11" a="V"><vh>&lt;&lt; body pane options &gt;&gt;</vh></v>
 <v t="T12"><vh>&lt;&lt; outline pane options&gt;&gt;</vh></v>
 <v t="T13"><vh>&lt;&lt; log pane options &gt;&gt;</vh></v>
 <v t="T14"><vh>&lt;&lt; Options for new windows &gt;&gt;</vh></v>
-<v t="T15" a="V"><vh>&lt;&lt; Options for newly opened windows &gt;&gt;</vh></v>
+<v t="T15" a="M"><vh>&lt;&lt; Options for newly opened windows &gt;&gt;</vh></v>
 <v t="T16"><vh>&lt;&lt; Options for the bar that separates panes in the Leo window &gt;&gt;</vh></v>
 </v>
 </v>
@@ -79,7 +79,7 @@ These get converted to 0/1 if the file is not read_only.</t>
 
 [config options]
 
-read_only = 0
+read_only = 1
 #	0: Leo writes this file, clearing all comments in the process.
 #	1: Leo writes nothing to this file.
 #	Syntax errors in this file set this file to read-only.
@@ -325,6 +325,14 @@ body_pane_wraps = 1
 additional_body_text_border = 0
 #	Additional border in body text pane, in pixels (must be an integer).
 
+body_text_foreground_color =
+body_text_background_color =
+#	Foreground and background colors of body text.
+
+body_cursor_foreground_color = red
+body_cursor_background_color = green
+# 	Foreground and background colors for the cursor in body text.
+
 body_text_font_family = Courier
 #	Font family for body text.
 #	Default is default font for Tk.Text widgets.
@@ -344,6 +352,20 @@ body_text_font_weight = normal
 outline_pane_scrolls_horizontally = 0
 #	0/1: 1: Use horizontal scrollbar in outline pane.
 
+headline_text_unselected_foreground_color = black
+headline_text_unselected_background_color = white
+
+headline_text_selected_foreground_color = black
+headline_text_selected_background_color = gray80
+
+headline_text_editing_foreground_color = white
+headline_text_editing_background_color = black
+
+#	Foreground and background colors of headline text.
+
+outline_pane_background_color =
+#	Background color of outline pane itself.
+
 headline_text_font_family =
 #	Font family for headline text.
 #	Default is default font for Tk.Text widgets.
@@ -362,6 +384,10 @@ headline_text_font_weight = normal
 
 log_pane_wraps = 0
 #	0/1: Wrap body text if 1.
+
+log_text_foreground_color =
+log_text_background_color =
+#	Foreground and background colors of log text.
 
 log_text_font_family =
 #	Font family for text in the log pane.
@@ -396,7 +422,6 @@ initial_window_top = 10
 <t tx="T15">@c
 
 initial_splitter_orientation = v
-
 #	Defines the primary splitter orientation.
 #	The primary panes are the body pane and the secondary pane.
 #	The secondary pane contains the outline and log panes.
