@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="6011" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="6014" clone_windows="0"/>
 <globals body_outline_ratio="0.474537037037">
 	<global_window_position top="10" left="283" height="864" width="907"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
@@ -219,7 +219,7 @@
 <v t="EKR.20040430162649.1"><vh>Unicode tests</vh>
 <v t="EKR.20040430162649.2"><vh> Tests</vh>
 <v t="EKR.20040430162649.3"><vh>@file-asis c:\prog\test\asisTest.txt</vh></v>
-<v t="EKR.20040430162649.4"><vh>@file-nosent c:\prog\test\nosentTest.txt</vh></v>
+<v t="EKR.20040430162649.4" tnodeList="EKR.20040430162649.4"><vh>@file-nosent c:\prog\test\nosentTest.txt</vh></v>
 <v t="EKR.20040430162649.5" tnodeList="EKR.20040430162649.5"><vh>@file-noref c:\prog\test\norefTest.txt</vh></v>
 </v>
 <v t="EKR.20040430162649.6"><vh> Tests</vh>
@@ -762,10 +762,10 @@
 <v t="ekr.20040723064143.3"><vh>Test error recovery when reading descendentTnodeUa's</vh></v>
 <v t="ekr.20040903102217"><vh>Test multi-line @doc parts with @language html</vh></v>
 </v>
-<v t="EKR.20040619133116"><vh>Unit testing...</vh>
+<v t="EKR.20040619133116" a="E"><vh>Unit testing...</vh>
 <v t="ekr.20040327114250"><vh>@thin ../test/unittest/batchTest.py</vh></v>
 <v t="ekr.20041012101944"><vh>@thin ../test/unittest/errorTest.py</vh></v>
-<v t="ekr.20040712101754"><vh>Unit Tests</vh>
+<v t="ekr.20040712101754" a="E"><vh>Unit Tests</vh>
 <v t="ekr.20040716144017"><vh>Perfect Import tests</vh>
 <v t="ekr.20040716071029.6"><vh>@test inserting a line: no trailing newline</vh>
 <v t="ekr.20040716071856.1"><vh>-input</vh></v>
@@ -970,24 +970,6 @@
 </v>
 <v t="ekr.20040803091512"><vh>@test bogus tnodeList doesn't corrupt @thin nodes</vh></v>
 <v t="ekr.20040917062206"><vh>@test g.cantImport returns None</vh></v>
-<v t="ekr.20040712101754.102"><vh>atFileTests...</vh>
-<v t="ekr.20040712101754.103"><vh>@test @file no newline</vh>
-<v t="ekr.20040712101754.104"><vh>@@file</vh></v>
-<v t="ekr.20040712101754.105"><vh>Output</vh></v>
-</v>
-<v t="ekr.20040712101754.106"><vh>@test @file one newline</vh>
-<v t="ekr.20040712101754.107"><vh>@@file</vh></v>
-<v t="ekr.20040712101754.108"><vh>Output</vh></v>
-</v>
-<v t="ekr.20040712101754.109"><vh>@test @file two newlines</vh>
-<v t="ekr.20040712101754.110"><vh>@@file</vh></v>
-<v t="ekr.20040712101754.111"><vh>Output</vh></v>
-</v>
-<v t="ekr.20040707141957.12"><vh>@test @thin</vh>
-<v t="ekr.20040707141957.13"><vh>@@thin</vh></v>
-<v t="ekr.20040707141957.14"><vh>Output</vh></v>
-</v>
-</v>
 <v t="ekr.20040712101754.115"><vh>Colorizer tests...</vh>
 <v t="ekr.20040712101754.116"><vh>@test @comment after @language plain</vh>
 <v t="ekr.20040712101754.117"><vh>Test</vh></v>
@@ -1144,6 +1126,34 @@
 <v t="ekr.20040712101813"><vh>@test checkAllPythonCode</vh></v>
 </v>
 </v>
+<v t="ekr.20040712101754.102" a="E"><vh>atFileTests...</vh>
+<v t="ekr.20040707140849.5" a="TV"><vh>at-File test code (leoTest.py)</vh>
+<v t="ekr.20040707141957"><vh>&lt;&lt; dump result and expected &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20040712101754.103"><vh>@test @file no newline</vh>
+<v t="ekr.20040712101754.104"><vh>@@file</vh></v>
+<v t="ekr.20040712101754.105"><vh>Output</vh></v>
+</v>
+<v t="ekr.20040712101754.106"><vh>@test @file one newline</vh>
+<v t="ekr.20040712101754.107"><vh>@@file</vh></v>
+<v t="ekr.20040712101754.108"><vh>Output</vh></v>
+</v>
+<v t="ekr.20040712101754.109"><vh>@test @file two newlines</vh>
+<v t="ekr.20040712101754.110"><vh>@@file</vh></v>
+<v t="ekr.20040712101754.111"><vh>Output</vh></v>
+</v>
+<v t="ekr.20040707141957.12"><vh>@test @thin</vh>
+<v t="ekr.20040707141957.13"><vh>@@thin</vh></v>
+<v t="ekr.20040707141957.14"><vh>Output</vh></v>
+</v>
+<v t="ekr.20041020100733"><vh>@test @nosent</vh>
+<v t="ekr.20041020100733.1"><vh>@@nosent</vh>
+<v t="ekr.20041020100918"><vh>&lt;&lt; section &gt;&gt;</vh></v>
+<v t="ekr.20041020100918.1"><vh>unnamed node</vh></v>
+</v>
+<v t="ekr.20041020100733.2"><vh>Output</vh></v>
+</v>
+</v>
 <v t="ekr.20040712101754.274"><vh>@suite run all doctests in leo*.py</vh></v>
 <v t="ekr.20040712101754.261"><vh>Plugins tests</vh>
 <v t="ekr.20040801141212"><vh>@suite test syntax of all plugins correctly</vh>
@@ -1236,9 +1246,13 @@
 <v t="ekr.20041017100700"><vh>Test of autocompleter</vh></v>
 <v t="ekr.20041018193142"><vh>Make sure openWith changes are benign</vh></v>
 <v t="ekr.20041019080125"><vh>Report loaded plugins</vh></v>
-<v t="ekr.20041019124050" a="ETV"><vh>@test pretty printing a docstring</vh>
+<v t="ekr.20041019124050"><vh>@test pretty printing a docstring</vh>
 <v t="ekr.20041019124050.1"><vh>Original</vh></v>
 <v t="ekr.20041019124050.2"><vh>Test</vh></v>
+</v>
+<v t="ekr.20041020100956" tnodeList="ekr.20041020100956,ekr.20041020100956.1,ekr.20041020100956.2"><vh>@nosent c:\prog\test\nosentTest2.txt</vh>
+<v t="ekr.20041020100956.1"><vh>&lt;&lt; section &gt;&gt;</vh></v>
+<v t="ekr.20041020100956.2"><vh>unnamed node</vh></v>
 </v>
 </vnodes>
 <tnodes>
@@ -2493,6 +2507,48 @@ leoTest.doTests(all=False)</t>
 <t tx="ekr.20040707110818">@ignore # Suppress @file reads/writes
 
 </t>
+<t tx="ekr.20040707140849.5">def runAtFileTest(c,p):
+
+    """Common code for testing output of @file, @thin, etc."""
+
+    at = c.atFileCommands
+    child1 = p.firstChild()
+    child2 = child1.next()
+    h1 = child1.headString().lower().strip()
+    h2 = child2.headString().lower().strip()
+    assert(g.match(h1,0,"@@"))
+    assert(g.match(h2,0,"output"))
+    expected = child2.bodyString()
+
+    # Compute the type from child1's headline.
+    j = g.skip_c_id(h1,2)
+    theType = h1[1:j]
+    assert theType in ("@file","@thin","@nosent","@noref","@asis"), "bad type: %s" % type
+
+    thinFile = theType == "@thin"
+    nosentinels = theType in ("@asis","@nosent")
+
+    if theType == "@asis":
+        at.asisWrite(child1,toString=True)
+    elif theType == "noref":
+        at.norefWrite(child1,toString=True)
+    else:
+        at.write(child1,thinFile=thinFile,nosentinels=nosentinels,toString=True)
+    try:
+        result = g.toUnicode(at.stringOutput,"ascii")
+        assert(result == expected)
+    except AssertionError:
+        &lt;&lt; dump result and expected &gt;&gt;
+        raise</t>
+<t tx="ekr.20040707141957">print ; print '-' * 20
+print "result..."
+for line in g.splitLines(result):
+    print "%3d" % len(line),repr(line)
+print '-' * 20
+print "expected..."
+for line in g.splitLines(expected):
+    print "%3d" % len(line),repr(line)
+print '-' * 20</t>
 <t tx="ekr.20040707141957.12">import leoGlobals as g
 import leoTest
 reload(leoTest)
@@ -3228,7 +3284,7 @@ for t in c.all_unique_tnodes_iter():
     nodes.append(t)
     
 # print "duplicate tests pass"</t>
-<t tx="ekr.20040712101754.102">@language plain
+<t tx="ekr.20040712101754.102"># @language plain
 @color</t>
 <t tx="ekr.20040712101754.103">import leoGlobals as g
 import leoTest
@@ -10200,5 +10256,35 @@ line 1
 line 2
 line 3
 """</t>
+<t tx="ekr.20041020100733">import leoGlobals as g
+import leoTest
+reload(leoTest)
+
+c = g.top() ; p = c.currentPosition()
+
+leoTest.runAtFileTest(c,p)</t>
+<t tx="ekr.20041020100733.1"># Test that @nosent generates no sentinels
+
+&lt;&lt; section &gt;&gt;
+
+@others
+
+last line</t>
+<t tx="ekr.20041020100733.2"># Test that @nosent generates no sentinels
+
+section line 1
+unnamed node line 1
+last line</t>
+<t tx="ekr.20041020100918">section line 1</t>
+<t tx="ekr.20041020100918.1">unnamed node line 1</t>
+<t tx="ekr.20041020100956"># Test that @nosent generates no sentinels
+
+&lt;&lt; section &gt;&gt;
+
+@others
+
+last line</t>
+<t tx="ekr.20041020100956.1">section line 1</t>
+<t tx="ekr.20041020100956.2">unnamed node line 1</t>
 </tnodes>
 </leo_file>
