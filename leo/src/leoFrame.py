@@ -3045,7 +3045,6 @@ class baseLeoFrame:
 		brackets = open_brackets + close_brackets
 		matching_brackets = close_brackets + open_brackets
 		forward = ch in open_brackets
-		trace(forward,ch)
 		# Find the character matching the initial bracket.
 		for n in xrange(len(brackets)):
 			if ch == brackets[n]:
