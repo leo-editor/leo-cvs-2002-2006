@@ -68,7 +68,7 @@
 <v t="edream.110203163054.44"><vh>Dan Winkler 1</vh></v>
 <v t="edream.110203163054.45"><vh>Dan Winkler 2</vh></v>
 </v>
-<v t="edream.110203163054.46" a="E"><vh>Release Notes</vh>
+<v t="edream.110203163054.46"><vh>Release Notes</vh>
 <v t="edream.110203163054.47"><vh>Warnings</vh></v>
 <v t="edream.110203163054.48"><vh>Installation notes</vh>
 <v t="edream.110203163054.49"><vh>System requirements</vh></v>
@@ -80,8 +80,8 @@
 <v t="edream.110203163054.61"><vh>Putting the Leo icon in Leo windows</vh></v>
 <v t="edream.110203163054.62"><vh>Quick start</vh></v>
 </v>
-<v t="edream.110203163054.63" a="E"><vh>Latest versions</vh>
-<v t="EKR.20040628095213" a="ETV"><vh>4.2 beta 1</vh>
+<v t="edream.110203163054.63"><vh>Latest versions</vh>
+<v t="EKR.20040628095213" a="E"><vh>4.2 beta 1</vh>
 <v t="EKR.20040524104904.242"><vh>Extending the format of .leo files</vh></v>
 <v t="ekr.20040629164557"><vh>New coding conventions in 4.2</vh></v>
 <v t="EKR.20040628100535"><vh>Fixed bugs</vh>
@@ -1232,10 +1232,769 @@
 </v>
 </v>
 <v t="EKR.20040524104904"><vh>Users Guide</vh>
-<v t="EKR.20040524104904.1"><vh>@file-thin leoUsersGuide.txt</vh></v>
+<v t="EKR.20040524104904.2"><vh>An overview of Leo</vh></v>
+<v t="EKR.20040524104904.3"><vh>Front material</vh>
+<v t="EKR.20040524104904.4"><vh>Title Page &amp; Summary</vh></v>
+<v t="EKR.20040524104904.5"><vh>Preface</vh></v>
+<v t="EKR.20040524104904.6"><vh>Leo's Design Goals</vh></v>
+<v t="EKR.20040524104904.7"><vh>Acknowledgements</vh></v>
+<v t="EKR.20040524104904.8"><vh>Legal Notices: Leo uses the Python license</vh></v>
+</v>
+<v t="EKR.20040524104904.9"><vh>Chapter 1: Introducing Leo</vh>
+<v t="EKR.20040524104904.10"><vh>Overview</vh></v>
+<v t="EKR.20040524104904.11"><vh>Leo's main window</vh></v>
+<v t="EKR.20040524104904.12"><vh>Body text and sections</vh></v>
+<v t="EKR.20040524104904.13"><vh>Outlines organize sections</vh>
+<v t="EKR.20040524104904.14"><vh>removeSentinelsCommand</vh>
+<v t="EKR.20040524104904.15"><vh>&lt;&lt; Read file into s &gt;&gt;</vh></v>
+<v t="EKR.20040524104904.16"><vh>&lt;&lt; set delims from the header line &gt;&gt;</vh></v>
+<v t="EKR.20040524104904.17"><vh>&lt;&lt; Write s into newFileName &gt;&gt;</vh></v>
+</v>
+</v>
+<v t="EKR.20040524104904.18"><vh>Clones manage tasks</vh></v>
+<v t="EKR.20040524104904.19"><vh>Outlines generate derived files</vh></v>
+<v t="EKR.20040524104904.20"><vh>A recommended workflow for using Leo</vh></v>
+</v>
+<v t="EKR.20040524104904.21"><vh>Chapter 2: Installing Leo</vh>
+<v t="EKR.20040524104904.22"><vh>System requirements</vh></v>
+<v t="EKR.20040524104904.23"><vh>How to install leo.py on Windows</vh></v>
+<v t="EKR.20040524104904.24"><vh>How to associate leo.py with .leo files on Windows</vh></v>
+<v t="EKR.20040524104904.25"><vh>Quick start</vh></v>
+</v>
+<v t="EKR.20040524104904.26"><vh>Chapter 3: Using Outlines &amp; Body text</vh>
+<v t="EKR.20040524104904.27"><vh>Cloning headlines</vh>
+<v t="EKR.20040524104904.28"><vh>read me</vh></v>
+<v t="EKR.20040524104904.29"><vh>a</vh>
+<v t="EKR.20040524104904.30"><vh>b</vh>
+<v t="EKR.20040524104904.31"><vh>c</vh>
+<v t="EKR.20040524104904.32"><vh>d</vh></v>
+<v t="EKR.20040524104904.33"><vh>e</vh></v>
+</v>
+<v t="EKR.20040524104904.31"><vh>c</vh>
+<v t="EKR.20040524104904.32"><vh>d</vh></v>
+<v t="EKR.20040524104904.33"><vh>e</vh></v>
+</v>
+</v>
+<v t="EKR.20040524104904.30"><vh>b</vh>
+<v t="EKR.20040524104904.31"><vh>c</vh>
+<v t="EKR.20040524104904.32"><vh>d</vh></v>
+<v t="EKR.20040524104904.33"><vh>e</vh></v>
+</v>
+<v t="EKR.20040524104904.31"><vh>c</vh>
+<v t="EKR.20040524104904.32"><vh>d</vh></v>
+<v t="EKR.20040524104904.33"><vh>e</vh></v>
+</v>
+</v>
+<v t="EKR.20040524104904.34"><vh>g</vh></v>
+</v>
+<v t="EKR.20040524104904.29"><vh>a</vh>
+<v t="EKR.20040524104904.30"><vh>b</vh>
+<v t="EKR.20040524104904.31"><vh>c</vh>
+<v t="EKR.20040524104904.32"><vh>d</vh></v>
+<v t="EKR.20040524104904.33"><vh>e</vh></v>
+</v>
+<v t="EKR.20040524104904.31"><vh>c</vh>
+<v t="EKR.20040524104904.32"><vh>d</vh></v>
+<v t="EKR.20040524104904.33"><vh>e</vh></v>
+</v>
+</v>
+<v t="EKR.20040524104904.30"><vh>b</vh>
+<v t="EKR.20040524104904.31"><vh>c</vh>
+<v t="EKR.20040524104904.32"><vh>d</vh></v>
+<v t="EKR.20040524104904.33"><vh>e</vh></v>
+</v>
+<v t="EKR.20040524104904.31"><vh>c</vh>
+<v t="EKR.20040524104904.32"><vh>d</vh></v>
+<v t="EKR.20040524104904.33"><vh>e</vh></v>
+</v>
+</v>
+<v t="EKR.20040524104904.34"><vh>g</vh></v>
+</v>
+<v t="EKR.20040524104904.35"><vh>f</vh></v>
+</v>
+<v t="EKR.20040524104904.36"><vh>Creating and destroying headlines</vh></v>
+<v t="EKR.20040524104904.37"><vh>Cutting, pasting and deleting headlines</vh></v>
+<v t="EKR.20040524104904.38"><vh>Dragging headlines</vh></v>
+<v t="EKR.20040524104904.39"><vh>Editing body text</vh></v>
+<v t="EKR.20040524104904.40"><vh>Expanding &amp; contracting headlines</vh></v>
+<v t="EKR.20040524104904.41"><vh>Indenting body text automatically</vh>
+<v t="EKR.20040524104904.42"><vh>Optional Emacs-style auto-indent</vh></v>
+</v>
+<v t="EKR.20040524104904.43"><vh>Marking headlines</vh></v>
+<v t="EKR.20040524104904.44"><vh>Moving &amp; Reorganizing headlines</vh></v>
+<v t="EKR.20040524104904.45"><vh>Opening URL's automatically</vh>
+<v t="EKR.20040524104904.46"><vh>@url</vh></v>
+</v>
+<v t="EKR.20040524104904.47"><vh>Resizing panes</vh></v>
+<v t="EKR.20040524104904.48"><vh>Undoing operations</vh></v>
+</v>
+<v t="EKR.20040524104904.49"><vh>Chapter 4: Writing Programs in Leo</vh>
+<v t="EKR.20040524104904.50"><vh>Overview</vh></v>
+<v t="EKR.20040524104904.51"><vh>Sections and section references</vh></v>
+<v t="EKR.20040524104904.52"><vh>Organizing @file trees.</vh>
+<v t="EKR.20040524104904.53"><vh>Examples</vh>
+<v t="EKR.20040524104904.54"><vh>@file f.c</vh>
+<v t="EKR.20040524104904.55"><vh>&lt;&lt; constants &gt;&gt;</vh></v>
+<v t="EKR.20040524104904.56"><vh>&lt;&lt; declarations &gt;&gt;</vh></v>
+<v t="EKR.20040524104904.57"><vh>function 1</vh></v>
+<v t="EKR.20040524104904.58"><vh>function 2</vh></v>
+</v>
+<v t="EKR.20040524104904.59"><vh>@file classX.py</vh>
+<v t="EKR.20040524104904.60"><vh>&lt;&lt; imports for classX &gt;&gt;</vh></v>
+<v t="EKR.20040524104904.61"><vh>Getters</vh>
+<v t="EKR.20040524104904.62"><vh>getter 1</vh></v>
+<v t="EKR.20040524104904.63"><vh>getter 2</vh></v>
+</v>
+<v t="EKR.20040524104904.64"><vh>Setters</vh>
+<v t="EKR.20040524104904.65"><vh>setter 1</vh></v>
+<v t="EKR.20040524104904.66"><vh>setter 2</vh></v>
+</v>
+</v>
+<v t="EKR.20040524104904.67"><vh>@file mainClass.py</vh>
+<v t="EKR.20040524104904.68"><vh>&lt;&lt;mainClass imports &gt;&gt;</vh></v>
+<v t="EKR.20040524104904.69"><vh>&lt;&lt;class mainClass&gt;&gt;</vh>
+<v t="EKR.20040524104904.70"><vh>method 1</vh></v>
+<v t="EKR.20040524104904.71"><vh>method 2</vh></v>
+</v>
+<v t="EKR.20040524104904.72"><vh>&lt;&lt;class helperClass&gt;&gt;</vh>
+<v t="EKR.20040524104904.73"><vh>method 1</vh></v>
+<v t="EKR.20040524104904.74"><vh>method 2</vh></v>
+</v>
+</v>
+<v t="EKR.20040524104904.75"><vh>@file bad</vh>
+<v t="EKR.20040524104904.76"><vh>Methods</vh>
+<v t="EKR.20040524104904.77"><vh>&lt;&lt; section 1 &gt;&gt;</vh>
+<v t="EKR.20040524104904.78"><vh>A</vh></v>
+</v>
+</v>
+</v>
+</v>
+</v>
+<v t="EKR.20040524104904.79"><vh>More about directives</vh>
+<v t="EKR.20040608091134"><vh>@all directive copies all nodes in @thin trees</vh></v>
+<v t="EKR.20040524104904.80"><vh>@color, @nocolor and @killcolor control syntax coloring</vh></v>
+<v t="EKR.20040524104904.81"><vh>@comment sets comment delimiters in @root and @unit trees</vh></v>
+<v t="EKR.20040524104904.82"><vh>@delims directive specifies comment delimiters in @file trees</vh></v>
+<v t="EKR.20040524104904.83"><vh>@encoding directive specifies encoding of text</vh></v>
+<v t="EKR.20040524104904.84"><vh>@first and @last directives allow leading and trailing lines in @file trees</vh></v>
+<v t="EKR.20040524104904.85"><vh>@language specifying the target language</vh></v>
+<v t="EKR.20040524104904.86"><vh>@lineending directive specifies line endings</vh></v>
+<v t="EKR.20040524104904.87"><vh>@path, @pagewidth and @tabwidth directives set preferences</vh></v>
+<v t="EKR.20040524104904.88"><vh>@raw and @end_raw directives delimit raw text</vh></v>
+<v t="EKR.20040524104904.89"><vh>@root options</vh></v>
+<v t="EKR.20040524104904.90"><vh>@wrap and @nowrap directives control line wrapping in the body pane</vh></v>
+</v>
+<v t="EKR.20040524104904.91"><vh>About cweb mode</vh></v>
+<v t="EKR.20040524104904.92"><vh>Appendix 1 to Chapter 4: Using @asis, @noref and @nosent trees</vh></v>
+<v t="EKR.20040524104904.93"><vh>Appendix 2 to Chapter 4: Using the @root directive, Tangling and Untangling</vh>
+<v t="EKR.20040524104904.94"><vh>@root vs. @file trees</vh></v>
+<v t="EKR.20040524104904.95"><vh>Sections and section definitions</vh></v>
+<v t="EKR.20040524104904.96"><vh>Tangling @root trees with the Tangle commands</vh></v>
+<v t="EKR.20040524104904.97"><vh>Untangling @root trees with the Untangle commands</vh></v>
+<v t="EKR.20040524104904.98"><vh>@verbose, @terse, @quiet and @silent directives control comments in @root trees</vh></v>
+</v>
+<v t="EKR.20040608091134.1"><vh>Appendix 3 to Chapter 4: Using @thin instead of @file</vh></v>
+</v>
+<v t="EKR.20040524104904.99"><vh>Chapter 5: Using Leo's Commands</vh>
+<v t="EKR.20040524104904.100"><vh> The File Menu</vh>
+<v t="EKR.20040524104904.101"><vh>Loading, Saving and Reverting Files</vh></v>
+<v t="EKR.20040524104904.102"><vh>Communicating with external editors</vh>
+<v t="EKR.20040524104904.103"><vh>Open With command</vh>
+<v t="EKR.20040524104904.104"><vh>createOpenWithMenuFromTable</vh></v>
+</v>
+</v>
+<v t="EKR.20040524104904.105"><vh>Tangling an outline: Producing Derived Files</vh></v>
+<v t="EKR.20040524104904.106"><vh>Untangling: updating an outline</vh></v>
+<v t="EKR.20040524104904.107"><vh>Tangling and Untangling: the Interface with the IDE</vh></v>
+<v t="EKR.20040524104904.108"><vh>Importing Files into Leo Outlines</vh></v>
+<v t="EKR.20040524104904.109"><vh>Exporting Files from Leo Outlines</vh></v>
+<v t="EKR.20040524104904.110"><vh>Quitting Leo</vh></v>
+</v>
+<v t="EKR.20040524104904.111"><vh> The Edit Menu</vh>
+<v t="EKR.20040524104904.112"><vh>Undoing changes</vh></v>
+<v t="EKR.20040524104904.113"><vh>Cutting, pasting and selecting text</vh></v>
+<v t="EKR.20040524104904.114"><vh>Shifting body text</vh></v>
+<v t="EKR.20040524104904.115"><vh>Creating nodes from body text</vh></v>
+<v t="EKR.20040524104904.116"><vh>Converting leading blanks and tabs in body text</vh></v>
+<v t="EKR.20040524104904.117"><vh>Executing Python scripts in body text</vh></v>
+<v t="EKR.20040524104904.118"><vh>Finding and changing text</vh>
+<v t="EKR.20040524104904.119"><vh> Script Find and Script Change</vh>
+<v t="EKR.20040524104904.120"><vh>How it works</vh></v>
+<v t="EKR.20040524104904.121"><vh>Using the initScriptFind script</vh></v>
+<v t="EKR.20040524104904.122"><vh>Ideas for using scripts</vh></v>
+</v>
+<v t="EKR.20040524104904.123"><vh>Batch</vh></v>
+<v t="EKR.20040524104904.124"><vh>Ignore Case</vh></v>
+<v t="EKR.20040524104904.125"><vh>Mark Changes</vh></v>
+<v t="EKR.20040524104904.126"><vh>Mark Matches</vh></v>
+<v t="EKR.20040524104904.127"><vh>Pattern Match</vh></v>
+<v t="EKR.20040524104904.128"><vh>Reverse</vh></v>
+<v t="EKR.20040524104904.129"><vh>Search Body Text</vh></v>
+<v t="EKR.20040524104904.130"><vh>Search Headline Text</vh></v>
+<v t="EKR.20040524104904.131"><vh>Suboutline Only</vh></v>
+<v t="EKR.20040524104904.132"><vh>Whole Word</vh></v>
+<v t="EKR.20040524104904.133"><vh>Wrap Around</vh></v>
+</v>
+<v t="EKR.20040524104904.134"><vh>Finding locations in outlines corresponding to line in derived files</vh>
+<v t="EKR.20040524104904.135"><vh>Go To Line Number command</vh></v>
+</v>
+<v t="EKR.20040524104904.136"><vh>Inserting the date and time</vh></v>
+<v t="EKR.20040524104904.137"><vh>Reformatting paragraphs in body text</vh>
+<v t="EKR.20040524104904.138"><vh>Reformat Paragraph command</vh></v>
+</v>
+<v t="EKR.20040524104904.139"><vh>Matching brackets and parenthesis</vh></v>
+<v t="EKR.20040524104904.140"><vh>Setting Preferences</vh>
+<v t="EKR.20040524104904.141"><vh>PHP keywords</vh></v>
+<v t="EKR.20040524104904.142"><vh>LaTex keywords</vh></v>
+</v>
+</v>
+<v t="EKR.20040524104904.143"><vh> The Outline Menu</vh>
+<v t="EKR.20040524104904.144"><vh> Checking outlines</vh></v>
+<v t="EKR.20040524104904.145"><vh> Creating and deleting headlines</vh></v>
+<v t="EKR.20040524104904.146"><vh> Cutting, pasting and deleting headlines</vh></v>
+<v t="EKR.20040524104904.147"><vh> Expanding and contracting headlines</vh></v>
+<v t="EKR.20040524104904.148"><vh> Hoisting &amp; De-hoisting headlines</vh></v>
+<v t="EKR.20040524104904.149"><vh> Marking headlines</vh></v>
+<v t="EKR.20040524104904.150"><vh> Moving, sorting and reorganizing headlines</vh></v>
+<v t="EKR.20040524104904.27"><vh>Cloning headlines</vh>
+<v t="EKR.20040524104904.28"><vh>read me</vh></v>
+<v t="EKR.20040524104904.29"><vh>a</vh>
+<v t="EKR.20040524104904.30"><vh>b</vh>
+<v t="EKR.20040524104904.31"><vh>c</vh>
+<v t="EKR.20040524104904.32"><vh>d</vh></v>
+<v t="EKR.20040524104904.33"><vh>e</vh></v>
+</v>
+<v t="EKR.20040524104904.31"><vh>c</vh>
+<v t="EKR.20040524104904.32"><vh>d</vh></v>
+<v t="EKR.20040524104904.33"><vh>e</vh></v>
+</v>
+</v>
+<v t="EKR.20040524104904.30"><vh>b</vh>
+<v t="EKR.20040524104904.31"><vh>c</vh>
+<v t="EKR.20040524104904.32"><vh>d</vh></v>
+<v t="EKR.20040524104904.33"><vh>e</vh></v>
+</v>
+<v t="EKR.20040524104904.31"><vh>c</vh>
+<v t="EKR.20040524104904.32"><vh>d</vh></v>
+<v t="EKR.20040524104904.33"><vh>e</vh></v>
+</v>
+</v>
+<v t="EKR.20040524104904.34"><vh>g</vh></v>
+</v>
+<v t="EKR.20040524104904.29"><vh>a</vh>
+<v t="EKR.20040524104904.30"><vh>b</vh>
+<v t="EKR.20040524104904.31"><vh>c</vh>
+<v t="EKR.20040524104904.32"><vh>d</vh></v>
+<v t="EKR.20040524104904.33"><vh>e</vh></v>
+</v>
+<v t="EKR.20040524104904.31"><vh>c</vh>
+<v t="EKR.20040524104904.32"><vh>d</vh></v>
+<v t="EKR.20040524104904.33"><vh>e</vh></v>
+</v>
+</v>
+<v t="EKR.20040524104904.30"><vh>b</vh>
+<v t="EKR.20040524104904.31"><vh>c</vh>
+<v t="EKR.20040524104904.32"><vh>d</vh></v>
+<v t="EKR.20040524104904.33"><vh>e</vh></v>
+</v>
+<v t="EKR.20040524104904.31"><vh>c</vh>
+<v t="EKR.20040524104904.32"><vh>d</vh></v>
+<v t="EKR.20040524104904.33"><vh>e</vh></v>
+</v>
+</v>
+<v t="EKR.20040524104904.34"><vh>g</vh></v>
+</v>
+<v t="EKR.20040524104904.35"><vh>f</vh></v>
+</v>
+</v>
+<v t="EKR.20040524104904.151"><vh> The Window Menu</vh>
+<v t="EKR.20040524104904.152"><vh> Resizing panes</vh></v>
+<v t="EKR.20040524104904.153"><vh> Cascading &amp; minimizing windows</vh></v>
+<v t="EKR.20040524104904.154"><vh>Toggling the active pane</vh></v>
+<v t="EKR.20040524104904.155"><vh>Toggling the orientation of the Leo window</vh></v>
+<v t="EKR.20040524104904.156"><vh>Comparing files</vh></v>
+</v>
+<v t="EKR.20040524104904.157"><vh>The Help Menu</vh>
+<v t="EKR.20040524104904.158"><vh>Getting Leo's version</vh></v>
+<v t="EKR.20040524104904.159"><vh>Reading documentation</vh></v>
+<v t="EKR.20040524104904.160"><vh>Configuring Leo</vh></v>
+</v>
+</v>
+<v t="EKR.20040524104904.161"><vh>Chapter 6: Leo and Literate Programming</vh>
+<v t="EKR.20040524104904.162"><vh>Why I like Literate Programming</vh>
+<v t="EKR.20040524104904.163"><vh>Literate programming creates a new design dimension</vh></v>
+<v t="EKR.20040524104904.164"><vh>Design and coding happen at the highest possible level</vh></v>
+<v t="EKR.20040524104904.165"><vh>The visual weight of code is separate from its actual length</vh></v>
+<v t="EKR.20040524104904.166"><vh>Sections show relations between snippets of code</vh></v>
+<v t="EKR.20040524104904.167"><vh>Complex section names invite improvements</vh></v>
+<v t="EKR.20040524104904.168"><vh>Sections create a place for extensive comments</vh></v>
+<v t="EKR.20040524104904.169"><vh>Section names eliminate mundane comments</vh></v>
+<v t="EKR.20040524104904.170"><vh>Sections create comments automatically</vh></v>
+<v t="EKR.20040524104904.171"><vh>Literate programming clarifies the shape of functions</vh></v>
+<v t="EKR.20040524104904.172"><vh>I spend less time formatting code</vh></v>
+</v>
+<v t="EKR.20040524104904.173"><vh>How Leo Improves Literate Programming</vh>
+<v t="EKR.20040524104904.174"><vh>Outlines add context</vh></v>
+<v t="EKR.20040524104904.175"><vh>Outlines provide scope for commands</vh></v>
+<v t="EKR.20040524104904.176"><vh>Clones create different views and focus attention</vh></v>
+<v t="EKR.20040524104904.177"><vh>Outlines increase flexibility</vh></v>
+<v t="EKR.20040524104904.178"><vh>Outlines express hierarchy directly</vh></v>
+<v t="EKR.20040524104904.179"><vh>Outlines create new design dimensions</vh></v>
+<v t="EKR.20040524104904.180"><vh>Leo improves tangling and adds untangling</vh></v>
+</v>
+<v t="EKR.20040524104904.181"><vh>How Leo Changes the Notion of Literate Programming</vh></v>
+</v>
+<v t="EKR.20040524104904.182"><vh>Chapter 7: Scripting Leo with Python</vh>
+<v t="EKR.20040524104904.183"><vh>Overview</vh></v>
+<v t="EKR.20040524104904.184"><vh>Basic scripts</vh>
+<v t="EKR.20040524104904.185"><vh>Writing to log window</vh></v>
+<v t="EKR.20040524104904.186"><vh>Getting commanders and frames</vh></v>
+<v t="EKR.20040524104904.187"><vh>Redirecting output from scripts</vh></v>
+<v t="EKR.20040524104904.188"><vh>Getting the headline and body text of the presently selected node</vh></v>
+<v t="EKR.20040524104904.189"><vh>Setting the headline and body text of the presently selected node</vh></v>
+<v t="EKR.20040524104904.190"><vh>Traversing all nodes of an outline</vh></v>
+<v t="EKR.20040524104904.191"><vh>Iterators</vh>
+<v t="EKR.20040524104904.192"><vh>allNodes_iter</vh>
+<v t="EKR.20040524104904.193"><vh>Example 1</vh></v>
+<v t="EKR.20040524104904.194"><vh>Example 2</vh></v>
+</v>
+<v t="EKR.20040524104904.195"><vh>children_iter</vh></v>
+<v t="EKR.20040524104904.196"><vh>parents_iter</vh></v>
+<v t="EKR.20040524104904.197"><vh>siblings_iter</vh></v>
+<v t="EKR.20040524104904.198"><vh>subtree_iter</vh></v>
+</v>
+<v t="EKR.20040524104904.199"><vh>Updating the screen</vh></v>
+<v t="EKR.20040524104904.200"><vh>Invoking commands from scripts</vh></v>
+<v t="EKR.20040524104904.201"><vh>Getting preferences</vh></v>
+<v t="EKR.20040524104904.202"><vh>Setting preferences</vh></v>
+<v t="EKR.20040524104904.203"><vh>Functions for finding and changing text from scripts</vh>
+<v t="EKR.20040524104904.204"><vh>Example 1: the findAll function</vh></v>
+<v t="EKR.20040524104904.205"><vh>Example 2: the reFindAll function</vh></v>
+</v>
+<v t="EKR.20040524104904.206"><vh>Running Leo in batch mode</vh></v>
+<v t="EKR.20040524104904.207"><vh>Functions defined in leoGlobals.py</vh></v>
+</v>
+<v t="EKR.20040524104904.208"><vh>Summary of the vnode and position classes</vh>
+<v t="EKR.20040524104904.191"><vh>Iterators</vh>
+<v t="EKR.20040524104904.192"><vh>allNodes_iter</vh>
+<v t="EKR.20040524104904.193"><vh>Example 1</vh></v>
+<v t="EKR.20040524104904.194"><vh>Example 2</vh></v>
+</v>
+<v t="EKR.20040524104904.195"><vh>children_iter</vh></v>
+<v t="EKR.20040524104904.196"><vh>parents_iter</vh></v>
+<v t="EKR.20040524104904.197"><vh>siblings_iter</vh></v>
+<v t="EKR.20040524104904.198"><vh>subtree_iter</vh></v>
+</v>
+<v t="EKR.20040524104904.209"><vh>Getters</vh></v>
+<v t="EKR.20040524104904.210"><vh>Setters</vh></v>
+</v>
+</v>
+<v t="EKR.20040524104904.211"><vh>Chapter 8: Customizing Leo</vh>
+<v t="EKR.20040524104904.212"><vh>Using leoConfig.leo and leoConfig.txt</vh></v>
+<v t="EKR.20040524104904.213"><vh>Using plugins and hooks</vh>
+<v t="EKR.20040524104904.214"><vh>Overview of plugins and hooks</vh></v>
+<v t="EKR.20040524104904.215"><vh>New plugin architecture</vh>
+<v t="EKR.20040524104904.216"><vh>@file plugins/mod_open_with.py</vh>
+<v t="EKR.20040524104904.217"><vh>on_idle</vh>
+<v t="EKR.20040524104904.218"><vh>&lt;&lt; update v's body text &gt;&gt;</vh>
+<v t="EKR.20040524104904.219"><vh>&lt;&lt; set s to the new text &gt;&gt;</vh></v>
+<v t="EKR.20040524104904.220"><vh>&lt;&lt; set conflict flag &gt;&gt;</vh></v>
+</v>
+</v>
+<v t="EKR.20040524104904.221"><vh>create_open_with_menu</vh>
+<v t="EKR.20040524104904.222"><vh>&lt;&lt; create the Open With menu &gt;&gt;</vh></v>
+</v>
+</v>
+</v>
+<v t="EKR.20040524104904.223"><vh>About hooks</vh></v>
+<v t="EKR.20040524104904.224"><vh>SECURITY WARNINGS</vh>
+<v t="EKR.20040524104904.225"><vh>The danger of trusting code in shared .leo files</vh></v>
+<v t="EKR.20040524104904.226"><vh>NEVER use this kind of code in a hook!!</vh></v>
+<v t="EKR.20040524104904.227"><vh>Don't use rexec !!</vh>
+<v t="EKR.20040524104904.228"><vh>&lt;&lt; change all instances of rexec to exec in v's body &gt;&gt;</vh></v>
+<v t="EKR.20040524104904.229"><vh>&lt;&lt; delete thisNode &gt;&gt;</vh></v>
+<v t="EKR.20040524104904.230"><vh>&lt;&lt; clear the undo stack &gt;&gt;</vh></v>
+</v>
+</v>
+<v t="EKR.20040524104904.231"><vh>Convenience routines for plugins</vh>
+<v t="EKR.20040524104904.232"><vh>Convenience functions to enable and disable the "idle" hook</vh></v>
+<v t="EKR.20040524104904.233"><vh>Convenience methods to create, destroy and modify menus</vh>
+<v t="EKR.20040524104904.234"><vh>createMenuItemsFromTable</vh></v>
+<v t="EKR.20040524104904.235"><vh>createNewMenu</vh></v>
+<v t="EKR.20040524104904.104"><vh>createOpenWithMenuFromTable</vh></v>
+<v t="EKR.20040524104904.236"><vh>deleteMenu</vh></v>
+<v t="EKR.20040524104904.237"><vh>deleteMenuItem</vh></v>
+<v t="EKR.20040524104904.238"><vh>Example: how to create a menu</vh></v>
+</v>
+</v>
+<v t="EKR.20040524104904.239"><vh>Translating menus into other languages</vh></v>
+<v t="EKR.20040524104904.240"><vh>Support for unit testing</vh></v>
+</v>
+<v t="EKR.20040524104904.241"><vh>Putting the Leo icon in Leo windows</vh></v>
+<v t="EKR.20040524104904.242"><vh>Extending the format of .leo files</vh></v>
+<v t="EKR.20040524104904.243"><vh>Attaching temporary attributes to vnodes and tnodes</vh></v>
+<v t="EKR.20040524104904.244"><vh>Recommended conventions for plugins</vh></v>
+<v t="EKR.20040524104904.119"><vh> Script Find and Script Change</vh>
+<v t="EKR.20040524104904.120"><vh>How it works</vh></v>
+<v t="EKR.20040524104904.121"><vh>Using the initScriptFind script</vh></v>
+<v t="EKR.20040524104904.122"><vh>Ideas for using scripts</vh></v>
+</v>
+</v>
+<v t="EKR.20040524104904.245"><vh>Chapter 9: History of Leo</vh>
+<v t="EKR.20040524104904.246"><vh>Beginnings</vh></v>
+<v t="EKR.20040524104904.247"><vh>Versions, and more versions</vh></v>
+<v t="EKR.20040524104904.248"><vh>Designing @file trees</vh>
+<v t="EKR.20040524104904.249"><vh>Deciding to do Leo2</vh></v>
+<v t="EKR.20040524104904.250"><vh>A prototype</vh></v>
+<v t="EKR.20040524104904.251"><vh>User interaction</vh></v>
+<v t="EKR.20040524104904.252"><vh>The write code</vh></v>
+<v t="EKR.20040524104904.253"><vh>The read code</vh></v>
+<v t="EKR.20040524104904.254"><vh>The load/save code</vh></v>
+<v t="EKR.20040524104904.255"><vh>Attributes, mirroring and dummy nodes</vh></v>
+<v t="EKR.20040524104904.256"><vh>Clones</vh></v>
+<v t="EKR.20040524104904.257"><vh>Error recovery, at last</vh></v>
+</v>
+<v t="EKR.20040524104904.258"><vh>White papers</vh>
+<v t="EKR.20040524104904.259"><vh>tk is the future of Leo</vh></v>
+<v t="EKR.20040524104904.260"><vh>Why I like Python</vh></v>
+</v>
+</v>
+<v t="EKR.20040524104904.261"><vh>Chapter 10: Theory of Operation</vh>
+<v t="EKR.20040524104904.262"><vh>Overview</vh></v>
+<v t="EKR.20040524104904.263"><vh>Nodes</vh></v>
+<v t="EKR.20040524104904.264"><vh>Drawing and events</vh></v>
+<v t="EKR.20040524104904.265"><vh>Clones</vh></v>
+<v t="EKR.20040524104904.266"><vh>Find and change commands</vh></v>
+<v t="EKR.20040524104904.267"><vh>Tangle and Untangle commands</vh></v>
+<v t="EKR.20040524104904.268"><vh>Unicode theory of operation</vh></v>
+<v t="EKR.20040524104904.269"><vh>Unlimited undo</vh></v>
+<v t="EKR.20040524104904.270"><vh>Other representations of trees</vh>
+<v t="EKR.20040524104904.271"><vh>Part 1</vh></v>
+<v t="EKR.20040524104904.272"><vh>Part 2</vh></v>
+</v>
+<v t="EKR.20040524104904.273"><vh>4.0 Theory of operation</vh></v>
+</v>
+<v t="EKR.20040524104904.274"><vh>Appendices</vh>
+<v t="EKR.20040524104904.275"><vh>Code hidden in leo.py</vh>
+<v t="EKR.20040524104904.276"><vh>c2py.py</vh></v>
+<v t="EKR.20040524104904.277"><vh>disStats.py</vh></v>
+<v t="EKR.20040524104904.278"><vh>Tkinter utilities</vh></v>
+<v t="EKR.20040524104904.279"><vh>Font dialog</vh></v>
+<v t="EKR.20040524104904.280"><vh>Syntax coloring code</vh></v>
+<v t="EKR.20040524104904.281"><vh>Tree code</vh></v>
+</v>
+<v t="EKR.20040524104904.282"><vh>Converting @root trees to @file trees</vh></v>
+<v t="EKR.20040524104904.283"><vh>Directives</vh>
+<v t="EKR.20040524104904.284"><vh>@c and @code</vh></v>
+<v t="EKR.20040524104904.285"><vh>@chapter (Macintosh only)</vh></v>
+<v t="EKR.20040524104904.286"><vh>@color</vh></v>
+<v t="EKR.20040524104904.287"><vh>@comment</vh></v>
+<v t="EKR.20040524104904.288"><vh>@delims (not valid in @root or @unit trees)</vh></v>
+<v t="EKR.20040524104904.289"><vh>@doc and @(space)</vh></v>
+<v t="EKR.20040524104904.290"><vh>@encoding</vh></v>
+<v t="EKR.20040524104904.291"><vh>@file (not valid in @root or @unit trees)</vh></v>
+<v t="EKR.20040524104904.292"><vh>@first (not valid in @root or @unit trees)</vh></v>
+<v t="EKR.20040524104904.293"><vh>@ignore  (not valid in @file trees)</vh></v>
+<v t="EKR.20040524104904.294"><vh>@language</vh></v>
+<v t="EKR.20040524104904.295"><vh>@nocolor</vh></v>
+<v t="EKR.20040524104904.296"><vh>@others (valid only in @file trees)</vh></v>
+<v t="EKR.20040524104904.297"><vh>@pagewidth</vh></v>
+<v t="EKR.20040524104904.298"><vh>@path</vh></v>
+<v t="EKR.20040524104904.299"><vh>@root  (not valid in @file trees)</vh></v>
+<v t="EKR.20040524104904.300"><vh>@section (Macintosh only)</vh></v>
+<v t="EKR.20040524104904.301"><vh>@silent (not valid in @file trees)</vh></v>
+<v t="EKR.20040524104904.302"><vh>@tabwidth</vh></v>
+<v t="EKR.20040524104904.303"><vh>@terse  (not valid in @file trees)</vh></v>
+<v t="EKR.20040524104904.304"><vh>@unit   (not valid in @file trees)</vh></v>
+<v t="EKR.20040524104904.305"><vh>@verbose, @terse and @silent directives</vh></v>
+</v>
+<v t="EKR.20040524104904.306"><vh>Error Messages</vh>
+<v t="EKR.20040524104904.307"><vh>Errors while tangling</vh>
+<v t="EKR.20040524104904.308"><vh>Can not re-open temp file</vh></v>
+<v t="EKR.20040524104904.309"><vh>Can not rename temporary file name</vh></v>
+<v t="EKR.20040524104904.310"><vh>@code expects the header: [text of header] to contain a section name</vh></v>
+<v t="EKR.20040524104904.311"><vh>@directive not valid here</vh></v>
+<v t="EKR.20040524104904.312"><vh>Halting Tangle: too many errors</vh></v>
+<v t="EKR.20040524104904.313"><vh>Invalid recursive reference of &lt;&lt; section name &gt;&gt;</vh></v>
+<v t="EKR.20040524104904.314"><vh>Multiple parts not allowed for &lt;&lt; section name &gt;&gt;</vh></v>
+<v t="EKR.20040524104904.315"><vh>No file written because of errors</vh></v>
+<v t="EKR.20040524104904.316"><vh>Run on comment</vh></v>
+<v t="EKR.20040524104904.317"><vh>Run on file name in @root directive</vh></v>
+<v t="EKR.20040524104904.318"><vh>Run on section name</vh></v>
+<v t="EKR.20040524104904.319"><vh>Run on string</vh></v>
+<v t="EKR.20040524104904.320"><vh>Section definition not valid here.</vh></v>
+<v t="EKR.20040524104904.321"><vh>Sections nested too deeply</vh></v>
+<v t="EKR.20040524104904.322"><vh>The outline contains no roots</vh></v>
+<v t="EKR.20040524104904.323"><vh>Undefined section:  &lt;&lt;&lt; section name &gt;&gt;&gt;</vh></v>
+<v t="EKR.20040524104904.324"><vh>Unexpected @directive while putting code</vh></v>
+<v t="EKR.20040524104904.325"><vh>Warning: possible duplicate definition of: &lt;&lt;&lt; section name &gt;&gt;&gt;</vh></v>
+<v t="EKR.20040524104904.326"><vh>Warning: &lt;&lt;&lt; section name &gt;&gt;&gt; has been defined but not used</vh></v>
+</v>
+<v t="EKR.20040524104904.327"><vh>Errors while untangling</vh>
+<v t="EKR.20040524104904.328"><vh>Incompatible definitions of &lt;&lt;&lt; section name &gt;&gt;&gt;</vh></v>
+<v t="EKR.20040524104904.329"><vh>Missing root part</vh></v>
+<v t="EKR.20040524104904.330"><vh>Missing root section</vh></v>
+<v t="EKR.20040524104904.331"><vh>Missing sentinel line for &lt;&lt;&lt; section name &gt;&gt;&gt;</vh></v>
+<v t="EKR.20040524104904.332"><vh>Unterminated section: &lt;&lt;&lt; section name &gt;&gt;&gt;</vh></v>
+</v>
+<v t="EKR.20040524104904.333"><vh>Errors while reading @file nodes</vh>
+<v t="EKR.20040524104904.334"><vh>Minor errors</vh></v>
+<v t="EKR.20040524104904.335"><vh>Serious errors</vh></v>
+</v>
+<v t="EKR.20040524104904.336"><vh>Errors while writing @file nodes</vh></v>
+</v>
+<v t="EKR.20040524104904.337"><vh>Format of derived files (3.x)</vh>
+<v t="EKR.20040524104904.338"><vh>Sentinels in derived files</vh>
+<v t="EKR.20040524104904.339"><vh>The @delims directive</vh></v>
+<v t="EKR.20040524104904.340"><vh>@leo &amp; comment delimiters</vh></v>
+<v t="EKR.20040524104904.341"><vh>@node</vh></v>
+<v t="EKR.20040524104904.342"><vh>@body</vh></v>
+<v t="EKR.20040524104904.343"><vh>@at and @doc &amp; the trailing whitespace convention</vh></v>
+<v t="EKR.20040524104904.344"><vh>@others</vh></v>
+<v t="EKR.20040524104904.345"><vh>@@delims</vh></v>
+<v t="EKR.20040524104904.346"><vh>@@&lt;text&gt;</vh></v>
+<v t="EKR.20040524104904.347"><vh>@verbatim and @verbatimAfterRef</vh></v>
+<v t="EKR.20040524104904.348"><vh>@&lt;&lt;section name&gt;&gt;</vh></v>
+</v>
+</v>
+<v t="EKR.20040524104904.349"><vh>Format of derived files (4.x)</vh></v>
+<v t="EKR.20040524104904.350"><vh>Future Features</vh></v>
+<v t="EKR.20040524104904.351"><vh>Known Bugs &amp; Limitations</vh></v>
+<v t="EKR.20040524104904.352"><vh>Reference for @file trees</vh></v>
+<v t="EKR.20040524104904.353"><vh>Sherlock</vh></v>
+<v t="EKR.20040524104904.354"><vh>Unicode</vh>
+<v t="EKR.20040524104904.355"><vh>How Leo handles unicode</vh></v>
+<v t="EKR.20040524104904.356"><vh>Unicode settings</vh></v>
+</v>
+<v t="EKR.20040524104904.357"><vh>XML file format</vh>
+<v t="EKR.20040524104904.358"><vh>Summary of the file format</vh></v>
+<v t="EKR.20040524104904.359"><vh>&lt;?xml ... ?&gt;</vh></v>
+<v t="EKR.20040524104904.360"><vh>&lt;leo_file&gt; ... &lt;/leo_file&gt;</vh>
+<v t="EKR.20040524104904.361"><vh>&lt;leo_header ... /&gt;</vh></v>
+<v t="EKR.20040524104904.362"><vh>&lt;globals ... &gt; ... &lt;/globals&gt;</vh></v>
+<v t="EKR.20040524104904.363"><vh>&lt;preferences ... &gt; ... &lt;/preferences&gt;</vh></v>
+<v t="EKR.20040524104904.364"><vh>&lt;find_panel_settings ... &gt; ... &lt;/find_panel_settings&gt;</vh></v>
+<v t="EKR.20040524104904.365"><vh>&lt;vnodes&gt;...&lt;/vnodes&gt;</vh>
+<v t="EKR.20040524104904.366"><vh>&lt;v...&gt; ... &lt;/v&gt;</vh></v>
+</v>
+<v t="EKR.20040524104904.367"><vh>&lt;tnodes&gt; ... &lt;/tnodes&gt;</vh>
+<v t="EKR.20040524104904.368"><vh>&lt;t...&gt; ... &lt;/t&gt;</vh></v>
+</v>
+<v t="EKR.20040524104904.369"><vh>&lt;clone_windows&gt; ... &lt;/clone_windows&gt;</vh>
+<v t="EKR.20040524104904.370"><vh>&lt;clone_window ...&gt; ... &lt;/clone_window&gt;</vh></v>
+</v>
+</v>
+<v t="EKR.20040524104904.371"><vh>DTD for Leo's File Format</vh></v>
+<v t="EKR.20040524104904.372"><vh>An example file</vh>
+<v t="EKR.20040524104904.373"><vh>The file itself</vh></v>
+<v t="EKR.20040524104904.374"><vh>The outline  from which the example file was created</vh>
+<v t="EKR.20040524104904.375"><vh>Headline 1</vh>
+<v t="EKR.20040524104904.376"><vh>Headline 2</vh>
+<v t="EKR.20040524104904.377"><vh>Headline 3 ( No body text)</vh></v>
+</v>
+</v>
+<v t="EKR.20040524104904.378"><vh>Headline 4 ( a clone )</vh>
+<v t="EKR.20040524104904.379"><vh>Headline 5</vh></v>
+</v>
+<v t="EKR.20040524104904.378"><vh>Headline 4 ( a clone )</vh>
+<v t="EKR.20040524104904.379"><vh>Headline 5</vh></v>
+</v>
+</v>
+</v>
+</v>
+</v>
+<v t="EKR.20040524104904.380"><vh>Glossary</vh>
+<v t="EKR.20040524104904.381"><vh>@file node, @others node, @root node, etc.</vh></v>
+<v t="EKR.20040524104904.382"><vh>@file tree, @others tree, @root tree, etc.</vh></v>
+<v t="EKR.20040524104904.383"><vh>Body pane</vh></v>
+<v t="EKR.20040524104904.384"><vh>Body text</vh></v>
+<v t="EKR.20040524104904.385"><vh>Body text box</vh></v>
+<v t="EKR.20040524104904.386"><vh>Child</vh></v>
+<v t="EKR.20040524104904.387"><vh>Chunk</vh></v>
+<v t="EKR.20040524104904.388"><vh>Clone</vh></v>
+<v t="EKR.20040524104904.389"><vh>Clone Arrow</vh></v>
+<v t="EKR.20040524104904.390"><vh>Code section</vh></v>
+<v t="EKR.20040524104904.391"><vh>CWEB</vh></v>
+<v t="EKR.20040524104904.392"><vh>Demote</vh></v>
+<v t="EKR.20040524104904.393"><vh>Derived file</vh></v>
+<v t="EKR.20040524104904.394"><vh>Descendent</vh></v>
+<v t="EKR.20040524104904.395"><vh>Directive</vh></v>
+<v t="EKR.20040524104904.396"><vh>Doc section</vh></v>
+<v t="EKR.20040524104904.397"><vh>Escape convention</vh></v>
+<v t="EKR.20040524104904.398"><vh>Grandchild</vh></v>
+<v t="EKR.20040524104904.399"><vh>Headline</vh></v>
+<v t="EKR.20040524104904.400"><vh>Hoist &amp; dehoist</vh></v>
+<v t="EKR.20040524104904.401"><vh>Leo, Leo1 and Leo2</vh></v>
+<v t="EKR.20040524104904.402"><vh>Literate programming</vh></v>
+<v t="EKR.20040524104904.403"><vh>Marking</vh></v>
+<v t="EKR.20040524104904.404"><vh>Named nodes</vh></v>
+<v t="EKR.20040524104904.405"><vh>Node</vh></v>
+<v t="EKR.20040524104904.406"><vh>noweb</vh></v>
+<v t="EKR.20040524104904.407"><vh>Offspring</vh></v>
+<v t="EKR.20040524104904.408"><vh>Organizing node</vh></v>
+<v t="EKR.20040524104904.409"><vh>Orphan node</vh></v>
+<v t="EKR.20040524104904.410"><vh>Outline</vh></v>
+<v t="EKR.20040524104904.411"><vh>Outline pane</vh></v>
+<v t="EKR.20040524104904.412"><vh>Parent</vh></v>
+<v t="EKR.20040524104904.413"><vh>Part</vh></v>
+<v t="EKR.20040524104904.414"><vh>pdf file</vh></v>
+<v t="EKR.20040524104904.415"><vh>Promote</vh></v>
+<v t="EKR.20040524104904.416"><vh>Root</vh></v>
+<v t="EKR.20040524104904.417"><vh>Scope</vh></v>
+<v t="EKR.20040524104904.418"><vh>Section</vh></v>
+<v t="EKR.20040524104904.419"><vh>Section name</vh></v>
+<v t="EKR.20040524104904.420"><vh>Section reference</vh></v>
+<v t="EKR.20040524104904.421"><vh>Sentinels, sentinel lines</vh></v>
+<v t="EKR.20040524104904.422"><vh>Sibling</vh></v>
+<v t="EKR.20040524104904.423"><vh>Status Icon</vh></v>
+<v t="EKR.20040524104904.424"><vh>Tangling</vh></v>
+<v t="EKR.20040524104904.425"><vh>Target language</vh></v>
+<v t="EKR.20040524104904.426"><vh>Tree</vh></v>
+<v t="EKR.20040524104904.427"><vh>Unnamed node</vh></v>
+<v t="EKR.20040524104904.428"><vh>Untangling</vh></v>
+<v t="EKR.20040524104904.429"><vh>Weaving</vh></v>
+</v>
 </v>
 <v t="edream.110203163054.1050"><vh>FAQ</vh>
-<v t="EKR.20040524105011"><vh>@file-thin leoFAQ.txt</vh></v>
+<v t="edream.110203163054.1051"><vh>Learning about Leo</vh>
+<v t="edream.110203163054.1052"><vh>What's the best way to learn to use Leo?</vh></v>
+<v t="edream.110203163054.1053"><vh>Where are the simple examples?</vh></v>
+<v t="edream.110203163054.1054"><vh>Why should I use clones?</vh></v>
+<v t="edream.110203163054.1055"><vh>Which should I use: @root trees or @file trees?</vh></v>
+<v t="ekr.20040411074926"><vh>How can I use Leo to develop Leo itself?</vh></v>
+</v>
+<v t="edream.110203163054.1056"><vh>Unicode and special characters</vh>
+<v t="edream.110203163054.1057"><vh>Some characters in derived files look funny. What can I do?</vh></v>
+<v t="edream.110203163054.1058"><vh>Some characters are garbled when importing files. What can I do?</vh></v>
+</v>
+<v t="edream.110203163054.1059"><vh>Using derived files</vh>
+<v t="edream.110203163054.1060"><vh>How do I prevent Leo from inserting sentinels in derived files?</vh>
+<v t="edream.110203163054.359"><vh>Appendix 1 to Chapter 4: Using @rawfile, @silentfile and @nosentinlefile trees</vh></v>
+</v>
+<v t="edream.110203163054.1061"><vh>How do I prevent Leo from expanding sections?</vh>
+<v t="edream.110203163054.359"><vh>Appendix 1 to Chapter 4: Using @rawfile, @silentfile and @nosentinlefile trees</vh></v>
+</v>
+<v t="edream.110203163054.1062"><vh>How do I generate files after using the Import commands?</vh></v>
+<v t="edream.110203163054.1063"><vh>How can I create Javascript comments?</vh></v>
+<v t="edream.110203163054.1064"><vh>How can I disable PHP comments?</vh></v>
+<v t="ekr.20040201114855.108"><vh>How can I use Leo with unsuppoorted languages?</vh></v>
+<v t="edream.110203163054.1065"><vh>How do I make derived files start with a shebang line?</vh></v>
+<v t="edream.110203163054.1066"><vh>How do I use Leo to create cweb files?</vh>
+<v t="edream.110203163054.355"><vh>About cweb mode </vh></v>
+</v>
+<v t="edream.110203163054.1067"><vh>Can @file trees contain material not in the derived file?</vh></v>
+<v t="EKR.20040521090400"><vh>How can I use Leo with older C compilers</vh></v>
+</v>
+<v t="edream.110203163054.1068"><vh>Customizing Leo</vh>
+<v t="edream.110203163054.322"><vh>Overview of plugins and hooks</vh></v>
+<v t="edream.110203163054.1069"><vh>I'm having trouble getting plugins to work.  What should I do?</vh></v>
+<v t="edream.110203163054.1070"><vh>How can I add support for a new language?</vh></v>
+<v t="edream.110203163054.319"><vh>Chapter 8: Customizing Leo</vh>
+<v t="edream.110203163054.320"><vh>Using leoConfig.leo and leoConfig.txt</vh></v>
+<v t="edream.110203163054.321"><vh>Using plugins and hooks</vh>
+<v t="edream.110203163054.322"><vh>Overview of plugins and hooks</vh></v>
+<v t="edream.110203163054.323"><vh>New plugin architecture</vh>
+<v t="edream.110203163054.324"><vh>@file plugins/mod_open_with.py</vh>
+<v t="edream.110203163054.325"><vh>on_idle</vh>
+<v t="edream.110203163054.326"><vh>&lt;&lt; update v's body text &gt;&gt;</vh>
+<v t="edream.110203163054.327"><vh>&lt;&lt; set s to the new text &gt;&gt;</vh></v>
+<v t="edream.110203163054.328"><vh>&lt;&lt; set conflict flag &gt;&gt;</vh></v>
+</v>
+</v>
+<v t="edream.110203163054.329"><vh>create_open_with_menu</vh>
+<v t="edream.110203163054.330"><vh>&lt;&lt; create the Open With menu &gt;&gt;</vh></v>
+</v>
+</v>
+</v>
+<v t="edream.110203163054.172"><vh>About hooks</vh></v>
+<v t="edream.110203163054.331"><vh>SECURITY WARNINGS</vh>
+<v t="edream.110203163054.332"><vh>The danger of trusting code in shared .leo files</vh></v>
+<v t="edream.110203163054.333"><vh>NEVER use this kind of code in a hook!!</vh></v>
+<v t="edream.110203163054.334"><vh>Don't use rexec !!</vh>
+<v t="edream.110203163054.335"><vh>&lt;&lt; change all instances of rexec to exec in v's body &gt;&gt;</vh></v>
+<v t="edream.110203163054.336"><vh>&lt;&lt; delete thisNode &gt;&gt;</vh></v>
+<v t="edream.110203163054.337"><vh>&lt;&lt; clear the undo stack &gt;&gt;</vh></v>
+</v>
+</v>
+<v t="edream.110203163054.338"><vh>Convenience routines for plugins</vh>
+<v t="edream.110203163054.339"><vh>Convenience functions to enable and disable the "idle" hook</vh></v>
+<v t="edream.110203163054.340"><vh>Convenience methods to create, destroy and modify menus</vh>
+<v t="edream.110203163054.341"><vh>createMenuItemsFromTable</vh></v>
+<v t="edream.110203163054.342"><vh>createNewMenu</vh></v>
+<v t="edream.110203163054.343"><vh>createOpenWithMenuFromTable</vh></v>
+<v t="edream.110203163054.344"><vh>deleteMenu</vh></v>
+<v t="edream.110203163054.345"><vh>deleteMenuItem</vh></v>
+<v t="edream.110203163054.346"><vh>Example: how to create a menu</vh></v>
+</v>
+</v>
+<v t="edream.110203163054.347"><vh>Translating menus into other languages</vh></v>
+<v t="edream.121403162622"><vh>Support for unit testing</vh></v>
+</v>
+<v t="edream.110203163054.61"><vh>Putting the Leo icon in Leo windows</vh></v>
+<v t="edream.110203163054.348"><vh>Extending the format of .leo files</vh></v>
+<v t="edream.120703073611"><vh>Attaching temporary attributes to vnodes and tnodes</vh></v>
+<v t="edream.120703073611.1"><vh>Recommended conventions for plugins</vh></v>
+<v t="edream.110603190322.6"><vh> Script Find and Script Change</vh>
+<v t="edream.111803060152.1"><vh>How it works</vh></v>
+<v t="ekr.20040201113232"><vh>Using the initScriptFind script</vh></v>
+<v t="edream.111803060152.2"><vh>Ideas for using scripts</vh></v>
+</v>
+</v>
+</v>
+<v t="edream.120903151103"><vh>Importing files</vh>
+<v t="edream.120903151103.1"><vh>How can I import many files at once?</vh></v>
+</v>
+<v t="edream.110203163054.1071"><vh>Other topics</vh>
+<v t="edream.110203163054.1072"><vh>How can I cut and paste nodes between different copies of Leo</vh></v>
+<v t="edream.110203163054.1073"><vh>How can I add support in Leo for a new language?</vh>
+<v t="edream.110203163054.1074"><vh>code</vh>
+<v t="edream.110203163054.1075"><vh>&lt;&lt; define global constants &gt;&gt;</vh></v>
+<v t="edream.110203163054.1076"><vh>&lt;&lt; Create the Target Language frame &gt;&gt;</vh></v>
+<v t="edream.110203163054.1077"><vh>&lt;&lt; define colorizer keywords &gt;&gt;</vh></v>
+<v t="edream.110203163054.1078"><vh>&lt;&lt; configure language-specific settings &gt;&gt;</vh></v>
+<v t="edream.110203163054.1079"><vh>&lt;&lt; check for syntax coloring prefs &gt;&gt;</vh></v>
+<v t="edream.110203163054.1080"><vh>&lt;&lt; initialize constant ivars &gt;&gt;</vh></v>
+<v t="edream.110203163054.1081"><vh>set_delims_from_language</vh></v>
+<v t="edream.110203163054.1082"><vh>set_language</vh></v>
+<v t="edream.110203163054.1083"><vh>colorizeAnyLanguage</vh>
+<v t="edream.110203163054.1084"><vh>&lt;&lt; configure tags &gt;&gt;</vh></v>
+<v t="edream.110203163054.1078"><vh>&lt;&lt; configure language-specific settings &gt;&gt;</vh></v>
+<v t="edream.110203163054.1085"><vh>Multiline State Handlers</vh>
+<v t="edream.110203163054.1086"><vh>&lt;&lt; continue doc part &gt;&gt;</vh>
+<v t="edream.110203163054.1087"><vh>&lt;&lt; handle cweb doc part &gt;&gt;</vh></v>
+<v t="edream.110203163054.1088"><vh>&lt;&lt; handle noweb doc part &gt;&gt;</vh></v>
+</v>
+<v t="edream.110203163054.1089"><vh>&lt;&lt; continue python triple string &gt;&gt;</vh></v>
+<v t="edream.110203163054.1090"><vh>&lt;&lt; continue block comment &gt;&gt;</vh></v>
+<v t="edream.110203163054.1091"><vh>&lt;&lt; continue nocolor state &gt;&gt;</vh></v>
+</v>
+<v t="edream.110203163054.1092"><vh>&lt;&lt; handle string &gt;&gt;</vh></v>
+<v t="edream.110203163054.1093"><vh>&lt;&lt; start block comment &gt;&gt;</vh></v>
+<v t="edream.110203163054.1094"><vh>&lt;&lt; handle single-line comment &gt;&gt;</vh></v>
+<v t="edream.110203163054.1095"><vh>&lt;&lt; handle C preprocessor line &gt;&gt;</vh></v>
+<v t="edream.110203163054.1096"><vh>&lt;&lt; handle possible section ref or def &gt;&gt;</vh>
+<v t="edream.110203163054.1097"><vh>&lt;&lt; set the hyperlink &gt;&gt;</vh></v>
+</v>
+<v t="edream.110203163054.1098"><vh>&lt;&lt; handle possible @keyword &gt;&gt;</vh>
+<v t="edream.110203163054.1099"><vh>&lt;&lt; Handle all cweb control codes &gt;&gt;</vh></v>
+<v t="edream.110203163054.1100"><vh>&lt;&lt; Handle non-cweb @keywords &gt;&gt;</vh></v>
+</v>
+<v t="edream.110203163054.1101"><vh>&lt;&lt; handle possible  keyword &gt;&gt;</vh></v>
+<v t="edream.110203163054.1102"><vh>&lt;&lt; handle blank &gt;&gt;</vh></v>
+<v t="edream.110203163054.1103"><vh>&lt;&lt; handle tab &gt;&gt;</vh></v>
+<v t="edream.110203163054.1104"><vh>&lt;&lt; handle normal character &gt;&gt;</vh></v>
+</v>
+<v t="edream.110203163054.1105"><vh>getPrefs</vh>
+<v t="edream.110203163054.1079"><vh>&lt;&lt; check for syntax coloring prefs &gt;&gt;</vh></v>
+</v>
+</v>
+<v t="edream.110203163054.1106"><vh>@root tcl/tk test</vh>
+<v t="edream.110203163054.1107"><vh>&lt;&lt; stuff &gt;&gt;</vh></v>
+</v>
+</v>
+<v t="edream.110203163054.1108"><vh>How can I create a template .leo file?</vh></v>
+<v t="ekr.20040411074926"><vh>How can I use Leo to develop Leo itself?</vh></v>
+</v>
 </v>
 <v t="edream.110203163054.1158"><vh>Sample Code</vh>
 <v t="edream.112303173638"><vh>Running Leo in batch mode</vh></v>
@@ -1246,10 +2005,23 @@
 </v>
 </v>
 </v>
-<v t="edream.110203163054.1653"><vh>Leaps (Leo Enhancement and Advancement Proposals)</vh>
-<v t="EKR.20040524105100"><vh>@file-thin leoLeaps.txt</vh></v>
+<v t="edream.110203163054.1653" a="TV"><vh>Leaps (Leo Enhancement and Advancement Proposals)</vh>
+<v t="edream.110203163054.1654"><vh>100's administering Leaps (and LeoCon)</vh>
+<v t="edream.110203163054.1655"><vh>Leap 102: LeoCon 1</vh></v>
 </v>
-<v t="ekr.20040414161647"><vh>Leo's HTML Users Guide (Created using the rst2 plugin)</vh>
+<v t="edream.110203163054.1656"><vh>200's single-user Leo</vh>
+<v t="edream.110203163054.1657"><vh>Leap 201. (Finished)  Represent clones as shared trees of vnodes</vh></v>
+<v t="edream.110203163054.1658"><vh>Leap 202. (Finished) Create cvs-friendly file format for derived files</vh></v>
+<v t="edream.110203163054.1659"><vh>Leap 203. (Open) Use Python Mega Widgets</vh></v>
+</v>
+<v t="edream.110203163054.1661"><vh>300's LeoN and beyond</vh>
+<v t="edream.110203163054.1662"><vh>Leap 301: Use central server</vh></v>
+<v t="edream.110203163054.1663"><vh>Leap 302: Produce a plugin for a Resolve CVS Conflicts command</vh>
+<v t="edream.110203163054.1664"><vh>Comments by Josef</vh></v>
+</v>
+</v>
+</v>
+<v t="ekr.20040414161647" a="E"><vh>Leo's HTML Users Guide (Created using the rst2 plugin)</vh>
 <v t="ekr.20040414162124"><vh>@rst leo_TOC.html</vh>
 <v t="ekr.20040414163815"><vh>Table of Contents</vh>
 <v t="ekr.20040414163815.1"><vh>@rst</vh></v>
@@ -1452,9 +2224,884 @@ How to recover the data:
 	- Read Outline.
 	- Remove @ignore
 	- Import derived file... </t>
+<t tx="EKR.20040521090400">Some older C compilers don't understand the "//" comment symbol, so using @language C won't work.
+
+Moreover, the following does not always work either:
+
+@comment /* */
+
+This generates the following sentinel line:
+
+/*@@comment /* */*/"
+
+in the output file, and not all C compilers allow nested comments, so the last "*/" genereates an error.
+
+The solution is to use:
+
+#if 0
+@comment /* */
+#endif
+
+Leo is happy: it recognizes the @comment directive.
+
+The C compiler is happy: the C preprocessor strips out the offending line before the C
+compiler gets it.
+
+Thanks to Rich Ries for this tip.</t>
 <t tx="EKR.20040524104904">@nocolor
 
 This outline contains the latest documentation available for Leo.</t>
+<t tx="EKR.20040524104904.2">@nocolor
+
+The following was written by Joe Orr, a user of Leo.  For more details, see http://www.jserv.com/jk_orr/xml/leo.htm
+
+Leo is a powerful tool for organizing text into tree structures, and for just generally attacking a number of problems from a tree-based perspective. 
+
+&lt;opinion&gt;
+There has been a lot of hype about XML and all the uses to which it can be put. But, to my mind, the greatest benefit of XML is that it allows people to easily work with tree structures. All the benefits of XML really flow from that. Leo is the best application I've seen for conceiving and planning the trees that are then put into action via various XML technologies.
+&lt;/opinion&gt;
+
+Outlining Editors have existed for a while (e.g. PC-Outline, MORE) but Leo takes a major leap beyond previous tools for three reasons:
+
+You can embed a simple macro language inside of a Leo document to instruct Leo to assemble pieces of the Leo document into another file. This facilitates, among other things, one type of Literate Programming.
+
+Leo saves its files in XML format. This means that you can easily import and export Leo documents to any number of programs that can understand XML. for example, you can use an XSLT stylesheet to export a Leo file to HTML. And you can import any XML file into Leo using another XSLT stylesheet.
+
+Leo is fully scriptable via Python.</t>
+<t tx="EKR.20040524104904.3">@nocolor</t>
+<t tx="EKR.20040524104904.4">Leo Users Manual
+June 15, 2002
+
+Leo is a programmer's editor and a flexible browser for projects, programs, classes or data. Leo clarifies design, coding, debugging, testing and maintenance.
+
+Leo is a literate programming tool, compatible with noweb and CWEB. Leo enhances any text-based programming language, from assembly language and C to Java and Python to XML and English.
+
+Leo is an outlining editor. Outlines clarify the big picture while providing unlimited space for details.
+
+Leo is also a data organizer. A single Leo outline can generate complex data spanning many different files.  Leo has been used to manage web sites.
+
+Leo is a project manager. Leo provides multiple views of a project within a single outline. Leo naturally represents tasks that remain up-to-date.
+
+Leo is fully scriptable using Python and saves its files in XML format.
+
+Leo is portable.  Leo.py is 100% pure Python and will run on any platform supporting Python and Tk/tcl, including Windows, Linux and MacOS X.  Leo.exe runs on any Windows platform.
+
+Leo is Open Software, distributed under the Python License.
+
+Leo was designed and built by:
+
+Edward K. Ream
+email:  edream@tds.net
+voice: (608) 231-0766</t>
+<t tx="EKR.20040524104904.5">Using Leo quickly becomes completely addicting.  I would never willing program in Leo again; many of Leo's users say the same.
+
+What makes Leo special?
+
+Leo creates a powerful new world: a new way of programming, a new way of organizing data, and a new way of managing projects.  The following paragraphs discuss specific reasons why Leo works so well.
+
+1. Outlines clarify and make explicit the relationships between parts of a project, regardless of whether those parts are computer programs, pages in a web site, pages in a document or tasks of a project.   Leo excels in handling complex projects: it shows you the big pictures at all times, while providing unlimited places to hide details.  Once you experience this way of seeing, you will never be satisfied with anything less.
+   
+2. A single outline can contain multiple kinds of data: programs, documentation, project management tasks, test data, whatever.  This means, for example, that the relationships between a program, its documentation and its tests suites can be shown directly within the same outline. Clones provide a way of relating and organizing all these kinds of data, and clones can create multiple views of these data within the _same_ outline.
+
+3. Leo's users can use plugins to add literally any conceivable feature to Leo.  Several significant improvements to Leo started out as started out as plugins and later migrated into Leo's core.
+
+4. Leo unifies outline structure, code and data:  
+
+- Outlines organize the code and data within them.
+- Leo's markup language (noweb) understands and uses outline structure.
+- Leo's Execute script command understands outline structure, section references and Leo's directives.
+- Scripts have full access to the outline structure of the outlines in which the are embedded.
+
+The outline structure _is_ data, scripts are data _within_ this structure, and scripts may _use_ this structure to access their own data.
+
+The unification of code, data and outline structure has great practical significance.  For example, a Leo outline is a natural way to organize the unit testing code and test cases.  Moreover,  test cases can access data using the outline structure.  The possibilities are endless.  For example, some unit tests create, test and then destroy other parts of the outline.  Finally, Leo's Execute Script command is a most convenient way of executing and debugging test code.
+
+The history of Leo
+
+Inventing and reinventing Leo has been the happiest and most creative part of my professional life.  Work on Leo accelerated significantly when a community of Leo's users became established on SourceForge.  For that I am truly grateful.  Suggestions (and plugins!) from users continue to drive Leo in excellent new directions.  Leo has come a long way since the early prototypes more than 9 years ago.  But in all that time, Leo's look and feel have remained almost completely unchanged--there has been no need to do so.
+
+Leo grew out of my attempts to understand and use Donald Knuth's CWEB system of "literate programming".  I had great difficulty the original CWEB. The design and organization of my own literate programs were a mystery to me. I couldn't keep the parts of a literate program clear in my mind.  I easily became confused about what I had done or what remained to do.  It was too difficult to remember the names of sections or where I had defined functions and variables.  Leo eliminates all these problems and makes Knuth's original idea truly useful.  Chapter 6 discusses these ideas in much greater detail.
+
+March 5, 1996 is Leo's true birthday.  On that day I started using the MORE outlining program to organize literate programs.  I had been lead to do this by the (gradual!) realization that webs are "outlines in disguise".  Within an hour of writing code in MORE, I knew that using outlines to organize literate programs would work spectacularly well.  March 5, 1996 was the day that changed my programming life forever.
+
+There have been many changes and improvements to Leo since that first prototype, and Leo continues to evolve and grow.  Leo's plugins provide excellent test beds for experimentation and development.  Who knows what the next spectacular plugin will bring?
+
+Edward K. Ream
+June, 2004
+</t>
+<t tx="EKR.20040524104904.6">This is what I wanted when I started this project.
+
+1. A tool that I could use successfully. I had tried flat literate programming and failed to produce a program that I could understand. The design of my own literate programs were a mystery to me. With the insight gained with two years experience with literate outlines, I believe I could now probably create flat literate outlines with some success. But how would I do that? By mentally simulating a literate outline! So although it would be possible for me to use flat literate programming tools, it would never be easy or natural.
+
+Using literate outlines instantly transformed how I program. No longer was I confused about what I had done or what remained to do. No longer did I need to remember section names. No longer did I have to search for where functions and variables were defined. March 5, 1996, the day I started using MORE as a prototype of a literate outliner, changed my programming life forever. Within an hour of writing code in MORE, I knew that literate outlines would work, and work spectacularly well.
+
+2. A way to ignore formatting. Printed listings, no matter how "beautiful", simply do not convey the structure of complex programs as well as an on-screen outline. What matters is how a program is represented on screen. I have been using Leo since early 1996. Not once have I had any inclination to look at a printed listing in order to understand my program better.
+
+3. An outliner as good as MORE. I accomplished this by borrowing a large part of MORE's screen design. Consider this the sincerest form of flattery.
+
+I did make one real change to MORE's design. MORE shows body text in multiple separate windows within the main outline pane; Leo shows body text in a single body pane. Leo's approach simplifies switching between nodes: one simply selects a new headline and the body text appears in the body pane. With MORE, one has to explicitly open the body pane for each individual headline, which can be clumsy.
+However, MORE's approach does have some advantages. First, when opening body text in MORE, the subsidiary window becomes as large as necessary to show the entire body text, up to the limit of the size of the containing window. With Leo, the body pane stays fixed unless one resizes it. This is the reason Leo has several shortcuts for resizing the body pane.
+
+MORE leaves lots of open windows around when doing a search or change command; MORE could be called a slob in this regard. However, MORE's way does have one benefit: one can see all the places where the search command found a match just be looking at all the open windows. With Leo this can not be done so directly; one must mark headlines to see where one has been. This is the main reason why Leo has a Find Next Marked Headline command. Without this command one must resort to something like expanding all headlines.
+Leo and MORE have superb outlining facilities; each provides true outline objects and a full range of outline operations. Leo attempts to fix the one clumsy feature of MORE, the need to explicitly open body text. On the whole, I believe that Leo is slightly easier to use than MORE, especially for programming.
+
+4. A self-contained programming system.  Leo's Tangle command provides basic support for literate programming.  Leo's Untangle command is a novel addition to literate programming.  The automatic tangling and untangling of @file trees is another major step forward.  Finally, Leo's many import and export commands ensure that Leo is compatible with noweb and CWEB.
+
+5. A fun tool.  In Chapter 6 I list several highbrow reasons for liking literate programming. I know somebody gets what literate programming is all about when he or she says how much fun literate programming is. Clearly, Leo has succeeded admirably in this regard. I would never again willingly program without a literate outliner.</t>
+<t tx="EKR.20040524104904.7">@nocolor
+
+Leo owes much of its visual design to MORE, possibly the most elegant computer program ever written. Leo's clone nodes are inspired by MORE.
+
+The following people have made generous donations to the Leo project: Robert Low, Nic Cave-Lynch.
+
+The following people reported bugs, answered questions, and made suggestions for improving Leo: Alex Abacus, Shakeeb Alireze, Bruce Arnold, Chris Barker, Eric Brown, Darius Clarke, Bill Drissel, Wenshan Du, Allen Edwards, Chris Elliot, Mark Engleberg, Dethe Elza, Stephen Ferg, Tom Fetherston, Tomaz Ficko, Niklas Frykholm, Fred Gansevles, Jonathan M. Gilligan, Thomas Guettler, Zak Greant, Thomas Guettler, Romain Guy, Dave Hein, Tiago Castro Henriques, Gary Herron, Steve Holden, Klass Holwerda, Matthias Huening, Robert Hustead, John Jacob, Christopher P. Jobling, Eric S. Johansson, Garold Johnson, James Kerwin, Nicola Larosa, David LeBlanc, Chris Liechti, Steve Litt, Martin v. Loewis, Robert Low, Fredrik Lundh, Alex Martelli,  Marcus A. Martin, Gidion May, David McNab, Chad Netzer, Naud Olivier, Joe Orr, Marc-Antoine Parent, Paul Paterson, Davide Salomoni, Sean Shaleh Perry, Tim Peters, Scott Powell, Bruce Rafnel, Walter H. Rauser, David Speed Ream, Rich Ries, Aharon Robbins, Guido van Rossum, David Rowe, Steven Schaefer, Wolfram Schwenzer, Gil Shwartz, Paul Snively, Phil Straus, Jurjen Stellingwerff,  Jeffrey Thompson, Gabriel Valiente, Tom van Vleck, Jim Vickroy, Tony Vignaux, Ying-Chao Wang, Cliff Wells, Dan Wharton, Wim Wijnders, Vadim Zeitlin.
+
+The following people have written code for Leo: Dave Hein wrote code to support PHP, to handle Tk version numbers properly and to open the Python window properly on Linux.  Marcus A. Martin wrote code to support LaTex. Bernhard Mulder proposed a new way of untangling derived files.  Paul Paterson wrote the first implementation of plugins and the spell checking plugin.  Steven P. Schaefer eliminated problems with end-of-line on Linux and fixed bugs in how directives were handled in @root trees.
+
+The following deserve special mention: David Brock wrote TSyntaxMemo.  The late Bob Fitzwater kept me focused on design. Donald Knuth invented literate programming and the CWEB language. Joe Orr created Leo stylesheets for Leo; see http://www.jserv.com/jk_orr/xml/leo.htm. Joe Orr also created an outstanding set of tutorials for Leo; see http://www.evisa.com/e/sb.htm. John K. Ousterhout created tcl/Tk. Neal Norwitz wrote PyChecker.  Marc-Antoine Parent urged me to use XML for Leo's file format and helped improve it. Paul Paterson suggested the plugin architecture and suggested an approach to spell checking.  Norman Ramsey created noweb and gave permission to quote from the noweb web documentation. Rich Ries has contributed a huge number of suggestions. Steven P. Schaefer pointed out major security problems lurking in hooks.  Gil Shwartz helped with unicode support.  Phil Straus has been a great friend and constant support. Guido van Rossum created Python, Tkinter and the Python License. Dave Winer created MORE. Dan Winkler helped support Leo on the Mac.
+
+Special thanks to my family. My brother, David Speed Ream, tested Leo and made many useful suggestions. Rebecca, James and Linda make it all worthwhile. It was during a conversation with Rebecca that I realized that MORE could be used as a prototype for Leo. That was a crucial first step.</t>
+<t tx="EKR.20040524104904.8">COPYRIGHT
+
+All parts of Leo are distributed under the following copyright.  This is intended to be the same as the Python license, namely that Leo is absolutely free, even for commercial use, including resale.  There is no GNU-like "copyleft" restriction.  This license is compatible with the GPL.
+
+Copyright 1997-2002 by Edward K. Ream.  All Rights Reserved.
+
+Permission to use, copy, modify, and distribute this software and its documentation for any purpose and without fee is hereby granted, provided that the above copyright notice appears in all copies and that both that copyright notice and this permission notice appear in supporting documentation, and that the names of Edward K. Ream or Leo not be used in advertising or publicity pertaining to distribution of the software without specific, written prior permission from Edward K. Ream. 
+
+DISCLAIMER OF WARRANTIES
+
+EDWARD K. REAM (REAM) SPECIFICALLY DISCLAIMS ALL WARRANTIES, EXPRESSED OR IMPLIED, WITH RESPECT TO THIS COMPUTER SOFTWARE, INCLUDING BUT NOT LIMITED TO IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS RO A PARTICULAR PURPOSE.  IN NO EVENT SHALL REAM BE LIABLE FOR ANY LOSS OF PROFIT OR ANY COMMERCIAL DAMAGE, INCLUDING BUT NOT LIMITED TO SPECIAL, INCIDENTAL, CONSEQUENTIAL OR OTHER DAMAGES.</t>
+<t tx="EKR.20040524104904.9"></t>
+<t tx="EKR.20040524104904.10">Leo's main window contains an _outline pane_ and a _body pane_. An _outline_ represents an entire project and is stored in a single .leo file.  An outline consists of _headlines_. Headlines may be expanded and contracted.  Each headline has its own _body text_.  The body pane shows the body text of the presently selected headline. A _node_ is a headline and its body text.
+
+_Sections_ group arbitrary text into a meaningful unit. Sections increase the expressive power of any language, from C to Python to XML to English. Outlines may be reorganized freely because the meaning of a section does not usually depend on its position.
+
+_Clones_ are parts of an outline that change in unison.  Any change to a clone's headline, body text or its children is propagated to all other clones.  Clones can represent tasks and clones can create multiple views of a project within a single outline.
+
+_Derived files_ are files generated from parts of an outline. An outline may generate many derived files. Conversely, an outline may be updated using changes to derived files.
+
+In short, sections simplify text, clones represent tasks, outlines organize projects and outlines generate derived files.</t>
+<t tx="EKR.20040524104904.11">Leo's main window contains two panes, an outline pane on top and a body pane below.  The outline pane contains a set of headlines.  Headlines fold (expand and contract) like Windows Explorer when you click the + or - icons. Headlines group components (subheadlines) into larger units.
+
+The bottom pane contains the body text associated with the selected headline.  The combination of a headline and its associated body text is called a node. Body text can simply be plain text or text in the noweb or CWEB languages. A Leo program is a collection of all the body text of an outline organized by the headline.
+
+Leo's outline are much more flexible and powerful than typical class browsers:
+
+1. Leo's programming language understands outline structure.  The programmer may name a part of the tree and refer to that tree by name in source code.
+
+2. Leo's commands understand outline structure.  Many of Leo's dozens of commands act on individual nodes and their descendents.  For example, one may limit a Find or Change operation to a specified part of an outline.
+
+3. Leo allows the user to reorganize outlines freely by adding, deleting and moving nodes.
+
+4. Leo opens an outline as it was when the user last used it, restoring the selected node, the top visible node, and the expansion state of all nodes.</t>
+<t tx="EKR.20040524104904.12">@nocolor
+
+Text in Leo's body pane is simply plain text that may contain section references.  For example, here is part of Leo's source code.
+
+@color
+def removeSentinelsCommand (self,fileName):
+	valid = true
+	&lt;&lt; Read file into s &gt;&gt;
+	&lt;&lt; Set delims from the header line &gt;&gt;
+	if valid:
+		s = self.removeSentinelLines(s,line_delim,start_delim,end_delim)
+		newFileName = fileName + ".tmp"
+		&lt;&lt; Write s into newFileName &gt;&gt;
+	else:
+		es("Invalid @+leo sentinel in " + fileName)
+		
+@nocolor
+Section references have the form &lt;&lt;section name&gt;&gt; and may appear anywhere in code.   Leo replaces a section reference by its definition  when Leo creates a source (derived) file.
+Section references clarify code.  In this example, the code that is represented by the three section references does not conceal the overall shape of the removeSentinelsCommand function.  In particular, the role of the valid and s variable are clear.  Section references are often more convenient than functions.  For example, there is no need to return s from
+
+	&lt;&lt;Read file into s&gt;&gt;
+	
+or to pass s to
+
+	&lt;&lt;Write s into newFileName&gt;&gt;.
+	
+There are two ways to define sections.  The first way is to use a section definition line,
+
+	&lt;&lt;section name&gt;&gt;=
+
+(notice the equal sign) on a line by itself in body text, followed by the source code that defines the section.   The second way is to create a node with &lt;&lt;section name&gt;&gt; in its headline and the source code that defines the section in its body text.  Either way, the section definition may contain other section references.</t>
+<t tx="EKR.20040524104904.13">Outlines can show relationships between sections. In the example above, a natural way of organizing the outline would as shown in the child of this node.  The removeSentinelsCommand method is defined in one node which has three children, one for each section referenced in the definition of removeSentinelsCommand.
+
+Furthermore, Leo uses outline structure to delimit derived files and to control the scope of section definitions.  See Chapter 4 for details.</t>
+<t tx="EKR.20040524104904.14">@color
+def removeSentinelsCommand (self,fileName):
+
+	path, self.fileName = os.path.split(fileName) # path/fileName
+	trace(`self.fileName`)
+	&lt;&lt; Read file into s &gt;&gt;
+	valid = true
+	line_delim = start_delim = end_delim = None
+	&lt;&lt; set delims from the header line &gt;&gt;
+	if valid == false:
+		es("Invalid @+leo sentinel in " + fileName)
+	else:
+		trace("line:"+`line_delim`+","+
+			"start:"+`start_delim`+","+
+			"end:"+`end_delim`)
+		s = removeSentinelLines(s,line_delim,start_delim,end_delim)
+		newFileName = os.path.join(path,fileName+".tmp")
+		&lt;&lt; Write s into newFileName &gt;&gt;</t>
+<t tx="EKR.20040524104904.15">try:
+	file = open(fileName)
+	s = file.read()
+	file.close()
+except:
+	es("Can not read " + fileName)
+	return</t>
+<t tx="EKR.20040524104904.16">@ This code is similar to atFile::scanHeader.
+@c
+
+tag = "@+leo"
+# Skip any non @+leo lines.
+i = 0
+while i &lt; len(s) and not find_on_line(s,i,tag):
+	i = skip_line(s,i)
+# We should be at the @+leo line.
+i = j = skip_ws(s,i)
+# The opening comment delim is the initial non-whitespace.
+while i &lt; len(s) and not match(s,i,tag) and not is_ws(s[i]) and not is_nl(s,i):
+	i += 1
+if j &lt; i: line_delim = s[j:i]
+else: valid = false
+# Make sure we have @+leo
+i = skip_ws(s,i)
+if match(s,i,tag): i += len(tag)
+else: valid = false
+# The closing comment delim is the trailing non-whitespace.
+i = j = skip_ws(s,i)
+while i &lt; n and not is_ws(s[i]) and not is_nl(s,i):
+	i += 1
+if j &lt; i:
+	start_delim = line_delim
+	end_delim = s[j:i]
+	line_delim = None</t>
+<t tx="EKR.20040524104904.17">try:
+	file = open(newFileName,"w")
+	file.write(s)
+	file.close()
+except:
+	es("Can not create " + newFileName)</t>
+<t tx="EKR.20040524104904.18">Headlines (and the sections they contain) are the natural building block of tasks. To build tasks from headlines we need another feature of Leo's outlines, namely clones. A clone is a copy of a tree that changes whenever any part of the original tree changes.  Clones are powerful. For example, adding a node to a cloned tree adds the same node to all cloned trees as well.
+
+We can use an ordinary headline to represent any task as follows.  We create an ordinary headline to represent the task and we label the headline with the name of the task.  Let us call such a headline a task headline. Then, throughout the entire outline, we clone all headlines (sections) that pertain to the task and move the new clones as sub-headlines of the task headline.
+
+In effect, the task headline becomes a separate view of the project. The task headline is a natural place to place notes about the task, for example, design documents, test data and logs, etc.  Most importantly, the task view will change when any of its cloned headlines changes, and conversely, changes to clones under the task outline are propagated throughout the outline. This means that,
+
+a) the task headline will remain up-to-date when the project changes, and
+b) we can make changes in the task view and rather than throughout an outline.
+
+In short, task headlines focus our attention on only those parts of a project that relate directly to a task and makes it easy to change code scattered throughout a project.</t>
+<t tx="EKR.20040524104904.19">Leo outlines are stored in a single .leo file. Leo can create many derived files from a single outline.  You can create derived files explicitly using the Tangle command, or automatically when an outline file is saved.  Conversely, Leo can update outlines based on changes to derived files. Again, you can update an outline explicitly using the Untangle command, or automatically when an outline file is opened.  Outline files contain all information contained in derived files.  This redundancy is useful for backing up data and for error recovery.
+
+This introduction has only sketched Leo's capabilities.  Chapter 3 shows how to create and reorganize Leo's outlines. This chapter covers clones, a powerful outline feature found in few other outliners.  Chapter 4 tells you everything you need to write programs in Leo.  Chapter 5 discusses all of Leo's commands.  Chapter 7 discusses scripting Leo with Python.</t>
+<t tx="EKR.20040524104904.20">There is a trick that makes it very easy to develop Leo using Leo itself. The
+trick is to create a workflow that separates editing from testing.
+
+Putting test code in LeoPy.leo would waste a lot of time. To run tests I would
+have to exit Leo and reload LeoPy. A much quicker way is to put all test code
+in a test.leo file. So to change and test code, just do the following:
+
+1. Save LeoPy.leo but do NOT exit Leo. 
+
+2. Quit the copy of Leo running test.leo, then reload test.leo.
+
+3. Run test scripts from test.leo.
+
+That's all. Python will recompile any changed .py files in the new copy of Leo.
+
+BTW, I use a batch file called t.bat that runs test.leo, so my
+"edit-reload-test" cycle is just:
+
+1. Control-S (to save the .leo file)
+2. t (to run load test.leo)
+3. Control-E (to run the test script)
+
+The benefits of the new workflow:
+
+1. test.leo loads _much_ more quickly than LeoPy.leo does. This new approach
+can increase the speed of the edit-reload-test cycle by more than a factor of
+10. Hitting Control-S, t, Control-E takes about 5 seconds.
+
+2. LeoPy.leo continues to run with the _old_ code, so it is much easier to fix
+syntax errors or exceptions in the _new_ code: just fix the problem and save
+LeoPy.leo _without_ closing LeoPy.leo., then restart test.leo. Tests are run on
+new code; editing is done on old, stable code.
+
+3. test.leo is the perfect place to develop test. I can create and organize
+those tests and when I am done, test.leo is a log of my work.
+
+BTW, I have long wondered whether there was a way to recompile Leo's .py files
+without leaving Leo. Theoretically this is possible using reload, but in
+practice it doesn't work when objects contain state information. The new
+workflow neatly solves the problem while sidestepping the problems.</t>
+<t tx="EKR.20040524104904.21">@nocolor
+
+This chapter tells how to install Leo.
+
+New in version 4.1:  The first time you start Leo, Leo will ask you for a unique identifier.  If you are using cvs, use your cvs login name.  Otherwise your initials will do.
+
+Leo stores this identifier in leoID.txt, so you can change this identifier at any time by chaning leoID.txt.</t>
+<t tx="EKR.20040524104904.22">leo.py is Leo2 written in Python and Tk.  It should work on any platform that supports Python 2.2 or later and Tk 8.3 or later.
+
+Download Python from http://python.org/
+Download tcl/Tk from http://tcl.activestate.com/software/tcltk/
+
+See "How to install Leo on MacOS Panther (10.3)" for installation instructions for MacOs X.  Leo will not run on MacOs 9.</t>
+<t tx="EKR.20040524104904.23">@nocolor
+
+leo.py requires Python 2.1 and tcl/tk 8.3 or above.
+
+	Download Python from http://python.org/ 
+	Download tcl/Tk from http://tcl.activestate.com/software/tcltk/
+
+Leo is distributed as a single compressed folder.  Simply uncompress this folder and run leo.py.  You can run leo.py by double-clicking leo.py.  You can also run leo.py from a Python interpreter as follows:
+
+@color
+
+	import leo
+	leo.run() # runs leo.py, opening a new outline.
+	leo.go() # runs leo.py after reloading all modules.
+	leo.leoOpen(fileName) # runs leo.py, reloads all modules, and opens fileName.
+	
+@nocolor
+
+Another way to open files would be to create a batch file.  On Windows, I put the following .bat file in c:\Windows
+
+cd c:\prog\LeoCVS\leo
+c:\python22\python c:\prog\LeoCVS\leo\leo.py %1
+
+This opens the file specified by the first argument (%1).</t>
+<t tx="EKR.20040524104904.24">leo.py 2.4 and above will open .leo files automatically provided that you associate leo.py with .leo files.  Here is how to open leo.py when double-clicking a .leo file on Windows 2K or XP.  I'm not sure it will work for Windows 95/98/Me.
+
+In Windows 2K or XP, Go to Start-&gt;Settings-&gt;Control panel, open the "Folder Options" applet.
+Select the "file types" tab from the Folder Options window. Press the "new" button.
+Enter LEO into the "Create New Extension" File Extension text field. Press OK.
+
+With LEO still highlighted in the Registered File Types list box, press the Advanced button.
+Change the default file type field to something like "Leo Literate Outline".
+Press the Icon button and browse to the LeoDoc icon in your [leo install dir]\leo-2.3\Icons folder.
+Click OK. This gets the icons right and registers the description of the .leo file.
+
+You now have to tell windows what to do to open the file properly.
+Press the new button to open the "New Action" window.
+In the Action field type Open.
+In the "Action used to perform action" type _one_ of the following lines:
+
+[python install dir]\pythonw.exe   [leo install dir]\leo.py %1
+[python install dir]\python.exe -i [leo install dir]\leo.py %1
+
+The first  line opens Leo files with no console window.
+The second line opens Leo files with a console window and leaves the window open after Leo exits.
+
+You should now be able to double click on a leo file in explorer with leo.py.</t>
+<t tx="EKR.20040524104904.25">@nocolor
+
+Quick start
+
+This is the minimum you need to use Leo effectively.
+
+1. Write body text using the noweb languages. See Using noweb, CWEB and Directives.
+
+2. Create source files (derived files) using the Tangle command. Only @root directives under the currently selected headline are tangled by the Tangle command. Warning: The Tangle command will overwrite files specified in @root directives if they exist.
+
+3. Use the Untangle command to propagate changes made to derived files back into the outline Untangle is useful only for making small syntactic changes. Don't attempt to change the structure of an outline by modifying derived files; it won't work.
+
+4. Many command key abbreviations are specified in the Syntax Coloring panel.
+
+See the Appendices for a concise summary of information about Leo.</t>
+<t tx="EKR.20040524104904.26">@nocolor
+
+This chapter tells how to use Leo's outline pane.  It introduces terminology and discusses creating, moving, marking, cloning headlines.
+
+This chapter also discusses the control keys that can be used in the body pane.  This material is excerpted from documentation at http://tcl.activestate.com/man/tcl8.4/TkCmd/text.htm</t>
+<t tx="EKR.20040524104904.27">A cloned node is a copy of a node that changes when the original changes. Changes to the children, grandchildren, etc. of a node are simultaneously made to the corresponding nodes contained in all cloned nodes.  Clones are marked by a small arrow  by their leader characters.
+
+There is no real distinction between the "original" node and any of its clones.  This makes it possible to update any of the clones and the original node will change as well.  When the second-to-last cloned node is deleted the last cloned node becomes a regular node again.
+
+Clones are useful for making alternate views of a program.  For example, when I begin to fix a bug I clone all the sections of the code that relate to the bug, and place those cloned sections under a new headline whose name is the name of the bug I am fixing.
+
+The children of this headline show some complex clones.  To see how clones work, try moving the node marked f around with the nodes marked a fully expanded.  Not all moves are allowed:  you can't move a cloned node so it would become a child of another clone of itself.</t>
+<t tx="EKR.20040524104904.28">This is a kind of bizarre outline that I use to test clone operations.  Try moving the nodes a through g around and see what happens to the children of the various clones.</t>
+<t tx="EKR.20040524104904.29"></t>
+<t tx="EKR.20040524104904.30"></t>
+<t tx="EKR.20040524104904.31"></t>
+<t tx="EKR.20040524104904.32"></t>
+<t tx="EKR.20040524104904.33"></t>
+<t tx="EKR.20040524104904.34"></t>
+<t tx="EKR.20040524104904.35"></t>
+<t tx="EKR.20040524104904.36">The Insert Node command inserts a new headline into the outline.
+
+The Delete Node command deletes a headline and all its children.
+</t>
+<t tx="EKR.20040524104904.37">The Cut Outline, Paste Outline, Copy Outline and Delete Outline commands work on nodes rather than text.  For example, to delete a headline, select the headline and choose the Cut Outline or Delete Outline commands.
+
+The Cut Outline and Copy Outline copy a text representation of the outline to the clipboard.  This representation is the same as the file format with some information deleted.  You may copy this text representation into a body pane (or into any other text editor) using the Paste command in the Edit menu.
+
+Warning:  In practice, it is almost always wiser to move clones rather than cutting or pasting them.  Cutting and pasting outlines preserves clones, but the links between clones only exist within the part of the outline that was pasted.  Therefore, if you are cutting and pasting an outline containing clones it is best to cut and paste the _entire_ outline.  Alternatively, you can paste part of an outline, then delete all clones.</t>
+<t tx="EKR.20040524104904.38">New in leo.py v2.4: You may drag an node (including all its descendents) from one place to another in an outline.  To start a drag, press the main (left) mouse button while the cursor is over the icon for a node.  The cursor will change to a hand icon. If you release the mouse button while the hand cursor is above the icon for another node, Leo will move the dragged node after that node.  If you release the mouse button when the hand cursor is not over an icon, Leo will print "not moved" and leave the outline pane as it is.  This can result in the dragged node not being visible on the screen, but it seems less alarming not to force the current node to become visible as that would undo any scrolling that has just been done.
+
+New in leo.py 3.0: If you drag outside the outline pane, the outline pane will scroll automatically.
+
+Leo scrolls the outline pane as the result of mouse-moved events, so to continue scrolling you must keep moving the mouse.  I experimented with scrolling the outline pane whenever the cursor is dragged outside it, but the results were not good.  There was a noticeable delay between releasing the cursors and halting the scrolling.  The present code is simpler and more likely to work on all platforms.
+
+Leo only allows dragging from one icon to another.  In particular, you can't move a node to the first child of another node unless that node is already expanded.   I experimented with automatically open nodes when the cursor moves over an unexpanded node with children.  However, this was confusing and alarming.  It seems best to expand and contract nodes explicitly.</t>
+<t tx="EKR.20040524104904.39">Body text in leo.py has the following features:
+
+Leo auto indents when @nocolor is not in effect.  That is, typing a newline automatically inserts the same leading whitespace present on the previous line.  If the present language is Python (set either in the preferences or with an @language Python command), Leo inserts an additional tab if the previous line ends with a colon.
+
+The default features of Leo's body text derive from the Tk Text widget, described at:
+http://www.tcl.tk/man/tcl8.3/TkCmd/text.htm
+Not all these features are found on all platforms.
+
+The following features are mostly derived from the Tk Text widget.  Some default behaviors have been changed because they conflict with other Leo features.
+
+Clicking mouse button 1 positions the insertion cursor just before the character underneath the mouse cursor, sets the input focus to this widget, and clears any selection in the widget. Dragging with mouse button 1 strokes out a selection between the insertion cursor and the character under the mouse. 
+
+Double-clicking with mouse button 1 selects the word under the mouse and positions the insertion cursor at the beginning of the word.
+
+The ends of the selection can be adjusted by dragging with mouse button 1 while the Shift key is down; this will adjust the end of the selection that was nearest to the mouse cursor when button 1 was pressed. 
+
+Clicking mouse button 1 with the Control key down will reposition the insertion cursor without affecting the selection. 
+
+If any normal printing characters are typed, they are inserted at the point of the insertion cursor. 
+
+If the mouse is dragged out of the body pane while button 1 is pressed, the entry will automatically scroll to make more text visible (if there is more text off-screen on the side where the mouse left the window). 
+
+The Left and Right (arrow) keys move the insertion cursor one character to the left or right; they also clear any selection in the text. If Left or Right is typed with the Shift key down, then the insertion cursor moves and the selection is extended to include the new character. Control-Left and Control-Right move the insertion cursor by words, and Control-Shift-Left and Control-Shift-Right move the insertion cursor by words and also extend the selection.
+
+The Up and Down (arrow) keys move the insertion cursor one line up or down and clear any selection in the text. If Up or Right is typed with the Shift key down, then the insertion cursor moves and the selection is extended to include the new character. Control-Up and Control-Down move the insertion cursor by paragraphs (groups of lines separated by blank lines), and Control-Shift-Up and Control-Shift-Down move the insertion cursor by paragraphs and also extend the selection. Control-p and Control-n behave the same as Up and Down, respectively. 
+
+The Next(Page Down) and Prior(Page Up) keys move the insertion cursor forward or backwards by one screenful and clear any selection in the text. If the Shift key is held down while Next or Prior is typed, then the selection is extended to include the new character.
+
+Line movement is by text lines terminated by hard returns (newlines), not by displayed lines;  if a text line is long and wraps across more than one display line, then the Up and Down movement will skip the extra wrapped display lines.
+
+Home moves the insertion cursor to the beginning of its line and clear any selection in the widget. Shift-Home moves the insertion cursor to the beginning of the line and also extends the selection to that point. 
+
+End moves the insertion cursor to the end of the line and clear any selection in the widget. Shift-End moves the cursor to the end of the line and extends the selection to that point. 
+
+Control-Home moves the insertion cursor to the beginning of the text and clear any selection in the widget. Control-Shift-Home moves the insertion cursor to the beginning of the text and also extends the selection to that point. 
+
+Control-End moves the insertion cursor to the end of the text and clear any selection in the widget. Control-Shift-End moves the cursor to the end of the text and extends the selection to that point. 
+
+The Select key and Control-Space set the selection anchor to the position of the insertion cursor. They don't affect the current selection. Shift-Select and Control-Shift-Space adjust the selection to the current position of the insertion cursor, selecting from the anchor to the insertion cursor if there was not any selection previously. 
+
+Control-/ selects the entire contents of the widget. 
+
+Control-\ clears any selection in the widget. 
+
+The F16 key (labeled Copy on many Sun workstations) or Control-c copies the selection in the widget to the clipboard, if there is a selection. This action is carried out by the command tk_textCopy. 
+
+The F20 key (labeled Cut on many Sun workstations) or Control-x copies the selection in the widget to the clipboard and deletes the selection. This action is carried out by the command tk_textCut. If there is no selection in the widget then these keys have no effect. 
+
+The F18 key (labeled Paste on many Sun workstations) or Control-v inserts the contents of the clipboard at the position of the insertion cursor. This action is carried out by the command tk_textPaste. 
+
+The Delete key deletes the selection, if there is one in the widget. If there is no selection, it deletes the character to the right of the insertion cursor. 
+
+Backspace deletes the selection, if there is one in the widget. If there is no selection, they delete the character to the left of the insertion cursor. </t>
+<t tx="EKR.20040524104904.40">You can expand or contract a headline by clicking in the standard Windows Tree View icon to the left of the status icon.
+
+Expanding a node shows its immediate children; contracting a node hides all its children.  The Expand All Subheads command expands all of a nodes offspring (children, grandchildren, etc.)</t>
+<t tx="EKR.20040524104904.41">Leo auto indents body text following colons when @language is in effect.
+
+You may use Emacs-style auto-indentation instead.  The child of this node provides full details.</t>
+<t tx="EKR.20040524104904.42">Leo now supports optional Emacs-style auto-indent.  This style of auto-indent aligns newly created lines with unmatched ( [ or { brackets in the previous line. This feature is enabled only if smart_auto_indent = 1 in leoConfig.txt.
+
+This code was contributed by David McNab, david@rebirthing.co.nz.</t>
+<t tx="EKR.20040524104904.43">You can mark headlines in several ways: with the various Outline:Mark commands, with the Find or Change commands, or with the Untangle command.  The "Go To Next Marked" command will go to the next marked node, if any.
+
+The Mark command will unmark the selected headline if it is already marked.</t>
+<t tx="EKR.20040524104904.44">There are a number of ways to move and reorganize headlines.
+
+The Move Up, Move Down, Move Left and Move Right commands move the currently selected outline.  The Promote command makes all the children of a headline siblings of the headline.  The Demote command makes all the siblings of a headline children of the headline.
+
+You can cut and paste any part of a tree.  If a headline contains selected text, the cut, copy, clear or paste operation affects only the selected text. Otherwise, the cut, copy, clear or paste operations acts on the node and all nodes contained by it.  For example, you can move a headline by cutting it, selecting another location in the outline and pasting the headline in the new location.
+
+Warning:  In practice, it is almost always wiser to move clones rather than cutting or pasting them.  Cutting and pasting outlines preserves clones, but the links between clones only exist within the part of the outline that was pasted.  Therefore, if you are cutting and pasting an outline containing clones it is best to cut and paste the _entire_ outline.  Alternatively, you can paste part of an outline, then delete all clones.  
+</t>
+<t tx="EKR.20040524104904.45">Double-clicking the icon box of a node whose headline has the form:
+
+@url &lt;any url&gt;
+
+executes the url in your default web browser.  See the child of this node for full details.</t>
+<t tx="EKR.20040524104904.46">Double-clicking the icon box of a node whose headline has the form:
+
+@url &lt;any url&gt;
+
+executes the url in your default web browser.
+
+Leo checks that the url is valid before doing so. A valid url is:
+
+-- 3 or more lowercase alphas,
+-- followed by one ':',
+-- followed by one or more of: $%&amp;'()*+,-./0-9:=?@A-Z_a-z{}~
+-- followed by one of:         $%&amp;'()*+/0-9:=?@A-Z_a-z}~
+
+Url's should contain no spaces: use %20 to indicate spaces.
+
+You may use any type of url that your browser supports: http,mailto,ftp,file,etc.
+</t>
+<t tx="EKR.20040524104904.47">You can change the relative sizes of the outline and body panes by dragging the splitter bar.  The Equal Sized Panes command resizes the panes so that each fills half of the main window.</t>
+<t tx="EKR.20040524104904.48">The outline pane supports one level of undo.
+
+The body pane supports unlimited undo.  However, you can not undo an operation affecting body text after selecting a new headline.  You can undo or redo the last operation involving the outline itself.  You can not undo operations affecting headline text.</t>
+<t tx="EKR.20040524104904.49">@nocolor
+@ignore
+@language python</t>
+<t tx="EKR.20040524104904.50">Important note 1: This chapter tells how to use the noweb markup language.  See the node called About CWEB if you plan to use the CWEB markup language.
+
+Important note 2: This chapter discusses only the @file directive.
+
+-- Appendix 1 to this chapter tells how to use the new @rawfile directive.
+-- Appendix 2 to this chapter tells how to use the older @root directive.
+
+This is the most important chapter because it describes everything you need to know to write programs with Leo. Unless otherwise mentioned, this chapter applies to all versions of Leo.  Newcomers to Leo should read Introducing Leo before reading further.
+
+I _strongly recommend_ that you have look at an example of a Leo outline like LeoPy.leo while you read this documentation. It is much easier to use Leo than to describe all the rules in detail.  Looking at a real Leo outline will make many points clear that are difficult to describe succinctly in words.
+
+Terminology: _Directives_ are commands that appear in body text.  Directives start with an @ in the leftmost column followed by a directive name. We often refer to outline nodes by the directives they contain.  For example, an @others node is a node containing an @others directive, an @ignore node is a node containing an @ignore directive, and so on.  Exception: an @file node is a node whose headline starts with @file.  We also speak of @root trees, trees whose is an @root node, @file trees, trees whose root is an @file node, and so on.
+
+The essentials of writing programs in Leo are as follows:
+
+1. A Leo program is composed the all the body text in an outline, or part of an outline.
+
+2. Body text is a sequence of _sections_.  There are two kinds of sections: doc sections and code sections.
+
+3. Sections may contain _section references_ that refer to other sections by their nam.
+
+4. Leo uses outline structure to control the scope of section definitions.
+
+5. Leo creates source files called _derived files_ by expanding all section references in an @file tree.
+</t>
+<t tx="EKR.20040524104904.51">@nocolor
+There are two kinds of sections: code sections and doc sections.  Code sections start with the @c directive.  Within @file trees, the entire body text of a node is a code section by default, so the @c directive can be omitted if there are no doc sections in the body pane.  Doc sections start with @ followed by a space at the start of a line.  Doc sections continue until the end of body text or until the next @c or @(space) directive.
+
+The term "section" has two related meanings.  Sections are syntactic units of text in the body pane.  Leo writes the text of section to derived files, so another meaning of "section" is "the text that is written to the derived file."  Which meaning is intended should be clear from context.
+
+Code sections may contain section references of the form &lt;&lt;section name&gt;&gt;. That is, a section reference is any sequence of characters except newlines enclosed in &lt;&lt; and &gt;&gt;. Leo ignores whitespace and case inside section names, so the following are equivalent:
+@color
+
+	&lt;&lt; Read file into s &gt;&gt;
+	&lt;&lt;READ File into S&gt;&gt;
+
+@nocolor
+Leo underlines section names whose definitions are not found in any descendent.  Such sections are always invalid in @file trees, and may be valid in @root trees provided that the section is defined somewhere else.
+
+Paired &lt;&lt; and &gt;&gt; characters on the same line always denote a section name, even within comments and strings.  That is, &lt;&lt; and &gt;&gt; characters that do not delimit a section name must be placed on separate lines.  If &lt;&lt; and &gt;&gt; are not paired on a line, they are treated as literal &lt;&lt; and &gt;&gt; characters.
+
+Body text may contain zero or more sections in any order.  A code section is named if the node's headline starts with &lt;&lt;section name&gt;&gt;.  Otherwise, the code section is unnamed.  Body text that contains no @ or @c directive is considered to be a single unnamed code section. @ and @c directives terminate any previous section. For example,
+
+@color
+@ This method puts an open node sentinel for node v.
+@c
+def putOpenNodeSentinel(self,v):
+	if v.isAtFileNode() and v != self.root:
+		&lt;&lt; issue an error message &gt;&gt;
+	else:
+		s = self.nodeSentinelText(v)
+		self.putSentinel("@+node:" + s)
+
+@nocolor
+An @c directive is optional at the start of body text, so:
+@color
+
+@c
+def hasChildren(self):
+	return self.firstChild() != None
+
+@nocolor
+is equivalent to the following text without any markup:
+@color
+
+def hasChildren(self):
+	return self.firstChild() != None
+
+@nocolor
+The @c directive is needed here:
+@color
+
+@ Returns true if the receiver has child nodes.
+@c
+def hasChildren(self):
+	return self.firstChild() != None
+
+@nocolor
+However, we could replace the doc part with a comment, like this:
+@color
+
+# Returns true if the receiver has child nodes.
+def hasChildren(self):
+	return self.firstChild() != None
+
+@nocolor
+The choice of using doc parts or comments is a matter of style.  Doc parts are convenient for longer comments that would be tedious to format by hand.
+
+Minor note 1: For historical reasons, the @code directive is a synonym for the @c directive and the @doc directive is a synonym for @ directive. Only the @c, @code, @ and @doc directives terminate sections.
+
+Minor note 2: A line of the form:
+	
+@ %def identifiers
+
+terminates the previous code section and indicates that the preceding code section defines the list of identifiers.  This list contains identifiers separated by whitespace; any sequence of non-white characters may be an identifier.  This construction is used in traditional noweb programming to generate indices.</t>
+<t tx="EKR.20040524104904.52">Lets see how to organize typical outlines.  The only rules we must follow are:
+
+- All nodes containing body text must be referenced.
+
+- Each named node must descend from the node that refers to it.
+
+- The @ignore directive is not valid in @file trees.
+
+A node that is not referenced is called an _orphan node_.  If an @file tree contains an orphan node or @ignore node, Leo issues a warning and does not write the derived file when saving an outline. Leo saves all the information in the @file tree in the .leo file, so nothing is lost; Leo will recreate the @file tree from the .leo file when reading the outline the next time.
+
+We can avoid having to refer to sections by name by using the @others directive.  This can save a lot of work.
+
+The @others directive refers to _all unnamed_ sections.  An @file tree may contain more than one @others directive.  @others directives that descend from other @other directives refer only to unnamed nodes that descend from them.  The @others directive that occurs highest in the @file tree refers to all other unnamed nodes.
+
+There are two minor restrictions on the @others directive:
+
+- No single node may contain more than one @others directive.
+
+- No named node may "intervene" between an unnamed node containing body text and an @others node. This restriction will be discussed in detail below.  In practice this is never a problem.
+
+When saving an outline, Leo creates derived files from all changed @file trees by expanding references to named and unnamed sections:
+
+- Section references place the body text of a single named section in the derived file.
+
+- @others directives place the body text of all unnamed nodes in the derived file.
+
+- The @others directive places unnamed nodes in outline order, the order in which nodes appear in an outline when all nodes are expanded.
+
+When reading an outline, Leo recreates @file trees from derived files. In particular, you may change derived files outside of Leo, and Leo will update the outline accordingly.  You may change derived files in any way provided that you don't change sentinel lines.  Sentinel lines are comment lines whose first character (after the comment delimiter) is @.  Leo represents outline structure in sentinel lines, so changing sentinel lines will corrupt the outline structure. (The appendix lists the format and meaning of all sentinel lines.)
+
+Some examples should make all this much clearer.  See the children of this node.
+
+The @ignore directive is not valid in @file trees because derived files contain primary data.  The .leo file also contains a copy of the information in the @file tree, but this information is used for backup and error recovery. As a result, everything in an @file trees must correspond to information the derived file and the @ignore directive may not appear in @file trees.</t>
+<t tx="EKR.20040524104904.53">@file f.c shows how to create a C file.
+
+@file classX.py shows how to create a single Python class.
+
+@file mainClass.py shows how to define two classes in a single Python file.
+
+The @file bad tree is invalid.  No named node may "intervene" between an unnamed node containing body text and an @others node.
+</t>
+<t tx="EKR.20040524104904.54">@color
+@ This @file node generates the file f.c.
+
+This body text ensures that the expansions of &lt;&lt; constants &gt;&gt; and &lt;&lt; declarations &gt;&gt; precede the expansions of all unnamed sections. It is good style to name those sections that must appear in a particular place in the derived file. All unnamed sections are placed in the derived file where the @others directive appears. Unnamed sections appear in the derived file the order in which they appear in the outline.
+
+The children of the @file node contain the definitions of all sections, both named and unnamed. Unnamed sections usually contain functions or method. It is bad style for the meaning of a derived file to depend on the order of unnamed sections in the outline.
+@c
+
+&lt;&lt; constants &gt;&gt;
+&lt;&lt; declarations &gt;&gt;
+@others</t>
+<t tx="EKR.20040524104904.55">the constants</t>
+<t tx="EKR.20040524104904.56">the declarations</t>
+<t tx="EKR.20040524104904.57">text of function 1</t>
+<t tx="EKR.20040524104904.58">text of function 2</t>
+<t tx="EKR.20040524104904.59">@color
+@ This @file node generates the file classX.py.
+
+Indentation is significant in languages like Python. When Leo expands a section reference (or an @others directive), Leo adds the leading whitespace of the line containing the section reference to all lines of the reference's expansion. The text of body text need not be indented beyond its natural indentation.
+
+Organizing nodes (nodes with no body text) do not affect the derived file in any way. In particular, such nodes never change indentation. Organizing nodes are often useful. 
+@c
+
+&lt;&lt; imports for classX &gt;&gt;
+class classX:
+	@others</t>
+<t tx="EKR.20040524104904.60"></t>
+<t tx="EKR.20040524104904.61">@ This is an organizing node.  Using this node does not change the indentation in the derived file.</t>
+<t tx="EKR.20040524104904.62"></t>
+<t tx="EKR.20040524104904.63"></t>
+<t tx="EKR.20040524104904.64">@ This is an organizing node.  Using this node does not change the indentation in the derived file.</t>
+<t tx="EKR.20040524104904.65"></t>
+<t tx="EKR.20040524104904.66"></t>
+<t tx="EKR.20040524104904.67">@color
+@ This @file node generates the file mainClass.py.
+
+When two classes appear in the same file, a single @others directive does not suffice. However, no node may contain more than one @others directive.  To get around this limitation we can organize the outline as shown.
+
+The @others directive refers only to unnamed nodes in the descendents of the @others node, so the two @others directives refer to disjoint sets of unnamed sections.
+@c
+
+&lt;&lt;mainClass imports&gt;&gt;
+&lt;&lt;class mainClass&gt;&gt;
+&lt;&lt;class helperClass&gt;&gt;</t>
+<t tx="EKR.20040524104904.68"></t>
+<t tx="EKR.20040524104904.69">class mainClass:
+	@others</t>
+<t tx="EKR.20040524104904.70"></t>
+<t tx="EKR.20040524104904.71"></t>
+<t tx="EKR.20040524104904.72">class helperClass:
+	@others</t>
+<t tx="EKR.20040524104904.73"></t>
+<t tx="EKR.20040524104904.74"></t>
+<t tx="EKR.20040524104904.75">@color
+@language python
+@ The following outline is invalid.  Node A is an unnamed node containing body text, and the &lt;&lt;section one&gt;&gt; node intervenes between Node A and the @others node.
+@c
+
+class classX:
+	@others
+</t>
+<t tx="EKR.20040524104904.76">def bad():
+	&lt;&lt; section 1 &gt;&gt;</t>
+<t tx="EKR.20040524104904.77">@ This node is invalid because it intervenes between Node A and the @others node above.
+</t>
+<t tx="EKR.20040524104904.78">def spam():
+	pass</t>
+<t tx="EKR.20040524104904.79">The following sections discuss directives that have not been discussed previously.  Unless otherwise noted, these directives are valid anywhere in an outline.</t>
+<t tx="EKR.20040524104904.80">Syntax coloring is on by default in all body text. Leo formats comments and documentation parts in red, directives and C keywords in blue, strings and character constants in gray and all other text in code parts in black.
+
+The @nocolor directive disables syntax coloring for the body text in which it appears. No syntax coloring is done until an @color directive re-enables syntax coloring.
+
+If a node contains neither the @color nor the @nocolor directive it may inherit the syntax coloring attribute from an ancestor. The nearest ancestor that contains exactly one of the @color or @nocolor directives will control the syntax coloring. Ambiguous nodes, nodes containing both the @color and @nocolor directives, never affect the coloring of their offspring.
+
+Note: the @color or @nocolor directives do not affect the Tangle commands in any way. In particular, the Tangle commands will recognize section definitions as usual even after an @nocolor directive is seen.
+
+New in 4.2:  The @killcolor directive completely disables the colorizer for that node.  The result is a huge improvement in responsiveness for large body text.  As usual @killcolor may itself be overridden in descendent nodes.
+
+The differences between @killcolor and @nocolor:
+
+- @nocolor suppresses coloring only until the next @color directive.
+
+- @killcolor overrides @nocolor and @color directives.  Any node containing @killcolor is unambiguously a @killcolor node regardless of whether that node also contains @color or @nocolor directives.</t>
+<t tx="EKR.20040524104904.81">Note: the @comment directive is now officially deprecated: you should use the @language directive whenever possible.
+
+Untangle will not process an @root or @unit node if an @comment directive is in effect because Untangle can't be sure of properly parsing a derived file if the language of the derived file isn't known. It might be possible to assume some defaults in this case, but that is not done at present and is not a high priority.
+
+By default, the Tangle Commands produces C-language comments. Single-line comments generated during tangling start with ///, while documentation parts are surrounded by /* and */. The @comment directive allows you to use Tangle to produce shell and make files, as well as source code for other programming languages.
+
+The @comment directive may be followed by zero to three delimiters, separated by whitespace. This directive sets the single-line comment delimiter and the opening and closing block comment delimiters as follows:
+
+@comment
+	(no delim) restores the defaults to ///, /* and */
+@comment ///
+	(one delim) sets the single-line comment and clears the other delimiters.
+@comment /* */
+	(two delims) sets the opening and closing block comment delimiters and clears the single-line comment.
+@comment /// /* */
+	(three delims) sets all three delimiters.
+
+If only one delimiter is given, Leo does not write any documentation parts while tangling. If two delimiters are given, block-style comments are used instead of single-line comments.
+For example, the @comment { } directive could be used to Tangle Pascal files.
+
+The @comment directive is only recognized in @root, @unit or @file nodes, and the @comment directive must precede the first section name or @code directive. An @comment directive in the body text of an @unit directive specifies the current global defaults. An @comment directive in the body text of an @root directive affects comments generated for one root only. Comments in all other roots are governed by the global defaults.
+
+New in leo.py 3.0: Leo will convert underscores in the @comment directives to significant spaces.  For example,
+
+@comment REM_
+
+causes the comment delimiter to be "REM " (Note the trailing space).</t>
+<t tx="EKR.20040524104904.82">@nocolor
+
+The @delims directive changes the comment strings used to mark sentinel lines. This directive is often used to place Javascript text inside XML or HTML files.
+
+The @delims directive contains one or two delimiters, separated by whitespace. If only one delim is present it delimits single-line comments. If two delims are present they delimit block comments. The @delims directive can not be used to change the comment strings at the start of the derived file, that is, the comment strings for the @+leo sentinel and the initial @+body and @+node sentinels. The @delims directive inserts @@delims sentinels into the derived file. The new delimiter strings continue in effect until the next @@delims sentinel in the derived file or the end of the derived file.
+
+Note: Leo can not revert to previous delimiters automatically; you must change back to previous delimiters using another @delims directive. For example:
+
+@color
+
+@delims /* */
+Javascript stuff
+@delims &lt;-- --&gt;
+HTML stuff
+
+@nocolor
+Adding, deleting or changing @@delims sentinels will destroy Leo's ability to read the derived file. Mistakes using the @delims directive have no effect on Leo, though such mistakes will thoroughly mess up a derived file as far as compilers, HTML renderers, etc. are concerned.</t>
+<t tx="EKR.20040524104904.83">You may use the @encoding directive to specify the encoding used in a derived file.  You can't mix encodings in a single derived file.  For example,
+
+@encoding iso-8859-1
+
+If the encoding used in a derived file is not "utf-8" it is represented in the @+leo sentinel line, like this:
+
+#@+leo-encoding=iso-8859-1.
+
+The "utf-8" encoding is used by default.  The "utf-8" encoding is a "lossless" encoding (it can represent all unicode code points), so encoding and decoding to and from utf-8 plain strings will never cause a problem.  When reading or writing a character not in a "lossy" encoding (such as iso-8859-1), Leo converts such characters to '?' and issues a warning. </t>
+<t tx="EKR.20040524104904.84">The @first directive allows you to place lines at the very start of files derived from @file nodes. For example, the body text of @file spam.py might be:
+
+	@first #! /usr/bin/env python
+
+The body text of @file foo.perl might be:
+
+	@first #/usr/bin/perl
+
+@first directives are recognized only at the start of the body text of @file nodes. No text may precede @first directives. More than one @first directive may exist, like this:
+
+	@first #! /usr/bin/env python
+	@first # more comments.
+
+Similarly, @last directives are recognized only at the end of body text of @file nodes.  No text may follow @last directives.  More than one @last directive may exist.  For example, here is how a PHP file might be set up:
+
+	@first &lt;?php
+	...
+	@last ?&gt;</t>
+<t tx="EKR.20040524104904.85">@nocolor
+The @language directive specifies the comment delimiters and string types used by the Tangle and Untangle commands. This directive over-rides the default specified in the Preferences panel. The form of this directive is:
+@color
+
+@language x
+
+@nocolor
+where x is one of the following: actionscript, c, c++, cweb, elisp, html, java, latex, objective-c, pascal, perl, perlpod, plain, python, rebol, shell or tcltk. Shell files have comments that start with #. Case is ignored in the language specifiers, but not in the @language itself. Thus, the following are equivalent:
+@color
+
+@language html
+@language HTML
+@language hTmL
+
+but the following is invalid:
+
+@LANGUAGE html</t>
+<t tx="EKR.20040524104904.86">New in version 3.11.  The @lineending directive allows you to specify the line endings for individual derived files.  This directive will override the output_newline setting in leoConfig.txt.  Note that @lineending _never_ affects the line endings in .leo files themselves:  we must have consistent line endings in .leo files!  See below for more details.
+
+The valid forms of the new @lineending directive are:
+
+@lineending nl       (the default, Linux)
+@lineending cr       (Mac)
+@lineending crlf     (Windows)
+@lineending lf       (same as nl, not recommended)
+@lineending platform (same as platform value for output_newline setting in leoConfig.txt)</t>
+<t tx="EKR.20040524104904.87">@nocolor
+
+The @path, @pagewidth and @tabwidth directives allow preferences to be set on a file-by-file basis: they override the corresponding defaults in the Preferences panel.
+
+The form of the @path directive is @path filename, where filename is taken to be everything following @path to the end of the line.
+
+If the filename in @file pathname or @root pathname is an absolute filename the location of the derived file is specified only by the filename.  Otherwise, if the filename is a relative filename, the location of the derived file is relative to:
+	
+1. the directory specified the applicable @path directive, or
+2. the "Default Tangle Directory" in the Preferences panel if no @path directive is in effect, or
+3. the directory in which the .leo resides if the .leo file has ever been saved.
+
+An error occurs if no absolute path can be computed according to these rules, or if the filename or directory does not exist.
+
+The form of the @pagewidth directive is @pagewidth n, where n is a positive integer that indicates the width of tangled pages in columns. This setting only affects how Tangle outputs block comments.
+
+The form of the @tabwidth directive is @tabwidth n, where n is a positive integer that indicates the width of tabs in spaces. This is used by Tangle to output leading whitespace.</t>
+<t tx="EKR.20040524104904.88">The @raw and @end_raw directives are valid only within @file trees.  The @raw directive starts a section of "raw" text.  The @end_raw directive ends such a section, as does the end of body text. No section references are recognized within "raw" text, and no additional leading whitespace is generated within "raw" text when writing the derived file.
+</t>
+<t tx="EKR.20040524104904.89">New in Leo 3.10:  Leo allows you to choose whether body text in @root trees will start in code mode or doc mode by default.
+
+@root-doc filename and @root-code filename specify that body text is assumed to start in doc mode or code mode respectively.  The options (-doc and -code) must follow @root immediately with no intervening whitespace.  In effect, @root-code and @root-doc are two new directives.
+
+These @root options override the new at_root_bodies_start_in_doc_mode option in leoConfig.py.  This option affects only @root trees without options.  Such "plain" @root trees are now deprecated, which only means that it is now better style to use either @root-code or @root-doc.  The reason is simple: the meaning of plain @root trees will depend on the at_root_bodies_start_in_doc_mode option, and that isn't good.
+
+By default, at_root_bodies_start_in_doc_mode = 1 for compatibility for old @root trees.  I actually don't think this option is good for much; I created it before I created @root-doc and @root-code, and I decided it wouldn't hurt to leave it in.  Anyway, you now have complete flexibility about how @root works, and in particular you can make @root work just like @file.</t>
+<t tx="EKR.20040524104904.90">New in version 3.12: By default, the body_pane_wraps setting in leoConfig.txt controls whether body text wraps.  You may override this setting for a particular tree using the @wrap and @nowrap directives.
+</t>
+<t tx="EKR.20040524104904.91">Cweb mode refers to how Leo tangles an outline when @language cweb is in effect or the cweb option in the Preferences Panel is in effect.
+
+Leo treats _all_ cweb code in cweb mode as unevaluated text.  That is, Leo treats cweb control codes, including @&lt;...@&gt;, @&lt;...@&gt;=, @c, @space, @* and @** as "raw" text within cweb mode.  Leo does _not_ expand _cweb_ section references when writing derived files in cweb mode.  However, Leo _does_ expand _noweb_ section references, so you may use noweb sections to organize cweb files! You can create _noweb_ code and doc sections using the @code and @doc directives in place of @c and @space directives.
+
+By default, cweb colors @space, @* and @** sections using the same syntax coloring as for LaTeX.  In addition, cweb colors C // and /*..*/ comments using LaTeX coloring by default.  You may change these defaults using the color_cweb_doc_parts_with_latex and color_cweb_comments_with_latex options in leoConfig.py.</t>
 <t tx="EKR.20040524104904.92">An @asis tree is a tree whose root headline starts with @asis &lt;filename&gt;.  Similarly, for @noref and @nosent trees.
 
 New in 4.2:  The following terms are equivalent.  The first form is preferred in each case.
@@ -1484,6 +3131,1998 @@ Notes:
 2. Within @asis trees only, if a headline starts with @@, Leo writes everything in the headline following the @@ just before the corresponding body text.
 
 3. Files derived from @asis trees contain _nothing_ not contained in body text (or @@ headlines).  In particular, if body text does not end in a newline, the first line from the next node will concatenated to the last line of the preceding node.</t>
+<t tx="EKR.20040524104904.93"></t>
+<t tx="EKR.20040524104904.94">@file trees are much easier to use than @root trees:
+
+1. @file trees require less markup than @root trees; all sections in @root trees must have names, but @file trees usually contain many unnamed sections. Within @file trees, the @others directive acts like a reference to all unnamed sections.
+
+2. The user must explicitly tangle and untangle @root trees using the Tangle and Untangle commands.  Leo tangles and untangles @file trees automatically,  tangling all changed @file trees when writing an outline and untangling all @file trees when reading an outline.
+
+However, @root trees are more flexible than @file trees:
+
+1. Within @file trees, sections must be defined in descendents of the node that contains the section reference.
+
+2. Within @root trees a section may be defined anywhere within the @root tree, regardless of where the section is referenced.  Moreover, the @unit directive expands the scope of section definitions in @root trees so that a section may be referenced in several @root trees.  (See "Tangling @root trees with the Tangle commands for a complete description of the @root directives.)
+
+3. The meaning of section definitions in @root trees are independent of their position within the tree.
+
+@root trees differ from @file trees as follows:
+
+- Only @root trees may contain section definition lines (see below.)
+
+- Only @file trees may contain @others directives.
+
+- @c directives require section names in the headline of @root trees.
+
+- @c directives are optional at the start of body text in @file trees only.
+Body text without markup is ignored in @root trees; it creates unnamed code sections in @file trees.</t>
+<t tx="EKR.20040524104904.95">@nocolor
+Just as with @file trees, @root trees may contain kinds of sections: code sections and doc sections.  Code sections start with section definition lines (see below) or the @c directive.  Doc sections start with @ followed by a space at the start of a line.  Doc sections continue until the end of body text or until the next @c or @(space) directive.
+
+The term "section" has two related meanings.  Sections are syntactic units of text in the body pane.  Leo writes the text of section to derived files, so another meaning of "section" is "the text that is written to the derived file."  Which meaning is intended should be clear from context.
+
+Body text in @root trees contain zero or more sections in any order. The @c directive starts a named code section if the node's headline starts with &lt;&lt;section name&gt;&gt;.  Otherwise, the @c directive is invalid.
+
+Section definition lines of the form:
+
+	&lt;&lt; section name&gt;&gt;=
+
+(note the equal sign) also start named code sections.  Named code sections in @root trees may be defined in several places.  The definition of a named code section is the concatenation of all code sections with the same name. Body text that defines no code section is ignored.
+
+As in @file trees, paired &lt;&lt; and &gt;&gt; characters on the same line always denote a section name, even within comments are strings.  That is, &lt;&lt; and &gt;&gt; characters that do not delimit a section name must be placed on separate lines.  If &lt;&lt; and &gt;&gt; are not paired on a line, they are treated as literal &lt;&lt; and &gt;&gt; characters.
+
+At least one non-blank line must follow the section definition line.  That is, empty sections are not allowed. 
+
+Here is a typical example of body text within an @root tree:
+@color
+
+@ This method puts an open node sentinel for node v.
+&lt;&lt;atFile methods&gt;&gt;=
+def putOpenNodeSentinel(self,v):
+	if v.isAtFileNode() and v != self.root:
+		&lt;&lt; issue an error message &gt;&gt;
+	else:
+		s = self.nodeSentinelText(v)
+		self.putSentinel("@+node:" + s)
+
+@nocolor
+Provided that the node's headline starts with &lt;&lt;atFile methods&gt;&gt;, the example above is equivalent to:
+@color
+
+@ This method puts an open node sentinel for node v.
+@c
+def putOpenNodeSentinel(self,v):
+	if v.isAtFileNode() and v != self.root:
+		&lt;&lt; issue an error message &gt;&gt;
+	else:
+		s = self.nodeSentinelText(v)
+		self.putSentinel("@+node:" + s)
+
+@nocolor
+We may not eliminate @c directives in @root trees.  If we convert the doc part to a comment we are left with:
+@color
+
+@c
+# This method puts an open node sentinel for node v.
+def putOpenNodeSentinel(self,v):
+	if v.isAtFileNode() and v != self.root:
+		&lt;&lt; issue an error message &gt;&gt;
+	else:
+		s = self.nodeSentinelText(v)
+		self.putSentinel("@+node:" + s)
+
+@nocolor
+The following escape convention applies only in @root trees.  Within a code parts @@ in the first column (and only in the first column) stands for a single @ sign.</t>
+<t tx="EKR.20040524104904.96">@nocolor
+Each @root tree  represents a single derived file.  Tangling is the process of creating derived files from @file or @root trees. Leo tangles @file trees automatically whenever an outline is saved.  The user must tangle @file trees explicitly using one of the Tangle commands.
+
+Leo creates derived files by expanding all section references in an @root node. Leo expands a section reference by substituting the code section itself for the section reference. This is a recursive process: the substituted code section may contain other code references which are themselves expanded, and so on.
+
+It is unusual and bad style for the meaning of an @root tree to depend on the position of nodes within it. The meaning of a section definition in an @root tree usually does not depend on is position, and we may place sections wherever we want.  The outline provides a natural way of organizing an sections as follows:
+
+	Place the definition of a section S in a child of
+	the node containing the reference to S.
+
+If a section is referenced in more than one node, I usually place its definition in a node containing all the nodes that refer to it. Using this rule of thumb creates an outline whose structure mirrors the intrinsic organization of a program.
+
+The Tangle command creates derived files from @root node. The @root directive indicates which sections constitute an output file. The text following a @root directive forms the entire content of the file, that is, after section references are expanded. An outline can contain arbitrarily many @root directives: Leo's Tangle commands will create one output file for each. The process of creating derived files is called "tangling" because the code from the outline is rearrange to create the derived files.
+
+For example, the following @root section shows a typical way of specifying a header file xx.h.
+@color
+
+@root"xx.h"
+#ifndef xx_defined
+#define xx_defined
+&lt;&lt; declarations of public constants of the xx class &gt;&gt;
+&lt;&lt; declarations of public types of the xx class &gt;&gt;
+&lt;&lt; declarations of public variables of the xx class &gt;&gt;
+&lt;&lt; public prototypes of the xx class &gt;&gt;
+#endif
+
+@nocolor
+The Tangle commands will create the file xx.h from this body text by expanding all the section references. Incidentally, the introductory documentation will be included in the header file: any text preceding the @root directive is treated just like the documentation part of an section definition.
+
+As another example, the following shows a typical way of specifying the corresponding xx.c file:
+@color
+
+@root"xx.c"
+&lt;&lt; public variables of the xx class &gt;&gt;
+&lt;&lt; private types of the xx class &gt;&gt;
+&lt;&lt; private variables of the xx class &gt;&gt;
+&lt;&lt; private function prototypes of the xx class &gt;&gt;
+&lt;&lt; methods of the xx class &gt;&gt;
+
+@nocolor
+There are three menu commands that tangle an outline: Tangle, Tangle All and Tangle Marked. These commands are identical except for how much of the outline is tangled. The Tangle command tangles only the selected portion of the outline, the Tangle All command tangles the entire outline, and the Tangle Marked command tangles only marked headlines.
+
+The @root directive has three forms. All three forms mean exactly the same thing.
+@color
+
+@root filename
+@root "filename"
+@root &lt;filename&gt;
+
+@nocolor
+
+If filename is an absolute filename the location of the derived file is specified only by the filename.  Otherwise, if the @root node contains a relative filename, the location of the derived file is relative to:
+	
+1. the directory specified the applicable @path directive, or
+2. the "Default Tangle Directory" in the Preferences panel if no @path directive is in effect, or
+3. the directory in which the .leo resides if the .leo file has ever been saved.
+
+An error occurs if no absolute path can be computed according to these rules, or if the filename or directory does not exist.
+
+The Tangle commands format derived files so they are easy to read. The .c file in the Examples folder shows how derived files are formatted by the Tangle commands.
+
+There is one complication that we haven't discussed yet: the scope of section definitions. The scope of a definition is the tree in which the definition is known.
+
+By default, Tangle commands look for section definitions only in the suboutline of the @root node being tangled. That is, all sections are assumed to be defined either in the body text of the headline, say h, containing the @root directive, or in the body texts of the descendants of h.
+
+The @unit directive explicitly indicates the scope of section definitions. When a Tangle command encounters the @unit directive it treats the suboutline containing the @unit command as the scope for all enclosed roots. This ensures that the group of roots in the subtree use the same section definitions.
+
+For example, suppose we have a tree organized as follows:
+	+ @unit
+		+ @root A
+		sections in A
+		+ @root B
+		sections in B
+		
+The @unit directive insures that:
+1. only sections defined in the unit can effect files A and B and
+2. all sections definitions in A and B are compatible with each other.
+
+Finally, Tangle commands ignore any tree containing an @ignore directive. This ensures that trees that contain cloned nodes or other subsidiary information do not cause the tangle commands to issue spurious error messages. It also ensures that a tree can never contribute a section definition to another part of the outline by mistake.</t>
+<t tx="EKR.20040524104904.97">The Untangle, Untangle All and Untangle Marked commands are the reverse of the corresponding Tangle commands. They update one or more @root nodes based on changes made to the corresponding derived files.
+
+For example, suppose you create a new part of the outline and Tangle it for the first time. When you compile derived files for the first you are likely to get many syntax errors. You could fix those errors in the outline and Tangle the outline again, but there is a much easier way: you fix the errors in the derived files using the compiler's editor, then run the untangle command on the part of the outline that created the derived file. The Untangle command updates the selected outline to match the changes in the derived files. It's as simple as that. By the way, the Untangle command marks all the nodes in the outline that it updates, and you can examine all such nodes with the Go To Next Marked command in the Outline menu.
+
+You cannot use Untangle to update doc parts, or leading comments in code parts or "trivial" whitespace in code parts.  This is a limitation of the Untangle command that cannot be fixed; Untangle has no way of knowing whether leading comments came from doc parts or are just leading comments.
+
+Untangle never changes the structure of an outline; it never inserts, deletes or moves nodes. Don't attempt to change the structure of an outline by modifying derived files; it won't work. Also, never delete, move or alter the sentinel lines in derived files written by the Tangle command. Such lines start with /// followed by a section name.
+
+If you change the section name in a sentinel line Untangle will not update the code in the outline (with the old name) that generated the renamed section. Untangle now warns about sections that appear in a derived file but not in the outline. Untangle has no trouble with changed section references in derived files; it is only changed sentinel lines that cause problems.
+
+Cloned nodes that generate code in several files may cause problems for Untangle. If Untangle is run separately on these derived files, Untangle will update all cloned nodes each time it is run, so only the code in the last Untangle run will take effect. Therefore, the safe way to update text in cloned nodes is to make the change in the .leo file rather than the derived files.</t>
+<t tx="EKR.20040524104904.98">The @verbose, @terse, @quiet and @silent directives determine how the Tangle command outputs comments in @root trees.  Comments written by the user in code sections are always output: these directives control only: a) the comments containing doc sections and b) sentinel comments that delimit the beginning and end of code sections.
+
+When @verbose is in effect Tangle outputs all comments. When @terse is in effect, Tangle outputs only those comments necessary for Untangle to work. When @silent is in effect Tangle adds no additional comments.  The @quiet directive is like @silent except that it does output leading sentinels as comments. Like @silent, @quiet inhibits untangling. 
+
+@verbose is the default. If more than one of these directives appear in the same body text the "most verbose" of these options will be in effect.</t>
+<t tx="EKR.20040524104904.99">@nocolor
+
+This chapter is discusses all of Leo's menu commands.  It is organized by menu, and by function within each menu.
+
+A note about typography:  in this chapter command names and menu names will be capitalized, just as they would be in a menu.  This convention allows us to write, for example, the Save A Copy As command, rather than having to use distracting quotation marks, like the "Save A Copy As" command.</t>
+<t tx="EKR.20040524104904.100"></t>
+<t tx="EKR.20040524104904.101">The New command creates a new Leo main window.  The Open command opens an existing Leo file and shows it in a main window.  The Close command closes the topmost Leo window, and gives you an opportunity to save your work if you haven't yet done so.
+
+The Save, Save As and Save To commands save the topmost Leo window to a file.  The Save As command changes the name of the outline being edited; the Save To command does not.
+
+The Revert command reloads a file, discarding any changes made to the file since it was last saved.
+
+New in Leo 2.5: The Recent Files... command brings up a submenu containing a list of recently opened files.  Choosing an item in this submenu opens the selected file or brings it to the front. Leo adds files to this submenu even if leoConfig.txt is missing or read-only, but those additions will not be remembered unless leoConfig.txt is present and writable.
+
+New in Leo 4.0: The Clear Recent Files command deletes all entries in the Recent Files submenu except the most recent file.  The files themselves are not affected, just the menu entries.
+
+The following four file commands are located in the File:Read/Write submenu.
+
+Read Outline Only: reads an outline using only the .leo file, not any files derived from @file nodes.  This command is useful for reverting a project to a previously saved state.
+
+Read @file Nodes: updates all @file nodes in an outline.  This ensures that the state of an outline matches all files derived from @file nodes.  Included for completeness.  This happens automatically when a .leo file is first read, and it also happens automatically when Leo2 is reactivated.
+
+Write Outline Only: saves an outline without writing any @file trees.  Useful for inserting an @file node into an outline without modifying a derived file with the same name.
+
+Write @file Nodes: forces an update of all @file trees.  Surprisingly useful.
+
+New in Leo 3.12:  The Write Dirty @file Nodes command writes all @file trees that have been changed.
+
+New in Leo 4.0: The Write 4.x Derived Files command and Write 3.x Derived Files command work just like the Write @file Nodes command, except that they write the indicated format off derived file.  In contrast, the Write @file Nodes command writes 3.x format derived files if and only if the write_old_format_derived_files = 1 in leoConfig.txt.  Auto Save: all three of these commands automatically save the outline (the .leo file) if any derived file was actually written.  This is necessary so that information in the .leo file always remains in synch with all derived files.</t>
+<t tx="EKR.20040524104904.102">The Open With command allows you to communicate with external editor.  See the child of this node for full details.</t>
+<t tx="EKR.20040524104904.103">The Open With command allows you to communicate with external editor.  When you select this command Leo creates a temporary file and invokes an external program.  Leo periodically checks whether this temporary file has changed; Leo changes the corresponding node in the outline if so.
+
+You must create the entries in the Open With submenu. This would typically be done in a hook routine, using the createOpenWithMenuFromTable routine described in the child of this node.
+
+The @file mod_open_with.py node in LeoPy.leo gives a complete example of handling the Open With menu.</t>
+<t tx="EKR.20040524104904.104">createOpenWithMenuFromTable (self,table)
+
+This method adds items to submenu of the Open With menu item in the File menu.
+
+The table argument describes the entries to be created.  This table is a sequence of items of the form (name,shortcut,data).
+
+- name is the command name
+- shortcut is the shortcut, or None to indicate no shortcut.
+- data is a tuple of the form (command,arg,ext)
+- command is one of "os.system", "os.startfile", "os.spawnl", "os.spawnv" or "exec".
+- arg is an argument to be passed to the given command.
+- ext is a file extension or None.
+
+When the user selects the Open With item corresponding to the table item Leo executes command(arg).
+If ext is not None, the temp file has the given extension.
+Otherwise, Leo computes an extension based on what @language directive is in effect.
+
+For example:
+
+table = (
+	("Idle",   "Alt+Shift+I",("os.system",idle_arg,".py")),
+	("Word",   "Alt+Shift+W",("os.startfile",None,".doc")),
+	("Wordpad","Alt+Shift+T",("os.startfile",None,".txt")))
+
+top().frame.createOpenWithMenuFromTable(table)
+	</t>
+<t tx="EKR.20040524104904.105">The Tangle, Tangle All and Tangle Marked commands create derived files from portions of an outline.  These commands indent and format the derived files so that they are easy to read and so that it is clear what sections produced the code.  The .c file in the Examples folder shows the code produced by the Tangle commands.
+
+The three Tangle commands are identical except for how much of the outline is tangled.  The Tangle command tangles only the selected portion of the outline, the Tangle All command tangles the entire outline, and the Tangle Marked command tangles only marked headlines.
+
+Derived files are usually .h or .c files (C), .cpp files (C++), or .m files (Objective-C) files, and they can also be other files such as "make" or "help" files.
+
+The Tangle commands create a derived file, call it F, from each @root node.  This process is very much like macro expansion.  The contents of F are simply the body text of the @root node, with each section reference replaced by its definition.  Substitution continues until all references to sections are replaced with their definitions.
+
+By default, Tangle commands look for section definitions only in the suboutline containing the @root directive being tangled.  That is, all sections are assumed to be defined either in the body text of the headline, say h, containing the @root directive, or in the body texts of the descendants of h.
+
+The @unit directive changes the default scope of the tangle command, while the @ignore directive causes the tangle commands to ignore a subtree.  For more details, see the discussion of the @unit and @ignore commands in Chapter called "Using noweb, CWEB and directives". 
+</t>
+<t tx="EKR.20040524104904.106">The Untangle, Untangle All and Untangle Marked commands are the reverse of the corresponding Tangle commands.  They update an outline based on changes made to one or more derived files.  These are exceptionally useful commands.
+
+For example, suppose you create a new part of the outline and Tangle it for the first time.  When you compile the resulting derived files for the first time, you are likely to get many syntax errors.  You could fix those errors in the outline and Tangle the outline again, but there is a much easier way:  you fix the errors in the derived files using the compiler's editor, then run the untangle command on the part of the outline that created the derived file.  The Untangle command updates the selected outline to match the changes in the derived files.  It's as simple as that.  By the way, the Untangle command marks all the nodes in the outline that it updates, and you can examine all such nodes with the Go To Next Marked command in the Outline menu.
+
+You cannot use Untangle to update doc parts, or leading comments in code parts or "trivial" whitespace in code parts.  This is a limitation of the Untangle command that cannot be fixed; Untangle has no way of knowing whether leading comments came from doc parts or are just leading comments.
+
+Untangle never changes the structure of an outline;  it never inserts, deletes or moves nodes.  Don't attempt to change the structure of an outline by modifying derived files; it won't work.  Also, never delete, move or alter the sentinel lines in derived files written by the Tangle command.  Such lines start with /// followed by a section name.
+
+If you change the section name in a sentinel line Untangle will not update the code in the outline (with the old name) that generated the renamed section.  Untangle now warns about sections that appear in a derived file but not in the outline.  Untangle has no trouble with changed section references in derived files; it is only changed sentinel lines that cause problems.
+
+Cloned nodes that generate code in several files may cause problems for Untangle if not all the code is changed the same way in derived files.  If Untangle is run separately on these derived files, Untangle will update all cloned nodes each time it is run, so only the code in the last Untangle run will take effect.  Therefore, the only reliable way to update text in cloned nodes is to make the change in the .leo file rather than the derived files.</t>
+<t tx="EKR.20040524104904.107">When using the Tangle and Untangle commands there are several issues to be aware of concerning your IDE (Integrated Development Environment). This section applies particularly to the Borland IDE; similar remarks apply to other IDE's.
+
+Assuming you have added a .cpp file to your project, you update the file with the Tangle command.  When you switch to the IDE you will get a dialog asking whether you want to update the file.  Say yes and rebuild or remake.
+
+You won't get the dialog unless the file is already open in the IDE.  There is a bug in the Borland IDE: the dialog doesn't come to the front, so it can be easy to miss.
+
+Now suppose you compile the file and get 20 errors all over the .cpp file. You fix the errors _in the IDE_, save the file, switch to Leo, and run the Untangle command. All your changes will appear in the outline! Each changed node will be marked by the Untangle command.
+
+If you like you can use the Go To Next Marked command to find each changed node.
+</t>
+<t tx="EKR.20040524104904.108">Note: the following describe the import and export commands found in leo.py.  This documentation notes differences with the Windows version of Leo.
+
+The Import to @file command creates an @file node from a file.  The Import to @root command creates an @root node from a file.  These commands do not attempt to do perfect translations; they merely automate the bulk of the drudgery.  The Import to @root command is called Import Files in the Borland/Windows version of Leo.  The Import to @file command does not exist in the Borland/Windows version of Leo.
+
+The Import CWEB Files command creates an @file node from a CWEB file.  This command does not exist in the Borland/Windows version of Leo.
+
+The Import noweb Files command creates an @file node from a CWEB file.  The Borland/Windows version of this command creates an @root node.
+
+The Import Flattened Outline command (called Import MORE Text in the Borland/Windows version of Leo) converts plain text written in MORE format to an outline. This command brings up a dialog which will accept at most one file. If that file contains MORE-format text it creates an outline corresponding to that text.
+
+MORE is a now- defunct Macintosh outliner program. MORE represents outlines as follows. Headlines are denoted by a leading + or - character, preceding by zero or more tabs that denote the level of the headline. Body text follows its headline, with no indentation. The original MORE format did not escape lines in the body text that started with + or -. Leo escapes such characters by preceding +, - or backslash with a backslash.
+
+New in Leo 4.0: The Import Derived File command imports all the nodes in a derived file into the outline.  Unlike the read commands, no outline structure is preserved.  This command can import either 3.x or 4.x derived files.  This command is necessary in version 4.0 because there is no other way to read derived files that are out-of-synch with a .leo file.</t>
+<t tx="EKR.20040524104904.109">The Outline To CWEB command creates a CWEB file from the selected outline.
+
+The Outline TO noweb command creates a noweb file from the selected outline.
+
+The Flatten Outline command creates a text file in MORE format from the selected outline.  See the previous section for a discussion of the MORE format.
+
+The Remove Sentinels command removes all sentinel lines from a file derived from an @file node.</t>
+<t tx="EKR.20040524104904.110">The Quit command causes Leo to exit.   You may also exit Leo by closing the main window.  In either event you will be prompted to save any file that has been altered but not saved. </t>
+<t tx="EKR.20040524104904.111"></t>
+<t tx="EKR.20040524104904.112">For leo.py version 2.0 and above:
+
+leo.py supports unlimited Undo and Redo.  All outline operations, including the Change All command and all operations and commands that affect body text may be undone and redone.  Only the "Read @file Nodes" command is undoable; it clears the undo state. This command raises a dialog to allow the user to cancel.
+
+Think of actions that may be Undone or Redone as a string of beads.  A "bead pointer" points to the present bead.  Performing an operation creates a new bead after the present bead and removes all following beads.  Undoing an operation moves the bead pointer backwards; redoing an operation moves the bead pointer forwards.  The Undo command is disabled when the bead pointer moves in front of the first bead; the Redo command is disabled when the bead pointer points to the last bead.
+
+For all Borland versions:
+
+The body pane supports unlimited undo.  However, you can not undo an operation affecting body text after selecting a new headline.  You can undo or redo the last operation involving the outline itself.  You can not undo operations affecting headline text.</t>
+<t tx="EKR.20040524104904.113">Leo supports the standard editing commands that appear in the edit menu: Undo, Cut, Copy, Paste and Clear. These commands work with either headline (when a headlines text is being edited) or body text. Text may be cut, copied and pasted between headline text and body text.
+
+The Select All command selects all text in the body pane.
+</t>
+<t tx="EKR.20040524104904.114">The Shift Left and Shift Right commands shift selected lines in the body text left or right one tab position. The entire line is shifted if any characters of the line are selected.</t>
+<t tx="EKR.20040524104904.115">The Extract, Extract Section and Extract Section Names commands create child nodes whose headline is the first line of the selected body text.
+
+The Extract command creates a new node whose headline is the first line of selected body text and whose body is all other lines of selected text.  All selected text is deleted from the original body text. This command is enabled only if the first line contains a section name (enclosed in angle brackets) on a line by itself.
+
+The Extract Section command creates a new node whose headline is the first line of selected text and whose body is @code followed by all the other lines of selected text.  All selected text lines except the first line are deleted from the original body text. 
+
+The Extract Section Names command creates one or more child nodes, one for each section name (enclosed in angle brackets) in the selected body text.  The headline of each created node is the section name and the body text of each created node is just @code followed by a newline.</t>
+<t tx="EKR.20040524104904.116">New in leo.py v2.5.
+
+The Convert Tabs command converts leading tabs to blanks in a single node.  The Convert Blanks command converts blanks to tabs in a single node.  The Convert All Tabs converts leading tabs to blanks throughout the selected tree.  The Convert All Blanks command converts leading blanks to tabs throughout the selected tree.
+
+All these commands convert between tabs and blanks using the tab width shown in the Preferences panel.</t>
+<t tx="EKR.20040524104904.117">The Execute Script command executes body text as a Python script.  Leo execute the selected text, or the entire body text if no text is selected.
+
+Scripts are executed in a "pristine" environment, that is, with __builtins__ as both the local and global environments.
+
+New in version 4.1:  Body text may now contain @directives and section references. This is a major step forward: you can now use all of Leo's features to organize scripts that you execute interactively.
+
+Section definitions must appear in the node containing the script or in descendent nodes.  Leo "preprocesses" all scripts by simulating the writing of a derived file to a string.
+
+The Execute Script command sets app.scriptDict["script1"] to the value of the script before preprocessing, and sets app.scriptDict["script2"] to the value of the script after preprocessing.  Scripts may examine and change app.scriptDict as they please.</t>
+<t tx="EKR.20040524104904.118">The Edit menu contains four commands for searching and replacing text.  The Find and Find Again commands search through the outline for text and the Change and Change, Then Find commands change selected text.
+
+New in Leo 4.1:  The Esc key dismisses the dialog.  Pressing the enter key is the same a pressing the Find button.
+
+The following check boxes options appear in the search dialog and control the operations of the find and change commands.
+</t>
+<t tx="EKR.20040524104904.119">@nocolor
+
+New in 4.1: Leo now supports scripts in Leo's Find/Change dialog.
+
+Leo's find panel now contains the Script Search radio button and the Script
+Change checkbox. When the Script Search radio button is selected Leo treats the
+contents of the Search Text as a script to execute whenever any kind of Find
+command is executed. Similarly, when the Script Change checkbox is selected Leo
+treats the context of the Change Text as a script to execute whenever any kind
+of Change command is executed. See below for just how this works.
+
+Script-based find-change is extremely powerful. In effect, Leo's Find/Change
+panel becomes a new platform for running scripts interactively. Leo now has all
+the find/change capability of pattern matching languages like Snobol and Icon,
+just by using the capabilities of the plain Python language. Moreover, Leo can
+deliver these capabilities interactively or not depending which buttons you push
+in Leo's Find/Change panel.
+
+Script-based find/change frees the user from having to control script-based
+searches interactively. Rather than forcing find/change scripts to implement
+their own interactive controls, it is much easier to use what Leo already has.</t>
+<t tx="EKR.20040524104904.120">Leo dedicates a Python dictionary called app.searchDict for communication
+between Leo and the search and change scripts. The search and change scripts may
+also use app.searchDict for communication between themselves. Leo sets
+app.searchDict["type"] to "find", "change", "findAll" or "changeAll" to indicate
+the kind of command being executed. Scripts may use all other entries in
+app.searchDict as they please.
+
+Leo executes the find script once when you press the Find button (or the Change
+then Find button) in Leo's Find/Change dialog. Typically, the find script would
+traversing the tree and highlight the found text or otherwise indicate to the
+user that the find operation has suceeded. However, the script can do anything
+it pleases.
+
+Leo executes the the find script repeatedly when you press the Find All button.
+Leo keeps executing the find script until app.searchDict["continue"] evaluates
+to false. Initially there is no entry for app.searchDict["continue"], so the
+find script must set app.searchDict["continue"] = true if it wants Leo to keep
+executing it.
+
+Leo executes the change script once when you press the Change button. Typically,
+the change script would change the selected text. Usually the change script will
+compute the new value of body text and call v.setBodyStringOrPane(newText) to
+make that change permanent. 
+
+The change script also may handle undo, typically by calling
+c.frame.onBodyChanged(v,"Change",oldText=oldText). Leo does not handle undo
+automatically. Indeed, Leo makes no assumptions whatever about what the change
+script really does.
+
+Leo executes the the change script repeatedly when you press the Change All
+button. Just as with the Find All command, Leo keeps executing the change script
+until app.searchDict["continue"] evaluates to false.
+
+Most find and change scripts will ignore settings in the Find Panel like "whole
+word", "pattern match", and "reverse". However, these settings are available to
+the scripts via ivars such as c.whole_word_flag, etc. if desired.</t>
+<t tx="EKR.20040524104904.121">@nocolor
+
+The Scripts node in LeoPy.leo contains a script called initScriptFind.  This script makes it easy to set up script based searches as follows:
+
+1. Put the following code in the root of a tree that will contain your script search:
+
+@color
+# Initialize Leo's find panel using the named children of this node.
+from leoGlobals import *
+initScriptFind("Find script","Change script") # Second argument is optional.
+# Start searching at the top.
+top().selectVnode(c.rootVnode())
+@nocolor
+
+2. Put the search script in a child node called "Find script" (no quotes).
+
+3. (Optional) Put the change script in a child node called "Change script"
+
+4.  Execute the code above.  Leo does the following:
+
+- Puts the body of the "Find script" into the find text of Leo's Find/Change dialog.
+- Puts the body of the "Change script" into the change text of Leo's Find/Change dialog.
+- Selects the Script Find radio button.
+- Selects the Script Change checkbox if the change script exists.
+- Selects the root of the entire outline.
+
+Presto!  Leo is ready for a script search.</t>
+<t tx="EKR.20040524104904.122">@nocolor
+
+Some ideas for using scripts:
+	
+Either the find and change scripts may use Python's re module.  For
+example, the find script could set app.searchDict["m"] to the match object
+returned by re's match method.  The change script would then compute the
+result, change the text and set the undo info as usual.
+
+There is no reason to confine find/change scripts to operate on data only
+within a Leo outline. These scripts could as easily traverse your file system
+as the Leo outline. But notice: scripts could pull data from the file system
+into the outline so that you can see the effects of changes as the scripts
+operate. Again, this can all happen interactively if you like.</t>
+<t tx="EKR.20040524104904.123">When checked, the Find and Change commands proceed without stopping.  Output is sent to the log window regarding the progress of the command.
+</t>
+<t tx="EKR.20040524104904.124">When checked, the Find and Change commands ignore the case of alphabetic characters when determining matches.
+</t>
+<t tx="EKR.20040524104904.125">When checked, the Change command marks all headlines whose headline or body text are changed by the command.
+</t>
+<t tx="EKR.20040524104904.126">When checked, the Find and Change commands mark all headlines in which a match is found with the pattern.
+</t>
+<t tx="EKR.20040524104904.127">When checked, the Find and Change commands treat several characters specially in the find pattern.  The '*' character matches any sequence of zero or more characters.  The '.' character matches any single character. The '^' character at the start of a pattern, or a '$' character at the end of a pattern matches a newline.
+
+Examples:
+The pattern "^abc$" matches lines that only contain "abc".
+The pattern "^a" matches any line starting with "A".
+The pattern "a$" matches any line ending with "a".
+The pattern "^*$" matches any line at all.</t>
+<t tx="EKR.20040524104904.128">When checked, the Find and Change commands search backward through the file.
+</t>
+<t tx="EKR.20040524104904.129">When checked, the Find and Change commands search body text.
+</t>
+<t tx="EKR.20040524104904.130">When checked, the Find and Change commands search headline text.
+</t>
+<t tx="EKR.20040524104904.131">When checked, the Find and Change commands search only the currently selected headline and its offspring.
+</t>
+<t tx="EKR.20040524104904.132">When checked, the find pattern must match an entire word.  Words consist of an alphabetic character or underscore, followed by zero or more alphabetic characters, numbers or underscores.
+</t>
+<t tx="EKR.20040524104904.133">When checked, the Find and Change commands continues at the top of the file when the command reaches the bottom of the file.  For reverse searches, the find or change command continues at the bottom of the file when the command reaches the top of the file.
+</t>
+<t tx="EKR.20040524104904.134">The Go To Line Number command selects the locations in your outlines corresponding to a line in a derived file.  See the child of this node for full details.</t>
+<t tx="EKR.20040524104904.135">The present version should be quite usable for its main purpose: tracking
+down lines corresponding to error messages. In particular, except for possible
+pathological cases, Leo should always put the cursor in the node containing the
+referenced line. Possible pathologies involve asking Leo to "go to" a sentinel
+line. It won't always be clear what node contains the sentinel.
+
+I am well aware that Leo may not put the cursor on the proper line within
+the vnode, but human beings being the excellent pattern matchers that we are,
+we should be easily be able to find a line within a node.
+
+Notes in LeoPy.leo, in the node called (Go to line number), discuss a variety
+of issues that may cause the cursor not to go to the "proper" line. It also
+discusses a better way to position the cursor.
+
+Internally, there are two main versions of this command: one for @silentfile
+trees, and one for @rawfile and @file trees. In the first case, there are no
+sentinels in the derived file, so Leo just steps through the outline. This is
+the easy case, and should work well. In the second case (@rawfile and @file
+trees), the derived file contains sentinels, and Leo uses those sentinels to
+determine in what vnode the given line occurs.
+
+In this second case, Leo can almost always position the cursor within the
+proper node, because Leo just scans back in the derived file looking for the
+proper @+node sentinel. However, in order to "count" lines in the derived file
+(to place the cursor properly _within_ the body text) Leo must recreate exactly
+the logic used by the atFile.read logic, and that isn't easy. Moreover, there
+is _no_ guarantee that the derived file is unchanged from when it was written;
+after all, if you get syntax errors you tend to want to fix them ;-)
+
+Please do not report bugs in this command, unless the bug involves a
+crash, which would be reported both in Leo's log pane and in the console
+window. This command will probably be improved in 3.10.</t>
+<t tx="EKR.20040524104904.136">New in leo.py 3.11: Insert Body Time/Date and Insert Headline Time/Date
+commands. These are in the Edit Body and Edit Headline menus respectively.
+These commands insert the formatted time &amp; date into t body or headline text.
+You must be editing a headline to be able to insert the time/date into the
+headline. If you aren't Leo will say: "Edit headline to append date/time"
+
+Leo allows you to specify your prefered format for time and date using settings
+in leoConfig.leo/.txt: body_time_format_string in &lt;&lt; body pane options &gt;&gt; and
+headline_time_format_string in &lt;&lt; outline pane options&gt;&gt;
+
+These settings specify the format string passed to time.strftime(format). For a
+complete list of the format options see
+http://www.python.org/doc/current/lib/module-time.html
+
+If the format specified by either of these two settings is erroneous the
+"%m/%d/%Y %H:%M:%S" format is used by default, resulting in a time/date format
+like 1/30/2003 8:31:55</t>
+<t tx="EKR.20040524104904.137">The Reformat Paragraph command allows you to easily reformat body text.  See the child of this node for full details.</t>
+<t tx="EKR.20040524104904.138">New in leo.py v3.9
+
+Whether importing text from an outside source, typing in text, or modifying text, eventually you end up with a block of text in which some lines are too long and some are too short.  The Reformat Paragraph command will rearrange the words in a text paragraph to fill each line as full as possible, up to the @pagewidth setting.
+
+A paragraph is delimited by blank lines, Leo directives, and (of course) start and end of text in a node.  The width of the line used by the reformatting operation is governed by @pagewidth and the indentation that would be applied to the node when tangled (as part of a @root) or written (as part of a @file).
+
+The command operates on the paragraph containing the insert cursor.  If the insert cursor is on a blank line or directive, nothing happens.  If the cursor is on a line containing text, then the paragraph containing that text line is reformatted and the insert cursor is moved to the next paragraph.
+
+Be careful that you don't do this on source code!  Of course, if you do reformat something that should have been left alone, then just Undo.
+
+NOTE: Lines with hanging indentation are handled so that the hanging indentation is preserved.  This is most useful for bulleted or numbered lists, such as:
+
+  1. This is the first paragraph, and
+     it has a hanging indentation.
+
+  2. This is the second paragraph, and
+     it too has a hanging indentation.</t>
+<t tx="EKR.20040524104904.139">The Match Brackets command is enabled if the cursor is next to one of the following characters in the body pane:
+
+( ) [ ] { } &lt; &gt;
+
+This command looks for the matching character, searching backwards through the body text if the cursor is next to ) ] } or &gt; and searching forward through the text otherwise.  If the cursor is between two brackets the search is made for the bracket matching the leftmost bracket.
+
+If a match is found, the entire range of characters delimited by the brackets is highlighted and the cursor is placed just to the left of the matching characters.  Thus, executing this command twice highlights the range of matched characters without changing the cursor.</t>
+<t tx="EKR.20040524104904.140">New in leo.py 3.11:  The Preferences Panel now contains a checkbox called "Replace tabs with spaces".  It is no longer necessary to type a negative tab width to indicate that tabs are to be converted to spaces.
+
+New in leo.py 3.0: The Set Colors command brings up a dialog specifying colors for syntax coloring.  You can specify colors for each syntax coloring construct using a color wheel or by choosing one of the standard Tk color names.  When a color becomes active Leo writes its value or color name to the log pane for your reference.  This is useful when setting coloring options in leoConfig.txt.
+
+New in leo.py 3.0:  The Set Font command brings allows you to specify the fonts used in the body pane, the outline pane (in headlines) and in the log pane. A font becomes active when you double-click its name, or check or uncheck any checkbox.  When a font becomes "active", the new font appears in the panes whose check boxes are selected. Font sizes must be greater than 0 and less than 100 for them to become in effect.  When you choose OK or Cancel Leo writes the fonts presently active in each pane to the log pane for your reference.  This is useful when setting font options in leoConfig.txt.
+
+The Preferences command brings up the preferences dialog. The Page Width option determines where Tangle will break lines. The other two global options control whether the Tangle and Untangle commands will execute a batch file when they are finished. The Default Target Language determines the default syntax coloring and the comment delimiters used by default when Tangling.
+
+New in leo.py 2.5, negative tab widths: Leo converts tabs to blanks as you type when a negative tab width is specified.</t>
+<t tx="EKR.20040524104904.141">Leo understands the following PHP keywords:
+
+&lt;?php, ?&gt;, __CLASS__, __FILE__, __FUNCTION__, __LINE__, and,	as, break, case, cfunction, class, const, continue, declare, default, do, else, elseif,  enddeclare, endfor, endforeach, endif, endswitch, endwhile, eval,  extends, for, foreach, function, global, if, new, old_function, or, static, switch, unset(), use, var, while, xor,
+
+Leo does not yet color the following keywords containing():
+
+array(), die(), echo(), empty(), exit(), include(), include_once(), isset(), list(), print(), require(), require_once(), return()</t>
+<t tx="EKR.20040524104904.142">Leo understands the following LaTex keywords: capitalization is significant.  For example, \vert produces a single vertical line and \Vert produces a double vertical line.
+
+\@, \(, \), \{, \},
+
+\acute, \addcontentsline, \addtocontents, \addtocounter, \address,
+\addtolength, \addvspace, \AE, \ae, \aleph, \alph, \angle, \appendix, 
+\approx,\arabic, \arccos, \arcsin, \arctan, \ast, \author,
+
+\b, \backmatter, \backslash, \bar, \baselineskip, \baselinestretch,
+\begin, \beta, \bezier, \bf, \bfseries, \bibitem, \bigcap, 
+\bigcup, \bigodot, \bigoplus, \bigotimes, \bigskip, \biguplus, 
+\bigvee, \bigwedge,\bmod, \boldmath, \Box, \breve, \bullet,
+
+\c, \cal, \caption, \cdot, \cdots, \centering, \chapter, 
+\check, \chi, \circ, \circle, \cite, \cleardoublepage, \clearpage, 
+\cline,\closing, \clubsuit, \coprod, \copywright, \cos, \cosh, 
+\cot, \coth,csc,
+
+\d, \dag, \dashbox, \date, \ddag, \ddot, \ddots, \decl, 
+\deg, \Delta, \delta, \depthits, \det, 
+\DH, \dh, \Diamond, \diamondsuit, \dim, \div, \DJ, \dj, 
+\documentclass, \documentstyle, \dot, \dotfil, \downarrow,
+
+\ell, \em, \emph, \end, \enlargethispage, \ensuremath, 
+\enumi, \enuii, \enumiii, \enuiv, \epsilon, \equation, \equiv,
+\eta, \example, \exists, \exp,
+
+\fbox, \figure, \flat, \flushbottom, \fnsymbol, \footnote, 
+\footnotemark, \fotenotesize, 
+\footnotetext, \forall, \frac, \frame, \framebox, \frenchspacing, 
+\frontmatter,
+
+\Gamma, \gamma, \gcd, \geq, \gg, \grave, \guillemotleft, 
+\guillemotright,\guilsinglleft, \guilsinglright,
+
+\H, \hat, \hbar, \heartsuit, \heightits, \hfill, \hline, \hom, \hrulefill,\hspace, \huge,\Huge,\hyphenation
+
+\Im, \imath, \include, includeonly, indent, \index, \inf, \infty, \input, \int, \iota,\it, \item, \itshape,
+
+\jmath, \Join,
+
+\k, \kappa, \ker, \kill,
+
+\label, \Lambda, \lambda, \langle, \large, \Large, \LARGE, 
+\LaTeX, \LaTeXe, 
+\ldots, \leadsto, \left, \Leftarrow, \leftarrow, \lefteqn, \leq,
+\lg, \lhd, \lim, \liminf, \limsup, \line, \linebreak, 
+\linethickness, \linewidth,\listfiles,
+\ll, \ln, \location, \log, \Longleftarrow, \longleftarrow, 
+\Longrightarrow,longrightarrow,
+
+\mainmatter, \makebox, \makeglossary, \makeindex,\maketitle, \markboth, \markright,
+\mathbf, \mathcal, \mathit, \mathnormal, \mathop,
+\mathrm, \mathsf, \mathtt, \max, \mbox, \mdseries, \medskip,
+\mho, \min, \mp, \mpfootnote, \mu, \multicolumn, \multiput,
+
+\nabla, \natural, \nearrow, \neq, \newcommand, \newcounter, 
+\newenvironment, \newfont,
+\newlength,\newline, \newpage, \newsavebox, \newtheorem, \NG, \ng,
+\nocite, \noindent, \nolinbreak, \nopagebreak, \normalsize,
+\not, \nu, nwarrow,
+
+\Omega, \omega, \onecolumn, \oint, \opening, \oval, 
+\overbrace, \overline,
+
+\P, \page, \pagebreak, \pagenumbering, \pageref, \pagestyle, 
+\par, \parbox,\paragraph, \parindent, \parskip, \part, 
+\partial, \per, \Phi, \phi,\Pi, \pi, \pm, 
+\pmod, \pounds, \prime, \printindex, \prod, \propto, \protext, 
+\providecomamnd, \Psi,\psi, \put,
+
+\qbezier, \quoteblbase, \quotesinglbase,
+
+\r, \raggedbottom, \raggedleft, \raggedright, \raisebox, \rangle, 
+\Re, \ref, \renewcommand, \renewenvironment, \rhd, \rho, \right, 
+\Rightarrow,\rightarrow, \rm, \rmfamily,
+\Roman, \roman, \rule, 
+
+\s, \samepage, \savebox, \sbox, \sc, \scriptsize, \scshape, 
+\searrow, \sec, \section,
+\setcounter, \setlength, \settowidth, \settodepth, \settoheight, 
+\settowidth, \sf, \sffamily, \sharp, \shortstack, \Sigma, \sigma, 
+\signature, \sim, \simeq, \sin, \sinh, \sl, \SLiTeX,
+\slshape, \small, \smallskip, \spadesuit, \sqrt, \sqsubset,
+\sqsupset, \SS,
+\stackrel, \star, \subsection, \subset, 
+\subsubsection, \sum, \sup, \supressfloats, \surd, \swarrow,
+
+\t, \table, \tableofcontents, \tabularnewline, \tan, \tanh, 
+\tau, \telephone,\TeX, \textbf,
+\textbullet, \textcircled, \textcompworkmark,\textemdash, 
+\textendash, \textexclamdown, \textheight, \textquestiondown, 
+\textquoteblleft, \textquoteblright, \textquoteleft,
+\textperiod, \textquotebl, \textquoteright, \textmd, \textit, \textrm, 
+\textsc, \textsl, \textsf, \textsuperscript, \texttt, \textup,
+\textvisiblespace, \textwidth, \TH, \th, \thanks, \thebibligraphy,
+\Theta, theta, 
+\tilde, \thinlines, 
+\thispagestyle, \times, \tiny, \title,\today, \totalheightits, 
+\triangle, \tt, 
+\ttfamily, \twocoloumn, \typeout, \typein,
+
+\u, \underbrace, \underline, \unitlength, \unlhd, \unrhd, \Uparrow,
+\uparrow,\updownarrow, \upshape, \Upsilon, \upsilon, \usebox,
+\usecounter, \usepackage, 
+
+\v, \value, \varepsilon, \varphi, \varpi, \varrho, \varsigma, 
+\vartheta, \vdots, \vec, \vector, \verb, \Vert, \vert, \vfill,
+\vline, \vphantom, \vspace,
+
+\widehat, \widetilde, \widthits, \wp,
+
+\Xi, \xi,
+
+\zeta</t>
+<t tx="EKR.20040524104904.143"></t>
+<t tx="EKR.20040524104904.144">The Check Outline command checks the outline for consistency and warns if it finds dubious clones.</t>
+<t tx="EKR.20040524104904.145">The Insert Headline command inserts a new headline after the presently selected headline, either as the next sibling or the first child of the presently selected headline if the presently selected headline has children and is expanded.</t>
+<t tx="EKR.20040524104904.146">The Cut Outline, Paste Outline, Copy Outline and Delete Outline commands work on nodes rather than text.  For example, to delete a headline, select the headline and choose the Cut Outline or Delete Outline commands.
+
+The Cut Outline and Copy Outline copy a text representation of the outline to the clipboard.  This representation is the same as the file format with some information deleted.  You may copy this text representation into a body pane (or into any other text editor) using the Paste command in the Edit menu.
+
+To Copy an outline from Borland Leo to leo.py:
+
+1. Copy the tree in Borland Leo.
+2. Paste the tree into empty body text of leo.py.
+3. Select all the body text and choose Paste from the Edit Menu.
+4. Move to the tree view, and choose Paste Node.
+
+Yes, this is clumsy.  I do not as yet know how to read the System clipboard using Tk, so I use the Tk.Text command to read it for me.  Hopefully this unpleasantness will go away soon.
+
+Warning:  In practice, it is almost always wiser to move clones rather than cutting or pasting them.  Cutting and pasting outlines preserves clones, but the links between clones only exist within the part of the outline that was pasted.  Therefore, if you are cutting and pasting an outline containing clones it is best to cut and paste the _entire_ outline.  Alternatively, you can paste part of an outline, then delete all clones.</t>
+<t tx="EKR.20040524104904.147">The Expand command expands the currently selected node so that all its children are visible.  The Expand All Subheads command expands the currently selected node so that all its offspring are visible.  The Expand All command expands all the nodes of the entire tree.
+
+New with leo.py version 1.0 and Borland Leo v2.6:
+
+The Contract Parent contracts the parent node of the present node, making the parent the new present node.</t>
+<t tx="EKR.20040524104904.148">The Hoist command redraws the screen so presently selected tree becomes the only visible part of the outline.  Leo prevents the you from moving nodes outside the hoisted outline.  The De-hoist command restores the outline.  Hoist commands may be nested.</t>
+<t tx="EKR.20040524104904.149">The Mark Headline command marks a headline with a red marker  near the leader characters, while the Unmark Headline command removes such a mark.  Only one of these commands appear in the Outline menu at any time: the Mark Headline command appears if the currently selected headline is unmarked.  Otherwise, the Unmark Headline command appears.  The Mark Subheads command marks all offspring of the currently selected node.  The Unmark All command removes the marks from the entire tree.
+
+The Mark Changed Items command marks all headlines whose headline or body text has been changed since the file was last saved.  The Mark Changed Roots command marks all changed headlines whose body text contains the @root directive.  This command is especially useful with the Tangle Marked command.</t>
+<t tx="EKR.20040524104904.150">The Move Up, Move Down, Move Left and Move Right commands move the currently selected node in the indicated direction.  The Promote command makes all the children of a node siblings of the node.  The Demote command makes all the siblings that follow a node children of the node.
+
+The Sort Children command sorts all children of the present node in alphabetical order, based on the headlines of the children.
+
+The Sort Siblings command sorts all siblings of the present node in alphabetical order.
+
+New in version 4.1:  The Hoist command redraws the outline making the present node the root node.  The outline itself is unaffected by the Hoist command.  The De-Hoist command removes one level of hoisting.</t>
+<t tx="EKR.20040524104904.151"></t>
+<t tx="EKR.20040524104904.152">The Equal Sized Panes command adjusts the sizes of the code and body pane of the topmost window so that they are the same height.
+</t>
+<t tx="EKR.20040524104904.153">The Cascade command cleans up the screen by cascading all Leo windows.  The Minimize All command minimizes all Leo windows.</t>
+<t tx="EKR.20040524104904.154">This command changes the pane that is currently active.  If the outline pane was active, the body pane becomes active, and vice versa.  This command makes it possible to switch between panes without using the mouse.</t>
+<t tx="EKR.20040524104904.155">New in leo.py 3.0:  The Toggle Split Direction command switches between vertical and horizontal orientations of the Leo window.  In the vertical orientation, the body pane appears below the pane containing the outline and log panes.  In the horizontal orientation, the body pane appears to the left the pane containing the outline and log panes.
+
+leoConfig.txt specifies the default direction.  If leoConfig.txt does not exist, or does not specify the direction, the "vertical" orientation is used, just as in previous versions.
+
+By default, the ratio of pane outline pane to the body pane is 0.5 in the vertical orientation and 0.3 in the horizontal orientation.  These two ratios may be changed using leoConfig.txt.</t>
+<t tx="EKR.20040524104904.156">The Open Compare Window command opens a dialog that allows you to compare two files.
+
+This is not really a general-purpose file-compare dialog.  The purpose of this window is to show what sentinels a derived file contains.  One file is assumed to contain sentinels, the other file is assumed not to contain sentinels.</t>
+<t tx="EKR.20040524104904.157"></t>
+<t tx="EKR.20040524104904.158">The About Leo command puts up a dialog box showing the version of Leo.
+</t>
+<t tx="EKR.20040524104904.159">The Online Home Page command opens Leo's home page at http://personalpages.tds.net/~edream/front.html.
+
+The Open Online Tutorial command opens Joe Orr's excellent ScreenBook tutorial at http://www.evisa.com/e/sbooks/leo/sbframetoc_ie.htm.
+
+The Open Offline Tutorial command opens the file sbooks.chm if it exists in the folder containing leo.py.  If sbooks.chm does not exist, you will be asked whether you want to download it from Leo's SourceForge web site.  If you say yes, the page http://sourceforge.net/project/showfiles.php?group_id=3458 will open.  You should then download sbooks.sbm to the folder containing leo.py.
+
+The Open LeoDocs.leo command opens this file, leoDocs.leo.
+
+</t>
+<t tx="EKR.20040524104904.160">The Open LeoConfig.leo command opens the file leoConfig.leo, the primary source file for the derived file leoConfig.txt.  Use the Tangle All command to update leoConfig.txt from changes made to leoConfig.leo.
+
+The Apply Settings command applies the settings in leoConfig.txt.  Leo reads these settings when it begins execution, so the only time you would need to use this command is just after changing leoConfig.txt.</t>
+<t tx="EKR.20040524104904.161">@nocolor
+
+This chapter discusses Leo's relationship with traditional literate programming.</t>
+<t tx="EKR.20040524104904.162">The following sections discuss the main benefits of traditional literate programming. It's worth noting that none of these benefits derives from being able to produce printed output.</t>
+<t tx="EKR.20040524104904.163">Sections add a new dimension to the design and coding process. Choices about what sections do, what they are named, what order they appear in, are choices in a design space different from "normal" programming. This an abstract concept, to be sure. However, the following concrete discussions are really manifestation of working in this new design space.</t>
+<t tx="EKR.20040524104904.164">The names of sections are constrained only by one's design skill, not by any rules of language. You say what you mean, and that becomes both the design and the code. You never have to simulate a concept because concepts become section names.</t>
+<t tx="EKR.20040524104904.165">The visual weight of a web section is simply the length and complexity of the section's name, regardless of how complex the actual definition of the section is. The results of this separation are spectacular. No longer is one reluctant to do extensive error handling (or any other kind of minutia) for fear that it would obscure the essence of the program. Donald Knuth stresses this aspect of literate programming and I fully agree.</t>
+<t tx="EKR.20040524104904.166">Sections can show and enforce relationships between apparently unrelated pieces of code. Comments, macros or functions are other ways to indicate such relationships, but often sections are ideal. Indeed, a natural progression is to create sections as a matter of course. I typically convert a section to a function only when it becomes apparent that a function's greater generality outweighs the inconvenience of having to declare and define the function.</t>
+<t tx="EKR.20040524104904.167">A section name is complex when it implies unwholesome dependencies between the caller (user) of the section and the section itself. Such section names tend to be conspicuous, so that the programmer is lead to revise both the section name and its purpose. Many times my attention has been drawn to a poorly conceived section because I didn't like what its name implied. I have always been able to revise the code to improve the design, either by splitting a section into parts or be simplifying its relation to colleagues.</t>
+<t tx="EKR.20040524104904.168">One of the most surprising thing about literate programming is how severely traditional programming tends to limit comments. In a conventional program the formatting of code must indicate structure, and comments obscure that formatting. Sections in literate programming provide a place for lengthy comments that do not clutter up the code at the place the section is referenced.</t>
+<t tx="EKR.20040524104904.169">The section name often says it all. The reference to the section says everything that the user needs to know, and the section name at the point of definition also eliminates the need for many comments.</t>
+<t tx="EKR.20040524104904.170">@nocolor
+
+A typical root starts out with something like.
+@color
+
+	&lt;&lt; includes for class x &gt;&gt;
+	&lt;&lt; private data for class x &gt;&gt;
+	&lt;&lt; private prototypes for class x &gt;&gt;
+	&lt;&lt; functions of class x &gt;&gt;
+
+@nocolor
+In the derived file there is a comment that looks like this:
+@color
+
+	/// &lt;&lt; includes for class x &gt;&gt;
+
+@nocolor
+It would be silly to write this comment by hand, though often programmers do just that in order to have a place holder for a mark in the source file. With literate programming the situation is different: the comment indicates that the code came from a particular section; that is, the comment servers a real purpose.
+</t>
+<t tx="EKR.20040524104904.171">These last several paragraphs have discussed comments in detail because the net effect of "putting comments where they belong" is that comments don't clutter the code. Section references hide irrelevant detail, so larger-scale patterns within functions (or declarations) become more apparent. Often just recasting code into web format has created Ahas about my own code, with no special attention to recoding or redesign! Recasting a function as a web raises the real and apparent level of abstraction.</t>
+<t tx="EKR.20040524104904.172">Formatting no longer has to indicate overall design; sections do that. I am less obsessive about formatting code; it simply doesn't matter much whether different sections are formatted consistently because the format of one section has no effect on the look of other sections. Also, I don't worry about most line breaks within documentation parts, or about adding comment delimiters.</t>
+<t tx="EKR.20040524104904.173">Outlines add something brand new to traditional literate programming, namely an explicit mechanism for expressing structure at any level of detail, from largest overall view to smallest detail. The following sections elaborate on this theme.</t>
+<t tx="EKR.20040524104904.174">By far the biggest drawback of conventional literate programming is that there are so many sections; it becomes difficult to understand the relationships, if any, between sections. Using an outline to express a literate programming instantly solves this problem. The programmer is always aware of how sections are related.</t>
+<t tx="EKR.20040524104904.175">Outlines provide a convenient way of expressing the intended scope of commands.  For example, the Tangle command operates only on the presently selected tree. The Extract Section command creates a new section as the last child of the present node.</t>
+<t tx="EKR.20040524104904.176">Clones transform a tree into a directed graph without loops. This is a very powerful data structure. Nothing would be gained by cloning an arbitrary directed graph: in general, the clone would simply become the entire tree. Cloning a tree, however, is very effective.
+
+A set of clones becomes essentially a different view of the outline. The set is itself part of the outline, so the outline itself contains an elegant mechanism for representing arbitrarily many views of the same data. It is because of the power of clones that I described MORE in the dedication as possibly the most elegant computer program ever written.
+
+It is easy to create different (and useful) view of a literate outline. For example, I often make clones of all relevant sections of my outline while debugging or adding new features. The clones carry along relevant suboutlines, so essential context is retained, but gathering all the clones together automatically concentrates attention on the problem at hand.</t>
+<t tx="EKR.20040524104904.177">The meaning of a well written literate outline is independent on the order in which sections appear, so outlines may be reorganized at will. In addition, headlines without body text do not affect derived files in any way; such headlines can be inserted freely at any time. In fact, such "nonfunctional" headlines often convey the most information about the structure and design of a large system. Decoupling structure from content in this way is precisely what is needed for flexibility: one can reorganize at will without worrying about changing the meaning of the code.</t>
+<t tx="EKR.20040524104904.178">Hierarchy is often implicit in programming: for example, the grouping of functions into files, or the organization of a single file as a set of functions, etc. An outline directly expresses hierarchy. For example, Leo's tangle or Find and Change commands may be restricted to a particular suboutline. That's a direct expression of an hierarchical constraint or property: I only want to deal with this part of the outline. With outlines, I can do so effortlessly.
+
+Traditional literate programming often simulates the hierarchy using "bridge" comments. Those comments are far weaker than explicit structure. Experience with the Print command clearly shows that a clear literate outline can easily become unintelligible when printed, no matter how "beautiful" the typeset printout is.
+
+My experience shows that organizational crutches such as printed listings, tables of contents and indices are much less clear than the corresponding outline. You could say the entire outline is a table of contents!</t>
+<t tx="EKR.20040524104904.179">There are many ways to express a program as a literate outline. Again, the choices made when doing so are choices in another design space. Such choices are important, and add clarity to the entire program, but can only be expressed when the hierarchy is expressed explicitly.</t>
+<t tx="EKR.20040524104904.180">Tangling and untangling are the fundamental operations of literate programming. Any editor that supports literate programming should provide these operations directly. Moreover, Leo automatically untangles @file trees when reading .leo files and tangles @file trees when writing .leo files.  Eliminating the need for explicit tangling and untangling is a huge improvement.</t>
+<t tx="EKR.20040524104904.181">Leo changes the theory and practice of literate programming as follows:
+
+1. Leo reduces the need for comments within a program. In particular, bridge or transition phrases are almost always unnecessary in a literate outline. One never needs to say something like, "having just finished with topic x, we turn now to topic y." Literate outlines tend to be far less chatty than flat literate programs.
+
+2. Leo shows that printed listings are not necessary to understand noweb or CWEB programs. No printed listing can be as clear as Leo's outline view. It is possible to make printed listings intelligible by adding "context lines" that show the outline context of a section definition. Without such context lines a literate program must rely on extensive bridge comments.
+
+3. Leo shows that simple, standard, yet flexible outline organizations provide a more natural way to organize large programs than narrative organizations. Indeed, narrative style creates severe maintenance problems. The narrative is soon forgotten, and when that happens it becomes difficult to find anything. The few times I have tried narrative organization I soon regretted it: things just weren't where I expected them to be.
+
+4. Leo shows that traditional literate programming encourages a too creative approach to programming. A dictionary is a better model for programs than a novel. Literate outlines provide a more regular organization, while providing space for the most lengthy discussions when those discussions are required.
+
+In short, Leo shows that the phrase "literate programming" is a misnomer. Indeed, chunks or sections, the atoms of literate programming, have little to do with literature. Outlines eliminate the need for narrative. One can use chunks or sections to write narrative prose, but Leo demonstrates that one is under no obligation to do so.</t>
+<t tx="EKR.20040524104904.182">@nocolor
+@language python
+
+This chapter documents scripting for Leo using Python.
+
+This chapter describes only the most useful functions, classes and methods in leo.py.  However, keep in mind the following:
+
+	** Your scripts have complete access to _all_ of Leo's source code **
+
+Therefore, the most complete documentation for scripting is Leo's source code itself, that is, the file LeoPy.leo.  In particular, see the node called "Overview of the Code", the first child of the node called "Code".
+
+You can execute all of the scripts in this chapter by selecting the node containing the script and executing the "Execute Script" command.  N.B.  Leo's Execute Script command now understands all aspects of Leo's markup, including @others directives, doc parts and section references.  This means that you don't have to select just the "code" part in the examples below: you can select the entire node!</t>
+<t tx="EKR.20040524104904.183">@nocolor
+@ Leo's source code is a collection of classes, along with utility functions in leoGlobals.py.  The preferred way of accessing the functions and data in leoGlobals.py is as follows:
+@c
+@color
+	
+import leoGlobals as g
+from leoGlobals import true,false
+
+@nocolor
+@ After these imports you may call function x in leoGlobals as follows: g.x()
+
+g.app refers to the _application object_ representing the entire Leo application.
+The ivars (instance variables) of g.app represent Leo's global variables.
+
+A _commander_ (an instance of the Commands class) represents the operations that can be performed on a _particular_ window.  Each open Leo window has its own commander.  g.top() returns the commander of the top window.  By convention, any variable named c refers to a commander.
+
+A _frame_ (an instance of the leoFrame class) contains all the internal data needed to manage a Leo window.  Given a commander c, c.frame refers to the commanders frame.  Given a frame f, f.c refers to the frame's commander.
+
+A _vnode_ represents an outline node.  New in 4.2:  a node may appear several times within the same outline.  You can use vnode methods to get and set headline text, body text and properties such as whether the node is dirty or marked.  By convention, any variable named v,v1 or v2 refers to a vnode.  vnodes have v._parent, v._next and v._back links that "point" to the vnodes parent and siblings.  Leo moves vnodes around by changing these links.
+
+Joined vnodes are updated together.  Cloned nodes are joined, as are corresponding nodes in the subtrees of cloned nodes.
+
+A _tnode_ represents the actual data in a vnode, including headline and body text.  Vnodes that are joined to each other have the same tnode.  For any vnode v, v.t is v's tnode.
+
+New in Leo 4.2:  tnodes contain a t._firstChild link that points to a _vnode_.  Because cloned vnodes share the same tnode, they also share the same v.t._firstChild link.  In other words, cloned vnodes use a _single_ subtree to represent their common decendent trees.  A _shared subtree_ is a tree of vnodes shared by multiple cloned nodes.  The root of a shared subtree is always some v.t._firstChild link.
+
+N.B. The vnodes of a shared subtree will appear multiple times on the screen.  That means that in Leo 4.2 in later vnodes no longer represent a _single_ location on the screen, nor do vnodes represent a particular position in a traversal of a tree.
+
+New in Leo 4.2:  a _position_ object represents the location of a particular node in a tree traversal or on the screen.  By convention, any variable named p or p1 or p2 refers to a position.  For any position p, p.v is the vnode at that position and p.v.t is the tnode at that position.
+
+Leo's code uses position objects very much like vnodes were used in pre-4.2 versions of Leo.  In particular, please note the following _extremely important_ properties of commanders and positions:
+	
+- In Leo 4.2 the c.currentVnode and c.rootVnode methods return _positions_, not vnodes.
+- position objects support all the common vnode methods that were used in scripts prior to Leo 4.2.
+
+These two facts mean that most scripts written before Leo 4.2 will continue to work in Leo 4.2.
+
+Aside: the preferred way of get the position of the root node and the presently select node is c.rootPosition and c.currentPosition respectively.  The c.currentVnode and c.rootVnode methods exist only for compatibility with old code.
+
+You can execute this script right now by selecting the script and choosing the "Execute Script" command.  The output from the g.es statement will go to the log pane.
+@c
+@color
+
+import leoGlobals as g
+windows = g.app.windowList # The list of all open _frames_
+g.es("Open windows...",color="purple")
+for w in windows:
+	g.es(w) # A frame.
+	g.es(w.c) # A commander.
+	g.es(w.c.rootPosition()) # A position.
+	assert(w.c.rootPosition()==w.c.rootVnode())</t>
+<t tx="EKR.20040524104904.184">@color
+@ The following nodes show how to do the most common tasks while scripting Leo.
+
+You may execute the code in each node by executing the Execute Script command.
+@c
+@language python</t>
+<t tx="EKR.20040524104904.185">@color
+
+# The g.es method prints its arguments to the log pane.
+import leoGlobals as g
+g.es("Hello world")
+
+# g.es prints multiple arguments separated by commas.
+g.es("Hello","world")
+
+# g.es converts non-string arguments using repr.
+g.es(g.top())</t>
+<t tx="EKR.20040524104904.186">@color
+
+# The g.top() function returns the Commands object of the top Leo window.
+import leoGlobals as g
+c = g.top()
+g.es(c)
+g.es(c.rootPosition())
+
+@ The windowlist attribute of the application instance contains the list of the
+frames of all open windows. The commands ivar of the frame gives the commander
+for that frame. Execute this code now with the Execute Script command.
+@c
+
+import leoGlobals as g
+windows = g.app.windowList # get the list of all open frames.
+g.es("windows...")
+for f in windows:
+	c = f.c # c is f's commander
+	g.es(f)
+	g.es(f.shortFileName())
+	g.es(c)
+	g.es(c.rootPosition())</t>
+<t tx="EKR.20040524104904.187">@color
+@ leoGlobal.py defines 6 convenience methods for redirecting stdout and stderr:
+
+- g.redirectStderr() # Redirect stderr to the current log pane.
+- g.redirectStdout() # Redirect stdout to the current log pane.
+- g.restoreStderr()  # Restores stderr so it prints to the console window.
+- g.restoreStdout()  # Restores stdout so it prints to the console window.
+- g.stdErrIsRedirected() # Returns true if the stderr stream is redirected to the log pane.
+- g.stdOutIsRedirected() # Returns true if the stdout stream is redirected to the log pane.
+
+Calls need _not_ be paired. Redundant calls are ignored and the last call made
+controls where output for each stream goes.
+
+NOTE: you must execute Leo in a console window
+to see non-redirected output from the print statement.
+@c
+
+import leoGlobals as g
+print "stdout isRedirected:", g.stdOutIsRedirected()
+print "stderr isRedirected:", g.stdErrIsRedirected()
+
+g.redirectStderr()
+print "stdout isRedirected:", g.stdOutIsRedirected()
+print "stderr isRedirected:", g.stdErrIsRedirected()
+
+g.redirectStdout()
+print "stdout isRedirected:", g.stdOutIsRedirected()
+print "stderr isRedirected:", g.stdErrIsRedirected()
+
+g.restoreStderr()
+print "stdout isRedirected:", g.stdOutIsRedirected()
+print "stderr isRedirected:", g.stdErrIsRedirected()
+
+g.restoreStdout()
+print "stdout isRedirected:", g.stdOutIsRedirected()
+print "stderr isRedirected:", g.stdErrIsRedirected()</t>
+<t tx="EKR.20040524104904.188">@color
+
+# Here is how to access the data of a Leo window.
+import leoGlobals as g
+c = g.top()
+
+p = c.currentPosition() # get the current position.
+g.es(p)
+g.es("head:",p.headString())
+g.es("body:",p.bodyString())</t>
+<t tx="EKR.20040524104904.189">@color
+
+import leoGlobals as g
+c = g.top()
+p = c.currentPosition()
+body = p.bodyString()
+head = p.headString()
+
+# BTW, these methods will work whether or not p is the current position.  
+# This won't really anyting because we haven changed body or head.
+p.setBodyStringOrPane(body)     # set body text of p to body.
+p.setHeadStringOrHeadline(head) # set headline text of p to head.</t>
+<t tx="EKR.20040524104904.190">@color
+@ New in Leo 4.2.  The preferred way to traverse an outline is with an iterator.
+
+c.allNode_iter is an iterator that returns all the positions of an outline in outline order.
+
+See the node called "Iterators" below for a full discussion of all iterators.
+@c
+
+# Count the number of separate positions and distinct vnodes of this outline.
+import leoGlobals as g
+c = g.top()
+
+positions = 0 ; tnodes = {}
+for p in c.allNodes_iter():
+	positions += 1
+	if not tnodes.get(p.v.t):
+		tnodes[p.v.t] = p.v.t
+
+g.es("%8s" % "positions",positions)
+g.es("%8s" % "vnodes",len(tnodes.keys()))</t>
+<t tx="EKR.20040524104904.191">@color
+@ Iterators are defined only by the position class;  vnodes can not have iterators because vnodes may appear in multiple places in an outline.
+
+All iterators take an optional copy keyword argument.  You should use copy=true if your script actually alters the position returned by the iterator, say by calling p.moveToThreadNext().</t>
+<t tx="EKR.20040524104904.192">@ The c.allNodes_iter returns a list of all positions in the outline.
+
+See the children of this node for more examples.
+@c
+
+# Here is how to create a list of all positions in an outline.
+
+import leoGlobals as g
+c = g.top()
+
+nodes = [p for p in c.allNodes_iter()]
+g.es("This outline contains %d nodes" % len(nodes))</t>
+<t tx="EKR.20040524104904.193"># Here is one way to count the nodes of an outline.
+
+import leoGlobals as g
+c = g.top()
+
+count = 0
+for p in c.allNodes_iter():
+	count += 1
+g.es("This outline contains %d nodes" % count)</t>
+<t tx="EKR.20040524104904.194"># Here is one way to count the _distinct vnodes of an outline.
+
+import leoGlobals as g
+c = g.top()
+
+positions = 0 ; tnodes = {}
+for p in c.allNodes_iter():
+	positions += 1
+	if not tnodes.get(p.v.t):
+		tnodes[p.v.t] = p.v.t
+
+g.es("%8s" % "positions",positions)
+g.es("%8s" % "vnodes",len(tnodes.keys()))</t>
+<t tx="EKR.20040524104904.195">@ The p.children_iter returns a list of all children of position p.
+@c
+
+import leoGlobals as g
+c = g.top()
+p = c.currentPosition()
+parent = p.parent()
+
+g.es("children of %s" % parent.headString(),color="purple")
+for p in parent.children_iter():
+	g.es(p.headString())</t>
+<t tx="EKR.20040524104904.196">@
+The p.parents_iter returns a list of all parents of position p, excluding p.
+The p.self_and_parents_iter returns a list of all parents of position p, including p.
+@c
+
+import leoGlobals as g
+c = g.top()
+current = c.currentPosition()
+
+print '-'*40
+
+g.es("inclusive parents of %s" % current.headString(),color="purple")
+for p in current.self_and_parents_iter():
+	g.es(p.headString())
+
+g.es("exclusive of %s" % current.headString(),color="purple")
+for p in current.parents_iter():
+	g.es(p.headString())</t>
+<t tx="EKR.20040524104904.197">@
+The p.siblings_iter returns a list of all siblings of position p.
+The p.following_siblings_iter returns a list of all siblings that follow position p
+@c
+
+import leoGlobals as g
+c = g.top()
+current = c.currentPosition()
+
+g.es("all siblings of %s" % current.headString(),color="purple")
+for p in current.self_and_siblings_iter():
+	g.es(p.headString())
+
+g.es("following siblings of %s" % current.headString(),color="purple")
+for p in current.following_siblings_iter():
+	g.es(p.headString())</t>
+<t tx="EKR.20040524104904.198">@
+The p.subtree_iter returns a list of all positions in p's subtree, excluding p.
+The p.self_and_subtree_iter returns a list of all positions in p's subtree, including p.
+@c
+
+import leoGlobals as g
+c = g.top()
+p = c.currentPosition()
+parent = p.parent()
+
+g.es("inclusive subtree of %s" % parent.headString(),color="purple")
+for p in parent.self_and_subtree_iter():
+	g.es(p.headString())
+	
+g.es("exclusive subtree of %s" % parent.headString(),color="purple")
+for p in parent.subtree_iter():
+	g.es(p.headString())</t>
+<t tx="EKR.20040524104904.199">@color
+@ Leo's commands use c.beginUpdate() and c.endUpdate() to reduce flicker.  c.beginUpdate() suppresses all drawing in the outline pane until the matching c.endUpdate() is seen.  These methods can be nested; each c.beginUpdate() must have a corresponding c.endUpdate().
+
+c.endUpdate takes an optional parameter.  If this parameter is false, no redrawing is done.  This can sometimes be useful; inner code can tell other code whether redrawing is actually required.
+
+c.redraw() forces an update of the entire screen.  c.endUpdate() calls c.redraw() as needed.
+@c
+
+import leoGlobals as g
+from leoGlobals import true,false
+c = g.top()
+# Force a screen redraw
+c.redraw()
+# Typical way to redraw the screen:
+c.beginUpdate()
+# ...code that alters the screen...
+c.endUpdate()
+# Typical way to conditionally redraw the screen:
+c.beginUpdate()
+# ...code sets flag if the screen needs redrawing.
+flag = true
+c.endUpdate(flag)s</t>
+<t tx="EKR.20040524104904.200">@color
+@
+Leo dispatches commands using the c.doCommand and "Menu Command Handlers"
+defined in the node by the same name in leoFrame.py. This node contains the menu
+handlers for _all_ of Leo's menu commands, organized by menu and submenu.
+
+I recommend that your scripts use frame.doCommand for the following reasons:
+
+- frame.doCommand calls the "command1" and "command2" hook routines for the given label and
+- frame.doCommand catches all exceptions thrown by the command.
+- the menu commands handles hide a number of implementation details.
+@c
+
+import leoGlobals as g
+c = g.top()
+
+if 1: # calls hooks.
+	c.doCommand(c.markHeadline,label="markheadline")
+else: # does not call hooks.
+	c.markHeadline()
+
+@
+As stated above, the commands handlers in leoFrame.py hide many implementation
+details involved in involking the various commands. If you want to invoke
+commands without calling frame.doCommand, you should study the corresponding
+menu command handler to see what may be required.
+
+Among these details is this: commanders create subcommanders to handle complex commands:
+
+- The atFile class (leoAtFile.py) reads and writes files derived from @file trees.
+- The LeoFind class (leoFind.py) handles the Find and Change commands.
+- The leoImportCommands class (leoImport.py) handles the Import and Export commands.
+- The tangleCommands class (leoTangle.py) handles the Tangle and Untangle commands.
+- The undoer class (leoUndo.py) handles the Undo command.
+- All other command are handled by the commander itself (leoCommands.py)</t>
+<t tx="EKR.20040524104904.201">@color
+@ Each commander maintains its own preferences.  Your scripts can get the following ivars:
+	c.output_doc_flag
+	c.page_width
+	c.tab_width
+	c.tangle_batch_flag
+	c.tangle_directory
+	c.target_language
+	c.untangle_batch_flag
+	c.use_header_flag
+	
+leoPrefs.leoPrefs.ivars is a list of the _names_ of these ivars.
+@c
+
+import leoPrefs
+import leoGlobals as g
+c = g.top()
+
+g.es("Prefs ivars...\n",color="purple")
+for ivar in leoPrefs.leoPrefs.ivars:
+	exec("val=c."+ivar) # do val = c.ivar
+	g.es("c."+ivar,val)</t>
+<t tx="EKR.20040524104904.202">@color
+@ Your scripts may set preferences by setting one of the following ivars:
+	c.output_doc_flag
+	c.page_width
+	c.tab_width
+	c.tangle_batch_flag
+	c.tangle_directory
+	c.target_language
+	c.untangle_batch_flag
+	c.use_header_flag
+@c
+
+import leoPrefs
+import leoGlobals as g
+c = g.top()
+c.tab_width = 4 # Change this and see what happens.
+
+# Your script may update the prefs panel as follows:
+if c.frame.prefsPanel:
+	c.frame.prefsPanel.init(c)
+	c.frame.prefsPanel.setWidgets()
+
+# If your script sets c.tab_width your script may call f.setTabWidth to redraw the screen.
+c.frame.setTabWidth(c.tab_width)</t>
+<t tx="EKR.20040524104904.203">@color
+@ The file leoFindScript.py contains functions for finding and changing text from within scripts. The children of this node show two examples of using the functions.  See the @file leoFindScript.py tree in LeoPy.leo for full details.</t>
+<t tx="EKR.20040524104904.204">@color
+@
+The findall function returns a list of tuples (v,pos) describing matches in c's entire tree.
+@c
+
+import leoGlobals as g
+import leoFindScript
+c = g.top()
+
+pattern="import leoGlobals as g"
+result = leoFindScript.findAll(c,pattern,bodyFlag=1)
+
+g.es("%-3d instances of: '%s'...\n" % (len(result),pattern),color="purple")
+
+for v,pos in result:
+	body = v.bodyString()
+	g.es('\n%-4d %s' % (pos,v.headString()))
+	g.es(g.get_line_after(body,pos))</t>
+<t tx="EKR.20040524104904.205">@color
+@ The reFindall function returns a list of tuples (v,mo,pos),
+where mo is a "Match Object".
+The reFlags argument are flags to re.search()
+@c
+
+import leoGlobals as g
+import leoFindScript
+c = g.top()
+
+pattern="from .* import"
+result = leoFindScript.reFindAll(c,pattern,bodyFlag=1,reFlags=None)
+
+g.es("%-3d instances of: '%s'...\n" % (len(result),pattern),color="purple")
+for v,mo,pos in result:
+	body = v.bodyString()
+	g.es('\n%-4d %s' % (pos,v.headString()))
+	g.es(g.get_line_after(body,pos))</t>
+<t tx="EKR.20040524104904.206">@color
+@  New in version 4.1: On startup, Leo looks for two arguments of the form --script scriptFile.  If found, Leo enters batch mode.
+
+In batch mode Leo does not show any windows.  Leo assumes the scriptFile contains a Python script and executes the contents of that file using Leo's Execute Script command.  By default, Leo sends all output to Leo's log pane to the console window.  Scripts in the scriptFile may disable or enable this output by calling app.log.disable() or app.log.enable()
+
+Scripts in the scriptFile may execute any of Leo's commands except the Edit Body and Edit Headline commands.  Those commands require interaction with the user.
+
+For example, the following batch script reads a Leo file and prints all the headlines in that file.
+@c
+
+import leoGlobals as g
+
+path = r"c:\prog\leoCVS\leo\test\test.leo"
+
+g.app.log.disable() # disable reading messages while opening the file
+flag,newFrame = g.openWithFileName(path,None)
+g.app.log.enable() # re-enable the log.
+
+for p in newFrame.c.allNodes_iter():
+	g.es(g.toEncodedString(p.headString(),"utf-8"))</t>
+<t tx="EKR.20040524104904.207">@color
+@ leoGlobals.py contains many "utility" functions and other names.
+@c
+
+# Print all names (functions and constants) defined in leoGlobals.py.
+import leoGlobals as g
+
+g.es("Names defined in leoGlobals.py",color="purple")
+names = g.__dict__.keys()
+names.sort()
+for name in names:
+	g.es(name)</t>
+<t tx="EKR.20040524104904.208">@color
+@ Most scripts will use methods of the position class to access information in an outline.
+
+The following section summarizes the most useful methods that your scripts can use.  For a complete list, see the @file leoNodes.py tree of LeoPy.leo.
+
+N.B. Both the position and vnode classes support similar methods.  However, iterators exist only in the position class.
+
+You may execute the code in each node by executing the Execute Script command.
+@c
+@language python</t>
+<t tx="EKR.20040524104904.209">@color
+@ This section lists the most useful ivars and methods for getting information from vnodes or positions.
+@c
+
+# Returning commanders...
+p.c # The commander for p.
+
+# Returning strings...
+p.bodyString() # the body string of p.
+p.headString() # the headline string of p.
+
+# Returning ints...
+p.childIndex()
+p.numberOfChildren()
+p.level()
+
+# Returning bools representing property bits...
+p.hasChildren()
+p.isAncestorOf(v2) # true if v2 is a child, grandchild, etc. of p.
+p.isCloned()
+p.isDirty()
+p.isExpanded()
+p.isMarked()
+p.isVisible()
+p.isVisited()</t>
+<t tx="EKR.20040524104904.210">@color
+@ This section lists the most useful methods for setting data or properties of positions.
+@c
+
+# These work whether or not p is the presently selected position.
+p.setBodyTextOrPane(s)       # Sets the body text of p.
+p.setHeadStringOrHeadline(s) # Sets the headline text of p.
+
+# Moving nodes...
+p.moveAfter(v2)  # move p after v2
+p.moveToNthChildOf(v2,n)  # move p to the n'th child of v2
+p.moveToRoot()  #  make p the root position
+
+# The "visited bit" may be used by commands or scripts for any purpose.
+# Many commands use this bits for tree traversal, so these bits do not persist.
+c.clearAllVisited() # Clears all visited bits in c's tree.
+p.clearVisited()
+p.setVisited()</t>
+<t tx="EKR.20040524104904.211">@nocolor
+
+You may customize Leo in several ways:
+
+I.  Using leoConfig.txt
+
+When Leo first starts, Leo looks for a file called leoConfig.txt, derived from leoConfig.leo, which contains extensive documentation for each setting.  The settings in leoConfig.txt include:
+
+- Fonts used in Leo's body, outline and log panes.
+- Colors used for syntax coloring.
+- Menu shortcuts for all menu items.
+- Sizes and splitter orientation for newly created windows.
+- Initial entries in the Recent Files menu, and the Find, Preferences and Compare panels.
+- The format of .leo files.
+
+The section called "Using leoConfig.leo and leoConfig.txt" gives the rules for how Leo uses these two files.
+
+II. Using plugins and hooks
+
+New in 3.11:  It is no longer necessary to modify customizeLeo.py.  Instead of modifying customizeLeo.py you now should add plugins to the plugins directory.  In fact, customizeLeo.py will soon disappear entirely.
+
+During startup, Leo looks for plugins, i.e., files whose name matches mod_*.py in the plugins directory.  These plugins register functions called "hooks" to be called a various times during execution.  Full details are provided below.
+
+Plugins provide the following advantages:
+
+- Any time you see a nice hook handler that someone has written you can just copy it to a plugin file and it runs next time you start Leo.
+- You don't have to keep updating a large and growing customizeLeo.py file.
+- You can disable and enable hooks by renaming the relevant plugin file.
+  (or by enabling or disabling the code in the plugin that registers hook functions).
+- You don't have to merge code from hooks pertaining to the same Leo event.
+
+When executing any command or handling any event, Leo calls hook routines registered from the plugin files.  The arguments to hooks are:
+
+- "tag", a string telling the kind of command or event about to be executed, and
+- "keywords", a Python dictionary whose keys depend on the specific command or event.
+
+This is a very simple, powerful and general mechanism for customizing Leo as you see fit.  There are dozens of kinds of hooks, including the "command1" and "command2" hooks that are called before and after each of Leo's menu commands.  Leo will allow you to override most commands and event handling.  In many cases, if a hook returns any value except None Leo will assume that the hook has completely handled the command or event and will take no further action.  The details will be explained in full below.
+
+Leo catches all exceptions raised in hook code, so you can modify hooks without worry.
+
+SECURITY WARNINGS: Using hooks naively can create the potential for virus-like behavior.  Please read the section called SECURITY WARNINGS for full details.
+
+III. Using convenience routines called from hooks.
+
+Hook routines can import any file in Leo's source code and execute routines in that file.  Leo's contains a number of convenience routines designed to make common customization tasks easier.  Hooks can use these routines to create your own menus, to translate menus into other languages, and to create entries in the Open With menu.  These convenience routines are discussed in detail below.
+
+IV. Setting app().realMenuNameDict inside hooks to translate menus into other languages.
+
+This is discussed below.</t>
+<t tx="EKR.20040524104904.212">@nocolor
+
+Leo will override settings in .leo files if it finds a file called leoConfig.txt in the config subdirectory.  Leo works just as before if it does not find a leoConfig.txt file.
+
+You should make changes to leoConfig.txt by changing leoConfig.leo and then executing the Tangle All command.  There are two advantages to changing leoConfig.txt in this manner.  First, it is just easier to change leoConfig.leo.  Second, all comments are lost in leoConfig.txt when Leo updates it, so using leoConfig.leo as the primary data file means you will always have the comments available.
+
+Leo looks for leoConfig.txt first in the directory specified by the Python variable sys.leo_config_directory.  You would typically set this variable in Python's sitecustomize.py file.  If this variable does not exist, Leo looks in the directory from which Leo was loaded.
+
+The child of this node contains an example of leoConfig.txt that shows all the options that may be set.
+
+Settings in leoConfig.txt overrides preferences in .leo files, but only for those items actually in leoConfig.txt, so you can choose which settings you want to override.  Also, a Leo ignores any setting in leoConfig.txt whose value is "ignore" (without the quotes). For example:
+
+[prefs panel options]
+tab_width = ignore
+
+If a setting is overridden, it is _not_ written to the .leo file when the outline is saved.  Note that this does not change the file format: all previous versions of Leo will be able to read such .leo files.
+
+The preceding is probably all you need to know to use leoConfig.txt.  The following discuss some minor details: 
+
+1. When reading a .leo file, if a setting is found neither in leoConfig.txt nor in the .leo file, Leo uses a default, hard-coded value.  In leo.py 3.0 and later these default settings are found in tables that appear in the section called:
+
+	&lt;&lt; define default tables for settings &gt;&gt;
+
+in the file leoConfig.py. So it is now convenient to change settings in leo.py itself as well as in leoConfig.txt.
+
+2. Leo will update leoConfig.txt unless the read_only option is on in leoConfig.txt.  
+
+WARNING: there are problems when Leo does write leoConfig.txt: all comments are lost and options and sections are written in a random order.  This is due to problems in Python's ConfigParser module and will not be changed any time soon.
+
+3. Provided the read_only option is off, Leo updates leoConfig.txt whenever it saves a .leo file or whenever the Preferences panel is closed without being canceled.  When updating leoConfig.txt, Leo will write only existing settings whose value is not "ignore".
+
+4. When Leo saves a .leo file, Leo will write a Preferences setting to the .leo file only if the setting will not be written when updating leoConfig.txt.  In particular, changes made in the Preferences Panel will become permanent immediately if Leo the read_only option is off.  Otherwise the change will become permanent when any .leo file is saved.</t>
+<t tx="EKR.20040524104904.213">Beginning with version 3.11, you may use plugins to customize how Leo works.  You can
+
+- override or modify any command
+- add or customize menus or
+- translate menus into any language.
+
+Plugins have full access to all of Leo's source code.  In particular, several convenience methods have been added to make customizing menus and commands easier.
+
+Plugins are permanent: they will not go away when Leo is updated.  You can take
+advantage of the latest CVS updates _without_ having to throw away your modifications.
+
+Important warning: plugins must avoid blindly executing scripts in .leo files.  Doing so could expose all parts of your computer to malicious Python code.  The section called "Security warnings and precautions" discusses how to customize Leo safely and how to avoid several pitfalls.</t>
+<t tx="EKR.20040524104904.214">@nocolor
+
+What is a plugin?
+
+A plugin is a .py file that appears in Leo's plugin subdirectory. Leo tries to
+import all such files while starting up. This is done at "start1" time, that
+is, in the call to doHook("start1") in the run function in leo.py. Plugins
+exist to define "hook code".
+
+New in 3.11: Leo looks in the plugins folder for .py files. Leo tries to
+import all such files at startup ("start2") time.
+
+New in 4.1: Leo enables only plugins whose name appears in pluginsManager.txt.
+Leo loads plugins in the order in which they appear in pluginsManager.txt. Leo
+loads no plugins if pluginsManager.txt does not exist in the plugins directory.
+
+What is hook code?
+
+Leo automatically calls hook code at various times during Leo's execution.
+Typical hooks are:
+
+- "start2", called at the end of Leo's startup process,
+- "command1", called before executing any of Leo's commands
+- "idle", called at Tk's idle time, when nothing else is happening,
+
+See the documentation for hooks in this file for full details.
+
+N.B. Plugins can use "start2" hooks to override any of Leo's classes. See
+"Overriding functions, methods &amp; classes" in leoPlugins.leo for several
+examples of how to do this.
+
+How do plugins work?
+
+Plugins register themselves when Leo imports them using the following code,
+which should appear as the outer level of the .py file:
+
+@color
+
+"""A description of this plugin"""
+
+registerHandler("xxx", onXXX)
+__version__ = "1.2"
+plugin_signon(__name__)
+	
+@nocolor
+
+Line by line:
+
+1) """A description of this plugin"""
+
+This is a Python doc string describing the plugin. This string becomes the
+value of the __name__ attribute for the module (.py file).
+
+2) registerHandler("xxx", onXXX)
+
+This line registers a handler called onXXX for the hook called "xxx". See the
+documentation for hooks for a complete list of hook names that you can use
+instead of "xxx". onXXX is the name of a function or method, presumably defined
+in the plugin file, that Leo will call at "xxx" time. For example:
+
+registerHandler("idle",onIdle)
+
+will cause Leo to call the onIdle function at "idle" time.
+
+You can pass a list of hook names as the first argument to registerHandler. For
+example:
+
+registerHandler(("bodykey1","bodykey2","headkey1","headkey2"), onKey)
+
+3) __version__ = "1.2"
+
+This assigns a version attribute to module. At present this attribute is used
+by the plugin code that creates Leo's Plugins menu.
+
+4) plugin_signon(__name__)
+
+This line increases the count of loaded modules. The present code for
+plugin_signon does not actually print separate signons--it seems to verbose.
+
+About hook handlers
+
+See the "About hooks" section of leoPlugins.leo for full documentation about
+how to write hook handler routines, like onXXX or onKey in the examples above.
+Basically, each hook should have this pattern:
+	
+@color
+
+def onXXX (tag,keywords):
+	c = keywords.get("c")
+	otherKeyword = keywords.get("otherKeyword")
+	&lt;&lt; do something with c and otherKeyword, etc. &gt;&gt;
+	
+@nocolor
+
+In other words, keywords is a Python dictionary containing the keyword
+arguments passed to the hook handler. See the See the "About hooks" section of
+leoPlugins.leo for a list of the keywords passed to each hook handler.
+
+The tag is the name of the hook. For example, tag would one of
+"bodykey1","bodykey2","headkey1","headkey2", for the onKey hook handler in the
+example above.
+
+What's next?
+
+It's one thing to know how to create a plugin. It's another to know how to
+actually change Leo. Obviously, some study is needed. The place to start your
+study is LeoPy.leo. In particular, study very carefully the section called
+"Overview of code". Leo is a highly modular program, and Python is ideally
+suited to this style of programming.</t>
+<t tx="EKR.20040524104904.215">@nocolor
+
+New in 3.11: Leo looks in the plugins folder for .py files. Leo tries to
+import all such files at startup ("start2") time.
+
+New in 4.1: Leo enables only plugins whose name appears in pluginsManager.txt.
+Leo loads no plugins if pluginsManager.txt does not exist in the plugins directory.
+
+The child of this node gives an example of the code that creates the Open With
+menu. The following code, appearing at the end of mod_open_with.py, registers
+two different hook functions. The on_idle function is the "idle" hook. The
+create_open_with_menu is the "start2","open2" and "command2" hooks.
+
+@color
+
+# Register the handlers... 
+registerHandler("idle", on_idle) 
+registerHandler(("start2","open2","command2"), create_open_with_menu) 
+es("...open with")
+	
+@nocolor
+Plugins may call registerHandler with a hook name like "idle" or a list of hook
+names like ("start2","open2","command2"). Also, you can use the "all" hook name
+to indicate that code will be called for all hooks. This is useful for tracing
+hooks. Plugins may also call registerExclusiveHandler for hooks that should not
+be redefined in other plugins.
+
+mod_open_with.py also contains the on_idle and create_open_with functions that
+actually handle the hook. Such functions have two arguments: tag and keywords.
+You will find many examples of this in LeoPy.leo.
+
+About error checking:
+
+At present Leo will disable all hooks if any hook throws an exception. In
+practice this isn't a big deal, but something better could be done.
+
+How to send me your plugins:
+
+It should now be _much_ easier to submit a plugin for inclusion in LeoPy.leo.
+Just send me a .leo file containing @file mod_your_plugin.py. Please have this
+@file node be @ignored: this is more convenient for me. Ideally, your .leo file
+should contain _only_ your plugin code.</t>
+<t tx="EKR.20040524104904.216">@color
+@language python
+@ignore
+
+"""Open With handler"""
+
+from customizeLeo import *
+from leoGlobals import *
+
+@others
+
+if 1: # Register the handlers...
+	registerHandler("idle", on_idle)
+	registerHandler(("start2","open2","command2"), create_open_with_menu)
+	es("...open with")</t>
+<t tx="EKR.20040524104904.217"># frame.OnOpenWith creates the dict as follows:
+# dict = {"c":c, "v":v, "f":f, "path":path, "time":time}
+
+def on_idle (tag,keywords):
+
+	import os
+	a = app()
+	for dict in a.openWithFiles:
+		path = dict.get("path")
+		c = dict.get("c")
+		v = dict.get("v")
+		if path and os.path.exists(path):
+			try:
+				time = os.path.getmtime(path)
+				if time and time != dict.get("time"):
+					dict["time"] = time
+					&lt;&lt; update v's body text &gt;&gt;
+			except: pass</t>
+<t tx="EKR.20040524104904.218">&lt;&lt; set s to the new text &gt;&gt;
+body = v.bodyString()
+&lt;&lt; set conflict flag &gt;&gt;
+
+if conflict:
+	# Report the conflict &amp; set update.
+	import leoDialog
+	d = leoDialog.leoDialog()
+	message = "Conflict in %s.\n\n" % (v.headString())
+	message += "Replace outline with external changes?"
+	update = d.askYesNo("Conflict!",message) == "yes"
+else:
+	update = s != body
+
+if update:
+	h = v.headString()
+	es("changed:" + h)
+	v.setBodyStringOrPane(s)
+	c.selectVnode(v)
+	v.OpenWithOldBody = s
+</t>
+<t tx="EKR.20040524104904.219">try:
+	# Update v from the changed temp file.
+	f=open(path)
+	s=f.read()
+	f.close()
+except:
+	es("can not open " + shortFileName(path))
+	break
+</t>
+<t tx="EKR.20040524104904.220">try:
+	# The OpenWithOldBody attribute does not normally exist in vnodes.
+	old_body = v.OpenWithOldBody
+	conflict = body != old_body and body != s
+except:
+	conflict = v.isDirty() and body != s
+</t>
+<t tx="EKR.20040524104904.221">def create_open_with_menu (tag,keywords):
+
+	if  (tag in ("start2","open2") or
+		(tag=="command2" and keywords.get("label")=="new")):
+	
+		&lt;&lt; create the Open With menu &gt;&gt;
+
+		# Enable the idle-time hook so we can check temp files created by Open With.
+		from leoGlobals import enableIdleTimeHook
+		enableIdleTimeHook(idleTimeDelay=500)
+</t>
+<t tx="EKR.20040524104904.222">@ Entries in the following table are the tuple (commandName,shortcut,data).
+data is the tuple (command,arg,ext).
+command is one of "os.system", "os.startfile", "os.spawnl", "os.spawnv" or "exec".
+Leo executes command(arg+path) where path is the full path to the temp file.
+If ext is not None, the temp file has the extension ext,
+Otherwise, Leo computes an extension based on what @language directive is in effect.
+@c
+
+idle_arg = "c:/python22/tools/idle/idle.py -e "
+
+if 1: # Default table.
+ table = (
+  ("&amp;Idle",   "Alt+Shift+I",("os.system",idle_arg,".py")),
+  ("&amp;Word",   "Alt+Shift+W",("os.startfile",None,".doc")),
+  ("Word&amp;Pad","Alt+Shift+T",("os.startfile",None,".txt")))
+else: # David McNab's table.
+ table = (
+  ("X&amp;Emacs", "Ctrl+E", ("os.spawnl","/usr/bin/gnuclient", None)))
+
+top().frame.createOpenWithMenuFromTable(table)
+</t>
+<t tx="EKR.20040524104904.223">@nowrap
+
+At startup time Leo looks all files of the form mod_*.py in the plugins
+directory. Leo assumes that these files are "plugins" containing Python modules
+that customizes Leo's operation. Leo attempts to import each file.
+
+Each module should register routines that are called at various times during
+execution. Such times are identified by strings known as "tags". The code in in
+one or more plugins corresponding to each tag are known as the "hook" routines
+for that tag. Leo catches exceptions (including syntax errors) in hook
+routines, so it is safe to hack away on this code.
+
+Leo passes two argument to all hook routines: the tag and a keywords dictionary
+containing additional information. For example, keywords["label"] indicates the
+kind of command for "command1" and "command2" hooks.
+
+For some hooks, returning anything other than None "overrides" Leo's default
+action. Hooks have full access to all of Leo's source code. Just import the
+relevant file. For example, top() returns the commander for the topmost Leo
+window.
+
+The following table summarizes the arguments passed to hooks: ( Overrides is
+"yes" if returning anything other than None overrides Leo's normal command or
+event processing.)
+
+tag argument                                              keys in keywords
+(hook name)  overrides       when called                  dictionary argument
+---------    ---------       -----------                  -------------------
+"bodyclick1"   yes      before normal click in body       c,v,event
+"bodyclick2"            after  normal click in body       c,v,event
+"bodydclick1"  yes      before double click in body       c,v,event
+"bodydclick2"           after  double click in body       c,v,event
+"bodykey1"     yes      before body keystrokes            c,v,ch,oldSel,undoType
+"bodykey2"              after  body keystrokes            c,v,ch,oldSel,undoType
+"bodyrclick1"  yes      before right click in body        c,v,event
+"bodyrclick2"           after  right click in body        c,v,event
+"boxclick1"    yes      before click in +- box            c,v,event
+"boxclick2"             after  click in +- box            c,v,event
+"command1"     yes      before each command               c,v,label (note 2)
+"command2"              after  each command               c,v,label (note 2)
+"drag1"        yes      before start of drag              c,v,event
+"drag2"                 after  start of drag              c,v,event
+"dragging1"    yes      before continuing to drag         c,v,event
+"dragging2"             after  continuing to drag         c,v,event
+"end1"                  start of app.quit()
+"enddrag1"     yes      before end of drag                c,v,event
+"enddrag2"              after  end of drag                c,v,event
+"headclick1"   yes      before normal click in headline   c,v,event
+"headclick2"            after  normal click in headline   c,v,event
+"headrclick1"  yes      before right click in headline    c,v,event
+"headrclick2"           after  right click in headline    c,v,event
+"headkey1"     yes      before headline keystrokes        c,v,ch
+"headkey2"              after  headline keystrokes        c,v,ch
+"hypercclick1" yes      before control click in hyperlink c,v,event
+"hypercclick2"          after  control click in hyperlink c,v,event
+"hyperenter1"  yes      before entering hyperlink         c,v,event
+"hyperenter2"           after  entering hyperlink         c,v,event
+"hyperleave1"  yes      before leaving  hyperlink         c,v,event
+"hyperleave2"           after  leaving  hyperlink         c,v,event
+"iconclick1"   yes      before single click in icon box   c,v,event
+"iconclick2"            after  single click in icon box   c,v,event
+"iconrclick1"  yes      before right click in icon box    c,v,event
+"iconrclick2"           after  right click in icon box    c,v,event
+"icondclick1"  yes      before double click in icon box   c,v,event
+"icondclick2"           after  double click in icon box   c,v,event
+"idle"                  periodically (at idle time)       c,v
+"menu1"        yes      before creating menus             c,v        (note 3)
+"menu2"        yes      before updating menus             c,v
+"open1"        yes      before opening any file           old_c,new_c,fileName (note 4)
+"open2"                 after  opening any file           old_c,new_c,fileName (note 4)
+"openwith1"    yes      before Open With command          c,v,openType,arg,ext
+"openwith2"             after  Open With command          c,v,openType,arg,ext
+"recentfiles1" yes      before Recent Files command       c,v,fileName,closeFlag
+"recentfiles2"          after  Recent Files command       c,v,fileName,closeFlag
+"save1"        yes      before any Save command           c,v,fileName
+"save2"                 after  any Save command           c,v,fileName
+"select1"      yes      before selecting a vnode          c,new_v,new_v
+"select2"               after  selecting a vnode          c,new_v,old_v
+"select3"               after  selecting a vnode          c,new_v,old_v
+"set-mark"     no       when a mark is set                c,v           (new)
+"start1"       no       after app.finishCreate()
+"start2"                after opening first Leo window    c,v,fileName
+"unselect1"    yes      before unselecting a vnode        c,new_v,old_v
+"unselect2"             after  unselecting a vnode        c,old_v,old_v
+"@url1"        yes      before double-click @url node     c,v           (note 5)
+"@url2"                 after  double-click @url node     c,v           (note 5)
+
+Notes:
+
+(1) "activate" and "deactivate" hooks: These have been removed because they do
+not work as expected.
+
+(2) "commands" hooks: The label entry in the keywords dict contains the
+"canonicalized" form of the command, that is, the lowercase name of the command
+with all non-alphabetic characters removed.
+
+Commands hooks now set the label for undo and redo commands "undo" and "redo"
+rather than "cantundo" and "cantredo".
+
+(3) "menu1" hook: Setting app().realMenuNameDict in this hook is an easy way of
+translating menu names to other languages. Note: the "new" names created this
+way affect only the actual spelling of the menu items, they do _not_ affect how
+you specify shortcuts in leoConfig.txt, nor do they affect the "official"
+command names passed in app().commandName. For example, suppose you set
+app().realMenuNameDict["Open..."] = "Ouvre".
+
+(4) "open1" and "open2" hooks: These are called with a keywords dict containing
+the following entries:
+
+old_c: The commander of the previously open window.
+new_c: The commander of the newly opened window.
+fileName: The name of the file being opened.
+
+You can use old_c.currentVnode() and new_c.currentVnode() to get the current
+vnode in the old and new windows.
+
+Leo calls the "open1" and "open2" hooks only if the file is already open. Leo
+will also call the "open1" and "open2" hooks if: a) a file is opened using the
+Recent Files menu and b) the file is not already open.
+
+(5) "@url1" and "@url2" hooks are only executed if "icondclick1" hook returns None.
+
+
+New in version 3.12:
+
+The following hooks are a new breed of hook, called "stub hooks". Conceptually,
+these hooks are like calls to stub routines that can be filled in by code in
+plugins.
+
+tag argument                                                       keys in keywords
+(hook name)               overrides        when called           dictionary argument
+---------                 ---------        -----------           -------------------
+"after-redraw-outline"       no        end of tree.redraw        c (note 6)
+"clear-mark"                 no        when mark is set          c,v
+"close-frame"                no        in app.closeLeoWindow     c
+"color-optional-markup"      yes *     (note 7)                  colorer,v (note 7)
+"create-optional-menus"      no        (note 8)                  (note 8)
+"destroy-all-global-windows" no        (note 12)                 None
+"create-popup-menu-items"    no        in tree.OnPopup           c,v,event (new)
+"enable-popup-menu-items"    no        in tree.OnPopup           c,v,event (new)
+"init-color-markup"          no        (note 7)                  colorer,v,s,i,j,colortag (note 7)
+"new"                        no        start of New command      old_c,new_c (note 9)
+"redraw-entire-outline"      yes       start of tree.redraw      c (note 6)
+"scan-directives"            no        in scanDirectives         c,v,s,old_dict,dict,pluginsList (note 10)
+"set-mark"                   no        when mark is set          c,v
+"show-popup-menu"            no        in tree.OnPopup           c,v,event
+
+Notes:
+
+(6) These hooks are useful for testing.
+
+(7) These stub hooks allow plugins to parse and handle markup withing doc
+parts, comments and Python """ strings. Note that these hooks are _not_ called
+in Python ''' strings. See the color_markup plugin for a complete example of
+how to use these hooks.
+
+(8) The "create-optional-menus" stub hook is called when Leo is creating menus,
+at the place at which creating new menus is appropriate. Therefore, this hook
+need only create new menus in the correct order, without worrying about the
+placement of the menus in the menu bar. See the plugins_menu and scripts_menu
+plugins for examples of how to use this hook. Leo now executes hooks in
+alphabetical order, so that the Plugins menu will be created before the Scripts
+menu.
+
+(9) The "new" stub hook is called at the beginning of the code that implements
+the New command. This provides a much easier way of recognizing when Leo is
+about to create a new Leo window.
+
+(10) The "scan-directives" stub hooks is called inside the scanDirectives
+global function. The dictionary returned by scanDirectives now contains an item
+whose key is "pluginsList". The value of this item is a list of tuples
+(d,v,s,k) where:
+
+- d is the spelling of the @directive, without the leading @.
+- v is the vnode containing the directive, _not_ the original vnode.
+- s[k:] is a string containing whatever follows the @directive. k has already
+been moved past any whitespace that follows the @directive.
+
+See the add_directives plugins directive for a complete example of how to use
+the "scan-directives" stub hook.
+
+(11) The "close-frame" stub hook is called in app.closeLeoWindow just before
+removing the window from app.windowList. The hook code may remove the window
+from app.windowList to prevent app.closeLeoWindow from destroying the window.
+
+(12) Leo calls the "destroy-all-global-windows" hook in app.destroyAllGlobalWindows().
+This hook gives plugins the chance to clean up after themselves when Leo shuts down.</t>
+<t tx="EKR.20040524104904.224">Naively using hooks can expose you and your .leo files to malicious attacks.  You will be safe as long as you follow these basic principles:
+
+1. Hooks should _never_ blindly execute Python scripts in .leo files. Blindly executing scripts in .leo files runs the extreme risk of executing malicious code if you ever share any .leo file with someone else.  Moreover, using rexec instead of exec WILL NOT PROTECT YOU.  See the children of this node for further discussion of this important topic.
+
+2. Hooks can execute any code safely _provided_ that all code is contained entirely within the plugin file. If you have a nifty customization that you want to do on a particular .leo file, put that code into a plugin.
+
+3. Use only authentic copies of Leo that come from Leo's SourceForge site.</t>
+<t tx="EKR.20040524104904.225">I'd like to thank Stephen Schaefer for gently insisting that we must guard against malicious code in shared .leo files.  Here is a little story Stephen told on Leo's SourceForge site that makes clear what the danger is:
+
+"I foresee a future in which the majority of leo projects come from marginally trusted sources...I see a world of leo documents sent hither and yon - resumes, project proposals, textbooks, magazines, contracts - and as a race of Pandora's, we cannot resist wanting to see "What's in the box?" And are we going to fire up a text editor to make a detailed examination of the ASCII XML? Never! We're going to double click on the cute leo file icon, and leo will fire up in all its raging glory. Just like Word (and its macros) or Excel (and its macros)."
+
+This succinctly illustrates the fundamental problem: when we share "our" .leo files we can _not_ assume that we know what is our "own" documents.  So hooks that naively searches through .leo files looking for scripts to execute is looking for big trouble.
+
+The following node contains an example of the kind of code that is extremely dangerous.</t>
+<t tx="EKR.20040524104904.226">@color
+@ WARNING ***** Using the following routine exposes you to malicious code in .leo files! *****
+
+Do not EVER use code that blindly executes code in .leo files!
+Someone could send you malicious code embedded in the .leo file.
+
+WARNING 1: Changing "@onloadpythonscript" to something else will NOT protect
+           you if you EVER share either your files with anyone else.
+
+WARNING 2: Replacing exec by rexec below provides NO additional protection!
+           A malicious rexec script could trash your .leo file in subtle ways.
+@c
+if 0: # WRONG: This blindly execute scripts found in an .leo file! NEVER DO THIS!
+	def onLoadFile():
+		v = top().rootVnode()
+		while v:
+			h = v.headString().lower()
+			if match_word(h,0,"@onloadpythonscript"):
+				s = v.bodyString()
+				if s and len(s) &gt; 0:
+					try: # SECURITY BREACH: s may be malicious!
+						exec(s + '\n',__builtins__,__builtins__)
+					except:
+						es_exception()
+			v = v.threadNext()
+</t>
+<t tx="EKR.20040524104904.227">@color
+@ It would be most foolish to expect rexec to protect you against malicious code contained in .leo files.  Remember that Leo is a repository of source code, so any text operation is potentially malicious.
+
+For example, consider the following script.  This script is valid in rexec mode:
+@c
+
+c = top()
+thisNode = c.currentVnode()
+v = c.rootVnode()
+while v:
+	&lt;&lt; change all instances of rexec to exec in v's body &gt;&gt;
+	v = v.threadNext()
+&lt;&lt; delete thisNode &gt;&gt;
+&lt;&lt; clear the undo stack &gt;&gt;
+
+@ This script will introduce a security hole the .leo file without doing anything prohibited by rexec, and without leaving any traces of the perpetrating script behind.  The damage will become permanent _outside_ this script when the user saves the .leo file.
+</t>
+<t tx="EKR.20040524104904.228">pass</t>
+<t tx="EKR.20040524104904.229">pass</t>
+<t tx="EKR.20040524104904.230">pass</t>
+<t tx="EKR.20040524104904.231">Hooks have full access to all of Leo's source code simply by importing it.
+
+Moreover, several convenience methods have been added to make customizing menus and commands easier.  The following paragraphs discuss these routines and how to use them.
+
+</t>
+<t tx="EKR.20040524104904.232">The following routines enable and disable "idle" hooks.  They are defined in leoGlobals.py.
+
+enableIdleTimeHook(idleTimeDelay=100)
+
+Enables the "idle" hook. After this routine is called Leo will call the "idle" hook approximately every idleTimeDelay milliseconds.  Leo will continue to call the "idle" hook periodically until disableIdleTimeHook() is called.
+
+disableIdleTimeHook()
+
+Disables the "idle" hook.</t>
+<t tx="EKR.20040524104904.233">The following convenience routines make creating menus easier.
+
+These are methods of the leoFrame class.  Use top().frame to get the frame object for the presently active Leo window.
+
+The plugins node in LeoPy.leo gives examples of how to use these routines to create custom menus and to add items to the Open With menu.
+
+These convenience methods all do complete error checking and write messages to the log pane and to the console if errors are encountered.</t>
+<t tx="EKR.20040524104904.234">@nocolor
+createMenuItemsFromTable (self,menuName,table,openWith=0)
+
+This method adds items to the menu whose name is menuName.  The table argument describes the entries to be created.  This table is a sequence of items of the form (name,shortcut,command).
+
+- name is the command name
+- shortcut is the shortcut, or None to indicate no shortcut.
+- command is the routine to execute when the menu item is selected.
+
+An entry of the form ("-",None,None) indicates a separator line between menu items.
+
+For example:
+@color
+table =
+	("Toggle Active Pane","Ctrl-T",self.OnToggleActivePane),
+	("-",None,None),
+	("Toggle Split Direction",None,self.OnToggleSplitDirection))
+
+top().frame.createMenuItemsFromTable("Window",table)
+@nocolor
+
+If the openWith keyword argument is 1 the items are added to a submenu of the Open With menu.  However, it will be more convenient to use the createOpenWithMenuFromTable method to create the Open With menu.
+</t>
+<t tx="EKR.20040524104904.235">createNewMenu (self,menuName,parentName="top")
+
+This method creates a new menu:
+
+- menuName is the name of the menu to be created.
+- parentName is the name of the parent menu, or "top" if the menu is to created in the menu bar.
+
+This method returns the menu object that was created, or None if there was a problem.  Your code need not remember the value returned by this method.  Instead, your code will refer to menus by name.
+</t>
+<t tx="EKR.20040524104904.236">deleteMenu (self,menuName)
+
+Deletes the menu whose name is given, including all entries in the menu.</t>
+<t tx="EKR.20040524104904.237">deleteMenuItem (self,itemName,menuName="top")
+
+Deletes the item whose name is itemName from the menu whose name is menuName.  To delete a menu in the menubar, specify menuName="top".</t>
+<t tx="EKR.20040524104904.238">@nocolor
+The leoFrame class creates the Window menu as follows:
+@color
+
+windowMenu = self.createNewMenu("&amp;Window")
+
+table = (
+	("&amp;Equal Sized Panes","Ctrl-E",self.OnEqualSizedPanes),
+	("Toggle &amp;Active Pane","Ctrl-T",self.OnToggleActivePane),
+	("Toggle &amp;Split Direction",None,self.OnToggleSplitDirection),
+	("-",None,None),
+	("Casca&amp;de",None,self.OnCascade),
+	("&amp;Minimize All",None,self.OnMinimizeAll),
+	("-",None,None),
+	("Open &amp;Compare Window",None,self.OnOpenCompareWindow),
+	("Open &amp;Python Window","Alt+P",self.OnOpenPythonWindow))
+
+self.createMenuEntries(windowMenu,table)
+</t>
+<t tx="EKR.20040524104904.239">@nocolor
+
+It is easy for hooks to translate menus into another language.  For example, code similar to the following code would typically be found in the "start2" hook:
+
+@color
+
+table = (
+	("Open...","&amp;Ouvre"),
+	("OpenWith","O&amp;uvre Avec..."),
+	("close","&amp;Ferme"),
+	("Undo Typing","French &amp;Undo Typing"), # Shows you how much French I know ;-)
+	("Redo Typing","French &amp;Redo Typing"),
+	("Can't Undo", "French Can't Undo"),
+	("Can't Redo", "French Can't Redo"))
+# Call the convenience routine to do the work.
+app().setRealMenuNamesFromTable(table)</t>
+<t tx="EKR.20040524104904.240">New in 4.1: The plugins test suite creates a new convention: if a plugin has a
+function at the outer (module) level called unitTest, Leo will call that
+function when doing unit testing for plugins. So it would be good if writers of
+plugins would create such a unitTest funcion. The unitTest function should run
+some tests. All unitTest needs to do to indicate failure is throw an exception
+or cause an assert to fail. Leo's plugins test suite takes care of the rest.</t>
+<t tx="EKR.20040524104904.241">New in Leo 4.0 and Python 2.3: Leo will draw a Leo icon in all Leo windows.  There is no need to install PIL or tkIcon.
+
+Otherwise (for versions of Leo before 4.0 and for versions of Python before 2.3) Leo will draw a Leo icon in Leo windows only if you have installed Fredrik Lundh's PIL and tkIcon packages.
+
+Download PIL from http://www.pythonware.com/downloads/index.htm#pil
+Download tkIcon from http://www.effbot.org/downloads/#tkIcon
+
+Many thanks to Jonathan M. Gilligan for suggesting this code.</t>
 <t tx="EKR.20040524104904.242">New in 4.0: Leo can now read and write "foreign" attributes in &lt;v&gt; and &lt;t&gt; elements in .leo files:
 
 - When reading a .leo file, Leo will create t.unknownAttributes or v.unknownAttributes ivars for any tnode and vnode object whose corresponding &lt;v&gt; or &lt;t&gt; element in the .leo file contains a foreign attribute.
@@ -1525,6 +5164,1423 @@ Leo writes only t.unknownAttributes when writing @thin trees to the .leo file.  
 The reason Leo does _not_ write v.unknownAttributes in @thin trees is that only tnodes have gnx's in thin derived files.  In effect, vnodes are anonymous.  We could attempt to get around this by identifying vnodes by their corresponding tnodes, but that's not a general solution and it is, in effect, equivalent to writing only t.unknownAttributes.  So it seems pointless to "pretend" to be writing v.unknownAttributes.
 
 The effect of this is to make all vnodes identical, as far as using unknownAttributes is concerned.  This won't work in all cases.  For example, a plugin that creates an arbitrary directed graph between vnodes must distinguish between joined vnodes.  In that case, the plugin should confine itself to @file trees, or just vnodes in .leo files, for that matter.</t>
+<t tx="EKR.20040524104904.243">Plugins may create (or add to) v.tempAttributes (for vnodes) or t.tempAttributes (for tnodes).  These will work just like the corresponding unknownAttributes dicts except that Leo will _not_ read or write these dictionaries when reading or writing files.  Note: nothing needs to change in Leo to support this convention.</t>
+<t tx="EKR.20040524104904.244">@nocolor
+
+We wish to avoid the possibility that two plugins might unwittingly choose the same name for attributes in the unknownAttributes or tempAttributes dictionaries.  The following convention eliminates that possibility.
+
+Each plugin should create its own dictionary _inside_ any tempAttributes or unknownAttributes dictionaries that it intends to create or modify.  Something like this:
+
+@color
+
+# Create the tempAttributes dict for this vnode.
+if not v.hasattr("tempAttributes"):
+	v.tempAttributes = {}
+
+# Create a subdictionary for the private use of my plugin.
+d = v.tempAttributes.get("myPluginName")
+if d is None:
+	v.tempAttributes["myPluginName"] = d = {}
+
+@nocolor
+
+Now the plugin can set and get fields in d.  Similar code would be used for the t.tempAttributes, v.unknownAttributes and t.unknownAttributes dictionaries.</t>
+<t tx="EKR.20040524104904.245">This chapter discusses the history of Leo and its various incarnations.  A large part of this chapter discusses the process by which I discovered how to implement @file trees.</t>
+<t tx="EKR.20040524104904.246">Leo grew out of my efforts to use Donald Knuth's "CWEB system of Structured documentation."  I had known of literate programming since the mid 1980's, but I never understood how to make it work for me: I was confused about when to create new sections and it was difficult to keep track of all the sections once they were created.
+
+In November 1995 I started thinking about literate programming in earnest.  Over the holidays I mused about making literate programs more understandable.  In January 1996 the fog of confusion suddenly cleared.  I summarized my thinking with the phrase, "Webs are outlines in disguise".  I strongly suspected that outline views were the key to literate programming, but many details remained obscure.  It still wasn't clear exactly how to represent webs in an outline.
+
+March 5, 1996, is the most important date in Leo's history.   While returning from a day of skiing, I discussed my thoughts with Rebecca.  During that conversation I realized that I could use the MORE outliner as a prototype for a "literate outliner." I immediately started work on my first literate outline. It quickly became apparent that outlines work: all my old problems with literate programming vanished.   Furthermore, I realized that MORE's outlines could form the basis for Leo's screen design. Rather than opening body text within the outline, as MORE does, I decided to use a separate body pane.
+
+In about a week I hacked a translator called M2Cwhich allowed me to use MORE to write real code.  I would write code in MORE, copy the text to the clipboard in MORE format, then run M2C, which would tangle the outline into C code.  This process was useful, if clumsy.  I called the language used in the outline SWEB, for simplified CWEB.  Much later I converted to the noweb language. noweb is simpler than SWEB, more standard and more general.</t>
+<t tx="EKR.20040524104904.247">Throughout 1996 I created a version of Leo on the Macintosh in plain C and the native Mac Toolbox.   This was a poor choice; I wasted a huge amount of time programming with these primitive tools.  However, this effort convinced me that Leo was a great way to program.
+
+Late in 1997 I wrote a Print command to typeset an outline. Printing (Weaving) is supposedly a key feature of literate programming.  Imagine my surprise when I realized that such a "beautiful" program listing was almost unintelligible; all the structure inherent in the outline was lost!  I saw clearly that typesetting, no matter how well done, is no substitute for explicit structure.
+
+Starting in May of 1998 I began work on a version of Leo using objective C and Apple's Yellow Box environment.  In some ways, this was the most powerful version of Leo.  Alas, a year later Apple chose not to support Yellow Box on Windows, so I had to begin again.  I was most unhappy.
+
+In May of 1999 I began work on the Borland version of Leo for Windows.  The Borland Delphi classes were a pleasure to use and free of bugs.  I redesigned Leo's file format for the Windows version of Leo;  the Yellow Box file format is a binary format that requires the Yellow Box runtime.  Fortunately, I choose to use XML for Leo's file format. I have Marc-Antoine Parent to thank for this decision; he urged me to use XML and patiently explained how to use XML properly.  However, there are two significant problems with the Borland version of Leo.  First, it works only on Windows.  Second, it can never be Open software, because it uses Borland's Delphi classes and a commercial syntax coloring component.
+
+In May of 2000 I began work an wxWindows version of Leo.  This was supposed to be a cross-platform version.  Alas, after much work I chose to abandon the wxWindows version.  There were too many bugs and too many incompatibilities between platforms.  Something good did come from this effort.  I spent a lot of time adding Python scripting to the wxWindows code and I became familiar with Python and its internals.
+
+In October of 2001 I began work on the leo.py, an Open Software version of leo.py, a version of Leo written in Python and Tk.  At last I have found the proper platform for Leo.  leo.py naturally supports scripting in Python.  The combination of Python and Tk is incredibly powerful, very easy to use, and truly cross platform.  I rewrote Leo in Python in about two months!  For the first time in my career I no longer am anxious while programming; it simply isn't possible to create bad bugs in Python.</t>
+<t tx="EKR.20040524104904.248">The following sections give a pseudo-chronological list of the major Aha's involved in creating Leo2. These Aha's form the real design and theory of operation of Leo. See the "Diary", "Notes" and "Letters to Speed Ream" sections in LeoDocs.leo for a more accurate and less tidy history of Leo2.
+
+I am writing these notes for several reasons.  First, the initial design and coding of Leo2, spanning a period of about 8 weeks, was some of the most creative and rewarding work I have ever done. The result is elegant and simple.  I'm proud of it.  Second, much of the design work is not reflected in the code, because improved design often eliminated code entirely. The final code is so elegant that it obscures the hard work that created it.  Third, you must understand this design in order to understand the implementation of @file trees and their derived files.  Someday someone else may take charge of Leo. That person should know what really makes Leo2 work.</t>
+<t tx="EKR.20040524104904.249">In the summer of 2001 I began work on a project that for a long time I had considered impossible.  I had long considered that "private" file formats such as .leo files were the only way to represent an outline properly and safely.  I'm not sure exactly what changed my mind, but I finally was willing to consider that information embedded in derived files might be useful.  This meant accepting the possibility that sentinel lines might be corrupted.  This was a crucial first step.  If we can trust the user not to corrupt sentinel lines than we can embed almost any kind of information into a derived file.
+
+There were several motivations for this work.  I wanted to eliminate the need for explicit Tangle and Untangle commands. I thought of this as "Untangle on Read/Tangle on Write."  If tangling and untangling could be made automatic it would save the user a lot of work.  I also wanted to make derived files the primary sources files.  .leo files might be made much smaller derived files contained the primary source information. This hope turned out to be false.
+
+The result of this design work was something I originally called Leo2, though I now usually prefer to talk about @file trees.  Initially most design issues were unresolved or unknown. I resolved to attempt a robust error-recovery scheme, not knowing in advance what that might involve. I also wanted to solve what I thought of as the "cross-file clone" problem: clones that point from a .leo outline into a derived file. With Leo1 cross-file clones do not exist; everything is in the same .leo file. It was clear that Leo2 would have to change some aspects of clones, but all details were fuzzy.
+</t>
+<t tx="EKR.20040524104904.250">The next step was also crucial.  I started to use Leo1 as a prototype to design what the new body pane would look like to the user. In retrospect, using Leo1 as a prototype for Leo2 was just as inspired as using MORE as a prototype for Leo1.  Both prototypes marked the true beginning of their respective projects.  The Leo2 prototype was a mockup in Python of the code for reading and writing derived files. The file LeoDocs.leo contain these first prototype nodes.
+
+Writing the prototype got me thinking about improving noweb.  With my experience with Leo1, I was able to create a new markup language that took advantage of outline structure.  I called the new language  "simplified noweb", though that terminology is obsolete.  I created @file nodes to distinguish between the old and new ways of creating derived files.  In Leo1, the @code directive is simply an abbreviation for a section definition line.  Simplified noweb used @c as an abbreviation for @code.  More importantly, simplified noweb used @c to separate doc parts from code parts without necessarily specifying a section name.  It quickly became apparent that most nodes could be unnamed.  All I needed was the @others directive to specify the location for all such unnamed nodes.
+
+From the start, simplified noweb was a joy to use. Indeed, the @others directive could replace all section definition lines.  Furthermore, I could make @doc directive optional if the body pane started in "code mode".  But this meant that plain body text could become a "literate" program! This was an amazing discovery.  These Aha's got me excited about Leo2. This was important, as it motivated me to do a lot of difficult design work.</t>
+<t tx="EKR.20040524104904.251">In spite of this excitement, I was uneasy. After much "daydreaming" I realized that I was afraid that reading and writing derived files would be interrupted by a long series of alerts. I saw that designing the "user interaction" during reading and writing would be very important. The next Aha was that I could replace a long series of alerts with messages to the log window, followed by a single "summary" alert. Much later I saw how to eliminate alerts entirely.
+
+At this time I thought there would be two kinds of "errors" while reading derived files. Warnings would alert the user that something non-serious had happened. True errors would alert the user that data might have been lost. Indeed, if Leo2 saves orphan and ignored nodes in a .leo file under an @file node, then read errors could endanger such nodes. Much later I saw that a robust error recovery scheme demands that @file nodes not contain orphan and @ignored nodes. (More on this subject later.) But if orphan and @ignored nodes are moved out of @file trees, there are no read errors that can cause data loss! So the distinction between warnings and errors finally went away.</t>
+<t tx="EKR.20040524104904.252">I next turned my attention to writing @file nodes.  A huge Aha: I realized that sentinel lines must contain both a leading and a trailing newline.  The general principle is this: the write code must contain absolutely no "conditional" logic, because otherwise the read code could not figure out whether the condition should be true or false.  So derived files contain blank lines between sentinel lines. These "extra" newlines are very useful, because the read (untangle) code can now easily determine exactly where every blank, tab and newline of the derived file came from.  It would be hard to overstate how important this simplifying principle was in practice.
+
+Much later, with urging from a customer, I realized that the write code could safely remove "extra" newlines between sentinels with a caching scheme in the low level atFile::os() routine. This scheme does not alter the body of the write code in any way: in effect, sentinels still contain leading and trailing "logical" newlines. The read code had to be modified to handle "missing" leading newlines, but this can always be done assuming that sentinels still contain logical leading and trailing newlines!
+
+At about this time I designed a clever way of having the write code tell the read code which newlines were inserted in doc parts. (The whole point of doc parts is to have the write code format long comments by splitting long lines.) To quote from my diary:
+
+"We can use the following convention to determine where putDocPart has inserted line breaks: A line in a doc part is followed by an inserted newline if and only if the newline is preceded by whitespace. This is a really elegant convention, and is essentially invisible to the user.
+Tangle outputs words until the line would become too long, and then it inserts a newline. To preserve all whitespace, tangle always includes the whitespace that terminates a word on the same line as the word itself. Therefore, split lines always end in whitespace. To make this convention work, tangle only has to delete the trailing whitespace of all lines that are followed by a 'real' newline."
+
+</t>
+<t tx="EKR.20040524104904.253">After the write code was working I turned my attention to the read (untangle) code.  Leo's Untangle command  is the most complex and difficult code I have ever written. Imagine my surprise when I realized that the Leo2 read code is essentially trivial! Indeed, the Leo2 untangle code is like an assembler. The read code scans lines of a derived files looking for "opcodes", that is, sentinel lines, and executes some simple code for each separate opcode. The heart of this code is the scanText routine in atFile.cpp.
+
+The read code was written and debugged in less than two days! It is the most elegant code I have ever written. While perfecting the read code I realized that sentinel lines should show the complete nesting structure found in the outline, even if this information seems redundant. For example, I was tempted to use a single sentinel to represent an @other directive, but finally abandoned this plan in favor of the @+other and @-other sentinels.
+
+This redundancy greatly simplified the read code and made the structure of derived files absolutely clear. Moreover, it turned out that we need, in general, all the information created by the present sentinel lines. In short, sentinels are as simple as they can be, and no simpler.
+
+The atFile::createNthChild method is a very important: it ensures that nodes will be correctly inserted into the outline. createNthChild must be bullet-proof if the Read code is to be robust. Note that the write code outputs @node sentinels, that is, section definitions, in the order in which sections are referenced in the outline, not the order in which sections appear in the outline. So createNthChild must insert the n'th node of parent p properly even if p contains fewer than n-1 children! The write code ensures that section references are properly nested: @node sentinels are enclosed in @node sentinels for all their ancestors in the @file tree. createNthChild creates dummy siblings as needed, then replaces the dummy siblings later when their actual definitions, that is, @node sentinels, are encountered.
+
+At this point the fundamental read/write code was complete. I found three minor bugs in the code over the next week or so, but it was clear that the read/write code formed a rock-solid base from which to continue design and implementation. This was an entirely unexpected surprise.</t>
+<t tx="EKR.20040524104904.254">At this point I could read and write derived files "by hand", using temporary Read and Write commands. The next step was to integrate the reading and writing of derived files with the loading and saving of .leo files.  From time to time I made minor changes to the drivers for the read/write code to accommodate the Load and Save code, but at no time did I significantly alter the read or write code itself.
+
+The user interaction of the Load and Save commands drove the design and implementation of the load/store code. The most important questions were: "what do we tell the user?", and "what does the user do with the information?" It turns out that the user can't make any complex decision during error recovery because the user doesn't have nearly enough information to make an informed choice. In turn, this means that certain kinds of error recovery schemes are out of the question...</t>
+<t tx="EKR.20040524104904.255">I now turned my attention to "attributes" of nodes.  Most attributes, like user marks, are non-essential. However, clone information is essential; we must never lose clone links. At this time I had a preliminary design for cross-file clones that involved a two part "pointer" consisting of a full path name and an immutable clone index within the derived file. Eventually such pointers completely disappeared, but the immutable clone indices remain.
+
+My first thought was that it would be good to store all attributes in @node sentinels in the derived file, but experience showed that would be irritating. Indeed, one wants Leo2 to rewrite derived files only if something essential has changed. For example, one doesn't want to rewrite the derived file just because a different node as been selected.
+
+At this point I had another Aha: we can use the .leo file to store all non-essential attributes. For example, this means that the .leo file, not the derived files, will change if we select a new node. In effect, the .leo file mirrors the derived file. The only reason to store nodes in the .leo file under an @file node is to carry these attributes, so Leo2 wrote dummy nodes that do not reference body text.  Much later I saw that dummy nodes were dangerous and that .leo files should contain all information found in derived files.</t>
+<t tx="EKR.20040524104904.256">The concept of mirroring created a huge breakthrough with cross-file clones: Here is an excerpt of an email i sent to my brother Speed:
+
+"I realized this morning that since a .leo file contains dummy vnodes for all nodes in a derived file, those dummy nodes can carry clone info! I changed one line to make sure that the write code always writes clone info in dummy vnodes and voila! Cross-file clones worked!"
+
+All of Leo1's clone code could be used completely unchanged. Everything "just works".</t>
+<t tx="EKR.20040524104904.257">At first I thought we could make sure that the .leo file always correctly mirrors all derived file, but disastrous experience showed that is a completely false hope. Indeed, backup .leo files will almost never mirror derived file correctly. So it became urgent to find a completely fool-proof error recovery scheme.
+
+I had known for quite a while that error recovery should work "as if" the mirroring nodes were deleted, then recreated afresh. Several failed attempts at an error recovery scheme convinced me that error recovery would actually have to delete all dummy nodes and then do a complete reread. This is what Leo2 does.
+
+But erasing dummy nodes would destroy any orphan and ignored nodes--by definition such nodes appear nowhere in the derived file. Therefore, I had to enforce the rule that @file nodes should contain no such nodes. Here is an email I wrote to my brother, Speed Ream discussing what turned out to be the penultimate error recovery scheme:
+
+"The error recovery saga continues. After much pondering and some trial coding I have changed my mind about orphans and @ignored nodes. They simply should never appear as descendants of @file nodes. Fortunately, this simplifies all aspects of Leo2.
+Leo2 will issue a warning (not an error) if an orphan or @ignored node appears as the descendant of an @file node when a .leo file is being saved. If any warnings occur while writing the derived file, Leo2 will write the "offending" @file tree to the .leo file instead of the derived file. This has several advantages:
+
+1.	The user gets warned about orphan nodes. These are useful warnings! Orphan nodes arise from missing @others directives or missing section references.
+
+2. The user doesn't have to change anything immediately in order to save an outline. This is very important. Besides warnings about orphans, Leo2 will also warn about undefined or unreferenced sections. User's shouldn't have to fix these warnings to do a Save!
+
+3. No errors or alerts will occur during Reading or Writing, so the user's anxiety level goes way down. At worst, some informational message will be sent to the log. The user will never have to make important decisions during Loads or Saves. [At last the dubious distinction between errors and warnings disappears.]
+
+4. Error recovery can be bullet-proof. Simple code will guarantee that after any read operation the structure of an @file node will match the structure of the derived file. Also, sentinels in derived files will now account for all children of an @file node. There are no more "missing nodes" that must be filled in using the .leo file. Finally, error recovery will never change the @file tree in any way: no more "recovered nodes" nodes.
+
+5. The present read code can be used almost unchanged. The only addition is the posting of a warning if the structure of the .leo file does not match the structure of the derived file. We need a warning because non-essential attribute of nodes (like user marks) may be altered."
+
+This ends the original history of Leo2. In fact, it took quite a while before Leo recovered properly from all errors. I finally saw that .leo files should duplicate all information in derived files. This allows a .leo file to be used a single backup file and allows maximal error recovery in all situations.  It took several months to stamp out several subtle bugs involving clones that caused spurious read errors. Such errors undermine confidence in Leo and can cause disastrous reversions. See my diary entries for January 2002 in leo.py for details.
+
+</t>
+<t tx="EKR.20040524104904.258">@nocolor
+
+These papers discuss topics related to Leo.</t>
+<t tx="EKR.20040524104904.259">The more I look at Tk, the more convinced I am that Python + Tk (aka tkinter) is, by far, the best way to go with Leo.py.  I now have Open Source code for tree widgets and splitter windows, and have intensely studied how to modify that code for use in Leo.  It is clear, even at this early date, that this code will provide a very pleasant base on which to build Leo.
+
+The tree code is based on code in IDLE, the Python IDE.  This code is simple, good and plenty fast enough. The tree code draws directly to a Tk canvas object.  The look and feel matches Windows exactly.  It would be trivial to use Mac triangle icons instead of the Windows plus and minus icons.  It would also be trivial to modify the look and feel for Linux.
+
+The tree widget code solves several intractable problems with wxTreeCtrl.  Moving nodes becomes trivial.  Bugs in wxTreeCtrl involving editing and redrawing disappear.  Using Python/Tk code simplifies the vnode class, and having access to the vnode class simplifies and speeds up the tree widget code.  There is no SWIG overhead in calling the wxTreeCtrl code.  It will now be possible to bind keystrokes properly; this simply can not be done in wxWindows.
+
+Actually, the tree widget code shows just how trivial the Windows native tree control is.  Of course, the Tk canvas class simplifies matters, but there are several important points here:
+
+1. The wxTreeCtrl tree class actually does very little, and does it rather badly.
+2. There is absolutely no need for C++ code (except in the Tk canvas class) to draw trees.
+3. Leo can _easily_ have _complete_ control over the look and feel of tree controls.
+4. I can modify in the tree code to simplify the rest of Leo, especially Leo's vnode class.
+
+Here we have a splendid example of higher-level code being superior, in _every_ way, to lower level code.  The wxTreeCtrl code is horrendously complex, and in fact does almost nothing!
+
+Similar remarks apply to the splitter window.  The Tk code for splitter windows is about a page long.  No code could be higher level because the Tk code describes only _what_ is to be done, not _how_ it is too be done.
+
+Another big win comes from using the Tk text widget.  This widget is extraordinarily powerful.  The only text control that rivals it is the MacOS/Yellow Box text control.  Indeed, the Tk text widget does everything that Leo could possibly want.  One can even embed images in text!
+
+Syntax coloring Tk text will be straightforward in Python. IDLE's syntax coloring is very fast on modern workstations.  There will be no need to use or modify the Scintilla C++ code.
+
+In short, using Tk for Leo.py will be fast enough and will greatly increase what is possible in Leo while at the same time greatly simplifying Leo's code.  I am about to convert Leo.py from wxPython to Python + Tk.
+
+Edward K. Ream
+November 4, 2001</t>
+<t tx="EKR.20040524104904.260">I've known for a while that Python was interesting; I attended a Python conference last year and added Python support to Leo.  But last week I got that Python is something truly remarkable.  I wanted to convert Leo from wxWindows to wxPython, so I began work on c2py, a Python script that would help convert from C++ syntax to Python.  While doing so, I had an Aha experience.  Python is more than an incremental improvement over Smalltalk or C++ or objective-C; it is "something completely different".  The rest of this post tries to explain this difference.
+
+Clarity: no clutter, easy prototyping
+-------------------------------------
+
+What struck me first as I converted C++ code to Python is how much less blah, blah, blah there is in Python.  No braces, no stupid semicolons and most importantly, _no declarations_.  No more pointless distinctions between const char *, char const *, char * and wxString. No more wondering whether a variable should be signed, unsigned, short or long.
+
+Declarations add clutter, declarations are never obviously right and declarations don't prevent memory allocation tragedies.  Declarations also hinder prototyping.  In C++, if I change the type of something I much change all related declarations; this can be a huge and dangerous task.  With Python, I can change the type of an object without changing the code at all!  It's no accident that Leo's new log pane was created first in Python.
+
+Functions returning tuples are a "minor" feature with a huge impact on code clarity.  No more passing pointers to data, no more defining (and allocating and deallocating) temporary structs to hold multiple values.
+
+Python can't check declarations because there aren't any.  However, there is a really nifty tool called Pychecker that does many of the checks typically done by compilers.  See http://pychecker.sourceforge.net/ for details.
+
+Power
+-----
+
+Python is much more powerful than C++, not because Python has more features, but because Python needs _less_ features.  Some examples:
+
+1. Python does everything that the C++ Standard Template Library (STL) does, without any of the blah, blah, blah needed by STL.  No fuss, no muss, no code bloat.
+
+2. Python's slicing mechanism is very powerful and applies to any sequence (string, list or tuple).  Python's string library does more with far less functions because slices replace many functions typically found in other string libraries.
+
+3. Writing dict = {} creates a dictionary (hash table).  Hash tables can contain anything, including lists and other hash tables.
+
+4. Python's special functions, like __init__, __del__, __repr__, __cmp__, etc. create an elegant way to handle any special need that might arise.
+
+Safety
+------
+
+Before using Python I never fully realized how difficult and dangerous memory allocation is in C++.  Try doing
+
+        aList[i:j] = list(aString)
+
+in C.  You will write at least 10 - 20 lines of code.  Any error in this code will create a memory allocation crash or leak.
+
+Python is fundamentally safe.  C++ is fundamentally unsafe.  When I am using Python I am free from worry and anxiety.  When I am using C++ I must be constantly "on guard."  A momentary lapse can create a hard-to-find pointer bug.  With Python, almost nothing serious can ever go wrong, so I can work late at night, or after a few beers.
+
+And the Python debugger is always available.  If an unexpected exception occurs, the debugger/interpreter tells me just what went wrong.  I don't have to plan a debugging strategy!  Finally, wxPython recovers from exceptions, so Leo can keep right on going even after a crash!
+
+Code Speed
+----------
+
+Python has almost all the speed of C.  Other interpretive environments such as icon and smalltalk have clarity, power and safety similar to Python.  What makes Python unique is its seamless way of making C code look like Python code.
+
+Much of Python executes at essentially the speed of C code because most Python modules are written in C.  The overhead in calling such modules is negligible.  Moreover, if code is too slow, one can always create a C module to do the job.
+
+In fact, Python encourages optimization by moving to _higher_ levels of expression.  For example, Leo's Open command reads an XML file.  If this command is too slow I can use Python's XML parser module.  This will speed up Leo while at the same time raising the level of the code.
+
+Conclusions
+-----------
+
+Little of Python is completely new.  What stands out is the superb engineering judgment evident in Python's design.  Python is extremely powerful, yet small, simple and elegant.  Python allows me to express my intentions clearly and at the highest possible level.
+
+The only hope of making Leo all it can be is to use the best possible tools.  I believe Python (possibly with tkinter) will allow me to add, at long last, the new features that Leo should have.
+
+Edward K. Ream
+October 25, 2001</t>
+<t tx="EKR.20040524104904.261">This chapter discusses how Leo's code works, paying particular attention to topics that have caused difficulties in design or implementation.  This information will be of use primarily to those wanting to change Leo's code.  The previous chapter contains a full discussion of how Leo reads and writes @file trees.</t>
+<t tx="EKR.20040524104904.262">This documentation describes leo.py. Other versions of Leo are similar in design; the differences between versions are generally not interesting enough to describe here.
+
+All versions of Leo are organized as a collection of classes.  The general organization of Leo has remained remarkably stable throughout all versions of Leo, although the names of classes are different in different versions. Smalltalk's Model/View/Controller terminology is a good way to organize Leo's classes conceptually.
+
+Model classes represent the fundamental data. The vnode and tnode classes are Leo's primary model classes.
+
+View classes draw the screen. The main view classes are leoFrame.py and leoTree.py.  The colorizer class in leoColor.py handles syntax coloring in the body pane. In leo.py, the view classes know about data stored in the vnode class. Most events (keystrokes and mouse actions) in the outline and body pane are handled in the leoTree class. The leoFrame class also creates the Leo window, including menus, and dispatches the appropriate members of the controller classes in response to menu commands.
+
+Controller classes (aka commanders) control the application. In Leo, controllers mostly handle menu commands. In leo.py, the Commands class creates subcommanders to handle complex commands. The atFile class reads and writes files derived from @file trees. The LeoFind class handles the Find and Change commands. The leoImportCommands class handles the Import and Export commands, the tangleCommands class handles the Tangle and Untangle commands and the undoer class handles the Undo command. Other classes could be considered controller classes.
+
+Each Leo window has its own commander and subcommanders. Subcommanders are not subclasses of their commander. Instead, subcommanders know the commander that created them, and call that commander as needed. Commanders and subcommanders call the model and view classes as needed. For example, the Commands class handles outline commands. To move a headline, the commander for the window calls a vnode move routine to alter the data, then calls the view class to redraw the screen based on the new data.
+
+A singleton instance of the LeoApp class represents the application itself. All code uses the app() global function to gain access to this singleton member. The ivars of the LeoApp object are the equivalent of Leo's global variables. leo.py uses no global Python variables, except the gApp variable returned by app(). leoGlobals.py defines all application constants.  Naturally, most constants are local to the class that uses them.
+
+Several classes combine aspects of model, view and controller. For example, the LeoPrefs class represents user preferences (model), the Preference Panel (view) and the Preferences menu command (controller). Similarly, the LeoFind class represents find settings, the Find/Change dialog, and the Find/Change commands.
+
+We use the following convention throughout this documentation. Any variable named c is a commander, i.e., an instance of the Commands class in leoCommands.py. Variables named v and t are vnodes and tnodes respectively. These classes are defined in leoNode.py.
+</t>
+<t tx="EKR.20040524104904.263">The vnode and tnode classes represent most of the data contained in the outline. These classes are Leo's fundamental Model classes.
+
+A vnode (visual node) represents a headline at a particular location on the screen. When a headline is cloned, vnodes must be copied. vnodes persist even if they are not drawn on the screen. Commanders call vnode routines to insert, delete and move headlines.
+
+The vnode contains data associated with a headline, except the body text data which is contained in tnodes. A vnode contains headline text, a link to its tnode and other information. In leo.py, vnodes contain structure links: parent, firstChild, next and back ivars. To insert, delete, move or clone a vnode the vnode class just alters those links. The Commands class calls the leoTree class to redraw the outline pane whenever it changes. The leoTree class knows about these structure links; in effect, the leoTree and vnode classes work together. The implementation of vnodes is quite different in the Borland version of Leo. This does not affect the rest of the Leo. Indeed, vnodes are designed to shield Leo from such implementation details.
+
+A tnode, (text node) represents body text: a tnode is shared by all vnodes that are clones of each other. In other words, tnodes are the unit of sharing of body text. The tnode class is more private than the vnode class. Most commanders deal only with vnodes, though there are exceptions.
+
+Because leo.py has unlimited Undo commands, vnodes and tnodes can be deleted only when the window containing them is closed. Nodes are deleted indirectly. Several classes, including the vnode, tnode, leoFrame and leoTree classes, have destroy() routines. These destroy() routines merely clear links so that Python's and Tkinter's reference counting mechanisms will eventually delete vnodes, tnodes and other data when a window closes.
+
+Leo uses several kinds of node indices. Leo's XML file format uses tnode indices to indicate which tnodes (t elements) belong to which vnodes (v elements). Such indices are required. Even if we duplicated the body text of shared tnodes within the file, the file format would still need an unambiguous way to denote that tnodes are shared.
+
+Present versions of Leo recompute these tnodes indices whenever Leo writes any .leo file. Earlier versions of Leo remembered tnode indices and rewrote the same indices whenever possible. Those versions of Leo recomputed indices when executing the Save As and Save To commands, so using these commands was a way of "compacting" indices. The main reason for not wanting to change tnode indices in .leo files was to reduce the number of changes reported by CVS and other Source Code Control Systems. I finally abandoned this goal in the interest of simplifying the code. Also, CVS will likely report many differences between two versions of the same .leo file, regardless of whether tnode indices are conserved.
+
+A second kind of node index is the clone index used in @+node sentinels in files derived from @file trees. As with indices in .leo files, indices in derived files are required so that Leo can know unambiguously which nodes are cloned to each other.
+
+It is imperative that clone indices be computed correctly, that is, that tnode @+node sentinels have the same index if and only if the corresponding vnodes are cloned. Early versions of leo.py had several bugs involving these clone indices. Such bugs are extremely serious because they corrupt the derived file and cause read errors when Leo reads the @file tree. Leo must guarantee that clone indices are always recomputed properly. This is not as simple as it might appear at first. In particular, Leo's commands must ensure that @file trees are marked dirty whenever any changed is made that affects cloned nodes within the tree. For example, a change made outside any @file tree may make several @file trees dirty if the change is made to a node with clones in those @file trees.</t>
+<t tx="EKR.20040524104904.264">@nocolor
+
+Leo must redraw the outline pane when commands are executed and as the result of mouse and keyboard events.  The main challenges are eliminating flicker and handling events properly.  These topics are interrelated.
+
+Eliminating flicker.  Leo must update the outline pane with minimum flicker.  Various versions of Leo have approached this problem in different ways.  The drawing code in leo.py is robust, flexible, relatively simple and should work in almost any conceivable environment.
+
+Leo assumes that all code that changes the outline pane will be enclosed in matching calls to the c.beginUpdate and c.endUpdate  methods of the Commands class. c.beginUpdate() inhibits drawing until the matching c.endUpdate().  These calls may be nested; only the outermost call to c.endUpdate() calls c.redraw() to force a redraw of the outline pane.
+
+In leo.py, code may call c.endUpdate(flag) instead of c.endUpdate().  Leo redraws the screen only if flag is true.  This allows code to suppress redrawing entirely when needed.  For example, here is how the idle_body_key event handler in leoTree.py conditionally redraws the outline pane:
+
+@language python
+@color
+	redraw_flag = false
+  	c.beginUpdate()
+	val = v.computeIcon()
+	if val != v.iconVal:
+		v.iconVal = val
+		redraw_flag = true
+	c.endUpdate(redraw_flag) # redraw only if necessary
+@nocolor
+
+The leoTree class redraws all icons automatically when c.redraw() is called.  This is a major simplification compared to previous versions of Leo.  The entire machinery of drawing icons in the vnode class has been eliminated.  The v.computeIcon method tells what the icon should be.  The v.iconVal ivar that tells what the present icon is. The event handler simply compares these two values and sets redraw_flag if they don't match.
+
+Handling events. Besides redrawing the screen, Leo must handle events or commands that change the text in the outline or body panes.  It is surprisingly difficult to ensure that headline and body text corresponds to the vnode and tnode corresponding to presently selected outline, and vice versa. For example, when the user selects a new headline in the outline pane, we must ensure that 1) the vnode and tnode of the previously selected node have up-to-date information and 2) the body pane is loaded from the correct data in the corresponding tnode.  Early versions of Leo attempted to satisfy these conditions when the user switched outline nodes.  Such attempts never worked well; there were too many special cases.  Later versions of Leo, including leo.py, use a much more direct approach.  The event handlers make sure that the vnode and tnode corresponding to the presently selected node are always kept up-to-date.  In particular, every keystroke in the body pane causes the presently selected tnode to be updated immediately.  There is no longer any need for the c.synchVnode method, though that method still exists for compatibility with old scripts.
+
+The leoTree class contains all the event handlers for the body and outline panes.  The actual work is done in the idle_head_key and idle_body_key methods.  These routines are surprisingly complex; they must handle all the tasks mentioned above, as well as others. The idle_head_key and idle_body_key methods should not be called outside the leoTree class.  However, it often happens that code that handles user commands must simulate an event.  That is, the code needs to indicate that headline or body text has changed so that the screen may be redrawn properly.   The leoTree class defines the following simplified event handlers: onBodyChanged, onBodyWillChange, onBodyKey, onHeadChanged and onHeadlineKey.  Commanders and subcommanders call these event handlers to indicate that a command has changed, or will change, the headline or body text.  Calling event handlers rather than c.beginUpdate and c.endUpdate ensures that the outline pane is redrawn only when needed.</t>
+<t tx="EKR.20040524104904.265">The following is a definition of clones from the user's point of view.
+
+Definition 1
+
+A clone node is a copy of a node that changes when the original changes. Changes to the children, grandchildren, etc. of a node are simultaneously made to the corresponding nodes contained in all cloned nodes. Clones are marked by a small clone arrow by its leader character. 
+
+As we shall see, this definition glosses over a number of complications. Note that all cloned nodes (including the original node) are equivalent. There is no such thing as a "master" node from which all clones are derived. When the penultimate cloned node is deleted, the remaining node becomes an ordinary node again. 
+
+Internally, the clone arrow is represented by a clone bit in the status field of the vnode. The Clone Node command sets the clone bits of the original and cloned vnodes when it creates the clone. Setting and clearing clone bits properly when nodes are inserted, deleted or moved, is non-trivial. We need the following machinery to do the job properly. 
+
+Two vnodes are joined if a) they share the same tnode (body text) and b) changes to any subtree of either joined vnodes are made to the corresponding nodes in all joined nodes.  For example, Definition 1 defines clones as joined nodes that are marked with a clone arrow.  Leo links all vnodes joined to each other in a circular list, called the join list. For any vnode n, let J(n) denote the join list of n, that is, the set of all vnodes joined to n. Again, maintaining the join lists in an outline is non-trivial. 
+
+The concept of structurally similar nodes provides an effective way of determining when two joined nodes should also have their cloned bit set.  Two joined nodes are structurally similar if a) their parents are distinct but joined and b) they are both the nth child of their (distinct) parents.  We can define cloned nodes using the concept of structurally similar nodes as follows:
+
+Definition 2
+
+Clones are joined vnodes such that at least two of the vnodes of J(n) are not structurally similar to each other. Non-cloned vnodes are vnodes such that all of the vnodes of J(n) are structurally similar. In particular, n is a non-cloned vnode if J(n) is empty.
+
+Leo ensures that definitions 1 and 2 are consistent. Definition 1 says that changes to the children, grandchildren, etc. of a node are simultaneously made to the corresponding nodes contained in all cloned nodes. Making "corresponding changes" to the non-cloned descendents of all cloned nodes insures that the non-cloned joined nodes will be structurally similar. On the other hand, cloned nodes are never structurally similar. They are created as siblings, so they have the same parent with different "child indices."  To see how this works in practice, let's look at some examples.
+
+Example 1
+
++ root
+	+ a' (1)
+	+ a' (2)
+
+This example shows the simplest possible clone. A prime (') indicates a cloned node.  Node a in position (1) has just been cloned to produce a' in position (2). Clearly, these two cloned nodes are not structurally similar because their parents are not distinct and they occupy different positions relative to their common parent.
+
+Example 2
+
+If we add a node b to either a' node we get the following tree:
+
++ root
+	+ a'
+		+ b
+	+ a'
+		+ b
+
+The b nodes are structurally similar because the a' nodes are joined and each b node is the first child of its parent.
+
+Example 3
+
+If we now clone either b, we will get:
+
++ root
+	+ a'
+		+ b' (1)
+		+ b' (2)
+	+ a'
+		+ b' (1)
+		+ b' (2)
+
+All b' nodes must be clones because the nodes marked (1) are not structurally similar to the nodes marked (2).
+
+Dependent nodes are nodes created or destroyed when corresponding linked nodes are created or destroyed in another tree. For example, going from example 1 to example 2 above, adding node b to either node a' causes another (dependent) node to be created as the ancestor of the other node a'. Similarly, going from example 2 to example 1, deleting node b from either node a' causes the other (dependent) node b to be deleted from the other node a'.  Cloned nodes may also be dependent nodes. In Example 3, all the b' nodes are dependent on any of the other b' nodes.
+
+We can now give simple rules for inserting and deleting dependent vnodes when other vnodes are created, moved or destroyed. For the purposes of this discussion, moving a node is handled exactly like deleting the node then inserting the node; we need not consider moving nodes further.  We insert a new node n as the nth child of a parent node p as follows. We insert n, then for every node pi linked to p, we insert a dependent node ni as the nth child of pi. Each ni is linked to n. Clearly, each ni is structurally similar to n.  Similarly, it is easy to delete a node n that is the nth child of a parent node p. We delete each dependent node ni that is the nth child of any node pi linked to p. We then delete n.  When inserting or deleting any vnode n we must update its join list, J(n). Updating the join list is easy because the join list is circular: the entire list is accessible from any of its members.
+
+Inserting or deleting nodes can cause the clone bits of all joined nodes to change in non-trivial ways. To see the problems that can arise, consider deleting any of the b' nodes from Example 3. We would be left with the tree in Example 2. There are two remaining b nodes, each with the clone bit set. Unless we know that both b nodes are structurally similar, there would be no way to conclude that we should clear the clone bits in each node. In order to update clone links properly we could examine many special cases, but there is an easier way. Because of definition 2, we can define a shouldBeCloned function that checks J(n) to see whether all nodes of J(n) are structurally similar.
+
+Leo's XML file format does not contain join lists. This makes it easy to change a Leo file "by hand." If join lists were a part of the file, as they are in the Mac version of Leo, corrupting a join list would corrupt the entire file. It is easy to recreate the join lists when reading a file using a dedicated field in the tnode.  This field is the head of a list of all vnodes that points to the tnode. After reading all nodes, Leo creates this list with one pass through the vnodes.  Leo then convert each list to a circular list with one additional pass through the tnodes.
+</t>
+<t tx="EKR.20040524104904.266">The find and change commands are tricky; there are many details that must be handled properly. This documentation describes the leo.py code. Previous versions of Leo used an inferior scheme.  The following principles govern the LeoFind class:
+
+1.	Find and Change commands initialize themselves using only the state of the present Leo window. In particular, the Find class must not save internal state information from one invocation to the next. This means that when the user changes the nodes, or selects new text in headline or body text, those changes will affect the next invocation of any Find or Change command. Failure to follow this principle caused all kinds of problems in the Borland and Macintosh codes. There is one exception to this rule: we must remember where interactive wrapped searches start. This principle simplifies the code because most ivars do not persist. However, each command must ensure that the Leo window is left in a state suitable for restarting the incremental (interactive) Find and Change commands. Details of initialization are discussed below.
+
+2. The Find and Change commands must not change the state of the outline or body pane during execution. That would cause severe flashing and slow down the commands a great deal. In particular, c.selectVnode and c.editVnode methods must not be called while looking for matches.
+
+3. When incremental Find or Change commands succeed they must leave the Leo window in the proper state to execute another incremental command. We restore the Leo window as it was on entry whenever an incremental search fails and after any Find All and Change All command.
+Initialization involves setting the self.c, self.v, self.in_headline, self.wrapping and self.s_text ivars. Setting self.in_headline is tricky; we must be sure to retain the state of the outline pane until initialization is complete. Initializing the Find All and Change All commands is much easier because such initialization does not depend on the state of the Leo window.
+
+Using Tk.Text widgets for both headlines and body text results in a huge simplification of the code. Indeed, the searching code does not know whether it is searching headline or body text. The search code knows only that self.s_text is a Tk.Text widget that contains the text to be searched or changed and the insert and sel Tk attributes of self.search_text indicate the range of text to be searched. Searching headline and body text simultaneously is complicated. The selectNextVnode() method handles the many details involved by setting self.s_text and its insert and sel attributes.
+</t>
+<t tx="EKR.20040524104904.267">This section describes Leo's explicit Tangle and Untangle commands.  Such commands operate only on @root and @unit trees.  The previous chapter discusses the implicit Tangle on Write/Untangle on Read processes used to read and write @file trees.
+
+The Tangle command translates the selected @root tree into one or more well-formatted C source files. The outline should contain directives, sections references and section definitions, as described in Chapter 4. The Untangle command is essentially the reverse of the Tangle command. The Tangle command creates a derived file from an @root tree; the Untangle command incorporates changes made to derived files back into the @root tree.
+
+The Tangle command operates in two passes. The first pass discovers the complete definitions of all sections and places these definitions in a symbol table. The first pass also makes a list of root sections. Definitions can appear in any order, so we must scan the entire input file to know whether any particular definition has been completed.
+
+Tangle's second pass creates one file for each @root node. Tangle rescans each section in the list of roots, copying the root text to the output and replacing each section reference by the section's definition. This is a recursive process because any definition may contain other references. We can not allow a section to be defined in terms of itself, either directly or indirectly. We check for such illegally recursive definitions in pass 2 using the section stack class.  Tangle indicates where sections begin and end using comment lines called sentinel lines.  The this part of the appendix discusses the format of the sentinels output by the Tangle command.
+
+The key design principle of the Tangle command is this: Tangle must output newlines in a context-free manner. That is, Tangle must never output conditional newlines, either directly or indirectly. Without this rule Untangle could not determine whether to skip or copy newlines.
+
+The Tangle command increases the indentation level of a section expansion the minimum necessary to align the section expansion with the surrounding code. In essence, this scheme aligns all section expansions with the line of code in which the reference to the section occurs. In some cases, several nested sections expansions will have the same indentation level. This can occur, for example, when a section reference in an outline occurs at the left margin of the outline.
+
+This scheme is probably better than more obvious schemes that indent more "consistently." Such schemes would produce too much indentation for deeply nested outlines. The present scheme is clear enough and avoids indentation wherever possible, yet indents sections adequately. End sentinel lines make this scheme work by making clear where the expansion of one section ends and the expansion of a containing section resumes.
+
+Tangle increases indentation if the section reference does not start a line. Untangle is aware of this hack and adjusts accordingly. This extra indentation handles several common code idioms, which otherwise would create under-indented code. In short, Tangle produces highly readable, given the necessity of preserving newlines for Untangle.
+
+Untangle is inherently complex.  It must do a perfect job of updating the outline, especially whitespace, from expansions of section definitions created by the Tangle command.  Such expansions need not be identical because they may have been generated at different levels of indentation.  The Untangle command can not assume that all expansions of a section will be identical in the derived file; within the derived file, the programmer may have made incompatible changes to two different expansions of the same section. Untangle must check to see that all expansions of a section are "equivalent".  As an added complication, derived files do not contain all the information found in @root trees.  @root trees may contain headlines that generate no code at all.  Also, an outline may define a section in several ways: with an @c or @code directive or with a section definition line.  To be useful, Untangle must handle all these complications flawlessly. The this part of the appendix discusses the various conventions used in the sentinels output by the Tangle command.  These conventions allow the Untangle command to recreate whitespace correctly.
+
+Untangle operates in two passes. The first pass finds definitions in the derived file and enters them into the Untangle Symbol Table, or UST.   Definitions often include references to other sections, so definitions often include nested definitions of referenced sections. The first pass of Untangle uses a definition stack to keep track of nested definitions. The top of the stack represents the definition following the latest reference, except for the very first entry pushed on the stack, which represents the code in the outline that contains the @root directive. The stack never becomes empty because of the entry for the @root section. All definitions of a section should match--otherwise there is an inconsistent definition. This pass uses a forgiving compare routine that ignores differences that do not affect the meaning of a program.
+
+Untangle's second pass enters definitions from the outline into the Tangle Symbol Table, or TST. The second pass simultaneously updates all sections in the outline whose definition in the TST does not match the definition in the UST.  The central coding insight of the Untangle command is that the second pass of Untangle is almost identical to the first pass of Tangle! That is, Tangle and Untangle share key parts of code, namely the skip_body() method and its allies.  Just when skip_body() enters a definition into the symbol table, all the information is present that Untangle needs to update that definition.
+
+</t>
+<t tx="EKR.20040524104904.268">The following paragraphs discuss code-level details.  You should not need to read this section in order to use Leo.
+
+1. Leo uses unicode objects in vnodes and tnodes to denote headline and body text.  Note that unicode strings have no encoding; only plain strings have encodings. This means that once an (encoded) plain string has been converted to a unicode string it doesn't matter how the unicode string was created.  This is the key that makes Leo's new code robust. 
+
+So internally Leo never has to worry about encodings. The only times encoding matter is when encoded strings are converted to and from unicode when Leo reads or writes files (or when the passing strings to and from Tk.Text widgets, but the idea is the same).
+
+2. Python expressions that mix unicode strings u and plain strings s, like:
+
+	u + s 
+or 
+	u == s 
+or 
+	u[5] == s[2:]
+
+are promoted to unicode objects using the "system encoding". This encoding should never be changed, but we can't assume that we know what it is, so for safety we should assume the most restrictive encoding, namely "ascii".  With this assumption, Leo's code can't throw an exception during these promotions provided that: 
+
+- All strings are converted to unicode when Leo reads files or gets text from Tk.Text widgets. 
+- All string literals in Leo's code have only ascii characters.</t>
+<t tx="EKR.20040524104904.269">Only leo.py supports unlimited undo.  Unlimited undo is straightforward; it merely requires that all commands that affect the outline or body text must be undoable. In other words, everything that affects the outline or body text must be remembered.
+
+We may think of all the actions that may be Undone or Redone as a string of beads (undo nodes). Undoing an operation moves backwards to the next bead; redoing an operation moves forwards to the next bead. A bead pointer points to the present bead. The bead pointer points in front of the first bead when Undo is disabled.  The bead pointer points at the last bead when Redo is disabled. An undo node is a Python dictionary containing all information needed to undo or redo the operation.
+
+The Undo command uses the present bead to undo the action, then moves the bead pointer backwards. The Redo command uses the bead after the present bead to redo the action, then moves the bead pointer forwards. All undoable operations call setUndoParams() to create a new bead. The list of beads does not branch; all undoable operations (except the Undo and Redo commands themselves) delete any beads following the newly created bead.
+
+I did not invent this model of unlimited undo.  I first came across it in the documentation for Apple's Yellow Box classes.</t>
+<t tx="EKR.20040524104904.270">@nocolor</t>
+<t tx="EKR.20040524104904.271">Today I have had series of important insights regarding Leo's implementation. To state my conclusion first: 
+
+** No representation of clones is likely to be better than the present way using vnodes and tnodes. ** 
+
+Since Leo's earliest days I have wondered whether it might not be possible to improve how Leo represents clones. The present scheme laboriously creates and deletes "dependent trees" of vnodes when a node is moved that is a clone or a descendent of a clone. Couldn't we do better if we represented clones as a single tree of nodes that is shared by other nodes? 
+
+Today I thought of a new way of looking at things. You can think of it as a thought experiment, though at first I thought of it as a viable implementation strategy. This new point of view has greatly clarified the essentials of the situation. It strongly suggests the conclusion stated above. 
+
+The thought was this: suppose vnodes are not "real" or "permanent", but merely epiphenomena of the underlying "reality", the shared nodes. I thought of vnodes as existing in "the floating world." The "real" nodes, the potentially shared nodes, I call inodes (information nodes.) All fundamental information would reside in inodes. 
+
+Furthermore, suppose that vnodes are created by the tree class _as a by-product of redrawing the screen_. This actually is a pretty clever idea. It has the following big advantages: 
+
+1. Only a single iterator is ever needed to traverse the tree of inodes. This iterator is called only by the tree class when the tree needs to be redrawn. The result of the tree traversal is the tree of vnodes. Most other Leo code (and user scripts) can use and traverse the tree of transient vnodes without any modifications. 
+
+2. Creating and destroying dependent trees happens automatically as the result of the tree traversal. There is no need for the complex special cases found in the present vnode class. 
+
+So this seems like hot stuff. Very clever indeed, if not a big breakthrough. However, a closer examination reveals that almost nothing is gained by this "cleverness". If this clever way doesn't really improve matters, it is most unlikely that any other scheme will. This insight is the real breakthrough. 
+
+So let us look at the details and implications of generating temporary vnodes while redrawing the screen: 
+
+1. Because inodes may be shared, they need not have unique parents. But the generated vnodes _will_ have unique parents. Therefore, all the code that traverses vnodes will work just fine. 
+
+2. Alas, there is a huge costs in creating vnodes on the fly. We must create: 
+a) the vnodes themselves, 
+b) the Tk.Text widgets corresponding to visible vnodes and 
+c) all the data in the vnodes, including links to other vnodes and links to inodes. 
+
+These costs can't be optimized away. 
+
+3. Most importantly, even if vnodes are "ephemeral" they are in fact essential. We need _unique_ vnodes to represent _different_ areas on the screen, even if those vnodes are on the same join list. For example, we need _distinct_ Tk.Text widgets in order to draw the screen at all. 
+
+4. And join lists too are essential! Indeed, if the headline of a cloned node changes, _different_ Tk.Text widgets must be updated on the screen. No matter how elegant the implementation of inodes, we _still_ must have a way of quickly updating all joined vnodes _on the screen_. 
+
+Summary 
+
+At long last the situation has become clear: 
+
+Fact 1: Separate vnodes are required to redraw the screen properly. 
+Fact 2: Join lists (whether in vnodes or tnodes) are also essential so that items _on the screen_ can be redrawn quickly. 
+Fact 3: Leo must create and destroy dependent trees of vnodes, _because those trees appear and disappear from the screen._ 
+Fact 4: Using shared inodes will not change either fact 1, 2 or 3. 
+
+In short, nothing would be gained by trying to represent clones as shared trees because: 
+
+** join lists and dependent trees are needed to draw the screen correctly ** 
+
+This came as a great surprise to me. It resolves a question that has been on my mind for at least 8 years. As a result, there is no need to do any prototyping of inodes or iterators. Inodes will never see the light of day. 
+
+Edward 
+
+P.S. As I have said before, the present representation of join links can most likely be improved greatly. I plan to do this (and probably not much else) for 4.0. 
+
+P.P.S. There are other implementation problems with temporary vnodes. For example, what would carry marks? These problems aren't really part of the discussion, but they would be quite important if one actually rewrote the code! 
+
+P.P.P.S. I'll look at Gil's ideas (and any others) thoroughly before fixing 4.0 in stone. As Gil suggests, designing 4.0 properly is more important than releasing 4.0 next week :-) 
+
+EKR </t>
+<t tx="EKR.20040524104904.272">Actually, my first analysis was incomplete. Suppose we eliminate vnodes completely? Leo would then redraw the screen directly from the inodes. This wouldn't be so hard: each inode would contain an list of Tk.Text widgets. The drawing code merely has to place the an unused widget in the correct place in the screen (the Tk.Canvas). 
+
+In some sense, the array of Tk.Text widgets in each inode is like the join list, but only visible nodes need be on this list. Furthermore, this list only needs to be updated when the outline is actually redrawn. It would be easy to insert or delete new Text widgets in this list. There are lots of possibilities, all easy to do in Python. 
+
+However, replacing vnodes with inodes is likely to be a very bad idea, for several reasons: 
+
+1. As I mentioned earlier, this implementation would require massive changes throughout Leo's code. All "user" code would have to use an iterator to traverse the outline. In particular, the fundamental code to manage the outlines would be changed significantly and would almost certainly become more complex. 
+
+2. Inodes complicate Leo from the user's point of view. The present data model is much better because 
+
+** The vnode tree corresponds directly to what the user sees on the screen ** 
+
+Giving up this correspondence seems like a big step backward. We could try to recreate the node list during redrawing, but that seems likely to create a real mess. Impermanent vnodes might well be worse than no vnodes at all. 
+
+3. As mentioned in an earlier post, marks present a problem without vnodes. Perhaps each inode could contain a list of locations (in the full tree traversal) that should be marked. However, updating this kind of list when the outline changes could be very complex. It wouldn't be horrible to say that all joined nodes must be marked in synchronization, but it wouldn't be a step forward. 
+
+4. There are other ways of improving Leo's performance without touching the data model at all. Rewriting the vnode, tnode, atFile and fileCommands modules as C++ code in a Python extension will almost certainly double the speed of key operations. As mentioned in the first post, there are optimizations that the vnode class can do to avoid deleting dependent trees and then immediately recreating them. And don't forget that the average speed of our computers doubles every 2-3 years or so. So just waiting for a faster machine is a highly effective optimization! 
+
+Revised conclusions 
+
+Replacing vnodes with inodes is possible, and it might even provide some performance gains for huge outlines containing many clones. However, replacing vnodes with inodes would be an extremely high risk project: very complex, with likely negative consequences. I doubt that there will ever be a need even to consider such a project. 
+
+The present code base is plenty good enough for most outlines, and there are much simpler and better ways to speed up key outline operations. In short: I have no more interest in inodes and their attendant complexities. </t>
+<t tx="EKR.20040524104904.273">The Synchronization Principle simplifies everything and at long last puts Leo on a firm theoretical foundation.  This principle states that the "smallest unit of meaning" of any Leo outline is the entire outline itself.  In particular, individual derived files have meaning only in the context of a particular outline.
+
+The Synchronization Principle has the following happy consequences:
+
+1. We may assume that all derived files are in synch with the outline that wrote them.  This assumption allows Leo to use "hidden machinery" in the outline to associate nodes in the derived file with nodes in the outline.  This "hidden" machinery consists of a list of tnodes associated with @file vnodes in the outline.  When writing a derived file Leo creates a list of tnodes in the order they were written to the derived file.  When reading the derived file, Leo uses this list to associate nodes in the derived file with nodes in the outline.
+
+2. Derived files must get their structure from the .leo file that wrote them.  As we have seen, this is done using the hidden machinery in the .leo file.  Consequently, there is no further need to represent outline structure in derived files.  There is no need any longer either for child indices or for sentinels to represent outline structure.  As a result, we can eliminate @+body and @-body nodes entirely because all @+node sentinels are followed by body text.
+
+3. All .leo files must contain full outline structure.  Even "thin" outline will contain the full representation of the outline as vnodes.
+
+4. Reading _never_ alters outline structure in the outline.  No vnodes are ever created or destroyed and reading never alters clone links.  This is true whether or not read errors occur.  The read code sets a temporary attribute of tnodes while reading.  These attributes are copied to the permanent t.bodyString attribute only if no read errors were encountered.
+
+4. Error recovery is now trivial:  Read errors indicate that the .leo files and one or more derived files are out-of-synch.  No error recovery is attempted: the @file tree in which the error occured reverts back to its original state.
+
+5. The new Import Derived File command is the _only_ way to recover data from mismatched derived file.</t>
+<t tx="EKR.20040524104904.274">@nocolor
+@ignore</t>
+<t tx="EKR.20040524104904.275">leo.py 3.1 contains Python code that may be of interest to some Python programmers.  All Python files are derived from LeoPy.leo.
+
+See the children of this node for details.</t>
+<t tx="EKR.20040524104904.276">This script does much of the grunt work of converting from C/C++ syntax to Python syntax.  It was surprisingly effective in converting Leo from C++ to Python.  These scripts don't need to be perfect to save a _lot_ of work.  And of course you can always add your own improvements...
+
+As written, the script converts an entire Leo tree.  It would be easy to write an entry that would convert plain text files, but it's probably best to import the files to be converted into Leo first.  That way the slow algorithms in c2py.py will work on smaller pieces of text.</t>
+<t tx="EKR.20040524104904.277">This code gathers and prints static statistics about Python bytecode.</t>
+<t tx="EKR.20040524104904.278">The file leoUtils.py contains some small Tkinter utilities:
+
+w,h,x,y = get_window_info(top) returns the width, height, x and y positions of the Tkinter window top.
+
+center_dialog(top) centers the Tkinter window top on the screen.
+
+w,f = create_labeled_frame(parent...) creates a labeled Tkinter window as a child of parent.  The caller packs widgets into f to create the frame.
+
+leoUtils.py contains many other routines including an Python version of the Sherlock tracing package.</t>
+<t tx="EKR.20040524104904.279">leoFontPanel.py puts up a Font dialog.  This dialog dispenses with the typical "sample" pane and instead changes text immediately directly on the screen.  Comes with Ok, Cancel and Revert buttons.  IMO, this dialog is much better than the sample Tk/Tkinter font dialogs available on the web.</t>
+<t tx="EKR.20040524104904.280">leoColor.py contains code to syntax color Tk.Text widgets for a variety of languages.  Supporting a new language here is mostly a matter of adding another table of keywords.</t>
+<t tx="EKR.20040524104904.281">Leo supports powerful outlining features, including clones.  Clones are challenging to implement, to say the least.  The vnode and tnode classes, defined in leoNodes.py, represent the underlying data.  vnodes represent nodes on the screen.  vnodes may share text, the tnode class is the "unit of sharing" of such text.  The leoTree class draws the tree and handles events, including dragging nodes around the screen.  The Commands class calls the vnode, tnode and leoTree classes to handle menu commands.  In Smalltalk's model/view/controller terminology, the vnode and tnode classes are model class, the leoTree class is a view class, and the Commands class is a controller class.</t>
+<t tx="EKR.20040524104904.282">To convert an @root tree to an @file tree, choose the root of the tree to be converted, then do the following in the Python window:
+
+	import c2py
+	c2py.leo1to2()
+	
+This script makes numerous changes throughout the tree.  It does not, however, change @root to @file, or insert the needed @others directives.  You must do that by hand.
+
+To convert @root trees to @file trees by hand:
+
+1.  Change the @root node to an @file node.  That is, delete the @root &lt;filename&gt; directive from the body text and insert @file &lt;filename&gt; in the headline.  Typically, the root node contains a reference like &lt;&lt;methods of class x&gt;&gt; as the last body text.  Replace this reference with the @others directive.  The expansion of @others is all text that is not part of a section definition.
+
+2.  Add @&lt;space&gt; to the start of all doc parts.  Leo2 starts syntax coloring in code mode rather than doc mode, so if a doc part starts body text it should start with @&lt;space&gt; or @doc.
+
+3.  Replace all section definition lines (like &lt;&lt;name&gt;&gt;=) by @c (or @code).  This results in the node being added to the expansion of @others.
+
+4.  Remove all unused code from the @file tree.  Leo2 does not write derived files whose @file trees contain orphan or @ignored nodes.  If an @file tree does contain an orphan or @ignored node, Leo2 issues a warning and writes the entire @file tree to the .leo file instead of the derived file.  This prohibition of orphan an @ignored nodes is necessary to make error recovery completely safe and reliable.
+
+5.  Make sure that all nodes defining a section have a headline that starts with &lt;&lt;section&gt;&gt;.  This will typically be true when converting @root trees that use the @code directive.
+
+6. If a section is referenced in more than one node (a rare occurence in my code), clone the defining node and move one clone under each referencing node.
+
+7. If a node contains the definitions of several sections, place each different definition in a different node.</t>
+<t tx="EKR.20040524104904.283">@ignore</t>
+<t tx="EKR.20040524104904.284">In @root and @unit trees, the @code directive indicates the start of a code section. The headline must contain a valid section name.
+
+In @file trees, the @c directive indicates the start of a code section.
+
+</t>
+<t tx="EKR.20040524104904.285">This directive affects only the Weave (Print) command (and possibly the Create CWEB command).  It indicates the start of a chapter.  This puts the chapter title at the top of each page.</t>
+<t tx="EKR.20040524104904.286">Indicates that syntax coloring is enabled for the body text in which it appears and all descendent nodes ( unless over-ridden in the descendent nodes ).</t>
+<t tx="EKR.20040524104904.287">This directive indicates the delimiters to be used by the Tangle command.</t>
+<t tx="EKR.20040524104904.288">@nocolor
+
+The @delims directive changes the comment strings used to mark sentinel lines. This directive is often used to place Javascript text inside XML or HTML files.  This directive is valid only in @file trees.  You can use the @comment directive in @unit or @root trees.
+
+The @delims directive contains one or two delimiters, separated by whitespace. If only one delim is present it delimits single-line comments. If two delims are present they delimit block comments. The @delims directive can not be used to change the comment strings at the start of the derived file, that is, the comment strings for the @+leo sentinel and the initial @+body and @+node sentinels. The @delims directive inserts @@delims sentinels into the derived file. The new delimiter strings continue in effect until the next @@delims sentinel in the derived file or the end of the derived file.
+
+Note: Leo can not revert to previous delimiters automatically; you must change back to previous delimiters using another @delims directive. For example:
+
+@color
+
+@delims /* */
+Javascript stuff
+@delims &lt;-- --&gt;
+HTML stuff
+
+@nocolor
+Adding, deleting or changing @@delims sentinels will destroy Leo's ability to read the derived file. Mistakes using the @delims directive have no effect on Leo, though such mistakes will thoroughly mess up a derived file as far as compilers, HTML renderers, etc. are concerned.</t>
+<t tx="EKR.20040524104904.289">In @root and @unit trees, the @doc directive indicates the start of a comment enclosed in the beginning and ending block comment delimiters ( see @comment ).
+
+In @file trees, the @(space) (@ followed by a space, tab or newline) indicates the start of an doc part.  @(space) is optional: it is not needed if the body text contains no doc part.
+
+</t>
+<t tx="EKR.20040524104904.290">You may use the @encoding directive to specify the encoding used in a derived file.  You can't mix encodings in a single derived file.  For example,
+
+@encoding iso-8859-1
+
+If the encoding used in a derived file is not "utf-8" it is represented in the @+leo sentinel line, like this:
+
+#@+leo-encoding=iso-8859-1.
+
+The "utf-8" encoding is used by default.  The "utf-8" encoding is a "lossless" encoding (it can represent all unicode code points), so encoding and decoding to and from utf-8 plain strings will never cause a problem.  When reading or writing a character not in a "lossy" encoding (such as iso-8859-1), Leo converts such characters to '?' and issues a warning. </t>
+<t tx="EKR.20040524104904.291">Strictly speaking, @file is not a directive; it is not valid in body text.
+
+A headline that starts with @file &lt;filename&gt; forms the root of an @file tree.  Leo writes all nodes in the tree to the derived file &lt;filename&gt; when any Save command is executed.  The @file tree is recreated from the derived file when the .leo file is opened.
+
+The Leo2 documentation discusses how to write code in @file trees.
+</t>
+<t tx="EKR.20040524104904.292">The @first directive allows you to place lines at the very start of files derived from @file nodes. For example, the body text of @file spam.py might be:
+
+	@first #! /usr/bin/env python
+
+The body text of @file foo.perl might be:
+
+	@first #/usr/bin/perl
+
+@first directives are recognized only at the start of the body text of @file nodes. No text may precede @first directives. More than one @first directive may exist, like this:
+
+	@first #! /usr/bin/env python
+	@first # more comments.</t>
+<t tx="EKR.20040524104904.293">This directive causes the Tangle and Untangle commands to ignore this node and all its descendents.</t>
+<t tx="EKR.20040524104904.294">The @language directive specifies the comment delimiters and string types used by the Tangle and Untangle.
+
+The form of this directive is
+
+@language x
+
+where x is one of the following: c,c++,html,java,objective-c,pascal,perl,python and shell.  Shell files have comments that start with #.  Case is ignored in the language specifiers, but not in the @language itself.  Thus, the following are equivalent:
+
+@language html
+@language HTML
+@language hTmL
+
+but the following is invalid:
+
+@LANGUAGE html
+
+The @comment directive is now officially deprecated: you should use the @language directive whenever possible.  At present Untangle will not process an @root or @unit node if an @comment directive is in effect.  Why?  Because Untangle can't be sure of properly parsing a derived file if the language of the derived file isn't known.  It might be possible to assume some defaults in this case, but that is not done at present and is not a high priority.</t>
+<t tx="EKR.20040524104904.295">Indicates that syntax coloring is disabled for the body text in which it appears and all descendent nodes ( unless over-ridden in the descendent nodes ).</t>
+<t tx="EKR.20040524104904.296">The @others directive is valid only in @file trees.  The @others directive causes the expansion of all unnamed nodes to be output to the derived file in the position of the @others directive.
+
+For example, a common Python idiom is:
+
+class myClass:
+	&lt;&lt; constants of myClass &gt;&gt;
+	@others
+	
+The @others directive inserts the expansion of all unnamed sections into the class definition, indented just as the @others directive is indented.
+
+An @file tree may have more than one @others directive.  Each @others directive collects only those nodes found in the descendents of the node containing the @others directive.
+
+A single node may contain at most one @others directive.  To use more than one @others directive in an @file tree, use the following pattern:
+
+class x:
+	&lt;&lt;members of x&gt;&gt;
+class y:
+	&lt;&lt;members of y&gt;&gt;
+	
+The named nodes &lt;&lt;members of x&gt;&gt; and &lt;&lt;members of y&gt;&gt; contain only an @others directive.  Define members of the x and y classes as descendents of the nodes containing @Others.
+
+</t>
+<t tx="EKR.20040524104904.297">The @pagewidth directives affects how Tangle outputs block comments:  it specifies the width of output pages in columns.  The form of the @pagewidth directive is @pagewidth n, where n is a positive integer.
+</t>
+<t tx="EKR.20040524104904.298">The @path directive specifies the directory to be used if an @file or @root directive does not specify a full path name. The form of the @path directive is @path filename, where filename is taken to be everything following @path to the end of the line.
+
+If the filename in @file pathname or @root pathname is an absolute filename the location of the derived file is specified only by the filename.  Otherwise, if the filename is a relative filename, the location of the derived file is relative to:
+	
+1. the directory specified the applicable @path directive, or
+2. the "Default Tangle Directory" in the Preferences panel if no @path directive is in effect, or
+3. the directory in which the .leo resides if the .leo file has ever been saved.
+
+An error occurs if no absolute path can be computed according to these rules, or if the filename or directory does not exist.</t>
+<t tx="EKR.20040524104904.299">This directive starts the text that forms a single derived file, after all section references have been replaced by their definitions.
+
+By default, only descendents of the @root node are examined for section definitions.  However, if the @root directive is a descendent of a node containing the @unit directive, all descendents of the @unit node are examined for section definitions.</t>
+<t tx="EKR.20040524104904.300">This directive affects only the Weave (Print) command (and possibly the Create CWEB command).  It indicates the start of a section.  This puts the section title at the top of each page.</t>
+<t tx="EKR.20040524104904.301">The @silent causes Tangle to output no comments for doc chunks and no sentinel lines for Untangle. Comments written by the user in code sections are always output.
+
+</t>
+<t tx="EKR.20040524104904.302">The @tabwidth directives affects how Tangle outputs leading whitespace:  it specifies the width of tabs in spaces.  The form of the @tabwidth directive is @tabwidth n, where n is a positive integer.
+</t>
+<t tx="EKR.20040524104904.303">The @terse directive causes Tangle not to output comments for doc chunks.  Tangle will output only those sentinel comments needed by Untangle.  As always, comments written by the user in code sections are output.
+
+These directives are not valid in @file trees.</t>
+<t tx="EKR.20040524104904.304">Expands the nodes searched for section definitions when processing an @root directive.
+
+By default, only descendents of the @root node are examined for section definitions.  However, if the @root directive is a descendent of a node containing the @unit directive, all descendents of the @unit node are examined for section definitions.</t>
+<t tx="EKR.20040524104904.305">The @verbose directive causes Tangle to output comments for doc chunks and sentinel comments needed by Untangle.  This is the default behavior if none of the @verbose, @terse or @silent directives are in effect.
+</t>
+<t tx="EKR.20040524104904.306"></t>
+<t tx="EKR.20040524104904.307">The following error messages may be generated by the Tangle commands.  Such errors appear in the log window, which will be opened if necessary.	
+</t>
+<t tx="EKR.20040524104904.308">A file error occurred while trying to reopen the temporary file used during tangling.</t>
+<t tx="EKR.20040524104904.309">A file error occurred while trying to change the name of the temporary file used during tangling.</t>
+<t tx="EKR.20040524104904.310">An @code directive appeared in body text whose header does not contain a section name.</t>
+<t tx="EKR.20040524104904.311">An @directive was seen somewhere other than the start of a line.</t>
+<t tx="EKR.20040524104904.312">Tangle detected more than 20 errors.</t>
+<t tx="EKR.20040524104904.313">A section was defined in terms of itself, either directly or indirectly.  The trace shows the chain of section definitions that resulted in the illegal definition.
+
+This message is followed by a walkback of the section names that recursively reference the section.  The walkback looks like this:
+
+called from &lt;&lt; section name &gt;&gt;
+called from &lt;&lt; section name &gt;&gt;
+...
+</t>
+<t tx="EKR.20040524104904.314">Sections can be defined in several parts in two ways:
+
+1.  Using &lt;&lt; section name &gt;&gt;= in several places with the same section name.
+
+2.  Using several @code directives within the _same_ body text.
+
+As a precaution against mistakenly defining a section in more than one place, it is invalid to use @code in different nodes to define multiple parts for the same section.  In particular, this error may arise when using cloned nodes.
+
+This error may always be eliminated by using &lt;&lt; section name &gt;&gt;= instead of @code.
+	
+</t>
+<t tx="EKR.20040524104904.315">Tangle did not write a file because errors were found.</t>
+<t tx="EKR.20040524104904.316">A C-language comment was not properly terminated.</t>
+<t tx="EKR.20040524104904.317">The file name in an @root directive was not terminated with the proper delimiter.</t>
+<t tx="EKR.20040524104904.318">A section name was not properly terminated before the end of the line in which it started.
+</t>
+<t tx="EKR.20040524104904.319">A C-language string or character constant was not properly terminated.</t>
+<t tx="EKR.20040524104904.320">Something that looks like a section definition was seen in the middle of a line.</t>
+<t tx="EKR.20040524104904.321">A section was defined using more than 100 levels of section definitions (!)
+
+You could easily create an outline containing every computer program ever written in less than 50 levels.</t>
+<t tx="EKR.20040524104904.322">The selected outline contained no @root directive.</t>
+<t tx="EKR.20040524104904.323">A reference to an undefined section was encountered.</t>
+<t tx="EKR.20040524104904.324">Tangle outputs 2-character WEB control code in a comment.  This message is given if we find such comments in a code definition.</t>
+<t tx="EKR.20040524104904.325">(The text of the duplicate definition follows.)
+
+The section may have been defined in more than one place.</t>
+<t tx="EKR.20040524104904.326">The indicated section appears in the outline but is never referenced.</t>
+<t tx="EKR.20040524104904.327">The following error messages may be generated by the Untangle commands.  Such errors appear in the log window, which will be opened if necessary.	
+</t>
+<t tx="EKR.20040524104904.328">Two expansions of &lt;&lt; section name &gt;&gt; were different in the derived file.  This typically arises when the programmer changes one of the expansions but not the other.</t>
+<t tx="EKR.20040524104904.329">No end sentinel line was found for a part of the expansion of the code in the @root node.  This is likely the result of adding, deleting or altering a sentinel line.</t>
+<t tx="EKR.20040524104904.330">No end sentinel line was found for the expansion of the code in the @root node.  This is likely the result of adding, deleting or altering a sentinel line.</t>
+<t tx="EKR.20040524104904.331">The end sentinel name for &lt;&lt; section name &gt;&gt; was expected but not found.  This is likely the result of adding, deleting or altering a sentinel line.</t>
+<t tx="EKR.20040524104904.332">The end of the file was reached before encountering the end sentinel line for
+	&lt;&lt; section name &gt;&gt;.
+This is likely the result of adding, deleting or altering a sentinel line.</t>
+<t tx="EKR.20040524104904.333"></t>
+<t tx="EKR.20040524104904.334">The following are all minor errors, meaning that no data is likely to have been lost.  You can proceed as usual.
+
+1. Rereading file.  Clone links into this file will be lost
+
+The .leo file is out of synch with the derived file, so non-essential information usually stored in the .leo file will be deleted.  Clone links may be severed.
+
+2. Missing file name.  Restoring @file tree from .leo file
+
+No file name follows @file
+
+3. Error reading file.  Restoring @file tree from .leo file
+
+The file name following @file could not be found
+
+4. File name in @node sentinel does not match file's name
+
+The name of the derived file may have been changed.
+
+5. Ignoring text after @-leo
+
+Some text follows the trailing @-leo sentinel line.  Make sure this text is not important.</t>
+<t tx="EKR.20040524104904.335">The following are all serious errors, meaning that the data in a derived file has been corrupted.  You should restore the information from a backup .leo file using the Read Outline Only commands, followed by a Write @file Nodes command.
+
+ 1. Bad @+leo sentinel in &lt;filename&gt;
+ 2. Bad @delims"
+ 3. Bad attribute field in @+node
+ 4. Bad child index in @+node
+ 5. File may have damaged sentinels!
+ 6. Ignoring &lt;sentinel kind&gt; sentinel.  Expecting &lt;sentinel kind&gt;
+ 7. Ignoring unexpected @+leo sentinel
+ 8. Missing &lt;sentinel kind&gt; sentinel
+ 9. Missing @file in root @node sentinel
+10. Outline corrupted: different nodes have same clone index!
+11. Replacing body text of orphan &lt;node name&gt;
+12. Unexpected end of file. Expecting &lt;sentinel kind&gt; sentinel
+13. Unknown sentinel: &lt;sentinel line&gt;
+</t>
+<t tx="EKR.20040524104904.336">Errors while writing @file nodes are harmless.  No information is lost because all information is written to the .leo file rather than the derived file.
+
+1. Bad @delims directive
+
+2. Can not open &lt;file name&gt;
+
+3. @ignore node: &lt;headline&gt;
+
+The body text of &lt;headline&gt; contains an @ignore directive.
+
+4. Missing file name: &lt;file name&gt;
+
+@file is not followed by a file name.
+
+5. Orphan node: &lt;headline&gt;
+
+The node is referenced by no ancestor node, and no @others directive applies to it.
+
+6. @others already expanded in: &lt;headline&gt;
+
+The node contains more than one @others directive.
+
+7.  Rename failed: no file created! (file may be read-only)
+
+Leo's Save commands write derived files to a temporary file, and rename that file to be the derived file only if the old derived file is different from the temporary file.  This message means that a problem with the file system prevented the temporary file from being renamed.
+
+8. Path does not exist: &lt;file name&gt;
+
+The path may be specified by the Preferences panel, an @path directive or by a path in the @file node.
+
+9.  undefined section: &lt;section name&gt; referenced from: &lt;headline&gt;
+			
+The node given by &lt;headline&gt; contains a reference to &lt;&lt;section name&gt;&gt;, 
+but no named node for &lt;&lt;section name&gt;&gt; exists in the descendents of &lt;headline&gt;	</t>
+<t tx="EKR.20040524104904.337">New for leo.py v2.0 and Borland Leo 2.6:
+
+Leo suppresses blank lines between sentinels by default.  This is an upward compatible change in the format of derived files: leo.py v2.0 can read derived files from all previous versions of Leo, but previous versions of Leo can not read derived files without blanks lines.
+
+To cause leo.py not to remove blank lines do the following.  In the section called &lt;&lt; initialize atFile ivars &gt;&gt; in leoAtFile.py, change:
+
+	self.suppress_newlines = true
+to
+	self.suppress_newlines = false
+
+Note: leo.py v2.0 can read derived files without blank lines between sentinels regardless of the setting of self.suppress_newlines.
+</t>
+<t tx="EKR.20040524104904.338">The following sections describe the comment lines embedded in derived files.  It is not necessary to understand this in detail.  All you need to know is this:
+
+1. Sentinel lines are comment lines whose first character (following the comment delimiter) is @.
+2. Do not alter sentinel lines in derived files.  Doing so will corrupt the outline structure!
+3. Do not alter blank lines in front of, behind or between sentinels.  Doing so will corrupt the outline structure in older versions of Leo.</t>
+<t tx="EKR.20040524104904.339">The @delims directive changes the comment strings used to mark sentinel lines.  The @delims directive contains one or two delimiters, separated by whitespace.  If only one delim is present it delimits single-line comments.  If two delims are present they delimit block comments. The @delim directive can _not_ be used to change the comment strings at the start of the derived file, that is, the comment strings for the @+leo sentinel and the initial @+body and @+node sentinels.
+
+NB: Leo can not revert to previous delimiters automatically; you must change back to previous delimiters using another @delims directive.  For example:
+
+@delims /* */
+Javascript stuff
+@delims &lt;-- --&gt;
+HTML stuff
+</t>
+<t tx="EKR.20040524104904.340">A file produced by an @file node begins with an @+leo sentinel.  The last lines of the file should be the matching @-leo sentinel
+
+The comment delimiters that delimit all sentinels are specified by the first line of the file, that is, the @+leo sentinel.  This sentinel has the form:
+
+&lt;opening_delim&gt;@leo&lt;closing_delim&gt;
+
+&lt;closing_delim&gt; may be empty, in which case single-line comments are used.  The Write code generates single-line comments if possible.  Presently, the Write logic generates single line comments for all languages except HTML.  (Block comments can be specified using the @comment directive.)</t>
+<t tx="EKR.20040524104904.341">Suppose the parent node of a node N is P and that P has n children.  The sentinel 
+
+  @+node:&lt;child_index&gt;:&lt;status_fields&gt;:&lt;headline&gt;
+
+begins the expansion of node N.  The expansion continues until a matching
+
+  @-node::&lt;child_index&gt;:&lt;status_fields&gt;:&lt;headline&gt;
+  
+sentinel.
+
+The &lt;child_index&gt; field is a number from 1 to n indicating the index of the node in the list of its parent's children.
+
+The &lt;status_field&gt; field the cloneIndex field of the form: "C=nnn", where nnn is an immutable clone index.
+
+The &lt;headline&gt; field contains headline text, not reference text.
+
+The indentation of the expansion is increased by the extra indentation of preceding the reference.  tree level never affects indentation level.</t>
+<t tx="EKR.20040524104904.342">If a node contains significant I(non-whitespace) body text, @+body and @-body sentinels surround the text.  These sentinels are nested within @node directives.
+</t>
+<t tx="EKR.20040524104904.343">@+doc and @-doc delimit doc parts within a node that start with @doc. These sentinels are nested within @body directives.  Similarly, @+at and @-at delimit doc parts within a node that start with @&lt;whitespace&gt;.
+
+We use the following convention to determine where putDocPart has inserted line breaks: A line in a doc part is followed by an inserted newline if and only if the newline if  preceded by whitespace.  To make this convention work, the Write deletes the trailing whitespace of all lines that are followed by a "real" newline.</t>
+<t tx="EKR.20040524104904.344">@+others indicates the start of the expansion of an @+others directive, which continues until the matching @-others. @others sentinels are nested within @body sentinels; the expansion of the @others directive always occurs within the body text of some node N.
+</t>
+<t tx="EKR.20040524104904.345">The @delims directive inserts @@delims sentinels into the derived file. The new delimiter strings continue in effect until the next @@delims sentinel _in the derived file_ or the end of the derived file.
+
+Adding, deleting or changing @@delim _sentinels_ will destroy Leo's ability to read the derived file.  Mistakes in using the @delims _directives_ have no effect on Leo, though such mistakes will thoroughly mess up a derived file as far as compilers, HTML renderers, etc. are concerned.</t>
+<t tx="EKR.20040524104904.346">The @@&lt;text&gt; sentinel represents any line starting with @ in body text except @&lt;whitespace&gt;, @doc and @others. Examples:
+
+  @@nocolor
+  @@pagewidth 80
+  @@tabwidth 4
+  @@code</t>
+<t tx="EKR.20040524104904.347">@verbatim indicates that the next line of the derived file is not a sentinel.  This escape convention allows body text to contain lines that would otherwise be considered sentinel lines.
+
+New for leo.py version 2.0 and Borland Leo version 2.6:
+
+@verbatimAfterRef is generated when a comment following a section reference would otherwise be treated as a sentinel.   In Python code, an example would be:
+
+  &lt;&lt; ref &gt;&gt; #+others
+
+This sentinel is required only when blank lines are suppressed between sentinel lines.</t>
+<t tx="EKR.20040524104904.348">@&lt;&lt;section_name&gt;&gt; represents section reference.  If the reference does not end the line, the sentinel line ending the expansion is followed by the remainder of the reference line.  This allows the Read code to recreate the reference line exactly.</t>
+<t tx="EKR.20040524104904.349">@nocolor
+
+The 4.0 file format meets all of the following goals:
+
+- The minimum of sentinels needed to properly recreate the outline.
+- A robust way of telling whether newlines belong to sentinels or not.
+- A minimum of intrusion and ugliness.
+
+Changes to derived file format:
+
+The @+leo sentinel indicates whether the format is 3.x or 4.x.
+
+@+node and @-node sentinels no longer contain child or clone indices.  Therefore, such sentinels do not change when outline nodes are inserted, deleted or moved.  This will grealy reduce (but not entirely eliminate) cvs conflicts involving sentinel lines.
+
+Leo generates @+node sentinels only for nodes containing body text.  Leo no longer generates other @+node sentinels to indicate outline structure.  As a result, there is no longer any need for @+body sentinels.
+
+The @nl and @nonl sentinels adjust contribution of _previous_ sentinels.  This eliminates all lookahead logic and greatly simplifies the read code.
+
+The @+others and @&lt;&lt; sentinels indicte leading whitespace appearing before @others directives and section refs.
+
+Leo writes the @afterref whenever any non-whitespace text appears after a section references.
+
+The @+doc and @+at sentinels now contain the whitespace that follows the corresponding @doc or @ directives.
+
+New in 4.2:
+
+- Files derived from @file-thin ("thin" derived files) use gnx's in @+-node sentinels to permanently and uniquely identify nodes.
+gnx's have the format id.timestamp or id.timestamp.n if two gnx's would be the same otherwise.
+	- id should be an string unique to a developer, e.g., a cvs id.
+	- the timestamp is the date the node was first created, in yyyymmddhhmmss format.
+	- n is an integer.
+
+- The @+-all sentinels correspond to the range of the @all directive.
+
+- The @+-middle sentinels indicate intermediate nodes between the node that references a section and the node that defines the section.  Typically no such sentinels are needed because most sections are defined in a direct child of the referencing node.</t>
+<t tx="EKR.20040524104904.350">The following is a list of features I'd like to add to Leo.
+
+Styled text and graphics
+
+Except for syntax coloring, there is no way to style text in an outline.  The ultimate would be for Leo to support arbitrary XML code in the body pane.  Perhaps someday Tk's text panes will allow this.
+
+Lists of sections
+
+It would be useful to have easily available, possibly as a pop-up menu, a list of the most recently accessed sections, and possibly a full list of all section names as well.</t>
+<t tx="EKR.20040524104904.351">Known bugs and limitations in all versions of Leo.
+
+1. Untangle has no way of updating a section(chunk) whose name has been changed in the derived file.  Because of the @unit directive, there is not even a way to issue a meaningful warning.
+
+2. Tangle treats @c like @code when in CWEB mode.
+I recommend changing @c to @&lt; c @&gt;= throughout your CWEB sources and adding a reference
+to @&lt; c @&gt; in all roots of CWEB files.
+
+Known bugs and limitations of the PC version of Leo.
+
+Syntax coloring options are not saved to the file.
+
+The Log window has a limited capacity. This mainly affects debugging traces but could affect the output from the Tangle or Untangle commands if you tangled or untangled a large number of files.
+</t>
+<t tx="EKR.20040524104904.352">The following documentation applies to @file trees.
+
+@file node:			Node whose headline starts with @file filename.
+Named node:			Node whose headline starts with  &lt;&lt;section_name&gt;&gt;.
+Unnamed node:		Node that is neither an @file node nor a definition node.
+Organizer node:		An unnamed node with no body text.
+@ignore node:		Node with an @ignore directive in its body text.
+@others node:		Node with an @others directive in its body text.
+Orphan node:		Ordinary node that is not part of any section definition.
+Directive:			A line of body text that starts with '@'.
+Doc part:			Body text from an @&lt;space&gt; or @doc directive to
+					the next @c or @code directive.
+Code part:			Body text from an @c or @code directive to the
+					next @&lt;space&gt; or @directive.
+Natural tree order:	The order of nodes would appear on the screen if all nodes
+					were expanded.
+
+An @file node forms the root of a tree whose expansion forms a derived file.
+
+The expansion of an @file node or a section definition node is the entire text of the node with all section references replaced by their definition.  Section references is any text containing &lt;&lt;section name&gt;&gt;.  Section references are recognized anywhere within code parts, even within comments or strings.
+
+Definition nodes must be a descendant of the node containing the section reference.  If a section is referenced in more than one node, you may use clones to "copy" the definition to more than one location.
+
+Organizer nodes never affect the generated code, except to produce sentinels.  In particular, organizer nodes do not affect indentation of code in the derived file.
+
+The body text of each node is assumed to start in code mode.  @ or @doc are used to create a doc part.  No escape conventions are used: if a line contains &lt;&lt; followed by &gt;&gt; then everything between the &lt;&lt; and &gt;&gt; becomes a section name.
+
+The @others directive may be used at most once in named nodes and @file nodes.  @others refers to descendant nodes that would not otherwise be included in the derived file. More exactly, the expansion of the @others directive in node N is the set of unnamed descendents of N that are the descendents of no named node or @others node other than N.
+
+Often, a single @others appears at the end of the body text of the @file node.  The expansion of @others is the concatenation of the body text of all ordinary nodes, in natural tree order.
+
+For a more complex example, suppose we have a tree with the following headlines:
+
+  @file name (contains @others in body text)
+    &lt;&lt;section1&gt;&gt; (contains @others in body text)
+      &lt;&lt;section2&gt;&gt; (contains @others in body text)
+         node A1
+		 node A2
+      node B
+    node C1
+	node C2
+	
+The expansion of @others in node &lt;&lt;section2&gt;&gt; is the concatenation of the expansion of the body texts of nodes A1 and A2.  Similarly, the expansion of @others in node &lt;&lt;section1&gt;&gt; is the concatenation of the expansion of the body texts of node B.  Finally, the expansion of @others in node @file name is the concatenation of the expansion of nodes C1 and C2.
+
+The derived file corresponding to an @file node is not written if any descendant of the @file node is an orphan. For example, the following outline contains an orphan node:
+
+@file name (no @others)
+    &lt;&lt;section1&gt;&gt; (contains @others)
+      node A
+    node B (orphan node)
+	
+Leo2 issues a warning when a .leo file is saved if any @file node contains an orphan or @ignored node.
+
+Typically a single @others directive in the @file node suffices.  For example, the body text of the @file node would be something like:
+
+  &lt;&lt; preliminary definitions &gt;&gt;
+  @others
+
+Sections may be defined in any descendant of the @file node provided that the method is not a descendant of any definition node.</t>
+<t tx="EKR.20040524104904.353">Sherlock is a flexible tracing and measurement package for C, C++ and Objective C.  All parts of Sherlock are in the public domain.
+
+You will see Sherlock macros throughout Leo's C++ code.  The most common of these macros are FTAG, STATB, STATX, TRACEP, TRACEPB and TRACEPX.  These Sherlock macros are not functional in the production version of Leo.
+
+Full documentation for Sherlock can be found at:
+	http://personalpages.tds.net/~edream/sl_index.html</t>
+<t tx="EKR.20040524104904.354">Leo now uses unicode internally for most strings.  This solves a lot of problems.  The children of this node discuss the details...
+</t>
+<t tx="EKR.20040524104904.355">Leo now uses unicode internally for most strings.  The highlights:
+
+1. Leo converts headline and body text to unicode when reading .leo files and derived files.  Both .leo files and derived files may specify their encoding, with "utf-8" being used by default.  If the encoding used in a derived file is not "utf-8" it is represented in the @+leo sentinel line.  For example:
+
+#@+leo-encoding=iso-8859-1.
+
+The "utf-8" encoding is a "lossless" encoding (it can represent all unicode code points), so encoding and decoding to and from utf-8 plain strings will never cause a problem.  When reading or writing a character not in a "lossy" encoding, Leo converts such characters to '?' and issues a warning. 
+
+2. When writing .leo files and derived files Leo uses the same encoding used to read the file, again with "utf-8" used as a default.
+
+3. leoConfig.py contains two settings used to specify the default encoding used for .leo and derived files:
+
+default_derived_file_encoding = UTF-8 
+new_leo_file_encoding = UTF-8 
+
+I do not recommend changing new_leo_file_encoding (see the comments in leoConfig.leo) and you may set 
+default_derived_file_encoding to anything that makes sense for you.
+
+4. You may use the @encoding directive to specify the encoding used in a derived file.  You can't mix encodings in a single derived file.
+
+This is all should need to know to use extended character sets on Leo.</t>
+<t tx="EKR.20040524104904.356">leoConfig.py now contains two new settings, with the defaults shown below: 
+
+default_derived_file_encoding = UTF-8 
+new_leo_file_encoding = UTF-8 
+
+These control the default encodings used when writing derived files and .leo files.
+
+I do not recommend changing new_leo_file_encoding (see the comments in leoConfig.leo)
+
+You may set default_derived_file_encoding to anything that makes sense for you.
+</t>
+<t tx="EKR.20040524104904.357">This Appendix describes Leo's file format.  Most users of Leo can skip this appendix.  This technical information will be of use only to those wanting to process Leo files with special-purpose filters.
+
+Leo's uses XML for its file format.  The following sections describe this format in detail.  The last node gives an example, and it will be useful to refer to this example frequently.
+
+In the description below sss denotes a string with the XML escapes for the &amp; &lt; and &gt; characters:
+
+&amp; becomes &amp;amp;
+&lt; becomes &amp;lt;
+&gt; becomes &amp;gt;
+
+This translation is performed on any text that could contain the &amp; &lt; or &gt; characters.
+
+For those of you who grok DTD's a preliminary DTD for Leo's XML follows.  This DTD is under development and may contain syntax or semantics errors.  It may also simply be inaccurate.
+
+The format of Leo2 .leo files is very similar to the format of Leo1 .leo files.  The major differences are:
+
+1.  Leo1 .leo files have file version 1.  Leo2 .leo files have file version 2.  This allows Leo1 to issue an important warning if a version 2 file is opened.
+
+2.  vnodes in Leo2 .leo files contain a new cloneIndex field, which records the immutable clone indices found in derived files.
+
+3.  vnodes in Leo2 .leo files contain a new attribute byte, the "orphan" attribute.
+
+In all other respects Leo1 and Leo2 .leo files are identical. Leo1 can open Leo2 files, but Leo1 ignores all information unique to Leo2.  However,  Leo1 treats @file nodes as regular outline nodes: Leo1 neither reads derived files when outlines (.leo files) are loaded nor writes derived files when outlines are saved.
+</t>
+<t tx="EKR.20040524104904.358">The heart of the file format is the &lt;vnodes&gt; element containing possibly nested &lt;v&gt; elements, and the &lt;tnodes&gt; element containing a list of (non-nested) &lt;t&gt; elements.  &lt;v&gt; elements refer to &lt;t&gt; elements using "t" attributes in &lt;v&gt; elements corresponding to "tx" attributes in &lt;t&gt; elements.
+
+&lt;v&gt; and &lt;t&gt; elements in .leo files correspond directly to vnodes and tnodes in memory when Leo is running.  For full information about these see @file leoNodes.py in LeoPy.leo.  For full information about exactly what Leo is doing when reading and writing files, see @file leoFileCommands.py in LeoPy.leo.
+
+New in 4.0:  &lt;v&gt; elements corresponding to @file nodes now contain tnodeList attributes that are a list of gnx's.  The tnodeList attribute allows the read code in @file leoAtFile.py to recreate the order in which nodes should appear in the outline.  The tnodeList attribute is a list of gnx's: global node indices.  See the nodeIndices class in leoNodes.py for details.  A gnx has the form id.timestamp.n where .n is elided unless two nodes would have the same id.timestamp field.
+
+The following sections of Users Guide:Customizing Leo contain new conventions that allow plugins to extend this format by adding attributes to &lt;v&gt; and &lt;t&gt; elments:
+
+- Extending the format of .leo files
+- Attaching temporary attributes to vnodes and tnodes
+- Recommended conventions for plugins</t>
+<t tx="EKR.20040524104904.359">Leo files start out with the following line declaring the format to be formatted as a type of XML.
+
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+</t>
+<t tx="EKR.20040524104904.360">The &lt;leo_file&gt; tag opens an element that contains the entire file. The &lt;/leo_file&gt; tag at the end of the file ends this element.
+
+The following sections describe the elements that may appear between the &lt;leo_file&gt; tag and the &lt;/leo_file&gt; tag.  These elements must appear in the order given.  However, the clone_windows element is optional.
+</t>
+<t tx="EKR.20040524104904.361">The file header element specifies information used to parse the file or to allocate data structures needed to read the file.  The header starts with &lt;leo_header and ends with /&gt;  In between are the following four required attribute fields.
+
+file_format="1" indicates the version number of the file format: 1, 2, 3, etc.
+
+tnodes="2" indicates the number of tnodes that appear in the file.
+
+max_tnode_index="2"	indicates the largest tnode index.
+
+clone_windows="0" indicates the number of clone windows specified by the file.
+
+I'll say more about tnodes later.
+</t>
+<t tx="EKR.20040524104904.362">The globals element specifies information relating to the entire file.  This element starts with the following the &lt;globals body_outline_ratio="0.50"&gt; tag and ends with &lt;/globals&gt; tag.
+
+The body_outline_ratio attribute specifies the ratio of the height of the body pane to the total height of the Leo window.  It initializes the position of the splitter separating the outline pane from the body pane.
+
+In between the &lt;globals...&gt; tag and the &lt;/globals tag&gt; are the following two elements.  These specify the position of the Leo window and Log window in global coordinates:
+
+&lt;global_window_position top="27" left="27" height="472" width="571"/&gt;
+
+&lt;global_log_window_position top="183" left="446" height="397" width="534"/&gt;
+</t>
+<t tx="EKR.20040524104904.363">The preferences element specifies the preferences that the user can change using the Preferences command.  It starts with the &lt;preferences...&gt; tag and ends with &lt;/preferences&gt; tag.
+
+The following three attributes may appear before the &gt; that ends the &lt;preferences...&gt; tag.
+
+allow_rich_text="1"
+tab_width="4"
+page_width="132"
+
+At present the "Allow Rich Text" option is non-functional.
+
+Following the &lt;preferences...&gt; tag is the following element.
+
+&lt;syntax_prefs&gt;sss&lt;/syntax_prefs&gt;
+
+The sss string encodes the settings of the TSyntaxMemo component used for body text.  This string is simply passed to and from TSyntaxMemo and is not used by Leo in any other way.  Future versions of TSyntaxMemo will allow more settings to be encoded, and those settings will appear between the &lt;preferences...&gt; and &lt;/preferences&gt; tags.
+</t>
+<t tx="EKR.20040524104904.364">The find_panel_settings element specifies the settings of the Find panel at the time the file was saved.  This element starts with the &lt;find_panel_settings...&gt; tag and continues until the &lt;/find_panel_settings&gt; tag.
+
+Zero or more of the following attributes may appear before the &gt; that terminates the &lt;find_panel_settings...&gt; tag. Leo writes these attributes in the order shown, but they may appear in any order.
+
+whole_word="1"
+search_body="1"
+whole_word="1"
+ignore_case="1"
+pattern_match="1"
+search_headline="1"
+search_body="1"
+suboutline_only="1"
+mark_changes="1"
+mark_finds="1"
+reverse="1"
+
+The default for all attributes is "0" (unchecked check box) and an attribute is written only if is "1" (checked check box).
+
+The following elements appear after the &lt;find_panel_settings&gt; tag and before the &lt;/find_panel_settings&gt; tag.
+
+&lt;find_string&gt;sss&lt;/find_string&gt;
+&lt;change_string&gt;sss&lt;/change_string&gt;
+
+The sss strings indicate the find and change strings in the Find panel.  Either sss string may be empty.  Both sss strings are encoded with the usual XML escapes.
+</t>
+<t tx="EKR.20040524104904.365">The vnodes element specifies the list of so-called vnodes of an outline.  
+
+The vnodes element starts with &lt;vnodes...&gt; and ends with &lt;/vnodes&gt;.  In between these tags are one or more v elements.
+</t>
+<t tx="EKR.20040524104904.366">The v element represents a single vnode and has the following form:
+
+&lt;v...&gt;&lt;vh&gt;sss&lt;/vh&gt; (zero or more nested v elements) &lt;/v&gt;
+
+The vh element specifies the headline text.  As usual it starts at the &lt;vh&gt; tag and continues until the &lt;/vh&gt; tag.  sss is the headline text encoded with the usual XML escapes.
+
+As shown above, a v element may contain nested v elements.  Each vnode corresponds to a headline on the screen, and vnodes are written to the file in the order they would appear on the screen if all headlines were fully expanded.
+
+The nesting relationship between vnodes gives the outline structure.  v elements for child vnodes are nested within the v elements of parent vnodes.  Therefore, the outline level of a v element is the number of unclosed v elements containing it.
+
+Zero or more of the following three attributes may appear before the &gt; that terminates the &lt;v...&gt; tag.
+
+t="T23"
+vtag="V18"
+a="xxxx"
+
+The t="Tnnn" attribute specifies the tnode associated with this vnode.  (See the section describing the &lt;t&gt; tag for more details.
+
+The vtag="Vnnn" attributes specifies the vtag number for this node.  This tag is specified only if a clone window exists for this vnode.
+
+The a="xxxx" attribute specifies vnode attributes.  The xxxx denotes one or more upper-case letters whose meanings are as follows:
+
+C	The vnode is a clone.
+E	The vnode is expanded so its children are visible.
+M	The vnode is marked.
+T	The vnode is the top visible node.
+V	The vnode is the current vnode.
+
+For example, a="CEM"  specifies that the vnode is a clone, is expanded and is marked.
+</t>
+<t tx="EKR.20040524104904.367">The tnodes element specifies the list of tnodes of an outline.
+
+The tnodes element starts with &lt;tnodes...&gt; and ends with &lt;/tnodes&gt;.  In between these tags are zero or more t elements.  
+</t>
+<t tx="EKR.20040524104904.368">The t element represents a single tnode.  Each tnode represents body text.  Because of cloning, a tnode may be shared among several vnodes.
+
+tnodes have the following form:
+
+&lt;t...&gt;&lt;tb&gt;sss&lt;/tb&gt;&lt;/t&gt;
+
+The tb element specifies the body text.  As usual it starts at the &lt;tb&gt; tag and continues until the &lt;/tb&gt; tag.  sss is the headline text encoded with the usual XML escapes.
+
+The tx="Tnnn" attribute must appear before the &gt; that terminates the &lt;t...&gt; tag.  It specifies the tnode index of the tnode.  Vnodes refer to this index in their t="Tnnn" attribute.
+
+The rtf="1" attribute may appear before the &gt; that terminates the &lt;t...&gt;tag.  If present it specifies that body text is encoded as Rich Text Format.  This attribute is not used at present.
+</t>
+<t tx="EKR.20040524104904.369">The clone_windows element is optional.  If present it specifies the list of cloned windows of an outline.
+
+The clone_windows element starts with &lt;clone_windows&gt; and ends with &lt;/clone_windows&gt;.  In between these tags are one or more clone_window elements.  
+</t>
+<t tx="EKR.20040524104904.370">The clone_window element specifies a single clone window to be opened when the file opens.
+
+The clone_window element has the following form:
+
+	&lt;clone_window vtag="Vnnn"&gt;
+		&lt;global_window_position top="nnn" left="nnnn" height="nnn" width="nnn" &gt;
+	&lt;/clone_window&gt;
+
+All attributes and elements shown above are required.
+
+The vtag attribute must match the vtag attribute in some vnode, and associates the clone window with the vnode.
+
+The global_window_position element specifies the size and position of the clone window.  The top and left attributes specify the position of the clone window in global coordinates.  The height and width attributes specify the size of the clone window.</t>
+<t tx="EKR.20040524104904.371">&lt;!-- This is a comment --&gt;
+&lt;!-- Version 1 of LEO DTD --&gt;
+
+&lt;!DOCTYPE LeoOutlineDocumentType [
+
+&lt;!-- A LEO file consists of the following parts (clone_windows is optional) --&gt;
+&lt;!ELEMENT leo_file (header, globals, prefs, find_settings, vnodes, tnodes, clone_windows?) &gt;
+
+&lt;!ELEMENT header EMPTY &gt;
+    &lt;!ATTLIST header
+        file_format     CDATA #REQUIRED  &lt;!-- An integer version number --&gt;
+        tnodes          CDATA #REQUIRED  &lt;!-- Unused at present --&gt;
+        max_tnode_index CDATA #REQUIRED  &lt;!-- The size of the array used to resolve tnode indices --&gt;
+        clone_windows   CDATA 0 &gt;  &lt;!-- Number of clone windows --&gt;
+
+&lt;!ELEMENT globals (global_window_position? global_log_window_position?) &gt;
+    &lt;!ATTLIST globals body_outline_ratio CDATA 0.5 &gt;
+    &lt;!ELEMENT global_window_position EMPTY &gt;
+        &lt;!ATTLIST global_window_position
+            top     CDATA #REQUIRED
+            left    CDATA #REQUIRED
+            height  CDATA #REQUIRED
+            width   CDATA #REQUIRED &gt;
+    &lt;!ELEMENT global_log_window_position EMPTY &gt;
+        &lt;!ATTLIST global_window_position
+            top     CDATA #REQUIRED
+            left    CDATA #REQUIRED
+            height  CDATA #REQUIRED
+            width   CDATA #REQUIRED &gt;
+
+&lt;!ELEMENT preferences ( syntax_options? ) &gt;
+    &lt;!ATTLIST preferences
+        &lt;!-- The following specify defaults for preferences --&gt;
+		allow_rich_text  CDATA 0
+		tab_width        CDATA 4
+		page_width       CDATA 132
+		font_name		CDATA "Courier New"
+		font_size		CDATA 9 &gt;
+    &lt;!ELEMENT syntax_options (#PCDATA) &gt;
+
+&lt;!ELEMENT find_settings (find_string? change_string?) &gt;
+    &lt;!ATTLIST find_settings
+        &lt;!-- The following specify defaults for the find/change panel --&gt;
+        batch            CDATA 0
+        wrap_around      CDATA 0
+        batch            CDATA 0
+        whole_word       CDATA 1
+        ignore_case      CDATA 0
+        pattern_match    CDATA 0
+        search_head_text CDATA 0
+        search_body_text CDATA 1
+        suboutline_only  CDATA 0
+        mark_changes     CDATA 0
+        mark_finds       CDATA 0
+        reverse          CDATA 0 &gt;
+    &lt;!ELEMENT find_string   (#PCDATA) &gt;
+    &lt;!ELEMENT change_string (#PCDATA) &gt;
+
+&lt;!ELEMENT vnodes (v*) &gt;
+    &lt;!ELEMENT v (vh, v*) &gt;  &lt;!-- The crucial change: vnode may contain other vnodes --&gt;
+        &lt;!ATTLIST v
+            vtag ID    #IMPLIED       &lt;!-- for use by clone_windows section --&gt;
+            t    IDREF #IMPLIED       &lt;!-- the tnode for this vnode, or none --&gt;
+            a    CDATA "" &gt;    &lt;!-- V=current, M=marked, C=cloned, E=expanded --&gt;
+    &lt;!ELEMENT vh (#PCDATA) &gt;
+
+&lt;!ELEMENT tnodes (t*)&gt;
+    &lt;!ELEMENT t (#PCDATA) &gt;
+        &lt;!ATTLIST t
+            tx  ID
+            rtf CDATA 0 &gt;      &lt;!-- 1 if the #PCDATA is rtf format --&gt;
+
+&lt;!ELEMENT clone_windows (clone_window*) &gt;
+    &lt;!ELEMENT clone_window (global_clone_window_position) &gt;
+        &lt;!ATTLIST clone_window
+            vref IDREF #REQUIRED &gt;    &lt;!-- the vtag of the vnode that owns this clone window --&gt;
+        &lt;!ELEMENT global_clone_window_position EMPTY &gt;
+            &lt;!ATTLIST global_clone_window_position
+                top     CDATA #REQUIRED
+                left    CDATA #REQUIRED
+                height  CDATA #REQUIRED
+                width   CDATA #REQUIRED &gt;
+]
+</t>
+<t tx="EKR.20040524104904.372">The following node contains the text of an actual leo file.  After that node is a node containing the outline that created the leo file.</t>
+<t tx="EKR.20040524104904.373">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;leo_file&gt;
+&lt;leo_header file_format="1" tnodes="4" max_tnode_index="4" clone_windows="0"/&gt;
+&lt;globals body_outline_ratio="0.499"&gt;
+	&lt;global_window_position top="54" left="54" height="550" width="559"/&gt;
+	&lt;global_log_window_position top="2" left="630" height="397" width="336"/&gt;
+&lt;/globals&gt;
+&lt;preferences allow_rich_text="0" tab_width="4" page_width="72" tangle_bat="0" untangle_bat="0"&gt;
+	&lt;TSyntaxMemo_options&gt;DBSoft6:OPT#8#67100656GWD#1#0GCL#11#-2147483633WRC#1#0IDS#1#1WRO#3#&amp;gt;|:FON#11#Courier NewFOS#1#9STC#8#16777215STB#7#8388608TBC#0#TBD#1#4EFF#323#18,0,0,16777215,;3,0,16777215,;4,8421504,16777215,;5,0,16777215,;6,255,16777215,;10,16711680,16777215,;11,0,16777215,;12,16711680,16777215,;14,16711680,16777215,;15,255,16777215,;16,16711680,16777215,;17,255,16777215,;18,16711680,16777215,;19,32768,16777215,;30,255,16777215,;32,0,16777215,;33,255,16777215,;36,0,16777215,;GDF#1#0MDF#1#0SDF#1#0BDF#1#0FOC#1#0RMG#1#0LNN#13#MS Sans SerifLNS#1#8LNC#11#-2147483640LNT#1#1LNE#0##END#&lt;/TSyntaxMemo_options&gt;
+&lt;/preferences&gt;
+&lt;find_panel_settings whole_word="1" search_body="1"&gt;
+	&lt;find_string&gt;error&lt;/find_string&gt;
+	&lt;change_string&gt;&lt;/change_string&gt;
+&lt;/find_panel_settings&gt;
+&lt;vnodes&gt;
+&lt;v t="T1" a="TV"&gt;&lt;vh&gt;Headline 1&lt;/vh&gt;
+&lt;v t="T2" a="E"&gt;&lt;vh&gt;Headline 2&lt;/vh&gt;
+&lt;v&gt;&lt;vh&gt;Headline 3 ( No body text)&lt;/vh&gt;&lt;/v&gt;
+&lt;/v&gt;
+&lt;/v&gt;
+&lt;v t="T3" a="C"&gt;&lt;vh&gt;Headline 4 ( a clone )&lt;/vh&gt;
+&lt;v t="T4"&gt;&lt;vh&gt;Headline 5&lt;/vh&gt;&lt;/v&gt;
+&lt;/v&gt;
+&lt;v t="T3" a="C"&gt;&lt;vh&gt;Headline 4 ( a clone )&lt;/vh&gt;
+&lt;v t="T4"&gt;&lt;vh&gt;Headline 5&lt;/vh&gt;&lt;/v&gt;
+&lt;/v&gt;
+&lt;/vnodes&gt;
+&lt;tnodes&gt;
+&lt;t tx="T1"&gt;Text of headline 1.&lt;/t&gt;
+&lt;t tx="T2"&gt;Text of headline 2.&lt;/t&gt;
+&lt;t tx="T3"&gt;Text of headline 4.&lt;/t&gt;
+&lt;t tx="T4"&gt;Text of headline 5.&lt;/t&gt;
+&lt;/tnodes&gt;
+&lt;/leo_file&gt;</t>
+<t tx="EKR.20040524104904.374"></t>
+<t tx="EKR.20040524104904.375">Text of headline 1.</t>
+<t tx="EKR.20040524104904.376">Text of headline 2.</t>
+<t tx="EKR.20040524104904.377"></t>
+<t tx="EKR.20040524104904.378">Text of headline 4.</t>
+<t tx="EKR.20040524104904.379">Text of headline 5.</t>
+<t tx="EKR.20040524104904.380">@nocolor
+@ignore</t>
+<t tx="EKR.20040524104904.381">We often refer to outline nodes by the directives they contain.  For example, an @root node is a node containing an @root directive, an @ignore node is a node containing an @ignore directive, and so on.
+
+Exception: an @file node is a node whose headline starts with @file.</t>
+<t tx="EKR.20040524104904.382">An @root tree is a tree whose is an @root node.  An @file tree is a tree whose root is an @file node, and so on.</t>
+<t tx="EKR.20040524104904.383">The pane containing the body text of the currently selected headline in the outline pane.</t>
+<t tx="EKR.20040524104904.384">The text in the body pane.  Body text is always associated with a particular headline.</t>
+<t tx="EKR.20040524104904.385">A small blue box in the icon just to the left of a headline that indicates that the node contains body text.</t>
+<t tx="EKR.20040524104904.386">A node directly contained by a node.</t>
+<t tx="EKR.20040524104904.387">Another name for a section or part.</t>
+<t tx="EKR.20040524104904.388">A copy of a tree that changes whenever the original changes.  The original and all clones are treated equally:  no special status is given to the "original" node.</t>
+<t tx="EKR.20040524104904.389">A small red arrow in the icon just to the left of a headline that indicates that the node is a clone of another node.</t>
+<t tx="EKR.20040524104904.390">A section containing code.  Code sections start with @c or @code directives.</t>
+<t tx="EKR.20040524104904.391">A literate programming language invented by Donald Knuth and Silvio Levy.  CWEB produces derived files for the C language.
+
+http://www-cs-faculty.stanford.edu/~knuth/cweb.html</t>
+<t tx="EKR.20040524104904.392">To move right all following siblings of a node so that they become children of a node.</t>
+<t tx="EKR.20040524104904.393">The output file created as the result of tangling a node containing an @root directive. The file consists of the expansion of the text following the @root directive.</t>
+<t tx="EKR.20040524104904.394">An offspring of a node.  That is, a child, grandchild, etc. of a node.</t>
+<t tx="EKR.20040524104904.395">A keyword, preceded by an '@' sign, that is used to control syntax coloring or the Tangle, Untangle or Weave commands.</t>
+<t tx="EKR.20040524104904.396">A section containing only documentation. That is, a section that start with @.  Doc sections are associated with the immediately following code section, if any.</t>
+<t tx="EKR.20040524104904.397">A convention for representing sequences of characters that would otherwise have special meaning.  Leo has only one such convention: in @root trees, @@ in the leftmost column of a code part stands for a single @ character.
+
+Note: the markup language Leo uses in body pane is based on noweb.  However, Leo does not support noweb's @&lt;&lt; and @&gt;&gt; escape conventions.  If a line in a code part contains &lt;&lt; followed by &gt;&gt;, then that line does contain a section name, regardless of context.  If the &lt;&lt; and &gt;&gt; characters should not, if fact, delimit a section name, then you must place the &lt;&lt; and &gt;&gt; on separate lines.
+
+Eliminating noweb's escape conventions for &lt;&lt; and &gt;&gt; characters solves some difficult problems when automatically untangling derived files.  Moreover, it is typically easier to split source lines than to use @&lt;&lt; and @&gt;&gt;.  Finally, Leo's Export and Import commands do support the @&lt;&lt; and @&gt;&gt; conventions.</t>
+<t tx="EKR.20040524104904.398">The child of a child of a node.</t>
+<t tx="EKR.20040524104904.399">The organizational unit of an outline.  A node.  Each headline contains headline text and (possibly empty) body text.</t>
+<t tx="EKR.20040524104904.400">Hoisting a node redraws the screen that node and its descendants becomes the only visible part of the outline.  Leo prevents the you from moving nodes outside the hoisted outline.  Dehoisting a node restores the outline.
+
+Multiple hoists may be in effect: each dehoist undoes the effect of the immediately preceding hoist.</t>
+<t tx="EKR.20040524104904.401">Leo stands for Literate Editor with Outlines. That is, Leo supports both literate programming and outlining.
+
+Leo1 denotes all versions of Leo that write version 1 .leo files, that is, all Windows version of Leo prior to version 2.0.  The last version of Leo1, version 1.15, understands enough about Leo2 to issue a warning when opening version 2 files.
+
+Leo2 denotes all versions of Leo that write version 2 .leo files, that is, all versions of leo.py and all Windows versions with version number 2.0 and above.  Only Leo2 can generate derived files from @file trees.</t>
+<t tx="EKR.20040524104904.402">A style of programming that aims at producing the highest quality program listings.  Literate programming languages apply two fundamental operations to text: weaving and tangling.  Leo supports two literate programming languages, CWEB and noweb.
+
+Knuth's book is the best overall introduction to literate programming:
+Literate Programming, by D. E. Knuth ISBN 0-937073-80-6.
+
+More information is available at Knuth's web site:
+http://www-cs-faculty.stanford.edu/%7Eknuth/lp.html</t>
+<t tx="EKR.20040524104904.403">Marking a node by placing a red mark near its leader character. Marks can be placed using the Mark command, as the result of Find and Change commands, or as the result of the Mark Changed Roots and Mark Changed Items command. The Tangle Marked command tangles only those subtrees that are marked.</t>
+<t tx="EKR.20040524104904.404">Within an @file tree, a node that contain a section name, like &lt;&lt;x&gt;&gt;, at the start of its headline text.
+
+Within an @file tree, all nodes containing a section reference must have a descendent named node corresponding to the reference.
+
+Within an @root or @unit tree, an @code directive is an abbreviation for &lt;&lt;x&gt;&gt;=, where &lt;&lt; x &gt;&gt; is found in the headline.
+
+</t>
+<t tx="EKR.20040524104904.405">The organizational unit of an outline.  A headline.  The combination of headline text and outline text.
+</t>
+<t tx="EKR.20040524104904.406">A simple literate programming language invented by Norman Ramsey.  noweb can produce derived files for any text-based programming language.
+
+http://www.eecs.harvard.edu/~nr/noweb/</t>
+<t tx="EKR.20040524104904.407">The children, grandchildren, etc. of a node.</t>
+<t tx="EKR.20040524104904.408">An unnamed node in an @tree that contains no body text.  Such nodes may appear anywhere in an @file tree; they do not affect the derived file in any way.  In particular, organizing nodes do not affect indentation in the derived file.</t>
+<t tx="EKR.20040524104904.409">An unnamed node that is either 1) a descendent of a named node or 2) the descendent of no @others node.
+
+Orphan and @ignore nodes are not allowed in @file trees: no derived file is written if an @file node contains an @ignore or orphan node.</t>
+<t tx="EKR.20040524104904.410">1. A visual representation of a hierarchy on the screen.
+
+2. The data contained by the hierarchy.
+
+Outlines are composed of headlines representing data.  The combination of a headline and its associated body text is called a node.
+</t>
+<t tx="EKR.20040524104904.411">he pane containing a visual representation of outlines.</t>
+<t tx="EKR.20040524104904.412">The node the directly contains a node.</t>
+<t tx="EKR.20040524104904.413">Another name for a section or chunk.</t>
+<t tx="EKR.20040524104904.414">A file that can be read by Adobe Acrobat.</t>
+<t tx="EKR.20040524104904.415">To move all children of a node left in an outline so that they become siblings of the node.</t>
+<t tx="EKR.20040524104904.416">The first node of the entire outline.  In the PC version of Leo several nodes may be siblings of the root.</t>
+<t tx="EKR.20040524104904.417">The portion of the outline in which a section definition is known. By default the scope of a section definition is the smallest subtree containing both the section and a node containing an @root directive. The @unit directive declares that the subtree containing the @unit directive is the scope for all sections defined in that tree.</t>
+<t tx="EKR.20040524104904.418">A fragment of text that can be incorporated into derived files.  A syntactic unit of body text.
+
+There are two kinds of sections: code sections and doc sections. Sections are defined in slightly different ways in @file in @root trees (that's the difference between the two kinds of trees.)
+
+In @file trees
+--------------
+Code sections start with the @c directive.  The entire body text of a node is a code section by default, so the @c directive can be omitted if there are no doc sections in the body pane.  Doc sections start with @ followed by a space at the start of a line. Doc sections continue until the end of body text or until the next @c or @(space) directive.
+
+In @root trees
+--------------
+Code sections start with the @c directive or section definition lines of the form:
+&lt;&lt; section name &gt;&gt;=
+Such lines begin named code sections.  Other code sections are unnamed. Doc sections start with @ followed by a space at the start of a line.  Doc sections continue until the end of body text or until the next @c or @(space) directive.
+
+The term "section" has two related meanings.  Sections are syntactic units of text in the body pane.  Leo writes the text of section to derived files, so another meaining of "section" is "the text that is written to the derived file."  Which meaning is intended should be clear from context.</t>
+<t tx="EKR.20040524104904.419">A name enclosed in &lt;&lt; and &gt;&gt;.  Section names may contain any characters except newlines and "&gt;&gt;".</t>
+<t tx="EKR.20040524104904.420">A section name appearing in a code part. Tangling replaces all references by their definitions.</t>
+<t tx="EKR.20040524104904.421">Comment lines in files derived from @file nodes.  Such lines start with an @ following the opening comment delimiter.  Sentinels embed outline structure into derived files.  Do not alter such lines!  Doing so can corrupt the outline structure.</t>
+<t tx="EKR.20040524104904.422">Nodes with the same parent.  Siblings of the root have no parent.</t>
+<t tx="EKR.20040524104904.423">The icon that appears just to the left of headline text in the outline pane.  This icon shows: a blue body text box if the node contains body text, a red clone arrow if the node is cloned, and a red marker bar if the node is marked.  The icon is outlined in black if the node is dirty, that is, if the node has been changed since the file was last change.
+</t>
+<t tx="EKR.20040524104904.424">The process of creating derived files from @root or @file trees.  Leo tangles @file automatically when writing a .leo file.  The user must explicitly tangle @root trees using the Tangle command.  Tangling expands all references in an @root node or @file node.</t>
+<t tx="EKR.20040524104904.425">The language used to syntax color text.  This language determines the default comment delimiters used during tangling and untangling.
+</t>
+<t tx="EKR.20040524104904.426">Another name for an outline.</t>
+<t tx="EKR.20040524104904.427">A node whose headline text does not start with &lt;&lt; name &gt;&gt;.
+
+Unnamed nodes in @file trees must be a descendent of an @others node and must not be the descendent of any named node.
+
+For example, the following tree is invalid:
+
+@others node
+  &lt;&lt; name &gt;&gt;
+    unnamed node
+	
+The unnamed node would be an orphan node.</t>
+<t tx="EKR.20040524104904.428">Updating an outline based on changes to derived files.  Untangling allows changes to be propagated from derived files back to the outline.  Especially useful when fixing syntax errors outside Leo.
+</t>
+<t tx="EKR.20040524104904.429">The process of creating typeset documentation from a noweb or CWEB source file.  Weaving creates documentation. Tangling creates source code files known as derived files.
+
+Leo does not support weaving directly.  If you want to weave a file you can create noweb or CWEB files using Leo's export commands, then use the noweb or CWEB systems to weave those files.</t>
 <t tx="EKR.20040601084317">Leo 4.2 alpha 3           June 1, 2004
 
 This version fixes completes the essential features of version 4.2.  All known incompletions and bugs involving shared nodes and Leo's new file format have been fixed.  BTW, this version of Leo completes Leaps 201 and 202.
@@ -1582,6 +6638,22 @@ At present only the u.saveTree method exists.  Coming soon, u.saveNode, u.saveNo
 <t tx="EKR.20040601102808">See the to-do list in LeoPy.leo for a list of known bugs in this version.
 
 None of these bugs is serious:  I consider this version to be suitable for day-to-day work.</t>
+<t tx="EKR.20040608091134">The @all directive is valid only in @thin trees.  This directive is similar to @others, but it is less restrictive: it dumps _all_ nodes to the derived file, including @ignore nodes and nodes that in an @others tree would be considered to be orphan nodes.
+
+The @all directive is required for files such as @thin leoProjects.txt in LeoPy.leo.  leoProjects.txt contains so-called project nodes.  It doesn't have an meaning as a program file:  it is simply a collection of unrelated data.  @others would not work at all: it would complain about lots of orphan nodes.</t>
+<t tx="EKR.20040608091134.1">In most respects @file-thin (or equivalently, @thin) works just like @file as far as writing code is concerned.  In fact, you can convert from @file to @thin simply by opening an outline, changing @file to @thin, and saving the outline.
+
+Here are the differences between @file and @thin:
+
+- Leo does not save the information contained in the @thin tree in the .leo file.  
+
+- Files derived from @thin (so-called "thin" derived files) contain all information needed to recreate the @thin tree in the outline.  In particular, @+node and @-node sentinels use gnx's to uniquely identify nodes.
+
+- The @all directive is valid only in @thin trees.  This directive is similar to @others, but it is less restrictive: it dumps _all_ nodes to the derived file, including @ignore nodes and nodes that in an @others tree would be considered to be orphan nodes.
+
+The @all directive is required for files such as @thin leoProjects.txt in LeoPy.leo.  leoProjects.txt contains so-called project nodes.  It doesn't have an meaning as a program file:  it is simply a collection of unrelated data.  @others would not work at all: it would complain about lots of orphan nodes.
+
+The great advantage of using @thin is that people can collaborate without having to continually update .leo files:  collaborators only need to commit thin derived files to cvs.</t>
 <t tx="EKR.20040628095213">Leo 4.2 beta 1           June 30, 2004
 
 Beta 1 completes all fundamental work in the 4.2 code base. All essential code
@@ -7120,6 +12192,1176 @@ names.sort()
 for name in names:
 	g.es(name)</t>
 <t tx="edream.110203163054.1050">@nocolor</t>
+<t tx="edream.110203163054.1051"></t>
+<t tx="edream.110203163054.1052">First, read the introduction to Leo at:
+http://webpages.charter.net/edreamleo/intro.html
+
+Then study LeoPy.leo, the source code for leo.py. The best way to learn about
+Leo is to spend 15 or 20 minutes just browsing through the outline, not
+worrying about details but just seeing how most nodes are organized and how
+directives and section references are typically used. Then read Chapter 4 to
+learn the details.
+
+When studying leo.py, I would suggest paying particular attention to the
+following:
+
+1. The (Projects) tree shows how to use clones to represent tasks.
+
+2. The @file leoNodes.py tree shows how to define more than one class in a
+single file using several @others directives. Note that the @others directives
+must be in separate nodes.
+
+3. Most other files show how to use a single @others directive to define one
+class.
+
+4. Note in particular that the vast majority of methods are defined in unnamed
+nodes.</t>
+<t tx="edream.110203163054.1053">The file LeoDocs.leo contains two "Hello World" programs, using @file trees and
+@root trees.
+
+The file LeoPy.leo contains a large number of other examples, some small, some
+large and complex.</t>
+<t tx="edream.110203163054.1054">Leo's clones provide an excellent way of solving any organizational problem.
+The fundamental principle is this: Clones create multiple views of data.
+
+For example, whenever I have a task to do, say a new feature to implement, or a
+non-trivial bug to fix, I create a new headline to represent that task. Let's
+call such a headline a task headline. By convention, I enclose the headline in
+parentheses and put an @ignore in the body text of the headline, but that's
+just a convention I use.
+
+I clone all nodes that relate to that task and move the clones under the
+headline. Voila. I now have a new view of Leo's source code, containing all and
+only those nodes that relate to the task. It is now trivial to find the parts
+of code relating to the task. Note that I can change the cloned nodes under the
+headline task in any way, and the clones under the @file tree also change and
+the @file node itself is marked dirty so that when I save the .leo file all
+affected @file trees are also saved. The task headline is a perfect place to
+place notes about the task: why some approaches didn't work, to-do lists, test
+data, whatever. You could even create @file nodes to create test files if you
+want.
+
+There are situations where you need to use @root trees. However, those
+situations are rare. Most of the time you can use clones to great effect. For
+extended examples, look at the (Projects) section in LeoPy.leo. That section
+contains a large number of views of Leo itself.</t>
+<t tx="edream.110203163054.1055">Leo's @file trees and @root trees represent derived files within an outline.
+Leo outlines may contain both @root and @file trees, and I recommend using
+@file trees whenever possible.
+
+Indeed, @file trees are much easier to use than @root trees:
+
+1. @file trees require less markup than @root trees; all sections in @root
+trees must have names, but @file trees usually contain many unnamed sections.
+Within @file trees, the @others directive acts like a reference to all unnamed
+sections.
+
+2. The user must explicitly tangle and untangle @root trees using the Tangle
+and Untangle commands. Leo tangles and untangles @file trees automatically,
+tangling all changed @file trees when writing an outline and untangling all
+@file trees when reading an outline.
+
+However, @root trees are more flexible than @file trees.
+
+1. Within @file trees, sections must be defined in descendents of the node that
+contains the section reference.
+
+2. Within @root trees a section may be defined anywhere within the @root tree,
+regardless of where the section is referenced. Moreover, the @unit directive
+expands the scope of section definitions in @root trees so that a section may
+be referenced in several @root trees.
+
+3. The meaning of section definitions in @root trees are independent of their
+position within the tree.</t>
+<t tx="edream.110203163054.1056"></t>
+<t tx="edream.110203163054.1057">Internally, Leo represents all strings as unicode. Leo translates from a particular encoding to unicode when reading .leo files or derived files. Leo translates from unicode to a particular encoding when writing derived files. You may see strange looking characters if your text editor is expecting a different encoding.
+
+The encoding used in any derived file is shown in the #@+leo line like this: #@+leo-encoding=iso-8859-1. Exception: the encoding is UTF-8 if no -encoding= field exists.  You can also use the @encoding directive to set the encoding for individual derived files.
+
+If no @encoding directive is in effect, Leo uses settings in leoConfig.leo/.txt to translate to and from unicode. These settings are in the section in leoConfig.leo called
+
+&lt;&lt; General configuration options, especially read-only mode &gt;&gt;
+
+Here is a summary of those settings:
+
+default_derived_file_encoding
+
+This is the encoding used for derived files if no @encoding directive is in
+effect. This setting is also used to encode files created by the Tangle
+commands. The default is UTF-8 (case not important).
+
+new_leo_file_encoding
+
+This is the encoding specified in the following line of new .leo files: &lt;?xml
+version="1.0" encoding="UTF-8"&gt; The default is UTF-8 (upper case for
+compatibility for old versions of Leo). Important: once a .leo file is created
+the &lt;?xml..."&gt; line can only be changed by hand. Changing the &lt;?xml..."&gt; line
+by hand may cause unicode errors the next time the .leo file is loaded, so you
+should change the &lt;?xml..."&gt; line by hand only when first creating a .leo file.
+
+tk_encoding
+
+This is the encoding that Leo uses to communicate with Tk text widgets. You
+would typically use this setting only in an emergency. The section called &lt;&lt;
+set app.tkEncoding &gt;&gt; in app.finishCreate sets this encoding as follows:
+
+a)using the tk_encoding setting if it exists,
+b) using locale.getpreferredencoding if it exists, or the equivalent code in pre-python
+2.3 versions,
+c) using sys.getdefaultencoding
+d) defaulting to "utf-8"
+
+Neither b nor c are guaranteed to give a valid encoding in all systems, and Leo
+will ignore invalid encodings returned from b or c. Therefore, setting
+tk_encoding in leoConfig may be needed.</t>
+<t tx="edream.110203163054.1058">The encoding used in the file being imported doesn't match the encoding in
+effect for Leo. You have two options:  Use the @encoding directive in an
+ancestor of the node selected when doing the Import command to specify the
+encoding of file to be imported.Set the tk_encoding option in
+leoConfig.leo/.txt to the encoding you normally use. See the previous answer.</t>
+<t tx="edream.110203163054.1059"></t>
+<t tx="edream.110203163054.1060">You have two options, depending on whether you want to be able to use sections
+or not.
+
+Option 1: Use @nosentinelsfile trees.
+
+Files derived from @nosentinelsfile trees contain no sentinels. However, Leo
+creates derived files just as in @file trees. In particular, Leo expands
+section references and understands the @others directive.
+
+Option 2: Use @silentfile trees.
+
+Files derived from @silentfile trees contain no sentinels. Moreover, Leo does
+not expand section references in @silentfile trees. In other words, Leo creates
+the derived file simply by writing all body text in outline order.
+
+Leo can't update the outline unless the derived file contains sentinels, so Leo
+does not update @nosentinelfile trees or @silentfile trees automatically when
+you change the derived file in an external editor.
+
+For complete details about @nosentinelfile trees and @silentfile trees, see the
+child of this node.</t>
+<t tx="edream.110203163054.1061">You have two options, depending on whether you want sentinel lines in your
+derived file or not.
+
+Option 1: Use @rawfiles trees.
+
+Leo creates files derived from @rawfile trees by writing all the nodes of the
+tree to the derived file in outline order. The derived file _does_ contain some
+sentinels, so you _can_ update @rawfile trees from changes made to derived
+files.
+
+Option 1: Use @silentfiles trees.
+
+Files derived from @silentfile trees contain no sentinels. Leo creates the
+derived file simply by writing all body text in outline order.
+
+Leo can't update the outline unless the derived file contains sentinels, so Leo
+does not update @silentfile trees automatically when you change the derived
+file in an external editor.
+
+For complete details about @rawfile and @silentfile trees, see the child of
+this node.</t>
+<t tx="edream.110203163054.1062">The import commands insert @ignore directives in the top-level node. Leo does
+this so that you won't accidentally overwrite your files after importing them.
+Change the filename following @file or @root as desired, then remove the
+@ignore directive. Saving the outline will then create the file.</t>
+<t tx="edream.110203163054.1063">Q: I'm writing a Windows Script Component, which is an XML file with a CData
+section containing javascript. I can get the XML as I want it by setting the
+language to html, but how can I get the tangling comments inside the CData
+section to be java-style comments rather than html ones?
+
+A: In @file trees you use the @delims directive to change comment delimiters.
+For example:
+
+@delims /* */ 
+Javascript stuff 
+@delims &lt;-- --&gt; 
+HTML stuff
+
+Important: Leo2 can not revert to previous delimiters automatically; you must
+change back to previous delimiters using another @delims directive.
+
+In @root trees you can work around this problem using the @silent directive.</t>
+<t tx="edream.110203163054.1064">Here is a letter from Zvi Boshernitzan which might be helpful:
+
+I was having trouble disabling &lt;?php with comments (and couldn't override the
+comment character for the start of the page).
+
+Finally, I found a solution that worked, using php's heredoc string syntax:
+
+-------------------------------
+@first &lt;?php
+@first $comment = &lt;&lt;&lt;EOD
+EOD;
+
+// php code goes here.
+echo "boogie";
+
+$comment2 = &lt;&lt;&lt;EOD
+@last EOD;
+@last ?&gt;
+--------------------
+
+  -- or --
+
+---------------------
+@first &lt;?php
+@first /*
+*/
+
+echo "hi";
+
+@delims /* */
+@last ?&gt;
+------------------------</t>
+<t tx="edream.110203163054.1065">Use the @first directive @file or @nosentinelsfile trees. Use the @silent in
+@root trees.
+
+The @first directive allows you to place lines at the very start of files
+derived from @file nodes. For example, the body text of @file spam.py might be:
+
+@first #! /usr/bin/env python
+
+The body text of @file foo.perl might be:
+
+@first #/usr/bin/perl
+
+@first directives are recognized only at the start of the body text of @file nodes.
+No text may precede @first directives. More than one @first directive may exist,
+like this:
+
+@first #! /usr/bin/env python
+@first # more comments.
+</t>
+<t tx="edream.110203163054.1066">Leo has good support for cweb. In @file trees can organize any part of cweb
+code using _noweb_ sections. You can also use @rawfile, @silentfile or
+@nosentinelsfile trees to create cweb files.
+
+By default, cweb colors @space, @* and @** sections using the same syntax
+coloring as for LaTeX. In addition, cweb colors C // and /*..*/ comments using
+LaTeX coloring by default. You may change these defaults using the
+color_cweb_doc_parts_with_latex and color_cweb_comments_with_latex options in
+leoConfig.leo.
+
+See the child of this node for full details.</t>
+<t tx="edream.110203163054.1067">Everything in an @file tree must be part of the derived file: orphan and
+@ignore nodes are invalid in @file trees. This restriction should not be
+troublesome. For example, you can organize your outline like this:
+
++ myClass
+..+ ignored stuff
+..+ @file myClass
+
+As usual, + denotes a headline. So you simply create a new node, called
+myClass, that holds your @file tree and stuff you don't want in the @file tree.</t>
+<t tx="edream.110203163054.1068">There are many ways to customize Leo.  The child of this node is a clone of Chapter 8: Customizing Leo of Leo's Users Guide.</t>
+<t tx="edream.110203163054.1069">Step 1: Set use_plugins = 1 in leoConfig.leo, then execute the Tangle All
+command.
+
+Or you can set use_plugins = 1 directly in leoConfig.txt.
+
+Step 2: For a particular @file node in leoPlugins.leo, enable the code that
+calls registerHandler by changing if 0: to if 1:
+
+For example:
+
+if 1: # Register the handlers...
+	registerHandler("start2", onStart)
+
+</t>
+<t tx="edream.110203163054.1070">1. What's the best way to go about adding a new @language? 
+
+In the short term, the instructions are in LeoPy.leo in the Notes:How To:How to
+add support for a new language section. This section contains clones of all
+relevant parts of Leo that you will change.
+
+Longer term, I plan to move to a scheme like JEdit's, which uses language
+description files. Perhaps Leo could even use these files. However, this won't
+happen for quite a while...
+
+2. How can the changes be best folded back into Leo?
+
+For now, you can only change Leo's source code and submit the changes for
+inclusion in Leo's "official" code. Longer term you will be able to create
+your own language description file.</t>
+<t tx="edream.110203163054.1071"></t>
+<t tx="edream.110203163054.1072">leo.py v2.5 and later does this automatically.
+
+For earlier versions, the workaround is as follows:
+
+1. Copy the node with the Copy Node command.
+2. Paste it into to _body_ text with a regular paste command.
+3. Copy the body text with a regular copy or cut command.
+4. Switch to the other copy of Leo, then do Paste Node.</t>
+<t tx="edream.110203163054.1073">@nocolor
+
+Here are the steps involved in adding a new language.
+
+- Add a new language constant in leoGlobals.&lt;&lt;define global constants&gt;&gt;
+
+- Add a new Tk.Radiobutton in leoPrefs.&lt;&lt;create the Target Language frame&gt;&gt;
+
+- Add a new entry for the language in self.languageNameDict in leoConfig.py.&lt;&lt;initialize constant ivars&gt;&gt;.
+
+This entry represents the name of the language in leoConfig.txt.
+
+- Modify the utility routines set_delims_from_language and set_language to handle the new language.
+
+- Modify the code in leoFileCommands.getPrefs.&lt;&lt; check for syntax coloring prefs &gt;&gt; to support the new language.
+
+This involves making new entries in lists in each function.
+
+- Modyify leoColor.py so that colorizeAnyLanguage will handle the new language:
+
+a. Add an entry in the list called "languages" defined  in
+	leoColor.&lt;&lt;configure language-specific settings&gt;&gt;
+
+b. Add a list containing the keywords of the new language to
+	leoColor.&lt;&lt; define colorizer keywords &gt;&gt;
+	
+Note: the name of this list must be x_keywords, where x is the entry in language in step a.
+	
+For example, to add tcltk:
+	
+	languages = (..., "tcltk",...) # list of names of keyword lists.
+	tcltk_keywords = ("after", "append", ...) # The keyword list for the tcl/tk language.
+		
+c. Add any language-specifig code to leoColor.colorizeAnyLanguage.
+
+For most languages nothing need be done in this step because colorizeAnyLanguage gets the comment delimiters from set_delims_from_language.
+
+-  Make the following tests:
+
+1. Test the syntax coloring for the new language by using the @language directive.
+
+2. Test workings of the Preferences Panel by choosing the language in the panel and by looking at code that is _not_ under control of an @language directive.
+
+3. Test the leoConfig.txt by setting default_target_language to the name of the new language.  When you restart Leo, the new language should be selected in the Prefs panel.
+
+4. Remove leoConfig.txt, select the new language in the Prefs panel, and save the .leo file.  Open the file with a text editor and check to make sure that the &lt;preferences&gt; tag (near the top) contains an entry like this:
+
+&lt;preferences allow_rich_text="0" defaultTargetLanguage="Python"&gt;
+&lt;/preferences&gt;
+
+but with the name of your new language instead of "Python".
+
+5. Create an @root node and verify that you can Tangle it.
+
+</t>
+<t tx="edream.110203163054.1074"># We put an @color here so it is unambiguous.
+
+@ignore
+@language python
+@color</t>
+<t tx="edream.110203163054.1075"># General constants...
+true = 1
+false = 0 # Better than None
+body_newline = '\n'
+body_ignored_newline = '\r'
+prolog_string = "&lt;?xml version=\"1.0\" encoding=\"UTF-8\"?&gt;"
+
+# New in leo.py 3.0
+prolog_prefix_string = "&lt;?xml version=\"1.0\" encoding="
+prolog_version_string1 = "UTF-8" # for leo.py 2.x
+prolog_version_string2 = "ISO-8859-1" # for leo.py 3.x
+prolog_postfix_string = "?&gt;"
+
+# These are set by the @langauge directive.
+# Used by Tangle, Untangle and syntax coloring.
+ada_language =		 1
+c_language =		 2  # C, C++ or objective C.
+cweb_language =		 3  # CWEB syntax coloring
+cobol_language =	 4  # literate cobol??
+fortran_language =	 5  # Comments start with C
+fortran90_language =	 6  # Comments start with !
+html_language =		 7
+java_language =		 8
+lisp_language =		 9
+pascal_language =	10
+plain_text_language =	11
+perl_language =		12  # just ##
+perlpod_language =	13  # ## and =pod and =cut
+python_language =	14
+shell_language =	15  # shell scripts
+tcltk_language = 16
+unknown_language =	17  # Set when @comment is seen.
+
+# Synonyms for the bits returned by is_special_bits...
+color_bits =    0x00001
+comment_bits =	 0x00002
+cweb_bits =     0x00004
+header_bits =   0x00008
+ignore_bits =   0x00010
+language_bits = 0x00020
+nocolor_bits =	 0x00040
+noheader_bits = 0x00080
+noweb_bits =    0x00100
+#               0x00200 #unused
+page_width_bits=0x00400
+path_bits =	    0x00800
+root_bits =	    0x01000 # Also represents &lt; &lt; * &gt; &gt; =
+silent_bits =	  0x02000
+tab_width_bits =0x04000
+terse_bits = 	  0x08000
+unit_bits = 	   0x10000
+verbose_bits =	 0x20000</t>
+<t tx="edream.110203163054.1076"># Frame and title
+w,target = create_labeled_frame (outer,caption="Default Target Language")
+w.pack(padx=2,pady=2,expand=1,fill="x")
+
+# Frames for two columns of radio buttons
+lt = Tk.Frame(target)
+rt = Tk.Frame(target)
+lt.pack(side="left")
+rt.pack(side="right")
+
+# Left column of radio buttons.
+left_data = [
+	("C/C++",c_language), ("CWEB", cweb_language),
+	("HTML", html_language), ("Java", java_language),
+	("Pascal", pascal_language) ]
+
+for text,value in left_data:
+	button = Tk.Radiobutton(lt,anchor="w",text=text,
+		variable=self.lang_var,value=value,command=self.set_lang)
+	button.pack(fill="x") 
+	
+# Right column of radio buttons.
+right_data = [ ("Perl", perl_language), ("Perl+POD", perlpod_language),
+	("Plain Text", plain_text_language), ("Python", python_language),
+	("tcl/tk", tcltk_language) ]
+	
+for text,value in right_data:
+	button = Tk.Radiobutton(rt,anchor="w",text=text,
+		variable=self.lang_var,value=value,command=self.set_lang)
+	button.pack(fill="x")</t>
+<t tx="edream.110203163054.1077">leoKeywords = (
+	# Leo 2 directives.
+	"@","@c","@code","@doc","@color","@comment",
+	"@delims","@first","@language","@nocolor","@others",
+	"@pagewidth","@path","@tabwidth",
+	# Leo 1 directives.
+	"@ignore","@root","@unit","@silent","@terse","@verbose")
+	
+c_keywords = (
+	# C keywords
+	"auto","break","case","char","continue",
+	"default","do","double","else","enum","extern",
+	"float","for","goto","if","int","long","register","return",
+	"short","signed","sizeof","static","struct","switch",
+	"typedef","union","unsigned","void","volatile","while"
+	# C++ keywords
+	"asm","bool","catch","class","const_cast",
+	"delete","dynamic_cast","explicit","false","friend",
+	"inline","mutable","namespace","new","operator",
+	"private","protected","public","reinterpret_cast","static_cast",
+	"template","this","throw","true","try",
+	"typeid","typename","using","virtual","wchar_t")
+	
+cweb_keywords = c_keywords
+
+html_keywords = (
+	# HTML constructs.
+	"&lt;","&lt;/","&gt;",
+	'"',
+	"&lt;!---","&lt;!--","&lt;!",
+	"&lt;%","%&gt;",
+	"&lt;a","&lt;/a",
+	"&lt;img",
+	"&lt;cf","&lt;/cf",
+	# Common tags: tables
+	"&lt;table","&lt;/table",
+	"&lt;td","&lt;/td",
+	"&lt;th","&lt;/th",
+	"&lt;tr","&lt;/tr",
+	"&lt;caption","&lt;/caption",
+	"&lt;col","&lt;/col",
+	"&lt;colgroup","&lt;/colgroup",
+	"&lt;tbody","&lt;/tbody",
+	"&lt;tfoot","&lt;/tfoot",
+	"&lt;thead","&lt;/thead",	
+	# Common tags: styles
+	"&lt;style","&lt;/style",
+	# Common tags: scripts
+	"&lt;script","&lt;/script",
+	# Escapes
+	"&amp;amp;", "&amp;lt;", "&amp;gt;", "&amp;quot;" )
+
+java_keywords = (
+	"abstract","boolean","break","byte","byvalue",
+	"case","cast","catch","char","class","const","continue",
+	"default","do","double","else","extends",
+	"false","final","finally","float","for","future",
+	"generic","goto","if","implements","import","inner",
+	"instanceof","int","interface","long","native",
+	"new","null","operator","outer",
+	"package","private","protected","public","rest","return",
+	"short","static","super","switch","synchronized",
+	"this","throw","transient","true","try",
+	"var","void","volatile","while")
+
+pascal_keywords = (
+	"and","array","as","begin",
+	"case","const","class","constructor","cdecl"
+	"div","do","downto","destructor","dispid","dynamic",
+	"else","end","except","external",
+	"false","file","for","forward","function","finally",
+	"goto","if","in","is","label","library",
+	"mod","message","nil","not","nodefault""of","or","on",
+	"procedure","program","packed","pascal"
+	"private","protected","public","published",
+	"record","repeat","raise","read","register",
+	"set","string","shl","shr","stdcall",
+	"then","to","true","type","try","until","unit","uses"
+	"var","virtual","while","with","xor"
+	# object pascal
+	"asm","absolute","abstract","assembler","at","automated",
+	"finalization",
+	"implementation","inherited","initialization","inline","interface",
+	"object","override","resident","resourcestring",
+	"threadvar",
+	# limited contexts
+	"exports","property","default","write","stored","index","name" )
+
+perl_keywords = (
+	"continue","do","else","elsif","format","for","format","for","foreach",
+	"if","local","package","sub","tr","unless","until","while","y",
+	# Comparison operators
+	"cmp","eq","ge","gt","le","lt","ne",
+	# Matching ooperators
+	"m","s"
+	# Unary functions
+	"alarm","caller","chdir","cos","chroot","exit","eval","exp",
+	"getpgrp","getprotobyname","gethostbyname","getnetbyname","gmtime",
+	"hex","int","length","localtime","log","ord","oct",
+	"require","reset","rand","rmdir","readlink",
+	"scalar","sin","sleep","sqrt","srand","umask",
+	# Transfer ops
+	"next","last","redo","go","dump",
+	# File operations...
+	"select","open",
+	# FL ops
+	"binmode","close","closedir","eof",
+	"fileno","getc","getpeername","getsockname","lstat",
+	"readdir","rewinddir","stat","tell","telldir","write",
+	# FL2 ops
+	"bind","connect","flock","listen","opendir",
+	"seekdir","shutdown","truncate",
+	# FL32 ops
+	"accept","pipe",
+	# FL3 ops
+	"fcntl","getsockopt","ioctl","read",
+	"seek","send","sysread","syswrite",
+	# FL4 &amp; FL5 ops
+	"recv","setsocket","socket","socketpair",
+	# Array operations
+	"pop","shift","split","delete",
+	# FLIST ops
+	"sprintf","grep","join","pack",
+	# LVAL ops
+	"chop","defined","study","undef",
+	# f0 ops
+	"endhostent","endnetent","endservent","endprotoent",
+	"endpwent","endgrent","fork",
+	"getgrent","gethostent","getlogin","getnetent","getppid",
+	"getprotoent","getpwent","getservent",
+	"setgrent","setpwent","time","times","wait","wantarray",
+	# f1 ops
+	"getgrgid","getgrnam","getprotobynumber","getpwnam","getpwuid",
+	"sethostent","setnetent","setprotoent","setservent",
+	# f2 ops
+	"atan2","crypt",
+	"gethostbyaddr","getnetbyaddr","getpriority","getservbyname","getservbyport",
+	"index","link","mkdir","msgget","rename",
+	"semop","setpgrp","symlink","unpack","waitpid",
+	# f2 or 3 ops
+	"index","rindex","substr",
+	# f3 ops
+	"msgctl","msgsnd","semget","setpriority","shmctl","shmget","vec",
+	# f4 &amp; f5 ops
+	"semctl","shmread","shmwrite","msgrcv",
+	# Assoc ops
+	"dbmclose","each","keys","values",
+	# List ops
+	"chmod","chown","die","exec","kill",
+	"print","printf","return","reverse",
+	"sort","system","syscall","unlink","utime","warn")
+
+perlpod_keywords = perl_keywords
+	
+python_keywords = (
+	"and",       "del",       "for",       "is",        "raise",    
+	"assert",    "elif",      "from",      "lambda",    "return",   
+	"break",     "else",      "global",    "not",       "try",      
+	"class",     "except",    "if",        "or",        "yield",   
+	"continue",  "exec",      "import",    "pass",      "while",
+	"def",       "finally",   "in",        "print")
+	
+tcltk_keywords = ( # Only the tcl keywords are here.
+	"after",     "append",    "array",
+	"bgerror",   "binary",    "break",
+	"catch",     "cd",        "clock",
+	"close",     "concat",    "continue",
+	"dde",
+	"encoding",  "eof",       "eval",
+	"exec",      "exit",      "expr",
+	"fblocked",  "fconfigure","fcopy",     "file",      "fileevent",
+	"filename",  "flush",     "for",       "foreach",   "format",
+	"gets",      "glob",      "global",
+	"history",
+	"if",        "incr",      "info",      "interp",
+	"join",
+	"lappend",   "lindex",    "linsert",   "list",      "llength",
+	"load",      "lrange",    "lreplace",  "lsearch",   "lsort",
+	"memory",    "msgcat",
+	"namespace",
+	"open",
+	"package",   "parray",    "pid",
+	"proc",      "puts",      "pwd",
+	"read",      "regexp",    "registry",   "regsub",
+	"rename",    "resource",  "return",
+	"scan",      "seek",      "set",        "socket",   "source",
+	"split",     "string",    "subst",      "switch",
+	"tell",      "time",      "trace",
+	"unknown",   "unset",     "update",     "uplevel",   "upvar",
+	"variable",  "vwait",
+	"while" )</t>
+<t tx="edream.110203163054.1078"># Define has_string, keywords, single_comment_start, block_comment_start, block_comment_end
+
+(single_comment_start,
+	block_comment_start,
+	block_comment_end) = set_delims_from_language(language)
+
+has_string = language != plain_text_language
+
+languages = ["c","cweb","html","java","pascal","perl","perlpod","python","tcltk"]
+
+keywords = []
+if language==cweb_language:
+	for i in c_keywords:
+		keywords.append(i)
+	for i in cweb_keywords:
+		keywords.append(i)
+else:
+	for name in languages:
+		exec("if language==%s_language: keywords=%s_keywords" % (name,name))
+
+if 1: # 7/8/02: Color plain text unless we are under the control of @nocolor.
+	state = choose(flag,normalState,nocolorState)
+else: # Stupid: no coloring at all in plain text.
+	state = choose(language==plain_text_language,nocolorState,normalState)
+
+lb = choose(language==cweb_language,"@&lt;","&lt;&lt;")
+rb = choose(language==cweb_language,"@&gt;","&gt;&gt;")</t>
+<t tx="edream.110203163054.1079"># Must match longer tags before short prefixes.
+language = c_language # default
+
+if self.matchTag("CWEB"):
+	language = cweb_language ; self.getDquote();
+elif self.matchTag("C"):
+	language = c_language ; self.getDquote()
+elif self.matchTag("HTML"):
+	language = html_language ; self.getDquote()
+elif self.matchTag("Java"):
+	language = java_language ; self.getDquote()
+elif self.matchTag("Pascal"):
+	language = pascal_language ; self.getDquote()
+elif self.matchTag("PerlPod"):
+	language = perlpod_language ; self.getDquote()
+elif self.matchTag("Perl"):
+	language = perl_language ; self.getDquote()
+elif self.matchTag("Plain"):
+	language = plain_text_language ; self.getDquote()
+elif self.matchTag("Python"):
+	language = python_language ; self.getDquote()
+elif self.matchTag("tcl/tk"):
+	language = tcltk_language ; self.getDquote()
+	
+# print(`language`)
+
+c.target_language = language</t>
+<t tx="edream.110203163054.1080"># Language names.
+self.languageNameDict = {
+	c_language: "C",
+	cweb_language: "CWEB",
+	html_language: "HTML",
+	java_language: "Java",
+	pascal_language: "Pascal",
+	perl_language: "Perl",
+	perlpod_language: "PerlPod",
+	plain_text_language: "Plain",
+	python_language: "Python",
+	tcltk_language: "tcl/tk" }
+
+# Names of sections.
+self.configSection = "config options"
+self.compareSection = "compare options"
+self.findSection = "find/change options"
+self.prefsSection = "prefs panel options"
+self.recentFilesSection = "recent files"
+self.colorsSection = "syntax coloring options"
+self.windowSection = "window options"</t>
+<t tx="edream.110203163054.1081"># Returns a tuple (single,start,end) of comment delims
+
+def set_delims_from_language(language):
+	
+	# trace(`language`)
+
+	for lang, val in [ (cweb_language, "// /* */"),
+		(c_language, "// /* */"), (java_language, "// /* */"),
+		(fortran_language, "C"), (fortran90_language, "!"),
+		(html_language, "&lt;!-- --&gt;"), (pascal_language, "// { }"),
+		(perl_language, "#"), (perlpod_language, "# =pod =cut"),
+		(plain_text_language, "#"), # 7/8/02: we have to pick something.
+		(shell_language, "#"), (python_language, "#"),
+		(tcltk_language, "#") ]: # 7/18/02
+		if lang == language:
+			# trace(`val`)
+			return set_delims_from_string(val)
+
+	return None, None, None # Indicate that no change should be made</t>
+<t tx="edream.110203163054.1082">@  Scans the @language directive that appears at s[i]. 'default' returns default_language.
+
+Returns (language, delim1, delim2, delim3)
+@c
+
+def set_language(s,i,issue_errors_flag,default_language):
+
+	tag = "@language"
+	# trace(`get_line(s,i)`)
+	assert(i != None)
+	assert(match_word(s,i,tag))
+	i += len(tag) ; i = skip_ws(s, i)
+	# Get the argument.
+	j = i
+	i = skip_c_id(s,i)
+	# Allow tcl/tk.
+	arg = string.lower(s[j:i])
+	if len(arg) &gt; 0:
+		for name, language in [ ("ada", ada_language),
+			("c", c_language), ("c++", c_language),
+			("cweb", cweb_language), ("default", default_language),
+			("fortran", fortran_language), ("fortran90", fortran90_language),
+			("html", html_language), ("java", java_language),
+			("lisp", lisp_language), ("objective-c", c_language),
+			("pascal", pascal_language), ("perl", perl_language),
+			("perlpod", perlpod_language),
+			("plain", plain_text_language), # 7/8/02
+			("python", python_language),
+			("shell", shell_language),
+			("tcl", tcltk_language) ]: # 7/18/02.  Note: this also matches tcl/tk.
+		
+			if arg == name:
+				delim1, delim2, delim3 = set_delims_from_language(language)
+				return language, delim1, delim2, delim3
+
+	if issue_errors_flag:
+		es("ignoring: " + get_line(s,i))
+
+	return None, None, None, None,</t>
+<t tx="edream.110203163054.1083">tags = (
+	"blank", "comment", "cwebName", "docPart", "keyword", "leoKeyword",
+	"link", "name", "nameBrackets", "pp", "string", "tab")
+
+def colorizeAnyLanguage(self,v,body,language,flag):
+	
+	#trace(`language`)
+
+	hyperCount = 0 # Number of hypertext tags
+	self.body = body # For callbacks
+	s = body.get("1.0", "end")
+	sel = body.index("insert") # get the location of the insert point
+	start, end = string.split(sel,'.')
+	start = int(start)
+	# trace(`self.count` + `v`)
+	# trace(`body.tag_names()`)
+
+	if 0: # Remove all tags from the selected line.
+		for tag in self.tags:
+			body.tag_remove(tag, index(start,0), index(start,"end"))
+	else: # Remove all tags from body.
+		body.tag_delete(
+			"blank", "comment", "cwebName", "docPart", "keyword", "leoKeyword",
+			"link", "name", "nameBrackets", "pp", "string", "tab")
+	&lt;&lt; configure tags &gt;&gt;
+	&lt;&lt; configure language-specific settings &gt;&gt;
+	self.count += 1
+	
+	lines = string.split(s,'\n')
+	n = 0 # The line number for indices, as in n.i
+	for s in lines:
+		n += 1 ; i = 0 ; sLen = len(s)
+		# trace(`n` + ", " + `s`)
+		while i &lt; sLen:
+			progress = i
+			ch = s[i]
+			if state == string3State:
+				&lt;&lt; continue python triple string &gt;&gt;
+				continue
+			elif state == docState:
+				&lt;&lt; continue doc part &gt;&gt;
+				continue
+			elif state == nocolorState:
+				&lt;&lt; continue nocolor state &gt;&gt;
+				continue
+			elif state == blockCommentState:
+				&lt;&lt; continue block comment &gt;&gt;
+				continue
+			else: assert(state == normalState)
+
+			if has_string and ch == '"' or ch == "'":
+				&lt;&lt; handle string &gt;&gt;
+			elif single_comment_start and match(s,i,single_comment_start):
+				&lt;&lt; handle single-line comment &gt;&gt;
+			elif block_comment_start and match(s,i,block_comment_start):
+				&lt;&lt; start block comment &gt;&gt;
+			elif ch == '#' and language in [c_language,cweb_language]:
+				&lt;&lt; handle C preprocessor line &gt;&gt;
+			elif match(s,i,lb) or (language==cweb_language and match(s,i,"@(")):
+				&lt;&lt; handle possible section ref or def &gt;&gt;
+			elif ch == '@':
+				&lt;&lt; handle possible @keyword &gt;&gt;
+			elif ch in string.letters:
+				&lt;&lt; handle possible keyword &gt;&gt;
+			elif ch == ' ':
+				&lt;&lt; handle blank &gt;&gt;
+			elif ch == '\t':
+				&lt;&lt; handle tab &gt;&gt;
+			else:
+				&lt;&lt; handle normal character &gt;&gt;
+			assert(progress &lt; i)</t>
+<t tx="edream.110203163054.1084">config = app().config
+assert(config)
+
+for name in default_colors_dict:
+	option_name,default_color = default_colors_dict[name]
+	option_color = config.getColorsPref(option_name)
+	color = choose(option_color,option_color,default_color)
+	# Must use foreground, not fg.
+	try:
+		body.tag_config(name, foreground=color)
+	except: # Recover after a user error.
+		body.tag_config(name, foreground=default_color)
+
+underline_undefined = config.getBoolColorsPref("underline_undefined_section_names")
+use_hyperlinks      = config.getBoolColorsPref("use_hyperlinks")
+self.use_hyperlinks = use_hyperlinks
+
+# underline=var doesn't seem to work.
+if use_hyperlinks: 
+	body.tag_config("link",underline=1) # defined
+	body.tag_config("name",underline=0) # undefined
+else:
+	body.tag_config("link",underline=0)
+	if underline_undefined:
+		body.tag_config("name",underline=1)
+	else:
+		body.tag_config("name",underline=0)
+
+if self.showInvisibles:
+	if 1: # Very poor, and vaguely usable.
+		body.tag_config("blank",background="black",bgstipple="gray25")
+		body.tag_config("tab",background="black",bgstipple="gray50")
+	else: # Doesn't work, but does increase the spacing ;-)
+		body.tag_config("blank",font="Symbol")
+		body.tag_config("tab",font="Symbol")
+else:
+	body.tag_config("blank",background="white")
+	body.tag_config("tab",background="white")</t>
+<t tx="edream.110203163054.1085"></t>
+<t tx="edream.110203163054.1086">if language == cweb_language:
+	&lt;&lt; handle cweb doc part &gt;&gt;
+else:
+	&lt;&lt; handle noweb doc part &gt;&gt;</t>
+<t tx="edream.110203163054.1087">word = self.getCwebWord(s,i)
+if word and len(word) &gt; 0:
+	j = i + len(word)
+	if word in ("@&lt;","@(","@c","@d","@f","@p"):
+		state = normalState # end the doc part and rescan
+	else:
+		# The control code does not end the doc part.
+		body.tag_add("keyword", index(n,i), index(n,j))
+		i = j
+		if word in ("@^","@.","@:","@="): # Ended by "@&gt;"
+			j = string.find(s,"@&gt;",i)
+			if j &gt; -1:
+				body.tag_add("cwebName", index(n,i), index(n,j))
+				body.tag_add("nameBrackets", index(n,j), index(n,j+2))
+				i = j + 2
+else:
+	# Everthing up to the next "@" is in the doc part.
+	j = string.find(s,"@",i+1)
+	if j == -1: j = len(s)
+	body.tag_add("docPart", index(n,i), index(n,j))
+	i = j</t>
+<t tx="edream.110203163054.1088">if i == 0 and match(s,i,lb):
+	# Possible section definition line.
+	state = normalState # rescan the line.
+	continue
+if i == 0 and ch == '@':
+	j = self.skip_id(s,i+1)
+	word = s[i:j]
+	word = string.lower(word)
+else:
+	word = ""
+
+if word in ["@c","@code","@unit","@root","@color","@nocolor"]:
+	# End of the doc part.
+	body.tag_remove("docPart", index(n,i), index(n,j))
+	body.tag_add("leoKeyword", index(n,i), index(n,j))
+	i = j ; state = normalState
+else:
+	# The entire line is in the doc part.
+	body.tag_add("docPart", index(n,i), index(n,sLen))
+	i = sLen # skipt the rest of the line.</t>
+<t tx="edream.110203163054.1089">delim = self.delim
+if delim=="'''":
+	j = string.find(s,"'''",i)
+elif delim=='"""':
+	j = string.find(s,'"""', i)
+else:
+	state=normalState ; self.delim = None ; continue
+
+if j == -1:
+	# The entire line is part of the triple-quoted string.
+	body.tag_add("string", index(n,i), index(n,"end"))
+	i = sLen # skipt the rest of the line.
+else:
+	# End the string
+	body.tag_add("string", index(n,i), index(n,j+3))
+	i = j + 3 ; state = normalState ; self.delim = None</t>
+<t tx="edream.110203163054.1090">j = string.find(s,block_comment_end,i)
+if j == -1:
+	# The entire line is part of the block comment.
+	body.tag_add("comment", index(n,i), index(n,"end"))
+	i = sLen # skipt the rest of the line.
+else:
+	# End the block comment.
+	k = len(block_comment_end)
+	body.tag_add("comment", index(n,i), index(n,j+k))
+	i = j + k ; state = normalState</t>
+<t tx="edream.110203163054.1091">if i == 0 and ch == '@':
+	j = self.skip_id(s,i+1)
+	word = s[i:j]
+	word = string.lower(word)
+else:
+	word = ""
+
+if word == "@color" and language != plain_text_language:
+	# End of the nocolor part.
+	body.tag_add("leoKeyword", index(n,0), index(n,j))
+	i = j ; state = normalState
+else:
+	# The entire line is in the nocolor part.
+	# Add tags for blanks and tabs to make "Show Invisibles" work.
+	for ch in s[i:]:
+		if ch == ' ':
+			body.tag_add("blank", index(n,i))
+		elif ch == '\t':
+			body.tag_add("tab", index(n,i))
+		i += 1</t>
+<t tx="edream.110203163054.1092">if language == python_language:
+	j, state = self.skip_python_string(s,i)
+	body.tag_add("string", index(n,i), index(n,j))
+	i = j
+else:
+	j = self.skip_string(s,i)
+	body.tag_add("string", index(n,i), index(n,j))
+	i = j</t>
+<t tx="edream.110203163054.1093">k = len(block_comment_start)
+body.tag_add("comment", index(n,i), index(n,i+k))
+i += k ; state = blockCommentState</t>
+<t tx="edream.110203163054.1094">body.tag_add("comment", index(n,i), index(n,"end"))
+i = sLen</t>
+<t tx="edream.110203163054.1095">body.tag_add("pp", index(n,i), index(n,"end"))
+i = sLen</t>
+<t tx="edream.110203163054.1096">body.tag_add("nameBrackets", index(n,i), index(n,i+2))
+
+# See if the line contains the rb
+j = string.find(s,rb+"=",i+2) ; k = 3
+if j == -1:
+	j = string.find(s,rb,i+2) ; k = 2
+if j == -1:
+	i += 2
+else:
+	if language != cweb_language:
+		searchName = body.get(index(n,i),   index(n,j+k)) # includes brackets
+		ref = findReference(searchName,v)
+	
+	if language == cweb_language:
+		body.tag_add("cwebName", index(n,i+2), index(n,j))
+	elif ref:
+		body.tag_add("link", index(n,i+2), index(n,j))
+		if self.use_hyperlinks:
+			&lt;&lt; set the hyperlink &gt;&gt;
+	elif k == 3: # a section definition
+		body.tag_add("link", index(n,i+2), index(n,j))
+	else:
+		body.tag_add("name", index(n,i+2), index(n,j))
+	body.tag_add("nameBrackets", index(n,j), index(n,j+k))
+	i = j + k</t>
+<t tx="edream.110203163054.1097"># Set the bindings to vnode callbacks.
+# Create the tag.
+# Create the tag name.
+tagName = "hyper" + `hyperCount`
+hyperCount += 1
+body.tag_delete(tagName)
+body.tag_add(tagName, index(n,i+2), index(n,j))
+ref.tagName = tagName
+body.tag_bind(tagName,"&lt;Control-1&gt;",ref.OnHyperLinkControlClick)
+body.tag_bind(tagName,"&lt;Any-Enter&gt;",ref.OnHyperLinkEnter)
+body.tag_bind(tagName,"&lt;Any-Leave&gt;",ref.OnHyperLinkLeave)</t>
+<t tx="edream.110203163054.1098">word = None
+if language == cweb_language:
+	&lt;&lt; Handle all cweb control codes &gt;&gt;
+if not word:
+	&lt;&lt; Handle non-cweb @keywords &gt;&gt;</t>
+<t tx="edream.110203163054.1099">word = self.getCwebWord(s,i)
+if word:
+	# Color and skip the word.
+	j = i + len(word)
+	body.tag_add("keyword",index(n,i),index(n,j))
+	i = j
+
+	if word in ("@ ","@\t","@\n","@*","@**"):
+		state = docState
+		continue ;
+
+	if word in ("@^","@.","@:","@="): # Ended by "@&gt;"
+		j = string.find(s,"@&gt;",i)
+		if j &gt; -1:
+			body.tag_add("cwebName", index(n,i), index(n,j))
+			body.tag_add("nameBrackets", index(n,j), index(n,j+2))
+			i = j + 2
+</t>
+<t tx="edream.110203163054.1100">j = self.skip_id(s,i+1)
+word = s[i:j]
+word = string.lower(word)
+if i != 0 and word != "@others":
+	word = "" # can't be a Leo keyword, even if it looks like it.
+
+# 7/8/02: don't color doc parts in plain text.
+if language != plain_text_language and (word == "@" or word == "@doc"):
+	# at-space starts doc part
+	body.tag_add("leoKeyword", index(n,i), index(n,j))
+	# Everything on the line is in the doc part.
+	body.tag_add("docPart", index(n,j), index(n,sLen))
+	i = sLen ; state = docState
+elif word == "@nocolor":
+	# Nothing on the line is colored.
+	body.tag_add("leoKeyword", index(n,i), index(n,j))
+	i = j ; state = nocolorState
+elif word in leoKeywords:
+	body.tag_add("leoKeyword", index(n,i), index(n,j))
+	i = j
+else:
+	i = j</t>
+<t tx="edream.110203163054.1101">j = self.skip_id(s,i)
+word = s[i:j]
+if word in keywords:
+	body.tag_add("keyword", index(n,i), index(n,j))
+i = j</t>
+<t tx="edream.110203163054.1102">body.tag_add("blank", index(n,i)) ; i += 1</t>
+<t tx="edream.110203163054.1103">body.tag_add("tab", index(n,i)) ; i += 1</t>
+<t tx="edream.110203163054.1104"># body.tag_add("normal", index(n,i))
+i += 1
+</t>
+<t tx="edream.110203163054.1105">def getPrefs (self):
+
+	c = self.commands ; config = app().config
+	
+	self.getTag("&lt;preferences")
+	while 1:
+		if self.matchTag("allow_rich_text="):
+			self.getDquote() ; self.getBool() ; self.getDquote() #ignored
+		elif self.matchTag("tab_width="):
+			self.getDquote() ; c.tab_width = self.getLong() ; self.getDquote()
+		elif self.matchTag("page_width="):
+			self.getDquote() ; c.page_width = self.getLong() ; self.getDquote()
+		elif self.matchTag("tangle_bat="):
+			self.getDquote() ; c.tangle_batch_flag = self.getBool() ; self.getDquote()
+		elif self.matchTag("untangle_bat="):
+			self.getDquote() ; c.untangle_batch_flag = self.getBool() ; self.getDquote()
+		# New in version 0.10
+		elif self.matchTag("output_doc_chunks="):
+			self.getDquote() ; c.output_doc_flag = self.getBool() ; self.getDquote()
+		elif self.matchTag("noweb_flag="):
+			# New in version 0.19: Ignore this flag.
+			self.getDquote() ; self.getBool() ; self.getDquote()
+		elif self.matchTag("extended_noweb_flag="):
+			# New in version 0.19: Ignore this flag.
+			self.getDquote() ; self.getBool() ; self.getDquote()
+		elif self.matchTag("defaultTargetLanguage="):
+			# New in version 0.15
+			self.getDquote()
+			&lt;&lt; check for syntax coloring prefs &gt;&gt;
+		elif self.matchTag("use_header_flag="):
+			self.getDquote() ; c.use_header_flag = self.getBool() ; self.getDquote()
+		else: break
+	self.getTag("&gt;")
+	while 1:
+		if self.matchTag("&lt;defaultDirectory&gt;"):
+			# New in version 0.16.
+			c.tangle_directory = self.getEscapedString()
+			self.getTag("&lt;/defaultDirectory&gt;")
+			if not os.path.exists(c.tangle_directory):
+				es("default tangle directory not found:" + c.tangle_directory)
+		elif self.matchTag("&lt;TSyntaxMemo_options&gt;"):
+			self.getEscapedString() # ignored
+			self.getTag("&lt;/TSyntaxMemo_options&gt;")
+		else: break
+	self.getTag("&lt;/preferences&gt;")
+	
+	# Override .leo file's preferences if settings are in leoConfig.txt.
+	if config.configsExist:
+		config.setCommandsIvars(c)</t>
+<t tx="edream.110203163054.1106">@color
+@language tcl/tk
+@root "c:\prog\test\tcltktest.txt"
+
+after # 'after' is a keyword
+all # 'all' is not a keyword
+
+&lt;&lt; stuff &gt;&gt;
+
+# A comment
+// Not a comment
+"A string"
+'A string'</t>
+<t tx="edream.110203163054.1107">@ This is a tcl/tk doc part
+
+This is code</t>
+<t tx="edream.110203163054.1108">Question:
+
+It would be nice if Leo could open empty files. I tend to be "document
+oriented" rather than "application oriented" in my thinking and prefer "create
+empty file at location -&gt; open it with program" to "start program -&gt; create new
+file -&gt; save it at location".
+
+Answer by Paul Paterson
+
+If you are on Windows 98/2000/XP then the procedure is as follows...
+
+1. Start Leo
+2. Click New
+3. Click Save as...
+4. Save the file as "c:\windows\shellnew\leofile.leo" (or c:\winnt for 2000/XP)
+5. Open regedit "start...run...regedit"
+6. Open HKEY_CLASSES_ROOT and find the ".leo" extension type
+7. Go New ... Key from the context menu 
+8. Call the new key ShellNew 
+9. Select the new key, right-click, choose New ... String Value from the contextmenu
+10. Call it FileName 
+11. Double-click on the string, and modify it to be the filename of the leofile.leo
+file you created, including the extension
+12. Exit the registry editor and restart Windows Explorer (or you may need to
+reboot on Windows 98)
+
+Now you should have a New.. Leo File option in Explorer. This creates a
+duplicate of the file you saved. This can be useful because you could make a
+template Leo file containing some standard nodes that you always have and then
+save this.</t>
 <t tx="edream.110203163054.1158">@ The following is part of Leo's actual source code.  The code is written in C++ and uses Borland's Delphi classes.
 
 For @root trees:  The Tangle command will generate derived files from @root trees.  The Untangle command will update outlines based on changes made to files derived from @root trees.
@@ -7154,7 +13396,69 @@ When you look at hello.c you will see that it contains comments starting with //
 {
 	printf("Hello World!\n");
 }</t>
-<t tx="edream.110203163054.1653"></t>
+<t tx="edream.110203163054.1653">@killcolor</t>
+<t tx="edream.110203163054.1654">100 Series: Leaps that apply to the Leap process itself. 
+
+Leap 101: How to administer Leaps. 
+
+- Assigned to nobody. 
+- No formality needed yet. </t>
+<t tx="edream.110203163054.1655">
+
+- Assigned to nobody. 
+- Create, plan, promote &amp; administer a gathering of Leo enthusiasts. 
+- Part of the planning would be to create a date and setting for the conferences. </t>
+<t tx="edream.110203163054.1656"></t>
+<t tx="edream.110203163054.1657">Project finished in Leo 4.2.
+
+- Cloned vnodes share the same tnode.  That tnode forms the root of a shared tree of vnodes.
+
+- Code must use positions to traverse the tree.
+
+- c.rootVnode and c.curreentPosition return positions, not vnodes.
+
+- Positions are proxies for vnodes.
+
+For more details, see leoNodes.py in LeoPy.leo.
+</t>
+<t tx="edream.110203163054.1658">Project finished in Leo 4.2.
+
+The new file format uses gnx's (global node indices) to represent nodes uniquely.</t>
+<t tx="edream.110203163054.1659">- More flexible and more powerful than present hand-drawn code. 
+- Ideally, it would be a path to anygui. </t>
+<t tx="edream.110203163054.1661"></t>
+<t tx="edream.110203163054.1662">Produce a plugin (with related design) that allows people to share all or part of .leo files via a
+central server. 
+
+- Assigned to nobody. 
+- This plugin need _not_ address itself to issues raised in Leap 302: it is a prototype for experimentation. The
+initial aim of this Leap would be to produce a starting point design that would be incorporated into this Leap
+for review. 
+
+</t>
+<t tx="edream.110203163054.1663">- Assigned to nobody 
+- This plugin need _not_ address itself to issues raised in Leap 301: it is a prototype for experimentation. The
+initial aim of this Leap would be to produce a starting point design that would be incorporated into this Leap
+for review.</t>
+<t tx="edream.110203163054.1664">Open Discussion
+
+ RE: Status report: ten breakthroughs
+2003-05-30 12:50  
+About merging / CVS etc: 
+
+Perhaps it helps to think about the big picture a bit, I mean about what do we really want / is practical. 
+
+CVS is a de-facto standard on the internet for collaboration, so being compatible is highly desirable. Unfortunately CVS has a series of shortcomings, particularly for Leo. 
+
+CVS merges on a line-by-line basis, so interdependencies of code are ignored (I think all other tools I know of do the same). Now, I believe this is ok for large sets of files, where mutiple changes to the same function or file are rare. Using CVS to merge only single Leo nodes (body text) would be rather silly though: Mostly these texts are short (a page or so) and one single function (or less). Multiple changes in such a codde snipped are likely to be interdependent, and I would rather like to look at the different texts rather than have them merged automatically. 
+
+On the other hand, I don't mind if the versioning or merging tool at hand allows me to update any nodes I did not touch myself. So rather than CVS-like merging, I would like to see which nodes are being affected by the change, then have it done automatically for thouse nodes I don't worry about, but by hand (or interactively) for thouse I changed myself too, or for thouse I worry about, because they are related to my own changes. 
+
+In other words, I would like to see a merge tool, that understands versions, can tell me which nodes in a Leo file have changed, remembers which changes I made myself, and gives me the choice, tree branch by tree branch, to automatically accept the changes, or screen them interactively. 
+
+I think Leo should have such a tool built-in. 
+
+- Josef</t>
 <t tx="edream.110303182253.3">Leo does an auto-save only if something has actually been changed.</t>
 <t tx="edream.110303182253.39"></t>
 <t tx="edream.110303182719">The config_encoding setting controls the encoding of non-ascii characters in leoConfig.txt.
@@ -7393,6 +13697,19 @@ Now the plugin can set and get fields in d.  Similar code would be used for the 
 isn't doubling every few months like it would be in another designers hands.
 adding features by removing constraints, hot refactoring while adding unit tests.
 forget the book. I would pay to see the movie.</t>
+<t tx="edream.120903151103"></t>
+<t tx="edream.120903151103.1">@nocolor
+
+There is an importFiles script in LeoPy.leo.  You can use that script as follows:
+
+@color
+
+import leoImport
+leoImport.importFiles(aDirectory, ".py")
+
+@nocolor
+
+This will import all .py files from aDirectory, which should be a full path to a particular directory.  You could use ".c" to import all .c files, etc.</t>
 <t tx="edream.121403160546">Leo 4.1 Release Candidate 3              December 19, 2003
 
 This release fixes a serious bug in the logic that reads old-style derived files.
@@ -7781,6 +14098,37 @@ plate code to quickly build an outline.</t>
 <t tx="ekr.20040201114855.105"></t>
 <t tx="ekr.20040201114855.106"></t>
 <t tx="ekr.20040201114855.107">This bug happened when executing the initScriptFind script.  This bug could cause Leo not to be able to save files.</t>
+<t tx="ekr.20040201114855.108">Here is a posting which might be helpful:
+
+http://sourceforge.net/forum/message.php?msg_id=2300457
+
+The "@first" directive is the key to output useable code in unsupported
+languages.  For example, to use Leo with the Basic language:
+
+-&gt;body of a "@file" header:
+-----------------------------Snippet
+@first $IFDEF LEOHEADER
+@delims '
+@c
+$ENDIF
+-----------------------------End of snippet
+
+So this would enable a basic compiler to "jump" over the "true"
+LEO-header-lines; wich gives you:
+
+-----------------------Derived file begins with:
+$IFDEF LEOHEADER &lt;-conditionnal compilation directive 
+#@+leo-ver=4 &lt;-these lines not compiled
+#@+node:@file QParser005.INC
+#@@first
+#@delims ' 
+'@@c
+$ENDIF &lt;-... Until here!
+&lt;rest of derived code file ... &gt;
+-----------------------end of snippet
+
+This changes the comment symbol to " ' " apostrophe... making comments parseable
+by a BASIC (or other language.)</t>
 <t tx="ekr.20040201120903">Adds a status line to the bottom of Leo windows.</t>
 <t tx="ekr.20040203084228">The Change All command was looping when the find pattern was '\n'.</t>
 <t tx="ekr.20040216151748">Leo 4.1 Final              February 20, 2004
@@ -8576,6 +14924,31 @@ Many commands use this bits for tree traversal, so these bits do not persist.
 
 |prev| |leo| |next|
 </t>
+<t tx="ekr.20040411074926">There is a trick that makes it very easy to develop Leo using Leo itself.  The trick is to create a workflow that separates editing from testing.
+
+Putting test code in LeoPy.leo would waste a lot of time.  To run tests you would have to exit Leo and reload LeoPy. A much quicker way is to put all test code in a test.leo file.  So to change and test code, do the following:
+
+1. Save LeoPy.leo but do NOT exit Leo. 
+
+2. Quit the copy of Leo running test.leo, then reload test.leo.
+
+3. Run test scripts from test.leo.
+
+That's all. Python will recompile any changed .py files in the new copy of Leo.
+
+BTW, I create a batch file called t.bat that runs test.leo, so to the "edit-reload-test" cycle is just:
+
+1. Control-S (in LeoPy.leo: saves the .leo file)
+2. t         (in a console window: runs test.leo, compiling all changed .py files as a side effect)
+3. Control-E (in test.leo: runs the test script)
+
+The benefits of the new workflow:
+
+- test.leo loads  _much_ more quickly than LeoPy.leo does.  This new approach can increase the speed of the edit-reload-test cycle by more than a factor of 10.  Hitting Control-S, t, Control-E takes about 5 seconds.
+
+- LeoPy.leo runs with the _old_ code, so it is much easier to fix syntax errors or exceptions in the _new_ code: just fix the problem and save LeoPy.leo _without_ closing LeoPy.leo., then restart test.leo. Tests are run on new code; editing is done on old, stable code.
+
+- test.leo is the perfect place to develop test.  I can create and organize those tests and when I am done, test.leo is a log of my work.</t>
 <t tx="ekr.20040411151245"></t>
 <t tx="ekr.20040411151245.1">@ignore
 @nocolor
