@@ -1576,6 +1576,12 @@ def checkFileTabs (fileName,s):
 #@nonl
 #@-node:ekr.20040801135348.1:checkFileTabs
 #@-node:ekr.20040801140146:Plugin tests... (leoTest.py)
+#@+node:ekr.20050316074630:throwAssertionError
+def throwAssertionError():
+    
+    assert 0, 'assert(0) as a test of catching assertions'
+#@nonl
+#@-node:ekr.20050316074630:throwAssertionError
 #@-node:ekr.20040708145036:Specific to particular unit tests...
 #@+node:ekr.20040710184602:Test of doctest
 #@+node:ekr.20040710183515:factorial
