@@ -1225,39 +1225,38 @@ class baseCommands:
                     g.es("exception in file %s, line: %d" % (fileName,n))
                 if p and not script1 and fileName == "<string>":
                     c.goToScriptLineNumber(p,script,n)
+                #@            << dump the lines near the error >>
+                #@+node:EKR.20040612215018:<< dump the lines near the error >>
+                if g.os_path_exists(fileName):
+                    f = file(fileName)
+                    lines = f.readlines()
+                    f.close()
                 else:
-                    #@                << dump the lines near the error >>
-                    #@+node:EKR.20040612215018:<< dump the lines near the error >>
-                    if g.os_path_exists(fileName):
-                        f = file(fileName)
-                        lines = f.readlines()
-                        f.close()
-                    else:
-                        lines = g.splitLines(script)
-                    
-                    s = '-' * 20
-                    print s; g.es(s)
-                    
-                    if 1:
-                        # Just print the error line.
-                        try:
-                            s = "%s line %d: %s" % (fileName,n,lines[n-1])
-                            print s, ; g.es(s,newline=False)
-                        except IndexError:
-                            s = "%s line %d" % (fileName,n)
-                            print s, ; g.es(s,newline=False)
-                    else:
-                        i = max(0,n-2)
-                        j = min(n+2,len(lines))
-                        # g.trace(n,i,j)
-                        while i < j:
-                            ch = g.choose(i==n-1,'*',' ')
-                            s = "%s line %d: %s" % (ch,i+1,lines[i])
-                            print s, ; g.es(s,newline=False)
-                            i += 1
-                    #@nonl
-                    #@-node:EKR.20040612215018:<< dump the lines near the error >>
-                    #@nl
+                    lines = g.splitLines(script)
+                
+                s = '-' * 20
+                print s; g.es(s)
+                
+                if 0:
+                    # Just print the error line.
+                    try:
+                        s = "%s line %d: %s" % (fileName,n,lines[n-1])
+                        print s, ; g.es(s,newline=False)
+                    except IndexError:
+                        s = "%s line %d" % (fileName,n)
+                        print s, ; g.es(s,newline=False)
+                else:
+                    i = max(0,n-2)
+                    j = min(n+2,len(lines))
+                    # g.trace(n,i,j)
+                    while i < j:
+                        ch = g.choose(i==n-1,'*',' ')
+                        s = "%s line %d: %s" % (ch,i+1,lines[i])
+                        print s, ; g.es(s,newline=False)
+                        i += 1
+                #@nonl
+                #@-node:EKR.20040612215018:<< dump the lines near the error >>
+                #@nl
                 c.frame.tree.redrawAfterException()
             del sys.path[0]
         elif not error:
