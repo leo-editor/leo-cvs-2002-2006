@@ -2592,10 +2592,11 @@ class baseCommands:
                 if full: # Unit tests usually set this false.
                     #@                << do full tests >>
                     #@+node:ekr.20040323155951:<< do full tests >>
-                    if count % 100 == 0:
-                        g.es('.',newline=False)
-                    if count % 2000 == 0:
-                        g.enl()
+                    if not unittest:
+                        if count % 100 == 0:
+                            g.es('.',newline=False)
+                        if count % 2000 == 0:
+                            g.enl()
                     
                     #@+others
                     #@+node:ekr.20040314035615:assert consistency of threadNext & threadBack links
@@ -2695,6 +2696,7 @@ class baseCommands:
                     #@nonl
                     #@-node:ekr.20040314043623:assert consistency of vnodeList
                     #@-others
+                    #@nonl
                     #@-node:ekr.20040323155951:<< do full tests >>
                     #@nl
             except AssertionError,message:
