@@ -3551,6 +3551,8 @@ class LeoFrame:
 
 	def createOpenWithMenuFromTable (self,table):
 		
+		# print "createOpenWithMenuFromTable"
+		
 		menuName = "Open With..."
 		a = app()
 		a.openWithTable = table # Override any previous table.
