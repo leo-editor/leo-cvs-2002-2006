@@ -9422,7 +9422,11 @@ def putOpenNodeSentinel(self,p,inAtAll=False,inAtOthers=False,middle=False):
 
     if not at.thinFile:
         # Append the n'th tnode to the root's tnode list.
-        at.root.v.t.tnodeList.append(p.v.t)
+        # It may not exist when executing scripts.
+        try: 
+            at.root.v.t.tnodeList.append(p.v.t)
+        except AttributeError:
+            pass # Do nothing.  We are creating a script.
 #@nonl
 #@-node:ekr.20041005105605.193:putOpenNodeSentinel (sets tnodeList) 4.x
 #@+node:ekr.20041005105605.194:putSentinel (applies cweb hack) 4.x
@@ -11134,16 +11138,17 @@ def oops(self):
     g.trace("nullLog:", g.callerName(2))
     
 #@-node:ekr.20041012083237.2:oops
-#@+node:ekr.20041012083237.3:put and putnl
+#@+node:ekr.20041012083237.3:put and putnl (nullLog)
 def put (self,s,color=None):
     if self.enabled:
+        # g.trace('nullLog',s)
         g.rawPrint(s)
 
 def putnl (self):
     if self.enabled:
         g.rawPrint("")
 #@nonl
-#@-node:ekr.20041012083237.3:put and putnl
+#@-node:ekr.20041012083237.3:put and putnl (nullLog)
 #@+node:ekr.20041012083237.4:setColorFromConfig & setFontFromConfig
 def setFontFromConfig (self):
     pass
@@ -14171,7 +14176,7 @@ def pack (self):
 show = pack
 #@nonl
 #@-node:ekr.20041223111916:pack & show
-#@+node:ekr.20031218072017.3963:put
+#@+node:ekr.20031218072017.3963:put (leoTkinterFrame)
 def put(self,s,color=None):
     
     t = self.textWidget
@@ -14194,7 +14199,7 @@ def put(self,s,color=None):
     t.configure(state="disabled")
     t.update_idletasks()
 #@nonl
-#@-node:ekr.20031218072017.3963:put
+#@-node:ekr.20031218072017.3963:put (leoTkinterFrame)
 #@+node:EKR.20040424154804:setFocus
 if 0: # No longer used in 4.3.  Done as the result of statusLineWantsFocus.
 
@@ -19645,7 +19650,7 @@ def pack (self):
 show = pack
 #@nonl
 #@-node:ekr.20041223111916:pack & show
-#@+node:ekr.20031218072017.3963:put
+#@+node:ekr.20031218072017.3963:put (leoTkinterFrame)
 def put(self,s,color=None):
     
     t = self.textWidget
@@ -19668,7 +19673,7 @@ def put(self,s,color=None):
     t.configure(state="disabled")
     t.update_idletasks()
 #@nonl
-#@-node:ekr.20031218072017.3963:put
+#@-node:ekr.20031218072017.3963:put (leoTkinterFrame)
 #@+node:EKR.20040424154804:setFocus
 if 0: # No longer used in 4.3.  Done as the result of statusLineWantsFocus.
 
@@ -22059,10 +22064,8 @@ This is important, the settings node found by findSettingsPosition may be a clon
 #@nonl
 #@-node:ekr.20050122104754.1:What I did
 #@+node:ekr.20041122162610:@recent_files
-C:\prog\leoCVS\leo\test\test.leo
-C:\prog\leoCVS\leo\src\LeoPy.leo
-C:\prog\leoCVS\leo\plugins\leoPlugins.leo
 /Users/edream/leoCVS/leo/src/LeoPy.leo
+/Users/edream/leoCVS/leo/plugins/leoPlugins.leo
 #@nonl
 #@-node:ekr.20041122162610:@recent_files
 #@+node:ekr.20040305223522:p.setBodyStringOrPane & p.setBodyTextOrPane
@@ -28580,9 +28583,6 @@ def forceLogUpdate (self):
 #@+node:EKR.20040423082910:<< put s to log control >>
 if type(s) == type(u""): # 3/18/03
     s = g.toEncodedString(s,g.app.tkEncoding)
-    
-if sys.platform == "darwin":
-    print s,
 
 if color:
     if color not in self.colorTags:
@@ -28612,9 +28612,6 @@ print s
 #@nonl
 #@-node:EKR.20040423082910.1:<< put s to logWaiting and print s >>
 #@+node:EKR.20040423082910.2:<< put newline to log control >>
-if sys.platform == "darwin":
-    print
-    
 self.logCtrl.insert("end",'\n')
 self.logCtrl.see("end")
 
@@ -28632,19 +28629,19 @@ print
 #@nonl
 #@-node:EKR.20040423082910.3:<< put newline to logWaiting and print newline >>
 #@-node:ekr.20031218072017.1473:tkLog.put & putnl & forceLogUpdate
-#@+node:ekr.20031218072017.1474:es, enl, ecnl
+#@+node:ekr.20031218072017.1474:es, enl, ecnl & ecnls
 def ecnl():
     g.ecnls(1)
 
 def ecnls(n):
     log = app.log
-    if log:
+    if log and not log.isNull:
         while log.newlines < n:
             g.enl()
 
 def enl():
     log = app.log
-    if log:
+    if log and not log.isNull:
         log.newlines += 1
         log.putnl()
 
@@ -28665,7 +28662,7 @@ def es(s,*args,**keys):
     else:
         log = app.log
         if log and not log.isNull:
-            # print 'g.es',log,s
+            # print 'g.es',s
             log.put(s,color=color)
             for ch in s:
                 if ch == '\n': log.newlines += 1
@@ -28679,7 +28676,7 @@ def es(s,*args,**keys):
             app.logWaiting.append((s,color),)
             # print s,
 #@nonl
-#@-node:ekr.20031218072017.1474:es, enl, ecnl
+#@-node:ekr.20031218072017.1474:es, enl, ecnl & ecnls
 #@+node:ekr.20031218072017.2619:app.writeWaitingLog
 def writeWaitingLog (self):
 
@@ -28839,6 +28836,285 @@ if marks or expanded:
 #@-node:ekr.20031218072017.1553:getLeoFile
 #@-node:ekr.20050130133731:Added silent keyword to severl methods
 #@-node:ekr.20050126102846.2:(Improved queuing of log messages)
+#@+node:ekr.20050201174750:(Fixed crasher in script button)
+#@+node:ekr.20050202052911:Traceback
+File "/Users/edream/leoCVS/leo/src/leoAtFile.py", line 2794, in write        
+    at.writeOpenFile(root,nosentinels=nosentinels,toString=toString)
+    
+File "/Users/edream/leoCVS/leo/src/leoAtFile.py", line 2794, in write    
+    at.writeOpenFile(root,nosentinels=nosentinels,toString=toString)
+    
+File "/Users/edream/leoCVS/leo/src/leoAtFile.py", line 3060, in writeOpenFile
+    at.putOpenNodeSentinel(root)
+    
+File "/Users/edream/leoCVS/leo/src/leoAtFile.py", line 3060, in writeOpenFile
+    at.putOpenNodeSentinel(root)
+    
+File "/Users/edream/leoCVS/leo/src/leoAtFile.py", line 3830, in putOpenNodeSentinel
+    at.root.v.t.tnodeList.append(p.v.t)
+    
+AttributeError: 'tnode' object has no attribute 'tnodeList'
+#@nonl
+#@-node:ekr.20050202052911:Traceback
+#@+node:ekr.20041005105605.193:putOpenNodeSentinel (sets tnodeList) 4.x
+def putOpenNodeSentinel(self,p,inAtAll=False,inAtOthers=False,middle=False):
+    
+    """Write @+node sentinel for p."""
+    
+    at = self
+
+    if not inAtAll and p.isAtFileNode() and p != at.root:
+        at.writeError("@file not valid in: " + p.headString())
+        return
+        
+    # g.trace(at.thinFile,p)
+        
+    s = at.nodeSentinelText(p)
+    
+    if middle:
+        at.putSentinel("@+middle:" + s)
+    else:
+        at.putSentinel("@+node:" + s)
+
+    if not at.thinFile:
+        # Append the n'th tnode to the root's tnode list.
+        # It may not exist when executing scripts.
+        try: 
+            at.root.v.t.tnodeList.append(p.v.t)
+        except AttributeError:
+            pass # Do nothing.  We are creating a script.
+#@nonl
+#@-node:ekr.20041005105605.193:putOpenNodeSentinel (sets tnodeList) 4.x
+#@-node:ekr.20050201174750:(Fixed crasher in script button)
+#@+node:ekr.20050202062110:(Fixed print problems on the Mac)
+# The button callback just calls c.executeScript
+#@nonl
+#@+node:ekr.20050202063852:What I did
+@killcolor
+
+The message 'command for widget 5' was a message from Tk saying in effect that no command was bound to the button.
+
+Indeed, this was so: a recent botch in a change in mod_scripting.py prevented the binding.
+#@nonl
+#@-node:ekr.20050202063852:What I did
+#@+node:ekr.20050201175325:(g.es called print on the Mac)
+# The problem was simply some extra print statements. No idea why they were there.
+#@nonl
+#@+node:ekr.20031218072017.1474:es, enl, ecnl & ecnls
+def ecnl():
+    g.ecnls(1)
+
+def ecnls(n):
+    log = app.log
+    if log and not log.isNull:
+        while log.newlines < n:
+            g.enl()
+
+def enl():
+    log = app.log
+    if log and not log.isNull:
+        log.newlines += 1
+        log.putnl()
+
+def es(s,*args,**keys):
+    if app.killed:
+        return
+    newline = keys.get("newline",True)
+    color = keys.get("color",None)
+    if type(s) != type("") and type(s) != type(u""): # 1/20/03
+        s = repr(s)
+    for arg in args:
+        if type(arg) != type("") and type(arg) != type(u""): # 1/20/03
+            arg = repr(arg)
+        s = s + ", " + arg
+    if app.batchMode:
+        if app.log:
+            app.log.put(s)
+    else:
+        log = app.log
+        if log and not log.isNull:
+            # print 'g.es',s
+            log.put(s,color=color)
+            for ch in s:
+                if ch == '\n': log.newlines += 1
+                else: log.newlines = 0
+            if newline:
+                g.ecnl() # only valid here
+        elif newline:
+            app.logWaiting.append((s+'\n',color),)
+            # print s
+        else:
+            app.logWaiting.append((s,color),)
+            # print s,
+#@nonl
+#@-node:ekr.20031218072017.1474:es, enl, ecnl & ecnls
+#@+node:ekr.20031218072017.3963:put (leoTkinterFrame)
+def put(self,s,color=None):
+    
+    t = self.textWidget
+    if not t: return
+    
+    t.configure(state="normal")
+        
+    if color and color not in self.colorTags:
+        self.colorTags.append(color)
+        t.tag_config(color,foreground=color)
+
+    if color:
+        t.insert("end",s)
+        t.tag_add(color,"end-%dc" % (len(s)+1),"end-1c")
+        t.tag_config("black",foreground="black")
+        t.tag_add("black","end")
+    else:
+        t.insert("end",s)
+    
+    t.configure(state="disabled")
+    t.update_idletasks()
+#@nonl
+#@-node:ekr.20031218072017.3963:put (leoTkinterFrame)
+#@+node:ekr.20041012083237.3:put and putnl (nullLog)
+def put (self,s,color=None):
+    if self.enabled:
+        # g.trace('nullLog',s)
+        g.rawPrint(s)
+
+def putnl (self):
+    if self.enabled:
+        g.rawPrint("")
+#@nonl
+#@-node:ekr.20041012083237.3:put and putnl (nullLog)
+#@+node:ekr.20041225063637.11:class logClass
+class logClass:
+    
+    def __init__ (self,textWidget):
+        self.textWidget = textWidget
+        self.colorTags = []
+        
+    def put(self,s,color=None):
+        w = self.textWidget
+        << put s to w >>
+        
+    def putnl (self):
+        w = self.textWidget
+        if sys.platform == "darwin": print
+        w.insert("end",'\n')
+        w.see("end")
+        w.update_idletasks()
+#@nonl
+#@+node:ekr.20041225063637.12:<< put s to w >>
+if type(s) == type(u""):
+    s = g.toEncodedString(s,g.app.tkEncoding)
+
+if color:
+    if color not in self.colorTags:
+        self.colorTags.append(color)
+        w.tag_config(color,foreground=color)
+    w.insert("end",s)
+    w.tag_add(color,"end-%dc" % (len(s)+1),"end-1c")
+    if "black" not in self.colorTags:
+        self.colorTags.append("black")
+        w.tag_config("black",foreground="black")
+    w.tag_add("black","end")
+else:
+    w.insert("end",s)
+
+w.see("end")
+w.update_idletasks()
+#@nonl
+#@-node:ekr.20041225063637.12:<< put s to w >>
+#@-node:ekr.20041225063637.11:class logClass
+#@+node:ekr.20031218072017.1473:tkLog.put & putnl & forceLogUpdate
+# All output to the log stream eventually comes here.
+def put (self,s,color=None):
+    
+    # print 'tkLog.put',self.c.shortFileName(),s,
+
+    if g.app.quitting: return
+    elif self.logCtrl:
+        << put s to log control >>
+    else:
+        << put s to logWaiting and print s >>
+
+def putnl (self):
+    if g.app.quitting: return
+    elif self.logCtrl:
+        << put newline to log control >>
+    else:
+        << put newline to logWaiting and print newline >>
+        
+def forceLogUpdate (self):
+    if sys.platform != "darwin": # Does not work on darwin.
+        self.frame.tree.disableRedraw = True
+        self.logCtrl.update_idletasks()
+        #self.frame.outerFrame.update_idletasks() # 4/23/04
+        #self.frame.top.update_idletasks()
+        self.frame.tree.disableRedraw = False
+#@nonl
+#@+node:EKR.20040423082910:<< put s to log control >>
+if type(s) == type(u""): # 3/18/03
+    s = g.toEncodedString(s,g.app.tkEncoding)
+
+if color:
+    if color not in self.colorTags:
+        self.colorTags.append(color)
+        self.logCtrl.tag_config(color,foreground=color)
+    self.logCtrl.insert("end",s)
+    self.logCtrl.tag_add(color,"end-%dc" % (len(s)+1),"end-1c")
+    if "black" not in self.colorTags:
+        self.colorTags.append("black")
+        self.logCtrl.tag_config("black",foreground="black")
+    self.logCtrl.tag_add("black","end")
+else:
+    self.logCtrl.insert("end",s)
+
+self.logCtrl.see("end")
+    
+self.forceLogUpdate()
+#@nonl
+#@-node:EKR.20040423082910:<< put s to log control >>
+#@+node:EKR.20040423082910.1:<< put s to logWaiting and print s >>
+g.app.logWaiting.append((s,color),)
+
+print "Null tkinter log"
+if type(s) == type(u""): # 3/18/03
+    s = g.toEncodedString(s,"ascii")
+print s
+#@nonl
+#@-node:EKR.20040423082910.1:<< put s to logWaiting and print s >>
+#@+node:EKR.20040423082910.2:<< put newline to log control >>
+self.logCtrl.insert("end",'\n')
+self.logCtrl.see("end")
+
+self.frame.tree.disableRedraw = True
+self.logCtrl.update_idletasks()
+#self.frame.outerFrame.update_idletasks() # 4/23/04
+#self.frame.top.update_idletasks()
+self.frame.tree.disableRedraw = False
+#@nonl
+#@-node:EKR.20040423082910.2:<< put newline to log control >>
+#@+node:EKR.20040423082910.3:<< put newline to logWaiting and print newline >>
+g.app.logWaiting.append(('\n',"black"),)
+print "Null tkinter log"
+print
+#@nonl
+#@-node:EKR.20040423082910.3:<< put newline to logWaiting and print newline >>
+#@-node:ekr.20031218072017.1473:tkLog.put & putnl & forceLogUpdate
+#@-node:ekr.20050201175325:(g.es called print on the Mac)
+#@-node:ekr.20050202062110:(Fixed print problems on the Mac)
+#@+node:ekr.20050202092849:leoTest.runTests now makes copies of all positions
+@killcolor
+
+This makes the test more robust in case of failure.
+#@nonl
+#@-node:ekr.20050202092849:leoTest.runTests now makes copies of all positions
+#@+node:ekr.20050202080802:Fixed problems with unit test file paths
+@killcolor
+
+Changed the setup code for the import/export test cases so that it uses os.path.sep when it sees \\ in the test nodes.
+
+With this change all unit tests pass.
+#@nonl
+#@-node:ekr.20050202080802:Fixed problems with unit test file paths
 #@-node:ekr.20050125203059.1:Bugs
 #@+node:ekr.20050125203059.2:New features...
 #@+node:ekr.20050125170349:(Added new undo granularities & undo_granularity setting)
@@ -29794,6 +30070,13 @@ enable(menu,"De-Hoist",c.canDehoist())
 #@nonl
 #@-node:ekr.20040131171020:<< enable top level outline menu >>
 #@-node:ekr.20050128081422:(Changed name of Paste Retaining Clones to Paste Node As Clone)
+#@+node:ekr.20050202074304:Script buttons can request to be removed
+@killcolor
+
+A script in an @button node or script node can now request to be removed by
+setting g.app.scriptDict['removeMe'] = True.
+#@nonl
+#@-node:ekr.20050202074304:Script buttons can request to be removed
 #@-node:ekr.20050125203059.2:New features...
 #@-node:ekr.20050125203059:4.3 a2 projects
 #@-all
