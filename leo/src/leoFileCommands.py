@@ -202,7 +202,9 @@ class baseFileCommands:
 	#@+node:ekr.20031218072017.3021:get routines
 	#@+node:ekr.20031218072017.1243:get & match (basic)(leoFileCommands)
 	#@+node:ekr.20031218072017.1244:get routines
+	#@+node:EKR.20040526204706:getBool
 	def getBool (self):
+	
 		self.skipWs() # guarantees at least one more character.
 		ch = self.fileBuffer[self.fileIndex]
 		if ch == '0':
@@ -211,21 +213,11 @@ class baseFileCommands:
 			self.fileIndex += 1 ; return true
 		else:
 			raise BadLeoFile("expecting bool constant")
-			
-	def getDqBool (self):
-		self.getDquote() ; val = self.getBool() ; self.getDquote()
-		return val
-		
-	def getDqString (self): # 7/10/02
-		self.getDquote()
-		i = self.fileIndex
-		self.fileIndex = j = string.find(self.fileBuffer,'"',i)
-		if j == -1: raise BadLeoFile("unterminated double quoted string")
-		s = self.fileBuffer[i:j]
-		self.getDquote()
-		return s
-	
+	#@nonl
+	#@-node:EKR.20040526204706:getBool
+	#@+node:EKR.20040526204706.1:getDouble
 	def getDouble (self):
+	
 		self.skipWs()
 		i = self.fileIndex ; buf = self.fileBuffer
 		floatChars = string.digits + 'e' + 'E' + '.' + '+' + '-'
@@ -237,16 +229,45 @@ class baseFileCommands:
 		val = float(buf[self.fileIndex:i])
 		self.fileIndex = i
 		return val
+	#@nonl
+	#@-node:EKR.20040526204706.1:getDouble
+	#@+node:EKR.20040526204706.2:getDqBool
+	def getDqBool (self):
 	
+		self.getDquote()
+		val = self.getBool()
+		self.getDquote()
+		return val
+	#@-node:EKR.20040526204706.2:getDqBool
+	#@+node:EKR.20040526204706.3:getDqString
+	def getDqString (self):
+	
+		self.getDquote()
+		i = self.fileIndex
+		self.fileIndex = j = string.find(self.fileBuffer,'"',i)
+		if j == -1: raise BadLeoFile("unterminated double quoted string")
+		s = self.fileBuffer[i:j]
+		self.getDquote()
+		return s
+	#@nonl
+	#@-node:EKR.20040526204706.3:getDqString
+	#@+node:EKR.20040526204706.4:getDquote
 	def getDquote (self):
+	
 		self.getTag('"')
-		
+	#@nonl
+	#@-node:EKR.20040526204706.4:getDquote
+	#@+node:EKR.20040526204706.5:getIndex
 	def getIndex (self):
+	
 		val = self.getLong()
 		if val < 0: raise BadLeoFile("expecting index")
 		return val
-		
+	#@nonl
+	#@-node:EKR.20040526204706.5:getIndex
+	#@+node:EKR.20040526204706.6:getLong
 	def getLong (self):
+	
 		self.skipWs() # guarantees at least one more character.
 		i = self.fileIndex
 		if self.fileBuffer[i] == '-':
@@ -259,22 +280,16 @@ class baseFileCommands:
 		val = int(self.fileBuffer[self.fileIndex:i])
 		self.fileIndex = i
 		return val
-			
-	def getStringToTag (self,tag):
-		buf = self.fileBuffer
-		blen = len(buf) ; tlen = len(tag)
-		i = j = self.fileIndex
-		while i < blen:
-			if tag == buf[i:i+tlen]:
-				self.fileIndex = i
-				return buf[j:i]
-			else: i += 1
-		raise BadLeoFile("expecting string terminated by " + tag)
-		return ""
-		
-	# Look ahead for collapsed tag: tag may or may not end in ">"
-	# Skips tag and /> if found, otherwise does not alter index.
+	#@nonl
+	#@-node:EKR.20040526204706.6:getLong
+	#@+node:EKR.20040526204706.7:getOpenTag
 	def getOpenTag (self,tag):
+		
+		"""
+		Look ahead for collapsed tag: tag may or may not end in ">"
+		Skips tag and /> if found, otherwise does not alter index.
+		"""
+	
 		if tag[-1] == ">":
 			# Only the tag itself or a collapsed tag are valid.
 			if self.matchTag(tag):
@@ -299,16 +314,58 @@ class baseFileCommands:
 			else:
 				print "getOpenTag(", tag, ") failed:"
 				raise BadLeoFile("expecting" + tag)
-		
-	# 11/24/02: Look ahead for closing />
-	# Return true if found.
+	#@nonl
+	#@-node:EKR.20040526204706.7:getOpenTag
+	#@+node:EKR.20040526204706.8:getStringToTag
+	def getStringToTag (self,tag):
+	
+		buf = self.fileBuffer
+		blen = len(buf) ; tlen = len(tag)
+		i = j = self.fileIndex
+		while i < blen:
+			if tag == buf[i:i+tlen]:
+				self.fileIndex = i
+				return buf[j:i]
+			else: i += 1
+		raise BadLeoFile("expecting string terminated by " + tag)
+		return ""
+	#@nonl
+	#@-node:EKR.20040526204706.8:getStringToTag
+	#@+node:EKR.20040526204706.9:getTag
 	def getTag (self,tag):
+		
+		"""
+		Look ahead for closing />
+		Return true if found.
+		"""
+		
 		if self.matchTag(tag):
 			return
 		else:
 			print "getTag(", tag, ") failed:"
 			raise BadLeoFile("expecting" + tag)
+	#@-node:EKR.20040526204706.9:getTag
+	#@+node:EKR.20040526204036.1:getUnknownAttribute
+	def getUnknownAttribute(self):
+		
+		import binascii,pickle
+		
+		# New in 4.2.  The unknown tag has been pickled and hexlify'd.
+		attr,val = self.getUnknownTag()
+		
+		# g.trace(attr,val)
+		
+		try:
+			bin = binascii.unhexlify(val) # Throws a TypeError if val is not a hex string.
+			val2 = pickle.loads(bin)
+		except TypeError, UnpicklingError:
+			# The unknownAtrribute was written before 4.2.
+			val2 = val
 			
+		return attr,val2
+	#@nonl
+	#@-node:EKR.20040526204036.1:getUnknownAttribute
+	#@+node:EKR.20040526204036:getUnknownTag
 	def getUnknownTag(self):
 		
 		self.skipWsAndNl() # guarantees at least one more character.
@@ -316,12 +373,13 @@ class baseFileCommands:
 		if not tag:
 			print "getUnknownTag failed"
 			raise BadLeoFile("unknown tag not followed by '='")
+	
 		self.fileIndex += 1
 		val = self.getDqString()
-		g.trace(tag,val)
+		# g.trace(tag,val)
 		return tag,val
-		
 	#@nonl
+	#@-node:EKR.20040526204036:getUnknownTag
 	#@-node:ekr.20031218072017.1244:get routines
 	#@+node:ekr.20031218072017.1245:match routines
 	def matchChar (self,ch):
@@ -721,7 +779,8 @@ class baseFileCommands:
 			elif self.matchTag("rtf=\"0\""): pass # ignored
 			elif self.matchTag(">"):         break
 			else: # New for 4.0: allow unknown attributes.
-				attr,val = self.getUnknownTag()
+				# New in 4.2: allow pickle'd and hexlify'ed values.
+				attr,val = self.getUnknownAttribute()
 				attrDict[attr] = val
 				
 		if g.app.use_gnx:
@@ -820,7 +879,8 @@ class baseFileCommands:
 			elif self.matchTag(">"):
 				break
 			else: # New for 4.0: allow unknown attributes.
-				attr,val = self.getUnknownTag()
+				# New in 4.2: allow pickle'd and hexlify'ed values.
+				attr,val = self.getUnknownAttribute()
 				attrDict[attr] = val
 		# Headlines are optional.
 		if self.matchTag("<vh>"):
@@ -1492,21 +1552,8 @@ class baseFileCommands:
 			self.put_in_dquotes("T" + str(t.fileIndex))
 	
 		if hasattr(t,"unknownAttributes"):
-			#@		<< put unknown tnode attributes >>
-			#@+node:ekr.20031218072017.1578:<< put unknown tnode attributes >>
-			attrDict = t.unknownAttributes
-			keys = attrDict.keys()
-			for key in keys:
-				val = attrDict[key]
-				attr = ' %s="%s"' % (key,self.xmlEscape(val))
-				self.put(attr)
-				if 1: # For debugging.
-					s = "putting unknown tnode attribute"
-					print s ;  g.es(s, color="red")
-					print attr, g.es(attr)
-			#@nonl
-			#@-node:ekr.20031218072017.1578:<< put unknown tnode attributes >>
-			#@nl
+			self.putUnknownAttributes(t)
+	
 		self.put(">")
 	
 		# g.trace(t)
@@ -1582,6 +1629,35 @@ class baseFileCommands:
 		self.put("</tnodes>") ; self.put_nl()
 	#@nonl
 	#@-node:ekr.20031218072017.1575:putTnodes
+	#@+node:EKR.20040526202501:putUnknownAttributes
+	def putUnknownAttributes (self,torv):
+		
+		import binascii,pickle
+		
+		attrDict = torv.unknownAttributes
+		if type(attrDict) != type({}):
+			g.es("ignoring non-dictionary unknownAttributes for",torv,color="blue")
+			return
+			
+		attrs = []
+		for key in attrDict.keys():
+			val = attrDict[key]
+			if 1:
+				try:
+					s = pickle.dumps(val,bin=true)
+				except PicklingError:
+					g.es("ignoring non-pickleable unknownAttributes for",torv,color="blue")
+					return
+				attr = ' %s="%s"' % (key,binascii.hexlify(s))
+			else: # This is not general enough
+				attr = ' %s="%s"' % (key,self.xmlEscape(val))
+			attrs.append(attr)
+	
+		for attr in attrs:
+			self.put(attr)
+			# g.trace(torv,attr)
+	#@nonl
+	#@-node:EKR.20040526202501:putUnknownAttributes
 	#@+node:ekr.20031218072017.1863:putVnode (3.x and 4.x)
 	def putVnode (self,p):
 	
@@ -1642,21 +1718,7 @@ class baseFileCommands:
 			fc.putTnodeList(v) # New in 4.0
 		
 		if hasattr(v,"unknownAttributes"): # New in 4.0
-			#@	<< put unknown vnode attributes >>
-			#@+node:ekr.20031218072017.1867:<< put unknown vnode attributes >>
-			attrDict = v.unknownAttributes
-			keys = attrDict.keys()
-			for key in keys:
-				val = attrDict[key]
-				attr = ' %s="%s"' % (key,self.xmlEscape(val))
-				self.put(attr)
-				if 0: # For debugging.
-					s = "putting unknown attribute for " + v.headString()
-					print s ;  g.es(s, color="red")
-					print attr, g.es(attr)
-			#@nonl
-			#@-node:ekr.20031218072017.1867:<< put unknown vnode attributes >>
-			#@nl
+			self.putUnknownAttributes(v)
 		#@nonl
 		#@-node:ekr.20040324082713:<< Put tnodeList and unKnownAttributes >>
 		#@nl
