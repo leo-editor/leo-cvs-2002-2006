@@ -1274,12 +1274,12 @@ class atFile:
 			delim = self.endSentinelComment
 			n = len(delim)
 			
-			# Remove delim and possibly a leading newline.
+			# Remove delim and possible a leading newline.
 			s = string.join(out,"")
 			s = string.rstrip(s)
 			if s[-n:] == delim:
 				s = s[:-n]
-			if len(s) > 0 and s[-1] == '\n':
+			if s[-1] == '\n':
 				s = s[:-1]
 				
 			# Rewrite out in place.
@@ -1871,8 +1871,6 @@ class atFile:
 				assert(match(s,i,"comment"))
 				
 				# We need do nothing more to ignore the comment line!
-				
-				
 				
 				#@-body
 				#@-node:2::<< scan @comment >>
@@ -2673,12 +2671,18 @@ class atFile:
 			if 1: # write the entire file
 				self.putOpenLeoSentinel("@+leo")
 				
-				#@<< put optional @comment sentinel line >>
-				#@+node:3::<< put optional @comment sentinel line >>
+				#@<< put optional @comment sentinel lines >>
+				#@+node:3::<< put optional @comment sentinel lines >>
 				#@+body
-				pass
+				s2 = app().config.output_initial_comment
+				if s2:
+					lines = string.split(s2,"\\n")
+					for line in lines:
+						line = string.replace(line,"@date",time.asctime())
+						if len(line)> 0:
+							self.putSentinel("@comment " + line)
 				#@-body
-				#@-node:3::<< put optional @comment sentinel line >>
+				#@-node:3::<< put optional @comment sentinel lines >>
 
 				self.putOpenNodeSentinel(root)
 				self.putBodyPart(root)

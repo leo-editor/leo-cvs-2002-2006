@@ -146,16 +146,22 @@ class config:
 		#@+body
 		# 10/11/02: Defaults are specified only here.
 		
-		self.config = None # The current instance of ConfigParser
+		self.config = None
+			# The current instance of ConfigParser
+		self.output_initial_comment = ""
+			# Must be "" or None for compatibility with older versions of Leo.
 		self.output_newline = "nl"
 		self.path_directive_creates_directories = false
-		self.read_only = true # Make _sure_ we don't alter an illegal leoConfig.txt file!
+		self.read_only = true
+			# Make _sure_ we don't alter an illegal leoConfig.txt file!
 		self.relative_path_base_directory = "!"
 		self.remove_sentinels_extension = ".txt"
 		self.save_clears_undo_buffer = false
 		self.use_relative_node_indices = 1
 		self.write_clone_indices = 0
-		self.xml_version_string = "UTF-8" # Must be upper case for compatibility with Borland version of Leo.
+		self.xml_version_string = "UTF-8"
+			# Must be upper case for compatibility with older versions of Leo.
+		
 		#@-body
 		#@-node:3::<< initialize ivars that may be set by config options >>
 
@@ -587,6 +593,10 @@ class config:
 			#@-at
 			#@@c
 
+			self.output_initial_comment = self.initConfigParam(
+				"output_initial_comment",
+				self.output_initial_comment)
+			
 			self.output_newline = self.initConfigParam(
 				"output_newline",self.output_newline)
 			

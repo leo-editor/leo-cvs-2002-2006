@@ -15,7 +15,7 @@
 <v t="T1" a="E"><vh>leoConfig.leo</vh>
 <v t="T2" a="E"><vh>@root leoConfig.txt</vh>
 <v t="T3"><vh>&lt;&lt; general comments and warnings &gt;&gt;</vh></v>
-<v t="T4"><vh>&lt;&lt; General configuration options, especially read-only mode &gt;&gt;</vh></v>
+<v t="T4" a="V"><vh>&lt;&lt; General configuration options, especially read-only mode &gt;&gt;</vh></v>
 <v t="T5"><vh>&lt;&lt; The "Recent Files" menu &gt;&gt;</vh></v>
 <v t="T6"><vh>&lt;&lt; Compare Panel settings &gt;&gt;</vh></v>
 <v t="T7"><vh>&lt;&lt; Find/Change Panel settings &gt;&gt;</vh></v>
@@ -28,8 +28,8 @@
 <v t="T14"><vh>&lt;&lt; None &gt;&gt;</vh></v>
 </v>
 <v t="T15"><vh>&lt;&lt; Preferences Panel settings &gt;&gt;</vh></v>
-<v t="T16" a="V"><vh>&lt;&lt; Syntax coloring options and colors &gt;&gt;</vh></v>
-<v t="T17" a="E"><vh>&lt;&lt; Window options &gt;&gt;</vh>
+<v t="T16"><vh>&lt;&lt; Syntax coloring options and colors &gt;&gt;</vh></v>
+<v t="T17"><vh>&lt;&lt; Window options &gt;&gt;</vh>
 <v t="T18"><vh>&lt;&lt; body pane options &gt;&gt;</vh></v>
 <v t="T19"><vh>&lt;&lt; outline pane options&gt;&gt;</vh></v>
 <v t="T20"><vh>&lt;&lt; log pane options &gt;&gt;</vh></v>
@@ -99,6 +99,16 @@ xml_version_string = UTF-8
 #	The version used at the start of .leo files.
 #	Default is UTF-8.  Better may be iso-8859-1 or iso-8859-15.
 #	Important:  Use UTF-8 (case is significant) to write leo.py 2.x files.
+
+output_initial_comment =
+
+#	Example:
+#		Created by Leo at @date
+#	A comment to be iserted in derived files just after the initial @+leo line.
+#	The comment will appear in an @comment sentinel.
+#	This must be empty or None for compatibility with older versions of Leo.
+#	Leo replaces @date with the date and time that the derived file was created.
+#	Use \n to separate lines.
 
 output_newline = nl
 #	Valid values for this option:
