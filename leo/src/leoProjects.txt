@@ -9408,6 +9408,7 @@ file to be the target file.
 @c
 
 self.docKind = None
+self.explicitLineEnding = False # True: an @lineending directive specifies the ending.
 self.fileChangedFlag = False # True: the file has actually been updated.
 self.shortFileName = "" # short version of file name used for messages.
 self.thinFile = False
@@ -10681,6 +10682,361 @@ def openWithTempFilePath (self,v,ext):
 #@-node:ekr.20031218072017.2832:openWithTempFilePath
 #@-node:ekr.20031218072017.2823:openWith and allies
 #@-node:ekr.20041018190736:(Fixed problems with spawnv option of openWith)
+#@+node:ekr.20041019074759:(Added better messages from g.cantImport)
+#@+node:ekr.20041019080519:what I did
+@killcolor
+
+- Added g.app.failedPlugins list.
+- Added moduleName arg to g.cantImport.
+- Removed redundant print from cantImport.
+- cantImport only writes one failure message per named plugin.
+#@nonl
+#@-node:ekr.20041019080519:what I did
+#@+node:ekr.20040917061619:g.cantImport
+def cantImport (s,moduleName=""):
+    
+    """Print a "Can't Import" message and return None."""
+    
+    if moduleName and moduleName in g.app.failedPlugins:
+        return
+    
+    if moduleName:
+        message = "Can not import %s from plugin %s" % (s,moduleName)
+        g.app.failedPlugins.append(moduleName)
+    else:
+        message = "Can not import %s from unnamed plugin" % s
+
+    g.es(message,color="blue")
+    return None
+#@nonl
+#@-node:ekr.20040917061619:g.cantImport
+#@-node:ekr.20041019074759:(Added better messages from g.cantImport)
+#@+node:ekr.20041019085841:(Made sure files that differ only in line ending get written if @lineending is in effect)
+#@+node:ekr.20041019085841.1:What I did
+@killcolor 
+
+The old code did not honor the @lineending directive if the two files would otherwise be identical.
+
+What I did:
+
+- Added self.explicitLineEnding  to remember whether an explicit @lineending directive is in effect.
+
+- Make sure the user knows why an otherwise identical file was written.
+
+- Changed name of compareFilesIgnoringNewlines to compareFiles.
+
+- Added ignoreLineEndings arg to compareFiles.
+#@nonl
+#@-node:ekr.20041019085841.1:What I did
+#@+node:ekr.20041005105605.222:atFile.scanAllDirectives
+@ Once a directive is seen, no other related directives in nodes further up the tree have any effect.  For example, if an @color directive is seen in node p, no @color or @nocolor directives are examined in any ancestor of p.
+
+This code is similar to Commands.scanAllDirectives, but it has been modified for use by the atFile class.
+@c
+
+def scanAllDirectives(self,p,scripting=False,importing=False,reading=False):
+    
+    """Scan position p and p's ancestors looking for directives,
+    setting corresponding atFile ivars.
+    """
+
+    c = self.c
+    << Set ivars >>
+    << Set path from @file node >>
+    old = {}
+    for p in p.self_and_parents_iter():
+        s = p.v.t.bodyString
+        theDict = g.get_directives_dict(s)
+        << Test for @path >>
+        << Test for @encoding >>
+        << Test for @comment and @language >>
+        << Test for @header and @noheader >>
+        << Test for @lineending >>
+        << Test for @pagewidth >>
+        << Test for @tabwidth >>
+        old.update(theDict)
+    << Set current directory >>
+    if not importing and not reading:
+        # 5/19/04: don't override comment delims when reading!
+        << Set comment strings from delims >>
+#@nonl
+#@+node:ekr.20041005105605.223:<< Set ivars >>
+self.page_width = self.c.page_width
+self.tab_width  = self.c.tab_width
+
+self.default_directory = None # 8/2: will be set later.
+
+delim1, delim2, delim3 = g.set_delims_from_language(c.target_language)
+self.language = c.target_language
+
+self.encoding = g.app.config.default_derived_file_encoding
+self.output_newline = g.getOutputNewline() # 4/24/03: initialize from config settings.
+#@nonl
+#@-node:ekr.20041005105605.223:<< Set ivars >>
+#@+node:ekr.20041005105605.224:<< Set path from @file node >> in scanDirectory in leoGlobals.py
+# An absolute path in an @file node over-rides everything else.
+# A relative path gets appended to the relative path by the open logic.
+
+name = p.anyAtFileNodeName() # 4/28/04
+
+theDir = g.choose(name,g.os_path_dirname(name),None)
+
+if theDir and len(theDir) > 0 and g.os_path_isabs(theDir):
+    if g.os_path_exists(theDir):
+        self.default_directory = theDir
+    else: # 9/25/02
+        self.default_directory = g.makeAllNonExistentDirectories(theDir)
+        if not self.default_directory:
+            self.error("Directory \"" + theDir + "\" does not exist")
+#@nonl
+#@-node:ekr.20041005105605.224:<< Set path from @file node >> in scanDirectory in leoGlobals.py
+#@+node:ekr.20041005105605.225:<< Test for @path >>
+# We set the current director to a path so future writes will go to that directory.
+
+if not self.default_directory and not old.has_key("path") and theDict.has_key("path"):
+
+    k = theDict["path"]
+    << compute relative path from s[k:] >>
+    if path and len(path) > 0:
+        base = g.getBaseDirectory() # returns "" on error.
+        path = g.os_path_join(base,path)
+        if g.os_path_isabs(path):
+            << handle absolute path >>
+        else:
+            self.error("ignoring bad @path: " + path)
+    else:
+        self.error("ignoring empty @path")
+#@nonl
+#@+node:ekr.20041005105605.226:<< compute relative path from s[k:] >>
+j = i = k + len("@path")
+i = g.skip_to_end_of_line(s,i)
+path = string.strip(s[j:i])
+
+# Remove leading and trailing delims if they exist.
+if len(path) > 2 and (
+    (path[0]=='<' and path[-1] == '>') or
+    (path[0]=='"' and path[-1] == '"') ):
+    path = path[1:-1]
+path = path.strip()
+
+if 0: # 11/14/02: we want a _relative_ path, not an absolute path.
+    path = g.os_path_join(g.app.loadDir,path)
+#@nonl
+#@-node:ekr.20041005105605.226:<< compute relative path from s[k:] >>
+#@+node:ekr.20041005105605.227:<< handle absolute path >>
+# path is an absolute path.
+
+if g.os_path_exists(path):
+    self.default_directory = path
+else: # 9/25/02
+    self.default_directory = g.makeAllNonExistentDirectories(path)
+    if not self.default_directory:
+        self.error("invalid @path: " + path)
+#@-node:ekr.20041005105605.227:<< handle absolute path >>
+#@-node:ekr.20041005105605.225:<< Test for @path >>
+#@+node:ekr.20041005105605.228:<< Test for @encoding >>
+if not old.has_key("encoding") and theDict.has_key("encoding"):
+    
+    e = g.scanAtEncodingDirective(s,theDict)
+    if e:
+        self.encoding = e
+#@nonl
+#@-node:ekr.20041005105605.228:<< Test for @encoding >>
+#@+node:ekr.20041005105605.229:<< Test for @comment and @language >>
+# 10/17/02: @language and @comment may coexist in @file trees.
+# For this to be effective the @comment directive should follow the @language directive.
+
+if not old.has_key("comment") and theDict.has_key("comment"):
+    k = theDict["comment"]
+    # 11/14/02: Similar to fix below.
+    delim1, delim2, delim3 = g.set_delims_from_string(s[k:])
+
+# Reversion fix: 12/06/02: We must use elif here, not if.
+elif not old.has_key("language") and theDict.has_key("language"):
+    k = theDict["language"]
+    # 11/14/02: Fix bug reported by J.M.Gilligan.
+    self.language,delim1,delim2,delim3 = g.set_language(s,k)
+#@nonl
+#@-node:ekr.20041005105605.229:<< Test for @comment and @language >>
+#@+node:ekr.20041005105605.230:<< Test for @header and @noheader >>
+# EKR: 10/10/02: perform the sames checks done by tangle.scanAllDirectives.
+if theDict.has_key("header") and theDict.has_key("noheader"):
+    g.es("conflicting @header and @noheader directives")
+#@nonl
+#@-node:ekr.20041005105605.230:<< Test for @header and @noheader >>
+#@+node:ekr.20041005105605.231:<< Test for @lineending >>
+if not old.has_key("lineending") and theDict.has_key("lineending"):
+    
+    lineending = g.scanAtLineendingDirective(s,theDict)
+    if lineending:
+        self.explicitLineEnding = True
+        self.output_newline = lineending
+#@-node:ekr.20041005105605.231:<< Test for @lineending >>
+#@+node:ekr.20041005105605.232:<< Test for @pagewidth >>
+if theDict.has_key("pagewidth") and not old.has_key("pagewidth"):
+    
+    w = g.scanAtPagewidthDirective(s,theDict,issue_error_flag=True)
+    if w and w > 0:
+        self.page_width = w
+#@nonl
+#@-node:ekr.20041005105605.232:<< Test for @pagewidth >>
+#@+node:ekr.20041005105605.233:<< Test for @tabwidth >>
+if theDict.has_key("tabwidth") and not old.has_key("tabwidth"):
+    
+    w = g.scanAtTabwidthDirective(s,theDict,issue_error_flag=True)
+    if w and w != 0:
+        self.tab_width = w
+
+#@-node:ekr.20041005105605.233:<< Test for @tabwidth >>
+#@+node:ekr.20041005105605.234:<< Set current directory >>
+# This code is executed if no valid absolute path was specified in the @file node or in an @path directive.
+
+if c.frame and not self.default_directory:
+    base = g.getBaseDirectory() # returns "" on error.
+    for theDir in (c.tangle_directory,c.frame.openDirectory,c.openDirectory):
+        if theDir and len(theDir) > 0:
+            theDir = g.os_path_join(base,theDir)
+            if g.os_path_isabs(theDir): # Errors may result in relative or invalid path.
+                if g.os_path_exists(theDir):
+                    self.default_directory = theDir ; break
+                else: # 9/25/02
+                    self.default_directory = g.makeAllNonExistentDirectories(theDir)
+
+if not self.default_directory and not scripting and not importing:
+    # This should never happen: c.openDirectory should be a good last resort.
+    g.trace()
+    self.error("No absolute directory specified anywhere.")
+    self.default_directory = ""
+#@-node:ekr.20041005105605.234:<< Set current directory >>
+#@+node:ekr.20041005105605.235:<< Set comment strings from delims >>
+if scripting:
+    # Force Python language.
+    delim1,delim2,delim3 = g.set_delims_from_language("python")
+    self.language = "python"
+    
+# Use single-line comments if we have a choice.
+# 8/2/01: delim1,delim2,delim3 now correspond to line,start,end
+
+if delim1:
+    self.startSentinelComment = delim1
+    self.endSentinelComment = "" # Must not be None.
+elif delim2 and delim3:
+    self.startSentinelComment = delim2
+    self.endSentinelComment = delim3
+else: # Emergency!
+    # assert(0)
+    g.es("Unknown language: using Python comment delimiters")
+    g.es("c.target_language:",c.target_language)
+    g.es("delim1,delim2,delim3:",delim1,delim2,delim3)
+    self.startSentinelComment = "#" # This should never happen!
+    self.endSentinelComment = ""
+    
+# g.trace(repr(self.startSentinelComment),repr(self.endSentinelComment))
+#@nonl
+#@-node:ekr.20041005105605.235:<< Set comment strings from delims >>
+#@-node:ekr.20041005105605.222:atFile.scanAllDirectives
+#@+node:ekr.20041005105605.197:compareFiles
+# This routine is needed to handle cvs stupidities.
+
+def compareFiles (self,path1,path2,ignoreLineEndings):
+
+    """Compare two text files ignoring line endings."""
+    
+    try:
+        # Opening both files in text mode converts all line endings to '\n'.
+        mode = g.choose(ignoreLineEndings,"r","rb")
+        f1 = open(path1,mode)
+        f2 = open(path2,mode)
+        equal = f1.read() == f2.read()
+        f1.close() ; f2.close()
+        return equal
+    except IOError:
+        return False # Should never happen
+#@nonl
+#@-node:ekr.20041005105605.197:compareFiles
+#@+node:ekr.20041005105605.212:replaceTargetFileIfDifferent
+def replaceTargetFileIfDifferent (self):
+    
+    assert(self.outputFile is None)
+    
+    self.fileChangedFlag = False
+    if g.os_path_exists(self.targetFileName):
+        if self.compareFiles(
+            self.outputFileName,self.targetFileName,not self.explicitLineEnding):
+            << delete the output file >>
+        else:
+            << report if the files differ only in line endings >>
+            << replace the target file with the output file >>
+    else:
+        << rename the output file to be the target file >>
+#@nonl
+#@+node:ekr.20041005105605.213:<< delete the output file >>
+try: # Just delete the temp file.
+    os.remove(self.outputFileName)
+except:
+    g.es("exception deleting:" + self.outputFileName)
+    g.es_exception()
+
+g.es("unchanged: " + self.shortFileName)
+#@nonl
+#@-node:ekr.20041005105605.213:<< delete the output file >>
+#@+node:ekr.20041005105605.214:<< replace the target file with the output file >>
+try:
+    # 10/6/02: retain the access mode of the previous file,
+    # removing any setuid, setgid, and sticky bits.
+    mode = (os.stat(self.targetFileName))[0] & 0777
+except:
+    mode = None
+
+try: # Replace target file with temp file.
+    os.remove(self.targetFileName)
+    try:
+        g.utils_rename(self.outputFileName,self.targetFileName)
+        if mode != None: # 10/3/02: retain the access mode of the previous file.
+            try:
+                os.chmod(self.targetFileName,mode)
+            except:
+                g.es("exception in os.chmod(%s)" % (self.targetFileName))
+        g.es("writing: " + self.shortFileName)
+        self.fileChangedFlag = True
+    except:
+        # 6/28/03
+        self.writeError("exception renaming: %s to: %s" % (self.outputFileName,self.targetFileName))
+        g.es_exception()
+except:
+    self.writeError("exception removing:" + self.targetFileName)
+    g.es_exception()
+    try: # Delete the temp file when the deleting the target file fails.
+        os.remove(self.outputFileName)
+    except:
+        g.es("exception deleting:" + self.outputFileName)
+        g.es_exception()
+#@nonl
+#@-node:ekr.20041005105605.214:<< replace the target file with the output file >>
+#@+node:ekr.20041019090322:<< report if the files differ only in line endings >>
+if (
+    self.explicitLineEnding and
+    self.compareFiles(
+        self.outputFileName,
+        self.targetFileName,
+        ignoreLineEndings=True)):
+
+    g.es("correcting line endings in: " + self.targetFileName,color="blue")
+#@nonl
+#@-node:ekr.20041019090322:<< report if the files differ only in line endings >>
+#@+node:ekr.20041005105605.215:<< rename the output file to be the target file >>
+try:
+    g.utils_rename(self.outputFileName,self.targetFileName)
+    g.es("creating: " + self.targetFileName)
+    self.fileChangedFlag = True
+except:
+    self.writeError("exception renaming:" + self.outputFileName +
+        " to " + self.targetFileName)
+    g.es_exception()
+#@nonl
+#@-node:ekr.20041005105605.215:<< rename the output file to be the target file >>
+#@-node:ekr.20041005105605.212:replaceTargetFileIfDifferent
+#@-node:ekr.20041019085841:(Made sure files that differ only in line ending get written if @lineending is in effect)
 #@-node:ekr.20040929081120:4.3 a1 projects
 #@-all
 #@nonl
