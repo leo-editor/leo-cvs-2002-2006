@@ -8761,14 +8761,13 @@ def getVnode (self,parent,back,skip,appendToCurrentStack,appendToTopStack):
         headline = self.getEscapedString() ; self.getTag("</vh>")
     
     # g.trace("skip:",skip,"parent:",parent,"back:",back,"headline:",headline)
-    # g.trace(skip,tref,headline)
     if skip:
-        v = self.getExistingVnode(tref)
-    else:
-        v,skip = self.createVnode(parent,back,tref,headline,attrDict)
+        v = self.getExistingVnode(tref,headline)
+    if v is None:
+        v,skip2 = self.createVnode(parent,back,tref,headline,attrDict)
+        skip = skip or skip2
         if tnodeList:
             v.t.tnodeList = tnodeList # New for 4.0, 4.2: now in tnode.
-            # g.trace("%4d" % len(tnodeList),v)
 
     << Set the remembered status bits >>
 

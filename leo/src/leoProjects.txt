@@ -10692,14 +10692,13 @@ def getVnode (self,parent,back,skip,appendToCurrentStack,appendToTopStack):
         headline = self.getEscapedString() ; self.getTag("</vh>")
     
     # g.trace("skip:",skip,"parent:",parent,"back:",back,"headline:",headline)
-    # g.trace(skip,tref,headline)
     if skip:
-        v = self.getExistingVnode(tref)
-    else:
-        v,skip = self.createVnode(parent,back,tref,headline,attrDict)
+        v = self.getExistingVnode(tref,headline)
+    if v is None:
+        v,skip2 = self.createVnode(parent,back,tref,headline,attrDict)
+        skip = skip or skip2
         if tnodeList:
             v.t.tnodeList = tnodeList # New for 4.0, 4.2: now in tnode.
-            # g.trace("%4d" % len(tnodeList),v)
 
     << Set the remembered status bits >>
 
@@ -11058,14 +11057,13 @@ def getVnode (self,parent,back,skip,appendToCurrentStack,appendToTopStack):
         headline = self.getEscapedString() ; self.getTag("</vh>")
     
     # g.trace("skip:",skip,"parent:",parent,"back:",back,"headline:",headline)
-    # g.trace(skip,tref,headline)
     if skip:
-        v = self.getExistingVnode(tref)
-    else:
-        v,skip = self.createVnode(parent,back,tref,headline,attrDict)
+        v = self.getExistingVnode(tref,headline)
+    if v is None:
+        v,skip2 = self.createVnode(parent,back,tref,headline,attrDict)
+        skip = skip or skip2
         if tnodeList:
             v.t.tnodeList = tnodeList # New for 4.0, 4.2: now in tnode.
-            # g.trace("%4d" % len(tnodeList),v)
 
     << Set the remembered status bits >>
 
@@ -14276,14 +14274,13 @@ def getVnode (self,parent,back,skip,appendToCurrentStack,appendToTopStack):
         headline = self.getEscapedString() ; self.getTag("</vh>")
     
     # g.trace("skip:",skip,"parent:",parent,"back:",back,"headline:",headline)
-    # g.trace(skip,tref,headline)
     if skip:
-        v = self.getExistingVnode(tref)
-    else:
-        v,skip = self.createVnode(parent,back,tref,headline,attrDict)
+        v = self.getExistingVnode(tref,headline)
+    if v is None:
+        v,skip2 = self.createVnode(parent,back,tref,headline,attrDict)
+        skip = skip or skip2
         if tnodeList:
             v.t.tnodeList = tnodeList # New for 4.0, 4.2: now in tnode.
-            # g.trace("%4d" % len(tnodeList),v)
 
     << Set the remembered status bits >>
 
@@ -19210,14 +19207,13 @@ def getVnode (self,parent,back,skip,appendToCurrentStack,appendToTopStack):
         headline = self.getEscapedString() ; self.getTag("</vh>")
     
     # g.trace("skip:",skip,"parent:",parent,"back:",back,"headline:",headline)
-    # g.trace(skip,tref,headline)
     if skip:
-        v = self.getExistingVnode(tref)
-    else:
-        v,skip = self.createVnode(parent,back,tref,headline,attrDict)
+        v = self.getExistingVnode(tref,headline)
+    if v is None:
+        v,skip2 = self.createVnode(parent,back,tref,headline,attrDict)
+        skip = skip or skip2
         if tnodeList:
             v.t.tnodeList = tnodeList # New for 4.0, 4.2: now in tnode.
-            # g.trace("%4d" % len(tnodeList),v)
 
     << Set the remembered status bits >>
 
@@ -20994,7 +20990,7 @@ def convertStackToPosition (self,stack):
 #@nonl
 #@-node:ekr.20040326052245:convertStackToPosition
 #@+node:ekr.20040326063413:getExistingVnode
-def getExistingVnode (self,tref):
+def getExistingVnode (self,tref,headline):
 
     tref1 = tref
     assert(tref > -1)
@@ -21003,8 +20999,9 @@ def getExistingVnode (self,tref):
     try:
         return t.vnodeList[0]
     except IndexError:
-        g.trace(tref1,t,t.vnodeList)
-        # import traceback ; traceback.print_stack()
+        g.es("Missing vnode:",headline,color="red")
+        g.es("Probably an outline topology error.")
+        # g.trace(tref1,t,t.vnodeList)
         return None
 #@nonl
 #@-node:ekr.20040326063413:getExistingVnode
@@ -21087,14 +21084,13 @@ def getVnode (self,parent,back,skip,appendToCurrentStack,appendToTopStack):
         headline = self.getEscapedString() ; self.getTag("</vh>")
     
     # g.trace("skip:",skip,"parent:",parent,"back:",back,"headline:",headline)
-    # g.trace(skip,tref,headline)
     if skip:
-        v = self.getExistingVnode(tref)
-    else:
-        v,skip = self.createVnode(parent,back,tref,headline,attrDict)
+        v = self.getExistingVnode(tref,headline)
+    if v is None:
+        v,skip2 = self.createVnode(parent,back,tref,headline,attrDict)
+        skip = skip or skip2
         if tnodeList:
             v.t.tnodeList = tnodeList # New for 4.0, 4.2: now in tnode.
-            # g.trace("%4d" % len(tnodeList),v)
 
     << Set the remembered status bits >>
 
@@ -32969,14 +32965,13 @@ def getVnode (self,parent,back,skip,appendToCurrentStack,appendToTopStack):
         headline = self.getEscapedString() ; self.getTag("</vh>")
     
     # g.trace("skip:",skip,"parent:",parent,"back:",back,"headline:",headline)
-    # g.trace(skip,tref,headline)
     if skip:
-        v = self.getExistingVnode(tref)
-    else:
-        v,skip = self.createVnode(parent,back,tref,headline,attrDict)
+        v = self.getExistingVnode(tref,headline)
+    if v is None:
+        v,skip2 = self.createVnode(parent,back,tref,headline,attrDict)
+        skip = skip or skip2
         if tnodeList:
             v.t.tnodeList = tnodeList # New for 4.0, 4.2: now in tnode.
-            # g.trace("%4d" % len(tnodeList),v)
 
     << Set the remembered status bits >>
 
@@ -42758,7 +42753,283 @@ else:
 #@-node:EKR.20040612215018:<< dump the lines of script near the error >>
 #@-node:ekr.20031218072017.2140:c.executeScript
 #@-node:EKR.20040615105613.2:(Fixed Problems executing script)
-#@+node:EKR.20040615105613:(Investigated bug when reading 4.1 file: file was corrupted)
+#@-node:EKR.20040617063837:6/15/04
+#@+node:EKR.20040617083707:6/17/04
+#@+node:EKR.20040615010747:(Fixed bug when writing unknownAttributes
+#@+node:EKR.20040615010747.1:Report
+@nocolor
+
+By: Bernhard Mulder - bwmulder
+ RE: Attributes in @thin trees: gotcha   
+2004-06-15 00:48  
+
+ In drawUserIcons:
+.iconsList = t.unknownAttributes.get("icons")
+.# g.trace(iconsList)
+
+.try:
+..for dict in iconsList:
+
+Guard the try: with 'if iconsList:', otherwise, you'll get a traceback whenever some attributes are defined, but not "icons".  
+#@-node:EKR.20040615010747.1:Report
+#@+node:ekr.20040317094609:drawUserIcons
+def drawUserIcons(self,p,where,x,y):
+    
+    """Draw any icons specified by p.v.t.unknownAttributes["icons"]."""
+    
+    h,w = 0,0 ; t = p.v.t
+    
+    if not hasattr(t,"unknownAttributes"):
+        return h,w
+    
+    iconsList = t.unknownAttributes.get("icons")
+    if not iconsList:
+        return h,w
+    
+    try:
+        for dict in iconsList:
+            h2,w2 = self.drawUserIcon(where,x+w,y,dict)
+            h = max(h,h2) ; w += w2
+    except:
+        g.es_exception()
+
+    return h,w
+#@nonl
+#@-node:ekr.20040317094609:drawUserIcons
+#@-node:EKR.20040615010747:(Fixed bug when writing unknownAttributes
+#@+node:EKR.20040617063225:(Fixed bugs opening a second file)
+#@+node:EKR.20040617063225.1:Report
+@killcolor
+
+Read and respond to this message at: 
+https://sourceforge.net/forum/message.php?msg_id=2621892
+By: nobody
+
+When I start leo with no parameters, then open one file, then another,  I get
+this exception:
+
+  File "/home/ng/mob/lib/leo/leo/src/leoGlobals.py", line 508, in
+openWithFileName
+    c,frame = app.gui.newLeoCommanderAndFrame(fileName)
+  File "/home/ng/mob/lib/leo/leo/src/leoGui.py", line 122, in
+newLeoCommanderAndFrame
+    frame.finishCreate(c)
+  File "/home/ng/mob/lib/leo/leo/src/leoTkinterFrame.py", line 192, in
+finishCreate
+    c.frame.getFocus()
+  File "/home/ng/mob/lib/leo/leo/src/leoTkinterFrame.py", line 1313, in
+getFocus
+    f = self.top.focus_displayof()
+  File "/usr/lib/python2.3/lib-tk/Tkinter.py", line 413, in focus_displayof
+    return self._nametowidget(name)
+  File "/usr/lib/python2.3/lib-tk/Tkinter.py", line 1015, in nametowidget
+    w = w.children[name]
+KeyError: '#1077138060#1082735148'
+
+This happens for some files, but not others (the .leo files distributed with
+leo).
+
+I am using the CVS version of leo.
+#@-node:EKR.20040617063225.1:Report
+#@+node:ekr.20031218072017.2188:newLeoCommanderAndFrame (gui-independent)
+def newLeoCommanderAndFrame(self,fileName):
+    
+    """Create a commander and its view frame for the Leo main window."""
+    
+    import leoCommands
+    
+    if not fileName: fileName = ""
+    << compute the window title >>
+
+    # Create an unfinished frame to pass to the commanders.
+    frame = g.app.gui.createLeoFrame(title)
+    
+    # Create the commander and its subcommanders.
+    c = leoCommands.Commands(frame,fileName)
+    
+    # Finish creating the frame
+    frame.finishCreate(c)
+    
+    # Finish initing the subcommanders.
+    c.undoer.clearUndoState() # Menus must exist at this point.
+    
+    c.updateRecentFiles(fileName) # 12/01/03
+    
+    g.doHook("after-create-leo-frame",c=c)
+    return c,frame
+#@nonl
+#@+node:ekr.20031218072017.2189:<< compute the window title >>
+# Set the window title and fileName
+if fileName:
+    title = g.computeWindowTitle(fileName)
+else:
+    s = "untitled"
+    n = g.app.numberOfWindows
+    if n > 0:
+        s += str(n)
+    title = g.computeWindowTitle(s)
+    g.app.numberOfWindows = n+1
+
+#@-node:ekr.20031218072017.2189:<< compute the window title >>
+#@-node:ekr.20031218072017.2188:newLeoCommanderAndFrame (gui-independent)
+#@+node:ekr.20031218072017.2821:open
+def open(self):
+
+    c = self
+    << Set closeFlag if the only open window is empty >>
+
+    fileName = g.app.gui.runOpenFileDialog(
+        title="Open",
+        filetypes=[("Leo files", "*.leo"), ("All files", "*")],
+        defaultextension=".leo")
+
+    if fileName and len(fileName) > 0:
+        ok, frame = g.openWithFileName(fileName,c)
+        if ok and closeFlag:
+            g.app.destroyWindow(c.frame)
+#@nonl
+#@+node:ekr.20031218072017.2822:<< Set closeFlag if the only open window is empty >>
+@ If this is the only open window was opened when the app started, and the window has never been written to or saved, then we will automatically close that window if this open command completes successfully.
+@c
+    
+closeFlag = (
+    c.frame.startupWindow==True and # The window was open on startup
+    c.changed==False and c.frame.saved==False and # The window has never been changed
+    g.app.numberOfWindows == 1) # Only one untitled window has ever been opened
+#@-node:ekr.20031218072017.2822:<< Set closeFlag if the only open window is empty >>
+#@-node:ekr.20031218072017.2821:open
+#@+node:ekr.20031218072017.2817: doCommand
+def doCommand (self,command,label,event=None):
+
+    """Execute the given command, invoking hooks and catching exceptions.
+    
+    The code assumes that the "command1" hook has completely handled the command if
+    g.doHook("command1") returns False.
+    This provides a simple mechanism for overriding commands."""
+    
+    c = self ; p = c.currentPosition()
+
+    # A horrible kludge: set g.app.log to cover for a possibly missing activate event.
+    g.app.setLog(c.frame.log,"doCommand")
+
+    if label == "cantredo": label = "redo"
+    if label == "cantundo": label = "undo"
+    g.app.commandName = label
+
+    if not g.doHook("command1",c=c,v=p,label=label):
+        try:
+            command()
+        except:
+            g.es("exception executing command")
+            print "exception executing command"
+            g.es_exception(c=c)
+            c.frame.tree.redrawAfterException() # 1/26/04
+    
+    c = g.top() # 6/17/04: The command can change the commander.
+    if c:
+        p = c.currentPosition()
+        g.doHook("command2",c=c,v=p,label=label)
+            
+    return "break" # Inhibit all other handlers.
+#@nonl
+#@-node:ekr.20031218072017.2817: doCommand
+#@+node:ekr.20031218072017.2052:openWithFileName
+def openWithFileName(fileName,old_c,enableLog=True):
+    
+    """Create a Leo Frame for the indicated fileName if the file exists."""
+
+    # g.trace(fileName)
+    assert(app.config)
+
+    if not fileName or len(fileName) == 0:
+        return False, None
+
+    # Create a full normalized path name.
+    # Display the file name with case intact.
+    fileName = g.os_path_join(os.getcwd(), fileName)
+    fileName = g.os_path_normpath(fileName)
+    oldFileName = fileName 
+    fileName = g.os_path_normcase(fileName)
+
+    # If the file is already open just bring its window to the front.
+    list = app.windowList
+    for frame in list:
+        fn = g.os_path_normcase(frame.c.mFileName)
+        fn = g.os_path_normpath(fn)
+        if fileName == fn:
+            frame.deiconify()
+            app.setLog(frame.log,"openWithFileName")
+            # g.es("This window already open")
+            return True, frame
+            
+    fileName = oldFileName # Use the idiosyncratic file name.
+
+    try:
+        # 11/4/03: open the file in binary mode to allow 0x1a in bodies & headlines.
+        file = open(fileName,'rb')
+        if file:
+            c,frame = app.gui.newLeoCommanderAndFrame(fileName)
+            frame.log.enable(enableLog)
+            if not g.doHook("open1",old_c=old_c,new_c=c,fileName=fileName):
+                app.setLog(frame.log,"openWithFileName")
+                app.lockLog()
+                frame.c.fileCommands.open(file,fileName) # closes file.
+                app.unlockLog()
+            frame.openDirectory = g.os_path_dirname(fileName)
+            g.doHook("open2",old_c=old_c,new_c=frame.c,fileName=fileName)
+            return True, frame
+        else:
+            g.es("can not open: " + fileName,color="red")
+            return False, None
+    except IOError:
+        g.es("can not open: " + fileName, color="blue")
+        return False, None
+    except:
+        if 1:
+            print "exceptions opening:", fileName
+            traceback.print_exc()
+        else:
+            g.es("exceptions opening: " + fileName,color="red")
+            g.es_exception()
+        return False, None
+#@nonl
+#@-node:ekr.20031218072017.2052:openWithFileName
+#@+node:ekr.20031218072017.3995:Tk bindings...
+def getFocus(self):
+    
+    """Returns the widget that has focus, or body if None."""
+    try:
+        f = self.top.focus_displayof()
+    except Exception:
+        f = None
+    if f:
+        return f
+    else:
+        return self.bodyCtrl
+        
+def getTitle (self):
+    return self.top.title()
+    
+def setTitle (self,title):
+    return self.top.title(title)
+    
+def get_window_info(self):
+    return g.app.gui.get_window_info(self.top)
+    
+def iconify(self):
+    self.top.iconify()
+
+def deiconify (self):
+    self.top.deiconify()
+    
+def lift (self):
+    self.top.lift()
+    
+def update (self):
+    self.top.update()
+#@-node:ekr.20031218072017.3995:Tk bindings...
+#@-node:EKR.20040617063225:(Fixed bugs opening a second file)
+#@+node:EKR.20040615105613:(Recovered nodes when reading .leo files containing topology errors)
 #@+node:EKR.20040615105613.1:Report
 @nocolor
 
@@ -42798,7 +43069,7 @@ IndexError: list index out of range
 Any ideas?
 #@nonl
 #@-node:EKR.20040615105613.1:Report
-#@+node:EKR.20040616102910:Resolution
+#@+node:EKR.20040616102910:Workaround
 @killcolor
 
 As I reported to Scott privately, this 4.1 file was corrupted:
@@ -42819,21 +43090,13 @@ I did this assuming the first clone is "proper" and everything now works. In par
 
 The conclusion is that 4.2 appears to read all correct 4.1 files properly.  Again, I'll see if I can get Leo to make sense out of this improper file, but don't count on it.
 #@nonl
-#@-node:EKR.20040616102910:Resolution
-#@+node:EKR.20040616080815:problem nodes
-sbeards.20040131002412.4 sbeards.20040131002412.4 <tnode 14702576>
+#@-node:EKR.20040616102910:Workaround
+#@+node:EKR.20040617103332:Fix
+@nocolor
 
-<v t="sbeards.20040131002412.4" tnodeList="sbeards.20040131002412.4"><vh>@file-nosent test.conf</vh></v>
-
-sbeards.20040201230930.1 sbeards.20040201230930.1 <tnode 14702704>
-
-<v t="sbeards.20040201230930.1" tnodeList="sbeards.20040201230930.1"><vh>@file-nosent menuDropdown.js</vh></v>
-
-sbeards.20040201230930.2 sbeards.20040201230930.2 <tnode 14702800>
-
-<v t="sbeards.20040201230930.2" tnodeList="sbeards.20040201230930.2"><vh>@file-nosent menuExpandable.js</vh></v>
-
-#@-node:EKR.20040616080815:problem nodes
+Changed getVnode so it checks for v = None after calling getExistingVnode.  Creating the node seems to work in this case: I wouldn't bet my life that it works in all cases.
+#@nonl
+#@-node:EKR.20040617103332:Fix
 #@+node:ekr.20031218072017.1565:getVnodes
 def getVnodes (self):
 
@@ -42913,14 +43176,13 @@ def getVnode (self,parent,back,skip,appendToCurrentStack,appendToTopStack):
         headline = self.getEscapedString() ; self.getTag("</vh>")
     
     # g.trace("skip:",skip,"parent:",parent,"back:",back,"headline:",headline)
-    # g.trace(skip,tref,headline)
     if skip:
-        v = self.getExistingVnode(tref)
-    else:
-        v,skip = self.createVnode(parent,back,tref,headline,attrDict)
+        v = self.getExistingVnode(tref,headline)
+    if v is None:
+        v,skip2 = self.createVnode(parent,back,tref,headline,attrDict)
+        skip = skip or skip2
         if tnodeList:
             v.t.tnodeList = tnodeList # New for 4.0, 4.2: now in tnode.
-            # g.trace("%4d" % len(tnodeList),v)
 
     << Set the remembered status bits >>
 
@@ -43025,7 +43287,7 @@ if keys:
 #@-node:ekr.20031218072017.1861:<< handle unknown vnode attributes >>
 #@-node:ekr.20031218072017.1860:createVnode (changed for 4.2) sets skip
 #@+node:ekr.20040326063413:getExistingVnode
-def getExistingVnode (self,tref):
+def getExistingVnode (self,tref,headline):
 
     tref1 = tref
     assert(tref > -1)
@@ -43034,8 +43296,9 @@ def getExistingVnode (self,tref):
     try:
         return t.vnodeList[0]
     except IndexError:
-        g.trace(tref1,t,t.vnodeList)
-        # import traceback ; traceback.print_stack()
+        g.es("Missing vnode:",headline,color="red")
+        g.es("Probably an outline topology error.")
+        # g.trace(tref1,t,t.vnodeList)
         return None
 #@nonl
 #@-node:ekr.20040326063413:getExistingVnode
@@ -43053,51 +43316,7 @@ def canonicalTnodeIndex(self,index):
     return index
 #@nonl
 #@-node:ekr.20031218072017.2004:canonicalTnodeIndex
-#@-node:EKR.20040615105613:(Investigated bug when reading 4.1 file: file was corrupted)
-#@-node:EKR.20040617063837:6/15/04
-#@+node:EKR.20040617083707:6/17/04
-#@+node:EKR.20040615010747:(Fixed bug when writing unknownAttributes
-#@+node:EKR.20040615010747.1:Report
-@nocolor
-
-By: Bernhard Mulder - bwmulder
- RE: Attributes in @thin trees: gotcha   
-2004-06-15 00:48  
-
- In drawUserIcons:
-.iconsList = t.unknownAttributes.get("icons")
-.# g.trace(iconsList)
-
-.try:
-..for dict in iconsList:
-
-Guard the try: with 'if iconsList:', otherwise, you'll get a traceback whenever some attributes are defined, but not "icons".  
-#@-node:EKR.20040615010747.1:Report
-#@+node:ekr.20040317094609:drawUserIcons
-def drawUserIcons(self,p,where,x,y):
-    
-    """Draw any icons specified by p.v.t.unknownAttributes["icons"]."""
-    
-    h,w = 0,0 ; t = p.v.t
-    
-    if not hasattr(t,"unknownAttributes"):
-        return h,w
-    
-    iconsList = t.unknownAttributes.get("icons")
-    if not iconsList:
-        return h,w
-    
-    try:
-        for dict in iconsList:
-            h2,w2 = self.drawUserIcon(where,x+w,y,dict)
-            h = max(h,h2) ; w += w2
-    except:
-        g.es_exception()
-
-    return h,w
-#@nonl
-#@-node:ekr.20040317094609:drawUserIcons
-#@-node:EKR.20040615010747:(Fixed bug when writing unknownAttributes
+#@-node:EKR.20040615105613:(Recovered nodes when reading .leo files containing topology errors)
 #@-node:EKR.20040617083707:6/17/04
 #@-node:EKR.20040610102329:In 4.2 a4
 #@-node:EKR.20040517090500:May 2004
