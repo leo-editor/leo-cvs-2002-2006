@@ -1250,9 +1250,20 @@ class settingsController:
             
             # The new frame must be a child of splitter2Frame.
             splitter2Frame = c.frame.component('splitter2Frame').getFrame()
-            treeCanvas = Tk.Canvas(splitter2Frame)
             
-            c.frame.componentClass(c,'settingsTree',treeCanvas,self,
+            # Create a Pmw scrolled canvas.
+            scrolledTreeCanvas = Pmw.ScrolledCanvas(splitter2Frame,
+                hscrollmode='none',borderframe=3)
+            
+            treeCanvas = scrolledTreeCanvas.component('canvas')
+            treeCanvas.configure(background='white')
+            
+            # Set canvas.name ivar for chapters.py plugin.
+            # This must be a tab number.  The number '1' should work well enough.
+            treeCanvas.name = '1'
+            
+            # Create the settingsTree component.
+            c.frame.componentClass(c,'settingsTree',scrolledTreeCanvas,self,
                 tree.getPacker(),tree.getUnpacker())
             
             c.frame.replaceTreePaneWithComponent('settingsTree')
@@ -1321,7 +1332,7 @@ class settingsController:
             self.tree.select(p)
         else:
             #@        << create the dialog d >>
-            #@+middle:ekr.20041225073207.3:Separate dialog...
+            #@+middle:ekr.20041225073207.3:When using separate dialog...
             #@+node:ekr.20041225063637.14:<< create the dialog d >>
             self.dialog = d = Pmw.Dialog(
                 c.frame.top,
@@ -1345,10 +1356,10 @@ class settingsController:
                 hull.after_idle(setIcont)
             #@nonl
             #@-node:ekr.20041225063637.14:<< create the dialog d >>
-            #@-middle:ekr.20041225073207.3:Separate dialog...
+            #@-middle:ekr.20041225073207.3:When using separate dialog...
             #@nl
             #@        << create paneFrame, a paned widget >>
-            #@+middle:ekr.20041225073207.3:Separate dialog...
+            #@+middle:ekr.20041225073207.3:When using separate dialog...
             #@+node:ekr.20041225063637.15:<< create paneFrame, a paned widget >>
             self.paneFrame = paneFrame = Pmw.PanedWidget(interior,
                 separatorthickness = 4, # default is 2
@@ -1380,10 +1391,10 @@ class settingsController:
             # g.printDict(self.panes)
             #@nonl
             #@-node:ekr.20041225063637.15:<< create paneFrame, a paned widget >>
-            #@-middle:ekr.20041225073207.3:Separate dialog...
+            #@-middle:ekr.20041225073207.3:When using separate dialog...
             #@nl
             #@        << create paneFrame2, a second paned widget >>
-            #@+middle:ekr.20041225073207.3:Separate dialog...
+            #@+middle:ekr.20041225073207.3:When using separate dialog...
             #@+node:ekr.20041225063637.16:<< create paneFrame2, a second paned widget >>
             splitter2 = self.panes.get('splitter2')
             
@@ -1409,10 +1420,10 @@ class settingsController:
             handle.configure(background='SteelBlue2')
             #@nonl
             #@-node:ekr.20041225063637.16:<< create paneFrame2, a second paned widget >>
-            #@-middle:ekr.20041225073207.3:Separate dialog...
+            #@-middle:ekr.20041225073207.3:When using separate dialog...
             #@nl
             #@        << create outline and log panes in paneFrame2 >>
-            #@+middle:ekr.20041225073207.3:Separate dialog...
+            #@+middle:ekr.20041225073207.3:When using separate dialog...
             #@+node:ekr.20041225063637.17:<< create outline and log panes in paneFrame2 >>
             outline = self.panes.get('outline')
             
@@ -1434,10 +1445,10 @@ class settingsController:
             logText.pack(expand=1,fill="both")
             #@nonl
             #@-node:ekr.20041225063637.17:<< create outline and log panes in paneFrame2 >>
-            #@-middle:ekr.20041225073207.3:Separate dialog...
+            #@-middle:ekr.20041225073207.3:When using separate dialog...
             #@nl
             #@        << put setterCanvas in paneFrame's setter pane>>
-            #@+middle:ekr.20041225073207.3:Separate dialog...
+            #@+middle:ekr.20041225073207.3:When using separate dialog...
             #@+node:ekr.20041225063637.18:<< put setterCanvas in paneFrame's setter pane>>
             # Create the widget in the 'setter' pane.
             setter = self.panes.get('setter')
@@ -1454,10 +1465,10 @@ class settingsController:
             # setterCanvas.configure(background='LightSteelBlue1')
             #@nonl
             #@-node:ekr.20041225063637.18:<< put setterCanvas in paneFrame's setter pane>>
-            #@-middle:ekr.20041225073207.3:Separate dialog...
+            #@-middle:ekr.20041225073207.3:When using separate dialog...
             #@nl
             #@        << put a Text widget in the comment pane >>
-            #@+middle:ekr.20041225073207.3:Separate dialog...
+            #@+middle:ekr.20041225073207.3:When using separate dialog...
             #@+node:ekr.20041225063637.19:<< put a Text widget in the comment pane >>
             commentFrame = self.paneFrame.pane('comments')
             
@@ -1470,7 +1481,7 @@ class settingsController:
             text.configure(background=background,borderwidth=0)
             #@nonl
             #@-node:ekr.20041225063637.19:<< put a Text widget in the comment pane >>
-            #@-middle:ekr.20041225073207.3:Separate dialog...
+            #@-middle:ekr.20041225073207.3:When using separate dialog...
             #@nl
             self.log = self.logClass(self.logText)
             self.tree.redraw_now() # To allocate widgets.
@@ -1480,8 +1491,8 @@ class settingsController:
     #@nonl
     #@+node:ekr.20041225073207:When replacing body & tree panes...
     #@-node:ekr.20041225073207:When replacing body & tree panes...
-    #@+node:ekr.20041225073207.3:Separate dialog...
-    #@-node:ekr.20041225073207.3:Separate dialog...
+    #@+node:ekr.20041225073207.3:When using separate dialog...
+    #@-node:ekr.20041225073207.3:When using separate dialog...
     #@-node:ekr.20041225063637.13: ctor
     #@+node:ekr.20041225063637.21:createSettingsTree & helpers
     def createSettingsTree (self):
