@@ -516,7 +516,7 @@ class baseUndoer:
 				else:
 					u.p.linkAsRoot()
 			
-				c.selectVnode(p)
+				c.selectVnode(u.p)
 			#@nonl
 			#@-node:<< redo clone cases >>
 			#@nl
@@ -548,10 +548,7 @@ class baseUndoer:
 					u.p.linkAsRoot()
 					
 				# Restore all vnodeLists (and thus all clone marks).
-				for p2 in u.p.self_and_subtree_iter():
-					vnodeList = p2.v.t.vnodeList
-					if p2.v not in vnodeList:
-						vnodeList.append(p2.v)
+				u.p.restoreLinksInTree()
 			
 				c.selectVnode(u.p)
 			#@nonl
@@ -758,10 +755,7 @@ class baseUndoer:
 					u.p.linkAsRoot()
 					
 				# Restore all vnodeLists (and thus all clone marks).
-				for p2 in u.p.self_and_subtree_iter():
-					vnodeList = p2.v.t.vnodeList
-					if p2.v not in vnodeList:
-						vnodeList.append(p2.v)
+				u.p.restoreLinksInTree()
 			
 				c.selectVnode(u.p)
 			#@nonl
