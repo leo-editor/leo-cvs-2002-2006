@@ -434,8 +434,8 @@ usehelp=1
 #@-others
 
 if load_ok:
-    
     configureNodebar()
+    
     if g.app.gui is None: 
         g.app.createTkGui(__file__)
 
