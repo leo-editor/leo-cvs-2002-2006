@@ -646,6 +646,8 @@ class leoTkinterTree (leoFrame.leoTree):
 	
 		"""Draw horizontal line from vertical line to icon"""
 		
+		# g.trace(p)
+		
 		if 1:
 			self.lineyoffset = 0
 		else:

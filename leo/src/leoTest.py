@@ -50,15 +50,16 @@ class testUtils:
 		ok = true
 		while v2 and v1 != after1 and v2 != after2:
 			ok = (
-			v1.numberOfChildren() == v2.numberOfChildren() and
-			v1.headString() == v2.headString() and
-			v1.bodyString() == v2.bodyString() and
-			v1.isCloned()   == v2.isCloned()   )
+				v1.numberOfChildren() == v2.numberOfChildren() and
+				v1.headString() == v2.headString() and
+				v1.bodyString() == v2.bodyString() and
+				v1.isCloned()   == v2.isCloned()
+			)
 			if not ok: break
 			v1 = v1.threadNext()
 			v2 = v2.threadNext()
 	
-		ok = ok and v1 == after1 and v2 == after2
+		ok = ok and ((not v1 and not v2) or (v1 == after1 and v2 == after2))
 		if not ok:
 			g.trace(v1,v2)
 		return ok
@@ -321,49 +322,67 @@ class editBodyTestCase(unittest.TestCase):
 		self.old_v = c.currentVnode()
 		
 		self.wasChanged = c.changed
+		
+		self.u = testUtils()
 	#@nonl
 	#@-node:ekr.20040303062846.22:__init__
 	#@+node:ekr.20040303062846.23:editBody
 	def editBody (self):
 		
-		c = self.c ; temp_v = self.temp_v ; after = self.after
+		c = self.c ; u = self.u
 	
 		# Compute the result in temp_v.bodyString()
 		commandName = self.parent.headString()
 		command = getattr(c,commandName)
 		command()
 		
-		# Compare the computed result to the reference result.
-		new_text = temp_v.bodyString().rstrip()
-		ref_text = after.bodyString().rstrip()
-	
-		if new_text != ref_text:
-			print ; print "test failed", commandName
-			g.trace("new",new_text)
-			g.trace("ref",ref_text)
+		if 1:
+			assert(u.compareOutlines(self.temp_v,self.after))
+			c.undoer.undo()
+			assert(u.compareOutlines(self.temp_v,self.before))
+			c.undoer.redo()
+			assert(u.compareOutlines(self.temp_v,self.after))
+			c.undoer.undo()
+			assert(u.compareOutlines(self.temp_v,self.before))
+		else:
+			#@		<< compare new, ref trees >>
+			#@+node:EKR.20040527145121:<< compare new, ref trees >>
+			temp_v = self.temp_v ; after = self.after
 			
-		assert(new_text == ref_text)
-		
-		# Compare subtrees.
-		
-		assert(temp_v.numberOfChildren() == after.numberOfChildren())
-		
-		ref_child = after.firstChild()
-		new_child = temp_v.firstChild()
-		
-		while new_child:
-			new_text = new_child.bodyString().rstrip()
-			ref_text = ref_child.bodyString().rstrip()
-	
+			# Compare the computed result to the reference result.
+			new_text = temp_v.bodyString().rstrip()
+			ref_text = after.bodyString().rstrip()
+			
 			if new_text != ref_text:
 				print ; print "test failed", commandName
 				g.trace("new",new_text)
 				g.trace("ref",ref_text)
-			
+				
 			assert(new_text == ref_text)
 			
-			new_child = new_child.next()
-			ref_child = ref_child.next()
+			# Compare subtrees.
+			
+			assert(temp_v.numberOfChildren() == after.numberOfChildren())
+			
+			ref_child = after.firstChild()
+			new_child = temp_v.firstChild()
+			
+			while new_child:
+				new_text = new_child.bodyString().rstrip()
+				ref_text = ref_child.bodyString().rstrip()
+			
+				if new_text != ref_text:
+					print ; print "test failed", commandName
+					g.trace("new",new_text)
+					g.trace("ref",ref_text)
+				
+				assert(new_text == ref_text)
+				
+				new_child = new_child.next()
+				ref_child = ref_child.next()
+			#@nonl
+			#@-node:EKR.20040527145121:<< compare new, ref trees >>
+			#@nl
 	#@nonl
 	#@-node:ekr.20040303062846.23:editBody
 	#@+node:ekr.20040303062846.24:tearDown
@@ -688,7 +707,7 @@ class leoFileTestCase(unittest.TestCase):
 #@nonl
 #@-node:ekr.20040303062846.38:class leoFileTestCase
 #@-node:ekr.20040303062846.36:LeoFiles tests
-#@+node:ekr.20040303062846.63:Outline tests
+#@+node:ekr.20040303062846.63:Outline tests (tests undo)
 #@+node:ekr.20040303062846.64: makeOutlineSuite
 def makeOutlineSuite(testParentHeadline,unused=None):
 	
@@ -796,7 +815,7 @@ class outlineTestCase(unittest.TestCase):
 	#@-others
 #@nonl
 #@-node:ekr.20040303062846.65:class outlineTestCase
-#@-node:ekr.20040303062846.63:Outline tests
+#@-node:ekr.20040303062846.63:Outline tests (tests undo)
 #@+node:ekr.20040303062846.72:Plugin tests
 #@+node:ekr.20040303062846.71: makePluginsSuite
 def makePluginsSuite(verbose=false,*args,**keys):
