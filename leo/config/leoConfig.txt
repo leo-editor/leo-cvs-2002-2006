@@ -221,9 +221,9 @@ expandtolevel8 = Alt+8
 
 [recent files]
 file3 = C:\prog\leoCVS\leo\test\test.leo
-file2 = c:\prog\leoCvs\leo\src\LeoPy.leo
-file1 = c:\prog\leoCvs\leo\plugins\leoPlugins.leo
-file0 = c:\prog\leoCvs\leo\doc\LeoDocs.leo
+file2 = c:\prog\leoCvs\leo\plugins\leoPlugins.leo
+file1 = c:\prog\leoCvs\leo\doc\LeoDocs.leo
+file0 = C:\prog\leoCVS\leo\src\LeoPy.leo
 file5 = C:\Documents and Settings\default\My Documents\ekr.leo
 file4 = C:/Documents and Settings/default/Desktop/newButtons.leo
 
