@@ -323,7 +323,7 @@ class AddClassMethod(NodeAdder):
             inherit=0)] # EKR: was 1.
 #@nonl
 #@-node:class AddClassMethod
-#@+node:Top-level code
+#@+node:main code
 if Tk: # OK for unit testing.
 
     if g.app.gui is None:
@@ -342,5 +342,5 @@ if Tk: # OK for unit testing.
         leoPlugins.registerHandler("after-create-leo-frame", helper.addWidgets)
         g.plugin_signon("newButtons")
 #@nonl
-#@-node:Top-level code
+#@-node:main code
 #@-leo

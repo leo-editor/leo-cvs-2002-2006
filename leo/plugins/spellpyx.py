@@ -14,14 +14,6 @@ Written by Paul Paterson and 'e', with revisions by EKR.
 #@@language python
 #@@tabwidth -4
 
-visibleInitially = False # True: open spell dialog initially.
-
-# Specify the path to the top-level Aspell directory.
-# This directory should contain aspell.pyd.
-# Change this path in setup.py if you recompile the pyd.
-aspell_dir = r'c:/Aspell'
-ini_file_name = __name__ + ".ini"
-
 __version__ = "0.9"
 #@<< version history >>
 #@+node:ekr.20040915052810:<< version history >>
@@ -59,22 +51,36 @@ __version__ = "0.9"
 #@<< spellpx imports >>
 #@+node:ekr.20040809151600.3:<< spellpx imports >>
 import leoGlobals as g
+import sys
+
+# Specify the path to the top-level Aspell directory.
+if sys.platform == 'darwin':
+    aspell_dir = '/sw/lib'
+    # Doesn't work yet.  We need something that Python recognizes.
+    aspell = g.importFromPath ("aspell",aspell_dir,pluginName=__name__,verbose=True)
+else:
+    # On Windows this directory should contain aspell.pyd.
+    # Change this path in setup.py if you recompile the pyd.
+    aspell_dir = r'c:/Aspell'
+    aspell = g.importFromPath(
+        "aspell",aspell_dir,pluginName=__name__,verbose=True)
+
 import leoPlugins
 import leoTkinterFind
 
-Tk     = g.importExtension('Tkinter',          pluginName=__name__,verbose=True)
-aspell = g.importFromPath ("aspell",aspell_dir,pluginName=__name__,verbose=True)
+Tk = g.importExtension('Tkinter',pluginName=__name__,verbose=True)
 
 import ConfigParser
 import os
 import re
 import string
-import sys
 import traceback
 #@nonl
 #@-node:ekr.20040809151600.3:<< spellpx imports >>
 #@nl
 
+visibleInitially = False # True: open spell dialog initially.
+ini_file_name = __name__ + ".ini"
 spellFrames = {}
 
 globalData = None

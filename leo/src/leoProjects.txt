@@ -14444,7 +14444,8 @@ def set (self,p,kind,name,val):
 
     # N.B.  We can't use c here: it may be destroyed!
     d[key] = g.Bunch(path=c.mFileName,kind=kind,val=val,tag='setting')
-    # g.trace(d.get(key).toString())
+    
+    # g.trace('parserBaseClass',g.shortFileName(c.mFileName),key,val)
 #@nonl
 #@-node:ekr.20041120094940.9:set (parseBaseClass)
 #@+node:ekr.20041118084146.1:set (g.app.config)
@@ -14475,7 +14476,7 @@ def set (self,c,setting,kind,val):
         g.trace(dkind,setting,kind,val)
 #@nonl
 #@-node:ekr.20041118084146.1:set (g.app.config)
-#@+node:ekr.20041117083141:get & allies
+#@+node:ekr.20041117083141:get & allies (g.app.config)
 def get (self,c,setting,kind):
     
     """Get the setting and make sure its type matches the expected type."""
@@ -14486,14 +14487,14 @@ def get (self,c,setting,kind):
         if d:
             val,found = self.getValFromDict(d,setting,kind,found)
             if val is not None:
-                # g.trace(c.hash(),setting,val)
+                # g.trace(c.shortFileName(),setting,val)
                 return val
                 
     for d in self.localOptionsList:
         val,found = self.getValFromDict(d,setting,kind,found)
         if val is not None:
             kind = d.get('_hash','<no hash>')
-            #  g.trace(kind,setting,val)
+            # g.trace(kind,setting,val)
             return val
 
     for d in self.dictList:
@@ -14505,7 +14506,7 @@ def get (self,c,setting,kind):
                 
     if 0: # Good for debugging leoSettings.leo.  This is NOT an error.
         # Don't warn if None was specified.
-        if not found and self.inited:
+        if not found:
             g.trace("Not found:",setting)
 
     return None
@@ -14515,7 +14516,7 @@ def getValFromDict (self,d,setting,requestedType,found):
 
     bunch = d.get(self.munge(setting))
     if bunch:
-        # g.trace(setting,requestedType,data)
+        # g.trace(setting,requestedType,bunch.toString())
         found = True ; val = bunch.val
         if val not in (u'None',u'none','None','none','',None):
             # g.trace(setting,val)
@@ -14525,7 +14526,7 @@ def getValFromDict (self,d,setting,requestedType,found):
     return None,found
 #@nonl
 #@-node:ekr.20041121143823:getValFromDict
-#@-node:ekr.20041117083141:get & allies
+#@-node:ekr.20041117083141:get & allies (g.app.config)
 #@+node:ekr.20041117062717.13:getFontFromParams (config)
 def getFontFromParams(self,c,family,size,slant,weight,defaultSize=12,tag="<unknown>"):
 
@@ -14561,7 +14562,7 @@ def getValFromDict (self,d,setting,requestedType,found):
 
     bunch = d.get(self.munge(setting))
     if bunch:
-        # g.trace(setting,requestedType,data)
+        # g.trace(setting,requestedType,bunch.toString())
         found = True ; val = bunch.val
         if val not in (u'None',u'none','None','none','',None):
             # g.trace(setting,val)
@@ -14589,7 +14590,8 @@ def set (self,p,kind,name,val):
 
     # N.B.  We can't use c here: it may be destroyed!
     d[key] = g.Bunch(path=c.mFileName,kind=kind,val=val,tag='setting')
-    # g.trace(d.get(key).toString())
+    
+    # g.trace('parserBaseClass',g.shortFileName(c.mFileName),key,val)
 #@nonl
 #@-node:ekr.20041120094940.9:set (parseBaseClass)
 #@-node:ekr.20041122180237:(Suppressed over-ride message when loading a leoSettings.leo file)
@@ -14812,37 +14814,42 @@ def __init__ (self,c):
     self.defaultLogFontSize  = g.app.config.defaultLogFontSize
     self.defaultTreeFontSize = g.app.config.defaultTreeFontSize
     
-    for ivar in g.app.config.encodingIvarsDict.keys():
-        if ivar != '_hash':
-            self.initEncoding(ivar)
+    for key in g.app.config.encodingIvarsDict.keys():
+        if key != '_hash':
+            self.initEncoding(key)
         
-    for ivar in g.app.config.ivarsDict.keys():
-        if ivar != '_hash':
-            self.initIvar(ivar)
+    for key in g.app.config.ivarsDict.keys():
+        if key != '_hash':
+            self.initIvar(key)
 #@nonl
 #@+node:ekr.20041118104240:initIvar
-def initIvar(self,ivarName):
+def initIvar(self,key):
     
-    munge = g.app.config.canonicalizeSettingName
+    c = self.c
+    
+    # N.B. The key is munged.
+    bunch = g.app.config.ivarsDict.get(key)
+    ivarName = bunch.ivar
+    val = g.app.config.get(c,ivarName,kind=None) # kind is ignored anyway.
 
-    bunch = g.app.config.ivarsDict.get(munge(ivarName))
-    ivar = bunch.ivar ; val = bunch.val
-
-    # g.trace(self.c.hash(),bunch.toString())
-
-    setattr(self,ivar,val)
+    if val or not hasattr(self,ivarName):
+        # g.trace('c.configSettings',c.shortFileName(),ivarName,val)
+        setattr(self,ivarName,val)
 #@nonl
 #@-node:ekr.20041118104240:initIvar
 #@+node:ekr.20041118104414:initEncoding
-def initEncoding (self,encodingName):
+def initEncoding (self,key):
     
-    munge = g.app.config.canonicalizeSettingName
+    c = self.c
+    
+    # N.B. The key is munged.
+    bunch = g.app.config.encodingIvarsDict.get(key)
+    encodingName = bunch.ivar
+    encoding = g.app.config.get(c,encodingName,kind='string')
 
-    bunch = g.app.config.encodingIvarsDict.get(munge(encodingName))
-    ivar = bunch.ivar ; encoding = bunch.encoding
-
-    # g.trace(bunch.toString())
-    setattr(self,ivar,encoding)
+    if encoding or not hasattr(self,encodingName):
+        # g.trace('c.configSettings',c.shortFileName(),encodingName,encoding)
+        setattr(self,encodingName,encoding)
 
     if encoding and not g.isValidEncoding(encoding):
         g.es("bad %s: %s" % (encodingName,encoding))
@@ -15071,7 +15078,8 @@ def set (self,p,kind,name,val):
 
     # N.B.  We can't use c here: it may be destroyed!
     d[key] = g.Bunch(path=c.mFileName,kind=kind,val=val,tag='setting')
-    # g.trace(d.get(key).toString())
+    
+    # g.trace('parserBaseClass',g.shortFileName(c.mFileName),key,val)
 #@nonl
 #@-node:ekr.20041120094940.9:set (parseBaseClass)
 #@+node:ekr.20031218072017.2052:g.openWithFileName
@@ -15656,7 +15664,8 @@ def set (self,p,kind,name,val):
 
     # N.B.  We can't use c here: it may be destroyed!
     d[key] = g.Bunch(path=c.mFileName,kind=kind,val=val,tag='setting')
-    # g.trace(d.get(key).toString())
+    
+    # g.trace('parserBaseClass',g.shortFileName(c.mFileName),key,val)
 #@nonl
 #@-node:ekr.20041120094940.9:set (parseBaseClass)
 #@-node:ekr.20041124150138:(Don't munge window title, make sure to munge when comparing c.mFileName)
@@ -16963,7 +16972,7 @@ def set (self,c,setting,kind,val):
         g.trace(dkind,setting,kind,val)
 #@nonl
 #@-node:ekr.20041118084146.1:set (g.app.config)
-#@+node:ekr.20041117083141:get & allies
+#@+node:ekr.20041117083141:get & allies (g.app.config)
 def get (self,c,setting,kind):
     
     """Get the setting and make sure its type matches the expected type."""
@@ -16974,14 +16983,14 @@ def get (self,c,setting,kind):
         if d:
             val,found = self.getValFromDict(d,setting,kind,found)
             if val is not None:
-                # g.trace(c.hash(),setting,val)
+                # g.trace(c.shortFileName(),setting,val)
                 return val
                 
     for d in self.localOptionsList:
         val,found = self.getValFromDict(d,setting,kind,found)
         if val is not None:
             kind = d.get('_hash','<no hash>')
-            #  g.trace(kind,setting,val)
+            # g.trace(kind,setting,val)
             return val
 
     for d in self.dictList:
@@ -16993,7 +17002,7 @@ def get (self,c,setting,kind):
                 
     if 0: # Good for debugging leoSettings.leo.  This is NOT an error.
         # Don't warn if None was specified.
-        if not found and self.inited:
+        if not found:
             g.trace("Not found:",setting)
 
     return None
@@ -17003,7 +17012,7 @@ def getValFromDict (self,d,setting,requestedType,found):
 
     bunch = d.get(self.munge(setting))
     if bunch:
-        # g.trace(setting,requestedType,data)
+        # g.trace(setting,requestedType,bunch.toString())
         found = True ; val = bunch.val
         if val not in (u'None',u'none','None','none','',None):
             # g.trace(setting,val)
@@ -17013,7 +17022,7 @@ def getValFromDict (self,d,setting,requestedType,found):
     return None,found
 #@nonl
 #@-node:ekr.20041121143823:getValFromDict
-#@-node:ekr.20041117083141:get & allies
+#@-node:ekr.20041117083141:get & allies (g.app.config)
 #@-node:ekr.20041130094657:(Finished g.app.config.set)
 #@+node:ekr.20041201075146:(Updated recent files properly)
 #@+node:ekr.20041201083311:What I did
@@ -17051,37 +17060,42 @@ def __init__ (self,c):
     self.defaultLogFontSize  = g.app.config.defaultLogFontSize
     self.defaultTreeFontSize = g.app.config.defaultTreeFontSize
     
-    for ivar in g.app.config.encodingIvarsDict.keys():
-        if ivar != '_hash':
-            self.initEncoding(ivar)
+    for key in g.app.config.encodingIvarsDict.keys():
+        if key != '_hash':
+            self.initEncoding(key)
         
-    for ivar in g.app.config.ivarsDict.keys():
-        if ivar != '_hash':
-            self.initIvar(ivar)
+    for key in g.app.config.ivarsDict.keys():
+        if key != '_hash':
+            self.initIvar(key)
 #@nonl
 #@+node:ekr.20041118104240:initIvar
-def initIvar(self,ivarName):
+def initIvar(self,key):
     
-    munge = g.app.config.canonicalizeSettingName
+    c = self.c
+    
+    # N.B. The key is munged.
+    bunch = g.app.config.ivarsDict.get(key)
+    ivarName = bunch.ivar
+    val = g.app.config.get(c,ivarName,kind=None) # kind is ignored anyway.
 
-    bunch = g.app.config.ivarsDict.get(munge(ivarName))
-    ivar = bunch.ivar ; val = bunch.val
-
-    # g.trace(self.c.hash(),bunch.toString())
-
-    setattr(self,ivar,val)
+    if val or not hasattr(self,ivarName):
+        # g.trace('c.configSettings',c.shortFileName(),ivarName,val)
+        setattr(self,ivarName,val)
 #@nonl
 #@-node:ekr.20041118104240:initIvar
 #@+node:ekr.20041118104414:initEncoding
-def initEncoding (self,encodingName):
+def initEncoding (self,key):
     
-    munge = g.app.config.canonicalizeSettingName
+    c = self.c
+    
+    # N.B. The key is munged.
+    bunch = g.app.config.encodingIvarsDict.get(key)
+    encodingName = bunch.ivar
+    encoding = g.app.config.get(c,encodingName,kind='string')
 
-    bunch = g.app.config.encodingIvarsDict.get(munge(encodingName))
-    ivar = bunch.ivar ; encoding = bunch.encoding
-
-    # g.trace(bunch.toString())
-    setattr(self,ivar,encoding)
+    if encoding or not hasattr(self,encodingName):
+        # g.trace('c.configSettings',c.shortFileName(),encodingName,encoding)
+        setattr(self,encodingName,encoding)
 
     if encoding and not g.isValidEncoding(encoding):
         g.es("bad %s: %s" % (encodingName,encoding))
@@ -17444,19 +17458,9 @@ self.target_language = "python" # 8/11/02: Required if leoConfig.txt does not ex
 #@-node:ekr.20041211050623.3:set in c.__init__
 #@-node:ekr.20041211050623:From 4.2
 #@+node:ekr.20041117072055:ivarsDict
-# Each of these settings sets the ivar with the same name.
+# Each of these settings sets the corresponding ivar.
+# Also, the c.configSettings settins class inits the corresponding commander ivar.
 ivarsDict = {'_hash':'ivarsDict'}
-
-if 0: # From c.__init__
-    # Global options
-    c.tangle_batch_flag = False
-    c.untangle_batch_flag = False
-    # Default Tangle options
-    c.tangle_directory = ""
-    c.use_header_flag = False
-    c.output_doc_flag = False
-    # Default Target Language
-    c.target_language = "python" # Required if leoConfig.txt does not exist.
 
 ivarsData = (
     ("at_root_bodies_start_in_doc_mode","bool",True),
@@ -17475,8 +17479,8 @@ ivarsData = (
     ("stylesheet","string",None),
     ("tab_width","int",-4),
     ("trailing_body_newlines","string","asis"),
-    ("use_plugins","bool",False),
-        # Should never be True here!
+    ("use_plugins","bool",True),
+        # New in 4.3: use_plugins = True by default.
     # use_pysco can not be set by 4.3:  config processing happens too late.
         # ("use_psyco","bool",False),
     ("undo_granularity","string","word"),
@@ -17601,7 +17605,8 @@ def set (self,p,kind,name,val):
 
     # N.B.  We can't use c here: it may be destroyed!
     d[key] = g.Bunch(path=c.mFileName,kind=kind,val=val,tag='setting')
-    # g.trace(d.get(key).toString())
+    
+    # g.trace('parserBaseClass',g.shortFileName(c.mFileName),key,val)
 #@nonl
 #@-node:ekr.20041120094940.9:set (parseBaseClass)
 #@+node:ekr.20041118084146.1:set (g.app.config)
@@ -17718,7 +17723,8 @@ def set (self,p,kind,name,val):
 
     # N.B.  We can't use c here: it may be destroyed!
     d[key] = g.Bunch(path=c.mFileName,kind=kind,val=val,tag='setting')
-    # g.trace(d.get(key).toString())
+    
+    # g.trace('parserBaseClass',g.shortFileName(c.mFileName),key,val)
 #@nonl
 #@-node:ekr.20041120094940.9:set (parseBaseClass)
 #@+node:ekr.20041121143823:getValFromDict
@@ -17726,7 +17732,7 @@ def getValFromDict (self,d,setting,requestedType,found):
 
     bunch = d.get(self.munge(setting))
     if bunch:
-        # g.trace(setting,requestedType,data)
+        # g.trace(setting,requestedType,bunch.toString())
         found = True ; val = bunch.val
         if val not in (u'None',u'none','None','none','',None):
             # g.trace(setting,val)
@@ -17764,7 +17770,7 @@ def set (self,c,setting,kind,val):
         g.trace(dkind,setting,kind,val)
 #@nonl
 #@-node:ekr.20041118084146.1:set (g.app.config)
-#@+node:ekr.20041117083141:get & allies
+#@+node:ekr.20041117083141:get & allies (g.app.config)
 def get (self,c,setting,kind):
     
     """Get the setting and make sure its type matches the expected type."""
@@ -17775,14 +17781,14 @@ def get (self,c,setting,kind):
         if d:
             val,found = self.getValFromDict(d,setting,kind,found)
             if val is not None:
-                # g.trace(c.hash(),setting,val)
+                # g.trace(c.shortFileName(),setting,val)
                 return val
                 
     for d in self.localOptionsList:
         val,found = self.getValFromDict(d,setting,kind,found)
         if val is not None:
             kind = d.get('_hash','<no hash>')
-            #  g.trace(kind,setting,val)
+            # g.trace(kind,setting,val)
             return val
 
     for d in self.dictList:
@@ -17794,7 +17800,7 @@ def get (self,c,setting,kind):
                 
     if 0: # Good for debugging leoSettings.leo.  This is NOT an error.
         # Don't warn if None was specified.
-        if not found and self.inited:
+        if not found:
             g.trace("Not found:",setting)
 
     return None
@@ -17804,7 +17810,7 @@ def getValFromDict (self,d,setting,requestedType,found):
 
     bunch = d.get(self.munge(setting))
     if bunch:
-        # g.trace(setting,requestedType,data)
+        # g.trace(setting,requestedType,bunch.toString())
         found = True ; val = bunch.val
         if val not in (u'None',u'none','None','none','',None):
             # g.trace(setting,val)
@@ -17814,7 +17820,7 @@ def getValFromDict (self,d,setting,requestedType,found):
     return None,found
 #@nonl
 #@-node:ekr.20041121143823:getValFromDict
-#@-node:ekr.20041117083141:get & allies
+#@-node:ekr.20041117083141:get & allies (g.app.config)
 #@-node:ekr.20041216050937:(Support for @font)
 #@+node:ekr.20041217071057:(Fixed long-standing problem with clashing fonts)
 @ It is essential to retain a link to a font.  Otherwise changes to one font may affect other fonts.
@@ -18138,7 +18144,7 @@ for key in d.keys():
 #@nonl
 #@-node:ekr.20041201081440:<< update recent files from d >>
 #@-node:ekr.20041120064303:config.readSettingsFiles
-#@+node:ekr.20041117083141:get & allies
+#@+node:ekr.20041117083141:get & allies (g.app.config)
 def get (self,c,setting,kind):
     
     """Get the setting and make sure its type matches the expected type."""
@@ -18149,14 +18155,14 @@ def get (self,c,setting,kind):
         if d:
             val,found = self.getValFromDict(d,setting,kind,found)
             if val is not None:
-                # g.trace(c.hash(),setting,val)
+                # g.trace(c.shortFileName(),setting,val)
                 return val
                 
     for d in self.localOptionsList:
         val,found = self.getValFromDict(d,setting,kind,found)
         if val is not None:
             kind = d.get('_hash','<no hash>')
-            #  g.trace(kind,setting,val)
+            # g.trace(kind,setting,val)
             return val
 
     for d in self.dictList:
@@ -18168,7 +18174,7 @@ def get (self,c,setting,kind):
                 
     if 0: # Good for debugging leoSettings.leo.  This is NOT an error.
         # Don't warn if None was specified.
-        if not found and self.inited:
+        if not found:
             g.trace("Not found:",setting)
 
     return None
@@ -18178,7 +18184,7 @@ def getValFromDict (self,d,setting,requestedType,found):
 
     bunch = d.get(self.munge(setting))
     if bunch:
-        # g.trace(setting,requestedType,data)
+        # g.trace(setting,requestedType,bunch.toString())
         found = True ; val = bunch.val
         if val not in (u'None',u'none','None','none','',None):
             # g.trace(setting,val)
@@ -18188,7 +18194,7 @@ def getValFromDict (self,d,setting,requestedType,found):
     return None,found
 #@nonl
 #@-node:ekr.20041121143823:getValFromDict
-#@-node:ekr.20041117083141:get & allies
+#@-node:ekr.20041117083141:get & allies (g.app.config)
 #@-node:ekr.20041217091737:(Changed lookup: added localOptionsList
 #@+node:ekr.20041217135735.3:(Update all colors immediately)
 #@+node:ekr.20041217135735.1:tkBody.setColorFromConfig
@@ -18307,7 +18313,7 @@ class Bunch (object):
 bunch = Bunch
 #@nonl
 #@-node:ekr.20031218072017.3098:class Bunch (object)
-#@+node:ekr.20041117083141:get & allies
+#@+node:ekr.20041117083141:get & allies (g.app.config)
 def get (self,c,setting,kind):
     
     """Get the setting and make sure its type matches the expected type."""
@@ -18318,14 +18324,14 @@ def get (self,c,setting,kind):
         if d:
             val,found = self.getValFromDict(d,setting,kind,found)
             if val is not None:
-                # g.trace(c.hash(),setting,val)
+                # g.trace(c.shortFileName(),setting,val)
                 return val
                 
     for d in self.localOptionsList:
         val,found = self.getValFromDict(d,setting,kind,found)
         if val is not None:
             kind = d.get('_hash','<no hash>')
-            #  g.trace(kind,setting,val)
+            # g.trace(kind,setting,val)
             return val
 
     for d in self.dictList:
@@ -18337,7 +18343,7 @@ def get (self,c,setting,kind):
                 
     if 0: # Good for debugging leoSettings.leo.  This is NOT an error.
         # Don't warn if None was specified.
-        if not found and self.inited:
+        if not found:
             g.trace("Not found:",setting)
 
     return None
@@ -18347,7 +18353,7 @@ def getValFromDict (self,d,setting,requestedType,found):
 
     bunch = d.get(self.munge(setting))
     if bunch:
-        # g.trace(setting,requestedType,data)
+        # g.trace(setting,requestedType,bunch.toString())
         found = True ; val = bunch.val
         if val not in (u'None',u'none','None','none','',None):
             # g.trace(setting,val)
@@ -18357,7 +18363,7 @@ def getValFromDict (self,d,setting,requestedType,found):
     return None,found
 #@nonl
 #@-node:ekr.20041121143823:getValFromDict
-#@-node:ekr.20041117083141:get & allies
+#@-node:ekr.20041117083141:get & allies (g.app.config)
 #@+node:ekr.20041118084146.1:set (g.app.config)
 def set (self,c,setting,kind,val):
     
@@ -18404,7 +18410,8 @@ def set (self,p,kind,name,val):
 
     # N.B.  We can't use c here: it may be destroyed!
     d[key] = g.Bunch(path=c.mFileName,kind=kind,val=val,tag='setting')
-    # g.trace(d.get(key).toString())
+    
+    # g.trace('parserBaseClass',g.shortFileName(c.mFileName),key,val)
 #@nonl
 #@-node:ekr.20041120094940.9:set (parseBaseClass)
 #@+node:ekr.20041201081440:<< update recent files from d >>
@@ -18430,37 +18437,42 @@ def __init__ (self,c):
     self.defaultLogFontSize  = g.app.config.defaultLogFontSize
     self.defaultTreeFontSize = g.app.config.defaultTreeFontSize
     
-    for ivar in g.app.config.encodingIvarsDict.keys():
-        if ivar != '_hash':
-            self.initEncoding(ivar)
+    for key in g.app.config.encodingIvarsDict.keys():
+        if key != '_hash':
+            self.initEncoding(key)
         
-    for ivar in g.app.config.ivarsDict.keys():
-        if ivar != '_hash':
-            self.initIvar(ivar)
+    for key in g.app.config.ivarsDict.keys():
+        if key != '_hash':
+            self.initIvar(key)
 #@nonl
 #@+node:ekr.20041118104240:initIvar
-def initIvar(self,ivarName):
+def initIvar(self,key):
     
-    munge = g.app.config.canonicalizeSettingName
+    c = self.c
+    
+    # N.B. The key is munged.
+    bunch = g.app.config.ivarsDict.get(key)
+    ivarName = bunch.ivar
+    val = g.app.config.get(c,ivarName,kind=None) # kind is ignored anyway.
 
-    bunch = g.app.config.ivarsDict.get(munge(ivarName))
-    ivar = bunch.ivar ; val = bunch.val
-
-    # g.trace(self.c.hash(),bunch.toString())
-
-    setattr(self,ivar,val)
+    if val or not hasattr(self,ivarName):
+        # g.trace('c.configSettings',c.shortFileName(),ivarName,val)
+        setattr(self,ivarName,val)
 #@nonl
 #@-node:ekr.20041118104240:initIvar
 #@+node:ekr.20041118104414:initEncoding
-def initEncoding (self,encodingName):
+def initEncoding (self,key):
     
-    munge = g.app.config.canonicalizeSettingName
+    c = self.c
+    
+    # N.B. The key is munged.
+    bunch = g.app.config.encodingIvarsDict.get(key)
+    encodingName = bunch.ivar
+    encoding = g.app.config.get(c,encodingName,kind='string')
 
-    bunch = g.app.config.encodingIvarsDict.get(munge(encodingName))
-    ivar = bunch.ivar ; encoding = bunch.encoding
-
-    # g.trace(bunch.toString())
-    setattr(self,ivar,encoding)
+    if encoding or not hasattr(self,encodingName):
+        # g.trace('c.configSettings',c.shortFileName(),encodingName,encoding)
+        setattr(self,encodingName,encoding)
 
     if encoding and not g.isValidEncoding(encoding):
         g.es("bad %s: %s" % (encodingName,encoding))
@@ -20591,28 +20603,18 @@ defaultsData = (
 encodingIvarsDict = {'_hash':'encodingIvarsDict'}
 
 encodingIvarsData = (
-    ("default_derived_file_encoding","unicode-encoding","utf-8"),
-    ("new_leo_file_encoding","unicode-encoding","UTF-8"),
+    ("default_derived_file_encoding","string","utf-8"),
+    ("new_leo_file_encoding","string","UTF-8"),
         # Upper case for compatibility with previous versions.
-    ("tkEncoding","unicode-encoding",None),
+    ("tkEncoding","string",None),
         # Defaults to None so it doesn't override better defaults.
 )
 #@nonl
 #@-node:ekr.20041118062709:define encodingIvarsDict
 #@+node:ekr.20041117072055:ivarsDict
-# Each of these settings sets the ivar with the same name.
+# Each of these settings sets the corresponding ivar.
+# Also, the c.configSettings settins class inits the corresponding commander ivar.
 ivarsDict = {'_hash':'ivarsDict'}
-
-if 0: # From c.__init__
-    # Global options
-    c.tangle_batch_flag = False
-    c.untangle_batch_flag = False
-    # Default Tangle options
-    c.tangle_directory = ""
-    c.use_header_flag = False
-    c.output_doc_flag = False
-    # Default Target Language
-    c.target_language = "python" # Required if leoConfig.txt does not exist.
 
 ivarsData = (
     ("at_root_bodies_start_in_doc_mode","bool",True),
@@ -20631,8 +20633,8 @@ ivarsData = (
     ("stylesheet","string",None),
     ("tab_width","int",-4),
     ("trailing_body_newlines","string","asis"),
-    ("use_plugins","bool",False),
-        # Should never be True here!
+    ("use_plugins","bool",True),
+        # New in 4.3: use_plugins = True by default.
     # use_pysco can not be set by 4.3:  config processing happens too late.
         # ("use_psyco","bool",False),
     ("undo_granularity","string","word"),
@@ -20658,37 +20660,42 @@ def __init__ (self,c):
     self.defaultLogFontSize  = g.app.config.defaultLogFontSize
     self.defaultTreeFontSize = g.app.config.defaultTreeFontSize
     
-    for ivar in g.app.config.encodingIvarsDict.keys():
-        if ivar != '_hash':
-            self.initEncoding(ivar)
+    for key in g.app.config.encodingIvarsDict.keys():
+        if key != '_hash':
+            self.initEncoding(key)
         
-    for ivar in g.app.config.ivarsDict.keys():
-        if ivar != '_hash':
-            self.initIvar(ivar)
+    for key in g.app.config.ivarsDict.keys():
+        if key != '_hash':
+            self.initIvar(key)
 #@nonl
 #@+node:ekr.20041118104240:initIvar
-def initIvar(self,ivarName):
+def initIvar(self,key):
     
-    munge = g.app.config.canonicalizeSettingName
+    c = self.c
+    
+    # N.B. The key is munged.
+    bunch = g.app.config.ivarsDict.get(key)
+    ivarName = bunch.ivar
+    val = g.app.config.get(c,ivarName,kind=None) # kind is ignored anyway.
 
-    bunch = g.app.config.ivarsDict.get(munge(ivarName))
-    ivar = bunch.ivar ; val = bunch.val
-
-    # g.trace(self.c.hash(),bunch.toString())
-
-    setattr(self,ivar,val)
+    if val or not hasattr(self,ivarName):
+        # g.trace('c.configSettings',c.shortFileName(),ivarName,val)
+        setattr(self,ivarName,val)
 #@nonl
 #@-node:ekr.20041118104240:initIvar
 #@+node:ekr.20041118104414:initEncoding
-def initEncoding (self,encodingName):
+def initEncoding (self,key):
     
-    munge = g.app.config.canonicalizeSettingName
+    c = self.c
+    
+    # N.B. The key is munged.
+    bunch = g.app.config.encodingIvarsDict.get(key)
+    encodingName = bunch.ivar
+    encoding = g.app.config.get(c,encodingName,kind='string')
 
-    bunch = g.app.config.encodingIvarsDict.get(munge(encodingName))
-    ivar = bunch.ivar ; encoding = bunch.encoding
-
-    # g.trace(bunch.toString())
-    setattr(self,ivar,encoding)
+    if encoding or not hasattr(self,encodingName):
+        # g.trace('c.configSettings',c.shortFileName(),encodingName,encoding)
+        setattr(self,encodingName,encoding)
 
     if encoding and not g.isValidEncoding(encoding):
         g.es("bad %s: %s" % (encodingName,encoding))
@@ -20773,7 +20780,8 @@ def set (self,p,kind,name,val):
 
     # N.B.  We can't use c here: it may be destroyed!
     d[key] = g.Bunch(path=c.mFileName,kind=kind,val=val,tag='setting')
-    # g.trace(d.get(key).toString())
+    
+    # g.trace('parserBaseClass',g.shortFileName(c.mFileName),key,val)
 #@nonl
 #@-node:ekr.20041120094940.9:set (parseBaseClass)
 #@+node:ekr.20041227071423:setShortcut (ParserBaseClass)
@@ -22064,8 +22072,9 @@ This is important, the settings node found by findSettingsPosition may be a clon
 #@nonl
 #@-node:ekr.20050122104754.1:What I did
 #@+node:ekr.20041122162610:@recent_files
-/Users/edream/leoCVS/leo/src/LeoPy.leo
 /Users/edream/leoCVS/leo/plugins/leoPlugins.leo
+/Users/edream/leoCVS/leo/config/leoSettings.leo
+/Users/edream/leoCVS/leo/src/LeoPy.leo
 #@nonl
 #@-node:ekr.20041122162610:@recent_files
 #@+node:ekr.20040305223522:p.setBodyStringOrPane & p.setBodyTextOrPane
@@ -29115,6 +29124,557 @@ Changed the setup code for the import/export test cases so that it uses os.path.
 With this change all unit tests pass.
 #@nonl
 #@-node:ekr.20050202080802:Fixed problems with unit test file paths
+#@+node:ekr.20050202063852.1:(Made local config settings work again)
+#@+node:ekr.20050203084346:Notes
+@killcolor
+
+*None* of the local settings were working(!!)
+
+The old init code in the configSettings class had no chance of working. We must
+use the full g.app.config.get logic.
+
+Added some very simple unit tests to make sure the basics will never break
+again so easily.
+#@nonl
+#@-node:ekr.20050203084346:Notes
+#@+node:ekr.20041122094813:<<  baseConfig data >>
+@others
+    
+# List of dictionaries to search.  Order not too important.
+dictList = [ivarsDict,encodingIvarsDict,defaultsDict]
+
+# Keys are commanders.  Values are optionsDicts.
+localOptionsDict = {}
+
+localOptionsList = []
+    
+# Keys are setting names, values are type names.
+warningsDict = {} # Used by get() or allies.
+#@nonl
+#@+node:ekr.20041117062717.1:defaultsDict
+@ This contains only the "interesting" defaults.
+Ints and bools default to 0, floats to 0.0 and strings to "".
+@c
+
+defaultBodyFontSize = g.choose(sys.platform=="win32",9,12)
+defaultLogFontSize  = g.choose(sys.platform=="win32",8,12)
+defaultTreeFontSize = g.choose(sys.platform=="win32",9,12)
+
+defaultsDict = {'_hash':'defaultsDict'}
+
+defaultsData = (
+    # compare options...
+    ("ignore_blank_lines","bool",True),
+    ("limit_count","int",9),
+    ("print_mismatching_lines","bool",True),
+    ("print_trailing_lines","bool",True),
+    # find/change options...
+    ("search_body","bool",True),
+    ("whole_word","bool",True),
+    # Prefs panel.
+    ("default_target_language","language","Python"),
+    ("tab_width","int",-4),
+    ("page_width","int",132),
+    ("output_doc_chunks","bool",True),
+    ("tangle_outputs_header","bool",True),
+    # Syntax coloring options...
+    # Defaults for colors are handled by leoColor.py.
+    ("color_directives_in_plain_text","bool",True),
+    ("underline_undefined_section_names","bool",True),
+    # Window options...
+    ("allow_clone_drags","bool",True),
+    ("body_pane_wraps","bool",True),
+    ("body_text_font_family","family","Courier"),
+    ("body_text_font_size","size",defaultBodyFontSize),
+    ("body_text_font_slant","slant","roman"),
+    ("body_text_font_weight","weight","normal"),
+    ("enable_drag_messages","bool",True),
+    ("headline_text_font_family","string",None),
+    ("headline_text_font_size","size",defaultLogFontSize),
+    ("headline_text_font_slant","slant","roman"),
+    ("headline_text_font_weight","weight","normal"),
+    ("log_text_font_family","string",None),
+    ("log_text_font_size","size",defaultLogFontSize),
+    ("log_text_font_slant","slant","roman"),
+    ("log_text_font_weight","weight","normal"),
+    ("initial_window_height","int",600),
+    ("initial_window_width","int",800),
+    ("initial_window_left","int",10),
+    ("initial_window_top","int",10),
+    ("initial_splitter_orientation","orientation","vertical"),
+    ("initial_vertical_ratio","ratio",0.5),
+    ("initial_horizontal_ratio","ratio",0.3),
+    ("initial_horizontal_secondary_ratio","ratio",0.5),
+    ("initial_vertical_secondary_ratio","ratio",0.7),
+    ("outline_pane_scrolls_horizontally","bool",False),
+    ("split_bar_color","color","LightSteelBlue2"),
+    ("split_bar_relief","relief","groove"),
+    ("split_bar_width","int",7),
+)
+#@nonl
+#@-node:ekr.20041117062717.1:defaultsDict
+#@+node:ekr.20041118062709:define encodingIvarsDict
+encodingIvarsDict = {'_hash':'encodingIvarsDict'}
+
+encodingIvarsData = (
+    ("default_derived_file_encoding","string","utf-8"),
+    ("new_leo_file_encoding","string","UTF-8"),
+        # Upper case for compatibility with previous versions.
+    ("tkEncoding","string",None),
+        # Defaults to None so it doesn't override better defaults.
+)
+#@nonl
+#@-node:ekr.20041118062709:define encodingIvarsDict
+#@+node:ekr.20041117072055:ivarsDict
+# Each of these settings sets the corresponding ivar.
+# Also, the c.configSettings settins class inits the corresponding commander ivar.
+ivarsDict = {'_hash':'ivarsDict'}
+
+ivarsData = (
+    ("at_root_bodies_start_in_doc_mode","bool",True),
+        # For compatibility with previous versions.
+    ("create_nonexistent_directories","bool",False),
+    ("output_initial_comment","string",""),
+        # "" for compatibility with previous versions.
+    ("output_newline","string","nl"),
+    ("page_width","int","132"),
+    ("read_only","bool",True),
+        # Make sure we don't alter an illegal leoConfig.txt file!
+    ("redirect_execute_script_output_to_log_pane","bool",False),
+    ("relative_path_base_directory","string","!"),
+    ("remove_sentinels_extension","string",".txt"),
+    ("save_clears_undo_buffer","bool",False),
+    ("stylesheet","string",None),
+    ("tab_width","int",-4),
+    ("trailing_body_newlines","string","asis"),
+    ("use_plugins","bool",True),
+        # New in 4.3: use_plugins = True by default.
+    # use_pysco can not be set by 4.3:  config processing happens too late.
+        # ("use_psyco","bool",False),
+    ("undo_granularity","string","word"),
+        # "char","word","line","node"
+    ("write_strips_blank_lines","bool",False),
+)
+#@nonl
+#@-node:ekr.20041117072055:ivarsDict
+#@-node:ekr.20041122094813:<<  baseConfig data >>
+#@+node:ekr.20041117083141:get & allies (g.app.config)
+def get (self,c,setting,kind):
+    
+    """Get the setting and make sure its type matches the expected type."""
+    
+    found = False
+    if c:
+        d = self.localOptionsDict.get(c.hash())
+        if d:
+            val,found = self.getValFromDict(d,setting,kind,found)
+            if val is not None:
+                # g.trace(c.shortFileName(),setting,val)
+                return val
+                
+    for d in self.localOptionsList:
+        val,found = self.getValFromDict(d,setting,kind,found)
+        if val is not None:
+            kind = d.get('_hash','<no hash>')
+            # g.trace(kind,setting,val)
+            return val
+
+    for d in self.dictList:
+        val,found = self.getValFromDict(d,setting,kind,found)
+        if val is not None:
+            kind = d.get('_hash','<no hash>')
+            # g.trace(kind,setting,val)
+            return val
+                
+    if 0: # Good for debugging leoSettings.leo.  This is NOT an error.
+        # Don't warn if None was specified.
+        if not found:
+            g.trace("Not found:",setting)
+
+    return None
+#@nonl
+#@+node:ekr.20041121143823:getValFromDict
+def getValFromDict (self,d,setting,requestedType,found):
+
+    bunch = d.get(self.munge(setting))
+    if bunch:
+        # g.trace(setting,requestedType,bunch.toString())
+        found = True ; val = bunch.val
+        if val not in (u'None',u'none','None','none','',None):
+            # g.trace(setting,val)
+            return val,found
+
+    # Do NOT warn if not found here.  It may be in another dict.
+    return None,found
+#@nonl
+#@-node:ekr.20041121143823:getValFromDict
+#@-node:ekr.20041117083141:get & allies (g.app.config)
+#@+node:ekr.20031218072017.2140:c.executeScript
+def executeScript(self,p=None,script=None,useSelectedText=True):
+
+    """This executes body text as a Python script.
+    
+    We execute the selected text, or the entire body text if no text is selected."""
+    
+    c = self ; error = False ; s = None ; script1 = script
+
+    if not script:
+        script = g.getScript(c,p,useSelectedText=useSelectedText)
+    << redirect output >>
+    # g.trace(script)
+    if script:
+        script = script.strip()
+    if script:
+        # 9/14/04: Temporarily add the open directory to sys.path.
+        sys.path.insert(0,c.frame.openDirectory)
+        script += '\n' # Make sure we end the script properly.
+        try:
+            exec script in {} # Use {} to get a pristine environment!
+            << unredirect output >>
+            if not script1:
+                g.es("end of script",color="purple")
+        except:
+            << unredirect output >>
+            g.es("exception executing script ")
+            fileName,n = g.es_exception(full=False,c=c)
+            if fileName not in (None,"<string>"):
+                g.es("exception in file %s, line: %d" % (fileName,n))
+            if p and not script1 and fileName == "<string>":
+                c.goToScriptLineNumber(p,script,n)
+            else:
+                << dump the lines near the error >>
+            c.frame.tree.redrawAfterException()
+        del sys.path[0]
+    elif not error:
+        << unredirect output >>
+        g.es("no script selected",color="blue")
+        
+    # Force a redraw _after_ all messages have been output.
+    c.redraw() 
+#@nonl
+#@+node:ekr.20031218072017.2143:<< redirect output >>
+if c.config.redirect_execute_script_output_to_log_pane:
+
+    g.redirectStdout() # Redirect stdout
+    g.redirectStderr() # Redirect stderr
+#@nonl
+#@-node:ekr.20031218072017.2143:<< redirect output >>
+#@+node:EKR.20040627100424:<< unredirect output >>
+if c.config.redirect_execute_script_output_to_log_pane:
+
+    g.restoreStderr()
+    g.restoreStdout()
+#@nonl
+#@-node:EKR.20040627100424:<< unredirect output >>
+#@+node:EKR.20040612215018:<< dump the lines near the error >>
+if g.os_path_exists(fileName):
+    f = file(fileName)
+    lines = f.readlines()
+    f.close()
+else:
+    lines = g.splitLines(script)
+
+s = '-' * 20
+print s; g.es(s)
+
+if 1:
+    # Just print the error line.
+    try:
+        s = "%s line %d: %s" % (fileName,n,lines[n-1])
+        print s, ; g.es(s,newline=False)
+    except IndexError:
+        s = "%s line %d" % (fileName,n)
+        print s, ; g.es(s,newline=False)
+else:
+    i = max(0,n-2)
+    j = min(n+2,len(lines))
+    # g.trace(n,i,j)
+    while i < j:
+        ch = g.choose(i==n-1,'*',' ')
+        s = "%s line %d: %s" % (ch,i+1,lines[i])
+        print s, ; g.es(s,newline=False)
+        i += 1
+#@nonl
+#@-node:EKR.20040612215018:<< dump the lines near the error >>
+#@-node:ekr.20031218072017.2140:c.executeScript
+#@+node:ekr.20031218072017.3121:redirecting stderr and stdout
+class redirectClass:
+    
+    """A class to redirect stdout and stderr."""
+
+    << redirectClass methods >>
+
+# Create two redirection objects, one for each stream.
+redirectStdErrObj = redirectClass()
+redirectStdOutObj = redirectClass()
+
+<< define convenience methods for redirecting streams >>
+
+if 0: # Test code: may be executed in the child node.
+    << test code >>
+#@nonl
+#@+node:ekr.20031218072017.1656:<< redirectClass methods >>
+@others
+#@nonl
+#@+node:ekr.20041012082437:redirectClass.__init__
+def __init__ (self):
+    
+    self.old = None
+#@nonl
+#@-node:ekr.20041012082437:redirectClass.__init__
+#@+node:ekr.20041012082437.1:isRedirected
+def isRedirected (self):
+
+    return self.old != None
+#@nonl
+#@-node:ekr.20041012082437.1:isRedirected
+#@+node:ekr.20041012082437.2:flush
+# For LeoN: just for compatibility.
+
+def flush(self, *args):
+    return 
+
+#@-node:ekr.20041012082437.2:flush
+#@+node:ekr.20041012091252:rawPrint
+def rawPrint (self,s):
+
+    if self.old:
+        self.old.write(s+'\n')
+    else:
+        print s
+#@nonl
+#@-node:ekr.20041012091252:rawPrint
+#@+node:ekr.20041012082437.3:redirect
+def redirect (self,stdout=1):
+
+    import sys
+
+    if g.app.batchMode:
+        # Redirection is futile in batch mode.
+        return
+
+    if not self.old:
+        if stdout:
+            self.old,sys.stdout = sys.stdout,self
+        else:
+            self.old,sys.stderr = sys.stderr,self
+#@nonl
+#@-node:ekr.20041012082437.3:redirect
+#@+node:ekr.20041012082437.4:undirect
+def undirect (self,stdout=1):
+
+    import sys
+
+    if self.old:
+        if stdout:
+            sys.stdout,self.old = self.old,None
+        else:
+            sys.stderr,self.old = self.old,None
+#@nonl
+#@-node:ekr.20041012082437.4:undirect
+#@+node:ekr.20041012082437.5:write
+def write(self,s):
+
+    if self.old:
+        if app.log:
+            app.log.put(s)
+        else:
+            self.old.write(s+'\n')
+    else:
+        # Can happen when g.batchMode is True.
+        print s
+#@nonl
+#@-node:ekr.20041012082437.5:write
+#@-node:ekr.20031218072017.1656:<< redirectClass methods >>
+#@+node:ekr.20031218072017.3122:<< define convenience methods for redirecting streams >>
+@others
+#@nonl
+#@+node:ekr.20041012090942:redirectStderr & redirectStdout
+# Redirect streams to the current log window.
+def redirectStderr():
+    global redirectStdErrObj
+    redirectStdErrObj.redirect(stdout=False)
+
+def redirectStdout():
+    global redirectStdOutObj
+    redirectStdOutObj.redirect()
+#@nonl
+#@-node:ekr.20041012090942:redirectStderr & redirectStdout
+#@+node:ekr.20041012090942.1:restoreStderr & restoreStdout
+# Restore standard streams.
+def restoreStderr():
+    global redirectStdErrObj
+    redirectStdErrObj.undirect(stdout=False)
+    
+def restoreStdout():
+    global redirectStdOutObj
+    redirectStdOutObj.undirect()
+#@nonl
+#@-node:ekr.20041012090942.1:restoreStderr & restoreStdout
+#@+node:ekr.20041012090942.2:stdErrIsRedirected & stdOutIsRedirected
+def stdErrIsRedirected():
+    global redirectStdErrObj
+    return redirectStdErrObj.isRedirected()
+    
+def stdOutIsRedirected():
+    global redirectStdOutObj
+    return redirectStdOutObj.isRedirected()
+#@nonl
+#@-node:ekr.20041012090942.2:stdErrIsRedirected & stdOutIsRedirected
+#@+node:ekr.20041012090942.3:rawPrint
+# Send output to original stdout.
+
+def rawPrint(s):
+
+    global redirectStdOutObj
+
+    redirectStdOutObj.rawPrint(s)
+#@nonl
+#@-node:ekr.20041012090942.3:rawPrint
+#@-node:ekr.20031218072017.3122:<< define convenience methods for redirecting streams >>
+#@+node:ekr.20031218072017.3123:<< test code >>
+import leoGlobals as g
+
+print "stdout isRedirected:", g.stdOutIsRedirected()
+print "stderr isRedirected:", g.stdErrIsRedirected()
+
+g.redirectStderr()
+g.redirectStdout()
+
+print "stdout isRedirected:", g.stdOutIsRedirected()
+print "stderr isRedirected:", g.stdErrIsRedirected()
+
+g.restoreStderr()
+
+print "stdout isRedirected:", g.stdOutIsRedirected()
+print "stderr isRedirected:", g.stdErrIsRedirected()
+
+g.restoreStdout()
+
+print "stdout isRedirected:", g.stdOutIsRedirected()
+print "stderr isRedirected:", g.stdErrIsRedirected()
+#@nonl
+#@-node:ekr.20031218072017.3123:<< test code >>
+#@-node:ekr.20031218072017.3121:redirecting stderr and stdout
+#@+node:ekr.20041118104831.1:class configSettings
+class configSettings:
+    
+    """A class to hold config settings for commanders."""
+    
+    @others
+#@nonl
+#@+node:ekr.20041118104831.2:configSettings.__init__
+def __init__ (self,c):
+    
+    self.c = c
+    
+    self.defaultBodyFontSize = g.app.config.defaultBodyFontSize
+    self.defaultLogFontSize  = g.app.config.defaultLogFontSize
+    self.defaultTreeFontSize = g.app.config.defaultTreeFontSize
+    
+    for key in g.app.config.encodingIvarsDict.keys():
+        if key != '_hash':
+            self.initEncoding(key)
+        
+    for key in g.app.config.ivarsDict.keys():
+        if key != '_hash':
+            self.initIvar(key)
+#@nonl
+#@+node:ekr.20041118104240:initIvar
+def initIvar(self,key):
+    
+    c = self.c
+    
+    # N.B. The key is munged.
+    bunch = g.app.config.ivarsDict.get(key)
+    ivarName = bunch.ivar
+    val = g.app.config.get(c,ivarName,kind=None) # kind is ignored anyway.
+
+    if val or not hasattr(self,ivarName):
+        # g.trace('c.configSettings',c.shortFileName(),ivarName,val)
+        setattr(self,ivarName,val)
+#@nonl
+#@-node:ekr.20041118104240:initIvar
+#@+node:ekr.20041118104414:initEncoding
+def initEncoding (self,key):
+    
+    c = self.c
+    
+    # N.B. The key is munged.
+    bunch = g.app.config.encodingIvarsDict.get(key)
+    encodingName = bunch.ivar
+    encoding = g.app.config.get(c,encodingName,kind='string')
+
+    if encoding or not hasattr(self,encodingName):
+        # g.trace('c.configSettings',c.shortFileName(),encodingName,encoding)
+        setattr(self,encodingName,encoding)
+
+    if encoding and not g.isValidEncoding(encoding):
+        g.es("bad %s: %s" % (encodingName,encoding))
+#@nonl
+#@-node:ekr.20041118104414:initEncoding
+#@-node:ekr.20041118104831.2:configSettings.__init__
+#@+node:ekr.20041118053731:Getters
+def getFontFromParams(self,family,size,slant,weight,defaultSize=12,tag="configSetting"):
+    return g.app.config.getFontFromParams(self.c,
+        family,size,slant,weight,defaultSize=defaultSize,tag=tag)
+
+def getRecentFiles (self):
+    return g.app.config.getRecentFiles(self.c)
+
+def get(self,setting,theType):
+    return g.app.config.get(self.c,setting,theType)
+
+def getBool      (self,setting): return g.app.config.getBool     (self.c,setting)
+def getColor     (self,setting): return g.app.config.getColor    (self.c,setting)
+def getDirectory (self,setting): return g.app.config.getDirectory(self.c,setting)
+def getInt       (self,setting): return g.app.config.getInt      (self.c,setting)
+def getFloat     (self,setting): return g.app.config.getFloat    (self.c,setting)
+def getFontDict  (self,setting): return g.app.config.getFontDict (self.c,setting)
+def getLanguage  (self,setting): return g.app.config.getLanguage (self.c,setting)
+def getRatio     (self,setting): return g.app.config.getRatio    (self.c,setting)
+def getShortcut  (self,setting): return g.app.config.getShortcut (self.c,setting)
+def getString    (self,setting): return g.app.config.getString   (self.c,setting)
+#@nonl
+#@-node:ekr.20041118053731:Getters
+#@+node:ekr.20041118195812:Setters...
+#@+node:ekr.20041118195812.3:setRecentFiles (configSettings)
+def setRecentFiles (self,files):
+    
+    c = self.c
+    
+    # Append the files to the global list.
+    g.app.config.appendToRecentFiles(files)
+    
+    # Do nothing if there is no @settings tree or no @recent-files node.
+    p = g.app.config.findSettingsPosition(c,"@recent-files")
+    if not p:
+        # g.trace("no @recent-files node for ",c.mFileName)
+        return
+
+    # g.trace("updating @recent-files for ",c.mFileName)
+    
+    # Update the @recent-files entry, leaving c's changed status untouched.
+    oldText = p.bodyString()
+    changed = c.isChanged()
+    newText = '\n'.join(files)
+    p.setBodyStringOrPane(newText,encoding=g.app.tkEncoding)
+    c.setChanged(changed)
+    c.undoer.setUndoTypingParams(p,'Clear Recent Files',
+        oldText,newText,oldSel=None,newSel=None)
+#@nonl
+#@-node:ekr.20041118195812.3:setRecentFiles (configSettings)
+#@+node:ekr.20041118195812.2:set & setString
+def set (self,p,setting,val):
+    
+    return g.app.config.setString(self.c,setting,val)
+    
+setString = set
+#@nonl
+#@-node:ekr.20041118195812.2:set & setString
+#@-node:ekr.20041118195812:Setters...
+#@-node:ekr.20041118104831.1:class configSettings
+#@-node:ekr.20050202063852.1:(Made local config settings work again)
 #@-node:ekr.20050125203059.1:Bugs
 #@+node:ekr.20050125203059.2:New features...
 #@+node:ekr.20050125170349:(Added new undo granularities & undo_granularity setting)
