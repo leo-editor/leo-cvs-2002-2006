@@ -552,39 +552,40 @@ class leoTree:
 	#@+body
 	#@+at
 	#  This scrolls the canvas so that v is in view.  This is done at idle 
-	# time after a redraw so that treeBar.get() will return proper values.  
-	# Earlier versions of this routine were called _before_ a redraw so that 
-	# the calls to yoffset() were required.  We could use v.icony instead, and 
-	# that might be better.
-	# 
-	# Another approach would be to add a "draw" flat to the drawing routines 
-	# so that they just compute a height if the draw flag is false.  However, 
-	# that would complicate the drawing logic quite a bit.
+	# time after a redraw so that treeBar.get() will return proper values.
 
 	#@-at
 	#@@c
 
 	def idle_scrollTo(self,v=None):
 	
+		frame = self.commands.frame
+		last = self.lastVisible()
+		nextToLast = last.visBack()
 		if v == None:
 			v = self.currentVnode
-		last = self.lastVisible()
 		h1 = self.yoffset(v)
 		h2 = self.yoffset(last)
-		# Compute the fraction to scroll, minus a smidge so the first line will be entirely visible.
-		if h2 > 0.1:
-			frac = float(h1)/float(h2)
+		if nextToLast: # 2/2/03: compute approximate line height.
+			lineHeight = h2 - self.yoffset(nextToLast)
 		else:
-			frac = 0.0 # probably any value would work here.
-		frac = min(frac,1.0)
-		frac = max(frac,0.0)
-		
-		# Do nothing if the line is already in view
-		frame = self.commands.frame
+			lineHeight = 20 # A reasonable default.
+		# Compute the fractions to scroll down/up.
 		lo, hi = frame.treeBar.get()
-		if frac < lo or frac > hi:
-			# print "h1, h2, frac, hi, lo:", h1, h2, frac, hi, lo
-			self.canvas.yview("moveto", frac)
+		if h2 > 0.1:
+			frac = float(h1)/float(h2) # For scrolling down.
+			frac2 = float(h1+lineHeight/2)/float(h2) # For scrolling up.
+			frac2 = frac2 - (hi - lo)
+		else:
+			frac = frac2 = 0.0 # probably any value would work here.
+		# 2/2/03: new logic for scrolling up.
+		frac =  max(min(frac,1.0),0.0)
+		frac2 = max(min(frac2,1.0),0.0)
+		if frac <= lo:
+			self.canvas.yview("moveto",frac)
+		elif frac2 + (hi - lo) >= hi: 
+			self.canvas.yview("moveto",frac2)
+		# print "%3d %3d %1.3f %1.3f %1.3f %1.3f" % (h1,h2,frac,frac2,lo,hi)
 	#@-body
 	#@-node:17::tree.idle_scrollTo
 	#@+node:18::tree.numberOfVisibleNodes
@@ -1648,6 +1649,9 @@ class leoTree:
 			#@-body
 			#@-node:3::<< select the new node >>
 
+			try: # may fail during initialization
+				self.idle_scrollTo(v)
+			except: pass
 	
 		
 		#@<< set the current node and redraw >>
