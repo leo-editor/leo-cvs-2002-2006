@@ -680,7 +680,7 @@ class baseLeoImportCommands:
 	
 	def scanPythonClass (self,s,i,start,parent):
 	
-		# line = get_line(s,i) ; trace(`line`)
+		# trace(get_line(s,i))
 		classIndent = self.getLeadingIndent(s,i)
 		#@	<< set classname and headline, or return i >>
 		#@+node:<< set classname and headline, or return i >>
@@ -768,6 +768,14 @@ class baseLeoImportCommands:
 		#@nonl
 		#@-node:<< create nodes for all defs of the class >>
 		#@nl
+		#@	<< append any other class material >>
+		#@+node:<< append any other class material >>
+		s2 = s[start:i]
+		if s2:
+			class_vnode.appendStringToBody(s2)
+		#@nonl
+		#@-node:<< append any other class material >>
+		#@nl
 		self.methodName = savedMethodName
 		return i
 	#@nonl
@@ -781,7 +789,7 @@ class baseLeoImportCommands:
 	
 	def scanPythonDef (self,s,i,start,parent):
 	
-		# line = get_line(s,i) ; trace(`line`)
+		# trace(get_line(s,i))
 		#@	<< set headline or return i >>
 		#@+node:<< set headline or return i >>
 		i = skip_ws(s,i)
@@ -850,7 +858,7 @@ class baseLeoImportCommands:
 		done = false ; start = i
 		while not done and i < len(s):
 			progress = i
-			# line = get_line(s,i) ; trace(`line`)
+			# trace(get_line(s,i))
 			ch = s[i]
 			if ch == '\n':
 				i = skip_nl(s,i)
@@ -913,7 +921,7 @@ class baseLeoImportCommands:
 		self.methodsSeen = false
 		while i < len(s):
 			progress = i
-			# line = get_line(s,i) ; trace(`line`)
+			# trace(get_line(s,i))
 			ch = s[i]
 			if ch == '\n' or ch == '\r': i = skip_nl(s,i)
 			elif ch == '#': i = skip_to_end_of_line(s,i)
