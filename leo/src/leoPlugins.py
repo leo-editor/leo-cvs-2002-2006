@@ -18,6 +18,7 @@ After startup:
 import leoGlobals as g
 
 handlers = {}
+loadedModules = {} # Keys are module names, values are modules.
 
 #@+others
 #@+node:ekr.20041001161108:doPlugins
@@ -57,7 +58,9 @@ def loadHandlers(loadAllFlag=False):
             for s in lines:
                 s = s.strip()
                 if s and not g.match(s,0,"#"):
-                    enabled_files.append(g.os_path_join(plugins_path,s))
+                    path = g.os_path_join(plugins_path,s)
+                    if path not in enabled_files:
+                        enabled_files.append(path)
             theFile.close()
         except IOError:
             g.es("Can not open: " + manager_path)
@@ -70,19 +73,45 @@ def loadHandlers(loadAllFlag=False):
         enabled_files = [g.os_path_abspath(theFile) for theFile in enabled_files]
     
     # Load plugins in the order they appear in the enabled_files list.
-    g.app.loadedPlugins = []
     if files and enabled_files:
         for theFile in enabled_files:
             if theFile in files:
-                theFile = g.toUnicode(theFile,g.app.tkEncoding)
-                g.importFromPath(theFile,plugins_path)
+                loadOnePlugin(theFile)
+                
+    # Note: g.plugin_signon adds module names to g.app.loadedPlugins 
     if g.app.loadedPlugins and not loadAllFlag:
         g.es("%d plugins loaded" % (len(g.app.loadedPlugins)), color="blue")
-        if 0:
-            for name in g.app.loadedPlugins:
-                print name
 #@nonl
 #@-node:ekr.20031218072017.3440:loadHandlers
+#@+node:ekr.20041113113140:loadOnePlugin
+def loadOnePlugin (moduleOrFileName, verbose=False):
+    
+    global loadedModules
+    
+    if moduleOrFileName [-3:] == ".py":
+        moduleName = moduleOrFileName [:-3]
+    else:
+        moduleName = moduleOrFileName
+
+    if isLoaded(moduleName):
+        module = loadedModules.get(moduleName)
+        return module
+
+    plugins_path = g.os_path_join(g.app.loadDir,"..","plugins")
+    moduleName = g.toUnicode(moduleName,g.app.tkEncoding)
+    result = g.importFromPath(moduleName,plugins_path)
+    if result:
+        loadedModules[moduleName] = result
+    
+    if verbose:
+        if result is None:
+            g.es("can not load %s plugin" % moduleName,color="blue")
+        else:
+            g.es("loaded %s plugin" % moduleName,color="blue")
+    
+    return result
+#@nonl
+#@-node:ekr.20041113113140:loadOnePlugin
 #@+node:ekr.20031218072017.3442:doHandlersForTag
 def doHandlersForTag (tag,keywords):
     
@@ -139,6 +168,12 @@ def getHandlersForOneTag (tag):
     return handlers.get(tag)
 #@nonl
 #@-node:ekr.20041111124831:getHandlersForTag
+#@+node:ekr.20041114113029:getPluginModule
+def getPluginModule (moduleName):
+    
+    return loadedModules.get(moduleName)
+#@nonl
+#@-node:ekr.20041114113029:getPluginModule
 #@+node:ekr.20031218072017.3443:registerHandler
 def registerHandler(tags,fn):
     
