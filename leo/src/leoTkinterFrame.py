@@ -1316,9 +1316,10 @@ class baseLeoTkinterFrame:
 			("&Clone Node","Ctrl+`",self.OnCloneNode),
 			("Sort C&hildren",None,self.OnSortChildren),
 			("&Sort Siblings","Alt-A",self.OnSortSiblings),
+			("Chec&k Outline",None,self.OnCheckOutline),
 			("-",None,None),
-			("Hoist",None,self.OnHoist),
-			("De-Hoist",None,self.OnDehoist),
+			("&Hoist",None,self.OnHoist),
+			("D&e-Hoist",None,self.OnDehoist),
 			("-",None,None))
 		
 		self.createMenuEntries(outlineMenu,table)
@@ -3202,6 +3203,12 @@ class baseLeoTkinterFrame:
 		self.commands.dehoist()
 	#@nonl
 	#@-node:f.OnHoist,OnDehoist
+	#@+node:f.OnCheckOutline
+	def OnCheckOutline (self,event=None):
+		
+		self.commands.checkOutline()
+	#@nonl
+	#@-node:f.OnCheckOutline
 	#@+node:OnContractChildren (no longer used)
 	def OnContractChildren(self,event=None):
 	
@@ -4743,6 +4750,8 @@ class leoTkinterBody (leoFrame.leoBody):
 		sel is the selected text (or "" if no selection)
 		after is all lines after the selected text
 		(or the text after the insert point if no selection)"""
+		
+		# At present, called only by getBodyLines.
 	
 		t = self.bodyCtrl
 		sel_index = t.tag_ranges("sel")
@@ -4751,7 +4760,7 @@ class leoTkinterBody (leoFrame.leoBody):
 			
 		i,j = sel_index
 		i = t.index(i + "linestart")
-		j = t.index(j + "lineend-1c") # 10/24/03: -1c
+		j = t.index(j + "lineend") # 10/24/03: -1c  # 11/4/03: no -1c.
 		before = toUnicode(t.get("1.0",i),app.tkEncoding)
 		sel    = toUnicode(t.get(i,j),    app.tkEncoding)
 		after  = toUnicode(t.get(j,"end-1c"),app.tkEncoding)
@@ -4771,7 +4780,7 @@ class leoTkinterBody (leoFrame.leoBody):
 		
 		"""Replace the body text by before + sel + after and
 		set the selection so that the sel text is selected."""
-		
+	
 		t = self.bodyCtrl
 		t.delete("1.0","end")
 	
@@ -4779,7 +4788,7 @@ class leoTkinterBody (leoFrame.leoBody):
 		sel_start = t.index("end-1c") # 10/24/03: -1c
 	
 		if sel: t.insert("end",sel)
-		sel_end = t.index("end") 
+		sel_end = t.index("end")
 	
 		if after:
 			# A horrible Tk kludge.  Remove a trailing newline so we don't keep extending the text.
@@ -4787,7 +4796,6 @@ class leoTkinterBody (leoFrame.leoBody):
 				after = after[:-1]
 			t.insert("end",after)
 	
-		# trace(sel_start,sel_end)
 		setTextSelection(t,sel_start,sel_end)
 		
 		return t.index(sel_start), t.index(sel_end)
