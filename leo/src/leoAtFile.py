@@ -33,9 +33,9 @@ endRawDirective = 10 # @end_raw
 
 # The kind of sentinel line.
 noSentinel		 = 20 # Not a sentinel
-# not used   = 21
-endAt			 = 22 # @-at
-endBody			 = 23 # @-body
+endAt			 = 21 # @-at
+endBody			 = 22 # @-body
+# not used   = 23
 endDoc			 = 24 # @-doc
 endLeo			 = 25 # @-leo
 endNode			 = 26 # @-node
@@ -56,12 +56,17 @@ startRef		     = 63 # @< < ... > >
 startVerbatim	 = 64 # @verbatim
 startVerbatimAfterRef = 65 # @verbatimAfterRef (3.0 only)
 
-# New in 4.x...
-startAfterRef  = 70 # @afterref (4.0)
-startNl        = 71 # @nl (4.0)
-startNonl      = 72 # @nonl (4.0)
-startAll       = 73 # at+all (4.2)
-endAll         = 74 # at-all (4.2)
+# New in 4.x. Paired
+endAll         = 70 # at-all (4.2)
+endMiddle      = 71 # at-middle (4.2)
+startAll       = 72 # at+all (4.2)
+startMiddle    = 73 # at+middle (4.2)
+
+# New in 4.x.  Unpaired.
+startAfterRef  = 80 # @afterref (4.0)
+startClone     = 81 # @clone (4.2)
+startNl        = 82 # @nl (4.0)
+startNonl      = 83 # @nonl (4.0)
 	
 sentinelDict = {
 	# Unpaired sentinels: 3.x and 4.x.
@@ -72,6 +77,7 @@ sentinelDict = {
 	"@verbatimAfterRef": startVerbatimAfterRef,
 	# Unpaired sentinels: 4.x only.
 	"@afterref" : startAfterRef,
+	"@clone"    : startClone,
 	"@nl"       : startNl,
 	"@nonl"     : startNonl,
 	# Paired sentinels: 3.x only.
@@ -81,6 +87,7 @@ sentinelDict = {
 	"@+at":     startAt,     "@-at":     endAt,
 	"@+doc":    startDoc,    "@-doc":    endDoc,
 	"@+leo":    startLeo,    "@-leo":    endLeo,
+	"@+middle": startMiddle, "@-middle": endMiddle,
 	"@+node":   startNode,   "@-node":   endNode,
 	"@+others": startOthers, "@-others": endOthers }
 #@nonl
@@ -255,7 +262,7 @@ class baseAtFile:
 			# 1/28/04: Don't set comment delims when importing.
 			# 1/28/04: Call scanAllDirectives here, not in readOpenFile.
 			importing = importFileName is not None
-			df.scanAllDirectives(root,importing=importing)
+			df.scanAllDirectives(root,importing=importing,reading=true)
 			df.readOpenFile(root,file,firstLines)
 		except:
 			at.error("Unexpected exception while reading derived file")
@@ -464,6 +471,7 @@ class baseAtFile:
 			i += 1
 		if j < i:
 			at.startSentinelComment = s[j:i]
+			# g.trace(at.startSentinelComment)
 		else: valid = false
 		#@nonl
 		#@-node:ekr.20031218072017.2634:<< skip any non @+leo lines >>
@@ -2080,7 +2088,7 @@ class baseOldDerivedFile:
 	#@-at
 	#@@c
 	
-	def scanAllDirectives(self,p,scripting=false,importing=false):
+	def scanAllDirectives(self,p,scripting=false,importing=false,reading=false):
 		
 		"""Scan position p and p's ancestors looking for directives,
 		setting corresponding atFile ivars.
@@ -2261,9 +2269,10 @@ class baseOldDerivedFile:
 		#@nonl
 		#@-node:ekr.20031218072017.2399:<< Set current directory >>
 		#@nl
-		if not importing:
-			#@		<< Set comment Strings from delims >>
-			#@+node:ekr.20031218072017.2400:<< Set comment Strings from delims >>
+		if not importing and not reading:
+			# 5/19/04: don't override comment delims when reading!
+			#@		<< Set comment strings from delims >>
+			#@+node:ekr.20031218072017.2400:<< Set comment strings from delims >>
 			# Use single-line comments if we have a choice.
 			# 8/2/01: delim1,delim2,delim3 now correspond to line,start,end
 			if delim1:
@@ -2279,8 +2288,10 @@ class baseOldDerivedFile:
 				g.es("delim1,delim2,delim3:",delim1,delim2,delim3)
 				self.startSentinelComment = "#" # This should never happen!
 				self.endSentinelComment = ""
+				
+			# g.trace(self.startSentinelComment)
 			#@nonl
-			#@-node:ekr.20031218072017.2400:<< Set comment Strings from delims >>
+			#@-node:ekr.20031218072017.2400:<< Set comment strings from delims >>
 			#@nl
 	#@nonl
 	#@-node:ekr.20031218072017.2387:old_df.scanAllDirectives
@@ -3459,6 +3470,7 @@ class baseNewDerivedFile(oldDerivedFile):
 		# For 4.x reading & writing...
 		at.inCode = true
 		at.thinFile = false
+		at.cloneSibCount = 0 # n > 1: Make sure n cloned sibs exists at next @+node sentinel
 	
 		# For 4.x writing...
 		at.docKind = None
@@ -3488,21 +3500,22 @@ class baseNewDerivedFile(oldDerivedFile):
 			# Starting sentinels...
 			startAll:    at.readStartAll,
 			startAt:     at.readStartAt,
-			# startBody:   at.readStartBody,
 			startDoc:    at.readStartDoc,
 			startLeo:    at.readStartLeo,
+			startMiddle: at.readStartMiddle,
 			startNode:   at.readStartNode,
 			startOthers: at.readStartOthers,
 			# Ending sentinels...
 			endAll:    at.readEndAll,
 			endAt:     at.readEndAt,
-			# endBody:   at.readEndBody,
 			endDoc:    at.readEndDoc,
 			endLeo:    at.readEndLeo,
+			endMiddle: at.readEndMiddle,
 			endNode:   at.readEndNode,
 			endOthers: at.readEndOthers,
 			# Non-paired sentinels.
 			startAfterRef:  at.readAfterRef,
+			startClone:     at.readClone,
 			startComment:   at.readComment,
 			startDelims:    at.readDelims,
 			startDirective: at.readDirective,
@@ -3528,23 +3541,33 @@ class baseNewDerivedFile(oldDerivedFile):
 		at = self ; v = at.root.v ; c = at.c ; indices = g.app.nodeIndices
 		last = at.lastThinNode ; lastIndex = last.t.fileIndex
 		gnx = indices.scanGnx(gnxString,0)
-	
 		#g.trace("last",last,last.t.fileIndex)
 		#g.trace("args",indices.areEqual(gnx,last.t.fileIndex),gnxString,headline)
-	
-		if indices.areEqual(gnx,lastIndex):
-			return last
-	
+		
+		# See if there is already a child with the proper index.
 		child = at.lastThinNode.firstChild()
 		while child and not indices.areEqual(gnx,child.t.fileIndex):
 			child = child.next()
 	
-		if not child:
+		if at.cloneSibCount > 1:
+			n = at.cloneSibCount ; at.cloneSibCount = 0
+			if child: clonedSibs,junk = at.scanForClonedSibs(child)
+			else: clonedSibs = 0
+			copies = n - clonedSibs
+			# g.trace(copies,headline)
+		else:
+			if indices.areEqual(gnx,lastIndex):
+				return last
+			if child:
+				return child
+			copies = 1 # Create exactly one copy.
+	
+		while copies > 0:
+			copies -= 1
 			# Create the tnode only if it does not already exist.
 			tnodesDict = c.fileCommands.tnodesDict
 			t = tnodesDict.get(gnxString)
 			if t:
-				# g.trace("found",gnxString)
 				assert(indices.areEqual(t.fileIndex,gnx))
 			else:
 				t = leoNodes.tnode(bodyString=None,headString=headline)
@@ -3557,7 +3580,7 @@ class baseNewDerivedFile(oldDerivedFile):
 			# g.trace("creating node",child,gnx)
 	
 		return child
-	
+	#@nonl
 	#@-node:ekr.20040321064134.5:createThinChild (4.2)
 	#@+node:ekr.20031218072017.2757:new_df.readOpenFile
 	def readOpenFile(self,root,file,firstLines):
@@ -3633,6 +3656,7 @@ class baseNewDerivedFile(oldDerivedFile):
 		#@	<< init ivars for scanText4 >>
 		#@+node:ekr.20031218072017.2759:<< init ivars for scanText4 >>
 		# Unstacked ivars...
+		at.cloneSibCount = 0
 		at.done = false
 		at.inCode = true
 		at.indent = 0 # Changed only for sentinels.
@@ -3652,6 +3676,8 @@ class baseNewDerivedFile(oldDerivedFile):
 				g.trace("len(tnodeList)",len(p.v.t.tnodeList),p.v)
 			else:
 				g.trace("no tnodeList",p.v)
+				
+		# g.trace(at.startSentinelComment)
 		#@nonl
 		#@-node:ekr.20031218072017.2759:<< init ivars for scanText4 >>
 		#@nl
@@ -3785,13 +3811,28 @@ class baseNewDerivedFile(oldDerivedFile):
 		at.readError("Ignoring unexpected @+leo sentinel")
 	#@nonl
 	#@-node:ekr.20031218072017.2765:readStartLeo
+	#@+node:EKR.20040524070500:readStartMiddle
+	def readStartMiddle (self,s,i):
+		
+		"""Read an @+middle sentinel."""
+		
+		at = self
+		
+		at.readStartNode(s,i,middle=true)
+	#@nonl
+	#@-node:EKR.20040524070500:readStartMiddle
 	#@+node:ekr.20031218072017.2766:readStartNode
-	def readStartNode (self,s,i):
+	def readStartNode (self,s,i,middle=false):
 		
-		"""Read an @+node sentinel."""
+		"""Read an @+node or @+middle sentinel."""
 		
-		at = self ; assert(g.match(s,i,"+node:"))
-		i += 6
+		at = self
+		if middle:
+			assert(g.match(s,i,"+middle:"))
+			i += 8
+		else:
+			assert(g.match(s,i,"+node:"))
+			i += 6
 		
 		if at.thinFile:
 			#@		<< set gnx and bump i >>
@@ -3935,8 +3976,18 @@ class baseNewDerivedFile(oldDerivedFile):
 		at.done = true
 	#@nonl
 	#@-node:ekr.20031218072017.2771:readEndLeo
+	#@+node:EKR.20040524071414:readEndMiddle
+	def readEndMiddle (self,s,i):
+		
+		"""Read an @-middle sentinel."""
+		
+		at = self
+		
+		at.readEndNode(s,i,middle=true)
+	#@nonl
+	#@-node:EKR.20040524071414:readEndMiddle
 	#@+node:ekr.20031218072017.2772:readEndNode
-	def readEndNode (self,s,i):
+	def readEndNode (self,s,i,middle=false):
 		
 		"""Handle end-of-node processing for @-others and @-ref sentinels."""
 	
@@ -3951,9 +4002,11 @@ class baseNewDerivedFile(oldDerivedFile):
 	
 		if at.importing:
 			at.t.bodyString = s
+		elif middle: 
+			pass # Middle sentinels never alter text.
 		else:
 			at.t.tempBodyString = s
-				
+	
 		# Indicate that the tnode has been set in the derived file.
 		at.t.setVisited()
 	
@@ -4075,6 +4128,25 @@ class baseNewDerivedFile(oldDerivedFile):
 		at.out.append(s)
 	#@nonl
 	#@-node:ekr.20031218072017.2776:readAfterRef
+	#@+node:EKR.20040520093903:readClone
+	def readClone (self,s,i):
+		
+		at = self ; tag = "clone"
+	
+		assert(g.match(s,i,tag))
+		
+		# Skip the tag and whitespace.
+		i = g.skip_ws(s,i+len(tag))
+		
+		# Get the clone count.
+		junk,val = g.skip_long(s,i)
+		
+		if val == None:
+			at.readError("Invalid count in @clone sentinel")
+		else:
+			at.cloneSibCount	 = val
+	#@nonl
+	#@-node:EKR.20040520093903:readClone
 	#@+node:ekr.20031218072017.2777:readComment
 	def readComment (self,s,i):
 		
@@ -4337,12 +4409,16 @@ class baseNewDerivedFile(oldDerivedFile):
 	#@nonl
 	#@-node:ekr.20031218072017.2788:putLeadInSentinel
 	#@+node:EKR.20040427095028:putCloseNodeSentinel 4.x
-	def putCloseNodeSentinel(self,p):
+	def putCloseNodeSentinel(self,p,inAtAll=false,inAtOthers=false,middle=false):
 		
 		at = self
 		
 		s = self.nodeSentinelText(p)
-		at.putSentinel("@-node:" + s)
+		
+		if middle:
+			at.putSentinel("@-middle:" + s)
+		else:
+			at.putSentinel("@-node:" + s)
 	#@nonl
 	#@-node:EKR.20040427095028:putCloseNodeSentinel 4.x
 	#@+node:ekr.20031218072017.2789:putOpenLeoSentinel 4.x
@@ -4367,7 +4443,7 @@ class baseNewDerivedFile(oldDerivedFile):
 	#@nonl
 	#@-node:ekr.20031218072017.2789:putOpenLeoSentinel 4.x
 	#@+node:ekr.20031218072017.2001:putOpenNodeSentinel (sets tnodeList) 4.x
-	def putOpenNodeSentinel(self,p,inAtAll=false):
+	def putOpenNodeSentinel(self,p,inAtAll=false,inAtOthers=false,middle=false):
 		
 		"""Write @+node sentinel for p."""
 		
@@ -4380,7 +4456,11 @@ class baseNewDerivedFile(oldDerivedFile):
 		# g.trace(at.thinFile,p)
 			
 		s = at.nodeSentinelText(p)
-		at.putSentinel("@+node:" + s)
+		
+		if middle:
+			at.putSentinel("@+middle:" + s)
+		else:
+			at.putSentinel("@+node:" + s)
 		
 		if not at.thinFile:
 			# Append the n'th tnode to the root's tnode list.
@@ -4724,7 +4804,7 @@ class baseNewDerivedFile(oldDerivedFile):
 			for p in root.self_and_subtree_iter():
 				#@	<< Write p's node >>
 				#@+node:ekr.20031218072017.2126:<< Write p's node >>
-				at.putOpenNodeSentinel(p)
+				at.putOpenNodeSentinel(p,inAtOthers=true)
 				
 				s = p.bodyString()
 				if s and len(s) > 0:
@@ -4735,7 +4815,8 @@ class baseNewDerivedFile(oldDerivedFile):
 				if s and s[-1] != '\n':
 					at.onl_sent() ; at.putSentinel("@nonl")
 				
-				at.putCloseNodeSentinel(p)
+				at.putCloseNodeSentinel(p,inAtOthers=true)
+				#@nonl
 				#@-node:ekr.20031218072017.2126:<< Write p's node >>
 				#@nl
 			
@@ -4892,7 +4973,8 @@ class baseNewDerivedFile(oldDerivedFile):
 		""" Generate the body enclosed in sentinel lines."""
 	
 		at = self ; s = p.bodyString()
-		p.v.setVisited() # Make sure v is never expanded again.
+		
+		## p.v.setVisited()   # Make sure v is never expanded again.
 		p.v.t.setVisited() # Use the tnode for the orphans check.
 		if not at.thinFile and not s: return
 		inCode = true
@@ -4915,42 +4997,13 @@ class baseNewDerivedFile(oldDerivedFile):
 		while i < len(s):
 			next_i = g.skip_line(s,i)
 			assert(next_i > i)
-			kind = at.directiveKind(s,i)
-			#@		<< handle line at s[i] >>
-			#@+node:EKR.20040430104717.2:<< handle line at s[i]  >> (4.x)
-			if kind == noDirective:
-				if inCode: at.putCodeLine(s,i)
-				else:      at.putDocLine(s,i)
-			elif kind in (docDirective,atDirective):
-				assert(not at.pending)
-				at.putStartDocLine(s,i,kind)
-				inCode = false
-			elif kind in (cDirective,codeDirective):
-				# Only @c and @code end a doc part.
-				if not inCode: at.putEndDocLine() 
-				at.putDirective(s,i)
-				inCode = true
-			elif kind == allDirective:
-				if inCode: at.putSentinel("@@all")
-				else: at.putDocLine(s,i)
-			elif kind == othersDirective:
-				if inCode: at.putSentinel("@@others")
-				else: at.putDocLine(s,i)
-			elif kind == rawDirective:
-				at.raw = true
-				at.putSentinel("@@raw")
-			elif kind == endRawDirective:
-				at.raw = false
-				at.putSentinel("@@end_raw")
-				i = g.skip_line(s,i)
-			elif kind == miscDirective:
-				at.putDirective(s,i)
+			if inCode:
+				# Use verbatim sentinels to write all directives.
+				at.putCodeLine(s,i)
 			else:
-				assert(0) # Unknown directive.
-			#@nonl
-			#@-node:EKR.20040430104717.2:<< handle line at s[i]  >> (4.x)
-			#@nl
+				at.putDocLine(s,i)
 			i = next_i
+	
 		if not inCode:
 			at.putEndDocLine()
 		if at.sentinels and not trailingNewlineFlag:
@@ -4958,18 +5011,38 @@ class baseNewDerivedFile(oldDerivedFile):
 	#@nonl
 	#@-node:EKR.20040430104717:putatAllBody
 	#@+node:EKR.20040430080943.2:putAtAllChild
+	#@+at
+	# This code puts only the first of two or more cloned siblings, preceding 
+	# the
+	# clone with an @clone n sentinel.
+	# 
+	# This is a debatable choice: the cloned tree appears only once in the 
+	# derived
+	# file. This should be benign; the text created by @all is likely to be 
+	# used only
+	# for recreating the outline in Leo. The representation in the derived 
+	# file
+	# doesn't matter much.
+	#@-at
+	#@@c
+	
 	def putAtAllChild(self,p):
 		
 		at = self
+		
+		clonedSibs,thisClonedSibIndex = at.scanForClonedSibs(p.v)
+		if clonedSibs > 1:
+			if thisClonedSibIndex == 1:
+				at.putSentinel("@clone %d" % (clonedSibs))
+			else: return # Don't write second or greater trees.
 	
 		at.putOpenNodeSentinel(p,inAtAll=true) # Suppress warnings about @file nodes.
 		at.putAtAllBody(p) 
 		
-		# Insert expansions of all children.
 		for child in p.children_iter():
 			at.putAtAllChild(child)
-				
-		at.putCloseNodeSentinel(p)
+	
+		at.putCloseNodeSentinel(p,inAtAll=true)
 	#@nonl
 	#@-node:EKR.20040430080943.2:putAtAllChild
 	#@-node:EKR.20040430081109.1:@all
@@ -5007,7 +5080,7 @@ class baseNewDerivedFile(oldDerivedFile):
 		
 		at = self
 	
-		at.putOpenNodeSentinel(p)
+		at.putOpenNodeSentinel(p,inAtOthers=true)
 		at.putBody(p) 
 		
 		# Insert expansions of all children.
@@ -5015,7 +5088,7 @@ class baseNewDerivedFile(oldDerivedFile):
 			if at.inAtOthers(child):
 				at.putAtOthersChild(child)
 				
-		at.putCloseNodeSentinel(p)
+		at.putCloseNodeSentinel(p,inAtOthers=true)
 	#@nonl
 	#@-node:ekr.20031218072017.2132:putAtOthersChild
 	#@+node:ekr.20031218072017.2133:putAtOthersLine
@@ -5091,7 +5164,7 @@ class baseNewDerivedFile(oldDerivedFile):
 		
 		self.putAfterLastRef(s,i,delta)
 	#@-node:EKR.20040430081109:putRefLine
-	#@+node:ekr.20031218072017.2107:PutRefAt
+	#@+node:ekr.20031218072017.2107:putRefAt
 	def putRefAt (self,s,i,n1,n2,p,delta):
 		
 		"""Put a reference at s[n1:n2+2] from p."""
@@ -5110,22 +5183,39 @@ class baseNewDerivedFile(oldDerivedFile):
 			junk,delta = g.skip_leading_ws_with_indent(s,i,at.tab_width)
 	
 		at.putLeadInSentinel(s,i,n1,delta)
-	
+		
+		inBetween = []
+		if at.thinFile: # @+-middle used only in thin files.
+			parent = ref.parent()
+			while parent != p:
+				inBetween.append(parent)
+				parent = parent.parent()
+			
 		at.indent += delta
+		
 		if at.leadingWs:
 			at.putSentinel("@" + at.leadingWs + name)
 		else:
 			at.putSentinel("@" + name)
 			
+		if inBetween:
+			for p2 in inBetween:
+				at.putOpenNodeSentinel(p2,middle=true)
+			
 		at.putOpenNodeSentinel(ref)
 		at.putBody(ref)
 		at.putCloseNodeSentinel(ref)
+		
+		if inBetween:
+			inBetween.reverse()
+			for p2 in inBetween:
+				at.putCloseNodeSentinel(p2,middle=true)
 		
 		at.indent -= delta
 		
 		return delta
 	#@nonl
-	#@-node:ekr.20031218072017.2107:PutRefAt
+	#@-node:ekr.20031218072017.2107:putRefAt
 	#@+node:ekr.20031218072017.2108:putAfterLastRef
 	def putAfterLastRef (self,s,start,delta):
 		
@@ -5492,6 +5582,29 @@ class baseNewDerivedFile(oldDerivedFile):
 	#@-node:ekr.20031218072017.1921:putDirective  (handles @delims) 4,x
 	#@-node:ekr.20031218072017.2135:Writing Utils...
 	#@-node:ekr.20031218072017.2111:Writing (4.x)
+	#@+node:EKR.20040523104815:scanForClonedSibs
+	def scanForClonedSibs (self,v):
+		
+		"""Scan the siblings of vnode v looking for clones of v.
+		Return the number of cloned sibs and n where p is the n'th cloned sibling."""
+	
+		clonedSibs = 0 # The number of cloned siblings of p, including p.
+		thisClonedSibIndex = 0 # Position of p in list of cloned siblings.
+	
+		if v and v.isCloned():
+			sib = v
+			while sib.back():
+				sib = sib.back()
+			while sib:
+				if sib.t == v.t:
+					clonedSibs += 1
+					if sib == v:
+						thisClonedSibIndex = clonedSibs
+				sib = sib.next()
+	
+		return clonedSibs,thisClonedSibIndex
+	#@nonl
+	#@-node:EKR.20040523104815:scanForClonedSibs
 	#@-others
 	#@nonl
 	#@-node:ekr.20031218072017.2754:<< class baseNewDerivedFile methods >>
