@@ -2,7 +2,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="3986" clone_windows="0"/>
 <globals body_outline_ratio="0.49655172413793103">
-	<global_window_position top="7" left="343" height="870" width="885"/>
+	<global_window_position top="32" left="317" height="870" width="827"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences>
@@ -789,6 +789,7 @@
 <v t="edream.110203160744.2425"><vh> Paste bug report</vh></v>
 <v t="edream.110203160744.2426"><vh> Test</vh></v>
 </v>
+<v t="edream.110203160744.2440"><vh>Automatic select &amp; Paste bug (Linux?)</vh></v>
 </v>
 <v t="edream.110203160744.452"><vh>Linux-only Bugs</vh>
 <v t="edream.110203160744.453"><vh>Possible webbrowser bug</vh></v>
@@ -1000,7 +1001,7 @@
 </v>
 </v>
 <v t="edream.110403112538"><vh>To do: 4.1</vh>
-<v t="edream.120203124941"><vh> 1. Fix all crashers &amp; other bugs</vh>
+<v t="edream.120203124941"><vh> 1. Fix all bugs</vh>
 <v t="edream.110203160744.3805"><vh>(Fix copy/paste bug involving clones)</vh>
 <v t="edream.110203160744.2978" a=""><vh>fileCommands.setAllJoinLinks</vh></v>
 <v t="edream.110203160744.2976" a=""><vh>newTnode</vh></v>
@@ -1021,25 +1022,6 @@
 </v>
 </v>
 <v t="edream.111003111536"><vh>Investigate No tnode list</vh></v>
-<v t="edream.110203160744.2440"><vh>Automatic select &amp; Paste bug (Linux?)</vh></v>
-<v t="edream.110203160744.2446"><vh>Extract bugs</vh>
-<v t="edream.110203160744.2447"><vh>Reports</vh>
-<v t="edream.110203160744.2448"><vh>Leading slashes are removed</vh></v>
-<v t="edream.110203160744.2449"><vh>Extract Section is enabled when it should not be</vh></v>
-<v t="edream.110203160744.2450"><vh>Documentation problem</vh></v>
-<v t="edream.110203160744.2451"><vh>Doesn't check for complete section name</vh></v>
-</v>
-</v>
-</v>
-<v t="edream.120203124941.1"><vh> 2. Unit tests</vh>
-<v t="edream.111303073523.4"><vh>UnitTests</vh></v>
-<v t="edream.112303032011"><vh>New unit test ideas</vh></v>
-<v t="edream.110703024557.1"><vh>More checks in CheckOutline command</vh></v>
-<v t="edream.120203125626"><vh>Unit tests for all plugins</vh></v>
-</v>
-<v t="edream.120303071612"><vh> 3. Finish wx plugin &amp; improve how Leo uses indices</vh></v>
-<v t="edream.120203105331"><vh> First</vh>
-<v t="edream.110203160744.2445"><vh>Find in status area</vh></v>
 <v t="edream.110203160744.2358"><vh>(Support Unicode file &amp; directory names)</vh>
 <v t="edream.110203160744.1479" a=""><vh>Unicode utils...</vh>
 <v t="edream.110203160744.1480"><vh>isUnicode</vh></v>
@@ -1054,14 +1036,22 @@
 <v t="edream.110203160744.2360"><vh>New Unicode crash</vh></v>
 </v>
 </v>
+<v t="edream.120203124941.1"><vh> 2. Unit tests</vh>
+<v t="edream.110203160744.2419"><vh>Improve how plugins are loaded</vh></v>
+<v t="edream.111303073523.4"><vh>UnitTests</vh></v>
+<v t="edream.112303032011"><vh>New unit test ideas</vh></v>
+<v t="edream.110703024557.1"><vh>More checks in CheckOutline command</vh></v>
+<v t="edream.120203125626"><vh>Unit tests for all plugins</vh></v>
+</v>
+<v t="edream.120303071612"><vh> 3. Finish wx plugin &amp; improve how Leo uses indices</vh></v>
 <v t="edream.120203105455"><vh> Next</vh>
+<v t="edream.110203160744.2445"><vh>Find in status area</vh></v>
 <v t="edream.110203160744.2457"><vh>Scroll improvement</vh></v>
-<v t="edream.120103074439"><vh>button context menu in body panel</vh></v>
 <v t="edream.120103072109"><vh>More intelligent untangling of clones</vh></v>
 <v t="edream.112403065048"><vh>Put tips in LeoDocs.leo</vh></v>
-<v t="edream.110203160744.2419"><vh>Improve how plugins are loaded</vh></v>
 </v>
 <v t="edream.110903125318"><vh>Later</vh>
+<v t="edream.120103074439"><vh>button context menu in body panel</vh></v>
 <v t="edream.120103060252"><vh>Study SPE editor</vh></v>
 <v t="edream.110703160555"><vh>Use Emacs style input to avoid difficult key combinations</vh></v>
 <v t="edream.111303073523.6"><vh>Should mouse up cancel a drag?</vh></v>
@@ -3545,9 +3535,6 @@
 <v t="edream.110203160744.1706" a=""><vh>openWithFileName</vh></v>
 </v>
 </v>
-</v>
-</v>
-</v>
 <v t="edream.120303100236"><vh>(Fixed Replace Blanks command)</vh>
 <v t="edream.112103153646.3" a=""><vh>getSelectionLines</vh></v>
 <v t="edream.110203160744.2010" a=""><vh>Edit Body Text</vh>
@@ -3586,7 +3573,37 @@
 <v t="edream.110203160744.2023"><vh>updateBodyPane (handles undo)</vh></v>
 </v>
 </v>
-<v t="edream.110203160744.2458" a="V"><vh>Code</vh>
+<v t="edream.110203160744.2441"><vh>(Fixed Import backslash-newline bug)</vh>
+<v t="edream.120403122144"><vh>Report</vh></v>
+<v t="edream.110203160744.1977" a=""><vh>Python scanners</vh>
+<v t="edream.110203160744.1978"><vh>scanPythonClass</vh>
+<v t="edream.110203160744.1979"><vh>&lt;&lt; set classname and headline, or return i &gt;&gt;</vh></v>
+<v t="edream.110203160744.1980"><vh>&lt;&lt; create class_vnode  &gt;&gt;</vh></v>
+<v t="edream.110203160744.1981" a="M"><vh>&lt;&lt; create nodes for all defs of the class &gt;&gt;</vh>
+<v t="edream.110203160744.1982"><vh>&lt;&lt; create parent_vnode &gt;&gt;</vh></v>
+</v>
+<v t="edream.110203160744.1983"><vh>&lt;&lt; append any other class material &gt;&gt;</vh></v>
+</v>
+<v t="edream.110203160744.1984"><vh>scanPythonDef</vh>
+<v t="edream.110203160744.1985"><vh>&lt;&lt; set headline or return i &gt;&gt;</vh></v>
+<v t="edream.110203160744.1986" a="M"><vh>&lt;&lt; skip the Python def &gt;&gt;</vh></v>
+<v t="edream.110203160744.1987"><vh>&lt;&lt; Create def node &gt;&gt;</vh></v>
+</v>
+<v t="edream.110203160744.1988" a="M"><vh>scanPythonDecls</vh>
+<v t="edream.110203160744.1989"><vh>&lt;&lt; break on def or class &gt;&gt;</vh></v>
+<v t="edream.110203160744.1990"><vh>&lt;&lt; Create a child node for declarations &gt;&gt;</vh></v>
+</v>
+<v t="edream.110203160744.1991"><vh>scanPythonText</vh>
+<v t="edream.110203160744.1992"><vh>&lt;&lt; handle possible Python function or class &gt;&gt;</vh></v>
+<v t="edream.110203160744.1993"><vh>&lt;&lt; Append a reference to the methods of this file &gt;&gt;</vh></v>
+<v t="edream.110203160744.1994"><vh>&lt;&lt; Append any unused python text to the parent's body text &gt;&gt;</vh></v>
+</v>
+</v>
+</v>
+</v>
+</v>
+</v>
+<v t="edream.110203160744.2458"><vh>Code</vh>
 <v t="edream.110203160744.2459"><vh>  Overview of code</vh>
 <v t="edream.110203160744.2460" a=""><vh>&lt;&lt; About clones &gt;&gt;</vh></v>
 <v t="edream.110203160744.2461" a=""><vh>&lt;&lt; About drawing &gt;&gt;</vh></v>
@@ -4603,7 +4620,7 @@
 <v t="edream.110203160744.2882"><vh>canExpandAllHeadlines</vh></v>
 <v t="edream.110203160744.2883"><vh>canExpandAllSubheads</vh></v>
 <v t="edream.110203160744.2884"><vh>canExpandSubheads</vh></v>
-<v t="edream.110203160744.2885"><vh>canExtract, canExtractSection &amp; canExtractSectionNames</vh></v>
+<v t="edream.110203160744.2885" a=""><vh>canExtract, canExtractSection &amp; canExtractSectionNames</vh></v>
 <v t="edream.110203160744.2886"><vh>canFindMatchingBracket</vh></v>
 <v t="edream.110203160744.2887"><vh>canGoToNextDirtyHeadline</vh></v>
 <v t="edream.110203160744.2888"><vh>canGoToNextMarkedHeadline</vh></v>
@@ -6772,31 +6789,17 @@
 </v>
 </v>
 </v>
-<v t="edream.110203160744.2441"><vh>(Fixed Import backslash-newline bug)</vh>
-<v t="edream.120403122144"><vh>Report</vh></v>
-<v t="edream.110203160744.1977" a=""><vh>Python scanners</vh>
-<v t="edream.110203160744.1978"><vh>scanPythonClass</vh>
-<v t="edream.110203160744.1979"><vh>&lt;&lt; set classname and headline, or return i &gt;&gt;</vh></v>
-<v t="edream.110203160744.1980"><vh>&lt;&lt; create class_vnode  &gt;&gt;</vh></v>
-<v t="edream.110203160744.1981" a="M"><vh>&lt;&lt; create nodes for all defs of the class &gt;&gt;</vh>
-<v t="edream.110203160744.1982"><vh>&lt;&lt; create parent_vnode &gt;&gt;</vh></v>
+<v t="edream.110203160744.2446" a="V"><vh>(Fixed several bugs related to Extract commands)</vh>
+<v t="edream.110203160744.2447" a="E"><vh>Reports</vh>
+<v t="edream.110203160744.2448"><vh>(fixed) Leading slashes are removed</vh></v>
+<v t="edream.110203160744.2449"><vh>(fixed) Extract Section is enabled when it should not be</vh></v>
+<v t="edream.110203160744.2450"><vh>(fixed) Documentation problem</vh></v>
+<v t="edream.110203160744.2451"><vh>(fixed) Doesn't check for complete section name</vh></v>
 </v>
-<v t="edream.110203160744.1983"><vh>&lt;&lt; append any other class material &gt;&gt;</vh></v>
-</v>
-<v t="edream.110203160744.1984"><vh>scanPythonDef</vh>
-<v t="edream.110203160744.1985"><vh>&lt;&lt; set headline or return i &gt;&gt;</vh></v>
-<v t="edream.110203160744.1986" a="M"><vh>&lt;&lt; skip the Python def &gt;&gt;</vh></v>
-<v t="edream.110203160744.1987"><vh>&lt;&lt; Create def node &gt;&gt;</vh></v>
-</v>
-<v t="edream.110203160744.1988" a="M"><vh>scanPythonDecls</vh>
-<v t="edream.110203160744.1989"><vh>&lt;&lt; break on def or class &gt;&gt;</vh></v>
-<v t="edream.110203160744.1990"><vh>&lt;&lt; Create a child node for declarations &gt;&gt;</vh></v>
-</v>
-<v t="edream.110203160744.1991"><vh>scanPythonText</vh>
-<v t="edream.110203160744.1992"><vh>&lt;&lt; handle possible Python function or class &gt;&gt;</vh></v>
-<v t="edream.110203160744.1993"><vh>&lt;&lt; Append a reference to the methods of this file &gt;&gt;</vh></v>
-<v t="edream.110203160744.1994"><vh>&lt;&lt; Append any unused python text to the parent's body text &gt;&gt;</vh></v>
-</v>
+<v t="edream.110203160744.1293" a=""><vh>updateEditMenu</vh></v>
+<v t="edream.110203160744.2885" a=""><vh>canExtract, canExtractSection &amp; canExtractSectionNames</vh></v>
+<v t="edream.110203160744.1805" a="E"><vh>extractSection</vh>
+<v t="edream.110203160744.1806"><vh>&lt;&lt; Set headline for extractSection &gt;&gt;</vh></v>
 </v>
 </v>
 </vnodes>
@@ -30466,12 +30469,22 @@ headline = string.strip(headline)</t>
 			oldText=oldText,newText=newText,
 			oldSel=oldSel,newSel=newSel)
 	c.endUpdate()</t>
-<t tx="edream.110203160744.1806">while len(headline) &gt; 0 and headline[0] == '/':
-	headline = headline[1:]
-headline = string.strip(headline)
+<t tx="edream.110203160744.1806">if 0: # I have no idea why this was being done.
+	while len(headline) &gt; 0 and headline[0] == '/':
+		headline = headline[1:]
 
-# Make sure we have a @&lt; or &lt;&lt;
-if headline[0:2] != '&lt;&lt;' and headline[0:2] != '@&lt;':
+headline = headline.strip()
+
+if len(headline) &lt; 5:
+	oops = true
+else:
+	head1 = headline[0:2] == '&lt;&lt;'
+	head2 = headline[0:2] == '@&lt;'
+	tail1 = headline[-2:] == '&gt;&gt;'
+	tail2 = headline[-2:] == '@&gt;'
+	oops = not (head1 and tail1) and not (head2 and tail2)
+
+if oops:
 	es("Selected text should start with a section name",color="blue")
 	return</t>
 <t tx="edream.110203160744.1807">def extractSectionNames(self):
@@ -37956,15 +37969,13 @@ selected text is deleted from the original body text. This command is enabled
 only if the first line contains a section name (enclosed in angle brackets)
 on a line by itself."
 
-The last sentence should be deleted - Extract does not require a section name
-(that's what confused me most, I couldn't see what was the difference between
-Extract and Extract Section.)
+(done) The last sentence should be deleted - Extract does not require a section
+name (that's what confused me most, I couldn't see what was the difference
+between Extract and Extract Section.)
 
-And the first sentence should make clear that only the selected lines will be
-moved to the new node. "...all following lines of body text." should be replaced
-with "...all the other lines of selected text."
-
-[Two more postings on Extract to follow]
+(done) And the first sentence should make clear that only the selected lines
+will be moved to the new node. "...all following lines of body text." should be
+replaced with "...all the other lines of selected text."
 </t>
 <t tx="edream.110203160744.2451">Read and respond to this message at: 
 https://sourceforge.net/forum/message.php?msg_id=2112787
@@ -44919,14 +44930,25 @@ canCutOutline = canDeleteHeadline</t>
 	return false</t>
 <t tx="edream.110203160744.2885">def canExtract (self):
 
-	c = self
-	if c.frame.body:
-		return c.frame.body.hasTextSelection()
-	else:
-		return false
+	c = self ; body = c.frame.body
+	return body and body.hasTextSelection()
+	
+canExtractSectionNames = canExtract
+		
+def canExtractSection (self):
 
-canExtractSection = canExtract
-canExtractSectionNames = canExtract</t>
+	c = self ; body = c.frame.body
+	if not body: return false
+	
+	s = body.getSelectedText()
+	if not s: return false
+
+	line = get_line(s,0)
+	i1 = line.find("&lt;&lt;")
+	j1 = line.find("&gt;&gt;")
+	i2 = line.find("@&lt;")
+	j2 = line.find("@&gt;")
+	return -1 &lt; i1 &lt; j1 or -1 &lt; i2 &lt; j2</t>
 <t tx="edream.110203160744.2886">def canFindMatchingBracket (self):
 	
 	c = self ; brackets = "()[]{}"
@@ -60480,7 +60502,6 @@ tk/Tkinter.py", line 1345, in __call__
      self.commands = c = app.log.commands
 AttributeError: 'NoneType' object has no attribute 'commands'</t>
 <t tx="edream.120203084427"></t>
-<t tx="edream.120203105331"></t>
 <t tx="edream.120203105455"></t>
 <t tx="edream.120203124941"></t>
 <t tx="edream.120203124941.1"></t>
