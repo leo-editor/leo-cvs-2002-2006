@@ -4092,7 +4092,7 @@ class baseNewDerivedFile(oldDerivedFile):
                 else:
                     if not at.updateWarningGiven:
                         at.updateWarningGiven = True
-                        print "***",at.t,at.root.t
+                        # print "***",at.t,at.root.t
                         g.es("Warning: updating changed text in %s" %
                             (at.root.headString()),color="blue")
                     # g.es("old...\n%s\n" % old)
