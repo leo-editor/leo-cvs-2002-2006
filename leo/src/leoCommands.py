@@ -449,28 +449,23 @@ class baseCommands:
                     if arg == None: arg = ""
                     shortPath = path # g.shortFileName(path)
                     if openType == "os.system":
-                        # command  = "os.system("+arg+shortPath+")"
                         command = "os.system(%s)" % (arg+shortPath)
                         os.system(arg+path)
                     elif openType == "os.startfile":
-                        # command = "os.startfile("+arg+shortPath+")"
                         command = "os.startfile(%s)" % (arg+shortPath)
                         os.startfile(arg+path)
                     elif openType == "exec":
-                        # command    = "exec("+arg+shortPath+")"
                         command = "exec(%s)" % (arg+shortPath)
                         exec arg+path in {} # 12/11/02
                     elif openType == "os.spawnl":
                         filename = g.os_path_basename(arg)
-                        # command = "os.spawnl("+arg+","+filename+','+ shortPath+")"
                         command = "os.spawnl(%s,%s,%s)" % (arg,filename,shortPath)
                         apply(os.spawnl,(os.P_NOWAIT,arg,filename,path))
                     elif openType == "os.spawnv":
-                        if 1: # New code
+                        if 1: # New code allows args to spawnv.
                             filename = os.path.basename(arg[0]) 
                             vtuple = arg[1:] 
-                            vtuple.append(path) 
-                            # command = "os.spawnv("+arg[0]+","+repr(vtuple)+")"
+                            vtuple.append(path)
                             command = "os.spawnv(%s,%s)" % (arg[0],repr(vtuple))
                             apply(os.spawnv,(os.P_NOWAIT,arg[0],vtuple)) 
                         else:
