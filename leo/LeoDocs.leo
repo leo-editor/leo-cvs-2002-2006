@@ -35,8 +35,9 @@
 <v t="T16" a="C"><vh>Quick start</vh></v>
 </v>
 <v a="E"><vh>Latest version</vh>
-<v t="T17" a="EV"><vh>CVS version 8/13/02</vh>
-<v t="T18"><vh>rewrote scanAllDirectives routines to handle relative paths</vh></v>
+<v t="T17" a="V"><vh>CVS version 8/13/02</vh>
+<v><vh>Add commands to open url's from the help menu</vh></v>
+<v t="T18"><vh>Rewrote scanAllDirectives routines to handle relative paths</vh></v>
 <v t="T19"><vh>Add logic to test for read-only files</vh></v>
 <v t="T20"><vh>Fixed cursed newline bug in leoAtFile</vh></v>
 <v><vh>Fixed crasher when leoConfig.txt does not exist</vh></v>
@@ -2029,10 +2030,11 @@ This is the minimum you need to use Leo effectively.
 4. Many command key abbreviations are specified in the Syntax Coloring panel.
 
 See the Appendices for a concise summary of information about Leo.</t>
-<t tx="T17">leo.py 3.5 b4                                    August 13, 2002
+<t tx="T17">leo.py 3.5 b5                                   August 13, 2002
 
 Highlights:
 
+- The user can open Leo's Home page and Tutorial page from the help menu.
 - Fixed handling of partial paths in @file and @root nodes.
   !! WARNING: experimental code !!
 

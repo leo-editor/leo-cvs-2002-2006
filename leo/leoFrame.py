@@ -611,7 +611,10 @@ class LeoFrame:
 		self.helpMenu = helpMenu = Tk.Menu(menu,tearoff=0)
 		menu.add_cascade(label="Help", menu=helpMenu)
 		helpMenu.add_command(label="About Leo...", command=self.OnAbout)
-		helpMenu.add_command(label="Leo Documentation...", command=self.OnLeoDocumentation)
+		helpMenu.add_command(label="Open LeoDocs.leo...", command=self.OnLeoDocumentation)
+		helpMenu.add_command(label="Leo's Home Page...", command=self.OnLeoHome)
+		# helpMenu.add_command(label="Leo's Help File...", command=self.OnLeoHelp)
+		helpMenu.add_command(label="Tutorial...", command=self.OnLeoTutorial)
 		#@-body
 		#@-node:5::<< create the help menu >>
 
@@ -2494,10 +2497,49 @@ class LeoFrame:
 		try:
 			self.OpenWithFileName(fileName)
 		except:
-			es("LeoDocs.leo not found")
+			es("not found: LeoDocs.leo")
 		return "break" # inhibit further command processing
 	#@-body
 	#@-node:2::OnLeoDocumentation
+	#@+node:3::OnLeoHome
+	#@+body
+	def OnLeoHome (self,event=None):
+		
+		import webbrowser
+		
+		url = "http://personalpages.tds.net/~edream/front.html"
+		try:
+			webbrowser.open(url)
+		except:
+			es("not found: " + url)
+	
+		return "break" # inhibit further command processing
+	#@-body
+	#@-node:3::OnLeoHome
+	#@+node:4::OnLeoHelp
+	#@+body
+	def OnLeoHelp (self,event=None):
+		
+		# Not ready yet.
+		
+		return "break" # inhibit further command processing
+	#@-body
+	#@-node:4::OnLeoHelp
+	#@+node:5::OnLeoTutorial
+	#@+body
+	def OnLeoTutorial (self,event=None):
+		
+		import webbrowser
+		
+		url = "http://www.evisa.com/e/sbooks/leo/sbframetoc_ie.htm"
+		try:
+			webbrowser.open(url)
+		except:
+			es("not found: " + url)
+		
+		return "break" # inhibit further command processing
+	#@-body
+	#@-node:5::OnLeoTutorial
 	#@-node:5::Help Menu
 	#@-node:14:C=15:Menu Command Handlers
 	#@+node:15:C=43:Splitter stuff
