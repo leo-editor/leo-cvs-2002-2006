@@ -456,7 +456,7 @@ class baseVnode (object):
 	def __repr__ (self):
 		
 		if self.t:
-			return "<vnode %d:'%s'>" % (id(self),self.t.headString)
+			return "<vnode %d:'%s'>" % (id(self),self.cleanHeadString())
 		else:
 			return "<vnode %d:NULL tnode>" % (id(self))
 			
@@ -2215,6 +2215,97 @@ class position (object):
 		return self.allNodes_iter_class(self,copy)
 	#@nonl
 	#@-node:ekr.20040305171133:allNodes_iter
+	#@+node:EKR.20040527065806:all_vnodes_iter
+	class all_vnodes_iter_class:
+	
+		"""Returns a list all vnodes in a position's subtree."""
+	
+		#@	@+others
+		#@+node:EKR.20040527065917.1:__init__ & __iter__
+		def __init__(self,p,all):
+		
+			self.first = p.copy()
+			if all: self.after = None
+			else:   self.after = p.nodeAfterTree()
+			self.p = None
+			self.marks = {}
+			
+		def __iter__(self):
+		
+			return self
+		#@nonl
+		#@-node:EKR.20040527065917.1:__init__ & __iter__
+		#@+node:EKR.20040527065917.2:next
+		def next(self):
+			
+			if self.first:
+				self.p = self.first
+				self.first = None
+				
+			else:
+				self.p.moveToThreadNext()
+				while self.p and self.p != self.after and self.marks.get(self.p.v):
+					self.p.moveToThreadNext()
+		
+			if self.p and self.p != self.after:
+				self.marks[self.p.v] = self.p.v
+				return self.p.v
+			else:
+				raise StopIteration
+		#@nonl
+		#@-node:EKR.20040527065917.2:next
+		#@-others
+	
+	def all_vnodes_iter (self,all=false):
+		
+		return self.all_vnodes_iter_class(self,all)
+	#@nonl
+	#@-node:EKR.20040527065806:all_vnodes_iter
+	#@+node:EKR.20040527065806.1:all_tnodes_iter
+	class all_tnodes_iter_class:
+	
+		"""Returns a list all tnodes in a position's subtree."""
+	
+		#@	@+others
+		#@+node:EKR.20040527065917.4:__init__ & __iter__
+		def __init__(self,p,all):
+		
+			self.first = p.copy()
+			if all: self.after = None
+			else:   self.after = p.nodeAfterTree()
+			self.p = None
+			self.marks = {}
+		
+		def __iter__(self):
+		
+			return self
+		#@nonl
+		#@-node:EKR.20040527065917.4:__init__ & __iter__
+		#@+node:EKR.20040527065917.5:next
+		def next(self):
+			
+			if self.first:
+				self.p = self.first
+				self.first = None
+			else:
+				self.p.moveToThreadNext()
+				while self.p and self.p != self.after and self.marks.get(self.p.v.t):
+					self.p.moveToThreadNext()
+		
+			if self.p and self.p != self.after:
+				self.marks[self.p.v.t] = self.p.v.t
+				return self.p.v.t
+			else:
+				raise StopIteration
+		#@nonl
+		#@-node:EKR.20040527065917.5:next
+		#@-others
+	
+	def all_tnodes_iter (self,all=false):
+		
+		return self.all_tnodes_iter_class(self,all)
+	#@nonl
+	#@-node:EKR.20040527065806.1:all_tnodes_iter
 	#@+node:ekr.20040305173559:subtree_iter
 	class subtree_iter_class:
 	

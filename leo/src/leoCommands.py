@@ -179,13 +179,24 @@ class baseCommands:
 		g.enl()
 	#@nonl
 	#@-node:ekr.20031218072017.2582: version & signon stuff
-	#@+node:ekr.20040312090934:c.allNodes_iter
+	#@+node:ekr.20040312090934:c.allNodes_iter, all_vnodes_iter, all_tnodes_iter
 	def allNodes_iter(self,copy=false):
 		
 		c = self
-		
 		return c.rootPosition().allNodes_iter(copy)
-	#@-node:ekr.20040312090934:c.allNodes_iter
+		
+	def all_tnodes_iter(self):
+		
+		c = self
+		return c.rootPosition().all_tnodes_iter(all=true)
+	
+		
+	def all_vnodes_iter(self):
+		
+		c = self
+		return c.rootPosition().all_vnodes_iter(all=true)
+	#@nonl
+	#@-node:ekr.20040312090934:c.allNodes_iter, all_vnodes_iter, all_tnodes_iter
 	#@+node:ekr.20031218072017.2818:Command handlers...
 	#@+node:ekr.20031218072017.2819:File Menu
 	#@+node:ekr.20031218072017.2820:top level
