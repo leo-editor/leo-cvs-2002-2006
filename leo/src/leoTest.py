@@ -1,25 +1,21 @@
 #@+leo-ver=4
 #@+node:@file leoTest.py
-"""Unit tests for Leo"""
+"""
+
+Unit tests for Leo.
+
+Run the unit tests in test.leo using the Execute Script command.
+
+"""
 
 from leoGlobals import *
-import unittest
 
 import leoColor,leoCommands,leoFrame,leoGui,leoNodes
-import Tkinter
-import os,sys
-Tk = Tkinter
+
+import glob,os,sys,unittest
 
 #@+others
-#@+node:fail
-def fail ():
-	
-	"""Mark a unit test as having failed."""
-	
-	app.unitTestDict["fail"] = callerName(2)
-#@nonl
-#@-node:fail
-#@+node: testUtils
+#@+node: class testUtils
 class testUtils:
 	
 	"""Common utility routines used by unit tests."""
@@ -30,39 +26,29 @@ class testUtils:
 		
 		"""Compares two outlines, making sure that their topologies,
 		content and join lists are equivent"""
-	
+		
 		v1,v2 = root1,root2
 		after1 = v1.nodeAfterTree()
 		after2 = v2.nodeAfterTree()
-		while v1 and v2 and v1 != after1 and v2 != after2:
-			if v1.numberOfChildren() != v2.numberOfChildren():
-				return false
-			if v1.headString() != v2.headString():
-				return false
-			if v1.bodyString() != v2.bodyString():
-				return false
-			if v1.isCloned() != v2.isCloned():
-				return false
+		v1 = v1.firstChild()
+		v2 = v2.firstChild()
+		ok = true
+		while v2 and v1 != after1 and v2 != after2:
+			ok = (
+			v1.numberOfChildren() == v2.numberOfChildren() and
+			v1.headString() == v2.headString() and
+			v1.bodyString() == v2.bodyString() and
+			v1.isCloned()   == v2.isCloned()   )
+			if not ok: break
 			v1 = v1.threadNext()
 			v2 = v2.threadNext()
-		return v1 == None and v2 == None
+	
+		ok = ok and v1 == after1 and v2 == after2
+		if not ok:
+			trace(v1,v2)
+		return ok
 	#@nonl
 	#@-node:compareOutlines
-	#@+node:createTestsForSubnodes (doesn't work)
-	if 0: # Doesn't work
-	
-		def createTestsForSubnodes(self,name,testClass):
-		
-			u = self
-			suite = unittest.makeSuite(unittest.TestCase)
-			vList = u.findSubnodesOf(name)
-			for v in vList:
-				h = v.headString()
-				test = testClass(v)
-				suite.addTest(test)
-			return suite,vList
-	#@nonl
-	#@-node:createTestsForSubnodes (doesn't work)
 	#@+node:findChildrenOf & findSubnodesOf
 	def findChildrenOf (self,headline):
 		
@@ -142,6 +128,19 @@ class testUtils:
 			v = v.threadNext()
 	#@nonl
 	#@-node:numberOfNodesInOutline, numberOfClonesInOutline
+	#@+node:replaceOutline
+	def replaceOutline (self,c,outline1,outline2):
+		
+		u = self
+		
+		"""Replace outline1 by a copy of outline 2 if not equal."""
+		
+		trace()
+		
+		copy = outline2.copyTreeWithNewTnodes()
+		copy.linkAfter(outline1)
+		outline1.doDelete(newVnode=copy)
+	#@-node:replaceOutline
 	#@+node:validateOutline TODO
 	def validateOutline (self,root):
 		
@@ -151,7 +150,15 @@ class testUtils:
 	#@-node:validateOutline TODO
 	#@-others
 #@nonl
-#@-node: testUtils
+#@-node: class testUtils
+#@+node: fail
+def fail ():
+	
+	"""Mark a unit test as having failed."""
+	
+	app.unitTestDict["fail"] = callerName(2)
+#@nonl
+#@-node: fail
 #@+node:Node tests...
 import leoNodes
 
@@ -272,33 +279,6 @@ class statusBitsChecks(unittest.TestCase):
 	#@-others
 #@nonl
 #@-node:class statusBitsChecks
-#@+node:class undoTests
-class undoTests(unittest.TestCase):
-	
-	"""test that undo works properly, especially when clones are involved"""
-	
-	#@	@+others
-	#@+node:testUndoMoveLeft
-	def testUndoMoveLeft(self):
-		pass
-	#@-node:testUndoMoveLeft
-	#@+node:testRedoMoveLeft
-	def testRedoMoveLeft(self):
-		pass
-	#@nonl
-	#@-node:testRedoMoveLeft
-	#@-others
-#@nonl
-#@-node:class undoTests
-#@+node:class fileTests
-class fileTests(unittest.TestCase):
-	
-	"""Unit tests for Leo's file operations."""
-	
-	#@	@+others
-	#@-others
-#@nonl
-#@-node:class fileTests
 #@+node: makeColorSuite
 def makeColorSuite(testParentHeadline,tempHeadline):
 	
@@ -373,114 +353,6 @@ class colorTestCase(unittest.TestCase):
 	#@-others
 #@nonl
 #@-node:class colorTestCase
-#@+node:makeImportExportSuite
-def makeImportExportSuite(testParentHeadline,tempHeadline):
-	
-	"""Create an Import/Export test for every descendant of testParentHeadline.."""
-	
-	u = testUtils() ; c = top() ; v = c.currentVnode()
-	root = u.findRootNode(v)
-	temp_v = u.findNodeInTree(root,tempHeadline)
-	vList = u.findChildrenOf(testParentHeadline)
-
-	# Create the suite and add all test cases.
-	suite = unittest.makeSuite(unittest.TestCase)
-	for v in vList:
-		dialog = u.findNodeInTree(v,"dialog")
-		test = importExportTestCase(c,v,dialog,temp_v)
-		suite.addTest(test)
-
-	return suite
-#@nonl
-#@-node:makeImportExportSuite
-#@+node:class importExportTestCase
-class importExportTestCase(unittest.TestCase):
-	
-	"""Data-driven unit tests for Leo's edit body commands."""
-	
-	#@	@+others
-	#@+node:__init__
-	def __init__ (self,c,v,dialog,temp_v):
-		
-		# Init the base class.
-		unittest.TestCase.__init__(self)
-		
-		self.c = c
-		self.dialog = dialog
-		self.v = v
-		self.temp_v = temp_v
-		
-		self.gui = None
-		self.wasChanged = c.changed
-	
-		self.old_v = c.currentVnode()
-	#@-node:__init__
-	#@+node:importExport
-	def importExport (self):
-		
-		c = self.c ; v = self.v
-		
-		app.unitTestDict = {}
-	
-		commandName = v.headString()
-		command = getattr(c,commandName) # Will fail if command does not exist.
-		command()
-	
-		failedMethod = app.unitTestDict.get("fail")
-		self.failIf(failedMethod,failedMethod)
-	#@nonl
-	#@-node:importExport
-	#@+node:tearDown
-	def tearDown (self):
-		
-		c = self.c ; temp_v = self.temp_v
-		
-		if self.gui:
-			self.gui.destroySelf()
-			self.gui = None
-		
-		temp_v.t.setTnodeText("",app.tkEncoding)
-		temp_v.clearDirty()
-		
-		if not self.wasChanged:
-			c.setChanged (false)
-			
-		# Delete all children of temp node.
-		while temp_v.firstChild():
-			temp_v.firstChild().doDelete(temp_v)
-	
-		c.selectVnode(self.old_v)
-	#@nonl
-	#@-node:tearDown
-	#@+node:setUp
-	def setUp(self,*args,**keys):
-		
-		c = self.c ; temp_v = self.temp_v ; d = self.dialog
-		
-		temp_v.t.setTnodeText('',app.tkEncoding)
-	
-		c.selectVnode(temp_v)
-		
-		if d: # Use unitTestDialog.
-			s = d.bodyString()
-			lines = s.split('\n')
-			name = lines[0]
-			val = lines[1]
-			dict = {name: val}
-			self.gui = leoGui.unitTestGui(dict,trace=false)
-		else:
-			self.gui = None
-	#@nonl
-	#@-node:setUp
-	#@+node:runTest
-	def runTest(self):
-	
-		self.importExport()
-	#@nonl
-	#@-node:runTest
-	#@-others
-#@nonl
-#@-node:class importExportTestCase
 #@+node: makeEditBodySuite
 def makeEditBodySuite(testParentHeadline,tempHeadline):
 	
@@ -633,88 +505,130 @@ class editBodyTestCase(unittest.TestCase):
 	#@-others
 #@nonl
 #@-node:class editBodyTestCase
-#@+node: makeOutlineSuite
-def makeOutlineSuite(testParentHeadline):
+#@+node:makeImportExportSuite
+def makeImportExportSuite(testParentHeadline,tempHeadline):
 	
-	"""Create an outline test for every descendant of testParentHeadline.."""
+	"""Create an Import/Export test for every descendant of testParentHeadline.."""
 	
 	u = testUtils() ; c = top() ; v = c.currentVnode()
-	
+	root = u.findRootNode(v)
+	temp_v = u.findNodeInTree(root,tempHeadline)
 	vList = u.findChildrenOf(testParentHeadline)
 
 	# Create the suite and add all test cases.
 	suite = unittest.makeSuite(unittest.TestCase)
 	for v in vList:
-		v1 = v.firstChild()
-		v2 = v1.next()
-		test = outlineTestCase(c,v,v1,v2,temp_v)
+		dialog = u.findNodeInTree(v,"dialog")
+		test = importExportTestCase(c,v,dialog,temp_v)
 		suite.addTest(test)
 
 	return suite
-#@-node: makeOutlineSuite
-#@+node:class outlineTestCase
-class outlineTestCase(unittest.TestCase):
+#@nonl
+#@-node:makeImportExportSuite
+#@+node:class importExportTestCase
+class importExportTestCase(unittest.TestCase):
 	
-	"""Data-driven unit tests for Leo's outline commands."""
+	"""Data-driven unit tests for Leo's edit body commands."""
 	
 	#@	@+others
 	#@+node:__init__
-	def __init__ (self,c,parent,v1,v2,temp_v):
+	def __init__ (self,c,v,dialog,temp_v):
 		
 		# Init the base class.
 		unittest.TestCase.__init__(self)
-	
+		
 		self.c = c
-		self.parent = parent
-		self.v1 = v1
-		self.v2 = v2
+		self.dialog = dialog
+		self.v = v
 		self.temp_v = temp_v
 		
-		self.old_v = c.currentVnode()
-	#@nonl
-	#@-node:__init__
-	#@+node:outlineCommand
-	def outlineCommand (self):
+		self.gui = None
+		self.wasChanged = c.changed
+		self.fileName = ""
 	
-		# Compute the result in temp_v.bodyString()
-		commandName = self.parent.headString()
-		command = getattr(self.c,commandName)
-		command()
+		self.old_v = c.currentVnode()
+	
+	#@-node:__init__
+	#@+node:importExport
+	def importExport (self):
 		
-		# Compare the computed result to the reference result.
-		u = testUtils()
-		u.compareOutlines(self.v1,self.v2)
-	#@-node:outlineCommand
+		c = self.c ; v = self.v
+		
+		app.unitTestDict = {}
+	
+		commandName = v.headString()
+		command = getattr(c,commandName) # Will fail if command does not exist.
+		command()
+	
+		failedMethod = app.unitTestDict.get("fail")
+		self.failIf(failedMethod,failedMethod)
+	#@nonl
+	#@-node:importExport
 	#@+node:runTest
 	def runTest(self):
+		
+		# """Import Export Test Case"""
 	
-		self.outlineCommand()
+		self.importExport()
 	#@nonl
 	#@-node:runTest
 	#@+node:setUp
 	def setUp(self,*args,**keys):
+		
+		c = self.c ; temp_v = self.temp_v ; d = self.dialog
+		
+		temp_v.t.setTnodeText('',app.tkEncoding)
 	
-		pass
+		c.selectVnode(temp_v)
+		
+		if d: # Use unitTestDialog.
+			s = d.bodyString()
+			lines = s.split('\n')
+			name = lines[0]
+			val = lines[1]
+			self.fileName = val
+			dict = {name: val}
+			self.gui = leoGui.unitTestGui(dict,trace=false)
+		else:
+			self.gui = None
 	#@nonl
 	#@-node:setUp
+	#@+node:shortDescription
+	def shortDescription (self):
+		
+		try:
+			return "ImportExportTestCase: %s %s" % (self.v.headString(),self.fileName)
+		except:
+			return "ImportExportTestCase"
+	#@nonl
+	#@-node:shortDescription
 	#@+node:tearDown
 	def tearDown (self):
+		
+		c = self.c ; temp_v = self.temp_v
+		
+		if self.gui:
+			self.gui.destroySelf()
+			self.gui = None
+		
+		temp_v.t.setTnodeText("",app.tkEncoding)
+		temp_v.clearDirty()
+		
+		if not self.wasChanged:
+			c.setChanged (false)
+			
+		# Delete all children of temp node.
+		while temp_v.firstChild():
+			temp_v.firstChild().doDelete(temp_v)
 	
-		self.undo()
-		self.c.selectVnode(self.old_v)
+		c.selectVnode(self.old_v)
 	#@nonl
 	#@-node:tearDown
-	#@+node:undo  TODO
-	def undo (self):
-		
-		pass
-	#@nonl
-	#@-node:undo  TODO
 	#@-others
 #@nonl
-#@-node:class outlineTestCase
+#@-node:class importExportTestCase
 #@+node:makeTestLeoFilesSuite
-def makeTestLeoFilesSuite(testParentHeadline,tempNode=None):
+def makeTestLeoFilesSuite(testParentHeadline,unused=None):
 	
 	"""Create a .leo file test for every descendant of testParentHeadline.."""
 	
@@ -790,6 +704,199 @@ class leoFileTestCase(unittest.TestCase):
 	#@-others
 #@nonl
 #@-node:class leoFileTestCase
+#@+node: makeOutlineSuite
+def makeOutlineSuite(testParentHeadline,unused=None):
+	
+	"""Create an outline test for every descendant of testParentHeadline.."""
+	
+	u = testUtils() ; c = top() ; v = c.currentVnode()
+	
+	vList = u.findChildrenOf(testParentHeadline)
+
+	# Create the suite and add all test cases.
+	suite = unittest.makeSuite(unittest.TestCase)
+	for v in vList:
+		before = u.findNodeInTree(v,"before")
+		after  = u.findNodeInTree(v,"after")
+		ref    = u.findNodeInTree(v,"ref")
+		if before and after and ref:
+			test = outlineTestCase(c,v,before,after,ref)
+			suite.addTest(test)
+
+	return suite
+#@-node: makeOutlineSuite
+#@+node:class outlineTestCase
+class outlineTestCase(unittest.TestCase):
+	
+	"""Data-driven unit tests for Leo's outline commands."""
+	
+	#@	@+others
+	#@+node:__init__
+	def __init__ (self,c,parent,before,after,ref):
+		
+		# Init the base class.
+		unittest.TestCase.__init__(self)
+	
+		self.c = c
+		self.parent = parent
+		self.before = before
+		self.after = after
+		self.ref    = ref
+		
+		self.old_v = c.currentVnode()
+		
+		self.u = testUtils()
+	#@nonl
+	#@-node:__init__
+	#@+node:outlineCommand
+	def outlineCommand (self):
+		
+		c = self.c ; u = self.u ; tree = c.frame.tree
+		
+		move = u.findNodeInTree(self.before,"move")
+		assert(move)
+		
+		c.selectVnode(move)
+		
+		commandName = self.parent.headString()
+		command = getattr(c,commandName)
+		command()
+	
+		assert(u.compareOutlines(self.before,self.after))
+		c.undoer.undo()
+		assert(u.compareOutlines(self.before,self.ref))
+		c.undoer.redo()
+		assert(u.compareOutlines(self.before,self.after))
+		c.undoer.undo()
+		assert(u.compareOutlines(self.before,self.ref))
+	#@nonl
+	#@-node:outlineCommand
+	#@+node:runTest
+	def runTest(self):
+	
+		self.outlineCommand()
+	#@nonl
+	#@-node:runTest
+	#@+node:setUp
+	def setUp(self,*args,**keys):
+	
+		assert(self.before)
+		assert(self.after)
+		assert(self.ref)
+		assert(self.u.compareOutlines(self.before,self.ref))
+		
+		# Batch mode bugs: meaning of move may depend on visibility.
+		self.parent.parent().expand()
+		self.parent.expand()
+		self.before.expand()
+		self.after.expand()
+	#@nonl
+	#@-node:setUp
+	#@+node:tearDown
+	def tearDown (self):
+	
+		c = self.c ; u = self.u
+	
+		if not u.compareOutlines(self.before,self.ref):
+			u.replaceOutline(c,self.before,self.ref)
+	
+		self.before.contract()
+		self.after.contract()
+		self.parent.contract()
+		self.parent.parent().contract()
+	
+		self.c.selectVnode(self.old_v)
+	#@nonl
+	#@-node:tearDown
+	#@-others
+#@nonl
+#@-node:class outlineTestCase
+#@+node: makePluginsSuite
+def makePluginsSuite(verbose=false,*args,**keys):
+	
+	"""Create an plugins test for every .py file in the plugins directory."""
+	
+	plugins_path = os_path_join(app.loadDir,"..","plugins")
+	
+	files = glob.glob(os_path_join(plugins_path,"*.py"))
+	files = [os_path_abspath(file) for file in files]
+	files.sort()
+
+	# Create the suite and add all test cases.
+	suite = unittest.makeSuite(unittest.TestCase)
+	
+	for file in files:
+		test = pluginTestCase(file,verbose)
+		suite.addTest(test)
+
+	return suite
+#@-node: makePluginsSuite
+#@+node:class pluginTestCase
+class pluginTestCase(unittest.TestCase):
+	
+	"""Unit tests for one Leo plugin."""
+	
+	#@	@+others
+	#@+node:__init__
+	def __init__ (self,fileName,verbose):
+		
+		# Init the base class.
+		unittest.TestCase.__init__(self)
+	
+		self.fileName = fileName
+		self.verbose = verbose
+	#@nonl
+	#@-node:__init__
+	#@+node:pluginTest
+	def pluginTest (self):
+		
+		# Duplicate the import logic in leoPlugins.py.
+		
+		fileName = toUnicode(self.fileName,app.tkEncoding)
+		path = os_path_join(app.loadDir,"..","plugins")
+		
+		if self.verbose:
+			trace(str(shortFileName(fileName)))
+	
+		module = importFromPath(fileName,path)
+		assert(module)
+		
+		# Run any unit tests in the module itself.
+		if hasattr(module,"unitTest"):
+			
+			if self.verbose:
+				trace("Executing unitTest in %s..." % str(shortFileName(fileName)))
+	
+			module.unitTest()
+	#@nonl
+	#@-node:pluginTest
+	#@+node:runTest
+	def runTest(self):
+	
+		self.pluginTest()
+	#@nonl
+	#@-node:runTest
+	#@+node:setUp
+	def setUp(self,*args,**keys):
+	
+		pass
+	#@nonl
+	#@-node:setUp
+	#@+node:shortDescription
+	def shortDescription (self):
+		
+		return "pluginTestCase: " + self.fileName
+	#@nonl
+	#@-node:shortDescription
+	#@+node:tearDown
+	def tearDown (self):
+	
+		pass
+	#@nonl
+	#@-node:tearDown
+	#@-others
+#@nonl
+#@-node:class pluginTestCase
 #@-others
 #@nonl
 #@-node:@file leoTest.py

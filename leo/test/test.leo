@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="2284" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="2288" clone_windows="0"/>
 <globals body_outline_ratio="0.5">
 	<global_window_position top="63" left="180" height="784" width="842"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
@@ -2650,7 +2650,6 @@
 </v>
 </v>
 <v t="edream.120303092653"><vh>4.1 beta 5 tests</vh>
-<v t="edream.112203144347" tnodeList="edream.112203144347"><vh>@file ..\test\batchScript.py</vh></v>
 <v t="edream.112303110337"><vh>Change all headlines/Undo test</vh>
 <v t="edream.112303110337.1"><vh>a</vh></v>
 <v t="edream.112303110337.2"><vh>Ba</vh></v>
@@ -2785,9 +2784,12 @@
 </v>
 <v t="edream.120803091715"><vh>using pdb</vh></v>
 <v t="edream.121303072722"><vh>tnode cleaning</vh></v>
+<v t="edream.121303091808"><vh>Batch test</vh>
+<v t="edream.112203144347" tnodeList="edream.112203144347"><vh>@file ..\test\batchScript.py</vh></v>
+</v>
 <v t="edream.110203161858.2119" a="E"><vh>Unit Tests</vh>
 <v t="edream.110203161858.2120"><vh>Bug reports</vh>
-<v t="edream.110203161858.2121" a="E"><vh>Colorizer</vh>
+<v t="edream.110203161858.2121"><vh>Colorizer</vh>
 <v t="edream.110203161858.2122"><vh> Report</vh></v>
 </v>
 </v>
@@ -2872,12 +2874,29 @@
 <v t="edream.121103121417.2"><vh>dialog</vh></v>
 </v>
 </v>
-<v t="edream.110203161858.2148"><vh>outlineTests (F(NISH)</vh>
-<v t="edream.110203161858.2149"><vh>moveOutlineDown</vh></v>
+<v t="edream.110203161858.2148"><vh>outlineTests</vh>
+<v t="edream.110203161858.2149"><vh>moveOutlineDown</vh>
+<v t="edream.121303184911"><vh>before</vh>
+<v t="edream.121303185011"><vh>a</vh></v>
+<v t="edream.121303185011.1"><vh>move</vh></v>
+<v t="edream.121303185011.2"><vh>b</vh></v>
+</v>
+<v t="edream.121303184911.2"><vh>after</vh>
+<v t="edream.121303185011.3"><vh>a</vh></v>
+<v t="edream.121303185011.4"><vh>b</vh></v>
+<v t="edream.121303185011.5"><vh>move</vh></v>
+</v>
+<v t="edream.121303185018"><vh>ref</vh>
+<v t="edream.121303185018.1"><vh>a</vh></v>
+<v t="edream.121303185018.2"><vh>move</vh></v>
+<v t="edream.121303185018.3"><vh>b</vh></v>
+</v>
+</v>
 <v t="edream.110203161858.2150"><vh>moveOutlineLeft</vh></v>
 <v t="edream.110203161858.2151"><vh>moveOutlineRight</vh></v>
 <v t="edream.110203161858.2152"><vh>moveOutlineUp</vh></v>
 </v>
+<v t="edream.121403092706" a="V"><vh>pluginsTests</vh></v>
 <v t="edream.110903064653"><vh>testLeoFiles</vh>
 <v t="edream.110903064653.1"><vh>c:\prog\leoCvs\leo\test\test.leo</vh></v>
 <v t="edream.110903064653.2"><vh>c:\prog\leoCvs\leo\src\LeoPy.leo</vh></v>
@@ -2885,7 +2904,7 @@
 <v t="edream.110903064653.4"><vh>c:\prog\leoCvs\leo\doc\LeoDocs.leo</vh></v>
 </v>
 </v>
-<v t="edream.110203161858.2153" a="EV"><vh>Run all tests</vh></v>
+<v t="edream.110203161858.2153" a="E"><vh>Run all tests</vh></v>
 </v>
 </vnodes>
 <tnodes>
@@ -34180,13 +34199,7 @@ line 4</t>
 	line 2
 	line 3
 line 4</t>
-<t tx="edream.110203161858.2148">@ The names of child nodes are the names of commander methods to be called to do the test.
-
-Each child node will in turn have two children: a "before" tree and an "after" tree.
-
-@c
-
-import unittest
+<t tx="edream.110203161858.2148">import unittest
 import leoTest
 reload(leoTest) # Allows us to rerun this script when leoTest.py changes.
 
@@ -34204,21 +34217,20 @@ reload(leoTest) # Allows us to rerun this script when leoTest.py changes.
 
 mainSuite = unittest.makeSuite(unittest.TestCase)
 
-for f,headline in (
+for f,arg in (
 	(leoTest.makeColorSuite,"colorizerTests"),
 	(leoTest.makeEditBodySuite,"editBodyTests"),
 	(leoTest.makeImportExportSuite,"exportTests"),
 	(leoTest.makeImportExportSuite,"importTests"),
-	(leoTest.makeTestLeoFilesSuite,"testLeoFiles")
+	(leoTest.makeTestLeoFilesSuite,"testLeoFiles"),
+	(leoTest.makeOutlineSuite,"outlineTests"),
+	(leoTest.makePluginsSuite,false) # verbose
 ):
-	suite = f(headline,"tempNode")
+	suite = f(arg,"tempNode")
 	mainSuite.addTest(suite)
 
 runner = unittest.TextTestRunner()
-runner.run(mainSuite)
-
-if 0: # not ready yet.
-	(leoTest.makeOutlineSuite,"outlineTests")</t>
+runner.run(mainSuite)</t>
 <t tx="edream.110403110104">line 1
 &lt;&lt; sec1 &gt;&gt;
 sec1
@@ -34382,27 +34394,21 @@ es(&lt;&lt;2&gt;&gt;+&lt;&lt;2&gt;&gt;, color="blue")</t>
 
 from leoGlobals import *
 
-print "batchScript.py log:", app.log
+enable = false # Enable or disable the log.
 
-disable = true
-
-if disable:
-	if app.batchMode:
-		print "Disabling log from batchScript.py"
-		app.log.disable()
-	
 path = r"c:\prog\leoCVS\leo\plugins\leoPlugins.leo"
-es(path)
-# trace(path)
-flag,frame = openWithFileName(path)
-print "batchScript.py log:", app.log
 
-if disable:
-	if app.batchMode:
-		print "Enabling log from batchScript.py"
-		app.log.enable()
+if app.batchMode:
+	print ; print "Start of batchScript.py"
+	if not enable:
+		print "Disabling log"
+		
+	flag,frame = openWithFileName(path,old_c=None,enableLog=enable)
+	
+	if not enable:
+		print "Enabling log"
+		frame.log.enable()
 		es(frame)
-else:
 	print "End of batchScript.py"</t>
 <t tx="edream.112303064255">before
 &lt;&lt; section &gt;&gt;
@@ -35816,5 +35822,29 @@ c:\\prog\\test\\unittest\\output\\outlineToCweb.txt</t>
 <t tx="edream.121103180347">saveFileDialog
 c:\\prog\\test\\unittest\\output\\outlineToNoweb.txt</t>
 <t tx="edream.121303072722">print "hello"</t>
+<t tx="edream.121303091808">import os
+
+s = r"c:\python23\python c:\prog\leoCVS\leo\src\leo.py -script c:\prog\leoCVS\leo\test\batchScript.py"
+
+os.system(s)</t>
+<t tx="edream.121303184911"></t>
+<t tx="edream.121303184911.2"></t>
+<t tx="edream.121303185011"></t>
+<t tx="edream.121303185011.1"></t>
+<t tx="edream.121303185011.2"></t>
+<t tx="edream.121303185011.3"></t>
+<t tx="edream.121303185011.4"></t>
+<t tx="edream.121303185011.5"></t>
+<t tx="edream.121303185018"></t>
+<t tx="edream.121303185018.1"></t>
+<t tx="edream.121303185018.2"></t>
+<t tx="edream.121303185018.3"></t>
+<t tx="edream.121403092706">import unittest
+import leoTest
+reload(leoTest) # Allows us to rerun this script when leoTest.py changes.
+
+suite = leoTest.makePluginsSuite(verbose=True)
+runner = unittest.TextTestRunner()
+runner.run(suite)</t>
 </tnodes>
 </leo_file>
