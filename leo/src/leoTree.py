@@ -1594,7 +1594,7 @@ class leoTree:
 	#@+body
 	# Warning: do not try to "optimize" this by returning if v==tree.currentVnode.
 	
-	def select (self,v):
+	def select (self,v,updateBeadList=true):
 		
 		# trace(`v`)
 		
@@ -1667,6 +1667,37 @@ class leoTree:
 				try: # may fail during initialization
 					self.idle_scrollTo(v)
 				except: pass
+			
+			#@<< update c.beadList or c.beadPointer >>
+			#@+node:5::<< update c.beadList or c.beadPointer >>
+			#@+body
+			if updateBeadList:
+				if c.beadPointer > -1:
+					present_v = c.beadList[c.beadPointer]
+				else:
+					present_v = None
+				
+				if v != present_v:
+					# Replace the tail of c.beadList by c and make c the present node.
+					c.beadPointer += 1
+					c.beadList[c.beadPointer:] = []
+					c.beadList.append(v)
+			
+			#@-body
+			#@-node:5::<< update c.beadList or c.beadPointer >>
+
+			
+			#@<< update c.visitedList >>
+			#@+node:6::<< update c.visitedList >>
+			#@+body
+			# Make v the most recently visited node on the list.
+			if v in c.visitedList:
+				c.visitedList.remove(v)
+				
+			c.visitedList.insert(0,v)
+			#@-body
+			#@-node:6::<< update c.visitedList >>
+
 	
 		
 		#@<< set the current node and redraw >>
@@ -1680,6 +1711,20 @@ class leoTree:
 		#@-node:4::<< set the current node and redraw >>
 
 		doHook("select2",c=c,new_v=v,old_v=old_v)
+		
+		#@<< update the sections list and the icons >>
+		#@+node:7::<< update the sections list and the icons >>
+		#@+body
+		for d in app().sectionDialogs:
+			try:
+				d.fillbox()
+			except: pass
+		
+		#@-body
+		#@-node:7::<< update the sections list and the icons >>
+
+		doHook("select3",c=c,new_v=v,old_v=old_v)
+	
 	#@-body
 	#@-node:7::tree.select
 	#@+node:8::tree.set...LabelState
