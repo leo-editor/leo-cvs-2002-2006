@@ -718,9 +718,20 @@ class baseLeoImportCommands:
 			self.methodsSeen = true
 		
 		# i points just after the class line.
+		
+		# Add a docstring to the class node.
+		docStringSeen = false
+		j = skip_ws_and_nl(s,i)
+		if match(s,j,'"""') or match(s,j,"'''"):
+			j = skip_python_string(s,j)
+			if j != len(s): # No scanning error.
+				i = j ; docStringSeen = true
+		
 		body = s[start:i]
 		body = self.undentBody(body)
+		if docStringSeen: body = body + '\n'
 		class_vnode = self.createHeadline(parent,prefix + body,headline)
+		#@nonl
 		#@-node:<< create class_vnode  >>
 		#@nl
 		savedMethodName = self.methodName
