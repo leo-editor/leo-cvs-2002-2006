@@ -113,8 +113,9 @@ def createButtons (tag, keys):
         b = c.frame.addIconButton(text=text)
         global data ; d = data.get(c,{})
         d [key] = b
-        width = int(len(h) * 0.9)
-        b.configure(width=width,font=('verdana',7,'bold'),bg='MistyRose1')
+        if sys.platform == "win32":
+            width = int(len(h) * 0.9)
+            b.configure(width=width,font=('verdana',7,'bold'),bg='MistyRose1')
         b.configure(command=commandCallback)
         b.bind('<3>',deleteButtonCallback)
         b.bind('<Enter>', mouseEnterCallback)
