@@ -1344,7 +1344,12 @@ class importExportTestCase(unittest.TestCase):
         fileName = lines[1]
         
         # Replace '\\' by os.path.sep in fileName
-        fileName = fileName.replace('\\',os.path.sep)
+        try:
+            # os.path.sep does not exist in Python 2.2.x.
+            sep = os.path.sep
+            fileName = fileName.replace('\\',os.path.sep)
+        except AttributeError:
+            fileName = g.os_path_normpath(fileName)
     
         self.fileName = fileName = g.os_path_join(g.app.loadDir,"..",fileName)
     
