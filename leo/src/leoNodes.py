@@ -1537,7 +1537,7 @@ class position (object):
                 # Only called when normal lookup fails.
                 print "unknown position attribute:",attr
                 # import traceback ; traceback.print_stack()
-                raise AttributeError
+                raise AttributeError, 'no position attribute: "%s"' % attr
     #@nonl
     #@-node:ekr.20040117170612:p.__getattr__  ON:  must be ON if use_plugins
     #@+node:ekr.20031218072017.892:p.__init__
