@@ -1482,7 +1482,8 @@ class baseAtFile:
 	#@@c
 	def putOpenLeoSentinel(self,s):
 		
-		if not self.sentinels: return # Handle @nosentinelsfile.
+		if not self.sentinels:
+			return # Handle @nosentinelsfile.
 	
 		self.os(self.startSentinelComment)
 		self.os(s)
@@ -1496,6 +1497,7 @@ class baseAtFile:
 			self.newline_pending = true # Schedule a newline.
 		else:
 			self.onl() # End of sentinel.
+	
 	#@-body
 	#@-node:4::putOpenLeoSentinel
 	#@+node:5::putOpenNodeSentinel
@@ -2148,7 +2150,7 @@ class baseAtFile:
 				i = skip_to_end_of_line(s,i)
 				# 21-SEP-2002 DTHEIN: write @first line, whether empty or not
 				line = s[j:i]
-				self.os(line) ; self.onl()
+				self.putBuffered(line) ; self.onl()
 				i = skip_nl(s,i)
 			#@-body
 			#@-node:1::<< put all @first lines in root >>
@@ -2222,7 +2224,7 @@ class baseAtFile:
 			# Write the @last lines.
 			for line in lines[j+1:k+1]:
 				i = len(tag) ; i = skip_ws(line,i)
-				self.os(line[i:]) ; self.onl()
+				self.putBuffered(line[i:]) ; self.onl()
 			#@-body
 			#@-node:4::<< put all @last lines in root >>
 			#@-body
@@ -2348,7 +2350,7 @@ class baseAtFile:
 				i = skip_to_end_of_line(s,i)
 				# 21-SEP-2002 DTHEIN: write @first line, whether empty or not
 				line = s[j:i]
-				self.os(line) ; self.onl()
+				self.putBuffered(line) ; self.onl()
 				i = skip_nl(s,i)
 			#@-body
 			#@-node:1::<< put all @first lines in root >>
@@ -2394,7 +2396,7 @@ class baseAtFile:
 			# Write the @last lines.
 			for line in lines[j+1:k+1]:
 				i = len(tag) ; i = skip_ws(line,i)
-				self.os(line[i:]) ; self.onl()
+				self.putBuffered(line[i:]) ; self.onl()
 			#@-body
 			#@-node:3::<< put all @last lines in root >>
 
@@ -3159,9 +3161,7 @@ class baseAtFile:
 			#@+body
 			if not self.raw:
 				# 12/8/02: Don't write trailing indentation if not writing sentinels.
-				if not self.sentinels and i >= len(s):
-					pass
-				else:
+				if self.sentinels or j < len(s):
 					self.putIndent(self.indent)
 			
 			newlineSeen = false
@@ -3183,7 +3183,12 @@ class baseAtFile:
 					
 					if isSection:
 						# Output the buffered characters and clear the buffer.
-						self.os(s[buf:i]) ; buf = i
+						s2 = s[buf:i] ; buf = i
+						# 7/9/03: don't output trailing indentation if we aren't generating sentinels.
+						if not self.sentinels:
+							while len(s2) and s2[-1] in (' ','\t'):
+								s2 = s2[:-1]
+						self.putBuffered(s2)
 						# Output the expansion.
 						name = s[i:j]
 						j,newlineSeen = self.putRef(name,v,s,j,delta)
@@ -3198,7 +3203,7 @@ class baseAtFile:
 				else:
 					i += 1
 			# Output any buffered characters.
-			self.os(s[buf:i])
+			self.putBuffered(s[buf:i])
 			#@-body
 			#@-node:2::<< put the line >>
 
@@ -3306,6 +3311,7 @@ class baseAtFile:
 				"\n\treferenced from: " + v.headString())
 			return i,newlineSeen
 	
+		# trace(self.indent,delta,s[i:])
 		
 		#@<< Generate the expansion of the reference >>
 		#@+node:1::<< Generate the expansion of the reference >>
@@ -3326,7 +3332,7 @@ class baseAtFile:
 			self.putSentinel("@verbatimAfterRef")
 			# 9/27/02: Put the line immediately, before the @-node sentinel.
 			k = skip_to_end_of_line(s,i)
-			self.os(s[i:k])
+			self.putBuffered(s[i:k])
 			i = k ; newlineSeen = false
 		#@-body
 		#@-node:1::<< Add @verbatimAfterRef sentinel if required >>
@@ -3344,7 +3350,35 @@ class baseAtFile:
 	#@-node:7::putRef
 	#@-node:5::putCodePart & allies
 	#@+node:6::Utils
-	#@+node:1::os, onl, etc. (leoAtFile)
+	#@+node:1::putBuffered
+	#@+body
+	def putBuffered (self,s):
+		
+		"""Put s, converting all tabs to blanks as necessary."""
+		
+		if s:
+			w = self.tab_width
+			if w < 0:
+				#trace(s)
+				lines = s.split('\n')
+				for i in xrange(len(lines)):
+					line = lines[i]
+					line2 = ""
+					for j in xrange(len(line)):
+						ch = line[j]
+						if ch == '\t':
+							w2 = computeWidth(s[:j],w)
+							w3 = (abs(w) - (w2 % abs(w)))
+							line2 += ' ' * w3
+						else:
+							line2 += ch
+					lines[i] = line2
+				s = string.join(lines,'\n')
+			#trace(s)
+			self.os(s)
+	#@-body
+	#@-node:1::putBuffered
+	#@+node:2::os, onl, etc. (leoAtFile)
 	#@+body
 	def oblank(self):
 		self.os(' ')
@@ -3371,8 +3405,8 @@ class baseAtFile:
 	def otabs(self,n):
 		self.os('\t' * abs(n))
 	#@-body
-	#@-node:1::os, onl, etc. (leoAtFile)
-	#@+node:2::putDirective  (handles @delims)
+	#@-node:2::os, onl, etc. (leoAtFile)
+	#@+node:3::putDirective  (handles @delims)
 	#@+body
 	# This method outputs s, a directive or reference, in a sentinel.
 	
@@ -3416,8 +3450,8 @@ class baseAtFile:
 		i = skip_line(s,k)
 		return i
 	#@-body
-	#@-node:2::putDirective  (handles @delims)
-	#@+node:3::putEmptyDirective (Dave Hein)
+	#@-node:3::putDirective  (handles @delims)
+	#@+node:4::putEmptyDirective (Dave Hein)
 	#@+body
 	# 14-SEP-2002 DTHEIN
 	# added for use by putBodyPart()
@@ -3438,23 +3472,24 @@ class baseAtFile:
 		i = skip_line(s,i)
 		return i
 	#@-body
-	#@-node:3::putEmptyDirective (Dave Hein)
-	#@+node:4::putIndent
+	#@-node:4::putEmptyDirective (Dave Hein)
+	#@+node:5::putIndent
 	#@+body
-	# Puts tabs and spaces corresponding to n spaces, assuming that we are at the start of a line.
-	
 	def putIndent(self,n):
+		
+		"""Put tabs and spaces corresponding to n spaces, assuming that we are at the start of a line."""
 	
-		c = self.commands
-		w = self.tab_width
-		if w > 1:
-			q,r = divmod(n,w) 
-			self.otabs(q) 
-			self.oblanks(r)
-		else:
-			self.oblanks(n)
+		if n != 0:
+			# trace(n)
+			w = self.tab_width
+			if w > 1:
+				q,r = divmod(n,w) 
+				self.otabs(q) 
+				self.oblanks(r)
+			else:
+				self.oblanks(n)
 	#@-body
-	#@-node:4::putIndent
+	#@-node:5::putIndent
 	#@-node:6::Utils
 	#@-node:8::Writing
 	#@-others

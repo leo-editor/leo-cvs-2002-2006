@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="79" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="86" clone_windows="0"/>
 <globals body_outline_ratio="0.5">
 	<global_window_position top="87" left="293" height="734" width="662"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
@@ -126,10 +126,23 @@
 <v t="T75"><vh>Node 1</vh></v>
 </v>
 </v>
-<v t="T76" a="E"><vh>Go to line number test</vh>
-<v t="T77" a="EV"><vh>@file c:\prog\test\goToLineNumber.txt</vh>
+<v t="T76"><vh>Go to line number test</vh>
+<v t="T77" a="E"><vh>@file c:\prog\test\goToLineNumber.txt</vh>
 <v t="T78"><vh>__init__</vh></v>
 <v t="T79"><vh>__init__</vh></v>
+</v>
+</v>
+<v t="T80" a="E"><vh>Line break problems</vh>
+<v t="T81" a="E"><vh>Error</vh>
+<v t="T82" a="EV"><vh>@nosentinelsfile c:\prog\test\lineBreakError.txt</vh>
+<v t="T83" a="E"><vh>functions</vh>
+<v t="T84" a="E"><vh>objects</vh>
+<v t="T85" a="EM"><vh>class shape</vh>
+<v t="T86"><vh>&lt;&lt; class shape declarations &gt;&gt;</vh></v>
+</v>
+</v>
+</v>
+</v>
 </v>
 </v>
 </vnodes>
@@ -643,5 +656,25 @@ This is a test file
 <t tx="T79">def __init__ (self):
 	
 	pass # line 16</t>
+<t tx="T80"></t>
+<t tx="T81">@ EKR: the doc string in class shape is improperly indented.
+@c
+
+@language Python
+@tabwidth -4</t>
+<t tx="T82">@first #!/usr/bin/python
+
+@others
+</t>
+<t tx="T83">@others
+</t>
+<t tx="T84">@others
+</t>
+<t tx="T85">class shape(object):
+  	&lt;&lt; class shape declarations &gt;&gt;
+  	# after decls</t>
+<t tx="T86">"""Parent class of all shapes."""
+pass
+</t>
 </tnodes>
 </leo_file>

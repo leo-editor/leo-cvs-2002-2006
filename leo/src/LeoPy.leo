@@ -2,7 +2,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="4376" clone_windows="0"/>
 <globals body_outline_ratio="0.5">
-	<global_window_position top="18" left="221" height="903" width="972"/>
+	<global_window_position top="14" left="437" height="903" width="831"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences allow_rich_text="0">
@@ -3261,8 +3261,6 @@
 <v t="T2407"><vh>&lt;&lt; read optional encoding param &gt;&gt;</vh></v>
 <v t="T2408"><vh>&lt;&lt; set the closing comment delim &gt;&gt;</vh></v>
 </v>
-<v t="T2399" a="C"><vh>&lt;&lt; put all @first lines in root &gt;&gt;</vh></v>
-<v t="T2401" a="C"><vh>&lt;&lt; put all @last lines in root &gt;&gt;</vh></v>
 </v>
 <v t="T2409"><vh>(@nosentinelsfile problems)</vh>
 <v t="T2410"><vh> Bug report &amp; resolution</vh></v>
@@ -3839,15 +3837,15 @@
 <v t="T2716"><vh>Top level</vh>
 <v t="T2717"><vh>atFile.rawWrite</vh>
 <v t="T2718"><vh>&lt;&lt; write root's tree &gt;&gt;</vh>
-<v t="T2719"><vh>&lt;&lt; put all @first lines in root &gt;&gt;</vh></v>
-<v t="T2720"><vh>&lt;&lt; put optional @comment sentinel lines &gt;&gt;</vh></v>
-<v t="T2721"><vh>&lt;&lt; Write v's node &gt;&gt;</vh></v>
-<v t="T2722"><vh>&lt;&lt; put all @last lines in root &gt;&gt;</vh></v>
+<v t="T2399" a="C"><vh>&lt;&lt; put all @first lines in root &gt;&gt;</vh></v>
+<v t="T2719"><vh>&lt;&lt; put optional @comment sentinel lines &gt;&gt;</vh></v>
+<v t="T2720"><vh>&lt;&lt; Write v's node &gt;&gt;</vh></v>
+<v t="T2401" a="C"><vh>&lt;&lt; put all @last lines in root &gt;&gt;</vh></v>
 </v>
 </v>
-<v t="T2723"><vh>atFile.silentWrite</vh>
-<v t="T2724"><vh>&lt;&lt; Write v's headline if it starts with @@ &gt;&gt;</vh></v>
-<v t="T2725"><vh>&lt;&lt; Write v's body &gt;&gt;</vh></v>
+<v t="T2721"><vh>atFile.silentWrite</vh>
+<v t="T2722"><vh>&lt;&lt; Write v's headline if it starts with @@ &gt;&gt;</vh></v>
+<v t="T2723"><vh>&lt;&lt; Write v's body &gt;&gt;</vh></v>
 </v>
 <v t="T2395" a="C"><vh>atFile.write</vh>
 <v t="T2396"><vh>&lt;&lt; initialize &gt;&gt;</vh></v>
@@ -3870,17 +3868,17 @@
 <v t="T2063"><vh>&lt;&lt; create self.outputFile &gt;&gt;</vh></v>
 <v t="T2064"><vh>&lt;&lt; write the @file node &gt;&gt;</vh></v>
 </v>
-<v t="T2726"><vh>Top level write helpers</vh>
-<v t="T2727"><vh>atFile.closeWriteFile</vh></v>
-<v t="T2728"><vh>atFile.handleWriteException</vh></v>
-<v t="T2729"><vh>atFile.openWriteFile</vh></v>
-<v t="T2730"><vh>atFile.putInitialComment</vh></v>
-<v t="T2731"><vh>atFile.replaceTargetFileIfDifferent</vh>
-<v t="T2732"><vh>&lt;&lt; delete the output file &gt;&gt;</vh></v>
-<v t="T2733"><vh>&lt;&lt; replace the target file with the output file &gt;&gt;</vh></v>
-<v t="T2734"><vh>&lt;&lt; rename the output file to be the target file &gt;&gt;</vh></v>
+<v t="T2724"><vh>Top level write helpers</vh>
+<v t="T2725"><vh>atFile.closeWriteFile</vh></v>
+<v t="T2726"><vh>atFile.handleWriteException</vh></v>
+<v t="T2727"><vh>atFile.openWriteFile</vh></v>
+<v t="T2728"><vh>atFile.putInitialComment</vh></v>
+<v t="T2729"><vh>atFile.replaceTargetFileIfDifferent</vh>
+<v t="T2730"><vh>&lt;&lt; delete the output file &gt;&gt;</vh></v>
+<v t="T2731"><vh>&lt;&lt; replace the target file with the output file &gt;&gt;</vh></v>
+<v t="T2732"><vh>&lt;&lt; rename the output file to be the target file &gt;&gt;</vh></v>
 </v>
-<v t="T2735"><vh>atFile.outputStringWithLineEndings</vh></v>
+<v t="T2733"><vh>atFile.outputStringWithLineEndings</vh></v>
 </v>
 </v>
 <v t="T2421" a="C"><vh>putBodyPart</vh>
@@ -3891,7 +3889,7 @@
 <v t="T2426"><vh>&lt;&lt; put out the last directives, if any &gt;&gt;</vh></v>
 </v>
 </v>
-<v t="T2736"><vh>putDoc</vh></v>
+<v t="T2734"><vh>putDoc</vh></v>
 <v t="T2205" a="C"><vh>putDocPart</vh>
 <v t="T2206"><vh>&lt;&lt; copy words, splitting the line if needed &gt;&gt;</vh></v>
 </v>
@@ -3915,144 +3913,145 @@
 </v>
 </v>
 </v>
-<v t="T2737"><vh>Utils</vh>
+<v t="T2735"><vh>Utils</vh>
+<v t="T2736"><vh>putBuffered</vh></v>
 <v t="T2204" a="C"><vh>os, onl, etc. (leoAtFile)</vh></v>
 <v t="T1892" a="C"><vh>putDirective  (handles @delims)</vh>
 <v t="T1893"><vh>&lt;&lt; handle @delims &gt;&gt;</vh></v>
 </v>
-<v t="T2738"><vh>putEmptyDirective (Dave Hein)</vh></v>
+<v t="T2737"><vh>putEmptyDirective (Dave Hein)</vh></v>
 <v t="T2500" a="C"><vh>putIndent</vh></v>
 </v>
 </v>
 </v>
 </v>
 </v>
-<v t="T2739"><vh> Memory</vh></v>
-<v t="T2740" a="C"><vh> Menus</vh>
-<v t="T2741"><vh>canonicalizeShortcut</vh>
-<v t="T2742"><vh>&lt;&lt; canonicalize the last field &gt;&gt;</vh>
-<v t="T2743"><vh>&lt;&lt; define dict of Tk bind names &gt;&gt;</vh></v>
-<v t="T2744"><vh>&lt;&lt; define dict of special names &gt;&gt;</vh></v>
+<v t="T2738"><vh> Memory</vh></v>
+<v t="T2739" a="C"><vh> Menus</vh>
+<v t="T2740"><vh>canonicalizeShortcut</vh>
+<v t="T2741"><vh>&lt;&lt; canonicalize the last field &gt;&gt;</vh>
+<v t="T2742"><vh>&lt;&lt; define dict of Tk bind names &gt;&gt;</vh></v>
+<v t="T2743"><vh>&lt;&lt; define dict of special names &gt;&gt;</vh></v>
 </v>
-<v t="T2745"><vh>&lt;&lt; set the last field, preserving case &gt;&gt;</vh></v>
-<v t="T2746"><vh>&lt;&lt; synthesize the shortcuts from the information &gt;&gt;</vh></v>
+<v t="T2744"><vh>&lt;&lt; set the last field, preserving case &gt;&gt;</vh></v>
+<v t="T2745"><vh>&lt;&lt; synthesize the shortcuts from the information &gt;&gt;</vh></v>
 </v>
-<v t="T2747"><vh>createMenuBar</vh>
-<v t="T2748"><vh>&lt;&lt; create the edit menu &gt;&gt;</vh>
-<v t="T2749"><vh>&lt;&lt; create the first top-level edit entries &gt;&gt;</vh></v>
-<v t="T2750"><vh>&lt;&lt; create the edit body submenu &gt;&gt;</vh></v>
-<v t="T2751"><vh>&lt;&lt; create the edit headline submenu &gt;&gt;</vh></v>
-<v t="T2752"><vh>&lt;&lt; create the find submenu &gt;&gt;</vh></v>
-<v t="T2753"><vh>&lt;&lt; create the last top-level edit entries &gt;&gt;</vh></v>
+<v t="T2746"><vh>createMenuBar</vh>
+<v t="T2747"><vh>&lt;&lt; create the edit menu &gt;&gt;</vh>
+<v t="T2748"><vh>&lt;&lt; create the first top-level edit entries &gt;&gt;</vh></v>
+<v t="T2749"><vh>&lt;&lt; create the edit body submenu &gt;&gt;</vh></v>
+<v t="T2750"><vh>&lt;&lt; create the edit headline submenu &gt;&gt;</vh></v>
+<v t="T2751"><vh>&lt;&lt; create the find submenu &gt;&gt;</vh></v>
+<v t="T2752"><vh>&lt;&lt; create the last top-level edit entries &gt;&gt;</vh></v>
 </v>
-<v t="T2754"><vh>&lt;&lt; create the file menu &gt;&gt;</vh>
-<v t="T2755" a="C"><vh>&lt;&lt; create the top-level file entries &gt;&gt;</vh></v>
-<v t="T2756"><vh>&lt;&lt; create the recent files submenu &gt;&gt;</vh></v>
-<v t="T2757"><vh>&lt;&lt; create the read/write submenu &gt;&gt;</vh></v>
-<v t="T2758"><vh>&lt;&lt; create the tangle submenu &gt;&gt;</vh></v>
-<v t="T2759"><vh>&lt;&lt; create the untangle submenu &gt;&gt;</vh></v>
-<v t="T2760"><vh>&lt;&lt; create the import submenu &gt;&gt;</vh></v>
-<v t="T2761"><vh>&lt;&lt; create the export submenu &gt;&gt;</vh></v>
+<v t="T2753"><vh>&lt;&lt; create the file menu &gt;&gt;</vh>
+<v t="T2754" a="C"><vh>&lt;&lt; create the top-level file entries &gt;&gt;</vh></v>
+<v t="T2755"><vh>&lt;&lt; create the recent files submenu &gt;&gt;</vh></v>
+<v t="T2756"><vh>&lt;&lt; create the read/write submenu &gt;&gt;</vh></v>
+<v t="T2757"><vh>&lt;&lt; create the tangle submenu &gt;&gt;</vh></v>
+<v t="T2758"><vh>&lt;&lt; create the untangle submenu &gt;&gt;</vh></v>
+<v t="T2759"><vh>&lt;&lt; create the import submenu &gt;&gt;</vh></v>
+<v t="T2760"><vh>&lt;&lt; create the export submenu &gt;&gt;</vh></v>
 </v>
-<v t="T2762"><vh>&lt;&lt; create the outline menu &gt;&gt;</vh>
-<v t="T2763"><vh>&lt;&lt; create top-level outline menu &gt;&gt;</vh></v>
-<v t="T2764"><vh>&lt;&lt; create expand/contract submenu &gt;&gt;</vh></v>
-<v t="T2765"><vh>&lt;&lt; create move submenu &gt;&gt;</vh></v>
-<v t="T2766"><vh>&lt;&lt; create mark submenu &gt;&gt;</vh></v>
-<v t="T2767"><vh>&lt;&lt; create goto submenu &gt;&gt;</vh></v>
+<v t="T2761"><vh>&lt;&lt; create the outline menu &gt;&gt;</vh>
+<v t="T2762"><vh>&lt;&lt; create top-level outline menu &gt;&gt;</vh></v>
+<v t="T2763"><vh>&lt;&lt; create expand/contract submenu &gt;&gt;</vh></v>
+<v t="T2764"><vh>&lt;&lt; create move submenu &gt;&gt;</vh></v>
+<v t="T2765"><vh>&lt;&lt; create mark submenu &gt;&gt;</vh></v>
+<v t="T2766"><vh>&lt;&lt; create goto submenu &gt;&gt;</vh></v>
 </v>
-<v t="T2768"><vh>&lt;&lt; create the window menu &gt;&gt;</vh></v>
-<v t="T2769"><vh>&lt;&lt; create the help menu &gt;&gt;</vh></v>
+<v t="T2767"><vh>&lt;&lt; create the window menu &gt;&gt;</vh></v>
+<v t="T2768"><vh>&lt;&lt; create the help menu &gt;&gt;</vh></v>
 </v>
-<v t="T2770" a="C"><vh>createMenuEntries</vh>
-<v t="T2771"><vh>&lt;&lt; set name to the label for doCommand &gt;&gt;</vh></v>
-<v t="T2772"><vh>&lt;&lt; set accel to the shortcut for name &gt;&gt;</vh></v>
-<v t="T2773"><vh>&lt;&lt; set bind_shortcut and menu_shortcut using accel &gt;&gt;</vh></v>
-<v t="T2774"><vh>&lt;&lt; define callback function &gt;&gt;</vh></v>
-<v t="T2775"><vh>&lt;&lt; set realLabel, amp_index and menu_shortcut &gt;&gt;</vh></v>
-<v t="T2776"><vh>&lt;&lt; handle bind_shorcut &gt;&gt;</vh></v>
+<v t="T2769" a="C"><vh>createMenuEntries</vh>
+<v t="T2770"><vh>&lt;&lt; set name to the label for doCommand &gt;&gt;</vh></v>
+<v t="T2771"><vh>&lt;&lt; set accel to the shortcut for name &gt;&gt;</vh></v>
+<v t="T2772"><vh>&lt;&lt; set bind_shortcut and menu_shortcut using accel &gt;&gt;</vh></v>
+<v t="T2773"><vh>&lt;&lt; define callback function &gt;&gt;</vh></v>
+<v t="T2774"><vh>&lt;&lt; set realLabel, amp_index and menu_shortcut &gt;&gt;</vh></v>
+<v t="T2775"><vh>&lt;&lt; handle bind_shorcut &gt;&gt;</vh></v>
 </v>
-<v t="T2777"><vh>createRecentFilesMenuItems</vh></v>
-<v t="T2778"><vh>frame.doCommand</vh></v>
-<v t="T2779"><vh>get/set/destroyMenu</vh></v>
-<v t="T2780"><vh>Menu Command Handlers</vh>
-<v t="T2781"><vh>File Menu</vh>
-<v t="T2782"><vh>top level</vh>
-<v t="T2783" a="C"><vh>OnNew</vh></v>
-<v t="T2784" a="C"><vh>frame.OnOpen</vh>
-<v t="T2785"><vh>&lt;&lt; Set closeFlag if the only open window is empty &gt;&gt;</vh></v>
+<v t="T2776"><vh>createRecentFilesMenuItems</vh></v>
+<v t="T2777"><vh>frame.doCommand</vh></v>
+<v t="T2778"><vh>get/set/destroyMenu</vh></v>
+<v t="T2779"><vh>Menu Command Handlers</vh>
+<v t="T2780"><vh>File Menu</vh>
+<v t="T2781"><vh>top level</vh>
+<v t="T2782" a="C"><vh>OnNew</vh></v>
+<v t="T2783" a="C"><vh>frame.OnOpen</vh>
+<v t="T2784"><vh>&lt;&lt; Set closeFlag if the only open window is empty &gt;&gt;</vh></v>
 </v>
-<v t="T2786" a="C"><vh>frame.OnOpenWith and allies</vh>
-<v t="T2787"><vh>&lt;&lt; set ext based on the present language &gt;&gt;</vh></v>
-<v t="T2788"><vh>&lt;&lt; create or reopen temp file, testing for conflicting changes &gt;&gt;</vh>
-<v t="T2789"><vh>&lt;&lt;set dict and path if a temp file already refers to v.t &gt;&gt;</vh></v>
-<v t="T2790"><vh>&lt;&lt; create or recreate temp file as needed &gt;&gt;</vh>
-<v t="T2791"><vh>&lt;&lt; Raise dialog about conflict and set result &gt;&gt;</vh></v>
+<v t="T2785" a="C"><vh>frame.OnOpenWith and allies</vh>
+<v t="T2786"><vh>&lt;&lt; set ext based on the present language &gt;&gt;</vh></v>
+<v t="T2787"><vh>&lt;&lt; create or reopen temp file, testing for conflicting changes &gt;&gt;</vh>
+<v t="T2788"><vh>&lt;&lt;set dict and path if a temp file already refers to v.t &gt;&gt;</vh></v>
+<v t="T2789"><vh>&lt;&lt; create or recreate temp file as needed &gt;&gt;</vh>
+<v t="T2790"><vh>&lt;&lt; Raise dialog about conflict and set result &gt;&gt;</vh></v>
 </v>
 </v>
-<v t="T2792"><vh>&lt;&lt; execute a command to open path in external editor &gt;&gt;</vh></v>
-<v t="T2793" a="C"><vh>frame.createOpenWithTempFile</vh>
-<v t="T2794"><vh>&lt;&lt; remove previous entry from a.openWithFiles if it exists &gt;&gt;</vh></v>
+<v t="T2791"><vh>&lt;&lt; execute a command to open path in external editor &gt;&gt;</vh></v>
+<v t="T2792" a="C"><vh>frame.createOpenWithTempFile</vh>
+<v t="T2793"><vh>&lt;&lt; remove previous entry from a.openWithFiles if it exists &gt;&gt;</vh></v>
 </v>
-<v t="T2795"><vh>frame.openWithTempFilePath</vh></v>
+<v t="T2794"><vh>frame.openWithTempFilePath</vh></v>
 </v>
-<v t="T2796" a="C"><vh>frame.OpenWithFileName</vh></v>
+<v t="T2795" a="C"><vh>frame.OpenWithFileName</vh></v>
 <v t="T2109" a="C"><vh>frame.OnClose</vh></v>
-<v t="T2797"><vh>OnSave</vh></v>
-<v t="T2798"><vh>OnSaveAs</vh></v>
-<v t="T2799"><vh>OnSaveTo</vh></v>
-<v t="T2800" a="C"><vh>frame.OnRevert</vh></v>
-<v t="T2801"><vh>frame.OnQuit</vh></v>
-<v t="T2802"><vh>frame.updateRecentFiles</vh></v>
+<v t="T2796"><vh>OnSave</vh></v>
+<v t="T2797"><vh>OnSaveAs</vh></v>
+<v t="T2798"><vh>OnSaveTo</vh></v>
+<v t="T2799" a="C"><vh>frame.OnRevert</vh></v>
+<v t="T2800"><vh>frame.OnQuit</vh></v>
+<v t="T2801"><vh>frame.updateRecentFiles</vh></v>
 </v>
-<v t="T2803"><vh>Recent Files submenu</vh>
-<v t="T2804" a="C"><vh>frame.OnOpenRecentFile</vh>
-<v t="T2805"><vh>&lt;&lt; Set closeFlag if the only open window is empty &gt;&gt;</vh></v>
-</v>
-</v>
-<v t="T2806"><vh>Read/Write submenu</vh>
-<v t="T2807"><vh>fileCommands.OnReadOutlineOnly</vh></v>
-<v t="T2808"><vh>OnReadAtFileNodes</vh></v>
-<v t="T2809"><vh>OnWriteDirtyAtFileNodes</vh></v>
-<v t="T2810"><vh>OnWriteMissingAtFileNodes</vh></v>
-<v t="T2811"><vh>OnWriteOutlineOnly</vh></v>
-<v t="T2812"><vh>OnWriteAtFileNodes</vh></v>
-</v>
-<v t="T2813"><vh>Tangle submenu</vh>
-<v t="T2814"><vh>OnTangleAll</vh></v>
-<v t="T2815"><vh>OnTangleMarked</vh></v>
-<v t="T2816"><vh>OnTangle</vh></v>
-</v>
-<v t="T2817"><vh>Untangle submenu</vh>
-<v t="T2818"><vh>OnUntangleAll</vh></v>
-<v t="T2819"><vh>OnUntangleMarked</vh></v>
-<v t="T2820"><vh>OnUntangle</vh></v>
-</v>
-<v t="T2821"><vh>Import&amp;Export submenu</vh>
-<v t="T2822"><vh>OnExportHeadlines</vh></v>
-<v t="T2823"><vh>OnFlattenOutline</vh></v>
-<v t="T2824"><vh>OnImportAtRoot</vh></v>
-<v t="T2825"><vh>OnImportAtFile</vh></v>
-<v t="T2826"><vh>OnImportCWEBFiles</vh></v>
-<v t="T2827"><vh>OnImportFlattenedOutline</vh></v>
-<v t="T2828"><vh>OnImportNowebFiles</vh></v>
-<v t="T2829"><vh>OnOutlineToCWEB</vh></v>
-<v t="T2830"><vh>OnOutlineToNoweb</vh></v>
-<v t="T2831"><vh>OnRemoveSentinels</vh></v>
-<v t="T2832"><vh>OnWeave</vh></v>
+<v t="T2802"><vh>Recent Files submenu</vh>
+<v t="T2803" a="C"><vh>frame.OnOpenRecentFile</vh>
+<v t="T2804"><vh>&lt;&lt; Set closeFlag if the only open window is empty &gt;&gt;</vh></v>
 </v>
 </v>
-<v t="T2833"><vh>Edit Menu (change to handle log pane too)</vh>
-<v t="T2834"><vh>Edit top level</vh>
-<v t="T2835"><vh>OnUndo</vh></v>
-<v t="T2836"><vh>OnRedo</vh></v>
-<v t="T2837"><vh>Cut/Copy/Paste body text</vh>
-<v t="T2838"><vh>frame.OnCut, OnCutFrom Menu</vh></v>
-<v t="T2839"><vh>frame.OnCopy, OnCopyFromMenu</vh></v>
-<v t="T2840"><vh>frame.OnPaste, OnPasteNode, OnPasteFromMenu</vh></v>
+<v t="T2805"><vh>Read/Write submenu</vh>
+<v t="T2806"><vh>fileCommands.OnReadOutlineOnly</vh></v>
+<v t="T2807"><vh>OnReadAtFileNodes</vh></v>
+<v t="T2808"><vh>OnWriteDirtyAtFileNodes</vh></v>
+<v t="T2809"><vh>OnWriteMissingAtFileNodes</vh></v>
+<v t="T2810"><vh>OnWriteOutlineOnly</vh></v>
+<v t="T2811"><vh>OnWriteAtFileNodes</vh></v>
 </v>
-<v t="T2841"><vh>OnDelete</vh></v>
-<v t="T2842"><vh>OnExecuteScript</vh></v>
+<v t="T2812"><vh>Tangle submenu</vh>
+<v t="T2813"><vh>OnTangleAll</vh></v>
+<v t="T2814"><vh>OnTangleMarked</vh></v>
+<v t="T2815"><vh>OnTangle</vh></v>
+</v>
+<v t="T2816"><vh>Untangle submenu</vh>
+<v t="T2817"><vh>OnUntangleAll</vh></v>
+<v t="T2818"><vh>OnUntangleMarked</vh></v>
+<v t="T2819"><vh>OnUntangle</vh></v>
+</v>
+<v t="T2820"><vh>Import&amp;Export submenu</vh>
+<v t="T2821"><vh>OnExportHeadlines</vh></v>
+<v t="T2822"><vh>OnFlattenOutline</vh></v>
+<v t="T2823"><vh>OnImportAtRoot</vh></v>
+<v t="T2824"><vh>OnImportAtFile</vh></v>
+<v t="T2825"><vh>OnImportCWEBFiles</vh></v>
+<v t="T2826"><vh>OnImportFlattenedOutline</vh></v>
+<v t="T2827"><vh>OnImportNowebFiles</vh></v>
+<v t="T2828"><vh>OnOutlineToCWEB</vh></v>
+<v t="T2829"><vh>OnOutlineToNoweb</vh></v>
+<v t="T2830"><vh>OnRemoveSentinels</vh></v>
+<v t="T2831"><vh>OnWeave</vh></v>
+</v>
+</v>
+<v t="T2832"><vh>Edit Menu (change to handle log pane too)</vh>
+<v t="T2833"><vh>Edit top level</vh>
+<v t="T2834"><vh>OnUndo</vh></v>
+<v t="T2835"><vh>OnRedo</vh></v>
+<v t="T2836"><vh>Cut/Copy/Paste body text</vh>
+<v t="T2837"><vh>frame.OnCut, OnCutFrom Menu</vh></v>
+<v t="T2838"><vh>frame.OnCopy, OnCopyFromMenu</vh></v>
+<v t="T2839"><vh>frame.OnPaste, OnPasteNode, OnPasteFromMenu</vh></v>
+</v>
+<v t="T2840"><vh>OnDelete</vh></v>
+<v t="T2841"><vh>OnExecuteScript</vh></v>
 <v t="T1306" a="C"><vh>OnGoToLineNumber &amp; allies</vh>
 <v t="T1307"><vh>&lt;&lt; set root to the nearest @file, @silentfile or @rawfile ancestor node &gt;&gt;</vh></v>
 <v t="T1308"><vh>&lt;&lt; read the file into lines &gt;&gt;</vh></v>
@@ -4070,248 +4069,248 @@
 </v>
 <v t="T1319"><vh>skipToMatchingNodeSentinel</vh></v>
 </v>
-<v t="T2843"><vh>OnSelectAll</vh></v>
-<v t="T2844"><vh>OnFontPanel</vh></v>
-<v t="T2845"><vh>OnColorPanel</vh></v>
-<v t="T2846"><vh>OnViewAllCharacters</vh></v>
-<v t="T2847"><vh>OnPreferences</vh></v>
+<v t="T2842"><vh>OnSelectAll</vh></v>
+<v t="T2843"><vh>OnFontPanel</vh></v>
+<v t="T2844"><vh>OnColorPanel</vh></v>
+<v t="T2845"><vh>OnViewAllCharacters</vh></v>
+<v t="T2846"><vh>OnPreferences</vh></v>
 </v>
-<v t="T2848"><vh>Edit Body submenu</vh>
-<v t="T2849"><vh>OnConvertBlanks &amp; OnConvertAllBlanks</vh></v>
-<v t="T2850"><vh>OnConvertTabs &amp; OnConvertAllTabs</vh></v>
-<v t="T2851"><vh>OnDedent</vh></v>
-<v t="T2852"><vh>OnExtract</vh></v>
-<v t="T2853"><vh>OnExtractNames</vh></v>
-<v t="T2854"><vh>OnExtractSection</vh></v>
-<v t="T2855"><vh>OnFindMatchingBracket</vh>
-<v t="T2856"><vh>findMatchingBracket</vh></v>
+<v t="T2847"><vh>Edit Body submenu</vh>
+<v t="T2848"><vh>OnConvertBlanks &amp; OnConvertAllBlanks</vh></v>
+<v t="T2849"><vh>OnConvertTabs &amp; OnConvertAllTabs</vh></v>
+<v t="T2850"><vh>OnDedent</vh></v>
+<v t="T2851"><vh>OnExtract</vh></v>
+<v t="T2852"><vh>OnExtractNames</vh></v>
+<v t="T2853"><vh>OnExtractSection</vh></v>
+<v t="T2854"><vh>OnFindMatchingBracket</vh>
+<v t="T2855"><vh>findMatchingBracket</vh></v>
 </v>
-<v t="T2857"><vh>OnIndent</vh></v>
+<v t="T2856"><vh>OnIndent</vh></v>
 <v t="T2282" a="C"><vh>OnInsertBody/HeadlineTime &amp; allies</vh>
 <v t="T2283"><vh>getTime</vh></v>
 </v>
 </v>
-<v t="T2858"><vh>Edit Headline submenu</vh>
-<v t="T2859"><vh>OnEditHeadline</vh></v>
-<v t="T2860"><vh>OnEndEditHeadline</vh></v>
-<v t="T2861"><vh>OnAbortEditHeadline</vh></v>
+<v t="T2857"><vh>Edit Headline submenu</vh>
+<v t="T2858"><vh>OnEditHeadline</vh></v>
+<v t="T2859"><vh>OnEndEditHeadline</vh></v>
+<v t="T2860"><vh>OnAbortEditHeadline</vh></v>
 <v t="T2293" a="C"><vh>OnToggleAngleBrackets</vh></v>
 </v>
-<v t="T2862"><vh>Find submenu (frame methods)</vh>
-<v t="T2863"><vh>OnFindPanel</vh></v>
-<v t="T2864"><vh>OnFindNext</vh></v>
-<v t="T2865"><vh>OnFindPrevious</vh></v>
-<v t="T2866"><vh>OnReplace</vh></v>
-<v t="T2867"><vh>OnReplaceThenFind</vh></v>
+<v t="T2861"><vh>Find submenu (frame methods)</vh>
+<v t="T2862"><vh>OnFindPanel</vh></v>
+<v t="T2863"><vh>OnFindNext</vh></v>
+<v t="T2864"><vh>OnFindPrevious</vh></v>
+<v t="T2865"><vh>OnReplace</vh></v>
+<v t="T2866"><vh>OnReplaceThenFind</vh></v>
 </v>
 </v>
-<v t="T2868"><vh>Outline Menu</vh>
-<v t="T2869"><vh>top level</vh>
-<v t="T2870"><vh>OnCutNode</vh></v>
-<v t="T2871"><vh>OnCopyNode</vh></v>
-<v t="T2872"><vh>OnPasteNodee</vh></v>
-<v t="T2873"><vh>OnDeleteNode</vh></v>
-<v t="T2874"><vh>OnInsertNode</vh></v>
-<v t="T2875"><vh>OnCloneNode</vh></v>
-<v t="T2876"><vh>OnSortChildren, OnSortSiblings</vh></v>
+<v t="T2867"><vh>Outline Menu</vh>
+<v t="T2868"><vh>top level</vh>
+<v t="T2869"><vh>OnCutNode</vh></v>
+<v t="T2870"><vh>OnCopyNode</vh></v>
+<v t="T2871"><vh>OnPasteNodee</vh></v>
+<v t="T2872"><vh>OnDeleteNode</vh></v>
+<v t="T2873"><vh>OnInsertNode</vh></v>
+<v t="T2874"><vh>OnCloneNode</vh></v>
+<v t="T2875"><vh>OnSortChildren, OnSortSiblings</vh></v>
 </v>
-<v t="T2877"><vh>Expand/Contract</vh>
-<v t="T2878"><vh>No longer used</vh>
+<v t="T2876"><vh>Expand/Contract</vh>
+<v t="T2877"><vh>No longer used</vh>
 <v t="T2307" a="C"><vh>OnContractChildren (no longer used)</vh></v>
-<v t="T2879"><vh>OnContractAllChildren (no longer used)</vh></v>
-<v t="T2880"><vh>OnExpandAllChildren (no longer used)</vh></v>
-<v t="T2881"><vh>OnExpandChildren (no longer used)</vh></v>
+<v t="T2878"><vh>OnContractAllChildren (no longer used)</vh></v>
+<v t="T2879"><vh>OnExpandAllChildren (no longer used)</vh></v>
+<v t="T2880"><vh>OnExpandChildren (no longer used)</vh></v>
 </v>
-<v t="T2882"><vh>OnContractAll</vh></v>
-<v t="T2883"><vh>OnContractNode</vh></v>
-<v t="T2884"><vh>OnContractParent</vh></v>
-<v t="T2885"><vh>OnExpandAll</vh></v>
-<v t="T2886"><vh>OnExpandNextLevel</vh></v>
-<v t="T2887"><vh>OnExpandNode</vh></v>
-<v t="T2888"><vh>OnExpandPrevLevel</vh></v>
-<v t="T2889"><vh>OnExpandToLevel1..9</vh></v>
+<v t="T2881"><vh>OnContractAll</vh></v>
+<v t="T2882"><vh>OnContractNode</vh></v>
+<v t="T2883"><vh>OnContractParent</vh></v>
+<v t="T2884"><vh>OnExpandAll</vh></v>
+<v t="T2885"><vh>OnExpandNextLevel</vh></v>
+<v t="T2886"><vh>OnExpandNode</vh></v>
+<v t="T2887"><vh>OnExpandPrevLevel</vh></v>
+<v t="T2888"><vh>OnExpandToLevel1..9</vh></v>
 </v>
-<v t="T2890"><vh>Move/Select</vh>
-<v t="T2891"><vh>OnMoveDownwn</vh></v>
-<v t="T2892"><vh>OnMoveLeft</vh></v>
-<v t="T2893"><vh>OnMoveRight</vh></v>
-<v t="T2894"><vh>OnMoveUp</vh></v>
-<v t="T2895"><vh>OnPromote</vh></v>
-<v t="T2896"><vh>OnDemote</vh></v>
-<v t="T2897"><vh>OnGoPrevVisible</vh></v>
-<v t="T2898"><vh>OnGoNextVisible</vh></v>
-<v t="T2899"><vh>OnGoBack</vh></v>
-<v t="T2900"><vh>OnGoNext</vh></v>
+<v t="T2889"><vh>Move/Select</vh>
+<v t="T2890"><vh>OnMoveDownwn</vh></v>
+<v t="T2891"><vh>OnMoveLeft</vh></v>
+<v t="T2892"><vh>OnMoveRight</vh></v>
+<v t="T2893"><vh>OnMoveUp</vh></v>
+<v t="T2894"><vh>OnPromote</vh></v>
+<v t="T2895"><vh>OnDemote</vh></v>
+<v t="T2896"><vh>OnGoPrevVisible</vh></v>
+<v t="T2897"><vh>OnGoNextVisible</vh></v>
+<v t="T2898"><vh>OnGoBack</vh></v>
+<v t="T2899"><vh>OnGoNext</vh></v>
 </v>
-<v t="T2901"><vh>Mark/Goto</vh>
-<v t="T2902" a="C"><vh>OnGoPrevVisitedNode</vh></v>
-<v t="T2903" a="C"><vh>OnGoNextVisitedNode</vh></v>
-<v t="T2904"><vh>OnGoToFirstNode</vh></v>
-<v t="T2905"><vh>OnGoToLastNode</vh></v>
-<v t="T2906"><vh>OnGoToNextChanged</vh></v>
-<v t="T2907"><vh>OnGoToNextClone</vh></v>
-<v t="T2908"><vh>OnGoToNextMarked</vh></v>
-<v t="T2909"><vh>OnGoToNextSibling</vh></v>
-<v t="T2910"><vh>OnGoToParent</vh></v>
-<v t="T2911"><vh>OnGoToPrevSibling</vh></v>
-<v t="T2912"><vh>OnMark</vh></v>
-<v t="T2913"><vh>OnMarkChangedItems</vh></v>
-<v t="T2914"><vh>OnMarkChangedRoots</vh></v>
-<v t="T2915"><vh>OnMarkClones</vh></v>
-<v t="T2916"><vh>OnMarkSubheads</vh></v>
-<v t="T2917"><vh>OnUnmarkAll</vh></v>
-</v>
-</v>
-<v t="T2918"><vh>Window Menu</vh>
-<v t="T2919"><vh>OnEqualSizedPanes</vh></v>
-<v t="T2920"><vh>OnToggleActivePane</vh></v>
-<v t="T2921"><vh>OnToggleSplitDirection</vh></v>
-<v t="T2922"><vh>OnCascade</vh></v>
-<v t="T2923"><vh>OnMinimizeAll</vh></v>
-<v t="T2924"><vh>OnHideLogWindow</vh></v>
-<v t="T2925"><vh>OnOpenCompareWindow</vh></v>
-<v t="T2926"><vh>OnOpenPythonWindow (Dave Hein)</vh>
-<v t="T2927"><vh>&lt;&lt; open idle in Linux &gt;&gt;</vh></v>
-<v t="T2928"><vh>&lt;&lt; open idle in Windows &gt;&gt;</vh></v>
-<v t="T2929"><vh>leoPyShellMain</vh></v>
+<v t="T2900"><vh>Mark/Goto</vh>
+<v t="T2901" a="C"><vh>OnGoPrevVisitedNode</vh></v>
+<v t="T2902" a="C"><vh>OnGoNextVisitedNode</vh></v>
+<v t="T2903"><vh>OnGoToFirstNode</vh></v>
+<v t="T2904"><vh>OnGoToLastNode</vh></v>
+<v t="T2905"><vh>OnGoToNextChanged</vh></v>
+<v t="T2906"><vh>OnGoToNextClone</vh></v>
+<v t="T2907"><vh>OnGoToNextMarked</vh></v>
+<v t="T2908"><vh>OnGoToNextSibling</vh></v>
+<v t="T2909"><vh>OnGoToParent</vh></v>
+<v t="T2910"><vh>OnGoToPrevSibling</vh></v>
+<v t="T2911"><vh>OnMark</vh></v>
+<v t="T2912"><vh>OnMarkChangedItems</vh></v>
+<v t="T2913"><vh>OnMarkChangedRoots</vh></v>
+<v t="T2914"><vh>OnMarkClones</vh></v>
+<v t="T2915"><vh>OnMarkSubheads</vh></v>
+<v t="T2916"><vh>OnUnmarkAll</vh></v>
 </v>
 </v>
-<v t="T2930"><vh>Help Menu</vh>
-<v t="T2931" a="C"><vh>OnAbout (version number &amp; date)</vh></v>
-<v t="T2932"><vh>OnLeoDocumentation</vh></v>
-<v t="T2933"><vh>OnLeoHome</vh></v>
-<v t="T2934"><vh>OnLeoHelp</vh>
-<v t="T2935"><vh>showProgressBar</vh>
-<v t="T2936"><vh>&lt;&lt; create the scale widget &gt;&gt;</vh></v>
+<v t="T2917"><vh>Window Menu</vh>
+<v t="T2918"><vh>OnEqualSizedPanes</vh></v>
+<v t="T2919"><vh>OnToggleActivePane</vh></v>
+<v t="T2920"><vh>OnToggleSplitDirection</vh></v>
+<v t="T2921"><vh>OnCascade</vh></v>
+<v t="T2922"><vh>OnMinimizeAll</vh></v>
+<v t="T2923"><vh>OnHideLogWindow</vh></v>
+<v t="T2924"><vh>OnOpenCompareWindow</vh></v>
+<v t="T2925"><vh>OnOpenPythonWindow (Dave Hein)</vh>
+<v t="T2926"><vh>&lt;&lt; open idle in Linux &gt;&gt;</vh></v>
+<v t="T2927"><vh>&lt;&lt; open idle in Windows &gt;&gt;</vh></v>
+<v t="T2928"><vh>leoPyShellMain</vh></v>
 </v>
 </v>
-<v t="T2937"><vh>OnLeoTutorial (version number)</vh></v>
+<v t="T2929"><vh>Help Menu</vh>
+<v t="T2930" a="C"><vh>OnAbout (version number &amp; date)</vh></v>
+<v t="T2931"><vh>OnLeoDocumentation</vh></v>
+<v t="T2932"><vh>OnLeoHome</vh></v>
+<v t="T2933"><vh>OnLeoHelp</vh>
+<v t="T2934"><vh>showProgressBar</vh>
+<v t="T2935"><vh>&lt;&lt; create the scale widget &gt;&gt;</vh></v>
+</v>
+</v>
+<v t="T2936"><vh>OnLeoTutorial (version number)</vh></v>
 <v t="T2352" a="C"><vh>OnLeoConfig, OnApplyConfig</vh></v>
 </v>
 </v>
-<v t="T2938" a="C"><vh>Menu Convenience Routines</vh>
-<v t="T2939"><vh>createMenuItemsFromTable</vh></v>
-<v t="T2940"><vh>createNewMenu</vh></v>
-<v t="T2941" a="C"><vh>createOpenWithMenuFromTable</vh></v>
-<v t="T2942"><vh>deleteMenu</vh></v>
-<v t="T2943"><vh>deleteMenuItem</vh></v>
-<v t="T2944"><vh>setRealMenuNamesFromTable</vh></v>
+<v t="T2937" a="C"><vh>Menu Convenience Routines</vh>
+<v t="T2938"><vh>createMenuItemsFromTable</vh></v>
+<v t="T2939"><vh>createNewMenu</vh></v>
+<v t="T2940" a="C"><vh>createOpenWithMenuFromTable</vh></v>
+<v t="T2941"><vh>deleteMenu</vh></v>
+<v t="T2942"><vh>deleteMenuItem</vh></v>
+<v t="T2943"><vh>setRealMenuNamesFromTable</vh></v>
 </v>
-<v t="T2945"><vh>Menu enablers (Frame)</vh>
-<v t="T2946"><vh>frame.OnMenuClick (enables and disables all menu items)</vh></v>
-<v t="T2947"><vh>hasSelection</vh></v>
-<v t="T2948"><vh>updateFileMenu</vh></v>
-<v t="T2949"><vh>updateEditMenu</vh></v>
-<v t="T2950"><vh>updateOutlineMenu</vh></v>
-</v>
-</v>
-<v t="T2951"><vh>(Convenience routines for hooks)</vh>
-<v t="T2952"><vh>Convenience routines that enable and disable the "idle" hook</vh>
-<v t="T2953" a="C"><vh>enableIdleTimeHook, disableIdleTimeHook, idleTimeHookHandler</vh></v>
-</v>
-<v t="T2938" a="C"><vh>Menu Convenience Routines</vh>
-<v t="T2939"><vh>createMenuItemsFromTable</vh></v>
-<v t="T2940"><vh>createNewMenu</vh></v>
-<v t="T2941" a="C"><vh>createOpenWithMenuFromTable</vh></v>
-<v t="T2942"><vh>deleteMenu</vh></v>
-<v t="T2943"><vh>deleteMenuItem</vh></v>
-<v t="T2944"><vh>setRealMenuNamesFromTable</vh></v>
-</v>
-<v t="T2954" a="C"><vh>file/module/plugin_date</vh></v>
-<v t="T2955" a="C"><vh>plugin_signon</vh></v>
-</v>
-<v t="T2956"><vh>(Key handlers)</vh>
-<v t="T2957" a="C"><vh>body key handlers (tree)</vh>
-<v t="T2958"><vh>idle_body_key</vh>
-<v t="T2959"><vh>&lt;&lt; set s to the widget text &gt;&gt;</vh></v>
-<v t="T2960"><vh>&lt;&lt; return if nothing has changed &gt;&gt;</vh></v>
-<v t="T2961"><vh>&lt;&lt; set removeTrailing &gt;&gt;</vh></v>
-<v t="T2962"><vh>&lt;&lt; Do auto indent &gt;&gt; (David McNab)</vh></v>
-<v t="T2963"><vh>&lt;&lt; convert tab to blanks &gt;&gt;</vh></v>
-<v t="T2964"><vh>&lt;&lt; set s to widget text, removing trailing newlines if necessary &gt;&gt;</vh></v>
-<v t="T2965"><vh>&lt;&lt; recolor the body &gt;&gt;</vh></v>
-<v t="T2966"><vh>&lt;&lt; redraw the screen if necessary &gt;&gt;</vh></v>
-</v>
-<v t="T2967"><vh>onBodyChanged</vh></v>
-<v t="T2968"><vh>OnBodyKey</vh></v>
-<v t="T2969"><vh>onBodyWillChange</vh></v>
-</v>
-<v t="T2970" a="C"><vh>headline key handlers (tree)</vh>
-<v t="T2971"><vh>onHeadChanged</vh></v>
-<v t="T2972"><vh>OnHeadlineKey</vh></v>
-<v t="T2973"><vh>idle_head_key</vh>
-<v t="T2974"><vh>&lt;&lt; set s to the widget text &gt;&gt;</vh></v>
-<v t="T2975"><vh>&lt;&lt; set head to vnode text &gt;&gt;</vh></v>
-<v t="T2976"><vh>&lt;&lt; update v and all nodes joined to v &gt;&gt;</vh></v>
-<v t="T2977"><vh>&lt;&lt; reconfigure v and all nodes joined to v &gt;&gt;</vh></v>
-<v t="T2978"><vh>&lt;&lt; update the screen &gt;&gt;</vh></v>
+<v t="T2944"><vh>Menu enablers (Frame)</vh>
+<v t="T2945"><vh>frame.OnMenuClick (enables and disables all menu items)</vh></v>
+<v t="T2946"><vh>hasSelection</vh></v>
+<v t="T2947"><vh>updateFileMenu</vh></v>
+<v t="T2948"><vh>updateEditMenu</vh></v>
+<v t="T2949"><vh>updateOutlineMenu</vh></v>
 </v>
 </v>
-<v t="T2979"><vh>What doesn't work</vh></v>
+<v t="T2950"><vh>(Convenience routines for hooks)</vh>
+<v t="T2951"><vh>Convenience routines that enable and disable the "idle" hook</vh>
+<v t="T2952" a="C"><vh>enableIdleTimeHook, disableIdleTimeHook, idleTimeHookHandler</vh></v>
 </v>
-<v t="T2980"><vh>(scanAllDirectives, scanDirectives, related utils)</vh>
-<v t="T2981" a="C"><vh>atFile.scanAllDirectives (calls writeError on errors)</vh>
-<v t="T2982"><vh>&lt;&lt; Set ivars &gt;&gt;</vh></v>
-<v t="T2983"><vh>&lt;&lt; Set path from @file node &gt;&gt;</vh></v>
-<v t="T2984"><vh>&lt;&lt; Test for @comment and @language &gt;&gt;</vh></v>
-<v t="T2985"><vh>&lt;&lt; Test for @encoding &gt;&gt;</vh></v>
-<v t="T2986"><vh>&lt;&lt; Test for @header and @noheader &gt;&gt;</vh></v>
-<v t="T2987"><vh>&lt;&lt; Test for @lineending &gt;&gt;</vh></v>
-<v t="T2988"><vh>&lt;&lt; Test for @path &gt;&gt;</vh>
-<v t="T2989"><vh>&lt;&lt; compute relative path from s[k:] &gt;&gt;</vh></v>
-<v t="T2990"><vh>&lt;&lt; handle absolute path &gt;&gt;</vh></v>
+<v t="T2937" a="C"><vh>Menu Convenience Routines</vh>
+<v t="T2938"><vh>createMenuItemsFromTable</vh></v>
+<v t="T2939"><vh>createNewMenu</vh></v>
+<v t="T2940" a="C"><vh>createOpenWithMenuFromTable</vh></v>
+<v t="T2941"><vh>deleteMenu</vh></v>
+<v t="T2942"><vh>deleteMenuItem</vh></v>
+<v t="T2943"><vh>setRealMenuNamesFromTable</vh></v>
 </v>
-<v t="T2991"><vh>&lt;&lt; Test for @pagewidth &gt;&gt;</vh></v>
-<v t="T2992"><vh>&lt;&lt; Test for @tabwidth &gt;&gt;</vh></v>
-<v t="T2993"><vh>&lt;&lt; Set current directory &gt;&gt;</vh></v>
-<v t="T2994"><vh>&lt;&lt; Set comment Strings from delims &gt;&gt;</vh></v>
+<v t="T2953" a="C"><vh>file/module/plugin_date</vh></v>
+<v t="T2954" a="C"><vh>plugin_signon</vh></v>
 </v>
-<v t="T2995" a="C"><vh>tangle.init_ivars &amp; init_directive_ivars</vh>
-<v t="T2996"><vh>&lt;&lt; init tangle ivars &gt;&gt;</vh></v>
-<v t="T2997"><vh>&lt;&lt; init untangle ivars &gt;&gt;</vh></v>
+<v t="T2955"><vh>(Key handlers)</vh>
+<v t="T2956" a="C"><vh>body key handlers (tree)</vh>
+<v t="T2957"><vh>idle_body_key</vh>
+<v t="T2958"><vh>&lt;&lt; set s to the widget text &gt;&gt;</vh></v>
+<v t="T2959"><vh>&lt;&lt; return if nothing has changed &gt;&gt;</vh></v>
+<v t="T2960"><vh>&lt;&lt; set removeTrailing &gt;&gt;</vh></v>
+<v t="T2961"><vh>&lt;&lt; Do auto indent &gt;&gt; (David McNab)</vh></v>
+<v t="T2962"><vh>&lt;&lt; convert tab to blanks &gt;&gt;</vh></v>
+<v t="T2963"><vh>&lt;&lt; set s to widget text, removing trailing newlines if necessary &gt;&gt;</vh></v>
+<v t="T2964"><vh>&lt;&lt; recolor the body &gt;&gt;</vh></v>
+<v t="T2965"><vh>&lt;&lt; redraw the screen if necessary &gt;&gt;</vh></v>
+</v>
+<v t="T2966"><vh>onBodyChanged</vh></v>
+<v t="T2967"><vh>OnBodyKey</vh></v>
+<v t="T2968"><vh>onBodyWillChange</vh></v>
+</v>
+<v t="T2969" a="C"><vh>headline key handlers (tree)</vh>
+<v t="T2970"><vh>onHeadChanged</vh></v>
+<v t="T2971"><vh>OnHeadlineKey</vh></v>
+<v t="T2972"><vh>idle_head_key</vh>
+<v t="T2973"><vh>&lt;&lt; set s to the widget text &gt;&gt;</vh></v>
+<v t="T2974"><vh>&lt;&lt; set head to vnode text &gt;&gt;</vh></v>
+<v t="T2975"><vh>&lt;&lt; update v and all nodes joined to v &gt;&gt;</vh></v>
+<v t="T2976"><vh>&lt;&lt; reconfigure v and all nodes joined to v &gt;&gt;</vh></v>
+<v t="T2977"><vh>&lt;&lt; update the screen &gt;&gt;</vh></v>
+</v>
+</v>
+<v t="T2978"><vh>What doesn't work</vh></v>
+</v>
+<v t="T2979"><vh>(scanAllDirectives, scanDirectives, related utils)</vh>
+<v t="T2980" a="C"><vh>atFile.scanAllDirectives (calls writeError on errors)</vh>
+<v t="T2981"><vh>&lt;&lt; Set ivars &gt;&gt;</vh></v>
+<v t="T2982"><vh>&lt;&lt; Set path from @file node &gt;&gt;</vh></v>
+<v t="T2983"><vh>&lt;&lt; Test for @comment and @language &gt;&gt;</vh></v>
+<v t="T2984"><vh>&lt;&lt; Test for @encoding &gt;&gt;</vh></v>
+<v t="T2985"><vh>&lt;&lt; Test for @header and @noheader &gt;&gt;</vh></v>
+<v t="T2986"><vh>&lt;&lt; Test for @lineending &gt;&gt;</vh></v>
+<v t="T2987"><vh>&lt;&lt; Test for @path &gt;&gt;</vh>
+<v t="T2988"><vh>&lt;&lt; compute relative path from s[k:] &gt;&gt;</vh></v>
+<v t="T2989"><vh>&lt;&lt; handle absolute path &gt;&gt;</vh></v>
+</v>
+<v t="T2990"><vh>&lt;&lt; Test for @pagewidth &gt;&gt;</vh></v>
+<v t="T2991"><vh>&lt;&lt; Test for @tabwidth &gt;&gt;</vh></v>
+<v t="T2992"><vh>&lt;&lt; Set current directory &gt;&gt;</vh></v>
+<v t="T2993"><vh>&lt;&lt; Set comment Strings from delims &gt;&gt;</vh></v>
+</v>
+<v t="T2994" a="C"><vh>tangle.init_ivars &amp; init_directive_ivars</vh>
+<v t="T2995"><vh>&lt;&lt; init tangle ivars &gt;&gt;</vh></v>
+<v t="T2996"><vh>&lt;&lt; init untangle ivars &gt;&gt;</vh></v>
 <v t="T1911" a="C"><vh>&lt;&lt; init directive ivars &gt;&gt; (tangle)</vh></v>
 </v>
-<v t="T2998" a="C"><vh>tangle.scanAllDirectives</vh>
-<v t="T2999"><vh>&lt;&lt; Collect @first attributes &gt;&gt;</vh></v>
-<v t="T3000"><vh>&lt;&lt; Test for @comment and @language &gt;&gt;</vh></v>
-<v t="T3001"><vh>&lt;&lt; Test for @encoding &gt;&gt;</vh></v>
-<v t="T3002"><vh>&lt;&lt; Test for @lineending &gt;&gt;</vh></v>
-<v t="T3003"><vh>&lt;&lt; Test for print modes directives &gt;&gt;</vh></v>
-<v t="T3004"><vh>&lt;&lt; Test for @path &gt;&gt;</vh>
-<v t="T3005"><vh>&lt;&lt; compute dir and relative_path from s[k:] &gt;&gt;</vh></v>
-<v t="T3006"><vh>&lt;&lt; handle absolute @path &gt;&gt;</vh></v>
+<v t="T2997" a="C"><vh>tangle.scanAllDirectives</vh>
+<v t="T2998"><vh>&lt;&lt; Collect @first attributes &gt;&gt;</vh></v>
+<v t="T2999"><vh>&lt;&lt; Test for @comment and @language &gt;&gt;</vh></v>
+<v t="T3000"><vh>&lt;&lt; Test for @encoding &gt;&gt;</vh></v>
+<v t="T3001"><vh>&lt;&lt; Test for @lineending &gt;&gt;</vh></v>
+<v t="T3002"><vh>&lt;&lt; Test for print modes directives &gt;&gt;</vh></v>
+<v t="T3003"><vh>&lt;&lt; Test for @path &gt;&gt;</vh>
+<v t="T3004"><vh>&lt;&lt; compute dir and relative_path from s[k:] &gt;&gt;</vh></v>
+<v t="T3005"><vh>&lt;&lt; handle absolute @path &gt;&gt;</vh></v>
 </v>
-<v t="T3007"><vh>&lt;&lt; Test for @pagewidth &gt;&gt;</vh></v>
-<v t="T3008"><vh>&lt;&lt; Test for @root &gt;&gt;</vh></v>
-<v t="T3009"><vh>&lt;&lt; Test for @tabwidth &gt;&gt;</vh></v>
-<v t="T3010"><vh>&lt;&lt; Test for @header and @noheader &gt;&gt;</vh></v>
-<v t="T3011"><vh>&lt;&lt; Set self.tangle_directory &gt;&gt;</vh>
-<v t="T3012"><vh>&lt;&lt; handle absolute path &gt;&gt;</vh></v>
+<v t="T3006"><vh>&lt;&lt; Test for @pagewidth &gt;&gt;</vh></v>
+<v t="T3007"><vh>&lt;&lt; Test for @root &gt;&gt;</vh></v>
+<v t="T3008"><vh>&lt;&lt; Test for @tabwidth &gt;&gt;</vh></v>
+<v t="T3009"><vh>&lt;&lt; Test for @header and @noheader &gt;&gt;</vh></v>
+<v t="T3010"><vh>&lt;&lt; Set self.tangle_directory &gt;&gt;</vh>
+<v t="T3011"><vh>&lt;&lt; handle absolute path &gt;&gt;</vh></v>
 </v>
 </v>
-<v t="T3013" a="C"><vh>tree.scanForTabWidth</vh>
-<v t="T3014"><vh>&lt;&lt; set w and break on @tabwidth &gt;&gt;</vh></v>
+<v t="T3012" a="C"><vh>tree.scanForTabWidth</vh>
+<v t="T3013"><vh>&lt;&lt; set w and break on @tabwidth &gt;&gt;</vh></v>
 </v>
-<v t="T3015" a="C"><vh>scanColorDirectives</vh>
-<v t="T3016"><vh>&lt;&lt; Test for @comment or @language &gt;&gt;</vh></v>
-<v t="T3017"><vh>&lt;&lt; Test for @root, @root-doc or @root-code &gt;&gt;</vh></v>
+<v t="T3014" a="C"><vh>scanColorDirectives</vh>
+<v t="T3015"><vh>&lt;&lt; Test for @comment or @language &gt;&gt;</vh></v>
+<v t="T3016"><vh>&lt;&lt; Test for @root, @root-doc or @root-code &gt;&gt;</vh></v>
 </v>
-<v t="T3018" a="C"><vh>Directive utils...</vh>
-<v t="T3019"><vh>@language and @comment directives (leoUtils)</vh>
+<v t="T3017" a="C"><vh>Directive utils...</vh>
+<v t="T3018"><vh>@language and @comment directives (leoUtils)</vh>
 <v t="T1154" a="C"><vh>set_delims_from_language</vh></v>
-<v t="T3020"><vh>set_delims_from_string</vh></v>
+<v t="T3019"><vh>set_delims_from_string</vh></v>
 <v t="T1155" a="C"><vh>set_language</vh></v>
 </v>
-<v t="T3021"><vh>findReference</vh></v>
+<v t="T3020"><vh>findReference</vh></v>
 <v t="T2707" a="C"><vh>get_directives_dict &amp; globalDirectiveList</vh>
 <v t="T2708"><vh>&lt;&lt; set dict for @ directives &gt;&gt;</vh></v>
 <v t="T2709"><vh>&lt;&lt; set dict["root"] for noweb * chunks &gt;&gt;</vh></v>
 </v>
 <v t="T2366" a="C"><vh>getOutputNewline</vh></v>
-<v t="T3022"><vh>scanAtEncodingDirective</vh></v>
-<v t="T3023"><vh>scanAtLineendingDirective</vh></v>
-<v t="T3024"><vh>scanAtPagewidthDirective</vh></v>
-<v t="T3025"><vh>scanAtTabwidthDirective</vh></v>
+<v t="T3021"><vh>scanAtEncodingDirective</vh></v>
+<v t="T3022"><vh>scanAtLineendingDirective</vh></v>
+<v t="T3023"><vh>scanAtPagewidthDirective</vh></v>
+<v t="T3024"><vh>scanAtTabwidthDirective</vh></v>
 <v t="T2077" a="C"><vh>scanDirectives (utils)</vh>
 <v t="T2078"><vh>&lt;&lt; Set local vars &gt;&gt;</vh></v>
 <v t="T2079"><vh>&lt;&lt; Test for @comment and @language &gt;&gt;</vh></v>
@@ -4325,59 +4324,59 @@
 <v t="T2086"><vh>&lt;&lt; Test for @wrap and @nowrap &gt;&gt;</vh></v>
 </v>
 </v>
-<v t="T3026"><vh>Tests</vh>
-<v t="T3027"><vh>@rawfile c:\prog\test\rawFileTest.txt</vh>
-<v t="T3028"><vh>node 1</vh></v>
-<v t="T3029"><vh>node 2</vh></v>
+<v t="T3025"><vh>Tests</vh>
+<v t="T3026"><vh>@rawfile c:\prog\test\rawFileTest.txt</vh>
+<v t="T3027"><vh>node 1</vh></v>
+<v t="T3028"><vh>node 2</vh></v>
 </v>
-<v t="T3030"><vh>@silentfile c:\prog\test\silentFileTest.txt</vh></v>
-<v t="T3031"><vh>@root c:\prog\test\tangleTest.txt</vh>
-<v t="T3032"><vh>ref</vh></v>
+<v t="T3029"><vh>@silentfile c:\prog\test\silentFileTest.txt</vh></v>
+<v t="T3030"><vh>@root c:\prog\test\tangleTest.txt</vh>
+<v t="T3031"><vh>ref</vh></v>
 </v>
 </v>
 </v>
-<v t="T3033"><vh>(Unicode)</vh>
-<v t="T3034"><vh> Bug Reports</vh>
-<v t="T3035"><vh> Report</vh></v>
-<v t="T3036"><vh> Report 1 (not a problem)</vh></v>
-<v t="T3037"><vh> Report 2 (a problem)</vh></v>
-<v t="T3038"><vh>Report: not real?</vh></v>
+<v t="T3032"><vh>(Unicode)</vh>
+<v t="T3033"><vh> Bug Reports</vh>
+<v t="T3034"><vh> Report</vh></v>
+<v t="T3035"><vh> Report 1 (not a problem)</vh></v>
+<v t="T3036"><vh> Report 2 (a problem)</vh></v>
+<v t="T3037"><vh>Report: not real?</vh></v>
 </v>
-<v t="T3039"><vh> Code</vh>
-<v t="T3040"><vh> App</vh>
-<v t="T3041" a="C"><vh>app.__init__</vh>
-<v t="T3042"><vh>&lt;&lt; define global constants &gt;&gt;</vh></v>
+<v t="T3038"><vh> Code</vh>
+<v t="T3039"><vh> App</vh>
+<v t="T3040" a="C"><vh>app.__init__</vh>
+<v t="T3041"><vh>&lt;&lt; define global constants &gt;&gt;</vh></v>
 <v t="T1138" a="C"><vh>&lt;&lt; define global data structures &gt;&gt;</vh></v>
 </v>
-<v t="T3043" a="C"><vh>app.finishCreate</vh>
-<v t="T3044"><vh>&lt;&lt; return false if not v2.1 or above &gt;&gt;</vh></v>
-<v t="T3045"><vh>&lt;&lt; set loadDir &gt;&gt;</vh></v>
-<v t="T3046"><vh>&lt;&lt; set the default Leo icon &gt;&gt;</vh>
-<v t="T3047"><vh>&lt;&lt; set v834 if version is 8.3.4 or greater &gt;&gt;</vh></v>
+<v t="T3042" a="C"><vh>app.finishCreate</vh>
+<v t="T3043"><vh>&lt;&lt; return false if not v2.1 or above &gt;&gt;</vh></v>
+<v t="T3044"><vh>&lt;&lt; set loadDir &gt;&gt;</vh></v>
+<v t="T3045"><vh>&lt;&lt; set the default Leo icon &gt;&gt;</vh>
+<v t="T3046"><vh>&lt;&lt; set v834 if version is 8.3.4 or greater &gt;&gt;</vh></v>
 </v>
-<v t="T3048" a="C"><vh>&lt;&lt; set app.tkEncoding &gt;&gt;</vh></v>
+<v t="T3047" a="C"><vh>&lt;&lt; set app.tkEncoding &gt;&gt;</vh></v>
 </v>
 </v>
-<v t="T3049"><vh>Config</vh>
-<v t="T3050" a="C"><vh>update_section</vh></v>
-<v t="T3051" a="C"><vh>&lt;&lt; get config options &gt;&gt;</vh></v>
-<v t="T3052" a="C"><vh>&lt;&lt; convert find/change options to unicode &gt;&gt;</vh></v>
+<v t="T3048"><vh>Config</vh>
+<v t="T3049" a="C"><vh>update_section</vh></v>
+<v t="T3050" a="C"><vh>&lt;&lt; get config options &gt;&gt;</vh></v>
+<v t="T3051" a="C"><vh>&lt;&lt; convert find/change options to unicode &gt;&gt;</vh></v>
 </v>
-<v t="T3053"><vh>Derived files</vh>
+<v t="T3052"><vh>Derived files</vh>
 <v t="T2415" a="C"><vh>atFile.__init__&amp; initIvars</vh>
 <v t="T2416"><vh>&lt;&lt; init atFile ivars &gt;&gt;</vh></v>
 </v>
-<v t="T3054" a="C"><vh>Reading</vh>
-<v t="T3055"><vh>completeFirstDirectives (Dave Hein)</vh></v>
-<v t="T3056"><vh>completeLastDirectives (Dave Hein)</vh></v>
-<v t="T3057"><vh>createNthChild (3.0)</vh>
-<v t="T3058"><vh>&lt;&lt; check the headlines &gt;&gt;</vh></v>
+<v t="T3053" a="C"><vh>Reading</vh>
+<v t="T3054"><vh>completeFirstDirectives (Dave Hein)</vh></v>
+<v t="T3055"><vh>completeLastDirectives (Dave Hein)</vh></v>
+<v t="T3056"><vh>createNthChild (3.0)</vh>
+<v t="T3057"><vh>&lt;&lt; check the headlines &gt;&gt;</vh></v>
 </v>
-<v t="T3059"><vh>handleLinesFollowingSentinel</vh>
-<v t="T3060"><vh>&lt;&lt; remove the comment delims from s &gt;&gt;</vh></v>
+<v t="T3058"><vh>handleLinesFollowingSentinel</vh>
+<v t="T3059"><vh>&lt;&lt; remove the comment delims from s &gt;&gt;</vh></v>
 </v>
-<v t="T3061"><vh>readLine</vh></v>
-<v t="T3062"><vh>readLinesToNextSentinel</vh></v>
+<v t="T3060"><vh>readLine</vh></v>
+<v t="T3061"><vh>readLinesToNextSentinel</vh></v>
 <v t="T2647" a="C"><vh>scanDoc</vh>
 <v t="T2648"><vh>&lt;&lt; Skip the opening sentinel &gt;&gt;</vh></v>
 <v t="T2649"><vh>&lt;&lt; Skip an opening block delim &gt;&gt;</vh></v>
@@ -4392,19 +4391,19 @@
 <v t="T2407"><vh>&lt;&lt; read optional encoding param &gt;&gt;</vh></v>
 <v t="T2408"><vh>&lt;&lt; set the closing comment delim &gt;&gt;</vh></v>
 </v>
-<v t="T3063"><vh>scanText</vh>
-<v t="T3064"><vh>&lt;&lt; put the next line into s &gt;&gt;</vh></v>
-<v t="T3065"><vh>&lt;&lt; set kind, nextKind &gt;&gt;</vh></v>
-<v t="T3066"><vh>&lt;&lt; Set lineIndent, linep and leading_ws &gt;&gt;</vh></v>
-<v t="T3067"><vh>&lt;&lt; handle unexpected end of text &gt;&gt;</vh></v>
-<v t="T3068"><vh>&lt;&lt; handle the line in s &gt;&gt;</vh>
-<v t="T3069"><vh>&lt;&lt; append non-sentinel line &gt;&gt;</vh></v>
-<v t="T3070"><vh>&lt;&lt; handle common sentinels &gt;&gt;</vh>
-<v t="T3071"><vh>&lt;&lt; handle an ending sentinel &gt;&gt;</vh></v>
+<v t="T3062"><vh>scanText</vh>
+<v t="T3063"><vh>&lt;&lt; put the next line into s &gt;&gt;</vh></v>
+<v t="T3064"><vh>&lt;&lt; set kind, nextKind &gt;&gt;</vh></v>
+<v t="T3065"><vh>&lt;&lt; Set lineIndent, linep and leading_ws &gt;&gt;</vh></v>
+<v t="T3066"><vh>&lt;&lt; handle unexpected end of text &gt;&gt;</vh></v>
+<v t="T3067"><vh>&lt;&lt; handle the line in s &gt;&gt;</vh>
+<v t="T3068"><vh>&lt;&lt; append non-sentinel line &gt;&gt;</vh></v>
+<v t="T3069"><vh>&lt;&lt; handle common sentinels &gt;&gt;</vh>
+<v t="T3070"><vh>&lt;&lt; handle an ending sentinel &gt;&gt;</vh></v>
 <v t="T1901" a="C"><vh>&lt;&lt; scan old ref &gt;&gt; (3.0)</vh></v>
-<v t="T3072"><vh>&lt;&lt; scan @+at &gt;&gt;</vh></v>
-<v t="T3073"><vh>&lt;&lt; scan @+body &gt;&gt;</vh></v>
-<v t="T3074"><vh>&lt;&lt; scan @+doc &gt;&gt;</vh></v>
+<v t="T3071"><vh>&lt;&lt; scan @+at &gt;&gt;</vh></v>
+<v t="T3072"><vh>&lt;&lt; scan @+body &gt;&gt;</vh></v>
+<v t="T3073"><vh>&lt;&lt; scan @+doc &gt;&gt;</vh></v>
 <v t="T2680" a="C"><vh>&lt;&lt; scan @+node &gt;&gt;</vh>
 <v t="T2681"><vh>&lt;&lt; Set childIndex &gt;&gt;</vh></v>
 <v t="T2682"><vh>&lt;&lt; Set cloneIndex &gt;&gt;</vh></v>
@@ -4412,16 +4411,16 @@
 <v t="T2683"><vh>&lt;&lt; Check the filename in the sentinel &gt;&gt;</vh></v>
 <v t="T2684"><vh>&lt;&lt; look for sentinels that may follow a reference &gt;&gt;</vh></v>
 </v>
-<v t="T3075"><vh>&lt;&lt; scan @+others &gt;&gt;</vh></v>
+<v t="T3074"><vh>&lt;&lt; scan @+others &gt;&gt;</vh></v>
 </v>
-<v t="T3076"><vh>&lt;&lt; handle rare sentinels &gt;&gt;</vh>
-<v t="T3077"><vh>&lt;&lt; scan @+leo &gt;&gt;</vh></v>
+<v t="T3075"><vh>&lt;&lt; handle rare sentinels &gt;&gt;</vh>
+<v t="T3076"><vh>&lt;&lt; scan @+leo &gt;&gt;</vh></v>
 <v t="T1902" a="C"><vh>&lt;&lt; scan @@ &gt;&gt;</vh></v>
-<v t="T3078"><vh>&lt;&lt; scan @comment &gt;&gt;</vh></v>
+<v t="T3077"><vh>&lt;&lt; scan @comment &gt;&gt;</vh></v>
 <v t="T2636" a="C"><vh>&lt;&lt; scan @delims &gt;&gt;</vh></v>
-<v t="T3079"><vh>&lt;&lt; scan @verbatim &gt;&gt;</vh></v>
+<v t="T3078"><vh>&lt;&lt; scan @verbatim &gt;&gt;</vh></v>
 </v>
-<v t="T3080"><vh>&lt;&lt; warn about unknown sentinel &gt;&gt;</vh></v>
+<v t="T3079"><vh>&lt;&lt; warn about unknown sentinel &gt;&gt;</vh></v>
 </v>
 </v>
 </v>
@@ -4429,15 +4428,15 @@
 <v t="T2716"><vh>Top level</vh>
 <v t="T2717"><vh>atFile.rawWrite</vh>
 <v t="T2718"><vh>&lt;&lt; write root's tree &gt;&gt;</vh>
-<v t="T2719"><vh>&lt;&lt; put all @first lines in root &gt;&gt;</vh></v>
-<v t="T2720"><vh>&lt;&lt; put optional @comment sentinel lines &gt;&gt;</vh></v>
-<v t="T2721"><vh>&lt;&lt; Write v's node &gt;&gt;</vh></v>
-<v t="T2722"><vh>&lt;&lt; put all @last lines in root &gt;&gt;</vh></v>
+<v t="T2399" a="C"><vh>&lt;&lt; put all @first lines in root &gt;&gt;</vh></v>
+<v t="T2719"><vh>&lt;&lt; put optional @comment sentinel lines &gt;&gt;</vh></v>
+<v t="T2720"><vh>&lt;&lt; Write v's node &gt;&gt;</vh></v>
+<v t="T2401" a="C"><vh>&lt;&lt; put all @last lines in root &gt;&gt;</vh></v>
 </v>
 </v>
-<v t="T2723"><vh>atFile.silentWrite</vh>
-<v t="T2724"><vh>&lt;&lt; Write v's headline if it starts with @@ &gt;&gt;</vh></v>
-<v t="T2725"><vh>&lt;&lt; Write v's body &gt;&gt;</vh></v>
+<v t="T2721"><vh>atFile.silentWrite</vh>
+<v t="T2722"><vh>&lt;&lt; Write v's headline if it starts with @@ &gt;&gt;</vh></v>
+<v t="T2723"><vh>&lt;&lt; Write v's body &gt;&gt;</vh></v>
 </v>
 <v t="T2395" a="C"><vh>atFile.write</vh>
 <v t="T2396"><vh>&lt;&lt; initialize &gt;&gt;</vh></v>
@@ -4460,17 +4459,17 @@
 <v t="T2063"><vh>&lt;&lt; create self.outputFile &gt;&gt;</vh></v>
 <v t="T2064"><vh>&lt;&lt; write the @file node &gt;&gt;</vh></v>
 </v>
-<v t="T2726"><vh>Top level write helpers</vh>
-<v t="T2727"><vh>atFile.closeWriteFile</vh></v>
-<v t="T2728"><vh>atFile.handleWriteException</vh></v>
-<v t="T2729"><vh>atFile.openWriteFile</vh></v>
-<v t="T2730"><vh>atFile.putInitialComment</vh></v>
-<v t="T2731"><vh>atFile.replaceTargetFileIfDifferent</vh>
-<v t="T2732"><vh>&lt;&lt; delete the output file &gt;&gt;</vh></v>
-<v t="T2733"><vh>&lt;&lt; replace the target file with the output file &gt;&gt;</vh></v>
-<v t="T2734"><vh>&lt;&lt; rename the output file to be the target file &gt;&gt;</vh></v>
+<v t="T2724"><vh>Top level write helpers</vh>
+<v t="T2725"><vh>atFile.closeWriteFile</vh></v>
+<v t="T2726"><vh>atFile.handleWriteException</vh></v>
+<v t="T2727"><vh>atFile.openWriteFile</vh></v>
+<v t="T2728"><vh>atFile.putInitialComment</vh></v>
+<v t="T2729"><vh>atFile.replaceTargetFileIfDifferent</vh>
+<v t="T2730"><vh>&lt;&lt; delete the output file &gt;&gt;</vh></v>
+<v t="T2731"><vh>&lt;&lt; replace the target file with the output file &gt;&gt;</vh></v>
+<v t="T2732"><vh>&lt;&lt; rename the output file to be the target file &gt;&gt;</vh></v>
 </v>
-<v t="T2735"><vh>atFile.outputStringWithLineEndings</vh></v>
+<v t="T2733"><vh>atFile.outputStringWithLineEndings</vh></v>
 </v>
 </v>
 <v t="T2421" a="C"><vh>putBodyPart</vh>
@@ -4481,7 +4480,7 @@
 <v t="T2426"><vh>&lt;&lt; put out the last directives, if any &gt;&gt;</vh></v>
 </v>
 </v>
-<v t="T2736"><vh>putDoc</vh></v>
+<v t="T2734"><vh>putDoc</vh></v>
 <v t="T2205" a="C"><vh>putDocPart</vh>
 <v t="T2206"><vh>&lt;&lt; copy words, splitting the line if needed &gt;&gt;</vh></v>
 </v>
@@ -4505,12 +4504,13 @@
 </v>
 </v>
 </v>
-<v t="T2737"><vh>Utils</vh>
+<v t="T2735"><vh>Utils</vh>
+<v t="T2736"><vh>putBuffered</vh></v>
 <v t="T2204" a="C"><vh>os, onl, etc. (leoAtFile)</vh></v>
 <v t="T1892" a="C"><vh>putDirective  (handles @delims)</vh>
 <v t="T1893"><vh>&lt;&lt; handle @delims &gt;&gt;</vh></v>
 </v>
-<v t="T2738"><vh>putEmptyDirective (Dave Hein)</vh></v>
+<v t="T2737"><vh>putEmptyDirective (Dave Hein)</vh></v>
 <v t="T2500" a="C"><vh>putIndent</vh></v>
 </v>
 </v>
@@ -4520,31 +4520,31 @@
 <v t="T2407"><vh>&lt;&lt; read optional encoding param &gt;&gt;</vh></v>
 <v t="T2408"><vh>&lt;&lt; set the closing comment delim &gt;&gt;</vh></v>
 </v>
-<v t="T3081" a="C"><vh>putOpenLeoSentinel</vh></v>
+<v t="T3080" a="C"><vh>putOpenLeoSentinel</vh></v>
 <v t="T2204" a="C"><vh>os, onl, etc. (leoAtFile)</vh></v>
 </v>
-<v t="T3082"><vh>Find</vh>
+<v t="T3081"><vh>Find</vh>
 <v t="T2387" a="C"><vh>find.set_ivars</vh></v>
 </v>
-<v t="T3083"><vh>Import/Export</vh>
+<v t="T3082"><vh>Import/Export</vh>
 <v t="T2368" a="C"><vh>exportHeadlines</vh></v>
 <v t="T2369" a="C"><vh>flattenOutline</vh></v>
 <v t="T2370" a="C"><vh>outlineToWeb</vh></v>
-<v t="T3084" a="C"><vh>setEncoding</vh></v>
+<v t="T3083" a="C"><vh>setEncoding</vh></v>
 <v t="T2377" a="C"><vh>weave</vh>
 <v t="T2378" a="C"><vh>&lt;&lt; open filename to f, or return &gt;&gt;</vh></v>
 <v t="T2379"><vh>&lt;&lt; write the context of v to f &gt;&gt;</vh></v>
 </v>
 </v>
-<v t="T3085"><vh>Leo files</vh>
-<v t="T3086"><vh>Reading</vh>
+<v t="T3084"><vh>Leo files</vh>
+<v t="T3085"><vh>Reading</vh>
 <v t="T2691" a="C"><vh>get &amp; match (basic)(leoFileCommands)</vh>
 <v t="T2692"><vh>get routines</vh></v>
 <v t="T2693"><vh>match routines</vh></v>
 </v>
-<v t="T3087" a="C"><vh>getXmlVersionTag</vh></v>
+<v t="T3086" a="C"><vh>getXmlVersionTag</vh></v>
 </v>
-<v t="T3088"><vh>Writing</vh>
+<v t="T3087"><vh>Writing</vh>
 <v t="T2382" a="C"><vh>put (basic)(leoFileCommands)</vh></v>
 <v t="T2694" a="C"><vh>putProlog</vh>
 <v t="T2695"><vh>&lt;&lt; Put the &lt;?xml...?&gt; line &gt;&gt;</vh></v>
@@ -4552,32 +4552,32 @@
 </v>
 </v>
 </v>
-<v t="T3089"><vh>Log</vh>
-<v t="T3090"><vh>log encoding</vh></v>
-<v t="T3091" a="C"><vh>f.put, putnl</vh></v>
-<v t="T3092" a="C"><vh>es, enl, ecnl</vh></v>
+<v t="T3088"><vh>Log</vh>
+<v t="T3089"><vh>log encoding</vh></v>
+<v t="T3090" a="C"><vh>f.put, putnl</vh></v>
+<v t="T3091" a="C"><vh>es, enl, ecnl</vh></v>
 </v>
-<v t="T3093"><vh>Nodes</vh>
-<v t="T3094"><vh>vnode setters</vh>
-<v t="T3095" a="C"><vh>Head and body text</vh>
-<v t="T3096"><vh>appendStringToBody</vh></v>
+<v t="T3092"><vh>Nodes</vh>
+<v t="T3093"><vh>vnode setters</vh>
+<v t="T3094" a="C"><vh>Head and body text</vh>
+<v t="T3095"><vh>appendStringToBody</vh></v>
 <v t="T2111" a="C"><vh>setBodyStringOrPane &amp; setBodyTextOrPane</vh></v>
-<v t="T3097"><vh>setHeadString &amp; initHeadString</vh></v>
-<v t="T3098"><vh>setHeadStringOrHeadline</vh></v>
+<v t="T3096"><vh>setHeadString &amp; initHeadString</vh></v>
+<v t="T3097"><vh>setHeadStringOrHeadline</vh></v>
 </v>
 </v>
-<v t="T3099"><vh>tnode setters</vh>
-<v t="T3100" a="C"><vh>Setting body text</vh>
-<v t="T3101"><vh>saveBodyPaneToTnode</vh></v>
+<v t="T3098"><vh>tnode setters</vh>
+<v t="T3099" a="C"><vh>Setting body text</vh>
+<v t="T3100"><vh>saveBodyPaneToTnode</vh></v>
 <v t="T2112" a="C"><vh>setTnodeText</vh></v>
-<v t="T3102"><vh>setSelection</vh></v>
+<v t="T3101"><vh>setSelection</vh></v>
 </v>
 </v>
 </v>
-<v t="T3103"><vh>Tangle</vh>
+<v t="T3102"><vh>Tangle</vh>
 <v t="T1886" a="C"><vh>oblank, oblanks, os, otab, otabs (Tangle)</vh></v>
 </v>
-<v t="T3104"><vh>Undo...</vh>
+<v t="T3103"><vh>Undo...</vh>
 <v t="T2100" a="C"><vh>setUndoTypingParams</vh>
 <v t="T2101"><vh>&lt;&lt; compute leading, middle &amp; trailing  lines &gt;&gt;</vh></v>
 <v t="T2102" a="C"><vh>&lt;&lt; save undo text info &gt;&gt;</vh></v>
@@ -4589,103 +4589,103 @@
 <v t="T2107"><vh>&lt;&lt; print mismatch trace &gt;&gt;</vh></v>
 </v>
 </v>
-<v t="T3105" a="C"><vh>Unicode utils...</vh>
-<v t="T3106"><vh>isValidEncoding</vh></v>
-<v t="T3107" a="C"><vh>reportBadChars</vh></v>
-<v t="T3108"><vh>toUnicode &amp; toEncodedString</vh></v>
-<v t="T3109" a="C"><vh>getpreferredencoding from 2.3a2</vh>
-<v t="T3110"><vh>&lt;&lt; define getpreferredencoding using _locale &gt;&gt;</vh></v>
-<v t="T3111"><vh>&lt;&lt; define getpreferredencoding for *nix &gt;&gt;</vh></v>
+<v t="T3104" a="C"><vh>Unicode utils...</vh>
+<v t="T3105"><vh>isValidEncoding</vh></v>
+<v t="T3106" a="C"><vh>reportBadChars</vh></v>
+<v t="T3107"><vh>toUnicode &amp; toEncodedString</vh></v>
+<v t="T3108" a="C"><vh>getpreferredencoding from 2.3a2</vh>
+<v t="T3109"><vh>&lt;&lt; define getpreferredencoding using _locale &gt;&gt;</vh></v>
+<v t="T3110"><vh>&lt;&lt; define getpreferredencoding for *nix &gt;&gt;</vh></v>
 </v>
 </v>
 </v>
-<v t="T3112"><vh> Notes...</vh>
-<v t="T3113"><vh>Code notes: big picture</vh></v>
-<v t="T3114"><vh>Code notes: encodings</vh></v>
-<v t="T3115"><vh>Unicode notes (from gil)</vh></v>
-<v t="T3116"><vh>Unicode design</vh>
-<v t="T3117"><vh>Unicode links</vh></v>
-<v t="T3118"><vh>unicode tests</vh></v>
+<v t="T3111"><vh> Notes...</vh>
+<v t="T3112"><vh>Code notes: big picture</vh></v>
+<v t="T3113"><vh>Code notes: encodings</vh></v>
+<v t="T3114"><vh>Unicode notes (from gil)</vh></v>
+<v t="T3115"><vh>Unicode design</vh>
+<v t="T3116"><vh>Unicode links</vh></v>
+<v t="T3117"><vh>unicode tests</vh></v>
 <v t="T494" a="C"><vh>From  Martin v. Löwis (use unicode to interface with tk)</vh></v>
-<v t="T3119"><vh>Dave Hein</vh></v>
-<v t="T3120"><vh>Gil Schwartz</vh></v>
-<v t="T3121"><vh>Gil's long post</vh>
-<v t="T3122"><vh>Internal representation</vh></v>
-<v t="T3123"><vh>Encoding conversion points</vh></v>
-<v t="T3124"><vh>Encoding process &amp; error handling</vh></v>
-<v t="T3125"><vh>Programming considerations</vh></v>
+<v t="T3118"><vh>Dave Hein</vh></v>
+<v t="T3119"><vh>Gil Schwartz</vh></v>
+<v t="T3120"><vh>Gil's long post</vh>
+<v t="T3121"><vh>Internal representation</vh></v>
+<v t="T3122"><vh>Encoding conversion points</vh></v>
+<v t="T3123"><vh>Encoding process &amp; error handling</vh></v>
+<v t="T3124"><vh>Programming considerations</vh></v>
 </v>
 </v>
 </v>
-<v t="T3126"><vh> Tests</vh>
-<v t="T3127"><vh>@file-asis c:\prog\test\asisTest.txt</vh></v>
-<v t="T3128"><vh>@file-nosent c:\prog\test\nosentTest.txt</vh></v>
-<v t="T3129"><vh>@file-noref c:\prog\test\norefTest.txt</vh></v>
+<v t="T3125"><vh> Tests</vh>
+<v t="T3126"><vh>@file-asis c:\prog\test\asisTest.txt</vh></v>
+<v t="T3127"><vh>@file-nosent c:\prog\test\nosentTest.txt</vh></v>
+<v t="T3128"><vh>@file-noref c:\prog\test\norefTest.txt</vh></v>
 </v>
-<v t="T3130"><vh> Tests</vh>
-<v t="T3131"><vh>Import/export tests</vh>
-<v t="T3132"><vh>test</vh>
-<v t="T3133"><vh>NewHeadlineë</vh></v>
-</v>
-</v>
-<v t="T3134"><vh>@file c:/prog/test/unicodeTest.doc</vh>
-<v t="T3135"><vh>NewÖ</vh></v>
+<v t="T3129"><vh> Tests</vh>
+<v t="T3130"><vh>Import/export tests</vh>
+<v t="T3131"><vh>test</vh>
+<v t="T3132"><vh>NewHeadlineë</vh></v>
 </v>
 </v>
-<v t="T3136"><vh>(Unicode/Tangle problem)</vh>
-<v t="T3137"><vh>Report</vh></v>
-<v t="T3138"><vh>Test</vh>
-<v t="T3139"><vh>@root c:\prog\test\tangleEncoding.txt</vh></v>
-</v>
-<v t="T2998" a="C"><vh>tangle.scanAllDirectives</vh>
-<v t="T2999"><vh>&lt;&lt; Collect @first attributes &gt;&gt;</vh></v>
-<v t="T3000"><vh>&lt;&lt; Test for @comment and @language &gt;&gt;</vh></v>
-<v t="T3001"><vh>&lt;&lt; Test for @encoding &gt;&gt;</vh></v>
-<v t="T3002"><vh>&lt;&lt; Test for @lineending &gt;&gt;</vh></v>
-<v t="T3003"><vh>&lt;&lt; Test for print modes directives &gt;&gt;</vh></v>
-<v t="T3004"><vh>&lt;&lt; Test for @path &gt;&gt;</vh>
-<v t="T3005"><vh>&lt;&lt; compute dir and relative_path from s[k:] &gt;&gt;</vh></v>
-<v t="T3006"><vh>&lt;&lt; handle absolute @path &gt;&gt;</vh></v>
-</v>
-<v t="T3007"><vh>&lt;&lt; Test for @pagewidth &gt;&gt;</vh></v>
-<v t="T3008"><vh>&lt;&lt; Test for @root &gt;&gt;</vh></v>
-<v t="T3009"><vh>&lt;&lt; Test for @tabwidth &gt;&gt;</vh></v>
-<v t="T3010"><vh>&lt;&lt; Test for @header and @noheader &gt;&gt;</vh></v>
-<v t="T3011"><vh>&lt;&lt; Set self.tangle_directory &gt;&gt;</vh>
-<v t="T3012"><vh>&lt;&lt; handle absolute path &gt;&gt;</vh></v>
+<v t="T3133"><vh>@file c:/prog/test/unicodeTest.doc</vh>
+<v t="T3134"><vh>NewÖ</vh></v>
 </v>
 </v>
+<v t="T3135"><vh>(Unicode/Tangle problem)</vh>
+<v t="T3136"><vh>Report</vh></v>
+<v t="T3137"><vh>Test</vh>
+<v t="T3138"><vh>@root c:\prog\test\tangleEncoding.txt</vh></v>
 </v>
-<v t="T3140"><vh>( Replace getdefaultlocale)</vh>
-<v t="T3141"><vh>About getdefaultlocale</vh></v>
-<v t="T3048" a="C"><vh>&lt;&lt; set app.tkEncoding &gt;&gt;</vh></v>
-<v t="T3109" a="C"><vh>getpreferredencoding from 2.3a2</vh>
-<v t="T3110"><vh>&lt;&lt; define getpreferredencoding using _locale &gt;&gt;</vh></v>
-<v t="T3111"><vh>&lt;&lt; define getpreferredencoding for *nix &gt;&gt;</vh></v>
+<v t="T2997" a="C"><vh>tangle.scanAllDirectives</vh>
+<v t="T2998"><vh>&lt;&lt; Collect @first attributes &gt;&gt;</vh></v>
+<v t="T2999"><vh>&lt;&lt; Test for @comment and @language &gt;&gt;</vh></v>
+<v t="T3000"><vh>&lt;&lt; Test for @encoding &gt;&gt;</vh></v>
+<v t="T3001"><vh>&lt;&lt; Test for @lineending &gt;&gt;</vh></v>
+<v t="T3002"><vh>&lt;&lt; Test for print modes directives &gt;&gt;</vh></v>
+<v t="T3003"><vh>&lt;&lt; Test for @path &gt;&gt;</vh>
+<v t="T3004"><vh>&lt;&lt; compute dir and relative_path from s[k:] &gt;&gt;</vh></v>
+<v t="T3005"><vh>&lt;&lt; handle absolute @path &gt;&gt;</vh></v>
+</v>
+<v t="T3006"><vh>&lt;&lt; Test for @pagewidth &gt;&gt;</vh></v>
+<v t="T3007"><vh>&lt;&lt; Test for @root &gt;&gt;</vh></v>
+<v t="T3008"><vh>&lt;&lt; Test for @tabwidth &gt;&gt;</vh></v>
+<v t="T3009"><vh>&lt;&lt; Test for @header and @noheader &gt;&gt;</vh></v>
+<v t="T3010"><vh>&lt;&lt; Set self.tangle_directory &gt;&gt;</vh>
+<v t="T3011"><vh>&lt;&lt; handle absolute path &gt;&gt;</vh></v>
 </v>
 </v>
 </v>
-<v t="T3142"><vh>3.11.1 projects</vh>
-<v t="T3143"><vh>(Control-dragging bug)</vh>
-<v t="T3144"><vh> Report</vh></v>
-<v t="T3145"><vh>Code</vh>
+<v t="T3139"><vh>( Replace getdefaultlocale)</vh>
+<v t="T3140"><vh>About getdefaultlocale</vh></v>
+<v t="T3047" a="C"><vh>&lt;&lt; set app.tkEncoding &gt;&gt;</vh></v>
+<v t="T3108" a="C"><vh>getpreferredencoding from 2.3a2</vh>
+<v t="T3109"><vh>&lt;&lt; define getpreferredencoding using _locale &gt;&gt;</vh></v>
+<v t="T3110"><vh>&lt;&lt; define getpreferredencoding for *nix &gt;&gt;</vh></v>
+</v>
+</v>
+</v>
+<v t="T3141"><vh>3.11.1 projects</vh>
+<v t="T3142"><vh>(Control-dragging bug)</vh>
+<v t="T3143"><vh> Report</vh></v>
+<v t="T3144"><vh>Code</vh>
 <v t="T2616" a="C"><vh>c.clone</vh></v>
 <v t="T2143" a="C"><vh>c.dragCloneAfter (changed in 3.11.1)</vh></v>
 <v t="T2128" a="C"><vh>c.dragCloneToNthChildOf (changed in 3.11.1)</vh></v>
-<v t="T3146" a="C"><vh>c.initJoinedClonedBits (changed in 3.11.1)</vh></v>
+<v t="T3145" a="C"><vh>c.initJoinedClonedBits (changed in 3.11.1)</vh></v>
 </v>
 </v>
-<v t="T3147"><vh>(fix problem with getpreferredencoding)</vh>
-<v t="T3109" a="C"><vh>getpreferredencoding from 2.3a2</vh>
-<v t="T3110"><vh>&lt;&lt; define getpreferredencoding using _locale &gt;&gt;</vh></v>
-<v t="T3111"><vh>&lt;&lt; define getpreferredencoding for *nix &gt;&gt;</vh></v>
+<v t="T3146"><vh>(fix problem with getpreferredencoding)</vh>
+<v t="T3108" a="C"><vh>getpreferredencoding from 2.3a2</vh>
+<v t="T3109"><vh>&lt;&lt; define getpreferredencoding using _locale &gt;&gt;</vh></v>
+<v t="T3110"><vh>&lt;&lt; define getpreferredencoding for *nix &gt;&gt;</vh></v>
 </v>
 </v>
 </v>
-<v t="T3148"><vh>3.12 projects</vh>
-<v t="T3149"><vh>3.12 beta 1</vh>
-<v t="T3150"><vh>(@wrap and @nowrap directives)</vh>
-<v t="T3151" a="C"><vh>f.setWrap</vh></v>
+<v t="T3147"><vh>3.12 projects</vh>
+<v t="T3148"><vh>3.12 beta 1</vh>
+<v t="T3149"><vh>(@wrap and @nowrap directives)</vh>
+<v t="T3150" a="C"><vh>f.setWrap</vh></v>
 <v t="T1553" a="C"><vh>tree.select</vh>
 <v t="T1554"><vh>&lt;&lt; define vars and stop editing &gt;&gt;</vh></v>
 <v t="T1555"><vh>&lt;&lt; unselect the old node &gt;&gt;</vh></v>
@@ -4695,7 +4695,7 @@
 <v t="T1559"><vh>&lt;&lt; update c.visitedList &gt;&gt;</vh></v>
 </v>
 </v>
-<v t="T3152"><vh>(Add new panes to Leo windows)</vh>
+<v t="T3151"><vh>(Add new panes to Leo windows)</vh>
 <v t="T2331" a="C"><vh>f.createLeoFrame</vh>
 <v t="T2332"><vh>&lt;&lt; create both splitters &gt;&gt;</vh></v>
 <v t="T2333"><vh>&lt;&lt; create the body pane &gt;&gt;</vh></v>
@@ -4703,31 +4703,31 @@
 <v t="T2334"><vh>&lt;&lt; create the log pane &gt;&gt;</vh></v>
 </v>
 <v t="T2343" a="C"><vh>createLeoSplitter</vh></v>
-<v t="T3153" a="C"><vh>Icon area: convenience routines</vh>
-<v t="T3154"><vh>createIconBar</vh></v>
-<v t="T3155"><vh>hideIconBar</vh></v>
-<v t="T3156"><vh>clearIconBar</vh></v>
-<v t="T3157"><vh>showIconBar</vh></v>
-<v t="T3158"><vh>addIconButton</vh>
-<v t="T3159"><vh>&lt;&lt; create a picture &gt;&gt;</vh></v>
+<v t="T3152" a="C"><vh>Icon area: convenience routines</vh>
+<v t="T3153"><vh>createIconBar</vh></v>
+<v t="T3154"><vh>hideIconBar</vh></v>
+<v t="T3155"><vh>clearIconBar</vh></v>
+<v t="T3156"><vh>showIconBar</vh></v>
+<v t="T3157"><vh>addIconButton</vh>
+<v t="T3158"><vh>&lt;&lt; create a picture &gt;&gt;</vh></v>
 </v>
 </v>
-<v t="T3160" a="C"><vh>Status line: convenience routines</vh>
-<v t="T3161"><vh>createStatusLine</vh></v>
-<v t="T3162"><vh>clearStatusLine</vh></v>
-<v t="T3163"><vh>putStatusLine</vh></v>
-<v t="T3164"><vh>updateStatusRowCol()</vh></v>
+<v t="T3159" a="C"><vh>Status line: convenience routines</vh>
+<v t="T3160"><vh>createStatusLine</vh></v>
+<v t="T3161"><vh>clearStatusLine</vh></v>
+<v t="T3162"><vh>putStatusLine</vh></v>
+<v t="T3163"><vh>updateStatusRowCol()</vh></v>
 </v>
 </v>
-<v t="T3165"><vh>(Bugs when cutting/pasting trees)</vh>
-<v t="T3166"><vh>Reports</vh>
-<v t="T3167"><vh>Report 1 (fixed, I think)</vh></v>
-<v t="T3168"><vh>Report 2 (fixed, I think)</vh></v>
-<v t="T3169"><vh>Report 3</vh></v>
+<v t="T3164"><vh>(Bugs when cutting/pasting trees)</vh>
+<v t="T3165"><vh>Reports</vh>
+<v t="T3166"><vh>Report 1 (fixed, I think)</vh></v>
+<v t="T3167"><vh>Report 2 (fixed, I think)</vh></v>
+<v t="T3168"><vh>Report 3</vh></v>
 </v>
-<v t="T3170"><vh> Code</vh>
-<v t="T3041" a="C"><vh>app.__init__</vh>
-<v t="T3042"><vh>&lt;&lt; define global constants &gt;&gt;</vh></v>
+<v t="T3169"><vh> Code</vh>
+<v t="T3040" a="C"><vh>app.__init__</vh>
+<v t="T3041"><vh>&lt;&lt; define global constants &gt;&gt;</vh></v>
 <v t="T1138" a="C"><vh>&lt;&lt; define global data structures &gt;&gt;</vh></v>
 </v>
 <v t="T2116" a="C"><vh>Cut &amp; Paste Outlines</vh>
@@ -4735,99 +4735,99 @@
 <v t="T2118"><vh>copyOutline</vh></v>
 <v t="T2119"><vh>pasteOutline</vh></v>
 </v>
-<v t="T3171"><vh>Reading</vh>
-<v t="T3172" a="C"><vh>compactFileIndices (changed from 3.11.1)</vh></v>
-<v t="T3173" a="C"><vh>getLeoFile (calls setAllJoinLinks, initAllCloneBits)</vh>
-<v t="T3174"><vh>&lt;&lt; warn on read-only files &gt;&gt;</vh></v>
-<v t="T3175"><vh>&lt;&lt; scan all the xml elements &gt;&gt;</vh></v>
-<v t="T3176"><vh>&lt;&lt; raise an alert &gt;&gt;</vh></v>
+<v t="T3170"><vh>Reading</vh>
+<v t="T3171" a="C"><vh>compactFileIndices (changed from 3.11.1)</vh></v>
+<v t="T3172" a="C"><vh>getLeoFile (calls setAllJoinLinks, initAllCloneBits)</vh>
+<v t="T3173"><vh>&lt;&lt; warn on read-only files &gt;&gt;</vh></v>
+<v t="T3174"><vh>&lt;&lt; scan all the xml elements &gt;&gt;</vh></v>
+<v t="T3175"><vh>&lt;&lt; raise an alert &gt;&gt;</vh></v>
 </v>
-<v t="T3177" a="C"><vh>finishPaste (changed from 3.11.1)  (calls initAllCloneBits)</vh>
-<v t="T3178"><vh>&lt;&lt; Create join lists of all pasted vnodes &gt;&gt;</vh></v>
-<v t="T3179"><vh>&lt;&lt; Recompute clone bits for pasted vnodes &gt;&gt;</vh></v>
+<v t="T3176" a="C"><vh>finishPaste (changed from 3.11.1)  (calls initAllCloneBits)</vh>
+<v t="T3177"><vh>&lt;&lt; Create join lists of all pasted vnodes &gt;&gt;</vh></v>
+<v t="T3178"><vh>&lt;&lt; Recompute clone bits for pasted vnodes &gt;&gt;</vh></v>
 </v>
-<v t="T3180" a="C"><vh>getLeoOutline (from clipboard) (changed from 3.11.1)</vh></v>
-<v t="T3181" a="C"><vh>getTnodes (no change from 3.11.1)</vh></v>
-<v t="T3182" a="C"><vh>getTnode (no change from 3.11.1)(changed 6/11)</vh>
-<v t="T3183"><vh>&lt;&lt; handle read from file &gt;&gt;</vh></v>
-<v t="T3184"><vh>&lt;&lt; handle read from clipboard &gt;&gt;</vh></v>
+<v t="T3179" a="C"><vh>getLeoOutline (from clipboard) (changed from 3.11.1)</vh></v>
+<v t="T3180" a="C"><vh>getTnodes (no change from 3.11.1)</vh></v>
+<v t="T3181" a="C"><vh>getTnode (no change from 3.11.1)(changed 6/11)</vh>
+<v t="T3182"><vh>&lt;&lt; handle read from file &gt;&gt;</vh></v>
+<v t="T3183"><vh>&lt;&lt; handle read from clipboard &gt;&gt;</vh></v>
 </v>
-<v t="T3185" a="C"><vh>getVnodes  (no change from 3.11.1)</vh></v>
-<v t="T3186" a="C"><vh>getVnode (changed from 3.11.1)</vh>
-<v t="T3187"><vh>&lt;&lt; Handle vnode attribute bits  &gt;&gt;</vh></v>
-<v t="T3188"><vh>&lt;&lt; Set the remembered status bits &gt;&gt;</vh></v>
-</v>
-</v>
-<v t="T3189"><vh>Writing</vh>
-<v t="T3190" a="C"><vh>assignFileIndices (no change from 3.11.1)</vh></v>
-<v t="T3191" a="C"><vh>putLeoOutline (to clipboard) (no change from 3.11.1)</vh></v>
-<v t="T3192" a="C"><vh>v.copyTreeWithNewTnodes (new after 3.11.1) (not used at present)</vh></v>
-<v t="T3193" a="C"><vh>putTnodes (reverted to 3.11.1)</vh>
-<v t="T3194"><vh>&lt;&lt; write only those tnodes that were referenced &gt;&gt;</vh></v>
-</v>
-<v t="T3195" a="C"><vh>putTnode (no change from 3.11.1)</vh></v>
-<v t="T3196" a="C"><vh>putVnodes (reverted 3.11.1)</vh></v>
-<v t="T3197" a="C"><vh>putVnode (no change from 3.11.1) (generates error)</vh>
-<v t="T3198"><vh>&lt;&lt; Put tnode index if this vnode has body text &gt;&gt;</vh></v>
-<v t="T3199"><vh>&lt;&lt; Put attribute bits &gt;&gt;</vh></v>
-<v t="T3200"><vh>&lt;&lt; write the head text &gt;&gt;</vh></v>
+<v t="T3184" a="C"><vh>getVnodes  (no change from 3.11.1)</vh></v>
+<v t="T3185" a="C"><vh>getVnode (changed from 3.11.1)</vh>
+<v t="T3186"><vh>&lt;&lt; Handle vnode attribute bits  &gt;&gt;</vh></v>
+<v t="T3187"><vh>&lt;&lt; Set the remembered status bits &gt;&gt;</vh></v>
 </v>
 </v>
+<v t="T3188"><vh>Writing</vh>
+<v t="T3189" a="C"><vh>assignFileIndices (no change from 3.11.1)</vh></v>
+<v t="T3190" a="C"><vh>putLeoOutline (to clipboard) (no change from 3.11.1)</vh></v>
+<v t="T3191" a="C"><vh>v.copyTreeWithNewTnodes (new after 3.11.1) (not used at present)</vh></v>
+<v t="T3192" a="C"><vh>putTnodes (reverted to 3.11.1)</vh>
+<v t="T3193"><vh>&lt;&lt; write only those tnodes that were referenced &gt;&gt;</vh></v>
+</v>
+<v t="T3194" a="C"><vh>putTnode (no change from 3.11.1)</vh></v>
+<v t="T3195" a="C"><vh>putVnodes (reverted 3.11.1)</vh></v>
+<v t="T3196" a="C"><vh>putVnode (no change from 3.11.1) (generates error)</vh>
+<v t="T3197"><vh>&lt;&lt; Put tnode index if this vnode has body text &gt;&gt;</vh></v>
+<v t="T3198"><vh>&lt;&lt; Put attribute bits &gt;&gt;</vh></v>
+<v t="T3199"><vh>&lt;&lt; write the head text &gt;&gt;</vh></v>
 </v>
 </v>
-<v t="T3201"><vh>(Check Clones Script)</vh>
-<v t="T3202" a="C"><vh>headString &amp; cleanHeadString</vh></v>
-<v t="T3203" a="C"><vh>checkClones2Links</vh>
-<v t="T3204"><vh>&lt;&lt; clear statistics &gt;&gt;</vh></v>
-<v t="T3205"><vh>&lt;&lt; print statistics &gt;&gt;</vh></v>
-<v t="T3206"><vh>&lt;&lt; handle each item in v's join list &gt;&gt;</vh></v>
 </v>
-<v t="T3207"><vh>Results of running checkClones2Links on LeoPy.leo</vh></v>
 </v>
-<v t="T3208"><vh>(Fix memory leaks)</vh>
-<v t="T3209"><vh>Initialization routines</vh>
-<v t="T3041" a="C"><vh>app.__init__</vh>
-<v t="T3042"><vh>&lt;&lt; define global constants &gt;&gt;</vh></v>
+<v t="T3200"><vh>(Check Clones Script)</vh>
+<v t="T3201" a="C"><vh>headString &amp; cleanHeadString</vh></v>
+<v t="T3202" a="C"><vh>checkClones2Links</vh>
+<v t="T3203"><vh>&lt;&lt; clear statistics &gt;&gt;</vh></v>
+<v t="T3204"><vh>&lt;&lt; print statistics &gt;&gt;</vh></v>
+<v t="T3205"><vh>&lt;&lt; handle each item in v's join list &gt;&gt;</vh></v>
+</v>
+<v t="T3206"><vh>Results of running checkClones2Links on LeoPy.leo</vh></v>
+</v>
+<v t="T3207"><vh>(Fix memory leaks)</vh>
+<v t="T3208"><vh>Initialization routines</vh>
+<v t="T3040" a="C"><vh>app.__init__</vh>
+<v t="T3041"><vh>&lt;&lt; define global constants &gt;&gt;</vh></v>
 <v t="T1138" a="C"><vh>&lt;&lt; define global data structures &gt;&gt;</vh></v>
 </v>
-<v t="T3210" a="C"><vh>run &amp; allies</vh>
-<v t="T3211"><vh>createTkRoot</vh>
+<v t="T3209" a="C"><vh>run &amp; allies</vh>
+<v t="T3210"><vh>createTkRoot</vh>
 <v t="T1264" a="C"><vh>&lt;&lt; set the icon image &gt;&gt;</vh></v>
 </v>
-<v t="T3212"><vh>createAppObject</vh></v>
-<v t="T3213" a="C"><vh>createFrame (works)</vh>
-<v t="T3214"><vh>&lt;&lt; open frame2.  return frame2 or frame1 on failure &gt;&gt;</vh></v>
+<v t="T3211"><vh>createAppObject</vh></v>
+<v t="T3212" a="C"><vh>createFrame (works)</vh>
+<v t="T3213"><vh>&lt;&lt; open frame2.  return frame2 or frame1 on failure &gt;&gt;</vh></v>
 </v>
-<v t="T3215"><vh>initSherlock</vh></v>
-</v>
-</v>
-<v t="T3216"><vh>quit/open/close routines</vh>
-<v t="T3217" a="C"><vh>app.destroyAllWindowObjects</vh>
-<v t="T3218"><vh>&lt;&lt; clear all vnodes and tnodes in the tree&gt;&gt;</vh></v>
-</v>
-<v t="T3219" a="C"><vh>app.closeLeoWindow</vh></v>
-<v t="T3220" a="C"><vh>app.finishQuit</vh></v>
-<v t="T3221" a="C"><vh>app.onQuit</vh></v>
-<v t="T2784" a="C"><vh>frame.OnOpen</vh>
-<v t="T2785"><vh>&lt;&lt; Set closeFlag if the only open window is empty &gt;&gt;</vh></v>
-</v>
-<v t="T3222" a="C"><vh>frame.destroyAllPanels</vh></v>
-<v t="T3223" a="C"><vh>frame.promptForSave</vh>
-<v t="T3224"><vh>&lt;&lt; Put up a file save dialog to set mFileName &gt;&gt;</vh></v>
+<v t="T3214"><vh>initSherlock</vh></v>
 </v>
 </v>
-<v t="T3225" a="C"><vh>Garbage Collection</vh>
-<v t="T3226"><vh>clearAllIvars</vh></v>
-<v t="T3227"><vh>collectGarbage</vh>
-<v t="T3228"><vh>&lt;&lt; make a list of the new objects &gt;&gt;</vh></v>
+<v t="T3215"><vh>quit/open/close routines</vh>
+<v t="T3216" a="C"><vh>app.destroyAllWindowObjects</vh>
+<v t="T3217"><vh>&lt;&lt; clear all vnodes and tnodes in the tree&gt;&gt;</vh></v>
 </v>
-<v t="T3229"><vh>printGc</vh></v>
-<v t="T3230"><vh>printGcRefs</vh></v>
+<v t="T3218" a="C"><vh>app.closeLeoWindow</vh></v>
+<v t="T3219" a="C"><vh>app.finishQuit</vh></v>
+<v t="T3220" a="C"><vh>app.onQuit</vh></v>
+<v t="T2783" a="C"><vh>frame.OnOpen</vh>
+<v t="T2784"><vh>&lt;&lt; Set closeFlag if the only open window is empty &gt;&gt;</vh></v>
+</v>
+<v t="T3221" a="C"><vh>frame.destroyAllPanels</vh></v>
+<v t="T3222" a="C"><vh>frame.promptForSave</vh>
+<v t="T3223"><vh>&lt;&lt; Put up a file save dialog to set mFileName &gt;&gt;</vh></v>
 </v>
 </v>
-<v t="T3231"><vh>(Hooks and plugins for user directives)</vh>
+<v t="T3224" a="C"><vh>Garbage Collection</vh>
+<v t="T3225"><vh>clearAllIvars</vh></v>
+<v t="T3226"><vh>collectGarbage</vh>
+<v t="T3227"><vh>&lt;&lt; make a list of the new objects &gt;&gt;</vh></v>
+</v>
+<v t="T3228"><vh>printGc</vh></v>
+<v t="T3229"><vh>printGcRefs</vh></v>
+</v>
+</v>
+<v t="T3230"><vh>(Hooks and plugins for user directives)</vh>
 <v t="T1141" a="C"><vh>&lt;&lt; leo keywords &gt;&gt;</vh></v>
-<v t="T3232" a="C"><vh>doHook</vh></v>
+<v t="T3231" a="C"><vh>doHook</vh></v>
 <v t="T2077" a="C"><vh>scanDirectives (utils)</vh>
 <v t="T2078"><vh>&lt;&lt; Set local vars &gt;&gt;</vh></v>
 <v t="T2079"><vh>&lt;&lt; Test for @comment and @language &gt;&gt;</vh></v>
@@ -4840,48 +4840,48 @@
 <v t="T2085"><vh>&lt;&lt; Test for @tabwidth &gt;&gt;</vh></v>
 <v t="T2086"><vh>&lt;&lt; Test for @wrap and @nowrap &gt;&gt;</vh></v>
 </v>
-<v t="T3233"><vh>@file ../plugins/add_directives.py</vh>
-<v t="T3234"><vh>addPluginDirectives</vh></v>
-<v t="T3235"><vh>scanPluginDirectives</vh></v>
+<v t="T3232"><vh>@file ../plugins/add_directives.py</vh>
+<v t="T3233"><vh>addPluginDirectives</vh></v>
+<v t="T3234"><vh>scanPluginDirectives</vh></v>
 </v>
 </v>
-<v t="T3236"><vh>(Hooks and plugins for user markup)</vh>
-<v t="T3237"><vh>Init &amp; Utils</vh>
+<v t="T3235"><vh>(Hooks and plugins for user markup)</vh>
+<v t="T3236"><vh>Init &amp; Utils</vh>
 <v t="T1157" a="C"><vh>&lt;&lt; initialize ivars &amp; tags &gt;&gt; colorizeAnyLanguage</vh>
 <v t="T1158"><vh>&lt;&lt; configure tags &gt;&gt;</vh></v>
 <v t="T1159" a="C"><vh>&lt;&lt; configure language-specific settings &gt;&gt;</vh></v>
 </v>
-<v t="T3238" a="C"><vh>removeAllTags &amp; removeTagsFromLines</vh></v>
-<v t="T3239" a="C"><vh>color.__init__</vh>
-<v t="T3240"><vh>&lt;&lt; ivars for communication between colorAllDirectives and its allies &gt;&gt;</vh></v>
-<v t="T3241"><vh>&lt;&lt; define dispatch dicts &gt;&gt;</vh></v>
-<v t="T3242"><vh>&lt;&lt; define fonts and data for wiki tags &gt;&gt;</vh></v>
+<v t="T3237" a="C"><vh>removeAllTags &amp; removeTagsFromLines</vh></v>
+<v t="T3238" a="C"><vh>color.__init__</vh>
+<v t="T3239"><vh>&lt;&lt; ivars for communication between colorAllDirectives and its allies &gt;&gt;</vh></v>
+<v t="T3240"><vh>&lt;&lt; define dispatch dicts &gt;&gt;</vh></v>
+<v t="T3241"><vh>&lt;&lt; define fonts and data for wiki tags &gt;&gt;</vh></v>
 </v>
-<v t="T3243" a="C"><vh>index &amp; tag</vh></v>
-<v t="T3244" a="C"><vh>skip_python_string</vh></v>
+<v t="T3242" a="C"><vh>index &amp; tag</vh></v>
+<v t="T3243" a="C"><vh>skip_python_string</vh></v>
 </v>
-<v t="T3245"><vh>Code containing "color-optional-markup" hook</vh>
-<v t="T3246" a="C"><vh>&lt;&lt; handle string &gt;&gt;</vh></v>
-<v t="T3247" a="C"><vh>continueSingle/DoublePythonString</vh></v>
-<v t="T3248" a="C"><vh>continueDocPart</vh>
-<v t="T3249"><vh>&lt;&lt; handle cweb doc part &gt;&gt;</vh></v>
-<v t="T3250"><vh>&lt;&lt; handle noweb doc part &gt;&gt;</vh></v>
+<v t="T3244"><vh>Code containing "color-optional-markup" hook</vh>
+<v t="T3245" a="C"><vh>&lt;&lt; handle string &gt;&gt;</vh></v>
+<v t="T3246" a="C"><vh>continueSingle/DoublePythonString</vh></v>
+<v t="T3247" a="C"><vh>continueDocPart</vh>
+<v t="T3248"><vh>&lt;&lt; handle cweb doc part &gt;&gt;</vh></v>
+<v t="T3249"><vh>&lt;&lt; handle noweb doc part &gt;&gt;</vh></v>
 </v>
-<v t="T3251" a="C"><vh>&lt;&lt; handle single-line comment &gt;&gt;</vh></v>
-<v t="T3252" a="C"><vh>continueBlockComment</vh></v>
-<v t="T3253" a="C"><vh>&lt;&lt; start block comment &gt;&gt;</vh></v>
-<v t="T3254" a="C"><vh>doAtKeyword: NOT for cweb keywords</vh></v>
+<v t="T3250" a="C"><vh>&lt;&lt; handle single-line comment &gt;&gt;</vh></v>
+<v t="T3251" a="C"><vh>continueBlockComment</vh></v>
+<v t="T3252" a="C"><vh>&lt;&lt; start block comment &gt;&gt;</vh></v>
+<v t="T3253" a="C"><vh>doAtKeyword: NOT for cweb keywords</vh></v>
 </v>
-<v t="T3255"><vh> Colorizing Test</vh></v>
+<v t="T3254"><vh> Colorizing Test</vh></v>
 </v>
-<v t="T3256"><vh>(Make window bigger when opening Leo from leo.py)</vh>
-<v t="T2783" a="C"><vh>OnNew</vh></v>
-<v t="T3213" a="C"><vh>createFrame (works)</vh>
-<v t="T3214"><vh>&lt;&lt; open frame2.  return frame2 or frame1 on failure &gt;&gt;</vh></v>
+<v t="T3255"><vh>(Make window bigger when opening Leo from leo.py)</vh>
+<v t="T2782" a="C"><vh>OnNew</vh></v>
+<v t="T3212" a="C"><vh>createFrame (works)</vh>
+<v t="T3213"><vh>&lt;&lt; open frame2.  return frame2 or frame1 on failure &gt;&gt;</vh></v>
 </v>
-<v t="T3257" a="C"><vh>f.setInitialWindowGeometry</vh></v>
+<v t="T3256" a="C"><vh>f.setInitialWindowGeometry</vh></v>
 </v>
-<v t="T3258"><vh>(Nav plugin &amp; related stuff)</vh>
+<v t="T3257"><vh>(Nav plugin &amp; related stuff)</vh>
 <v t="T1553" a="C"><vh>tree.select</vh>
 <v t="T1554"><vh>&lt;&lt; define vars and stop editing &gt;&gt;</vh></v>
 <v t="T1555"><vh>&lt;&lt; unselect the old node &gt;&gt;</vh></v>
@@ -4890,88 +4890,88 @@
 <v t="T1558"><vh>&lt;&lt; update c.beadList or c.beadPointer &gt;&gt;</vh></v>
 <v t="T1559"><vh>&lt;&lt; update c.visitedList &gt;&gt;</vh></v>
 </v>
-<v t="T2902" a="C"><vh>OnGoPrevVisitedNode</vh></v>
-<v t="T2903" a="C"><vh>OnGoNextVisitedNode</vh></v>
-<v t="T3259" a="C"><vh>fillbox (recent sections)</vh>
-<v t="T3260"><vh>&lt;&lt; reconstruct the contents of self.box &gt;&gt;&gt;</vh></v>
+<v t="T2901" a="C"><vh>OnGoPrevVisitedNode</vh></v>
+<v t="T2902" a="C"><vh>OnGoNextVisitedNode</vh></v>
+<v t="T3258" a="C"><vh>fillbox (recent sections)</vh>
+<v t="T3259"><vh>&lt;&lt; reconstruct the contents of self.box &gt;&gt;&gt;</vh></v>
 </v>
 </v>
-<v t="T3261"><vh>(Open With problems)</vh>
-<v t="T3262"><vh>What I did</vh></v>
-<v t="T2941" a="C"><vh>createOpenWithMenuFromTable</vh></v>
-<v t="T2786" a="C"><vh>frame.OnOpenWith and allies</vh>
-<v t="T2787"><vh>&lt;&lt; set ext based on the present language &gt;&gt;</vh></v>
-<v t="T2788"><vh>&lt;&lt; create or reopen temp file, testing for conflicting changes &gt;&gt;</vh>
-<v t="T2789"><vh>&lt;&lt;set dict and path if a temp file already refers to v.t &gt;&gt;</vh></v>
-<v t="T2790"><vh>&lt;&lt; create or recreate temp file as needed &gt;&gt;</vh>
-<v t="T2791"><vh>&lt;&lt; Raise dialog about conflict and set result &gt;&gt;</vh></v>
+<v t="T3260"><vh>(Open With problems)</vh>
+<v t="T3261"><vh>What I did</vh></v>
+<v t="T2940" a="C"><vh>createOpenWithMenuFromTable</vh></v>
+<v t="T2785" a="C"><vh>frame.OnOpenWith and allies</vh>
+<v t="T2786"><vh>&lt;&lt; set ext based on the present language &gt;&gt;</vh></v>
+<v t="T2787"><vh>&lt;&lt; create or reopen temp file, testing for conflicting changes &gt;&gt;</vh>
+<v t="T2788"><vh>&lt;&lt;set dict and path if a temp file already refers to v.t &gt;&gt;</vh></v>
+<v t="T2789"><vh>&lt;&lt; create or recreate temp file as needed &gt;&gt;</vh>
+<v t="T2790"><vh>&lt;&lt; Raise dialog about conflict and set result &gt;&gt;</vh></v>
 </v>
 </v>
-<v t="T2792"><vh>&lt;&lt; execute a command to open path in external editor &gt;&gt;</vh></v>
-<v t="T2793" a="C"><vh>frame.createOpenWithTempFile</vh>
-<v t="T2794"><vh>&lt;&lt; remove previous entry from a.openWithFiles if it exists &gt;&gt;</vh></v>
+<v t="T2791"><vh>&lt;&lt; execute a command to open path in external editor &gt;&gt;</vh></v>
+<v t="T2792" a="C"><vh>frame.createOpenWithTempFile</vh>
+<v t="T2793"><vh>&lt;&lt; remove previous entry from a.openWithFiles if it exists &gt;&gt;</vh></v>
 </v>
-<v t="T2795"><vh>frame.openWithTempFilePath</vh></v>
+<v t="T2794"><vh>frame.openWithTempFilePath</vh></v>
 </v>
-<v t="T2770" a="C"><vh>createMenuEntries</vh>
-<v t="T2771"><vh>&lt;&lt; set name to the label for doCommand &gt;&gt;</vh></v>
-<v t="T2772"><vh>&lt;&lt; set accel to the shortcut for name &gt;&gt;</vh></v>
-<v t="T2773"><vh>&lt;&lt; set bind_shortcut and menu_shortcut using accel &gt;&gt;</vh></v>
-<v t="T2774"><vh>&lt;&lt; define callback function &gt;&gt;</vh></v>
-<v t="T2775"><vh>&lt;&lt; set realLabel, amp_index and menu_shortcut &gt;&gt;</vh></v>
-<v t="T2776"><vh>&lt;&lt; handle bind_shorcut &gt;&gt;</vh></v>
-</v>
-</v>
-<v t="T3263"><vh>(Problems with convert tabs to blanks)</vh></v>
-<v t="T3264"><vh>(Rewriting joinList code)</vh>
-<v t="T3265"><vh>  What I did</vh></v>
-<v t="T3266"><vh> Unused code</vh>
-<v t="T3267"><vh>setJoinList</vh></v>
-<v t="T3268"><vh>getJoinList</vh></v>
-<v t="T3269"><vh>setJoinHead</vh></v>
-<v t="T3270"><vh>isOnJoinListOf</vh></v>
-<v t="T3271"><vh>unjoinNode</vh></v>
-<v t="T3272"><vh>unused code from atFile.read</vh>
-<v t="T3273"><vh>atFile.joinTrees (NO LONGER USED)</vh></v>
-<v t="T3274"><vh>&lt;&lt; Handle clone bits &gt;&gt; (no longer used)</vh></v>
-<v t="T3275"><vh>&lt;&lt; Join cloned trees &gt;&gt; (no longer used)</vh></v>
+<v t="T2769" a="C"><vh>createMenuEntries</vh>
+<v t="T2770"><vh>&lt;&lt; set name to the label for doCommand &gt;&gt;</vh></v>
+<v t="T2771"><vh>&lt;&lt; set accel to the shortcut for name &gt;&gt;</vh></v>
+<v t="T2772"><vh>&lt;&lt; set bind_shortcut and menu_shortcut using accel &gt;&gt;</vh></v>
+<v t="T2773"><vh>&lt;&lt; define callback function &gt;&gt;</vh></v>
+<v t="T2774"><vh>&lt;&lt; set realLabel, amp_index and menu_shortcut &gt;&gt;</vh></v>
+<v t="T2775"><vh>&lt;&lt; handle bind_shorcut &gt;&gt;</vh></v>
 </v>
 </v>
-<v t="T3276"><vh>Changed Code</vh>
-<v t="T3277" a="C"><vh>joinNodeTo (rewritten for 4.0)</vh></v>
-<v t="T3278" a="C"><vh>unjoinTree (changed for 4.0)</vh></v>
-</v>
-<v t="T3279"><vh>Clone Tests (Sigh)</vh>
-<v t="T3280" a="C"><vh>AA</vh>
-<v t="T3281"><vh>BB</vh>
-<v t="T3282"><vh>E</vh></v>
-<v t="T3283"><vh>abc</vh></v>
-</v>
-<v t="T3284"><vh>CC</vh></v>
-</v>
-<v t="T3280" a="C"><vh>AA</vh>
-<v t="T3281"><vh>BB</vh>
-<v t="T3282"><vh>E</vh></v>
-<v t="T3283"><vh>abc</vh></v>
-</v>
-<v t="T3284"><vh>CC</vh></v>
+<v t="T3262"><vh>(Problems with convert tabs to blanks)</vh></v>
+<v t="T3263"><vh>(Rewriting joinList code)</vh>
+<v t="T3264"><vh>  What I did</vh></v>
+<v t="T3265"><vh> Unused code</vh>
+<v t="T3266"><vh>setJoinList</vh></v>
+<v t="T3267"><vh>getJoinList</vh></v>
+<v t="T3268"><vh>setJoinHead</vh></v>
+<v t="T3269"><vh>isOnJoinListOf</vh></v>
+<v t="T3270"><vh>unjoinNode</vh></v>
+<v t="T3271"><vh>unused code from atFile.read</vh>
+<v t="T3272"><vh>atFile.joinTrees (NO LONGER USED)</vh></v>
+<v t="T3273"><vh>&lt;&lt; Handle clone bits &gt;&gt; (no longer used)</vh></v>
+<v t="T3274"><vh>&lt;&lt; Join cloned trees &gt;&gt; (no longer used)</vh></v>
 </v>
 </v>
+<v t="T3275"><vh>Changed Code</vh>
+<v t="T3276" a="C"><vh>joinNodeTo (rewritten for 4.0)</vh></v>
+<v t="T3277" a="C"><vh>unjoinTree (changed for 4.0)</vh></v>
 </v>
-<v t="T3285"><vh>(Support for LeoN)</vh>
-<v t="T3286" a="C"><vh>&lt;&lt; redirectClass methods &gt;&gt;</vh></v>
-<v t="T3287" a="C"><vh>runMainLoop</vh></v>
+<v t="T3278"><vh>Clone Tests (Sigh)</vh>
+<v t="T3279" a="C"><vh>AA</vh>
+<v t="T3280"><vh>BB</vh>
+<v t="T3281"><vh>E</vh></v>
+<v t="T3282"><vh>abc</vh></v>
 </v>
-<v t="T3288"><vh>(Using xml parser)</vh>
-<v t="T3289"><vh>characters</vh></v>
-<v t="T3290"><vh>endDocument</vh></v>
-<v t="T3291"><vh>endElement</vh></v>
-<v t="T3292"><vh>other methods</vh></v>
-<v t="T3293"><vh>startDocument</vh></v>
-<v t="T3294"><vh>startElement</vh></v>
+<v t="T3283"><vh>CC</vh></v>
 </v>
-<v t="T3295"><vh>(Write Dirty @file Nodes command)</vh>
-<v t="T3296" a="C"><vh>writeDirtyAtFileNodes</vh></v>
+<v t="T3279" a="C"><vh>AA</vh>
+<v t="T3280"><vh>BB</vh>
+<v t="T3281"><vh>E</vh></v>
+<v t="T3282"><vh>abc</vh></v>
+</v>
+<v t="T3283"><vh>CC</vh></v>
+</v>
+</v>
+</v>
+<v t="T3284"><vh>(Support for LeoN)</vh>
+<v t="T3285" a="C"><vh>&lt;&lt; redirectClass methods &gt;&gt;</vh></v>
+<v t="T3286" a="C"><vh>runMainLoop</vh></v>
+</v>
+<v t="T3287"><vh>(Using xml parser)</vh>
+<v t="T3288"><vh>characters</vh></v>
+<v t="T3289"><vh>endDocument</vh></v>
+<v t="T3290"><vh>endElement</vh></v>
+<v t="T3291"><vh>other methods</vh></v>
+<v t="T3292"><vh>startDocument</vh></v>
+<v t="T3293"><vh>startElement</vh></v>
+</v>
+<v t="T3294"><vh>(Write Dirty @file Nodes command)</vh>
+<v t="T3295" a="C"><vh>writeDirtyAtFileNodes</vh></v>
 <v t="T2417" a="C"><vh>atFile.writeAll</vh>
 <v t="T2418"><vh>&lt;&lt; Clear all orphan bits &gt;&gt;</vh></v>
 <v t="T2419"><vh>&lt;&lt; handle v's tree &gt;&gt;</vh></v>
@@ -4979,10 +4979,10 @@
 </v>
 </v>
 </v>
-<v t="T3297"><vh>3.12 beta 2</vh>
-<v t="T3298"><vh>(Added apply button to Font panel)</vh></v>
-<v t="T3299"><vh>(Allow plugins to extend popup menus)</vh>
-<v t="T3300"><vh>Request</vh></v>
+<v t="T3296"><vh>3.12 beta 2</vh>
+<v t="T3297"><vh>(Added apply button to Font panel)</vh></v>
+<v t="T3298"><vh>(Allow plugins to extend popup menus)</vh>
+<v t="T3299"><vh>Request</vh></v>
 <v t="T2591" a="C"><vh>tree.OnPopup &amp; allies</vh>
 <v t="T2592"><vh>OnPopupFocusLost</vh></v>
 <v t="T2593"><vh>createPopupMenu</vh>
@@ -4995,7 +4995,22 @@
 </v>
 <v t="T2590" a="C"><vh>v.OnHeadlineClick &amp; OnHeadlineRightClick</vh></v>
 </v>
-<v t="T3301"><vh>(Fix cut/paste problem)(seems to work now)</vh></v>
+<v t="T3300"><vh>(Fix cut/paste problem)(seems to work now)</vh></v>
+<v t="T3301"><vh>(Fixed bug that forced body_pane_wraps to 1)</vh>
+<v t="T3150" a="C"><vh>f.setWrap</vh></v>
+<v t="T2077" a="C"><vh>scanDirectives (utils)</vh>
+<v t="T2078"><vh>&lt;&lt; Set local vars &gt;&gt;</vh></v>
+<v t="T2079"><vh>&lt;&lt; Test for @comment and @language &gt;&gt;</vh></v>
+<v t="T2080"><vh>&lt;&lt; Test for @encoding &gt;&gt;</vh></v>
+<v t="T2081"><vh>&lt;&lt; Test for @lineending &gt;&gt;</vh></v>
+<v t="T2082"><vh>&lt;&lt; Test for @pagewidth &gt;&gt;</vh></v>
+<v t="T2083"><vh>&lt;&lt; Test for @path &gt;&gt;</vh>
+<v t="T2084"><vh>&lt;&lt; compute relative path from s[k:] &gt;&gt;</vh></v>
+</v>
+<v t="T2085"><vh>&lt;&lt; Test for @tabwidth &gt;&gt;</vh></v>
+<v t="T2086"><vh>&lt;&lt; Test for @wrap and @nowrap &gt;&gt;</vh></v>
+</v>
+</v>
 <v t="T3302"><vh>(Fixed colorizer exception when undoing paste)</vh>
 <v t="T3303"><vh>Traceback &amp; Report</vh></v>
 <v t="T1161" a="C"><vh>&lt;&lt; incrementally color the text &gt;&gt;</vh>
@@ -5006,11 +5021,11 @@
 </v>
 </v>
 <v t="T3304"><vh>(Fixed crash on Open With: Shift-Control-O)</vh>
-<v t="T2755" a="C"><vh>&lt;&lt; create the top-level file entries &gt;&gt;</vh></v>
+<v t="T2754" a="C"><vh>&lt;&lt; create the top-level file entries &gt;&gt;</vh></v>
 </v>
 <v t="T3305"><vh>(Fixed missing log bug)</vh>
 <v t="T3306" a="C"><vh>app.setLog, lockLog, unlocklog</vh></v>
-<v t="T2796" a="C"><vh>frame.OpenWithFileName</vh></v>
+<v t="T2795" a="C"><vh>frame.OpenWithFileName</vh></v>
 </v>
 <v t="T3307"><vh>(Fixed Nav button bug?)</vh>
 <v t="T3308"><vh> Report</vh></v>
@@ -5019,13 +5034,13 @@
 <v t="T3310"><vh>(Fixed problem with destroying Leo windows)</vh>
 <v t="T3311"><vh> Report</vh></v>
 <v t="T3312" a="C"><vh>app.destroyWindow</vh></v>
-<v t="T2784" a="C"><vh>frame.OnOpen</vh>
-<v t="T2785"><vh>&lt;&lt; Set closeFlag if the only open window is empty &gt;&gt;</vh></v>
+<v t="T2783" a="C"><vh>frame.OnOpen</vh>
+<v t="T2784"><vh>&lt;&lt; Set closeFlag if the only open window is empty &gt;&gt;</vh></v>
 </v>
-<v t="T2804" a="C"><vh>frame.OnOpenRecentFile</vh>
-<v t="T2805"><vh>&lt;&lt; Set closeFlag if the only open window is empty &gt;&gt;</vh></v>
+<v t="T2803" a="C"><vh>frame.OnOpenRecentFile</vh>
+<v t="T2804"><vh>&lt;&lt; Set closeFlag if the only open window is empty &gt;&gt;</vh></v>
 </v>
-<v t="T2800" a="C"><vh>frame.OnRevert</vh></v>
+<v t="T2799" a="C"><vh>frame.OnRevert</vh></v>
 </v>
 <v t="T3313"><vh>(Fixed refresh problem after Read @file Node)</vh>
 <v t="T3314"><vh>Report</vh></v>
@@ -5039,8 +5054,8 @@
 <v t="T2655" a="C"><vh>v.sortChildren</vh></v>
 </v>
 <v t="T3318"><vh>(Fixed yet another bug in Open With logic)</vh>
-<v t="T2793" a="C"><vh>frame.createOpenWithTempFile</vh>
-<v t="T2794"><vh>&lt;&lt; remove previous entry from a.openWithFiles if it exists &gt;&gt;</vh></v>
+<v t="T2792" a="C"><vh>frame.createOpenWithTempFile</vh>
+<v t="T2793"><vh>&lt;&lt; remove previous entry from a.openWithFiles if it exists &gt;&gt;</vh></v>
 </v>
 </v>
 <v t="T3319"><vh>(Improved how headlines are highlighted)</vh>
@@ -5062,7 +5077,7 @@
 </v>
 <v t="T3325"><vh>(Improved reportBadChars)</vh>
 <v t="T3326"><vh>Report</vh></v>
-<v t="T3107" a="C"><vh>reportBadChars</vh></v>
+<v t="T3106" a="C"><vh>reportBadChars</vh></v>
 </v>
 <v t="T3327"><vh>(Paritally fixed goto line number bug)</vh>
 <v t="T3328"><vh>Report</vh></v>
@@ -5092,11 +5107,11 @@
 <v t="T2164" a="C"><vh>getTextSelection</vh></v>
 </v>
 <v t="T3332"><vh>(Updated row/col when plugins not enabled)</vh>
-<v t="T3160" a="C"><vh>Status line: convenience routines</vh>
-<v t="T3161"><vh>createStatusLine</vh></v>
-<v t="T3162"><vh>clearStatusLine</vh></v>
-<v t="T3163"><vh>putStatusLine</vh></v>
-<v t="T3164"><vh>updateStatusRowCol()</vh></v>
+<v t="T3159" a="C"><vh>Status line: convenience routines</vh>
+<v t="T3160"><vh>createStatusLine</vh></v>
+<v t="T3161"><vh>clearStatusLine</vh></v>
+<v t="T3162"><vh>putStatusLine</vh></v>
+<v t="T3163"><vh>updateStatusRowCol()</vh></v>
 </v>
 </v>
 <v t="T3333"><vh>Fixed bug importing upper case extensions)</vh>
@@ -5107,7 +5122,7 @@
 </v>
 </v>
 </v>
-<v t="T3336" a="E"><vh>Code</vh>
+<v t="T3336" a="V"><vh>Code</vh>
 <v t="T3337"><vh>  Overview of code</vh>
 <v t="T3338" a="C"><vh>&lt;&lt; About clones &gt;&gt;</vh></v>
 <v t="T3339" a="C"><vh>&lt;&lt; About drawing and events &gt;&gt;</vh></v>
@@ -5286,7 +5301,7 @@
 <v t="T3483" a="C"><vh>importFiles</vh></v>
 </v>
 <v t="T3484"><vh> Version stuff (update this for every release)</vh>
-<v t="T2931" a="C"><vh>OnAbout (version number &amp; date)</vh></v>
+<v t="T2930" a="C"><vh>OnAbout (version number &amp; date)</vh></v>
 <v t="T2199" a="C"><vh>f.__init__</vh>
 <v t="T2200"><vh>&lt;&lt; set the LeoFrame ivars &gt;&gt;</vh></v>
 <v t="T2201"><vh>&lt;&lt; create the first tree node &gt;&gt;</vh></v>
@@ -5298,44 +5313,44 @@
 </v>
 <v t="T3485"><vh>@file leo.py </vh>
 <v t="T3486"><vh>&lt;&lt; Import pychecker &gt;&gt;</vh></v>
-<v t="T3210" a="C"><vh>run &amp; allies</vh>
-<v t="T3211"><vh>createTkRoot</vh>
+<v t="T3209" a="C"><vh>run &amp; allies</vh>
+<v t="T3210"><vh>createTkRoot</vh>
 <v t="T1264" a="C"><vh>&lt;&lt; set the icon image &gt;&gt;</vh></v>
 </v>
-<v t="T3212"><vh>createAppObject</vh></v>
-<v t="T3213" a="C"><vh>createFrame (works)</vh>
-<v t="T3214"><vh>&lt;&lt; open frame2.  return frame2 or frame1 on failure &gt;&gt;</vh></v>
+<v t="T3211"><vh>createAppObject</vh></v>
+<v t="T3212" a="C"><vh>createFrame (works)</vh>
+<v t="T3213"><vh>&lt;&lt; open frame2.  return frame2 or frame1 on failure &gt;&gt;</vh></v>
 </v>
-<v t="T3215"><vh>initSherlock</vh></v>
+<v t="T3214"><vh>initSherlock</vh></v>
 </v>
-<v t="T3287" a="C"><vh>runMainLoop</vh></v>
+<v t="T3286" a="C"><vh>runMainLoop</vh></v>
 <v t="T3487"><vh>profile</vh></v>
 </v>
 <v t="T3488"><vh>@file leoApp.py</vh>
-<v t="T3041" a="C"><vh>app.__init__</vh>
-<v t="T3042"><vh>&lt;&lt; define global constants &gt;&gt;</vh></v>
+<v t="T3040" a="C"><vh>app.__init__</vh>
+<v t="T3041"><vh>&lt;&lt; define global constants &gt;&gt;</vh></v>
 <v t="T1138" a="C"><vh>&lt;&lt; define global data structures &gt;&gt;</vh></v>
 </v>
-<v t="T3219" a="C"><vh>app.closeLeoWindow</vh></v>
+<v t="T3218" a="C"><vh>app.closeLeoWindow</vh></v>
 <v t="T3489"><vh>app.destroyAllGlobalWindows</vh></v>
 <v t="T3490"><vh>app.destroyAllOpenWithFiles</vh></v>
-<v t="T3217" a="C"><vh>app.destroyAllWindowObjects</vh>
-<v t="T3218"><vh>&lt;&lt; clear all vnodes and tnodes in the tree&gt;&gt;</vh></v>
+<v t="T3216" a="C"><vh>app.destroyAllWindowObjects</vh>
+<v t="T3217"><vh>&lt;&lt; clear all vnodes and tnodes in the tree&gt;&gt;</vh></v>
 </v>
 <v t="T3491"><vh>app.destroyOpenWithFilesForFrame</vh></v>
 <v t="T3492"><vh>app.destroyOpenWithFileWithDict</vh></v>
 <v t="T3312" a="C"><vh>app.destroyWindow</vh></v>
-<v t="T3043" a="C"><vh>app.finishCreate</vh>
-<v t="T3044"><vh>&lt;&lt; return false if not v2.1 or above &gt;&gt;</vh></v>
-<v t="T3045"><vh>&lt;&lt; set loadDir &gt;&gt;</vh></v>
-<v t="T3046"><vh>&lt;&lt; set the default Leo icon &gt;&gt;</vh>
-<v t="T3047"><vh>&lt;&lt; set v834 if version is 8.3.4 or greater &gt;&gt;</vh></v>
+<v t="T3042" a="C"><vh>app.finishCreate</vh>
+<v t="T3043"><vh>&lt;&lt; return false if not v2.1 or above &gt;&gt;</vh></v>
+<v t="T3044"><vh>&lt;&lt; set loadDir &gt;&gt;</vh></v>
+<v t="T3045"><vh>&lt;&lt; set the default Leo icon &gt;&gt;</vh>
+<v t="T3046"><vh>&lt;&lt; set v834 if version is 8.3.4 or greater &gt;&gt;</vh></v>
 </v>
-<v t="T3048" a="C"><vh>&lt;&lt; set app.tkEncoding &gt;&gt;</vh></v>
+<v t="T3047" a="C"><vh>&lt;&lt; set app.tkEncoding &gt;&gt;</vh></v>
 </v>
-<v t="T3220" a="C"><vh>app.finishQuit</vh></v>
+<v t="T3219" a="C"><vh>app.finishQuit</vh></v>
 <v t="T3493"><vh>app.get/setRealMenuName &amp; setRealMenuNamesFromTable</vh></v>
-<v t="T3221" a="C"><vh>app.onQuit</vh></v>
+<v t="T3220" a="C"><vh>app.onQuit</vh></v>
 <v t="T3306" a="C"><vh>app.setLog, lockLog, unlocklog</vh></v>
 <v t="T3494"><vh>app.writeWaitingLog</vh></v>
 </v>
@@ -5358,17 +5373,17 @@
 <v t="T3506"><vh>&lt;&lt; set self.targetFileName &gt;&gt;</vh></v>
 </v>
 </v>
-<v t="T3054" a="C"><vh>Reading</vh>
-<v t="T3055"><vh>completeFirstDirectives (Dave Hein)</vh></v>
-<v t="T3056"><vh>completeLastDirectives (Dave Hein)</vh></v>
-<v t="T3057"><vh>createNthChild (3.0)</vh>
-<v t="T3058"><vh>&lt;&lt; check the headlines &gt;&gt;</vh></v>
+<v t="T3053" a="C"><vh>Reading</vh>
+<v t="T3054"><vh>completeFirstDirectives (Dave Hein)</vh></v>
+<v t="T3055"><vh>completeLastDirectives (Dave Hein)</vh></v>
+<v t="T3056"><vh>createNthChild (3.0)</vh>
+<v t="T3057"><vh>&lt;&lt; check the headlines &gt;&gt;</vh></v>
 </v>
-<v t="T3059"><vh>handleLinesFollowingSentinel</vh>
-<v t="T3060"><vh>&lt;&lt; remove the comment delims from s &gt;&gt;</vh></v>
+<v t="T3058"><vh>handleLinesFollowingSentinel</vh>
+<v t="T3059"><vh>&lt;&lt; remove the comment delims from s &gt;&gt;</vh></v>
 </v>
-<v t="T3061"><vh>readLine</vh></v>
-<v t="T3062"><vh>readLinesToNextSentinel</vh></v>
+<v t="T3060"><vh>readLine</vh></v>
+<v t="T3061"><vh>readLinesToNextSentinel</vh></v>
 <v t="T2647" a="C"><vh>scanDoc</vh>
 <v t="T2648"><vh>&lt;&lt; Skip the opening sentinel &gt;&gt;</vh></v>
 <v t="T2649"><vh>&lt;&lt; Skip an opening block delim &gt;&gt;</vh></v>
@@ -5383,19 +5398,19 @@
 <v t="T2407"><vh>&lt;&lt; read optional encoding param &gt;&gt;</vh></v>
 <v t="T2408"><vh>&lt;&lt; set the closing comment delim &gt;&gt;</vh></v>
 </v>
-<v t="T3063"><vh>scanText</vh>
-<v t="T3064"><vh>&lt;&lt; put the next line into s &gt;&gt;</vh></v>
-<v t="T3065"><vh>&lt;&lt; set kind, nextKind &gt;&gt;</vh></v>
-<v t="T3066"><vh>&lt;&lt; Set lineIndent, linep and leading_ws &gt;&gt;</vh></v>
-<v t="T3067"><vh>&lt;&lt; handle unexpected end of text &gt;&gt;</vh></v>
-<v t="T3068"><vh>&lt;&lt; handle the line in s &gt;&gt;</vh>
-<v t="T3069"><vh>&lt;&lt; append non-sentinel line &gt;&gt;</vh></v>
-<v t="T3070"><vh>&lt;&lt; handle common sentinels &gt;&gt;</vh>
-<v t="T3071"><vh>&lt;&lt; handle an ending sentinel &gt;&gt;</vh></v>
+<v t="T3062"><vh>scanText</vh>
+<v t="T3063"><vh>&lt;&lt; put the next line into s &gt;&gt;</vh></v>
+<v t="T3064"><vh>&lt;&lt; set kind, nextKind &gt;&gt;</vh></v>
+<v t="T3065"><vh>&lt;&lt; Set lineIndent, linep and leading_ws &gt;&gt;</vh></v>
+<v t="T3066"><vh>&lt;&lt; handle unexpected end of text &gt;&gt;</vh></v>
+<v t="T3067"><vh>&lt;&lt; handle the line in s &gt;&gt;</vh>
+<v t="T3068"><vh>&lt;&lt; append non-sentinel line &gt;&gt;</vh></v>
+<v t="T3069"><vh>&lt;&lt; handle common sentinels &gt;&gt;</vh>
+<v t="T3070"><vh>&lt;&lt; handle an ending sentinel &gt;&gt;</vh></v>
 <v t="T1901" a="C"><vh>&lt;&lt; scan old ref &gt;&gt; (3.0)</vh></v>
-<v t="T3072"><vh>&lt;&lt; scan @+at &gt;&gt;</vh></v>
-<v t="T3073"><vh>&lt;&lt; scan @+body &gt;&gt;</vh></v>
-<v t="T3074"><vh>&lt;&lt; scan @+doc &gt;&gt;</vh></v>
+<v t="T3071"><vh>&lt;&lt; scan @+at &gt;&gt;</vh></v>
+<v t="T3072"><vh>&lt;&lt; scan @+body &gt;&gt;</vh></v>
+<v t="T3073"><vh>&lt;&lt; scan @+doc &gt;&gt;</vh></v>
 <v t="T2680" a="C"><vh>&lt;&lt; scan @+node &gt;&gt;</vh>
 <v t="T2681"><vh>&lt;&lt; Set childIndex &gt;&gt;</vh></v>
 <v t="T2682"><vh>&lt;&lt; Set cloneIndex &gt;&gt;</vh></v>
@@ -5403,16 +5418,16 @@
 <v t="T2683"><vh>&lt;&lt; Check the filename in the sentinel &gt;&gt;</vh></v>
 <v t="T2684"><vh>&lt;&lt; look for sentinels that may follow a reference &gt;&gt;</vh></v>
 </v>
-<v t="T3075"><vh>&lt;&lt; scan @+others &gt;&gt;</vh></v>
+<v t="T3074"><vh>&lt;&lt; scan @+others &gt;&gt;</vh></v>
 </v>
-<v t="T3076"><vh>&lt;&lt; handle rare sentinels &gt;&gt;</vh>
-<v t="T3077"><vh>&lt;&lt; scan @+leo &gt;&gt;</vh></v>
+<v t="T3075"><vh>&lt;&lt; handle rare sentinels &gt;&gt;</vh>
+<v t="T3076"><vh>&lt;&lt; scan @+leo &gt;&gt;</vh></v>
 <v t="T1902" a="C"><vh>&lt;&lt; scan @@ &gt;&gt;</vh></v>
-<v t="T3078"><vh>&lt;&lt; scan @comment &gt;&gt;</vh></v>
+<v t="T3077"><vh>&lt;&lt; scan @comment &gt;&gt;</vh></v>
 <v t="T2636" a="C"><vh>&lt;&lt; scan @delims &gt;&gt;</vh></v>
-<v t="T3079"><vh>&lt;&lt; scan @verbatim &gt;&gt;</vh></v>
+<v t="T3078"><vh>&lt;&lt; scan @verbatim &gt;&gt;</vh></v>
 </v>
-<v t="T3080"><vh>&lt;&lt; warn about unknown sentinel &gt;&gt;</vh></v>
+<v t="T3079"><vh>&lt;&lt; warn about unknown sentinel &gt;&gt;</vh></v>
 </v>
 </v>
 </v>
@@ -5422,7 +5437,7 @@
 </v>
 <v t="T3508"><vh>putCloseNodeSentinel</vh></v>
 <v t="T3509"><vh>putCloseSentinels</vh></v>
-<v t="T3081" a="C"><vh>putOpenLeoSentinel</vh></v>
+<v t="T3080" a="C"><vh>putOpenLeoSentinel</vh></v>
 <v t="T3510"><vh>putOpenNodeSentinel</vh></v>
 <v t="T3511"><vh>putOpenSentinels</vh></v>
 <v t="T1894" a="C"><vh>putSentinel (applies cweb hack)</vh></v>
@@ -5438,21 +5453,21 @@
 </v>
 </v>
 <v t="T3518"><vh>Utilites</vh>
-<v t="T2981" a="C"><vh>atFile.scanAllDirectives (calls writeError on errors)</vh>
-<v t="T2982"><vh>&lt;&lt; Set ivars &gt;&gt;</vh></v>
-<v t="T2983"><vh>&lt;&lt; Set path from @file node &gt;&gt;</vh></v>
-<v t="T2984"><vh>&lt;&lt; Test for @comment and @language &gt;&gt;</vh></v>
-<v t="T2985"><vh>&lt;&lt; Test for @encoding &gt;&gt;</vh></v>
-<v t="T2986"><vh>&lt;&lt; Test for @header and @noheader &gt;&gt;</vh></v>
-<v t="T2987"><vh>&lt;&lt; Test for @lineending &gt;&gt;</vh></v>
-<v t="T2988"><vh>&lt;&lt; Test for @path &gt;&gt;</vh>
-<v t="T2989"><vh>&lt;&lt; compute relative path from s[k:] &gt;&gt;</vh></v>
-<v t="T2990"><vh>&lt;&lt; handle absolute path &gt;&gt;</vh></v>
+<v t="T2980" a="C"><vh>atFile.scanAllDirectives (calls writeError on errors)</vh>
+<v t="T2981"><vh>&lt;&lt; Set ivars &gt;&gt;</vh></v>
+<v t="T2982"><vh>&lt;&lt; Set path from @file node &gt;&gt;</vh></v>
+<v t="T2983"><vh>&lt;&lt; Test for @comment and @language &gt;&gt;</vh></v>
+<v t="T2984"><vh>&lt;&lt; Test for @encoding &gt;&gt;</vh></v>
+<v t="T2985"><vh>&lt;&lt; Test for @header and @noheader &gt;&gt;</vh></v>
+<v t="T2986"><vh>&lt;&lt; Test for @lineending &gt;&gt;</vh></v>
+<v t="T2987"><vh>&lt;&lt; Test for @path &gt;&gt;</vh>
+<v t="T2988"><vh>&lt;&lt; compute relative path from s[k:] &gt;&gt;</vh></v>
+<v t="T2989"><vh>&lt;&lt; handle absolute path &gt;&gt;</vh></v>
 </v>
-<v t="T2991"><vh>&lt;&lt; Test for @pagewidth &gt;&gt;</vh></v>
-<v t="T2992"><vh>&lt;&lt; Test for @tabwidth &gt;&gt;</vh></v>
-<v t="T2993"><vh>&lt;&lt; Set current directory &gt;&gt;</vh></v>
-<v t="T2994"><vh>&lt;&lt; Set comment Strings from delims &gt;&gt;</vh></v>
+<v t="T2990"><vh>&lt;&lt; Test for @pagewidth &gt;&gt;</vh></v>
+<v t="T2991"><vh>&lt;&lt; Test for @tabwidth &gt;&gt;</vh></v>
+<v t="T2992"><vh>&lt;&lt; Set current directory &gt;&gt;</vh></v>
+<v t="T2993"><vh>&lt;&lt; Set comment Strings from delims &gt;&gt;</vh></v>
 </v>
 <v t="T1903" a="C"><vh>directiveKind</vh></v>
 <v t="T3519"><vh>error</vh></v>
@@ -5464,15 +5479,15 @@
 <v t="T2716"><vh>Top level</vh>
 <v t="T2717"><vh>atFile.rawWrite</vh>
 <v t="T2718"><vh>&lt;&lt; write root's tree &gt;&gt;</vh>
-<v t="T2719"><vh>&lt;&lt; put all @first lines in root &gt;&gt;</vh></v>
-<v t="T2720"><vh>&lt;&lt; put optional @comment sentinel lines &gt;&gt;</vh></v>
-<v t="T2721"><vh>&lt;&lt; Write v's node &gt;&gt;</vh></v>
-<v t="T2722"><vh>&lt;&lt; put all @last lines in root &gt;&gt;</vh></v>
+<v t="T2399" a="C"><vh>&lt;&lt; put all @first lines in root &gt;&gt;</vh></v>
+<v t="T2719"><vh>&lt;&lt; put optional @comment sentinel lines &gt;&gt;</vh></v>
+<v t="T2720"><vh>&lt;&lt; Write v's node &gt;&gt;</vh></v>
+<v t="T2401" a="C"><vh>&lt;&lt; put all @last lines in root &gt;&gt;</vh></v>
 </v>
 </v>
-<v t="T2723"><vh>atFile.silentWrite</vh>
-<v t="T2724"><vh>&lt;&lt; Write v's headline if it starts with @@ &gt;&gt;</vh></v>
-<v t="T2725"><vh>&lt;&lt; Write v's body &gt;&gt;</vh></v>
+<v t="T2721"><vh>atFile.silentWrite</vh>
+<v t="T2722"><vh>&lt;&lt; Write v's headline if it starts with @@ &gt;&gt;</vh></v>
+<v t="T2723"><vh>&lt;&lt; Write v's body &gt;&gt;</vh></v>
 </v>
 <v t="T2395" a="C"><vh>atFile.write</vh>
 <v t="T2396"><vh>&lt;&lt; initialize &gt;&gt;</vh></v>
@@ -5495,17 +5510,17 @@
 <v t="T2063"><vh>&lt;&lt; create self.outputFile &gt;&gt;</vh></v>
 <v t="T2064"><vh>&lt;&lt; write the @file node &gt;&gt;</vh></v>
 </v>
-<v t="T2726"><vh>Top level write helpers</vh>
-<v t="T2727"><vh>atFile.closeWriteFile</vh></v>
-<v t="T2728"><vh>atFile.handleWriteException</vh></v>
-<v t="T2729"><vh>atFile.openWriteFile</vh></v>
-<v t="T2730"><vh>atFile.putInitialComment</vh></v>
-<v t="T2731"><vh>atFile.replaceTargetFileIfDifferent</vh>
-<v t="T2732"><vh>&lt;&lt; delete the output file &gt;&gt;</vh></v>
-<v t="T2733"><vh>&lt;&lt; replace the target file with the output file &gt;&gt;</vh></v>
-<v t="T2734"><vh>&lt;&lt; rename the output file to be the target file &gt;&gt;</vh></v>
+<v t="T2724"><vh>Top level write helpers</vh>
+<v t="T2725"><vh>atFile.closeWriteFile</vh></v>
+<v t="T2726"><vh>atFile.handleWriteException</vh></v>
+<v t="T2727"><vh>atFile.openWriteFile</vh></v>
+<v t="T2728"><vh>atFile.putInitialComment</vh></v>
+<v t="T2729"><vh>atFile.replaceTargetFileIfDifferent</vh>
+<v t="T2730"><vh>&lt;&lt; delete the output file &gt;&gt;</vh></v>
+<v t="T2731"><vh>&lt;&lt; replace the target file with the output file &gt;&gt;</vh></v>
+<v t="T2732"><vh>&lt;&lt; rename the output file to be the target file &gt;&gt;</vh></v>
 </v>
-<v t="T2735"><vh>atFile.outputStringWithLineEndings</vh></v>
+<v t="T2733"><vh>atFile.outputStringWithLineEndings</vh></v>
 </v>
 </v>
 <v t="T2421" a="C"><vh>putBodyPart</vh>
@@ -5516,7 +5531,7 @@
 <v t="T2426"><vh>&lt;&lt; put out the last directives, if any &gt;&gt;</vh></v>
 </v>
 </v>
-<v t="T2736"><vh>putDoc</vh></v>
+<v t="T2734"><vh>putDoc</vh></v>
 <v t="T2205" a="C"><vh>putDocPart</vh>
 <v t="T2206"><vh>&lt;&lt; copy words, splitting the line if needed &gt;&gt;</vh></v>
 </v>
@@ -5527,7 +5542,7 @@
 <v t="T2431"><vh>&lt;&lt; handle @end_raw &gt;&gt;</vh></v>
 <v t="T2432" a="C"><vh>&lt;&lt; put @verbatim sentinel if necessary &gt;&gt;</vh></v>
 </v>
-<v t="T2433"><vh>&lt;&lt; put the line &gt;&gt;</vh>
+<v t="T2433" a="M"><vh>&lt;&lt; put the line &gt;&gt;</vh>
 <v t="T2434"><vh>&lt;&lt; put possible section reference &gt;&gt;</vh></v>
 </v>
 <v t="T2435" a="C"><vh>inAtOthers</vh></v>
@@ -5540,12 +5555,13 @@
 </v>
 </v>
 </v>
-<v t="T2737"><vh>Utils</vh>
+<v t="T2735"><vh>Utils</vh>
+<v t="T2736"><vh>putBuffered</vh></v>
 <v t="T2204" a="C"><vh>os, onl, etc. (leoAtFile)</vh></v>
 <v t="T1892" a="C"><vh>putDirective  (handles @delims)</vh>
 <v t="T1893"><vh>&lt;&lt; handle @delims &gt;&gt;</vh></v>
 </v>
-<v t="T2738"><vh>putEmptyDirective (Dave Hein)</vh></v>
+<v t="T2737"><vh>putEmptyDirective (Dave Hein)</vh></v>
 <v t="T2500" a="C"><vh>putIndent</vh></v>
 </v>
 </v>
@@ -5585,10 +5601,10 @@
 <v t="T3540"><vh>select</vh></v>
 </v>
 <v t="T3541"><vh>class colorizer</vh>
-<v t="T3239" a="C"><vh>color.__init__</vh>
-<v t="T3240"><vh>&lt;&lt; ivars for communication between colorAllDirectives and its allies &gt;&gt;</vh></v>
-<v t="T3241"><vh>&lt;&lt; define dispatch dicts &gt;&gt;</vh></v>
-<v t="T3242"><vh>&lt;&lt; define fonts and data for wiki tags &gt;&gt;</vh></v>
+<v t="T3238" a="C"><vh>color.__init__</vh>
+<v t="T3239"><vh>&lt;&lt; ivars for communication between colorAllDirectives and its allies &gt;&gt;</vh></v>
+<v t="T3240"><vh>&lt;&lt; define dispatch dicts &gt;&gt;</vh></v>
+<v t="T3241"><vh>&lt;&lt; define fonts and data for wiki tags &gt;&gt;</vh></v>
 </v>
 <v t="T3542"><vh>color.callbacks...</vh>
 <v t="T3543"><vh>OnHyperLinkControlClick</vh></v>
@@ -5616,15 +5632,15 @@
 </v>
 </v>
 <v t="T3547"><vh>colorizeLine &amp; allies</vh>
-<v t="T3252" a="C"><vh>continueBlockComment</vh></v>
+<v t="T3251" a="C"><vh>continueBlockComment</vh></v>
 <v t="T3548"><vh>continueSingle/DoubleString</vh></v>
-<v t="T3248" a="C"><vh>continueDocPart</vh>
-<v t="T3249"><vh>&lt;&lt; handle cweb doc part &gt;&gt;</vh></v>
-<v t="T3250"><vh>&lt;&lt; handle noweb doc part &gt;&gt;</vh></v>
+<v t="T3247" a="C"><vh>continueDocPart</vh>
+<v t="T3248"><vh>&lt;&lt; handle cweb doc part &gt;&gt;</vh></v>
+<v t="T3249"><vh>&lt;&lt; handle noweb doc part &gt;&gt;</vh></v>
 </v>
 <v t="T3549"><vh>continueNocolor</vh></v>
-<v t="T3247" a="C"><vh>continueSingle/DoublePythonString</vh></v>
-<v t="T3254" a="C"><vh>doAtKeyword: NOT for cweb keywords</vh></v>
+<v t="T3246" a="C"><vh>continueSingle/DoublePythonString</vh></v>
+<v t="T3253" a="C"><vh>doAtKeyword: NOT for cweb keywords</vh></v>
 <v t="T3550"><vh>doLatexLine</vh></v>
 <v t="T3551"><vh>doNormalState</vh>
 <v t="T3552"><vh>Valid regardless of latex mode</vh>
@@ -5637,15 +5653,15 @@
 <v t="T3558"><vh>&lt;&lt; Handle cweb control word &gt;&gt;</vh></v>
 <v t="T3559"><vh>&lt;&lt; handle cweb ref or def &gt;&gt;</vh></v>
 </v>
-<v t="T3251" a="C"><vh>&lt;&lt; handle single-line comment &gt;&gt;</vh></v>
-<v t="T3253" a="C"><vh>&lt;&lt; start block comment &gt;&gt;</vh></v>
+<v t="T3250" a="C"><vh>&lt;&lt; handle single-line comment &gt;&gt;</vh></v>
+<v t="T3252" a="C"><vh>&lt;&lt; start block comment &gt;&gt;</vh></v>
 <v t="T3560"><vh>&lt;&lt; handle latex line &gt;&gt;</vh></v>
 </v>
 <v t="T3561"><vh>Vaid only in latex mode</vh>
 <v t="T3562"><vh>&lt;&lt; handle latex normal character &gt;&gt;</vh></v>
 </v>
 <v t="T3563"><vh>Valid when not in latex_mode</vh>
-<v t="T3246" a="C"><vh>&lt;&lt; handle string &gt;&gt;</vh></v>
+<v t="T3245" a="C"><vh>&lt;&lt; handle string &gt;&gt;</vh></v>
 <v t="T3564"><vh>&lt;&lt; handle C preprocessor line &gt;&gt;</vh></v>
 <v t="T3565"><vh>&lt;&lt; handle special php keywords &gt;&gt;</vh></v>
 <v t="T3566"><vh>&lt;&lt; handle blank &gt;&gt;</vh></v>
@@ -5656,11 +5672,11 @@
 <v t="T3569"><vh>doNowebSecRef</vh>
 <v t="T3570"><vh>&lt;&lt; set the hyperlink &gt;&gt;</vh></v>
 </v>
-<v t="T3238" a="C"><vh>removeAllTags &amp; removeTagsFromLines</vh></v>
+<v t="T3237" a="C"><vh>removeAllTags &amp; removeTagsFromLines</vh></v>
 </v>
-<v t="T3015" a="C"><vh>scanColorDirectives</vh>
-<v t="T3016"><vh>&lt;&lt; Test for @comment or @language &gt;&gt;</vh></v>
-<v t="T3017"><vh>&lt;&lt; Test for @root, @root-doc or @root-code &gt;&gt;</vh></v>
+<v t="T3014" a="C"><vh>scanColorDirectives</vh>
+<v t="T3015"><vh>&lt;&lt; Test for @comment or @language &gt;&gt;</vh></v>
+<v t="T3016"><vh>&lt;&lt; Test for @root, @root-doc or @root-code &gt;&gt;</vh></v>
 </v>
 <v t="T3571"><vh>color.schedule</vh></v>
 <v t="T3572"><vh>getCwebWord</vh></v>
@@ -5668,10 +5684,10 @@
 <v t="T3574"><vh>updateSyntaxColorer</vh></v>
 <v t="T3575"><vh>useSyntaxColoring</vh></v>
 <v t="T3576"><vh>Utils</vh>
-<v t="T3243" a="C"><vh>index &amp; tag</vh></v>
+<v t="T3242" a="C"><vh>index &amp; tag</vh></v>
 <v t="T3577"><vh>setFirstLineState</vh></v>
 <v t="T3578"><vh>skip_id</vh></v>
-<v t="T3244" a="C"><vh>skip_python_string</vh></v>
+<v t="T3243" a="C"><vh>skip_python_string</vh></v>
 <v t="T3579"><vh>skip_string</vh></v>
 </v>
 </v>
@@ -5784,7 +5800,7 @@
 <v t="T2616" a="C"><vh>c.clone</vh></v>
 <v t="T3642"><vh>c.copyTree</vh></v>
 <v t="T3643"><vh>initAllCloneBits (changed in 4.0)</vh></v>
-<v t="T3146" a="C"><vh>c.initJoinedClonedBits (changed in 3.11.1)</vh></v>
+<v t="T3145" a="C"><vh>c.initJoinedClonedBits (changed in 3.11.1)</vh></v>
 <v t="T3644"><vh>validateOutline</vh></v>
 </v>
 <v t="T3645"><vh>Mark &amp; Unmark &amp; goto</vh>
@@ -5911,15 +5927,15 @@
 <v t="T3722"><vh>setConfigIvars</vh></v>
 </v>
 <v t="T3723"><vh>open</vh>
-<v t="T3051" a="C"><vh>&lt;&lt; get config options &gt;&gt;</vh></v>
+<v t="T3050" a="C"><vh>&lt;&lt; get config options &gt;&gt;</vh></v>
 <v t="T3724"><vh>&lt;&lt; get recent files &gt;&gt;</vh></v>
-<v t="T3052" a="C"><vh>&lt;&lt; convert find/change options to unicode &gt;&gt;</vh></v>
+<v t="T3051" a="C"><vh>&lt;&lt; convert find/change options to unicode &gt;&gt;</vh></v>
 <v t="T3725"><vh>&lt;&lt; print options &gt;&gt;</vh></v>
 </v>
 <v t="T2630" a="C"><vh>update (config)</vh>
 <v t="T2631"><vh>&lt;&lt; write recent files section &gt;&gt;</vh></v>
 </v>
-<v t="T3050" a="C"><vh>update_section</vh></v>
+<v t="T3049" a="C"><vh>update_section</vh></v>
 </v>
 <v t="T3726"><vh>@file leoDialog.py</vh>
 <v t="T3727"><vh>class leoDialog</vh>
@@ -5979,8 +5995,8 @@
 <v t="T3772"><vh>createFrame</vh></v>
 <v t="T3773"><vh>deleteEntry</vh></v>
 <v t="T3774"><vh>destroy</vh></v>
-<v t="T3259" a="C"><vh>fillbox (recent sections)</vh>
-<v t="T3260"><vh>&lt;&lt; reconstruct the contents of self.box &gt;&gt;&gt;</vh></v>
+<v t="T3258" a="C"><vh>fillbox (recent sections)</vh>
+<v t="T3259"><vh>&lt;&lt; reconstruct the contents of self.box &gt;&gt;&gt;</vh></v>
 </v>
 <v t="T3775"><vh>synchNavButtons</vh></v>
 </v>
@@ -5995,9 +6011,9 @@
 <v t="T3782"><vh>leoFileCommands._init_</vh></v>
 <v t="T3783"><vh>Reading</vh>
 <v t="T3784"><vh>createVnode</vh></v>
-<v t="T3177" a="C"><vh>finishPaste (changed from 3.11.1)  (calls initAllCloneBits)</vh>
-<v t="T3178"><vh>&lt;&lt; Create join lists of all pasted vnodes &gt;&gt;</vh></v>
-<v t="T3179"><vh>&lt;&lt; Recompute clone bits for pasted vnodes &gt;&gt;</vh></v>
+<v t="T3176" a="C"><vh>finishPaste (changed from 3.11.1)  (calls initAllCloneBits)</vh>
+<v t="T3177"><vh>&lt;&lt; Create join lists of all pasted vnodes &gt;&gt;</vh></v>
+<v t="T3178"><vh>&lt;&lt; Recompute clone bits for pasted vnodes &gt;&gt;</vh></v>
 </v>
 <v t="T3785"><vh>get routines</vh>
 <v t="T2691" a="C"><vh>get &amp; match (basic)(leoFileCommands)</vh>
@@ -6011,30 +6027,30 @@
 <v t="T2236"><vh>&lt;&lt; Set defaults of all flags &gt;&gt;</vh></v>
 </v>
 <v t="T3789"><vh>getGlobals (changed for 4.0)</vh></v>
-<v t="T3173" a="C"><vh>getLeoFile (calls setAllJoinLinks, initAllCloneBits)</vh>
-<v t="T3174"><vh>&lt;&lt; warn on read-only files &gt;&gt;</vh></v>
-<v t="T3175"><vh>&lt;&lt; scan all the xml elements &gt;&gt;</vh></v>
-<v t="T3176"><vh>&lt;&lt; raise an alert &gt;&gt;</vh></v>
+<v t="T3172" a="C"><vh>getLeoFile (calls setAllJoinLinks, initAllCloneBits)</vh>
+<v t="T3173"><vh>&lt;&lt; warn on read-only files &gt;&gt;</vh></v>
+<v t="T3174"><vh>&lt;&lt; scan all the xml elements &gt;&gt;</vh></v>
+<v t="T3175"><vh>&lt;&lt; raise an alert &gt;&gt;</vh></v>
 </v>
 <v t="T3790"><vh>getLeoHeader</vh></v>
-<v t="T3180" a="C"><vh>getLeoOutline (from clipboard) (changed from 3.11.1)</vh></v>
+<v t="T3179" a="C"><vh>getLeoOutline (from clipboard) (changed from 3.11.1)</vh></v>
 <v t="T3791"><vh>getPosition</vh></v>
 <v t="T1171" a="C"><vh>getPrefs</vh>
 <v t="T1152" a="C"><vh>&lt;&lt; check for syntax coloring prefs &gt;&gt; (getPrefs)</vh></v>
 </v>
 <v t="T3792"><vh>getSize</vh></v>
-<v t="T3182" a="C"><vh>getTnode (no change from 3.11.1)(changed 6/11)</vh>
-<v t="T3183"><vh>&lt;&lt; handle read from file &gt;&gt;</vh></v>
-<v t="T3184"><vh>&lt;&lt; handle read from clipboard &gt;&gt;</vh></v>
+<v t="T3181" a="C"><vh>getTnode (no change from 3.11.1)(changed 6/11)</vh>
+<v t="T3182"><vh>&lt;&lt; handle read from file &gt;&gt;</vh></v>
+<v t="T3183"><vh>&lt;&lt; handle read from clipboard &gt;&gt;</vh></v>
 </v>
-<v t="T3181" a="C"><vh>getTnodes (no change from 3.11.1)</vh></v>
-<v t="T3186" a="C"><vh>getVnode (changed from 3.11.1)</vh>
-<v t="T3187"><vh>&lt;&lt; Handle vnode attribute bits  &gt;&gt;</vh></v>
-<v t="T3188"><vh>&lt;&lt; Set the remembered status bits &gt;&gt;</vh></v>
+<v t="T3180" a="C"><vh>getTnodes (no change from 3.11.1)</vh></v>
+<v t="T3185" a="C"><vh>getVnode (changed from 3.11.1)</vh>
+<v t="T3186"><vh>&lt;&lt; Handle vnode attribute bits  &gt;&gt;</vh></v>
+<v t="T3187"><vh>&lt;&lt; Set the remembered status bits &gt;&gt;</vh></v>
 </v>
-<v t="T3185" a="C"><vh>getVnodes  (no change from 3.11.1)</vh></v>
+<v t="T3184" a="C"><vh>getVnodes  (no change from 3.11.1)</vh></v>
 <v t="T2697" a="C"><vh>getXmlStylesheetTag</vh></v>
-<v t="T3087" a="C"><vh>getXmlVersionTag</vh></v>
+<v t="T3086" a="C"><vh>getXmlVersionTag</vh></v>
 <v t="T3793"><vh>skipWs</vh></v>
 <v t="T3794"><vh>skipWsAndNl</vh></v>
 </v>
@@ -6050,8 +6066,8 @@
 <v t="T3800"><vh>xmlUnescape</vh></v>
 </v>
 <v t="T3801"><vh>Writing</vh>
-<v t="T3190" a="C"><vh>assignFileIndices (no change from 3.11.1)</vh></v>
-<v t="T3172" a="C"><vh>compactFileIndices (changed from 3.11.1)</vh></v>
+<v t="T3189" a="C"><vh>assignFileIndices (no change from 3.11.1)</vh></v>
+<v t="T3171" a="C"><vh>compactFileIndices (changed from 3.11.1)</vh></v>
 <v t="T3802"><vh>put routines</vh>
 <v t="T3803"><vh>putClipboardHeader</vh>
 <v t="T3804"><vh>&lt;&lt; count the number of tnodes &gt;&gt;</vh></v>
@@ -6067,7 +6083,7 @@
 <v t="T3809"><vh>&lt;&lt; put the position of the log window &gt;&gt;</vh></v>
 </v>
 <v t="T3810"><vh>putHeader</vh></v>
-<v t="T3191" a="C"><vh>putLeoOutline (to clipboard) (no change from 3.11.1)</vh></v>
+<v t="T3190" a="C"><vh>putLeoOutline (to clipboard) (no change from 3.11.1)</vh></v>
 <v t="T2383" a="C"><vh>putPrefs</vh>
 <v t="T2384"><vh>&lt;&lt; put prefs that may exist in leoConfig.txt &gt;&gt; (putPrefs)</vh>
 <v t="T2385"><vh>&lt;&lt; put default directory &gt;&gt;</vh></v>
@@ -6078,15 +6094,15 @@
 <v t="T2696"><vh>&lt;&lt; Put the optional &lt;?xml-stylesheet...?&gt; line &gt;&gt;</vh></v>
 </v>
 <v t="T3811"><vh>putPostlog</vh></v>
-<v t="T3193" a="C"><vh>putTnodes (reverted to 3.11.1)</vh>
-<v t="T3194"><vh>&lt;&lt; write only those tnodes that were referenced &gt;&gt;</vh></v>
+<v t="T3192" a="C"><vh>putTnodes (reverted to 3.11.1)</vh>
+<v t="T3193"><vh>&lt;&lt; write only those tnodes that were referenced &gt;&gt;</vh></v>
 </v>
-<v t="T3195" a="C"><vh>putTnode (no change from 3.11.1)</vh></v>
-<v t="T3196" a="C"><vh>putVnodes (reverted 3.11.1)</vh></v>
-<v t="T3197" a="C"><vh>putVnode (no change from 3.11.1) (generates error)</vh>
-<v t="T3198"><vh>&lt;&lt; Put tnode index if this vnode has body text &gt;&gt;</vh></v>
-<v t="T3199"><vh>&lt;&lt; Put attribute bits &gt;&gt;</vh></v>
-<v t="T3200"><vh>&lt;&lt; write the head text &gt;&gt;</vh></v>
+<v t="T3194" a="C"><vh>putTnode (no change from 3.11.1)</vh></v>
+<v t="T3195" a="C"><vh>putVnodes (reverted 3.11.1)</vh></v>
+<v t="T3196" a="C"><vh>putVnode (no change from 3.11.1) (generates error)</vh>
+<v t="T3197"><vh>&lt;&lt; Put tnode index if this vnode has body text &gt;&gt;</vh></v>
+<v t="T3198"><vh>&lt;&lt; Put attribute bits &gt;&gt;</vh></v>
+<v t="T3199"><vh>&lt;&lt; write the head text &gt;&gt;</vh></v>
 </v>
 </v>
 <v t="T3812"><vh>save</vh>
@@ -6096,7 +6112,7 @@
 <v t="T3815"><vh>saveTo</vh></v>
 <v t="T3816"><vh>xmlEscape</vh></v>
 <v t="T3817"><vh>writeAtFileNodes</vh></v>
-<v t="T3296" a="C"><vh>writeDirtyAtFileNodes</vh></v>
+<v t="T3295" a="C"><vh>writeDirtyAtFileNodes</vh></v>
 <v t="T3818"><vh>writeMissingAtFileNodes</vh></v>
 <v t="T3819"><vh>writeOutlineOnly</vh></v>
 <v t="T2388" a="C"><vh>write_LEO_file</vh>
@@ -6210,23 +6226,23 @@
 </v>
 </v>
 </v>
-<v t="T3860" a="E"><vh>@file leoFrame.py</vh>
-<v t="T3861" a="E"><vh>Birth &amp; Death</vh>
+<v t="T3860"><vh>@file leoFrame.py</vh>
+<v t="T3861"><vh>Birth &amp; Death</vh>
 <v t="T2199" a="C"><vh>f.__init__</vh>
 <v t="T2200"><vh>&lt;&lt; set the LeoFrame ivars &gt;&gt;</vh></v>
 <v t="T2201"><vh>&lt;&lt; create the first tree node &gt;&gt;</vh></v>
 </v>
 <v t="T3862"><vh>f.__repr__</vh></v>
 <v t="T3863"><vh>f.setWindowTitle</vh></v>
-<v t="T2331" a="CE"><vh>f.createLeoFrame</vh>
+<v t="T2331" a="C"><vh>f.createLeoFrame</vh>
 <v t="T2332"><vh>&lt;&lt; create both splitters &gt;&gt;</vh></v>
-<v t="T2333" a="V"><vh>&lt;&lt; create the body pane &gt;&gt;</vh></v>
+<v t="T2333"><vh>&lt;&lt; create the body pane &gt;&gt;</vh></v>
 <v t="T1839" a="C"><vh>&lt;&lt; create the tree pane &gt;&gt;</vh></v>
 <v t="T2334"><vh>&lt;&lt; create the log pane &gt;&gt;</vh></v>
 </v>
-<v t="T3222" a="C"><vh>frame.destroyAllPanels</vh></v>
-<v t="T3223" a="C"><vh>frame.promptForSave</vh>
-<v t="T3224"><vh>&lt;&lt; Put up a file save dialog to set mFileName &gt;&gt;</vh></v>
+<v t="T3221" a="C"><vh>frame.destroyAllPanels</vh></v>
+<v t="T3222" a="C"><vh>frame.promptForSave</vh>
+<v t="T3223"><vh>&lt;&lt; Put up a file save dialog to set mFileName &gt;&gt;</vh></v>
 </v>
 </v>
 <v t="T3864"><vh>Configuration</vh>
@@ -6234,11 +6250,11 @@
 <v t="T2354" a="C"><vh>f.configureBarsFromConfig</vh></v>
 <v t="T2355" a="C"><vh>f.reconfigureFromConfig</vh></v>
 <v t="T2327" a="C"><vh>f.setBodyFontFromConfig</vh></v>
-<v t="T3257" a="C"><vh>f.setInitialWindowGeometry</vh></v>
+<v t="T3256" a="C"><vh>f.setInitialWindowGeometry</vh></v>
 <v t="T2356" a="C"><vh>f.setLogFontFromConfig</vh></v>
 <v t="T2357" a="C"><vh>f.setTabWidth</vh></v>
 <v t="T3866"><vh>f.setTreeColorsFromConfig</vh></v>
-<v t="T3151" a="C"><vh>f.setWrap</vh></v>
+<v t="T3150" a="C"><vh>f.setWrap</vh></v>
 <v t="T3867"><vh>reconfigurePanes (use config bar_width)</vh></v>
 </v>
 <v t="T1840" a="C"><vh>Scrolling callbacks (frame)</vh></v>
@@ -6254,143 +6270,143 @@
 <v t="T3877"><vh>OnBodyDoubleClick (Events)</vh></v>
 <v t="T3878"><vh>OnMouseWheel (Tomaz Ficko)</vh></v>
 </v>
-<v t="T3153" a="C"><vh>Icon area: convenience routines</vh>
-<v t="T3154"><vh>createIconBar</vh></v>
-<v t="T3155"><vh>hideIconBar</vh></v>
-<v t="T3156"><vh>clearIconBar</vh></v>
-<v t="T3157"><vh>showIconBar</vh></v>
-<v t="T3158"><vh>addIconButton</vh>
-<v t="T3159"><vh>&lt;&lt; create a picture &gt;&gt;</vh></v>
+<v t="T3152" a="C"><vh>Icon area: convenience routines</vh>
+<v t="T3153"><vh>createIconBar</vh></v>
+<v t="T3154"><vh>hideIconBar</vh></v>
+<v t="T3155"><vh>clearIconBar</vh></v>
+<v t="T3156"><vh>showIconBar</vh></v>
+<v t="T3157"><vh>addIconButton</vh>
+<v t="T3158"><vh>&lt;&lt; create a picture &gt;&gt;</vh></v>
 </v>
 </v>
 <v t="T3879"><vh>f.longFileName &amp; shortFileName</vh></v>
-<v t="T3091" a="C"><vh>f.put, putnl</vh></v>
+<v t="T3090" a="C"><vh>f.put, putnl</vh></v>
 <v t="T3880"><vh>getFocus</vh></v>
-<v t="T2740" a="C"><vh> Menus</vh>
-<v t="T2741"><vh>canonicalizeShortcut</vh>
-<v t="T2742"><vh>&lt;&lt; canonicalize the last field &gt;&gt;</vh>
-<v t="T2743"><vh>&lt;&lt; define dict of Tk bind names &gt;&gt;</vh></v>
-<v t="T2744"><vh>&lt;&lt; define dict of special names &gt;&gt;</vh></v>
+<v t="T2739" a="C"><vh> Menus</vh>
+<v t="T2740"><vh>canonicalizeShortcut</vh>
+<v t="T2741"><vh>&lt;&lt; canonicalize the last field &gt;&gt;</vh>
+<v t="T2742"><vh>&lt;&lt; define dict of Tk bind names &gt;&gt;</vh></v>
+<v t="T2743"><vh>&lt;&lt; define dict of special names &gt;&gt;</vh></v>
 </v>
-<v t="T2745"><vh>&lt;&lt; set the last field, preserving case &gt;&gt;</vh></v>
-<v t="T2746"><vh>&lt;&lt; synthesize the shortcuts from the information &gt;&gt;</vh></v>
+<v t="T2744"><vh>&lt;&lt; set the last field, preserving case &gt;&gt;</vh></v>
+<v t="T2745"><vh>&lt;&lt; synthesize the shortcuts from the information &gt;&gt;</vh></v>
 </v>
-<v t="T2747"><vh>createMenuBar</vh>
-<v t="T2748"><vh>&lt;&lt; create the edit menu &gt;&gt;</vh>
-<v t="T2749"><vh>&lt;&lt; create the first top-level edit entries &gt;&gt;</vh></v>
-<v t="T2750"><vh>&lt;&lt; create the edit body submenu &gt;&gt;</vh></v>
-<v t="T2751"><vh>&lt;&lt; create the edit headline submenu &gt;&gt;</vh></v>
-<v t="T2752"><vh>&lt;&lt; create the find submenu &gt;&gt;</vh></v>
-<v t="T2753"><vh>&lt;&lt; create the last top-level edit entries &gt;&gt;</vh></v>
+<v t="T2746"><vh>createMenuBar</vh>
+<v t="T2747"><vh>&lt;&lt; create the edit menu &gt;&gt;</vh>
+<v t="T2748"><vh>&lt;&lt; create the first top-level edit entries &gt;&gt;</vh></v>
+<v t="T2749"><vh>&lt;&lt; create the edit body submenu &gt;&gt;</vh></v>
+<v t="T2750"><vh>&lt;&lt; create the edit headline submenu &gt;&gt;</vh></v>
+<v t="T2751"><vh>&lt;&lt; create the find submenu &gt;&gt;</vh></v>
+<v t="T2752"><vh>&lt;&lt; create the last top-level edit entries &gt;&gt;</vh></v>
 </v>
-<v t="T2754"><vh>&lt;&lt; create the file menu &gt;&gt;</vh>
-<v t="T2755" a="C"><vh>&lt;&lt; create the top-level file entries &gt;&gt;</vh></v>
-<v t="T2756"><vh>&lt;&lt; create the recent files submenu &gt;&gt;</vh></v>
-<v t="T2757"><vh>&lt;&lt; create the read/write submenu &gt;&gt;</vh></v>
-<v t="T2758"><vh>&lt;&lt; create the tangle submenu &gt;&gt;</vh></v>
-<v t="T2759"><vh>&lt;&lt; create the untangle submenu &gt;&gt;</vh></v>
-<v t="T2760"><vh>&lt;&lt; create the import submenu &gt;&gt;</vh></v>
-<v t="T2761"><vh>&lt;&lt; create the export submenu &gt;&gt;</vh></v>
+<v t="T2753"><vh>&lt;&lt; create the file menu &gt;&gt;</vh>
+<v t="T2754" a="C"><vh>&lt;&lt; create the top-level file entries &gt;&gt;</vh></v>
+<v t="T2755"><vh>&lt;&lt; create the recent files submenu &gt;&gt;</vh></v>
+<v t="T2756"><vh>&lt;&lt; create the read/write submenu &gt;&gt;</vh></v>
+<v t="T2757"><vh>&lt;&lt; create the tangle submenu &gt;&gt;</vh></v>
+<v t="T2758"><vh>&lt;&lt; create the untangle submenu &gt;&gt;</vh></v>
+<v t="T2759"><vh>&lt;&lt; create the import submenu &gt;&gt;</vh></v>
+<v t="T2760"><vh>&lt;&lt; create the export submenu &gt;&gt;</vh></v>
 </v>
-<v t="T2762"><vh>&lt;&lt; create the outline menu &gt;&gt;</vh>
-<v t="T2763"><vh>&lt;&lt; create top-level outline menu &gt;&gt;</vh></v>
-<v t="T2764"><vh>&lt;&lt; create expand/contract submenu &gt;&gt;</vh></v>
-<v t="T2765"><vh>&lt;&lt; create move submenu &gt;&gt;</vh></v>
-<v t="T2766"><vh>&lt;&lt; create mark submenu &gt;&gt;</vh></v>
-<v t="T2767"><vh>&lt;&lt; create goto submenu &gt;&gt;</vh></v>
+<v t="T2761"><vh>&lt;&lt; create the outline menu &gt;&gt;</vh>
+<v t="T2762"><vh>&lt;&lt; create top-level outline menu &gt;&gt;</vh></v>
+<v t="T2763"><vh>&lt;&lt; create expand/contract submenu &gt;&gt;</vh></v>
+<v t="T2764"><vh>&lt;&lt; create move submenu &gt;&gt;</vh></v>
+<v t="T2765"><vh>&lt;&lt; create mark submenu &gt;&gt;</vh></v>
+<v t="T2766"><vh>&lt;&lt; create goto submenu &gt;&gt;</vh></v>
 </v>
-<v t="T2768"><vh>&lt;&lt; create the window menu &gt;&gt;</vh></v>
-<v t="T2769"><vh>&lt;&lt; create the help menu &gt;&gt;</vh></v>
+<v t="T2767"><vh>&lt;&lt; create the window menu &gt;&gt;</vh></v>
+<v t="T2768"><vh>&lt;&lt; create the help menu &gt;&gt;</vh></v>
 </v>
-<v t="T2770" a="C"><vh>createMenuEntries</vh>
-<v t="T2771"><vh>&lt;&lt; set name to the label for doCommand &gt;&gt;</vh></v>
-<v t="T2772"><vh>&lt;&lt; set accel to the shortcut for name &gt;&gt;</vh></v>
-<v t="T2773"><vh>&lt;&lt; set bind_shortcut and menu_shortcut using accel &gt;&gt;</vh></v>
-<v t="T2774"><vh>&lt;&lt; define callback function &gt;&gt;</vh></v>
-<v t="T2775"><vh>&lt;&lt; set realLabel, amp_index and menu_shortcut &gt;&gt;</vh></v>
-<v t="T2776"><vh>&lt;&lt; handle bind_shorcut &gt;&gt;</vh></v>
+<v t="T2769" a="C"><vh>createMenuEntries</vh>
+<v t="T2770"><vh>&lt;&lt; set name to the label for doCommand &gt;&gt;</vh></v>
+<v t="T2771"><vh>&lt;&lt; set accel to the shortcut for name &gt;&gt;</vh></v>
+<v t="T2772"><vh>&lt;&lt; set bind_shortcut and menu_shortcut using accel &gt;&gt;</vh></v>
+<v t="T2773"><vh>&lt;&lt; define callback function &gt;&gt;</vh></v>
+<v t="T2774"><vh>&lt;&lt; set realLabel, amp_index and menu_shortcut &gt;&gt;</vh></v>
+<v t="T2775"><vh>&lt;&lt; handle bind_shorcut &gt;&gt;</vh></v>
 </v>
-<v t="T2777"><vh>createRecentFilesMenuItems</vh></v>
-<v t="T2778"><vh>frame.doCommand</vh></v>
-<v t="T2779"><vh>get/set/destroyMenu</vh></v>
-<v t="T2780"><vh>Menu Command Handlers</vh>
-<v t="T2781"><vh>File Menu</vh>
-<v t="T2782"><vh>top level</vh>
-<v t="T2783" a="C"><vh>OnNew</vh></v>
-<v t="T2784" a="C"><vh>frame.OnOpen</vh>
-<v t="T2785"><vh>&lt;&lt; Set closeFlag if the only open window is empty &gt;&gt;</vh></v>
+<v t="T2776"><vh>createRecentFilesMenuItems</vh></v>
+<v t="T2777"><vh>frame.doCommand</vh></v>
+<v t="T2778"><vh>get/set/destroyMenu</vh></v>
+<v t="T2779"><vh>Menu Command Handlers</vh>
+<v t="T2780"><vh>File Menu</vh>
+<v t="T2781"><vh>top level</vh>
+<v t="T2782" a="C"><vh>OnNew</vh></v>
+<v t="T2783" a="C"><vh>frame.OnOpen</vh>
+<v t="T2784"><vh>&lt;&lt; Set closeFlag if the only open window is empty &gt;&gt;</vh></v>
 </v>
-<v t="T2786" a="C"><vh>frame.OnOpenWith and allies</vh>
-<v t="T2787"><vh>&lt;&lt; set ext based on the present language &gt;&gt;</vh></v>
-<v t="T2788"><vh>&lt;&lt; create or reopen temp file, testing for conflicting changes &gt;&gt;</vh>
-<v t="T2789"><vh>&lt;&lt;set dict and path if a temp file already refers to v.t &gt;&gt;</vh></v>
-<v t="T2790"><vh>&lt;&lt; create or recreate temp file as needed &gt;&gt;</vh>
-<v t="T2791"><vh>&lt;&lt; Raise dialog about conflict and set result &gt;&gt;</vh></v>
+<v t="T2785" a="C"><vh>frame.OnOpenWith and allies</vh>
+<v t="T2786"><vh>&lt;&lt; set ext based on the present language &gt;&gt;</vh></v>
+<v t="T2787"><vh>&lt;&lt; create or reopen temp file, testing for conflicting changes &gt;&gt;</vh>
+<v t="T2788"><vh>&lt;&lt;set dict and path if a temp file already refers to v.t &gt;&gt;</vh></v>
+<v t="T2789"><vh>&lt;&lt; create or recreate temp file as needed &gt;&gt;</vh>
+<v t="T2790"><vh>&lt;&lt; Raise dialog about conflict and set result &gt;&gt;</vh></v>
 </v>
 </v>
-<v t="T2792"><vh>&lt;&lt; execute a command to open path in external editor &gt;&gt;</vh></v>
-<v t="T2793" a="C"><vh>frame.createOpenWithTempFile</vh>
-<v t="T2794"><vh>&lt;&lt; remove previous entry from a.openWithFiles if it exists &gt;&gt;</vh></v>
+<v t="T2791"><vh>&lt;&lt; execute a command to open path in external editor &gt;&gt;</vh></v>
+<v t="T2792" a="C"><vh>frame.createOpenWithTempFile</vh>
+<v t="T2793"><vh>&lt;&lt; remove previous entry from a.openWithFiles if it exists &gt;&gt;</vh></v>
 </v>
-<v t="T2795"><vh>frame.openWithTempFilePath</vh></v>
+<v t="T2794"><vh>frame.openWithTempFilePath</vh></v>
 </v>
-<v t="T2796" a="C"><vh>frame.OpenWithFileName</vh></v>
+<v t="T2795" a="C"><vh>frame.OpenWithFileName</vh></v>
 <v t="T2109" a="C"><vh>frame.OnClose</vh></v>
-<v t="T2797"><vh>OnSave</vh></v>
-<v t="T2798"><vh>OnSaveAs</vh></v>
-<v t="T2799"><vh>OnSaveTo</vh></v>
-<v t="T2800" a="C"><vh>frame.OnRevert</vh></v>
-<v t="T2801"><vh>frame.OnQuit</vh></v>
-<v t="T2802"><vh>frame.updateRecentFiles</vh></v>
+<v t="T2796"><vh>OnSave</vh></v>
+<v t="T2797"><vh>OnSaveAs</vh></v>
+<v t="T2798"><vh>OnSaveTo</vh></v>
+<v t="T2799" a="C"><vh>frame.OnRevert</vh></v>
+<v t="T2800"><vh>frame.OnQuit</vh></v>
+<v t="T2801"><vh>frame.updateRecentFiles</vh></v>
 </v>
-<v t="T2803"><vh>Recent Files submenu</vh>
-<v t="T2804" a="C"><vh>frame.OnOpenRecentFile</vh>
-<v t="T2805"><vh>&lt;&lt; Set closeFlag if the only open window is empty &gt;&gt;</vh></v>
-</v>
-</v>
-<v t="T2806"><vh>Read/Write submenu</vh>
-<v t="T2807"><vh>fileCommands.OnReadOutlineOnly</vh></v>
-<v t="T2808"><vh>OnReadAtFileNodes</vh></v>
-<v t="T2809"><vh>OnWriteDirtyAtFileNodes</vh></v>
-<v t="T2810"><vh>OnWriteMissingAtFileNodes</vh></v>
-<v t="T2811"><vh>OnWriteOutlineOnly</vh></v>
-<v t="T2812"><vh>OnWriteAtFileNodes</vh></v>
-</v>
-<v t="T2813"><vh>Tangle submenu</vh>
-<v t="T2814"><vh>OnTangleAll</vh></v>
-<v t="T2815"><vh>OnTangleMarked</vh></v>
-<v t="T2816"><vh>OnTangle</vh></v>
-</v>
-<v t="T2817"><vh>Untangle submenu</vh>
-<v t="T2818"><vh>OnUntangleAll</vh></v>
-<v t="T2819"><vh>OnUntangleMarked</vh></v>
-<v t="T2820"><vh>OnUntangle</vh></v>
-</v>
-<v t="T2821"><vh>Import&amp;Export submenu</vh>
-<v t="T2822"><vh>OnExportHeadlines</vh></v>
-<v t="T2823"><vh>OnFlattenOutline</vh></v>
-<v t="T2824"><vh>OnImportAtRoot</vh></v>
-<v t="T2825"><vh>OnImportAtFile</vh></v>
-<v t="T2826"><vh>OnImportCWEBFiles</vh></v>
-<v t="T2827"><vh>OnImportFlattenedOutline</vh></v>
-<v t="T2828"><vh>OnImportNowebFiles</vh></v>
-<v t="T2829"><vh>OnOutlineToCWEB</vh></v>
-<v t="T2830"><vh>OnOutlineToNoweb</vh></v>
-<v t="T2831"><vh>OnRemoveSentinels</vh></v>
-<v t="T2832"><vh>OnWeave</vh></v>
+<v t="T2802"><vh>Recent Files submenu</vh>
+<v t="T2803" a="C"><vh>frame.OnOpenRecentFile</vh>
+<v t="T2804"><vh>&lt;&lt; Set closeFlag if the only open window is empty &gt;&gt;</vh></v>
 </v>
 </v>
-<v t="T2833"><vh>Edit Menu (change to handle log pane too)</vh>
-<v t="T2834"><vh>Edit top level</vh>
-<v t="T2835"><vh>OnUndo</vh></v>
-<v t="T2836"><vh>OnRedo</vh></v>
-<v t="T2837"><vh>Cut/Copy/Paste body text</vh>
-<v t="T2838"><vh>frame.OnCut, OnCutFrom Menu</vh></v>
-<v t="T2839"><vh>frame.OnCopy, OnCopyFromMenu</vh></v>
-<v t="T2840"><vh>frame.OnPaste, OnPasteNode, OnPasteFromMenu</vh></v>
+<v t="T2805"><vh>Read/Write submenu</vh>
+<v t="T2806"><vh>fileCommands.OnReadOutlineOnly</vh></v>
+<v t="T2807"><vh>OnReadAtFileNodes</vh></v>
+<v t="T2808"><vh>OnWriteDirtyAtFileNodes</vh></v>
+<v t="T2809"><vh>OnWriteMissingAtFileNodes</vh></v>
+<v t="T2810"><vh>OnWriteOutlineOnly</vh></v>
+<v t="T2811"><vh>OnWriteAtFileNodes</vh></v>
 </v>
-<v t="T2841"><vh>OnDelete</vh></v>
-<v t="T2842"><vh>OnExecuteScript</vh></v>
+<v t="T2812"><vh>Tangle submenu</vh>
+<v t="T2813"><vh>OnTangleAll</vh></v>
+<v t="T2814"><vh>OnTangleMarked</vh></v>
+<v t="T2815"><vh>OnTangle</vh></v>
+</v>
+<v t="T2816"><vh>Untangle submenu</vh>
+<v t="T2817"><vh>OnUntangleAll</vh></v>
+<v t="T2818"><vh>OnUntangleMarked</vh></v>
+<v t="T2819"><vh>OnUntangle</vh></v>
+</v>
+<v t="T2820"><vh>Import&amp;Export submenu</vh>
+<v t="T2821"><vh>OnExportHeadlines</vh></v>
+<v t="T2822"><vh>OnFlattenOutline</vh></v>
+<v t="T2823"><vh>OnImportAtRoot</vh></v>
+<v t="T2824"><vh>OnImportAtFile</vh></v>
+<v t="T2825"><vh>OnImportCWEBFiles</vh></v>
+<v t="T2826"><vh>OnImportFlattenedOutline</vh></v>
+<v t="T2827"><vh>OnImportNowebFiles</vh></v>
+<v t="T2828"><vh>OnOutlineToCWEB</vh></v>
+<v t="T2829"><vh>OnOutlineToNoweb</vh></v>
+<v t="T2830"><vh>OnRemoveSentinels</vh></v>
+<v t="T2831"><vh>OnWeave</vh></v>
+</v>
+</v>
+<v t="T2832"><vh>Edit Menu (change to handle log pane too)</vh>
+<v t="T2833"><vh>Edit top level</vh>
+<v t="T2834"><vh>OnUndo</vh></v>
+<v t="T2835"><vh>OnRedo</vh></v>
+<v t="T2836"><vh>Cut/Copy/Paste body text</vh>
+<v t="T2837"><vh>frame.OnCut, OnCutFrom Menu</vh></v>
+<v t="T2838"><vh>frame.OnCopy, OnCopyFromMenu</vh></v>
+<v t="T2839"><vh>frame.OnPaste, OnPasteNode, OnPasteFromMenu</vh></v>
+</v>
+<v t="T2840"><vh>OnDelete</vh></v>
+<v t="T2841"><vh>OnExecuteScript</vh></v>
 <v t="T1306" a="C"><vh>OnGoToLineNumber &amp; allies</vh>
 <v t="T1307"><vh>&lt;&lt; set root to the nearest @file, @silentfile or @rawfile ancestor node &gt;&gt;</vh></v>
 <v t="T1308"><vh>&lt;&lt; read the file into lines &gt;&gt;</vh></v>
@@ -6408,139 +6424,139 @@
 </v>
 <v t="T1319"><vh>skipToMatchingNodeSentinel</vh></v>
 </v>
-<v t="T2843"><vh>OnSelectAll</vh></v>
-<v t="T2844"><vh>OnFontPanel</vh></v>
-<v t="T2845"><vh>OnColorPanel</vh></v>
-<v t="T2846"><vh>OnViewAllCharacters</vh></v>
-<v t="T2847"><vh>OnPreferences</vh></v>
+<v t="T2842"><vh>OnSelectAll</vh></v>
+<v t="T2843"><vh>OnFontPanel</vh></v>
+<v t="T2844"><vh>OnColorPanel</vh></v>
+<v t="T2845"><vh>OnViewAllCharacters</vh></v>
+<v t="T2846"><vh>OnPreferences</vh></v>
 </v>
-<v t="T2848"><vh>Edit Body submenu</vh>
-<v t="T2849"><vh>OnConvertBlanks &amp; OnConvertAllBlanks</vh></v>
-<v t="T2850"><vh>OnConvertTabs &amp; OnConvertAllTabs</vh></v>
-<v t="T2851"><vh>OnDedent</vh></v>
-<v t="T2852"><vh>OnExtract</vh></v>
-<v t="T2853"><vh>OnExtractNames</vh></v>
-<v t="T2854"><vh>OnExtractSection</vh></v>
-<v t="T2855"><vh>OnFindMatchingBracket</vh>
-<v t="T2856"><vh>findMatchingBracket</vh></v>
+<v t="T2847"><vh>Edit Body submenu</vh>
+<v t="T2848"><vh>OnConvertBlanks &amp; OnConvertAllBlanks</vh></v>
+<v t="T2849"><vh>OnConvertTabs &amp; OnConvertAllTabs</vh></v>
+<v t="T2850"><vh>OnDedent</vh></v>
+<v t="T2851"><vh>OnExtract</vh></v>
+<v t="T2852"><vh>OnExtractNames</vh></v>
+<v t="T2853"><vh>OnExtractSection</vh></v>
+<v t="T2854"><vh>OnFindMatchingBracket</vh>
+<v t="T2855"><vh>findMatchingBracket</vh></v>
 </v>
-<v t="T2857"><vh>OnIndent</vh></v>
+<v t="T2856"><vh>OnIndent</vh></v>
 <v t="T2282" a="C"><vh>OnInsertBody/HeadlineTime &amp; allies</vh>
 <v t="T2283"><vh>getTime</vh></v>
 </v>
 </v>
-<v t="T2858"><vh>Edit Headline submenu</vh>
-<v t="T2859"><vh>OnEditHeadline</vh></v>
-<v t="T2860"><vh>OnEndEditHeadline</vh></v>
-<v t="T2861"><vh>OnAbortEditHeadline</vh></v>
+<v t="T2857"><vh>Edit Headline submenu</vh>
+<v t="T2858"><vh>OnEditHeadline</vh></v>
+<v t="T2859"><vh>OnEndEditHeadline</vh></v>
+<v t="T2860"><vh>OnAbortEditHeadline</vh></v>
 <v t="T2293" a="C"><vh>OnToggleAngleBrackets</vh></v>
 </v>
-<v t="T2862"><vh>Find submenu (frame methods)</vh>
-<v t="T2863"><vh>OnFindPanel</vh></v>
-<v t="T2864"><vh>OnFindNext</vh></v>
-<v t="T2865"><vh>OnFindPrevious</vh></v>
-<v t="T2866"><vh>OnReplace</vh></v>
-<v t="T2867"><vh>OnReplaceThenFind</vh></v>
+<v t="T2861"><vh>Find submenu (frame methods)</vh>
+<v t="T2862"><vh>OnFindPanel</vh></v>
+<v t="T2863"><vh>OnFindNext</vh></v>
+<v t="T2864"><vh>OnFindPrevious</vh></v>
+<v t="T2865"><vh>OnReplace</vh></v>
+<v t="T2866"><vh>OnReplaceThenFind</vh></v>
 </v>
 </v>
-<v t="T2868"><vh>Outline Menu</vh>
-<v t="T2869"><vh>top level</vh>
-<v t="T2870"><vh>OnCutNode</vh></v>
-<v t="T2871"><vh>OnCopyNode</vh></v>
-<v t="T2872"><vh>OnPasteNodee</vh></v>
-<v t="T2873"><vh>OnDeleteNode</vh></v>
-<v t="T2874"><vh>OnInsertNode</vh></v>
-<v t="T2875"><vh>OnCloneNode</vh></v>
-<v t="T2876"><vh>OnSortChildren, OnSortSiblings</vh></v>
+<v t="T2867"><vh>Outline Menu</vh>
+<v t="T2868"><vh>top level</vh>
+<v t="T2869"><vh>OnCutNode</vh></v>
+<v t="T2870"><vh>OnCopyNode</vh></v>
+<v t="T2871"><vh>OnPasteNodee</vh></v>
+<v t="T2872"><vh>OnDeleteNode</vh></v>
+<v t="T2873"><vh>OnInsertNode</vh></v>
+<v t="T2874"><vh>OnCloneNode</vh></v>
+<v t="T2875"><vh>OnSortChildren, OnSortSiblings</vh></v>
 </v>
-<v t="T2877"><vh>Expand/Contract</vh>
-<v t="T2878"><vh>No longer used</vh>
+<v t="T2876"><vh>Expand/Contract</vh>
+<v t="T2877"><vh>No longer used</vh>
 <v t="T2307" a="C"><vh>OnContractChildren (no longer used)</vh></v>
-<v t="T2879"><vh>OnContractAllChildren (no longer used)</vh></v>
-<v t="T2880"><vh>OnExpandAllChildren (no longer used)</vh></v>
-<v t="T2881"><vh>OnExpandChildren (no longer used)</vh></v>
+<v t="T2878"><vh>OnContractAllChildren (no longer used)</vh></v>
+<v t="T2879"><vh>OnExpandAllChildren (no longer used)</vh></v>
+<v t="T2880"><vh>OnExpandChildren (no longer used)</vh></v>
 </v>
-<v t="T2882"><vh>OnContractAll</vh></v>
-<v t="T2883"><vh>OnContractNode</vh></v>
-<v t="T2884"><vh>OnContractParent</vh></v>
-<v t="T2885"><vh>OnExpandAll</vh></v>
-<v t="T2886"><vh>OnExpandNextLevel</vh></v>
-<v t="T2887"><vh>OnExpandNode</vh></v>
-<v t="T2888"><vh>OnExpandPrevLevel</vh></v>
-<v t="T2889"><vh>OnExpandToLevel1..9</vh></v>
+<v t="T2881"><vh>OnContractAll</vh></v>
+<v t="T2882"><vh>OnContractNode</vh></v>
+<v t="T2883"><vh>OnContractParent</vh></v>
+<v t="T2884"><vh>OnExpandAll</vh></v>
+<v t="T2885"><vh>OnExpandNextLevel</vh></v>
+<v t="T2886"><vh>OnExpandNode</vh></v>
+<v t="T2887"><vh>OnExpandPrevLevel</vh></v>
+<v t="T2888"><vh>OnExpandToLevel1..9</vh></v>
 </v>
-<v t="T2890"><vh>Move/Select</vh>
-<v t="T2891"><vh>OnMoveDownwn</vh></v>
-<v t="T2892"><vh>OnMoveLeft</vh></v>
-<v t="T2893"><vh>OnMoveRight</vh></v>
-<v t="T2894"><vh>OnMoveUp</vh></v>
-<v t="T2895"><vh>OnPromote</vh></v>
-<v t="T2896"><vh>OnDemote</vh></v>
-<v t="T2897"><vh>OnGoPrevVisible</vh></v>
-<v t="T2898"><vh>OnGoNextVisible</vh></v>
-<v t="T2899"><vh>OnGoBack</vh></v>
-<v t="T2900"><vh>OnGoNext</vh></v>
+<v t="T2889"><vh>Move/Select</vh>
+<v t="T2890"><vh>OnMoveDownwn</vh></v>
+<v t="T2891"><vh>OnMoveLeft</vh></v>
+<v t="T2892"><vh>OnMoveRight</vh></v>
+<v t="T2893"><vh>OnMoveUp</vh></v>
+<v t="T2894"><vh>OnPromote</vh></v>
+<v t="T2895"><vh>OnDemote</vh></v>
+<v t="T2896"><vh>OnGoPrevVisible</vh></v>
+<v t="T2897"><vh>OnGoNextVisible</vh></v>
+<v t="T2898"><vh>OnGoBack</vh></v>
+<v t="T2899"><vh>OnGoNext</vh></v>
 </v>
-<v t="T2901"><vh>Mark/Goto</vh>
-<v t="T2902" a="C"><vh>OnGoPrevVisitedNode</vh></v>
-<v t="T2903" a="C"><vh>OnGoNextVisitedNode</vh></v>
-<v t="T2904"><vh>OnGoToFirstNode</vh></v>
-<v t="T2905"><vh>OnGoToLastNode</vh></v>
-<v t="T2906"><vh>OnGoToNextChanged</vh></v>
-<v t="T2907"><vh>OnGoToNextClone</vh></v>
-<v t="T2908"><vh>OnGoToNextMarked</vh></v>
-<v t="T2909"><vh>OnGoToNextSibling</vh></v>
-<v t="T2910"><vh>OnGoToParent</vh></v>
-<v t="T2911"><vh>OnGoToPrevSibling</vh></v>
-<v t="T2912"><vh>OnMark</vh></v>
-<v t="T2913"><vh>OnMarkChangedItems</vh></v>
-<v t="T2914"><vh>OnMarkChangedRoots</vh></v>
-<v t="T2915"><vh>OnMarkClones</vh></v>
-<v t="T2916"><vh>OnMarkSubheads</vh></v>
-<v t="T2917"><vh>OnUnmarkAll</vh></v>
-</v>
-</v>
-<v t="T2918"><vh>Window Menu</vh>
-<v t="T2919"><vh>OnEqualSizedPanes</vh></v>
-<v t="T2920"><vh>OnToggleActivePane</vh></v>
-<v t="T2921"><vh>OnToggleSplitDirection</vh></v>
-<v t="T2922"><vh>OnCascade</vh></v>
-<v t="T2923"><vh>OnMinimizeAll</vh></v>
-<v t="T2924"><vh>OnHideLogWindow</vh></v>
-<v t="T2925"><vh>OnOpenCompareWindow</vh></v>
-<v t="T2926"><vh>OnOpenPythonWindow (Dave Hein)</vh>
-<v t="T2927"><vh>&lt;&lt; open idle in Linux &gt;&gt;</vh></v>
-<v t="T2928"><vh>&lt;&lt; open idle in Windows &gt;&gt;</vh></v>
-<v t="T2929"><vh>leoPyShellMain</vh></v>
+<v t="T2900"><vh>Mark/Goto</vh>
+<v t="T2901" a="C"><vh>OnGoPrevVisitedNode</vh></v>
+<v t="T2902" a="C"><vh>OnGoNextVisitedNode</vh></v>
+<v t="T2903"><vh>OnGoToFirstNode</vh></v>
+<v t="T2904"><vh>OnGoToLastNode</vh></v>
+<v t="T2905"><vh>OnGoToNextChanged</vh></v>
+<v t="T2906"><vh>OnGoToNextClone</vh></v>
+<v t="T2907"><vh>OnGoToNextMarked</vh></v>
+<v t="T2908"><vh>OnGoToNextSibling</vh></v>
+<v t="T2909"><vh>OnGoToParent</vh></v>
+<v t="T2910"><vh>OnGoToPrevSibling</vh></v>
+<v t="T2911"><vh>OnMark</vh></v>
+<v t="T2912"><vh>OnMarkChangedItems</vh></v>
+<v t="T2913"><vh>OnMarkChangedRoots</vh></v>
+<v t="T2914"><vh>OnMarkClones</vh></v>
+<v t="T2915"><vh>OnMarkSubheads</vh></v>
+<v t="T2916"><vh>OnUnmarkAll</vh></v>
 </v>
 </v>
-<v t="T2930"><vh>Help Menu</vh>
-<v t="T2931" a="C"><vh>OnAbout (version number &amp; date)</vh></v>
-<v t="T2932"><vh>OnLeoDocumentation</vh></v>
-<v t="T2933"><vh>OnLeoHome</vh></v>
-<v t="T2934"><vh>OnLeoHelp</vh>
-<v t="T2935"><vh>showProgressBar</vh>
-<v t="T2936"><vh>&lt;&lt; create the scale widget &gt;&gt;</vh></v>
+<v t="T2917"><vh>Window Menu</vh>
+<v t="T2918"><vh>OnEqualSizedPanes</vh></v>
+<v t="T2919"><vh>OnToggleActivePane</vh></v>
+<v t="T2920"><vh>OnToggleSplitDirection</vh></v>
+<v t="T2921"><vh>OnCascade</vh></v>
+<v t="T2922"><vh>OnMinimizeAll</vh></v>
+<v t="T2923"><vh>OnHideLogWindow</vh></v>
+<v t="T2924"><vh>OnOpenCompareWindow</vh></v>
+<v t="T2925"><vh>OnOpenPythonWindow (Dave Hein)</vh>
+<v t="T2926"><vh>&lt;&lt; open idle in Linux &gt;&gt;</vh></v>
+<v t="T2927"><vh>&lt;&lt; open idle in Windows &gt;&gt;</vh></v>
+<v t="T2928"><vh>leoPyShellMain</vh></v>
 </v>
 </v>
-<v t="T2937"><vh>OnLeoTutorial (version number)</vh></v>
+<v t="T2929"><vh>Help Menu</vh>
+<v t="T2930" a="C"><vh>OnAbout (version number &amp; date)</vh></v>
+<v t="T2931"><vh>OnLeoDocumentation</vh></v>
+<v t="T2932"><vh>OnLeoHome</vh></v>
+<v t="T2933"><vh>OnLeoHelp</vh>
+<v t="T2934"><vh>showProgressBar</vh>
+<v t="T2935"><vh>&lt;&lt; create the scale widget &gt;&gt;</vh></v>
+</v>
+</v>
+<v t="T2936"><vh>OnLeoTutorial (version number)</vh></v>
 <v t="T2352" a="C"><vh>OnLeoConfig, OnApplyConfig</vh></v>
 </v>
 </v>
-<v t="T2938" a="C"><vh>Menu Convenience Routines</vh>
-<v t="T2939"><vh>createMenuItemsFromTable</vh></v>
-<v t="T2940"><vh>createNewMenu</vh></v>
-<v t="T2941" a="C"><vh>createOpenWithMenuFromTable</vh></v>
-<v t="T2942"><vh>deleteMenu</vh></v>
-<v t="T2943"><vh>deleteMenuItem</vh></v>
-<v t="T2944"><vh>setRealMenuNamesFromTable</vh></v>
+<v t="T2937" a="C"><vh>Menu Convenience Routines</vh>
+<v t="T2938"><vh>createMenuItemsFromTable</vh></v>
+<v t="T2939"><vh>createNewMenu</vh></v>
+<v t="T2940" a="C"><vh>createOpenWithMenuFromTable</vh></v>
+<v t="T2941"><vh>deleteMenu</vh></v>
+<v t="T2942"><vh>deleteMenuItem</vh></v>
+<v t="T2943"><vh>setRealMenuNamesFromTable</vh></v>
 </v>
-<v t="T2945"><vh>Menu enablers (Frame)</vh>
-<v t="T2946"><vh>frame.OnMenuClick (enables and disables all menu items)</vh></v>
-<v t="T2947"><vh>hasSelection</vh></v>
-<v t="T2948"><vh>updateFileMenu</vh></v>
-<v t="T2949"><vh>updateEditMenu</vh></v>
-<v t="T2950"><vh>updateOutlineMenu</vh></v>
+<v t="T2944"><vh>Menu enablers (Frame)</vh>
+<v t="T2945"><vh>frame.OnMenuClick (enables and disables all menu items)</vh></v>
+<v t="T2946"><vh>hasSelection</vh></v>
+<v t="T2947"><vh>updateFileMenu</vh></v>
+<v t="T2948"><vh>updateEditMenu</vh></v>
+<v t="T2949"><vh>updateOutlineMenu</vh></v>
 </v>
 </v>
 <v t="T2340" a="C"><vh>Splitter stuff</vh>
@@ -6553,21 +6569,21 @@
 <v t="T2347"><vh>onDrag...</vh></v>
 <v t="T2348"><vh>placeSplitter</vh></v>
 </v>
-<v t="T3160" a="C"><vh>Status line: convenience routines</vh>
-<v t="T3161"><vh>createStatusLine</vh></v>
-<v t="T3162"><vh>clearStatusLine</vh></v>
-<v t="T3163"><vh>putStatusLine</vh></v>
-<v t="T3164"><vh>updateStatusRowCol()</vh></v>
+<v t="T3159" a="C"><vh>Status line: convenience routines</vh>
+<v t="T3160"><vh>createStatusLine</vh></v>
+<v t="T3161"><vh>clearStatusLine</vh></v>
+<v t="T3162"><vh>putStatusLine</vh></v>
+<v t="T3163"><vh>updateStatusRowCol()</vh></v>
 </v>
 </v>
-<v t="T3881" a="E"><vh>@file leoGlobals.py</vh>
+<v t="T3881"><vh>@file leoGlobals.py</vh>
 <v t="T3882"><vh>&lt;&lt; define general constants &gt;&gt;</vh></v>
 <v t="T3883"><vh>Checking Leo Files...</vh>
 <v t="T1521" a="C"><vh>createTopologyList</vh></v>
-<v t="T3203" a="C"><vh>checkClones2Links</vh>
-<v t="T3204"><vh>&lt;&lt; clear statistics &gt;&gt;</vh></v>
-<v t="T3205"><vh>&lt;&lt; print statistics &gt;&gt;</vh></v>
-<v t="T3206"><vh>&lt;&lt; handle each item in v's join list &gt;&gt;</vh></v>
+<v t="T3202" a="C"><vh>checkClones2Links</vh>
+<v t="T3203"><vh>&lt;&lt; clear statistics &gt;&gt;</vh></v>
+<v t="T3204"><vh>&lt;&lt; print statistics &gt;&gt;</vh></v>
+<v t="T3205"><vh>&lt;&lt; handle each item in v's join list &gt;&gt;</vh></v>
 </v>
 </v>
 <v t="T3884"><vh>CheckVersion (Dave Hein)</vh></v>
@@ -6582,22 +6598,22 @@
 <v t="T3892"><vh>center_dialog</vh></v>
 <v t="T3893"><vh>create_labeled_frame</vh></v>
 </v>
-<v t="T3018" a="C"><vh>Directive utils...</vh>
-<v t="T3019"><vh>@language and @comment directives (leoUtils)</vh>
+<v t="T3017" a="C"><vh>Directive utils...</vh>
+<v t="T3018"><vh>@language and @comment directives (leoUtils)</vh>
 <v t="T1154" a="C"><vh>set_delims_from_language</vh></v>
-<v t="T3020"><vh>set_delims_from_string</vh></v>
+<v t="T3019"><vh>set_delims_from_string</vh></v>
 <v t="T1155" a="C"><vh>set_language</vh></v>
 </v>
-<v t="T3021"><vh>findReference</vh></v>
+<v t="T3020"><vh>findReference</vh></v>
 <v t="T2707" a="C"><vh>get_directives_dict &amp; globalDirectiveList</vh>
 <v t="T2708"><vh>&lt;&lt; set dict for @ directives &gt;&gt;</vh></v>
 <v t="T2709"><vh>&lt;&lt; set dict["root"] for noweb * chunks &gt;&gt;</vh></v>
 </v>
 <v t="T2366" a="C"><vh>getOutputNewline</vh></v>
-<v t="T3022"><vh>scanAtEncodingDirective</vh></v>
-<v t="T3023"><vh>scanAtLineendingDirective</vh></v>
-<v t="T3024"><vh>scanAtPagewidthDirective</vh></v>
-<v t="T3025"><vh>scanAtTabwidthDirective</vh></v>
+<v t="T3021"><vh>scanAtEncodingDirective</vh></v>
+<v t="T3022"><vh>scanAtLineendingDirective</vh></v>
+<v t="T3023"><vh>scanAtPagewidthDirective</vh></v>
+<v t="T3024"><vh>scanAtTabwidthDirective</vh></v>
 <v t="T2077" a="C"><vh>scanDirectives (utils)</vh>
 <v t="T2078"><vh>&lt;&lt; Set local vars &gt;&gt;</vh></v>
 <v t="T2079"><vh>&lt;&lt; Test for @comment and @language &gt;&gt;</vh></v>
@@ -6628,7 +6644,7 @@
 <v t="T2337" a="C"><vh>makeAllNonExistentDirectories</vh></v>
 <v t="T3901"><vh>readlineForceUnixNewline (Steven P. Schaefer)</vh></v>
 <v t="T3902"><vh>redirecting stderr and stdout</vh>
-<v t="T3286" a="C"><vh>&lt;&lt; redirectClass methods &gt;&gt;</vh></v>
+<v t="T3285" a="C"><vh>&lt;&lt; redirectClass methods &gt;&gt;</vh></v>
 <v t="T3903"><vh>&lt;&lt; define convenience methods for redirecting streams &gt;&gt;</vh></v>
 <v t="T3904"><vh>&lt;&lt; test code &gt;&gt;</vh></v>
 </v>
@@ -6657,7 +6673,7 @@
 <v t="T3921"><vh>es_error</vh></v>
 <v t="T3922"><vh>es_event_exception</vh></v>
 <v t="T3923"><vh>es_exception</vh></v>
-<v t="T2954" a="C"><vh>file/module/plugin_date</vh></v>
+<v t="T2953" a="C"><vh>file/module/plugin_date</vh></v>
 <v t="T3924"><vh>funcToMethod</vh></v>
 <v t="T3925"><vh>get_line &amp; get_line_after</vh></v>
 <v t="T3926"><vh>pause</vh></v>
@@ -6670,18 +6686,18 @@
 <v t="T3323"><vh>set_focus</vh></v>
 <v t="T3324"><vh>force_focus</vh></v>
 </v>
-<v t="T3225" a="C"><vh>Garbage Collection</vh>
-<v t="T3226"><vh>clearAllIvars</vh></v>
-<v t="T3227"><vh>collectGarbage</vh>
-<v t="T3228"><vh>&lt;&lt; make a list of the new objects &gt;&gt;</vh></v>
+<v t="T3224" a="C"><vh>Garbage Collection</vh>
+<v t="T3225"><vh>clearAllIvars</vh></v>
+<v t="T3226"><vh>collectGarbage</vh>
+<v t="T3227"><vh>&lt;&lt; make a list of the new objects &gt;&gt;</vh></v>
 </v>
-<v t="T3229"><vh>printGc</vh></v>
-<v t="T3230"><vh>printGcRefs</vh></v>
+<v t="T3228"><vh>printGc</vh></v>
+<v t="T3229"><vh>printGcRefs</vh></v>
 </v>
 <v t="T3931"><vh>Hooks &amp; plugins</vh>
-<v t="T2953" a="C"><vh>enableIdleTimeHook, disableIdleTimeHook, idleTimeHookHandler</vh></v>
-<v t="T3232" a="C"><vh>doHook</vh></v>
-<v t="T2955" a="C"><vh>plugin_signon</vh></v>
+<v t="T2952" a="C"><vh>enableIdleTimeHook, disableIdleTimeHook, idleTimeHookHandler</vh></v>
+<v t="T3231" a="C"><vh>doHook</vh></v>
+<v t="T2954" a="C"><vh>plugin_signon</vh></v>
 </v>
 <v t="T3932"><vh>importFromPath</vh></v>
 <v t="T3933"><vh>Lists...</vh>
@@ -6692,7 +6708,7 @@
 <v t="T3937"><vh>Most common functions</vh>
 <v t="T3938"><vh>app, setApp</vh></v>
 <v t="T3939"><vh>choose</vh></v>
-<v t="T3092" a="C"><vh>es, enl, ecnl</vh></v>
+<v t="T3091" a="C"><vh>es, enl, ecnl</vh></v>
 <v t="T388" a="C"><vh>top</vh></v>
 <v t="T3940"><vh>trace is defined below</vh></v>
 <v t="T3941"><vh>windows</vh></v>
@@ -6765,13 +6781,13 @@
 <v t="T2190"><vh>skip_leading_ws_with_indent</vh></v>
 </v>
 </v>
-<v t="T3105" a="C"><vh>Unicode utils...</vh>
-<v t="T3106"><vh>isValidEncoding</vh></v>
-<v t="T3107" a="C"><vh>reportBadChars</vh></v>
-<v t="T3108"><vh>toUnicode &amp; toEncodedString</vh></v>
-<v t="T3109" a="C"><vh>getpreferredencoding from 2.3a2</vh>
-<v t="T3110"><vh>&lt;&lt; define getpreferredencoding using _locale &gt;&gt;</vh></v>
-<v t="T3111"><vh>&lt;&lt; define getpreferredencoding for *nix &gt;&gt;</vh></v>
+<v t="T3104" a="C"><vh>Unicode utils...</vh>
+<v t="T3105"><vh>isValidEncoding</vh></v>
+<v t="T3106" a="C"><vh>reportBadChars</vh></v>
+<v t="T3107"><vh>toUnicode &amp; toEncodedString</vh></v>
+<v t="T3108" a="C"><vh>getpreferredencoding from 2.3a2</vh>
+<v t="T3109"><vh>&lt;&lt; define getpreferredencoding using _locale &gt;&gt;</vh></v>
+<v t="T3110"><vh>&lt;&lt; define getpreferredencoding for *nix &gt;&gt;</vh></v>
 </v>
 </v>
 </v>
@@ -6943,7 +6959,7 @@
 <v t="T4055"><vh>&lt;&lt; Remove most newlines from @space and @* sections &gt;&gt;</vh></v>
 <v t="T4056"><vh>&lt;&lt; Replace abbreviated names with full names &gt;&gt;</vh></v>
 </v>
-<v t="T3084" a="C"><vh>setEncoding</vh></v>
+<v t="T3083" a="C"><vh>setEncoding</vh></v>
 <v t="T4057"><vh>skipLeadingComments</vh>
 <v t="T4058"><vh>&lt;&lt; scan for C-style comments &gt;&gt;</vh></v>
 <v t="T4059"><vh>&lt;&lt; scan for Pascal comments &gt;&gt;</vh></v>
@@ -6968,10 +6984,10 @@
 </v>
 </v>
 <v t="T4073"><vh>Setters</vh>
-<v t="T3100" a="C"><vh>Setting body text</vh>
-<v t="T3101"><vh>saveBodyPaneToTnode</vh></v>
+<v t="T3099" a="C"><vh>Setting body text</vh>
+<v t="T3100"><vh>saveBodyPaneToTnode</vh></v>
 <v t="T2112" a="C"><vh>setTnodeText</vh></v>
-<v t="T3102"><vh>setSelection</vh></v>
+<v t="T3101"><vh>setSelection</vh></v>
 </v>
 <v t="T4074"><vh>Status bits</vh>
 <v t="T4075"><vh>clearDirty</vh></v>
@@ -7045,17 +7061,17 @@
 <v t="T4123"><vh>currentVnode (vnode)</vh></v>
 <v t="T4124"><vh>edit_text</vh></v>
 <v t="T4125"><vh>findRoot</vh></v>
-<v t="T3202" a="C"><vh>headString &amp; cleanHeadString</vh></v>
+<v t="T3201" a="C"><vh>headString &amp; cleanHeadString</vh></v>
 <v t="T4126"><vh>isAncestorOf</vh></v>
 <v t="T4127"><vh>isRoot</vh></v>
 <v t="T4128"><vh>v.exists</vh></v>
 </v>
 <v t="T4129"><vh>Setters</vh>
-<v t="T3095" a="C"><vh>Head and body text</vh>
-<v t="T3096"><vh>appendStringToBody</vh></v>
+<v t="T3094" a="C"><vh>Head and body text</vh>
+<v t="T3095"><vh>appendStringToBody</vh></v>
 <v t="T2111" a="C"><vh>setBodyStringOrPane &amp; setBodyTextOrPane</vh></v>
-<v t="T3097"><vh>setHeadString &amp; initHeadString</vh></v>
-<v t="T3098"><vh>setHeadStringOrHeadline</vh></v>
+<v t="T3096"><vh>setHeadString &amp; initHeadString</vh></v>
+<v t="T3097"><vh>setHeadStringOrHeadline</vh></v>
 </v>
 <v t="T4130"><vh>computeIcon &amp; setIcon</vh></v>
 <v t="T4131"><vh>Status bits</vh>
@@ -7110,7 +7126,7 @@
 </v>
 <v t="T4170"><vh>Public helper functions</vh>
 <v t="T4171"><vh>v.copyTree</vh></v>
-<v t="T3192" a="C"><vh>v.copyTreeWithNewTnodes (new after 3.11.1) (not used at present)</vh></v>
+<v t="T3191" a="C"><vh>v.copyTreeWithNewTnodes (new after 3.11.1) (not used at present)</vh></v>
 <v t="T4172"><vh>joinTreeTo</vh></v>
 <v t="T4173"><vh>shouldBeClone</vh></v>
 <v t="T1517" a="C"><vh>validateOutlineWithParent</vh>
@@ -7127,12 +7143,12 @@
 <v t="T4179"><vh>destroyDependents</vh></v>
 <v t="T4180"><vh>destroyTree (does nothing!)</vh></v>
 <v t="T4181"><vh>invalidOutline</vh></v>
-<v t="T3277" a="C"><vh>joinNodeTo (rewritten for 4.0)</vh></v>
+<v t="T3276" a="C"><vh>joinNodeTo (rewritten for 4.0)</vh></v>
 <v t="T1782" a="C"><vh>linkAfter</vh></v>
 <v t="T1783" a="C"><vh>linkAsNthChild</vh></v>
 <v t="T1784" a="C"><vh>linkAsRoot</vh></v>
 <v t="T1785" a="C"><vh>unlink</vh></v>
-<v t="T3278" a="C"><vh>unjoinTree (changed for 4.0)</vh></v>
+<v t="T3277" a="C"><vh>unjoinTree (changed for 4.0)</vh></v>
 </v>
 </v>
 </v>
@@ -7195,9 +7211,9 @@
 </v>
 <v t="T4221"><vh>class tangleCommands methods</vh>
 <v t="T4222"><vh>tangle.__init__</vh></v>
-<v t="T2995" a="C"><vh>tangle.init_ivars &amp; init_directive_ivars</vh>
-<v t="T2996"><vh>&lt;&lt; init tangle ivars &gt;&gt;</vh></v>
-<v t="T2997"><vh>&lt;&lt; init untangle ivars &gt;&gt;</vh></v>
+<v t="T2994" a="C"><vh>tangle.init_ivars &amp; init_directive_ivars</vh>
+<v t="T2995"><vh>&lt;&lt; init tangle ivars &gt;&gt;</vh></v>
+<v t="T2996"><vh>&lt;&lt; init untangle ivars &gt;&gt;</vh></v>
 <v t="T1911" a="C"><vh>&lt;&lt; init directive ivars &gt;&gt; (tangle)</vh></v>
 </v>
 <v t="T4223"><vh>top level</vh>
@@ -7377,22 +7393,22 @@
 <v t="T4293"><vh>skip_noweb_section_name</vh></v>
 <v t="T1958" a="C"><vh>skip_section_name</vh></v>
 <v t="T4294"><vh>standardize_name</vh></v>
-<v t="T2998" a="C"><vh>tangle.scanAllDirectives</vh>
-<v t="T2999"><vh>&lt;&lt; Collect @first attributes &gt;&gt;</vh></v>
-<v t="T3000"><vh>&lt;&lt; Test for @comment and @language &gt;&gt;</vh></v>
-<v t="T3001"><vh>&lt;&lt; Test for @encoding &gt;&gt;</vh></v>
-<v t="T3002"><vh>&lt;&lt; Test for @lineending &gt;&gt;</vh></v>
-<v t="T3003"><vh>&lt;&lt; Test for print modes directives &gt;&gt;</vh></v>
-<v t="T3004"><vh>&lt;&lt; Test for @path &gt;&gt;</vh>
-<v t="T3005"><vh>&lt;&lt; compute dir and relative_path from s[k:] &gt;&gt;</vh></v>
-<v t="T3006"><vh>&lt;&lt; handle absolute @path &gt;&gt;</vh></v>
+<v t="T2997" a="C"><vh>tangle.scanAllDirectives</vh>
+<v t="T2998"><vh>&lt;&lt; Collect @first attributes &gt;&gt;</vh></v>
+<v t="T2999"><vh>&lt;&lt; Test for @comment and @language &gt;&gt;</vh></v>
+<v t="T3000"><vh>&lt;&lt; Test for @encoding &gt;&gt;</vh></v>
+<v t="T3001"><vh>&lt;&lt; Test for @lineending &gt;&gt;</vh></v>
+<v t="T3002"><vh>&lt;&lt; Test for print modes directives &gt;&gt;</vh></v>
+<v t="T3003"><vh>&lt;&lt; Test for @path &gt;&gt;</vh>
+<v t="T3004"><vh>&lt;&lt; compute dir and relative_path from s[k:] &gt;&gt;</vh></v>
+<v t="T3005"><vh>&lt;&lt; handle absolute @path &gt;&gt;</vh></v>
 </v>
-<v t="T3007"><vh>&lt;&lt; Test for @pagewidth &gt;&gt;</vh></v>
-<v t="T3008"><vh>&lt;&lt; Test for @root &gt;&gt;</vh></v>
-<v t="T3009"><vh>&lt;&lt; Test for @tabwidth &gt;&gt;</vh></v>
-<v t="T3010"><vh>&lt;&lt; Test for @header and @noheader &gt;&gt;</vh></v>
-<v t="T3011"><vh>&lt;&lt; Set self.tangle_directory &gt;&gt;</vh>
-<v t="T3012"><vh>&lt;&lt; handle absolute path &gt;&gt;</vh></v>
+<v t="T3006"><vh>&lt;&lt; Test for @pagewidth &gt;&gt;</vh></v>
+<v t="T3007"><vh>&lt;&lt; Test for @root &gt;&gt;</vh></v>
+<v t="T3008"><vh>&lt;&lt; Test for @tabwidth &gt;&gt;</vh></v>
+<v t="T3009"><vh>&lt;&lt; Test for @header and @noheader &gt;&gt;</vh></v>
+<v t="T3010"><vh>&lt;&lt; Set self.tangle_directory &gt;&gt;</vh>
+<v t="T3011"><vh>&lt;&lt; handle absolute path &gt;&gt;</vh></v>
 </v>
 </v>
 <v t="T1913" a="C"><vh>token_type</vh>
@@ -7496,20 +7512,20 @@
 <v t="T4349"><vh>OnBoxClick</vh></v>
 <v t="T4350"><vh>OnDeactivate</vh></v>
 <v t="T2580" a="C"><vh>tree.findVnodeWithIconId</vh></v>
-<v t="T2957" a="C"><vh>body key handlers (tree)</vh>
-<v t="T2958"><vh>idle_body_key</vh>
-<v t="T2959"><vh>&lt;&lt; set s to the widget text &gt;&gt;</vh></v>
-<v t="T2960"><vh>&lt;&lt; return if nothing has changed &gt;&gt;</vh></v>
-<v t="T2961"><vh>&lt;&lt; set removeTrailing &gt;&gt;</vh></v>
-<v t="T2962"><vh>&lt;&lt; Do auto indent &gt;&gt; (David McNab)</vh></v>
-<v t="T2963"><vh>&lt;&lt; convert tab to blanks &gt;&gt;</vh></v>
-<v t="T2964"><vh>&lt;&lt; set s to widget text, removing trailing newlines if necessary &gt;&gt;</vh></v>
-<v t="T2965"><vh>&lt;&lt; recolor the body &gt;&gt;</vh></v>
-<v t="T2966"><vh>&lt;&lt; redraw the screen if necessary &gt;&gt;</vh></v>
+<v t="T2956" a="C"><vh>body key handlers (tree)</vh>
+<v t="T2957"><vh>idle_body_key</vh>
+<v t="T2958"><vh>&lt;&lt; set s to the widget text &gt;&gt;</vh></v>
+<v t="T2959"><vh>&lt;&lt; return if nothing has changed &gt;&gt;</vh></v>
+<v t="T2960"><vh>&lt;&lt; set removeTrailing &gt;&gt;</vh></v>
+<v t="T2961"><vh>&lt;&lt; Do auto indent &gt;&gt; (David McNab)</vh></v>
+<v t="T2962"><vh>&lt;&lt; convert tab to blanks &gt;&gt;</vh></v>
+<v t="T2963"><vh>&lt;&lt; set s to widget text, removing trailing newlines if necessary &gt;&gt;</vh></v>
+<v t="T2964"><vh>&lt;&lt; recolor the body &gt;&gt;</vh></v>
+<v t="T2965"><vh>&lt;&lt; redraw the screen if necessary &gt;&gt;</vh></v>
 </v>
-<v t="T2967"><vh>onBodyChanged</vh></v>
-<v t="T2968"><vh>OnBodyKey</vh></v>
-<v t="T2969"><vh>onBodyWillChange</vh></v>
+<v t="T2966"><vh>onBodyChanged</vh></v>
+<v t="T2967"><vh>OnBodyKey</vh></v>
+<v t="T2968"><vh>onBodyWillChange</vh></v>
 </v>
 <v t="T2581" a="C"><vh>tree.OnContinueDrag</vh>
 <v t="T2582"><vh>&lt;&lt; continue dragging &gt;&gt;</vh>
@@ -7521,15 +7537,15 @@
 <v t="T2323" a="C"><vh>tree.OnEndDrag</vh>
 <v t="T2324"><vh>&lt;&lt; set vdrag, childFlag &gt;&gt;</vh></v>
 </v>
-<v t="T2970" a="C"><vh>headline key handlers (tree)</vh>
-<v t="T2971"><vh>onHeadChanged</vh></v>
-<v t="T2972"><vh>OnHeadlineKey</vh></v>
-<v t="T2973"><vh>idle_head_key</vh>
-<v t="T2974"><vh>&lt;&lt; set s to the widget text &gt;&gt;</vh></v>
-<v t="T2975"><vh>&lt;&lt; set head to vnode text &gt;&gt;</vh></v>
-<v t="T2976"><vh>&lt;&lt; update v and all nodes joined to v &gt;&gt;</vh></v>
-<v t="T2977"><vh>&lt;&lt; reconfigure v and all nodes joined to v &gt;&gt;</vh></v>
-<v t="T2978"><vh>&lt;&lt; update the screen &gt;&gt;</vh></v>
+<v t="T2969" a="C"><vh>headline key handlers (tree)</vh>
+<v t="T2970"><vh>onHeadChanged</vh></v>
+<v t="T2971"><vh>OnHeadlineKey</vh></v>
+<v t="T2972"><vh>idle_head_key</vh>
+<v t="T2973"><vh>&lt;&lt; set s to the widget text &gt;&gt;</vh></v>
+<v t="T2974"><vh>&lt;&lt; set head to vnode text &gt;&gt;</vh></v>
+<v t="T2975"><vh>&lt;&lt; update v and all nodes joined to v &gt;&gt;</vh></v>
+<v t="T2976"><vh>&lt;&lt; reconfigure v and all nodes joined to v &gt;&gt;</vh></v>
+<v t="T2977"><vh>&lt;&lt; update the screen &gt;&gt;</vh></v>
 </v>
 </v>
 <v t="T2619" a="C"><vh>tree.OnIconClick &amp; OnIconRightClick</vh></v>
@@ -7563,8 +7579,8 @@
 <v t="T3320" a="C"><vh>editLabel</vh></v>
 <v t="T2585" a="C"><vh>endEditLabel &amp; endEditLabelCommand</vh></v>
 <v t="T4357"><vh>tree.expandAllAncestors</vh></v>
-<v t="T3013" a="C"><vh>tree.scanForTabWidth</vh>
-<v t="T3014"><vh>&lt;&lt; set w and break on @tabwidth &gt;&gt;</vh></v>
+<v t="T3012" a="C"><vh>tree.scanForTabWidth</vh>
+<v t="T3013"><vh>&lt;&lt; set w and break on @tabwidth &gt;&gt;</vh></v>
 </v>
 <v t="T1553" a="C"><vh>tree.select</vh>
 <v t="T1554"><vh>&lt;&lt; define vars and stop editing &gt;&gt;</vh></v>
@@ -7655,23 +7671,100 @@
 <v t="T4371"><vh>Put in FAQ</vh></v>
 <v t="T4372"><vh>PUt in FAQ 2</vh></v>
 </v>
-<v t="T4373"><vh>Disallow writes outside a "root" directory</vh></v>
-<v t="T4374"><vh>Follow up re: OpenWith code review</vh></v>
+<v t="T4373"><vh>Disallow writes outside a "top-level" folder</vh></v>
+<v t="T4374"><vh>OpenWith code review: bwmulder</vh></v>
 </v>
-<v t="T4375"><vh>(line-break bug)</vh></v>
-<v t="T4376" a="E"><vh>body_pane_wraps = 0 still wraps</vh>
-<v t="T3151" a="C"><vh>f.setWrap</vh></v>
-<v t="T2077" a="C"><vh>scanDirectives (utils)</vh>
-<v t="T2078"><vh>&lt;&lt; Set local vars &gt;&gt;</vh></v>
-<v t="T2079"><vh>&lt;&lt; Test for @comment and @language &gt;&gt;</vh></v>
-<v t="T2080"><vh>&lt;&lt; Test for @encoding &gt;&gt;</vh></v>
-<v t="T2081"><vh>&lt;&lt; Test for @lineending &gt;&gt;</vh></v>
-<v t="T2082"><vh>&lt;&lt; Test for @pagewidth &gt;&gt;</vh></v>
-<v t="T2083"><vh>&lt;&lt; Test for @path &gt;&gt;</vh>
-<v t="T2084"><vh>&lt;&lt; compute relative path from s[k:] &gt;&gt;</vh></v>
+<v t="T4375"><vh>(line-break bug)</vh>
+<v t="T4376"><vh>Report</vh></v>
+<v t="T2715" a="C"><vh>Writing</vh>
+<v t="T2716"><vh>Top level</vh>
+<v t="T2717"><vh>atFile.rawWrite</vh>
+<v t="T2718"><vh>&lt;&lt; write root's tree &gt;&gt;</vh>
+<v t="T2399" a="C"><vh>&lt;&lt; put all @first lines in root &gt;&gt;</vh></v>
+<v t="T2719"><vh>&lt;&lt; put optional @comment sentinel lines &gt;&gt;</vh></v>
+<v t="T2720"><vh>&lt;&lt; Write v's node &gt;&gt;</vh></v>
+<v t="T2401" a="C"><vh>&lt;&lt; put all @last lines in root &gt;&gt;</vh></v>
 </v>
-<v t="T2085"><vh>&lt;&lt; Test for @tabwidth &gt;&gt;</vh></v>
-<v t="T2086"><vh>&lt;&lt; Test for @wrap and @nowrap &gt;&gt;</vh></v>
+</v>
+<v t="T2721"><vh>atFile.silentWrite</vh>
+<v t="T2722"><vh>&lt;&lt; Write v's headline if it starts with @@ &gt;&gt;</vh></v>
+<v t="T2723"><vh>&lt;&lt; Write v's body &gt;&gt;</vh></v>
+</v>
+<v t="T2395" a="C"><vh>atFile.write</vh>
+<v t="T2396"><vh>&lt;&lt; initialize &gt;&gt;</vh></v>
+<v t="T2397"><vh>&lt;&lt; open the file; return on error &gt;&gt;</vh></v>
+<v t="T2398"><vh>&lt;&lt; write then entire @file tree &gt;&gt;</vh>
+<v t="T2399" a="C"><vh>&lt;&lt; put all @first lines in root &gt;&gt;</vh></v>
+<v t="T2400"><vh>&lt;&lt; write the derived file&gt;&gt;</vh></v>
+<v t="T2401" a="C"><vh>&lt;&lt; put all @last lines in root &gt;&gt;</vh></v>
+</v>
+<v t="T2402"><vh>&lt;&lt; Warn about @ignored and orphans  &gt;&gt;</vh></v>
+<v t="T2403"><vh>&lt;&lt; finish writing &gt;&gt;</vh></v>
+</v>
+<v t="T2417" a="C"><vh>atFile.writeAll</vh>
+<v t="T2418"><vh>&lt;&lt; Clear all orphan bits &gt;&gt;</vh></v>
+<v t="T2419"><vh>&lt;&lt; handle v's tree &gt;&gt;</vh></v>
+<v t="T2420"><vh>&lt;&lt; say the command is finished &gt;&gt;</vh></v>
+</v>
+<v t="T2061" a="C"><vh>atFile.writeMissing</vh>
+<v t="T2062"><vh>&lt;&lt; set missing if the file does not exist &gt;&gt;</vh></v>
+<v t="T2063"><vh>&lt;&lt; create self.outputFile &gt;&gt;</vh></v>
+<v t="T2064"><vh>&lt;&lt; write the @file node &gt;&gt;</vh></v>
+</v>
+<v t="T2724"><vh>Top level write helpers</vh>
+<v t="T2725"><vh>atFile.closeWriteFile</vh></v>
+<v t="T2726"><vh>atFile.handleWriteException</vh></v>
+<v t="T2727"><vh>atFile.openWriteFile</vh></v>
+<v t="T2728"><vh>atFile.putInitialComment</vh></v>
+<v t="T2729"><vh>atFile.replaceTargetFileIfDifferent</vh>
+<v t="T2730"><vh>&lt;&lt; delete the output file &gt;&gt;</vh></v>
+<v t="T2731"><vh>&lt;&lt; replace the target file with the output file &gt;&gt;</vh></v>
+<v t="T2732"><vh>&lt;&lt; rename the output file to be the target file &gt;&gt;</vh></v>
+</v>
+<v t="T2733"><vh>atFile.outputStringWithLineEndings</vh></v>
+</v>
+</v>
+<v t="T2421" a="C"><vh>putBodyPart</vh>
+<v t="T2422"><vh>&lt;&lt; put code/doc parts and sentinels &gt;&gt;</vh>
+<v t="T2423"><vh>&lt;&lt; initialize lookingForFirst/Last &amp; initialLastDirective &gt;&gt;</vh></v>
+<v t="T2424"><vh>&lt;&lt; set lookingForFirst/Last &amp; initialLastDirective &gt;&gt;</vh></v>
+<v t="T2425"><vh>&lt;&lt; handle misc directives &gt;&gt;</vh></v>
+<v t="T2426"><vh>&lt;&lt; put out the last directives, if any &gt;&gt;</vh></v>
+</v>
+</v>
+<v t="T2734"><vh>putDoc</vh></v>
+<v t="T2205" a="C"><vh>putDocPart</vh>
+<v t="T2206"><vh>&lt;&lt; copy words, splitting the line if needed &gt;&gt;</vh></v>
+</v>
+<v t="T2427" a="C"><vh>putCodePart &amp; allies</vh>
+<v t="T2428"><vh>&lt;&lt; handle the start of a line &gt;&gt;</vh>
+<v t="T2429"><vh>&lt;&lt; handle @others &gt;&gt;</vh></v>
+<v t="T2430"><vh>&lt;&lt; handle @raw &gt;&gt;</vh></v>
+<v t="T2431"><vh>&lt;&lt; handle @end_raw &gt;&gt;</vh></v>
+<v t="T2432" a="C"><vh>&lt;&lt; put @verbatim sentinel if necessary &gt;&gt;</vh></v>
+</v>
+<v t="T2433"><vh>&lt;&lt; put the line &gt;&gt;</vh>
+<v t="T2434"><vh>&lt;&lt; put possible section reference &gt;&gt;</vh></v>
+</v>
+<v t="T2435" a="C"><vh>inAtOthers</vh></v>
+<v t="T2436"><vh>isSectionName</vh></v>
+<v t="T2437" a="C"><vh>putAtOthers</vh></v>
+<v t="T2438" a="C"><vh>putAtOthersChild</vh></v>
+<v t="T2439"><vh>putRef</vh>
+<v t="T2440"><vh>&lt;&lt; Generate the expansion of the reference &gt;&gt;</vh>
+<v t="T2441"><vh>&lt;&lt; Add @verbatimAfterRef sentinel if required &gt;&gt;</vh></v>
+</v>
+</v>
+</v>
+<v t="T2735"><vh>Utils</vh>
+<v t="T2736"><vh>putBuffered</vh></v>
+<v t="T2204" a="C"><vh>os, onl, etc. (leoAtFile)</vh></v>
+<v t="T1892" a="C"><vh>putDirective  (handles @delims)</vh>
+<v t="T1893"><vh>&lt;&lt; handle @delims &gt;&gt;</vh></v>
+</v>
+<v t="T2737"><vh>putEmptyDirective (Dave Hein)</vh></v>
+<v t="T2500" a="C"><vh>putIndent</vh></v>
+</v>
 </v>
 </v>
 </vnodes>
@@ -31179,7 +31272,7 @@ while match(s,i,tag):
 	i = skip_to_end_of_line(s,i)
 	# 21-SEP-2002 DTHEIN: write @first line, whether empty or not
 	line = s[j:i]
-	self.os(line) ; self.onl()
+	self.putBuffered(line) ; self.onl()
 	i = skip_nl(s,i)</t>
 <t tx="T2400">tag1 = "@+leo"
 
@@ -31206,7 +31299,7 @@ while j &gt;= 0:
 # Write the @last lines.
 for line in lines[j+1:k+1]:
 	i = len(tag) ; i = skip_ws(line,i)
-	self.os(line[i:]) ; self.onl()</t>
+	self.putBuffered(line[i:]) ; self.onl()</t>
 <t tx="T2402"># 10/26/02: Always warn, even when language=="cweb"
 
 next = root.nodeAfterTree()
@@ -31606,9 +31699,7 @@ i = skip_line(s,i)</t>
 	self.putSentinel("verbatim")</t>
 <t tx="T2433">if not self.raw:
 	# 12/8/02: Don't write trailing indentation if not writing sentinels.
-	if not self.sentinels and i &gt;= len(s):
-		pass
-	else:
+	if self.sentinels or j &lt; len(s):
 		self.putIndent(self.indent)
 
 newlineSeen = false
@@ -31626,12 +31717,17 @@ while i &lt; len(s) and not newlineSeen:
 	else:
 		i += 1
 # Output any buffered characters.
-self.os(s[buf:i])</t>
+self.putBuffered(s[buf:i])</t>
 <t tx="T2434">isSection, j = self.isSectionName(s, i)
 
 if isSection:
 	# Output the buffered characters and clear the buffer.
-	self.os(s[buf:i]) ; buf = i
+	s2 = s[buf:i] ; buf = i
+	# 7/9/03: don't output trailing indentation if we aren't generating sentinels.
+	if not self.sentinels:
+		while len(s2) and s2[-1] in (' ','\t'):
+			s2 = s2[:-1]
+	self.putBuffered(s2)
 	# Output the expansion.
 	name = s[i:j]
 	j,newlineSeen = self.putRef(name,v,s,j,delta)
@@ -31711,6 +31807,7 @@ def putAtOthers(self,v,delta):
 			"\n\treferenced from: " + v.headString())
 		return i,newlineSeen
 
+	# trace(self.indent,delta,s[i:])
 	&lt;&lt; Generate the expansion of the reference &gt;&gt;
 
 	# The newlineSeen allows the caller to break out of the loop.
@@ -31731,7 +31828,7 @@ if j &lt; len(s) and match(s,j,self.startSentinelComment + '@'):
 	self.putSentinel("@verbatimAfterRef")
 	# 9/27/02: Put the line immediately, before the @-node sentinel.
 	k = skip_to_end_of_line(s,i)
-	self.os(s[i:k])
+	self.putBuffered(s[i:k])
 	i = k ; newlineSeen = false</t>
 <t tx="T2442">@ This is called from the key-event handler, so we must not force a redraw of the screen here. We avoid redraw in most cases by passing redraw_flag to c.endUpdate().
 
@@ -32024,18 +32121,19 @@ def utils_rename(src,dst):
 		move_file(src,dst)</t>
 <t tx="T2498">@ignore</t>
 <t tx="T2499"></t>
-<t tx="T2500"># Puts tabs and spaces corresponding to n spaces, assuming that we are at the start of a line.
+<t tx="T2500">def putIndent(self,n):
+	
+	"""Put tabs and spaces corresponding to n spaces, assuming that we are at the start of a line."""
 
-def putIndent(self,n):
-
-	c = self.commands
-	w = self.tab_width
-	if w &gt; 1:
-		q,r = divmod(n,w) 
-		self.otabs(q) 
-		self.oblanks(r)
-	else:
-		self.oblanks(n)</t>
+	if n != 0:
+		# trace(n)
+		w = self.tab_width
+		if w &gt; 1:
+			q,r = divmod(n,w) 
+			self.otabs(q) 
+			self.oblanks(r)
+		else:
+			self.oblanks(n)</t>
 <t tx="T2501"></t>
 <t tx="T2502"># Puts tabs and spaces corresponding to n spaces, assuming that we are at the start of a line.
 
@@ -34615,22 +34713,7 @@ while v and v != next:
 
 self.putSentinel("@-leo")
 &lt;&lt; put all @last lines in root &gt;&gt;</t>
-<t tx="T2719">@ Write any @first lines.  These lines are also converted to @verbatim lines, so the read logic simply ignores lines preceding the @+leo sentinel.
-@c
-
-s = root.t.bodyString
-tag = "@first"
-i = 0
-while match(s,i,tag):
-	i += len(tag)
-	i = skip_ws(s,i)
-	j = i
-	i = skip_to_end_of_line(s,i)
-	# 21-SEP-2002 DTHEIN: write @first line, whether empty or not
-	line = s[j:i]
-	self.os(line) ; self.onl()
-	i = skip_nl(s,i)</t>
-<t tx="T2720">s2 = app().config.output_initial_comment
+<t tx="T2719">s2 = app().config.output_initial_comment
 if s2:
 	lines = string.split(s2,"\\n")
 	for line in lines:
@@ -34638,7 +34721,7 @@ if s2:
 		if len(line)&gt; 0:
 			self.putSentinel("@comment " + line)
 </t>
-<t tx="T2721">self.putOpenNodeSentinel(v)
+<t tx="T2720">self.putOpenNodeSentinel(v)
 	
 s = v.bodyString()
 if s and len(s) &gt; 0:
@@ -34652,25 +34735,7 @@ if s and len(s) &gt; 0:
 	
 self.putCloseNodeSentinel(v)
 </t>
-<t tx="T2722">@ Write any @last lines.  These lines are also converted to @verbatim lines, so the read logic simply ignores lines following the @-leo sentinel.
-@c
-
-tag = "@last"
-lines = string.split(root.t.bodyString,'\n')
-n = len(lines) ; j = k = n - 1
-# Don't write an empty last line.
-if j &gt;= 0 and len(lines[j])==0:
-	j = k = n - 2
-# Scan backwards for @last directives.
-while j &gt;= 0:
-	line = lines[j]
-	if match(line,0,tag): j -= 1
-	else: break
-# Write the @last lines.
-for line in lines[j+1:k+1]:
-	i = len(tag) ; i = skip_ws(line,i)
-	self.os(line[i:]) ; self.onl()</t>
-<t tx="T2723">def silentWrite(self,root):
+<t tx="T2721">def silentWrite(self,root):
 
 	# trace(`root`)
 	c = self.commands ; self.root = root
@@ -34691,19 +34756,19 @@ for line in lines[j+1:k+1]:
 		root.clearOrphan() ; root.clearDirty()
 	except:
 		self.handleWriteException(root)</t>
-<t tx="T2724">s = v.headString()
+<t tx="T2722">s = v.headString()
 if match(s,0,"@@"):
 	s = s[2:]
 	if s and len(s) &gt; 0:
 		s = toEncodedString(s,self.encoding,reportErrors=true) # 3/7/03
 		self.outputFile.write(s)
 </t>
-<t tx="T2725">s = v.bodyString()
+<t tx="T2723">s = v.bodyString()
 if s and len(s) &gt; 0:
 	s = toEncodedString(s,self.encoding,reportErrors=true) # 3/7/03
 	self.outputStringWithLineEndings(s)</t>
-<t tx="T2726"></t>
-<t tx="T2727">def closeWriteFile (self):
+<t tx="T2724"></t>
+<t tx="T2725">def closeWriteFile (self):
 	
 	if self.outputFile:
 		if self.suppress_newlines and self.newline_pending:
@@ -34713,7 +34778,7 @@ if s and len(s) &gt; 0:
 		self.outputFile.close()
 		self.outputFile = None
 </t>
-<t tx="T2728">def handleWriteException (self,root=None):
+<t tx="T2726">def handleWriteException (self,root=None):
 	
 	es("exception writing:" + self.targetFileName)
 	es_exception()
@@ -34734,7 +34799,7 @@ if s and len(s) &gt; 0:
 		# Make sure we try to rewrite this file.
 		root.setOrphan()
 		root.setDirty()</t>
-<t tx="T2729"># Open files.  Set root.orphan and root.dirty flags and return on errors.
+<t tx="T2727"># Open files.  Set root.orphan and root.dirty flags and return on errors.
 
 def openWriteFile (self,root):
 
@@ -34791,7 +34856,7 @@ def openWriteFile (self,root):
 		root.setDirty()
 	
 	return valid</t>
-<t tx="T2730">def putInitialComment (self):
+<t tx="T2728">def putInitialComment (self):
 	
 	s2 = app().config.output_initial_comment
 	if s2:
@@ -34800,7 +34865,7 @@ def openWriteFile (self,root):
 			line = line.replace("@date",time.asctime())
 			if len(line)&gt; 0:
 				self.putSentinel("@comment " + line)</t>
-<t tx="T2731">def replaceTargetFileIfDifferent (self):
+<t tx="T2729">def replaceTargetFileIfDifferent (self):
 	
 	assert(self.outputFile == None)
 	
@@ -34812,14 +34877,14 @@ def openWriteFile (self,root):
 	else:
 		&lt;&lt; rename the output file to be the target file &gt;&gt;
 </t>
-<t tx="T2732">try: # Just delete the temp file.
+<t tx="T2730">try: # Just delete the temp file.
 	os.remove(self.outputFileName)
 except:
 	es("exception deleting:" + self.outputFileName)
 	es_exception()
 
 es("unchanged: " + self.shortFileName)</t>
-<t tx="T2733">try:
+<t tx="T2731">try:
 	# 10/6/02: retain the access mode of the previous file,
 	# removing any setuid, setgid, and sticky bits.
 	mode = (os.stat(self.targetFileName))[0] &amp; 0777
@@ -34848,20 +34913,20 @@ except:
 	except:
 		es("exception deleting:" + self.outputFileName)
 		es_exception()</t>
-<t tx="T2734">try:
+<t tx="T2732">try:
 	utils_rename(self.outputFileName,self.targetFileName)
 	es("creating: " + self.targetFileName)
 except:
 	self.writeError("exception renaming:" + self.outputFileName +
 		" to " + self.targetFileName)
 	es_exception()</t>
-<t tx="T2735"># Write the string s as-is except that we replace '\n' with the proper line ending.
+<t tx="T2733"># Write the string s as-is except that we replace '\n' with the proper line ending.
 
 def outputStringWithLineEndings (self,s):
 
 	# Calling self.onl() runs afoul of queued newlines.
 	self.os(s.replace('\n',self.output_newline))</t>
-<t tx="T2736">@ This method outputs a doc section terminated by @code or end-of-text.  All other interior directives become part of the doc part.
+<t tx="T2734">@ This method outputs a doc section terminated by @code or end-of-text.  All other interior directives become part of the doc part.
 @c
 def putDoc(self,s,i,kind):
 
@@ -34881,8 +34946,32 @@ def putDoc(self,s,i,kind):
 	self.putDocPart(s[i:j])
 	self.putSentinel("@-" + tag)
 	return j</t>
-<t tx="T2737"></t>
-<t tx="T2738"># 14-SEP-2002 DTHEIN
+<t tx="T2735"></t>
+<t tx="T2736">def putBuffered (self,s):
+	
+	"""Put s, converting all tabs to blanks as necessary."""
+	
+	if s:
+		w = self.tab_width
+		if w &lt; 0:
+			#trace(s)
+			lines = s.split('\n')
+			for i in xrange(len(lines)):
+				line = lines[i]
+				line2 = ""
+				for j in xrange(len(line)):
+					ch = line[j]
+					if ch == '\t':
+						w2 = computeWidth(s[:j],w)
+						w3 = (abs(w) - (w2 % abs(w)))
+						line2 += ' ' * w3
+					else:
+						line2 += ch
+				lines[i] = line2
+			s = string.join(lines,'\n')
+		#trace(s)
+		self.os(s)</t>
+<t tx="T2737"># 14-SEP-2002 DTHEIN
 # added for use by putBodyPart()
 
 # This method outputs the directive without the parameter text
@@ -34900,9 +34989,9 @@ def putEmptyDirective(self,s,i):
 
 	i = skip_line(s,i)
 	return i</t>
+<t tx="T2738"></t>
 <t tx="T2739"></t>
-<t tx="T2740"></t>
-<t tx="T2741">@ This code "canonicalizes" both the shortcuts that appear in menus and the arguments to bind, mostly ignoring case and the order in which special keys are specified in leoConfig.txt.
+<t tx="T2740">@ This code "canonicalizes" both the shortcuts that appear in menus and the arguments to bind, mostly ignoring case and the order in which special keys are specified in leoConfig.txt.
 
 For example, Ctrl+Shift+a is the same as Shift+Control+A.  Either may appear in leoConfig.txt.  Each generates Shift+Ctrl-A in the menu and Control+A as the argument to bind.
 
@@ -34922,7 +35011,7 @@ def canonicalizeShortcut (self,shortcut):
 	&lt;&lt; synthesize the shortcuts from the information &gt;&gt;
 	# print shortcut,bind_shortcut,menu_shortcut
 	return bind_shortcut,menu_shortcut</t>
-<t tx="T2742">bind_last = menu_last = last
+<t tx="T2741">bind_last = menu_last = last
 if len(last) == 1:
 	ch = last[0]
 	if ch in string.letters:
@@ -34942,7 +35031,7 @@ elif len(last) &gt; 0:
 	last2 = string.lower(last)
 	if last2 in dict.keys():
 		bind_last,menu_last = dict[last2]</t>
-<t tx="T2743"># These are defined at http://tcl.activestate.com/man/tcl8.4/TkCmd/keysyms.htm.
+<t tx="T2742"># These are defined at http://tcl.activestate.com/man/tcl8.4/TkCmd/keysyms.htm.
 dict = {
 	"!" : "exclam",
 	'"' : "quotedbl",
@@ -34976,7 +35065,7 @@ dict = {
 	"|" : "bar",
 	"}" : "braceright",
 	"~" : "asciitilde" }</t>
-<t tx="T2744"># These keys are simply made-up names.  The menu_bind values are known to Tk.
+<t tx="T2743"># These keys are simply made-up names.  The menu_bind values are known to Tk.
 # Case is not significant in the keys.
 
 dict = {
@@ -35006,7 +35095,7 @@ KP_Multiply, KP_Separator,KP_Space, KP_Subtract, KP_Tab,
 KP_F1,KP_F2,KP_F3,KP_F4,
 KP_0,KP_1,KP_2,KP_3,KP_4,KP_5,KP_6,KP_7,KP_8,KP_9
 </t>
-<t tx="T2745">s2 = shortcut
+<t tx="T2744">s2 = shortcut
 s2 = string.strip(s2)
 
 # Replace all minus signs by plus signs, except a trailing minus:
@@ -35027,7 +35116,7 @@ if last == None or len(last) == 0:
 	if not app().menuWarningsGiven:
 		print "bad shortcut specifier:", s
 	return None,None</t>
-<t tx="T2746">bind_head = menu_head = ""
+<t tx="T2745">bind_head = menu_head = ""
 
 if has_shift:
 	menu_head = "Shift+"
@@ -35045,7 +35134,7 @@ if has_ctrl:
 	
 bind_shortcut = "&lt;" + bind_head + bind_last + "&gt;"
 menu_shortcut = menu_head + menu_last</t>
-<t tx="T2747">def createMenuBar(self, top):
+<t tx="T2746">def createMenuBar(self, top):
 
 	c = self.commands
 	Tk = Tkinter
@@ -35062,14 +35151,14 @@ menu_shortcut = menu_head + menu_last</t>
 	top.config(menu=topMenu) # Display the menu.
 	app().menuWarningsGiven = true
 </t>
-<t tx="T2748">editMenu = self.createNewMenu("&amp;Edit")
+<t tx="T2747">editMenu = self.createNewMenu("&amp;Edit")
 &lt;&lt; create the first top-level edit entries &gt;&gt;
 &lt;&lt; create the edit body submenu &gt;&gt;
 &lt;&lt; create the edit headline submenu &gt;&gt;
 &lt;&lt; create the find submenu &gt;&gt;
 &lt;&lt; create the last top-level edit entries &gt;&gt;
 </t>
-<t tx="T2749">table = (
+<t tx="T2748">table = (
 	("Can't Undo","Ctrl+Z",self.OnUndo), # &amp;U reserved for Undo
 	("Can't Redo","Shift+Ctrl+Z",self.OnRedo), # &amp;R reserved for Redo
 	("-",None,None),
@@ -35082,7 +35171,7 @@ menu_shortcut = menu_head + menu_last</t>
 
 self.createMenuEntries(editMenu,table)
 </t>
-<t tx="T2750">editBodyMenu = self.createNewMenu("Edit &amp;Body...","Edit")
+<t tx="T2749">editBodyMenu = self.createNewMenu("Edit &amp;Body...","Edit")
 
 table = (
 	("Extract &amp;Section","Shift+Ctrl+E",self.OnExtractSection),
@@ -35103,7 +35192,7 @@ table = (
 self.createMenuEntries(editBodyMenu,table)
 
 </t>
-<t tx="T2751">editHeadlineMenu = self.createNewMenu("Edit &amp;Headline...","Edit")
+<t tx="T2750">editHeadlineMenu = self.createNewMenu("Edit &amp;Headline...","Edit")
 
 table = (
 	("Edit &amp;Headline","Ctrl+H",self.OnEditHeadline),
@@ -35117,7 +35206,7 @@ table = (
 self.createMenuEntries(editHeadlineMenu,table)
 
 </t>
-<t tx="T2752">findMenu = self.createNewMenu("&amp;Find...","Edit")
+<t tx="T2751">findMenu = self.createNewMenu("&amp;Find...","Edit")
 
 table = (
 	("&amp;Find Panel","Ctrl+F",self.OnFindPanel),
@@ -35129,7 +35218,7 @@ table = (
 
 self.createMenuEntries(findMenu,table)
 </t>
-<t tx="T2753">label = choose(c.tree.colorizer.showInvisibles,"Hide In&amp;visibles","Show In&amp;visibles")
+<t tx="T2752">label = choose(c.tree.colorizer.showInvisibles,"Hide In&amp;visibles","Show In&amp;visibles")
 
 table = (
 	("&amp;Go To Line Number","Alt+G",self.OnGoToLineNumber),
@@ -35141,7 +35230,7 @@ table = (
 	("Prefere&amp;nces","Ctrl+Y",self.OnPreferences))
 
 self.createMenuEntries(editMenu,table)</t>
-<t tx="T2754">fileMenu = self.createNewMenu("&amp;File")
+<t tx="T2753">fileMenu = self.createNewMenu("&amp;File")
 &lt;&lt; create the top-level file entries &gt;&gt;
 &lt;&lt; create the recent files submenu &gt;&gt;
 fileMenu.add_separator()
@@ -35156,7 +35245,7 @@ exitTable = (("E&amp;xit","Ctrl-Q",self.OnQuit),)
 self.createMenuEntries(fileMenu,exitTable)
 
 </t>
-<t tx="T2755">@ leo.py will probably never have a Print command.  Instead, export text files that may be formatted and printed as desired.
+<t tx="T2754">@ leo.py will probably never have a Print command.  Instead, export text files that may be formatted and printed as desired.
 @c
 
 table = (
@@ -35175,12 +35264,12 @@ table = (
 	("Save To",None,self.OnSaveTo), # &amp;Tangle
 	("Re&amp;vert To Saved",None,self.OnRevert)) # &amp;Read/Write
 self.createMenuEntries(fileMenu,table)</t>
-<t tx="T2756">recentFilesMenu = self.createNewMenu("Recent &amp;Files...","File")
+<t tx="T2755">recentFilesMenu = self.createNewMenu("Recent &amp;Files...","File")
 self.recentFiles = app().config.getRecentFiles()
 self.createRecentFilesMenuItems()
 
 </t>
-<t tx="T2757">readWriteMenu = self.createNewMenu("&amp;Read/Write...","File")
+<t tx="T2756">readWriteMenu = self.createNewMenu("&amp;Read/Write...","File")
 
 table = [
 		("&amp;Read Outline Only","Shift+Ctrl+R",self.OnReadOutlineOnly),
@@ -35192,7 +35281,7 @@ table = [
 		("&amp;Write @file Nodes","Shift+Ctrl+W",self.OnWriteAtFileNodes)]
 
 self.createMenuEntries(readWriteMenu,table)</t>
-<t tx="T2758">tangleMenu = self.createNewMenu("&amp;Tangle...","File")
+<t tx="T2757">tangleMenu = self.createNewMenu("&amp;Tangle...","File")
 
 table = (
 	("Tangle &amp;All","Shift+Ctrl+A",self.OnTangleAll),
@@ -35202,7 +35291,7 @@ table = (
 self.createMenuEntries(tangleMenu,table)
 
 </t>
-<t tx="T2759">untangleMenu = self.createNewMenu("&amp;Untangle...","File")
+<t tx="T2758">untangleMenu = self.createNewMenu("&amp;Untangle...","File")
 
 table = (
 	("Untangle &amp;All",None,self.OnUntangleAll),
@@ -35212,7 +35301,7 @@ table = (
 self.createMenuEntries(untangleMenu,table)
 
 </t>
-<t tx="T2760">importMenu = self.createNewMenu("&amp;Import...","File")
+<t tx="T2759">importMenu = self.createNewMenu("&amp;Import...","File")
 
 table = (
 	("Import To @&amp;file","Shift+Ctrl+F",self.OnImportAtFile),
@@ -35224,7 +35313,7 @@ table = (
 self.createMenuEntries(importMenu,table)
 
 </t>
-<t tx="T2761">exportMenu = self.createNewMenu("&amp;Export...","File")
+<t tx="T2760">exportMenu = self.createNewMenu("&amp;Export...","File")
 
 table = [
 	("Export &amp;Headlines",None,self.OnExportHeadlines),
@@ -35236,13 +35325,13 @@ table = [
 
 self.createMenuEntries(exportMenu,table)
 </t>
-<t tx="T2762">outlineMenu = self.createNewMenu("&amp;Outline")
+<t tx="T2761">outlineMenu = self.createNewMenu("&amp;Outline")
 &lt;&lt; create top-level outline menu &gt;&gt;
 &lt;&lt; create expand/contract submenu &gt;&gt;
 &lt;&lt; create move submenu &gt;&gt;
 &lt;&lt; create mark submenu &gt;&gt;
 &lt;&lt; create goto submenu &gt;&gt;</t>
-<t tx="T2763">table = (
+<t tx="T2762">table = (
 	("C&amp;ut Node","Shift+Ctrl+X",self.OnCutNode),
 	("C&amp;opy Node","Shift+Ctrl+C",self.OnCopyNode),
 	("&amp;Paste Node","Shift+Ctrl+V",self.OnPasteNode),
@@ -35255,7 +35344,7 @@ self.createMenuEntries(exportMenu,table)
 	("-",None,None))
 
 self.createMenuEntries(outlineMenu,table)</t>
-<t tx="T2764">expandMenu = self.createNewMenu("&amp;Expand/Contract...","Outline")
+<t tx="T2763">expandMenu = self.createNewMenu("&amp;Expand/Contract...","Outline")
 
 table = (
 	("&amp;Contract All","Alt+-",self.OnContractAll),
@@ -35280,7 +35369,7 @@ table = (
 
 
 self.createMenuEntries(expandMenu,table)</t>
-<t tx="T2765">moveSelectMenu = self.createNewMenu("&amp;Move...","Outline")
+<t tx="T2764">moveSelectMenu = self.createNewMenu("&amp;Move...","Outline")
 
 table = (
 	("Move &amp;Down", "Ctrl+D",self.OnMoveDown),
@@ -35293,7 +35382,7 @@ table = (
 	
 self.createMenuEntries(moveSelectMenu,table)
 </t>
-<t tx="T2766">markMenu = self.createNewMenu("M&amp;ark/Unmark...","Outline")
+<t tx="T2765">markMenu = self.createNewMenu("M&amp;ark/Unmark...","Outline")
 
 table = (
 	("&amp;Mark","Ctrl-M",self.OnMark),
@@ -35305,7 +35394,7 @@ table = (
 	
 self.createMenuEntries(markMenu,table)
 </t>
-<t tx="T2767">gotoMenu = self.createNewMenu("&amp;Go To...","Outline")
+<t tx="T2766">gotoMenu = self.createNewMenu("&amp;Go To...","Outline")
 
 table = (
 	("Go Back",None,self.OnGoPrevVisitedNode), # Usually use buttons for this.
@@ -35328,7 +35417,7 @@ table = (
 	
 self.createMenuEntries(gotoMenu,table)
 </t>
-<t tx="T2768">windowMenu = self.createNewMenu("&amp;Window")
+<t tx="T2767">windowMenu = self.createNewMenu("&amp;Window")
 
 table = (
 	("&amp;Equal Sized Panes","Ctrl-E",self.OnEqualSizedPanes),
@@ -35343,7 +35432,7 @@ table = (
 
 self.createMenuEntries(windowMenu,table)
 </t>
-<t tx="T2769">helpMenu = self.createNewMenu("&amp;Help")
+<t tx="T2768">helpMenu = self.createNewMenu("&amp;Help")
 
 table = (
 	("&amp;About Leo...",None,self.OnAbout),
@@ -35364,7 +35453,7 @@ table = (
 	("Apply &amp;Settings",None,self.OnApplyConfig))
 
 self.createMenuEntries(helpMenu,table)</t>
-<t tx="T2770">@ The old, non-user-configurable code bound shortcuts in createMenuBar.  The new user-configurable code binds shortcuts here.
+<t tx="T2769">@ The old, non-user-configurable code bound shortcuts in createMenuBar.  The new user-configurable code binds shortcuts here.
 
 Centralized tables of shortscuts no longer exist as they did in createAccelerators.  To check for duplicates, (possibly arising from leoConfig.txt) we add entries to a central dictionary here, and report duplicates if an entry for a canonicalized shortcut already exists.
 @c
@@ -35386,7 +35475,7 @@ def createMenuEntries (self,menu,table,openWith=0):
 
 			if bind_shortcut:
 				&lt;&lt; handle bind_shorcut &gt;&gt;</t>
-<t tx="T2771">name = label.strip().lower()
+<t tx="T2770">name = label.strip().lower()
 
 # Remove special characters from command names.
 name2 = ""
@@ -35395,7 +35484,7 @@ for ch in name:
 		name2 = name2 + ch
 name = name2
 </t>
-<t tx="T2772">config = app().config
+<t tx="T2771">config = app().config
 accel2 = config.getShortcut(name)
 if accel2 and len(accel2) &gt; 0:
 	accel = accel2
@@ -35403,7 +35492,7 @@ if accel2 and len(accel2) &gt; 0:
 else:
 	pass
 	# print "no default:",name</t>
-<t tx="T2773">bind_shortcut,menu_shortcut = self.canonicalizeShortcut(accel)
+<t tx="T2772">bind_shortcut,menu_shortcut = self.canonicalizeShortcut(accel)
 
 # Kludge: disable the shortcuts for cut, copy, paste.
 # This has already been bound in leoFrame.__init__
@@ -35412,7 +35501,7 @@ else:
 if sys.platform not in ("linux1","linux2"):
 	if bind_shortcut in ("&lt;Control-c&gt;","&lt;Control-v&gt;","&lt;Control-x&gt;"):
 		bind_shortcut = None</t>
-<t tx="T2774">@ Tkinter will call the callback function with:
+<t tx="T2773">@ Tkinter will call the callback function with:
 
 	- one event argument if the user uses a menu shortcut.
 	- no arguments otherwise.
@@ -35429,12 +35518,12 @@ else:
 	def callback(event=None,self=self,command=command,label=name):
 		# print "event",`event` ; print "self",`self` ; print "command",`command`
 		return self.doCommand(command,label,event)</t>
-<t tx="T2775">realLabel = app().getRealMenuName(label)
+<t tx="T2774">realLabel = app().getRealMenuName(label)
 amp_index = realLabel.find("&amp;")
 realLabel = realLabel.replace("&amp;","")
 if not menu_shortcut:
 	menu_shortcut = ""</t>
-<t tx="T2776">if bind_shortcut in self.menuShortcuts:
+<t tx="T2775">if bind_shortcut in self.menuShortcuts:
 	if not app().menuWarningsGiven:
 		print "duplicate shortcut:", accel, bind_shortcut, label
 else:
@@ -35448,7 +35537,7 @@ else:
 			print bind_shortcut
 			es_exception()
 			app().menuWarningsGive = true</t>
-<t tx="T2777">def createRecentFilesMenuItems (self):
+<t tx="T2776">def createRecentFilesMenuItems (self):
 	
 	f = self
 	recentFilesMenu = f.getMenu("Recent Files...")
@@ -35460,7 +35549,7 @@ else:
 		recentFilesMenu.add_command(label=label,command=callback,underline=0)
 		i += 1
 </t>
-<t tx="T2778">@ Executes the given command, invoking hooks and catching exceptions.
+<t tx="T2777">@ Executes the given command, invoking hooks and catching exceptions.
 Command handlers no longer need to return "break".  Yippee!
 
 The code assumes that the "command1" hook has completely handled the command if doHook("command1") returns false.  This provides a very simple mechanism for overriding commands.
@@ -35487,7 +35576,7 @@ def doCommand (self,command,label,event=None):
 			
 	return "break" # Inhibit all other handlers.
 </t>
-<t tx="T2779">def getMenu (self,menuName):
+<t tx="T2778">def getMenu (self,menuName):
 
 	cmn = canonicalizeMenuName(menuName)
 	return self.menus.get(cmn)
@@ -35502,10 +35591,10 @@ def destroyMenu (self,menuName):
 	cmn = canonicalizeMenuName(menuName)
 	del self.menus[cmn]
 </t>
+<t tx="T2779"></t>
 <t tx="T2780"></t>
 <t tx="T2781"></t>
-<t tx="T2782"></t>
-<t tx="T2783">def OnNew (self,event=None):
+<t tx="T2782">def OnNew (self,event=None):
 
 	config = app().config
 	frame = LeoFrame() # Create another Leo window.
@@ -35544,7 +35633,7 @@ def destroyMenu (self,menuName):
 	c.endUpdate()
 	
 	set_focus(frame.body)</t>
-<t tx="T2784">def OnOpen(self,event=None):
+<t tx="T2783">def OnOpen(self,event=None):
 
 	c = self.commands
 	&lt;&lt; Set closeFlag if the only open window is empty &gt;&gt;
@@ -35559,7 +35648,7 @@ def destroyMenu (self,menuName):
 		ok, frame = self.OpenWithFileName(fileName)
 		if ok and closeFlag:
 			app().destroyWindow(self)</t>
-<t tx="T2785">@ If this is the only open window was opened when the app started, and the window has never been written to or saved, then we will automatically close that window if this open command completes successfully.
+<t tx="T2784">@ If this is the only open window was opened when the app started, and the window has never been written to or saved, then we will automatically close that window if this open command completes successfully.
 @c
 	
 closeFlag = (
@@ -35567,7 +35656,7 @@ closeFlag = (
 	c.changed==false and self.saved==false and # The window has never been changed
 	app().numberOfWindows == 1) # Only one untitled window has ever been opened
 </t>
-<t tx="T2786">@ This routine handles the items in the Open With... menu.
+<t tx="T2785">@ This routine handles the items in the Open With... menu.
 These items can only be created by createOpenWithMenuFromTable().
 Typically this would be done from the "open2" hook.
 @c
@@ -35589,7 +35678,7 @@ def OnOpenWith(self,data=None):
 		es_exception()
 
 	return "break"</t>
-<t tx="T2787">if not ext:
+<t tx="T2786">if not ext:
 	dict = scanDirectives(c)
 	language = dict.get("language")
 	ext = a.language_extension_dict.get(language)
@@ -35601,7 +35690,7 @@ if ext[0] != ".":
 	ext = "."+ext
 	
 # print "ext",`ext`</t>
-<t tx="T2788">dict = None ; path = None
+<t tx="T2787">dict = None ; path = None
 &lt;&lt; set dict and path if a temp file already refers to v.t &gt;&gt;
 if path:
 	&lt;&lt; create or recreate temp file as needed &gt;&gt;
@@ -35610,7 +35699,7 @@ else:
 
 if not path:
 	return # An error has occured.</t>
-<t tx="T2789">searchPath = self.openWithTempFilePath(v,ext)
+<t tx="T2788">searchPath = self.openWithTempFilePath(v,ext)
 
 if os.path.exists(searchPath):
 	for dict in a.openWithFiles:
@@ -35618,7 +35707,7 @@ if os.path.exists(searchPath):
 			path = searchPath
 			break
 </t>
-<t tx="T2790">@ We test for changes in both v and the temp file:
+<t tx="T2789">@ We test for changes in both v and the temp file:
 
 - If only v's body text has changed, we recreate the temp file.
 - If only the temp file has changed, do nothing here.
@@ -35650,7 +35739,7 @@ if rewrite:
 	path = self.createOpenWithTempFile(v,ext)
 else:
 	es("reopening: " + shortFileName(path),color="blue")</t>
-<t tx="T2791">message = (
+<t tx="T2790">message = (
 	"Conflicting changes in outline and temp file\n\n" +
 	"Do you want to use the code in the outline or the temp file?\n\n")
 
@@ -35661,7 +35750,7 @@ result = leoDialog.askYesNoCancel(
 	defaultButton = "Cancel").run(modal=1)
 
 </t>
-<t tx="T2792">try:
+<t tx="T2791">try:
 	if arg == None: arg = ""
 	shortPath = path # shortFileName(path)
 	if openType == "os.system":
@@ -35688,7 +35777,7 @@ result = leoDialog.askYesNoCancel(
 except:
 	es("exception executing: "+command)
 	es_exception()</t>
-<t tx="T2793">def createOpenWithTempFile (self, v, ext):
+<t tx="T2792">def createOpenWithTempFile (self, v, ext):
 	
 	c = self.commands ; a = app()
 	path = self.openWithTempFilePath(v,ext)
@@ -35721,12 +35810,12 @@ except:
 		es("exception creating temp file",color="red")
 		es_exception()
 		return None</t>
-<t tx="T2794">for d in a.openWithFiles[:]: # 6/30/03
+<t tx="T2793">for d in a.openWithFiles[:]: # 6/30/03
 	v2 = d.get("v")
 	if v.t == v2.t:
 		print "removing previous entry in a.openWithFiles for",v
 		a.openWithFiles.remove(d)</t>
-<t tx="T2795">def openWithTempFilePath (self,v,ext):
+<t tx="T2794">def openWithTempFilePath (self,v,ext):
 	
 	"""Return the path to the temp file corresponding to v and ext."""
 
@@ -35736,7 +35825,7 @@ except:
 	
 	# print "openWithTempFilePath",path
 	return path</t>
-<t tx="T2796">def OpenWithFileName(self, fileName):
+<t tx="T2795">def OpenWithFileName(self, fileName):
 
 	if not fileName or len(fileName) == 0:
 		return false, None
@@ -35783,7 +35872,7 @@ except:
 		es("exceptions opening" + fileName)
 		es_exception()
 		return false, None</t>
-<t tx="T2797">def OnSave(self,event=None):
+<t tx="T2796">def OnSave(self,event=None):
 
 	c = self.commands
 	
@@ -35810,7 +35899,7 @@ except:
 		self.top.title(self.setWindowTitle(self.mFileName)) # 3/25/03
 		c.fileCommands.save(self.mFileName)
 		self.updateRecentFiles(self.mFileName)</t>
-<t tx="T2798">def OnSaveAs(self,event=None):
+<t tx="T2797">def OnSaveAs(self,event=None):
 
 	# Make sure we never pass None to the ctor.
 	if not self.mFileName:
@@ -35829,7 +35918,7 @@ except:
 		self.top.title(self.setWindowTitle(self.mFileName)) # 3/25/03
 		self.commands.fileCommands.saveAs(self.mFileName)
 		self.updateRecentFiles(self.mFileName)</t>
-<t tx="T2799">def OnSaveTo(self,event=None):
+<t tx="T2798">def OnSaveTo(self,event=None):
 
 	# Make sure we never pass None to the ctor.
 	if not self.mFileName:
@@ -35847,7 +35936,7 @@ except:
 		self.commands.fileCommands.saveTo(fileName)
 		self.updateRecentFiles(self.mFileName)
 </t>
-<t tx="T2800">def OnRevert(self,event=None):
+<t tx="T2799">def OnRevert(self,event=None):
 	
 	a = app()
 
@@ -35874,10 +35963,10 @@ except:
 	else:
 		self.mFileName = fileName
 </t>
-<t tx="T2801">def OnQuit(self,event=None):
+<t tx="T2800">def OnQuit(self,event=None):
 	
 	app().onQuit()</t>
-<t tx="T2802">def updateRecentFiles (self, fileName):
+<t tx="T2801">def updateRecentFiles (self, fileName):
 	
 	if not fileName or len(fileName) == 0:
 		return
@@ -35899,8 +35988,8 @@ except:
 	# Update the config file.
 	app().config.setRecentFiles(frame.recentFiles)
 	app().config.update()</t>
-<t tx="T2803"></t>
-<t tx="T2804">def OnOpenRecentFile(self,name=None):
+<t tx="T2802"></t>
+<t tx="T2803">def OnOpenRecentFile(self,name=None):
 	
 	c = self.commands ; v = c.currentVnode()
 	&lt;&lt; Set closeFlag if the only open window is empty &gt;&gt;
@@ -35915,7 +36004,7 @@ except:
 			app().setLog(frame,"OnOpenRecentFile") # Sets the log stream for es()
 
 	doHook("recentfiles2",c=c,v=v,fileName=fileName,closeFlag=closeFlag)</t>
-<t tx="T2805">@ If this is the only open window was opened when the app started, and the window has never been written to or saved, then we will automatically close that window if this open command completes successfully.
+<t tx="T2804">@ If this is the only open window was opened when the app started, and the window has never been written to or saved, then we will automatically close that window if this open command completes successfully.
 @c
 	
 closeFlag = (
@@ -35923,8 +36012,8 @@ closeFlag = (
 	c.changed==false and self.saved==false and # The window has never been changed
 	app().numberOfWindows == 1) # Only one untitled window has ever been opened
 </t>
-<t tx="T2806"></t>
-<t tx="T2807">def OnReadOutlineOnly (self,event=None):
+<t tx="T2805"></t>
+<t tx="T2806">def OnReadOutlineOnly (self,event=None):
 
 	fileName = tkFileDialog.askopenfilename(
 		title="Read Outline Only",
@@ -35943,7 +36032,7 @@ closeFlag = (
 		frame.commands.fileCommands.readOutlineOnly(file,fileName) # closes file.
 	except:
 		es("can not open:" + fileName)</t>
-<t tx="T2808">def OnReadAtFileNodes (self,event=None):
+<t tx="T2807">def OnReadAtFileNodes (self,event=None):
 
 	c = self.commands
 
@@ -35955,56 +36044,56 @@ closeFlag = (
 		c.fileCommands.readAtFileNodes()
 		c.undoer.clearUndoState()
 </t>
-<t tx="T2809">def OnWriteDirtyAtFileNodes (self,event=None):
+<t tx="T2808">def OnWriteDirtyAtFileNodes (self,event=None):
 
 	self.commands.fileCommands.writeDirtyAtFileNodes()
 </t>
-<t tx="T2810">def OnWriteMissingAtFileNodes (self,event=None):
+<t tx="T2809">def OnWriteMissingAtFileNodes (self,event=None):
 
 	self.commands.fileCommands.writeMissingAtFileNodes()
 </t>
-<t tx="T2811">def OnWriteOutlineOnly (self,event=None):
+<t tx="T2810">def OnWriteOutlineOnly (self,event=None):
 
 	self.commands.fileCommands.writeOutlineOnly()
 </t>
-<t tx="T2812">def OnWriteAtFileNodes (self,event=None):
+<t tx="T2811">def OnWriteAtFileNodes (self,event=None):
 
 	self.commands.fileCommands.writeAtFileNodes()
 </t>
-<t tx="T2813"></t>
-<t tx="T2814">def OnTangleAll(self,event=None):
+<t tx="T2812"></t>
+<t tx="T2813">def OnTangleAll(self,event=None):
 
 	self.commands.tangleCommands.tangleAll()
 </t>
-<t tx="T2815">def OnTangleMarked(self,event=None):
+<t tx="T2814">def OnTangleMarked(self,event=None):
 
 	self.commands.tangleCommands.tangleMarked()
 </t>
-<t tx="T2816">def OnTangle (self,event=None):
+<t tx="T2815">def OnTangle (self,event=None):
 
 	self.commands.tangleCommands.tangle()
 </t>
-<t tx="T2817"></t>
-<t tx="T2818">def OnUntangleAll(self,event=None):
+<t tx="T2816"></t>
+<t tx="T2817">def OnUntangleAll(self,event=None):
 
 	c = self.commands
 	c.tangleCommands.untangleAll()
 	c.undoer.clearUndoState()
 </t>
-<t tx="T2819">def OnUntangleMarked(self,event=None):
+<t tx="T2818">def OnUntangleMarked(self,event=None):
 
 	c = self.commands
 	self.commands.tangleCommands.untangleMarked()
 	c.undoer.clearUndoState()
 </t>
-<t tx="T2820">def OnUntangle(self,event=None):
+<t tx="T2819">def OnUntangle(self,event=None):
 
 	c = self.commands
 	self.commands.tangleCommands.untangle()
 	c.undoer.clearUndoState()
 </t>
-<t tx="T2821"></t>
-<t tx="T2822">def OnExportHeadlines (self,event=None):
+<t tx="T2820"></t>
+<t tx="T2821">def OnExportHeadlines (self,event=None):
 	
 	filetypes = [("Text files", "*.txt"),("All files", "*")]
 
@@ -36015,7 +36104,7 @@ closeFlag = (
 	if fileName and len(fileName) &gt; 0:
 		self.commands.importCommands.exportHeadlines(fileName)
 </t>
-<t tx="T2823">def OnFlattenOutline (self,event=None):
+<t tx="T2822">def OnFlattenOutline (self,event=None):
 	
 	filetypes = [("Text files", "*.txt"),("All files", "*")]
 
@@ -36027,7 +36116,7 @@ closeFlag = (
 		c = self.commands
 		c.importCommands.flattenOutline(fileName)
 </t>
-<t tx="T2824">def OnImportAtRoot (self,event=None):
+<t tx="T2823">def OnImportAtRoot (self,event=None):
 	
 	types = [
 		("All files","*"),
@@ -36046,7 +36135,7 @@ closeFlag = (
 		paths = [fileName] # alas, askopenfilename returns only a single name.
 		c.importCommands.importFilesCommand (paths,"@root")
 </t>
-<t tx="T2825">def OnImportAtFile (self,event=None):
+<t tx="T2824">def OnImportAtFile (self,event=None):
 	
 	types = [
 		("All files","*"),
@@ -36065,7 +36154,7 @@ closeFlag = (
 		paths = [fileName] # alas, askopenfilename returns only a single name.
 		c.importCommands.importFilesCommand (paths,"@file")
 </t>
-<t tx="T2826">def OnImportCWEBFiles (self,event=None):
+<t tx="T2825">def OnImportCWEBFiles (self,event=None):
 	
 	filetypes = [
 		("CWEB files", "*.w"),
@@ -36080,7 +36169,7 @@ closeFlag = (
 		paths = [fileName] # alas, askopenfilename returns only a single name.
 		c.importCommands.importWebCommand(paths,"cweb")
 </t>
-<t tx="T2827">def OnImportFlattenedOutline (self,event=None):
+<t tx="T2826">def OnImportFlattenedOutline (self,event=None):
 	
 	types = [("Text files","*.txt"), ("All files","*")]
 		
@@ -36093,7 +36182,7 @@ closeFlag = (
 		paths = [fileName] # alas, askopenfilename returns only a single name.
 		c.importCommands.importFlattenedOutline(paths)
 </t>
-<t tx="T2828">def OnImportNowebFiles (self,event=None):
+<t tx="T2827">def OnImportNowebFiles (self,event=None):
 	
 	filetypes = [
 		("Noweb files", "*.nw"),
@@ -36108,7 +36197,7 @@ closeFlag = (
 		paths = [fileName] # alas, askopenfilename returns only a single name.
 		c.importCommands.importWebCommand(paths,"noweb")
 </t>
-<t tx="T2829">def OnOutlineToCWEB (self,event=None):
+<t tx="T2828">def OnOutlineToCWEB (self,event=None):
 	
 	filetypes=[
 		("CWEB files", "*.w"),
@@ -36123,7 +36212,7 @@ closeFlag = (
 		c = self.commands
 		c.importCommands.outlineToWeb(fileName,"cweb")
 </t>
-<t tx="T2830">def OnOutlineToNoweb (self,event=None):
+<t tx="T2829">def OnOutlineToNoweb (self,event=None):
 	
 	filetypes=[
 		("Noweb files", "*.nw"),
@@ -36139,7 +36228,7 @@ closeFlag = (
 		c.importCommands.outlineToWeb(fileName,"noweb")
 		self.outlineToNowebDefaultFileName = fileName
 </t>
-<t tx="T2831">def OnRemoveSentinels (self,event=None):
+<t tx="T2830">def OnRemoveSentinels (self,event=None):
 	
 	types = [
 		("All files","*"),
@@ -36159,7 +36248,7 @@ closeFlag = (
 		# alas, askopenfilename returns only a single name.
 		c.importCommands.removeSentinelsCommand (fileName)
 </t>
-<t tx="T2832">def OnWeave (self,event=None):
+<t tx="T2831">def OnWeave (self,event=None):
 	
 	filetypes = [("Text files", "*.txt"),("All files", "*")]
 
@@ -36171,18 +36260,18 @@ closeFlag = (
 		c = self.commands
 		c.importCommands.weave(fileName)
 </t>
+<t tx="T2832"></t>
 <t tx="T2833"></t>
-<t tx="T2834"></t>
-<t tx="T2835">def OnUndo(self,event=None):
+<t tx="T2834">def OnUndo(self,event=None):
 
 	self.commands.undoer.undo()
 </t>
-<t tx="T2836">def OnRedo(self,event=None):
+<t tx="T2835">def OnRedo(self,event=None):
 
 	self.commands.undoer.redo()
 </t>
-<t tx="T2837"></t>
-<t tx="T2838">def OnCut (self,event=None):
+<t tx="T2836"></t>
+<t tx="T2837">def OnCut (self,event=None):
 
 	# Activate the body key handler by hand.
 	c = self.commands ; v = c.currentVnode()
@@ -36197,7 +36286,7 @@ def OnCutFromMenu (self,event=None):
 	c = self.commands ; v = c.currentVnode()
 	c.tree.onHeadChanged(v) # Works even if it wasn't the headline that changed.
 </t>
-<t tx="T2839">def OnCopy (self,event=None):
+<t tx="T2838">def OnCopy (self,event=None):
 
 	# Copy never changes dirty bits or syntax coloring.
 	pass
@@ -36208,7 +36297,7 @@ def OnCopyFromMenu (self,event=None):
 	w = self.getFocus()
 	w.event_generate(virtual_event_name("Copy"))
 </t>
-<t tx="T2840">def OnPaste (self,event=None):
+<t tx="T2839">def OnPaste (self,event=None):
 
 	# Activate the body key handler by hand.
 	c = self.commands ; v = c.currentVnode()
@@ -36228,7 +36317,7 @@ def OnPasteFromMenu (self,event=None):
 	c = self.commands ; v = c.currentVnode()
 	c.tree.onHeadChanged(v) # Works even if it wasn't the headline that changed.
 </t>
-<t tx="T2841">def OnDelete(self,event=None):
+<t tx="T2840">def OnDelete(self,event=None):
 
 	c = self.commands ; v = c.currentVnode()
 	first, last = oldSel = getTextSelection(self.body)
@@ -36236,7 +36325,7 @@ def OnPasteFromMenu (self,event=None):
 		self.body.delete(first,last)
 		c.tree.onBodyChanged(v,"Delete",oldSel=oldSel)
 </t>
-<t tx="T2842">@ This executes body text as a Python script.  We execute the selected text, or the entire body text if no text is selected.
+<t tx="T2841">@ This executes body text as a Python script.  We execute the selected text, or the entire body text if no text is selected.
 @c
 
 def OnExecuteScript(self,event=None,v=None):
@@ -36265,11 +36354,11 @@ def OnExecuteScript(self,event=None,v=None):
 			es_exception(full=false)
 	else:
 		es("no script selected")</t>
-<t tx="T2843">def OnSelectAll(self,event=None):
+<t tx="T2842">def OnSelectAll(self,event=None):
 
 	setTextSelection(self.body,"1.0","end")
 </t>
-<t tx="T2844">def OnFontPanel(self,event=None):
+<t tx="T2843">def OnFontPanel(self,event=None):
 
 	if self.fontPanel:
 		# trace()
@@ -36279,7 +36368,7 @@ def OnExecuteScript(self,event=None,v=None):
 		self.fontPanel = fp =  leoFontPanel.leoFontPanel(self.commands)
 		fp.run()
 </t>
-<t tx="T2845">def OnColorPanel(self,event=None):
+<t tx="T2844">def OnColorPanel(self,event=None):
 	
 	if self.colorPanel:
 		# trace()
@@ -36290,7 +36379,7 @@ def OnExecuteScript(self,event=None,v=None):
 		cp.run()
 
 </t>
-<t tx="T2846">def OnViewAllCharacters (self, event=None):
+<t tx="T2845">def OnViewAllCharacters (self, event=None):
 
 	c = self.commands ; v = c.currentVnode() ; colorizer = c.tree.colorizer
 	colorizer.showInvisibles = choose(colorizer.showInvisibles,0,1)
@@ -36305,7 +36394,7 @@ def OnExecuteScript(self,event=None,v=None):
 
 	c.tree.recolor_now(v)
 </t>
-<t tx="T2847">def OnPreferences(self,event=None):
+<t tx="T2846">def OnPreferences(self,event=None):
 	
 	c = self.commands
 	if self.prefsPanel:
@@ -36322,8 +36411,8 @@ def OnExecuteScript(self,event=None,v=None):
 			top.focus_force() # Get all keystrokes.
 			app().root.wait_window(top)
 </t>
-<t tx="T2848"></t>
-<t tx="T2849">def OnConvertBlanks(self,event=None):
+<t tx="T2847"></t>
+<t tx="T2848">def OnConvertBlanks(self,event=None):
 
 	self.commands.convertBlanks()
 
@@ -36332,7 +36421,7 @@ def OnConvertAllBlanks(self,event=None):
 
 	self.commands.convertAllBlanks()
 </t>
-<t tx="T2850">def OnConvertTabs(self,event=None):
+<t tx="T2849">def OnConvertTabs(self,event=None):
 
 	self.commands.convertTabs()
 	
@@ -36344,23 +36433,23 @@ def OnReformatParagraph(self,event=None):
 	
 	self.commands.reformatParagraph()
 </t>
-<t tx="T2851">def OnDedent (self,event=None):
+<t tx="T2850">def OnDedent (self,event=None):
 
 	self.commands.dedentBody()
 </t>
-<t tx="T2852">def OnExtract(self,event=None):
+<t tx="T2851">def OnExtract(self,event=None):
 
 	self.commands.extract()
 </t>
-<t tx="T2853">def OnExtractNames(self,event=None):
+<t tx="T2852">def OnExtractNames(self,event=None):
 
 	self.commands.extractSectionNames()
 </t>
-<t tx="T2854">def OnExtractSection(self,event=None):
+<t tx="T2853">def OnExtractSection(self,event=None):
 
 	self.commands.extractSection()
 </t>
-<t tx="T2855">def OnFindMatchingBracket (self,event=None):
+<t tx="T2854">def OnFindMatchingBracket (self,event=None):
 	
 	c = self ; body = c.body
 	brackets = "()[]{}&lt;&gt;"
@@ -36386,7 +36475,7 @@ def OnReformatParagraph(self,event=None):
 	else:
 		es("unmatched " + `ch`)
 </t>
-<t tx="T2856"># Test  unmatched())
+<t tx="T2855"># Test  unmatched())
 def findMatchingBracket(self,ch,body,index):
 
 	open_brackets  = "([{&lt;"
@@ -36417,27 +36506,27 @@ def findMatchingBracket(self,ch,body,index):
 # Test  (
 # ([(x){y}]))
 # Test  ((x)(unmatched</t>
-<t tx="T2857">def OnIndent(self,event=None):
+<t tx="T2856">def OnIndent(self,event=None):
 
 	self.commands.indentBody()
 </t>
-<t tx="T2858"></t>
-<t tx="T2859">def OnEditHeadline(self,event=None):
+<t tx="T2857"></t>
+<t tx="T2858">def OnEditHeadline(self,event=None):
 
 	tree = self.commands.tree
 	tree.editLabel(tree.currentVnode)</t>
-<t tx="T2860">def OnEndEditHeadline(self,event=None):
+<t tx="T2859">def OnEndEditHeadline(self,event=None):
 	
 	tree = self.commands.tree
 	tree.endEditLabelCommand()
 </t>
-<t tx="T2861">def OnAbortEditHeadline(self,event=None):
+<t tx="T2860">def OnAbortEditHeadline(self,event=None):
 	
 	tree = self.commands.tree
 	tree.abortEditLabelCommand()
 </t>
-<t tx="T2862"></t>
-<t tx="T2863">def OnFindPanel(self,event=None):
+<t tx="T2861"></t>
+<t tx="T2862">def OnFindPanel(self,event=None):
 
 	find = app().findFrame
 	# 15-SEP-2002 DTHEIN: call withdraw() to force findFrame to top after 
@@ -36451,101 +36540,101 @@ def findMatchingBracket(self,ch,body,index):
 	setTextSelection (t,"1.0","end") # Thanks Rich.
 	find.commands = self
 </t>
-<t tx="T2864">def OnFindNext(self,event=None):
+<t tx="T2863">def OnFindNext(self,event=None):
 
 	c = self.commands
 	app().findFrame.findNextCommand(c)
 </t>
-<t tx="T2865">def OnFindPrevious(self,event=None):
+<t tx="T2864">def OnFindPrevious(self,event=None):
 
 	c = self.commands
 	app().findFrame.findPreviousCommand(c)
 </t>
-<t tx="T2866">def OnReplace(self,event=None):
+<t tx="T2865">def OnReplace(self,event=None):
 
 	c = self.commands
 	app().findFrame.changeCommand(c)
 </t>
-<t tx="T2867">def OnReplaceThenFind(self,event=None):
+<t tx="T2866">def OnReplaceThenFind(self,event=None):
 
 	c = self.commands
 	app().findFrame.changeThenFindCommand(c)
 </t>
+<t tx="T2867"></t>
 <t tx="T2868"></t>
-<t tx="T2869"></t>
-<t tx="T2870">def OnCutNode(self,event=None):
+<t tx="T2869">def OnCutNode(self,event=None):
 
 	self.commands.cutOutline()
 </t>
-<t tx="T2871">def OnCopyNode(self,event=None):
+<t tx="T2870">def OnCopyNode(self,event=None):
 
 	self.commands.copyOutline()
 </t>
-<t tx="T2872">def OnPasteNode(self,event=None):
+<t tx="T2871">def OnPasteNode(self,event=None):
 
 	self.commands.pasteOutline()
 </t>
-<t tx="T2873">def OnDeleteNode(self,event=None):
+<t tx="T2872">def OnDeleteNode(self,event=None):
 
 	self.commands.deleteHeadline()
 </t>
-<t tx="T2874">def OnInsertNode(self,event=None):
+<t tx="T2873">def OnInsertNode(self,event=None):
 
 	self.commands.insertHeadline()</t>
-<t tx="T2875">def OnCloneNode(self,event=None):
+<t tx="T2874">def OnCloneNode(self,event=None):
 
 	self.commands.clone()
 </t>
-<t tx="T2876">def OnSortChildren(self,event=None):
+<t tx="T2875">def OnSortChildren(self,event=None):
 
 	self.commands.sortChildren()
 	
 def OnSortSiblings(self,event=None):
 
 	self.commands.sortSiblings()</t>
+<t tx="T2876"></t>
 <t tx="T2877"></t>
-<t tx="T2878"></t>
-<t tx="T2879">def OnContractAllChildren(self,event=None):
+<t tx="T2878">def OnContractAllChildren(self,event=None):
 
 	self.commands.contractAllSubheads()
 </t>
-<t tx="T2880">def OnExpandAllChildren(self,event=None):
+<t tx="T2879">def OnExpandAllChildren(self,event=None):
 
 	self.commands.expandAllSubheads()
 </t>
-<t tx="T2881">def OnExpandChildren(self,event=None):
+<t tx="T2880">def OnExpandChildren(self,event=None):
 
 	self.commands.expandSubheads()
 </t>
-<t tx="T2882">def OnContractAll(self,event=None):
+<t tx="T2881">def OnContractAll(self,event=None):
 
 	self.commands.contractAllHeadlines()
 </t>
-<t tx="T2883">def OnContractNode(self,event=None):
+<t tx="T2882">def OnContractNode(self,event=None):
 
 	self.commands.contractNode()
 </t>
-<t tx="T2884">def OnContractParent(self,event=None):
+<t tx="T2883">def OnContractParent(self,event=None):
 
 	self.commands.contractParent()
 </t>
-<t tx="T2885">def OnExpandAll(self,event=None):
+<t tx="T2884">def OnExpandAll(self,event=None):
 
 	self.commands.expandAllHeadlines()
 </t>
-<t tx="T2886">def OnExpandNextLevel(self,event=None):
+<t tx="T2885">def OnExpandNextLevel(self,event=None):
 
 	self.commands.expandNextLevel()
 </t>
-<t tx="T2887">def OnExpandNode(self,event=None):
+<t tx="T2886">def OnExpandNode(self,event=None):
 
 	self.commands.expandNode()
 </t>
-<t tx="T2888">def OnExpandPrevLevel(self,event=None):
+<t tx="T2887">def OnExpandPrevLevel(self,event=None):
 
 	self.commands.expandPrevLevel()
 </t>
-<t tx="T2889">def OnExpandToLevel1(self,event=None): self.commands.expandLevel1()
+<t tx="T2888">def OnExpandToLevel1(self,event=None): self.commands.expandLevel1()
 def OnExpandToLevel2(self,event=None): self.commands.expandLevel2()
 def OnExpandToLevel3(self,event=None): self.commands.expandLevel3()
 def OnExpandToLevel4(self,event=None): self.commands.expandLevel4()
@@ -36555,49 +36644,49 @@ def OnExpandToLevel7(self,event=None): self.commands.expandLevel7()
 def OnExpandToLevel8(self,event=None): self.commands.expandLevel8()
 def OnExpandToLevel9(self,event=None): self.commands.expandLevel9()
 </t>
-<t tx="T2890"></t>
-<t tx="T2891">def OnMoveDown(self,event=None):
+<t tx="T2889"></t>
+<t tx="T2890">def OnMoveDown(self,event=None):
 
 	self.commands.moveOutlineDown()
 </t>
-<t tx="T2892">def OnMoveLeft(self,event=None):
+<t tx="T2891">def OnMoveLeft(self,event=None):
 
 	self.commands.moveOutlineLeft()
 </t>
-<t tx="T2893">def OnMoveRight(self,event=None):
+<t tx="T2892">def OnMoveRight(self,event=None):
 
 	self.commands.moveOutlineRight()
 </t>
-<t tx="T2894">def OnMoveUp(self,event=None):
+<t tx="T2893">def OnMoveUp(self,event=None):
 
 	self.commands.moveOutlineUp()
 </t>
-<t tx="T2895">def OnPromote(self,event=None):
+<t tx="T2894">def OnPromote(self,event=None):
 
 	self.commands.promote()
 </t>
-<t tx="T2896">def OnDemote(self,event=None):
+<t tx="T2895">def OnDemote(self,event=None):
 
 	self.commands.demote()
 </t>
-<t tx="T2897">def OnGoPrevVisible(self,event=None):
+<t tx="T2896">def OnGoPrevVisible(self,event=None):
 
 	self.commands.selectVisBack()
 </t>
-<t tx="T2898">def OnGoNextVisible(self,event=None):
+<t tx="T2897">def OnGoNextVisible(self,event=None):
 
 	self.commands.selectVisNext()
 </t>
-<t tx="T2899">def OnGoBack(self,event=None):
+<t tx="T2898">def OnGoBack(self,event=None):
 
 	self.commands.selectThreadBack()
 </t>
-<t tx="T2900">def OnGoNext(self,event=None):
+<t tx="T2899">def OnGoNext(self,event=None):
 
 	self.commands.selectThreadNext()
 </t>
-<t tx="T2901"></t>
-<t tx="T2902">def OnGoPrevVisitedNode(self,event=None):
+<t tx="T2900"></t>
+<t tx="T2901">def OnGoPrevVisitedNode(self,event=None):
 	
 	c = self.commands
 
@@ -36612,7 +36701,7 @@ def OnExpandToLevel9(self,event=None): self.commands.expandLevel9()
 			c.tree.idle_scrollTo(v)
 			return
 </t>
-<t tx="T2903">def OnGoNextVisitedNode(self,event=None):
+<t tx="T2902">def OnGoNextVisitedNode(self,event=None):
 	
 	c = self.commands
 
@@ -36626,7 +36715,7 @@ def OnExpandToLevel9(self,event=None): self.commands.expandLevel9()
 			c.endUpdate()
 			c.tree.idle_scrollTo(v)
 			return</t>
-<t tx="T2904">def OnGoToFirstNode(self,event=None):
+<t tx="T2903">def OnGoToFirstNode(self,event=None):
 	
 	c = self.commands
 	v = c.rootVnode()
@@ -36634,7 +36723,7 @@ def OnExpandToLevel9(self,event=None): self.commands.expandLevel9()
 		c.beginUpdate()
 		c.selectVnode(v)
 		c.endUpdate()</t>
-<t tx="T2905">def OnGoToLastNode(self,event=None):
+<t tx="T2904">def OnGoToLastNode(self,event=None):
 	
 	c = self.commands
 	v = c.rootVnode()
@@ -36646,19 +36735,19 @@ def OnExpandToLevel9(self,event=None): self.commands.expandLevel9()
 		c.selectVnode(v)
 		c.endUpdate()
 </t>
-<t tx="T2906">def OnGoToNextChanged(self,event=None):
+<t tx="T2905">def OnGoToNextChanged(self,event=None):
 
 	self.commands.goToNextDirtyHeadline()
 </t>
-<t tx="T2907">def OnGoToNextClone(self,event=None):
+<t tx="T2906">def OnGoToNextClone(self,event=None):
 
 	self.commands.goToNextClone()
 </t>
-<t tx="T2908">def OnGoToNextMarked(self,event=None):
+<t tx="T2907">def OnGoToNextMarked(self,event=None):
 
 	self.commands.goToNextMarkedHeadline()
 </t>
-<t tx="T2909">def OnGoToNextSibling(self,event=None):
+<t tx="T2908">def OnGoToNextSibling(self,event=None):
 	
 	c = self.commands
 	v = c.currentVnode()
@@ -36668,7 +36757,7 @@ def OnExpandToLevel9(self,event=None): self.commands.expandLevel9()
 		c.beginUpdate()
 		c.selectVnode(next)
 		c.endUpdate()</t>
-<t tx="T2910">def OnGoToParent(self,event=None):
+<t tx="T2909">def OnGoToParent(self,event=None):
 	
 	c = self.commands
 	v = c.currentVnode()
@@ -36679,7 +36768,7 @@ def OnExpandToLevel9(self,event=None): self.commands.expandLevel9()
 		c.selectVnode(p)
 		c.endUpdate()
 </t>
-<t tx="T2911">def OnGoToPrevSibling(self,event=None):
+<t tx="T2910">def OnGoToPrevSibling(self,event=None):
 	
 	c = self.commands
 	v = c.currentVnode()
@@ -36690,45 +36779,45 @@ def OnExpandToLevel9(self,event=None): self.commands.expandLevel9()
 		c.selectVnode(back)
 		c.endUpdate()
 </t>
-<t tx="T2912">def OnMark(self,event=None):
+<t tx="T2911">def OnMark(self,event=None):
 
 	self.commands.markHeadline()
 </t>
-<t tx="T2913">def OnMarkChangedItems(self,event=None):
+<t tx="T2912">def OnMarkChangedItems(self,event=None):
 
 	self.commands.markChangedHeadlines()
 </t>
-<t tx="T2914">def OnMarkChangedRoots(self,event=None):
+<t tx="T2913">def OnMarkChangedRoots(self,event=None):
 
 	self.commands.markChangedRoots()
 </t>
-<t tx="T2915">def OnMarkClones(self,event=None):
+<t tx="T2914">def OnMarkClones(self,event=None):
 
 	self.commands.markClones()
 </t>
-<t tx="T2916">def OnMarkSubheads(self,event=None):
+<t tx="T2915">def OnMarkSubheads(self,event=None):
 
 	self.commands.markSubheads()
 </t>
-<t tx="T2917">def OnUnmarkAll(self,event=None):
+<t tx="T2916">def OnUnmarkAll(self,event=None):
 
 	self.commands.unmarkAll()
 </t>
-<t tx="T2918"></t>
-<t tx="T2919">def OnEqualSizedPanes(self,event=None):
+<t tx="T2917"></t>
+<t tx="T2918">def OnEqualSizedPanes(self,event=None):
 
 	frame = self
 
 	frame.resizePanesToRatio(0.5,frame.secondary_ratio)
 </t>
-<t tx="T2920">def OnToggleActivePane (self,event=None):
+<t tx="T2919">def OnToggleActivePane (self,event=None):
 
 	# trace(`event`)
 	if self.getFocus() == self.body:
 		set_focus(self.canvas)
 	else:
 		set_focus(self.body)</t>
-<t tx="T2921"># The key invariant: self.splitVerticalFlag tells the alignment of the main splitter.
+<t tx="T2920"># The key invariant: self.splitVerticalFlag tells the alignment of the main splitter.
 
 def OnToggleSplitDirection(self,event=None):
 	# Abbreviations.
@@ -36753,7 +36842,7 @@ def OnToggleSplitDirection(self,event=None):
 	# Redraw with an appropriate ratio.
 	vflag,ratio,secondary_ratio = frame.initialRatios()
 	self.resizePanesToRatio(ratio,secondary_ratio)</t>
-<t tx="T2922">def OnCascade(self,event=None):
+<t tx="T2921">def OnCascade(self,event=None):
 	
 	c = self ; x,y,delta = 10,10,10
 	for frame in app().windowList:
@@ -36772,7 +36861,7 @@ def OnToggleSplitDirection(self,event=None):
 			x = 10 + delta ; y = 40 + delta
 			delta += 10
 </t>
-<t tx="T2923">def OnMinimizeAll(self,event=None):
+<t tx="T2922">def OnMinimizeAll(self,event=None):
 
 	self.minimize(app().findFrame)
 	self.minimize(app().pythonFrame)
@@ -36783,11 +36872,11 @@ def minimize(self, frame):
 
 	if frame and frame.top.state() == "normal":
 		frame.top.iconify()</t>
-<t tx="T2924">def OnHideLogWindow (self):
+<t tx="T2923">def OnHideLogWindow (self):
 	
 	c = self.commands ; frame = c.frame
 	frame.divideLeoSplitter2(0.99, not frame.splitVerticalFlag)</t>
-<t tx="T2925">def OnOpenCompareWindow (self,event=None):
+<t tx="T2924">def OnOpenCompareWindow (self,event=None):
 	
 	c = self.commands
 	cp = self.comparePanel
@@ -36799,14 +36888,14 @@ def minimize(self, frame):
 		cmp = leoCompare.leoCompare(c)
 		self.comparePanel = cp =  leoCompare.leoComparePanel(c,cmp)
 		cp.run()</t>
-<t tx="T2926">def OnOpenPythonWindow(self,event=None):
+<t tx="T2925">def OnOpenPythonWindow(self,event=None):
 
 	if sys.platform == "linux2":
 		&lt;&lt; open idle in Linux &gt;&gt;
 	else:
 		&lt;&lt; open idle in Windows &gt;&gt;
 </t>
-<t tx="T2927"># 09-SEP-2002 DHEIN: Open Python window under linux
+<t tx="T2926"># 09-SEP-2002 DHEIN: Open Python window under linux
 
 try:
 	pathToLeo = os.path.join(app().loadDir,"leo.py")
@@ -36824,7 +36913,7 @@ except:
 		es_exception() # This can fail!!
 	except: pass
 </t>
-<t tx="T2928">try:
+<t tx="T2927">try:
 	executable_dir = os.path.dirname(sys.executable)
 	idle_dir=os.path.join(executable_dir,"Tools","idle")
 	if idle_dir not in sys.path:
@@ -36846,7 +36935,7 @@ except:
 		es("Please add " + `idle_dir` + " to sys.path")
 		es_exception() # This can fail!!
 	except: pass</t>
-<t tx="T2929">@ The key parts of Pyshell.main(), but using Leo's root window instead of a new Tk root window.
+<t tx="T2928">@ The key parts of Pyshell.main(), but using Leo's root window instead of a new Tk root window.
 
 This does _not_ work.  Using Leo's root window means that Idle will shut down Leo without warning when the Idle window is closed!
 @c
@@ -36860,8 +36949,8 @@ def leoPyShellMain(self):
 	shell = PyShell.PyShell(flist)
 	flist.pyshell = shell
 	shell.begin()</t>
-<t tx="T2930"></t>
-<t tx="T2931">def OnAbout(self,event=None):
+<t tx="T2929"></t>
+<t tx="T2930">def OnAbout(self,event=None):
 	
 	# Don't use triple-quoted strings or continued strings here.
 	# Doing so would add unwanted leading tabs.
@@ -36878,7 +36967,7 @@ def leoPyShellMain(self):
 	import leoDialog
 	leoDialog.aboutLeo(version,copyright,url,email).run(modal=false)
 </t>
-<t tx="T2932">def OnLeoDocumentation (self,event=None):
+<t tx="T2931">def OnLeoDocumentation (self,event=None):
 
 	fileName = os.path.join(app().loadDir,"..","doc","LeoDocs.leo")
 	try:
@@ -36886,7 +36975,7 @@ def leoPyShellMain(self):
 	except:
 		es("not found: LeoDocs.leo")
 </t>
-<t tx="T2933">def OnLeoHome (self,event=None):
+<t tx="T2932">def OnLeoHome (self,event=None):
 	
 	import webbrowser
 	
@@ -36895,7 +36984,7 @@ def leoPyShellMain(self):
 		webbrowser.open_new(url)
 	except:
 		es("not found: " + url)</t>
-<t tx="T2934">def OnLeoHelp (self,event=None):
+<t tx="T2933">def OnLeoHelp (self,event=None):
 	
 	file = os.path.join(app().loadDir,"..","doc","sbooks.chm")
 	if os.path.exists(file):
@@ -36923,20 +37012,20 @@ def leoPyShellMain(self):
 			except:
 				es("exception dowloading sbooks.chm")
 				es_exception()</t>
-<t tx="T2935">def showProgressBar (self,count,size,total):
+<t tx="T2934">def showProgressBar (self,count,size,total):
 
 	# trace("count,size,total:" + `count` + "," + `size` + "," + `total`)
 	if self.scale == None:
 		&lt;&lt; create the scale widget &gt;&gt;
 	self.scale.set(count*size)
 	self.scale.update_idletasks()</t>
-<t tx="T2936">Tk = Tkinter
+<t tx="T2935">Tk = Tkinter
 top = Tk.Toplevel()
 top.title("Download progress")
 self.scale = scale = Tk.Scale(top,state="normal",orient="horizontal",from_=0,to=total)
 scale.pack()
 top.lift()</t>
-<t tx="T2937">def OnLeoTutorial (self,event=None):
+<t tx="T2936">def OnLeoTutorial (self,event=None):
 	
 	import webbrowser
 
@@ -36948,11 +37037,11 @@ top.lift()</t>
 		webbrowser.open_new(url)
 	except:
 		es("not found: " + url)</t>
-<t tx="T2938">@ The following convenience routines make creating menus easier.
+<t tx="T2937">@ The following convenience routines make creating menus easier.
 
 The Plugins section gives examples of how to use these routines to create custom menus and to add items to the Open With menu.
 </t>
-<t tx="T2939">def createMenuItemsFromTable (self,menuName,table,openWith=0):
+<t tx="T2938">def createMenuItemsFromTable (self,menuName,table,openWith=0):
 	
 	try:
 		menu = self.getMenu(menuName)
@@ -36965,7 +37054,7 @@ The Plugins section gives examples of how to use these routines to create custom
 		print "exception creating items for ", menuName," menu"
 		es("exception creating items for " + `menuName` + " menu")
 		es_exception()</t>
-<t tx="T2940">def createNewMenu (self,menuName,parentName="top",before=None):
+<t tx="T2939">def createNewMenu (self,menuName,parentName="top",before=None):
 	
 	import Tkinter
 	from leoGlobals import app
@@ -36997,7 +37086,7 @@ The Plugins section gives examples of how to use these routines to create custom
 		es("exception creating " + menuName + " menu")
 		es_exception()
 		return None</t>
-<t tx="T2941">@ Entries in the table passed to createOpenWithMenuFromTable are
+<t tx="T2940">@ Entries in the table passed to createOpenWithMenuFromTable are
 tuples of the form (commandName,shortcut,data).
 
 - command is one of "os.system", "os.startfile", "os.spawnl", "os.spawnv" or "exec".
@@ -37042,7 +37131,7 @@ def createOpenWithMenuFromTable (self,table):
 	# for i in shortcut_table: print i
 	self.createMenuItemsFromTable("Open &amp;With...",shortcut_table,openWith=1)
 </t>
-<t tx="T2942">def deleteMenu (self,menuName):
+<t tx="T2941">def deleteMenu (self,menuName):
 
 	try:
 		menu = self.getMenu(menuName)
@@ -37054,7 +37143,7 @@ def createOpenWithMenuFromTable (self,table):
 	except:
 		es("exception deleting " + menuName + " menu")
 		es_exception()</t>
-<t tx="T2943"># Delete itemName from the menu whose name is menuName.
+<t tx="T2942"># Delete itemName from the menu whose name is menuName.
 def deleteMenuItem (self,itemName,menuName="top"):
 
 	from leoGlobals import app
@@ -37068,7 +37157,7 @@ def deleteMenuItem (self,itemName,menuName="top"):
 	except:
 		es("exception deleting " + itemName + " from " + menuName + " menu")
 		es_exception()</t>
-<t tx="T2944">def setRealMenuNamesFromTable (self,table):
+<t tx="T2943">def setRealMenuNamesFromTable (self,table):
 
 	try:
 		app().setRealMenuNamesFromTable(table)
@@ -37076,8 +37165,8 @@ def deleteMenuItem (self,itemName,menuName="top"):
 		es("exception in setRealMenuNamesFromTable")
 		es_exception()
 </t>
-<t tx="T2945"></t>
-<t tx="T2946"># This is the Tk "postcommand" callback.  It should update all menu items.
+<t tx="T2944"></t>
+<t tx="T2945"># This is the Tk "postcommand" callback.  It should update all menu items.
 
 def OnMenuClick (self):
 	
@@ -37092,7 +37181,7 @@ def OnMenuClick (self):
 		self.updateOutlineMenu()
 
 </t>
-<t tx="T2947"># Returns true if text in the outline or body text is selected.
+<t tx="T2946"># Returns true if text in the outline or body text is selected.
 
 def hasSelection (self):
 
@@ -37101,7 +37190,7 @@ def hasSelection (self):
 		return first != last
 	else:
 		return false</t>
-<t tx="T2948">def updateFileMenu (self):
+<t tx="T2947">def updateFileMenu (self):
 	
 	c = self.commands
 	if not c: return
@@ -37117,7 +37206,7 @@ def hasSelection (self):
 		es("exception updating File menu")
 		es_exception()
 </t>
-<t tx="T2949">def updateEditMenu (self):
+<t tx="T2948">def updateEditMenu (self):
 
 	c = self.commands
 	if not c: return
@@ -37144,7 +37233,7 @@ def hasSelection (self):
 	except:
 		es("exception updating Edit menu")
 		es_exception()</t>
-<t tx="T2950">def updateOutlineMenu (self):
+<t tx="T2949">def updateOutlineMenu (self):
 
 	c = self.commands ; v = c.currentVnode()
 	if not c: return
@@ -37200,7 +37289,7 @@ def hasSelection (self):
 	except:
 		es("exception updating Outline menu")
 		es_exception()</t>
-<t tx="T2951">@nocolor
+<t tx="T2950">@nocolor
 
 The following sections contain convenience routines that hooks may call to create menus and to schedule events.
 
@@ -37209,10 +37298,10 @@ The following sections contain convenience routines that hooks may call to creat
 @ignore
 
 </t>
-<t tx="T2952">@ When the "idle" hook is enabled, Leo will call the "idle" hook periodically.
+<t tx="T2951">@ When the "idle" hook is enabled, Leo will call the "idle" hook periodically.
 
 You scripts should call only enableIdleTimeHook and disableIdleTimeHook.  The idleTimeHookHandler is used to dispatch the "idle" hook.  Your code should not call it directly.</t>
-<t tx="T2953">@ Enables the "idle" hook.
+<t tx="T2952">@ Enables the "idle" hook.
 After enableIdleTimeHook is called, Leo will call the "idle" hook
 approximately every idleTimeDelay milliseconds.
 @c
@@ -37235,7 +37324,7 @@ def idleTimeHookHandler(*args):
 	# Faster requeues overload the system.
 	if a.idleTimeHook:
 		a.root.after(a.idleTimeDelay,idleTimeHookHandler)</t>
-<t tx="T2954">def module_date (mod,format=None):
+<t tx="T2953">def module_date (mod,format=None):
 	file = os.path.join(app().loadDir,mod.__file__)
 	root,ext = os.path.splitext(file) 
 	return file_date(root + ".py",format=format)
@@ -37256,7 +37345,7 @@ def file_date (file,format=None):
 		except: pass
 	return ""
 </t>
-<t tx="T2955">def plugin_signon(module_name,verbose=false):
+<t tx="T2954">def plugin_signon(module_name,verbose=false):
 	
 	exec("import %s ; m = %s" % (module_name,module_name))
 	
@@ -37270,9 +37359,9 @@ def file_date (file,format=None):
 	import leoPlugins
 	leoPlugins.count += 1
 </t>
-<t tx="T2956">@ These routines are involved in many projects.  Cloning them over and over can slow down Leo a lot.
+<t tx="T2955">@ These routines are involved in many projects.  Cloning them over and over can slow down Leo a lot.
 </t>
-<t tx="T2957">@ The &lt;Key&gt; event generates the event before the body text is changed(!), so we register an idle-event handler to do the work later.
+<t tx="T2956">@ The &lt;Key&gt; event generates the event before the body text is changed(!), so we register an idle-event handler to do the work later.
 
 1/17/02: Rather than trying to figure out whether the control or alt keys are down, we always schedule the idle_handler.  The idle_handler sees if any change has, in fact, been made to the body text, and sets the changed and dirty bits only if so.  This is the clean and safe way.
 
@@ -37280,7 +37369,7 @@ def file_date (file,format=None):
 @c
 
 @others</t>
-<t tx="T2958">def idle_body_key (self,v,oldSel,undoType,ch=None,oldYview=None,newSel=None):
+<t tx="T2957">def idle_body_key (self,v,oldSel,undoType,ch=None,oldYview=None,newSel=None):
 	
 	"""Update the body pane at idle time."""
 
@@ -37310,7 +37399,7 @@ def file_date (file,format=None):
 	&lt;&lt; redraw the screen if necessary &gt;&gt;
 	doHook("bodykey2",c=c,v=v,ch=ch,oldSel=oldSel,undoType=undoType)
 	return "break"</t>
-<t tx="T2959">s = c.body.get("1.0", "end")
+<t tx="T2958">s = c.body.get("1.0", "end")
 
 if s == None:
 	s = u""
@@ -37318,7 +37407,7 @@ if s == None:
 if type(s) == type(""):
 	s = toUnicode(s,app().tkEncoding) # 2/25/03
 	# if len(ch) &gt; 0: print `s`</t>
-<t tx="T2960"># 6/22/03: Make sure we handle delete key properly.
+<t tx="T2959"># 6/22/03: Make sure we handle delete key properly.
 
 if ch not in ('\n','\r',chr(8)):
 
@@ -37330,7 +37419,7 @@ if ch not in ('\n','\r',chr(8)):
 		return "break"
 	
 # print `ch`,len(body),len(s)</t>
-<t tx="T2961">@ Tk will add a newline only if:
+<t tx="T2960">@ Tk will add a newline only if:
 1. A real change has been made to the Tk.Text widget, and
 2. the change did _not_ result in the widget already containing a newline.
 
@@ -37361,7 +37450,7 @@ else:
 
 
 </t>
-<t tx="T2962"># Do nothing if we are in @nocolor mode or if we are executing a Change command.
+<t tx="T2961"># Do nothing if we are in @nocolor mode or if we are executing a Change command.
 if self.colorizer.useSyntaxColoring(v) and undoType != "Change":
 	# Get the previous line.
 	s=c.body.get("insert linestart - 1 lines","insert linestart -1c")
@@ -37389,7 +37478,7 @@ if self.colorizer.useSyntaxColoring(v) and undoType != "Change":
 	if ws and len(ws) &gt; 0:
 		c.body.insert("insert", ws)
 		removeTrailing = false # bug fix: 11/18</t>
-<t tx="T2963"># Do nothing if we are executing a Change command.
+<t tx="T2962"># Do nothing if we are executing a Change command.
 if undoType != "Change":
 	
 	# Get the characters preceeding the tab.
@@ -37419,14 +37508,14 @@ if undoType != "Change":
 			# print "prev w:" + `w` + ", prev chars:" + `prev`
 			c.body.delete("insert -1c")
 			c.body.insert("insert",' ' * w2)</t>
-<t tx="T2964">s = c.body.get("1.0", "end")
+<t tx="T2963">s = c.body.get("1.0", "end")
 s = toUnicode(s,app().tkEncoding) #2/25/03
 if len(s) &gt; 0 and s[-1] == '\n' and removeTrailing:
 	s = s[:-1]</t>
-<t tx="T2965">self.scanForTabWidth(v)
+<t tx="T2964">self.scanForTabWidth(v)
 incremental = undoType not in ("Cut","Paste")
 self.recolor_now(v,incremental=incremental)</t>
-<t tx="T2966">redraw_flag = false
+<t tx="T2965">redraw_flag = false
 
 c.beginUpdate()
 
@@ -37441,7 +37530,7 @@ if val != v.iconVal:
 	redraw_flag = true
 
 c.endUpdate(redraw_flag) # redraw only if necessary</t>
-<t tx="T2967"># Called by command handlers that have already changed the text.
+<t tx="T2966"># Called by command handlers that have already changed the text.
 
 def onBodyChanged (self,v,undoType,oldSel=None,oldYview=None,newSel=None):
 	
@@ -37456,7 +37545,7 @@ def onBodyChanged (self,v,undoType,oldSel=None,oldYview=None,newSel=None):
 
 	self.idle_body_key(v,oldSel,undoType,oldYview=oldYview,newSel=newSel)
 </t>
-<t tx="T2968">def OnBodyKey (self,event):
+<t tx="T2967">def OnBodyKey (self,event):
 	
 	"""Handle any key press event in the body pane."""
 
@@ -37469,7 +37558,7 @@ def onBodyChanged (self,v,undoType,oldSel=None,oldYview=None,newSel=None):
 		
 	# We must execute this even if len(ch) &gt; 0 to delete spurious trailing newlines.
 	self.commands.body.after_idle(self.idle_body_key,v,oldSel,"Typing",ch)</t>
-<t tx="T2969"># Called by command handlers that change the text just before idle time.
+<t tx="T2968"># Called by command handlers that change the text just before idle time.
 
 def onBodyWillChange (self,v,undoType,oldSel=None,oldYview=None):
 	
@@ -37483,11 +37572,11 @@ def onBodyWillChange (self,v,undoType,oldSel=None,oldYview=None):
 	self.commands.body.after_idle(self.idle_body_key,v,oldSel,undoType,oldYview)
 
 </t>
-<t tx="T2970">@ The &lt;Key&gt; event generates the event before the headline text is changed(!), so we register an idle-event handler to do the work later.
+<t tx="T2969">@ The &lt;Key&gt; event generates the event before the headline text is changed(!), so we register an idle-event handler to do the work later.
 @c
 
 @others</t>
-<t tx="T2971">def onHeadChanged (self,v):
+<t tx="T2970">def onHeadChanged (self,v):
 	
 	"""Handle a change to headline text."""
 
@@ -37495,7 +37584,7 @@ def onBodyWillChange (self,v,undoType,oldSel=None,oldYview=None):
 
 
 </t>
-<t tx="T2972">def OnHeadlineKey (self,v,event):
+<t tx="T2971">def OnHeadlineKey (self,v,event):
 	
 	"""Handle a key event in a headline."""
 
@@ -37503,7 +37592,7 @@ def onBodyWillChange (self,v,undoType,oldSel=None,oldYview=None):
 	self.commands.body.after_idle(self.idle_head_key,v,ch)
 
 </t>
-<t tx="T2973">def idle_head_key (self,v,ch=None):
+<t tx="T2972">def idle_head_key (self,v,ch=None):
 	
 	"""Update headline text at idle time."""
 
@@ -37529,7 +37618,7 @@ def onBodyWillChange (self,v,undoType,oldSel=None,oldYview=None):
 
 	doHook("headkey2",c=c,v=v,ch=ch)
 	return "break"</t>
-<t tx="T2974">s = v.edit_text().get("1.0","end")
+<t tx="T2973">s = v.edit_text().get("1.0","end")
 s = toUnicode(s,app().tkEncoding) # 2/25/03
 if not s:
 	s = u""
@@ -37537,12 +37626,12 @@ s = s.replace('\n','')
 s = s.replace('\r','')
 # trace(`s`)
 </t>
-<t tx="T2975">head = v.headString()
+<t tx="T2974">head = v.headString()
 if head == None:
 	head = u""
 head = toUnicode(head,"utf-8")
 </t>
-<t tx="T2976">c.beginUpdate()
+<t tx="T2975">c.beginUpdate()
 
 # Update changed bit.
 if not c.changed:
@@ -37566,7 +37655,7 @@ for v2 in v.t.joinList:
 			v2.edit_text().insert("end",s)
 
 c.endUpdate(false) # do not redraw now.</t>
-<t tx="T2977"># Reconfigure v's headline.
+<t tx="T2976"># Reconfigure v's headline.
 if done:
 	self.setDisabledLabelState(v)
 
@@ -37577,7 +37666,7 @@ for v2 in v.t.joinList:
 	if v2 != v:
 		if v2.edit_text(): # v2 may not be visible
 			v2.edit_text().configure(width=self.headWidth(v2))</t>
-<t tx="T2978">if done:
+<t tx="T2977">if done:
 	c.beginUpdate()
 	self.endEditLabel()
 	c.endUpdate()
@@ -37586,7 +37675,7 @@ elif changed:
 	# update v immediately.  Joined nodes are redrawn later by endEditLabel.
 	# Redrawing the whole screen now messes up the cursor in the headline.
 	self.drawIcon(v,v.iconx,v.icony) # just redraw the icon.</t>
-<t tx="T2979">@nocolor
+<t tx="T2978">@nocolor
 
 I tried several unsuccessful experiments:
 
@@ -37604,8 +37693,8 @@ def OnBodyKeyRelease (self,event):
     c = self.commands ; v = c.currentVnode() ; ch = event.char
     oldSel = getTextSelection(c.body)
     self.idle_body_key(v,oldSel,"Typing",ch)</t>
-<t tx="T2980">@ These routines are involved in many projects.  Cloning them over and over can slow down Leo a lot.</t>
-<t tx="T2981">@ Once a directive is seen, no other related directives in nodes further up the tree have any effect.  For example, if an @color directive is seen in node v, no @color or @nocolor directives are examined in any ancestor of v.
+<t tx="T2979">@ These routines are involved in many projects.  Cloning them over and over can slow down Leo a lot.</t>
+<t tx="T2980">@ Once a directive is seen, no other related directives in nodes further up the tree have any effect.  For example, if an @color directive is seen in node v, no @color or @nocolor directives are examined in any ancestor of v.
 
 This code is similar to Commands::scanAllDirectives, but it has been modified for use by the atFile class.
 @c
@@ -37634,7 +37723,7 @@ def scanAllDirectives(self,v):
 		v = v.parent()
 	&lt;&lt; Set current directory &gt;&gt;
 	&lt;&lt; Set comment Strings from delims &gt;&gt;</t>
-<t tx="T2982">self.page_width = self.commands.page_width
+<t tx="T2981">self.page_width = self.commands.page_width
 self.tab_width  = self.commands.tab_width
 
 self.default_directory = None # 8/2: will be set later.
@@ -37644,7 +37733,7 @@ self.language = c.target_language
 
 self.encoding = app().config.default_derived_file_encoding
 self.output_newline = getOutputNewline() # 4/24/03: initialize from config settings.</t>
-<t tx="T2983"># An absolute path in an @file node over-rides everything else.
+<t tx="T2982"># An absolute path in an @file node over-rides everything else.
 # A relative path gets appended to the relative path by the open logic.
 
 # Bug fix: 10/16/02
@@ -37667,7 +37756,7 @@ if dir and len(dir) &gt; 0 and os.path.isabs(dir):
 			self.error("Directory \"" + dir + "\" does not exist")
 			
 </t>
-<t tx="T2984"># 10/17/02: @language and @comment may coexist in @file trees.
+<t tx="T2983"># 10/17/02: @language and @comment may coexist in @file trees.
 # For this to be effective the @comment directive should follow the @language directive.
 
 if not old.has_key("comment") and dict.has_key("comment"):
@@ -37680,21 +37769,21 @@ elif not old.has_key("language") and dict.has_key("language"):
 	k = dict["language"]
 	# 11/14/02: Fix bug reported by J.M.Gilligan.
 	self.language,delim1,delim2,delim3 = set_language(s,k)</t>
-<t tx="T2985">if not old.has_key("encoding") and dict.has_key("encoding"):
+<t tx="T2984">if not old.has_key("encoding") and dict.has_key("encoding"):
 	
 	e = scanAtEncodingDirective(s,dict)
 	if e:
 		self.encoding = e</t>
-<t tx="T2986"># EKR: 10/10/02: perform the sames checks done by tangle.scanAllDirectives.
+<t tx="T2985"># EKR: 10/10/02: perform the sames checks done by tangle.scanAllDirectives.
 if dict.has_key("header") and dict.has_key("noheader"):
 	es("conflicting @header and @noheader directives")</t>
-<t tx="T2987">if not old.has_key("lineending") and dict.has_key("lineending"):
+<t tx="T2986">if not old.has_key("lineending") and dict.has_key("lineending"):
 	
 	lineending = scanAtLineendingDirective(s,dict)
 	if lineending:
 		self.output_newline = lineending
 </t>
-<t tx="T2988"># We set the current director to a path so future writes will go to that directory.
+<t tx="T2987"># We set the current director to a path so future writes will go to that directory.
 
 loadDir = app().loadDir
 
@@ -37711,7 +37800,7 @@ if not self.default_directory and not old.has_key("path") and dict.has_key("path
 			self.error("ignoring bad @path: " + path)
 	else:
 		self.error("ignoring empty @path")</t>
-<t tx="T2989">j = i = k + len("@path")
+<t tx="T2988">j = i = k + len("@path")
 i = skip_to_end_of_line(s,i)
 path = string.strip(s[j:i])
 
@@ -37724,7 +37813,7 @@ path = path.strip()
 
 if 0: # 11/14/02: we want a _relative_ path, not an absolute path.
 	path = os.path.join(loadDir,path)</t>
-<t tx="T2990"># path is an absolute path.
+<t tx="T2989"># path is an absolute path.
 
 if os.path.exists(path):
 	self.default_directory = path
@@ -37733,19 +37822,19 @@ else: # 9/25/02
 	if not self.default_directory:
 		self.error("invalid @path: " + path)
 </t>
-<t tx="T2991">if dict.has_key("pagewidth") and not old.has_key("pagewidth"):
+<t tx="T2990">if dict.has_key("pagewidth") and not old.has_key("pagewidth"):
 	
 	w = scanAtPagewidthDirective(s,dict,issue_error_flag=true)
 	if w and w &gt; 0:
 		self.page_width = w</t>
-<t tx="T2992">if dict.has_key("tabwidth") and not old.has_key("tabwidth"):
+<t tx="T2991">if dict.has_key("tabwidth") and not old.has_key("tabwidth"):
 	
 	w = scanAtTabwidthDirective(s,dict,issue_error_flag=true)
 	if w and w != 0:
 		self.tab_width = w
 
 </t>
-<t tx="T2993"># This code is executed if no valid absolute path was specified in the @file node or in an @path directive.
+<t tx="T2992"># This code is executed if no valid absolute path was specified in the @file node or in an @path directive.
 
 if c.frame and not self.default_directory:
 	base = getBaseDirectory() # returns "" on error.
@@ -37762,7 +37851,7 @@ if not self.default_directory:
 	# This should never happen: c.openDirectory should be a good last resort.
 	self.error("No absolute directory specified anywhere.")
 	self.default_directory = ""</t>
-<t tx="T2994"># Use single-line comments if we have a choice.
+<t tx="T2993"># Use single-line comments if we have a choice.
 # 8/2/01: delim1,delim2,delim3 now correspond to line,start,end
 if delim1:
 	self.startSentinelComment = delim1
@@ -37777,7 +37866,7 @@ else: # Emergency!
 	es("delim1,delim2,delim3:" + `delim1`+":"+`delim2`+":"+`delim3`)
 	self.startSentinelComment = "#" # This should never happen!
 	self.endSentinelComment = ""</t>
-<t tx="T2995"># Called by __init__
+<t tx="T2994"># Called by __init__
 
 def init_ivars(self):
 
@@ -37791,7 +37880,7 @@ def init_directive_ivars (self):
 
 	c = self.commands
 	&lt;&lt; init directive ivars &gt;&gt;</t>
-<t tx="T2996"># Various flags and counts...
+<t tx="T2995"># Various flags and counts...
 
 self.errors = 0 # The number of errors seen.
 self.tangling = true # true if tangling, false if untangling.
@@ -37845,13 +37934,13 @@ self.code_seen = false # true if @code seen in body text.
 
 # Support of output_newline option
 self.output_newline = getOutputNewline()</t>
-<t tx="T2997">@ Untangle vars used while comparing.
+<t tx="T2996">@ Untangle vars used while comparing.
 @c
 self.line_comment = self.comment = self.comment_end = None
 self.comment2 = self.comment2_end = None
 self.string1 = self.string2 = self.verbatim = None
 self.message = None # forgiving compare message.</t>
-<t tx="T2998">@ Once a directive is seen, related directives in ancesors have no effect.  For example, if an @color directive is seen in node x, no @color or @nocolor directives are examined in any ancestor of x.
+<t tx="T2997">@ Once a directive is seen, related directives in ancesors have no effect.  For example, if an @color directive is seen in node x, no @color or @nocolor directives are examined in any ancestor of x.
 @c
 
 def scanAllDirectives(self,v,require_path_flag,issue_error_flag):
@@ -37883,7 +37972,7 @@ def scanAllDirectives(self,v,require_path_flag,issue_error_flag):
 		old.update(dict)
 		v = v.parent()
 	&lt;&lt; Set self.tangle_directory &gt;&gt;</t>
-<t tx="T2999">@ Stephen P. Schaefer 9/13/2002: Add support for @first.
+<t tx="T2998">@ Stephen P. Schaefer 9/13/2002: Add support for @first.
 Unlike other root attributes, does *NOT* inherit from parent nodes.
 @c
 tag = "@first"
@@ -37904,7 +37993,7 @@ while 1:
 		break
 
 </t>
-<t tx="T3000">if old.has_key("comment") or old.has_key("language"):
+<t tx="T2999">if old.has_key("comment") or old.has_key("language"):
 	 pass # Do nothing more.
 
 elif dict.has_key("comment"):
@@ -37940,19 +38029,19 @@ elif dict.has_key("language"):
 	self.use_cweb_flag = false # Only raw cweb mode is ever used.
 	self.raw_cweb_flag = self.language == "cweb" # A new ivar.
 </t>
-<t tx="T3001">if not old.has_key("encoding") and dict.has_key("encoding"):
+<t tx="T3000">if not old.has_key("encoding") and dict.has_key("encoding"):
 	
 	e = scanAtEncodingDirective(s,dict)
 	if e:
 		self.encoding = e
 </t>
-<t tx="T3002">if not old.has_key("lineending") and dict.has_key("lineending"):
+<t tx="T3001">if not old.has_key("lineending") and dict.has_key("lineending"):
 	
 	lineending = scanAtLineendingDirective(s,dict)
 	if lineending:
 		self.output_newline = lineending
 </t>
-<t tx="T3003">@ It is valid to have more than one of these directives in the same body text: the more verbose directive takes precedence.
+<t tx="T3002">@ It is valid to have more than one of these directives in the same body text: the more verbose directive takes precedence.
 @c
 
 if not print_mode_changed:
@@ -37962,7 +38051,7 @@ if not print_mode_changed:
 			print_mode_changed = true
 			break
 </t>
-<t tx="T3004">if require_path_flag and not old.has_key("path") and dict.has_key("path"):
+<t tx="T3003">if require_path_flag and not old.has_key("path") and dict.has_key("path"):
 
 	k = dict["path"]
 	&lt;&lt; compute dir and relative_path from s[k:] &gt;&gt;
@@ -37979,7 +38068,7 @@ if not print_mode_changed:
 		self.path_warning_given = true # supress future warnings
 		self.error("ignoring empty @path")
 </t>
-<t tx="T3005">j = i = k + len("@path")
+<t tx="T3004">j = i = k + len("@path")
 i = skip_to_end_of_line(s,i)
 path = string.strip(s[j:i])
 
@@ -37994,7 +38083,7 @@ if 0: # 11/14/02: we want a _relative_ path, not an absolute path.
 	dir = os.path.join(app().loadDir,dir)
 
 # trace("dir: " + dir)</t>
-<t tx="T3006">if os.path.exists(dir):
+<t tx="T3005">if os.path.exists(dir):
 	self.tangle_directory = dir
 else: # 11/19/02
 	self.tangle_directory = makeAllNonExistentDirectories(dir)
@@ -38006,12 +38095,12 @@ else: # 11/19/02
 				es("relative_path_base_directory: " + base)
 			if relative_path and len(relative_path) &gt; 0:
 				es("relative path in @path directive: " + relative_path)</t>
-<t tx="T3007">if not old.has_key("pagewidth") and dict.has_key("pagewidth"):
+<t tx="T3006">if not old.has_key("pagewidth") and dict.has_key("pagewidth"):
 	
 	w = scanAtPagewidthDirective(s,dict,issue_error_flag)
 	if w and w &gt; 0:
 		self.page_width = w</t>
-<t tx="T3008">@ 10/27/02: new code:  self.root may not be defined here, so any relative directory specified in the @root node will have no effect unless we have this code.
+<t tx="T3007">@ 10/27/02: new code:  self.root may not be defined here, so any relative directory specified in the @root node will have no effect unless we have this code.
 
 @c
 if self.root_name == None and dict.has_key("root"):
@@ -38019,13 +38108,13 @@ if self.root_name == None and dict.has_key("root"):
 	i = dict["root"]
 	# i += len("@root")
 	self.setRootFromText(s[i:],issue_error_flag)</t>
-<t tx="T3009">if not old.has_key("tabwidth") and dict.has_key("tabwidth"):
+<t tx="T3008">if not old.has_key("tabwidth") and dict.has_key("tabwidth"):
 	
 	w = scanAtTabwidthDirective(s,dict,issue_error_flag)
 	if w and w != 0:
 		self.tab_width = w
 </t>
-<t tx="T3010">if old.has_key("header") or old.has_key("noheader"):
+<t tx="T3009">if old.has_key("header") or old.has_key("noheader"):
 	pass # Do nothing more.
 	
 elif dict.has_key("header") and dict.has_key("noheader"):
@@ -38038,7 +38127,7 @@ elif dict.has_key("header"):
 elif dict.has_key("noheader"):
 	self.use_header_flag = false
 </t>
-<t tx="T3011">@ This code sets self.tangle_directory if it has not already been set by an @path directive.
+<t tx="T3010">@ This code sets self.tangle_directory if it has not already been set by an @path directive.
 
 An absolute file name in an @root directive will override the directory set here.
 A relative file name gets appended later to the default directory.
@@ -38069,7 +38158,7 @@ if c.frame and require_path_flag and not self.tangle_directory:
 if not self.tangle_directory and require_path_flag: # issue_error_flag:
 	self.pathError("No absolute directory specified by @root, @path or Preferences.")
 </t>
-<t tx="T3012">if os.path.exists(dir):
+<t tx="T3011">if os.path.exists(dir):
 	if kind == "@root" and not os.path.isabs(root_dir):
 		self.tangle_directory = base
 	else:
@@ -38085,7 +38174,7 @@ else: # 9/25/02
 		if dir2 and len(dir2) &gt; 0:
 			es(kind + " directory: " + dir2)
 </t>
-<t tx="T3013"># Similar to code in scanAllDirectives.
+<t tx="T3012"># Similar to code in scanAllDirectives.
 
 def scanForTabWidth (self, v):
 	
@@ -38098,13 +38187,13 @@ def scanForTabWidth (self, v):
 		v = v.parent()
 
 	c.frame.setTabWidth(w)</t>
-<t tx="T3014">if dict.has_key("tabwidth"):
+<t tx="T3013">if dict.has_key("tabwidth"):
 	
 	val = scanAtTabwidthDirective(s,dict,issue_error_flag=false)
 	if val and val != 0:
 		w = val
 		break</t>
-<t tx="T3015">def scanColorDirectives(self,v):
+<t tx="T3014">def scanColorDirectives(self,v):
 	
 	"""Scan vnode v and v's ancestors looking for @color and @nocolor directives,
 	setting corresponding colorizer ivars.
@@ -38123,7 +38212,7 @@ def scanForTabWidth (self, v):
 		v = v.parent()
 	return self.language # For use by external routines.
 </t>
-<t tx="T3016"># 10/17/02: @comment and @language may coexist in the same node.
+<t tx="T3015"># 10/17/02: @comment and @language may coexist in the same node.
 
 if dict.has_key("comment"):
 	k = dict["comment"]
@@ -38136,7 +38225,7 @@ if dict.has_key("language"):
 
 if dict.has_key("comment") or dict.has_key("language"):
 	break</t>
-<t tx="T3017">if dict.has_key("root") and not self.rootMode:
+<t tx="T3016">if dict.has_key("root") and not self.rootMode:
 
 	k = dict["root"]
 	if match_word(s,k,"@root-code"):
@@ -38147,9 +38236,9 @@ if dict.has_key("comment") or dict.has_key("language"):
 		doc = app().config.at_root_bodies_start_in_doc_mode
 		self.rootMode = choose(doc,"doc","code")
 </t>
+<t tx="T3017"></t>
 <t tx="T3018"></t>
-<t tx="T3019"></t>
-<t tx="T3020">@ Returns (delim1, delim2, delim2), the delims following the @comment directive.
+<t tx="T3019">@ Returns (delim1, delim2, delim2), the delims following the @comment directive.
 
 This code can be called from @languge logic, in which case s can point at @comment
 @c
@@ -38187,7 +38276,7 @@ def set_delims_from_string(s):
 			delims[i] = string.replace(delims[i],'_',' ')
 
 	return delims[0], delims[1], delims[2]</t>
-<t tx="T3021">@ We search the descendents of v looking for the definition node matching name.
+<t tx="T3020">@ We search the descendents of v looking for the definition node matching name.
 There should be exactly one such node (descendents of other definition nodes are not searched).
 @c
 
@@ -38201,7 +38290,7 @@ def findReference(name,root):
 		v = v.threadNext()
 	return None
 </t>
-<t tx="T3022">def scanAtEncodingDirective(s,dict):
+<t tx="T3021">def scanAtEncodingDirective(s,dict):
 	
 	"""Scan the @encoding directive at s[dict["encoding"]:].
 
@@ -38218,7 +38307,7 @@ def findReference(name,root):
 	else:
 		es("invalid @encoding:"+encoding,color="red")
 		return None</t>
-<t tx="T3023">def scanAtLineendingDirective(s,dict):
+<t tx="T3022">def scanAtLineendingDirective(s,dict):
 	
 	"""Scan the @lineending directive at s[dict["lineending"]:].
 
@@ -38239,7 +38328,7 @@ def findReference(name,root):
 		es("invalid @lineending directive:"+e,color="red")
 		return None
 </t>
-<t tx="T3024">def scanAtPagewidthDirective(s,dict,issue_error_flag=false):
+<t tx="T3023">def scanAtPagewidthDirective(s,dict,issue_error_flag=false):
 	
 	"""Scan the @pagewidth directive at s[dict["pagewidth"]:].
 
@@ -38258,7 +38347,7 @@ def findReference(name,root):
 			es("ignoring " + s[k:j],color="red")
 		return None
 </t>
-<t tx="T3025">def scanAtTabwidthDirective(s,dict,issue_error_flag=false):
+<t tx="T3024">def scanAtTabwidthDirective(s,dict,issue_error_flag=false):
 	
 	"""Scan the @tabwidth directive at s[dict["tabwidth"]:].
 
@@ -38278,36 +38367,36 @@ def findReference(name,root):
 		return None
 
 </t>
-<t tx="T3026">@ignore
+<t tx="T3025">@ignore
 @lineending nl
 @encoding iso-8859-1
 @pagewidth 80
 @tabwidth -8</t>
-<t tx="T3027">line 1
+<t tx="T3026">line 1
 line 2
 last line (no newline)</t>
-<t tx="T3028">node 1 line 1
+<t tx="T3027">node 1 line 1
 node 1 line 2
 node 1 line 3 (newline)
 </t>
-<t tx="T3029">node 2 line 1
+<t tx="T3028">node 2 line 1
 node 2 line 2
 node 2 line 3 (no newline)</t>
-<t tx="T3030">line 1
+<t tx="T3029">line 1
 line 2
 last line (no newline)</t>
-<t tx="T3031">@root c:\prog\test\tangleTest.txt
+<t tx="T3030">@root c:\prog\test\tangleTest.txt
 
 line 1 Ã
 line 2
 &lt;&lt; ref &gt;&gt;
 line 3</t>
-<t tx="T3032">&lt;&lt; ref &gt;&gt;=
+<t tx="T3031">&lt;&lt; ref &gt;&gt;=
 ref line 1
 ref line 2</t>
+<t tx="T3032"></t>
 <t tx="T3033"></t>
-<t tx="T3034"></t>
-<t tx="T3035">@encoding iso-8859-15
+<t tx="T3034">@encoding iso-8859-15
 @nocolor
 
 https://sourceforge.net/forum/message.php?msg_id=1915561
@@ -38326,7 +38415,7 @@ Setting the encoding for derived files to latin-1 does not change anything.
 - Josef
 
 @color</t>
-<t tx="T3036">@nocolor
+<t tx="T3035">@nocolor
 
 http://sourceforge.net/forum/message.php?msg_id=1914029
 
@@ -38355,7 +38444,7 @@ You are receiving this email because you elected to monitor this forum.
 To stop monitoring this forum, login to SourceForge.net and visit: 
 https://sourceforge.net/forum/monitor.php?forum_id=10227
 </t>
-<t tx="T3037">@nocolor
+<t tx="T3036">@nocolor
 https://sourceforge.net/forum/message.php?msg_id=1916142
 By: riotnrrrd
 
@@ -38385,7 +38474,7 @@ default_derived_file_encoding = iso-8859-15
 
 Changing them to UTF-8 has no effect.
 </t>
-<t tx="T3038">@nocolor
+<t tx="T3037">@nocolor
 https://sourceforge.net/forum/message.php?msg_id=1952587
 Developers
 
@@ -38412,9 +38501,9 @@ default_derived_file_encoding = iso-8859-1,
 tk_encoding=
 
 This is exactly the same behaviour as in beta3.</t>
+<t tx="T3038"></t>
 <t tx="T3039"></t>
-<t tx="T3040"></t>
-<t tx="T3041">def __init__(self, root):
+<t tx="T3040">def __init__(self, root):
 
 	# These ivars are the global vars of this program.
 	self.commandName = None # The name of the command being executed.
@@ -38449,7 +38538,7 @@ This is exactly the same behaviour as in beta3.</t>
 	
 	&lt;&lt; Define global constants &gt;&gt;
 	&lt;&lt; Define global data structures &gt;&gt;</t>
-<t tx="T3042">self.prolog_string = "&lt;?xml version=\"1.0\" encoding=\"UTF-8\"?&gt;"
+<t tx="T3041">self.prolog_string = "&lt;?xml version=\"1.0\" encoding=\"UTF-8\"?&gt;"
 
 # New in leo.py 3.0
 self.prolog_prefix_string = "&lt;?xml version=\"1.0\" encoding="
@@ -38458,7 +38547,7 @@ self.prolog_postfix_string = "?&gt;"
 # leo.py 3.11
 self.use_unicode = true # true: use new unicode logic.
 </t>
-<t tx="T3043"># Called when the gApp global has been defined.
+<t tx="T3042"># Called when the gApp global has been defined.
 
 def finishCreate(self):
 
@@ -38476,7 +38565,7 @@ def finishCreate(self):
 	self.globalWindows.append(self.findFrame)
 
 	return true # all went well.</t>
-<t tx="T3044"># Python 2.1 support.
+<t tx="T3043"># Python 2.1 support.
 
 try:
 	# 04-SEP-2002 DHEIN: simplify version check
@@ -38493,7 +38582,7 @@ except:
 	print "exception getting version"
 	import traceback
 	traceback.print_exc()</t>
-<t tx="T3045"># loadDir should be the directory that contains leo.py
+<t tx="T3044"># loadDir should be the directory that contains leo.py
 
 try:
 	self.loadDir = os.path.dirname(leo.__file__)
@@ -38508,7 +38597,7 @@ except:
 		self.loadDir = "LeoPy"
 	print "Setting load directory to:", self.loadDir
 </t>
-<t tx="T3046">try: # 6/2/02: Try to set the default bitmap.
+<t tx="T3045">try: # 6/2/02: Try to set the default bitmap.
 	bitmap_name = os.path.join(self.loadDir,"..","Icons","LeoApp.ico")
 	bitmap = Tkinter.BitmapImage(bitmap_name)
 except:
@@ -38536,11 +38625,11 @@ if v834:
 		if 0: # Let's ignore this for now until I understand the issues better.
 			es("exception setting bitmap")
 			es_exception()</t>
-<t tx="T3047"># 04-SEP-2002 DHEIN: simplify version check
+<t tx="T3046"># 04-SEP-2002 DHEIN: simplify version check
 # 04-SEP-2002 Stephen P. Schaefer: make sure v834 is set
 v834 = CheckVersion(version, "8.3.4")
 </t>
-<t tx="T3048">@ According to Martin v. Löwis, getdefaultlocale() is broken, and cannot be fixed. The workaround is to copy the getpreferredencoding() function from locale.py in Python 2.3a2.  This function is now in leoGlobals.py.
+<t tx="T3047">@ According to Martin v. Löwis, getdefaultlocale() is broken, and cannot be fixed. The workaround is to copy the getpreferredencoding() function from locale.py in Python 2.3a2.  This function is now in leoGlobals.py.
 @c
 
 for (encoding,src) in (
@@ -38558,8 +38647,8 @@ for (encoding,src) in (
 		print "ignoring invalid " + src + " encoding: " + `encoding`
 
 </t>
-<t tx="T3049"></t>
-<t tx="T3050">def update_section (self,config,section,dict):
+<t tx="T3048"></t>
+<t tx="T3049">def update_section (self,config,section,dict):
 	
 	if config.has_section(section):
 		config.remove_section(section)
@@ -38572,7 +38661,7 @@ for (encoding,src) in (
 		val = toEncodedString(val,"utf-8")
 		config.set(section,name,val)
 </t>
-<t tx="T3051">@ Rewritten 10/11/02 as follows:
+<t tx="T3050">@ Rewritten 10/11/02 as follows:
 
 1. We call initConfigParam and initBooleanConfigParam to get the values.
 
@@ -38642,7 +38731,7 @@ if encoding and len(encoding) &gt; 0: # May be None.
 	
 self.use_plugins = self.initBooleanConfigParam(
 	"use_plugins",self.use_plugins)</t>
-<t tx="T3052">find = self.findDict.get("find_string")
+<t tx="T3051">find = self.findDict.get("find_string")
 if find:
 	# Leo always writes utf-8 encoding, but users may not.
 	find = toUnicode(find,"utf-8")
@@ -38654,9 +38743,9 @@ if change:
 	change = toUnicode(change,"utf-8")
 	self.findDict["change_string"] = change
 </t>
+<t tx="T3052"></t>
 <t tx="T3053"></t>
-<t tx="T3054"></t>
-<t tx="T3055"># 14-SEP-2002 DTHEIN: added for use by atFile.read()
+<t tx="T3054"># 14-SEP-2002 DTHEIN: added for use by atFile.read()
 
 # this function scans the lines in the list 'out' for @first directives
 # and appends the corresponding line from 'firstLines' to each @first 
@@ -38683,7 +38772,7 @@ def completeFirstDirectives(self,out,firstLines):
 		leadingLine = " " + firstLines[j]
 		out[k] = tag + leadingLine.rstrip() ; j += 1
 </t>
-<t tx="T3056"># 14-SEP-2002 DTHEIN: added for use by atFile.read()
+<t tx="T3055"># 14-SEP-2002 DTHEIN: added for use by atFile.read()
 
 # this function scans the lines in the list 'out' for @last directives
 # and appends the corresponding line from 'lastLines' to each @last 
@@ -38710,7 +38799,7 @@ def completeLastDirectives(self,out,lastLines):
 		trailingLine = " " + lastLines[j]
 		out[k] = tag + trailingLine.rstrip() ; j -= 1
 </t>
-<t tx="T3057">@ Sections appear in the derived file in reference order, not tree order.  Therefore, when we insert the nth child of the parent there is no guarantee that the previous n-1 children have already been inserted. And it won't work just to insert the nth child as the last child if there aren't n-1 previous siblings.  For example, if we insert the third child followed by the second child followed by the first child the second and third children will be out of order.
+<t tx="T3056">@ Sections appear in the derived file in reference order, not tree order.  Therefore, when we insert the nth child of the parent there is no guarantee that the previous n-1 children have already been inserted. And it won't work just to insert the nth child as the last child if there aren't n-1 previous siblings.  For example, if we insert the third child followed by the second child followed by the first child the second and third children will be out of order.
 
 To ensure that nodes are placed in the correct location we create "dummy" children as needed as placeholders.  In the example above, we would insert two dummy children when inserting the third child.  When inserting the other two children we replace the previously inserted dummy child with the actual children.
 
@@ -38743,7 +38832,7 @@ def createNthChild(self,n,parent,headline):
 	
 	result.setVisited() # Suppress all other errors for this node.
 	return result</t>
-<t tx="T3058"># 1/24/03: A kludgy fix to the problem of headlines containing comment delims.
+<t tx="T3057"># 1/24/03: A kludgy fix to the problem of headlines containing comment delims.
 
 result = parent.nthChild(n-1)
 resulthead = result.headString()
@@ -38764,7 +38853,7 @@ if headline.strip() != resulthead.strip():
 	else:
 		self.structureErrors += 1
 </t>
-<t tx="T3059">def handleLinesFollowingSentinel (self,lines,sentinel,comments = true):
+<t tx="T3058">def handleLinesFollowingSentinel (self,lines,sentinel,comments = true):
 	
 	"""convert lines following a sentinel to a single line"""
 	
@@ -38792,7 +38881,7 @@ if headline.strip() != resulthead.strip():
 		s = s.replace('@@','@')
 
 	return s</t>
-<t tx="T3060"># Remove the starting comment and the blank.
+<t tx="T3059"># Remove the starting comment and the blank.
 # 5/1/03: The starting comment now looks like a sentinel, to warn users from changing it.
 comment = start + '@ '
 if match(s,0,comment):
@@ -38806,7 +38895,7 @@ if len(end) == 0:
 else:
 	k = s.rfind(end)
 	s = string.strip(s[:k]) # works even if k == -1</t>
-<t tx="T3061">def readLine (self,file):
+<t tx="T3060">def readLine (self,file):
 	"""Reads one line from file using the present encoding"""
 	
 	s = readlineForceUnixNewline(file)
@@ -38814,7 +38903,7 @@ else:
 	return u
 
 </t>
-<t tx="T3062"># We expect only a single line, and more may exist if cvs detects a conflict.
+<t tx="T3061"># We expect only a single line, and more may exist if cvs detects a conflict.
 # We accept the first line even if it looks like a sentinel.
 # 5/1/03: The starting comment now looks like a sentinel, to warn users from changing it.
 
@@ -38838,7 +38927,7 @@ def readLinesToNextSentinel (self,file):
 			else: break
 
 	return nextLine,lines</t>
-<t tx="T3063">@ This method is the read code.
+<t tx="T3062">@ This method is the read code.
 
 scanText reads lines from the file until the given ending sentinel is found, and warns if any other ending sentinel is found instead.  It calls itself recursively to handle most nested sentinels.
 
@@ -38858,14 +38947,14 @@ def scanText (self,file,v,out,endSentinelKind,nextLine=None):
 	&lt;&lt; handle unexpected end of text &gt;&gt;
 	assert(len(s)==0 and nextLine==None) # We get here only if readline fails.
 	return lastLines # We get here only if there are problems.</t>
-<t tx="T3064">if nextLine:
+<t tx="T3063">if nextLine:
 	s = nextLine ; nextLine = None
 else:
 	s = self.readLine(file)
 	if len(s) == 0: break
 
 # trace(`s`)</t>
-<t tx="T3065">@ For non-sentinel lines we look ahead to see whether the next line is a sentinel.  If so, the newline that ends a non-sentinel line belongs to the next sentinel.
+<t tx="T3064">@ For non-sentinel lines we look ahead to see whether the next line is a sentinel.  If so, the newline that ends a non-sentinel line belongs to the next sentinel.
 @c
 
 assert(nextLine==None)
@@ -38880,7 +38969,7 @@ else:
 
 # nextLine != None only if we have a non-sentinel line.
 # Therefore, nextLine == None whenever scanText returns.</t>
-<t tx="T3066">@ lineIndent is the total indentation on a sentinel line.  The first "self.indent" portion of that must be removed when recreating text.  leading_ws is the remainder of the leading whitespace.  linep points to the first "real" character of a line, the character following the "indent" whitespace.
+<t tx="T3065">@ lineIndent is the total indentation on a sentinel line.  The first "self.indent" portion of that must be removed when recreating text.  leading_ws is the remainder of the leading whitespace.  linep points to the first "real" character of a line, the character following the "indent" whitespace.
 @c
 
 # Point linep past the first self.indent whitespace characters.
@@ -38900,17 +38989,17 @@ while i &lt; len(s):
 
 # Set leading_ws to the additional indentation on the line.
 leading_ws = s[linep:i]</t>
-<t tx="T3067"># Issue the error.
+<t tx="T3066"># Issue the error.
 name = self.sentinelName(endSentinelKind)
 self.readError("Unexpected end of file. Expecting " + name + "sentinel" )
 </t>
-<t tx="T3068">if kind == atFile.noSentinel:
+<t tx="T3067">if kind == atFile.noSentinel:
 	&lt;&lt; append non-sentinel line &gt;&gt;
 &lt;&lt; handle common sentinels &gt;&gt;
 &lt;&lt; handle rare sentinels &gt;&gt;
 else:
 	&lt;&lt; warn about unknown sentinel &gt;&gt;</t>
-<t tx="T3069"># We don't output the trailing newline if the next line is a sentinel.
+<t tx="T3068"># We don't output the trailing newline if the next line is a sentinel.
 if self.raw: # 10/15/02
 	i = 0
 else:
@@ -38925,7 +39014,7 @@ else:
 	line = s[i:-1] # don't output the newline
 	out.append(line)
 </t>
-<t tx="T3070">elif kind in (
+<t tx="T3069">elif kind in (
 	atFile.endAt,  atFile.endBody, atFile.endDoc,
 	atFile.endLeo, atFile.endNode, atFile.endOthers):
 		&lt;&lt; handle an ending sentinel &gt;&gt;
@@ -38941,7 +39030,7 @@ elif kind == atFile.startDoc:
 	&lt;&lt; scan @+doc &gt;&gt;
 elif kind == atFile.startOthers:
 	&lt;&lt; scan @+others &gt;&gt;</t>
-<t tx="T3071"># trace("end sentinel:", self.sentinelName(kind))
+<t tx="T3070"># trace("end sentinel:", self.sentinelName(kind))
 
 if kind == endSentinelKind:
 	if kind == atFile.endLeo:
@@ -38962,9 +39051,9 @@ else:
 	name = self.sentinelName(kind)
 	expect = self.sentinelName(endSentinelKind)
 	self.readError("Ignoring " + name + " sentinel.  Expecting " + expect)</t>
-<t tx="T3072">assert(match(s,i,"+at"))
+<t tx="T3071">assert(match(s,i,"+at"))
 self.scanDoc(file,s,i,out,kind)</t>
-<t tx="T3073">assert(match(s,i,"+body"))
+<t tx="T3072">assert(match(s,i,"+body"))
 
 child_out = [] ; child = v # Do not change out or v!
 oldIndent = self.indent ; self.indent = lineIndent
@@ -38980,15 +39069,15 @@ body = string.join(child_out, "")
 body = body.replace('\r', '')
 child.t.setTnodeText(body)
 self.indent = oldIndent</t>
-<t tx="T3074">assert(match(s,i,"+doc"))
+<t tx="T3073">assert(match(s,i,"+doc"))
 self.scanDoc(file,s,i,out,kind)</t>
-<t tx="T3075">assert(match(s,i,"+others"))
+<t tx="T3074">assert(match(s,i,"+others"))
 
 # Make sure that the generated at-others is properly indented.
 out.append(leading_ws + "@others")
 
 self.scanText(file,v,out,atFile.endOthers)</t>
-<t tx="T3076">elif kind == atFile.startComment:
+<t tx="T3075">elif kind == atFile.startComment:
 	&lt;&lt; scan @comment &gt;&gt;
 elif kind == atFile.startDelims:
 	&lt;&lt; scan @delims &gt;&gt;
@@ -38998,13 +39087,13 @@ elif kind == atFile.startLeo:
 	&lt;&lt; scan @+leo &gt;&gt;
 elif kind == atFile.startVerbatim:
 	&lt;&lt; scan @verbatim &gt;&gt;</t>
-<t tx="T3077">assert(match(s,i,"+leo"))
+<t tx="T3076">assert(match(s,i,"+leo"))
 self.readError("Ignoring unexpected @+leo sentinel")</t>
-<t tx="T3078">assert(match(s,i,"comment"))
+<t tx="T3077">assert(match(s,i,"comment"))
 
 # We need do nothing more to ignore the comment line!
 </t>
-<t tx="T3079">assert(match(s,i,"verbatim"))
+<t tx="T3078">assert(match(s,i,"verbatim"))
 
 # Skip the sentinel.
 s = self.readLine(file) 
@@ -39013,15 +39102,16 @@ s = self.readLine(file)
 i = self.skipIndent(s,0,self.indent)
 out.append(s[i:])
 </t>
-<t tx="T3080">j = i
+<t tx="T3079">j = i
 i = skip_line(s,i)
 line = s[j:i]
 self.readError("Unknown sentinel: " + line)</t>
-<t tx="T3081">@ This method is the same as putSentinel except we don't put an opening newline and leading whitespace.
+<t tx="T3080">@ This method is the same as putSentinel except we don't put an opening newline and leading whitespace.
 @c
 def putOpenLeoSentinel(self,s):
 	
-	if not self.sentinels: return # Handle @nosentinelsfile.
+	if not self.sentinels:
+		return # Handle @nosentinelsfile.
 
 	self.os(self.startSentinelComment)
 	self.os(s)
@@ -39034,10 +39124,11 @@ def putOpenLeoSentinel(self,s):
 	if self.suppress_newlines: # 9/27/02
 		self.newline_pending = true # Schedule a newline.
 	else:
-		self.onl() # End of sentinel.</t>
+		self.onl() # End of sentinel.
+</t>
+<t tx="T3081"></t>
 <t tx="T3082"></t>
-<t tx="T3083"></t>
-<t tx="T3084">def setEncoding (self):
+<t tx="T3083">def setEncoding (self):
 	
 	# scanDirectives checks the encoding: may return None.
 	dict = scanDirectives(self.commands)
@@ -39049,9 +39140,9 @@ def putOpenLeoSentinel(self,s):
 
 	# print self.encoding
 </t>
+<t tx="T3084"></t>
 <t tx="T3085"></t>
-<t tx="T3086"></t>
-<t tx="T3087"># Parses the encoding string, and sets self.leo_file_encoding.
+<t tx="T3086"># Parses the encoding string, and sets self.leo_file_encoding.
 
 def getXmlVersionTag (self):
 	
@@ -39066,9 +39157,9 @@ def getXmlVersionTag (self):
 	else:
 		es("invalid encoding in .leo file: " + encoding)
 </t>
+<t tx="T3087"></t>
 <t tx="T3088"></t>
-<t tx="T3089"></t>
-<t tx="T3090">@nocolor
+<t tx="T3089">@nocolor
 https://sourceforge.net/forum/message.php?msg_id=1923127
 By: dalcolmo
 Open Discussion
@@ -39083,7 +39174,7 @@ the string?
 
 if 0: #test
 	from leoGlobals import es ; es(u"this is a test")</t>
-<t tx="T3091"># All output to the log stream eventually comes here.
+<t tx="T3090"># All output to the log stream eventually comes here.
 
 def put (self,s,color=None):
 	# print `app().quitting`,`self.log`
@@ -39122,7 +39213,7 @@ def putnl (self):
 		app().logWaiting.append(('\n',"black"),) # 6/28/03
 		print "Null log"
 		print</t>
-<t tx="T3092">def ecnl():
+<t tx="T3091">def ecnl():
 	ecnls(1)
 
 def ecnls(n):
@@ -39162,16 +39253,16 @@ def es(s,*args,**keys):
 	else:
 		a.logWaiting.append((s,color),) # 2/16/03
 		print s,</t>
+<t tx="T3092"></t>
 <t tx="T3093"></t>
 <t tx="T3094"></t>
-<t tx="T3095"></t>
-<t tx="T3096">def appendStringToBody (self,s,encoding="utf-8"):
+<t tx="T3095">def appendStringToBody (self,s,encoding="utf-8"):
 
 	if len(s) == 0: return
 	body = self.t.bodyString + s
 	self.setBodyStringOrPane(body,encoding)
 </t>
-<t tx="T3097">def setHeadString (self,s,encoding="utf-8"):
+<t tx="T3096">def setHeadString (self,s,encoding="utf-8"):
 
 	self.initHeadString(s,encoding) # 6/28/03
 	self.setDirty()
@@ -39181,7 +39272,7 @@ def initHeadString (self,s,encoding="utf-8"):
 	s = toUnicode(s,encoding,reportErrors=true)
 	self.t.headString = s
 </t>
-<t tx="T3098"># Compatibility routine for scripts
+<t tx="T3097"># Compatibility routine for scripts
 
 def setHeadStringOrHeadline (self,s,encoding="utf-8"):
 
@@ -39189,9 +39280,9 @@ def setHeadStringOrHeadline (self,s,encoding="utf-8"):
 	c.endEditing()
 	self.setHeadString(s,encoding)
 </t>
-<t tx="T3099">The fileCommands logic calls t.setTnodeText(s)</t>
-<t tx="T3100"></t>
-<t tx="T3101">def saveBodyPaneToTnode (self,body): # No need for an encoding param.
+<t tx="T3098">The fileCommands logic calls t.setTnodeText(s)</t>
+<t tx="T3099"></t>
+<t tx="T3100">def saveBodyPaneToTnode (self,body): # No need for an encoding param.
 
 	self.setTnodeText(body.GetValue()) # 1/20/03
 
@@ -39202,14 +39293,14 @@ def setHeadStringOrHeadline (self,s,encoding="utf-8"):
 	self.selectionStart = i
 	self.selectionLength = j - i
 </t>
-<t tx="T3102">def setSelection (self, start, length):
+<t tx="T3101">def setSelection (self, start, length):
 
 	self.selectionStart = start
 	self.selectionLength = length</t>
+<t tx="T3102"></t>
 <t tx="T3103"></t>
 <t tx="T3104"></t>
-<t tx="T3105"></t>
-<t tx="T3106">def isValidEncoding (encoding):
+<t tx="T3105">def isValidEncoding (encoding):
 	
 	try:
 		if len(encoding) == 0:
@@ -39219,7 +39310,7 @@ def setHeadStringOrHeadline (self,s,encoding="utf-8"):
 	except:
 		return false
 </t>
-<t tx="T3107">def reportBadChars (s,encoding):
+<t tx="T3106">def reportBadChars (s,encoding):
 	
 	errors = 0
 	if type(s) == type(u""):
@@ -39238,7 +39329,7 @@ def setHeadStringOrHeadline (self,s,encoding="utf-8"):
 		if errors:
 			es("%d errors converting %s from %s to unicode" % 
 				(errors, s.encode(encoding,"replace"),encoding))</t>
-<t tx="T3108">def toUnicode (s,encoding,reportErrors=false):
+<t tx="T3107">def toUnicode (s,encoding,reportErrors=false):
 	
 	if type(s) == type(""):
 		try:
@@ -39259,7 +39350,7 @@ def toEncodedString (s,encoding,reportErrors=false):
 				reportBadChars(s,encoding)
 			s = s.encode(encoding,"replace")
 	return s</t>
-<t tx="T3109">try:
+<t tx="T3108">try:
 	# Use Python's version of getpreferredencoding if it exists.
 	# It is new in Python 2.3.
 	import locale
@@ -39271,7 +39362,7 @@ except:
 	else:
 		&lt;&lt; define getpreferredencoding for *nix &gt;&gt;
 </t>
-<t tx="T3110"># On Win32, this will return the ANSI code page
+<t tx="T3109"># On Win32, this will return the ANSI code page
 # On the Mac, it should return the system encoding;
 # it might return "ascii" instead.
 
@@ -39282,7 +39373,7 @@ def getpreferredencoding(do_setlocale = true):
 		return _locale._getdefaultlocale()[1]
 	except:
 		return None # Good enough for a.finishCreate.</t>
-<t tx="T3111"># On Unix, if CODESET is available, use that.
+<t tx="T3110"># On Unix, if CODESET is available, use that.
 try:
 	local.CODESET
 except NameError:
@@ -39309,8 +39400,8 @@ else:
 				return locale.nl_langinfo(CODESET)
 		except:
 			return None # Good enough for a.finishCreate.</t>
-<t tx="T3112">@nocolor</t>
-<t tx="T3113">The previous message focused on the details.  In this posting I'd like to focus on the big picture. This should make clear that the new code is actually quite easy to understand.
+<t tx="T3111">@nocolor</t>
+<t tx="T3112">The previous message focused on the details.  In this posting I'd like to focus on the big picture. This should make clear that the new code is actually quite easy to understand.
 
 The key principles are:
 
@@ -39333,7 +39424,7 @@ Edward
 P.S. The code above silently replaces characters invalid in an encoding by '?' characters.  This should not be a problem now that derived files can specify the encoding used to write them.  And besides, the old error messages did no good anyway.
 
 EKR</t>
-<t tx="T3114">This posting discusses the encodings Leo will use when converting to and from unicode strings. The present CVS codes does _not_ work this way.  It will be a day or so before all these changes are in place.
+<t tx="T3113">This posting discusses the encodings Leo will use when converting to and from unicode strings. The present CVS codes does _not_ work this way.  It will be a day or so before all these changes are in place.
 
 The present code is in transition.  I'm not going to discuss what Leo did, or presently does.  Both are wrong.  Here is what is about to happen:
 
@@ -39364,7 +39455,7 @@ When importing files Leo will assume that the files use the encoding specified b
 It would be possible to specify default_import_encoding and default_export_encoding settings in leoConfig.leo, but I won't do that unless there is a clamor for those settings.  It should be easy enough to use the @encoding directive...
 
 Edward</t>
-<t tx="T3115">Just to set things straight, here is a quick (informal) Unicode summary
+<t tx="T3114">Just to set things straight, here is a quick (informal) Unicode summary
 
 First there was ASCII. This is 0-127 (some control up to 31, space 32, and the rest A-Za-z0-9 and other printable special characters, e.g. !@#$%).
 
@@ -39384,13 +39475,13 @@ For thorough description of the implementation read
 
 	http://www.egenix.com/files/python/unicode-proposal.txt
 </t>
-<t tx="T3116"></t>
-<t tx="T3117">http://effbot.org/zone/unicode-objects.htm
+<t tx="T3115"></t>
+<t tx="T3116">http://effbot.org/zone/unicode-objects.htm
 http://www.jorendorff.com/articles/unicode/python.html
 http://www.reportlab.com/i18n/python_unicode_tutorial.html
 http://www.python.org/doc/current/ref/strings.html
 </t>
-<t tx="T3118">@nocolor
+<t tx="T3117">@nocolor
 
 Fact: u"a" + "a" results in u"aa", so Python promotes strings to unicode as needed. 
 
@@ -39421,7 +39512,7 @@ u'\xcb'
 
 - Is there any reason not to use utf-8 for LeoPy.leo?
 - Should all strings in Leo be unicode strings?</t>
-<t tx="T3119">By: dthein ( Dave Hein ) 
+<t tx="T3118">By: dthein ( Dave Hein ) 
  ALTERNATE SUGGESTION FOR UNICODE  
 2002-12-22 21:16  
 Actually, I think differently. 
@@ -39451,7 +39542,7 @@ So, it seems that Leo needs to know the encoding of the fonts specified for outl
 Note: I am trying my hand at implementing these ideas. It is tedious, but not difficult. Probably a couple programmer days of effort. 
  
 </t>
-<t tx="T3120">Read and respond to this message at: 
+<t tx="T3119">Read and respond to this message at: 
 https://sourceforge.net/forum/message.php?msg_id=1805325
 By: gilshwartz
 
@@ -39488,7 +39579,7 @@ seems very attractive.
 
 Gil
 </t>
-<t tx="T3121">Following is a list of issues and options that need to be considered for an
+<t tx="T3120">Following is a list of issues and options that need to be considered for an
 overall Unicode solution for Leo. I tried to present all the options I could
 think of, with my recommendation, and encourage comments/additions/corrections.
 Some of the arguments were initially raised by Gilles Lenfant and by Dave Hein.
@@ -39498,7 +39589,7 @@ Some of the arguments were initially raised by Gilles Lenfant and by Dave Hein.
 There you are, the end at last. I hope it is useful. 
 
 Gil</t>
-<t tx="T3122">1. Leo internal representation. 
+<t tx="T3121">1. Leo internal representation. 
 
 This issue deals with how Leo should represent data internally. 
 
@@ -39533,7 +39624,7 @@ point.
 This is what Leo tried to do, i.e. adapt to some preferred encoding scheme. I
 think that while friendly, it mainly made things complex and incompatible.
 </t>
-<t tx="T3123">2. Encoding conversion points. 
+<t tx="T3122">2. Encoding conversion points. 
 
 This issue discusses identified interaction points in which possible encoding conversion occurs. 
 
@@ -39604,7 +39695,7 @@ I think write and tangle should use an internal encoding directive, and as a
 fallback, the preference. Export should offer encoding selection, with the
 default being based on encoding directive and as fallback on preference.
 </t>
-<t tx="T3124">3. Encoding process.
+<t tx="T3123">3. Encoding process.
 
 This issue discusses primitives and states in the encoding process.
 
@@ -39680,7 +39771,7 @@ somehow saved. This is especially true for the design ideas for version 4.
 
 
 </t>
-<t tx="T3125">4. Programmer's view 
+<t tx="T3124">4. Programmer's view 
 
 4.1. Standard conversion functions 
 
@@ -39715,7 +39806,16 @@ As for reading and writing files is a particular encoding, one approach is to
 read a string and use the functions in 4.1. Another possible approach is to use
 encoding reader and writer streams. I have no opinion at this point, as I have
 not tried the second approach.</t>
-<t tx="T3126"></t>
+<t tx="T3125"></t>
+<t tx="T3126">@nocolor
+
+I tried to write out text containing characters like:
+ä ö ü Ä Ö Ü ß ø ó
+with @file-asis and get:
+
+UnicodeError: ASCII encoding error: ordinal not in range(128)
+
+@file (without option) works fine.</t>
 <t tx="T3127">@nocolor
 
 I tried to write out text containing characters like:
@@ -39734,26 +39834,17 @@ with @file-asis and get:
 UnicodeError: ASCII encoding error: ordinal not in range(128)
 
 @file (without option) works fine.</t>
-<t tx="T3129">@nocolor
-
-I tried to write out text containing characters like:
-ä ö ü Ä Ö Ü ß ø ó
-with @file-asis and get:
-
-UnicodeError: ASCII encoding error: ordinal not in range(128)
-
-@file (without option) works fine.</t>
-<t tx="T3130">@ignore
+<t tx="T3129">@ignore
 
 Ä á Û</t>
-<t tx="T3131">@encoding iso-8859-1</t>
+<t tx="T3130">@encoding iso-8859-1</t>
+<t tx="T3131"></t>
 <t tx="T3132"></t>
-<t tx="T3133"></t>
-<t tx="T3134">@encoding cp1252
+<t tx="T3133">@encoding cp1252
 @others</t>
-<t tx="T3135">aÖb</t>
-<t tx="T3136">@ignore</t>
-<t tx="T3137">@nocolor
+<t tx="T3134">aÖb</t>
+<t tx="T3135">@ignore</t>
+<t tx="T3136">@nocolor
 By: nobody ( Nobody/Anonymous ) 
  @encoding problem   
 2003-04-04 08:54
@@ -39765,13 +39856,13 @@ invalid @encoding:, iso-8859-1
 
 My system is W2k with Python 2.2 (tcl 8.3) OR Python 2.3a2 (tcl 8.4); I tried several combinations of default_derived_file_encoding and tk_encoding and the encoding in the &lt;?xml..."&gt; line of the .leo. The behaviour was uniform for all combinations: same error-message and the output-file stayed in UTF-8.  
 </t>
-<t tx="T3138">@encoding iso-8859-1</t>
-<t tx="T3139">@root c:\prog\test\tangleEncoding.txt
+<t tx="T3137">@encoding iso-8859-1</t>
+<t tx="T3138">@root c:\prog\test\tangleEncoding.txt
 
 This is a test: ÅÅÅ
 </t>
-<t tx="T3140"></t>
-<t tx="T3141">@nocolor
+<t tx="T3139"></t>
+<t tx="T3140">@nocolor
 
 I've got a minor problem with locale settings and tkinter. My program 
 has done a test to determine the current locale setting for the user:
@@ -39814,9 +39905,9 @@ use that instead.
 Regards,
 Martin
 </t>
-<t tx="T3142"></t>
-<t tx="T3143">@ignore</t>
-<t tx="T3144">@nocolor
+<t tx="T3141"></t>
+<t tx="T3142">@ignore</t>
+<t tx="T3143">@nocolor
 
 I think I have an idea what could have happened to my clones. If I clone a tree
 and then clone nodes within one of those both trees, one tree does not do the
@@ -39849,8 +39940,8 @@ Is this by design?
 Kind regards
 Franz GEIGER
 </t>
-<t tx="T3145"></t>
-<t tx="T3146"># Initializes all clone bits in the all nodes joined to v.
+<t tx="T3144"></t>
+<t tx="T3145"># Initializes all clone bits in the all nodes joined to v.
 
 def initJoinedCloneBits (self,v):
 
@@ -39869,11 +39960,11 @@ def initJoinedCloneBits (self,v):
 			v2.clearClonedBit()
 	c.endUpdate()
 </t>
+<t tx="T3146"></t>
 <t tx="T3147"></t>
 <t tx="T3148"></t>
 <t tx="T3149"></t>
-<t tx="T3150"></t>
-<t tx="T3151">def setWrap (self,v):
+<t tx="T3150">def setWrap (self,v):
 	
 	c = self.commands
 	dict = scanDirectives(c,v)
@@ -39881,16 +39972,16 @@ def initJoinedCloneBits (self,v):
 		wrap = dict.get("wrap")
 		wrap = choose(wrap,"word","none")
 		self.body.configure(wrap=wrap)</t>
+<t tx="T3151"></t>
 <t tx="T3152"></t>
-<t tx="T3153"></t>
-<t tx="T3154">def createIconBar (self):
+<t tx="T3153">def createIconBar (self):
 	
 	"""Create an empty icon bar in the packer's present position"""
 
 	if not self.iconFrame:
 		self.iconFrame = Tk.Frame(self.outerFrame,height="5m",bd=2,relief="groove")
 		self.iconFrame.pack(fill="x",pady=2)</t>
-<t tx="T3155">def hideIconBar (self):
+<t tx="T3154">def hideIconBar (self):
 	
 	"""Hide the icon bar by unpacking it.
 	
@@ -39899,7 +39990,7 @@ def initJoinedCloneBits (self,v):
 	if self.iconFrame:
 		self.iconFrame.pack_forget()
 </t>
-<t tx="T3156">def clearIconBar(self):
+<t tx="T3155">def clearIconBar(self):
 	
 	"""Destroy all the widgets in the icon bar"""
 	
@@ -39913,12 +40004,12 @@ def initJoinedCloneBits (self,v):
 	a.iconWidgetCount = 0
 	a. iconImageRefs = []
 </t>
-<t tx="T3157">def showIconBar(self):
+<t tx="T3156">def showIconBar(self):
 	
 	"""Show the icon bar by repacking it"""
 
 	self.iconFrame.pack(fill="x",pady=2)</t>
-<t tx="T3158">def addIconButton(self,text=None,imagefile=None,image=None,command=None,bg=None):
+<t tx="T3157">def addIconButton(self,text=None,imagefile=None,image=None,command=None,bg=None):
 	
 	"""Add a button containing text or a picture to the icon bar.
 	
@@ -39946,7 +40037,7 @@ def initJoinedCloneBits (self,v):
 		return b
 		
 	return None</t>
-<t tx="T3159">try:
+<t tx="T3158">try:
 	if imagefile:
 		# Create the image.  Throws an exception if file not found
 		imagefile = os.path.join(app().loadDir,imagefile)
@@ -39971,9 +40062,9 @@ def initJoinedCloneBits (self,v):
 except:
 	es_exception()
 	return None</t>
-<t tx="T3160">@tabwidth 4
+<t tx="T3159">@tabwidth 4
 </t>
-<t tx="T3161">def createStatusLine (self):
+<t tx="T3160">def createStatusLine (self):
 	
 	if self.statusFrame and self.statusLabel:
 		return
@@ -39996,14 +40087,14 @@ except:
 
 	# Register an idle-time handler to update the row and column indicators.
 	self.statusFrame.after_idle(self.updateStatusRowCol)</t>
-<t tx="T3162">def clearStatusLine (self):
+<t tx="T3161">def clearStatusLine (self):
 	
 	t = self.statusText
 	t.configure(state="normal")
 	t.delete("1.0","end")
 	t.configure(state="disabled")
 </t>
-<t tx="T3163">def putStatusLine (self,s,color=None):
+<t tx="T3162">def putStatusLine (self,s,color=None):
 	
 	t = self.statusText ; tags = self.statusColorTags
 	if not t: return
@@ -40026,7 +40117,7 @@ except:
 		t.insert("end",s)
 	
 	t.configure(state="disabled")</t>
-<t tx="T3164">def updateStatusRowCol (self):
+<t tx="T3163">def updateStatusRowCol (self):
 	
 	c = self.commands ; body = self.body ; lab = self.statusLabel
 
@@ -40046,27 +40137,27 @@ except:
 	# Don't use after_idle: it hangs Leo.
 	self.statusFrame.after(10,self.updateStatusRowCol)
 </t>
-<t tx="T3165"></t>
-<t tx="T3166">@nocolor</t>
-<t tx="T3167">- Cut uncloned node from test.leo.
+<t tx="T3164"></t>
+<t tx="T3165">@nocolor</t>
+<t tx="T3166">- Cut uncloned node from test.leo.
 - Pasted it in LeoPy.leo.
 - A second copy of the node appeared later in the file!
 
 This was probably due to not clearing the tnodesDict ivar when use_gnx was false. The effect would be to mis-join nodes that have nothing to do with each other!
 </t>
-<t tx="T3168">6/11/03:  called self.assignFileIndices in putLeoOutline when using old code.
+<t tx="T3167">6/11/03:  called self.assignFileIndices in putLeoOutline when using old code.
 
 </t>
-<t tx="T3169">Pasted nodes with the same file indices _work_ like clones but aren't marked as clones.
+<t tx="T3168">Pasted nodes with the same file indices _work_ like clones but aren't marked as clones.
 
 The problem may be the new representation for join lists in 4.0.
 
 t.joinList is the list of all vnodes joined to it.
 
 It may be that the only thing to do is rewrite this code for 4.0.  It certainly is confusing.</t>
+<t tx="T3169"></t>
 <t tx="T3170"></t>
-<t tx="T3171"></t>
-<t tx="T3172">def compactFileIndices (self):
+<t tx="T3171">def compactFileIndices (self):
 	
 	"""Assign a file index to all tnodes, compacting all file indices"""
 	
@@ -40087,7 +40178,7 @@ It may be that the only thing to do is rewrite this code for 4.0.  It certainly 
 				self.maxTnodeIndex += 1
 				t.setFileIndex(self.maxTnodeIndex)
 		v = v.threadNext()</t>
-<t tx="T3173"># The caller should enclose this in begin/endUpdate.
+<t tx="T3172"># The caller should enclose this in begin/endUpdate.
 
 def getLeoFile (self,frame,fileName,atFileNodesFlag=true):
 
@@ -40114,7 +40205,7 @@ def getLeoFile (self,frame,fileName,atFileNodesFlag=true):
 	c.tree.initing = false # Enable changes in endEditLabel
 	self.tnodesDict = {}
 	return ok, self.ratio</t>
-<t tx="T3174">try:
+<t tx="T3173">try:
 	self.read_only = false
 	self.read_only = not os.access(fileName,os.W_OK)
 	if self.read_only:
@@ -40125,7 +40216,7 @@ except:
 	if 0: # testing only: access may not exist on all platforms.
 		es("exception getting file access")
 		es_exception()</t>
-<t tx="T3175">self.getXmlVersionTag()
+<t tx="T3174">self.getXmlVersionTag()
 self.getXmlStylesheetTag()
 self.getTag("&lt;leo_file&gt;")
 self.getLeoHeader()
@@ -40141,11 +40232,11 @@ self.getVnodes()
 self.getTnodes()
 self.getCloneWindows()
 self.getTag("&lt;/leo_file&gt;")</t>
-<t tx="T3176"># All other exceptions are Leo bugs.
+<t tx="T3175"># All other exceptions are Leo bugs.
 
 # es_exception()
 alert(self.mFileName + " is not a valid Leo file: " + `message`)</t>
-<t tx="T3177"># This method finishes pasting the outline from the clipboard.
+<t tx="T3176"># This method finishes pasting the outline from the clipboard.
 def finishPaste(self):
 
 	c=self.commands
@@ -40160,14 +40251,14 @@ def finishPaste(self):
 		c.selectVnode(current)
 	c.endUpdate()
 	return current</t>
-<t tx="T3178">v = c.currentVnode()
+<t tx="T3177">v = c.currentVnode()
 
 while v and v != after:
 	if v not in v.t.joinList:
 		v.t.joinList.append(v)
 	v = v.threadNext()
 </t>
-<t tx="T3179">@ This must be done after the join lists have been created.  The saved clone bit is unreliable for pasted nodes.
+<t tx="T3178">@ This must be done after the join lists have been created.  The saved clone bit is unreliable for pasted nodes.
 @c
 
 v = c.currentVnode()
@@ -40175,7 +40266,7 @@ while v and v != after:
 	v.initClonedBit(v.shouldBeClone())
 	v.clearDirty()
 	v = v.threadNext()</t>
-<t tx="T3180"># This method reads a Leo outline from string s in clipboard format.
+<t tx="T3179"># This method reads a Leo outline from string s in clipboard format.
 def getLeoOutline (self,s):
 
 	self.usingClipboard = true
@@ -40199,7 +40290,7 @@ def getLeoOutline (self,s):
 	self.usingClipboard = false
 	self.tnodesDict = {}
 	return v</t>
-<t tx="T3181">def getTnodes (self):
+<t tx="T3180">def getTnodes (self):
 
 	# A slight change: we require a tnode element.  But Leo always writes this.
 	if self.getOpenTag("&lt;tnodes&gt;"):
@@ -40209,7 +40300,7 @@ def getLeoOutline (self,s):
 		self.getTnode()
 	self.getTag("&lt;/tnodes&gt;")
 </t>
-<t tx="T3182">def getTnode (self):
+<t tx="T3181">def getTnode (self):
 
 	# we have already matched &lt;t.
 	index = -1
@@ -40231,13 +40322,13 @@ def getLeoOutline (self,s):
 	else:
 		es("no tnode with index: " + `index` + ".  The text will be discarded")
 	self.getTag("&lt;/t&gt;")</t>
-<t tx="T3183">s = self.getEscapedString()
+<t tx="T3182">s = self.getEscapedString()
 t.setTnodeText(s,encoding=self.leo_file_encoding)</t>
-<t tx="T3184">if t:
+<t tx="T3183">if t:
 	s = self.getEscapedString()
 	t.setTnodeText(s,encoding=self.leo_file_encoding)
 	# trace(`index`,`len(s)`)</t>
-<t tx="T3185">def getVnodes (self):
+<t tx="T3184">def getVnodes (self):
 
 	c=self.commands
 	if  self.usingClipboard:
@@ -40253,7 +40344,7 @@ t.setTnodeText(s,encoding=self.leo_file_encoding)</t>
 		back = self.getVnode(parent,back)
 
 	self.getTag("&lt;/vnodes&gt;")</t>
-<t tx="T3186">def getVnode (self,parent,back):
+<t tx="T3185">def getVnode (self,parent,back):
 
 	# trace("parent:" + `parent` + ", back:" + `back`)
 	c = self.commands
@@ -40282,7 +40373,7 @@ t.setTnodeText(s,encoding=self.leo_file_encoding)</t>
 	# End this vnode.
 	self.getTag("&lt;/v&gt;")
 	return v</t>
-<t tx="T3187"># The a=" has already been seen.
+<t tx="T3186"># The a=" has already been seen.
 while 1:
 	if   self.matchChar('C'): pass # Not used: clone bits are recomputed later.
 	elif self.matchChar('D'): pass # Not used.
@@ -40293,7 +40384,7 @@ while 1:
 	elif self.matchChar('V'): setCurrent = true
 	else: break
 self.getDquote()</t>
-<t tx="T3188">if setCurrent:
+<t tx="T3187">if setCurrent:
 	c.tree.currentVnode = v
 
 if setExpanded:
@@ -40308,8 +40399,8 @@ if setOrphan:
 if setTop:
 	c.mTopVnode = v  # Not used at present.
 </t>
-<t tx="T3189"></t>
-<t tx="T3190">def assignFileIndices (self,root=None):
+<t tx="T3188"></t>
+<t tx="T3189">def assignFileIndices (self,root=None):
 	
 	"""Assign a file index to all tnodes"""
 	
@@ -40331,7 +40422,7 @@ if setTop:
 			
 		# if self.usingClipboard: trace(t.fileIndex)
 		v = v.threadNext()</t>
-<t tx="T3191"># Writes a Leo outline to s in a format suitable for pasting to the clipboard.
+<t tx="T3190"># Writes a Leo outline to s in a format suitable for pasting to the clipboard.
 
 def putLeoOutline (self):
 
@@ -40347,7 +40438,7 @@ def putLeoOutline (self):
 	self.outputString = None
 	self.usingClipboard = false
 	return s</t>
-<t tx="T3192">def copyTreeWithNewTnodes (self):
+<t tx="T3191">def copyTreeWithNewTnodes (self):
 	
 	"""Return a copy of self with all new tnodes"""
 	
@@ -40370,7 +40461,7 @@ def putLeoOutline (self):
 		
 	# Return the root of the new tree.
 	return new_v</t>
-<t tx="T3193">def putTnodes (self):
+<t tx="T3192">def putTnodes (self):
 	
 	"""Puts all tnodes as required for copy or save commands"""
 
@@ -40383,7 +40474,7 @@ def putLeoOutline (self):
 	self.put("&lt;tnodes&gt;") ; self.put_nl()
 	&lt;&lt; write only those tnodes that were referenced &gt;&gt;
 	self.put("&lt;/tnodes&gt;") ; self.put_nl()</t>
-<t tx="T3194"># Populate tnodes
+<t tx="T3193"># Populate tnodes
 tnodes = {}
 while v and v != after:
 	index = v.t.fileIndex
@@ -40398,7 +40489,7 @@ for index in keys:
 	assert(t)
 	# Write only those tnodes whose vnodes were written.
 	if t.isVisited(): self.putTnode(t)</t>
-<t tx="T3195">def putTnode (self,t):
+<t tx="T3194">def putTnode (self,t):
 	
 	# if self.usingClipboard: trace(t.fileIndex)
 
@@ -40410,7 +40501,7 @@ for index in keys:
 		self.putEscapedString(t.bodyString)
 
 	self.put("&lt;/t&gt;") ; self.put_nl()</t>
-<t tx="T3196">@ This method puts all vnodes by starting the recursion.  putVnode will write all vnodes in the order in which they appear in the outline.
+<t tx="T3195">@ This method puts all vnodes by starting the recursion.  putVnode will write all vnodes in the order in which they appear in the outline.
 @c
 def putVnodes (self):
 
@@ -40430,7 +40521,7 @@ def putVnodes (self):
 				c.tree.topVnode) # Write the top-vnode status bit.
 			v = v.next()
 	self.put("&lt;/vnodes&gt;") ; self.put_nl()</t>
-<t tx="T3197">@ This writes full headline and body text for all vnodes, even orphan and @ignored nodes.  This allows all Leo outlines to be used as backup files.
+<t tx="T3196">@ This writes full headline and body text for all vnodes, even orphan and @ignored nodes.  This allows all Leo outlines to be used as backup files.
 @c
 
 def putVnode (self,v,topVnode):
@@ -40448,7 +40539,7 @@ def putVnode (self,v,topVnode):
 			self.putVnode(child,topVnode)
 			child = child.next()
 	self.put("&lt;/v&gt;") ; self.put_nl()</t>
-<t tx="T3198">t = v.t
+<t tx="T3197">t = v.t
 if t and (t.hasBody() or len(v.t.joinList) &gt; 0):
 	if t.fileIndex &gt; 0:
 		self.put(" t=") ; self.put_in_dquotes("T" + `t.fileIndex`)
@@ -40456,7 +40547,7 @@ if t and (t.hasBody() or len(v.t.joinList) &gt; 0):
 	else:
 		es("error writing file(bad vnode)!")
 		es("try using the Save To command")</t>
-<t tx="T3199"># Dummy vnodes carry all attributes.
+<t tx="T3198"># Dummy vnodes carry all attributes.
 current = c.currentVnode()
 top = topVnode
 if ( v.isCloned() or v.isExpanded() or v.isMarked() or
@@ -40469,15 +40560,15 @@ if ( v.isCloned() or v.isExpanded() or v.isMarked() or
 	if v == top: self.put("T")
 	if v == current: self.put("V")
 	self.put_dquote()</t>
-<t tx="T3200">headString = v.headString()
+<t tx="T3199">headString = v.headString()
 if len(headString) &gt; 0:
 	self.put("&lt;vh&gt;")
 	self.putEscapedString(headString)
 	self.put("&lt;/vh&gt;")</t>
-<t tx="T3201">from leoGlobals import *
+<t tx="T3200">from leoGlobals import *
 
 checkClones2Links(verbose=true)</t>
-<t tx="T3202">def headString (self):
+<t tx="T3201">def headString (self):
 
 	if self.t.headString:
 		return self.t.headString
@@ -40489,7 +40580,7 @@ def cleanHeadString (self):
 	s = self.headString()
 	s = toEncodedString(s,"ascii") # Replaces non-ascii characters by '?'
 	return s</t>
-<t tx="T3203">def checkClones2Links (c=None,verbose=false):
+<t tx="T3202">def checkClones2Links (c=None,verbose=false):
 	
 	if not c: c = top()
 	
@@ -40503,12 +40594,12 @@ def cleanHeadString (self):
 		v = v.threadNext()
 				
 	&lt;&lt; print statistics &gt;&gt;</t>
-<t tx="T3204">targetsInDerivedFiles = []
+<t tx="T3203">targetsInDerivedFiles = []
 multipleTargetsInDerivedFiles = []
 clonesInNoDerivedFiles = []
 clonedAtFileNodes = []
 </t>
-<t tx="T3205">for name, theList in (
+<t tx="T3204">for name, theList in (
 	("targetsInDerivedFiles:", targetsInDerivedFiles),
 	("multipleTargetsInDerivedFiles:", multipleTargetsInDerivedFiles),
 	("clonesInNoDerivedFiles:", clonesInNoDerivedFiles),
@@ -40523,7 +40614,7 @@ clonedAtFileNodes = []
 		headlines.sort()
 		for h in headlines:
 			print h</t>
-<t tx="T3206">if v.isAnyAtFileNode():
+<t tx="T3205">if v.isAnyAtFileNode():
 	clonedAtFileNodes.append(v)
 else:
 	anchors = 0 ; targets = 0
@@ -40545,7 +40636,7 @@ else:
 		multipleTargetsInDerivedFiles.append(v)
 	else:
 		clonesInNoDerivedFiles.append(v)</t>
-<t tx="T3207">@nocolor
+<t tx="T3206">@nocolor
 
 targetsInDerivedFiles: 418
 
@@ -40580,9 +40671,9 @@ clonedAtFileNodes: 9
 @silentfile ../doc/PKG-INFO.TXT
 @silentfile ../doc/README.TXT
 </t>
-<t tx="T3208">@ The key is the new clearAllIvars routine.  This is simple and foolproof.</t>
-<t tx="T3209"></t>
-<t tx="T3210">def run(fileName=None,*args,**keywords):
+<t tx="T3207">@ The key is the new clearAllIvars routine.  This is simple and foolproof.</t>
+<t tx="T3208"></t>
+<t tx="T3209">def run(fileName=None,*args,**keywords):
 	
 	"""Initialize and run Leo"""
 
@@ -40610,7 +40701,7 @@ clonedAtFileNodes: 9
 	frame.commands.redraw()
 
 	runMainLoop(root)</t>
-<t tx="T3211">def createTkRoot ():
+<t tx="T3210">def createTkRoot ():
 	
 	"""Step 1 of Leo startup process:
 	
@@ -40625,7 +40716,7 @@ clonedAtFileNodes: 9
 	return root
 	
 </t>
-<t tx="T3212">def createAppObject(root):
+<t tx="T3211">def createAppObject(root):
 
 	# Create the application object.
 	app = leoApp.LeoApp(root)
@@ -40637,7 +40728,7 @@ clonedAtFileNodes: 9
 		root = None
 
 	return app</t>
-<t tx="T3213">def createFrame (app,fileName):
+<t tx="T3212">def createFrame (app,fileName):
 	
 	"""Step 2 of Leo startup process:
 		
@@ -40654,7 +40745,7 @@ clonedAtFileNodes: 9
 		frame1.top.deiconify()
 		frame1.startupWindow = true
 		return frame1</t>
-<t tx="T3214"># Hide the first frame.
+<t tx="T3213"># Hide the first frame.
 frame1.top.withdraw()
 frame1.top.update()
 
@@ -40677,15 +40768,15 @@ else:
 	frame1.title = fileName
 	frame1.top.title(fileName)
 	return frame1</t>
-<t tx="T3215">def initSherlock (app,args):
+<t tx="T3214">def initSherlock (app,args):
 	
 	"""Initialize Sherlock."""
 	
 	# Initialze Sherlock &amp; stats.
 	init_sherlock(args)
 	clear_stats()</t>
-<t tx="T3216"></t>
-<t tx="T3217"># Objects must not be "destroyed" more than once; only this method calls destroy routines.
+<t tx="T3215"></t>
+<t tx="T3216"># Objects must not be "destroyed" more than once; only this method calls destroy routines.
 
 def destroyAllWindowObjects (self,frame):
 
@@ -40714,7 +40805,7 @@ def destroyAllWindowObjects (self,frame):
 	clearAllIvars(frame)
 	
 	# Note: pointers to frame still exist in the caller!</t>
-<t tx="T3218"># Using a dict here is essential for adequate speed.
+<t tx="T3217"># Using a dict here is essential for adequate speed.
 vList = [] ; tDict = {}
 
 v = frame.commands.rootVnode()
@@ -40733,7 +40824,7 @@ for v in vList:
 	clearAllIvars(v)
 
 vList = [] ; tList = [] # Remove these references immediately.</t>
-<t tx="T3219">def closeLeoWindow (self,frame):
+<t tx="T3218">def closeLeoWindow (self,frame):
 	
 	"""Attempt to close a Leo window.
 	
@@ -40764,7 +40855,7 @@ vList = [] ; tList = [] # Remove these references immediately.</t>
 
 	return true # The window has been closed.
 </t>
-<t tx="T3220">def finishQuit(self):
+<t tx="T3219">def finishQuit(self):
 
 	# Wait until everything is quiet before really quitting.
 	doHook("end1")
@@ -40782,7 +40873,7 @@ vList = [] ; tList = [] # Remove these references immediately.</t>
 	else: # closes Python window.
 		self.root.quit()
 		collectGarbage("after self.root.quit")</t>
-<t tx="T3221">def onQuit (self):
+<t tx="T3220">def onQuit (self):
 	
 	a = self
 	
@@ -40797,7 +40888,7 @@ vList = [] ; tList = [] # Remove these references immediately.</t>
 
 
 </t>
-<t tx="T3222">def destroyAllPanels (self):
+<t tx="T3221">def destroyAllPanels (self):
 	
 	"""Destroy all panels attached to this frame."""
 	
@@ -40811,7 +40902,7 @@ vList = [] ; tList = [] # Remove these references immediately.</t>
 	self.colorPanel = None
 	self.fontPanel = None
 	self.prefsPanel = None</t>
-<t tx="T3223">def promptForSave (self):
+<t tx="T3222">def promptForSave (self):
 	
 	"""Prompt the user to save changes.
 	
@@ -40838,7 +40929,7 @@ vList = [] ; tList = [] # Remove these references immediately.</t>
 			return false # Don't veto.
 		else:
 			return true # Veto.</t>
-<t tx="T3224"># Make sure we never pass None to the ctor.
+<t tx="T3223"># Make sure we never pass None to the ctor.
 if not self.title:
 	self.title = ""
 	
@@ -40848,7 +40939,7 @@ self.mFileName = tkFileDialog.asksaveasfilename(
 	filetypes=[("Leo files", "*.leo")],
 	defaultextension=".leo")
 </t>
-<t tx="T3225">lastObjectCount = 0
+<t tx="T3224">lastObjectCount = 0
 lastObjectsDict = {}
 debugGC = false
 
@@ -40870,13 +40961,13 @@ except:
 
 @others
 </t>
-<t tx="T3226">def clearAllIvars (o):
+<t tx="T3225">def clearAllIvars (o):
 	
 	"""Clear all ivars of o, a member of some class."""
 	
 	o.__dict__.clear()
 </t>
-<t tx="T3227">def collectGarbage(message=None):
+<t tx="T3226">def collectGarbage(message=None):
 	
 	if not debugGC: return
 	
@@ -40894,7 +40985,7 @@ except:
 		&lt;&lt; make a list of the new objects &gt;&gt;
 		print "%25s: %d new, %d total objects" % (message,len(newObjects),len(objects))
 </t>
-<t tx="T3228"># WARNING: the id trick is not proper because newly allocated objects can have the same address as old objets.
+<t tx="T3227"># WARNING: the id trick is not proper because newly allocated objects can have the same address as old objets.
 
 global lastObjectsDict
 objects = gc.get_objects()
@@ -40904,7 +40995,7 @@ newObjects = [o for o in objects if not lastObjectsDict.has_key(id(o))]
 lastObjectsDict = {}
 for o in objects:
 	lastObjectsDict[id(o)]=o</t>
-<t tx="T3229">def printGc(message=None,onlyPrintChanges=false):
+<t tx="T3228">def printGc(message=None,onlyPrintChanges=false):
 	
 	if not debugGC: return None
 	
@@ -40928,7 +41019,7 @@ for o in objects:
 	except:
 		traceback.print_exc()
 		return None</t>
-<t tx="T3230">def printGcRefs (verbose=true):
+<t tx="T3229">def printGcRefs (verbose=true):
 
 	import leoFrame
 
@@ -40950,8 +41041,8 @@ for o in objects:
 							print key,ref[key]
 	else:
 		print "%d referers" % len(refs)</t>
-<t tx="T3231">@ignore</t>
-<t tx="T3232">@ This global function calls a hook routine.  Hooks are identified by the tag param.
+<t tx="T3230">@ignore</t>
+<t tx="T3231">@ This global function calls a hook routine.  Hooks are identified by the tag param.
 Returns the value returned by the hook routine, or None if the there is an exception.
 
 We look for a hook routine in three places:
@@ -40993,7 +41084,7 @@ def doHook(tag,*args,**keywords):
 	a.hookError = true # Supress this function.
 	a.idleTimeHook = false # Supress idle-time hook
 	return None # No return value</t>
-<t tx="T3233">"""Support new @direcives"""
+<t tx="T3232">"""Support new @direcives"""
 
 from leoPlugins import *
 from leoGlobals import *
@@ -41012,7 +41103,7 @@ if 1: # Register the handlers...
 	
 	__version__ = "1.1"
 	plugin_signon(__name__)</t>
-<t tx="T3234">def addPluginDirectives (tag,keywords):
+<t tx="T3233">def addPluginDirectives (tag,keywords):
 	
 	"""Add all new directives to globalDirectivesList"""
 	
@@ -41027,7 +41118,7 @@ if 1: # Register the handlers...
 	for d in directives:
 		if d not in globalDirectiveList:
 			globalDirectiveList.append(d)</t>
-<t tx="T3235">def scanPluginDirectives (tag, keywords):
+<t tx="T3234">def scanPluginDirectives (tag, keywords):
 	
 	"""Add a tuple (d,v,s,k) to list for every directive d found"""
 	
@@ -41045,11 +41136,11 @@ if 1: # Register the handlers...
 			# trace(`d`,`k`)
 			pluginsList.append((d,v,s,k),)
 </t>
-<t tx="T3236">@ignore
+<t tx="T3235">@ignore
 @markup wiki
 </t>
-<t tx="T3237"></t>
-<t tx="T3238">def removeAllTags (self):
+<t tx="T3236"></t>
+<t tx="T3237">def removeAllTags (self):
 	
 	# Warning: the following DOES NOT WORK: self.body.tag_delete(self.tags)
 	for tag in self.tags:
@@ -41066,7 +41157,7 @@ def removeTagsFromLine (self):
 		
 	for tag in self.color_tags_list:
 		self.body.tag_remove(tag,self.index(0),self.index("end"))</t>
-<t tx="T3239">def disable (self):
+<t tx="T3238">def disable (self):
 
 	print "disabling all syntax coloring"
 	self.enabled=false
@@ -41102,7 +41193,7 @@ def __init__(self, commands):
 	&lt;&lt; ivars for communication between colorAllDirectives and its allies &gt;&gt;
 	&lt;&lt; define dispatch dicts &gt;&gt;
 	&lt;&lt; define fonts and data for wiki tags &gt;&gt;</t>
-<t tx="T3240"># Copies of arguments.
+<t tx="T3239"># Copies of arguments.
 self.v = None
 self.body = None
 self.language = None
@@ -41125,7 +41216,7 @@ config = app().config
 self.latex_cweb_docs     = config.getBoolColorsPref("color_cweb_doc_parts_with_latex")
 self.latex_cweb_comments = config.getBoolColorsPref("color_cweb_comments_with_latex")
 # print "docs,comments",`self.latex_cweb_docs`,`self.latex_cweb_comments`</t>
-<t tx="T3241">self.state_dict = {
+<t tx="T3240">self.state_dict = {
 	"blockComment" : self.continueBlockComment,
 	"doubleString" : self.continueDoubleString, # 1/25/03
 	"nocolor"      : self.continueNocolor,
@@ -41190,7 +41281,7 @@ if 0: # not ready yet.
 			ddict2 [self.block_comment_start] = self.doBlockComment
 		else:
 			mutli_list.append((self.block_comment_start,self.doBlockComment),)</t>
-<t tx="T3242">self.bold_font = config.getFontFromParams(
+<t tx="T3241">self.bold_font = config.getFontFromParams(
 	"body_text_font_family", "body_text_font_size",
 	"body_text_font_slant",  "body_text_font_weight")
 
@@ -41211,14 +41302,14 @@ self.bolditalic_font.configure(weight="bold",slant="italic")
 self.color_tags_list = []
 self.image_references = []
 </t>
-<t tx="T3243">def index (self,i):
+<t tx="T3242">def index (self,i):
 	
 	return "%s.%s" % (self.line_index,i)
 		
 def tag (self,name,i,j):
 
 	self.body.tag_add(name,self.index(i),self.index(j))</t>
-<t tx="T3244">def skip_python_string(self,s,i):
+<t tx="T3243">def skip_python_string(self,s,i):
 
 	delim = s[i:i+3]
 	if delim == "'''" or delim == '"""':
@@ -41229,8 +41320,8 @@ def tag (self,name,i,j):
 			return k+3, "normal"
 	else:
 		return self.skip_string(s,i)</t>
-<t tx="T3245"></t>
-<t tx="T3246">if self.language == "python":
+<t tx="T3244"></t>
+<t tx="T3245">if self.language == "python":
 
 	delim = s[i:i+3]
 	j, state = self.skip_python_string(s,i)
@@ -41248,7 +41339,7 @@ else:
 	self.tag("string",i,j)
 	i = j
 </t>
-<t tx="T3247">def continueDoublePythonString (self,s,i):
+<t tx="T3246">def continueDoublePythonString (self,s,i):
 	j = s.find('"""',i)
 	return self.continuePythonString(s,i,j,"string3d")
 
@@ -41278,7 +41369,7 @@ def continuePythonString (self,s,i,j,continueState):
 		else:
 			self.tag("string",i,j+3)
 		return j+3,"normal"</t>
-<t tx="T3248">def continueDocPart (self,s,i):
+<t tx="T3247">def continueDocPart (self,s,i):
 	
 	state = "doc"
 	if self.language == "cweb":
@@ -41286,7 +41377,7 @@ def continuePythonString (self,s,i,j,continueState):
 	else:
 		&lt;&lt; handle noweb doc part &gt;&gt;
 	return i,state</t>
-<t tx="T3249">word = self.getCwebWord(s,i)
+<t tx="T3248">word = self.getCwebWord(s,i)
 if word and len(word) &gt; 0:
 	j = i + len(word)
 	if word in ("@&lt;","@(","@c","@d","@f","@p"):
@@ -41318,7 +41409,7 @@ else:
 	if j == -1: j = len(s)
 	self.tag("docPart",i,j)
 	i = j</t>
-<t tx="T3250">if i == 0 and match(s,i,"&lt;&lt;"):
+<t tx="T3249">if i == 0 and match(s,i,"&lt;&lt;"):
 	# Possible section definition line.
 	return i,"normal" # rescan the line.
 
@@ -41342,7 +41433,7 @@ else:
 		self.tag("docPart",i,j)
 	i = j # skip the rest of the line.
 </t>
-<t tx="T3251"># print "single-line comment i,s:",i,s
+<t tx="T3250"># print "single-line comment i,s:",i,s
 
 if self.language == "cweb" and self.latex_cweb_comments:
 	j = i + len(self.single_comment_start)
@@ -41355,7 +41446,7 @@ else:
 		colorer=self,v=self.v,s=s,i=i,j=j,colortag="comment"):
 		self.tag("comment",i,j)
 	i = j</t>
-<t tx="T3252">def continueBlockComment (self,s,i):
+<t tx="T3251">def continueBlockComment (self,s,i):
 	
 	j = s.find(self.block_comment_end,i)
 
@@ -41381,14 +41472,14 @@ else:
 				self.tag("comment",i,j+k)
 		i = j + k
 		return i,"normal"</t>
-<t tx="T3253">k = len(self.block_comment_start)
+<t tx="T3252">k = len(self.block_comment_start)
 
 if not doHook("color-optional-markup",
 	colorer=self,v=self.v,s=s,i=i,j=i+k,colortag="comment"):
 	self.tag("comment",i,i+k)
 
 i += k ; state = "blockComment"</t>
-<t tx="T3254"># Handles non-cweb keyword.
+<t tx="T3253"># Handles non-cweb keyword.
 
 def doAtKeyword (self,s,i):
 
@@ -41416,7 +41507,7 @@ def doAtKeyword (self,s,i):
 		return j,"normal"
 	else:
 		return j,"normal"</t>
-<t tx="T3255">@language python
+<t tx="T3254">@language python
 
 """ continued
 string"""
@@ -41445,8 +41536,8 @@ string"""
 and if
 
 from leoGlobals import * ; print `app().loadDir`</t>
-<t tx="T3256"></t>
-<t tx="T3257">def setInitialWindowGeometry(self):
+<t tx="T3255"></t>
+<t tx="T3256">def setInitialWindowGeometry(self):
 	
 	"""Set the position and size of the frame to config params."""
 	
@@ -41463,13 +41554,13 @@ from leoGlobals import * ; print `app().loadDir`</t>
 	y = max(y,0) ; x = max(x,0)
 
 	self.top.geometry("%dx%d%+d%+d" % (w,h,x,y))</t>
-<t tx="T3258">@ To do:
+<t tx="T3257">@ To do:
 	
 For users:
 	
 - Make Back and Forward icons smaller.
 </t>
-<t tx="T3259">def fillbox(self,event=None):
+<t tx="T3258">def fillbox(self,event=None):
 
 	"""Update a Recent Sections listbox dialog and update vnodeList &amp; tnodeList ivars"""
 
@@ -41479,7 +41570,7 @@ For users:
 	if self.top.state() == "normal":
 		&lt;&lt; reconstruct the contents of self.box &gt;&gt;
 		self.synchButtons()</t>
-<t tx="T3260">c = self.c
+<t tx="T3259">c = self.c
 
 self.box.delete(0,"end")
 self.vnodeList = []
@@ -41495,15 +41586,15 @@ for v in c.visitedList:
 		self.vnodeList.append(v)
 		i += 1
 </t>
-<t tx="T3261"></t>
-<t tx="T3262">@nocolor
+<t tx="T3260"></t>
+<t tx="T3261">@nocolor
 
 I have no idea how the old code worked at all.  The only parameter to any callback will be an event, so event must be the first parameter to the callback.</t>
-<t tx="T3263">@ The fix was in &lt;&lt; convert tab to blanks &gt;&gt; in idle_body_key
+<t tx="T3262">@ The fix was in &lt;&lt; convert tab to blanks &gt;&gt; in idle_body_key
 
 The old code only converted tabs when everything before the insertion point was whitespace!</t>
-<t tx="T3264"></t>
-<t tx="T3265">@nocolor
+<t tx="T3263"></t>
+<t tx="T3264">@nocolor
 
 Replaced getJoinList() by joinList
 Replaced setJoinList() by joinList =
@@ -41521,35 +41612,35 @@ Did diffs on all changed files: (checked all usages of
 	(done) leoNodes
 	(done) leoTree
 	(done) leoUndo</t>
-<t tx="T3266"></t>
-<t tx="T3267">def setJoinList (self, v):
+<t tx="T3265"></t>
+<t tx="T3266">def setJoinList (self, v):
 
 	assert(not self.joinList)
 	self.joinList = v</t>
-<t tx="T3268">def getJoinList (self):
+<t tx="T3267">def getJoinList (self):
 
 	return self.joinList</t>
-<t tx="T3269">def setJoinHead (self, v):
+<t tx="T3268">def setJoinHead (self, v):
 
 	self.joinHead = v</t>
-<t tx="T3270"># Returns true if the nodes v1 and v2 are on the same join list.
+<t tx="T3269"># Returns true if the nodes v1 and v2 are on the same join list.
 
 def isOnJoinListOf (self, v2):
 	
 	v1 = self
 	return v1.t == v2.t and v2 in v1.t.joinList</t>
-<t tx="T3271">def unjoinNode (self):
+<t tx="T3270">def unjoinNode (self):
 	
 	"""Unlinks the receiver from its own join list"""
 	
 	v = self ; j = v.t.joinList
 	if v in j:
 		j.remove(v)</t>
-<t tx="T3272">		if 0: # 9/26/02: No longer used: derived files contain no clone indices.
+<t tx="T3271">		if 0: # 9/26/02: No longer used: derived files contain no clone indices.
 			root.clearAllVisitedInTree()
 			&lt;&lt; Handle clone bits &gt;&gt;
 			&lt;&lt; Join cloned trees &gt;&gt;</t>
-<t tx="T3273">@ This function joins all nodes in the two trees which should have the same topology. This code makes no other assumptions about the two trees; some or all of the nodes may already have been joined.
+<t tx="T3272">@ This function joins all nodes in the two trees which should have the same topology. This code makes no other assumptions about the two trees; some or all of the nodes may already have been joined.
 
 There are several differences between this method and the similar vnode:joinTreeTo method.  First, we can not assert that the two trees have the same topology because the derived file could have been edited outside of Leo.  Second, this method also merges the tnodes of all joined nodes.
 @c
@@ -41571,7 +41662,7 @@ def joinTrees(self,tree1,tree2):
 		child2 = child2.next()
 	if child1 or child2:
 		self.readError("cloned nodes have different topologies")</t>
-<t tx="T3274">h = {}
+<t tx="T3273">h = {}
 v = root
 while v and v != next:
 	cloneIndex = v.t.cloneIndex
@@ -41599,7 +41690,7 @@ while v and v != next:
 			v.unjoinTree();
 			t.setCloneIndex(0) # t is no longer cloned.
 	v = v.threadNext()</t>
-<t tx="T3275">@ In most cases, this code is not needed, because the outline already has been read and nodes joined.  However, there could be problems on read errors, so we also join nodes here.
+<t tx="T3274">@ In most cases, this code is not needed, because the outline already has been read and nodes joined.  However, there could be problems on read errors, so we also join nodes here.
 @c
 
 h = {}
@@ -41622,8 +41713,8 @@ while v and v != next:
 		# The next call to lookup will find this v, not the previous.
 		h[cloneIndex] = v
 	v = v.threadNext()</t>
-<t tx="T3276"></t>
-<t tx="T3277">def joinNodeTo (self, v2):
+<t tx="T3275"></t>
+<t tx="T3276">def joinNodeTo (self, v2):
 	
 	"""Add self or v2 to their common join list"""
 
@@ -41636,7 +41727,7 @@ while v and v != next:
 		
 	if v2 not in j:
 		j.append(v2)</t>
-<t tx="T3278"># This function unjoins all nodes of the receiver's tree.
+<t tx="T3277"># This function unjoins all nodes of the receiver's tree.
 
 def unjoinTree (self):
 
@@ -41646,20 +41737,20 @@ def unjoinTree (self):
 		if v in v.t.joinList:
 			v.t.joinList.remove(v)
 		v = v.threadNext()</t>
+<t tx="T3278"></t>
 <t tx="T3279"></t>
-<t tx="T3280"></t>
-<t tx="T3281">B</t>
+<t tx="T3280">B</t>
+<t tx="T3281"></t>
 <t tx="T3282"></t>
-<t tx="T3283"></t>
-<t tx="T3284">test</t>
-<t tx="T3285">@nocolor
+<t tx="T3283">test</t>
+<t tx="T3284">@nocolor
 
 - (done) Created runMainLoop function in leo.py so the call to mainloop() is in a separate function.
 
 - (done) Added flush method to redirect class in leoGlobals.py
 
 @color</t>
-<t tx="T3286"># To redirect stdout a class only needs to implement a write(self,s) method.
+<t tx="T3285"># To redirect stdout a class only needs to implement a write(self,s) method.
 def __init__ (self):
 	self.old = None
 	
@@ -41691,7 +41782,7 @@ def write(self,s):
 		else: self.old.write(s)
 	else: print s # Typically will not happen.
 </t>
-<t tx="T3287">def runMainLoop(root):
+<t tx="T3286">def runMainLoop(root):
 	
 	"""A function that runs root.mainloop()
 	
@@ -41699,7 +41790,7 @@ def write(self,s):
 	
 	root.mainloop()
 </t>
-<t tx="T3288">from leoGlobals import *
+<t tx="T3287">from leoGlobals import *
 import os,leoNodes
 from xml.sax import saxutils, make_parser
 from xml.sax.xmlreader import InputSource
@@ -41733,22 +41824,22 @@ try:
 	except: es_exception()
 finally:
 	if f: f.close()</t>
-<t tx="T3289">def characters(self,content):
+<t tx="T3288">def characters(self,content):
 
 	content = content.replace('\r','')
 
 	if verbose and content.strip():
 		print clean(content)
 </t>
-<t tx="T3290">def endDocument(self):
+<t tx="T3289">def endDocument(self):
 	trace()
 
 
 </t>
-<t tx="T3291">def endElement(self,name):
+<t tx="T3290">def endElement(self,name):
 	if verbose: print '&lt;/' + clean(name).strip() + '&gt;'
 </t>
-<t tx="T3292">def ignorableWhitespace(self):
+<t tx="T3291">def ignorableWhitespace(self):
 	trace()
 
 def processingInstruction (self,target,data):
@@ -41763,13 +41854,13 @@ def startElementNS(self,name,qname,attrs):
 def endElementNS(self,name,qname):
 	trace(name)
 </t>
-<t tx="T3293">def startDocument(self):
+<t tx="T3292">def startDocument(self):
 
 	if verbose:
 		print ; print ; print '*' * 30 + " dump " + '*' * 30 ; print
 	trace()
 </t>
-<t tx="T3294">def startElement(self,name,atts):
+<t tx="T3293">def startElement(self,name,atts):
 	global vnodes,tnodes
 	if verbose: print '&lt;' + clean(name).strip() + '&gt;',
 	if name == "v":
@@ -41778,14 +41869,14 @@ def endElementNS(self,name,qname):
 	elif name == "t":
 		tnodes += 1
 		t = leoNodes.tnode()</t>
-<t tx="T3295"></t>
-<t tx="T3296">def writeDirtyAtFileNodes (self): # fileCommands
+<t tx="T3294"></t>
+<t tx="T3295">def writeDirtyAtFileNodes (self): # fileCommands
 
 	"""The Write Dirty @file Nodes command"""
 
 	self.commands.atFileCommands.writeAll(writeDirtyAtFileNodesFlag=true)</t>
-<t tx="T3297"></t>
-<t tx="T3298">@nocolor
+<t tx="T3296"></t>
+<t tx="T3297">@nocolor
 
 What I did:
 
@@ -41798,8 +41889,8 @@ To do:
 - Use a Tk.Text widget instead of a ListBox widget so we can display fonts in differently.
 
 @color</t>
-<t tx="T3299"></t>
-<t tx="T3300">@nocolor
+<t tx="T3298"></t>
+<t tx="T3299">@nocolor
 
 Developers forum
 https://sourceforge.net/forum/message.php?msg_id=2081895
@@ -41826,7 +41917,7 @@ def OnHeadlineRightClick(self,event=None):
 
 By this edit, the headrclick2 hook will be able to add elements to the recently
 Popup menu created.</t>
-<t tx="T3301">@nocolor
+<t tx="T3300">@nocolor
  cuttin' and pastin'   
 2003-07-01 21:02
 Developers
@@ -41840,6 +41931,7 @@ Sorry, more small stuff. Overall the beta is a big improvement.
 - ordinarius  
 
 abc xyz</t>
+<t tx="T3301"></t>
 <t tx="T3302"></t>
 <t tx="T3303">File "src\leoColor.py", line 1403, in colorizeAnyLanguage
     new_states.append(old_states[j])
@@ -56310,10 +56402,40 @@ Option 2. Use the @encoding directive in an ancestor of the node selected when d
 HTH.
 
 Edward</t>
-<t tx="T4373">W</t>
+<t tx="T4373">@nocolor
+
+Open discussion
+By: paulpaterson ( Paul Paterson ) 
+RE: A major security hole w/ plugins   
+2003-07-07 21:26 
+
+The situation seems to be, 
+
+- @file nodes are dangerous if they point to a folder where a new file would be
+automatically executed and the user has permission to write to that folder
+
+- @root nodes are dangerous if they point to any folder that the user can write
+to since they can overwrite existing files
+
+Warning about writing to the plug-ins directory plugs one potential hole but
+doesn't address the other situations, where an untrusted leo file tries to do
+damage without using Leo itself.
+
+Perhaps a more rigorous solution is for each Leo file to identify its top-level
+folder. Then Leo can restrict file writes to the top-level folder and
+sub-folders. If the top-level folder is not specified then Leo assumes a
+default of the folder where the .leo file resides. Attempts to write outside of
+this folder (or sub-folders) would generate an error and the user can be
+prompted to specify a new top-level folder.
+
+If the top-level folder for an untrusted leo file resides in my document area
+then I can be sure that it cannot possibly write to executable areas of the
+disk.
+
+Paul </t>
 <t tx="T4374">@nocolor
 Developers
-https://sourceforge.net/forum/message.php?msg_id=2085578
+http://sourceforge.net/forum/message.php?msg_id=2085578
 By: bwmulder
 
 I looked some more at the code. The following remarks are based on eye inspection
@@ -56377,6 +56499,22 @@ deleted?
 
 </t>
 <t tx="T4375"></t>
-<t tx="T4376"></t>
+<t tx="T4376"># The following was improperly indented in @nosentinel files.  The expansion of &lt;&lt; class shape declarations &gt;&gt; was indented twice.
+
+class shape(object):
+  	&lt;&lt; class shape declarations &gt;&gt;
+  	# after decls
+	
+What I did:
+	
+1. Added this code to &lt;&lt; put possible section reference &gt;&gt;:
+
+	if not self.sentinels:
+		while len(s2) and s2[-1] in (' ','\t'):
+			s2 = s2[:-1]
+			
+2. Created self.putBuffered to change tabs to blanks if the tabwidth is negative.
+			
+3. Changed most calls to self.os to self.putBuffered.</t>
 </tnodes>
 </leo_file>
