@@ -608,6 +608,8 @@ class leoFind:
         """Searches the present headline or body text for c.find_text and returns True if found.
     
         c.whole_word_flag, c.ignore_case_flag, and c.pattern_match_flag control the search."""
+        
+        __pychecker__ = '--no-implicitreturns' # Suppress bad warning.
     
         c = self.c ; v = self.v ; t = self.s_text ; gui = g.app.gui
         assert(c and t and v)

@@ -1442,7 +1442,7 @@ class nullUndoer (undoer):
 
     def setBead (self,n,keywords=None):
         return {}
-        
+
     def redoMenuName (self,name):
         return "Can't Redo"
     
@@ -1457,8 +1457,6 @@ class nullUndoer (undoer):
         
     def setUndoTypes (self):
         pass
-        
-#@nonl
 #@-node:ekr.20031218072017.2243:class nullUndoer
 #@-others
 #@nonl

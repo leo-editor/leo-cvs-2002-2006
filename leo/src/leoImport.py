@@ -167,6 +167,8 @@ class baseLeoImportCommands:
     # Almost all the time spent in this command is spent here.
     
     def convertMoreStringsToOutlineAfter (self,strings,firstVnode):
+        
+        __pychecker__ = '--no-objattrs' # suppress bad warnings re lastVnode.
     
         c = self.c
         if len(strings) == 0: return None
