@@ -2,7 +2,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="1261" clone_windows="0"/>
 <globals body_outline_ratio="0.5">
-	<global_window_position top="16" left="265" height="26" width="65"/>
+	<global_window_position top="9" left="116" height="26" width="85"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences allow_rich_text="0">
@@ -163,7 +163,7 @@
 <v t="T93" a="C"><vh>Chapter 8: Customizing Leo</vh>
 <v t="T94" a="C"><vh>Using leoConfig.leo and leoConfig.txt</vh></v>
 <v t="T95"><vh>Using customizeLeo.py</vh>
-<v t="T96"><vh>About hooks</vh></v>
+<v t="T96" a="C"><vh>About hooks</vh></v>
 <v t="T97"><vh>SECURITY WARNINGS</vh>
 <v t="T98"><vh>The danger of trusting code in shared .leo files</vh></v>
 <v t="T99"><vh>NEVER use this kind of code in a hook!!</vh></v>
@@ -662,7 +662,8 @@
 </v>
 </v>
 </v>
-<v t="T431" a="E"><vh>Users Guide</vh>
+<v t="T96" a="CV"><vh>About hooks</vh></v>
+<v t="T431"><vh>Users Guide</vh>
 <v t="T432"><vh>An overview of Leo</vh></v>
 <v t="T433"><vh>Front material</vh>
 <v t="T434"><vh>Title Page &amp; Summary</vh></v>
@@ -1008,10 +1009,10 @@
 </v>
 </v>
 </v>
-<v t="T93" a="CE"><vh>Chapter 8: Customizing Leo</vh>
+<v t="T93" a="C"><vh>Chapter 8: Customizing Leo</vh>
 <v t="T94" a="C"><vh>Using leoConfig.leo and leoConfig.txt</vh></v>
 <v t="T95" a="E"><vh>Using customizeLeo.py</vh>
-<v t="T96" a="V"><vh>About hooks</vh></v>
+<v t="T96" a="C"><vh>About hooks</vh></v>
 <v t="T97"><vh>SECURITY WARNINGS</vh>
 <v t="T98"><vh>The danger of trusting code in shared .leo files</vh></v>
 <v t="T99"><vh>NEVER use this kind of code in a hook!!</vh></v>
@@ -1215,7 +1216,7 @@
 <v t="T93" a="C"><vh>Chapter 8: Customizing Leo</vh>
 <v t="T94" a="C"><vh>Using leoConfig.leo and leoConfig.txt</vh></v>
 <v t="T95"><vh>Using customizeLeo.py</vh>
-<v t="T96"><vh>About hooks</vh></v>
+<v t="T96" a="C"><vh>About hooks</vh></v>
 <v t="T97"><vh>SECURITY WARNINGS</vh>
 <v t="T98"><vh>The danger of trusting code in shared .leo files</vh></v>
 <v t="T99"><vh>NEVER use this kind of code in a hook!!</vh></v>
@@ -2668,7 +2669,9 @@ Your custom code in customizeLeo.py is permanent; it will not go away when Leo i
 advantage of the latest CVS updates _without_ having to throw away your modifications.
 
 Important warning: the customizeLeo() routine must avoid blindly executing scripts in .leo files.  Doing so could expose all parts of your computer to malicious Python code.  The section called "Security warnings and precautions" discusses how to customize Leo safely and how to avoid several pitfalls.</t>
-<t tx="T96">Leo calls customizeLeo() at various times during execution.  Leo catches exceptions, including syntax errors in this code, so it is safe to hack away on this code.
+<t tx="T96">@nocolor
+
+Leo calls customizeLeo() at various times during execution.  Leo catches exceptions, including syntax errors in this code, so it is safe to hack away on this code.
 
 The code in customizeLeo() corresponding to each tag is known as the "hook" routine for that tag.
 keywords is a Python dictionary containing information unique to each hook.  For example,
@@ -2680,67 +2683,85 @@ For example, top() returns the commander for the topmost Leo window.
 
 The following table summarizes the arguments passed to customizeLeo().
 
-Overrides is "yes" if returning anything other than None overrides
-Leo's normal command or event processing.
+Overrides is "yes" if returning anything other than None overrides Leo's normal command or event processing.
 
-tag argument                                             keys in keywords
-(hook name)  overrides       when called                dictionary argument
----------    ---------       -----------               -------------------
-"bodykey1"     yes      before body keystrokes          v,ch,oldSel,undoType
-"bodykey2"              after body keystrokes           v,ch,oldSel,undoType
-"command1"     yes      before each command             label
-"command2"              after each command              label
-"end1"         no       start of app.quit()
-"event1"       yes      start of event handlers         kind,v
-"event2"                end of event handlers           kind,v
-"headkey1"     no       before headline keystrokes      c,v,ch
-"headkey2"              after headline keystrokes       c,v,ch
-"idle"                  periodically (at idle time)
-"menu1"        yes      before creating menus
-"menu2"        yes      before updating menus
-"open1"        yes      before opening any file         old_c,new_c,fileName
-"open2"                 after  opening any file         old_c,new_c,fileName
-"openwith1"    yes      before Open With command        c,v,openType,arg,ext
-"openwith2"             after  Open With command        c,v,openType,arg,ext
-"recentfiles1" yes      before Recent Files command     c,fileName,closeFlag
-"recentfiles2"          after  Recent Files command     c,fileName,closeFlag
-"select1"      yes      before selecting a vnode        c,old_v,new_v
-"select2"               after selecting a vnode         c,old_v,new_v
+tag argument                                              keys in keywords
+(hook name)  overrides       when called                  dictionary argument
+---------    ---------       -----------                  -------------------
+"bodyclick1"   yes      before normal click in body       c,v,event (new)
+"bodyclick2"            after  normal click in body       c,v,event (new)
+"bodykey1"     yes      before body keystrokes            c,v,ch,oldSel,undoType
+"bodykey2"              after  body keystrokes            c,v,ch,oldSel,undoType
+"bodyrclick1"  yes      before right click in body        c,v,event (new)
+"bodyrclick2"           after  right click in body        c,v,event (new)
+"boxclick1"    yes      before click in +- box            c,v,event (new)
+"boxclick2"             after  click in +- box            c,v,event (new)
+"command1"     yes      before each command               c,v,label (note 2)
+"command2"              after  each command               c,v,label (note 2)
+"drag1"        yes      before start of drag              c,v,event (new)
+"drag2"                 after  start of drag              c,v,event (new)
+"dragging1"    yes      before continuing to drag         c,v,event (new)
+"dragging2"             after  continuing to drag         c,v,event (new)
+"end1"                  start of app.quit()
+"enddrag1"     yes      before end of drag                c,v,event (new)
+"enddrag2"              after  end of drag                c,v,event (new)
+"headkey1"     yes      before headline keystrokes        c,v,ch
+"headkey2"              after  headline keystrokes        c,v,ch
+"headclick1"   yes      before normal click in headline   c,v,event (new)
+"headclick2"            after  normal click in headline   c,v,event (new)
+"headrclick1"  yes      before right click in headline    c,v,event (new)
+"headrclick2"           after  right click in headline    c,v,event (new)
+"hypercclick1" yes      before control click in hyperlink c,v,event (new)
+"hypercclick2"          after  control click in hyperlink c,v,event (new)
+"hyperenter1"  yes      before entering hyperlink         c,v,event (new)
+"hyperenter2"           after  entering hyperlink         c,v,event (new)
+"hyperleave1"  yes      before leaving  hyperlink         c,v,event (new)
+"hyperleave2"           after  leaving  hyperlink         c,v,event (new)
+"iconclick1"   yes      before single click in icon box   c,v,event (new)
+"iconclick2"            after  single click in icon box   c,v,event (new)
+"iconrclick1"  yes      before right click in icon box    c,v,event (new)
+"iconrclick2"           after  right click in icon box    c,v,event (new)
+"icondclick1"  yes      before double click in icon box   c,v,event (new)
+"icondclick2"           after  double click in icon box   c,v,event (new)
+"idle"                  periodically (at idle time)       c,v
+"menu1"        yes      before creating menus             c,v (note 3)
+"menu2"        yes      before updating menus             c,v
+"open1"        yes      before opening any file           old_c,new_c,fileName (note 4)
+"open2"                 after  opening any file           old_c,new_c,fileName (note 4)
+"openwith1"    yes      before Open With command          c,v,openType,arg,ext
+"openwith2"             after  Open With command          c,v,openType,arg,ext
+"recentfiles1" yes      before Recent Files command       c,v,fileName,closeFlag
+"recentfiles2"          after  Recent Files command       c,v,fileName,closeFlag
+"save1"        yes      before any Save command           c,v,fileName
+"save2"                 after  any Save command           c,v,fileName
+"select1"      yes      before selecting a vnode          c,v,new_v
+"select2"               after  selecting a vnode          c,v,old_v
 "start1"       no       after app.finishCreate()
-"start2"                after opening first Leo window  fileName
-"unselect1"             before unselecting a node       c,old_v,new_v
-"unselect1"             after  unselecting a node       c,old_v,new_v
-"@url1"        yes      before double-click @url node   c,v
-"@url2"                 after double-click @url node    c,v
+"start2"                after opening first Leo window    c,v,fileName
+"@url1"        yes      before double-click @url node     c,v (note 5)
+"@url2"                 after  double-click @url node     c,v (note 5)
 
 Notes:
 
-"event1" and "event2" are generated for many Leo events. keywords.get("kind") returns one of the following for "event1" and "event2" hooks:
+(1) "activate" and "deactivate" hooks: These have been removed because they do not work as expected.
 
-"activate",             activate window event   (not uniform across window managers).
-"deactivate"            deactivate window event (not uniform across window managers).
-"boxClick"              The +- box has been clicked.
-"drag"                  Generated repeatedly while dragging nodes.
-"endDrag"               mouseUp that ends a drag.
-"headClick"             Left-click in a headline.
-"headPopup"             Right-click in a headline.
-"headKey"               A keypress in a headline.
-"iconDoubleClick"       The icon box has been double-clicked.
-"hyperLinkControlClick" Control-click on a hyperlink.
-"hyperLinkEnter"        Mouse moves over a hyperlink.       Disabled at present.
-"hyperLinkLeave"        Mouse moves away from a hyperlink.  Disabled at present.
+(2) "commands" hooks:  The label entry in the keywords dict contains the "canonicalized" form of the command, that is, the lowercase name of the command with all non-alphabetic characters removed.
 
-Both "open1" and "open2" are called with a keywords dict containing the following entries:
+Commands hooks now set the label for undo and redo commands "undo" and "redo" rather than "cantundo" and "cantredo".
+
+(3) "menu1" hook: Setting app().realMenuNameDict in this hook is an easy way of translating menu names to other languages.  Note: the "new" names created this way affect only the actual spelling of the menu items, they do _not_ affect how you specify shortcuts in leoConfig.txt, nor do they affect the "official" command names passed in app().commandName.  For example, suppose you set app().realMenuNameDict["Open..."] = "Ouvre".
+
+(4) "open1" and "open2" hooks:  These are called with a keywords dict containing the following entries:
+
 old_c: The commander of the previously open window.
 new_c: The commander of the newly opened window.
 fileName: The name of the file being opened.
 
-Neiter customizeLeo("open1") nor customizeLeo("open2") is called if the file is already open when frame.OpenWithFileName was called.
+You can use old_c.currentVnode() and new_c.currentVnode() to get get the current vnode in the old and new windows.
 
-Leo calls frame.OpenWithFileName, and thus possibly customizeLeo("open1") and customizeLeo("open2"), when opening a file using either the Open command or the Recent Files menu.
+Neiter customizeLeo("open1") nor customizeLeo("open2") is called if the file is already open when frame.OpenWithFileName was called.  Leo calls frame.OpenWithFileName, and thus possibly customizeLeo("open1") and customizeLeo("open2"), when opening a file using either the Open command or the Recent Files menu.
 
-Setting app().realMenuNameDict when customizeLeo("menu1") is called is an easy way of translating menu names to other languages.  Please note that the "new" names created this way affect only the actual spelling of the menu items, they do _not_ affect how you specify shortcuts in leoConfig.txt, nor do they affect the "official" command names passed in app().commandName.  For example, suppose you set app().realMenuNameDict["Open..."] = "Ouvre".  When customizeLeo("command1") is called, app().commandName will be "open", not "ouvre".
-</t>
+(5) "@url1" and "@url2" hooks are only executed if "icondclick1" hook returns None When customizeLeo("command1") is called, app().commandName will be "open", not "ouvre".</t>
 <t tx="T97">Naively using customizeLeo.py can expose you and your .leo files to malicious attacks.  You will be safe as long as you follow these basic principles:
 
 1. NEVER share customizeLeo.py with anyone else, and NEVER accept a copy of customizeLeo.py from anyone else.  Think of customizeLeo.py as a lock to be carefully guarded.  Regard anyone who sends you a copy of customizeLeo.py as having committed a hostile act.
