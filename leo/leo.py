@@ -50,18 +50,7 @@ def go(*args):
 	run(args)
 #@-body
 #@-node:2::go
-#@+node:3::init_sherlock
-#@+body
-# Called by startup code.
-# Args are all the arguments on the command line.
-
-def init_sherlock (args):
-	
-	init_trace(args,echo=0)
-	# trace("argv", "sys.argv: " + `sys.argv`)
-#@-body
-#@-node:3::init_sherlock
-#@+node:4::leo.leoOpen
+#@+node:3::leo.leoOpen
 #@+body
 def leoOpen(fileName=None,*args):
 	
@@ -124,8 +113,8 @@ def leoOpen(fileName=None,*args):
 	handleLeoHook("start2",fileName=fileName)
 	root.mainloop()
 #@-body
-#@-node:4::leo.leoOpen
-#@+node:5::leo.run
+#@-node:3::leo.leoOpen
+#@+node:4::leo.run
 #@+body
 def run(*args):
 
@@ -165,8 +154,8 @@ def run(*args):
 	handleLeoHook("start2")
 	root.mainloop()
 #@-body
-#@-node:5::leo.run
-#@+node:6::profile
+#@-node:4::leo.run
+#@+node:5::profile
 #@+body
 def profile ():
 
@@ -180,7 +169,7 @@ def profile ():
 	p.sort_stats('cum','file','name')
 	p.print_stats()
 #@-body
-#@-node:6::profile
+#@-node:5::profile
 #@-others
 
 
