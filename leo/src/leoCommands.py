@@ -543,11 +543,7 @@ class baseCommands:
 		
 		c = self
 		oldYview = c.frame.body.yview()
-		i, j = getTextSelection(c.body)
-		oldSel = (i,j) # 11/21/02: for undo.
-			# 12-SEP-2002 DTHEIN
-			# i is index to first character in the selection
-		# j is index to first character following the selection
+		i, j = oldSel = getTextSelection(c.body)
 		# if selection was made from back to front, then i and j are reversed
 		if i and j: # Convert all lines containing any part of the selection.
 			if c.body.compare(i,">",j): i,j = j,i

@@ -28759,11 +28759,7 @@ else:
 	
 	c = self
 	oldYview = c.frame.body.yview()
-	i, j = getTextSelection(c.body)
-	oldSel = (i,j) # 11/21/02: for undo.
-		# 12-SEP-2002 DTHEIN
-		# i is index to first character in the selection
-	# j is index to first character following the selection
+	i, j = oldSel = getTextSelection(c.body)
 	# if selection was made from back to front, then i and j are reversed
 	if i and j: # Convert all lines containing any part of the selection.
 		if c.body.compare(i,"&gt;",j): i,j = j,i
@@ -36288,7 +36284,7 @@ def OnPasteFromMenu (self,event=None):
 
 	c = self.commands ; v = c.currentVnode()
 	first, last = oldSel = getTextSelection(self.body)
-	if first and last:
+	if first and last and first != last:
 		self.body.delete(first,last)
 		c.tree.onBodyChanged(v,"Delete",oldSel=oldSel)
 </t>
@@ -59514,7 +59510,6 @@ class undoer (baseUndoer):
 	"back","oldBack",
 	"n","oldN","oldV",
 	"oldText","newText",
-	"oldInsert","newInsert", # 7/1/03
 	"oldSel","newSel",
 	"sort","select",
 	"oldTree",

@@ -47,7 +47,6 @@ optionalIvars = (
 	"back","oldBack",
 	"n","oldN","oldV",
 	"oldText","newText",
-	"oldInsert","newInsert", # 7/1/03
 	"oldSel","newSel",
 	"sort","select",
 	"oldTree",

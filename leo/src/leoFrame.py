@@ -2826,7 +2826,7 @@ class baseLeoFrame:
 	
 		c = self.commands ; v = c.currentVnode()
 		first, last = oldSel = getTextSelection(self.body)
-		if first and last:
+		if first and last and first != last:
 			self.body.delete(first,last)
 			c.tree.onBodyChanged(v,"Delete",oldSel=oldSel)
 	
