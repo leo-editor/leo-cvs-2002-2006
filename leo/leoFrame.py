@@ -773,7 +773,7 @@ class LeoFrame:
 		for i in xrange(len(self.recentFiles)):
 			name = self.recentFiles[i]
 			f=self.OnOpenRecentFile
-			callback = lambda f=f,n=i,self=self:f(n)
+			callback = lambda f=f:f(n=n)
 			recentFilesMenu.add_command(label=name,command=callback)
 		
 		#@-body
@@ -1645,7 +1645,7 @@ class LeoFrame:
 	#@-node:10::frame.OnQuit
 	#@-node:1::top level
 	#@+node:2::Recent Files submenu
-	#@+node:1::frame.OnOpenFileN (Recent files)
+	#@+node:1::frame.OnOpenRecentFile
 	#@+body
 	def OnOpenRecentFile(self,n):
 		
@@ -1681,7 +1681,7 @@ class LeoFrame:
 					app().log = frame # Sets the log stream for es()
 				handleLeoHook("recentfiles2",c=c,fileName=fileName,closeFlag=closeFlag)
 	#@-body
-	#@-node:1::frame.OnOpenFileN (Recent files)
+	#@-node:1::frame.OnOpenRecentFile
 	#@-node:2::Recent Files submenu
 	#@+node:3::Read/Write submenu
 	#@+node:1::fileCommands.OnReadOutlineOnly
@@ -1696,16 +1696,15 @@ class LeoFrame:
 		if not fileName or len(fileName) == 0:
 			return
 			
-		file = open(fileName,'r')
-		if file:
+		try: # 11/18/02
+			file = open(fileName,'r')
 			frame = LeoFrame(fileName)
 			frame.top.deiconify()
 			frame.top.lift()
 			app().root.update() # Force a screen redraw immediately.
 			frame.commands.fileCommands.readOutlineOnly(file,fileName) # closes file.
-		else:
+		except:
 			es("can not open:" + fileName)
-	
 	#@-body
 	#@-node:1::fileCommands.OnReadOutlineOnly
 	#@+node:2::OnReadAtFileNodes

@@ -950,8 +950,35 @@ class colorizer:
 				# print "middle lines", middle_lines
 				
 				
+				#@<< clear leading_lines if middle lines involve @color or @recolor  >>
+				#@+node:2::<< clear leading_lines if middle lines involve @color or @recolor  >>
+				#@+body
+				#@+at
+				#  11/19/02: Changing @color or @nocolor directives requires 
+				# we recolor all leading states as well.
+
+				#@-at
+				#@@c
+				if trailing_lines == 0:
+					m1 = new_lines[leading_lines:]
+					m2 = old_lines[leading_lines:]
+				else:
+					m1 = new_lines[leading_lines:-trailing_lines]
+					m2 = old_lines[leading_lines:-trailing_lines]
+				m1.extend(m2) # m1 now contains all old and new middle lines.
+				if m1:
+					for s in m1:
+						i = skip_ws(s,0)
+						if match_word(s,i,"@color") or match_word(s,i,"@nocolor"):
+							leading_lines = 0
+							break
+				
+				#@-body
+				#@-node:2::<< clear leading_lines if middle lines involve @color or @recolor  >>
+
+				
 				#@<< initialize new states >>
-				#@+node:2::<< initialize new states >>
+				#@+node:3::<< initialize new states >>
 				#@+body
 				# Copy the leading states from the old to the new lines.
 				i = 0
@@ -986,11 +1013,11 @@ class colorizer:
 				# print "i:", i
 				# print "new_states:", str(new_states)
 				#@-body
-				#@-node:2::<< initialize new states >>
+				#@-node:3::<< initialize new states >>
 
 				
 				#@<< colorize until the states match >>
-				#@+node:3::<< colorize until the states match >>
+				#@+node:4::<< colorize until the states match >>
 				#@+body
 				# Colorize until the states match.
 				# All middle lines have "unknown" state, so they will all be colored.
@@ -1024,7 +1051,7 @@ class colorizer:
 				self.states = new_states
 				self.lines = new_lines
 				#@-body
-				#@-node:3::<< colorize until the states match >>
+				#@-node:4::<< colorize until the states match >>
 				#@-body
 				#@-node:2::<< incrementally color the text >>
 

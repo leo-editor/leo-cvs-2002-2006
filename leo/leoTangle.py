@@ -1480,8 +1480,12 @@ class tangleCommands:
 			# Use "text" mode for platform-specific newlines.
 			mode = app().config.output_newline
 			mode = choose(mode=="platform",'w','wb')
-			self.output_file = open(temp_name,mode)
-			if not self.output_file:
+			try:
+				self.output_file = open(temp_name,mode)
+				if not self.output_file:
+					es("Can not create: " + temp_name)
+					break
+			except:
 				es("Can not create: " + temp_name)
 				break
 			

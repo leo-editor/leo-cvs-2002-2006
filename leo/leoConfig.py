@@ -718,35 +718,32 @@ class config:
 			# 9/1/02: apparently Linux requires w+ and XP requires w.
 			mode = choose(sys.platform=="win32","wb","wb+")
 			cf = open(self.configFileName,mode)
-			if cf:
-				config.readfp(cf)
-				
-				#@<< write recent files section >>
-				#@+node:1::<< write recent files section >>
-				#@+body
-				section = self.recentFilesSection
-				files = self.recentFiles
-				
-				if config.has_section(section):
-					config.remove_section(section)
-				config.add_section(section)
-				
-				if 0: # elegant, but may be a security hole.
-					config.set(section,"recentFiles",files)
-				else: # easier to read in the config file.
-					for i in xrange(len(files)):
-						config.set(section, "file"+`i`, files[i])
-				#@-body
-				#@-node:1::<< write recent files section >>
+			config.readfp(cf)
+			
+			#@<< write recent files section >>
+			#@+node:1::<< write recent files section >>
+			#@+body
+			section = self.recentFilesSection
+			files = self.recentFiles
+			
+			if config.has_section(section):
+				config.remove_section(section)
+			config.add_section(section)
+			
+			if 0: # elegant, but may be a security hole.
+				config.set(section,"recentFiles",files)
+			else: # easier to read in the config file.
+				for i in xrange(len(files)):
+					config.set(section, "file"+`i`, files[i])
+			#@-body
+			#@-node:1::<< write recent files section >>
 
-				for section,dict in self.sectionInfo:
-					if dict:
-						self.update_section(config,section,dict)
-				config.write(cf)
-				cf.flush()
-				cf.close()
-			else:
-				es("can not open: " + self.configFileName)
+			for section,dict in self.sectionInfo:
+				if dict:
+					self.update_section(config,section,dict)
+			config.write(cf)
+			cf.flush()
+			cf.close()
 		except:
 			es("exception writing: " + self.configFileName)
 			es_exception()
