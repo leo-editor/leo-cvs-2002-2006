@@ -120,19 +120,17 @@ class leoTkinterFind (leoTkinterFindBase):
 		#@+node:<< Initialize the leoTkinterFind ivars >>
 		self.dict = {}
 		
-		# Order is important for compatibility with 3.x.  Sheesh.
 		self.intKeys = [
 			"batch", "wrap", "whole_word", "ignore_case", "node_only",
 			"pattern_match", "search_headline", "search_body",
-			"suboutline_only", "mark_changes", "mark_finds", "reverse"]
-		self.newIntKeys = ["script_change"]
+			"suboutline_only", "mark_changes", "mark_finds", "reverse",
+			"script_search","script_change"]
+		
 		self.newStringKeys = ["radio-find-type", "radio-search-scope"]
-		# self.stringKeys = ["change_text","find_text"]
 		
 		for key in self.intKeys:
 			self.dict[key] = Tk.IntVar()
-		for key in self.newIntKeys:
-			self.dict[key] = Tk.IntVar()
+		
 		for key in self.newStringKeys:
 			self.dict[key] = Tk.StringVar()
 			
@@ -233,9 +231,9 @@ class leoTkinterFind (leoTkinterFindBase):
 		radioLists[0] = [
 			(self.dict["radio-find-type"],"Plain Search","plain-search"),  
 			(self.dict["radio-find-type"],"Pattern Match Search","pattern-search"),
-			(self.dict["radio-find-type"],"Script Search",None)] #"script-search")]
+			(self.dict["radio-find-type"],"Script Search","script-search")]
 		checkLists[0] = [
-			("Script Change",None)] # self.dict["script_change"]),]
+			("Script Change",self.dict["script_change"])]
 		checkLists[1] = [
 			("Whole Word",  self.dict["whole_word"]),
 			("Ignore Case", self.dict["ignore_case"]),
@@ -244,8 +242,8 @@ class leoTkinterFind (leoTkinterFindBase):
 		radioLists[2] = [
 			(self.dict["radio-search-scope"],"Entire Outline","entire-outine"),
 			(self.dict["radio-search-scope"],"Suboutline Only","suboutline-only"),  
-			(self.dict["radio-search-scope"],"Node Only","snode-only"),           
-			(self.dict["radio-search-scope"],"Selection Only",None)] # "selected-text-only")]
+			(self.dict["radio-search-scope"],"Node Only","node-only"),    
+			(self.dict["radio-search-scope"],"Selection Only","selected-text-only")]
 		checkLists[2] = []
 		checkLists[3] = [
 			("Search Headline Text", self.dict["search_headline"]),
@@ -264,7 +262,6 @@ class leoTkinterFind (leoTkinterFindBase):
 				box.pack(fill="x")
 				box.bind("<1>", self.resetWrap)
 				if var == None: box.configure(state="disabled")
-		#@nonl
 		#@-node:<< Create four columns of radio and checkboxes >>
 		#@nl
 		#@	<< Create two rows of buttons >>
@@ -308,7 +305,7 @@ class leoTkinterFind (leoTkinterFindBase):
 		for key in self.intKeys:
 			val = getattr(c, key + "_flag")
 			self.dict[key].set(val)
-			# trace(key,val)
+			# trace(key,`val`)
 	
 		#@	<< set widgets >>
 		#@+node:<< set widgets >>
@@ -322,13 +319,27 @@ class leoTkinterFind (leoTkinterFindBase):
 		#@nl
 		
 		# Set radio buttons from ivars.
-		val = self.dict["pattern_match"].get()
-		self.dict["radio-find-type"].set(
-			choose(val,"pattern-search","plain-search"))
-	
-		val = self.dict["suboutline_only"].get()
-		self.dict["radio-search-scope"].set(
-			choose(val,"suboutline-only","entire-outine"))
+		found = false
+		for var,setting in (
+			("pattern_match","pattern-search"),
+			("script_search","script-search")):
+			val = self.dict[var].get()
+			if val:
+				self.dict["radio-find-type"].set(setting)
+				found = true ; break
+		if not found:
+			self.dict["radio-find-type"].set("plain-search")
+			
+		found = false
+		for var,setting in (
+			("suboutline_only","suboutline-only"),
+			("node_only","node-only")):
+			val = self.dict[var].get()
+			if val:
+				self.dict["radio-search-scope"].set(setting)
+				found = true ; break
+		if not found:
+			self.dict["radio-search-scope"].set("entire-outine")
 	#@nonl
 	#@-node:find.init
 	#@+node:find.set_ivars
@@ -341,8 +352,13 @@ class leoTkinterFind (leoTkinterFindBase):
 			# trace(key,val)
 	
 		# Set ivars from radio buttons. 10/2/01: convert these to 1 or 0.
-		c.pattern_match_flag   = choose(self.dict["radio-find-type"].get()    == "pattern-search",1,0)
-		c.suboutline_only_flag = choose(self.dict["radio-search-scope"].get() == "suboutline-only",1,0)
+		find_type = self.dict["radio-find-type"].get()
+		c.pattern_match_flag = choose(find_type == "pattern-search",1,0)
+		c.script_search_flag = choose(find_type == "script-search",1,0)
+	
+		search_scope = self.dict["radio-search-scope"].get()
+		c.suboutline_only_flag = choose(search_scope == "suboutline-only",1,0)
+		c.node_only_flag       = choose(search_scope == "node-only",1,0)
 	
 		s = self.find_text.get("1.0","end - 1c") # Remove trailing newline
 		s = toUnicode(s,app.tkEncoding) # 2/25/03
@@ -359,8 +375,12 @@ class leoTkinterFind (leoTkinterFindBase):
 	
 	def changeButton(self):
 	
-		self.setup_button()
-		self.change()
+		c  = self.setup_button()
+	
+		if c.script_change_flag:
+			self.doChangeScript()
+		else:
+			self.change()
 	#@nonl
 	#@-node:changeButton
 	#@+node:changeAllButton
@@ -370,7 +390,11 @@ class leoTkinterFind (leoTkinterFindBase):
 	
 		c = self.setup_button()
 		c.clearAllVisited() # Clear visited for context reporting.
-		self.changeAll()
+		
+		if c.script_change_flag:
+			self.doChangeAllScript()
+		else:
+			self.changeAll()
 	#@nonl
 	#@-node:changeAllButton
 	#@+node:changeThenFindButton
@@ -378,8 +402,20 @@ class leoTkinterFind (leoTkinterFindBase):
 	
 	def changeThenFindButton(self):
 	
-		self.setup_button()
-		self.changeThenFind()
+		c = self.setup_button()
+		
+		if c.script_change_flag:
+			self.doChangeScript()
+			if c.script_search_flag:
+				self.doFindScript()
+			else:
+				self.find()
+		else:
+		 	if c.script_search_flag:
+				self.change()
+				self.doFindScript()
+			else:
+				self.changeThenFind()
 	#@nonl
 	#@-node:changeThenFindButton
 	#@+node:findButton
@@ -387,8 +423,12 @@ class leoTkinterFind (leoTkinterFindBase):
 	
 	def findButton(self):
 	
-		self.setup_button()
-		self.findNext()
+		c = self.setup_button()
+		
+		if c.script_search_flag:
+			self.doFindScript()
+		else:
+			self.findNext()
 	#@nonl
 	#@-node:findButton
 	#@+node:findAllButton
@@ -398,7 +438,11 @@ class leoTkinterFind (leoTkinterFindBase):
 	
 		c = self.setup_button()
 		c.clearAllVisited() # Clear visited for context reporting.
-		self.findAll()
+		
+		if c.script_search_flag:
+			self.doFindAllScript()
+		else:
+			self.findAll()
 	#@nonl
 	#@-node:findAllButton
 	#@+node:changeCommand
@@ -407,7 +451,11 @@ class leoTkinterFind (leoTkinterFindBase):
 	def changeCommand(self,c):
 	
 		self.setup_command(c)
-		self.change()
+		
+		if c.script_search_flag:
+			self.doChangeScript()
+		else:
+			self.change()
 	#@nonl
 	#@-node:changeCommand
 	#@+node:changeThenFindCommandd
@@ -416,7 +464,12 @@ class leoTkinterFind (leoTkinterFindBase):
 	def changeThenFindCommand(self,c):
 	
 		self.setup_command(c)
-		self.changeThenFind()
+		
+		if c.script_search_flag:
+			self.doChangeScript()
+			self.doFindScript()
+		else:
+			self.changeThenFind()
 	#@nonl
 	#@-node:changeThenFindCommandd
 	#@+node:findNextCommand
@@ -425,7 +478,11 @@ class leoTkinterFind (leoTkinterFindBase):
 	def findNextCommand(self,c):
 	
 		self.setup_command(c)
-		self.findNext()
+		
+		if c.script_search_flag:
+			self.doFindScript()
+		else:
+			self.findNext()
 	#@nonl
 	#@-node:findNextCommand
 	#@+node:fndPreviousCommand
@@ -434,8 +491,14 @@ class leoTkinterFind (leoTkinterFindBase):
 	def findPreviousCommand(self,c):
 	
 		self.setup_command(c)
+		
 		c.reverse_flag = not c.reverse_flag
-		self.findNext()
+		
+		if c.script_search_flag:
+			self.doFindScript()
+		else:
+			self.findNext()
+	
 		c.reverse_flag = not c.reverse_flag
 	#@nonl
 	#@-node:fndPreviousCommand
@@ -512,10 +575,14 @@ class leoTkinterFind (leoTkinterFindBase):
 			#@+node:<< set the undo body typing params >>
 			sel = c.bodyCtrl.index("insert")
 			if len(s) > 0 and s[-1]=='\n': s = s[:-1]
+			
 			if s != v.bodyString():
 				if count == 1:
 					c.undoer.setUndoParams("Change All",v) # Tag the start of the Change all.
-				c.undoer.setUndoTypingParams(v,"Change",v.bodyString(),s,sel,sel)
+					
+				# 11/5/03: Changed setUndoTypingParams to setUndoParams (avoids incremental undo).
+				c.undoer.setUndoParams(
+					"Change",v,oldText=v.bodyString(),newText=s,oldSel=sel,newSel=sel)
 			#@nonl
 			#@-node:<< set the undo body typing params >>
 			#@nl
@@ -623,6 +690,58 @@ class leoTkinterFind (leoTkinterFindBase):
 			self.findNext(false) # don't reinitialize
 	#@nonl
 	#@-node:changeThenFind
+	#@+node:doChange...Script
+	def doChangeScript (self):
+		
+		app.searchDict["type"] = "change"
+		self.runChangeScript()
+		
+	def doChangeAllScript (self):
+		
+		app.searchDict["type"] = "changeAll"
+		self.runChangeScript()
+		
+	def runChangeScript (self):
+		
+		c = self.commands ; d = app.searchDict
+		try:
+			while 1:
+				if c.script_change_flag:
+					exec c.change_text in {} # Use {} to get a pristine environment!
+					flag = d.get("continue")
+					if not flag: break
+				else:
+					self.changeSelection()
+					break
+		except:
+			es("exception executing change script")
+			es_exception(full=false)
+	#@nonl
+	#@-node:doChange...Script
+	#@+node:doFind...Script
+	def doFindScript (self):
+		
+		app.searchDict["type"] = "find"
+		self.runFindScript()
+		
+	def doFindAllScript (self):
+		
+		app.searchDict["type"] = "findAll"
+		self.runFindScript()
+	
+	def runFindScript (self):
+	
+		c = self.commands
+		try:
+			while 1:
+				exec c.find_text in {} # Use {} to get a pristine environment!
+				flag = app.searchDict.get("continue")
+				if not flag: break
+		except:
+			es("exception executing find script")
+			es_exception(full=false)
+	#@nonl
+	#@-node:doFind...Script
 	#@+node:findAll
 	def findAll(self):
 	
@@ -875,7 +994,7 @@ class leoTkinterFind (leoTkinterFindBase):
 		self.errors = 0
 	
 		# Select the first node.
-		if c.suboutline_only_flag:
+		if c.suboutline_only_flag or c.node_only_flag: # 11/5/03
 			self.v = c.currentVnode()
 		else:
 			v = c.rootVnode()
