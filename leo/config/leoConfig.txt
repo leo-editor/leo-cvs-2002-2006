@@ -203,10 +203,10 @@ headline_text_editing_background_color = white
 headline_text_editing_selection_foreground_color = white
 
 [recent files]
-file3 = C:\prog\leoCVS\leo\src\LeoPy.leo
-file2 = C:\prog\leoCVS\leo\config\leoConfig.leo
+file3 = C:\prog\leoCVS\leo\config\leoConfig.leo
+file2 = C:\prog\leoCVS\leo\doc\LeoDocs.leo
 file1 = C:\Documents and Settings\default\My Documents\ekr.leo
-file0 = C:\prog\leoCVS\leo\doc\LeoDocs.leo
+file0 = C:\prog\leoCVS\leo\src\LeoPy.leo
 file4 = C:\prog\leoCVS\leo\test\test.leo
 
 [find/change options]
