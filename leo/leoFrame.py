@@ -149,9 +149,14 @@ class LeoFrame:
 		self.log.bind("<Button-1>", self.OnActivateLog)
 		self.body.bind("<Key>", self.tree.OnBodyKey)
 		
-		if 0: # No joy.  Previous bindings also are fired!
-			self.body.bind("<Up>",   self.tree.OnUpKey)
-			self.body.bind("<Down>", self.tree.OnDownKey)
+		# Add "hard" bindings for up and down arrow keys to move by visual lines, not hard lines.
+		old_binding = self.body.bind("<Up>")
+		if len(old_binding) == 0:
+			self.body.bind("<Up>",self.tree.OnUpKey)
+	
+		old_binding = self.body.bind("<Down>")
+		if len(old_binding) == 0:
+			self.body.bind("<Down>",self.tree.OnDownKey)
 	
 		self.body.bind(virtual_event_name("Cut"), self.OnCut)
 		self.body.bind(virtual_event_name("Copy"), self.OnCopy)
@@ -565,7 +570,7 @@ class LeoFrame:
 	# appear in leoConfig.txt.  Each generates Shift+Ctrl-A in the menu and 
 	# Control+A as the argument to bind.
 	# 
-	# Returns (bind_shortcut, menu_shortcut,amp_index)
+	# Returns (bind_shortcut, menu_shortcut)
 
 	#@-at
 	#@@c
