@@ -1172,6 +1172,8 @@ class nullBody (leoBody):
 		
 		All lines end in a newline, except possibly the last line."""
 	
+		# DTHEIN 18-JAN-2004: NOTE: overridden by leoTkinterBody!!!!!!
+		
 		n1 = self.scanToStartOfLine(self.insertPoint)
 		n2 = self.scanToEndOfLine(self.insertPoint)
 		

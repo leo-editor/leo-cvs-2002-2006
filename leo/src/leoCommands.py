@@ -1889,7 +1889,7 @@ class baseCommands:
 		head,ins,tail = c.frame.body.getInsertLines()
 	
 		if not ins or ins.isspace() or ins[0] == '@':
-			return None,None,None
+			return None,None,None,None # DTHEIN 18-JAN-2004
 			
 		head_lines = splitLines(head)
 		tail_lines = splitLines(tail)
@@ -1897,12 +1897,16 @@ class baseCommands:
 		if 0:
 			#@		<< trace head_lines, ins, tail_lines >>
 			#@+node:<< trace head_lines, ins, tail_lines >>
-			print ; print "head_lines"
-			for line in head_lines: print `line`
-			print ; print "ins", `ins`
-			print ; print "tail_lines"
-			for line in tail_lines: print `line`
-			#@nonl
+			if 0:
+				print ; print "head_lines"
+				for line in head_lines: print `line`
+				print ; print "ins", `ins`
+				print ; print "tail_lines"
+				for line in tail_lines: print `line`
+			else:
+				es("head_lines: " + `head_lines`)
+				es("ins: ", `ins`)
+				es("tail_lines: " + `tail_lines`)
 			#@-node:<< trace head_lines, ins, tail_lines >>
 			#@nl
 	
@@ -1919,12 +1923,15 @@ class baseCommands:
 	
 		# Scan forwards.
 		i = 0
+		trailingNL = False # DTHEIN 18-JAN-2004: properly capture terminating NL
 		while i < len(tail_lines):
 			line = tail_lines[i]
 			if len(line) == 0 or line.isspace() or line[0] == '@':
+				trailingNL = line[0] == u'\n' or line[0] == '@' # DTHEIN 18-JAN-2004
 				break
 			i += 1
 			
+	#	para_tail_lines = tail_lines[:i]
 		para_tail_lines = tail_lines[:i]
 		post_para_lines = tail_lines[i:]
 		
@@ -1934,7 +1941,8 @@ class baseCommands:
 		result.extend(para_tail_lines)
 		tail = joinLines(post_para_lines)
 	
-		return head,result,tail # string, list, string
+		# DTHEIN 18-JAN-2004: added trailingNL to return value list
+		return head,result,tail,trailingNL # string, list, string, bool
 	#@nonl
 	#@-node:findBoundParagraph
 	#@+node:findMatchingBracket
@@ -2127,7 +2135,7 @@ class baseCommands:
 		original = body.getAllText()
 		oldSel   = body.getTextSelection()
 		oldYview = body.getYScrollPosition()
-		head,lines,tail = c.findBoundParagraph()
+		head,lines,tail,trailingNL = c.findBoundParagraph() # DTHEIN 18-JAN-2004: add trailingNL
 		#@nonl
 		#@-node:<< compute vars for reformatParagraph >>
 		#@nl
@@ -2145,18 +2153,18 @@ class baseCommands:
 			indents[1] = max(indents)
 			if len(lines) == 1:
 				leading_ws[1] = leading_ws[0]
-			#@nonl
 			#@-node:<< compute the leading whitespace >>
 			#@nl
 			#@		<< compute the result of wrapping all lines >>
 			#@+node:<< compute the result of wrapping all lines >>
 			# Remember whether the last line ended with a newline.
 			lastLine = lines[-1]
-			trailingNL = lastLine and lastLine[-1] == '\n'
+			if 0: # DTHEIN 18-JAN-2004: removed because findBoundParagraph now gives trailingNL
+				trailingNL = lastLine and lastLine[-1] == '\n'
 			
 			# Remove any trailing newlines for wraplines.
 			lines = [line[:-1] for line in lines[:-1]]
-			if lastLine and trailingNL:
+			if lastLine and not trailingNL:
 				lastLine = lastLine[:-1]
 			lines.extend([lastLine])
 			
@@ -2165,11 +2173,18 @@ class baseCommands:
 				pageWidth-indents[1],
 				pageWidth-indents[0])
 			
+			# DTHEIN 	18-JAN-2004
+			# prefix with the leading whitespace, if any
+			paddedResult = []
+			paddedResult.append(leading_ws[0] + result[0])
+			for line in result[1:]:
+				paddedResult.append(leading_ws[1] + line)
+			
 			# Convert the result to a string.
-			result = '\n'.join(result)
-			if trailingNL:
-				result += '\n'
-			#@nonl
+			result = '\n'.join(paddedResult) # DTHEIN 	18-JAN-2004: use paddedResult
+			if 0: # DTHEIN 18-JAN-2004:  No need to do this.
+				if trailingNL:
+					result += '\n'
 			#@-node:<< compute the result of wrapping all lines >>
 			#@nl
 			#@		<< update the body, selection & undo state >>

@@ -98,7 +98,7 @@ class leoTkinterFrame (leoFrame.leoFrame):
 		# Handle mouse wheel in the outline pane.
 		if sys.platform == "linux2": # This crashes tcl83.dll
 			canvas.bind("<MouseWheel>", frame.OnMouseWheel)
-			
+		
 		# print_bindings("canvas",canvas)
 		return canvas
 	#@nonl

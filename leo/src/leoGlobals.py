@@ -813,13 +813,18 @@ def wrap_lines (lines,pageWidth,firstLineWidth=None):
 	for s in lines:
 		i = 0
 		while i < len(s):
-			assert(len(line) < outputLineWidth)
+			assert(len(line) <= outputLineWidth) # DTHEIN 18-JAN-2004
 			j = skip_ws(s,i)   # ;   ws = s[i:j]
 			k = skip_non_ws(s,j) ; word = s[j:k]
 			assert(k>i)
 			i = k
-			if 1 + len(word) + len(line) < outputLineWidth:
-				if len(word) > 0:
+			# DTHEIN 18-JAN-2004: wrap at exactly the text width, 
+			# not one character less
+			# 
+			wordLen = len(word)
+			if len(line) > 0 and wordLen > 0: wordLen += len(" ")
+			if wordLen + len(line) <= outputLineWidth:
+				if wordLen > 0:
 					#@					<< place blank and word on the present line >>
 					#@+node:<< place blank and word on the present line >>
 					if len(line) == 0:
@@ -827,7 +832,7 @@ def wrap_lines (lines,pageWidth,firstLineWidth=None):
 						line = word
 					else:
 						# Add the word, preceeded by a blank.
-						line = string.join((line,' ',word),'')
+						line = " ".join([line,word]) # DTHEIN 18-JAN-2004: better syntax
 					#@nonl
 					#@-node:<< place blank and word on the present line >>
 					#@nl
@@ -844,7 +849,7 @@ def wrap_lines (lines,pageWidth,firstLineWidth=None):
 				line = word
 				
 				# Careful: the word may be longer than pageWidth.
-				if len(line) >= pageWidth:
+				if len(line) > pageWidth: # DTHEIN 18-JAN-2004: line can equal pagewidth
 					result.append(line)
 					outputLineWidth = pageWidth # DTHEIN 3-NOV-2002: width for remaining lines
 					line = ""
