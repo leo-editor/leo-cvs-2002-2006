@@ -3,6 +3,7 @@
 #@+node:EKR.20040519082027.23:@thin createLeoDist.py
 #@@first
 
+#@@color
 #@+at
 # The main distribution script executes this file as follows:
 # 
@@ -20,54 +21,6 @@
 import leoGlobals as g
 import distutils.core
 import os,sys
-
-#@+others
-#@+node:EKR.20040519082027.26:replacePatterns
-def replacePatterns (file,pats):
-
-    try:
-        path = os.getcwd()
-        name  = g.os_path_join(path,file)
-        f = open(name)
-    except:
-        g.trace(file, "not found")
-        return
-    try:
-        data = f.read()
-        f.close()
-        changed = False
-        for pat1,pat2 in pats:
-            newdata = data.replace(pat1,pat2)
-            if data != newdata:
-                changed = True
-                data = newdata
-                print file,"replaced",pat1,"by",pat2
-        if changed:
-            f = open(name,"w")
-            f.write(data)
-            f.close()
-    except:
-        import traceback ; traceback.print_exc()
-        sys.exit()
-#@-node:EKR.20040519082027.26:replacePatterns
-#@+node:EKR.20040519082027.27:setDefaultParams
-def setDefaultParams():
-
-    print "setDefaultParams"
-
-    pats = (
-        ("create_nonexistent_directories = 1","create_nonexistent_directories = 0"),
-        ("read_only = 1","read_only = 0"),
-        ("use_plugins = 1","use_plugins = 0"))
-
-    replacePatterns(g.os_path_join("config","leoConfig.leo"),pats)
-    replacePatterns(g.os_path_join("config","leoConfig.txt"),pats)
-#@nonl
-#@-node:EKR.20040519082027.27:setDefaultParams
-#@-others
-
-if 0: # No longer used.
-    setDefaultParams()
 
 modules = []
 distutils.core.setup (
