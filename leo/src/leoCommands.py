@@ -1167,21 +1167,21 @@ class baseCommands:
 	def goToLineNumber (self):
 	
 		c = self ; p = c.currentPosition()
-		#@	<< set root to the nearest @file, @silentfile or @rawfile ancestor node >>
-		#@+node:ekr.20031218072017.2865:<< set root to the nearest @file, @silentfile or @rawfile ancestor node >>
+		#@	<< set root to the nearest ancestor @file node >>
+		#@+node:ekr.20031218072017.2865:<< set root to the nearest ancestor @file node >>
 		fileName = None
 		for p in p.self_and_parents_iter():
-			fileName = self.getGoToFileName(p)
+			fileName = p.anyAtFileNodeName()
 			if fileName: break
 		
 		# New in 4.2: Search the entire tree for joined nodes.
 		if not fileName:
 			p1 = c.currentPosition()
-			for p in c.allNodes_iter():
+			for p in c.all_positions_iter():
 				if p.v.t == p1.v.t and p != p1:
 					# Found a joined position.
 					for p in p.self_and_parents_iter():
-						fileName = self.getGoToFileName(p)
+						fileName = p.anyAtFileNodeName()
 						if fileName: break
 				if fileName: break
 			
@@ -1192,10 +1192,10 @@ class baseCommands:
 			g.es("Go to line number: ancestor must be @file node", color="blue")
 			return
 		#@nonl
-		#@-node:ekr.20031218072017.2865:<< set root to the nearest @file, @silentfile or @rawfile ancestor node >>
+		#@-node:ekr.20031218072017.2865:<< set root to the nearest ancestor @file node >>
 		#@nl
 		#@	<< read the file into lines >>
-		#@+node:ekr.20031218072017.2866:<< read the file into lines >> in OnGoToLineNumber
+		#@+node:ekr.20031218072017.2866:<< read the file into lines >>
 		# 1/26/03: calculate the full path.
 		d = g.scanDirectives(c)
 		path = d.get("path")
@@ -1210,7 +1210,7 @@ class baseCommands:
 			g.es("not found: " + fileName)
 			return
 			
-		#@-node:ekr.20031218072017.2866:<< read the file into lines >> in OnGoToLineNumber
+		#@-node:ekr.20031218072017.2866:<< read the file into lines >>
 		#@nl
 		#@	<< get n, the line number, from a dialog >>
 		#@+node:ekr.20031218072017.2867:<< get n, the line number, from a dialog >>
@@ -1534,18 +1534,12 @@ class baseCommands:
 				elif g.match(s,i,end):
 					if level == 0: break
 					else: level -= 1
-			n += delta # bug fix: 1/30/02
+			n += delta
 			
 		# g.trace(n)
 		return n
 	#@nonl
 	#@-node:ekr.20031218072017.2882:skipToMatchingNodeSentinel
-	#@+node:ekr.20040322115523:getGoToFileName
-	def getGoToFileName (self,p):
-		
-		return p.anyAtFileNodeName() # 4/28/04
-	#@nonl
-	#@-node:ekr.20040322115523:getGoToFileName
 	#@-node:ekr.20031218072017.2864:goToLineNumber & allies
 	#@+node:ekr.20031218072017.2088:fontPanel
 	def fontPanel(self):
