@@ -10692,6 +10692,7 @@ def getVnode (self,parent,back,skip,appendToCurrentStack,appendToTopStack):
         headline = self.getEscapedString() ; self.getTag("</vh>")
     
     # g.trace("skip:",skip,"parent:",parent,"back:",back,"headline:",headline)
+    # g.trace(skip,tref,headline)
     if skip:
         v = self.getExistingVnode(tref)
     else:
@@ -10759,7 +10760,7 @@ if not setTop and len(self.topVnodeStack) > 0 and appendToTopStack:
 #@nonl
 #@-node:ekr.20040326055828:<< Append to current or top stack >>
 #@-node:ekr.20031218072017.1566:getVnode changed for 4.2)
-#@+node:ekr.20031218072017.1860:createVnode (changed for 4.2)
+#@+node:ekr.20031218072017.1860:createVnode (changed for 4.2) sets skip
 def createVnode (self,parent,back,tref,headline,attrDict):
     
     # g.trace(parent,headline)
@@ -10783,9 +10784,9 @@ def createVnode (self,parent,back,tref,headline,attrDict):
         v.t.vnodeList.append(v) # New in 4.2.
 
     skip = len(v.t.vnodeList) > 1
-
     v.initHeadString(headline,encoding=self.leo_file_encoding)
     << handle unknown vnode attributes >>
+    # g.trace(skip,tref,v,v.t,len(v.t.vnodeList))
     return v,skip
 #@nonl
 #@+node:ekr.20031218072017.1861:<< handle unknown vnode attributes >>
@@ -10801,7 +10802,7 @@ if keys:
             print s ; g.es(s)
 #@nonl
 #@-node:ekr.20031218072017.1861:<< handle unknown vnode attributes >>
-#@-node:ekr.20031218072017.1860:createVnode (changed for 4.2)
+#@-node:ekr.20031218072017.1860:createVnode (changed for 4.2) sets skip
 #@+node:ekr.20031218072017.1560:getTnodes
 def getTnodes (self):
 
@@ -11057,6 +11058,7 @@ def getVnode (self,parent,back,skip,appendToCurrentStack,appendToTopStack):
         headline = self.getEscapedString() ; self.getTag("</vh>")
     
     # g.trace("skip:",skip,"parent:",parent,"back:",back,"headline:",headline)
+    # g.trace(skip,tref,headline)
     if skip:
         v = self.getExistingVnode(tref)
     else:
@@ -11124,7 +11126,7 @@ if not setTop and len(self.topVnodeStack) > 0 and appendToTopStack:
 #@nonl
 #@-node:ekr.20040326055828:<< Append to current or top stack >>
 #@-node:ekr.20031218072017.1566:getVnode changed for 4.2)
-#@+node:ekr.20031218072017.1860:createVnode (changed for 4.2)
+#@+node:ekr.20031218072017.1860:createVnode (changed for 4.2) sets skip
 def createVnode (self,parent,back,tref,headline,attrDict):
     
     # g.trace(parent,headline)
@@ -11148,9 +11150,9 @@ def createVnode (self,parent,back,tref,headline,attrDict):
         v.t.vnodeList.append(v) # New in 4.2.
 
     skip = len(v.t.vnodeList) > 1
-
     v.initHeadString(headline,encoding=self.leo_file_encoding)
     << handle unknown vnode attributes >>
+    # g.trace(skip,tref,v,v.t,len(v.t.vnodeList))
     return v,skip
 #@nonl
 #@+node:ekr.20031218072017.1861:<< handle unknown vnode attributes >>
@@ -11166,7 +11168,7 @@ if keys:
             print s ; g.es(s)
 #@nonl
 #@-node:ekr.20031218072017.1861:<< handle unknown vnode attributes >>
-#@-node:ekr.20031218072017.1860:createVnode (changed for 4.2)
+#@-node:ekr.20031218072017.1860:createVnode (changed for 4.2) sets skip
 #@-node:ekr.20040311133449:(Cut/paste outlines)
 #@-node:ekr.20040325203859:3/11 to 3/20
 #@+node:ekr.20040325203859.1:3/21
@@ -14274,6 +14276,7 @@ def getVnode (self,parent,back,skip,appendToCurrentStack,appendToTopStack):
         headline = self.getEscapedString() ; self.getTag("</vh>")
     
     # g.trace("skip:",skip,"parent:",parent,"back:",back,"headline:",headline)
+    # g.trace(skip,tref,headline)
     if skip:
         v = self.getExistingVnode(tref)
     else:
@@ -15065,7 +15068,7 @@ def unlink (self):
 #@nonl
 #@-node:ekr.20031218072017.3438:v.unlink
 #@-node:ekr.20040301071824:v.Link/Unlink/Insert methods (used by file read logic)
-#@+node:ekr.20031218072017.1860:createVnode (changed for 4.2)
+#@+node:ekr.20031218072017.1860:createVnode (changed for 4.2) sets skip
 def createVnode (self,parent,back,tref,headline,attrDict):
     
     # g.trace(parent,headline)
@@ -15089,9 +15092,9 @@ def createVnode (self,parent,back,tref,headline,attrDict):
         v.t.vnodeList.append(v) # New in 4.2.
 
     skip = len(v.t.vnodeList) > 1
-
     v.initHeadString(headline,encoding=self.leo_file_encoding)
     << handle unknown vnode attributes >>
+    # g.trace(skip,tref,v,v.t,len(v.t.vnodeList))
     return v,skip
 #@nonl
 #@+node:ekr.20031218072017.1861:<< handle unknown vnode attributes >>
@@ -15107,7 +15110,7 @@ if keys:
             print s ; g.es(s)
 #@nonl
 #@-node:ekr.20031218072017.1861:<< handle unknown vnode attributes >>
-#@-node:ekr.20031218072017.1860:createVnode (changed for 4.2)
+#@-node:ekr.20031218072017.1860:createVnode (changed for 4.2) sets skip
 #@+node:ekr.20040305162628.1:p.Iterators
 @ 3/18/04: a crucial optimization:
 
@@ -17596,7 +17599,7 @@ def unlink (self):
         if parent: parent.dump(label="parent")
 #@-node:ekr.20040310062332.5:p.unlink
 #@-node:ekr.20040310062332:p.Link/Unlink methods
-#@+node:ekr.20031218072017.1860:createVnode (changed for 4.2)
+#@+node:ekr.20031218072017.1860:createVnode (changed for 4.2) sets skip
 def createVnode (self,parent,back,tref,headline,attrDict):
     
     # g.trace(parent,headline)
@@ -17620,9 +17623,9 @@ def createVnode (self,parent,back,tref,headline,attrDict):
         v.t.vnodeList.append(v) # New in 4.2.
 
     skip = len(v.t.vnodeList) > 1
-
     v.initHeadString(headline,encoding=self.leo_file_encoding)
     << handle unknown vnode attributes >>
+    # g.trace(skip,tref,v,v.t,len(v.t.vnodeList))
     return v,skip
 #@nonl
 #@+node:ekr.20031218072017.1861:<< handle unknown vnode attributes >>
@@ -17638,7 +17641,7 @@ if keys:
             print s ; g.es(s)
 #@nonl
 #@-node:ekr.20031218072017.1861:<< handle unknown vnode attributes >>
-#@-node:ekr.20031218072017.1860:createVnode (changed for 4.2)
+#@-node:ekr.20031218072017.1860:createVnode (changed for 4.2) sets skip
 #@-node:ekr.20040323090456.2:(Removed v.parents field)
 #@+node:ekr.20040322123611:(Check Outline command)
 #@+node:ekr.20031218072017.2072:c.checkOutline
@@ -18808,7 +18811,8 @@ def drawUserIcons(self,p,where,x,y):
         return h,w
     
     iconsList = t.unknownAttributes.get("icons")
-    # g.trace(iconsList)
+    if not iconsList:
+        return h,w
     
     try:
         for dict in iconsList:
@@ -19134,7 +19138,7 @@ if top:
 #@nonl
 #@-node:ekr.20040326054052:<< set current and top positions >>
 #@-node:ekr.20031218072017.1565:getVnodes
-#@+node:ekr.20031218072017.1860:createVnode (changed for 4.2)
+#@+node:ekr.20031218072017.1860:createVnode (changed for 4.2) sets skip
 def createVnode (self,parent,back,tref,headline,attrDict):
     
     # g.trace(parent,headline)
@@ -19158,9 +19162,9 @@ def createVnode (self,parent,back,tref,headline,attrDict):
         v.t.vnodeList.append(v) # New in 4.2.
 
     skip = len(v.t.vnodeList) > 1
-
     v.initHeadString(headline,encoding=self.leo_file_encoding)
     << handle unknown vnode attributes >>
+    # g.trace(skip,tref,v,v.t,len(v.t.vnodeList))
     return v,skip
 #@nonl
 #@+node:ekr.20031218072017.1861:<< handle unknown vnode attributes >>
@@ -19176,7 +19180,7 @@ if keys:
             print s ; g.es(s)
 #@nonl
 #@-node:ekr.20031218072017.1861:<< handle unknown vnode attributes >>
-#@-node:ekr.20031218072017.1860:createVnode (changed for 4.2)
+#@-node:ekr.20031218072017.1860:createVnode (changed for 4.2) sets skip
 #@+node:ekr.20031218072017.1566:getVnode changed for 4.2)
 def getVnode (self,parent,back,skip,appendToCurrentStack,appendToTopStack):
 
@@ -19206,6 +19210,7 @@ def getVnode (self,parent,back,skip,appendToCurrentStack,appendToTopStack):
         headline = self.getEscapedString() ; self.getTag("</vh>")
     
     # g.trace("skip:",skip,"parent:",parent,"back:",back,"headline:",headline)
+    # g.trace(skip,tref,headline)
     if skip:
         v = self.getExistingVnode(tref)
     else:
@@ -20991,10 +20996,16 @@ def convertStackToPosition (self,stack):
 #@+node:ekr.20040326063413:getExistingVnode
 def getExistingVnode (self,tref):
 
+    tref1 = tref
     assert(tref > -1)
     tref = self.canonicalTnodeIndex(tref)
     t = self.tnodesDict.get(tref)
-    return t.vnodeList[0]
+    try:
+        return t.vnodeList[0]
+    except IndexError:
+        g.trace(tref1,t,t.vnodeList)
+        # import traceback ; traceback.print_stack()
+        return None
 #@nonl
 #@-node:ekr.20040326063413:getExistingVnode
 #@+node:ekr.20031218072017.1565:getVnodes
@@ -21076,6 +21087,7 @@ def getVnode (self,parent,back,skip,appendToCurrentStack,appendToTopStack):
         headline = self.getEscapedString() ; self.getTag("</vh>")
     
     # g.trace("skip:",skip,"parent:",parent,"back:",back,"headline:",headline)
+    # g.trace(skip,tref,headline)
     if skip:
         v = self.getExistingVnode(tref)
     else:
@@ -22207,7 +22219,8 @@ def drawUserIcons(self,p,where,x,y):
         return h,w
     
     iconsList = t.unknownAttributes.get("icons")
-    # g.trace(iconsList)
+    if not iconsList:
+        return h,w
     
     try:
         for dict in iconsList:
@@ -29911,6 +29924,120 @@ for line in lines[j+1:k+1]:
 #@-node:ekr.20031218072017.2123:<< write root's tree >>
 #@-node:ekr.20031218072017.2122:new_df.norefWrite
 #@-node:EKR.20040517084551:(problems with tnodeList)
+#@+node:EKR.20040610082855:(Fixed crasher in openRecentFile)
+#@+node:EKR.20040610082855.1:Report
+@nocolor
+
+By: Davide Salomoni - dsalomoni
+ 4.2a3: traceback loading a recent file   
+2004-06-09 08:08  
+
+ I just downloaded the latest cvs code. I launched leo, opened a few files (among them leoPluginsRef.leo) and exited. Then I re-launched leo and selected File->Recent Files->leoPluginsRef.leo
+
+The file loaded, and I got the following traceback:
+
+Exception in Tkinter callback
+Traceback (most recent call last):
+File "/localstore/computer/local/lib/python2.3/lib-tk/Tkinter.py", line 1345, in __call__
+return self.func(*args)
+File "/localstore/computer/davides/Test/leo/leo/src/leoMenu.py", line 1128, in callback
+c.openRecentFile(name)
+File "/localstore/computer/davides/Test/leo/leo/src/leoCommands.py", line 676, in openRecentFile
+g.doHook("recentfiles2",c=c,v=v,fileName=fileName,closeFlag=closeFlag)
+File "/localstore/computer/davides/Test/leo/leo/src/leoGlobals.py", line 1790, in doHook
+elif c and c.hookFunction:
+AttributeError: Commands instance has no attribute 'hookFunction'
+
+(leo cvs, python 2.3.3, tk 8.3.3, linux)
+
+Davide
+
+----
+
+The fix was to set c = frame.c in openRecentFile after destroying the original commander.
+#@-node:EKR.20040610082855.1:Report
+#@+node:ekr.20031218072017.2081:openRecentFile
+def openRecentFile(self,name=None):
+    
+    if not name: return
+
+    c = self ; v = c.currentVnode()
+    << Set closeFlag if the only open window is empty >>
+    
+    fileName = name
+    if not g.doHook("recentfiles1",c=c,v=v,fileName=fileName,closeFlag=closeFlag):
+        ok, frame = g.openWithFileName(fileName,c)
+        if ok and closeFlag:
+            g.app.destroyWindow(c.frame) # 12/12/03
+            g.app.setLog(frame.log,"openRecentFile") # Sets the log stream for g.es()
+            c = frame.c # 6/10/04: Switch to the new commander so the "recentfiles2" hook doesn't crash.
+
+    g.doHook("recentfiles2",c=c,v=v,fileName=fileName,closeFlag=closeFlag)
+#@+node:ekr.20031218072017.2082:<< Set closeFlag if the only open window is empty >>
+@ If this is the only open window was opened when the app started, and the window has never been written to or saved, then we will automatically close that window if this open command completes successfully.
+@c
+    
+closeFlag = (
+    c.frame.startupWindow==True and # The window was open on startup
+    c.changed==False and c.frame.saved==False and # The window has never been changed
+    g.app.numberOfWindows == 1) # Only one untitled window has ever been opened
+#@nonl
+#@-node:ekr.20031218072017.2082:<< Set closeFlag if the only open window is empty >>
+#@-node:ekr.20031218072017.2081:openRecentFile
+#@+node:ekr.20031218072017.1596:g.doHook
+@ This global function calls a hook routine.  Hooks are identified by the tag param.
+Returns the value returned by the hook routine, or None if the there is an exception.
+
+We look for a hook routine in three places:
+1. g.top().hookFunction
+2. app.hookFunction
+3. leoPlugins.doPlugins()
+We set app.hookError on all exceptions.  Scripts may reset app.hookError to try again.
+@c
+
+def doHook(tag,*args,**keywords):
+    
+    if g.app.killed or g.app.hookError:
+        return None
+    
+    # New in 4.2.  We call the idle-time handlers for all open windows.
+    c = keywords.get("c")
+    
+    if 0: # Don't use trace here!
+        if tag != "idle":
+            print "doHook",tag,c
+
+    if not g.app.config.use_plugins:
+        if tag == "start1":
+            g.es("Plugins disabled: use_plugins is 0",color="blue")
+        return None
+    elif c and c.hookFunction:
+        try:
+            return c.hookFunction(tag,keywords)
+        except:
+            g.es("exception in c.hookFunction for " + c.frame.getTitle())
+    elif g.app.hookFunction:
+        try:
+            return g.app.hookFunction(tag,keywords)
+        except:
+            g.es("exception in app.hookFunction")
+    else:
+        import leoPlugins
+        try:
+            g.app.hookFunction = leoPlugins.doPlugins
+            return app.hookFunction(tag,keywords)
+        except:
+            g.app.hookFunction = None
+            g.es("exception in plugin")
+
+    # Handle all exceptions.
+    g.es_exception()
+    g.app.hookError = True # Supress this function.
+    g.app.idleTimeHook = False # Supress idle-time hook
+    return None # No return value
+#@nonl
+#@-node:ekr.20031218072017.1596:g.doHook
+#@-node:EKR.20040610082855:(Fixed crasher in openRecentFile)
 #@-node:EKR.20040519080820:In 4.2 a2
 #@+node:EKR.20040601083927:In 4.2 a3
 #@+node:EKR.20040519073926.1:(Fixed @file-thin copy bug)
@@ -32842,6 +32969,7 @@ def getVnode (self,parent,back,skip,appendToCurrentStack,appendToTopStack):
         headline = self.getEscapedString() ; self.getTag("</vh>")
     
     # g.trace("skip:",skip,"parent:",parent,"back:",back,"headline:",headline)
+    # g.trace(skip,tref,headline)
     if skip:
         v = self.getExistingVnode(tref)
     else:
@@ -34933,7 +35061,8 @@ def drawUserIcons(self,p,where,x,y):
         return h,w
     
     iconsList = t.unknownAttributes.get("icons")
-    # g.trace(iconsList)
+    if not iconsList:
+        return h,w
     
     try:
         for dict in iconsList:
@@ -39936,120 +40065,6 @@ Leo seemed to do a reasonable job with the Import.
 #@-node:EKR.20040521084602:(Checked PHP import bug: works for me)
 #@-node:EKR.20040612121907:6/04
 #@+node:EKR.20040612121907.1:6/11/04
-#@+node:EKR.20040610082855:(Fixed crasher in openRecentFile)
-#@+node:EKR.20040610082855.1:Report
-@nocolor
-
-By: Davide Salomoni - dsalomoni
- 4.2a3: traceback loading a recent file   
-2004-06-09 08:08  
-
- I just downloaded the latest cvs code. I launched leo, opened a few files (among them leoPluginsRef.leo) and exited. Then I re-launched leo and selected File->Recent Files->leoPluginsRef.leo
-
-The file loaded, and I got the following traceback:
-
-Exception in Tkinter callback
-Traceback (most recent call last):
-File "/localstore/computer/local/lib/python2.3/lib-tk/Tkinter.py", line 1345, in __call__
-return self.func(*args)
-File "/localstore/computer/davides/Test/leo/leo/src/leoMenu.py", line 1128, in callback
-c.openRecentFile(name)
-File "/localstore/computer/davides/Test/leo/leo/src/leoCommands.py", line 676, in openRecentFile
-g.doHook("recentfiles2",c=c,v=v,fileName=fileName,closeFlag=closeFlag)
-File "/localstore/computer/davides/Test/leo/leo/src/leoGlobals.py", line 1790, in doHook
-elif c and c.hookFunction:
-AttributeError: Commands instance has no attribute 'hookFunction'
-
-(leo cvs, python 2.3.3, tk 8.3.3, linux)
-
-Davide
-
-----
-
-The fix was to set c = frame.c in openRecentFile after destroying the original commander.
-#@-node:EKR.20040610082855.1:Report
-#@+node:ekr.20031218072017.2081:openRecentFile
-def openRecentFile(self,name=None):
-    
-    if not name: return
-
-    c = self ; v = c.currentVnode()
-    << Set closeFlag if the only open window is empty >>
-    
-    fileName = name
-    if not g.doHook("recentfiles1",c=c,v=v,fileName=fileName,closeFlag=closeFlag):
-        ok, frame = g.openWithFileName(fileName,c)
-        if ok and closeFlag:
-            g.app.destroyWindow(c.frame) # 12/12/03
-            g.app.setLog(frame.log,"openRecentFile") # Sets the log stream for g.es()
-            c = frame.c # 6/10/04: Switch to the new commander so the "recentfiles2" hook doesn't crash.
-
-    g.doHook("recentfiles2",c=c,v=v,fileName=fileName,closeFlag=closeFlag)
-#@+node:ekr.20031218072017.2082:<< Set closeFlag if the only open window is empty >>
-@ If this is the only open window was opened when the app started, and the window has never been written to or saved, then we will automatically close that window if this open command completes successfully.
-@c
-    
-closeFlag = (
-    c.frame.startupWindow==True and # The window was open on startup
-    c.changed==False and c.frame.saved==False and # The window has never been changed
-    g.app.numberOfWindows == 1) # Only one untitled window has ever been opened
-#@nonl
-#@-node:ekr.20031218072017.2082:<< Set closeFlag if the only open window is empty >>
-#@-node:ekr.20031218072017.2081:openRecentFile
-#@+node:ekr.20031218072017.1596:g.doHook
-@ This global function calls a hook routine.  Hooks are identified by the tag param.
-Returns the value returned by the hook routine, or None if the there is an exception.
-
-We look for a hook routine in three places:
-1. g.top().hookFunction
-2. app.hookFunction
-3. leoPlugins.doPlugins()
-We set app.hookError on all exceptions.  Scripts may reset app.hookError to try again.
-@c
-
-def doHook(tag,*args,**keywords):
-    
-    if g.app.killed or g.app.hookError:
-        return None
-    
-    # New in 4.2.  We call the idle-time handlers for all open windows.
-    c = keywords.get("c")
-    
-    if 0: # Don't use trace here!
-        if tag != "idle":
-            print "doHook",tag,c
-
-    if not g.app.config.use_plugins:
-        if tag == "start1":
-            g.es("Plugins disabled: use_plugins is 0",color="blue")
-        return None
-    elif c and c.hookFunction:
-        try:
-            return c.hookFunction(tag,keywords)
-        except:
-            g.es("exception in c.hookFunction for " + c.frame.getTitle())
-    elif g.app.hookFunction:
-        try:
-            return g.app.hookFunction(tag,keywords)
-        except:
-            g.es("exception in app.hookFunction")
-    else:
-        import leoPlugins
-        try:
-            g.app.hookFunction = leoPlugins.doPlugins
-            return app.hookFunction(tag,keywords)
-        except:
-            g.app.hookFunction = None
-            g.es("exception in plugin")
-
-    # Handle all exceptions.
-    g.es_exception()
-    g.app.hookError = True # Supress this function.
-    g.app.idleTimeHook = False # Supress idle-time hook
-    return None # No return value
-#@nonl
-#@-node:ekr.20031218072017.1596:g.doHook
-#@-node:EKR.20040610082855:(Fixed crasher in openRecentFile)
 #@+node:ekr.20040115163454:(Created @killcolor directive)
 #@+node:ekr.20031218072017.1595:<< define leo keywords >>
 # leoKeywords is used by directivesKind, so it should be a module-level symbol.
@@ -42293,6 +42308,797 @@ elif changed:
 #@-node:ekr.20031218072017.1335:idle_head_key
 #@-node:EKR.20040614072333:(Fixed headline key handling)
 #@-node:EKR.20040614151841.1:6/14/04
+#@+node:EKR.20040617063837:6/15/04
+#@+node:EKR.20040615105613.2:(Fixed Problems executing script)
+#@+node:EKR.20040615105613.3:Report
+@nocolor
+https://sourceforge.net/forum/message.php?msg_id=2618807
+By: nobody
+
+From: Rich
+
+I have a script to print headlines that runs in one node, but not another!?!
+The script is:
+
+@color
+
+from leoGlobals import top
+v = top().currentVnode() 
+after = v.nodeAfterTree() 
+# Don't do _this_ node
+v = v.threadNext()
+while v and v != after: 
+# Get the header
+    h = v.headString()
+# Filter
+    if (h.find("CR3") != -1):
+        print h 
+# Next! 
+    v = v.threadNext()
+
+@nocolor
+
+and it runs fine (either Ctrl-e or dynabutton's exS) in one node, but in the
+other, I get:
+
+Unknown language: using Python comment delimiters
+c.target_language:u'c'
+delim1,delim2,delim3:None:None:None
+exception executing script
+  File "<string>", line 1
+    from leoGlobals import top
+                              ^
+SyntaxError: invalid syntax
+
+#@-node:EKR.20040615105613.3:Report
+#@+node:ekr.20031218072017.368:<< define global data structures >> app
+# Internally, lower case is used for all language names.
+self.language_delims_dict = {
+    "actionscript" : "// /* */", #jason 2003-07-03
+    "c" : "// /* */", # C, C++ or objective C.
+    "csharp" : "// /* */",	# C#
+    "css" : "/* */", # 4/1/04
+    "cweb" : "@q@ @>", # Use the "cweb hack"
+    "elisp" : ";",
+    "forth" : "_\\_ _(_ _)_", # Use the "REM hack"
+    "fortran" : "C",
+    "fortran90" : "!",
+    "html" : "<!-- -->",
+    "java" : "// /* */",
+    "latex" : "%",
+    "pascal" : "// { }",
+    "perl" : "#",
+    "perlpod" : "# __=pod__ __=cut__", # 9/25/02: The perlpod hack.
+    "php" : "//",
+    "plain" : "#", # We must pick something.
+    "python" : "#",
+    "rapidq" : "'", # fil 2004-march-11
+    "rebol" : ";",  # jason 2003-07-03
+    "shell" : "#",  # shell scripts
+    "tcltk" : "#",
+    "unknown" : "#" } # Set when @comment is seen.
+
+self.language_extension_dict = {
+    "actionscript" : "as", #jason 2003-07-03
+    "c" : "c",
+    "css" : "css", # 4/1/04
+    "cweb" : "w",
+    "elisp" : "el",
+    "forth" : "forth",
+    "fortran" : "f",
+    "fortran90" : "f",
+    "html" : "html",
+    "java" : "java",
+    "latex" : "tex", # 1/8/04
+    "noweb" : "nw",
+    "pascal" : "p",
+    "perl" : "perl",
+    "perlpod" : "perl",
+    "php" : "php",
+    "plain" : "txt",
+    "python" : "py",
+    "rapidq" : "bas", # fil 2004-march-11
+    "rebol" : "r",    # jason 2003-07-03
+    "shell" : "sh",   # DS 4/1/04
+    "tex" : "tex",
+    "tcltk" : "tcl",
+    "unknown" : "txt" } # Set when @comment is seen.
+#@nonl
+#@-node:ekr.20031218072017.368:<< define global data structures >> app
+#@+node:ekr.20031218072017.2387:old_df.scanAllDirectives
+@ Once a directive is seen, no other related directives in nodes further up the tree have any effect.  For example, if an @color directive is seen in node p, no @color or @nocolor directives are examined in any ancestor of p.
+
+This code is similar to Commands.scanAllDirectives, but it has been modified for use by the atFile class.
+@c
+
+def scanAllDirectives(self,p,scripting=False,importing=False,reading=False):
+    
+    """Scan position p and p's ancestors looking for directives,
+    setting corresponding atFile ivars.
+    """
+
+    c = self.c
+    << Set ivars >>
+    << Set path from @file node >>
+    old = {}
+    for p in p.self_and_parents_iter():
+        s = p.v.t.bodyString
+        dict = g.get_directives_dict(s)
+        << Test for @path >>
+        << Test for @encoding >>
+        << Test for @comment and @language >>
+        << Test for @header and @noheader >>
+        << Test for @lineending >>
+        << Test for @pagewidth >>
+        << Test for @tabwidth >>
+        old.update(dict)
+    << Set current directory >>
+    if not importing and not reading:
+        # 5/19/04: don't override comment delims when reading!
+        << Set comment strings from delims >>
+#@nonl
+#@+node:ekr.20031218072017.2388:<< Set ivars >>
+self.page_width = self.c.page_width
+self.tab_width  = self.c.tab_width
+
+self.default_directory = None # 8/2: will be set later.
+
+delim1, delim2, delim3 = g.set_delims_from_language(c.target_language)
+self.language = c.target_language
+
+self.encoding = g.app.config.default_derived_file_encoding
+self.output_newline = g.getOutputNewline() # 4/24/03: initialize from config settings.
+#@nonl
+#@-node:ekr.20031218072017.2388:<< Set ivars >>
+#@+node:ekr.20031218072017.2389:<< Set path from @file node >> in scanDirectory in leoGlobals.py
+# An absolute path in an @file node over-rides everything else.
+# A relative path gets appended to the relative path by the open logic.
+
+name = p.anyAtFileNodeName() # 4/28/04
+
+dir = g.choose(name,g.os_path_dirname(name),None)
+
+if dir and len(dir) > 0 and g.os_path_isabs(dir):
+    if g.os_path_exists(dir):
+        self.default_directory = dir
+    else: # 9/25/02
+        self.default_directory = g.makeAllNonExistentDirectories(dir)
+        if not self.default_directory:
+            self.error("Directory \"" + dir + "\" does not exist")
+#@nonl
+#@-node:ekr.20031218072017.2389:<< Set path from @file node >> in scanDirectory in leoGlobals.py
+#@+node:ekr.20031218072017.2390:<< Test for @comment and @language >>
+# 10/17/02: @language and @comment may coexist in @file trees.
+# For this to be effective the @comment directive should follow the @language directive.
+
+if not old.has_key("comment") and dict.has_key("comment"):
+    k = dict["comment"]
+    # 11/14/02: Similar to fix below.
+    delim1, delim2, delim3 = g.set_delims_from_string(s[k:])
+
+# Reversion fix: 12/06/02: We must use elif here, not if.
+elif not old.has_key("language") and dict.has_key("language"):
+    k = dict["language"]
+    # 11/14/02: Fix bug reported by J.M.Gilligan.
+    self.language,delim1,delim2,delim3 = g.set_language(s,k)
+#@nonl
+#@-node:ekr.20031218072017.2390:<< Test for @comment and @language >>
+#@+node:ekr.20031218072017.2391:<< Test for @encoding >>
+if not old.has_key("encoding") and dict.has_key("encoding"):
+    
+    e = g.scanAtEncodingDirective(s,dict)
+    if e:
+        self.encoding = e
+#@nonl
+#@-node:ekr.20031218072017.2391:<< Test for @encoding >>
+#@+node:ekr.20031218072017.2392:<< Test for @header and @noheader >>
+# EKR: 10/10/02: perform the sames checks done by tangle.scanAllDirectives.
+if dict.has_key("header") and dict.has_key("noheader"):
+    g.es("conflicting @header and @noheader directives")
+#@nonl
+#@-node:ekr.20031218072017.2392:<< Test for @header and @noheader >>
+#@+node:ekr.20031218072017.2393:<< Test for @lineending >>
+if not old.has_key("lineending") and dict.has_key("lineending"):
+    
+    lineending = g.scanAtLineendingDirective(s,dict)
+    if lineending:
+        self.output_newline = lineending
+#@-node:ekr.20031218072017.2393:<< Test for @lineending >>
+#@+node:ekr.20031218072017.2394:<< Test for @path >>
+# We set the current director to a path so future writes will go to that directory.
+
+if not self.default_directory and not old.has_key("path") and dict.has_key("path"):
+
+    k = dict["path"]
+    << compute relative path from s[k:] >>
+    if path and len(path) > 0:
+        base = g.getBaseDirectory() # returns "" on error.
+        path = g.os_path_join(base,path)
+        if g.os_path_isabs(path):
+            << handle absolute path >>
+        else:
+            self.error("ignoring bad @path: " + path)
+    else:
+        self.error("ignoring empty @path")
+#@nonl
+#@+node:ekr.20031218072017.2395:<< compute relative path from s[k:] >>
+j = i = k + len("@path")
+i = g.skip_to_end_of_line(s,i)
+path = string.strip(s[j:i])
+
+# Remove leading and trailing delims if they exist.
+if len(path) > 2 and (
+    (path[0]=='<' and path[-1] == '>') or
+    (path[0]=='"' and path[-1] == '"') ):
+    path = path[1:-1]
+path = path.strip()
+
+if 0: # 11/14/02: we want a _relative_ path, not an absolute path.
+    path = g.os_path_join(g.app.loadDir,path)
+#@nonl
+#@-node:ekr.20031218072017.2395:<< compute relative path from s[k:] >>
+#@+node:ekr.20031218072017.2396:<< handle absolute path >>
+# path is an absolute path.
+
+if g.os_path_exists(path):
+    self.default_directory = path
+else: # 9/25/02
+    self.default_directory = g.makeAllNonExistentDirectories(path)
+    if not self.default_directory:
+        self.error("invalid @path: " + path)
+#@-node:ekr.20031218072017.2396:<< handle absolute path >>
+#@-node:ekr.20031218072017.2394:<< Test for @path >>
+#@+node:ekr.20031218072017.2397:<< Test for @pagewidth >>
+if dict.has_key("pagewidth") and not old.has_key("pagewidth"):
+    
+    w = g.scanAtPagewidthDirective(s,dict,issue_error_flag=True)
+    if w and w > 0:
+        self.page_width = w
+#@nonl
+#@-node:ekr.20031218072017.2397:<< Test for @pagewidth >>
+#@+node:ekr.20031218072017.2398:<< Test for @tabwidth >>
+if dict.has_key("tabwidth") and not old.has_key("tabwidth"):
+    
+    w = g.scanAtTabwidthDirective(s,dict,issue_error_flag=True)
+    if w and w != 0:
+        self.tab_width = w
+
+#@-node:ekr.20031218072017.2398:<< Test for @tabwidth >>
+#@+node:ekr.20031218072017.2399:<< Set current directory >>
+# This code is executed if no valid absolute path was specified in the @file node or in an @path directive.
+
+if c.frame and not self.default_directory:
+    base = g.getBaseDirectory() # returns "" on error.
+    for dir in (c.tangle_directory,c.frame.openDirectory,c.openDirectory):
+        if dir and len(dir) > 0:
+            dir = g.os_path_join(base,dir)
+            if g.os_path_isabs(dir): # Errors may result in relative or invalid path.
+                if g.os_path_exists(dir):
+                    self.default_directory = dir ; break
+                else: # 9/25/02
+                    self.default_directory = g.makeAllNonExistentDirectories(dir)
+
+if not self.default_directory and not scripting and not importing:
+    # This should never happen: c.openDirectory should be a good last resort.
+    g.trace()
+    self.error("No absolute directory specified anywhere.")
+    self.default_directory = ""
+#@-node:ekr.20031218072017.2399:<< Set current directory >>
+#@+node:ekr.20031218072017.2400:<< Set comment strings from delims >>
+if scripting:
+    # Force Python language.
+    delim1,delim2,delim3 = g.set_delims_from_language("python")
+    self.language = "python"
+    
+# Use single-line comments if we have a choice.
+# 8/2/01: delim1,delim2,delim3 now correspond to line,start,end
+
+if delim1:
+    self.startSentinelComment = delim1
+    self.endSentinelComment = "" # Must not be None.
+elif delim2 and delim3:
+    self.startSentinelComment = delim2
+    self.endSentinelComment = delim3
+else: # Emergency!
+    # assert(0)
+    g.es("Unknown language: using Python comment delimiters")
+    g.es("c.target_language:",c.target_language)
+    g.es("delim1,delim2,delim3:",delim1,delim2,delim3)
+    self.startSentinelComment = "#" # This should never happen!
+    self.endSentinelComment = ""
+    
+# g.trace(self.startSentinelComment)
+#@nonl
+#@-node:ekr.20031218072017.2400:<< Set comment strings from delims >>
+#@-node:ekr.20031218072017.2387:old_df.scanAllDirectives
+#@+node:ekr.20031218072017.1381:@language and @comment directives (leoUtils)
+#@+node:ekr.20031218072017.1382:set_delims_from_language
+# Returns a tuple (single,start,end) of comment delims
+
+def set_delims_from_language(language):
+
+    val = app.language_delims_dict.get(language)
+    if val:
+        delim1,delim2,delim3 = g.set_delims_from_string(val)
+        if delim2 and not delim3:
+            return None,delim1,delim2
+        else: # 0,1 or 3 params.
+            return delim1,delim2,delim3
+    else:
+        return None, None, None # Indicate that no change should be made
+#@-node:ekr.20031218072017.1382:set_delims_from_language
+#@+node:ekr.20031218072017.1383:set_delims_from_string
+def set_delims_from_string(s):
+
+    """Returns (delim1, delim2, delim2), the delims following the @comment directive.
+    
+    This code can be called from @languge logic, in which case s can point at @comment"""
+
+    # Skip an optional @comment
+    tag = "@comment"
+    i = 0
+    if g.match_word(s,i,tag):
+        i += len(tag)
+        
+    count = 0 ; delims = [None, None, None]
+    while count < 3 and i < len(s):
+        i = j = g.skip_ws(s,i)
+        while i < len(s) and not g.is_ws(s[i]) and not g.is_nl(s,i):
+            i += 1
+        if j == i: break
+        delims[count] = s[j:i]
+        count += 1
+        
+    # 'rr 09/25/02
+    if count == 2: # delims[0] is always the single-line delim.
+        delims[2] = delims[1]
+        delims[1] = delims[0]
+        delims[0] = None
+
+    # 7/8/02: The "REM hack": replace underscores by blanks.
+    # 9/25/02: The "perlpod hack": replace double underscores by newlines.
+    for i in xrange(0,3):
+        if delims[i]:
+            delims[i] = string.replace(delims[i],"__",'\n') 
+            delims[i] = string.replace(delims[i],'_',' ')
+
+    return delims[0], delims[1], delims[2]
+#@nonl
+#@-node:ekr.20031218072017.1383:set_delims_from_string
+#@+node:ekr.20031218072017.1384:set_language
+def set_language(s,i,issue_errors_flag=False):
+    
+    """Scan the @language directive that appears at s[i:].
+
+    Returns (language, delim1, delim2, delim3)
+    """
+
+    tag = "@language"
+    # g.trace(g.get_line(s,i))
+    assert(i != None)
+    assert(g.match_word(s,i,tag))
+    i += len(tag) ; i = g.skip_ws(s, i)
+    # Get the argument.
+    j = i ; i = g.skip_c_id(s,i)
+    # Allow tcl/tk.
+    arg = string.lower(s[j:i])
+    if app.language_delims_dict.get(arg):
+        language = arg
+        delim1, delim2, delim3 = g.set_delims_from_language(language)
+        return language, delim1, delim2, delim3
+    
+    if issue_errors_flag:
+        g.es("ignoring: " + g.get_line(s,i))
+
+    return None, None, None, None,
+#@nonl
+#@-node:ekr.20031218072017.1384:set_language
+#@-node:ekr.20031218072017.1381:@language and @comment directives (leoUtils)
+#@+node:ekr.20031218072017.2140:c.executeScript
+def executeScript(self,p=None,script=None):
+
+    """This executes body text as a Python script.
+    
+    We execute the selected text, or the entire body text if no text is selected."""
+    
+    c = self ; error = False ; s = None ; script1 = script
+
+    if not script:
+        script = g.getScript(c,p)
+    << redirect output if redirect_execute_script_output_to_log_pane >>
+    if script:
+        script = script.strip()
+    if script:
+        script += '\n' # Make sure we end the script properly.
+        try:
+            exec script in {} # Use {} to get a pristine environment!
+            if not script1:
+                g.es("end of script",color="purple")
+        except:
+            g.es("exception executing script")
+            n = g.es_exception(full=False,c=c)
+            if n is not None:
+                << dump the lines of script near the error >>
+                if p and not script1:
+                    c.goToScriptLineNumber(p,script,n)
+            c.frame.tree.redrawAfterException()
+    elif not error:
+        g.es("no script selected",color="blue")
+        
+    # Force a redraw _after_ all messages have been output.
+    c.redraw() 
+#@nonl
+#@+node:ekr.20031218072017.2143:<< redirect output if redirect_execute_script_output_to_log_pane >>
+if g.app.config.redirect_execute_script_output_to_log_pane:
+
+    g.redirectStdout() # Redirect stdout
+    g.redirectStderr() # Redirect stderr
+#@nonl
+#@-node:ekr.20031218072017.2143:<< redirect output if redirect_execute_script_output_to_log_pane >>
+#@+node:EKR.20040612215018:<< dump the lines of script near the error >>
+lines = g.splitLines(script)
+
+s = '-' * 20
+print s; g.es(s)
+
+if 1:
+    # Just print the error line.
+    s = "line %d: %s" % (n,lines[n-1])
+    print s, ; g.es(s,newline=False)
+else:
+    i = max(0,n-2)
+    j = min(n+2,len(lines))
+    # g.trace(n,i,j)
+    while i < j:
+        ch = g.choose(i==n-1,'*',' ')
+        s = "%s line %d: %s" % (ch,i+1,lines[i])
+        print s, ; g.es(s,newline=False)
+        i += 1
+#@nonl
+#@-node:EKR.20040612215018:<< dump the lines of script near the error >>
+#@-node:ekr.20031218072017.2140:c.executeScript
+#@-node:EKR.20040615105613.2:(Fixed Problems executing script)
+#@+node:EKR.20040615105613:(Investigated bug when reading 4.1 file: file was corrupted)
+#@+node:EKR.20040615105613.1:Report
+@nocolor
+
+Read and respond to this message at: 
+http://sourceforge.net/forum/message.php?msg_id=2618355
+By: sbeards
+
+I'm having a problem opening a leo file that I last used with 4.1-final. I'm
+getting the following traceback from leo on cvs and 4.2a3 when attempting to
+open the file:
+
+exceptions opening: [filename].leo
+Traceback (most recent call last):
+  File "/usr/local/lib/leo/src/leoGlobals.py", line 670, in openWithFileName
+    frame.c.fileCommands.open(file,fileName) # closes file.
+  File "/usr/local/lib/leo/src/leoFileCommands.py", line 1181, in open
+    ok, ratio = self.getLeoFile(fileName,atFileNodesFlag=true)
+  File "/usr/local/lib/leo/src/leoFileCommands.py", line 583, in getLeoFile
+    self.getVnodes()
+  File "/usr/local/lib/leo/src/leoFileCommands.py", line 987, in getVnodes
+    appendToCurrentStack=append1,appendToTopStack=append2)
+  File "/usr/local/lib/leo/src/leoFileCommands.py", line 924, in getVnode
+    appendToCurrentStack=append1,appendToTopStack=append2)
+  File "/usr/local/lib/leo/src/leoFileCommands.py", line 924, in getVnode
+    appendToCurrentStack=append1,appendToTopStack=append2)
+  File "/usr/local/lib/leo/src/leoFileCommands.py", line 924, in getVnode
+    appendToCurrentStack=append1,appendToTopStack=append2)
+  File "/usr/local/lib/leo/src/leoFileCommands.py", line 924, in getVnode
+    appendToCurrentStack=append1,appendToTopStack=append2)
+  File "/usr/local/lib/leo/src/leoFileCommands.py", line 891, in getVnode
+    v = self.getExistingVnode(tref)
+  File "/usr/local/lib/leo/src/leoFileCommands.py", line 165,
+in getExistingVnode
+    return t.vnodeList[0]
+IndexError: list index out of range
+
+Any ideas?
+#@nonl
+#@-node:EKR.20040615105613.1:Report
+#@+node:EKR.20040616102910:Resolution
+@killcolor
+
+As I reported to Scott privately, this 4.1 file was corrupted:
+
+When I run the Check Outline command (in 4.1) Leo reports various "topology mismatches".  This error indicates that one clone has a different topology than another  A node in one clone have a different number of children from the "same" node in another clone!
+
+Obviously Leo has messed up somehow in creating this file.  I have no idea how this happened.  This kind of error is (I think) impossible in 4.2 because in 4.2 Leo represents clones as actual shared data.  There is only one copy of the data so it can't possibly be inconsistent with itself.
+
+I am going to see whether there is some way of having Leo recover from this error automatically in 4.2: it doesn't look easy.  In the meantime, the outline can be fixed as follows:
+
+1. Pick one of the clones called "Latest Code", (maybe the first?) as the "proper" clone.  That is, make _sure_ the proper clone contains all the nodes in either clone.  In particular, check all the nodes that contain the topology mismatch.
+
+2. Delete the other clone.
+
+3. Re-clone the proper clone and drag it where the deleted clone used to be.
+
+I did this assuming the first clone is "proper" and everything now works. In particular, the Check Outline command now is happy and Leo can now read the recreated outline.
+
+The conclusion is that 4.2 appears to read all correct 4.1 files properly.  Again, I'll see if I can get Leo to make sense out of this improper file, but don't count on it.
+#@nonl
+#@-node:EKR.20040616102910:Resolution
+#@+node:EKR.20040616080815:problem nodes
+sbeards.20040131002412.4 sbeards.20040131002412.4 <tnode 14702576>
+
+<v t="sbeards.20040131002412.4" tnodeList="sbeards.20040131002412.4"><vh>@file-nosent test.conf</vh></v>
+
+sbeards.20040201230930.1 sbeards.20040201230930.1 <tnode 14702704>
+
+<v t="sbeards.20040201230930.1" tnodeList="sbeards.20040201230930.1"><vh>@file-nosent menuDropdown.js</vh></v>
+
+sbeards.20040201230930.2 sbeards.20040201230930.2 <tnode 14702800>
+
+<v t="sbeards.20040201230930.2" tnodeList="sbeards.20040201230930.2"><vh>@file-nosent menuExpandable.js</vh></v>
+
+#@-node:EKR.20040616080815:problem nodes
+#@+node:ekr.20031218072017.1565:getVnodes
+def getVnodes (self):
+
+    c = self.c
+
+    if self.getOpenTag("<vnodes>"):
+        return
+        
+    if self.usingClipboard:
+        oldRoot = c.rootPosition()
+        oldCurrent = c.currentPosition()
+
+    back = parent = None # This routine _must_ work on vnodes!
+    
+    self.currentVnodeStack = []
+    self.topVnodeStack = []
+    while self.matchTag("<v"):
+        append1 = not self.usingClipboard and len(self.currentVnodeStack) == 0
+        append2 = not self.usingClipboard and len(self.topVnodeStack) == 0
+        back = self.getVnode(parent,back,skip=False,
+            appendToCurrentStack=append1,appendToTopStack=append2)
+
+    if self.usingClipboard:
+        # Link in the pasted nodes after the current position.
+        newRoot = c.rootPosition()
+        c.setRootPosition(oldRoot)
+        newRoot.v.linkAfter(oldCurrent.v)
+        newCurrent = oldCurrent.copy()
+        newCurrent.v = newRoot.v
+        c.setCurrentPosition(newCurrent)
+    else:
+        << set current and top positions >>
+
+    self.getTag("</vnodes>")
+#@nonl
+#@+node:ekr.20040326054052:<< set current and top positions >>
+current = self.convertStackToPosition(self.currentVnodeStack)
+if current:
+    c.setCurrentPosition(current)
+else:
+    # g.trace(self.currentVnodeStack)
+    c.setCurrentPosition(c.rootPosition())
+    
+# At present this is useless: the drawing code doesn't set the top position properly.
+top = self.convertStackToPosition(self.topVnodeStack)
+if top:
+    c.setTopPosition(top)
+#@nonl
+#@-node:ekr.20040326054052:<< set current and top positions >>
+#@-node:ekr.20031218072017.1565:getVnodes
+#@+node:ekr.20031218072017.1566:getVnode changed for 4.2)
+def getVnode (self,parent,back,skip,appendToCurrentStack,appendToTopStack):
+
+    c = self.c ; v = None
+    setCurrent = setExpanded = setMarked = setOrphan = setTop = False
+    tref = -1 ; headline = "" ; tnodeList = None ; attrDict = {} 
+    # we have already matched <v.
+    while 1:
+        if self.matchTag("a=\""):
+            << Handle vnode attribute bits >>
+        elif self.matchTag("t="):
+            # New for 4.1.  Read either "Tnnn" or "gnx".
+            tref = self.getDqString()
+        elif self.matchTag("vtag=\"V"):
+            self.getIndex() ; self.getDquote() # ignored
+        elif self.matchTag("tnodeList="):
+            s = self.getDqString()
+            tnodeList = self.getTnodeList(s) # New for 4.0
+        elif self.matchTag(">"):
+            break
+        else: # New for 4.0: allow unknown attributes.
+            # New in 4.2: allow pickle'd and hexlify'ed values.
+            attr,val = self.getUnknownAttribute()
+            attrDict[attr] = val
+    # Headlines are optional.
+    if self.matchTag("<vh>"):
+        headline = self.getEscapedString() ; self.getTag("</vh>")
+    
+    # g.trace("skip:",skip,"parent:",parent,"back:",back,"headline:",headline)
+    # g.trace(skip,tref,headline)
+    if skip:
+        v = self.getExistingVnode(tref)
+    else:
+        v,skip = self.createVnode(parent,back,tref,headline,attrDict)
+        if tnodeList:
+            v.t.tnodeList = tnodeList # New for 4.0, 4.2: now in tnode.
+            # g.trace("%4d" % len(tnodeList),v)
+
+    << Set the remembered status bits >>
+
+    # Recursively create all nested nodes.
+    parent = v ; back = None
+    while self.matchTag("<v"):
+        append1 = appendToCurrentStack and len(self.currentVnodeStack) == 0
+        append2 = appendToTopStack and len(self.topVnodeStack) == 0
+        back = self.getVnode(parent,back,skip,
+            appendToCurrentStack=append1,appendToTopStack=append2)
+            
+    << Append to current or top stack >>
+
+    # End this vnode.
+    self.getTag("</v>")
+    return v
+#@nonl
+#@+node:ekr.20031218072017.1567:<< Handle vnode attribute bits  >>
+# The a=" has already been seen.
+while 1:
+    if   self.matchChar('C'): pass # Not used: clone bits are recomputed later.
+    elif self.matchChar('D'): pass # Not used.
+    elif self.matchChar('E'): setExpanded = True
+    elif self.matchChar('M'): setMarked = True
+    elif self.matchChar('O'): setOrphan = True
+    elif self.matchChar('T'): setTop = True
+    elif self.matchChar('V'): setCurrent = True
+    else: break
+
+self.getDquote()
+#@nonl
+#@-node:ekr.20031218072017.1567:<< Handle vnode attribute bits  >>
+#@+node:ekr.20031218072017.1568:<< Set the remembered status bits >>
+if setCurrent:
+    self.currentVnodeStack = [v]
+
+if setTop:
+    self.topVnodeStack = [v]
+    
+if setExpanded:
+    v.initExpandedBit()
+    
+if setMarked:
+    v.initMarkedBit() # 3/25/03: Do not call setMarkedBit here!
+
+if setOrphan:
+    v.setOrphan()
+#@nonl
+#@-node:ekr.20031218072017.1568:<< Set the remembered status bits >>
+#@+node:ekr.20040326055828:<< Append to current or top stack >>
+if not setCurrent and len(self.currentVnodeStack) > 0 and appendToCurrentStack:
+    #g.trace("append current",v)
+    self.currentVnodeStack.append(v)
+    
+if not setTop and len(self.topVnodeStack) > 0 and appendToTopStack:
+    #g.trace("append top",v)
+    self.topVnodeStack.append(v)
+#@nonl
+#@-node:ekr.20040326055828:<< Append to current or top stack >>
+#@-node:ekr.20031218072017.1566:getVnode changed for 4.2)
+#@+node:ekr.20031218072017.1860:createVnode (changed for 4.2) sets skip
+def createVnode (self,parent,back,tref,headline,attrDict):
+    
+    # g.trace(parent,headline)
+    v = None ; c = self.c
+    # Shared tnodes are placed in the file even if empty.
+    if tref == -1:
+        t = leoNodes.tnode()
+    else:
+        tref = self.canonicalTnodeIndex(tref)
+        t = self.tnodesDict.get(tref)
+        if not t: t = self.newTnode(tref)
+    if back: # create v after back.
+        v = back.insertAfter(t)
+    elif parent: # create v as the parent's first child.
+        v = parent.insertAsNthChild(0,t)
+    else: # create a root vnode
+        v = leoNodes.vnode(c,t)
+        v.moveToRoot()
+
+    if v not in v.t.vnodeList:
+        v.t.vnodeList.append(v) # New in 4.2.
+
+    skip = len(v.t.vnodeList) > 1
+    v.initHeadString(headline,encoding=self.leo_file_encoding)
+    << handle unknown vnode attributes >>
+    # g.trace(skip,tref,v,v.t,len(v.t.vnodeList))
+    return v,skip
+#@nonl
+#@+node:ekr.20031218072017.1861:<< handle unknown vnode attributes >>
+keys = attrDict.keys()
+if keys:
+    v.unknownAttributes = attrDict
+
+    if 0: # For debugging.
+        s = "unknown attributes for " + v.headString()
+        print s ; g.es(s,color="blue")
+        for key in keys:
+            s = "%s = %s" % (key,attrDict.get(key))
+            print s ; g.es(s)
+#@nonl
+#@-node:ekr.20031218072017.1861:<< handle unknown vnode attributes >>
+#@-node:ekr.20031218072017.1860:createVnode (changed for 4.2) sets skip
+#@+node:ekr.20040326063413:getExistingVnode
+def getExistingVnode (self,tref):
+
+    tref1 = tref
+    assert(tref > -1)
+    tref = self.canonicalTnodeIndex(tref)
+    t = self.tnodesDict.get(tref)
+    try:
+        return t.vnodeList[0]
+    except IndexError:
+        g.trace(tref1,t,t.vnodeList)
+        # import traceback ; traceback.print_stack()
+        return None
+#@nonl
+#@-node:ekr.20040326063413:getExistingVnode
+#@+node:ekr.20031218072017.2004:canonicalTnodeIndex
+def canonicalTnodeIndex(self,index):
+    
+    """Convert Tnnn to nnn, leaving gnx's unchanged."""
+
+    # index might be Tnnn, nnn, or gnx.
+    id,time,n = g.app.nodeIndices.scanGnx(index,0)
+    if time == None: # A pre-4.1 file index.
+        if index[0] == "T":
+            index = index[1:]
+
+    return index
+#@nonl
+#@-node:ekr.20031218072017.2004:canonicalTnodeIndex
+#@-node:EKR.20040615105613:(Investigated bug when reading 4.1 file: file was corrupted)
+#@-node:EKR.20040617063837:6/15/04
+#@+node:EKR.20040617083707:6/17/04
+#@+node:EKR.20040615010747:(Fixed bug when writing unknownAttributes
+#@+node:EKR.20040615010747.1:Report
+@nocolor
+
+By: Bernhard Mulder - bwmulder
+ RE: Attributes in @thin trees: gotcha   
+2004-06-15 00:48  
+
+ In drawUserIcons:
+.iconsList = t.unknownAttributes.get("icons")
+.# g.trace(iconsList)
+
+.try:
+..for dict in iconsList:
+
+Guard the try: with 'if iconsList:', otherwise, you'll get a traceback whenever some attributes are defined, but not "icons".  
+#@-node:EKR.20040615010747.1:Report
+#@+node:ekr.20040317094609:drawUserIcons
+def drawUserIcons(self,p,where,x,y):
+    
+    """Draw any icons specified by p.v.t.unknownAttributes["icons"]."""
+    
+    h,w = 0,0 ; t = p.v.t
+    
+    if not hasattr(t,"unknownAttributes"):
+        return h,w
+    
+    iconsList = t.unknownAttributes.get("icons")
+    if not iconsList:
+        return h,w
+    
+    try:
+        for dict in iconsList:
+            h2,w2 = self.drawUserIcon(where,x+w,y,dict)
+            h = max(h,h2) ; w += w2
+    except:
+        g.es_exception()
+
+    return h,w
+#@nonl
+#@-node:ekr.20040317094609:drawUserIcons
+#@-node:EKR.20040615010747:(Fixed bug when writing unknownAttributes
+#@-node:EKR.20040617083707:6/17/04
 #@-node:EKR.20040610102329:In 4.2 a4
 #@-node:EKR.20040517090500:May 2004
 #@-node:ekr.20040107064101.1:4.2 Projects

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="4256" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="4261" clone_windows="0"/>
 <globals body_outline_ratio="0.414301929625">
 	<global_window_position top="28" left="234" height="881" width="1011"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
@@ -630,6 +630,9 @@
 <v t="EKR.20040608095146.1" a="M" tnodeList="EKR.20040608095146.1"><vh>@file login_process.cfm</vh></v>
 <v t="EKR.20040610092248"><vh>Test of pasting into big node</vh></v>
 <v t="EKR.20040610131858"><vh>Test of Paste Node Retaining Clones</vh>
+<v t="EKR.20040615144810"><vh>b</vh></v>
+<v t="EKR.20040615144735"><vh>branch</vh>
+<v t="EKR.20040615144810"><vh>b</vh></v>
 <v t="EKR.20040610131858.1"><vh>a</vh>
 <v t="EKR.20040610143643"><vh>b</vh></v>
 <v t="EKR.20040610143643"><vh>b</vh></v>
@@ -639,6 +642,7 @@
 <v t="EKR.20040610143643"><vh>b</vh></v>
 </v>
 <v t="EKR.20040610132739"><vh>copied</vh></v>
+</v>
 </v>
 </v>
 <v t="EKR.20040612095237"><vh>Prototypes of new commands</vh>
@@ -2719,12 +2723,21 @@ try:
 
 except IOError:
     print "can not open",path</t>
-<t tx="EKR.20040615070332">x = 'stuff\n\f'
-f = file( 'LPT1:', 'w' )
-f.write( x )
-f.flush()
-f.close()
-</t>
+<t tx="EKR.20040615070332"># "LPT1:", "PRN:" and "PRN" all freeze
+
+s = 'stuff\n'
+port = 'USB002'
+
+try:
+    f = file(port,'w')
+    f.write(s)
+    f.flush()
+    f.close()
+    print "done"
+except IOError:
+    print "Can not open",port</t>
+<t tx="EKR.20040615144735"></t>
+<t tx="EKR.20040615144810">d</t>
 <t tx="ekr.20040126105605"></t>
 <t tx="ekr.20040126105605.2"></t>
 <t tx="ekr.20040126105605.3"></t>

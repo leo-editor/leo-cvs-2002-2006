@@ -6,40 +6,9 @@
 #@+node:EKR.20040612172916:Make sure people use cvs to get latest plugins
 #@-node:EKR.20040612172916:Make sure people use cvs to get latest plugins
 #@+node:EKR.20040430163619:To do: 4.2
+#@+node:EKR.20040617083816:Ask for bugs not on to-do list
+#@-node:EKR.20040617083816:Ask for bugs not on to-do list
 #@+node:EKR.20040611081747:To do First
-#@+node:EKR.20040524053657.1:(Handle conflicts in different clones)
-#@+node:ekr.20031218072017.853:More intelligent untangling of clones (make @all secondary)
-@nocolor
-
-By: nobody ( Nobody/Anonymous ) 
- About "@file" untangling and clones   
-2003-11-24 23:55  
-
-0-before untangling:save a reference copy of a found clone for each clone in the outline!
-1-Start untangling,
-2- once you reach a clone node: compare, if changed update all instances of outline
-3-later in untangling, if same is found but no change in regards to reference copy, leave it as last found. ---END OF ALGORITHM
-
-so you see, only the last _Changed_ instance of a clone would have precedence in the untangling process.
-
-- bolt
-
-EKR comments:
-
-- We can probably use something like this even for @file-thin.  In most cases, a text from a derived file should override the text in the outline.
-
-- The actual algorithm is easier than this.  There is only one tnode per set of clones, so "updating all clones" is trivial.  Moreover, we don't need to compute "reference text", we merely need to know where text comes from:  outline or derived file.
-
-- leoFileCommands.getLeoFile reads all derived files after reading the .leo file, which is exactly what we want.
-
-In short, the algorithm is this:  When creating/updating tnode text, if the "new" text is different from the "old", do the following:
-
-1.  Create a tempRefText attribute (ivar) in tnode if it doesn't already exist,  put the old text into it, and put the new text into the tnode.  (Actually, the text gets put into another temp ivar, but that's not particularly significant).
-
-2.  If the tempRefText attribute already exists, then it contains what you originally called the "reference copy".  If the "new" text is the same as the reference copy, do _not_ update the cloned text.  Otherwise, we have multiple conflicting updates to the same clone.  Issue a warning and do something arbitrary.
-#@nonl
-#@-node:ekr.20031218072017.853:More intelligent untangling of clones (make @all secondary)
-#@-node:EKR.20040524053657.1:(Handle conflicts in different clones)
 #@+node:ekr.20031218072017.791:(Finish Check Tabs, Check Python Syntax and PrettyPrint Python commands)
 @
 
@@ -875,7 +844,8 @@ def drawUserIcons(self,p,where,x,y):
         return h,w
     
     iconsList = t.unknownAttributes.get("icons")
-    # g.trace(iconsList)
+    if not iconsList:
+        return h,w
     
     try:
         for dict in iconsList:
@@ -2518,6 +2488,16 @@ WshShell.SendKeys("%Fe");   WScript.Sleep(1300);  #^Q
 ---end openleo.pys
 #@nonl
 #@-node:EKR.20040611081747.1:Look at windows scripting
+#@+node:EKR.20040616112407:Create a FAQ entry about using @thin in a cooperative environment
+@nocolor
+
+The general idea is that developers should use @thin in a cvs environment, and only commit thin derived files.
+
+Consider .leo files to be private in a cooperative environment.  Only "reference" .leo files get committed to cvs: each developer uses a private copy.
+
+Edward
+#@nonl
+#@-node:EKR.20040616112407:Create a FAQ entry about using @thin in a cooperative environment
 #@-node:EKR.20040609155110:Docs, etc
 #@+node:ekr.20040323195916.1:Tests
 @nocolor
@@ -8781,6 +8761,7 @@ def getVnode (self,parent,back,skip,appendToCurrentStack,appendToTopStack):
         headline = self.getEscapedString() ; self.getTag("</vh>")
     
     # g.trace("skip:",skip,"parent:",parent,"back:",back,"headline:",headline)
+    # g.trace(skip,tref,headline)
     if skip:
         v = self.getExistingVnode(tref)
     else:
