@@ -4155,27 +4155,33 @@ class atFile:
     #@+node:ekr.20041005105605.212:replaceTargetFileIfDifferent
     def replaceTargetFileIfDifferent (self):
         
+        '''Create target file as follows:
+        1. If target file does not exist, rename output file to target file.
+        2. If target file is identical to output file, remove the output file.
+        3. If target file is different from output file,
+           remove target file, then rename output file to be target file.'''
+        
         assert(self.outputFile is None)
         
-        if self.toString:
-            return False
-        
         self.fileChangedFlag = False
+        
+        if self.toString: return self.fileChangedFlag
+    
         if g.os_path_exists(self.targetFileName):
-            if self.compareFiles(
-                self.outputFileName,self.targetFileName,not self.explicitLineEnding):
-                #@            << delete the output file >>
-                #@+node:ekr.20041005105605.213:<< delete the output file >>
-                try: # Just delete the temp file.
-                    os.remove(self.outputFileName)
-                except:
-                    g.es("exception deleting:" + self.outputFileName)
-                    g.es_exception()
-                
-                g.es("unchanged: " + self.shortFileName)
+            if (
+                #@            << files are identical >>
+                #@+node:ekr.20050104131343:<< files are identical >>
+                self.compareFiles(
+                    self.outputFileName,
+                    self.targetFileName,
+                    not self.explicitLineEnding)
                 #@nonl
-                #@-node:ekr.20041005105605.213:<< delete the output file >>
+                #@-node:ekr.20050104131343:<< files are identical >>
                 #@nl
+            ):
+                self.remove(self.outputFileName)
+                g.es('%-10s %s' % ('unchanged:',self.shortFileName))
+                return False
             else:
                 #@            << report if the files differ only in line endings >>
                 #@+node:ekr.20041019090322:<< report if the files differ only in line endings >>
@@ -4190,56 +4196,18 @@ class atFile:
                 #@nonl
                 #@-node:ekr.20041019090322:<< report if the files differ only in line endings >>
                 #@nl
-                #@            << replace the target file with the output file >>
-                #@+node:ekr.20041005105605.214:<< replace the target file with the output file >>
-                try:
-                    # 10/6/02: retain the access mode of the previous file,
-                    # removing any setuid, setgid, and sticky bits.
-                    mode = (os.stat(self.targetFileName))[0] & 0777
-                except:
-                    mode = None
-                
-                try: # Replace target file with temp file.
-                    os.remove(self.targetFileName)
-                    try:
-                        g.utils_rename(self.outputFileName,self.targetFileName)
-                        if mode != None: # 10/3/02: retain the access mode of the previous file.
-                            try:
-                                os.chmod(self.targetFileName,mode)
-                            except:
-                                g.es("exception in os.chmod(%s)" % (self.targetFileName))
-                        g.es("writing: " + self.shortFileName)
-                        self.fileChangedFlag = True
-                    except:
-                        # 6/28/03
-                        self.writeError("exception renaming: %s to: %s" % (self.outputFileName,self.targetFileName))
-                        g.es_exception()
-                except:
-                    self.writeError("exception removing:" + self.targetFileName)
-                    g.es_exception()
-                    try: # Delete the temp file when the deleting the target file fails.
-                        os.remove(self.outputFileName)
-                    except:
-                        g.es("exception deleting:" + self.outputFileName)
-                        g.es_exception()
-                #@nonl
-                #@-node:ekr.20041005105605.214:<< replace the target file with the output file >>
-                #@nl
+                mode = self.stat(self.targetFileName)
+                ok = self.rename(self.outputFileName,self.targetFileName,mode)
+                if ok:
+                    g.es('%-10s %s' % ('writing:',self.shortFileName))
+                    self.fileChangedFlag = True
                 return True # bwm
         else:
-            #@        << rename the output file to be the target file >>
-            #@+node:ekr.20041005105605.215:<< rename the output file to be the target file >>
-            try:
-                g.utils_rename(self.outputFileName,self.targetFileName)
-                g.es("creating: " + self.targetFileName)
+            # Rename the output file.
+            ok = self.rename(self.outputFileName,self.targetFileName)
+            if ok:
+                g.es('%-10s %s' % ('creating:',self.targetFileName))
                 self.fileChangedFlag = True
-            except:
-                self.writeError("exception renaming:" + self.outputFileName +
-                    " to " + self.targetFileName)
-                g.es_exception()
-            #@nonl
-            #@-node:ekr.20041005105605.215:<< rename the output file to be the target file >>
-            #@nl
             return False
     #@nonl
     #@-node:ekr.20041005105605.212:replaceTargetFileIfDifferent
@@ -4269,12 +4237,13 @@ class atFile:
     #@nonl
     #@-node:ekr.20041005105605.216:warnAboutOrpanAndIgnoredNodes
     #@+node:ekr.20041005105605.217:writeError
-    def writeError(self,message):
+    def writeError(self,message=None):
     
         if self.errors == 0:
             g.es_error("errors writing: " + self.targetFileName)
     
         self.error(message)
+    
         self.root.setOrphan()
         self.root.setDirty()
     #@nonl
@@ -4306,13 +4275,107 @@ class atFile:
     #@-node:ekr.20041005105605.196:Writing 4.x utils...
     #@-node:ekr.20041005105605.132:Writing...
     #@+node:ekr.20041005105605.219:Uilites...
+    #@+node:ekr.20050104131929:file operations...
+    #@+at 
+    #@nonl
+    # The difference, if any, between these methods and the corresponding 
+    # g.utils_x
+    # functions is that these methods may call self.error.
+    #@-at
+    #@nonl
+    #@+node:ekr.20050104131820:chmod
+    def chmod (self,fileName,mode):
+        
+        # Do _not_ call self.error here.
+        return g.utils_chmod(fileName,mode)
+    #@nonl
+    #@-node:ekr.20050104131820:chmod
+    #@+node:ekr.20050104131929.1:rename
+    #@<< about os.rename >>
+    #@+node:ekr.20050104131929.2:<< about os.rename >>
+    #@+at 
+    #@nonl
+    # Here is the Python 2.4 documentation for rename (same as Python 2.3)
+    # 
+    # Rename the file or directory src to dst.  If dst is a directory, OSError 
+    # will be raised.
+    # 
+    # On Unix, if dst exists and is a file, it will be removed silently if the 
+    # user
+    # has permission. The operation may fail on some Unix flavors if src and 
+    # dst are
+    # on different filesystems. If successful, the renaming will be an atomic
+    # operation (this is a POSIX requirement).
+    # 
+    # On Windows, if dst already exists, OSError will be raised even if it is 
+    # a file;
+    # there may be no way to implement an atomic rename when dst names an 
+    # existing
+    # file.
+    #@-at
+    #@nonl
+    #@-node:ekr.20050104131929.2:<< about os.rename >>
+    #@nl
+    
+    def rename (self,src,dst,mode=None,verbose=True):
+    
+        '''remove dst if it exists, then rename src to dst.
+        
+        Change the mode of the renamed file if mode is given.
+        
+        Return True if all went well.'''
+    
+        head,tail=g.os_path_split(dst)
+        if head and len(head) > 0:
+            g.makeAllNonExistentDirectories(head)
+            
+        if g.os_path_exists(dst):
+            if not self.remove(dst,verbose=verbose):
+                return False
+    
+        try:
+            os.rename(src,dst)
+            if mode != None:
+                self.chmod(dst,mode)
+            return True
+        except Exception:
+            if verbose:
+                self.error("exception renaming: %s to: %s" % (
+                    self.outputFileName,self.targetFileName))
+                g.es_exception()
+            return False
+    #@nonl
+    #@-node:ekr.20050104131929.1:rename
+    #@+node:ekr.20050104132018:remove
+    def remove (self,fileName,verbose=True):
+    
+        try:
+            os.remove(fileName)
+            return True
+        except:
+            if verbose:
+                self.error("exception removing:" + fileName)
+                g.es_exception()
+            return False
+    #@nonl
+    #@-node:ekr.20050104132018:remove
+    #@+node:ekr.20050104132026:stat
+    def stat (self,fileName):
+    
+        '''Return the access mode of named file, removing any setuid, setgid, and sticky bits.'''
+        
+        # Do _not_ call self.error here.
+        return g.utils_stat(fileName)
+    #@nonl
+    #@-node:ekr.20050104132026:stat
+    #@-node:ekr.20050104131929:file operations...
     #@+node:ekr.20041005105605.220:error
     def error(self,message):
     
-        g.es_error(message)
-        # print
-        print message
-        # print
+        if message:
+            g.es_error(message)
+            print message
+    
         self.errors += 1
     #@nonl
     #@-node:ekr.20041005105605.220:error
