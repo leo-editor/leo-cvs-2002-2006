@@ -1821,7 +1821,7 @@ class baseFileCommands:
         fc = self ; c = fc.c ; v = p.v
         isThin = p.isAtThinFileNode()
         isIgnore = False
-        if 1: # New in 4.2 b3: use ignored argument to compute this without leaking positions.
+        if 0: # Wrong: must check all parents.
             ignored = ignored or p.isAtIgnoreNode()
         else:
             for p2 in p.self_and_parents_iter():
