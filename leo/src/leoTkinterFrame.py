@@ -22,7 +22,7 @@ import os
 import string
 import sys
 
-Pmw = g.importExtension("Pmw")
+Pmw = g.importExtension("Pmw",pluginName="leoTkinterFrame.py",verbose=False)
 #@nonl
 #@-node:ekr.20041221070525:<< imports >>
 #@nl
