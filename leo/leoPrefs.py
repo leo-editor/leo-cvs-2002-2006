@@ -148,7 +148,7 @@ class LeoPrefs:
 		left_data = [
 			("C/C++",c_language), ("CWEB", cweb_language),
 			("HTML", html_language), ("Java", java_language),
-			("Pascal", pascal_language) ]
+			("LaTeX", latex_language), ("Pascal", pascal_language) ]
 		
 		for text,value in left_data:
 			button = Tk.Radiobutton(lt,anchor="w",text=text,

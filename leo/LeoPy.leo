@@ -2,12 +2,12 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="2051" clone_windows="0"/>
 <globals body_outline_ratio="0.4983974358974359">
-	<global_window_position top="5" left="62" height="27" width="89"/>
+	<global_window_position top="63" left="80" height="27" width="89"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
-<preferences allow_rich_text="0">
+<preferences allow_rich_text="0" tab_width="4" page_width="132" tangle_bat="0" untangle_bat="0" output_doc_chunks="1" use_header_flag="1" defaultTargetLanguage="Python">
 </preferences>
-<find_panel_settings>
+<find_panel_settings search_body="1" whole_word="1">
 	<find_string></find_string>
 	<change_string></change_string>
 </find_panel_settings>
@@ -801,7 +801,7 @@
 </v>
 <v t="T494" a="E"><vh>To do</vh>
 <v a="EM"><vh>Bugs</vh>
-<v a="EV"><vh>Serious bugs: @root, leoConfig.txt</vh>
+<v a="E"><vh>Serious bugs: @root, leoConfig.txt</vh>
 <v t="T495" a="M"><vh>Fix Fred Gansevles bugs</vh></v>
 <v t="T496" a="M"><vh>Fix directory bug</vh></v>
 <v t="T497" a="M"><vh>Fix linux rename bug</vh></v>
@@ -2821,7 +2821,7 @@
 </v>
 </v>
 </v>
-<v t="T1368"><vh>Code</vh>
+<v t="T1368" a="E"><vh>Code</vh>
 <v t="T1369"><vh> Overview of code</vh></v>
 <v t="T1370"><vh> Scripts &amp; Batch Files (Change version in setup.py)</vh>
 <v t="T1371"><vh> Batch Files &amp; other @root trees</vh>
@@ -3851,8 +3851,8 @@
 <v t="T971"><vh>reconfigurePanes (use config bar_width)</vh></v>
 </v>
 </v>
-<v t="T1750"><vh>@file leoGlobals.py</vh>
-<v t="T380" a="C"><vh>&lt;&lt; define global constants &gt;&gt;</vh></v>
+<v t="T1750" a="EO"><vh>@file leoGlobals.py</vh>
+<v t="T380" a="CV"><vh>&lt;&lt; define global constants &gt;&gt;</vh></v>
 <v t="T1751"><vh>alert</vh></v>
 <v t="T1752"><vh>app, setApp</vh></v>
 <v t="T1753"><vh>choose</vh></v>
@@ -6530,15 +6530,16 @@ fortran_language =	 5  # Comments start with C
 fortran90_language =	 6  # Comments start with !
 html_language =		 7
 java_language =		 8
-lisp_language =		 9
-pascal_language =	10
-plain_text_language =	11
-perl_language =		12  # just ##
-perlpod_language =	13  # ## and =pod and =cut
-python_language =	14
-shell_language =	15  # shell scripts
-tcltk_language = 16
-unknown_language =	17  # Set when @comment is seen.
+latex_langauge = 9
+lisp_language =		 10
+pascal_language =	11
+plain_text_language =	12
+perl_language =		13  # just ##
+perlpod_language =	14  # ## and =pod and =cut
+python_language =	15
+shell_language =	16  # shell scripts
+tcltk_language = 17
+unknown_language =	18  # Set when @comment is seen.
 
 # Synonyms for the bits returned by is_special_bits...
 color_bits =    0x00001

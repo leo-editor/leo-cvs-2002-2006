@@ -108,6 +108,132 @@ java_keywords = (
 	"this","throw","transient","true","try",
 	"var","void","volatile","while")
 
+#If you see two idenitical words, with minor capitalization differences
+#DO NOT ASSUME that they are the same word. For example \vert produces
+#a single vertical line and \Vert produces a double vertical line
+
+latex_keywords = (
+	#special keyworlds
+	"\\@", "\\(", "\\)", "\\{", "\\}",
+	#A
+	"\\acute", "\\addcontentsline", "\\addtocontents", "\\addtocounter", "\\address",
+	"\\addtolength", "\\addvspace", "\\AE", "\\ae", "\\aleph", "\\alph", "\\angle",
+	"\\appendix", 
+	"\\approx",	"\\arabic", "\\arccos", "\\arcsin", "\\arctan", "\\ast", "\\author",
+	#B
+	"\\b", "\\backmatter", "\\backslash", "\\bar", "\\baselineskip", "\\baselinestretch",
+	"\\begin", "\\beta", "\\bezier", "\\bf", "\\bfseries", "\\bibitem", "\\bigcap", 
+	"\\bigcup", "\\bigodot", "\\bigoplus", "\\bigotimes", "\\bigskip", "\\biguplus", 
+	"\\bigvee", "\\bigwedge",	"\\bmod", "\\boldmath", "\\Box", "\\breve", "\\bullet",
+	#C
+	"\\c", "\\cal", "\\caption", "\\cdot", "\\cdots", "\\centering", "\\chapter", 
+	"\\check", "\\chi", "\\circ", "\\circle", "\\cite", "\\cleardoublepage", "\\clearpage", 
+	"\\cline",	"\\closing", "\\clubsuit", "\\coprod", "\\copywright", "\\cos", "\\cosh", 
+	"\\cot", "\\coth",	"csc",
+	#D
+	"\\d", "\\dag", "\\dashbox", "\\date", "\\ddag", "\\ddot", "\\ddots", "\\decl", 
+	"\\deg", "\\Delta", 
+	"\\delta", "\\depthits", "\\det", 
+	"\\DH", "\\dh", "\\Diamond", "\\diamondsuit", "\\dim", "\\div", "\\DJ", "\\dj", 
+	"\\documentclass", "\\documentstyle", 
+	"\\dot", "\\dotfil", "\\downarrow",
+	#E
+	"\\ell", "\\em", "\\emph", "\\end", "\\enlargethispage", "\\ensuremath", 
+	"\\enumi", "\\enuii", "\\enumiii", "\\enuiv", "\\epsilon", "\\equation", "\\equiv",	
+	"\\eta", "\\example", "\\exists", "\\exp",
+	#F
+	"\\fbox", "\\figure", "\\flat", "\\flushbottom", "\\fnsymbol", "\\footnote", 
+	"\\footnotemark", "\\fotenotesize", 
+	"\\footnotetext", "\\forall", "\\frac", "\\frame", "\\framebox", "\\frenchspacing", 
+	"\\frontmatter",
+	#G
+	"\\Gamma", "\\gamma", "\\gcd", "\\geq", "\\gg", "\\grave", "\\guillemotleft", 
+	"\\guillemotright",	"\\guilsinglleft", "\\guilsinglright",
+	#H
+	"\\H", "\\hat", "\\hbar", "\\heartsuit", "\\heightits", "\\hfill", "\\hline", "\\hom",
+	"\\hrulefill",	"\\hspace", "\\huge",	"\\Huge",	"\\hyphenation"
+	#I
+	"\\Im", "\\imath", "\\include", "includeonly", "indent", "\\inf", "\\infty", 
+	"\\input", "\\int", "\\iota",	"\\it", "\\item", "\\itshape",
+	#J
+	"\\jmath", "\\Join",
+	#K
+	"\\k", "\\kappa", "\\ker", "\\kill",
+	#L
+	"\\label", "\\Lambda", "\\lambda", "\\langle", "\\large", "\\Large", "\\LARGE", 
+	"\\LaTeX", "\\LaTeXe", 
+	"\\ldots", "\\leadsto", "\\left", "\\Leftarrow", "\\leftarrow", "\\lefteqn", "\\leq",
+	"\\lg", "\\lhd", "\\lim", "\\liminf", "\\limsup", "\\line", 	"\\linebreak", 
+	"\\linethickness", "\\linewidth",	"\\listfiles",
+	"\\ll", "\\ln", "\\location", "\\log", "\\Longleftarrow", "\\longleftarrow", 
+	"\\Longrightarrow",	"longrightarrow",
+	#M
+	"\\mainmatter", "\\makebox", "\\maketitle", "\\markboth", "\\markright",
+	"\\mathbf", "\\mathcal", "\\mathit", "\\mathnormal", "\\mathop",
+	"\\mathrm", "\\mathsf", "\\mathtt", "\\max", "\\mbox", "\\mdseries", "\\medskip",
+	"\\mho", "\\min", "\\mp", "\\mpfootnote", "\\mu", "\\multicolumn", "\\multiput",
+	#N
+	"\\nabla", "\\natural", "\\nearrow", "\\neq", "\\newcommand", "\\newcounter", 
+	"\\newenvironment", "\\newfont",
+	"\\newlength",	"\\newline", "\\newpage", "\\newsavebox", "\\newtheorem", "\\NG", "\\ng",
+	"\\nocite", "\\noindent", "\\nolinbreak", "\\nopagebreak", "\\normalsize",
+	"\\not", "\\nu", "nwarrow",
+	#O
+	"\\Omega", "\\omega", "\\onecolumn", "\\oint", "\\opening", "\\oval", 
+	"\\overbrace", "\\overline",
+	#P
+	"\\P", "\\page", "\\pagebreak", "\\pagenumbering", "\\pageref", "\\pagestyle", 
+	"\\par", "\\parbox",	"\\paragraph", "\\parindent", "\\parskip", "\\part", 
+	"\\partial", "\\per", "\\Phi", 	"\\phi",	"\\Pi", "\\pi", "\\pm", 
+	"\\pmod", "\\pounds", "\\prime", "\\prod", "\\propto", "\\protext", 
+	"\\providecomamnd", "\\Psi",	"\\psi", "\\put",
+	#Q
+	"\\qbezier", "\\quoteblbase", "\\quotesinglbase",
+	#R
+	"\\r", "\\raggedbottom", "\\raggedleft", "\\raggedright", "\\raisebox", "\\rangle", 
+	"\\Re", "\\ref", 	"\\renewcommand", "\\renewenvironment", "\\rhd", "\\rho", "\\right", 
+	"\\Rightarrow",	"\\rightarrow", "\\rm", "\\rmfamily",
+	"\\Roman", "\\roman", "\\rule", 
+	#S
+	"\\s", "\\samepage", "\\savebox", "\\sbox", "\\sc", "\\scriptsize", "\\scshape", 
+	"\\searrow",	"\\sec", "\\section",
+	"\\setcounter", "\\setlength", "\\settowidth", "\\settodepth", "\\settoheight", 
+	"\\settowidth", "\\sf", "\\sffamily", "\\sharp", "\\shortstack", "\\Sigma", "\\sigma", 
+	"\\signature", "\\sim", "\\simeq", "\\sin", "\\sinh", "\\sl", "\\SLiTeX",
+	"\\slshape", "\\small", "\\smallskip", "\\spadesuit", "\\sqrt", "\\sqsubset",	
+	"\\sqsupset", "\\SS",
+	"\\stackrel", "\\star", "\\subsection", "\\subset", 
+	"\\subsubsection", "\\sum", "\\sup", "\\supressfloats", "\\surd", "\\swarrow",
+	#T
+	"\\t", "\\table", "\\tableofcontents", "\\tabularnewline", "\\tan", "\\tanh", 
+	"\\tau", "\\telephone",	"\\TeX", "\\textbf",
+	"\\textbullet", "\\textcircled", "\\textcompworkmark",	"\\textemdash", 
+	"\\textendash", "\\textexclamdown", "\\textheight", "\\textquestiondown", 
+	"\\textquoteblleft", "\\textquoteblright", "\\textquoteleft",
+	"\\textperiod", "\\textquotebl", "\\textquoteright", "\\textmd", "\\textit", "\\textrm", 
+	"\\textsc", "\\textsl", "\\textsf", "\\textsuperscript", "\\texttt", "\\textup",
+	"\\textvisiblespace", "\\textwidth", "\\TH", "\\th", "\\thanks", "\\thebibligraphy",
+	"\\Theta", "theta", 
+	"\\tilde", "\\thinlines", 
+	"\\thispagestyle", "\\times", "\\tiny", "\\title",	"\\today", "\\totalheightits", 
+	"\\triangle", "\\tt", 
+	"\\ttfamily", "\\twocoloumn", "\\typeout", "\\typein",
+	#U
+	"\\u", "\\underbrace", "\\underline", "\\unitlength", "\\unlhd", "\\unrhd", "\\Uparrow",
+	"\\uparrow",	"\\updownarrow", "\\upshape", "\\Upsilon", "\\upsilon", "\\usebox",	
+	"\\usecounter", "\\usepackage", 
+	#V
+	"\\v", "\\value", "\\varepsilon", "\\varphi", "\\varpi", "\\varrho", "\\varsigma", 
+	"\\vartheta", "\\vdots", "\\vec", "\\vector", "\\verb", "\\Vert", "\\vert", 	"\\vfill",
+	"\\vline", "\\vphantom", "\\vspace",
+	#W
+	"\\widehat", "\\widetilde", "\\widthits", "\\wp",
+	#X
+	"\\Xi", "\\xi",
+	#Z
+	"\\zeta" )
+
+
 pascal_keywords = (
 	"and","array","as","begin",
 	"case","const","class","constructor","cdecl"
@@ -477,7 +603,7 @@ class colorizer:
 		
 		has_string = language != plain_text_language
 		
-		languages = ["c","cweb","html","java","pascal","perl","perlpod","python","tcltk"]
+		languages = ["c","cweb","html","java","latex", "pascal","perl","perlpod","python","tcltk"]
 		
 		keywords = []
 		if language==cweb_language:
@@ -848,12 +974,16 @@ class colorizer:
 					#@-body
 					#@-node:9::<< handle possible @keyword >>
 
-				elif ch in string.letters:
+				elif ch in string.letters or (ch == '\\' and language == latex_language):
 					
 					#@<< handle possible keyword >>
 					#@+node:10::<< handle possible  keyword >>
 					#@+body
-					j = self.skip_id(s,i)
+					if language == latex_language and match(s,i,"\\"):
+						j = self.skip_id(s,i+1)
+					else:
+						j = self.skip_id(s,i)
+
 					word = s[i:j]
 					if word in keywords:
 						body.tag_add("keyword", index(n,i), index(n,j))

@@ -565,6 +565,8 @@ class fileCommands:
 					language = html_language ; self.getDquote()
 				elif self.matchTag("Java"):
 					language = java_language ; self.getDquote()
+				elif self.matchTag("LaTeX"):
+					language = latex_language ; self.getDquote()
 				elif self.matchTag("Pascal"):
 					language = pascal_language ; self.getDquote()
 				elif self.matchTag("PerlPod"):

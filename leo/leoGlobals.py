@@ -40,15 +40,16 @@ fortran_language =	 5  # Comments start with C
 fortran90_language =	 6  # Comments start with !
 html_language =		 7
 java_language =		 8
-lisp_language =		 9
-pascal_language =	10
-plain_text_language =	11
-perl_language =		12  # just ##
-perlpod_language =	13  # ## and =pod and =cut
-python_language =	14
-shell_language =	15  # shell scripts
-tcltk_language = 16
-unknown_language =	17  # Set when @comment is seen.
+latex_language =	 9
+lisp_language =		10
+pascal_language =	11
+plain_text_language =	12
+perl_language =		13  # just ##
+perlpod_language =	14  # ## and =pod and =cut
+python_language =	15
+shell_language =	16  # shell scripts
+tcltk_language =	17
+unknown_language =	18  # Set when @comment is seen.
 
 # Synonyms for the bits returned by is_special_bits...
 color_bits =    0x00001
