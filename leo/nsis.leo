@@ -2,7 +2,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="20" clone_windows="0"/>
 <globals body_outline_ratio="0.5">
-	<global_window_position top="53" left="38" height="24" width="87"/>
+	<global_window_position top="53" left="38" height="31" width="87"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences allow_rich_text="0">
@@ -12,9 +12,9 @@
 	<change_string></change_string>
 </find_panel_settings>
 <vnodes>
-<v t="T1" a="E"><vh>NSIS Sample Scripts</vh>
-<v t="T2" a="EM"><vh>NSIS script for Leo</vh>
-<v t="T3" a="MV"><vh>@root leo.nsi</vh>
+<v t="T1" a="EV"><vh>NSIS Sample Scripts</vh>
+<v t="T2"><vh>NSIS script for Leo</vh>
+<v t="T3"><vh>@root leo.nsi</vh>
 <v t="T4"><vh>&lt;&lt; installer settings &gt;&gt;</vh>
 <v t="T5"><vh>&lt;&lt; icons used by the installer &gt;&gt;</vh></v>
 <v t="T6"><vh>&lt;&lt; the installation dir &gt;&gt;</vh></v>
@@ -37,8 +37,8 @@
 <v t="T18"><vh>&lt;&lt; get the path to pythonw.exe &gt;&gt;</vh></v>
 </v>
 </v>
-<v t="T19" a="EM"><vh>License file</vh>
-<v t="T20" a="M"><vh>@root leo_license.txt</vh></v>
+<v t="T19"><vh>License file</vh>
+<v t="T20"><vh>@root leo_license.txt</vh></v>
 </v>
 </v>
 </vnodes>
@@ -160,14 +160,24 @@ ReadRegStr $9 HKEY_LOCAL_MACHINE "SOFTWARE\Classes\Python.NoConFile\shell\open\c
 # cut 8 characters from back of the open command
 StrCpy $8 $9 -8
 
+IfFileExists $8 ok tryagain
+
+tryagain:
+# ok, that  didn't work, but since the Python installer doesn't seem to be consistent, we'll try again
+# cut 3 characters from back of the open command
+StrCpy $8 $9 -3
+
 IfFileExists $8 ok ng
+
 ng:
   MessageBox MB_OK "Python is not installed on this system. $\nPlease install Python first. $\n$\nClick OK to cancel installation and remove installation Files."
   Delete "$INSTDIR\Icons\*.*" ; Icons dir
   RMDir "$INSTDIR\Icons"
   Delete "$INSTDIR\*.*" ; 
   RMDir "$INSTDIR"
-  Quit</t>
+  Quit
+  
+</t>
 <t tx="T11">@code
 
 # optional sections
@@ -292,7 +302,7 @@ Note: the copyright sign in the license will appear properly when rendered in th
 
 Leo is Open Software and is distributed under the terms of the Python License. The gist of the license is that Leo is absolutely free, even for commercial use (including resale). There is no GNU-like "copyleft" restriction. The Open Source Initiative board has voted to certify the Python license as Open Source. This license is compatible with the GPL.
 
-Copyright © 1997-2002 by Edward K. Ream. All Rights Reserved.
+Copyright (c) 1997-2002 by Edward K. Ream. All Rights Reserved.
 
 Permission to use, copy, modify, and distribute this software and its documentation for any purpose and without fee is hereby granted, provided that the above copyright notice appear in all copies and that both that copyright notice and this permission notice appear in supporting documentation, and that the names of Leo or Edward K. Ream not be used in advertising or publicity pertaining to distribution of the software without specific, written prior permission.
 
