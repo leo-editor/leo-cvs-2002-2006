@@ -40,28 +40,32 @@ import os,string,sys,Tkinter
 
 
 #@+others
-#@+node:2::go
+#@+node:2::run & allies
 #@+body
-# This is useful for reloading after a file has been changed.
-
-def go(*args):
-
-	if len(args) > 0 and type(args[0]) == type(("a","b")):
-		args = args[0] # Strip the outer tuple.
-
-	run(args)
-#@-body
-#@-node:2::go
-#@+node:3::leo.leoOpen
-#@+body
-def leoOpen(fileName=None,*args):
+def run(fileName=None,*args,**keywords):
 	
-	if fileName == None:
-		run()
-		return
+	"""Initialize and run Leo"""
 
+	app,root = doStep1()
+	if root:
+		doHook("start1")
+		frame = doStep2(app,fileName)
+		doStep3(app,frame,args)
+		root.mainloop()
+
+
+#@-body
+#@+node:1::doStep1
+#@+body
+def doStep1 ():
+	
+	"""Step 1 of Leo startup process:
+	
+	Create a hidden Tk root window and the app object"""
+	
 	# Create a hidden main window: this window never becomes visible!
 	root = Tkinter.Tk()
+
 	
 	#@<< set the icon image >>
 	#@+node:1::<< set the icon image >>
@@ -80,106 +84,103 @@ def leoOpen(fileName=None,*args):
 
 	root.title("Leo Main Window")
 	root.withdraw()
-	# Initialize application globals
+
+	# Create the application object.
 	app = leoApp.LeoApp(root)
 	setApp(app)
-	if not app.finishCreate(): # do this after gApp exists.
+	
+	# do this after gApp exists.
+	if not app.finishCreate(): 
 		root.destroy()
-		return
-	doHook("start1")
-	# Create the first Leo window
+		root = None
+	
+	return app,root
+#@-body
+#@-node:1::doStep1
+#@+node:2::doStep2
+#@+body
+def doStep2 (app,fileName):
+	
+	"""Step 2 of Leo startup process:
+		
+	Create a frame, and optionally read a file into it"""
+	
+	# Create the first frame.
 	frame1 = leoFrame.LeoFrame()
-	frame1.top.withdraw()
-	frame1.top.update()
-	# Now open the second Leo window
-	fileName = os.path.join(os.getcwd(), fileName)
-	fileName = os.path.normpath(fileName)
-	if os.path.exists(fileName):
-		ok, frame = frame1.OpenWithFileName(fileName)
-	else: ok = 0
-	if ok:
-		app.windowList.remove(frame1)
-		frame1.destroy() # force the window to go away now.
-		app.log = frame # Sets the log stream for es()
+	
+	if fileName:
+		# Hide the first frame.
+		frame1.top.withdraw()
+		frame1.top.update()
+		
+		#@<< open frame2. return frame2 or frame1 on failure >>
+		#@+node:1::<< open frame2.  return frame2 or frame1 on failure >>
+		#@+body
+		fileName = os.path.join(os.getcwd(), fileName)
+		fileName = os.path.normpath(fileName)
+		if os.path.exists(fileName):
+			ok, frame2 = frame1.OpenWithFileName(fileName)
+		else: ok = 0
+		if ok:
+			app.windowList.remove(frame1)
+			frame1.destroy() # force the window to go away now.
+			app.log = frame2 # Sets the log stream for es()
+			return frame2
+		else:
+			frame1.top.deiconify()
+			app.log = frame1
+			es("File not found: " + fileName)
+			fileName = ensure_extension(fileName, ".leo")
+			frame1.mFileName = fileName
+			frame1.title = fileName
+			frame1.top.title(fileName)
+			return frame1
+		#@-body
+		#@-node:1::<< open frame2.  return frame2 or frame1 on failure >>
+
 	else:
+		# Show the first frame & indicate it is the startup window.
 		frame1.top.deiconify()
-		app.log = frame1
-		es("File not found: " + fileName)
-		# 10/6/02: Set the file's name if it doesn't exist.
-		fileName = ensure_extension(fileName, ".leo")
-		frame1.mFileName = fileName
-		frame1.title = fileName
-		frame1.top.title(fileName)
-		frame1.commands.redraw() # Bug fix: 12/12/02
-		frame = frame1
+		frame1.startupWindow = true
+		return frame1
+#@-body
+#@-node:2::doStep2
+#@+node:3::doStep3
+#@+body
+def doStep3 (app,frame,args):
+	
+	"""Step 3 of Leo startup process:
+		
+	Initialize Sherlock and reddraw the screen."""
+	
+	# Initialze Sherlock & stats.
 	init_sherlock(args)
 	clear_stats()
-	issueHookWarning()
-	# Write any queued output generated before a log existed.
-	app.writeWaitingLog() # 2/16/03
-	c = frame.commands ; v = c.currentVnode() # 2/8/03
-	doHook("start2",c=c,v=v,fileName=fileName)
-	root.mainloop()
-#@-body
-#@-node:3::leo.leoOpen
-#@+node:4::leo.run
-#@+body
-def run(*args):
 
-	# Create a hidden main window: this window never becomes visible!
-	root = Tkinter.Tk()
-	
-	#@<< set the icon image >>
-	#@+node:1::<< set the icon image >>
-	#@+body
-	if 0: # not yet
-		fullname = r"c:\prog\LeoPy\Icons\box05.GIF"
-		image = Tkinter.PhotoImage(file=fullname)
-		trace(`image`)
-		image = Tkinter.BitmapImage(image)
-		trace(`image`)
-		image = Tkinter.BitmapImage("stop")
-		trace(`image`)
-		root.iconbitmap(image)
-	#@-body
-	#@-node:1::<< set the icon image >>
-
-	root.title("Leo Main Window")
-	root.withdraw()
-	# Initialize application globals
-	app = leoApp.LeoApp(root)
-	setApp(app)
-	if not app.finishCreate(): # do this after gApp exists.
-		root.destroy()
-		return
-	doHook("start1")
-	# Create the first Leo window
-	frame = leoFrame.LeoFrame()
-	frame.top.deiconify() # 7/19/02
-	frame.commands.redraw() # 9/1/02
-	frame.startupWindow = true
-	init_sherlock(args)
-	issueHookWarning()
-	# Write any queued output generated before a log existed.
-	app.writeWaitingLog() # 2/16/03
+	# Write queued output and redraw the screen.
+	app.writeWaitingLog()
 	doHook("start2")
-	root.mainloop()
+	frame.commands.redraw()
+
 #@-body
-#@-node:4::leo.run
-#@+node:5::profile
+#@-node:3::doStep3
+#@-node:2::run & allies
+#@+node:3::profile
 #@+body
 #@+at
 #  To gather statistics, do the following in a Python window, not idle:
 # 
-# import leo
-# leo.profile()  (this runs leo)
-# load leoDocs.leo (it is very slow)
-# quit Leo.
+# 	import leo
+# 	leo.profile()  (this runs leo)
+# 	load leoDocs.leo (it is very slow)
+# 	quit Leo.
 
 #@-at
 #@@c
 
 def profile ():
+	
+	"""Gather and print statistics about Leo"""
 
 	import profile, pstats
 	
@@ -191,7 +192,7 @@ def profile ():
 	p.sort_stats('cum','file','name')
 	p.print_stats()
 #@-body
-#@-node:5::profile
+#@-node:3::profile
 #@-others
 
 
@@ -201,7 +202,7 @@ if __name__ == "__main__":
 			fileName = string.join(sys.argv[1:],' ')
 		else:
 			fileName = sys.argv[1]
-		leoOpen(fileName)
+		run(fileName)
 	else:
 		run()
 

@@ -33,60 +33,7 @@ assert(false!=None)
 
 
 #@+others
-#@+node:2::callerName
-#@+body
-def callerName (n=1):
-
-	try: # get the function name from the call stack.
-		f1 = sys._getframe(n) # The stack frame, n levels up.
-		code1 = f1.f_code # The code object
-		return code1.co_name # The code name
-	except:
-		es_exception()
-		return "<no caller name>"
-
-#@-body
-#@-node:2::callerName
-#@+node:3::collectGarbage
-#@+body
-def collectGarbage():
-	
-	if 0: # not needed.
-		try:
-			import gc
-			gc.collect()
-			es("len(garbage):"+`len(gc.garbage)`)
-		except:
-			# es_exception()
-			pass
-
-#@-body
-#@-node:3::collectGarbage
-#@+node:4::executeScript
-#@+body
-def executeScript (name):
-	
-	"""Execute a script whose short python file name is given"""
-	
-	mod_name,ext = os.path.splitext(name)
-	file = None
-	try:
-		# This code is in effect an import or a reload.
-		# This allows the user to modify scripts without leaving Leo.
-		import imp
-		file,filename,description = imp.find_module(mod_name)
-		imp.load_module(mod_name,file,filename,description)
-	except:
-		es("Exception executing " + name,color="red")
-		es_exception()
-
-	if file:
-		file.close()
-
-
-#@-body
-#@-node:4::executeScript
-#@+node:5::Commands, Dialogs, Directives, & Menus...
+#@+node:2::Commands, Dialogs, Directives, & Menus...
 #@+node:1::Dialog utils...
 #@+node:1::attachLeoIcon & allies
 #@+body
@@ -934,484 +881,9 @@ def wrap_lines (lines,pageWidth,firstLineWidth=None):
 	return result
 #@-body
 #@-node:5::wrap_lines
-#@-node:5::Commands, Dialogs, Directives, & Menus...
-#@+node:6::Debugging, Dumping, Timing, Tracing & Sherlock
-#@+node:1::alert
-#@+body
-def alert(message):
-
-	es(message)
-
-	import tkMessageBox
-	tkMessageBox.showwarning("Alert", message)
-
-#@-body
-#@-node:1::alert
-#@+node:2::angleBrackets & virtual_event_name
-#@+body
-# Returns < < s > >
-
-def angleBrackets(s):
-
-	return ( "<<" + s +
-		">>") # must be on a separate line.
-
-virtual_event_name = angleBrackets
-#@-body
-#@-node:2::angleBrackets & virtual_event_name
-#@+node:3::createTopologyList
-#@+body
-def createTopologyList (c=None,root=None,useHeadlines=false):
-	
-	"""Creates a list describing a node and all its descendents"""
-	
-	if not c: c = top()
-	if not root: root = c.rootVnode()
-	v = root
-	if useHeadlines:
-		aList = [(v.numberOfChildren(),v.headString()),]
-	else:
-		aList = [v.numberOfChildren()]
-	child = v.firstChild()
-	while child:
-		aList.append(createTopologyList(c,child,useHeadlines))
-		child = child.next()
-	return aList
-#@-body
-#@-node:3::createTopologyList
-#@+node:4::dump
-#@+body
-def dump(s):
-	
-	out = ""
-	for i in s:
-		out += `ord(i)` + ","
-	return out
-		
-def oldDump(s):
-
-	out = ""
-	for i in s:
-		if i=='\n':
-			out += "[" ; out += "n" ; out += "]"
-		if i=='\t':
-			out += "[" ; out += "t" ; out += "]"
-		elif i==' ':
-			out += "[" ; out += " " ; out += "]"
-		else: out += i
-	return out
-#@-body
-#@-node:4::dump
-#@+node:5::es_error
-#@+body
-def es_error (s):
-	
-	config = app().config
-	if config: # May not exist during initialization.
-		color = config.getWindowPref("log_error_color")
-		es(s,color=color)
-	else:
-		es(s)
-#@-body
-#@-node:5::es_error
-#@+node:6::es_exception
-#@+body
-def es_exception (full=false):
-
-	import traceback
-	typ,val,tb = sys.exc_info()
-	if full:
-		errList = traceback.format_exception(typ,val,tb)
-	else:
-		errList = traceback.format_exception_only(typ,val)
-	for i in errList:
-		es_error(i)
-	traceback.print_exc()
-#@-body
-#@-node:6::es_exception
-#@+node:7::es_event_exception
-#@+body
-def es_event_exception (eventName,full=false):
-
-	import traceback
-	es("exception handling ", eventName, " event")
-	typ,val,tb = sys.exc_info()
-	if full:
-		errList = traceback.format_exception(typ,val,tb)
-	else:
-		errList = traceback.format_exception_only(typ,val)
-	for i in errList:
-		es(i)
-	traceback.print_exc()
-#@-body
-#@-node:7::es_event_exception
-#@+node:8::funcToMethod
-#@+body
-#@+at
-#  The following is taken from page 188 of the Python Cookbook.
-# 
-# The following method allows you to add a function as a method of any class.  
-# That is, it converts the function to a method of the class.  The method just 
-# added is available instantly to all existing instances of the class, and to 
-# all instances created in the future.
-# 
-# The function's first argument should be self.
-# 
-# The newly created method has the same name as the function unless the 
-# optional name argument is supplied, in which case that name is used as the 
-# method name.
-
-#@-at
-#@@c
-
-def funcToMethod(f,theClass,name=None):
-	setattr(theClass,name or f.__name__,f)
-	trace(`name`)
-#@-body
-#@-node:8::funcToMethod
-#@+node:9::get_line & get_line_after
-#@+body
-# Very useful for tracing.
-
-def get_line (s,i):
-
-	nl = ""
-	if is_nl(s,i):
-		i = skip_nl(s,i)
-		nl = "[nl]"
-	j = find_line_start(s,i)
-	k = skip_to_end_of_line(s,i)
-	return nl + s[j:k]
-	
-def get_line_after (s,i):
-	
-	nl = ""
-	if is_nl(s,i):
-		i = skip_nl(s,i)
-		nl = "[nl]"
-	k = skip_to_end_of_line(s,i)
-	return nl + s[i:k]
-
-#@-body
-#@-node:9::get_line & get_line_after
-#@+node:10::file/module/plugin_date
-#@+body
-def module_date (mod,format=None):
-	file = os.path.join(app().loadDir,mod.__file__)
-	root,ext = os.path.splitext(file) 
-	return file_date(root + ".py",format=format)
-
-def plugin_date (plugin_mod,format=None):
-	file = os.path.join(app().loadDir,"..","plugins",plugin_mod.__file__)
-	root,ext = os.path.splitext(file) 
-	return file_date(root + ".py",format=format)
-
-def file_date (file,format=None):
-	if file and len(file)and os.path.exists(file):
-		try:
-			import time
-			n = os.path.getmtime(file)
-			if format == None:
-				format = "%m/%d/%y %H:%M:%S"
-			return time.strftime(format,time.gmtime(n))
-		except: pass
-	return ""
-
-#@-body
-#@-node:10::file/module/plugin_date
-#@+node:11::printBindings
-#@+body
-def print_bindings (name,window):
-
-	bindings = window.bind()
-	print
-	print "Bindings for", name
-	for b in bindings:
-		print b
-#@-body
-#@-node:11::printBindings
-#@+node:12::printGlobals
-#@+body
-def printGlobals(message=None):
-	
-	# Get the list of globals.
-	globs = list(globals())
-	globs.sort()
-	
-	# Print the list.
-	if message:
-		leader = "-" * 10
-		print leader, ' ', message, ' ', leader
-	for glob in globs:
-		print glob
-#@-body
-#@-node:12::printGlobals
-#@+node:13::printLeoModules
-#@+body
-def printLeoModules(message=None):
-	
-	# Create the list.
-	mods = []
-	for name in sys.modules.keys():
-		if name and name[0:3] == "leo":
-			mods.append(name)
-
-	# Print the list.
-	if message:
-		leader = "-" * 10
-		print leader, ' ', message, ' ', leader
-	mods.sort()
-	for m in mods:
-		print m,
-	print
-#@-body
-#@-node:13::printLeoModules
-#@+node:14::Sherlock...
-#@+body
-#@+at
-#  Starting with this release, you will see trace statements throughout the 
-# code.  The trace function is defined in leoGlobals.py; trace implements much 
-# of the functionality of my Sherlock tracing package.  Traces are more 
-# convenient than print statements for two reasons: 1) you don't need explicit 
-# trace names and 2) you can disable them without recompiling.
-# 
-# In the following examples, suppose that the call to trace appears in 
-# function f.
-# 
-# trace(string) prints string if tracing for f has been enabled.  For example, 
-# the following statment prints from s[i] to the end of the line if tracing 
-# for f has been enabled.
-# 
-# 	j = skip_line(s,i) ; trace(s[i:j])
-# 
-# trace(function) exectutes the function if tracing for f has been enabled.  
-# For example,
-# 
-# 	trace(self.f2)
-# 
-# You enable and disable tracing by calling init_trace(args).  Examples:
-# 
-# 	init_trace("+*")         # enable all traces
-# 	init_trace("+a","+b")    # enable traces for a and b
-# 	init_trace(("+a","+b"))  # enable traces for a and b
-# 	init_trace("-a")         # disable tracing for a
-# 	traces = init_trace("?") # return the list of enabled traces
-# 
-# If two arguments are supplied to trace, the first argument is the 
-# "tracepoint name" and the second argument is the "tracepoint action" as 
-# shown in the examples above.  If tracing for the tracepoint name is enabled, 
-# the tracepoint action is printed (if it is a string) or exectuted (if it is 
-# a function name).
-# 
-# "*" will not match an explicit tracepoint name that starts with a minus 
-# sign.  For example,
-# 
-# 	trace_tag("-nocolor", self.disable_color)
-
-#@-at
-#@-body
-#@+node:1::init_sherlock
-#@+body
-# Called by startup code.
-# Args are all the arguments on the command line.
-
-def init_sherlock (args):
-	
-	init_trace(args,echo=0)
-	# trace("argv", "sys.argv: " + `sys.argv`)
-#@-body
-#@-node:1::init_sherlock
-#@+node:2::get_Sherlock_args
-#@+body
-#@+at
-#  It no args are given we attempt to get them from the "SherlockArgs" file.  
-# If there are still no arguments we trace everything.  This default makes 
-# tracing much more useful in Python.
-
-#@-at
-#@@c
-
-def get_Sherlock_args (args):
-
-	if not args or len(args)==0:
-		try:
-			f = open(os.path.join(app().loadDir,"SherlockArgs"))
-			args = f.readlines()
-			f.close()
-		except: pass
-	elif type(args[0]) == type(("1","2")):
-		args = args[0] # strip away the outer tuple.
-
-	# No args means trace everything.
-	if not args or len(args)==0: args = ["+*"] 
-	# print "get_Sherlock_args:", args
-	return args
-#@-body
-#@-node:2::get_Sherlock_args
-#@+node:3::init_trace
-#@+body
-def init_trace(args,echo=1):
-
-	t = app().trace_list
-	args = get_Sherlock_args(args)
-
-	for arg in args:
-		if arg[0] in string.letters: prefix = '+'
-		else: prefix = arg[0] ; arg = arg[1:]
-		
-		if prefix == '?':
-			print "trace list:", t
-		elif prefix == '+' and not arg in t:
-			t.append(string.lower(arg))
-			if echo:
-				print "enabling:", arg
-		elif prefix == '-' and arg in t:
-			t.remove(string.lower(arg))
-			if echo:
-				print "disabling:", arg
-		else:
-			print "ignoring:", prefix + arg
-#@-body
-#@-node:3::init_trace
-#@+node:4::trace
-#@+body
-# Convert all args to strings.
-# Print if tracing for the presently executing function has been enabled.
-
-def trace (*args):
-
-	s = ""
-	for arg in args:
-		if type(arg) != type(""):
-			arg = repr(arg)
-		if len(s) > 0:
-			s = s + " " + arg
-		else:
-			s = arg
-	message = s
-	try: # get the function name from the call stack.
-		f1 = sys._getframe(1) # The stack frame, one level up.
-		code1 = f1.f_code # The code object
-		name = code1.co_name # The code name
-	except: name = ""
-	if name == "?":
-		name = "<unknown>"
-
-	t = app().trace_list
-	# tracepoint names starting with '-' must match exactly.
-	minus = len(name) > 0 and name[0] == '-'
-	if minus: name = name[1:]
-	if (not minus and '*' in t) or name.lower() in t:
-		s = name + ": " + message
-		if 1: print s
-		else: es(s)
-#@-body
-#@-node:4::trace
-#@+node:5::trace_tag
-#@+body
-# Convert all args to strings.
-# Print if tracing for name has been enabled.
-
-def trace_tag (name, *args):
-	
-	s = ""
-	for arg in args:
-		if type(arg) != type(""):
-			arg = repr(arg)
-		if len(s) > 0:
-			s = s + ", " + arg
-		else:
-			s = arg
-	message = s
-
-	t = app().trace_list
-	# tracepoint names starting with '-' must match exactly.
-	minus = len(name) > 0 and name[0] == '-'
-	if minus: name = name[1:]
-	if (not minus and '*' in t) or name.lower() in t:
-		s = name + ": " + message
-		if 1: print s
-		else: es(s)
-
-#@-body
-#@-node:5::trace_tag
-#@-node:14::Sherlock...
-#@+node:15::Statistics
-#@+node:1::clear_stats
-#@+body
-def clear_stats():
-	
-	app().stats = {}
-
-#@-body
-#@-node:1::clear_stats
-#@+node:2::print_stats
-#@+body
-def print_stats (name=None):
-	
-	if name:
-		if type(name) != type(""):
-			name = repr(name)
-	else:
-		name = callerName(n=2) # Get caller name 2 levels back.
-	
-	try:
-		stats = app().stats
-	except:
-		print ; print "no statistics at", name ; print
-		return
-		
-	items = stats.items()
-	items.sort()
-	print ; print "statistics at",name ; print
-	for key,value in items:
-		print key,value
-		
-	clear_stats()
-
-#@-body
-#@-node:2::print_stats
-#@+node:3::stat
-#@+body
-def stat (name=None):
-
-	"""Increments the statistic for name in app().stats
-	The caller's name is used by default.
-	"""
-	
-	if name:
-		if type(name) != type(""):
-			name = repr(name)
-	else:
-		name = callerName(n=2) # Get caller name 2 levels back.
-
-	try:
-		stats = app().stats
-	except:
-		app().stats = stats = {}
-
-	stats[name] = 1 + stats.get(name,0)
-
-#@-body
-#@-node:3::stat
-#@-node:15::Statistics
-#@+node:16::Timing
-#@+body
-#@+at
-#  pychecker bug: pychecker complains that there is no attribute time.clock
-
-#@-at
-#@@c
-
-def getTime():
-	return time.clock()
-	
-def esDiffTime(message, start):
-	es(message + ("%6.3f" % (time.clock()-start)))
-	return time.clock()
-#@-body
-#@-node:16::Timing
-#@+node:17::Files & Directories...
+#@-node:2::Commands, Dialogs, Directives, & Menus...
+#@+node:3::Debugging, Dumping, Timing, Tracing & Sherlock
+#@+node:1::Files & Directories...
 #@+node:1::create_temp_name
 #@+body
 # Returns a temporary file name.
@@ -1740,9 +1212,498 @@ def utils_rename(src,dst):
 		move_file(src,dst)
 #@-body
 #@-node:10::utils_rename
-#@-node:17::Files & Directories...
-#@-node:6::Debugging, Dumping, Timing, Tracing & Sherlock
-#@+node:7::Hooks
+#@-node:1::Files & Directories...
+#@+node:2::Sherlock...
+#@+body
+#@+at
+#  Starting with this release, you will see trace statements throughout the 
+# code.  The trace function is defined in leoGlobals.py; trace implements much 
+# of the functionality of my Sherlock tracing package.  Traces are more 
+# convenient than print statements for two reasons: 1) you don't need explicit 
+# trace names and 2) you can disable them without recompiling.
+# 
+# In the following examples, suppose that the call to trace appears in 
+# function f.
+# 
+# trace(string) prints string if tracing for f has been enabled.  For example, 
+# the following statment prints from s[i] to the end of the line if tracing 
+# for f has been enabled.
+# 
+# 	j = skip_line(s,i) ; trace(s[i:j])
+# 
+# trace(function) exectutes the function if tracing for f has been enabled.  
+# For example,
+# 
+# 	trace(self.f2)
+# 
+# You enable and disable tracing by calling init_trace(args).  Examples:
+# 
+# 	init_trace("+*")         # enable all traces
+# 	init_trace("+a","+b")    # enable traces for a and b
+# 	init_trace(("+a","+b"))  # enable traces for a and b
+# 	init_trace("-a")         # disable tracing for a
+# 	traces = init_trace("?") # return the list of enabled traces
+# 
+# If two arguments are supplied to trace, the first argument is the 
+# "tracepoint name" and the second argument is the "tracepoint action" as 
+# shown in the examples above.  If tracing for the tracepoint name is enabled, 
+# the tracepoint action is printed (if it is a string) or exectuted (if it is 
+# a function name).
+# 
+# "*" will not match an explicit tracepoint name that starts with a minus 
+# sign.  For example,
+# 
+# 	trace_tag("-nocolor", self.disable_color)
+
+#@-at
+#@-body
+#@+node:1::init_sherlock
+#@+body
+# Called by startup code.
+# Args are all the arguments on the command line.
+
+def init_sherlock (args):
+	
+	init_trace(args,echo=0)
+	# trace("argv", "sys.argv: " + `sys.argv`)
+#@-body
+#@-node:1::init_sherlock
+#@+node:2::get_Sherlock_args
+#@+body
+#@+at
+#  It no args are given we attempt to get them from the "SherlockArgs" file.  
+# If there are still no arguments we trace everything.  This default makes 
+# tracing much more useful in Python.
+
+#@-at
+#@@c
+
+def get_Sherlock_args (args):
+
+	if not args or len(args)==0:
+		try:
+			f = open(os.path.join(app().loadDir,"SherlockArgs"))
+			args = f.readlines()
+			f.close()
+		except: pass
+	elif type(args[0]) == type(("1","2")):
+		args = args[0] # strip away the outer tuple.
+
+	# No args means trace everything.
+	if not args or len(args)==0: args = ["+*"] 
+	# print "get_Sherlock_args:", args
+	return args
+#@-body
+#@-node:2::get_Sherlock_args
+#@+node:3::init_trace
+#@+body
+def init_trace(args,echo=1):
+
+	t = app().trace_list
+	args = get_Sherlock_args(args)
+
+	for arg in args:
+		if arg[0] in string.letters: prefix = '+'
+		else: prefix = arg[0] ; arg = arg[1:]
+		
+		if prefix == '?':
+			print "trace list:", t
+		elif prefix == '+' and not arg in t:
+			t.append(string.lower(arg))
+			if echo:
+				print "enabling:", arg
+		elif prefix == '-' and arg in t:
+			t.remove(string.lower(arg))
+			if echo:
+				print "disabling:", arg
+		else:
+			print "ignoring:", prefix + arg
+#@-body
+#@-node:3::init_trace
+#@+node:4::trace
+#@+body
+# Convert all args to strings.
+# Print if tracing for the presently executing function has been enabled.
+
+def trace (*args):
+
+	s = ""
+	for arg in args:
+		if type(arg) != type(""):
+			arg = repr(arg)
+		if len(s) > 0:
+			s = s + " " + arg
+		else:
+			s = arg
+	message = s
+	try: # get the function name from the call stack.
+		f1 = sys._getframe(1) # The stack frame, one level up.
+		code1 = f1.f_code # The code object
+		name = code1.co_name # The code name
+	except: name = ""
+	if name == "?":
+		name = "<unknown>"
+
+	t = app().trace_list
+	# tracepoint names starting with '-' must match exactly.
+	minus = len(name) > 0 and name[0] == '-'
+	if minus: name = name[1:]
+	if (not minus and '*' in t) or name.lower() in t:
+		s = name + ": " + message
+		if 1: print s
+		else: es(s)
+#@-body
+#@-node:4::trace
+#@+node:5::trace_tag
+#@+body
+# Convert all args to strings.
+# Print if tracing for name has been enabled.
+
+def trace_tag (name, *args):
+	
+	s = ""
+	for arg in args:
+		if type(arg) != type(""):
+			arg = repr(arg)
+		if len(s) > 0:
+			s = s + ", " + arg
+		else:
+			s = arg
+	message = s
+
+	t = app().trace_list
+	# tracepoint names starting with '-' must match exactly.
+	minus = len(name) > 0 and name[0] == '-'
+	if minus: name = name[1:]
+	if (not minus and '*' in t) or name.lower() in t:
+		s = name + ": " + message
+		if 1: print s
+		else: es(s)
+
+#@-body
+#@-node:5::trace_tag
+#@-node:2::Sherlock...
+#@+node:3::Statistics
+#@+node:1::clear_stats
+#@+body
+def clear_stats():
+	
+	app().stats = {}
+
+#@-body
+#@-node:1::clear_stats
+#@+node:2::print_stats
+#@+body
+def print_stats (name=None):
+	
+	if name:
+		if type(name) != type(""):
+			name = repr(name)
+	else:
+		name = callerName(n=2) # Get caller name 2 levels back.
+	
+	try:
+		stats = app().stats
+	except:
+		print ; print "no statistics at", name ; print
+		return
+		
+	items = stats.items()
+	items.sort()
+	print ; print "statistics at",name ; print
+	for key,value in items:
+		print key,value
+		
+	clear_stats()
+
+#@-body
+#@-node:2::print_stats
+#@+node:3::stat
+#@+body
+def stat (name=None):
+
+	"""Increments the statistic for name in app().stats
+	The caller's name is used by default.
+	"""
+	
+	if name:
+		if type(name) != type(""):
+			name = repr(name)
+	else:
+		name = callerName(n=2) # Get caller name 2 levels back.
+
+	try:
+		stats = app().stats
+	except:
+		app().stats = stats = {}
+
+	stats[name] = 1 + stats.get(name,0)
+
+#@-body
+#@-node:3::stat
+#@-node:3::Statistics
+#@+node:4::Timing
+#@+body
+#@+at
+#  pychecker bug: pychecker complains that there is no attribute time.clock
+
+#@-at
+#@@c
+
+def getTime():
+	return time.clock()
+	
+def esDiffTime(message, start):
+	es(message + ("%6.3f" % (time.clock()-start)))
+	return time.clock()
+#@-body
+#@-node:4::Timing
+#@+node:5::alert
+#@+body
+def alert(message):
+
+	es(message)
+
+	import tkMessageBox
+	tkMessageBox.showwarning("Alert", message)
+
+#@-body
+#@-node:5::alert
+#@+node:6::angleBrackets & virtual_event_name
+#@+body
+# Returns < < s > >
+
+def angleBrackets(s):
+
+	return ( "<<" + s +
+		">>") # must be on a separate line.
+
+virtual_event_name = angleBrackets
+#@-body
+#@-node:6::angleBrackets & virtual_event_name
+#@+node:7::callerName
+#@+body
+def callerName (n=1):
+
+	try: # get the function name from the call stack.
+		f1 = sys._getframe(n) # The stack frame, n levels up.
+		code1 = f1.f_code # The code object
+		return code1.co_name # The code name
+	except:
+		es_exception()
+		return "<no caller name>"
+
+#@-body
+#@-node:7::callerName
+#@+node:8::createTopologyList
+#@+body
+def createTopologyList (c=None,root=None,useHeadlines=false):
+	
+	"""Creates a list describing a node and all its descendents"""
+	
+	if not c: c = top()
+	if not root: root = c.rootVnode()
+	v = root
+	if useHeadlines:
+		aList = [(v.numberOfChildren(),v.headString()),]
+	else:
+		aList = [v.numberOfChildren()]
+	child = v.firstChild()
+	while child:
+		aList.append(createTopologyList(c,child,useHeadlines))
+		child = child.next()
+	return aList
+#@-body
+#@-node:8::createTopologyList
+#@+node:9::dump
+#@+body
+def dump(s):
+	
+	out = ""
+	for i in s:
+		out += `ord(i)` + ","
+	return out
+		
+def oldDump(s):
+
+	out = ""
+	for i in s:
+		if i=='\n':
+			out += "[" ; out += "n" ; out += "]"
+		if i=='\t':
+			out += "[" ; out += "t" ; out += "]"
+		elif i==' ':
+			out += "[" ; out += " " ; out += "]"
+		else: out += i
+	return out
+#@-body
+#@-node:9::dump
+#@+node:10::es_error
+#@+body
+def es_error (s):
+	
+	config = app().config
+	if config: # May not exist during initialization.
+		color = config.getWindowPref("log_error_color")
+		es(s,color=color)
+	else:
+		es(s)
+#@-body
+#@-node:10::es_error
+#@+node:11::es_event_exception
+#@+body
+def es_event_exception (eventName,full=false):
+
+	import traceback
+	es("exception handling ", eventName, " event")
+	typ,val,tb = sys.exc_info()
+	if full:
+		errList = traceback.format_exception(typ,val,tb)
+	else:
+		errList = traceback.format_exception_only(typ,val)
+	for i in errList:
+		es(i)
+	traceback.print_exc()
+#@-body
+#@-node:11::es_event_exception
+#@+node:12::es_exception
+#@+body
+def es_exception (full=false):
+
+	import traceback
+	typ,val,tb = sys.exc_info()
+	if full:
+		errList = traceback.format_exception(typ,val,tb)
+	else:
+		errList = traceback.format_exception_only(typ,val)
+	for i in errList:
+		es_error(i)
+	traceback.print_exc()
+#@-body
+#@-node:12::es_exception
+#@+node:13::file/module/plugin_date
+#@+body
+def module_date (mod,format=None):
+	file = os.path.join(app().loadDir,mod.__file__)
+	root,ext = os.path.splitext(file) 
+	return file_date(root + ".py",format=format)
+
+def plugin_date (plugin_mod,format=None):
+	file = os.path.join(app().loadDir,"..","plugins",plugin_mod.__file__)
+	root,ext = os.path.splitext(file) 
+	return file_date(root + ".py",format=format)
+
+def file_date (file,format=None):
+	if file and len(file)and os.path.exists(file):
+		try:
+			import time
+			n = os.path.getmtime(file)
+			if format == None:
+				format = "%m/%d/%y %H:%M:%S"
+			return time.strftime(format,time.gmtime(n))
+		except: pass
+	return ""
+
+#@-body
+#@-node:13::file/module/plugin_date
+#@+node:14::funcToMethod
+#@+body
+#@+at
+#  The following is taken from page 188 of the Python Cookbook.
+# 
+# The following method allows you to add a function as a method of any class.  
+# That is, it converts the function to a method of the class.  The method just 
+# added is available instantly to all existing instances of the class, and to 
+# all instances created in the future.
+# 
+# The function's first argument should be self.
+# 
+# The newly created method has the same name as the function unless the 
+# optional name argument is supplied, in which case that name is used as the 
+# method name.
+
+#@-at
+#@@c
+
+def funcToMethod(f,theClass,name=None):
+	setattr(theClass,name or f.__name__,f)
+	trace(`name`)
+#@-body
+#@-node:14::funcToMethod
+#@+node:15::get_line & get_line_after
+#@+body
+# Very useful for tracing.
+
+def get_line (s,i):
+
+	nl = ""
+	if is_nl(s,i):
+		i = skip_nl(s,i)
+		nl = "[nl]"
+	j = find_line_start(s,i)
+	k = skip_to_end_of_line(s,i)
+	return nl + s[j:k]
+	
+def get_line_after (s,i):
+	
+	nl = ""
+	if is_nl(s,i):
+		i = skip_nl(s,i)
+		nl = "[nl]"
+	k = skip_to_end_of_line(s,i)
+	return nl + s[i:k]
+
+#@-body
+#@-node:15::get_line & get_line_after
+#@+node:16::printBindings
+#@+body
+def print_bindings (name,window):
+
+	bindings = window.bind()
+	print
+	print "Bindings for", name
+	for b in bindings:
+		print b
+#@-body
+#@-node:16::printBindings
+#@+node:17::printGlobals
+#@+body
+def printGlobals(message=None):
+	
+	# Get the list of globals.
+	globs = list(globals())
+	globs.sort()
+	
+	# Print the list.
+	if message:
+		leader = "-" * 10
+		print leader, ' ', message, ' ', leader
+	for glob in globs:
+		print glob
+#@-body
+#@-node:17::printGlobals
+#@+node:18::printLeoModules
+#@+body
+def printLeoModules(message=None):
+	
+	# Create the list.
+	mods = []
+	for name in sys.modules.keys():
+		if name and name[0:3] == "leo":
+			mods.append(name)
+
+	# Print the list.
+	if message:
+		leader = "-" * 10
+		print leader, ' ', message, ' ', leader
+	mods.sort()
+	for m in mods:
+		print m,
+	print
+#@-body
+#@-node:18::printLeoModules
+#@-node:3::Debugging, Dumping, Timing, Tracing & Sherlock
+#@+node:4::Hooks & plugins
 #@+node:1::enableIdleTimeHook, disableIdleTimeHook, idleTimeHookHandler
 #@+body
 #@+at
@@ -1823,27 +1784,26 @@ def doHook(tag,*args,**keywords):
 	return None # No return value
 #@-body
 #@-node:2::doHook
-#@+node:3::issueHookWarning
+#@+node:3::plugin_signon
 #@+body
-#@+at
-#  This global function issues a warning if use_plugins = 0.
-# 
-# This should be called after creating the first window so the message appears 
-# in the log pane.
+def plugin_signon(module_name):
+	
+	exec("import %s ; m = %s" % (module_name,module_name))
+	
+	if 0: # Verbose
+		es("...%s.py v%s: %s" % (
+			m.__name__, m.__version__, plugin_date(m)))
 
-#@-at
-#@@c
+		print m.__name__, m.__version__
+		
+	# Increment a global count.
+	import leoPlugins
+	leoPlugins.count += 1
 
-def issueHookWarning ():
-
-	if 0: # No longer useful.
-		if not app().config.use_plugins:
-			es("plugin not loaded:")
-			es("use_plugins = 0")
 #@-body
-#@-node:3::issueHookWarning
-#@-node:7::Hooks
-#@+node:8::Lists...
+#@-node:3::plugin_signon
+#@-node:4::Hooks & plugins
+#@+node:5::Lists...
 #@+node:1::appendToList
 #@+body
 def appendToList(out, s):
@@ -1876,8 +1836,8 @@ def listToString(theList):
 		return ""
 #@-body
 #@-node:3::listToString
-#@-node:8::Lists...
-#@+node:9::Most common functions
+#@-node:5::Lists...
+#@+node:6::Most common functions
 #@+body
 # These are guaranteed always to exist for scripts.
 
@@ -1993,8 +1953,8 @@ def windows():
 	return app().windowList
 #@-body
 #@-node:6::windows
-#@-node:9::Most common functions
-#@+node:10::Scanning, selection & whitespace...
+#@-node:6::Most common functions
+#@+node:7::Scanning, selection & whitespace...
 #@+node:1::scanAtFileOptions
 #@+body
 def scanAtFileOptions (h,err_flag=false):
@@ -3062,204 +3022,8 @@ def skip_leading_ws_with_indent(s,i,tab_width):
 #@-body
 #@-node:8::skip_leading_ws_with_indent
 #@-node:8::Whitespace...
-#@-node:10::Scanning, selection & whitespace...
-#@+node:11::Startup & initialization...
-#@+node:1::CheckVersion (Dave Hein)
-#@+body
-#@+at
-# 
-# CheckVersion() is a generic version checker.  Assumes a
-# version string of up to four parts, or tokens, with
-# leftmost token being most significant and each token
-# becoming less signficant in sequence to the right.
-# 
-# RETURN VALUE
-# 
-# 1 if comparison is true
-# 0 if comparison is false
-# 
-# PARAMETERS
-# 
-# version: the version string to be tested
-# againstVersion: the reference version string to be
-# 				compared against
-# condition: can be any of "==", "!=", ">=", "<=", ">", or "<"
-# stringCompare: whether to test a token using only the
-# 			   leading integer of the token, or using the
-# 			   entire token string.  For example, a value
-# 			   of "0.0.1.0" means that we use the integer
-# 			   value of the first, second, and fourth
-# 			   tokens, but we use a string compare for the
-# 			   third version token.
-# delimiter: the character that separates the tokens in the
-# 		   version strings.
-# 
-# The comparison uses the precision of the version string
-# with the least number of tokens.  For example a test of
-# "8.4" against "8.3.3" would just compare the first two
-# tokens.
-# 
-# The version strings are limited to a maximum of 4 tokens.
-
-#@-at
-#@@c
-
-def CheckVersion( version, againstVersion, condition=">=", stringCompare="0.0.0.0", delimiter='.' ):
-	import sre  # Unicode-aware regular expressions
-	#
-	# tokenize the stringCompare flags
-	compareFlag = string.split( stringCompare, '.' )
-	#
-	# tokenize the version strings
-	testVersion = string.split( version, delimiter )
-	testAgainst = string.split( againstVersion, delimiter )
-	#
-	# find the 'precision' of the comparison
-	tokenCount = 4
-	if tokenCount > len(testAgainst):
-		tokenCount = len(testAgainst)
-	if tokenCount > len(testVersion):
-		tokenCount = len(testVersion)
-	#
-	# Apply the stringCompare flags
-	justInteger = sre.compile("^[0-9]+")
-	for i in range(tokenCount):
-		if "0" == compareFlag[i]:
-			m = justInteger.match( testVersion[i] )
-			testVersion[i] = m.group()
-			m = justInteger.match( testAgainst[i] )
-			testAgainst[i] = m.group()
-		elif "1" != compareFlag[i]:
-			errMsg = "stringCompare argument must be of " +\
-				 "the form \"x.x.x.x\" where each " +\
-				 "'x' is either '0' or '1'."
-			raise EnvironmentError,errMsg
-	#
-	# Compare the versions
-	if condition == ">=":
-		for i in range(tokenCount):
-			if testVersion[i] < testAgainst[i]:
-				return 0
-			if testVersion[i] > testAgainst[i]:
-				return 1 # it was greater than
-		return 1 # it was equal
-	if condition == ">":
-		for i in range(tokenCount):
-			if testVersion[i] < testAgainst[i]:
-				return 0
-			if testVersion[i] > testAgainst[i]:
-				return 1 # it was greater than
-		return 0 # it was equal
-	if condition == "==":
-		for i in range(tokenCount):
-			if testVersion[i] != testAgainst[i]:
-				return 0 # any token was not equal
-		return 1 # every token was equal
-	if condition == "!=":
-		for i in range(tokenCount):
-			if testVersion[i] != testAgainst[i]:
-				return 1 # any token was not equal
-		return 0 # every token was equal
-	if condition == "<":
-		for i in range(tokenCount):
-			if testVersion[i] >= testAgainst[i]:
-				return 0
-			if testVersion[i] < testAgainst[i]:
-				return 1 # it was less than
-		return 0 # it was equal
-	if condition == "<=":
-		for i in range(tokenCount):
-			if testVersion[i] > testAgainst[i]:
-				return 0
-			if testVersion[i] < testAgainst[i]:
-				return 1 # it was less than
-		return 1 # it was equal
-	#
-	# didn't find a condition that we expected.
-	raise EnvironmentError,"condition must be one of '>=', '>', '==', '!=', '<', or '<='."
-
-#@-body
-#@-node:1::CheckVersion (Dave Hein)
-#@+node:2::importFromPath
-#@+body
-def importFromPath (name,path):
-	
-	import imp
-	
-	file = None ; module = None
-	try:
-		fn = shortFileName(name)
-		module,ext = os.path.splitext(fn)
-		path = os.path.normpath(path)
-		data = imp.find_module(module,[path])
-		if data:
-			try:
-				file,pathname,description = data
-				module = imp.load_module(module,file,pathname,description)
-			finally:
-				if not module: es_exception()
-				if file: file.close()
-	except:
-		es_exception()
-		
-	return module
-
-#@-body
-#@-node:2::importFromPath
-#@+node:3::unloadAll
-#@+body
-#@+at
-#  Unloads all of Leo's modules.  Based on code from the Python Cookbook.
-# 
-# It would be very confusing to call this reloadAll.  In fact, this routine 
-# does no reloading at all.  You must understand that modules are reloaded 
-# _only_ as the result of a later call to import.
-# 
-# Actually, the more I think about it, the less useful this routine appears.  
-# It is easy enought to save LeoPy.leo and then reload it, and trying to do 
-# this kind of processing looks like asking for trouble...
-
-#@-at
-#@@c
-
-def unloadAll():
-
-	try:
-		import sys
-		a = app()
-		modules = []
-		for name in sys.modules.keys():
-			if name and name[0:3]=="leo":
-				del (sys.modules[name])
-				modules.append(name)
-		# Restore gApp.  This must be done first.
-		setApp(a)
-		print "unloaded",str(len(modules)),"modules"
-	except:
-		es_exception()
-
-#@-body
-#@-node:3::unloadAll
-#@+node:4::plugin_signon
-#@+body
-def plugin_signon(module_name):
-	
-	exec("import %s ; m = %s" % (module_name,module_name))
-	
-	if 0: # Verbose
-		es("...%s.py v%s: %s" % (
-			m.__name__, m.__version__, plugin_date(m)))
-	else:
-		print m.__name__, m.__version__
-		
-	# Increment a global count.
-	import leoPlugins
-	leoPlugins.count += 1
-
-#@-body
-#@-node:4::plugin_signon
-#@-node:11::Startup & initialization...
-#@+node:12::Unicode utils...
+#@-node:7::Scanning, selection & whitespace...
+#@+node:8::Unicode utils...
 #@+node:1::isValidEncoding
 #@+body
 def isValidEncoding (encoding):
@@ -3386,7 +3150,188 @@ except:
 
 #@-body
 #@-node:4::getpreferredencoding from 2.3a2
-#@-node:12::Unicode utils...
+#@-node:8::Unicode utils...
+#@+node:9::CheckVersion (Dave Hein)
+#@+body
+#@+at
+# 
+# CheckVersion() is a generic version checker.  Assumes a
+# version string of up to four parts, or tokens, with
+# leftmost token being most significant and each token
+# becoming less signficant in sequence to the right.
+# 
+# RETURN VALUE
+# 
+# 1 if comparison is true
+# 0 if comparison is false
+# 
+# PARAMETERS
+# 
+# version: the version string to be tested
+# againstVersion: the reference version string to be
+# 				compared against
+# condition: can be any of "==", "!=", ">=", "<=", ">", or "<"
+# stringCompare: whether to test a token using only the
+# 			   leading integer of the token, or using the
+# 			   entire token string.  For example, a value
+# 			   of "0.0.1.0" means that we use the integer
+# 			   value of the first, second, and fourth
+# 			   tokens, but we use a string compare for the
+# 			   third version token.
+# delimiter: the character that separates the tokens in the
+# 		   version strings.
+# 
+# The comparison uses the precision of the version string
+# with the least number of tokens.  For example a test of
+# "8.4" against "8.3.3" would just compare the first two
+# tokens.
+# 
+# The version strings are limited to a maximum of 4 tokens.
+
+#@-at
+#@@c
+
+def CheckVersion( version, againstVersion, condition=">=", stringCompare="0.0.0.0", delimiter='.' ):
+	import sre  # Unicode-aware regular expressions
+	#
+	# tokenize the stringCompare flags
+	compareFlag = string.split( stringCompare, '.' )
+	#
+	# tokenize the version strings
+	testVersion = string.split( version, delimiter )
+	testAgainst = string.split( againstVersion, delimiter )
+	#
+	# find the 'precision' of the comparison
+	tokenCount = 4
+	if tokenCount > len(testAgainst):
+		tokenCount = len(testAgainst)
+	if tokenCount > len(testVersion):
+		tokenCount = len(testVersion)
+	#
+	# Apply the stringCompare flags
+	justInteger = sre.compile("^[0-9]+")
+	for i in range(tokenCount):
+		if "0" == compareFlag[i]:
+			m = justInteger.match( testVersion[i] )
+			testVersion[i] = m.group()
+			m = justInteger.match( testAgainst[i] )
+			testAgainst[i] = m.group()
+		elif "1" != compareFlag[i]:
+			errMsg = "stringCompare argument must be of " +\
+				 "the form \"x.x.x.x\" where each " +\
+				 "'x' is either '0' or '1'."
+			raise EnvironmentError,errMsg
+	#
+	# Compare the versions
+	if condition == ">=":
+		for i in range(tokenCount):
+			if testVersion[i] < testAgainst[i]:
+				return 0
+			if testVersion[i] > testAgainst[i]:
+				return 1 # it was greater than
+		return 1 # it was equal
+	if condition == ">":
+		for i in range(tokenCount):
+			if testVersion[i] < testAgainst[i]:
+				return 0
+			if testVersion[i] > testAgainst[i]:
+				return 1 # it was greater than
+		return 0 # it was equal
+	if condition == "==":
+		for i in range(tokenCount):
+			if testVersion[i] != testAgainst[i]:
+				return 0 # any token was not equal
+		return 1 # every token was equal
+	if condition == "!=":
+		for i in range(tokenCount):
+			if testVersion[i] != testAgainst[i]:
+				return 1 # any token was not equal
+		return 0 # every token was equal
+	if condition == "<":
+		for i in range(tokenCount):
+			if testVersion[i] >= testAgainst[i]:
+				return 0
+			if testVersion[i] < testAgainst[i]:
+				return 1 # it was less than
+		return 0 # it was equal
+	if condition == "<=":
+		for i in range(tokenCount):
+			if testVersion[i] > testAgainst[i]:
+				return 0
+			if testVersion[i] < testAgainst[i]:
+				return 1 # it was less than
+		return 1 # it was equal
+	#
+	# didn't find a condition that we expected.
+	raise EnvironmentError,"condition must be one of '>=', '>', '==', '!=', '<', or '<='."
+
+#@-body
+#@-node:9::CheckVersion (Dave Hein)
+#@+node:10::collectGarbage
+#@+body
+def collectGarbage():
+	
+	if 0: # not needed.
+		try:
+			import gc
+			gc.collect()
+			es("len(garbage):"+`len(gc.garbage)`)
+		except:
+			# es_exception()
+			pass
+
+#@-body
+#@-node:10::collectGarbage
+#@+node:11::executeScript
+#@+body
+def executeScript (name):
+	
+	"""Execute a script whose short python file name is given"""
+	
+	mod_name,ext = os.path.splitext(name)
+	file = None
+	try:
+		# This code is in effect an import or a reload.
+		# This allows the user to modify scripts without leaving Leo.
+		import imp
+		file,filename,description = imp.find_module(mod_name)
+		imp.load_module(mod_name,file,filename,description)
+	except:
+		es("Exception executing " + name,color="red")
+		es_exception()
+
+	if file:
+		file.close()
+
+
+#@-body
+#@-node:11::executeScript
+#@+node:12::importFromPath
+#@+body
+def importFromPath (name,path):
+	
+	import imp
+	
+	file = None ; module = None
+	try:
+		fn = shortFileName(name)
+		module,ext = os.path.splitext(fn)
+		path = os.path.normpath(path)
+		data = imp.find_module(module,[path])
+		if data:
+			try:
+				file,pathname,description = data
+				module = imp.load_module(module,file,pathname,description)
+			finally:
+				if not module: es_exception()
+				if file: file.close()
+	except:
+		es_exception()
+		
+	return module
+
+#@-body
+#@-node:12::importFromPath
 #@-others
 #@-body
 #@-node:0::@file leoGlobals.py

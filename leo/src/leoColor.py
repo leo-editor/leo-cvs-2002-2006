@@ -880,7 +880,11 @@ class colorizer:
 			"latexBackground","latexKeyword",
 			"link","name","nameBrackets","pp","string","tab",
 			"elide","bold","italic") # new for wiki styling.
+		self.color_pass = 0
 		self.incremental = false
+		self.redoColoring = false
+		self.redoingColoring = false
+		self.sel = None
 		self.lines = []
 		self.states = []
 		self.last_flag = "unknown"
@@ -1064,17 +1068,11 @@ class colorizer:
 	#@-node:3::colorize & recolor_range
 	#@+node:4::colorizeAnyLanguage & allies
 	#@+body
-	#@+at
-	#  Leo needs both incremental and non-incremental colorizing; this routine 
-	# does both.
-
-	#@-at
-	#@@c
-
 	def colorizeAnyLanguage (self,v,body,leading=None,trailing=None):
 		
-		# print "incremental,showInvisibles",`self.incremental`,`self.showInvisibles`
-		# print `self.color_tags_list`
+		"""Color the body pane either incrementally or non-incrementally"""
+		
+		#trace(`v`)
 		try:
 			
 			#@<< initialize ivars & tags >>
@@ -1090,7 +1088,7 @@ class colorizer:
 			self.v = v
 			self.body = body
 			s = body.get("1.0","end")
-			sel = body.index("insert") # get the location of the insert point
+			self.sel = sel = body.index("insert") # get the location of the insert point
 			start, end = string.split(sel,'.')
 			start = int(start)
 			
@@ -1100,6 +1098,10 @@ class colorizer:
 			
 			if not self.incremental:
 				self.removeAllTags()
+				self.removeAllImages()
+			
+			self.redoColoring = false
+			self.redoingColoring = false
 			
 			
 			#@<< configure tags >>
@@ -1232,21 +1234,6 @@ class colorizer:
 			#@-node:2::<< configure language-specific settings >>
 
 			
-			#@<< remove all image references >>
-			#@+node:3::<< remove all image references >>
-			#@+body
-			if 0:
-				self.image_references = []
-			else:
-				for data in self.image_references:
-					v,junk,junk,junk = data
-					if v != self.v:
-						self.image_references.remove(data)
-			
-			#@-body
-			#@-node:3::<< remove all image references >>
-
-			
 			self.hyperCount = 0 # Number of hypertext tags
 			self.count += 1
 			lines = string.split(s,'\n')
@@ -1254,15 +1241,22 @@ class colorizer:
 			#@-node:1::<< initialize ivars & tags >> colorizeAnyLanguage
 
 			doHook("init-color-markup",colorer=self,v=self.v)
+			self.color_pass = 0
 			if self.incremental and (
+				
+				#@<< all state ivars match >>
+				#@+node:2::<< all state ivars match >>
+				#@+body
 				self.flag == self.last_flag and
 				self.last_language == self.language and
 				self.comment_string == self.last_comment and
-				self.markup_string == self.last_markup):
-				# trace("incremental coloring")
+				self.markup_string == self.last_markup
+				#@-body
+				#@-node:2::<< all state ivars match >>
+ ):
 				
 				#@<< incrementally color the text >>
-				#@+node:2::<< incrementally color the text >>
+				#@+node:3::<< incrementally color the text >>
 				#@+body
 				#@+at
 				#   Each line has a starting state.  The starting state for 
@@ -1283,6 +1277,8 @@ class colorizer:
 				#@-at
 				#@@c
 
+				# trace("incremental")
+				
 				old_lines = self.lines
 				old_states = self.states
 				new_lines = lines
@@ -1459,25 +1455,106 @@ class colorizer:
 				#@-body
 				#@-node:4::<< colorize until the states match >>
 				#@-body
-				#@-node:2::<< incrementally color the text >>
+				#@-node:3::<< incrementally color the text >>
 
 			else:
-				# trace("batch coloring")
+				
+				#@<< non-incrementally color the text >>
+				#@+node:4::<< non-incrementally color the text >>
+				#@+body
+				# trace("non-incremental")
+				
 				self.line_index = 1 # The Tk line number for indices, as in n.i
 				for s in lines:
 					state = self.colorizeLine(s,state)
 					self.line_index += 1
+				
+				#@-body
+				#@-node:4::<< non-incrementally color the text >>
+
+			if self.redoColoring:
+				
+				#@<< completely recolor in two passes >>
+				#@+node:7::<< completely recolor in two passes >>
+				#@+body
+				# This code is executed only if graphics characters will be inserted by user markup code.
+				
+				# Pass 1:  Insert all graphics characters.
+				
+				self.removeAllImages()
+				s = self.body.get("1.0","end")
+				lines = s.split('\n')
+				
+				self.color_pass = 1
+				self.line_index = 1
+				state = self.setFirstLineState()
+				for s in lines:
+					state = self.colorizeLine(s,state)
+					self.line_index += 1
+				
+				# Pass 2: Insert one blank for each previously inserted graphic.
+				
+				self.color_pass = 2
+				self.line_index = 1
+				state = self.setFirstLineState()
+				for s in lines:
+					
+					#@<< kludge: insert a blank in s for every image in the line >>
+					#@+node:1::<< kludge: insert a blank in s for every image in the line >>
+					#@+body
+					#@+at
+					#  A spectacular kludge.
+					# 
+					# Images take up a real index, yet the get routine does 
+					# not return any character for them!
+					# In order to keep the colorer in synch, we must insert 
+					# dummy blanks in s at the positions corresponding to each image.
+
+					#@-at
+					#@@c
+
+					inserted = 0
+					
+					for photo,image,line_index,i in self.image_references:
+						if self.line_index == line_index:
+							n = i+inserted ; 	inserted += 1
+							s = s[:n] + ' ' + s[n:]
+					
+					#@-body
+					#@-node:1::<< kludge: insert a blank in s for every image in the line >>
+
+					state = self.colorizeLine(s,state)
+					self.line_index += 1
+				
+				#@-body
+				#@-node:7::<< completely recolor in two passes >>
+
+			
+			#@<< update state ivars >>
+			#@+node:5::<< update state ivars >>
+			#@+body
 			self.last_flag = self.flag
 			self.last_language = self.language
 			self.last_comment = self.comment_string
 			self.last_markup = self.markup_string
+			#@-body
+			#@-node:5::<< update state ivars >>
+
 		except:
+			
+			#@<< set state ivars to "unknown" >>
+			#@+node:6::<< set state ivars to "unknown" >>
+			#@+body
 			self.last_flag = "unknown"
 			self.last_language = "unknown"
 			self.last_comment = "unknown"
+			#@-body
+			#@-node:6::<< set state ivars to "unknown" >>
+
 			es_exception()
 	#@-body
-	#@+node:3::colorizeLine & allies
+	#@-node:4::colorizeAnyLanguage & allies
+	#@+node:5::colorizeLine & allies
 	#@+body
 	def colorizeLine (self,s,state):
 	
@@ -2149,9 +2226,8 @@ class colorizer:
 			self.body.tag_remove(tag,self.index(0),self.index("end"))
 	#@-body
 	#@-node:10::removeAllTags & removeTagsFromLines
-	#@-node:3::colorizeLine & allies
-	#@-node:4::colorizeAnyLanguage & allies
-	#@+node:5::scanColorDirectives
+	#@-node:5::colorizeLine & allies
+	#@+node:6::scanColorDirectives
 	#@+body
 	def scanColorDirectives(self,v):
 		
@@ -2209,8 +2285,8 @@ class colorizer:
 		return self.language # For use by external routines.
 	
 	#@-body
-	#@-node:5::scanColorDirectives
-	#@+node:6::color.schedule
+	#@-node:6::scanColorDirectives
+	#@+node:7::color.schedule
 	#@+body
 	def schedule(self,v,body,incremental=0):
 	
@@ -2224,8 +2300,8 @@ class colorizer:
 		if v and body and self.enabled:
 			self.colorize(v,body,self.incremental)
 	#@-body
-	#@-node:6::color.schedule
-	#@+node:7::getCwebWord
+	#@-node:7::color.schedule
+	#@+node:8::getCwebWord
 	#@+body
 	def getCwebWord (self,s,i):
 		
@@ -2253,8 +2329,23 @@ class colorizer:
 			
 		return word
 	#@-body
-	#@-node:7::getCwebWord
-	#@+node:8::updateSyntaxColorer
+	#@-node:8::getCwebWord
+	#@+node:9::removeAllImages
+	#@+body
+	def removeAllImages (self):
+		
+		for photo,image,line_index,i in self.image_references:
+			try:
+				index = self.body.index(image)
+				# print "removing image at: ", `index`
+				self.body.delete(index)
+			except:
+				pass # The image may have been deleted earlier.
+		
+		self.image_references = []
+	#@-body
+	#@-node:9::removeAllImages
+	#@+node:10::updateSyntaxColorer
 	#@+body
 	# self.flag is true unless an unambiguous @nocolor is seen.
 	
@@ -2264,8 +2355,8 @@ class colorizer:
 		self.scanColorDirectives(v)
 	
 	#@-body
-	#@-node:8::updateSyntaxColorer
-	#@+node:9::useSyntaxColoring
+	#@-node:10::updateSyntaxColorer
+	#@+node:11::useSyntaxColoring
 	#@+body
 	# Return true if v unless v is unambiguously under the control of @nocolor.
 	
@@ -2291,8 +2382,8 @@ class colorizer:
 		# trace("useSyntaxColoring",`val`)
 		return val
 	#@-body
-	#@-node:9::useSyntaxColoring
-	#@+node:10::Utils
+	#@-node:11::useSyntaxColoring
+	#@+node:12::Utils
 	#@+body
 	#@+at
 	#  These methods are like the corresponding functions in leoGlobals.py 
@@ -2382,7 +2473,7 @@ class colorizer:
 	
 	#@-body
 	#@-node:5::skip_string
-	#@-node:10::Utils
+	#@-node:12::Utils
 	#@-others
 #@-body
 #@-node:6::class colorizer
