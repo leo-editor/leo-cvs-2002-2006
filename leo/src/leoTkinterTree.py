@@ -107,7 +107,6 @@ class leoTkinterTree (leoFrame.leoTree):
 		self.drag_v = None
 		self.controlDrag = false # true: control was down when drag started.
 		self.drag_id = None # To reset bindings after drag
-		self.keyCount = 0 # For debugging.
 		
 		# 20-SEP-2002 DTHEIN: keep track of popup menu so we can handle
 		#                     behavior better on Linux
@@ -387,6 +386,16 @@ class leoTkinterTree (leoFrame.leoTree):
 			self.canvas.after_idle(self.idle_redraw)
 	#@nonl
 	#@-node:redraw
+	#@+node:tkTree.enableDrawingAfterException
+	def enableDrawingAfterException (self):
+		
+		"""Make sure drawing is enabled following an exception."""
+		
+		if 0: # This makes things worse.
+			self.redrawScheduled = false
+			self.updateCount = 0
+	#@nonl
+	#@-node:tkTree.enableDrawingAfterException
 	#@+node:force_redraw
 	# Schedules a redraw even if inside beginUpdate/endUpdate
 	def force_redraw (self):
