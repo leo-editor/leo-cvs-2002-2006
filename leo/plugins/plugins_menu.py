@@ -1,6 +1,36 @@
 #@+leo-ver=4-thin
 #@+node:EKR.20040517080555.2:@thin plugins_menu.py
-"""Create a Plugins menu"""
+"""Create a Plugins menu
+
+Adds an item to the plugin menu for each active plugin. Selecting
+this menu item will bring up a short About dialog with the details of the
+plugin.
+
+Plugins can create additional menu items by defining functions named
+"cmd_XZY". These will apear in a sub menu. 
+
+If the plugin requires an INI file then a configure menu item will be
+created which will show an INI file editor. the plugin can define an
+"applyConfiguration" function, which will be called when the configuration 
+changes.
+
+Plugins can also define a top level function to be called instead of
+the default "About" dialog by defining a "topLevelMenu" function in
+the plugin. This function will be called when the user clicks on the
+plugin name in the plugins menu. 
+
+Plugins can define their name by setting the __plugin_name__ property.
+
+Plugins can also attempt to select the order they will apear in the menu
+by defining a __plugin_prioriy__. The menu will be created with the
+highest priority items first. This behaviour is not guaranteed since
+other plugins can define any priority. This priority does not affect
+the order of calling handlers.
+
+To change the order select a number outside the range 0-200 since this
+range is used internally for sorting alphabetically.
+
+"""
 
 #@@language python
 #@@tabwidth -4
@@ -16,6 +46,9 @@ import ConfigParser
 import glob
 import os
 import sys
+
+__plugin_name__ = "Plugins Menu"
+__plugin_priority__ = -100
 
 try: import Tkinter as Tk
 except ImportError: Tk = None
@@ -39,7 +72,15 @@ class PlugIn:
             self.mod = __import__(g.os_path_splitext(g.os_path_basename(filename))[0])
             if not self.mod:
                 return
-            self.name = self.mod.__name__
+            try:
+                self.name = self.mod.__plugin_name__
+            except AttributeError:
+                self.name = self.mod.__name__
+            try:
+                self.priority = self.mod.__plugin_priority__
+            except AttributeError:
+                self.priority = 200 - ord(self.name[0])
+            #
             self.doc = self.mod.__doc__
             self.version = self.mod.__dict__.get("__version__") # "<unknown>")
             # if self.version: print self.version,g.shortFileName(filename)
@@ -82,6 +123,22 @@ class PlugIn:
             if item.startswith("cmd_"):
                 self.othercmds[item[4:]] = self.mod.__dict__[item]
         #@-node:EKR.20040517080555.7:<< Look for additional commands >>
+        #@nl
+        #@    << Look for toplevel menu item >>
+        #@+node:pap.20041009131822:<< Look for toplevel menu item >>
+        #@+at 
+        #@nonl
+        # Check to see if there is a toplevel menu item - this will be used 
+        # instead of the default About
+        #@-at
+        #@@c
+        
+        try:
+            self.hastoplevel = self.mod.__dict__["topLevelMenu"]
+        except KeyError:
+            self.hastoplevel = False
+        #@nonl
+        #@-node:pap.20041009131822:<< Look for toplevel menu item >>
         #@nl
     #@nonl
     #@-node:EKR.20040517080555.4:__init__
@@ -301,15 +358,27 @@ def createPluginsMenu (tag,keywords):
         plugins = [PlugIn(file) for file in files]
         items = [(p.name,p) for p in plugins if p.version]
         if items:
-            items.sort()
+            #@            << Sort items >>
+            #@+node:pap.20041009133925:<< sort items >>
+            dec = [(item[1].priority, item) for item in items]
+            dec.sort()
+            dec.reverse()
+            items = [item[1] for item in dec]
+            #@nonl
+            #@-node:pap.20041009133925:<< sort items >>
+            #@nl
             c.pluginsMenu = pluginMenu = c.frame.menu.createNewMenu("&Plugins")
             #@            << add items to the plugins menu >>
             #@+node:EKR.20040517080555.24:<< add items to the plugins menu >>
             for name,p in items:
-                if p.hasconfig:
+                if p.hastoplevel:
+                    table = ((p.name, None, p.hastoplevel),)
+                    c.frame.menu.createMenuEntries(pluginMenu, table)
+                elif p.hasconfig or p.othercmds:
                     m = c.frame.menu.createNewMenu(p.name, "&Plugins")
-                    table = [("About...", None, p.about),
-                             ("Properties...", None, p.properties)]
+                    table = [("About...", None, p.about)]
+                    if p.hasconfig:
+                        table.append(("Properties...", None, p.properties))
                     if p.othercmds:
                         table.append(("-", None, None))
                         items = [(cmd,None,fn) for cmd,fn in p.othercmds.iteritems()]
@@ -337,7 +406,7 @@ if Tk and not g.app.unitTesting: # Register the handlers...
     if g.app.gui.guiName() == "tkinter":
         leoPlugins.registerHandler("create-optional-menus",createPluginsMenu)
         
-        __version__ = "1.2"
+        __version__ = "1.3"
         g.plugin_signon(__name__)
 #@nonl
 #@-node:EKR.20040517080555.2:@thin plugins_menu.py
