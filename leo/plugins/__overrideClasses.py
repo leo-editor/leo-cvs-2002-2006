@@ -1,5 +1,5 @@
 #@+leo-ver=4-thin
-#@+node:edream.110203113231.916:@file-thin __overrideClasses.py
+#@+node:edream.110203113231.916:@thin __overrideClasses.py
 """A plugin showing how to override Leo's core classes."""
 
 #@@language python
@@ -60,5 +60,5 @@ if 0:
 __version__ = "1.2"
 g.plugin_signon(__name__)
 #@nonl
-#@-node:edream.110203113231.916:@file-thin __overrideClasses.py
+#@-node:edream.110203113231.916:@thin __overrideClasses.py
 #@-leo
