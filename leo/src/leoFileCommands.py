@@ -84,7 +84,7 @@ class baseFileCommands:
 	#@+node:createVnode (changed for 4.2)
 	def createVnode (self,parent,back,tref,headline,attrDict):
 		
-		# g.trace(headline)
+		# g.trace(parent,headline)
 		v = None ; c = self.c
 		# Shared tnodes are placed in the file even if empty.
 		if tref == -1:
@@ -122,7 +122,6 @@ class baseFileCommands:
 		#@nonl
 		#@-node:<< handle unknown vnode attributes >>
 		#@nl
-		# if skip: print "clone: ",v
 		return v,skip
 	#@nonl
 	#@-node:createVnode (changed for 4.2)
@@ -464,6 +463,7 @@ class baseFileCommands:
 		self.tnodesDict = {}
 		ok = true
 		c.loading = true # disable c.changed
+		
 		try:
 			#@		<< scan all the xml elements >>
 			#@+node:<< scan all the xml elements >>
@@ -497,7 +497,7 @@ class baseFileCommands:
 			#@-node:<< raise an alert >>
 			#@nl
 			ok = false
-			
+	
 		c.frame.tree.redraw_now()
 		
 		if ok and atFileNodesFlag:
@@ -783,8 +783,7 @@ class baseFileCommands:
 		if self.matchTag("<vh>"):
 			headline = self.getEscapedString() ; self.getTag("</vh>")
 		
-		# g.trace("skip:",skip," parent:",parent," back:",back,"headline:",headline)
-		
+		# g.trace("skip:",skip,"parent:",parent,"back:",back,"headline:",headline)
 		if not skip:
 			v,skip = self.createVnode(parent,back,tref,headline,attrDict)
 			if tnodeList:
@@ -793,11 +792,12 @@ class baseFileCommands:
 			#@		<< Set the remembered status bits >>
 			#@+node:<< Set the remembered status bits >>
 			# We can't set the current position in here!
+			
 			# if setCurrent:
 			#	c.setCurrentPosition(p)
 			
 			if setExpanded: v.initExpandedBit()
-			if setMarked:   v.setMarked()
+			if setMarked:   v.initMarkedBit() # 3/25/03: Do not call setMarkedBit here!
 			if setOrphan:   v.setOrphan()
 			if setTop:      self.topVnode = v
 			#@nonl
@@ -808,6 +808,7 @@ class baseFileCommands:
 		parent = v ; back = None
 		while self.matchTag("<v"):
 			back = self.getVnode(parent,back,skip)
+	
 		# End this vnode.
 		self.getTag("</v>")
 		return v
@@ -1516,20 +1517,16 @@ class baseFileCommands:
 		#@nl
 		#@	<< Put attribute bits >>
 		#@+node:<< Put attribute bits >>
-		if (
-			p.isExpanded() or
-			p.isMarked() or
-			p == self.currentPosition or
-			p == self.topPosition
-		):
-			fc.put(" a=") ; fc.put_dquote()
-			if p.isExpanded():   fc.put("E")
-			if p.isMarked():     fc.put("M")
-			if p.isOrphan():     fc.put("O")
-			if p == self.topPosition:     fc.put("T")
-			if p == self.currentPosition: fc.put("V")
-			fc.put_dquote()
-		#@nonl
+		attr = ""
+		if p.v.isExpanded():          attr += "E"
+		if p.v.isMarked():            attr += "M"
+		if p.v.isOrphan():            attr += "O"
+		if 1: # No longer a bottleneck now that we use p.equal rather than p.__cmp__
+			# Almost 30% of the entire writing time came from here!!!
+			if p.equal(self.topPosition):     attr += "T" # was a bottleneck
+			if p.equal(self.currentPosition): attr += "V" # was a bottleneck
+		
+		if attr: fc.put(' a="%s"' % attr)
 		#@-node:<< Put attribute bits >>
 		#@nl
 		#@	<< Put tnodeList and unKnownAttributes >>
@@ -1537,7 +1534,7 @@ class baseFileCommands:
 		# Write tnodeList only for @file nodes.
 		# New in 4.2: tnode list is in tnode.
 		
-		if hasattr(v.t,"tnodeList") and len(v.t.tnodeList) > 0 and v.isAnyAtFileNode():
+		if hasattr(v.t,"tnodeList") and len(v.t.tnodeList) > 0: ### and v.isAnyAtFileNode():
 			fc.putTnodeList(v) # New in 4.0
 		
 		if hasattr(v,"unknownAttributes"): # New in 4.0
@@ -1562,9 +1559,9 @@ class baseFileCommands:
 		fc.put(">")
 		#@	<< Write the head text >>
 		#@+node:<< Write the head text >>
-		headString = p.headString()
+		headString = p.v.headString()
 		
-		if len(headString) > 0:
+		if headString:
 			fc.put("<vh>")
 			fc.putEscapedString(headString)
 			fc.put("</vh>")
@@ -1572,14 +1569,18 @@ class baseFileCommands:
 		#@-node:<< Write the head text >>
 		#@nl
 	
-		if 1: # if not p.isAtThinFileNode(): # New in 4.2: don't write child nodes of @file-thin trees.
-			if p.hasChildren():
-				fc.put_nl()
-				for child in p.children_iter():
-					fc.putVnode(child)
+		# New in 4.2: don't write child nodes of @file-thin trees.
+		if p.hasChildren(): ### and not p.isAtThinFileNode():
+			fc.put_nl()
+			# This optimization eliminates all "recursive" copies.
+			p.moveToFirstChild()
+			while 1:
+				fc.putVnode(p)
+				if p.hasNext(): p.moveToNext()
+				else:           break
+			p.moveToParent()
 	
 		fc.put("</v>") ; fc.put_nl()
-	#@nonl
 	#@-node:putVnode (3.x and 4.x)
 	#@+node:putVnodes
 	def putVnodes (self):
@@ -1593,18 +1594,19 @@ class baseFileCommands:
 	
 		# Make only one copy for all calls.
 		self.currentPosition = c.currentPosition() 
-		self.topPosition = c.nullPosition()
-		
-		# g.trace(g.app.copies) ; g.app.copies = 0
+		self.topPosition     = c.nullPosition()
 	
 		if self.usingClipboard:
 			self.putVnode(c.currentPosition()) # Write only current tree.
 		else:
-			root = c.rootPosition()
-			for p in root.self_and_siblings_iter():
-				self.putVnode(p) # Write the next top-level node.
-				
-		# g.trace(g.app.copies) ; g.app.copies = 0
+			root = p = c.rootPosition()
+			if 1:
+				while p:
+					self.putVnode(p) # Write the next top-level node.
+					p.moveToNext()
+			else:
+				for p in root.self_and_siblings_iter():
+					self.putVnode(p) # Write the next top-level node.
 	
 		self.put("</vnodes>") ; self.put_nl()
 	#@nonl
@@ -1679,7 +1681,6 @@ class baseFileCommands:
 	
 		c = self.c ; config = g.app.config
 	
-		start = g.getTime()
 		if not outlineOnlyFlag:
 			#@		<< write all @file nodes >>
 			#@+node:<< write all @file nodes >>
@@ -1765,7 +1766,6 @@ class baseFileCommands:
 			#@nonl
 			#@-node:<< create the output file >>
 			#@nl
-			# g.printDiffTime("1",start)
 			#@		<< update leoConfig.txt >>
 			#@+node:<< update leoConfig.txt >>
 			c.setIvarsFromFind()
@@ -1778,22 +1778,27 @@ class baseFileCommands:
 			#@nl
 			#@		<< put the .leo file >>
 			#@+node:<< put the .leo file >>
-			#start = g.printDiffTime("2a",start)
+			start = g.getTime()
 			self.putProlog()
 			self.putHeader()
 			self.putGlobals()
 			self.putPrefs()
 			self.putFindSettings()
-			#start = g.printDiffTime("2b",start)
+			
+			start = g.printDiffTime("headers",start)
+			
 			self.putVnodes()
-			#start = g.printDiffTime("2c",start)
+			
+			start = g.printDiffTime("vnodes ",start)
+			
 			self.putTnodes()
-			#start = g.printDiffTime("2d",start)
+			
+			start = g.printDiffTime("tnodes ",start)
+			
 			self.putPostlog()
 			#@nonl
 			#@-node:<< put the .leo file >>
 			#@nl
-			# start = g.printDiffTime("2",start)
 		except:
 			#@		<< report the exception >>
 			#@+node:<< report the exception >>
@@ -1873,7 +1878,6 @@ class baseFileCommands:
 					return false
 			#@-node:<< delete backup file >>
 			#@nl
-			start = g.printDiffTime("3",start)
 			return true
 		else: # This probably will never happen because errors should raise exceptions.
 			#@		<< erase filename and rename backupName to fileName >>
