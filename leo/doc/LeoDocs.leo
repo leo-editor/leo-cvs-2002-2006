@@ -23,6 +23,33 @@
 <v t="edream.110203163054.6"><vh>Please use SourceForge to ask questions and make comments</vh></v>
 <v t="edream.110203163054.7"><vh>Acknowledgements</vh></v>
 <v t="edream.110203163054.8"><vh>What people are saying about Leo</vh>
+<v t="edream.110203163054.15"><vh> Open Software award nominations</vh></v>
+<v t="edream.110203163054.14"><vh> Speed Ream's slashdot article (Why Leo is interesting)</vh></v>
+<v t="edream.110203163054.16"><vh>Alex Abacus</vh></v>
+<v t="edream.110203163054.13"><vh>Annonymous</vh></v>
+<v t="edream.110203163054.28"><vh>Austin King</vh></v>
+<v t="edream.110203163054.27"><vh>Bob Hustead</vh></v>
+<v t="edream.110203163054.41"><vh>Brian Takita</vh></v>
+<v t="edream.110203163054.19"><vh>Bruce M. Bolden</vh></v>
+<v t="edream.110203163054.37"><vh>Bruce Rafnel</vh></v>
+<v t="edream.110203163054.44"><vh>Dan Winkler 1</vh></v>
+<v t="edream.110203163054.45"><vh>Dan Winkler 2</vh></v>
+<v t="edream.110203163054.25"><vh>Dave Hein</vh></v>
+<v t="edream.110203163054.33"><vh>David McNab</vh></v>
+<v t="edream.110203163054.22"><vh>F. Geiger</vh></v>
+<v t="ekr.20040828084113"><vh>Ian Mulvany</vh></v>
+<v t="edream.110203163054.43"><vh>Jim Vickroy</vh></v>
+<v t="edream.110203163054.34"><vh>Joe Orr</vh></v>
+<v t="edream.110203163054.35"><vh>Joe Orr 2</vh></v>
+<v t="edream.121503192354.1"><vh>John Benson</vh></v>
+<v t="edream.110203163054.40"><vh>John Sequeira</vh></v>
+<v t="edream.110203163054.42"><vh>Kent Tenney</vh></v>
+<v t="edream.110203163054.21"><vh>Korakot Chaovavanich </vh></v>
+<v t="edream.110203163054.24"><vh>Lyn Adams Headley</vh></v>
+<v t="edream.110203163054.32"><vh>Marcus A. Martin</vh></v>
+<v t="edream.110203163054.36" a="M"><vh>Marshall Parsons</vh></v>
+<v t="edream.110203163054.31"><vh>Michael Manti</vh></v>
+<v t="edream.110203163054.29"><vh>Nicola Larosa</vh></v>
 <v t="edream.110203163054.9" a="M"><vh>Quotes of the Month</vh>
 <v t="ekr.20040129074732"><vh>Anon</vh></v>
 <v t="ekr.20040118085921"><vh>Tarvin Rhodes</vh></v>
@@ -33,42 +60,16 @@
 <v t="edream.110203163054.11"><vh>From William A. Stapp</vh></v>
 <v t="edream.110203163054.12"><vh>From Dan Winkler</vh></v>
 </v>
-<v t="edream.110203163054.13"><vh>Annonymous</vh></v>
-<v t="edream.110203163054.14"><vh> Speed Ream's slashdot article (Why Leo is interesting)</vh></v>
-<v t="edream.110203163054.15"><vh> Open Software award nominations</vh></v>
-<v t="edream.110203163054.16"><vh>Alex Abacus</vh></v>
-<v t="edream.110203163054.17"><vh>Steve Allen</vh></v>
-<v t="edream.110203163054.18"><vh>Shakeeb Alireza</vh></v>
-<v t="edream.121503192354.1"><vh>John Benson</vh></v>
-<v t="edream.110203163054.19"><vh>Bruce M. Bolden</vh></v>
-<v t="edream.110203163054.20"><vh>Serge Brisson</vh></v>
-<v t="edream.110203163054.21"><vh>Korakot Chaovavanich </vh></v>
-<v t="edream.110203163054.22"><vh>F. Geiger</vh></v>
-<v t="edream.110203163054.23"><vh>Zak Greant</vh></v>
-<v t="edream.110203163054.24"><vh>Lyn Adams Headley</vh></v>
-<v t="edream.110203163054.25"><vh>Dave Hein</vh></v>
-<v t="edream.110203163054.26"><vh>Travers A. Hough</vh></v>
-<v t="edream.110203163054.27"><vh>Bob Hustead</vh></v>
-<v t="edream.110203163054.28"><vh>Austin King</vh></v>
-<v t="edream.110203163054.29"><vh>Nicola Larosa</vh></v>
-<v t="edream.110203163054.30"><vh>Tom Lee</vh></v>
-<v t="edream.110203163054.31"><vh>Michael Manti</vh></v>
-<v t="edream.110203163054.32"><vh>Marcus A. Martin</vh></v>
-<v t="edream.110203163054.33"><vh>David McNab</vh></v>
-<v t="edream.110203163054.34"><vh>Joe Orr</vh></v>
-<v t="edream.110203163054.35"><vh>Joe Orr 2</vh></v>
-<v t="edream.110203163054.36" a="M"><vh>Marshall Parsons</vh></v>
-<v t="edream.110203163054.37"><vh>Bruce Rafnel</vh></v>
 <v t="edream.110203163054.38"><vh>Rich Reis</vh></v>
+<v t="edream.110203163054.20"><vh>Serge Brisson</vh></v>
+<v t="edream.110203163054.18"><vh>Shakeeb Alireza</vh></v>
+<v t="edream.110203163054.17"><vh>Steve Allen</vh></v>
 <v t="edream.110203163054.39"><vh>Steven P. Schaefer</vh></v>
-<v t="edream.110203163054.40"><vh>John Sequeira</vh></v>
-<v t="edream.110203163054.41"><vh>Brian Takita</vh></v>
-<v t="edream.110203163054.42"><vh>Kent Tenney</vh></v>
-<v t="edream.110203163054.43"><vh>Jim Vickroy</vh></v>
-<v t="edream.110203163054.44"><vh>Dan Winkler 1</vh></v>
-<v t="edream.110203163054.45"><vh>Dan Winkler 2</vh></v>
+<v t="edream.110203163054.30"><vh>Tom Lee</vh></v>
+<v t="edream.110203163054.26"><vh>Travers A. Hough</vh></v>
+<v t="edream.110203163054.23"><vh>Zak Greant</vh></v>
 </v>
-<v t="edream.110203163054.46" a="E"><vh>Release Notes</vh>
+<v t="edream.110203163054.46"><vh>Release Notes</vh>
 <v t="edream.110203163054.47"><vh>Warnings</vh></v>
 <v t="edream.110203163054.48"><vh>Installation notes</vh>
 <v t="edream.110203163054.49"><vh>System requirements</vh></v>
@@ -81,7 +82,7 @@
 <v t="edream.110203163054.62"><vh>Quick start</vh></v>
 </v>
 <v t="edream.110203163054.63" a="E"><vh>Latest versions</vh>
-<v t="ekr.20040713110718" a="TV"><vh>4.2 beta 3</vh>
+<v t="ekr.20040713110718"><vh>4.2 beta 3</vh>
 <v t="ekr.20040804165258.1"><vh>Bug fixes</vh>
 <v t="ekr.20040804164600.16"><vh>Leo gives the user a chance to save read-only files</vh></v>
 <v t="ekr.20040804164600.36"><vh>Fixed some unit-test bugs</vh></v>
@@ -2116,6 +2117,7 @@
 </v>
 </v>
 </v>
+<v t="ekr.20040829091910" a="MTV"><vh>TO DO:  Revise MacOS install notes</vh></v>
 </vnodes>
 <tnodes>
 <t tx="EKR.20040518070558">Leo 4.2 alpha 2           May 18, 2004
@@ -15161,5 +15163,25 @@ import pdb ; pdb.set_trace() # Drop into pdb.
 All output from pdb goes to stdout, which is the console window.
 
 It would be good to create a subclass of pdb.Pdb that uses Leo's log pane rather than a console window, but I haven't done that.  It could be done easily enough in a plugin...</t>
+<t tx="ekr.20040828084113">Leo is the best IDE that I have had the pleasure to use. I have been using it
+now for about 2 -- 3 months. It has totally changed not only the way that I
+program, but also the way that I store and organise all of the information that
+I need for the job that I do. -- Ian Mulvany
+</t>
+<t tx="ekr.20040829091910">@nocolor
+
+https://sourceforge.net/forum/message.php?msg_id=2734512
+By: hinsen
+
+MacOS 10.3 comes with a near-complete version of MacPython 2.3. Instead of installing
+a full MacPython 2.3, get the "MacPython 2.3 for Panther addons" (from
+http://homepages.cwi.nl/~jack/macpython/), which add the package manager and
+the Mac-specific Python IDE. After installing TclTkAcqua (8.4.7 BI works fine
+for me), you can use the package manager to install tkinter. Then you have everything
+needed for Leo, you can just download Leo and run leo.py from wherever it happens
+to be, or install it to wherever you would like it to have.
+
+Konrad.
+</t>
 </tnodes>
 </leo_file>

@@ -32,4 +32,6 @@ tests now takes a few seconds!
 
 - The Perfect Import feature guarantee that Leo imports file exactly.
 
-- Dozens of minor improvements.
+- Leo draws large outlines more quickly with less memory used.
+
+- Dozens of other improvements.

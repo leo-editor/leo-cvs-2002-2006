@@ -42,6 +42,113 @@ WshShell.SendKeys("%Fe");   WScript.Sleep(1300);  #^Q
 #@-node:EKR.20040607073134.1:@url http://wingide.com/
 #@-node:EKR.20040607073134:Download and study wingide
 #@+node:EKR.20040430163619:To do: 4.2
+#@+node:ekr.20040812033107:Fix bug:  Perfect Import does not import pyrex/plex files correctly
+@nocolor
+
+One problem is that continued lines don't have to be indented!  This should be fixed asap.
+#@nonl
+#@+node:ekr.20040828161347:Report
+@killcolor
+
+https://sourceforge.net/forum/message.php?msg_id=2711908
+By: nobody
+
+import worked ok on a few files already ok since b3,
+this one doesn't import well.
+<http://users.wpi.edu/~squirrel/programs/piemenu.html>
+<http://users.wpi.edu/~squirrel/programs/piemenu.py>
+
+the methods are all in each class declaration node.
+the nodes for each method are made and marked but empty.
+same with the other 2 classes in the file.
+the generated @file had indentation errors...
+
+import to @file doesn't print status to log?
+and why must it mark each method node?
+did it know there were problems? why no errors?
+maybe a config enabled backup dir to put bak files
+if there are going to be some incomplete imports.
+
+looks like it got confused on class variables
+and some var = funct asssignments after methods.
+some got put after @others at the wrong indent.
+
+has anyone tried to import decorators?
+no time like the present...
+they import ok for a simple @memoize example.
+
+Leo 4.2 beta 3, build  1.152 , August 10, 2004
+Python 2.3.3, Tk 8.4.3, win32
+e
+#@nonl
+#@-node:ekr.20040828161347:Report
+#@-node:ekr.20040812033107:Fix bug:  Perfect Import does not import pyrex/plex files correctly
+#@+node:ekr.20040811083125:Make sure *nix install script has *nix line endings
+#@-node:ekr.20040811083125:Make sure *nix install script has *nix line endings
+#@+node:ekr.20040811112113:Document @test, @suite and unit-testing breakthroughs
+@nocolor
+
+Leo now makes it extremely easy to convert other scripts to unit tests.  See test.leo for complete examples.
+
+Using @test nodes
+
+- Enable the mod_scripting.py plugin. This plugin creates two buttons in the
+icon area called "run Script" and "script Button".
+
+- Start with a test script that you want to convert to a unit test. Change its
+headline from test x to @test x.
+
+- Select the node called "Do @test" in test.leo and click the scriptButton
+button. This reate a button called "Do @test".
+
+- Click on this button to run all @test and @suite nodes in the presently
+selected headline. Leo now executes the script (in the @test or @suite node!) as
+a unit test! That's all there is to it!
+
+
+Using @suite nodes
+
+Such nodes create a suite of tests. Leo executes the script in these nodes
+similar to @test nodes, but Leo assumes that the script in an @suite node will
+do the following:
+
+- Create a suite of unit tests
+- Put the suite in g.app.scriptDict["suite"]
+
+The difference between @test and @suite is:
+
+- Leo creates a unit test from script in an @test node by creating an instance of generalTestCase, a subclass of unittest.TestCase.
+- The script in an @suite node creates the test suite.
+
+@suite nodes allow us to create "legacy" unit tests simply. For example, rather than rewriting all the reformatParagraph unit tests to use @test nodes, I simply wrote an @suite node with the following body.
+
+@color
+import leoGlobals as g
+import leoTest ; reload(leoTest)
+suite = leoTest.makeReformatParagraphSuite()
+g.app.scriptDict['suite'] = suite
+@nocolor
+
+@test and @suite perfectly integrate outlines, scripting and script buttons.  This is a big step forward.
+
+Notes:
+    
+- @test nodes dramatically simplifies the test code. There is no need for
+explicit unit testing classes and methods. Nor is there any need for setUp and
+tearDown methods; scripts can use try/finally instead.
+
+- leoTest.doTests performs its own kind of setUp/tearDown code. It ensures that
+the script being executed is the presently selected node. This makes it trivial
+for a test script to find its own data: the script can just look in a sibling or
+descendent node. There is hardly any need for testUtils.findNodeAnywhere.
+leoTest.doTests also saves and restores the "changed" state of test.leo.
+
+- Test scripts can't use @others if descendent nodes hold data. In practice this
+doesn't matter. I recommend putting lengthy shared code in leoTest.py.
+#@nonl
+#@-node:ekr.20040811112113:Document @test, @suite and unit-testing breakthroughs
+#@+node:ekr.20040811083522:Handle contractions properly in spell checkers
+#@-node:ekr.20040811083522:Handle contractions properly in spell checkers
 #@+node:ekr.20040810110025:Complete all plugins
 #@-node:ekr.20040810110025:Complete all plugins
 #@+node:EKR.20040422132037:Linux bugs 3
@@ -245,6 +352,8 @@ Guenther.
 #@-node:EKR.20040430163619:To do: 4.2
 #@+node:EKR.20040609091327:To do: 4.3: configuration, plugins & translation
 #@+node:ekr.20040730191332:Must do...
+#@+node:ekr.20040720073339:Remove use_gnx and write_old_format_derived_files options
+#@-node:ekr.20040720073339:Remove use_gnx and write_old_format_derived_files options
 #@+node:ekr.20040323084434:(Add granularity setting for undo)
 #@+node:ekr.20040328111626:Notes
 @nocolor
@@ -2530,16 +2639,14 @@ for line in lines[j+1:k+1]:
 #@-node:ekr.20031218072017.2119:<< put all @last lines in root >> (4.x)
 #@-node:EKR.20040506075328:new_df.writeOpenFile
 #@-node:EKR.20040507095329.1:More flexible atFile classes
-#@+node:EKR.20040628085831:(Must do) @import, etc.
+#@+node:EKR.20040628085831:@import, etc.
 #@+node:ekr.20040718033104:@shadow
 #@-node:ekr.20040718033104:@shadow
 #@+node:ekr.20040718032616:@import
 #@-node:ekr.20040718032616:@import
 #@+node:EKR.20040503160843:@directory-import (Generalization of @import)
 #@-node:EKR.20040503160843:@directory-import (Generalization of @import)
-#@-node:EKR.20040628085831:(Must do) @import, etc.
-#@+node:ekr.20040720073339:Remove use_gnx and write_old_format_derived_files options
-#@-node:ekr.20040720073339:Remove use_gnx and write_old_format_derived_files options
+#@-node:EKR.20040628085831:@import, etc.
 #@-node:ekr.20040730191332:Must do...
 #@+node:EKR.20040601133022.1:(Finish the new undo)
 #@+node:EKR.20040606195417.5:To do
@@ -3661,21 +3768,23 @@ def onBodyKey (self,event):
     
     """Handle any key press event in the body pane."""
 
-    c = self.c ; ch = event.char 
+    c = self.c ; ch = event.char
+    
+    # This translation is needed on MacOS.
+    if ch == '':
+        d = {'Return':'\r', 'Tab':'\t', 'BackSpace':chr(8)}
+        ch = d.get(event.keysym,'')
+
     oldSel = c.frame.body.getTextSelection()
     
     p = c.currentPosition()
 
-    # g.trace(repr(ch))
-
     if 0: # won't work when menu keys are bound.
         self.handleStatusLineKey(event)
         
-    # g.trace(p)
-        
     # We must execute this even if len(ch) > 0 to delete spurious trailing newlines.
     self.c.frame.bodyCtrl.after_idle(self.idle_body_key,p,oldSel,"Typing",ch)
-
+#@nonl
 #@+node:ekr.20040105223536:handleStatusLineKey
 def handleStatusLineKey (self,event):
     
@@ -5162,6 +5271,20 @@ C:\prog\leoCVS\leo\src\leoCommands.py:2280: (dict) shadows builtin
 #@nonl
 #@-node:ekr.20040701152235.18:leoCommands
 #@-node:ekr.20040701152235:Fix shawdow warnings ?
+#@+node:ekr.20040831092540:Allow uA's to be stored as plain strings
+I would like to store unknown
+attributes as a simple string. The reason, is because I am using an unknown
+attribute to carry additional markup information, in this case, to carry color
+information for each node. (I used Joe Orr's XSL stylesheet as a startpoint for
+HTML generation).
+
+In order to achieve my nefarious aim, I have had to edit leoFileCommands.py but
+I would prefer not to have to edit the main source code.
+
+Martin Clifford
+Senior Software Engineer
+Snell & Wilcox
+#@-node:ekr.20040831092540:Allow uA's to be stored as plain strings
 #@+node:ekr.20040329182535:plugins
 #@+node:ekr.20040130185920.1:** Add incremental search to search plugin (make find panel smaller)
 #@-node:ekr.20040130185920.1:** Add incremental search to search plugin (make find panel smaller)
