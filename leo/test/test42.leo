@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="2595" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="2596" clone_windows="0"/>
 <globals body_outline_ratio="0.38383838383838381">
-	<global_window_position top="90" left="121" height="780" width="1071"/>
+	<global_window_position top="37" left="164" height="755" width="1071"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences>
@@ -192,9 +192,9 @@
 <v t="ekr.20040302092753.4"><vh>z</vh></v>
 </v>
 </v>
-<v t="ekr.20040303063644" a="E"><vh>Position tests</vh>
+<v t="ekr.20040303063644"><vh>Position tests</vh>
 <v t="ekr.20040303064013"><vh> makePositionSuite</vh></v>
-<v t="ekr.20040303063118" a="E"><vh>class positionTestCase</vh>
+<v t="ekr.20040303063118"><vh>class positionTestCase</vh>
 <v t="ekr.20040303063118.4"><vh>setUp</vh></v>
 <v t="ekr.20040303064020.1"><vh>testFullTraverse</vh></v>
 <v t="ekr.20040303064020.2"><vh>testParentChildLinks</vh>
@@ -207,10 +207,10 @@
 <v t="ekr.20040303064020.8"><vh>testParentChildLevel</vh></v>
 <v t="ekr.20040303091606"><vh>testHasNextBack</vh></v>
 <v t="ekr.20040303092153"><vh>testHasParentChild</vh></v>
-<v t="ekr.20040303092153.1" a="TV"><vh>testHasThreadNextBack</vh></v>
+<v t="ekr.20040303092153.1"><vh>testHasThreadNextBack</vh></v>
 </v>
 </v>
-<v t="ekr.20040303063549" a="E"><vh>Unit Tests</vh>
+<v t="ekr.20040303063549"><vh>Unit Tests</vh>
 <v t="ekr.20040303063549.1"><vh>tempNode</vh></v>
 <v t="ekr.20040303063549.45"><vh>colorizerTests</vh>
 <v t="ekr.20040303063549.46"><vh>Actionscript</vh></v>
@@ -379,6 +379,13 @@
 <v t="ekr.20040303063549.125"><vh>Run all tests</vh></v>
 <v t="ekr.20040303080010"><vh>Run all tests except files tests</vh></v>
 </v>
+<v t="ekr.20040303215834"><vh>Test of position  comparisons</vh></v>
+<v t="ekr.20040304082053" a="TV"><vh>__iter__ tests</vh>
+<v t="ekr.20040304090931"><vh>__init__</vh></v>
+<v t="ekr.20040304090931.1"><vh>__iter__</vh></v>
+<v t="ekr.20040304091204"><vh>next</vh></v>
+</v>
+<v t="ekr.20040304091615"><vh>Node after tree</vh></v>
 </vnodes>
 <tnodes>
 <t tx="ekr.20040126105605"></t>
@@ -2755,5 +2762,74 @@ runner.run(mainSuite)</t>
 			(not threadNext and not p.hasThreadNext()))
 		
 		p.moveToThreadNext()</t>
+<t tx="ekr.20040303215834">from leoGlobals import *
+
+import leoNodes
+
+c = top()
+
+t = leoNodes.tnode()
+v = leoNodes.vnode(c,t)
+p = leoNodes.position(v,[])
+p2 = p.copy()
+print p == p2
+</t>
+<t tx="ekr.20040304082053">from leoGlobals import *
+import leoNodes
+
+# WARNING: only tested with sharedNodes = false
+sharedNodes = false
+
+# Many other iterator classes might be useful...
+class all_vnodes_iter:
+	"""Returns a list of all vnodes in the subtree passed to the ctor.
+	
+	Returns a list of all vnodes in the entire tree by default."""
+
+	@others
+
+c = top()
+if sharedNodes: current = c.currentPosition() 
+else:           current = c.currentVnode()
+
+print '-'*20
+for v in all_vnodes_iter(current):
+	print v.headString()
+	first = false</t>
+<t tx="ekr.20040304090931">def __init__(self,porv=None):
+	c = top()
+	self. first = true # Hack so we return the first node properly.
+	if porv is None:
+		if sharedNodes:
+			self.p = c.rootPosition()
+			self.after = leoNodes.position(None,[])
+		else:
+			self.p = c.rootVnode()
+			self.after = None
+	else:
+		self.p = porv
+		if sharedNodes:
+			self.after = porv.copy().moveToNodeAfterTree()
+		else:
+			self.after = self.p.nodeAfterTree()</t>
+<t tx="ekr.20040304090931.1">def __iter__(self):
+	return self</t>
+<t tx="ekr.20040304091204">def next(self):
+	if not self.p: raise StopIteration
+	if self.first:
+		self.first = false
+		if sharedNodes: return self.p.v
+		else:           return self.p
+	if sharedNodes:
+		self.p = self.p.moveToThreadNext()
+		if not self.p or self.p == self.after:
+			raise StopIteration
+		return self.p.v
+	else:
+		self.p = self.p.threadNext()
+		if not self.p or self.p == self.after:
+			raise StopIteration
+		return self.p</t>
+<t tx="ekr.20040304091615"></t>
 </tnodes>
 </leo_file>
