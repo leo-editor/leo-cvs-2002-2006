@@ -3399,9 +3399,7 @@ class Bunch:
         
     def __getitem__ (self,key):
         return operator.getitem(self.__dict__,key)
-        
-        
-        
+#@nonl
 #@-node:ekr.20031218072017.3098:class Bunch
 #@+node:EKR.20040504150046:class mulderUpdateAlgorithm (leoGlobals)
 import difflib,shutil
@@ -3939,6 +3937,16 @@ class nullObject:
     def __setattr__(self,attr,val): return self
 #@nonl
 #@-node:ekr.20031219074948.1:class nullObject
+#@+node:ekr.20031218072017.3144:g,makeDict
+# From the Python cookbook.
+
+def makeDict(**keys):
+    
+    """Returns a Python dictionary from using the optional keyword arguments."""
+
+    return keys
+#@nonl
+#@-node:ekr.20031218072017.3144:g,makeDict
 #@+node:ekr.20031218072017.3103:g.computeWindowTitle
 def computeWindowTitle (fileName):
 
@@ -3974,6 +3982,41 @@ def executeScript (name):
         theFile.close()
 
 #@-node:ekr.20031218072017.3138:g.executeScript
+#@+node:ekr.20040331083824.1:g.fileLikeObject
+# Note: we could use StringIo for this.
+
+class fileLikeObject:
+
+    """Define a file-like object for redirecting writes to a string.
+    
+    The caller is responsible for handling newlines correctly."""
+
+    def __init__(self,fromString=None):
+        # New in 4.2.1: allow the file to be inited from string s.
+        if fromString: self.list = g.splitLines(fromString) # Must preserve newlines!
+        else: self.list = []
+        self.ptr = 0
+
+    def clear (self):   self.list = []
+
+    def close (self): pass
+    def flush (self): pass
+
+    def get (self):
+        return ''.join(self.list)
+        
+    def readline(self): # New for read-from-string (readOpenFile).
+        if self.ptr < len(self.list):
+            line = self.list[self.ptr]
+            # g.trace(repr(line))
+            self.ptr += 1
+            return line
+        else: return ""
+
+    def write (self,s):
+        if s: self.list.append(s)
+#@nonl
+#@-node:ekr.20040331083824.1:g.fileLikeObject
 #@+node:ekr.20031218072017.3126:g.funcToMethod
 #@+at 
 #@nonl
@@ -3998,6 +4041,66 @@ def funcToMethod(f,theClass,name=None):
     # g.trace(name)
 #@nonl
 #@-node:ekr.20031218072017.3126:g.funcToMethod
+#@+node:EKR.20040614071102.1:g.getScript
+def getScript (c,p,useSelectedText=True):
+
+    if not p: p = c.currentPosition()
+    old_body = p.bodyString()
+    
+    try:
+        script = None
+        # Allow p not to be the present position.
+        if p == c.currentPosition():
+            if useSelectedText and c.frame.body.hasTextSelection():
+                # Temporarily replace v's body text with just the selected text.
+                s = c.frame.body.getSelectedText()
+                p.v.setTnodeText(s)
+            else:
+                s = c.frame.body.getAllText()
+        else:
+            s = p.bodyString()
+    
+        if s.strip():
+            g.app.scriptDict["script1"]=s
+            at = c.atFileCommands
+            at.write(p.copy(),nosentinels=False,toString=True,scriptWrite=True)
+            script = at.stringOutput
+            # g.trace(script)
+            g.app.scriptDict["script2"]=script
+            error = len(script) == 0
+    except:
+        s = "unexpected exception"
+        print s ; g.es(s)
+        g.es_exception()
+        script = None
+
+    p.v.setTnodeText(old_body)
+    return script
+#@nonl
+#@-node:EKR.20040614071102.1:g.getScript
+#@+node:ekr.20041219071407:g.importExtension
+def importExtension (moduleName,verbose=False):
+
+    '''Try to import a module.  If that fails,
+    try to import the module from Leo's extensions directory.
+
+    moduleName is the module's name, without file extension.'''
+
+    try:
+        exec 'import %s ; module = %s' % (moduleName,moduleName)
+        return module
+    except ImportError:
+        module = g.importFromPath(moduleName,g.app.extensionsDir)
+        if verbose and not module:
+            s = "can not import extension %s" % moduleName
+            print s ; g.es(s,color="blue")
+        return module
+    except:
+        g.es("unexpected exception in importExtension",color='blue')
+        g.es_exception()
+        return None
+#@nonl
+#@-node:ekr.20041219071407:g.importExtension
 #@+node:ekr.20031218072017.2278:g.importFromPath
 #@+at 
 #@nonl
@@ -4043,88 +4146,6 @@ def importFromPath (name,path,verbose=False):
     return result
 #@nonl
 #@-node:ekr.20031218072017.2278:g.importFromPath
-#@+node:ekr.20031218072017.3144:g,makeDict
-# From the Python cookbook.
-
-def makeDict(**keys):
-    
-    """Returns a Python dictionary from using the optional keyword arguments."""
-
-    return keys
-#@nonl
-#@-node:ekr.20031218072017.3144:g,makeDict
-#@+node:ekr.20040331083824.1:g.fileLikeObject
-# Note: we could use StringIo for this.
-
-class fileLikeObject:
-
-    """Define a file-like object for redirecting writes to a string.
-    
-    The caller is responsible for handling newlines correctly."""
-
-    def __init__(self,fromString=None):
-        # New in 4.2.1: allow the file to be inited from string s.
-        if fromString: self.list = g.splitLines(fromString) # Must preserve newlines!
-        else: self.list = []
-        self.ptr = 0
-
-    def clear (self):   self.list = []
-
-    def close (self): pass
-    def flush (self): pass
-
-    def get (self):
-        return ''.join(self.list)
-        
-    def readline(self): # New for read-from-string (readOpenFile).
-        if self.ptr < len(self.list):
-            line = self.list[self.ptr]
-            # g.trace(repr(line))
-            self.ptr += 1
-            return line
-        else: return ""
-
-    def write (self,s):
-        if s: self.list.append(s)
-#@nonl
-#@-node:ekr.20040331083824.1:g.fileLikeObject
-#@+node:EKR.20040614071102.1:g.getScript
-def getScript (c,p,useSelectedText=True):
-
-    if not p: p = c.currentPosition()
-    old_body = p.bodyString()
-    
-    try:
-        script = None
-        # Allow p not to be the present position.
-        if p == c.currentPosition():
-            if useSelectedText and c.frame.body.hasTextSelection():
-                # Temporarily replace v's body text with just the selected text.
-                s = c.frame.body.getSelectedText()
-                p.v.setTnodeText(s)
-            else:
-                s = c.frame.body.getAllText()
-        else:
-            s = p.bodyString()
-    
-        if s.strip():
-            g.app.scriptDict["script1"]=s
-            at = c.atFileCommands
-            at.write(p.copy(),nosentinels=False,toString=True,scriptWrite=True)
-            script = at.stringOutput
-            # g.trace(script)
-            g.app.scriptDict["script2"]=script
-            error = len(script) == 0
-    except:
-        s = "unexpected exception"
-        print s ; g.es(s)
-        g.es_exception()
-        script = None
-
-    p.v.setTnodeText(old_body)
-    return script
-#@nonl
-#@-node:EKR.20040614071102.1:g.getScript
 #@+node:ekr.20040629162023:readLines class and generator
 #@+node:EKR.20040612114220.3:g.readLinesGenerator
 def readLinesGenerator(s):
