@@ -188,7 +188,8 @@ class baseAtFile:
 		fn = toUnicode(fn,app.tkEncoding) # 10/20/03
 		
 		try:
-			file = open(fn,'r')
+			# 11/4/03: open the file in binary mode to allow 0x1a in bodies & headlines.
+			file = open(fn,'rb')
 			if file:
 				#@		<< warn on read-only file >>
 				#@+node:<< warn on read-only file >>
