@@ -162,7 +162,7 @@ class leoFind:
 	#@+node:findButton
 	# The user has pushed the "Find" button from the find panel.
 	
-	def findButton(self):
+	def findButton(self,event=None):
 	
 		c = self.setup_button()
 		

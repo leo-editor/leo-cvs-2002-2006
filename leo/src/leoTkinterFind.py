@@ -148,7 +148,7 @@ class leoTkinterFind (leoFind.leoFind,leoTkinterDialog.leoTkinterDialog):
 		buttons2.pack(anchor="n",expand=1,fill="x")
 		
 		# Create the first row of buttons
-		findButton=Tk.Button(buttons,width=8,text="Find",command=self.findButton)
+		findButton=Tk.Button(buttons,width=8,text="Find",bd=4,command=self.findButton) # The default.
 		contextBox=Tk.Checkbutton(buttons,anchor="w",text="Show Context",variable=self.dict["batch"])
 		findAllButton=Tk.Button(buttons,width=8,text="Find All",command=self.findAllButton)
 		
@@ -168,12 +168,16 @@ class leoTkinterFind (leoFind.leoFind,leoTkinterDialog.leoTkinterDialog):
 		#@-node:<< Create two rows of buttons >>
 		#@nl
 		
-		self.find_text.bind  ("<1>", self.resetWrap)
-		self.change_text.bind("<1>", self.resetWrap)
-		self.find_text.bind  ("<Key>", self.resetWrap)
-		self.change_text.bind("<Key>", self.resetWrap)
+		for widget in (self.find_text, self.change_text):
+			widget.bind ("<1>",  self.resetWrap)
+			widget.bind("<Key>", self.resetWrap)
+		
+		for widget in (outer, self.find_text, self.change_text):
+			widget.bind("<Key-Return>", self.findButton)
+			widget.bind("<Key-Escape>", self.onCloseWindow)
 		
 		self.top.protocol("WM_DELETE_WINDOW", self.onCloseWindow)
+	#@nonl
 	#@-node:find.createFrame
 	#@+node:find.init
 	def init (self,c):
@@ -252,7 +256,7 @@ class leoTkinterFind (leoFind.leoFind,leoTkinterDialog.leoTkinterDialog):
 	#@nonl
 	#@-node:find.set_ivars
 	#@+node:onCloseWindow
-	def onCloseWindow(self):
+	def onCloseWindow(self,event=None):
 	
 		self.top.withdraw()
 	#@nonl
