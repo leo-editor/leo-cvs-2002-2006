@@ -2,7 +2,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="3986" clone_windows="0"/>
 <globals body_outline_ratio="0.49655172413793103">
-	<global_window_position top="45" left="345" height="870" width="827"/>
+	<global_window_position top="45" left="359" height="870" width="827"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences>
@@ -12,8 +12,10 @@
 	<change_string></change_string>
 </find_panel_settings>
 <vnodes>
-<v t="edream.110203160744"><vh> Diary</vh>
+<v t="edream.110203160744" a="V"><vh> Diary</vh>
 <v t="edream.120103054230"><vh>December 2003</vh>
+<v t="edream.120903113758"><vh>Leo now allows @ignore nodes and orphan nodes in @file-nosent trees</vh></v>
+<v t="edream.120903112324"><vh>Looked at report of import bug</vh></v>
 <v t="edream.120803170142"><vh>12/08</vh>
 <v t="edream.120803170142.1"><vh>Investigated &amp; fixed copy/paste bugs</vh></v>
 </v>
@@ -1036,12 +1038,7 @@
 </v>
 </v>
 </v>
-<v t="edream.110403112538" a="E"><vh>To do: 4.1</vh>
-<v t="edream.120803171529" a="V"><vh>Fix import bug</vh></v>
-<v t="edream.120203124941.1"><vh>Unit tests</vh>
-<v t="edream.112303032011"><vh>New unit test ideas</vh></v>
-<v t="edream.110703024557.1"><vh>More checks in CheckOutline command</vh></v>
-</v>
+<v t="edream.110403112538"><vh>To do: 4.1</vh>
 <v t="edream.120803170142.2"><vh>Documentation for recent changes</vh></v>
 <v t="edream.120303071612"><vh>(maybe) Finish wx plugin &amp; improve how Leo uses indices</vh></v>
 </v>
@@ -3714,16 +3711,6 @@
 <v t="edream.110203160744.3453" a=""><vh>&lt;&lt; set the private global matching vars &gt;&gt;</vh></v>
 <v t="edream.110203160744.3073" a=""><vh>skip_string : called by tangle</vh></v>
 </v>
-<v t="edream.120803102832"><vh>(Recent files bug: works for me)</vh>
-<v t="edream.120803102832.1"><vh>Report</vh></v>
-<v t="edream.110203160744.1107" a=""><vh>Recent Files submenu &amp; allies</vh>
-<v t="edream.110203160744.1108"><vh>clearRecentFiles</vh></v>
-<v t="edream.110203160744.1109"><vh>openRecentFile</vh>
-<v t="edream.110203160744.1110" a=""><vh>&lt;&lt; Set closeFlag if the only open window is empty &gt;&gt;</vh></v>
-</v>
-<v t="edream.110203160744.1106" a=""><vh>updateRecentFiles</vh></v>
-</v>
-</v>
 <v t="edream.111003111536"><vh>(Investigated No tnode list)</vh>
 <v t="edream.120803164637"><vh>Report</vh></v>
 <v t="edream.120803164637.1"><vh>Writing</vh>
@@ -3744,6 +3731,47 @@
 <v t="edream.110203160744.1842" a=""><vh>findChild</vh></v>
 <v t="edream.110203160744.2973" a=""><vh>getTnodeList (4.0)</vh></v>
 </v>
+</v>
+<v t="edream.110203160744.3805"><vh>(Fixed minor bugs with copy/paste bugs involving clones)</vh>
+<v t="edream.120403144310"><vh>Notes</vh></v>
+<v t="edream.120803164637.3"><vh>Report: billp9619: fixed</vh></v>
+<v t="edream.120803161153"><vh>Report: RodrigoB: Probably a 4.0.4 issue</vh></v>
+<v t="edream.120803161842.1"><vh>Reading</vh>
+<v t="edream.110203160744.2978" a=""><vh>fileCommands.setAllJoinLinks</vh></v>
+<v t="edream.110203160744.2976" a=""><vh>newTnode</vh></v>
+<v t="edream.110203160744.1555" a=""><vh>getTnode</vh>
+<v t="edream.110203160744.1556"><vh>&lt;&lt; handle read from file &gt;&gt;</vh></v>
+<v t="edream.110203160744.1557"><vh>&lt;&lt; handle read from clipboard &gt;&gt;</vh></v>
+<v t="edream.110203160744.1558"><vh>&lt;&lt; handle unknown attributes &gt;&gt;</vh></v>
+</v>
+<v t="edream.110203160744.1560" a=""><vh>getVnode</vh>
+<v t="edream.110203160744.1561"><vh>&lt;&lt; Handle vnode attribute bits  &gt;&gt;</vh></v>
+<v t="edream.110203160744.1562"><vh>&lt;&lt; Set the remembered status bits &gt;&gt;</vh></v>
+</v>
+<v t="edream.110203160744.2060" a=""><vh>createVnode</vh>
+<v t="edream.110203160744.2061"><vh>&lt;&lt; handle unknown vnode attributes &gt;&gt;</vh></v>
+</v>
+<v t="edream.110203160744.1551" a=""><vh>finishPaste</vh>
+<v t="edream.110203160744.1552"><vh>&lt;&lt; reassign tnode indices and clear all clone links &gt;&gt;</vh></v>
+</v>
+</v>
+<v t="edream.120803161842.2"><vh>Writing</vh>
+<v t="edream.110203160744.1564" a=""><vh>assignFileIndices &amp; compactFileIndices</vh>
+<v t="edream.110203160744.1565"><vh>&lt;&lt; assign missing gnx's, converting ints to gnx's &gt;&gt;</vh></v>
+<v t="edream.110203160744.1566"><vh>&lt;&lt; reassign all tnode indices &gt;&gt;</vh></v>
+</v>
+</v>
+</v>
+<v t="edream.120803102832"><vh>(Recent files bug: works for me)</vh>
+<v t="edream.120803102832.1"><vh>Report</vh></v>
+<v t="edream.110203160744.1107" a=""><vh>Recent Files submenu &amp; allies</vh>
+<v t="edream.110203160744.1108"><vh>clearRecentFiles</vh></v>
+<v t="edream.110203160744.1109"><vh>openRecentFile</vh>
+<v t="edream.110203160744.1110" a=""><vh>&lt;&lt; Set closeFlag if the only open window is empty &gt;&gt;</vh></v>
+</v>
+<v t="edream.110203160744.1106" a=""><vh>updateRecentFiles</vh></v>
+</v>
+<v t="edream.110203160744.1111" a=""><vh>createRecentFilesMenuItems (leoMenu)</vh></v>
 </v>
 </v>
 </v>
@@ -4184,7 +4212,7 @@
 <v t="edream.110203160744.2753"><vh>&lt;&lt; Write v's headline if it starts with @@ &gt;&gt;</vh></v>
 <v t="edream.110203160744.2754"><vh>&lt;&lt; Write v's body &gt;&gt;</vh></v>
 </v>
-<v t="edream.110203160744.2755"><vh>old_df.write</vh>
+<v t="edream.110203160744.2755" a=""><vh>old_df.write</vh>
 <v t="edream.110203160744.2756"><vh>&lt;&lt; initialize &gt;&gt;</vh></v>
 <v t="edream.110203160744.2757"><vh>&lt;&lt; open the file; return on error &gt;&gt;</vh></v>
 <v t="edream.110203160744.2758"><vh>&lt;&lt; write then entire @file tree &gt;&gt; (3.x)</vh>
@@ -6936,34 +6964,31 @@
 </v>
 </v>
 </v>
-<v t="edream.110203160744.3805"><vh>(Fixed minor bugs with copy/paste bugs involving clones)</vh>
-<v t="edream.120403144310"><vh>Notes</vh></v>
-<v t="edream.120803164637.3"><vh>Report: billp9619: fixed</vh></v>
-<v t="edream.120803161153"><vh>Report: RodrigoB: Probably a 4.0.4 issue</vh></v>
-<v t="edream.120803161842.1"><vh>Reading</vh>
-<v t="edream.110203160744.2978" a=""><vh>fileCommands.setAllJoinLinks</vh></v>
-<v t="edream.110203160744.2976" a=""><vh>newTnode</vh></v>
-<v t="edream.110203160744.1555" a=""><vh>getTnode</vh>
-<v t="edream.110203160744.1556"><vh>&lt;&lt; handle read from file &gt;&gt;</vh></v>
-<v t="edream.110203160744.1557"><vh>&lt;&lt; handle read from clipboard &gt;&gt;</vh></v>
-<v t="edream.110203160744.1558"><vh>&lt;&lt; handle unknown attributes &gt;&gt;</vh></v>
+<v t="edream.120203124941.1"><vh>Unit tests</vh>
+<v t="edream.112303032011"><vh>New unit test ideas</vh></v>
+<v t="edream.110703024557.1"><vh>More checks in CheckOutline command</vh></v>
 </v>
-<v t="edream.110203160744.1560" a=""><vh>getVnode</vh>
-<v t="edream.110203160744.1561"><vh>&lt;&lt; Handle vnode attribute bits  &gt;&gt;</vh></v>
-<v t="edream.110203160744.1562"><vh>&lt;&lt; Set the remembered status bits &gt;&gt;</vh></v>
+<v t="edream.120903094900" a="E"><vh>(Allow @ignore and orphans in @file-nosent)</vh>
+<v t="edream.110203160744.2755" a=""><vh>old_df.write</vh>
+<v t="edream.110203160744.2756"><vh>&lt;&lt; initialize &gt;&gt;</vh></v>
+<v t="edream.110203160744.2757"><vh>&lt;&lt; open the file; return on error &gt;&gt;</vh></v>
+<v t="edream.110203160744.2758"><vh>&lt;&lt; write then entire @file tree &gt;&gt; (3.x)</vh>
+<v t="edream.110203160744.2748" a=""><vh>&lt;&lt; put all @first lines in root &gt;&gt; (3.x)</vh></v>
+<v t="edream.110203160744.2759"><vh>&lt;&lt; write the derived file&gt;&gt;</vh></v>
+<v t="edream.110203160744.2751" a=""><vh>&lt;&lt; put all @last lines in root &gt;&gt; (3.x)</vh></v>
 </v>
-<v t="edream.110203160744.2060" a=""><vh>createVnode</vh>
-<v t="edream.110203160744.2061"><vh>&lt;&lt; handle unknown vnode attributes &gt;&gt;</vh></v>
+<v t="edream.110203160744.2760"><vh>&lt;&lt; Warn about @ignored and orphans  &gt;&gt;</vh></v>
+<v t="edream.110203160744.2761"><vh>&lt;&lt; finish writing &gt;&gt;</vh></v>
 </v>
-<v t="edream.110203160744.1551" a=""><vh>finishPaste</vh>
-<v t="edream.110203160744.1552"><vh>&lt;&lt; reassign tnode indices and clear all clone links &gt;&gt;</vh></v>
+<v t="edream.110203160744.2844" a=""><vh>new_df.write (inits root.tnodeList)</vh>
+<v t="edream.110203160744.2845"><vh>&lt;&lt; initialize &gt;&gt;</vh></v>
+<v t="edream.110203160744.2846"><vh>&lt;&lt; open the file; return on error &gt;&gt;</vh></v>
+<v t="edream.110203160744.2847"><vh>&lt;&lt; write then entire @file tree &gt;&gt; (4.x)</vh>
+<v t="edream.110203160744.2848"><vh>&lt;&lt; put all @first lines in root &gt;&gt;</vh></v>
+<v t="edream.110203160744.2849"><vh>&lt;&lt; put all @last lines in root &gt;&gt; (4.x)</vh></v>
 </v>
-</v>
-<v t="edream.120803161842.2"><vh>Writing</vh>
-<v t="edream.110203160744.1564" a=""><vh>assignFileIndices &amp; compactFileIndices</vh>
-<v t="edream.110203160744.1565"><vh>&lt;&lt; assign missing gnx's, converting ints to gnx's &gt;&gt;</vh></v>
-<v t="edream.110203160744.1566"><vh>&lt;&lt; reassign all tnode indices &gt;&gt;</vh></v>
-</v>
+<v t="edream.110203160744.2850"><vh>&lt;&lt; Warn about @ignored and orphans  &gt;&gt;</vh></v>
+<v t="edream.110203160744.2851"><vh>&lt;&lt; finish writing &gt;&gt;</vh></v>
 </v>
 </v>
 </vnodes>
@@ -43381,7 +43406,8 @@ def write(self,root,nosentinels=false):
 		root.clearVisitedInTree()
 		&lt;&lt; write then entire @file tree &gt;&gt;
 		self.closeWriteFile()
-		&lt;&lt; warn about @ignored and orphans &gt;&gt;
+		if not nosentinels:
+			&lt;&lt; warn about @ignored and orphans &gt;&gt;
 		&lt;&lt; finish writing &gt;&gt;
 	except:
 		self.handleWriteException()
@@ -44614,7 +44640,8 @@ def write(self,root,nosentinels=false,scriptFile=None):
 		&lt;&lt; write then entire @file tree &gt;&gt;
 		if not scriptFile:
 			at.closeWriteFile()
-			&lt;&lt; warn about @ignored and orphans &gt;&gt;
+			if not nosentinels:
+				&lt;&lt; warn about @ignored and orphans &gt;&gt;
 			&lt;&lt; finish writing &gt;&gt;
 	except:
 		if scriptFile:
@@ -61075,6 +61102,10 @@ In short, the present code appears to be reasonably solid.  I should withdraw th
 <t tx="edream.120803170142.2">- pluginsManager.text
 - Import Derived File command now puts up a dialog.
 </t>
-<t tx="edream.120803171529"></t>
+<t tx="edream.120903094900"></t>
+<t tx="edream.120903112324"># Line 1108: _multiples = [(2., Numeric.log10(2.)), (5., Numeric.log10(5.))]
+
+I suspect this was a file that contained both tabs and spaces.</t>
+<t tx="edream.120903113758"></t>
 </tnodes>
 </leo_file>

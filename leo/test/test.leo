@@ -2,7 +2,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="2259" clone_windows="0"/>
 <globals body_outline_ratio="0.50724637681159424">
-	<global_window_position top="10" left="82" height="784" width="822"/>
+	<global_window_position top="27" left="237" height="784" width="822"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences>
@@ -2817,11 +2817,9 @@
 </v>
 </v>
 <v t="edream.120703182038"><vh>Test of @others inside doc part</vh>
-<v t="edream.120703182038.1" a="M" tnodeList="edream.120703182038.1"><vh>@file c:\prog\test\atOthersInDocTest.txt</vh></v>
+<v t="edream.120703182038.1" tnodeList="edream.120703182038.1"><vh>@file c:\prog\test\atOthersInDocTest.txt</vh></v>
 </v>
-</v>
-<v t="edream.120803091715"><vh>using pdb</vh></v>
-<v t="edream.120803164745" a="E"><vh>clone copy/paste test</vh>
+<v t="edream.120803164745"><vh>clone copy/paste test</vh>
 <v t="edream.120803164745.1" a=""><vh>a</vh>
 <v t="edream.120803164745.2"><vh>b</vh></v>
 </v>
@@ -2833,7 +2831,15 @@
 <v t="edream.120803164745.2"><vh>b</vh></v>
 </v>
 </v>
-<v t="edream.120803164752" a="V"><vh>paste</vh></v>
+<v t="edream.120803164752"><vh>paste</vh></v>
+</v>
+</v>
+<v t="edream.120803091715"><vh>using pdb</vh></v>
+<v t="edream.120903112952" a="E" tnodeList="edream.120903112952,edream.120903113034"><vh>@file-nosent c:\prog\test\atIgnoreInAtNosentTest.txt</vh>
+<v t="edream.120903113034" a="EV"><vh>&lt;&lt; ref &gt;&gt;</vh>
+<v t="edream.120903112952.1"><vh>orphan node</vh></v>
+</v>
+<v t="edream.120903113034.1"><vh>@ignore</vh></v>
 </v>
 </vnodes>
 <tnodes>
@@ -35648,5 +35654,16 @@ This should be more doc part
 <t tx="edream.120803164745.2"></t>
 <t tx="edream.120803164745.3"></t>
 <t tx="edream.120803164752"></t>
+<t tx="edream.120903112952">Line 1
+
+&lt;&lt; ref &gt;&gt;
+
+@others
+</t>
+<t tx="edream.120903112952.1"></t>
+<t tx="edream.120903113034">ref line 1</t>
+<t tx="edream.120903113034.1">@ignore
+
+This line should be ignored.</t>
 </tnodes>
 </leo_file>
