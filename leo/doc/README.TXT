@@ -4,7 +4,7 @@ Leo is available at:  http://sourceforge.net/projects/leo/
 Leo requires Python 2.1 or above and tcl/tk 8.3 or above.
 Leo will work on Linux, Windows and MacOs X Jaguar.
 
-Leo 4.1 Release Candidate 2              December 18, 2003
+Leo 4.1 Release Candidate 3              December 18, 2003
 
 This release fixes minor bugs in Leo and its plugins.
 

@@ -24447,7 +24447,9 @@ leoImport.importFiles(aDirectory, ".py")
 @nocolor
 
 This will import all .py files from aDirectory, which should be a full path to a particular directory.  You could use ".c" to import all .c files, etc.</t>
-<t tx="edream.121403160546">Leo 4.1 Release Candidate 2              December 18, 2003
+<t tx="edream.121403160546">Leo 4.1 Release Candidate 3              December 19, 2003
+
+This release fixes a serious bug in the logic that reads old-style derived files.
 
 There are no known bugs in this version of Leo.
 

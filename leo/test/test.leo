@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="2294" clone_windows="0"/>
-<globals body_outline_ratio="0.22959183673469388">
+<globals body_outline_ratio="0.46811224489795916">
 	<global_window_position top="89" left="349" height="784" width="842"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
@@ -12,7 +12,7 @@
 	<change_string></change_string>
 </find_panel_settings>
 <vnodes>
-<v t="edream.110203161858"><vh>Distribution checklist</vh>
+<v t="edream.110203161858" a="E"><vh>Distribution checklist</vh>
 <v t="edream.110203161858.5" tnodeList="edream.110203161858.5"><vh>@file-nosent c:\prog\leoCVS\.pycheckrc</vh></v>
 <v t="edream.110203161858.1"><vh>@url http://www.python.org/pypi?:action=submit_form</vh></v>
 </v>
@@ -2788,7 +2788,7 @@
 <v t="edream.110803170022"><vh>Count pages</vh></v>
 <v t="edream.120203185502"><vh>PyUno script</vh></v>
 </v>
-<v t="edream.110203161858.2119"><vh>Unit Tests</vh>
+<v t="edream.110203161858.2119" a="E"><vh>Unit Tests</vh>
 <v t="edream.110203161858.2124" a="E"><vh>tempNode</vh></v>
 <v t="edream.110203161858.2125"><vh>colorizerTests</vh>
 <v t="edream.110203161858.2126"><vh>Actionscript</vh></v>
@@ -2898,27 +2898,10 @@
 <v t="edream.110903064653.3"><vh>c:\prog\leoCvs\leo\plugins\leoPlugins.leo</vh></v>
 <v t="edream.110903064653.4"><vh>c:\prog\leoCvs\leo\doc\LeoDocs.leo</vh></v>
 </v>
-<v t="edream.110203161858.2153" a="E"><vh>Run all tests</vh></v>
-</v>
-<v t="edream.031218070146" a="EV"><vh>Distribution checklist 4.1 rc2</vh>
-<v t="edream.031218070146.3"><vh>@url http://www.python.org/pypi?:action=submit_form</vh></v>
+<v t="edream.110203161858.2153" a="EV"><vh>Run all tests</vh></v>
 </v>
 </vnodes>
 <tnodes>
-<t tx="edream.031218070146">Create Release on SourceForge
-
-Uploads
-    - Upload leodocs.zip
-	- Upload leosetup.exe
-	- Upload leo-x-y.zip
-	- Upload sbook.chm if it has been changed.
-Announcements
-	- Announce to SourceForge itself. USE ANNOUNCEMENT FORMAT, not readme format.
-	- Announce to Leo's SourceForce site.
-	- Announce to comp.lang.python
-	- Announce to comp.programming.literate
-	- Register Leo at http://www.python.org/pypi?:action=submit_form</t>
-<t tx="edream.031218070146.3"></t>
 <t tx="edream.110203161858">@color
 
 # **** Run this from test.leo ****
@@ -2931,7 +2914,7 @@ if 1:
 Documentation
 	- Update readme.txt
 	- Update LeoDocs.leo
-	- Update web site.
+	** Update version number on web site.
 Version numbers
 	- Update version number in Help menu.
 	- Update version number in setup.py (@ignore'd!!)
@@ -34204,6 +34187,7 @@ for f,arg in (
 	(leoTest.makeImportExportSuite,"importTests"),
 	(leoTest.makeTestLeoFilesSuite,"testLeoFiles"),
 	(leoTest.makeOutlineSuite,"outlineTests"),
+	# These tests presently have problem with the gui when run with other tests...
 	(leoTest.makePluginsSuite,false) # verbose
 ):
 	suite = f(arg,"tempNode")

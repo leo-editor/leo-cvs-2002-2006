@@ -2,7 +2,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="4006" clone_windows="0"/>
 <globals body_outline_ratio="0.4149425287356322">
-	<global_window_position top="49" left="430" height="870" width="818"/>
+	<global_window_position top="10" left="308" height="870" width="817"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences>
@@ -14,7 +14,15 @@
 <vnodes>
 <v t="ekr.20031218072017"><vh> Diary</vh>
 <v t="ekr.20031218072017.1"><vh>December 2003</vh>
+<v t="ekr.20031219073155"><vh>12/19</vh>
+<v t="ekr.20031219073155.1"><vh>Released 4.1 rc3</vh></v>
+<v t="ekr.20031219082957"><vh>All unittests pass (but only with tkinterGui)</vh></v>
+<v t="ekr.20031219074948"><vh>Added nullObject class to leoGlobals.py</vh></v>
+<v t="ekr.20031219073155.2"><vh>Fixed serious problem reading 3.x files</vh></v>
+</v>
 <v t="ekr.20031218072017.2"><vh>12/18</vh>
+<v t="ekr.20031218192539"><vh>Fixed crasher in 3.x version of scanText</vh></v>
+<v t="ekr.20031218192539.1"><vh>Released 4.1 rc2</vh></v>
 <v t="ekr.20031218072017.3"><vh>Added year to timestamp</vh></v>
 <v t="ekr.20031218072017.4"><vh>Fixed bug in getInsertLines</vh></v>
 </v>
@@ -1074,6 +1082,7 @@
 </v>
 <v t="ekr.20031218072017.862"><vh>Cleanup</vh></v>
 </v>
+<v t="ekr.20031219082559"><vh>To do: 4.1</vh></v>
 <v t="ekr.20031218072017.863"><vh>(Project Views)</vh>
 <v t="ekr.20031218072017.864"><vh>  Reports</vh>
 <v t="ekr.20031218072017.865"><vh>(Translation problems)</vh>
@@ -3429,6 +3438,7 @@
 <v t="ekr.20031218072017.2223" a=""><vh>class nullGui (runs scripts)</vh>
 <v t="ekr.20031218072017.2224"><vh>Birth &amp; death</vh>
 <v t="ekr.20031218072017.2225"><vh> nullGui.__init__</vh></v>
+<v t="ekr.20031219075221"><vh> nullGui.__getattr__</vh></v>
 <v t="ekr.20031218072017.2226" a=""><vh>createLeoFrame</vh></v>
 <v t="ekr.20031218072017.2227"><vh>createRootWindow</vh></v>
 <v t="ekr.20031218072017.2228"><vh>finishCreate</vh></v>
@@ -4318,7 +4328,7 @@
 <v t="ekr.20031218072017.2661"><vh>&lt;&lt; Append s to out &gt;&gt;</vh></v>
 <v t="ekr.20031218072017.2662"><vh>&lt;&lt; Remove a closing block delim from out &gt;&gt;</vh></v>
 </v>
-<v t="ekr.20031218072017.2663"><vh>scanText</vh>
+<v t="ekr.20031218072017.2663" a=""><vh>scanText (3.x)</vh>
 <v t="ekr.20031218072017.2664"><vh>&lt;&lt; put the next line into s &gt;&gt;</vh></v>
 <v t="ekr.20031218072017.2665"><vh>&lt;&lt; set kind, nextKind &gt;&gt;</vh></v>
 <v t="ekr.20031218072017.2666"><vh>&lt;&lt; Set lineIndent, linep and leading_ws &gt;&gt;</vh></v>
@@ -5238,7 +5248,7 @@
 </v>
 <v t="ekr.20031218072017.3092"><vh>Must be overridden in subclasses</vh></v>
 </v>
-<v t="ekr.20031218072017.3093" tnodeList="ekr.20031218072017.3093,ekr.20031218072017.3094,ekr.20031218072017.822,ekr.20031218072017.1582,ekr.20031218072017.1583,ekr.20031218072017.1585,ekr.20031218072017.1584,ekr.20031218072017.3096,ekr.20031218072017.3097,ekr.20031218072017.3098,ekr.20031218072017.1382,ekr.20031218072017.1383,ekr.20031218072017.1384,ekr.20031218072017.1385,ekr.20031218072017.1260,ekr.20031218072017.1261,ekr.20031218072017.1262,ekr.20031218072017.1386,ekr.20031218072017.1387,ekr.20031218072017.1388,ekr.20031218072017.1389,ekr.20031218072017.1390,ekr.20031218072017.1391,ekr.20031218072017.1392,ekr.20031218072017.1393,ekr.20031218072017.1394,ekr.20031218072017.1395,ekr.20031218072017.1396,ekr.20031218072017.1397,ekr.20031218072017.1398,ekr.20031218072017.1399,ekr.20031218072017.1400,ekr.20031218072017.2052,ekr.20031218072017.3100,ekr.20031218072017.3101,ekr.20031218072017.3102,ekr.20031218072017.3103,ekr.20031218072017.3105,ekr.20031218072017.3106,ekr.20031218072017.3107,ekr.20031218072017.3109,ekr.20031218072017.3110,ekr.20031218072017.3111,ekr.20031218072017.3112,ekr.20031218072017.3113,ekr.20031218072017.3114,ekr.20031218072017.3115,ekr.20031218072017.1317,ekr.20031218072017.3117,ekr.20031218072017.3118,ekr.20031218072017.1264,ekr.20031218072017.3119,ekr.20031218072017.3120,ekr.20031218072017.3121,ekr.20031218072017.1656,ekr.20031218072017.3122,ekr.20031218072017.3123,ekr.20031218072017.3124,ekr.20031218072017.3125,ekr.20031218072017.1241,ekr.20031218072017.1263,ekr.20031218072017.3126,ekr.20031218072017.3127,ekr.20031218072017.3128,ekr.20031218072017.3129,ekr.20031218072017.3130,ekr.20031218072017.3131,ekr.20031218072017.3132,ekr.20031218072017.2317,ekr.20031218072017.2318,ekr.20031218072017.3134,ekr.20031218072017.3135,ekr.20031218072017.3136,ekr.20031218072017.3137,ekr.20031218072017.3138,ekr.20031218072017.2146,ekr.20031218072017.2147,ekr.20031218072017.2148,ekr.20031218072017.2149,ekr.20031218072017.2150,ekr.20031218072017.2151,ekr.20031218072017.2152,ekr.20031218072017.2153,ekr.20031218072017.2154,ekr.20031218072017.2155,ekr.20031218072017.2156,ekr.20031218072017.2157,ekr.20031218072017.2158,ekr.20031218072017.2159,ekr.20031218072017.2160,ekr.20031218072017.1588,ekr.20031218072017.1589,ekr.20031218072017.1590,ekr.20031218072017.1591,ekr.20031218072017.1592,ekr.20031218072017.1593,ekr.20031218072017.1315,ekr.20031218072017.1596,ekr.20031218072017.1318,ekr.20031218072017.2278,ekr.20031218072017.3141,ekr.20031218072017.3142,ekr.20031218072017.3143,ekr.20031218072017.3144,ekr.20031218072017.3145,ekr.20031218072017.3146,ekr.20031218072017.3147,ekr.20031218072017.1474,ekr.20031218072017.3148,ekr.20031218072017.3150,ekr.20031218072017.3152,ekr.20031218072017.3153,ekr.20031218072017.3154,ekr.20031218072017.3155,ekr.20031218072017.3156,ekr.20031218072017.3157,ekr.20031218072017.3158,ekr.20031218072017.3159,ekr.20031218072017.3160,ekr.20031218072017.3161,ekr.20031218072017.3162,ekr.20031218072017.3163,ekr.20031218072017.3164,ekr.20031218072017.3165,ekr.20031218072017.3166,ekr.20031218072017.3167,ekr.20031218072017.3168,ekr.20031218072017.3169,ekr.20031218072017.3170,ekr.20031218072017.2369,ekr.20031218072017.3171,ekr.20031218072017.3172,ekr.20031218072017.3174,ekr.20031218072017.3175,ekr.20031218072017.3176,ekr.20031218072017.3177,ekr.20031218072017.3178,ekr.20031218072017.3179,ekr.20031218072017.3180,ekr.20031218072017.3181,ekr.20031218072017.3182,ekr.20031218072017.3183,ekr.20031218072017.3184,ekr.20031218072017.3185,ekr.20031218072017.3186,ekr.20031218072017.3187,ekr.20031218072017.3188,ekr.20031218072017.3189,ekr.20031218072017.3190,ekr.20031218072017.3191,ekr.20031218072017.3192,ekr.20031218072017.3193,ekr.20031218072017.3194,ekr.20031218072017.3195,ekr.20031218072017.2418,ekr.20031218072017.1499,ekr.20031218072017.1500,ekr.20031218072017.1501,ekr.20031218072017.1502,ekr.20031218072017.1503,ekr.20031218072017.1504,ekr.20031218072017.1505,ekr.20031218072017.3198,ekr.20031218072017.3199,ekr.20031218072017.3200,ekr.20031218072017.3201,ekr.20031218072017.3202,ekr.20031218072017.3203,ekr.20031218072017.3204,ekr.20031218072017.3205"><vh>@file leoGlobals.py</vh>
+<v t="ekr.20031218072017.3093" tnodeList="ekr.20031218072017.3093,ekr.20031218072017.3094,ekr.20031218072017.822,ekr.20031218072017.1582,ekr.20031218072017.1583,ekr.20031218072017.1585,ekr.20031218072017.1584,ekr.20031218072017.3096,ekr.20031218072017.3097,ekr.20031218072017.3098,ekr.20031219074948.1,ekr.20031218072017.1382,ekr.20031218072017.1383,ekr.20031218072017.1384,ekr.20031218072017.1385,ekr.20031218072017.1260,ekr.20031218072017.1261,ekr.20031218072017.1262,ekr.20031218072017.1386,ekr.20031218072017.1387,ekr.20031218072017.1388,ekr.20031218072017.1389,ekr.20031218072017.1390,ekr.20031218072017.1391,ekr.20031218072017.1392,ekr.20031218072017.1393,ekr.20031218072017.1394,ekr.20031218072017.1395,ekr.20031218072017.1396,ekr.20031218072017.1397,ekr.20031218072017.1398,ekr.20031218072017.1399,ekr.20031218072017.1400,ekr.20031218072017.2052,ekr.20031218072017.3100,ekr.20031218072017.3101,ekr.20031218072017.3102,ekr.20031218072017.3103,ekr.20031218072017.3105,ekr.20031218072017.3106,ekr.20031218072017.3107,ekr.20031218072017.3109,ekr.20031218072017.3110,ekr.20031218072017.3111,ekr.20031218072017.3112,ekr.20031218072017.3113,ekr.20031218072017.3114,ekr.20031218072017.3115,ekr.20031218072017.1317,ekr.20031218072017.3117,ekr.20031218072017.3118,ekr.20031218072017.1264,ekr.20031218072017.3119,ekr.20031218072017.3120,ekr.20031218072017.3121,ekr.20031218072017.1656,ekr.20031218072017.3122,ekr.20031218072017.3123,ekr.20031218072017.3124,ekr.20031218072017.3125,ekr.20031218072017.1241,ekr.20031218072017.1263,ekr.20031218072017.3126,ekr.20031218072017.3127,ekr.20031218072017.3128,ekr.20031218072017.3129,ekr.20031218072017.3130,ekr.20031218072017.3131,ekr.20031218072017.3132,ekr.20031218072017.2317,ekr.20031218072017.2318,ekr.20031218072017.3134,ekr.20031218072017.3135,ekr.20031218072017.3136,ekr.20031218072017.3137,ekr.20031218072017.3138,ekr.20031218072017.1588,ekr.20031218072017.1589,ekr.20031218072017.1590,ekr.20031218072017.1591,ekr.20031218072017.1592,ekr.20031218072017.1593,ekr.20031218072017.1315,ekr.20031218072017.1596,ekr.20031218072017.1318,ekr.20031218072017.2278,ekr.20031218072017.3141,ekr.20031218072017.3142,ekr.20031218072017.3143,ekr.20031218072017.3144,ekr.20031218072017.3145,ekr.20031218072017.3146,ekr.20031218072017.3147,ekr.20031218072017.1474,ekr.20031218072017.3148,ekr.20031218072017.3150,ekr.20031218072017.2146,ekr.20031218072017.2147,ekr.20031218072017.2148,ekr.20031218072017.2149,ekr.20031218072017.2150,ekr.20031218072017.2151,ekr.20031218072017.2152,ekr.20031218072017.2153,ekr.20031218072017.2154,ekr.20031218072017.2155,ekr.20031218072017.2156,ekr.20031218072017.2157,ekr.20031218072017.2158,ekr.20031218072017.2159,ekr.20031218072017.2160,ekr.20031218072017.3152,ekr.20031218072017.3153,ekr.20031218072017.3154,ekr.20031218072017.3155,ekr.20031218072017.3156,ekr.20031218072017.3157,ekr.20031218072017.3158,ekr.20031218072017.3159,ekr.20031218072017.3160,ekr.20031218072017.3161,ekr.20031218072017.3162,ekr.20031218072017.3163,ekr.20031218072017.3164,ekr.20031218072017.3165,ekr.20031218072017.3166,ekr.20031218072017.3167,ekr.20031218072017.3168,ekr.20031218072017.3169,ekr.20031218072017.3170,ekr.20031218072017.2369,ekr.20031218072017.3171,ekr.20031218072017.3172,ekr.20031218072017.3174,ekr.20031218072017.3175,ekr.20031218072017.3176,ekr.20031218072017.3177,ekr.20031218072017.3178,ekr.20031218072017.3179,ekr.20031218072017.3180,ekr.20031218072017.3181,ekr.20031218072017.3182,ekr.20031218072017.3183,ekr.20031218072017.3184,ekr.20031218072017.3185,ekr.20031218072017.3186,ekr.20031218072017.3187,ekr.20031218072017.3188,ekr.20031218072017.3189,ekr.20031218072017.3190,ekr.20031218072017.3191,ekr.20031218072017.3192,ekr.20031218072017.3193,ekr.20031218072017.3194,ekr.20031218072017.3195,ekr.20031218072017.2418,ekr.20031218072017.1499,ekr.20031218072017.1500,ekr.20031218072017.1501,ekr.20031218072017.1502,ekr.20031218072017.1503,ekr.20031218072017.1504,ekr.20031218072017.1505,ekr.20031218072017.3198,ekr.20031218072017.3199,ekr.20031218072017.3200,ekr.20031218072017.3201,ekr.20031218072017.3202,ekr.20031218072017.3203,ekr.20031218072017.3204,ekr.20031218072017.3205"><vh>@file leoGlobals.py</vh>
 <v t="ekr.20031218072017.3094"><vh>&lt;&lt; define general constants &gt;&gt;</vh></v>
 <v t="ekr.20031218072017.3095"><vh>Checking Leo Files...</vh>
 <v t="ekr.20031218072017.822" a=""><vh>createTopologyList</vh></v>
@@ -5251,6 +5261,7 @@
 </v>
 <v t="ekr.20031218072017.3097"><vh>CheckVersion (Dave Hein)</vh></v>
 <v t="ekr.20031218072017.3098"><vh>class Bunch</vh></v>
+<v t="ekr.20031219074948.1"><vh>class nullObject</vh></v>
 <v t="ekr.20031218072017.3099"><vh>Commands &amp; Directives</vh>
 <v t="ekr.20031218072017.1380" a=""><vh>Directive utils...</vh>
 <v t="ekr.20031218072017.1381"><vh>@language and @comment directives (leoUtils)</vh>
@@ -5336,23 +5347,6 @@
 <v t="ekr.20031218072017.3137"><vh>Timing</vh></v>
 </v>
 <v t="ekr.20031218072017.3138"><vh>executeScript</vh></v>
-<v t="ekr.20031218072017.2145" a=""><vh>os.path wrappers (leoGlobals.py)</vh>
-<v t="ekr.20031218072017.2146"><vh>os_path_abspath</vh></v>
-<v t="ekr.20031218072017.2147"><vh>os_path_basename</vh></v>
-<v t="ekr.20031218072017.2148"><vh>os_path_dirname</vh></v>
-<v t="ekr.20031218072017.2149"><vh>os_path_exists</vh></v>
-<v t="ekr.20031218072017.2150"><vh>os_path_getmtime</vh></v>
-<v t="ekr.20031218072017.2151"><vh>os_path_isabs</vh></v>
-<v t="ekr.20031218072017.2152"><vh>os_path_isdir (not used)</vh></v>
-<v t="ekr.20031218072017.2153"><vh>os_path_isfile</vh></v>
-<v t="ekr.20031218072017.2154"><vh>os_path_join</vh></v>
-<v t="ekr.20031218072017.2155"><vh>os_path_norm</vh></v>
-<v t="ekr.20031218072017.2156"><vh>os_path_normcase</vh></v>
-<v t="ekr.20031218072017.2157"><vh>os_path_normpath</vh></v>
-<v t="ekr.20031218072017.2158"><vh>os_path_split</vh></v>
-<v t="ekr.20031218072017.2159"><vh>os_path_splitext</vh></v>
-<v t="ekr.20031218072017.2160"><vh>toUnicodeFileEncoding</vh></v>
-</v>
 <v t="ekr.20031218072017.1588" a=""><vh>Garbage Collection</vh>
 <v t="ekr.20031218072017.1589"><vh>clearAllIvars</vh></v>
 <v t="ekr.20031218072017.1590"><vh>collectGarbage</vh>
@@ -5380,6 +5374,23 @@
 <v t="ekr.20031218072017.3148"><vh>top</vh></v>
 <v t="ekr.20031218072017.3149"><vh>trace is defined below</vh></v>
 <v t="ekr.20031218072017.3150"><vh>windows</vh></v>
+</v>
+<v t="ekr.20031218072017.2145" a=""><vh>os.path wrappers (leoGlobals.py)</vh>
+<v t="ekr.20031218072017.2146"><vh>os_path_abspath</vh></v>
+<v t="ekr.20031218072017.2147"><vh>os_path_basename</vh></v>
+<v t="ekr.20031218072017.2148"><vh>os_path_dirname</vh></v>
+<v t="ekr.20031218072017.2149"><vh>os_path_exists</vh></v>
+<v t="ekr.20031218072017.2150"><vh>os_path_getmtime</vh></v>
+<v t="ekr.20031218072017.2151"><vh>os_path_isabs</vh></v>
+<v t="ekr.20031218072017.2152"><vh>os_path_isdir (not used)</vh></v>
+<v t="ekr.20031218072017.2153"><vh>os_path_isfile</vh></v>
+<v t="ekr.20031218072017.2154"><vh>os_path_join</vh></v>
+<v t="ekr.20031218072017.2155"><vh>os_path_norm</vh></v>
+<v t="ekr.20031218072017.2156"><vh>os_path_normcase</vh></v>
+<v t="ekr.20031218072017.2157"><vh>os_path_normpath</vh></v>
+<v t="ekr.20031218072017.2158"><vh>os_path_split</vh></v>
+<v t="ekr.20031218072017.2159"><vh>os_path_splitext</vh></v>
+<v t="ekr.20031218072017.2160"><vh>toUnicodeFileEncoding</vh></v>
 </v>
 <v t="ekr.20031218072017.3151"><vh>Scanning...</vh>
 <v t="ekr.20031218072017.3152"><vh>scanAtFileOptions</vh>
@@ -6299,7 +6310,7 @@
 <v t="ekr.20031218072017.2242"><vh>select</vh></v>
 </v>
 </v>
-<v t="ekr.20031218072017.3719" tnodeList="ekr.20031218072017.3719,ekr.20031218072017.3720,ekr.20031218072017.3722,ekr.20031218072017.2188,ekr.20031218072017.2189,ekr.20031218072017.3724,ekr.20031218072017.3725,ekr.20031218072017.3726,ekr.20031218072017.3727,ekr.20031218072017.3728,ekr.20031218072017.3729,ekr.20031218072017.3730,ekr.20031218072017.3731,ekr.20031218072017.3732,ekr.20031218072017.3733,ekr.20031218072017.3734,ekr.20031218072017.3735,ekr.20031218072017.3736,ekr.20031218072017.3737,ekr.20031218072017.3738,ekr.20031218072017.3739,ekr.20031218072017.3740,ekr.20031218072017.3741,ekr.20031218072017.2223,ekr.20031218072017.2225,ekr.20031218072017.2226,ekr.20031218072017.2227,ekr.20031218072017.2228,ekr.20031218072017.2229,ekr.20031218072017.2230,ekr.20031218072017.2231,ekr.20031218072017.3742,ekr.20031218072017.3743,ekr.20031218072017.3744,ekr.20031218072017.3745,ekr.20031218072017.3746,ekr.20031218072017.3747"><vh>@file leoGui.py</vh>
+<v t="ekr.20031218072017.3719" tnodeList="ekr.20031218072017.3719,ekr.20031218072017.3720,ekr.20031218072017.3722,ekr.20031218072017.2188,ekr.20031218072017.2189,ekr.20031218072017.3724,ekr.20031218072017.3725,ekr.20031218072017.3726,ekr.20031218072017.3727,ekr.20031218072017.3728,ekr.20031218072017.3729,ekr.20031218072017.3730,ekr.20031218072017.3731,ekr.20031218072017.3732,ekr.20031218072017.3733,ekr.20031218072017.3734,ekr.20031218072017.3735,ekr.20031218072017.3736,ekr.20031218072017.3737,ekr.20031218072017.3738,ekr.20031218072017.3739,ekr.20031218072017.3740,ekr.20031218072017.3741,ekr.20031218072017.2223,ekr.20031218072017.2225,ekr.20031219075221,ekr.20031218072017.2226,ekr.20031218072017.2227,ekr.20031218072017.2228,ekr.20031218072017.2229,ekr.20031218072017.2230,ekr.20031218072017.2231,ekr.20031218072017.3742,ekr.20031218072017.3743,ekr.20031218072017.3744,ekr.20031218072017.3745,ekr.20031218072017.3746,ekr.20031218072017.3747"><vh>@file leoGui.py</vh>
 <v t="ekr.20031218072017.3720"><vh>class leoGui</vh>
 <v t="ekr.20031218072017.3721"><vh>app.gui Birth &amp; death</vh>
 <v t="ekr.20031218072017.3722"><vh> leoGui.__init__</vh></v>
@@ -6332,6 +6343,7 @@
 <v t="ekr.20031218072017.2223" a=""><vh>class nullGui (runs scripts)</vh>
 <v t="ekr.20031218072017.2224"><vh>Birth &amp; death</vh>
 <v t="ekr.20031218072017.2225"><vh> nullGui.__init__</vh></v>
+<v t="ekr.20031219075221"><vh> nullGui.__getattr__</vh></v>
 <v t="ekr.20031218072017.2226" a=""><vh>createLeoFrame</vh></v>
 <v t="ekr.20031218072017.2227"><vh>createRootWindow</vh></v>
 <v t="ekr.20031218072017.2228"><vh>finishCreate</vh></v>
@@ -7166,6 +7178,40 @@
 <v t="ekr.20031218072017.4247"><vh>tearDown</vh></v>
 </v>
 </v>
+</v>
+</v>
+</v>
+<v t="ekr.20031219071829"><vh>(Fixed serious problem reading 3.x files)</vh>
+<v t="ekr.20031218072017.2663" a=""><vh>scanText (3.x)</vh>
+<v t="ekr.20031218072017.2664"><vh>&lt;&lt; put the next line into s &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.2665"><vh>&lt;&lt; set kind, nextKind &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.2666"><vh>&lt;&lt; Set lineIndent, linep and leading_ws &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.2667"><vh>&lt;&lt; handle unexpected end of text &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.2668"><vh>&lt;&lt; handle the line in s &gt;&gt;</vh>
+<v t="ekr.20031218072017.2669"><vh>&lt;&lt; append non-sentinel line &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.2670"><vh>&lt;&lt; handle common sentinels &gt;&gt;</vh>
+<v t="ekr.20031218072017.2671"><vh>&lt;&lt; handle an ending sentinel &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.2672"><vh>&lt;&lt; scan old ref &gt;&gt; (3.0)</vh></v>
+<v t="ekr.20031218072017.2673"><vh>&lt;&lt; scan @+at &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.2674"><vh>&lt;&lt; scan @+body &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.2675"><vh>&lt;&lt; scan @+doc &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.2676"><vh>&lt;&lt; scan @+node &gt;&gt;</vh>
+<v t="ekr.20031218072017.2677"><vh>&lt;&lt; Set childIndex &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.2678"><vh>&lt;&lt; Set cloneIndex &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.2679"><vh>&lt;&lt; Set headline and ref &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.2680"><vh>&lt;&lt; Check the filename in the sentinel &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.2681"><vh>&lt;&lt; look for sentinels that may follow a reference &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20031218072017.2682"><vh>&lt;&lt; scan @+others &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20031218072017.2683"><vh>&lt;&lt; handle rare sentinels &gt;&gt;</vh>
+<v t="ekr.20031218072017.2684"><vh>&lt;&lt; scan @+leo &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.2685"><vh>&lt;&lt; scan @@ &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.2686"><vh>&lt;&lt; scan @comment &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.2687"><vh>&lt;&lt; scan @delims &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.2688"><vh>&lt;&lt; scan @verbatim &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20031218072017.2689"><vh>&lt;&lt; warn about unknown sentinel &gt;&gt;</vh></v>
 </v>
 </v>
 </v>
@@ -27161,8 +27207,9 @@ from leoGlobals import * ; print `app().loadDir`</t>
 	w = config.getIntWindowPref("initial_window_width")
 	x = config.getIntWindowPref("initial_window_left")
 	y = config.getIntWindowPref("initial_window_top")
-
-	self.setTopGeometry(w,h,x,y)</t>
+	
+	if h and w and x and y:
+		self.setTopGeometry(w,h,x,y)</t>
 <t tx="ekr.20031218072017.1626">@ To do:
 	
 For users:
@@ -31269,8 +31316,6 @@ if 0:
 		if val: val = 1
 		else: val = 0
 	return val
-	#if val and val != None and val != 0: val = 1
-	#return val
 
 def getFloatFromDict (self,name,dict):
 	val = self.getFromDict(name,dict)
@@ -31290,16 +31335,15 @@ def getFromDict (self,name,dict):
 
 def getIntFromDict (self,name,dict):
 	val = self.getFromDict(name,dict)
-	if val:
-		try: val = int(val)
-		except: val = None
-	return val
+	try:
+		return int(val)
+	except:
+		return 0
 
 def setDict (self,name,val,dict):
 	dict [name] = val
 		
-getStringFromDict = getFromDict
-</t>
+getStringFromDict = getFromDict</t>
 <t tx="ekr.20031218072017.1933">@
 
 - Changed code in various places to prevent unbounded loops and recursion.
@@ -35136,6 +35180,11 @@ def OnHyperLinkLeave (self,v):
 		leoFrame.__init__(self) # Init the base class.
 		assert(self.c is None)
 		self.title = title
+		
+	def __getattr__(self,attr):
+
+		trace("nullFrame",attr)
+		return nullObject()
 
 	def finishCreate(self,c):
 
@@ -40163,7 +40212,7 @@ c:\python22\python &lt;leopath&gt;leo.py %1
 </t>
 <t tx="ekr.20031218072017.2563">Metadata-Version: 1.0
 Name: leo
-Version: 4.1-rc2
+Version: 4.1-rc3
 Summary: Leo: Literate Editor with Outlines
 Home-page: http://webpages.charter.net/edreamleo/front.html
 Author: Edward K. Ream
@@ -40189,7 +40238,7 @@ Leo is available at:  http://sourceforge.net/projects/leo/
 Leo requires Python 2.1 or above and tcl/tk 8.3 or above.
 Leo will work on Linux, Windows and MacOs X Jaguar.
 
-Leo 4.1 Release Candidate 2              December 18, 2003
+Leo 4.1 Release Candidate 3              December 18, 2003
 
 This release fixes minor bugs in Leo and its plugins.
 
@@ -40336,7 +40385,7 @@ setup (
 if sys.argv[1] == "sdist":
 	print "setup complete"</t>
 <t tx="ekr.20031218072017.2571">name="leo",
-version="4.1-rc2",
+version="4.1-rc3",
 author="Edward K. Ream",
 author_email="edream@tds.net",
 url="http://personalpages.tds.net/~edream/front.html",
@@ -40663,7 +40712,7 @@ rm -f  $LEO_RUN_SCRIPT_OUTPUT
 
 def getSignOnLine (self):
 	c = self
-	return "Leo 4.1 rc2, build %s, December 18, 2003" % c.getBuildNumber()
+	return "Leo 4.1 rc3, build %s, December 19, 2003" % c.getBuildNumber()
 	
 def initVersion (self):
 	c = self
@@ -42071,6 +42120,7 @@ if not single:
 	
 	"""Scan a 3.x derived file recursively."""
 
+	at = self # 12/18/03
 	lastLines = [] # The lines after @-leo
 	lineIndent = 0 ; linep = 0 # Changed only for sentinels.
 	while 1:
@@ -61091,7 +61141,7 @@ Run the unit tests in test.leo using the Execute Script command.
 
 from leoGlobals import *
 
-import leoColor,leoCommands,leoFrame,leoGui,leoNodes
+import leoColor,leoCommands,leoFrame,leoGui,leoNodes,leoTkinterGui
 
 import glob,os,sys,unittest
 
@@ -61643,7 +61693,7 @@ def setUp(self,*args,**keys):
 	assert(os_path_exists(fileName))
 	
 	self.oldGui = app.gui
-	app.gui = leoGui.nullGui("nullGui")
+	# app.gui = leoGui.nullGui("nullGui")
 
 	ok, frame = openWithFileName(fileName,c,enableLog=false)
 	assert(ok)
@@ -61776,6 +61826,7 @@ def setUp(self,*args,**keys):
 	unittest.TestCase.__init__(self)
 
 	self.fileName = fileName
+	self.oldGui = None
 	self.verbose = verbose</t>
 <t tx="ekr.20031218072017.4243">def pluginTest (self):
 	
@@ -61802,13 +61853,14 @@ def setUp(self,*args,**keys):
 	self.pluginTest()</t>
 <t tx="ekr.20031218072017.4245">def setUp(self,*args,**keys):
 
-	pass</t>
+	self.oldGui = app.gui
+	# app.gui = leoTkinterGui.tkinterGui()</t>
 <t tx="ekr.20031218072017.4246">def shortDescription (self):
 	
 	return "pluginTestCase: " + self.fileName</t>
 <t tx="ekr.20031218072017.4247">def tearDown (self):
 
-	pass</t>
+	app.gui = self.oldGui</t>
 <t tx="ekr.20031218072017.4248"></t>
 <t tx="ekr.20031218072017.4249">@nocolor
 
@@ -61885,5 +61937,36 @@ while v:
 	v = v.threadNext()
 	
 es("all timestamps cleared")</t>
+<t tx="ekr.20031218192539">Added at = self</t>
+<t tx="ekr.20031218192539.1"></t>
+<t tx="ekr.20031219071829"></t>
+<t tx="ekr.20031219073155"></t>
+<t tx="ekr.20031219073155.1"></t>
+<t tx="ekr.20031219073155.2"></t>
+<t tx="ekr.20031219074948">Useful for unit testing.</t>
+<t tx="ekr.20031219074948.1"># From the Python cookbook, recipe 5.23
+
+class nullObject:
+	
+	"""An object that does nothing, and does it very well."""
+	
+	def __init__   (self,*args,**keys): pass
+	def __call__   (self,*args,**keys): return self
+	
+	def __repr__   (self): return "nullObject"
+	
+	def __nonzero__ (self): return 0
+	
+	def __delattr__(self,attr):     return self
+	def __getattr__(self,attr):     return self
+	def __setattr__(self,attr,val): return self</t>
+<t tx="ekr.20031219075221">def __getattr__(self,attr):
+
+	trace("nullGui",attr)
+	return nullObject()</t>
+<t tx="ekr.20031219082559">@nocolor
+
+- The nullGui class needs more work.  Unit tests are failing.</t>
+<t tx="ekr.20031219082957">The nullGui class is not ready for prime time yet.</t>
 </tnodes>
 </leo_file>
