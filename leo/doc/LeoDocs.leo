@@ -132,6 +132,7 @@
 <v t="ekr.20040131044136"><vh>Fixed several bugs involving cut &amp; paste</vh></v>
 <v t="ekr.20040131040544.227"><vh>Fixed whitespace problem in leoTkinterGui.py</vh></v>
 <v t="ekr.20040131100557"><vh>Fixed glitches when inserting node in hoisted outline</vh></v>
+<v t="ekr.20040203084228"><vh>Fixed bugs in search command</vh></v>
 </v>
 <v t="ekr.20040131040356.2"><vh>Bug fixed in previous 4.1 releases</vh></v>
 <v t="ekr.20040131040356.3"><vh>New code-level features</vh></v>
@@ -183,6 +184,7 @@
 <v t="ekr.20040131044136"><vh>Fixed several bugs involving cut &amp; paste</vh></v>
 <v t="ekr.20040131040544.227"><vh>Fixed whitespace problem in leoTkinterGui.py</vh></v>
 <v t="ekr.20040131100557"><vh>Fixed glitches when inserting node in hoisted outline</vh></v>
+<v t="ekr.20040203084228"><vh>Fixed bugs in search command</vh></v>
 </v>
 <v t="ekr.20040131040356.2"><vh>Bug fixed in previous 4.1 releases</vh></v>
 <v t="ekr.20040131040356.3"><vh>New code-level features</vh></v>
@@ -24996,5 +24998,6 @@ $ENDIF &lt;-... Until here!
 This changes the comment symbol to " ' " apostrophe... making comments parseable
 by a BASIC (or other language.)</t>
 <t tx="ekr.20040201120903">Adds a status line to the bottom of Leo windows.</t>
+<t tx="ekr.20040203084228">The Change All command was looping when the find pattern was '\n'.</t>
 </tnodes>
 </leo_file>
