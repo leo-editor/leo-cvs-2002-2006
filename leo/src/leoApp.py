@@ -27,7 +27,6 @@ class LeoApp:
 		self.config = None # The leoConfig instance.
 		self.globalWindows = []
 		self.gui = None # The gui class.
-		self.guiDispatcher = None # Class used to dispatch gui calls to proper object.
 		self.hasOpenWithMenu = false # True: open with plugin has been loaded.
 		self.hookError = false # true: suppress further calls to hooks.
 		self.hookFunction = None # Application wide hook function.
@@ -55,6 +54,7 @@ class LeoApp:
 		self.trace_list = [] # "Sherlock" argument list for tracing().
 		self.tkEncoding = "utf-8"
 		self.unicodeErrorGiven = true # true: suppres unicode tracebacks.
+		self.unitTestDict = {} # For communication between unit tests and code.
 		self.use_gnx = true # True: generate gnx's instead of tnode indices.
 		self.windowList = [] # Global list of all frames.  Does not include hidden root window.
 	
