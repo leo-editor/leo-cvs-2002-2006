@@ -9760,7 +9760,7 @@ Write a script that supports golf sections.
         - It's not clear that @golf-root or @golf-unit are needed.</t>
 <t tx="ekr.20050402080206">@
 
-This is LeoN-0.0.1 as created by Rodrigo Berenson, very slightly reorganized form.
+This is LeoN-0.0.1 as created by Rodrigo Benenson, very slightly reorganized form.
 
 An important project for Leo's long-term development.
 
