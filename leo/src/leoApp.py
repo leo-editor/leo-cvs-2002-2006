@@ -151,7 +151,6 @@ class LeoApp:
     
         if c.changed:
             veto = frame.promptForSave()
-            # print "veto",veto
             if veto: return False
     
         g.app.setLog(None) # no log until we reactive a window.
@@ -171,6 +170,7 @@ class LeoApp:
             g.app.finishQuit()
     
         return True # The window has been closed.
+    #@nonl
     #@-node:ekr.20031218072017.2609:app.closeLeoWindow
     #@+node:ekr.20031218072017.2610:app.createTkGui
     def createTkGui (self,fileName=None): # Do NOT omit fileName param: it is used in plugin code.

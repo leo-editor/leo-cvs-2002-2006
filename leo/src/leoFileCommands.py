@@ -1970,11 +1970,14 @@ class baseFileCommands:
     
         c = self.c ; v = c.currentVnode()
     
-        if not g.doHook("save1",c=c,v=v,fileName=fileName):
+        # New in 4.2.  Return ok flag so shutdown logic knows if all went well.
+        ok = g.doHook("save1",c=c,v=v,fileName=fileName)
+        if ok is None:
             c.beginUpdate()
             c.endEditing()# Set the current headline text.
             self.setDefaultDirectoryForNewFiles(fileName)
-            if self.write_Leo_file(fileName,False): # outlineOnlyFlag
+            ok = self.write_Leo_file(fileName,False) # outlineOnlyFlag
+            if ok:
                 c.setChanged(False) # Clears all dirty bits.
                 g.es("saved: " + g.shortFileName(fileName))
                 if g.app.config.save_clears_undo_buffer:
@@ -1982,6 +1985,7 @@ class baseFileCommands:
                     c.undoer.clearUndoState()
             c.endUpdate()
         g.doHook("save2",c=c,v=v,fileName=fileName)
+        return ok
     #@nonl
     #@-node:ekr.20031218072017.1720:save
     #@+node:ekr.20031218072017.3043:saveAs
@@ -2054,7 +2058,7 @@ class baseFileCommands:
         if g.os_path_exists(fileName):
             try:
                 if not os.access(fileName,os.W_OK):
-                    g.es("can not create: read only: " + fileName)
+                    g.es("can not create: read only: " + fileName,color="red")
                     return False
             except:
                 pass # os.access() may not exist on all platforms.

@@ -546,9 +546,8 @@ class leoFrame:
                 #@-node:ekr.20031218072017.3693:<< Put up a file save dialog to set mFileName >>
                 #@nl
             if c.mFileName:
-                # print "saving", c.mFileName
-                c.fileCommands.save(c.mFileName)
-                return False # Don't veto.
+                ok = c.fileCommands.save(c.mFileName)
+                return not ok # New in 4.2: Veto if the save did not succeed.
             else:
                 return True # Veto.
     #@nonl
