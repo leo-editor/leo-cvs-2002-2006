@@ -451,8 +451,8 @@ class baseCommands:
 			c.mFileName = ""
 	
 		if c.mFileName != "":
-			c.fileCommands.save(c.mFileName)
-			c.setChanged(false)
+			# Calls c.setChanged(false) if no error.
+			c.fileCommands.save(c.mFileName) 
 			return
 	
 		fileName = app.gui.runSaveFileDialog(
@@ -490,6 +490,7 @@ class baseCommands:
 			c.mFileName = ensure_extension(fileName, ".leo")
 			c.frame.title = c.mFileName
 			c.frame.setTitle(computeWindowTitle(c.mFileName))
+			# Calls c.setChanged(false) if no error.
 			c.fileCommands.saveAs(c.mFileName)
 			c.updateRecentFiles(c.mFileName)
 	#@nonl
