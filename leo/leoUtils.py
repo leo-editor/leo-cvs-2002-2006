@@ -17,6 +17,8 @@ import os, string, sys, time, types, Tkinter, traceback
 # Returns a tuple (single,start,end) of comment delims
 
 def set_delims_from_language(language):
+	
+	# trace(`language`)
 
 	for lang, val in [ (cweb_language, "// /* */"),
 		(c_language, "// /* */"), (java_language, "// /* */"),
@@ -24,8 +26,10 @@ def set_delims_from_language(language):
 		(html_language, "<!-- -->"), (pascal_language, "// { }"),
 		(perl_language, "#"), (perlpod_language, "# =pod =cut"),
 		(plain_text_language, "#"), # 7/8/02: we have to pick something.
-		(shell_language, "#"), (python_language, "#") ]:
+		(shell_language, "#"), (python_language, "#"),
+		(tcltk_language, "#") ]: # 7/18/02
 		if lang == language:
+			# trace(`val`)
 			return set_delims_from_string(val)
 
 	return None, None, None # Indicate that no change should be made
@@ -42,6 +46,8 @@ def set_delims_from_language(language):
 #@@c
 
 def set_delims_from_string(s):
+	
+	# trace(`s`)
 
 	# Skip an optional @comment
 	tag = "@comment"
@@ -70,7 +76,7 @@ def set_delims_from_string(s):
 	return delims[0], delims[1], delims[2]
 #@-body
 #@-node:2:C=3:set_delims_from_string
-#@+node:3::set_language
+#@+node:3:C=4:set_language
 #@+body
 #@+at
 #   Scans the @language directive that appears at s[i]. 'default' returns default_language.
@@ -83,12 +89,14 @@ def set_delims_from_string(s):
 def set_language(s,i,issue_errors_flag,default_language):
 
 	tag = "@language"
+	# trace(`get_line(s,i)`)
 	assert(i != None)
 	assert(match_word(s,i,tag))
 	i += len(tag) ; i = skip_ws(s, i)
 	# Get the argument.
 	j = i
 	i = skip_c_id(s,i)
+	# Allow tcl/tk.
 	arg = string.lower(s[j:i])
 	if len(arg) > 0:
 		for name, language in [ ("ada", ada_language),
@@ -101,7 +109,8 @@ def set_language(s,i,issue_errors_flag,default_language):
 			("perlpod", perlpod_language),
 			("plain", plain_text_language), # 7/8/02
 			("python", python_language),
-			("shell", shell_language) ]:
+			("shell", shell_language),
+			("tcl", tcltk_language) ]: # 7/18/02.  Note: this also matches tcl/tk.
 		
 			if arg == name:
 				delim1, delim2, delim3 = set_delims_from_language(language)
@@ -112,7 +121,7 @@ def set_language(s,i,issue_errors_flag,default_language):
 
 	return None, None, None, None,
 #@-body
-#@-node:3::set_language
+#@-node:3:C=4:set_language
 #@-node:1:C=1:@language and @comment directives
 #@+node:2::angleBrackets & virtual_event_name
 #@+body
@@ -186,7 +195,7 @@ def center_dialog(top):
 	return w,h,x,y
 #@-body
 #@-node:2::center_dialog
-#@+node:3:C=4:create_labeled_frame
+#@+node:3:C=5:create_labeled_frame
 #@+body
 # Returns frames w and f.
 # Typically the caller would pack w into other frames, and pack content into f.
@@ -229,7 +238,7 @@ def create_labeled_frame (parent,
 
 	return w,f
 #@-body
-#@-node:3:C=4:create_labeled_frame
+#@-node:3:C=5:create_labeled_frame
 #@-node:5::Dialog utilites...
 #@+node:6::Dumping, Tracing & Sherlock
 #@+node:1::dump
@@ -255,7 +264,7 @@ def oldDump(s):
 	return out
 #@-body
 #@-node:1::dump
-#@+node:2:C=5:get_line & get_line_after
+#@+node:2:C=6:get_line & get_line_after
 #@+body
 # Very useful for tracing.
 
@@ -279,7 +288,7 @@ def get_line_after (s,i):
 	return nl + s[i:k]
 
 #@-body
-#@-node:2:C=5:get_line & get_line_after
+#@-node:2:C=6:get_line & get_line_after
 #@+node:3::printBindings
 #@+body
 def print_bindings (name,window):
@@ -291,7 +300,7 @@ def print_bindings (name,window):
 		print `b`
 #@-body
 #@-node:3::printBindings
-#@+node:4:C=6:Sherlock...
+#@+node:4:C=7:Sherlock...
 #@+body
 #@+at
 #  Starting with this release, you will see trace statements throughout the code.  The trace function is defined in leoUtils.py; 
@@ -405,7 +414,7 @@ def trace (s1=None,s2=None):
 			message()
 #@-body
 #@-node:3::trace
-#@-node:4:C=6:Sherlock...
+#@-node:4:C=7:Sherlock...
 #@-node:6::Dumping, Tracing & Sherlock
 #@+node:7::ensure_extension
 #@+body
@@ -420,7 +429,7 @@ def ensure_extension (name, ext):
 		return file + ext
 #@-body
 #@-node:7::ensure_extension
-#@+node:8:C=7:findReference
+#@+node:8:C=8:findReference
 #@+body
 #@+at
 #  We search the descendents of v looking for the definition node matching name.
@@ -440,8 +449,8 @@ def findReference(name,root):
 	return None
 
 #@-body
-#@-node:8:C=7:findReference
-#@+node:9:C=8:Leading & trailing whitespace...
+#@-node:8:C=8:findReference
+#@+node:9:C=9:Leading & trailing whitespace...
 #@+node:1::computeLeadingWhitespace
 #@+body
 # Returns optimized whitespace corresponding to width with the indicated tab_width.
@@ -562,7 +571,7 @@ def skip_leading_ws_with_indent(s,i,tab_width):
 	return i, count
 #@-body
 #@-node:7::skip_leading_ws_with_indent
-#@-node:9:C=8:Leading & trailing whitespace...
+#@-node:9:C=9:Leading & trailing whitespace...
 #@+node:10::List utilities...
 #@+node:1::appendToList
 #@+body
@@ -902,7 +911,7 @@ def escaped(s,i):
 	return (count%2) == 1
 #@-body
 #@-node:1::escaped
-#@+node:2:C=9:find_line_start
+#@+node:2:C=10:find_line_start
 #@+body
 def find_line_start(s,i):
 
@@ -910,7 +919,7 @@ def find_line_start(s,i):
 	if i == -1: return 0
 	else: return i + 1
 #@-body
-#@-node:2:C=9:find_line_start
+#@-node:2:C=10:find_line_start
 #@+node:3::find_on_line
 #@+body
 def find_on_line(s,i,pattern):
@@ -960,7 +969,7 @@ def is_special(s,i,directive):
 	return false, -1
 #@-body
 #@-node:6::is_special
-#@+node:7:C=10:is_special_bits
+#@+node:7:C=11:is_special_bits
 #@+body
 #@+at
 #  Returns bits, dict where:
@@ -1003,7 +1012,6 @@ def is_special_bits(s,root=None):
 				if   match_word(s,i,"@pagewidth"):
 					bits |= page_width_bits ; dict["page_width"] = i
 				elif match_word(s,i,"@path"):
-					# trace(`s[i:]`)
 					bits |= path_bits ; dict["path"] = i
 			elif ch == 'r':
 				if match_word(s,i,"@root"): bits |= root_bits # skip_body finds the root.
@@ -1050,7 +1058,7 @@ def is_special_bits(s,root=None):
 		i = skip_line(s,i)
 	return bits, dict
 #@-body
-#@-node:7:C=10:is_special_bits
+#@-node:7:C=11:is_special_bits
 #@+node:8::is_ws & is_ws_or_nl
 #@+body
 def is_ws(c):
@@ -1161,10 +1169,11 @@ def skip_long(s,i):
 	n = len(s)
 	if i >= n or s[i] not in string.digits:
 		return i, None
+	# Rewritten: 7/18/02.
+	j = i
 	while i < n and s[i] in string.digits:
-		val = val * 10
-		val += (s[i] - '0')
 		i += 1
+	val = int(s[j:i])
 	return i, val
 #@-body
 #@-node:16::skip_long
@@ -1290,7 +1299,7 @@ def esDiffTime(message, start):
 	return time.clock()
 #@-body
 #@-node:17::Timing
-#@+node:18:C=11:Tk.Text selection (utils)
+#@+node:18:C=12:Tk.Text selection (utils)
 #@+node:1::getTextSelection
 #@+body
 # t is a Tk.Text widget.  Returns the selected range of t.
@@ -1318,7 +1327,7 @@ def getSelectedText (t):
 		return None
 #@-body
 #@-node:2::getSelectedText
-#@+node:3:C=12:setTextSelection
+#@+node:3:C=13:setTextSelection
 #@+body
 #@+at
 #  t is a Tk.Text widget.  start and end are positions.  Selects from start to end.
@@ -1338,8 +1347,8 @@ def setTextSelection (t,start,end):
 	t.tag_remove("sel",end,"end")
 	t.mark_set("insert",end)
 #@-body
-#@-node:3:C=12:setTextSelection
-#@-node:18:C=11:Tk.Text selection (utils)
+#@-node:3:C=13:setTextSelection
+#@-node:18:C=12:Tk.Text selection (utils)
 #@+node:19::update_file_if_changed
 #@+body
 #@+at

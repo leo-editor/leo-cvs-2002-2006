@@ -1464,7 +1464,7 @@ class tangleCommands:
 			assert(progress < i)
 	#@-body
 	#@-node:3::put_code
-	#@+node:4::put_doc
+	#@+node:4:C=10:put_doc
 	#@+body
 	# This method outputs a doc section within a block comment.
 	
@@ -1482,6 +1482,7 @@ class tangleCommands:
 		if i < len(s) and self.print_bits == verbose_bits:
 			use_block_comment = self.start_comment_string and self.end_comment_string
 			use_single_comment = not use_block_comment and self.single_comment_string
+			# javadoc_comment = use_block_comment and self.start_comment_string == "/**"
 			if use_block_comment or use_single_comment:
 				if 0: # The section name ends in an self.onl().
 					self.onl()
@@ -1597,7 +1598,7 @@ class tangleCommands:
 				self.onl()
 			else: self.onl()
 	#@-body
-	#@-node:4::put_doc
+	#@-node:4:C=10:put_doc
 	#@+node:5::put_leading_ws
 	#@+body
 	# Outputs leading whitespace, converting tab_width blanks to tabs.
@@ -2077,7 +2078,7 @@ class tangleCommands:
 	#@-body
 	#@-node:7::st_lookup
 	#@-node:5::tst
-	#@+node:6:C=10:ust
+	#@+node:6:C=11:ust
 	#@+node:1::ust_dump
 	#@+body
 	def ust_dump (self):
@@ -2182,8 +2183,8 @@ class tangleCommands:
 					break # One warning per section is enough.
 	#@-body
 	#@-node:4::ust_warn_about_orphans
-	#@-node:6:C=10:ust
-	#@+node:7:C=11:untangle
+	#@-node:6:C=11:ust
+	#@+node:7:C=12:untangle
 	#@+node:1::compare_comments
 	#@+body
 	#@+at
@@ -2207,7 +2208,7 @@ class tangleCommands:
 			if self.comment and self.comment_end:
 				
 				#@<< Check both parts for @ comment conventions >>
-				#@+node:1:C=12:<< Check both parts for @ comment conventions >>
+				#@+node:1:C=13:<< Check both parts for @ comment conventions >>
 				#@+body
 				#@+at
 				#  This code is used in forgiving_compare()and in compare_comments().
@@ -2244,7 +2245,7 @@ class tangleCommands:
 						continue
 
 				#@-body
-				#@-node:1:C=12:<< Check both parts for @ comment conventions >>
+				#@-node:1:C=13:<< Check both parts for @ comment conventions >>
 
 			if p1 >= len(s1) or p2 >= len(s2):
 				break
@@ -2341,7 +2342,7 @@ class tangleCommands:
 			if self.comment and self.comment_end:
 				
 				#@<< Check both parts for @ comment conventions >>
-				#@+node:2:C=12:<< Check both parts for @ comment conventions >>
+				#@+node:2:C=13:<< Check both parts for @ comment conventions >>
 				#@+body
 				#@+at
 				#  This code is used in forgiving_compare()and in compare_comments().
@@ -2378,7 +2379,7 @@ class tangleCommands:
 						continue
 
 				#@-body
-				#@-node:2:C=12:<< Check both parts for @ comment conventions >>
+				#@-node:2:C=13:<< Check both parts for @ comment conventions >>
 
 			ch1 = s1[p1]
 			if ch1 == '\r' or ch1 == '\n':
@@ -2460,14 +2461,14 @@ class tangleCommands:
 				else:
 					
 					#@<< Compare single characters >>
-					#@+node:1:C=13:<< Compare single characters >>
+					#@+node:1:C=14:<< Compare single characters >>
 					#@+body
 					assert(p1 < len(s1) and p2 < len(s2))
 					result = s1[p1] == s2[p2]
 					p1 += 1 ; p2 += 1
 					if not result: self.mismatch("Mismatched single characters")
 					#@-body
-					#@-node:1:C=13:<< Compare single characters >>
+					#@-node:1:C=14:<< Compare single characters >>
 				#@-body
 				#@-node:6::<< Compare possible strings >>
 
@@ -2503,14 +2504,14 @@ class tangleCommands:
 				else:
 					
 					#@<< compare single characters >>
-					#@+node:1:C=13:<< Compare single characters >>
+					#@+node:1:C=14:<< Compare single characters >>
 					#@+body
 					assert(p1 < len(s1) and p2 < len(s2))
 					result = s1[p1] == s2[p2]
 					p1 += 1 ; p2 += 1
 					if not result: self.mismatch("Mismatched single characters")
 					#@-body
-					#@-node:1:C=13:<< Compare single characters >>
+					#@-node:1:C=14:<< Compare single characters >>
 
 
 				#@-body
@@ -2608,14 +2609,14 @@ class tangleCommands:
 				else:
 					
 					#@<< Compare single characters >>
-					#@+node:1:C=13:<< Compare single characters >>
+					#@+node:1:C=14:<< Compare single characters >>
 					#@+body
 					assert(p1 < len(s1) and p2 < len(s2))
 					result = s1[p1] == s2[p2]
 					p1 += 1 ; p2 += 1
 					if not result: self.mismatch("Mismatched single characters")
 					#@-body
-					#@-node:1:C=13:<< Compare single characters >>
+					#@-node:1:C=14:<< Compare single characters >>
 				#@-body
 				#@-node:8::<< Compare comments or single characters >>
 
@@ -3025,8 +3026,8 @@ class tangleCommands:
 		c.endUpdate()
 	#@-body
 	#@-node:7::update_current_vnode
-	#@-node:7:C=11:untangle
-	#@+node:8:C=14:utility methods
+	#@-node:7:C=12:untangle
+	#@+node:8:C=15:utility methods
 	#@+body
 	#@+at
 	#  These utilities deal with tangle ivars, so they should be methods.
@@ -3519,7 +3520,7 @@ class tangleCommands:
 		return name
 	#@-body
 	#@-node:17::standardize_name
-	#@+node:18:C=15:tangle.scanAllDirectives
+	#@+node:18:C=16:tangle.scanAllDirectives
 	#@+body
 	#@+at
 	#  This code scans the node v and all its ancestors looking for directives.  If found,the corresponding globals are set for 
@@ -3555,8 +3556,14 @@ class tangleCommands:
 			elif btest(bits,language_bits):
 				issue_error_flag = false
 				i = dict["language"]
-				set_language(s,i,issue_error_flag,c.target_language)
-
+				# Bug fix 7/18/02 (!!):
+				language,delim1,delim2,delim3 = set_language(
+					s,i,issue_error_flag,c.target_language)
+				self.language = language
+				self.single_comment_string = delim1
+				self.start_comment_string = delim2
+				self.end_comment_string = delim3
+				# trace(`self.single_comment_string` + "," + `self.start_comment_string` + "," + `self.end_comment_string`)
 			#@-body
 			#@-node:1::<< Test for @comment or @language >>
 
@@ -3617,7 +3624,7 @@ class tangleCommands:
 					self.error("Empty @path")
 			
 			if btest(bits,page_width_bits) and not btest(old_bits,page_width_bits):
-				i = dict["pagewidth"]
+				i = dict["page_width"] # 7/18/02 (!)
 				i, val = skip_long(s,i+10) # Point past @pagewidth
 				if val == -1:
 					if issue_error_flag:
@@ -3626,7 +3633,7 @@ class tangleCommands:
 				else: self.page_width = val
 			
 			if btest(bits,tab_width_bits)and not btest(old_bits,tab_width_bits):
-				i = dict["tabwidth"]
+				i = dict["tab_width"] # 7/18/02 (!)
 				i, val = skip_long(s,i+9) # Point past @tabwidth.
 				if val == -1:
 					if issue_error_flag:
@@ -3710,8 +3717,8 @@ class tangleCommands:
 
 		# trace(`self.tangle_directory`)
 	#@-body
-	#@-node:18:C=15:tangle.scanAllDirectives
-	#@+node:19:C=16:token_type
+	#@-node:18:C=16:tangle.scanAllDirectives
+	#@+node:19:C=17:token_type
 	#@+body
 	#@+at
 	#  This method returns a code indicating the apparent kind of token at the position i. The caller must determine whether 
@@ -3787,8 +3794,8 @@ class tangleCommands:
 		# trace(`kind` + ":" + `get_line(s,i)`)
 		return kind, end
 	#@-body
-	#@-node:19:C=16:token_type
-	#@-node:8:C=14:utility methods
+	#@-node:19:C=17:token_type
+	#@-node:8:C=15:utility methods
 	#@-others
 	
 	#@-body

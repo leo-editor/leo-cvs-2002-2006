@@ -209,7 +209,7 @@ class config:
 		self.configFileName = os.path.join(self.configDir,"leoConfig.txt")
 		
 		#@<< initialize constant ivars >>
-		#@+node:1::<< initialize constant ivars >>
+		#@+node:1:C=4:<< initialize constant ivars >>
 		#@+body
 		# Language names.
 		self.languageNameDict = {
@@ -221,7 +221,8 @@ class config:
 			perl_language: "Perl",
 			perlpod_language: "PerlPod",
 			plain_text_language: "Plain",
-			python_language: "Python" }
+			python_language: "Python",
+			tcltk_language: "tcl/tk" }
 		
 		# Names of sections.
 		self.configSection = "config options"
@@ -231,10 +232,11 @@ class config:
 		self.colorsSection = "syntax coloring options"
 		self.windowSection = "window options"
 		#@-body
-		#@-node:1::<< initialize constant ivars >>
+		#@-node:1:C=4:<< initialize constant ivars >>
 
 	
 		# Initialize settings in each section.
+		self.configsExist = false # True when we successfully open leoConfig.txt.
 		self.config = None # The current instance of ConfigParser
 		self.read_only = true # Make _sure_ we don't alter an illegal leoConfig.txt file!
 		self.xml_version_string = None
@@ -268,7 +270,7 @@ class config:
 			if val == "ignore":
 				val = None
 			return val
-		elif name in defaultDict:
+		elif defaultDict and name in defaultDict:
 			val = defaultDict[name]
 			if val == "ignore":
 				val = None
@@ -312,7 +314,7 @@ class config:
 	getStringFindPref = getFindPref
 	#@-body
 	#@-node:5::get/setFindPref
-	#@+node:6:C=4:getFontFromParams
+	#@+node:6:C=5:getFontFromParams
 	#@+body
 	# A convenience method that computes a font from font parameters.
 	# Arguments are the names of settings to be use.
@@ -339,7 +341,7 @@ class config:
 	
 
 	#@-body
-	#@-node:6:C=4:getFontFromParams
+	#@-node:6:C=5:getFontFromParams
 	#@+node:7::get/setPref
 	#@+body
 	def getBoolPref (self,name):
@@ -359,7 +361,7 @@ class config:
 	getStringPref = getPref
 	#@-body
 	#@-node:7::get/setPref
-	#@+node:8:C=5:get/setRecentFiles
+	#@+node:8:C=6:get/setRecentFiles
 	#@+body
 	def getRecentFiles (self):
 		
@@ -370,7 +372,7 @@ class config:
 		self.recentFiles = files
 
 	#@-body
-	#@-node:8:C=5:get/setRecentFiles
+	#@-node:8:C=6:get/setRecentFiles
 	#@+node:9::get/setColors
 	#@+body
 	def getBoolColorsPref (self,name):
@@ -515,6 +517,7 @@ class config:
 				print "\n\ncolorsDict:\n\n" + `self.colorsDict`
 				print "\n\nwindowDict:\n\n" + `self.windowDict`
 			cf.close()
+			self.configsExist = true
 		except exceptions.IOError:
 			pass
 		except:
@@ -548,7 +551,7 @@ class config:
 		# print "setAllDicts:" + `dict`
 	#@-body
 	#@-node:12::setAllDicts
-	#@+node:13:C=6:setCommandsFindIvars
+	#@+node:13:C=7:setCommandsFindIvars
 	#@+body
 	# Sets ivars of c that can be overridden by leoConfig.txt
 	
@@ -603,8 +606,8 @@ class config:
 
 		app().findFrame.init(c)
 	#@-body
-	#@-node:13:C=6:setCommandsFindIvars
-	#@+node:14:C=7:setCommandsIvars
+	#@-node:13:C=7:setCommandsFindIvars
+	#@+node:14:C=8:setCommandsIvars
 	#@+body
 	# Sets ivars of c that can be overridden by leoConfig.txt
 	
@@ -615,7 +618,6 @@ class config:
 		#@<< set prefs ivars >>
 		#@+node:1::<< set prefs ivars >>
 		#@+body
-		
 		val = config.getIntPref("tab_width")
 		if val: c.tab_width = val
 		c.frame.setTabWidth(c.tab_width)
@@ -654,8 +656,8 @@ class config:
 		#@-body
 		#@-node:1::<< set prefs ivars >>
 	#@-body
-	#@-node:14:C=7:setCommandsIvars
-	#@+node:15:C=8:setConfigFindIvars
+	#@-node:14:C=8:setCommandsIvars
+	#@+node:15:C=9:setConfigFindIvars
 	#@+body
 	# Sets config ivars from c.
 	
@@ -678,8 +680,8 @@ class config:
 		self.setFindPref("find_string",c.find_text)
 
 	#@-body
-	#@-node:15:C=8:setConfigFindIvars
-	#@+node:16:C=9:setConfigIvars
+	#@-node:15:C=9:setConfigFindIvars
+	#@+node:16:C=10:setConfigIvars
 	#@+body
 	# Sets config ivars from c.
 	
@@ -715,7 +717,7 @@ class config:
 		self.setFindPref("find_string",c.find_text)
 
 	#@-body
-	#@-node:16:C=9:setConfigIvars
+	#@-node:16:C=10:setConfigIvars
 	#@+node:17::update
 	#@+body
 	# Rewrites the entire config file from ivars.

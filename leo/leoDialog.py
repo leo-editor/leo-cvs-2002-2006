@@ -21,7 +21,7 @@ class leoDialog:
 	#@-node:1::dialog.__init__
 	#@+node:2::askOk
 	#@+body
-	def askOk(self, title, message):
+	def askOk(self, title, message, text="OK"):
 	
 		Tk = Tkinter ; root = app().root
 		self.answer="ok"
@@ -29,14 +29,16 @@ class leoDialog:
 		top.title(title)
 		top.resizable(0,0) # neither height or width is resizable.
 		frame = Tk.Frame(top)
-		self.top.bind("<Key>", self.OnOkCancelKey)
-		frame.pack()
+		if text=="OK":
+			self.top.bind("<Key>", self.OnOkCancelKey)
+		frame.pack(padx=6,pady=4)
 		label = Tk.Label(frame, text=message)
 		label.pack(pady=10)
 		center = Tk.Frame(frame)
 		center.pack()
-		ok = Tk.Button(center,width=6,text="OK",bd=4, # default button
-			underline=0,command=self.okButton)
+		underline = choose(text=="OK",0,-1) # Underline character 0 if "OK", else no underlining.
+		ok = Tk.Button(center,width=6,text=text,bd=4, # default button
+			underline=underline,command=self.okButton)
 		ok.pack(side="left",padx=5,pady=10)
 		self.center() # Do this after packing.
 		top.grab_set() # Make the dialog a modal dialog.
@@ -55,7 +57,7 @@ class leoDialog:
 		top.resizable(0,0) # neither height or width is resizable.
 		frame = Tk.Frame(top)
 		self.top.bind("<Key>", self.OnOkCancelKey)
-		frame.pack()
+		frame.pack(padx=6,pady=4)
 		label = Tk.Label(frame, text=message)
 		label.pack(pady=10)
 		center = Tk.Frame(frame)
@@ -84,7 +86,7 @@ class leoDialog:
 		top.resizable(0,0) # neither height or width is resizable.
 		frame = Tk.Frame(top)
 		self.top.bind("<Key>", self.OnYesNoKey)
-		frame.pack()
+		frame.pack(padx=6,pady=4)
 		label = Tk.Label(frame, text=message)
 		label.pack(pady=10)
 		center = Tk.Frame(frame)
@@ -113,7 +115,7 @@ class leoDialog:
 		top.resizable(0,0) # neither height or width is resizable.
 		frame = Tk.Frame(top)
 		self.top.bind("<Key>", self.OnYesNoCancelKey)
-		frame.pack()
+		frame.pack(padx=6,pady=4)
 		label = Tk.Label(frame, text=message)
 		label.pack(pady=10)
 		center = Tk.Frame(frame)
@@ -136,25 +138,10 @@ class leoDialog:
 	#@-node:5::askYesNoCancel
 	#@+node:6::dialog.center
 	#@+body
-	# Center the dialog on the screen.
-	
 	def center(self):
-	
-		top = self.top
-		top.update_idletasks() # Required to get proper info.
-	
-		# Get the information about top and the screen.
-		sw = top.winfo_screenwidth()
-		sh = top.winfo_screenheight()
-		g = top.geometry() # g = "WidthxHeight+XOffset+YOffset"
-		dim,x,y = string.split(g,'+')
-		w,h = string.split(dim,'x')
-		w,h,x,y = int(w),int(h),int(x),int(y)
 		
-		# Set the new window coordinates, leaving w and h unchanged.
-		x = (sw - w)/2
-		y = (sh - h)/2
-		top.geometry("%dx%d%+d%+d" % (w,h,x,y))
+		center_dialog(self.top)
+		return
 	#@-body
 	#@-node:6::dialog.center
 	#@+node:7::Event handlers & command handlers

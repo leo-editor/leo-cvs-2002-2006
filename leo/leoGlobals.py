@@ -47,7 +47,8 @@ perl_language =		12  # just ##
 perlpod_language =	13  # ## and =pod and =cut
 python_language =	14
 shell_language =	15  # shell scripts
-unknown_language =	16  # Set when @comment is seen.
+tcltk_language = 16
+unknown_language =	17  # Set when @comment is seen.
 
 # Synonyms for the bits returned by is_special_bits...
 color_bits =    0x00001

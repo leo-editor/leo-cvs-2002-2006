@@ -132,7 +132,7 @@ class LeoPrefs:
 
 		
 		#@<< Create the Target Language frame >>
-		#@+node:4::<< Create the Target Language frame >>
+		#@+node:4:C=2:<< Create the Target Language frame >>
 		#@+body
 		# Frame and title
 		w,target = create_labeled_frame (outer,caption="Default Target Language")
@@ -157,14 +157,15 @@ class LeoPrefs:
 			
 		# Right column of radio buttons.
 		right_data = [ ("Perl", perl_language), ("Perl+POD", perlpod_language),
-			("Plain Text", plain_text_language), ("Python", python_language) ]
+			("Plain Text", plain_text_language), ("Python", python_language),
+			("tcl/tk", tcltk_language) ]
 			
 		for text,value in right_data:
 			button = Tk.Radiobutton(rt,anchor="w",text=text,
 				variable=self.lang_var,value=value,command=self.set_lang)
 			button.pack(fill="x")
 		#@-body
-		#@-node:4::<< Create the Target Language frame >>
+		#@-node:4:C=2:<< Create the Target Language frame >>
 
 		
 		#@<< Create the Ok, Cancel & Revert buttons >>
@@ -190,7 +191,7 @@ class LeoPrefs:
 		# es("Prefs.__init__")
 	#@-body
 	#@-node:1:C=1:prefs.__init__
-	#@+node:2:C=2:prefs.init
+	#@+node:2:C=3:prefs.init
 	#@+body
 	# Initializes prefs ivars and widgets from c's ivars.
 	
@@ -243,9 +244,9 @@ class LeoPrefs:
 
 		# print "init" ; print self.print_ivars()
 	#@-body
-	#@-node:2:C=2:prefs.init
+	#@-node:2:C=3:prefs.init
 	#@+node:3::Event handlers
-	#@+node:1:C=3:prefs.set_ivars & idle_set_ivars & print_ivars
+	#@+node:1:C=4:prefs.set_ivars & idle_set_ivars & print_ivars
 	#@+body
 	# These event handlers get executed when the user types in the prefs panel.
 	
@@ -302,8 +303,8 @@ class LeoPrefs:
 		for var in ivars:
 			exec("print self.%s, '%s'" % (var,var))
 	#@-body
-	#@-node:1:C=3:prefs.set_ivars & idle_set_ivars & print_ivars
-	#@+node:2:C=4:set_lang
+	#@-node:1:C=4:prefs.set_ivars & idle_set_ivars & print_ivars
+	#@+node:2:C=5:set_lang
 	#@+body
 	# This event handler gets executed when the user choose a new default language.
 	
@@ -315,8 +316,8 @@ class LeoPrefs:
 		c.tree.recolor(v)
 		# print "set_lang" ; print self.print_ivars()
 	#@-body
-	#@-node:2:C=4:set_lang
-	#@+node:3:C=5:OnClosePrefsFrame
+	#@-node:2:C=5:set_lang
+	#@+node:3:C=6:OnClosePrefsFrame
 	#@+body
 	def OnClosePrefsFrame(self):
 	
@@ -329,8 +330,8 @@ class LeoPrefs:
 			self.commands.frame.prefsPanel = None
 			self.top.destroy()
 	#@-body
-	#@-node:3:C=5:OnClosePrefsFrame
-	#@+node:4:C=6:prefs.onOK, onCancel, onRevert
+	#@-node:3:C=6:OnClosePrefsFrame
+	#@+node:4:C=7:prefs.onOK, onCancel, onRevert
 	#@+body
 	def onOK (self):
 		app().config.setConfigIvars(self.commands)
@@ -392,7 +393,7 @@ class LeoPrefs:
 		self.init(c)
 		self.set_ivars(c)
 	#@-body
-	#@-node:4:C=6:prefs.onOK, onCancel, onRevert
+	#@-node:4:C=7:prefs.onOK, onCancel, onRevert
 	#@-node:3::Event handlers
 	#@-others
 #@-body

@@ -199,6 +199,36 @@ python_keywords = (
 	"class",     "except",    "if",        "or",        "yield",   
 	"continue",  "exec",      "import",    "pass",      "while",
 	"def",       "finally",   "in",        "print")
+	
+tcltk_keywords = ( # Only the tcl keywords are here.
+	"after",     "append",    "array",
+	"bgerror",   "binary",    "break",
+	"catch",     "cd",        "clock",
+	"close",     "concat",    "continue",
+	"dde",
+	"encoding",  "eof",       "eval",
+	"exec",      "exit",      "expr",
+	"fblocked",  "fconfigure","fcopy",     "file",      "fileevent",
+	"filename",  "flush",     "for",       "foreach",   "format",
+	"gets",      "glob",      "global",
+	"history",
+	"if",        "incr",      "info",      "interp",
+	"join",
+	"lappend",   "lindex",    "linsert",   "list",      "llength",
+	"load",      "lrange",    "lreplace",  "lsearch",   "lsort",
+	"memory",    "msgcat",
+	"namespace",
+	"open",
+	"package",   "parray",    "pid",
+	"proc",      "puts",      "pwd",
+	"read",      "regexp",    "registry",   "regsub",
+	"rename",    "resource",  "return",
+	"scan",      "seek",      "set",        "socket",   "source",
+	"split",     "string",    "subst",      "switch",
+	"tell",      "time",      "trace",
+	"unknown",   "unset",     "update",     "uplevel",   "upvar",
+	"variable",  "vwait",
+	"while" )
 #@-body
 #@-node:2:C=1:<< define colorizer keywords >>
 
@@ -347,7 +377,7 @@ class colorizer:
 
 		
 		#@<< configure language-specific settings >>
-		#@+node:2::<< configure language-specific settings >>
+		#@+node:2:C=6:<< configure language-specific settings >>
 		#@+body
 		# Define has_string, keywords, single_comment_start, block_comment_start, block_comment_end
 		
@@ -357,7 +387,7 @@ class colorizer:
 		
 		has_string = language != plain_text_language
 		
-		languages = ["c","cweb","html","java","pascal","perl","perlpod","python"]
+		languages = ["c","cweb","html","java","pascal","perl","perlpod","python","tcltk"]
 		
 		keywords = []
 		if language==cweb_language:
@@ -377,7 +407,7 @@ class colorizer:
 		lb = choose(language==cweb_language,"@<","<<")
 		rb = choose(language==cweb_language,"@>",">>")
 		#@-body
-		#@-node:2::<< configure language-specific settings >>
+		#@-node:2:C=6:<< configure language-specific settings >>
 
 		self.count += 1
 		
@@ -745,7 +775,7 @@ class colorizer:
 	#@+node:3::Multiline State Handlers
 	#@-node:3::Multiline State Handlers
 	#@-node:4:C=4:colorizeAnyLanguage
-	#@+node:5:C=6:scanColorDirectives
+	#@+node:5:C=7:scanColorDirectives
 	#@+body
 	#@+at
 	#  This code scans the node v and all of v's ancestors looking for @color and @nocolor directives.
@@ -790,7 +820,7 @@ class colorizer:
 		# trace(`language`)
 		return language
 	#@-body
-	#@-node:5:C=6:scanColorDirectives
+	#@-node:5:C=7:scanColorDirectives
 	#@+node:6::color.schedule
 	#@+body
 	def schedule(self,v,body):
@@ -834,7 +864,7 @@ class colorizer:
 		return word
 	#@-body
 	#@-node:7::getCwebWord
-	#@+node:8:C=7:updateSyntaxColorer
+	#@+node:8:C=8:updateSyntaxColorer
 	#@+body
 	# Returns (flag,language)
 	# flag is true unless an unambiguous @nocolor is seen.
@@ -847,7 +877,7 @@ class colorizer:
 		return flag,language
 
 	#@-body
-	#@-node:8:C=7:updateSyntaxColorer
+	#@-node:8:C=8:updateSyntaxColorer
 	#@+node:9::useSyntaxColoring
 	#@+body
 	# Return true if v unless v is unambiguously under the control of @nocolor.
@@ -1025,7 +1055,7 @@ colorNamesList = (
 class leoColorPanel:
 	
 	#@<< class leoColorPanel methods >>
-	#@+node:6:C=8:<< class leoColorPanel methods >>
+	#@+node:6:C=9:<< class leoColorPanel methods >>
 	#@+body
 	#@+others
 	#@+node:1::colorPanel.__init__
@@ -1128,7 +1158,7 @@ class leoColorPanel:
 		np.run(name,color)
 	#@-body
 	#@-node:4::showColorName
-	#@+node:5:C=9:colorPanel.onOk, onCancel, onRevert
+	#@+node:5:C=10:colorPanel.onOk, onCancel, onRevert
 	#@+body
 	def onOk (self):
 		if 1: # Hide the window, preserving its position.
@@ -1151,7 +1181,7 @@ class leoColorPanel:
 		self.changed_options = []
 		self.commands.recolor()
 	#@-body
-	#@-node:5:C=9:colorPanel.onOk, onCancel, onRevert
+	#@-node:5:C=10:colorPanel.onOk, onCancel, onRevert
 	#@+node:6::update
 	#@+body
 	def update (self,name,val):
@@ -1176,7 +1206,7 @@ class leoColorPanel:
 	#@-others
 	
 	#@-body
-	#@-node:6:C=8:<< class leoColorPanel methods >>
+	#@-node:6:C=9:<< class leoColorPanel methods >>
 
 	
 class leoColorNamePanel:

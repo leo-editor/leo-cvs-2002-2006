@@ -527,7 +527,7 @@ class fileCommands:
 				self.getDquote()
 				
 				#@<< check for syntax coloring prefs >>
-				#@+node:1::<< check for syntax coloring prefs >>
+				#@+node:1:C=6:<< check for syntax coloring prefs >>
 				#@+body
 				# Must match longer tags before short prefixes.
 				language = c_language # default
@@ -550,10 +550,14 @@ class fileCommands:
 					language = plain_text_language ; self.getDquote()
 				elif self.matchTag("Python"):
 					language = python_language ; self.getDquote()
+				elif self.matchTag("tcl/tk"):
+					language = tcltk_language ; self.getDquote()
+					
+				# print(`language`)
 				
 				c.target_language = language
 				#@-body
-				#@-node:1::<< check for syntax coloring prefs >>
+				#@-node:1:C=6:<< check for syntax coloring prefs >>
 
 			elif self.matchTag("use_header_flag="):
 				self.getDquote() ; c.use_header_flag = self.getBool() ; self.getDquote()
@@ -573,7 +577,8 @@ class fileCommands:
 		self.getTag("</preferences>")
 		
 		# Override .leo file's preferences if settings are in leoConfig.txt.
-		config.setCommandsIvars(c)
+		if config.configsExist:
+			config.setCommandsIvars(c)
 	#@-body
 	#@-node:11:C=5:getPrefs
 	#@+node:12::getSize
@@ -713,7 +718,7 @@ class fileCommands:
 		self.getTag("</vnodes>")
 	#@-body
 	#@-node:17::getVnodes
-	#@+node:18:C=6:getXmlVersionTag
+	#@+node:18:C=7:getXmlVersionTag
 	#@+body
 	#@+at
 	#  Parses the xml version string, and sets the xml version string.
@@ -735,7 +740,7 @@ class fileCommands:
 		self.getTag(prolog_postfix_string)
 
 	#@-body
-	#@-node:18:C=6:getXmlVersionTag
+	#@-node:18:C=7:getXmlVersionTag
 	#@+node:19::skipWs
 	#@+body
 	def skipWs (self):
@@ -789,7 +794,7 @@ class fileCommands:
 		c.atFileCommands.readAll(c.currentVnode(), true) # partialFlag
 	#@-body
 	#@-node:5::readAtFileNodes
-	#@+node:6:C=7:fileCommands.readOutlineOnly
+	#@+node:6:C=8:fileCommands.readOutlineOnly
 	#@+body
 	def readOutlineOnly (self,file,fileName):
 	
@@ -799,7 +804,7 @@ class fileCommands:
 		self.fileIndex = 0
 		
 		#@<< Set the default directory >>
-		#@+node:1:C=8:<< Set the default directory >>
+		#@+node:1:C=9:<< Set the default directory >>
 		#@+body
 		#@+at
 		#  The most natural default directory is the directory containing the .leo file that we are about to open.  If the user 
@@ -812,7 +817,7 @@ class fileCommands:
 		if len(dir) > 0:
 			c.openDirectory = dir
 		#@-body
-		#@-node:1:C=8:<< Set the default directory >>
+		#@-node:1:C=9:<< Set the default directory >>
 
 		c.beginUpdate()
 		ok, ratio = self.getLeoFile(self.frame, false) # readAtFileNodes
@@ -829,8 +834,8 @@ class fileCommands:
 		self.fileBuffer = ""
 		return ok
 	#@-body
-	#@-node:6:C=7:fileCommands.readOutlineOnly
-	#@+node:7:C=9:fileCommands.open
+	#@-node:6:C=8:fileCommands.readOutlineOnly
+	#@+node:7:C=10:fileCommands.open
 	#@+body
 	def open(self,file,fileName):
 	
@@ -841,7 +846,7 @@ class fileCommands:
 		self.fileIndex = 0
 		
 		#@<< Set the default directory >>
-		#@+node:1:C=8:<< Set the default directory >>
+		#@+node:1:C=9:<< Set the default directory >>
 		#@+body
 		#@+at
 		#  The most natural default directory is the directory containing the .leo file that we are about to open.  If the user 
@@ -854,7 +859,7 @@ class fileCommands:
 		if len(dir) > 0:
 			c.openDirectory = dir
 		#@-body
-		#@-node:1:C=8:<< Set the default directory >>
+		#@-node:1:C=9:<< Set the default directory >>
 
 		# esDiffTime("open:read all", t)
 		es("reading: " + fileName)
@@ -875,7 +880,7 @@ class fileCommands:
 		# esDiffTime("open: exit",t)
 		return ok
 	#@-body
-	#@-node:7:C=9:fileCommands.open
+	#@-node:7:C=10:fileCommands.open
 	#@+node:8::xmlUnescape
 	#@+body
 	def xmlUnescape(self,s):
@@ -982,7 +987,7 @@ class fileCommands:
 		self.put("/>") ; self.put_nl()
 	#@-body
 	#@-node:1::putClipboardHeader
-	#@+node:2::put (basic)
+	#@+node:2:C=11:put (basic)
 	#@+body
 	# All output eventually comes here
 	def put (self,s):
@@ -1008,7 +1013,7 @@ class fileCommands:
 		
 	def put_find_flag (self,a,b):
 		config = app().config
-		if config.getFindPref(b) != None:
+		if config.configsExist: # 7/18/02
 			config.setFindPref(b,`a`)
 		else:
 			self.put_flag(a,b)
@@ -1034,7 +1039,7 @@ class fileCommands:
 			self.put("\t")
 			n -= 1
 	#@-body
-	#@-node:2::put (basic)
+	#@-node:2:C=11:put (basic)
 	#@+node:3::putEscapedString
 	#@+body
 	#@+at
@@ -1049,7 +1054,7 @@ class fileCommands:
 			self.put(self.xmlEscape(s))
 	#@-body
 	#@-node:3::putEscapedString
-	#@+node:4:C=10:putFindSettings
+	#@+node:4:C=12:putFindSettings
 	#@+body
 	def putFindSettings (self):
 	
@@ -1071,7 +1076,7 @@ class fileCommands:
 		self.put_find_flag(c.wrap_flag,"wrap")
 		self.put(">") ; self.put_nl()
 		#
-		if config.getFindPref("find_string"):
+		if config.configsExist: # 7/18/02
 			config.setFindPref("find_string",c.find_text)
 			self.put_tab()
 			self.put("<find_string></find_string>") ; self.put_nl()
@@ -1080,7 +1085,7 @@ class fileCommands:
 			self.put("<find_string>") ; self.putEscapedString(c.find_text)
 			self.put("</find_string>") ; self.put_nl()
 		#
-		if config.getFindPref("change_string"):
+		if config.configsExist: # 7/18/02
 			config.setFindPref("change_string",c.change_text)
 			self.put_tab()
 			self.put("<change_string></change_string>") ; self.put_nl()
@@ -1091,7 +1096,7 @@ class fileCommands:
 		#
 		self.put("</find_panel_settings>") ; self.put_nl()
 	#@-body
-	#@-node:4:C=10:putFindSettings
+	#@-node:4:C=12:putFindSettings
 	#@+node:5::putGlobals
 	#@+body
 	def putGlobals (self):
@@ -1111,7 +1116,7 @@ class fileCommands:
 		self.put(">") ; self.put_nl()
 		
 		#@<< put the position of this frame >>
-		#@+node:2:C=11:<< put the position of this frame >>
+		#@+node:2:C=13:<< put the position of this frame >>
 		#@+body
 		width,height,left,top = get_window_info(self.frame.top)
 		# print ("t,l,h,w:" + `top` + ":" + `left` + ":" + `height` + ":" + `width`)
@@ -1124,7 +1129,7 @@ class fileCommands:
 		self.put(" width=") ; self.put_in_dquotes(`width`)
 		self.put("/>") ; self.put_nl()
 		#@-body
-		#@-node:2:C=11:<< put the position of this frame >>
+		#@-node:2:C=13:<< put the position of this frame >>
 
 		
 		#@<< put the position of the log window >>
@@ -1178,7 +1183,7 @@ class fileCommands:
 		return s
 	#@-body
 	#@-node:7::putLeoOutline (to clipboard)
-	#@+node:8:C=12:putPrefs
+	#@+node:8:C=14:putPrefs
 	#@+body
 	def putPrefs (self):
 	
@@ -1191,31 +1196,21 @@ class fileCommands:
 		#@<< put prefs that may exist in leoConfig.txt >>
 		#@+node:1::<< put prefs that may exist in leoConfig.txt >>
 		#@+body
-		# tab width
-		if config.getPref("tab_width") != None:
+		if config.configsExist: # 7/18/02
 			config.setPref("tab_width",`c.tab_width`)
+			config.setPref("page_width",`c.page_width`)
+			config.setPref("run_tangle_done.py",`c.tangle_batch_flag`)
+			config.setPref("run_untangle_done.py",`c.untangle_batch_flag`)
+			config.setPref("output_doc_chunks",`c.output_doc_flag`)
+			config.setPref("tangle_outputs_header",`c.use_header_flag`)
 		else:
 			self.put(" tab_width=") ; self.put_in_dquotes(`c.tab_width`)
-		# page width
-		if config.getPref("page_width") != None:
-			config.setPref("page_width",`c.page_width`)
-		else:
 			self.put(" page_width=") ; self.put_in_dquotes(`c.page_width`)
-		# run tangle_done.py
-		if config.getPref("run_tangle_done.py") != None:
-			config.setPref("run_tangle_done.py",`c.tangle_batch_flag`)
-		else:
 			self.put(" tangle_bat=") ; self.put_dquoted_bool(c.tangle_batch_flag)
-		# run untangle_done.py
-		if config.getPref("run_untangle_done.py") != None:
-			config.setPref("run_untangle_done.py",`c.untangle_batch_flag`)
-		else:
 			self.put(" untangle_bat=") ; self.put_dquoted_bool(c.untangle_batch_flag)
-		# output document chunks: New in version 0.10
-		if config.getPref("output_doc_chunks") != None:
-			config.setPref("output_doc_chunks",`c.output_doc_flag`)
-		else:
 			self.put(" output_doc_chunks=") ; self.put_dquoted_bool(c.output_doc_flag)
+			self.put(" use_header_flag=") ; self.put_dquoted_bool(c.use_header_flag)
+		
 		# New in version 0.15
 		
 		#@<< put language prefs >>
@@ -1228,18 +1223,13 @@ class fileCommands:
 		else:
 			language = "Plain"
 		
-		if config.getPref("default_target_language") != None:
+		if config.configsExist:
 			config.setPref("default_target_language",language)
 		else:
 			self.put(" defaultTargetLanguage=") ; self.put_in_dquotes(language)
 		#@-body
 		#@-node:1::<< put language prefs >>
 
-		# tangle outputs header: New in version 0.18
-		if config.getPref("tangle_outputs_header") != None:
-			config.setPref("tangle_outputs_header",`c.use_header_flag`)
-		else:
-			self.put(" use_header_flag=") ; self.put_dquoted_bool(c.use_header_flag)
 		
 		self.put(">") ; self.put_nl()
 		# New in version 0.16
@@ -1247,7 +1237,7 @@ class fileCommands:
 		#@<< put default directory >>
 		#@+node:2::<< put default directory >>
 		#@+body
-		if config.getPref("default_tangle_directory"):
+		if config.configsExist:
 			config.setPref("default_tangle_directory",c.tangle_directory)
 		elif len(c.tangle_directory) > 0:
 			self.put_tab()
@@ -1262,8 +1252,8 @@ class fileCommands:
 
 		self.put("</preferences>") ; self.put_nl()
 	#@-body
-	#@-node:8:C=12:putPrefs
-	#@+node:9:C=13:putProlog
+	#@-node:8:C=14:putPrefs
+	#@+node:9:C=15:putProlog
 	#@+body
 	def putProlog (self):
 	
@@ -1286,7 +1276,7 @@ class fileCommands:
 			self.put("<leo_file>") ; self.put_nl()
 
 	#@-body
-	#@-node:9:C=13:putProlog
+	#@-node:9:C=15:putProlog
 	#@+node:10::putPostlog
 	#@+body
 	def putPostlog (self):
@@ -1516,7 +1506,7 @@ class fileCommands:
 		self.write_LEO_file(self.mFileName,true) # outlineOnlyFlag
 	#@-body
 	#@-node:10::writeOutlineOnly
-	#@+node:11:C=14:write_LEO_file
+	#@+node:11:C=16:write_LEO_file
 	#@+body
 	def write_LEO_file(self,fileName,outlineOnlyFlag):
 	
@@ -1652,7 +1642,7 @@ class fileCommands:
 
 			return false
 	#@-body
-	#@-node:11:C=14:write_LEO_file
+	#@-node:11:C=16:write_LEO_file
 	#@-node:3::Writing
 	#@-others
 #@-body

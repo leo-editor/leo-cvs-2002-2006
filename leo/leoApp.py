@@ -62,7 +62,12 @@ class LeoApp:
 		if not v22:
 			d = leoDialog.leoDialog()
 			d.askOk("Python version error",
-				"leo.py requires Python 2.2 or higher...Goodbye.")
+		"""
+		leo.py requires Python 2.2 or higher.
+		
+		You may download Python 2.2 from http://python.org/download/
+		""",
+				text="Exit")
 			return false
 		#@-body
 		#@-node:1::<< return false if not v2.2 or above >>

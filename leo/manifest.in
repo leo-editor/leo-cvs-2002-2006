@@ -7,7 +7,7 @@ include openLeo.py
 include tangle_done.py
 include untangle_done.py
 include __init__.py
-include readme.*
+include README.txt
 include Icons/*.*
 include leo.rc
 include leo.res

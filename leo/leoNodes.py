@@ -487,10 +487,19 @@ class vnode:
 		return s
 	#@-body
 	#@-node:2::moreHead
-	#@+node:3::moreBody
+	#@+node:3:C=4:v.moreBody
 	#@+body
 	#@+at
 	#  Returns the body string in MORE format.  It inserts a backslash before any leading plus, minus or backslash.
+	# 
+	# + test line
+	# - test line
+	# \ test line
+	# test line +
+	# test line -
+	# test line \
+	# 
+	# More lines...
 
 	#@-at
 	#@@c
@@ -498,13 +507,27 @@ class vnode:
 	def moreBody (self):
 	
 		v = self ; list = []
-		for ch in v.t.bodyString:
-			if ch == '+' or ch == '-' or ch == '\\':
-				list.append('\\')
-			list.append(ch)
-		return string.join(list,'')
+		
+		if 1: # new code: only escape the first non-blank character of the line.
+			s =  v.t.bodyString ; result = []
+			lines = string.split(s,'\n')
+			for s in lines:
+				i = skip_ws(s,0)
+				if i < len(s):
+					ch = s[i]
+					if ch == '+' or ch == '-' or ch == '\\':
+						s = s[:i] + '\\' + s[i:]
+				result.append(s)
+			return string.join(result,'\n')
+	
+		else: # pre 3.1 code.
+			for ch in v.t.bodyString:
+				if ch == '+' or ch == '-' or ch == '\\':
+					list.append('\\')
+				list.append(ch)
+			return string.join(list,'')
 	#@-body
-	#@-node:3::moreBody
+	#@-node:3:C=4:v.moreBody
 	#@-node:9::File Conversion (vnode)
 	#@+node:10::Getters
 	#@+node:1::bodyString
@@ -1048,7 +1071,7 @@ class vnode:
 		self.statusBits = status
 	#@-body
 	#@-node:10::initStatus
-	#@+node:11:C=4:setAncestorAtFileNodeDirty
+	#@+node:11:C=5:setAncestorAtFileNodeDirty
 	#@+body
 	#@+at
 	#  This is called from the key-event handler, so we must not force a redraw of the screen here. We avoid redraw in most cases 
@@ -1074,7 +1097,7 @@ class vnode:
 		c.endUpdate(redraw_flag) # A crucial optimization!
 		return redraw_flag # Allow caller to do the same optimization.
 	#@-body
-	#@-node:11:C=4:setAncestorAtFileNodeDirty
+	#@-node:11:C=5:setAncestorAtFileNodeDirty
 	#@+node:12::setClonedBit & initClonedBit
 	#@+body
 	def setClonedBit (self):
@@ -1089,7 +1112,7 @@ class vnode:
 			self.statusBits &= ~ self.clonedBit
 	#@-body
 	#@-node:12::setClonedBit & initClonedBit
-	#@+node:13:C=5:setDirty & initDirtyBit
+	#@+node:13:C=6:setDirty & initDirtyBit
 	#@+body
 	#@+at
 	#  This now ensures that all cloned nodes are marked dirty and that all ancestor @file nodes are marked dirty.  It is much 
@@ -1125,7 +1148,7 @@ class vnode:
 	def initDirtyBit (self):
 		self.t.setDirty()
 	#@-body
-	#@-node:13:C=5:setDirty & initDirtyBit
+	#@-node:13:C=6:setDirty & initDirtyBit
 	#@+node:14::setMarked & initMarkedBit
 	#@+body
 	def setMarked (self):
@@ -1187,7 +1210,7 @@ class vnode:
 			self.t = t
 	#@-body
 	#@-node:6::setT
-	#@+node:7:C=6:v.sortChildren
+	#@+node:7:C=7:v.sortChildren
 	#@+body
 	def sortChildren (self):
 		
@@ -1232,7 +1255,7 @@ class vnode:
 				child.moveToNthChildOf(v,index)
 				index += 1
 	#@-body
-	#@-node:7:C=6:v.sortChildren
+	#@-node:7:C=7:v.sortChildren
 	#@+node:8::trimTrailingLines
 	#@+body
 	#@+at
@@ -1308,7 +1331,7 @@ class vnode:
 		return self # We no longer need dvnodes: vnodes contain all needed info.
 	#@-body
 	#@-node:2::doDelete
-	#@+node:3:C=7:insertAfter
+	#@+node:3:C=8:insertAfter
 	#@+body
 	def insertAfter (self, t = None):
 	
@@ -1321,7 +1344,7 @@ class vnode:
 		v.linkAfter(self)
 		return v
 	#@-body
-	#@-node:3:C=7:insertAfter
+	#@-node:3:C=8:insertAfter
 	#@+node:4::insertAsLastChild
 	#@+body
 	def insertAsLastChild (self,t = None):
@@ -1350,7 +1373,7 @@ class vnode:
 		return v
 	#@-body
 	#@-node:5::insertAsNthChild
-	#@+node:6:C=8:moveAfter
+	#@+node:6:C=9:moveAfter
 	#@+body
 	# Used by scripts
 	
@@ -1369,8 +1392,8 @@ class vnode:
 		if not a.parent() and not a.back():
 			c.tree.rootVnode = a
 	#@-body
-	#@-node:6:C=8:moveAfter
-	#@+node:7:C=9:moveToRoot
+	#@-node:6:C=9:moveAfter
+	#@+node:7:C=10:moveToRoot
 	#@+body
 	def moveToRoot (self, oldRoot = None):
 	
@@ -1383,8 +1406,8 @@ class vnode:
 		v.linkAsRoot(oldRoot)
 		v.createDependents()
 	#@-body
-	#@-node:7:C=9:moveToRoot
-	#@+node:8:C=10:moveToNthChildOf
+	#@-node:7:C=10:moveToRoot
+	#@+node:8:C=11:moveToNthChildOf
 	#@+body
 	# Compatibility routine for scripts
 	
@@ -1403,7 +1426,7 @@ class vnode:
 		if not p.parent() and not p.back():
 			c.tree.rootVnode = p
 	#@-body
-	#@-node:8:C=10:moveToNthChildOf
+	#@-node:8:C=11:moveToNthChildOf
 	#@+node:9::restoreOutlineFromDVnodes (test)
 	#@+body
 	# Restores (relinks) the dv tree in the position described by back and parent.
@@ -1419,7 +1442,7 @@ class vnode:
 		return dv
 	#@-body
 	#@-node:9::restoreOutlineFromDVnodes (test)
-	#@+node:10:C=11:swap_links
+	#@+node:10:C=12:swap_links
 	#@+body
 	# 7/5/02: New for undo.
 	# On entry, linked is linked into a tree and unlinked is not.
@@ -1454,10 +1477,10 @@ class vnode:
 		# Clear links in linked.
 		linked.mParent = linked.mBack = linked.mNext = linked.joinList = None
 	#@-body
-	#@-node:10:C=11:swap_links
+	#@-node:10:C=12:swap_links
 	#@-node:1::Entry Points (vnode)
 	#@+node:2::Public helper functions
-	#@+node:1:C=12:v.copyTree
+	#@+node:1:C=13:v.copyTree
 	#@+body
 	#@+at
 	#  This method copies all subtrees of oldRoot to the subtrees of newRoot.  The caller is responsible for copying the headline 
@@ -1491,7 +1514,7 @@ class vnode:
 			new_v = new_v.next()
 		assert(new_v == None)
 	#@-body
-	#@-node:1:C=12:v.copyTree
+	#@-node:1:C=13:v.copyTree
 	#@+node:2::joinTreeTo
 	#@+body
 	#@+at
@@ -1661,14 +1684,14 @@ class vnode:
 		assert(child2 == None)
 	#@-body
 	#@-node:2::copyCloneBitsTo
-	#@+node:3:C=13:v.copyNode
+	#@+node:3:C=14:v.copyNode
 	#@+body
 	def copyNode (self, old_node, new_node):
 	
 		new_node.mHeadString = old_node.mHeadString
 		new_node.iconVal = old_node.iconVal
 	#@-body
-	#@-node:3:C=13:v.copyNode
+	#@-node:3:C=14:v.copyNode
 	#@+node:4::createDependents (bug fix: 4/22/01)
 	#@+body
 	# This method creates all nodes that depend on the receiver.
@@ -1843,7 +1866,7 @@ class vnode:
 				v.mNext.mBack = v
 	#@-body
 	#@-node:12::linkAsNthChild
-	#@+node:13:C=14:linkAsRoot
+	#@+node:13:C=15:linkAsRoot
 	#@+body
 	#@+at
 	#  Bug fix: 5/27/02.  We link in the rest of the tree only when oldRoot != None.  Otherwise, we are calling this routine from 
@@ -1867,7 +1890,7 @@ class vnode:
 		tree.rootVnode = v
 
 	#@-body
-	#@-node:13:C=14:linkAsRoot
+	#@-node:13:C=15:linkAsRoot
 	#@+node:14::unlink
 	#@+body
 	def unlink (self):
