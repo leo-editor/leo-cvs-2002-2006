@@ -24,7 +24,7 @@ import tkFont
 import sys
 
 #@<< about drawing >>
-#@+node:ekr.20040803072955.1:<< About drawing >>
+#@+node:ekr.20040803072955.1: << About drawing >>
 #@+at
 # 
 # Leo must update the outline pane with minimum flicker.  Leo assumes that all 
@@ -43,7 +43,7 @@ import sys
 # values and sets redraw_flag if they don't match.
 #@-at
 #@nonl
-#@-node:ekr.20040803072955.1:<< About drawing >>
+#@-node:ekr.20040803072955.1: << About drawing >>
 #@nl
 
 class leoTkinterTree (leoFrame.leoTree):
@@ -53,389 +53,7 @@ class leoTkinterTree (leoFrame.leoTree):
     """Leo tkinter tree class."""
     
     #@    @+others
-    #@+node:ekr.20040803072955.2:Notes
-    #@@killcolor
-    #@nonl
-    #@+node:ekr.20040803072955.3:Changes made since first update
-    #@+at
-    # 
-    # - disabled drawing of user icons.  They weren't being hidden, which 
-    # messed up scrolling.
-    # 
-    # - Expanded clickBox so all clicks fall inside it.
-    # 
-    # - Added binding for plugBox so it doesn't interfere with the clickBox.  
-    # Another weirdness.
-    # 
-    # - Setting self.useBindtags = True also seems to work.
-    # 
-    # - Re-enabled code in drawText that sets the headline state.
-    # 
-    # - Clear self.ids dict on each redraw so "invisible" id's don't confuse 
-    # eventToPosition.
-    #     This effectively disables a check on id's, but that can't be helped.
-    # 
-    # - eventToPosition now returns p.copy, which means that nobody can change 
-    # the list.
-    # 
-    # - Likewise, clear self.iconIds so old icon id's don't confuse 
-    # findVnodeWithIconId.
-    # 
-    # - All drawing methods must do p = p.copy() at the beginning if they make 
-    # any changes to p.
-    #     - This ensures neither they nor their allies can change the caller's 
-    # position.
-    #     - In fact, though, only drawTree changes position.
-    # 
-    # - Fixed the race conditions that caused drawing sometimes to fail.  The 
-    # essential idea is that we must not call w.config if we are about to do a 
-    # redraw.  For full details, see the Notes node in the Race Conditions 
-    # section.
-    #@-at
-    #@nonl
-    #@-node:ekr.20040803072955.3:Changes made since first update
-    #@+node:ekr.20040803072955.4:Changes made since second update
-    #@+at
-    # 
-    # - Removed code in leoTkinterFrame.OnActivateTree:
-    #     self.tree.undimEditLabel()
-    # 
-    # I have no idea why this was originally there.  It seems to be pure 
-    # duplication.
-    # 
-    # - Removed code from self.OnActivate:
-    #     self.undimEditLabel()
-    # 
-    # Again, needless duplication.  The OnActivate logic might be simplified 
-    # further...
-    # 
-    # - Removed duplicate code in tree.select.  The following code was being 
-    # called twice (!!):
-    #     self.endEditLabel()
-    #     self.setUnselectedLabelState(old_p)
-    # 
-    # - Add p.copy() instead of p when inserting nodes into data structures in 
-    # select.
-    # 
-    # - Fixed a _major_ bug in Leo's core.  c.setCurrentPosition must COPY the 
-    # position given to it!  It's _not_ enough to return a copy of position: 
-    # it may already have changed!!
-    # 
-    # - Fixed a another (lesser??) bug in Leo's core.  handleUserClick should 
-    # also make a copy.
-    # 
-    # - Fixed bug in mod_scripting.py.  The callback was failing if the script 
-    # was empty.
-    # 
-    # - Put in the self.recycle ivar AND THE CODE STILL FAILS.
-    #     It seems to me that this shows there is a bug in my code somewhere, 
-    # but where ???????????????????
-    #@-at
-    #@nonl
-    #@-node:ekr.20040803072955.4:Changes made since second update
-    #@+node:ekr.20040803072955.5:Most recent changes
-    #@+at
-    # 
-    # - Added generation count.
-    #     - Incremented on each redraw.
-    #     - Potentially a barrior to race conditions, but it never seemed to 
-    # do anything.
-    #     - This code is a candidate for elimination.
-    # 
-    # - Used vnodes rather than positions in several places.
-    #     - I actually don't think this was involved in the real problem, and 
-    # it doesn't hurt.
-    # 
-    # - Added much better traces: the beginning of the end for the bugs :-)
-    #     - Added self.verbose option.
-    #     - Added align keyword option to g.trace.
-    #     - Separate each set of traces by a blank line.
-    #         - This makes clear the grouping of id's.
-    # 
-    # - Defensive code: Disable dragging at start of redraw code.
-    #     - This protects against race conditions.
-    # 
-    # - Fixed blunder 1: Fixed a number of bugs in the dragging code.
-    #     - I had never looked at this code!
-    #     - Eliminating false drags greatly simplifies matters.
-    #     - One of the blunders was the confusion between self.dragging and 
-    # self._dragging.
-    #         - self.setDragging sets self._dragging.
-    #         - self._dragging is TOTALLY USELESS!!
-    # 
-    # - Fixed blunder 2: Added the following to eventToPosition:
-    #         x = canvas.canvasx(x)
-    #         y = canvas.canvasy(y)
-    #     - Apparently this was the cause of false associations between icons 
-    # and id's.
-    #     - It's amazing that the code didn't fail earlier without these!
-    # 
-    # - Converted all module-level constants to ivars.
-    # 
-    # - Lines no longer interfere with eventToPosition.
-    #     - The problem was that find_nearest or find_overlapping don't depend 
-    # on stacking order!
-    #     - Added p param to horizontal lines, but not vertical lines.
-    #     - EventToPosition adds 1 to the x coordinate of vertical lines, then 
-    # recomputes the id.
-    # 
-    # - Compute indentation only in forceDrawNode.  Removed child_indent 
-    # constant.
-    # 
-    # - Simplified drawTree to use indentation returned from forceDrawNode.
-    # 
-    # - setText now ensures that state is "normal" before attempting to set 
-    # the text.
-    #     - This is the robust way.
-    # 
-    # 7/31/04: newText must call setText for all nodes allocated, even if p 
-    # matches.
-    #@-at
-    #@nonl
-    #@-node:ekr.20040803072955.5:Most recent changes
-    #@-node:ekr.20040803072955.2:Notes
-    #@+node:ekr.20040803072955.6:Allocation...
-    #@+node:ekr.20040803072955.7:newBox
-    def newBox (self,p,x,y,image):
-        
-        canvas = self.canvas ; tag = "plugBox"
-    
-        if self.freeBoxes:
-            id = self.freeBoxes.pop(0)
-            canvas.coords(id,x,y)
-            canvas.itemconfigure(id,image=image)
-        else:
-            id = canvas.create_image(x,y,image=image,tag=tag)
-            
-        if self.trace and self.verbose:
-            g.trace("%3d %3d %3d %8s" % (id,x,y,' '),p.headString(),align=-20)
-    
-        assert(id not in self.visibleBoxes)
-        self.visibleBoxes.append(id)
-    
-        assert(not self.ids.get(id))
-        assert(p)
-        self.ids[id] = p.copy()
-    
-        return id
-    #@nonl
-    #@-node:ekr.20040803072955.7:newBox
-    #@+node:ekr.20040803072955.8:newClickBox
-    def newClickBox (self,p,x1,y1,x2,y2):
-        
-        canvas = self.canvas ; defaultColor = "" ; tag="clickBox" 
-    
-        if self.freeClickBoxes:
-            id = self.freeClickBoxes.pop(0)
-            canvas.coords(id,x1,y1,x2,y2)
-        else:
-            # Was this the bug ?? was (x1,y2**,x2,y2)
-            id = self.canvas.create_rectangle(x1,y1,x2,y2,tag=tag)
-            canvas.itemconfig(id,fill=defaultColor,outline=defaultColor)
-            
-        if self.trace and self.verbose:
-            g.trace("%3d %3d %3d %3d %3d" % (id,x1,y1,x2,y2),p.headString(),align=-20)
-    
-        assert(id not in self.visibleClickBoxes)
-        self.visibleClickBoxes.append(id)
-        
-        assert(p)
-        assert(not self.ids.get(id))
-        self.ids[id] = p.copy()
-        
-        return id
-    #@nonl
-    #@-node:ekr.20040803072955.8:newClickBox
-    #@+node:ekr.20040803072955.9:newIcon
-    def newIcon (self,p,x,y,image):
-        
-        canvas = self.canvas ; tag = "iconBox"
-    
-        if self.freeIcons:
-            id = self.freeIcons.pop(0)
-            canvas.itemconfigure(id,image=image)
-            canvas.coords(id,x,y)
-        else:
-            id = canvas.create_image(x,y,image=image,anchor="nw",tag=tag)
-            assert(not self.ids.get(id))
-            
-        if self.trace and self.verbose:
-            g.trace("%3d %3d %3d %8s" % (id,x,y,' '),p.headString(),align=-20)
-            
-        assert(id not in self.visibleIcons)
-        self.visibleIcons.append(id)
-        
-        assert(p)
-        p = p.copy()
-        assert(not self.iconIds.get(id))
-        assert(not self.ids.get(id))
-        data = p,self.generation
-        self.iconIds[id] = data # Remember which vnode belongs to the icon.
-        self.ids[id] = p
-    
-        return id
-    #@nonl
-    #@-node:ekr.20040803072955.9:newIcon
-    #@+node:ekr.20040803072955.10:newLine
-    def newLine (self,p,x1,y1,x2,y2):
-        
-        canvas = self.canvas
-        
-        if self.freeLines:
-            id = self.freeLines.pop(0)
-            canvas.coords(id,x1,y1,x2,y2)
-        else:
-            id = canvas.create_line(x1,y1,x2,y2,tag="lines",fill="gray50") # stipple="gray25")
-            assert(not self.ids.get(id))
-    
-        assert(not self.ids.get(id))
-        self.ids[id] = p
-            
-        self.visibleLines.append(id)
-    
-        return id
-    #@nonl
-    #@-node:ekr.20040803072955.10:newLine
-    #@+node:ekr.20040803072955.11:newText
-    def newText (self,p,x,y):
-        
-        canvas = self.canvas ; tag = "textBox"
-        
-        d = self.freeText
-        key = p.v ; assert key
-        pList = d.get(key,[])
-        
-        # Return only Tk.Text widgets with an exact match with p.
-        found = False
-        for i in xrange(len(pList)):
-            p2,t,id = pList[i]
-            if p2 == p:
-                # if self.trace: g.trace("allocating from freeText")
-                del pList[i]
-                id = t.leo_window_id
-                assert(id)
-                assert(t.leo_position == p2)
-                canvas.coords(id,x,y)
-                found = True ; break
-                
-        if not found:
-            # Tags are not valid in Tk.Text widgets.
-            t = Tk.Text(canvas,state="normal",font=self.font,bd=0,relief="flat",height=1)
-        
-            if self.useBindtags:
-                t.bindtags(self.textBindings)
-            else:
-                t.bind("<Button-1>", self.onHeadlineClick)
-                t.bind("<Button-3>", self.onHeadlineRightClick)
-                t.bind("<Key>",      self.onHeadlineKey)
-                t.bind("<Control-t>",self.onControlT)
-        
-            id = canvas.create_window(x,y,anchor="nw",window=t,tag=tag)
-            t.leo_window_id = id # Never changes.
-            
-        if self.trace and self.verbose:
-            g.trace("%3d %3d %3d %8s" % (id,x,y,' '),p.headString(),self.textAddr(t),align=-20)
-    
-        # Common configuration.
-        # Bug fix 7/31/04:  We must call setText even if p matches: p's text may have changed!
-        self.setText(t,p.headString(),tag="newText")
-        t.configure(width=self.headWidth(p.copy()))
-        t.leo_position = p.copy() # Never changes.
-        t.leo_generation = self.generation
-    
-        assert(id == t.leo_window_id)
-        assert(not self.ids.get(id))
-        self.ids[id] = p.copy()
-        
-        # New in 4.2 b3: entries are pairs (p,t,id) indexed by v.
-        key = p.v ; assert key
-        pList = self.visibleText.get(key,[])
-        pList.append((p,t,id),)
-        self.visibleText[key] = pList
-    
-        return t
-    #@nonl
-    #@-node:ekr.20040803072955.11:newText
-    #@+node:ekr.20040803072955.12:recycleWidgets
-    def recycleWidgets (self):
-        
-        # if self.trace: g.trace()
-        
-        canvas = self.canvas
-        
-        for id in self.visibleBoxes:
-            assert(id not in self.freeBoxes)
-            self.freeBoxes.append(id)
-            canvas.coords(id,-100,-100)
-        self.visibleBoxes = []
-    
-        for id in self.visibleClickBoxes:
-            assert(id not in self.freeClickBoxes)
-            self.freeClickBoxes.append(id)
-            canvas.coords(id,-100,-100,-100,-100)
-        self.visibleClickBoxes = []
-        
-        for id in self.visibleIcons:
-            assert(id not in self.freeIcons)
-            self.freeIcons.append(id)
-            canvas.coords(id,-100,-100)
-        self.visibleIcons = []
-            
-        for id in self.visibleLines:
-            assert(id not in self.freeLines)
-            self.freeLines.append(id)
-            canvas.coords(id,-100,-100,-100,-100)
-        self.visibleLines = []
-        
-        for key in self.visibleText.keys():
-            visList = self.visibleText.get(key,[])
-            freeList = self.freeText.get(key,[])
-            for data in visList:
-                p,t,id = data
-                assert p  == t.leo_position
-                assert id == t.leo_window_id
-                canvas.coords(id,-100,-100)
-                freeList.append(data)
-            self.freeText[key] = freeList
-        self.visibleText = {}
-        
-        for id in self.visibleUserIcons:
-            # The present code does not recycle user Icons.
-            self.canvas.delete(id)
-        self.visibleUserIcons = []
-    #@nonl
-    #@-node:ekr.20040803072955.12:recycleWidgets
-    #@+node:ekr.20040803072955.13:destroyWidgets (not used)
-    # This was a desparation measure.  It would leak bindings bigtime.
-    
-    def destroyWidgets (self):
-        
-        g.trace('*' * 20)
-    
-        self.canvas.delete("all")
-        
-        self.visibleBoxes = []
-        self.visibleClickBoxes = []
-        self.visibleIcons = []
-        self.visibleLines = []
-        self.visibleText  = []
-    #@nonl
-    #@-node:ekr.20040803072955.13:destroyWidgets (not used)
-    #@+node:ekr.20040803072955.14:getTextStats
-    def getTextStats (self):
-        
-        # Count the number of individual items in each list in freeText.
-        free = 0
-        for val in self.freeText.values():
-            free += len(val)
-            
-        visible = len(self.visibleText)
-        
-        return "%3d %3d tot: %4d" % (visible,free,visible+free)
-    #@nonl
-    #@-node:ekr.20040803072955.14:getTextStats
-    #@-node:ekr.20040803072955.6:Allocation...
-    #@+node:ekr.20040803072955.15:Birth...
+    #@+node:ekr.20040803072955.15: Birth...
     #@+node:ekr.20040803072955.16:__init__
     def __init__(self,c,frame,canvas):
         
@@ -506,10 +124,11 @@ class leoTkinterTree (leoFrame.leoTree):
         
         self.redrawing = False # Used only to disable traces.
         self.trace = False
-        self.verbose = True
+        self.verbose = False
         self.useBindtags = True
         self.generation = 0
         self.dragging = False
+        self.prevPositions = 0
         
         self.createPermanentBindings()
         self.setEditPosition(None) # Set positions returned by leoTree.editPosition()
@@ -644,7 +263,249 @@ class leoTkinterTree (leoFrame.leoTree):
             g.funcToMethod(f,leoNodes.position)
     #@nonl
     #@-node:ekr.20040803072955.21:injectCallbacks
-    #@-node:ekr.20040803072955.15:Birth...
+    #@-node:ekr.20040803072955.15: Birth...
+    #@+node:ekr.20040803072955.6:Allocation...
+    #@+node:ekr.20040803072955.7:newBox
+    def newBox (self,p,x,y,image):
+        
+        canvas = self.canvas ; tag = "plugBox"
+    
+        if self.freeBoxes:
+            id = self.freeBoxes.pop(0)
+            canvas.coords(id,x,y)
+            canvas.itemconfigure(id,image=image)
+        else:
+            id = canvas.create_image(x,y,image=image,tag=tag)
+            
+        if self.trace and self.verbose:
+            g.trace("%3d %3d %3d %8s" % (id,x,y,' '),p.headString(),align=-20)
+    
+        assert(id not in self.visibleBoxes)
+        self.visibleBoxes.append(id)
+    
+        assert(not self.ids.get(id))
+        assert(p)
+        self.ids[id] = p # p.copy()
+    
+        return id
+    #@nonl
+    #@-node:ekr.20040803072955.7:newBox
+    #@+node:ekr.20040803072955.8:newClickBox
+    def newClickBox (self,p,x1,y1,x2,y2):
+        
+        canvas = self.canvas ; defaultColor = "" ; tag="clickBox" 
+    
+        if self.freeClickBoxes:
+            id = self.freeClickBoxes.pop(0)
+            canvas.coords(id,x1,y1,x2,y2)
+        else:
+            # Was this the bug ?? was (x1,y2**,x2,y2)
+            id = self.canvas.create_rectangle(x1,y1,x2,y2,tag=tag)
+            canvas.itemconfig(id,fill=defaultColor,outline=defaultColor)
+            
+        if self.trace and self.verbose:
+            g.trace("%3d %3d %3d %3d %3d" % (id,x1,y1,x2,y2),p.headString(),align=-20)
+    
+        assert(id not in self.visibleClickBoxes)
+        self.visibleClickBoxes.append(id)
+        
+        assert(p)
+        assert(not self.ids.get(id))
+        self.ids[id] = p # p.copy()
+        
+        return id
+    #@nonl
+    #@-node:ekr.20040803072955.8:newClickBox
+    #@+node:ekr.20040803072955.9:newIcon
+    def newIcon (self,p,x,y,image):
+        
+        canvas = self.canvas ; tag = "iconBox"
+    
+        if self.freeIcons:
+            id = self.freeIcons.pop(0)
+            canvas.itemconfigure(id,image=image)
+            canvas.coords(id,x,y)
+        else:
+            id = canvas.create_image(x,y,image=image,anchor="nw",tag=tag)
+            assert(not self.ids.get(id))
+            
+        if self.trace and self.verbose:
+            g.trace("%3d %3d %3d %8s" % (id,x,y,' '),p.headString(),align=-20)
+            
+        assert(id not in self.visibleIcons)
+        self.visibleIcons.append(id)
+        
+        assert(p)
+        ## p = p.copy()
+        assert(not self.iconIds.get(id))
+        assert(not self.ids.get(id))
+        data = p,self.generation
+        self.iconIds[id] = data # Remember which vnode belongs to the icon.
+        self.ids[id] = p
+    
+        return id
+    #@nonl
+    #@-node:ekr.20040803072955.9:newIcon
+    #@+node:ekr.20040803072955.10:newLine
+    def newLine (self,p,x1,y1,x2,y2):
+        
+        canvas = self.canvas
+        
+        if self.freeLines:
+            id = self.freeLines.pop(0)
+            canvas.coords(id,x1,y1,x2,y2)
+        else:
+            id = canvas.create_line(x1,y1,x2,y2,tag="lines",fill="gray50") # stipple="gray25")
+            assert(not self.ids.get(id))
+    
+        assert(not self.ids.get(id))
+        self.ids[id] = p
+            
+        self.visibleLines.append(id)
+    
+        return id
+    #@nonl
+    #@-node:ekr.20040803072955.10:newLine
+    #@+node:ekr.20040803072955.11:newText
+    def newText (self,p,x,y):
+        
+        canvas = self.canvas ; tag = "textBox"
+        
+        d = self.freeText
+        key = p.v ; assert key
+        pList = d.get(key,[])
+        
+        # Return only Tk.Text widgets with an exact match with p.
+        found = False
+        for i in xrange(len(pList)):
+            p2,t,id = pList[i]
+            if p2 == p:
+                # if self.trace and self.verbose g.trace("allocating from freeText")
+                del pList[i]
+                id = t.leo_window_id
+                assert(id)
+                assert(t.leo_position == p2)
+                canvas.coords(id,x,y)
+                found = True ; break
+                
+        if not found:
+            # Tags are not valid in Tk.Text widgets.
+            t = Tk.Text(canvas,state="normal",font=self.font,bd=0,relief="flat",height=1)
+        
+            if self.useBindtags:
+                t.bindtags(self.textBindings)
+            else:
+                t.bind("<Button-1>", self.onHeadlineClick)
+                t.bind("<Button-3>", self.onHeadlineRightClick)
+                t.bind("<Key>",      self.onHeadlineKey)
+                t.bind("<Control-t>",self.onControlT)
+        
+            id = canvas.create_window(x,y,anchor="nw",window=t,tag=tag)
+            t.leo_window_id = id # Never changes.
+            
+        if self.trace and self.verbose:
+            g.trace("%3d %3d %3d %8s" % (id,x,y,' '),p.headString(),self.textAddr(t),align=-20)
+    
+        # Common configuration.
+        # Bug fix 7/31/04:  We must call setText even if p matches: p's text may have changed!
+        self.setText(t,p.headString(),tag="newText")
+        ## p = p.copy()
+        t.configure(width=self.headWidth(p))
+        t.leo_position = p # p.copy() # Never changes.
+        t.leo_generation = self.generation
+    
+        assert(id == t.leo_window_id)
+        assert(not self.ids.get(id))
+        self.ids[id] = p # p.copy()
+        
+        # New in 4.2 b3: entries are pairs (p,t,id) indexed by v.
+        key = p.v ; assert key
+        pList = self.visibleText.get(key,[])
+        pList.append((p,t,id),)
+        self.visibleText[key] = pList
+    
+        return t
+    #@nonl
+    #@-node:ekr.20040803072955.11:newText
+    #@+node:ekr.20040803072955.12:recycleWidgets
+    def recycleWidgets (self):
+        
+        # if self.trace: g.trace()
+        
+        canvas = self.canvas
+        
+        for id in self.visibleBoxes:
+            assert(id not in self.freeBoxes)
+            self.freeBoxes.append(id)
+            canvas.coords(id,-100,-100)
+        self.visibleBoxes = []
+    
+        for id in self.visibleClickBoxes:
+            assert(id not in self.freeClickBoxes)
+            self.freeClickBoxes.append(id)
+            canvas.coords(id,-100,-100,-100,-100)
+        self.visibleClickBoxes = []
+        
+        for id in self.visibleIcons:
+            assert(id not in self.freeIcons)
+            self.freeIcons.append(id)
+            canvas.coords(id,-100,-100)
+        self.visibleIcons = []
+            
+        for id in self.visibleLines:
+            assert(id not in self.freeLines)
+            self.freeLines.append(id)
+            canvas.coords(id,-100,-100,-100,-100)
+        self.visibleLines = []
+        
+        for key in self.visibleText.keys():
+            visList = self.visibleText.get(key,[])
+            freeList = self.freeText.get(key,[])
+            for data in visList:
+                p,t,id = data
+                assert p  == t.leo_position
+                assert id == t.leo_window_id
+                canvas.coords(id,-100,-100)
+                freeList.append(data)
+            self.freeText[key] = freeList
+        self.visibleText = {}
+        
+        for id in self.visibleUserIcons:
+            # The present code does not recycle user Icons.
+            self.canvas.delete(id)
+        self.visibleUserIcons = []
+    #@nonl
+    #@-node:ekr.20040803072955.12:recycleWidgets
+    #@+node:ekr.20040803072955.13:destroyWidgets (not used)
+    # This was a desparation measure.  It would leak bindings bigtime.
+    
+    def destroyWidgets (self):
+        
+        g.trace('*' * 20)
+    
+        self.canvas.delete("all")
+        
+        self.visibleBoxes = []
+        self.visibleClickBoxes = []
+        self.visibleIcons = []
+        self.visibleLines = []
+        self.visibleText  = []
+    #@nonl
+    #@-node:ekr.20040803072955.13:destroyWidgets (not used)
+    #@+node:ekr.20040803072955.14:getTextStats
+    def getTextStats (self):
+        
+        # Count the number of individual items in each list in freeText.
+        free = 0
+        for val in self.freeText.values():
+            free += len(val)
+            
+        visible = len(self.visibleText)
+        
+        return "%3d %3d tot: %4d" % (visible,free,visible+free)
+    #@nonl
+    #@-node:ekr.20040803072955.14:getTextStats
+    #@-node:ekr.20040803072955.6:Allocation...
     #@+node:ekr.20040803072955.26:Config & Measuring...
     #@+node:ekr.20040803072955.27:tree.getFont,setFont,setFontFromConfig
     def getFont (self):
@@ -1153,12 +1014,16 @@ class leoTkinterTree (leoFrame.leoTree):
         self.drag_p = None # Disable drags across redraws.
         self.dragging = False
         if self.trace:
-            print ; print
-            g.trace("**** generation: %3d ***" % self.generation)
+            if self.verbose:
+                print ; print
+            delta = g.app.positions - self.prevPositions
+            g.trace("**** gen: %3d positions: %5d +%4d" % (
+                self.generation,g.app.positions,delta))
+        self.prevPositions = g.app.positions
         
         if c.hoistStack:
             p,junk = c.hoistStack[-1]
-            self.drawTree(p.copy(),self.root_left,self.root_top,0,0,hoistFlag=True)
+            self.drawTree(p,self.root_left,self.root_top,0,0,hoistFlag=True)
         else:
             self.drawTree(c.rootPosition(),self.root_left,self.root_top,0,0)
         
@@ -1183,10 +1048,11 @@ class leoTkinterTree (leoFrame.leoTree):
         data = g.doHook("draw-sub-outline",tree=tree,p=p,v=v,x=x,y=y,h=h,level=level,hoistFlag=hoistFlag)
         if data is not None: return data
         
-        p = p.copy() # Make _sure_ we never change the caller's position.
-        
         while p: # Do not use iterator.
-            h,indent = self.drawNode(p,x,y)
+            # N.B. This is the ONLY copy of p that needs to be made.
+            # No other drawing routine calls any p.moveTo method.
+            const_p = p.copy()
+            h,indent = self.drawNode(const_p,x,y)
             if h1 is None: h1 = h
             y += h ; ylast = y
             if p.isExpanded() and p.hasFirstChild():
@@ -1568,19 +1434,21 @@ class leoTkinterTree (leoFrame.leoTree):
             p = self.ids.get(theId)
             # g.trace("was vertical line",p)
         
-        if self.trace:
+        if self.trace and self.verbose:
             if p:
                 w = self.findEditWidget(p)
                 g.trace("%3d %3d %3d %d" % (theId,x,y,id(w)),p.headString())
             else:
                 g.trace("%3d %3d %3d" % (theId,x,y),None)
             
-        if p: return p.copy() # Make _sure_ nobody changes this table!
+        if p: return p # p.copy() # Make _sure_ nobody changes this table!
         else: return None
     #@nonl
     #@-node:ekr.20040803072955.74:eventToPosition
     #@+node:ekr.20040803072955.75:edit_text
     def edit_text (self,p):
+        
+        """Returns the Tk.Edit widget for position p."""
         
         if self.editPosition:
             return self.findEditWidget(p,tag="tree:edit_text")
@@ -1647,7 +1515,7 @@ class leoTkinterTree (leoFrame.leoTree):
         
         c = self.c ; gui = g.app.gui
         
-        if self.trace: g.trace()
+        if self.trace and self.verbose: g.trace()
         
         p = self.eventToPosition(event)
         
@@ -1672,7 +1540,7 @@ class leoTkinterTree (leoFrame.leoTree):
         c = self.c ; gui = g.app.gui
         tree = self ; canvas = tree.canvas
         
-        if self.trace: g.trace()
+        if self.trace and self.verbose: g.trace()
         
         p = self.eventToPosition(event)
         if not p: return
@@ -1723,7 +1591,7 @@ class leoTkinterTree (leoFrame.leoTree):
             g.trace("Can't happen")
             return
         
-        if p == c.currentPosition():
+        if p.isCurrentPosition():
             if p == self.editPosition():
                 self.setNormalLabelState(p)
             else:
@@ -1751,7 +1619,7 @@ class leoTkinterTree (leoFrame.leoTree):
         except AttributeError:
             return "continue"
             
-        if self.trace: g.trace(p)
+        if self.trace and self.verbose: g.trace(p)
         
         try:
             if not g.doHook("headclick1",c=c,p=p,event=event):
@@ -1809,7 +1677,7 @@ class leoTkinterTree (leoFrame.leoTree):
         
         c = self.c
     
-        if not p or p != c.currentPosition():
+        if not p or not p.isCurrentPosition():
             return "break"
             
         edit_text = self.edit_text(p)
@@ -2001,9 +1869,10 @@ class leoTkinterTree (leoFrame.leoTree):
             except: pass
             p = self.ids.get(id)
             if not p: return
-            self.drag_p = p.copy()
+            self.drag_p = p # p.copy()
             self.dragging = True
-            if self.trace: g.trace("*** start drag ***",id,self.drag_p.headString())
+            if self.trace and self.verbose:
+                g.trace("*** start drag ***",id,self.drag_p.headString())
             windowPref = g.app.config.getBoolWindowPref
             # Only do this once: greatly speeds drags.
             self.savedNumberOfVisibleNodes = self.numberOfVisibleNodes()
@@ -2019,7 +1888,6 @@ class leoTkinterTree (leoFrame.leoTree):
             self.canvas['cursor'] = "hand2" # "center_ptr"
     
         self.onContinueDrag(event)
-    #@nonl
     #@-node:ekr.20040803072955.102:tree.onDrag
     #@+node:ekr.20040803072955.103:tree.onEndDrag
     def onEndDrag(self,event):
@@ -2052,7 +1920,9 @@ class leoTkinterTree (leoFrame.leoTree):
                     self.controlDrag = c.frame.controlKeyIsDown
     
             if vdrag and vdrag.v.t != p.v.t: # 6/22/04: Disallow drag to joined node.
-                if self.trace: g.trace("*** end drag   ***",id,x,y,p.headString(),vdrag.headString())
+                if self.trace and self.verbose:
+                    g.trace("*** end drag   ***",\
+                        id,x,y,p.headString(),vdrag.headString())
                 if self.controlDrag: # Clone p and move the clone.
                     if childFlag:
                         c.dragCloneToNthChildOf(p,vdrag,0)
@@ -2064,13 +1934,13 @@ class leoTkinterTree (leoFrame.leoTree):
                     else:
                         c.dragAfter(p,vdrag)
             else:
-                if self.trace: g.trace("Cancel drag")
+                if self.trace and self.verbose:
+                    g.trace("Cancel drag")
         
         # Reset the old cursor by brute force.
         self.canvas['cursor'] = "arrow"
         self.dragging = False
         self.drag_p = None
-    #@nonl
     #@-node:ekr.20040803072955.103:tree.onEndDrag
     #@-node:ekr.20040803072955.99:Dragging
     #@+node:ekr.20040803072955.105:OnActivate
@@ -2126,12 +1996,12 @@ class leoTkinterTree (leoFrame.leoTree):
         # Doing this on every click would interfere with the double-clicking.
         if not c.frame.log.hasFocus() and focus != c.frame.bodyCtrl:
             try:
-                if self.trace: g.trace(focus)
+                if self.trace and self.verbose:
+                    g.trace(focus)
                 tree.endEditLabel()
                 tree.dimEditLabel()
             except:
                 g.es_event_exception("deactivate tree")
-    #@nonl
     #@-node:ekr.20040803072955.108:tree.OnDeactivate (caused double-click problem)
     #@+node:ekr.20040803072955.109:tree.findVnodeWithIconId
     def findPositionWithIconId (self,id):
@@ -2145,7 +2015,8 @@ class leoTkinterTree (leoFrame.leoTree):
         if data:
             p,generation = data
             if generation==self.generation:
-                if self.trace: g.trace(id,p.headString())
+                if self.trace and self.verbose:
+                    g.trace(id,p.headString())
                 return p
             else:
                 g.trace("*** wrong generation: %d ***" % id)
@@ -2155,7 +2026,6 @@ class leoTkinterTree (leoFrame.leoTree):
             return None
             
         
-    #@nonl
     #@-node:ekr.20040803072955.109:tree.findVnodeWithIconId
     #@+node:ekr.20040803072955.110:tree.OnPopup & allies
     def OnPopup (self,p,event):
@@ -2470,6 +2340,149 @@ class leoTkinterTree (leoFrame.leoTree):
         return y
     #@-node:ekr.20040803072955.124:tree.updateTree
     #@-node:ekr.20040803072955.118:Incremental drawing...
+    #@+node:ekr.20040803072955.2:Notes
+    #@@killcolor
+    #@nonl
+    #@+node:ekr.20040803072955.3:Changes made since first update
+    #@+at
+    # 
+    # - disabled drawing of user icons.  They weren't being hidden, which 
+    # messed up scrolling.
+    # 
+    # - Expanded clickBox so all clicks fall inside it.
+    # 
+    # - Added binding for plugBox so it doesn't interfere with the clickBox.  
+    # Another weirdness.
+    # 
+    # - Setting self.useBindtags = True also seems to work.
+    # 
+    # - Re-enabled code in drawText that sets the headline state.
+    # 
+    # - Clear self.ids dict on each redraw so "invisible" id's don't confuse 
+    # eventToPosition.
+    #     This effectively disables a check on id's, but that can't be helped.
+    # 
+    # - eventToPosition now returns p.copy, which means that nobody can change 
+    # the list.
+    # 
+    # - Likewise, clear self.iconIds so old icon id's don't confuse 
+    # findVnodeWithIconId.
+    # 
+    # - All drawing methods must do p = p.copy() at the beginning if they make 
+    # any changes to p.
+    #     - This ensures neither they nor their allies can change the caller's 
+    # position.
+    #     - In fact, though, only drawTree changes position.  It makes a copy 
+    # before calling drawNode.
+    #     *** Therefore, all positions in the drawing code are immutable!
+    # 
+    # - Fixed the race conditions that caused drawing sometimes to fail.  The 
+    # essential idea is that we must not call w.config if we are about to do a 
+    # redraw.  For full details, see the Notes node in the Race Conditions 
+    # section.
+    #@-at
+    #@nonl
+    #@-node:ekr.20040803072955.3:Changes made since first update
+    #@+node:ekr.20040803072955.4:Changes made since second update
+    #@+at
+    # 
+    # - Removed code in leoTkinterFrame.OnActivateTree:
+    #     self.tree.undimEditLabel()
+    # 
+    # I have no idea why this was originally there.  It seems to be pure 
+    # duplication.
+    # 
+    # - Removed code from self.OnActivate:
+    #     self.undimEditLabel()
+    # 
+    # Again, needless duplication.  The OnActivate logic might be simplified 
+    # further...
+    # 
+    # - Removed duplicate code in tree.select.  The following code was being 
+    # called twice (!!):
+    #     self.endEditLabel()
+    #     self.setUnselectedLabelState(old_p)
+    # 
+    # - Add p.copy() instead of p when inserting nodes into data structures in 
+    # select.
+    # 
+    # - Fixed a _major_ bug in Leo's core.  c.setCurrentPosition must COPY the 
+    # position given to it!  It's _not_ enough to return a copy of position: 
+    # it may already have changed!!
+    # 
+    # - Fixed a another (lesser??) bug in Leo's core.  handleUserClick should 
+    # also make a copy.
+    # 
+    # - Fixed bug in mod_scripting.py.  The callback was failing if the script 
+    # was empty.
+    # 
+    # - Put in the self.recycle ivar AND THE CODE STILL FAILS.
+    #     It seems to me that this shows there is a bug in my code somewhere, 
+    # but where ???????????????????
+    #@-at
+    #@nonl
+    #@-node:ekr.20040803072955.4:Changes made since second update
+    #@+node:ekr.20040803072955.5:Most recent changes
+    #@+at
+    # 
+    # - Added generation count.
+    #     - Incremented on each redraw.
+    #     - Potentially a barrior to race conditions, but it never seemed to 
+    # do anything.
+    #     - This code is a candidate for elimination.
+    # 
+    # - Used vnodes rather than positions in several places.
+    #     - I actually don't think this was involved in the real problem, and 
+    # it doesn't hurt.
+    # 
+    # - Added much better traces: the beginning of the end for the bugs :-)
+    #     - Added self.verbose option.
+    #     - Added align keyword option to g.trace.
+    #     - Separate each set of traces by a blank line.
+    #         - This makes clear the grouping of id's.
+    # 
+    # - Defensive code: Disable dragging at start of redraw code.
+    #     - This protects against race conditions.
+    # 
+    # - Fixed blunder 1: Fixed a number of bugs in the dragging code.
+    #     - I had never looked at this code!
+    #     - Eliminating false drags greatly simplifies matters.
+    #     - One of the blunders was the confusion between self.dragging and 
+    # self._dragging.
+    #         - self.setDragging sets self._dragging.
+    #         - self._dragging is TOTALLY USELESS!!
+    # 
+    # - Fixed blunder 2: Added the following to eventToPosition:
+    #         x = canvas.canvasx(x)
+    #         y = canvas.canvasy(y)
+    #     - Apparently this was the cause of false associations between icons 
+    # and id's.
+    #     - It's amazing that the code didn't fail earlier without these!
+    # 
+    # - Converted all module-level constants to ivars.
+    # 
+    # - Lines no longer interfere with eventToPosition.
+    #     - The problem was that find_nearest or find_overlapping don't depend 
+    # on stacking order!
+    #     - Added p param to horizontal lines, but not vertical lines.
+    #     - EventToPosition adds 1 to the x coordinate of vertical lines, then 
+    # recomputes the id.
+    # 
+    # - Compute indentation only in forceDrawNode.  Removed child_indent 
+    # constant.
+    # 
+    # - Simplified drawTree to use indentation returned from forceDrawNode.
+    # 
+    # - setText now ensures that state is "normal" before attempting to set 
+    # the text.
+    #     - This is the robust way.
+    # 
+    # 7/31/04: newText must call setText for all nodes allocated, even if p 
+    # matches.
+    #@-at
+    #@nonl
+    #@-node:ekr.20040803072955.5:Most recent changes
+    #@-node:ekr.20040803072955.2:Notes
     #@+node:ekr.20040803072955.125:Selecting & editing...
     #@+node:ekr.20040803072955.126:endEditLabel
     def endEditLabel (self):
@@ -2514,7 +2527,7 @@ class leoTkinterTree (leoFrame.leoTree):
     #@nonl
     #@-node:ekr.20040803072955.127:editLabel
     #@+node:ekr.20040803072955.128:tree.select
-    # Warning: do not try to "optimize" this by returning if v==tree.currentVnode.
+    # Warning: do not try to "optimize" this by returning if p==tree.currentPosition.
     
     def select (self,p,updateBeadList=True):
         
@@ -2523,7 +2536,7 @@ class leoTkinterTree (leoFrame.leoTree):
     
         if not p: return
         
-        if self.trace: g.trace(p.headString())
+        if self.trace and self.verbose: g.trace(p.headString())
     
         if not g.doHook("unselect1",c=c,new_v=p,old_v=old_p):
             #@        << unselect the old node >>
@@ -2533,14 +2546,14 @@ class leoTkinterTree (leoFrame.leoTree):
             insertSpot = c.frame.body.getInsertionPoint()
             
             if old_p and old_p != p:
-                if self.trace: g.trace("unselect:",old_p.headString())
+                if self.trace and self.verbose:
+                    g.trace("unselect:",old_p.headString())
                 self.endEditLabel() # sets editPosition = None
                 self.setUnselectedLabelState(old_p)
             
             if old_p and old_p.edit_text():
                 old_p.v.t.scrollBarSpot = yview
                 old_p.v.t.insertSpot = insertSpot
-            #@nonl
             #@-node:ekr.20040803072955.129:<< unselect the old node >> (changed in 4.2)
             #@nl
     
@@ -2607,7 +2620,7 @@ class leoTkinterTree (leoFrame.leoTree):
     
         #@    << set the current node >>
         #@+node:ekr.20040803072955.133:<< set the current node >>
-        self.c.setCurrentPosition(p.copy())
+        self.c.setCurrentPosition(p)
         if p != old_p:
             self.setSelectedLabelState(p)
         self.frame.scanForTabWidth(p) #GS I believe this should also get into the select1 hook
@@ -2675,7 +2688,7 @@ class leoTkinterTree (leoFrame.leoTree):
     
         config = g.app.config ; w = p.edit_text()
         
-        if self.trace:
+        if self.trace and self.verbose:
             if not self.redrawing:
                 print "%10s %d %s" % ("disabled",id(w),p.headString())
                 # import traceback ; traceback.print_stack(limit=6)
@@ -2697,7 +2710,7 @@ class leoTkinterTree (leoFrame.leoTree):
     
         config = g.app.config ; w = p.edit_text()
         
-        if self.trace:
+        if self.trace and self.verbose:
             if not self.redrawing:
                 print "%10s %d %s" % ("edit",id(2),p.headString())
         
@@ -2726,7 +2739,7 @@ class leoTkinterTree (leoFrame.leoTree):
         
         config = g.app.config ; w = p.edit_text()
         
-        if self.trace:
+        if self.trace and self.verbose:
             if not self.redrawing:
                 print "%10s %d %s" % ("unselect",id(w),p.headString())
                 # import traceback ; traceback.print_stack(limit=6)
