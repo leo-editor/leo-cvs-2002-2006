@@ -4473,7 +4473,7 @@ class LeoFrame:
 			self.log.see("end")
 			self.log.update_idletasks()
 		else:
-			a.logWaiting.append((s),) # 2/16/03
+			a.logWaiting.append((s,color),) # 2/16/03
 			print "Null log"
 			if type(s) == type(u""): # 3/18/03
 				s = toEncodedString(s,"ascii")
@@ -4486,7 +4486,7 @@ class LeoFrame:
 			self.log.see("end")
 			self.log.update_idletasks()
 		else:
-			a.logWaiting.append(('\n'),) # 2/16/03
+			a.logWaiting.append(('\n',"black"),) # 2/16/03
 			print "Null log"
 			print
 	#@-body

@@ -1736,10 +1736,10 @@ def es(s,*args,**keys):
 		if newline:
 			ecnl() # only valid here
 	elif newline:
-		a.logWaiting.append((s+'\n'),) # 2/16/03
+		a.logWaiting.append((s+'\n',color),) # 2/16/03
 		print s
 	else:
-		a.logWaiting.append((s),) # 2/16/03
+		a.logWaiting.append((s,color),) # 2/16/03
 		print s,
 #@-body
 #@-node:3::es, enl, ecnl
@@ -2993,8 +2993,10 @@ def unloadAll():
 #@+node:1::isValidEncoding
 #@+body
 def isValidEncoding (encoding):
-
+	
 	try:
+		if len(encoding) == 0:
+			return false
 		u = unicode("a",encoding)
 		return true
 	except:

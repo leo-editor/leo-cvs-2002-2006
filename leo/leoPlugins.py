@@ -38,7 +38,7 @@ def loadHandlers():
 		path = os.path.join(app().loadDir,"plugins") # 2/19/03
 		files = glob.glob(os.path.join(path,"mod_*.py"))
 		if len(files) > 0:
-			es("Loading plugins:")
+			es("Loading plugins:",color="red")
 			sys.path.append(path)
 			for file in files:
 				try:

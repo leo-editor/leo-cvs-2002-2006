@@ -231,7 +231,7 @@ class LeoApp:
 			(sys.getdefaultencoding(),"sys"),
 			("utf-8","default")):
 		
-			if encoding and len(encoding) > 0:
+			if isValidEncoding (encoding): # 3/22/03
 				self.tkEncoding = encoding
 				# print self.tkEncoding,src
 				break
@@ -312,8 +312,8 @@ class LeoApp:
 	def writeWaitingLog (self):
 	
 		if self.log:
-			for s in self.logWaiting:
-				es(s,newline=0) # The caller must write the newlines.
+			for s,color in self.logWaiting:
+				es(s,color=color,newline=0) # The caller must write the newlines.
 			self.logWaiting = []
 	
 	#@-body
