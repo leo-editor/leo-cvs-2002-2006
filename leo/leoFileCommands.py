@@ -923,6 +923,7 @@ class fileCommands:
 	
 		c = self.commands
 		c.atFileCommands.readAll(c.currentVnode(), true) # partialFlag
+		c.redraw() # 4/4/03
 	#@-body
 	#@-node:5::readAtFileNodes
 	#@+node:6::fileCommands.readOutlineOnly
