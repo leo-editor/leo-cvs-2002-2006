@@ -1316,6 +1316,9 @@ class baseLeoTkinterFrame:
 			("&Clone Node","Ctrl+`",self.OnCloneNode),
 			("Sort C&hildren",None,self.OnSortChildren),
 			("&Sort Siblings","Alt-A",self.OnSortSiblings),
+			("-",None,None),
+			("Hoist",None,self.OnHoist),
+			("De-Hoist",None,self.OnDehoist),
 			("-",None,None))
 		
 		self.createMenuEntries(outlineMenu,table)
@@ -3189,6 +3192,16 @@ class baseLeoTkinterFrame:
 		self.commands.sortSiblings()
 	#@nonl
 	#@-node:OnSortChildren, OnSortSiblings
+	#@+node:f.OnHoist,OnDehoist
+	def OnHoist(self,event=None):
+	
+		self.commands.hoist()
+		
+	def OnDehoist(self,event=None):
+	
+		self.commands.dehoist()
+	#@nonl
+	#@-node:f.OnHoist,OnDehoist
 	#@+node:OnContractChildren (no longer used)
 	def OnContractChildren(self,event=None):
 	
@@ -4158,6 +4171,8 @@ class baseLeoTkinterFrame:
 			enableMenu(menu,"Delete Node",c.canDeleteHeadline())
 			enableMenu(menu,"Paste Node",c.canPasteOutline())
 			enableMenu(menu,"Sort Siblings",c.canSortSiblings())
+			enableMenu(menu,"Hoist",c.canHoist())
+			enableMenu(menu,"De-Hoist",c.canDehoist())
 			# Expand/Contract submenu...
 			menu = self.getMenu("Expand/Contract...")
 			hasChildren = v.hasChildren()

@@ -631,7 +631,7 @@ class baseLeoTkinterTree:
 			self.canvas.delete("all")
 			self.deleteWidgets()
 			self.setVisibleAreaToFullCanvas()
-			self.drawTree(self.rootVnode,root_left,root_top,0,0)
+			self.drawTopTree()
 			# Set up the scroll region after the tree has been redrawn.
 			x0, y0, x1, y1 = self.canvas.bbox("all")
 			self.canvas.configure(scrollregion=(0, 0, x1, y1))
@@ -658,7 +658,7 @@ class baseLeoTkinterTree:
 		self.setVisibleArea(args)
 		self.deleteBindings()
 		self.canvas.delete("all")
-		self.drawTree(self.rootVnode,root_left,root_top,0,0)
+		self.drawTopTree()
 		
 		if self.trace:
 			print "idle_second_redraw allocated:",self.redrawCount, self.allocatedNodes
@@ -763,10 +763,23 @@ class baseLeoTkinterTree:
 		return self.line_height
 	#@nonl
 	#@-node:drawText (bind)
-	#@+node:drawTree
-	def drawTree(self,v,x,y,h,level):
+	#@+node:drawTopTree
+	def drawTopTree (self):
 		
-		# Recursive routine, stat() not useful.
+		"""Draws the top-level tree, taking into account the hoist state."""
+		
+		c = self.frame.commands
+		
+		if c.hoistStack:
+			v = c.hoistStack[-1]
+			self.drawTree(v,root_left,root_top,0,0,hoistFlag=true)
+		else:
+			self.drawTree(self.rootVnode,root_left,root_top,0,0)
+	#@nonl
+	#@-node:drawTopTree
+	#@+node:drawTree
+	def drawTree(self,v,x,y,h,level,hoistFlag=false):
+		
 		yfirst = ylast = y
 		if level==0: yfirst += 10
 		while v:
@@ -775,7 +788,10 @@ class baseLeoTkinterTree:
 			y += h ; ylast = y
 			if v.isExpanded() and v.firstChild():
 				y = self.drawTree(v.firstChild(),x+child_indent,y,h,level+1)
-			v = v.next()
+			if hoistFlag:
+				v = None
+			else:
+				v = v.next()
 		#@	<< draw vertical line >>
 		#@+node:<< draw vertical line >>
 		id = self.canvas.create_line(

@@ -491,6 +491,7 @@ class baseUndoer:
 		redrawFlag = true
 		c.beginUpdate()
 		redoType = u.undoType # Use the type of the next bead.
+		updateSetChangedFlag = true
 		if 1: # range...
 			#@		<< redo clone cases >>
 			#@+node:<< redo clone cases >>
@@ -510,6 +511,22 @@ class baseUndoer:
 				c.selectVnode(u.v)
 			#@nonl
 			#@-node:<< redo clone cases >>
+			#@nl
+			#@		<< redo hoist cases >>
+			#@+node:<< redo hoist cases >>
+			elif redoType == "Hoist":
+				
+				c.selectVnode(u.v)
+				c.hoist()
+				updateSetChangedFlag = false
+				
+			elif redoType == "De-Hoist":
+				
+				c.selectVnode(u.v)
+				c.dehoist()
+				updateSetChangedFlag = false
+			#@nonl
+			#@-node:<< redo hoist cases >>
 			#@nl
 			#@		<< redo insert cases >>
 			#@+node:<< redo insert cases >>
@@ -670,8 +687,9 @@ class baseUndoer:
 			#@-node:<< redo typing cases >>
 			#@nl
 			else: trace("Unknown case: " + `redoType`)
-			c.setChanged(true)
-			if u.v: u.v.setDirty()
+			if updateSetChangedFlag:
+				c.setChanged(true)
+				if u.v: u.v.setDirty()
 		c.endUpdate(redrawFlag) # 11/08/02
 		u.redoing = false
 		u.bead += 1
@@ -701,6 +719,7 @@ class baseUndoer:
 		c.beginUpdate()
 		undoType = u.undoType
 		redrawFlag = true
+		updateSetChangedFlag = true
 		if 1: # range...
 			#@		<< undo clone cases >>
 			#@+node:<< undo clone cases >>
@@ -745,6 +764,21 @@ class baseUndoer:
 				c.selectVnode(u.v)
 			#@nonl
 			#@-node:<< undo delete cases >>
+			#@nl
+			#@		<< undo hoist cases >>
+			#@+node:<< undo hoist cases >>
+			elif undoType == "Hoist":
+				
+				c.selectVnode(u.v)
+				c.dehoist()
+				updateSetChangedFlag = false
+			
+			elif undoType == "De-Hoist":
+				
+				c.selectVnode(u.v)
+				c.hoist()
+				updateSetChangedFlag = false
+			#@-node:<< undo hoist cases >>
 			#@nl
 			#@		<< undo insert cases >>
 			#@+node:<< undo insert cases >>
@@ -908,8 +942,9 @@ class baseUndoer:
 			#@-node:<< undo typing cases >>
 			#@nl
 			else: trace("Unknown case: " + `u.undoType`)
-			c.setChanged(true)
-			if u.v: u.v.setDirty()
+			if updateSetChangedFlag:
+				c.setChanged(true)
+				if u.v: u.v.setDirty()
 		c.endUpdate(redrawFlag) # 11/9/02
 		u.undoing = false
 		u.bead -= 1

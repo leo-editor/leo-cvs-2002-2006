@@ -57,6 +57,9 @@ class baseCommands:
 		self.beadList = [] # list of vnodes for the Back and Forward commands.
 		self.beadPointer = -1 # present item in the list.
 		self.visitedList = [] # list of vnodes for the Nodes dialog.
+		
+		# 4.1: for hoist/dehoist commands.
+		self.hoistStack = [] # Stack of nodes to be root of drawn tree.  Affects only drawing routines.
 		#@nonl
 		#@-node:<< initialize ivars >>
 		#@nl
@@ -923,7 +926,7 @@ class baseCommands:
 		return false
 	#@nonl
 	#@-node:canMarkChangedRoots
-	#@+node:canMoveOutlineDown
+	#@+node:canMoveOutlineDown (changed for hoist)
 	def canMoveOutlineDown (self):
 	
 		c = self
@@ -933,38 +936,59 @@ class baseCommands:
 			v = current.visNext()
 			while v and current.isAncestorOf(v):
 				v = v.visNext()
-			return v != None
+				
+			if c.hoistStack:
+				h = c.hoistStack[-1]
+				return v and v != h and h.isAncestorOf(v)
+			else:
+				return v != None
 		else: # The MORE way.
 			return c.currentVnode().next() != None
 	#@nonl
-	#@-node:canMoveOutlineDown
-	#@+node:canMoveOutlineLeft
+	#@-node:canMoveOutlineDown (changed for hoist)
+	#@+node:canMoveOutlineLeft (changed for hoist)
 	def canMoveOutlineLeft (self):
 	
 		c = self ; v = c.currentVnode()
 		if 0: # Old code: assumes multiple leftmost nodes.
 			return v and v.parent()
 		else: # Can't move a child of the root left.
-			return v and v.parent() and v.parent().parent()
+			if c.hoistStack:
+				h = c.hoistStack[-1]
+				if v and v.parent() and v.parent().parent():
+					p = v.parent()
+					return p != h and h.isAncestorOf(p)
+				else:
+					return false
+			else:
+				return v and v.parent() and v.parent().parent()
 	#@nonl
-	#@-node:canMoveOutlineLeft
-	#@+node:canMoveOutlineRight
+	#@-node:canMoveOutlineLeft (changed for hoist)
+	#@+node:canMoveOutlineRight (changed for hoist)
 	def canMoveOutlineRight (self):
 	
 		c = self ; v = c.currentVnode()
-		return v and v.back()
+		if c.hoistStack:
+			h = c.hoistStack[-1]
+			return v and v.back() and v != h
+		else:
+			return v and v.back()
 	#@nonl
-	#@-node:canMoveOutlineRight
-	#@+node:canMoveOutlineUp
+	#@-node:canMoveOutlineRight (changed for hoist)
+	#@+node:canMoveOutlineUp (changed for hoist)
 	def canMoveOutlineUp (self):
 	
 		c = self ; v = c.currentVnode()
 		if 1: # The permissive way.
-			return v and v.visBack()
+			if c.hoistStack:
+				h = c.hoistStack[-1] ; vback = v.visBack()
+				return v and vback and h != v and h.isAncestorOf(vback)
+			else:
+				return v and v.visBack()
 		else: # The MORE way.
 			return v and v.back()
 	#@nonl
-	#@-node:canMoveOutlineUp
+	#@-node:canMoveOutlineUp (changed for hoist)
 	#@+node:canPasteOutline
 	def canPasteOutline (self,s=None):
 	
@@ -1315,6 +1339,48 @@ class baseCommands:
 				if s[0:2]=="* ": c.frame.setTitle(s[2:])
 	#@nonl
 	#@-node:c.setChanged
+	#@+node:c.Hoist & dehoist & enablers
+	def dehoist(self):
+	
+		c = self ; v = c.currentVnode()
+		if v and c.canDehoist():
+			c.undoer.setUndoParams("De-Hoist",v)
+			c.hoistStack.pop()
+			v.contract()
+			c.redraw()
+			c.frame.clearStatusLine()
+			if c.hoistStack:
+				h = c.hoistStack[-1]
+				c.frame.putStatusLine("Hoist: " + h.headString())
+			else:
+				c.frame.putStatusLine("No hoist")
+	
+	def hoist(self):
+	
+		c = self ; v = c.currentVnode()
+		if v and c.canHoist():
+			c.undoer.setUndoParams("Hoist",v)
+			c.hoistStack.append(v)
+			v.expand()
+			c.redraw()
+			c.frame.clearStatusLine()
+			c.frame.putStatusLine("Hoist: " + v.headString())
+	
+	def canDehoist(self):
+		
+		return len(self.hoistStack) > 0
+			
+	def canHoist(self):
+		
+		c = self ; v = c.currentVnode()
+		if v == c.rootVnode():
+			return v.next() != None
+		elif not c.hoistStack:
+			return true
+		else:
+			return c.hoistStack[-1] != v
+	#@nonl
+	#@-node:c.Hoist & dehoist & enablers
 	#@+node:c.checkMoveWithParentWithWarning
 	# Returns false if any node of tree is a clone of parent or any of parents ancestors.
 	
@@ -1869,6 +1935,9 @@ class baseCommands:
 		c = self
 		v = c.currentVnode()
 		if not v: return
+		if not c.canMoveOutlineDown(): # 11/4/03: Support for hoist.
+			if c.hoistStack: es("Can't move node out of hoisted outline",color="blue")
+			return
 		# Set next to the node after which v will be moved.
 		next = v.visNext()
 		while next and v.isAncestorOf(next):
@@ -1915,6 +1984,9 @@ class baseCommands:
 		c = self
 		v = c.currentVnode()
 		if not v: return
+		if not c.canMoveOutlineLeft(): # 11/4/03: Support for hoist.
+			if c.hoistStack: es("Can't move node out of hoisted outline",color="blue")
+			return
 		parent = v.parent()
 		if not parent: return
 		# Remember both the before state and the after state for undo/redo
@@ -1944,6 +2016,9 @@ class baseCommands:
 		c = self
 		v = c.currentVnode()
 		if not v: return
+		if not c.canMoveOutlineRight(): # 11/4/03: Support for hoist.
+			if c.hoistStack: es("Can't move node out of hoisted outline",color="blue")
+			return
 		back = v.back()
 		if not back: return
 		if not c.checkMoveWithParentWithWarning(v,back,true): return
@@ -1974,6 +2049,9 @@ class baseCommands:
 		c = self
 		v = c.currentVnode()
 		if not v: return
+		if not c.canMoveOutlineUp(): # 11/4/03: Support for hoist.
+			if c.hoistStack: es("Can't move node out of hoisted outline",color="blue")
+			return
 		back = v.visBack()
 		if not back: return
 		back2 = back.visBack()
@@ -2013,7 +2091,6 @@ class baseCommands:
 			c.initJoinedCloneBits(v) # 10/8/03
 		c.endUpdate()
 		c.updateSyntaxColorer(v) # Moving can change syntax coloring.
-	#@nonl
 	#@-node:moveOutlineUp
 	#@+node:promote
 	def promote(self):
