@@ -569,6 +569,7 @@ class LeoFrame:
 		self.editBodyMenu = editBodyMenu = Tk.Menu(editMenu,tearoff=0)
 		editMenu.add_cascade(label="Edit Body...", menu=editBodyMenu)
 		
+		# DTHEIN 27-OCT-2002: added reformat paragraph
 		table = (
 			("Extract Section","Shift+Ctrl+E",self.OnExtractSection),
 			("Extract Names","Shift+Ctrl+N",self.OnExtractNames),
@@ -578,6 +579,7 @@ class LeoFrame:
 			("Convert All Tabs",None,self.OnConvertAllTabs),
 			("Convert Blanks","Shift+Ctrl+B",self.OnConvertBlanks),
 			("Convert Tabs","Shift+Ctrl+J",self.OnConvertTabs),
+			("Reformat Paragraph","Shift+Ctrl+P",self.OnReformatParagraph),
 			("-",None,None),
 			("Indent","Ctrl+]",self.OnIndent),
 			("Unindent","Ctrl+[",self.OnDedent),
@@ -2101,6 +2103,12 @@ class LeoFrame:
 	def OnConvertAllTabs(self,event=None):
 	
 		self.commands.convertAllTabs()
+		return "break" # inhibit further command processing
+		
+	#DTHEIN 27-OCT-2002
+	def OnReformatParagraph(self,event=None):
+		
+		self.commands.reformatParagraph()
 		return "break" # inhibit further command processing
 	#@-body
 	#@-node:2::OnConvertTabs & OnConvertAllTabs
