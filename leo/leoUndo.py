@@ -326,6 +326,7 @@ class undoer:
 		if not current: return
 		# trace(`u.bead+1` + ":" + `len(u.beads)` + ":" + `u.peekBead(u.bead+1)`)
 		u.redoing = true
+		redrawFlag = true
 		c.beginUpdate()
 		type = u.undoType # Use the type of the next bead.
 		if 1: # range...
@@ -451,6 +452,8 @@ class undoer:
 				# This rewrites the body pane, so we must do a full recolor.
 				v.setBodyStringOrPane(v.bodyString())
 				c.tree.recolor(u.v)
+				redrawFlag = (current != u.v)
+			
 			#@-body
 			#@-node:6::<< redo replace cases >>
 
@@ -492,6 +495,7 @@ class undoer:
 				if u.newSel:
 					c.body.mark_set("insert",u.newSel)
 					c.body.see(u.oldSel)
+				redrawFlag = (current != u.v)
 					
 			elif type == "Change All":
 			
@@ -527,8 +531,7 @@ class undoer:
 			else: trace("Unknown case: " + `type`)
 			c.setChanged(true)
 			if u.v: u.v.setDirty()
-			flag = current != u.v
-		c.endUpdate(flag) # 11/08/02
+		c.endUpdate(redrawFlag) # 11/08/02
 		u.redoing = false
 		u.bead += 1
 		u.setUndoTypes()
@@ -554,6 +557,7 @@ class undoer:
 		u.undoing = true
 		c.beginUpdate()
 		type = u.undoType
+		redrawFlag = true
 		if 1: # range...
 			
 			#@<< undo clone cases >>
@@ -678,6 +682,7 @@ class undoer:
 				# This rewrites the body pane, so we must do a full recolor.
 				v.setBodyStringOrPane(v.bodyString())
 				c.tree.recolor(u.v)
+				redrawFlag = (current != u.v)
 			#@-body
 			#@-node:6::<< undo replace cases >>
 
@@ -725,6 +730,7 @@ class undoer:
 				if u.oldSel:
 					c.body.mark_set("insert",u.oldSel)
 					c.body.see(u.oldSel)
+				redrawFlag = (current != u.v)
 					
 			elif type == "Change All":
 			
@@ -760,8 +766,7 @@ class undoer:
 			else: trace("Unknown case: " + `u.undoType`)
 			c.setChanged(true)
 			if u.v: u.v.setDirty()
-			flag = current != u.v
-		c.endUpdate(flag) # 11/9/02
+		c.endUpdate(redrawFlag) # 11/9/02
 		u.undoing = false
 		u.bead -= 1
 		u.setUndoTypes()
