@@ -20,9 +20,9 @@
 <v t="T5"><vh>&lt;&lt; The "Recent Files" menu &gt;&gt;</vh></v>
 <v t="T6"><vh>&lt;&lt; Compare Panel settings &gt;&gt;</vh></v>
 <v t="T7"><vh>&lt;&lt; Find/Change Panel settings &gt;&gt;</vh></v>
-<v t="T8" a="E"><vh>&lt;&lt; Keyboard shortcuts settings &gt;&gt;</vh>
+<v t="T8" a="V"><vh>&lt;&lt; Keyboard shortcuts settings &gt;&gt;</vh>
 <v t="T9"><vh>&lt;&lt; About keyboard shortcuts &gt;&gt;</vh></v>
-<v t="T10" a="V"><vh>&lt;&lt; Alt and Shift-Alt&gt;&gt;</vh></v>
+<v t="T10"><vh>&lt;&lt; Alt and Shift-Alt&gt;&gt;</vh></v>
 <v t="T11"><vh>&lt;&lt; Control &gt;&gt;</vh></v>
 <v t="T12"><vh>&lt;&lt; Shift-Control &gt;&gt;</vh></v>
 <v t="T13"><vh>&lt;&lt; F-keys and others &gt;&gt;</vh></v>
@@ -494,7 +494,7 @@ ConvertTabs     = Shift+Ctrl+J
 # Unused        = Shift+Ctrl+L
 TangleMarked    = Shift+Ctrl+M
 ExtractNames    = Shift+Ctrl+N
-# Unused        = Shift+Ctrl+O
+OpenWith        = Shift+Ctrl+O
 ReformatParagraph = Shift+Ctrl+P
 # Unused        = Shift+Ctrl+Q
 ReadOutlineOnly = Shift+Ctrl+R

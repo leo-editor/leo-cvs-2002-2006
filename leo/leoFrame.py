@@ -419,13 +419,14 @@ class LeoFrame:
 		table = (
 			("New","Ctrl+N",self.OnNew),
 			("Open...","Ctrl+O",self.OnOpen),
-			("Open @file With...",None,self.OnOpenWith),
+			("Open With...","Shift+Ctrl+O",self.OnOpenWith),
 			("-",None,None),
 			("Close","Ctrl+W",self.OnClose),
 			("Save","Ctrl+S",self.OnSave),
 			("Save As","Shift+Ctrl+S",self.OnSaveAs),
 			("Save To",None,self.OnSaveTo),
-			("Revert To Saved",None,self.OnRevert))
+			("Revert To Saved",None,self.OnRevert),
+			("Reload Leo",None,unloadAll))
 				
 		self.createMenuEntries(fileMenu,table)
 		#@-body
@@ -1147,7 +1148,6 @@ class LeoFrame:
 		
 		menu = self.fileMenu
 		enableMenu(menu,"Revert To Saved", c.canRevert())
-		enableMenu(menu,"Open @file With...", v.isAtFileNode())
 	
 	#@-body
 	#@-node:3::updateFileMenu
@@ -1312,23 +1312,81 @@ class LeoFrame:
 
 	def OnOpenWith(self,event=None):
 		
-		c = self.commands ; v = c.currentVnode()
-	
-		isAtFile = v.isAtFileNode()
-		if not isAtFile: return
+		a = app() ; c = self.commands ; v = c.currentVnode()
 		
-		name = v.atFileNodeName()
-		if name == None or len(name) == 0: return
 		
-		## To do: 
-		name = string.strip(name)
-		f = os.path.join(app().loadDir,name)
-		print f
+		#@<< set ext based on the present language >>
+		#@+node:1::<< set ext based on the present language >>
+		#@+body
+		ext = language_extension_dict.get(c.target_language)
+		if ext == None: ext = "txt"
+		ext = "." + ext
+		# trace(c.target_language + "," + ext)
+		#@-body
+		#@-node:1::<< set ext based on the present language >>
+
+		
+		#@<< open a temp file f with extension ext >>
+		#@+node:2::<< open a temp file f with extension ext >>
+		#@+body
+		f = None
+		while f == None:
+		
+			a.openWithFileNum += 1
+			name = "LeoTemp" + str(a.openWithFileNum) + ext
+			path = os.path.join(a.loadDir,name)
+			
+			if not os.path.exists(path):
+				try:
+					f = open(path,"w")
+					es("creating: " + path)
+					data = (f,path)
+					a.openWithFiles.append(data)
+				except:
+					f = None
+					es("exception opening temp file")
+					es_exception()
+		
+		#@-body
+		#@-node:2::<< open a temp file f with extension ext >>
+
+		if f:
+			f.write(v.bodyString())
+			f.flush()
+			f.close()
+		
+		#@<< open f in the external editor >>
+		#@+node:3::<< open f in the external editor >>
+		#@+body
+		try:
+			os.startfile("c:/python22/tools/idle/idle.py " + path)
+		except:
+			es("exception opening " + path)
+			es_exception()
+		
+		#@-body
+		#@-node:3::<< open f in the external editor >>
+
+		
+		if 0: # old code
+			isAtFile = v.isAtFileNode()
+			if not isAtFile: return  "break"
+			
+			name = v.atFileNodeName()
+			if name == None or len(name) == 0: return  "break"
+			
+			## To do: 
+			name = string.strip(name)
+			f = os.path.join(app().loadDir,name)
+			print f
+		
+			# This doesn't work for .py files or .bat files.
+			# Probably not too swift for other files either.
+			if 0:
+				os.startfile(f)
+				
+		return "break" # inhibit further command processing
 	
-		# This doesn't work for .py files or .bat files.
-		# Probably not too swift for other files either.
-		if 0:
-			os.startfile(f)
 	#@-body
 	#@-node:3::frame.OnOpenWith
 	#@+node:4::frame.OpenWithFileName
@@ -2019,7 +2077,7 @@ class LeoFrame:
 				s = body.get(start,end)
 				s = s.strip()
 				
-		# Otherwise, the script if v's body text if v is an @pythonscript node.
+		# Otherwise, the script is v's body text if v is an @pythonscript node.
 		if s == None or len(s) == 0:
 			h = v.headString()
 			if match_word(h,0,"@pythonscript"):
@@ -2028,10 +2086,9 @@ class LeoFrame:
 		#trace(`s`)
 		if s and len(s) > 0:
 			try:
-				exec(s) # globals(), locals()
+				exec(s,globals(),locals())
 			except:
-				full = true # Send the entire exception to the log.
-				es_exception(full)
+				es_exception(full=true)
 		else:
 			es("no script selected")
 	

@@ -48,6 +48,28 @@ language_delims_dict = {
 	"shell" : "#",  # shell scripts
 	"tcltk" : "#",
 	"unknown" : "#" } # Set when @comment is seen.
+	
+language_extension_dict = {
+	"c" : "c", 
+	"cweb" : "w",
+	"forth" : "forth",
+	"fortran" : "f",
+	"fortran90" : "f",
+	"html" : "html",
+	"java" : "java",
+	"latex" : "latex",
+	"noweb" : "nw",
+	"pascal" : "p",
+	"perl" : "perl",
+	"perlpod" : "perl", 
+	"php" : "php",
+	"plain" : "txt",
+	"python" : "py",
+	"shell" : "txt",
+	"tex" : "tex",
+	"tcltk" : "tcl",
+	"unknown" : "txt" } # Set when @comment is seen.
+
 #@-body
 #@-node:1::<< define global constants >>
 
@@ -125,23 +147,37 @@ def print_stack():
 	traceback.print_stack()
 #@-body
 #@-node:6::print_stack
-#@+node:7::reloadAll
+#@+node:7::unloadAll
 #@+body
-# Adapted from the Python Cookbook.
-# It's not clear how useful this is with Tk programs.
+#@+at
+#  Unloads all of Leo's modules.  Based on code from the Python Cookbook.
+# 
+# It would be very confusing to call this reloadAll.  In fact, this routine 
+# does no reloading at all.  You must understand that modules are reloaded 
+# _only_ as the result of a later call to import.
 
-def reloadAll ():
+#@-at
+#@@c
 
-	if globals().has_key("init_modules"):
-		for m in sys.modules.keys():
-			if m not in init_modules:
-				print "deleting:", sys.modules[m]
-				del sys.modules[m]
-	else:
-		init_modules = sys.modules.keys()
+def unloadAll():
 
+	try:
+		import leoGlobals,sys
+		a = leoGlobals.app()
+		modules = []
+		for name in sys.modules.keys():
+			if name and name[0:3]=="leo":
+				del (sys.modules[name])
+				modules.append(name)
+		# Restore gApp.  This must be done first.
+		import leoGlobals
+		leoGlobals.setApp(a)
+		print "unloaded",str(len(modules)),"modules"
+	except:
+		import leoUtils
+		leoUtils.es_exception()
 #@-body
-#@-node:7::reloadAll
+#@-node:7::unloadAll
 #@+node:8::top
 #@+body
 def top():

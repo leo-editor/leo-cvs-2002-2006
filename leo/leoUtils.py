@@ -414,7 +414,43 @@ def print_bindings (name,window):
 		print `b`
 #@-body
 #@-node:4::printBindings
-#@+node:5::Sherlock...
+#@+node:5::printGlobals
+#@+body
+def printGlobals(message=None):
+	
+	# Get the list of globals.
+	globs = list(globals())
+	globs.sort()
+	
+	# Print the list.
+	if message:
+		leader = "-" * 10
+		print leader, ' ', message, ' ', leader
+	for g in globs:
+		print g
+#@-body
+#@-node:5::printGlobals
+#@+node:6::printLeoModules
+#@+body
+def printLeoModules(message=None):
+	
+	# Create the list.
+	mods = []
+	for name in sys.modules.keys():
+		if name and name[0:3] == "leo":
+			mods.append(name)
+
+	# Print the list.
+	if message:
+		leader = "-" * 10
+		print leader, ' ', message, ' ', leader
+	mods.sort()
+	for m in mods:
+		print m,
+	print
+#@-body
+#@-node:6::printLeoModules
+#@+node:7::Sherlock...
 #@+body
 #@+at
 #  Starting with this release, you will see trace statements throughout the 
@@ -537,7 +573,7 @@ def trace (s1=None,s2=None):
 			message()
 #@-body
 #@-node:3::trace
-#@-node:5::Sherlock...
+#@-node:7::Sherlock...
 #@-node:7::Dumping, Tracing & Sherlock
 #@+node:8::ensure_extension
 #@+body

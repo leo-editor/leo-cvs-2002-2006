@@ -24,6 +24,8 @@ class LeoApp:
 		self.log = None # The LeoFrame containing the present log.
 		self.menuWarningsGiven = false # true: supress warnings in menu code.
 		self.numberOfWindows = 0 # Number of opened windows.
+		self.openWithFiles = [] # List of data used by Open With command.
+		self.openWithFileNum = 0 # Used to generate temp file names for Open With command.
 		self.quitting = false # True if quitting.  Locks out some events.
 		self.root = root # The hidden main window
 		self.trace_list = [] # "Sherlock" argument list for tracing().
@@ -38,7 +40,15 @@ class LeoApp:
 		self.pythonFrame = None
 	#@-body
 	#@-node:1::app.__init__
-	#@+node:2::app.finishCreate
+	#@+node:2::app.destroyAllGlobalWindows
+	#@+body
+	def destroyAllGlobalWindows (self):
+	
+		if self.findFrame:
+			self.findFrame.top.destroy()
+	#@-body
+	#@-node:2::app.destroyAllGlobalWindows
+	#@+node:3::app.finishCreate
 	#@+body
 	# Called when the gApp global has been defined.
 	
@@ -134,34 +144,37 @@ class LeoApp:
 		#@-node:3::<< set the default Leo icon >>
 
 		self.config = leoConfig.config()
+		self.init_modules = sys.modules.keys()
 		
 		# Create the global windows
 		self.findFrame = leoFind.LeoFind()
 		self.findFrame.top.withdraw()
 		return true # all went well.
 	#@-body
-	#@-node:2::app.finishCreate
-	#@+node:3::destroyAllGlobalWindows
+	#@-node:3::app.finishCreate
+	#@+node:4::app.handleOpenTempFiles
 	#@+body
-	def destroyAllGlobalWindows (self):
-	
-		if self.findFrame:
-			self.findFrame.top.destroy()
+	def handleOpenTempFiles (self):
+		
+		for f,path in self.openWithFiles:
+			print path
 	#@-body
-	#@-node:3::destroyAllGlobalWindows
-	#@+node:4::app.quit
+	#@-node:4::app.handleOpenTempFiles
+	#@+node:5::app.quit
 	#@+body
 	def quit(self):
 	
 		# Wait until everything is quiet before really quitting.
 		self.destroyAllGlobalWindows()
+		self.handleOpenTempFiles()
+	
 		if 1: # leaves Python window open.
 			self.root.destroy()
 		else: # closes Python window.
 			self.root.quit()
 	#@-body
-	#@-node:4::app.quit
-	#@+node:5::app.testDialogs
+	#@-node:5::app.quit
+	#@+node:6::app.testDialogs
 	#@+body
 	def testDialogs (self):
 	
@@ -169,7 +182,7 @@ class LeoApp:
 		d = leoDialog.leoDialog()
 		d.testDialogs()
 	#@-body
-	#@-node:5::app.testDialogs
+	#@-node:6::app.testDialogs
 	#@-others
 #@-body
 #@-node:0::@file leoApp.py

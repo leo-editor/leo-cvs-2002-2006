@@ -39,7 +39,6 @@ import os, string, sys
 
 app = leoGlobals.app
 
-
 #@+others
 #@+node:2::Functions for scripts
 #@+body
@@ -64,9 +63,9 @@ topCommand = topCommands
 
 def go(*args):
 
-	reload_all()
 	if len(args) > 0 and type(args[0]) == type(("a","b")):
 		args = args[0] # Strip the outer tuple.
+
 	run(args)
 #@-body
 #@-node:3::go
@@ -85,9 +84,6 @@ def leoOpen(fileName=None,*args):
 	if fileName == None:
 		run()
 		return
-
-	if 0: # 9/5/02
-		reload_all()
 
 	# Create a hidden main window: this window never becomes visible!
 	root = Tkinter.Tk()
@@ -142,36 +138,7 @@ def leoOpen(fileName=None,*args):
 	root.mainloop()
 #@-body
 #@-node:5::leoOpen (leo.py)
-#@+node:6::reload_all
-#@+body
-def reload_all ():
-
-	return ##
-
-	modules = [ "", "App", "AtFile", "Color", "Commands", "Compare",
-		"Dialog", "FileCommands", "Frame", "Find", "Globals",
-		"Import", "Nodes", "Prefs", "Tangle", "Tree", "Undo", "Utils" ]
-	
-	print "reloading all modules"
-	for m in modules:
-		exec("import leo%s" % m)
-		exec("reload(leo%s)" % m)
-		
-
-#@+at
-#  Warning: Python version 2.2 warns if import * is done outside the module 
-# level.  Alas, for reasons that are not clear to me, it appears necessary to 
-# do an import * whenever leoGlobals or leoUtils change.  The workaround is to 
-# quit Python and then reload leo.py from scratch.  Sigh.
-
-#@-at
-#@@c 
-	if 0: # invalid past 2.1: import * must be at the module level.
-		from leoGlobals import *
-		from leoUtils import *
-#@-body
-#@-node:6::reload_all
-#@+node:7::run (leo.py)
+#@+node:6::run (leo.py)
 #@+body
 def run(*args):
 
@@ -213,8 +180,8 @@ def run(*args):
 	init_sherlock(args)
 	root.mainloop()
 #@-body
-#@-node:7::run (leo.py)
-#@+node:8::onKillLeoEvent
+#@-node:6::run (leo.py)
+#@+node:7::onKillLeoEvent
 #@+body
 # Apparently the value returned from this routine is ignored.
 
@@ -231,8 +198,8 @@ def onKillLeoEvent (event=None):
 		print "1"
 		return 1
 #@-body
-#@-node:8::onKillLeoEvent
-#@+node:9::profile
+#@-node:7::onKillLeoEvent
+#@+node:8::profile
 #@+body
 def profile ():
 
@@ -246,7 +213,7 @@ def profile ():
 	p.sort_stats('cum','file','name')
 	p.print_stats()
 #@-body
-#@-node:9::profile
+#@-node:8::profile
 #@-others
 
 
@@ -259,6 +226,9 @@ if __name__ == "__main__":
 		leoOpen(fileName)
 	else:
 		run()
+
+
+
 #@-body
 #@-node:0::@file leo.py 
 #@-leo

@@ -1207,6 +1207,7 @@ class leoTree:
 		#@<< create the menu >>
 		#@+node:1::<< create the menu >>
 		#@+body
+		menu.add_command(label="Open With", command=frame.OnOpenWith)
 		menu.add_command(label="Read @file Nodes", command=frame.OnReadAtFileNodes)
 		menu.add_command(label="Write @file Nodes",command=frame.OnWriteAtFileNodes)
 		menu.add_separator()

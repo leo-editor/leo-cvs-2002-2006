@@ -267,6 +267,8 @@ class Commands:
 		
 		c = self ; v = current = c.currentVnode()
 		next = v.nodeAfterTree()
+		dict = scanDirectives(c)
+		tabWidth  = dict.get("tabwidth")
 		# Create copy for undo.
 		v_copy = c.copyTree(v)
 		anyChanged = false
@@ -278,7 +280,7 @@ class Commands:
 				text = v.t.bodyString
 				lines = string.split(text, '\n')
 				for line in lines:
-					s = optimizeLeadingWhitespace(line,c.tab_width)
+					s = optimizeLeadingWhitespace(line,tabWidth)
 					if s != line:
 						changed = true ; anyChanged = true
 					result.append(s)
@@ -299,6 +301,8 @@ class Commands:
 	
 		c = self ; v = current = c.currentVnode()
 		next = v.nodeAfterTree()
+		dict = scanDirectives(c)
+		tabWidth  = dict.get("tabwidth")
 		# Create copy for undo.
 		v_copy = c.copyTree(v)
 		anyChanged = false
@@ -310,8 +314,8 @@ class Commands:
 				text = v.t.bodyString
 				lines = string.split(text, '\n')
 				for line in lines:
-					i,w = skip_leading_ws_with_indent(line,0,c.tab_width)
-					s = computeLeadingWhitespace(w,-abs(c.tab_width)) + line[i:] # use negative width.
+					i,w = skip_leading_ws_with_indent(line,0,tabWidth)
+					s = computeLeadingWhitespace(w,-abs(tabWidth)) + line[i:] # use negative width.
 					if s != line:
 						changed = true ; anyChanged = true
 					result.append(s)
@@ -649,10 +653,11 @@ class Commands:
 		else: return
 		
 		# Compute the leading whitespace.
-		indents = [0,0]
+		indents = [0,0] ; leading_ws = [0,0]
 		for i in (0,1):
 			if firstLine + i < len(lines):
-				ws = get_leading_ws(lines[firstLine+i])
+				# Use the original, non-optimized leading whitespace.
+				leading_ws[i] = ws = get_leading_ws(lines[firstLine+i])
 				indents[i] = computeWidth(ws,tabWidth)
 		indents[1] = max(indents)
 	
@@ -666,11 +671,6 @@ class Commands:
 		wrapped_lines = \
 		    wrap_lines(lines[firstLine:lastLine],pageWidth-indents[1],pageWidth-indents[0])
 		lineCount = len(wrapped_lines)
-		
-		# Add the leading whitespace to the wrapped lines.
-		leading_ws = [0,0]
-		for i in (0,1):
-			leading_ws[i] = computeLeadingWhitespace(indents[i],tabWidth)
 			
 		i = 0
 		for line in wrapped_lines:
