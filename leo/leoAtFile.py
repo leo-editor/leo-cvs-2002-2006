@@ -3028,6 +3028,7 @@ class atFile:
 					if self.newline_pending:
 						self.newline_pending = false
 						self.onl()
+					s = toEncodedString(s,self.encoding,reportErrors=true) # 3/7/03
 					self.outputFile.write(s)
 					self.putSentinel("@-body")
 					
@@ -3112,6 +3113,7 @@ class atFile:
 				#@+body
 				s = v.bodyString()
 				if s and len(s) > 0:
+					s = toEncodedString(s,self.encoding,reportErrors=true) # 3/7/03
 					self.outputFile.write(s)
 				#@-body
 				#@-node:2::<< Write v's body >>
