@@ -268,10 +268,12 @@ class LeoFrame:
 		readWriteMenu = Tk.Menu(fileMenu,tearoff=0)
 		fileMenu.add_cascade(label="Read/Write...", menu=readWriteMenu)
 		
-		readWriteMenu.add_command(label="Read Outline Only",command=self.OnReadOutlineOnly)
+		readWriteMenu.add_command(label="Read Outline Only",
+			accelerator="Shift+Control+R",command=self.OnReadOutlineOnly)
 		readWriteMenu.add_command(label="Read @file Nodes",command=self.OnReadAtFileNodes)
 		readWriteMenu.add_command(label="Write Outline Only",command=self.OnWriteOutlineOnly)
-		readWriteMenu.add_command(label="Write @file Nodes",command=self.OnWriteAtFileNodes)
+		readWriteMenu.add_command(label="Write @file Nodes",
+			accelerator="Shift+Control+W",command=self.OnWriteAtFileNodes)
 		#@-body
 		#@-node:3::<< create the read/write submenu >>
 
@@ -712,12 +714,12 @@ class LeoFrame:
 			# O unused
 			# P unused
 			# Q unused
-			# R unused
+			("R", self.OnReadAtFileNodes), # EKR: 9/3/02
 			("S", self.OnSaveAs),
 			("T", self.OnTangle),
 			("U", self.OnUntangle),
 			("V", self.OnPasteNode),
-			# W unused
+			("W", self.OnWriteAtFileNodes), # EKR: 9/3/02
 			("X", self.OnCutNode),
 			("Z", self.OnRedo)
 			#@-body
@@ -2835,9 +2837,6 @@ class LeoFrame:
 	#@+body
 	# Create a splitter window and panes into which the caller packs widgets.
 	# Returns (f, bar, pane1, pane2)
-	
-	# To do: use config.window_height config.window_width
-	# To do: use config.bar_color, config.bar_relief
 	
 	def createLeoSplitter (self, parent, verticalFlag):
 	
