@@ -1545,7 +1545,9 @@ def init_trace(args,echo=1):
 # Convert all args to strings.
 # Print if tracing for the presently executing function has been enabled.
 
-def trace (*args):
+def trace (*args,**keys):
+	
+	callers = keys.get("callers",false)
 
 	s = ""
 	for arg in args:
@@ -1564,6 +1566,10 @@ def trace (*args):
 	if name == "?":
 		name = "<unknown>"
 
+	if callers:
+		import traceback
+		traceback.print_stack()
+
 	t = app().trace_list
 	# tracepoint names starting with '-' must match exactly.
 	minus = len(name) > 0 and name[0] == '-'
@@ -1572,6 +1578,7 @@ def trace (*args):
 		s = name + ": " + message
 		if 1: print s
 		else: es(s)
+
 #@-body
 #@-node:4::trace
 #@+node:5::trace_tag
@@ -1827,7 +1834,7 @@ def file_date (file,format=None):
 
 def funcToMethod(f,theClass,name=None):
 	setattr(theClass,name or f.__name__,f)
-	trace(`name`)
+	# trace(`name`)
 #@-body
 #@-node:13::funcToMethod
 #@+node:14::get_line & get_line_after
@@ -1938,7 +1945,25 @@ def executeScript (name):
 
 #@-body
 #@-node:7::executeScript
-#@+node:8::Garbage Collection
+#@+node:8::Focus
+#@+node:1::set_focus
+#@+body
+def set_focus(widget):
+	
+	# trace(`widget`)
+	widget.focus_set()
+#@-body
+#@-node:1::set_focus
+#@+node:2::force_focus
+#@+body
+def force_focus(widget):
+	
+	# trace(widget)
+	widget.focus_force()
+#@-body
+#@-node:2::force_focus
+#@-node:8::Focus
+#@+node:9::Garbage Collection
 #@+body
 lastObjectCount = 0
 lastObjectsDict = {}
@@ -2068,8 +2093,8 @@ def printGcRefs (verbose=true):
 
 
 #@-body
-#@-node:8::Garbage Collection
-#@+node:9::Hooks & plugins
+#@-node:9::Garbage Collection
+#@+node:10::Hooks & plugins
 #@+node:1::enableIdleTimeHook, disableIdleTimeHook, idleTimeHookHandler
 #@+body
 #@+at
@@ -2168,8 +2193,8 @@ def plugin_signon(module_name,verbose=false):
 
 #@-body
 #@-node:3::plugin_signon
-#@-node:9::Hooks & plugins
-#@+node:10::importFromPath
+#@-node:10::Hooks & plugins
+#@+node:11::importFromPath
 #@+body
 def importFromPath (name,path):
 	
@@ -2194,8 +2219,8 @@ def importFromPath (name,path):
 
 	return result
 #@-body
-#@-node:10::importFromPath
-#@+node:11::Lists...
+#@-node:11::importFromPath
+#@+node:12::Lists...
 #@+node:1::appendToList
 #@+body
 def appendToList(out, s):
@@ -2228,8 +2253,8 @@ def listToString(theList):
 		return ""
 #@-body
 #@-node:3::listToString
-#@-node:11::Lists...
-#@+node:12::Most common functions
+#@-node:12::Lists...
+#@+node:13::Most common functions
 #@+body
 # These are guaranteed always to exist for scripts.
 
@@ -2333,8 +2358,8 @@ def windows():
 	return app().windowList
 #@-body
 #@-node:6::windows
-#@-node:12::Most common functions
-#@+node:13::Scanning, selection & whitespace...
+#@-node:13::Most common functions
+#@+node:14::Scanning, selection & whitespace...
 #@+node:1::getindex
 #@+body
 def getindex(text, index):
@@ -3425,8 +3450,8 @@ def skip_leading_ws_with_indent(s,i,tab_width):
 #@-body
 #@-node:8::skip_leading_ws_with_indent
 #@-node:9::Whitespace...
-#@-node:13::Scanning, selection & whitespace...
-#@+node:14::Unicode utils...
+#@-node:14::Scanning, selection & whitespace...
+#@+node:15::Unicode utils...
 #@+node:1::isValidEncoding
 #@+body
 def isValidEncoding (encoding):
@@ -3555,7 +3580,7 @@ except:
 
 #@-body
 #@-node:4::getpreferredencoding from 2.3a2
-#@-node:14::Unicode utils...
+#@-node:15::Unicode utils...
 #@-others
 #@-body
 #@-node:0::@file leoGlobals.py
