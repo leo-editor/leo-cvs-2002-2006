@@ -373,7 +373,7 @@ class LeoFrame:
 	#@-body
 	#@-node:8::reconfigurePanes (use config bar_width)
 	#@-node:2::Configuration
-	#@+node:3::Event handlers
+	#@+node:3::Event handlers (Frame)
 	#@+node:1::frame.OnCloseLeoEvent
 	#@+body
 	# Called from quit logic and when user closes the window.
@@ -546,7 +546,7 @@ class LeoFrame:
 			self.icon.attach(self.top)
 	#@-body
 	#@-node:8::frame.OnVisibility
-	#@-node:3::Event handlers
+	#@-node:3::Event handlers (Frame)
 	#@+node:4::Menus, Commands & Shortcuts
 	#@+node:1::canonicalizeShortcut
 	#@+body

@@ -707,31 +707,48 @@ class leoTree:
 	#@-body
 	#@-node:21::tree.yoffset
 	#@-node:4::Drawing
-	#@+node:5::Event handers
+	#@+node:5::Event handers (tree)
+	#@+body
+	#@+at
+	#  Important note: most hooks are created in the vnode callback routines, 
+	# _not_ here.
+
+	#@-at
+	#@-body
 	#@+node:1::OnActivate
 	#@+body
 	def OnActivate (self,v):
-	
-		c=self.commands
-		# trace(`v`)
-	
-		if v == self.currentVnode:
-			# w = self.commands.frame.getFocus()
-			if self.active:
-				self.editLabel(v)
+		
+		if handleLeoHook("event1",kind="activate",v=v) == None:
+			
+			#@<< activate this window >>
+			#@+node:1::<< activate this window >>
+			#@+body
+			c=self.commands
+			# trace(`v`)
+			
+			if v == self.currentVnode:
+				# w = self.commands.frame.getFocus()
+				if self.active:
+					self.editLabel(v)
+				else:
+					self.undimEditLabel()
+					self.canvas.focus_set()
 			else:
-				self.undimEditLabel()
-				self.canvas.focus_set()
-		else:
-			self.select(v)
-			if v.t.insertSpot != None: # 9/1/02
-				c.body.mark_set("insert",v.t.insertSpot)
-				c.body.see(v.t.insertSpot)
-			else:
-				c.body.mark_set("insert","1.0")
-			c.body.focus_force()
+				self.select(v)
+				if v.t.insertSpot != None: # 9/1/02
+					c.body.mark_set("insert",v.t.insertSpot)
+					c.body.see(v.t.insertSpot)
+				else:
+					c.body.mark_set("insert","1.0")
+				c.body.focus_force()
+			
+			self.active = true
+			#@-body
+			#@-node:1::<< activate this window >>
+
+			handleLeoHook("event2",kind="activate",v=v)
 	
-		self.active = true
 	#@-body
 	#@-node:1::OnActivate
 	#@+node:2::OnBoxClick
@@ -755,9 +772,12 @@ class leoTree:
 	#@+body
 	def OnDeactivate (self, event=None):
 	
-		self.endEditLabel()
-		self.dimEditLabel()
-		self.active = false
+		if handleLeoHook("event1",kind="deactivate") == None:
+			self.endEditLabel()
+			self.dimEditLabel()
+			self.active = false
+			handleLeoHook("event2",kind="deactivate")
+	
 	#@-body
 	#@-node:3::OnDeactivate
 	#@+node:4::tree.findVnodeWithIconId
@@ -1486,7 +1506,7 @@ class leoTree:
 		self.popupMenu.unpost()
 	#@-body
 	#@-node:13::tree.OnPopup
-	#@-node:5::Event handers
+	#@-node:5::Event handers (tree)
 	#@+node:6::Selecting & editing (tree)
 	#@+node:1::abortEditLabelCommand
 	#@+body

@@ -558,20 +558,26 @@ class vnode:
 	
 	def OnBoxClick(self,event=None):
 	
-		self.commands.tree.OnBoxClick(self)
+		if handleLeoHook("event1",kind="boxClick",v=self) == None:
+			self.commands.tree.OnBoxClick(self)
+			handleLeoHook("event2",kind="boxClick",v=self)
 		
 	# Called when the icon is double-clicked.
 		
 	def OnIconDoubleClick(self,event=None):
 	
-		self.commands.tree.OnIconDoubleClick(self)
+		if handleLeoHook("event1",kind="iconDoubleClick",v=self) == None:
+			self.commands.tree.OnIconDoubleClick(self)
+			handleLeoHook("event2",kind="iconDoubleClick",v=self)
 	#@-body
 	#@-node:1::OnBoxClick, OnIconDoubleClick
 	#@+node:2::OnDrag
 	#@+body
 	def OnDrag(self,event=None):
 		
-		self.commands.tree.OnDrag(self,event)
+		if handleLeoHook("event1",kind="drag",v=self) == None:
+			self.commands.tree.OnDrag(self,event)
+			handleLeoHook("event2",kind="drag",v=self)
 	
 	#@-body
 	#@-node:2::OnDrag
@@ -579,7 +585,9 @@ class vnode:
 	#@+body
 	def OnEndDrag(self,event=None):
 		
-		self.commands.tree.OnEndDrag(self,event)
+		if handleLeoHook("event1",kind="endDrag",v=self) == None:
+			self.commands.tree.OnEndDrag(self,event)
+			handleLeoHook("event2",kind="endDrag",v=self)
 	
 	#@-body
 	#@-node:3::OnEndDrag
@@ -587,12 +595,16 @@ class vnode:
 	#@+body
 	def OnHeadlineClick(self,event=None):
 	
-		self.commands.tree.OnActivate(self)
+		if handleLeoHook("event1",kind="headClick",v=self) == None:
+			self.commands.tree.OnActivate(self)
+			handleLeoHook("event2",kind="headClick",v=self)
 		
 	def OnHeadlinePopup(self,event=None):
 	
-		self.commands.tree.OnActivate(self)
-		self.commands.tree.OnPopup(self,event)
+		if handleLeoHook("event1",kind="headPopup",v=self) == None:
+			self.commands.tree.OnActivate(self)
+			self.commands.tree.OnPopup(self,event)
+			handleLeoHook("event2",kind="headPopup",v=self)
 	
 	#@-body
 	#@-node:4::OnHeadlineClick & OnHeadlinePopup
@@ -600,7 +612,9 @@ class vnode:
 	#@+body
 	def OnHeadlineKey (self,event):
 	
-		self.commands.tree.OnHeadlineKey(self,event)
+		if handleLeoHook("event1",kind="headKey",v=self) == None:
+			self.commands.tree.OnHeadlineKey(self,event)
+			handleLeoHook("event2",kind="headKey",v=self)
 	#@-body
 	#@-node:5::OnHeadlineKey
 	#@+node:6::OnHyperLinkControlClick
@@ -608,10 +622,14 @@ class vnode:
 	def OnHyperLinkControlClick (self,event):
 	
 		c = self.commands ; v = self
-		c.beginUpdate()
-		c.selectVnode(v)
-		c.endUpdate()
-		c.body.mark_set("insert","1.0")
+		
+		if handleLeoHook("event1",kind="hyperLinkControlClick",v=self) == None:
+			c.beginUpdate()
+			c.selectVnode(v)
+			c.endUpdate()
+			c.body.mark_set("insert","1.0")
+			handleLeoHook("event2",kind="hyperLinkControlClick",v=self)
+	
 	#@-body
 	#@-node:6::OnHyperLinkControlClick
 	#@+node:7::OnHyperLinkEnter
@@ -619,8 +637,10 @@ class vnode:
 	def OnHyperLinkEnter (self,event):
 	
 		if 0: # This works, and isn't very useful.
-			c = self.commands ; v = self
-			c.body.tag_config(v.tagName,background="green")
+			if handleLeoHook("event1",kind="hyperLinkEnter",v=self) == None:
+				c = self.commands ; v = self
+				c.body.tag_config(v.tagName,background="green")
+				handleLeoHook("event2",kind="hyperLinkEnter",v=self)
 	#@-body
 	#@-node:7::OnHyperLinkEnter
 	#@+node:8::OnHyperLinkLeave
@@ -628,18 +648,22 @@ class vnode:
 	def OnHyperLinkLeave (self,event):
 	
 		if 0: # This works, and isn't very useful.
-			c = self.commands ; v = self
-			c.body.tag_config(v.tagName,background="white")
+			if handleLeoHook("event1",kind="hyperLinkLeave",v=self) == None:
+				c = self.commands ; v = self
+				c.body.tag_config(v.tagName,background="white")
+				handleLeoHook("event2",kind="hyperLinkLeave",v=self)
 	#@-body
 	#@-node:8::OnHyperLinkLeave
-	#@+node:9::v.OnIconClick
+	#@+node:9::OnIconClick
 	#@+body
 	def OnIconClick(self,event=None):
 		
-		self.commands.tree.OnIconClick(self,event)
+		if handleLeoHook("event1",kind="iconClick",v=self) == None:
+			self.commands.tree.OnIconClick(self,event)
+			handleLeoHook("event2",kind="iconClick",v=self)
 	
 	#@-body
-	#@-node:9::v.OnIconClick
+	#@-node:9::OnIconClick
 	#@-node:7::v.Callbacks
 	#@+node:8::Comparisons (vnode)
 	#@+node:1::afterHeadlineMatch
