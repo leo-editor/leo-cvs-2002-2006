@@ -64,7 +64,7 @@ import types
 class undoer:
 
 	#@+others
-	#@+node:3::undo.__init__
+	#@+node:3::undo.__init__ & clearIvars
 	#@+body
 	def __init__ (self,commands):
 		
@@ -82,6 +82,9 @@ class undoer:
 		
 		# State ivars...
 		u.undoType = "Can't Undo"
+		# Bug fix: 12/16/02: These must be set here, _not_ in clearUndoState.
+		u.redoMenuLabel = "Can't Redo"
+		u.undoMenuLabel = "Can't Undo"
 		u.realRedoMenuLabel = "Can't Redo"
 		u.realUndoMenuLabel = "Can't Undo"
 		u.undoing = false # True if executing an Undo command.
@@ -89,7 +92,18 @@ class undoer:
 	
 		u.clearUndoState()
 	#@-body
-	#@+node:1::clearUndoState & clearIvars
+	#@+node:1::clearIvars
+	#@+body
+	def clearIvars (self):
+		
+		self.v = None # The node being operated upon for undo and redo.
+		for ivar in optionalIvars:
+			exec('self.%s = None' % ivar)
+	#@-body
+	#@-node:1::clearIvars
+	#@-node:3::undo.__init__ & clearIvars
+	#@+node:4::State routines...
+	#@+node:1::clearUndoState
 	#@+body
 	#@+at
 	#  This method clears then entire Undo state.  All non-undoable commands 
@@ -101,31 +115,25 @@ class undoer:
 	def clearUndoState (self):
 		
 		u = self
-		u.redoMenuLabel = "Can't Redo" # Set here to indicate initial menu entry.
-		u.undoMenuLabel = "Can't Undo" # Set here to indicate initial menu entry.
 		
-		if 0: # This would wrong; set realLabel only when calling setMenuLabel.
+		if 0: # Bug fix: 12/16/02: setUndo/Redo type needs the old values.
+			u.redoMenuLabel = "Can't Redo" 
+			u.undoMenuLabel = "Can't Undo"
+		
+		if 0: # Wrong: set realLabel only when calling setMenuLabel.
 			realLabel = app().getRealMenuName("Can't Redo")
 			u.realRedoMenuLabel = realLabel.replace("&","")
 			realLabel = app().getRealMenuName("Can't Undo")
 			u.realUndoMenuLabel = realLabel.replace("&","")
-		
+			
 		u.setRedoType("Can't Redo")
 		u.setUndoType("Can't Undo")
 		u.beads = [] # List of undo nodes.
 		u.bead = -1 # Index of the present bead: -1:len(beads)
 		u.clearIvars()
-		
-	def clearIvars (self):
-		
-		self.v = None # The node being operated upon for undo and redo.
-		for ivar in optionalIvars:
-			exec('self.%s = None' % ivar)
 	#@-body
-	#@-node:1::clearUndoState & clearIvars
-	#@-node:3::undo.__init__
-	#@+node:4::State routines...
-	#@+node:1::canRedo & canUndo
+	#@-node:1::clearUndoState
+	#@+node:2::canRedo & canUndo
 	#@+body
 	# Translation does not affect these routines.
 	
@@ -140,19 +148,20 @@ class undoer:
 		return u.undoMenuLabel != "Can't Undo"
 	
 	#@-body
-	#@-node:1::canRedo & canUndo
-	#@+node:2::enableMenuItems
+	#@-node:2::canRedo & canUndo
+	#@+node:3::enableMenuItems
 	#@+body
 	def enableMenuItems (self):
 	
 		u = self ; c = u.commands
 		menu = c.frame.getMenu("Edit")
+	
 		enableMenu(menu,u.redoMenuLabel,u.canRedo())
 		enableMenu(menu,u.undoMenuLabel,u.canUndo())
 	
 	#@-body
-	#@-node:2::enableMenuItems
-	#@+node:3::getBead, peekBead, setBead
+	#@-node:3::enableMenuItems
+	#@+node:4::getBead, peekBead, setBead
 	#@+body
 	def getBead (self,n):
 		
@@ -214,8 +223,8 @@ class undoer:
 		# trace(`d`)
 		return d
 	#@-body
-	#@-node:3::getBead, peekBead, setBead
-	#@+node:4::redoMenuName, undoMenuName
+	#@-node:4::getBead, peekBead, setBead
+	#@+node:5::redoMenuName, undoMenuName
 	#@+body
 	def redoMenuName (self,name):
 	
@@ -231,8 +240,8 @@ class undoer:
 		else:
 			return "Undo " + name
 	#@-body
-	#@-node:4::redoMenuName, undoMenuName
-	#@+node:5::setRedoType, setUndoType
+	#@-node:5::redoMenuName, undoMenuName
+	#@+node:6::setRedoType, setUndoType
 	#@+body
 	# These routines update both the ivar and the menu label.
 	def setRedoType (self,type):
@@ -268,8 +277,8 @@ class undoer:
 			u.undoMenuLabel = name
 			u.realUndoMenuLabel = realLabel
 	#@-body
-	#@-node:5::setRedoType, setUndoType
-	#@+node:6::setUndoParams
+	#@-node:6::setRedoType, setUndoType
+	#@+node:7::setUndoParams
 	#@+body
 	#@+at
 	#  This routine saves enough information so an operation can be undone and 
@@ -304,8 +313,8 @@ class undoer:
 		u.setUndoTypes()
 		return d
 	#@-body
-	#@-node:6::setUndoParams
-	#@+node:7::setUndoTypingParams
+	#@-node:7::setUndoParams
+	#@+node:8::setUndoTypingParams
 	#@+body
 	#@+at
 	#  This routine saves enough information so a typing operation can be 
@@ -464,8 +473,8 @@ class undoer:
 		return d
 	
 	#@-body
-	#@-node:7::setUndoTypingParams
-	#@+node:8::setUndoTypes
+	#@-node:8::setUndoTypingParams
+	#@+node:9::setUndoTypes
 	#@+body
 	def setUndoTypes (self):
 		
@@ -490,7 +499,7 @@ class undoer:
 	
 	
 	#@-body
-	#@-node:8::setUndoTypes
+	#@-node:9::setUndoTypes
 	#@-node:4::State routines...
 	#@+node:5::u.redo
 	#@+body
