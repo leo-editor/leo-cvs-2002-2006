@@ -342,7 +342,8 @@ class LeoApp:
 			"leoID.txt not found\n\n" +
 			"Please enter an id that identifies you uniquely.\n" +
 			"Your cvs login name is a good choice.\n" +
-			"Your id must contain only letters and numbers.")
+			"Your id must contain only letters and numbers\n" +
+			"and must be at least 4 characters in length.")
 		
 		d = leoDialog.leoDialog()
 		self.leoID = d.askLeoID("Enter unique id", message)
