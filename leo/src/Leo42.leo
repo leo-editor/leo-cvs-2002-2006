@@ -2,7 +2,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="4431" clone_windows="0"/>
 <globals body_outline_ratio="0.5803571428571429">
-	<global_window_position top="23" left="253" height="896" width="940"/>
+	<global_window_position top="39" left="305" height="896" width="940"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences>
@@ -3046,7 +3046,7 @@
 <v t="ekr.20031218072017.1577"><vh>putTnode</vh>
 <v t="ekr.20031218072017.1578"><vh>&lt;&lt; put unknown tnode attributes &gt;&gt;</vh></v>
 </v>
-<v t="ekr.20031218072017.2002"><vh>putTnodeList (4.0)</vh></v>
+<v t="ekr.20031218072017.2002"><vh>putTnodeList (4.0,4.2)</vh></v>
 </v>
 <v t="ekr.20031218072017.2003"><vh>Reading gnx's</vh>
 <v t="ekr.20031218072017.2004"><vh>canonicalTnodeIndex</vh></v>
@@ -3064,7 +3064,7 @@
 <v t="ekr.20031218072017.1567"><vh>&lt;&lt; Handle vnode attribute bits  &gt;&gt;</vh></v>
 <v t="ekr.20031218072017.1568"><vh>&lt;&lt; Set the remembered status bits &gt;&gt;</vh></v>
 </v>
-<v t="ekr.20031218072017.2008"><vh>getTnodeList (4.0)</vh></v>
+<v t="ekr.20031218072017.2008"><vh>getTnodeList (4.0,4.2)</vh></v>
 <v t="ekr.20031218072017.2009"><vh>newTnode</vh></v>
 </v>
 </v>
@@ -3965,11 +3965,11 @@
 <v t="ekr.20031218072017.2121"><vh>&lt;&lt; finish writing &gt;&gt;</vh></v>
 </v>
 <v t="ekr.20031218072017.2001"><vh>putOpenNodeSentinel (sets tnodeList)</vh></v>
-<v t="ekr.20031218072017.2002"><vh>putTnodeList (4.0)</vh></v>
+<v t="ekr.20031218072017.2002"><vh>putTnodeList (4.0,4.2)</vh></v>
 </v>
 <v t="ekr.20031218072017.2381"><vh>Reading</vh>
 <v t="ekr.20031218072017.2007"><vh>findChild</vh></v>
-<v t="ekr.20031218072017.2008"><vh>getTnodeList (4.0)</vh></v>
+<v t="ekr.20031218072017.2008"><vh>getTnodeList (4.0,4.2)</vh></v>
 </v>
 </v>
 <v t="ekr.20031218072017.2382"><vh>(Patched scanPythonClass to put class docstrings in class nodes)</vh>
@@ -4592,7 +4592,11 @@
 <v t="ekr.20040117170612"><vh>p.__getattr__  (used only for p.t)</vh></v>
 <v t="ekr.20040311124726"><vh>Features of 4.2</vh></v>
 <v t="ekr.20040117181936"><vh>To do</vh>
-<v t="ekr.20040311165107"><vh>Move vnodeList into tnodes ??</vh></v>
+<v t="ekr.20040314110927.2"><vh>Test all commands</vh>
+<v t="ekr.20040312092455.1"><vh>(Fix bug in Go To Line Number)</vh></v>
+<v t="ekr.20040312021644"><vh>Test tangle/untangle commands</vh></v>
+<v t="ekr.20040315073818.1"><vh>Find commands (unit tests)</vh></v>
+</v>
 <v t="ekr.20040302084553.2"><vh>Clean up setDirty logic</vh></v>
 <v t="ekr.20040314110927"><vh>AT END OF TRANSITION</vh>
 <v t="ekr.20040311124726.2"><vh>Re-enable p.__getattr__ DO THIS LAST</vh></v>
@@ -4813,7 +4817,7 @@
 <v t="ekr.20031218072017.1577"><vh>putTnode</vh>
 <v t="ekr.20031218072017.1578"><vh>&lt;&lt; put unknown tnode attributes &gt;&gt;</vh></v>
 </v>
-<v t="ekr.20031218072017.2002"><vh>putTnodeList (4.0)</vh></v>
+<v t="ekr.20031218072017.2002"><vh>putTnodeList (4.0,4.2)</vh></v>
 <v t="ekr.20031218072017.1575"><vh>putTnodes</vh>
 <v t="ekr.20031218072017.1576"><vh>&lt;&lt; write only those tnodes that were referenced &gt;&gt;</vh></v>
 </v>
@@ -4880,7 +4884,37 @@
 <v t="ekr.20040310062332.2"><vh>p.linkAfter</vh></v>
 <v t="ekr.20040310062332.4"><vh>p.linkAsRoot</vh></v>
 </v>
-<v t="ekr.20040312120107" a="M"><vh>(Fixed move/drawing/level bugs) *****</vh>
+<v t="ekr.20040314103754"><vh>(Fixed hoist command)</vh>
+<v t="ekr.20031218072017.2029"><vh>drawTopTree</vh></v>
+<v t="ekr.20031218072017.1008"><vh>drawTree</vh>
+<v t="ekr.20031218072017.1009"><vh>&lt;&lt; draw vertical line &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20031218072017.2028"><vh>Hoist &amp; dehoist &amp; enablers</vh></v>
+<v t="ekr.20031218072017.1761"><vh>c.insertHeadline</vh></v>
+<v t="ekr.20040131170659"><vh>canClone (new for hoist)</vh></v>
+</v>
+<v t="ekr.20040314110927.1"><vh>(Got all unit tests working)</vh>
+<v t="ekr.20040315031219.1"><vh>Flatten outline</vh>
+<v t="ekr.20031218072017.1147"><vh>flattenOutline</vh></v>
+<v t="ekr.20040315023430"><vh>File Conversion</vh>
+<v t="ekr.20040315023430.1"><vh>convertTreeToString</vh></v>
+<v t="ekr.20040315023430.2"><vh>moreHead</vh></v>
+<v t="ekr.20040315023430.3"><vh>moreBody</vh></v>
+</v>
+</v>
+<v t="ekr.20031218072017.2072"><vh>c.checkOutline</vh>
+<v t="ekr.20040314062338"><vh>&lt;&lt; assert equivalence of lastVisible methods &gt;&gt;</vh></v>
+<v t="ekr.20040313150633"><vh>&lt;&lt; remove unused tnodeList &gt;&gt;</vh></v>
+<v t="ekr.20040313151511"><vh>&lt;&lt; assert that simple and complex position methods are equivalent &gt;&gt;</vh></v>
+<v t="ekr.20040314035615"><vh>&lt;&lt; assert consistency of threadNext &amp; threadBack links &gt;&gt;</vh></v>
+<v t="ekr.20040314035615.1"><vh>&lt;&lt; assert consistency of next and back links &gt;&gt;</vh></v>
+<v t="ekr.20040314035615.2"><vh>&lt;&lt; assert consistency of parent and chiild links &gt;&gt;</vh></v>
+<v t="ekr.20040314043623"><vh>&lt;&lt; assert consistency of vnodeList &gt;&gt;</vh></v>
+<v t="ekr.20040314043900"><vh>&lt;&lt; print summary message &gt;&gt;</vh></v>
+<v t="ekr.20040314044652"><vh>&lt;&lt; give test failed message &gt;&gt;</vh></v>
+</v>
+</v>
+<v t="ekr.20040312120107"><vh>(Fixed move/drawing/level bugs) *****</vh>
 <v t="ekr.20040312213623"><vh> Notes</vh></v>
 <v t="ekr.20031218072017.1416"><vh>app.__init__</vh>
 <v t="ekr.20031218072017.1417"><vh>&lt;&lt; define global constants &gt;&gt;</vh></v>
@@ -5008,36 +5042,6 @@
 <v t="ekr.20031218072017.3422"><vh>v.moveToRoot</vh></v>
 <v t="ekr.20031218072017.3438"><vh>v.unlink</vh></v>
 </v>
-</v>
-</v>
-<v t="ekr.20040314103754"><vh>(Fixed hoist command)</vh>
-<v t="ekr.20031218072017.2029"><vh>drawTopTree</vh></v>
-<v t="ekr.20031218072017.1008"><vh>drawTree</vh>
-<v t="ekr.20031218072017.1009"><vh>&lt;&lt; draw vertical line &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20031218072017.2028"><vh>Hoist &amp; dehoist &amp; enablers</vh></v>
-<v t="ekr.20031218072017.1761"><vh>c.insertHeadline</vh></v>
-<v t="ekr.20040131170659"><vh>canClone (new for hoist)</vh></v>
-</v>
-<v t="ekr.20040314110927.1"><vh>(Got all unit tests working)</vh>
-<v t="ekr.20040315031219.1"><vh>Flatten outline</vh>
-<v t="ekr.20031218072017.1147"><vh>flattenOutline</vh></v>
-<v t="ekr.20040315023430"><vh>File Conversion</vh>
-<v t="ekr.20040315023430.1"><vh>convertTreeToString</vh></v>
-<v t="ekr.20040315023430.2"><vh>moreHead</vh></v>
-<v t="ekr.20040315023430.3"><vh>moreBody</vh></v>
-</v>
-</v>
-<v t="ekr.20031218072017.2072"><vh>c.checkOutline</vh>
-<v t="ekr.20040314062338"><vh>&lt;&lt; assert equivalence of lastVisible methods &gt;&gt;</vh></v>
-<v t="ekr.20040313150633"><vh>&lt;&lt; remove unused tnodeList &gt;&gt;</vh></v>
-<v t="ekr.20040313151511"><vh>&lt;&lt; assert that simple and complex position methods are equivalent &gt;&gt;</vh></v>
-<v t="ekr.20040314035615"><vh>&lt;&lt; assert consistency of threadNext &amp; threadBack links &gt;&gt;</vh></v>
-<v t="ekr.20040314035615.1"><vh>&lt;&lt; assert consistency of next and back links &gt;&gt;</vh></v>
-<v t="ekr.20040314035615.2"><vh>&lt;&lt; assert consistency of parent and chiild links &gt;&gt;</vh></v>
-<v t="ekr.20040314043623"><vh>&lt;&lt; assert consistency of vnodeList &gt;&gt;</vh></v>
-<v t="ekr.20040314043900"><vh>&lt;&lt; print summary message &gt;&gt;</vh></v>
-<v t="ekr.20040314044652"><vh>&lt;&lt; give test failed message &gt;&gt;</vh></v>
 </v>
 </v>
 </v>
@@ -8483,7 +8487,7 @@
 <v t="ekr.20031218072017.1567"><vh>&lt;&lt; Handle vnode attribute bits  &gt;&gt;</vh></v>
 <v t="ekr.20031218072017.1568"><vh>&lt;&lt; Set the remembered status bits &gt;&gt;</vh></v>
 </v>
-<v t="ekr.20031218072017.2008"><vh>getTnodeList (4.0)</vh></v>
+<v t="ekr.20031218072017.2008"><vh>getTnodeList (4.0,4.2)</vh></v>
 <v t="ekr.20031218072017.1565"><vh>getVnodes</vh></v>
 <v t="ekr.20031218072017.1249"><vh>getXmlStylesheetTag</vh></v>
 <v t="ekr.20031218072017.1468"><vh>getXmlVersionTag</vh></v>
@@ -8534,7 +8538,7 @@
 <v t="ekr.20031218072017.1577"><vh>putTnode</vh>
 <v t="ekr.20031218072017.1578"><vh>&lt;&lt; put unknown tnode attributes &gt;&gt;</vh></v>
 </v>
-<v t="ekr.20031218072017.2002"><vh>putTnodeList (4.0)</vh></v>
+<v t="ekr.20031218072017.2002"><vh>putTnodeList (4.0,4.2)</vh></v>
 <v t="ekr.20031218072017.1575"><vh>putTnodes</vh>
 <v t="ekr.20031218072017.1576"><vh>&lt;&lt; write only those tnodes that were referenced &gt;&gt;</vh></v>
 </v>
@@ -8562,24 +8566,46 @@
 <v t="ekr.20031218072017.3051"><vh>xmlEscape</vh></v>
 </v>
 </v>
-<v t="ekr.20040314110927.2"><vh>Test all commands</vh>
-<v t="ekr.20040312092455.1"><vh>(Fix bug in Go To Line Number)</vh></v>
-<v t="ekr.20040312021644"><vh>Test tangle/untangle commands</vh></v>
-<v t="ekr.20040315073818.1"><vh>Find commands (unit tests)</vh></v>
-</v>
-<v t="ekr.20040312092455.2" a="EMTV"><vh>Enable and test atFile read logic</vh>
+<v t="ekr.20040312092455.2" a="EM"><vh>(Enable and test atFile read logic)</vh>
+<v t="ekr.20031218072017.2759"><vh>&lt;&lt; init ivars for scanText4 &gt;&gt;</vh></v>
+<v t="ekr.20040316075317" a="E"><vh>reading...</vh>
 <v t="ekr.20031218072017.2626"><vh> top_df.readAll</vh></v>
 <v t="ekr.20031218072017.2007"><vh>findChild</vh></v>
+<v t="ekr.20031218072017.2008"><vh>getTnodeList (4.0,4.2)</vh></v>
 <v t="ekr.20031218072017.1566"><vh>getVnode changed for 4.2)</vh>
 <v t="ekr.20031218072017.1567"><vh>&lt;&lt; Handle vnode attribute bits  &gt;&gt;</vh></v>
 <v t="ekr.20031218072017.1568"><vh>&lt;&lt; Set the remembered status bits &gt;&gt;</vh></v>
 </v>
+</v>
+<v t="ekr.20040316075317.1" a="E"><vh>writing...</vh>
 <v t="ekr.20031218072017.1570"><vh>assignFileIndices &amp; compactFileIndices</vh>
 <v t="ekr.20031218072017.1571"><vh>&lt;&lt; assign missing gnx's, converting ints to gnx's &gt;&gt;</vh></v>
 <v t="ekr.20031218072017.1572"><vh>&lt;&lt; reassign all tnode indices &gt;&gt;</vh></v>
 </v>
+<v t="ekr.20031218072017.2114"><vh>new_df.write (inits root.tnodeList)</vh>
+<v t="ekr.20031218072017.2115"><vh>&lt;&lt; initialize &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.2116"><vh>&lt;&lt; open the file; return on error &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.2117"><vh>&lt;&lt; write then entire @file tree &gt;&gt; (4.x)</vh>
+<v t="ekr.20031218072017.2118"><vh>&lt;&lt; put all @first lines in root &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.2119"><vh>&lt;&lt; put all @last lines in root &gt;&gt; (4.x)</vh></v>
+</v>
+<v t="ekr.20031218072017.2121"><vh>&lt;&lt; finish writing &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20031218072017.2322"><vh>old_df.write</vh>
+<v t="ekr.20031218072017.2323"><vh>&lt;&lt; initialize &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.2324"><vh>&lt;&lt; open the file; return on error &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.2325"><vh>&lt;&lt; write then entire @file tree &gt;&gt; (3.x)</vh>
+<v t="ekr.20031218072017.2326"><vh>&lt;&lt; put all @first lines in root &gt;&gt; (3.x)</vh></v>
+<v t="ekr.20031218072017.2327"><vh>&lt;&lt; write the derived file&gt;&gt;</vh></v>
+<v t="ekr.20031218072017.2328"><vh>&lt;&lt; put all @last lines in root &gt;&gt; (3.x)</vh></v>
+</v>
+<v t="ekr.20031218072017.2330"><vh>&lt;&lt; finish writing &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20031218072017.2001"><vh>putOpenNodeSentinel (sets tnodeList)</vh></v>
+<v t="ekr.20031218072017.2002" a="TV"><vh>putTnodeList (4.0,4.2)</vh></v>
 <v t="ekr.20031218072017.1575"><vh>putTnodes</vh>
 <v t="ekr.20031218072017.1576"><vh>&lt;&lt; write only those tnodes that were referenced &gt;&gt;</vh></v>
+</v>
 </v>
 </v>
 </vnodes>
@@ -25243,7 +25269,7 @@ if keys:
 	if not skip:
 		v,skip = self.createVnode(parent,back,tref,headline,attrDict)
 		if tnodeList:
-			v.tnodeList = tnodeList # New for 4.0
+			v.t.tnodeList = tnodeList # New for 4.0, 4.2: now in tnode.
 			# g.trace("%4d" % len(tnodeList),v)
 		&lt;&lt; Set the remembered status bits &gt;&gt;
 
@@ -29401,7 +29427,7 @@ if keys:
 	&lt;&lt; Put tnode index &gt;&gt;
 	&lt;&lt; Put attribute bits &gt;&gt;
 	# 12/13/03 Write tnodeList only for @file nodes.
-	if hasattr(v,"tnodeList") and len(v.tnodeList) &gt; 0 and v.isAnyAtFileNode():
+	if hasattr(v.t,"tnodeList") and len(v.t.tnodeList) &gt; 0 and v.isAnyAtFileNode():
 		fc.putTnodeList(v) # New in 4.0
 	if hasattr(v,"unknownAttributes"): # New in 4.0
 		&lt;&lt; put unknown vnode attributes &gt;&gt;
@@ -31127,30 +31153,33 @@ def setDefaultId (self,id):
 
 	# Append the n'th tnode to the root's tnode list.
 
-	# g.trace("%3d %3d" % (len(at.root.tnodeList),p.v.t.fileIndex),p.v)
-	at.root.tnodeList.append(p.v.t)</t>
+	if 0:
+		if hasattr(p.v.t,"tnodeList"):
+			g.trace("len(tnodeList): %3d %s" % (len(p.v.t.tnodeList),p.v))
+
+	at.root.v.t.tnodeList.append(p.v.t)</t>
 <t tx="ekr.20031218072017.2002">def putTnodeList (self,v):
 	
-	"""Put the optional tnodeList attribute of a vnode."""
+	"""Put the tnodeList attribute of a tnode."""
 	
 	# Remember: entries in the tnodeList correspond to @+node sentinels, _not_ to tnodes!
 
 	fc = self ; nodeIndices = g.app.nodeIndices
-	if v.tnodeList:
-		# g.trace("%4d" % len(v.tnodeList),v)
+	tnodeList = v.t.tnodeList
+	if tnodeList:
+		# g.trace("%4d" % len(tnodeList),v)
 		fc.put(" tnodeList=") ; fc.put_dquote()
 		if g.app.use_gnx:
-			for t in v.tnodeList:
+			for t in tnodeList:
 				try: # Will fail for None or any pre 4.1 file index.
 					id,time,n = t.fileIndex
 				except:
 					g.trace("assigning gnx for ",v,t)
 					gnx = nodeIndices.getNewIndex()
-					t.setFileIndex(gnx) # Don't convert to string until the actual write.
-			s = ','.join([nodeIndices.toString(t.fileIndex) for t in v.tnodeList])
+					v.t.setFileIndex(gnx) # Don't convert to string until the actual write.
+			s = ','.join([nodeIndices.toString(t.fileIndex) for t in tnodeList])
 		else:
-			s = ','.join([str(t.fileIndex) for t in v.tnodeList])
-		# g.trace(s)
+			s = ','.join([str(t.fileIndex) for t in tnodeList])
 		fc.put(s) ; fc.put_dquote()</t>
 <t tx="ekr.20031218072017.2003"></t>
 <t tx="ekr.20031218072017.2004">def canonicalTnodeIndex(self,index):
@@ -31202,7 +31231,7 @@ def __init__ (self,bodyString=None,headString=None):
 	self._firstChild = None</t>
 <t tx="ekr.20031218072017.2007">def findChild (self,headline):
 	
-	"""Return the next tnode in the at.tnodeList."""
+	"""Return the next tnode in at.root.t.tnodeList."""
 
 	at = self
 
@@ -31212,18 +31241,18 @@ def __init__ (self,bodyString=None,headString=None):
 		
 	v = at.root.v
 
-	if not hasattr(v,"tnodeList"):
+	if not hasattr(v.t,"tnodeList"):
 		at.readError("no tnodeList for " + `v`)
 		g.es("Write the @file node or use the Import Derived File command")
 		g.trace("no tnodeList for ",v)
 		return None
 		
-	if at.tnodeListIndex &gt;= len(v.tnodeList):
+	if at.tnodeListIndex &gt;= len(v.t.tnodeList):
 		at.readError("bad tnodeList index: %d, %s" % (at.tnodeListIndex,`v`))
-		g.trace("bad tnodeList index",at.tnodeListIndex,len(v.tnodeList),v)
+		g.trace("bad tnodeList index",at.tnodeListIndex,len(v.t.tnodeList),v)
 		return None
 		
-	t = v.tnodeList[at.tnodeListIndex]
+	t = v.t.tnodeList[at.tnodeListIndex]
 	assert(t)
 	at.tnodeListIndex += 1
 
@@ -31244,7 +31273,7 @@ def __init__ (self,bodyString=None,headString=None):
 			"Mismatched headline.\nExpecting: %s\ngot: %s" %
 			(headline,v.headString()))
 		g.trace("Mismatched headline",headline,v.headString())
-		g.trace(at.tnodeListIndex,len(at.root.v.tnodeList))
+		g.trace(at.tnodeListIndex,len(at.root.v.t.tnodeList))
 		return None</t>
 <t tx="ekr.20031218072017.2008">def getTnodeList (self,s):
 
@@ -31265,7 +31294,9 @@ def __init__ (self,bodyString=None,headString=None):
 			t = self.newTnode(index)
 		tnodeList.append(t)
 		
-	return tnodeList</t>
+	# if tnodeList: g.trace(len(tnodeList))
+	return tnodeList
+</t>
 <t tx="ekr.20031218072017.2009">def newTnode(self,index):
 
 	if self.tnodesDict.has_key(index):
@@ -32748,7 +32779,7 @@ def write(self,root,nosentinels=false,scriptFile=None):
 		root.clearAllVisitedInTree() # 1/28/04: clear both vnode and tnode bits.
 		&lt;&lt; write then entire @file tree &gt;&gt;
 		if scriptFile != None:
-			at.root.tnodeList = [] # 12/13/03
+			at.root.v.t.tnodeList = []
 		else:
 			at.closeWriteFile()
 			if not nosentinels:
@@ -32759,14 +32790,14 @@ def write(self,root,nosentinels=false,scriptFile=None):
 			g.es("exception preprocessing script",color="blue")
 			g.es_exception(full=false)
 			scriptFile.clear()
-			at.root.tnodeList = [] # 12/13/03
+			at.root.v.t.tnodeList = []
 		else:
 			at.handleWriteException()
 </t>
 <t tx="ekr.20031218072017.2115">at.errors = 0
 c.setIvarsFromPrefs()
 at.root = root
-at.root.tnodeList = []
+at.root.v.t.tnodeList = []
 at.raw = false
 at.scripting = scriptFile is not None # 1/30/04
 c.endEditing() # Capture the current headline.</t>
@@ -32851,7 +32882,7 @@ else:
 
 	c = at.c ; at.root = root
 	at.errors = 0
-	at.root.tnodeList = [] # 9/26/03: after beta 1 release.
+	at.root.t.tnodeList = [] # 9/26/03: after beta 1 release.
 	at.sentinels = true # 10/1/03
 	at.scripting = false # 1/30/04
 	c.endEditing() # Capture the current headline.
@@ -35327,9 +35358,9 @@ def trace_tag (name, *args):
 def write(self,root,nosentinels=false):
 	
 	# Remove any old tnodeList.
-	if hasattr(root,"tnodeList"):
-		# g.trace("removing tnodeList for " + `root`)
-		delattr(root,"tnodeList")
+	if hasattr(root.v.t,"tnodeList"):
+		# g.trace("removing tnodeList for ",root)
+		delattr(root.v.t,"tnodeList")
 
 	c = self.c
 	self.sentinels = not nosentinels
@@ -42401,8 +42432,8 @@ at.out = [] ; at.outStack = []
 at.t = p.v.t ; at.tStack = []
 
 if 0: # Useful for debugging.
-	if hasattr(p.v,"tnodeList"):
-		g.trace("len(p.v.tnodeList)",len(p.v.tnodeList),p.v)
+	if hasattr(p.v.t,"tnodeList"):
+		g.trace("len(tnodeList)",len(p.v.t.tnodeList),p.v)
 	else:
 		g.trace("no tnodeList",p.v)</t>
 <t tx="ekr.20031218072017.2760">assert(at.endSentinelStack)
@@ -45165,7 +45196,9 @@ def selectVisBack(self):
 	c.frame.tree.endEditLabel()
 	c.frame.tree.select(p,updateBeadList)
 	c.frame.body.setFocus()
-	self.editing = false</t>
+	self.editing = false
+	
+selectPosition = selectVnode</t>
 <t tx="ekr.20031218072017.2998"># Selects the given node and enables editing of the headline if editFlag is true.
 
 def selectVnodeWithEditing(self,v,editFlag):
@@ -45175,7 +45208,8 @@ def selectVnodeWithEditing(self,v,editFlag):
 		c.editPosition(v)
 	else:
 		c.selectVnode(v)
-</t>
+
+selectPositionWithEditing = selectVnodeWithEditing</t>
 <t tx="ekr.20031218072017.2999">@ These routines provide a convenient interface to the syntax colorer.
 </t>
 <t tx="ekr.20031218072017.3000">def updateSyntaxColorer(self,v):
@@ -65872,7 +65906,6 @@ It is useful for compatibility.</t>
 <t tx="ekr.20040311133449"></t>
 <t tx="ekr.20040311143141"></t>
 <t tx="ekr.20040311160938"></t>
-<t tx="ekr.20040311165107"></t>
 <t tx="ekr.20040311165928"></t>
 <t tx="ekr.20040311173238">def topPosition(self):
 	
@@ -65920,7 +65953,8 @@ What I did:
 
 - Enabled top_df.readAll
 - Changed findChild to use p.v.t.vnodeList.
-- Changed subtree_iter to c.allNodes_iter in putTnodes.</t>
+- Changed subtree_iter to c.allNodes_iter in putTnodes.
+- Move tnodeList into tnodes. (Change made in getVnode).</t>
 <t tx="ekr.20040312094553"></t>
 <t tx="ekr.20040312094553.1"></t>
 <t tx="ekr.20040312101356"></t>
@@ -66185,5 +66219,7 @@ Look for exceptions.
 	
 	</t>
 <t tx="ekr.20040315073818.1"></t>
+<t tx="ekr.20040316075317"></t>
+<t tx="ekr.20040316075317.1"></t>
 </tnodes>
 </leo_file>
