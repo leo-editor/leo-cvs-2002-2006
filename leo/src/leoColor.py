@@ -2172,7 +2172,8 @@ class nullColorizer (colorizer):
     #@+node:ekr.20031218072017.2219:__init__
     def __init__ (self,c):
         
-        
+        colorizer.__init__(self,c) # init the base class.
+    
         self.c = c
     #@-node:ekr.20031218072017.2219:__init__
     #@+node:ekr.20031218072017.2220:entry points
