@@ -121,9 +121,6 @@ class newAtFile:
     #@+node:ekr.20040929105133.4:atFile.__init__ & initIvars
     def __init__(self,c):
         
-        s = '*' * 10 + " New atFile classes installed"
-        print s, g.es(s,color="red")
-        
         at = self
         
         at.c = c
@@ -221,6 +218,7 @@ class newAtFile:
         self.errors = 0
         self.inCode = True
         self.indent = 0  # The unit of indentation is spaces, not tabs.
+        self.raw = False # True: in @raw mode
         self.root = None # The root of tree being read or written.
         self.root_seen = False # True: root vnode has been handled in this file.
         self.toString = False # True: sring-oriented read or write.
@@ -255,7 +253,6 @@ class newAtFile:
         self.out = None
         self.outStack = []
         self.pending = []
-        self.raw = False # True: in @raw mode
         self.tnodeList = []
         self.tnodeListIndex = 0
         self.t = None
@@ -2529,7 +2526,7 @@ class newAtFile:
             targetFileName = root.atAsisFileNodeName()
             at.initWriteIvars(root,targetFileName,toString=toString)
             if at.errors: return
-            if not at.openFileForWriting(targetFileName,toString): return
+            if not at.openFileForWriting(root,targetFileName,toString): return
             for p in root.self_and_subtree_iter():
                 #@            << Write p's headline if it starts with @@ >>
                 #@+node:ekr.20040929105133.126:<< Write p's headline if it starts with @@ >>
@@ -2557,7 +2554,7 @@ class newAtFile:
             at.replaceTargetFileIfDifferent()
             root.clearOrphan() ; root.clearDirty()
         except:
-            at.handleWriteException(root)
+            at.writeException(root)
             
     silentWrite = asisWrite # Compatibility with old scripts.
     #@nonl
@@ -2587,7 +2584,7 @@ class newAtFile:
             targetFileName = root.atNorefFileNodeName()
             initWriteIvars(self,root,targetFileName,nosentinels=False,toString=toString)
             if at.errors: return
-            if not at.openFileForWriting(targetFileName,toString):
+            if not at.openFileForWriting(root,targetFileName,toString):
                 return
             #@        << write root's tree >>
             #@+node:ekr.20040929105133.252:<< write root's tree >>
@@ -2684,12 +2681,12 @@ class newAtFile:
             at.replaceTargetFileIfDifferent()
             root.clearOrphan() ; root.clearDirty()
         except:
-            at.handleWriteException(root)
+            at.writeException(root)
             
     rawWrite = norefWrite
     #@-node:ekr.20040929105133.251:norefWrite
     #@+node:ekr.20040929105133.144:openFileForWriting & openFileForWritingHelper
-    def openFileForWriting (self,fileName,toString):
+    def openFileForWriting (self,root,fileName,toString):
     
         at = self
         at.outputFile = None
@@ -2702,7 +2699,7 @@ class newAtFile:
             at.openFileForWritingHelper(fileName,toString)
     
         if at.outputFile:
-            root.clearOphan()
+            root.clearOrphan()
         else:
             root.setOrphan()
             root.setDirty()
@@ -2752,8 +2749,8 @@ class newAtFile:
         
         at = self ; c = at.c
         c.endEditing() # Capture the current headline.
-        #@    << set targetFileName >>
-        #@+node:ekr.20040929105133.245:<< set targetFileName >>
+        #@    << set at.targetFileName >>
+        #@+node:ekr.20040929105133.245:<< set at.targetFileName >>
         if toString:
             at.targetFileName = "<new_df.write string-file>"
         elif nosentinels:
@@ -2763,14 +2760,15 @@ class newAtFile:
         else:
             at.targetFileName = root.atFileNodeName()
         #@nonl
-        #@-node:ekr.20040929105133.245:<< set targetFileName >>
+        #@-node:ekr.20040929105133.245:<< set at.targetFileName >>
         #@nl
-        at.initWriteIvars(root,targetFileName,toString=toString)
-        if not at.openFileForWriting(targetFileName,toString):
+        at.initWriteIvars(root,at.targetFileName,thinFile=thinFile,toString=toString)
+        if not at.openFileForWriting(root,at.targetFileName,toString):
             return
     
         try:
-            at.writeOpenFile(root,oneNodeOnly=oneNodeOnly)
+            at.writeOpenFile(root,
+                nosentinels=nosentinels,oneNodeOnly=oneNodeOnly,toString=toString)
             if toString:
                 at.closeWriteFile()
                 # Major bug: failure to clear this wipes out headlines!
@@ -2799,8 +2797,7 @@ class newAtFile:
                 at.exception("exception preprocessing script")
                 at.root.v.t.tnodeList = []
             else:
-                at.handleWriteException() # Sets dirty and orphan bits.
-    #@nonl
+                at.writeException() # Sets dirty and orphan bits.
     #@-node:ekr.20040929105133.244:write
     #@+node:ekr.20040929105133.33:writeAll
     def writeAll(self,writeAtFileNodesFlag=False,writeDirtyAtFileNodesFlag=False,toString=False):
@@ -2904,7 +2901,7 @@ class newAtFile:
                     at.targetFileName = g.os_path_join(self.default_directory,at.targetFileName)
                     at.targetFileName = g.os_path_normpath(at.targetFileName)
                     if not g.os_path_exists(at.targetFileName):
-                        at.openFileForWriting(at.targetFileName,toString)
+                        at.openFileForWriting(p,at.targetFileName,toString)
                         if at.outputFile:
                             #@                        << write the @file node >>
                             #@+node:ekr.20040929105133.41:<< write the @file node >>
@@ -2943,7 +2940,7 @@ class newAtFile:
     #@+node:ekr.20040929105133.247:writeOpenFile
     # New in 4.3: must be inited before calling this method.
     
-    def writeOpenFile(self,root,oneNodeOnly=False):
+    def writeOpenFile(self,root,nosentinels=False,oneNodeOnly=False,toString=False):
     
         """Do all writes except asis writes."""
         
@@ -3792,6 +3789,23 @@ class newAtFile:
     #@-node:ekr.20040929105133.237:putSentinel (applies cweb hack) 4.x
     #@-node:ekr.20040929105133.230:Writing 4,x sentinels...
     #@+node:ekr.20040930081343.2:Writing 4.x utils...
+    #@+node:ekr.20040929105133.142:compareFilesIgnoringLineEndings
+    # This routine is needed to handle cvs stupidities.
+    
+    def compareFilesIgnoringLineEndings (self,path1,path2):
+    
+        """Compare two text files ignoring line endings."""
+        
+        try:
+            # Opening both files in text mode converts all line endings to '\n'.
+            f1 = open(path1) ; f2 = open(path2)
+            equal = f1.read() == f2.read()
+            f1.close() ; f2.close()
+            return equal
+        except:
+            return False
+    #@nonl
+    #@-node:ekr.20040929105133.142:compareFilesIgnoringLineEndings
     #@+node:ekr.20040929105133.284:directiveKind4
     def directiveKind4(self,s,i):
         
@@ -3843,7 +3857,7 @@ class newAtFile:
         return at.noDirective
     #@nonl
     #@-node:ekr.20040929105133.284:directiveKind4
-    #@+node:ekr.20040929105133.285:hasSectionName 4.x
+    #@+node:ekr.20040929105133.285:hasSectionName
     def findSectionName(self,s,i):
         
         end = s.find('\n',i)
@@ -3856,7 +3870,21 @@ class newAtFile:
     
         return -1 < n1 < n2, n1, n2
     #@nonl
-    #@-node:ekr.20040929105133.285:hasSectionName 4.x
+    #@-node:ekr.20040929105133.285:hasSectionName
+    #@+node:ekr.20040929105133.170:isSectionName
+    # returns (flag, end). end is the index of the character after the section name.
+    
+    def isSectionName(self,s,i):
+    
+        if not g.match(s,i,"<<"):
+            return False, -1
+        i = g.find_on_line(s,i,">>")
+        if i:
+            return True, i + 2
+        else:
+            return False, -1
+    #@nonl
+    #@-node:ekr.20040929105133.170:isSectionName
     #@+node:ekr.20040929105133.286:os and allies
     # Note:  self.outputFile may be either a fileLikeObject or a real file.
     
@@ -3904,6 +3932,15 @@ class newAtFile:
     #@nonl
     #@-node:ekr.20040929105133.289:os
     #@-node:ekr.20040929105133.286:os and allies
+    #@+node:ekr.20040929105133.150:outputStringWithLineEndings
+    # Write the string s as-is except that we replace '\n' with the proper line ending.
+    
+    def outputStringWithLineEndings (self,s):
+    
+        # Calling self.onl() runs afoul of queued newlines.
+        self.os(s.replace('\n',self.output_newline))
+    #@nonl
+    #@-node:ekr.20040929105133.150:outputStringWithLineEndings
     #@+node:ekr.20040929105133.290:putDirective  (handles @delims,@comment,@language) 4.x
     #@+at 
     #@nonl
@@ -4009,6 +4046,131 @@ class newAtFile:
         return i
     #@nonl
     #@-node:ekr.20040929105133.290:putDirective  (handles @delims,@comment,@language) 4.x
+    #@+node:ekr.20040929105133.182:putIndent
+    def putIndent(self,n):
+        
+        """Put tabs and spaces corresponding to n spaces, assuming that we are at the start of a line."""
+    
+        if n != 0:
+            w = self.tab_width
+            if w > 1:
+                q,r = divmod(n,w) 
+                self.otabs(q) 
+                self.oblanks(r)
+            else:
+                self.oblanks(n)
+    #@nonl
+    #@-node:ekr.20040929105133.182:putIndent
+    #@+node:ekr.20040929105133.145:putInitialComment
+    def putInitialComment (self):
+        
+        s2 = g.app.config.output_initial_comment
+        if s2:
+            lines = string.split(s2,"\\n")
+            for line in lines:
+                line = line.replace("@date",time.asctime())
+                if len(line)> 0:
+                    self.putSentinel("@comment " + line)
+    #@nonl
+    #@-node:ekr.20040929105133.145:putInitialComment
+    #@+node:ekr.20040929105133.146:replaceTargetFileIfDifferent
+    def replaceTargetFileIfDifferent (self):
+        
+        assert(self.outputFile is None)
+        
+        self.fileChangedFlag = False
+        if g.os_path_exists(self.targetFileName):
+            if self.compareFilesIgnoringLineEndings(
+                self.outputFileName,self.targetFileName):
+                #@            << delete the output file >>
+                #@+node:ekr.20040929105133.147:<< delete the output file >>
+                try: # Just delete the temp file.
+                    os.remove(self.outputFileName)
+                except:
+                    g.es("exception deleting:" + self.outputFileName)
+                    g.es_exception()
+                
+                g.es("unchanged: " + self.shortFileName)
+                #@nonl
+                #@-node:ekr.20040929105133.147:<< delete the output file >>
+                #@nl
+            else:
+                #@            << replace the target file with the output file >>
+                #@+node:ekr.20040929105133.148:<< replace the target file with the output file >>
+                try:
+                    # 10/6/02: retain the access mode of the previous file,
+                    # removing any setuid, setgid, and sticky bits.
+                    mode = (os.stat(self.targetFileName))[0] & 0777
+                except:
+                    mode = None
+                
+                try: # Replace target file with temp file.
+                    os.remove(self.targetFileName)
+                    try:
+                        g.utils_rename(self.outputFileName,self.targetFileName)
+                        if mode != None: # 10/3/02: retain the access mode of the previous file.
+                            try:
+                                os.chmod(self.targetFileName,mode)
+                            except:
+                                g.es("exception in os.chmod(%s)" % (self.targetFileName))
+                        g.es("writing: " + self.shortFileName)
+                        self.fileChangedFlag = True
+                    except:
+                        # 6/28/03
+                        self.writeError("exception renaming: %s to: %s" % (self.outputFileName,self.targetFileName))
+                        g.es_exception()
+                except:
+                    self.writeError("exception removing:" + self.targetFileName)
+                    g.es_exception()
+                    try: # Delete the temp file when the deleting the target file fails.
+                        os.remove(self.outputFileName)
+                    except:
+                        g.es("exception deleting:" + self.outputFileName)
+                        g.es_exception()
+                #@nonl
+                #@-node:ekr.20040929105133.148:<< replace the target file with the output file >>
+                #@nl
+        else:
+            #@        << rename the output file to be the target file >>
+            #@+node:ekr.20040929105133.149:<< rename the output file to be the target file >>
+            try:
+                g.utils_rename(self.outputFileName,self.targetFileName)
+                g.es("creating: " + self.targetFileName)
+                self.fileChangedFlag = True
+            except:
+                self.writeError("exception renaming:" + self.outputFileName +
+                    " to " + self.targetFileName)
+                g.es_exception()
+            #@nonl
+            #@-node:ekr.20040929105133.149:<< rename the output file to be the target file >>
+            #@nl
+    #@nonl
+    #@-node:ekr.20040929105133.146:replaceTargetFileIfDifferent
+    #@+node:ekr.20040929105133.151:warnAboutOrpanAndIgnoredNodes
+    def warnAboutOrphandAndIgnoredNodes (self):
+        
+        # Always warn, even when language=="cweb"
+        at = self ; root = at.root
+    
+        for p in root.self_and_subtree_iter():
+            if not p.v.t.isVisited(): # Check tnode bit, not vnode bit.
+                at.writeError("Orphan node:  " + p.headString())
+                if p.isCloned() and p.hasParent():
+                    g.es("parent node: " + p.parent().headString(),color="blue")
+                if not at.thinFile and p.isAtIgnoreNode():
+                    at.writeError("@ignore node: " + p.headString())
+                    
+        if at.thinFile:
+            p = root.copy() ; after = p.nodeAfterTree()
+            while p and p != after:
+                if p.isAtAllNode():
+                    p.moveToNodeAfterTree()
+                else:
+                    if p.isAtIgnoreNode():
+                        at.writeError("@ignore node: " + p.headString())
+                    p.moveToThreadNext()
+    #@nonl
+    #@-node:ekr.20040929105133.151:warnAboutOrpanAndIgnoredNodes
     #@+node:ekr.20040929105133.122:writeError
     def writeError(self,message):
     
@@ -4020,6 +4182,30 @@ class newAtFile:
         self.root.setDirty()
     #@nonl
     #@-node:ekr.20040929105133.122:writeError
+    #@+node:ekr.20040929105133.143:writeException
+    def writeException (self,root=None):
+        
+        g.es("exception writing:" + self.targetFileName,color="red")
+        g.es_exception()
+    
+        if self.outputFile:
+            self.outputFile.flush()
+            self.outputFile.close()
+            self.outputFile = None
+        
+        if self.outputFileName != None:
+            try: # Just delete the temp file.
+                os.remove(self.outputFileName)
+            except:
+                g.es("exception deleting:" + self.outputFileName,color="red")
+                g.es_exception()
+    
+        if root:
+            # Make sure we try to rewrite this file.
+            root.setOrphan()
+            root.setDirty()
+    #@nonl
+    #@-node:ekr.20040929105133.143:writeException
     #@-node:ekr.20040930081343.2:Writing 4.x utils...
     #@-node:ekr.20040930080842.1:Writing...
     #@+node:ekr.20040929105133.103:Uilites...
@@ -4428,11 +4614,10 @@ class newAtFile:
     #@-node:ekr.20040929105133.101:sentinelName
     #@-node:ekr.20040929105133.103:Uilites...
     #@-others
-    
-## To do:
-## g.app.atFileClass = atFile
 
 if 1:
+    s = "New atFile class installed"
+    print s, g.es(s,color="red")
     import leoAtFile
     leoAtFile.atFile = newAtFile
 #@nonl
