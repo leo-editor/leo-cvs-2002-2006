@@ -110,7 +110,7 @@ class baseConfig:
 		self.compareDict = {}
 		self.configDict = {} # 10/11/02: we use a dict even for ivars.
 		self.findDict = {}
-		self.keysDict = {}
+		self.keysDict = {} ; self.rawKeysDict = {} # 2/8/04
 		self.prefsDict = {}
 		self.colorsDict = {}
 		self.windowDict = {}
@@ -319,16 +319,24 @@ class baseConfig:
 		return app.gui.getFontFromParams(family,size,slant,weight)
 	#@nonl
 	#@-node:config.getFontFromParams
-	#@+node:getShortcut
+	#@+node:getShortcut (config)
 	def getShortcut (self,name):
 		
-		val = self.keysDict.get(name)
-		
-		# 7/19/03: Return "None" if the setting is "None"
-		# This allows settings to disable a default shortcut.
-		return val
+		if 1: # 2/8/04: allow & in keys.
+			val = self.rawKeysDict.get(name.replace('&',''))
+			if val:
+				rawKey,shortcut = val
+				return rawKey,shortcut
+			else:
+				return None,None
+		else:
+			val = self.keysDict.get(name)
+			
+			# 7/19/03: Return "None" if the setting is "None"
+			# This allows settings to disable a default shortcut.
+			return val
 	#@nonl
-	#@-node:getShortcut
+	#@-node:getShortcut (config)
 	#@+node:init/Boolean/ConfigParam
 	def initConfigParam (self,name,defaultVal):
 		try:
@@ -605,6 +613,21 @@ class baseConfig:
 							val = toUnicode(val,self.config_encoding) # 10/31/03
 							dict[string.lower(opt)]= val
 					except: pass
+			#@		<< create rawKeysDict without ampersands >>
+			#@+node:<< create rawKeysDict without ampersands >> (config)
+			# 2/8/04: New code.
+			for key in self.keysDict.keys():
+				newKey = key.replace('&','')
+				self.rawKeysDict[newKey] = key,self.keysDict[key]
+				
+			if 0: #trace
+				keys = self.rawKeysDict.keys()
+				keys.sort()
+				for key in keys:
+					print self.rawKeysDict[key]
+			#@nonl
+			#@-node:<< create rawKeysDict without ampersands >> (config)
+			#@nl
 			#@		<< convert find/change options to unicode >>
 			#@+node:<< convert find/change options to unicode >>
 			find = self.findDict.get("find_string")
@@ -648,7 +671,6 @@ class baseConfig:
 			es_exception()
 			pass
 		self.config = None
-	#@nonl
 	#@-node:open
 	#@+node:update (config)
 	# Rewrites the entire config file from ivars.

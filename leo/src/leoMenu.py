@@ -214,13 +214,15 @@ class leoMenu:
 			("-",None,None),
 			("&Insert Node","Ctrl+I",c.insertHeadline),
 			("&Clone Node","Ctrl+`",c.clone),
-			("Sort C&hildren",None,c.sortChildren),
+			("Sort Childre&n",None,c.sortChildren), # Conflicted with Hoist.
 			("&Sort Siblings","Alt-A",c.sortSiblings),
 			("Chec&k Outline",None,c.checkOutline),
 			("-",None,None),
 			("&Hoist",None,c.hoist),
 			("D&e-Hoist",None,f.c.dehoist),
 			("-",None,None))
+			
+		# Ampersand bindings:  c,d,e,h,i,k,n,o,p,s,u
 		#@nonl
 		#@-node:<< define outlineMenuTopMenuTable >>
 		#@nl
@@ -518,7 +520,7 @@ class leoMenu:
 			return false
 	#@nonl
 	#@-node:hasSelection
-	#@+node:get/setRealMenuName & setRealMenuNamesFromTable (MOVED to leoMenu class)
+	#@+node:get/setRealMenuName & setRealMenuNamesFromTable
 	# Returns the translation of a menu name or an item name.
 	
 	def getRealMenuName (self,menuName):
@@ -540,7 +542,7 @@ class leoMenu:
 			es("exception in setRealMenuNamesFromTable")
 			es_exception()
 	#@nonl
-	#@-node:get/setRealMenuName & setRealMenuNamesFromTable (MOVED to leoMenu class)
+	#@-node:get/setRealMenuName & setRealMenuNamesFromTable
 	#@+node:canonicalizeMenuName & cononicalizeTranslatedMenuName
 	def canonicalizeMenuName (self,name):
 		
@@ -774,7 +776,7 @@ class leoMenu:
 				#@			<< set accel to the shortcut for name >>
 				#@+node:<< set accel to the shortcut for name >>
 				config = app.config
-				accel2 = config.getShortcut(name)
+				rawKey,accel2 = config.getShortcut(name)
 				
 				# 7/19/03: Make sure "None" overrides the default shortcut.
 				if accel2 == None or len(accel2) == 0:
@@ -812,8 +814,20 @@ class leoMenu:
 				#@			<< set realLabel, amp_index and menu_shortcut >>
 				#@+node:<< set realLabel, amp_index and menu_shortcut >>
 				realLabel = self.getRealMenuName(label)
-				amp_index = realLabel.find("&")
+				
+				# 2/8/04: A bad hack:  this does not allow for translations!
+				# We need a way of specifying shortcuts, & bindings and translations all in the same place.
+				if rawKey and rawKey != label:
+					amp_index = rawKey.find("&") + 1
+				else:
+					amp_index = realLabel.find("&")
+				
 				realLabel = realLabel.replace("&","")
+				
+				if 0: # trace
+					if realLabel.lower().startswith("sort"):
+						trace(label,realLabel,rawKey,bind_shortcut)
+				
 				if not menu_shortcut:
 					menu_shortcut = ""
 				#@nonl

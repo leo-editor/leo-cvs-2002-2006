@@ -165,7 +165,7 @@ class leoTkinterMenu (leoMenu.leoMenu):
 		# for i in shortcut_table: print i
 		self.createMenuItemsFromTable("Open &With...",shortcut_table,openWith=1)
 	#@-node:createOpenWithMenuFromTable
-	#@+node:defineMenuCallback
+	#@+node:defineMenuCallback (tk)
 	def defineMenuCallback(self,command,name):
 		
 		# The first parameter must be event, and it must default to None.
@@ -174,7 +174,7 @@ class leoTkinterMenu (leoMenu.leoMenu):
 	
 		return callback
 	#@nonl
-	#@-node:defineMenuCallback
+	#@-node:defineMenuCallback (tk)
 	#@+node:defineOpenWithMenuCallback
 	def defineOpenWithMenuCallback(self,command):
 		
