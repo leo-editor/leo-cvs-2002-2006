@@ -308,10 +308,12 @@ class nullGui(leoGui):
 	#@nonl
 	#@-node: nullGui.__init__
 	#@+node: nullGui.__getattr__
-	def __getattr__(self,attr):
+	if 0: # This causes no end of problems.
 	
-		trace("nullGui",attr)
-		return nullObject()
+		def __getattr__(self,attr):
+	
+			trace("nullGui",attr)
+			return nullObject()
 	#@nonl
 	#@-node: nullGui.__getattr__
 	#@+node:createLeoFrame

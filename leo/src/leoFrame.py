@@ -1307,10 +1307,11 @@ class nullFrame (leoFrame):
 		assert(self.c is None)
 		self.title = title
 		
-	def __getattr__(self,attr):
-
-		trace("nullFrame",attr)
-		return nullObject()
+	if 0: # This causes no end of problems.
+		
+		def __getattr__(self,attr):
+			trace("nullFrame",attr)
+			return nullObject()
 
 	def finishCreate(self,c):
 

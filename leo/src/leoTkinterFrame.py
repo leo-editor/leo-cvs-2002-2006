@@ -1704,6 +1704,7 @@ class leoTkinterBody (leoFrame.leoBody):
 	#@-node:Bounding box (Tk spelling)
 	#@+node:Color tags (Tk spelling)
 	# Could have been replaced by the __getattr__ routine above...
+	# 12/19/03: no: that would cause more problems.
 	
 	def tag_add (self,tagName,index1,index2):
 		self.bodyCtrl.tag_add(tagName,index1,index2)
