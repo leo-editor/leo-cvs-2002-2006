@@ -74,7 +74,7 @@
 </v>
 </v>
 </v>
-<v t="EKR.20040519080201.1"><vh>Distribution checklist</vh>
+<v t="EKR.20040519080201.1"><vh>Checklist for 4.2</vh>
 <v t="EKR.20040519080201.2" tnodeList="EKR.20040519080201.2"><vh>@file-nosent c:\prog\leoCVS\.pycheckrc</vh></v>
 <v t="EKR.20040519080201.3"><vh>@url http://www.python.org/pypi?:action=submit_form</vh></v>
 </v>
@@ -104,11 +104,11 @@
 <v t="EKR.20040519082027.23"><vh>@thin ../createLeoDist.py</vh></v>
 <v t="EKR.20040519082027.29"><vh>@thin postSetup.py</vh></v>
 </v>
-<v t="ekr.20040629175400" a="E"><vh>Pychecker stuff</vh>
+<v t="ekr.20040629175400" a="TV"><vh>Pychecker stuff</vh>
 <v t="ekr.20040701160830"><vh>@url http://pychecker.sourceforge.net/</vh></v>
 <v t="ekr.20040701160830.1"><vh>names for use in suppressions</vh></v>
 <v t="ekr.20040629180414"><vh>pycheckrc (reference)</vh></v>
-<v t="ekr.20040629173419.1" a="EMTV" tnodeList="ekr.20040629173419.1,ekr.20040701193853,ekr.20040701193853.1,ekr.20040701193853.2,ekr.20040701193853.3,ekr.20040701193853.4,ekr.20040701193853.5"><vh>@file c:\prog\leoCVS\.pycheckrc</vh>
+<v t="ekr.20040629173419.1" a="M" tnodeList="ekr.20040629173419.1,ekr.20040701193853,ekr.20040701193853.1,ekr.20040701193853.2,ekr.20040701193853.3,ekr.20040701193853.4,ekr.20040701193853.5"><vh>@file c:\prog\leoCVS\.pycheckrc</vh>
 <v t="ekr.20040701193853"><vh>blacklist</vh></v>
 <v t="ekr.20040701193853.1"><vh>defaults</vh></v>
 <v t="ekr.20040701193853.2"><vh>max...</vh></v>
@@ -116,6 +116,10 @@
 <v t="ekr.20040701193853.4"><vh>unusedNames</vh></v>
 <v t="ekr.20040701193853.5"><vh>variablesToIgnore</vh></v>
 </v>
+</v>
+<v t="EKR.20040519080201.1"><vh>Checklist for 4.2</vh>
+<v t="EKR.20040519080201.2" tnodeList="EKR.20040519080201.2"><vh>@file-nosent c:\prog\leoCVS\.pycheckrc</vh></v>
+<v t="EKR.20040519080201.3"><vh>@url http://www.python.org/pypi?:action=submit_form</vh></v>
 </v>
 </vnodes>
 <tnodes>
@@ -2988,7 +2992,8 @@ suppressions = {
         'leoFind.leoFind.search'               : '--no-implicitreturns',
         'leoTkinterFind.leoTkinterFind.search' : '--no-implicitreturns',
     # A bad warning...
-        'leoCommands.Commands.canExtractSection' : '--no-implicitreturns',
+        'leoCommands.Commands.canExtractSection'     : '--no-implicitreturns',
+        'leoCommands.baseCommands.canExtractSection' : '--no-implicitreturns',
     # A bad warning about lastVnode.  BOTH MUST BE SPECIFIED
         'leoImport.baseLeoImportCommands.convertMoreStringsToOutlineAfter' : '--no-objattrs', 
         'leoImport.leoImportCommands.convertMoreStringsToOutlineAfter'     : '--no-objattrs',
