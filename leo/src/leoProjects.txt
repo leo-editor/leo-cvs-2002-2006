@@ -8618,7 +8618,7 @@ def writeException (self,root=None):
 #@-node:ekr.20041005105605.218:writeException
 #@-node:ekr.20041005105605.196:Writing 4.x utils...
 #@-node:ekr.20041005105605.132:Writing...
-#@+node:ekr.20041005105605.219:Uilites...
+#@+node:ekr.20041005105605.219:Uilites... (atFile)
 #@+node:ekr.20050104131929:file operations...
 @ The difference, if any, between these methods and the corresponding g.utils_x
 functions is that these methods may call self.error.
@@ -8630,7 +8630,7 @@ def chmod (self,fileName,mode):
     return g.utils_chmod(fileName,mode)
 #@nonl
 #@-node:ekr.20050104131820:chmod
-#@+node:ekr.20050104131929.1:rename
+#@+node:ekr.20050104131929.1:rename & test
 << about os.rename >>
 
 def rename (self,src,dst,mode=None,verbose=True):
@@ -8676,8 +8676,41 @@ there may be no way to implement an atomic rename when dst names an existing
 file.
 #@nonl
 #@-node:ekr.20050104131929.2:<< about os.rename >>
-#@-node:ekr.20050104131929.1:rename
-#@+node:ekr.20050104132018:remove
+#@+node:ekr.20050107085710:test_atFile_rename
+def test_atFile_rename (self):
+
+    import leoGlobals as g
+    import os
+    
+    c = g.top() ; at = c.atFileCommands
+
+    exists = g.os_path_exists
+    path = g.os_path_join(g.app.testDir,'xyzzy')
+    path2 = g.os_path_join(g.app.testDir,'xyzzy2')
+    
+    # Create both paths.
+    for p in (path,path2):
+        if exists(p):
+            os.remove(p)
+        assert not exists(p)
+        f = file(p,'w')
+        f.write('test %s' % p)
+        f.close()
+        assert exists(p)
+    
+    assert at.rename(path,path2,verbose=True)
+    assert exists(path2)
+    f = file(path2)
+    s = f.read()
+    f.close()
+    # print 'Contents of %s: %s' % (path2,s)
+    assert s == 'test %s' % path
+    os.remove(path2)
+    assert not exists(path)
+#@nonl
+#@-node:ekr.20050107085710:test_atFile_rename
+#@-node:ekr.20050104131929.1:rename & test
+#@+node:ekr.20050104132018:remove & test
 def remove (self,fileName,verbose=True):
 
     try:
@@ -8689,7 +8722,33 @@ def remove (self,fileName,verbose=True):
             g.es_exception()
         return False
 #@nonl
-#@-node:ekr.20050104132018:remove
+#@+node:ekr.20050107090156:test_atFile_remove
+def test_atFile_remove(self):
+    
+    import leoGlobals as g
+    import os
+    
+    c = g.top() ; at = c.atFileCommands
+    
+    exists = g.os_path_exists
+    
+    path = g.os_path_join(g.app.testDir,'xyzzy')
+    if exists(path):
+        os.remove(path)
+        
+    assert not exists(path)
+    assert not at.remove(path,verbose=False)
+    
+    f = file(path,'w')
+    f.write('test')
+    f.close()
+    
+    assert exists(path)
+    assert at.remove(path)
+    assert not exists(path)
+#@nonl
+#@-node:ekr.20050107090156:test_atFile_remove
+#@-node:ekr.20050104132018:remove & test
 #@+node:ekr.20050104132026:stat
 def stat (self,fileName):
 
@@ -9082,7 +9141,7 @@ def sentinelName(self, kind):
     return sentinelNameDict.get(kind,"<unknown sentinel!>")
 #@nonl
 #@-node:ekr.20041005105605.243:sentinelName
-#@-node:ekr.20041005105605.219:Uilites...
+#@-node:ekr.20041005105605.219:Uilites... (atFile)
 #@-node:ekr.20041005105605.4:class atFile
 #@-node:ekr.20041020101401:(Fixed bug:  @nosent writes sentinels!)
 #@+node:ekr.20041021064354:(Fixed bug in replaceTargetFileIfDifferent)
@@ -20607,11 +20666,10 @@ Doing so gives you a way to add Pmw easily and any other 3rd party libs Leo ever
 #@nonl
 #@-node:ekr.20041219065925:Notes
 #@+node:ekr.20041219095213:import wrappers
-@ Warning:
+@ 1/6/05: The problem with Tkinter is that imp.load_module is equivalent to reload.
 
-These functions use imp.load_module, and that is equivalent to reload!
-
-Calling any of these functions to reload Leo files will crash Leo!
+The solutions is easy: simply return sys.modules.get(moduleName) if moduleName is in sys.modules!
+#@nonl
 #@+node:ekr.20040917061619:g.cantImport
 def cantImport (moduleName,pluginName=None,verbose=True):
     
@@ -20635,21 +20693,23 @@ def importModule (moduleName,pluginName=None,verbose=False):
 
     moduleName is the module's name, without file extension.'''
     
-    try:
-        theFile = None ; module = None
-        import imp
+    module = sys.modules.get(moduleName)
+    if not module:
         try:
-            data = imp.find_module(moduleName) # This can open the file.
-            theFile,pathname,description = data
-            module = imp.load_module(moduleName,theFile,pathname,description)
-        except ImportError:
-            g.cantImport(moduleName,pluginName=pluginName,verbose=verbose)
-        except:
-            g.es("unexpected exception in g.import",color='blue')
-            g.es_exception()
-    finally:
-        if theFile: theFile.close()
-
+            theFile = None
+            import imp
+            try:
+                data = imp.find_module(moduleName) # This can open the file.
+                theFile,pathname,description = data
+                module = imp.load_module(moduleName,theFile,pathname,description)
+            except ImportError:
+                g.cantImport(moduleName,pluginName=pluginName,verbose=verbose)
+            except Exception:
+                g.es("unexpected exception in g.import",color='blue')
+                g.es_exception()
+        # Put no return statements before here!
+        finally:
+            if theFile: theFile.close()
     return module
 #@nonl
 #@-node:ekr.20041219095213.1:g.importModule
@@ -20675,39 +20735,34 @@ def importExtension (moduleName,pluginName=None,verbose=False):
 #@+node:ekr.20031218072017.2278:g.importFromPath
 def importFromPath (name,path,pluginName=None,verbose=False):
     
+    fn = g.shortFileName(name)
+    moduleName,ext = g.os_path_splitext(fn)
+    path = g.os_path_normpath(path)
+    path = g.toEncodedString(path,app.tkEncoding)
+    
     # g.trace(verbose,name,pluginName)
-
-    try:
-        theFile = None ; data = None ; result = None
-        import imp
+    module = sys.modules.get(moduleName)
+    if not module:
         try:
-            fn = g.shortFileName(name)
-            mod_name,ext = g.os_path_splitext(fn)
-            path = g.os_path_normpath(path)
-            if g.CheckVersion(sys.version,"2.3"):
-                path = g.toEncodedString(path,app.tkEncoding)
-            else:
-                path = str(path) # May throw exception.
+            theFile = None
+            import imp
             try:
-                data = imp.find_module(mod_name,[path]) # This can open the file.
+                data = imp.find_module(moduleName,[path]) # This can open the file.
+                theFile,pathname,description = data
+                module = imp.load_module(moduleName,theFile,pathname,description)
             except ImportError:
                 pass
-            if data:
-                theFile,pathname,description = data
-                try:
-                    result = imp.load_module(mod_name,theFile,pathname,description)
-                except ImportError:
-                    g.es_exception()
-        except:
-            g.es_exception()
-
-    # Put no return statements before here!
-    finally: 
-        if theFile: theFile.close()
+            except Exception:
+                g.es("unexpected exception in g.importFromPath",color='blue')
+                g.es_exception()
+        # Put no return statements before here!
+        finally: 
+            if theFile: theFile.close()
         
-    if not result:
-        g.cantImport(mod_name,pluginName=pluginName,verbose=verbose)
-    return result
+    if not module:
+        g.cantImport(moduleName,pluginName=pluginName,verbose=verbose)
+    return module
+#@nonl
 #@-node:ekr.20031218072017.2278:g.importFromPath
 #@-node:ekr.20041219095213:import wrappers
 #@+node:ekr.20031218072017.1934:run & allies
@@ -21852,11 +21907,10 @@ def loadOnePlugin (moduleOrFileName, verbose=False):
 #@nonl
 #@-node:ekr.20050101065403.1:What I did
 #@+node:ekr.20041219095213:import wrappers
-@ Warning:
+@ 1/6/05: The problem with Tkinter is that imp.load_module is equivalent to reload.
 
-These functions use imp.load_module, and that is equivalent to reload!
-
-Calling any of these functions to reload Leo files will crash Leo!
+The solutions is easy: simply return sys.modules.get(moduleName) if moduleName is in sys.modules!
+#@nonl
 #@+node:ekr.20040917061619:g.cantImport
 def cantImport (moduleName,pluginName=None,verbose=True):
     
@@ -21880,21 +21934,23 @@ def importModule (moduleName,pluginName=None,verbose=False):
 
     moduleName is the module's name, without file extension.'''
     
-    try:
-        theFile = None ; module = None
-        import imp
+    module = sys.modules.get(moduleName)
+    if not module:
         try:
-            data = imp.find_module(moduleName) # This can open the file.
-            theFile,pathname,description = data
-            module = imp.load_module(moduleName,theFile,pathname,description)
-        except ImportError:
-            g.cantImport(moduleName,pluginName=pluginName,verbose=verbose)
-        except:
-            g.es("unexpected exception in g.import",color='blue')
-            g.es_exception()
-    finally:
-        if theFile: theFile.close()
-
+            theFile = None
+            import imp
+            try:
+                data = imp.find_module(moduleName) # This can open the file.
+                theFile,pathname,description = data
+                module = imp.load_module(moduleName,theFile,pathname,description)
+            except ImportError:
+                g.cantImport(moduleName,pluginName=pluginName,verbose=verbose)
+            except Exception:
+                g.es("unexpected exception in g.import",color='blue')
+                g.es_exception()
+        # Put no return statements before here!
+        finally:
+            if theFile: theFile.close()
     return module
 #@nonl
 #@-node:ekr.20041219095213.1:g.importModule
@@ -21920,39 +21976,34 @@ def importExtension (moduleName,pluginName=None,verbose=False):
 #@+node:ekr.20031218072017.2278:g.importFromPath
 def importFromPath (name,path,pluginName=None,verbose=False):
     
+    fn = g.shortFileName(name)
+    moduleName,ext = g.os_path_splitext(fn)
+    path = g.os_path_normpath(path)
+    path = g.toEncodedString(path,app.tkEncoding)
+    
     # g.trace(verbose,name,pluginName)
-
-    try:
-        theFile = None ; data = None ; result = None
-        import imp
+    module = sys.modules.get(moduleName)
+    if not module:
         try:
-            fn = g.shortFileName(name)
-            mod_name,ext = g.os_path_splitext(fn)
-            path = g.os_path_normpath(path)
-            if g.CheckVersion(sys.version,"2.3"):
-                path = g.toEncodedString(path,app.tkEncoding)
-            else:
-                path = str(path) # May throw exception.
+            theFile = None
+            import imp
             try:
-                data = imp.find_module(mod_name,[path]) # This can open the file.
+                data = imp.find_module(moduleName,[path]) # This can open the file.
+                theFile,pathname,description = data
+                module = imp.load_module(moduleName,theFile,pathname,description)
             except ImportError:
                 pass
-            if data:
-                theFile,pathname,description = data
-                try:
-                    result = imp.load_module(mod_name,theFile,pathname,description)
-                except ImportError:
-                    g.es_exception()
-        except:
-            g.es_exception()
-
-    # Put no return statements before here!
-    finally: 
-        if theFile: theFile.close()
+            except Exception:
+                g.es("unexpected exception in g.importFromPath",color='blue')
+                g.es_exception()
+        # Put no return statements before here!
+        finally: 
+            if theFile: theFile.close()
         
-    if not result:
-        g.cantImport(mod_name,pluginName=pluginName,verbose=verbose)
-    return result
+    if not module:
+        g.cantImport(moduleName,pluginName=pluginName,verbose=verbose)
+    return module
+#@nonl
 #@-node:ekr.20031218072017.2278:g.importFromPath
 #@-node:ekr.20041219095213:import wrappers
 #@-node:ekr.20050101065403:(Fixed problems loading plugins)

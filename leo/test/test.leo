@@ -925,7 +925,7 @@ marks="ekr.20050106081120.1,"><vh>@thin ../src/leoTest.py</vh></v>
 <v t="ekr.20041230121429"><vh>@ button pydoc</vh></v>
 <v t="ekr.20041230143535"><vh>@ button help</vh></v>
 </v>
-<v t="EKR.20040619133116"><vh>Unit testing...</vh>
+<v t="EKR.20040619133116" a="TV"><vh>Unit testing...</vh>
 <v t="ekr.20040723064143.1" a="M"><vh>To do...</vh>
 <v t="ekr.20040723064143.3"><vh>Test error recovery when reading descendentTnodeUa's</vh></v>
 <v t="ekr.20040903102217"><vh>Test multi-line @doc parts with @language html</vh></v>
@@ -1023,7 +1023,7 @@ marks="ekr.20050106081120.1,"><vh>@thin ../src/leoTest.py</vh></v>
 <v t="ekr.20050106095223"><vh>findTestsInCommander</vh></v>
 </v>
 </v>
-<v t="ekr.20050106080318.1" a="E"><vh>&lt;&lt; class testRoutineTestCase &gt;&gt;</vh>
+<v t="ekr.20050106080318.1"><vh>&lt;&lt; class testRoutineTestCase &gt;&gt;</vh>
 <v t="ekr.20050106080318.2"><vh>__init__</vh></v>
 <v t="ekr.20050106080318.3"><vh> fail</vh></v>
 <v t="ekr.20050106080318.4"><vh>setUp</vh></v>
@@ -1032,7 +1032,7 @@ marks="ekr.20050106081120.1,"><vh>@thin ../src/leoTest.py</vh></v>
 <v t="ekr.20050106080318.7"><vh>shortDescription</vh></v>
 </v>
 <v t="ekr.20050106080318"><vh>addTestRoutinesInModuleToSuite</vh></v>
-<v t="ekr.20050106081120.2" a="E"><vh>findTestsInModule</vh>
+<v t="ekr.20050106081120.2"><vh>findTestsInModule</vh>
 <v t="ekr.20050106124235"><vh>&lt;&lt; print classes, methods &amp; functions &gt;&gt;</vh></v>
 </v>
 <v t="ekr.20050106124624"><vh>getAllLeoModules</vh></v>
@@ -1494,7 +1494,7 @@ marks="ekr.20050106081120.1,"><vh>@thin ../src/leoTest.py</vh></v>
 </v>
 <v t="ekr.20040707081532.1"><vh>Do @test</vh></v>
 </v>
-<v t="ekr.20050107093251" a="TV"><vh>Unit testing for plugins (do this separately!)</vh>
+<v t="ekr.20050107093251"><vh>Unit testing for plugins (do this separately!)</vh>
 <v t="ekr.20050105112238"><vh>@suite plugins tests</vh>
 <v t="ekr.20050105153808"><vh> To do</vh></v>
 <v t="ekr.20050105141608"><vh>Notes</vh>
@@ -2148,7 +2148,7 @@ import leoGlobals as g
 print g.app.config.redirect_execute_script_output_to_log_pane</t>
 <t tx="EKR.20040627103732">@ignore</t>
 <t tx="EKR.20040627103801"></t>
-<t tx="EKR.20040627103902" lineYOffset="4b032e" icons="5d7100287d710128550577686572657102550a6265666f726549636f6e710355047870616471044b025504747970657105550466696c6571066806582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286805680668084afdffffff6806582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6802550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e"></t>
+<t tx="EKR.20040627103902" lineYOffset="4b032e" icons="5d7100287d7101285504747970657102550466696c65710355047870616471044b02550577686572657105550a6265666f726549636f6e71066803582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286802680368084afdffffff6803582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6805550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e"></t>
 <t tx="EKR.20040627121836">import leoGlobals as g
 
 c = g.top() ; p = c.currentPosition()
@@ -2279,7 +2279,7 @@ for p in c.rootPosition().allNodes_iter():
 s = "%d nodes" % count
 print s ; g.es(s)</t>
 <t tx="ekr.20040312101720"></t>
-<t tx="ekr.20040317101155" lineYOffset="4b032e" icons="5d7100287d7101285504747970657102550466696c65710355047870616471044b02550577686572657105550a6265666f726549636f6e710668035834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286802680368084afdffffff68035834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6805550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">import leoGlobals as g
+<t tx="ekr.20040317101155" lineYOffset="4b032e" icons="5d7100287d710128550577686572657102550a6265666f726549636f6e710355047870616471044b025504747970657105550466696c65710668065834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286805680668084afdffffff68065834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6802550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">import leoGlobals as g
 
 c = g.top()
 
@@ -10944,10 +10944,10 @@ if spellpyx:
         spellFrame.checkSpelling()</t>
 <t tx="ekr.20041121151002">@nocolor</t>
 <t tx="ekr.20041121151002.1">C:\prog\leoCVS\leo\plugins\leoPlugins.leo
-C:\prog\leoCVS\leo\src\LeoPy.leo
-C:\prog\leoCVS\leo\test\test.leo
 C:\prog\leoCVS\leo\doc\LeoDocs.leo
-C:\prog\leoCVS\leo\dist\leoDist.leo</t>
+C:\prog\leoCVS\leo\test\test.leo
+C:\prog\leoCVS\leo\dist\leoDist.leo
+C:\prog\leoCVS\leo\src\LeoPy.leo</t>
 <t tx="ekr.20041124063401"></t>
 <t tx="ekr.20041124144944">import os
 import sys
