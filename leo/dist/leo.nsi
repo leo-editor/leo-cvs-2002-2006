@@ -95,28 +95,7 @@ Section "Leo" ; (default, required section)
   IfFileExists $8 ok ng
   
   ng:
-    MessageBox MB_OK "Python is not installed on this system. $\nPlease install Python first. $\n$\nClick OK to cancel installation and remove installation Files."
-    
-    Delete "$INSTDIR\config\*.*" ; config dir
-    RMDir "$INSTDIR\config"
-    Delete "$INSTDIR\doc\*.*" ; doc dir
-    RMDir "$INSTDIR\doc"
-    Delete "$INSTDIR\examples\*.*" ; src dir
-    RMDir "$INSTDIR\examples"
-    Delete "$INSTDIR\Icons\*.*" ; Icons dir
-    RMDir "$INSTDIR\Icons"
-    Delete "$INSTDIR\plugins\*.*" ; plugins dir
-    RMDir "$INSTDIR\plugins"
-    Delete "$INSTDIR\scripts\*.*" ; scripts dir
-    RMDir "$INSTDIR\scripts"
-    Delete "$INSTDIR\src\*.*" ; src dir
-    RMDir "$INSTDIR\src"
-    Delete "$INSTDIR\test\*.*" ; test dir
-    RMDir "$INSTDIR\test"
-    Delete "$INSTDIR\tools\*.*" ; tools dir
-    RMDir "$INSTDIR\tools"
-    Delete "$INSTDIR\*.*" ; Leo directory
-    RMDir "$INSTDIR"
+    MessageBox MB_OK "Python is not installed on this system. $\nPlease install Python first. $\n$\nClick OK to cancel installation."
   
     Quit
   ;@nonl
