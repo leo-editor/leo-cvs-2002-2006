@@ -12,8 +12,7 @@
 	<change_string></change_string>
 </find_panel_settings>
 <vnodes>
-<v t="edream.110203113231"
-expanded="edream.110203113231.3,"><vh>@file-thin pluginsNotes.txt</vh></v>
+<v t="edream.110203113231"><vh>@file-thin pluginsNotes.txt</vh></v>
 <v t="edream.110203113231.618"><vh>Plugins</vh>
 <v t="edream.110203113231.667"><vh>Commands &amp; directives</vh>
 <v t="edream.110203113231.668"><vh> Importing Cisco configuration files</vh>
@@ -125,8 +124,7 @@ expanded="edream.110203113231.3,"><vh>@file-thin pluginsNotes.txt</vh></v>
 <v t="ekr.20040331072607"><vh>@thin hoist.py</vh></v>
 <v t="EKR.20040613213623"><vh>@thin mod_scripting.py</vh></v>
 <v t="edream.110203113231.758"><vh>@thin nav_buttons.py</vh></v>
-<v t="ekr.20040108062655"
-expanded="ekr.20040108062655.2,"><vh>@thin nodenavigator.py</vh></v>
+<v t="ekr.20040108062655"><vh>@thin nodenavigator.py</vh></v>
 <v t="ekr.20040108095351"><vh>@thin rowcol.py</vh></v>
 <v t="ekr.20040107092135.2"><vh>@thin searchbox.py</vh></v>
 </v>
@@ -417,7 +415,7 @@ expanded="ekr.20040108062655.2,"><vh>@thin nodenavigator.py</vh></v>
 <v t="edream.110203113231.983"><vh>Notes by Paul Paterson</vh></v>
 </v>
 <v t="ekr.20040717133342"><vh>Shadow files plugin</vh></v>
-<v t="edream.110203113231.233" a="E"><vh>wxPython plugin (pre-alpha quality)</vh>
+<v t="edream.110203113231.233"><vh>wxPython plugin (pre-alpha quality)</vh>
 <v t="edream.110203113231.234"><vh> Diary</vh>
 <v t="edream.111503110300"><vh>11/15/03  Leo becomes usuable (!)</vh></v>
 <v t="edream.111403093253"><vh>11/13 &amp; 11/14</vh></v>
@@ -480,8 +478,7 @@ expanded="ekr.20040108062655.2,"><vh>@thin nodenavigator.py</vh></v>
 <v t="edream.110203113231.257"><vh>updateJoinedHeadlines</vh></v>
 <v t="edream.111303202917.1"><vh>Syntax coloring REMOVED: now in base body class</vh></v>
 </v>
-<v t="edream.110203113231.302" a="E"
-expanded="edream.111603213219,edream.111603221343.1,"><vh>@thin __wx_gui.py</vh></v>
+<v t="edream.110203113231.302"><vh>@thin __wx_gui.py</vh></v>
 </v>
 </v>
 <v t="EKR.20040517075715"><vh>External editors &amp; Open With</vh>
@@ -542,7 +539,7 @@ expanded="edream.111603213219,edream.111603221343.1,"><vh>@thin __wx_gui.py</vh>
 </v>
 </v>
 </v>
-<v t="EKR.20040517090508" a="M"><vh>Enable plugins by changing pluginsManager.txt</vh>
+<v t="EKR.20040517090508" a="MTV"><vh>Enable plugins by changing pluginsManager.txt</vh>
 <v t="edream.120603093808"><vh>@thin pluginsManager.txt</vh></v>
 </v>
 <v t="ekr.20040725171859"><vh>To do...</vh>
@@ -550,8 +547,7 @@ expanded="edream.111603213219,edream.111603221343.1,"><vh>@thin __wx_gui.py</vh>
 <v t="ekr.20040722122834"><vh>To do: reinstall spelling plugin</vh></v>
 <v t="ekr.20040722134333.1"><vh>To do: install latest xemacs</vh></v>
 </v>
-<v t="ekr.20040723100651" a="ETV"
-expanded="ekr.20040729143503.1,ekr.20040723104427.8,"><vh>@thin __outlineExperiments.py</vh></v>
+<v t="ekr.20040723100651"><vh>@thin __outlineExperiments.py</vh></v>
 </vnodes>
 <tnodes>
 <t tx="EKR.20040517075715"></t>

@@ -1690,8 +1690,6 @@ class myLeoTkinterTree(leoFrame.leoTree):
     
         p = self.eventToPosition(event)
         if not p: return
-    
-        g.trace(p)
         
         try:
             if not g.doHook("icondclick1",c=c,p=p,event=event):
@@ -1704,7 +1702,6 @@ class myLeoTkinterTree(leoFrame.leoTree):
     def onIconBoxRightClick (self,event):
     
         p = self.eventToPosition(event)
-        g.trace(p)
         
         if p:
             self.select(p)
