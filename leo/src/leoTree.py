@@ -884,7 +884,7 @@ class baseLeoTree:
 	#@+others
 	#@+node:1::idle_body_key
 	#@+body
-	def idle_body_key (self,v,oldSel,undoType,ch=None,oldYview=None,newSel=None):
+	def idle_body_key (self,v,oldSel,undoType,ch=None,oldYview=None,newSel=None,oldText=None):
 		
 		"""Update the body pane at idle time."""
 	
@@ -896,20 +896,23 @@ class baseLeoTree:
 		body = v.bodyString()
 		if not newSel:
 			newSel = getTextSelection(c.body)
-		
-		#@<< set s to the widget text >>
-		#@+node:1::<< set s to the widget text >>
-		#@+body
-		s = c.body.get("1.0", "end")
-		
-		if s == None:
-			s = u""
-		
-		if type(s) == type(""):
-			s = toUnicode(s,app().tkEncoding) # 2/25/03
-			# if len(ch) > 0: print `s`
-		#@-body
-		#@-node:1::<< set s to the widget text >>
+		if oldText != None:
+			s = oldText
+		else:
+			
+			#@<< set s to the widget text >>
+			#@+node:1::<< set s to the widget text >>
+			#@+body
+			s = c.body.get("1.0", "end")
+			
+			if s == None:
+				s = u""
+			
+			if type(s) == type(""):
+				s = toUnicode(s,app().tkEncoding) # 2/25/03
+				# if len(ch) > 0: print `s`
+			#@-body
+			#@-node:1::<< set s to the widget text >>
 
 		
 		#@<< return if nothing has changed >>
@@ -1105,7 +1108,7 @@ class baseLeoTree:
 	#@+body
 	# Called by command handlers that have already changed the text.
 	
-	def onBodyChanged (self,v,undoType,oldSel=None,oldYview=None,newSel=None):
+	def onBodyChanged (self,v,undoType,oldSel=None,oldYview=None,newSel=None,oldText=None):
 		
 		"""Handle a change to the body pane."""
 		
@@ -1116,7 +1119,7 @@ class baseLeoTree:
 		if not oldSel:
 			oldSel = getTextSelection(c.body)
 	
-		self.idle_body_key(v,oldSel,undoType,oldYview=oldYview,newSel=newSel)
+		self.idle_body_key(v,oldSel,undoType,oldYview=oldYview,newSel=newSel,oldText=oldText)
 	
 	#@-body
 	#@-node:2::onBodyChanged
@@ -1493,7 +1496,7 @@ class baseLeoTree:
 			if id != None:
 				try: id = id[0]
 				except: pass
-				trace("drag_v",v)
+				# trace("drag_v",v)
 				self.drag_v = v
 				self.drag_id = id
 				id4 = canvas.tag_bind(id,"<B1-Motion>", v.OnDrag)
