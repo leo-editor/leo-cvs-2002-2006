@@ -70,6 +70,12 @@ class Commands:
 		self.target_language = "python" # 8/11/02: Required if leoConfig.txt does not exist.
 		
 		self.setIvarsFromFind()
+		
+		# New in 4.0
+		# These are defined here, and updated by the tree.select()
+		self.beadList = [] # list of vnodes for the Back and Forward commands.
+		self.beadPointer = -1 # present item in the list.
+		self.visitedList = [] # list of vnodes for the Nodes dialog.
 		#@-body
 		#@-node:1::<< initialize ivars >>
 	#@-body
@@ -2298,12 +2304,12 @@ class Commands:
 	#@+body
 	# This is called inside commands to select a new vnode.
 	
-	def selectVnode(self,v):
+	def selectVnode(self,v,updateBeadList=true):
 	
 		# All updating and "synching" of nodes are now done in the event handlers!
 		c = self
 		c.tree.endEditLabel()
-		c.tree.select(v)
+		c.tree.select(v,updateBeadList)
 		c.body.focus_force()
 		self.editing = false
 	#@-body
