@@ -313,6 +313,8 @@ class baseConfig:
 		weight = self.getWindowPref(weight)
 		if not weight or weight == "": weight = "normal"
 		
+		trace(family,size,slant,weight)
+		
 		return app.gui.getFontFromParams(family,size,slant,weight)
 	#@nonl
 	#@-node:config.getFontFromParams
