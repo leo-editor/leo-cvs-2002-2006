@@ -84,6 +84,8 @@ import os
 # 
 # - JD 2004-09-09 changed headline directive from @rst to @text to become 
 # compatible with the rst2 plugin.
+# 
+# 1.7 EKR 2005-03-07 changed publish() to publish(argv=[''])
 #@-at
 #@nonl
 #@-node:edream.111803100242.2:<< change log >>
@@ -140,7 +142,7 @@ def onIconDoubleClick(tag,keywords):
                 pub.destination = StringOutput(pub.settings, encoding=enc)
                 pub.set_reader('standalone', None, 'restructuredtext')
                 pub.set_writer(writer)
-                output = pub.publish()
+                output = pub.publish(argv=[''])
                 #@nonl
                 #@-node:edream.111803100242.5:<< convert rST to HTML/LaTeX >>
                 #@nl
@@ -218,7 +220,7 @@ if 1: # Ok for unit testing??
     # Register the handlers...
     leoPlugins.registerHandler("icondclick1",onIconDoubleClick)
         
-    __version__ = "1.6" # Set version for the plugin handler.
+    __version__ = "1.7" # Set version for the plugin handler.
     g.plugin_signon(__name__)
 #@nonl
 #@-node:edream.111803100242:@thin rst.py

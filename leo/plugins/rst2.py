@@ -44,6 +44,7 @@ import os
 #     - Added comments to << define code-block>>
 #     - Added div.code-block style to silver_city.css (see documentation)
 #     - Rewrote documentation.
+# 2.2 EKR 2005-03-07 changed publish() to publish(argv=[''])
 #@-at
 #@nonl
 #@-node:ekr.20040331071319.2:<< change log >>
@@ -145,7 +146,7 @@ def onIconDoubleClick(tag,keywords):
                 pub.destination = StringOutput(pub.settings, encoding=enc)
                 pub.set_reader('standalone', None, 'restructuredtext')
                 pub.set_writer(writer)
-                output = pub.publish()
+                output = pub.publish(argv=[''])
                 
                 convertedFile = file(fname,'w')
                 convertedFile.write(output)
@@ -291,7 +292,7 @@ def underline(h,level):
 
 if 1: # Ok for unit testing.
     leoPlugins.registerHandler("icondclick1",onIconDoubleClick)
-    __version__ = "2.1"
+    __version__ = "2.2"
     g.plugin_signon(__name__)
 #@nonl
 #@-node:ekr.20040331071319:@thin rst2.py
