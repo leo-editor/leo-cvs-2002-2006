@@ -3671,18 +3671,23 @@ class baseNewDerivedFile(oldDerivedFile):
             at.readError("No vnodeList for tnode: %s" % repr(t))
             g.trace(at.tnodeListIndex)
             return None
-    
-        # Check the headline.
-        if headline.strip() == v.headString().strip():
-            t.setVisited() # Supress warning about unvisited node.
-            return t
-        else:
-            at.readError(
-                "Mismatched headline.\nExpecting: %s\ngot: %s" %
-                (headline,v.headString()))
-            g.trace("Mismatched headline",headline,v.headString())
-            g.trace(at.tnodeListIndex,len(at.root.v.t.tnodeList))
-            return None
+            
+        # Don't check the headline.  It simply causes problems.
+        t.setVisited() # Supress warning about unvisited node.
+        return t
+        
+        if 0: # Old code:
+            # Check the headline.
+            if headline.strip() == v.headString().strip():
+                t.setVisited() # Supress warning about unvisited node.
+                return t
+            else:
+                at.readError(
+                    "Mismatched headline.\nExpecting: %s\ngot: %s" %
+                    (headline,v.headString()))
+                g.trace("Mismatched headline",headline,v.headString())
+                g.trace(at.tnodeListIndex,len(at.root.v.t.tnodeList))
+                return None
     #@nonl
     #@-node:ekr.20031218072017.2007:findChild 4.x
     #@+node:ekr.20031218072017.2758:scanText4 & allies
