@@ -3,7 +3,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="13163" clone_windows="0"/>
 <globals body_outline_ratio="0.53452685422">
-	<global_window_position top="40" left="169" height="859" width="1023"/>
+	<global_window_position top="7" left="194" height="900" width="1023"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -39,7 +39,7 @@
 <v t="edream.110203163054.12"><vh>Dan Winkler 3</vh></v>
 </v>
 </v>
-<v t="edream.110203163054.46" a="E"><vh>Release Notes</vh>
+<v t="edream.110203163054.46"><vh>Release Notes</vh>
 <v t="edream.110203163054.47"><vh>Warnings</vh></v>
 <v t="edream.110203163054.48"><vh>Installation notes</vh>
 <v t="edream.110203163054.49"><vh>System requirements</vh></v>
@@ -1528,7 +1528,7 @@
 </v>
 </v>
 </v>
-<v t="EKR.20040524104904" a="TV"><vh>Users Guide</vh>
+<v t="EKR.20040524104904"><vh>Users Guide</vh>
 <v t="EKR.20040524104904.2"><vh>An overview of Leo</vh></v>
 <v t="EKR.20040524104904.3"><vh>Front material</vh>
 <v t="EKR.20040524104904.4"><vh>Title Page &amp; Summary</vh></v>
@@ -1938,7 +1938,7 @@
 </v>
 <v t="EKR.20040524104904.213"><vh>Using plugins and hooks</vh>
 <v t="EKR.20040524104904.214"><vh>Overview of plugins and hooks</vh></v>
-<v t="EKR.20040524104904.215" a="E"><vh>New plugin architecture</vh>
+<v t="EKR.20040524104904.215"><vh>New plugin architecture</vh>
 <v t="EKR.20040524104904.216"><vh>@file plugins/mod_open_with.py</vh>
 <v t="EKR.20040524104904.217"><vh>on_idle</vh>
 <v t="EKR.20040524104904.218"><vh>&lt;&lt; update v's body text &gt;&gt;</vh>
@@ -1976,9 +1976,11 @@
 <v t="EKR.20040524104904.240"><vh>Support for unit testing</vh></v>
 </v>
 <v t="EKR.20040524104904.241"><vh>Putting the Leo icon in Leo windows</vh></v>
+<v t="ekr.20050306090601"><vh>Adding attributes to nodes and .leo files</vh>
 <v t="EKR.20040524104904.242"><vh>Extending the format of .leo files</vh></v>
 <v t="EKR.20040524104904.243"><vh>Attaching temporary attributes to vnodes and tnodes</vh></v>
 <v t="EKR.20040524104904.244"><vh>Recommended conventions for plugins</vh></v>
+</v>
 <v t="EKR.20040524104904.119"><vh> Script Find and Script Change</vh>
 <v t="EKR.20040524104904.120"><vh>How it works</vh></v>
 <v t="EKR.20040524104904.121"><vh>Using the initScriptFind script</vh></v>
@@ -2197,7 +2199,7 @@
 <v t="EKR.20040524104904.429"><vh>Weaving</vh></v>
 </v>
 </v>
-<v t="edream.110203163054.1050"><vh>FAQ</vh>
+<v t="edream.110203163054.1050" a="TV"><vh>FAQ</vh>
 <v t="edream.110203163054.1051"><vh>Learning about Leo</vh>
 <v t="edream.110203163054.1052"><vh>What's the best way to learn to use Leo?</vh></v>
 <v t="edream.110203163054.1053"><vh>Where are the simple examples?</vh></v>
@@ -2349,6 +2351,7 @@
 </v>
 <v t="edream.110203163054.1108"><vh>How can I create a template .leo file?</vh></v>
 <v t="ekr.20040908100113"><vh>Control-Shift backspace doesn't work.  What should I do?</vh></v>
+<v t="ekr.20050307112705"><vh>The rst plugins sometimes crash.  What can I do?</vh></v>
 </v>
 <v t="ekr.20041013100216"><vh>Tips and techniques</vh>
 <v t="ekr.20040411074926"><vh>How can I use Leo to develop Leo itself?</vh></v>
@@ -2400,7 +2403,7 @@
 <v t="ekr.20040414174439.1"><vh>@rst</vh></v>
 </v>
 </v>
-<v t="ekr.20040403171740" a="E"><vh>@rst scripting.html</vh>
+<v t="ekr.20040403171740"><vh>@rst scripting.html</vh>
 <v t="ekr.20040403183229"><vh>Overview</vh>
 <v t="ekr.20040403183229.1"><vh>@rst</vh></v>
 </v>
@@ -2417,7 +2420,7 @@
 <v t="ekr.20040403180217"><vh>@rst</vh></v>
 </v>
 <v t="ekr.20040403173920.9"><vh>Traversing outlines</vh>
-<v t="ekr.20040403183934" a="E"><vh>@rst</vh>
+<v t="ekr.20040403183934"><vh>@rst</vh>
 <v t="ekr.20040403173920.10"><vh>c.allNodes_iter</vh>
 <v t="ekr.20040403185643"><vh>@rst</vh></v>
 </v>
@@ -2430,10 +2433,10 @@
 <v t="ekr.20040403173920.15"><vh>p.siblings_iter and p.following_siblings_iter</vh>
 <v t="ekr.20040403185803.2"><vh>@rst</vh></v>
 </v>
-<v t="ekr.20040403173920.16" a="E"><vh>p.subtree_iter and p.self_and_subtree_iter</vh>
+<v t="ekr.20040403173920.16"><vh>p.subtree_iter and p.self_and_subtree_iter</vh>
 <v t="ekr.20040403185803.3"><vh>@rst</vh></v>
 </v>
-<v t="ekr.20040903100514" a="E"><vh>Testing whether a position is valid</vh>
+<v t="ekr.20040903100514"><vh>Testing whether a position is valid</vh>
 <v t="ekr.20040903100514.1"><vh>@rst</vh></v>
 </v>
 </v>
@@ -2467,14 +2470,14 @@
 <v t="ekr.20040403183718"><vh>@rst</vh></v>
 </v>
 <v t="ekr.20040403173920.26"><vh>Summary of the vnode and position classes</vh>
-<v t="ekr.20040403184306.4" a="E"><vh>@rst</vh>
-<v t="ekr.20040411151245" a="E"><vh>Iterators</vh>
+<v t="ekr.20040403184306.4"><vh>@rst</vh>
+<v t="ekr.20040411151245"><vh>Iterators</vh>
 <v t="ekr.20040411151245.1"><vh>@rst</vh></v>
 </v>
-<v t="ekr.20040403173920.27" a="E"><vh>Getters</vh>
+<v t="ekr.20040403173920.27"><vh>Getters</vh>
 <v t="ekr.20040403192653"><vh>@rst</vh></v>
 </v>
-<v t="ekr.20040403173920.28" a="E"><vh>Setters</vh>
+<v t="ekr.20040403173920.28"><vh>Setters</vh>
 <v t="ekr.20040403192653.1"><vh>@rst</vh></v>
 </v>
 </v>
@@ -2686,7 +2689,7 @@ The history of Leo
 
 Inventing and reinventing Leo has been the happiest and most creative part of my professional life.  Work on Leo accelerated significantly when a community of Leo's users became established on SourceForge.  For that I am truly grateful.  Suggestions (and plugins!) from users continue to drive Leo in excellent new directions.  Leo has come a long way since the early prototypes more than 9 years ago.  But in all that time, Leo's look and feel have remained almost completely unchanged--there has been no need to do so.
 
-Leo grew out of my attempts to understand and use Donald Knuth's CWEB system of "literate programming".  I had great difficulty the original CWEB. The design and organization of my own literate programs were a mystery to me. I couldn't keep the parts of a literate program clear in my mind.  I easily became confused about what I had done or what remained to do.  It was too difficult to remember the names of sections or where I had defined functions and variables.  Leo eliminates all these problems and makes Knuth's original idea truly useful.  Chapter 6 discusses these ideas in much greater detail.
+Leo grew out of my attempts to understand and use Donald Knuth's CWEB system of "literate programming".  I had great difficulty using the original CWEB. The design and organization of my own literate programs were a mystery to me. I couldn't keep the parts of a literate program clear in my mind.  I easily became confused about what I had done or what remained to do.  It was too difficult to remember the names of sections or where I had defined functions and variables.  Leo eliminates all these problems and makes Knuth's original idea truly useful.  Chapter 6 discusses these ideas in much greater detail.
 
 March 5, 1996 is Leo's true birthday.  On that day I started using the MORE outlining program to organize literate programs.  I had been lead to do this by the (gradual!) realization that webs are "outlines in disguise".  Within an hour of writing code in MORE, I knew that using outlines to organize literate programs would work spectacularly well.  March 5, 1996 was the day that changed my programming life forever.
 
@@ -3627,7 +3630,7 @@ def putOpenNodeSentinel(self,v):
 @nocolor
 The following escape convention applies only in @root trees.  Within a code parts @@ in the first column (and only in the first column) stands for a single @ sign.</t>
 <t tx="EKR.20040524104904.96">@nocolor
-Each @root tree  represents a single derived file.  Tangling is the process of creating derived files from @file or @root trees. Leo tangles @file trees automatically whenever an outline is saved.  The user must tangle @file trees explicitly using one of the Tangle commands.
+Each @root tree represents a single derived file.  Tangling is the process of creating derived files from @file or @root trees. Leo tangles @file trees automatically whenever an outline is saved.  The user must tangle @root trees explicitly using one of the Tangle commands.
 
 Leo creates derived files by expanding all section references in an @root node. Leo expands a section reference by substituting the code section itself for the section reference. This is a recursive process: the substituted code section may contain other code references which are themselves expanded, and so on.
 
@@ -3643,7 +3646,7 @@ The Tangle command creates derived files from @root node. The @root directive in
 For example, the following @root section shows a typical way of specifying a header file xx.h.
 @color
 
-@root"xx.h"
+@root xx.h
 #ifndef xx_defined
 #define xx_defined
 &lt;&lt; declarations of public constants of the xx class &gt;&gt;
@@ -3658,7 +3661,7 @@ The Tangle commands will create the file xx.h from this body text by expanding a
 As another example, the following shows a typical way of specifying the corresponding xx.c file:
 @color
 
-@root"xx.c"
+@root xx.c
 &lt;&lt; public variables of the xx class &gt;&gt;
 &lt;&lt; private types of the xx class &gt;&gt;
 &lt;&lt; private variables of the xx class &gt;&gt;
@@ -5223,7 +5226,7 @@ tag argument                                              keys in keywords
 "select1"      yes      before selecting a vnode          c,new_p,old_p,new_v,new_v
 "select2"               after  selecting a vnode          c,new_p,old_p,new_v,old_v
 "select3"               after  selecting a vnode          c,new_p,old_p,new_v,old_v
-"set-mark"     no       when a mark is set                c,p,v           (new)
+"set-mark"     no       when a mark is set                c,p,v
 "start1"       no       after app.finishCreate()
 "start2"                after opening first Leo window    c,p,v,fileName
 "unselect1"    yes      before unselecting a vnode        c,new_p,old_p,new_v,old_v
@@ -5290,6 +5293,7 @@ tag argument                                                       keys in keywo
 "enable-popup-menu-items"    no        in tree.OnPopup           c,p,v,event (new)
 "init-color-markup"          no        (note 7)                  colorer,p,v (note 7)
 "new"                        no        start of New command      old_c,new_c (note 9)
+"onCreate"                   no        before frame.finishCreate c (note 13)
 "redraw-entire-outline"      yes       start of tree.redraw      c (note 6)
 "scan-directives"            no        in scanDirectives         c,p,v,s,old_dict,dict,pluginsList (note 10)
 "set-mark"                   no        when mark is set          c,p,v
@@ -5334,7 +5338,11 @@ removing the window from app.windowList. The hook code may remove the window
 from app.windowList to prevent app.closeLeoWindow from destroying the window.
 
 (12) Leo calls the "destroy-all-global-windows" hook in app.destroyAllGlobalWindows().
-This hook gives plugins the chance to clean up after themselves when Leo shuts down.</t>
+This hook gives plugins the chance to clean up after themselves when Leo shuts down.
+
+(13) Leo calls the "onCreate" hook just before calling frame.finishCreate. Using
+the "onCreate" hook is the recommended way of creating per-commander plugin
+controller classes.</t>
 <t tx="EKR.20040524104904.224">Naively using hooks can expose you and your .leo files to malicious attacks.  You will be safe as long as you follow these basic principles:
 
 1. Hooks should _never_ blindly execute Python scripts in .leo files. Blindly executing scripts in .leo files runs the extreme risk of executing malicious code if you ever share any .leo file with someone else.  Moreover, using rexec instead of exec WILL NOT PROTECT YOU.  See the children of this node for further discussion of this important topic.
@@ -7210,7 +7218,7 @@ Leo owes much of its visual design to MORE, possibly the most elegant computer p
 
 The following people have made generous donations to the Leo project: Robert Low, Nic Cave-Lynch.
 
-The following people reported bugs, answered questions, and made suggestions for improving Leo: Alex Abacus, Shakeeb Alireze, Bruce Arnold, Chris Barker, Eric Brown, Gaspard Bucher, Darius Clarke, Bill Drissel, Wenshan Du, Allen Edwards, Chris Elliot, Mark Engleberg, Dethe Elza, Stephen Ferg, Tom Fetherston, Tomaz Ficko, Niklas Frykholm, Fred Gansevles, Jonathan M. Gilligan, Thomas Guettler, Zak Greant, Thomas Guettler, Romain Guy, Dave Hein, Tiago Castro Henriques, Gary Herron, Steve Holden, Klass Holwerda, Matthias Huening, Robert Hustead, John Jacob, Christopher P. Jobling, Eric S. Johansson, Garold Johnson, James Kerwin, Nicola Larosa, David LeBlanc, Chris Liechti, Steve Litt, Martin v. Loewis, Robert Low, Fredrik Lundh, Alex Martelli,  Marcus A. Martin, Gidion May, David McNab, Chad Netzer, Naud Olivier, Joe Orr, Marc-Antoine Parent, Paul Paterson, Davide Salomoni, Sean Shaleh Perry, Tim Peters, Scott Powell, Bruce Rafnel, Walter H. Rauser, David Speed Ream, Rich Ries, Aharon Robbins, Guido van Rossum, David Rowe, Steven Schaefer, Wolfram Schwenzer, Gil Shwartz, Paul Snively, Phil Straus, Jurjen Stellingwerff,  Jeffrey Thompson, Gabriel Valiente, Tom van Vleck, Jim Vickroy, Tony Vignaux, Randall Voth, Ying-Chao Wang, Cliff Wells, Dan Wharton, Wim Wijnders, Vadim Zeitlin.
+The following people reported bugs, answered questions, and made suggestions for improving Leo: Alex Abacus, Shakeeb Alireze, Bruce Arnold, Chris Barker, Eric Brown, Gaspard Bucher, Darius Clarke, Bill Drissel, Wenshan Du, Allen Edwards, Chris Elliot, Mark Engleberg, Dethe Elza, Stephen Ferg, Tom Fetherston, Tomaz Ficko, Niklas Frykholm, Fred Gansevles, Jonathan M. Gilligan, Zak Greant, Thomas Guettler, Romain Guy, Dave Hein, Tiago Castro Henriques, Gary Herron, Steve Holden, Klass Holwerda, Matthias Huening, Robert Hustead, John Jacob, Christopher P. Jobling, Eric S. Johansson, Garold Johnson, James Kerwin, Nicola Larosa, David LeBlanc, Chris Liechti, Steve Litt, Martin v. Loewis, Robert Low, Fredrik Lundh, Alex Martelli,  Marcus A. Martin, Gidion May, David McNab, Chad Netzer, Naud Olivier, Joe Orr, Marc-Antoine Parent, Paul Paterson, Davide Salomoni, Sean Shaleh Perry, Tim Peters, Scott Powell, Bruce Rafnel, Walter H. Rauser, David Speed Ream, Rich Ries, Aharon Robbins, Guido van Rossum, David Rowe, Steven Schaefer, Wolfram Schwenzer, Gil Shwartz, Paul Snively, Phil Straus, Jurjen Stellingwerff,  Jeffrey Thompson, Gabriel Valiente, Tom van Vleck, Jim Vickroy, Tony Vignaux, Randall Voth, Ying-Chao Wang, Cliff Wells, Dan Wharton, Wim Wijnders, Vadim Zeitlin.
 
 The following people have written code for Leo: Dave Hein wrote code to support PHP, to handle Tk version numbers properly and to open the Python window properly on Linux.  Marcus A. Martin wrote code to support LaTex. Bernhard Mulder proposed a new way of untangling derived files.  Paul Paterson wrote the first implementation of plugins and the spell checking plugin.  Steven P. Schaefer eliminated problems with end-of-line on Linux and fixed bugs in how directives were handled in @root trees.
 
@@ -12490,7 +12498,7 @@ troublesome. For example, you can organize your outline like this:
 
 As usual, + denotes a headline. So you simply create a new node, called
 myClass, that holds your @file tree and stuff you don't want in the @file tree.</t>
-<t tx="edream.110203163054.1068">There are many ways to customize Leo.  The child of this node is a clone of Chapter 8: Customizing Leo of Leo's Users Guide.</t>
+<t tx="edream.110203163054.1068">There are many ways to customize Leo.  The last child of this node is a clone of Chapter 8: Customizing Leo of Leo's Users Guide.</t>
 <t tx="edream.110203163054.1069">Step 1: Set use_plugins = 1 in leoConfig.leo, then execute the Tangle All
 command.
 
@@ -16434,7 +16442,7 @@ does not save recent files information in leoSettings.leo files.
 don't save the .leo file the recent files information will not be updated.</t>
 <t tx="ekr.20050203102830">@killcolor
 
-Why is are sections better than methods?
+Why are sections better than methods?
 
 There are several answers to this question:
 
@@ -16901,5 +16909,7 @@ This should be similar to the readme file.
 If necessary, set the file name to Leo.pkg.  This will create Leo.pkg.
 
 6. Quit PackageMaker.  Choose 'yes' when prompted to save LeoPackage.pmsp.</t>
+<t tx="ekr.20050306090601"></t>
+<t tx="ekr.20050307112705">Python's docutils module 'reports' syntax errors in rst markup by crashing.  Obviously, this is not great, but it's not really the fault of the rst plugins.  You can isolate rst syntax errors by reducing your input files until they work again, then adding sections until you get a crash.</t>
 </tnodes>
 </leo_file>
