@@ -1820,12 +1820,19 @@ def idleTimeHookHandler(*args,**keys):
 #@-node:EKR.20040602125018.2:idleTimeHookHandler
 #@-node:ekr.20031218072017.1315:idle time functions (leoGlobals)
 #@+node:ekr.20040917061619:g.cantImport
-def cantImport (s):
+def cantImport (s,moduleName=""):
     
     """Print a "Can't Import" message and return None."""
+    
+    if moduleName and moduleName in g.app.failedPlugins:
+        return
+    
+    if moduleName:
+        message = "Can not import %s from plugin %s" % (s,moduleName)
+        g.app.failedPlugins.append(moduleName)
+    else:
+        message = "Can not import %s from unnamed plugin" % s
 
-    message = "Can not import " + s
-    print message
     g.es(message,color="blue")
     return None
 #@nonl
