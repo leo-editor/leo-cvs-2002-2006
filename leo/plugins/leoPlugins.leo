@@ -1533,17 +1533,17 @@
 </v>
 <v t="ekr.20040108060748"><vh>&lt;&lt; doc string &gt;&gt;</vh></v>
 </v>
-<v t="ekr.20040108062655" a="E" tnodeList="ekr.20040108062655,ekr.20040108062655.2,ekr.20040108062655.3,ekr.20040108062655.4,ekr.20040108062655.5,ekr.20040108062655.6,ekr.20040108091136"><vh>@file nodenavigator.py</vh>
+<v t="ekr.20040108062655" tnodeList="ekr.20040108062655,ekr.20040108062655.2,ekr.20040108062655.3,ekr.20040108062655.4,ekr.20040108062655.5,ekr.20040108091136,ekr.20040108062655.6"><vh>@file nodenavigator.py</vh>
 <v t="ekr.20040108062655.2" a="E"><vh>class Navigator</vh>
 <v t="ekr.20040108062655.3"><vh>addWidgets</vh></v>
 <v t="ekr.20040108062655.4"><vh>_getSizer</vh></v>
 <v t="ekr.20040108062655.5"><vh>onSelect</vh></v>
-<v t="ekr.20040108062655.6"><vh>updateMarks</vh></v>
 <v t="ekr.20040108091136"><vh>updateRecent</vh></v>
+<v t="ekr.20040108062655.6"><vh>updateMarks</vh></v>
 </v>
 </v>
-<v t="ekr.20040108095351" tnodeList="ekr.20040108095351,ekr.20040108095351.1,ekr.20040108100040,ekr.20040108095351.2,ekr.20040108095351.4"><vh>@file rowcol.py</vh>
-<v t="ekr.20040108095351.1"><vh>class rowColClass</vh>
+<v t="ekr.20040108095351" a="E" tnodeList="ekr.20040108095351,ekr.20040108095351.1,ekr.20040108100040,ekr.20040108095351.2,ekr.20040108095351.4"><vh>@file rowcol.py</vh>
+<v t="ekr.20040108095351.1" a="E"><vh>class rowColClass</vh>
 <v t="ekr.20040108100040"><vh>__init__</vh></v>
 <v t="ekr.20040108095351.2"><vh>addWidgets</vh></v>
 <v t="ekr.20040108095351.4"><vh>updateRowColWidget</vh></v>
@@ -15910,7 +15910,7 @@ if Tkinter:
 </t>
 <t tx="ekr.20040108062655.3">def addWidgets(self, tag, keywords): 
 	"""Add the widgets to the navigation bar""" 
-	self.c = keywords['c'] 
+	self.c = c = keywords['c'] 
 	toolbar = self.c.frame.iconFrame 
 	# Main container 
 	self.frame = Tkinter.Frame(toolbar) 
@@ -15926,7 +15926,10 @@ if Tkinter:
 	self.recent_value = Tkinter.StringVar() 
 	self.recent = Tkinter.OptionMenu(self._getSizer(self.frame,29,70),self.recent_value,*recent) 
 	self.recent_value.set(recent[0]) 
-	self.recent.pack(side="left",fill="both",expand=1)</t>
+	self.recent.pack(side="left",fill="both",expand=1)
+	# Recreate the menus immediately.
+	self.updateRecent("tag",{"c":c})
+	self.updateMarks("tag",{"c":c})</t>
 <t tx="ekr.20040108062655.4">def _getSizer(self, parent, height, width):
 	
 	"""Return a sizer object to force a Tk widget to be the right size""" 
@@ -15952,19 +15955,20 @@ if Tkinter:
 		menu.delete(0,"end")
 	except: return
 
-	def callback(self=self,v=v):
-		return self.onSelect(v)
-
 	# Find all marked nodes
 	vnodes = [] ; tnodes = []
 	while v:
 		if v.isMarked() and v.t not in tnodes:
+			
+			def callback(event=None,self=self,v=v):
+				return self.onSelect(v)
+
 			name = v.headString().strip()
 			menu.add_command(label=name,command=callback)
 			tnodes.append(v.t)
 			vnodes.append(v)
 		v = v.threadNext()</t>
-<t tx="ekr.20040108091136">def updateRecent(self, tag, keywords):
+<t tx="ekr.20040108091136">def updateRecent(self,tag,keywords):
 	"""Update the marks list"""        
 	c = keywords.get("c")
 	v = c.rootVnode()
@@ -15975,14 +15979,15 @@ if Tkinter:
 		menu.delete(0,"end")
 	except: return
 
-	def callback(self=self,v=v):
-		return self.onSelect(v)
-
 	# Make sure the node still exists.
 	# Insert only the last cloned node.
 	vnodes = [] ; tnodes = []
 	for v in c.visitedList:
 		if v.exists(c) and v.t not in tnodes:
+			
+			def callback(event=None,self=self,v=v):
+				return self.onSelect(v)
+
 			menu.add_command(label=v.headString(),command=callback)
 			tnodes.append(v.t)
 			vnodes.append(v)</t>
@@ -16028,9 +16033,9 @@ if Tkinter:
 	width = len(text) # Setting the width here prevents jitters.
 	self.rowColLabel = Tk.Label(f,text=text,width=width,anchor="w")
 	self.rowColLabel.pack(side="left")
-
-	# Register an idle-time handler to update the row and column indicators.
-	f.after_idle(self.updateRowColWidget)</t>
+	
+	# Update the row/column indicators immediately to reserve a place.
+	self.updateRowColWidget()</t>
 <t tx="ekr.20040108095351.4">def updateRowColWidget (self):
 	
 	c = self.c ; body = c.frame.body.bodyCtrl ; gui = app.gui
@@ -16067,8 +16072,14 @@ if Tkinter:
 
 1/9/04: nodenavigator.py
 
+- Call updateMarks and UpdateRecent during initialization.
 - Put the code that deletes menus in a try/except block.
 - Simplified defintion of callback routines: I don't like lambda.
-- Removed some old code.</t>
+- Removed some old code.
+
+1/9/04: rowcol.py
+
+- Call updatedRowColWidget immediately from addWidgets.
+  This seems to be necessary to reserve the proper place in the icon area.</t>
 </tnodes>
 </leo_file>
