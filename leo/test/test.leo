@@ -625,7 +625,8 @@
 <v t="ekr.20040317101155" a="E"><vh>Test of user icons</vh>
 <v t="ekr.20040317185041"><vh>&lt;&lt; define event callbacks &gt;&gt;</vh></v>
 </v>
-<v t="EKR.20040603064545" a="TV"><vh>Print timestamps of all nodes</vh></v>
+<v t="EKR.20040603064545"><vh>Print timestamps of all nodes</vh></v>
+<v t="EKR.20040603103118" a="TV"><vh>String bug in html</vh></v>
 </vnodes>
 <tnodes>
 <t tx="EKR.20040424065452">import leoGlobals as g
@@ -2077,6 +2078,11 @@ c = g.top()
 
 for p in c.all_positions_iter():
 	print p.v.t.fileIndex</t>
+<t tx="EKR.20040603103118">@language html
+
+b = "cd"
+d
+</t>
 <t tx="ekr.20040126105605"></t>
 <t tx="ekr.20040126105605.2"></t>
 <t tx="ekr.20040126105605.3"></t>
