@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="4254" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="4255" clone_windows="0"/>
 <globals body_outline_ratio="0.292849035187">
-	<global_window_position top="36" left="289" height="881" width="894"/>
+	<global_window_position top="67" left="147" height="881" width="1011"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences>
@@ -403,7 +403,7 @@
 </v>
 </v>
 </v>
-<v t="ekr.20040402043516" a="E"><vh>A pretty printer for Leo</vh>
+<v t="ekr.20040402043516"><vh>A pretty printer for Leo</vh>
 <v t="ekr.20040402043516.1"><vh>readLinesClass</vh></v>
 <v t="ekr.20040402084155"><vh>prettyPrintNode</vh></v>
 <v t="ekr.20040402064301"><vh>class prettyPrinter</vh>
@@ -654,16 +654,14 @@
 <v t="EKR.20040610132739"><vh>copied</vh></v>
 </v>
 </v>
-<v t="EKR.20040610201941"><vh>Check Syntax prototype</vh>
+<v t="EKR.20040610201941" a="E"><vh>Check Syntax prototype</vh>
 <v t="EKR.20040610192622" a="E"><vh>Check Syntax script</vh></v>
 <v t="EKR.20040610192622.1"><vh>Check Syntax data</vh></v>
 </v>
-<v t="EKR.20040610201236" a="TV"><vh>Tabnanny prototype</vh>
+<v t="EKR.20040610201236" a="E"><vh>Tabnanny prototype</vh>
 <v t="EKR.20040610194209" a="E"><vh>TabNanny script</vh>
-<v t="EKR.20040610195543"><vh>checkString</vh></v>
-<v t="EKR.20040610195651"><vh>readLinesClass</vh></v>
+<v t="EKR.20040610195543" a="TV"><vh>checkString</vh></v>
 </v>
-<v t="EKR.20040610194209.1" a="E"><vh>TabNanny data</vh></v>
 <v t="EKR.20040610195543.1"><vh>tabnanny.py (reference only)</vh>
 <v t="EKR.20040610195543.2"><vh>&lt;&lt; tabnanny declarations &gt;&gt;</vh></v>
 <v t="EKR.20040610195543.3"><vh>errprint</vh></v>
@@ -688,6 +686,11 @@
 <v t="EKR.20040610195543.20"><vh>format_witnesses</vh></v>
 <v t="EKR.20040610195543.21"><vh>process_tokens</vh></v>
 </v>
+<v t="EKR.20040610194209.1" a="E"><vh>TabNanny data</vh></v>
+</v>
+<v t="EKR.20040611083703" a="E"><vh>Using a generator instead of readLinesClass</vh>
+<v t="EKR.20040611094028"><vh>readLinesGenerator</vh></v>
+<v t="EKR.20040610195651"><vh>readLinesClass</vh></v>
 </v>
 </vnodes>
 <tnodes>
@@ -2262,13 +2265,14 @@ except SyntaxError:
 string.join(a,b]
 </t>
 <t tx="EKR.20040610194209">import leoGlobals as g
-
-c = g.top() ; p = c.currentPosition()
-
 import tabnanny
 
 @others
 
+# print '-' * 20
+
+c = g.top()
+p = c.currentPosition()
 next = p.next()
 s = next.bodyString()
 headline = next.headString()
@@ -2283,9 +2287,14 @@ checkString(s,headline)</t>
 	# This code is based on tabnanny.check.
 	
 	import tokenize
-	
-	# Create readLinesClass and return its next method.
-	readline = readLinesClass(s).next
+
+	def readLineGenerator(s):
+		for line in s.splitlines(True):
+			g.trace(line,newline=False)
+			yield line
+		yield ''
+
+	readline = readLineGenerator(s).next
 
 	try:
 		tabnanny.process_tokens(tokenize.generate_tokens(readline))
@@ -2294,6 +2303,7 @@ checkString(s,headline)</t>
 
 		g.es("Token error in %s" % headline,color="red")
 		g.es(str(msg))
+		return
 
 	except tabnanny.NannyNag, nag:
 
@@ -2303,7 +2313,11 @@ checkString(s,headline)</t>
 
 		g.es("Indentation error in %s, line %d" % (headline, badline),color="red")
 		g.es(message)
-		g.es("offending line:\n%s" % repr(str(line))[1:-1])</t>
+		g.es("offending line:\n%s" % repr(str(line))[1:-1])
+		return
+		
+	g.es("Indentation is good",color="blue")
+</t>
 <t tx="EKR.20040610195543.1">@ignore
 @language python
 &lt;&lt; tabnanny declarations &gt;&gt;
@@ -2674,6 +2688,36 @@ To do:
 - Specify which nodes to check.
 - Check only Python code.
 - use g.readLinesClass or similar code in existing Python module.</t>
+<t tx="EKR.20040611083703">from __future__ import generators
+
+import leoGlobals as g
+
+@others
+
+lines = "a\nb\nc\nd"
+
+if 1: # Both work
+	readline = readLinesGenerator(lines).next
+else:
+	readline = readLinesClass(lines).next
+
+print '-' * 20
+
+if 1: # Both work
+	for s in readLinesGenerator(lines):
+		print s,
+else:
+	while 1:
+		s = readline()
+		if s: print s,
+		else: break
+	
+print ; print '-' * 20</t>
+<t tx="EKR.20040611094028">def readLinesGenerator(s):
+
+	for line in g.splitLines(s):
+		yield line
+	yield ''</t>
 <t tx="ekr.20040126105605"></t>
 <t tx="ekr.20040126105605.2"></t>
 <t tx="ekr.20040126105605.3"></t>
