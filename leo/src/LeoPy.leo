@@ -2,7 +2,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="3986" clone_windows="0"/>
 <globals body_outline_ratio="0.49655172413793103">
-	<global_window_position top="33" left="430" height="870" width="827"/>
+	<global_window_position top="45" left="345" height="870" width="827"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences>
@@ -12,9 +12,11 @@
 	<change_string></change_string>
 </find_panel_settings>
 <vnodes>
-<v t="edream.110203160744" a="V"><vh> Diary</vh>
+<v t="edream.110203160744"><vh> Diary</vh>
 <v t="edream.120103054230"><vh>December 2003</vh>
 <v t="edream.120703115300"><vh>12/07</vh>
+<v t="edream.120703170710"><vh>Added file open dialog to Import Derived Files command</vh></v>
+<v t="edream.120703113459"><vh>Made sure that Reformat Paragraph makes the new insertion point visible</vh></v>
 <v t="edream.120703115300.1"><vh>Changed logControl to logCtrl</vh></v>
 </v>
 <v t="edream.120603095416"><vh>12/06</vh>
@@ -900,6 +902,7 @@
 <v t="edream.111803112700"><vh>HTML plugin</vh></v>
 </v>
 <v t="edream.110203160744.509"><vh>1. Major improvements</vh>
+<v t="edream.120703114619"><vh>Execute scripts like IDE's do</vh></v>
 <v t="edream.110203160744.510"><vh>Rerwite colorizer to use jEdit language descriptionfiles</vh>
 <v t="edream.110203160744.511"><vh>Option: case insensitive keywords</vh></v>
 </v>
@@ -3222,7 +3225,7 @@
 </v>
 </v>
 <v t="edream.110203160744.2852"><vh>putBody (4.x)</vh>
-<v t="edream.110203160744.2853"><vh>&lt;&lt; handle line at s[i]  &gt;&gt;</vh></v>
+<v t="edream.110203160744.2853" a=""><vh>&lt;&lt; handle line at s[i]  &gt;&gt; (4.x)</vh></v>
 </v>
 <v t="edream.110203160744.2854"><vh>code lines... (4.x)</vh>
 <v t="edream.110203160744.2855"><vh>inAtOthers</vh></v>
@@ -3602,6 +3605,12 @@
 </v>
 </v>
 <v t="edream.112303174924.1"><vh>beta 6 projects</vh>
+<v t="edream.120703082927"><vh>(Added dialog to Import Derived File)</vh>
+<v t="edream.110203160744.1120" a="M"><vh>importDerivedFile</vh></v>
+</v>
+<v t="edream.120703061418"><vh>(Fixed 2 new reorg bugs)</vh>
+<v t="edream.110203160744.1110" a=""><vh>&lt;&lt; Set closeFlag if the only open window is empty &gt;&gt;</vh></v>
+</v>
 <v t="edream.120603112107"><vh>(Fixed clone-drag bug)</vh>
 <v t="edream.120603112107.1"><vh>Report</vh></v>
 <v t="edream.110203160744.1740" a=""><vh>Event handers (tree)</vh>
@@ -3653,12 +3662,14 @@
 <v t="edream.110203160744.3315" a=""><vh>v.moveAfter</vh></v>
 <v t="edream.110203160744.3312" a=""><vh>v.linkAfter</vh></v>
 </v>
+<v t="edream.120603162124"><vh>(Fixed inconsistency between how 4.x and 3.x handle @others)</vh>
+<v t="edream.120703181534"><vh>Report</vh></v>
+<v t="edream.110203160744.1622" a=""><vh>&lt;&lt; handle noweb doc part &gt;&gt;</vh></v>
+<v t="edream.110203160744.2853" a=""><vh>&lt;&lt; handle line at s[i]  &gt;&gt; (4.x)</vh></v>
+</v>
 <v t="edream.120503112445"><vh>(Fixed problem untangling html file)</vh>
 <v t="edream.110203160744.3453" a=""><vh>&lt;&lt; set the private global matching vars &gt;&gt;</vh></v>
 <v t="edream.110203160744.3073" a=""><vh>skip_string : called by tangle</vh></v>
-</v>
-<v t="edream.120703061418"><vh>(Fixed 2 new reorg bugs)</vh>
-<v t="edream.110203160744.1110" a=""><vh>&lt;&lt; Set closeFlag if the only open window is empty &gt;&gt;</vh></v>
 </v>
 </v>
 </v>
@@ -4247,7 +4258,7 @@
 </v>
 </v>
 <v t="edream.110203160744.2852" a="M"><vh>putBody (4.x)</vh>
-<v t="edream.110203160744.2853"><vh>&lt;&lt; handle line at s[i]  &gt;&gt;</vh></v>
+<v t="edream.110203160744.2853" a=""><vh>&lt;&lt; handle line at s[i]  &gt;&gt; (4.x)</vh></v>
 </v>
 <v t="edream.110203160744.2854"><vh>code lines... (4.x)</vh>
 <v t="edream.110203160744.2855"><vh>inAtOthers</vh></v>
@@ -6851,7 +6862,7 @@
 </v>
 </v>
 </v>
-<v t="edream.110203160744.3805"><vh>(Fix possible copy/paste bugs involving clones)</vh>
+<v t="edream.110203160744.3805" a="EV"><vh>(Fix major copy/paste bugs involving clones)</vh>
 <v t="edream.120403144310"><vh>Report</vh></v>
 <v t="edream.111003111536"><vh>Investigate No tnode list</vh></v>
 <v t="edream.110203160744.2978" a=""><vh>fileCommands.setAllJoinLinks</vh></v>
@@ -6872,10 +6883,6 @@
 <v t="edream.110203160744.1552"><vh>&lt;&lt; reassign tnode indices and clear all clone links &gt;&gt;</vh></v>
 </v>
 </v>
-<v t="edream.120603162124"><vh>Colorizer bug</vh></v>
-<v t="edream.120703082927"><vh>Add dialog to Import Derived File</vh></v>
-<v t="edream.120703113459"><vh>Make sure that Reformat Paragraph makes the new insertion point visible</vh></v>
-<v t="edream.120703114619"><vh>Execute scripts like IDE's do</vh></v>
 </vnodes>
 <tnodes>
 <t tx="edream.110203160744">@ignore
@@ -21273,11 +21280,30 @@ closeFlag = (
 	
 	c = self ; frame = c.frame ; v = c.currentVnode()
 	
-	if v.isAtFileNode():
-		fileName = v.atFileNodeName()
+	types = [
+		("All files","*.*"),
+		("C/C++ files","*.c"),
+		("C/C++ files","*.cpp"),
+		("C/C++ files","*.h"),
+		("C/C++ files","*.hpp"),
+		("Java files","*.java"),
+		("Pascal files","*.pas"),
+		("Python files","*.py") ]
+	
+	fileName = app.gui.runOpenFileDialog(
+		title="Import Derived File",
+		filetypes=types,
+		defaultextension=".leo")
+
+	if fileName:
 		c.importCommands.importDerivedFiles(v,fileName)
-	else:
-		es("not an @file node",color="blue")</t>
+	
+	if 0: # old code: very non-intuitive.
+		if v.isAtFileNode():
+			fileName = v.atFileNodeName()
+			c.importCommands.importDerivedFiles(v,fileName)
+		else:
+			es("not an @file node",color="blue")</t>
 <t tx="edream.110203160744.1121">def writeNewDerivedFiles (self):
 	
 	c = self
@@ -21403,9 +21429,7 @@ def writeOldDerivedFiles (self):
 
 	if fileName and len(fileName) &gt; 0:
 		paths = [fileName] # alas, askopenfilename returns only a single name.
-		c.importCommands.importFilesCommand (paths,"@file")
-
-</t>
+		c.importCommands.importFilesCommand (paths,"@file")</t>
 <t tx="edream.110203160744.1135">def importCWEBFiles (self):
 	
 	c = self
@@ -33651,6 +33675,7 @@ body.onBodyChanged(v,undoType,oldSel=oldSel,oldYview=oldYview)
 # Advance the selection to the next paragraph.
 newSel = sel_end, sel_end
 body.setTextSelection(newSel)
+body.makeIndexVisible(sel_end)
 
 c.recolor()</t>
 <t tx="edream.110203160744.2023">def updateBodyPane (self,head,middle,tail,undoType,oldSel,oldYview,setSel=true):
@@ -42524,7 +42549,8 @@ headline = ""
 # print childIndex,headline
 
 if childIndex == 0: # The root node.
-	&lt;&lt; Check the filename in the sentinel &gt;&gt;
+	if not at.importing:
+		&lt;&lt; Check the filename in the sentinel &gt;&gt;
 	# Put the text of the root node in the current node.
 	self.scanText(file,v,out,endNode)
 	v.t.setCloneIndex(cloneIndex)
@@ -44077,7 +44103,8 @@ else:
 	&lt;&lt; Set headline, undoing the CWEB hack &gt;&gt;
 	if not at.root_seen:
 		at.root_seen = true
-		&lt;&lt; Check the filename in the sentinel &gt;&gt;
+		if not at.importing:
+			&lt;&lt; Check the filename in the sentinel &gt;&gt;
 
 	i,newIndent = skip_leading_ws_with_indent(s,0,at.tab_width)
 	at.indentStack.append(at.indent) ; at.indent = newIndent
@@ -44649,8 +44676,8 @@ elif kind in (cDirective,codeDirective):
 	at.putDirective(s,i)
 	inCode = true
 elif kind == othersDirective:
-	inCode = true
-	at.putAtOthersLine(s,i,v)
+	if inCode: at.putAtOthersLine(s,i,v)
+	else: at.putDocLine(s,i) # 12/7/03
 elif kind == rawDirective:
 	at.raw = true
 	at.putSentinel("@@raw")
@@ -60819,18 +60846,7 @@ The only such checks that remain are checks to see if Tkinter can be imported, a
 dragged ... the 'f' node onto the ... 'f' clone above it. The resultant tree has only two 'f' nodes, siblings, on it.  Everything else seems to have vanished.</t>
 <t tx="edream.120603140102">Only double-quoted strings are valid in html.  A lone single-quote caused a cascade of mismatched comments.</t>
 <t tx="edream.120603140102.1">This has been around ever since the dragging code was created.</t>
-<t tx="edream.120603162124">@color
-@language python
-
-@ 
-some snap code
-@others
-more snap code
-@c
-
-in the output file "more snap code" will be NOT commented, but in Leo that line will appear as a red comment line.
-I do not know which is the "correct behaviour" but the colorizer should be consisten with it.
-</t>
+<t tx="edream.120603162124"></t>
 <t tx="edream.120703061418">http://sourceforge.net/forum/message.php?msg_id=2321348
 By: rodrigo_b
 
@@ -60893,5 +60909,22 @@ or even my entire apps by just hitting, for exampe, F5.
 Paul</t>
 <t tx="edream.120703115300"></t>
 <t tx="edream.120703115300.1"></t>
+<t tx="edream.120703170710">The old way always surprised me.
+
+To make this work I disabled checks in the read logic if at.importing is true</t>
+<t tx="edream.120703181534">@color
+@language python
+
+@ 
+some snap code
+@others
+more snap code
+@c
+
+@nocolor
+
+in the output file "more snap code" will be NOT commented, but in Leo that line will appear as a red comment line.
+I do not know which is the "correct behaviour" but the colorizer should be consisten with it.
+</t>
 </tnodes>
 </leo_file>

@@ -28,9 +28,9 @@
 <v t="edream.112003031953"><vh>tuple unpacking test</vh></v>
 </v>
 </v>
-<v t="edream.110203161858.6" a="E"><vh>Tests...</vh>
+<v t="edream.110203161858.6"><vh>Tests...</vh>
 <v t="edream.110203161858.25" a="E"><vh>Body pane &amp; typing</vh>
-<v t="edream.110203161858.26" a="V"><vh>@file c:\prog\test\wrap_test.txt</vh>
+<v t="edream.110203161858.26"><vh>@file c:\prog\test\wrap_test.txt</vh>
 <v t="edream.110203161858.27"><vh>wrap node</vh></v>
 <v t="edream.110203161858.28"><vh>nowrap node</vh></v>
 </v>
@@ -2720,7 +2720,7 @@
 </v>
 <v t="edream.120403143517" tnodeList="edream.120403143517"><vh>@file c:\prog\test\chinese脖folder\chinese脖test.txt</vh></v>
 </v>
-<v t="edream.120603125057" a="E"><vh>4.1 beta 6 tests</vh>
+<v t="edream.120603125057"><vh>4.1 beta 6 tests</vh>
 <v t="edream.120603112201" a="E"><vh>clone-drag bug</vh>
 <v t="edream.120603112201.1" a=""><vh>a</vh>
 <v t="edream.120603112201.3"><vh>f</vh></v>
@@ -2816,6 +2816,9 @@
 </v>
 </v>
 </v>
+</v>
+<v t="edream.120703182038" a="E"><vh>Test of @others inside doc part</vh>
+<v t="edream.120703182038.1" a="MV" tnodeList="edream.120703182038.1"><vh>@file c:\prog\test\atOthersInDocTest.txt</vh></v>
 </v>
 </vnodes>
 <tnodes>
@@ -35618,5 +35621,11 @@ cal3.time_comp = false;
 	&lt;td colspan="2" height="5px"/&gt;
 &lt;/tr&gt;
 &lt;!-- *****************************************************************************************************************--&gt;</t>
+<t tx="edream.120703182038"></t>
+<t tx="edream.120703182038.1">@ This is a doc part
+@others
+This should be more doc part
+@c
+</t>
 </tnodes>
 </leo_file>

@@ -669,11 +669,30 @@ class baseCommands:
 		
 		c = self ; frame = c.frame ; v = c.currentVnode()
 		
-		if v.isAtFileNode():
-			fileName = v.atFileNodeName()
+		types = [
+			("All files","*.*"),
+			("C/C++ files","*.c"),
+			("C/C++ files","*.cpp"),
+			("C/C++ files","*.h"),
+			("C/C++ files","*.hpp"),
+			("Java files","*.java"),
+			("Pascal files","*.pas"),
+			("Python files","*.py") ]
+		
+		fileName = app.gui.runOpenFileDialog(
+			title="Import Derived File",
+			filetypes=types,
+			defaultextension=".leo")
+	
+		if fileName:
 			c.importCommands.importDerivedFiles(v,fileName)
-		else:
-			es("not an @file node",color="blue")
+		
+		if 0: # old code: very non-intuitive.
+			if v.isAtFileNode():
+				fileName = v.atFileNodeName()
+				c.importCommands.importDerivedFiles(v,fileName)
+			else:
+				es("not an @file node",color="blue")
 	#@nonl
 	#@-node:importDerivedFile
 	#@+node:writeNew/OldDerivedFiles
@@ -814,7 +833,7 @@ class baseCommands:
 		if fileName and len(fileName) > 0:
 			paths = [fileName] # alas, askopenfilename returns only a single name.
 			c.importCommands.importFilesCommand (paths,"@file")
-	
+	#@nonl
 	#@-node:importAtFile
 	#@+node:importCWEBFiles
 	def importCWEBFiles (self):
@@ -2157,6 +2176,7 @@ class baseCommands:
 			# Advance the selection to the next paragraph.
 			newSel = sel_end, sel_end
 			body.setTextSelection(newSel)
+			body.makeIndexVisible(sel_end)
 			
 			c.recolor()
 			#@nonl
