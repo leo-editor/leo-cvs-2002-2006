@@ -1644,9 +1644,11 @@ class baseFileCommands:
 			val = attrDict[key]
 			if 1:
 				try:
+					g.es(key,val)
 					s = pickle.dumps(val,bin=true)
-				except PicklingError:
+				except pickle.PicklingError:
 					g.es("ignoring non-pickleable unknownAttributes for",torv,color="blue")
+					# import traceback ; traceback.print_exc()
 					return
 				attr = ' %s="%s"' % (key,binascii.hexlify(s))
 			else: # This is not general enough
