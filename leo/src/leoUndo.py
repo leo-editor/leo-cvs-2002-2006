@@ -445,7 +445,7 @@ class baseUndoer:
 		if oldYview:
 			u.yview = oldYview
 		else:
-			u.yview = c.frame.body.yview()
+			u.yview = c.frame.bodyCtrl.yview()
 		# Push params on undo stack, clearing all forward entries.
 		u.bead += 1
 		d = u.setBead(u.bead)
@@ -589,7 +589,7 @@ class baseUndoer:
 				c.selectVnode(u.v) # Does full recolor.
 				if u.newSel:
 					start,end=u.newSel
-					setTextSelection(c.frame.body,start,end)
+					setTextSelection(c.frame.bodyCtrl,start,end)
 				redrawFlag = redoType in ("Extract","Extract Names","Extract Section","Read @file Nodes")
 			#@-node:<< redo replace cases >>
 			#@nl
@@ -633,10 +633,10 @@ class baseUndoer:
 				
 				if u.newSel:
 					start,end=u.newSel
-					setTextSelection (c.frame.body,start,end)
+					setTextSelection (c.frame.bodyCtrl,start,end)
 				if u.yview:
 					first,last=u.yview
-					c.body.yview("moveto",first)
+					c.bodyCtrl.yview("moveto",first)
 				redrawFlag = (current != u.v)
 					
 			elif redoType == "Change All":
@@ -808,7 +808,7 @@ class baseUndoer:
 				c.selectVnode(u.v) # Does full recolor.
 				if u.oldSel:
 					start,end=u.oldSel
-					setTextSelection(c.frame.body,start,end)
+					setTextSelection(c.frame.bodyCtrl,start,end)
 				redrawFlag = true
 			#@nonl
 			#@-node:<< undo replace cases >>
@@ -871,10 +871,10 @@ class baseUndoer:
 					tag="undo",undoType=undoType)
 				if u.oldSel:
 					start,end=u.oldSel
-					setTextSelection (c.frame.body,start,end)
+					setTextSelection (c.frame.bodyCtrl,start,end)
 				if u.yview:
 					first,last=u.yview
-					c.body.yview("moveto",first)
+					c.bodyCtrl.yview("moveto",first)
 				redrawFlag = (current != u.v)
 					
 			elif undoType == "Change All":
@@ -1102,30 +1102,30 @@ class baseUndoer:
 		new_mid_len = len(newMidLines)
 		# Maybe this could be simplified, and it is good to treat the "end" with care.
 		if trailing == 0:
-			c.frame.body.delete(str(1+leading)+".0","end")
+			c.frame.bodyCtrl.delete(str(1+leading)+".0","end")
 			if leading > 0:
-				c.frame.body.insert("end",'\n')
-			c.frame.body.insert("end",mid_text)
+				c.frame.bodyCtrl.insert("end",'\n')
+			c.frame.bodyCtrl.insert("end",mid_text)
 		else:
 			if new_mid_len > 0:
-				c.frame.body.delete(str(1+leading)+".0",
+				c.frame.bodyCtrl.delete(str(1+leading)+".0",
 					str(leading+new_mid_len)+".0 lineend")
 			elif leading > 0:
-				c.frame.body.insert(str(1+leading)+".0",'\n')
-			c.frame.body.insert(str(1+leading)+".0",mid_text)
+				c.frame.bodyCtrl.insert(str(1+leading)+".0",'\n')
+			c.frame.bodyCtrl.insert(str(1+leading)+".0",mid_text)
 		# Try to end the Tk.Text widget with oldNewlines newlines.
 		# This may be off by one, and we don't care because
 		# we never use body text to compute undo results!
-		s = c.frame.body.get("1.0","end")
+		s = c.frame.bodyCtrl.get("1.0","end")
 		s = toUnicode(s,app.tkEncoding) # 2/25/03
 		newlines = 0 ; i = len(s) - 1
 		while i >= 0 and s[i] == '\n':
 			newlines += 1 ; i -= 1
 		while newlines > oldNewlines:
-			c.frame.body.delete("end-1c")
+			c.frame.bodyCtrl.delete("end-1c")
 			newlines -= 1
 		if oldNewlines > newlines:
-			c.frame.body.insert("end",'\n'*(oldNewlines-newlines))
+			c.frame.bodyCtrl.insert("end",'\n'*(oldNewlines-newlines))
 		#@-node:<< Incrementally update the Tk.Text widget >>
 		#@nl
 		#@	<< Compute the result using v's body text >>
@@ -1161,7 +1161,7 @@ class baseUndoer:
 		#trace("new:"+`v.bodyString()`)
 		#@	<< Get textResult from the Tk.Text widget >>
 		#@+node:<< Get textResult from the Tk.Text widget >>
-		textResult = c.frame.body.get("1.0","end")
+		textResult = c.frame.bodyCtrl.get("1.0","end")
 		textResult = toUnicode(textResult,app.tkEncoding) # 2/25/03
 		
 		if textResult != result:
