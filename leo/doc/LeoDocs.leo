@@ -3,7 +3,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="12847" clone_windows="0"/>
 <globals body_outline_ratio="0.398837209302">
-	<global_window_position top="23" left="466" height="860" width="686"/>
+	<global_window_position top="16" left="539" height="860" width="686"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -39,7 +39,7 @@
 <v t="edream.110203163054.12"><vh>Dan Winkler 3</vh></v>
 </v>
 </v>
-<v t="edream.110203163054.46" a="E"><vh>Release Notes</vh>
+<v t="edream.110203163054.46" a="TV"><vh>Release Notes</vh>
 <v t="edream.110203163054.47"><vh>Warnings</vh></v>
 <v t="edream.110203163054.48"><vh>Installation notes</vh>
 <v t="edream.110203163054.49"><vh>System requirements</vh></v>
@@ -52,7 +52,7 @@
 <v t="edream.110203163054.62"><vh>Quick start</vh></v>
 </v>
 <v t="edream.110203163054.63" a="E"><vh>Latest versions</vh>
-<v t="ekr.20050126100405" a="TV"><vh>4.3-a2</vh>
+<v t="ekr.20050126100405"><vh>4.3-a2</vh>
 <v t="ekr.20050126100405.1"><vh>Added undo granularity</vh>
 <v t="EKR.20040524104904.48"><vh>Undoing operations</vh></v>
 </v>
@@ -7103,7 +7103,7 @@ Leo owes much of its visual design to MORE, possibly the most elegant computer p
 
 The following people have made generous donations to the Leo project: Robert Low, Nic Cave-Lynch.
 
-The following people reported bugs, answered questions, and made suggestions for improving Leo: Alex Abacus, Shakeeb Alireze, Bruce Arnold, Chris Barker, Eric Brown, Darius Clarke, Bill Drissel, Wenshan Du, Allen Edwards, Chris Elliot, Mark Engleberg, Dethe Elza, Stephen Ferg, Tom Fetherston, Tomaz Ficko, Niklas Frykholm, Fred Gansevles, Jonathan M. Gilligan, Thomas Guettler, Zak Greant, Thomas Guettler, Romain Guy, Dave Hein, Tiago Castro Henriques, Gary Herron, Steve Holden, Klass Holwerda, Matthias Huening, Robert Hustead, John Jacob, Christopher P. Jobling, Eric S. Johansson, Garold Johnson, James Kerwin, Nicola Larosa, David LeBlanc, Chris Liechti, Steve Litt, Martin v. Loewis, Robert Low, Fredrik Lundh, Alex Martelli,  Marcus A. Martin, Gidion May, David McNab, Chad Netzer, Naud Olivier, Joe Orr, Marc-Antoine Parent, Paul Paterson, Davide Salomoni, Sean Shaleh Perry, Tim Peters, Scott Powell, Bruce Rafnel, Walter H. Rauser, David Speed Ream, Rich Ries, Aharon Robbins, Guido van Rossum, David Rowe, Steven Schaefer, Wolfram Schwenzer, Gil Shwartz, Paul Snively, Phil Straus, Jurjen Stellingwerff,  Jeffrey Thompson, Gabriel Valiente, Tom van Vleck, Jim Vickroy, Tony Vignaux, Ying-Chao Wang, Cliff Wells, Dan Wharton, Wim Wijnders, Vadim Zeitlin.
+The following people reported bugs, answered questions, and made suggestions for improving Leo: Alex Abacus, Shakeeb Alireze, Bruce Arnold, Chris Barker, Eric Brown, Gaspard Bucher, Darius Clarke, Bill Drissel, Wenshan Du, Allen Edwards, Chris Elliot, Mark Engleberg, Dethe Elza, Stephen Ferg, Tom Fetherston, Tomaz Ficko, Niklas Frykholm, Fred Gansevles, Jonathan M. Gilligan, Thomas Guettler, Zak Greant, Thomas Guettler, Romain Guy, Dave Hein, Tiago Castro Henriques, Gary Herron, Steve Holden, Klass Holwerda, Matthias Huening, Robert Hustead, John Jacob, Christopher P. Jobling, Eric S. Johansson, Garold Johnson, James Kerwin, Nicola Larosa, David LeBlanc, Chris Liechti, Steve Litt, Martin v. Loewis, Robert Low, Fredrik Lundh, Alex Martelli,  Marcus A. Martin, Gidion May, David McNab, Chad Netzer, Naud Olivier, Joe Orr, Marc-Antoine Parent, Paul Paterson, Davide Salomoni, Sean Shaleh Perry, Tim Peters, Scott Powell, Bruce Rafnel, Walter H. Rauser, David Speed Ream, Rich Ries, Aharon Robbins, Guido van Rossum, David Rowe, Steven Schaefer, Wolfram Schwenzer, Gil Shwartz, Paul Snively, Phil Straus, Jurjen Stellingwerff,  Jeffrey Thompson, Gabriel Valiente, Tom van Vleck, Jim Vickroy, Tony Vignaux, Randall Voth, Ying-Chao Wang, Cliff Wells, Dan Wharton, Wim Wijnders, Vadim Zeitlin.
 
 The following people have written code for Leo: Dave Hein wrote code to support PHP, to handle Tk version numbers properly and to open the Python window properly on Linux.  Marcus A. Martin wrote code to support LaTex. Bernhard Mulder proposed a new way of untangling derived files.  Paul Paterson wrote the first implementation of plugins and the spell checking plugin.  Steven P. Schaefer eliminated problems with end-of-line on Linux and fixed bugs in how directives were handled in @root trees.
 
@@ -14051,21 +14051,54 @@ about comment lines that do not have the form:
 # -*- coding: &lt;encoding&gt; -*-</t>
 <t tx="ekr.20040219100738">Leo works reliably only on MacOS X 10.3 (Panther).
 
-For complete installation instructions see:
+To run Leo on Macintosh OS X 10.3
 
-http://www.teti.ch/share/leo.php
+1) Download and install "MacPython 2.3 for Panther addons".
 
-Many thanks to Gaspard Bucher for these instructions.
+Python is already included in OS X 10.3 so only the addons are necessary
 
-Another set of instructions:
+	http://www.cwi.nl/~jack/macpython.html
 
-MacOS 10.3 comes with a near-complete version of MacPython 2.3. Instead of
-installing a full MacPython 2.3, get the "MacPython 2.3 for Panther addons"
-(from http://homepages.cwi.nl/~jack/macpython/), which add the package manager
-and the Mac-specific Python IDE. After installing TclTkAcqua (8.4.7 BI works
-fine for me), you can use the package manager to install tkinter. Then you have
-everything needed for Leo, you can just download Leo and run leo.py from
-wherever it happens to be, or install it to wherever you would like it to have.</t>
+2) Download and install TclTkAqua.
+
+	http://tcltkaqua.sourceforge.net/
+
+3) Run the PackageManager found in /Applications/MacPython-2.3 and  
+install "_tkinter-2.3-binary" by clicking on the package in the list  
+and clicking the [Install:] button with "Install dependencies" checked
+
+4) Download Leo (platform independent source.zip).
+
+	http://leo.sourceforge.net/
+
+5) Unzip the contents into a directory by double-clicking the  
+downloaded file.
+
+6) Control-click on /path_to_unzipped_dir/leo/src/leo.py and open with  
+PythonLauncher.
+
+7) It is a good idea to set PythonLauncher as the default program to  
+open python scripts by clicking on "leo.py", choosing Get Info from the  
+Finder's File menu, and selecting "PythonLauncher" as the default  
+program to "Open With:"
+
+By clicking the "Change All..." button, all python scripts will be  
+opened with PythonLauncher.
+
+8) Download and install Pmw.
+
+    http://pmw.sourceforge.net/
+
+Pmw must be installed in order to use the Preferences panel.
+
+Drag the downloaded gzip file into
+ 
+/System/Library/Frameworks/Python.framework/Versions/2.3/lib/python2.3/site-packages
+
+Double click on it to unzip and untar the file into a folder to make it
+available to Python
+
+Thanks to Randall Voth for these instructions.</t>
 <t tx="ekr.20040403051340">@color
 
 # The g.es method prints its arguments to the log pane.
