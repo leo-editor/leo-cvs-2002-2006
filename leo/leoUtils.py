@@ -656,7 +656,8 @@ def getBaseDirectory():
 	if base and len(base) > 0 and os.path.isabs(base):
 		return base # base need not exist yet.
 	else:
-		return "" # An error.
+		return "" # No relative base given.
+
 #@-body
 #@-node:11::getBaseDirectory
 #@+node:12::getUserNewline
@@ -1778,9 +1779,9 @@ def update_file_if_changed(file_name,temp_name):
 		try:
 			# os.rename(temp_name, file_name)
 			utils_rename(temp_name, file_name)
-			es("Creating: " + file_name)
+			es("creating: " + file_name)
 		except:
-			es("Rename failed: no file created!")
+			es("rename failed: no file created!")
 			es(`file_name` + " may be read-only or in use")
 			es_exception()
 #@-body

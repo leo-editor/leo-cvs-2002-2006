@@ -151,7 +151,7 @@ class config:
 		self.output_initial_comment = ""
 			# Must be "" or None for compatibility with older versions of Leo.
 		self.output_newline = "nl"
-		self.path_directive_creates_directories = false
+		self.create_nonexistent_directories = false
 		self.read_only = true
 			# Make _sure_ we don't alter an illegal leoConfig.txt file!
 		self.relative_path_base_directory = "!"
@@ -601,9 +601,9 @@ class config:
 			self.output_newline = self.initConfigParam(
 				"output_newline",self.output_newline)
 			
-			self.path_directive_creates_directories = self.initBooleanConfigParam(
-				"path_directive_creates_directories",
-				self.path_directive_creates_directories)
+			self.create_nonexistent_directories = self.initBooleanConfigParam(
+				"create_nonexistent_directories",
+				self.create_nonexistent_directories)
 			
 			self.read_only = self.initBooleanConfigParam(
 				"read_only",self.read_only)

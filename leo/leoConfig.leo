@@ -122,9 +122,12 @@ output_newline = nl
 #
 #	Please specify nl when uploading files to Leo's CVS site.
 
-path_directive_creates_directories = 0
-#	1: @path directive attempts to create directory if it does not exist.
-#	0: @path directive makes no such attempt.
+create_nonexistent_directories = 0
+#	1: Leo attempts to create directories if they do not exist.
+#	0: Leo never attempts to create directories
+#	This option applies to directories specified in filenames in
+#	@file, @rawfile, @root and @silentfile trees, and to filenames
+#	speicied in the @path directory.
 
 relative_path_base_directory = .
 #	The directory to be used as a prefix for &lt;filename&gt; in

@@ -441,7 +441,7 @@ class atFile:
 			if os.path.exists(dir):
 				self.default_directory = dir
 			else: # 9/25/02
-				if config.path_directive_creates_directories:
+				if config.create_nonexistent_directories:
 					try:
 						os.mkdir(dir)
 						self.default_directory = dir
@@ -501,7 +501,7 @@ class atFile:
 						if os.path.exists(path):
 							self.default_directory = path
 						else: # 9/25/02
-							if config.path_directive_creates_directories:
+							if config.create_nonexistent_directories:
 								try:
 									os.mkdir(path)
 									self.default_directory = path
@@ -609,7 +609,7 @@ class atFile:
 						if os.path.exists(dir):
 							self.default_directory = dir ; break
 						else: # 9/25/02
-							if config.path_directive_creates_directories:
+							if config.create_nonexistent_directories:
 								try:
 									os.mkdir(dir)
 									es("creating @file directory:" + dir)

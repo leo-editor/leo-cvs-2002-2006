@@ -3910,8 +3910,8 @@ class tangleCommands:
 			
 				k = dict["path"]
 				
-				#@<< compute path from s[k:] >>
-				#@+node:1::<< compute path from s[k:] >>
+				#@<< compute dir and relative_path from s[k:] >>
+				#@+node:1::<< compute dir and relative_path from s[k:] >>
 				#@+body
 				j = i = k + len("@path")
 				i = skip_to_end_of_line(s,i)
@@ -3923,15 +3923,16 @@ class tangleCommands:
 					(path[0]=='"' and path[-1] == '"') ):
 					path = path[1:-1]
 				
-				path = string.strip(path)
-				path = os.path.join(app().loadDir,path) # EKR: 9/5/02
-				# trace("path: " + path)
+				dir = relative_path = string.strip(path)
+				dir = os.path.join(app().loadDir,dir) # EKR: 9/5/02
+				
+				# trace("dir: " + dir)
+				
 				#@-body
-				#@-node:1::<< compute path from s[k:] >>
+				#@-node:1::<< compute dir and relative_path from s[k:] >>
 
-				dir = path
 				if len(dir) > 0:
-					base = getBaseDirectory() # returns "" on error.
+					base = getBaseDirectory() # May return "".
 					if dir and len(dir) > 0:
 						dir = os.path.join(base,dir)
 						if os.path.isabs(dir):
@@ -3943,24 +3944,28 @@ class tangleCommands:
 								self.tangle_directory = dir
 							else: # 9/25/02
 								config = app().config
-								if config.path_directive_creates_directories:
+								if config.create_nonexistent_directories:
 									try:
 										os.mkdir(dir)
 										es("creating @path directory:" + dir)
-										self.default_directory = dir
+										self.tangle_directory = dir
 										break
 									except:
 										self.error("exception creating @path directory: " + dir)
 										es_exception()
 								elif issue_error_flag and not self.path_warning_given:
 									self.path_warning_given = true # supress future warnings
-									self.error("invalid directory: " + '"' + s[i:j] + '"')
+									self.error("@path directory does not exist: " + dir)
+									if base and len(base) > 0:
+										es("relative_path_base_directory: " + base)
+									if relative_path and len(relative_path) > 0:
+										es("relative path in @path directive: " + relative_path)
 							#@-body
 							#@-node:2::<< handle absolute @path >>
 
 						elif issue_error_flag and not self.path_warning_given:
 							self.path_warning_given = true # supress future warnings
-							self.error("ignoring relative path:" + dir)
+							self.error("ignoring relative path in @path:" + dir)
 				elif issue_error_flag and not self.path_warning_given:
 					self.path_warning_given = true # supress future warnings
 					self.error("ignoring empty @path")
@@ -3987,8 +3992,28 @@ class tangleCommands:
 			#@-node:5::<< Test for @pagewidth >>
 
 			
+			#@<< Test for @root >>
+			#@+node:6::<< Test for @root >>
+			#@+body
+			#@+at
+			#  10/27/02: new code:  self.root may not be defined here, so any 
+			# relative directory specified in the @root node will have no 
+			# effect unless we have this code.
+			# 
+
+			#@-at
+			#@@c
+			if self.root_name == None and dict.has_key("root"):
+			
+				i = dict["root"]
+				i += len("@root")
+				self.setRootFromText(s[i:],issue_error_flag)
+			#@-body
+			#@-node:6::<< Test for @root >>
+
+			
 			#@<< Test for @tabwidth >>
-			#@+node:6::<< Test for @tabwidth >>
+			#@+node:7::<< Test for @tabwidth >>
 			#@+body
 			if not old.has_key("tabwidth") and dict.has_key("tabwidth"):
 			
@@ -4002,11 +4027,11 @@ class tangleCommands:
 						es("ignoring " + s[i:j])
 			
 			#@-body
-			#@-node:6::<< Test for @tabwidth >>
+			#@-node:7::<< Test for @tabwidth >>
 
 			
 			#@<< Test for @header and @noheader >>
-			#@+node:7::<< Test for @header and @noheader >>
+			#@+node:8::<< Test for @header and @noheader >>
 			#@+body
 			if old.has_key("header") or old.has_key("noheader"):
 				pass # Do nothing more.
@@ -4022,13 +4047,13 @@ class tangleCommands:
 				self.use_header_flag = false
 			
 			#@-body
-			#@-node:7::<< Test for @header and @noheader >>
+			#@-node:8::<< Test for @header and @noheader >>
 
 			old.update(dict)
 			v = v.parent()
 		
 		#@<< Set self.tangle_directory >>
-		#@+node:8::<< Set self.tangle_directory >>
+		#@+node:9::<< Set self.tangle_directory >>
 		#@+body
 		#@+at
 		#  This code sets self.tangle_directory if it has not already been set 
@@ -4043,46 +4068,65 @@ class tangleCommands:
 		#@@c
 
 		if c.frame and require_path_flag and not self.tangle_directory:
-		
 			if self.root_name and len(self.root_name) > 0:
 				root_dir = os.path.dirname(self.root_name)
 			else:
 				root_dir = None
+			# print "root_dir", `root_dir`
+		
 			table = ( # This is a precedence table.
 				(root_dir,"@root"), 
 				(c.tangle_directory,"default tangle"), # Probably should be eliminated.
 				(c.frame.openDirectory,"open"))
-			base = getBaseDirectory() # returns "" on error.
-			for dir, kind in table:
-				if dir and len(dir) > 0:
-					dir = os.path.join(base,dir)
+		
+			base = getBaseDirectory() # May return "".
+		
+			for dir2, kind in table:
+				if dir2 and len(dir2) > 0:
+					# print "base,dir",`base`,`dir`
+					dir = os.path.join(base,dir2)
 					if os.path.isabs(dir): # Errors may result in relative or invalid path.
 						
 						#@<< handle absolute path >>
 						#@+node:1::<< handle absolute path >>
 						#@+body
 						if os.path.exists(dir):
-							self.tangle_directory = dir ; break
+							if kind == "@root" and not os.path.isabs(root_dir):
+								self.tangle_directory = base
+							else:
+								self.tangle_directory = dir 
+							break
 						else: # 9/25/02
 							config = app().config
-							if config.path_directive_creates_directories:
+							if config.create_nonexistent_directories:
 								try:
 									os.mkdir(dir)
 									es("creating @root directory:" + dir)
-									self.default_directory = dir ; break
+									if kind == "@root" and not os.path.isabs(root_dir):
+										self.tangle_directory = base
+									else:
+										self.tangle_directory = dir
+									break
 								except:
 									self.error("exception creating @root directory: " + dir)
 									es_exception()
-							elif issue_error_flag:
-								self.warning("ignoring invalid " + kind + " directory: " + dir)
+							else:
+								# 10/27/02: It is an error for this not to exist now.
+								self.error("@root directory does not exist:" + dir)
+								if base and len(base) > 0:
+									es("relative_path_base_directory: " + base)
+								if dir2 and len(dir2) > 0:
+									es(kind + " directory: " + dir2)
+						
 						#@-body
 						#@-node:1::<< handle absolute path >>
 
 		
-		if not self.tangle_directory and issue_error_flag:
-			self.pathError("No directory specified by @root, @path or Preferences.")
+		if not self.tangle_directory and require_path_flag: # issue_error_flag:
+			self.pathError("No absolute directory specified by @root, @path or Preferences.")
+		
 		#@-body
-		#@-node:8::<< Set self.tangle_directory >>
+		#@-node:9::<< Set self.tangle_directory >>
 	#@-body
 	#@-node:17::tangle.scanAllDirectives
 	#@+node:18::token_type
