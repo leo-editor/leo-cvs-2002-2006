@@ -1209,7 +1209,6 @@ class leoTree:
 		menu.focus_set() 
 		return "break"
 	
-	
 	# 20-SEP-2002 DTHEIN: This event handler is only needed for Linux
 	
 	def OnPopupFocusLost(self,event=None):
