@@ -10818,19 +10818,27 @@ def findChild (self,headline):
         at.readError("No vnodeList for tnode: %s" % repr(t))
         g.trace(at.tnodeListIndex)
         return None
-
-    # Check the headline.
-    if headline.strip() == v.headString().strip():
-        t.setVisited() # Supress warning about unvisited node.
-        return t
-    else:
-        at.readError(
-            "Mismatched headline.\nExpecting: %s\ngot: %s" %
-            (headline,v.headString()))
-        g.trace("Mismatched headline",headline,v.headString())
-        g.trace(at.tnodeListIndex,len(at.root.v.t.tnodeList))
-        return None
+        
+    # Don't check the headline.  It simply causes problems.
+    t.setVisited() # Supress warning about unvisited node.
+    return t
+    
+    if 0: # Old code:
+        << Check the headlines >>
 #@nonl
+#@+node:ekr.20040716061450:<< Check the headlines >>
+if headline.strip() == v.headString().strip():
+    t.setVisited() # Supress warning about unvisited node.
+    return t
+else:
+    at.readError(
+        "Mismatched headline.\nExpecting: %s\ngot: %s" %
+        (headline,v.headString()))
+    g.trace("Mismatched headline",headline,v.headString())
+    g.trace(at.tnodeListIndex,len(at.root.v.t.tnodeList))
+    return None
+#@nonl
+#@-node:ekr.20040716061450:<< Check the headlines >>
 #@-node:ekr.20031218072017.2007:findChild 4.x
 #@+node:ekr.20031218072017.2008:getTnodeList (4.0,4.2)
 def getTnodeList (self,s):
@@ -11027,6 +11035,7 @@ def write(self,root,nosentinels=False,thinFile=False,toString=False,oneNodeOnly=
         if toString:
             at.closeWriteFile()
             # Major bug: failure to clear this wipes out headlines!
+            # Minor bug: sometimes this causes slight problems...
             at.root.v.t.tnodeList = [] 
         else:
             at.closeWriteFile()
@@ -11041,7 +11050,7 @@ def write(self,root,nosentinels=False,thinFile=False,toString=False,oneNodeOnly=
 #@nonl
 #@+node:ekr.20031218072017.2116:<< open the file; return on error >>
 if toString:
-    at.targetFileName = "<string-file>"
+    at.targetFileName = "<new_df.write string-file>"
 elif nosentinels:
     at.targetFileName = root.atNoSentFileNodeName()
 elif thinFile:
@@ -23751,15 +23760,18 @@ def readAll(self,root,partialFlag=False):
 #@nonl
 #@-node:ekr.20031218072017.2626: top_df.readAll
 #@+node:ekr.20031218072017.2757:new_df.readOpenFile
-def readOpenFile(self,root,file,firstLines):
+def readOpenFile(self,root,file,firstLines,perfectImportRoot=None):
     
     """Read an open 4.x thick or thin derived file."""
     
     at = self
+    
+    # This is safe (just barely) because only this method calls scanText4>
+    at.perfectImportRoot = perfectImportRoot
 
     # Scan the 4.x file.
     at.tnodeListIndex = 0
-    # 4/27/04: at.thinFile tells scanText4 whether this is a thin file or not.
+    # at.thinFile tells scanText4 whether this is a thin file or not.
     lastLines = at.scanText4(file,root)
     root.v.t.setVisited() # Disable warning about set nodes.
     
@@ -23872,6 +23884,7 @@ df.indent = 0
 df.targetFileName = fileName
 df.root = root
 df.root_seen = False
+df.perfectImportRoot = None # Set only in readOpenFile.
 #@nonl
 #@-node:ekr.20031218072017.1816:<< copy ivars to df >>
 #@+node:ekr.20031218072017.1817:<< warn about non-empty unvisited nodes >>
@@ -24041,6 +24054,7 @@ def write(self,root,nosentinels=False,thinFile=False,toString=False,oneNodeOnly=
         if toString:
             at.closeWriteFile()
             # Major bug: failure to clear this wipes out headlines!
+            # Minor bug: sometimes this causes slight problems...
             at.root.v.t.tnodeList = [] 
         else:
             at.closeWriteFile()
@@ -24055,7 +24069,7 @@ def write(self,root,nosentinels=False,thinFile=False,toString=False,oneNodeOnly=
 #@nonl
 #@+node:ekr.20031218072017.2116:<< open the file; return on error >>
 if toString:
-    at.targetFileName = "<string-file>"
+    at.targetFileName = "<new_df.write string-file>"
 elif nosentinels:
     at.targetFileName = root.atNoSentFileNodeName()
 elif thinFile:
@@ -24670,11 +24684,18 @@ def readEndNode (self,s,i,middle=False):
         else:
             old = None
         if old:
-            g.es("Warning: updating cloned text",color="blue")
-            #g.es("old...\n%s\n" % old)
-            #g.es("new...\n%s\n" % s)
-            at.t.setDirty() # Mark the node dirty.  Ancestors will be marked dirty later.
-            at.c.setChanged(True)
+            if at.perfectImportRoot:
+                << bump at.correctedLines and tell about the correction >>
+                p.setMarked()
+                at.t.bodyString = s # Just etting at.t.tempBodyString won't work here.
+                at.t.setDirty() # Mark the node dirty.  Ancestors will be marked dirty later.
+                at.c.setChanged(True)
+            else:
+                g.es("Warning: updating cloned text",color="blue")
+                #g.es("old...\n%s\n" % old)
+                #g.es("new...\n%s\n" % s)
+                at.t.setDirty() # Mark the node dirty.  Ancestors will be marked dirty later.
+                at.c.setChanged(True)
         at.t.tempBodyString = s
 
     # Indicate that the tnode has been set in the derived file.
@@ -24689,6 +24710,35 @@ def readEndNode (self,s,i,middle=False):
 
     at.popSentinelStack(endNode)
 #@nonl
+#@+node:ekr.20040717133944:<< bump at.correctedLines and tell about the correction >>
+# Report the number of corrected nodes.
+at.correctedLines += 1
+
+found = False
+for p in at.perfectImportRoot.self_and_subtree_iter():
+    if p.v.t == at.t:
+        found = True ; break
+
+if found:
+    if 0: # Not needed: we mark all corrected nodes.
+        g.es("Correcting %s" % p.headString(),color="blue")
+    if 0: # For debugging.
+        print ; print '-' * 40
+        print "old",len(old)
+        for line in g.splitLines(old):
+            #line = line.replace(' ','< >').replace('\t','<TAB>')
+            print repr(str(line))
+        print ; print '-' * 40
+        print "new",len(s)
+        for line in g.splitLines(s):
+            #line = line.replace(' ','< >').replace('\t','<TAB>')
+            print repr(str(line))
+        print ; print '-' * 40
+else:
+    # This should never happen.
+    g.es("Correcting hidden node: t=%s" % repr(at.t),color="red")
+#@nonl
+#@-node:ekr.20040717133944:<< bump at.correctedLines and tell about the correction >>
 #@-node:ekr.20031218072017.2772:readEndNode (4.x)
 #@+node:ekr.20031218072017.2773:readEndOthers
 def readEndOthers (self,s,i):
@@ -25239,11 +25289,18 @@ def readEndNode (self,s,i,middle=False):
         else:
             old = None
         if old:
-            g.es("Warning: updating cloned text",color="blue")
-            #g.es("old...\n%s\n" % old)
-            #g.es("new...\n%s\n" % s)
-            at.t.setDirty() # Mark the node dirty.  Ancestors will be marked dirty later.
-            at.c.setChanged(True)
+            if at.perfectImportRoot:
+                << bump at.correctedLines and tell about the correction >>
+                p.setMarked()
+                at.t.bodyString = s # Just etting at.t.tempBodyString won't work here.
+                at.t.setDirty() # Mark the node dirty.  Ancestors will be marked dirty later.
+                at.c.setChanged(True)
+            else:
+                g.es("Warning: updating cloned text",color="blue")
+                #g.es("old...\n%s\n" % old)
+                #g.es("new...\n%s\n" % s)
+                at.t.setDirty() # Mark the node dirty.  Ancestors will be marked dirty later.
+                at.c.setChanged(True)
         at.t.tempBodyString = s
 
     # Indicate that the tnode has been set in the derived file.
@@ -25258,6 +25315,35 @@ def readEndNode (self,s,i,middle=False):
 
     at.popSentinelStack(endNode)
 #@nonl
+#@+node:ekr.20040717133944:<< bump at.correctedLines and tell about the correction >>
+# Report the number of corrected nodes.
+at.correctedLines += 1
+
+found = False
+for p in at.perfectImportRoot.self_and_subtree_iter():
+    if p.v.t == at.t:
+        found = True ; break
+
+if found:
+    if 0: # Not needed: we mark all corrected nodes.
+        g.es("Correcting %s" % p.headString(),color="blue")
+    if 0: # For debugging.
+        print ; print '-' * 40
+        print "old",len(old)
+        for line in g.splitLines(old):
+            #line = line.replace(' ','< >').replace('\t','<TAB>')
+            print repr(str(line))
+        print ; print '-' * 40
+        print "new",len(s)
+        for line in g.splitLines(s):
+            #line = line.replace(' ','< >').replace('\t','<TAB>')
+            print repr(str(line))
+        print ; print '-' * 40
+else:
+    # This should never happen.
+    g.es("Correcting hidden node: t=%s" % repr(at.t),color="red")
+#@nonl
+#@-node:ekr.20040717133944:<< bump at.correctedLines and tell about the correction >>
 #@-node:ekr.20031218072017.2772:readEndNode (4.x)
 #@-node:EKR.20040429082121:4.2 Code Gen Read
 #@+node:EKR.20040429080901.1:4.2 Code Gen Write
@@ -25527,6 +25613,7 @@ def __init__(self,c):
     
     # For reading thin derived files.
     at.lastThinNode = None ; at.thinNodeStack = [] # Used by createThinChild.
+    at.perfectImportRoot = None # The root of the perfect import command.
 
     << Create the dispatch dictionary used by scanText4 >>
 #@nonl
@@ -25795,9 +25882,10 @@ def putRefAt (self,s,i,n1,n2,p,delta):
 
     ref = g.findReference(name,p)
     if not ref:
-        at.writeError(
-            "undefined section: %s\n\treferenced from: %s" %
-            ( name,p.headString()))
+        if not at.perfectImportRoot: # A kludge: we shouldn't be importing derived files here!
+            at.writeError(
+                "undefined section: %s\n\treferenced from: %s" %
+                ( name,p.headString()))
         return None
     
     # Expand the ref.
@@ -27963,9 +28051,10 @@ def putRefAt (self,s,i,n1,n2,p,delta):
 
     ref = g.findReference(name,p)
     if not ref:
-        at.writeError(
-            "undefined section: %s\n\treferenced from: %s" %
-            ( name,p.headString()))
+        if not at.perfectImportRoot: # A kludge: we shouldn't be importing derived files here!
+            at.writeError(
+                "undefined section: %s\n\treferenced from: %s" %
+                ( name,p.headString()))
         return None
     
     # Expand the ref.
@@ -28070,11 +28159,18 @@ def readEndNode (self,s,i,middle=False):
         else:
             old = None
         if old:
-            g.es("Warning: updating cloned text",color="blue")
-            #g.es("old...\n%s\n" % old)
-            #g.es("new...\n%s\n" % s)
-            at.t.setDirty() # Mark the node dirty.  Ancestors will be marked dirty later.
-            at.c.setChanged(True)
+            if at.perfectImportRoot:
+                << bump at.correctedLines and tell about the correction >>
+                p.setMarked()
+                at.t.bodyString = s # Just etting at.t.tempBodyString won't work here.
+                at.t.setDirty() # Mark the node dirty.  Ancestors will be marked dirty later.
+                at.c.setChanged(True)
+            else:
+                g.es("Warning: updating cloned text",color="blue")
+                #g.es("old...\n%s\n" % old)
+                #g.es("new...\n%s\n" % s)
+                at.t.setDirty() # Mark the node dirty.  Ancestors will be marked dirty later.
+                at.c.setChanged(True)
         at.t.tempBodyString = s
 
     # Indicate that the tnode has been set in the derived file.
@@ -28089,6 +28185,35 @@ def readEndNode (self,s,i,middle=False):
 
     at.popSentinelStack(endNode)
 #@nonl
+#@+node:ekr.20040717133944:<< bump at.correctedLines and tell about the correction >>
+# Report the number of corrected nodes.
+at.correctedLines += 1
+
+found = False
+for p in at.perfectImportRoot.self_and_subtree_iter():
+    if p.v.t == at.t:
+        found = True ; break
+
+if found:
+    if 0: # Not needed: we mark all corrected nodes.
+        g.es("Correcting %s" % p.headString(),color="blue")
+    if 0: # For debugging.
+        print ; print '-' * 40
+        print "old",len(old)
+        for line in g.splitLines(old):
+            #line = line.replace(' ','< >').replace('\t','<TAB>')
+            print repr(str(line))
+        print ; print '-' * 40
+        print "new",len(s)
+        for line in g.splitLines(s):
+            #line = line.replace(' ','< >').replace('\t','<TAB>')
+            print repr(str(line))
+        print ; print '-' * 40
+else:
+    # This should never happen.
+    g.es("Correcting hidden node: t=%s" % repr(at.t),color="red")
+#@nonl
+#@-node:ekr.20040717133944:<< bump at.correctedLines and tell about the correction >>
 #@-node:ekr.20031218072017.2772:readEndNode (4.x)
 #@+node:ekr.20031218072017.2758:scanText4 & allies
 def scanText4 (self,file,p):
@@ -28448,11 +28573,18 @@ def readEndNode (self,s,i,middle=False):
         else:
             old = None
         if old:
-            g.es("Warning: updating cloned text",color="blue")
-            #g.es("old...\n%s\n" % old)
-            #g.es("new...\n%s\n" % s)
-            at.t.setDirty() # Mark the node dirty.  Ancestors will be marked dirty later.
-            at.c.setChanged(True)
+            if at.perfectImportRoot:
+                << bump at.correctedLines and tell about the correction >>
+                p.setMarked()
+                at.t.bodyString = s # Just etting at.t.tempBodyString won't work here.
+                at.t.setDirty() # Mark the node dirty.  Ancestors will be marked dirty later.
+                at.c.setChanged(True)
+            else:
+                g.es("Warning: updating cloned text",color="blue")
+                #g.es("old...\n%s\n" % old)
+                #g.es("new...\n%s\n" % s)
+                at.t.setDirty() # Mark the node dirty.  Ancestors will be marked dirty later.
+                at.c.setChanged(True)
         at.t.tempBodyString = s
 
     # Indicate that the tnode has been set in the derived file.
@@ -28467,6 +28599,35 @@ def readEndNode (self,s,i,middle=False):
 
     at.popSentinelStack(endNode)
 #@nonl
+#@+node:ekr.20040717133944:<< bump at.correctedLines and tell about the correction >>
+# Report the number of corrected nodes.
+at.correctedLines += 1
+
+found = False
+for p in at.perfectImportRoot.self_and_subtree_iter():
+    if p.v.t == at.t:
+        found = True ; break
+
+if found:
+    if 0: # Not needed: we mark all corrected nodes.
+        g.es("Correcting %s" % p.headString(),color="blue")
+    if 0: # For debugging.
+        print ; print '-' * 40
+        print "old",len(old)
+        for line in g.splitLines(old):
+            #line = line.replace(' ','< >').replace('\t','<TAB>')
+            print repr(str(line))
+        print ; print '-' * 40
+        print "new",len(s)
+        for line in g.splitLines(s):
+            #line = line.replace(' ','< >').replace('\t','<TAB>')
+            print repr(str(line))
+        print ; print '-' * 40
+else:
+    # This should never happen.
+    g.es("Correcting hidden node: t=%s" % repr(at.t),color="red")
+#@nonl
+#@-node:ekr.20040717133944:<< bump at.correctedLines and tell about the correction >>
 #@-node:ekr.20031218072017.2772:readEndNode (4.x)
 #@+node:ekr.20031218072017.2773:readEndOthers
 def readEndOthers (self,s,i):
@@ -35430,6 +35591,7 @@ df.indent = 0
 df.targetFileName = fileName
 df.root = root
 df.root_seen = False
+df.perfectImportRoot = None # Set only in readOpenFile.
 #@nonl
 #@-node:ekr.20031218072017.1816:<< copy ivars to df >>
 #@+node:ekr.20031218072017.1817:<< warn about non-empty unvisited nodes >>
@@ -35587,6 +35749,7 @@ df.indent = 0
 df.targetFileName = fileName
 df.root = root
 df.root_seen = False
+df.perfectImportRoot = None # Set only in readOpenFile.
 #@nonl
 #@-node:ekr.20031218072017.1816:<< copy ivars to df >>
 #@+node:ekr.20031218072017.1817:<< warn about non-empty unvisited nodes >>
@@ -35655,11 +35818,18 @@ def readEndNode (self,s,i,middle=False):
         else:
             old = None
         if old:
-            g.es("Warning: updating cloned text",color="blue")
-            #g.es("old...\n%s\n" % old)
-            #g.es("new...\n%s\n" % s)
-            at.t.setDirty() # Mark the node dirty.  Ancestors will be marked dirty later.
-            at.c.setChanged(True)
+            if at.perfectImportRoot:
+                << bump at.correctedLines and tell about the correction >>
+                p.setMarked()
+                at.t.bodyString = s # Just etting at.t.tempBodyString won't work here.
+                at.t.setDirty() # Mark the node dirty.  Ancestors will be marked dirty later.
+                at.c.setChanged(True)
+            else:
+                g.es("Warning: updating cloned text",color="blue")
+                #g.es("old...\n%s\n" % old)
+                #g.es("new...\n%s\n" % s)
+                at.t.setDirty() # Mark the node dirty.  Ancestors will be marked dirty later.
+                at.c.setChanged(True)
         at.t.tempBodyString = s
 
     # Indicate that the tnode has been set in the derived file.
@@ -35674,6 +35844,35 @@ def readEndNode (self,s,i,middle=False):
 
     at.popSentinelStack(endNode)
 #@nonl
+#@+node:ekr.20040717133944:<< bump at.correctedLines and tell about the correction >>
+# Report the number of corrected nodes.
+at.correctedLines += 1
+
+found = False
+for p in at.perfectImportRoot.self_and_subtree_iter():
+    if p.v.t == at.t:
+        found = True ; break
+
+if found:
+    if 0: # Not needed: we mark all corrected nodes.
+        g.es("Correcting %s" % p.headString(),color="blue")
+    if 0: # For debugging.
+        print ; print '-' * 40
+        print "old",len(old)
+        for line in g.splitLines(old):
+            #line = line.replace(' ','< >').replace('\t','<TAB>')
+            print repr(str(line))
+        print ; print '-' * 40
+        print "new",len(s)
+        for line in g.splitLines(s):
+            #line = line.replace(' ','< >').replace('\t','<TAB>')
+            print repr(str(line))
+        print ; print '-' * 40
+else:
+    # This should never happen.
+    g.es("Correcting hidden node: t=%s" % repr(at.t),color="red")
+#@nonl
+#@-node:ekr.20040717133944:<< bump at.correctedLines and tell about the correction >>
 #@-node:ekr.20031218072017.2772:readEndNode (4.x)
 #@-node:EKR.20040605173241:(Removed gnx in headlines when importing thin derived files)
 #@+node:EKR.20040605181231:(Made sure change all doesn't keep redrawing the screen)
@@ -40941,14 +41140,25 @@ class fileLikeObject:
     
     The caller is responsible for handling newlines correctly."""
 
-    def __init__(self): self.list = []
+    def __init__(self):
+        self.list = []
+        self.ptr = 0
+
     def clear (self):   self.list = []
 
     def close (self): pass
     def flush (self): pass
 
     def get (self):
-        return string.join(self.list,'')
+        return ''.join(self.list)
+        
+    def readline(self): # New for read-from-string (readOpenFile).
+        if self.ptr < len(self.list):
+            line = self.list[self.ptr]
+            # g.trace(repr(line))
+            self.ptr += 1
+            return line
+        else: return ""
 
     def write (self,s):
         if s: self.list.append(s)
@@ -41128,6 +41338,7 @@ def write(self,root,nosentinels=False,thinFile=False,toString=False,oneNodeOnly=
         if toString:
             at.closeWriteFile()
             # Major bug: failure to clear this wipes out headlines!
+            # Minor bug: sometimes this causes slight problems...
             at.root.v.t.tnodeList = [] 
         else:
             at.closeWriteFile()
@@ -41142,7 +41353,7 @@ def write(self,root,nosentinels=False,thinFile=False,toString=False,oneNodeOnly=
 #@nonl
 #@+node:ekr.20031218072017.2116:<< open the file; return on error >>
 if toString:
-    at.targetFileName = "<string-file>"
+    at.targetFileName = "<new_df.write string-file>"
 elif nosentinels:
     at.targetFileName = root.atNoSentFileNodeName()
 elif thinFile:
@@ -41741,6 +41952,7 @@ def write(self,root,nosentinels=False,thinFile=False,toString=False,oneNodeOnly=
         if toString:
             at.closeWriteFile()
             # Major bug: failure to clear this wipes out headlines!
+            # Minor bug: sometimes this causes slight problems...
             at.root.v.t.tnodeList = [] 
         else:
             at.closeWriteFile()
@@ -41755,7 +41967,7 @@ def write(self,root,nosentinels=False,thinFile=False,toString=False,oneNodeOnly=
 #@nonl
 #@+node:ekr.20031218072017.2116:<< open the file; return on error >>
 if toString:
-    at.targetFileName = "<string-file>"
+    at.targetFileName = "<new_df.write string-file>"
 elif nosentinels:
     at.targetFileName = root.atNoSentFileNodeName()
 elif thinFile:
@@ -42708,6 +42920,7 @@ def write(self,root,nosentinels=False,thinFile=False,toString=False,oneNodeOnly=
         if toString:
             at.closeWriteFile()
             # Major bug: failure to clear this wipes out headlines!
+            # Minor bug: sometimes this causes slight problems...
             at.root.v.t.tnodeList = [] 
         else:
             at.closeWriteFile()
@@ -42722,7 +42935,7 @@ def write(self,root,nosentinels=False,thinFile=False,toString=False,oneNodeOnly=
 #@nonl
 #@+node:ekr.20031218072017.2116:<< open the file; return on error >>
 if toString:
-    at.targetFileName = "<string-file>"
+    at.targetFileName = "<new_df.write string-file>"
 elif nosentinels:
     at.targetFileName = root.atNoSentFileNodeName()
 elif thinFile:
@@ -43247,9 +43460,10 @@ def putRefAt (self,s,i,n1,n2,p,delta):
 
     ref = g.findReference(name,p)
     if not ref:
-        at.writeError(
-            "undefined section: %s\n\treferenced from: %s" %
-            ( name,p.headString()))
+        if not at.perfectImportRoot: # A kludge: we shouldn't be importing derived files here!
+            at.writeError(
+                "undefined section: %s\n\treferenced from: %s" %
+                ( name,p.headString()))
         return None
     
     # Expand the ref.
@@ -45105,6 +45319,7 @@ df.indent = 0
 df.targetFileName = fileName
 df.root = root
 df.root_seen = False
+df.perfectImportRoot = None # Set only in readOpenFile.
 #@nonl
 #@-node:ekr.20031218072017.1816:<< copy ivars to df >>
 #@+node:ekr.20031218072017.1817:<< warn about non-empty unvisited nodes >>
@@ -45173,11 +45388,18 @@ def readEndNode (self,s,i,middle=False):
         else:
             old = None
         if old:
-            g.es("Warning: updating cloned text",color="blue")
-            #g.es("old...\n%s\n" % old)
-            #g.es("new...\n%s\n" % s)
-            at.t.setDirty() # Mark the node dirty.  Ancestors will be marked dirty later.
-            at.c.setChanged(True)
+            if at.perfectImportRoot:
+                << bump at.correctedLines and tell about the correction >>
+                p.setMarked()
+                at.t.bodyString = s # Just etting at.t.tempBodyString won't work here.
+                at.t.setDirty() # Mark the node dirty.  Ancestors will be marked dirty later.
+                at.c.setChanged(True)
+            else:
+                g.es("Warning: updating cloned text",color="blue")
+                #g.es("old...\n%s\n" % old)
+                #g.es("new...\n%s\n" % s)
+                at.t.setDirty() # Mark the node dirty.  Ancestors will be marked dirty later.
+                at.c.setChanged(True)
         at.t.tempBodyString = s
 
     # Indicate that the tnode has been set in the derived file.
@@ -45192,6 +45414,35 @@ def readEndNode (self,s,i,middle=False):
 
     at.popSentinelStack(endNode)
 #@nonl
+#@+node:ekr.20040717133944:<< bump at.correctedLines and tell about the correction >>
+# Report the number of corrected nodes.
+at.correctedLines += 1
+
+found = False
+for p in at.perfectImportRoot.self_and_subtree_iter():
+    if p.v.t == at.t:
+        found = True ; break
+
+if found:
+    if 0: # Not needed: we mark all corrected nodes.
+        g.es("Correcting %s" % p.headString(),color="blue")
+    if 0: # For debugging.
+        print ; print '-' * 40
+        print "old",len(old)
+        for line in g.splitLines(old):
+            #line = line.replace(' ','< >').replace('\t','<TAB>')
+            print repr(str(line))
+        print ; print '-' * 40
+        print "new",len(s)
+        for line in g.splitLines(s):
+            #line = line.replace(' ','< >').replace('\t','<TAB>')
+            print repr(str(line))
+        print ; print '-' * 40
+else:
+    # This should never happen.
+    g.es("Correcting hidden node: t=%s" % repr(at.t),color="red")
+#@nonl
+#@-node:ekr.20040717133944:<< bump at.correctedLines and tell about the correction >>
 #@-node:ekr.20031218072017.2772:readEndNode (4.x)
 #@-node:EKR.20040524053657.1:(Better reporting of body text conflicts)
 #@-node:EKR.20040628084530:6/29
@@ -50564,7 +50815,8 @@ def importWebCommand (self,files,webType):
 #@nonl
 #@-node:ekr.20031218072017.3226:importWebCommand
 #@+node:ekr.20031218072017.3212:importFilesCommand
-def importFilesCommand (self,files,treeType):
+def importFilesCommand (self,files,treeType,
+    perfectImport=True,testing=False,verbose=False):
 
     c = self.c
     if c == None: return
@@ -50578,9 +50830,11 @@ def importFilesCommand (self,files,treeType):
             << Create a parent for two files having a common prefix >>
         for fileName in files:
             v = self.createOutline(fileName,current)
-            self.perfectImport(fileName,v)
-            if v: # 8/11/02: createOutline may fail.
-                g.es("imported " + fileName)
+            if v: # createOutline may fail.
+                if perfectImport and treeType == "@file": # Can't correct @root trees.
+                    self.perfectImport(fileName,v,testing=testing,verbose=verbose)
+                else:
+                    g.es("imported " + fileName,color="blue")
                 v.contract()
                 v.setDirty()
                 c.setChanged(True)
@@ -50799,6 +51053,7 @@ def write(self,root,nosentinels=False,thinFile=False,toString=False,oneNodeOnly=
         if toString:
             at.closeWriteFile()
             # Major bug: failure to clear this wipes out headlines!
+            # Minor bug: sometimes this causes slight problems...
             at.root.v.t.tnodeList = [] 
         else:
             at.closeWriteFile()
@@ -50813,7 +51068,7 @@ def write(self,root,nosentinels=False,thinFile=False,toString=False,oneNodeOnly=
 #@nonl
 #@+node:ekr.20031218072017.2116:<< open the file; return on error >>
 if toString:
-    at.targetFileName = "<string-file>"
+    at.targetFileName = "<new_df.write string-file>"
 elif nosentinels:
     at.targetFileName = root.atNoSentFileNodeName()
 elif thinFile:
@@ -51603,6 +51858,7 @@ def write(self,root,nosentinels=False,thinFile=False,toString=False,oneNodeOnly=
         if toString:
             at.closeWriteFile()
             # Major bug: failure to clear this wipes out headlines!
+            # Minor bug: sometimes this causes slight problems...
             at.root.v.t.tnodeList = [] 
         else:
             at.closeWriteFile()
@@ -51617,7 +51873,7 @@ def write(self,root,nosentinels=False,thinFile=False,toString=False,oneNodeOnly=
 #@nonl
 #@+node:ekr.20031218072017.2116:<< open the file; return on error >>
 if toString:
-    at.targetFileName = "<string-file>"
+    at.targetFileName = "<new_df.write string-file>"
 elif nosentinels:
     at.targetFileName = root.atNoSentFileNodeName()
 elif thinFile:
@@ -52142,9 +52398,10 @@ def putRefAt (self,s,i,n1,n2,p,delta):
 
     ref = g.findReference(name,p)
     if not ref:
-        at.writeError(
-            "undefined section: %s\n\treferenced from: %s" %
-            ( name,p.headString()))
+        if not at.perfectImportRoot: # A kludge: we shouldn't be importing derived files here!
+            at.writeError(
+                "undefined section: %s\n\treferenced from: %s" %
+                ( name,p.headString()))
         return None
     
     # Expand the ref.
@@ -53669,6 +53926,79 @@ def endUndo (self):
 #@-node:ekr.20040711135959.1:Pretty Print commands
 #@-node:ekr.20040711135959.2:Check Outline submenu...
 #@-node:ekr.20040711135244.2:(Finished all commands in the Outline Check submenu)
+#@+node:ekr.20040712082657:(Removed headline check logic in atFile read logic)
+#@+node:ekr.20040715171241:Report
+@nocolor
+
+when opening a leo document that contains an @file, say like @file helloworld.bas, leo reports upon opening that:
+
+Leo Log Window...
+Leo 4.2 beta 2, build 1.128 , July 5, 2004
+Python 2.3.4, Tk 8.4.3, win32
+File encoding: UTF-8
+reading: D:\Programming\HelloWorld.leo
+reading: @file helloworld.bas
+----- error reading @file helloworld.bas
+Mismatched headline.
+Expecting: @file helloworld
+got: @file helloworld.bas
+leoConfig.txt encoding: utf-8
+@run encoding: mbcs
+13 plugins loaded
+leoID = fil
+#@-node:ekr.20040715171241:Report
+#@+node:ekr.20031218072017.2007:findChild 4.x
+def findChild (self,headline):
+    
+    """Return the next tnode in at.root.t.tnodeList."""
+
+    at = self ; v = at.root.v
+
+    if not hasattr(v.t,"tnodeList"):
+        at.readError("no tnodeList for " + repr(v))
+        g.es("Write the @file node or use the Import Derived File command")
+        g.trace("no tnodeList for ",v)
+        return None
+        
+    if at.tnodeListIndex >= len(v.t.tnodeList):
+        at.readError("bad tnodeList index: %d, %s" % (at.tnodeListIndex,repr(v)))
+        g.trace("bad tnodeList index",at.tnodeListIndex,len(v.t.tnodeList),v)
+        return None
+        
+    t = v.t.tnodeList[at.tnodeListIndex]
+    assert(t)
+    at.tnodeListIndex += 1
+
+    # Get any vnode joined to t.
+    try:
+        v = t.vnodeList[0]
+    except:
+        at.readError("No vnodeList for tnode: %s" % repr(t))
+        g.trace(at.tnodeListIndex)
+        return None
+        
+    # Don't check the headline.  It simply causes problems.
+    t.setVisited() # Supress warning about unvisited node.
+    return t
+    
+    if 0: # Old code:
+        << Check the headlines >>
+#@nonl
+#@+node:ekr.20040716061450:<< Check the headlines >>
+if headline.strip() == v.headString().strip():
+    t.setVisited() # Supress warning about unvisited node.
+    return t
+else:
+    at.readError(
+        "Mismatched headline.\nExpecting: %s\ngot: %s" %
+        (headline,v.headString()))
+    g.trace("Mismatched headline",headline,v.headString())
+    g.trace(at.tnodeListIndex,len(at.root.v.t.tnodeList))
+    return None
+#@nonl
+#@-node:ekr.20040716061450:<< Check the headlines >>
+#@-node:ekr.20031218072017.2007:findChild 4.x
+#@-node:ekr.20040712082657:(Removed headline check logic in atFile read logic)
 #@-node:ekr.20040706080316:in 4.2 b3
 #@-node:ekr.20040107064101.1:4.2 Projects
 #@-all
