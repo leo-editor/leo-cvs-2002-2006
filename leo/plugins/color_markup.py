@@ -1,5 +1,5 @@
-#@+leo-ver=4
-#@+node:@file color_markup.py
+#@+leo-ver=4-thin
+#@+node:edream.110403140857.8:@file-thin color_markup.py
 """Handle coloring for markup in doc parts and Python triple-double-quoted strings"""
 
 #@@language python
@@ -17,7 +17,7 @@ import tkColorChooser
 if Tk: # Register the handlers...
 
 	#@	@+others
-	#@+node:initAnyMarkup
+	#@+node:edream.110403140857.9:initAnyMarkup
 	def initAnyMarkup (tag,keywords):
 		
 		"""initialize colorer.markup_string
@@ -47,8 +47,8 @@ if Tk: # Register the handlers...
 						
 		colorer.markup_string = "unknown" # default
 	#@nonl
-	#@-node:initAnyMarkup
-	#@+node:colorWikiMarkup
+	#@-node:edream.110403140857.9:initAnyMarkup
+	#@+node:edream.110403140857.10:colorWikiMarkup
 	colorCount = 0
 	
 	def colorWikiMarkup (tag,keywords):
@@ -73,15 +73,15 @@ if Tk: # Register the handlers...
 		# g.trace(`colorCount`,"no markup")
 		return None # We have not colored the text.
 	#@nonl
-	#@-node:colorWikiMarkup
-	#@+node:doWikiText
+	#@-node:edream.110403140857.10:colorWikiMarkup
+	#@+node:edream.110403140857.11:doWikiText
 	def doWikiText (colorer,v,s,i,end,colortag):
 	
 		firsti = i ; inserted = 0
 	
 		while i < end:
 			#@		<< set first to a tuple describing the first tag to be handled >>
-			#@+node:<< set first to a tuple describing the first tag to be handled >>
+			#@+node:edream.110403140857.12:<< set first to a tuple describing the first tag to be handled >>
 			first = None
 			
 			for tag,delim1,delim2 in (
@@ -97,13 +97,13 @@ if Tk: # Register the handlers...
 					if n2 > -1:
 						if not first or (first and n1 < first[1]):
 							first = tag,n1,n2,delim1,delim2
-			#@-node:<< set first to a tuple describing the first tag to be handled >>
+			#@-node:edream.110403140857.12:<< set first to a tuple describing the first tag to be handled >>
 			#@nl
 			if first:
 				tag,n1,n2,delim1,delim2 = first
 				i = n2 + len(delim2)
 				#@			<< handle the tag using n1,n2,delim1,delim2 >>
-				#@+node:<< handle the tag using n1,n2,delim1,delim2 >>
+				#@+node:edream.110403140857.13:<< handle the tag using n1,n2,delim1,delim2 >>
 				if tag =="picture":
 					colorer.tag("elide",n1,n2+len(delim2)) # Elide everything.
 					filename = s[n1+len(delim1):n2]
@@ -112,7 +112,7 @@ if Tk: # Register the handlers...
 					inserted += insertWikiPicture(colorer,filename,n2+len(delim2))
 				elif tag == "color":
 					#@	<< parse and handle color field >>
-					#@+node:<< parse and handle color field >>
+					#@+node:edream.110403140857.14:<< parse and handle color field >>
 					# Parse the color value.
 					j = n1+len(delim1)
 					n = s.find(":",j,n2)
@@ -135,7 +135,7 @@ if Tk: # Register the handlers...
 							except: # an invalid color name: elide nothing.
 								pass # g.es_exception()
 					#@nonl
-					#@-node:<< parse and handle color field >>
+					#@-node:edream.110403140857.14:<< parse and handle color field >>
 					#@nl
 				elif tag == "http" or tag == "https":
 					colorer.tag(tag,n1,n2)
@@ -162,14 +162,14 @@ if Tk: # Register the handlers...
 						colorer.tag("elide",n2,n2+len(delim2))
 						colorer.tag(tag,n1+len(delim1),n2)
 				#@nonl
-				#@-node:<< handle the tag using n1,n2,delim1,delim2 >>
+				#@-node:edream.110403140857.13:<< handle the tag using n1,n2,delim1,delim2 >>
 				#@nl
 			else: i = end
 			
 		colorer.tag(colortag,firsti,end+inserted)
 	#@nonl
-	#@-node:doWikiText
-	#@+node:insertWikiPicture
+	#@-node:edream.110403140857.11:doWikiText
+	#@+node:edream.110403140857.15:insertWikiPicture
 	def insertWikiPicture (colorer,filename,i):
 		
 		"""Try to insert a picture with the give filename.
@@ -200,8 +200,8 @@ if Tk: # Register the handlers...
 			g.es_exception()
 			return 0
 	#@nonl
-	#@-node:insertWikiPicture
-	#@+node:onBodykey1 (not ready)
+	#@-node:edream.110403140857.15:insertWikiPicture
+	#@+node:edream.110403140857.16:onBodykey1 (not ready)
 	def onBodykey1(tag,keywords):
 		c = keywords.get("c")
 		body = c.frame.body
@@ -216,8 +216,8 @@ if Tk: # Register the handlers...
 				# print "XXX: tag!"
 				# body.bodyCtrl.mark_set("insert", "elide+1c")
 		return 0 # do not override
-	#@-node:onBodykey1 (not ready)
-	#@+node:onBodydclick1 & allies
+	#@-node:edream.110403140857.16:onBodykey1 (not ready)
+	#@+node:edream.110403140857.17:onBodydclick1 & allies
 	def onBodydclick1(tag,keywords):
 		"""Handle double clicks on a hyperlink."""
 	
@@ -230,8 +230,7 @@ if Tk: # Register the handlers...
 			except:
 				g.es("exception opening " + url)
 				g.es_exception()
-	#@-node:onBodydclick1 & allies
-	#@+node:getUrl
+	#@+node:edream.110403140857.18:getUrl
 	def getUrl(c, *tags):
 		"""See if the current text belongs to a hyperlink tag and, if so, return the url."""
 		
@@ -248,8 +247,10 @@ if Tk: # Register the handlers...
 						return url
 		return None
 	#@nonl
-	#@-node:getUrl
-	#@+node:createWikiMenu
+	#@-node:edream.110403140857.18:getUrl
+	#@-node:edream.110403140857.17:onBodydclick1 & allies
+	#@+node:edream.110403140857.19:Menu handling
+	#@+node:edream.110403140857.20:createWikiMenu
 	def createWikiMenu(tag, keywords):
 		"""Create menu entries under Edit->Edit Body to insert wiki tags."""
 	
@@ -278,8 +279,8 @@ if Tk: # Register the handlers...
 			
 			c.frame.menu.createMenuEntries(wikiMenu, newEntries)
 	
-	#@-node:createWikiMenu
-	#@+node:doWikiBold
+	#@-node:edream.110403140857.20:createWikiMenu
+	#@+node:edream.110403140857.21:doWikiBold
 	def doWikiBold(event=None):
 		c = g.top()
 		v = c.currentVnode()
@@ -288,8 +289,8 @@ if Tk: # Register the handlers...
 		insertWikiMarkup(c,v,"__","__")
 		return
 	#@nonl
-	#@-node:doWikiBold
-	#@+node:doWikiItalic
+	#@-node:edream.110403140857.21:doWikiBold
+	#@+node:edream.110403140857.22:doWikiItalic
 	def doWikiItalic(event=None):
 		c = g.top()
 		v = c.currentVnode()
@@ -297,8 +298,8 @@ if Tk: # Register the handlers...
 	
 		insertWikiMarkup(c,v,"''","''")
 		return
-	#@-node:doWikiItalic
-	#@+node:doWikiColor
+	#@-node:edream.110403140857.22:doWikiItalic
+	#@+node:edream.110403140857.23:doWikiColor
 	def doWikiColor(event=None):
 		global wikiColoredText
 		
@@ -308,8 +309,8 @@ if Tk: # Register the handlers...
 	
 		insertWikiMarkup(c,v,"~~%s:" % wikiColoredText,"~~")
 		return
-	#@-node:doWikiColor
-	#@+node:doWikiChooseColor
+	#@-node:edream.110403140857.23:doWikiColor
+	#@+node:edream.110403140857.24:doWikiChooseColor
 	def doWikiChooseColor(event=None):
 		global wikiColoredText
 		
@@ -321,8 +322,8 @@ if Tk: # Register the handlers...
 		if val:
 			wikiColoredText = val
 			doWikiColor()
-	#@-node:doWikiChooseColor
-	#@+node:doWikiPicture (not ready)
+	#@-node:edream.110403140857.24:doWikiChooseColor
+	#@+node:edream.110403140857.25:doWikiPicture (not ready)
 	def doWikiPicture(event=None):
 		import tkFileDialog
 	
@@ -339,14 +340,14 @@ if Tk: # Register the handlers...
 		insertWikiMarkup(c,v,"{picture file=%s}" % name,"")
 		return
 	#@nonl
-	#@-node:doWikiPicture (not ready)
-	#@+node:insertWikiMarkup
+	#@-node:edream.110403140857.25:doWikiPicture (not ready)
+	#@+node:edream.110403140857.26:insertWikiMarkup
 	def insertWikiMarkup(c,v,leftTag,rightTag):
 		body = c.frame.body
 		oldSel = body.bodyCtrl.tag_ranges("sel")
 		if oldSel:
 			#@		<< apply markup to selection >>
-			#@+node:<< apply markup to selection >>
+			#@+node:edream.110403140857.27:<< apply markup to selection >>
 			start,end = oldSel
 			body.bodyCtrl.insert(start, leftTag)
 			# we need to review where the selection now ends
@@ -356,11 +357,11 @@ if Tk: # Register the handlers...
 									 end + "+" + `len(rightTag)` + "c")
 			newSel = body.getTextSelection()
 			c.frame.onBodyChanged(v,"Change",oldSel=oldSel,newSel=newSel)
-			#@-node:<< apply markup to selection >>
+			#@-node:edream.110403140857.27:<< apply markup to selection >>
 			#@nl
 		else:
 			#@		<< handle no selection >>
-			#@+node:<< handle no selection >>
+			#@+node:edream.110403140857.28:<< handle no selection >>
 			# Note: this does not currently handle mixed nested tags,
 			# e.g. <b><i>text</b></i>. One should always close the
 			# tags in the order they were opened, as in <b><i>text</i></b>.
@@ -377,12 +378,13 @@ if Tk: # Register the handlers...
 			body.setTextSelection(newPos, newPos)
 			newSel = body.getTextSelection()
 			c.frame.onBodyChanged(v,"Typing",oldSel=oldSel,newSel=newSel)
-			#@-node:<< handle no selection >>
+			#@-node:edream.110403140857.28:<< handle no selection >>
 			#@nl
 	
 		body.focus_set()
 	#@nonl
-	#@-node:insertWikiMarkup
+	#@-node:edream.110403140857.26:insertWikiMarkup
+	#@-node:edream.110403140857.19:Menu handling
 	#@-others
 
 	if g.app.gui is None:
@@ -403,5 +405,5 @@ if Tk: # Register the handlers...
 	
 		__version__ = "1.4" # DS: 10/29/03.  EKR: 11/4/03: mods for 4.1.
 		g.plugin_signon(__name__)
-#@-node:@file color_markup.py
+#@-node:edream.110403140857.8:@file-thin color_markup.py
 #@-leo

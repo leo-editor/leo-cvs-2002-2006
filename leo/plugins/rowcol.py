@@ -1,5 +1,5 @@
-#@+leo-ver=4
-#@+node:@file rowcol.py
+#@+leo-ver=4-thin
+#@+node:ekr.20040108095351:@file-thin rowcol.py
 """Add row/column indicators to the toolbar."""
 
 #@@language python
@@ -15,20 +15,20 @@ try: import Tkinter as Tk
 except ImportError: Tk = None 
 
 #@+others
-#@+node:class rowColClass
+#@+node:ekr.20040108095351.1:class rowColClass
 class rowColClass:
 	
 	"""Class that puts row/column indicators in the status bar."""
 	
 	#@	@+others
-	#@+node:__init__
+	#@+node:ekr.20040108100040:__init__
 	def __init__ (self):
 		
 		self.lastStatusRow, self.lastStatusCol = -1,-1
 		self.c = None # Will be set later.  Needed for idle handling.
 	#@nonl
-	#@-node:__init__
-	#@+node:addWidgets
+	#@-node:ekr.20040108100040:__init__
+	#@+node:ekr.20040108095351.2:addWidgets
 	def addWidgets (self,tag,keywords):
 	
 		self.c = c = keywords.get("c")
@@ -50,8 +50,8 @@ class rowColClass:
 		
 		g.enableIdleTimeHook()
 	#@nonl
-	#@-node:addWidgets
-	#@+node:updateRowColWidget
+	#@-node:ekr.20040108095351.2:addWidgets
+	#@+node:ekr.20040108095351.4:updateRowColWidget
 	### There seems to be no way of undoing the idle-time hook!
 	### And one idle-time hook interferes with other hooks!
 	
@@ -80,10 +80,10 @@ class rowColClass:
 			self.lastStatusRow = row
 			self.lastStatusCol = col
 	#@nonl
-	#@-node:updateRowColWidget
+	#@-node:ekr.20040108095351.4:updateRowColWidget
 	#@-others
 #@nonl
-#@-node:class rowColClass
+#@-node:ekr.20040108095351.1:class rowColClass
 #@-others
 
 if Tk: 
@@ -97,5 +97,5 @@ if Tk:
 		leoPlugins.registerHandler("idle",rowCol.updateRowColWidget) 
 		g.plugin_signon("rowcol")
 #@nonl
-#@-node:@file rowcol.py
+#@-node:ekr.20040108095351:@file-thin rowcol.py
 #@-leo

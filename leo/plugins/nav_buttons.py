@@ -1,5 +1,5 @@
-#@+leo-ver=4
-#@+node:@file nav_buttons.py
+#@+leo-ver=4-thin
+#@+node:edream.110203113231.758:@file-thin nav_buttons.py
 """Adds navigation buttons to icon bar"""
 
 #@@language python
@@ -17,10 +17,10 @@ import os
 if Tk: # Register the handlers...
 
 	#@	@+others
-	#@+node:class commanderInfoClass
+	#@+node:edream.110203113231.759:class commanderInfoClass
 	class commanderInfoClass:
 		#@	@+others
-		#@+node:__init__ (commanderInfoClass)
+		#@+node:edream.110203113231.760:__init__ (commanderInfoClass)
 		def __init__ (self,c,globalInfo):
 			
 			self.c = c
@@ -42,8 +42,8 @@ if Tk: # Register the handlers...
 			sections_button = self.marks_button = None
 			
 			self.nav_buttons = None
-		#@-node:__init__ (commanderInfoClass)
-		#@+node:addWidgets
+		#@-node:edream.110203113231.760:__init__ (commanderInfoClass)
+		#@+node:edream.110203113231.761:addWidgets
 		def addWidgets (self):
 			
 			c = self.c ; d = self
@@ -66,7 +66,7 @@ if Tk: # Register the handlers...
 				command=c.goPrevVisitedNode)
 				
 			#@	<< define callbacks >>
-			#@+node:<< define callbacks >>
+			#@+node:edream.110203113231.762:<< define callbacks >>
 			# These are functions, not methods, so we must bind self at definition time.
 			
 			def onMarksButton(self=self):
@@ -77,7 +77,7 @@ if Tk: # Register the handlers...
 			
 				self.recentButtonCallback()
 			#@nonl
-			#@-node:<< define callbacks >>
+			#@-node:edream.110203113231.762:<< define callbacks >>
 			#@nl
 		
 			self.sections_button = c.frame.addIconButton(
@@ -98,8 +98,8 @@ if Tk: # Register the handlers...
 			# Package these buttons for the recentSectionsDialog class in leoTkinterDialog.py
 			self.nav_buttons = (self.lt_nav_button, self.rt_nav_button)
 		#@nonl
-		#@-node:addWidgets
-		#@+node:createImage
+		#@-node:edream.110203113231.761:addWidgets
+		#@+node:edream.110203113231.763:createImage
 		def createImage (self,path):
 			
 			path = os.path.join(g.app.loadDir,path)
@@ -112,8 +112,8 @@ if Tk: # Register the handlers...
 				image = None
 			return image
 		
-		#@-node:createImage
-		#@+node:updateNavButtons (nav_buttons.py)
+		#@-node:edream.110203113231.763:createImage
+		#@+node:edream.110203113231.764:updateNavButtons (nav_buttons.py)
 		def updateNavButtons (self):	
 		
 			d = self ; c = self.c
@@ -143,8 +143,9 @@ if Tk: # Register the handlers...
 				state = "normal" # "disabled" makes the icon look bad.
 			b.configure(image=image,state=state)
 		#@nonl
-		#@-node:updateNavButtons (nav_buttons.py)
-		#@+node:marksButtonCallback
+		#@-node:edream.110203113231.764:updateNavButtons (nav_buttons.py)
+		#@+node:edream.110203113231.765:Callbacks
+		#@+node:edream.110203113231.766:marksButtonCallback
 		def marksButtonCallback(self,event=None):
 			
 			c = self.c ; d = self.marksDialog
@@ -158,8 +159,8 @@ if Tk: # Register the handlers...
 				d = marksDialog(c,title,label)
 				self.marksDialog = d
 				d.root.wait_window(d.top)
-		#@-node:marksButtonCallback
-		#@+node:recentButtonCallback
+		#@-node:edream.110203113231.766:marksButtonCallback
+		#@+node:edream.110203113231.767:recentButtonCallback
 		def recentButtonCallback(self,event=None):
 			
 			c = self.c ; d = self.recentSectionsDialog
@@ -174,19 +175,20 @@ if Tk: # Register the handlers...
 				d = recentSectionsDialog(c,self.nav_buttons,title,label)
 				self.recentSectionsDialog = d
 				d.root.wait_window(d.top)
-		#@-node:recentButtonCallback
+		#@-node:edream.110203113231.767:recentButtonCallback
+		#@-node:edream.110203113231.765:Callbacks
 		#@-others
 	#@nonl
-	#@-node:class commanderInfoClass
-	#@+node:class globalInfoClass
+	#@-node:edream.110203113231.759:class commanderInfoClass
+	#@+node:edream.110203113231.768:class globalInfoClass
 	class globalInfoClass:
 		#@	@+others
-		#@+node:__init__ ( globalInfoClass)
+		#@+node:edream.110203113231.769:__init__ ( globalInfoClass)
 		def __init__ (self):
 			
 			self.commanderInfo = {} # keys are commanders, values are navCommanderInfo objects
-		#@-node:__init__ ( globalInfoClass)
-		#@+node:addNavWidgets
+		#@-node:edream.110203113231.769:__init__ ( globalInfoClass)
+		#@+node:edream.110203113231.770:addNavWidgets
 		def addNavWidgets(self,tag,keywords):
 			
 			c = keywords.get("c")
@@ -198,8 +200,8 @@ if Tk: # Register the handlers...
 			# Add the widgets.
 			d.addWidgets()
 			
-		#@-node:addNavWidgets
-		#@+node:destroyFrame, destroyAllFrames, destroyOneFrame
+		#@-node:edream.110203113231.770:addNavWidgets
+		#@+node:edream.110203113231.771:destroyFrame, destroyAllFrames, destroyOneFrame
 		def destroyAllFrames(self,tag,keywords):
 			
 			for d in self.commanderInfo.values():
@@ -220,8 +222,8 @@ if Tk: # Register the handlers...
 				d.recentSectionsDialog.top.destroy()
 			del self.commanderInfo[d.c]
 		#@nonl
-		#@-node:destroyFrame, destroyAllFrames, destroyOneFrame
-		#@+node:updateRecentSections
+		#@-node:edream.110203113231.771:destroyFrame, destroyAllFrames, destroyOneFrame
+		#@+node:edream.110203113231.772:updateRecentSections
 		def updateRecentSections (self,tag,keywords):
 			
 			c = keywords.get("c")
@@ -232,8 +234,8 @@ if Tk: # Register the handlers...
 				d = info.recentSectionsDialog
 				if d:
 					d.fillbox()
-		#@-node:updateRecentSections
-		#@+node:updateMarks & updateMarksAfterCommand
+		#@-node:edream.110203113231.772:updateRecentSections
+		#@+node:edream.110203113231.773:updateMarks & updateMarksAfterCommand
 		def updateMarksAfterCommand (self,tag,keywords):
 			
 			"""Update the marks dialog when a new window is opened."""
@@ -253,8 +255,8 @@ if Tk: # Register the handlers...
 			if info and info.marksDialog:
 				info.marksDialog.fillbox()
 		#@nonl
-		#@-node:updateMarks & updateMarksAfterCommand
-		#@+node:updateNavButtons
+		#@-node:edream.110203113231.773:updateMarks & updateMarksAfterCommand
+		#@+node:edream.110203113231.774:updateNavButtons
 		def updateNavButtons (self,tag,keywords):
 		
 			"""Update the colors of c's nav buttons"""
@@ -264,24 +266,24 @@ if Tk: # Register the handlers...
 			
 			if info:
 				info.updateNavButtons()
-		#@-node:updateNavButtons
+		#@-node:edream.110203113231.774:updateNavButtons
 		#@-others
 	#@nonl
-	#@-node:class globalInfoClass
-	#@+node:class marksDialog (listBoxDialog)
+	#@-node:edream.110203113231.768:class globalInfoClass
+	#@+node:edream.110203113231.775:class marksDialog (listBoxDialog)
 	class marksDialog (tkinterListBoxDialog):
 		
 		"""A class to create the marks dialog"""
 	
 		#@	@+others
-		#@+node:marksDialog.__init__
+		#@+node:edream.110203113231.776:marksDialog.__init__
 		def __init__ (self,c,title,label):
 			
 			"""Create a Marks listbox dialog."""
 		
 			tkinterListBoxDialog.__init__(self,c,title,label)
-		#@-node:marksDialog.__init__
-		#@+node:createFrame
+		#@-node:edream.110203113231.776:marksDialog.__init__
+		#@+node:edream.110203113231.777:createFrame
 		def createFrame(self):
 			
 			"""Create the frame for a Marks listbox dialog."""
@@ -289,8 +291,8 @@ if Tk: # Register the handlers...
 			tkinterListBoxDialog.createFrame(self)
 			self.addButtons()
 		#@nonl
-		#@-node:createFrame
-		#@+node:addbuttons
+		#@-node:edream.110203113231.777:createFrame
+		#@+node:edream.110203113231.778:addbuttons
 		def addButtons (self):
 			
 			"""Add buttons to a Marks listbox dialog."""
@@ -299,8 +301,8 @@ if Tk: # Register the handlers...
 			f.pack()
 			self.addStdButtons(f)
 		#@nonl
-		#@-node:addbuttons
-		#@+node:fillbox
+		#@-node:edream.110203113231.778:addbuttons
+		#@+node:edream.110203113231.779:fillbox
 		def fillbox(self,event=None):
 		
 			"""Update a Marks listbox dialog and update the listbox and update vnodeList & tnodeList ivars"""
@@ -321,17 +323,17 @@ if Tk: # Register the handlers...
 					i += 1
 				v = v.threadNext()
 		#@nonl
-		#@-node:fillbox
+		#@-node:edream.110203113231.779:fillbox
 		#@-others
 	#@nonl
-	#@-node:class marksDialog (listBoxDialog)
-	#@+node:class recentSectionsDialog (tkinterListBoxDialog)
+	#@-node:edream.110203113231.775:class marksDialog (listBoxDialog)
+	#@+node:edream.110203113231.780:class recentSectionsDialog (tkinterListBoxDialog)
 	class recentSectionsDialog (tkinterListBoxDialog):
 		
 		"""A class to create the recent sections dialog"""
 	
 		#@	@+others
-		#@+node:__init__  recentSectionsDialog
+		#@+node:edream.110203113231.781:__init__  recentSectionsDialog
 		def __init__ (self,c,buttons,title,label):
 			
 			"""Create a Recent Sections listbox dialog."""
@@ -340,8 +342,8 @@ if Tk: # Register the handlers...
 		
 			tkinterListBoxDialog.__init__(self,c,title,label)
 		
-		#@-node:__init__  recentSectionsDialog
-		#@+node:addButtons
+		#@-node:edream.110203113231.781:__init__  recentSectionsDialog
+		#@+node:edream.110203113231.782:addButtons
 		def addButtons (self):
 			
 			"""Add buttons for a Recent Sections listbox dialog."""
@@ -379,8 +381,8 @@ if Tk: # Register the handlers...
 			self.delete_button = b =  Tk.Button(row3,text="Delete",
 				width=6,command=self.deleteEntry)
 			b.pack(side="left",pady=2,padx=5)
-		#@-node:addButtons
-		#@+node:clearAll
+		#@-node:edream.110203113231.782:addButtons
+		#@+node:edream.110203113231.783:clearAll
 		def clearAll (self,event=None):
 		
 			"""Handle clicks in the "Delete" button of the Recent Sections listbox dialog."""
@@ -388,16 +390,16 @@ if Tk: # Register the handlers...
 			self.c.visitedList = []
 			self.vnodeList = []
 			self.fillbox()
-		#@-node:clearAll
-		#@+node:createFrame
+		#@-node:edream.110203113231.783:clearAll
+		#@+node:edream.110203113231.784:createFrame
 		def createFrame(self):
 			
 			"""Create the frame of a Recent Sections listbox dialog."""
 			
 			tkinterListBoxDialog.createFrame(self)	
 			self.addButtons()
-		#@-node:createFrame
-		#@+node:deleteEntry
+		#@-node:edream.110203113231.784:createFrame
+		#@+node:edream.110203113231.785:deleteEntry
 		def deleteEntry (self,event=None):
 		
 			"""Handle clicks in the "Delete" button of a Recent Sections listbox dialog."""
@@ -417,8 +419,8 @@ if Tk: # Register the handlers...
 				if v in c.visitedList:
 					c.visitedList.remove(v)
 				self.fillbox()
-		#@-node:deleteEntry
-		#@+node:destroy
+		#@-node:edream.110203113231.785:deleteEntry
+		#@+node:edream.110203113231.786:destroy
 		def destroy (self,event=None):
 			
 			"""Hide a Recent Sections listbox dialog and mark it inactive.
@@ -427,8 +429,8 @@ if Tk: # Register the handlers...
 				
 			# This is enough to disable fillbox.
 			self.top.withdraw()
-		#@-node:destroy
-		#@+node:fillbox (recent sections)
+		#@-node:edream.110203113231.786:destroy
+		#@+node:edream.110203113231.787:fillbox (recent sections)
 		def fillbox(self,event=None):
 		
 			"""Update a Recent Sections listbox dialog and update vnodeList & tnodeList ivars"""
@@ -438,7 +440,7 @@ if Tk: # Register the handlers...
 		
 			if self.top.state() == "normal":
 				#@		<< reconstruct the contents of self.box >>
-				#@+node:<< reconstruct the contents of self.box >>>
+				#@+node:edream.110203113231.788:<< reconstruct the contents of self.box >>>
 				c = self.c
 				
 				self.box.delete(0,"end")
@@ -454,12 +456,12 @@ if Tk: # Register the handlers...
 						self.tnodeList.append(v.t)
 						self.vnodeList.append(v)
 						i += 1
-				#@-node:<< reconstruct the contents of self.box >>>
+				#@-node:edream.110203113231.788:<< reconstruct the contents of self.box >>>
 				#@nl
 				self.synchButtons()
 		#@nonl
-		#@-node:fillbox (recent sections)
-		#@+node:synchNavButtons
+		#@-node:edream.110203113231.787:fillbox (recent sections)
+		#@+node:edream.110203113231.789:synchNavButtons
 		def synchButtons (self):
 			
 			"""Synchronize the arrow boxes of a Recent Sections listbox dialog."""
@@ -470,10 +472,10 @@ if Tk: # Register the handlers...
 			image = self.rt_nav_iconFrame_button.cget("image")
 			self.rt_nav_button.configure(image=image)
 		#@nonl
-		#@-node:synchNavButtons
+		#@-node:edream.110203113231.789:synchNavButtons
 		#@-others
 	#@nonl
-	#@-node:class recentSectionsDialog (tkinterListBoxDialog)
+	#@-node:edream.110203113231.780:class recentSectionsDialog (tkinterListBoxDialog)
 	#@-others
 	
 	globalInfo = globalInfoClass()
@@ -493,5 +495,5 @@ if Tk: # Register the handlers...
 		__version__ = "1.2"
 		g.plugin_signon(__name__)
 #@nonl
-#@-node:@file nav_buttons.py
+#@-node:edream.110203113231.758:@file-thin nav_buttons.py
 #@-leo

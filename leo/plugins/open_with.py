@@ -1,5 +1,5 @@
-#@+leo-ver=4
-#@+node:@file open_with.py
+#@+leo-ver=4-thin
+#@+node:EKR.20040517075715.4:@file-thin open_with.py
 """Create menu for Open With command and handle the resulting commands"""
 
 #@@language python
@@ -14,7 +14,7 @@ except ImportError: Tk = None
 if Tk: # Register the handlers...
 
 	#@	@+others
-	#@+node:on_idle
+	#@+node:EKR.20040517075715.5:on_idle
 	# frame.OnOpenWith creates the dict with the following entries:
 	# "body", "c", "encoding", "f", "path", "time" and "v".
 	
@@ -35,9 +35,9 @@ if Tk: # Register the handlers...
 						dict["time"] = time # inhibit endless dialog loop.
 						# The file has changed.
 						#@					<< update v's body text >>
-						#@+node:<< update v's body text >>
+						#@+node:EKR.20040517075715.6:<< update v's body text >>
 						#@<< set s to the file text >>
-						#@+node:<< set s to the file text >>
+						#@+node:EKR.20040517075715.7:<< set s to the file text >>
 						try:
 							# Update v from the changed temp file.
 							f=open(path)
@@ -46,7 +46,7 @@ if Tk: # Register the handlers...
 						except:
 							g.es("can not open " + g.shortFileName(path))
 							break
-						#@-node:<< set s to the file text >>
+						#@-node:EKR.20040517075715.7:<< set s to the file text >>
 						#@nl
 						
 						# Convert body and s to whatever encoding is in effect.
@@ -74,21 +74,21 @@ if Tk: # Register the handlers...
 						elif conflict:
 							g.es("not updated from: " + g.shortFileName(path),color="blue")
 						#@nonl
-						#@-node:<< update v's body text >>
+						#@-node:EKR.20040517075715.6:<< update v's body text >>
 						#@nl
 				except:
 					g.es_exception() ## testing
 					pass
 	#@nonl
-	#@-node:on_idle
-	#@+node:create_open_with_menu
+	#@-node:EKR.20040517075715.5:on_idle
+	#@+node:EKR.20040517075715.8:create_open_with_menu
 	def create_open_with_menu (tag,keywords):
 	
 		if  (tag in ("start2","open2") or
 			(tag=="command2" and keywords.get("label")=="new")):
 	
 			#@		<< create the Open With menu >>
-			#@+node:<< create the Open With menu >>
+			#@+node:EKR.20040517075715.9:<< create the Open With menu >>
 			#@+at 
 			#@nonl
 			# Entries in the following table are the tuple 
@@ -121,12 +121,12 @@ if Tk: # Register the handlers...
 			
 			g.top().frame.menu.createOpenWithMenuFromTable(table)
 			#@nonl
-			#@-node:<< create the Open With menu >>
+			#@-node:EKR.20040517075715.9:<< create the Open With menu >>
 			#@nl
 			# Enable the idle-time hook so we can check temp files created by Open With.
 			from leoGlobals import enableIdleTimeHook
 			g.enableIdleTimeHook(idleTimeDelay=500)
-	#@-node:create_open_with_menu
+	#@-node:EKR.20040517075715.8:create_open_with_menu
 	#@-others
 
 	if g.app.gui is None:
@@ -141,5 +141,5 @@ if Tk: # Register the handlers...
 		__version__ = "1.4" # Set version for the plugin handler.
 		g.plugin_signon(__name__)
 #@nonl
-#@-node:@file open_with.py
+#@-node:EKR.20040517075715.4:@file-thin open_with.py
 #@-leo

@@ -1,5 +1,5 @@
-#@+leo-ver=4
-#@+node:@file nodenavigator.py
+#@+leo-ver=4-thin
+#@+node:ekr.20040108062655:@file-thin nodenavigator.py
 """Add a quick node navigators to the toolbar in Leo 
 
 Adds a node navigator to the toolbar. The navigator allows quick
@@ -24,11 +24,11 @@ except ImportError: Tk = None
 USE_FIXED_SIZES = 1 
 
 #@+others
-#@+node:class Navigator
+#@+node:ekr.20040108062655.2:class Navigator
 class Navigator: 
 	"""A node navigation aid for Leo"""
 	#@	@+others
-	#@+node:addWidgets
+	#@+node:ekr.20040108062655.3:addWidgets
 	def addWidgets(self, tag, keywords): 
 		"""Add the widgets to the navigation bar""" 
 		self.c = c = keywords['c'] 
@@ -52,8 +52,8 @@ class Navigator:
 		self.updateRecent("tag",{"c":c})
 		self.updateMarks("tag",{"c":c})
 	#@nonl
-	#@-node:addWidgets
-	#@+node:_getSizer
+	#@-node:ekr.20040108062655.3:addWidgets
+	#@+node:ekr.20040108062655.4:_getSizer
 	def _getSizer(self, parent, height, width):
 		
 		"""Return a sizer object to force a Tk widget to be the right size""" 
@@ -65,15 +65,15 @@ class Navigator:
 		else: 
 			return parent 
 	#@nonl
-	#@-node:_getSizer
-	#@+node:onSelect
+	#@-node:ekr.20040108062655.4:_getSizer
+	#@+node:ekr.20040108062655.5:onSelect
 	def onSelect(self, vnode):
 		"""Do the navigation"""
 	
 		self.c.selectVnode(vnode)
 	#@nonl
-	#@-node:onSelect
-	#@+node:updateRecent
+	#@-node:ekr.20040108062655.5:onSelect
+	#@+node:ekr.20040108091136:updateRecent
 	def updateRecent(self,tag,keywords):
 		"""Update the marks list"""        
 		c = keywords.get("c")
@@ -98,8 +98,8 @@ class Navigator:
 				tnodes.append(v.t)
 				vnodes.append(v)
 	#@nonl
-	#@-node:updateRecent
-	#@+node:updateMarks
+	#@-node:ekr.20040108091136:updateRecent
+	#@+node:ekr.20040108062655.6:updateMarks
 	def updateMarks(self, tag, keywords):
 		"""Update the marks list"""        
 		c = keywords.get("c")
@@ -125,9 +125,9 @@ class Navigator:
 				vnodes.append(v)
 			v = v.threadNext()
 	#@nonl
-	#@-node:updateMarks
+	#@-node:ekr.20040108062655.6:updateMarks
 	#@-others
-#@-node:class Navigator
+#@-node:ekr.20040108062655.2:class Navigator
 #@-others
 
 if Tk: 
@@ -141,5 +141,5 @@ if Tk:
 		leoPlugins.registerHandler("select2",nav.updateRecent)
 		g.plugin_signon("nodenavigator")
 #@nonl
-#@-node:@file nodenavigator.py
+#@-node:ekr.20040108062655:@file-thin nodenavigator.py
 #@-leo

@@ -1,5 +1,5 @@
-#@+leo-ver=4
-#@+node:@file word_export.py
+#@+leo-ver=4-thin
+#@+node:EKR.20040517075715.14:@file-thin word_export.py
 """Exports an outline to a word document.
 
 Make sure word is running with an open (empty) document.
@@ -20,7 +20,7 @@ except ImportError:
 import ConfigParser
 
 #@+others
-#@+node:getConfiguration
+#@+node:EKR.20040517075715.15:getConfiguration
 def getConfiguration():
 	
 	"""Called when the user presses the "Apply" button on the Properties form"""
@@ -29,8 +29,8 @@ def getConfiguration():
 	config = ConfigParser.ConfigParser()
 	config.read(fileName)
 	return config
-#@-node:getConfiguration
-#@+node:getWordConnection
+#@-node:EKR.20040517075715.15:getConfiguration
+#@+node:EKR.20040517075715.16:getWordConnection
 def getWordConnection():
 	
 	"""Get a connection to Word"""
@@ -45,8 +45,8 @@ def getWordConnection():
 		g.es("Please make sure word is running with an open (empty) document.")
 		return None
 #@nonl
-#@-node:getWordConnection
-#@+node:doPara
+#@-node:EKR.20040517075715.16:getWordConnection
+#@+node:EKR.20040517075715.17:doPara
 def doPara(word, text, style=None):
 	
 	"""Write a paragraph to word"""
@@ -61,8 +61,8 @@ def doPara(word, text, style=None):
 	sel.TypeText(text)
 	sel.TypeParagraph()
 #@nonl
-#@-node:doPara
-#@+node:writeNodeAndTree
+#@-node:EKR.20040517075715.17:doPara
+#@+node:EKR.20040517075715.18:writeNodeAndTree
 def writeNodeAndTree(word, header_style, level, maxlevel=3, usesections=1, sectionhead="", vnode=None):
 	
 	"""Write a node and its children to Word"""
@@ -90,8 +90,8 @@ def writeNodeAndTree(word, header_style, level, maxlevel=3, usesections=1, secti
 		h = g.toEncodedString(h, encoding, reportErrors=true)
 		doPara(word, "%s %s" % (thishead, h), "%s %d" % (header_style, min(level, maxlevel)))
 		writeNodeAndTree(word, header_style, level+1, maxlevel, usesections, thishead, child)
-#@-node:writeNodeAndTree
-#@+node:cmd_Export
+#@-node:EKR.20040517075715.18:writeNodeAndTree
+#@+node:EKR.20040517075715.19:cmd_Export
 def cmd_Export(event=None):
 
 	"""Export the current node to Word"""
@@ -114,7 +114,7 @@ def cmd_Export(event=None):
 		g.es("Failed to connect to Word",color="blue")
 		g.es("Please make sure an empty word document is open.")
 #@nonl
-#@-node:cmd_Export
+#@-node:EKR.20040517075715.19:cmd_Export
 #@-others
 
 if client: # Register the handlers...
@@ -125,5 +125,5 @@ if client: # Register the handlers...
 
 	g.plugin_signon("word_export")
 #@nonl
-#@-node:@file word_export.py
+#@-node:EKR.20040517075715.14:@file-thin word_export.py
 #@-leo

@@ -1,5 +1,5 @@
-#@+leo-ver=4
-#@+node:@file add_directives.py
+#@+leo-ver=4-thin
+#@+node:edream.110203113231.741:@file-thin add_directives.py
 """Support new @direcives"""
 
 #@@language python
@@ -14,7 +14,7 @@ else:
 	directives = ("markup","markup2")
 	
 #@+others
-#@+node:addPluginDirectives
+#@+node:edream.110203113231.742:addPluginDirectives
 def addPluginDirectives (tag,keywords):
 	
 	"""Add all new directives to g.globalDirectiveList"""
@@ -31,8 +31,8 @@ def addPluginDirectives (tag,keywords):
 		if d not in g.globalDirectiveList:
 			g.globalDirectiveList.append(d)
 #@nonl
-#@-node:addPluginDirectives
-#@+node:scanPluginDirectives
+#@-node:edream.110203113231.742:addPluginDirectives
+#@+node:edream.110203113231.743:scanPluginDirectives
 def scanPluginDirectives (tag, keywords):
 	
 	"""Add a tuple (d,v,s,k) to list for every directive d found"""
@@ -50,7 +50,7 @@ def scanPluginDirectives (tag, keywords):
 			k = g.skip_ws(s,k) # Skip whitespace
 			# g.trace(`d`,`k`)
 			pluginsList.append((d,v,s,k),)
-#@-node:scanPluginDirectives
+#@-node:edream.110203113231.743:scanPluginDirectives
 #@-others
 
 # Register the handlers...
@@ -60,5 +60,5 @@ leoPlugins.registerHandler("scan-directives",scanPluginDirectives)
 __version__ = "1.1"
 g.plugin_signon(__name__)
 #@nonl
-#@-node:@file add_directives.py
+#@-node:edream.110203113231.741:@file-thin add_directives.py
 #@-leo
