@@ -49,11 +49,12 @@ class leoTkinterFrame (leoFrame.leoFrame):
         self.canvas = None ; self.treeBar = None
         self.splitter1 = self.splitter2 = None
         self.icon = None
-        self.outerFrame = None # 5/20/02
-        self.iconFrame = None # 5/20/02
-        self.statusFrame = None # 5/20/02
-        self.statusText = None # 5/20/02
-        self.statusLabel = None # 5/20/02
+        self.outerFrame = None 
+        self.iconFrame = None 
+        self.statusFrame = None 
+        self.statusText = None 
+        self.statusLabel = None 
+        self.findPanel = None
         
         # Used by event handlers...
         self.redrawCount = 0
@@ -690,7 +691,7 @@ class leoTkinterFrame (leoFrame.leoFrame):
         #@-node:ekr.20031218072017.1976:<< clear all vnodes and tnodes in the tree>>
         #@nl
     
-        # Destroy all ivars in subclasses.
+        # Destroy all ivars in subcommanders.
         g.clearAllIvars(c.atFileCommands)
         g.clearAllIvars(c.fileCommands)
         g.clearAllIvars(c.importCommands)
@@ -711,14 +712,15 @@ class leoTkinterFrame (leoFrame.leoFrame):
         
         """Destroy all panels attached to this frame."""
         
-        panels = (self.comparePanel, self.colorPanel, self.fontPanel, self.prefsPanel)
+        panels = (self.comparePanel, self.colorPanel, self.findPanel, self.fontPanel, self.prefsPanel)
     
         for panel in panels:
             if panel:
                 panel.top.destroy()
-                
+    
         self.comparePanel = None
         self.colorPanel = None
+        self.findPanel = None
         self.fontPanel = None
         self.prefsPanel = None
     #@nonl
@@ -1248,7 +1250,7 @@ class leoTkinterFrame (leoFrame.leoFrame):
         self.minimize(g.app.pythonFrame)
         for frame in g.app.windowList:
             self.minimize(frame)
-            self.minimize(frame.c.findFrame)
+            self.minimize(frame.findPanel)
         
     def minimize(self, frame):
     

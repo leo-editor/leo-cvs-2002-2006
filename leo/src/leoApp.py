@@ -35,7 +35,6 @@ class LeoApp:
         self.disableSave = False
         self.failedPlugins = [] # List of loaded plugins that have failed to load.
         self.globalConfigDir = None # The directory that is assumed to contain the global configuration files.
-        self.globalWindows = []
         self.gui = None # The gui class.
         self.hasOpenWithMenu = False # True: open with plugin has been loaded.
         self.hookError = False # True: suppress further calls to hooks.
@@ -75,7 +74,6 @@ class LeoApp:
         self.windowList = [] # Global list of all frames.  Does not include hidden root window.
     
         # Global panels.  Destroyed when Leo ends.
-        self.findFrame = None
         self.pythonFrame = None
         
         #@    << Define global constants >>
@@ -226,17 +224,6 @@ class LeoApp:
             print "Tk gui created in", g.shortFileName(fileName)
     #@nonl
     #@-node:ekr.20031218072017.2610:app.createTkGui
-    #@+node:ekr.20031218072017.2611:app.destroyAllGlobalWindows
-    def destroyAllGlobalWindows (self):
-        
-        for w in self.globalWindows:
-            w.destroySelf()
-            
-        self.globalWindows = []
-        
-        self.findFrame = None
-        self.pythonFrame = None
-    #@-node:ekr.20031218072017.2611:app.destroyAllGlobalWindows
     #@+node:ekr.20031218072017.2612:app.destroyAllOpenWithFiles
     def destroyAllOpenWithFiles (self):
     
@@ -300,7 +287,6 @@ class LeoApp:
         if not g.app.killed:
             g.doHook("end1")
     
-        self.destroyAllGlobalWindows()
         self.destroyAllOpenWithFiles()
         
         if g.app.gui:

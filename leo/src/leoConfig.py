@@ -135,8 +135,7 @@ class baseConfig:
         self.dictList = [self.defaultsDict] # List of dictionaries.
         self.inited = False
         self.recentFiles = [] # List of recent files.
-        
-        
+    
         self.initIvarsFromSettings()
         self.initSettingsFiles()
         self.initRecentFiles()
@@ -551,33 +550,42 @@ class parserBaseClass:
     
     """The base class for settings parsers."""
     
-    basic_types = ['bool','color','directory','font','int','float','path','shortcut','string']
-
-    control_types = ['if','if-platform','ignore','page','shortcuts']
-
+    #@    << parserBaseClass data >>
+    #@+node:ekr.20041121130043:<< parserBaseClass data >>
+    basic_types = [
+        'bool','color','directory','font','int',
+        'float','path','ratio','shortcut','string']
+    
+    control_types = ['if','if-gui','if-platform','ignore','page','shortcuts']
+    
     # Keys are settings names, values are (type,value) tuples.
     settingsDict = {}
-
+    
     type_dict = {}
+    #@nonl
+    #@-node:ekr.20041121130043:<< parserBaseClass data >>
+    #@nl
     
     #@    @+others
     #@+node:ekr.20041119204700:ctor
     def __init__ (self,c):
         
         self.c = c
-    
+        
         self.dispatchDict = {
             'bool':         self.doBool,
             'color':        self.doColor,
             'directory':    self.doDirectory,
             'font':         self.doFont,
             'if':           self.doIf,
+            'if-gui':       self.doIfGui,
             'if-platform':  self.doIfPlatform,
             'ignore':       self.doIgnore,
             'int':          self.doInt,
             'float':        self.doFloat,
             'path':         self.doPath,
             'page':         self.doPage,
+            'ratio':        self.doRatio,
             'shortcuts':    self.doShortcuts,
             'string':       self.doString,
         }
@@ -618,6 +626,15 @@ class parserBaseClass:
         return None
     #@nonl
     #@-node:ekr.20041120103933:doIf
+    #@+node:ekr.20041121125416:doIfGui
+    def doIfGui (self,p,kind,name,val):
+    
+        if g.app.gui == name:
+            return None
+        else:
+            return "skip"
+    #@nonl
+    #@-node:ekr.20041121125416:doIfGui
     #@+node:ekr.20041120104215:doIfPlatform
     def doIfPlatform (self,p,kind,name,val):
     
@@ -653,7 +670,7 @@ class parserBaseClass:
     def doInt (self,p,kind,name,val):
         
         try:
-            int(val)
+            val = int(val)
             self.set(kind,name,val)
         except ValueError:
             self.valueError(p,kind,name,val)
@@ -663,7 +680,7 @@ class parserBaseClass:
     def doFloat (self,p,kind,name,val):
         
         try:
-            float(val)
+            val = float(val)
             self.set(kind,name,val)
         except ValueError:
             self.valueError(p,kind,name,val)
@@ -675,6 +692,19 @@ class parserBaseClass:
         pass # Ignore @page this while parsing settings.
     #@nonl
     #@-node:ekr.20041120104215.2:doPage
+    #@+node:ekr.20041121125741:doRatio
+    def doRatio (self,p,kind,name,val):
+        
+        try:
+            val = float(val)
+            if 0.0 <= val <= 1.0:
+                self.set(kind,name,val)
+            else:
+                self.valueError(p,kind,name,val)
+        except ValueError:
+            self.valueError(p,kind,name,val)
+    #@nonl
+    #@-node:ekr.20041121125741:doRatio
     #@+node:ekr.20041120113848:doShortcut
     def doShortcut(self,p,kind,name,val):
         
@@ -768,7 +798,7 @@ class parserBaseClass:
             return c.nullPosition()
     #@nonl
     #@-node:ekr.20041120074536:settingsRoot
-    #@+node:ekr.20041120094940.9:set
+    #@+node:ekr.20041120094940.9:settingsParser.set
     def set (self,kind,name,val):
         
         """Init the setting for name to val."""
@@ -782,7 +812,7 @@ class parserBaseClass:
         
         d[name] = kind,val
     #@nonl
-    #@-node:ekr.20041120094940.9:set
+    #@-node:ekr.20041120094940.9:settingsParser.set
     #@+node:ekr.20041119204700.1:traverse
     def traverse (self):
         

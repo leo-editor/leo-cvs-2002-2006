@@ -3019,8 +3019,8 @@ def initScriptFind(findHeadline,changeHeadline=None,firstNode=None,
         c.change_text = change_text.strip() + "\n"
     else:
         c.change_text = change_text
-    c.findFrame.init(c)
-    c.findPanel()
+    c.frame.frame.findPanel.init(c)
+    c.showFindPanel()
 #@nonl
 #@-node:ekr.20031218072017.2418:g.initScriptFind (set up dialog)
 #@+node:ekr.20040321065415:g.findNodeInTree, findNodeAnywhere, findTopLevelNode

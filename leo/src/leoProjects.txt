@@ -5601,11 +5601,12 @@ self.body = None ; self.bodyCtrl = None ; self.bodyBar = None ; self.bodyXBar = 
 self.canvas = None ; self.treeBar = None
 self.splitter1 = self.splitter2 = None
 self.icon = None
-self.outerFrame = None # 5/20/02
-self.iconFrame = None # 5/20/02
-self.statusFrame = None # 5/20/02
-self.statusText = None # 5/20/02
-self.statusLabel = None # 5/20/02
+self.outerFrame = None 
+self.iconFrame = None 
+self.statusFrame = None 
+self.statusText = None 
+self.statusLabel = None 
+self.findPanel = None
 
 # Used by event handlers...
 self.redrawCount = 0
@@ -6207,7 +6208,7 @@ def destroyAllObjects (self):
     # Do this first.
     << clear all vnodes and tnodes in the tree >>
 
-    # Destroy all ivars in subclasses.
+    # Destroy all ivars in subcommanders.
     g.clearAllIvars(c.atFileCommands)
     g.clearAllIvars(c.fileCommands)
     g.clearAllIvars(c.importCommands)
@@ -6248,14 +6249,15 @@ def destroyAllPanels (self):
     
     """Destroy all panels attached to this frame."""
     
-    panels = (self.comparePanel, self.colorPanel, self.fontPanel, self.prefsPanel)
+    panels = (self.comparePanel, self.colorPanel, self.findPanel, self.fontPanel, self.prefsPanel)
 
     for panel in panels:
         if panel:
             panel.top.destroy()
-            
+
     self.comparePanel = None
     self.colorPanel = None
+    self.findPanel = None
     self.fontPanel = None
     self.prefsPanel = None
 #@nonl
@@ -14172,6 +14174,8 @@ def __init__(self,c,resizeable=False):
     self.createTopFrame() # Create the outer tkinter dialog frame.
     self.createFrame()
     self.init(c) # New in 4.3: init only once.
+    
+    # g.trace(self.top)
 #@nonl
 #@+node:ekr.20031218072017.3900:<< create the tkinter intVars >>
 self.dict = {}
@@ -16096,7 +16100,7 @@ def onClickBoxClick (self,event):
         # This disables any call that would configure old text widgets.
         self.redraw()
         self.select(p)
-        c.findFrame.handleUserClick(p)
+        c.frame.findPanel.handleUserClick(p)
         gui.set_focus(c,c.frame.bodyCtrl)
     g.doHook("boxclick2",c=c,p=p,v=p,event=event)
 #@nonl
@@ -16117,7 +16121,7 @@ def onIconBoxClick (self,event):
         if event:
             self.onDrag(event)
         tree.select(p)
-        c.findFrame.handleUserClick(p) # 4/3/04
+        c.frame.findPanel.handleUserClick(p) # 4/3/04
     g.doHook("iconclick2",c=c,p=p,v=p,event=event)
         
     return "break" # disable expanded box handling.
@@ -16357,7 +16361,7 @@ def update_ivars (self):
 def getFindPanelSettings (self):
     
     if self.getOpenTag("<find_panel_settings"):
-        return # <find_panel_settings/> 
+        return # <find_panel_settings/> seen.
     
     # New in 4.3: ignore all pre-4.3 find settings.
     while 1:

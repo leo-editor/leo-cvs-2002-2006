@@ -494,7 +494,7 @@ class baseFileCommands:
     def getFindPanelSettings (self):
         
         if self.getOpenTag("<find_panel_settings"):
-            return # <find_panel_settings/> 
+            return # <find_panel_settings/> seen.
         
         # New in 4.3: ignore all pre-4.3 find settings.
         while 1:
@@ -776,7 +776,7 @@ class baseFileCommands:
         c = self.c
         
         if self.getOpenTag("<preferences"):
-            return # <preferences/> seeen
+            return # <preferences/> seen
     
         table = (
             ("allow_rich_text",None,None), # Ignored.

@@ -106,6 +106,8 @@ class leoTkinterFind (leoFind.leoFind,leoTkinterDialog.leoTkinterDialog):
         self.createTopFrame() # Create the outer tkinter dialog frame.
         self.createFrame()
         self.init(c) # New in 4.3: init only once.
+        
+        # g.trace(self.top)
     #@nonl
     #@-node:ekr.20031218072017.3899:__init__
     #@+node:ekr.20031218072017.3901:destroySelf
@@ -403,7 +405,7 @@ class leoTkinterFind (leoFind.leoFind,leoTkinterDialog.leoTkinterDialog):
         
         """Bring the tkinter Find Panel to the front."""
         
-        c = g.top() ; t = self.find_ctrl ; gui = g.app.gui
+        c = self.c ; t = self.find_ctrl ; gui = g.app.gui
                 
         self.top.withdraw() # Helps bring the window to the front.
         self.top.deiconify()

@@ -2,21 +2,22 @@
 <?xml-stylesheet ekr_stylesheet?>
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="90" clone_windows="0"/>
-<globals body_outline_ratio="0.448863636364">
+<globals body_outline_ratio="0.627840909091">
 	<global_window_position top="143" left="367" height="704" width="857"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
 <find_panel_settings/>
 <vnodes>
-<v t="ekr.20041119035137" a="TV"><vh>About this file</vh>
-<v t="ekr.20041119035704"><vh> Basic setting nodes: @type-name setting-name = value</vh>
+<v t="ekr.20041119035137" a="E"><vh>About this file</vh>
+<v t="ekr.20041119035704" a="TV"><vh> Basic setting nodes: @type-name setting-name = value</vh>
 <v t="ekr.20041119042929"><vh>@bool</vh></v>
 <v t="ekr.20041119042929.1"><vh>@color</vh></v>
 <v t="ekr.20041119044139"><vh>@directory</vh></v>
 <v t="ekr.20041119042929.3"><vh>@encoding</vh></v>
 <v t="ekr.20041119042929.4"><vh>@int</vh></v>
 <v t="ekr.20041119042929.5"><vh>@font</vh></v>
+<v t="ekr.20041120181045"><vh>@ratio</vh></v>
 <v t="ekr.20041119042929.6"><vh>@shortcut</vh></v>
 <v t="ekr.20041120155431.1"><vh>@shortcuts</vh></v>
 <v t="ekr.20041119042929.2"><vh>@path</vh></v>
@@ -24,6 +25,7 @@
 </v>
 <v t="ekr.20041119035704.1"><vh> Organizer nodes</vh></v>
 <v t="ekr.20041119035931"><vh>@if expression</vh></v>
+<v t="ekr.20041120175840" a="E"><vh>@if-gui gui-name</vh></v>
 <v t="ekr.20041119110141"><vh>@if-platform platform-name</vh></v>
 <v t="ekr.20041119035704.2"><vh>@ignore comment</vh></v>
 <v t="ekr.20041119035931.1"><vh>@page comment</vh></v>
@@ -32,6 +34,18 @@
 <v t="ekr.20041120155431.2"><vh>@type type-name: script: script-name</vh></v>
 </v>
 <v t="ekr.20041119034357.1" a="E"><vh>@settings</vh>
+<v t="ekr.20041120180154" a="E"><vh>Types</vh>
+<v t="ekr.20041120180154.1"><vh>@if-gui tkinter</vh>
+<v t="ekr.20041120180707"><vh>@type font: tuple = @family, @size, @slant, @weight</vh>
+<v t="ekr.20041120180707.1"><vh>@type family: string</vh></v>
+<v t="ekr.20041120180707.2"><vh>@type size: int</vh></v>
+<v t="ekr.20041120180707.3"><vh>@type slant: string = roman, italic</vh></v>
+<v t="ekr.20041120180707.4"><vh>@type weight: string = normal, bold</vh></v>
+</v>
+<v t="ekr.20041120180154.2"><vh>@type relief: string</vh></v>
+<v t="ekr.20041120181045.1"><vh>@type orientation: string = vertical,horizontal</vh></v>
+</v>
+</v>
 <v t="ekr.20041119034357.3"><vh>General configuration options</vh>
 <v t="ekr.20041119034357.5"><vh>@bool read_only = False</vh></v>
 <v t="ekr.20041119034357.13"><vh>@bool use_plugins = False</vh></v>
@@ -133,7 +147,7 @@
 <v t="ekr.20041119034357.27"><vh>@shortcuts override defaults</vh></v>
 <v t="ekr.20041119054938"><vh>@ignore No shortcut specified</vh></v>
 </v>
-<v t="ekr.20041119034357.70"><vh>Syntax coloring</vh>
+<v t="ekr.20041119034357.70" a="E"><vh>Syntax coloring</vh>
 <v t="ekr.20041119034357.71"><vh>@page syntax coloring options</vh>
 <v t="ekr.20041119034357.72"><vh>@bool color_cweb_doc_parts_with_latex=True</vh></v>
 <v t="ekr.20041119034357.73"><vh>@bool color_cweb_comments_with_latex=True</vh></v>
@@ -142,40 +156,40 @@
 <v t="ekr.20041119034357.76"><vh>@bool use_hyperlinks=False</vh></v>
 </v>
 <v t="ekr.20041119034357.77"><vh>@page syntax colors</vh>
-<v t="ekr.20041119034357.78"><vh>@tk-color comment_color=firebrick3</vh></v>
-<v t="ekr.20041119034357.79"><vh>@tk-color cweb_section_name_color=red</vh></v>
-<v t="ekr.20041119034357.80"><vh>@tk-color directive_color=blue</vh></v>
-<v t="ekr.20041119034357.81"><vh>@tk-color doc_part_color=firebrick3</vh></v>
-<v t="ekr.20041119034357.82"><vh>@tk-color keyword_color=blue</vh></v>
-<v t="ekr.20041120152508"><vh>@tk-color latex_background_color = None</vh></v>
-<v t="ekr.20041119034357.83"><vh>@tk-color leo_keyword_color=#00aa00</vh></v>
-<v t="ekr.20041119034357.84"><vh>@tk-color section_name_color=red</vh></v>
-<v t="ekr.20041119034357.85"><vh>@tk-color section_name_brackets_color=blue</vh></v>
-<v t="ekr.20041119034357.86"><vh>@tk-color show_invisibles_space_background_color=Gray90</vh></v>
-<v t="ekr.20041119034357.87"><vh>@tk-color show_invisibles_tab_foreground_color=Gray80</vh></v>
-<v t="ekr.20041119034357.88"><vh>@tk-color string_color=#00aa00</vh></v>
-<v t="ekr.20041119034357.89"><vh>@tk-color undefined_section_name_color=red</vh></v>
+<v t="ekr.20041119034357.78"><vh>@color comment_color=firebrick3</vh></v>
+<v t="ekr.20041119034357.79"><vh>@color cweb_section_name_color=red</vh></v>
+<v t="ekr.20041119034357.80"><vh>@color directive_color=blue</vh></v>
+<v t="ekr.20041119034357.81"><vh>@color doc_part_color=firebrick3</vh></v>
+<v t="ekr.20041119034357.82"><vh>@color keyword_color=blue</vh></v>
+<v t="ekr.20041120152508"><vh>@color latex_background_color = None</vh></v>
+<v t="ekr.20041119034357.83"><vh>@color leo_keyword_color=#00aa00</vh></v>
+<v t="ekr.20041119034357.84"><vh>@color section_name_color=red</vh></v>
+<v t="ekr.20041119034357.85"><vh>@color section_name_brackets_color=blue</vh></v>
+<v t="ekr.20041119034357.86"><vh>@color show_invisibles_space_background_color=Gray90</vh></v>
+<v t="ekr.20041119034357.87"><vh>@color show_invisibles_tab_foreground_color=Gray80</vh></v>
+<v t="ekr.20041119034357.88"><vh>@color string_color=#00aa00</vh></v>
+<v t="ekr.20041119034357.89"><vh>@color undefined_section_name_color=red</vh></v>
 </v>
 </v>
-<v t="ekr.20041119034357.37"><vh>Window options</vh>
-<v t="ekr.20041119050749.1"><vh>body pane</vh>
-<v t="ekr.20041119034357.38"><vh>@page body options</vh>
+<v t="ekr.20041119034357.37" a="E"><vh>Window options</vh>
+<v t="ekr.20041119050749.1" a="E"><vh>body pane</vh>
+<v t="ekr.20041119034357.38" a="E"><vh>@page body options</vh>
 <v t="ekr.20041119034357.39"><vh>@bool body_pane_wraps = True</vh></v>
-<v t="ekr.20041119034357.40"><vh>@tk-color body_cursor_foreground_color = None</vh></v>
-<v t="ekr.20041119034357.41"><vh>@tk-color body_cursor_background_color = None</vh></v>
+<v t="ekr.20041119034357.40"><vh>@color body_cursor_foreground_color = None</vh></v>
+<v t="ekr.20041119034357.41"><vh>@color body_cursor_background_color = None</vh></v>
 <v t="ekr.20041119034357.42"><vh>@string body_time_format_string = %m/%d/%Y %H:%M:%S</vh></v>
 <v t="ekr.20041119034357.43"><vh>@bool body_gmt_time = False</vh></v>
 <v t="ekr.20041119034357.44"><vh>@bool smart_auto_indent = False</vh></v>
 <v t="ekr.20041119034357.53"><vh>@int additional_body_text_border = 0</vh></v>
 </v>
 <v t="ekr.20041119050749.2"><vh>@page body colors</vh>
-<v t="ekr.20041119034357.48"><vh>@tk-color body_text_foreground_color = None</vh></v>
-<v t="ekr.20041119034357.49"><vh>@tk-color body_text_background_color = None</vh></v>
-<v t="ekr.20041119034357.50"><vh>@tk-color body_insertion_cursor_color = None</vh></v>
+<v t="ekr.20041119034357.48"><vh>@color body_text_foreground_color = None</vh></v>
+<v t="ekr.20041119034357.49"><vh>@color body_text_background_color = None</vh></v>
+<v t="ekr.20041119034357.50"><vh>@color body_insertion_cursor_color = None</vh></v>
 </v>
-<v t="ekr.20041119034357.45"><vh>@page body text font</vh>
+<v t="ekr.20041119034357.45" a="E"><vh>@page body text font</vh>
 <v t="ekr.20041119034357.47"><vh>@family body_text_font_family = Courier New</vh></v>
-<v t="ekr.20041119034357.51"><vh>@int body_text_font_size = None</vh></v>
+<v t="ekr.20041119034357.51"><vh>@size body_text_font_size = None</vh></v>
 <v t="ekr.20041119034357.46"><vh>@slant body_text_font_slant = roman</vh></v>
 <v t="ekr.20041119034357.52"><vh>@weight body_text_font_weight = normal</vh></v>
 </v>
@@ -218,12 +232,12 @@
 <v t="ekr.20041119052015.7"><vh>@weight log_text_font_weight = normal</vh></v>
 </v>
 </v>
-<v t="ekr.20041119034357.56"><vh>@page options for new windows</vh>
-<v t="ekr.20041119034357.57"><vh>@float initial_horizontal_ratio = 0.3</vh></v>
-<v t="ekr.20041119034357.58"><vh>@float initial_horizontal_secondary_ratio = 0.5</vh></v>
-<v t="ekr.20041119034357.59"><vh>@string initial_splitter_orientation = v</vh></v>
-<v t="ekr.20041119034357.60"><vh>@float initial_vertical_ratio = 0.5</vh></v>
-<v t="ekr.20041119034357.61"><vh>@float initial_vertical_secondary_ratio = 0.7</vh></v>
+<v t="ekr.20041119034357.56" a="E"><vh>@page options for new windows</vh>
+<v t="ekr.20041119034357.57"><vh>@ratio initial_horizontal_ratio = 0.3</vh></v>
+<v t="ekr.20041119034357.58"><vh>@ratio initial_horizontal_secondary_ratio = 0.5</vh></v>
+<v t="ekr.20041119034357.59"><vh>@orientation initial_splitter_orientation = vertical</vh></v>
+<v t="ekr.20041119034357.60"><vh>@ratio initial_vertical_ratio = 0.5</vh></v>
+<v t="ekr.20041119034357.61"><vh>@ratio initial_vertical_secondary_ratio = 0.7</vh></v>
 <v t="ekr.20041119034357.62"><vh>@int initial_window_height = 600</vh></v>
 <v t="ekr.20041119034357.63"><vh>@int initial_window_left = 20</vh></v>
 <v t="ekr.20041119034357.64"><vh>@int initial_window_top = 20</vh></v>
@@ -597,9 +611,6 @@ Valid values: 0.0 to 1.0.
 The primary panes are the body pane and the secondary pane.
 The secondary pane contains the outline and log panes.
 
-valid values: h or horizontal or v vertical.
-Actually, anything but h or horizontal is considered vertical.
-
 vertical: body pane below outline and log panes.
 horizontal: body pane to left of outline and log panes.</t>
 <t tx="ekr.20041119034357.60">The ratio of tree pane size to body pane size when splitting primary panes vertically.
@@ -707,15 +718,16 @@ Organizer nodes may be inserted freely without changing the meaning of an @setti
 
 Creates a user-defined type. For example:
 
-@tk-relief: string = [raised, sunken, flat, ridge, solid, groove]
+@type relief: string = [raised, sunken, flat, ridge, solid, groove]
 
 This is much better than using a base type because the dialog creator can
 present the user with a listbox containing only the valid options.</t>
-<t tx="ekr.20041119035931">Acts like an organizer node if the expression evaluates to True, otherwise acts like an @ignore node. If the expression is empty the
-body text should contain a script that will be evaluated (in an empty context).
+<t tx="ekr.20041119035931">Acts like an organizer node if the expression evaluates to True, otherwise acts
+like an @ignore node. If the expression is empty thebody text should contain a
+script that will be evaluated (in an empty context).
 
-This is a completely general method of creating different classes of settings. For example, editing modes could be implemented this
-way.</t>
+This is a completely general method of creating different classes of settings.
+For example, editing modes could be implemented this way.</t>
 <t tx="ekr.20041119035931.1">Acts like an organizer node for the settings parser.
 
 Tells the dialog creator to place all descendent nodes in a single page.  The page will be scrollable to accommodate arbitrarily many entries. </t>
@@ -1043,7 +1055,11 @@ WriteOutlineOnly        = None</t>
 
 Creates a permanent value that can be tested later with @if. That is, it alters
 the environment in which @if code is executed.</t>
-<t tx="ekr.20041119110141">Same as "@if sys.platform = = platform-name", except that it isn't necessary to import sys.
+<t tx="ekr.20041119110141">Same as:
+
+@if sys.platform == "platform-name":
+
+except that it isn't necessary to import sys.
 
 This would be the natural way to implement platform-dependent settings.</t>
 <t tx="ekr.20041120152508"></t>
@@ -1061,5 +1077,25 @@ commandName = shortcut specifier.</t>
 <t tx="ekr.20041120155431.2">Not implemented yet.
 
 Autments the settings parser and the dialog creator with scripts.</t>
+<t tx="ekr.20041120175840">Same as
+
+@if g.app.guiName == "gui-name":
+
+This would be a natural way to implement gui-dependent settings.</t>
+<t tx="ekr.20041120180154"></t>
+<t tx="ekr.20041120180154.1"></t>
+<t tx="ekr.20041120180154.2">raised
+sunken
+flat
+ridge
+solid
+groove</t>
+<t tx="ekr.20041120180707"></t>
+<t tx="ekr.20041120180707.1"></t>
+<t tx="ekr.20041120180707.2"></t>
+<t tx="ekr.20041120180707.3"></t>
+<t tx="ekr.20041120180707.4"></t>
+<t tx="ekr.20041120181045">A float value restricted to the range 0.0 to 1.0.</t>
+<t tx="ekr.20041120181045.1"></t>
 </tnodes>
 </leo_file>

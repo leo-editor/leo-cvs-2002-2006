@@ -81,7 +81,7 @@ class leoMenu:
         #@<< define editMenuFindMenuTable >>
         #@+node:ekr.20031218072017.3756:<< define editMenuFindMenuTable >>
         self.editMenuFindMenuTable = (
-            ("&Find Panel","Ctrl+F",c.findPanel),
+            ("&Find Panel","Ctrl+F",c.showFindPanel),
             ("-",None,None),
             ("Find &Next","F3",c.findNext),
             ("Find &Previous","F4",c.findPrevious),

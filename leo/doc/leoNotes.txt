@@ -3201,7 +3201,7 @@ else: # easier to read in the config file.
 #@nonl
 #@-node:ekr.20041117062717.28:<< write recent files section >>
 #@-node:ekr.20041117062717.27:update (config)
-#@+node:ekr.20041117062717.29:update_section 
+#@+node:ekr.20041117062717.29:update_section
 def update_section (self,config,section,dict):
     
     section = g.toEncodedString(section,self.config_encoding) # 10/31/03
@@ -3218,7 +3218,7 @@ def update_section (self,config,section,dict):
         name = g.toEncodedString(name,self.config_encoding) # 10/31/03
         config.set(section,name,val)
 #@nonl
-#@-node:ekr.20041117062717.29:update_section 
+#@-node:ekr.20041117062717.29:update_section
 #@+node:ekr.20041117062717.25:<< convert find/change options to unicode >>
 find = self.findDict.get("find_string")
 if find:
@@ -3243,6 +3243,103 @@ if 0: # Not done in 4.3.
 #@nonl
 #@-node:ekr.20040324080819:<< update leoConfig.txt >>
 #@-node:ekr.20041118184748:Unused old config stuff
+#@+node:ekr.20041121111018:Unused (find initing)
+#@+node:ekr.20031218072017.2815:c.setIvarsFromFind (sets c ivars from widgets)
+# This should be called whenever we need to use find values:
+# i.e., before reading or writing
+
+def setIvarsFromFind (self):
+    
+    c = self
+
+    if c.findFrame:
+        c.findFrame.set_ivars(c)
+#@nonl
+#@-node:ekr.20031218072017.2815:c.setIvarsFromFind (sets c ivars from widgets)
+#@+node:ekr.20041118195812.1:configSettings.setCommandsFindIvars
+def setCommandsFindIvars(self):
+    
+    return g.app.config.setCommandsFindIvars(self.c)
+#@nonl
+#@-node:ekr.20041118195812.1:configSettings.setCommandsFindIvars
+#@+node:ekr.20041117062717.16:config.setCommandsFindIvars
+def setCommandsFindIvars (self,c):
+    
+    """Set c.name_flag for each name in findFrame.intKeys."""
+    
+    if g.app.gui.guiName() != "tkinter":
+        return
+
+    findFrame = c.findFrame
+    if not findFrame: return
+    
+    g.trace(c)
+
+    for s in findFrame.intKeys:
+        val = self.getBool(c,s)
+        if val != None:
+            setattr(c,s+"_flag",val)
+            # g.trace(s+"_flag",val)
+
+    for name in ("change_string","find_string"):
+        val = self.getString(c,name)
+        if val:
+            settattr(c,name,val)
+
+    g.app.findFrame.init(c)
+#@nonl
+#@-node:ekr.20041117062717.16:config.setCommandsFindIvars
+#@+node:ekr.20041117062717.19:configSettings.etConfigFindIvars
+def setConfigFindIvars (self):
+    
+    """Set the config ivars from the commander."""
+    
+    c = self.c
+
+    # N.B.: separate c.ivars are much more convenient than a dict.
+    for s in c.findFrame.intKeys: # These _are_ gui-independent.
+        val = getattr(c,s+"_flag")
+        g.app.config.setPref(s,val)
+        # g.trace(s,val)
+    
+    g.app.config.setPref("change_string",c.change_text)
+    g.app.config.setPref("find_string",c.find_text)
+#@nonl
+#@-node:ekr.20041117062717.19:configSettings.etConfigFindIvars
+#@+node:ekr.20031218072017.4050:tkGui.createGlobalWindows
+def createGlobalWindows (self):
+    
+    """Create the global windows for the application."""
+    
+    if 0:
+        g.app.findFrame = g.app.gui.createFindPanel()
+        g.app.globalWindows.append(g.app.findFrame)
+#@nonl
+#@-node:ekr.20031218072017.4050:tkGui.createGlobalWindows
+#@-node:ekr.20041121111018:Unused (find initing)
+#@+node:ekr.20031218072017.2816:c.setIvarsFromPrefs
+@ This should be called whenever we need to use preference:
+i.e., before reading, writing, tangling, untangling.
+
+7/2/02: We no longer need this now that the Prefs dialog is modal.
+@c
+
+def setIvarsFromPrefs (self):
+
+    pass
+#@nonl
+#@-node:ekr.20031218072017.2816:c.setIvarsFromPrefs
+#@+node:ekr.20031218072017.2611:app.destroyAllGlobalWindows
+def destroyAllGlobalWindows (self):
+    
+    for w in self.globalWindows:
+        w.destroySelf()
+        
+    self.globalWindows = []
+    
+    self.findFrame = None
+    self.pythonFrame = None
+#@-node:ekr.20031218072017.2611:app.destroyAllGlobalWindows
 #@-node:ekr.20031218072017.434:Unused code
 #@-all
 #@nonl

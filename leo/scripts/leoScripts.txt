@@ -330,7 +330,7 @@ g.app.searchDict = {} # Communication between search & change scripts
 c = g.top()
 c.script_search_flag = True
 c.find_text = script
-g.app.findFrame.init(c)
+c.frame.findPanel.init(c)
 c.frame.OnFindPanel()
 #@nonl
 #@-node:EKR.20040502195524.15:early find script

@@ -53,9 +53,6 @@ class baseCommands:
         c.atFileCommands = leoAtFile.atFile(c)
         c.importCommands = leoImport.leoImportCommands(c)
         c.tangleCommands = leoTangle.tangleCommands(c)
-        
-        # Create the find panel.  It will be inited later.
-        c.findFrame = g.app.gui.createFindPanel(c)
     
         if 0 and g.debugGC:
             print ; print "*** using Null undoer ***" ; print
@@ -2465,37 +2462,40 @@ class baseCommands:
     #@-node:ekr.20031218072017.2290:toggleAngleBrackets
     #@-node:ekr.20031218072017.2885:Edit Headline submenu
     #@+node:ekr.20031218072017.2887:Find submenu (frame methods)
-    #@+node:ekr.20031218072017.2888:findPanel
-    def findPanel(self):
+    #@+node:ekr.20031218072017.2888:showFindPanel
+    def showFindPanel(self):
     
         c = self
+        
+        if not c.frame.findPanel:
+            c.frame.findPanel = g.app.gui.createFindPanel(c)
     
-        c.findFrame.bringToFront()
+        c.frame.findPanel.bringToFront()
     #@nonl
-    #@-node:ekr.20031218072017.2888:findPanel
+    #@-node:ekr.20031218072017.2888:showFindPanel
     #@+node:ekr.20031218072017.2889:findNext
     def findNext(self):
     
         c = self
-        c.findFrame.findNextCommand(c)
+        c.frame.findPanel.findNextCommand(c)
     #@-node:ekr.20031218072017.2889:findNext
     #@+node:ekr.20031218072017.2890:findPrevious
     def findPrevious(self):
     
         c = self
-        c.findFrame.findPreviousCommand(c)
+        c.frame.findPanel.findPreviousCommand(c)
     #@-node:ekr.20031218072017.2890:findPrevious
     #@+node:ekr.20031218072017.2891:replace
     def replace(self):
     
         c = self
-        c.findFrame.changeCommand(c)
+        c.frame.findPanel.changeCommand(c)
     #@-node:ekr.20031218072017.2891:replace
     #@+node:ekr.20031218072017.2892:replaceThenFind
     def replaceThenFind(self):
     
         c = self
-        c.findFrame.changeThenFindCommand(c)
+        c.frame.findPanel.changeThenFindCommand(c)
     #@-node:ekr.20031218072017.2892:replaceThenFind
     #@-node:ekr.20031218072017.2887:Find submenu (frame methods)
     #@+node:ekr.20031218072017.2893:notValidInBatchMode

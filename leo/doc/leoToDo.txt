@@ -1051,7 +1051,6 @@ def __init__(self):
     self.disableSave = False
     self.failedPlugins = [] # List of loaded plugins that have failed to load.
     self.globalConfigDir = None # The directory that is assumed to contain the global configuration files.
-    self.globalWindows = []
     self.gui = None # The gui class.
     self.hasOpenWithMenu = False # True: open with plugin has been loaded.
     self.hookError = False # True: suppress further calls to hooks.
@@ -1091,7 +1090,6 @@ def __init__(self):
     self.windowList = [] # Global list of all frames.  Does not include hidden root window.
 
     # Global panels.  Destroyed when Leo ends.
-    self.findFrame = None
     self.pythonFrame = None
     
     << Define global constants >>
@@ -3175,7 +3173,7 @@ def getPrefs (self):
     c = self.c
     
     if self.getOpenTag("<preferences"):
-        return # <preferences/> seeen
+        return # <preferences/> seen
 
     table = (
         ("allow_rich_text",None,None), # Ignored.
