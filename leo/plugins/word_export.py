@@ -15,8 +15,8 @@ __version__ = "0.4"
 
 #@<< version history >>
 #@+node:ekr.20040909110753:<< version history >>
-#@+at
 #@@killcolor
+#@+at
 # 
 # 0.3 EKR:
 # 

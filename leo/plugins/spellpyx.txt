@@ -1298,6 +1298,7 @@ sourcetime
 spawnl
 spawnv
 speedTest
+spellpyx
 splitLines
 src
 sss
