@@ -83,7 +83,7 @@ class baseLeoFrame:
 		return self.ver[10:-1] # Strip off "$Reversion" and the trailing "$"
 	
 	def getSignOnLine (self):
-		return "Leo 4.0.2, build %s, October 23, 2003" % self.getBuildNumber()
+		return "Leo 4.0.3, build %s, October 25, 2003" % self.getBuildNumber()
 		
 	def initVersion (self):
 		self.ver = "$Revision$" # CVS will update this.
@@ -2541,12 +2541,9 @@ class baseLeoFrame:
 	#@+node:OnGoToLineNumber & allies
 	def OnGoToLineNumber (self,event=None):
 	
-		c = self.commands
+		c = self.commands ; v = c.currentVnode()
 		#@	<< set root to the nearest @file, @silentfile or @rawfile ancestor node >>
 		#@+node:<< set root to the nearest @file, @silentfile or @rawfile ancestor node >>
-		v = c.currentVnode()
-		fileName = None
-		
 		# Search the present node first.
 		j = v.t.joinList
 		if v in j:
@@ -2554,6 +2551,7 @@ class baseLeoFrame:
 		j.insert(0,v)
 		
 		# 10/15/03: search joined nodes if first search fails.
+		root = None ; fileName = None
 		for v in j:
 			while v and not fileName:
 				if v.isAtFileNode():
@@ -2564,8 +2562,10 @@ class baseLeoFrame:
 					fileName = v.atRawFileNodeName()
 				else:
 					v = v.parent()
-		
-		root = v
+			if fileName:
+				root = v
+				# trace("root,fileName",root,fileName)
+				break # Bug fix: 10/25/03
 		if not root:
 			es("Go to line number: ancestor must be @file node")
 			return
@@ -2586,7 +2586,7 @@ class baseLeoFrame:
 		except:
 			es("not found: " + fileName)
 			return
-			
+		#@nonl
 		#@-node:<< read the file into lines >>
 		#@nl
 		#@	<< get n, the line number, from a dialog >>
