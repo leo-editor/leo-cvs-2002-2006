@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="2180" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="2181" clone_windows="0"/>
 <globals body_outline_ratio="0.5">
-	<global_window_position top="90" left="302" height="728" width="819"/>
+	<global_window_position top="90" left="302" height="728" width="912"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences>
@@ -2711,6 +2711,12 @@
 </v>
 </v>
 <v t="edream.112203144347" a="V" tnodeList="edream.112203144347"><vh>@file ..\test\batchScript.py</vh></v>
+<v t="edream.112303064255" a="E"><vh>Extract section test</vh></v>
+<v t="edream.112303110337" a="E"><vh>Change all headlines/Undo test</vh>
+<v t="edream.112303110337.1"><vh>a</vh></v>
+<v t="edream.112303110337.2"><vh>Ba</vh></v>
+<v t="edream.112303110337.3"><vh>Ca</vh></v>
+</v>
 </vnodes>
 <tnodes>
 <t tx="edream.110203161858">@color
@@ -34243,14 +34249,41 @@ c.frame.body.onBodyChanged(v,"Change",oldText=oldText) # Handles undo.
 c.frame.body.setInsertPointToStartOfLine(0)
 
 app.searchDict["continue"] = "true" # Allow change all to continue.</t>
-<t tx="edream.112203144347">from leoGlobals import *
+<t tx="edream.112203144347"># Run this using:
+# c:\python23\python c:\prog\leoCVS\leo\src\leo.py -script c:\prog\leoCVS\leo\test\batchScript.py
 
-print "Hello from batchScript.py"
+from leoGlobals import *
 
+# print "batchScript.py batchMode:", app.batchMode
+
+disable = true
+
+if disable:
+	if app.batchMode:
+		print "Disabling log from batchScript.py"
+		app.log.disable()
+	
 path = r"c:\prog\leoCVS\leo\plugins\leoPlugins.leo"
-print path
-
+es(path)
+# trace(path)
 flag,frame = openWithFileName(path)
-print `frame`</t>
+
+if disable:
+	if app.batchMode:
+		print "Enabling log from batchScript.py"
+		app.log.enable()
+		es(frame)
+else:
+	print "End of batchScript.py"</t>
+<t tx="edream.112303064255">before
+&lt;&lt; section &gt;&gt;
+	sec line 1
+		sec line 2 indented
+	sec line 3
+after</t>
+<t tx="edream.112303110337"></t>
+<t tx="edream.112303110337.1"></t>
+<t tx="edream.112303110337.2"></t>
+<t tx="edream.112303110337.3"></t>
 </tnodes>
 </leo_file>
