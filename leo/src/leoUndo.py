@@ -624,6 +624,66 @@ class baseUndoer:
 	#@nonl
 	#@-node:ekr.20031218072017.3616:setUndoTypes
 	#@-node:ekr.20031218072017.3608:State routines...
+	#@+node:EKR.20040530121329:u.restoreTree
+	def restoreTree (self,treeInfo):
+		
+		"""Use the tree info to restore all vnode and tnode data,
+		including all links."""
+		
+		# This effectively relinks all vnodes.
+		
+		for v,vInfo,tInfo in treeInfo:
+			v.restoreUndoInfo(vInfo)
+			v.t.restoreUndoInfo(tInfo)
+	#@nonl
+	#@-node:EKR.20040530121329:u.restoreTree
+	#@+node:EKR.20040528075307:u.saveTree
+	def saveTree (self,p,treeInfo=None):
+		
+		"""Create all info needed to handle a general undo operation."""
+	
+		# WARNING: read this before doing anything "clever"
+		#@	<< about u.saveTree >>
+		#@+node:EKR.20040530114124:<< about u.saveTree >>
+		#@+at 
+		# The old code made a free-standing copy of the tree using v.copy and 
+		# t.copy.  This looks "elegant" and is WRONG.  The problem is that it 
+		# can not handle clones properly, especially when some clones were in 
+		# the "undo" tree and some were not.   Moreover, it required complex 
+		# adjustments to t.vnodeLists.
+		# 
+		# Instead of creating new nodes, the new code creates all information 
+		# needed to properly restore the vnodes and tnodes.  It creates a list 
+		# of tuples, on tuple for each vnode in the tree.  Each tuple has the 
+		# form,
+		# 
+		# (vnodeInfo, tnodeInfo) where vnodeInfo and tnodeInfo are dicts 
+		# contain all info needed to recreate the nodes.  The 
+		# v.createUndoInfoDict and t.createUndoInfoDict methods correspond to 
+		# the old v.copy and t.copy methods.
+		# 
+		# Aside:  Prior to 4.2 Leo used a scheme that was equivalent to the 
+		# createUndoInfoDict info, but quite a bit uglier.
+		#@-at
+		#@-node:EKR.20040530114124:<< about u.saveTree >>
+		#@nl
+		
+		u = self ; c = u.c ; topLevel = (treeInfo == None)
+		if topLevel: treeInfo = []
+	
+		# Add info for p.v and p.v.t.  Duplicate tnode info is harmless.
+		data = (p.v,p.v.createUndoInfo(),p.v.t.createUndoInfo())
+		treeInfo.append(data)
+	
+		# Recursively add info for the subtree.
+		child = p.firstChild()
+		while child:
+			self.saveTree(child,treeInfo)
+			child = child.next()
+	
+		# if topLevel: g.trace(treeInfo)
+		return treeInfo
+	#@-node:EKR.20040528075307:u.saveTree
 	#@+node:ekr.20031218072017.2030:redo & allies
 	def redo (self):
 	
@@ -804,9 +864,8 @@ class baseUndoer:
 		"""Redo replacement of body text of multiple nodes."""
 		
 		u = self
-		u.undoReplaceNodes()
+		u.redoReplaceNodes()
 		u.redrawFlag = false
-	#@nonl
 	#@-node:EKR.20040526075238.3:redoReplaceNodes & replaceNodesContents
 	#@+node:EKR.20040526075238.4:redoSortChildren/Siblings/TopLevel
 	def redoSortChildren (self):
@@ -893,28 +952,6 @@ class baseUndoer:
 		u.bead -= 1
 		u.setUndoTypes()
 	#@nonl
-	#@+node:ekr.20031218072017.3618: u.saveTree, restoreExtraAttributes
-	def saveTree (self,p):
-		
-		tree = None ## no longer used??
-		headlines = []
-		bodies = []
-		extraAttributes = []
-		for p in p.self_and_subtree_iter(copy=true):
-			headlines.append(p.headString())
-			bodies.append(p.bodyString())
-			data = p.v.extraAttributes(), p.v.t.extraAttributes()
-			extraAttributes.append(data)
-	
-		return tree, headlines, bodies, extraAttributes
-	
-	def restoreExtraAttributes (self,v,extraAttributes):
-	
-		v_extraAttributes, t_extraAttributes = extraAttributes
-		v.setExtraAttributes(v_extraAttributes)
-		v.t.setExtraAttributes(t_extraAttributes)
-	#@nonl
-	#@-node:ekr.20031218072017.3618: u.saveTree, restoreExtraAttributes
 	#@+node:EKR.20040526090701.5:undoChangeAll
 	def undoChangeAll (self):
 		
@@ -1212,47 +1249,26 @@ class baseUndoer:
 	
 	def undoReplace (self,p,new_data,old_data,text):
 	
-		"""Replace new_v with old_v during undo."""
+		"""Replace p.v and its subtree using old_data during undo."""
 	
 		u = self ; c = u.c
 		if 0:
-			g.trace(u.undoType)
-			g.trace("u.bead",u.bead, type(u.peekBead(u.bead)))
-			g.trace("new_data:",type(new_data))
-			g.trace("old_data:",type(old_data))
+			# g.trace(u.undoType,"u.bead",u.bead)
+			g.trace("new_data:",new_data)
+			g.trace("old_data:",old_data)
 	
-		assert(type(new_data)==type((),) or type(old_data)==type((),))
-	
-		# new_data will be None the first time we undo this operation.
-		# In that case, we must save the new tree for later undo operation.
-		try:
-			new_v, new_headlines, new_bodies, new_attributes = new_data
-		except:
-			new_data = u.saveTree(p)
-			new_v, new_headlines, new_bodies, new_attributes = new_data
+		if new_data == None:
+			# This is the first time we have undone the operation.
 			# Put the new data in the bead.
 			d = u.beads[u.bead]
-			d["newTree"] = new_data
+			d["newTree"] = u.saveTree(p.copy())
 			u.beads[u.bead] = d
-			
-		# The previous code should already have created this data.
-		old_v, old_headlines, old_bodies, old_attributes = old_data
-		assert(new_bodies != None)
-		assert(old_bodies != None)
 	
-		result = old_v
+		# Replace data in tree with old data.
+		u.restoreTree(old_data)
+		p.setBodyStringOrPane(p.bodyString())
 	
-		# Restore all headlines and bodies from the saved lists.
-		encoding = g.app.tkEncoding
-		i = 0
-		for p in result.self_and_subtree_iter():
-			p.initHeadString(old_headlines[i],encoding)
-			p.setTnodeText(old_bodies[i],encoding)
-			u.restoreExtraAttributes(p,old_attributes[i])
-			i += 1
-	
-		result.setBodyStringOrPane(result.bodyString())
-		return result
+		return p # Nothing really changes.
 	#@nonl
 	#@-node:ekr.20031218072017.1714:undoReplace
 	#@+node:EKR.20040526090701.3:undoReplaceNodes & undoReplaceNodesContents
