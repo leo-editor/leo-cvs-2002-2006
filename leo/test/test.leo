@@ -2964,7 +2964,7 @@
 </v>
 <v t="edream.110203161858.2153" a="E"><vh>Run all tests</vh></v>
 </v>
-<v t="ekr.20040126105605"><vh>Clone test</vh>
+<v t="ekr.20040126105605" a="V"><vh>Clone test</vh>
 <v t="ekr.20040126105605.1"><vh>moving last b up destroys the outline!!</vh></v>
 <v t="ekr.20040126105605.2" a="E"><vh>a</vh>
 <v t="ekr.20040126105605.3"><vh>b</vh></v>
@@ -2973,7 +2973,6 @@
 <v t="ekr.20040126105605.3"><vh>b</vh></v>
 </v>
 </v>
-<v t="ekr.20040128182006" a="V"><vh>Import derived file test</vh></v>
 </vnodes>
 <tnodes>
 <t tx="dthein.20040108213304">@ 
@@ -36217,6 +36216,5 @@ c.doCommand(throwException,"Throw Exception")</t>
 <t tx="ekr.20040128174521.2"></t>
 <t tx="ekr.20040128175919"></t>
 <t tx="ekr.20040128180619"></t>
-<t tx="ekr.20040128182006"></t>
 </tnodes>
 </leo_file>
