@@ -29,7 +29,7 @@
 <v t="edream.120803091715"><vh>using pdb</vh></v>
 </v>
 </v>
-<v t="edream.110203161858.6" a="V"><vh>Tests...</vh>
+<v t="edream.110203161858.6"><vh>Tests...</vh>
 <v t="edream.110203161858.7"><vh>4.0 tests</vh>
 <v t="edream.110203161858.8"><vh>unicode test for find all</vh>
 <v t="edream.110203161858.9"><vh>a</vh></v>
@@ -2788,7 +2788,7 @@
 <v t="edream.121303091808"><vh>Batch test</vh>
 <v t="edream.112203144347" tnodeList="edream.112203144347"><vh>@file ..\test\batchScript.py</vh></v>
 </v>
-<v t="edream.110203161858.2119"><vh>Unit Tests</vh>
+<v t="edream.110203161858.2119" a="V"><vh>Unit Tests</vh>
 <v t="edream.110203161858.2124"><vh>tempNode</vh></v>
 <v t="edream.110203161858.2125"><vh>colorizerTests</vh>
 <v t="edream.110203161858.2126"><vh>Actionscript</vh></v>

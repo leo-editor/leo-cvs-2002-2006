@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="4024" clone_windows="0"/>
-<globals body_outline_ratio="0.40610859728506787">
-	<global_window_position top="39" left="240" height="779" width="804"/>
+<globals body_outline_ratio="0.62002567394094998">
+	<global_window_position top="18" left="367" height="779" width="804"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences>
@@ -15,6 +15,12 @@
 <v t="ekr.20031218072017"><vh> Diary</vh>
 <v t="ekr.20040105070023"><vh>2004</vh>
 <v t="ekr.20040105070023.1"><vh>January 2004</vh>
+<v t="ekr.20040108131321"><vh>1/8</vh>
+<v t="ekr.20040108141927"><vh>Fixed huge performance bug in cut/copy nodes.</vh></v>
+<v t="ekr.20040108134357"><vh>Improved sample code for batch mode in LeoDocs.leo</vh></v>
+<v t="ekr.20040108133440"><vh>Removed a complex assert in colorizer</vh></v>
+<v t="ekr.20040108131321.1"><vh>Change file extenstion for LaTeX files from .latext to .tex</vh></v>
+</v>
 <v t="ekr.20040106095934"><vh>1/6 Enable drawing after exceptions</vh></v>
 <v t="ekr.20040105070023.2"><vh>1/5</vh>
 <v t="ekr.20040105070023.3"><vh>Import now creates @root-code</vh></v>
@@ -1111,33 +1117,6 @@
 <v t="ekr.20031218072017.862"><vh>Cleanup</vh></v>
 </v>
 <v t="ekr.20031219082559"><vh>To do: 4.1</vh>
-<v t="ekr.20040105064959"><vh>Fix Bugs</vh>
-<v t="ekr.20040107162214"><vh>Exception in batch mode</vh></v>
-<v t="ekr.20040107161709"><vh>Write missing @file nodes</vh></v>
-<v t="ekr.20040107095421"><vh>Batch mode report (works, with changes)</vh></v>
-<v t="ekr.20040107081050"><vh>Can't open Idle</vh></v>
-<v t="ekr.20040105070134"><vh>Bug: reformat paragraph</vh></v>
-<v t="ekr.20040105120208"><vh>Fix crasher in colorizer</vh></v>
-<v t="ekr.20040105070616"><vh>Fix performance bug in cut/copy node</vh></v>
-<v t="ekr.20040104162835"><vh>Bug: marked nodes</vh>
-<v t="ekr.20040104162835.1"><vh>Reports</vh>
-<v t="ekr.20040104162835.2"><vh>Report</vh></v>
-<v t="ekr.20040104162835.3"><vh>Report 2</vh></v>
-<v t="ekr.20040104162835.4"><vh>Report 3 (latest)</vh></v>
-<v t="ekr.20040104162835.5"><vh>Another clue</vh></v>
-</v>
-</v>
-<v t="ekr.20040104184913"><vh>Bug: Script code should make sure all nodes end in a newline.</vh></v>
-<v t="ekr.20040106121339"><vh>(Improve the find panel)</vh>
-<v t="ekr.20040107064101.2"><vh>Requests</vh></v>
-</v>
-<v t="ekr.20040105080119.1"><vh>Linux bug: paste does not work in find panel</vh></v>
-<v t="ekr.20040105080119.3"><vh>Multiple bugs</vh></v>
-<v t="ekr.20040106145421"><vh>PHP syntax coloring</vh></v>
-<v t="ekr.20040105103517"><vh>Importing @file issues</vh>
-<v t="ekr.20040105103916"><vh>Fix?</vh></v>
-</v>
-</v>
 <v t="ekr.20040107090747"><vh>Add features</vh>
 <v t="ekr.20040105080119.4"><vh>put back"draw-outline-text-box" hook</vh></v>
 <v t="ekr.20040104200407"><vh>Add @language html when importing html files</vh></v>
@@ -1162,9 +1141,8 @@
 <v t="ekr.20040104162835.17"><vh>Steve Zatz</vh></v>
 <v t="ekr.20040104162835.18"><vh>Jon Schull  vpython and mac</vh></v>
 </v>
-<v t="ekr.20040107092757"><vh>Finish zope.leo (or zodb.leo ?)</vh></v>
 </v>
-<v t="ekr.20031218072017.863" a="M"><vh>(Project Views)</vh>
+<v t="ekr.20031218072017.863"><vh>(Project Views)</vh>
 <v t="ekr.20031218072017.864"><vh>  Reports</vh>
 <v t="ekr.20031218072017.865"><vh>(Translation problems)</vh>
 <v t="ekr.20031218072017.866"><vh> Report</vh></v>
@@ -2867,7 +2845,7 @@
 </v>
 </v>
 </v>
-<v t="ekr.20031218072017.1923" a="E"><vh>4.1 Projects</vh>
+<v t="ekr.20031218072017.1923"><vh>4.1 Projects</vh>
 <v t="ekr.20031218072017.1924"><vh>Waiting for help from Linux people</vh>
 <v t="ekr.20031218072017.1925"><vh>Paste bug (Linux only)</vh>
 <v t="ekr.20031218072017.1331" a=""><vh>onBodyWillChange</vh></v>
@@ -3426,12 +3404,12 @@
 </v>
 </v>
 </v>
-<v t="ekr.20031218072017.2161" a="E"><vh>beta 5 projects</vh>
+<v t="ekr.20031218072017.2161"><vh>beta 5 projects</vh>
 <v t="ekr.20031218072017.2162"><vh>(Added defensive code to prevent crash in colorizer)</vh>
 <v t="ekr.20031218072017.2163"><vh>Report</vh></v>
 <v t="ekr.20031218072017.1885" a=""><vh>&lt;&lt; initialize new states &gt;&gt;</vh></v>
 </v>
-<v t="ekr.20031218072017.2165" a="E"><vh>(Bold body pane bug)</vh>
+<v t="ekr.20031218072017.2165"><vh>(Bold body pane bug)</vh>
 <v t="ekr.20031218072017.2166"><vh>Scripts</vh>
 <v t="ekr.20031218072017.2167"><vh>Show settings</vh>
 <v t="ekr.20031218072017.2168"><vh>getFontSettings</vh></v>
@@ -3440,7 +3418,7 @@
 <v t="ekr.20031218072017.2170"><vh>Print font</vh></v>
 <v t="ekr.20031218072017.2171"><vh>Print default font</vh></v>
 </v>
-<v t="ekr.20031218072017.2172" a="E"><vh>Code</vh>
+<v t="ekr.20031218072017.2172"><vh>Code</vh>
 <v t="ekr.20031218072017.1416" a=""><vh>app.__init__</vh>
 <v t="ekr.20031218072017.1417"><vh>&lt;&lt; define global constants &gt;&gt;</vh></v>
 <v t="ekr.20031218072017.368" a=""><vh>&lt;&lt; define global data structures &gt;&gt; app</vh></v>
@@ -3448,8 +3426,8 @@
 <v t="ekr.20031218072017.2173"><vh>config</vh>
 <v t="ekr.20031218072017.2174" a=""><vh>config.getFontFromParams</vh></v>
 </v>
-<v t="ekr.20031218072017.2175" a="E"><vh>frame</vh>
-<v t="ekr.20031218072017.2176" a="E"><vh>f.finishCreate</vh>
+<v t="ekr.20031218072017.2175"><vh>frame</vh>
+<v t="ekr.20031218072017.2176" a=""><vh>f.finishCreate</vh>
 <v t="ekr.20031218072017.2177" a=""><vh>&lt;&lt; create the toplevel frame &gt;&gt;</vh></v>
 <v t="ekr.20031218072017.2178" a=""><vh>&lt;&lt; create all the subframes &gt;&gt;</vh>
 <v t="ekr.20031218072017.2179"><vh>&lt;&lt; create both splitters &gt;&gt;</vh></v>
@@ -4122,7 +4100,7 @@
 </v>
 </v>
 </v>
-<v t="ekr.20040107064101"><vh>rc4 projects</vh>
+<v t="ekr.20040107064101" a="V"><vh>rc4 projects</vh>
 <v t="ekr.20040106121339.1"><vh>(Added message when plugins are disabled)</vh>
 <v t="ekr.20031218072017.1596" a=""><vh>frame.doHook</vh></v>
 </v>
@@ -4134,16 +4112,21 @@
 <v t="ekr.20031218072017.2063"><vh>getTargetLanguage</vh></v>
 </v>
 </v>
+<v t="ekr.20040108095341"><vh>(Move the status area to the icon area)</vh>
+<v t="ekr.20031218072017.2178" a=""><vh>&lt;&lt; create all the subframes &gt;&gt;</vh>
+<v t="ekr.20031218072017.2179"><vh>&lt;&lt; create both splitters &gt;&gt;</vh></v>
 </v>
-<v t="ekr.20040106095546.2"><vh>(Enabled drawing after exceptions)  MAKES THINGS WORSE</vh>
-<v t="ekr.20031218072017.2817" a=""><vh> doCommand</vh></v>
-<v t="ekr.20040106095546" a=""><vh>tkTree.enableDrawingAfterException</vh></v>
-<v t="ekr.20031218072017.2140" a=""><vh>executeScript</vh>
-<v t="ekr.20031218072017.2141"><vh>&lt;&lt; define class fileLikeObject &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.2142"><vh>&lt;&lt; get script into s &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.2143"><vh>&lt;&lt; redirect output if redirect_execute_script_output_to_log_pane &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.3960" a=""><vh>Creating the status area</vh>
+<v t="ekr.20031218072017.3961"><vh>createStatusLine</vh></v>
+<v t="ekr.20031218072017.3962"><vh>clearStatusLine</vh></v>
+<v t="ekr.20031218072017.3963"><vh>putStatusLine</vh></v>
+<v t="ekr.20031218072017.1733" a=""><vh>updateStatusRowCol</vh></v>
 </v>
-<v t="ekr.20031218072017.3112" a=""><vh>es_exception</vh></v>
+</v>
+<v t="ekr.20040105070616"><vh>(Fixed huge performance bug in cut/copy node)</vh>
+<v t="ekr.20031218072017.1573" a=""><vh>putLeoOutline (to clipboard)</vh></v>
+<v t="ekr.20031218072017.1470" a=""><vh>put (basic)(leoFileCommands)</vh></v>
+</v>
 </v>
 <v t="ekr.20031218072017.2406"><vh>Code</vh>
 <v t="ekr.20031218072017.2407"><vh>  Overview of code</vh>
@@ -7365,16 +7348,39 @@
 </v>
 </v>
 </v>
-<v t="ekr.20040108095341" a="V"><vh>(Move the status area to the icon area)</vh>
-<v t="ekr.20031218072017.2178" a=""><vh>&lt;&lt; create all the subframes &gt;&gt;</vh>
-<v t="ekr.20031218072017.2179"><vh>&lt;&lt; create both splitters &gt;&gt;</vh></v>
+<v t="ekr.20040105064959"><vh>Fix Bugs</vh>
+<v t="ekr.20040106121339" a="M"><vh>(Improve the find panel)</vh>
+<v t="ekr.20040107064101.2"><vh>Requests</vh></v>
 </v>
-<v t="ekr.20031218072017.3960" a=""><vh>Creating the status area</vh>
-<v t="ekr.20031218072017.3961"><vh>createStatusLine</vh></v>
-<v t="ekr.20031218072017.3962"><vh>clearStatusLine</vh></v>
-<v t="ekr.20031218072017.3963"><vh>putStatusLine</vh></v>
-<v t="ekr.20031218072017.1733" a=""><vh>updateStatusRowCol</vh></v>
+<v t="ekr.20040107161709"><vh>Write missing @file nodes</vh></v>
+<v t="ekr.20040107095421"><vh>Batch mode report (works, with changes)</vh></v>
+<v t="ekr.20040105070134"><vh>Bug: reformat paragraph</vh></v>
+<v t="ekr.20040104162835"><vh>Bug: marked nodes</vh>
+<v t="ekr.20040104162835.1"><vh>Reports</vh>
+<v t="ekr.20040104162835.2"><vh>Report</vh></v>
+<v t="ekr.20040104162835.3"><vh>Report 2</vh></v>
+<v t="ekr.20040104162835.4"><vh>Report 3 (latest)</vh></v>
+<v t="ekr.20040104162835.5"><vh>Another clue</vh></v>
 </v>
+</v>
+<v t="ekr.20040104184913"><vh>Bug: Script code should make sure all nodes end in a newline.</vh></v>
+<v t="ekr.20040105080119.1"><vh>Linux bug: paste does not work in find panel</vh></v>
+<v t="ekr.20040105080119.3"><vh>Multiple bugs</vh></v>
+<v t="ekr.20040106145421"><vh>PHP syntax coloring</vh></v>
+<v t="ekr.20040105103517"><vh>Importing @file issues</vh>
+<v t="ekr.20040105103916"><vh>Fix?</vh></v>
+</v>
+<v t="ekr.20040106095546.2"><vh>(Enabled drawing after exceptions)  MAKES THINGS WORSE</vh>
+<v t="ekr.20031218072017.2817" a=""><vh> doCommand</vh></v>
+<v t="ekr.20040106095546" a=""><vh>tkTree.enableDrawingAfterException</vh></v>
+<v t="ekr.20031218072017.2140" a=""><vh>executeScript</vh>
+<v t="ekr.20031218072017.2141"><vh>&lt;&lt; define class fileLikeObject &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.2142"><vh>&lt;&lt; get script into s &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.2143"><vh>&lt;&lt; redirect output if redirect_execute_script_output_to_log_pane &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20031218072017.3112" a=""><vh>es_exception</vh></v>
+</v>
+<v t="ekr.20040107081050"><vh>Can't open Idle</vh></v>
 </v>
 </vnodes>
 <tnodes>
@@ -9544,7 +9550,7 @@ self.language_extension_dict = {
 	"fortran90" : "f",
 	"html" : "html",
 	"java" : "java",
-	"latex" : "latex",
+	"latex" : "tex", # 1/8/04
 	"noweb" : "nw",
 	"pascal" : "p",
 	"perl" : "perl",
@@ -24850,8 +24856,8 @@ def put (self,s):
 		if self.outputFile:
 			s = toEncodedString(s,self.leo_file_encoding,reportErrors=true)
 			self.outputFile.write(s)
-		elif self.outputString != None: # Write to a string
-			self.outputString += s
+		elif self.outputList != None: # Write to a list.
+			self.outputList.append(s) # 1/8/04: avoid using string concatenation here!
 
 def put_dquote (self):
 	self.put('"')
@@ -24879,7 +24885,8 @@ def put_tab (self):
 def put_tabs (self,n):
 	while n &gt; 0:
 		self.put("\t")
-		n -= 1</t>
+		n -= 1
+</t>
 <t tx="ekr.20031218072017.1471"></t>
 <t tx="ekr.20031218072017.1472">@nocolor
 https://sourceforge.net/forum/message.php?msg_id=1923127
@@ -26385,7 +26392,7 @@ while v:
 
 def putLeoOutline (self):
 
-	self.outputString = "" ; self.outputFile = None
+	self.outputList = [] ; self.outputFile = None
 	self.usingClipboard = true
 	self.assignFileIndices() # 6/11/03: Must do this for 3.x code.
 	self.putProlog()
@@ -26393,8 +26400,8 @@ def putLeoOutline (self):
 	self.putVnodes()
 	self.putTnodes()
 	self.putPostlog()
-	s = self.outputString
-	self.outputString = None
+	s = ''.join(self.outputList) # 1/8/04: convert the list to a string.
+	self.outputList = []
 	self.usingClipboard = false
 	return s</t>
 <t tx="ekr.20031218072017.1574">def copyTreeWithNewTnodes (self):
@@ -30880,33 +30887,20 @@ if middle_lines &gt; 0 and i &lt; old_len:
 	i += 1
 	
 # Set the state of all other middle lines to "unknown".
-first_trailing_line = max(0,new_len - trailing_lines) # 11/23/03
+first_trailing_line = max(0,new_len - trailing_lines)
 while i &lt; first_trailing_line:
 	new_states.append("unknown")
 	i += 1
 
 # Copy the trailing states from the old to the new lines.
-j = max(0,old_len - trailing_lines)
-while j &lt; old_len and j &lt; len(old_states): # 11/23/03
-	new_states.append(old_states[j])
-	j += 1
-	i += 1 # for the assert below.
+i = max(0,old_len - trailing_lines)
+while i &lt; old_len and i &lt; len(old_states):
+	new_states.append(old_states[i])
+	i += 1
 
-while j &lt; len(old_states):
-	new_states.append("unknown")
-	j += 1
-	i += 1 # for the assert below.
-	
-# A crucial assertion.  If it fails we won't handle continued states properly.
-assert(i == new_len)
-	# Step 1 writes leading_lines lines
-	# Step 2 writes (new_len - trailing_lines - leading_lines) lines.
-	# Step 3 writes trailing_lines lines.
-
-# print "i:", i
-if 0:
-	for i in xrange(len(new_lines)):
-		print new_states[i],new_lines[i]</t>
+# 1/8/03: complete new_states by brute force.
+while len(new_states) &lt; new_len:
+	new_states.append("unknown")</t>
 <t tx="ekr.20031218072017.1886"># Colorize until the states match.
 # All middle lines have "unknown" state, so they will all be colored.
 
@@ -46763,7 +46757,7 @@ def initIvars(self):
 	# For writing
 	self.read_only = false
 	self.outputFile = None # File for normal writing
-	self.outputString = None # String for pasting
+	self.outputList = None # List of strings for pasting
 	self.openDirectory = None
 	self.usingClipboard = false
 	# New in 3.12
@@ -62833,12 +62827,6 @@ Scott
 </t>
 <t tx="ekr.20040105115534"></t>
 <t tx="ekr.20040105115534.1"></t>
-<t tx="ekr.20040105120208">Traceback (most recent call last):
-  File "c:\prog\leoCVS\leo\src\leoColor.py", line 1055, in colorizeAnyLanguage
-    assert(i == new_len)
-AssertionError
-
-This happened after undoing something, I think.</t>
 <t tx="ekr.20040105120208.1"></t>
 <t tx="ekr.20040105121411"></t>
 <t tx="ekr.20040105210752"></t>
@@ -63197,7 +63185,6 @@ ImportError: No module named idlelib.Py
 <t tx="ekr.20040107090240"></t>
 <t tx="ekr.20040107090747"></t>
 <t tx="ekr.20040107090747.1"></t>
-<t tx="ekr.20040107092757"></t>
 <t tx="ekr.20040107095421">@nocolor
 http://sourceforge.net/forum/message.php?msg_id=2362976
 By: comcol
@@ -63305,51 +63292,15 @@ Didn't do a reduced testcase because I figured this was one of the "reorg" probl
 and the solution would be fairly obvious (at least to ed ;]). If this is a problem,
 I can create a testcase.
 </t>
-<t tx="ekr.20040107162214">http://sourceforge.net/forum/message.php?msg_id=2363436
-By: rogererens
-
-Hello,
-
-as Mark also found out already, part of the solution is to use
-openWithFileName(path,None)
-instead of
-openWithFileName(path)
-
-I also replaced
-root = c.rootVnode()
-with
-v = c.rootVnode()
-in the demo code.
-
-This makes the code run with CTRL-E from within Leo. However, when I paste it
-into a file hih.py and use
-leo.py --script hih.py
-I get the following trace:
-
-__getattr__: nullGui __eq__
-__getattr__: nullFrame __nonzero__
-Traceback (most recent call last):
-  File "C:\Leo\src\leo.py", line 241, in ?
-    run(fileName)
-  File "C:\Leo\src\leo.py", line 79, in run
-    c,frame = createFrame(fileName)
-  File "C:\Leo\src\leo.py", line 161, in createFrame
-    c,frame = app.gui.newLeoCommanderAndFrame(fileName=None)
-  File "C:\Leo\src\leoGui.py", line 66, in newLeoCommanderAndFrame
-    c = leoCommands.Commands(frame,fileName)
-  File "C:\Leo\src\leoCommands.py", line 26, in __init__
-    self.tangleCommands = leoTangle.tangleCommands(self)
-  File "C:\Leo\src\leoTangle.py", line 364, in __init__
-    self.init_ivars()
-  File "C:\Leo\src\leoTangle.py", line 381, in init_ivars
-    if c.frame:
-TypeError: __nonzero__ should return an int
-
-Could you shed your light on this one, too? I'm using Leo 4.1rc3 on windowsXP.
-Maybe I missed some patch that's already in CVS?
-
-Best regards,
-Roger</t>
 <t tx="ekr.20040108095341"></t>
+<t tx="ekr.20040108131321"></t>
+<t tx="ekr.20040108131321.1"></t>
+<t tx="ekr.20040108133440">The assertion
+
+assert(i == new_len)
+
+in &lt;&lt; initialize new states &gt;&gt; has caused no end of troubles.  The new code eliminates the assertion by brute force.  It has never been clear why the assert has failed, and it does so rarely.  However, the very worst that can happen is that some lines aren't colored properly, so it's not a big deal.</t>
+<t tx="ekr.20040108134357"></t>
+<t tx="ekr.20040108141927"></t>
 </tnodes>
 </leo_file>
