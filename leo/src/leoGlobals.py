@@ -1506,6 +1506,26 @@ def printDiffTime(message, start):
 	return time.clock()
 #@nonl
 #@-node:Timing
+#@+node:fileLikeObject
+class fileLikeObject:
+	
+	"""Define a file-like object for redirecting i/o."""
+	
+	# Used by Execute Script command and rClick plugin.
+	
+	def __init__(self): self.s = ""
+	def clear (self):   self.s = ""
+	def close (self):   pass
+	def flush (self):   pass
+		
+	def get (self):
+		return self.s
+		
+	def write (self,s):
+		if s:
+			self.s = self.s + s
+#@nonl
+#@-node:fileLikeObject
 #@+node:funcToMethod
 #@+at 
 #@nonl
@@ -1530,34 +1550,6 @@ def funcToMethod(f,theClass,name=None):
 	# g.trace(name)
 #@nonl
 #@-node:funcToMethod
-#@+node:findNodeInTree, findNodeAnywhere, findTopLevelNode
-def findNodeInTree(p,headline):
-
-	"""Search for a node in v's tree matching the given headline."""
-	
-	c = p.c
-	for p in p.subtree_iter():
-		if p.headString().strip() == headline.strip():
-			return p
-	return c.nullPosition()
-
-def findNodeAnywhere(headline):
-	
-	c = g.top()
-	for p in c.allNodes_iter():
-		if p.headString().strip() == headline.strip():
-			return p.copy()
-	return c.nullPosition()
-	
-def findNodeAtTopLevel(headline):
-	
-	c = g.top() ; p = c.rootPosition()
-	for p in p.self_and_siblings_iter():
-		if p.headString().strip() == headline.strip():
-			return p.copy()
-	return c.nullPosition()
-#@nonl
-#@-node:findNodeInTree, findNodeAnywhere, findTopLevelNode
 #@+node:executeScript
 def executeScript (name):
 	
@@ -1746,7 +1738,7 @@ def doHook(tag,*args,**keywords):
 	
 	if app.killed or app.hookError:
 		return None
-	if not app.config.use_plugins:
+	elif not app.config.use_plugins:
 		if tag == "start1":
 			g.es("Plugins disabled: use_plugins is 0",color="blue")
 		return None
@@ -2213,7 +2205,7 @@ def scanAtFileOptions (h,err_flag=false):
 		("@rawfile","noref"),
 		("@thinfile","thin")
 	):
-		if atFileType == fileType:
+		if atFileType == fileType and option not in optionsList:
 			optionsList.append(option)
 			
 	# g.trace(atFileType,optionsList)
@@ -2907,30 +2899,31 @@ def skip_ws_and_nl(s,i):
 #@nonl
 #@-node:skip_ws, skip_ws_and_nl
 #@+node:splitLines & joinLines
-# These two routines preserve the state of trailing newlines.
-# Each line of the list ends in a newline, except possibly the last line.
-
 def splitLines (s):
 	
-	if not s:
-		return []
+	"""Split s into lines, preserving the number of lines and the ending of the last line."""
+	
+	if s:
+		return s.splitlines(true) # This is a Python string function!
 	else:
-		if s[-1] == '\n':
+		return []
+
+	if 0:# Rewritten: 4/2/04.  This works, but why bother?
+		if s:
 			lines = s.split('\n')
-			lines = [line + '\n' for line in lines[:-1]]
+			result = [line + '\n' for line in lines[:-1]]
+			if s[-1] != '\n':
+				result.append(lines[-1])
+			return result
 		else:
-			lines = s.split('\n')
-			last = lines[-1]
-			lines = [line + '\n' for line in lines[:-1]]
-			lines.extend(last)
-		return lines
-		
+			return []
+
 def joinLines (aList):
 	
 	return ''.join(aList)
 #@nonl
 #@-node:splitLines & joinLines
-#@+node:initScriptFind (use this to set up Leo's Find/Change dialog for scripting)
+#@+node:g.initScriptFind (set up dialog)
 def initScriptFind(findHeadline,changeHeadline=None,firstNode=None,
 	script_search=true,script_change=true):
 	
@@ -2939,23 +2932,23 @@ def initScriptFind(findHeadline,changeHeadline=None,firstNode=None,
 	from leoGlobals import true,false
 	
 	# Find the scripts.
-	c = g.top() ; v = c.currentVnode()
+	c = g.top() ; p = c.currentPosition()
 	u = leoTest.testUtils()
-	find_v = u.findNodeInTree(v,findHeadline)
-	if find_v:
-		find_text = find_v.bodyString()
+	find_p = u.findNodeInTree(p,findHeadline)
+	if find_p:
+		find_text = find_p.bodyString()
 	else:
 		g.es("no Find script node",color="red")
 		return
 	if changeHeadline:
-		change_v = u.findNodeInTree(v,changeHeadline)
+		change_p = u.findNodeInTree(p,changeHeadline)
 	else:
-		change_v = None
-	if change_v:
-		change_text = change_v.bodyString()
+		change_p = None
+	if change_p:
+		change_text = change_p.bodyString()
 	else:
 		change_text = ""
-	# print find_v,change_v
+	# print find_p,change_p
 	
 	# Initialize the find panel.
 	c.script_search_flag = script_search
@@ -2971,7 +2964,35 @@ def initScriptFind(findHeadline,changeHeadline=None,firstNode=None,
 	g.app.findFrame.init(c)
 	c.findPanel()
 #@nonl
-#@-node:initScriptFind (use this to set up Leo's Find/Change dialog for scripting)
+#@-node:g.initScriptFind (set up dialog)
+#@+node:g.findNodeInTree, findNodeAnywhere, findTopLevelNode
+def findNodeInTree(p,headline):
+
+	"""Search for a node in v's tree matching the given headline."""
+	
+	c = p.c
+	for p in p.subtree_iter():
+		if p.headString().strip() == headline.strip():
+			return p.copy()
+	return c.nullPosition()
+
+def findNodeAnywhere(headline):
+	
+	c = g.top()
+	for p in c.allNodes_iter():
+		if p.headString().strip() == headline.strip():
+			return p.copy()
+	return c.nullPosition()
+	
+def findTopLevelNode(headline):
+	
+	c = g.top()
+	for p in c.rootPosition().self_and_siblings_iter():
+		if p.headString().strip() == headline.strip():
+			return p.copy()
+	return c.nullPosition()
+#@nonl
+#@-node:g.findNodeInTree, findNodeAnywhere, findTopLevelNode
 #@+node:isUnicode
 def isUnicode(s):
 	
