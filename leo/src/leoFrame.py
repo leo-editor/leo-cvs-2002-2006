@@ -2041,24 +2041,22 @@ class baseLeoFrame:
 	def OnReadAtFileNodes (self,event=None):
 	
 		c = self.commands ; v = c.currentVnode()
-		
-		if 1: # undo not ready yet.
-				c.fileCommands.readAtFileNodes()
-		else:
-			# Create copy for undo.
-			v_copy = v.copyTree()
-			oldText = getAllText(c.body)
-			oldSel = getTextSelection(c.body)
-		
-			c.fileCommands.readAtFileNodes()
 	
-			newText = getAllText(c.body)
-			newSel = getTextSelection(c.body)
-		
-			c.undoer.setUndoParams("Read @file Nodes",
-				v,select=v.currentVnode(),oldTree=v_copy,
-				oldText=oldText,newText=newText,
-				oldSel=oldSel,newSel=newSel)
+		# Create copy for undo.
+		v_copy = v.copyTree()
+		oldText = getAllText(c.body)
+		oldSel = getTextSelection(c.body)
+	
+		c.fileCommands.readAtFileNodes()
+	
+		newText = getAllText(c.body)
+		newSel = getTextSelection(c.body)
+	
+		c.undoer.setUndoParams("Read @file Nodes",
+			v,select=v,oldTree=v_copy,
+			oldText=oldText,newText=newText,
+			oldSel=oldSel,newSel=newSel)
+	#@nonl
 	#@-node:OnReadAtFileNodes
 	#@+node:OnWriteDirtyAtFileNodes
 	def OnWriteDirtyAtFileNodes (self,event=None):

@@ -94,22 +94,22 @@ You may download Python 2.1 and Python 2.2 from http://python.org/download/
 def computeLoadDir():
 	
 	"""Returns the directory containing leo.py."""
-
-	try:
-		loadDir = os.path.dirname(__file__)
-		if not loadDir:
-			loadDir = os.getcwd()
-		loadDir = os.path.abspath(loadDir)
-	except:
-		# Emergency defaults.
-		if sys.platform=="win32": # Windows
-			loadDir = "c:\\prog\\LeoPy\\"
-		else: # Linux, or whatever.
-			loadDir = "LeoPy"
-		print "Setting load directory to:", loadDir
 	
-	# trace("loadDir:",`loadDir`)
-	return loadDir
+	try:
+		import leo
+		path = os.path.abspath(leo.__file__)
+		if path:
+			loadDir = os.path.dirname(path)
+		else:
+			loadDir = None
+		if not loadDir:
+			loadDir = os.path.abspath(os.getcwd())
+			print "Using emergency loadDir:",`loadDir`
+		return loadDir
+	except:
+		print "Exception getting load directory"
+		print traceback.print_exc()
+		return None
 #@nonl
 #@-node:computeLoadDir
 #@+node:createFrame (leo.py)
@@ -178,6 +178,7 @@ if __name__ == "__main__":
 		run(fileName)
 	else:
 		run()
+
 
 
 #@-node:@file leo.py 

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="2175" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="2177" clone_windows="0"/>
 <globals body_outline_ratio="0.5">
-	<global_window_position top="18" left="213" height="835" width="981"/>
+	<global_window_position top="41" left="262" height="835" width="981"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences allow_rich_text="0">
@@ -2718,9 +2718,9 @@
 </v>
 </v>
 </v>
-<v t="T2165" a="E"><vh>Import tests</vh>
+<v t="T2165"><vh>Import tests</vh>
 <v t="T2166" a="E" tnodeList="2166,2167,2168,2169,2170,2171,2172,2173,2174,2175"><vh>@file c:\prog\test\leo.py </vh>
-<v t="T2167" a="MV"><vh>&lt;&lt; Import pychecker &gt;&gt;</vh></v>
+<v t="T2167" a="M"><vh>&lt;&lt; Import pychecker &gt;&gt;</vh></v>
 <v t="T2168"><vh>runMainLoop</vh></v>
 <v t="T2169"><vh>run &amp; allies</vh>
 <v t="T2170"><vh>createTkRoot</vh>
@@ -2733,11 +2733,11 @@
 <v t="T2175"><vh>profile</vh></v>
 </v>
 </v>
+<v t="T2176" a="V"><vh>Distribution checklist for 4.0 beta 2</vh></v>
+<v t="T2177"><vh>__module__ test</vh></v>
 </vnodes>
 <tnodes>
 <t tx="T1">@color
-
-# **** Do a full virus scan first!
 
 # **** Run this from test.leo ****
 
@@ -2769,7 +2769,13 @@ Create and test leosetup.exe.
 	- Create leosetup.exe by right-clicking leo.nsi and choosing "compile with NSI (bz2)"
 	- Test created leosetup.exe file.
 	- test the files created in c:\program files\leo
+
+@color
+# **** Scan all folders &amp; files before uploading.
+@nocolor
+
 Create Release on SourceForge
+
 Uploads
     - Upload leodocs.zip
 	- Upload leosetup.exe
@@ -33686,7 +33692,7 @@ several files: pychecker complains about several routines being "too big", i.e.,
 @c
 
 if 0: # Set to 1 for lint-like testing.  This can also be done in idle.
-	try: # changed
+	try: # changed a
 		import pychecker.checker
 	except: pass</t>
 <t tx="T2168">def runMainLoop(root):
@@ -33821,5 +33827,16 @@ def profile ():
 	p.strip_dirs()
 	p.sort_stats('cum','file','name')
 	p.print_stats()</t>
+<t tx="T2176">@nocolor
+
+	- Update web site.
+
+	- Announce to comp.lang.python
+	- Announce to comp.programming.literate</t>
+<t tx="T2177">def test():
+	# probably only works with nested scopes.
+	print test.__module__
+	
+test()</t>
 </tnodes>
 </leo_file>

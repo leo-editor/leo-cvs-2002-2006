@@ -229,7 +229,7 @@ class colorTests(unittest.TestCase):
 	def testPython2(self):
 		
 		s = """# This creates a free-floating copy of v's tree for undo.
-	# The copied trees must use different tnodes than the original.
+	The copied trees must use different tnodes than the original."""
 	
 	def copyTree(self,root):
 	
@@ -244,7 +244,7 @@ class colorTests(unittest.TestCase):
 	    while v:
 	        v.t = leoNodes.tnode(0, v.t.bodyString)
 	        v = v.threadNext()
-	    return result"""
+	    return result
 	
 		self.color("python",s)
 	#@nonl
