@@ -34,7 +34,6 @@ class LeoApp:
             # 1: full traces in g.es_exception.
             # 2: call pdb.set_trace in g.es_exception, etc.
         self.disableSave = False
-        self.failedPlugins = [] # List of loaded plugins that have failed to load.
         self.globalConfigDir = None # The directory that is assumed to contain the global configuration files.
         self.gui = None # The gui class.
         self.hasOpenWithMenu = False # True: open with plugin has been loaded.
