@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="1399" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="1410" clone_windows="0"/>
 <globals body_outline_ratio="0.5">
-	<global_window_position top="89" left="216" height="828" width="901"/>
+	<global_window_position top="59" left="376" height="856" width="742"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences>
@@ -1075,7 +1075,7 @@
 </v>
 </v>
 </v>
-<v t="edream.110203113231.233" a="E"><vh>wxPython plugin (alpha quality)</vh>
+<v t="edream.110203113231.233" a="V"><vh>wxPython plugin (alpha quality)</vh>
 <v t="edream.110203113231.234"><vh> Diary</vh>
 <v t="edream.111503110300"><vh>11/15/03  Leo becomes usuable (!)</vh></v>
 <v t="edream.111403093253"><vh>11/13 &amp; 11/14</vh></v>
@@ -1088,7 +1088,7 @@
 <v t="edream.110203113231.243"><vh>invoke c2py</vh></v>
 <v t="edream.111503111146"><vh>Finished or mostly finished</vh>
 <v t="edream.111303205442"><vh>(colorizing) (demo only)</vh>
-<v t="edream.111303204025" a=""><vh>Indices  (wxLeoBody)</vh>
+<v t="edream.111303204025" a=""><vh>Indices</vh>
 <v t="edream.111303204025.1"><vh>adjustIndex</vh></v>
 <v t="edream.111303204025.2"><vh>compareIndices</vh></v>
 <v t="edream.111303204025.3"><vh>convertRowColumnToIndex</vh></v>
@@ -1124,13 +1124,21 @@
 <v t="edream.111303101709"><vh>toggleActivePane</vh></v>
 <v t="edream.111303100039.12"><vh>toggleSplitDirection</vh></v>
 </v>
+<v t="edream.111703103908"><vh>Help Menu...</vh>
+<v t="edream.111703103908.2"><vh>leoHelp</vh>
+<v t="edream.111703103908.3"><vh>showProgressBar</vh>
+<v t="edream.111703103908.4"><vh>&lt;&lt; create the scale widget &gt;&gt;</vh></v>
+</v>
+</v>
+</v>
 </v>
 </v>
 </v>
 <v t="edream.110203113231.242"><vh>Unused code</vh>
 <v t="edream.110203113231.257"><vh>updateJoinedHeadlines</vh></v>
+<v t="edream.111303202917.1"><vh>Syntax coloring REMOVED: now in base body class</vh></v>
 </v>
-<v t="edream.110203113231.302" a="V" tnodeList="edream.110203113231.302,edream.110203113231.303,edream.110203113231.259,edream.110203113231.305,edream.110203113231.307,edream.110203113231.308,edream.110203113231.309,edream.110203113231.310,edream.110203113231.311,edream.110203113231.312,edream.111303085447.1,edream.110203113231.317,edream.110203113231.314,edream.110203113231.315,edream.110203113231.316,edream.110203113231.322,edream.110203113231.323,edream.110203113231.324,edream.110203113231.325,edream.110203113231.326,edream.110203113231.327,edream.110203113231.328,edream.111403104835,edream.111303092328,edream.111303092328.1,edream.111303092328.2,edream.111303092328.3,edream.111303092328.4,edream.111303092328.5,edream.110203113231.333,edream.110203113231.320,edream.111403151611,edream.110203113231.343,edream.110203113231.344,edream.110203113231.336,edream.110203113231.337,edream.110203113231.319,edream.110203113231.340,edream.110203113231.341,edream.110203113231.342,edream.111303093843,edream.111303093843.1,edream.111303093953.2,edream.111303093953.3,edream.111303093953.4,edream.111303093953.5,edream.111303093953.6,edream.111303093953.7,edream.111303093953.9,edream.111303093953.10,edream.111303093953.12,edream.111303093953.13,edream.111303093953.14,edream.111303093953.15,edream.111303093953.16,edream.111303093953.18,edream.111303093953.19,edream.111303093953.20,edream.111303093953.21,edream.111303093953.22,edream.111303093953.23,edream.111303093953.25,edream.110203113231.346,edream.110203113231.347,edream.110203113231.348,edream.110203113231.539,edream.110203113231.541,edream.110203113231.542,edream.110203113231.543,edream.111403082513,edream.111303205611,edream.111303205611.1,edream.111303205611.2,edream.111303205611.3,edream.111303205611.4,edream.110203113231.544,edream.110203113231.545,edream.111303204025.1,edream.111303204025.2,edream.111303204025.3,edream.111303204025.4,edream.111303204025.5,edream.111403080609,edream.110203113231.548,edream.110203113231.549,edream.111303104912,edream.111303171218,edream.111303171218.1,edream.111303171238,edream.111303171238.1,edream.111303171238.2,edream.111303171238.3,edream.111303171238.4,edream.110203113231.552,edream.110203113231.349,edream.110203113231.266,edream.110203113231.351,edream.110203113231.260,edream.110203113231.261,edream.110203113231.262,edream.110203113231.265,edream.110203113231.264,edream.110203113231.263,edream.111403141810,edream.111503105816,edream.111303141147,edream.111503213533,edream.110203113231.269,edream.110203113231.270,edream.110203113231.273,edream.110203113231.275,edream.111303201144.6,edream.111303201144.7,edream.110203113231.280,edream.110203113231.281,edream.110203113231.283,edream.110203113231.284,edream.110203113231.286,edream.110203113231.287,edream.110203113231.288,edream.110203113231.289,edream.110203113231.290,edream.110203113231.291,edream.110203113231.292,edream.110203113231.293,edream.110203113231.379,edream.110203113231.380,edream.110203113231.381,edream.111303135410,edream.110203113231.382,edream.110203113231.294,edream.111403090242,edream.111403090242.1,edream.111403093559,edream.111403093559.1,edream.111303202917.1,edream.110203113231.295,edream.110203113231.296,edream.110203113231.297,edream.110203113231.298,edream.110203113231.299,edream.110203113231.300,edream.110203113231.301,edream.111303101257,edream.111303101257.1,edream.111303100039.6,edream.111303100039.8,edream.111303100039.9,edream.111303100039.10,edream.111303100039.11,edream.111303101709,edream.111303100039.12,edream.110203113231.384,edream.110203113231.553,edream.110203113231.554,edream.110203113231.555,edream.110203113231.556,edream.110203113231.557,edream.110203113231.558,edream.110203113231.559,edream.111303095242,edream.111303095242.3,edream.111303111942.1,edream.111303103141,edream.111303121150,edream.111303103141.1,edream.111303103141.2,edream.111303103141.3,edream.111303103141.4,edream.111303111942,edream.111303110018,edream.111303103457.2,edream.111603112846.1,edream.111303103254,edream.111303095242.6,edream.111303163727.2,edream.111303163727.1,edream.111303163727.3,edream.110203113231.598,edream.110203113231.599,edream.110203113231.600,edream.110203113231.601,edream.110203113231.602,edream.110203113231.603,edream.110203113231.605,edream.110203113231.606,edream.110203113231.607,edream.110203113231.608,edream.110203113231.609,edream.110203113231.610,edream.110203113231.611,edream.110203113231.612,edream.110203113231.613,edream.110203113231.614,edream.110203113231.615,edream.110203113231.616,edream.110203113231.617,edream.111503093140,edream.111503094014,edream.111503094322,edream.111503094014.1,edream.110203113231.561,edream.110203113231.563,edream.111503074302,edream.110203113231.564,edream.111503085739,edream.111503085739.1,edream.111403151611.1,edream.111503213733,edream.111503211508,edream.111403135745,edream.111503091617,edream.111503093522,edream.111503204508,edream.110203113231.588,edream.110203113231.589,edream.110203113231.590,edream.110203113231.591,edream.110203113231.592,edream.110203113231.593,edream.110203113231.594,edream.111503133933.2,edream.111503133933.3,edream.110203113231.595,edream.110203113231.596,edream.110203113231.597,edream.110203113231.304"><vh>@file __wx_gui.py</vh>
+<v t="edream.110203113231.302" tnodeList="edream.110203113231.302,edream.110203113231.303,edream.110203113231.259,edream.110203113231.305,edream.110203113231.307,edream.110203113231.308,edream.110203113231.309,edream.110203113231.310,edream.110203113231.311,edream.110203113231.312,edream.111303085447.1,edream.110203113231.317,edream.110203113231.314,edream.110203113231.315,edream.110203113231.316,edream.110203113231.322,edream.110203113231.323,edream.110203113231.324,edream.110203113231.325,edream.110203113231.326,edream.110203113231.327,edream.110203113231.328,edream.111403104835,edream.111303092328,edream.111303092328.1,edream.111303092328.2,edream.111303092328.3,edream.111303092328.4,edream.111303092328.5,edream.110203113231.333,edream.110203113231.320,edream.111403151611,edream.110203113231.343,edream.110203113231.344,edream.110203113231.336,edream.110203113231.337,edream.110203113231.319,edream.110203113231.340,edream.110203113231.341,edream.110203113231.342,edream.111303093843,edream.111303093843.1,edream.111303093953.2,edream.111303093953.3,edream.111303093953.4,edream.111303093953.5,edream.111303093953.6,edream.111303093953.7,edream.111303093953.9,edream.111303093953.10,edream.111303093953.12,edream.111303093953.13,edream.111303093953.14,edream.111303093953.15,edream.111303093953.16,edream.111303093953.18,edream.111303093953.19,edream.111303093953.20,edream.111303093953.21,edream.111303093953.22,edream.111303093953.23,edream.111303093953.25,edream.110203113231.346,edream.110203113231.347,edream.110203113231.348,edream.110203113231.539,edream.110203113231.541,edream.110203113231.542,edream.110203113231.543,edream.111403082513,edream.111303205611,edream.111303205611.1,edream.111303205611.2,edream.111303205611.3,edream.111303205611.4,edream.110203113231.544,edream.110203113231.545,edream.111303204025.1,edream.111303204025.2,edream.111303204025.3,edream.111303204025.4,edream.111303204025.5,edream.111403080609,edream.110203113231.548,edream.110203113231.549,edream.111303171218,edream.111603222048,edream.111303171218.1,edream.111303171238,edream.111303171238.1,edream.111303171238.2,edream.111303171238.3,edream.111303171238.4,edream.110203113231.552,edream.110203113231.275,edream.111303201144.6,edream.111303201144.7,edream.110203113231.349,edream.110203113231.266,edream.110203113231.351,edream.110203113231.260,edream.110203113231.261,edream.110203113231.265,edream.110203113231.264,edream.111403141810,edream.111503105816,edream.111303141147,edream.111503213533,edream.110203113231.269,edream.110203113231.270,edream.110203113231.273,edream.110203113231.379,edream.110203113231.380,edream.110203113231.381,edream.111303135410,edream.111303101257,edream.111303101257.1,edream.111303100039.6,edream.111303100039.8,edream.111303100039.9,edream.111303100039.10,edream.111303100039.11,edream.111303101709,edream.111303100039.12,edream.111703103908.2,edream.111703103908.3,edream.111703103908.4,edream.110203113231.384,edream.110203113231.553,edream.110203113231.554,edream.110203113231.555,edream.110203113231.556,edream.110203113231.557,edream.110203113231.558,edream.110203113231.559,edream.111303095242,edream.111303095242.3,edream.111303111942.1,edream.111303103141,edream.111303121150,edream.111303103141.1,edream.111303103141.2,edream.111303103141.3,edream.111303103141.4,edream.111303111942,edream.111303110018,edream.111303103457.2,edream.111603112846.1,edream.111303103254,edream.111303095242.6,edream.111303163727.2,edream.111303163727.1,edream.111303163727.3,edream.110203113231.598,edream.110203113231.599,edream.110203113231.600,edream.110203113231.601,edream.110203113231.602,edream.110203113231.603,edream.110203113231.605,edream.110203113231.606,edream.110203113231.607,edream.110203113231.608,edream.110203113231.609,edream.110203113231.610,edream.110203113231.611,edream.110203113231.612,edream.110203113231.613,edream.110203113231.614,edream.110203113231.615,edream.110203113231.616,edream.110203113231.617,edream.111603213219,edream.111603213219.1,edream.111603213329,edream.111603221005,edream.111403090242,edream.111403090242.1,edream.111403093559,edream.111403093559.1,edream.110203113231.295,edream.110203113231.296,edream.110203113231.298,edream.110203113231.299,edream.110203113231.300,edream.111603221343.1,edream.111603221343.3,edream.111603221343.4,edream.111603221343.5,edream.111603221343.6,edream.111603221343.7,edream.110203113231.280,edream.110203113231.281,edream.110203113231.283,edream.110203113231.284,edream.110203113231.286,edream.110203113231.287,edream.110203113231.288,edream.110203113231.289,edream.110203113231.290,edream.110203113231.291,edream.110203113231.292,edream.110203113231.293,edream.111503093140,edream.111503094014,edream.111503094322,edream.111503094014.1,edream.110203113231.561,edream.110203113231.563,edream.111503074302,edream.110203113231.564,edream.111503085739,edream.111503085739.1,edream.111403151611.1,edream.111503213733,edream.111503211508,edream.111403135745,edream.111503091617,edream.111503093522,edream.111503204508,edream.110203113231.588,edream.110203113231.589,edream.110203113231.590,edream.110203113231.591,edream.110203113231.592,edream.110203113231.593,edream.110203113231.594,edream.111503133933.2,edream.111503133933.3,edream.110203113231.595,edream.110203113231.596,edream.110203113231.597,edream.110203113231.304"><vh>@file __wx_gui.py</vh>
 <v t="edream.110203113231.259"><vh>&lt;&lt; constants for wx plugin &gt;&gt;</vh></v>
 <v t="edream.110203113231.303"><vh>&lt;&lt; imports for wx plugin &gt;&gt;</vh></v>
 <v t="edream.110203113231.304"><vh>&lt;&lt; set app.gui &gt;&gt;</vh></v>
@@ -1247,7 +1255,7 @@
 </v>
 <v t="edream.110203113231.544"><vh>Config... TO DO</vh></v>
 <v t="edream.110203113231.545"><vh>Focus...</vh></v>
-<v t="edream.111303204025" a=""><vh>Indices  (wxLeoBody)</vh>
+<v t="edream.111303204025" a=""><vh>Indices</vh>
 <v t="edream.111303204025.1"><vh>adjustIndex</vh></v>
 <v t="edream.111303204025.2"><vh>compareIndices</vh></v>
 <v t="edream.111303204025.3"><vh>convertRowColumnToIndex</vh></v>
@@ -1255,10 +1263,10 @@
 <v t="edream.111303204025.5"><vh>getImageIndex</vh></v>
 <v t="edream.111403080609"><vh>maxWxIndex (internal use)</vh></v>
 </v>
-<v t="edream.110203113231.548"><vh>Idle-time callback... (not used?)</vh></v>
+<v t="edream.110203113231.548"><vh>Idle-time callback...</vh></v>
 <v t="edream.110203113231.549"><vh>Height &amp; width info...</vh></v>
-<v t="edream.111303104912"><vh>Menus bind LATER</vh></v>
-<v t="edream.111303171218"><vh>Insert point</vh></v>
+<v t="edream.111303171218" a="M"><vh>Insert point</vh></v>
+<v t="edream.111603222048"><vh>Menu</vh></v>
 <v t="edream.111303171218.1"><vh>Selection</vh></v>
 <v t="edream.111303171238"><vh>Text</vh>
 <v t="edream.111303171238.1"><vh>delete... (untested)</vh></v>
@@ -1268,15 +1276,17 @@
 </v>
 <v t="edream.110203113231.552"><vh>Visibility &amp; scrolling...</vh></v>
 </v>
+<v t="edream.110203113231.275"><vh>onBodyTextUpdated MORE WORK NEEDED</vh>
+<v t="edream.111303201144.6"><vh>&lt;&lt; recolor the body &gt;&gt;</vh></v>
+<v t="edream.111303201144.7"><vh>&lt;&lt; redraw the screen if necessary &gt;&gt;</vh></v>
 </v>
-<v t="edream.110203113231.349"><vh>wxLeoFrame class</vh>
+</v>
+<v t="edream.110203113231.349" a="M"><vh>wxLeoFrame class</vh>
 <v t="edream.110203113231.350"><vh>Birth &amp; death</vh>
 <v t="edream.110203113231.266"><vh>__init__</vh></v>
 <v t="edream.110203113231.351"><vh>__repr__</vh></v>
 <v t="edream.110203113231.260"><vh>finishCreate</vh>
 <v t="edream.110203113231.261"><vh>&lt;&lt; create the splitters &gt;&gt;</vh></v>
-<v t="edream.110203113231.262"><vh>&lt;&lt; create the tree &gt;&gt;</vh></v>
-<v t="edream.110203113231.263"><vh>&lt;&lt; declare event handlers for body &amp; tree &gt;&gt;</vh></v>
 <v t="edream.110203113231.264"><vh>&lt;&lt; declare event handlers for frame &gt;&gt;</vh></v>
 <v t="edream.110203113231.265"><vh>&lt;&lt; set the window icon &gt;&gt;</vh></v>
 </v>
@@ -1291,56 +1301,12 @@
 <v t="edream.110203113231.270"><vh>onCloseLeoFrame</vh></v>
 <v t="edream.110203113231.273"><vh>onResize</vh></v>
 </v>
-<v t="edream.110203113231.274"><vh>Body events</vh>
-<v t="edream.110203113231.275"><vh>onBodyTextUpdated MORE WORK NEEDED</vh>
-<v t="edream.111303201144.6"><vh>&lt;&lt; recolor the body &gt;&gt;</vh></v>
-<v t="edream.111303201144.7"><vh>&lt;&lt; redraw the screen if necessary &gt;&gt;</vh></v>
-</v>
-</v>
-<v t="edream.110203113231.278"><vh>Tree events</vh>
-<v t="edream.110203113231.279"><vh>Expand/contract</vh>
-<v t="edream.110203113231.280"><vh>onTreeCollapsed &amp; onTreeExpanded</vh></v>
-<v t="edream.110203113231.281"><vh>onTreeCollapsing &amp; onTreeExpanding</vh></v>
-</v>
-<v t="edream.110203113231.282"><vh>Selecting</vh>
-<v t="edream.110203113231.283"><vh>onTreeChanged</vh></v>
-<v t="edream.110203113231.284"><vh>onTreeChanging</vh></v>
-</v>
-<v t="edream.110203113231.285"><vh>Editing labels</vh>
-<v t="edream.110203113231.286"><vh>onTreeBeginLabelEdit</vh></v>
-<v t="edream.110203113231.287"><vh>onTreeEndLabelEdit</vh></v>
-<v t="edream.110203113231.288"><vh>onTreeKeyDown</vh></v>
-</v>
-<v t="edream.110203113231.289"><vh>onTreeBeginDrag</vh></v>
-<v t="edream.110203113231.290"><vh>onTreeEndDrag</vh>
-<v t="edream.110203113231.291"><vh>&lt;&lt; Define onTreeEndDrag vars &gt;&gt;</vh></v>
-<v t="edream.110203113231.292"><vh>&lt;&lt; Insert src as the first child of dst &gt;&gt;</vh></v>
-<v t="edream.110203113231.293"><vh>&lt;&lt; Insert src after dst &gt;&gt;</vh></v>
-</v>
-</v>
 </v>
 <v t="edream.110203113231.379"><vh>wxFrame dummy routines: (to do: minor)</vh></v>
 <v t="edream.110203113231.378"><vh>Externally visible routines...</vh>
 <v t="edream.110203113231.380"><vh>deiconify</vh></v>
 <v t="edream.110203113231.381"><vh>getTitle</vh></v>
 <v t="edream.111303135410"><vh>setTitle</vh></v>
-<v t="edream.110203113231.382"><vh>select</vh></v>
-</v>
-<v t="edream.110203113231.294"><vh>Interface with the tree class (wxLeoFrame) (mostly done)</vh>
-<v t="edream.111403090242"><vh>Drawing  &amp; scrolling TO DO</vh></v>
-<v t="edream.111403090242.1"><vh>Editing TO DO</vh></v>
-<v t="edream.111403093559"><vh>Focus</vh></v>
-<v t="edream.111403093559.1"><vh>Fonts TO DO</vh></v>
-<v t="edream.111303202917.1"><vh>Syntax coloring</vh></v>
-<v t="edream.111303202917"><vh>Tree refresh</vh>
-<v t="edream.110203113231.295"><vh>beginUpdate</vh></v>
-<v t="edream.110203113231.296"><vh>endUpdate</vh></v>
-<v t="edream.110203113231.297"><vh>Getters</vh></v>
-<v t="edream.110203113231.298"><vh>redraw &amp; redraw_now</vh></v>
-<v t="edream.110203113231.299"><vh>redraw_node</vh></v>
-<v t="edream.110203113231.300"><vh>redraw_subtree</vh></v>
-<v t="edream.110203113231.301"><vh>Setters</vh></v>
-</v>
 </v>
 <v t="edream.111303100039" a=""><vh>Gui-dependent commands (to do)</vh>
 <v t="edream.111303100039.1"><vh>Edit Menu...</vh>
@@ -1355,6 +1321,13 @@
 <v t="edream.111303100039.11"><vh>minimizeAll</vh></v>
 <v t="edream.111303101709"><vh>toggleActivePane</vh></v>
 <v t="edream.111303100039.12"><vh>toggleSplitDirection</vh></v>
+</v>
+<v t="edream.111703103908"><vh>Help Menu...</vh>
+<v t="edream.111703103908.2"><vh>leoHelp</vh>
+<v t="edream.111703103908.3"><vh>showProgressBar</vh>
+<v t="edream.111703103908.4"><vh>&lt;&lt; create the scale widget &gt;&gt;</vh></v>
+</v>
+</v>
 </v>
 </v>
 <v t="edream.110203113231.384"><vh>updateAllMenus (wxFrame)</vh></v>
@@ -1414,6 +1387,51 @@
 <v t="edream.110203113231.615"><vh>&lt;&lt; Create the Global Options static box &gt;&gt;</vh></v>
 <v t="edream.110203113231.616"><vh>&lt;&lt; Create the Default Tangle Options static box &gt;&gt;</vh></v>
 <v t="edream.110203113231.617"><vh>&lt;&lt; Create the Default Target Language radio buttons &gt;&gt;</vh></v>
+</v>
+</v>
+<v t="edream.111603213219"><vh>wxLeoTree class</vh>
+<v t="edream.111603213219.1"><vh>__init__</vh>
+<v t="edream.111603213329"><vh>&lt;&lt; declare event handlers &gt;&gt;</vh></v>
+</v>
+<v t="edream.111603221005"><vh>expandAllAncestors</vh></v>
+<v t="edream.111403090242"><vh>Drawing  &amp; scrolling TO DO</vh></v>
+<v t="edream.111403090242.1"><vh>Editing TO DO</vh></v>
+<v t="edream.111403093559"><vh>Focus</vh></v>
+<v t="edream.111403093559.1"><vh>Fonts TO DO</vh></v>
+<v t="edream.111303202917"><vh>Tree refresh</vh>
+<v t="edream.110203113231.295"><vh>beginUpdate</vh></v>
+<v t="edream.110203113231.296"><vh>endUpdate</vh></v>
+<v t="edream.110203113231.298"><vh>redraw &amp; redraw_now</vh></v>
+<v t="edream.110203113231.299"><vh>redraw_node</vh></v>
+<v t="edream.110203113231.300"><vh>redraw_subtree</vh></v>
+</v>
+<v t="edream.111603221343.1"><vh>select</vh>
+<v t="edream.111603221343.3"><vh>&lt;&lt; unselect the old node &gt;&gt;</vh></v>
+<v t="edream.111603221343.4"><vh>&lt;&lt; select the new node &gt;&gt;</vh></v>
+<v t="edream.111603221343.5"><vh>&lt;&lt; update c.beadList or c.beadPointer &gt;&gt;</vh></v>
+<v t="edream.111603221343.6"><vh>&lt;&lt; update c.visitedList &gt;&gt;</vh></v>
+<v t="edream.111603221343.7"><vh>&lt;&lt; set the current node and redraw &gt;&gt;</vh></v>
+</v>
+<v t="edream.110203113231.278"><vh>Event handlers</vh>
+<v t="edream.110203113231.279"><vh>Expand/contract</vh>
+<v t="edream.110203113231.280"><vh>onTreeCollapsed &amp; onTreeExpanded</vh></v>
+<v t="edream.110203113231.281"><vh>onTreeCollapsing &amp; onTreeExpanding</vh></v>
+</v>
+<v t="edream.110203113231.282"><vh>Selecting</vh>
+<v t="edream.110203113231.283"><vh>onTreeChanged</vh></v>
+<v t="edream.110203113231.284"><vh>onTreeChanging</vh></v>
+</v>
+<v t="edream.110203113231.285"><vh>Editing labels</vh>
+<v t="edream.110203113231.286"><vh>onTreeBeginLabelEdit</vh></v>
+<v t="edream.110203113231.287"><vh>onTreeEndLabelEdit</vh></v>
+<v t="edream.110203113231.288"><vh>onTreeKeyDown</vh></v>
+</v>
+<v t="edream.110203113231.289"><vh>onTreeBeginDrag</vh></v>
+<v t="edream.110203113231.290"><vh>onTreeEndDrag (NOT READY YET)</vh>
+<v t="edream.110203113231.291"><vh>&lt;&lt; Define onTreeEndDrag vars &gt;&gt;</vh></v>
+<v t="edream.110203113231.292"><vh>&lt;&lt; Insert src as the first child of dst &gt;&gt;</vh></v>
+<v t="edream.110203113231.293"><vh>&lt;&lt; Insert src after dst &gt;&gt;</vh></v>
+</v>
 </v>
 </v>
 <v t="edream.110203113231.560"><vh>Find...</vh>
@@ -4759,6 +4777,9 @@ def runTest(frame, nb, log):
         dlg.Destroy()</t>
 <t tx="edream.110203113231.233">@ To do:
 	
+*** WARNING: problems with locking out event handlers could cause Leo to drop Text!
+	- Do not trust this version of Leo with important data !!!
+	
 - The find logic doesn't properly show the found selection (or the correct body text).
 	- Remove traces.
 
@@ -4836,20 +4857,19 @@ def const(name):
 	self.CreateStatusBar()
 
 	&lt;&lt; create the splitters &gt;&gt;
-	&lt;&lt; create the tree &gt;&gt;
-	c.log  = frame.log = wxLeoLog(frame,self.splitter2)
-	c.body = frame.body = wxLeoBody(frame,self.splitter1)
+	frame.tree = wxLeoTree(frame,self.splitter2)
+	frame.log = wxLeoLog(frame,self.splitter2)
+	frame.body = wxLeoBody(frame,self.splitter1)
 	frame.bodyCtrl = frame.body
 	# Attach the controls to the splitter.
 	self.splitter1.SplitHorizontally(self.splitter2,self.body.bodyCtrl,0)
-	self.splitter2.SplitVertically(self.tree,self.log.logCtrl,cSplitterWidth/2)
+	self.splitter2.SplitVertically(self.tree.treeCtrl,self.log.logCtrl,cSplitterWidth/2)
 	
 	self.menu = wxLeoMenu(frame)
 	self.menu.createMenuBar()
 	
 	&lt;&lt; set the window icon &gt;&gt;
 	&lt;&lt; declare event handlers for frame &gt;&gt;
-	&lt;&lt; declare event handlers for body &amp; tree &gt;&gt;
 	
 	if 0: # Not ready yet...
 		self.wxApp.SetTopWindow(self.wxFrame)
@@ -4866,7 +4886,7 @@ def const(name):
 
 	# Add the frame to the global window list.
 	app.windowList.append(self)
-	self.redraw()</t>
+	self.tree.redraw()</t>
 <t tx="edream.110203113231.261">self.splitter1 = wx.wxSplitterWindow(self,
 	const("cSplitterWindow"),
 	wx.wxDefaultPosition, wx.wxDefaultSize,
@@ -4884,31 +4904,6 @@ self.splitter2 = wx.wxSplitterWindow(self.splitter1, -1,
 
 self.splitter1.SetMinimumPaneSize(4)
 self.splitter2.SetMinimumPaneSize(4)</t>
-<t tx="edream.110203113231.262">self.tree = wx.wxTreeCtrl(self.splitter2,
-	const("cTreeCtrl"),
-	wx.wxDefaultPosition, wx.wxDefaultSize,
-	wx.wxTR_HAS_BUTTONS | wx.wxTR_EDIT_LABELS, wx.wxDefaultValidator,
-	"treeCtrl")</t>
-<t tx="edream.110203113231.263"># in self.body
-wx.EVT_TEXT(self,const("cBodyCtrl"),self.onBodyTextUpdated) # Fires whenever text changes.
-
-# in self.tree
-id = const("cTreeCtrl")
-
-wx.EVT_TREE_KEY_DOWN        (self,id,self.onTreeKeyDown) # Control keys do not fire this event.
-wx.EVT_TREE_SEL_CHANGED     (self,id,self.onTreeChanged)
-wx.EVT_TREE_SEL_CHANGING    (self,id,self.onTreeChanging)
-wx.EVT_TREE_BEGIN_DRAG      (self,id,self.onTreeBeginDrag)
-wx.EVT_TREE_END_DRAG        (self,id,self.onTreeEndDrag)
-wx.EVT_TREE_BEGIN_LABEL_EDIT(self,id,self.onTreeBeginLabelEdit)
-wx.EVT_TREE_END_LABEL_EDIT  (self,id,self.onTreeEndLabelEdit)
-
- 
-wx.EVT_TREE_ITEM_COLLAPSED  (self,id,self.onTreeCollapsed)
-wx.EVT_TREE_ITEM_EXPANDED   (self,id,self.onTreeExpanded)
-
-wx.EVT_TREE_ITEM_COLLAPSING (self,id,self.onTreeCollapsing)
-wx.EVT_TREE_ITEM_EXPANDING  (self,id,self.onTreeExpanding)</t>
 <t tx="edream.110203113231.264">if wx.wxPlatform == "__WXMSW__": # Activate events exist only on Windows.
 	wx.EVT_ACTIVATE(self,self.onActivate)
 else:
@@ -4936,15 +4931,13 @@ if 0: # Causes problems at present.  The screen isn't drawn properly.
 	self.bodyCtrl = None # set in finishCreate
 	self.title = title
 	
-	self.lockout = 0 # Suppress further events
-	
 	# trace("wxLeoFrame",title)
 	self.activeFrame = None
+	self.lockout = 0 # Suppress further events
 	self.quitting = false
 	self.updateCount = 0
 	self.treeIniting = false
 	self.drawing = false # Lockout recursive draws.
-	self.root_id = None
 	self.menuIdDict = {}
 	self.menuBar = None
 	self.ratio = 0.5
@@ -4953,10 +4946,11 @@ if 0: # Causes problems at present.  The screen isn't drawn properly.
 	self.use_coloring = false # set true to enable coloring
 	
 	# These vars have corresponding getters/setters.
-	self.mDragging = false
-	self.mRootVnode = None
-	self.mTopVnode = None
-	self.mCurrentVnode = None</t>
+	if 0: # now defined in base tree class.
+		self.mDragging = false
+		self.mRootVnode = None
+		self.mTopVnode = None
+		self.mCurrentVnode = None</t>
 <t tx="edream.110203113231.267"></t>
 <t tx="edream.110203113231.268"></t>
 <t tx="edream.110203113231.269">if wx.wxPlatform == '__WXMSW__':
@@ -5003,21 +4997,20 @@ else:
 	else:
 		self.splitter2.SetSashPosition((3*h)/5,true)
 </t>
-<t tx="edream.110203113231.274"></t>
 <t tx="edream.110203113231.275">def onBodyTextUpdated(self,event):
 
-	frame = self ; c = self.c
+	frame = self.frame ; c = self.c
 	if not c:  return
-	v = self.c.currentVnode()
+	v = c.currentVnode()
 	if not v: return
-	if self.lockout &gt; 0: return
+	if self.frame.lockout &gt; 0: return
 	
 	# Similar to idle_body_key
-	self.lockout += 1
+	self.frame.lockout += 1
 
 	s = frame.body.bodyCtrl.GetValue()
 	v.t.setTnodeText(s)
-	v.t.insertSpot = c.body.getInsertionPoint()
+	v.t.insertSpot = c.frame.body.getInsertionPoint()
 	&lt;&lt; recolor the body &gt;&gt;
 	if not c.changed:
 		c.setChanged(true)
@@ -5025,7 +5018,7 @@ else:
 	if 0: # ch, etc. are not defined.
 		doHook("bodykey2",c=c,v=v,ch=ch,oldSel=oldSel,undoType=undoType)
 		
-	self.lockout -= 1</t>
+	self.frame.lockout -= 1</t>
 <t tx="edream.110203113231.278"></t>
 <t tx="edream.110203113231.279"></t>
 <t tx="edream.110203113231.280">def onTreeCollapsed(self,event):
@@ -5038,16 +5031,16 @@ def onTreeExpanded (self,event):
 	
 	"""Redraw the tree when a tree collapses."""
 
-	if not self.lockout and not self.drawing:
+	if not self.frame.lockout and not self.drawing:
 
 		self.redraw()</t>
 <t tx="edream.110203113231.281">def onTreeCollapsing(self,event):
 	
 	"""Call v.contract for a later redraw."""
 
-	tree = self.tree
+	tree = self.treeCtrl
 	id = event.GetItem()
-	if id.IsOk and not self.lockout:
+	if id.IsOk and not self.frame.lockout:
 		v = tree.GetItemData(id).GetData()
 		if v:
 			#trace(v)
@@ -5057,9 +5050,9 @@ def onTreeExpanding (self,event):
 	
 	"""Call v.expand for a later redraw."""
 	
-	tree = self.tree
+	tree = self.treeCtrl
 	id = event.GetItem()
-	if id.IsOk and not self.lockout:
+	if id.IsOk and not self.frame.lockout:
 		v = tree.GetItemData(id).GetData()
 		if v:
 			#trace(v)
@@ -5067,25 +5060,25 @@ def onTreeExpanding (self,event):
 <t tx="edream.110203113231.282"></t>
 <t tx="edream.110203113231.283">def onTreeChanged(self,event):
 
-	frame = self ; c = self.c ; tree = self.tree
+	frame = self ; c = self.c ; tree = self.treeCtrl
 	
-	if self.lockout &gt; 0: return 
+	if self.frame.lockout &gt; 0: return 
  	new_id = event.GetItem()
 	if not new_id.IsOk(): return
 	v = tree.GetItemData(new_id).GetData()
 	if not v: return
 
-	self.lockout += 1 # MUST prevent further events.
+	self.frame.lockout += 1 # MUST prevent further events.
 	
 	c.selectVnode(v)
 	s = v.t.bodyString
 	s = toUnicode(s,"utf-8")  # No app.tkEncoding or similar yet.
-	t = self.body.bodyCtrl
+	t = self.frame.body.bodyCtrl
 	t.Clear()
 	t.WriteText(s)
-	self.recolor(v)
+	self.frame.body.recolor(v)
 	
-	self.lockout -= 1</t>
+	self.frame.lockout -= 1</t>
 <t tx="edream.110203113231.284">def onTreeChanging(self,event):
 	
 	"""Event handler gets called whenever a new node gets selected"""
@@ -5105,7 +5098,7 @@ def onTreeBeginLabelEdit(self,event):
 
 def onTreeEndLabelEdit(self,event):
 
-	tree = self.tree
+	tree = self.treeCtrl
 	s = event.GetLabel()
 	id = event.GetItem()
 	v = tree.GetItemData(id).GetData()
@@ -5130,7 +5123,7 @@ def onTreeEndLabelEdit(self,event):
 
 	trace() ; return
 
-	if event.GetItem()!= self.tree.GetRootItem():
+	if event.GetItem()!= self.treeCtrl.GetRootItem():
 		mDraggedItem = event.GetItem()
 		event.Allow()
 </t>
@@ -5200,13 +5193,6 @@ if not self.c.checkMoveWithParentWithWarning(src_v,parent_v,true):
 	return
 
 src_v.moveAfter(dst_v)</t>
-<t tx="edream.110203113231.294"># Others...
-
-def expandAllAncestors(self,v):
-	trace() #  return self.tree.expandAllAncestors(v)
-	
-def getEditTextDict(self,v):
-	pass # Allows Tk to recycle bindings.</t>
 <t tx="edream.110203113231.295">def beginUpdate (self):
 	
 	if self.updateCount == 0:
@@ -5221,23 +5207,12 @@ def getEditTextDict(self,v):
 	if flag and self.updateCount == 0:
 		## self.Thaw()
 		self.redraw()</t>
-<t tx="edream.110203113231.297">def currentVnode(self):
-	return self.mCurrentVnode
-
-def dragging(self):
-	return self.mDragging
-	
-def rootVnode(self):
-	return self.mRootVnode
-
-def topVnode(self):
-	return self.mTopVnode</t>
 <t tx="edream.110203113231.298">def redraw (self):
 
 	# trace(self.drawing)
 	self.drawing = true # Tell event handlers not to call us.
 
-	c = self.c ; tree = self.tree
+	c = self.c ; tree = self.treeCtrl
 	if c is None: return
 	v = c.rootVnode()
 	if v is None: return
@@ -5257,7 +5232,7 @@ def redraw_now(self):
 <t tx="edream.110203113231.299">def redraw_node(self,parent_id,v):
 	
 	# trace(v)
-	tree = self.tree
+	tree = self.treeCtrl
 	data = wx.wxTreeItemData(v)
 	id = tree.AppendItem(parent_id,v.headString(),data=data)
 	v.wxTreeId = id # Inject the ivar into the vnode.
@@ -5267,7 +5242,7 @@ def redraw_now(self):
 <t tx="edream.110203113231.300">def redraw_subtree(self,parent_id,v):
 	
 	# trace(v)
-	tree = self.tree
+	tree = self.treeCtrl
 	id = self.redraw_node(parent_id,v)
 	child = v.firstChild()
 	
@@ -5285,17 +5260,6 @@ def redraw_now(self):
 			if child:
 				tree.SetItemHasChildren(id)
 		tree.Collapse(id)</t>
-<t tx="edream.110203113231.301">def setRootVnode(self,v):
-	
-	# trace(v)
-	if v:
-		self.mRootVnode = v
-	
-def setCurrentVnode(self,v):
-	
-	# trace(v)
-	if v:
-		self.mCurrentVnode = v</t>
 <t tx="edream.110203113231.302">@first # -*- coding: utf-8 -*-
 
 """A plugin to use wxPython as Leo's gui."""
@@ -5495,7 +5459,7 @@ def getTextFromClibboard (self):
 	
 	"""Create and run a wxPython askOK dialog ."""
 	
-	d = wx.wxMessageDialog(self.root,message,"wxLeo",wx.wxOK)
+	d = wx.wxMessageDialog(self.root,message,"Leo",wx.wxOK)
 	d.ShowModal()
 	return "ok"</t>
 <t tx="edream.110203113231.324">def runAskOkCancelNumberDialog(self,title,message):
@@ -5508,7 +5472,7 @@ def getTextFromClibboard (self):
 
 	"""Create and run a wxPython askYesNo dialog."""
 	
-	d = wx.wxMessageDialog(self.root,message,"wxLeo",wx.wxYES_NO)
+	d = wx.wxMessageDialog(self.root,message,"Leo",wx.wxYES_NO)
 	answer = d.ShowModal()
 
 	return choose(answer==wx.wxYES,"yes","no")</t>
@@ -5517,7 +5481,7 @@ def getTextFromClibboard (self):
 
 	"""Create and run a wxPython askYesNoCancel dialog ."""
 	
-	d = wx.wxMessageDialog(self.root,message,"wxLeo",wx.wxYES_NO | wx.wxCANCEL)
+	d = wx.wxMessageDialog(self.root,message,"Leo",wx.wxYES_NO | wx.wxCANCEL)
 	answer = d.ShowModal()
 	
 	if answer == wx.wxID_YES:
@@ -5721,14 +5685,6 @@ def update (self):
 	
 	return self.title
 </t>
-<t tx="edream.110203113231.382">def select(self,v,updateBeadList=true):
-	
-	if v:
-		self.mCurrentVnode = v
-		#### What to do about updateBeadList ????
-		# trace("wxLeoFrame",v)
-		####  return self.tree.select(v,updateBeadList)
-</t>
 <t tx="edream.110203113231.384">def updateAllMenus(self,event):
 	
 	"""Called whenever any menu is pulled down."""
@@ -5744,12 +5700,12 @@ def update (self):
 <t tx="edream.110203113231.540"></t>
 <t tx="edream.110203113231.541">def __init__ (self,frame,parentFrame):
 
-	self.frame = frame
-	self.c = frame.c
+	# Init the base class: calls createControl.
+	leoFrame.leoBody.__init__(self,frame,parentFrame)
+
 	self.styles = {} # For syntax coloring.
 
-	self.bodyCtrl = self.createControl(frame,parentFrame)
-	self.setBodyFontFromConfig()</t>
+	wx.EVT_TEXT(self.bodyCtrl,const("cBodyCtrl"),self.onBodyTextUpdated)</t>
 <t tx="edream.110203113231.542">def createControl (self,frame,parentFrame):
 	
 	ctrl = wx.wxTextCtrl(parentFrame,
@@ -11492,8 +11448,8 @@ if Tkinter and 1: # Register the handlers...
 	if not c or not v or not top(): return
 
 	# underline means hyperlinks
-	c.body.tag_configure("http",underline=1) # EKR: 11/4/03
-	c.body.tag_configure("https",underline=1) # EKR: 11/4/03
+	c.frame.body.tag_configure("http",underline=1) # EKR: 11/4/03
+	c.frame.body.tag_configure("https",underline=1) # EKR: 11/4/03
 	# trace()
 	dict = scanDirectives(c,v=v) # v arg is essential.
 	pluginsList = dict.get("pluginsList")
@@ -11643,7 +11599,7 @@ if n2 &gt; n &gt; j &gt; -1:
 		return 0</t>
 <t tx="edream.110403140857.16">def onBodykey1(tag,keywords):
 	c = keywords.get("c")
-	body = c.body
+	body = c.frame.body
 	idx = body.bodyCtrl.index("insert")
 	line,char = map(int, idx.split('.'))
 	elideRange = body.bodyCtrl.tag_prevrange("elide", idx) # EKR: 11/4/03
@@ -11672,7 +11628,7 @@ if n2 &gt; n &gt; j &gt; -1:
 <t tx="edream.110403140857.18">def getUrl(c, *tags):
 	"""See if the current text belongs to a hyperlink tag and, if so, return the url."""
 	
-	body = c.body
+	body = c.frame.body
 	selStart,selEnd = body.getTextSelection() # EKR: 11/4/03
 	for tag in tags:
 		hyperlink = body.bodyCtrl.tag_prevrange(tag,selEnd) # EKR: 11/4/03
@@ -11767,7 +11723,7 @@ if n2 &gt; n &gt; j &gt; -1:
 	insertWikiMarkup(c,v,"{picture file=%s}" % name,"")
 	return</t>
 <t tx="edream.110403140857.26">def insertWikiMarkup(c,v,leftTag,rightTag):
-	body = c.body
+	body = c.frame.body
 	oldSel = body.bodyCtrl.tag_ranges("sel")
 	if oldSel:
 		&lt;&lt; apply markup to selection &gt;&gt;
@@ -13999,7 +13955,7 @@ es("nodes,lines,pages",nodes,lines,pages)</t>
 <t tx="edream.111303092854"></t>
 <t tx="edream.111303093843">def setIdleTimeHook (self,idleTimeHookHandler,*args,**keys):
 	
-	trace(idleTimeHookHandler)
+	pass # trace(idleTimeHookHandler)
 	
 </t>
 <t tx="edream.111303093843.1">def setIdleTimeHookAfterDelay (self,delay,idleTimeHookHandler,*args,**keys):
@@ -14357,12 +14313,6 @@ def toggleSplitDirection(self):
 	self.createMenusFromTables()
 
 	self.frame.SetMenuBar(menuBar)</t>
-<t tx="edream.111303104912">def bind (self,*args,**keys):
-	
-	# The wx bind model is different from tk...
-	
-	pass
-</t>
 <t tx="edream.111303110018">def new_menu(self,parent,tearoff=0):
 	
 	return wx.wxMenu()</t>
@@ -14408,7 +14358,7 @@ def toggleSplitDirection(self):
 		trace("no menu",name,val)
 		return
 	
-	realName = app.getRealMenuName(name)
+	realName = self.getRealMenuName(name)
 	realName = realName.replace("&amp;","")
 	id = menu.FindItem(realName)
 	if id:
@@ -14423,7 +14373,7 @@ def toggleSplitDirection(self):
 		trace("no menu",name)
 		return
 	
-	realName = app.getRealMenuName(name)
+	realName = self.getRealMenuName(name)
 	realName = realName.replace("&amp;","")
 	id = menu.FindItem(realName)
 	if id:
@@ -14444,13 +14394,13 @@ def toggleSplitDirection(self):
 			id = items[name].GetId()
 		else: id = None
 	else:
-		realName = app.getRealMenuName(name)
+		realName = self.getRealMenuName(name)
 		realName = realName.replace("&amp;","")
 		id = menu.FindItem(realName)
 
 	if id:
 		item = menu.FindItemById(id)
-		label = app.getRealMenuName(label)
+		label = self.getRealMenuName(label)
 		label = label.replace("&amp;","")
 		# trace(name,label)
 		item.SetText(label)
@@ -14691,19 +14641,14 @@ wxLeo should use wxStc rather than wxText!</t>
 		
 	return d.get(color)</t>
 <t tx="edream.111403090242">def drawIcon(self,v,x,y):
-	trace(v) #  return self.tree.drawIcon(v,x,y)
-
-def setTreeIniting(self,flag):
-	self.treeIniting = flag
+	trace(v)
 
 # Scrolling... 
 def scrollTo(self,v):
-	trace() #  return self.tree.scrollTo(v)
+	trace()
 
 def idle_scrollTo(self,v):
-	trace(v) #  return self.tree.idle_scrollTo(v)
-
-</t>
+	pass</t>
 <t tx="edream.111403090242.1">def editLabel(self,v):
 	pass
 
@@ -14720,7 +14665,7 @@ def setNormalLabelState(self,v):
 	pass
 
 def OnActivateHeadline(self,v):
-	trace() # This probably is never called.</t>
+	trace()</t>
 <t tx="edream.111403093253">The new code now works with the new reorg.  This means that wxLeo is using all the code in Leo's core.
 
 In particular:
@@ -14735,10 +14680,10 @@ The syntax colorer is working in demo mode.  Almost certainly wxLeo should use a
 	
 	return self.FindFocus()</t>
 <t tx="edream.111403093559.1">def getFont(self):
-	trace() # return self.tree.getFont()
+	trace()
 
 def setFont(self,font):
-	trace() # return self.tree.setFont(font)</t>
+	trace()</t>
 <t tx="edream.111403104835">def getWildcardList (self,filetypes):
 	
 	"""Create a wxWindows wildcard string for open/save dialogs."""
@@ -15080,7 +15025,7 @@ def createOpenWithMenuFromTable (self,table):
 	app.openWithTable = table # Override any previous table.
 	# Delete the previous entry.
 	parent = self.getMenu("File")
-	label=app.getRealMenuName("Open &amp;With...")
+	label = self.getRealMenuName("Open &amp;With...")
 	amp_index = label.find("&amp;")
 	label = label.replace("&amp;","")
 	try:
@@ -15108,5 +15053,180 @@ def createOpenWithMenuFromTable (self,table):
 	self.createMenuItemsFromTable("Open &amp;With...",shortcut_table,openWith=1)
 </t>
 <t tx="edream.111603130528">A number of changes made to accomodate the new reorg...</t>
+<t tx="edream.111603213219">class wxLeoTree (leoFrame.leoTree):
+	@others
+</t>
+<t tx="edream.111603213219.1">def __init__ (self,frame,parentFrame):
+
+	# Init the base class.
+	leoFrame.leoTree.__init__(self,frame)
+
+	self.treeCtrl = wx.wxTreeCtrl(parentFrame,
+		const("cTreeCtrl"),
+		wx.wxDefaultPosition, wx.wxDefaultSize,
+		wx.wxTR_HAS_BUTTONS | wx.wxTR_EDIT_LABELS, wx.wxDefaultValidator,
+		"treeCtrl")
+
+	self.root_id = None
+	
+	&lt;&lt; declare event handlers &gt;&gt;</t>
+<t tx="edream.111603213329">id = const("cTreeCtrl")
+
+wx.EVT_TREE_KEY_DOWN        (self.treeCtrl,id,self.onTreeKeyDown) # Control keys do not fire this event.
+wx.EVT_TREE_SEL_CHANGED     (self.treeCtrl,id,self.onTreeChanged)
+wx.EVT_TREE_SEL_CHANGING    (self.treeCtrl,id,self.onTreeChanging)
+wx.EVT_TREE_BEGIN_DRAG      (self.treeCtrl,id,self.onTreeBeginDrag)
+wx.EVT_TREE_END_DRAG        (self.treeCtrl,id,self.onTreeEndDrag)
+wx.EVT_TREE_BEGIN_LABEL_EDIT(self.treeCtrl,id,self.onTreeBeginLabelEdit)
+wx.EVT_TREE_END_LABEL_EDIT  (self.treeCtrl,id,self.onTreeEndLabelEdit)
+
+ 
+wx.EVT_TREE_ITEM_COLLAPSED  (self.treeCtrl,id,self.onTreeCollapsed)
+wx.EVT_TREE_ITEM_EXPANDED   (self.treeCtrl,id,self.onTreeExpanded)
+
+wx.EVT_TREE_ITEM_COLLAPSING (self.treeCtrl,id,self.onTreeCollapsing)
+wx.EVT_TREE_ITEM_EXPANDING  (self.treeCtrl,id,self.onTreeExpanding)</t>
+<t tx="edream.111603221005">def expandAllAncestors(self,v):
+	trace()</t>
+<t tx="edream.111603221343.1"># Warning: do not try to "optimize" this by returning if v==tree.currentVnode.
+
+def select (self,v,updateBeadList=true):
+
+	c = self.c ; frame = c.frame ; body = frame.bodyCtrl
+	old_v = c.currentVnode()
+
+	if not doHook("unselect1",c=c,new_v=v,old_v=old_v):
+		if 0: ## Not ready yet.
+			&lt;&lt; unselect the old node &gt;&gt;
+	else: old_body = u""
+
+	doHook("unselect2",c=c,new_v=v,old_v=old_v)
+	
+	if not doHook("select1",c=c,new_v=v,old_v=old_v):
+		&lt;&lt; select the new node &gt;&gt;
+		if v and v != old_v: # 3/26/03: Suppress duplicate call.
+			try: # may fail during initialization
+				self.idle_scrollTo(v)
+			except: pass
+		&lt;&lt; update c.beadList or c.beadPointer &gt;&gt;
+		&lt;&lt; update c.visitedList &gt;&gt;
+
+	&lt;&lt; set the current node and redraw &gt;&gt;
+	doHook("select2",c=c,new_v=v,old_v=old_v)
+	doHook("select3",c=c,new_v=v,old_v=old_v)
+</t>
+<t tx="edream.111603221343.3"># Remember the position of the scrollbar before making any changes.
+yview = body.yview()
+insertSpot = c.frame.body.getInsertionPoint()
+
+# Remember the old body text
+old_body = body.getAllText()
+
+if old and old != v and old.edit_text():
+	old.t.scrollBarSpot = yview
+	old.t.insertSpot = insertSpot
+</t>
+<t tx="edream.111603221343.4">if 0: # Done in event handler??
+
+	frame.setWrap(v)
+
+	# Delete only if necessary: this may reduce flicker slightly.
+	s = v.t.bodyString
+	s = toUnicode(s,"utf-8")
+	old_body = toUnicode(old_body,"utf-8")
+	if old_body != s:
+		body.delete("1.0","end")
+		body.insert("1.0",s)
+
+	# We must do a full recoloring: we may be changing context!
+	self.frame.body.recolor_now(v)
+
+	if v and v.t.scrollBarSpot != None:
+		first,last = v.t.scrollBarSpot
+		body.yview("moveto",first)
+
+	if v.t.insertSpot != None: # 9/21/02: moved from c.selectVnode
+		c.frame.bodyCtrl.mark_set("insert",v.t.insertSpot)
+		c.frame.bodyCtrl.see(v.t.insertSpot)
+	else:
+		c.frame.bodyCtrl.mark_set("insert","1.0")</t>
+<t tx="edream.111603221343.5">if updateBeadList:
+	
+	if c.beadPointer &gt; -1:
+		present_v = c.beadList[c.beadPointer]
+	else:
+		present_v = None
+	
+	if v != present_v:
+		# Replace the tail of c.beadList by c and make c the present node.
+		# print "updating c.beadList"
+		c.beadPointer += 1
+		c.beadList[c.beadPointer:] = []
+		c.beadList.append(v)
+		
+	# trace(c.beadPointer,v,present_v)</t>
+<t tx="edream.111603221343.6"># Make v the most recently visited node on the list.
+if v in c.visitedList:
+	c.visitedList.remove(v)
+	
+c.visitedList.insert(0,v)</t>
+<t tx="edream.111603221343.7">self.setCurrentVnode(v)
+
+if 0: ## Not ready yet
+	self.setSelectedLabelState(v)
+	self.scanForTabWidth(v) # 9/13/02 #GS I believe this should also get into the select1 hook.
+
+app.gui.set_focus(c,c.frame.bodyCtrl)</t>
+<t tx="edream.111603222048">def bind (self,bind_shortcut,callback):
+	
+	pass # later.</t>
+<t tx="edream.111703103908"></t>
+<t tx="edream.111703103908.2">def leoHelp (self):
+	
+	es("leoHelp not ready yet")
+	
+	return ##
+	
+	file = os.path.join(app.loadDir,"..","doc","sbooks.chm")
+	file = toUnicode(file,app.tkEncoding) # 10/20/03
+
+	if os.path.exists(file):
+		os.startfile(file)
+	else:	
+		answer = app.gui.runAskYesNoDialog(
+			"Download Tutorial?",
+			"Download tutorial (sbooks.chm) from SourceForge?")
+
+		if answer == "yes":
+			try:
+				if 0: # Download directly.  (showProgressBar needs a lot of work)
+					url = "http://umn.dl.sourceforge.net/sourceforge/leo/sbooks.chm"
+					import urllib
+					self.scale = None
+					urllib.urlretrieve(url,file,self.showProgressBar)
+					if self.scale:
+						self.scale.destroy()
+						self.scale = None
+				else:
+					url = "http://prdownloads.sourceforge.net/leo/sbooks.chm?download"
+					import webbrowser
+					os.chdir(app.loadDir)
+					webbrowser.open_new(url)
+			except:
+				es("exception dowloading sbooks.chm")
+				es_exception()</t>
+<t tx="edream.111703103908.3">def showProgressBar (self,count,size,total):
+
+	# trace("count,size,total:" + `count` + "," + `size` + "," + `total`)
+	if self.scale == None:
+		&lt;&lt; create the scale widget &gt;&gt;
+	self.scale.set(count*size)
+	self.scale.update_idletasks()</t>
+<t tx="edream.111703103908.4">Tk = Tkinter
+top = Tk.Toplevel()
+top.title("Download progress")
+self.scale = scale = Tk.Scale(top,state="normal",orient="horizontal",from_=0,to=total)
+scale.pack()
+top.lift()</t>
 </tnodes>
 </leo_file>
