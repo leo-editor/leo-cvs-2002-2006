@@ -4205,7 +4205,7 @@
 </v>
 </v>
 </v>
-<v t="ekr.20040107064101.1"><vh>4.2 Projects</vh>
+<v t="ekr.20040107064101.1" a="TV"><vh>4.2 Projects</vh>
 <v t="ekr.20040326032652"><vh> Notes</vh>
 <v t="ekr.20040301192211"><vh> What I did</vh>
 <v t="ekr.20040311124726"><vh>Features of 4.2</vh></v>
@@ -5860,9 +5860,12 @@
 <v t="ekr.20040414073612"><vh>4/14</vh>
 <v t="ekr.20040414073612.1"><vh>Fixed several minor bugs in Tangle logic</vh></v>
 </v>
+<v t="EKR.20040422101256"><vh>4/22</vh>
+<v t="EKR.20040422101256.1"><vh>changed v=v to p=v in some calls to scanDirectives</vh></v>
 </v>
 </v>
-<v t="ekr.20040117181936" a="E"><vh>To do: 4.2</vh>
+</v>
+<v t="ekr.20040117181936"><vh>To do: 4.2</vh>
 <v t="ekr.20040409164648"><vh>Bugs</vh>
 <v t="ekr.20040323170225"><vh>General bugs</vh>
 <v t="ekr.20040327123438"><vh>Idle hooks are not working properly!  (add unregisterHandler)</vh>
@@ -6115,7 +6118,7 @@
 <v t="ekr.20040323195916.1"><vh>Tests</vh></v>
 </v>
 <v t="ekr.20040414093055"><vh>Shadow files plugin</vh></v>
-<v t="ekr.20040414093758" a="TV"><vh>Suggestions</vh></v>
+<v t="ekr.20040414093758"><vh>Suggestions</vh></v>
 </v>
 <v t="ekr.20031218072017.2406"><vh>Code</vh>
 <v t="ekr.20031218072017.2407"><vh>  Overview of code</vh>
@@ -8491,7 +8494,7 @@
 </v>
 </v>
 <v t="ekr.20031218072017.2938"><vh>Help Menu</vh>
-<v t="ekr.20031218072017.2939"><vh>about (version number &amp; date)</vh></v>
+<v t="ekr.20031218072017.2939" a="M"><vh>about (version number &amp; date)</vh></v>
 <v t="ekr.20031218072017.2940"><vh>leoDocumentation</vh></v>
 <v t="ekr.20031218072017.2941"><vh>leoHome</vh></v>
 <v t="ekr.20031218072017.2942"><vh>leoTutorial (version number)</vh></v>
@@ -9420,8 +9423,28 @@
 <v t="ekr.20040207170503"><vh>double-paste in searchbox</vh></v>
 <v t="ekr.20040414051834"><vh>Mouse / Paste Anomalies  </vh></v>
 </v>
+<v t="EKR.20040422091601" a="E"><vh>New bugs</vh>
+<v t="EKR.20040422091601.1"><vh>Syntax Colouring Bug - html mode   </vh></v>
+</v>
 </vnodes>
 <tnodes>
+<t tx="EKR.20040422091601"></t>
+<t tx="EKR.20040422091601.1">@nocolor
+
+By: David McNab - davidmcnab
+ Syntax Colouring Bug - html mode   
+2004-04-22 07:38  
+
+ Hi,
+
+Within an HTML @file node, where I have '@language html' at the top root, I notice that on typing in a triple-double-quote ("""), the text following gets coloured green, as would be appropriate if the node were actually python.
+
+Cheers
+David
+ 
+</t>
+<t tx="EKR.20040422101256"></t>
+<t tx="EKR.20040422101256.1"></t>
 <t tx="ekr.20031218072017">@ignore
 @nocolor
 
@@ -38473,7 +38496,7 @@ pub.set_writer('html')
 output = pub.publish()
 
 # EKR: 3/7/03: convert output using the present encoding.
-dict = g.scanDirectives(self.c,v=root)
+dict = g.scanDirectives(self.c,p=root)
 encoding = dict.get("encoding",None)
 if encoding == None:
 	encoding = g.app.config.default_derived_file_encoding
@@ -42898,6 +42921,7 @@ if g.app.config.use_psyco:
 	except ImportError: pass
 
 import leoAtFile,leoFileCommands,leoImport,leoNodes,leoTangle,leoUndo
+import os
 import string
 import sys
 import tempfile
@@ -43178,7 +43202,7 @@ except:
 		file = open(path,"w")
 		# 3/7/03: convert s to whatever encoding is in effect.
 		s = v.bodyString()
-		dict = g.scanDirectives(c,v=v)
+		dict = g.scanDirectives(c,p=v)
 		encoding = dict.get("encoding",None)
 		if encoding == None:
 			encoding = g.app.config.default_derived_file_encoding
@@ -44440,7 +44464,7 @@ def leoPyShellMain(self):
 	# Doing so would add unwanted leading tabs.
 	version = c.getSignOnLine() + "\n\n"
 	copyright = (
-		"Copyright 1999-2003 by Edward K. Ream\n" +
+		"Copyright 1999-2004 by Edward K. Ream\n" +
 		"All Rights Reserved\n" +
 		"Leo is distributed under the Python License")
 	url = "http://webpages.charter.net/edreamleo/front.html"
