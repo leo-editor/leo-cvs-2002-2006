@@ -3,7 +3,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="6552" clone_windows="0"/>
 <globals body_outline_ratio="0.5">
-	<global_window_position top="45" left="204" height="804" width="943"/>
+	<global_window_position top="26" left="322" height="804" width="943"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -31,9 +31,6 @@
 <v t="ekr.20041218141525.3"><vh>@font outline font</vh></v>
 </v>
 <v t="ekr.20050104095950"><vh>@shortcuts</vh></v>
-</v>
-<v t="bwmulder.20050108100437" a="ETV"><vh>how to run tests</vh>
-<v t="bwmulder.20050108100437.1" a="E"><vh>posting from Edwad</vh></v>
 </v>
 <v t="EKR.20040623200709"
 marks="ekr.20050106081120.1,"><vh>@thin ../src/leoTest.py</vh></v>
@@ -901,23 +898,6 @@ marks="ekr.20050106081120.1,"><vh>@thin ../src/leoTest.py</vh></v>
 <v t="ekr.20041124144944"><vh>print sys.path</vh></v>
 <v t="ekr.20041126035448"><vh>Script to import a file</vh></v>
 <v t="ekr.20041225104159.1"><vh>Create stand-alone settings dialog</vh></v>
-<v t="ekr.20041229163210" a="M"><vh>dyna htmlize</vh>
-<v t="ekr.20041229164609"><vh>&lt;&lt; imports &gt;&gt;</vh></v>
-<v t="ekr.20041229163210.2"><vh>&lt;&lt; init globals &gt;&gt;</vh></v>
-<v t="ekr.20041229170824"><vh>stripSentinels</vh></v>
-<v t="ekr.20041229165956"><vh>sanitize</vh></v>
-<v t="ekr.20041229163210.3"><vh>class Parser</vh>
-<v t="ekr.20041229163210.4"><vh>__init__</vh></v>
-<v t="ekr.20041229163210.5"><vh>format</vh></v>
-<v t="ekr.20041229163210.6"><vh>__call__</vh></v>
-</v>
-<v t="ekr.20041229164609.2"><vh>htmlize</vh>
-<v t="ekr.20041229163210.7"><vh>&lt;&lt; colorize with silvercity &gt;&gt;</vh></v>
-</v>
-</v>
-<v t="ekr.20041228135008"><vh>HTML to Browser</vh>
-<v t="ekr.20041228140714"><vh>&lt;&lt; alternate code doesn't work well for me &gt;&gt;</vh></v>
-</v>
 </v>
 <v t="ekr.20041001211817"><vh>Startup...</vh>
 <v t="ekr.20041001203411"><vh>@ plugin ___proto_atFile.py</vh></v>
@@ -928,8 +908,9 @@ marks="ekr.20050106081120.1,"><vh>@thin ../src/leoTest.py</vh></v>
 <v t="ekr.20041230121429"><vh>@ button pydoc</vh></v>
 <v t="ekr.20041230143535"><vh>@ button help</vh></v>
 </v>
-<v t="EKR.20040619133116"><vh>Unit testing...</vh>
-<v t="ekr.20040723064143.1" a="EM"><vh>To do...</vh>
+<v t="EKR.20040619133116" a="TV"><vh>Unit testing...</vh>
+<v t="bwmulder.20050108100437.1" a="E"><vh>How to run unit tests</vh></v>
+<v t="ekr.20040723064143.1" a="M"><vh>To do...</vh>
 <v t="ekr.20040723064143.3"><vh>Test error recovery when reading descendentTnodeUa's</vh></v>
 <v t="ekr.20040903102217"><vh>Test multi-line @doc parts with @language html</vh></v>
 <v t="ekr.20040712101754.213"><vh>Unfinished tests...</vh>
@@ -1497,7 +1478,7 @@ marks="ekr.20050106081120.1,"><vh>@thin ../src/leoTest.py</vh></v>
 </v>
 <v t="ekr.20040707081532.1"><vh>Do @test</vh></v>
 </v>
-<v t="ekr.20050107093251" a="E"><vh>Unit testing for plugins (do this separately!)</vh>
+<v t="ekr.20050107093251"><vh>Unit testing for plugins (do this separately!)</vh>
 <v t="ekr.20050105112238"><vh>@suite plugins tests</vh>
 <v t="ekr.20050105153808"><vh> To do</vh></v>
 <v t="ekr.20050105141608"><vh>Notes</vh>
@@ -1530,6 +1511,28 @@ marks="ekr.20050106081120.1,"><vh>@thin ../src/leoTest.py</vh></v>
 </v>
 <v t="ekr.20040909122141" tnodeList="ekr.20040909122141,ekr.20040909122141.1"><vh>@nosent c:\prog\test\niceNosentTest.txt</vh>
 <v t="ekr.20040909122141.1"><vh>spam</vh></v>
+</v>
+<v t="ekr.20050108110751"><vh>HTMLize scripts</vh>
+<v t="ekr.20041229163210" a="EM"><vh>dyna htmlize</vh>
+<v t="ekr.20041229164609"><vh>&lt;&lt; imports &gt;&gt;</vh></v>
+<v t="ekr.20041229163210.2"><vh>&lt;&lt; init globals &gt;&gt;</vh></v>
+<v t="ekr.20041229170824"><vh>stripSentinels</vh></v>
+<v t="ekr.20041229165956"><vh>sanitize</vh></v>
+<v t="ekr.20041229163210.3"><vh>class Parser</vh>
+<v t="ekr.20041229163210.4"><vh>__init__</vh></v>
+<v t="ekr.20041229163210.5"><vh>format</vh></v>
+<v t="ekr.20041229163210.6"><vh>__call__</vh></v>
+</v>
+<v t="ekr.20041229164609.2"><vh>htmlize</vh>
+<v t="ekr.20041229163210.7"><vh>&lt;&lt; colorize with silvercity &gt;&gt;</vh></v>
+</v>
+</v>
+<v t="ekr.20041228135008" a="E"><vh>HTML to Browser</vh>
+<v t="ekr.20041228140714"><vh>&lt;&lt; alternate code doesn't work well for me &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20050108110751.1" a="E"><vh>Code from Bill P</vh>
+<v t="ekr.20050108110751.2"><vh>NewHeadline</vh></v>
+</v>
 </v>
 </vnodes>
 <tnodes>
@@ -2203,21 +2206,30 @@ for n in xrange(1):
                 canvas.create_line(x,y,x+1,y+1,fill=color,width=1)
         top.update()
 print "done"</t>
-<t tx="bwmulder.20050108100437">@nocolor</t>
-<t tx="bwmulder.20050108100437.1">Running unit tests from test.leo is very easy, provided you have enabled the mod_scripting plugin. When this plugin is enabled Leo will create a blue 'script button' in the icon bar called 'unit test'. 
+<t tx="bwmulder.20050108100437.1">@killcolor
+
+Running unit tests from test.leo is very easy, provided you have enabled the
+mod_scripting plugin. When this plugin is enabled Leo will create a blue 'script
+button' in the icon bar called 'unit test'. 
  
-- To run all unit tests, select the node in test.leo called 'Unit testing...', then click the 'unit test' button. 
+- To run all unit tests, select the node in test.leo called 'Unit testing...',
+then click the 'unit test' button. 
  
 - To run a single test, select an @test node and click the 'unit test' button. 
  
 - To run a suite of tests, select an @suite node and click the 'unit test' button. 
  
-- To run any other collection of tests, create an outline containing those @test or @suite nodes, select the root of that tree and click the 'unit test' button. 
+- To run any other collection of tests, create an outline containing those @test
+or @suite nodes, select the root of that tree and click the 'unit test' button.
+
+That's all. See the docstring for mod_scripting for more details about script
+buttons. You can see this docstring using the plugin_manager plugin if you have
+it installed. 
  
-That's all. See the docstring for mod_scripting for more details about script buttons. You can see this docstring using the plugin_manager plugin if you have it installed. 
- 
-Several nodes in the tree @thin ../src/leoTest.py (in test.leo) contain support code for @test, @suite, etc. so if you want all the gory details you can read the code. It's not complicated: Leo creates UnitTest classes automatically whose run method is the body of the @suite or @test node. 
-</t>
+Several nodes in the tree @thin ../src/leoTest.py (in test.leo) contain support
+code for @test, @suite, etc. so if you want all the gory details you can read
+the code. It's not complicated: Leo creates UnitTest classes automatically whose
+run method is the body of the @suite or @test node.</t>
 <t tx="ekr.20040302091705">import leoGlobals as g
 
 class position:
@@ -10962,9 +10974,10 @@ if spellpyx:
         spellFrame.checkSpelling()</t>
 <t tx="ekr.20041121151002">@nocolor</t>
 <t tx="ekr.20041121151002.1">C:\prog\leoCVS\leo\plugins\leoPlugins.leo
-C:\prog\leoCVS\leo\doc\LeoDocs.leo
 C:\prog\leoCVS\leo\test\test.leo
+C:\prog\leoCVS\leo\doc\LeoDocs.leo
 C:\prog\leoCVS\leo\dist\leoDist.leo
+C:\prog\leoCVS\leo\test\test(conflict).leo
 C:\prog\leoCVS\leo\src\LeoPy.leo</t>
 <t tx="ekr.20041124063401"></t>
 <t tx="ekr.20041124144944">import os
@@ -13138,5 +13151,67 @@ else:
     result = ''.join(result)
     return result</t>
 <t tx="ekr.20050107093251"></t>
+<t tx="ekr.20050108110751"></t>
+<t tx="ekr.20050108110751.1">@ Here is a function to convert the font tags to equivalent span tags. Note use
+of font-size:x-large to show how styling can be used for emphasis.
+
+Uses a regular expression to insert style CSS classes before &lt;/STYLE&gt; closing
+tag ...so &lt;STYLE&gt;&lt;/STYLE&gt; is expected to exist in input html.
+@c
+
+def font2span(colorizedusingFONT):
+    aa=colorizedusingFONT
+    styleClasses="""    .token_STRING    {color:#00AA00;} 
+    .token_NUMBER    {color:#483D8B;}
+    .token_OP        {color:#000080;} 
+    .tokenize_COMMENT{color:#DD0000;} 
+    .token_NAME      {color:#4B0082;} 
+    .token_ERRORTOKEN{color:#FF8080;} 
+    .KEYWORD        {color:#0066ff;} 
+    .TEXT           {color:#000000;} 
+    .LeoDir       {color:#228B22;} 
+    .LeoSen       {color:#BC8F8F;font-size:x-large;} 
+    .bg            {color:#FFFAFA;} 
+    """
+    myRE=re.compile(r"&lt;/STYLE&gt;")              ;aa=myRE.sub(styleClasses+"\n&lt;/STYLE&gt;",aa)
+    myRE=re.compile(r'&lt;font color="#00AA00"&gt;');aa=myRE.sub('&lt;span class="token_STRING"&gt;',aa)
+    myRE=re.compile(r'&lt;font color="#483D8B"&gt;');aa=myRE.sub('&lt;span class="token_NUMBER"&gt;',aa)
+    myRE=re.compile(r'&lt;font color="#000080"&gt;');aa=myRE.sub('&lt;span class="token_OP"&gt;',aa)
+    myRE=re.compile(r'&lt;font color="#DD0000"&gt;');aa=myRE.sub('&lt;span class="tokenize_COMMENT"&gt;',aa)
+    myRE=re.compile(r'&lt;font color="#4B0082"&gt;');aa=myRE.sub('&lt;span class="token_NAME"&gt;',aa)
+    myRE=re.compile(r'&lt;font color="#FF8080"&gt;');aa=myRE.sub('&lt;span class="token_ERRORTOKEN"&gt;',aa)
+    myRE=re.compile(r'&lt;font color="#0066ff"&gt;');aa=myRE.sub('&lt;span class="KEYWORD"&gt;',aa)
+    myRE=re.compile(r'&lt;font color="#000000"&gt;');aa=myRE.sub('&lt;span class="TEXT"&gt;',aa)
+    myRE=re.compile(r'&lt;font color="#228B22"&gt;');aa=myRE.sub('&lt;span class="LeoDir"&gt;',aa)
+    myRE=re.compile(r'&lt;font color="#BC8F8F"&gt;');aa=myRE.sub('&lt;span class="LeoSen"&gt;',aa)
+    myRE=re.compile(r'&lt;font color="#FFFAFA"&gt;');aa=myRE.sub('&lt;span class="bg"&gt;',aa)
+    myRE=re.compile(r'&lt;/font&gt;')               ;aa=myRE.sub('&lt;/span&gt;',aa)
+    
+    basefontSize="12pt"
+    basefontFamily="Lucida,Courier New"
+    myRE=re.compile(r'&lt;font face="Lucida,Courier New"&gt;');
+    aa=myRE.sub('&lt;span style="font:'+basefontSize+' '+basefontFamily+';"&gt;',aa)
+
+    return aa</t>
+<t tx="ekr.20050108110751.2">@ To adjust this script internally to use span tags and CSS style classes make
+the following changes to  three nodes as follows:
+@c
+
+# I. in "init globals" node change the _colors dictionary to use lists 
+# (with 3 values representing color, CSS class, extra styling) as follows:
+
+_colors = {
+    token.NUMBER:     ['#483D8B','token_NUMBER',' '], #black/darkslateblue
+    token.OP:         ['#000080','token_OP',' '], #black/navy
+    token.STRING:     ['#00AA00','token_STRING',' '], #green 00cc66
+    tokenize.COMMENT: ['#DD0000','tokenize_COMMENT',' '], #red cc0033
+    token.NAME:       ['#4B0082','token_NAME',' '], #black/indigo
+    token.ERRORTOKEN: ['#FF8080','token_ERRORTOKEN',' '], #redred bare null does it
+    _KEYWORD:         ['#0066ff','KEYWORD',' '], #blue
+    _TEXT:            ['#000000','TEXT',' '], #black /is text fg color too
+    '_LeoDir':        ['#228B22','LeoDir',' '], #directive, forest comment
+    '_LeoSen':        ['#BC8F8F','LeoSen','font-size:x-large;'], #sentinal, tan fade comment
+    'bg':             ['#FFFAFA','bg',' '], #snow
+}</t>
 </tnodes>
 </leo_file>
