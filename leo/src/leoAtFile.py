@@ -4274,7 +4274,7 @@ class atFile:
     #@-node:ekr.20041005105605.218:writeException
     #@-node:ekr.20041005105605.196:Writing 4.x utils...
     #@-node:ekr.20041005105605.132:Writing...
-    #@+node:ekr.20041005105605.219:Uilites...
+    #@+node:ekr.20041005105605.219:Uilites... (atFile)
     #@+node:ekr.20050104131929:file operations...
     #@+at 
     #@nonl
@@ -4290,7 +4290,7 @@ class atFile:
         return g.utils_chmod(fileName,mode)
     #@nonl
     #@-node:ekr.20050104131820:chmod
-    #@+node:ekr.20050104131929.1:rename
+    #@+node:ekr.20050104131929.1:rename & test
     #@<< about os.rename >>
     #@+node:ekr.20050104131929.2:<< about os.rename >>
     #@+at 
@@ -4345,8 +4345,41 @@ class atFile:
                 g.es_exception()
             return False
     #@nonl
-    #@-node:ekr.20050104131929.1:rename
-    #@+node:ekr.20050104132018:remove
+    #@+node:ekr.20050107085710:test_atFile_rename
+    def test_atFile_rename (self):
+    
+        import leoGlobals as g
+        import os
+        
+        c = g.top() ; at = c.atFileCommands
+    
+        exists = g.os_path_exists
+        path = g.os_path_join(g.app.testDir,'xyzzy')
+        path2 = g.os_path_join(g.app.testDir,'xyzzy2')
+        
+        # Create both paths.
+        for p in (path,path2):
+            if exists(p):
+                os.remove(p)
+            assert not exists(p)
+            f = file(p,'w')
+            f.write('test %s' % p)
+            f.close()
+            assert exists(p)
+        
+        assert at.rename(path,path2,verbose=True)
+        assert exists(path2)
+        f = file(path2)
+        s = f.read()
+        f.close()
+        # print 'Contents of %s: %s' % (path2,s)
+        assert s == 'test %s' % path
+        os.remove(path2)
+        assert not exists(path)
+    #@nonl
+    #@-node:ekr.20050107085710:test_atFile_rename
+    #@-node:ekr.20050104131929.1:rename & test
+    #@+node:ekr.20050104132018:remove & test
     def remove (self,fileName,verbose=True):
     
         try:
@@ -4358,7 +4391,33 @@ class atFile:
                 g.es_exception()
             return False
     #@nonl
-    #@-node:ekr.20050104132018:remove
+    #@+node:ekr.20050107090156:test_atFile_remove
+    def test_atFile_remove(self):
+        
+        import leoGlobals as g
+        import os
+        
+        c = g.top() ; at = c.atFileCommands
+        
+        exists = g.os_path_exists
+        
+        path = g.os_path_join(g.app.testDir,'xyzzy')
+        if exists(path):
+            os.remove(path)
+            
+        assert not exists(path)
+        assert not at.remove(path,verbose=False)
+        
+        f = file(path,'w')
+        f.write('test')
+        f.close()
+        
+        assert exists(path)
+        assert at.remove(path)
+        assert not exists(path)
+    #@nonl
+    #@-node:ekr.20050107090156:test_atFile_remove
+    #@-node:ekr.20050104132018:remove & test
     #@+node:ekr.20050104132026:stat
     def stat (self,fileName):
     
@@ -4776,7 +4835,7 @@ class atFile:
         return sentinelNameDict.get(kind,"<unknown sentinel!>")
     #@nonl
     #@-node:ekr.20041005105605.243:sentinelName
-    #@-node:ekr.20041005105605.219:Uilites...
+    #@-node:ekr.20041005105605.219:Uilites... (atFile)
     #@-others
 #@nonl
 #@-node:ekr.20041005105605.4:class atFile

@@ -716,7 +716,7 @@ def makeReformatParagraphSuite(*args,**keys):
         return suite
 #@nonl
 #@-node:ekr.20040708074710.1:makeReformatParagraphSuite
-#@+node:ekr.20040708074710.2:class reformatParagraphTestCase
+#@+node:ekr.20040708074710.2:class reformatParagraphTestCase (TestCase)
 # DTHEIN 2004.01.11: Added class
 class reformatParagraphTestCase(unittest.TestCase):
 
@@ -1087,7 +1087,7 @@ class reformatParagraphTestCase(unittest.TestCase):
     #@-node:ekr.20040708074710.24:getRowCol
     #@-others
 #@nonl
-#@-node:ekr.20040708074710.2:class reformatParagraphTestCase
+#@-node:ekr.20040708074710.2:class reformatParagraphTestCase (TestCase)
 #@-node:ekr.20040708074710:Reformat Paragraph test code (leoTest.py)
 #@+node:ekr.20040708111644:Edit Body test code (leoTest.py)
 #@+node:ekr.20040707140849.11: makeEditBodySuite
@@ -1484,8 +1484,8 @@ def getAllPluginFilenames ():
     return files
 #@nonl
 #@-node:ekr.20040801145719:getAllPluginFilenames
-#@+node:ekr.20040801124822:testPlugin
-def testPlugin (fileName,verbose=False):
+#@+node:ekr.20040801124822:testPlugin (no longer used)
+def oldTestPlugin (fileName,verbose=False):
         
     path = g.os_path_join(g.app.loadDir,"..","plugins")
     path = g.os_path_abspath(path)
@@ -1507,7 +1507,7 @@ def testPlugin (fileName,verbose=False):
     finally:
         g.app.unitTesting = False
 #@nonl
-#@-node:ekr.20040801124822:testPlugin
+#@-node:ekr.20040801124822:testPlugin (no longer used)
 #@+node:ekr.20040801135348:checkFileSyntax
 def checkFileSyntax (fileName,s):
     
@@ -1710,6 +1710,20 @@ def safeImportModule (fileName):
 #@nonl
 #@-node:ekr.20040711061551:safeImportModule
 #@-node:ekr.20040711043551:Docutils stuff
+#@+node:ekr.20050106081120:Test of doTestRoutinesInModule
+#@+node:ekr.20050106081120.1:test_dummy & dummyTestCase
+def test_dummy():
+    import leoGlobals as g
+    g.trace()
+    # raise SyntaxError
+
+class dummyTestClass: # NOT a TestCase.
+    def test_one (self):
+        import leoGlobals as g
+        g.trace(self)
+#@nonl
+#@-node:ekr.20050106081120.1:test_dummy & dummyTestCase
+#@-node:ekr.20050106081120:Test of doTestRoutinesInModule
 #@-others
 #@nonl
 #@-node:EKR.20040623200709:@thin ../src/leoTest.py

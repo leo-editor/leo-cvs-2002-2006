@@ -1506,7 +1506,7 @@ def update_file_if_changed(file_name,temp_name):
         g.es(file_name," may be read-only or in use")
 #@nonl
 #@-node:ekr.20031218072017.1241:g.update_file_if_changed
-#@+node:ekr.20050104123726.3:g.utils_remove
+#@+node:ekr.20050104123726.3:g.utils_remove & test
 def utils_remove (fileName,verbose=True):
 
     try:
@@ -1518,8 +1518,31 @@ def utils_remove (fileName,verbose=True):
             g.es_exception()
         return False
 #@nonl
-#@-node:ekr.20050104123726.3:g.utils_remove
-#@+node:ekr.20031218072017.1263:g.utils_rename
+#@+node:ekr.20050107084901:test_utils_remove
+def test_utils_remove():
+    
+    import leoGlobals as g
+    import os
+    
+    exists = g.os_path_exists
+    
+    path = g.os_path_join(g.app.testDir,'xyzzy')
+    if exists(path):
+        os.remove(path)
+        
+    assert not exists(path)
+    assert not g.utils_remove(path,verbose=False)
+    
+    f = file(path,'w')
+    f.write('test')
+    f.close()
+    
+    assert exists(path)
+    assert g.utils_remove(path,verbose=True)
+    assert not exists(path)
+#@-node:ekr.20050107084901:test_utils_remove
+#@-node:ekr.20050104123726.3:g.utils_remove & test
+#@+node:ekr.20031218072017.1263:g.utils_rename & test
 #@<< about os.rename >>
 #@+node:ekr.20050104123726.1:<< about os.rename >>
 #@+at 
@@ -1580,7 +1603,31 @@ def utils_rename(src,dst,mode=None,verbose=True):
             g.es_exception()
         return False
 #@nonl
-#@-node:ekr.20031218072017.1263:g.utils_rename
+#@+node:ekr.20050107085710.1:test_utils_rename
+def test_utils_rename():
+
+    import leoGlobals as g
+    import os
+    
+    exists = g.os_path_exists
+    
+    path = g.os_path_join(g.app.testDir,'xyzzy')
+    if exists(path):
+        os.remove(path)
+        
+    assert not exists(path)
+    assert not g.utils_remove(path,verbose=False)
+    
+    f = file(path,'w')
+    f.write('test')
+    f.close()
+    
+    assert exists(path)
+    assert g.utils_remove(path,verbose=True)
+    assert not exists(path)
+#@nonl
+#@-node:ekr.20050107085710.1:test_utils_rename
+#@-node:ekr.20031218072017.1263:g.utils_rename & test
 #@+node:ekr.20050104124903:g.utils_chmod
 def utils_chmod (fileName,mode,verbose=True):
     
