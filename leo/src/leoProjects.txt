@@ -15085,19 +15085,22 @@ def computeHomeDir():
     encoding = startupEncoding()
     # dotDir = g.os_path_abspath('./',encoding)
     home = os.getenv('HOME',default=None)
+
     if home and len(home) > 1 and home[0]=='%' and home[-1]=='%':
 	    # Get the indirect reference to the true home.
 	    home = os.getenv(home[1:-1],default=None)
-    
-    home = g.os_path_abspath(home,encoding)
-    
-    if (
-        not home or
-        not g.os_path_exists(home,encoding) or
-        not g.os_path_isdir(home,encoding)
-    ):
-        home = None
 
+    if home:
+        # N.B. This returns the _working_ directory if home is None!
+        # This was the source of the 4.3 .leoID.txt problems.
+        home = g.os_path_abspath(home,encoding)
+        if (
+            not g.os_path_exists(home,encoding) or
+            not g.os_path_isdir(home,encoding)
+        ):
+            home = None
+
+    # g.trace(home)
     return home
 #@nonl
 #@-node:ekr.20041117151301:computeHomeDir
@@ -24229,19 +24232,22 @@ def computeHomeDir():
     encoding = startupEncoding()
     # dotDir = g.os_path_abspath('./',encoding)
     home = os.getenv('HOME',default=None)
+
     if home and len(home) > 1 and home[0]=='%' and home[-1]=='%':
 	    # Get the indirect reference to the true home.
 	    home = os.getenv(home[1:-1],default=None)
-    
-    home = g.os_path_abspath(home,encoding)
-    
-    if (
-        not home or
-        not g.os_path_exists(home,encoding) or
-        not g.os_path_isdir(home,encoding)
-    ):
-        home = None
 
+    if home:
+        # N.B. This returns the _working_ directory if home is None!
+        # This was the source of the 4.3 .leoID.txt problems.
+        home = g.os_path_abspath(home,encoding)
+        if (
+            not g.os_path_exists(home,encoding) or
+            not g.os_path_isdir(home,encoding)
+        ):
+            home = None
+
+    # g.trace(home)
     return home
 #@nonl
 #@-node:ekr.20041117151301:computeHomeDir
@@ -24432,19 +24438,22 @@ def computeHomeDir():
     encoding = startupEncoding()
     # dotDir = g.os_path_abspath('./',encoding)
     home = os.getenv('HOME',default=None)
+
     if home and len(home) > 1 and home[0]=='%' and home[-1]=='%':
 	    # Get the indirect reference to the true home.
 	    home = os.getenv(home[1:-1],default=None)
-    
-    home = g.os_path_abspath(home,encoding)
-    
-    if (
-        not home or
-        not g.os_path_exists(home,encoding) or
-        not g.os_path_isdir(home,encoding)
-    ):
-        home = None
 
+    if home:
+        # N.B. This returns the _working_ directory if home is None!
+        # This was the source of the 4.3 .leoID.txt problems.
+        home = g.os_path_abspath(home,encoding)
+        if (
+            not g.os_path_exists(home,encoding) or
+            not g.os_path_isdir(home,encoding)
+        ):
+            home = None
+
+    # g.trace(home)
     return home
 #@nonl
 #@-node:ekr.20041117151301:computeHomeDir
@@ -29309,32 +29318,27 @@ else:
 #@-node:ekr.20031218072017.1979:<< return if we can set self.leoID from sys.leoID>>
 #@+node:ekr.20031218072017.1980:<< return if we can set self.leoID from "leoID.txt" >>
 for theDir in (homeDir,globalConfigDir,loadDir):
-    try:
-        fn = g.os_path_join(theDir,tag)
-        f = open(fn,'r')
-        s = f.readline()
-        f.close()
-        if s and len(s) > 0:
-            g.app.leoID = s
-            if verbose:
-                g.es("leoID = %s (in %s)" % (g.app.leoID,theDir), color="red")
-            return
-        elif verbose:
-            g.es("empty %s (in %s)" % (tag,theDir), color = "red")
-    except IOError:
-        g.app.leoID = None
-    except Exception:
-        g.app.leoID = None
-        g.es('Unexpected exception in app.setLeoID',color='red')
-        g.es_esception()
-        
-dirs = []
-
-for theDir in (globalConfigDir,homeDir):
-    if theDir not in dirs:
-        dirs.append(theDir)
-
-g.es("%s not found in %s" % (tag,repr(dirs)),color="red")
+    # N.B. We would use the _working_ directory if theDir is None!
+    if theDir:
+        try:
+            fn = g.os_path_join(theDir,tag)
+            f = open(fn,'r')
+            s = f.readline()
+            f.close()
+            if s and len(s) > 0:
+                g.app.leoID = s
+                if verbose:
+                    g.es("leoID = %s (in %s)" % (g.app.leoID,theDir), color="red")
+                return
+            elif verbose:
+                g.es("empty %s (in %s)" % (tag,theDir), color = "red")
+        except IOError:
+            g.app.leoID = None
+            # g.es("%s not found in %s" % (tag,theDir),color="red")
+        except Exception:
+            g.app.leoID = None
+            g.es('Unexpected exception in app.setLeoID',color='red')
+            g.es_exception()
 #@nonl
 #@-node:ekr.20031218072017.1980:<< return if we can set self.leoID from "leoID.txt" >>
 #@+node:ekr.20031218072017.1981:<< put up a dialog requiring a valid id >>
@@ -29352,26 +29356,23 @@ g.es("leoID = %s" % (repr(g.app.leoID)),color="blue")
 #@nonl
 #@-node:ekr.20031218072017.1981:<< put up a dialog requiring a valid id >>
 #@+node:ekr.20031218072017.1982:<< attempt to create leoID.txt >>
-dirs = []
-
 for theDir in (homeDir,globalConfigDir,loadDir):
-    cant = "can not create %s in %s" % (tag,theDir)
-    try:
-        fn = g.os_path_join(theDir,tag)
-        f = open(fn,'w')
-        if f:
+    # N.B. We would use the _working_ directory if theDir is None!
+    if theDir:
+        cant = "can not create %s in %s" % (tag,theDir)
+        try:
+            fn = g.os_path_join(theDir,tag)
+            f = open(fn,'w')
             f.write(g.app.leoID)
             f.close()
             if g.os_path_exists(fn):
-                g.es("created %s in %s" % (tag,theDir), color="red")
+                s = "%s created in %s" % (tag,theDir)
+                print s ; g.es(s, color="red")
                 return
             else:
                 g.es(cant,color='red')
-    except IOError:
-        g.es(cant,color='red')
-
-    if theDir not in dirs:
-        dirs.append(theDir)
+        except IOError:
+            g.es(cant,color='red')
 #@nonl
 #@-node:ekr.20031218072017.1982:<< attempt to create leoID.txt >>
 #@-node:ekr.20031218072017.1978:app.setLeoID
@@ -31265,6 +31266,12 @@ u.optionalIvars = [
 #@-node:ekr.20031218072017.3604:<< Define optional ivars >>
 #@+node:EKR.20040526072519:<< define redoDispatchDict >>
 u.redoDispatchDict = {
+    # New, general purpose types.
+    'group':  u.redoGroup,
+    'node':   u.redoNode,
+    'tree':   u.redoTree,
+    
+    # Old, deprecated types.
     "Add Comments":       u.redoTyping,
     "Change":             u.redoTyping,
     "Change All":         u.redoChangeAll,
@@ -31310,6 +31317,12 @@ u.redoDispatchDict = {
 #@-node:EKR.20040526072519:<< define redoDispatchDict >>
 #@+node:EKR.20040526075238:<< define undoDispatchDict >>
 u.undoDispatchDict = {
+    # New, general purpose types.
+    'group':  u.undoGroup,
+    'node':   u.undoNode,
+    'tree':   u.undoTree,
+
+    # Old, deprecated types.
     "Add Comments":       u.undoTyping,
     "Change":             u.undoTyping,
     "Change All":         u.undoChangeAll,
@@ -33413,32 +33426,27 @@ else:
 #@-node:ekr.20031218072017.1979:<< return if we can set self.leoID from sys.leoID>>
 #@+node:ekr.20031218072017.1980:<< return if we can set self.leoID from "leoID.txt" >>
 for theDir in (homeDir,globalConfigDir,loadDir):
-    try:
-        fn = g.os_path_join(theDir,tag)
-        f = open(fn,'r')
-        s = f.readline()
-        f.close()
-        if s and len(s) > 0:
-            g.app.leoID = s
-            if verbose:
-                g.es("leoID = %s (in %s)" % (g.app.leoID,theDir), color="red")
-            return
-        elif verbose:
-            g.es("empty %s (in %s)" % (tag,theDir), color = "red")
-    except IOError:
-        g.app.leoID = None
-    except Exception:
-        g.app.leoID = None
-        g.es('Unexpected exception in app.setLeoID',color='red')
-        g.es_esception()
-        
-dirs = []
-
-for theDir in (globalConfigDir,homeDir):
-    if theDir not in dirs:
-        dirs.append(theDir)
-
-g.es("%s not found in %s" % (tag,repr(dirs)),color="red")
+    # N.B. We would use the _working_ directory if theDir is None!
+    if theDir:
+        try:
+            fn = g.os_path_join(theDir,tag)
+            f = open(fn,'r')
+            s = f.readline()
+            f.close()
+            if s and len(s) > 0:
+                g.app.leoID = s
+                if verbose:
+                    g.es("leoID = %s (in %s)" % (g.app.leoID,theDir), color="red")
+                return
+            elif verbose:
+                g.es("empty %s (in %s)" % (tag,theDir), color = "red")
+        except IOError:
+            g.app.leoID = None
+            # g.es("%s not found in %s" % (tag,theDir),color="red")
+        except Exception:
+            g.app.leoID = None
+            g.es('Unexpected exception in app.setLeoID',color='red')
+            g.es_exception()
 #@nonl
 #@-node:ekr.20031218072017.1980:<< return if we can set self.leoID from "leoID.txt" >>
 #@+node:ekr.20031218072017.1981:<< put up a dialog requiring a valid id >>
@@ -33456,26 +33464,23 @@ g.es("leoID = %s" % (repr(g.app.leoID)),color="blue")
 #@nonl
 #@-node:ekr.20031218072017.1981:<< put up a dialog requiring a valid id >>
 #@+node:ekr.20031218072017.1982:<< attempt to create leoID.txt >>
-dirs = []
-
 for theDir in (homeDir,globalConfigDir,loadDir):
-    cant = "can not create %s in %s" % (tag,theDir)
-    try:
-        fn = g.os_path_join(theDir,tag)
-        f = open(fn,'w')
-        if f:
+    # N.B. We would use the _working_ directory if theDir is None!
+    if theDir:
+        cant = "can not create %s in %s" % (tag,theDir)
+        try:
+            fn = g.os_path_join(theDir,tag)
+            f = open(fn,'w')
             f.write(g.app.leoID)
             f.close()
             if g.os_path_exists(fn):
-                g.es("created %s in %s" % (tag,theDir), color="red")
+                s = "%s created in %s" % (tag,theDir)
+                print s ; g.es(s, color="red")
                 return
             else:
                 g.es(cant,color='red')
-    except IOError:
-        g.es(cant,color='red')
-
-    if theDir not in dirs:
-        dirs.append(theDir)
+        except IOError:
+            g.es(cant,color='red')
 #@nonl
 #@-node:ekr.20031218072017.1982:<< attempt to create leoID.txt >>
 #@-node:ekr.20031218072017.1978:app.setLeoID
@@ -35045,32 +35050,27 @@ else:
 #@-node:ekr.20031218072017.1979:<< return if we can set self.leoID from sys.leoID>>
 #@+node:ekr.20031218072017.1980:<< return if we can set self.leoID from "leoID.txt" >>
 for theDir in (homeDir,globalConfigDir,loadDir):
-    try:
-        fn = g.os_path_join(theDir,tag)
-        f = open(fn,'r')
-        s = f.readline()
-        f.close()
-        if s and len(s) > 0:
-            g.app.leoID = s
-            if verbose:
-                g.es("leoID = %s (in %s)" % (g.app.leoID,theDir), color="red")
-            return
-        elif verbose:
-            g.es("empty %s (in %s)" % (tag,theDir), color = "red")
-    except IOError:
-        g.app.leoID = None
-    except Exception:
-        g.app.leoID = None
-        g.es('Unexpected exception in app.setLeoID',color='red')
-        g.es_esception()
-        
-dirs = []
-
-for theDir in (globalConfigDir,homeDir):
-    if theDir not in dirs:
-        dirs.append(theDir)
-
-g.es("%s not found in %s" % (tag,repr(dirs)),color="red")
+    # N.B. We would use the _working_ directory if theDir is None!
+    if theDir:
+        try:
+            fn = g.os_path_join(theDir,tag)
+            f = open(fn,'r')
+            s = f.readline()
+            f.close()
+            if s and len(s) > 0:
+                g.app.leoID = s
+                if verbose:
+                    g.es("leoID = %s (in %s)" % (g.app.leoID,theDir), color="red")
+                return
+            elif verbose:
+                g.es("empty %s (in %s)" % (tag,theDir), color = "red")
+        except IOError:
+            g.app.leoID = None
+            # g.es("%s not found in %s" % (tag,theDir),color="red")
+        except Exception:
+            g.app.leoID = None
+            g.es('Unexpected exception in app.setLeoID',color='red')
+            g.es_exception()
 #@nonl
 #@-node:ekr.20031218072017.1980:<< return if we can set self.leoID from "leoID.txt" >>
 #@+node:ekr.20031218072017.1981:<< put up a dialog requiring a valid id >>
@@ -35088,26 +35088,23 @@ g.es("leoID = %s" % (repr(g.app.leoID)),color="blue")
 #@nonl
 #@-node:ekr.20031218072017.1981:<< put up a dialog requiring a valid id >>
 #@+node:ekr.20031218072017.1982:<< attempt to create leoID.txt >>
-dirs = []
-
 for theDir in (homeDir,globalConfigDir,loadDir):
-    cant = "can not create %s in %s" % (tag,theDir)
-    try:
-        fn = g.os_path_join(theDir,tag)
-        f = open(fn,'w')
-        if f:
+    # N.B. We would use the _working_ directory if theDir is None!
+    if theDir:
+        cant = "can not create %s in %s" % (tag,theDir)
+        try:
+            fn = g.os_path_join(theDir,tag)
+            f = open(fn,'w')
             f.write(g.app.leoID)
             f.close()
             if g.os_path_exists(fn):
-                g.es("created %s in %s" % (tag,theDir), color="red")
+                s = "%s created in %s" % (tag,theDir)
+                print s ; g.es(s, color="red")
                 return
             else:
                 g.es(cant,color='red')
-    except IOError:
-        g.es(cant,color='red')
-
-    if theDir not in dirs:
-        dirs.append(theDir)
+        except IOError:
+            g.es(cant,color='red')
 #@nonl
 #@-node:ekr.20031218072017.1982:<< attempt to create leoID.txt >>
 #@-node:ekr.20031218072017.1978:app.setLeoID
@@ -35150,19 +35147,22 @@ def computeHomeDir():
     encoding = startupEncoding()
     # dotDir = g.os_path_abspath('./',encoding)
     home = os.getenv('HOME',default=None)
+
     if home and len(home) > 1 and home[0]=='%' and home[-1]=='%':
 	    # Get the indirect reference to the true home.
 	    home = os.getenv(home[1:-1],default=None)
-    
-    home = g.os_path_abspath(home,encoding)
-    
-    if (
-        not home or
-        not g.os_path_exists(home,encoding) or
-        not g.os_path_isdir(home,encoding)
-    ):
-        home = None
 
+    if home:
+        # N.B. This returns the _working_ directory if home is None!
+        # This was the source of the 4.3 .leoID.txt problems.
+        home = g.os_path_abspath(home,encoding)
+        if (
+            not g.os_path_exists(home,encoding) or
+            not g.os_path_isdir(home,encoding)
+        ):
+            home = None
+
+    # g.trace(home)
     return home
 #@nonl
 #@-node:ekr.20041117151301:computeHomeDir
@@ -37427,6 +37427,177 @@ def printLeoModules(message=None):
 #@-node:ekr.20031218072017.3115:printLeoModules
 #@-node:ekr.20031218072017.3108:Dumps
 #@-node:ekr.20050315082746:(Made sure NameErrors are reported with tracebacks in scripts)
+#@+node:ekr.20050317153857:(Finally! fixed .leoID problem!)
+#@+node:ekr.20050317153857.1:Report
+@killcolor
+
+http://sourceforge.net/forum/message.php?msg_id=3053699
+By: nobody
+
+I also struggled with leoID after changing from v4.2 to v4.3 on Windows (I started
+http://sourceforge.net/forum/forum.php?thread_id=1240664&forum_id=10226).
+
+Without HOME environmental variable or sitecustomize.py Leo creates leoID.txt
+in the current working directory, not in the globalConfigDir as before.
+My understanding is that HOME is not typically present on Windows, so this could
+keep confusing HOME-less windows users.
+
+The problem is computeHomeDir(). It returns current working directory if HOME
+does not exist. From computeHomeDir() definition:
+
+home = os.getenv('HOME',default=None) # home = None
+home = g.os_path_abspath(home,encoding) # current working directory!
+
+Note that it does not help if computeHomeDir() returns None. In that case
+f = open(fn,'w') in
+Code-->Core classes...-->@thin leoApp.py-->app.setLeoID--><< attempt to create
+leoID.txt >>
+still creates '.leoID.txt' in the current directory.
+
+Things that work if HOME does not exist (not sure if work on Mac and Win98):
+from user import home
+os.path.expanduser('~')
+
+Hope this is useful.
+
+'vpe'
+
+_____________________
+#@nonl
+#@-node:ekr.20050317153857.1:Report
+#@+node:ekr.20050318021951:What I did
+@killcolor
+
+There were three similar bugs, all arising from the fact that g.os_path_abs and g.os_path_join return the _working_ directory if the initial path is None!
+
+I removed my HOME directory for testing.  This was essential.
+
+- Compute home directory must return None, rather than the working directory if the HOME variable is None.
+
+- app.setLeoId must be careful (in two sections) to do nothing if any of (homeDir,globalConfigDir,loadDir) is None.
+#@nonl
+#@-node:ekr.20050318021951:What I did
+#@+node:ekr.20041117151301:computeHomeDir
+def computeHomeDir():
+    
+    """Returns the user's home directory."""
+    
+    import leoGlobals as g
+
+    encoding = startupEncoding()
+    # dotDir = g.os_path_abspath('./',encoding)
+    home = os.getenv('HOME',default=None)
+
+    if home and len(home) > 1 and home[0]=='%' and home[-1]=='%':
+	    # Get the indirect reference to the true home.
+	    home = os.getenv(home[1:-1],default=None)
+
+    if home:
+        # N.B. This returns the _working_ directory if home is None!
+        # This was the source of the 4.3 .leoID.txt problems.
+        home = g.os_path_abspath(home,encoding)
+        if (
+            not g.os_path_exists(home,encoding) or
+            not g.os_path_isdir(home,encoding)
+        ):
+            home = None
+
+    # g.trace(home)
+    return home
+#@nonl
+#@-node:ekr.20041117151301:computeHomeDir
+#@+node:ekr.20031218072017.1978:app.setLeoID
+def setLeoID (self,verbose=True):
+
+    tag = ".leoID.txt"
+    homeDir = g.app.homeDir
+    globalConfigDir = g.app.globalConfigDir
+    loadDir = g.app.loadDir
+
+    << return if we can set self.leoID from sys.leoID >>
+    << return if we can set self.leoID from "leoID.txt" >>
+
+    << put up a dialog requiring a valid id >>
+    << attempt to create leoID.txt >>
+#@nonl
+#@+node:ekr.20031218072017.1979:<< return if we can set self.leoID from sys.leoID>>
+# This would be set by in Python's sitecustomize.py file.
+
+# 7/2/04: Use hasattr & getattr to suppress pychecker warning.
+# We also have to use a "non-constant" attribute to suppress another warning!
+
+nonConstantAttr = "leoID"
+
+if hasattr(sys,nonConstantAttr):
+    g.app.leoID = getattr(sys,nonConstantAttr)
+    if verbose:
+        g.es("leoID = " + g.app.leoID, color="orange")
+    return
+else:
+    g.app.leoID = None
+#@nonl
+#@-node:ekr.20031218072017.1979:<< return if we can set self.leoID from sys.leoID>>
+#@+node:ekr.20031218072017.1980:<< return if we can set self.leoID from "leoID.txt" >>
+for theDir in (homeDir,globalConfigDir,loadDir):
+    # N.B. We would use the _working_ directory if theDir is None!
+    if theDir:
+        try:
+            fn = g.os_path_join(theDir,tag)
+            f = open(fn,'r')
+            s = f.readline()
+            f.close()
+            if s and len(s) > 0:
+                g.app.leoID = s
+                if verbose:
+                    g.es("leoID = %s (in %s)" % (g.app.leoID,theDir), color="red")
+                return
+            elif verbose:
+                g.es("empty %s (in %s)" % (tag,theDir), color = "red")
+        except IOError:
+            g.app.leoID = None
+            # g.es("%s not found in %s" % (tag,theDir),color="red")
+        except Exception:
+            g.app.leoID = None
+            g.es('Unexpected exception in app.setLeoID',color='red')
+            g.es_exception()
+#@nonl
+#@-node:ekr.20031218072017.1980:<< return if we can set self.leoID from "leoID.txt" >>
+#@+node:ekr.20031218072017.1981:<< put up a dialog requiring a valid id >>
+# New in 4.1: get an id for gnx's.  Plugins may set g.app.leoID.
+
+# Create an emergency gui and a Tk root window.
+g.app.createTkGui("startup")
+
+# Bug fix: 2/6/05: put result in g.app.leoID.
+g.app.leoID = g.app.gui.runAskLeoIDDialog()
+g.app.gui = None
+
+# g.trace(g.app.leoID)
+g.es("leoID = %s" % (repr(g.app.leoID)),color="blue")
+#@nonl
+#@-node:ekr.20031218072017.1981:<< put up a dialog requiring a valid id >>
+#@+node:ekr.20031218072017.1982:<< attempt to create leoID.txt >>
+for theDir in (homeDir,globalConfigDir,loadDir):
+    # N.B. We would use the _working_ directory if theDir is None!
+    if theDir:
+        cant = "can not create %s in %s" % (tag,theDir)
+        try:
+            fn = g.os_path_join(theDir,tag)
+            f = open(fn,'w')
+            f.write(g.app.leoID)
+            f.close()
+            if g.os_path_exists(fn):
+                s = "%s created in %s" % (tag,theDir)
+                print s ; g.es(s, color="red")
+                return
+            else:
+                g.es(cant,color='red')
+        except IOError:
+            g.es(cant,color='red')
+#@nonl
+#@-node:ekr.20031218072017.1982:<< attempt to create leoID.txt >>
+#@-node:ekr.20031218072017.1978:app.setLeoID
+#@-node:ekr.20050317153857:(Finally! fixed .leoID problem!)
 #@-node:ekr.20050316083031.1:Bugs...
 #@+node:ekr.20050316083031.2:Features...
 #@-node:ekr.20050316083031.2:Features...
