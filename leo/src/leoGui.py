@@ -318,11 +318,11 @@ class leoGui:
 	
 		self.oops()
 		
-	def moveIndexForward(self,index,n):
+	def moveIndexForward(self,t,index,n):
 	
 		self.oops()
 		
-	def moveIndexToNextLine(self,index):
+	def moveIndexToNextLine(self,t,index):
 	
 		self.oop()
 	#@nonl

@@ -514,9 +514,11 @@ class tkinterGui(leoGui.leoGui):
 		return "%s-%dc" % (index,n)
 	#@-node:moveIndexBackward
 	#@+node:moveIndexForward & moveIndexToNextLine
-	def moveIndexForward(self,index,n):
+	def moveIndexForward(self,t,index,n):
 	
-		return "%s+%dc" % (index,n)
+		newpos = t.index("%s+%dc" % (index,n))
+		
+		return choose(t.compare(newpos,"==","end"),None,newpos)
 		
 	def moveIndexToNextLine(self,t,index):
 	
