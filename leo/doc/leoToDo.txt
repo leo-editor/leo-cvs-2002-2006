@@ -3,53 +3,377 @@
 #@@nocolor
 
 #@+all
-#@+node:ekr.20041214132052:Mac issues
-#@+node:ekr.20041214132052.1:Mac packages
-@killcolor
-
-http://sourceforge.net/forum/message.php?msg_id=2881302
-By: genthaler  Günther
-
-I'm happy to provide scripts, icons, whatever. The application bundles I've
-created previously should really provide enough of a pattern to do the job.
-What I was referring to, is what other scripts/tools I would have to integrate
-with. I'm not familiar enough with the SF way of doing things to know what I
-should provide, access to CVS etc. I also don't know whether you bundle things
-up a home and post them on SF, or if you do the compile/archive on the SF boxen.
-#@nonl
-#@-node:ekr.20041214132052.1:Mac packages
-#@+node:ekr.20041130125213.1:(Create Mac package for Leo)
-#@+node:ekr.20041130125213.2:Requests & follow up
-@killcolor
-
-http://sourceforge.net/forum/message.php?msg_id=2859149
-By: genthaler
-
-I'd really like to have Mac OS X packages available as a download option, rather
-than doing it by hand every time a new version comes out. What do I have to
-do to make this happen?
-
-http://sourceforge.net/forum/message.php?msg_id=2859156
-By: genthaler
-
-BTW, I wasn't the first to do this and publish it - heres a link to an older
-version - http://www.wordtech-software.com/leo.html
- 
-http://sourceforge.net/forum/message.php?msg_id=2859153
-By: genthaler
-
-On Mac OS X, it's quite easy to have a double-clickable application bundle with
-its own private Python and TclTk frameworks, but it's huge; about 20MB unpacked
-IIRC. More sensible to use the OS's version, but that requires Tkinter to be
-installed in /System/Library/Frameworks/Python.framework, and that requires
-an installer package and admin privileges.
-
-Günther
-
-#@-node:ekr.20041130125213.2:Requests & follow up
-#@-node:ekr.20041130125213.1:(Create Mac package for Leo)
-#@-node:ekr.20041214132052:Mac issues
 #@+node:EKR.20040609091327:To do: 4.3
+#@+node:ekr.20041228053704:Config...
+Major:
+    - Cancel should revert all settings.
+        (Revert doesn't work after a node changes:this is confusing and dangerous.)
+    - Support generalized widget settings (see child node)
+    - Copy expansion state when writing @settings trees.
+    - Handle undo/redo properly.
+
+Minor:
+    - Remove label in settings pane.
+    - Make sure comment area is always visible.
+    - Disable all commands while in dialog.
+    - Print changes to log.
+    - Unit tests: there are too many cases to test by hand.
+    - move findCorrespondingNode into leoNodes class.
+    - Fix bug: findSettingsRoot doesn't work if no summary node.
+    - findSettingsPostion should honor if-gui and if-platform nodes.
+#@nonl
+#@+node:ekr.20041228053945.1:Support for general component settings
+@list name
+    - name specifies the component to configure.
+    - parser creates a list of name,kind,value tuples from the body.
+
+Leo's core would support one 'name' for:
+    each Tk widget,
+    each Pmw megawidget,
+    each megawidget component.
+
+Examples:
+    headline:
+        @list outline_canvas_settings
+    body:
+        height,int,1
+        text,string,my widget
+
+g.setGeneralTkSetting(widget,setting_name) would do the following:
+    - get the setting_name and the associated list of tuples/bunches from the config class.
+    - safely set the widget's setting using the settings list as is done in the prototype code.
+#@nonl
+#@-node:ekr.20041228053945.1:Support for general component settings
+#@+node:EKR.20040606193130:(Fix problems with negative tab width in prefs)
+#@+node:EKR.20040606193323:Report
+@nocolor
+
+Open discussion
+http://sourceforge.net/forum/message.php?msg_id=2603738
+
+I always set tabs to -4 in the config. when you open the prefs it says 4 but
+there is a checkmark for convert tabs to space. open a new leo, open prefs. its
+not checked! open another leo, its checked.
+
+The problem is that tab_width is usually stored in leoConfig.txt, not the .leo file.
+I'm going to ignore this problem for now...
+#@nonl
+#@-node:EKR.20040606193323:Report
+#@+node:ekr.20031218072017.2062:getPrefs
+# Note: Leo 4.3 does not write these settings to local .leo files.
+# Instead, corresponding settings are contained in leoConfig.leo files.
+
+def getPrefs (self):
+
+    c = self.c
+    
+    if self.getOpenTag("<preferences"):
+        return # <preferences/> seen
+
+    table = (
+        ("allow_rich_text",None,None), # Ignored.
+        ("tab_width","tab_width",self.getLong),
+        ("page_width","page_width",self.getLong),
+        ("tangle_bat","tangle_batch_flag",self.getBool),
+        ("untangle_bat","untangle_batch_flag",self.getBool),
+        ("output_doc_chunks","output_doc_flag",self.getBool),
+        ("noweb_flag",None,None), # Ignored.
+        ("extended_noweb_flag",None,None), # Ignored.
+        ("defaultTargetLanguage","target_language",self.getTargetLanguage),
+        ("use_header_flag","use_header_flag",self.getBool))
+    
+    done = False
+    while 1:
+        found = False
+        for tag,var,f in table:
+            if self.matchTag("%s=" % tag):
+                if var:
+                    self.getDquote() ; val = f() ; self.getDquote()
+                    setattr(c,var,val)
+                else:
+                    self.getDqString()
+                found = True ; break
+        if not found:
+            if self.matchTag("/>"):
+                done = True ; break
+            if self.matchTag(">"):
+                break
+            else: # New in 4.1: ignore all other tags.
+                self.getUnknownTag()
+
+    if not done:
+        while 1:
+            if self.matchTag("<defaultDirectory>"):
+                # New in version 0.16.
+                c.tangle_directory = self.getEscapedString()
+                self.getTag("</defaultDirectory>")
+                if not g.os_path_exists(c.tangle_directory):
+                    g.es("default tangle directory not found:" + c.tangle_directory)
+            elif self.matchTag("<TSyntaxMemo_options>"):
+                self.getEscapedString() # ignored
+                self.getTag("</TSyntaxMemo_options>")
+            else: break
+        self.getTag("</preferences>")
+#@nonl
+#@+node:ekr.20031218072017.2063:getTargetLanguage
+def getTargetLanguage (self):
+    
+    # Must match longer tags before short prefixes.
+    for name in g.app.language_delims_dict.keys():
+        if self.matchTagWordIgnoringCase(name):
+            language = name.replace("/","")
+            # self.getDquote()
+            return language
+            
+    return "c" # default
+#@nonl
+#@-node:ekr.20031218072017.2063:getTargetLanguage
+#@-node:ekr.20031218072017.2062:getPrefs
+#@-node:EKR.20040606193130:(Fix problems with negative tab width in prefs)
+#@-node:ekr.20041228053704:Config...
+#@+node:ekr.20041218152654:First
+#@+node:ekr.20041214131745:Python 2.4 installer problem
+#@+node:ekr.20041214131745.1:Notes
+@killcolor
+
+http://sourceforge.net/forum/message.php?msg_id=2877749
+By: djsg
+
+The Leo 4.2-final installer checks a Windows Registry key to figure out the
+location of Python home folder. It handles the format of the data left in that
+key by the Python 2.3.4 installer, but does not handle the format of the data
+left in some cases by the Python 2.4-final installer.
+
+http://sourceforge.net/forum/message.php?msg_id=2875823
+By: djsg
+
+The installer for Python 2.3.4 is a Nullsoft installer. 
+
+The installer for Python 2.4 Final is a Microsoft installer. 
+
+The leo.nsi file that creates the installer for Leo 2.4-final finds the installed
+copy of Python by checking the Registry key
+HKEY_LOCAL_MACHINE\SOFTWARE\Classes\Python.NoConFile\shell\open\command -- for
+a value left by the installer for Python.  The format of the Registry key value
+stored by the installer for Python 2.4 Final does not match the for Python
+2.3.4.
+
+To prove this: 
+
+A. install Python 2.3.4 for all users;
+B. use RegEdit to export this Registry key to a file called "23key.reg". 
+C. uninstall Python 2.3.4
+D. install Python 2.4 Final
+E. Use RegEdit to export this registry key to a file called "24key.reg". 
+
+The 23key.reg file gives the key the value @="C:\Python23\pythonw.exe \%1\
+%*
+
+where the 24key.reg file gives it the value 
+@="\C:\Python23\pythonw.exe\ \%1\ %*
+
+I duplicated Srdjan's problem, and installed Leo 4.2-final by: 
+
+1. creating a copy of the 23key.reg file called 24keyhack.reg;
+
+2. Editing 24keyhack.reg, changing the value of the key to point at the C:\Python24
+folder -- i.e., changing it to
+@="C:\Python24\pythonw.exe \%1\ %*
+
+3. Right-clicking the 24keyhack.reg file and merging it -- thereby changing
+the value of the Registry key.
+
+4. Running the Leosetup-4-2 installer. No problem this time!
+
+5. Right-clicking the 24key.reg file and merging it -- thereby restoring the
+orthodox Python 2.4 value of the Registry key.
+
+Looks to me as though the 2.4 key surrounds the path to pythonw.exe in quotation
+marks. Perhaps this allows the Microsoft Installer to install Python in a folder
+whose name includes a space.
+#@-node:ekr.20041214131745.1:Notes
+#@+node:ekr.20041219162724.1:Notes 2
+@killcolor
+
+http://sourceforge.net/forum/message.php?msg_id=2898633
+By: djsg
+
+Having no experience with writing installers for Windows, I can't comment. I
+can report with three items of interest, though.
+
+One. The documentation for NSIS 2.0.3 indicates that NSIS can extract single
+characters from strings and compare strings with constants, and that it supports
+looping. It seems to me that it should be possible to use that version of NSIS
+to handle both the Python 2.3-style and Python 2.4-style registry entries. I
+am willing to research this after Christmas.
+
+Two. The installer for the Python 2.4 version of Mark Hammond's Python for Windows
+extensions runs afoul of the Python 2.4 installer, too -- see
+http://sourceforge.net/tracker/index.php?func=detail&aid=1066510&group_id=78018&
+atid=551954
+
+Three. Fredrik Lundh documents a method for "Adding Python Information to the
+Windows Registry", at http://effbot.org/zone/python-register.htm. He comments
+that this is useful for Hammond's Python for Windows extensions and for Windows
+installers generated by the distutils package.
+
+Lundh's Web page is dated February, 2003, so it may be out of date. 
+#@-node:ekr.20041219162724.1:Notes 2
+#@-node:ekr.20041214131745:Python 2.4 installer problem
+#@+node:EKR.20040602153716:(Finish drawUserIcons)
+# Create a better way of writing user icons.
+#@nonl
+#@+node:ekr.20040317050439:Right-click to add user-specified attributes and icons
+Also add corresponding commands.
+#@nonl
+#@-node:ekr.20040317050439:Right-click to add user-specified attributes and icons
+#@+node:ekr.20040317184631:Design
+@nocolor
+http://sourceforge.net/forum/message.php?msg_id=2477913
+By: edream
+
+A better design for user icons
+
+Using tuples in t.unknownAttributes["icons"] is too constricted.  Much better
+to have t.unknownAttributes["icons"] be a list of Python _dictionaries_ rather
+than a list of tuples.  Each of these "subsidiary" dictionaries could have the
+following keys:
+
+"type"
+
+"file", "icon" or "url".  At present my prototype code uses "file" to specify
+the location of an icon.
+
+"where":
+
+"beforeBox", "beforeIcon", "beforeHeadLine", "afterHeadline".  This specifies
+where to put the icon.  The default would be "beforeHeadline".  "beforeBox"
+means before the plus/minus box.  "beforeIcon" means before the standard icon.
+
+"height":
+
+the height of the icon to use when calculating the line height.  Default: get
+from the icon itself, if possible.
+
+"width":
+
+the width of the icon to use when calculating where to put the following element.
+Default: get from the icon, if possible.
+
+"xoffset"
+
+Leo draws the icon at x + xoffset, where x is determined by the where param
+above.  Default 0.
+
+"xpad"
+
+The amount of extra space following the icon.  Default 0.
+
+"yoffset"
+
+Leo draws the icon at y + yoffset.  Default 0.
+
+"ypad"
+
+The amount of extra vertical space to add to the line height.  Default 0.
+
+These offset and pad values are integer pixel values and may be positive or
+negative.
+
+"lineHeight"  NOT USED.
+
+Overrides any calculated line height.  Default:  lineHeight = yoffset + height + ypad.
+
+"onClick", "onRightClick", "onDoubleClick"
+
+commands to call when the specified event happens.  By default, the "onRightClick"
+icon will be bound to a popup menu that offers the user a chance to delete the
+icon,  and maybe other options such as "nudging" the icon up or down, left or
+right.
+
+"popUpMenu"
+
+a list of items to put in a popup menu.  This would be a convenience to avoid
+having to use "onRightClick".
+
+I think you get the idea.  We want the drawing code to support lots of common
+things that plugins would like to do.  I'll probably think of other goodies,
+but this already is a big step forward.  Note that each of these keys will have
+a default, so plugins only need to specify keys that have non-default values.
+
+Edward
+
+P.S.  Other gui's might not be able to support all these options.  That's ok.
+The drawing code in gui plugins should degrade gracefully.
+
+EKR
+#@nonl
+#@-node:ekr.20040317184631:Design
+#@+node:ekr.20040317184631.2:Changes
+@nocolor
+
+"lineHeight"
+
+This key won't be used.
+
+t.unknownAttributes["lineYOffset"] 
+
+An integer y offset for the entire line (except user icons, which are flexible enough).  You can use this to center the following vertically: the plus/minus box, the horizontal line to the plus/minus box, the standard headline box, and the Tk.Text widget for the headline.
+#@nonl
+#@-node:ekr.20040317184631.2:Changes
+#@+node:ekr.20040317184631.1:To do
+@nocolor
+
+"onClick", "onRightClick", "onDoubleClick"
+
+commands to call when the specified event happens.  By default, the "onRightClick"
+icon will be bound to a popup menu that offers the user a chance to delete the
+icon,  and maybe other options such as "nudging" the icon up or down, left or
+right.
+
+"popUpMenu"
+
+a list of items to put in a popup menu.  This would be a convenience to avoid
+having to use "onRightClick".
+
+I think you get the idea.  We want the drawing code to support lots of common
+things that plugins would like to do.  I'll probably think of other goodies,
+but this already is a big step forward.  Note that each of these keys will have
+a default, so plugins only need to specify keys that have non-default values.
+#@nonl
+#@-node:ekr.20040317184631.1:To do
+#@+node:EKR.20040526202501:putUnknownAttributes
+def putUnknownAttributes (self,torv,toString=False):
+    
+    """Put pickleable values for all keys in torv.unknownAttributes dictionary."""
+    
+    result = []
+    attrDict = torv.unknownAttributes
+    if type(attrDict) != type({}):
+        g.es("ignoring non-dictionary unknownAttributes for",torv,color="blue")
+        return
+
+    for key in attrDict.keys():
+        try:
+            val = attrDict[key]
+            s = pickle.dumps(val,bin=True)
+            attr = ' %s="%s"' % (key,binascii.hexlify(s))
+            self.put(attr)
+
+        except pickle.PicklingError:
+            # New in 4.2 beta 1: keep going after error.
+            g.es("ignoring non-pickleable attribute %s in %s" % (
+                key,torv),color="blue")
+#@nonl
+#@-node:EKR.20040526202501:putUnknownAttributes
+#@-node:EKR.20040602153716:(Finish drawUserIcons)
+#@+node:ekr.20041123100100:support @fixed-recent-files in Leo's core
+The config classes do nothing special.
+
+The core must put fixed files first in the menu.
+#@nonl
+#@-node:ekr.20041123100100:support @fixed-recent-files in Leo's core
+#@-node:ekr.20041218152654:First
 #@+node:ekr.20040919101448:Major (Must do)
 #@+node:ekr.20040831092540:Allow uA's to be stored as plain strings (or base64)
 I would like to store unknown
@@ -2450,161 +2774,6 @@ I personally prefer the wiki way [[name of section]].
 #@-node:EKR.20040628085831:@import, @shadow
 #@-node:ekr.20040919101448:Major (Must do)
 #@+node:ekr.20041001182730:Easy
-#@+node:ekr.20041018195347:Docs
-#@+node:ekr.20041018195347.1:Improve MacOS Docs
-I just succeeded at installing Leo under os x (10.2.8) by folliwing  
-your instructions with modification.  It would be nice to get the  
-modification added to your page for others. I actually found the mods  
-by doing a search for help after following the present instructions  
-failed. The step that is missing (as clearly as I can see) is step 3  
-(using the Package Manager) in the following that comes from
-
-http://coding.derkeiler.com/Archive/Python/comp.lang.python/2003-12/ 
-3431.html
-
-> What I did that worked on Jaguar:
->  - Installed MacPython 2.3 for Jaguar using the binary installer from:
->  <http://homepages.cwi.nl/~jack/macpython/macpython-osx.html>
->  - Installed Tcl/Tk 8.4.4 using the binary installer from
->  <http://www.maths.mq.edu.au/~steffen/tcltk/TclTkAqua/>
->  - Used Package Manager (in /Applications/MacPython) to install  
-> _tkinter
->  (and also readlines and some other useful stuff)
->
-[x]
-   - type "rehash" in a terminal
-   - type pythonw to start Python and then test Tkinter with the  
-following:
->
-> import Tkinter
->  root = Tkinter.Tk()
->
->
-> should bring up a window.
-
-(It was also nice to have a test included so you could see that  
-everything was installed properly.)
-
-I also edited the leo file that is part of the leo distribution so it  
-read:
-
-pythonw /usr/local/lib/leo/src/leo.pyw "$1"
-
-That way I can just type "leo" to start leo rather than doing
-
-/usr/local/bin/pythonw leo.pyw
-
-Finally, when leo is run for the first time, it creates a window that  
-is centered on the screen asking for an ID. The screen happened to  
-appear under existing terminal windows and I didn't see it there and  
-thought something was wrong with leo on my system. After I found it  
-(accidentally) and entered a user name, all went as advertised.
-
-Seeing the leo project in python is inspiring.  Thanks for making this  
-available.
-
-/c
-#@nonl
-#@-node:ekr.20041018195347.1:Improve MacOS Docs
-#@+node:ekr.20040226094105:Put the scrollWheel workaround in the FAQ (or in the code??)
-@nocolor
-#@nonl
-#@+node:ekr.20040226094105.1:halw
-
-https://sourceforge.net/forum/message.php?msg_id=2437859
-By: halw
-
-David,
-
-I agree that your solution is best -- the problem is it doesn't work. 
-
-If you look at the original post you'll note that the mouse wheel works fine
-in all other Leo panes (which are native text panes, not a custom canvas).
-
-In fact, a stock RH9 system does set up X as those pages indicate. The problem
-is elsewhere, perhaps Tk or Tkinter.
-
-If Edward doesn't want to ship a workaround, that's fine. It should, IMO, make
-it into the FAQ, though.
-
---Hal
-
-#@-node:ekr.20040226094105.1:halw
-#@+node:ekr.20040226094105.2:djsg
-https://sourceforge.net/forum/message.php?msg_id=2435622
-By: djsg
-
-Tk is complying with the behavior of XFree86, and not hiding that behavior. 
-
-Documentation for XFree86 4.2.0 -- documentation for a 4.4 development version
-matches it, so 4.3.0 ought to match it also:
-
-http://www.xfree86.org/4.2.0/mouse7.html
-
-An example of configuration for XFree86 3.3.2.
-
-First, the URL: 
-
-http://www.genius-europe.com/service/faq/tuxmouse.htm
-
-o save their bandwidth, the example follows: 
-
-
-All mices with scroll wheel or stick
-
-XFree86 >= 3.3.2 (or other XServer with wheel to mouse button support)
-The mouse must be setup in XF86Config to send the mouse buttons 4 and 5 for
-wheel actions.
-Edit /etc/XF86Config with your favorite editor
-Add the following line to the "Pointer" section.
-
-ZAxisMapping 4 5
-
-Make sure your Protocol is set to either "IMPS/2" for a PS/2 mouse
-or for serial mice set it to "IntelliMouse" or "Auto".
-Example for PS/2 wheel mouse:
-
-Section "Pointer"
-Protocol "IMPS/2"
-Device "/dev/psaux"
-SampleRate 60
-BaudRate 1200
-ZAxisMapping 4 5
-Buttons 3
-EndSection
-
-After XWindows is started run :
-imwheel -k
-
-
-#@-node:ekr.20040226094105.2:djsg
-#@+node:ekr.20040226094105.3:The actual workaround
-
-https://sourceforge.net/forum/message.php?msg_id=2433628
-By: halw
-
-Okay, I have a workaround that works for me with my existing Tk version. My
-Tkinter skills are weak, but I don't think this will hurt anything else :)
-
-Turns out this Tk version (or X or Tkinter or 	) doesn't generate MouseWheel
-events, but maps to buttons 4 (up) & 5 (down).
-
-Add to if clause 
-# Handle mouse wheel in the outline pane.
-if sys.platform == "linux2": # This crashes tcl83.dll
-..canvas.bind("<MouseWheel>", frame.OnMouseWheel)
-..def mapWheel(e):
-    if e.num == 4:
-    ..e.delta = 120
-    ..return frame.OnMouseWheel(e)
-    elif e.num == 5:
-    ..e.delta = -120
-    ..return frame.OnMouseWheel(e)
-..canvas.bind("<ButtonPress>", mapWheel, add=1)
-#@nonl
-#@-node:ekr.20040226094105.3:The actual workaround
-#@-node:ekr.20040226094105:Put the scrollWheel workaround in the FAQ (or in the code??)
-#@-node:ekr.20041018195347:Docs
 #@+node:ekr.20041004193600:Add safeguards on @button and @script
 #@+node:ekr.20041004193600.1:Paul's first posting
 @killcolor
@@ -2951,6 +3120,291 @@ c:\aspell is hardcoded in the plugin.
 #@-node:ekr.20041005083816:Use g.bunch to encapsulate plugins options
 #@-node:ekr.20041115100150:Improve plugins style guide
 #@-node:ekr.20041001182730:Easy
+#@+node:ekr.20041018195347:Docs
+#@+node:ekr.20041018195347.1:Improve MacOS Docs
+I just succeeded at installing Leo under os x (10.2.8) by folliwing  
+your instructions with modification.  It would be nice to get the  
+modification added to your page for others. I actually found the mods  
+by doing a search for help after following the present instructions  
+failed. The step that is missing (as clearly as I can see) is step 3  
+(using the Package Manager) in the following that comes from
+
+http://coding.derkeiler.com/Archive/Python/comp.lang.python/2003-12/ 
+3431.html
+
+> What I did that worked on Jaguar:
+>  - Installed MacPython 2.3 for Jaguar using the binary installer from:
+>  <http://homepages.cwi.nl/~jack/macpython/macpython-osx.html>
+>  - Installed Tcl/Tk 8.4.4 using the binary installer from
+>  <http://www.maths.mq.edu.au/~steffen/tcltk/TclTkAqua/>
+>  - Used Package Manager (in /Applications/MacPython) to install  
+> _tkinter
+>  (and also readlines and some other useful stuff)
+>
+[x]
+   - type "rehash" in a terminal
+   - type pythonw to start Python and then test Tkinter with the  
+following:
+>
+> import Tkinter
+>  root = Tkinter.Tk()
+>
+>
+> should bring up a window.
+
+(It was also nice to have a test included so you could see that  
+everything was installed properly.)
+
+I also edited the leo file that is part of the leo distribution so it  
+read:
+
+pythonw /usr/local/lib/leo/src/leo.pyw "$1"
+
+That way I can just type "leo" to start leo rather than doing
+
+/usr/local/bin/pythonw leo.pyw
+
+Finally, when leo is run for the first time, it creates a window that  
+is centered on the screen asking for an ID. The screen happened to  
+appear under existing terminal windows and I didn't see it there and  
+thought something was wrong with leo on my system. After I found it  
+(accidentally) and entered a user name, all went as advertised.
+
+Seeing the leo project in python is inspiring.  Thanks for making this  
+available.
+
+/c
+#@nonl
+#@-node:ekr.20041018195347.1:Improve MacOS Docs
+#@+node:ekr.20040226094105:Put the scrollWheel workaround in the FAQ (or in the code??)
+@nocolor
+#@nonl
+#@+node:ekr.20040226094105.1:halw
+
+https://sourceforge.net/forum/message.php?msg_id=2437859
+By: halw
+
+David,
+
+I agree that your solution is best -- the problem is it doesn't work. 
+
+If you look at the original post you'll note that the mouse wheel works fine
+in all other Leo panes (which are native text panes, not a custom canvas).
+
+In fact, a stock RH9 system does set up X as those pages indicate. The problem
+is elsewhere, perhaps Tk or Tkinter.
+
+If Edward doesn't want to ship a workaround, that's fine. It should, IMO, make
+it into the FAQ, though.
+
+--Hal
+
+#@-node:ekr.20040226094105.1:halw
+#@+node:ekr.20040226094105.2:djsg
+https://sourceforge.net/forum/message.php?msg_id=2435622
+By: djsg
+
+Tk is complying with the behavior of XFree86, and not hiding that behavior. 
+
+Documentation for XFree86 4.2.0 -- documentation for a 4.4 development version
+matches it, so 4.3.0 ought to match it also:
+
+http://www.xfree86.org/4.2.0/mouse7.html
+
+An example of configuration for XFree86 3.3.2.
+
+First, the URL: 
+
+http://www.genius-europe.com/service/faq/tuxmouse.htm
+
+o save their bandwidth, the example follows: 
+
+
+All mices with scroll wheel or stick
+
+XFree86 >= 3.3.2 (or other XServer with wheel to mouse button support)
+The mouse must be setup in XF86Config to send the mouse buttons 4 and 5 for
+wheel actions.
+Edit /etc/XF86Config with your favorite editor
+Add the following line to the "Pointer" section.
+
+ZAxisMapping 4 5
+
+Make sure your Protocol is set to either "IMPS/2" for a PS/2 mouse
+or for serial mice set it to "IntelliMouse" or "Auto".
+Example for PS/2 wheel mouse:
+
+Section "Pointer"
+Protocol "IMPS/2"
+Device "/dev/psaux"
+SampleRate 60
+BaudRate 1200
+ZAxisMapping 4 5
+Buttons 3
+EndSection
+
+After XWindows is started run :
+imwheel -k
+
+
+#@-node:ekr.20040226094105.2:djsg
+#@+node:ekr.20040226094105.3:The actual workaround
+
+https://sourceforge.net/forum/message.php?msg_id=2433628
+By: halw
+
+Okay, I have a workaround that works for me with my existing Tk version. My
+Tkinter skills are weak, but I don't think this will hurt anything else :)
+
+Turns out this Tk version (or X or Tkinter or 	) doesn't generate MouseWheel
+events, but maps to buttons 4 (up) & 5 (down).
+
+Add to if clause 
+# Handle mouse wheel in the outline pane.
+if sys.platform == "linux2": # This crashes tcl83.dll
+..canvas.bind("<MouseWheel>", frame.OnMouseWheel)
+..def mapWheel(e):
+    if e.num == 4:
+    ..e.delta = 120
+    ..return frame.OnMouseWheel(e)
+    elif e.num == 5:
+    ..e.delta = -120
+    ..return frame.OnMouseWheel(e)
+..canvas.bind("<ButtonPress>", mapWheel, add=1)
+#@nonl
+#@-node:ekr.20040226094105.3:The actual workaround
+#@-node:ekr.20040226094105:Put the scrollWheel workaround in the FAQ (or in the code??)
+#@+node:ekr.20041117163258:Document Design of new config manager
+@nocolor
+#@nonl
+#@+node:ekr.20041116091233.2:Key principle & corollaries
+The fundamental design principle underlying the new configuration manager is this:
+
+** Settings must be infinitely flexible **
+
+There is no way that I can predict what people and plugins are going to want to do.  Rather than trying to "figure it all out" Leo must let people and plugins do whatever they want.  This turns out to be the easiest way.  You could say it is the only way.
+
+There are several direct corollaries of this principle:
+
+- Only outlines can structure settings.  Tabbed notebooks are not general enough.
+
+- We must be able to add any kind of new setting without changing the format of .leo files.  The xml structure of .leo files must not depend on settings.  In particular, the <preferences> element must become vestigial.
+
+- Leo can not use flat configuration files.  There is no way flat configuration files can do what is required.  Say bye bye to ConfigParser and all it's spawn.
+
+I understand some people like flat config files.  Plugins can still use them.  However, using flat config files is simply not feasible if Leo is to have an extensible structure.
+
+- Leo's configuration manager must be entirely rewritten and substantial changes to Leo's core may be coming.  This can't be helped; much of the structure of leoConfig.txt is hard-wired into leoConfig.py.
+
+- The new configuration manager must allow plugins to create and reorganize settings.  As we shall see in a later posting, this will be surprisingly easy to do.
+
+- Leo must use Leo outlines in a new way to organize settings.
+
+It would be extremely foolish not to take advantage of Leo's organizational capabilities.  However, using leoConfig.leo to create leoConfig.txt created endless problems.  Something _much_ better is needed.  As we shall see in the next posting, there is, in fact, a much better way.
+
+Edward
+#@nonl
+#@-node:ekr.20041116091233.2:Key principle & corollaries
+#@+node:ekr.20041116091233.10:The shape of the new design
+The shape of the 4.3 design
+
+Given the fundamental design principle for the new configuration manager, viz., settings must be infinitely flexible, the shape of a powerful and flexible design starts to emerge from the shadows:
+
+- Leo will support at least the local, user and per-Leo-file settings.
+
+Plugins may create other kinds of settings.  The new configuration manager will support this.
+
+- Settings must be contained _in Leo outlines_.
+
+It would be extremely wasteful and foolish not to use Leo's superb data organizing features.  Flat configuration files can not begin to do what must be done.  I shall have no further use for ConfigParser.  Plugins can, of course, use ConfigParser if they like.
+
+Global and user settings will be contained in files called leoSettings.leo.  The big difference between leoSettings.leo and leoConfig.leo is that the leoSettings.leo files never get tangled.  Instead, Leo will _parse_ these files on startup to create settings.  As we shall see, this parsing is trivial to do.
+
+Per-file settings will be contained _in the outline to which the settings apply_.  These settings will be contained in an @settings tree.
+
+N.B. This @settings tree is just part of the outline. In particular:
+
+a) all nodes of this tree will be easily accessible to scripts and plugins.  For example, c.settingsRoot() will return the root of this tree.
+
+b) no part of Leo's xml file format needs to change in order to create additional settings.
+
+- The @settings tree will normally be hidden.
+
+The Show @settings command will hide the "regular" outline and show only the @settings outline.  This command will work pretty much like the hoist command.  The corresponding Hide @settings command will work like the De-Hoist command.  leoSettings.leo files will contain nothing but the @settings tree, so this tree will be visible by default.
+
+- Users will usually view and change settings using a _settings dialog_.
+
+The supremely valuable Configurator.py script is the inspiration for this idea.
+
+The Edit Global Prefs, Edit User Prefs, and Edit Local Prefs commands will bring up these dialogs.  These settings dialog will (and must) be organized as in jEdit.  There will be an extensible outline to organize settings and a separate page area to examine and change settings.   Selecting an item in the outline will select a page.
+
+BTW, Leo will change settings files _only_ as the result of such commands.  In particular, Leo will no longer change settings when saving a .leo file. 
+
+- User _will_ be able to view and change the @settings tree.
+
+So there are two views of the @settings tree.  The normal view is the gui view.  The "expert" view is the @settings outline itself.  The expert view allows users to create new settings, to reorganize settings, and to do other things that can't be done in the gui view.
+
+The outline part of the settings dialog will be a Tix or Pmw megawidget.  There will be no need to use the leoTkinterTree class.  However, the @settings tree _is_ part of a regular Leo outline, so the @settings tree itself can use clones.  The megawidget outline won't allow changes, but that does not make the scheme any less flexible; changes can be made in the @settings "view".  Do you see how clever this is?
+
+- Leo will create settings dialogs _using information contained in the @settings trees_. 
+
+Again, this idea comes from the Configurator.py script.  Parsing @settings trees is trivial because the parser has full access to @settings tree, just as any script does.  Furthermore, the structure of settings is mirrored in the structure of this tree, so discovering hierarchical relationships in the settings is also trivial.
+
+I'll discuss the actual format of @settings tree in a later posting.  Suffice it to say here that
+
+a) The format is simple, yet powerful and flexible;
+b) plugins could easily extend this format.
+
+- The Open Global Settings and Open User Settings commands will open the appropriate leoSettings.leo files and automatically show the @settings trees. (There is nothing else to show).
+
+- Leo will update settings only in response to saving leoSettings.leo files or .leo files containing @settings trees.  There will be no _derived_ settings files to update.  This will eliminate all the confusion arising from leoConfig.txt getting out of synch with leoConfig.leo.
+
+Conclusion
+
+I am pleased with this design.  It is simple, powerful, flexible.  
+
+Just as one example of what can be done, this design makes translating Leo into foreign languages about as easy as can be imagined.  I haven't discussed all the details of this, but clearly translating @settings dialog entries can be done without fuss.  The "infinitely extensible" principle guarantees that plugins can create whatever translation data is needed in an @setting tree somewhere.  Because this tree is an regular part of the Leo outline, a plugin could create this tree from other data.
+
+Acknowledgments
+
+Besides the Configurator.py script, another crucial influence on my thinking was the plugin_manager plugin.  This showed that it is indeed possible to have a "dual" view of data, both as text (or outline) and as a dialog.  RodrigoB's suggestion concerning @config-file nodes is the direct precursor of @settings trees.  However, I probably would not have been able to understand Rodrigo's suggestion without Configurator.py script and plugin_manager.py.  Also, Tom Fetherston's long postings convinced me that configuration must be infinitely extensible.  This was another key aha.  So thanks to you all; this would not have happened without you.
+
+Edward
+#@nonl
+#@-node:ekr.20041116091233.10:The shape of the new design
+#@+node:ekr.20041116091233.11:Format of the @settings tree
+Some nodes in the @setting tree will organize the settings.  All other nodes nodes will represent individual settings in a very simple way as follows:
+
+- The headline contains the name of the setting, optionally followed by its translation for other languages.
+
+- The body text contains the expected type of the settings, its present value, and comments.  Leo will use these fields to create an area in the gui dialog in which the user can examine and change the setting.
+
+The first line of the body text contains type:value.  The type determines the type of the option and thus the kind of widget used to show the setting in the dialog.  Typical types will be bool, int, string, color, font, directory etc.
+
+All other lines of the body text contains comments that will appear in the dialog.
+
+Leo can easily use this information to create dialog entries.  Bool settings create radio buttons, string entries, create Text boxes, color entries create color pickers, etc.
+
+There will be other details forthcoming, but this is enough to show that a simple scheme can be extremely powerful in an outline context.
+#@nonl
+#@-node:ekr.20041116091233.11:Format of the @settings tree
+#@+node:ekr.20041116125049:Improvements
+- @page creates a single dialog page.
+
+- Use @int:name=val in headline.
+
+The advantage is that the body text will contain only comment text.
+The disadvantage is that parsing the headline is a little harder.
+
+Similarly for @string, @color, etc.
+
+- Allow @trans translation in child nodes
+
+- Non-@ headlines just create nodes in outline mega-widget.
+#@nonl
+#@-node:ekr.20041116125049:Improvements
+#@-node:ekr.20041117163258:Document Design of new config manager
+#@-node:ekr.20041018195347:Docs
 #@+node:ekr.20041022081937.1:Others (Maybe)
 #@+node:ekr.20041120153700.1:Change g.app.gui to c.frame.gui
 In:
@@ -2966,8 +3420,9 @@ http://www.reportlab.com
 import xml.sax
 #@-node:ekr.20031218072017.736:Use xml parser to read .leo files
 #@+node:ekr.20040217153407:User customizeable tangling and untangling
-#@+node:ekr.20031218072017.803:@template directive?
-#@-node:ekr.20031218072017.803:@template directive?
+@template plugin does some (most?) of this.
+#@nonl
+#@-node:ekr.20040217153407:User customizeable tangling and untangling
 #@+node:ekr.20031218072017.795:Metatags
 @nocolor
 
@@ -2980,8 +3435,10 @@ Here are some features I'd like to see:
 3. Metatags. @sectionname or @savedate are expanded to the appropriate text when saved.
 
 -marshall-  
+
+There are quite a few of these now.  It would be good to generalize:
+- Register @node type.
 #@-node:ekr.20031218072017.795:Metatags
-#@-node:ekr.20040217153407:User customizeable tangling and untangling
 #@+node:ekr.20041007052853:(Fix problems with paste on Linux)
 @color
 #@nonl
@@ -3203,966 +3660,64 @@ Günther
 #@nonl
 #@-node:ekr.20041130104552:(Support bird-track programs/comments?)
 #@-node:ekr.20041022081937.1:Others (Maybe)
-#@+node:EKR.20040606193130:(Fix problems with negative tab width in prefs)
-#@+node:EKR.20040606193323:Report
-@nocolor
+#@+node:ekr.20041118135306.1:Testing
+- Create unit tests for essential features
 
-Open discussion
-http://sourceforge.net/forum/message.php?msg_id=2603738
+- Test all dialogs.
 
-I always set tabs to -4 in the config. when you open the prefs it says 4 but
-there is a checkmark for convert tabs to space. open a new leo, open prefs. its
-not checked! open another leo, its checked.
+- Make sure that shortcut settings work.
 
-The problem is that tab_width is usually stored in leoConfig.txt, not the .leo file.
-I'm going to ignore this problem for now...
+- Make sure proper values from Prefs panel are used in Tangle/Untangle commands.
 #@nonl
-#@-node:EKR.20040606193323:Report
-#@+node:ekr.20031218072017.2062:getPrefs
-# Note: Leo 4.3 does not write these settings to local .leo files.
-# Instead, corresponding settings are contained in leoConfig.leo files.
+#@-node:ekr.20041118135306.1:Testing
+#@+node:ekr.20041214132052:Mac issues
+#@+node:ekr.20041214132052.1:Mac packages
+@killcolor
 
-def getPrefs (self):
+http://sourceforge.net/forum/message.php?msg_id=2881302
+By: genthaler  Günther
 
-    c = self.c
-    
-    if self.getOpenTag("<preferences"):
-        return # <preferences/> seen
-
-    table = (
-        ("allow_rich_text",None,None), # Ignored.
-        ("tab_width","tab_width",self.getLong),
-        ("page_width","page_width",self.getLong),
-        ("tangle_bat","tangle_batch_flag",self.getBool),
-        ("untangle_bat","untangle_batch_flag",self.getBool),
-        ("output_doc_chunks","output_doc_flag",self.getBool),
-        ("noweb_flag",None,None), # Ignored.
-        ("extended_noweb_flag",None,None), # Ignored.
-        ("defaultTargetLanguage","target_language",self.getTargetLanguage),
-        ("use_header_flag","use_header_flag",self.getBool))
-    
-    done = False
-    while 1:
-        found = False
-        for tag,var,f in table:
-            if self.matchTag("%s=" % tag):
-                if var:
-                    self.getDquote() ; val = f() ; self.getDquote()
-                    setattr(c,var,val)
-                else:
-                    self.getDqString()
-                found = True ; break
-        if not found:
-            if self.matchTag("/>"):
-                done = True ; break
-            if self.matchTag(">"):
-                break
-            else: # New in 4.1: ignore all other tags.
-                self.getUnknownTag()
-
-    if not done:
-        while 1:
-            if self.matchTag("<defaultDirectory>"):
-                # New in version 0.16.
-                c.tangle_directory = self.getEscapedString()
-                self.getTag("</defaultDirectory>")
-                if not g.os_path_exists(c.tangle_directory):
-                    g.es("default tangle directory not found:" + c.tangle_directory)
-            elif self.matchTag("<TSyntaxMemo_options>"):
-                self.getEscapedString() # ignored
-                self.getTag("</TSyntaxMemo_options>")
-            else: break
-        self.getTag("</preferences>")
+I'm happy to provide scripts, icons, whatever. The application bundles I've
+created previously should really provide enough of a pattern to do the job.
+What I was referring to, is what other scripts/tools I would have to integrate
+with. I'm not familiar enough with the SF way of doing things to know what I
+should provide, access to CVS etc. I also don't know whether you bundle things
+up a home and post them on SF, or if you do the compile/archive on the SF boxen.
 #@nonl
-#@+node:ekr.20031218072017.2063:getTargetLanguage
-def getTargetLanguage (self):
-    
-    # Must match longer tags before short prefixes.
-    for name in g.app.language_delims_dict.keys():
-        if self.matchTagWordIgnoringCase(name):
-            language = name.replace("/","")
-            # self.getDquote()
-            return language
-            
-    return "c" # default
-#@nonl
-#@-node:ekr.20031218072017.2063:getTargetLanguage
-#@-node:ekr.20031218072017.2062:getPrefs
-#@-node:EKR.20040606193130:(Fix problems with negative tab width in prefs)
+#@-node:ekr.20041214132052.1:Mac packages
+#@+node:ekr.20041130125213.1:(Create Mac package for Leo)
+#@+node:ekr.20041130125213.2:Requests & follow up
+@killcolor
+
+http://sourceforge.net/forum/message.php?msg_id=2859149
+By: genthaler
+
+I'd really like to have Mac OS X packages available as a download option, rather
+than doing it by hand every time a new version comes out. What do I have to
+do to make this happen?
+
+http://sourceforge.net/forum/message.php?msg_id=2859156
+By: genthaler
+
+BTW, I wasn't the first to do this and publish it - heres a link to an older
+version - http://www.wordtech-software.com/leo.html
+ 
+http://sourceforge.net/forum/message.php?msg_id=2859153
+By: genthaler
+
+On Mac OS X, it's quite easy to have a double-clickable application bundle with
+its own private Python and TclTk frameworks, but it's huge; about 20MB unpacked
+IIRC. More sensible to use the OS's version, but that requires Tkinter to be
+installed in /System/Library/Frameworks/Python.framework, and that requires
+an installer package and admin privileges.
+
+Günther
+
+#@-node:ekr.20041130125213.2:Requests & follow up
+#@-node:ekr.20041130125213.1:(Create Mac package for Leo)
+#@-node:ekr.20041214132052:Mac issues
 #@-node:EKR.20040609091327:To do: 4.3
 #@+node:ekr.20041112155009:Others
-#@+node:ekr.20041022091645.2:Top Big Picture
-#@+node:ekr.20041022091645.4:Better integration with Emacs/Pymacs
-#@+node:ekr.20041022144159:Q: Pymacs bridge
-I'm trying to use the Pymacs bridge to add a symbol completion facility to
-Emacs's python-mode.  Neither the Python nor Emacs Lisp portions are all
-that complex, but I'm having trouble passing a list of strings from Emacs
-Lisp into Python.  On the Emacs Lisp side it looks like this:
-
-    (pymacs-load "pycomplete")
-
-    (defun py-complete ()
-      (interactive)
-      (pycomplete-pycomplete (py-symbol-near-point)
-                             (py-find-global-imports)))
-
-(py-find-global-imports) returns a (Lisp) list of strings, e.g.:
-
-    ("import time", "import sys")
-
-On the Python side I have this function:
-
-    def pycomplete(s, imports=None):
-        completions = get_all_completions(s, imports)
-        dots = s.split(".")
-        return os.path.commonprefix([k[len(dots[-1]):] for k in completions])
-
-Unfortunately, the imports arg does not come across as a Python list of
-strings (s does come across the bridge as a normal Python string).  Its
-repr() prints out like this:
-
-    lisp('("import time")')
-
-What do I need to do to convert that object into a true Python list of
-strings?  I'm afraid I don't quite understand the description of the lisp
-object in the Pymacs docs.  I tried imports.value() but that just gave me
-
-    (aref pymacs-lisp 0)
-
-Any help appreciated...
-
-Skip
-#@nonl
-#@-node:ekr.20041022144159:Q: Pymacs bridge
-#@+node:ekr.20041022144159.1:A: pymacs-forget-mutability
-"""
-Proper Emacs Lisp lists, those for which the cdr of last cell is nil, are
-normally transmitted opaquely to Python. If pymacs-forget-mutability is
-set, or if Python later asks for these to be expanded, proper Emacs Lisp
-lists get converted into Python lists, if we except the empty list, which
-is always converted as Python None. In the other direction, Python lists
-are always converted into proper Emacs Lisp lists.
-"""
-
-So, maybe try
-
-    (defun py-complete ()
-      (interactive)
-      (let ((pymacs-forget-mutability t)) 
-	(pycomplete-pycomplete (py-symbol-near-point)
-                               (py-find-global-imports))))
-#@-node:ekr.20041022144159.1:A: pymacs-forget-mutability
-#@-node:ekr.20041022091645.4:Better integration with Emacs/Pymacs
-#@+node:ekr.20040329182535.4:Leo + zodb
-#@+node:ekr.20041002151816:ZODB docs
-#@+node:ekr.20041002151816.1:What is the ZODB?
-http://zope.org/Wikis/ZODB/FrontPage/guide/node2.html#SECTION000210000000000000000
-
-1.1 What is the ZODB?
-
-The ZODB is a persistence system for Python objects. Persistent programming
-languages provide facilities that automatically write objects to disk and read
-them in again when they're required by a running program. By installing the
-ZODB, you add such facilities to Python.
-
-#@-node:ekr.20041002151816.1:What is the ZODB?
-#@+node:ekr.20041002151816.2:How ZODB Works
-2.2 How ZODB Works
-
-The ZODB is conceptually simple. Python classes subclass a persistent.Persistent
-class to become ZODB-aware. Instances of persistent objects are brought in from
-a permanent storage medium, such as a disk file, when the program needs them,
-and remain cached in RAM. The ZODB traps modifications to objects, so that when
-a statement such as obj.size = 1 is executed, the modified object is marked as
-``dirty.'' On request, any dirty objects are written out to permanent storage;
-this is called committing a transaction. Transactions can also be aborted or
-rolled back, which results in any changes being discarded, dirty objects
-reverting to their initial state before the transaction began.
-
-#@-node:ekr.20041002151816.2:How ZODB Works
-#@+node:ekr.20041002151816.3:Rules for Writing Persistent Classes
-2.6 Rules for Writing Persistent Classes
-
-Practically all persistent languages impose some restrictions on programming
-style, warning against constructs they can't handle or adding subtle semantic
-changes, and the ZODB is no exception. Happily, the ZODB's restrictions are
-fairly simple to understand, and in practice it isn't too painful to work around
-them.
-
-The summary of rules is as follows:
-
-* If you modify a mutable object that's the value of an object's attribute, the
-ZODB can't catch that, and won't mark the object as dirty. The solution is to
-either set the dirty bit yourself when you modify mutable objects, or use a
-wrapper for Python's lists and dictionaries (PersistentList, PersistentMapping)
-that will set the dirty bit properly.
-
-* Recent versions of the ZODB allow writing a class with __setattr__ ,
-__getattr__, or __delattr__ methods. (Older versions didn't support this at
-all.) If you write such a __setattr__ or __delattr__ method, its code has to set
-the dirty bit manually.
-
-* A persistent class should not have an __del__ method. The database moves
-objects freely between memory and storage. If an object has not been used in a
-while, it may be released and its contents loaded from storage the next time it
-is used. Since the Python interpreter is unaware of persistence, it would call
-the __del__ each time the object was freed.
-#@nonl
-#@-node:ekr.20041002151816.3:Rules for Writing Persistent Classes
-#@-node:ekr.20041002151816:ZODB docs
-#@+node:ekr.20031218072017.404:LeoN, Zope & collaboration info
-@nocolor
-#@nonl
-#@+node:ekr.20031218072017.405:Kent Tenny Notes
-@nocolor
-
-Outlook: server for email, addresses & calendar.  Groupware.  Chandler similar.
-
-Zope: back end is ZODB.  Zope like an OS: run Python code on Zope.
-
-Zope: another way to access Leo files.  Maybe twisted is better?
-
-Wiki anology: edit Leo files with browser.  Write through the web.
-
-longrun.org
-
-Wiki principles: 
-	- Sharing is 90% of collaboration.
-	- Zope: Subscribe to a wiki: email when page changes.
-	- RSS: xml that defines piece of info(tile,url,abstract)
-		- Client has a list of rss feeds: an xml file.
-		- List of intesting people: notified when they say something.
-
-Two goals:
-	- publish Leo files
-	- edit Leo files
-
-Brother needs cvs.
-Kent not so worried about cvs.
-	-Leo file is a web site!
-	- Helper layer between user and OS.
-		- Look at aap project.  Author of vim. a-p.org
-			- Replacement for make in Python.  Automating tool.
-		- Expert prepares Leo file.  User uses it.
-#@nonl
-#@-node:ekr.20031218072017.405:Kent Tenny Notes
-#@+node:ekr.20031218072017.406:url's
-#@+node:ekr.20031218072017.407:@url http://24.243.129.68:8080/members/sandbox
-#@-node:ekr.20031218072017.407:@url http://24.243.129.68:8080/members/sandbox
-#@+node:ekr.20031218072017.408:@url http://www.zopelabs.com/cookbook
-#@-node:ekr.20031218072017.408:@url http://www.zopelabs.com/cookbook
-#@+node:ekr.20031218072017.409:@url http://zwiki.org/FrontPage  Zope implementation of wiki
-#@-node:ekr.20031218072017.409:@url http://zwiki.org/FrontPage  Zope implementation of wiki
-#@-node:ekr.20031218072017.406:url's
-#@+node:ekr.20031218072017.410:Collaboration & Sharing
-#@+node:ekr.20031218072017.411:From Rodrigo
-Developers Forum
-By: rodrigo_b ( Rodrigo Benenson ) 
- RE: Leo over the network   
-2003-05-10 00:06  
-So this is my first proposal: 
-
-Requirements 
--------------------- 
-
-* Read remote outlines. 
-** With Leo clients. 
-** Over the web. 
-
-* Edit remote outlines. 
-
-* Import remote outlines (retrieve outlines from the web). 
-
-* Synchronize local outlines with remote ones (web to local and local to web). 
-
-* Publish outlines (send outlines to the web). 
-
-* The Leo client have to be keept lighweigth. 
-
-* The Leo remote outline access server should be a lighweigth daemon. 
-
-* This daemon should automagically render HTML from the outlines. 
-
-* The outlines should be editable from the web and via Leo client. 
-
-* Concurency management is must. 
-
-* The remote servers should be included in the leo client as leo nodes (just like leo files, but remotes). 
-"@leo-outline leo.server.org:854" 
-
-* By this way I could have access to local server nodes. 
-"@leo-outline localhost:854" 
-
-* The remote server should offer one and only one big outline with sub nodes, and so on, and so on... 
-
-* At least the concurency should be managed as "when someone write, all the other ones only can read" 
-
-* It is better if Leo devellop simultaneaously some hypertext/wiki extensions. 
-
----------------------------- 
-End of requeriments 
-
-This requeriments requires a client-server architecture, with basic commands as: 
-- Update node 
-- Lock/release node 
-- Edit outline 
-- Download outline 
-- Upload outline 
-
-well that is by the moment, I hope that we will be able to create a Finite, clear, requeriments list for this branch of Leo. 
-
-RodrigoB.  
-
-#@-node:ekr.20031218072017.411:From Rodrigo
-#@-node:ekr.20031218072017.410:Collaboration & Sharing
-#@+node:ekr.20031218072017.412:Zope
-#@+node:ekr.20031218072017.413:From Rodrigo re: Zope.
-Open Discussion
-https://sourceforge.net/forum/message.php?msg_id=2007586
-By: rodrigo_b
-
-z2.py,
->Supposing that that I did find this file, what would I be looking for? 
-
-This is the Main script, the principal program, the code that startup all the
-servers, the only python program that make run Zope, it the code called by start.py,
-and it is the one to which you pass the command lines.
-
-With the command line you can indicate which services to start up at which ports.
-This is IMPORTANT. Also you can enable/disable the Debug mode.
-
-python z2.py --help will give you some infos about what I'm talking about.
-
-In linux the debug or not debug mode, enable the console or daemon mode (that
-means 'background task mode').
-
-In windows, I'm not sure that disabling the debug mode will be enough.
-I know that at the install time you can setup Zope as a Windows Service, so
-it will start automatically every time Windows Startup, and it will not open
-a console window.
-
-But first look at the debug mode.
-
-Start.bat give some defaults command lines to z2.py
-
-Webdav,
->What issues are involved in this choice, and why should I care today? 
-
-from www.webdav.org
-
-What is WebDAV? 
-Briefly: WebDAV stands for "Web-based Distributed Authoring and Versioning".
-It is a set of extensions to the HTTP protocol which allows users to collaboratively
-edit and manage files on remote web servers.
-
-For example that means that you can open you Windows Explorer (from your mail
-I understand that you work on an MsWindows OS),
-tip the url "localhost:%i"%(your webdav port) and you will be able to navigate,
-view and edit the Zope Objects just as a normal file system (well, almost).
-
-WebDav is a standard and there are Python implementations. WebDav is support
-by  Oscom.
-
-WebDav is cool.
-WebDav is the 'highest level tool'.
-
-ZODB,
-
->Does that mean that gnx's aren't needed with Zope? Could Leo nodes live in
-the ZODB?
-
-You have to thinks to ZODB just as what it is: a Persistent Object Database.
-Most objects in Zope are Persistents, that mean that their instances do not
-die when you shutdown the server.
-
-The ZODB store his data in it own format.
-I think that GNX should be keeped.
-You have to basic ways to put nodes into Zope.
-
-First: the hard way: create a new Product (Products are something like Zope
-plugins) that is based on the Leo code, but were there is no node storage, instead
-the node should be Persistents. Then add rendering code to this objects.
-
-Leo node object + Persistence + ZClass + Rendering Code -> Leo Zope node.
-
-Additionaly you should create an Folder like object that should be an 'Leo Outline
-Zope Object',  actuating as an Leo nodes container.
-
-This shema is similar to the Zwiki way, with a Zwiki Web and the Zwiki Pages.
-
-Second: Use A zope folder just as Leo manage the @file nodes. Let have simple
-DTMLDocuments, edited via WebDav, with <dtml-comments> , and stuff like that.
-The Leo import/export that nodes.
-
-RodrigoB.
-
-#@-node:ekr.20031218072017.413:From Rodrigo re: Zope.
-#@+node:ekr.20031218072017.414:Clarification from Kent Tenny
-Open Discussion
-https://sourceforge.net/forum/message.php?msg_id=2009081
-By: ktenney
-
-Edward,
-
-I don't see ZLeo replacing Leo, rather a method of accessing
-Leo files.
-
-When I write, I almost always want it to be web accessable,
-so that I can access it from any browser, and so that I can
-share it easily. I would like myfile.leo to live
-at http://longrun.org/leo/myfile.leo. It can be read and
-written to from any browser (according to how permissions are
-configured) The page describing how to configure Apache would
-be found at http://longrun.org/leo/myfile.leo/Apache/configure
-The only requirement to work with Leo files is a browser.
-
-I wouldn't want to lose the capability to edit outside
-the browser, using a standalone version of Leo or Zope's
-ExternalEditor product. ExternalEditor allows me to click
-an icon to open the page I'm viewing in any editor. I could
-open it in Leo as a Leo file, or open just the page in
-Vim (http://vim.sourceforge.net/index.php)
-
-Zope is ponderous, I think of it as more of a platform
-than an application. My understanding of how Zope works
-grows slowly, in the mean time my focus is on _products_.
-Installing a product in Zope is like installing an application
-in Windows or Linux.
-
-One of the most evolved products is Plone/CMF http://plone.org
-which is basically a turnkey web site.
-
-twisted http://twistedmatrix.com is a brilliant set of network
-programming tools. That's all I know about it.
-
-I'm not sure about Chandler (http://www.osafoundation.org/) 
-(they did choose Python and ZODB http://www.osafoundation.org/technology.htm)
-
-You might try subscribing to a Zope mailing list or two
-http://www.zope.org/Resources/MailingLists
-The community of users and developers is very important to Zope.
-
-Thanks,
-Kent
-#@-node:ekr.20031218072017.414:Clarification from Kent Tenny
-#@+node:ekr.20031218072017.415:From Rodrigo re: ip
-Open Discussion
-https://sourceforge.net/forum/message.php?msg_id=2007817
-By: rodrigo_b
-
-If zope is running some server then this server will be accesible from your
-network if and only if there is no firewall in the way.
-
-The people can access to your services using (normally on internet you do not
-have a domain name)
-
-your_ip:the_service_port
-
-Example:
-zope http service on port 8080 on your machine.
-When  you connect to internet your machine got an extra IP.
-Then simple put on the web browser
-
-http://your_conexion_ip:8080
-
-and Tada you will see the root_zope/index_html object rendered intro HTML.
-
-Most of the ISP give you a dinamic IP.
-Some companies provides you dinamic IP Domain Name services, allowing to attach
-a domain name to your machine dinamically (each time you reconect).
-
-then you can have:
-
-http://leo.edward.com:8080/
-
-The 8080 stuff can be avoied if you setup zope to use the standard port 80 for
-HTTP service.
-
-With this in mind you can access ftp
-
-ftp://your_ip_or_domain_name:8021
-
-or webdav, or anything else.
-#@-node:ekr.20031218072017.415:From Rodrigo re: ip
-#@+node:ekr.20031218072017.416:Other servers
-Open Discussion
-https://sourceforge.net/forum/message.php?msg_id=2007832
-By: rodrigo_b
-
-I would made a warning.
-
-Zope IT IS NOT the only way to obtain an local HTTP server, pythonic and
-flexible.
-
-There is a lot of other way.
-
-Also Zope IT IS NOT THE BEST pythonic http/ftp/webdav or anything server
-aviable.
-
-I think that we should define better 
-
-What we want to do?
-
-before choosing the tool.
-
-As I said, I had already used Zope, I choosed it because of very specific features,
-but nothing indicate that Zope is the best way to get Leo to the colaborative
-network universe.
-
-I think that we should at least consider:
-- SimpleHTTPServer
-- To take of the Medusa Server from Zope (that is use Zope code in the standard
-Leo distribution, avoying dependences)
-- Twisted matrix (I had no experience with it, but it looks much more
-flexible/powerfull)
-
-Zope provides you a specific framework, you have to match you application to
-this framework, Zope (in my opinion) it is not a tool, it's an ambient.
-
-It's seems that Edward it is new in the web oriented software, I think it has
-a lot of potencialities and it will benefits Leo devellopment.
-
-Please Edward, look at Zope as an example but not as THE options. Think about
-what can be done, what should be done, and then we will take the best tool.
-
-Anyway my opinion:
-- SimpleHTTP server: usefull, it is in python, not very eficiente, just http
-server	
-- Medusa: usefull, very eficiente, just http server...
-- Twisted Matrix: very powerfull, fresh comunity, confusing documentation, a
-new paradigm, a devellopment tool.
-- Zope: powerfull, eficient, comes with battery included, bad documentation,
-to very paradigm oriented, the apps have to fit the paradigm, don't believe
-all the promises, strong enthousiast comunity, poor web examples.
-
-
-RodrigoB. 
-#@-node:ekr.20031218072017.416:Other servers
-#@+node:ekr.20031218072017.417:Is my ip public?
-https://sourceforge.net/forum/message.php?msg_id=2007962
-By: bwmulder
-
-Since no one else answered this question, let me take a first take on the
-question:
-
-If you are connected to the internet, people can use your IP number to connect
-to your computer. This IP number is often given dynamically, though some DSL
-providers give you fixed IP numbers for an additional fee. If you did not ask
-for fixed IP numbers, you probably have an dynamic IP number (I think).
-
-An IP number consist of four digits. A connection to the (example) IP number
-111.222.333.444 can by made via the request http://111.222.333.444
-
-If you have a dynamic IP number, and your Internet provider provides you with
-some space to publish HTML, you could, via a script, upload your current IP
-number dynamically.
-
-You might also consider buying a domain name. In this case, people can use the
-domain name to connect to your computer instead of the IP number.
-
-Another consideration are firewalls. Normally, you want a firewall isolating
-your computer from attacks from the Internet. I firewall can be some additional
-software. I am currently using a router, a piece of hardware, as a firewall.
-Windows XP has firewall software build in. You might have to configure your
-firewall to let requests for your server go through.
-
-Finally, you might want to check the agreement you entered with your Internet
-service provider, if you are allowed to run a server from your connection. It
-might become a problem if your server becomes very popular.
-#@-node:ekr.20031218072017.417:Is my ip public?
-#@+node:ekr.20031218072017.418:Back ends for storing/retrieving nodes: Paul Paterson
-Open Discussion
-https://sourceforge.net/forum/message.php?msg_id=2009279
-By: paulpaterson
-
-What I see Zope offering is an alternative way of storing and retrieving nodes.
-What you also get for "free" with Zope is concurrent access, security,
-http/ftp/webdav access to the same node information etc. The hidden price you
-pay is that Zope is big and many users will have other tools which can provide
-these facilities also.
-
-So, my thinking is that we can abstract the basic idea (alternative ways of
-storing and retrieving node information) into Leo and then let the magic really
-happen in the concrete implementation stage.
-
-What does this mean? Well, we could change Leo so that whenever it goes to retrieve
-Headline or Body it goes to a Node Server object to do that. The Node Server
-object uses whatever method it wants to retrieve or set the information. The
-Node server would also be responsible for telling Leo what child nodes an object
-has and whether they are clones or not.
-
-The cool part is that we could implement different kinds of Node server to talk
-to different back-ends. These can then be thought of as drivers. So we might
-have,
-
-- a file system driver where all information is stored in files and directories
-- a database driver where the DB stores all information
-- an ftp driver
-- a Zope driver
-- the default Leo driver
-
-People could write a driver to their own back end storage system. 
-
-What is the advantage of this?
-
-Well, the magic really happens in the back-end. If you choose a back end which
-supports versioning, security, concurrent working, web access, etc etc then
-Leo now supports them. If you choose a back-end which supports dynamic mark-up
-or some other fancy stuff then Leo supports it. The key is that Leo doesn't
-need to bind itself to any one system to achieve this - the end user can install
-the relevant driver, configure the back-end and just go with it.
-
-Paul
-#@-node:ekr.20031218072017.418:Back ends for storing/retrieving nodes: Paul Paterson
-#@+node:ekr.20031218072017.419:From Paul Paterson
-Ok, I'll have a bash in a rough order or when things occurred...
-
-
-1. Everything is web based. I had the same problem you did. I ran the
-thing and said, "ok, so what did it do". Others have pointed you in the
-right direction now with visiting http://localhost:8080 and
-http://localhost:8080/manage to view the site and mange it respectively.
-
-If you are running WinNT, 2000 or XP you can also run Zope as a service,
-which is much more convenient as you don't need the console window open
-all the time.
-
-
-2. Everything in Zope is an object. Ok, you'll see this a lot. The best
-thing to do is think "wow, cool" and then forget it again as you
-probably wont really see how this helps at all until you get much deeper
-into Zope. 
-
-
-3. DTML allows you to construct web pages by piecing together bits much
-like writing a program from functions. In fact you will find DTML is a
-lot like tangling Leo's @root nodes. Here's a bit...
-
-<!-- start html -->
-
-<h>DTML allows you to assemble web pages much like Leo tangles
-documents</h>
-
-<p>For instance, have a look at how this page is constructed</p>
-
-<dtml-var first_bit>
-<dtml-var second_bit>
-<dtml-var third_bit>
-
-<!-- end html -->
-
-The <dtml-var name> bit is like a < < name > > directive. It effectively
-inserts the object (could be HTML, an image or something more complex)
-in the current page. 
-
-To see this snippet in action you can visit my server at
-http://24.243.129.68:8080/members/sandbox/index_html
-
-To see the code, visit http://24.243.129.68:8080/members/sandbox/manage
-(username=edream, pwd=leo) and then click on the index_html to see the
-main DTML. Feel free to mess around in here but please don't publish the
-IP address as my ISP doesn't allow servers!
-
-
-4. There is a lot of power in Zope products. Try going to www.zope.org
-and seeing what is available. As an example I put a Wiki in the sandbox
-area http://24.243.129.68:8080/members/sandbox/edswiki
-
-
-5. If you are looking for a good book to begin with then steer clear of
-"The Zope Book"! If you don't mind paying then "The book of Zope" is a
-much better introduction. When you have read this then "The Zope Book"
-will make some sense but really I found this book tremendously hard to
-get through.
-
-
-6. Web standards are very cool! Zope supports FTP. Point your favourite
-FTP tool to,
-
-ftp://24.243.129.68:8021/members/sandbox/
-
-Or try using WebDav by creating a network place pointing to
-
-http://24.243.129.68:8080/members/sandbox
-
-You can then use windows explorer or an ftp tool to browse your objects.
-
-
-7. Everything is an object! I can't do justice to the concept of
-Acquisition here but by the time you have messed around with Zope a bit
-you should start to see how acquisition starts to make things really
-work like classes in Python. 
-
-
-I realize this isn't very coherent - if I get a spare moment this
-weekend I'll knock up a quick demo showing Leo interacting with Zope.
-
-Regards,
-
-Paul
-#@-node:ekr.20031218072017.419:From Paul Paterson
-#@-node:ekr.20031218072017.412:Zope
-#@+node:ekr.20031218072017.420:Jabber
-Open Discussion
-https://sourceforge.net/forum/message.php?msg_id=2016634
-By: jasonic
-
-I have been thinking about LeoZopeWiki integration. I am a recovering Zope addict
-[1999-2001] :-)  I believe Zope offers a very valuable client and server for
-Leo.
-
-I think Ed higlighted the distinction of collboration vs. sharing. So consdering
-that re:  Leo and CVS , Leo and Zope, Leo and wikis, I had another idea this
-morning..
-
-LEO+JABBER
-
-Jabber is an open XML-based  instant messaging and *presence* system. Although
-Jabber is typically used for IM chat, its core designers have a much bigger
-vision in mind.
-
-Jabber Software Foundation
-http://www.jabber.org/
-O'Reilly Book
-http://www.oreilly.com/catalog/jabber/
-Python Jabber library
-http://jabberpy.sourceforge.net/
-
-CVS etc all depend on runing diff on posted static files which are checked in
-or out. Clearly valuable, and good for __sharing__ but not so suitable as the
-communication paradigm needed for collboration.
-
-Wikis and Zope all suffer from problem of versioning and the time delay and
-lack of timely communications to their cobtributors. There is no 'shared state'
-or persistence in the collaboration beyond their own files or objectdatabases.
-
-For example if two people want to edit a wiki or Zope site, they have an imeedaiet
-problem of knowing whether or not the someone else is working one it already.
-
-Score:
-Sharing 1
-Collaboration 0
-
-Two  or more people wanting to edit a common project based on Leo have the same
-dilemma. They can check the leo file into a wiki, Zope or CVS, but they still
-don't have direct communication at teh content level.
-
-score:
-Sharing 1
-Collaboration 0
-
-PROPOSAL: LeoJabber
-1. Integrate a Jabber client into Leo 
-2. Add special Leo module to jabberd [Jabber's server daemon]
-
-Leo-based developers could work in direct communication with each other allowing
-them to add, edit and comment nodes in a shared le-space, local or remote. Static
-publishing via upload/import etc all still apply.
-
-LeoJabber would mean subscribing developers could immediately be aware of changes
-and then apply whatever strategy is appropriate for handling them, such as:
- 
-a. autoUpdate()
-b. makeNewNode()
-c. runDiffFunctions()
-d. notifyPartners()
-e. notifyPublic()
-etc..
-
-Jabber via its presencing mechanism offers real-time and just-in time communcations.
-If you are logged out, then mesages are queued.
-
-An open Jabber message session is actually one long piece of XML data passed
-over an XMLSocket :-) Sounds like a great fit for Leo
-
-- All Jabber configs are XML.
-- Good smart open source community.
-- Similar open embracing philsophy as Leo
-- Jabber connects diverse messaging systems., MSN, AOL etc [Most are
-close/proprietary, though the trend is toward greater openness and connectivity]
-- Many Jabber clients already. There is even one written in Flash so that any
-webpage can participate.
-
-Embedding Jabber in Leo would allow 'discussion' threads to  be integrated.
-Developers need to bounce idea and notes around just as this forum does. But
-often they need to be more provate or more focused on project specifics.
-WORKFLOW 
-It is important to know  which code is uptodate, but arguably, even *more* important
-is to know which people and what discussions are uptodate. And if not, what
-their status is. The larger, longer the more global the develpoment office/project,
-the more this is true.
-
-IM [instant messaging] are popular largely becuae they offer direct communication
-with status feedback to crucial people's workflow:
-"off-line", "on-line", "back-soon", "later" etc
-
-Jabber extends this idea to create a platform for any presence application.
-That is its long term-goal.
-
-So in a Leo deevlopment project, that presence might apply to adding status
-mesages such as
-"making changes" "new version" "debugging" "review only" "major re-write"
-
-or perhaps status/presence woudl be used for much lower level Leo-specific
-purposes.
-
-"new node"
-"cloned to .."
-"@file imported"
-"version uploaded"
-etc
-
-I am not suggesting that Leo forget CVS or file upload storage. But I think
-Jabber may truly provide the Missing Link, literally for Leo collaboration.
-
-Jabber Software Foundation
-http://www.jabber.org/
-O'Reilly Book
-http://www.oreilly.com/catalog/jabber/
-Python Jabber library
-http://jabberpy.sourceforge.net/
-
-hope this makes sense
-Jason
-#@-node:ekr.20031218072017.420:Jabber
-#@-node:ekr.20031218072017.404:LeoN, Zope & collaboration info
-#@+node:ekr.20040107064101.5:Zope notes
-#@+node:ekr.20040107065006:posting
-@nocolor
-
-Yes he's absolutely right -- focus on the ZODB.
-
-..stay alway from ZTP. ZPT, TPZ, CMF, Plone and all that other stuff for now.
-
-I jsut came accross a handy slide show overview from last spring:
-http://jace.seacrow.com/tech/zope/blug-zodb
-
-BerkeyDB Storage is cool too and fits Leo well I think. plays nicely wiht ZODB
-standalnioe and in Zope.
-#@-node:ekr.20040107065006:posting
-#@+node:ekr.20040107064854:example Code
-from ZODG import FileStorage,DB
-from Persistence import Persistent
-
-# Connect to db.
-# FileStorage is standard: entire db is stored in a single file.
-storage = FileStorage.FileStorage("/tmp/test-filestorage.fs")
-db = DB.(storage)
-conn = db.open()
-
-# Get the root of the db.
-root = conn.root()
-
-# Defining user classes.
-class leoData(Persistent):
-	pass
-	
-# Commit or revert.
-get_transaction().commit()
-get_transaction().abort()
-#@nonl
-#@-node:ekr.20040107064854:example Code
-#@+node:ekr.20040107080609.1:Zshell
-@nocolor
-
-By: jasonic ( Jason Cunliffe )
-ZShell  
-2003-12-31 22:25
-
-Hi, Just another friendly reminder to check out Jerome Alet's ZShell, one of Zope's best kept secrets:
-
-http://www.librelogiciel.com/software/
-
-ZShell : Manipulate the Zope Object DataBase with Unix shell like commands
-
-and also
-
-ZShellScripts : Unifies the Zope notion of Scripts and provides several Script interpreters : Python, Unix shell , Lisp, Perl, PHP, Ruby, and Zope ZShell
-
-Not only for obvious usefullness, but also as a valuable study of Python access to the ZODB.
-
-JAXML is cool too..
-http://www.librelogiciel.com/software/jaxml/action_Presentation
-
-- Jason
-#@nonl
-#@-node:ekr.20040107080609.1:Zshell
-#@+node:ekr.20040107064854.1:@url http://zope.org/Products/StandaloneZODB
-#@-node:ekr.20040107064854.1:@url http://zope.org/Products/StandaloneZODB
-#@+node:ekr.20040107064854.2:@url http://jace.seacrow.com/tech/zope/blug-zodb
-#@-node:ekr.20040107064854.2:@url http://jace.seacrow.com/tech/zope/blug-zodb
-#@-node:ekr.20040107064101.5:Zope notes
-#@+node:ekr.20040117092727.2:using zodb versions
-Read and respond to this message at: 
-https://sourceforge.net/forum/message.php?msg_id=2379351
-By: korakot
-
-If leo use database storage (ZODB or otherwise)
-it could scale much better. This will bring us some
-possiblity to store all versions of changes to a node
-or a tree.
-
-Cloning will then point to a specific version. If there
-is no conflict, it can update to a later version when
-the primary clone change. If there is a conflict
-we can deal with it wisely using 'diff information'
-because we have 'all versions' stored.
-
-#@-node:ekr.20040117092727.2:using zodb versions
-#@+node:ekr.20040226114127:Zope test
-@color
-
-import leoGlobals as g
-import ZODB
-
-if 1:
-    storage = ZODB.FileStorage.FileStorage(r"c:\prog\zopeTemp\leo.fs") 
-    db = ZODB.DB(storage)
-    g.es(storage)
-    g.es(db)
-    db.close()
-#@nonl
-#@-node:ekr.20040226114127:Zope test
-#@+node:ekr.20031218072017.737:Leo & data bases
-From: "Scott Chapman" <scott_list@mischko.com>
-To: <edreamleo@charter.net>
-Sent: Monday, November 10, 2003 11:05 AM
-Subject: Enhancement request: Make Leo deal with a database
-
-It would be Way Cool if Leo could deal with psycopg or other DataBase 
-API compliant implementations and fetch and store database records.
-
-Details of what I'd like to see:
-
-I'm working on Python source code. I want Leo to pull a source code file 
-from a database record built something like this:
-
-filename: text
-updated: datetimestamp
-code: text
-
-Leo would insert a new record, not update an existing one, each time a 
-Save was done, with a more current time stamp.  
-
-When a File Open was requested (i.e. a node on a existing Leo outline 
-was being pulled from a database), Leo would fetch the most recent 
-time-stamped version only.
-
-I use this same technique for my wiki pages.  It's very easy to 
-implement in SQL and works great.
-
-Leo would also need the ability to save the same file to a regular 
-python source code file on disk at a specific location, so you'd have 
-to be able to put more than one save/load directive in a given node.
-
-This would provide a nice version history and could lead to other Useful 
-Things in Leo.
-
-Scott
-#@nonl
-#@-node:ekr.20031218072017.737:Leo & data bases
-#@-node:ekr.20040329182535.4:Leo + zodb
-#@-node:ekr.20041022091645.2:Top Big Picture
 #@+node:ekr.20040329182535.7:1 hour to 1 day projects
 #@+node:ekr.20041022083833:New commands
 #@+node:ekr.20031218072017.792:Double Click Node command
@@ -8024,21 +7579,899 @@ other times only fix is to exit & restart.
 #@-node:ekr.20040329185649:Known Bugs: can't be fixed or can wait
 #@-node:ekr.20040123102724:Can't or wont
 #@-node:ekr.20041112155009:Others
-#@+node:ekr.20041213161415:Completion List
+#@+node:ekr.20041213161415:Completion List: the big picture
 Leo will be essentially complete when the following are complete:
 
+** A successful book query goes to O'Reilly.
+
+Before query:
+
 - Outline-driven settings dialog.
+- More fexible look--user attributes:  uAstring, uAhex, etc.
+
+Later:
+
+- Larger undo granularities & generalize the undo code.
+- Support for most Emacs-style commands.
+- Drive syntax colorer from language description files.
+- Support for zodb.
+- Better handling of whitespace.
 - Resolve CVS Conflicts command.
 - @import, perfect import and related issues.
-- Support for zodb.
-- Larger undo granularities.
-- Support for most Emacs-style editing commands.
-- Drive syntax colorer from language description files.
-- More fexible user attributes:  uAstring, uAhex, etc.
 
 Most of these items are less than one-week projects, so the end is in view.
 #@nonl
-#@-node:ekr.20041213161415:Completion List
+#@+node:ekr.20040329182535.4:Leo + zodb
+#@+node:ekr.20041002151816:ZODB docs
+#@+node:ekr.20041002151816.1:What is the ZODB?
+http://zope.org/Wikis/ZODB/FrontPage/guide/node2.html#SECTION000210000000000000000
+
+1.1 What is the ZODB?
+
+The ZODB is a persistence system for Python objects. Persistent programming
+languages provide facilities that automatically write objects to disk and read
+them in again when they're required by a running program. By installing the
+ZODB, you add such facilities to Python.
+
+#@-node:ekr.20041002151816.1:What is the ZODB?
+#@+node:ekr.20041002151816.2:How ZODB Works
+2.2 How ZODB Works
+
+The ZODB is conceptually simple. Python classes subclass a persistent.Persistent
+class to become ZODB-aware. Instances of persistent objects are brought in from
+a permanent storage medium, such as a disk file, when the program needs them,
+and remain cached in RAM. The ZODB traps modifications to objects, so that when
+a statement such as obj.size = 1 is executed, the modified object is marked as
+``dirty.'' On request, any dirty objects are written out to permanent storage;
+this is called committing a transaction. Transactions can also be aborted or
+rolled back, which results in any changes being discarded, dirty objects
+reverting to their initial state before the transaction began.
+
+#@-node:ekr.20041002151816.2:How ZODB Works
+#@+node:ekr.20041002151816.3:Rules for Writing Persistent Classes
+2.6 Rules for Writing Persistent Classes
+
+Practically all persistent languages impose some restrictions on programming
+style, warning against constructs they can't handle or adding subtle semantic
+changes, and the ZODB is no exception. Happily, the ZODB's restrictions are
+fairly simple to understand, and in practice it isn't too painful to work around
+them.
+
+The summary of rules is as follows:
+
+* If you modify a mutable object that's the value of an object's attribute, the
+ZODB can't catch that, and won't mark the object as dirty. The solution is to
+either set the dirty bit yourself when you modify mutable objects, or use a
+wrapper for Python's lists and dictionaries (PersistentList, PersistentMapping)
+that will set the dirty bit properly.
+
+* Recent versions of the ZODB allow writing a class with __setattr__ ,
+__getattr__, or __delattr__ methods. (Older versions didn't support this at
+all.) If you write such a __setattr__ or __delattr__ method, its code has to set
+the dirty bit manually.
+
+* A persistent class should not have an __del__ method. The database moves
+objects freely between memory and storage. If an object has not been used in a
+while, it may be released and its contents loaded from storage the next time it
+is used. Since the Python interpreter is unaware of persistence, it would call
+the __del__ each time the object was freed.
+#@nonl
+#@-node:ekr.20041002151816.3:Rules for Writing Persistent Classes
+#@-node:ekr.20041002151816:ZODB docs
+#@+node:ekr.20031218072017.404:LeoN, Zope & collaboration info
+@nocolor
+#@nonl
+#@+node:ekr.20031218072017.405:Kent Tenny Notes
+@nocolor
+
+Outlook: server for email, addresses & calendar.  Groupware.  Chandler similar.
+
+Zope: back end is ZODB.  Zope like an OS: run Python code on Zope.
+
+Zope: another way to access Leo files.  Maybe twisted is better?
+
+Wiki anology: edit Leo files with browser.  Write through the web.
+
+longrun.org
+
+Wiki principles: 
+	- Sharing is 90% of collaboration.
+	- Zope: Subscribe to a wiki: email when page changes.
+	- RSS: xml that defines piece of info(tile,url,abstract)
+		- Client has a list of rss feeds: an xml file.
+		- List of intesting people: notified when they say something.
+
+Two goals:
+	- publish Leo files
+	- edit Leo files
+
+Brother needs cvs.
+Kent not so worried about cvs.
+	-Leo file is a web site!
+	- Helper layer between user and OS.
+		- Look at aap project.  Author of vim. a-p.org
+			- Replacement for make in Python.  Automating tool.
+		- Expert prepares Leo file.  User uses it.
+#@nonl
+#@-node:ekr.20031218072017.405:Kent Tenny Notes
+#@+node:ekr.20031218072017.406:url's
+#@+node:ekr.20031218072017.407:@url http://24.243.129.68:8080/members/sandbox
+#@-node:ekr.20031218072017.407:@url http://24.243.129.68:8080/members/sandbox
+#@+node:ekr.20031218072017.408:@url http://www.zopelabs.com/cookbook
+#@-node:ekr.20031218072017.408:@url http://www.zopelabs.com/cookbook
+#@+node:ekr.20031218072017.409:@url http://zwiki.org/FrontPage  Zope implementation of wiki
+#@-node:ekr.20031218072017.409:@url http://zwiki.org/FrontPage  Zope implementation of wiki
+#@-node:ekr.20031218072017.406:url's
+#@+node:ekr.20031218072017.410:Collaboration & Sharing
+#@+node:ekr.20031218072017.411:From Rodrigo
+Developers Forum
+By: rodrigo_b ( Rodrigo Benenson ) 
+ RE: Leo over the network   
+2003-05-10 00:06  
+So this is my first proposal: 
+
+Requirements 
+-------------------- 
+
+* Read remote outlines. 
+** With Leo clients. 
+** Over the web. 
+
+* Edit remote outlines. 
+
+* Import remote outlines (retrieve outlines from the web). 
+
+* Synchronize local outlines with remote ones (web to local and local to web). 
+
+* Publish outlines (send outlines to the web). 
+
+* The Leo client have to be keept lighweigth. 
+
+* The Leo remote outline access server should be a lighweigth daemon. 
+
+* This daemon should automagically render HTML from the outlines. 
+
+* The outlines should be editable from the web and via Leo client. 
+
+* Concurency management is must. 
+
+* The remote servers should be included in the leo client as leo nodes (just like leo files, but remotes). 
+"@leo-outline leo.server.org:854" 
+
+* By this way I could have access to local server nodes. 
+"@leo-outline localhost:854" 
+
+* The remote server should offer one and only one big outline with sub nodes, and so on, and so on... 
+
+* At least the concurency should be managed as "when someone write, all the other ones only can read" 
+
+* It is better if Leo devellop simultaneaously some hypertext/wiki extensions. 
+
+---------------------------- 
+End of requeriments 
+
+This requeriments requires a client-server architecture, with basic commands as: 
+- Update node 
+- Lock/release node 
+- Edit outline 
+- Download outline 
+- Upload outline 
+
+well that is by the moment, I hope that we will be able to create a Finite, clear, requeriments list for this branch of Leo. 
+
+RodrigoB.  
+
+#@-node:ekr.20031218072017.411:From Rodrigo
+#@-node:ekr.20031218072017.410:Collaboration & Sharing
+#@+node:ekr.20031218072017.412:Zope
+#@+node:ekr.20031218072017.413:From Rodrigo re: Zope.
+Open Discussion
+https://sourceforge.net/forum/message.php?msg_id=2007586
+By: rodrigo_b
+
+z2.py,
+>Supposing that that I did find this file, what would I be looking for? 
+
+This is the Main script, the principal program, the code that startup all the
+servers, the only python program that make run Zope, it the code called by start.py,
+and it is the one to which you pass the command lines.
+
+With the command line you can indicate which services to start up at which ports.
+This is IMPORTANT. Also you can enable/disable the Debug mode.
+
+python z2.py --help will give you some infos about what I'm talking about.
+
+In linux the debug or not debug mode, enable the console or daemon mode (that
+means 'background task mode').
+
+In windows, I'm not sure that disabling the debug mode will be enough.
+I know that at the install time you can setup Zope as a Windows Service, so
+it will start automatically every time Windows Startup, and it will not open
+a console window.
+
+But first look at the debug mode.
+
+Start.bat give some defaults command lines to z2.py
+
+Webdav,
+>What issues are involved in this choice, and why should I care today? 
+
+from www.webdav.org
+
+What is WebDAV? 
+Briefly: WebDAV stands for "Web-based Distributed Authoring and Versioning".
+It is a set of extensions to the HTTP protocol which allows users to collaboratively
+edit and manage files on remote web servers.
+
+For example that means that you can open you Windows Explorer (from your mail
+I understand that you work on an MsWindows OS),
+tip the url "localhost:%i"%(your webdav port) and you will be able to navigate,
+view and edit the Zope Objects just as a normal file system (well, almost).
+
+WebDav is a standard and there are Python implementations. WebDav is support
+by  Oscom.
+
+WebDav is cool.
+WebDav is the 'highest level tool'.
+
+ZODB,
+
+>Does that mean that gnx's aren't needed with Zope? Could Leo nodes live in
+the ZODB?
+
+You have to thinks to ZODB just as what it is: a Persistent Object Database.
+Most objects in Zope are Persistents, that mean that their instances do not
+die when you shutdown the server.
+
+The ZODB store his data in it own format.
+I think that GNX should be keeped.
+You have to basic ways to put nodes into Zope.
+
+First: the hard way: create a new Product (Products are something like Zope
+plugins) that is based on the Leo code, but were there is no node storage, instead
+the node should be Persistents. Then add rendering code to this objects.
+
+Leo node object + Persistence + ZClass + Rendering Code -> Leo Zope node.
+
+Additionaly you should create an Folder like object that should be an 'Leo Outline
+Zope Object',  actuating as an Leo nodes container.
+
+This shema is similar to the Zwiki way, with a Zwiki Web and the Zwiki Pages.
+
+Second: Use A zope folder just as Leo manage the @file nodes. Let have simple
+DTMLDocuments, edited via WebDav, with <dtml-comments> , and stuff like that.
+The Leo import/export that nodes.
+
+RodrigoB.
+
+#@-node:ekr.20031218072017.413:From Rodrigo re: Zope.
+#@+node:ekr.20031218072017.414:Clarification from Kent Tenny
+Open Discussion
+https://sourceforge.net/forum/message.php?msg_id=2009081
+By: ktenney
+
+Edward,
+
+I don't see ZLeo replacing Leo, rather a method of accessing
+Leo files.
+
+When I write, I almost always want it to be web accessable,
+so that I can access it from any browser, and so that I can
+share it easily. I would like myfile.leo to live
+at http://longrun.org/leo/myfile.leo. It can be read and
+written to from any browser (according to how permissions are
+configured) The page describing how to configure Apache would
+be found at http://longrun.org/leo/myfile.leo/Apache/configure
+The only requirement to work with Leo files is a browser.
+
+I wouldn't want to lose the capability to edit outside
+the browser, using a standalone version of Leo or Zope's
+ExternalEditor product. ExternalEditor allows me to click
+an icon to open the page I'm viewing in any editor. I could
+open it in Leo as a Leo file, or open just the page in
+Vim (http://vim.sourceforge.net/index.php)
+
+Zope is ponderous, I think of it as more of a platform
+than an application. My understanding of how Zope works
+grows slowly, in the mean time my focus is on _products_.
+Installing a product in Zope is like installing an application
+in Windows or Linux.
+
+One of the most evolved products is Plone/CMF http://plone.org
+which is basically a turnkey web site.
+
+twisted http://twistedmatrix.com is a brilliant set of network
+programming tools. That's all I know about it.
+
+I'm not sure about Chandler (http://www.osafoundation.org/) 
+(they did choose Python and ZODB http://www.osafoundation.org/technology.htm)
+
+You might try subscribing to a Zope mailing list or two
+http://www.zope.org/Resources/MailingLists
+The community of users and developers is very important to Zope.
+
+Thanks,
+Kent
+#@-node:ekr.20031218072017.414:Clarification from Kent Tenny
+#@+node:ekr.20031218072017.415:From Rodrigo re: ip
+Open Discussion
+https://sourceforge.net/forum/message.php?msg_id=2007817
+By: rodrigo_b
+
+If zope is running some server then this server will be accesible from your
+network if and only if there is no firewall in the way.
+
+The people can access to your services using (normally on internet you do not
+have a domain name)
+
+your_ip:the_service_port
+
+Example:
+zope http service on port 8080 on your machine.
+When  you connect to internet your machine got an extra IP.
+Then simple put on the web browser
+
+http://your_conexion_ip:8080
+
+and Tada you will see the root_zope/index_html object rendered intro HTML.
+
+Most of the ISP give you a dinamic IP.
+Some companies provides you dinamic IP Domain Name services, allowing to attach
+a domain name to your machine dinamically (each time you reconect).
+
+then you can have:
+
+http://leo.edward.com:8080/
+
+The 8080 stuff can be avoied if you setup zope to use the standard port 80 for
+HTTP service.
+
+With this in mind you can access ftp
+
+ftp://your_ip_or_domain_name:8021
+
+or webdav, or anything else.
+#@-node:ekr.20031218072017.415:From Rodrigo re: ip
+#@+node:ekr.20031218072017.416:Other servers
+Open Discussion
+https://sourceforge.net/forum/message.php?msg_id=2007832
+By: rodrigo_b
+
+I would made a warning.
+
+Zope IT IS NOT the only way to obtain an local HTTP server, pythonic and
+flexible.
+
+There is a lot of other way.
+
+Also Zope IT IS NOT THE BEST pythonic http/ftp/webdav or anything server
+aviable.
+
+I think that we should define better 
+
+What we want to do?
+
+before choosing the tool.
+
+As I said, I had already used Zope, I choosed it because of very specific features,
+but nothing indicate that Zope is the best way to get Leo to the colaborative
+network universe.
+
+I think that we should at least consider:
+- SimpleHTTPServer
+- To take of the Medusa Server from Zope (that is use Zope code in the standard
+Leo distribution, avoying dependences)
+- Twisted matrix (I had no experience with it, but it looks much more
+flexible/powerfull)
+
+Zope provides you a specific framework, you have to match you application to
+this framework, Zope (in my opinion) it is not a tool, it's an ambient.
+
+It's seems that Edward it is new in the web oriented software, I think it has
+a lot of potencialities and it will benefits Leo devellopment.
+
+Please Edward, look at Zope as an example but not as THE options. Think about
+what can be done, what should be done, and then we will take the best tool.
+
+Anyway my opinion:
+- SimpleHTTP server: usefull, it is in python, not very eficiente, just http
+server	
+- Medusa: usefull, very eficiente, just http server...
+- Twisted Matrix: very powerfull, fresh comunity, confusing documentation, a
+new paradigm, a devellopment tool.
+- Zope: powerfull, eficient, comes with battery included, bad documentation,
+to very paradigm oriented, the apps have to fit the paradigm, don't believe
+all the promises, strong enthousiast comunity, poor web examples.
+
+
+RodrigoB. 
+#@-node:ekr.20031218072017.416:Other servers
+#@+node:ekr.20031218072017.417:Is my ip public?
+https://sourceforge.net/forum/message.php?msg_id=2007962
+By: bwmulder
+
+Since no one else answered this question, let me take a first take on the
+question:
+
+If you are connected to the internet, people can use your IP number to connect
+to your computer. This IP number is often given dynamically, though some DSL
+providers give you fixed IP numbers for an additional fee. If you did not ask
+for fixed IP numbers, you probably have an dynamic IP number (I think).
+
+An IP number consist of four digits. A connection to the (example) IP number
+111.222.333.444 can by made via the request http://111.222.333.444
+
+If you have a dynamic IP number, and your Internet provider provides you with
+some space to publish HTML, you could, via a script, upload your current IP
+number dynamically.
+
+You might also consider buying a domain name. In this case, people can use the
+domain name to connect to your computer instead of the IP number.
+
+Another consideration are firewalls. Normally, you want a firewall isolating
+your computer from attacks from the Internet. I firewall can be some additional
+software. I am currently using a router, a piece of hardware, as a firewall.
+Windows XP has firewall software build in. You might have to configure your
+firewall to let requests for your server go through.
+
+Finally, you might want to check the agreement you entered with your Internet
+service provider, if you are allowed to run a server from your connection. It
+might become a problem if your server becomes very popular.
+#@-node:ekr.20031218072017.417:Is my ip public?
+#@+node:ekr.20031218072017.418:Back ends for storing/retrieving nodes: Paul Paterson
+Open Discussion
+https://sourceforge.net/forum/message.php?msg_id=2009279
+By: paulpaterson
+
+What I see Zope offering is an alternative way of storing and retrieving nodes.
+What you also get for "free" with Zope is concurrent access, security,
+http/ftp/webdav access to the same node information etc. The hidden price you
+pay is that Zope is big and many users will have other tools which can provide
+these facilities also.
+
+So, my thinking is that we can abstract the basic idea (alternative ways of
+storing and retrieving node information) into Leo and then let the magic really
+happen in the concrete implementation stage.
+
+What does this mean? Well, we could change Leo so that whenever it goes to retrieve
+Headline or Body it goes to a Node Server object to do that. The Node Server
+object uses whatever method it wants to retrieve or set the information. The
+Node server would also be responsible for telling Leo what child nodes an object
+has and whether they are clones or not.
+
+The cool part is that we could implement different kinds of Node server to talk
+to different back-ends. These can then be thought of as drivers. So we might
+have,
+
+- a file system driver where all information is stored in files and directories
+- a database driver where the DB stores all information
+- an ftp driver
+- a Zope driver
+- the default Leo driver
+
+People could write a driver to their own back end storage system. 
+
+What is the advantage of this?
+
+Well, the magic really happens in the back-end. If you choose a back end which
+supports versioning, security, concurrent working, web access, etc etc then
+Leo now supports them. If you choose a back-end which supports dynamic mark-up
+or some other fancy stuff then Leo supports it. The key is that Leo doesn't
+need to bind itself to any one system to achieve this - the end user can install
+the relevant driver, configure the back-end and just go with it.
+
+Paul
+#@-node:ekr.20031218072017.418:Back ends for storing/retrieving nodes: Paul Paterson
+#@+node:ekr.20031218072017.419:From Paul Paterson
+Ok, I'll have a bash in a rough order or when things occurred...
+
+
+1. Everything is web based. I had the same problem you did. I ran the
+thing and said, "ok, so what did it do". Others have pointed you in the
+right direction now with visiting http://localhost:8080 and
+http://localhost:8080/manage to view the site and mange it respectively.
+
+If you are running WinNT, 2000 or XP you can also run Zope as a service,
+which is much more convenient as you don't need the console window open
+all the time.
+
+
+2. Everything in Zope is an object. Ok, you'll see this a lot. The best
+thing to do is think "wow, cool" and then forget it again as you
+probably wont really see how this helps at all until you get much deeper
+into Zope. 
+
+
+3. DTML allows you to construct web pages by piecing together bits much
+like writing a program from functions. In fact you will find DTML is a
+lot like tangling Leo's @root nodes. Here's a bit...
+
+<!-- start html -->
+
+<h>DTML allows you to assemble web pages much like Leo tangles
+documents</h>
+
+<p>For instance, have a look at how this page is constructed</p>
+
+<dtml-var first_bit>
+<dtml-var second_bit>
+<dtml-var third_bit>
+
+<!-- end html -->
+
+The <dtml-var name> bit is like a < < name > > directive. It effectively
+inserts the object (could be HTML, an image or something more complex)
+in the current page. 
+
+To see this snippet in action you can visit my server at
+http://24.243.129.68:8080/members/sandbox/index_html
+
+To see the code, visit http://24.243.129.68:8080/members/sandbox/manage
+(username=edream, pwd=leo) and then click on the index_html to see the
+main DTML. Feel free to mess around in here but please don't publish the
+IP address as my ISP doesn't allow servers!
+
+
+4. There is a lot of power in Zope products. Try going to www.zope.org
+and seeing what is available. As an example I put a Wiki in the sandbox
+area http://24.243.129.68:8080/members/sandbox/edswiki
+
+
+5. If you are looking for a good book to begin with then steer clear of
+"The Zope Book"! If you don't mind paying then "The book of Zope" is a
+much better introduction. When you have read this then "The Zope Book"
+will make some sense but really I found this book tremendously hard to
+get through.
+
+
+6. Web standards are very cool! Zope supports FTP. Point your favourite
+FTP tool to,
+
+ftp://24.243.129.68:8021/members/sandbox/
+
+Or try using WebDav by creating a network place pointing to
+
+http://24.243.129.68:8080/members/sandbox
+
+You can then use windows explorer or an ftp tool to browse your objects.
+
+
+7. Everything is an object! I can't do justice to the concept of
+Acquisition here but by the time you have messed around with Zope a bit
+you should start to see how acquisition starts to make things really
+work like classes in Python. 
+
+
+I realize this isn't very coherent - if I get a spare moment this
+weekend I'll knock up a quick demo showing Leo interacting with Zope.
+
+Regards,
+
+Paul
+#@-node:ekr.20031218072017.419:From Paul Paterson
+#@-node:ekr.20031218072017.412:Zope
+#@+node:ekr.20031218072017.420:Jabber
+Open Discussion
+https://sourceforge.net/forum/message.php?msg_id=2016634
+By: jasonic
+
+I have been thinking about LeoZopeWiki integration. I am a recovering Zope addict
+[1999-2001] :-)  I believe Zope offers a very valuable client and server for
+Leo.
+
+I think Ed higlighted the distinction of collboration vs. sharing. So consdering
+that re:  Leo and CVS , Leo and Zope, Leo and wikis, I had another idea this
+morning..
+
+LEO+JABBER
+
+Jabber is an open XML-based  instant messaging and *presence* system. Although
+Jabber is typically used for IM chat, its core designers have a much bigger
+vision in mind.
+
+Jabber Software Foundation
+http://www.jabber.org/
+O'Reilly Book
+http://www.oreilly.com/catalog/jabber/
+Python Jabber library
+http://jabberpy.sourceforge.net/
+
+CVS etc all depend on runing diff on posted static files which are checked in
+or out. Clearly valuable, and good for __sharing__ but not so suitable as the
+communication paradigm needed for collboration.
+
+Wikis and Zope all suffer from problem of versioning and the time delay and
+lack of timely communications to their cobtributors. There is no 'shared state'
+or persistence in the collaboration beyond their own files or objectdatabases.
+
+For example if two people want to edit a wiki or Zope site, they have an imeedaiet
+problem of knowing whether or not the someone else is working one it already.
+
+Score:
+Sharing 1
+Collaboration 0
+
+Two  or more people wanting to edit a common project based on Leo have the same
+dilemma. They can check the leo file into a wiki, Zope or CVS, but they still
+don't have direct communication at teh content level.
+
+score:
+Sharing 1
+Collaboration 0
+
+PROPOSAL: LeoJabber
+1. Integrate a Jabber client into Leo 
+2. Add special Leo module to jabberd [Jabber's server daemon]
+
+Leo-based developers could work in direct communication with each other allowing
+them to add, edit and comment nodes in a shared le-space, local or remote. Static
+publishing via upload/import etc all still apply.
+
+LeoJabber would mean subscribing developers could immediately be aware of changes
+and then apply whatever strategy is appropriate for handling them, such as:
+ 
+a. autoUpdate()
+b. makeNewNode()
+c. runDiffFunctions()
+d. notifyPartners()
+e. notifyPublic()
+etc..
+
+Jabber via its presencing mechanism offers real-time and just-in time communcations.
+If you are logged out, then mesages are queued.
+
+An open Jabber message session is actually one long piece of XML data passed
+over an XMLSocket :-) Sounds like a great fit for Leo
+
+- All Jabber configs are XML.
+- Good smart open source community.
+- Similar open embracing philsophy as Leo
+- Jabber connects diverse messaging systems., MSN, AOL etc [Most are
+close/proprietary, though the trend is toward greater openness and connectivity]
+- Many Jabber clients already. There is even one written in Flash so that any
+webpage can participate.
+
+Embedding Jabber in Leo would allow 'discussion' threads to  be integrated.
+Developers need to bounce idea and notes around just as this forum does. But
+often they need to be more provate or more focused on project specifics.
+WORKFLOW 
+It is important to know  which code is uptodate, but arguably, even *more* important
+is to know which people and what discussions are uptodate. And if not, what
+their status is. The larger, longer the more global the develpoment office/project,
+the more this is true.
+
+IM [instant messaging] are popular largely becuae they offer direct communication
+with status feedback to crucial people's workflow:
+"off-line", "on-line", "back-soon", "later" etc
+
+Jabber extends this idea to create a platform for any presence application.
+That is its long term-goal.
+
+So in a Leo deevlopment project, that presence might apply to adding status
+mesages such as
+"making changes" "new version" "debugging" "review only" "major re-write"
+
+or perhaps status/presence woudl be used for much lower level Leo-specific
+purposes.
+
+"new node"
+"cloned to .."
+"@file imported"
+"version uploaded"
+etc
+
+I am not suggesting that Leo forget CVS or file upload storage. But I think
+Jabber may truly provide the Missing Link, literally for Leo collaboration.
+
+Jabber Software Foundation
+http://www.jabber.org/
+O'Reilly Book
+http://www.oreilly.com/catalog/jabber/
+Python Jabber library
+http://jabberpy.sourceforge.net/
+
+hope this makes sense
+Jason
+#@-node:ekr.20031218072017.420:Jabber
+#@-node:ekr.20031218072017.404:LeoN, Zope & collaboration info
+#@+node:ekr.20040107064101.5:Zope notes
+#@+node:ekr.20040107065006:posting
+@nocolor
+
+Yes he's absolutely right -- focus on the ZODB.
+
+..stay alway from ZTP. ZPT, TPZ, CMF, Plone and all that other stuff for now.
+
+I jsut came accross a handy slide show overview from last spring:
+http://jace.seacrow.com/tech/zope/blug-zodb
+
+BerkeyDB Storage is cool too and fits Leo well I think. plays nicely wiht ZODB
+standalnioe and in Zope.
+#@-node:ekr.20040107065006:posting
+#@+node:ekr.20040107064854:example Code
+from ZODG import FileStorage,DB
+from Persistence import Persistent
+
+# Connect to db.
+# FileStorage is standard: entire db is stored in a single file.
+storage = FileStorage.FileStorage("/tmp/test-filestorage.fs")
+db = DB.(storage)
+conn = db.open()
+
+# Get the root of the db.
+root = conn.root()
+
+# Defining user classes.
+class leoData(Persistent):
+	pass
+	
+# Commit or revert.
+get_transaction().commit()
+get_transaction().abort()
+#@nonl
+#@-node:ekr.20040107064854:example Code
+#@+node:ekr.20040107080609.1:Zshell
+@nocolor
+
+By: jasonic ( Jason Cunliffe )
+ZShell  
+2003-12-31 22:25
+
+Hi, Just another friendly reminder to check out Jerome Alet's ZShell, one of Zope's best kept secrets:
+
+http://www.librelogiciel.com/software/
+
+ZShell : Manipulate the Zope Object DataBase with Unix shell like commands
+
+and also
+
+ZShellScripts : Unifies the Zope notion of Scripts and provides several Script interpreters : Python, Unix shell , Lisp, Perl, PHP, Ruby, and Zope ZShell
+
+Not only for obvious usefullness, but also as a valuable study of Python access to the ZODB.
+
+JAXML is cool too..
+http://www.librelogiciel.com/software/jaxml/action_Presentation
+
+- Jason
+#@nonl
+#@-node:ekr.20040107080609.1:Zshell
+#@+node:ekr.20040107064854.1:@url http://zope.org/Products/StandaloneZODB
+#@-node:ekr.20040107064854.1:@url http://zope.org/Products/StandaloneZODB
+#@+node:ekr.20040107064854.2:@url http://jace.seacrow.com/tech/zope/blug-zodb
+#@-node:ekr.20040107064854.2:@url http://jace.seacrow.com/tech/zope/blug-zodb
+#@-node:ekr.20040107064101.5:Zope notes
+#@+node:ekr.20040117092727.2:using zodb versions
+Read and respond to this message at: 
+https://sourceforge.net/forum/message.php?msg_id=2379351
+By: korakot
+
+If leo use database storage (ZODB or otherwise)
+it could scale much better. This will bring us some
+possiblity to store all versions of changes to a node
+or a tree.
+
+Cloning will then point to a specific version. If there
+is no conflict, it can update to a later version when
+the primary clone change. If there is a conflict
+we can deal with it wisely using 'diff information'
+because we have 'all versions' stored.
+
+#@-node:ekr.20040117092727.2:using zodb versions
+#@+node:ekr.20040226114127:Zope test
+@color
+
+import leoGlobals as g
+import ZODB
+
+if 1:
+    storage = ZODB.FileStorage.FileStorage(r"c:\prog\zopeTemp\leo.fs") 
+    db = ZODB.DB(storage)
+    g.es(storage)
+    g.es(db)
+    db.close()
+#@nonl
+#@-node:ekr.20040226114127:Zope test
+#@+node:ekr.20031218072017.737:Leo & data bases
+From: "Scott Chapman" <scott_list@mischko.com>
+To: <edreamleo@charter.net>
+Sent: Monday, November 10, 2003 11:05 AM
+Subject: Enhancement request: Make Leo deal with a database
+
+It would be Way Cool if Leo could deal with psycopg or other DataBase 
+API compliant implementations and fetch and store database records.
+
+Details of what I'd like to see:
+
+I'm working on Python source code. I want Leo to pull a source code file 
+from a database record built something like this:
+
+filename: text
+updated: datetimestamp
+code: text
+
+Leo would insert a new record, not update an existing one, each time a 
+Save was done, with a more current time stamp.  
+
+When a File Open was requested (i.e. a node on a existing Leo outline 
+was being pulled from a database), Leo would fetch the most recent 
+time-stamped version only.
+
+I use this same technique for my wiki pages.  It's very easy to 
+implement in SQL and works great.
+
+Leo would also need the ability to save the same file to a regular 
+python source code file on disk at a specific location, so you'd have 
+to be able to put more than one save/load directive in a given node.
+
+This would provide a nice version history and could lead to other Useful 
+Things in Leo.
+
+Scott
+#@nonl
+#@-node:ekr.20031218072017.737:Leo & data bases
+#@-node:ekr.20040329182535.4:Leo + zodb
+#@+node:ekr.20041022091645.4:Better integration with Emacs/Pymacs
+#@+node:ekr.20041022144159:Q: Pymacs bridge
+I'm trying to use the Pymacs bridge to add a symbol completion facility to
+Emacs's python-mode.  Neither the Python nor Emacs Lisp portions are all
+that complex, but I'm having trouble passing a list of strings from Emacs
+Lisp into Python.  On the Emacs Lisp side it looks like this:
+
+    (pymacs-load "pycomplete")
+
+    (defun py-complete ()
+      (interactive)
+      (pycomplete-pycomplete (py-symbol-near-point)
+                             (py-find-global-imports)))
+
+(py-find-global-imports) returns a (Lisp) list of strings, e.g.:
+
+    ("import time", "import sys")
+
+On the Python side I have this function:
+
+    def pycomplete(s, imports=None):
+        completions = get_all_completions(s, imports)
+        dots = s.split(".")
+        return os.path.commonprefix([k[len(dots[-1]):] for k in completions])
+
+Unfortunately, the imports arg does not come across as a Python list of
+strings (s does come across the bridge as a normal Python string).  Its
+repr() prints out like this:
+
+    lisp('("import time")')
+
+What do I need to do to convert that object into a true Python list of
+strings?  I'm afraid I don't quite understand the description of the lisp
+object in the Pymacs docs.  I tried imports.value() but that just gave me
+
+    (aref pymacs-lisp 0)
+
+Any help appreciated...
+
+Skip
+#@nonl
+#@-node:ekr.20041022144159:Q: Pymacs bridge
+#@+node:ekr.20041022144159.1:A: pymacs-forget-mutability
+"""
+Proper Emacs Lisp lists, those for which the cdr of last cell is nil, are
+normally transmitted opaquely to Python. If pymacs-forget-mutability is
+set, or if Python later asks for these to be expanded, proper Emacs Lisp
+lists get converted into Python lists, if we except the empty list, which
+is always converted as Python None. In the other direction, Python lists
+are always converted into proper Emacs Lisp lists.
+"""
+
+So, maybe try
+
+    (defun py-complete ()
+      (interactive)
+      (let ((pymacs-forget-mutability t)) 
+	(pycomplete-pycomplete (py-symbol-near-point)
+                               (py-find-global-imports))))
+#@-node:ekr.20041022144159.1:A: pymacs-forget-mutability
+#@-node:ekr.20041022091645.4:Better integration with Emacs/Pymacs
+#@-node:ekr.20041213161415:Completion List: the big picture
 #@-all
 #@nonl
 #@-node:ekr.20040117181936:@thin ../doc/leoToDo.txt

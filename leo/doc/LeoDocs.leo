@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet ekr_stylesheet?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="11731" clone_windows="0"/>
-<globals body_outline_ratio="0.452928870293">
-	<global_window_position top="15" left="133" height="860" width="988"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="11734" clone_windows="0"/>
+<globals body_outline_ratio="0.5">
+	<global_window_position top="54" left="369" height="860" width="988"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -16,6 +17,7 @@
 <v t="edream.110203163054.4"><vh>This is a cloned headline</vh></v>
 <v t="edream.110203163054.5"><vh>This node contains no text</vh></v>
 </v>
+<v t="ekr.20041226081019" a="TV"><vh>@button check spelling...</vh></v>
 <v t="edream.110203163054.6"><vh>Please use SourceForge to ask questions and make comments</vh></v>
 <v t="edream.110203163054.7"><vh>Acknowledgements</vh></v>
 <v t="edream.110203163054.8"><vh>What people are saying about Leo</vh>
@@ -1849,7 +1851,7 @@
 <v t="EKR.20040524104904.429"><vh>Weaving</vh></v>
 </v>
 </v>
-<v t="edream.110203163054.1050" a="E"><vh>FAQ</vh>
+<v t="edream.110203163054.1050"><vh>FAQ</vh>
 <v t="edream.110203163054.1051"><vh>Learning about Leo</vh>
 <v t="edream.110203163054.1052"><vh>What's the best way to learn to use Leo?</vh></v>
 <v t="edream.110203163054.1053"><vh>Where are the simple examples?</vh></v>
@@ -1880,11 +1882,11 @@
 <v t="EKR.20040521090400"><vh>How can I use Leo with older C compilers</vh></v>
 <v t="ekr.20040804173200.6"><vh>How does @thin make Leo more friendly to CVS?</vh></v>
 </v>
-<v t="edream.110203163054.1068" a="E"><vh>Customizing Leo</vh>
+<v t="edream.110203163054.1068"><vh>Customizing Leo</vh>
 <v t="edream.110203163054.322"><vh>Overview of plugins and hooks</vh></v>
 <v t="edream.110203163054.1069"><vh>I'm having trouble getting plugins to work.  What should I do?</vh></v>
 <v t="edream.110203163054.1070"><vh>How can I add support for a new language?</vh></v>
-<v t="ekr.20041220095419" a="TV"><vh>How do I submit a plugin?</vh></v>
+<v t="ekr.20041220095419"><vh>How do I submit a plugin?</vh></v>
 <v t="edream.110203163054.319"><vh>Chapter 8: Customizing Leo</vh>
 <v t="edream.110203163054.320"><vh>Using leoConfig.leo and leoConfig.txt</vh></v>
 <v t="edream.110203163054.321"><vh>Using plugins and hooks</vh>
@@ -2009,14 +2011,14 @@
 <v t="edream.110203163054.1654"><vh>100's administering Leaps (and LeoCon)</vh>
 <v t="edream.110203163054.1655"><vh>Leap 102: LeoCon 1</vh></v>
 </v>
-<v t="edream.110203163054.1656"><vh>200's single-user Leo</vh>
+<v t="edream.110203163054.1656" a="E"><vh>200's single-user Leo</vh>
 <v t="edream.110203163054.1657"><vh>Leap 201. (Finished)  Represent clones as shared trees of vnodes</vh></v>
 <v t="edream.110203163054.1658"><vh>Leap 202. (Finished) Create cvs-friendly file format for derived files</vh></v>
-<v t="edream.110203163054.1659"><vh>Leap 203. (Open) Use Python Mega Widgets</vh></v>
+<v t="edream.110203163054.1659"><vh>Leap 203. (Finished) Use Python Mega Widgets</vh></v>
 </v>
-<v t="edream.110203163054.1661"><vh>300's LeoN and beyond</vh>
+<v t="edream.110203163054.1661" a="E"><vh>300's LeoN and beyond</vh>
 <v t="edream.110203163054.1662"><vh>Leap 301: Use central server</vh></v>
-<v t="edream.110203163054.1663"><vh>Leap 302: Produce a plugin for a Resolve CVS Conflicts command</vh>
+<v t="edream.110203163054.1663"><vh>Leap 302: Resolve CVS Conflicts command</vh>
 <v t="edream.110203163054.1664"><vh>Comments by Josef</vh></v>
 </v>
 </v>
@@ -13310,8 +13312,9 @@ For more details, see leoNodes.py in LeoPy.leo.
 <t tx="edream.110203163054.1658">Project finished in Leo 4.2.
 
 The new file format uses gnx's (global node indices) to represent nodes uniquely.</t>
-<t tx="edream.110203163054.1659">- More flexible and more powerful than present hand-drawn code. 
-- Ideally, it would be a path to anygui. </t>
+<t tx="edream.110203163054.1659">Leo's core will use plain Tk so that Leo will run without Pmw.  Moreover there are problems with the Pmw.PanedWidget class that make it less attractive as a base for Leo's main window.
+
+However, Pmw is welcome within plugins.  Plugins or scripts should use g.importExtension('Pmw') to attempt to import Pmw.</t>
 <t tx="edream.110203163054.1661"></t>
 <t tx="edream.110203163054.1662">Produce a plugin (with related design) that allows people to share all or part of .leo files via a
 central server. 
@@ -13322,10 +13325,13 @@ initial aim of this Leap would be to produce a starting point design that would 
 for review. 
 
 </t>
-<t tx="edream.110203163054.1663">- Assigned to nobody 
-- This plugin need _not_ address itself to issues raised in Leap 301: it is a prototype for experimentation. The
-initial aim of this Leap would be to produce a starting point design that would be incorporated into this Leap
-for review.</t>
+<t tx="edream.110203163054.1663">This is less important than I once thought, for the following reasons:
+
+1. CVS conflicts are actually fairly rare.  Moreover, people typically must discuss how to resolve such conflicts; in general completely automated solutions are not possible.
+
+2. Leo handle's conflicts in most code just as any editor would:  Leo body pane shows the conflict delimited as usual.
+
+3. Leo can read @thin files with conflicts that span sentinels.  This affects the outline structure, but not as severely as one might think.  Such conflicts would typically result from two developers changing the headline of a node in conflicting ways.  This will happen rarely, and the workarounds are straightforward.</t>
 <t tx="edream.110203163054.1664">Open Discussion
 
  RE: Status report: ten breakthroughs
@@ -15638,5 +15644,26 @@ if I could just learn how to tame the beast.
 My email address is edreamleo@charter.net.
 
 That's all you need to do.  In particular that there is no need to change leoPlugins.leo.</t>
+<t tx="ekr.20041226081019">import leoGlobals as g
+import leoPlugins
+c = g.top()
+
+spellpyx = leoPlugins.getPluginModule("spellpyx")
+createMenu = spellpyx is None
+keys = {'c':c}
+
+if not spellpyx:
+    print 'loading spellpyx plugin'
+    spellpyx = leoPlugins.loadOnePlugin("spellpyx",verbose=True)
+    if spellpyx:
+        spellpyx.onCreate('tag',keys)
+
+if spellpyx:
+    # g.trace(g.dictToString(spellpyx.spellFrames,tag='spellFrames'))
+    spellFrame = spellpyx.spellFrames.get(c)
+    if spellFrame and createMenu:
+        spellFrame.createSpellMenu('tag',keys)
+    if spellFrame:
+        spellFrame.checkSpelling()</t>
 </tnodes>
 </leo_file>
