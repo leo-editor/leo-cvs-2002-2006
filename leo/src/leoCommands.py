@@ -278,9 +278,9 @@ class baseCommands:
     
         c,frame = g.app.gui.newLeoCommanderAndFrame(fileName=None)
         
-        # 5/16/03: Needed for hooks.
+        # 5/16/03: Needed for plugins.
         g.doHook("new",old_c=self,new_c=c)
-        
+    
         # Use the config params to set the size and location of the window.
         frame.setInitialWindowGeometry()
         frame.deiconify()
@@ -2804,6 +2804,7 @@ class baseCommands:
             p.setAllAncestorAtFileNodesDirty()
             c.setChanged(True)
         c.endUpdate()
+        return p # for mod_labels plugin.
     #@nonl
     #@-node:ekr.20031218072017.1761:c.insertHeadline
     #@+node:ekr.20031218072017.1762:c.clone
@@ -2822,6 +2823,7 @@ class baseCommands:
                 c.selectVnode(clone)
                 c.undoer.setUndoParams("Clone Node",clone)
         c.endUpdate() # updates all icons
+        return clone # For mod_labels plugin.
     #@nonl
     #@-node:ekr.20031218072017.1762:c.clone
     #@+node:ekr.20031218072017.1765:c.validateOutline
