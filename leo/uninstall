@@ -1,0 +1,53 @@
+#!/bin/sh
+
+############################################
+# This is a small uninstall script to uninstall
+# leo on GNU/Linux. 
+# Leo is Open Software and is distributed under the terms 
+# of the Python License.  Please see:
+# docs/LICENSE.TXT for details.
+#
+# This uninstall script created by Frank Merenda 
+# (fmerenda@yahoo.com)
+#
+# verison 1.0 - 07/02/2003
+# - initial creation 
+#
+############################################
+
+
+################################
+# Variables for usage in this script.
+################################
+LEO_RUN_SCRIPT_SOURCE='./scripts/leo-script.txt'
+LEO_RUN_SCRIPT_OUTPUT='/usr/bin/leo'
+LEO_LIB_DIR='/usr/lib/leo'
+
+################################
+# Step 1
+# Verify the current user is root
+################################
+CURRENT_USER=$(whoami)
+
+if [ "$CURRENT_USER" = "root" ] ; then
+    echo Verified user is root
+else
+    echo You must be root to run this program
+    exit 0;
+fi    
+
+################################
+# Step 2
+# remove all the files
+################################
+echo Removing all installed leo files....
+
+rm -f /usr/lib/config/leoConfig.leo
+rm -f /usr/lib/config/leoConfig.txt
+rm -f /usr/lib/doc/LeoDocs.leo
+
+rm -f $LEO_RUN_SCRIPT_OUTPUT
+rm -rf $LEO_LIB_DIR
+
+
+echo Leo has been successfully uninstalled.
