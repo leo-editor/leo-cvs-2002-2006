@@ -7924,7 +7924,7 @@ menu_shortcut = menu_head + menu_last
 #@-node:ekr.20040914081306:(Shifted all Alt-shortcuts to Ctrl shortcuts on the Mac)
 #@+node:ekr.20040914082436:(Added c.frame.openDirectory to sys.path when executing scripts)
 #@+node:ekr.20031218072017.2140:c.executeScript
-def executeScript(self,p=None,script=None):
+def executeScript(self,p=None,script=None,useSelectedText=True):
 
     """This executes body text as a Python script.
     
@@ -7933,7 +7933,7 @@ def executeScript(self,p=None,script=None):
     c = self ; error = False ; s = None ; script1 = script
 
     if not script:
-        script = g.getScript(c,p)
+        script = g.getScript(c,p,useSelectedText=useSelectedText)
     << redirect output >>
     # g.trace(script)
     if script:
@@ -9808,7 +9808,7 @@ if not item[-1] is None:
     item = data[-2]
 #@-node:ekr.20041007080346.1:Report 2 from e
 #@+node:ekr.20031218072017.2140:c.executeScript
-def executeScript(self,p=None,script=None):
+def executeScript(self,p=None,script=None,useSelectedText=True):
 
     """This executes body text as a Python script.
     
@@ -9817,7 +9817,7 @@ def executeScript(self,p=None,script=None):
     c = self ; error = False ; s = None ; script1 = script
 
     if not script:
-        script = g.getScript(c,p)
+        script = g.getScript(c,p,useSelectedText=useSelectedText)
     << redirect output >>
     # g.trace(script)
     if script:
@@ -9984,6 +9984,194 @@ def goToScriptLineNumber (self,root,script,n):
 #@nonl
 #@-node:EKR.20040612232221:goToScriptLineNumber
 #@-node:ekr.20041004094706:(Fixed error reporting in executeScript when the error happens outside the script)
+#@+node:ekr.20041013061250:(Fixed hyperlink bug)
+#@+node:ekr.20041013061250.1:Report
+@killcolor
+
+http://sourceforge.net/forum/message.php?msg_id=2802138
+By: rogererens
+
+Using Leo4.2 on WinXP, control-clicking on a section reference:
+instead of going to the section definition, I get the following log message:
+
+exception handling , hypercclick,  event
+AttributeError
+
+and in the console:
+
+unknown position attribute: redraw
+Traceback (most recent call last):
+  File "C:\Leo\src\leoTkinterTree.py", line 351, in OnHyperLinkControlClick
+    self.redraw()
+  File "C:\Leo\src\leoNodes.py", line 1534, in __getattr__
+    raise AttributeError
+AttributeError
+
+Commenting out the line
+self.redraw
+in onHyperLinkControlClick
+seems to work, but the comment above puts some doubts on the correctness of
+this adaptation.
+
+Also, the documentation w.r.t. hyperlinks seems outdated to me, since with the
+'Recent' button one can quite easily navigate backward and forward like in web
+browsers.
+#@-node:ekr.20041013061250.1:Report
+#@+node:ekr.20040803072955.23:OnHyperLinkControlClick
+def OnHyperLinkControlClick (self,event):
+    
+    """Callback injected into position class."""
+
+    try:
+        p = self ; c = p.c
+        if not g.doHook("hypercclick1",c=c,p=p,event=event):
+            # New in recycled nodes code:
+            # Call self.redraw to inhibit calls to setLabelState.
+            c.frame.tree.redraw()
+            c.beginUpdate()
+            c.selectVnode(p)
+            c.endUpdate()
+            c.frame.bodyCtrl.mark_set("insert","1.0")
+        g.doHook("hypercclick2",c=c,p=p,event=event)
+    except:
+        g.es_event_exception("hypercclick")
+        
+onHyperLinkControlClick = OnHyperLinkControlClick
+#@nonl
+#@-node:ekr.20040803072955.23:OnHyperLinkControlClick
+#@-node:ekr.20041013061250:(Fixed hyperlink bug)
+#@+node:ekr.20041013101851:(Use entire script when executing script buttons)
+#@+node:ekr.20031218072017.2140:c.executeScript
+def executeScript(self,p=None,script=None,useSelectedText=True):
+
+    """This executes body text as a Python script.
+    
+    We execute the selected text, or the entire body text if no text is selected."""
+    
+    c = self ; error = False ; s = None ; script1 = script
+
+    if not script:
+        script = g.getScript(c,p,useSelectedText=useSelectedText)
+    << redirect output >>
+    # g.trace(script)
+    if script:
+        script = script.strip()
+    if script:
+        # 9/14/04: Temporarily add the open directory to sys.path.
+        sys.path.insert(0,c.frame.openDirectory)
+        script += '\n' # Make sure we end the script properly.
+        try:
+            exec script in {} # Use {} to get a pristine environment!
+            << unredirect output >>
+            if not script1:
+                g.es("end of script",color="purple")
+        except:
+            << unredirect output >>
+            g.es("exception executing script")
+            fileName,n = g.es_exception(full=False,c=c)
+            g.trace(fileName)
+            if n is not None:
+                << dump the lines near the error >>
+                if p and not script1 and not fileName:
+                    c.goToScriptLineNumber(p,script,n)
+            c.frame.tree.redrawAfterException()
+        del sys.path[0]
+    elif not error:
+        << unredirect output >>
+        g.es("no script selected",color="blue")
+        
+    # Force a redraw _after_ all messages have been output.
+    c.redraw() 
+#@nonl
+#@+node:ekr.20031218072017.2143:<< redirect output >>
+if g.app.config.redirect_execute_script_output_to_log_pane:
+
+    g.redirectStdout() # Redirect stdout
+    g.redirectStderr() # Redirect stderr
+#@nonl
+#@-node:ekr.20031218072017.2143:<< redirect output >>
+#@+node:EKR.20040627100424:<< unredirect output >>
+if g.app.config.redirect_execute_script_output_to_log_pane:
+
+    g.restoreStderr()
+    g.restoreStdout()
+#@nonl
+#@-node:EKR.20040627100424:<< unredirect output >>
+#@+node:EKR.20040612215018:<< dump the lines near the error >>
+if g.os_path_exists(fileName):
+    f = file(fileName)
+    lines = f.readlines()
+    f.close()
+else:
+    lines = g.splitLines(script)
+
+s = '-' * 20
+print s; g.es(s)
+
+if 1:
+    # Just print the error line.
+    try:
+        s = "%s line %d: %s" % (fileName,n,lines[n-1])
+        print s, ; g.es(s,newline=False)
+    except IndexError:
+        s = "%s line %d" % (fileName,n)
+        print s, ; g.es(s,newline=False)
+else:
+    i = max(0,n-2)
+    j = min(n+2,len(lines))
+    # g.trace(n,i,j)
+    while i < j:
+        ch = g.choose(i==n-1,'*',' ')
+        s = "%s line %d: %s" % (ch,i+1,lines[i])
+        print s, ; g.es(s,newline=False)
+        i += 1
+#@nonl
+#@-node:EKR.20040612215018:<< dump the lines near the error >>
+#@-node:ekr.20031218072017.2140:c.executeScript
+#@+node:EKR.20040614071102.1:g.getScript
+def getScript (c,p,useSelectedText=True):
+
+    if not p: p = c.currentPosition()
+    old_body = p.bodyString()
+    
+    try:
+        script = None
+        # 7/7/04: Allow p not to be the present position.
+        if p == c.currentPosition():
+            if useSelectedText and c.frame.body.hasTextSelection():
+                # Temporarily replace v's body text with just the selected text.
+                s = c.frame.body.getSelectedText()
+                p.v.setTnodeText(s)
+            else:
+                s = c.frame.body.getAllText()
+        else:
+            s = p.bodyString()
+    
+        if s.strip():
+            g.app.scriptDict["script1"]=s
+            # df = c.atFileCommands.new_df
+            at = c.atFileCommands
+            if 0: # now done in 
+                # Force Python comment delims.
+                at.scanAllDirectives(p,scripting=True)
+                at.startSentinelComment = "#"
+                at.endSentinelComment = None
+            at.write(p.copy(),nosentinels=False,toString=True,scriptWrite=True)
+            script = at.stringOutput
+            assert(p)
+            g.app.scriptDict["script2"]=script
+            error = len(script) == 0
+    except:
+        s = "unexpected exception"
+        print s ; g.es(s)
+        g.es_exception()
+        script = None
+
+    p.v.setTnodeText(old_body)
+    return script
+#@nonl
+#@-node:EKR.20040614071102.1:g.getScript
+#@-node:ekr.20041013101851:(Use entire script when executing script buttons)
 #@-node:ekr.20040929081120:4.3 a1 projects
 #@-all
 #@nonl

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="6008" clone_windows="0"/>
-<globals body_outline_ratio="0.633101851852">
-	<global_window_position top="9" left="283" height="864" width="907"/>
+<globals body_outline_ratio="0.474537037037">
+	<global_window_position top="10" left="283" height="864" width="907"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences>
@@ -374,8 +374,40 @@
 <v t="ekr.20040922064156"><vh>Test of reportBadChars</vh></v>
 <v t="ekr.20040920104357"><vh>Tix Tests</vh></v>
 <v t="ekr.20041012091500"><vh>@test g.rawPrint</vh></v>
+<v t="ekr.20041011160953"><vh>Test of xsltWithNodes plugin</vh>
+<v t="ekr.20041011160953.1"><vh>stylesheet</vh>
+<v t="ekr.20041012123331"><vh>Joe Orr's stylesheet</vh></v>
+<v t="ekr.20041011161235"><vh>The actual stylesheet</vh></v>
 </v>
-<v t="ekr.20040312021734"><vh>Scripts</vh>
+<v t="ekr.20041011160953.2"><vh>From xsltWithNodes.py</vh>
+<v t="ekr.20041011160953.3"><vh>&lt;&lt; imports &gt;&gt;</vh></v>
+<v t="ekr.20041011160953.4"><vh>&lt;&lt; version history &gt;&gt;</vh></v>
+<v t="ekr.20041011160953.5"><vh>NewHeadline</vh></v>
+<v t="ekr.20041011160953.6"><vh>setStyleNode</vh></v>
+<v t="ekr.20041011160953.7"><vh>processDocumentNode</vh></v>
+<v t="ekr.20041011160953.8"><vh>addXSLTNode</vh></v>
+<v t="ekr.20041011160953.9"><vh>addXSLTemplate</vh></v>
+<v t="ekr.20041011160953.10"><vh>getStream</vh></v>
+<v t="ekr.20041011160953.11"><vh>jumpToStyleNode</vh></v>
+<v t="ekr.20041011160953.12"><vh>styleNodeSelected</vh></v>
+<v t="ekr.20041011160953.13"><vh>addMenu</vh></v>
+<v t="ekr.20041011160953.14"><vh>NewHeadline</vh></v>
+</v>
+</v>
+<v t="ekr.20041013062906.1"><vh>Tests of error reporting in scripts</vh>
+<v t="ekr.20041012101530" a="E"><vh>Test reporting of SyntaxError</vh>
+<v t="ekr.20041012101634"><vh>syntax error</vh></v>
+</v>
+<v t="ekr.20041012101720"><vh>Test reporting of IndexError</vh>
+<v t="ekr.20041012101720.1"><vh>index error</vh></v>
+</v>
+<v t="ekr.20041012101836"><vh>Test reporting of SyntaxError</vh>
+<v t="ekr.20041012101836.1"><vh>syntax error</vh></v>
+</v>
+<v t="ekr.20041012102030"><vh>Test reporting of IndexError in another file</vh></v>
+</v>
+</v>
+<v t="ekr.20040312021734" a="E"><vh>Scripts</vh>
 <v t="ekr.20040318091620"><vh>Clear all uAs (unknown attributes)</vh></v>
 <v t="ekr.20040915080419"><vh>Print all uAs (unknown attributes)</vh></v>
 <v t="EKR.20040424065452"><vh>Compare files</vh></v>
@@ -712,15 +744,25 @@
 <v t="ekr.20040918093738.4"><vh>test</vh></v>
 </v>
 </v>
-<v t="ekr.20040930124233"><vh>headfind</vh></v>
-<v t="ekr.20041002105138"><vh>headfine (uses re)</vh></v>
+<v t="ekr.20041013101029" a="ETV"><vh>headfind</vh>
+<v t="ekr.20041013101029.1"><vh>&lt;&lt; about this script &gt;&gt;</vh></v>
+</v>
 <v t="ekr.20041001161303"><vh>print all laoded plugins</vh></v>
 </v>
 <v t="ekr.20041001211817"><vh>Startup</vh>
 <v t="ekr.20041001203411"><vh>@ plugin ___proto_atFile.py</vh></v>
 <v t="ekr.20041001203411.1"><vh>@ script hi</vh></v>
 </v>
-<v t="EKR.20040619133116" a="E"><vh>Unit testing...</vh>
+<v t="ekr.20040723064143.1"><vh>To do...</vh>
+<v t="ekr.20041004093917"><vh>@test read from string</vh>
+<v t="ekr.20041004093917.1"><vh>From @thin at-file-thin-test2.txt</vh></v>
+<v t="ekr.20041004100940"><vh>root</vh></v>
+</v>
+<v t="ekr.20040723064143.2"><vh>Finish unit tests for @asis</vh></v>
+<v t="ekr.20040723064143.3"><vh>Test error recovery when reading descendentTnodeUa's</vh></v>
+<v t="ekr.20040903102217"><vh>Test multi-line @doc parts with @language html</vh></v>
+</v>
+<v t="EKR.20040619133116"><vh>Unit testing...</vh>
 <v t="ekr.20040327114250"><vh>@thin ../test/unittest/batchTest.py</vh></v>
 <v t="ekr.20041012101944"><vh>@thin ../test/unittest/errorTest.py</vh></v>
 <v t="ekr.20040712101754"><vh>Unit Tests</vh>
@@ -1090,6 +1132,7 @@
 <v t="ekr.20040712101754.211"><vh>@test hasThreadNextBack</vh></v>
 <v t="ekr.20040712101754.212"><vh>@test vnode list</vh></v>
 <v t="ekr.20040722055040"><vh>@test isAncestorOf</vh></v>
+<v t="ekr.20041013062906"><vh>@test onHyperLinkControlClick</vh></v>
 </v>
 <v t="ekr.20040723062819"><vh>Syntax Checks...</vh>
 <v t="EKR.20040612095237"><vh>@test checkPythonCode (bad syntax)</vh>
@@ -1190,44 +1233,6 @@
 <v t="ekr.20040707081532.1"><vh>Do @test</vh></v>
 <v t="ekr.20041001194357"><vh>@button unit test</vh></v>
 </v>
-<v t="ekr.20040723064143.1"><vh>To do (when file tests are easier)</vh>
-<v t="ekr.20041004093917"><vh>@test read from string</vh>
-<v t="ekr.20041004093917.1"><vh>From @thin at-file-thin-test2.txt</vh></v>
-<v t="ekr.20041004100940"><vh>root</vh></v>
-</v>
-<v t="ekr.20040723064143.2"><vh>Finish unit tests for @asis</vh></v>
-<v t="ekr.20040723064143.3"><vh>Test error recovery when reading descendentTnodeUa's</vh></v>
-<v t="ekr.20040903102217"><vh>Test multi-line @doc parts with @language html</vh></v>
-</v>
-<v t="ekr.20041011160953"><vh>Test of xsltWithNodes plugin</vh>
-<v t="ekr.20041011160953.1" a="E"><vh>stylesheet</vh>
-<v t="ekr.20041011161235"><vh>The actual stylesheet</vh></v>
-</v>
-<v t="ekr.20041011160953.2"><vh>From xsltWithNodes.py</vh>
-<v t="ekr.20041011160953.3"><vh>&lt;&lt; imports &gt;&gt;</vh></v>
-<v t="ekr.20041011160953.4"><vh>&lt;&lt; version history &gt;&gt;</vh></v>
-<v t="ekr.20041011160953.5"><vh>NewHeadline</vh></v>
-<v t="ekr.20041011160953.6"><vh>setStyleNode</vh></v>
-<v t="ekr.20041011160953.7"><vh>processDocumentNode</vh></v>
-<v t="ekr.20041011160953.8"><vh>addXSLTNode</vh></v>
-<v t="ekr.20041011160953.9"><vh>addXSLTemplate</vh></v>
-<v t="ekr.20041011160953.10"><vh>getStream</vh></v>
-<v t="ekr.20041011160953.11"><vh>jumpToStyleNode</vh></v>
-<v t="ekr.20041011160953.12"><vh>styleNodeSelected</vh></v>
-<v t="ekr.20041011160953.13"><vh>addMenu</vh></v>
-<v t="ekr.20041011160953.14"><vh>NewHeadline</vh></v>
-</v>
-</v>
-<v t="ekr.20041012101530"><vh>Test reporting of SyntaxError</vh>
-<v t="ekr.20041012101634"><vh>syntax error</vh></v>
-</v>
-<v t="ekr.20041012101720"><vh>Test reporting of IndexError</vh>
-<v t="ekr.20041012101720.1"><vh>index error</vh></v>
-</v>
-<v t="ekr.20041012101836"><vh>Test reporting of SyntaxError</vh>
-<v t="ekr.20041012101836.1"><vh>syntax error</vh></v>
-</v>
-<v t="ekr.20041012102030" a="ETV"><vh>Test reporting of IndexError in another file</vh></v>
 </vnodes>
 <tnodes>
 <t tx="EKR.20040424065452">import leoGlobals as g
@@ -9713,27 +9718,6 @@ s = u"ß"
 g.reportBadChars(s,"latin_1")
 
 print g.toEncodedString(s,"latin_1")</t>
-<t tx="ekr.20040930124233"># Add to rClick or use as scriptButton.
-import leoGlobals as g
-
-def headfind():
-    """Search for a headline matching the selected text or clipboard buffer"""
-    c = g.top()
-    s = c.frame.body.getSelectedText() or g.app.gui.getTextFromClipboard()
-    if s:
-        s = s.lower()
-        for p in c.allNodes_iter():
-            if p.headString().lower().startswith(s):
-                c.beginUpdate()
-                c.frame.tree.expandAllAncestors(p)
-                c.selectVnode(p)
-                c.endUpdate()
-                return
-        g.es("no headline matches '%s'" % (s),color="blue")
-    else:
-        g.es("no selected text &amp; clipboard empty",color="blue")
-
-headfind()</t>
 <t tx="ekr.20041001161303">import leoGlobals as g
 
 for s in g.app.loadedPlugins:
@@ -9749,43 +9733,6 @@ leoTest.doTests(all=False)</t>
 
 g.es("hi",color="red")</t>
 <t tx="ekr.20041001211817"></t>
-<t tx="ekr.20041002105138"># Add to rClick or use as scriptButton.
-import leoGlobals as g
-import re
-
-def headfind():
-    """Search with re and
-    - GO to found headline beginning with the selected text or clipboard buffer
-    - EXCEPT when found search string is '-info' node
-    (BOTH 1.followed by ' -info'
-    AND 2.appears anywhere in headline(preceding space or start)
-    THEN just SHOW found info node's body text in Log pane."""
-    c = g.top()
-    s = c.frame.body.getSelectedText() or g.app.gui.getTextFromClipboard()
-    if s:
-        s = re.escape(s.lower())
-        sUseLogTrigger = re.escape(" -info")
-        for p in c.allNodes_iter():
-            srch="(^%s|(\b| )%s%s)" % (s,s,sUseLogTrigger)
-            if re.findall(srch,p.headString().lower()):
-                g.es("found " + s)
-                sUseLogTrigger_srch="(^| )%s%s" % (s,sUseLogTrigger)
-                if re.findall(sUseLogTrigger_srch,p.headString().lower()):
-                    body2=p.bodyString()
-                    g.es(body2,color="orange")
-                    return
-                else:
-                    c.beginUpdate()
-                    c.frame.tree.expandAllAncestors(p)
-                    c.selectVnode(p)
-                    c.endUpdate()
-                    return
-
-        g.es("no headline matches '%s'" % (s),color="blue")
-    else:
-        g.es("no selected text &amp; clipboard empty",color="blue")
-        
-headfind()</t>
 <t tx="ekr.20041004093917">@color
 
 @language python
@@ -9851,7 +9798,7 @@ c.atFileCommands.read(root,thinFile=True,fromString=s)</t>
 #@-leo
 </t>
 <t tx="ekr.20041004100940"></t>
-<t tx="ekr.20041011160953"></t>
+<t tx="ekr.20041011160953">@ignore</t>
 <t tx="ekr.20041011160953.1">@language html</t>
 <t tx="ekr.20041011160953.2">"""Adds XSLT-Node Command submen item to the Outline menu.
 
@@ -10068,5 +10015,123 @@ path = g.os_path_join(g.app.loadDir,"..","test","unittest")
 errorTest = g.importFromPath ("errorTest",path,verbose=True)
 
 errorTest.testIndexError()</t>
+<t tx="ekr.20041012123331">&lt;?xml version='1.0' encoding="UTF-8"?&gt;
+&lt;xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform"&gt;
+&lt;xsl:output method="xml" indent="yes" encoding="UTF-8" /&gt;
+
+&lt;!-- Main template --&gt;
+&lt;xsl:template match="/"&gt;
+
+&lt;leo_file&gt;
+
+&lt;leo_header file_format="1" tnodes="0" max_tnode_index="6" clone_windows="0"/&gt;
+&lt;globals body_outline_ratio="0.302"&gt;
+	&lt;global_window_position top="-4" left="-4" height="748" width="1032"/&gt;
+	&lt;global_log_window_position top="64" left="164" height="586" width="747"/&gt;
+&lt;/globals&gt;
+&lt;preferences allow_rich_text="0" tab_width="4" page_width="132" 
+tangle_bat="0" untangle_bat="0" output_doc_chunks="1" 
+defaultTargetLanguage="C" use_header_flag="1"&gt;
+	
+&lt;/preferences&gt;
+&lt;find_panel_settings ignore_case="1" search_body="1"&gt;
+	&lt;find_string&gt;cweb&lt;/find_string&gt;
+	&lt;change_string&gt;&lt;/change_string&gt;
+&lt;/find_panel_settings&gt;
+
+&lt;vnodes&gt;
+&lt;xsl:apply-templates/&gt;
+&lt;/vnodes&gt;
+&lt;tnodes&gt;
+&lt;xsl:text&gt;
+&lt;/xsl:text&gt;
+&lt;/tnodes&gt;
+&lt;/leo_file&gt;
+
+&lt;/xsl:template&gt;
+
+&lt;!-- Template for the top element --&gt;
+&lt;xsl:template match="*[not(parent::*)]"&gt;
+&lt;v a="ET"&gt;&lt;vh&gt;&lt;xsl:value-of select="name(.)"/&gt;&lt;/vh&gt;
+&lt;xsl:apply-templates/&gt;
+&lt;/v&gt;
+&lt;/xsl:template&gt;
+
+&lt;!-- Template for all but the top element --&gt;
+&lt;xsl:template match="*[parent::*]"&gt;
+&lt;v&gt;&lt;vh&gt;&lt;xsl:value-of select="name(.)"/&gt;&lt;/vh&gt;
+&lt;xsl:apply-templates/&gt;
+&lt;/v&gt;
+&lt;/xsl:template&gt;
+
+&lt;!-- Template to dump the text --&gt;
+&lt;xsl:template match="text()"&gt;
+&lt;/xsl:template&gt;
+
+&lt;/xsl:stylesheet&gt;</t>
+<t tx="ekr.20041013062906">import leoGlobals as g
+
+c = g.top()
+p = c.currentPosition()
+p.OnHyperLinkControlClick(event=None)</t>
+<t tx="ekr.20041013062906.1">@ignore</t>
+<t tx="ekr.20041013101029"># Run this script from a scriptButton.
+
+&lt;&lt; about this script &gt;&gt;
+
+import leoGlobals as g
+import re
+
+def headfind():
+    """Search with re and 
+    - GO to found headline beginning with the selected text or clipboard buffer
+    or also GO when line begins with @ and word or string in variable sMyOwnPrefix
+    - EXCEPT when found search string is '-info' node
+    (BOTH  1.followed by ' -info'
+    AND  2.appears anywhere in headline(preceding space or start) 
+    THEN  just SHOW found info node's body text in cleared Log pane.
+    """
+    c = g.top()
+    s = c.frame.body.getSelectedText() or g.app.gui.getTextFromClipboard()
+    if s:
+        if len(s) == 1: s = "index -info" #if select is one char try to goto this named index node
+        s = re.escape(s.lower())
+        sUseLogTrigger = re.escape(" -info")
+        sMyOwnPrefix = re.escape("FOLLOWING FILE IS: ").lower()
+        sAllowablePrefixRe = "\@([A-Za-z][A-Za-z0-9\-]+) "
+            # @ char, followed by alpha,some alphanum or dash chars, then space ...matches Leo special nodes
+        for p in c.allNodes_iter():
+            srch="(^%s%s|^%s%s|^%s| %s%s)" % (sMyOwnPrefix,s,sAllowablePrefixRe,s,s,s,sUseLogTrigger) #all re
+            if re.findall(srch,p.headString().lower()):
+                g.es("found " + s)
+                sUseLogTrigger_srch="(^| )%s%s" % (s,sUseLogTrigger) #first just Log trigger re
+                if re.findall(sUseLogTrigger_srch,p.headString().lower()):
+                    body2=p.bodyString()
+                    g.top().frame.log.logCtrl.delete("1.0","end"); # clear Log pane before message
+                    # g.es(body2,color="orange")
+                    return
+                else:
+                    c.beginUpdate()
+                    c.frame.tree.expandAllAncestors(p)
+                    c.selectVnode(p)
+                    c.endUpdate()
+                    return
+					
+        g.es("no headline matches '%s'" % (s),color="blue")
+    else:
+        g.es("no selected text &amp; clipboard empty",color="blue")
+
+headfind()</t>
+<t tx="ekr.20041013101029.1">@ PREFIXES: Now will jump to any headline where search is preceded by an @+chars+space
+and alternatively a fixed prefix string+space.
+
+CLEAR LOG: Now also clears Log for display of -info nodes. 
+
+NOTE:I already had a file with a bunch of text files each preceded by "THE FOLLOWING
+FILE IS: " and a list of these files at the top of everything. After global
+changing these lines with "- " (and at first line), I imported flattened outline...
+and "there you go" a index-driven Leo version. :)
+
+bill p</t>
 </tnodes>
 </leo_file>
