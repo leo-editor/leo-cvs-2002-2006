@@ -256,6 +256,42 @@ class baseConfig:
     #@-node:ekr.20041117083857:initSettingsFiles
     #@-node:ekr.20041117083202:Birth...
     #@+node:ekr.20041117081009:Getters...
+    #@+node:ekr.20041123070429:canonicalizeSettingName (munge)
+    def canonicalizeSettingName (self,name):
+        
+        if name is None:
+            return None
+    
+        name = name.lower()
+        for ch in ('-','_',' ','\n'):
+            name = name.replace(ch,'')
+            
+        return g.choose(name,name,None)
+        
+    munge = canonicalizeSettingName
+    #@nonl
+    #@-node:ekr.20041123070429:canonicalizeSettingName (munge)
+    #@+node:ekr.20041123092357:findSettingsPosition
+    def findSettingsPosition (self,c,setting):
+        
+        """Return the position for the setting in the @settings tree for c."""
+        
+        munge = self.munge
+        
+        root = self.settingsRoot(c)
+        if not root:
+            return c.nullPosition()
+            
+        setting = munge(setting)
+            
+        for p in root.subtree_iter():
+            h = munge(p.headString())
+            if h == setting:
+                return p.copy()
+        
+        return c.nullPosition()
+    #@nonl
+    #@-node:ekr.20041123092357:findSettingsPosition
     #@+node:ekr.20041117083141:get & allies
     def get (self,c,setting,theType):
         
@@ -359,19 +395,6 @@ class baseConfig:
             return None
     #@nonl
     #@-node:ekr.20041117093009.1:getDirectory
-    #@+node:ekr.20041117081513:getInt
-    def getInt (self,c,setting):
-        
-        """Search all dictionaries for the setting & check it's type"""
-        
-        val = self.get(c,setting,"int")
-        try:
-            val = int(val)
-            return val
-        except TypeError:
-            return None
-    #@nonl
-    #@-node:ekr.20041117081513:getInt
     #@+node:ekr.20041117082135:getFloat
     def getFloat (self,c,setting):
         
@@ -385,52 +408,6 @@ class baseConfig:
             return None
     #@nonl
     #@-node:ekr.20041117082135:getFloat
-    #@+node:ekr.20041117093009.2:getLanguage FINISH
-    def getLanguage (self,c,setting):
-        
-        """Return the setting whose value should be a language known to Leo."""
-        
-        language = self.getString(c,setting)
-        
-        return language ###
-    
-        if language in xxx:
-            return language
-        else:
-            return None
-    #@nonl
-    #@-node:ekr.20041117093009.2:getLanguage FINISH
-    #@+node:ekr.20041122070752:getRatio
-    def getRatio (self,c,setting):
-        
-        """Search all dictionaries for the setting & check it's type"""
-        
-        val = self.get(c,setting,"ratio")
-        try:
-            val = float(val)
-            if 0.0 <= val <= 1.0:
-                return val
-            else:
-                return None
-        except TypeError:
-            return None
-    #@nonl
-    #@-node:ekr.20041122070752:getRatio
-    #@+node:ekr.20041117062717.11:getRecentFiles
-    def getRecentFiles (self,c):
-        
-        # Must get c's recent files.
-        return self.recentFiles
-    #@nonl
-    #@-node:ekr.20041117062717.11:getRecentFiles
-    #@+node:ekr.20041117081009.4:getString
-    def getString (self,c,setting):
-        
-        """Search all dictionaries for the setting & check it's type"""
-    
-        return self.get(c,setting,"string")
-    #@nonl
-    #@-node:ekr.20041117081009.4:getString
     #@+node:ekr.20041118055543:getFontDict  FINISH (needed for @settings tree, maybe)
     def getFontDict (self,c,setting):
         
@@ -472,6 +449,57 @@ class baseConfig:
         return g.app.gui.getFontFromParams(family,size,slant,weight)
     #@nonl
     #@-node:ekr.20041117062717.13:getFontFromParams (config)
+    #@+node:ekr.20041117081513:getInt
+    def getInt (self,c,setting):
+        
+        """Search all dictionaries for the setting & check it's type"""
+        
+        val = self.get(c,setting,"int")
+        try:
+            val = int(val)
+            return val
+        except TypeError:
+            return None
+    #@nonl
+    #@-node:ekr.20041117081513:getInt
+    #@+node:ekr.20041117093009.2:getLanguage FINISH
+    def getLanguage (self,c,setting):
+        
+        """Return the setting whose value should be a language known to Leo."""
+        
+        language = self.getString(c,setting)
+        
+        return language ###
+    
+        if language in xxx:
+            return language
+        else:
+            return None
+    #@nonl
+    #@-node:ekr.20041117093009.2:getLanguage FINISH
+    #@+node:ekr.20041122070752:getRatio
+    def getRatio (self,c,setting):
+        
+        """Search all dictionaries for the setting & check it's type"""
+        
+        val = self.get(c,setting,"ratio")
+        try:
+            val = float(val)
+            if 0.0 <= val <= 1.0:
+                return val
+            else:
+                return None
+        except TypeError:
+            return None
+    #@nonl
+    #@-node:ekr.20041122070752:getRatio
+    #@+node:ekr.20041117062717.11:getRecentFiles
+    def getRecentFiles (self,c):
+        
+        # Must get c's recent files.
+        return self.recentFiles
+    #@nonl
+    #@-node:ekr.20041117062717.11:getRecentFiles
     #@+node:ekr.20041117062717.14:getShortcut
     def getShortcut (self,c,name):
         
@@ -485,6 +513,14 @@ class baseConfig:
             return None,None
     #@nonl
     #@-node:ekr.20041117062717.14:getShortcut
+    #@+node:ekr.20041117081009.4:getString
+    def getString (self,c,setting):
+        
+        """Search all dictionaries for the setting & check it's type"""
+    
+        return self.get(c,setting,"string")
+    #@nonl
+    #@-node:ekr.20041117081009.4:getString
     #@+node:ekr.20041117062717.17:setCommandsIvars
     # Sets ivars of c that can be overridden by leoConfig.txt
     
@@ -510,14 +546,26 @@ class baseConfig:
                 setattr(c,setting,val)
     #@nonl
     #@-node:ekr.20041117062717.17:setCommandsIvars
+    #@+node:ekr.20041120074536:settingsRoot
+    def settingsRoot (self,c):
+    
+        for p in c.allNodes_iter():
+            if p.headString().rstrip() == "@settings":
+                return p.copy()
+        else:
+            return c.nullPosition()
+    #@nonl
+    #@-node:ekr.20041120074536:settingsRoot
     #@-node:ekr.20041117081009:Getters...
     #@+node:ekr.20041118084146:Setters
-    #@+node:ekr.20041118084146.1:set (config)
+    #@+node:ekr.20041118084146.1:set (g.app.config)
     def set (self,c,setting,type,val):
         
         """Set the setting and make sure its type matches the given type."""
         
-        setting = self.canonicalizeSettingName(setting)
+        munge = self.munge
+        
+        setting = munge(setting)
     
         g.trace(c,setting,type,val)
     
@@ -536,7 +584,7 @@ class baseConfig:
         
         return val
     #@nonl
-    #@-node:ekr.20041118084146.1:set (config)
+    #@-node:ekr.20041118084146.1:set (g.app.config)
     #@+node:ekr.20041118084241:setString
     def setString (self,c,setting,val):
         
@@ -571,7 +619,7 @@ class baseConfig:
     #@nonl
     #@-node:ekr.20041117085625:openSettingsFile
     #@+node:ekr.20041120064303:readSettingsFiles
-    def readSettingsFiles (self,fileName):
+    def readSettingsFiles (self,fileName,verbose=True):
         
         # Init settings from leoSettings.leo files.
         for path,setOptionsFlag in (
@@ -580,7 +628,8 @@ class baseConfig:
             (fileName,True),
         ):
             if path:
-                if 1: # A print statement here is clearest.
+                if verbose:
+                    # A print statement here is clearest.
                     print "reading settings in %s" % path
                 c = self.openSettingsFile(path)
                 if c:
@@ -627,52 +676,6 @@ class baseConfig:
     #@nonl
     #@-node:ekr.20041117083857.1:readSettings
     #@-node:ekr.20041117093246:Scanning @settings
-    #@+node:ekr.20041123084849:Utilities (config)
-    #@+node:ekr.20041123070429:canonicalizeSettingName (munge)
-    def canonicalizeSettingName (self,name):
-        
-        if name is None:
-            return None
-    
-        name = name.lower()
-        for ch in ('-','_',' ','\n'):
-            name = name.replace(ch,'')
-            
-        return g.choose(name,name,None)
-        
-    munge = canonicalizeSettingName
-    #@nonl
-    #@-node:ekr.20041123070429:canonicalizeSettingName (munge)
-    #@+node:ekr.20041120074536:settingsRoot
-    def settingsRoot (self,c):
-    
-        for p in c.allNodes_iter():
-            if p.headString().rstrip() == "@settings":
-                return p.copy()
-        else:
-            return c.nullPosition()
-    #@nonl
-    #@-node:ekr.20041120074536:settingsRoot
-    #@+node:ekr.20041123092357:findSettingsPosition
-    def findSettingsPosition (self,c,setting):
-        
-        """Return the position for the setting in the @settings tree for c."""
-        
-        root = self.settingsRoot(c)
-        if not root:
-            return c.nullPosition()
-            
-        setting = self.canonicalizeSettingName(setting)
-            
-        for p in root.subtree_iter():
-            h = self.canonicalizeSettingName(p.headString())
-            if h == setting:
-                return p.copy()
-        
-        return c.nullPosition()
-    #@nonl
-    #@-node:ekr.20041123092357:findSettingsPosition
-    #@-node:ekr.20041123084849:Utilities (config)
     #@-others
     
 class config (baseConfig):
@@ -1121,48 +1124,6 @@ class settingsTreeParser (parserBaseClass):
     #@-others
 #@nonl
 #@-node:ekr.20041119203941.3:class settingsTreeParser (parserBaseClass)
-#@+node:ekr.20041119203941.4:class dialogCreator (parserBaseClass)
-class dialogCreator (parserBaseClass):
-    
-    """A class that creates a dialog for view and changing settings.
-    
-    This class creates this dialog using an @settings tree."""
-    
-    #@    @+others
-    #@+node:ekr.20041119204700.4:ctor
-    def __init__ (self,c):
-        
-        # Init the base class.
-        parserBaseClass.__init__(self,c)
-    #@nonl
-    #@-node:ekr.20041119204700.4:ctor
-    #@+node:ekr.20041119205753:createDialog
-    def createDialog (self):
-        
-        # Traverse the @settings tree, creating data used to create the dialogs.
-        self.traverse()
-        
-        # Create the dialog from the data.
-        self.createDialogFromData()
-    #@nonl
-    #@-node:ekr.20041119205753:createDialog
-    #@+node:ekr.20041119205753.1:createDialogFromData
-    def createDialogFromData (self):
-        
-        pass
-    #@nonl
-    #@-node:ekr.20041119205753.1:createDialogFromData
-    #@+node:ekr.20041119205148.2:visitNode
-    def visitNode (self,p):
-        
-        """Save data in node p if p will contribute any item to the dialog."""
-        
-        g.trace(p)
-    #@nonl
-    #@-node:ekr.20041119205148.2:visitNode
-    #@-others
-#@nonl
-#@-node:ekr.20041119203941.4:class dialogCreator (parserBaseClass)
 #@-others
 #@nonl
 #@-node:ekr.20041119205325:parser classes
