@@ -1046,9 +1046,12 @@ class LeoFrame:
 		expandMenu = self.createNewMenu("&Expand/Contract...","Outline")
 		
 		table = (
-			("&Contract All","Alt+Shift+0",self.OnContractAll),
+			("&Contract All","Alt+-",self.OnContractAll),
 			("Contract &Node","Alt+[",self.OnContractNode),
 			("Contract &Parent","Alt+0",self.OnContractParent),
+			("-",None,None),
+			("Expand P&rev Level","Alt+.",self.OnExpandPrevLevel),
+			("Expand N&ext Level","Alt+=",self.OnExpandNextLevel),
 			("-",None,None),
 			("Expand To Level &1","Alt+1",self.OnExpandToLevel1),
 			("Expand To Level &2","Alt+2",self.OnExpandToLevel2),
@@ -1060,8 +1063,8 @@ class LeoFrame:
 			("Expand To Level &8","Alt+8",self.OnExpandToLevel8),
 			("-",None,None),
 			("Expand &All","Alt+9",self.OnExpandAll),
-			("Expand N&ode","Alt+]",self.OnExpandNode),
-			("Expand N&ext &Level","Alt+=",self.OnExpandNextLevel))
+			("Expand N&ode","Alt+]",self.OnExpandNode))
+		
 		
 		self.createMenuEntries(expandMenu,table)
 		#@-body
@@ -3158,7 +3161,15 @@ class LeoFrame:
 	
 	#@-body
 	#@-node:7::OnExpandNode
-	#@+node:8::OnExpandToLevel1..9
+	#@+node:8::OnExpandPrevLevel
+	#@+body
+	def OnExpandPrevLevel(self,event=None):
+	
+		self.commands.expandPrevLevel()
+	
+	#@-body
+	#@-node:8::OnExpandPrevLevel
+	#@+node:9::OnExpandToLevel1..9
 	#@+body
 	def OnExpandToLevel1(self,event=None): self.commands.expandLevel1()
 	def OnExpandToLevel2(self,event=None): self.commands.expandLevel2()
@@ -3171,7 +3182,7 @@ class LeoFrame:
 	def OnExpandToLevel9(self,event=None): self.commands.expandLevel9()
 	
 	#@-body
-	#@-node:8::OnExpandToLevel1..9
+	#@-node:9::OnExpandToLevel1..9
 	#@-node:2::Expand/Contract
 	#@+node:3::Move/Select
 	#@+node:1::OnMoveDownwn
@@ -3916,12 +3927,16 @@ class LeoFrame:
 		enableMenu(menu,"Sort Siblings",c.canSortSiblings())
 		# Expand/Contract submenu...
 		menu = self.getMenu("Expand/Contract...")
+		hasChildren = v.hasChildren()
+		isExpanded = v.isExpanded()
 		enableMenu(menu,"Contract Parent",c.canContractParent())
-		enableMenu(menu,"Contract Node",v.hasChildren() and v.isExpanded())
-		enableMenu(menu,"Expand Node",v.hasChildren() and not v.isExpanded())
-		enableMenu(menu,"Expand To Level 1",v.hasChildren() and v.isExpanded())
+		enableMenu(menu,"Contract Node",hasChildren and isExpanded)
+		enableMenu(menu,"Expand Node",hasChildren and not isExpanded)
+		enableMenu(menu,"Expand Prev Level",hasChildren and isExpanded)
+		enableMenu(menu,"Expand Next Level",hasChildren)
+		enableMenu(menu,"Expand To Level 1",hasChildren and isExpanded)
 		for i in xrange(2,9):
-			enableMenu(menu,"Expand To Level " + str(i), v.hasChildren())
+			enableMenu(menu,"Expand To Level " + str(i), hasChildren)
 		# Move submenu...
 		menu = self.getMenu("Move...")
 		enableMenu(menu,"Move Down",c.canMoveOutlineDown())
@@ -3947,7 +3962,6 @@ class LeoFrame:
 		enableMenu(menu,"Mark Changed Items",c.canMarkChangedHeadlines())
 		enableMenu(menu,"Mark Changed Roots",c.canMarkChangedRoots())
 		enableMenu(menu,"Mark Clones",v.isCloned())
-	
 	#@-body
 	#@-node:5::updateOutlineMenu
 	#@-node:9::Menu enablers (Frame)

@@ -438,6 +438,7 @@ KP_Multiply, KP_Separator, KP_Space, KP_Subtract, KP_Tab,
 KP_F1, KP_F2, KP_F3, KP_F4,
 KP_0, KP_1, KP_2, KP_3, KP_4, KP_5, KP_6, KP_7, KP_8, KP_9</t>
 <t tx="T10">ExpandNextLevel   = Alt+=
+ExpandPrevLevel   = Alt+.
 ContractAll       = Alt+-
 ContractParent    = Alt+0
 ExpandToLevel1    = Alt+1

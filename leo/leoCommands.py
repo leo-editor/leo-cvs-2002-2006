@@ -1305,7 +1305,7 @@ class Commands:
 		
 		# 1/31/02: Expansion levels are now local to a particular tree.
 		if c.expansionNode != v:
-			c.expansionLevel = 0
+			c.expansionLevel = 1
 			c.expansionNode = v
 			
 		self.expandToLevel(c.expansionLevel + 1)
@@ -1324,6 +1324,21 @@ class Commands:
 	
 	#@-body
 	#@-node:8::expandNode
+	#@+node:9::expandPrevLevel
+	#@+body
+	def expandPrevLevel (self):
+	
+		c = self ; v = c.currentVnode()
+		
+		# 1/31/02: Expansion levels are now local to a particular tree.
+		if c.expansionNode != v:
+			c.expansionLevel = 1
+			c.expansionNode = v
+			
+		self.expandToLevel(max(1,c.expansionLevel - 1))
+	
+	#@-body
+	#@-node:9::expandPrevLevel
 	#@-node:1::Commands
 	#@+node:2::Utilities
 	#@+node:1::no longer used
