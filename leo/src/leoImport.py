@@ -727,7 +727,7 @@ class baseLeoImportCommands:
         #@-node:ekr.20040717112739:<< about this algorithm >>
         #@nl
         c = p.c ; root = p.copy()
-        df = c.atFileCommands.new_df
+        at = c.atFileCommands
         if testing:
             #@        << clear all dirty bits >>
             #@+node:ekr.20040716065356:<< clear all dirty bits >>
@@ -752,8 +752,8 @@ class baseLeoImportCommands:
         #@nl
         #@    << Write root's tree to to string s >>
         #@+node:ekr.20040716064333.1:<< Write root's tree to to string s >>
-        df.write(root,thinFile=True,toString=True)
-        s = df.stringOutput
+        at.write(root,thinFile=True,toString=True)
+        s = at.stringOutput
         if not s: return
         #@-node:ekr.20040716064333.1:<< Write root's tree to to string s >>
         #@nl
@@ -796,16 +796,16 @@ class baseLeoImportCommands:
             #@@c
             
             try:
-                df.correctedLines = 0
-                df.targetFileName = "<perfectImport string-file>"
-                df.inputFile = fo = g.fileLikeObject()
-                df.file = fo # Strange, that this is needed.  Should be cleaned up.
+                at.correctedLines = 0
+                at.targetFileName = "<perfectImport string-file>"
+                at.inputFile = fo = g.fileLikeObject()
+                at.file = fo # Strange, that this is needed.  Should be cleaned up.
                 for line in write_lines:
                     fo.write(line)
-                firstLines,junk,junk = c.atFileCommands.scanHeader(fo,df.targetFileName)
+                firstLines,junk,junk = c.atFileCommands.scanHeader(fo,at.targetFileName)
                 # To do: pass params to readEndNode.
-                df.readOpenFile(root,fo,firstLines,perfectImportRoot=root)
-                n = df.correctedLines
+                at.readOpenFile(root,fo,firstLines,perfectImportRoot=root)
+                n = at.correctedLines
                 if verbose:
                     g.es("%d marked node%s corrected" % (n,g.choose(n==1,'','s')),color="blue")
             except:
@@ -825,8 +825,8 @@ class baseLeoImportCommands:
                 before.close()
                 
                 # Write the tree into after_lines.
-                df.write(root,thinFile=True,toString=True)
-                after_lines1 = g.splitLines(df.stringOutput)
+                at.write(root,thinFile=True,toString=True)
+                after_lines1 = g.splitLines(at.stringOutput)
                 
                 # Strip sentinels from after_lines and compare.
                 after_lines = mu.removeSentinelsFromLines(after_lines1,delims)
