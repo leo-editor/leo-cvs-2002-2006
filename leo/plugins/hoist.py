@@ -34,13 +34,18 @@ import sys
 
 activeHoistColor = "pink1" # The Tk color to use for the active hoist button.
 
-# Set this to 0 if the sizing of the toolbar controls doesn't look good on your platform. 
-USE_FIXED_SIZES = sys.platform != "darwin" 
+# Set this to 0 if the sizing of the toolbar controls doesn't look good on your platform.
+USE_SIZER = False
+USE_FIXED_SIZES = sys.platform != "darwin"
+SIZER_HEIGHT = 23 # was 25
+SIZER_WIDTH = 55 # was 70
 
 #@+others
 #@+node:ekr.20040331072607.1:class HoistButtons
 class HoistButtons:
+
     """Hoist/dehoist buttons for the toolbar."""
+
     #@    @+others
     #@+node:ekr.20040331072607.2:__init__
     def __init__(self):
@@ -76,18 +81,24 @@ class HoistButtons:
         def hoistOnCallback(self=self,c=c):
             self.doHoistOn(c)
     
-        # Button De-Hoist
-        self.hoistOff[c] = Tk.Button(
-            self._getSizer(toolbar, 25, 70),text="De-Hoist",
-            command = hoistOffCallback)
-        self.hoistOff[c].pack(side="right", fill="both", expand=1)
+        if USE_SIZER: # original code
+            self.hoistOff[c] = b = Tk.Button(
+                self._getSizer(toolbar, SIZER_HEIGHT, SIZER_WIDTH),text="De-Hoist",
+                command = hoistOffCallback)
+            b.pack(side="right", fill="both", expand=1)
+            self.hoistOn[c] = b = Tk.Button(
+                self._getSizer(toolbar, SIZER_HEIGHT, SIZER_WIDTH),text="Hoist", 
+                command = hoistOnCallback)
+            b.pack(side="left", fill="both", expand=1)
+        else: # Use addIconButton for better visual compatibility.
+            self.hoistOn[c] = b1 = c.frame.addIconButton(text="Hoist")
+            b1.configure(command = hoistOnCallback)
+            self.hoistOff[c] = b2 = c.frame.addIconButton(text="De-Hoist")
+            b2.configure(command = hoistOffCallback)
+            if 1: # use this to force the buttons to the right.
+                b1.pack(side="right", fill="y", expand=0)
+                b2.pack(side="right", fill="y", expand=0)
     
-        # Button Hoist
-        self.hoistOn[c] = Tk.Button(
-            self._getSizer(toolbar, 25, 70),text="Hoist", 
-            command = hoistOnCallback)
-    
-        self.hoistOn[c].pack(side="left", fill="both", expand=1)
         self.bgColor = self.hoistOn[c]["background"]
         self.activeBgColor = self.hoistOn[c]["activebackground"]
     #@nonl
