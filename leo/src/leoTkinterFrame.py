@@ -755,13 +755,16 @@ class leoTkinterFrame (leoFrame.leoFrame):
     #@+node:ekr.20031218072017.3946:resizePanesToRatio
     def resizePanesToRatio(self,ratio,ratio2):
         
+        # g.trace(ratio,ratio2)
+        
         if use_Pmw and Pmw:
-            # g.trace(ratio,ratio2)
+            #@        << resize the Pmw panes >>
+            #@+node:ekr.20050104084531:<< resize the Pmw panes >>
             self.ratio = ratio
             self.secondary_ratio = ratio2
             splitter1 = self.component('splitter1').getObject()
             splitter2 = self.component('splitter2').getObject()
-    
+            
             if self.splitVerticalFlag:
                 # Use ratio to set splitter2 height.
                 size = ratio * float(splitter1.winfo_height())
@@ -776,6 +779,12 @@ class leoTkinterFrame (leoFrame.leoFrame):
                 # Use ratio2 to set outline height.
                 size = ratio2 * float(splitter2.winfo_height())
                 splitter2.configurepane('outline',size=int(size))
+            #@nonl
+            #@-node:ekr.20050104084531:<< resize the Pmw panes >>
+            #@nl
+        else:
+            self.divideLeoSplitter(self.splitVerticalFlag,ratio)
+            self.divideLeoSplitter(not self.splitVerticalFlag,ratio2)
     #@nonl
     #@-node:ekr.20031218072017.3946:resizePanesToRatio
     #@+node:ekr.20041221075743:onPmwResizeSplitter1/2
