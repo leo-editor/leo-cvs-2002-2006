@@ -146,17 +146,20 @@ ok:
   File c:\prog\leoCVS\leo\dist\postSetup.py
 
   SetOutPath $INSTDIR\doc
+ 
   File c:\prog\leoCVS\leo\doc\LeoDocs.leo
   File c:\prog\leoCVS\leo\doc\leoDiary.txt
   File c:\prog\leoCVS\leo\doc\leoNotes.txt
   File c:\prog\leoCVS\leo\doc\leoToDo.txt
-  ## File c:\prog\leoCVS\leo\doc\leoUsersGuide.txt
-  ## File c:\prog\leoCVS\leo\doc\leoFAQ.txt
-  ## File c:\prog\leoCVS\leo\doc\leoLeaps.txt
+
   File c:\prog\leoCVS\leo\doc\README.TXT
   File c:\prog\leoCVS\leo\doc\INSTALL.TXT
   File c:\prog\leoCVS\leo\doc\PKG-INFO.TXT
   File c:\prog\leoCVS\leo\doc\LICENSE.TXT
+ 
+  File c:\prog\leoCVS\leo\doc\default.css
+  File c:\prog\leoCVS\leo\doc\leo_rst.css
+  File c:\prog\leoCVS\leo\doc\silver_city.css
   
   SetOutPath $INSTDIR\Icons
   File c:\prog\leoCVS\leo\Icons\*.*
