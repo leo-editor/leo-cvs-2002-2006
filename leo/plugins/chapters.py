@@ -30,7 +30,7 @@ Warnings:
 #@@language python
 #@@tabwidth -4
 
-__version__ = "0.67"
+__version__ = "0.68"
 #@<< version history >>
 #@+node:ekr.20041103051117:<< version history >>
 #@@killcolor
@@ -84,6 +84,9 @@ __version__ = "0.67"
 # 
 # .67 EKR:
 #     - Added 'silent' keywords to newGetLeoFile and newOpen.
+# .68 EKR:
+#     - Use 'c._xPosition. or c.nullPosition()' to init so that c._xPosition 
+# is never None.
 #@-at
 #@nonl
 #@-node:ekr.20041103051117:<< version history >>
@@ -152,22 +155,24 @@ class Chapter:
             tn = leoNodes.tnode( '', 'New Headline' )
             vn = leoNodes.vnode( c, tn )
             pos = leoNodes.position( vn, [] )
-            self.cp = pos
-            self.rp = pos
-            self.tp = pos
+            self.cp = pos.copy()
+            self.rp = pos.copy()
+            self.tp = pos.copy()
         else:
             c.cChapter = self
-            self.cp = c._currentPosition
-            self.tp = c._topPosition
-            self.rp = c._rootPosition
+            self.cp = c._currentPosition or c.nullPosition()
+            self.tp = c._topPosition or c.nullPosition()
+            self.rp = c._rootPosition or c.nullPosition()
     #@nonl
     #@-node:ekr.20041103051228:__init__
     #@+node:ekr.20041103051228.1:_saveInfo
     def _saveInfo( self ):
         
-        self.cp = self.c._currentPosition.copy()
-        self.rp = self.c._rootPosition.copy()
-        self.tp = self.c._topPosition.copy()
+        c = self.c
+    
+        self.cp = c._currentPosition or c.nullPosition()
+        self.rp = c._rootPosition or c.nullPosition()
+        self.tp = c._topPosition or c.nullPosition()
     #@nonl
     #@-node:ekr.20041103051228.1:_saveInfo
     #@+node:ekr.20041103051228.2:setVariables
@@ -181,6 +186,7 @@ class Chapter:
         c._currentPosition = self.cp
         c._rootPosition = self.rp
         c._topPosition = self.tp
+    #@nonl
     #@-node:ekr.20041103051228.2:setVariables
     #@+node:ekr.20041103051228.3:makeCurrent
     def makeCurrent( self ):
@@ -993,7 +999,7 @@ def newWrite_LEO_file( self,fileName,outlineOnlyFlag, singleChapter = False):
         rv = olWrite_LEO_file( self, fileName, outlineOnlyFlag )
 
     return rv
-
+#@nonl
 #@-node:mork.20040926105355.30:newWrite_LEO_file
 #@+node:mork.20040929092231:getMakeStringIO
 def getMakeStringIO( chapList ):
