@@ -767,6 +767,8 @@ class atFile:
 		self.scanHeader(file)
 		self.scanText(file,root,out,atFile.endLeo)
 		s = string.join(out, "")
+		# 8/13/02: Remove cursed newlines.
+		s = string.replace(s, '\r', '')
 		root.setBodyStringOrPane(s)
 		#@-body
 		#@-node:2::<< Scan the file buffer  >>
@@ -819,6 +821,8 @@ class atFile:
 			self.scanHeader(file)
 			self.scanText(file,root,out,atFile.endLeo)
 			s = string.join(out, "")
+			# 8/13/02: Remove cursed newlines.
+			s = string.replace(s, '\r', '')
 			root.setBodyStringOrPane(s)
 			#@-body
 			#@-node:2::<< Scan the file buffer  >>
@@ -1472,6 +1476,8 @@ class atFile:
 					if child.isOrphan():
 						self.readError("Replacing body text of orphan: " + child.headString())
 					body = string.join(child_out, "")
+					# 8/13/02: Remove cursed newlines.
+					body = string.replace(body, '\r', '')
 					child.t.setTnodeText(body)
 					self.indent = oldIndent
 					if len(s) == 1: # don't discard newline
