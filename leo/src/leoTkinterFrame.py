@@ -74,7 +74,7 @@ class leoTkinterFrame (leoFrame.leoFrame):
 		scrolls = g.choose(scrolls,1,0)
 	
 		canvas = Tk.Canvas(parentFrame,name="canvas",
-			bd=0,bg="white",relief="flat",highlightthickness=0) # Solves border problem.
+			bd=0,bg="white",relief="flat")
 	
 		frame.treeBar = treeBar = Tk.Scrollbar(parentFrame,name="treeBar")
 		
@@ -2289,14 +2289,20 @@ class leoTkinterLog (leoFrame.leoLog):
 			g.es_event_exception("activate log")
 	#@nonl
 	#@-node:tkLog.onActivateLog
-	#@+node:tkLog.put & putnl
+	#@+node:tkLog.put & putnl & forceLogUpdate
 	# All output to the log stream eventually comes here.
-	
 	def put (self,s,color=None):
+		
 		if g.app.quitting: return
-		if self.logCtrl:
+		elif self.logCtrl:
+			#@		<< put s to log control >>
+			#@+node:<< put s to log control >>
 			if type(s) == type(u""): # 3/18/03
 				s = g.toEncodedString(s,g.app.tkEncoding)
+				
+			if sys.platform == "darwin":
+				print s,
+			
 			if color:
 				if color not in self.colorTags:
 					self.colorTags.append(color)
@@ -2309,31 +2315,64 @@ class leoTkinterLog (leoFrame.leoLog):
 				self.logCtrl.tag_add("black","end")
 			else:
 				self.logCtrl.insert("end",s)
+			
 			self.logCtrl.see("end")
-			self.frame.tree.disableRedraw = true
-			self.logCtrl.update_idletasks()
-			self.frame.tree.disableRedraw = false
+				
+			self.forceLogUpdate()
+			#@nonl
+			#@-node:<< put s to log control >>
+			#@nl
 		else:
-			g.app.logWaiting.append((s,color),) # 2/25/03
+			#@		<< put s to logWaiting and print s >>
+			#@+node:<< put s to logWaiting and print s >>
+			g.app.logWaiting.append((s,color),)
+			
 			print "Null tkinter log"
 			if type(s) == type(u""): # 3/18/03
 				s = g.toEncodedString(s,"ascii")
 			print s
+			#@nonl
+			#@-node:<< put s to logWaiting and print s >>
+			#@nl
 	
 	def putnl (self):
 		if g.app.quitting: return
-		if self.logCtrl:
+		elif self.logCtrl:
+			#@		<< put newline to log control >>
+			#@+node:<< put newline to log control >>
+			if sys.platform == "darwin":
+				print
+				
 			self.logCtrl.insert("end",'\n')
 			self.logCtrl.see("end")
+			
 			self.frame.tree.disableRedraw = true
 			self.logCtrl.update_idletasks()
+			#self.frame.outerFrame.update_idletasks() # 4/23/04
+			#self.frame.top.update_idletasks()
 			self.frame.tree.disableRedraw = false
+			#@nonl
+			#@-node:<< put newline to log control >>
+			#@nl
 		else:
-			g.app.logWaiting.append(('\n',"black"),) # 6/28/03
+			#@		<< put newline to logWaiting and print newline >>
+			#@+node:<< put newline to logWaiting and print newline >>
+			g.app.logWaiting.append(('\n',"black"),)
 			print "Null tkinter log"
 			print
+			#@nonl
+			#@-node:<< put newline to logWaiting and print newline >>
+			#@nl
+			
+	def forceLogUpdate (self):
+		if sys.platform != "darwin": # Does not work on darwin.
+			self.frame.tree.disableRedraw = true
+			self.logCtrl.update_idletasks()
+			#self.frame.outerFrame.update_idletasks() # 4/23/04
+			#self.frame.top.update_idletasks()
+			self.frame.tree.disableRedraw = false
 	#@nonl
-	#@-node:tkLog.put & putnl
+	#@-node:tkLog.put & putnl & forceLogUpdate
 	#@+node:tkLog.setFontFromConfig
 	def setFontFromConfig (self):
 	
@@ -2361,6 +2400,5 @@ class leoTkinterLog (leoFrame.leoLog):
 #@nonl
 #@-node:class leoTkinterLog
 #@-others
-#@nonl
 #@-node:@file leoTkinterFrame.py
 #@-leo

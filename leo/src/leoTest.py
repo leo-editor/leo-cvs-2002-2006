@@ -1,5 +1,5 @@
 #@+leo-ver=4
-#@+node:@file ..\src\leoTest.py
+#@+node:@file ../src/leoTest.py
 """
 
 Unit tests for Leo.
@@ -1561,5 +1561,5 @@ class reformatParagraphTestCase(unittest.TestCase):
 #@nonl
 #@-node:class reformatParagraphTestCase
 #@-others
-#@-node:@file ..\src\leoTest.py
+#@-node:@file ../src/leoTest.py
 #@-leo

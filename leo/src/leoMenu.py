@@ -598,10 +598,15 @@ class leoMenu:
 		if shortcut == None or len(shortcut) == 0:
 			return None,None
 		s = shortcut.strip().lower()
+		
 		has_cmd   = s.find("cmd") >= 0     or s.find("command") >= 0 # 11/18/03
-		has_alt   = s.find("alt") >= 0
 		has_ctrl  = s.find("control") >= 0 or s.find("ctrl") >= 0
+		has_alt   = s.find("alt") >= 0
 		has_shift = s.find("shift") >= 0   or s.find("shft") >= 0
+		if sys.platform == "darwin":
+			if has_ctrl and not has_cmd:
+				has_cmd = true ; has_ctrl = false
+	
 		#@	<< set the last field, preserving case >>
 		#@+node:<< set the last field, preserving case >>
 		s2 = shortcut
@@ -732,15 +737,10 @@ class leoMenu:
 		#@+node:<< synthesize the shortcuts from the information >>
 		bind_head = menu_head = ""
 		
-		if has_cmd: # 11/18/03
-			bind_head = bind_head + "Command-"
-			menu_head = menu_head + "Command+"
-		
 		if has_shift:
 			menu_head = "Shift+"
 			if len(last) > 1 or (len(last)==1 and last[0] not in string.ascii_letters):
 				bind_head = "Shift-"
-		
 		if has_alt:
 			bind_head = bind_head + "Alt-"
 			menu_head = menu_head + "Alt+"
@@ -748,6 +748,10 @@ class leoMenu:
 		if has_ctrl:
 			bind_head = bind_head + "Control-"
 			menu_head = menu_head + "Ctrl+"
+			
+		if has_cmd: # 11/18/03
+			bind_head = bind_head + "Command-"
+			menu_head = menu_head + "Command+"
 			
 		bind_shortcut = "<" + bind_head + bind_last + ">"
 		menu_shortcut = menu_head + menu_last
