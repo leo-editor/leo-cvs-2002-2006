@@ -12,7 +12,7 @@
 __name__ = "New Buttons"
 __version__ = "0.3"
 # 0.2 EKR: Converted to @file-noref
-# 0.3 EKR: Added 4 new plugin templates.  Added init function.
+# 0.3 EKR: Added 6 new plugin templates.  Added init function.
  
 import leoGlobals as g
 import leoPlugins
