@@ -69,10 +69,12 @@ doc\leoToDo.txt
 plugins\ConceptualSort.py
 plugins\Configurator.py
 plugins\FileActions.py
+plugins\Library.py
 plugins\TabbedLog.py
 plugins\UASearch.py
 plugins\URLloader.py
 plugins\UniversalScrolling.py
+plugins\___proto_atFile.py
 plugins\__outlineExperiments.py
 plugins\__overrideClasses.py
 plugins\__wx_gui.py
@@ -97,6 +99,7 @@ plugins\hoist.py
 plugins\image.py
 plugins\import_cisco_config.py
 plugins\leoPlugins.leo
+plugins\library.dbm
 plugins\lineNumbers.py
 plugins\macros.py
 plugins\maximizeNewWindows.py
@@ -119,6 +122,7 @@ plugins\open_with.py
 plugins\outline_export.py
 plugins\override_commands.py
 plugins\pie_menus.py
+plugins\plugin_manager.py
 plugins\pluginsManager.txt
 plugins\pluginsNotes.txt
 plugins\pluginsTest.py
@@ -136,7 +140,9 @@ plugins\scheduler.py
 plugins\script_io_to_body.py
 plugins\scripts_menu.py
 plugins\searchbox.py
+plugins\spellpyx.ini
 plugins\spellpyx.py
+plugins\spellpyx.txt
 plugins\startfile.py
 plugins\status_line.py
 plugins\style_guide.py
@@ -147,6 +153,7 @@ plugins\vim.py
 plugins\word_export.ini
 plugins\word_export.py
 plugins\xemacs.py
+plugins\xsltWithNodes.py
 scripts\leoScripts.txt
 scripts\tangle_done.py
 scripts\untangle_done.py

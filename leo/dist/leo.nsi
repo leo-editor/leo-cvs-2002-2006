@@ -264,13 +264,13 @@ DeleteRegKey HKEY_LOCAL_MACHINE "SOFTWARE\Microsoft\Windows\CurrentVersion\Unins
 ;@+node:EKR.20040519083717.12:<< remove file association >>
   ReadRegStr $1 HKCR ".leo" ""
   StrCmp $1 "LeoFile" 0 NoOwn ; only do this if we own it
-	ReadRegStr $1 HKCR ".leo" "backup_val"
-	StrCmp $1 "" 0 RestoreBackup ; if backup == "" then delete the whole key
-	  DeleteRegKey HKCR ".leo"
-	Goto NoOwn
-	RestoreBackup:
-	  WriteRegStr HKCR ".leo" "" $1
-	  DeleteRegValue HKCR ".leo" "backup_val"
+    ReadRegStr $1 HKCR ".leo" "backup_val"
+    StrCmp $1 "" 0 RestoreBackup ; if backup == "" then delete the whole key
+      DeleteRegKey HKCR ".leo"
+    Goto NoOwn
+    RestoreBackup:
+      WriteRegStr HKCR ".leo" "" $1
+      DeleteRegValue HKCR ".leo" "backup_val"
   NoOwn:
 ;@nonl
 ;@-node:EKR.20040519083717.12:<< remove file association >>
@@ -278,8 +278,8 @@ DeleteRegKey HKEY_LOCAL_MACHINE "SOFTWARE\Microsoft\Windows\CurrentVersion\Unins
 ;@<< remove program folder >>
 ;@+node:EKR.20040519083717.13:<< remove program folder >>
 MessageBox MB_YESNO|MB_ICONQUESTION \
-			 "Delete all files in Leo Program folder?" \
-			 IDNO NoDelete  
+             "Delete all files in Leo Program folder?" \
+             IDNO NoDelete  
 
   Delete "$INSTDIR\config\*.*" ; config dir
   RMDir "$INSTDIR\config"

@@ -12,53 +12,53 @@ import os,sys
 #@+node:EKR.20040519082027.24:printReminders
 def printReminders ():
 
-	print
-	print "- Update version numbers"
-	print "- Clear Default Tangle Directory"
-	print "- Distribute both leox-y.zip and leosetup.exe"
-	print
+    print
+    print "- Update version numbers"
+    print "- Clear Default Tangle Directory"
+    print "- Distribute both leox-y.zip and leosetup.exe"
+    print
 #@nonl
 #@-node:EKR.20040519082027.24:printReminders
 #@+node:EKR.20040519082027.26:replacePatterns
 def replacePatterns (file,pats):
 
-	try:
-		path = os.getcwd()
-		name  = g.os_path_join(path,file)
-		f = open(name)
-	except:
-		g.trace(file, "not found")
-		return
-	try:
-		data = f.read()
-		f.close()
-		changed = False
-		for pat1,pat2 in pats:
-			newdata = data.replace(pat1,pat2)
-			if data != newdata:
-				changed = True
-				data = newdata
-				print file,"replaced",pat1,"by",pat2
-		if changed:
-			f = open(name,"w")
-			f.write(data)
-			f.close()
-	except:
-		import traceback ; traceback.print_exc()
-		sys.exit()
+    try:
+        path = os.getcwd()
+        name  = g.os_path_join(path,file)
+        f = open(name)
+    except:
+        g.trace(file, "not found")
+        return
+    try:
+        data = f.read()
+        f.close()
+        changed = False
+        for pat1,pat2 in pats:
+            newdata = data.replace(pat1,pat2)
+            if data != newdata:
+                changed = True
+                data = newdata
+                print file,"replaced",pat1,"by",pat2
+        if changed:
+            f = open(name,"w")
+            f.write(data)
+            f.close()
+    except:
+        import traceback ; traceback.print_exc()
+        sys.exit()
 #@-node:EKR.20040519082027.26:replacePatterns
 #@+node:EKR.20040519082027.27:setDefaultParams
 def setDefaultParams():
 
-	print "setDefaultParams"
+    print "setDefaultParams"
 
-	pats = (
-		("create_nonexistent_directories = 1","create_nonexistent_directories = 0"),
-		("read_only = 1","read_only = 0"),
-		("use_plugins = 1","use_plugins = 0"))
+    pats = (
+        ("create_nonexistent_directories = 1","create_nonexistent_directories = 0"),
+        ("read_only = 1","read_only = 0"),
+        ("use_plugins = 1","use_plugins = 0"))
 
-	replacePatterns(g.os_path_join("config","leoConfig.leo"),pats)
-	replacePatterns(g.os_path_join("config","leoConfig.txt"),pats)
+    replacePatterns(g.os_path_join("config","leoConfig.leo"),pats)
+    replacePatterns(g.os_path_join("config","leoConfig.txt"),pats)
 #@nonl
 #@-node:EKR.20040519082027.27:setDefaultParams
 #@-others
@@ -67,10 +67,10 @@ setDefaultParams()
 
 modules = []
 distutils.core.setup (
-    #@	<< setup info for createLeoDist.py >>
+    #@    << setup info for createLeoDist.py >>
     #@+node:EKR.20040519082027.28:<< setup info for createLeoDist.py >> (no spaces in file names)
     name="leo",
-    version="4.2-final",
+    version="4.3-pre-alpha-chipy-talk",
     author="Edward K. Ream",
     author_email="edreamleo@charter.net",
     url="http://webpages.charter.net/edreamleo/front.html",

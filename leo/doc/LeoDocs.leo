@@ -1991,8 +1991,11 @@
 </v>
 </v>
 <v t="edream.110203163054.1108"><vh>How can I create a template .leo file?</vh></v>
-<v t="ekr.20040411074926"><vh>How can I use Leo to develop Leo itself?</vh></v>
 <v t="ekr.20040908100113"><vh>Control-Shift backspace doesn't work.  What should I do?</vh></v>
+</v>
+<v t="ekr.20041013100216"><vh>Tips and techniques</vh>
+<v t="ekr.20040411074926"><vh>How can I use Leo to develop Leo itself?</vh></v>
+<v t="ekr.20041013100216.1"><vh>Using Chapters &amp; multiple editors</vh></v>
 </v>
 </v>
 <v t="edream.110203163054.1158"><vh>Sample Code</vh>
@@ -15548,5 +15551,22 @@ tests now takes a few seconds!
 - Leo is now much more friendly to using spaces instead of tabs.
 
 - The Execute Script command reports erroneous lines more clearly.</t>
+<t tx="ekr.20041013100216"></t>
+<t tx="ekr.20041013100216.1">I often rework C code that's already been "Leo-ized" -- the first pass was quick
+and dirty to get it going. When I do subsequent passes, I wind up with subnodes
+that are out of order with the sequence found in the main node. It's not a big
+deal, but I like 'em ordered. With just one editor pane, clicking on the node to
+move would switch focus to that node. I'd then need to re-focus on the main
+node. A minor nuisance, but it does slow you down.
+
+My solution (just found it today) is to open a second editor with its focus on
+the main node. Switch to the other editor, and, referring to the first editor
+pane, move the nodes as you like. The second editor's pane will change focus to
+the node you're moving, but the first editor will stay focused on the main node.
+
+Phew!! It's a lot easier to DO than to DESCRIBE! 8-D 
+ 
+--Rich Ries
+</t>
 </tnodes>
 </leo_file>
