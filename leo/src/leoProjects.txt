@@ -4784,7 +4784,7 @@ bunch = d.get(bind_shortcut)
 
 if bunch and not g.app.menuWarningsGiven:
     if bunch.init:
-        if 1: # Testing only.
+        if 0: # Testing only.
             s = 'overriding default shortcut\nnew: %s %s\nold: %s %s' % (
                 accel,label,bunch.accel,bunch.label)
             g.es(s,color="red")
@@ -11781,7 +11781,7 @@ bunch = d.get(bind_shortcut)
 
 if bunch and not g.app.menuWarningsGiven:
     if bunch.init:
-        if 1: # Testing only.
+        if 0: # Testing only.
             s = 'overriding default shortcut\nnew: %s %s\nold: %s %s' % (
                 accel,label,bunch.accel,bunch.label)
             g.es(s,color="red")
@@ -22059,12 +22059,10 @@ This is important, the settings node found by findSettingsPosition may be a clon
 #@nonl
 #@-node:ekr.20050122104754.1:What I did
 #@+node:ekr.20041122162610:@recent_files
-c:\prog\leoCVS\leo\doc\LeoDocs.leo
-C:\prog\leoCVS\leo\src\LeoPy.leo
-C:\prog\Leo Stuff\oldLeoFiles.leo
 C:\prog\leoCVS\leo\test\test.leo
+C:\prog\leoCVS\leo\src\LeoPy.leo
 C:\prog\leoCVS\leo\plugins\leoPlugins.leo
-C:\prog\leoCVS\leo\config\leoSettings.leo
+/Users/edream/leoCVS/leo/src/LeoPy.leo
 #@nonl
 #@-node:ekr.20041122162610:@recent_files
 #@+node:ekr.20040305223522:p.setBodyStringOrPane & p.setBodyTextOrPane
@@ -28287,7 +28285,10 @@ def openWithFileName(fileName,old_c,enableLog=True,readAtFileNodesFlag=True):
 #@-node:ekr.20031218072017.2052:g.openWithFileName
 #@-node:ekr.20050127090959:(Made sure to remove duplicates from recent files)
 #@+node:ekr.20050127090442:Fixed indentation problems in leoTkinterFind.py
-There was an inconsistent use of tabs and spaces in indentation.
+> leo\src\leoTkinterFind.py:  
+inconsistent use of tabs and spaces in indentation.
+ 
+much of PMW has inconsistent use of tabs and spaces in indentation in various files .py 
 #@nonl
 #@-node:ekr.20050127090442:Fixed indentation problems in leoTkinterFind.py
 #@+node:ekr.20050127091201:(Changed Help menu & related code to handle leoSettings.leo instead of leoConfig.leo)
@@ -28440,27 +28441,57 @@ def appendToRecentFiles (self,files):
 #@-node:ekr.20041118084146:Setters
 #@-node:ekr.20050129114601.1:(Investigated recent files problems)
 #@+node:ekr.20050126102846.2:(Improved queuing of log messages)
+Read and respond to this message at: 
+https://sourceforge.net/forum/message.php?msg_id=2960328
+By: nobody
+
+From: Rich
+System: Leo Log Window...
+Leo 4.3 alpha 1, build  1.208 , January 24, 2005
+Python 2.3.4, Tk 8.4.3, win32
+
+Part of the console report (Note that a new user would not have thought to run
+Leo from a console window, rather he just would have noticed that certain plugins
+"weren't working"). Comments identified with "{[number]}":
+
+[i]Can not import win32com.client[/i] {1}
+
+wiki markup enabled
+
+newCreateCanvas: '1' <Tkinter.Canvas instance at 0x012DA058>
+
+newTreeinit: <Tkinter.Canvas instance at 0x012DA058>
+
+[i]overriding default shortcut[/i] {2}
+new: Ctrl+E &Equal Sized Panes
+old: Ctrl+E &Execute Script
+
+Exception in thread Thread-2:
+Traceback (most recent call last):
+  File "C:\Language\Python\lib\threading.py", line 436, in __bootstrap
+    self.run()
+  File "C:\Language\Python\lib\threading.py", line 416, in run
+    self.__target(*self.__args, **self.__kwargs)
+  File "C:\Language\Literate Programming\Leo\plugins\UniversalScrolling.py",
+line 66, in run
+    canvas.yview(Tkinter.SCROLL, 1, Tkinter.UNITS)
+[i]NameError: global name 'Tkinter' is not defined[/i] {3}
+
+
+Comments:
+{1} So what can I do about this? Why is it needed?
+{2} But I [i]want[/i] Execute Script! That's why I put in into leoSettings.leo!
+{3} But Tk is loaded, and there doesn't seem to have been a problem earlier.
+(Tkinter.Canvas)
+
+Finally, is there a way to direct these messages to the Log Pane??
+
+Thanks, 
+--Rich
+
+(I'm also testing to see if [i]&[/i] work in the e-mail that gets sent from SF)
+
 #@+node:ekr.20050130113848.2:What I did
-@killcolor
-
-http://sourceforge.net/forum/message.php?msg_id=2960328
-
-Symptom
-
-Can not import messages were not being sent to the console, even though there is a call to es in g.cantImport.
-
-What I did
-
-- The code in g.es now checks for nullLog as well as log == None when deciding when to queue messages.
-
-- g.openWithFileName now calls g.app.writeWaitingLog immediately after enabling the new log.
-
-This writes the queued log messages in the proper order: a major advance in clarity.
-
-- Added silent param to two methods.
-
-This allows the 'reading settings from' message to be sent to the log instead of the default 'reading' message.
-#@nonl
 #@-node:ekr.20050130113848.2:What I did
 #@+node:ekr.20050130134313:es & related logic...
 #@+node:ekr.20031218072017.2052:g.openWithFileName
@@ -29713,18 +29744,23 @@ def loadOnePlugin (moduleOrFileName, verbose=False):
 #@-node:ekr.20041113113140:loadOnePlugin
 #@-node:ekr.20050127120924:(Plugins manager attempts to call init functions in plugins)
 #@+node:ekr.20050128081422:(Changed name of Paste Retaining Clones to Paste Node As Clone)
-# This affects leoSettings.leo.
-#@nonl
-#@+node:ekr.20050130102241:Request
 @killcolor
 
 https://sourceforge.net/forum/message.php?msg_id=2963461
 By: ktenney
 
-It would make more sense to me if 'Paste Retaining Clone' was called 'Paste As Clone'
+Howdy,
 
-Note: requires change to leoSettings.leo
-#@nonl
+I only just now realized that
+Outline -> Paste Retaining Clone
+would _create_ a clone from any node on the clipboard.
+It's name led me to believe that I had to create a clone, copy it, and use 'Paste
+Retaining Clones'
+
+It would make more sense to me if it was called
+"Paste As Clone" 
+Maybe it could be given a hotkey, such as Shft+Ctrl+Z
+#@+node:ekr.20050130102241:Request
 #@-node:ekr.20050130102241:Request
 #@+node:ekr.20031218072017.3768:<< define outlineMenuTopMenuTable >>
 self.outlineMenuTopMenuTable = (
