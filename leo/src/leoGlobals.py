@@ -4078,6 +4078,41 @@ def getScript (c,p,useSelectedText=True):
     return script
 #@nonl
 #@-node:EKR.20040614071102.1:g.getScript
+#@+node:ekr.20041219095213:import wrappers
+#@+at 
+#@nonl
+# Warning:
+# 
+# These functions use imp.load_module, and that is equivalent to reload!
+# 
+# Calling any of these functions to reload Leo files will crash Leo!
+#@-at
+#@+node:ekr.20041219095213.1:g.importModule
+def importModule (moduleName,verbose=False):
+
+    '''Try to import a module as Python's import command does.
+
+    moduleName is the module's name, without file extension.'''
+    
+    try:
+        theFile = None ; module = None
+        import imp
+        try:
+            data = imp.find_module(moduleName) # This can open the file.
+            theFile,pathname,description = data
+            module = imp.load_module(moduleName,theFile,pathname,description)
+        except ImportError:
+            if verbose and not module:
+                s = "can not import %s" % moduleName
+                print s ; g.es(s,color="blue")
+        except:
+            g.es("unexpected exception in g.import",color='blue')
+            g.es_exception()
+    finally:
+        if theFile: theFile.close()
+    return module
+#@nonl
+#@-node:ekr.20041219095213.1:g.importModule
 #@+node:ekr.20041219071407:g.importExtension
 def importExtension (moduleName,verbose=False):
 
@@ -4085,37 +4120,25 @@ def importExtension (moduleName,verbose=False):
     try to import the module from Leo's extensions directory.
 
     moduleName is the module's name, without file extension.'''
+    
+    module = g.importModule(moduleName,verbose=False)
 
-    try:
-        exec 'import %s ; module = %s' % (moduleName,moduleName)
-        return module
-    except ImportError:
-        module = g.importFromPath(moduleName,g.app.extensionsDir)
-        if verbose and not module:
-            s = "can not import extension %s" % moduleName
-            print s ; g.es(s,color="blue")
-        return module
-    except:
-        g.es("unexpected exception in importExtension",color='blue')
-        g.es_exception()
-        return None
+    if not module:
+        module = g.importFromPath(moduleName,g.app.extensionsDir,verbose=False)
+
+    if verbose and not module:
+        s = "can not import extension %s" % moduleName
+        print s ; g.es(s,color="blue")
+
+    return module
 #@nonl
 #@-node:ekr.20041219071407:g.importExtension
 #@+node:ekr.20031218072017.2278:g.importFromPath
-#@+at 
-#@nonl
-# Warning:
-# g.importFromPath uses imp.load_module, and that is equivalent to reload!
-# Calling this function to reload Leo files will crash Leo!
-#@-at
-#@@c
-
 def importFromPath (name,path,verbose=False):
-    
-    import imp
 
     try:
         theFile = None ; data = None ; result = None
+        import imp
         try:
             fn = g.shortFileName(name)
             mod_name,ext = g.os_path_splitext(fn)
@@ -4146,6 +4169,7 @@ def importFromPath (name,path,verbose=False):
     return result
 #@nonl
 #@-node:ekr.20031218072017.2278:g.importFromPath
+#@-node:ekr.20041219095213:import wrappers
 #@+node:ekr.20040629162023:readLines class and generator
 #@+node:EKR.20040612114220.3:g.readLinesGenerator
 def readLinesGenerator(s):
