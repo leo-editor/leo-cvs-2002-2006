@@ -4687,7 +4687,12 @@ class baseNewDerivedFile(oldDerivedFile):
 		if not at.raw:
 			at.putIndent(at.indent)
 		line = s[i:j]
-		at.os(line)
+		# at.os(line)
+		if line[-1:]=="\n": # 12/2/03: emakital
+			at.os(line[:-1])
+			at.onl()
+		else:
+			at.os(line)
 	#@nonl
 	#@-node:putCodeLine
 	#@+node:putRefLine (new) & allies
