@@ -1070,12 +1070,15 @@ class leoTree:
 			self.savedNumberOfVisibleNodes = self.numberOfVisibleNodes()
 			self.dragging = true
 			self.controlDrag = c.frame.controlKeyIsDown
-			if self.controlDrag:
-				es("dragged node will be cloned")
-			else:
-				es("dragged node will be moved")
-		self.OnContinueDrag(v,event)
+			# 1/29/03: support this new option.
+			flag = app().config.getBoolWindowPref("look_for_control_drag_on_mouse_down")
+			if flag:
+				if self.controlDrag:
+					es("dragged node will be cloned")
+				else:
+					es("dragged node will be moved")
 	
+		self.OnContinueDrag(v,event)
 	#@-body
 	#@-node:8::tree.OnDrag
 	#@+node:9::tree.OnEndDrag
@@ -1101,6 +1104,10 @@ class leoTree:
 			#@-body
 			#@-node:1::<< set vdrag, childFlag >>
 
+			# 1/29/03: support for this new option.
+			flag = app().config.getBoolWindowPref("look_for_control_drag_on_mouse_down")
+			if not flag:
+				self.controlDrag = c.frame.controlKeyIsDown
 			if vdrag and vdrag != v:
 				if self.controlDrag: # Clone v and move the clone.
 					if childFlag:

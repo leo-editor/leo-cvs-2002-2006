@@ -31,8 +31,8 @@
 <v t="T15"><vh>&lt;&lt; Preferences Panel settings &gt;&gt;</vh></v>
 <v t="T16"><vh>&lt;&lt; Syntax coloring options and colors &gt;&gt;</vh></v>
 <v t="T17" a="E"><vh>&lt;&lt; Window options &gt;&gt;</vh>
-<v t="T18" a="V"><vh>&lt;&lt; body pane options &gt;&gt;</vh></v>
-<v t="T19"><vh>&lt;&lt; outline pane options&gt;&gt;</vh></v>
+<v t="T18"><vh>&lt;&lt; body pane options &gt;&gt;</vh></v>
+<v t="T19" a="V"><vh>&lt;&lt; outline pane options&gt;&gt;</vh></v>
 <v t="T20"><vh>&lt;&lt; log pane options &gt;&gt;</vh></v>
 <v t="T21"><vh>&lt;&lt; Options for new windows &gt;&gt;</vh></v>
 <v t="T22"><vh>&lt;&lt; Options for newly opened windows &gt;&gt;</vh></v>
@@ -85,8 +85,8 @@ Leo uses Python's ConfigParser module to parse this file,
 with all of ConfigParser's features (and bugs!).
 
 Comments start with a pound character in the leftmost column.
-You may specify booleans as 0/1, no/yes, false/true, off/on (case insensitive).
-These get converted to 0/1 if the file is not read_only.</t>
+You must specify booleans as 0/1.
+</t>
 <t tx="T4">[config options]
 
 at_root_bodies_start_in_doc_mode = 1
@@ -728,10 +728,7 @@ body_text_font_weight = normal
 smart_auto_indent = 0
 #	1: auto-indent aligns with open ({[ brackets
 #	0: auto-indent increases indentation by one tab for Python only.</t>
-<t tx="T19">outline_pane_scrolls_horizontally = 0
-#	0/1: 1: Use horizontal scrollbar in outline pane.
-
-headline_text_unselected_foreground_color = black
+<t tx="T19">headline_text_unselected_foreground_color = black
 headline_text_unselected_background_color = white
 #	Foreground and background colors of unselected headline text.
 #	Both must be specified for either to take effect.
@@ -767,7 +764,15 @@ headline_text_font_slant = roman
 #	The Tk -slant setting: roman or italic. Default is roman.
 
 headline_text_font_weight = normal
-#	The Tk -weight setting: normal or bold.  Default is normal.</t>
+#	The Tk -weight setting: normal or bold.  Default is normal.
+
+look_for_control_drag_on_mouse_down = 1
+#	This option control the interpretation of the control key when dragging nodes in the outline pane.
+#	1: A drag is a control-drag if the control key is down at the start of the drag.
+#   0: A drag is a control-drag if the control key is down at the end of the drag.
+
+outline_pane_scrolls_horizontally = 0
+#	0/1: 1: Use horizontal scrollbar in outline pane.</t>
 <t tx="T20">log_pane_wraps = 0
 #	0/1: Wrap body text if 1.
 
