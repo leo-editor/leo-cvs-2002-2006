@@ -1,4 +1,4 @@
-#@+leo-ver=4
+#@+leo-ver=4-thin
 #@+node:ekr.20031218072017.329:@file-thin ../doc/leoNotes.txt
 #@@nocolor
 
@@ -6830,6 +6830,828 @@ def reverseParentsList (self,p):
 #@-node:EKR.20040429083147.2:reverseParentsList
 #@-node:ekr.20040321064134.3:thinSentinels (4.2) NOT USED
 #@-node:EKR.20040427175808:From atFile class
+#@+node:EKR.20040505090056:From perfect import script
+#@@ignore
+#@nonl
+#@+node:EKR.20040505090056.1:class sentinel_squasher
+class sentinel_squasher:
+	"""
+	The heart of the script.
+	
+	Creates files without sentinels from files with sentinels.
+	
+	Propagates changes in the files without sentinels back
+	to the files with sentinels.
+	
+	"""
+
+#@@others
+#@nonl
+#@+node:EKR.20040505090056.2:report_mismatch
+# was check_lines_for_equality
+
+def report_mismatch (self,lines1,lines2,message,lines1_message,lines2_message):
+
+	"""
+	Generate a report when something goes wrong.
+	"""
+
+	print '='*20
+	print message
+	
+	if 0:
+		print lines1_message
+		print '-'*20
+		for line in lines1:
+		  print line,
+
+		print '='*20
+	
+		print lines2_message
+		print '-'*20
+		for line in lines2:
+			print line,
+			
+	print "length of files",len(lines1),len(lines2)
+	
+	if len(lines1) == len(lines2):
+		i = 0
+		while 1:
+			if lines1[i] != lines2[i]:
+				print "first mismatched lines:"
+				print lines1[i]
+				print lines2[i]
+				break
+			i += 1
+#@nonl
+#@-node:EKR.20040505090056.2:report_mismatch
+#@+node:EKR.20040505090056.3:create_mapping
+def create_mapping (self,lines,marker):
+	"""
+
+	'lines' is a list of lines of a file with sentinels.
+ 
+	Returns:
+
+	result: lines with all sentinels removed.
+
+	mapping: a list such that result[mapping[i]] == lines[i]
+	for all i in range(len(result))
+
+	"""
+
+	mapping = [] ; result = []
+	for i in xrange(len(lines)):
+		line = lines[i]
+		if not is_sentinel(line,marker):
+			result.append(line)
+			mapping.append(i)
+
+	# Create a last mapping entry for copy_sentinels.
+	mapping.append(i)
+
+	return result, mapping
+#@nonl
+#@-node:EKR.20040505090056.3:create_mapping
+#@+node:EKR.20040505090056.4:old code
+#@+node:EKR.20040505090056.5:OLDcopy_sentinels
+#@+at 
+#@nonl
+# Sentinels are NEVER deleted by this script.
+# 
+# If code is replaced, or deleted, then we must make sure that the sentinels 
+# are still in the Leo file.
+# 
+# We detect sentinel lines by checking for gaps in the mapping.
+#@-at
+#@@c
+
+def OLDcopy_sentinels (self,writer,leo_reader,mapping,startline,endline):
+	"""
+	
+	Copy lines from leo_reader to writer if those lines contain sentinels.
+
+	Copy all sentinels after the current reader postion up to,
+	but not including, mapping[endline].
+
+	"""
+
+	j_last = mapping[startline]
+	i = startline + 1
+	while i <= endline:
+		j = mapping[i]
+		if j_last + 1 != j:
+			leo_reader.sync(j_last + 1)
+			# Copy the deleted sentinels that comprise the gap.
+			while leo_reader.index() < j:
+				line = leo_reader.get()
+				if testing: print "Copy sentinels:", line,
+				writer.push(line)
+		j_last = j ; i += 1
+
+	leo_reader.sync(mapping[endline])
+#@nonl
+#@-node:EKR.20040505090056.5:OLDcopy_sentinels
+#@+node:EKR.20040505090056.6:OLDpull_source
+def pull_source(self, sourcefile, targetfile):
+	"""
+
+	Propagate the changes of targetfile back to sourcefile.
+	sourcefile has sentinels, and targetfile does not.
+
+	This is the heart of the script.
+
+	"""
+	print testing
+	if testing: g.trace(sourcefile,targetfile)
+	<< init pull_source vars >>
+	<< establish the loop invariant >>
+	for tag, i1, i2, j1, j2 in matcher.get_opcodes():
+		if testing:
+			print ; print "opcode",tag,i1,i2,j1,j2 ; print
+		<< update and check the loop invariant >>
+		if tag == 'equal':
+			<< handle 'equal' tag >>
+		elif tag == 'replace':
+			<< handle 'replace' tag >>
+		elif tag == 'delete':
+			<< handle 'delete' tag >>
+		elif tag == 'insert':
+			<< handle 'insert' tag >>
+		else: assert 0
+	<< copy the sentinels at the end of the file >>
+	written = write_if_changed(writer.getlines(),targetfile,sourcefile)
+	if written:
+		<<final paranoia check>>
+#@+node:EKR.20040505090056.7:<< init pull_source vars >>
+marker = marker_from_extension(sourcefile) # The sentinel comment marker.
+	
+sourcelines = file(sourcefile).readlines() # Has sentinels.
+targetlines = file(targetfile).readlines() # No sentinels.
+
+strippedSourceLines,mapping = self.create_mapping(sourcelines,marker)
+
+writer = sourcewriter() # Accumulates the new file.
+i_reader = sourcereader(strippedSourceLines) # Unmodified file, no sentinels.
+j_reader = sourcereader(targetlines) # Modified file, no sentinels.
+leo_reader = sourcereader(sourcelines) # The file with sentinels.
+
+matcher = difflib.SequenceMatcher(None,strippedSourceLines,targetlines)
+#@nonl
+#@-node:EKR.20040505090056.7:<< init pull_source vars >>
+#@+node:EKR.20040505090056.8:<<establish the loop invariant>>
+#@+at 
+# We compare the 'targetlines' with 'strippedSourceLines' and propagate the
+# changes back into 'writer' while making sure that all sentinels of 
+# 'sourcelines'
+# are copied as well.
+# 
+# The loop invariant is that all three readers are in sync. Also, writer has
+# accumulated the new file, which is going to replace leo_reader.
+#@-at
+#@@c
+
+# Check that all ranges returned by get_opcodes() are contiguous
+i2_old = j2_old = -1
+
+# Copy the sentinels at the beginning of the file.
+while leo_reader.index() < mapping[0]:
+	line = leo_reader.get()
+	writer.push(line)
+#@nonl
+#@-node:EKR.20040505090056.8:<<establish the loop invariant>>
+#@+node:EKR.20040505090056.9:<< update and check the loop invariant>>
+# We need the ranges returned by get_opcodes to completely cover the source lines being compared.
+# We also need the ranges not to overlap.
+if i2_old != -1:
+	assert i2_old == i1
+	assert j2_old == j1
+i2_old = i2 ; j2_old = j2
+
+#@+at 
+#@nonl
+# Loosely speaking, the loop invariant is that we have processed everything up 
+# to,
+# but not including, the lower bound of the ranges returned by the iterator.
+# 
+# We have to check the three readers, i_reader, j_reader, and leo_reader. For 
+# the
+# writer, the filter must reproduce the modified file up until, but not 
+# including,
+# j1. In addition, all the sentinels of the original Leo file, up until
+# mapping[i1], must be present in the new_source_file.
+# 
+#@-at
+#@@code
+
+# Check the loop invariant.
+assert i_reader.i == i1
+assert j_reader.i == j1
+assert leo_reader.i == mapping[i1]
+if testing: # A bit costly.
+	t_sourcelines,t_sentinel_lines = push_filter_lines(writer.lines, marker)
+	# Check that we have all the modifications so far.
+	assert t_sourcelines == j_reader.lines[:j1]
+	# Check that we kept all sentinels so far.
+	assert t_sentinel_lines == push_filter_lines(leo_reader.lines[:leo_reader.i], marker)[1]
+#@nonl
+#@-node:EKR.20040505090056.9:<< update and check the loop invariant>>
+#@+node:EKR.20040505090056.10:<< handle 'equal' tag >>
+# nothing is to be done.  Leave the Leo file alone.
+# Copy the lines from the leo file to the new sourcefile.
+# This loop copies both text and sentinels.
+while leo_reader.index() <= mapping[i2 - 1]:
+	line = leo_reader.get()
+	if 0:
+		if testing: print "Equal: ", line,
+	writer.push(line)
+
+if testing:
+	print "Equal: synch i", i_reader.i, i2
+	print "Equal: synch j", j_reader.i, j2
+
+i_reader.sync(i2)
+j_reader.sync(j2)
+
+# now we must copy the sentinels which might follow the lines which were equal.       
+self.copy_sentinels(writer,leo_reader,mapping, i2 - 1, i2)
+#@nonl
+#@-node:EKR.20040505090056.10:<< handle 'equal' tag >>
+#@+node:EKR.20040505090056.11:<< handle 'replace' tag >>
+#@+at 
+#@nonl
+# Replace lines that may span sentinels.
+# 
+# For now, we put all the new contents after the first sentinels.
+# 
+# A more complex approach: run the difflib across the different lines and try 
+# to
+# construct a mapping changed line => orignal line.
+#@-at
+#@@c
+
+while j_reader.index() < j2:
+	line = j_reader.get()
+	if testing: print "Replace:", line,
+	writer.push(line)
+
+# Copy the sentinels which might be between the changed code.         
+self.copy_sentinels(writer,leo_reader,mapping,i1,i2)
+i_reader.sync(i2)
+#@nonl
+#@-node:EKR.20040505090056.11:<< handle 'replace' tag >>
+#@+node:EKR.20040505090056.12:<< handle 'delete' tag >>
+# We have to delete lines.
+# However, we NEVER delete sentinels, so they must be copied over.
+
+if testing:
+	print "Delete: synch i", i_reader.i, i1
+	print "Delete: synch j", j_reader.i, j1
+	
+# sync the readers
+j_reader.sync(j2)
+i_reader.sync(i2)
+
+self.copy_sentinels(writer, leo_reader, mapping, i1, i2)
+#@nonl
+#@-node:EKR.20040505090056.12:<< handle 'delete' tag >>
+#@+node:EKR.20040505090056.13:<< handle 'insert' tag >>
+while j_reader.index() < j2:
+	line = j_reader.get()
+	if testing: print "insert: ", line,
+	writer.push(line)
+
+# Since (only) lines are inserted, we do not have to reposition any reader.
+#@nonl
+#@-node:EKR.20040505090056.13:<< handle 'insert' tag >>
+#@+node:EKR.20040505090056.14:<< copy the sentinels at the end of the file >>
+while leo_reader.index() < leo_reader.size():
+	line = leo_reader.get()
+	writer.push(line)
+	if testing: print "Copy last line",line
+#@nonl
+#@-node:EKR.20040505090056.14:<< copy the sentinels at the end of the file >>
+#@+node:EKR.20040505090056.15:<<final paranoia check>>
+#@+at 
+#@nonl
+# For the initial usage, we check that the output actually makes sense.
+# 	We check two things:
+# 	1. Applying a 'push' operation will produce the modified file.
+# 	2. Our new sourcefile still has the same sentinels as the replaced one.
+#@-at
+#@@c
+
+s_outlines,sentinel_lines = push_filter(sourcefile)
+
+# Check that 'push' will re-create the changed file.
+if s_outlines != targetlines:
+	self.report_mismatch(s_outlines, targetlines,
+		"Pull did not work as expected",
+		"Content of sourcefile:",
+		"Content of modified file:")
+
+# Check that no sentinels got lost.
+old_sentinel_lines = push_filter_lines(leo_reader.lines[:leo_reader.i], marker)[1]
+if sentinel_lines != old_sentinel_lines:
+	self.report_mismatch(sentinel_lines, old_sentinel_lines,
+		"Pull modified sentinel lines:",
+		"Current sentinel lines:",
+		"Old sentinel lines:")
+#@nonl
+#@-node:EKR.20040505090056.15:<<final paranoia check>>
+#@-node:EKR.20040505090056.6:OLDpull_source
+#@-node:EKR.20040505090056.4:old code
+#@+node:EKR.20040505090056.16:pull_source 
+def pull_source(self,sourcefile,targetfile):
+	"""
+
+	Propagate the changes of targetfile back to sourcefile.
+	sourcefile has sentinels, and targetfile does not.
+
+	"""
+	if testing: g.trace(sourcefile,targetfile)
+	<< init pull_source vars >>
+	<< establish the loop invariant >>
+	for tag, i1, i2, j1, j2 in matcher.get_opcodes():
+		if testing:
+			print ; print "Opcode",tag,i1,i2,j1,j2 ; print
+		<< update and check the loop invariant >>
+		if tag == 'equal':
+			<< handle 'equal' tag >>
+		elif tag == 'replace':
+			<< handle 'replace' tag >>
+		elif tag == 'delete':
+			<< handle 'delete' tag >>
+		elif tag == 'insert':
+			<< handle 'insert' tag >>
+		else: assert 0,"bad tag"
+	<< copy the sentinels at the end of the file >>
+	written = write_if_changed(write_lines,targetfile,sourcefile)
+	if written:
+		<<final paranoia check>>
+#@+node:EKR.20040505090056.17:<< init pull_source vars >>
+marker = marker_from_extension(sourcefile) # The sentinel comment marker.
+
+sourceLines = file(sourcefile).readlines() # Has sentinels.
+targetLines = file(targetfile).readlines() # No sentinels.
+strippedSourceLines,mapping = self.create_mapping(sourceLines,marker)
+
+write_lines = []
+i_lines = strippedSourceLines
+j_lines = targetLines
+fat_lines = sourceLines
+i_pos = j_pos = fat_pos = 0
+
+matcher = difflib.SequenceMatcher(None,strippedSourceLines,targetLines)
+#@nonl
+#@-node:EKR.20040505090056.17:<< init pull_source vars >>
+#@+node:EKR.20040505090056.18:<<establish the loop invariant>>
+#@+at
+# We compare the 'targetLines' with 'strippedSourceLines' and propagate the
+# changes back into 'write_lines' while making sure that all sentinels of 
+# 'sourceLines'
+# are copied as well.
+#@-at
+#@@c
+
+# Check that all ranges returned by get_opcodes() are contiguous
+i2_old = j2_old = -1
+
+# Copy the sentinels at the beginning of the file.
+while fat_pos < mapping[0]:
+	line = fat_lines[fat_pos]
+	write_lines.append(line)
+	if testing: print "copy initial line",fat_pos,line
+	fat_pos += 1
+#@nonl
+#@-node:EKR.20040505090056.18:<<establish the loop invariant>>
+#@+node:EKR.20040505090056.19:<< update and check the loop invariant>>
+# We need the ranges returned by get_opcodes to completely cover the source lines being compared.
+# We also need the ranges not to overlap.
+if i2_old != -1:
+	assert i2_old == i1,"i2_old==i1"
+	assert j2_old == j1,"j2_old==j1"
+
+i2_old = i2 ; j2_old = j2
+
+# Check the loop invariants.
+assert i_pos == i1,"i_pos==i1"
+assert j_pos == j1,"j_pos==j1"
+assert fat_pos == mapping[i1],"fat_pos == mapping[i1]"
+
+if 0: # not yet.
+	if testing: # A bit costly.
+		t_sourcelines,t_sentinel_lines = push_filter_lines(write_lines, marker)
+		# Check that we have all the modifications so far.
+		assert t_sourcelines == j_lines[:j1],"t_sourcelines == j_lines[:j1]"
+		# Check that we kept all sentinels so far.
+		assert t_sentinel_lines == push_filter_lines(fat_lines[:fat_pos], marker)[1]
+#@nonl
+#@-node:EKR.20040505090056.19:<< update and check the loop invariant>>
+#@+node:EKR.20040505090056.20:<< handle 'equal' tag >>
+# nothing is to be done.  Leave the Leo file alone.
+# Copy the lines from the leo file to the new sourcefile.
+# This loop copies both text and sentinels.
+
+# while leo_reader.index() <= mapping[i2 - 1]:
+while fat_pos <= mapping[i2-1]:
+	line = fat_lines[fat_pos]
+	if 0:
+		if testing: print "Equal: copying ", line,
+	write_lines.append(line) # writer.push(line)
+	fat_pos += 1
+
+if testing:
+	print "Equal: synch i", i_pos,i2
+	print "Equal: synch j", j_pos,j2
+
+i_pos = i2
+j_pos = j2
+
+# Copy the sentinels which might follow the lines.       
+fat_pos = self.copy_sentinels(write_lines,fat_lines,fat_pos,mapping,i2-1,i2)
+#@nonl
+#@-node:EKR.20040505090056.20:<< handle 'equal' tag >>
+#@+node:EKR.20040505090056.21:<< handle 'replace' tag >>
+#@+at 
+#@nonl
+# Replace lines that may span sentinels.
+# 
+# For now, we put all the new contents after the first sentinels.
+# 
+# A more complex approach: run the difflib across the different lines and try 
+# to
+# construct a mapping changed line => orignal line.
+#@-at
+#@@c
+
+while j_pos < j2:
+	line = j_lines[j_pos]
+	if testing: print "Replace:", line,
+	write_lines.append(line)
+	j_pos += 1
+
+# Copy the sentinels which might be between the changed code.         
+fat_pos = self.copy_sentinels(write_lines,fat_lines,fat_pos,mapping,i1,i2)
+i_pos = i2
+#@nonl
+#@-node:EKR.20040505090056.21:<< handle 'replace' tag >>
+#@+node:EKR.20040505090056.22:<< handle 'delete' tag >>
+if testing:
+	print "delete: i",i_pos,i1
+	print "delete: j",j_pos,j1
+	
+# Synch the import streams.
+j_pos = j2 
+i_pos = i2
+
+# Restore any deleted sentinels.
+fat_pos = self.copy_sentinels(write_lines,fat_lines,fat_pos,mapping,i1,i2)
+#@nonl
+#@-node:EKR.20040505090056.22:<< handle 'delete' tag >>
+#@+node:EKR.20040505090056.23:<< handle 'insert' tag >>
+while j_pos < j2:
+	line = j_lines[j_pos]
+	if testing: print "Insert:", line,
+	write_lines.append(line)
+	j_pos += 1
+
+# We do not have to reposition any input stream.
+#@nonl
+#@-node:EKR.20040505090056.23:<< handle 'insert' tag >>
+#@+node:EKR.20040505090056.24:<< copy the sentinels at the end of the file >>
+while fat_pos < len(fat_lines):
+	line = fat_lines[fat_pos]
+	write_lines.append(line)
+	if testing: print "appending last line",line
+	fat_pos += 1
+#@nonl
+#@-node:EKR.20040505090056.24:<< copy the sentinels at the end of the file >>
+#@+node:EKR.20040505090056.25:<<final paranoia check>>
+# Check that 'push' will re-create the changed file.
+strippedLines,sentinel_lines = push_filter(sourcefile)
+
+if strippedLines != targetLines:
+	self.report_mismatch(strippedLines, targetLines,
+		"Pull did not work as expected",
+		"Content of sourcefile:",
+		"Content of modified file:")
+
+# Check that no sentinels got lost.
+old_strippedLines,old_sentinel_lines = push_filter_lines(sourceLines, marker)
+
+if sentinel_lines != old_sentinel_lines:
+	self.report_mismatch(sentinel_lines, old_sentinel_lines,
+		"Pull modified sentinel lines:",
+		"Current sentinel lines:",
+		"Old sentinel lines:")
+#@nonl
+#@-node:EKR.20040505090056.25:<<final paranoia check>>
+#@-node:EKR.20040505090056.16:pull_source 
+#@+node:EKR.20040505090056.26:copy_sentinels
+#@+at 
+#@nonl
+# This script retains _all_ sentinels in the fat file.  If lines are replaced, 
+# or deleted,
+# we restore deleted sentinel lines by checking for gaps in the mapping.
+#@-at
+#@@c
+
+def copy_sentinels (self,write_lines,fat_lines,fat_pos,mapping,startline,endline):
+	"""
+	
+	Copy sentinel lines from fat_lines to write_lines.
+
+	Copy all sentinels _after_ the current reader postion up to,
+	but not including, mapping[endline].
+
+	"""
+
+	j_last = mapping[startline]
+	i = startline + 1
+	while i <= endline:
+		j = mapping[i]
+		if j_last + 1 != j:
+			fat_pos = j_last + 1
+			# Copy the deleted sentinels that comprise the gap.
+			while fat_pos < j:
+				line = fat_lines[fat_pos]
+				write_lines.append(line)
+				if testing: print "Copy sentinels:",fat_pos,line,
+				fat_pos += 1
+		j_last = j ; i += 1
+
+	fat_pos = mapping[endline]
+	return fat_pos
+#@nonl
+#@-node:EKR.20040505090056.26:copy_sentinels
+#@-node:EKR.20040505090056.1:class sentinel_squasher
+#@+node:EKR.20040505090056.27:class sourcereader
+class sourcereader:
+	"""
+	A simple class to read lines sequentially.
+	
+	The class keeps an internal index, so that each
+	call to get returns the next line.
+	
+	Index returns the internal index, and sync
+	advances the index to the the desired line.
+	
+	The index is the *next* line to be returned.
+	
+	The line numbering starts from 0.
+	
+	"""
+
+#@@others
+#@+node:EKR.20040505090056.28:__init__
+def __init__(self, lines):
+	self.lines = lines
+	self.length = len(self.lines)
+	self.i = 0
+#@-node:EKR.20040505090056.28:__init__
+#@+node:EKR.20040505090056.29:index
+def index(self):
+	return self.i
+#@-node:EKR.20040505090056.29:index
+#@+node:EKR.20040505090056.30:get
+def get(self):
+	result = self.lines[self.i]
+	self.i += 1
+	return result
+#@nonl
+#@-node:EKR.20040505090056.30:get
+#@+node:EKR.20040505090056.31:sync
+def sync(self, i):
+	self.i = i
+#@-node:EKR.20040505090056.31:sync
+#@+node:EKR.20040505090056.32:size
+def size(self):
+	return self.length
+#@-node:EKR.20040505090056.32:size
+#@+node:EKR.20040505090056.33:atEnd
+def atEnd(self):
+	return self.index >= self.length
+#@nonl
+#@-node:EKR.20040505090056.33:atEnd
+#@-node:EKR.20040505090056.27:class sourcereader
+#@+node:EKR.20040505090056.34:class sourcewriter
+class sourcewriter:
+	
+	"""
+	Convenience class to capture output to a file.
+	"""
+
+#@@others
+
+
+#@+node:EKR.20040505090056.35:__init__
+def __init__(self):
+	self.i = 0
+	self.lines = []
+#@-node:EKR.20040505090056.35:__init__
+#@+node:EKR.20040505090056.36:push
+def push(self, line):
+	self.lines.append(line)
+	self.i += 1
+#@-node:EKR.20040505090056.36:push
+#@+node:EKR.20040505090056.37:index
+def index(self):
+	return self.i
+#@-node:EKR.20040505090056.37:index
+#@+node:EKR.20040505090056.38:getlines
+def getlines(self):
+	return self.lines
+#@-node:EKR.20040505090056.38:getlines
+#@-node:EKR.20040505090056.34:class sourcewriter
+#@+node:EKR.20040505090056.39:copy_time
+def copy_time(sourcefilename, targetfilename):
+	
+	"""
+	Set the modification time of target file to the
+	modification time of sourcefile.
+	"""
+
+	st = os.stat(sourcefilename)
+
+	if hasattr(os, 'utime'):
+		os.utime(targetfilename, (st.st_atime, st.st_mtime))
+	elif hasattr(os, 'mtime'):
+		os.mtime(targetfilename, st.st_mtime)
+	else:
+		print "copy_time can not set file modification time."
+#@nonl
+#@-node:EKR.20040505090056.39:copy_time
+#@+node:EKR.20040505090056.40:create_ext
+def create_ext(extensions=('.py', '.c', '.cpp', '.h', '.bat'), directory=".", sourcedir=None):
+	"""
+	Convenience script: calls create_leo_subdirectory for all files in 'directory' with an extension in 'extensions'.
+	
+	NOTE THAT IF BOTH A DIRECTORY AND A SOURCEDIR ARE SPECIFIED, THIS SCRIPT WILL DELETE THE WHOLE DIRECTORY 'directory'.
+	
+	"""
+	if sourcedir:
+		# For quick testing, we make a copy of a directory.
+		if os.path.exists(directory):
+			shutil.rmtree(directory)
+		shutil.copytree(sourcedir, directory)
+
+		# Not sure if this is necessary, but let's delete all .pyc files
+		map(os.unlink, [os.path.join(root, filename) 
+			for root, dirs, files in os.walk(directory) 
+				for filename in files if os.path.splitext(filename)[1] == '.pyc'])
+				
+	files = [f for f in os.listdir(directory) if os.path.splitext(f)[1] in extensions]
+	create_leo_subdirectory (files, directory)
+#@nonl
+#@-node:EKR.20040505090056.40:create_ext
+#@+node:EKR.20040505090056.41:create_leo_subdirectory
+def create_leo_subdirectory(files, directory="."):
+	"""
+	Moves 'files' into a Leo subdirectory.
+	
+	'files' are replaced with files without sentinels.
+	
+	files is the list of files which should be shuffled to the subdirectory.
+	
+	- Checks if a Leo subdirectory exists. If yes, does nothing.
+	
+	- Moves the files to the Leo subdirectory.
+	
+	- Creates files without sentinels in the original directory.
+	"""
+	from os.path import exists, join, split, splitext
+	assert exists(directory)
+	targetfiles = [join(directory,element) for element in files]
+	missing_files = [filename for filename in targetfiles if not exists(filename)]
+	assert len(missing_files) == 0,"Files do not exist:%s" % missing_files
+		
+	leo_directory = join(directory, "Leo")
+	if exists(leo_directory):
+		print "Directory already exists. Exit"
+		return
+	os.mkdir(leo_directory)
+		
+	pairs = [split(filename) for filename in targetfiles]
+	sourcefiles = [join(dir, 'Leo', name) for dir, name in pairs]
+	full_filenames = zip(sourcefiles, targetfiles)
+	for targetfile, sourcefile in full_filenames: os.rename(sourcefile, targetfile)
+	push(full_filenames) 
+#@-node:EKR.20040505090056.41:create_leo_subdirectory
+#@+node:EKR.20040505090056.42:is_sentinel
+def is_sentinel(line, marker):
+	"""
+	Check if line starts with a Leo marker.
+	
+	Leo markers are filtered away by this script.
+	
+	Leo markers start with a comment character, which dependends
+	on the language used. That's why the marker is passed in.
+	"""
+	return line.lstrip().startswith(marker)
+#@nonl
+#@-node:EKR.20040505090056.42:is_sentinel
+#@+node:EKR.20040505090056.43:marker_from_extension
+def marker_from_extension(filename):
+	"""
+	Tries to guess the sentinel leadin
+	comment from the filename extension.
+	
+	This code should probably be shared
+	with the main Leo code.
+	"""
+	root, ext = os.path.splitext(filename)
+	if ext == '.tmp':
+		root, ext = os.path.splitext(root)
+	if ext in ('.h', '.c'):
+		marker = "//@"
+	elif ext in (".py", ".cfg", ".bat", ".ksh"):
+		marker = "#@"
+	else:
+		assert 0, "extension %s not handled by this plugin" % ext
+	return marker
+#@nonl
+#@-node:EKR.20040505090056.43:marker_from_extension
+#@+node:EKR.20040505090056.44:push_file
+def push_file(sourcefilename, targetfilename):
+	
+	outlines, sentinel_lines = push_filter(sourcefilename)
+	write_if_changed(outlines, sourcefilename, targetfilename)
+#@nonl
+#@-node:EKR.20040505090056.44:push_file
+#@+node:EKR.20040505090056.45:push_filter
+def push_filter(sourcefilename):
+	"""
+	
+	Removes sentinels from the lines of 'sourcefilename'.
+	
+	"""
+
+	return push_filter_lines(
+		file(sourcefilename).readlines(),
+		marker_from_extension(sourcefilename))
+#@-node:EKR.20040505090056.45:push_filter
+#@+node:EKR.20040505090056.46:push_filter_lines
+def push_filter_lines(lines, marker):
+	"""
+	
+	Removes sentinels from lines.
+	
+	"""
+
+	result = [] ; sentinel_lines = []
+	for line in lines:
+		if is_sentinel(line, marker):
+			sentinel_lines.append(line)
+		else:
+			result.append(line)
+
+	return result, sentinel_lines
+#@nonl
+#@-node:EKR.20040505090056.46:push_filter_lines
+#@+node:EKR.20040505090056.47:write_if_changed
+def write_if_changed(lines, sourcefilename, targetfilename):
+	"""
+	
+	Replaces target file if it is not the same as 'lines',
+	and makes the modification date of target file the same as the source file.
+	
+	Optionally backs up the overwritten file.
+
+	"""
+	
+	copy = not os.path.exists(targetfilename) or lines != file(targetfilename).readlines()
+		
+	if testing:
+		if copy:
+			print "Copying", sourcefilename, "to", targetfilename, "without sentinals"
+		else:
+			print "files are identical"
+
+	if copy:
+		if do_backups:
+			<< make backup file >>
+		outfile = open(targetfilename, "w")
+		for line in lines:
+			outfile.write(line)
+		outfile.close()
+		copy_time(sourcefilename,targetfilename)
+	return copy
+#@+node:EKR.20040505090056.48:<< make backup file >>
+# Keep the old file around while we are debugging this script
+if os.path.exists(targetfilename):
+	count = 0
+	backupname = "%s.~%s~" % (targetfilename, count)
+	while os.path.exists(backupname):
+		count += 1
+		backupname = "%s.~%s~" % (targetfilename, count)
+	os.rename(targetfilename, backupname)
+	if testing:
+		print "backup file in ", backupname
+#@nonl
+#@-node:EKR.20040505090056.48:<< make backup file >>
+#@-node:EKR.20040505090056.47:write_if_changed
+#@-node:EKR.20040505090056:From perfect import script
 #@-node:ekr.20040311143141:No longer used in 4.2
 #@-node:ekr.20031218072017.434:Unused code
 #@-all

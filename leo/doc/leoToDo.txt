@@ -1,35 +1,11 @@
-#@+leo-ver=4
+#@+leo-ver=4-thin
 #@+node:ekr.20040117181936:@file-thin ../doc/leoToDo.txt
 #@+all
-#@+node:EKR.20040503090928:Before LeoPy(ref).leo
-#@+node:EKR.20040503064147.2:Add -thin field to @+leo sentinel
-#@-node:EKR.20040503064147.2:Add -thin field to @+leo sentinel
-#@-node:EKR.20040503090928:Before LeoPy(ref).leo
-#@+node:EKR.20040503091111:Before alpha 2
+#@+node:EKR.20040504144045:Have @thin be a synonym for @file-thin
+#@-node:EKR.20040504144045:Have @thin be a synonym for @file-thin
+#@+node:EKR.20040503091111:Before alpha 2 May 7
 - Add -thin to @+leo
 #@nonl
-#@+node:ekr.20031218072017.853:More intelligent untangling of clones (make @all secondary)
-#@@nocolor
-
-By: nobody ( Nobody/Anonymous ) 
- About "@file" untangling and clones   
-2003-11-24 23:55  
-
- I really like generating source code with the @file directive. I like even most to see it untangle all my changes back to the outline! 
-
-I only wish the untangler would not _only_ use the last instance of a clone in the untangling process...
-
-I understand the difficulty of making it otherwise, but hey, here is my algo anyways...:
-0-before untangling:save a reference copy of a found clone for each clone in the outline!
-1-Start untangling,
-2- once you reach a clone node: compare, if changed update all instances of outline
-3-later in untangling, if same is found but no change in regards to reference copy, leave it as last found. ---END OF ALGORITHM
-
-so you see, only the last _Changed_ instance of a clone would have precedence in the untangling process. I understand it would need some memory & more process time for each clone in an outline! but I dont care if untangle takes 3 minutes instead of 3 seconds... and it just doubles the memory requirements... but untangling is a killer-Feature.
---
-bolt  
-#@nonl
-#@-node:ekr.20031218072017.853:More intelligent untangling of clones (make @all secondary)
 #@+node:EKR.20040503091612:Dangers of @file-thin
 #@@nocolor
 
@@ -42,13 +18,13 @@ How to recover the data:
 	- Import derived file... 
 #@nonl
 #@-node:EKR.20040503091612:Dangers of @file-thin
-#@-node:EKR.20040503091111:Before alpha 2
-#@+node:EKR.20040503091111.1:Before beta 1
+#@-node:EKR.20040503091111:Before alpha 2 May 7
+#@+node:EKR.20040503091111.1:Before beta 1 May 14
 - Import derived file supports @file-thin.
 #@nonl
 #@+node:EKR.20040503093407:Import derived file
 #@-node:EKR.20040503093407:Import derived file
-#@-node:EKR.20040503091111.1:Before beta 1
+#@-node:EKR.20040503091111.1:Before beta 1 May 14
 #@+node:ekr.20031218072017.646:To do...
 #@@ignore
 #@@nocolor
