@@ -797,6 +797,7 @@ class baseFileCommands:
             ("defaultTargetLanguage","target_language",self.getTargetLanguage),
             ("use_header_flag","use_header_flag",self.getBool))
         
+        done = False
         while 1:
             found = False
             for tag,var,f in table:
@@ -808,24 +809,27 @@ class baseFileCommands:
                         self.getDqString()
                     found = True ; break
             if not found:
+                if self.matchTag("/>"):
+                    done = True ; break
                 if self.matchTag(">"):
                     break
                 else: # New in 4.1: ignore all other tags.
                     self.getUnknownTag()
     
-        while 1:
-            if self.matchTag("<defaultDirectory>"):
-                # New in version 0.16.
-                c.tangle_directory = self.getEscapedString()
-                self.getTag("</defaultDirectory>")
-                if not g.os_path_exists(c.tangle_directory):
-                    g.es("default tangle directory not found:" + c.tangle_directory)
-            elif self.matchTag("<TSyntaxMemo_options>"):
-                self.getEscapedString() # ignored
-                self.getTag("</TSyntaxMemo_options>")
-            else: break
-        self.getTag("</preferences>")
-        
+        if not done: # 8/31/04
+            while 1:
+                if self.matchTag("<defaultDirectory>"):
+                    # New in version 0.16.
+                    c.tangle_directory = self.getEscapedString()
+                    self.getTag("</defaultDirectory>")
+                    if not g.os_path_exists(c.tangle_directory):
+                        g.es("default tangle directory not found:" + c.tangle_directory)
+                elif self.matchTag("<TSyntaxMemo_options>"):
+                    self.getEscapedString() # ignored
+                    self.getTag("</TSyntaxMemo_options>")
+                else: break
+            self.getTag("</preferences>")
+    
         # Override .leo file's preferences if settings are in leoConfig.txt.
         if config.configsExist:
             config.setCommandsIvars(c)
