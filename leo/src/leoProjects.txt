@@ -9017,6 +9017,374 @@ def getUnknownAttribute(self,nodeType):
 #@nonl
 #@-node:EKR.20040526204036.1:getUnknownAttribute
 #@-node:ekr.20050101100920:(Fixed deprecation warning when saving .leo files)
+#@+node:ekr.20050101100208:(Fixed Pretty Printer code for Python 2.4)
+# The '@' sign is an operator in Python 2.4, not an error token.
+#@nonl
+#@+node:ekr.20040711135959.1:Pretty Print commands
+#@+node:ekr.20040712053025:prettyPrintAllPythonCode
+def prettyPrintAllPythonCode (self,dump=False):
+
+    c = self ; pp = c.prettyPrinter(c)
+
+    for p in c.all_positions_iter():
+        
+        # Unlike scanDirectives, scanForAtLanguage ignores @comment.
+        if g.scanForAtLanguage(c,p) == "python":
+
+            pp.prettyPrintNode(p,dump=dump)
+            
+    pp.endUndo()
+#@nonl
+#@-node:ekr.20040712053025:prettyPrintAllPythonCode
+#@+node:ekr.20040712053025.1:prettyPrintPythonCode
+def prettyPrintPythonCode (self,p=None,dump=False):
+
+    c = self
+    
+    if p: root = p.copy()
+    else: root = c.currentPosition();
+    
+    pp = c.prettyPrinter(c)
+    
+    for p in root.self_and_subtree_iter():
+        
+        # Unlike scanDirectives, scanForAtLanguage ignores @comment.
+        if g.scanForAtLanguage(c,p) == "python":
+    
+            pp.prettyPrintNode(p,dump=dump)
+          
+    pp.endUndo()
+#@nonl
+#@-node:ekr.20040712053025.1:prettyPrintPythonCode
+#@+node:ekr.20040711135244.5:class prettyPrinter
+class prettyPrinter:
+    
+    @others
+#@nonl
+#@+node:ekr.20040711135244.6:__init__
+def __init__ (self,c):
+    
+    self.array = [] # List of strings comprising the line being accumulated.
+    self.bracketLevel = 0
+    self.c = c
+    self.changed = False
+    self.dumping = False
+    self.erow = self.ecol = 0 # The ending row/col of the token.
+    self.line = 0 # Same as self.srow
+    self.lines = [] # List of lines.
+    self.name = None
+    self.p = c.currentPosition()
+    self.parenLevel = 0
+    self.prevName = None
+    self.s = None # The string containing the line.
+    self.srow = self.scol = 0 # The starting row/col of the token.
+    self.startline = True # True: the token starts a line.
+    self.tracing = False
+
+    << define dispatch dict >>
+#@nonl
+#@+node:ekr.20041021100850:<< define dispatch dict >>
+self.dispatchDict = {
+    
+    "comment":    self.doMultiLine,
+    "dedent":     self.doDedent,
+    "endmarker":  self.doEndMarker,
+    "errortoken": self.doErrorToken,
+    "indent":     self.doIndent,
+    "name":       self.doName,
+    "newline":    self.doNewline,
+    "nl" :        self.doNewline,
+    "number":     self.doNumber,
+    "op":         self.doOp,
+    "string":     self.doMultiLine,
+}
+#@nonl
+#@-node:ekr.20041021100850:<< define dispatch dict >>
+#@-node:ekr.20040711135244.6:__init__
+#@+node:ekr.20040713093048:clear
+def clear (self):
+    self.lines = []
+#@nonl
+#@-node:ekr.20040713093048:clear
+#@+node:ekr.20040713064323:dumpLines
+def dumpLines (self,p,lines):
+
+    encoding = g.app.tkEncoding
+    
+    print ; print '-'*10, p.headString()
+    
+    if 0:
+        for line in lines:
+            line2 = g.toEncodedString(line,encoding,reportErrors=True)
+            print line2, # Don't add a trailing newline!
+    else:
+        for i in xrange(len(lines)):
+            line = lines[i]
+            line = g.toEncodedString(line,encoding,reportErrors=True)
+            print "%3d" % i, repr(lines[i])
+#@nonl
+#@-node:ekr.20040713064323:dumpLines
+#@+node:ekr.20040711135244.7:dumpToken
+def dumpToken (self,token5tuple):
+
+    t1,t2,t3,t4,t5 = token5tuple
+    srow,scol = t3 ; erow,ecol = t4
+    line = str(t5) # can fail
+    name = token.tok_name[t1].lower()
+    val = str(t2) # can fail
+
+    startLine = self.line != srow
+    if startLine:
+        print "----- line",srow,repr(line)
+    self.line = srow
+
+    print "%10s (%2d,%2d) %-8s" % (name,scol,ecol,repr(val))
+#@nonl
+#@-node:ekr.20040711135244.7:dumpToken
+#@+node:ekr.20040713091855:endUndo
+def endUndo (self):
+    
+    c = self.c
+    
+    if self.changed:
+
+        # Tag the end of the command.
+        c.undoer.setUndoParams("Pretty Print",self.p)
+#@nonl
+#@-node:ekr.20040713091855:endUndo
+#@+node:ekr.20040711135244.8:get
+def get (self):
+    
+    return self.lines
+#@nonl
+#@-node:ekr.20040711135244.8:get
+#@+node:ekr.20040711135244.4:prettyPrintNode
+def prettyPrintNode(self,p,dump):
+
+    c = self.c
+    h = p.headString()
+    s = p.bodyString()
+    if not s: return
+    
+    readlines = g.readLinesGenerator(s).next
+
+    try:
+        self.clear()
+        for token5tuple in tokenize.generate_tokens(readlines):
+            self.putToken(token5tuple)
+        lines = self.get()
+
+    except tokenize.TokenError:
+        g.es("Error pretty-printing %s.  Not changed." % h, color="blue")
+        return
+
+    if dump:
+        self.dumpLines(p,lines)
+    else:
+        self.replaceBody(p,lines)
+#@nonl
+#@-node:ekr.20040711135244.4:prettyPrintNode
+#@+node:ekr.20040711135244.9:put
+def put (self,s,strip=True):
+    
+    """Put s to self.array, and strip trailing whitespace if strip is True."""
+    
+    if self.array and strip:
+        prev = self.array[-1]
+        if len(self.array) == 1:
+            if prev.rstrip():
+                # Stripping trailing whitespace doesn't strip leading whitespace.
+                self.array[-1] = prev.rstrip()
+        else:
+            # The previous entry isn't leading whitespace, so we can strip whitespace.
+            self.array[-1] = prev.rstrip()
+
+    self.array.append(s)
+#@nonl
+#@-node:ekr.20040711135244.9:put
+#@+node:ekr.20041021104237:putArray
+def putArray (self):
+    
+    """Add the next line by joining all the strings is self.array"""
+    
+    self.lines.append(''.join(self.array))
+    self.array = []
+#@nonl
+#@-node:ekr.20041021104237:putArray
+#@+node:ekr.20040711135244.10:putNormalToken & allies
+def putNormalToken (self,token5tuple):
+
+    t1,t2,t3,t4,t5 = token5tuple
+    self.name = token.tok_name[t1].lower() # The token type
+    self.val = t2  # the token string
+    self.srow,self.scol = t3 # row & col where the token begins in the source.
+    self.erow,self.ecol = t4 # row & col where the token ends in the source.
+    self.s = t5 # The line containing the token.
+    self.startLine = self.line != self.srow
+    self.line = self.srow
+
+    if self.startLine:
+        self.doStartLine()
+
+    f = self.dispatchDict.get(self.name,self.oops)
+    self.trace()
+    f()
+#@nonl
+#@+node:ekr.20041021102938:doEndMarker
+def doEndMarker (self):
+    
+    self.putArray()
+#@nonl
+#@-node:ekr.20041021102938:doEndMarker
+#@+node:ekr.20041021102340.1:doErrorToken
+def doErrorToken (self):
+    
+    self.array.append(self.val)
+
+    # This code is executed for versions of Python earlier than 2.4
+    if self.val == '@':
+        # Preserve whitespace after @.
+        i = g.skip_ws(self.s,self.scol+1)
+        ws = self.s[self.scol+1:i]
+        if ws:
+            self.array.append(ws)
+#@nonl
+#@-node:ekr.20041021102340.1:doErrorToken
+#@+node:ekr.20041021102340.2:doIndent & doDedent
+def doDedent (self):
+    
+    pass
+    
+def doIndent (self):
+    
+    self.array.append(self.val)
+#@-node:ekr.20041021102340.2:doIndent & doDedent
+#@+node:ekr.20041021102340:doMultiLine
+def doMultiLine (self):
+    
+    # These may span lines, so duplicate the end-of-line logic.
+    lines = g.splitLines(self.val)
+    for line in lines:
+        self.array.append(line)
+        if line and line[-1] == '\n':
+            self.putArray()
+            
+    # Suppress start-of-line logic.
+    self.line = self.erow
+#@nonl
+#@-node:ekr.20041021102340:doMultiLine
+#@+node:ekr.20041021101911.5:doName
+def doName(self):
+
+    self.array.append("%s " % self.val)
+    if self.prevName == "def": # A personal idiosyncracy.
+        self.array.append(' ') # Retain the blank before '('.
+    self.prevName = self.val
+#@-node:ekr.20041021101911.5:doName
+#@+node:ekr.20041021101911.3:doNewline
+def doNewline (self):
+    
+    self.array.append('\n')
+    self.putArray()
+#@nonl
+#@-node:ekr.20041021101911.3:doNewline
+#@+node:ekr.20041021101911.6:doNumber
+def doNumber (self):
+
+    self.array.append(self.val)
+#@-node:ekr.20041021101911.6:doNumber
+#@+node:ekr.20040711135244.11:doOp
+def doOp (self):
+    
+    val = self.val
+    
+    # New in Python 2.4: '@' is an operator, not an error token.
+    if self.val == '@':
+        self.array.append(self.val)
+        # Preserve whitespace after @.
+        i = g.skip_ws(self.s,self.scol+1)
+        ws = self.s[self.scol+1:i]
+        if ws: self.array.append(ws)
+    elif val == '(':
+        self.parenLevel += 1
+        self.put(val)
+    elif val == ')':
+        self.parenLevel -= 1
+        self.put(val)
+    elif val == '=':
+        if self.parenLevel > 0: self.put('=')
+        else:                   self.put(' = ')
+    elif val == ',':
+        if self.parenLevel > 0: self.put(',')
+        else:                   self.put(', ')
+    elif val == ';':
+        self.put(" ; ")
+    else:
+        self.put(val)
+#@nonl
+#@-node:ekr.20040711135244.11:doOp
+#@+node:ekr.20041021112219:doStartLine
+def doStartLine (self):
+    
+    before = self.s[0:self.scol]
+    i = g.skip_ws(before,0)
+    self.ws = self.s[0:i]
+     
+    if self.ws:
+        self.array.append(self.ws)
+#@nonl
+#@-node:ekr.20041021112219:doStartLine
+#@+node:ekr.20041021101911.1:oops
+def oops(self):
+    
+    print "unknown PrettyPrinting code: %s" % (self.name)
+#@nonl
+#@-node:ekr.20041021101911.1:oops
+#@+node:ekr.20041021101911.2:trace
+def trace(self):
+    
+    if self.tracing:
+
+        g.trace("%10s: %s" % (
+            self.name,
+            repr(g.toEncodedString(self.val,"utf-8"))
+        ))
+#@nonl
+#@-node:ekr.20041021101911.2:trace
+#@-node:ekr.20040711135244.10:putNormalToken & allies
+#@+node:ekr.20040711135244.12:putToken
+def putToken (self,token5tuple):
+    
+    if self.dumping:
+        self.dumpToken(token5tuple)
+    else:
+        self.putNormalToken(token5tuple)
+#@nonl
+#@-node:ekr.20040711135244.12:putToken
+#@+node:ekr.20040713070356:replaceBody
+def replaceBody (self,p,lines):
+    
+    c = self.c
+    
+    sel = c.frame.body.getInsertionPoint()
+    oldBody = p.bodyString()
+    body = string.join(lines,'')
+    
+    p.setBodyStringOrPane(body)
+    
+    if not self.changed:
+
+        # Tag the start of the command.
+        c.undoer.setUndoParams("Pretty Print",self.p) 
+        self.changed = True
+    
+    self.c.undoer.setUndoParams("Change",p,
+        oldText=oldBody,newText=body,oldSel=sel, newSel=sel)
+#@nonl
+#@-node:ekr.20040713070356:replaceBody
+#@-node:ekr.20040711135244.5:class prettyPrinter
+#@-node:ekr.20040711135959.1:Pretty Print commands
+#@-node:ekr.20050101100208:(Fixed Pretty Printer code for Python 2.4)
 #@-node:ekr.20041228052527:Bug fixes...
 #@+node:ekr.20041228052527.1:Cleanup...
 #@+node:ekr.20040917080403.1:(Cleaned up code in runOpenFileDialog)
@@ -9459,6 +9827,7 @@ def doErrorToken (self):
     
     self.array.append(self.val)
 
+    # This code is executed for versions of Python earlier than 2.4
     if self.val == '@':
         # Preserve whitespace after @.
         i = g.skip_ws(self.s,self.scol+1)
@@ -9514,8 +9883,15 @@ def doNumber (self):
 def doOp (self):
     
     val = self.val
-
-    if val == '(':
+    
+    # New in Python 2.4: '@' is an operator, not an error token.
+    if self.val == '@':
+        self.array.append(self.val)
+        # Preserve whitespace after @.
+        i = g.skip_ws(self.s,self.scol+1)
+        ws = self.s[self.scol+1:i]
+        if ws: self.array.append(ws)
+    elif val == '(':
         self.parenLevel += 1
         self.put(val)
     elif val == ')':
