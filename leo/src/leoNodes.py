@@ -3400,6 +3400,7 @@ class position (object):
     #@-node:ekr.20040310062332.5:p.unlink
     #@-node:ekr.20040310062332:p.Link/Unlink methods
     #@-others
+#@nonl
 #@-node:ekr.20031218072017.889:class position
 #@-others
 #@nonl
