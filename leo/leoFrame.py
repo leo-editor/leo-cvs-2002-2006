@@ -44,12 +44,7 @@ class LeoFrame:
 		# Set title and fileName
 		if title:
 			self.mFileName = title
-			# Adjust title
-			path,fn = os.path.split(title)
-			if path and len(path) > 0:
-				title = fn + " in " + path
-			else:
-				title = fn
+			title = self.setWindowTitle(title)
 		else:
 			title = "untitled"
 			n = app().numberOfWindows
@@ -197,6 +192,18 @@ class LeoFrame:
 		self.top = None
 	#@-body
 	#@-node:4::frame.destroy
+	#@+node:5::frame.setWindowTitle
+	#@+body
+	def setWindowTitle (self,fileName):
+		
+		path,fn = os.path.split(fileName)
+		if path and len(path) > 0:
+			title = fn + " in " + path
+		else:
+			title = fn
+		return title
+	#@-body
+	#@-node:5::frame.setWindowTitle
 	#@-node:1::Birth & Death
 	#@+node:2::Configuration
 	#@+node:1::f.configureBar
@@ -807,6 +814,7 @@ class LeoFrame:
 			menu_head = "Shift+"
 			if len(last) > 1 or (len(last)==1 and last[0] not in string.letters):
 				bind_head = "Shift-"
+			# else: print "no shift: last:", `last`
 		
 		if has_alt:
 			bind_head = bind_head + "Alt-"
@@ -1751,7 +1759,7 @@ class LeoFrame:
 			# 7/2/02: don't change mFileName until the dialog has suceeded.
 			self.mFileName = ensure_extension(fileName, ".leo")
 			self.title = self.mFileName
-			self.top.title(self.mFileName)
+			self.top.title(self.setWindowTitle(self.mFileName)) # 3/25/03
 			c.fileCommands.save(self.mFileName)
 			self.updateRecentFiles(self.mFileName)
 	#@-body
@@ -1774,10 +1782,9 @@ class LeoFrame:
 			# 7/2/02: don't change mFileName until the dialog has suceeded.
 			self.mFileName = ensure_extension(fileName, ".leo")
 			self.title = self.mFileName
-			self.top.title(self.mFileName)
+			self.top.title(self.setWindowTitle(self.mFileName)) # 3/25/03
 			self.commands.fileCommands.saveAs(self.mFileName)
 			self.updateRecentFiles(self.mFileName)
-	
 	#@-body
 	#@-node:7::OnSaveAs
 	#@+node:8::OnSaveTo

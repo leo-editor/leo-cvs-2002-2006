@@ -20,7 +20,7 @@
 <v t="T5"><vh>&lt;&lt; The "Recent Files" menu &gt;&gt;</vh></v>
 <v t="T6"><vh>&lt;&lt; Compare Panel settings &gt;&gt;</vh></v>
 <v t="T7"><vh>&lt;&lt; Find/Change Panel settings &gt;&gt;</vh></v>
-<v t="T8"><vh>&lt;&lt; Keyboard shortcuts settings &gt;&gt;</vh>
+<v t="T8" a="EV"><vh>&lt;&lt; Keyboard shortcuts settings &gt;&gt;</vh>
 <v t="T9"><vh>&lt;&lt; About keyboard shortcuts &gt;&gt;</vh></v>
 <v t="T10"><vh>&lt;&lt; Alt and Shift-Alt&gt;&gt;</vh></v>
 <v t="T11"><vh>&lt;&lt; Control &gt;&gt;</vh></v>
@@ -30,8 +30,8 @@
 </v>
 <v t="T15"><vh>&lt;&lt; Preferences Panel settings &gt;&gt;</vh></v>
 <v t="T16"><vh>&lt;&lt; Syntax coloring options and colors &gt;&gt;</vh></v>
-<v t="T17" a="E"><vh>&lt;&lt; Window options &gt;&gt;</vh>
-<v t="T18" a="V"><vh>&lt;&lt; body pane options &gt;&gt;</vh></v>
+<v t="T17"><vh>&lt;&lt; Window options &gt;&gt;</vh>
+<v t="T18"><vh>&lt;&lt; body pane options &gt;&gt;</vh></v>
 <v t="T19"><vh>&lt;&lt; outline pane options&gt;&gt;</vh></v>
 <v t="T20"><vh>&lt;&lt; log pane options &gt;&gt;</vh></v>
 <v t="T21"><vh>&lt;&lt; Options for new windows &gt;&gt;</vh></v>
@@ -337,7 +337,9 @@ A shortcut specification has the form:
 	
 commandName = shortcutSpecifier
 
-where commandName is the name of the command in the menu with all non-alphanumeric characters removed.  The shortcut specifier consists of a head followed by a tail.  The head may be empty, or may be a concatenation of the following: Shift+, Alt+, Control+ or Ctrl+.
+where commandName is the name of the command in the menu with all non-alphabetic characters removed:
+
+The shortcut specifier consists of a head followed by a tail.  The head may be empty, or may be a concatenation of the following: Shift+, Alt+, Control+ or Ctrl+.
 
 Case is ignored in commandName, and in the head of the shortcutSpecifier. Case is significant in multi-character tails.  Also, - may be used instead of + in heads.  The following are all equivalent:
 	
@@ -484,9 +486,7 @@ GoToNextSibling  = Alt+Shift+S
 GoToNextVisible  = Alt+DnArrow
 GoToPrevVisible  = Alt+UpArrow
 GoBack           = Alt+Shift+UpArrow
-GoNext           = Alt+Shift+DnArrow
-
-</t>
+GoNext           = Alt+Shift+DnArrow</t>
 <t tx="T11">CloneNode        = Ctrl+`
 Replace          = Ctrl+=
 ReplaceThenFind  = Ctrl+-
@@ -530,8 +530,8 @@ CopyNode        = Shift+Ctrl+C
 Extract         = Shift+Ctrl+D
 ExtractSection  = Shift+Ctrl+E
 ImportTofile    = Shift+Ctrl+F
-InsertBodyTimeDate      = Shift+Ctrl+G
-InsertHeadlineTimeDate  = Shift+Ctrl+H
+InsertBodyTime/Date     = Shift+Ctrl+G
+InsertHeadlineTime/Date = Shift+Ctrl+H
 # Unused        = Shift+Ctrl+I
 ConvertTabs     = Shift+Ctrl+J
 # Unused        = Shift+Ctrl+K

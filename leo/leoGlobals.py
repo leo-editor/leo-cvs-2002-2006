@@ -587,18 +587,28 @@ def findReference(name,root):
 #@-node:4::findReference
 #@-node:2::Directive utils...
 #@+node:3::Menus...
-#@+node:1::canonicalizeMenuName
+#@+node:1::canonicalizeMenuName & cononicalizeTranslatedMenuName
 #@+body
 def canonicalizeMenuName (name):
 	
 	name = name.lower() ; newname = ""
 	for ch in name:
+		# if ch not in (' ','\t','\n','\r','&'):
 		if ch in string.letters:
+			newname = newname+ch
+	return newname
+	
+def canonicalizeTranslatedMenuName (name):
+	
+	name = name.lower() ; newname = ""
+	for ch in name:
+		if ch not in (' ','\t','\n','\r','&'):
+		# if ch in string.letters:
 			newname = newname+ch
 	return newname
 
 #@-body
-#@-node:1::canonicalizeMenuName
+#@-node:1::canonicalizeMenuName & cononicalizeTranslatedMenuName
 #@+node:2::enableMenu & disableMenu & setMenuLabel
 #@+body
 # 11/17/02: Fail gracefully if the item name does not exist.
@@ -638,6 +648,9 @@ def setMenuLabel (menu,name,label,underline=-1):
 			# Bug fix: 2/16/03: use translated name.
 			realName = app().getRealMenuName(name)
 			realName = realName.replace("&","")
+			# Bug fix: 3/25/03" use tranlasted label.
+			label = app().getRealMenuName(label)
+			label = label.replace("&","")
 			menu.entryconfig(realName,label=label,underline=underline)
 	except:
 		print "setMenuLabel menu,name,label:",menu,name,label

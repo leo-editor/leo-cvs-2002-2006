@@ -253,12 +253,12 @@ class LeoApp:
 	
 	def getRealMenuName (self,menuName):
 		
-		cmn = canonicalizeMenuName(menuName)
+		cmn = canonicalizeTranslatedMenuName(menuName)
 		return self.realMenuNameDict.get(cmn,menuName)
 		
 	def setRealMenuName (self,untrans,trans):
 		
-		cmn = canonicalizeMenuName(untrans)
+		cmn = canonicalizeTranslatedMenuName(untrans)
 		self.realMenuNameDict[cmn] = trans
 	
 	def setRealMenuNamesFromTable (self,table):
