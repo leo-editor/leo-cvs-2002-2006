@@ -273,7 +273,7 @@ class baseTnode (object):
     __str__ = __repr__
     #@nonl
     #@-node:ekr.20031218072017.3323:t.__repr__ & t.__str__
-    #@+node:EKR.20040530121847.1:For undo
+    #@+node:EKR.20040530121847.1:For undo (tnode)
     #@+node:EKR.20040530120245:t.createUndoInfo
     def createUndoInfo (self,copyLinks=True):
         
@@ -322,7 +322,7 @@ class baseTnode (object):
             pass
     #@nonl
     #@-node:EKR.20040530121847.2:t.restoreUndoInfo
-    #@-node:EKR.20040530121847.1:For undo
+    #@-node:EKR.20040530121847.1:For undo (tnode)
     #@+node:ekr.20031218072017.3325:Getters
     #@+node:EKR.20040625161602:getBody
     def getBody (self):
@@ -1211,7 +1211,7 @@ class baseVnode (object):
             # Don't set the dirty bit: it would just be annoying.
     #@-node:ekr.20031218072017.3404:v.trimTrailingLines
     #@-node:ekr.20031218072017.3384:Setters
-    #@+node:EKR.20040528111420:For undo
+    #@+node:EKR.20040528111420:For undo (vnode)
     #@+node:EKR.20040530115450:v.createUndoInfo
     def createUndoInfo (self):
         
@@ -1251,7 +1251,7 @@ class baseVnode (object):
             pass
     #@nonl
     #@-node:EKR.20040530121847:v.restoreUndoInfo
-    #@-node:EKR.20040528111420:For undo
+    #@-node:EKR.20040528111420:For undo (vnode)
     #@+node:EKR.20040528151551:v.Iterators
     #@+node:EKR.20040528151551.2:self_subtree_iter
     def subtree_iter(self):
@@ -1560,9 +1560,9 @@ class position (object):
     #@-node:ekr.20031218072017.892:p.__init__
     #@+node:ekr.20040117173448:p.__nonzero__
     #@+at
-    # The test "if p" is the _only_ correct way to test whether a position p 
-    # is valid.
-    # In particular, tests like "if p is None" or "if p is not None" will not 
+    # Tests such as 'if p' or 'if not p' are the _only_ correct ways to test 
+    # whether a position p is valid.
+    # In particular, tests like 'if p is None' or 'if p is not None' will not 
     # work properly.
     #@-at
     #@@c
