@@ -23,6 +23,7 @@ leoKeywords = [
 	"@","@all","@c","@code","@color","@comment",
 	"@delims","@doc","@encoding","@end_raw",
 	"@first","@header","@ignore",
+	"@killcolor",
 	"@language","@last","@lineending",
 	"@nocolor","@noheader","@nowrap","@others",
 	"@pagewidth","@path","@quiet","@raw","@root","@root-code","@root-doc",
@@ -678,12 +679,13 @@ class baseColorizer:
 		# For use of external markup routines.
 		self.last_markup = "unknown" 
 		self.markup_string = "unknown"
-		#@	<< ivars for communication between colorAllDirectives and its allies >>
-		#@+node:ekr.20031218072017.1606:<< ivars for communication between colorAllDirectives and its allies >>
+		#@	<< ivars for communication between colorizeAnyLanguage and its allies >>
+		#@+node:ekr.20031218072017.1606:<< ivars for communication between colorizeAnyLanguage and its allies >>
 		# Copies of arguments.
 		self.p = None
 		self.language = None
 		self.flag = None
+		self.killFlag = false
 		self.line_index = 0
 		
 		# Others.
@@ -703,7 +705,7 @@ class baseColorizer:
 		self.latex_cweb_comments = config.getBoolColorsPref("color_cweb_comments_with_latex")
 		# print "docs,comments",self.latex_cweb_docs,self.latex_cweb_comments
 		#@nonl
-		#@-node:ekr.20031218072017.1606:<< ivars for communication between colorAllDirectives and its allies >>
+		#@-node:ekr.20031218072017.1606:<< ivars for communication between colorizeAnyLanguage and its allies >>
 		#@nl
 		#@	<< define dispatch dicts >>
 		#@+node:ekr.20031218072017.1607:<< define dispatch dicts >>
@@ -840,6 +842,9 @@ class baseColorizer:
 		"""Color the body pane either incrementally or non-incrementally"""
 		
 		# g.trace("incremental",self.incremental,p)
+		if self.killFlag:
+			self.removeAllTags()
+			return
 		try:
 			#@		<< initialize ivars & tags >>
 			#@+node:ekr.20031218072017.1602:<< initialize ivars & tags >> colorizeAnyLanguage
@@ -1280,6 +1285,7 @@ class baseColorizer:
 			else:
 				import traceback ; traceback.print_exc()
 			return "error" # for unit testing.
+	#@nonl
 	#@-node:ekr.20031218072017.1880:colorizeAnyLanguage & allies
 	#@+node:ekr.20031218072017.1892:colorizeLine & allies
 	def colorizeLine (self,s,state):
@@ -1914,7 +1920,7 @@ class baseColorizer:
 	#@+node:ekr.20031218072017.1377:scanColorDirectives
 	def scanColorDirectives(self,p):
 		
-		"""Scan position p and p's ancestors looking for @color and @nocolor directives,
+		"""Scan position p and p's ancestors looking for @comment, @language and @root directives,
 		setting corresponding colorizer ivars.
 		"""
 	
@@ -2036,13 +2042,17 @@ class baseColorizer:
 		"""Return true unless p is unambiguously under the control of @nocolor."""
 		
 		p = p.copy() ; first = p.copy()
-		val = true
+		val = true ; self.killFlag = false
 		for p in p.self_and_parents_iter():
 			# g.trace(p)
 			s = p.v.t.bodyString
 			dict = g.get_directives_dict(s)
 			no_color = dict.has_key("nocolor")
 			color = dict.has_key("color")
+			kill_color = dict.has_key("killcolor")
+			# A killcolor anywhere disables coloring.
+			if kill_color:
+				val = false ; self.killFlag = true ; break
 			# A color anywhere in the target enables coloring.
 			if color and p == first:
 				val = true ; break

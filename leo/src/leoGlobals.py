@@ -24,16 +24,20 @@ except NameError:
 #@nonl
 #@-node:ekr.20031218072017.3094:<< define general constants >>
 #@nl
-
-app = None # The singleton app object.
-
+#@<< define global data structures >>
+#@+node:EKR.20040610094819:<< define global data structures >>
 # Visible externally so plugins may add to the list of directives.
 
 globalDirectiveList = [
-	"color", "comment", "encoding", "header", "ignore",
+	"color", "comment", "encoding", "header", "ignore", "killcolor",
 	"language", "lineending", "nocolor", "noheader", "nowrap",
 	"pagewidth", "path", "quiet", "root", "silent",
 	"tabwidth", "terse", "unit", "verbose", "wrap"]
+#@nonl
+#@-node:EKR.20040610094819:<< define global data structures >>
+#@nl
+
+app = None # The singleton app object.
 
 #@+others
 #@+node:ekr.20031218072017.3095:Checking Leo Files...
@@ -3798,6 +3802,5 @@ def skip_leading_ws_with_indent(s,i,tab_width):
 #@-node:ekr.20031218072017.3205:skip_leading_ws_with_indent
 #@-node:ekr.20031218072017.3197:Whitespace...
 #@-others
-#@nonl
 #@-node:ekr.20031218072017.3093:@thin leoGlobals.py
 #@-leo
