@@ -18,7 +18,7 @@
 
 from leoGlobals import *
 from leoUtils import *
-import leoNodes, leoPrefs
+import leoNodes
 import filecmp, os, os.path, time, traceback
 
 class atFile:

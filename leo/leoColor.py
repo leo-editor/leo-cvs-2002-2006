@@ -1212,10 +1212,9 @@ class colorizer:
 		if not match(s,i,"@"):
 			return None
 		
-		ch1 = ch2 = ch3 = word = None
+		ch1 = ch2 = word = None
 		if i + 1 < len(s): ch1 = s[i+1]
 		if i + 2 < len(s): ch2 = s[i+2]
-		if i + 3 < len(s): ch3 = s[i+3]
 	
 		if match(s,i,"@**"):
 			word = "@**"

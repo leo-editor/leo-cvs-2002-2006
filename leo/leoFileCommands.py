@@ -903,9 +903,9 @@ class fileCommands:
 			ok, ratio = self.getLeoFile(self.frame,fileName,true) # readAtFileNodes
 			c.loading = false # reenable c.changed
 			c.setChanged(false)
-			# This should be done after the pane size has been set.
-			top = c.tree.topVnode
 			if 0: # This can't be done directly.
+				# This should be done after the pane size has been set.
+				top = c.tree.topVnode
 				if top: c.tree.scrollTo(top)
 		c.endUpdate()
 		# delete the file buffer

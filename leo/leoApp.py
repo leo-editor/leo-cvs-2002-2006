@@ -66,7 +66,6 @@ class LeoApp:
 		except:
 			print "exception getting version"
 			traceback.print_exc()
-			v22 = true # Just hope
 		
 		#@-body
 		#@-node:1::<< return false if not v2.1 or above >>

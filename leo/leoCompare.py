@@ -8,6 +8,9 @@
 import difflib, filecmp, os, string, traceback
 import Tkinter, tkFileDialog
 
+from leoGlobals import *
+from leoUtils import *
+
 # We try to interfere with scripts as little as possible.
 true = 1
 false = 0 # Better than none.
@@ -25,7 +28,7 @@ def choose(cond, a, b): # warning: evaluates all arguments
 #@-node:1::choose
 #@+node:2::go
 #@+body
-def go (self,name=None):
+def go ():
 
 	cmp = leoCompare(
 		commands = None,
@@ -227,7 +230,6 @@ class leoCompare:
 			if f1 and f2 and ok: # Don't compare if there is an error opening the output file.
 				self.compare_open_files(f1,f2,name1,name2)
 		except:
-			import traceback
 			self.show("exception comparing files")
 			traceback.print_exc()
 		try:
@@ -236,7 +238,6 @@ class leoCompare:
 			if self.outputFile:
 				self.outputFile.close() ; self.outputFile = None
 		except:
-			import traceback
 			self.show("exception closing files")
 			traceback.print_exc()
 	#@-body
@@ -250,7 +251,6 @@ class leoCompare:
 			s2 = string.lstrip(s2)
 	
 		if self.ignoreInteriorWhitespace:
-			from leoUtils import skip_ws
 			k1 = skip_ws(s1,0)
 			k2 = skip_ws(s2,0)
 			ws1 = s1[:k1]
@@ -476,8 +476,7 @@ class leoCompare:
 	#@@c
 
 	def isLeoHeader (self,s):
-		
-		from leoUtils import skip_ws
+	
 		tag = "@+leo"
 		j = string.find(s,tag)
 		if j > 0:
@@ -487,8 +486,7 @@ class leoCompare:
 		else: return None
 			
 	def isSentinel (self,s,sentinelComment):
-		
-		from leoUtils import skip_ws, match
+	
 		i = skip_ws(s,0)
 		return match(s,i,sentinelComment)
 	#@-body
@@ -530,7 +528,6 @@ class leoCompare:
 		if self.outputFile:
 			self.outputFile.write(s + '\n')
 		elif self.commands:
-			from leoGlobals import es
 			es(s)
 		else:
 			print s
@@ -653,8 +650,7 @@ class leoComparePanel:
 	# Initialize ivars from config parameters.
 	
 	def finishCreate (self):
-		
-		from leoGlobals import app
+	
 		config = app().config
 		
 		# File names.
@@ -734,10 +730,7 @@ class leoComparePanel:
 	#@+node:4::run
 	#@+body
 	def run (self):
-		
-		# We import these here so as not to interfere with scripts
-		from leoUtils   import center_dialog, create_labeled_frame, shortFileName
-		from leoGlobals import app
+	
 		import leoApp, leoCommands
 	
 		c = self.commands ; cmp = self.cmp ; Tk = Tkinter
@@ -1020,7 +1013,7 @@ class leoComparePanel:
 	def onCompareFiles (self):
 	
 		cmp = self.cmp
-		ok = self.setIvarsFromWidgets()
+		self.setIvarsFromWidgets()
 		cmp.compare_files(cmp.fileName1,cmp.fileName2)
 	#@-body
 	#@-node:3::onCompare...

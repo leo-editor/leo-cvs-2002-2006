@@ -22,7 +22,7 @@ class LeoFrame:
 	#@+body
 	def __init__(self, title = None):
 	
-		Tk = Tkinter ; config = app().config
+		Tk = Tkinter
 		
 		#@<< set the LeoFrame ivars >>
 		#@+node:1::<< set the LeoFrame ivars >>
@@ -68,7 +68,7 @@ class LeoFrame:
 		self.topMenu = self.fileMenu = self.editMenu = None
 		self.outlineMenu = self.windowMenu = self.helpMenu = None
 		# Submenus
-		self.editBodyMenu = editHeadlineMenu = self.moveSelectMenu = self.markGotoMenu = None
+		self.editBodyMenu = self.editHeadlineMenu = self.moveSelectMenu = self.markGotoMenu = None
 		self.menuShortcuts = None # List of menu shortcuts for warnings.
 		
 		# Used by event handlers...
@@ -149,7 +149,7 @@ class LeoFrame:
 		self.topMenu = self.fileMenu = self.editMenu = None
 		self.outlineMenu = self.windowMenu = self.helpMenu = None
 		# Submenus.
-		self.editBodyMenu = editHeadlineMenu = self.moveSelectMenu = self.markGotoMenu = None
+		self.editBodyMenu = self.editHeadlineMenu = self.moveSelectMenu = self.markGotoMenu = None
 	#@-body
 	#@-node:2::frame.__del__
 	#@+node:3::frame.__repr__
@@ -876,193 +876,7 @@ class LeoFrame:
 								# traceback.print_exc()
 	#@-body
 	#@-node:8::createMenuEntries
-	#@+node:9::createAccelerators (no longer used)
-	#@+body
-	#@+at
-	#  The accelerator entry specified when creating a menu item just creates 
-	# text.  The actual correspondance between keys and routines is defined here.
-
-	#@-at
-	#@@c
-
-	def createAccelerators (self,top):
-		
-		return ## no longer used!
-	
-		body = self.body ; canvas = self.canvas
-	
-		fkeyBindings = [
-			("F3", self.OnFindNext)
-		]
-		for accel, command in fkeyBindings:
-			top.bind("<" + accel + ">", command)
-	
-		controlBindings = [
-			
-			#@<< control key bindings >>
-			#@+node:1::<< control key bindings >>
-			#@+body
-			# The names at http://tcl.activestate.com/man/tcl8.4/TkCmd/keysyms.htm must be used here.
-			("equal", self.OnReplace), # "="
-			("quoteleft", self.OnCloneNode), # "`"
-			("minus", self.OnReplaceThenFind),
-			
-			("braceleft", self.OnPromote), # "{"
-			("braceright", self.OnDemote), # "}"
-			("bracketleft", self.OnDedent), # "["
-			("bracketright", self.OnIndent), # "]"
-			("Shift-BackSpace", self.OnDeleteNode),
-			
-			("a", self.OnSelectAll),
-			# "b" unused
-			# ("c", self.OnCopy), # Done in frame.__init__
-			("d", self.OnMoveDown),
-			("e", self.OnEqualSizedPanes),
-			("f", self.OnFindPanel),
-			("g", self.OnFindNext),
-			("h", self.OnEditHeadline),
-			("i", self.OnInsertNode), # Control-I == '\t'
-			# Control-J == '\n'
-			# Control-k no longer used
-			("k", self.OnFindMatchingBracket), # EKR: 9/3/02
-			("l", self.OnMoveLeft),
-			("m", self.OnMark),
-			("n", self.OnNew),
-			("o", self.OnOpen),
-			# "p" unused.
-			("q", self.OnQuit),
-			("r", self.OnMoveRight),
-			("s", self.OnSave),
-			("t", self.OnToggleActivePane),
-			("u", self.OnMoveUp),
-			# ("v", self.OnCopy), # Done in frame.__init__
-			("w", self.OnClose),
-			# ("x", self.OnCut), # Done in frame.__init__
-			("y", self.OnPreferences),
-			("z", self.OnUndo),
-			# Shift-Control...
-			("A", self.OnTangleAll),
-			("B", self.OnConvertBlanks),
-			("C", self.OnCopyNode),
-			("D", self.OnExtract),
-			("E", self.OnExtractSection),
-			("F", self.OnImportAtFile),
-			("G", self.OnFindPrevious),
-			# H unused
-			# I reserved
-			("J", self.OnConvertTabs),
-			# K unused
-			# L unused
-			("M", self.OnTangleMarked),
-			("N", self.OnExtractNames),
-			# O unused
-			# P unused
-			# Q unused
-			("R", self.OnReadAtFileNodes), # EKR: 9/3/02
-			("S", self.OnSaveAs),
-			("T", self.OnTangle),
-			("U", self.OnUntangle),
-			("V", self.OnPasteNode),
-			("W", self.OnWriteAtFileNodes), # EKR: 9/3/02
-			("X", self.OnCutNode),
-			("Z", self.OnRedo)
-			#@-body
-			#@-node:1::<< control key bindings >>
-
-		]
-		# Warnings: two sets of actions will be taken for these
-		# unless all event handlers returns "break".
-		for accel, command in controlBindings:
-			body.bind("<Control-" + accel + ">", command) # Necessary to override defaults in body.
-			top.bind ("<Control-" + accel + ">", command)
-	
-		altBindings = [
-			
-			#@<< alt key bindings >>
-			#@+node:2::<< alt key bindings >>
-			#@+body
-			("equal", self.OnExpandNextLevel),
-			("Key-0", self.OnContractParent),
-			("Key-1", self.OnExpandToLevel1), # Note 1-5 all by itself refers to button 1-5, not key 1-5.
-			("Key-2", self.OnExpandToLevel2),
-			("Key-3", self.OnExpandToLevel3),
-			("Key-4", self.OnExpandToLevel4),
-			("Key-5", self.OnExpandToLevel5),
-			("Key-6", self.OnExpandToLevel6),
-			("Key-7", self.OnExpandToLevel7),
-			("Key-8", self.OnExpandToLevel8),
-			("Key-9", self.OnExpandAll),
-			("a", self.OnSortSiblings),
-			# "b" unused
-			("c", self.OnMarkChangedItems),
-			("d", self.OnGoToNextChanged),
-			# "e" opens Edit menu
-			# "f" opens File menu
-			# "g" unused
-			# "h" opens Help menu
-			# "i" unused (reserved?)
-			# "j" unused (reserved?)
-			# "k" unused
-			# "l" unused
-			("m", self.OnGoToNextMarked),
-			# "n" unused
-			# "o" opens Outline menu
-			("p", self.OnOpenPythonWindow),
-			# "q" unused
-			("r", self.OnMarkChangedRoots),
-			("s", self.OnMarkSubheads),
-			# "t" unused
-			("u", self.OnUnmarkAll),
-			("v", self.OnViewAllCharacters),
-			# "w" opens Window menu
-			# "x" unused
-			# "y" unused
-			# "z" unused
-			
-			# Shift-Alt...
-			
-			# ("E", self.OnExecuteScript),
-			("S", self.OnColorPanel),
-			("T", self.OnFontPanel),
-			
-
-			#@+at
-			#  7/29/02: It's too confusing to have arrow keys mean different 
-			# things in different panes.
-			# 
-			# For one thing, we want to leave the focus in the body pane after 
-			# the first click in the outline pane, but that means that the 
-			# arrow keys must still be functional in the _body_ pane!
-			# 
-			# Alas, all the various combinations of key bindings of arrow keys 
-			# appear to do something; there are none left to use for moving 
-			# around in the outline pane.  So we are stuck with poor shortcuts.
-
-			#@-at
-			#@@c
-
-			# We would love to use arrow keys, and we can't.
-			("D", self.OnGoNextVisible),
-			("U", self.OnGoPrevVisible),
-			("V", self.OnGoBack),
-			("W", self.OnGoNext),
-			#@-body
-			#@-node:2::<< alt key bindings >>
-
-		]
-		# Warnings: two sets of actions will be taken for these
-		# unless all event handlers returns "break".
-		for accel, command in altBindings:
-			body.bind("<Alt-" + accel + ">", command) # Necessary to override defaults in body.
-			self.top.bind ("<Alt-" + accel + ">", command)
-			
-		if 0: # A useful trace
-			print_bindings("top",self.top)
-			print_bindings("body",self.body)
-			print_bindings("canvas",self.canvas)
-	#@-body
-	#@-node:9::createAccelerators (no longer used)
-	#@+node:10::initialRatios
+	#@+node:9::initialRatios
 	#@+body
 	def initialRatios (self):
 	
@@ -1084,8 +898,8 @@ class LeoFrame:
 		# print (`r`,`r2`)
 		return verticalFlag,r,r2
 	#@-body
-	#@-node:10::initialRatios
-	#@+node:11::getFocus
+	#@-node:9::initialRatios
+	#@+node:10::getFocus
 	#@+body
 	# Returns the frame that has focus, or body if None.
 	
@@ -1097,16 +911,16 @@ class LeoFrame:
 		else:
 			return self.body
 	#@-body
-	#@-node:11::getFocus
-	#@+node:12::notYet
+	#@-node:10::getFocus
+	#@+node:11::notYet
 	#@+body
 	def notYet(self,name):
 	
 		es(name + " not ready yet")
 	
 	#@-body
-	#@-node:12::notYet
-	#@+node:13::frame.put, putnl
+	#@-node:11::notYet
+	#@+node:12::frame.put, putnl
 	#@+body
 	# All output to the log stream eventually comes here.
 	
@@ -1130,8 +944,8 @@ class LeoFrame:
 			print "Null log"
 			print
 	#@-body
-	#@-node:13::frame.put, putnl
-	#@+node:14::resizePanesToRatio
+	#@-node:12::frame.put, putnl
+	#@+node:13::resizePanesToRatio
 	#@+body
 	def resizePanesToRatio(self,ratio,secondary_ratio):
 	
@@ -1140,8 +954,8 @@ class LeoFrame:
 		# trace(`ratio`)
 	
 	#@-body
-	#@-node:14::resizePanesToRatio
-	#@+node:15::Event handlers
+	#@-node:13::resizePanesToRatio
+	#@+node:14::Event handlers
 	#@+node:1::frame.OnCloseLeoEvent
 	#@+body
 	# Called from quit logic and when user closes the window.
@@ -1280,8 +1094,8 @@ class LeoFrame:
 			self.canvas.yview(Tkinter.SCROLL, -1, Tkinter.UNITS)
 	#@-body
 	#@-node:6::OnMouseWheel (Tomaz Ficko)
-	#@-node:15::Event handlers
-	#@+node:16::Menu enablers (Frame)
+	#@-node:14::Event handlers
+	#@+node:15::Menu enablers (Frame)
 	#@+node:1::OnMenuClick (enables and disables all menu items)
 	#@+body
 	# This is the Tk "postcommand" callback.  It should update all menu items.
@@ -1385,8 +1199,8 @@ class LeoFrame:
 		enableMenu(menu,"Go To Next Changed",c.canGoToNextDirtyHeadline())
 	#@-body
 	#@-node:5::updateOutlineMenu
-	#@-node:16::Menu enablers (Frame)
-	#@+node:17::Menu Command Handlers
+	#@-node:15::Menu enablers (Frame)
+	#@+node:16::Menu Command Handlers
 	#@+node:1::File Menu
 	#@+node:1::top level
 	#@+node:1::OnNew
@@ -3050,7 +2864,6 @@ class LeoFrame:
 		PyShell.fixwordbreaks(root)
 		flist = PyShell.PyShellFileList(root)
 		shell = PyShell.PyShell(flist)
-		interp = shell.interp
 		flist.pyshell = shell
 		shell.begin()
 	#@-body
@@ -3066,7 +2879,7 @@ class LeoFrame:
 		# Doing so would add unwanted leading tabs.
 		ver = "$Revision$" # CVS will update this.
 		build = ver[10:-1] # Strip off "$Reversion" and "$"
-		version = "leo.py 3.7, Build " + build + ", October 7, 2002\n\n"
+		version = "leo.py 3.7, Build " + build + ", October 9, 2002\n\n"
 		copyright = (
 			"Copyright 1999-2002 by Edward K. Ream\n" +
 			"All Rights Reserved\n" +
@@ -3188,8 +3001,8 @@ class LeoFrame:
 	#@-body
 	#@-node:5::OnLeoTutorial (version number)
 	#@-node:5::Help Menu
-	#@-node:17::Menu Command Handlers
-	#@+node:18::Splitter stuff
+	#@-node:16::Menu Command Handlers
+	#@+node:17::Splitter stuff
 	#@+body
 	#@+at
 	#  The key invariants used throughout this code:
@@ -3535,7 +3348,7 @@ class LeoFrame:
 		self.log.configure(bd=border)
 	#@-body
 	#@-node:9::reconfigurePanes (use config bar_width)
-	#@-node:18::Splitter stuff
+	#@-node:17::Splitter stuff
 	#@-others
 #@-body
 #@-node:0::@file leoFrame.py

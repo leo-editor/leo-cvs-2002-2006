@@ -4,7 +4,7 @@ Important notes:
 1. See INSTALL.TXT for installation instructions.
 2. 
 
-leo.py 3.7                                 October 6, 2002
+leo.py 3.7                                 October 7, 2002
 
 Many improvements have been made to Leo.  The highlights:
 

@@ -1069,7 +1069,6 @@ class leoImportCommands:
 		class_start = 0
 		function_start = 0
 		c = self.commands
-		name = None
 		i = 0
 		class_body = ""
 		class_node = ""

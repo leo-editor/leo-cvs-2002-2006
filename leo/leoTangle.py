@@ -371,11 +371,11 @@ class root_attributes:
 	        ", single_comment_string: " + self.single_comment_string +
 			", start_comment_string: " +	self.start_comment_string +
 			", end_comment_string: " +	self.end_comment_string +
-			", use_header_flag: " + choose(tangle_state.use_header_flag, "true", "false") +
-			", print_bits: " + represent_print_bits(tangle_state.print_bits) +
-			", path: " + tangle_state.path +
-			", page_width: " + tangle_state.page_width +
-			", tab_width: " + tangle_state.tab_width +
+			", use_header_flag: " + choose(self.use_header_flag, "true", "false") +
+			", print_bits: " + represent_print_bits(self.print_bits) +
+			", path: " + self.path +
+			", page_width: " + self.page_width +
+			", tab_width: " + self.tab_width +
 			# Stephen P. Schaefer 9/13/2002
 			", first_lines: " + self.first_lines)
 	
@@ -2194,12 +2194,7 @@ class tangleCommands:
 	#@-at
 	#@@c
 
-	def st_enter(self,name,code,doc,multiple_parts_flag,is_root_flag,
-		# Stephen Schaefer, 9/2/02
-		language=None,
-		single_comment_string=None,
-		start_comment_string=None,
-		end_comment_string=None):
+	def st_enter(self,name,code,doc,multiple_parts_flag,is_root_flag):
 		
 		# trace(`name`)
 		section = self.st_lookup(name,is_root_flag)
@@ -2247,7 +2242,9 @@ class tangleCommands:
 			section.root_attributes = root_attributes(self)
 			#@-body
 			#@-node:2::<<remember root node attributes>>
-# Stephen Schaefer, 9/2/02	return len(section.parts) # part number
+
+		# Stephen Schaefer, 9/2/02
+		return len(section.parts) # part number
 	
 	#@-body
 	#@-node:4::st_enter
@@ -2558,7 +2555,10 @@ class tangleCommands:
 
 	def forgiving_compare (self,name,part,s1,s2):
 	
-		# trace(`name` +":"+ `part` +"\n1:"+ `get_line(s1,0)` +"\n2:"+ `get_line(s2,0)`)
+		if 0:
+			trace(`name`+":"+`part`+
+			      "\n1:"+`get_line(s1,0)`+
+			      "\n2:"+ `get_line(s2,0)`)
 		
 		#@<< Define forgiving_compare vars >>
 		#@+node:1::<< Define forgiving_compare vars >>

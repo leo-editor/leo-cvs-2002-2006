@@ -1624,10 +1624,10 @@ def returnNonEncodingChar(c,xml_encoding):
 		if type(c) == types.UnicodeType:
 			xml_encoding = app().config.xml_version_string
 			e = c.encode(xml_encoding)
-			e = unicode(e,xml_encoding)
+			unicode(e,xml_encoding)
 			return u""
 		else:
-			s = unicode(c,xml_encoding)
+			unicode(c,xml_encoding)
 			return u""
 	except:
 		return c

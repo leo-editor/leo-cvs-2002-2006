@@ -251,7 +251,7 @@ class leoTree:
 	def setLineHeight (self,font):
 		
 		try:
-			metrics = self.font.metrics()
+			metrics = font.metrics()
 			linespace = metrics ["linespace"]
 			self.line_height = linespace + 5 # Same as before for the default font on Windows.
 			# print `metrics`
@@ -785,7 +785,7 @@ class leoTree:
 	def idle_body_key (self,v,oldSel,undoType,ch=None):
 	
 		c = self.commands
-		if not c or not v or v != c.currentVnode(): return
+		if not c or not v or v != c.currentVnode(): return "break"
 		if 0: # prints on control-alt keys
 			trace(`ch` + ":" + `c.body.get("1.0", "end")`)
 			trace(c.body.index("insert")+":"+c.body.get("insert linestart","insert lineend"))
@@ -820,7 +820,7 @@ class leoTree:
 			# vnode strings are encoded using the xml_encoding.
 			body = body.encode(xml_encoding) # result is a string.
 			
-		if s == body: return
+		if s == body: return "break"
 		
 		# trace(`ch`)
 		# trace(`ch` + ":" + `s`)
@@ -1053,7 +1053,7 @@ class leoTree:
 	
 		c = self.commands
 		if not v or not v.edit_text or v != c.currentVnode():
-			return
+			return "break"
 		s = v.edit_text.get("1.0","end")
 		
 		#@<< Make sure that the headline text is valid in the encoding >>
@@ -1090,7 +1090,7 @@ class leoTree:
 		changed = s != head
 		done = ch and (ch == '\r' or ch == '\n')
 		if not changed and not done:
-			return
+			return "break"
 		if changed:
 			c.undoer.setUndoParams("Change Headline",v,newText=s,oldText=head)
 		index = v.edit_text.index("insert")
@@ -1181,14 +1181,13 @@ class leoTree:
 		# print `v`,`event`
 		if event == None: return
 		
-		c = self.commands ; frame = c.frame ; topMenu = frame.topMenu
+		c = self.commands ; frame = c.frame
 		# 20-SEP-2002 DTHEIN: If we are going to recreate it, we'd
 		#                     better destroy it.
 		if self.popupMenu:
 			self.popupMenu.destroy()
 			self.popupMenu = None
 		self.popupMenu = menu = Tkinter.Menu(app().root, tearoff=0)
-		#self.popupMenu = menu = Tkinter.Menu(topMenu, tearoff=0)
 		
 		#@<< create the menu >>
 		#@+node:1::<< create the menu >>

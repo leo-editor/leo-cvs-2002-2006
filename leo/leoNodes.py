@@ -1367,8 +1367,7 @@ class vnode:
 	def setAncestorsOfClonedNodesInTreeDirty(self):
 	
 		# Look up the tree for an ancestor @file node.
-		v = self ; c = v.commands
-		redraw_flag = false
+		v = self ; redraw_flag = false
 		
 		if v == None:
 			return redraw_flag
