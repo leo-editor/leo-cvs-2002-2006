@@ -2615,6 +2615,8 @@ class tangleCommands:
 			trace(`name`+":"+`part`+
 			      "\n1:"+`get_line(s1,0)`+
 			      "\n2:"+ `get_line(s2,0)`)
+		s1 = toUnicode(s1,self.encoding) # 4/4/03
+		s2 = toUnicode(s2,self.encoding) # 4/4/03
 		
 		#@<< Define forgiving_compare vars >>
 		#@+node:1::<< Define forgiving_compare vars >>
@@ -3262,7 +3264,7 @@ class tangleCommands:
 		part, found = self.ust_lookup(name,part_number,is_root_flag,true) # Set update
 		if not found:
 			return false_ret  # Not an error.
-		ucode = part.code
+		ucode = toUnicode(part.code,self.encoding) # 4/4/03
 		
 		#@<< Remove leading blank lines and comments from ucode >>
 		#@+node:1::<< Remove leading blank lines and comments from ucode >>
@@ -3957,7 +3959,7 @@ class tangleCommands:
 				# trace("encoding:",e)
 			
 				if isValidEncoding(e):
-					self.encoding = e # 3/4/03
+					self.encoding = e # 4/4/03
 				else:
 					es("invalid @encoding:" + e)
 			
