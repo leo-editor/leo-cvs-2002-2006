@@ -831,11 +831,12 @@ class leoTkinterFrame (leoFrame.leoFrame):
 			es_event_exception("activate Leo")
 	
 	def OnDeactivateLeoEvent(self,event=None):
-	
-		try:
-			app.setLog(None,"OnDeactivateLeoEvent")
-		except:
-			es_event_exception("deactivate Leo")
+		
+		if 0: # This causes problems on the Mac.
+			try:
+				app.setLog(None,"OnDeactivateLeoEvent")
+			except:
+				es_event_exception("deactivate Leo")
 	#@nonl
 	#@-node:OnActivateLeoEvent, OnDeactivateLeoEvent
 	#@+node:OnActivateTree
