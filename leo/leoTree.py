@@ -568,6 +568,7 @@ class leoTree:
 		frame = self.commands.frame
 		last = self.lastVisible()
 		nextToLast = last.visBack()
+		# print 'v,last',`v`,`last`
 		if v == None:
 			v = self.currentVnode
 		h1 = self.yoffset(v)
@@ -1618,14 +1619,13 @@ class leoTree:
 		c.frame.setTabWidth(w)
 	#@-body
 	#@-node:6::tree.scanForTabWidth
-	#@+node:7::tree.select (move left is slow)
+	#@+node:7::tree.select
 	#@+body
 	# Warning: do not try to "optimize" this by returning if v==tree.currentVnode.
 	
 	def select (self,v):
 		
-		# tick()
-	
+		# trace(`v`)
 		
 		#@<< define vars and stop editing >>
 		#@+node:1::<< define vars and stop editing >>
@@ -1692,9 +1692,10 @@ class leoTree:
 			#@-body
 			#@-node:3::<< select the new node >>
 
-			try: # may fail during initialization
-				self.idle_scrollTo(v)
-			except: pass
+			if v and v != old_v: # 3/26/03: Suppress duplicate call.
+				try: # may fail during initialization
+					self.idle_scrollTo(v)
+				except: pass
 	
 		
 		#@<< set the current node and redraw >>
@@ -1709,7 +1710,7 @@ class leoTree:
 
 		handleLeoHook("select2",c=c,new_v=v,old_v=old_v)
 	#@-body
-	#@-node:7::tree.select (move left is slow)
+	#@-node:7::tree.select
 	#@+node:8::tree.set...LabelState
 	#@+body
 	def setNormalLabelState (self,v): # selected, editing
