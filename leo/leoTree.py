@@ -159,7 +159,6 @@ class leoTree:
 		# Drag and drop
 		self.dragging = false # true: presently dragging.
 		self.controlDrag = false # true: control was down when drag started.
-		self.oldcursor = None # To reset cursor after drag
 		self.drag_id = None # To reset bindings after drag
 		
 		# 20-SEP-2002 DTHEIN: keep track of popup menu so we can handle
@@ -1030,42 +1029,11 @@ class leoTree:
 		
 		id = self.canvas.find_closest(canvas_x,canvas_y)
 	
-		if 0: # Confusing: we should only do this if a modifier key is down.
-			# Moreover, this would slow down dragging a lot.
-			vdrag = self.findVnodeWithIconId(id)
-			if vdrag and vdrag != v and expandFlag:
-				
-				#@<< expand vdrag and redraw >>
-				#@+node:1::<< expand vdrag and redraw >> (not used)
-				#@+body
-				# redrawing will change id's.
-				if self.drag_id:
-					canvas.tag_unbind(self.drag_id , "<B1-Motion>")
-					canvas.tag_unbind(self.drag_id , "<Any-ButtonRelease-1>")
-					
-				vdrag.expand()
-				c.dragToNthChildOf(v,vdrag,0)
-				self.redraw_now()
-				self.idle_scrollTo(vdrag)
-				
-				if 0: # This doesn't work, because we haven't had a mouse down event in the new node.
-					# Pretend the expanded node is what we are dragging!
-					self.drag_id = vdrag.icon_id
-					# es("OnContinueDrag expanding:" + `vdrag` + " " + `self.drag_id`)
-					if self.drag_id:
-						canvas.tag_bind(self.drag_id, "<B1-Motion>", v.OnDrag)
-						canvas.tag_bind(self.drag_id, "<Any-ButtonRelease-1>", v.OnEndDrag)
-				else:
-					self.canvas['cursor'] = self.oldcursor
-				#@-body
-				#@-node:1::<< expand vdrag and redraw >> (not used)
-
-	
 		# OnEndDrag() halts the scrolling by clearing self.drag_id when the mouse button goes up.
 		if self.drag_id: # This gets cleared by OnEndDrag()
 			
 			#@<< scroll the canvas as needed >>
-			#@+node:2::<< scroll the canvas as needed >>
+			#@+node:1::<< scroll the canvas as needed >>
 			#@+body
 			# Scroll the screen up or down one line if the cursor (y) is outside the canvas.
 			h = canvas.winfo_height()
@@ -1084,7 +1052,7 @@ class leoTree:
 				if (y < 0 and lo > 0.1) or (y > h and hi < 0.9):
 					canvas.after_idle(self.OnContinueDrag,v,None) # Don't propagate the event.
 			#@-body
-			#@-node:2::<< scroll the canvas as needed >>
+			#@-node:1::<< scroll the canvas as needed >>
 	#@-body
 	#@-node:6::tree.OnContinueDrag
 	#@+node:7::tree.OnCtontrolT
@@ -1163,8 +1131,8 @@ class leoTree:
 				if 0: # Don't undo the scrolling we just did!
 					self.idle_scrollTo(v)
 		
-		# 10/26/02: always do this.
-		self.canvas['cursor'] = self.oldcursor
+		# 1216/02: Reset the old cursor by brute force.
+		self.canvas['cursor'] = "arrow"
 	
 		if self.drag_id:
 			canvas.tag_unbind(self.drag_id , "<B1-Motion>")
@@ -1307,7 +1275,6 @@ class leoTree:
 				self.drag_v = v
 				canvas.tag_bind(id,"<B1-Motion>", v.OnDrag)
 				canvas.tag_bind(id,"<Any-ButtonRelease-1>", v.OnEndDrag)
-				self.oldcursor = self.canvas['cursor']
 				self.canvas['cursor'] = "hand2" # "center_ptr"
 	
 		self.select(v)
