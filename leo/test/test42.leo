@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="2799" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="2803" clone_windows="0"/>
 <globals body_outline_ratio="0.4370860927152318">
 	<global_window_position top="96" left="353" height="755" width="891"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
@@ -18,7 +18,50 @@
 </v>
 <v t="ekr.20040303062846"><vh>Unit Testing</vh>
 <v t="ekr.20040303062846.1"><vh>To do</vh></v>
-<v t="ekr.20040303062846.2" a="E" tnodeList="ekr.20040303062846.2,ekr.20040303062846.3,ekr.20040303062846.4,ekr.20040303062846.5,ekr.20040303062846.6,ekr.20040303062846.7,ekr.20040303062846.8,ekr.20040303062846.9,ekr.20040303062846.10,ekr.20040303062846.12,ekr.20040303062846.13,ekr.20040303062846.14,ekr.20040303062846.15,ekr.20040303062846.16,ekr.20040303062846.17,ekr.20040303062846.18,ekr.20040303062846.20,ekr.20040303062846.21,ekr.20040303062846.22,ekr.20040303062846.23,ekr.20040303062846.24,ekr.20040303062846.25,ekr.20040303062846.26,ekr.20040303062846.28,ekr.20040303062846.29,ekr.20040303062846.30,ekr.20040303062846.31,ekr.20040303062846.32,ekr.20040303062846.33,ekr.20040303062846.34,ekr.20040303062846.35,ekr.20040303062846.37,ekr.20040303062846.38,ekr.20040303062846.39,ekr.20040303062846.40,ekr.20040303062846.41,ekr.20040303062846.42,ekr.20040303062846.64,ekr.20040303062846.65,ekr.20040303062846.66,ekr.20040303062846.67,ekr.20040303062846.68,ekr.20040303062846.69,ekr.20040303062846.70,ekr.20040303062846.71,ekr.20040303062846.73,ekr.20040303062846.74,ekr.20040303062846.75,ekr.20040303062846.76,ekr.20040303062846.77,ekr.20040303062846.78,ekr.20040303062846.79,ekr.20040303064013,ekr.20040303063118,ekr.20040303063118.4,ekr.20040309105731,ekr.20040309101454.15,ekr.20040309101454.17,ekr.20040309101454.13,ekr.20040303064020.5,ekr.20040309101454.16,ekr.20040309101454.14,ekr.20040303064020.7,ekr.20040303091606,ekr.20040303092153,ekr.20040303092153.1,ekr.20040303064020.6,ekr.20040303062846.80,ekr.20040303062846.81,ekr.20040303062846.82,ekr.20040303062846.83,ekr.20040303062846.84,ekr.20040303062846.85,ekr.20040303062846.86,ekr.20040303062846.87,ekr.20040303062846.88,ekr.20040303062846.89,ekr.20040303062846.90,ekr.20040303062846.91,ekr.20040303062846.92,ekr.20040303062846.93,ekr.20040303062846.94,ekr.20040303062846.95,ekr.20040303062846.96,ekr.20040303062846.97,ekr.20040303062846.98,ekr.20040303062846.99,ekr.20040303062846.100,ekr.20040303062846.101,ekr.20040303062846.102,ekr.20040303062846.103,ekr.20040303062846.104"><vh>@file ..\src\leoTest.py</vh>
+<v t="ekr.20040126105605"><vh>Clone test data</vh>
+<v t="ekr.20040302092753"><vh>aa</vh></v>
+<v t="ekr.20040126105605.2"><vh>a</vh>
+<v t="ekr.20040126105605.3"><vh>b</vh>
+<v t="ekr.20040301191933"><vh>c</vh>
+<v t="ekr.20040302092753.1"><vh>c2</vh>
+<v t="ekr.20040302092753.2"><vh>c3</vh></v>
+<v t="ekr.20040302092753.3"><vh>c4</vh></v>
+</v>
+</v>
+</v>
+<v t="ekr.20040126105605.3"><vh>b</vh>
+<v t="ekr.20040301191933"><vh>c</vh>
+<v t="ekr.20040302092753.1"><vh>c2</vh>
+<v t="ekr.20040302092753.2"><vh>c3</vh></v>
+<v t="ekr.20040302092753.3"><vh>c4</vh></v>
+</v>
+</v>
+</v>
+</v>
+<v t="ekr.20040301191933.1"><vh>d</vh>
+<v t="ekr.20040126105605.2"><vh>a</vh>
+<v t="ekr.20040126105605.3"><vh>b</vh>
+<v t="ekr.20040301191933"><vh>c</vh>
+<v t="ekr.20040302092753.1"><vh>c2</vh>
+<v t="ekr.20040302092753.2"><vh>c3</vh></v>
+<v t="ekr.20040302092753.3"><vh>c4</vh></v>
+</v>
+</v>
+</v>
+<v t="ekr.20040126105605.3"><vh>b</vh>
+<v t="ekr.20040301191933"><vh>c</vh>
+<v t="ekr.20040302092753.1"><vh>c2</vh>
+<v t="ekr.20040302092753.2"><vh>c3</vh></v>
+<v t="ekr.20040302092753.3"><vh>c4</vh></v>
+</v>
+</v>
+</v>
+</v>
+</v>
+<v t="ekr.20040301191933.2"><vh>e</vh></v>
+<v t="ekr.20040302092753.4"><vh>z</vh></v>
+</v>
+<v t="ekr.20040303062846.2" tnodeList="ekr.20040303062846.2,ekr.20040303062846.3,ekr.20040303062846.4,ekr.20040303062846.5,ekr.20040303062846.6,ekr.20040303062846.7,ekr.20040303062846.8,ekr.20040303062846.9,ekr.20040303062846.10,ekr.20040303062846.12,ekr.20040303062846.13,ekr.20040303062846.14,ekr.20040303062846.15,ekr.20040303062846.16,ekr.20040303062846.17,ekr.20040303062846.18,ekr.20040303062846.20,ekr.20040303062846.21,ekr.20040303062846.22,ekr.20040303062846.23,ekr.20040303062846.24,ekr.20040303062846.25,ekr.20040303062846.26,ekr.20040303062846.28,ekr.20040303062846.29,ekr.20040303062846.30,ekr.20040303062846.31,ekr.20040303062846.32,ekr.20040303062846.33,ekr.20040303062846.34,ekr.20040303062846.35,ekr.20040303062846.37,ekr.20040303062846.38,ekr.20040303062846.39,ekr.20040303062846.40,ekr.20040303062846.41,ekr.20040303062846.42,ekr.20040303062846.64,ekr.20040303062846.65,ekr.20040303062846.66,ekr.20040303062846.67,ekr.20040303062846.68,ekr.20040303062846.69,ekr.20040303062846.70,ekr.20040303062846.71,ekr.20040303062846.73,ekr.20040303062846.74,ekr.20040303062846.75,ekr.20040303062846.76,ekr.20040303062846.77,ekr.20040303062846.78,ekr.20040303062846.79,ekr.20040303064013,ekr.20040303063118,ekr.20040303063118.4,ekr.20040309105731,ekr.20040309101454.15,ekr.20040309101454.17,ekr.20040309101454.13,ekr.20040303064020.5,ekr.20040309101454.16,ekr.20040309101454.14,ekr.20040303064020.7,ekr.20040303091606,ekr.20040303092153,ekr.20040303092153.1,ekr.20040303064020.6,ekr.20040303062846.80,ekr.20040303062846.81,ekr.20040303062846.82,ekr.20040303062846.83,ekr.20040303062846.84,ekr.20040303062846.85,ekr.20040303062846.86,ekr.20040303062846.87,ekr.20040303062846.88,ekr.20040303062846.89,ekr.20040303062846.90,ekr.20040303062846.91,ekr.20040303062846.92,ekr.20040303062846.93,ekr.20040303062846.94,ekr.20040303062846.95,ekr.20040303062846.96,ekr.20040303062846.97,ekr.20040303062846.98,ekr.20040303062846.99,ekr.20040303062846.100,ekr.20040303062846.101,ekr.20040303062846.102,ekr.20040303062846.103,ekr.20040303062846.104"><vh>@file ..\src\leoTest.py</vh>
 <v t="ekr.20040303062846.3"><vh> class testUtils</vh>
 <v t="ekr.20040303062846.4"><vh>compareOutlines</vh></v>
 <v t="ekr.20040303062846.5"><vh>findChildrenOf &amp; findSubnodesOf</vh></v>
@@ -40,11 +83,11 @@
 </v>
 <v t="ekr.20040303062846.19"><vh>Edit body tests</vh>
 <v t="ekr.20040303062846.20"><vh> makeEditBodySuite</vh></v>
-<v t="ekr.20040303062846.21"><vh>class editBodyTestCase</vh>
+<v t="ekr.20040303062846.21" a="E"><vh>class editBodyTestCase</vh>
 <v t="ekr.20040303062846.22"><vh>__init__</vh></v>
 <v t="ekr.20040303062846.23"><vh>editBody</vh></v>
 <v t="ekr.20040303062846.24"><vh>tearDown</vh></v>
-<v t="ekr.20040303062846.25"><vh>setUp</vh></v>
+<v t="ekr.20040303062846.25" a="M"><vh>setUp</vh></v>
 <v t="ekr.20040303062846.26"><vh>runTest</vh></v>
 </v>
 </v>
@@ -137,56 +180,13 @@
 </v>
 </v>
 </v>
-<v t="ekr.20040126105605"><vh>Clone test data</vh>
-<v t="ekr.20040302092753"><vh>aa</vh></v>
-<v t="ekr.20040126105605.2"><vh>a</vh>
-<v t="ekr.20040126105605.3"><vh>b</vh>
-<v t="ekr.20040301191933"><vh>c</vh>
-<v t="ekr.20040302092753.1"><vh>c2</vh>
-<v t="ekr.20040302092753.2"><vh>c3</vh></v>
-<v t="ekr.20040302092753.3"><vh>c4</vh></v>
 </v>
-</v>
-</v>
-<v t="ekr.20040126105605.3"><vh>b</vh>
-<v t="ekr.20040301191933"><vh>c</vh>
-<v t="ekr.20040302092753.1"><vh>c2</vh>
-<v t="ekr.20040302092753.2"><vh>c3</vh></v>
-<v t="ekr.20040302092753.3"><vh>c4</vh></v>
-</v>
-</v>
-</v>
-</v>
-<v t="ekr.20040301191933.1"><vh>d</vh>
-<v t="ekr.20040126105605.2"><vh>a</vh>
-<v t="ekr.20040126105605.3"><vh>b</vh>
-<v t="ekr.20040301191933"><vh>c</vh>
-<v t="ekr.20040302092753.1"><vh>c2</vh>
-<v t="ekr.20040302092753.2"><vh>c3</vh></v>
-<v t="ekr.20040302092753.3"><vh>c4</vh></v>
-</v>
-</v>
-</v>
-<v t="ekr.20040126105605.3"><vh>b</vh>
-<v t="ekr.20040301191933"><vh>c</vh>
-<v t="ekr.20040302092753.1"><vh>c2</vh>
-<v t="ekr.20040302092753.2"><vh>c3</vh></v>
-<v t="ekr.20040302092753.3"><vh>c4</vh></v>
-</v>
-</v>
-</v>
-</v>
-</v>
-<v t="ekr.20040301191933.2"><vh>e</vh></v>
-<v t="ekr.20040302092753.4"><vh>z</vh></v>
-</v>
-</v>
-<v t="ekr.20040303063644" a="E"><vh>Position tests</vh>
+<v t="ekr.20040303063644"><vh>Position tests</vh>
 <v t="ekr.20040303064013"><vh> makePositionSuite</vh></v>
-<v t="ekr.20040303063118" a="E"><vh>class positionTestCase</vh>
+<v t="ekr.20040303063118"><vh>class positionTestCase</vh>
 <v t="ekr.20040303063118.4"><vh>setUp</vh></v>
 <v t="ekr.20040309105731"><vh>testComparisons</vh></v>
-<v t="ekr.20040312101853" a="TV"><vh>Consistency tests...</vh>
+<v t="ekr.20040312101853"><vh>Consistency tests...</vh>
 <v t="ekr.20040309101454.15"><vh>testConsistencyOfAllNodesThreadNext</vh></v>
 <v t="ekr.20040309101454.17"><vh>testConsistencyOfFirstChildAndChildrenIter</vh></v>
 <v t="ekr.20040309101454.13"><vh>testConsistencyOfLevel</vh></v>
@@ -201,9 +201,8 @@
 </v>
 </v>
 </v>
-<v t="ekr.20040303063549"><vh>Unit Tests</vh>
+<v t="ekr.20040303063549" a="TV"><vh>Unit Tests (Tests must be run from inside this tree!)</vh>
 <v t="ekr.20040309101454"><vh> To do</vh></v>
-<v t="ekr.20040303063549.1"><vh>tempNode</vh></v>
 <v t="ekr.20040303063549.45"><vh>colorizerTests</vh>
 <v t="ekr.20040303063549.46"><vh>Actionscript</vh></v>
 <v t="ekr.20040303063549.47"><vh>C</vh></v>
@@ -262,6 +261,12 @@
 <v t="ekr.20040303063549.88"><vh>removeSentinels</vh>
 <v t="ekr.20040303063549.89"><vh>dialog</vh></v>
 </v>
+</v>
+<v t="ekr.20040303063549.120"><vh>fileTests</vh>
+<v t="ekr.20040303063549.121"><vh>c:\prog\leoCvs\leo\test\test.leo</vh></v>
+<v t="ekr.20040303063549.122"><vh>c:\prog\leoCvs\leo\src\LeoPy.leo</vh></v>
+<v t="ekr.20040303063549.123"><vh>c:\prog\leoCvs\leo\plugins\leoPlugins.leo</vh></v>
+<v t="ekr.20040303063549.124"><vh>c:\prog\leoCvs\leo\doc\LeoDocs.leo</vh></v>
 </v>
 <v t="ekr.20040303063549.90"><vh>importTests</vh>
 <v t="ekr.20040303063549.91"><vh>importAtRoot</vh>
@@ -362,14 +367,9 @@
 <v t="ekr.20040303063549.44"><vh>after</vh></v>
 </v>
 </v>
-<v t="ekr.20040303063549.120"><vh>testLeoFiles</vh>
-<v t="ekr.20040303063549.121"><vh>c:\prog\leoCvs\leo\test\test.leo</vh></v>
-<v t="ekr.20040303063549.122"><vh>c:\prog\leoCvs\leo\src\LeoPy.leo</vh></v>
-<v t="ekr.20040303063549.123"><vh>c:\prog\leoCvs\leo\plugins\leoPlugins.leo</vh></v>
-<v t="ekr.20040303063549.124"><vh>c:\prog\leoCvs\leo\doc\LeoDocs.leo</vh></v>
-</v>
 <v t="ekr.20040303063549.125"><vh>Run all tests</vh></v>
-<v t="ekr.20040303080010"><vh>Run all tests except files tests</vh></v>
+<v t="ekr.20040303080010" a="M"><vh>Run all tests except files tests</vh></v>
+<v t="ekr.20040303063549.1"><vh>tempNode</vh></v>
 </v>
 <v t="ekr.20040311111734" tnodeList="ekr.20040311111734,ekr.20040311111734.1,ekr.20040311111734.2,ekr.20040311111734.3"><vh>@file c:\prog\test\leo42test.txt</vh>
 <v t="ekr.20040311111734.1"><vh>&lt;&lt; node one &gt;&gt;</vh></v>
@@ -377,7 +377,7 @@
 <v t="ekr.20040311111734.3"><vh>node b</vh></v>
 </v>
 <v t="ekr.20040303071432"><vh>Mini tests, scripts &amp; experiments</vh>
-<v t="ekr.20040309091917" a="E"><vh>To do</vh></v>
+<v t="ekr.20040309091917"><vh>To do</vh></v>
 <v t="ekr.20040312101720"><vh>Experiments</vh>
 <v t="ekr.20040302091705"><vh>Test of moving positions</vh></v>
 </v>
@@ -431,9 +431,16 @@
 <v t="ekr.20040311125054"><vh>Test that p.t == p.v.t</vh></v>
 <v t="ekr.20040310145919"><vh>Change python keywords</vh></v>
 </v>
-<v t="ekr.20040312021734" a="E"><vh>Testing scripts</vh>
+<v t="ekr.20040312021734"><vh>Testing scripts</vh>
 <v t="ekr.20040311090054"><vh>Dump fileIndex</vh></v>
 <v t="ekr.20040312021734.1"><vh>Script to clean unused tnodeLists</vh></v>
+</v>
+<v t="ekr.20040315030123"><vh>test convertTreeToString and allies</vh>
+<v t="ekr.20040315025315"><vh>File Conversion</vh>
+<v t="ekr.20040315025315.1"><vh>convertTreeToString</vh></v>
+<v t="ekr.20040315025315.2"><vh>moreHead</vh></v>
+<v t="ekr.20040315025315.3"><vh>moreBody</vh></v>
+</v>
 </v>
 </v>
 </vnodes>
@@ -556,23 +563,24 @@ def findSubnodesOf (self,headline):
 def findNodeInTree(self,v,headline):
 
 	"""Search for a node in v's tree matching the given headline."""
-	if not headline: return None # This is valid.
+	c = v.c
+	if not headline: return c.nullPosition() # This is valid.
 	after = v.nodeAfterTree()
 	while v and v != after:
 		if v.headString().strip() == headline.strip():
 			return v
 		v = v.threadNext()
-	return None
+	return c.nullPosition()
 
 def findNodeAnywhere(self,c,headline):
 	
-	if not headline: return None # This is valid.
+	if not headline: return c.nullPosition() # This is valid.
 	v = c.rootVnode()
 	while v:
 		if v.headString().strip() == headline.strip():
 			return v
 		v = v.threadNext()
-	return None</t>
+	return c.nullPosition()</t>
 <t tx="ekr.20040303062846.7">def numberOfNodesInOutline (self,root):
 	
 	"""Returns the total number of nodes in an outline"""
@@ -602,8 +610,7 @@ def numberOfClonesInOutline (self,root):
 	
 	copy = outline2.copyTreeWithNewTnodes()
 	copy.linkAfter(outline1)
-	outline1.doDelete(newVnode=copy)
-</t>
+	outline1.doDelete(newVnode=copy)</t>
 <t tx="ekr.20040303062846.9">def validateOutline (self,root):
 	
 	"""Checks an outline for consistency"""
@@ -657,11 +664,11 @@ def numberOfClonesInOutline (self,root):
 	# Initialize the text in the temp node.
 	text = self.v.bodyString()
 	self.c.selectVnode(self.temp_v)
-	self.temp_v.t.setTnodeText(text,app.tkEncoding)
+	self.temp_v.setTnodeText(text,app.tkEncoding)
 	self.c.frame.body.setSelectionAreas(None,text,None)</t>
 <t tx="ekr.20040303062846.17">def tearDown (self):
 	
-	self.temp_v.t.setTnodeText("",app.tkEncoding)
+	self.temp_v.setTnodeText("",app.tkEncoding)
 	self.c.selectVnode(self.old_v)</t>
 <t tx="ekr.20040303062846.18">def runTest(self):
 
@@ -755,7 +762,7 @@ def numberOfClonesInOutline (self,root):
 	
 	c = self.c ; temp_v = self.temp_v
 	
-	temp_v.t.setTnodeText("",app.tkEncoding)
+	temp_v.setTnodeText("",app.tkEncoding)
 	temp_v.clearDirty()
 	
 	if not self.wasChanged:
@@ -778,24 +785,24 @@ def setUp(self,*args,**keys):
 
 	text = self.before.bodyString()
 	
-	temp_v.t.setTnodeText(text,app.tkEncoding)
+	temp_v.setTnodeText(text,app.tkEncoding)
 	c.selectVnode(self.temp_v)
 	
 	t = c.frame.body.bodyCtrl
 	if self.sel:
-		s = self.sel.bodyString()
+		s = str(self.sel.bodyString()) # Can't be unicode.
 		lines = s.split('\n')
 		app.gui.setTextSelection(t,lines[0],lines[1])
 
 	if self.ins:
-		s = self.ins.bodyString()
+		s = str(self.ins.bodyString()) # Can't be unicode.
 		lines = s.split('\n')
+		trace(lines)
 		app.gui.setInsertPoint(t,lines[0])
 		
 	if not self.sel and not self.ins:
 		app.gui.setInsertPoint(t,"1.0")
-		app.gui.setTextSelection(t,"1.0","1.0")
-</t>
+		app.gui.setTextSelection(t,"1.0","1.0")</t>
 <t tx="ekr.20040303062846.26">def runTest(self):
 
 	self.editBody()</t>
@@ -860,7 +867,7 @@ def setUp(self,*args,**keys):
 	
 	c = self.c ; temp_v = self.temp_v ; d = self.dialog
 	
-	temp_v.t.setTnodeText('',app.tkEncoding)
+	temp_v.setTnodeText('',app.tkEncoding)
 
 	# Create a node under temp_v.
 	child = temp_v.insertAsLastChild()
@@ -892,7 +899,7 @@ def setUp(self,*args,**keys):
 		self.gui.destroySelf()
 		self.gui = None
 	
-	temp_v.t.setTnodeText("",app.tkEncoding)
+	temp_v.setTnodeText("",app.tkEncoding)
 	temp_v.clearDirty()
 	
 	if not self.wasChanged:
@@ -939,7 +946,7 @@ def setUp(self,*args,**keys):
 	
 	"""Run the Check Outline command."""
 
-	errors = self.c.checkOutline()
+	errors = self.c.checkOutline(verbose=false,unittest=true)
 	assert(errors == 0)</t>
 <t tx="ekr.20040303062846.41">def setUp(self):
 
@@ -1179,7 +1186,7 @@ def tearDown(self):
 	
 	# clear the temp node and mark it unchanged
 	#
-	temp_v.t.setTnodeText("",app.tkEncoding)
+	temp_v.setTnodeText("",app.tkEncoding)
 	temp_v.clearDirty()
 	
 	if not self.wasChanged:
@@ -1422,7 +1429,7 @@ def copyBeforeToTemp(self):
 	# Copy the test case node text to the temp node
 	#
 	text = self.case_v.bodyString()
-	temp_v.t.setTnodeText(text,app.tkEncoding)
+	temp_v.setTnodeText(text,app.tkEncoding)
 	
 	# create the child node that holds the text
 	#
@@ -1432,7 +1439,7 @@ def copyBeforeToTemp(self):
 	# copy the before text to the temp text
 	#
 	text = self.before_v.bodyString()
-	self.tempChild_v.t.setTnodeText(text,app.tkEncoding)
+	self.tempChild_v.setTnodeText(text,app.tkEncoding)
 	
 	# make the temp child node current, and put the
 	# cursor at the beginning
@@ -2446,7 +2453,7 @@ runner.run(suite)</t>
 import leoTest
 reload(leoTest) # Allows us to rerun this script when leoTest.py changes.
 
-suite = testLeoFilesSuite = leoTest.makeTestLeoFilesSuite("testLeoFiles")
+suite = testLeoFilesSuite = leoTest.makeTestLeoFilesSuite("fileTests")
 runner = unittest.TextTestRunner()
 runner.run(suite)</t>
 <t tx="ekr.20040303063549.121"></t>
@@ -2468,9 +2475,10 @@ for f,arg in (
 	(leoTest.makeEditBodySuite,"editBodyTests"),
 	(leoTest.makeImportExportSuite,"exportTests"),
 	(leoTest.makeImportExportSuite,"importTests"),
-	(leoTest.makeTestLeoFilesSuite,"testLeoFiles"),
+	(leoTest.makeOutlineSuite,"outlineTests"),
+	(leoTest.makeTestLeoFilesSuite,"fileTests"),
 	(leoTest.makePositionSuite,None),
-	# (leoTest.makeOutlineSuite,"outlineTests")
+	# 
 	# These tests presently have problem with the gui when run with other tests...
 	# (leoTest.makePluginsSuite,false) # verbose
 ):
@@ -2832,5 +2840,71 @@ print s ; g.es(s)</t>
 <t tx="ekr.20040312101720"></t>
 <t tx="ekr.20040312101720.1"></t>
 <t tx="ekr.20040312101853"></t>
+<t tx="ekr.20040315025315">@
+- convertTreeToString and moreHead can't be vnode methods because they uses level().
+- moreBody could be anywhere: it may as well be a postion method.
+</t>
+<t tx="ekr.20040315025315.1">def convertTreeToString (self):
+	
+	"""Convert a positions  suboutline to a string in MORE format."""
+
+	p = self ; level1 = p.level()
+	
+	array = []
+	for p in p.subtree_iter()
+		array.append(p.moreHead(level1)+'\n')
+		body = p.moreBody()
+		if body:
+			array.append(body +'\n')
+
+	return ''.join(array)</t>
+<t tx="ekr.20040315025315.2">def moreHead (self, firstLevel,useVerticalBar=false):
+	
+	"""Return the headline string in MORE format."""
+
+	p = self
+
+	level = self.level() - firstLevel
+	plusMinus = g.choose(p.hasChildren(), "+", "-")
+	
+	return "%s%s %s" % ('\t'*level,plusMinus,p.headString())</t>
+<t tx="ekr.20040315025315.3">@ 
+	+ test line
+	- test line
+	\ test line
+	test line +
+	test line -
+	test line \
+	More lines...
+@c
+
+def moreBody (self):
+
+	"""Returns the body string in MORE format.  
+	
+	Inserts a backslash before any leading plus, minus or backslash."""
+
+	p = self ; list = []
+	
+	# Only escape the first non-blank character of the line.
+	s =  p.bodyString() ; result = []
+	lines = string.split(s,'\n')
+	for s in lines:
+		i = g.skip_ws(s,0)
+		if i &lt; len(s):
+			ch = s[i]
+			if ch == '+' or ch == '-' or ch == '\\':
+				s = s[:i] + '\\' + s[i:]
+		result.append(s)
+	return string.join(result,'\n')
+</t>
+<t tx="ekr.20040315030123">import leoGlobals as g
+from leoGlobals import true,false
+
+c = g.top() ; p = c.currentPosition()
+
+p = p.firstChild()
+assert(p.headString()=="File Conversion")
+print p.convertTreeToString()</t>
 </tnodes>
 </leo_file>
