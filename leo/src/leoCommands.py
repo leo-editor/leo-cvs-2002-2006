@@ -3451,12 +3451,12 @@ class baseCommands:
                 child.moveToNthChildOf(p,p.numberOfChildren())
             p.expand()
             c.selectVnode(p)
+            # Even if p is an @ignore node there is no need to mark the demoted children dirty.
             p.setAllAncestorAtFileNodesDirty()
             c.setChanged(True)
         c.endUpdate()
         c.undoer.setUndoParams("Demote",p,lastChild=last)
         c.updateSyntaxColorer(p) # Moving can change syntax coloring.
-    #@nonl
     #@-node:ekr.20031218072017.1767:demote
     #@+node:ekr.20031218072017.1768:moveOutlineDown
     #@+at 
@@ -3476,6 +3476,8 @@ class baseCommands:
         if not c.canMoveOutlineDown(): # 11/4/03: Support for hoist.
             if c.hoistStack: g.es("Can't move node out of hoisted outline",color="blue")
             return
+            
+        inAtIgnoreRange = p.inAtIgnoreRange()
         # Set next to the node after which p will be moved.
         next = p.visNext()
         while next and p.isAncestorOf(next):
@@ -3507,7 +3509,11 @@ class baseCommands:
             #@nonl
             #@-node:ekr.20031218072017.1769:<< Move v down >>
             #@nl
-            p.setAllAncestorAtFileNodesDirty()
+            if inAtIgnoreRange and not p.inAtIgnoreRange():
+                # The moved nodes have just become newly unignored.
+                p.setDirty() # Mark descendent @thin nodes dirty.
+            else: # No need to mark descendents dirty.
+                p.setAllAncestorAtFileNodesDirty()
             c.selectVnode(p)
             c.setChanged(True)
         c.endUpdate()
@@ -3526,6 +3532,7 @@ class baseCommands:
         
         if not p.hasParent(): return
         # Remember both the before state and the after state for undo/redo
+        inAtIgnoreRange = p.inAtIgnoreRange()
         parent = p.parent()
         oldBack = p.back()
         oldParent = p.parent()
@@ -3537,7 +3544,11 @@ class baseCommands:
             p.moveAfter(parent)
             c.undoer.setUndoParams("Move Left",p,
                 oldBack=oldBack,oldParent=oldParent,oldN=oldN)
-            p.setAllAncestorAtFileNodesDirty()
+            if inAtIgnoreRange and not p.inAtIgnoreRange():
+                # The moved nodes have just become newly unignored.
+                p.setDirty() # Mark descendent @thin nodes dirty.
+            else: # No need to mark descendents dirty.
+                p.setAllAncestorAtFileNodesDirty()
             c.selectVnode(p)
             c.setChanged(True)
         c.endUpdate()
@@ -3569,6 +3580,7 @@ class baseCommands:
             p.moveToNthChildOf(back,n)
             c.undoer.setUndoParams("Move Right",p,
                 oldBack=oldBack,oldParent=oldParent,oldN=oldN)
+            # Moving an outline right can never bring it outside the range of @ignore.
             p.setAllAncestorAtFileNodesDirty()
             c.selectVnode(p)
             c.setChanged(True)
@@ -3587,6 +3599,7 @@ class baseCommands:
             return
         back = p.visBack()
         if not back: return
+        inAtIgnoreRange = p.inAtIgnoreRange()
         back2 = back.visBack()
         # A weird special case: just select back2.
         if back2 and p.v in back2.v.t.vnodeList:
@@ -3629,7 +3642,11 @@ class baseCommands:
             #@nonl
             #@-node:ekr.20031218072017.1773:<< Move v up >>
             #@nl
-            p.setAllAncestorAtFileNodesDirty()
+            if inAtIgnoreRange and not p.inAtIgnoreRange():
+                # The moved nodes have just become newly unignored.
+                p.setDirty() # Mark descendent @thin nodes dirty.
+            else: # No need to mark descendents dirty.
+                p.setAllAncestorAtFileNodesDirty()
             c.selectVnode(p)
             c.setChanged(True)
         c.endUpdate()
@@ -3643,6 +3660,8 @@ class baseCommands:
         if not p or not p.hasChildren(): return
     
         last = p.lastChild()
+        isAtIgnoreNode = p.isAtIgnoreNode()
+        inAtIgnoreRange = p.inAtIgnoreRange()
         c.beginUpdate()
         if 1: # update...
             c.endEditing()
@@ -3651,7 +3670,11 @@ class baseCommands:
                 child = p.firstChild()
                 child.moveAfter(after)
                 after = child
-            p.setAllAncestorAtFileNodesDirty()
+            if not inAtIgnoreRange and isAtIgnoreNode:
+                # The promoted nodes have just become newly unignored.
+                p.setDirty() # Mark descendent @thin nodes dirty.
+            else: # No need to mark descendents dirty.
+                p.setAllAncestorAtFileNodesDirty()
             c.setChanged(True)
             c.selectVnode(p)
         c.endUpdate()
@@ -3891,6 +3914,7 @@ class baseCommands:
         c = self
         if not c.checkMoveWithParentWithWarning(v,after.parent(),True): return
         # Remember both the before state and the after state for undo/redo
+        inAtIgnoreRange = v.inAtIgnoreRange()
         oldBack = v.back()
         oldParent = v.parent()
         oldN = v.childIndex()
@@ -3902,8 +3926,11 @@ class baseCommands:
             v.moveAfter(after)
             c.undoer.setUndoParams("Drag",v,
                 oldBack=oldBack,oldParent=oldParent,oldN=oldN)
-            # v.setDirty()
-            v.setAllAncestorAtFileNodesDirty() # 1/12/04
+            if inAtIgnoreRange and not v.inAtIgnoreRange():
+                # The moved nodes have just become newly unignored.
+                v.setDirty() # Mark descendent @thin nodes dirty.
+            else: # No need to mark descendents dirty.
+                v.setAllAncestorAtFileNodesDirty()
             c.selectVnode(v)
             c.setChanged(True)
         c.endUpdate()
@@ -3915,49 +3942,57 @@ class baseCommands:
     
         c = self
         c.beginUpdate()
-        # g.trace("v,parent,n:",v.headString(),parent.headString(),n)
-        clone = v.clone(v) # Creates clone & dependents, does not set undo.
-        if not c.checkMoveWithParentWithWarning(clone,parent,True):
-            clone.doDelete(v) # Destroys clone & dependents. Makes v the current node.
-            c.endUpdate(False) # Nothing has changed.
-            return
-        # Remember both the before state and the after state for undo/redo
-        oldBack = v.back()
-        oldParent = v.parent()
-        oldN = v.childIndex()
-        c.endEditing()
-        # clone.setDirty()
-        clone.setAllAncestorAtFileNodesDirty() # 1/12/04
-        clone.moveToNthChildOf(parent,n)
-        c.undoer.setUndoParams("Drag & Clone",clone,
-            oldBack=oldBack,oldParent=oldParent,oldN=oldN,oldV=v)
-        # clone.setDirty()
-        clone.setAllAncestorAtFileNodesDirty() # 1/12/04
-        c.selectVnode(clone)
-        c.setChanged(True)
-        c.endUpdate()
+        if 1: # Update range...
+            # g.trace("v,parent,n:",v.headString(),parent.headString(),n)
+            clone = v.clone(v) # Creates clone & dependents, does not set undo.
+            if not c.checkMoveWithParentWithWarning(clone,parent,True):
+                clone.doDelete(v) # Destroys clone and makes v the current node.
+                c.endUpdate(False) # Nothing has changed.
+                return
+            # Remember both the before state and the after state for undo/redo
+            inAtIgnoreRange = v.inAtIgnoreRange()
+            oldBack = v.back()
+            oldParent = v.parent()
+            oldN = v.childIndex()
+            c.endEditing()
+            # clone.setDirty()
+            clone.setAllAncestorAtFileNodesDirty() # 1/12/04
+            clone.moveToNthChildOf(parent,n)
+            c.undoer.setUndoParams("Drag & Clone",clone,
+                oldBack=oldBack,oldParent=oldParent,oldN=oldN,oldV=v)
+            if inAtIgnoreRange and not v.inAtIgnoreRange():
+                # The moved nodes have just become newly unignored.
+                v.setDirty() # Mark descendent @thin nodes dirty.
+            else: # No need to mark descendents dirty.
+                v.setAllAncestorAtFileNodesDirty()
+            c.selectVnode(clone)
+            c.setChanged(True)
+            c.endUpdate()
         c.updateSyntaxColorer(clone) # Dragging can change syntax coloring.
+    #@nonl
     #@-node:ekr.20031218072017.2946:c.dragCloneToNthChildOf (changed in 3.11.1)
     #@+node:ekr.20031218072017.2947:c.dragToNthChildOf
     def dragToNthChildOf(self,v,parent,n):
     
-        # g.es("dragToNthChildOf")
         c = self
         if not c.checkMoveWithParentWithWarning(v,parent,True): return
         # Remember both the before state and the after state for undo/redo
+        inAtIgnoreRange = v.inAtIgnoreRange()
         oldBack = v.back()
         oldParent = v.parent()
         oldN = v.childIndex()
         c.beginUpdate()
         if 1: # inside update...
             c.endEditing()
-            # v.setDirty()
-            v.setAllAncestorAtFileNodesDirty() # 1/12/04
+            v.setAllAncestorAtFileNodesDirty()
             v.moveToNthChildOf(parent,n)
             c.undoer.setUndoParams("Drag",v,
                 oldBack=oldBack,oldParent=oldParent,oldN=oldN)
-            # v.setDirty()
-            v.setAllAncestorAtFileNodesDirty() # 1/12/04
+            if inAtIgnoreRange and not v.inAtIgnoreRange():
+                # The moved nodes have just become newly unignored.
+                v.setDirty() # Mark descendent @thin nodes dirty.
+            else: # No need to mark descendents dirty.
+                v.setAllAncestorAtFileNodesDirty()
             c.selectVnode(v)
             c.setChanged(True)
         c.endUpdate()
@@ -3969,27 +4004,31 @@ class baseCommands:
     
         c = self
         c.beginUpdate()
-        clone = v.clone(v) # Creates clone & dependents, does not set undo.
-        # g.trace("v,after:",v.headString(),after.headString())
-        if not c.checkMoveWithParentWithWarning(clone,after.parent(),True):
-            g.trace("invalid clone move")
-            clone.doDelete(v) # Destroys clone & dependents. Makes v the current node.
-            c.endUpdate(False) # Nothing has changed.
-            return
-        # Remember both the before state and the after state for undo/redo
-        oldBack = v.back()
-        oldParent = v.parent()
-        oldN = v.childIndex()
-        c.endEditing()
-        # clone.setDirty()
-        clone.setAllAncestorAtFileNodesDirty() # 1/12/04
-        clone.moveAfter(after)
-        c.undoer.setUndoParams("Drag & Clone",clone,
-            oldBack=oldBack,oldParent=oldParent,oldN=oldN,oldV=v)
-        # clone.setDirty()
-        clone.setAllAncestorAtFileNodesDirty() # 1/12/04
-        c.selectVnode(clone)
-        c.setChanged(True)
+        if 1: # Update range...
+            clone = v.clone(v) # Creates clone.  Does not set undo.
+            # g.trace("v,after:",v.headString(),after.headString())
+            if not c.checkMoveWithParentWithWarning(clone,after.parent(),True):
+                g.trace("invalid clone move")
+                clone.doDelete(v) # Destroys clone & dependents. Makes v the current node.
+                c.endUpdate(False) # Nothing has changed.
+                return
+            # Remember both the before state and the after state for undo/redo
+            inAtIgnoreRange = clone.inAtIgnoreRange()
+            oldBack = v.back()
+            oldParent = v.parent()
+            oldN = v.childIndex()
+            c.endEditing()
+            clone.setAllAncestorAtFileNodesDirty()
+            clone.moveAfter(after)
+            c.undoer.setUndoParams("Drag & Clone",clone,
+                oldBack=oldBack,oldParent=oldParent,oldN=oldN,oldV=v)
+            if inAtIgnoreRange and not clone.inAtIgnoreRange():
+                # The moved node have just become newly unignored.
+                clone.setDirty() # Mark descendent @thin nodes dirty.
+            else: # No need to mark descendents dirty.
+                clone.setAllAncestorAtFileNodesDirty()
+            c.selectVnode(clone)
+            c.setChanged(True)
         c.endUpdate()
         c.updateSyntaxColorer(clone) # Dragging can change syntax coloring.
     #@nonl
