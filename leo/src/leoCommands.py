@@ -3021,7 +3021,7 @@ class baseCommands:
 			c.endUpdate()
 	#@-node:goToPrevSibling
 	#@+node:markChangedHeadlines
-	def markChangedHeadlines (self):
+	def markChangedHeadlines (self): 
 	
 		c = self ; v = c.rootVnode()
 		c.beginUpdate()
@@ -3031,7 +3031,7 @@ class baseCommands:
 				c.setChanged(true)
 			v = v.threadNext()
 		c.endUpdate()
-	#@nonl
+		es("done",color="blue")
 	#@-node:markChangedHeadlines
 	#@+node:markChangedRoots
 	def markChangedRoots (self):
@@ -3047,6 +3047,7 @@ class baseCommands:
 					c.setChanged(true)
 			v = v.threadNext()
 		c.endUpdate()
+		es("done",color="blue")
 	#@nonl
 	#@-node:markChangedRoots
 	#@+node:markAllAtFileNodesDirty
