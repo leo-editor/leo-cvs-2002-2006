@@ -1,6 +1,5 @@
-#@+leo
-#@+node:0::@file leoDialog.py
-#@+body
+#@+leo-ver=4
+#@+node:@file leoDialog.py
 #@@language python
 
 import leoDialog
@@ -9,16 +8,12 @@ import string,Tkinter
 
 Tk = Tkinter
 
-
 #@+others
-#@+node:1:: class leoDialog
-#@+body
+#@+node: class leoDialog
 class baseLeoDialog:
 	"""The base class for all Leo dialogs"""
-
-	#@+others
-	#@+node:1::__init__ (leoDialog)
-	#@+body
+	#@	@+others
+	#@+node:__init__ (leoDialog)
 	def __init__(self,title="",resizeable=true):
 		
 		"""Constructor for base leoDialog class."""
@@ -34,10 +29,9 @@ class baseLeoDialog:
 		self.root = None # app().root
 		self.top = None # The toplevel Tk widget.
 		self.focus_widget = None # The widget to get the first focus.
-	#@-body
-	#@-node:1::__init__ (leoDialog)
-	#@+node:2::cancelButton, noButton, okButton, yesButton
-	#@+body
+	#@nonl
+	#@-node:__init__ (leoDialog)
+	#@+node:cancelButton, noButton, okButton, yesButton
 	def cancelButton(self):
 		
 		"""Do default click action in cancel button."""
@@ -65,20 +59,16 @@ class baseLeoDialog:
 	
 		self.answer="yes"
 		self.top.destroy()
-	#@-body
-	#@-node:2::cancelButton, noButton, okButton, yesButton
-	#@+node:3::center
-	#@+body
+	#@nonl
+	#@-node:cancelButton, noButton, okButton, yesButton
+	#@+node:center
 	def center(self):
 		
 		"""Center any leoDialog."""
 		
 		center_dialog(self.top)
-	
-	#@-body
-	#@-node:3::center
-	#@+node:4::createButtons
-	#@+body
+	#@-node:center
+	#@+node:createButtons
 	def createButtons (self,buttons):
 		
 		"""Create a row of buttons.
@@ -106,21 +96,17 @@ class baseLeoDialog:
 				self.defaultButtonCommand = command
 			
 		return buttonList
-	#@-body
-	#@-node:4::createButtons
-	#@+node:5::createMessageFrame
-	#@+body
+	#@nonl
+	#@-node:createButtons
+	#@+node:createMessageFrame
 	def createMessageFrame (self,message):
 		
 		"""Create a frame containing a Tk.Label widget."""
 	
 		label = Tk.Label(self.frame,text=message)
 		label.pack(pady=10)
-	
-	#@-body
-	#@-node:5::createMessageFrame
-	#@+node:6::createTopFrame
-	#@+body
+	#@-node:createMessageFrame
+	#@+node:createTopFrame
 	def createTopFrame(self):
 		
 		"""Create the Tk.Toplevel widget for a leoDialog."""
@@ -137,10 +123,9 @@ class baseLeoDialog:
 	
 		self.frame = Tk.Frame(self.top)
 		self.frame.pack(side="top",expand=1,fill="both")
-	#@-body
-	#@-node:6::createTopFrame
-	#@+node:7::run
-	#@+body
+	#@nonl
+	#@-node:createTopFrame
+	#@+node:run
 	def run (self,modal):
 		
 		"""Run a leoDialog."""
@@ -159,25 +144,19 @@ class baseLeoDialog:
 		else:
 			self.root.wait_window(self.top)
 			return None
-	#@-body
-	#@-node:7::run
+	#@nonl
+	#@-node:run
 	#@-others
-
 	
 class leoDialog (baseLeoDialog):
 	"""A base class for all Leo dialogs that may be overridden by plugins."""
 	pass
-
-#@-body
-#@-node:1:: class leoDialog
-#@+node:2::class aboutLeo
-#@+body
+#@-node: class leoDialog
+#@+node:class aboutLeo
 class aboutLeo (leoDialog):
 	"""A class that creates the About Leo dialog."""
-
-	#@+others
-	#@+node:1::aboutLeo.__init__
-	#@+body
+	#@	@+others
+	#@+node:aboutLeo.__init__
 	def __init__ (self,version,copyright,url,email):
 		
 		"""Create an About Leo dialog."""
@@ -191,11 +170,8 @@ class aboutLeo (leoDialog):
 	
 		self.createTopFrame()
 		self.createFrame()
-	
-	#@-body
-	#@-node:1::aboutLeo.__init__
-	#@+node:2::aboutLeo.createFrame
-	#@+body
+	#@-node:aboutLeo.__init__
+	#@+node:aboutLeo.createFrame
 	def createFrame (self):
 		
 		"""Create the frame for an About Leo dialog."""
@@ -247,10 +223,9 @@ class aboutLeo (leoDialog):
 		text.tag_bind("email","<Leave>",self.setDefaultCursor)
 	
 		text.configure(state="disabled")
-	#@-body
-	#@-node:2::aboutLeo.createFrame
-	#@+node:3::onAboutLeoEmail
-	#@+body
+	#@nonl
+	#@-node:aboutLeo.createFrame
+	#@+node:onAboutLeoEmail
 	def onAboutLeoEmail(self,event=None):
 		
 		"""Handle clicks in the email link in an About Leo dialog."""
@@ -260,10 +235,9 @@ class aboutLeo (leoDialog):
 			webbrowser.open("mailto:" + self.email)
 		except:
 			es("not found: " + self.email)
-	#@-body
-	#@-node:3::onAboutLeoEmail
-	#@+node:4::onAboutLeoUrl
-	#@+body
+	#@nonl
+	#@-node:onAboutLeoEmail
+	#@+node:onAboutLeoUrl
 	def onAboutLeoUrl(self,event=None):
 		
 		"""Handle clicks in the url link in an About Leo dialog."""
@@ -273,10 +247,9 @@ class aboutLeo (leoDialog):
 			webbrowser.open(self.url)
 		except:
 			es("not found: " + self.url)
-	#@-body
-	#@-node:4::onAboutLeoUrl
-	#@+node:5::setArrowCursor, setDefaultCursor
-	#@+body
+	#@nonl
+	#@-node:onAboutLeoUrl
+	#@+node:setArrowCursor, setDefaultCursor
 	def setArrowCursor (self,event=None):
 		
 		"""Set the cursor to an arrow in an About Leo dialog."""
@@ -288,23 +261,17 @@ class aboutLeo (leoDialog):
 		"""Set the cursor to the default cursor in an About Leo dialog."""
 		
 		self.text.configure(cursor="xterm")
-	#@-body
-	#@-node:5::setArrowCursor, setDefaultCursor
+	#@nonl
+	#@-node:setArrowCursor, setDefaultCursor
 	#@-others
-
-
-#@-body
-#@-node:2::class aboutLeo
-#@+node:3::class askLeoID
-#@+body
+#@-node:class aboutLeo
+#@+node:class askLeoID
 class askLeoID (leoDialog):
 	
 	"""A class to create and run a dialog that asks for Id for gnx's."""
 	
-
-	#@+others
-	#@+node:1::askLeoID.__init__
-	#@+body
+	#@	@+others
+	#@+node:askLeoID.__init__
 	def __init__(self):
 		
 		"""Create the Leo Id dialog."""
@@ -329,10 +296,9 @@ class askLeoID (leoDialog):
 		buttons = {"text":"OK","command":self.onButton,"default":true}, # Singleton tuple.
 		buttonList = self.createButtons(buttons)
 		self.ok_button = buttonList[0]
-	#@-body
-	#@-node:1::askLeoID.__init__
-	#@+node:2::askLeoID.createFrame
-	#@+body
+	#@nonl
+	#@-node:askLeoID.__init__
+	#@+node:askLeoID.createFrame
 	def createFrame(self,message):
 		
 		"""Create the frame for the Leo Id dialog."""
@@ -344,19 +310,17 @@ class askLeoID (leoDialog):
 	
 		self.id_entry = text = Tk.Entry(f,width=20)
 		text.pack()
-	#@-body
-	#@-node:2::askLeoID.createFrame
-	#@+node:3::onCloseWindow
-	#@+body
+	#@nonl
+	#@-node:askLeoID.createFrame
+	#@+node:onCloseWindow
 	def onCloseWindow (self):
 		
 		"""Prevent the Leo Id dialog from closing by ignoring close events."""
 	
 		pass
-	#@-body
-	#@-node:3::onCloseWindow
-	#@+node:4::onButton
-	#@+body
+	#@nonl
+	#@-node:onCloseWindow
+	#@+node:onButton
 	def onButton(self):
 		
 		"""Handle clicks in the Leo Id close button."""
@@ -367,18 +331,15 @@ class askLeoID (leoDialog):
 	
 		self.answer = s
 		self.top.destroy() # terminates wait_window
-	#@-body
-	#@-node:4::onButton
-	#@+node:5::onKey
-	#@+body
+	#@nonl
+	#@-node:onButton
+	#@+node:onKey
 	def onKey(self,event):
 		
 		"""Handle keystrokes in the Leo Id dialog."""
 		
-		
-		#@<< eliminate invalid characters >>
-		#@+node:1::<< eliminate invalid characters >>
-		#@+body
+		#@	<< eliminate invalid characters >>
+		#@+node:<< eliminate invalid characters >>
 		e = self.id_entry
 		s = e.get().strip()
 		i = 0 ; ok = true
@@ -391,13 +352,11 @@ class askLeoID (leoDialog):
 			else:
 				i += 1
 		if not ok: return
-		#@-body
-		#@-node:1::<< eliminate invalid characters >>
-
-		
-		#@<< enable the ok button if there are 4 or more valid characters >>
-		#@+node:2::<< enable the ok button if there are 4 or more valid characters >>
-		#@+body
+		#@nonl
+		#@-node:<< eliminate invalid characters >>
+		#@nl
+		#@	<< enable the ok button if there are 4 or more valid characters >>
+		#@+node:<< enable the ok button if there are 4 or more valid characters >>
 		e = self.id_entry
 		b = self.ok_button
 		
@@ -405,29 +364,24 @@ class askLeoID (leoDialog):
 			b.configure(state="normal")
 		else:
 			b.configure(state="disabled")
-		#@-body
-		#@-node:2::<< enable the ok button if there are 4 or more valid characters >>
-
+		#@nonl
+		#@-node:<< enable the ok button if there are 4 or more valid characters >>
+		#@nl
 		
 		ch = event.char.lower()
 		if ch in ('\n','\r'):
 			self.onButton()
 		return "break"
 	
-	
-	#@-body
-	#@-node:5::onKey
+	#@-node:onKey
 	#@-others
-#@-body
-#@-node:3::class askLeoID
-#@+node:4::class askOk
-#@+body
+#@nonl
+#@-node:class askLeoID
+#@+node:class askOk
 class askOk(leoDialog):
 	"""A class that creates a dialog with a single OK button."""
-
-	#@+others
-	#@+node:1::askOk.__init__
-	#@+body
+	#@	@+others
+	#@+node:askOk.__init__
 	def __init__ (self,title,message=None,text="Ok",resizeable=false):
 	
 		"""Create a dialog with one button"""
@@ -442,10 +396,9 @@ class askOk(leoDialog):
 	
 		buttons = {"text":text,"command":self.okButton,"default":true}, # Singleton tuple.
 		self.createButtons(buttons)
-	#@-body
-	#@-node:1::askOk.__init__
-	#@+node:2::askOk.onKey
-	#@+body
+	#@nonl
+	#@-node:askOk.__init__
+	#@+node:askOk.onKey
 	def onKey(self,event):
 		
 		"""Handle Key events in askOk dialogs."""
@@ -456,20 +409,15 @@ class askOk(leoDialog):
 			self.okButton()
 	
 		return "break"
-	
-	#@-body
-	#@-node:2::askOk.onKey
+	#@-node:askOk.onKey
 	#@-others
-#@-body
-#@-node:4::class askOk
-#@+node:5::class askOkCancel
-#@+body
+#@nonl
+#@-node:class askOk
+#@+node:class askOkCancel
 class askOkCancel (leoDialog):
 	"""A class that creates a dialog with two buttons: Ok and Cancel."""
-
-	#@+others
-	#@+node:1::askOkCancel.__init__
-	#@+body
+	#@	@+others
+	#@+node:askOkCancel.__init__
 	def __init__ (self,title,message=None,resizeable=false):
 		
 		"""Create a dialog having Ok and Cancel buttons."""
@@ -485,11 +433,8 @@ class askOkCancel (leoDialog):
 			{"text":"Ok",    "command":self.okButton,     "default":true},
 			{"text":"Cancel","command":self.cancelButton} )
 		self.createButtons(buttons)
-	
-	#@-body
-	#@-node:1::askOkCancel.__init__
-	#@+node:2::askOkCancel.onKey
-	#@+body
+	#@-node:askOkCancel.__init__
+	#@+node:askOkCancel.onKey
 	def onKey(self,event):
 		
 		"""Handle keystrokes in a dialog having Ok and Cancel buttons."""
@@ -501,19 +446,16 @@ class askOkCancel (leoDialog):
 			self.cancelButton()
 	
 		return "break"
-	#@-body
-	#@-node:2::askOkCancel.onKey
+	#@nonl
+	#@-node:askOkCancel.onKey
 	#@-others
-#@-body
-#@-node:5::class askOkCancel
-#@+node:6::class askOkCancelNumber
-#@+body
+#@nonl
+#@-node:class askOkCancel
+#@+node:class askOkCancelNumber
 class  askOkCancelNumber (leoDialog):
 	"""Create and run a modal dialog to get a number."""
-
-	#@+others
-	#@+node:1::askOKCancelNumber.__init__
-	#@+body
+	#@	@+others
+	#@+node:askOKCancelNumber.__init__
 	def __init__ (self,title,message):
 		
 		"""Create a number dialog"""
@@ -533,10 +475,9 @@ class  askOkCancelNumber (leoDialog):
 				{"text":"Cancel","command":self.cancelButton} )
 		buttonList = self.createButtons(buttons)
 		self.ok_button = buttonList[0] # Override the default kind of Ok button.
-	#@-body
-	#@-node:1::askOKCancelNumber.__init__
-	#@+node:2::askOKCancelNumber.createFrame
-	#@+body
+	#@nonl
+	#@-node:askOKCancelNumber.__init__
+	#@+node:askOKCancelNumber.createFrame
 	def createFrame (self,message):
 		
 		"""Create the frame for a number dialog."""
@@ -548,10 +489,9 @@ class  askOkCancelNumber (leoDialog):
 		
 		self.number_entry = t = Tk.Entry(f,width=20)
 		t.pack(side="left")
-	#@-body
-	#@-node:2::askOKCancelNumber.createFrame
-	#@+node:3::askOKCancelNumber.okButton, cancelButton
-	#@+body
+	#@nonl
+	#@-node:askOKCancelNumber.createFrame
+	#@+node:askOKCancelNumber.okButton, cancelButton
 	def okButton(self):
 		
 		"""Handle clicks in the ok button of a number dialog."""
@@ -571,16 +511,13 @@ class  askOkCancelNumber (leoDialog):
 	
 		self.answer=-1
 		self.top.destroy()
-	#@-body
-	#@-node:3::askOKCancelNumber.okButton, cancelButton
-	#@+node:4::askOKCancelNumber.onKey
-	#@+body
+	#@nonl
+	#@-node:askOKCancelNumber.okButton, cancelButton
+	#@+node:askOKCancelNumber.onKey
 	def onKey (self,event):
 		
-		
-		#@<< eliminate non-numbers >>
-		#@+node:1::<< eliminate non-numbers >>
-		#@+body
+		#@	<< eliminate non-numbers >>
+		#@+node:<< eliminate non-numbers >>
 		e = self.number_entry
 		s = e.get().strip()
 		
@@ -592,9 +529,9 @@ class  askOkCancelNumber (leoDialog):
 				s = e.get()
 			else:
 				i += 1
-		#@-body
-		#@-node:1::<< eliminate non-numbers >>
-
+		#@nonl
+		#@-node:<< eliminate non-numbers >>
+		#@nl
 	
 		ch = event.char.lower()
 	
@@ -604,21 +541,15 @@ class  askOkCancelNumber (leoDialog):
 			self.cancelButton()
 	
 		return "break"
-	#@-body
-	#@-node:4::askOKCancelNumber.onKey
+	#@nonl
+	#@-node:askOKCancelNumber.onKey
 	#@-others
-
-
-#@-body
-#@-node:6::class askOkCancelNumber
-#@+node:7::class askYesNo
-#@+body
+#@-node:class askOkCancelNumber
+#@+node:class askYesNo
 class askYesNo (leoDialog):
 	"""A class that creates a dialog with two buttons: Yes and No."""
-
-	#@+others
-	#@+node:1::askYesNo.__init__
-	#@+body
+	#@	@+others
+	#@+node:askYesNo.__init__
 	def __init__ (self,title,message=None,resizeable=false):
 		
 		"""Create a dialog having yes and no buttons."""
@@ -634,11 +565,8 @@ class askYesNo (leoDialog):
 			{"text":"Yes","command":self.yesButton,  "default":true},
 			{"text":"No", "command":self.noButton} )
 		self.createButtons(buttons)
-	
-	#@-body
-	#@-node:1::askYesNo.__init__
-	#@+node:2::askYesNo.onKey
-	#@+body
+	#@-node:askYesNo.__init__
+	#@+node:askYesNo.onKey
 	def onKey(self,event):
 		
 		"""Handle keystroke events in dialogs having yes and no buttons."""
@@ -651,26 +579,20 @@ class askYesNo (leoDialog):
 			self.noButton()
 	
 		return "break"
-	#@-body
-	#@-node:2::askYesNo.onKey
+	#@nonl
+	#@-node:askYesNo.onKey
 	#@-others
 
-
-
-#@-body
-#@-node:7::class askYesNo
-#@+node:8::class askYesNoCancel
-#@+body
+#@-node:class askYesNo
+#@+node:class askYesNoCancel
 class askYesNoCancel(leoDialog):
 	
 	"""A class to create and run dialogs having three buttons.
 	
 	By default, these buttons are labeled Yes, No and Cancel."""
 	
-
-	#@+others
-	#@+node:1::askYesNoCancel.__init__
-	#@+body
+	#@	@+others
+	#@+node:askYesNoCancel.__init__
 	def __init__ (self,title,
 		message=None,
 		yesMessage="Yes",
@@ -696,11 +618,8 @@ class askYesNoCancel(leoDialog):
 			{"text":"Cancel",  "command":self.cancelButton,"default":"Cancel"==defaultButton} )
 		self.createButtons(buttons)
 	
-	
-	#@-body
-	#@-node:1::askYesNoCancel.__init__
-	#@+node:2::askYesNoCancel.onKey
-	#@+body
+	#@-node:askYesNoCancel.__init__
+	#@+node:askYesNoCancel.onKey
 	def onKey(self,event):
 		
 		"""Handle keystrokes in dialogs with three buttons."""
@@ -718,10 +637,9 @@ class askYesNoCancel(leoDialog):
 			self.cancelButton()
 	
 		return "break"
-	#@-body
-	#@-node:2::askYesNoCancel.onKey
-	#@+node:3::askYesNoCancel.noButton & yesButton
-	#@+body
+	#@nonl
+	#@-node:askYesNoCancel.onKey
+	#@+node:askYesNoCancel.noButton & yesButton
 	def noButton(self):
 		
 		"""Handle clicks in the 'no' (second) button in a dialog with three buttons."""
@@ -735,22 +653,14 @@ class askYesNoCancel(leoDialog):
 		
 		self.answer=self.yesMessage.lower()
 		self.top.destroy()
-	
-	#@-body
-	#@-node:3::askYesNoCancel.noButton & yesButton
+	#@-node:askYesNoCancel.noButton & yesButton
 	#@-others
-
-
-#@-body
-#@-node:8::class askYesNoCancel
-#@+node:9::class listboxDialog
-#@+body
+#@-node:class askYesNoCancel
+#@+node:class listboxDialog
 class listBoxDialog (leoDialog):
 	"""A base class for dialogs containing a Tk Listbox"""
-
-	#@+others
-	#@+node:1::listboxDialog.__init__
-	#@+body
+	#@	@+others
+	#@+node:listboxDialog.__init__
 	def __init__ (self,c,title,label):
 		
 		"""Constructor for the base listboxDialog class."""
@@ -773,11 +683,8 @@ class listBoxDialog (leoDialog):
 		# Make the common bindings after creating self.box.
 		
 		self.box.bind("<Double-Button-1>",self.go)
-	
-	#@-body
-	#@-node:1::listboxDialog.__init__
-	#@+node:2::addStdButtons
-	#@+body
+	#@-node:listboxDialog.__init__
+	#@+node:addStdButtons
 	def addStdButtons (self,frame):
 		
 		"""Add stanadard buttons to a listBox dialog."""
@@ -788,10 +695,9 @@ class listBoxDialog (leoDialog):
 	
 		ok.pack(side="left",pady=2,padx=5)
 		hide.pack(side="left",pady=2,padx=5)
-	#@-body
-	#@-node:2::addStdButtons
-	#@+node:3::createFrame
-	#@+body
+	#@nonl
+	#@-node:addStdButtons
+	#@+node:createFrame
 	def createFrame(self):
 		
 		"""Create the essentials of a listBoxDialog frame
@@ -818,10 +724,9 @@ class listBoxDialog (leoDialog):
 		
 		bar.config(command=box.yview)
 		box.config(yscrollcommand=bar.set)
-	#@-body
-	#@-node:3::createFrame
-	#@+node:4::destroy
-	#@+body
+	#@nonl
+	#@-node:createFrame
+	#@+node:destroy
 	def destroy (self,event=None):
 		
 		"""Hide, do not destroy, a listboxDialog window
@@ -829,20 +734,16 @@ class listBoxDialog (leoDialog):
 		subclasses may override to really destroy the window"""
 		
 		self.top.withdraw() # Don't allow this window to be destroyed.
-	
-	#@-body
-	#@-node:4::destroy
-	#@+node:5::hide
-	#@+body
+	#@-node:destroy
+	#@+node:hide
 	def hide (self):
 		
 		"""Hide a list box dialog."""
 		
 		self.top.withdraw()
-	#@-body
-	#@-node:5::hide
-	#@+node:6::fillbox
-	#@+body
+	#@nonl
+	#@-node:hide
+	#@+node:fillbox
 	def fillbox(self,event=None):
 		
 		"""Fill a listbox from information.
@@ -850,10 +751,9 @@ class listBoxDialog (leoDialog):
 		Overridden by subclasses"""
 		
 		pass
-	#@-body
-	#@-node:6::fillbox
-	#@+node:7::go
-	#@+body
+	#@nonl
+	#@-node:fillbox
+	#@+node:go
 	def go(self,event=None):
 		
 		"""Handle clicks in the "go" button in a list box dialog."""
@@ -874,13 +774,11 @@ class listBoxDialog (leoDialog):
 			c.selectVnode(v,updateBeadList=true) # A case could be made for updateBeadList=false
 			c.endUpdate()
 			c.tree.idle_scrollTo(v)
-	
-	#@-body
-	#@-node:7::go
+	#@-node:go
 	#@-others
-#@-body
-#@-node:9::class listboxDialog
+#@nonl
+#@-node:class listboxDialog
 #@-others
-#@-body
-#@-node:0::@file leoDialog.py
+#@nonl
+#@-node:@file leoDialog.py
 #@-leo

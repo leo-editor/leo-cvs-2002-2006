@@ -1,8 +1,6 @@
-#@+leo
-#@+node:0::@file leoAtFile.py 
-#@+body
+#@+leo-ver=4
+#@+node:@file leoAtFile.py 
 """Classes to read and write @file nodes."""
-
 
 #@@language python
 
@@ -10,10 +8,8 @@ from leoGlobals import *
 import leoColor,leoNodes
 import filecmp,os,os.path,time
 
-
 #@<< global atFile constants >>
-#@+node:2::<< global atFile constants >>
-#@+body
+#@+node:<< global atFile constants >>
 # These constants must be global to this module because they are shared by several classes.
 
 # The kind of at_directives.
@@ -77,13 +73,11 @@ sentinelDict = {
 	"@+leo":    startLeo,    "@-leo":    endLeo,
 	"@+node":   startNode,   "@-node":   endNode,
 	"@+others": startOthers, "@-others": endOthers }
-#@-body
-#@-node:2::<< global atFile constants >>
-
-
+#@nonl
+#@-node:<< global atFile constants >>
+#@nl
 #@<< global functions >>
-#@+node:1::<< global functions >>
-#@+body
+#@+node:<< global functions >>
 def importDerivedFileNode(root,c,headline):
 	
 	moveRight = c.currentVnode() == root
@@ -94,20 +88,15 @@ def importDerivedFileNode(root,c,headline):
 	v.initHeadString(headline)
 	v.t.setVisited() # Suppress warning about unvisited node.
 	return v
-
-#@-body
-#@-node:1::<< global functions >>
-
+#@-node:<< global functions >>
+#@nl
 
 class baseAtFile:
 	"""The base class for the top-level atFile subcommander."""
-	
-	#@<< class baseAtFile methods >>
-	#@+node:3::<< class baseAtFile methods >>
-	#@+body
+	#@	<< class baseAtFile methods >>
+	#@+node:<< class baseAtFile methods >>
 	#@+others
-	#@+node:1::atFile.__init__ & initIvars
-	#@+body
+	#@+node:atFile.__init__ & initIvars
 	def __init__(self,theCommander):
 		
 		# trace("topLevelDerivedFile.__init__")
@@ -134,20 +123,17 @@ class baseAtFile:
 		self.encoding = app().config.default_derived_file_encoding
 		at.endSentinelComment = None
 		at.startSentinelComment = None
-	#@-body
-	#@-node:1::atFile.__init__ & initIvars
-	#@+node:2::top_df.error
-	#@+body
+	#@nonl
+	#@-node:atFile.__init__ & initIvars
+	#@+node:top_df.error
 	def error(self,message):
 	
 		es(message,color="red")
 		print message
 		self.errors += 1
-	#@-body
-	#@-node:2::top_df.error
-	#@+node:3::Reading
-	#@+node:1:: top_df.readAll
-	#@+body
+	#@nonl
+	#@-node:top_df.error
+	#@+node: top_df.readAll
 	def readAll(self,root,partialFlag=false):
 		
 		"""Scan vnodes, looking for @file nodes to read."""
@@ -186,10 +172,9 @@ class baseAtFile:
 			
 		if partialFlag and not anyRead:
 			es("no @file nodes in the selected tree")
-	#@-body
-	#@-node:1:: top_df.readAll
-	#@+node:2::top_df.read
-	#@+body
+	#@nonl
+	#@-node: top_df.readAll
+	#@+node:top_df.read
 	# The caller has enclosed this code in beginUpdate/endUpdate.
 	
 	def read(self,root,importFileName=None):
@@ -200,10 +185,8 @@ class baseAtFile:
 		at.errors = 0
 		at.scanDefaultDirectory(root)
 		if at.errors: return
-		
-		#@<< set fileName from root and importFileName >>
-		#@+node:1::<< set fileName from root and importFileName >>
-		#@+body
+		#@	<< set fileName from root and importFileName >>
+		#@+node:<< set fileName from root and importFileName >>
 		if importFileName:
 			fileName = importFileName
 		elif root.isAtFileNode():
@@ -214,13 +197,11 @@ class baseAtFile:
 		if not fileName:
 			at.error("Missing file name.  Restoring @file tree from .leo file.")
 			return false
-		#@-body
-		#@-node:1::<< set fileName from root and importFileName >>
-
-		
-		#@<< open file or return false >>
-		#@+node:2::<< open file or return false >>
-		#@+body
+		#@nonl
+		#@-node:<< set fileName from root and importFileName >>
+		#@nl
+		#@	<< open file or return false >>
+		#@+node:<< open file or return false >>
 		fn = os.path.join(at.default_directory,fileName)
 		fn = os.path.normpath(fn)
 		fn = toUnicode(fn,"ascii")
@@ -228,33 +209,29 @@ class baseAtFile:
 		try:
 			file = open(fn,'r')
 			if file:
-				
-				#@<< warn on read-only file >>
-				#@+node:1::<< warn on read-only file >>
-				#@+body
+				#@		<< warn on read-only file >>
+				#@+node:<< warn on read-only file >>
 				try:
 					read_only = not os.access(fn,os.W_OK)
 					if read_only:
 						es("read only: " + fn,color="red")
 				except:
 					pass # os.access() may not exist on all platforms.
-				#@-body
-				#@-node:1::<< warn on read-only file >>
-
+				#@nonl
+				#@-node:<< warn on read-only file >>
+				#@nl
 			else: return false
 		except:
 			at.error("Can not open: " + '"@file ' + fn + '"')
 			return false
-		#@-body
-		#@-node:2::<< open file or return false >>
-
+		#@nonl
+		#@-node:<< open file or return false >>
+		#@nl
 		es("reading: " + root.headString())
 		firstLines,read_new = at.scanHeader(file,fileName)
 		df = choose(read_new,at.new_df,at.old_df)
-		
-		#@<< copy ivars to df >>
-		#@+node:3::<< copy ivars to df >>
-		#@+body
+		#@	<< copy ivars to df >>
+		#@+node:<< copy ivars to df >>
 		if importFileName:
 			df.importing = true
 			df.importRoot = c.currentVnode()
@@ -276,10 +253,8 @@ class baseAtFile:
 		df.raw = false
 		df.root = root
 		df.root_seen = false
-		
-		#@-body
-		#@-node:3::<< copy ivars to df >>
-
+		#@-node:<< copy ivars to df >>
+		#@nl
 		root.clearVisitedInTree()
 		try:
 			df.readOpenFile(root,file,fileName,firstLines)
@@ -288,10 +263,8 @@ class baseAtFile:
 			es_exception()
 		file.close()
 		after = root.nodeAfterTree()
-		
-		#@<< warn about non-empty unvisited nodes >>
-		#@+node:4::<< warn about non-empty unvisited nodes >>
-		#@+body
+		#@	<< warn about non-empty unvisited nodes >>
+		#@+node:<< warn about non-empty unvisited nodes >>
 		v = root
 		while v and v != after:
 			try: s = v.t.tempBodyString
@@ -300,15 +273,13 @@ class baseAtFile:
 				at.error("Not in derived file:" + v.headString())
 				v.t.setVisited() # One message is enough.
 			v = v.threadNext()
-		#@-body
-		#@-node:4::<< warn about non-empty unvisited nodes >>
-
+		#@nonl
+		#@-node:<< warn about non-empty unvisited nodes >>
+		#@nl
 		if df.errors == 0:
 			if not df.importing:
-				
-				#@<< copy all tempBodyStrings to tnodes >>
-				#@+node:5::<< copy all tempBodyStrings to tnodes >>
-				#@+body
+				#@			<< copy all tempBodyStrings to tnodes >>
+				#@+node:<< copy all tempBodyStrings to tnodes >>
 				v = root
 				while v and v != after:
 					try: s = v.t.tempBodyString
@@ -322,37 +293,32 @@ class baseAtFile:
 						v.setBodyStringOrPane(s)
 						v.setDirty()
 					v = v.threadNext()
-				#@-body
-				#@-node:5::<< copy all tempBodyStrings to tnodes >>
-
-		
-		#@<< delete all tempBodyStrings >>
-		#@+node:6::<< delete all tempBodyStrings >>
-		#@+body
+				#@nonl
+				#@-node:<< copy all tempBodyStrings to tnodes >>
+				#@nl
+		#@	<< delete all tempBodyStrings >>
+		#@+node:<< delete all tempBodyStrings >>
 		v = root
 		while v and v != after:
 			if hasattr(v.t,"tempBodyString"):
 				delattr(v.t,"tempBodyString")
 			v = v.threadNext()
-		#@-body
-		#@-node:6::<< delete all tempBodyStrings >>
-
+		#@nonl
+		#@-node:<< delete all tempBodyStrings >>
+		#@nl
 		root.clearDirty()
 		return df.errors == 0
-	#@-body
-	#@-node:2::top_df.read
-	#@+node:3::top_df.scanDefaultDirectory
-	#@+body
+	#@nonl
+	#@-node:top_df.read
+	#@+node:top_df.scanDefaultDirectory
 	def scanDefaultDirectory(self,v):
 		
 		"""Set default_directory ivar by looking for @path directives."""
 	
 		at = self ; c = at.commands
 		at.default_directory = None
-		
-		#@<< Set path from @file node >>
-		#@+node:1::<< Set path from @file node >>
-		#@+body
+		#@	<< Set path from @file node >>
+		#@+node:<< Set path from @file node >>
 		# An absolute path in an @file node over-rides everything else.
 		# A relative path gets appended to the relative path by the open logic.
 		
@@ -374,9 +340,9 @@ class baseAtFile:
 				at.default_directory = makeAllNonExistentDirectories(dir)
 				if not at.default_directory:
 					at.error("Directory \"" + dir + "\" does not exist")
-		#@-body
-		#@-node:1::<< Set path from @file node >>
-
+		#@nonl
+		#@-node:<< Set path from @file node >>
+		#@nl
 		if at.default_directory:
 			return
 	
@@ -384,17 +350,13 @@ class baseAtFile:
 			s = v.t.bodyString
 			dict = get_directives_dict(s)
 			if dict.has_key("path"):
-				
-				#@<< handle @path >>
-				#@+node:2::<< handle @path >>
-				#@+body
+				#@			<< handle @path >>
+				#@+node:<< handle @path >>
 				# We set the current director to a path so future writes will go to that directory.
 				
 				k = dict["path"]
-				
 				#@<< compute relative path from s[k:] >>
-				#@+node:1::<< compute relative path from s[k:] >>
-				#@+body
+				#@+node:<< compute relative path from s[k:] >>
 				j = i = k + len("@path")
 				i = skip_to_end_of_line(s,i)
 				path = string.strip(s[j:i])
@@ -406,18 +368,16 @@ class baseAtFile:
 					path = path[1:-1]
 				
 				path = path.strip()
-				#@-body
-				#@-node:1::<< compute relative path from s[k:] >>
-
+				#@nonl
+				#@-node:<< compute relative path from s[k:] >>
+				#@nl
 				
 				if path and len(path) > 0:
 					base = getBaseDirectory() # returns "" on error.
 					path = os.path.join(base,path)
 					if os.path.isabs(path):
-						
-						#@<< handle absolute path >>
-						#@+node:2::<< handle absolute path >>
-						#@+body
+						#@		<< handle absolute path >>
+						#@+node:<< handle absolute path >>
 						# path is an absolute path.
 						
 						if os.path.exists(path):
@@ -426,23 +386,21 @@ class baseAtFile:
 							at.default_directory = makeAllNonExistentDirectories(path)
 							if not at.default_directory:
 								at.error("invalid @path: " + path)
-						#@-body
-						#@-node:2::<< handle absolute path >>
-
+						#@nonl
+						#@-node:<< handle absolute path >>
+						#@nl
 					else:
 						at.error("ignoring bad @path: " + path)
 				else:
 					at.error("ignoring empty @path")
-				#@-body
-				#@-node:2::<< handle @path >>
-
+				#@nonl
+				#@-node:<< handle @path >>
+				#@nl
 				return
 			v = v.parent()
 	
-		
-		#@<< Set current directory >>
-		#@+node:3::<< Set current directory >>
-		#@+body
+		#@	<< Set current directory >>
+		#@+node:<< Set current directory >>
 		# This code is executed if no valid absolute path was specified in the @file node or in an @path directive.
 		
 		assert(not at.default_directory)
@@ -457,17 +415,16 @@ class baseAtFile:
 							at.default_directory = dir ; break
 						else:
 							at.default_directory = makeAllNonExistentDirectories(dir)
-		#@-body
-		#@-node:3::<< Set current directory >>
-
+		#@nonl
+		#@-node:<< Set current directory >>
+		#@nl
 		if not at.default_directory:
 			# This should never happen: c.openDirectory should be a good last resort.
 			at.error("No absolute directory specified anywhere.")
 			at.default_directory = ""
-	#@-body
-	#@-node:3::top_df.scanDefaultDirectory
-	#@+node:4::top_df.scanHeader
-	#@+body
+	#@nonl
+	#@-node:top_df.scanDefaultDirectory
+	#@+node:top_df.scanHeader
 	def scanHeader(self,file,fileName):
 		
 		"""Scan the @+leo sentinel.
@@ -484,12 +441,11 @@ class baseAtFile:
 		version_tag = "-ver=" ; gnx_tag = "-gnx="
 		tag = "@+leo" ; encoding_tag = "-encoding="
 		valid = true
-		
-		#@<< skip any non @+leo lines >>
-		#@+node:1::<< skip any non @+leo lines >>
-		#@+body
-		#@+at
-		#  Queue up the lines before the @+leo.  These will be used to add as 
+		#@	<< skip any non @+leo lines >>
+		#@+node:<< skip any non @+leo lines >>
+		#@+at 
+		#@nonl
+		# Queue up the lines before the @+leo.  These will be used to add as 
 		# parameters to the @first directives, if any.  Empty lines are 
 		# ignored (because empty @first directives are ignored). NOTE: the 
 		# function now returns a list of the lines before @+leo.
@@ -497,10 +453,9 @@ class baseAtFile:
 		# We can not call sentinelKind here because that depends on the 
 		# comment delimiters we set here.  @first lines are written 
 		# "verbatim", so nothing more needs to be done!
-
 		#@-at
 		#@@c
-
+		
 		s = at.readLine(file)
 		while len(s) > 0:
 			j = s.find(tag)
@@ -518,36 +473,32 @@ class baseAtFile:
 		if j < i:
 			at.startSentinelComment = s[j:i]
 		else: valid = false
-		#@-body
-		#@-node:1::<< skip any non @+leo lines >>
-
-		
-		#@<< make sure we have @+leo >>
-		#@+node:2::<< make sure we have @+leo >>
-		#@+body
-		#@+at
-		#  REM hack: leading whitespace is significant before the @+leo.  We 
-		# do this so that sentinelKind need not skip whitespace following 
+		#@nonl
+		#@-node:<< skip any non @+leo lines >>
+		#@nl
+		#@	<< make sure we have @+leo >>
+		#@+node:<< make sure we have @+leo >>
+		#@+at 
+		#@nonl
+		# REM hack: leading whitespace is significant before the @+leo.  We do 
+		# this so that sentinelKind need not skip whitespace following 
 		# self.startSentinelComment.  This is correct: we want to be as 
 		# restrictive as possible about what is recognized as a sentinel.  
 		# This minimizes false matches.
-
 		#@-at
 		#@@c
-
+		
 		if 0:# 7/8/02: make leading whitespace significant.
 			i = skip_ws(s,i)
 		
 		if match(s,i,tag):
 			i += len(tag)
 		else: valid = false
-		#@-body
-		#@-node:2::<< make sure we have @+leo >>
-
-		
-		#@<< read optional version param >>
-		#@+node:3::<< read optional version param >>
-		#@+body
+		#@nonl
+		#@-node:<< make sure we have @+leo >>
+		#@nl
+		#@	<< read optional version param >>
+		#@+node:<< read optional version param >>
 		new_df = match(s,i,version_tag)
 		
 		if new_df:
@@ -561,14 +512,10 @@ class baseAtFile:
 				version = s[j:i]
 			else:
 				valid = false
-		
-		#@-body
-		#@-node:3::<< read optional version param >>
-
-		
-		#@<< read optional encoding param >>
-		#@+node:4::<< read optional encoding param >>
-		#@+body
+		#@-node:<< read optional version param >>
+		#@nl
+		#@	<< read optional encoding param >>
+		#@+node:<< read optional encoding param >>
 		# Set the default encoding
 		at.encoding = app().config.default_derived_file_encoding
 		
@@ -590,29 +537,24 @@ class baseAtFile:
 					es("bad encoding in derived file:",encoding)
 			else:
 				valid = false
-		
-		#@-body
-		#@-node:4::<< read optional encoding param >>
-
-		
-		#@<< set the closing comment delim >>
-		#@+node:5::<< set the closing comment delim >>
-		#@+body
+		#@-node:<< read optional encoding param >>
+		#@nl
+		#@	<< set the closing comment delim >>
+		#@+node:<< set the closing comment delim >>
 		# The closing comment delim is the trailing non-whitespace.
 		i = j = skip_ws(s,i)
 		while i < n and not is_ws(s[i]) and not is_nl(s,i):
 			i += 1
 		at.endSentinelComment = s[j:i]
-		#@-body
-		#@-node:5::<< set the closing comment delim >>
-
+		#@nonl
+		#@-node:<< set the closing comment delim >>
+		#@nl
 		if not valid:
 			at.error("Bad @+leo sentinel in " + fileName)
 		return firstLines, new_df
-	#@-body
-	#@-node:4::top_df.scanHeader
-	#@+node:5::top_df.readLine
-	#@+body
+	#@nonl
+	#@-node:top_df.scanHeader
+	#@+node:top_df.readLine
 	def readLine (self,file):
 	
 		"""Reads one line from file using the present encoding"""
@@ -620,12 +562,9 @@ class baseAtFile:
 		s = readlineForceUnixNewline(file)
 		u = toUnicode(s,self.encoding)
 		return u
-	#@-body
-	#@-node:5::top_df.readLine
-	#@-node:3::Reading
-	#@+node:4::Writing
-	#@+node:1::top_df.writeAll
-	#@+body
+	#@nonl
+	#@-node:top_df.readLine
+	#@+node:top_df.writeAll
 	def writeAll(self,writeAtFileNodesFlag=false,writeDirtyAtFileNodesFlag=false):
 		
 		"""Write @file nodes in all or part of the outline"""
@@ -645,32 +584,29 @@ class baseAtFile:
 			v = c.rootVnode()
 			after = None
 	
-		
-		#@<< Clear all orphan bits >>
-		#@+node:1::<< Clear all orphan bits >>
-		#@+body
-		#@+at
-		#  We must clear these bits because they may have been set on a 
+		#@	<< Clear all orphan bits >>
+		#@+node:<< Clear all orphan bits >>
+		#@+at 
+		#@nonl
+		# We must clear these bits because they may have been set on a 
 		# previous write.  Calls to atFile::write may set the orphan bits in 
-		# @file nodes.  If so, write_LEO_file will write the entire @file tree.
-
+		# @file nodes.  If so, write_LEO_file will write the entire @file 
+		# tree.
 		#@-at
 		#@@c
-
+		
 		v2 = v
 		while v2 and v2 != after:
 			v2.clearOrphan()
 			v2 = v2.threadNext()
-		#@-body
-		#@-node:1::<< Clear all orphan bits >>
-
+		#@nonl
+		#@-node:<< Clear all orphan bits >>
+		#@nl
 		while v and v != after:
 			# trace(`v`)
 			if v.isAnyAtFileNode() or v.isAtIgnoreNode():
-				
-				#@<< handle v's tree >>
-				#@+node:2::<< handle v's tree >>
-				#@+body
+				#@			<< handle v's tree >>
+				#@+node:<< handle v's tree >>
 				# This code is a little tricky: @ignore not recognised in @silentfile nodes.
 				
 				if v.isDirty() or writeAtFileNodesFlag or v.t in writtenFiles:
@@ -688,17 +624,15 @@ class baseAtFile:
 				
 					if not v.isAtIgnoreNode():
 						writtenFiles.append(v.t)
-				#@-body
-				#@-node:2::<< handle v's tree >>
-
+				#@nonl
+				#@-node:<< handle v's tree >>
+				#@nl
 				v = v.nodeAfterTree()
 			else:
 				v = v.threadNext()
 	
-		
-		#@<< say the command is finished >>
-		#@+node:3::<< say the command is finished >>
-		#@+body
+		#@	<< say the command is finished >>
+		#@+node:<< say the command is finished >>
 		if writeAtFileNodesFlag or writeDirtyAtFileNodesFlag:
 			if len(writtenFiles) > 0:
 				es("finished")
@@ -706,15 +640,14 @@ class baseAtFile:
 				es("no @file nodes in the selected tree")
 			else:
 				es("no dirty @file nodes")
-		#@-body
-		#@-node:3::<< say the command is finished >>
-
+		#@nonl
+		#@-node:<< say the command is finished >>
+		#@nl
 		
 		return len(writtenFiles) # 9/23/03: so caller knows whether to do an auto-save.
-	#@-body
-	#@-node:1::top_df.writeAll
-	#@+node:2::top_df.write, rawWrite, silentWrite
-	#@+body
+	#@nonl
+	#@-node:top_df.writeAll
+	#@+node:top_df.write, rawWrite, silentWrite
 	def rawWrite (self,v):
 		
 		at = self
@@ -739,10 +672,9 @@ class baseAtFile:
 	def writeException(self,v):
 		self.error("Unexpected exception while writing " + v.headString())
 		es_exception()
-	#@-body
-	#@-node:2::top_df.write, rawWrite, silentWrite
-	#@+node:3::top_df.writeOld/NewDerivedFiles
-	#@+body
+	#@nonl
+	#@-node:top_df.write, rawWrite, silentWrite
+	#@+node:top_df.writeOld/NewDerivedFiles
 	def writeOldDerivedFiles (self,v):
 		
 		self.writeDerivedFiles(v,write_old=true)
@@ -758,10 +690,9 @@ class baseAtFile:
 		config.write_old_format_derived_files = write_old
 		self.writeAll(writeAtFileNodesFlag=true)
 		config.write_old_format_derived_files = old
-	#@-body
-	#@-node:3::top_df.writeOld/NewDerivedFiles
-	#@+node:4::top_df.writeMissing
-	#@+body
+	#@nonl
+	#@-node:top_df.writeOld/NewDerivedFiles
+	#@+node:top_df.writeMissing
 	def writeMissing(self,v):
 		
 		trace("old_df",v)
@@ -776,10 +707,8 @@ class baseAtFile:
 			if v.isAtSilentFileNode() or (v.isAnyAtFileNode() and not v.isAtIgnoreNode()):
 				missing = false ; valid = true
 				df.targetFileName = v.anyAtFileNodeName()
-				
-				#@<< set missing if the file does not exist >>
-				#@+node:1::<< set missing if the file does not exist >>
-				#@+body
+				#@			<< set missing if the file does not exist >>
+				#@+node:<< set missing if the file does not exist >>
 				# This is similar, but not the same as, the logic in openWriteFile.
 				
 				valid = df.targetFileName and len(df.targetFileName) > 0
@@ -808,14 +737,12 @@ class baseAtFile:
 						es("exception creating path:" + fn)
 						es_exception()
 						valid = false
-				#@-body
-				#@-node:1::<< set missing if the file does not exist >>
-
+				#@nonl
+				#@-node:<< set missing if the file does not exist >>
+				#@nl
 				if valid and missing:
-					
-					#@<< create df.outputFile >>
-					#@+node:2::<< create df.outputFile >>
-					#@+body
+					#@				<< create df.outputFile >>
+					#@+node:<< create df.outputFile >>
 					try:
 						df.outputFileName = df.targetFileName + ".leotmp"
 						df.outputFile = open(df.outputFileName,'wb')
@@ -825,15 +752,11 @@ class baseAtFile:
 						es("exception opening:" + df.outputFileName)
 						es_exception()
 						df.outputFile = None
-					
-					#@-body
-					#@-node:2::<< create df.outputFile >>
-
+					#@-node:<< create df.outputFile >>
+					#@nl
 					if at.outputFile:
-						
-						#@<< write the @file node >>
-						#@+node:3::<< write the @file node >>
-						#@+body
+						#@					<< write the @file node >>
+						#@+node:<< write the @file node >>
 						if v.isAtSilentFileNode():
 							at.silentWrite(v)
 						elif v.isAtRawFileNode():
@@ -845,10 +768,8 @@ class baseAtFile:
 						else: assert(0)
 						
 						writtenFiles = true
-						
-						#@-body
-						#@-node:3::<< write the @file node >>
-
+						#@-node:<< write the @file node >>
+						#@nl
 				v = v.nodeAfterTree()
 			elif v.isAtIgnoreNode():
 				v = v.nodeAfterTree()
@@ -861,27 +782,22 @@ class baseAtFile:
 			es("no missing @file node in the selected tree")
 			
 		return writtenFiles # 9/23/03: so caller knows whether to do an auto-save.
-	#@-body
-	#@-node:4::top_df.writeMissing
-	#@-node:4::Writing
+	#@nonl
+	#@-node:top_df.writeMissing
 	#@-others
-	
-	#@-body
-	#@-node:3::<< class baseAtFile methods >>
-
+	#@nonl
+	#@-node:<< class baseAtFile methods >>
+	#@nl
 	
 class atFile (baseAtFile):
 	pass # May be overridden in plugins.
 	
 class baseOldDerivedFile:
 	"""The base class to read and write 3.x derived files."""
-	
-	#@<< class baseOldDerivedFile methods >>
-	#@+node:4::<< class baseOldDerivedFile methods >>
-	#@+body
+	#@	<< class baseOldDerivedFile methods >>
+	#@+node:<< class baseOldDerivedFile methods >>
 	#@+others
-	#@+node:1:: old_df.__init__& initIvars
-	#@+body
+	#@+node: old_df.__init__& initIvars
 	def __init__(self,theCommander): 
 	
 		# trace("oldDerivedFile.__init__")
@@ -893,10 +809,8 @@ class baseOldDerivedFile:
 	
 	def initIvars(self):
 	
-		
-		#@<< init atFile ivars >>
-		#@+node:1::<< init atFile ivars >>
-		#@+body
+		#@	<< init atFile ivars >>
+		#@+node:<< init atFile ivars >>
 		# errors is the number of errors seen while reading and writing.
 		self.errors = 0
 		
@@ -908,13 +822,12 @@ class baseOldDerivedFile:
 		self.endSentinelComment = None
 		self.language = None
 		
-
-		#@+at
-		#  The files used by the output routines.  When tangling, we first 
+		#@+at 
+		#@nonl
+		# The files used by the output routines.  When tangling, we first 
 		# write to a temporary output file.  After tangling is temporary 
 		# file.  Otherwise we delete the old target file and rename the 
 		# temporary file to be the target file.
-
 		#@-at
 		#@@c
 		self.shortFileName = "" # short version of file name used for messages.
@@ -922,13 +835,12 @@ class baseOldDerivedFile:
 		self.outputFileName = u"" # EKR 1/21/03: now a unicode string
 		self.outputFile = None # The temporary output file.
 		
-
-		#@+at
-		#  The indentation used when outputting section references or 
-		# at-others sections.  We add the indentation of the line containing 
-		# the at-node directive and restore the old value when the
+		#@+at 
+		#@nonl
+		# The indentation used when outputting section references or at-others 
+		# sections.  We add the indentation of the line containing the at-node 
+		# directive and restore the old value when the
 		# expansion is complete.
-
 		#@-at
 		#@@c
 		self.indent = 0  # The unit of indentation is spaces, not tabs.
@@ -957,15 +869,11 @@ class baseOldDerivedFile:
 		self.file = None
 		self.importing = false
 		self.importRoot = None
-		#@-body
-		#@-node:1::<< init atFile ivars >>
-
-	
-	#@-body
-	#@-node:1:: old_df.__init__& initIvars
-	#@+node:2::Reading (3.x)
-	#@+node:1::old_df.readOpenFile
-	#@+body
+		#@nonl
+		#@-node:<< init atFile ivars >>
+		#@nl
+	#@-node: old_df.__init__& initIvars
+	#@+node:old_df.readOpenFile
 	def readOpenFile(self,root,file,fileName,firstLines):
 		
 		"""Read an open 3.x derived file."""
@@ -987,10 +895,9 @@ class baseOldDerivedFile:
 		at.completeLastDirectives(lines,lastLines)
 		s = '\n'.join(lines).replace('\r', '')
 		root.t.tempBodyString = s
-	#@-body
-	#@-node:1::old_df.readOpenFile
-	#@+node:2::completeFirstDirectives
-	#@+body
+	#@nonl
+	#@-node:old_df.readOpenFile
+	#@+node:completeFirstDirectives
 	# 14-SEP-2002 DTHEIN: added for use by atFile.read()
 	
 	# this function scans the lines in the list 'out' for @first directives
@@ -1017,11 +924,8 @@ class baseOldDerivedFile:
 			# 21-SEP-2002 DTHEIN: no trailing whitespace on empty @first directive
 			leadingLine = " " + firstLines[j]
 			out[k] = tag + leadingLine.rstrip() ; j += 1
-	
-	#@-body
-	#@-node:2::completeFirstDirectives
-	#@+node:3::completeLastDirectives
-	#@+body
+	#@-node:completeFirstDirectives
+	#@+node:completeLastDirectives
 	# 14-SEP-2002 DTHEIN: added for use by atFile.read()
 	
 	# this function scans the lines in the list 'out' for @last directives
@@ -1048,19 +952,17 @@ class baseOldDerivedFile:
 			# 21-SEP-2002 DTHEIN: no trailing whitespace on empty @last directive
 			trailingLine = " " + lastLines[j]
 			out[k] = tag + trailingLine.rstrip() ; j -= 1
-	
-	#@-body
-	#@-node:3::completeLastDirectives
-	#@+node:4::createNthChild
-	#@+body
-	#@+at
-	#  Sections appear in the derived file in reference order, not tree 
-	# order.  Therefore, when we insert the nth child of the parent there is 
-	# no guarantee that the previous n-1 children have already been inserted. 
-	# And it won't work just to insert the nth child as the last child if 
-	# there aren't n-1 previous siblings.  For example, if we insert the third 
-	# child followed by the second child followed by the first child the 
-	# second and third children will be out of order.
+	#@-node:completeLastDirectives
+	#@+node:createNthChild
+	#@+at 
+	#@nonl
+	# Sections appear in the derived file in reference order, not tree order.  
+	# Therefore, when we insert the nth child of the parent there is no 
+	# guarantee that the previous n-1 children have already been inserted. And 
+	# it won't work just to insert the nth child as the last child if there 
+	# aren't n-1 previous siblings.  For example, if we insert the third child 
+	# followed by the second child followed by the first child the second and 
+	# third children will be out of order.
 	# 
 	# To ensure that nodes are placed in the correct location we create 
 	# "dummy" children as needed as placeholders.  In the example above, we 
@@ -1074,7 +976,6 @@ class baseOldDerivedFile:
 	# create dummy vnodes.  Such structure errors cause a second pass to be 
 	# made, with an empty root.  This second pass will generate other 
 	# structure errors, which are ignored.
-
 	#@-at
 	#@@c
 	def createNthChild(self,n,parent,headline):
@@ -1098,10 +999,8 @@ class baseOldDerivedFile:
 			dummy.initHeadString("Dummy")
 	
 		if n <= parent.numberOfChildren():
-			
-			#@<< check the headlines >>
-			#@+node:1::<< check the headlines >>
-			#@+body
+			#@		<< check the headlines >>
+			#@+node:<< check the headlines >>
 			# 1/24/03: A kludgy fix to the problem of headlines containing comment delims.
 			
 			result = parent.nthChild(n-1)
@@ -1122,10 +1021,8 @@ class baseOldDerivedFile:
 						self.errors += 1
 				else:
 					self.errors += 1
-			
-			#@-body
-			#@-node:1::<< check the headlines >>
-
+			#@-node:<< check the headlines >>
+			#@nl
 		else:
 			# This is using a dummy; we should already have bumped errors.
 			result = parent.insertAsLastChild(leoNodes.tnode())
@@ -1134,10 +1031,9 @@ class baseOldDerivedFile:
 		result.setVisited() # Suppress all other errors for this node.
 		result.t.setVisited() # Suppress warnings about unvisited nodes.
 		return result
-	#@-body
-	#@-node:4::createNthChild
-	#@+node:5::handleLinesFollowingSentinel
-	#@+body
+	#@nonl
+	#@-node:createNthChild
+	#@+node:handleLinesFollowingSentinel
 	def handleLinesFollowingSentinel (self,lines,sentinel,comments = true):
 		
 		"""convert lines following a sentinel to a single line"""
@@ -1159,10 +1055,8 @@ class baseOldDerivedFile:
 			if comments: s = start + ' ' + s
 	
 		if comments:
-			
-			#@<< remove the comment delims from s >>
-			#@+node:1::<< remove the comment delims from s >>
-			#@+body
+			#@		<< remove the comment delims from s >>
+			#@+node:<< remove the comment delims from s >>
 			# Remove the starting comment and the blank.
 			# 5/1/03: The starting comment now looks like a sentinel, to warn users from changing it.
 			comment = start + '@ '
@@ -1177,19 +1071,18 @@ class baseOldDerivedFile:
 			else:
 				k = s.rfind(end)
 				s = string.strip(s[:k]) # works even if k == -1
-			#@-body
-			#@-node:1::<< remove the comment delims from s >>
-
+			#@nonl
+			#@-node:<< remove the comment delims from s >>
+			#@nl
 			
 		# Undo the cweb hack: undouble @ signs if the opening comment delim ends in '@'.
 		if start[-1:] == '@':
 			s = s.replace('@@','@')
 	
 		return s
-	#@-body
-	#@-node:5::handleLinesFollowingSentinel
-	#@+node:6::readLine
-	#@+body
+	#@nonl
+	#@-node:handleLinesFollowingSentinel
+	#@+node:readLine
 	def readLine (self,file):
 		"""Reads one line from file using the present encoding"""
 		
@@ -1197,11 +1090,8 @@ class baseOldDerivedFile:
 		u = toUnicode(s,self.encoding)
 		return u
 	
-	
-	#@-body
-	#@-node:6::readLine
-	#@+node:7::readLinesToNextSentinel
-	#@+body
+	#@-node:readLine
+	#@+node:readLinesToNextSentinel
 	# We expect only a single line, and more may exist if cvs detects a conflict.
 	# We accept the first line even if it looks like a sentinel.
 	# 5/1/03: The starting comment now looks like a sentinel, to warn users from changing it.
@@ -1226,10 +1116,9 @@ class baseOldDerivedFile:
 				else: break
 	
 		return nextLine,lines
-	#@-body
-	#@-node:7::readLinesToNextSentinel
-	#@+node:8::scanDoc
-	#@+body
+	#@nonl
+	#@-node:readLinesToNextSentinel
+	#@+node:scanDoc
 	# Scans the doc part and appends the text out.
 	# s,i point to the present line on entry.
 	
@@ -1237,42 +1126,34 @@ class baseOldDerivedFile:
 	
 		endKind = choose(kind ==startDoc,endDoc,endAt)
 		single = len(self.endSentinelComment) == 0
-		
-		#@<< Skip the opening sentinel >>
-		#@+node:1::<< Skip the opening sentinel >>
-		#@+body
+		#@	<< Skip the opening sentinel >>
+		#@+node:<< Skip the opening sentinel >>
 		assert(match(s,i,choose(kind == startDoc, "+doc", "+at")))
 		
 		out.append(choose(kind == startDoc, "@doc", "@"))
 		s = self.readLine(file)
-		
-		#@-body
-		#@-node:1::<< Skip the opening sentinel >>
-
-		
-		#@<< Skip an opening block delim >>
-		#@+node:2::<< Skip an opening block delim >>
-		#@+body
+		#@-node:<< Skip the opening sentinel >>
+		#@nl
+		#@	<< Skip an opening block delim >>
+		#@+node:<< Skip an opening block delim >>
 		if not single:
 			j = skip_ws(s,0)
 			if match(s,j,self.startSentinelComment):
 				s = self.readLine(file)
-		#@-body
-		#@-node:2::<< Skip an opening block delim >>
-
+		#@nonl
+		#@-node:<< Skip an opening block delim >>
+		#@nl
 		nextLine = None ; kind = noSentinel
 		while len(s) > 0:
-			
-			#@<< set kind, nextLine >>
-			#@+node:3::<< set kind, nextLine >>
-			#@+body
-			#@+at
-			#  For non-sentinel lines we look ahead to see whether the next 
+			#@		<< set kind, nextLine >>
+			#@+node:<< set kind, nextLine >>
+			#@+at 
+			#@nonl
+			# For non-sentinel lines we look ahead to see whether the next 
 			# line is a sentinel.
-
 			#@-at
 			#@@c
-
+			
 			assert(nextLine==None)
 			
 			kind = self.sentinelKind(s)
@@ -1284,15 +1165,11 @@ class baseOldDerivedFile:
 				nextKind = self.sentinelKind(nextLine)
 				if blankLine and nextKind == endKind:
 					kind = endKind # stop the scan now
-			
-			#@-body
-			#@-node:3::<< set kind, nextLine >>
-
+			#@-node:<< set kind, nextLine >>
+			#@nl
 			if kind == endKind: break
-			
-			#@<< Skip the leading stuff >>
-			#@+node:4::<< Skip the leading stuff >>
-			#@+body
+			#@		<< Skip the leading stuff >>
+			#@+node:<< Skip the leading stuff >>
 			# Point i to the start of the real line.
 			
 			if single: # Skip the opening comment delim and a blank.
@@ -1302,14 +1179,10 @@ class baseOldDerivedFile:
 					if match(s,i," "): i += 1
 			else:
 				i = self.skipIndent(s,0, self.indent)
-			
-			#@-body
-			#@-node:4::<< Skip the leading stuff >>
-
-			
-			#@<< Append s to out >>
-			#@+node:5::<< Append s to out >>
-			#@+body
+			#@-node:<< Skip the leading stuff >>
+			#@nl
+			#@		<< Append s to out >>
+			#@+node:<< Append s to out >>
 			# Append the line with a newline if it is real
 			
 			line = s[i:-1] # remove newline for rstrip.
@@ -1320,19 +1193,15 @@ class baseOldDerivedFile:
 			else:
 				# trailing whitespace: the newline is not real.
 				out.append(line)
-			
-			#@-body
-			#@-node:5::<< Append s to out >>
-
+			#@-node:<< Append s to out >>
+			#@nl
 			if nextLine:
 				s = nextLine ; nextLine = None
 			else: s = self.readLine(file)
 		if kind != endKind:
 			self.readError("Missing " + self.sentinelName(endKind) + " sentinel")
-		
-		#@<< Remove a closing block delim from out >>
-		#@+node:6::<< Remove a closing block delim from out >>
-		#@+body
+		#@	<< Remove a closing block delim from out >>
+		#@+node:<< Remove a closing block delim from out >>
 		# This code will typically only be executed for HTML files.
 		
 		if not single:
@@ -1351,21 +1220,19 @@ class baseOldDerivedFile:
 			# Rewrite out in place.
 			del out[:]
 			out.append(s)
-		
-		#@-body
-		#@-node:6::<< Remove a closing block delim from out >>
-	#@-body
-	#@-node:8::scanDoc
-	#@+node:9::scanText
-	#@+body
-	#@+at
-	#  This method is the read code.
+		#@-node:<< Remove a closing block delim from out >>
+		#@nl
+	#@nonl
+	#@-node:scanDoc
+	#@+node:scanText
+	#@+at 
+	#@nonl
+	# This method is the read code.
 	# 
 	# scanText reads lines from the file until the given ending sentinel is 
 	# found, and warns if any other ending sentinel is found instead.  It 
 	# calls itself recursively to handle most nested sentinels.
 	# 
-
 	#@-at
 	#@@c
 	def scanText (self,file,v,out,endSentinelKind,nextLine=None):
@@ -1374,10 +1241,8 @@ class baseOldDerivedFile:
 		lastLines = [] # The lines after @-leo
 		lineIndent = 0 ; linep = 0 # Changed only for sentinels.
 		while 1:
-			
-			#@<< put the next line into s >>
-			#@+node:1::<< put the next line into s >>
-			#@+body
+			#@		<< put the next line into s >>
+			#@+node:<< put the next line into s >>
 			if nextLine:
 				s = nextLine ; nextLine = None
 			else:
@@ -1385,21 +1250,19 @@ class baseOldDerivedFile:
 				if len(s) == 0: break
 			
 			# trace(`s`)
-			#@-body
-			#@-node:1::<< put the next line into s >>
-
-			
-			#@<< set kind, nextKind >>
-			#@+node:2::<< set kind, nextKind >>
-			#@+body
-			#@+at
-			#  For non-sentinel lines we look ahead to see whether the next 
+			#@nonl
+			#@-node:<< put the next line into s >>
+			#@nl
+			#@		<< set kind, nextKind >>
+			#@+node:<< set kind, nextKind >>
+			#@+at 
+			#@nonl
+			# For non-sentinel lines we look ahead to see whether the next 
 			# line is a sentinel.  If so, the newline that ends a non-sentinel 
 			# line belongs to the next sentinel.
-
 			#@-at
 			#@@c
-
+			
 			assert(nextLine==None)
 			
 			kind = self.sentinelKind(s)
@@ -1412,24 +1275,22 @@ class baseOldDerivedFile:
 			
 			# nextLine != None only if we have a non-sentinel line.
 			# Therefore, nextLine == None whenever scanText returns.
-			#@-body
-			#@-node:2::<< set kind, nextKind >>
-
+			#@nonl
+			#@-node:<< set kind, nextKind >>
+			#@nl
 			if kind != noSentinel:
-				
-				#@<< set lineIndent, linep and leading_ws >>
-				#@+node:3::<< Set lineIndent, linep and leading_ws >>
-				#@+body
-				#@+at
-				#  lineIndent is the total indentation on a sentinel line.  
-				# The first "self.indent" portion of that must be removed when 
+				#@			<< set lineIndent, linep and leading_ws >>
+				#@+node:<< Set lineIndent, linep and leading_ws >>
+				#@+at 
+				#@nonl
+				# lineIndent is the total indentation on a sentinel line.  The 
+				# first "self.indent" portion of that must be removed when 
 				# recreating text.  leading_ws is the remainder of the leading 
 				# whitespace.  linep points to the first "real" character of a 
 				# line, the character following the "indent" whitespace.
-
 				#@-at
 				#@@c
-
+				
 				# Point linep past the first self.indent whitespace characters.
 				if self.raw: # 10/15/02
 					linep =0
@@ -1447,19 +1308,15 @@ class baseOldDerivedFile:
 				
 				# Set leading_ws to the additional indentation on the line.
 				leading_ws = s[linep:i]
-				#@-body
-				#@-node:3::<< Set lineIndent, linep and leading_ws >>
-
+				#@nonl
+				#@-node:<< Set lineIndent, linep and leading_ws >>
+				#@nl
 				i = self.skipSentinelStart(s,0)
-			
-			#@<< handle the line in s >>
-			#@+node:5::<< handle the line in s >>
-			#@+body
+			#@		<< handle the line in s >>
+			#@+node:<< handle the line in s >>
 			if kind == noSentinel:
-				
-				#@<< append non-sentinel line >>
-				#@+node:1::<< append non-sentinel line >>
-				#@+body
+				#@	<< append non-sentinel line >>
+				#@+node:<< append non-sentinel line >>
 				# We don't output the trailing newline if the next line is a sentinel.
 				if self.raw: # 10/15/02
 					i = 0
@@ -1474,19 +1331,13 @@ class baseOldDerivedFile:
 				else:
 					line = s[i:-1] # don't output the newline
 					out.append(line)
-				
-				#@-body
-				#@-node:1::<< append non-sentinel line >>
-
-			
+				#@-node:<< append non-sentinel line >>
+				#@nl
 			#@<< handle common sentinels >>
-			#@+node:2::<< handle common sentinels >>
-			#@+body
+			#@+node:<< handle common sentinels >>
 			elif kind in (endAt, endBody,endDoc,endLeo,endNode,endOthers):
-					
-					#@<< handle an ending sentinel >>
-					#@+node:1::<< handle an ending sentinel >>
-					#@+body
+					#@		<< handle an ending sentinel >>
+					#@+node:<< handle an ending sentinel >>
 					# trace("end sentinel:", self.sentinelName(kind))
 					
 					if kind == endSentinelKind:
@@ -1508,14 +1359,12 @@ class baseOldDerivedFile:
 						name = self.sentinelName(kind)
 						expect = self.sentinelName(endSentinelKind)
 						self.readError("Ignoring " + name + " sentinel.  Expecting " + expect)
-					#@-body
-					#@-node:1::<< handle an ending sentinel >>
-
+					#@nonl
+					#@-node:<< handle an ending sentinel >>
+					#@nl
 			elif kind == startBody:
-				
-				#@<< scan @+body >>
-				#@+node:4::<< scan @+body >>
-				#@+body
+				#@	<< scan @+body >>
+				#@+node:<< scan @+body >>
 				assert(match(s,i,"+body"))
 				
 				child_out = [] ; child = v # Do not change out or v!
@@ -1536,22 +1385,18 @@ class baseOldDerivedFile:
 					child.t.tempBodyString = body
 				
 				self.indent = oldIndent
-				#@-body
-				#@-node:4::<< scan @+body >>
-
+				#@nonl
+				#@-node:<< scan @+body >>
+				#@nl
 			elif kind == startNode:
-				
-				#@<< scan @+node >>
-				#@+node:6::<< scan @+node >>
-				#@+body
+				#@	<< scan @+node >>
+				#@+node:<< scan @+node >>
 				assert(match(s,i,"+node:"))
 				i += 6
 				
 				childIndex = 0 ; cloneIndex = 0
-				
 				#@<< Set childIndex >>
-				#@+node:1::<< Set childIndex >>
-				#@+body
+				#@+node:<< Set childIndex >>
 				i = skip_ws(s,i) ; j = i
 				while i < len(s) and s[i] in string.digits:
 					i += 1
@@ -1566,13 +1411,11 @@ class baseOldDerivedFile:
 					i += 1 # Skip the ":".
 				else:
 					self.readError("Bad child index in @+node")
-				#@-body
-				#@-node:1::<< Set childIndex >>
-
-				
+				#@nonl
+				#@-node:<< Set childIndex >>
+				#@nl
 				#@<< Set cloneIndex >>
-				#@+node:2::<< Set cloneIndex >>
-				#@+body
+				#@+node:<< Set cloneIndex >>
 				while i < len(s) and s[i] != ':' and not is_nl(s,i):
 					if match(s,i,"C="):
 						# set cloneIndex from the C=nnn, field
@@ -1587,14 +1430,12 @@ class baseOldDerivedFile:
 					i += 1
 				else:
 					self.readError("Bad attribute field in @+node")
-				#@-body
-				#@-node:2::<< Set cloneIndex >>
-
+				#@nonl
+				#@-node:<< Set cloneIndex >>
+				#@nl
 				headline = ""
-				
 				#@<< Set headline and ref >>
-				#@+node:3::<< Set headline and ref >>
-				#@+body
+				#@+node:<< Set headline and ref >>
 				# Set headline to the rest of the line.
 				# 6/22/03: don't strip leading whitespace.
 				if len(self.endSentinelComment) == 0:
@@ -1615,17 +1456,15 @@ class baseOldDerivedFile:
 					if match(s,i,"<<"):
 						k = s.find(">>",i)
 						if k != -1: ref = s[i:k+2]
-				#@-body
-				#@-node:3::<< Set headline and ref >>
-
+				#@nonl
+				#@-node:<< Set headline and ref >>
+				#@nl
 				
 				# print childIndex,headline
 				
 				if childIndex == 0: # The root node.
-					
-					#@<< Check the filename in the sentinel >>
-					#@+node:4::<< Check the filename in the sentinel >>
-					#@+body
+					#@	<< Check the filename in the sentinel >>
+					#@+node:<< Check the filename in the sentinel >>
 					h = headline.strip()
 					
 					if h[:5] == "@file":
@@ -1639,10 +1478,8 @@ class baseOldDerivedFile:
 							self.readError("File name in @node sentinel does not match file's name")
 					else:
 						self.readError("Missing @file in root @node sentinel")
-					
-					#@-body
-					#@-node:4::<< Check the filename in the sentinel >>
-
+					#@-node:<< Check the filename in the sentinel >>
+					#@nl
 					# Put the text of the root node in the current node.
 					self.scanText(file,v,out,endNode)
 					v.t.setCloneIndex(cloneIndex)
@@ -1654,10 +1491,8 @@ class baseOldDerivedFile:
 					# if cloneIndex > 0: trace("clone index:" + `cloneIndex` + ", " + `child`)
 					self.scanText(file,child,out,endNode)
 				
-				
 				#@<< look for sentinels that may follow a reference >>
-				#@+node:5::<< look for sentinels that may follow a reference >>
-				#@+body
+				#@+node:<< look for sentinels that may follow a reference >>
 				s = self.readLine(file)
 				kind = self.sentinelKind(s)
 				
@@ -1669,26 +1504,23 @@ class baseOldDerivedFile:
 					out.append(s)
 				else:
 					nextLine = s # Handle the sentinel or blank line later.
-				
-				#@-body
-				#@-node:5::<< look for sentinels that may follow a reference >>
-				#@-body
-				#@-node:6::<< scan @+node >>
-
+				#@-node:<< look for sentinels that may follow a reference >>
+				#@nl
+				#@nonl
+				#@-node:<< scan @+node >>
+				#@nl
 			elif kind == startRef:
-				
-				#@<< scan old ref >>
-				#@+node:2::<< scan old ref >> (3.0)
-				#@+body
-				#@+at
-				#  The sentinel contains an @ followed by a section name in 
+				#@	<< scan old ref >>
+				#@+node:<< scan old ref >> (3.0)
+				#@+at 
+				#@nonl
+				# The sentinel contains an @ followed by a section name in 
 				# angle brackets.  This code is different from the code for 
 				# the @@ sentinel: the expansion of the reference does not 
 				# include a trailing newline.
-
 				#@-at
 				#@@c
-
+				
 				assert(match(s,i,"<<"))
 				
 				if len(self.endSentinelComment) == 0:
@@ -1703,66 +1535,53 @@ class baseOldDerivedFile:
 					line = line.replace('@@','@')
 				
 				out.append(line)
-				#@-body
-				#@-node:2::<< scan old ref >> (3.0)
-
+				#@nonl
+				#@-node:<< scan old ref >> (3.0)
+				#@nl
 			elif kind == startAt:
-				
-				#@<< scan @+at >>
-				#@+node:3::<< scan @+at >>
-				#@+body
+				#@	<< scan @+at >>
+				#@+node:<< scan @+at >>
 				assert(match(s,i,"+at"))
 				self.scanDoc(file,s,i,out,kind)
-				#@-body
-				#@-node:3::<< scan @+at >>
-
+				#@nonl
+				#@-node:<< scan @+at >>
+				#@nl
 			elif kind == startDoc:
-				
-				#@<< scan @+doc >>
-				#@+node:5::<< scan @+doc >>
-				#@+body
+				#@	<< scan @+doc >>
+				#@+node:<< scan @+doc >>
 				assert(match(s,i,"+doc"))
 				self.scanDoc(file,s,i,out,kind)
-				#@-body
-				#@-node:5::<< scan @+doc >>
-
+				#@nonl
+				#@-node:<< scan @+doc >>
+				#@nl
 			elif kind == startOthers:
-				
-				#@<< scan @+others >>
-				#@+node:7::<< scan @+others >>
-				#@+body
+				#@	<< scan @+others >>
+				#@+node:<< scan @+others >>
 				assert(match(s,i,"+others"))
 				
 				# Make sure that the generated at-others is properly indented.
 				out.append(leading_ws + "@others")
 				
 				self.scanText(file,v,out,endOthers)
-				#@-body
-				#@-node:7::<< scan @+others >>
-			#@-body
-			#@-node:2::<< handle common sentinels >>
-
-			
+				#@nonl
+				#@-node:<< scan @+others >>
+				#@nl
+			#@nonl
+			#@-node:<< handle common sentinels >>
+			#@nl
 			#@<< handle rare sentinels >>
-			#@+node:3::<< handle rare sentinels >>
-			#@+body
+			#@+node:<< handle rare sentinels >>
 			elif kind == startComment:
-				
-				#@<< scan @comment >>
-				#@+node:3::<< scan @comment >>
-				#@+body
+				#@	<< scan @comment >>
+				#@+node:<< scan @comment >>
 				assert(match(s,i,"comment"))
 				
 				# We need do nothing more to ignore the comment line!
-				
-				#@-body
-				#@-node:3::<< scan @comment >>
-
+				#@-node:<< scan @comment >>
+				#@nl
 			elif kind == startDelims:
-				
-				#@<< scan @delims >>
-				#@+node:4::<< scan @delims >>
-				#@+body
+				#@	<< scan @delims >>
+				#@+node:<< scan @delims >>
 				assert(match(s,i-1,"@delims"));
 				
 				# Skip the keyword and whitespace.
@@ -1799,14 +1618,12 @@ class baseOldDerivedFile:
 					self.readError("Bad @delims")
 					# Append the bad @delims line to the body text.
 					out.append("@delims")
-				#@-body
-				#@-node:4::<< scan @delims >>
-
+				#@nonl
+				#@-node:<< scan @delims >>
+				#@nl
 			elif kind == startDirective:
-				
-				#@<< scan @@ >>
-				#@+node:2::<< scan @@ >>
-				#@+body
+				#@	<< scan @@ >>
+				#@+node:<< scan @@ >>
 				# The first '@' has already been eaten.
 				assert(match(s,i,"@"))
 				
@@ -1827,24 +1644,20 @@ class baseOldDerivedFile:
 					s2 = s2.replace('@@','@')
 				out.append(s2)
 				# trace(`s2`)
-				#@-body
-				#@-node:2::<< scan @@ >>
-
+				#@nonl
+				#@-node:<< scan @@ >>
+				#@nl
 			elif kind == startLeo:
-				
-				#@<< scan @+leo >>
-				#@+node:1::<< scan @+leo >>
-				#@+body
+				#@	<< scan @+leo >>
+				#@+node:<< scan @+leo >>
 				assert(match(s,i,"+leo"))
 				self.readError("Ignoring unexpected @+leo sentinel")
-				#@-body
-				#@-node:1::<< scan @+leo >>
-
+				#@nonl
+				#@-node:<< scan @+leo >>
+				#@nl
 			elif kind == startVerbatim:
-				
-				#@<< scan @verbatim >>
-				#@+node:5::<< scan @verbatim >>
-				#@+body
+				#@	<< scan @verbatim >>
+				#@+node:<< scan @verbatim >>
 				assert(match(s,i,"verbatim"))
 				
 				# Skip the sentinel.
@@ -1853,45 +1666,36 @@ class baseOldDerivedFile:
 				# Append the next line to the text.
 				i = self.skipIndent(s,0,self.indent)
 				out.append(s[i:])
-				
-				#@-body
-				#@-node:5::<< scan @verbatim >>
-			#@-body
-			#@-node:3::<< handle rare sentinels >>
-
+				#@-node:<< scan @verbatim >>
+				#@nl
+			#@nonl
+			#@-node:<< handle rare sentinels >>
+			#@nl
 			else:
-				
-				#@<< warn about unknown sentinel >>
-				#@+node:4::<< warn about unknown sentinel >>
-				#@+body
+				#@	<< warn about unknown sentinel >>
+				#@+node:<< warn about unknown sentinel >>
 				j = i
 				i = skip_line(s,i)
 				line = s[j:i]
 				self.readError("Unknown sentinel: " + line)
-				#@-body
-				#@-node:4::<< warn about unknown sentinel >>
-			#@-body
-			#@-node:5::<< handle the line in s >>
-
-		
-		#@<< handle unexpected end of text >>
-		#@+node:4::<< handle unexpected end of text >>
-		#@+body
+				#@nonl
+				#@-node:<< warn about unknown sentinel >>
+				#@nl
+			#@nonl
+			#@-node:<< handle the line in s >>
+			#@nl
+		#@	<< handle unexpected end of text >>
+		#@+node:<< handle unexpected end of text >>
 		# Issue the error.
 		name = self.sentinelName(endSentinelKind)
 		self.readError("Unexpected end of file. Expecting " + name + "sentinel" )
-		
-		#@-body
-		#@-node:4::<< handle unexpected end of text >>
-
+		#@-node:<< handle unexpected end of text >>
+		#@nl
 		assert(len(s)==0 and nextLine==None) # We get here only if readline fails.
 		return lastLines # We get here only if there are problems.
-	#@-body
-	#@-node:9::scanText
-	#@-node:2::Reading (3.x)
-	#@+node:3::Sentinels (3.x)
-	#@+node:1::nodeSentinelText
-	#@+body
+	#@nonl
+	#@-node:scanText
+	#@+node:nodeSentinelText
 	# 4/5/03: config.write_clone_indices no longer used.
 	
 	def nodeSentinelText(self,v):
@@ -1902,47 +1706,44 @@ class baseOldDerivedFile:
 			index = v.childIndex() + 1
 	
 		h = v.headString()
-		
-		#@<< remove comment delims from h if necessary >>
-		#@+node:1::<< remove comment delims from h if necessary >>
-		#@+body
-		#@+at
-		#  Bug fix 1/24/03:
+		#@	<< remove comment delims from h if necessary >>
+		#@+node:<< remove comment delims from h if necessary >>
+		#@+at 
+		#@nonl
+		# Bug fix 1/24/03:
 		# 
 		# If the present @language/@comment settings do not specify a 
 		# single-line comment we remove all block comment delims from h.  This 
-		# prevents headline text from interfering with the parsing of node sentinels.
-
+		# prevents headline text from interfering with the parsing of node 
+		# sentinels.
 		#@-at
 		#@@c
-
+		
 		start = self.startSentinelComment
 		end = self.endSentinelComment
 		
 		if end and len(end) > 0:
 			h = h.replace(start,"")
 			h = h.replace(end,"")
-		#@-body
-		#@-node:1::<< remove comment delims from h if necessary >>
-
+		#@nonl
+		#@-node:<< remove comment delims from h if necessary >>
+		#@nl
 	
 		return str(index) + '::' + h
-	#@-body
-	#@-node:1::nodeSentinelText
-	#@+node:2::putCloseNodeSentinel
-	#@+body
+	#@nonl
+	#@-node:nodeSentinelText
+	#@+node:putCloseNodeSentinel
 	def putCloseNodeSentinel(self,v):
 	
 		s = self.nodeSentinelText(v)
 		self.putSentinel("@-node:" + s)
-	#@-body
-	#@-node:2::putCloseNodeSentinel
-	#@+node:3::putCloseSentinels
-	#@+body
-	#@+at
-	#  root is an ancestor of v, or root == v.  We call putCloseSentinel for v 
+	#@nonl
+	#@-node:putCloseNodeSentinel
+	#@+node:putCloseSentinels
+	#@+at 
+	#@nonl
+	# root is an ancestor of v, or root == v.  We call putCloseSentinel for v 
 	# up to, but not including, root.
-
 	#@-at
 	#@@c
 	def putCloseSentinels(self,root,v):
@@ -1953,14 +1754,13 @@ class baseOldDerivedFile:
 			assert(v) # root must be an ancestor of v.
 			if  v == root: break
 			self.putCloseNodeSentinel(v)
-	#@-body
-	#@-node:3::putCloseSentinels
-	#@+node:4::putOpenLeoSentinel
-	#@+body
-	#@+at
-	#  This method is the same as putSentinel except we don't put an opening 
+	#@nonl
+	#@-node:putCloseSentinels
+	#@+node:putOpenLeoSentinel
+	#@+at 
+	#@nonl
+	# This method is the same as putSentinel except we don't put an opening 
 	# newline and leading whitespace.
-
 	#@-at
 	#@@c
 	def putOpenLeoSentinel(self,s):
@@ -1980,14 +1780,11 @@ class baseOldDerivedFile:
 			self.newline_pending = true # Schedule a newline.
 		else:
 			self.onl() # End of sentinel.
-	
-	#@-body
-	#@-node:4::putOpenLeoSentinel
-	#@+node:5::putOpenNodeSentinel
-	#@+body
-	#@+at
-	#  This method puts an open node sentinel for node v.
-
+	#@-node:putOpenLeoSentinel
+	#@+node:putOpenNodeSentinel
+	#@+at 
+	#@nonl
+	# This method puts an open node sentinel for node v.
 	#@-at
 	#@@c
 	def putOpenNodeSentinel(self,v):
@@ -1998,14 +1795,13 @@ class baseOldDerivedFile:
 		
 		s = self.nodeSentinelText(v)
 		self.putSentinel("@+node:" + s)
-	#@-body
-	#@-node:5::putOpenNodeSentinel
-	#@+node:6::putOpenSentinels
-	#@+body
-	#@+at
-	#  root is an ancestor of v, or root == v.  We call putOpenNodeSentinel on 
+	#@nonl
+	#@-node:putOpenNodeSentinel
+	#@+node:putOpenSentinels
+	#@+at 
+	#@nonl
+	# root is an ancestor of v, or root == v.  We call putOpenNodeSentinel on 
 	# all the descendents of root which are the ancestors of v.
-
 	#@-at
 	#@@c
 	def putOpenSentinels(self,root,v):
@@ -2019,12 +1815,12 @@ class baseOldDerivedFile:
 			assert(node)
 			self.putOpenNodeSentinel(node)
 			last = node
-	#@-body
-	#@-node:6::putOpenSentinels
-	#@+node:7::putSentinel (applies cweb hack)
-	#@+body
-	#@+at
-	#  All sentinels are eventually output by this method.
+	#@nonl
+	#@-node:putOpenSentinels
+	#@+node:putSentinel (applies cweb hack)
+	#@+at 
+	#@nonl
+	# All sentinels are eventually output by this method.
 	# 
 	# Sentinels include both the preceding and following newlines. This rule 
 	# greatly simplies the code and has several important benefits:
@@ -2041,7 +1837,6 @@ class baseOldDerivedFile:
 	# The only exception is that no newline is required before the opening 
 	# "leo" sentinel. The putLeoSentinel and isLeoSentinel routines handle 
 	# this minor exception.
-
 	#@-at
 	#@@c
 	def putSentinel(self,s):
@@ -2067,21 +1862,20 @@ class baseOldDerivedFile:
 			self.newline_pending = true # Schedule a newline.
 		else:
 			self.onl() # End of sentinel.
-	#@-body
-	#@-node:7::putSentinel (applies cweb hack)
-	#@+node:8::sentinelKind
-	#@+body
-	#@+at
-	#  This method tells what kind of sentinel appears in line s.  Typically s 
+	#@nonl
+	#@-node:putSentinel (applies cweb hack)
+	#@+node:sentinelKind
+	#@+at 
+	#@nonl
+	# This method tells what kind of sentinel appears in line s.  Typically s 
 	# will be an empty line before the actual sentinel, but it is also valid 
 	# for s to be an actual sentinel line.
 	# 
 	# Returns (kind, s, emptyFlag), where emptyFlag is true if kind == 
 	# noSentinel and s was an empty line on entry.
-
 	#@-at
 	#@@c
-
+	
 	def sentinelKind(self,s):
 	
 		# trace(s)
@@ -2112,10 +1906,9 @@ class baseOldDerivedFile:
 		else:
 			# trace("not found:",key)
 			return noSentinel
-	#@-body
-	#@-node:8::sentinelKind
-	#@+node:9::sentinelName
-	#@+body
+	#@nonl
+	#@-node:sentinelKind
+	#@+node:sentinelName
 	# Returns the name of the sentinel for warnings.
 	
 	sentinelNameDict = {
@@ -2138,10 +1931,9 @@ class baseOldDerivedFile:
 			return atFile.sentinelNameDict[kind]
 		else:
 			return "<unknown sentinel!>"
-	#@-body
-	#@-node:9::sentinelName
-	#@+node:10::skipSentinelStart
-	#@+body
+	#@nonl
+	#@-node:sentinelName
+	#@+node:skipSentinelStart
 	def skipSentinelStart(self,s,i):
 	
 		start = self.startSentinelComment
@@ -2155,13 +1947,8 @@ class baseOldDerivedFile:
 		i = skip_ws(s,i)
 		assert(i < len(s) and s[i] == '@')
 		return i + 1
-	
-	#@-body
-	#@-node:10::skipSentinelStart
-	#@-node:3::Sentinels (3.x)
-	#@+node:4::Testing (3.x)
-	#@+node:1::scanAll
-	#@+body
+	#@-node:skipSentinelStart
+	#@+node:scanAll
 	def scanAll (self):
 	
 		c = self.commands ; v = c.rootVnode()
@@ -2172,20 +1959,17 @@ class baseOldDerivedFile:
 				self.scanFile(v)
 				v = v.nodeAfterTree()
 			else: v = v.threadNext()
-	#@-body
-	#@-node:1::scanAll
-	#@+node:2::scanFile
-	#@+body
+	#@nonl
+	#@-node:scanAll
+	#@+node:scanFile
 	def scanFile(self,root):
 	
 		es("scanning: " + root.headString())
 		self.targetFileName = root.atFileNodeName()
 		self.root = root
 		self.errors = 0
-		
-		#@<< open file >>
-		#@+node:1::<< open file >>
-		#@+body
+		#@	<< open file >>
+		#@+node:<< open file >>
 		if len(self.targetFileName) == 0:
 			self.readError("Missing file name")
 		else:
@@ -2193,31 +1977,24 @@ class baseOldDerivedFile:
 				file = open(self.targetFileName,'r')
 			except:
 				self.readError("Error reading file")
-		
-		#@-body
-		#@-node:1::<< open file >>
-
+		#@-node:<< open file >>
+		#@nl
 		if self.errors > 0: return 0
-		
-		#@<< Scan the file buffer >>
-		#@+node:2::<< Scan the file buffer  >>
-		#@+body
+		#@	<< Scan the file buffer >>
+		#@+node:<< Scan the file buffer  >>
 		self.indent = 0
 		out = []
 		self.scanHeader(file)
 		self.scanText(file,root,out,endLeo)
 		s = string.join(out, "")
 		root.setBodyStringOrPane(s)
-		#@-body
-		#@-node:2::<< Scan the file buffer  >>
-
+		#@nonl
+		#@-node:<< Scan the file buffer  >>
+		#@nl
 		return self.errors == 0
-	#@-body
-	#@-node:2::scanFile
-	#@-node:4::Testing (3.x)
-	#@+node:5::Utilites (3.x)
-	#@+node:1::directiveKind
-	#@+body
+	#@nonl
+	#@-node:scanFile
+	#@+node:directiveKind
 	# Returns the kind of at-directive or noDirective.
 	
 	def directiveKind(self,s,i):
@@ -2257,19 +2034,15 @@ class baseOldDerivedFile:
 				return miscDirective
 	
 		return noDirective
-	#@-body
-	#@-node:1::directiveKind
-	#@+node:2::error
-	#@+body
+	#@nonl
+	#@-node:directiveKind
+	#@+node:error
 	def error(self,message):
 	
 		es_error(message)
 		self.errors += 1
-	
-	#@-body
-	#@-node:2::error
-	#@+node:3::readError
-	#@+body
+	#@-node:error
+	#@+node:readError
 	def readError(self,message):
 	
 		# This is useful now that we don't print the actual messages.
@@ -2284,22 +2057,21 @@ class baseOldDerivedFile:
 		
 		self.root.setOrphan()
 		self.root.setDirty()
-	#@-body
-	#@-node:3::readError
-	#@+node:4::scanAllDirectives
-	#@+body
-	#@+at
-	#  Once a directive is seen, no other related directives in nodes further 
+	#@nonl
+	#@-node:readError
+	#@+node:scanAllDirectives
+	#@+at 
+	#@nonl
+	# Once a directive is seen, no other related directives in nodes further 
 	# up the tree have any effect.  For example, if an @color directive is 
 	# seen in node v, no @color or @nocolor directives are examined in any 
 	# ancestor of v.
 	# 
 	# This code is similar to Commands::scanAllDirectives, but it has been 
 	# modified for use by the atFile class.
-
 	#@-at
 	#@@c
-
+	
 	def scanAllDirectives(self,v):
 		
 		"""Scan vnode v and v's ancestors looking for directives,
@@ -2307,10 +2079,8 @@ class baseOldDerivedFile:
 		"""
 	
 		c = self.commands
-		
-		#@<< Set ivars >>
-		#@+node:1::<< Set ivars >>
-		#@+body
+		#@	<< Set ivars >>
+		#@+node:<< Set ivars >>
 		self.page_width = self.commands.page_width
 		self.tab_width  = self.commands.tab_width
 		
@@ -2321,13 +2091,11 @@ class baseOldDerivedFile:
 		
 		self.encoding = app().config.default_derived_file_encoding
 		self.output_newline = getOutputNewline() # 4/24/03: initialize from config settings.
-		#@-body
-		#@-node:1::<< Set ivars >>
-
-		
-		#@<< Set path from @file node >>
-		#@+node:2::<< Set path from @file node >>
-		#@+body
+		#@nonl
+		#@-node:<< Set ivars >>
+		#@nl
+		#@	<< Set path from @file node >>
+		#@+node:<< Set path from @file node >>
 		# An absolute path in an @file node over-rides everything else.
 		# A relative path gets appended to the relative path by the open logic.
 		
@@ -2350,18 +2118,14 @@ class baseOldDerivedFile:
 				if not self.default_directory:
 					self.error("Directory \"" + dir + "\" does not exist")
 					
-		
-		#@-body
-		#@-node:2::<< Set path from @file node >>
-
+		#@-node:<< Set path from @file node >>
+		#@nl
 		old = {}
 		while v:
 			s = v.t.bodyString
 			dict = get_directives_dict(s)
-			
-			#@<< Test for @path >>
-			#@+node:7::<< Test for @path >>
-			#@+body
+			#@		<< Test for @path >>
+			#@+node:<< Test for @path >>
 			# We set the current director to a path so future writes will go to that directory.
 			
 			loadDir = app().loadDir
@@ -2369,10 +2133,8 @@ class baseOldDerivedFile:
 			if not self.default_directory and not old.has_key("path") and dict.has_key("path"):
 			
 				k = dict["path"]
-				
-				#@<< compute relative path from s[k:] >>
-				#@+node:1::<< compute relative path from s[k:] >>
-				#@+body
+				#@	<< compute relative path from s[k:] >>
+				#@+node:<< compute relative path from s[k:] >>
 				j = i = k + len("@path")
 				i = skip_to_end_of_line(s,i)
 				path = string.strip(s[j:i])
@@ -2386,17 +2148,15 @@ class baseOldDerivedFile:
 				
 				if 0: # 11/14/02: we want a _relative_ path, not an absolute path.
 					path = os.path.join(loadDir,path)
-				#@-body
-				#@-node:1::<< compute relative path from s[k:] >>
-
+				#@nonl
+				#@-node:<< compute relative path from s[k:] >>
+				#@nl
 				if path and len(path) > 0:
 					base = getBaseDirectory() # returns "" on error.
 					path = os.path.join(base,path)
 					if os.path.isabs(path):
-						
-						#@<< handle absolute path >>
-						#@+node:2::<< handle absolute path >>
-						#@+body
+						#@			<< handle absolute path >>
+						#@+node:<< handle absolute path >>
 						# path is an absolute path.
 						
 						if os.path.exists(path):
@@ -2405,33 +2165,27 @@ class baseOldDerivedFile:
 							self.default_directory = makeAllNonExistentDirectories(path)
 							if not self.default_directory:
 								self.error("invalid @path: " + path)
-						
-						#@-body
-						#@-node:2::<< handle absolute path >>
-
+						#@-node:<< handle absolute path >>
+						#@nl
 					else:
 						self.error("ignoring bad @path: " + path)
 				else:
 					self.error("ignoring empty @path")
-			#@-body
-			#@-node:7::<< Test for @path >>
-
-			
-			#@<< Test for @encoding >>
-			#@+node:4::<< Test for @encoding >>
-			#@+body
+			#@nonl
+			#@-node:<< Test for @path >>
+			#@nl
+			#@		<< Test for @encoding >>
+			#@+node:<< Test for @encoding >>
 			if not old.has_key("encoding") and dict.has_key("encoding"):
 				
 				e = scanAtEncodingDirective(s,dict)
 				if e:
 					self.encoding = e
-			#@-body
-			#@-node:4::<< Test for @encoding >>
-
-			
-			#@<< Test for @comment and @language >>
-			#@+node:3::<< Test for @comment and @language >>
-			#@+body
+			#@nonl
+			#@-node:<< Test for @encoding >>
+			#@nl
+			#@		<< Test for @comment and @language >>
+			#@+node:<< Test for @comment and @language >>
 			# 10/17/02: @language and @comment may coexist in @file trees.
 			# For this to be effective the @comment directive should follow the @language directive.
 			
@@ -2445,64 +2199,50 @@ class baseOldDerivedFile:
 				k = dict["language"]
 				# 11/14/02: Fix bug reported by J.M.Gilligan.
 				self.language,delim1,delim2,delim3 = set_language(s,k)
-			#@-body
-			#@-node:3::<< Test for @comment and @language >>
-
-			
-			#@<< Test for @header and @noheader >>
-			#@+node:5::<< Test for @header and @noheader >>
-			#@+body
+			#@nonl
+			#@-node:<< Test for @comment and @language >>
+			#@nl
+			#@		<< Test for @header and @noheader >>
+			#@+node:<< Test for @header and @noheader >>
 			# EKR: 10/10/02: perform the sames checks done by tangle.scanAllDirectives.
 			if dict.has_key("header") and dict.has_key("noheader"):
 				es("conflicting @header and @noheader directives")
-			#@-body
-			#@-node:5::<< Test for @header and @noheader >>
-
-			
-			#@<< Test for @lineending >>
-			#@+node:6::<< Test for @lineending >>
-			#@+body
+			#@nonl
+			#@-node:<< Test for @header and @noheader >>
+			#@nl
+			#@		<< Test for @lineending >>
+			#@+node:<< Test for @lineending >>
 			if not old.has_key("lineending") and dict.has_key("lineending"):
 				
 				lineending = scanAtLineendingDirective(s,dict)
 				if lineending:
 					self.output_newline = lineending
-			
-			#@-body
-			#@-node:6::<< Test for @lineending >>
-
-			
-			#@<< Test for @pagewidth >>
-			#@+node:8::<< Test for @pagewidth >>
-			#@+body
+			#@-node:<< Test for @lineending >>
+			#@nl
+			#@		<< Test for @pagewidth >>
+			#@+node:<< Test for @pagewidth >>
 			if dict.has_key("pagewidth") and not old.has_key("pagewidth"):
 				
 				w = scanAtPagewidthDirective(s,dict,issue_error_flag=true)
 				if w and w > 0:
 					self.page_width = w
-			#@-body
-			#@-node:8::<< Test for @pagewidth >>
-
-			
-			#@<< Test for @tabwidth >>
-			#@+node:9::<< Test for @tabwidth >>
-			#@+body
+			#@nonl
+			#@-node:<< Test for @pagewidth >>
+			#@nl
+			#@		<< Test for @tabwidth >>
+			#@+node:<< Test for @tabwidth >>
 			if dict.has_key("tabwidth") and not old.has_key("tabwidth"):
 				
 				w = scanAtTabwidthDirective(s,dict,issue_error_flag=true)
 				if w and w != 0:
 					self.tab_width = w
 			
-			
-			#@-body
-			#@-node:9::<< Test for @tabwidth >>
-
+			#@-node:<< Test for @tabwidth >>
+			#@nl
 			old.update(dict)
 			v = v.parent()
-		
-		#@<< Set current directory >>
-		#@+node:10::<< Set current directory >>
-		#@+body
+		#@	<< Set current directory >>
+		#@+node:<< Set current directory >>
 		# This code is executed if no valid absolute path was specified in the @file node or in an @path directive.
 		
 		if c.frame and not self.default_directory:
@@ -2520,13 +2260,11 @@ class baseOldDerivedFile:
 			# This should never happen: c.openDirectory should be a good last resort.
 			self.error("No absolute directory specified anywhere.")
 			self.default_directory = ""
-		#@-body
-		#@-node:10::<< Set current directory >>
-
-		
-		#@<< Set comment Strings from delims >>
-		#@+node:11::<< Set comment Strings from delims >>
-		#@+body
+		#@nonl
+		#@-node:<< Set current directory >>
+		#@nl
+		#@	<< Set comment Strings from delims >>
+		#@+node:<< Set comment Strings from delims >>
 		# Use single-line comments if we have a choice.
 		# 8/2/01: delim1,delim2,delim3 now correspond to line,start,end
 		if delim1:
@@ -2542,12 +2280,12 @@ class baseOldDerivedFile:
 			es("delim1,delim2,delim3:" + `delim1`+":"+`delim2`+":"+`delim3`)
 			self.startSentinelComment = "#" # This should never happen!
 			self.endSentinelComment = ""
-		#@-body
-		#@-node:11::<< Set comment Strings from delims >>
-	#@-body
-	#@-node:4::scanAllDirectives
-	#@+node:5::skipIndent
-	#@+body
+		#@nonl
+		#@-node:<< Set comment Strings from delims >>
+		#@nl
+	#@nonl
+	#@-node:scanAllDirectives
+	#@+node:skipIndent
 	# Skip past whitespace equivalent to width spaces.
 	
 	def skipIndent(self,s,i,width):
@@ -2559,10 +2297,9 @@ class baseOldDerivedFile:
 			else: break
 			i += 1
 		return i
-	#@-body
-	#@-node:5::skipIndent
-	#@+node:6::writeError
-	#@+body
+	#@nonl
+	#@-node:skipIndent
+	#@+node:writeError
 	def writeError(self,message):
 	
 		if self.errors == 0:
@@ -2571,13 +2308,9 @@ class baseOldDerivedFile:
 		self.error(message)
 		self.root.setOrphan()
 		self.root.setDirty()
-	#@-body
-	#@-node:6::writeError
-	#@-node:5::Utilites (3.x)
-	#@+node:6::Writing (3.x)
-	#@+node:1::Top level
-	#@+node:1::old_df.rawWrite
-	#@+body
+	#@nonl
+	#@-node:writeError
+	#@+node:old_df.rawWrite
 	def rawWrite(self,root):
 	
 		trace("old_df",root)
@@ -2590,27 +2323,23 @@ class baseOldDerivedFile:
 			ok = self.openWriteFile(root)
 			if not ok: return
 			next = root.nodeAfterTree()
-			
-			#@<< write root's tree >>
-			#@+node:1::<< write root's tree >>
-			#@+body
+			#@		<< write root's tree >>
+			#@+node:<< write root's tree >>
 			next = root.nodeAfterTree()
 			
 			if 0: # Clone indices are no longer used.
 				self.updateCloneIndices(root, next)
 			
-			
 			#@<< put all @first lines in root >>
-			#@+node:1::<< put all @first lines in root >>
-			#@+body
-			#@+at
-			#  Write any @first lines.  These lines are also converted to 
+			#@+node:<< put all @first lines in root >>
+			#@+at 
+			#@nonl
+			# Write any @first lines.  These lines are also converted to 
 			# @verbatim lines, so the read logic simply ignores lines 
 			# preceding the @+leo sentinel.
-
 			#@-at
 			#@@c
-
+			
 			s = root.t.bodyString
 			tag = "@first"
 			i = 0
@@ -2623,14 +2352,12 @@ class baseOldDerivedFile:
 				line = s[j:i]
 				self.putBuffered(line) ; self.onl()
 				i = skip_nl(s,i)
-			#@-body
-			#@-node:1::<< put all @first lines in root >>
-
+			#@nonl
+			#@-node:<< put all @first lines in root >>
+			#@nl
 			self.putOpenLeoSentinel("@+leo")
-			
 			#@<< put optional @comment sentinel lines >>
-			#@+node:2::<< put optional @comment sentinel lines >>
-			#@+body
+			#@+node:<< put optional @comment sentinel lines >>
 			s2 = app().config.output_initial_comment
 			if s2:
 				lines = string.split(s2,"\\n")
@@ -2638,17 +2365,13 @@ class baseOldDerivedFile:
 					line = line.replace("@date",time.asctime())
 					if len(line)> 0:
 						self.putSentinel("@comment " + line)
-			
-			#@-body
-			#@-node:2::<< put optional @comment sentinel lines >>
-
+			#@-node:<< put optional @comment sentinel lines >>
+			#@nl
 			
 			v = root
 			while v and v != next:
-				
-				#@<< Write v's node >>
-				#@+node:3::<< Write v's node >>
-				#@+body
+				#@	<< Write v's node >>
+				#@+node:<< Write v's node >>
 				self.putOpenNodeSentinel(v)
 					
 				s = v.bodyString()
@@ -2662,25 +2385,21 @@ class baseOldDerivedFile:
 					self.putSentinel("@-body")
 					
 				self.putCloseNodeSentinel(v)
-				
-				#@-body
-				#@-node:3::<< Write v's node >>
-
+				#@-node:<< Write v's node >>
+				#@nl
 				v = v.threadNext()
 			
 			self.putSentinel("@-leo")
-			
 			#@<< put all @last lines in root >>
-			#@+node:4::<< put all @last lines in root >>
-			#@+body
-			#@+at
-			#  Write any @last lines.  These lines are also converted to 
+			#@+node:<< put all @last lines in root >>
+			#@+at 
+			#@nonl
+			# Write any @last lines.  These lines are also converted to 
 			# @verbatim lines, so the read logic simply ignores lines 
 			# following the @-leo sentinel.
-
 			#@-at
 			#@@c
-
+			
 			tag = "@last"
 			lines = string.split(root.t.bodyString,'\n')
 			n = len(lines) ; j = k = n - 1
@@ -2696,21 +2415,19 @@ class baseOldDerivedFile:
 			for line in lines[j+1:k+1]:
 				i = len(tag) ; i = skip_ws(line,i)
 				self.putBuffered(line[i:]) ; self.onl()
-			#@-body
-			#@-node:4::<< put all @last lines in root >>
-			#@-body
-			#@-node:1::<< write root's tree >>
-
+			#@nonl
+			#@-node:<< put all @last lines in root >>
+			#@nl
+			#@nonl
+			#@-node:<< write root's tree >>
+			#@nl
 			self.closeWriteFile()
 			self.replaceTargetFileIfDifferent()
 			root.clearOrphan() ; root.clearDirty()
 		except:
 			self.handleWriteException(root)
-	
-	#@-body
-	#@-node:1::old_df.rawWrite
-	#@+node:2::old_df.silentWrite
-	#@+body
+	#@-node:old_df.rawWrite
+	#@+node:old_df.silentWrite
 	def silentWrite(self,root):
 	
 		trace("old_df",root)
@@ -2725,41 +2442,34 @@ class baseOldDerivedFile:
 			next = root.nodeAfterTree()
 			v = root
 			while v and v != next:
-				
-				#@<< Write v's headline if it starts with @@ >>
-				#@+node:1::<< Write v's headline if it starts with @@ >>
-				#@+body
+				#@			<< Write v's headline if it starts with @@ >>
+				#@+node:<< Write v's headline if it starts with @@ >>
 				s = v.headString()
 				if match(s,0,"@@"):
 					s = s[2:]
 					if s and len(s) > 0:
 						s = toEncodedString(s,self.encoding,reportErrors=true) # 3/7/03
 						self.outputFile.write(s)
-				
-				#@-body
-				#@-node:1::<< Write v's headline if it starts with @@ >>
-
-				
-				#@<< Write v's body >>
-				#@+node:2::<< Write v's body >>
-				#@+body
+				#@-node:<< Write v's headline if it starts with @@ >>
+				#@nl
+				#@			<< Write v's body >>
+				#@+node:<< Write v's body >>
 				s = v.bodyString()
 				if s and len(s) > 0:
 					s = toEncodedString(s,self.encoding,reportErrors=true) # 3/7/03
 					self.outputStringWithLineEndings(s)
-				#@-body
-				#@-node:2::<< Write v's body >>
-
+				#@nonl
+				#@-node:<< Write v's body >>
+				#@nl
 				v = v.threadNext()
 			self.closeWriteFile()
 			self.replaceTargetFileIfDifferent()
 			root.clearOrphan() ; root.clearDirty()
 		except:
 			self.handleWriteException(root)
-	#@-body
-	#@-node:2::old_df.silentWrite
-	#@+node:3::old_df.write
-	#@+body
+	#@nonl
+	#@-node:old_df.silentWrite
+	#@+node:old_df.write
 	# This is the entry point to the write code.  root should be an @file vnode.
 	
 	def write(self,root,nosentinels=false):
@@ -2773,23 +2483,19 @@ class baseOldDerivedFile:
 	
 		c = self.commands
 		self.sentinels = not nosentinels
-		
-		#@<< initialize >>
-		#@+node:1::<< initialize >>
-		#@+body
+		#@	<< initialize >>
+		#@+node:<< initialize >>
 		self.errors = 0 # 9/26/02
 		c.setIvarsFromPrefs()
 		self.root = root
 		self.raw = false
 		c.endEditing() # Capture the current headline.
-		#@-body
-		#@-node:1::<< initialize >>
-
+		#@nonl
+		#@-node:<< initialize >>
+		#@nl
 		try:
-			
-			#@<< open the file; return on error >>
-			#@+node:2::<< open the file; return on error >>
-			#@+body
+			#@		<< open the file; return on error >>
+			#@+node:<< open the file; return on error >>
 			if nosentinels:
 				self.targetFileName = root.atNoSentinelsFileNodeName()
 			else:
@@ -2797,28 +2503,24 @@ class baseOldDerivedFile:
 			
 			ok = self.openWriteFile(root)
 			if not ok: return
-			#@-body
-			#@-node:2::<< open the file; return on error >>
-
+			#@nonl
+			#@-node:<< open the file; return on error >>
+			#@nl
 			root.clearVisitedInTree()
-			
-			#@<< write then entire @file tree >>
-			#@+node:3::<< write then entire @file tree >> (3.x)
-			#@+body
+			#@		<< write then entire @file tree >>
+			#@+node:<< write then entire @file tree >> (3.x)
 			next = root.nodeAfterTree()
 			
-			
 			#@<< put all @first lines in root >>
-			#@+node:1::<< put all @first lines in root >>
-			#@+body
-			#@+at
-			#  Write any @first lines.  These lines are also converted to 
+			#@+node:<< put all @first lines in root >>
+			#@+at 
+			#@nonl
+			# Write any @first lines.  These lines are also converted to 
 			# @verbatim lines, so the read logic simply ignores lines 
 			# preceding the @+leo sentinel.
-
 			#@-at
 			#@@c
-
+			
 			s = root.t.bodyString
 			tag = "@first"
 			i = 0
@@ -2831,13 +2533,11 @@ class baseOldDerivedFile:
 				line = s[j:i]
 				self.putBuffered(line) ; self.onl()
 				i = skip_nl(s,i)
-			#@-body
-			#@-node:1::<< put all @first lines in root >>
-
-			
+			#@nonl
+			#@-node:<< put all @first lines in root >>
+			#@nl
 			#@<< write the derived file >>
-			#@+node:2::<< write the derived file>>
-			#@+body
+			#@+node:<< write the derived file>>
 			tag1 = "@+leo"
 			
 			self.putOpenLeoSentinel(tag1)
@@ -2846,21 +2546,19 @@ class baseOldDerivedFile:
 			self.putBodyPart(root)
 			self.putCloseNodeSentinel(root)
 			self.putSentinel("@-leo")
-			#@-body
-			#@-node:2::<< write the derived file>>
-
-			
+			#@nonl
+			#@-node:<< write the derived file>>
+			#@nl
 			#@<< put all @last lines in root >>
-			#@+node:3::<< put all @last lines in root >>
-			#@+body
-			#@+at
-			#  Write any @last lines.  These lines are also converted to 
+			#@+node:<< put all @last lines in root >>
+			#@+at 
+			#@nonl
+			# Write any @last lines.  These lines are also converted to 
 			# @verbatim lines, so the read logic simply ignores lines 
 			# following the @-leo sentinel.
-
 			#@-at
 			#@@c
-
+			
 			tag = "@last"
 			lines = string.split(root.t.bodyString,'\n')
 			n = len(lines) ; j = k = n - 1
@@ -2876,19 +2574,17 @@ class baseOldDerivedFile:
 			for line in lines[j+1:k+1]:
 				i = len(tag) ; i = skip_ws(line,i)
 				self.putBuffered(line[i:]) ; self.onl()
-			#@-body
-			#@-node:3::<< put all @last lines in root >>
-
+			#@nonl
+			#@-node:<< put all @last lines in root >>
+			#@nl
 			
 			root.setVisited()
-			#@-body
-			#@-node:3::<< write then entire @file tree >> (3.x)
-
+			#@nonl
+			#@-node:<< write then entire @file tree >> (3.x)
+			#@nl
 			self.closeWriteFile()
-			
-			#@<< warn about @ignored and orphans >>
-			#@+node:4::<< Warn about @ignored and orphans  >>
-			#@+body
+			#@		<< warn about @ignored and orphans >>
+			#@+node:<< Warn about @ignored and orphans  >>
 			# 10/26/02: Always warn, even when language=="cweb"
 			
 			next = root.nodeAfterTree()
@@ -2899,22 +2595,18 @@ class baseOldDerivedFile:
 				if v.isAtIgnoreNode():
 					self.writeError("@ignore node: " + v.headString())
 				v = v.threadNext()
-			
-			#@-body
-			#@-node:4::<< Warn about @ignored and orphans  >>
-
-			
-			#@<< finish writing >>
-			#@+node:5::<< finish writing >>
-			#@+body
-			#@+at
-			#  We set the orphan and dirty flags if there are problems writing 
+			#@-node:<< Warn about @ignored and orphans  >>
+			#@nl
+			#@		<< finish writing >>
+			#@+node:<< finish writing >>
+			#@+at 
+			#@nonl
+			# We set the orphan and dirty flags if there are problems writing 
 			# the file to force Commands::write_LEO_file to write the tree to 
 			# the .leo file.
-
 			#@-at
 			#@@c
-
+			
 			if self.errors > 0 or self.root.isOrphan():
 				root.setOrphan()
 				root.setDirty() # 2/9/02: make _sure_ we try to rewrite this file.
@@ -2924,17 +2616,13 @@ class baseOldDerivedFile:
 				root.clearOrphan()
 				root.clearDirty()
 				self.replaceTargetFileIfDifferent()
-			#@-body
-			#@-node:5::<< finish writing >>
-
+			#@nonl
+			#@-node:<< finish writing >>
+			#@nl
 		except:
 			self.handleWriteException()
-	
-	#@-body
-	#@-node:3::old_df.write
-	#@+node:4::Top level write helpers
-	#@+node:1::atFile.closeWriteFile
-	#@+body
+	#@-node:old_df.write
+	#@+node:atFile.closeWriteFile
 	def closeWriteFile (self):
 		
 		if self.outputFile:
@@ -2944,11 +2632,8 @@ class baseOldDerivedFile:
 			self.outputFile.flush()
 			self.outputFile.close()
 			self.outputFile = None
-	
-	#@-body
-	#@-node:1::atFile.closeWriteFile
-	#@+node:2::atFile.handleWriteException
-	#@+body
+	#@-node:atFile.closeWriteFile
+	#@+node:atFile.handleWriteException
 	def handleWriteException (self,root=None):
 		
 		es("exception writing:" + self.targetFileName)
@@ -2970,10 +2655,9 @@ class baseOldDerivedFile:
 			# Make sure we try to rewrite this file.
 			root.setOrphan()
 			root.setDirty()
-	#@-body
-	#@-node:2::atFile.handleWriteException
-	#@+node:3::atFile.openWriteFile
-	#@+body
+	#@nonl
+	#@-node:atFile.handleWriteException
+	#@+node:atFile.openWriteFile
 	# Open files.  Set root.orphan and root.dirty flags and return on errors.
 	
 	def openWriteFile (self,root):
@@ -3031,10 +2715,9 @@ class baseOldDerivedFile:
 			root.setDirty()
 		
 		return valid
-	#@-body
-	#@-node:3::atFile.openWriteFile
-	#@+node:4::atFile.putInitialComment
-	#@+body
+	#@nonl
+	#@-node:atFile.openWriteFile
+	#@+node:atFile.putInitialComment
 	def putInitialComment (self):
 		
 		s2 = app().config.output_initial_comment
@@ -3044,20 +2727,17 @@ class baseOldDerivedFile:
 				line = line.replace("@date",time.asctime())
 				if len(line)> 0:
 					self.putSentinel("@comment " + line)
-	#@-body
-	#@-node:4::atFile.putInitialComment
-	#@+node:5::atFile.replaceTargetFileIfDifferent
-	#@+body
+	#@nonl
+	#@-node:atFile.putInitialComment
+	#@+node:atFile.replaceTargetFileIfDifferent
 	def replaceTargetFileIfDifferent (self):
 		
 		assert(self.outputFile == None)
 		
 		if os.path.exists(self.targetFileName):
 			if filecmp.cmp(self.outputFileName,self.targetFileName):
-				
-				#@<< delete the output file >>
-				#@+node:1::<< delete the output file >>
-				#@+body
+				#@			<< delete the output file >>
+				#@+node:<< delete the output file >>
 				try: # Just delete the temp file.
 					os.remove(self.outputFileName)
 				except:
@@ -3065,14 +2745,12 @@ class baseOldDerivedFile:
 					es_exception()
 				
 				es("unchanged: " + self.shortFileName)
-				#@-body
-				#@-node:1::<< delete the output file >>
-
+				#@nonl
+				#@-node:<< delete the output file >>
+				#@nl
 			else:
-				
-				#@<< replace the target file with the output file >>
-				#@+node:2::<< replace the target file with the output file >>
-				#@+body
+				#@			<< replace the target file with the output file >>
+				#@+node:<< replace the target file with the output file >>
 				try:
 					# 10/6/02: retain the access mode of the previous file,
 					# removing any setuid, setgid, and sticky bits.
@@ -3102,14 +2780,12 @@ class baseOldDerivedFile:
 					except:
 						es("exception deleting:" + self.outputFileName)
 						es_exception()
-				#@-body
-				#@-node:2::<< replace the target file with the output file >>
-
+				#@nonl
+				#@-node:<< replace the target file with the output file >>
+				#@nl
 		else:
-			
-			#@<< rename the output file to be the target file >>
-			#@+node:3::<< rename the output file to be the target file >>
-			#@+body
+			#@		<< rename the output file to be the target file >>
+			#@+node:<< rename the output file to be the target file >>
 			try:
 				utils_rename(self.outputFileName,self.targetFileName)
 				es("creating: " + self.targetFileName)
@@ -3117,26 +2793,20 @@ class baseOldDerivedFile:
 				self.writeError("exception renaming:" + self.outputFileName +
 					" to " + self.targetFileName)
 				es_exception()
-			#@-body
-			#@-node:3::<< rename the output file to be the target file >>
-
-	
-	#@-body
-	#@-node:5::atFile.replaceTargetFileIfDifferent
-	#@+node:6::atFile.outputStringWithLineEndings
-	#@+body
+			#@nonl
+			#@-node:<< rename the output file to be the target file >>
+			#@nl
+	#@-node:atFile.replaceTargetFileIfDifferent
+	#@+node:atFile.outputStringWithLineEndings
 	# Write the string s as-is except that we replace '\n' with the proper line ending.
 	
 	def outputStringWithLineEndings (self,s):
 	
 		# Calling self.onl() runs afoul of queued newlines.
 		self.os(s.replace('\n',self.output_newline))
-	#@-body
-	#@-node:6::atFile.outputStringWithLineEndings
-	#@-node:4::Top level write helpers
-	#@-node:1::Top level
-	#@+node:2::putBodyPart
-	#@+body
+	#@nonl
+	#@-node:atFile.outputStringWithLineEndings
+	#@+node:putBodyPart
 	def putBodyPart(self,v):
 		
 		""" Generate the body enclosed in sentinel lines."""
@@ -3148,18 +2818,14 @@ class baseOldDerivedFile:
 	
 		s = removeTrailingWs(s) # don't use string.rstrip!
 		self.putSentinel("@+body")
-		
-		#@<< put code/doc parts and sentinels >>
-		#@+node:1::<< put code/doc parts and sentinels >>
-		#@+body
+		#@	<< put code/doc parts and sentinels >>
+		#@+node:<< put code/doc parts and sentinels >>
 		i = 0 ; n = len(s)
 		firstLastHack = 1
 		
 		if firstLastHack:
-			
-			#@<< initialize lookingForFirst/Last & initialLastDirective >>
-			#@+node:1::<< initialize lookingForFirst/Last & initialLastDirective >>
-			#@+body
+			#@	<< initialize lookingForFirst/Last & initialLastDirective >>
+			#@+node:<< initialize lookingForFirst/Last & initialLastDirective >>
 			# 14-SEP-2002 DTHEIN: If this is the root node, then handle all @first directives here
 			lookingForLast = 0
 			lookingForFirst = 0
@@ -3168,16 +2834,14 @@ class baseOldDerivedFile:
 			if (v == self.root):
 				lookingForLast = 1
 				lookingForFirst = 1
-			#@-body
-			#@-node:1::<< initialize lookingForFirst/Last & initialLastDirective >>
-
+			#@nonl
+			#@-node:<< initialize lookingForFirst/Last & initialLastDirective >>
+			#@nl
 		while i < n:
 			kind = self.directiveKind(s,i)
 			if firstLastHack:
-				
-				#@<< set lookingForFirst/Last & initialLastDirective >>
-				#@+node:2::<< set lookingForFirst/Last & initialLastDirective >>
-				#@+body
+				#@		<< set lookingForFirst/Last & initialLastDirective >>
+				#@+node:<< set lookingForFirst/Last & initialLastDirective >>
 				# 14-SEP-2002 DTHEIN: If first directive isn't @first, then stop looking for @first
 				if lookingForFirst:
 					if kind != miscDirective:
@@ -3197,9 +2861,9 @@ class baseOldDerivedFile:
 							i, initialLastDirective = initialLastDirective, -1
 							lastDirectiveCount = 0
 							kind = self.directiveKind(s,i)
-				#@-body
-				#@-node:2::<< set lookingForFirst/Last & initialLastDirective >>
-
+				#@nonl
+				#@-node:<< set lookingForFirst/Last & initialLastDirective >>
+				#@nl
 			j = i
 			if kind == docDirective or kind == atDirective:
 				i = self.putDoc(s,i,kind)
@@ -3208,10 +2872,8 @@ class baseOldDerivedFile:
 				kind == rawDirective or
 				kind == endRawDirective ):
 				if firstLastHack:
-					
-					#@<< handle misc directives >>
-					#@+node:3::<< handle misc directives >>
-					#@+body
+					#@			<< handle misc directives >>
+					#@+node:<< handle misc directives >>
 					if lookingForFirst: # DTHEIN: can only be true if it is @first directive
 						i = self.putEmptyDirective(s,i)
 					elif (initialLastDirective != -1) and match_word(s,i,"@last"):
@@ -3222,9 +2884,9 @@ class baseOldDerivedFile:
 						i = skip_line(s,i)
 					else:
 						i = self.putDirective(s,i)
-					#@-body
-					#@-node:3::<< handle misc directives >>
-
+					#@nonl
+					#@-node:<< handle misc directives >>
+					#@nl
 				else:
 					i = self.putDirective(s,i)
 			elif kind == noDirective or kind == othersDirective:
@@ -3237,29 +2899,27 @@ class baseOldDerivedFile:
 			assert(j < i) # We must make progress.
 		
 		if firstLastHack:
-			
-			#@<< put out the last directives, if any >>
-			#@+node:4::<< put out the last directives, if any >>
-			#@+body
+			#@	<< put out the last directives, if any >>
+			#@+node:<< put out the last directives, if any >>
 			# 14-SEP-2002 DTHEIN
 			if initialLastDirective != -1:
 				d = initialLastDirective
 				for k in range(lastDirectiveCount):
 					d = self.putEmptyDirective(s,d)
-			#@-body
-			#@-node:4::<< put out the last directives, if any >>
-		#@-body
-		#@-node:1::<< put code/doc parts and sentinels >>
-
+			#@nonl
+			#@-node:<< put out the last directives, if any >>
+			#@nl
+		#@nonl
+		#@-node:<< put code/doc parts and sentinels >>
+		#@nl
 		self.putSentinel("@-body")
-	#@-body
-	#@-node:2::putBodyPart
-	#@+node:3::putDoc
-	#@+body
-	#@+at
-	#  This method outputs a doc section terminated by @code or end-of-text.  
+	#@nonl
+	#@-node:putBodyPart
+	#@+node:putDoc
+	#@+at 
+	#@nonl
+	# This method outputs a doc section terminated by @code or end-of-text.  
 	# All other interior directives become part of the doc part.
-
 	#@-at
 	#@@c
 	def putDoc(self,s,i,kind):
@@ -3280,10 +2940,9 @@ class baseOldDerivedFile:
 		self.putDocPart(s[i:j])
 		self.putSentinel("@-" + tag)
 		return j
-	#@-body
-	#@-node:3::putDoc
-	#@+node:4::putDocPart (3.x)
-	#@+body
+	#@nonl
+	#@-node:putDoc
+	#@+node:putDocPart (3.x)
 	# Puts a comment part in comments.
 	# Note: this routine is _never_ called in cweb mode,
 	# so noweb section references are _valid_ in cweb doc parts!
@@ -3304,18 +2963,16 @@ class baseOldDerivedFile:
 			if single:
 				self.os(self.startSentinelComment) ; self.oblank()
 				leading += len(self.startSentinelComment) + 1
-			
-			#@<< copy words, splitting the line if needed >>
-			#@+node:1::<< copy words, splitting the line if needed >>
-			#@+body
-			#@+at
-			#  We remove trailing whitespace from lines that have _not_ been 
+			#@		<< copy words, splitting the line if needed >>
+			#@+node:<< copy words, splitting the line if needed >>
+			#@+at 
+			#@nonl
+			# We remove trailing whitespace from lines that have _not_ been 
 			# split so that a newline has been inserted by this routine if and 
 			# only if it is preceded by whitespace.
-
 			#@-at
 			#@@c
-
+			
 			line = i # Start of the current line.
 			while i < n:
 				word = i # Start of the current word.
@@ -3344,23 +3001,22 @@ class baseOldDerivedFile:
 			if i < n and is_nl(s,i):
 				i = skip_nl(s,i)
 				self.onl() # No inserted newline and no trailing whitespace.
-			#@-body
-			#@-node:1::<< copy words, splitting the line if needed >>
-
+			#@nonl
+			#@-node:<< copy words, splitting the line if needed >>
+			#@nl
 		if not single:
 			# This comment is like a sentinel.
 			self.onl() ; self.putIndent(self.indent)
 			self.os(self.endSentinelComment)
 			self.onl() # Note: no trailing whitespace.
-	#@-body
-	#@-node:4::putDocPart (3.x)
-	#@+node:5::putCodePart & allies
-	#@+body
-	#@+at
-	#  This method expands a code part, terminated by any at-directive except 
+	#@nonl
+	#@-node:putDocPart (3.x)
+	#@+node:putCodePart & allies
+	#@+at 
+	#@nonl
+	# This method expands a code part, terminated by any at-directive except 
 	# at-others.  It expands references and at-others and outputs @verbatim 
 	# sentinels as needed.
-
 	#@-at
 	#@@c
 	def putCodePart(self,s,i,v):
@@ -3368,18 +3024,16 @@ class baseOldDerivedFile:
 		c = self.commands
 		atOthersSeen = false # true: at-others has been expanded.
 		while i < len(s):
-			
-			#@<< handle the start of a line >>
-			#@+node:1::<< handle the start of a line >>
-			#@+body
-			#@+at
-			#  The at-others directive is the only directive that is 
-			# recognized following leading whitespace, so it is just a little 
-			# tricky to recognize it.
-
+			#@		<< handle the start of a line >>
+			#@+node:<< handle the start of a line >>
+			#@+at 
+			#@nonl
+			# The at-others directive is the only directive that is recognized 
+			# following leading whitespace, so it is just a little tricky to 
+			# recognize it.
 			#@-at
 			#@@c
-
+			
 			leading_nl = (s[i] == body_newline) # 9/27/02: look ahead before outputting newline.
 			if leading_nl:
 				i = skip_nl(s,i)
@@ -3392,22 +3046,18 @@ class baseOldDerivedFile:
 			kind2 = self.directiveKind(s,j)
 			if self.raw:
 				if kind1 == endRawDirective:
-					
-					#@<< handle @end_raw >>
-					#@+node:3::<< handle @end_raw >>
-					#@+body
+					#@		<< handle @end_raw >>
+					#@+node:<< handle @end_raw >>
 					self.raw = false
 					self.putSentinel("@@end_raw")
 					i = skip_line(s,i)
-					#@-body
-					#@-node:3::<< handle @end_raw >>
-
+					#@nonl
+					#@-node:<< handle @end_raw >>
+					#@nl
 			else:
 				if kind1 == othersDirective or kind2 == othersDirective:
-					
-					#@<< handle @others >>
-					#@+node:1::<< handle @others >>
-					#@+body
+					#@		<< handle @others >>
+					#@+node:<< handle @others >>
 					# This skips all indent and delta whitespace, so putAtOthers must generate it all.
 					
 					if 0: # 9/27/02: eliminates the newline preceeding the @+others sentinel.
@@ -3425,40 +3075,32 @@ class baseOldDerivedFile:
 						# 12/8/02: Skip the newline _after_ the @others.
 						if not self.sentinels and is_nl(s,i):
 							i = skip_nl(s,i)
-					
-					#@-body
-					#@-node:1::<< handle @others >>
-
+					#@-node:<< handle @others >>
+					#@nl
 				elif kind1 == rawDirective:
-					
-					#@<< handle @raw >>
-					#@+node:2::<< handle @raw >>
-					#@+body
+					#@		<< handle @raw >>
+					#@+node:<< handle @raw >>
 					self.raw = true
 					self.putSentinel("@@raw")
 					i = skip_line(s,i)
-					#@-body
-					#@-node:2::<< handle @raw >>
-
+					#@nonl
+					#@-node:<< handle @raw >>
+					#@nl
 				elif kind1 == noDirective:
-					
-					#@<< put @verbatim sentinel if necessary >>
-					#@+node:4::<< put @verbatim sentinel if necessary >>
-					#@+body
+					#@		<< put @verbatim sentinel if necessary >>
+					#@+node:<< put @verbatim sentinel if necessary >>
 					if match (s,i,self.startSentinelComment + '@'):
 						self.putSentinel("@verbatim") # Bug fix (!!): 9/20/03
-					#@-body
-					#@-node:4::<< put @verbatim sentinel if necessary >>
-
+					#@nonl
+					#@-node:<< put @verbatim sentinel if necessary >>
+					#@nl
 				else:
 					break # all other directives terminate the code part.
-			#@-body
-			#@-node:1::<< handle the start of a line >>
-
-			
-			#@<< put the line >>
-			#@+node:2::<< put the line >>
-			#@+body
+			#@nonl
+			#@-node:<< handle the start of a line >>
+			#@nl
+			#@		<< put the line >>
+			#@+node:<< put the line >>
 			if not self.raw:
 				# 12/8/02: Don't write trailing indentation if not writing sentinels.
 				if self.sentinels or j < len(s):
@@ -3475,10 +3117,8 @@ class baseOldDerivedFile:
 				elif ch == body_ignored_newline:
 					i += 1
 				elif ch == '<' and not self.raw:
-					
-					#@<< put possible section reference >>
-					#@+node:1::<< put possible section reference >>
-					#@+body
+					#@		<< put possible section reference >>
+					#@+node:<< put possible section reference >>
 					isSection, j = self.isSectionName(s, i)
 					
 					if isSection:
@@ -3497,31 +3137,31 @@ class baseOldDerivedFile:
 					else:
 						# This is _not_ an error.
 						i += 1
-					#@-body
-					#@-node:1::<< put possible section reference >>
-
+					#@nonl
+					#@-node:<< put possible section reference >>
+					#@nl
 				else:
 					i += 1
 			# Output any buffered characters.
 			self.putBuffered(s[buf:i])
-			#@-body
-			#@-node:2::<< put the line >>
-
+			#@nonl
+			#@-node:<< put the line >>
+			#@nl
 	
 		# Raw code parts can only end at the end of body text.
 		self.raw = false
 		return i
-	#@-body
-	#@+node:3::inAtOthers
-	#@+body
-	#@+at
-	#  Returns true if v should be included in the expansion of the at-others 
+	#@nonl
+	#@-node:putCodePart & allies
+	#@+node:inAtOthers
+	#@+at 
+	#@nonl
+	# Returns true if v should be included in the expansion of the at-others 
 	# directive in the body text of v's parent.
 	# 
 	# 7/30/02: v will not be included if it is a definition node or if its 
 	# body text contains an @ignore directive. Previously, a "nested" @others 
 	# directive would also inhibit the inclusion of v.
-
 	#@-at
 	#@@c
 	def inAtOthers(self,v):
@@ -3538,10 +3178,9 @@ class baseOldDerivedFile:
 			return not v.isAtIgnoreNode()
 		else: # old & reliable code
 			return not v.isAtIgnoreNode() and not v.isAtOthersNode()
-	#@-body
-	#@-node:3::inAtOthers
-	#@+node:4::isSectionName
-	#@+body
+	#@nonl
+	#@-node:inAtOthers
+	#@+node:isSectionName
 	# returns (flag, end). end is the index of the character after the section name.
 	
 	def isSectionName(self,s,i):
@@ -3553,14 +3192,13 @@ class baseOldDerivedFile:
 			return true, i + 2
 		else:
 			return false, -1
-	#@-body
-	#@-node:4::isSectionName
-	#@+node:5::putAtOthers
-	#@+body
-	#@+at
-	#  The at-others directive is recognized only at the start of the line.  
+	#@nonl
+	#@-node:isSectionName
+	#@+node:putAtOthers
+	#@+at 
+	#@nonl
+	# The at-others directive is recognized only at the start of the line.  
 	# This code must generate all leading whitespace for the opening sentinel.
-
 	#@-at
 	#@@c
 	def putAtOthers(self,v,delta):
@@ -3576,10 +3214,9 @@ class baseOldDerivedFile:
 	
 		self.putSentinel("@-others")
 		self.indent -= delta
-	#@-body
-	#@-node:5::putAtOthers
-	#@+node:6::putAtOthersChild
-	#@+body
+	#@nonl
+	#@-node:putAtOthers
+	#@+node:putAtOthersChild
 	def putAtOthersChild(self,v):
 		
 		# trace("%d %s" % (self.indent,`v`))
@@ -3597,11 +3234,8 @@ class baseOldDerivedFile:
 			child = child.next()
 	
 		self.putCloseNodeSentinel(v)
-	
-	#@-body
-	#@-node:6::putAtOthersChild
-	#@+node:7::putRef
-	#@+body
+	#@-node:putAtOthersChild
+	#@+node:putRef
 	def putRef (self,name,v,s,i,delta):
 	
 		newlineSeen = false
@@ -3612,10 +3246,8 @@ class baseOldDerivedFile:
 			return i,newlineSeen
 	
 		# trace(self.indent,delta,s[i:])
-		
-		#@<< Generate the expansion of the reference >>
-		#@+node:1::<< Generate the expansion of the reference >>
-		#@+body
+		#@	<< Generate the expansion of the reference >>
+		#@+node:<< Generate the expansion of the reference >>
 		# Adjust indent here so sentinel looks better.
 		self.indent += delta
 		
@@ -3623,10 +3255,8 @@ class baseOldDerivedFile:
 		self.putOpenSentinels(v,ref)
 		self.putBodyPart(ref)
 		self.putCloseSentinels(v,ref)
-		
 		#@<< Add @verbatimAfterRef sentinel if required >>
-		#@+node:1::<< Add @verbatimAfterRef sentinel if required >>
-		#@+body
+		#@+node:<< Add @verbatimAfterRef sentinel if required >>
 		j = skip_ws(s,i)
 		if j < len(s) and match(s,j,self.startSentinelComment + '@'):
 			self.putSentinel("@verbatimAfterRef")
@@ -3634,24 +3264,21 @@ class baseOldDerivedFile:
 			k = skip_to_end_of_line(s,i)
 			self.putBuffered(s[i:k])
 			i = k ; newlineSeen = false
-		#@-body
-		#@-node:1::<< Add @verbatimAfterRef sentinel if required >>
-
+		#@nonl
+		#@-node:<< Add @verbatimAfterRef sentinel if required >>
+		#@nl
 		
 		self.indent -= delta
 		ref.setVisited()
-		#@-body
-		#@-node:1::<< Generate the expansion of the reference >>
-
+		#@nonl
+		#@-node:<< Generate the expansion of the reference >>
+		#@nl
 	
 		# The newlineSeen allows the caller to break out of the loop.
 		return i,newlineSeen
-	#@-body
-	#@-node:7::putRef
-	#@-node:5::putCodePart & allies
-	#@+node:6::Writing Utils
-	#@+node:1::putBuffered
-	#@+body
+	#@nonl
+	#@-node:putRef
+	#@+node:putBuffered
 	def putBuffered (self,s):
 		
 		"""Put s, converting all tabs to blanks as necessary."""
@@ -3676,10 +3303,9 @@ class baseOldDerivedFile:
 				s = string.join(lines,'\n')
 			#trace(s)
 			self.os(s)
-	#@-body
-	#@-node:1::putBuffered
-	#@+node:2::os, onl, etc. (leoAtFile)
-	#@+body
+	#@nonl
+	#@-node:putBuffered
+	#@+node:os, onl, etc. (leoAtFile)
 	def oblank(self):
 		self.os(' ')
 	
@@ -3704,10 +3330,9 @@ class baseOldDerivedFile:
 	
 	def otabs(self,n):
 		self.os('\t' * abs(n))
-	#@-body
-	#@-node:2::os, onl, etc. (leoAtFile)
-	#@+node:3::putDirective  (handles @delims)
-	#@+body
+	#@nonl
+	#@-node:os, onl, etc. (leoAtFile)
+	#@+node:putDirective  (handles @delims)
 	# This method outputs s, a directive or reference, in a sentinel.
 	
 	def putDirective(self,s,i):
@@ -3719,10 +3344,8 @@ class baseOldDerivedFile:
 		directive = s[i:j]
 	
 		if match_word(s,k,tag):
-			
-			#@<< handle @delims >>
-			#@+node:1::<< handle @delims >>
-			#@+body
+			#@		<< handle @delims >>
+			#@+node:<< handle @delims >>
 			# Put a space to protect the last delim.
 			self.putSentinel(directive + " ") # 10/23/02: put @delims, not @@delims
 			
@@ -3741,18 +3364,17 @@ class baseOldDerivedFile:
 				self.endSentinelComment = choose(j<i, s[j:i], "")
 			else:
 				self.writeError("Bad @delims directive")
-			#@-body
-			#@-node:1::<< handle @delims >>
-
+			#@nonl
+			#@-node:<< handle @delims >>
+			#@nl
 		else:
 			self.putSentinel("@" + directive)
 	
 		i = skip_line(s,k)
 		return i
-	#@-body
-	#@-node:3::putDirective  (handles @delims)
-	#@+node:4::putEmptyDirective (Dave Hein)
-	#@+body
+	#@nonl
+	#@-node:putDirective  (handles @delims)
+	#@+node:putEmptyDirective (Dave Hein)
 	# 14-SEP-2002 DTHEIN
 	# added for use by putBodyPart()
 	
@@ -3771,10 +3393,9 @@ class baseOldDerivedFile:
 	
 		i = skip_line(s,i)
 		return i
-	#@-body
-	#@-node:4::putEmptyDirective (Dave Hein)
-	#@+node:5::putIndent
-	#@+body
+	#@nonl
+	#@-node:putEmptyDirective (Dave Hein)
+	#@+node:putIndent
 	def putIndent(self,n):
 		
 		"""Put tabs and spaces corresponding to n spaces, assuming that we are at the start of a line."""
@@ -3788,28 +3409,22 @@ class baseOldDerivedFile:
 				self.oblanks(r)
 			else:
 				self.oblanks(n)
-	#@-body
-	#@-node:5::putIndent
-	#@-node:6::Writing Utils
-	#@-node:6::Writing (3.x)
+	#@nonl
+	#@-node:putIndent
 	#@-others
-	
-	#@-body
-	#@-node:4::<< class baseOldDerivedFile methods >>
-
+	#@nonl
+	#@-node:<< class baseOldDerivedFile methods >>
+	#@nl
 	
 class oldDerivedFile(baseOldDerivedFile):
 	pass # May be overridden in plugins.
 	
 class baseNewDerivedFile(oldDerivedFile):
 	"""The base class to read and write 4.x derived files."""
-	
-	#@<< class baseNewDerivedFile methods >>
-	#@+node:5::<< class baseNewDerivedFile methods >>
-	#@+body
+	#@	<< class baseNewDerivedFile methods >>
+	#@+node:<< class baseNewDerivedFile methods >>
 	#@+others
-	#@+node:1::newDerivedFile.__init__
-	#@+body
+	#@+node:newDerivedFile.__init__
 	def __init__(self,theCommander):
 		
 		"""Ctor for 4.x atFile class."""
@@ -3872,11 +3487,9 @@ class baseNewDerivedFile(oldDerivedFile):
 			endBody:               at.ignoreOldSentinel,
 			startBody:             at.ignoreOldSentinel,
 			startVerbatimAfterRef: at.ignoreOldSentinel }
-	#@-body
-	#@-node:1::newDerivedFile.__init__
-	#@+node:2::Reading (4.x)
-	#@+node:1::new_df.readOpenFile
-	#@+body
+	#@nonl
+	#@-node:newDerivedFile.__init__
+	#@+node:new_df.readOpenFile
 	def readOpenFile(self,root,file,fileName,firstLines):
 		
 		"""Read an open 4.x derived file."""
@@ -3899,10 +3512,9 @@ class baseNewDerivedFile(oldDerivedFile):
 		at.completeLastDirectives(lines,lastLines)
 		s = '\n'.join(lines).replace('\r', '')
 		root.t.tempBodyString = s
-	#@-body
-	#@-node:1::new_df.readOpenFile
-	#@+node:2::findChild
-	#@+body
+	#@nonl
+	#@-node:new_df.readOpenFile
+	#@+node:findChild
 	def findChild (self,headline):
 		
 		"""Return the next tnode in the at.tnodeList."""
@@ -3949,20 +3561,15 @@ class baseNewDerivedFile(oldDerivedFile):
 			trace("Mismatched headline",headline,v.headString())
 			trace(at.tnodeListIndex,len(at.root.tnodeList))
 			return None
-	
-	#@-body
-	#@-node:2::findChild
-	#@+node:3::scanText & allies
-	#@+body
+	#@-node:findChild
+	#@+node:scanText & allies
 	def scanText (self,file,v):
 		
 		"""The new 4.x read code.."""
 	
 		at = self
-		
-		#@<< init ivars for scanText >>
-		#@+node:1::<< init ivars for scanText >>
-		#@+body
+		#@	<< init ivars for scanText >>
+		#@+node:<< init ivars for scanText >>
 		# Unstacked ivars...
 		at.done = false
 		at.inCode = true
@@ -3981,9 +3588,9 @@ class baseNewDerivedFile(oldDerivedFile):
 				trace("len(v.tnodeList)",len(v.tnodeList),v)
 			else:
 				trace("no tnodeList",v)
-		#@-body
-		#@-node:1::<< init ivars for scanText >>
-
+		#@nonl
+		#@-node:<< init ivars for scanText >>
+		#@nl
 		while at.errors == 0 and not at.done:
 			s = at.readLine(file)
 			if len(s) == 0: break
@@ -3997,23 +3604,21 @@ class baseNewDerivedFile(oldDerivedFile):
 			func(s,i)
 	
 		if at.errors == 0 and not at.done:
-			
-			#@<< report unexpected end of text >>
-			#@+node:2::<< report unexpected end of text >>
-			#@+body
+			#@		<< report unexpected end of text >>
+			#@+node:<< report unexpected end of text >>
 			assert(at.endSentinelStack)
 			
 			at.readError(
 				"Unexpected end of file. Expecting %s sentinel" %
 				at.sentinelName(at.endSentinelStack[-1]))
-			#@-body
-			#@-node:2::<< report unexpected end of text >>
-
+			#@nonl
+			#@-node:<< report unexpected end of text >>
+			#@nl
 	
 		return at.lastLines
-	#@-body
-	#@+node:3::readNormalLine
-	#@+body
+	#@nonl
+	#@-node:scanText & allies
+	#@+node:readNormalLine
 	def readNormalLine (self,s,i):
 	
 		at = self
@@ -4024,10 +3629,8 @@ class baseNewDerivedFile(oldDerivedFile):
 			# trace(`s`)
 			at.out.append(s)
 		else:
-			
-			#@<< Skip the leading stuff >>
-			#@+node:1::<< Skip the leading stuff >>
-			#@+body
+			#@		<< Skip the leading stuff >>
+			#@+node:<< Skip the leading stuff >>
 			if len(at.endSentinelComment) == 0:
 				# Skip the single comment delim and a blank.
 				i = skip_ws(s,0)
@@ -4037,14 +3640,10 @@ class baseNewDerivedFile(oldDerivedFile):
 			else:
 				i = at.skipIndent(s,0,at.indent)
 			
-			
-			#@-body
-			#@-node:1::<< Skip the leading stuff >>
-
-			
-			#@<< Append s to docOut >>
-			#@+node:2::<< Append s to docOut >>
-			#@+body
+			#@-node:<< Skip the leading stuff >>
+			#@nl
+			#@		<< Append s to docOut >>
+			#@+node:<< Append s to docOut >>
 			line = s[i:-1] # remove newline for rstrip.
 			
 			if line == line.rstrip():
@@ -4053,13 +3652,12 @@ class baseNewDerivedFile(oldDerivedFile):
 			else:
 				# trailing whitespace: the newline is fake.
 				at.docOut.append(line)
-			#@-body
-			#@-node:2::<< Append s to docOut >>
-	#@-body
-	#@-node:3::readNormalLine
-	#@+node:4::start sentinels
-	#@+node:1::readStartAt, readStartDoc & readStartDocLine
-	#@+body
+			#@nonl
+			#@-node:<< Append s to docOut >>
+			#@nl
+	#@nonl
+	#@-node:readNormalLine
+	#@+node:readStartAt, readStartDoc & readStartDocLine
 	def readStartAt (self,s,i):
 		
 		"""Read an @+at sentinel."""
@@ -4079,10 +3677,9 @@ class baseNewDerivedFile(oldDerivedFile):
 		at.docOut = ["@doc" + ws + '\n'] # This newline may be removed by a following @nonl
 		at.inCode = false
 		at.endSentinelStack.append(endDoc)
-	#@-body
-	#@-node:1::readStartAt, readStartDoc & readStartDocLine
-	#@+node:2::readStartLeo
-	#@+body
+	#@nonl
+	#@-node:readStartAt, readStartDoc & readStartDocLine
+	#@+node:readStartLeo
 	def readStartLeo (self,s,i):
 		
 		"""Read an unexpected @+leo sentinel."""
@@ -4090,10 +3687,9 @@ class baseNewDerivedFile(oldDerivedFile):
 		at = self
 		assert(match(s,i,"+leo"))
 		at.readError("Ignoring unexpected @+leo sentinel")
-	#@-body
-	#@-node:2::readStartLeo
-	#@+node:3::readStartNode
-	#@+body
+	#@nonl
+	#@-node:readStartLeo
+	#@+node:readStartNode
 	def readStartNode (self,s,i):
 		
 		"""Read an @node sentinel."""
@@ -4101,10 +3697,8 @@ class baseNewDerivedFile(oldDerivedFile):
 		at = self ; assert(match(s,i,"+node:"))
 		i += 6
 		
-		
-		#@<< Set headline, undoing the CWEB hack >>
-		#@+node:1::<< Set headline, undoing the CWEB hack >>
-		#@+body
+		#@	<< Set headline, undoing the CWEB hack >>
+		#@+node:<< Set headline, undoing the CWEB hack >>
 		# Set headline to the rest of the line.
 		# Don't strip leading whitespace."
 		
@@ -4117,15 +3711,13 @@ class baseNewDerivedFile(oldDerivedFile):
 		# Undo the CWEB hack: undouble @ signs if the opening comment delim ends in '@'.
 		if at.startSentinelComment[-1:] == '@':
 			headline = headline.replace('@@','@')
-		#@-body
-		#@-node:1::<< Set headline, undoing the CWEB hack >>
-
+		#@nonl
+		#@-node:<< Set headline, undoing the CWEB hack >>
+		#@nl
 		if not at.root_seen:
 			at.root_seen = true
-			
-			#@<< Check the filename in the sentinel >>
-			#@+node:2::<< Check the filename in the sentinel >>
-			#@+body
+			#@		<< Check the filename in the sentinel >>
+			#@+node:<< Check the filename in the sentinel >>
 			h = headline.strip()
 			
 			if h[:5] == "@file":
@@ -4139,9 +3731,9 @@ class baseNewDerivedFile(oldDerivedFile):
 					at.readError("File name in @node sentinel does not match file's name")
 			else:
 				at.readError("Missing @file in root @node sentinel")
-			#@-body
-			#@-node:2::<< Check the filename in the sentinel >>
-
+			#@nonl
+			#@-node:<< Check the filename in the sentinel >>
+			#@nl
 	
 		i,newIndent = skip_leading_ws_with_indent(s,0,at.tab_width)
 		at.indentStack.append(at.indent) ; at.indent = newIndent
@@ -4150,10 +3742,9 @@ class baseNewDerivedFile(oldDerivedFile):
 		at.tStack.append(at.t) ; at.t = at.findChild(headline)
 		
 		at.endSentinelStack.append(endNode)
-	#@-body
-	#@-node:3::readStartNode
-	#@+node:4::readStartOthers
-	#@+body
+	#@nonl
+	#@-node:readStartNode
+	#@+node:readStartOthers
 	def readStartOthers (self,s,i):
 		
 		"""Read an @+others sentinel."""
@@ -4170,12 +3761,9 @@ class baseNewDerivedFile(oldDerivedFile):
 		at.out.append(leadingWs + "@others\n")
 		
 		at.endSentinelStack.append(endOthers)
-	#@-body
-	#@-node:4::readStartOthers
-	#@-node:4::start sentinels
-	#@+node:5::end sentinels
-	#@+node:1::readEndAt & readEndDoc
-	#@+body
+	#@nonl
+	#@-node:readStartOthers
+	#@+node:readEndAt & readEndDoc
 	def readEndAt (self,s,i):
 		
 		"""Read an @-at sentinel."""
@@ -4193,10 +3781,9 @@ class baseNewDerivedFile(oldDerivedFile):
 		at.readLastDocLine("@doc")
 		at.popSentinelStack(endDoc)
 		at.inCode = true
-	#@-body
-	#@-node:1::readEndAt & readEndDoc
-	#@+node:2::readEndLeo
-	#@+body
+	#@nonl
+	#@-node:readEndAt & readEndDoc
+	#@+node:readEndLeo
 	def readEndLeo (self,s,i):
 		
 		"""Read an @-leo sentinel."""
@@ -4211,10 +3798,9 @@ class baseNewDerivedFile(oldDerivedFile):
 			at.lastLines.append(s) # Capture all trailing lines, even if empty.
 	
 		at.done = true
-	#@-body
-	#@-node:2::readEndLeo
-	#@+node:3::readEndNode
-	#@+body
+	#@nonl
+	#@-node:readEndLeo
+	#@+node:readEndNode
 	def readEndNode (self,s,i):
 		
 		"""Handle end-of-node processing for @-others and @-ref sentinels."""
@@ -4242,20 +3828,18 @@ class baseNewDerivedFile(oldDerivedFile):
 		at.t = at.tStack.pop()
 	
 		at.popSentinelStack(endNode)
-	#@-body
-	#@-node:3::readEndNode
-	#@+node:4::readEndOthers
-	#@+body
+	#@nonl
+	#@-node:readEndNode
+	#@+node:readEndOthers
 	def readEndOthers (self,s,i):
 		
 		"""Read an @-others sentinel."""
 		
 		at = self
 		at.popSentinelStack(endOthers)
-	#@-body
-	#@-node:4::readEndOthers
-	#@+node:5::readLastDocLine
-	#@+body
+	#@nonl
+	#@-node:readEndOthers
+	#@+node:readLastDocLine
 	def readLastDocLine (self,tag):
 		
 		at = self
@@ -4291,21 +3875,17 @@ class baseNewDerivedFile(oldDerivedFile):
 	
 		at.out.append(tag + s)
 		at.docOut = []
-	#@-body
-	#@-node:5::readLastDocLine
-	#@-node:5::end sentinels
-	#@+node:6::Unpaired sentinels
-	#@+node:1::ignoreOldSentinel
-	#@+body
+	#@nonl
+	#@-node:readLastDocLine
+	#@+node:ignoreOldSentinel
 	def  ignoreOldSentinel (self,s,i):
 		
 		"""Ignore an 3.x sentinel."""
 		
 		es("Ignoring 3.x sentinel: " + s.strip(), color="blue")
-	#@-body
-	#@-node:1::ignoreOldSentinel
-	#@+node:2::readAfterRef
-	#@+body
+	#@nonl
+	#@-node:ignoreOldSentinel
+	#@+node:readAfterRef
 	def  readAfterRef (self,s,i):
 		
 		"""Read an @afterref sentinel."""
@@ -4316,10 +3896,9 @@ class baseNewDerivedFile(oldDerivedFile):
 		# Append the next line to the text.
 		s = at.readLine(at.file)
 		at.out.append(s)
-	#@-body
-	#@-node:2::readAfterRef
-	#@+node:3::readComment
-	#@+body
+	#@nonl
+	#@-node:readAfterRef
+	#@+node:readComment
 	def readComment (self,s,i):
 		
 		"""Read an @comment sentinel."""
@@ -4327,11 +3906,8 @@ class baseNewDerivedFile(oldDerivedFile):
 		assert(match(s,i,"comment"))
 	
 		# Just ignore the comment line!
-	
-	#@-body
-	#@-node:3::readComment
-	#@+node:4::readDelims
-	#@+body
+	#@-node:readComment
+	#@+node:readDelims
 	def readDelims (self,s,i):
 		
 		"""Read an @delims sentinel."""
@@ -4373,10 +3949,9 @@ class baseNewDerivedFile(oldDerivedFile):
 			at.readError("Bad @delims")
 			# Append the bad @delims line to the body text.
 			at.out.append("@delims")
-	#@-body
-	#@-node:4::readDelims
-	#@+node:5::readDirective
-	#@+body
+	#@nonl
+	#@-node:readDelims
+	#@+node:readDirective
 	def readDirective (self,s,i):
 		
 		"""Read an @@sentinel."""
@@ -4401,10 +3976,9 @@ class baseNewDerivedFile(oldDerivedFile):
 			s2 = s2.replace('@@','@')
 	
 		at.out.append(s2)
-	#@-body
-	#@-node:5::readDirective
-	#@+node:6::readNl
-	#@+body
+	#@nonl
+	#@-node:readDirective
+	#@+node:readNl
 	def readNl (self,s,i):
 		
 		"""Handle an @nonl sentinel."""
@@ -4416,10 +3990,9 @@ class baseNewDerivedFile(oldDerivedFile):
 			at.out.append('\n')
 		else:
 			at.docOut.append('\n')
-	#@-body
-	#@-node:6::readNl
-	#@+node:7::readNonl
-	#@+body
+	#@nonl
+	#@-node:readNl
+	#@+node:readNonl
 	def readNonl (self,s,i):
 		
 		"""Handle an @nonl sentinel."""
@@ -4449,18 +4022,17 @@ class baseNewDerivedFile(oldDerivedFile):
 				else:
 					trace("docOut:",`s`)
 					at.readError("unexpected @nonl directive in doc part")
-	#@-body
-	#@-node:7::readNonl
-	#@+node:8::readRef
-	#@+body
-	#@+at
-	#  The sentinel contains an @ followed by a section name in angle 
+	#@nonl
+	#@-node:readNonl
+	#@+node:readRef
+	#@+at 
+	#@nonl
+	# The sentinel contains an @ followed by a section name in angle 
 	# brackets.  This code is different from the code for the @@ sentinel: the 
 	# expansion of the reference does not include a trailing newline.
-
 	#@-at
 	#@@c
-
+	
 	def readRef (self,s,i):
 		
 		"""Handle an @<< sentinel."""
@@ -4481,10 +4053,9 @@ class baseNewDerivedFile(oldDerivedFile):
 			line = line.replace('@@','@')
 	
 		at.out.append(line)
-	#@-body
-	#@-node:8::readRef
-	#@+node:9::readVerbatim
-	#@+body
+	#@nonl
+	#@-node:readRef
+	#@+node:readVerbatim
 	def readVerbatim (self,s,i):
 		
 		"""Read an @verbatim sentinel."""
@@ -4496,11 +4067,9 @@ class baseNewDerivedFile(oldDerivedFile):
 		s = at.readLine(at.file) 
 		i = at.skipIndent(s,0,at.indent)
 		at.out.append(s[i:])
-	#@-body
-	#@-node:9::readVerbatim
-	#@-node:6::Unpaired sentinels
-	#@+node:7::badEndSentinel, push/popSentinelStack
-	#@+body
+	#@nonl
+	#@-node:readVerbatim
+	#@+node:badEndSentinel, push/popSentinelStack
 	def badEndSentinel (self,expectedKind):
 		
 		"""Handle a mismatched ending sentinel."""
@@ -4520,46 +4089,40 @@ class baseNewDerivedFile(oldDerivedFile):
 			at.endSentinelStack.pop()
 		else:
 			at.badEndSentinel(expectedKind)
-	#@-body
-	#@-node:7::badEndSentinel, push/popSentinelStack
-	#@-node:3::scanText & allies
-	#@-node:2::Reading (4.x)
-	#@+node:3::Sentinels (4.x)
-	#@+node:1::nodeSentinelText
-	#@+body
+	#@nonl
+	#@-node:badEndSentinel, push/popSentinelStack
+	#@+node:nodeSentinelText
 	def nodeSentinelText(self,v):
 		
 		"""Return the text of a @+node or @-node sentinel for v."""
 		
 		at = self ; t = v.t ; h = v.headString()
-		
-		#@<< remove comment delims from h if necessary >>
-		#@+node:1::<< remove comment delims from h if necessary >>
-		#@+body
-		#@+at
-		#  Bug fix 1/24/03:
+		#@	<< remove comment delims from h if necessary >>
+		#@+node:<< remove comment delims from h if necessary >>
+		#@+at 
+		#@nonl
+		# Bug fix 1/24/03:
 		# 
 		# If the present @language/@comment settings do not specify a 
 		# single-line comment we remove all block comment delims from h.  This 
-		# prevents headline text from interfering with the parsing of node sentinels.
-
+		# prevents headline text from interfering with the parsing of node 
+		# sentinels.
 		#@-at
 		#@@c
-
+		
 		start = at.startSentinelComment
 		end = at.endSentinelComment
 		
 		if end and len(end) > 0:
 			h = h.replace(start,"")
 			h = h.replace(end,"")
-		#@-body
-		#@-node:1::<< remove comment delims from h if necessary >>
-
+		#@nonl
+		#@-node:<< remove comment delims from h if necessary >>
+		#@nl
 		return h
-	#@-body
-	#@-node:1::nodeSentinelText
-	#@+node:2::putLeadInSentinel
-	#@+body
+	#@nonl
+	#@-node:nodeSentinelText
+	#@+node:putLeadInSentinel
 	def putLeadInSentinel (self,s,i,j,delta):
 		
 		"""Generate @nonl sentinels as needed to ensure a newline before a group of sentinels.
@@ -4591,10 +4154,9 @@ class baseNewDerivedFile(oldDerivedFile):
 			at.indent += delta # Align the @nonl with the following line.
 			at.putSentinel("@nonl")
 			at.indent -= delta # Let the caller set at.indent permanently.
-	#@-body
-	#@-node:2::putLeadInSentinel
-	#@+node:3::putOpenLeoSentinel
-	#@+body
+	#@nonl
+	#@-node:putLeadInSentinel
+	#@+node:putOpenLeoSentinel
 	def putOpenLeoSentinel(self,s):
 		
 		"""Write @+leo sentinel."""
@@ -4609,10 +4171,9 @@ class baseNewDerivedFile(oldDerivedFile):
 			s = s + "-encoding=%s." % (encoding)
 		
 		at.putSentinel(s)
-	#@-body
-	#@-node:3::putOpenLeoSentinel
-	#@+node:4::putOpenNodeSentinel
-	#@+body
+	#@nonl
+	#@-node:putOpenLeoSentinel
+	#@+node:putOpenNodeSentinel
 	def putOpenNodeSentinel(self,v):
 		
 		"""Write @+node sentinel for v."""
@@ -4630,10 +4191,9 @@ class baseNewDerivedFile(oldDerivedFile):
 	
 		# trace("%3d %3d" % (len(at.root.tnodeList),v.t.fileIndex),v)
 		at.root.tnodeList.append(v.t)
-	#@-body
-	#@-node:4::putOpenNodeSentinel
-	#@+node:5::putSentinel (applies cweb hack)
-	#@+body
+	#@nonl
+	#@-node:putOpenNodeSentinel
+	#@+node:putSentinel (applies cweb hack)
 	# This method outputs all sentinels.
 	
 	def putSentinel(self,s,putLeadingNewlineFlag=false):
@@ -4649,35 +4209,32 @@ class baseNewDerivedFile(oldDerivedFile):
 			at.onl()
 		at.putIndent(at.indent)
 		at.os(at.startSentinelComment)
-		
-		#@<< apply the cweb hack to s >>
-		#@+node:1::<< apply the cweb hack to s >>
-		#@+body
-		#@+at
-		#  The cweb hack:
+		#@	<< apply the cweb hack to s >>
+		#@+node:<< apply the cweb hack to s >>
+		#@+at 
+		#@nonl
+		# The cweb hack:
 		# 
 		# If the opening comment delim ends in '@', double all '@' signs 
 		# except the first, which is "doubled" by the trailing '@' in the 
 		# opening comment delimiter.
-
 		#@-at
 		#@@c
-
+		
 		start = at.startSentinelComment
 		if start and start[-1] == '@':
 			assert(s and s[0]=='@')
 			s = s.replace('@','@@')[1:]
-		#@-body
-		#@-node:1::<< apply the cweb hack to s >>
-
+		#@nonl
+		#@-node:<< apply the cweb hack to s >>
+		#@nl
 		at.os(s)
 		if at.endSentinelComment:
 			at.os(at.endSentinelComment)
 		at.onl()
-	#@-body
-	#@-node:5::putSentinel (applies cweb hack)
-	#@+node:6::skipSentinelStart
-	#@+body
+	#@nonl
+	#@-node:putSentinel (applies cweb hack)
+	#@+node:skipSentinelStart
 	def skipSentinelStart(self,s,i):
 		
 		"""Skip the start of a sentinel."""
@@ -4693,11 +4250,8 @@ class baseNewDerivedFile(oldDerivedFile):
 		i = skip_ws(s,i)
 		assert(i < len(s) and s[i] == '@')
 		return i + 1
-	
-	#@-body
-	#@-node:6::skipSentinelStart
-	#@+node:7::sentinelKind
-	#@+body
+	#@-node:skipSentinelStart
+	#@+node:sentinelKind
 	def sentinelKind(self,s):
 		
 		"""Return the kind of sentinel at s."""
@@ -4742,13 +4296,9 @@ class baseNewDerivedFile(oldDerivedFile):
 			return sentinelDict[key]
 		else:
 			return noSentinel
-	#@-body
-	#@-node:7::sentinelKind
-	#@-node:3::Sentinels (4.x)
-	#@+node:4::Writing (4.x)
-	#@+node:1::Top level
-	#@+node:1::new_df.closeWriteFile
-	#@+body
+	#@nonl
+	#@-node:sentinelKind
+	#@+node:new_df.closeWriteFile
 	# 4.0: Don't use newline-pending logic.
 	
 	def closeWriteFile (self):
@@ -4758,10 +4308,9 @@ class baseNewDerivedFile(oldDerivedFile):
 			at.outputFile.flush()
 			at.outputFile.close()
 			at.outputFile = None
-	#@-body
-	#@-node:1::new_df.closeWriteFile
-	#@+node:2::new_df.write
-	#@+body
+	#@nonl
+	#@-node:new_df.closeWriteFile
+	#@+node:new_df.write
 	# This is the entry point to the write code.  root should be an @file vnode.
 	
 	def write(self,root,nosentinels=false):
@@ -4772,24 +4321,20 @@ class baseNewDerivedFile(oldDerivedFile):
 	
 		at = self ; c = at.commands
 		at.sentinels = not nosentinels
-		
-		#@<< initialize >>
-		#@+node:1::<< initialize >>
-		#@+body
+		#@	<< initialize >>
+		#@+node:<< initialize >>
 		at.errors = 0
 		c.setIvarsFromPrefs()
 		at.root = root
 		at.root.tnodeList = []
 		at.raw = false
 		c.endEditing() # Capture the current headline.
-		#@-body
-		#@-node:1::<< initialize >>
-
+		#@nonl
+		#@-node:<< initialize >>
+		#@nl
 		try:
-			
-			#@<< open the file; return on error >>
-			#@+node:2::<< open the file; return on error >>
-			#@+body
+			#@		<< open the file; return on error >>
+			#@+node:<< open the file; return on error >>
 			if nosentinels:
 				at.targetFileName = root.atNoSentinelsFileNodeName()
 			else:
@@ -4797,29 +4342,25 @@ class baseNewDerivedFile(oldDerivedFile):
 			
 			ok = at.openWriteFile(root)
 			if not ok: return
-			#@-body
-			#@-node:2::<< open the file; return on error >>
-
-			
-			#@<< write then entire @file tree >>
-			#@+node:3::<< write then entire @file tree >> (4.x)
-			#@+body
+			#@nonl
+			#@-node:<< open the file; return on error >>
+			#@nl
+			#@		<< write then entire @file tree >>
+			#@+node:<< write then entire @file tree >> (4.x)
 			# unvisited nodes will be orphans, except in cweb trees.
 			root.clearVisitedInTree()
 			next = root.nodeAfterTree()
 			
-			
 			#@<< put all @first lines in root >>
-			#@+node:1::<< put all @first lines in root >>
-			#@+body
-			#@+at
-			#  Write any @first lines.  These lines are also converted to 
+			#@+node:<< put all @first lines in root >>
+			#@+at 
+			#@nonl
+			# Write any @first lines.  These lines are also converted to 
 			# @verbatim lines, so the read logic simply ignores lines 
 			# preceding the @+leo sentinel.
-
 			#@-at
 			#@@c
-
+			
 			s = root.t.bodyString
 			tag = "@first"
 			i = 0
@@ -4832,9 +4373,9 @@ class baseNewDerivedFile(oldDerivedFile):
 				line = s[j:i]
 				self.os(line) ; self.onl()
 				i = skip_nl(s,i)
-			#@-body
-			#@-node:1::<< put all @first lines in root >>
-
+			#@nonl
+			#@-node:<< put all @first lines in root >>
+			#@nl
 			
 			# Put the main part of the file.
 			at.putOpenLeoSentinel("@+leo-ver=4")
@@ -4843,18 +4384,16 @@ class baseNewDerivedFile(oldDerivedFile):
 			at.putSentinel("@-leo")
 			root.setVisited()
 			
-			
 			#@<< put all @last lines in root >>
-			#@+node:2::<< put all @last lines in root >>
-			#@+body
-			#@+at
-			#  Write any @last lines.  These lines are also converted to 
+			#@+node:<< put all @last lines in root >>
+			#@+at 
+			#@nonl
+			# Write any @last lines.  These lines are also converted to 
 			# @verbatim lines, so the read logic simply ignores lines 
 			# following the @-leo sentinel.
-
 			#@-at
 			#@@c
-
+			
 			tag = "@last"
 			lines = string.split(root.t.bodyString,'\n')
 			n = len(lines) ; j = k = n - 1
@@ -4870,21 +4409,17 @@ class baseNewDerivedFile(oldDerivedFile):
 			for line in lines[j+1:k+1]:
 				i = len(tag) ; i = skip_ws(line,i)
 				self.os(line[i:]) ; self.onl()
-			#@-body
-			#@-node:2::<< put all @last lines in root >>
-
+			#@nonl
+			#@-node:<< put all @last lines in root >>
+			#@nl
 			
 			
-			
-			#@-body
-			#@-node:3::<< write then entire @file tree >> (4.x)
-
+			#@-node:<< write then entire @file tree >> (4.x)
+			#@nl
 			at.closeWriteFile()
 			if 0: ### Not yet
-				
-				#@<< warn about @ignored and orphans >>
-				#@+node:4::<< Warn about @ignored and orphans  >>
-				#@+body
+				#@			<< warn about @ignored and orphans >>
+				#@+node:<< Warn about @ignored and orphans  >>
 				# 10/26/02: Always warn, even when language=="cweb"
 				
 				next = root.nodeAfterTree()
@@ -4895,22 +4430,18 @@ class baseNewDerivedFile(oldDerivedFile):
 					if v.isAtIgnoreNode():
 						at.writeError("@ignore node: " + v.headString())
 					v = v.threadNext()
-				
-				#@-body
-				#@-node:4::<< Warn about @ignored and orphans  >>
-
-			
-			#@<< finish writing >>
-			#@+node:5::<< finish writing >>
-			#@+body
-			#@+at
-			#  We set the orphan and dirty flags if there are problems writing 
+				#@-node:<< Warn about @ignored and orphans  >>
+				#@nl
+			#@		<< finish writing >>
+			#@+node:<< finish writing >>
+			#@+at 
+			#@nonl
+			# We set the orphan and dirty flags if there are problems writing 
 			# the file to force Commands::write_LEO_file to write the tree to 
 			# the .leo file.
-
 			#@-at
 			#@@c
-
+			
 			if at.errors > 0 or at.root.isOrphan():
 				root.setOrphan()
 				root.setDirty() # 2/9/02: make _sure_ we try to rewrite this file.
@@ -4920,15 +4451,14 @@ class baseNewDerivedFile(oldDerivedFile):
 				root.clearOrphan()
 				root.clearDirty()
 				at.replaceTargetFileIfDifferent()
-			#@-body
-			#@-node:5::<< finish writing >>
-
+			#@nonl
+			#@-node:<< finish writing >>
+			#@nl
 		except:
 			at.handleWriteException()
-	#@-body
-	#@-node:2::new_df.write
-	#@+node:3::new_df.rawWrite (needs testing)
-	#@+body
+	#@nonl
+	#@-node:new_df.write
+	#@+node:new_df.rawWrite (needs testing)
 	def rawWrite(self,root):
 	
 		trace("new_df",root)
@@ -4942,24 +4472,20 @@ class baseNewDerivedFile(oldDerivedFile):
 			ok = at.openWriteFile(root)
 			if not ok: return
 			next = root.nodeAfterTree()
-			
-			#@<< write root's tree >>
-			#@+node:1::<< write root's tree >>
-			#@+body
+			#@		<< write root's tree >>
+			#@+node:<< write root's tree >>
 			next = root.nodeAfterTree()
 			
-			
 			#@<< put all @first lines in root >>
-			#@+node:1::<< put all @first lines in root >>
-			#@+body
-			#@+at
-			#  Write any @first lines.  These lines are also converted to 
+			#@+node:<< put all @first lines in root >>
+			#@+at 
+			#@nonl
+			# Write any @first lines.  These lines are also converted to 
 			# @verbatim lines, so the read logic simply ignores lines 
 			# preceding the @+leo sentinel.
-
 			#@-at
 			#@@c
-
+			
 			s = root.t.bodyString
 			tag = "@first"
 			i = 0
@@ -4972,14 +4498,12 @@ class baseNewDerivedFile(oldDerivedFile):
 				line = s[j:i]
 				at.putBuffered(line) ; at.onl()
 				i = skip_nl(s,i)
-			#@-body
-			#@-node:1::<< put all @first lines in root >>
-
+			#@nonl
+			#@-node:<< put all @first lines in root >>
+			#@nl
 			at.putOpenLeoSentinel()
-			
 			#@<< put optional @comment sentinel lines >>
-			#@+node:2::<< put optional @comment sentinel lines >>
-			#@+body
+			#@+node:<< put optional @comment sentinel lines >>
 			s2 = app().config.output_initial_comment
 			if s2:
 				lines = string.split(s2,"\\n")
@@ -4987,17 +4511,13 @@ class baseNewDerivedFile(oldDerivedFile):
 					line = line.replace("@date",time.asctime())
 					if len(line)> 0:
 						at.putSentinel("@comment " + line)
-			
-			#@-body
-			#@-node:2::<< put optional @comment sentinel lines >>
-
+			#@-node:<< put optional @comment sentinel lines >>
+			#@nl
 			
 			v = root
 			while v and v != next:
-				
-				#@<< Write v's node >>
-				#@+node:3::<< Write v's node >>
-				#@+body
+				#@	<< Write v's node >>
+				#@+node:<< Write v's node >>
 				at.putOpenNodeSentinel(v)
 				
 				s = v.bodyString()
@@ -5007,25 +4527,21 @@ class baseNewDerivedFile(oldDerivedFile):
 					at.outputStringWithLineEndings(s)
 					
 				at.putCloseNodeSentinel(v)
-				
-				#@-body
-				#@-node:3::<< Write v's node >>
-
+				#@-node:<< Write v's node >>
+				#@nl
 				v = v.threadNext()
 			
 			at.putSentinel()
-			
 			#@<< put all @last lines in root >>
-			#@+node:4::<< put all @last lines in root >>
-			#@+body
-			#@+at
-			#  Write any @last lines.  These lines are also converted to 
+			#@+node:<< put all @last lines in root >>
+			#@+at 
+			#@nonl
+			# Write any @last lines.  These lines are also converted to 
 			# @verbatim lines, so the read logic simply ignores lines 
 			# following the @-leo sentinel.
-
 			#@-at
 			#@@c
-
+			
 			tag = "@last"
 			lines = string.split(root.t.bodyString,'\n')
 			n = len(lines) ; j = k = n - 1
@@ -5041,21 +4557,20 @@ class baseNewDerivedFile(oldDerivedFile):
 			for line in lines[j+1:k+1]:
 				i = len(tag) ; i = skip_ws(line,i)
 				at.putBuffered(line[i:]) ; at.onl()
-			#@-body
-			#@-node:4::<< put all @last lines in root >>
-			#@-body
-			#@-node:1::<< write root's tree >>
-
+			#@nonl
+			#@-node:<< put all @last lines in root >>
+			#@nl
+			#@nonl
+			#@-node:<< write root's tree >>
+			#@nl
 			at.closeWriteFile()
 			at.replaceTargetFileIfDifferent()
 			root.clearOrphan() ; root.clearDirty()
 		except:
 			at.handleWriteException(root)
-	#@-body
-	#@-node:3::new_df.rawWrite (needs testing)
-	#@-node:1::Top level
-	#@+node:2::putBody
-	#@+body
+	#@nonl
+	#@-node:new_df.rawWrite (needs testing)
+	#@+node:putBody
 	def putBody(self,v):
 		
 		""" Generate the body enclosed in sentinel lines."""
@@ -5077,10 +4592,8 @@ class baseNewDerivedFile(oldDerivedFile):
 			next_i = skip_line(s,i)
 			assert(next_i > i)
 			kind = at.directiveKind(s,i)
-			
-			#@<< handle line at s[i] >>
-			#@+node:1::<< handle line at s[i]  >>
-			#@+body
+			#@		<< handle line at s[i] >>
+			#@+node:<< handle line at s[i]  >>
 			if kind == noDirective:
 				if inCode:
 					hasRef,n1,n2 = at.findSectionName(s,i)
@@ -5114,20 +4627,18 @@ class baseNewDerivedFile(oldDerivedFile):
 				at.putDirective(s,i)
 			else:
 				assert(not "unknown directive")
-			#@-body
-			#@-node:1::<< handle line at s[i]  >>
-
+			#@nonl
+			#@-node:<< handle line at s[i]  >>
+			#@nl
 			i = next_i
 		if not inCode:
 			at.putEndDocLine()
 		if not trailingNewlineFlag:
 			at.putSentinel("@nonl")
 		at.putCloseNodeSentinel(v)
-	#@-body
-	#@-node:2::putBody
-	#@+node:3::code lines...
-	#@+node:1::inAtOthers
-	#@+body
+	#@nonl
+	#@-node:putBody
+	#@+node:inAtOthers
 	def inAtOthers(self,v):
 		
 		"""Returns true if v should be included in the expansion of the at-others directive
@@ -5153,10 +4664,9 @@ class baseNewDerivedFile(oldDerivedFile):
 		else:
 			# trace("ok",v)
 			return true
-	#@-body
-	#@-node:1::inAtOthers
-	#@+node:2::putAtOthersChild
-	#@+body
+	#@nonl
+	#@-node:inAtOthers
+	#@+node:putAtOthersChild
 	def putAtOthersChild(self,v):
 	
 		v.setVisited() # Make sure v is never expanded again.
@@ -5168,11 +4678,8 @@ class baseNewDerivedFile(oldDerivedFile):
 			if self.inAtOthers( child ):
 				self.putAtOthersChild( child )
 			child = child.next()
-	
-	#@-body
-	#@-node:2::putAtOthersChild
-	#@+node:3::putAtOthersLine
-	#@+body
+	#@-node:putAtOthersChild
+	#@+node:putAtOthersLine
 	def putAtOthersLine (self,s,i,v):
 		
 		"""Put the expansion of @others."""
@@ -5195,10 +4702,9 @@ class baseNewDerivedFile(oldDerivedFile):
 	
 		at.putSentinel("@-others")
 		at.indent -= delta
-	#@-body
-	#@-node:3::putAtOthersLine
-	#@+node:4::putCodeLine
-	#@+body
+	#@nonl
+	#@-node:putAtOthersLine
+	#@+node:putCodeLine
 	def putCodeLine (self,s,i):
 		
 		"""Put a normal code line."""
@@ -5216,10 +4722,9 @@ class baseNewDerivedFile(oldDerivedFile):
 		line = s[i:j]
 		# trace(`line`)
 		at.os(line)
-	#@-body
-	#@-node:4::putCodeLine
-	#@+node:5::putRefLine
-	#@+body
+	#@nonl
+	#@-node:putCodeLine
+	#@+node:putRefLine
 	def putRefLine(self,s,i,n1,n2,v):
 		
 		"""Put a reference at s[n1:n2+2] from v."""
@@ -5256,12 +4761,9 @@ class baseNewDerivedFile(oldDerivedFile):
 			at.indent += delta
 			at.putSentinel("@nl")
 			at.indent -= delta
-	#@-body
-	#@-node:5::putRefLine
-	#@-node:3::code lines...
-	#@+node:4::doc lines... (write)
-	#@+node:1::putBlankDocLine
-	#@+body
+	#@nonl
+	#@-node:putRefLine
+	#@+node:putBlankDocLine
 	def putBlankDocLine (self):
 		
 		at = self
@@ -5273,10 +4775,9 @@ class baseNewDerivedFile(oldDerivedFile):
 			at.os(at.startSentinelComment) ; at.oblank()
 	
 		at.onl()
-	#@-body
-	#@-node:1::putBlankDocLine
-	#@+node:2::putStartDocLine
-	#@+body
+	#@nonl
+	#@-node:putBlankDocLine
+	#@+node:putStartDocLine
 	def putStartDocLine (self,s,i,kind):
 		
 		"""Write the start of a doc part."""
@@ -5329,10 +4830,9 @@ class baseNewDerivedFile(oldDerivedFile):
 			if not is_nl(s,j):
 				at.putSentinel("@nonl")
 				at.putDocLine(s,i)
-	#@-body
-	#@-node:2::putStartDocLine
-	#@+node:3::putDocLine
-	#@+body
+	#@nonl
+	#@-node:putStartDocLine
+	#@+node:putDocLine
 	def putDocLine (self,s,i):
 		
 		"""Handle one line of a doc part.
@@ -5354,17 +4854,16 @@ class baseNewDerivedFile(oldDerivedFile):
 			# A blank line.
 			at.putBlankDocLine()
 		else:
-			
-			#@<< append words to pending line, splitting the line if needed >>
-			#@+node:1::<< append words to pending line, splitting the line if needed >>
-			#@+body
-			#@+at
-			#  All inserted newlines are preceeded by whitespace:
-			# we remove trailing whitespace from lines that have not been split.
-
+			#@		<< append words to pending line, splitting the line if needed >>
+			#@+node:<< append words to pending line, splitting the line if needed >>
+			#@+at 
+			#@nonl
+			# All inserted newlines are preceeded by whitespace:
+			# we remove trailing whitespace from lines that have not been 
+			# split.
 			#@-at
 			#@@c
-
+			
 			i = 0
 			while i < len(s):
 			
@@ -5394,12 +4893,12 @@ class baseNewDerivedFile(oldDerivedFile):
 						
 			# Output the remaining line: no more is left.
 			at.putPending(split=false)
-			#@-body
-			#@-node:1::<< append words to pending line, splitting the line if needed >>
-	#@-body
-	#@-node:3::putDocLine
-	#@+node:4::putEndDocLine
-	#@+body
+			#@nonl
+			#@-node:<< append words to pending line, splitting the line if needed >>
+			#@nl
+	#@nonl
+	#@-node:putDocLine
+	#@+node:putEndDocLine
 	def putEndDocLine (self):
 		
 		"""Write the conclusion of a doc part."""
@@ -5416,10 +4915,9 @@ class baseNewDerivedFile(oldDerivedFile):
 	
 		sentinel = choose(at.docKind == docDirective,"@-doc","@-at")
 		at.putSentinel(sentinel)
-	#@-body
-	#@-node:4::putEndDocLine
-	#@+node:5::putPending
-	#@+body
+	#@nonl
+	#@-node:putEndDocLine
+	#@+node:putPending
 	def putPending (self,split):
 		
 		"""Write the pending part of a doc part.
@@ -5445,12 +4943,9 @@ class baseNewDerivedFile(oldDerivedFile):
 			at.os(at.startSentinelComment) ; at.oblank()
 	
 		at.os(s) ; at.onl()
-	#@-body
-	#@-node:5::putPending
-	#@-node:4::doc lines... (write)
-	#@+node:5::Writing Utils...
-	#@+node:1::hasSectionName
-	#@+body
+	#@nonl
+	#@-node:putPending
+	#@+node:hasSectionName
 	def findSectionName(self,s,i):
 		
 		end = s.find('\n',i)
@@ -5462,10 +4957,9 @@ class baseNewDerivedFile(oldDerivedFile):
 			n2 = s.find(">>",i,end)
 	
 		return -1 < n1 < n2, n1, n2
-	#@-body
-	#@-node:1::hasSectionName
-	#@+node:2::os, onl, etc.
-	#@+body
+	#@nonl
+	#@-node:hasSectionName
+	#@+node:os, onl, etc.
 	def oblank(self):
 		self.os(' ')
 	
@@ -5486,10 +4980,9 @@ class baseNewDerivedFile(oldDerivedFile):
 	
 	def otabs(self,n):
 		self.os('\t' * abs(n))
-	#@-body
-	#@-node:2::os, onl, etc.
-	#@+node:3::directiveKind
-	#@+body
+	#@nonl
+	#@-node:os, onl, etc.
+	#@+node:directiveKind
 	# Returns the kind of at-directive or noDirective.
 	
 	def directiveKind(self,s,i):
@@ -5535,18 +5028,15 @@ class baseNewDerivedFile(oldDerivedFile):
 				return miscDirective
 	
 		return noDirective
-	#@-body
-	#@-node:3::directiveKind
-	#@-node:5::Writing Utils...
-	#@-node:4::Writing (4.x)
+	#@nonl
+	#@-node:directiveKind
 	#@-others
-	
-	#@-body
-	#@-node:5::<< class baseNewDerivedFile methods >>
-
+	#@nonl
+	#@-node:<< class baseNewDerivedFile methods >>
+	#@nl
 	
 class newDerivedFile(baseNewDerivedFile):
 	pass # May be overridden in plugins.
-#@-body
-#@-node:0::@file leoAtFile.py 
+#@nonl
+#@-node:@file leoAtFile.py 
 #@-leo

@@ -49,7 +49,7 @@ tk_encoding =
 output_newline = nl
 stylesheet = 
 at_root_bodies_start_in_doc_mode = 1
-write_old_format_derived_files = 1
+write_old_format_derived_files = 0
 create_nonexistent_directories = 0
 save_clears_undo_buffer = 0
 use_plugins = 1
@@ -205,7 +205,9 @@ headline_text_editing_background_color = white
 headline_text_editing_selection_foreground_color = white
 
 [recent files]
-file1 = C:\prog\leoCVS\leo\test\test.leo
+file3 = C:\prog\leoCVS\leo\test\test.leo
+file2 = C:\prog\leoCVS\leo\plugins\leoPlugins.leo
+file1 = C:\Documents and Settings\default\My Documents\ekr.leo
 file0 = C:\prog\leoCVS\leo\src\LeoPy.leo
 
 [find/change options]

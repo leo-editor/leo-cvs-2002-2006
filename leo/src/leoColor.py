@@ -1,6 +1,5 @@
-#@+leo
-#@+node:0::@file leoColor.py
-#@+body
+#@+leo-ver=4
+#@+node:@file leoColor.py
 #@@language python
 
 # Syntax coloring routines for Leo.py
@@ -8,10 +7,8 @@
 from leoGlobals import *
 import string,Tkinter,tkColorChooser
 
-
 #@<< define leo keywords >>
-#@+node:1::<< define leo keywords >>
-#@+body
+#@+node:<< define leo keywords >>
 # leoKeywords is used by directivesKind, so it should be a module-level symbol.
 
 # leoKeywords must be a list so that plugins may alter it.
@@ -25,13 +22,11 @@ leoKeywords = [
 	"@pagewidth","@path","@quiet","@raw","@root","@root-code","@root-doc",
 	"@silent","@tabwidth","@terse",
 	"@unit","@verbose","@wrap" ]
-#@-body
-#@-node:1::<< define leo keywords >>
-
-
+#@nonl
+#@-node:<< define leo keywords >>
+#@nl
 #@<< define colorizer constants >>
-#@+node:2::<< define colorizer constants >>
-#@+body
+#@+node:<< define colorizer constants >>
 # These defaults are sure to exist.
 default_colors_dict = {
 	# tag name      :(     option name,           default color),
@@ -46,13 +41,11 @@ default_colors_dict = {
 	"string"         :("string_color",                "#00aa00"), # Used by IDLE.
 	"name"           :("undefined_section_name_color","red"),
 	"latexBackground":("latex_background_color","white") }
-#@-body
-#@-node:2::<< define colorizer constants >>
-
-
+#@nonl
+#@-node:<< define colorizer constants >>
+#@nl
 #@<< define color panel data >>
-#@+node:3::<< define color panel data >>
-#@+body
+#@+node:<< define color panel data >>
 colorPanelData = (
 	#Dialog name,                option name,         default color),
 	("Brackets",          "section_name_brackets_color", "blue"),
@@ -129,21 +122,15 @@ colorNamesList = (
 	"purple2", "purple3", "purple4", "MediumPurple1", "MediumPurple2",
 	"MediumPurple3", "MediumPurple4", "thistle1", "thistle2", "thistle3",
 	"thistle4" )
-
-#@-body
-#@-node:3::<< define color panel data >>
-
-
+#@-node:<< define color panel data >>
+#@nl
 
 #@+others
-#@+node:4::class leoColorPanel
-#@+body
+#@+node:class leoColorPanel
 class baseLeoColorPanel:
 	"""The base class for Leo's color panel."""
-
-	#@+others
-	#@+node:1::colorPanel.__init__
-	#@+body
+	#@	@+others
+	#@+node:colorPanel.__init__
 	def __init__ (self,c):
 		
 		self.commands = c
@@ -161,10 +148,9 @@ class baseLeoColorPanel:
 		config = app().config
 		for name,option_name,default_color in colorPanelData:
 			self.revertColors[option_name] = config.getColorsPref(option_name)
-	#@-body
-	#@-node:1::colorPanel.__init__
-	#@+node:2::run
-	#@+body
+	#@nonl
+	#@-node:colorPanel.__init__
+	#@+node:run
 	def run (self):
 		
 		c = self.commands ; Tk = Tkinter
@@ -175,10 +161,8 @@ class baseLeoColorPanel:
 		top.protocol("WM_DELETE_WINDOW", self.onOk)
 		attachLeoIcon(top)
 	
-		
-		#@<< create color panel >>
-		#@+node:1::<< create color panel >>
-		#@+body
+		#@	<< create color panel >>
+		#@+node:<< create color panel >>
 		outer = Tk.Frame(top,bd=2,relief="groove")
 		outer.pack(anchor="n",pady=2,ipady=1,expand=1,fill="x")
 		
@@ -223,9 +207,9 @@ class baseLeoColorPanel:
 		b.pack(side="left",padx=4,expand=1,fill="x")
 		b = Tk.Button(f,width=6,text="Revert",command=self.onRevert)
 		b.pack(side="right",padx=4)
-		#@-body
-		#@-node:1::<< create color panel >>
-
+		#@nonl
+		#@-node:<< create color panel >>
+		#@nl
 		center_dialog(top) # Do this _after_ building the dialog!
 		top.resizable(0,0)
 		
@@ -234,10 +218,9 @@ class baseLeoColorPanel:
 		if 0:
 			top.grab_set() # Make the dialog a modal dialog.
 			top.focus_set() # Get all keystrokes.
-	#@-body
-	#@-node:2::run
-	#@+node:3::showColorPicker
-	#@+body
+	#@nonl
+	#@-node:run
+	#@+node:showColorPicker
 	def showColorPicker (self,name):
 		
 		option_name = self.option_names[name]
@@ -245,18 +228,16 @@ class baseLeoColorPanel:
 		rgb,val = tkColorChooser.askcolor(color=color)
 		if val != None:
 			self.update(name,val)
-	#@-body
-	#@-node:3::showColorPicker
-	#@+node:4::showColorName
-	#@+body
+	#@nonl
+	#@-node:showColorPicker
+	#@+node:showColorName
 	def showColorName (self,name,color):
 		
 		np = leoColorNamePanel(self,name,color)
 		np.run(name,color)
-	#@-body
-	#@-node:4::showColorName
-	#@+node:5::colorPanel.onOk, onCancel, onRevert
-	#@+body
+	#@nonl
+	#@-node:showColorName
+	#@+node:colorPanel.onOk, onCancel, onRevert
 	def onOk (self):
 		# Update the revert colors
 		config = app().config
@@ -292,10 +273,9 @@ class baseLeoColorPanel:
 			b.configure(text=`old_val`)
 		self.changed_options = []
 		self.commands.recolor()
-	#@-body
-	#@-node:5::colorPanel.onOk, onCancel, onRevert
-	#@+node:6::update
-	#@+body
+	#@nonl
+	#@-node:colorPanel.onOk, onCancel, onRevert
+	#@+node:update
 	def update (self,name,val):
 		
 		config = app().config
@@ -317,36 +297,29 @@ class baseLeoColorPanel:
 		# Set the new value and recolor.
 		config.setColorsPref(option_name,val)
 		self.commands.recolor()
-	#@-body
-	#@-node:6::update
+	#@nonl
+	#@-node:update
 	#@-others
-
 	
 class leoColorPanel (baseLeoColorPanel):
 	"""A class that creates Leo's color picker panel."""
 	pass
 
-
-#@-body
-#@-node:4::class leoColorPanel
-#@+node:5::class leoColorNamePanel
-#@+body
+#@-node:class leoColorPanel
+#@+node:class leoColorNamePanel
 class baseLeoColorNamePanel:
 	"""The base class for Leo's color name picker panel."""
-
-	#@+others
-	#@+node:1::namePanel.__init__
-	#@+body
+	#@	@+others
+	#@+node:namePanel.__init__
 	def __init__ (self, colorPanel, name, color):
 		
 		self.colorPanel = colorPanel
 		self.name = name
 		self.color = color
 		self.revertColor = color
-	#@-body
-	#@-node:1::namePanel.__init__
-	#@+node:2::getSelection
-	#@+body
+	#@nonl
+	#@-node:namePanel.__init__
+	#@+node:getSelection
 	def getSelection (self):
 	
 		box = self.box ; color = None
@@ -365,10 +338,9 @@ class baseLeoColorNamePanel:
 		if not color:
 			color = self.color
 		return color
-	#@-body
-	#@-node:2::getSelection
-	#@+node:3::run
-	#@+body
+	#@nonl
+	#@-node:getSelection
+	#@+node:run
 	def run (self,name,color):
 		
 		assert(name==self.name)
@@ -382,10 +354,8 @@ class baseLeoColorNamePanel:
 		top.title("Color names for " + '"' + name + '"')
 		top.protocol("WM_DELETE_WINDOW", self.onOk)
 	
-		
-		#@<< create color name panel >>
-		#@+node:1::<< create color name panel >>
-		#@+body
+		#@	<< create color name panel >>
+		#@+node:<< create color name panel >>
 		# Create organizer frames
 		outer = Tk.Frame(top,bd=2,relief="groove")
 		outer.pack(fill="both",expand=1)
@@ -429,9 +399,9 @@ class baseLeoColorNamePanel:
 				
 			b = Tk.Button(lower,text=text,command=command)
 			b.pack(side="left",pady=6,padx=4)
-		#@-body
-		#@-node:1::<< create color name panel >>
-
+		#@nonl
+		#@-node:<< create color name panel >>
+		#@nl
 		self.select(color)
 		
 		center_dialog(top) # Do this _after_ building the dialog!
@@ -440,10 +410,9 @@ class baseLeoColorNamePanel:
 		# This must be a modal dialog.
 		top.grab_set()
 		top.focus_set() # Get all keystrokes.
-	#@-body
-	#@-node:3::run
-	#@+node:4::onOk, onCancel, onRevert, OnApply
-	#@+body
+	#@nonl
+	#@-node:run
+	#@+node:onOk, onCancel, onRevert, OnApply
 	def onApply (self,event=None):
 		self.color = color = self.getSelection()
 		self.colorPanel.update(self.name,color)
@@ -461,10 +430,9 @@ class baseLeoColorNamePanel:
 		self.color = color = self.revertColor
 		self.select(self.color)
 		self.colorPanel.update(self.name,color)
-	#@-body
-	#@-node:4::onOk, onCancel, onRevert, OnApply
-	#@+node:5::select
-	#@+body
+	#@nonl
+	#@-node:onOk, onCancel, onRevert, OnApply
+	#@+node:select
 	def select (self,color):
 	
 		# trace(color)
@@ -480,40 +448,32 @@ class baseLeoColorNamePanel:
 				return
 	
 		# trace("not found:" + `color`)
-	#@-body
-	#@-node:5::select
+	#@nonl
+	#@-node:select
 	#@-others
-
 	
 class leoColorNamePanel(baseLeoColorNamePanel):
 	"""A class that creates Leo's color name picker panel."""
 	pass
-#@-body
-#@-node:5::class leoColorNamePanel
-#@+node:6::class colorizer
-#@+body
+#@nonl
+#@-node:class leoColorNamePanel
+#@+node:class colorizer
 class baseColorizer:
 	"""The base class for Leo's syntax colorer."""
-	
-	#@<< define colorizer keywords >>
-	#@+node:1::<< define colorizer keywords >>
-	#@+body
-	
+	#@	<< define colorizer keywords >>
+	#@+node:<< define colorizer keywords >>
 	#@<< actionscript keywords >>
-	#@+node:1::<< actionscript keywords >>
-	#@+body
+	#@+node:<< actionscript keywords >>
 	actionscript_keywords = (
 	#Jason 2003-07-03 
 	#Actionscript keywords for Leo adapted from UltraEdit syntax highlighting
 	"break", "call", "continue", "delete", "do", "else", "false", "for", "function", "goto", "if", "in", "new", "null", "return", "true", "typeof", "undefined", "var", "void", "while", "with", "#include", "catch", "constructor", "prototype", "this", "try", "_parent", "_root", "__proto__", "ASnative", "abs", "acos", "appendChild", "asfunction", "asin", "atan", "atan2", "attachMovie", "attachSound", "attributes", "BACKSPACE", "CAPSLOCK", "CONTROL", "ceil", "charAt", "charCodeAt", "childNodes", "chr", "cloneNode", "close", "concat", "connect", "cos", "createElement", "createTextNode", "DELETEKEY", "DOWN", "docTypeDecl", "duplicateMovieClip", "END", "ENTER", "ESCAPE", "enterFrame", "entry", "equal", "eval", "evaluate", "exp", "firstChild", "floor", "fromCharCode", "fscommand", "getAscii", "getBeginIndex", "getBounds", "getBytesLoaded", "getBytesTotal", "getCaretIndex", "getCode", "getDate", "getDay", "getEndIndex", "getFocus", "getFullYear", "getHours", "getMilliseconds", "getMinutes", "getMonth", "getPan", "getProperty", "getRGB", "getSeconds", "getTime", "getTimer", "getTimezoneOffset", "getTransform", "getURL", "getUTCDate", "getUTCDay", "getUTCFullYear", "getUTCHours", "getUTCMilliseconds", "getUTCMinutes", "getUTCMonth", "getUTCSeconds", "getVersion", "getVolume", "getYear", "globalToLocal", "gotoAndPlay", "gotoAndStop", "HOME", "haschildNodes", "hide", "hitTest", "INSERT", "Infinity", "ifFrameLoaded", "ignoreWhite", "indexOf", "insertBefore", "int", "isDown", "isFinite", "isNaN", "isToggled", "join", "keycode", "keyDown", "keyUp", "LEFT", "LN10", "LN2", "LOG10E", "LOG2E", "lastChild", "lastIndexOf", "length", "load", "loaded", "loadMovie", "loadMovieNum", "loadVariables", "loadVariablesNum", "localToGlobal", "log", "MAX_VALUE", "MIN_VALUE", "max", "maxscroll", "mbchr", "mblength", "mbord", "mbsubstring", "min", "NEGATIVE_INFINITY", "NaN", "newline", "nextFrame", "nextScene", "nextSibling", "nodeName", "nodeType", "nodeValue", "on", "onClipEvent", "onClose", "onConnect", "onData", "onLoad", "onXML", "ord", "PGDN", "PGUP", "PI", "POSITIVE_INFINITY", "parentNode", "parseFloat", "parseInt", "parseXML", "play", "pop", "pow", "press", "prevFrame", "previousSibling", "prevScene", "print", "printAsBitmap", "printAsBitmapNum", "printNum", "push", "RIGHT", "random", "release", "removeMovieClip", "removeNode", "reverse", "round", "SPACE", "SQRT1_2", "SQRT2", "scroll", "send", "sendAndLoad", "set", "setDate", "setFocus", "setFullYear", "setHours", "setMilliseconds", "setMinutes", "setMonth", "setPan", "setProperty", "setRGB", "setSeconds", "setSelection", "setTime", "setTransform", "setUTCDate", "setUTCFullYear", "setUTCHours", "setUTCMilliseconds", "setUTCMinutes", "setUTCMonth", "setUTCSeconds", "setVolume", "setYear", "shift", "show", "sin", "slice", "sort", "start", "startDrag", "status", "stop", "stopAllSounds", "stopDrag", "substr", "substring", "swapDepths", "splice", "split", "sqrt", "TAB", "tan", "targetPath", "tellTarget", "toggleHighQuality", "toLowerCase", "toString", "toUpperCase", "trace", "UP", "UTC", "unescape", "unloadMovie", "unLoadMovieNum", "unshift", "updateAfterEvent", "valueOf", "xmlDecl", "_alpha", "_currentframe", "_droptarget", "_focusrect", "_framesloaded", "_height", "_highquality", "_name", "_quality", "_rotation", "_soundbuftime", "_target", "_totalframes", "_url", "_visible", "_width", "_x", "_xmouse", "_xscale", "_y", "_ymouse", "_yscale", "and", "add", "eq", "ge", "gt", "le", "lt", "ne", "not", "or", "Array", "Boolean", "Color", "Date", "Key", "Math", "MovieClip", "Mouse", "Number", "Object", "Selection", "Sound", "String", "XML", "XMLSocket"
 	)
-	#@-body
-	#@-node:1::<< actionscript keywords >>
-
-	
+	#@nonl
+	#@-node:<< actionscript keywords >>
+	#@nl
 	#@<< c keywords >>
-	#@+node:2::<< c keywords >>
-	#@+body
+	#@+node:<< c keywords >>
 	c_keywords = (
 		# C keywords
 		"auto","break","case","char","continue",
@@ -528,14 +488,12 @@ class baseColorizer:
 		"private","protected","public","reinterpret_cast","static_cast",
 		"template","this","throw","true","try",
 		"typeid","typename","using","virtual","wchar_t")
-	#@-body
-	#@-node:2::<< c keywords >>
-
+	#@nonl
+	#@-node:<< c keywords >>
+	#@nl
 	cweb_keywords = c_keywords
-	
 	#@<< html keywords >>
-	#@+node:3::<< html keywords >>
-	#@+body
+	#@+node:<< html keywords >>
 	# No longer used by syntax colorer.
 	html_keywords = ()
 	
@@ -553,13 +511,11 @@ class baseColorizer:
 			"script","style")
 	
 		html_specials = ( "<%","%>" )
-	#@-body
-	#@-node:3::<< html keywords >>
-
-	
+	#@nonl
+	#@-node:<< html keywords >>
+	#@nl
 	#@<< java keywords >>
-	#@+node:4::<< java keywords >>
-	#@+body
+	#@+node:<< java keywords >>
 	java_keywords = (
 		"abstract","boolean","break","byte","byvalue",
 		"case","cast","catch","char","class","const","continue",
@@ -572,13 +528,11 @@ class baseColorizer:
 		"short","static","super","switch","synchronized",
 		"this","throw","transient","true","try",
 		"var","void","volatile","while")
-	#@-body
-	#@-node:4::<< java keywords >>
-
-	
+	#@nonl
+	#@-node:<< java keywords >>
+	#@nl
 	#@<< latex keywords >>
-	#@+node:5::<< latex keywords >>
-	#@+body
+	#@+node:<< latex keywords >>
 	#If you see two idenitical words, with minor capitalization differences
 	#DO NOT ASSUME that they are the same word. For example \vert produces
 	#a single vertical line and \Vert produces a double vertical line
@@ -704,13 +658,11 @@ class baseColorizer:
 		"\\Xi", "\\xi",
 		#Z
 		"\\zeta" )
-	#@-body
-	#@-node:5::<< latex keywords >>
-
-	
+	#@nonl
+	#@-node:<< latex keywords >>
+	#@nl
 	#@<< pascal keywords >>
-	#@+node:6::<< pascal keywords >>
-	#@+body
+	#@+node:<< pascal keywords >>
 	pascal_keywords = (
 		"and","array","as","begin",
 		"case","const","class","constructor","cdecl"
@@ -733,13 +685,11 @@ class baseColorizer:
 		"threadvar",
 		# limited contexts
 		"exports","property","default","write","stored","index","name" )
-	#@-body
-	#@-node:6::<< pascal keywords >>
-
-	
+	#@nonl
+	#@-node:<< pascal keywords >>
+	#@nl
 	#@<< perl keywords >>
-	#@+node:7::<< perl keywords >>
-	#@+body
+	#@+node:<< perl keywords >>
 	perl_keywords = (
 		"continue","do","else","elsif","format","for","format","for","foreach",
 		"if","local","package","sub","tr","unless","until","while","y",
@@ -803,14 +753,12 @@ class baseColorizer:
 		"chmod","chown","die","exec","kill",
 		"print","printf","return","reverse",
 		"sort","system","syscall","unlink","utime","warn")
-	#@-body
-	#@-node:7::<< perl keywords >>
-
+	#@nonl
+	#@-node:<< perl keywords >>
+	#@nl
 	perlpod_keywords = perl_keywords
-	
 	#@<< python keywords >>
-	#@+node:8::<< python keywords >>
-	#@+body
+	#@+node:<< python keywords >>
 	python_keywords = (
 		"and",       "del",       "for",       "is",        "raise",    
 		"assert",    "elif",      "from",      "lambda",    "return",   
@@ -818,13 +766,11 @@ class baseColorizer:
 		"class",     "except",    "if",        "or",        "yield",   
 		"continue",  "exec",      "import",    "pass",      "while",
 		"def",       "finally",   "in",        "print")
-	#@-body
-	#@-node:8::<< python keywords >>
-
-	
+	#@nonl
+	#@-node:<< python keywords >>
+	#@nl
 	#@<< tcl/tk keywords >>
-	#@+node:9::<< tcl/tk keywords >>
-	#@+body
+	#@+node:<< tcl/tk keywords >>
 	tcltk_keywords = ( # Only the tcl keywords are here.
 		"after",     "append",    "array",
 		"bgerror",   "binary",    "break",
@@ -854,13 +800,11 @@ class baseColorizer:
 		"unknown",   "unset",     "update",     "uplevel",   "upvar",
 		"variable",  "vwait",
 		"while" )
-	#@-body
-	#@-node:9::<< tcl/tk keywords >>
-
-	
+	#@nonl
+	#@-node:<< tcl/tk keywords >>
+	#@nl
 	#@<< php keywords >>
-	#@+node:10::<< php keywords >>
-	#@+body
+	#@+node:<< php keywords >>
 	php_keywords = ( # 08-SEP-2002 DTHEIN
 		"__CLASS__", "__FILE__", "__FUNCTION__", "__LINE__",
 		"and", "as", "break",
@@ -881,14 +825,10 @@ class baseColorizer:
 		
 	# The following are handled by special case code:
 	# "<?php", "?>"
-	
-	#@-body
-	#@-node:10::<< php keywords >>
-
-	
+	#@-node:<< php keywords >>
+	#@nl
 	#@<< rebol keywords >>
-	#@+node:11::<< rebol keywords >>
-	#@+body
+	#@+node:<< rebol keywords >>
 	rebol_keywords = (
 	#Jason 2003-07-03 
 	#based on UltraEdit syntax highlighting
@@ -956,17 +896,13 @@ class baseColorizer:
 	"within?", "word?",  
 	"zero?"
 	)
-	#@-body
-	#@-node:11::<< rebol keywords >>
-
-	
-	#@-body
-	#@-node:1::<< define colorizer keywords >>
-
-
-	#@+others
-	#@+node:2::color.__init__
-	#@+body
+	#@nonl
+	#@-node:<< rebol keywords >>
+	#@nl
+	#@-node:<< define colorizer keywords >>
+	#@nl
+	#@	@+others
+	#@+node:color.__init__
 	def disable (self):
 	
 		print "disabling all syntax coloring"
@@ -1000,10 +936,8 @@ class baseColorizer:
 		# For use of external markup routines.
 		self.last_markup = "unknown" 
 		self.markup_string = "unknown"
-		
-		#@<< ivars for communication between colorAllDirectives and its allies >>
-		#@+node:1::<< ivars for communication between colorAllDirectives and its allies >>
-		#@+body
+		#@	<< ivars for communication between colorAllDirectives and its allies >>
+		#@+node:<< ivars for communication between colorAllDirectives and its allies >>
 		# Copies of arguments.
 		self.v = None
 		self.body = None
@@ -1027,13 +961,11 @@ class baseColorizer:
 		self.latex_cweb_docs     = config.getBoolColorsPref("color_cweb_doc_parts_with_latex")
 		self.latex_cweb_comments = config.getBoolColorsPref("color_cweb_comments_with_latex")
 		# print "docs,comments",`self.latex_cweb_docs`,`self.latex_cweb_comments`
-		#@-body
-		#@-node:1::<< ivars for communication between colorAllDirectives and its allies >>
-
-		
-		#@<< define dispatch dicts >>
-		#@+node:2::<< define dispatch dicts >>
-		#@+body
+		#@nonl
+		#@-node:<< ivars for communication between colorAllDirectives and its allies >>
+		#@nl
+		#@	<< define dispatch dicts >>
+		#@+node:<< define dispatch dicts >>
 		self.state_dict = {
 			"blockComment" : self.continueBlockComment,
 			"doubleString" : self.continueDoubleString, # 1/25/03
@@ -1099,13 +1031,11 @@ class baseColorizer:
 					ddict2 [self.block_comment_start] = self.doBlockComment
 				else:
 					mutli_list.append((self.block_comment_start,self.doBlockComment),)
-		#@-body
-		#@-node:2::<< define dispatch dicts >>
-
-		
-		#@<< define fonts and data for wiki tags >>
-		#@+node:3::<< define fonts and data for wiki tags >>
-		#@+body
+		#@nonl
+		#@-node:<< define dispatch dicts >>
+		#@nl
+		#@	<< define fonts and data for wiki tags >>
+		#@+node:<< define fonts and data for wiki tags >>
 		self.bold_font = config.getFontFromParams(
 			"body_text_font_family", "body_text_font_size",
 			"body_text_font_slant",  "body_text_font_weight")
@@ -1126,36 +1056,29 @@ class baseColorizer:
 		
 		self.color_tags_list = []
 		self.image_references = []
-		
-		#@-body
-		#@-node:3::<< define fonts and data for wiki tags >>
-	#@-body
-	#@-node:2::color.__init__
-	#@+node:3::color.callbacks...
-	#@+node:1::OnHyperLinkControlClick
-	#@+body
+		#@-node:<< define fonts and data for wiki tags >>
+		#@nl
+	#@nonl
+	#@-node:color.__init__
+	#@+node:OnHyperLinkControlClick
 	def OnHyperLinkControlClick (self,v):
 	
 		pass
-	#@-body
-	#@-node:1::OnHyperLinkControlClick
-	#@+node:2::OnHyperLinkEnter
-	#@+body
+	#@nonl
+	#@-node:OnHyperLinkControlClick
+	#@+node:OnHyperLinkEnter
 	def OnHyperLinkEnter (self,v):
 	
 		pass # trace(`v` + ", " + `v.tagName`)
-	#@-body
-	#@-node:2::OnHyperLinkEnter
-	#@+node:3::OnHyperLinkLeave
-	#@+body
+	#@nonl
+	#@-node:OnHyperLinkEnter
+	#@+node:OnHyperLinkLeave
 	def OnHyperLinkLeave (self,v):
 	
 		pass # trace(`v`)
-	#@-body
-	#@-node:3::OnHyperLinkLeave
-	#@-node:3::color.callbacks...
-	#@+node:4::colorize & recolor_range
-	#@+body
+	#@nonl
+	#@-node:OnHyperLinkLeave
+	#@+node:colorize & recolor_range
 	# The main colorizer entry point.
 	
 	def colorize(self,v,body,incremental=false):
@@ -1176,21 +1099,16 @@ class baseColorizer:
 			self.incremental=true
 			self.updateSyntaxColorer(v)
 			self.colorizeAnyLanguage(v,body,leading=leading,trailing=trailing)
-	
-	#@-body
-	#@-node:4::colorize & recolor_range
-	#@+node:5::colorizeAnyLanguage & allies
-	#@+body
+	#@-node:colorize & recolor_range
+	#@+node:colorizeAnyLanguage & allies
 	def colorizeAnyLanguage (self,v,body,leading=None,trailing=None):
 		
 		"""Color the body pane either incrementally or non-incrementally"""
 		
 		#trace(`v`)
 		try:
-			
-			#@<< initialize ivars & tags >>
-			#@+node:1::<< initialize ivars & tags >> colorizeAnyLanguage
-			#@+body
+			#@		<< initialize ivars & tags >>
+			#@+node:<< initialize ivars & tags >> colorizeAnyLanguage
 			# Add any newly-added user keywords.
 			for d in globalDirectiveList:
 				name = '@' + d
@@ -1216,10 +1134,8 @@ class baseColorizer:
 			self.redoColoring = false
 			self.redoingColoring = false
 			
-			
 			#@<< configure tags >>
-			#@+node:1::<< configure tags >>
-			#@+body
+			#@+node:<< configure tags >>
 			config = app().config
 			assert(config)
 			
@@ -1283,13 +1199,11 @@ class baseColorizer:
 			body.tag_configure("bolditalic",font=self.bolditalic_font)
 			for name in self.color_tags_list:
 				self.body.tag_configure(name,foreground=name)
-			#@-body
-			#@-node:1::<< configure tags >>
-
-			
+			#@nonl
+			#@-node:<< configure tags >>
+			#@nl
 			#@<< configure language-specific settings >>
-			#@+node:2::<< configure language-specific settings >>
-			#@+body
+			#@+node:<< configure language-specific settings >>
 			# Define has_string, keywords, single_comment_start, block_comment_start, block_comment_end.
 			
 			if self.language == "cweb": # Use C comments, not cweb sentinel comments.
@@ -1344,37 +1258,35 @@ class baseColorizer:
 			else:
 				self.lb = choose(self.language == "cweb","@<","<<")
 				self.rb = choose(self.language == "cweb","@>",">>")
-			#@-body
-			#@-node:2::<< configure language-specific settings >>
-
+			#@nonl
+			#@-node:<< configure language-specific settings >>
+			#@nl
 			
 			self.hyperCount = 0 # Number of hypertext tags
 			self.count += 1
 			lines = string.split(s,'\n')
-			#@-body
-			#@-node:1::<< initialize ivars & tags >> colorizeAnyLanguage
-
+			#@nonl
+			#@-node:<< initialize ivars & tags >> colorizeAnyLanguage
+			#@nl
 			doHook("init-color-markup",colorer=self,v=self.v)
 			self.color_pass = 0
 			if self.incremental and (
-				
-				#@<< all state ivars match >>
-				#@+node:2::<< all state ivars match >>
-				#@+body
+				#@			<< all state ivars match >>
+				#@+node:<< all state ivars match >>
 				self.flag == self.last_flag and
 				self.last_language == self.language and
 				self.comment_string == self.last_comment and
 				self.markup_string == self.last_markup
-				#@-body
-				#@-node:2::<< all state ivars match >>
+				#@nonl
+				#@-node:<< all state ivars match >>
+	#@afterref
  ):
-				
-				#@<< incrementally color the text >>
-				#@+node:3::<< incrementally color the text >>
-				#@+body
-				#@+at
-				#   Each line has a starting state.  The starting state for 
-				# the first line is always "normal".
+				#@			<< incrementally color the text >>
+				#@+node:<< incrementally color the text >>
+				#@+at  
+				#@nonl
+				# Each line has a starting state.  The starting state for the 
+				# first line is always "normal".
 				# 
 				# We need remember only self.lines and self.states between 
 				# colorizing.  It is not necessary to know where the text 
@@ -1387,10 +1299,9 @@ class baseColorizer:
 				# other lines (the middle lines) must be colorized, as well as 
 				# any trailing lines whose states may have changed as the 
 				# result of changes to the middle lines.
-
 				#@-at
 				#@@c
-
+				
 				# trace("incremental")
 				
 				# 6/30/03: make a copies of everything
@@ -1413,20 +1324,18 @@ class baseColorizer:
 					leading_lines = leading
 					trailing_lines = trailing
 				else:
-					
-					#@<< compute leading, middle & trailing lines >>
-					#@+node:1::<< compute leading, middle & trailing  lines >>
-					#@+body
-					#@+at
-					#  The leading lines are the leading matching lines.  The 
+					#@	<< compute leading, middle & trailing lines >>
+					#@+node:<< compute leading, middle & trailing  lines >>
+					#@+at 
+					#@nonl
+					# The leading lines are the leading matching lines.  The 
 					# trailing lines are the trailing matching lines.  The 
 					# middle lines are all other new lines.  We will color at 
 					# least all the middle lines.  There may be no middle 
 					# lines if we delete lines.
-
 					#@-at
 					#@@c
-
+					
 					min_len = min(old_len,new_len)
 					
 					i = 0
@@ -1449,25 +1358,21 @@ class baseColorizer:
 								break
 							i += 1
 						trailing_lines = i
-					
-					#@-body
-					#@-node:1::<< compute leading, middle & trailing  lines >>
-
+					#@-node:<< compute leading, middle & trailing  lines >>
+					#@nl
 					
 				middle_lines = new_len - leading_lines - trailing_lines
 				# print "middle lines", middle_lines
 				
-				
 				#@<< clear leading_lines if middle lines involve @color or @recolor  >>
-				#@+node:2::<< clear leading_lines if middle lines involve @color or @recolor  >>
-				#@+body
-				#@+at
-				#  11/19/02: Changing @color or @nocolor directives requires 
-				# we recolor all leading states as well.
-
+				#@+node:<< clear leading_lines if middle lines involve @color or @recolor  >>
+				#@+at 
+				#@nonl
+				# 11/19/02: Changing @color or @nocolor directives requires we 
+				# recolor all leading states as well.
 				#@-at
 				#@@c
-
+				
 				if trailing_lines == 0:
 					m1 = new_lines[leading_lines:]
 					m2 = old_lines[leading_lines:]
@@ -1481,14 +1386,10 @@ class baseColorizer:
 						if match_word(s,i,"@color") or match_word(s,i,"@nocolor"):
 							leading_lines = 0
 							break
-				
-				#@-body
-				#@-node:2::<< clear leading_lines if middle lines involve @color or @recolor  >>
-
-				
+				#@-node:<< clear leading_lines if middle lines involve @color or @recolor  >>
+				#@nl
 				#@<< initialize new states >>
-				#@+node:3::<< initialize new states >>
-				#@+body
+				#@+node:<< initialize new states >>
 				# Copy the leading states from the old to the new lines.
 				i = 0
 				while i < leading_lines and i < old_len: # 12/8/02
@@ -1528,13 +1429,11 @@ class baseColorizer:
 				if 0:
 					for i in xrange(len(new_lines)):
 						print new_states[i],new_lines[i]
-				#@-body
-				#@-node:3::<< initialize new states >>
-
-				
+				#@nonl
+				#@-node:<< initialize new states >>
+				#@nl
 				#@<< colorize until the states match >>
-				#@+node:4::<< colorize until the states match >>
-				#@+body
+				#@+node:<< colorize until the states match >>
 				# Colorize until the states match.
 				# All middle lines have "unknown" state, so they will all be colored.
 				
@@ -1568,31 +1467,26 @@ class baseColorizer:
 				# Update the ivars
 				self.states = new_states
 				self.lines = new_lines
-				#@-body
-				#@-node:4::<< colorize until the states match >>
-				#@-body
-				#@-node:3::<< incrementally color the text >>
-
+				#@nonl
+				#@-node:<< colorize until the states match >>
+				#@nl
+				#@nonl
+				#@-node:<< incrementally color the text >>
+				#@nl
 			else:
-				
-				#@<< non-incrementally color the text >>
-				#@+node:4::<< non-incrementally color the text >>
-				#@+body
+				#@			<< non-incrementally color the text >>
+				#@+node:<< non-incrementally color the text >>
 				# trace("non-incremental")
 				
 				self.line_index = 1 # The Tk line number for indices, as in n.i
 				for s in lines:
 					state = self.colorizeLine(s,state)
 					self.line_index += 1
-				
-				#@-body
-				#@-node:4::<< non-incrementally color the text >>
-
+				#@-node:<< non-incrementally color the text >>
+				#@nl
 			if self.redoColoring:
-				
-				#@<< completely recolor in two passes >>
-				#@+node:7::<< completely recolor in two passes >>
-				#@+body
+				#@			<< completely recolor in two passes >>
+				#@+node:<< completely recolor in two passes >>
 				# This code is executed only if graphics characters will be inserted by user markup code.
 				
 				# Pass 1:  Insert all graphics characters.
@@ -1614,70 +1508,60 @@ class baseColorizer:
 				self.line_index = 1
 				state = self.setFirstLineState()
 				for s in lines:
-					
-					#@<< kludge: insert a blank in s for every image in the line >>
-					#@+node:1::<< kludge: insert a blank in s for every image in the line >>
-					#@+body
-					#@+at
-					#  A spectacular kludge.
+					#@	<< kludge: insert a blank in s for every image in the line >>
+					#@+node:<< kludge: insert a blank in s for every image in the line >>
+					#@+at 
+					#@nonl
+					# A spectacular kludge.
 					# 
 					# Images take up a real index, yet the get routine does 
 					# not return any character for them!
 					# In order to keep the colorer in synch, we must insert 
-					# dummy blanks in s at the positions corresponding to each image.
-
+					# dummy blanks in s at the positions corresponding to each 
+					# image.
 					#@-at
 					#@@c
-
+					
 					inserted = 0
 					
 					for photo,image,line_index,i in self.image_references:
 						if self.line_index == line_index:
 							n = i+inserted ; 	inserted += 1
 							s = s[:n] + ' ' + s[n:]
-					
-					#@-body
-					#@-node:1::<< kludge: insert a blank in s for every image in the line >>
-
+					#@-node:<< kludge: insert a blank in s for every image in the line >>
+					#@nl
 					state = self.colorizeLine(s,state)
 					self.line_index += 1
-				
-				#@-body
-				#@-node:7::<< completely recolor in two passes >>
-
-			
-			#@<< update state ivars >>
-			#@+node:5::<< update state ivars >>
-			#@+body
+				#@-node:<< completely recolor in two passes >>
+				#@nl
+			#@		<< update state ivars >>
+			#@+node:<< update state ivars >>
 			self.last_flag = self.flag
 			self.last_language = self.language
 			self.last_comment = self.comment_string
 			self.last_markup = self.markup_string
-			#@-body
-			#@-node:5::<< update state ivars >>
-
+			#@nonl
+			#@-node:<< update state ivars >>
+			#@nl
 			return "ok" # for testing.
 		except:
-			
-			#@<< set state ivars to "unknown" >>
-			#@+node:6::<< set state ivars to "unknown" >>
-			#@+body
+			#@		<< set state ivars to "unknown" >>
+			#@+node:<< set state ivars to "unknown" >>
 			self.last_flag = "unknown"
 			self.last_language = "unknown"
 			self.last_comment = "unknown"
-			#@-body
-			#@-node:6::<< set state ivars to "unknown" >>
-
+			#@nonl
+			#@-node:<< set state ivars to "unknown" >>
+			#@nl
 			if self.commands:
 				es_exception()
 			else:
 				import traceback
 				traceback.print_exc()
 			return "error" # for testing.
-	#@-body
-	#@-node:5::colorizeAnyLanguage & allies
-	#@+node:6::colorizeLine & allies
-	#@+body
+	#@nonl
+	#@-node:colorizeAnyLanguage & allies
+	#@+node:colorizeLine & allies
 	def colorizeLine (self,s,state):
 	
 		# print "line,inc,state,s:",self.line_index,self.incremental,state,s
@@ -1692,9 +1576,9 @@ class baseColorizer:
 			i,state = func(s,i)
 	
 		return state
-	#@-body
-	#@+node:1::continueBlockComment
-	#@+body
+	#@nonl
+	#@-node:colorizeLine & allies
+	#@+node:continueBlockComment
 	def continueBlockComment (self,s,i):
 		
 		j = s.find(self.block_comment_end,i)
@@ -1721,10 +1605,9 @@ class baseColorizer:
 					self.tag("comment",i,j+k)
 			i = j + k
 			return i,"normal"
-	#@-body
-	#@-node:1::continueBlockComment
-	#@+node:2::continueSingle/DoubleString
-	#@+body
+	#@nonl
+	#@-node:continueBlockComment
+	#@+node:continueSingle/DoubleString
 	def continueDoubleString (self,s,i):
 		return self.continueString(s,i,'"',"doubleString")
 		
@@ -1750,18 +1633,15 @@ class baseColorizer:
 		self.tag("string",j,i)
 		state = choose(continueFlag,continueState,"normal")
 		return i,state
-	#@-body
-	#@-node:2::continueSingle/DoubleString
-	#@+node:3::continueDocPart
-	#@+body
+	#@nonl
+	#@-node:continueSingle/DoubleString
+	#@+node:continueDocPart
 	def continueDocPart (self,s,i):
 		
 		state = "doc"
 		if self.language == "cweb":
-			
-			#@<< handle cweb doc part >>
-			#@+node:1::<< handle cweb doc part >>
-			#@+body
+			#@		<< handle cweb doc part >>
+			#@+node:<< handle cweb doc part >>
 			word = self.getCwebWord(s,i)
 			if word and len(word) > 0:
 				j = i + len(word)
@@ -1794,14 +1674,12 @@ class baseColorizer:
 				if j == -1: j = len(s)
 				self.tag("docPart",i,j)
 				i = j
-			#@-body
-			#@-node:1::<< handle cweb doc part >>
-
+			#@nonl
+			#@-node:<< handle cweb doc part >>
+			#@nl
 		else:
-			
-			#@<< handle noweb doc part >>
-			#@+node:2::<< handle noweb doc part >>
-			#@+body
+			#@		<< handle noweb doc part >>
+			#@+node:<< handle noweb doc part >>
 			if i == 0 and match(s,i,"<<"):
 				# Possible section definition line.
 				return i,"normal" # rescan the line.
@@ -1825,15 +1703,12 @@ class baseColorizer:
 					colorer=self,v=self.v,s=s,i=i,j=j,colortag="docPart"):
 					self.tag("docPart",i,j)
 				i = j # skip the rest of the line.
-			
-			#@-body
-			#@-node:2::<< handle noweb doc part >>
-
+			#@-node:<< handle noweb doc part >>
+			#@nl
 		return i,state
-	#@-body
-	#@-node:3::continueDocPart
-	#@+node:4::continueNocolor
-	#@+body
+	#@nonl
+	#@-node:continueDocPart
+	#@+node:continueNocolor
 	def continueNocolor (self,s,i):
 	
 		if i == 0 and s[i] == '@':
@@ -1857,10 +1732,9 @@ class baseColorizer:
 					self.tag("tab",i,i+1)
 				i += 1
 			return i,"nocolor"
-	#@-body
-	#@-node:4::continueNocolor
-	#@+node:5::continueSingle/DoublePythonString
-	#@+body
+	#@nonl
+	#@-node:continueNocolor
+	#@+node:continueSingle/DoublePythonString
 	def continueDoublePythonString (self,s,i):
 		j = s.find('"""',i)
 		return self.continuePythonString(s,i,j,"string3d")
@@ -1891,10 +1765,9 @@ class baseColorizer:
 			else:
 				self.tag("string",i,j+3)
 			return j+3,"normal"
-	#@-body
-	#@-node:5::continueSingle/DoublePythonString
-	#@+node:6::doAtKeyword: NOT for cweb keywords
-	#@+body
+	#@nonl
+	#@-node:continueSingle/DoublePythonString
+	#@+node:doAtKeyword: NOT for cweb keywords
 	# Handles non-cweb keyword.
 	
 	def doAtKeyword (self,s,i):
@@ -1923,10 +1796,9 @@ class baseColorizer:
 			return j,"normal"
 		else:
 			return j,"normal"
-	#@-body
-	#@-node:6::doAtKeyword: NOT for cweb keywords
-	#@+node:7::doLatexLine
-	#@+body
+	#@nonl
+	#@-node:doAtKeyword: NOT for cweb keywords
+	#@+node:doLatexLine
 	# Colorize the line from i to j.
 	
 	def doLatexLine (self,s,i,j):
@@ -1941,10 +1813,9 @@ class baseColorizer:
 			else:
 				self.tag("latexModeBackground",i,i+1)
 				i += 1
-	#@-body
-	#@-node:7::doLatexLine
-	#@+node:8::doNormalState
-	#@+body
+	#@nonl
+	#@-node:doLatexLine
+	#@+node:doNormalState
 	## To do: rewrite using dynamically generated tables.
 	
 	def doNormalState (self,s,i):
@@ -1954,16 +1825,11 @@ class baseColorizer:
 		if ch in string.letters or ch == '_' or (
 			(ch == '\\' and self.language=="latex") or
 			(ch in '/&<>' and self. language=="html")):
-			
-			#@<< handle possible keyword >>
-			#@+node:1::Valid regardless of latex mode
-			#@+node:1::<< handle possible  keyword >>
-			#@+body
+			#@		<< handle possible keyword >>
+			#@+node:<< handle possible  keyword >>
 			if self.language == "latex":
-				
-				#@<< handle possible latex keyword >>
-				#@+node:1::<< handle possible latex keyword >>
-				#@+body
+				#@	<< handle possible latex keyword >>
+				#@+node:<< handle possible latex keyword >>
 				if match(s,i,"\\"):
 					j = self.skip_id(s,i+1)
 					word = s[i:j]
@@ -1974,14 +1840,12 @@ class baseColorizer:
 				else:
 					self.tag("latexBackground",i,i+1)
 					j = i + 1 # skip the character.
-				#@-body
-				#@-node:1::<< handle possible latex keyword >>
-
+				#@nonl
+				#@-node:<< handle possible latex keyword >>
+				#@nl
 			elif self.language == "html":
-				
-				#@<< handle possible html keyword >>
-				#@+node:2::<< handle possible html keyword >>
-				#@+body
+				#@	<< handle possible html keyword >>
+				#@+node:<< handle possible html keyword >>
 				if match(s,i,"<!---") or match(s,i,"<!--"):
 					if match(s,i,"<!---"): k = 5
 					else: k = 4
@@ -2003,15 +1867,11 @@ class baseColorizer:
 					self.tag("keyword",i,j)
 				else:
 					j = i + 1
-				
-				#@-body
-				#@-node:2::<< handle possible html keyword >>
-
+				#@-node:<< handle possible html keyword >>
+				#@nl
 			else:
-				
-				#@<< handle general keyword >>
-				#@+node:3::<< handle general keyword >>
-				#@+body
+				#@	<< handle general keyword >>
+				#@+node:<< handle general keyword >>
 				if self.language == "rebol":
 					j = self.skip_id(s,i+1,chars="-~!?")
 				else:
@@ -2023,29 +1883,21 @@ class baseColorizer:
 					if word in self.php_paren_keywords and match(s,j,"()"):
 						self.tag("keyword",i,j+2)
 						j += 2
-				
-				#@-body
-				#@-node:3::<< handle general keyword >>
-
+				#@-node:<< handle general keyword >>
+				#@nl
 			i = j
-			#@-body
-			#@-node:1::<< handle possible  keyword >>
-			#@-node:1::Valid regardless of latex mode
-
+			#@nonl
+			#@-node:<< handle possible  keyword >>
+			#@nl
 		elif match(s,i,self.lb):
 			i = self.doNowebSecRef(s,i)
 		elif ch == '@':
-			
-			#@<< handle at keyword >>
-			#@+node:1::Valid regardless of latex mode
-			#@+node:2::<< handle at keyword >>
-			#@+body
+			#@		<< handle at keyword >>
+			#@+node:<< handle at keyword >>
 			if self.language == "cweb":
 				if match(s,i,"@(") or match(s,i,"@<"):
-					
-					#@<< handle cweb ref or def >>
-					#@+node:2::<< handle cweb ref or def >>
-					#@+body
+					#@		<< handle cweb ref or def >>
+					#@+node:<< handle cweb ref or def >>
 					self.tag("nameBrackets",i,i+2)
 					
 					# See if the line contains the right name bracket.
@@ -2060,17 +1912,13 @@ class baseColorizer:
 						self.tag("cwebName",i+2,j)
 						self.tag("nameBrackets",j,j+k)
 						i = j + k
-					
-					#@-body
-					#@-node:2::<< handle cweb ref or def >>
-
+					#@-node:<< handle cweb ref or def >>
+					#@nl
 				else:
 					word = self.getCwebWord(s,i)
 					if word:
-						
-						#@<< Handle cweb control word >>
-						#@+node:1::<< Handle cweb control word >>
-						#@+body
+						#@			<< Handle cweb control word >>
+						#@+node:<< Handle cweb control word >>
 						# Color and skip the word.
 						assert(self.language=="cweb")
 						
@@ -2088,23 +1936,19 @@ class baseColorizer:
 								self.tag("cwebName",i,j)
 								self.tag("nameBrackets",j,j+2)
 								i = j + 2
-						#@-body
-						#@-node:1::<< Handle cweb control word >>
-
+						#@nonl
+						#@-node:<< Handle cweb control word >>
+						#@nl
 					else:
 						i,state = self.doAtKeyword(s,i)
 			else:
 				i,state = self.doAtKeyword(s,i)
-			#@-body
-			#@-node:2::<< handle at keyword >>
-			#@-node:1::Valid regardless of latex mode
-
+			#@nonl
+			#@-node:<< handle at keyword >>
+			#@nl
 		elif match(s,i,self.single_comment_start):
-			
-			#@<< handle single-line comment >>
-			#@+node:1::Valid regardless of latex mode
-			#@+node:3::<< handle single-line comment >>
-			#@+body
+			#@		<< handle single-line comment >>
+			#@+node:<< handle single-line comment >>
 			# print "single-line comment i,s:",i,s
 			
 			if self.language == "cweb" and self.latex_cweb_comments:
@@ -2118,16 +1962,12 @@ class baseColorizer:
 					colorer=self,v=self.v,s=s,i=i,j=j,colortag="comment"):
 					self.tag("comment",i,j)
 				i = j
-			#@-body
-			#@-node:3::<< handle single-line comment >>
-			#@-node:1::Valid regardless of latex mode
-
+			#@nonl
+			#@-node:<< handle single-line comment >>
+			#@nl
 		elif match(s,i,self.block_comment_start):
-			
-			#@<< start block comment >>
-			#@+node:1::Valid regardless of latex mode
-			#@+node:4::<< start block comment >>
-			#@+body
+			#@		<< start block comment >>
+			#@+node:<< start block comment >>
 			k = len(self.block_comment_start)
 			
 			if not doHook("color-optional-markup",
@@ -2135,46 +1975,34 @@ class baseColorizer:
 				self.tag("comment",i,i+k)
 			
 			i += k ; state = "blockComment"
-			#@-body
-			#@-node:4::<< start block comment >>
-			#@-node:1::Valid regardless of latex mode
-
+			#@nonl
+			#@-node:<< start block comment >>
+			#@nl
 		elif ch == '%' and self.language=="cweb":
-			
-			#@<< handle latex line >>
-			#@+node:1::Valid regardless of latex mode
-			#@+node:5::<< handle latex line >>
-			#@+body
+			#@		<< handle latex line >>
+			#@+node:<< handle latex line >>
 			self.tag("keyword",i,i+1)
 			i += 1 # Skip the %
 			self.doLatexLine(s,i,len(s))
 			i = len(s)
-			#@-body
-			#@-node:5::<< handle latex line >>
-			#@-node:1::Valid regardless of latex mode
-
+			#@nonl
+			#@-node:<< handle latex line >>
+			#@nl
 		elif self.language=="latex":
-			
-			#@<< handle latex normal character >>
-			#@+node:2::Vaid only in latex mode
-			#@+node:1::<< handle latex normal character >>
-			#@+body
+			#@		<< handle latex normal character >>
+			#@+node:<< handle latex normal character >>
 			if self.language=="cweb":
 				self.tag("latexModeBackground",i,i+1)
 			else:
 				self.tag("latexBackground",i,i+1)
 			i += 1
-			#@-body
-			#@-node:1::<< handle latex normal character >>
-			#@-node:2::Vaid only in latex mode
-
+			#@nonl
+			#@-node:<< handle latex normal character >>
+			#@nl
 		# ---- From here on self.language != "latex" -----
 		elif ch in self.string_delims:
-			
-			#@<< handle string >>
-			#@+node:3::Valid when not in latex_mode
-			#@+node:1::<< handle string >>
-			#@+body
+			#@		<< handle string >>
+			#@+node:<< handle string >>
 			if self.language == "python":
 			
 				delim = s[i:i+3]
@@ -2192,17 +2020,11 @@ class baseColorizer:
 				j, state = self.skip_string(s,i)
 				self.tag("string",i,j)
 				i = j
-			
-			#@-body
-			#@-node:1::<< handle string >>
-			#@-node:3::Valid when not in latex_mode
-
+			#@-node:<< handle string >>
+			#@nl
 		elif ch == '#' and self.has_pp_directives:
-			
-			#@<< handle C preprocessor line >>
-			#@+node:3::Valid when not in latex_mode
-			#@+node:2::<< handle C preprocessor line >>
-			#@+body
+			#@		<< handle C preprocessor line >>
+			#@+node:<< handle C preprocessor line >>
 			# 10/17/02: recognize comments in preprocessor lines.
 			j = i
 			while i < len(s):
@@ -2211,16 +2033,12 @@ class baseColorizer:
 				else: i += 1
 			
 			self.tag("pp",j,i)
-			#@-body
-			#@-node:2::<< handle C preprocessor line >>
-			#@-node:3::Valid when not in latex_mode
-
+			#@nonl
+			#@-node:<< handle C preprocessor line >>
+			#@nl
 		elif self.language == "php" and (match(s,i,"<") or match(s,i,"?")):
-			
-			#@<< handle special php keywords >>
-			#@+node:3::Valid when not in latex_mode
-			#@+node:3::<< handle special php keywords >>
-			#@+body
+			#@		<< handle special php keywords >>
+			#@+node:<< handle special php keywords >>
 			if match(s,i,"<?php"):
 				self.tag("keyword",i,i+5)
 				i += 5
@@ -2229,64 +2047,40 @@ class baseColorizer:
 				i += 2
 			else:
 				i += 1
-			
-			#@-body
-			#@-node:3::<< handle special php keywords >>
-			#@-node:3::Valid when not in latex_mode
-
+			#@-node:<< handle special php keywords >>
+			#@nl
 		elif ch == ' ':
-			
-			#@<< handle blank >>
-			#@+node:3::Valid when not in latex_mode
-			#@+node:4::<< handle blank >>
-			#@+body
+			#@		<< handle blank >>
+			#@+node:<< handle blank >>
 			if self.showInvisibles:
 				self.tag("blank",i,i+1)
 			i += 1
-			#@-body
-			#@-node:4::<< handle blank >>
-			#@-node:3::Valid when not in latex_mode
-
+			#@nonl
+			#@-node:<< handle blank >>
+			#@nl
 		elif ch == '\t':
-			
-			#@<< handle tab >>
-			#@+node:3::Valid when not in latex_mode
-			#@+node:5::<< handle tab >>
-			#@+body
+			#@		<< handle tab >>
+			#@+node:<< handle tab >>
 			if self.showInvisibles:
 				self.tag("tab",i,i+1)
 			#print "tab",i,self.body.cget("tabs"),self.body.tag_config("tab")
 			i += 1
-			#@-body
-			#@-node:5::<< handle tab >>
-			#@-node:3::Valid when not in latex_mode
-
+			#@nonl
+			#@-node:<< handle tab >>
+			#@nl
 		else:
-			
-			#@<< handle normal character >>
-			#@+node:3::Valid when not in latex_mode
-			#@+node:6::<< handle normal character >>
-			#@+body
+			#@		<< handle normal character >>
+			#@+node:<< handle normal character >>
 			# self.tag("normal",i,i+1)
 			i += 1
-			#@-body
-			#@-node:6::<< handle normal character >>
-			#@-node:3::Valid when not in latex_mode
-
+			#@nonl
+			#@-node:<< handle normal character >>
+			#@nl
 	
 		assert(self.progress < i)
 		return i,state
-	
-	#@-body
-	#@+node:1::Valid regardless of latex mode
-	#@-node:1::Valid regardless of latex mode
-	#@+node:2::Vaid only in latex mode
-	#@-node:2::Vaid only in latex mode
-	#@+node:3::Valid when not in latex_mode
-	#@-node:3::Valid when not in latex_mode
-	#@-node:8::doNormalState
-	#@+node:9::doNowebSecRef
-	#@+body
+	#@-node:doNormalState
+	#@+node:doNowebSecRef
 	def doNowebSecRef (self,s,i):
 	
 		self.tag("nameBrackets",i,i+2)
@@ -2304,10 +2098,8 @@ class baseColorizer:
 			if ref:
 				self.tag("link",i+2,j)
 				if self.use_hyperlinks:
-					
-					#@<< set the hyperlink >>
-					#@+node:1::<< set the hyperlink >>
-					#@+body
+					#@				<< set the hyperlink >>
+					#@+node:<< set the hyperlink >>
 					# Set the bindings to vnode callbacks.
 					# Create the tag.
 					# Create the tag name.
@@ -2319,19 +2111,18 @@ class baseColorizer:
 					self.body.tag_bind(tagName,"<Control-1>",ref.OnHyperLinkControlClick)
 					self.body.tag_bind(tagName,"<Any-Enter>",ref.OnHyperLinkEnter)
 					self.body.tag_bind(tagName,"<Any-Leave>",ref.OnHyperLinkLeave)
-					#@-body
-					#@-node:1::<< set the hyperlink >>
-
+					#@nonl
+					#@-node:<< set the hyperlink >>
+					#@nl
 			elif k == 3: # a section definition
 				self.tag("link",i+2,j)
 			else:
 				self.tag("name",i+2,j)
 			self.tag("nameBrackets",j,j+k)
 			return j + k
-	#@-body
-	#@-node:9::doNowebSecRef
-	#@+node:10::removeAllTags & removeTagsFromLines
-	#@+body
+	#@nonl
+	#@-node:doNowebSecRef
+	#@+node:removeAllTags & removeTagsFromLines
 	def removeAllTags (self):
 		
 		# Warning: the following DOES NOT WORK: self.body.tag_delete(self.tags)
@@ -2349,11 +2140,9 @@ class baseColorizer:
 			
 		for tag in self.color_tags_list:
 			self.body.tag_remove(tag,self.index(0),self.index("end"))
-	#@-body
-	#@-node:10::removeAllTags & removeTagsFromLines
-	#@-node:6::colorizeLine & allies
-	#@+node:7::scanColorDirectives
-	#@+body
+	#@nonl
+	#@-node:removeAllTags & removeTagsFromLines
+	#@+node:scanColorDirectives
 	def scanColorDirectives(self,v):
 		
 		"""Scan vnode v and v's ancestors looking for @color and @nocolor directives,
@@ -2371,10 +2160,8 @@ class baseColorizer:
 		while v:
 			s = v.t.bodyString
 			dict = get_directives_dict(s)
-			
-			#@<< Test for @comment or @language >>
-			#@+node:1::<< Test for @comment or @language >>
-			#@+body
+			#@		<< Test for @comment or @language >>
+			#@+node:<< Test for @comment or @language >>
 			# 10/17/02: @comment and @language may coexist in the same node.
 			
 			if dict.has_key("comment"):
@@ -2388,13 +2175,11 @@ class baseColorizer:
 			
 			if dict.has_key("comment") or dict.has_key("language"):
 				break
-			#@-body
-			#@-node:1::<< Test for @comment or @language >>
-
-			
-			#@<< Test for @root, @root-doc or @root-code >>
-			#@+node:2::<< Test for @root, @root-doc or @root-code >>
-			#@+body
+			#@nonl
+			#@-node:<< Test for @comment or @language >>
+			#@nl
+			#@		<< Test for @root, @root-doc or @root-code >>
+			#@+node:<< Test for @root, @root-doc or @root-code >>
 			if dict.has_key("root") and not self.rootMode:
 			
 				k = dict["root"]
@@ -2405,17 +2190,12 @@ class baseColorizer:
 				else:
 					doc = app().config.at_root_bodies_start_in_doc_mode
 					self.rootMode = choose(doc,"doc","code")
-			
-			#@-body
-			#@-node:2::<< Test for @root, @root-doc or @root-code >>
-
+			#@-node:<< Test for @root, @root-doc or @root-code >>
+			#@nl
 			v = v.parent()
 		return self.language # For use by external routines.
-	
-	#@-body
-	#@-node:7::scanColorDirectives
-	#@+node:8::color.schedule
-	#@+body
+	#@-node:scanColorDirectives
+	#@+node:color.schedule
 	def schedule(self,v,body,incremental=0):
 	
 		if self.enabled:
@@ -2427,10 +2207,9 @@ class baseColorizer:
 		# trace(`v` + ", " + `body`)
 		if v and body and self.enabled:
 			self.colorize(v,body,self.incremental)
-	#@-body
-	#@-node:8::color.schedule
-	#@+node:9::getCwebWord
-	#@+body
+	#@nonl
+	#@-node:color.schedule
+	#@+node:getCwebWord
 	def getCwebWord (self,s,i):
 		
 		# trace(get_line(s,i))
@@ -2456,10 +2235,9 @@ class baseColorizer:
 		# if word: trace(`word`)
 			
 		return word
-	#@-body
-	#@-node:9::getCwebWord
-	#@+node:10::removeAllImages
-	#@+body
+	#@nonl
+	#@-node:getCwebWord
+	#@+node:removeAllImages
 	def removeAllImages (self):
 		
 		for photo,image,line_index,i in self.image_references:
@@ -2471,21 +2249,17 @@ class baseColorizer:
 				pass # The image may have been deleted earlier.
 		
 		self.image_references = []
-	#@-body
-	#@-node:10::removeAllImages
-	#@+node:11::updateSyntaxColorer
-	#@+body
+	#@nonl
+	#@-node:removeAllImages
+	#@+node:updateSyntaxColorer
 	# self.flag is true unless an unambiguous @nocolor is seen.
 	
 	def updateSyntaxColorer (self,v):
 		
 		self.flag = self.useSyntaxColoring(v)
 		self.scanColorDirectives(v)
-	
-	#@-body
-	#@-node:11::updateSyntaxColorer
-	#@+node:12::useSyntaxColoring
-	#@+body
+	#@-node:updateSyntaxColorer
+	#@+node:useSyntaxColoring
 	# Return true if v unless v is unambiguously under the control of @nocolor.
 	
 	def useSyntaxColoring (self,v):
@@ -2509,18 +2283,16 @@ class baseColorizer:
 				v = v.parent()
 		# trace("useSyntaxColoring",`val`)
 		return val
-	#@-body
-	#@-node:12::useSyntaxColoring
-	#@+node:13::Utils
-	#@+body
-	#@+at
-	#  These methods are like the corresponding functions in leoGlobals.py 
+	#@nonl
+	#@-node:useSyntaxColoring
+	#@+node:Utils
+	#@+at 
+	#@nonl
+	# These methods are like the corresponding functions in leoGlobals.py 
 	# except they issue no error messages.
-
 	#@-at
-	#@-body
-	#@+node:1::index & tag
-	#@+body
+	#@-node:Utils
+	#@+node:index & tag
 	def index (self,i):
 		
 		return "%s.%s" % (self.line_index,i)
@@ -2528,10 +2300,9 @@ class baseColorizer:
 	def tag (self,name,i,j):
 	
 		self.body.tag_add(name,self.index(i),self.index(j))
-	#@-body
-	#@-node:1::index & tag
-	#@+node:2::setFirstLineState
-	#@+body
+	#@nonl
+	#@-node:index & tag
+	#@+node:setFirstLineState
 	def setFirstLineState (self):
 		
 		if self.flag:
@@ -2543,10 +2314,9 @@ class baseColorizer:
 			state = "nocolor"
 	
 		return state
-	#@-body
-	#@-node:2::setFirstLineState
-	#@+node:3::skip_id
-	#@+body
+	#@nonl
+	#@-node:setFirstLineState
+	#@+node:skip_id
 	def skip_id(self,s,i,chars=None):
 	
 		n = len(s)
@@ -2558,11 +2328,8 @@ class baseColorizer:
 				i += 1
 			else: break
 		return i
-	
-	#@-body
-	#@-node:3::skip_id
-	#@+node:4::skip_python_string
-	#@+body
+	#@-node:skip_id
+	#@+node:skip_python_string
 	def skip_python_string(self,s,i):
 	
 		delim = s[i:i+3]
@@ -2574,10 +2341,9 @@ class baseColorizer:
 				return k+3, "normal"
 		else:
 			return self.skip_string(s,i)
-	#@-body
-	#@-node:4::skip_python_string
-	#@+node:5::skip_string
-	#@+body
+	#@nonl
+	#@-node:skip_python_string
+	#@+node:skip_string
 	def skip_string(self,s,i):
 	
 		delim = s[i] ; i += 1
@@ -2598,19 +2364,15 @@ class baseColorizer:
 		elif s[i] == delim:
 			i += 1
 		return i,"normal"
-	
-	#@-body
-	#@-node:5::skip_string
-	#@-node:13::Utils
+	#@-node:skip_string
 	#@-others
-
 	
 class colorizer (baseColorizer):
 	"""Leo's syntax colorer class"""
 	pass
-#@-body
-#@-node:6::class colorizer
+#@nonl
+#@-node:class colorizer
 #@-others
-#@-body
-#@-node:0::@file leoColor.py
+#@nonl
+#@-node:@file leoColor.py
 #@-leo

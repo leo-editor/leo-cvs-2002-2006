@@ -1,6 +1,5 @@
-#@+leo
-#@+node:0::@file leoConfig.py
-#@+body
+#@+leo-ver=4
+#@+node:@file leoConfig.py
 #@@language python
 
 from leoGlobals import *
@@ -9,17 +8,15 @@ import ConfigParser,exceptions,os,string,sys,tkFont
 
 class baseConfig:
 	"""The base class for Leo's configuration handler."""
-	
-	#@<< define defaultsDict >>
-	#@+node:1::<< define defaultsDict >>
-	#@+body
-	#@+at
-	#  This contains only the "interesting" defaults.
+	#@	<< define defaultsDict >>
+	#@+node:<< define defaultsDict >>
+	#@+at 
+	#@nonl
+	# This contains only the "interesting" defaults.
 	# Ints and bools default to 0, floats to 0.0 and strings to "".
-
 	#@-at
 	#@@c
-
+	
 	defaultBodyFontSize = choose(sys.platform=="win32",9,12)
 	
 	defaultsDict = {
@@ -66,19 +63,15 @@ class baseConfig:
 		"split_bar_color" : "LightSteelBlue2",
 		"split_bar_relief" : "groove",
 		"split_bar_width" : 7 }
-	#@-body
-	#@-node:1::<< define defaultsDict >>
-
-
-	#@+others
-	#@+node:2::config.__init__
-	#@+body
+	#@nonl
+	#@-node:<< define defaultsDict >>
+	#@nl
+	#@	@+others
+	#@+node:config.__init__
 	def __init__ (self):
 		
-		
-		#@<< get the default font >>
-		#@+node:1::<< get the default font >>
-		#@+body
+		#@	<< get the default font >>
+		#@+node:<< get the default font >>
 		# Get the default font from a new text widget.
 		# This should only be done once.
 		
@@ -87,10 +80,8 @@ class baseConfig:
 		font = tkFont.Font(font=fn)
 		self.defaultFont = font
 		self.defaultFontFamily = font.cget("family")
-		
-		#@-body
-		#@-node:1::<< get the default font >>
-
+		#@-node:<< get the default font >>
+		#@nl
 		self.init()
 	
 	def init (self):
@@ -102,10 +93,8 @@ class baseConfig:
 		self.configFileName = os.path.join(self.configDir,"leoConfig.txt")
 		self.configsExist = false # True when we successfully open leoConfig.txt.
 		
-		
-		#@<< initialize constant ivars, lists & dicts >>
-		#@+node:2::<< initialize constant ivars, lists & dicts >> (leoConfig)
-		#@+body
+		#@	<< initialize constant ivars, lists & dicts >>
+		#@+node:<< initialize constant ivars, lists & dicts >> (leoConfig)
 		# Names of sections.
 		self.configSection = "config options"
 		self.compareSection = "compare options"
@@ -138,13 +127,11 @@ class baseConfig:
 			(self.recentFilesSection,None),
 			(self.colorsSection,self.colorsDict),
 			(self.windowSection,self.windowDict) )
-		#@-body
-		#@-node:2::<< initialize constant ivars, lists & dicts >> (leoConfig)
-
-		
-		#@<< initialize ivars that may be set by config options >>
-		#@+node:3::<< initialize ivars that may be set by config options >>
-		#@+body
+		#@nonl
+		#@-node:<< initialize constant ivars, lists & dicts >> (leoConfig)
+		#@nl
+		#@	<< initialize ivars that may be set by config options >>
+		#@+node:<< initialize ivars that may be set by config options >>
 		# 10/11/02: Defaults are specified only here.
 		
 		self.config = None # The current instance of ConfigParser
@@ -164,16 +151,14 @@ class baseConfig:
 		self.tkEncoding = None # Defaults to None so it doesn't override better defaults.
 		self.use_plugins = false # Should never be true here!
 		self.write_old_format_derived_files = false
-		#@-body
-		#@-node:3::<< initialize ivars that may be set by config options >>
-
+		#@nonl
+		#@-node:<< initialize ivars that may be set by config options >>
+		#@nl
 	
 		self.open() # read and process the configuration file.
-	#@-body
-	#@-node:2::config.__init__
-	#@+node:3::getters/setters
-	#@+node:1::get...FromDict & setDict
-	#@+body
+	#@nonl
+	#@-node:config.__init__
+	#@+node:get...FromDict & setDict
 	def getBoolFromDict (self,name,dict):
 		val = self.getIntFromDict(name,dict)
 		if val and val != None and val != 0: val = 1
@@ -205,11 +190,8 @@ class baseConfig:
 		dict [name] = val
 			
 	getStringFromDict = getFromDict
-	
-	#@-body
-	#@-node:1::get...FromDict & setDict
-	#@+node:2::get/setColors
-	#@+body
+	#@-node:get...FromDict & setDict
+	#@+node:get/setColors
 	def getBoolColorsPref (self,name):
 		return self.getBoolFromDict(name,self.colorsDict)
 		
@@ -222,10 +204,9 @@ class baseConfig:
 		self.setDict(name,val,self.colorsDict)
 		
 	getStringColorsPref = getColorsPref
-	#@-body
-	#@-node:2::get/setColors
-	#@+node:3::get/setComparePref
-	#@+body
+	#@nonl
+	#@-node:get/setColors
+	#@+node:get/setComparePref
 	def getBoolComparePref (self,name):
 		return self.getBoolFromDict(name,self.compareDict)
 		
@@ -241,10 +222,9 @@ class baseConfig:
 		self.setDict(name,val,self.compareDict)
 		
 	getStringComparePref = getComparePref
-	#@-body
-	#@-node:3::get/setComparePref
-	#@+node:4::get/setFindPref
-	#@+body
+	#@nonl
+	#@-node:get/setComparePref
+	#@+node:get/setFindPref
 	def getBoolFindPref (self,name):
 		return self.getBoolFromDict(name,self.findDict)
 	
@@ -257,10 +237,9 @@ class baseConfig:
 		self.setDict(name,val,self.findDict)
 		
 	getStringFindPref = getFindPref
-	#@-body
-	#@-node:4::get/setFindPref
-	#@+node:5::get/setPref
-	#@+body
+	#@nonl
+	#@-node:get/setFindPref
+	#@+node:get/setPref
 	def getBoolPref (self,name):
 		return self.getBoolFromDict(name,self.prefsDict)
 	
@@ -276,10 +255,9 @@ class baseConfig:
 		self.setDict(name,val,self.prefsDict)
 		
 	getStringPref = getPref
-	#@-body
-	#@-node:5::get/setPref
-	#@+node:6::get/setRecentFiles
-	#@+body
+	#@nonl
+	#@-node:get/setPref
+	#@+node:get/setRecentFiles
 	def getRecentFiles (self):
 		
 		return self.recentFiles
@@ -287,11 +265,8 @@ class baseConfig:
 	def setRecentFiles (self,files):
 		
 		self.recentFiles = files
-	
-	#@-body
-	#@-node:6::get/setRecentFiles
-	#@+node:7::get/setWindowPrefs
-	#@+body
+	#@-node:get/setRecentFiles
+	#@+node:get/setWindowPrefs
 	def getBoolWindowPref (self,name):
 		return self.getBoolFromDict(name,self.windowDict)
 		
@@ -310,20 +285,19 @@ class baseConfig:
 		self.setDict(name,val,self.windowDict)
 		
 	getStringWindowPref = getWindowPref
-	#@-body
-	#@-node:7::get/setWindowPrefs
-	#@+node:8::config.getFontFromParams
-	#@+body
-	#@+at
-	#  A convenience method that computes a font from font parameters.
+	#@nonl
+	#@-node:get/setWindowPrefs
+	#@+node:config.getFontFromParams
+	#@+at 
+	#@nonl
+	# A convenience method that computes a font from font parameters.
 	# Arguments are the names of settings to be use.
 	# We return None if there is no family setting so we can use system 
 	# default fonts.
 	# We default to size=12, slant="roman", weight="normal"
-
 	#@-at
 	#@@c
-
+	
 	def getFontFromParams(self,family,size,slant,weight):
 		
 		tag = "getFont..." ; family_name = family
@@ -353,10 +327,9 @@ class baseConfig:
 		#print family_name,family,size,slant,weight
 		#print "actual_name:",font.cget("family")
 		return font
-	#@-body
-	#@-node:8::config.getFontFromParams
-	#@+node:9::getShortcut
-	#@+body
+	#@nonl
+	#@-node:config.getFontFromParams
+	#@+node:getShortcut
 	def getShortcut (self,name):
 		
 		val = self.keysDict.get(name)
@@ -364,10 +337,9 @@ class baseConfig:
 		# 7/19/03: Return "None" if the setting is "None"
 		# This allows settings to disable a default shortcut.
 		return val
-	#@-body
-	#@-node:9::getShortcut
-	#@+node:10::init/Boolean/ConfigParam
-	#@+body
+	#@nonl
+	#@-node:getShortcut
+	#@+node:init/Boolean/ConfigParam
 	def initConfigParam (self,name,defaultVal):
 		try:
 			val = self.config.get(self.configSection,name,raw=1) # 2/4/03
@@ -381,11 +353,8 @@ class baseConfig:
 		except:
 			val = defaultVal
 		return val
-	
-	#@-body
-	#@-node:10::init/Boolean/ConfigParam
-	#@+node:11::setCommandsFindIvars
-	#@+body
+	#@-node:init/Boolean/ConfigParam
+	#@+node:setCommandsFindIvars
 	# Sets ivars of c that can be overridden by leoConfig.txt
 	
 	def setCommandsFindIvars (self,c):
@@ -406,19 +375,16 @@ class baseConfig:
 		if val: c.find_text = val
 	
 		app().findFrame.init(c)
-	#@-body
-	#@-node:11::setCommandsFindIvars
-	#@+node:12::setCommandsIvars
-	#@+body
+	#@nonl
+	#@-node:setCommandsFindIvars
+	#@+node:setCommandsIvars
 	# Sets ivars of c that can be overridden by leoConfig.txt
 	
 	def setCommandsIvars (self,c):
 	
 		config = self ; a = app()
-		
-		#@<< set prefs ivars >>
-		#@+node:1::<< set prefs ivars >>
-		#@+body
+		#@	<< set prefs ivars >>
+		#@+node:<< set prefs ivars >>
 		val = config.getIntPref("tab_width")
 		if val:
 			c.tab_width = val
@@ -456,12 +422,12 @@ class baseConfig:
 					c.target_language = val
 				
 			except: pass
-		#@-body
-		#@-node:1::<< set prefs ivars >>
-	#@-body
-	#@-node:12::setCommandsIvars
-	#@+node:13::setConfigFindIvars
-	#@+body
+		#@nonl
+		#@-node:<< set prefs ivars >>
+		#@nl
+	#@nonl
+	#@-node:setCommandsIvars
+	#@+node:setConfigFindIvars
 	# Sets config ivars from c.
 	
 	def setConfigFindIvars (self,c):
@@ -476,10 +442,9 @@ class baseConfig:
 		
 		self.setFindPref("change_string",c.change_text)
 		self.setFindPref("find_string",c.find_text)
-	#@-body
-	#@-node:13::setConfigFindIvars
-	#@+node:14::setConfigIvars
-	#@+body
+	#@nonl
+	#@-node:setConfigFindIvars
+	#@+node:setConfigIvars
 	# Sets config ivars from c.
 	
 	def setConfigIvars (self,c):
@@ -514,11 +479,9 @@ class baseConfig:
 		
 		self.setFindPref("change_string",c.change_text)
 		self.setFindPref("find_string",c.find_text)
-	#@-body
-	#@-node:14::setConfigIvars
-	#@-node:3::getters/setters
-	#@+node:4::open
-	#@+body
+	#@nonl
+	#@-node:setConfigIvars
+	#@+node:open
 	def open (self):
 		
 		config = ConfigParser.ConfigParser()
@@ -526,14 +489,14 @@ class baseConfig:
 		try:
 			cf = open(self.configFileName)
 			config.readfp(cf)
-			
-			#@<< get config options >>
-			#@+node:1::<< get config options >>
-			#@+body
-			#@+at
-			#  Rewritten 10/11/02 as follows:
+			#@		<< get config options >>
+			#@+node:<< get config options >>
+			#@+at 
+			#@nonl
+			# Rewritten 10/11/02 as follows:
 			# 
-			# 1. We call initConfigParam and initBooleanConfigParam to get the values.
+			# 1. We call initConfigParam and initBooleanConfigParam to get the 
+			# values.
 			# 
 			# The general purpose code will enter all these values into 
 			# configDict.  This allows update() to write the configuration 
@@ -542,11 +505,11 @@ class baseConfig:
 			# values via the ivars of this class.
 			# 
 			# 2. We pass the ivars themselves as params so that default 
-			# initialization is done in the ctor, as would normally be expected.
-
+			# initialization is done in the ctor, as would normally be 
+			# expected.
 			#@-at
 			#@@c
-
+			
 			self.at_root_bodies_start_in_doc_mode = self.initBooleanConfigParam(
 				"at_root_bodies_start_in_doc_mode",self.at_root_bodies_start_in_doc_mode)
 				
@@ -611,13 +574,11 @@ class baseConfig:
 				
 			self.write_old_format_derived_files = self.initBooleanConfigParam(
 				"write_old_format_derived_files",self.write_old_format_derived_files)
-			#@-body
-			#@-node:1::<< get config options >>
-
-			
-			#@<< get recent files >>
-			#@+node:2::<< get recent files >>
-			#@+body
+			#@nonl
+			#@-node:<< get config options >>
+			#@nl
+			#@		<< get recent files >>
+			#@+node:<< get recent files >>
 			section = self.recentFilesSection
 			
 			if 0: # elegant, but may be a security hole.
@@ -627,19 +588,17 @@ class baseConfig:
 					for i in xrange(10):
 						self.recentFiles.append(config.get(section,"file" + `i`,raw=1)) # 2/4/03
 				except: pass
-			#@-body
-			#@-node:2::<< get recent files >>
-
+			#@nonl
+			#@-node:<< get recent files >>
+			#@nl
 			for section, dict in self.sectionInfo:
 				if dict != None:
 					try:
 						for opt in config.options(section):
 							dict[string.lower(opt)]=config.get(section,opt,raw=1) # 2/4/03
 					except: pass
-			
-			#@<< convert find/change options to unicode >>
-			#@+node:3::<< convert find/change options to unicode >>
-			#@+body
+			#@		<< convert find/change options to unicode >>
+			#@+node:<< convert find/change options to unicode >>
 			find = self.findDict.get("find_string")
 			if find:
 				# Leo always writes utf-8 encoding, but users may not.
@@ -651,14 +610,10 @@ class baseConfig:
 				# Leo always writes utf-8 encoding, but users may not.
 				change = toUnicode(change,"utf-8")
 				self.findDict["change_string"] = change
-			
-			#@-body
-			#@-node:3::<< convert find/change options to unicode >>
-
-			
-			#@<< print options >>
-			#@+node:4::<< print options >>
-			#@+body
+			#@-node:<< convert find/change options to unicode >>
+			#@nl
+			#@		<< print options >>
+			#@+node:<< print options >>
 			if 0:
 				print "\n\ncolorsDict:\n" ,self.colorsDict
 				print "\n\ncompareDict:\n",self.compareDict
@@ -673,9 +628,9 @@ class baseConfig:
 				print "\n\nwindowDict:\n\n"
 				for i in self.windowDict.keys():
 					print i
-			#@-body
-			#@-node:4::<< print options >>
-
+			#@nonl
+			#@-node:<< print options >>
+			#@nl
 			cf.close()
 			self.configsExist = true
 		except IOError:
@@ -685,10 +640,9 @@ class baseConfig:
 			es_exception()
 			pass
 		self.config = None
-	#@-body
-	#@-node:4::open
-	#@+node:5::update (config)
-	#@+body
+	#@nonl
+	#@-node:open
+	#@+node:update (config)
 	# Rewrites the entire config file from ivars.
 	# This is called when a .leo file is written and when the preferences panel changes.
 	
@@ -709,10 +663,8 @@ class baseConfig:
 			mode = choose(sys.platform=="win32","wb","wb+")
 			cf = open(self.configFileName,mode)
 			config.readfp(cf)
-			
-			#@<< write recent files section >>
-			#@+node:1::<< write recent files section >>
-			#@+body
+			#@		<< write recent files section >>
+			#@+node:<< write recent files section >>
 			section = self.recentFilesSection
 			files = self.recentFiles
 			
@@ -725,9 +677,9 @@ class baseConfig:
 			else: # easier to read in the config file.
 				for i in xrange(len(files)):
 					config.set(section, "file"+`i`, files[i])
-			#@-body
-			#@-node:1::<< write recent files section >>
-
+			#@nonl
+			#@-node:<< write recent files section >>
+			#@nl
 			for section,dict in self.sectionInfo:
 				if dict:
 					self.update_section(config,section,dict)
@@ -738,10 +690,9 @@ class baseConfig:
 			es("exception writing: " + self.configFileName)
 			es_exception()
 		self.config = None
-	#@-body
-	#@-node:5::update (config)
-	#@+node:6::update_section
-	#@+body
+	#@nonl
+	#@-node:update (config)
+	#@+node:update_section
 	def update_section (self,config,section,dict):
 		
 		if config.has_section(section):
@@ -754,15 +705,12 @@ class baseConfig:
 			val = dict [name]
 			val = toEncodedString(val,"utf-8")
 			config.set(section,name,val)
-	
-	#@-body
-	#@-node:6::update_section
+	#@-node:update_section
 	#@-others
-
 	
 class config (baseConfig):
 	"""A class to manage configuration settings."""
 	pass
-#@-body
-#@-node:0::@file leoConfig.py
+#@nonl
+#@-node:@file leoConfig.py
 #@-leo

@@ -1,6 +1,5 @@
-#@+leo
-#@+node:0::@file leoPrefs.py
-#@+body
+#@+leo-ver=4
+#@+node:@file leoPrefs.py
 #@@language python
 
 from leoGlobals import *
@@ -20,17 +19,13 @@ ivars = [
 
 class baseLeoPrefs:
 	"""The base class of Leo's preferences panel."""
-
-	#@+others
-	#@+node:1::prefs.__init__
-	#@+body
+	#@	@+others
+	#@+node:prefs.__init__
 	def __init__ (self,c):
 	
 		Tk = Tkinter
-		
-		#@<< set ivars >>
-		#@+node:1::<< Set ivars >>
-		#@+body
+		#@	<< set ivars >>
+		#@+node:<< Set ivars >>
 		# These ivars have the same names as the corresponding ivars in commands class.
 		
 		# Global options
@@ -54,9 +49,9 @@ class baseLeoPrefs:
 		# Default Target Language
 		self.target_language = default_target_language
 		self.lang_var = Tk.StringVar()
-		#@-body
-		#@-node:1::<< Set ivars >>
-
+		#@nonl
+		#@-node:<< Set ivars >>
+		#@nl
 		self.commands = c
 		self.top = top = Tk.Toplevel()
 		c.frame.prefsPanel = self
@@ -66,10 +61,8 @@ class baseLeoPrefs:
 		# Create the outer frame
 		outer = Tk.Frame(top,bd=2,relief="groove")
 		outer.pack(fill="both",expand=1,padx=2,pady=2)
-		
-		#@<< Create the Global Options frame >>
-		#@+node:2::<< Create the Global Options frame >>
-		#@+body
+		#@	<< Create the Global Options frame >>
+		#@+node:<< Create the Global Options frame >>
 		# Frame and title
 		w,glob = create_labeled_frame (outer,caption="Global Options")
 		w.pack(padx=2,pady=2,expand=1,fill="x")
@@ -103,13 +96,11 @@ class baseLeoPrefs:
 		
 		for box in (replaceBox, doneBox, unBox):
 			box.pack(fill="x")
-		#@-body
-		#@-node:2::<< Create the Global Options frame >>
-
-		
-		#@<< Create the Tangle Options frame >>
-		#@+node:3::<< Create the Tangle Options frame >>
-		#@+body
+		#@nonl
+		#@-node:<< Create the Global Options frame >>
+		#@nl
+		#@	<< Create the Tangle Options frame >>
+		#@+node:<< Create the Tangle Options frame >>
 		# Frame and title
 		w,tangle = create_labeled_frame (outer,caption="Default Options")
 		w.pack(padx=2,pady=2,expand=1,fill="x")
@@ -130,13 +121,11 @@ class baseLeoPrefs:
 			variable=self.output_doc_var,command=self.idle_set_ivars)
 		header.pack(fill="x")
 		doc.pack(fill="x")
-		#@-body
-		#@-node:3::<< Create the Tangle Options frame >>
-
-		
-		#@<< Create the Target Language frame >>
-		#@+node:4::<< Create the Target Language frame >>
-		#@+body
+		#@nonl
+		#@-node:<< Create the Tangle Options frame >>
+		#@nl
+		#@	<< Create the Target Language frame >>
+		#@+node:<< Create the Target Language frame >>
 		# Frame and title
 		w,target = create_labeled_frame (outer,caption="Default Target Language")
 		w.pack(padx=2,pady=2,expand=1,fill="x")
@@ -176,14 +165,10 @@ class baseLeoPrefs:
 			button = Tk.Radiobutton(rt,anchor="w",text=text,
 				variable=self.lang_var,value=value,command=self.set_lang)
 			button.pack(fill="x")
-		
-		#@-body
-		#@-node:4::<< Create the Target Language frame >>
-
-		
-		#@<< Create the Ok, Cancel & Revert buttons >>
-		#@+node:5::<< Create the Ok, Cancel & Revert buttons >>
-		#@+body
+		#@-node:<< Create the Target Language frame >>
+		#@nl
+		#@	<< Create the Ok, Cancel & Revert buttons >>
+		#@+node:<< Create the Ok, Cancel & Revert buttons >>
 		buttons = Tk.Frame(outer)
 		buttons.pack(padx=2,pady=2,expand=1,fill="x")
 		
@@ -194,18 +179,17 @@ class baseLeoPrefs:
 		okButton.pack(side="left",pady=7,expand=1)
 		cancelButton.pack(side="left",pady=7,expand=0)
 		revertButton.pack(side="left",pady=7,expand=1)
-		#@-body
-		#@-node:5::<< Create the Ok, Cancel & Revert buttons >>
-
+		#@nonl
+		#@-node:<< Create the Ok, Cancel & Revert buttons >>
+		#@nl
 		center_dialog(top) # Do this _after_ building the dialog!
 		top.resizable(0,0) # neither height or width is resizable.
 		self.top.protocol("WM_DELETE_WINDOW", self.onCancel) # 1/31/03
 		self.init(c)
 		# es("Prefs.__init__")
-	#@-body
-	#@-node:1::prefs.__init__
-	#@+node:2::prefs.init
-	#@+body
+	#@nonl
+	#@-node:prefs.__init__
+	#@+node:prefs.init
 	# Initializes prefs ivars and widgets from c's ivars.
 	
 	def init(self,c):
@@ -218,10 +202,8 @@ class baseLeoPrefs:
 			setattr(self,var,val)
 			# trace(val,var)
 	
-		
-		#@<< remember values for revert >>
-		#@+node:1::<< remember values for revert >>
-		#@+body
+		#@	<< remember values for revert >>
+		#@+node:<< remember values for revert >>
 		# Global options
 		self.revert_tangle_batch_flag = c.tangle_batch_flag
 		self.revert_untangle_batch_flag = c.untangle_batch_flag
@@ -235,13 +217,11 @@ class baseLeoPrefs:
 		if c.target_language == None: # 7/29/02
 			c.target_language = "python"
 		self.revert_target_language = c.target_language
-		#@-body
-		#@-node:1::<< remember values for revert >>
-
-		
-		#@<< set widgets >>
-		#@+node:2::<< set widgets >>
-		#@+body
+		#@nonl
+		#@-node:<< remember values for revert >>
+		#@nl
+		#@	<< set widgets >>
+		#@+node:<< set widgets >>
 		# Global options
 		self.replace_tabs_var.set(choose(c.tab_width<0,1,0)) # 1/30/03
 		self.tangle_batch_var.set(c.tangle_batch_flag)
@@ -259,23 +239,19 @@ class baseLeoPrefs:
 		if c.target_language == None:
 			c.target_language = "python" # 7/29/02
 		self.lang_var.set(c.target_language)
-		#@-body
-		#@-node:2::<< set widgets >>
-
+		#@nonl
+		#@-node:<< set widgets >>
+		#@nl
 		# print "init" ; print self.print_ivars()
-	#@-body
-	#@-node:2::prefs.init
-	#@+node:3::Event handlers
-	#@+node:1::prefs.set_ivars & idle_set_ivars & print_ivars
-	#@+body
+	#@nonl
+	#@-node:prefs.init
+	#@+node:prefs.set_ivars & idle_set_ivars & print_ivars
 	# These event handlers get executed when the user types in the prefs panel.
 	
 	def set_ivars (self,c):
 	
-		
-		#@<< update ivars >>
-		#@+node:1::<< update ivars >>
-		#@+body
+		#@	<< update ivars >>
+		#@+node:<< update ivars >>
 		# Global options
 		w = self.pageWidthText.get("1.0","end")
 		w = string.strip(w)
@@ -306,10 +282,8 @@ class baseLeoPrefs:
 		
 		# Default Target Language
 		self.target_language = self.lang_var.get()
-		
-		#@-body
-		#@-node:1::<< update ivars >>
-
+		#@-node:<< update ivars >>
+		#@nl
 		for var in ivars:
 			val = getattr(self,var)
 			setattr(c,var,val)
@@ -328,10 +302,9 @@ class baseLeoPrefs:
 		
 		for var in ivars:
 			trace(var, getattr(self,var))
-	#@-body
-	#@-node:1::prefs.set_ivars & idle_set_ivars & print_ivars
-	#@+node:2::set_lang
-	#@+body
+	#@nonl
+	#@-node:prefs.set_ivars & idle_set_ivars & print_ivars
+	#@+node:set_lang
 	# This event handler gets executed when the user choose a new default language.
 	
 	def set_lang (self):
@@ -341,10 +314,9 @@ class baseLeoPrefs:
 		c.target_language = self.target_language = language
 		c.tree.recolor(v)
 		# print "set_lang",language
-	#@-body
-	#@-node:2::set_lang
-	#@+node:3::prefs.onOK, onCancel, onRevert
-	#@+body
+	#@nonl
+	#@-node:set_lang
+	#@+node:prefs.onOK, onCancel, onRevert
 	def onOK (self):
 		app().config.setConfigIvars(self.commands)
 		app().config.update()
@@ -356,10 +328,8 @@ class baseLeoPrefs:
 		
 	def onCancel (self):
 		c = self.commands
-		
-		#@<< restore options >>
-		#@+node:1::<< restore options >>
-		#@+body
+		#@	<< restore options >>
+		#@+node:<< restore options >>
 		# Global options
 		c.tangle_batch_flag = self.revert_tangle_batch_flag
 		c.untangle_batch_flag = self.revert_untangle_batch_flag
@@ -373,9 +343,9 @@ class baseLeoPrefs:
 		
 		# Default Target Language
 		c.target_language = self.revert_target_language
-		#@-body
-		#@-node:1::<< restore options >>
-
+		#@nonl
+		#@-node:<< restore options >>
+		#@nl
 		self.init(c)
 		self.set_ivars(c)
 		if 1: # Hide the window, preserving its position.
@@ -386,10 +356,8 @@ class baseLeoPrefs:
 	
 	def onRevert (self):
 		c = self.commands
-		
-		#@<< restore options >>
-		#@+node:1::<< restore options >>
-		#@+body
+		#@	<< restore options >>
+		#@+node:<< restore options >>
 		# Global options
 		c.tangle_batch_flag = self.revert_tangle_batch_flag
 		c.untangle_batch_flag = self.revert_untangle_batch_flag
@@ -403,20 +371,18 @@ class baseLeoPrefs:
 		
 		# Default Target Language
 		c.target_language = self.revert_target_language
-		#@-body
-		#@-node:1::<< restore options >>
-
+		#@nonl
+		#@-node:<< restore options >>
+		#@nl
 		self.init(c)
 		self.set_ivars(c)
-	#@-body
-	#@-node:3::prefs.onOK, onCancel, onRevert
-	#@-node:3::Event handlers
+	#@nonl
+	#@-node:prefs.onOK, onCancel, onRevert
 	#@-others
-
 	
 class LeoPrefs (baseLeoPrefs):
 	"""A class that creates Leo's preferenes panel."""
 	pass
-#@-body
-#@-node:0::@file leoPrefs.py
+#@nonl
+#@-node:@file leoPrefs.py
 #@-leo

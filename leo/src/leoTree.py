@@ -1,37 +1,33 @@
-#@+leo
-#@+node:0::@file leoTree.py
-#@+body
+#@+leo-ver=4
+#@+node:@file leoTree.py
 #@@language python
 
-
 #@<< about the tree classes >>
-#@+node:1::<< about the tree classes >>
-#@+body
-#@+at
-#  This class implements a tree control similar to Windows explorer.  The draw 
-# code is based on code found in Python's IDLE program.  Thank you Guido van Rossum!
+#@+node:<< about the tree classes >>
+#@+at 
+#@nonl
+# This class implements a tree control similar to Windows explorer.  The draw 
+# code is based on code found in Python's IDLE program.  Thank you Guido van 
+# Rossum!
 # 
 # The tree class knows about vnodes.  The vnode class could be split into a 
 # base class (say a treeItem class) containing the ivars known to the tree 
 # class, and a derived class containing everything else, including, e.g., the 
 # bodyString ivar.  I haven't chosen to split the vnode class this way because 
 # nothing would be gained in Leo.
-
 #@-at
-#@-body
-#@-node:1::<< about the tree classes >>
-
+#@-node:<< about the tree classes >>
+#@nl
 
 from leoGlobals import *
 import leoColor
 import os,string,Tkinter,tkFont,types
 
-
 #@<< about drawing and events >>
-#@+node:2::<< About drawing and events >>
-#@+body
-#@+at
-#  Leo must redraw the outline pane when commands are executed and as the 
+#@+node:<< About drawing and events >>
+#@+at 
+#@nonl
+# Leo must redraw the outline pane when commands are executed and as the 
 # result of mouse and keyboard events.  The main challenges are eliminating 
 # flicker and handling events properly.  These topics are interrelated.
 # 
@@ -89,15 +85,11 @@ import os,string,Tkinter,tkFont,types
 # changed, or will change, the headline or body text.  Calling event handlers 
 # rather than c.beginUpdate and c.endUpdate ensures that the outline pane is 
 # redrawn only when needed.
-
 #@-at
-#@-body
-#@-node:2::<< About drawing and events >>
-
-
+#@-node:<< About drawing and events >>
+#@nl
 #@<< drawing constants >>
-#@+node:3::<< drawing constants >>
-#@+body
+#@+node:<< drawing constants >>
 box_padding = 5 # extra padding between box and icon
 box_width = 9 + box_padding
 icon_width = 20
@@ -108,17 +100,14 @@ root_left = 7 + box_width
 root_top = 2
 hiding = true # True if we don't reallocate items
 line_height = 17 + 2 # To be replaced by Font height
-#@-body
-#@-node:3::<< drawing constants >>
-
+#@nonl
+#@-node:<< drawing constants >>
+#@nl
 
 class baseLeoTree:
 	"""The base class of the Leo's tree class."""
-
-	#@+others
-	#@+node:4::Birth & death
-	#@+node:1::tree.__init__
-	#@+body
+	#@	@+others
+	#@+node:tree.__init__
 	def __init__(self,commands,canvas):
 	
 		# Objects associated with this tree.
@@ -178,10 +167,9 @@ class baseLeoTree:
 			
 		if self.allocateOnlyVisibleNodes:
 			self.commands.frame.bar1.bind("<B1-ButtonRelease>", self.redraw)
-	#@-body
-	#@-node:1::tree.__init__
-	#@+node:2::tree.deleteBindings
-	#@+body
+	#@nonl
+	#@-node:tree.__init__
+	#@+node:tree.deleteBindings
 	def deleteBindings (self):
 		
 		"""Delete all tree bindings and all references to tree widgets."""
@@ -200,10 +188,9 @@ class baseLeoTree:
 			count += 1
 		self.bindings = []
 		# print("bindings freed:"+`count`)
-	#@-body
-	#@-node:2::tree.deleteBindings
-	#@+node:3::tree.deleteWidgets
-	#@+body
+	#@nonl
+	#@-node:tree.deleteBindings
+	#@+node:tree.deleteWidgets
 	# canvas.delete("all") does _not_ delete the Tkinter objects associated with those objects!
 	
 	def deleteWidgets (self):
@@ -217,14 +204,12 @@ class baseLeoTree:
 		for w in self.widgets:
 			w.destroy() 
 		self.widgets = []
-	#@-body
-	#@-node:3::tree.deleteWidgets
-	#@-node:4::Birth & death
-	#@+node:5::Drawing
-	#@+node:1::About drawing and updating
-	#@+body
-	#@+at
-	#  About drawing and updating strategy.
+	#@nonl
+	#@-node:tree.deleteWidgets
+	#@+node:About drawing and updating
+	#@+at 
+	#@nonl
+	# About drawing and updating strategy.
 	# 
 	# This version of Leo draws the outline "by hand" using the Tk canvas 
 	# widget.  Surprisingly, this is not only easy, but simplifies the vnode 
@@ -248,19 +233,15 @@ class baseLeoTree:
 	# actually delete vnodes for them to disappear from the screen.  Indeed, 
 	# vnode are never actually deleted, only unlinked.  It would be valid for 
 	# "dependent" vnodes to be deleted, but there really is no need to do so.
-
 	#@-at
-	#@-body
-	#@-node:1::About drawing and updating
-	#@+node:2::beginUpdate
-	#@+body
+	#@-node:About drawing and updating
+	#@+node:beginUpdate
 	def beginUpdate (self):
 	
 		self.updateCount += 1
-	#@-body
-	#@-node:2::beginUpdate
-	#@+node:3::drawBox (tag_bind)
-	#@+body
+	#@nonl
+	#@-node:beginUpdate
+	#@+node:drawBox (tag_bind)
 	def drawBox (self,v,x,y):
 		
 		y += 7 # draw the box at x, y+7
@@ -275,11 +256,8 @@ class baseLeoTree:
 		# Remember the bindings so deleteBindings can delete them.
 		self.tagBindings.append((id,id1,"<1>"),)
 		self.tagBindings.append((id,id2,"<Double-1>"),)
-	
-	#@-body
-	#@-node:3::drawBox (tag_bind)
-	#@+node:4::drawIcon (tag_bind)
-	#@+body
+	#@-node:drawBox (tag_bind)
+	#@+node:drawIcon (tag_bind)
 	# Draws icon for v at x,y
 	
 	def drawIcon(self,v,x,y):
@@ -311,11 +289,9 @@ class baseLeoTree:
 		self.tagBindings.append((id,id3,"<3>"),)
 	
 		return 0 # dummy icon height
-	#@-body
-	#@-node:4::drawIcon (tag_bind)
-	#@+node:5::Drawing routines (tree)...
-	#@+node:1::redraw
-	#@+body
+	#@nonl
+	#@-node:drawIcon (tag_bind)
+	#@+node:redraw
 	# Calling redraw inside c.beginUpdate()/c.endUpdate() does nothing.
 	# This _is_ useful when a flag is passed to c.endUpdate.
 	
@@ -327,11 +303,8 @@ class baseLeoTree:
 			self.redrawScheduled = true
 			self.canvas.after_idle(self.idle_redraw)
 			
-	
-	#@-body
-	#@-node:1::redraw
-	#@+node:2::force_redraw
-	#@+body
+	#@-node:redraw
+	#@+node:force_redraw
 	# Schedules a redraw even if inside beginUpdate/endUpdate
 	def force_redraw (self):
 	
@@ -340,10 +313,9 @@ class baseLeoTree:
 		if not self.redrawScheduled:
 			self.redrawScheduled = true
 			self.canvas.after_idle(self.idle_redraw)
-	#@-body
-	#@-node:2::force_redraw
-	#@+node:3::redraw_now
-	#@+body
+	#@nonl
+	#@-node:force_redraw
+	#@+node:redraw_now
 	# Redraws immediately: used by Find so a redraw doesn't mess up selections.
 	# It is up to the caller to ensure that no other redraws are pending.
 	def redraw_now (self):
@@ -351,10 +323,9 @@ class baseLeoTree:
 		# trace()
 	
 		self.idle_redraw()
-	#@-body
-	#@-node:3::redraw_now
-	#@+node:4::idle_redraw
-	#@+body
+	#@nonl
+	#@-node:redraw_now
+	#@+node:idle_redraw
 	def idle_redraw (self):
 		
 		self.redrawScheduled = false # 7/10/03: Always do this here.
@@ -393,10 +364,9 @@ class baseLeoTree:
 			doHook("after_redraw-outline",c=self.commands)
 	
 		self.canvas['cursor'] = oldcursor
-	#@-body
-	#@-node:4::idle_redraw
-	#@+node:5::idle_second_redraw
-	#@+body
+	#@nonl
+	#@-node:idle_redraw
+	#@+node:idle_second_redraw
 	def idle_second_redraw (self):
 		
 		# trace()
@@ -412,11 +382,9 @@ class baseLeoTree:
 		
 		if self.trace:
 			print "idle_second_redraw allocated:",self.redrawCount, self.allocatedNodes
-	#@-body
-	#@-node:5::idle_second_redraw
-	#@-node:5::Drawing routines (tree)...
-	#@+node:6::drawNode & force_draw_node
-	#@+body
+	#@nonl
+	#@-node:idle_second_redraw
+	#@+node:drawNode & force_draw_node
 	def drawNode(self,v,x,y):
 	
 		"""Draw horizontal line from vertical line to icon"""
@@ -436,10 +404,9 @@ class baseLeoTree:
 		icon_height = self.drawIcon(v,x+box_width,y)
 		text_height = self.drawText(v,x+box_width+icon_width,y)
 		return max(icon_height, text_height)
-	#@-body
-	#@-node:6::drawNode & force_draw_node
-	#@+node:7::drawText (bind)
-	#@+body
+	#@nonl
+	#@-node:drawNode & force_draw_node
+	#@+node:drawText (bind)
 	# draws text for v at x,y
 	
 	def drawText(self,v,x,y):
@@ -454,10 +421,8 @@ class baseLeoTree:
 		self.widgets.append(t) # Fixes a _huge_ memory leak.
 	
 		t.insert("end", v.headString())
-		
-		#@<< configure the text depending on state >>
-		#@+node:1::<< configure the text depending on state >>
-		#@+body
+		#@	<< configure the text depending on state >>
+		#@+node:<< configure the text depending on state >>
 		if v == self.currentVnode:
 			# trace("editVnode",self.editVnode)
 			if v == self.editVnode:
@@ -466,9 +431,9 @@ class baseLeoTree:
 				self.setDisabledLabelState(v) # selected, disabled
 		else:
 			self.setUnselectedLabelState(v) # unselected
-		#@-body
-		#@-node:1::<< configure the text depending on state >>
-
+		#@nonl
+		#@-node:<< configure the text depending on state >>
+		#@nl
 	
 		id1 = t.bind("<1>", v.OnHeadlineClick)
 		id2 = t.bind("<3>", v.OnHeadlineRightClick) # 9/11/02.
@@ -488,10 +453,9 @@ class baseLeoTree:
 		self.canvas.tag_lower(id)
 	
 		return self.line_height
-	#@-body
-	#@-node:7::drawText (bind)
-	#@+node:8::drawTree
-	#@+body
+	#@nonl
+	#@-node:drawText (bind)
+	#@+node:drawTree
 	def drawTree(self,v,x,y,h,level):
 		
 		# Recursive routine, stat() not useful.
@@ -504,10 +468,8 @@ class baseLeoTree:
 			if v.isExpanded() and v.firstChild():
 				y = self.drawTree(v.firstChild(),x+child_indent,y,h,level+1)
 			v = v.next()
-		
-		#@<< draw vertical line >>
-		#@+node:1::<< draw vertical line >>
-		#@+body
+		#@	<< draw vertical line >>
+		#@+node:<< draw vertical line >>
 		id = self.canvas.create_line(
 			x, yfirst-hline_y+4,
 			x, ylast+hline_y-h,
@@ -515,38 +477,35 @@ class baseLeoTree:
 			tag="lines")
 		
 		self.canvas.tag_lower(id)
-		#@-body
-		#@-node:1::<< draw vertical line >>
-
+		#@nonl
+		#@-node:<< draw vertical line >>
+		#@nl
 		return y
-	#@-body
-	#@-node:8::drawTree
-	#@+node:9::endUpdate
-	#@+body
+	#@nonl
+	#@-node:drawTree
+	#@+node:endUpdate
 	def endUpdate (self, flag=true):
 	
 		assert(self.updateCount > 0)
 		self.updateCount -= 1
 		if flag and self.updateCount == 0:
 			self.redraw()
-	#@-body
-	#@-node:9::endUpdate
-	#@+node:10::headWidth
-	#@+body
-	#@+at
-	#  Returns the proper width of the entry widget for the headline. This has 
+	#@nonl
+	#@-node:endUpdate
+	#@+node:headWidth
+	#@+at 
+	#@nonl
+	# Returns the proper width of the entry widget for the headline. This has 
 	# been a problem.
-
 	#@-at
 	#@@c
-
+	
 	def headWidth(self,v):
 	
 		return max(10,5 + len(v.headString()))
-	#@-body
-	#@-node:10::headWidth
-	#@+node:11::inVisibleArea & inExpandedVisibleArea
-	#@+body
+	#@nonl
+	#@-node:headWidth
+	#@+node:inVisibleArea & inExpandedVisibleArea
 	def inVisibleArea (self,y1):
 		
 		if self.allocateOnlyVisibleNodes:
@@ -566,10 +525,9 @@ class baseLeoTree:
 			return y2 >= vis1 and y1 <= vis2
 		else:
 			return false
-	#@-body
-	#@-node:11::inVisibleArea & inExpandedVisibleArea
-	#@+node:12::lastVisible
-	#@+body
+	#@nonl
+	#@-node:inVisibleArea & inExpandedVisibleArea
+	#@+node:lastVisible
 	# Returns the last visible node of the screen.
 	
 	def lastVisible (self):
@@ -585,10 +543,9 @@ class baseLeoTree:
 			else:
 				v = v.threadNext()
 		return last
-	#@-body
-	#@-node:12::lastVisible
-	#@+node:13::setLineHeight
-	#@+body
+	#@nonl
+	#@-node:lastVisible
+	#@+node:setLineHeight
 	def setLineHeight (self,font):
 		
 		try:
@@ -600,10 +557,9 @@ class baseLeoTree:
 			self.line_height = line_height # was 17 + 2
 			es("exception setting outline line height")
 			es_exception()
-	#@-body
-	#@-node:13::setLineHeight
-	#@+node:14::tree.getFont,setFont,setFontFromConfig
-	#@+body
+	#@nonl
+	#@-node:setLineHeight
+	#@+node:tree.getFont,setFont,setFontFromConfig
 	def getFont (self):
 	
 		return self.font
@@ -628,10 +584,9 @@ class baseLeoTree:
 			"headline_text_font_slant",  "headline_text_font_weight")
 	
 		self.setFont(font)
-	#@-body
-	#@-node:14::tree.getFont,setFont,setFontFromConfig
-	#@+node:15::tree.getIconImage
-	#@+body
+	#@nonl
+	#@-node:tree.getFont,setFont,setFontFromConfig
+	#@+node:tree.getIconImage
 	def getIconImage (self, name):
 	
 		# Return the image from the cache if possible.
@@ -648,17 +603,16 @@ class baseLeoTree:
 			es("Exception loading: " + fullname)
 			es_exception()
 			return None
-	#@-body
-	#@-node:15::tree.getIconImage
-	#@+node:16::tree.idle_scrollTo
-	#@+body
-	#@+at
-	#  This scrolls the canvas so that v is in view.  This is done at idle 
-	# time after a redraw so that treeBar.get() will return proper values.
-
+	#@nonl
+	#@-node:tree.getIconImage
+	#@+node:tree.idle_scrollTo
+	#@+at 
+	#@nonl
+	# This scrolls the canvas so that v is in view.  This is done at idle time 
+	# after a redraw so that treeBar.get() will return proper values.
 	#@-at
 	#@@c
-
+	
 	def idle_scrollTo(self,v=None):
 	
 		frame = self.commands.frame
@@ -698,10 +652,9 @@ class baseLeoTree:
 			self.canvas.after_idle(self.idle_second_redraw)
 	
 		# print "%3d %3d %1.3f %1.3f %1.3f %1.3f" % (h1,h2,frac,frac2,lo,hi)
-	#@-body
-	#@-node:16::tree.idle_scrollTo
-	#@+node:17::tree.numberOfVisibleNodes
-	#@+body
+	#@nonl
+	#@-node:tree.idle_scrollTo
+	#@+node:tree.numberOfVisibleNodes
 	def numberOfVisibleNodes(self):
 		
 		n = 0 ; v = self.rootVnode
@@ -709,10 +662,9 @@ class baseLeoTree:
 			n += 1
 			v = v.visNext()
 		return n
-	#@-body
-	#@-node:17::tree.numberOfVisibleNodes
-	#@+node:18::tree.recolor, recolor_now, recolor_range
-	#@+body
+	#@nonl
+	#@-node:tree.numberOfVisibleNodes
+	#@+node:tree.recolor, recolor_now, recolor_range
 	def recolor(self,v,incremental=0):
 	
 		body = self.commands.frame.body
@@ -731,17 +683,16 @@ class baseLeoTree:
 	
 		body = self.commands.frame.body
 		self.colorizer.recolor_range(v,body,leading,trailing)
-	#@-body
-	#@-node:18::tree.recolor, recolor_now, recolor_range
-	#@+node:19::tree.yoffset
-	#@+body
-	#@+at
-	#  We can't just return icony because the tree hasn't been redrawn yet.  
+	#@nonl
+	#@-node:tree.recolor, recolor_now, recolor_range
+	#@+node:tree.yoffset
+	#@+at 
+	#@nonl
+	# We can't just return icony because the tree hasn't been redrawn yet.  
 	# For the same reason we can't rely on any TK canvas methods here.
-
 	#@-at
 	#@@c
-
+	
 	def yoffset(self, v1):
 	
 		# if not v1.isVisible(): print "yoffset not visible:", `v1`
@@ -768,27 +719,22 @@ class baseLeoTree:
 				if flag: return h, true
 			v = v.next()
 		return h, false
-	#@-body
-	#@-node:19::tree.yoffset
-	#@-node:5::Drawing
-	#@+node:6::Event handers (tree)
-	#@+body
-	#@+at
-	#  Important note: most hooks are created in the vnode callback routines, 
+	#@nonl
+	#@-node:tree.yoffset
+	#@+node:Event handers (tree)
+	#@+at 
+	#@nonl
+	# Important note: most hooks are created in the vnode callback routines, 
 	# _not_ here.
-
 	#@-at
-	#@-body
-	#@+node:1::OnActivate
-	#@+body
+	#@-node:Event handers (tree)
+	#@+node:OnActivate
 	def OnActivate (self,v,event=None):
 	
 		try:
 			c = self.commands
-			
-			#@<< activate this window >>
-			#@+node:1::<< activate this window >>
-			#@+body
+			#@		<< activate this window >>
+			#@+node:<< activate this window >>
 			c = self.commands
 			# trace(`v`)
 			
@@ -808,15 +754,14 @@ class baseLeoTree:
 				set_focus(c,c.body)
 			
 			self.active = true
-			#@-body
-			#@-node:1::<< activate this window >>
-
+			#@nonl
+			#@-node:<< activate this window >>
+			#@nl
 		except:
 			es_event_exception("activate tree")
-	#@-body
-	#@-node:1::OnActivate
-	#@+node:2::OnBoxClick
-	#@+body
+	#@nonl
+	#@-node:OnActivate
+	#@+node:OnBoxClick
 	# Called on click in box and double-click in headline.
 	
 	def OnBoxClick (self,v):
@@ -833,10 +778,9 @@ class baseLeoTree:
 		self.select(v)
 		set_focus(c,c.body) # 7/12/03
 		self.redraw()
-	#@-body
-	#@-node:2::OnBoxClick
-	#@+node:3::tree.OnDeactivate (caused double-click problem)
-	#@+body
+	#@nonl
+	#@-node:OnBoxClick
+	#@+node:tree.OnDeactivate (caused double-click problem)
 	def OnDeactivate (self,event=None):
 		
 		"""Deactivate the tree pane, dimming any headline being edited."""
@@ -853,10 +797,9 @@ class baseLeoTree:
 				self.dimEditLabel()
 			except:
 				es_event_exception("deactivate tree")
-	#@-body
-	#@-node:3::tree.OnDeactivate (caused double-click problem)
-	#@+node:4::tree.findVnodeWithIconId
-	#@+body
+	#@nonl
+	#@-node:tree.OnDeactivate (caused double-click problem)
+	#@+node:tree.findVnodeWithIconId
 	def findVnodeWithIconId (self,id):
 		
 		# Due to an old bug, id may be a tuple.
@@ -864,13 +807,11 @@ class baseLeoTree:
 			return self.icon_id_dict.get(id[0])
 		except:
 			return self.icon_id_dict.get(id)
-	
-	#@-body
-	#@-node:4::tree.findVnodeWithIconId
-	#@+node:5::body key handlers (tree)
-	#@+body
-	#@+at
-	#  The <Key> event generates the event before the body text is changed(!), 
+	#@-node:tree.findVnodeWithIconId
+	#@+node:body key handlers (tree)
+	#@+at 
+	#@nonl
+	# The <Key> event generates the event before the body text is changed(!), 
 	# so we register an idle-event handler to do the work later.
 	# 
 	# 1/17/02: Rather than trying to figure out whether the control or alt 
@@ -884,14 +825,11 @@ class baseLeoTree:
 	# text, and that change must be captured immediately.  The latter commands 
 	# have not changed the body text, and that change may only be captured at 
 	# idle time.
-
 	#@-at
 	#@@c
-
-
+	
 	#@+others
-	#@+node:1::idle_body_key
-	#@+body
+	#@+node:idle_body_key
 	def idle_body_key (self,v,oldSel,undoType,ch=None,oldYview=None,newSel=None,oldText=None):
 		
 		"""Update the body pane at idle time."""
@@ -907,10 +845,8 @@ class baseLeoTree:
 		if oldText != None:
 			s = oldText
 		else:
-			
-			#@<< set s to the widget text >>
-			#@+node:1::<< set s to the widget text >>
-			#@+body
+			#@		<< set s to the widget text >>
+			#@+node:<< set s to the widget text >>
 			s = c.body.get("1.0", "end")
 			
 			if s == None:
@@ -919,13 +855,11 @@ class baseLeoTree:
 			if type(s) == type(""):
 				s = toUnicode(s,app().tkEncoding) # 2/25/03
 				# if len(ch) > 0: print `s`
-			#@-body
-			#@-node:1::<< set s to the widget text >>
-
-		
-		#@<< return if nothing has changed >>
-		#@+node:2::<< return if nothing has changed >>
-		#@+body
+			#@nonl
+			#@-node:<< set s to the widget text >>
+			#@nl
+		#@	<< return if nothing has changed >>
+		#@+node:<< return if nothing has changed >>
 		# 6/22/03: Make sure we handle delete key properly.
 		
 		if ch not in ('\n','\r',chr(8)):
@@ -938,23 +872,23 @@ class baseLeoTree:
 				return "break"
 			
 		# print `ch`,len(body),len(s)
-		#@-body
-		#@-node:2::<< return if nothing has changed >>
-
-		
-		#@<< set removeTrailing >>
-		#@+node:3::<< set removeTrailing >>
-		#@+body
-		#@+at
-		#  Tk will add a newline only if:
+		#@nonl
+		#@-node:<< return if nothing has changed >>
+		#@nl
+		#@	<< set removeTrailing >>
+		#@+node:<< set removeTrailing >>
+		#@+at 
+		#@nonl
+		# Tk will add a newline only if:
 		# 1. A real change has been made to the Tk.Text widget, and
-		# 2. the change did _not_ result in the widget already containing a newline.
+		# 2. the change did _not_ result in the widget already containing a 
+		# newline.
 		# 
 		# It's not possible to tell, given the information available, what Tk 
 		# has actually done. We need only make a reasonable guess here.   
 		# setUndoTypingParams stores the number of trailing newlines in each 
-		# undo bead, so whatever we do here can be faithfully undone and redone.
-
+		# undo bead, so whatever we do here can be faithfully undone and 
+		# redone.
 		#@-at
 		#@@c
 		new = s ; old = body
@@ -981,15 +915,11 @@ class baseLeoTree:
 		# trace(`ch`+","+`removeTrailing`)
 		
 		
-		
-		#@-body
-		#@-node:3::<< set removeTrailing >>
-
+		#@-node:<< set removeTrailing >>
+		#@nl
 		if ch in ('\n','\r'):
-			
-			#@<< Do auto indent >>
-			#@+node:4::<< Do auto indent >> (David McNab)
-			#@+body
+			#@		<< Do auto indent >>
+			#@+node:<< Do auto indent >> (David McNab)
 			# Do nothing if we are in @nocolor mode or if we are executing a Change command.
 			if self.colorizer.useSyntaxColoring(v) and undoType != "Change":
 				# Get the previous line.
@@ -1018,14 +948,12 @@ class baseLeoTree:
 				if ws and len(ws) > 0:
 					c.body.insert("insert", ws)
 					removeTrailing = false # bug fix: 11/18
-			#@-body
-			#@-node:4::<< Do auto indent >> (David McNab)
-
+			#@nonl
+			#@-node:<< Do auto indent >> (David McNab)
+			#@nl
 		elif ch == '\t' and c.tab_width < 0:
-			
-			#@<< convert tab to blanks >>
-			#@+node:5::<< convert tab to blanks >>
-			#@+body
+			#@		<< convert tab to blanks >>
+			#@+node:<< convert tab to blanks >>
 			# Do nothing if we are executing a Change command.
 			if undoType != "Change":
 				
@@ -1056,40 +984,34 @@ class baseLeoTree:
 						# print "prev w:" + `w` + ", prev chars:" + `prev`
 						c.body.delete("insert -1c")
 						c.body.insert("insert",' ' * w2)
-			#@-body
-			#@-node:5::<< convert tab to blanks >>
-
-		
-		#@<< set s to widget text, removing trailing newlines if necessary >>
-		#@+node:6::<< set s to widget text, removing trailing newlines if necessary >>
-		#@+body
+			#@nonl
+			#@-node:<< convert tab to blanks >>
+			#@nl
+		#@	<< set s to widget text, removing trailing newlines if necessary >>
+		#@+node:<< set s to widget text, removing trailing newlines if necessary >>
 		s = c.body.get("1.0", "end")
 		s = toUnicode(s,app().tkEncoding) #2/25/03
 		if len(s) > 0 and s[-1] == '\n' and removeTrailing:
 			s = s[:-1]
-		#@-body
-		#@-node:6::<< set s to widget text, removing trailing newlines if necessary >>
-
+		#@nonl
+		#@-node:<< set s to widget text, removing trailing newlines if necessary >>
+		#@nl
 		if undoType:
 			c.undoer.setUndoTypingParams(v,undoType,body,s,oldSel,newSel,oldYview=oldYview)
 		v.t.setTnodeText(s)
 		v.t.insertSpot = c.body.index("insert")
-		
-		#@<< recolor the body >>
-		#@+node:7::<< recolor the body >>
-		#@+body
+		#@	<< recolor the body >>
+		#@+node:<< recolor the body >>
 		self.scanForTabWidth(v)
 		incremental = undoType not in ("Cut","Paste")
 		self.recolor_now(v,incremental=incremental)
-		#@-body
-		#@-node:7::<< recolor the body >>
-
+		#@nonl
+		#@-node:<< recolor the body >>
+		#@nl
 		if not c.changed:
 			c.setChanged(true)
-		
-		#@<< redraw the screen if necessary >>
-		#@+node:8::<< redraw the screen if necessary >>
-		#@+body
+		#@	<< redraw the screen if necessary >>
+		#@+node:<< redraw the screen if necessary >>
 		redraw_flag = false
 		
 		c.beginUpdate()
@@ -1105,15 +1027,14 @@ class baseLeoTree:
 			redraw_flag = true
 		
 		c.endUpdate(redraw_flag) # redraw only if necessary
-		#@-body
-		#@-node:8::<< redraw the screen if necessary >>
-
+		#@nonl
+		#@-node:<< redraw the screen if necessary >>
+		#@nl
 		doHook("bodykey2",c=c,v=v,ch=ch,oldSel=oldSel,undoType=undoType)
 		return "break"
-	#@-body
-	#@-node:1::idle_body_key
-	#@+node:2::onBodyChanged
-	#@+body
+	#@nonl
+	#@-node:idle_body_key
+	#@+node:onBodyChanged
 	# Called by command handlers that have already changed the text.
 	
 	def onBodyChanged (self,v,undoType,oldSel=None,oldYview=None,newSel=None,oldText=None):
@@ -1128,11 +1049,8 @@ class baseLeoTree:
 			oldSel = getTextSelection(c.body)
 	
 		self.idle_body_key(v,oldSel,undoType,oldYview=oldYview,newSel=newSel,oldText=oldText)
-	
-	#@-body
-	#@-node:2::onBodyChanged
-	#@+node:3::OnBodyKey
-	#@+body
+	#@-node:onBodyChanged
+	#@+node:OnBodyKey
 	def OnBodyKey (self,event):
 		
 		"""Handle any key press event in the body pane."""
@@ -1146,10 +1064,9 @@ class baseLeoTree:
 			
 		# We must execute this even if len(ch) > 0 to delete spurious trailing newlines.
 		self.commands.body.after_idle(self.idle_body_key,v,oldSel,"Typing",ch)
-	#@-body
-	#@-node:3::OnBodyKey
-	#@+node:4::onBodyWillChange
-	#@+body
+	#@nonl
+	#@-node:OnBodyKey
+	#@+node:onBodyWillChange
 	# Called by command handlers that change the text just before idle time.
 	
 	def onBodyWillChange (self,v,undoType,oldSel=None,oldYview=None):
@@ -1163,22 +1080,16 @@ class baseLeoTree:
 		  
 		self.commands.body.after_idle(self.idle_body_key,v,oldSel,undoType,oldYview)
 	
-	
-	#@-body
-	#@-node:4::onBodyWillChange
+	#@-node:onBodyWillChange
 	#@-others
-	
-	#@-body
-	#@-node:5::body key handlers (tree)
-	#@+node:6::tree.OnContinueDrag
-	#@+body
+	#@nonl
+	#@-node:body key handlers (tree)
+	#@+node:tree.OnContinueDrag
 	def OnContinueDrag(self,v,event):
 	
 		try:
-			
-			#@<< continue dragging >>
-			#@+node:1::<< continue dragging >>
-			#@+body
+			#@		<< continue dragging >>
+			#@+node:<< continue dragging >>
 			# trace(`v`)
 			assert(v == self.drag_v)
 			
@@ -1199,10 +1110,8 @@ class baseLeoTree:
 			
 			# OnEndDrag() halts the scrolling by clearing self.drag_id when the mouse button goes up.
 			if self.drag_id: # This gets cleared by OnEndDrag()
-				
-				#@<< scroll the canvas as needed >>
-				#@+node:1::<< scroll the canvas as needed >>
-				#@+body
+				#@	<< scroll the canvas as needed >>
+				#@+node:<< scroll the canvas as needed >>
 				# Scroll the screen up or down one line if the cursor (y) is outside the canvas.
 				h = canvas.winfo_height()
 				if y < 0 or y > h:
@@ -1219,27 +1128,26 @@ class baseLeoTree:
 					lo, hi = frame.treeBar.get()
 					if (y < 0 and lo > 0.1) or (y > h and hi < 0.9):
 						canvas.after_idle(self.OnContinueDrag,v,None) # Don't propagate the event.
-				#@-body
-				#@-node:1::<< scroll the canvas as needed >>
-			#@-body
-			#@-node:1::<< continue dragging >>
-
+				#@nonl
+				#@-node:<< scroll the canvas as needed >>
+				#@nl
+			#@nonl
+			#@-node:<< continue dragging >>
+			#@nl
 		except:
 			es_event_exception("continue drag")
-	#@-body
-	#@-node:6::tree.OnContinueDrag
-	#@+node:7::tree.OnCtontrolT
-	#@+body
+	#@nonl
+	#@-node:tree.OnContinueDrag
+	#@+node:tree.OnCtontrolT
 	# This works around an apparent Tk bug.
 	
 	def OnControlT (self,event=None):
 	
 		# If we don't inhibit further processing the Tx.Text widget switches characters!
 		return "break"
-	#@-body
-	#@-node:7::tree.OnCtontrolT
-	#@+node:8::tree.OnDrag
-	#@+body
+	#@nonl
+	#@-node:tree.OnCtontrolT
+	#@+node:tree.OnDrag
 	# This precomputes numberOfVisibleNodes(), a significant optimization.
 	# We also indicate where findVnodeWithIconId() should start looking for tree id's.
 	
@@ -1269,10 +1177,9 @@ class baseLeoTree:
 			self.canvas['cursor'] = "hand2" # "center_ptr"
 	
 		self.OnContinueDrag(v,event)
-	#@-body
-	#@-node:8::tree.OnDrag
-	#@+node:9::tree.OnEndDrag
-	#@+body
+	#@nonl
+	#@-node:tree.OnDrag
+	#@+node:tree.OnEndDrag
 	def OnEndDrag(self,v,event):
 		
 		"""Tree end-of-drag handler called from vnode event handler."""
@@ -1287,10 +1194,8 @@ class baseLeoTree:
 		c = self.commands ; canvas = self.canvas
 	
 		if event:
-			
-			#@<< set vdrag, childFlag >>
-			#@+node:1::<< set vdrag, childFlag >>
-			#@+body
+			#@		<< set vdrag, childFlag >>
+			#@+node:<< set vdrag, childFlag >>
 			x,y = event.x,event.y
 			canvas_x = canvas.canvasx(x)
 			canvas_y = canvas.canvasy(y)
@@ -1298,9 +1203,9 @@ class baseLeoTree:
 			id = self.canvas.find_closest(canvas_x,canvas_y)
 			vdrag = self.findVnodeWithIconId(id)
 			childFlag = vdrag and vdrag.hasChildren() and vdrag.isExpanded()
-			#@-body
-			#@-node:1::<< set vdrag, childFlag >>
-
+			#@nonl
+			#@-node:<< set vdrag, childFlag >>
+			#@nl
 			# 1/29/03: support for this new option.
 			flag = app().config.getBoolWindowPref("look_for_control_drag_on_mouse_down")
 			if not flag:
@@ -1332,21 +1237,18 @@ class baseLeoTree:
 			
 		self.dragging = false
 		self.drag_v = None
-	#@-body
-	#@-node:9::tree.OnEndDrag
-	#@+node:10::headline key handlers (tree)
-	#@+body
-	#@+at
-	#  The <Key> event generates the event before the headline text is 
+	#@nonl
+	#@-node:tree.OnEndDrag
+	#@+node:headline key handlers (tree)
+	#@+at 
+	#@nonl
+	# The <Key> event generates the event before the headline text is 
 	# changed(!), so we register an idle-event handler to do the work later.
-
 	#@-at
 	#@@c
-
-
+	
 	#@+others
-	#@+node:1::onHeadChanged
-	#@+body
+	#@+node:onHeadChanged
 	def onHeadChanged (self,v):
 		
 		"""Handle a change to headline text."""
@@ -1354,11 +1256,8 @@ class baseLeoTree:
 		self.commands.body.after_idle(self.idle_head_key,v)
 	
 	
-	
-	#@-body
-	#@-node:1::onHeadChanged
-	#@+node:2::OnHeadlineKey
-	#@+body
+	#@-node:onHeadChanged
+	#@+node:OnHeadlineKey
 	def OnHeadlineKey (self,v,event):
 		
 		"""Handle a key event in a headline."""
@@ -1366,11 +1265,8 @@ class baseLeoTree:
 		ch = event.char
 		self.commands.body.after_idle(self.idle_head_key,v,ch)
 	
-	
-	#@-body
-	#@-node:2::OnHeadlineKey
-	#@+node:3::idle_head_key
-	#@+body
+	#@-node:OnHeadlineKey
+	#@+node:idle_head_key
 	def idle_head_key (self,v,ch=None):
 		
 		"""Update headline text at idle time."""
@@ -1381,10 +1277,8 @@ class baseLeoTree:
 		if doHook("headkey1",c=c,v=v,ch=ch):
 			return "break" # The hook claims to have handled the event.
 	
-		
-		#@<< set s to the widget text >>
-		#@+node:1::<< set s to the widget text >>
-		#@+body
+		#@	<< set s to the widget text >>
+		#@+node:<< set s to the widget text >>
 		s = v.edit_text().get("1.0","end")
 		s = toUnicode(s,app().tkEncoding) # 2/25/03
 		if not s:
@@ -1392,22 +1286,16 @@ class baseLeoTree:
 		s = s.replace('\n','')
 		s = s.replace('\r','')
 		# trace(`s`)
-		
-		#@-body
-		#@-node:1::<< set s to the widget text >>
-
-		
-		#@<< set head to vnode text >>
-		#@+node:2::<< set head to vnode text >>
-		#@+body
+		#@-node:<< set s to the widget text >>
+		#@nl
+		#@	<< set head to vnode text >>
+		#@+node:<< set head to vnode text >>
 		head = v.headString()
 		if head == None:
 			head = u""
 		head = toUnicode(head,"utf-8")
-		
-		#@-body
-		#@-node:2::<< set head to vnode text >>
-
+		#@-node:<< set head to vnode text >>
+		#@nl
 		changed = s != head
 		done = ch and (ch == '\r' or ch == '\n')
 		if not changed and not done:
@@ -1416,10 +1304,8 @@ class baseLeoTree:
 			c.undoer.setUndoParams("Change Headline",v,newText=s,oldText=head)
 		index = v.edit_text().index("insert")
 		if changed:
-			
-			#@<< update v and all nodes joined to v >>
-			#@+node:3::<< update v and all nodes joined to v >>
-			#@+body
+			#@		<< update v and all nodes joined to v >>
+			#@+node:<< update v and all nodes joined to v >>
 			c.beginUpdate()
 			
 			# Update changed bit.
@@ -1444,13 +1330,11 @@ class baseLeoTree:
 						v2.edit_text().insert("end",s)
 			
 			c.endUpdate(false) # do not redraw now.
-			#@-body
-			#@-node:3::<< update v and all nodes joined to v >>
-
-		
-		#@<< reconfigure v and all nodes joined to v >>
-		#@+node:4::<< reconfigure v and all nodes joined to v >>
-		#@+body
+			#@nonl
+			#@-node:<< update v and all nodes joined to v >>
+			#@nl
+		#@	<< reconfigure v and all nodes joined to v >>
+		#@+node:<< reconfigure v and all nodes joined to v >>
 		# Reconfigure v's headline.
 		if done:
 			self.setDisabledLabelState(v)
@@ -1462,13 +1346,11 @@ class baseLeoTree:
 			if v2 != v:
 				if v2.edit_text(): # v2 may not be visible
 					v2.edit_text().configure(width=self.headWidth(v2))
-		#@-body
-		#@-node:4::<< reconfigure v and all nodes joined to v >>
-
-		
-		#@<< update the screen >>
-		#@+node:5::<< update the screen >>
-		#@+body
+		#@nonl
+		#@-node:<< reconfigure v and all nodes joined to v >>
+		#@nl
+		#@	<< update the screen >>
+		#@+node:<< update the screen >>
 		if done:
 			c.beginUpdate()
 			self.endEditLabel()
@@ -1478,20 +1360,18 @@ class baseLeoTree:
 			# update v immediately.  Joined nodes are redrawn later by endEditLabel.
 			# Redrawing the whole screen now messes up the cursor in the headline.
 			self.drawIcon(v,v.iconx,v.icony) # just redraw the icon.
-		#@-body
-		#@-node:5::<< update the screen >>
-
+		#@nonl
+		#@-node:<< update the screen >>
+		#@nl
 	
 		doHook("headkey2",c=c,v=v,ch=ch)
 		return "break"
-	#@-body
-	#@-node:3::idle_head_key
+	#@nonl
+	#@-node:idle_head_key
 	#@-others
-	
-	#@-body
-	#@-node:10::headline key handlers (tree)
-	#@+node:11::tree.OnIconClick & OnIconRightClick
-	#@+body
+	#@nonl
+	#@-node:headline key handlers (tree)
+	#@+node:tree.OnIconClick & OnIconRightClick
 	def OnIconClick (self,v,event):
 	
 		# Note: "iconclick" hooks handled by vnode callback routine.
@@ -1519,10 +1399,9 @@ class baseLeoTree:
 	def OnIconRightClick (self,v,event):
 	
 		self.select(v)
-	#@-body
-	#@-node:11::tree.OnIconClick & OnIconRightClick
-	#@+node:12::tree.OnIconDoubleClick (@url)
-	#@+body
+	#@nonl
+	#@-node:tree.OnIconClick & OnIconRightClick
+	#@+node:tree.OnIconDoubleClick (@url)
 	def OnIconDoubleClick (self,v,event=None):
 	
 		# Note: "icondclick" hooks handled by vnode callback routine.
@@ -1532,10 +1411,8 @@ class baseLeoTree:
 		if match_word(s,0,"@url"):
 			if not doHook("@url1",c=c,v=v):
 				url = s[4:].strip()
-				
-				#@<< stop the url after any whitespace >>
-				#@+node:1::<< stop the url after any whitespace  >>
-				#@+body
+				#@			<< stop the url after any whitespace >>
+				#@+node:<< stop the url after any whitespace  >>
 				# For safety, the URL string should end at the first whitespace.
 				
 				url = url.replace('\t',' ')
@@ -1545,32 +1422,28 @@ class baseLeoTree:
 						es("ignoring characters after space in url:"+url[i:])
 						es("use %20 instead of spaces")
 					url = url[:i]
-				
-				#@-body
-				#@-node:1::<< stop the url after any whitespace  >>
-
-				
-				#@<< check the url; return if bad >>
-				#@+node:2::<< check the url; return if bad >>
-				#@+body
+				#@-node:<< stop the url after any whitespace  >>
+				#@nl
+				#@			<< check the url; return if bad >>
+				#@+node:<< check the url; return if bad >>
 				if not url or len(url) == 0:
 					es("no url following @url")
 					return
 					
-
-				#@+at
-				#  A valid url is (according to D.T.Hein):
+				#@+at 
+				#@nonl
+				# A valid url is (according to D.T.Hein):
 				# 
 				# 3 or more lowercase alphas, followed by,
 				# one ':', followed by,
 				# one or more of: (excludes !"#;<>[\]^`|)
 				#   $%&'()*+,-./0-9:=?@A-Z_a-z{}~
-				# followed by one of: (same as above, except no minus sign or comma).
+				# followed by one of: (same as above, except no minus sign or 
+				# comma).
 				#   $%&'()*+/0-9:=?@A-Z_a-z}~
-
 				#@-at
 				#@@c
-
+				
 				urlPattern = "[a-z]{3,}:[\$-:=?-Z_a-z{}~]+[\$-+\/-:=?-Z_a-z}~]"
 				import re
 				# 4/21/03: Add http:// if required.
@@ -1579,23 +1452,19 @@ class baseLeoTree:
 				if not re.match(urlPattern,url):
 					es("invalid url: "+url)
 					return
-				
-				#@-body
-				#@-node:2::<< check the url; return if bad >>
-
-				
-				#@<< pass the url to the web browser >>
-				#@+node:3::<< pass the url to the web browser >>
-				#@+body
-				#@+at
-				#  Most browsers should handle the following urls:
+				#@-node:<< check the url; return if bad >>
+				#@nl
+				#@			<< pass the url to the web browser >>
+				#@+node:<< pass the url to the web browser >>
+				#@+at 
+				#@nonl
+				# Most browsers should handle the following urls:
 				#   ftp://ftp.uu.net/public/whatever.
 				#   http://localhost/MySiteUnderDevelopment/index.html
 				#   file:///home/me/todolist.html
-
 				#@-at
 				#@@c
-
+				
 				try:
 					import os
 					import webbrowser
@@ -1605,14 +1474,13 @@ class baseLeoTree:
 				except:
 					es("exception opening " + url)
 					es_exception()
-				#@-body
-				#@-node:3::<< pass the url to the web browser >>
-
+				#@nonl
+				#@-node:<< pass the url to the web browser >>
+				#@nl
 			doHook("@url2",c=c,v=v)
-	#@-body
-	#@-node:12::tree.OnIconDoubleClick (@url)
-	#@+node:13::tree.OnPopup & allies
-	#@+body
+	#@nonl
+	#@-node:tree.OnIconDoubleClick (@url)
+	#@+node:tree.OnPopup & allies
 	def OnPopup (self,v,event):
 		
 		"""Handle right-clicks in the outline."""
@@ -1629,34 +1497,32 @@ class baseLeoTree:
 				self.showPopupMenu(v,event)
 	
 		return "break"
-	#@-body
-	#@+node:1::OnPopupFocusLost
-	#@+body
-	#@+at
-	#  On Linux we must do something special to make the popup menu "unpost" 
-	# if the mouse is clicked elsewhere.  So we have to catch the <FocusOut> 
+	#@nonl
+	#@-node:tree.OnPopup & allies
+	#@+node:OnPopupFocusLost
+	#@+at 
+	#@nonl
+	# On Linux we must do something special to make the popup menu "unpost" if 
+	# the mouse is clicked elsewhere.  So we have to catch the <FocusOut> 
 	# event and explicitly unpost.  In order to process the <FocusOut> event, 
 	# we need to be able to find the reference to the popup window again, so 
-	# this needs to be an attribute of the tree object; hence, "self.popupMenu".
+	# this needs to be an attribute of the tree object; hence, 
+	# "self.popupMenu".
 	# 
 	# Aside: though Tk tries to be muli-platform, the interaction with 
 	# different window managers does cause small differences that will need to 
 	# be compensated by system specific application code. :-(
-
 	#@-at
 	#@@c
-
+	
 	# 20-SEP-2002 DTHEIN: This event handler is only needed for Linux.
 	
 	def OnPopupFocusLost(self,event=None):
 	
 		self.popupMenu.unpost()
 		
-	
-	#@-body
-	#@-node:1::OnPopupFocusLost
-	#@+node:2::createPopupMenu
-	#@+body
+	#@-node:OnPopupFocusLost
+	#@+node:createPopupMenu
 	def createPopupMenu (self,v,event):
 		
 		a = app() ; c = self.commands ; frame = c.frame
@@ -1674,10 +1540,8 @@ class baseLeoTree:
 			table = (("-",None,None),)
 			frame.createMenuEntries(menu,table)
 			
-		
-		#@<< Create the menu table >>
-		#@+node:1::<< Create the menu table >>
-		#@+body
+		#@	<< Create the menu table >>
+		#@+node:<< Create the menu table >>
 		table = (
 			("&Read @file Nodes",None,frame.OnReadAtFileNodes),
 			("&Write @file Nodes",None,frame.OnWriteAtFileNodes),
@@ -1698,24 +1562,21 @@ class baseLeoTree:
 			("&Sort Siblings","Alt-A",frame.OnSortSiblings),
 			("-",None,None),
 			("Contract Parent","Alt+0",frame.OnContractParent))
-		#@-body
-		#@-node:1::<< Create the menu table >>
-
+		#@nonl
+		#@-node:<< Create the menu table >>
+		#@nl
 		frame.createMenuEntries(menu,table)
-	#@-body
-	#@-node:2::createPopupMenu
-	#@+node:3::enablePopupMenuItems
-	#@+body
+	#@nonl
+	#@-node:createPopupMenu
+	#@+node:enablePopupMenuItems
 	def enablePopupMenuItems (self,v,event):
 		
 		"""Enable and disable items in the popup menu."""
 		
 		c = self.commands ; menu = self.popupMenu
 	
-		
-		#@<< set isAtRoot and isAtFile if v's tree contains @root or @file nodes >>
-		#@+node:1::<< set isAtRoot and isAtFile if v's tree contains @root or @file nodes >>
-		#@+body
+		#@	<< set isAtRoot and isAtFile if v's tree contains @root or @file nodes >>
+		#@+node:<< set isAtRoot and isAtFile if v's tree contains @root or @file nodes >>
 		isAtFile = false ; isAtRoot = false
 		v2 = v ; next = v.nodeAfterTree()
 		
@@ -1731,9 +1592,9 @@ class baseLeoTree:
 			if isRoot:
 				isAtRoot = true
 			v2 = v2.threadNext()
-		#@-body
-		#@-node:1::<< set isAtRoot and isAtFile if v's tree contains @root or @file nodes >>
-
+		#@nonl
+		#@-node:<< set isAtRoot and isAtFile if v's tree contains @root or @file nodes >>
+		#@nl
 		isAtFile = choose(isAtFile,1,0)
 		isAtRoot = choose(isAtRoot,1,0)
 		canContract = v.parent() != None
@@ -1750,10 +1611,9 @@ class baseLeoTree:
 		enableMenu(menu,"Sort Children",c.canSortChildren())
 		enableMenu(menu,"Sort Siblings",c.canSortSiblings())
 		enableMenu(menu,"Contract Parent",c.canContractParent())
-	#@-body
-	#@-node:3::enablePopupMenuItems
-	#@+node:4::showPopupMenu
-	#@+body
+	#@nonl
+	#@-node:enablePopupMenuItems
+	#@+node:showPopupMenu
 	def showPopupMenu (self,v,event):
 		
 		"""Show a popup menu."""
@@ -1768,13 +1628,9 @@ class baseLeoTree:
 		# Make certain we have focus so we know when we lose it.
 		# I think this is OK for all OSes.
 		set_focus(c,menu)
-	#@-body
-	#@-node:4::showPopupMenu
-	#@-node:13::tree.OnPopup & allies
-	#@-node:6::Event handers (tree)
-	#@+node:7::Incremental drawing
-	#@+node:1::allocateNodes
-	#@+body
+	#@nonl
+	#@-node:showPopupMenu
+	#@+node:allocateNodes
 	def allocateNodes(self,where,lines):
 		
 		"""Allocate Tk widgets in nodes that will become visible as the result of an upcoming scroll"""
@@ -1799,11 +1655,8 @@ class baseLeoTree:
 		self.updatedNodeCount = 0
 		self.updateTree(self.rootVnode,root_left,root_top,0,0)
 		# if self.updatedNodeCount: print "updatedNodeCount:", self.updatedNodeCount
-	
-	#@-body
-	#@-node:1::allocateNodes
-	#@+node:2::allocateNodesBeforeScrolling
-	#@+body
+	#@-node:allocateNodes
+	#@+node:allocateNodesBeforeScrolling
 	def allocateNodesBeforeScrolling (self, args):
 		
 		"""Calculate the nodes that will become visible as the result of an upcoming scroll.
@@ -1831,10 +1684,9 @@ class baseLeoTree:
 			where = choose(n == 1,"below","above")
 			lines = choose(args[2] == "pages",linesPerPage,lines)
 			self.allocateNodes(where=where,lines=lines)
-	#@-body
-	#@-node:2::allocateNodesBeforeScrolling
-	#@+node:3::updateNode
-	#@+body
+	#@nonl
+	#@-node:allocateNodesBeforeScrolling
+	#@+node:updateNode
 	def updateNode (self,v,x,y):
 		
 		"""Draw a node that may have become visible as a result of a scrolling operation"""
@@ -1847,20 +1699,18 @@ class baseLeoTree:
 				return self.line_height
 	
 		return self.line_height
-	#@-body
-	#@-node:3::updateNode
-	#@+node:4::setVisibleAreaToFullCanvas
-	#@+body
+	#@nonl
+	#@-node:updateNode
+	#@+node:setVisibleAreaToFullCanvas
 	def setVisibleAreaToFullCanvas(self):
 		
 		if self.visibleArea:
 			y1,y2 = self.visibleArea
 			y2 = max(y2,y1 + self.canvas.winfo_height())
 			self.visibleArea = y1,y2
-	#@-body
-	#@-node:4::setVisibleAreaToFullCanvas
-	#@+node:5::setVisibleArea
-	#@+body
+	#@nonl
+	#@-node:setVisibleAreaToFullCanvas
+	#@+node:setVisibleArea
 	def setVisibleArea (self,args):
 	
 		r1,r2 = args
@@ -1882,11 +1732,8 @@ class baseLeoTree:
 		vy2 = y1 + (scroll_h*r2)
 		self.visibleArea = vy1,vy2
 		# print "setVisibleArea: %5.1f %5.1f" % (vy1,vy2)
-	
-	#@-body
-	#@-node:5::setVisibleArea
-	#@+node:6::tree.updateTree
-	#@+body
+	#@-node:setVisibleArea
+	#@+node:tree.updateTree
 	def updateTree (self,v,x,y,h,level):
 	
 		yfirst = ylast = y
@@ -1899,13 +1746,8 @@ class baseLeoTree:
 				y = self.updateTree(v.firstChild(),x+child_indent,y,h,level+1)
 			v = v.next()
 		return y
-	
-	#@-body
-	#@-node:6::tree.updateTree
-	#@-node:7::Incremental drawing
-	#@+node:8::Selecting & editing (tree)
-	#@+node:1::abortEditLabelCommand
-	#@+body
+	#@-node:tree.updateTree
+	#@+node:abortEditLabelCommand
 	def abortEditLabelCommand (self):
 		
 		v = self.currentVnode
@@ -1921,10 +1763,9 @@ class baseLeoTree:
 			if v and len(v.t.joinList) > 0:
 				# 3/26/03: changed redraw_now to force_redraw.
 				self.force_redraw() # force a redraw of joined headlines.
-	#@-body
-	#@-node:1::abortEditLabelCommand
-	#@+node:2::dimEditLabel, undimEditLabel
-	#@+body
+	#@nonl
+	#@-node:abortEditLabelCommand
+	#@+node:dimEditLabel, undimEditLabel
 	# Convenience methods so the caller doesn't have to know the present edit node.
 	
 	def dimEditLabel (self):
@@ -1936,10 +1777,9 @@ class baseLeoTree:
 	
 		v = self.currentVnode
 		self.setSelectedLabelState(v)
-	#@-body
-	#@-node:2::dimEditLabel, undimEditLabel
-	#@+node:3::editLabel
-	#@+body
+	#@nonl
+	#@-node:dimEditLabel, undimEditLabel
+	#@+node:editLabel
 	# Start editing v.edit_text()
 	
 	def editLabel (self, v):
@@ -1956,10 +1796,9 @@ class baseLeoTree:
 			# trace(`v`)
 			self.setNormalLabelState(v)
 			self.revertHeadline = v.headString()
-	#@-body
-	#@-node:3::editLabel
-	#@+node:4::endEditLabel & endEditLabelCommand
-	#@+body
+	#@nonl
+	#@-node:editLabel
+	#@+node:endEditLabel & endEditLabelCommand
 	# End editing for self.editText
 	
 	def endEditLabel (self):
@@ -1984,10 +1823,9 @@ class baseLeoTree:
 			# 3/26/03: changed redraw_now to force_redraw.
 			self.force_redraw() # force a redraw of joined headlines.
 		set_focus(c,c.body) # 10/14/02
-	#@-body
-	#@-node:4::endEditLabel & endEditLabelCommand
-	#@+node:5::tree.expandAllAncestors
-	#@+body
+	#@nonl
+	#@-node:endEditLabel & endEditLabelCommand
+	#@+node:tree.expandAllAncestors
 	def expandAllAncestors (self,v):
 	
 		redraw_flag = false
@@ -1998,10 +1836,9 @@ class baseLeoTree:
 				redraw_flag = true
 			p = p.parent()
 		return redraw_flag
-	#@-body
-	#@-node:5::tree.expandAllAncestors
-	#@+node:6::tree.scanForTabWidth
-	#@+body
+	#@nonl
+	#@-node:tree.expandAllAncestors
+	#@+node:tree.scanForTabWidth
 	# Similar to code in scanAllDirectives.
 	
 	def scanForTabWidth (self, v):
@@ -2011,36 +1848,31 @@ class baseLeoTree:
 		while v:
 			s = v.t.bodyString
 			dict = get_directives_dict(s)
-			
-			#@<< set w and break on @tabwidth >>
-			#@+node:1::<< set w and break on @tabwidth >>
-			#@+body
+			#@		<< set w and break on @tabwidth >>
+			#@+node:<< set w and break on @tabwidth >>
 			if dict.has_key("tabwidth"):
 				
 				val = scanAtTabwidthDirective(s,dict,issue_error_flag=false)
 				if val and val != 0:
 					w = val
 					break
-			#@-body
-			#@-node:1::<< set w and break on @tabwidth >>
-
+			#@nonl
+			#@-node:<< set w and break on @tabwidth >>
+			#@nl
 			v = v.parent()
 	
 		c.frame.setTabWidth(w)
-	#@-body
-	#@-node:6::tree.scanForTabWidth
-	#@+node:7::tree.select
-	#@+body
+	#@nonl
+	#@-node:tree.scanForTabWidth
+	#@+node:tree.select
 	# Warning: do not try to "optimize" this by returning if v==tree.currentVnode.
 	
 	def select (self,v,updateBeadList=true):
 		
 		# trace(v)
 	
-		
-		#@<< define vars and stop editing >>
-		#@+node:1::<< define vars and stop editing >>
-		#@+body
+		#@	<< define vars and stop editing >>
+		#@+node:<< define vars and stop editing >>
 		c = self.commands ; frame = c.frame ; body = frame.body
 		old_v = c.currentVnode()
 		
@@ -2048,15 +1880,13 @@ class baseLeoTree:
 		self.endEditLabel()
 		old = self.currentVnode
 		self.setUnselectedLabelState(old)
-		#@-body
-		#@-node:1::<< define vars and stop editing >>
-
+		#@nonl
+		#@-node:<< define vars and stop editing >>
+		#@nl
 	
 		if not doHook("unselect1",c=c,new_v=v,old_v=old_v):
-			
-			#@<< unselect the old node >>
-			#@+node:2::<< unselect the old node >>
-			#@+body
+			#@		<< unselect the old node >>
+			#@+node:<< unselect the old node >>
 			# Remember the position of the scrollbar before making any changes.
 			yview=body.yview()
 			insertSpot = c.body.index("insert")
@@ -2067,19 +1897,15 @@ class baseLeoTree:
 			if old and old != v and old.edit_text():
 				old.t.scrollBarSpot = yview
 				old.t.insertSpot = insertSpot
-			
-			#@-body
-			#@-node:2::<< unselect the old node >>
-
+			#@-node:<< unselect the old node >>
+			#@nl
 		else: old_body = u""
 	
 		doHook("unselect2",c=c,new_v=v,old_v=old_v)
 		
 		if not doHook("select1",c=c,new_v=v,old_v=old_v):
-			
-			#@<< select the new node >>
-			#@+node:3::<< select the new node >>
-			#@+body
+			#@		<< select the new node >>
+			#@+node:<< select the new node >>
 			frame.setWrap(v)
 			
 			# Delete only if necessary: this may reduce flicker slightly.
@@ -2102,17 +1928,15 @@ class baseLeoTree:
 				c.body.see(v.t.insertSpot)
 			else:
 				c.body.mark_set("insert","1.0")
-			#@-body
-			#@-node:3::<< select the new node >>
-
+			#@nonl
+			#@-node:<< select the new node >>
+			#@nl
 			if v and v != old_v: # 3/26/03: Suppress duplicate call.
 				try: # may fail during initialization
 					self.idle_scrollTo(v)
 				except: pass
-			
-			#@<< update c.beadList or c.beadPointer >>
-			#@+node:4::<< update c.beadList or c.beadPointer >>
-			#@+body
+			#@		<< update c.beadList or c.beadPointer >>
+			#@+node:<< update c.beadList or c.beadPointer >>
 			if updateBeadList:
 				if c.beadPointer > -1:
 					present_v = c.beadList[c.beadPointer]
@@ -2125,49 +1949,36 @@ class baseLeoTree:
 					c.beadPointer += 1
 					c.beadList[c.beadPointer:] = []
 					c.beadList.append(v)
-			
-			#@-body
-			#@-node:4::<< update c.beadList or c.beadPointer >>
-
-			
-			#@<< update c.visitedList >>
-			#@+node:5::<< update c.visitedList >>
-			#@+body
+			#@-node:<< update c.beadList or c.beadPointer >>
+			#@nl
+			#@		<< update c.visitedList >>
+			#@+node:<< update c.visitedList >>
 			# Make v the most recently visited node on the list.
 			if v in c.visitedList:
 				c.visitedList.remove(v)
 				
 			c.visitedList.insert(0,v)
-			#@-body
-			#@-node:5::<< update c.visitedList >>
-
+			#@nonl
+			#@-node:<< update c.visitedList >>
+			#@nl
 	
-		
-		#@<< set the current node and redraw >>
-		#@+node:6::<< set the current node and redraw >>
-		#@+body
+		#@	<< set the current node and redraw >>
+		#@+node:<< set the current node and redraw >>
 		self.currentVnode = v
 		self.setSelectedLabelState(v)
 		self.scanForTabWidth(v) # 9/13/02 #GS I believe this should also get into the select1 hook
 		set_focus(c,c.body)
-		
-		#@-body
-		#@-node:6::<< set the current node and redraw >>
-
+		#@-node:<< set the current node and redraw >>
+		#@nl
 		doHook("select2",c=c,new_v=v,old_v=old_v)
 		doHook("select3",c=c,new_v=v,old_v=old_v)
-	
-	#@-body
-	#@-node:7::tree.select
-	#@+node:8::tree.set...LabelState
-	#@+body
+	#@-node:tree.select
+	#@+node:tree.set...LabelState
 	def setNormalLabelState (self,v): # selected, editing
 		if v and v.edit_text():
 			# trace(v)
-			
-			#@<< set editing headline colors >>
-			#@+node:1::<< set editing headline colors >>
-			#@+body
+			#@		<< set editing headline colors >>
+			#@+node:<< set editing headline colors >>
 			config = app().config
 			fg   = config.getWindowPref("headline_text_editing_foreground_color")
 			bg   = config.getWindowPref("headline_text_editing_background_color")
@@ -2187,9 +1998,9 @@ class baseLeoTree:
 						state="normal",highlightthickness=1,fg=fg,bg=bg)
 			except:
 				es_exception()
-			#@-body
-			#@-node:1::<< set editing headline colors >>
-
+			#@nonl
+			#@-node:<< set editing headline colors >>
+			#@nl
 			v.edit_text().tag_remove("sel","1.0","end")
 			v.edit_text().tag_add("sel","1.0","end")
 			set_focus(self.commands,v.edit_text())
@@ -2197,10 +2008,8 @@ class baseLeoTree:
 	def setDisabledLabelState (self,v): # selected, disabled
 		if v and v.edit_text():
 			# trace(v)
-			
-			#@<< set selected, disabled headline colors >>
-			#@+node:2::<< set selected, disabled headline colors >>
-			#@+body
+			#@		<< set selected, disabled headline colors >>
+			#@+node:<< set selected, disabled headline colors >>
 			config = app().config
 			fg = config.getWindowPref("headline_text_selected_foreground_color")
 			bg = config.getWindowPref("headline_text_selected_background_color")
@@ -2213,9 +2022,9 @@ class baseLeoTree:
 					state="disabled",highlightthickness=0,fg=fg,bg=bg)
 			except:
 				es_exception()
-			#@-body
-			#@-node:2::<< set selected, disabled headline colors >>
-
+			#@nonl
+			#@-node:<< set selected, disabled headline colors >>
+			#@nl
 	
 	def setSelectedLabelState (self,v): # selected, not editing
 		self.setDisabledLabelState(v)
@@ -2223,10 +2032,8 @@ class baseLeoTree:
 	def setUnselectedLabelState (self,v): # not selected.
 		if v and v.edit_text():
 			# trace(v)
-			
-			#@<< set unselected headline colors >>
-			#@+node:3::<< set unselected headline colors >>
-			#@+body
+			#@		<< set unselected headline colors >>
+			#@+node:<< set unselected headline colors >>
 			config = app().config
 			fg = config.getWindowPref("headline_text_unselected_foreground_color")
 			bg = config.getWindowPref("headline_text_unselected_background_color")
@@ -2239,13 +2046,12 @@ class baseLeoTree:
 					state="disabled",highlightthickness=0,fg=fg,bg=bg)
 			except:
 				es_exception()
-			#@-body
-			#@-node:3::<< set unselected headline colors >>
-	#@-body
-	#@-node:8::tree.set...LabelState
-	#@-node:8::Selecting & editing (tree)
-	#@+node:9::tree.moveUpDown
-	#@+body
+			#@nonl
+			#@-node:<< set unselected headline colors >>
+			#@nl
+	#@nonl
+	#@-node:tree.set...LabelState
+	#@+node:tree.moveUpDown
 	def OnUpKey   (self,event=None): return self.moveUpDown("up")
 	def OnDownKey (self,event=None): return self.moveUpDown("down")
 	
@@ -2279,14 +2085,13 @@ class baseLeoTree:
 		# trace("result:",result)
 		# trace("insert:",body.index("insert"))
 		return "break" # Inhibit further bindings.
-	#@-body
-	#@-node:9::tree.moveUpDown
+	#@nonl
+	#@-node:tree.moveUpDown
 	#@-others
-
 	
 class leoTree (baseLeoTree):
 	"""A class that draws and handles events in an outline."""
 	pass
-#@-body
-#@-node:0::@file leoTree.py
+#@nonl
+#@-node:@file leoTree.py
 #@-leo

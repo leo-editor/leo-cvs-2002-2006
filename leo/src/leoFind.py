@@ -1,15 +1,13 @@
-#@+leo
-#@+node:0::@file leoFind.py
-#@+body
+#@+leo-ver=4
+#@+node:@file leoFind.py
 #@@language python
 
-
 #@<< Theory of operation of find/change >>
-#@+node:1::<< Theory of operation of find/change >>
-#@+body
-#@+at
-#  The find and change commands are tricky; there are many details that must 
-# be handled properly. This documentation describes the leo.py code. Previous 
+#@+node:<< Theory of operation of find/change >>
+#@+at 
+#@nonl
+# The find and change commands are tricky; there are many details that must be 
+# handled properly. This documentation describes the leo.py code. Previous 
 # versions of Leo used an inferior scheme.  The following principles govern 
 # the leoFind class:
 # 
@@ -50,51 +48,42 @@
 # the range of text to be searched. Searching headline and body text 
 # simultaneously is complicated. The selectNextVnode() method handles the many 
 # details involved by setting self.s_text and its insert and sel attributes.
-
 #@-at
-#@-body
-#@-node:1::<< Theory of operation of find/change >>
-
+#@-node:<< Theory of operation of find/change >>
+#@nl
 
 from leoGlobals import *
 import leoDialog
 import string,sys,Tkinter,types
 Tk=Tkinter
 
-
 #@+others
-#@+node:2::class leoFindBase
-#@+body
+#@+node:class leoFindBase
 class leoFindBase (leoDialog.leoDialog):
 	"""The base class for Leo's Find panel."""
-
-	#@+others
-	#@+node:1::findBase.__init__
-	#@+body
+	#@	@+others
+	#@+node:findBase.__init__
 	def __init__(self,title,resizeable=false):
 	
 		leoDialog.leoDialog.__init__(self,title,resizeable)
 		self.createTopFrame()
 		self.top.protocol("WM_DELETE_WINDOW", self.onCloseWindow)
-	#@-body
-	#@-node:1::findBase.__init__
-	#@+node:2::onCloseWindow
-	#@+body
+	#@nonl
+	#@-node:findBase.__init__
+	#@+node:onCloseWindow
 	def onCloseWindow(self):
 	
 		self.top.withdraw()
-	#@-body
-	#@-node:2::onCloseWindow
-	#@+node:3::resetWrap
-	#@+body
+	#@nonl
+	#@-node:onCloseWindow
+	#@+node:resetWrap
 	def resetWrap (self,event=None):
 	
 		self.wrapVnode = None
 		self.onlyVnode = None
-	#@-body
-	#@-node:3::resetWrap
-	#@+node:4::OnReturnKey (no longer used)
-	#@+body
+	#@nonl
+	#@-node:resetWrap
+	#@+node:OnReturnKey (no longer used)
 	def OnReturnKey (self,event):
 		
 		# Remove the newly inserted newline from the search & change strings.
@@ -106,27 +95,22 @@ class leoFindBase (leoDialog.leoDialog):
 		# Do the default command.
 		self.findNextCommand(top())
 		return "break"
-	#@-body
-	#@-node:4::OnReturnKey (no longer used)
+	#@nonl
+	#@-node:OnReturnKey (no longer used)
 	#@-others
-#@-body
-#@-node:2::class leoFindBase
-#@+node:3::class leoFind
-#@+body
+#@nonl
+#@-node:class leoFindBase
+#@+node:class leoFind
 class leoFind (leoFindBase):
 	"""A class that implements Leo's find commands."""
-
-	#@+others
-	#@+node:1::find.__init__ (creates find panel)
-	#@+body
+	#@	@+others
+	#@+node:find.__init__ (creates find panel)
 	def __init__(self):
 		
 		leoFindBase.__init__(self,"Leo Find/Change",resizeable=false)
 	
-		
-		#@<< Initialize the leoFind ivars >>
-		#@+node:1::<< Initialize the leoFind ivars >>
-		#@+body
+		#@	<< Initialize the leoFind ivars >>
+		#@+node:<< Initialize the leoFind ivars >>
 		self.dict = {}
 		
 		# Order is important for compatibility with 3.x.  Sheesh.
@@ -155,38 +139,34 @@ class leoFind (leoFindBase):
 		self.wrapping = false # true: wrapping is enabled. _not_ the same as c.wrap_flag for batch searches.
 		self.s_text = Tk.Text() # Used by find.search()
 		
-
-		#@+at
-		#  Initializing a wrapped search is tricky.  The search() method will 
+		#@+at 
+		#@nonl
+		# Initializing a wrapped search is tricky.  The search() method will 
 		# fail if v==wrapVnode and pos >= wrapPos.  selectNextVnode() will 
 		# fail if v == wrapVnode.  We set wrapPos on entry, before the first 
 		# search.  We set wrapVnode in selectNextVnode after the first search 
 		# fails.  We also set wrapVnode on exit if the first search suceeds.
-
 		#@-at
 		#@@c
 		self.wrapVnode = None # The start of wrapped searches: persists between calls.
 		self.onlyVnode = None # The starting node for suboutline-only searches.
 		self.wrapPos = None # The starting position of the wrapped search: persists between calls.
-		#@-body
-		#@-node:1::<< Initialize the leoFind ivars >>
-
+		#@nonl
+		#@-node:<< Initialize the leoFind ivars >>
+		#@nl
 		
 		self.createFrame()
-	#@-body
-	#@-node:1::find.__init__ (creates find panel)
-	#@+node:2::find.createFrame
-	#@+body
+	#@nonl
+	#@-node:find.__init__ (creates find panel)
+	#@+node:find.createFrame
 	def createFrame (self):
 		
 		# Create the find panel...
 		outer = Tk.Frame(self.frame,relief="groove",bd=2)
 		outer.pack(padx=2,pady=2)
 	
-		
-		#@<< Create the Find and Change panes >>
-		#@+node:2::<< Create the Find and Change panes >>
-		#@+body
+		#@	<< Create the Find and Change panes >>
+		#@+node:<< Create the Find and Change panes >>
 		fc = Tk.Frame(outer, bd="1m")
 		fc.pack(anchor="n", fill="x", expand=1)
 		
@@ -218,13 +198,11 @@ class leoFind (leoFindBase):
 		clab.pack(side="left")
 		ctxt.pack(side="right", expand=1, fill="both")
 		ftxt.pack(side="right", expand=1, fill="both")
-		#@-body
-		#@-node:2::<< Create the Find and Change panes >>
-
-		
-		#@<< Create four columns of radio and checkboxes >>
-		#@+node:1::<< Create four columns of radio and checkboxes >>
-		#@+body
+		#@nonl
+		#@-node:<< Create the Find and Change panes >>
+		#@nl
+		#@	<< Create four columns of radio and checkboxes >>
+		#@+node:<< Create four columns of radio and checkboxes >>
 		columnsFrame = Tk.Frame(outer,relief="groove",bd=2)
 		columnsFrame.pack(anchor="e",expand=1,padx="7m",pady="2m") # Don't fill.
 		
@@ -272,13 +250,11 @@ class leoFind (leoFindBase):
 				box.pack(fill="x")
 				box.bind("<1>", self.resetWrap)
 				if var == None: box.configure(state="disabled")
-		#@-body
-		#@-node:1::<< Create four columns of radio and checkboxes >>
-
-		
-		#@<< Create two rows of buttons >>
-		#@+node:3::<< Create two rows of buttons >>
-		#@+body
+		#@nonl
+		#@-node:<< Create four columns of radio and checkboxes >>
+		#@nl
+		#@	<< Create two rows of buttons >>
+		#@+node:<< Create two rows of buttons >>
 		# Create the button panes
 		buttons  = Tk.Frame(outer,bd=1)
 		buttons2 = Tk.Frame(outer,bd=1)
@@ -302,19 +278,16 @@ class leoFind (leoFindBase):
 		changeButton.pack    (pady="1m",padx="25m",side="left")
 		changeFindButton.pack(pady="1m",          side="left",expand=1)
 		changeAllButton.pack (pady="1m",padx="25m",side="right")
-		#@-body
-		#@-node:3::<< Create two rows of buttons >>
-
+		#@nonl
+		#@-node:<< Create two rows of buttons >>
+		#@nl
 		
 		self.find_text.bind  ("<1>", self.resetWrap)
 		self.change_text.bind("<1>", self.resetWrap)
 		self.find_text.bind  ("<Key>", self.resetWrap)
 		self.change_text.bind("<Key>", self.resetWrap)
-	
-	#@-body
-	#@-node:2::find.createFrame
-	#@+node:3::find.init
-	#@+body
+	#@-node:find.createFrame
+	#@+node:find.init
 	def init (self,c):
 	
 		# N.B.: separate c.ivars are much more convenient than a dict.
@@ -323,18 +296,16 @@ class leoFind (leoFindBase):
 			self.dict[key].set(val)
 			# trace(key,val)
 	
-		
-		#@<< set widgets >>
-		#@+node:1::<< set widgets >>
-		#@+body
+		#@	<< set widgets >>
+		#@+node:<< set widgets >>
 		self.find_text.delete("1.0","end")
 		self.find_text.insert("end",c.find_text)
 		
 		self.change_text.delete("1.0","end")
 		self.change_text.insert("end",c.change_text)
-		#@-body
-		#@-node:1::<< set widgets >>
-
+		#@nonl
+		#@-node:<< set widgets >>
+		#@nl
 		
 		# Set radio buttons from ivars.
 		val = self.dict["pattern_match"].get()
@@ -344,10 +315,9 @@ class leoFind (leoFindBase):
 		val = self.dict["suboutline_only"].get()
 		self.dict["radio-search-scope"].set(
 			choose(val,"suboutline-only","entire-outine"))
-	#@-body
-	#@-node:3::find.init
-	#@+node:4::find.set_ivars
-	#@+body
+	#@nonl
+	#@-node:find.init
+	#@+node:find.set_ivars
 	def set_ivars (self,c):
 		
 		# N.B.: separate c.ivars are much more convenient than a dict.
@@ -367,22 +337,19 @@ class leoFind (leoFindBase):
 		s = self.change_text.get("1.0","end - 1c") # Remove trailing newline
 		s = toUnicode(s,app().tkEncoding) # 2/25/03
 		c.change_text = s
-	#@-body
-	#@-node:4::find.set_ivars
-	#@+node:5::Top Level Commands
-	#@+node:1::changeButton
-	#@+body
-
+	#@nonl
+	#@-node:find.set_ivars
+	#@+node:changeButton
+	
 	# The user has pushed the "Change" button from the find panel.
 	
 	def changeButton(self):
 	
 		self.setup_button()
 		self.change()
-	#@-body
-	#@-node:1::changeButton
-	#@+node:2::changeAllButton
-	#@+body
+	#@nonl
+	#@-node:changeButton
+	#@+node:changeAllButton
 	# The user has pushed the "Change All" button from the find panel.
 	
 	def changeAllButton(self):
@@ -390,30 +357,27 @@ class leoFind (leoFindBase):
 		c = self.setup_button()
 		c.clearAllVisited() # Clear visited for context reporting.
 		self.changeAll()
-	#@-body
-	#@-node:2::changeAllButton
-	#@+node:3::changeThenFindButton
-	#@+body
+	#@nonl
+	#@-node:changeAllButton
+	#@+node:changeThenFindButton
 	# The user has pushed the "Change Then Find" button from the find panel.
 	
 	def changeThenFindButton(self):
 	
 		self.setup_button()
 		self.changeThenFind()
-	#@-body
-	#@-node:3::changeThenFindButton
-	#@+node:4::findButton
-	#@+body
+	#@nonl
+	#@-node:changeThenFindButton
+	#@+node:findButton
 	# The user has pushed the "Find" button from the find panel.
 	
 	def findButton(self):
 	
 		self.setup_button()
 		self.findNext()
-	#@-body
-	#@-node:4::findButton
-	#@+node:5::findAllButton
-	#@+body
+	#@nonl
+	#@-node:findButton
+	#@+node:findAllButton
 	# The user has pushed the "Find All" button from the find panel.
 	
 	def findAllButton(self):
@@ -421,40 +385,36 @@ class leoFind (leoFindBase):
 		c = self.setup_button()
 		c.clearAllVisited() # Clear visited for context reporting.
 		self.findAll()
-	#@-body
-	#@-node:5::findAllButton
-	#@+node:6::changeCommand
-	#@+body
+	#@nonl
+	#@-node:findAllButton
+	#@+node:changeCommand
 	# The user has selected the "Replace" menu item.
 	
 	def changeCommand(self,c):
 	
 		self.setup_command(c)
 		self.change()
-	#@-body
-	#@-node:6::changeCommand
-	#@+node:7::changeThenFindCommandd
-	#@+body
+	#@nonl
+	#@-node:changeCommand
+	#@+node:changeThenFindCommandd
 	# The user has pushed the "Change Then Find" button from the Find menu.
 	
 	def changeThenFindCommand(self,c):
 	
 		self.setup_command(c)
 		self.changeThenFind()
-	#@-body
-	#@-node:7::changeThenFindCommandd
-	#@+node:8::findNextCommand
-	#@+body
+	#@nonl
+	#@-node:changeThenFindCommandd
+	#@+node:findNextCommand
 	# The user has selected the "Find Next" menu item.
 	
 	def findNextCommand(self,c):
 	
 		self.setup_command(c)
 		self.findNext()
-	#@-body
-	#@-node:8::findNextCommand
-	#@+node:9::fndPreviousCommand
-	#@+body
+	#@nonl
+	#@-node:findNextCommand
+	#@+node:fndPreviousCommand
 	# The user has selected the "Find Previous" menu item.
 	
 	def findPreviousCommand(self,c):
@@ -463,10 +423,9 @@ class leoFind (leoFindBase):
 		c.reverse_flag = not c.reverse_flag
 		self.findNext()
 		c.reverse_flag = not c.reverse_flag
-	#@-body
-	#@-node:9::fndPreviousCommand
-	#@+node:10::setup_button
-	#@+body
+	#@nonl
+	#@-node:fndPreviousCommand
+	#@+node:setup_button
 	# Initializes a search when a button is pressed in the Find panel.
 	
 	def setup_button(self):
@@ -479,10 +438,9 @@ class leoFind (leoFindBase):
 			c.endEditing()
 		c.setIvarsFromFind()
 		return c
-	#@-body
-	#@-node:10::setup_button
-	#@+node:11::setup_command
-	#@+body
+	#@nonl
+	#@-node:setup_button
+	#@+node:setup_command
 	# Initializes a search when a command is invoked from the menu.
 	
 	def setup_command(self,c):
@@ -492,24 +450,21 @@ class leoFind (leoFindBase):
 		if 0: # We _must_ retain the editing status for incremental searches!
 			c.endEditing()
 		c.setIvarsFromFind()
-	#@-body
-	#@-node:11::setup_command
-	#@-node:5::Top Level Commands
-	#@+node:6::Utilities
-	#@+node:1::batchChange
-	#@+body
-	#@+at
-	#  This routine performs a single batch change operation, updating the 
-	# head or body string of v and leaving the result in s_text.  We update 
-	# the c.body if we are changing the body text of c.currentVnode().
+	#@nonl
+	#@-node:setup_command
+	#@+node:batchChange
+	#@+at 
+	#@nonl
+	# This routine performs a single batch change operation, updating the head 
+	# or body string of v and leaving the result in s_text.  We update the 
+	# c.body if we are changing the body text of c.currentVnode().
 	# 
 	# s_text contains the found text on entry and contains the changed text on 
 	# exit.  pos and pos2 indicate the selection.  The selection will never be 
 	# empty. NB: we can not assume that self.v is visible.
-
 	#@-at
 	#@@c
-
+	
 	def batchChange (self,pos1,pos2,count):
 	
 		c = self.commands ; v = self.v ; st = self.s_text
@@ -527,34 +482,30 @@ class leoFind (leoFindBase):
 		# trace("result:" + `insert` + ", " + `s`)
 		# Update the node
 		if self.in_headline:
-			
-			#@<< set the undo head params >>
-			#@+node:1::<< set the undo head params >>
-			#@+body
+			#@		<< set the undo head params >>
+			#@+node:<< set the undo head params >>
 			sel = None
 			if len(s) > 0 and s[-1]=='\n': s = s[:-1]
 			if s != v.headString():
 				if count == 1:
 					c.undoer.setUndoParams("Change All",v) # Tag the start of the Change all.
 				c.undoer.setUndoTypingParams(v,"Change Headline",v.bodyString(),s,sel,sel)
-			#@-body
-			#@-node:1::<< set the undo head params >>
-
+			#@nonl
+			#@-node:<< set the undo head params >>
+			#@nl
 			v.initHeadString(s)
 		else:
-			
-			#@<< set the undo body typing params >>
-			#@+node:2::<< set the undo body typing params >>
-			#@+body
+			#@		<< set the undo body typing params >>
+			#@+node:<< set the undo body typing params >>
 			sel = c.body.index("insert")
 			if len(s) > 0 and s[-1]=='\n': s = s[:-1]
 			if s != v.bodyString():
 				if count == 1:
 					c.undoer.setUndoParams("Change All",v) # Tag the start of the Change all.
 				c.undoer.setUndoTypingParams(v,"Change",v.bodyString(),s,sel,sel)
-			#@-body
-			#@-node:2::<< set the undo body typing params >>
-
+			#@nonl
+			#@-node:<< set the undo body typing params >>
+			#@nl
 			v.setBodyStringOrPane(s)
 		# Set mark, changed and dirty bits.
 		if c.mark_changes_flag:
@@ -562,19 +513,17 @@ class leoFind (leoFindBase):
 		if not c.isChanged():
 			c.setChanged(true)
 		v.setDirty()
-	#@-body
-	#@-node:1::batchChange
-	#@+node:2::change
-	#@+body
+	#@nonl
+	#@-node:batchChange
+	#@+node:change
 	def change(self):
 	
 		if self.checkArgs():
 			self.initInHeadline()
 			self.changeSelection()
-	#@-body
-	#@-node:2::change
-	#@+node:3::changeAll
-	#@+body
+	#@nonl
+	#@-node:change
+	#@+node:changeAll
 	def changeAll(self):
 	
 		c = self.commands ; st = self.s_text
@@ -603,10 +552,9 @@ class leoFind (leoFindBase):
 			c.undoer.setUndoParams("Change All",v)
 		es("changed: " + `count`)
 		self.restore(data)
-	#@-body
-	#@-node:3::changeAll
-	#@+node:4::changeSelection
-	#@+body
+	#@nonl
+	#@-node:changeAll
+	#@+node:changeSelection
 	# Replace selection with c.change_text.
 	# If no selection, insert c.change_text at the cursor.
 	
@@ -648,10 +596,9 @@ class leoFind (leoFindBase):
 		c.endUpdate(false) # No redraws here: they would destroy the headline selection.
 		# trace(c.body.index("insert")+":"+c.body.get("insert linestart","insert lineend"))
 		return true
-	#@-body
-	#@-node:4::changeSelection
-	#@+node:5::changeThenFind
-	#@+body
+	#@nonl
+	#@-node:changeSelection
+	#@+node:changeThenFind
 	def changeThenFind(self):
 	
 		if not self.checkArgs():
@@ -660,10 +607,9 @@ class leoFind (leoFindBase):
 		self.initInHeadline()
 		if self.changeSelection():
 			self.findNext(false) # don't reinitialize
-	#@-body
-	#@-node:5::changeThenFind
-	#@+node:6::findAll
-	#@+body
+	#@nonl
+	#@-node:changeThenFind
+	#@+node:findAll
 	def findAll(self):
 	
 		c = self.commands ; st = self.s_text
@@ -684,10 +630,9 @@ class leoFind (leoFindBase):
 		c.endUpdate()
 		es("found: " + `count`)
 		self.restore(data)
-	#@-body
-	#@-node:6::findAll
-	#@+node:7::findNext
-	#@+body
+	#@nonl
+	#@-node:findAll
+	#@+node:findNext
 	def findNext(self,initFlag = true):
 	
 		c = self.commands
@@ -713,10 +658,9 @@ class leoFind (leoFindBase):
 			else:
 				es("not found: " + "'" + c.find_text + "'")
 			self.restore(data)
-	#@-body
-	#@-node:7::findNext
-	#@+node:8::findNextMatch
-	#@+body
+	#@nonl
+	#@-node:findNext
+	#@+node:findNextMatch
 	# Resumes the search where it left off.
 	# The caller must call set_first_incremental_search or set_first_batch_search.
 	
@@ -744,10 +688,9 @@ class leoFind (leoFindBase):
 			else:
 				v = self.v = self.selectNextVnode()
 		return None, None
-	#@-body
-	#@-node:8::findNextMatch
-	#@+node:9::selectNextVnode
-	#@+body
+	#@nonl
+	#@-node:findNextMatch
+	#@+node:selectNextVnode
 	# Selects the next node to be searched.
 	
 	def selectNextVnode(self):
@@ -801,19 +744,18 @@ class leoFind (leoFindBase):
 			self.in_headline = c.search_headline_flag
 			self.initNextText()
 		return v
-	#@-body
-	#@-node:9::selectNextVnode
-	#@+node:10::search
-	#@+body
-	#@+at
-	#  Searches the present headline or body text for c.find_text and returns 
+	#@nonl
+	#@-node:selectNextVnode
+	#@+node:search
+	#@+at 
+	#@nonl
+	# Searches the present headline or body text for c.find_text and returns 
 	# true if found.
 	# c.whole_word_flag, c.ignore_case_flag, and c.pattern_match_flag control 
 	# the search.
-
 	#@-at
 	#@@c
-
+	
 	def search (self):
 	
 		c = self.commands ; v = self.v ; t = self.s_text
@@ -829,10 +771,8 @@ class leoFind (leoFindBase):
 				return None, None
 			newpos = pos + "+" + `len(c.find_text)` + "c"
 			if c.reverse_flag and t.compare(newpos,"==",index): # 10/3/02
-				
-				#@<< search again after getting stuck going backward >>
-				#@+node:1::<< search again after getting stuck going backward >>
-				#@+body
+				#@			<< search again after getting stuck going backward >>
+				#@+node:<< search again after getting stuck going backward >>
 				# print "stuck"
 				index = newpos + "-" + `len(c.find_text)` + "c"
 				pos = t.search(c.find_text,index,
@@ -842,29 +782,25 @@ class leoFind (leoFindBase):
 				if not pos:
 					return None, None
 				newpos = pos + "+" + `len(c.find_text)` + "c"
-				#@-body
-				#@-node:1::<< search again after getting stuck going backward >>
-
+				#@nonl
+				#@-node:<< search again after getting stuck going backward >>
+				#@nl
 			# trace(`pos`+":"+`newpos`)
-			
-			#@<< return if we are passed the wrap point >>
-			#@+node:2::<< return if we are passed the wrap point >>
-			#@+body
+			#@		<< return if we are passed the wrap point >>
+			#@+node:<< return if we are passed the wrap point >>
 			if self.wrapping and self.wrapPos and self.wrapVnode and self.v == self.wrapVnode:
 				if c.reverse_flag and t.compare(pos, "<", self.wrapPos):
 					# trace("wrap done")
 					return None, None
 				if not c.reverse_flag and t.compare(newpos, ">", self.wrapPos):
 					return None, None
-			#@-body
-			#@-node:2::<< return if we are passed the wrap point >>
-
+			#@nonl
+			#@-node:<< return if we are passed the wrap point >>
+			#@nl
 			if c.whole_word_flag:
 				index = t.index(choose(c.reverse_flag,pos,newpos))
-				
-				#@<< test for whole word match >>
-				#@+node:3::<< test for whole word match >>
-				#@+body
+				#@			<< test for whole word match >>
+				#@+node:<< test for whole word match >>
 				# Set pos to None if word characters preceed or follow the selection.
 				
 				before = t.get(pos + "-1c", pos)
@@ -877,20 +813,18 @@ class leoFind (leoFindBase):
 					pos = None
 				if after  and is_c_id(after)  and last  and is_c_id(last):
 					pos = None
-				#@-body
-				#@-node:3::<< test for whole word match >>
-
+				#@nonl
+				#@-node:<< test for whole word match >>
+				#@nl
 				if not pos: continue
 			# trace("found:" + `pos` + ":" + `newpos` + ":" + `v`)
 			# set the insertion point.
 			setTextSelection(t,pos,newpos)
 			t.mark_set("insert",choose(c.reverse_flag,pos,newpos))
 			return pos, newpos
-	#@-body
-	#@-node:10::search
-	#@+node:11::Initializing & finalizing & selecting
-	#@+node:1::checkArgs
-	#@+body
+	#@nonl
+	#@-node:search
+	#@+node:checkArgs
 	def checkArgs (self):
 	
 		c = self.commands 
@@ -902,10 +836,9 @@ class leoFind (leoFindBase):
 			es("empty find patttern")
 			val = false
 		return val
-	#@-body
-	#@-node:1::checkArgs
-	#@+node:2::initBatchCommands
-	#@+body
+	#@nonl
+	#@-node:checkArgs
+	#@+node:initBatchCommands
 	# Initializes for the Find All and Change All commands.
 	
 	def initBatchCommands (self):
@@ -926,16 +859,15 @@ class leoFind (leoFindBase):
 		
 		# Set the insert point.
 		self.initBatchText()
-	#@-body
-	#@-node:2::initBatchCommands
-	#@+node:3::initBatchText & initNextText
-	#@+body
-	#@+at
-	#  Returns s_text with "insert" point set properly for batch searches.
-
+	#@nonl
+	#@-node:initBatchCommands
+	#@+node:initBatchText & initNextText
+	#@+at 
+	#@nonl
+	# Returns s_text with "insert" point set properly for batch searches.
 	#@-at
 	#@@c
-
+	
 	def initBatchText(self):
 		c = self.commands ; v = self.v ; st = self.s_text	
 		s = choose(self.in_headline,v.headString(), v.bodyString())
@@ -954,10 +886,9 @@ class leoFind (leoFindBase):
 		st.insert("end",s)
 		st.mark_set("insert",choose(c.reverse_flag,"end","1.0"))
 		return st
-	#@-body
-	#@-node:3::initBatchText & initNextText
-	#@+node:4::initInHeadline
-	#@+body
+	#@nonl
+	#@-node:initBatchText & initNextText
+	#@+node:initInHeadline
 	# Guesses which pane to start in for incremental searches and changes.
 	# This must not alter the current "insert" or "sel" marks.
 	
@@ -970,10 +901,9 @@ class leoFind (leoFindBase):
 			self.in_headline = (v == c.tree.editVnode)
 		else:
 			self.in_headline = c.search_headline_flag
-	#@-body
-	#@-node:4::initInHeadline
-	#@+node:5::initInteractiveCommands
-	#@+body
+	#@nonl
+	#@-node:initInHeadline
+	#@+node:initInteractiveCommands
 	# For incremental searches
 	
 	def initInteractiveCommands(self):
@@ -996,10 +926,9 @@ class leoFind (leoFindBase):
 		if c.wrap_flag and self.wrapVnode == None:
 			self.wrapPos = pos
 			# Do not set self.wrapVnode here: that must be done after the first search.
-	#@-body
-	#@-node:5::initInteractiveCommands
-	#@+node:6::printLine
-	#@+body
+	#@nonl
+	#@-node:initInteractiveCommands
+	#@+node:printLine
 	def printLine (self,line,allFlag=false):
 	
 		c = self.commands
@@ -1017,10 +946,9 @@ class leoFind (leoFindBase):
 			self.v.setVisited()
 		else:
 			es(line)
-	#@-body
-	#@-node:6::printLine
-	#@+node:7::restore
-	#@+body
+	#@nonl
+	#@-node:printLine
+	#@+node:restore
 	# Restores the screen after a search fails
 	
 	def restore (self,data):
@@ -1039,10 +967,9 @@ class leoFind (leoFindBase):
 			t.mark_set("insert",insert)
 			t.see("insert")
 			set_focus(c,t)
-	#@-body
-	#@-node:7::restore
-	#@+node:8::save
-	#@+body
+	#@nonl
+	#@-node:restore
+	#@+node:save
 	def save (self):
 	
 		c = self.commands ; v = self.v
@@ -1054,18 +981,17 @@ class leoFind (leoFindBase):
 		else:
 			start,end = None,None
 		return (self.in_headline,v,t,insert,start,end)
-	#@-body
-	#@-node:8::save
-	#@+node:9::showSuccess
-	#@+body
-	#@+at
-	#  This is used for displaying the final result.  It returns 
+	#@nonl
+	#@-node:save
+	#@+node:showSuccess
+	#@+at 
+	#@nonl
+	# This is used for displaying the final result.  It returns 
 	# self.dummy_vnode, v.edit_text() or c.body with "insert" and "sel" points 
 	# set properly.
-
 	#@-at
 	#@@c
-
+	
 	def showSuccess(self,pos,newpos):
 	
 		c = self.commands ; v = self.v
@@ -1093,14 +1019,12 @@ class leoFind (leoFindBase):
 		set_focus(c,t)
 		if c.wrap_flag and not self.wrapVnode:
 			self.wrapVnode = self.v
-	#@-body
-	#@-node:9::showSuccess
-	#@-node:11::Initializing & finalizing & selecting
-	#@-node:6::Utilities
+	#@nonl
+	#@-node:showSuccess
 	#@-others
-#@-body
-#@-node:3::class leoFind
+#@nonl
+#@-node:class leoFind
 #@-others
-#@-body
-#@-node:0::@file leoFind.py
+#@nonl
+#@-node:@file leoFind.py
 #@-leo

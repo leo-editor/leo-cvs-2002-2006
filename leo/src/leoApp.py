@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
-#@+leo
-#@+node:0::@file leoApp.py
-#@+body
-#@@first
+#@+leo-ver=4
+#@+node:@file leoApp.py
+#@@first # -*- coding: utf-8 -*-
 #@@language python
 
 from leoGlobals import *
@@ -15,10 +14,8 @@ class LeoApp:
 	
 	Ivars of this class are Leo's global variables."""
 	
-
-	#@+others
-	#@+node:1::app.__init__
-	#@+body
+	#@	@+others
+	#@+node:app.__init__
 	def __init__(self, root):
 	
 		# These ivars are the global vars of this program.
@@ -55,10 +52,8 @@ class LeoApp:
 		self.findFrame = None
 		self.pythonFrame = None
 		
-		
-		#@<< Define global constants >>
-		#@+node:1::<< define global constants >>
-		#@+body
+		#@	<< Define global constants >>
+		#@+node:<< define global constants >>
 		self.prolog_string = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>"
 		
 		# New in leo.py 3.0
@@ -67,14 +62,10 @@ class LeoApp:
 		
 		# leo.py 3.11
 		self.use_unicode = true # true: use new unicode logic.
-		
-		#@-body
-		#@-node:1::<< define global constants >>
-
-		
-		#@<< Define global data structures >>
-		#@+node:2::<< define global data structures >>
-		#@+body
+		#@-node:<< define global constants >>
+		#@nl
+		#@	<< Define global data structures >>
+		#@+node:<< define global data structures >>
 		# Internally, lower case is used for all language names.
 		self.language_delims_dict = {
 			"actionscript" : "// /* */", #jason 2003-07-03
@@ -119,13 +110,11 @@ class LeoApp:
 			"tex" : "tex",
 			"tcltk" : "tcl",
 			"unknown" : "txt" } # Set when @comment is seen.
-		
-		#@-body
-		#@-node:2::<< define global data structures >>
-	#@-body
-	#@-node:1::app.__init__
-	#@+node:2::app.closeLeoWindow
-	#@+body
+		#@-node:<< define global data structures >>
+		#@nl
+	#@nonl
+	#@-node:app.__init__
+	#@+node:app.closeLeoWindow
 	def closeLeoWindow (self,frame):
 		
 		"""Attempt to close a Leo window.
@@ -156,11 +145,8 @@ class LeoApp:
 			a.finishQuit()
 	
 		return true # The window has been closed.
-	
-	#@-body
-	#@-node:2::app.closeLeoWindow
-	#@+node:3::app.destroyAllGlobalWindows
-	#@+body
+	#@-node:app.closeLeoWindow
+	#@+node:app.destroyAllGlobalWindows
 	def destroyAllGlobalWindows (self):
 		
 		for w in self.globalWindows:
@@ -172,20 +158,17 @@ class LeoApp:
 		self.pythonFrame = None
 			
 		doHook("destroy-all-global-windows")
-	
-	#@-body
-	#@-node:3::app.destroyAllGlobalWindows
-	#@+node:4::app.destroyAllOpenWithFiles
-	#@+body
-	#@+at
-	#  Try to remove temp files created with the Open With command.  This may 
+	#@-node:app.destroyAllGlobalWindows
+	#@+node:app.destroyAllOpenWithFiles
+	#@+at 
+	#@nonl
+	# Try to remove temp files created with the Open With command.  This may 
 	# fail if the files are still open.
 	# 
 	# We can't use es here because the log stream no longer exists.
-
 	#@-at
 	#@@c 
-
+	
 	def destroyAllOpenWithFiles (self):
 		
 		a = self
@@ -195,10 +178,9 @@ class LeoApp:
 			
 		# Delete the list so the gc can recycle Leo windows!
 		a.openWithFiles = []
-	#@-body
-	#@-node:4::app.destroyAllOpenWithFiles
-	#@+node:5::app.destroyAllWindowObjects
-	#@+body
+	#@nonl
+	#@-node:app.destroyAllOpenWithFiles
+	#@+node:app.destroyAllWindowObjects
 	# Objects must not be "destroyed" more than once; only this method calls destroy routines.
 	
 	def destroyAllWindowObjects (self,frame):
@@ -208,10 +190,8 @@ class LeoApp:
 		# print "app.destroyAllNodes", frame
 		
 		# Do this first.
-		
-		#@<< clear all vnodes and tnodes in the tree >>
-		#@+node:1::<< clear all vnodes and tnodes in the tree>>
-		#@+body
+		#@	<< clear all vnodes and tnodes in the tree >>
+		#@+node:<< clear all vnodes and tnodes in the tree>>
 		# Using a dict here is essential for adequate speed.
 		vList = [] ; tDict = {}
 		
@@ -231,9 +211,9 @@ class LeoApp:
 			clearAllIvars(v)
 		
 		vList = [] ; tList = [] # Remove these references immediately.
-		#@-body
-		#@-node:1::<< clear all vnodes and tnodes in the tree>>
-
+		#@nonl
+		#@-node:<< clear all vnodes and tnodes in the tree>>
+		#@nl
 		
 		# Destroy all subcommanders.
 		clearAllIvars(frame.commands.atFileCommands)
@@ -253,10 +233,9 @@ class LeoApp:
 		clearAllIvars(frame)
 		
 		# Note: pointers to frame still exist in the caller!
-	#@-body
-	#@-node:5::app.destroyAllWindowObjects
-	#@+node:6::app.destroyOpenWithFilesForFrame
-	#@+body
+	#@nonl
+	#@-node:app.destroyAllWindowObjects
+	#@+node:app.destroyOpenWithFilesForFrame
 	def destroyOpenWithFilesForFrame (self,frame):
 		
 		"""Close all "Open With" files associated with frame"""
@@ -270,11 +249,8 @@ class LeoApp:
 			c = dict.get("c")
 			if c.frame == frame:
 				a.destroyOpenWithFileWithDict(dict)
-	
-	#@-body
-	#@-node:6::app.destroyOpenWithFilesForFrame
-	#@+node:7::app.destroyOpenWithFileWithDict
-	#@+body
+	#@-node:app.destroyOpenWithFilesForFrame
+	#@+node:app.destroyOpenWithFileWithDict
 	def destroyOpenWithFileWithDict (self,dict):
 		
 		a = self
@@ -289,10 +265,9 @@ class LeoApp:
 				
 		# Remove dict from the list so the gc can recycle the Leo window!
 		a.openWithFiles.remove(dict)
-	#@-body
-	#@-node:7::app.destroyOpenWithFileWithDict
-	#@+node:8::app.destroyWindow
-	#@+body
+	#@nonl
+	#@-node:app.destroyOpenWithFileWithDict
+	#@+node:app.destroyWindow
 	def destroyWindow (self,frame):
 		
 		a = self
@@ -307,20 +282,17 @@ class LeoApp:
 		a.windowList.remove(frame)
 	
 		top.destroy() # force the window to go away now.
-	#@-body
-	#@-node:8::app.destroyWindow
-	#@+node:9::app.finishCreate
-	#@+body
+	#@nonl
+	#@-node:app.destroyWindow
+	#@+node:app.finishCreate
 	# Called when the gApp global has been defined.
 	
 	def finishCreate(self):
 	
 		a = self
 	
-		
-		#@<< return false if not v2.1 or above >>
-		#@+node:1::<< return false if not v2.1 or above >>
-		#@+body
+		#@	<< return false if not v2.1 or above >>
+		#@+node:<< return false if not v2.1 or above >>
 		# Python 2.1 support.
 		
 		try:
@@ -338,13 +310,11 @@ class LeoApp:
 			print "exception getting version"
 			import traceback
 			traceback.print_exc()
-		#@-body
-		#@-node:1::<< return false if not v2.1 or above >>
-
-		
-		#@<< set loadDir >>
-		#@+node:2::<< set loadDir >>
-		#@+body
+		#@nonl
+		#@-node:<< return false if not v2.1 or above >>
+		#@nl
+		#@	<< set loadDir >>
+		#@+node:<< set loadDir >>
 		# loadDir should be the directory that contains leo.py
 		
 		try:
@@ -359,14 +329,10 @@ class LeoApp:
 			else: # Linux, or whatever.
 				a.loadDir = "LeoPy"
 			print "Setting load directory to:", a.loadDir
-		
-		#@-body
-		#@-node:2::<< set loadDir >>
-
-		
-		#@<< set the default Leo icon >>
-		#@+node:3::<< set the default Leo icon >>
-		#@+body
+		#@-node:<< set loadDir >>
+		#@nl
+		#@	<< set the default Leo icon >>
+		#@+node:<< set the default Leo icon >>
 		try: # 6/2/02: Try to set the default bitmap.
 			bitmap_name = os.path.join(a.loadDir,"..","Icons","LeoApp.ico")
 			bitmap = Tkinter.BitmapImage(bitmap_name)
@@ -378,17 +344,13 @@ class LeoApp:
 		try:
 			version = a.root.getvar("tk_patchLevel")
 			# print "tcl version:", version
-			
-			#@<< set v834 if version is 8.3.4 or greater >>
-			#@+node:1::<< set v834 if version is 8.3.4 or greater >>
-			#@+body
+			#@	<< set v834 if version is 8.3.4 or greater >>
+			#@+node:<< set v834 if version is 8.3.4 or greater >>
 			# 04-SEP-2002 DHEIN: simplify version check
 			# 04-SEP-2002 Stephen P. Schaefer: make sure v834 is set
 			v834 = CheckVersion(version, "8.3.4")
-			
-			#@-body
-			#@-node:1::<< set v834 if version is 8.3.4 or greater >>
-
+			#@-node:<< set v834 if version is 8.3.4 or greater >>
+			#@nl
 		except:
 			print "exception getting version"
 			import traceback
@@ -405,23 +367,21 @@ class LeoApp:
 				if 0: # Let's ignore this for now until I understand the issues better.
 					es("exception setting bitmap")
 					es_exception()
-		#@-body
-		#@-node:3::<< set the default Leo icon >>
-
+		#@nonl
+		#@-node:<< set the default Leo icon >>
+		#@nl
 		a.config = leoConfig.config()
-		
-		#@<< set app.tkEncoding >>
-		#@+node:4::<< set app.tkEncoding >>
-		#@+body
-		#@+at
-		#  According to Martin v. Löwis, getdefaultlocale() is broken, and 
+		#@	<< set app.tkEncoding >>
+		#@+node:<< set app.tkEncoding >>
+		#@+at 
+		#@nonl
+		# According to Martin v. Löwis, getdefaultlocale() is broken, and 
 		# cannot be fixed. The workaround is to copy the 
 		# getpreferredencoding() function from locale.py in Python 2.3a2.  
 		# This function is now in leoGlobals.py.
-
 		#@-at
 		#@@c
-
+		
 		for (encoding,src) in (
 			(a.config.tkEncoding,"config"),
 			#(locale.getdefaultlocale()[1],"locale"),
@@ -436,10 +396,8 @@ class LeoApp:
 			elif encoding and len(encoding) > 0:
 				print "ignoring invalid " + src + " encoding: " + `encoding`
 		
-		
-		#@-body
-		#@-node:4::<< set app.tkEncoding >>
-
+		#@-node:<< set app.tkEncoding >>
+		#@nl
 	
 		# Create the global windows
 		a.findFrame = leoFind.leoFind()
@@ -452,10 +410,9 @@ class LeoApp:
 			a.nodeIndices = leoNodes.nodeIndices()
 	
 		return true # all went well.
-	#@-body
-	#@-node:9::app.finishCreate
-	#@+node:10::app.finishQuit
-	#@+body
+	#@nonl
+	#@-node:app.finishCreate
+	#@+node:app.finishQuit
 	def finishQuit(self):
 		
 		self.killed = true # Disable after events.
@@ -477,10 +434,9 @@ class LeoApp:
 			
 		else: # Works in Python 2.3.  Closes Python window.
 			self.root.quit()
-	#@-body
-	#@-node:10::app.finishQuit
-	#@+node:11::app.get/setRealMenuName & setRealMenuNamesFromTable
-	#@+body
+	#@nonl
+	#@-node:app.finishQuit
+	#@+node:app.get/setRealMenuName & setRealMenuNamesFromTable
 	# Returns the translation of a menu name or an item name.
 	
 	def getRealMenuName (self,menuName):
@@ -497,11 +453,8 @@ class LeoApp:
 	
 		for untrans,trans in table:
 			self.setRealMenuName(untrans,trans)
-	
-	#@-body
-	#@-node:11::app.get/setRealMenuName & setRealMenuNamesFromTable
-	#@+node:12::app.onQuit
-	#@+body
+	#@-node:app.get/setRealMenuName & setRealMenuNamesFromTable
+	#@+node:app.onQuit
 	def onQuit (self):
 		
 		a = self
@@ -516,11 +469,8 @@ class LeoApp:
 		a.quitting = false # If we get here the quit has been disabled.
 	
 	
-	
-	#@-body
-	#@-node:12::app.onQuit
-	#@+node:13::app.setLeoID
-	#@+body
+	#@-node:app.onQuit
+	#@+node:app.setLeoID
 	def setLeoID (self):
 		
 		a = self
@@ -528,10 +478,8 @@ class LeoApp:
 		tag = ".leoID.txt"
 		loadDir = a.loadDir
 		configDir = a.config.configDir
-		
-		#@<< return if we can set self.leoID from sys.leoID >>
-		#@+node:1::<< return if we can set self.leoID from sys.leoID>>
-		#@+body
+		#@	<< return if we can set self.leoID from sys.leoID >>
+		#@+node:<< return if we can set self.leoID from sys.leoID>>
 		# This would be set by in Python's sitecustomize.py file.
 		try:
 			a.leoID = sys.leoID
@@ -539,13 +487,11 @@ class LeoApp:
 			return
 		except:
 			a.leoID = None
-		#@-body
-		#@-node:1::<< return if we can set self.leoID from sys.leoID>>
-
-		
-		#@<< return if we can set self.leoID from "leoID.txt" >>
-		#@+node:2::<< return if we can set self.leoID from "leoID.txt" >>
-		#@+body
+		#@nonl
+		#@-node:<< return if we can set self.leoID from sys.leoID>>
+		#@nl
+		#@	<< return if we can set self.leoID from "leoID.txt" >>
+		#@+node:<< return if we can set self.leoID from "leoID.txt" >>
 		for dir in (configDir,loadDir):
 			try:
 				fn = os.path.join(dir, tag)
@@ -567,24 +513,18 @@ class LeoApp:
 		else:
 			es(tag + " not found in " + configDir + " or " + loadDir, color="red")
 		
-		
-		#@-body
-		#@-node:2::<< return if we can set self.leoID from "leoID.txt" >>
-
-		
-		#@<< put up a dialog requiring a valid id >>
-		#@+node:3::<< put up a dialog requiring a valid id >>
-		#@+body
+		#@-node:<< return if we can set self.leoID from "leoID.txt" >>
+		#@nl
+		#@	<< put up a dialog requiring a valid id >>
+		#@+node:<< put up a dialog requiring a valid id >>
 		a.leoID = leoDialog.askLeoID().run(modal=true)
 		
 		es("leoID = " + `a.leoID`, color="blue")
-		#@-body
-		#@-node:3::<< put up a dialog requiring a valid id >>
-
-		
-		#@<< attempt to create leoID.txt >>
-		#@+node:4::<< attempt to create leoID.txt >>
-		#@+body
+		#@nonl
+		#@-node:<< put up a dialog requiring a valid id >>
+		#@nl
+		#@	<< attempt to create leoID.txt >>
+		#@+node:<< attempt to create leoID.txt >>
 		for dir in (configDir,loadDir):
 			try:
 				# Look in configDir first.
@@ -602,13 +542,11 @@ class LeoApp:
 		else:
 			es("can not create leoID.txt in " + configDir + " or " + loadDir, color="red")
 		
-		
-		#@-body
-		#@-node:4::<< attempt to create leoID.txt >>
-	#@-body
-	#@-node:13::app.setLeoID
-	#@+node:14::app.setLog, lockLog, unlocklog
-	#@+body
+		#@-node:<< attempt to create leoID.txt >>
+		#@nl
+	#@nonl
+	#@-node:app.setLeoID
+	#@+node:app.setLog, lockLog, unlocklog
 	def setLog (self,log,tag=""):
 		"""set the frame to which log messages will go"""
 		
@@ -623,22 +561,16 @@ class LeoApp:
 	def unlockLog(self):
 		"""Enable changes to the log"""
 		self.logIsLocked = false
-	#@-body
-	#@-node:14::app.setLog, lockLog, unlocklog
-	#@+node:15::app.writeWaitingLog
-	#@+body
+	#@nonl
+	#@-node:app.setLog, lockLog, unlocklog
+	#@+node:app.writeWaitingLog
 	def writeWaitingLog (self):
 	
 		if self.log:
 			for s,color in self.logWaiting:
 				es(s,color=color,newline=0) # The caller must write the newlines.
 			self.logWaiting = []
-	
-	#@-body
-	#@-node:15::app.writeWaitingLog
+	#@-node:app.writeWaitingLog
 	#@-others
-
-
-#@-body
-#@-node:0::@file leoApp.py
+#@-node:@file leoApp.py
 #@-leo

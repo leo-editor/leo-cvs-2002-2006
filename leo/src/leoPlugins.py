@@ -1,6 +1,5 @@
-#@+leo
-#@+node:0::@file leoPlugins.py
-#@+body
+#@+leo-ver=4
+#@+node:@file leoPlugins.py
 """Install and run Leo plugins.
 
 On startup:
@@ -26,10 +25,8 @@ def doPlugins(tag,keywords):
 		loadHandlers()
 	return doHandlersForTag(tag,keywords)
 		
-
 #@+others
-#@+node:1::loadHandlers
-#@+body
+#@+node:loadHandlers
 def loadHandlers():
 
 	"""Load all plugins from the plugins directory"""
@@ -43,10 +40,9 @@ def loadHandlers():
 		for file in files:
 			importFromPath(file,path)
 		es("%d plugins loaded, %d examined" % (count,len(files)), color="blue")
-#@-body
-#@-node:1::loadHandlers
-#@+node:2::doHandlersForTag
-#@+body
+#@nonl
+#@-node:loadHandlers
+#@+node:doHandlersForTag
 def doHandlersForTag (tag,keywords):
 	
 	"""Execute all handlers for a given tag, in alphabetical order"""
@@ -69,10 +65,9 @@ def doHandlersForTag (tag,keywords):
 			if ret is not None:
 				return ret
 	return None
-#@-body
-#@-node:2::doHandlersForTag
-#@+node:3::registerHandler
-#@+body
+#@nonl
+#@-node:doHandlersForTag
+#@+node:registerHandler
 def registerHandler(tags,fn):
 	
 	""" Register one or more handlers"""
@@ -96,11 +91,8 @@ def registerOneHandler(tag,fn):
 		existing.append(fn)
 	except AttributeError:
 		es("*** Two exclusive handlers for '%s'" % tag)
-
-#@-body
-#@-node:3::registerHandler
-#@+node:4::registerExclusiveHandler
-#@+body
+#@-node:registerHandler
+#@+node:registerExclusiveHandler
 def registerExclusiveHandler(tags, fn):
 	
 	""" Register one or more exclusive handlers"""
@@ -123,13 +115,11 @@ def registerOneExclusiveHandler(tag, fn):
 		es("*** Two exclusive handlers for '%s'" % tag)
 	else:
 		handlers[tag] = (fn,)
-
-#@-body
-#@-node:4::registerExclusiveHandler
-#@+node:5::funcToMethod
-#@+body
-#@+at
-#  The following is taken from page 188 of the Python Cookbook.
+#@-node:registerExclusiveHandler
+#@+node:funcToMethod
+#@+at 
+#@nonl
+# The following is taken from page 188 of the Python Cookbook.
 # 
 # The following method allows you to add a function as a method of any class.  
 # That is, it converts the function to a method of the class.  The method just 
@@ -141,7 +131,6 @@ def registerOneExclusiveHandler(tag, fn):
 # The newly created method has the same name as the function unless the 
 # optional name argument is supplied, in which case that name is used as the 
 # method name.
-
 #@-at
 #@@c
 
@@ -149,9 +138,9 @@ def funcToMethod(f,theClass,name=None):
 	setattr(theClass,name or f.__name__,f)
 	
 # That's all!
-#@-body
-#@-node:5::funcToMethod
+#@nonl
+#@-node:funcToMethod
 #@-others
-#@-body
-#@-node:0::@file leoPlugins.py
+#@nonl
+#@-node:@file leoPlugins.py
 #@-leo

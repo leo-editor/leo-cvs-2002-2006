@@ -1,6 +1,5 @@
-#@+leo
-#@+node:0::@file leoTangle.py
-#@+body
+#@+leo-ver=4
+#@+node:@file leoTangle.py
 #@@language python
 
 # Tangle and Untangle.
@@ -8,12 +7,11 @@
 from leoGlobals import *
 import os,string
 
-
 #@<< about Tangle and Untangle >>
-#@+node:1::<< About Tangle and Untangle >>
-#@+body
-#@+at
-#  The Tangle command translates the selected @root tree into one or more 
+#@+node:<< About Tangle and Untangle >>
+#@+at 
+#@nonl
+# The Tangle command translates the selected @root tree into one or more 
 # well-formatted C source files. The outline should contain directives, 
 # sections references and section definitions, as described in Chapter 4. The 
 # Untangle command is essentially the reverse of the Tangle command. The 
@@ -99,16 +97,13 @@ import os,string
 # pass of Untangle is almost identical to the first pass of Tangle! That is, 
 # Tangle and Untangle share key parts of code, namely the skip_body() method 
 # and its allies.  Just when skip_body() enters a definition into the symbol 
-# table, all the information is present that Untangle needs to update that definition.
-
+# table, all the information is present that Untangle needs to update that 
+# definition.
 #@-at
-#@-body
-#@-node:1::<< About Tangle and Untangle >>
-
-
+#@-node:<< About Tangle and Untangle >>
+#@nl
 #@<< constants & synonyms >>
-#@+node:2::<< constants & synonyms >>
-#@+body
+#@+node:<< constants & synonyms >>
 # Synonyms for multiple_parts_flag.
 allow_multiple_parts = 1
 disallow_multiple_parts = 2
@@ -124,11 +119,10 @@ require_path = 1 ; done_require_path = 0
 # Constants...
 max_errors = 20
 
-
-#@+at
-#  All these must be defined together, because they form a single 
-# enumeration.  Some of these are used by utility functions.
-
+#@+at 
+#@nonl
+# All these must be defined together, because they form a single enumeration.  
+# Some of these are used by utility functions.
 #@-at
 #@@c
 
@@ -160,21 +154,14 @@ if 1: # A single enum...
 	# Stephen P. Schaefer 9/13/2002
 	# add support for @first
 	at_last    = 18
-
-#@-body
-#@-node:2::<< constants & synonyms >>
-
-
+#@-node:<< constants & synonyms >>
+#@nl
 
 #@+others
-#@+node:3::node classes
-#@+node:1::class tst_node
-#@+body
+#@+node:class tst_node
 class tst_node:
-
-	#@+others
-	#@+node:1::tst_node.__init__
-	#@+body
+	#@	@+others
+	#@+node:tst_node.__init__
 	def __init__ (self,name,root_flag):
 	
 		# trace("tst_node.__init__" + `name`)
@@ -182,25 +169,21 @@ class tst_node:
 		self.is_root = root_flag
 		self.referenced = false
 		self.parts = []
-	#@-body
-	#@-node:1::tst_node.__init__
-	#@+node:2::tst_node.__repr__
-	#@+body
+	#@nonl
+	#@-node:tst_node.__init__
+	#@+node:tst_node.__repr__
 	def __repr__ (self):
 	
 		return "tst_node:" + self.name
-	#@-body
-	#@-node:2::tst_node.__repr__
+	#@nonl
+	#@-node:tst_node.__repr__
 	#@-others
-#@-body
-#@-node:1::class tst_node
-#@+node:2::class part_node
-#@+body
+#@nonl
+#@-node:class tst_node
+#@+node:class part_node
 class part_node:
-
-	#@+others
-	#@+node:1::part_node.__init__
-	#@+body
+	#@	@+others
+	#@+node:part_node.__init__
 	def __init__ (self,name,code,doc,is_root,is_dirty):
 	
 		# trace("part_node.__init__" + `name`)
@@ -209,34 +192,30 @@ class part_node:
 		self.doc = doc # The doc text.
 		self.is_dirty = is_dirty # true: vnode for body text is dirty.
 		self.is_root = is_root # true: name is a root name.
-	#@-body
-	#@-node:1::part_node.__init__
-	#@+node:2::part_node.__repr__
-	#@+body
+	#@nonl
+	#@-node:part_node.__init__
+	#@+node:part_node.__repr__
 	def __repr__ (self):
 	
 		return "part_node:" + self.name
-	#@-body
-	#@-node:2::part_node.__repr__
+	#@nonl
+	#@-node:part_node.__repr__
 	#@-others
-#@-body
-#@-node:2::class part_node
-#@+node:3::class ust_node
-#@+body
+#@nonl
+#@-node:class part_node
+#@+node:class ust_node
 class ust_node:
-
-	#@+others
-	#@+node:1::ust_node.__init__
-	#@+body
-	#@+at
-	#  The text has been masssaged so that 1) it contains no leading 
+	#@	@+others
+	#@+node:ust_node.__init__
+	#@+at 
+	#@nonl
+	# The text has been masssaged so that 1) it contains no leading 
 	# indentation and 2) all code arising from section references have been 
 	# replaced by the reference line itself.  Text for all copies of the same 
 	# part can differ only in non-critical white space.
-
 	#@-at
 	#@@c
-
+	
 	def __init__ (self,name,code,part,of,nl_flag,update_flag):
 	
 		# trace("ust_node.__init__", `name` +":"+ `part`)
@@ -247,34 +226,30 @@ class ust_node:
 		self.of = of  # m in "(part n of m)" or zero.
 		self.nl_flag = nl_flag  # true: section starts with a newline.
 		self.update_flag = update_flag # true: section corresponds to a section in the outline.
-	#@-body
-	#@-node:1::ust_node.__init__
-	#@+node:2::ust_node.__repr__
-	#@+body
+	#@nonl
+	#@-node:ust_node.__init__
+	#@+node:ust_node.__repr__
 	def __repr__ (self):
 	
 		return "ust_node:" + self.name
-	#@-body
-	#@-node:2::ust_node.__repr__
+	#@nonl
+	#@-node:ust_node.__repr__
 	#@-others
-#@-body
-#@-node:3::class ust_node
-#@+node:4::class def_node
-#@+body
+#@nonl
+#@-node:class ust_node
+#@+node:class def_node
 class def_node:
-
-	#@+others
-	#@+node:1::def_node.__init__
-	#@+body
-	#@+at
-	#  The text has been masssaged so that 1) it contains no leading 
+	#@	@+others
+	#@+node:def_node.__init__
+	#@+at 
+	#@nonl
+	# The text has been masssaged so that 1) it contains no leading 
 	# indentation and 2) all code arising from section references have been 
 	# replaced by the reference line itself.  Text for all copies of the same 
 	# part can differ only in non-critical white space.
-
 	#@-at
 	#@@c
-
+	
 	def __init__ (self,name,indent,part,of,nl_flag,code):
 	
 		if 0:
@@ -287,46 +262,40 @@ class def_node:
 		self.part = part
 		self.of = of
 		self.nl_flag = nl_flag
-	#@-body
-	#@-node:1::def_node.__init__
-	#@+node:2::def_node.__repr__
-	#@+body
+	#@nonl
+	#@-node:def_node.__init__
+	#@+node:def_node.__repr__
 	def __repr__ (self):
 	
 		return "def_node:" + self.name
-	#@-body
-	#@-node:2::def_node.__repr__
+	#@nonl
+	#@-node:def_node.__repr__
 	#@-others
-#@-body
-#@-node:4::class def_node
-#@+node:5::class root_attributes (Stephen P. Schaefer)
-#@+body
-#@+doc
-#  Stephen P. Schaefer, 9/2/2002
+#@nonl
+#@-node:class def_node
+#@+node:class root_attributes (Stephen P. Schaefer)
+#@+doc 
+#@nonl
+# Stephen P. Schaefer, 9/2/2002
 # Collect the root node specific attributes in an
 # easy-to-use container.
-
 #@-doc
 #@@code
 class root_attributes:
-
-	#@+others
-	#@+node:1::root_attributes.__init__
-	#@+body
-	#@+at
-	#  Stephen P. Schaefer, 9/2/2002
+	#@	@+others
+	#@+node:root_attributes.__init__
+	#@+at 
+	#@nonl
+	# Stephen P. Schaefer, 9/2/2002
 	# Keep track of the attributes of a root node
-
 	#@-at
 	#@@c
-
+	
 	def __init__ (self, tangle_state):
 	
 		if 0:
-			
-			#@<< trace the state >>
-			#@+node:1::<< trace the state >>
-			#@+body
+			#@		<< trace the state >>
+			#@+node:<< trace the state >>
 			try:
 				if tangle_state.path: pass
 			except AttributeError:
@@ -344,9 +313,9 @@ class root_attributes:
 				", tab_width: " + tangle_state.tab_width +
 				# Stephen P. Schaefer 9/13/2002
 				", first_lines: " + tangle_state.first_lines)
-			#@-body
-			#@-node:1::<< trace the state >>
-
+			#@nonl
+			#@-node:<< trace the state >>
+			#@nl
 		self.language = tangle_state.language
 		self.single_comment_string = tangle_state.single_comment_string
 		self.start_comment_string = tangle_state.start_comment_string
@@ -364,10 +333,9 @@ class root_attributes:
 		self.page_width = tangle_state.page_width
 		self.tab_width = tangle_state.tab_width
 		self.first_lines = tangle_state.first_lines # Stephen P. Schaefer 9/13/2002
-	#@-body
-	#@-node:1::root_attributes.__init__
-	#@+node:2::root_attributes.__repr__
-	#@+body
+	#@nonl
+	#@-node:root_attributes.__init__
+	#@+node:root_attributes.__repr__
 	def __repr__ (self):
 	
 		return ("root_attributes: language: " + self.language +
@@ -381,38 +349,29 @@ class root_attributes:
 			", tab_width: " + self.tab_width +
 			# Stephen P. Schaefer 9/13/2002
 			", first_lines: " + self.first_lines)
-	
-	#@-body
-	#@-node:2::root_attributes.__repr__
+	#@-node:root_attributes.__repr__
 	#@-others
-#@-body
-#@-node:5::class root_attributes (Stephen P. Schaefer)
-#@-node:3::node classes
-#@+node:4::class tangleCommands methods
-#@+body
+#@nonl
+#@-node:class root_attributes (Stephen P. Schaefer)
+#@+node:class tangleCommands methods
 class baseTangleCommands:
 	"""The base class for Leo's tangle and untangle commands."""
-
-	#@+others
-	#@+node:1::tangle.__init__
-	#@+body
+	#@	@+others
+	#@+node:tangle.__init__
 	def __init__ (self,commands):
 	
 		self.commands = commands
 		self.init_ivars()
-	#@-body
-	#@-node:1::tangle.__init__
-	#@+node:2::tangle.init_ivars & init_directive_ivars
-	#@+body
+	#@nonl
+	#@-node:tangle.__init__
+	#@+node:tangle.init_ivars & init_directive_ivars
 	# Called by __init__
 	
 	def init_ivars(self):
 	
 		c = self.commands
-		
-		#@<< init tangle ivars >>
-		#@+node:1::<< init tangle ivars >>
-		#@+body
+		#@	<< init tangle ivars >>
+		#@+node:<< init tangle ivars >>
 		# Various flags and counts...
 		
 		self.errors = 0 # The number of errors seen.
@@ -425,12 +384,11 @@ class baseTangleCommands:
 		self.start_mode = "doc" # "code" or "doc".  Use "doc" for compatibility.
 		self.tangle_default_directory = None # Default directory set by scanAllDirectives.
 		
-
-		#@+at
-		#  Symbol tables: the TST (Tangle Symbol Table) contains all section 
+		#@+at 
+		#@nonl
+		# Symbol tables: the TST (Tangle Symbol Table) contains all section 
 		# names in the outline. The UST (Untangle Symbol Table) contains all 
 		# sections defined in the derived file.
-
 		#@-at
 		#@@c
 		self.tst = {}
@@ -440,11 +398,11 @@ class baseTangleCommands:
 		self.section_stack = []
 		self.def_stack = []
 		
-
-		#@+at
-		#  The list of all roots. The symbol table routines add roots to self 
-		# list during pass 1. Pass 2 uses self list to generate code for all roots.
-
+		#@+at 
+		#@nonl
+		# The list of all roots. The symbol table routines add roots to self 
+		# list during pass 1. Pass 2 uses self list to generate code for all 
+		# roots.
 		#@-at
 		#@@c
 		self.root_list = []
@@ -471,48 +429,43 @@ class baseTangleCommands:
 			self.header = None
 			self.section_name = None
 		
-
-		#@+at
-		#  The following records whether we have seen an @code directive in a 
+		#@+at 
+		#@nonl
+		# The following records whether we have seen an @code directive in a 
 		# body text.
 		# If so, an @code represents < < header name > > = and it is valid to 
 		# continue a section definition.
-
 		#@-at
 		#@@c
 		self.code_seen = false # true if @code seen in body text.
 		
 		# Support of output_newline option
 		self.output_newline = getOutputNewline()
-		#@-body
-		#@-node:1::<< init tangle ivars >>
-
-		
-		#@<< init untangle ivars >>
-		#@+node:2::<< init untangle ivars >>
-		#@+body
-		#@+at
-		#  Untangle vars used while comparing.
-
+		#@nonl
+		#@-node:<< init tangle ivars >>
+		#@nl
+		#@	<< init untangle ivars >>
+		#@+node:<< init untangle ivars >>
+		#@+at 
+		#@nonl
+		# Untangle vars used while comparing.
 		#@-at
 		#@@c
 		self.line_comment = self.comment = self.comment_end = None
 		self.comment2 = self.comment2_end = None
 		self.string1 = self.string2 = self.verbatim = None
 		self.message = None # forgiving compare message.
-		#@-body
-		#@-node:2::<< init untangle ivars >>
-
+		#@nonl
+		#@-node:<< init untangle ivars >>
+		#@nl
 		
 	# Called by scanAllDirectives
 	
 	def init_directive_ivars (self):
 	
 		c = self.commands
-		
-		#@<< init directive ivars >>
-		#@+node:3::<< init directive ivars >> (tangle)
-		#@+body
+		#@	<< init directive ivars >>
+		#@+node:<< init directive ivars >> (tangle)
 		if 0: # not used in this version of Leo
 			self.allow_rich_text = default_allow_rich_text
 			self.extended_noweb_flag = default_extended_noweb_flag
@@ -558,28 +511,25 @@ class baseTangleCommands:
 		self.first_lines = ""
 		self.encoding = app().config.default_derived_file_encoding # 2/21/03
 		self.output_newline = getOutputNewline() # 4/24/03: initialize from config settings.
-		#@-body
-		#@-node:3::<< init directive ivars >> (tangle)
-	#@-body
-	#@-node:2::tangle.init_ivars & init_directive_ivars
-	#@+node:3::top level
-	#@+body
-	#@+at
-	#  Only top-level drivers initialize ivars.
-
+		#@nonl
+		#@-node:<< init directive ivars >> (tangle)
+		#@nl
+	#@nonl
+	#@-node:tangle.init_ivars & init_directive_ivars
+	#@+node:top level
+	#@+at 
+	#@nonl
+	# Only top-level drivers initialize ivars.
 	#@-at
-	#@-body
-	#@+node:1::cleanup
-	#@+body
+	#@-node:top level
+	#@+node:cleanup
 	# This code is called from tangleTree and untangleTree.
 	
 	def cleanup (self):
 		
 		if self.errors == 0:
-			
-			#@<< call tangle_done.run() or untangle_done.run() >>
-			#@+node:1::<< call tangle_done.run() or untangle_done.run() >>
-			#@+body
+			#@		<< call tangle_done.run() or untangle_done.run() >>
+			#@+node:<< call tangle_done.run() or untangle_done.run() >>
 			# Create a list of root names:
 			root_names = []
 			dir = self.tangle_directory # Bug fix: 12/04/02
@@ -603,19 +553,18 @@ class baseTangleCommands:
 				except:
 					es("Can not execute tangle_done.run()")
 					es_exception()
-			#@-body
-			#@-node:1::<< call tangle_done.run() or untangle_done.run() >>
-
+			#@nonl
+			#@-node:<< call tangle_done.run() or untangle_done.run() >>
+			#@nl
 	
 		# Reinitialize the symbol tables and lists.
 		self.tst = {}
 		self.ust = {}
 		self.root_list = []
 		self.def_stack = []
-	#@-body
-	#@-node:1::cleanup
-	#@+node:2::initTangleCommand
-	#@+body
+	#@nonl
+	#@-node:cleanup
+	#@+node:initTangleCommand
 	def initTangleCommand (self):
 	
 		c = self.commands
@@ -625,10 +574,9 @@ class baseTangleCommands:
 		c.setIvarsFromPrefs()
 		self.init_ivars()
 		self.tangling = true
-	#@-body
-	#@-node:2::initTangleCommand
-	#@+node:3::initUntangleCommand
-	#@+body
+	#@nonl
+	#@-node:initTangleCommand
+	#@+node:initUntangleCommand
 	def initUntangleCommand (self):
 	
 		c = self.commands
@@ -638,20 +586,18 @@ class baseTangleCommands:
 		c.setIvarsFromPrefs()
 		self.init_ivars()
 		self.tangling = false
-	#@-body
-	#@-node:3::initUntangleCommand
-	#@+node:4::tangle
-	#@+body
+	#@nonl
+	#@-node:initUntangleCommand
+	#@+node:tangle
 	def tangle(self):
 	
 		c = self.commands ; v = c.currentVnode()
 		self.initTangleCommand()
 		self.tangleTree(v,report_errors)
 		es("Tangle complete")
-	#@-body
-	#@-node:4::tangle
-	#@+node:5::tangleAll
-	#@+body
+	#@nonl
+	#@-node:tangle
+	#@+node:tangleAll
 	def tangleAll(self):
 	
 		c = self.commands ; v = c.rootVnode()
@@ -671,10 +617,9 @@ class baseTangleCommands:
 			self.warning("----- Tangle halted because of errors")
 		else:
 			es("Tangle complete")
-	#@-body
-	#@-node:5::tangleAll
-	#@+node:6::tangleMarked
-	#@+body
+	#@nonl
+	#@-node:tangleAll
+	#@+node:tangleMarked
 	def tangleMarked(self):
 	
 		c = self.commands ; v = c.rootVnode()
@@ -701,17 +646,16 @@ class baseTangleCommands:
 			self.warning("----- Tangle halted because of errors")
 		else:
 			es("Tangle complete")
-	#@-body
-	#@-node:6::tangleMarked
-	#@+node:7::tanglePass1
-	#@+body
-	#@+at
-	#  This is the main routine of pass 1. It traverses the tree whose root is 
+	#@nonl
+	#@-node:tangleMarked
+	#@+node:tanglePass1
+	#@+at 
+	#@nonl
+	# This is the main routine of pass 1. It traverses the tree whose root is 
 	# given, handling each headline and associated body text.
-
 	#@-at
 	#@@c
-
+	
 	def tanglePass1(self,v):
 	
 		next = v.nodeAfterTree()
@@ -738,10 +682,9 @@ class baseTangleCommands:
 		if self.tangling:
 			self.st_check()
 			# trace(self.st_dump(verbose_flag=true))
-	#@-body
-	#@-node:7::tanglePass1
-	#@+node:8::tanglePass2
-	#@+body
+	#@nonl
+	#@-node:tanglePass1
+	#@+node:tanglePass2
 	# At this point v is the root of the tree that has been tangled.
 	
 	def tanglePass2(self):
@@ -754,20 +697,19 @@ class baseTangleCommands:
 			self.warning("----- The outline contains no roots")
 		else:
 			self.put_all_roots() # pass 2 top level function.
-	#@-body
-	#@-node:8::tanglePass2
-	#@+node:9::tangleTree (calls cleanup)
-	#@+body
-	#@+at
-	#  This funtion tangles all nodes in the tree whose root is v. It reports 
+	#@nonl
+	#@-node:tanglePass2
+	#@+node:tangleTree (calls cleanup)
+	#@+at 
+	#@nonl
+	# This funtion tangles all nodes in the tree whose root is v. It reports 
 	# on its results if report_flag is true.
 	# 
 	# This function is called only from the top level, so there is no need to 
 	# initialize globals.
-
 	#@-at
 	#@@c
-
+	
 	def tangleTree(self,v,report_flag):
 	
 		assert(v)
@@ -798,10 +740,9 @@ class baseTangleCommands:
 			# This is done by Untangle if we are untangling.
 			self.warning("----- The outline contains no roots")
 		return any_root_flag
-	#@-body
-	#@-node:9::tangleTree (calls cleanup)
-	#@+node:10::untangle
-	#@+body
+	#@nonl
+	#@-node:tangleTree (calls cleanup)
+	#@+node:untangle
 	def untangle(self):
 	
 		c = self.commands ; v = c.currentVnode()
@@ -811,10 +752,9 @@ class baseTangleCommands:
 		self.untangleTree(v,report_errors)
 		c.endUpdate()
 		es("Untangle complete")
-	#@-body
-	#@-node:10::untangle
-	#@+node:11::untangleAll
-	#@+body
+	#@nonl
+	#@-node:untangle
+	#@+node:untangleAll
 	def untangleAll(self):
 	
 		c = self.commands ; v = c.rootVnode()
@@ -834,10 +774,9 @@ class baseTangleCommands:
 			self.warning("----- Untangle command halted because of errors")
 		else:
 			es("Untangle complete")
-	#@-body
-	#@-node:11::untangleAll
-	#@+node:12::untangleMarked
-	#@+body
+	#@nonl
+	#@-node:untangleAll
+	#@+node:untangleMarked
 	def untangleMarked(self):
 	
 		c = self.commands ; v = c.rootVnode()
@@ -860,30 +799,28 @@ class baseTangleCommands:
 			self.warning("----- Untangle command halted because of errors")
 		else:
 			es("Untangle complete")
-	#@-body
-	#@-node:12::untangleMarked
-	#@+node:13::untangleRoot (calls cleanup)
-	#@+body
-	#@+at
-	#  This method untangles the derived files in a vnode known to contain at 
+	#@nonl
+	#@-node:untangleMarked
+	#@+node:untangleRoot (calls cleanup)
+	#@+at 
+	#@nonl
+	# This method untangles the derived files in a vnode known to contain at 
 	# least one @root directive. The work is done in two passes. The first 
 	# pass creates the UST by scanning the derived file. The second pass 
-	# updates the outline using the UST and a TST that is created during the pass.
+	# updates the outline using the UST and a TST that is created during the 
+	# pass.
 	# 
 	# We assume that all sections from root to end are contained in the 
 	# derived file, and we attempt to update all such sections. The begin/end 
 	# params indicate the range of nodes to be scanned when building the TST.
-
 	#@-at
 	#@@c
-
+	
 	def untangleRoot(self,root,begin,end):
 	
 		# trace("root,begin,end:" + `root` + `begin` + `end`)
-		
-		#@<< Set path & root_name to the file specified in the @root directive >>
-		#@+node:2::<< Set path & root_name to the file specified in the @root directive >>
-		#@+body
+		#@	<< Set path & root_name to the file specified in the @root directive >>
+		#@+node:<< Set path & root_name to the file specified in the @root directive >>
 		s = root.bodyString()
 		i = 0
 		while i < len(s):
@@ -898,13 +835,11 @@ class baseTangleCommands:
 			# A bad @root command.  token_type has already given an error.
 			self.cleanup()
 			return
-		#@-body
-		#@-node:2::<< Set path & root_name to the file specified in the @root directive >>
-
-		
-		#@<< return if @silent or unknown language >>
-		#@+node:1::<< return if @silent or unknown language >>
-		#@+body
+		#@nonl
+		#@-node:<< Set path & root_name to the file specified in the @root directive >>
+		#@nl
+		#@	<< return if @silent or unknown language >>
+		#@+node:<< return if @silent or unknown language >>
 		if self.language == "unknown":
 			es("**Unknown language for " + path)
 			return
@@ -912,14 +847,10 @@ class baseTangleCommands:
 		if self.print_mode in ("quiet","silent"):
 			es("@" + self.print_mode +  " inhibits untangle for " + path)
 			return
-		
-		#@-body
-		#@-node:1::<< return if @silent or unknown language >>
-
-		
-		#@<< Read the file into file_buf >>
-		#@+node:3::<< Read the file into file_buf  >>
-		#@+body
+		#@-node:<< return if @silent or unknown language >>
+		#@nl
+		#@	<< Read the file into file_buf >>
+		#@+node:<< Read the file into file_buf  >>
 		f = None
 		try:
 			path = os.path.join(self.tangle_directory,path)
@@ -933,26 +864,24 @@ class baseTangleCommands:
 			es_exception()
 			self.cleanup()
 			return
-		#@-body
-		#@-node:3::<< Read the file into file_buf  >>
-
+		#@nonl
+		#@-node:<< Read the file into file_buf  >>
+		#@nl
 		es("@root " + path)
 		# Pass 1: Scan the C file, creating the UST
 		self.scan_derived_file(file_buf)
 		# trace(self.ust_dump())
 		if self.errors == 0:
-			
-			#@<< Pass 2: Untangle the outline using the UST and a newly-created TST >>
-			#@+node:4::<< Pass 2:  Untangle the outline using the UST and a newly-created TST >>
-			#@+body
-			#@+at
-			#  This code untangles the root and all its siblings. We don't 
-			# call tangleTree here because we must handle all siblings.  
+			#@		<< Pass 2: Untangle the outline using the UST and a newly-created TST >>
+			#@+node:<< Pass 2:  Untangle the outline using the UST and a newly-created TST >>
+			#@+at 
+			#@nonl
+			# This code untangles the root and all its siblings. We don't call 
+			# tangleTree here because we must handle all siblings.  
 			# tanglePass1 handles an entire tree.  It also handles @ignore.
-
 			#@-at
 			#@@c
-
+			
 			v = begin
 			while v and v != end:
 				self.tanglePass1(v)
@@ -961,14 +890,13 @@ class baseTangleCommands:
 				v = v.nodeAfterTree()
 			
 			self.ust_warn_about_orphans()
-			#@-body
-			#@-node:4::<< Pass 2:  Untangle the outline using the UST and a newly-created TST >>
-
+			#@nonl
+			#@-node:<< Pass 2:  Untangle the outline using the UST and a newly-created TST >>
+			#@nl
 		self.cleanup()
-	#@-body
-	#@-node:13::untangleRoot (calls cleanup)
-	#@+node:14::untangleTree
-	#@+body
+	#@nonl
+	#@-node:untangleRoot (calls cleanup)
+	#@+node:untangleTree
 	# This funtion is called when the user selects any "Untangle" command.
 	
 	def untangleTree(self,v,report_flag):
@@ -1002,29 +930,25 @@ class baseTangleCommands:
 					if root:
 						any_root_flag = true
 						end = None
-						
-						#@<< set end to the next root in the unit >>
-						#@+node:1::<< set end to the next root in the unit >>
-						#@+body
-						#@+at
-						#  The untangle_root function will untangle an entire 
+						#@					<< set end to the next root in the unit >>
+						#@+node:<< set end to the next root in the unit >>
+						#@+at 
+						#@nonl
+						# The untangle_root function will untangle an entire 
 						# tree by calling untangleTree, so the following code 
 						# ensures that the next @root node will not be an 
 						# offspring of v.
-
 						#@-at
 						#@@c
-
+						
 						end = v.threadNext()
 						while end and end != afterUnit:
 							flag, i = is_special(end.bodyString(),0,"@root")
 							if flag and not v.isAncestorOf(end):
 								break
 							end = end.threadNext()
-						
-						#@-body
-						#@-node:1::<< set end to the next root in the unit >>
-
+						#@-node:<< set end to the next root in the unit >>
+						#@nl
 						# trace("end:" + `end`)
 						self.scanAllDirectives(v,require_path,report_errors)
 						self.untangleRoot(v,unitNode,afterUnit)
@@ -1045,25 +969,21 @@ class baseTangleCommands:
 			elif self.errors > 0:
 				self.warning("----- Untangle command halted because of errors")
 		return any_root_flag
-	#@-body
-	#@-node:14::untangleTree
-	#@-node:3::top level
-	#@+node:4::tangle
-	#@+node:1::Pass 1
-	#@+node:1::handle_newline
-	#@+body
-	#@+at
-	#  This method handles newline processing while skipping a code section. 
-	# It sets 'done' if the line contains an @directive or section definition 
+	#@nonl
+	#@-node:untangleTree
+	#@+node:handle_newline
+	#@+at 
+	#@nonl
+	# This method handles newline processing while skipping a code section. It 
+	# sets 'done' if the line contains an @directive or section definition 
 	# that terminates the present code section. On entry: i should point to 
 	# the first character of a line.  This routine scans past a line only if 
 	# it could not contain a section reference.
 	# 
 	# Returns (i, done)
-
 	#@-at
 	#@@c
-
+	
 	def handle_newline(self,s,i):
 	
 		j = i ; done = false
@@ -1098,10 +1018,9 @@ class baseTangleCommands:
 		else: assert(false)
 	
 		return i, done
-	#@-body
-	#@-node:1::handle_newline
-	#@+node:2::skip_body
-	#@+body
+	#@nonl
+	#@-node:handle_newline
+	#@+node:skip_body
 	# This method handles all the body text.
 	
 	def skip_body (self,v):
@@ -1115,11 +1034,8 @@ class baseTangleCommands:
 			j = skip_blank_lines(s,i)
 			i,code = self.skip_code(s,j)
 			if code:
-				
-				#@<< Define a section for a leading code part >>
-				#@+node:1::The interface between tangle and untangle
-				#@+node:2::<< Define a section for a leading code part >>
-				#@+body
+				#@			<< Define a section for a leading code part >>
+				#@+node:<< Define a section for a leading code part >>
 				if self.header_name:
 					# Tangle code.
 					flag = choose(code_seen,allow_multiple_parts,disallow_multiple_parts)
@@ -1131,27 +1047,23 @@ class baseTangleCommands:
 						if changed: anyChanged = true
 					code_seen = true
 					code = doc = None
-				#@-body
-				#@-node:2::<< Define a section for a leading code part >>
-				#@-node:1::The interface between tangle and untangle
-
+				#@nonl
+				#@-node:<< Define a section for a leading code part >>
+				#@nl
 	
 		if not code:
 			i,doc = self.skip_doc(s,i) # Start in doc section by default.
 			if i >= len(s) and doc:
-				
-				#@<< Define a section containing only an @doc part >>
-				#@+node:1::The interface between tangle and untangle
-				#@+node:1::<< Define a section containing only an @doc part >>
-				#@+body
-				#@+at
-				#  It's valid for an @doc directive to appear under a headline 
+				#@			<< Define a section containing only an @doc part >>
+				#@+node:<< Define a section containing only an @doc part >>
+				#@+at 
+				#@nonl
+				# It's valid for an @doc directive to appear under a headline 
 				# that does not contain a section name.  In that case, no 
 				# section is defined.
-
 				#@-at
 				#@@c
-
+				
 				if self.header_name:
 					# Tangle code.
 					flag = choose(code_seen,allow_multiple_parts,disallow_multiple_parts)
@@ -1164,10 +1076,9 @@ class baseTangleCommands:
 							part,not_root_name,true) # set update flag
 				
 				doc = None
-				#@-body
-				#@-node:1::<< Define a section containing only an @doc part >>
-				#@-node:1::The interface between tangle and untangle
-
+				#@nonl
+				#@-node:<< Define a section containing only an @doc part >>
+				#@nl
 	
 		while i < len(s):
 			progress = i # progress indicator
@@ -1176,11 +1087,8 @@ class baseTangleCommands:
 			# if is_nl(s,i): i = skip_nl(s,i)
 			i = skip_ws(s,i)
 			if kind == section_def:
-				
-				#@<< Scan and define a section definition >>
-				#@+node:1::The interface between tangle and untangle
-				#@+node:3::<< Scan and define a section definition >>
-				#@+body
+				#@			<< Scan and define a section definition >>
+				#@+node:<< Scan and define a section definition >>
 				# We enter the code part and any preceding doc part into the symbol table.
 				
 				# Skip the section definition line.
@@ -1202,20 +1110,16 @@ class baseTangleCommands:
 					if changed: anyChanged = true
 					
 				code = doc = None
-				#@-body
-				#@-node:3::<< Scan and define a section definition >>
-				#@-node:1::The interface between tangle and untangle
-
+				#@nonl
+				#@-node:<< Scan and define a section definition >>
+				#@nl
 			elif kind == at_code:
 				if self.use_cweb_flag:
 					i += 2 # Skip the at-c or at-p
 				else:
 					i = skip_line(s,i)
-				
-				#@<< Scan and define an @code defininition >>
-				#@+node:1::The interface between tangle and untangle
-				#@+node:4::<< Scan and define an @code defininition >>
-				#@+body
+				#@			<< Scan and define an @code defininition >>
+				#@+node:<< Scan and define an @code defininition >>
 				# All @c or @code directives denote < < headline_name > > =
 				if self.header_name:
 				
@@ -1233,17 +1137,13 @@ class baseTangleCommands:
 				
 				code_seen = true
 				code = doc = None
-				#@-body
-				#@-node:4::<< Scan and define an @code defininition >>
-				#@-node:1::The interface between tangle and untangle
-
+				#@nonl
+				#@-node:<< Scan and define an @code defininition >>
+				#@nl
 			elif kind == at_root:
 				i = skip_line(s,i)
-				
-				#@<< Scan and define a root section >>
-				#@+node:1::The interface between tangle and untangle
-				#@+node:5::<< Scan and define a root section >>
-				#@+body
+				#@			<< Scan and define a root section >>
+				#@+node:<< Scan and define a root section >>
 				# We save the file name in case another @root ends the code section.
 				old_root_name = self.root_name
 				
@@ -1264,10 +1164,9 @@ class baseTangleCommands:
 					if changed: anyChanged = true
 					
 				code = doc = None
-				#@-body
-				#@-node:5::<< Scan and define a root section >>
-				#@-node:1::The interface between tangle and untangle
-
+				#@nonl
+				#@-node:<< Scan and define a root section >>
+				#@nl
 			elif kind == at_doc:
 				if self.use_cweb_flag:
 					i += 2 # Skip the at-space
@@ -1283,11 +1182,12 @@ class baseTangleCommands:
 		# 3/4/02: Only call v.trimTrailingLines if we have changed its body.
 		if anyChanged:
 			v.trimTrailingLines()
-	#@-body
-	#@+node:1::The interface between tangle and untangle
-	#@+body
-	#@+at
-	#  The following subsections contain the interface between the Tangle and 
+	#@nonl
+	#@-node:skip_body
+	#@+node:The interface between tangle and untangle
+	#@+at 
+	#@nonl
+	# The following subsections contain the interface between the Tangle and 
 	# Untangle commands.  This interface is an important hack, and allows 
 	# Untangle to avoid duplicating the logic in skip_tree and its allies.
 	# 
@@ -1297,23 +1197,19 @@ class baseTangleCommands:
 	# 
 	# To get whitespace exactly right we retain the outline's leading 
 	# whitespace and remove leading whitespace from the updated definition.
-
 	#@-at
-	#@-body
-	#@-node:1::The interface between tangle and untangle
-	#@-node:2::skip_body
-	#@+node:3::skip_code
-	#@+body
-	#@+at
-	#  This method skips an entire code section. The caller is responsible for 
+	#@-node:The interface between tangle and untangle
+	#@+node:skip_code
+	#@+at 
+	#@nonl
+	# This method skips an entire code section. The caller is responsible for 
 	# entering the completed section into the symbol table. On entry, i points 
 	# at the line following the @directive or section definition that starts a 
 	# code section. We skip code until we see the end of the body text or the 
 	# next @ directive or section defintion that starts a code or doc part.
-
 	#@-at
 	#@@c
-
+	
 	def skip_code(self,s,i):
 	
 		# trace(`get_line(s,i)`)
@@ -1321,17 +1217,15 @@ class baseTangleCommands:
 		nl_i = i # For error messages
 		done = false # true when end of code part seen.
 		if self.use_noweb_flag:
-			
-			#@<< skip a noweb code section >>
-			#@+node:1::<< skip a noweb code section >>
-			#@+body
-			#@+at
-			#  This code handles the following escape conventions: double 
+			#@		<< skip a noweb code section >>
+			#@+node:<< skip a noweb code section >>
+			#@+at 
+			#@nonl
+			# This code handles the following escape conventions: double 
 			# at-sign at the start of a line and at-<< and at.>.
-
 			#@-at
 			#@@c
-
+			
 			i, done = self.handle_newline(s,i)
 			while not done and i < len(s):
 				ch = s[i]
@@ -1342,10 +1236,8 @@ class baseTangleCommands:
 					match(s,i+1,">>")):
 					i += 3 # skip the noweb escape sequence.
 				elif ch == '<':
-					
-					#@<< handle possible noweb section reference >>
-					#@+node:1::<< handle possible noweb section reference >>
-					#@+body
+					#@		<< handle possible noweb section reference >>
+					#@+node:<< handle possible noweb section reference >>
 					j, kind, end = self.is_section_name(s,i)
 					if kind == section_def:
 						k = skip_to_end_of_line(s,i)
@@ -1360,26 +1252,22 @@ class baseTangleCommands:
 						name = s[i:end]
 						self.st_enter_section_name(name,None,None,unused_parts_flag)
 						i = end
-					#@-body
-					#@-node:1::<< handle possible noweb section reference >>
-
+					#@nonl
+					#@-node:<< handle possible noweb section reference >>
+					#@nl
 				else: i += 1
-			#@-body
-			#@-node:1::<< skip a noweb code section >>
-
+			#@nonl
+			#@-node:<< skip a noweb code section >>
+			#@nl
 		else:
-			
-			#@<< skip a CWEB code section >>
-			#@+node:2::<< skip a CWEB code section >>
-			#@+body
+			#@		<< skip a CWEB code section >>
+			#@+node:<< skip a CWEB code section >>
 			# This code is simple because CWEB control codes are valid anywhere.
 			
 			while not done and i < len(s):
 				if s[i] == '@':
-					
-					#@<< handle CWEB control code >>
-					#@+node:1::<< handle CWEB control code >>
-					#@+body
+					#@		<< handle CWEB control code >>
+					#@+node:<< handle CWEB control code >>
 					j, kind, end = self.is_section_name(s,i)
 					
 					if kind == section_def:
@@ -1392,20 +1280,19 @@ class baseTangleCommands:
 						name = s[i:j]
 						self.st_enter_section_name(name,None,None,unused_parts_flag)
 						i = j
-					#@-body
-					#@-node:1::<< handle CWEB control code >>
-
+					#@nonl
+					#@-node:<< handle CWEB control code >>
+					#@nl
 				else: i += 1
-			#@-body
-			#@-node:2::<< skip a CWEB code section >>
-
+			#@nonl
+			#@-node:<< skip a CWEB code section >>
+			#@nl
 		code = s[code1:i]
 		# trace(returns: + `code`)
 		return i,code
-	#@-body
-	#@-node:3::skip_code
-	#@+node:4::skip_doc
-	#@+body
+	#@nonl
+	#@-node:skip_code
+	#@+node:skip_doc
 	def skip_doc(self,s,i):
 	
 		# trace(`get_line(s,i)`)
@@ -1433,21 +1320,20 @@ class baseTangleCommands:
 		doc = s[doc1:i]
 		# trace(doc)
 		return i, doc
-	#@-body
-	#@-node:4::skip_doc
-	#@+node:5::skip_headline
-	#@+body
-	#@+at
-	#  This function sets ivars that keep track of the indentation level. We 
+	#@nonl
+	#@-node:skip_doc
+	#@+node:skip_headline
+	#@+at 
+	#@nonl
+	# This function sets ivars that keep track of the indentation level. We 
 	# also remember where the next line starts because it is assumed to be the 
 	# first line of a documentation section.
 	# 
 	# A headline can contain a leading section name.  If it does, we 
 	# substitute the section name if we see an @c directive in the body text.
-
 	#@-at
 	#@@c
-
+	
 	def skip_headline(self,v):
 	
 		# trace(`v`)
@@ -1459,12 +1345,9 @@ class baseTangleCommands:
 			self.header_name = None
 		else:
 			self.header_name = s[j:end]
-	#@-body
-	#@-node:5::skip_headline
-	#@-node:1::Pass 1
-	#@+node:2::Pass 2
-	#@+node:1::oblank, oblanks, os, otab, otabs (Tangle)
-	#@+body
+	#@nonl
+	#@-node:skip_headline
+	#@+node:oblank, oblanks, os, otab, otabs (Tangle)
 	def oblank (self):
 		self.oblanks(1)
 	
@@ -1490,21 +1373,20 @@ class baseTangleCommands:
 	def otabs (self,n):
 		if abs(n) > 0:
 			self.output_file.write('\t' * abs(n))
-	#@-body
-	#@-node:1::oblank, oblanks, os, otab, otabs (Tangle)
-	#@+node:2::tangle.put_all_roots
-	#@+body
-	#@+at
-	#  This is the top level method of the second pass. It creates a separate 
-	# C file for each @root directive in the outline. As will be seen 
-	# later,the file is actually written only if the new version of the file 
-	# is different from the old version,or if the file did not exist 
-	# previously. If changed_only_flag FLAG is true only changed roots are 
-	# actually written.
-
+	#@nonl
+	#@-node:oblank, oblanks, os, otab, otabs (Tangle)
+	#@+node:tangle.put_all_roots
+	#@+at 
+	#@nonl
+	# This is the top level method of the second pass. It creates a separate C 
+	# file for each @root directive in the outline. As will be seen later,the 
+	# file is actually written only if the new version of the file is 
+	# different from the old version,or if the file did not exist previously. 
+	# If changed_only_flag FLAG is true only changed roots are actually 
+	# written.
 	#@-at
 	#@@c
-
+	
 	def put_all_roots(self):
 	
 		c = self.commands ; outline_name = c.frame.mFileName
@@ -1530,10 +1412,8 @@ class baseTangleCommands:
 			except:
 				es("Can not create: " + temp_name)
 				break
-			
-			#@<<Get root specific attributes>>
-			#@+node:1::<<Get root specific attributes>>
-			#@+body
+			#@		<<Get root specific attributes>>
+			#@+node:<<Get root specific attributes>>
 			# Stephen Schaefer, 9/2/02
 			# Retrieve the full complement of state for the root node
 			self.language = section.root_attributes.language
@@ -1547,24 +1427,20 @@ class baseTangleCommands:
 			self.tab_width = section.root_attributes.tab_width
 			# Stephen P. Schaefer, 9/13/2002
 			self.first_lines = section.root_attributes.first_lines
-			#@-body
-			#@-node:1::<<Get root specific attributes>>
-
-			
-			#@<<Put @first lines>>
-			#@+node:2::<<Put @first lines>>
-			#@+body
+			#@nonl
+			#@-node:<<Get root specific attributes>>
+			#@nl
+			#@		<<Put @first lines>>
+			#@+node:<<Put @first lines>>
 			# Stephen P. Schaefer 9/13/2002
 			if self.first_lines:
 				self.os(self.first_lines)
-			#@-body
-			#@-node:2::<<Put @first lines>>
-
+			#@nonl
+			#@-node:<<Put @first lines>>
+			#@nl
 			if self.use_header_flag and self.print_mode == "verbose":
-				
-				#@<< Write a banner at the start of the output file >>
-				#@+node:3::<<Write a banner at the start of the output file>>
-				#@+body
+				#@			<< Write a banner at the start of the output file >>
+				#@+node:<<Write a banner at the start of the output file>>
 				if self.single_comment_string:
 					self.os(self.single_comment_string)
 					self.os(" Created by Leo from: ")
@@ -1576,10 +1452,8 @@ class baseTangleCommands:
 					self.os(outline_name)
 					self.oblank() ; self.os(self.end_comment_string)
 					self.onl() ; self.onl()
-				
-				#@-body
-				#@-node:3::<<Write a banner at the start of the output file>>
-
+				#@-node:<<Write a banner at the start of the output file>>
+				#@nl
 			for part in section.parts:
 				if part.is_root:
 					self.tangle_indent = 0 # Initialize global.
@@ -1591,32 +1465,28 @@ class baseTangleCommands:
 				update_file_if_changed(file_name,temp_name)
 			else:
 				es("unchanged:  " + file_name)
-				
-				#@<< Erase the temporary file >>
-				#@+node:4::<< Erase the temporary file >>
-				#@+body
+				#@			<< Erase the temporary file >>
+				#@+node:<< Erase the temporary file >>
 				try: # Just delete the temp file.
 					os.remove(temp_name)
 				except: pass
-				
-				#@-body
-				#@-node:4::<< Erase the temporary file >>
-	#@-body
-	#@-node:2::tangle.put_all_roots
-	#@+node:3::put_code
-	#@+body
-	#@+at
-	#  This method outputs a code section, expanding section references by 
+				#@-node:<< Erase the temporary file >>
+				#@nl
+	#@nonl
+	#@-node:tangle.put_all_roots
+	#@+node:put_code
+	#@+at 
+	#@nonl
+	# This method outputs a code section, expanding section references by 
 	# their definition. We should see no @directives or section definitions 
 	# that would end the code section.
 	# 
 	# Most of the differences bewteen noweb mode and CWEB mode are handled by 
 	# token_type(called from put_newline). Here, the only difference is that 
 	# noweb handles double-@ signs only at the start of a line.
-
 	#@-at
 	#@@c
-
+	
 	def put_code(self,s,no_first_lws_flag):
 	
 		# trace(`get_line(s,0)`)
@@ -1631,10 +1501,8 @@ class baseTangleCommands:
 			ch = s[i]
 			if (match(s,i,"<<") and self.use_noweb_flag or
 				match(s,i,"@<") and self.use_cweb_flag):
-				
-				#@<< put possible section reference >>
-				#@+node:1::<<put possible section reference >>
-				#@+body
+				#@			<< put possible section reference >>
+				#@+node:<<put possible section reference >>
 				j, kind, name_end = self.is_section_name(s,i)
 				if kind == section_def:
 					# We are in the middle of a code section
@@ -1650,15 +1518,13 @@ class baseTangleCommands:
 					name = s[i:name_end]
 					self.put_section(s,i,name,name_end)
 					i = j
-				#@-body
-				#@-node:1::<<put possible section reference >>
-
+				#@nonl
+				#@-node:<<put possible section reference >>
+				#@nl
 			elif ch == '@': # We are in the middle of a line.
 				if self.use_cweb_flag:
-					
-					#@<< handle 2-character CWEB control codes >>
-					#@+node:2::<< handle 2-character CWEB control codes >>
-					#@+body
+					#@				<< handle 2-character CWEB control codes >>
+					#@+node:<< handle 2-character CWEB control codes >>
 					if match(s,i,"@@"):
 						# Handle double @ sign.
 						self.os('@') ; i += 2
@@ -1670,23 +1536,21 @@ class baseTangleCommands:
 							self.os("/*@" + s[i] + "*/") ; i += 1
 						else:
 							self.os("@") # The at sign is not part of a control code.
-					#@-body
-					#@-node:2::<< handle 2-character CWEB control codes >>
-
+					#@nonl
+					#@-node:<< handle 2-character CWEB control codes >>
+					#@nl
 				else:
-					
-					#@<< handle noweb @ < < convention >>
-					#@+node:3::<< handle noweb @ < < convention >>
-					#@+body
-					#@+at
-					#  The user must ensure that neither @ < < nor @ > > 
-					# occurs in comments or strings. However, it is valid for 
-					# @ < < or @ > > to appear in the doc chunk or in a 
-					# single-line comment.
-
+					#@				<< handle noweb @ < < convention >>
+					#@+node:<< handle noweb @ < < convention >>
+					#@+at 
+					#@nonl
+					# The user must ensure that neither @ < < nor @ > > occurs 
+					# in comments or strings. However, it is valid for @ < < 
+					# or @ > > to appear in the doc chunk or in a single-line 
+					# comment.
 					#@-at
 					#@@c
-
+					
 					if match(s,i,"@<<"):
 						self.os("/*@*/<<") ; i += 3
 					
@@ -1694,9 +1558,9 @@ class baseTangleCommands:
 						self.os("/*@*/>>") ; i += 3
 						
 					else: self.os("@") ; i += 1
-					#@-body
-					#@-node:3::<< handle noweb @ < < convention >>
-
+					#@nonl
+					#@-node:<< handle noweb @ < < convention >>
+					#@nl
 			elif ch == body_ignored_newline:
 				i += 1
 			elif ch == body_newline:
@@ -1706,10 +1570,9 @@ class baseTangleCommands:
 					self.os('@') ; i += 2
 			else: self.os(s[i]) ; i += 1
 			assert(progress < i)
-	#@-body
-	#@-node:3::put_code
-	#@+node:4::put_doc
-	#@+body
+	#@nonl
+	#@-node:put_code
+	#@+node:put_doc
 	# This method outputs a doc section within a block comment.
 	
 	def put_doc(self,s):
@@ -1735,18 +1598,16 @@ class baseTangleCommands:
 				self.put_leading_ws(self.tangle_indent)
 				if use_block_comment:
 					self.os(self.start_comment_string)
-				
-				#@<< put the doc part >>
-				#@+node:1::<<put the doc part>>
-				#@+body
-				#@+at
-				#  This code fills and outputs each line of a doc part. It 
+				#@			<< put the doc part >>
+				#@+node:<<put the doc part>>
+				#@+at 
+				#@nonl
+				# This code fills and outputs each line of a doc part. It 
 				# keeps track of whether the next word will fit on a line,and 
 				# starts a new line if needed.
-
 				#@-at
 				#@@c
-
+				
 				if use_single_comment:
 					# New code: 5/31/00
 					self.os(self.single_comment_string) ; self.otab()
@@ -1758,19 +1619,18 @@ class baseTangleCommands:
 				line_width += max(0,self.tangle_indent)
 				words = 0 ; word_width = 0
 				while i < len(s):
-					
-					#@<<output or skip whitespace or newlines>>
-					#@+node:1::<<output or skip whitespace or newlines>>
-					#@+body
-					#@+at
-					#  This outputs whitespace if it fits, and ignores it 
+					#@	<<output or skip whitespace or newlines>>
+					#@+node:<<output or skip whitespace or newlines>>
+					#@+at 
+					#@nonl
+					# This outputs whitespace if it fits, and ignores it 
 					# otherwise, and starts a new line if a newline is seen. 
 					# The effect of self code is that we never start a line 
-					# with whitespace that was originally at the end of a line.
-
+					# with whitespace that was originally at the end of a 
+					# line.
 					#@-at
 					#@@c
-
+					
 					while is_ws_or_nl(s,i):
 						ch = s[i]
 						if ch == '\t':
@@ -1797,35 +1657,29 @@ class baseTangleCommands:
 							self.put_leading_ws(self.tangle_indent)
 							# tangle_indent is in spaces.
 							line_width += max(0,self.tangle_indent)
-					
-					#@-body
-					#@-node:1::<<output or skip whitespace or newlines>>
-
+					#@-node:<<output or skip whitespace or newlines>>
+					#@nl
 					if i >= len(s):
 						break
-					
-					#@<<compute the width of the next word>>
-					#@+node:2::<<compute the width of the next word>>
-					#@+body
+					#@	<<compute the width of the next word>>
+					#@+node:<<compute the width of the next word>>
 					j = i ; word_width = 0
 					while j < len(s) and not is_ws_or_nl(s,j):
 						word_width += 1
 						j += 1
-					#@-body
-					#@-node:2::<<compute the width of the next word>>
-
+					#@nonl
+					#@-node:<<compute the width of the next word>>
+					#@nl
 					if words == 0 or line_width + word_width < width:
 						words += 1
-						
-						#@<<output next word>>
-						#@+node:3::<<output next word>>
-						#@+body
+						#@		<<output next word>>
+						#@+node:<<output next word>>
 						while i < len(s) and not is_ws_or_nl(s,i):
 							self.os(s[i])
 							i += 1
-						#@-body
-						#@-node:3::<<output next word>>
-
+						#@nonl
+						#@-node:<<output next word>>
+						#@nl
 						line_width += word_width
 					else:
 						# 11-SEP-2002 DTHEIN: Fixed linewrapping bug in
@@ -1841,20 +1695,17 @@ class baseTangleCommands:
 						self.put_leading_ws(self.tangle_indent)
 						# tangle_indent is in spaces.
 						line_width += max(0,self.tangle_indent)
-				
-				#@-body
-				#@-node:1::<<put the doc part>>
-
+				#@-node:<<put the doc part>>
+				#@nl
 				self.onl()
 				self.put_leading_ws(self.tangle_indent)
 				if use_block_comment:
 					self.os(self.end_comment_string)
 				self.onl()
 			else: self.onl()
-	#@-body
-	#@-node:4::put_doc
-	#@+node:5::put_leading_ws
-	#@+body
+	#@nonl
+	#@-node:put_doc
+	#@+node:put_leading_ws
 	# Puts tabs and spaces corresponding to n spaces, assuming that we are at the start of a line.
 	
 	def put_leading_ws(self,n):
@@ -1868,27 +1719,22 @@ class baseTangleCommands:
 			self.oblanks(r) 
 		else:
 			self.oblanks(n)
-	
-	#@-body
-	#@-node:5::put_leading_ws
-	#@+node:6::put_newline
-	#@+body
-	#@+at
-	#  This method handles scanning when putting the start of a new line. 
+	#@-node:put_leading_ws
+	#@+node:put_newline
+	#@+at 
+	#@nonl
+	# This method handles scanning when putting the start of a new line. 
 	# Unlike the corresponding method in pass one, this method doesn't need to 
 	# set a done flag in the caller because the caller already knows where the 
 	# code section ends.
-
 	#@-at
 	#@@c
-
+	
 	def put_newline(self,s,i,no_first_lws_flag):
 	
 		kind, end = self.token_type(s,i,dont_report_errors)
-		
-		#@<< Output leading white space except for blank lines >>
-		#@+node:1::<< Output leading white space except for blank lines >>
-		#@+body
+		#@	<< Output leading white space except for blank lines >>
+		#@+node:<< Output leading white space except for blank lines >>
 		j = i ; i = skip_ws(s,i)
 		if i < len(s) and not is_nl(s,i):
 			# Conditionally output the leading previous leading whitespace.
@@ -1897,9 +1743,9 @@ class baseTangleCommands:
 			# Always output the leading whitespace of _this_ line.
 			k, width = skip_leading_ws_with_indent(s,j,self.tab_width)
 			self.put_leading_ws(width)
-		#@-body
-		#@-node:1::<< Output leading white space except for blank lines >>
-
+		#@nonl
+		#@-node:<< Output leading white space except for blank lines >>
+		#@nl
 		if i >= len(s):
 			return i
 		elif kind == at_web or kind == at_at:
@@ -1911,10 +1757,9 @@ class baseTangleCommands:
 			# These should have set limit in pass 1.
 			assert(kind != section_def and kind != at_chapter and kind != at_section)
 		return i
-	#@-body
-	#@-node:6::put_newline
-	#@+node:7::put_part_node
-	#@+body
+	#@nonl
+	#@-node:put_newline
+	#@+node:put_part_node
 	# This method outputs one part of a section definition.
 	
 	def put_part_node(self,part,no_first_lws_flag):
@@ -1929,20 +1774,19 @@ class baseTangleCommands:
 	
 		if part.code:
 			self.put_code(part.code,no_first_lws_flag)
-	#@-body
-	#@-node:7::put_part_node
-	#@+node:8::put_section
-	#@+body
-	#@+at
-	#  This method outputs the definition of a section and all sections 
+	#@nonl
+	#@-node:put_part_node
+	#@+node:put_section
+	#@+at 
+	#@nonl
+	# This method outputs the definition of a section and all sections 
 	# referenced from the section. name is the section's name. This code 
 	# checks for recursive definitions by calling section_check(). We can not 
 	# allow section x to expand to code containing another call to section x, 
 	# either directly or indirectly.
-
 	#@-at
 	#@@c
-
+	
 	def put_section(self,s,i,name,name_end):
 	
 		j = skip_line(s,i)
@@ -1952,10 +1796,8 @@ class baseTangleCommands:
 		inner_old_indent = 0 # Set below.
 		newline_flag = false  # True if the line ends with the reference.
 		assert(match(name,0,"<<") or match(name,0,"@<"))
-		
-		#@<< Calculate the new value of tangle_indent >>
-		#@+node:1::<< Calculate the new value of tangle_indent >>
-		#@+body
+		#@	<< Calculate the new value of tangle_indent >>
+		#@+node:<< Calculate the new value of tangle_indent >>
 		# Find the start of the line containing the reference.
 		j = i
 		while j > 0 and not is_nl(s,j):
@@ -1980,37 +1822,33 @@ class baseTangleCommands:
 				((self.use_noweb_flag and s[j] != '<') or
 				(self.use_cweb_flag and s[j] != '@'))):
 			self.tangle_indent += abs(self.tab_width)
-		#@-body
-		#@-node:1::<< Calculate the new value of tangle_indent >>
-
-		
-		#@<< Set 'newline_flag' if the line ends with the reference >>
-		#@+node:2::<< Set 'newline_flag' if the line ends with the reference >>
-		#@+body
+		#@nonl
+		#@-node:<< Calculate the new value of tangle_indent >>
+		#@nl
+		#@	<< Set 'newline_flag' if the line ends with the reference >>
+		#@+node:<< Set 'newline_flag' if the line ends with the reference >>
 		if self.print_mode != "silent":
 			i = name_end
 			i = skip_ws(s,i)
 			newline_flag = (i >= len(s) or is_nl(s,i))
-		#@-body
-		#@-node:2::<< Set 'newline_flag' if the line ends with the reference >>
-
+		#@nonl
+		#@-node:<< Set 'newline_flag' if the line ends with the reference >>
+		#@nl
 		section = self.st_lookup(name,not_root_name)
 		if section and section.parts:
 			# Expand the section only if we are not already expanding it.
 			if self.section_check(name):
 				self.section_stack.append(name)
-				
-				#@<< put all parts of the section definition >>
-				#@+node:3::<<put all parts of the section definition>>
-				#@+body
-				#@+at
-				#  This section outputs each part of a section definition. We 
+				#@			<< put all parts of the section definition >>
+				#@+node:<<put all parts of the section definition>>
+				#@+at 
+				#@nonl
+				# This section outputs each part of a section definition. We 
 				# first count how many parts there are so that the code can 
 				# output a comment saying 'part x of y'.
-
 				#@-at
 				#@@c
-
+				
 				# Output each part of the section.
 				sections = len(section.parts)
 				count = 0
@@ -2023,10 +1861,8 @@ class baseTangleCommands:
 					inner_old_indent = self.tangle_indent
 					# 4/3/01: @silent inhibits newlines after section expansion.
 					if self.print_mode != "silent":
-						
-						#@<< Put the section name in a comment >>
-						#@+node:1::<< Put the section name in a comment >>
-						#@+body
+						#@		<< Put the section name in a comment >>
+						#@+node:<< Put the section name in a comment >>
 						if count > 1:
 							self.onl()
 							self.put_leading_ws(self.tangle_indent)
@@ -2035,52 +1871,46 @@ class baseTangleCommands:
 						name = string.rstrip(name)
 						if self.single_comment_string:
 							self.os(self.single_comment_string) ; self.oblank() ; self.os(name)
-							
-							#@<< put (n of m) >>
-							#@+node:1::<< put ( n of m ) >>
-							#@+body
+							#@	<< put (n of m) >>
+							#@+node:<< put ( n of m ) >>
 							if sections > 1:
 								self.oblank()
 								self.os("(" + `count` + " of " + `sections` + ")")
-							#@-body
-							#@-node:1::<< put ( n of m ) >>
-
+							#@nonl
+							#@-node:<< put ( n of m ) >>
+							#@nl
 						else:
 							assert(
 								self.start_comment_string and len(self.start_comment_string) > 0 and
 								self.end_comment_string and len(self.end_comment_string)> 0)
 							self.os(self.start_comment_string) ; self.oblank() ; self.os(name)
-							
-							#@<< put (n of m) >>
-							#@+node:1::<< put ( n of m ) >>
-							#@+body
+							#@	<< put (n of m) >>
+							#@+node:<< put ( n of m ) >>
 							if sections > 1:
 								self.oblank()
 								self.os("(" + `count` + " of " + `sections` + ")")
-							#@-body
-							#@-node:1::<< put ( n of m ) >>
-
+							#@nonl
+							#@-node:<< put ( n of m ) >>
+							#@nl
 							self.oblank() ; self.os(self.end_comment_string)
 						
 						self.onl() # Always output a newline.
-						#@-body
-						#@-node:1::<< Put the section name in a comment >>
-
+						#@nonl
+						#@-node:<< Put the section name in a comment >>
+						#@nl
 					self.put_part_node(part,no_first_leading_ws_flag)
 					# 4/3/01: @silent inhibits newlines after section expansion.
 					if count == sections and (self.print_mode != "silent" and self.print_mode != "quiet"):
-						
-						#@<< Put the ending comment >>
-						#@+node:2::<< Put the ending comment >>
-						#@+body
-						#@+at
-						#  We do not produce an ending comment unless we are 
+						#@		<< Put the ending comment >>
+						#@+node:<< Put the ending comment >>
+						#@+at 
+						#@nonl
+						# We do not produce an ending comment unless we are 
 						# ending the last part of the section,and the comment 
 						# is clearer if we don't say(n of m).
-
 						#@-at
 						#@@c
-
+						
 						self.onl() ; self.put_leading_ws(self.tangle_indent)
 						#  Don't print trailing whitespace
 						while name_end > 0 and is_ws(s[name_end-1]):
@@ -2094,19 +1924,18 @@ class baseTangleCommands:
 							self.os("-- end -- ") ; self.os(name)
 							self.oblank() ; self.os(self.end_comment_string)
 							
-
-						#@+at
-						#  The following code sets a flag for untangle.
+						#@+at 
+						#@nonl
+						# The following code sets a flag for untangle.
 						# 
 						# If something follows the section reference we must 
 						# add a newline, otherwise the "something" would 
 						# become part of the comment.  Any whitespace 
 						# following the (!newline) should follow the section 
 						# defintion when Untangled.
-
 						#@-at
 						#@@c
-
+						
 						if not newline_flag:
 							self.os(" (!newline)") # LeoCB puts the leading blank, so we must do so too.
 							# Put the whitespace following the reference.
@@ -2114,20 +1943,18 @@ class baseTangleCommands:
 								self.os(s[name_end])
 								name_end += 1
 							self.onl() # We must supply the newline!
-						#@-body
-						#@-node:2::<< Put the ending comment >>
-
+						#@nonl
+						#@-node:<< Put the ending comment >>
+						#@nl
 					# Restore the old indent.
 					self.tangle_indent = inner_old_indent
-				#@-body
-				#@-node:3::<<put all parts of the section definition>>
-
+				#@nonl
+				#@-node:<<put all parts of the section definition>>
+				#@nl
 				self.section_stack.pop()
 		else:
-			
-			#@<< Put a comment about the undefined section >>
-			#@+node:4::<<Put a comment about the undefined section>>
-			#@+body
+			#@		<< Put a comment about the undefined section >>
+			#@+node:<<Put a comment about the undefined section>>
 			self.onl() ; self.put_leading_ws(self.tangle_indent)
 			
 			if self.print_mode != "silent":
@@ -2140,29 +1967,28 @@ class baseTangleCommands:
 					self.oblank() ; self.os(self.end_comment_string) ; self.onl()
 			
 			self.error("Undefined section: " + name)
-			#@-body
-			#@-node:4::<<Put a comment about the undefined section>>
-
+			#@nonl
+			#@-node:<<Put a comment about the undefined section>>
+			#@nl
 		if not newline_flag:
 			self.put_leading_ws(trailing_ws_indent)
 		self.tangle_indent = outer_old_indent
 		return i, name_end
-	#@-body
-	#@-node:8::put_section
-	#@+node:9::section_check
-	#@+body
-	#@+at
-	#  We can not allow a section to be defined in terms of itself, either 
+	#@nonl
+	#@-node:put_section
+	#@+node:section_check
+	#@+at 
+	#@nonl
+	# We can not allow a section to be defined in terms of itself, either 
 	# directly or indirectly.
 	# 
 	# We push an entry on the section stack whenever beginning to expand a 
 	# section and pop the section stack at the end of each section.  This 
 	# method checks whether the given name appears in the stack. If so, the 
 	# section is defined in terms of itself.
-
 	#@-at
 	#@@c
-
+	
 	def section_check (self,name):
 	
 		if name in self.section_stack:
@@ -2172,20 +1998,16 @@ class baseTangleCommands:
 			self.error(s)
 			return false
 		return true
-	#@-body
-	#@-node:9::section_check
-	#@-node:2::Pass 2
-	#@-node:4::tangle
-	#@+node:5::tst
-	#@+node:1::st_check
-	#@+body
-	#@+at
-	#  This function checks the given symbol table for defined but never 
+	#@nonl
+	#@-node:section_check
+	#@+node:st_check
+	#@+at 
+	#@nonl
+	# This function checks the given symbol table for defined but never 
 	# referenced sections.
-
 	#@-at
 	#@@c
-
+	
 	def st_check(self):
 	
 		keys = self.tst.keys()
@@ -2199,10 +2021,9 @@ class baseTangleCommands:
 					section.name +
 					choose(self.use_noweb_flag," >>"," @>") +
 					" has been defined but not used.")
-	#@-body
-	#@-node:1::st_check
-	#@+node:2::st_dump
-	#@+body
+	#@nonl
+	#@-node:st_check
+	#@+node:st_dump
 	# Dumps the given symbol table in a readable format.
 	
 	def st_dump(self,verbose_flag=true):
@@ -2218,10 +2039,9 @@ class baseTangleCommands:
 				type = choose(len(section.parts)>0,"  ","un")
 				s += ("\n" + type + "defined:[" + section.name + "]")
 		return s
-	#@-body
-	#@-node:2::st_dump
-	#@+node:3::st_dump_node
-	#@+body
+	#@nonl
+	#@-node:st_dump
+	#@+node:st_dump_node
 	# Dumps each part of a section's definition.
 	
 	def st_dump_node(self,section):
@@ -2240,18 +2060,17 @@ class baseTangleCommands:
 				s += "\ncode: [" + `part.code` + "]"
 			s += "\n----- end of partList\n"
 		return s
-	#@-body
-	#@-node:3::st_dump_node
-	#@+node:4::st_enter
-	#@+body
-	#@+at
-	#  Enters names and their associated code and doc parts into the given 
+	#@nonl
+	#@-node:st_dump_node
+	#@+node:st_enter
+	#@+at 
+	#@nonl
+	# Enters names and their associated code and doc parts into the given 
 	# symbol table.
 	# `is_dirty` is used only when entering root names.
-
 	#@-at
 	#@@c
-
+	
 	def st_enter(self,name,code,doc,multiple_parts_flag,is_root_flag):
 		
 		# trace(`name`)
@@ -2266,10 +2085,8 @@ class baseTangleCommands:
 				if code and len(code) > 0: code = string.rstrip(code) # remove trailing lines.
 			if len(code) == 0: code = None
 		if code:
-			
-			#@<< check for duplicate code definitions >>
-			#@+node:1::<<check for duplicate code definitions >>
-			#@+body
+			#@		<< check for duplicate code definitions >>
+			#@+node:<<check for duplicate code definitions >>
 			for part in section.parts:
 			
 				if part.code and multiple_parts_flag == disallow_multiple_parts:
@@ -2280,9 +2097,9 @@ class baseTangleCommands:
 				if self.tangling and code and code == part.code:
 					es("Warning: possible duplicate definition of: <<" +
 						section.name + ">>")
-			#@-body
-			#@-node:1::<<check for duplicate code definitions >>
-
+			#@nonl
+			#@-node:<<check for duplicate code definitions >>
+			#@nl
 		if code or doc:
 			part = part_node(name,code,doc,is_root_flag,false) # not dirty
 			section.parts.append(part)
@@ -2291,23 +2108,18 @@ class baseTangleCommands:
 		if is_root_flag:
 			self.root_list.append(section)
 			section.referenced = true # Mark the root as referenced.
-			
-			#@<<remember root node attributes>>
-			#@+node:2::<<remember root node attributes>>
-			#@+body
+			#@		<<remember root node attributes>>
+			#@+node:<<remember root node attributes>>
 			# Stephen Schaefer, 9/2/02
 			# remember the language and comment characteristics
 			section.root_attributes = root_attributes(self)
-			#@-body
-			#@-node:2::<<remember root node attributes>>
-
+			#@nonl
+			#@-node:<<remember root node attributes>>
+			#@nl
 		# Stephen Schaefer, 9/2/02
 		return len(section.parts) # part number
-	
-	#@-body
-	#@-node:4::st_enter
-	#@+node:5::st_enter_root_name
-	#@+body
+	#@-node:st_enter
+	#@+node:st_enter_root_name
 	# Enters a root name into the given symbol table.
 	
 	def st_enter_root_name(self,name,code,doc):
@@ -2315,31 +2127,29 @@ class baseTangleCommands:
 		# assert(code)
 		if name: # User errors can result in an empty @root name.
 			self.st_enter(name,code,doc,disallow_multiple_parts,is_root_name)
-	#@-body
-	#@-node:5::st_enter_root_name
-	#@+node:6::st_enter_section_name
-	#@+body
-	#@+at
-	#  This function enters a section name into the given symbol table.
+	#@nonl
+	#@-node:st_enter_root_name
+	#@+node:st_enter_section_name
+	#@+at 
+	#@nonl
+	# This function enters a section name into the given symbol table.
 	# The code and doc pointers are None for references.
-
 	#@-at
 	#@@c
-
+	
 	def st_enter_section_name(self,name,code,doc,multiple_parts_flag):
 		
 		return self.st_enter(name,code,doc,multiple_parts_flag,not_root_name)
-	#@-body
-	#@-node:6::st_enter_section_name
-	#@+node:7::st_lookup
-	#@+body
-	#@+at
-	#  This function looks up name in the symbol table and creates a tst_node 
+	#@nonl
+	#@-node:st_enter_section_name
+	#@+node:st_lookup
+	#@+at 
+	#@nonl
+	# This function looks up name in the symbol table and creates a tst_node 
 	# for it if it does not exist.
-
 	#@-at
 	#@@c
-
+	
 	def st_lookup(self,name,is_root_flag):
 	
 		if is_root_flag:
@@ -2356,12 +2166,9 @@ class baseTangleCommands:
 			section = tst_node(key,is_root_flag)
 			self.tst [key] = section
 			return section
-	#@-body
-	#@-node:7::st_lookup
-	#@-node:5::tst
-	#@+node:6::ust
-	#@+node:1::ust_dump
-	#@+body
+	#@nonl
+	#@-node:st_lookup
+	#@+node:ust_dump
 	def ust_dump (self):
 	
 		s = "\n---------- Untangle Symbol Table ----------"
@@ -2376,50 +2183,45 @@ class baseTangleCommands:
 				s += `get_line(part.code,0)`
 		s += "\n--------------------"
 		return s
-	#@-body
-	#@-node:1::ust_dump
-	#@+node:2::ust_enter
-	#@+body
-	#@+at
-	#  This routine enters names and their code parts into the given table. 
-	# The 'part' and 'of' parameters are taken from the "(part n of m)" 
-	# portion of the line that introduces the section definition in the C code.
+	#@nonl
+	#@-node:ust_dump
+	#@+node:ust_enter
+	#@+at 
+	#@nonl
+	# This routine enters names and their code parts into the given table. The 
+	# 'part' and 'of' parameters are taken from the "(part n of m)" portion of 
+	# the line that introduces the section definition in the C code.
 	# 
 	# If no part numbers are given the caller should set the 'part' and 'of' 
-	# parameters to zero.  The caller is reponsible for checking for duplicate parts.
+	# parameters to zero.  The caller is reponsible for checking for duplicate 
+	# parts.
 	# 
 	# This function handles names scanned from a source file; the 
 	# corresponding st_enter routine handles names scanned from outlines.
-
 	#@-at
 	#@@c
-
+	
 	def ust_enter (self,name,part,of,code,nl_flag,is_root_flag):
 	
 		if not is_root_flag:
 			name = self.standardize_name(name)
-		
-		#@<< remove blank lines from the start and end of the text >>
-		#@+node:1::<< remove blank lines from the start and end of the text >>
-		#@+body
+		#@	<< remove blank lines from the start and end of the text >>
+		#@+node:<< remove blank lines from the start and end of the text >>
 		i = skip_blank_lines(code,0)
 		if i > 0:
 			code = code[i:]
 			code = string.rstrip(code)
-		
-		#@-body
-		#@-node:1::<< remove blank lines from the start and end of the text >>
-
+		#@-node:<< remove blank lines from the start and end of the text >>
+		#@nl
 		u = ust_node(name,code,part,of,nl_flag,false) # update_flag
 		if not self.ust.has_key(name):
 			self.ust[name] = u
 		section = self.ust[name]
 		section.parts[part]=u # Parts may be defined in any order.
 		# trace("section name: [" + name + "](" + `part` + " of " + `of` + ")..."+`get_line(code,0)`)
-	#@-body
-	#@-node:2::ust_enter
-	#@+node:3::ust_lookup
-	#@+body
+	#@nonl
+	#@-node:ust_enter
+	#@+node:ust_lookup
 	# Searches the given table for a part matching the name and part number.
 	
 	def ust_lookup (self,name,part_number,is_root_flag,update_flag):
@@ -2440,17 +2242,16 @@ class baseTangleCommands:
 	
 		# trace("not found:" + name + " (" + `part_number` + ")...\n")
 		return None, false
-	#@-body
-	#@-node:3::ust_lookup
-	#@+node:4::ust_warn_about_orphans
-	#@+body
-	#@+at
-	#  This function issues a warning about any sections in the derived file 
+	#@nonl
+	#@-node:ust_lookup
+	#@+node:ust_warn_about_orphans
+	#@+at 
+	#@nonl
+	# This function issues a warning about any sections in the derived file 
 	# for which no corresponding section has been seen in the outline.
-
 	#@-at
 	#@@c
-
+	
 	def ust_warn_about_orphans (self):
 	
 		for section in self.ust.values():
@@ -2464,21 +2265,18 @@ class baseTangleCommands:
 						choose(self.use_noweb_flag," >>"," @>") +
 						" is not in the outline")
 					break # One warning per section is enough.
-	#@-body
-	#@-node:4::ust_warn_about_orphans
-	#@-node:6::ust
-	#@+node:7::untangle
-	#@+node:1::compare_comments
-	#@+body
-	#@+at
-	#  This function compares the interior of comments and returns true if 
-	# they are identical except for whitespace or newlines. It is up to the 
-	# caller to eliminate the opening and closing delimiters from the text to 
-	# be compared.
-
+	#@nonl
+	#@-node:ust_warn_about_orphans
+	#@+node:compare_comments
+	#@+at 
+	#@nonl
+	# This function compares the interior of comments and returns true if they 
+	# are identical except for whitespace or newlines. It is up to the caller 
+	# to eliminate the opening and closing delimiters from the text to be 
+	# compared.
 	#@-at
 	#@@c
-
+	
 	def compare_comments (self,s1,s2):
 	
 		tot_len = 0
@@ -2491,12 +2289,12 @@ class baseTangleCommands:
 			p1 = skip_ws_and_nl(s1,p1)
 			p2 = skip_ws_and_nl(s2,p2)
 			if self.comment and self.comment_end:
-				
-				#@<< Check both parts for @ comment conventions >>
-				#@+node:1::<< Check both parts for @ comment conventions >>
-				#@+body
-				#@+at
-				#  This code is used in forgiving_compare()and in compare_comments().
+				#@			<< Check both parts for @ comment conventions >>
+				#@+node:<< Check both parts for @ comment conventions >>
+				#@+at 
+				#@nonl
+				# This code is used in forgiving_compare()and in 
+				# compare_comments().
 				# 
 				# In noweb mode we allow / * @ * /  (without the spaces)to be 
 				# equal to @.
@@ -2506,11 +2304,11 @@ class baseTangleCommands:
 				# have to equate
 				# / * @ \\ * / with at-backslash.
 				# 
-				# We must be careful not to run afoul of this very convention here!
-
+				# We must be careful not to run afoul of this very convention 
+				# here!
 				#@-at
 				#@@c
-
+				
 				if p1 < len(s1) and s1[p1] == '@':
 					if match(s2,p2,self.comment + '@' + self.comment_end):
 						p1 += 1
@@ -2531,10 +2329,8 @@ class baseTangleCommands:
 						p2 += 2
 						p1 += tot_len + 2
 						continue
-				
-				#@-body
-				#@-node:1::<< Check both parts for @ comment conventions >>
-
+				#@-node:<< Check both parts for @ comment conventions >>
+				#@nl
 			if p1 >= len(s1) or p2 >= len(s2):
 				break
 			if s1[p1] != s2[p2]:
@@ -2543,17 +2339,15 @@ class baseTangleCommands:
 		p1 = skip_ws_and_nl(s1,p1)
 		p2 = skip_ws_and_nl(s2,p2)
 		return p1 == len(s1) and p2 == len(s2)
-	
-	#@-body
-	#@-node:1::compare_comments
-	#@+node:2::massage_block_comment (no longer used)
-	#@+body
-	#@+at
-	#  This function is called to massage an @doc part in the ust. We call 
-	# this routine only after a mismatch in @doc parts is found between the 
-	# ust and tst. On entry, the parameters point to the inside of a block C 
-	# comment: the opening and closing delimiters are not part of the text 
-	# handled by self routine.
+	#@-node:compare_comments
+	#@+node:massage_block_comment (no longer used)
+	#@+at 
+	#@nonl
+	# This function is called to massage an @doc part in the ust. We call this 
+	# routine only after a mismatch in @doc parts is found between the ust and 
+	# tst. On entry, the parameters point to the inside of a block C comment: 
+	# the opening and closing delimiters are not part of the text handled by 
+	# self routine.
 	# 
 	# This code removes newlines that may have been inserted by the Tangle 
 	# command in a block comment. Tangle may break lines differently in 
@@ -2563,10 +2357,9 @@ class baseTangleCommands:
 	# We count the leading whitespace from the first non-blank line and remove 
 	# this much whitespace from all lines. We also remove singleton newlines 
 	# and replace sequences of two or more newlines by a single newline.
-
 	#@-at
 	#@@c
-
+	
 	def massage_block_comment (self,s):
 	
 		c = self.commands
@@ -2597,20 +2390,17 @@ class baseTangleCommands:
 				j = i ; i = skip_to_end_of_line(s,i)
 				result += s[j:i]
 		return result
-	
-	#@-body
-	#@-node:2::massage_block_comment (no longer used)
-	#@+node:3::forgiving_compare
-	#@+body
-	#@+at
-	#  This is the "forgiving compare" function.  It compares two texts and 
+	#@-node:massage_block_comment (no longer used)
+	#@+node:forgiving_compare
+	#@+at 
+	#@nonl
+	# This is the "forgiving compare" function.  It compares two texts and 
 	# returns true if they are identical except for comments or non-critical 
 	# whitespace.  Whitespace inside strings or preprocessor directives must 
 	# match exactly.
-
 	#@-at
 	#@@c
-
+	
 	def forgiving_compare (self,name,part,s1,s2):
 	
 		if 0:
@@ -2619,10 +2409,8 @@ class baseTangleCommands:
 				  "\n2:"+ `get_line(s2,0)`)
 		s1 = toUnicode(s1,self.encoding) # 4/4/03
 		s2 = toUnicode(s2,self.encoding) # 4/4/03
-		
-		#@<< Define forgiving_compare vars >>
-		#@+node:1::<< Define forgiving_compare vars >>
-		#@+body
+		#@	<< Define forgiving_compare vars >>
+		#@+node:<< Define forgiving_compare vars >>
 		# scan_derived_file has set the ivars describing comment delims.
 		first1 = first2 = 0
 		
@@ -2631,21 +2419,21 @@ class baseTangleCommands:
 		if self.comment_end: tot_len += len(self.comment_end)
 		
 		CWEB_flag = (self.language == "c" and not self.use_noweb_flag)
-		#@-body
-		#@-node:1::<< Define forgiving_compare vars >>
-
+		#@nonl
+		#@-node:<< Define forgiving_compare vars >>
+		#@nl
 		p1 = skip_ws_and_nl(s1,0) 
 		p2 = skip_ws_and_nl(s2,0)
 		result = true
 		while result and p1 < len(s1) and p2 < len(s2):
 			first1 = p1 ; first2 = p2
 			if self.comment and self.comment_end:
-				
-				#@<< Check both parts for @ comment conventions >>
-				#@+node:2::<< Check both parts for @ comment conventions >>
-				#@+body
-				#@+at
-				#  This code is used in forgiving_compare()and in compare_comments().
+				#@			<< Check both parts for @ comment conventions >>
+				#@+node:<< Check both parts for @ comment conventions >>
+				#@+at 
+				#@nonl
+				# This code is used in forgiving_compare()and in 
+				# compare_comments().
 				# 
 				# In noweb mode we allow / * @ * /  (without the spaces)to be 
 				# equal to @.
@@ -2655,11 +2443,11 @@ class baseTangleCommands:
 				# have to equate
 				# / * @ \\ * / with at-backslash.
 				# 
-				# We must be careful not to run afoul of this very convention here!
-
+				# We must be careful not to run afoul of this very convention 
+				# here!
 				#@-at
 				#@@c
-
+				
 				if p1 < len(s1) and s1[p1] == '@':
 					if match(s2,p2,self.comment + '@' + self.comment_end):
 						p1 += 1
@@ -2680,67 +2468,51 @@ class baseTangleCommands:
 						p2 += 2
 						p1 += tot_len + 2
 						continue
-				
-				#@-body
-				#@-node:2::<< Check both parts for @ comment conventions >>
-
+				#@-node:<< Check both parts for @ comment conventions >>
+				#@nl
 			ch1 = s1[p1]
 			if ch1 == '\r' or ch1 == '\n':
-				
-				#@<< Compare non-critical newlines >>
-				#@+node:3::<< Compare non-critical newlines >>
-				#@+body
+				#@			<< Compare non-critical newlines >>
+				#@+node:<< Compare non-critical newlines >>
 				p1 = skip_ws_and_nl(s1,p1)
 				p2 = skip_ws_and_nl(s2,p2)
-				
-				#@-body
-				#@-node:3::<< Compare non-critical newlines >>
-
+				#@-node:<< Compare non-critical newlines >>
+				#@nl
 			elif ch1 ==  ' ' or ch1 == '\t':
-				
-				#@<< Compare non-critical whitespace >>
-				#@+node:4::<< Compare non-critical whitespace >>
-				#@+body
+				#@			<< Compare non-critical whitespace >>
+				#@+node:<< Compare non-critical whitespace >>
 				p1 = skip_ws(s1,p1)
 				p2 = skip_ws(s2,p2)
-				#@-body
-				#@-node:4::<< Compare non-critical whitespace >>
-
+				#@nonl
+				#@-node:<< Compare non-critical whitespace >>
+				#@nl
 			elif ch1 == '\'' or ch1 == '"':
-				
-				#@<< Compare possible strings >>
-				#@+node:6::<< Compare possible strings >>
-				#@+body
+				#@			<< Compare possible strings >>
+				#@+node:<< Compare possible strings >>
 				# This code implicitly assumes that string1_len == string2_len == 1.
 				# The match test ensures that the language actually supports strings.
 				
 				if (match(s1,p1,self.string1) or match(s1,p1,self.string2)) and s1[p1] == s2[p2]:
 				
 					if self.language == "pascal":
-						
-						#@<< Compare Pascal strings >>
-						#@+node:3::<< Compare Pascal strings >>
-						#@+body
-						#@+at
-						#  We assume the Pascal string is on a single line so 
+						#@		<< Compare Pascal strings >>
+						#@+node:<< Compare Pascal strings >>
+						#@+at 
+						#@nonl
+						# We assume the Pascal string is on a single line so 
 						# the problems with cr/lf do not concern us.
-
 						#@-at
 						#@@c
-
+						
 						first1 = p1 ; first2 = p2
 						p1 = skip_pascal_string(s1,p1)
 						p2 = skip_pascal_string(s2,p2)
 						result = s1[first1,p1] == s2[first2,p2]
-						
-						#@-body
-						#@-node:3::<< Compare Pascal strings >>
-
+						#@-node:<< Compare Pascal strings >>
+						#@nl
 					else:
-						
-						#@<< Compare C strings >>
-						#@+node:2::<< Compare C strings >>
-						#@+body
+						#@		<< Compare C strings >>
+						#@+node:<< Compare C strings >>
 						delim = s1[p1]
 						result = s1[p1] == s2[p2]
 						p1 += 1 ; p2 += 1
@@ -2756,36 +2528,29 @@ class baseTangleCommands:
 							else:
 								result = s1[p1] == s2[p2]
 								p1 += 1 ; p2 += 1
-						
-						#@-body
-						#@-node:2::<< Compare C strings >>
-
+						#@-node:<< Compare C strings >>
+						#@nl
 					if not result:
 						self.mismatch("Mismatched strings")
 				else:
-					
-					#@<< Compare single characters >>
-					#@+node:1::<< Compare single characters >>
-					#@+body
+					#@	<< Compare single characters >>
+					#@+node:<< Compare single characters >>
 					assert(p1 < len(s1) and p2 < len(s2))
 					result = s1[p1] == s2[p2]
 					p1 += 1 ; p2 += 1
 					if not result: self.mismatch("Mismatched single characters")
-					#@-body
-					#@-node:1::<< Compare single characters >>
-				#@-body
-				#@-node:6::<< Compare possible strings >>
-
+					#@nonl
+					#@-node:<< Compare single characters >>
+					#@nl
+				#@nonl
+				#@-node:<< Compare possible strings >>
+				#@nl
 			elif ch1 == '#':
-				
-				#@<< Compare possible preprocessor directives >>
-				#@+node:5::<< Compare possible preprocessor directives >>
-				#@+body
+				#@			<< Compare possible preprocessor directives >>
+				#@+node:<< Compare possible preprocessor directives >>
 				if self.language == "c":
-					
-					#@<< compare preprocessor directives >>
-					#@+node:2::<< Compare preprocessor directives >>
-					#@+body
+					#@	<< compare preprocessor directives >>
+					#@+node:<< Compare preprocessor directives >>
 					# We cannot assume that newlines are single characters.
 					
 					result = s1[p1] == s2[p2]
@@ -2802,30 +2567,24 @@ class baseTangleCommands:
 							p1 += 1 ; p2 += 1
 					if not result:
 						self.mismatch("Mismatched preprocessor directives")
-					#@-body
-					#@-node:2::<< Compare preprocessor directives >>
-
+					#@nonl
+					#@-node:<< Compare preprocessor directives >>
+					#@nl
 				else:
-					
-					#@<< compare single characters >>
-					#@+node:1::<< Compare single characters >>
-					#@+body
+					#@	<< compare single characters >>
+					#@+node:<< Compare single characters >>
 					assert(p1 < len(s1) and p2 < len(s2))
 					result = s1[p1] == s2[p2]
 					p1 += 1 ; p2 += 1
 					if not result: self.mismatch("Mismatched single characters")
-					#@-body
-					#@-node:1::<< Compare single characters >>
-
-				
-				#@-body
-				#@-node:5::<< Compare possible preprocessor directives >>
-
+					#@nonl
+					#@-node:<< Compare single characters >>
+					#@nl
+				#@-node:<< Compare possible preprocessor directives >>
+				#@nl
 			elif ch1 == '<' or ch1 == '@':
-				
-				#@<< Compare possible section references >>
-				#@+node:7::<< Compare possible section references >>
-				#@+body
+				#@			<< Compare possible section references >>
+				#@+node:<< Compare possible section references >>
 				if s1[p1] == '@' and CWEB_flag:  start_ref = "@<"
 				elif s1[p1] == '<' and not CWEB_flag:  start_ref = "<<"
 				else: start_ref = None
@@ -2848,14 +2607,12 @@ class baseTangleCommands:
 					p1 += 1 ; p2 += 1
 					if not result:
 						self.mismatch("Mismatch at '@' or '<'")
-				#@-body
-				#@-node:7::<< Compare possible section references >>
-
+				#@nonl
+				#@-node:<< Compare possible section references >>
+				#@nl
 			else:
-				
-				#@<< Compare comments or single characters >>
-				#@+node:8::<< Compare comments or single characters >>
-				#@+body
+				#@			<< Compare comments or single characters >>
+				#@+node:<< Compare comments or single characters >>
 				if match(s1,p1,self.sentinel) and match(s2,p2,self.sentinel):
 					first1 = p1 ; first2 = p2
 					p1 = skip_to_end_of_line(s1,p1)
@@ -2911,23 +2668,20 @@ class baseTangleCommands:
 					if not result:
 						self.mismatch("Mismatched alternalte block comments")
 				else:
-					
-					#@<< Compare single characters >>
-					#@+node:1::<< Compare single characters >>
-					#@+body
+					#@	<< Compare single characters >>
+					#@+node:<< Compare single characters >>
 					assert(p1 < len(s1) and p2 < len(s2))
 					result = s1[p1] == s2[p2]
 					p1 += 1 ; p2 += 1
 					if not result: self.mismatch("Mismatched single characters")
-					#@-body
-					#@-node:1::<< Compare single characters >>
-				#@-body
-				#@-node:8::<< Compare comments or single characters >>
-
-		
-		#@<< Make sure both parts have ended >>
-		#@+node:9::<< Make sure both parts have ended >>
-		#@+body
+					#@nonl
+					#@-node:<< Compare single characters >>
+					#@nl
+				#@nonl
+				#@-node:<< Compare comments or single characters >>
+				#@nl
+		#@	<< Make sure both parts have ended >>
+		#@+node:<< Make sure both parts have ended >>
 		if result:
 			p1 = skip_ws_and_nl(s1,p1)
 			p2 = skip_ws_and_nl(s2,p2)
@@ -2937,42 +2691,40 @@ class baseTangleCommands:
 				p1 = len(s1)
 				p2 = len(s2)
 				self.mismatch("One part ends before the other.")
-		#@-body
-		#@-node:9::<< Make sure both parts have ended >>
-
+		#@nonl
+		#@-node:<< Make sure both parts have ended >>
+		#@nl
 		if not result:
-			
-			#@<< trace the mismatch >>
-			#@+node:10::<< Trace the mismatch >>
-			#@+body
+			#@		<< trace the mismatch >>
+			#@+node:<< Trace the mismatch >>
 			if 0:
 				trace(self.message +
 					"\nPart " + `part` + ", section " + name +
 					"\n1:" + get_line(s1,p1) +
 					"\n2:" + get_line(s2,p2) )
-			#@-body
-			#@-node:10::<< Trace the mismatch >>
-
+			#@nonl
+			#@-node:<< Trace the mismatch >>
+			#@nl
 		return result
-	#@-body
-	#@-node:3::forgiving_compare
-	#@+node:4::mismatch
-	#@+body
+	#@nonl
+	#@-node:forgiving_compare
+	#@+node:mismatch
 	def mismatch (self,message):
 	
 		self.message = message
-	#@-body
-	#@-node:4::mismatch
-	#@+node:5::scan_derived_file (pass 1)
-	#@+body
-	#@+at
-	#  This function scans an entire derived file in s, discovering section or 
+	#@nonl
+	#@-node:mismatch
+	#@+node:scan_derived_file (pass 1)
+	#@+at 
+	#@nonl
+	# This function scans an entire derived file in s, discovering section or 
 	# part definitions.
 	# 
 	# This is the easiest place to delete leading whitespace from each line: 
 	# we simply don't copy it.  We also ignore leading blank lines and 
 	# trailing blank lines.  The resulting definition must compare equal using 
-	# the "forgiving" compare to any other definitions of that section or part.
+	# the "forgiving" compare to any other definitions of that section or 
+	# part.
 	# 
 	# We use a stack to handle nested expansions.  The outermost level of 
 	# expansion corresponds to the @root directive that created the file.  
@@ -2981,18 +2733,15 @@ class baseTangleCommands:
 	# self.root_name is the name of the file mentioned in the @root directive.
 	# 
 	# The caller has deleted all body_ignored_newlines from the text.
-
 	#@-at
 	#@@c
-
+	
 	def scan_derived_file (self,s):
 	
 		c = self.commands
 		self.def_stack = []
-		
-		#@<< set the private global matching vars >>
-		#@+node:1::<< set the private global matching vars >>
-		#@+body
+		#@	<< set the private global matching vars >>
+		#@+node:<< set the private global matching vars >>
 		# Set defaults from the public globals set by the @comment command.
 		if self.single_comment_string:
 			self.sentinel = self.single_comment_string
@@ -3025,25 +2774,21 @@ class baseTangleCommands:
 			self.comment2 = "(*" ; self.comment2_end = "*)"
 		if self.language == "latex": # 3/10/03: Joo-won Jung
 			self.string1 = self.string2 = None # This is debatable.
-		
-		#@-body
-		#@-node:1::<< set the private global matching vars >>
-
+		#@-node:<< set the private global matching vars >>
+		#@nl
 		line_indent = 0  # The indentation to use if we see a section reference.
 		# indent is the leading whitespace to be deleted.
 		i, indent = skip_leading_ws_with_indent(s,0,self.tab_width)
-		
-		#@<< Skip the header line output by tangle >>
-		#@+node:2::<< Skip the header line output by tangle >>
-		#@+body
+		#@	<< Skip the header line output by tangle >>
+		#@+node:<< Skip the header line output by tangle >>
 		if self.sentinel or self.comment:
 			line = choose(self.sentinel,self.sentinel,self.comment) + " Created by Leo from" 
 			if match(s,i,line):
 				# Even a block comment will end on the first line.
 				i = skip_to_end_of_line(s,i)
-		#@-body
-		#@-node:2::<< Skip the header line output by tangle >>
-
+		#@nonl
+		#@-node:<< Skip the header line output by tangle >>
+		#@nl
 		# The top level of the stack represents the root.
 		self.push_new_def_node(self.root_name,indent,1,1,true)
 		while i < len(s):
@@ -3051,25 +2796,22 @@ class baseTangleCommands:
 			if ch == body_ignored_newline:
 				i += 1 # ignore
 			elif ch == body_newline:
-				
-				#@<< handle the start of a new line >>
-				#@+node:3::<< handle the start of a new line >>
-				#@+body
+				#@			<< handle the start of a new line >>
+				#@+node:<< handle the start of a new line >>
 				self.copy(ch) ; i += 1 # This works because we have one-character newlines.
 				
 				# Set line_indent, used only if we see a section reference.
 				junk, line_indent = skip_leading_ws_with_indent(s,i,c.tab_width)
 				i = skip_leading_ws(s,i,indent,c.tab_width) # skip indent leading white space.
-				#@-body
-				#@-node:3::<< handle the start of a new line >>
-
+				#@nonl
+				#@-node:<< handle the start of a new line >>
+				#@nl
 			elif match(s,i,self.sentinel) and self.is_sentinel_line(s,i):
-				
-				#@<< handle a sentinel line  >>
-				#@+node:4::<< handle a sentinel line >>
-				#@+body
-				#@+at
-				#  This is the place to eliminate the proper amount of 
+				#@			<< handle a sentinel line  >>
+				#@+node:<< handle a sentinel line >>
+				#@+at 
+				#@nonl
+				# This is the place to eliminate the proper amount of 
 				# whitespace from the start of each line. We do this by 
 				# setting the 'indent' variable to the leading whitespace of 
 				# the first _non-blank_ line following the opening sentinel.
@@ -3077,26 +2819,23 @@ class baseTangleCommands:
 				# Tangle increases the indentation by one tab if the section 
 				# reference is not the first non-whitespace item on the 
 				# line,so self code must do the same.
-
 				#@-at
 				#@@c
-
+				
 				# trace(`get_line(s,i)`)
 				result,junk,kind,name,part,of,end,nl_flag = self.is_sentinel_line_with_data(s,i)
 				assert(result==true)
-				
 				#@<< terminate the previous part of this section if it exists >>
-				#@+node:1::<< terminate the previous part of this section if it exists >>
-				#@+body
-				#@+at
-				#  We have just seen a sentinel line. Any kind of sentinel 
-				# line will terminate a previous part of the present 
-				# definition. For end sentinel lines, the present section name 
-				# must match the name on the top of the stack.
-
+				#@+node:<< terminate the previous part of this section if it exists >>
+				#@+at 
+				#@nonl
+				# We have just seen a sentinel line. Any kind of sentinel line 
+				# will terminate a previous part of the present definition. 
+				# For end sentinel lines, the present section name must match 
+				# the name on the top of the stack.
 				#@-at
 				#@@c
-
+				
 				if len(self.def_stack) > 0:
 					dn = self.def_stack[-1]
 					if self.compare_section_names(name,dn.name):
@@ -3110,9 +2849,9 @@ class baseTangleCommands:
 								self.ust_enter(name,dn.part,dn.of,dn.code,dn.nl_flag,false) # not root
 					elif kind == end_sentinel_line:
 						self.error("Missing sentinel line for: " + name)
-				#@-body
-				#@-node:1::<< terminate the previous part of this section if it exists >>
-
+				#@nonl
+				#@-node:<< terminate the previous part of this section if it exists >>
+				#@nl
 				
 				if kind == start_sentinel_line:
 					indent = line_indent
@@ -3148,25 +2887,19 @@ class baseTangleCommands:
 					# Restore the old indentation level.
 					if len(self.def_stack) > 0:
 						indent = self.def_stack[-1].indent
-				#@-body
-				#@-node:4::<< handle a sentinel line >>
-
+				#@nonl
+				#@-node:<< handle a sentinel line >>
+				#@nl
 			elif match(s,i,self.line_comment) or match(s,i,self.verbatim):
-				
-				#@<< copy the entire line >>
-				#@+node:5::<< copy the entire line >>
-				#@+body
+				#@			<< copy the entire line >>
+				#@+node:<< copy the entire line >>
 				j = i ; i = skip_to_end_of_line(s,i)
 				self.copy(s[j:i])
-				
-				#@-body
-				#@-node:5::<< copy the entire line >>
-
+				#@-node:<< copy the entire line >>
+				#@nl
 			elif match(s,i,self.comment):
-				
-				#@<< copy a multi-line comment >>
-				#@+node:7::<< copy a multi-line comment >>
-				#@+body
+				#@			<< copy a multi-line comment >>
+				#@+node:<< copy a multi-line comment >>
 				assert(self.comment_end)
 				
 				# Scan for the ending delimiter.
@@ -3176,14 +2909,12 @@ class baseTangleCommands:
 				if match(s,i,self.comment_end):
 					i += len(self.comment_end)
 				self.copy(s[j:i])
-				#@-body
-				#@-node:7::<< copy a multi-line comment >>
-
+				#@nonl
+				#@-node:<< copy a multi-line comment >>
+				#@nl
 			elif match(s,i,self.comment2):
-				
-				#@<< copy an alternate multi-line comment >>
-				#@+node:8::<< copy an alternate multi-line comment >>
-				#@+body
+				#@			<< copy an alternate multi-line comment >>
+				#@+node:<< copy an alternate multi-line comment >>
 				assert(self.comment2_end)
 				j = i
 				# Scan for the ending delimiter.
@@ -3193,29 +2924,25 @@ class baseTangleCommands:
 				if match(s,i,self.comment2_end):
 					i += len(self.comment2)
 				self.copy(s[j:i])
-				#@-body
-				#@-node:8::<< copy an alternate multi-line comment >>
-
+				#@nonl
+				#@-node:<< copy an alternate multi-line comment >>
+				#@nl
 			elif match(s,i,self.string1) or match(s,i,self.string2):
-				
-				#@<< copy a string >>
-				#@+node:6::<< copy a string >>
-				#@+body
+				#@			<< copy a string >>
+				#@+node:<< copy a string >>
 				j = i
 				if self.language == "pascal":
 					i = skip_pascal_string(s,i)
 				else:
 					i = skip_string(s,i)
 				self.copy(s[j:i])
-				#@-body
-				#@-node:6::<< copy a string >>
-
+				#@nonl
+				#@-node:<< copy a string >>
+				#@nl
 			else:
 				self.copy(ch) ; i += 1
-		
-		#@<< end all open sections >>
-		#@+node:9::<< end all open sections >>
-		#@+body
+		#@	<< end all open sections >>
+		#@+node:<< end all open sections >>
 		dn= None
 		while len(self.def_stack) > 0:
 			dn = self.def_stack.pop()
@@ -3230,14 +2957,15 @@ class baseTangleCommands:
 				self.error("Missing root part")
 		else:
 			self.error("Missing root section")
-		#@-body
-		#@-node:9::<< end all open sections >>
-	#@-body
-	#@-node:5::scan_derived_file (pass 1)
-	#@+node:6::update_def (pass 2)
-	#@+body
-	#@+at
-	#  This function handles the actual updating of section definitions in the 
+		#@nonl
+		#@-node:<< end all open sections >>
+		#@nl
+	#@nonl
+	#@-node:scan_derived_file (pass 1)
+	#@+node:update_def (pass 2)
+	#@+at 
+	#@nonl
+	# This function handles the actual updating of section definitions in the 
 	# web.  Only code parts are updated, never doc parts.
 	# 
 	# During pass 2 of Untangle, skip_body() calls this routine when it 
@@ -3249,10 +2977,9 @@ class baseTangleCommands:
 	# We use the forgiving_compare() to compare code parts. It's not possible 
 	# to change only trivial whitespace using Untangle because 
 	# forgiving_compare() ignores trivial whitespace.
-
 	#@-at
 	#@@c
-
+	
 	# Major change: 2/23/01: Untangle never updates doc parts.
 	
 	def update_def (self,name,part_number,head,code,tail,is_root_flag): # Doc parts are never updated!
@@ -3267,18 +2994,16 @@ class baseTangleCommands:
 		if not found:
 			return false_ret  # Not an error.
 		ucode = toUnicode(part.code,self.encoding) # 4/4/03
-		
-		#@<< Remove leading blank lines and comments from ucode >>
-		#@+node:1::<< Remove leading blank lines and comments from ucode >>
-		#@+body
-		#@+at
-		#  We assume that any leading comments came from an @doc part.  This 
+		#@	<< Remove leading blank lines and comments from ucode >>
+		#@+node:<< Remove leading blank lines and comments from ucode >>
+		#@+at 
+		#@nonl
+		# We assume that any leading comments came from an @doc part.  This 
 		# isn't always valid and this code will eliminate such leading 
 		# comments.  This is a defect in Untangle; it can hardly be avoided.
-
 		#@-at
 		#@@c
-
+		
 		i = skip_blank_lines(ucode,0)
 		j = skip_ws(ucode,i)
 		# trace("comment,end,single:"+`self.comment`+":"+`self.comment_end`+":"+`self.line_comment`)
@@ -3299,9 +3024,9 @@ class baseTangleCommands:
 				j = skip_ws(ucode,i)
 		# Only the value of ucode matters here.
 		if ucode: ucode = ucode[i:]
-		#@-body
-		#@-node:1::<< Remove leading blank lines and comments from ucode >>
-
+		#@nonl
+		#@-node:<< Remove leading blank lines and comments from ucode >>
+		#@nl
 		# trace(`ucode`)
 		if not ucode or len(ucode) == 0:
 			return false_ret # Not an error.
@@ -3323,18 +3048,15 @@ class baseTangleCommands:
 			trace("ucode:" + `ucode`)
 			trace("tail:" + `tail`)
 		return body, len(head) + len(ucode),true
-	
-	#@-body
-	#@-node:6::update_def (pass 2)
-	#@+node:7::update_current_vnode
-	#@+body
-	#@+at
-	#  This function is called from within the Untangle logic to update the 
+	#@-node:update_def (pass 2)
+	#@+node:update_current_vnode
+	#@+at 
+	#@nonl
+	# This function is called from within the Untangle logic to update the 
 	# body text of self.v.
-
 	#@-at
 	#@@c
-
+	
 	def update_current_vnode (self,s):
 	
 		c = self.commands ; v = self.v
@@ -3346,18 +3068,15 @@ class baseTangleCommands:
 		v.setDirty()
 		v.setMarked()
 		c.endUpdate()
-	#@-body
-	#@-node:7::update_current_vnode
-	#@-node:7::untangle
-	#@+node:8::utility methods
-	#@+body
-	#@+at
-	#  These utilities deal with tangle ivars, so they should be methods.
-
+	#@nonl
+	#@-node:update_current_vnode
+	#@+node:utility methods
+	#@+at 
+	#@nonl
+	# These utilities deal with tangle ivars, so they should be methods.
 	#@-at
-	#@-body
-	#@+node:1::compare_section_names
-	#@+body
+	#@-node:utility methods
+	#@+node:compare_section_names
 	# Compares section names or root names.
 	# Arbitrary text may follow the section name on the same line.
 	
@@ -3381,19 +3100,17 @@ class baseTangleCommands:
 			return false
 		else: # A root name.
 			return s1 == s2
-	#@-body
-	#@-node:1::compare_section_names
-	#@+node:2::copy
-	#@+body
+	#@nonl
+	#@-node:compare_section_names
+	#@+node:copy
 	def copy (self, s):
 	
 		assert(len(self.def_stack) > 0)
 		dn = self.def_stack[-1] # Add the code at the top of the stack.
 		dn.code += s
-	#@-body
-	#@-node:2::copy
-	#@+node:3::error, pathError, warning
-	#@+body
+	#@nonl
+	#@-node:copy
+	#@+node:error, pathError, warning
 	def error (self,s):
 		self.errors += 1
 		es_error(s)
@@ -3405,27 +3122,22 @@ class baseTangleCommands:
 		
 	def warning (self,s):
 		es_error(s)
-	
-	#@-body
-	#@-node:3::error, pathError, warning
-	#@+node:4::is_end_of_directive
-	#@+body
+	#@-node:error, pathError, warning
+	#@+node:is_end_of_directive
 	# This function returns true if we are at the end of preprocessor directive.
 	
 	def is_end_of_directive (self,s,i):
 	
 		return is_nl(s,i) and not self.is_escaped(s,i)
-	#@-body
-	#@-node:4::is_end_of_directive
-	#@+node:5::is_end_of_string
-	#@+body
+	#@nonl
+	#@-node:is_end_of_directive
+	#@+node:is_end_of_string
 	def is_end_of_string (self,s,i,delim):
 	
 		return i < len(s) and s[i] == delim and not self.is_escaped(s,i)
-	#@-body
-	#@-node:5::is_end_of_string
-	#@+node:6::is_escaped
-	#@+body
+	#@nonl
+	#@-node:is_end_of_string
+	#@+node:is_escaped
 	# This function returns true if the s[i] is preceded by an odd number of back slashes.
 	
 	def is_escaped (self,s,i):
@@ -3435,11 +3147,8 @@ class baseTangleCommands:
 			back_slashes += 1
 			i -= 1
 		return (back_slashes & 1) == 1
-	
-	#@-body
-	#@-node:6::is_escaped
-	#@+node:7::is_section_name
-	#@+body
+	#@-node:is_escaped
+	#@+node:is_section_name
 	def is_section_name(self,s,i):
 	
 		kind = bad_section_name ; end = -1
@@ -3452,12 +3161,12 @@ class baseTangleCommands:
 	
 		# trace(`kind` + ":" + `get_line(s,end)`)
 		return i, kind, end
-	#@-body
-	#@-node:7::is_section_name
-	#@+node:8::is_sentinel_line & is_sentinel_line_with_data
-	#@+body
-	#@+at
-	#  This function returns true if i points to a line a sentinel line of one 
+	#@nonl
+	#@-node:is_section_name
+	#@+node:is_sentinel_line & is_sentinel_line_with_data
+	#@+at 
+	#@nonl
+	# This function returns true if i points to a line a sentinel line of one 
 	# of the following forms:
 	# 
 	# start_sentinel <<section name>> end_sentinel
@@ -3468,7 +3177,8 @@ class baseTangleCommands:
 	# start_sentinel: the string that signals the start of sentinel lines\
 	# end_sentinel:   the string that signals the endof sentinel lines.
 	# 
-	# end_sentinel may be None,indicating that sentinel lines end with a newline.
+	# end_sentinel may be None,indicating that sentinel lines end with a 
+	# newline.
 	# 
 	# Any of these forms may end with (!newline), indicating that the section 
 	# reference was not followed by a newline in the orignal text.  We set 
@@ -3478,10 +3188,10 @@ class baseTangleCommands:
 	# The valid values of kind param are:
 	# 
 	# non_sentinel_line,   # not a sentinel line.
-	# start_sentinel_line, #   /// <section name> or /// <section name>(n of m)
+	# start_sentinel_line, #   /// <section name> or /// <section name>(n of 
+	# m)
 	# end_sentinel_line  //  /// -- end -- <section name> or /// -- end -- 
 	# <section name>(n of m).
-
 	#@-at
 	#@@c
 	def is_sentinel_line (self,s,i):
@@ -3493,23 +3203,17 @@ class baseTangleCommands:
 	
 		start_sentinel = self.sentinel
 		end_sentinel = self.sentinel_end
-		
-		#@<< Initialize the return values >>
-		#@+node:1::<< Initialize the return values  >>
-		#@+body
+		#@	<< Initialize the return values >>
+		#@+node:<< Initialize the return values  >>
 		name = end = None
 		part = of = 1
 		kind = non_sentinel_line
 		nl_flag = true
 		false_data = (false,i,kind,name,part,of,end,nl_flag)
-		
-		#@-body
-		#@-node:1::<< Initialize the return values  >>
-
-		
-		#@<< Make sure the line starts with start_sentinel >>
-		#@+node:2::<< Make sure the line starts with start_sentinel >>
-		#@+body
+		#@-node:<< Initialize the return values  >>
+		#@nl
+		#@	<< Make sure the line starts with start_sentinel >>
+		#@+node:<< Make sure the line starts with start_sentinel >>
 		if is_nl(s,i): i = skip_nl(s,i)
 		i = skip_ws(s,i)
 		
@@ -3518,13 +3222,11 @@ class baseTangleCommands:
 			i += len(start_sentinel)
 		else:
 			return false_data
-		#@-body
-		#@-node:2::<< Make sure the line starts with start_sentinel >>
-
-		
-		#@<< Set end_flag if we have -- end -- >>
-		#@+node:3::<< Set end_flag if we have -- end -- >>
-		#@+body
+		#@nonl
+		#@-node:<< Make sure the line starts with start_sentinel >>
+		#@nl
+		#@	<< Set end_flag if we have -- end -- >>
+		#@+node:<< Set end_flag if we have -- end -- >>
 		# If i points to "-- end --", this code skips it and sets end_flag.
 		
 		end_flag = false
@@ -3541,13 +3243,11 @@ class baseTangleCommands:
 			while i < len(s) and s[i] == '-':
 				i += 1
 			end_flag = true
-		#@-body
-		#@-node:3::<< Set end_flag if we have -- end -- >>
-
-		
-		#@<< Make sure we have a section reference >>
-		#@+node:4::<< Make sure we have a section reference >>
-		#@+body
+		#@nonl
+		#@-node:<< Set end_flag if we have -- end -- >>
+		#@nl
+		#@	<< Make sure we have a section reference >>
+		#@+node:<< Make sure we have a section reference >>
 		i = skip_ws(s,i)
 		
 		if (self.use_noweb_flag and match(s,i,"<<") or
@@ -3559,13 +3259,11 @@ class baseTangleCommands:
 			name = s[j:i]
 		else:
 			return false_data
-		#@-body
-		#@-node:4::<< Make sure we have a section reference >>
-
-		
-		#@<< Set part and of if they exist >>
-		#@+node:5::<< Set part and of if they exist >>
-		#@+body
+		#@nonl
+		#@-node:<< Make sure we have a section reference >>
+		#@nl
+		#@	<< Set part and of if they exist >>
+		#@+node:<< Set part and of if they exist >>
 		# This code handles (m of n), if it exists.
 		i = skip_ws(s,i)
 		if match(s,i,'('):
@@ -3588,26 +3286,20 @@ class baseTangleCommands:
 					i += 1 # Skip the paren and do _not_ return.
 				else:
 					return false_data
-		#@-body
-		#@-node:5::<< Set part and of if they exist >>
-
-		
-		#@<< Set nl_flag to false if !newline exists >>
-		#@+node:6::<< Set nl_flag to false if !newline exists >>
-		#@+body
+		#@nonl
+		#@-node:<< Set part and of if they exist >>
+		#@nl
+		#@	<< Set nl_flag to false if !newline exists >>
+		#@+node:<< Set nl_flag to false if !newline exists >>
 		line = "(!newline)"
 		i = skip_ws(s,i)
 		if match(s,i,line):
 			i += len(line)
 			nl_flag = false
-		
-		#@-body
-		#@-node:6::<< Set nl_flag to false if !newline exists >>
-
-		
-		#@<< Make sure the line ends with end_sentinel >>
-		#@+node:7::<< Make sure the line ends with end_sentinel >>
-		#@+body
+		#@-node:<< Set nl_flag to false if !newline exists >>
+		#@nl
+		#@	<< Make sure the line ends with end_sentinel >>
+		#@+node:<< Make sure the line ends with end_sentinel >>
 		i = skip_ws(s,i)
 		if end_sentinel:
 			# Make sure the line ends with the end sentinel.
@@ -3620,15 +3312,14 @@ class baseTangleCommands:
 		i = skip_ws(s,i)
 		if i < len(s) and not is_nl(s,i):
 			return false_data
-		#@-body
-		#@-node:7::<< Make sure the line ends with end_sentinel >>
-
+		#@nonl
+		#@-node:<< Make sure the line ends with end_sentinel >>
+		#@nl
 		kind = choose(end_flag,end_sentinel_line,start_sentinel_line)
 		return true,i,kind,name,part,of,end,nl_flag
-	#@-body
-	#@-node:8::is_sentinel_line & is_sentinel_line_with_data
-	#@+node:9::push_new_def_node
-	#@+body
+	#@nonl
+	#@-node:is_sentinel_line & is_sentinel_line_with_data
+	#@+node:push_new_def_node
 	# This function pushes a new def_node on the top of the section stack.
 	
 	def push_new_def_node (self,name,indent,part,of,nl_flag):
@@ -3636,10 +3327,9 @@ class baseTangleCommands:
 		# trace(`name` + ":" + `part`)
 		node = def_node(name,indent,part,of,nl_flag,None)
 		self.def_stack.append(node)
-	#@-body
-	#@-node:9::push_new_def_node
-	#@+node:10::scan_short_val
-	#@+body
+	#@nonl
+	#@-node:push_new_def_node
+	#@+node:scan_short_val
 	# This function scans a positive integer.
 	# returns (i,val), where val == -1 if there is an error.
 	
@@ -3655,10 +3345,9 @@ class baseTangleCommands:
 		val = int(s[j:i])
 		# trace(s[j:i] + ":" + `val`)
 		return i, val
-	#@-body
-	#@-node:10::scan_short_val
-	#@+node:11::setRootFromHeadline
-	#@+body
+	#@nonl
+	#@-node:scan_short_val
+	#@+node:setRootFromHeadline
 	def setRootFromHeadline (self,v):
 	
 		# trace(`v`)
@@ -3671,18 +3360,17 @@ class baseTangleCommands:
 			if i < len(s): # Non-empty file name.
 				# self.root_name must be set later by token_type().
 				self.root = s[i:]
-	#@-body
-	#@-node:11::setRootFromHeadline
-	#@+node:12::setRootFromText
-	#@+body
-	#@+at
-	#  This code skips the file name used in @root directives.  i points after 
+	#@nonl
+	#@-node:setRootFromHeadline
+	#@+node:setRootFromText
+	#@+at 
+	#@nonl
+	# This code skips the file name used in @root directives.  i points after 
 	# the @root directive.
 	# 
 	# File names may be enclosed in < and > characters, or in double quotes.  
 	# If a file name is not enclosed be these delimiters it continues until 
 	# the next newline.
-
 	#@-at
 	#@@c
 	def setRootFromText(self,s,err_flag):
@@ -3711,12 +3399,12 @@ class baseTangleCommands:
 		else:
 			self.root_name = string.strip(s[root1:root2])
 		return i
-	#@-body
-	#@-node:12::setRootFromText
-	#@+node:13::skip_CWEB_section_name
-	#@+body
-	#@+at
-	#  This function skips past a section name that starts with @< and ends 
+	#@nonl
+	#@-node:setRootFromText
+	#@+node:skip_CWEB_section_name
+	#@+at 
+	#@nonl
+	# This function skips past a section name that starts with @< and ends 
 	# with @>. This code also skips any = following the section name.
 	# 
 	# Returns (i, kind, end), where kind is:
@@ -3726,10 +3414,9 @@ class baseTangleCommands:
 	# 	section_def: @ < name @ > =
 	# 
 	# Unlike noweb, bad section names generate errors.
-
 	#@-at
 	#@@c
-
+	
 	def skip_cweb_section_name(self,s,i):
 		
 		j = i # Used for error message.
@@ -3757,24 +3444,25 @@ class baseTangleCommands:
 			return i, bad_section_name, -1
 		else:
 			return i, kind, end
-	#@-body
-	#@-node:13::skip_CWEB_section_name
-	#@+node:14::skip_noweb_section_name
-	#@+body
-	#@+at
-	#  This function skips past a section name that starts with < < and might 
-	# end with > > or > > =. The entire section name must appear on the same line.
+	#@nonl
+	#@-node:skip_CWEB_section_name
+	#@+node:skip_noweb_section_name
+	#@+at 
+	#@nonl
+	# This function skips past a section name that starts with < < and might 
+	# end with > > or > > =. The entire section name must appear on the same 
+	# line.
 	# 
 	# Note: this code no longer supports extended noweb mode.
 	# 
 	# Returns (i, kind, end),
 	# 	end indicates the end of the section name itself (not counting the =).
 	# 	kind is one of:
-	# 		bad_section_name: "no matching ">>" or ">>"  This is _not_ a user error!
+	# 		bad_section_name: "no matching ">>" or ">>"  This is _not_ a user 
+	# error!
 	# 		section_ref: < < name > >
 	# 		section_def: < < name > > =
 	# 		at_root:     < < * > > =
-
 	#@-at
 	#@@c
 	def skip_noweb_section_name(self,s,i):
@@ -3805,10 +3493,9 @@ class baseTangleCommands:
 		if kind == bad_section_name:
 			i = j
 		return i, kind, end
-	#@-body
-	#@-node:14::skip_noweb_section_name
-	#@+node:15::skip_section_name
-	#@+body
+	#@nonl
+	#@-node:skip_noweb_section_name
+	#@+node:skip_section_name
 	# Returns a tuple (i, kind, end)
 	
 	def skip_section_name(self,s,i):
@@ -3817,17 +3504,16 @@ class baseTangleCommands:
 			return self.skip_noweb_section_name(s,i)
 		else:
 			return self.skip_cweb_section_name(s,i)
-	#@-body
-	#@-node:15::skip_section_name
-	#@+node:16::standardize_name
-	#@+body
-	#@+at
-	#  This code removes leading and trailing brackets, converts white space 
-	# to a single blank and converts to lower case.
-
+	#@nonl
+	#@-node:skip_section_name
+	#@+node:standardize_name
+	#@+at 
+	#@nonl
+	# This code removes leading and trailing brackets, converts white space to 
+	# a single blank and converts to lower case.
 	#@-at
 	#@@c
-
+	
 	def standardize_name (self,name):
 	
 		# Convert to lowercase.
@@ -3846,18 +3532,17 @@ class baseTangleCommands:
 		name = string.strip(name[j:i])
 		# trace(`name`)
 		return name
-	#@-body
-	#@-node:16::standardize_name
-	#@+node:17::tangle.scanAllDirectives
-	#@+body
-	#@+at
-	#  Once a directive is seen, related directives in ancesors have no 
+	#@nonl
+	#@-node:standardize_name
+	#@+node:tangle.scanAllDirectives
+	#@+at 
+	#@nonl
+	# Once a directive is seen, related directives in ancesors have no 
 	# effect.  For example, if an @color directive is seen in node x, no 
 	# @color or @nocolor directives are examined in any ancestor of x.
-
 	#@-at
 	#@@c
-
+	
 	def scanAllDirectives(self,v,require_path_flag,issue_error_flag):
 		
 		"""Scan vnode v and v's ancestors looking for directives,
@@ -3870,14 +3555,13 @@ class baseTangleCommands:
 		self.init_directive_ivars()
 		if v:
 			s = v.bodyString()
-			
-			#@<< Collect @first attributes >>
-			#@+node:1::<< Collect @first attributes >>
-			#@+body
-			#@+at
-			#  Stephen P. Schaefer 9/13/2002: Add support for @first.
-			# Unlike other root attributes, does *NOT* inherit from parent nodes.
-
+			#@		<< Collect @first attributes >>
+			#@+node:<< Collect @first attributes >>
+			#@+at 
+			#@nonl
+			# Stephen P. Schaefer 9/13/2002: Add support for @first.
+			# Unlike other root attributes, does *NOT* inherit from parent 
+			# nodes.
 			#@-at
 			#@@c
 			tag = "@first"
@@ -3897,18 +3581,14 @@ class baseTangleCommands:
 				if i >= sizeString:  # DTHEIN 13-OCT-2002: get out when end of string reached
 					break
 			
-			
-			#@-body
-			#@-node:1::<< Collect @first attributes >>
-
+			#@-node:<< Collect @first attributes >>
+			#@nl
 		while v:
 			s = v.bodyString()
 			dict = get_directives_dict(s)
 			# trace("dict:" + `dict`, ", " + `v`)
-			
-			#@<< Test for @comment and @language >>
-			#@+node:2::<< Test for @comment and @language >>
-			#@+body
+			#@		<< Test for @comment and @language >>
+			#@+node:<< Test for @comment and @language >>
 			if old.has_key("comment") or old.has_key("language"):
 				 pass # Do nothing more.
 			
@@ -3944,68 +3624,50 @@ class baseTangleCommands:
 				self.use_noweb_flag = true
 				self.use_cweb_flag = false # Only raw cweb mode is ever used.
 				self.raw_cweb_flag = self.language == "cweb" # A new ivar.
-			
-			#@-body
-			#@-node:2::<< Test for @comment and @language >>
-
-			
-			#@<< Test for @encoding >>
-			#@+node:3::<< Test for @encoding >>
-			#@+body
+			#@-node:<< Test for @comment and @language >>
+			#@nl
+			#@		<< Test for @encoding >>
+			#@+node:<< Test for @encoding >>
 			if not old.has_key("encoding") and dict.has_key("encoding"):
 				
 				e = scanAtEncodingDirective(s,dict)
 				if e:
 					self.encoding = e
-			
-			#@-body
-			#@-node:3::<< Test for @encoding >>
-
-			
-			#@<< Test for @lineending >>
-			#@+node:4::<< Test for @lineending >>
-			#@+body
+			#@-node:<< Test for @encoding >>
+			#@nl
+			#@		<< Test for @lineending >>
+			#@+node:<< Test for @lineending >>
 			if not old.has_key("lineending") and dict.has_key("lineending"):
 				
 				lineending = scanAtLineendingDirective(s,dict)
 				if lineending:
 					self.output_newline = lineending
-			
-			#@-body
-			#@-node:4::<< Test for @lineending >>
-
-			
-			#@<< Test for print modes directives >>
-			#@+node:5::<< Test for print modes directives >>
-			#@+body
-			#@+at
-			#  It is valid to have more than one of these directives in the 
+			#@-node:<< Test for @lineending >>
+			#@nl
+			#@		<< Test for print modes directives >>
+			#@+node:<< Test for print modes directives >>
+			#@+at 
+			#@nonl
+			# It is valid to have more than one of these directives in the 
 			# same body text: the more verbose directive takes precedence.
-
 			#@-at
 			#@@c
-
+			
 			if not print_mode_changed:
 				for name in ("verbose","terse","quiet","silent"):
 					if dict.has_key(name):
 						self.print_mode = name
 						print_mode_changed = true
 						break
-			
-			#@-body
-			#@-node:5::<< Test for print modes directives >>
-
-			
-			#@<< Test for @path >>
-			#@+node:6::<< Test for @path >>
-			#@+body
+			#@-node:<< Test for print modes directives >>
+			#@nl
+			#@		<< Test for @path >>
+			#@+node:<< Test for @path >>
 			if require_path_flag and not old.has_key("path") and dict.has_key("path"):
 			
 				k = dict["path"]
-				
-				#@<< compute dir and relative_path from s[k:] >>
-				#@+node:1::<< compute dir and relative_path from s[k:] >>
-				#@+body
+				#@	<< compute dir and relative_path from s[k:] >>
+				#@+node:<< compute dir and relative_path from s[k:] >>
 				j = i = k + len("@path")
 				i = skip_to_end_of_line(s,i)
 				path = string.strip(s[j:i])
@@ -4021,18 +3683,16 @@ class baseTangleCommands:
 					dir = os.path.join(app().loadDir,dir)
 				
 				# trace("dir: " + dir)
-				#@-body
-				#@-node:1::<< compute dir and relative_path from s[k:] >>
-
+				#@nonl
+				#@-node:<< compute dir and relative_path from s[k:] >>
+				#@nl
 				if len(dir) > 0:
 					base = getBaseDirectory() # May return "".
 					if dir and len(dir) > 0:
 						dir = os.path.join(base,dir)
 						if os.path.isabs(dir):
-							
-							#@<< handle absolute @path >>
-							#@+node:2::<< handle absolute @path >>
-							#@+body
+							#@				<< handle absolute @path >>
+							#@+node:<< handle absolute @path >>
 							if os.path.exists(dir):
 								self.tangle_directory = dir
 							else: # 11/19/02
@@ -4045,41 +3705,35 @@ class baseTangleCommands:
 											es("relative_path_base_directory: " + base)
 										if relative_path and len(relative_path) > 0:
 											es("relative path in @path directive: " + relative_path)
-							#@-body
-							#@-node:2::<< handle absolute @path >>
-
+							#@nonl
+							#@-node:<< handle absolute @path >>
+							#@nl
 						elif issue_error_flag and not self.path_warning_given:
 							self.path_warning_given = true # supress future warnings
 							self.error("ignoring relative path in @path:" + dir)
 				elif issue_error_flag and not self.path_warning_given:
 					self.path_warning_given = true # supress future warnings
 					self.error("ignoring empty @path")
-			
-			#@-body
-			#@-node:6::<< Test for @path >>
-
-			
-			#@<< Test for @pagewidth >>
-			#@+node:7::<< Test for @pagewidth >>
-			#@+body
+			#@-node:<< Test for @path >>
+			#@nl
+			#@		<< Test for @pagewidth >>
+			#@+node:<< Test for @pagewidth >>
 			if not old.has_key("pagewidth") and dict.has_key("pagewidth"):
 				
 				w = scanAtPagewidthDirective(s,dict,issue_error_flag)
 				if w and w > 0:
 					self.page_width = w
-			#@-body
-			#@-node:7::<< Test for @pagewidth >>
-
-			
-			#@<< Test for @root >>
-			#@+node:8::<< Test for @root >>
-			#@+body
-			#@+at
-			#  10/27/02: new code:  self.root may not be defined here, so any 
+			#@nonl
+			#@-node:<< Test for @pagewidth >>
+			#@nl
+			#@		<< Test for @root >>
+			#@+node:<< Test for @root >>
+			#@+at 
+			#@nonl
+			# 10/27/02: new code:  self.root may not be defined here, so any 
 			# relative directory specified in the @root node will have no 
 			# effect unless we have this code.
 			# 
-
 			#@-at
 			#@@c
 			if self.root_name == None and dict.has_key("root"):
@@ -4087,26 +3741,20 @@ class baseTangleCommands:
 				i = dict["root"]
 				# i += len("@root")
 				self.setRootFromText(s[i:],issue_error_flag)
-			#@-body
-			#@-node:8::<< Test for @root >>
-
-			
-			#@<< Test for @tabwidth >>
-			#@+node:9::<< Test for @tabwidth >>
-			#@+body
+			#@nonl
+			#@-node:<< Test for @root >>
+			#@nl
+			#@		<< Test for @tabwidth >>
+			#@+node:<< Test for @tabwidth >>
 			if not old.has_key("tabwidth") and dict.has_key("tabwidth"):
 				
 				w = scanAtTabwidthDirective(s,dict,issue_error_flag)
 				if w and w != 0:
 					self.tab_width = w
-			
-			#@-body
-			#@-node:9::<< Test for @tabwidth >>
-
-			
-			#@<< Test for @header and @noheader >>
-			#@+node:10::<< Test for @header and @noheader >>
-			#@+body
+			#@-node:<< Test for @tabwidth >>
+			#@nl
+			#@		<< Test for @header and @noheader >>
+			#@+node:<< Test for @header and @noheader >>
 			if old.has_key("header") or old.has_key("noheader"):
 				pass # Do nothing more.
 				
@@ -4119,28 +3767,25 @@ class baseTangleCommands:
 			
 			elif dict.has_key("noheader"):
 				self.use_header_flag = false
-			
-			#@-body
-			#@-node:10::<< Test for @header and @noheader >>
-
+			#@-node:<< Test for @header and @noheader >>
+			#@nl
 			old.update(dict)
 			v = v.parent()
-		
-		#@<< Set self.tangle_directory >>
-		#@+node:11::<< Set self.tangle_directory >>
-		#@+body
-		#@+at
-		#  This code sets self.tangle_directory if it has not already been set 
+		#@	<< Set self.tangle_directory >>
+		#@+node:<< Set self.tangle_directory >>
+		#@+at 
+		#@nonl
+		# This code sets self.tangle_directory if it has not already been set 
 		# by an @path directive.
 		# 
 		# An absolute file name in an @root directive will override the 
 		# directory set here.
 		# A relative file name gets appended later to the default directory.
-		# That is, the final file name will be os.path.join(self.tangle_directory,fileName)
-
+		# That is, the final file name will be 
+		# os.path.join(self.tangle_directory,fileName)
 		#@-at
 		#@@c
-
+		
 		if c.frame and require_path_flag and not self.tangle_directory:
 			if self.root_name and len(self.root_name) > 0:
 				root_dir = os.path.dirname(self.root_name)
@@ -4160,10 +3805,8 @@ class baseTangleCommands:
 					# print "base,dir:",`base`,`dir`
 					dir = os.path.join(base,dir2)
 					if os.path.isabs(dir): # Errors may result in relative or invalid path.
-						
-						#@<< handle absolute path >>
-						#@+node:1::<< handle absolute path >>
-						#@+body
+						#@				<< handle absolute path >>
+						#@+node:<< handle absolute path >>
 						if os.path.exists(dir):
 							if kind == "@root" and not os.path.isabs(root_dir):
 								self.tangle_directory = base
@@ -4179,38 +3822,32 @@ class baseTangleCommands:
 									es("relative_path_base_directory: " + base)
 								if dir2 and len(dir2) > 0:
 									es(kind + " directory: " + dir2)
-						
-						#@-body
-						#@-node:1::<< handle absolute path >>
-
+						#@-node:<< handle absolute path >>
+						#@nl
 		
 		if not self.tangle_directory and require_path_flag: # issue_error_flag:
 			self.pathError("No absolute directory specified by @root, @path or Preferences.")
-		
-		#@-body
-		#@-node:11::<< Set self.tangle_directory >>
-	#@-body
-	#@-node:17::tangle.scanAllDirectives
-	#@+node:18::token_type
-	#@+body
-	#@+at
-	#  This method returns a code indicating the apparent kind of token at the 
+		#@-node:<< Set self.tangle_directory >>
+		#@nl
+	#@nonl
+	#@-node:tangle.scanAllDirectives
+	#@+node:token_type
+	#@+at 
+	#@nonl
+	# This method returns a code indicating the apparent kind of token at the 
 	# position i. The caller must determine whether section definiton tokens 
 	# are valid.
 	# 
 	# returns (kind, end) and sets global root_name using setRootFromText().
-
 	#@-at
 	#@@c
-
+	
 	def token_type(self,s,i,err_flag):
 	
 		kind = plain_line ; end = -1
 		if self.use_noweb_flag:
-			
-			#@<< set token_type in noweb mode >>
-			#@+node:1::<< set token_type in noweb mode >>
-			#@+body
+			#@		<< set token_type in noweb mode >>
+			#@+node:<< set token_type in noweb mode >>
 			if match(s,i,"<<"):
 				i, kind, end = self.skip_section_name(s,i)
 				if kind == bad_section_name:
@@ -4226,14 +3863,12 @@ class baseTangleCommands:
 			elif match(s,i,"@@"): kind = at_at
 			elif i < len(s) and s[i] == '@': kind = at_other
 			else: kind = plain_line
-			#@-body
-			#@-node:1::<< set token_type in noweb mode >>
-
+			#@nonl
+			#@-node:<< set token_type in noweb mode >>
+			#@nl
 		else:
-			
-			#@<< set token_type for CWEB mode >>
-			#@+node:2::<< set token_type for CWEB mode >>
-			#@+body
+			#@		<< set token_type for CWEB mode >>
+			#@+node:<< set token_type for CWEB mode >>
 			i = skip_ws(s,i)
 			if match(s,i,"@*") or match(s,i,"@ "): kind = at_doc
 			elif match(s,i,"@<"): i, kind, end = self.skip_section_name(s,i)
@@ -4245,14 +3880,12 @@ class baseTangleCommands:
 					kind = at_web
 				else: kind = at_other # Set kind later
 			else: kind = plain_line
-			#@-body
-			#@-node:2::<< set token_type for CWEB mode >>
-
+			#@nonl
+			#@-node:<< set token_type for CWEB mode >>
+			#@nl
 		if kind == at_other :
-			
-			#@<< set kind for directive >>
-			#@+node:3::<< set kind for directive >>
-			#@+body
+			#@		<< set kind for directive >>
+			#@+node:<< set kind for directive >>
 			# This code will return at_other for any directive other than those listed.
 			
 			if match_word(s,i,"@c"):
@@ -4274,23 +3907,21 @@ class baseTangleCommands:
 			
 			if kind == at_root:
 				i = self.setRootFromText(s[i:],err_flag)
-			#@-body
-			#@-node:3::<< set kind for directive >>
-
+			#@nonl
+			#@-node:<< set kind for directive >>
+			#@nl
 		# trace(`kind` + ":" + `get_line(s,i)`)
 		return kind, end
-	#@-body
-	#@-node:18::token_type
-	#@-node:8::utility methods
+	#@nonl
+	#@-node:token_type
 	#@-others
-
 	
 class tangleCommands (baseTangleCommands):
 	"""A class that implements Leo' tangle and untangle commands."""
 	pass
-#@-body
-#@-node:4::class tangleCommands methods
+#@nonl
+#@-node:class tangleCommands methods
 #@-others
-#@-body
-#@-node:0::@file leoTangle.py
+#@nonl
+#@-node:@file leoTangle.py
 #@-leo

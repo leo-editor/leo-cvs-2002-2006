@@ -1,20 +1,16 @@
 # -*- coding: utf-8 -*-
-#@+leo
-#@+node:0::@file leoGlobals.py
-#@+body
-#@@first
+#@+leo-ver=4
+#@+node:@file leoGlobals.py
+#@@first # -*- coding: utf-8 -*-
 
 # Global constants, variables and utility functions used throughout Leo.
-
 
 #@@language python
 
 import exceptions,os,re,string,sys,time,Tkinter,traceback,types
 
-
 #@<< define general constants >>
-#@+node:1::<< define general constants >>
-#@+body
+#@+node:<< define general constants >>
 body_newline = '\n'
 body_ignored_newline = '\r'
 
@@ -27,15 +23,12 @@ except:
 	false = False = 0 # Better than None
 
 assert(false!=None)
-#@-body
-#@-node:1::<< define general constants >>
-
-
+#@nonl
+#@-node:<< define general constants >>
+#@nl
 
 #@+others
-#@+node:2::Checking Leo Files...
-#@+node:1::createTopologyList
-#@+body
+#@+node:createTopologyList
 def createTopologyList (c=None,root=None,useHeadlines=false):
 	
 	"""Creates a list describing a node and all its descendents"""
@@ -52,35 +45,28 @@ def createTopologyList (c=None,root=None,useHeadlines=false):
 		aList.append(createTopologyList(c,child,useHeadlines))
 		child = child.next()
 	return aList
-#@-body
-#@-node:1::createTopologyList
-#@+node:2::checkClones2Links
-#@+body
+#@nonl
+#@-node:createTopologyList
+#@+node:checkClones2Links
 def checkClones2Links (c=None,verbose=false):
 	
 	if not c: c = top()
 	
 	c.clearAllVisited()
 	v = c.rootVnode()
-	
-	#@<< clear statistics >>
-	#@+node:1::<< clear statistics >>
-	#@+body
+	#@	<< clear statistics >>
+	#@+node:<< clear statistics >>
 	targetsInDerivedFiles = []
 	multipleTargetsInDerivedFiles = []
 	clonesInNoDerivedFiles = []
 	clonedAtFileNodes = []
-	
-	#@-body
-	#@-node:1::<< clear statistics >>
-
+	#@-node:<< clear statistics >>
+	#@nl
 	while v:
 		if v.isCloned() and not v.t.isVisited():
 			v.t.setVisited()
-			
-			#@<< handle each item in v's join list >>
-			#@+node:3::<< handle each item in v's join list >>
-			#@+body
+			#@			<< handle each item in v's join list >>
+			#@+node:<< handle each item in v's join list >>
 			if v.isAnyAtFileNode():
 				clonedAtFileNodes.append(v)
 			else:
@@ -103,15 +89,13 @@ def checkClones2Links (c=None,verbose=false):
 					multipleTargetsInDerivedFiles.append(v)
 				else:
 					clonesInNoDerivedFiles.append(v)
-			#@-body
-			#@-node:3::<< handle each item in v's join list >>
-
+			#@nonl
+			#@-node:<< handle each item in v's join list >>
+			#@nl
 		v = v.threadNext()
 				
-	
-	#@<< print statistics >>
-	#@+node:2::<< print statistics >>
-	#@+body
+	#@	<< print statistics >>
+	#@+node:<< print statistics >>
 	for name, theList in (
 		("targetsInDerivedFiles:", targetsInDerivedFiles),
 		("multipleTargetsInDerivedFiles:", multipleTargetsInDerivedFiles),
@@ -127,15 +111,13 @@ def checkClones2Links (c=None,verbose=false):
 			headlines.sort()
 			for h in headlines:
 				print h
-	#@-body
-	#@-node:2::<< print statistics >>
-#@-body
-#@-node:2::checkClones2Links
-#@-node:2::Checking Leo Files...
-#@+node:3::CheckVersion (Dave Hein)
-#@+body
+	#@nonl
+	#@-node:<< print statistics >>
+	#@nl
+#@nonl
+#@-node:checkClones2Links
+#@+node:CheckVersion (Dave Hein)
 #@+at
-# 
 # CheckVersion() is a generic version checker.  Assumes a
 # version string of up to four parts, or tokens, with
 # leftmost token being most significant and each token
@@ -168,7 +150,6 @@ def checkClones2Links (c=None,verbose=false):
 # tokens.
 # 
 # The version strings are limited to a maximum of 4 tokens.
-
 #@-at
 #@@c
 
@@ -245,11 +226,8 @@ def CheckVersion( version, againstVersion, condition=">=", stringCompare="0.0.0.
 	#
 	# didn't find a condition that we expected.
 	raise EnvironmentError,"condition must be one of '>=', '>', '==', '!=', '<', or '<='."
-
-#@-body
-#@-node:3::CheckVersion (Dave Hein)
-#@+node:4::class Bunch
-#@+body
+#@-node:CheckVersion (Dave Hein)
+#@+node:class Bunch
 # From The Python Cookbook.
 
 import operator
@@ -274,23 +252,19 @@ class Bunch:
 		
 		
 		
-
-#@-body
-#@-node:4::class Bunch
-#@+node:5::Commands, Dialogs, Directives, & Menus...
-#@+node:1::Dialog utils...
-#@+node:1::attachLeoIcon & allies
-#@+body
-#@+at
-#  This code requires Fredrik Lundh's PIL and tkIcon packages:
+#@-node:class Bunch
+#@+node:attachLeoIcon & allies
+#@+at 
+#@nonl
+# This code requires Fredrik Lundh's PIL and tkIcon packages:
 # 
 # Download PIL    from http://www.pythonware.com/downloads/index.htm#pil
 # Download tkIcon from http://www.effbot.org/downloads/#tkIcon
 # 
-# We wait until the window has been drawn once before attaching the icon in OnVisiblity.
+# We wait until the window has been drawn once before attaching the icon in 
+# OnVisiblity.
 # 
 # Many thanks to Jonathan M. Gilligan for suggesting this code.
-
 #@-at
 #@@c
 
@@ -318,9 +292,9 @@ def attachLeoIcon (w):
 	except:
 		# es_exception()
 		leoIcon = None
-#@-body
-#@+node:1::createLeoIcon
-#@+body
+#@nonl
+#@-node:attachLeoIcon & allies
+#@+node:createLeoIcon
 # This code is adapted from tkIcon.__init__
 # Unlike the tkIcon code, this code does _not_ resize the icon file.
 
@@ -351,10 +325,9 @@ def createLeoIcon (icon):
 		return _tkicon.new(i.size, c, m)
 	except:
 		return None
-#@-body
-#@-node:1::createLeoIcon
-#@+node:2::onVisibility
-#@+body
+#@nonl
+#@-node:createLeoIcon
+#@+node:onVisibility
 # Handle the "visibility" event and attempt to attach the Leo icon.
 # This code must be executed whenever the window is redrawn.
 
@@ -371,11 +344,9 @@ def onVisibility (w,event):
 			else:
 				leoIcon.attach(w)
 	except: pass
-#@-body
-#@-node:2::onVisibility
-#@-node:1::attachLeoIcon & allies
-#@+node:2::get_window_info
-#@+body
+#@nonl
+#@-node:onVisibility
+#@+node:get_window_info
 # WARNING: Call this routine _after_ creating a dialog.
 # (This routine inhibits the grid and pack geometry managers.)
 
@@ -390,10 +361,9 @@ def get_window_info (top):
 	w,h,x,y = int(w),int(h),int(x),int(y)
 	
 	return w,h,x,y
-#@-body
-#@-node:2::get_window_info
-#@+node:3::center_dialog
-#@+body
+#@nonl
+#@-node:get_window_info
+#@+node:center_dialog
 # Center the dialog on the screen.
 # WARNING: Call this routine _after_ creating a dialog.
 # (This routine inhibits the grid and pack geometry managers.)
@@ -410,10 +380,9 @@ def center_dialog(top):
 	top.geometry("%dx%d%+d%+d" % (w,h,x,y))
 	
 	return w,h,x,y
-#@-body
-#@-node:3::center_dialog
-#@+node:4::create_labeled_frame
-#@+body
+#@nonl
+#@-node:center_dialog
+#@+node:create_labeled_frame
 # Returns frames w and f.
 # Typically the caller would pack w into other frames, and pack content into f.
 
@@ -454,13 +423,9 @@ def create_labeled_frame (parent,
 		caption.grid(in_=w,row=0,column=2,rowspan=2,columnspan=3,padx=4,sticky="w")
 
 	return w,f
-#@-body
-#@-node:4::create_labeled_frame
-#@-node:1::Dialog utils...
-#@+node:2::Directive utils...
-#@+node:1::@language and @comment directives (leoUtils)
-#@+node:1::set_delims_from_language
-#@+body
+#@nonl
+#@-node:create_labeled_frame
+#@+node:set_delims_from_language
 # Returns a tuple (single,start,end) of comment delims
 
 def set_delims_from_language(language):
@@ -476,16 +441,15 @@ def set_delims_from_language(language):
 			return delim1,delim2,delim3
 	else:
 		return None, None, None # Indicate that no change should be made
-
-#@-body
-#@-node:1::set_delims_from_language
-#@+node:2::set_delims_from_string
-#@+body
-#@+at
-#  Returns (delim1, delim2, delim2), the delims following the @comment directive.
+#@-node:set_delims_from_language
+#@+node:set_delims_from_string
+#@+at 
+#@nonl
+# Returns (delim1, delim2, delim2), the delims following the @comment 
+# directive.
 # 
-# This code can be called from @languge logic, in which case s can point at @comment
-
+# This code can be called from @languge logic, in which case s can point at 
+# @comment
 #@-at
 #@@c
 
@@ -522,10 +486,9 @@ def set_delims_from_string(s):
 			delims[i] = string.replace(delims[i],'_',' ')
 
 	return delims[0], delims[1], delims[2]
-#@-body
-#@-node:2::set_delims_from_string
-#@+node:3::set_language
-#@+body
+#@nonl
+#@-node:set_delims_from_string
+#@+node:set_language
 def set_language(s,i,issue_errors_flag=false):
 	
 	"""Scan the @language directive that appears at s[i:].
@@ -552,16 +515,15 @@ def set_language(s,i,issue_errors_flag=false):
 		es("ignoring: " + get_line(s,i))
 
 	return None, None, None, None,
-#@-body
-#@-node:3::set_language
-#@-node:1::@language and @comment directives (leoUtils)
-#@+node:2::findReference
-#@+body
-#@+at
-#  We search the descendents of v looking for the definition node matching name.
+#@nonl
+#@-node:set_language
+#@+node:findReference
+#@+at 
+#@nonl
+# We search the descendents of v looking for the definition node matching 
+# name.
 # There should be exactly one such node (descendents of other definition nodes 
 # are not searched).
-
 #@-at
 #@@c
 
@@ -574,18 +536,15 @@ def findReference(name,root):
 			return v
 		v = v.threadNext()
 	return None
-
-#@-body
-#@-node:2::findReference
-#@+node:3::get_directives_dict & globalDirectiveList
-#@+body
-#@+at
-#  The caller passes [root_node] or None as the second arg.  This allows us to 
+#@-node:findReference
+#@+node:get_directives_dict & globalDirectiveList
+#@+at 
+#@nonl
+# The caller passes [root_node] or None as the second arg.  This allows us to 
 # distinguish between None and [None].
 # 
 # 5/17/03: globalDirectiveList is now visible externally so plugins may add to 
 # the list of directives.
-
 #@-at
 #@@c
 
@@ -605,31 +564,25 @@ def get_directives_dict(s,root=None):
 	i = 0 ; n = len(s)
 	while i < n:
 		if s[i] == '@' and i+1 < n:
-			
-			#@<< set dict for @ directives >>
-			#@+node:1::<< set dict for @ directives >>
-			#@+body
+			#@			<< set dict for @ directives >>
+			#@+node:<< set dict for @ directives >>
 			j = skip_c_id(s,i+1)
 			word = s[i+1:j]
 			if word in globalDirectiveList:
 				dict [word] = i
-			
-			#@-body
-			#@-node:1::<< set dict for @ directives >>
-
+			#@-node:<< set dict for @ directives >>
+			#@nl
 		elif root and match(s,i,"<<"):
-			
-			#@<< set dict["root"] for noweb * chunks >>
-			#@+node:2::<< set dict["root"] for noweb * chunks >>
-			#@+body
-			#@+at
-			#  The following looks for chunk definitions of the form < < * > > 
+			#@			<< set dict["root"] for noweb * chunks >>
+			#@+node:<< set dict["root"] for noweb * chunks >>
+			#@+at 
+			#@nonl
+			# The following looks for chunk definitions of the form < < * > > 
 			# =. If found, we take this to be equivalent to @root filename if 
 			# the headline has the form @root filename.
-
 			#@-at
 			#@@c
-
+			
 			i = skip_ws(s,i+2)
 			if i < n and s[i] == '*' :
 				i = skip_ws(s,i+1) # Skip the '*'
@@ -640,15 +593,14 @@ def get_directives_dict(s,root=None):
 						dict["root"]=0 # value not immportant
 					else:
 						es(angleBrackets("*") + "= requires @root in the headline")
-			#@-body
-			#@-node:2::<< set dict["root"] for noweb * chunks >>
-
+			#@nonl
+			#@-node:<< set dict["root"] for noweb * chunks >>
+			#@nl
 		i = skip_line(s,i)
 	return dict
-#@-body
-#@-node:3::get_directives_dict & globalDirectiveList
-#@+node:4::getOutputNewline
-#@+body
+#@nonl
+#@-node:get_directives_dict & globalDirectiveList
+#@+node:getOutputNewline
 def getOutputNewline (lineending = None):
 	
 	"""Convert the name of a line ending to the line ending itself.
@@ -665,10 +617,9 @@ def getOutputNewline (lineending = None):
 	elif s == "crlf": s = "\r\n"
 	else: s = '\n' # Default for erroneous values.
 	return s
-#@-body
-#@-node:4::getOutputNewline
-#@+node:5::scanAtEncodingDirective
-#@+body
+#@nonl
+#@-node:getOutputNewline
+#@+node:scanAtEncodingDirective
 def scanAtEncodingDirective(s,dict):
 	
 	"""Scan the @encoding directive at s[dict["encoding"]:].
@@ -686,10 +637,9 @@ def scanAtEncodingDirective(s,dict):
 	else:
 		es("invalid @encoding:"+encoding,color="red")
 		return None
-#@-body
-#@-node:5::scanAtEncodingDirective
-#@+node:6::scanAtLineendingDirective
-#@+body
+#@nonl
+#@-node:scanAtEncodingDirective
+#@+node:scanAtLineendingDirective
 def scanAtLineendingDirective(s,dict):
 	
 	"""Scan the @lineending directive at s[dict["lineending"]:].
@@ -710,11 +660,8 @@ def scanAtLineendingDirective(s,dict):
 	else:
 		es("invalid @lineending directive:"+e,color="red")
 		return None
-
-#@-body
-#@-node:6::scanAtLineendingDirective
-#@+node:7::scanAtPagewidthDirective
-#@+body
+#@-node:scanAtLineendingDirective
+#@+node:scanAtPagewidthDirective
 def scanAtPagewidthDirective(s,dict,issue_error_flag=false):
 	
 	"""Scan the @pagewidth directive at s[dict["pagewidth"]:].
@@ -733,11 +680,8 @@ def scanAtPagewidthDirective(s,dict,issue_error_flag=false):
 			j = skip_to_end_of_line(s,k)
 			es("ignoring " + s[k:j],color="red")
 		return None
-
-#@-body
-#@-node:7::scanAtPagewidthDirective
-#@+node:8::scanAtTabwidthDirective
-#@+body
+#@-node:scanAtPagewidthDirective
+#@+node:scanAtTabwidthDirective
 def scanAtTabwidthDirective(s,dict,issue_error_flag=false):
 	
 	"""Scan the @tabwidth directive at s[dict["tabwidth"]:].
@@ -757,14 +701,12 @@ def scanAtTabwidthDirective(s,dict,issue_error_flag=false):
 			es("Ignoring " + s[k:i],color="red")
 		return None
 
-
-#@-body
-#@-node:8::scanAtTabwidthDirective
-#@+node:9::scanDirectives (utils)
-#@+body
-#@+at
-#  A general-purpose routine that scans v and its ancestors for directives.  
-# It returns a dict containing the settings in effect as the result of the 
+#@-node:scanAtTabwidthDirective
+#@+node:scanDirectives (utils)
+#@+at 
+#@nonl
+# A general-purpose routine that scans v and its ancestors for directives.  It 
+# returns a dict containing the settings in effect as the result of the 
 # @comment, @language, @lineending, @pagewidth, @path and @tabwidth 
 # directives.  This code does not check on the existence of paths, and issues 
 # no error messages.
@@ -773,7 +715,6 @@ def scanAtTabwidthDirective(s,dict,issue_error_flag=false):
 # tangle.scanAllDirectives, but I am loath to make any further to these two 
 # already-infamous routines.  Also, this code does not check for @color and 
 # @nocolor directives: leoColor.useSyntaxColoring does that.
-
 #@-at
 #@@c
 
@@ -789,10 +730,8 @@ def scanDirectives(c,v=None):
 	if v == None: v = c.currentVnode()
 	a = app()
 	# trace(`v`)
-	
-	#@<< Set local vars >>
-	#@+node:1::<< Set local vars >>
-	#@+body
+	#@	<< Set local vars >>
+	#@+node:<< Set local vars >>
 	loadDir = a.loadDir
 	
 	page_width = c.page_width
@@ -803,18 +742,16 @@ def scanDirectives(c,v=None):
 	encoding = None # 2/25/03: This must be none so that the caller can set a proper default.
 	lineending = getOutputNewline() # 4/24/03 initialize from config settings.
 	wrap = a.config.getBoolWindowPref("body_pane_wraps") # 7/7/03: this is a window pref.
-	#@-body
-	#@-node:1::<< Set local vars >>
-
+	#@nonl
+	#@-node:<< Set local vars >>
+	#@nl
 	old = {}
 	pluginsList = [] # 5/17/03: a list of items for use by plugins.
 	while v:
 		s = v.t.bodyString
 		dict = get_directives_dict(s)
-		
-		#@<< Test for @comment and @language >>
-		#@+node:2::<< Test for @comment and @language >>
-		#@+body
+		#@		<< Test for @comment and @language >>
+		#@+node:<< Test for @comment and @language >>
 		# @language and @comment may coexist in @file trees.
 		# For this to be effective the @comment directive should follow the @language directive.
 		
@@ -826,58 +763,44 @@ def scanDirectives(c,v=None):
 		elif not old.has_key("language") and dict.has_key("language"):
 			k = dict["language"]
 			language,delim1,delim2,delim3 = set_language(s,k)
-		#@-body
-		#@-node:2::<< Test for @comment and @language >>
-
-		
-		#@<< Test for @encoding >>
-		#@+node:3::<< Test for @encoding >>
-		#@+body
+		#@nonl
+		#@-node:<< Test for @comment and @language >>
+		#@nl
+		#@		<< Test for @encoding >>
+		#@+node:<< Test for @encoding >>
 		if not old.has_key("encoding") and dict.has_key("encoding"):
 			
 			e = scanAtEncodingDirective(s,dict)
 			if e:
 				encoding = e
-		
-		#@-body
-		#@-node:3::<< Test for @encoding >>
-
-		
-		#@<< Test for @lineending >>
-		#@+node:4::<< Test for @lineending >>
-		#@+body
+		#@-node:<< Test for @encoding >>
+		#@nl
+		#@		<< Test for @lineending >>
+		#@+node:<< Test for @lineending >>
 		if not old.has_key("lineending") and dict.has_key("lineending"):
 			
 			e = scanAtLineendingDirective(s,dict)
 			if e:
 				lineending = e
-		
-		#@-body
-		#@-node:4::<< Test for @lineending >>
-
-		
-		#@<< Test for @pagewidth >>
-		#@+node:5::<< Test for @pagewidth >>
-		#@+body
+		#@-node:<< Test for @lineending >>
+		#@nl
+		#@		<< Test for @pagewidth >>
+		#@+node:<< Test for @pagewidth >>
 		if dict.has_key("pagewidth") and not old.has_key("pagewidth"):
 			
 			w = scanAtPagewidthDirective(s,dict)
 			if w and w > 0:
 				page_width = w
-		#@-body
-		#@-node:5::<< Test for @pagewidth >>
-
-		
-		#@<< Test for @path >>
-		#@+node:6::<< Test for @path >>
-		#@+body
+		#@nonl
+		#@-node:<< Test for @pagewidth >>
+		#@nl
+		#@		<< Test for @path >>
+		#@+node:<< Test for @path >>
 		if not path and not old.has_key("path") and dict.has_key("path"):
 		
 			k = dict["path"]
-			
-			#@<< compute relative path from s[k:] >>
-			#@+node:1::<< compute relative path from s[k:] >>
-			#@+body
+			#@	<< compute relative path from s[k:] >>
+			#@+node:<< compute relative path from s[k:] >>
 			j = i = k + len("@path")
 			i = skip_to_end_of_line(s,i)
 			path = string.strip(s[j:i])
@@ -891,40 +814,36 @@ def scanDirectives(c,v=None):
 			path = string.strip(path)
 			if 0: # 11/14/02: we want a _relative_ path, not an absolute path.
 				path = os.path.join(loadDir,path)
-			#@-body
-			#@-node:1::<< compute relative path from s[k:] >>
-
+			#@nonl
+			#@-node:<< compute relative path from s[k:] >>
+			#@nl
 			if path and len(path) > 0:
 				base = getBaseDirectory() # returns "" on error.
 				path = os.path.join(base,path)
-		#@-body
-		#@-node:6::<< Test for @path >>
-
-		
-		#@<< Test for @tabwidth >>
-		#@+node:7::<< Test for @tabwidth >>
-		#@+body
+		#@nonl
+		#@-node:<< Test for @path >>
+		#@nl
+		#@		<< Test for @tabwidth >>
+		#@+node:<< Test for @tabwidth >>
 		if dict.has_key("tabwidth") and not old.has_key("tabwidth"):
 			
 			w = scanAtTabwidthDirective(s,dict)
 			if w and w > 0:
 				tab_width = w
-		#@-body
-		#@-node:7::<< Test for @tabwidth >>
-
-		
-		#@<< Test for @wrap and @nowrap >>
-		#@+node:8::<< Test for @wrap and @nowrap >>
-		#@+body
+		#@nonl
+		#@-node:<< Test for @tabwidth >>
+		#@nl
+		#@		<< Test for @wrap and @nowrap >>
+		#@+node:<< Test for @wrap and @nowrap >>
 		if not old.has_key("wrap") and not old.has_key("nowrap"):
 			
 			if dict.has_key("wrap"):
 				wrap = true
 			elif dict.has_key("nowrap"):
 				wrap = false
-		#@-body
-		#@-node:8::<< Test for @wrap and @nowrap >>
-
+		#@nonl
+		#@-node:<< Test for @wrap and @nowrap >>
+		#@nl
 		doHook("scan-directives",c=c,v=v,s=s,
 			old_dict=old,dict=dict,pluginsList=pluginsList)
 		old.update(dict)
@@ -943,13 +862,8 @@ def scanDirectives(c,v=None):
 		"pluginsList": pluginsList,
 		"wrap"      : wrap }
 
-
-#@-body
-#@-node:9::scanDirectives (utils)
-#@-node:2::Directive utils...
-#@+node:3::Menus...
-#@+node:1::canonicalizeMenuName & cononicalizeTranslatedMenuName
-#@+body
+#@-node:scanDirectives (utils)
+#@+node:canonicalizeMenuName & cononicalizeTranslatedMenuName
 def canonicalizeMenuName (name):
 	
 	name = name.lower() ; newname = ""
@@ -967,11 +881,8 @@ def canonicalizeTranslatedMenuName (name):
 		# if ch in string.letters:
 			newname = newname+ch
 	return newname
-
-#@-body
-#@-node:1::canonicalizeMenuName & cononicalizeTranslatedMenuName
-#@+node:2::enableMenu & disableMenu & setMenuLabel
-#@+body
+#@-node:canonicalizeMenuName & cononicalizeTranslatedMenuName
+#@+node:enableMenu & disableMenu & setMenuLabel
 # 11/17/02: Fail gracefully if the item name does not exist.
 def enableMenu (menu,name,val):
 	state = choose(val,"normal","disabled")
@@ -1017,11 +928,9 @@ def setMenuLabel (menu,name,label,underline=-1):
 		print "setMenuLabel menu,name,label:",menu,name,label
 		es_exception()
 		pass
-#@-body
-#@-node:2::enableMenu & disableMenu & setMenuLabel
-#@-node:3::Menus...
-#@+node:4::openWithFileName (leoGlobals)
-#@+body
+#@nonl
+#@-node:enableMenu & disableMenu & setMenuLabel
+#@+node:openWithFileName (leoGlobals)
 def openWithFileName(fileName,old_c=None):
 	
 	"""Create a Leo Frame for the indicated fileName if the file exists."""
@@ -1074,19 +983,19 @@ def openWithFileName(fileName,old_c=None):
 		es("exceptions opening" + fileName)
 		es_exception()
 		return false, None
-#@-body
-#@-node:4::openWithFileName (leoGlobals)
-#@+node:5::wrap_lines
-#@+body
-#@+at
-#  Returns a list of lines, consisting of the input lines wrapped to the given pageWidth.
+#@nonl
+#@-node:openWithFileName (leoGlobals)
+#@+node:wrap_lines
+#@+at 
+#@nonl
+# Returns a list of lines, consisting of the input lines wrapped to the given 
+# pageWidth.
 # 
 # Important note: this routine need not deal with leading whitespace.  
 # Instead, the caller should simply reduce pageWidth by the width of leading 
 # whitespace wanted, then add that whitespace to the lines returned here.
 # 
 # The key to this code is the invarient that line never ends in whitespace.
-
 #@-at
 #@@c
 # DTHEIN 3-NOV-2002: handle indented first line (normal or hanging indent)
@@ -1116,25 +1025,21 @@ def wrap_lines (lines,pageWidth,firstLineWidth=None):
 			i = k
 			if 1 + len(word) + len(line) < outputLineWidth:
 				if len(word) > 0:
-					
-					#@<< place blank and word on the present line >>
-					#@+node:1::<< place blank and word on the present line >>
-					#@+body
+					#@					<< place blank and word on the present line >>
+					#@+node:<< place blank and word on the present line >>
 					if len(line) == 0:
 						# Just add the word to the start of the line.
 						line = word
 					else:
 						# Add the word, preceeded by a blank.
 						line = string.join((line,' ',word),'')
-					#@-body
-					#@-node:1::<< place blank and word on the present line >>
-
+					#@nonl
+					#@-node:<< place blank and word on the present line >>
+					#@nl
 				else: pass # discard the trailing whitespace.
 			else:
-				
-				#@<< place word on a new line >>
-				#@+node:2::<< place word on a new line >>
-				#@+body
+				#@				<< place word on a new line >>
+				#@+node:<< place word on a new line >>
 				# End the previous line.
 				if len(line) > 0:
 					result.append(line)
@@ -1148,21 +1053,15 @@ def wrap_lines (lines,pageWidth,firstLineWidth=None):
 					result.append(line)
 					outputLineWidth = pageWidth # DTHEIN 3-NOV-2002: width for remaining lines
 					line = ""
-				
-				#@-body
-				#@-node:2::<< place word on a new line >>
-
+				#@-node:<< place word on a new line >>
+				#@nl
 	if len(line) > 0:
 		result.append(line)
 	# trace(`result`)
 	return result
-#@-body
-#@-node:5::wrap_lines
-#@-node:5::Commands, Dialogs, Directives, & Menus...
-#@+node:6::Debugging, Dumping, Timing, Tracing & Sherlock
-#@+node:1::Files & Directories...
-#@+node:1::create_temp_name
-#@+body
+#@nonl
+#@-node:wrap_lines
+#@+node:create_temp_name
 # Returns a temporary file name.
 
 def create_temp_name ():
@@ -1171,10 +1070,9 @@ def create_temp_name ():
 	temp = tempfile.mktemp()
 	# trace(`temp`)
 	return temp
-#@-body
-#@-node:1::create_temp_name
-#@+node:2::ensure_extension
-#@+body
+#@nonl
+#@-node:create_temp_name
+#@+node:ensure_extension
 def ensure_extension (name, ext):
 
 	file, old_ext = os.path.splitext(name)
@@ -1184,10 +1082,9 @@ def ensure_extension (name, ext):
 		return name
 	else:
 		return file + ext
-#@-body
-#@-node:2::ensure_extension
-#@+node:3::getBaseDirectory
-#@+body
+#@nonl
+#@-node:ensure_extension
+#@+node:getBaseDirectory
 # Handles the conventions applying to the "relative_path_base_directory" configuration option.
 
 def getBaseDirectory():
@@ -1204,15 +1101,12 @@ def getBaseDirectory():
 		return base # base need not exist yet.
 	else:
 		return "" # No relative base given.
-
-#@-body
-#@-node:3::getBaseDirectory
-#@+node:4::makeAllNonExistentDirectories
-#@+body
-#@+at
-#  This is a generalization of os.makedir.
+#@-node:getBaseDirectory
+#@+node:makeAllNonExistentDirectories
+#@+at 
+#@nonl
+# This is a generalization of os.makedir.
 # It attempts to make all non-existent directories.
-
 #@-at
 #@@c
 
@@ -1245,17 +1139,16 @@ def makeAllNonExistentDirectories (dir):
 				es_exception()
 				return None
 	return dir1 # All have been created.
-#@-body
-#@-node:4::makeAllNonExistentDirectories
-#@+node:5::readlineForceUnixNewline (Steven P. Schaefer)
-#@+body
-#@+at
-#  Stephen P. Schaefer 9/7/2002
+#@nonl
+#@-node:makeAllNonExistentDirectories
+#@+node:readlineForceUnixNewline (Steven P. Schaefer)
+#@+at 
+#@nonl
+# Stephen P. Schaefer 9/7/2002
 # 
 # The Unix readline() routine delivers "\r\n" line end strings verbatim, while 
 # the windows versions force the string to use the Unix convention of using 
 # only "\n".  This routine causes the Unix readline to do the same.
-
 #@-at
 #@@c
 
@@ -1265,16 +1158,11 @@ def readlineForceUnixNewline(f):
 	if len(s) >= 2 and s[-2] == "\r" and s[-1] == "\n":
 		s = s[0:-2] + "\n"
 	return s
-
-#@-body
-#@-node:5::readlineForceUnixNewline (Steven P. Schaefer)
-#@+node:6::redirecting stderr and stdout
-#@+body
+#@-node:readlineForceUnixNewline (Steven P. Schaefer)
+#@+node:redirecting stderr and stdout
 class redirectClass:
-	
-	#@<< redirectClass methods >>
-	#@+node:1::<< redirectClass methods >>
-	#@+body
+	#@	<< redirectClass methods >>
+	#@+node:<< redirectClass methods >>
 	# To redirect stdout a class only needs to implement a write(self,s) method.
 	def __init__ (self):
 		self.old = None
@@ -1306,19 +1194,15 @@ class redirectClass:
 			if app().log: app().log.put(s)
 			else: self.old.write(s)
 		else: print s # Typically will not happen.
-	
-	#@-body
-	#@-node:1::<< redirectClass methods >>
-
+	#@-node:<< redirectClass methods >>
+	#@nl
 
 # Create two redirection objects, one for each stream.
 redirectStdErrObj = redirectClass()
 redirectStdOutObj = redirectClass()
 
-
 #@<< define convenience methods for redirecting streams >>
-#@+node:2::<< define convenience methods for redirecting streams >>
-#@+body
+#@+node:<< define convenience methods for redirecting streams >>
 
 # Redirect streams to the current log window.
 def redirectStderr():
@@ -1345,15 +1229,13 @@ def stdErrIsRedirected():
 def stdOutIsRedirected():
 	global redirectStdOutObj
 	return redirectStdOutObj.isRedirected()
-#@-body
-#@-node:2::<< define convenience methods for redirecting streams >>
-
+#@nonl
+#@-node:<< define convenience methods for redirecting streams >>
+#@nl
 
 if 0: # Test code: may be safely and conveniently executed in the child node.
-	
-	#@<< test code >>
-	#@+node:3::<< test code >>
-	#@+body
+	#@	<< test code >>
+	#@+node:<< test code >>
 	from leoGlobals import stdErrIsRedirected,stdOutIsRedirected
 	print "stdout isRedirected:", stdOutIsRedirected()
 	print "stderr isRedirected:", stdErrIsRedirected()
@@ -1379,20 +1261,20 @@ if 0: # Test code: may be safely and conveniently executed in the child node.
 	from leoGlobals import stdErrIsRedirected,stdOutIsRedirected
 	print "stdout isRedirected:", stdOutIsRedirected()
 	print "stderr isRedirected:", stdErrIsRedirected()
-	#@-body
-	#@-node:3::<< test code >>
-#@-body
-#@-node:6::redirecting stderr and stdout
-#@+node:7::sanitize_filename
-#@+body
-#@+at
-#  This prepares string s to be a valid file name:
+	#@nonl
+	#@-node:<< test code >>
+	#@nl
+#@nonl
+#@-node:redirecting stderr and stdout
+#@+node:sanitize_filename
+#@+at 
+#@nonl
+# This prepares string s to be a valid file name:
 # 
 # - substitute '_' whitespace and characters used special path characters.
 # - eliminate all other non-alphabetic characters.
 # - strip leading and trailing whitespace.
 # - return at most 128 characters.
-
 #@-at
 #@@c
 
@@ -1413,22 +1295,20 @@ def sanitize_filename(s):
 			break
 	result = result.strip()
 	return result [:128]
-#@-body
-#@-node:7::sanitize_filename
-#@+node:8::shortFileName
-#@+body
+#@nonl
+#@-node:sanitize_filename
+#@+node:shortFileName
 def shortFileName (fileName):
 	
 	return os.path.basename(fileName)
-#@-body
-#@-node:8::shortFileName
-#@+node:9::update_file_if_changed
-#@+body
-#@+at
-#  This function compares two files. If they are different, we replace 
+#@nonl
+#@-node:shortFileName
+#@+node:update_file_if_changed
+#@+at 
+#@nonl
+# This function compares two files. If they are different, we replace 
 # file_name with temp_name. Otherwise, we just delete temp_name.  Both files 
 # should be closed.
-
 #@-at
 #@@c
 
@@ -1467,15 +1347,15 @@ def update_file_if_changed(file_name,temp_name):
 			es("rename failed: no file created!",color="red")
 			es(`file_name` + " may be read-only or in use")
 			es_exception()
-#@-body
-#@-node:9::update_file_if_changed
-#@+node:10::utils_rename
-#@+body
-#@+at
-#  Platform-independent rename.
+#@nonl
+#@-node:update_file_if_changed
+#@+node:utils_rename
+#@+at 
+#@nonl
+# Platform-independent rename.
 # 
-# os.rename may fail on some Unix flavors if src and dst are on different filesystems.
-
+# os.rename may fail on some Unix flavors if src and dst are on different 
+# filesystems.
 #@-at
 #@@c
 
@@ -1490,13 +1370,12 @@ def utils_rename(src,dst):
 	else:
 		from distutils.file_util import move_file
 		move_file(src,dst)
-#@-body
-#@-node:10::utils_rename
-#@-node:1::Files & Directories...
-#@+node:2::Sherlock...
-#@+body
-#@+at
-#  Starting with this release, you will see trace statements throughout the 
+#@nonl
+#@-node:utils_rename
+#@+node:Sherlock...
+#@+at 
+#@nonl
+# Starting with this release, you will see trace statements throughout the 
 # code.  The trace function is defined in leoGlobals.py; trace implements much 
 # of the functionality of my Sherlock tracing package.  Traces are more 
 # convenient than print statements for two reasons: 1) you don't need explicit 
@@ -1534,11 +1413,9 @@ def utils_rename(src,dst):
 # sign.  For example,
 # 
 #   trace_tag("-nocolor", self.disable_color)
-
 #@-at
-#@-body
-#@+node:1::init_sherlock
-#@+body
+#@-node:Sherlock...
+#@+node:init_sherlock
 # Called by startup code.
 # Args are all the arguments on the command line.
 
@@ -1546,15 +1423,14 @@ def init_sherlock (args):
 	
 	init_trace(args,echo=0)
 	# trace("argv", "sys.argv: " + `sys.argv`)
-#@-body
-#@-node:1::init_sherlock
-#@+node:2::get_Sherlock_args
-#@+body
-#@+at
-#  It no args are given we attempt to get them from the "SherlockArgs" file.  
+#@nonl
+#@-node:init_sherlock
+#@+node:get_Sherlock_args
+#@+at 
+#@nonl
+# It no args are given we attempt to get them from the "SherlockArgs" file.  
 # If there are still no arguments we trace everything.  This default makes 
 # tracing much more useful in Python.
-
 #@-at
 #@@c
 
@@ -1573,10 +1449,9 @@ def get_Sherlock_args (args):
 	if not args or len(args)==0: args = ["+*"] 
 	# print "get_Sherlock_args:", args
 	return args
-#@-body
-#@-node:2::get_Sherlock_args
-#@+node:3::init_trace
-#@+body
+#@nonl
+#@-node:get_Sherlock_args
+#@+node:init_trace
 def init_trace(args,echo=1):
 
 	t = app().trace_list
@@ -1598,10 +1473,9 @@ def init_trace(args,echo=1):
 				print "disabling:", arg
 		else:
 			print "ignoring:", prefix + arg
-#@-body
-#@-node:3::init_trace
-#@+node:4::trace
-#@+body
+#@nonl
+#@-node:init_trace
+#@+node:trace
 # Convert all args to strings.
 # Print if tracing for the presently executing function has been enabled.
 
@@ -1638,11 +1512,8 @@ def trace (*args,**keys):
 		s = name + ": " + message
 		if 1: print s
 		else: es(s)
-
-#@-body
-#@-node:4::trace
-#@+node:5::trace_tag
-#@+body
+#@-node:trace
+#@+node:trace_tag
 # Convert all args to strings.
 # Print if tracing for name has been enabled.
 
@@ -1666,21 +1537,13 @@ def trace_tag (name, *args):
 		s = name + ": " + message
 		if 1: print s
 		else: es(s)
-
-#@-body
-#@-node:5::trace_tag
-#@-node:2::Sherlock...
-#@+node:3::Statistics
-#@+node:1::clear_stats
-#@+body
+#@-node:trace_tag
+#@+node:clear_stats
 def clear_stats():
 	
 	app().stats = {}
-
-#@-body
-#@-node:1::clear_stats
-#@+node:2::print_stats
-#@+body
+#@-node:clear_stats
+#@+node:print_stats
 def print_stats (name=None):
 	
 	if name:
@@ -1702,11 +1565,8 @@ def print_stats (name=None):
 		print key,value
 		
 	clear_stats()
-
-#@-body
-#@-node:2::print_stats
-#@+node:3::stat
-#@+body
+#@-node:print_stats
+#@+node:stat
 def stat (name=None):
 
 	"""Increments the statistic for name in app().stats
@@ -1725,15 +1585,11 @@ def stat (name=None):
 		app().stats = stats = {}
 
 	stats[name] = 1 + stats.get(name,0)
-
-#@-body
-#@-node:3::stat
-#@-node:3::Statistics
-#@+node:4::Timing
-#@+body
-#@+at
-#  pychecker bug: pychecker complains that there is no attribute time.clock
-
+#@-node:stat
+#@+node:Timing
+#@+at 
+#@nonl
+# pychecker bug: pychecker complains that there is no attribute time.clock
 #@-at
 #@@c
 
@@ -1743,21 +1599,17 @@ def getTime():
 def esDiffTime(message, start):
 	es(message + ("%6.3f" % (time.clock()-start)))
 	return time.clock()
-#@-body
-#@-node:4::Timing
-#@+node:5::alert
-#@+body
+#@nonl
+#@-node:Timing
+#@+node:alert
 def alert(message):
 
 	es(message)
 
 	import tkMessageBox
 	tkMessageBox.showwarning("Alert", message)
-
-#@-body
-#@-node:5::alert
-#@+node:6::angleBrackets & virtual_event_name
-#@+body
+#@-node:alert
+#@+node:angleBrackets & virtual_event_name
 # Returns < < s > >
 
 def angleBrackets(s):
@@ -1766,10 +1618,9 @@ def angleBrackets(s):
 		">>") # must be on a separate line.
 
 virtual_event_name = angleBrackets
-#@-body
-#@-node:6::angleBrackets & virtual_event_name
-#@+node:7::callerName
-#@+body
+#@nonl
+#@-node:angleBrackets & virtual_event_name
+#@+node:callerName
 def callerName (n=1):
 
 	try: # get the function name from the call stack.
@@ -1779,11 +1630,8 @@ def callerName (n=1):
 	except:
 		es_exception()
 		return "<no caller name>"
-
-#@-body
-#@-node:7::callerName
-#@+node:8::dump
-#@+body
+#@-node:callerName
+#@+node:dump
 def dump(s):
 	
 	out = ""
@@ -1803,10 +1651,9 @@ def oldDump(s):
 			out += "[" ; out += " " ; out += "]"
 		else: out += i
 	return out
-#@-body
-#@-node:8::dump
-#@+node:9::es_error
-#@+body
+#@nonl
+#@-node:dump
+#@+node:es_error
 def es_error (s):
 	
 	config = app().config
@@ -1815,10 +1662,9 @@ def es_error (s):
 		es(s,color=color)
 	else:
 		es(s)
-#@-body
-#@-node:9::es_error
-#@+node:10::es_event_exception
-#@+body
+#@nonl
+#@-node:es_error
+#@+node:es_event_exception
 def es_event_exception (eventName,full=false):
 
 	import traceback
@@ -1831,10 +1677,9 @@ def es_event_exception (eventName,full=false):
 	for i in errList:
 		es(i)
 	traceback.print_exc()
-#@-body
-#@-node:10::es_event_exception
-#@+node:11::es_exception
-#@+body
+#@nonl
+#@-node:es_event_exception
+#@+node:es_exception
 def es_exception (full=false):
 
 	import traceback
@@ -1846,10 +1691,9 @@ def es_exception (full=false):
 	for i in errList:
 		es_error(i)
 	traceback.print_exc()
-#@-body
-#@-node:11::es_exception
-#@+node:12::file/module/plugin_date
-#@+body
+#@nonl
+#@-node:es_exception
+#@+node:file/module/plugin_date
 def module_date (mod,format=None):
 	file = os.path.join(app().loadDir,mod.__file__)
 	root,ext = os.path.splitext(file) 
@@ -1870,13 +1714,11 @@ def file_date (file,format=None):
 			return time.strftime(format,time.gmtime(n))
 		except: pass
 	return ""
-
-#@-body
-#@-node:12::file/module/plugin_date
-#@+node:13::funcToMethod
-#@+body
-#@+at
-#  The following is taken from page 188 of the Python Cookbook.
+#@-node:file/module/plugin_date
+#@+node:funcToMethod
+#@+at 
+#@nonl
+# The following is taken from page 188 of the Python Cookbook.
 # 
 # The following method allows you to add a function as a method of any class.  
 # That is, it converts the function to a method of the class.  The method just 
@@ -1888,17 +1730,15 @@ def file_date (file,format=None):
 # The newly created method has the same name as the function unless the 
 # optional name argument is supplied, in which case that name is used as the 
 # method name.
-
 #@-at
 #@@c
 
 def funcToMethod(f,theClass,name=None):
 	setattr(theClass,name or f.__name__,f)
 	# trace(`name`)
-#@-body
-#@-node:13::funcToMethod
-#@+node:14::get_line & get_line_after
-#@+body
+#@nonl
+#@-node:funcToMethod
+#@+node:get_line & get_line_after
 # Very useful for tracing.
 
 def get_line (s,i):
@@ -1919,11 +1759,8 @@ def get_line_after (s,i):
 		nl = "[nl]"
 	k = skip_to_end_of_line(s,i)
 	return nl + s[i:k]
-
-#@-body
-#@-node:14::get_line & get_line_after
-#@+node:15::pause
-#@+body
+#@-node:get_line & get_line_after
+#@+node:pause
 def pause (s):
 	
 	print s
@@ -1931,10 +1768,9 @@ def pause (s):
 	i = 0
 	while i < 1000000L:
 		i += 1
-#@-body
-#@-node:15::pause
-#@+node:16::printBindings
-#@+body
+#@nonl
+#@-node:pause
+#@+node:printBindings
 def print_bindings (name,window):
 
 	bindings = window.bind()
@@ -1942,10 +1778,9 @@ def print_bindings (name,window):
 	print "Bindings for", name
 	for b in bindings:
 		print b
-#@-body
-#@-node:16::printBindings
-#@+node:17::printGlobals
-#@+body
+#@nonl
+#@-node:printBindings
+#@+node:printGlobals
 def printGlobals(message=None):
 	
 	# Get the list of globals.
@@ -1958,10 +1793,9 @@ def printGlobals(message=None):
 		print leader, ' ', message, ' ', leader
 	for glob in globs:
 		print glob
-#@-body
-#@-node:17::printGlobals
-#@+node:18::printLeoModules
-#@+body
+#@nonl
+#@-node:printGlobals
+#@+node:printLeoModules
 def printLeoModules(message=None):
 	
 	# Create the list.
@@ -1978,11 +1812,9 @@ def printLeoModules(message=None):
 	for m in mods:
 		print m,
 	print
-#@-body
-#@-node:18::printLeoModules
-#@-node:6::Debugging, Dumping, Timing, Tracing & Sherlock
-#@+node:7::executeScript
-#@+body
+#@nonl
+#@-node:printLeoModules
+#@+node:executeScript
 def executeScript (name):
 	
 	"""Execute a script whose short python file name is given"""
@@ -2002,21 +1834,16 @@ def executeScript (name):
 	if file:
 		file.close()
 
-
-#@-body
-#@-node:7::executeScript
-#@+node:8::Focus (leoGlobals)
-#@+node:1::get_focus
-#@+body
+#@-node:executeScript
+#@+node:get_focus
 def get_focus(top):
 	
 	"""Returns the widget that has focus, or body if None."""
 
 	return top.focus_displayof()
-#@-body
-#@-node:1::get_focus
-#@+node:2::set_focus
-#@+body
+#@nonl
+#@-node:get_focus
+#@+node:set_focus
 def set_focus(commands,widget):
 	
 	"""Set the focus of the widget in the given commander if it needs to be changed."""
@@ -2025,21 +1852,18 @@ def set_focus(commands,widget):
 	if focus != widget:
 		# trace(`widget`)
 		widget.focus_set()
-#@-body
-#@-node:2::set_focus
-#@+node:3::force_focus
-#@+body
+#@nonl
+#@-node:set_focus
+#@+node:force_focus
 def force_focus(widget):
 	
 	focus = commands.frame.top.focus_displayof()
 	if focus != widget:
 		trace(widget)
 		widget.focus_force() # Apparently it is not a good idea to call focus_force.
-#@-body
-#@-node:3::force_focus
-#@-node:8::Focus (leoGlobals)
-#@+node:9::Garbage Collection
-#@+body
+#@nonl
+#@-node:force_focus
+#@+node:Garbage Collection
 lastObjectCount = 0
 lastObjectsDict = {}
 debugGC = false
@@ -2060,20 +1884,15 @@ try:
 except:
 	traceback.print_exc()
 
-
 #@+others
-#@+node:1::clearAllIvars
-#@+body
+#@+node:clearAllIvars
 def clearAllIvars (o):
 	
 	"""Clear all ivars of o, a member of some class."""
 	
 	o.__dict__.clear()
-
-#@-body
-#@-node:1::clearAllIvars
-#@+node:2::collectGarbage
-#@+body
+#@-node:clearAllIvars
+#@+node:collectGarbage
 def collectGarbage(message=None):
 	
 	if not debugGC: return
@@ -2089,10 +1908,8 @@ def collectGarbage(message=None):
 	
 	if 0: # This isn't needed unless we want to look at individual objects.
 	
-		
-		#@<< make a list of the new objects >>
-		#@+node:1::<< make a list of the new objects >>
-		#@+body
+		#@		<< make a list of the new objects >>
+		#@+node:<< make a list of the new objects >>
 		# WARNING: the id trick is not proper because newly allocated objects can have the same address as old objets.
 		
 		global lastObjectsDict
@@ -2103,15 +1920,12 @@ def collectGarbage(message=None):
 		lastObjectsDict = {}
 		for o in objects:
 			lastObjectsDict[id(o)]=o
-		#@-body
-		#@-node:1::<< make a list of the new objects >>
-
+		#@nonl
+		#@-node:<< make a list of the new objects >>
+		#@nl
 		print "%25s: %d new, %d total objects" % (message,len(newObjects),len(objects))
-
-#@-body
-#@-node:2::collectGarbage
-#@+node:3::printGc
-#@+body
+#@-node:collectGarbage
+#@+node:printGc
 def printGc(message=None,onlyPrintChanges=false):
 	
 	if not debugGC: return None
@@ -2136,10 +1950,9 @@ def printGc(message=None,onlyPrintChanges=false):
 	except:
 		traceback.print_exc()
 		return None
-#@-body
-#@-node:3::printGc
-#@+node:4::printGcRefs
-#@+body
+#@nonl
+#@-node:printGc
+#@+node:printGcRefs
 def printGcRefs (verbose=true):
 
 	import leoFrame
@@ -2162,21 +1975,16 @@ def printGcRefs (verbose=true):
 							print key,ref[key]
 	else:
 		print "%d referers" % len(refs)
-#@-body
-#@-node:4::printGcRefs
+#@nonl
+#@-node:printGcRefs
 #@-others
-
-
-#@-body
-#@-node:9::Garbage Collection
-#@+node:10::Hooks & plugins
-#@+node:1::enableIdleTimeHook, disableIdleTimeHook, idleTimeHookHandler
-#@+body
-#@+at
-#  Enables the "idle" hook.
+#@-node:Garbage Collection
+#@+node:enableIdleTimeHook, disableIdleTimeHook, idleTimeHookHandler
+#@+at 
+#@nonl
+# Enables the "idle" hook.
 # After enableIdleTimeHook is called, Leo will call the "idle" hook
 # approximately every idleTimeDelay milliseconds.
-
 #@-at
 #@@c
 def enableIdleTimeHook(idleTimeDelay=100):
@@ -2205,13 +2013,15 @@ def idleTimeHookHandler(*args):
 		a.afterHandler = a.root.after(a.idleTimeDelay,idleTimeHookHandler)
 	else:
 		a.afterHandler = None
-#@-body
-#@-node:1::enableIdleTimeHook, disableIdleTimeHook, idleTimeHookHandler
-#@+node:2::doHook
-#@+body
-#@+at
-#  This global function calls a hook routine.  Hooks are identified by the tag param.
-# Returns the value returned by the hook routine, or None if the there is an exception.
+#@nonl
+#@-node:enableIdleTimeHook, disableIdleTimeHook, idleTimeHookHandler
+#@+node:doHook
+#@+at 
+#@nonl
+# This global function calls a hook routine.  Hooks are identified by the tag 
+# param.
+# Returns the value returned by the hook routine, or None if the there is an 
+# exception.
 # 
 # We look for a hook routine in three places:
 # 1. top().hookFunction
@@ -2219,7 +2029,6 @@ def idleTimeHookHandler(*args):
 # 3. leoPlugins.doPlugins()
 # We set app().hookError on all exceptions.  Scripts may reset app().hookError 
 # to try again.
-
 #@-at
 #@@c
 
@@ -2255,10 +2064,9 @@ def doHook(tag,*args,**keywords):
 	a.hookError = true # Supress this function.
 	a.idleTimeHook = false # Supress idle-time hook
 	return None # No return value
-#@-body
-#@-node:2::doHook
-#@+node:3::plugin_signon
-#@+body
+#@nonl
+#@-node:doHook
+#@+node:plugin_signon
 def plugin_signon(module_name,verbose=false):
 	
 	exec("import %s ; m = %s" % (module_name,module_name))
@@ -2272,12 +2080,8 @@ def plugin_signon(module_name,verbose=false):
 	# Increment a global count.
 	import leoPlugins
 	leoPlugins.count += 1
-
-#@-body
-#@-node:3::plugin_signon
-#@-node:10::Hooks & plugins
-#@+node:11::importFromPath
-#@+body
+#@-node:plugin_signon
+#@+node:importFromPath
 def importFromPath (name,path):
 	
 	import imp
@@ -2300,19 +2104,16 @@ def importFromPath (name,path):
 		if file: file.close()
 
 	return result
-#@-body
-#@-node:11::importFromPath
-#@+node:12::Lists...
-#@+node:1::appendToList
-#@+body
+#@nonl
+#@-node:importFromPath
+#@+node:appendToList
 def appendToList(out, s):
 
 	for i in s:
 		out.append(i)
-#@-body
-#@-node:1::appendToList
-#@+node:2::flattenList
-#@+body
+#@nonl
+#@-node:appendToList
+#@+node:flattenList
 def flattenList (theList):
 
 	result = []
@@ -2322,10 +2123,9 @@ def flattenList (theList):
 		else:
 			result.append(item)
 	return result
-#@-body
-#@-node:2::flattenList
-#@+node:3::listToString
-#@+body
+#@nonl
+#@-node:flattenList
+#@+node:listToString
 def listToString(theList):
 
 	if list:
@@ -2333,11 +2133,9 @@ def listToString(theList):
 		return string.join(theList,"")
 	else:
 		return ""
-#@-body
-#@-node:3::listToString
-#@-node:12::Lists...
-#@+node:13::makeDict
-#@+body
+#@nonl
+#@-node:listToString
+#@+node:makeDict
 # From the Python cookbook.
 
 def makeDict(**keys):
@@ -2345,15 +2143,12 @@ def makeDict(**keys):
 	"""Returns a Python dictionary from using the optional keyword arguments."""
 
 	return keys
-#@-body
-#@-node:13::makeDict
-#@+node:14::Most common functions
-#@+body
+#@nonl
+#@-node:makeDict
+#@+node:Most common functions
 # These are guaranteed always to exist for scripts.
-
-#@-body
-#@+node:1::app, setApp
-#@+body
+#@-node:Most common functions
+#@+node:app, setApp
 # *** Note *** the global statement makes sense only within functions!
 
 gApp = None # Not needed, and keeps Pychecker happy.
@@ -2365,18 +2160,16 @@ def app():
 def setApp(app):
 	global gApp
 	gApp = app
-#@-body
-#@-node:1::app, setApp
-#@+node:2::choose
-#@+body
+#@nonl
+#@-node:app, setApp
+#@+node:choose
 def choose(cond, a, b): # warning: evaluates all arguments
 
 	if cond: return a
 	else: return b
-#@-body
-#@-node:2::choose
-#@+node:3::es, enl, ecnl
-#@+body
+#@nonl
+#@-node:choose
+#@+node:es, enl, ecnl
 def ecnl():
 	ecnls(1)
 
@@ -2417,18 +2210,17 @@ def es(s,*args,**keys):
 	else:
 		a.logWaiting.append((s,color),) # 2/16/03
 		print s,
-#@-body
-#@-node:3::es, enl, ecnl
-#@+node:4::top
-#@+body
-#@+at
-#  frame.doCommand and frame.OnMenuClick now set app().log, so top() will be 
+#@nonl
+#@-node:es, enl, ecnl
+#@+node:top
+#@+at 
+#@nonl
+# frame.doCommand and frame.OnMenuClick now set app().log, so top() will be 
 # reliable after any command is executed.
 # 
 # Note 1: The value of top() may change during a new or open command, which 
 # may change the routine used to execute the "command1" and "command2" hooks.  
 # This is not a bug, and hook routines must be aware of this fact.
-
 #@-at
 #@@c
 
@@ -2441,29 +2233,22 @@ def top():
 		return app().log.commands
 	except:
 		return None
-#@-body
-#@-node:4::top
-#@+node:5::trace is defined below
-#@-node:5::trace is defined below
-#@+node:6::windows
-#@+body
+#@nonl
+#@-node:top
+#@+node:windows
 def windows():
 	return app().windowList
-#@-body
-#@-node:6::windows
-#@-node:14::Most common functions
-#@+node:15::Scanning, selection & whitespace...
-#@+node:1::getindex
-#@+body
+#@nonl
+#@-node:windows
+#@+node:getindex
 def getindex(text, index):
 	
 	"""Convert string index of the form line.col into a tuple of two ints."""
 	
 	return tuple(map(int,string.split(text.index(index), ".")))
-#@-body
-#@-node:1::getindex
-#@+node:2::scanAtFileOptions
-#@+body
+#@nonl
+#@-node:getindex
+#@+node:scanAtFileOptions
 def scanAtFileOptions (h,err_flag=false):
 	
 	assert(match(h,0,"@file"))
@@ -2472,10 +2257,8 @@ def scanAtFileOptions (h,err_flag=false):
 	optionsList = []
 
 	while match(h,i,'-'):
-		
-		#@<< scan another @file option >>
-		#@+node:1::<< scan another @file option >>
-		#@+body
+		#@		<< scan another @file option >>
+		#@+node:<< scan another @file option >>
 		i += 1 ; err = -1
 		
 		if match_word(h,i,"asis"):
@@ -2508,9 +2291,9 @@ def scanAtFileOptions (h,err_flag=false):
 			i += 1
 		if err > -1:
 			es("unknown option:" + h[err:i] + " in " + h)
-		#@-body
-		#@-node:1::<< scan another @file option >>
-
+		#@nonl
+		#@-node:<< scan another @file option >>
+		#@nl
 		
 	# Convert atFileType to a list of options.
 	for fileType,option in (
@@ -2523,20 +2306,17 @@ def scanAtFileOptions (h,err_flag=false):
 	# trace(atFileType,optionsList)
 
 	return i,atFileType,optionsList
-#@-body
-#@-node:2::scanAtFileOptions
-#@+node:3::scanAtRootOptions
-#@+body
+#@nonl
+#@-node:scanAtFileOptions
+#@+node:scanAtRootOptions
 def scanAtRootOptions (s,i,err_flag=false):
 	
 	assert(match(s,i,"@root"))
 	i += len("@root")
 	mode = None 
 	while match(s,i,'-'):
-		
-		#@<< scan another @root option >>
-		#@+node:1::<< scan another @root option >>
-		#@+body
+		#@		<< scan another @root option >>
+		#@+node:<< scan another @root option >>
 		i += 1 ; err = -1
 		
 		if match_word(s,i,"code"): # Just match the prefix.
@@ -2554,22 +2334,21 @@ def scanAtRootOptions (s,i,err_flag=false):
 		
 		if err > -1 and err_flag:
 			es("unknown option:" + s[err:i] + " in " + get_line(s,i))
-		#@-body
-		#@-node:1::<< scan another @root option >>
-
+		#@nonl
+		#@-node:<< scan another @root option >>
+		#@nl
 
 	if mode == None:
 		doc = app().config.at_root_bodies_start_in_doc_mode
 		mode = choose(doc,"doc","code")
 	return i,mode
-#@-body
-#@-node:3::scanAtRootOptions
-#@+node:4::scanError
-#@+body
-#@+at
-#  It seems dubious to bump the Tangle error count here.  OTOH, it really 
+#@nonl
+#@-node:scanAtRootOptions
+#@+node:scanError
+#@+at 
+#@nonl
+# It seems dubious to bump the Tangle error count here.  OTOH, it really 
 # doesn't hurt.
-
 #@-at
 #@@c
 
@@ -2579,10 +2358,9 @@ def scanError(s):
 	top().tangleCommands.errors += 1
 
 	es(s)
-#@-body
-#@-node:4::scanError
-#@+node:5::scanf
-#@+body
+#@nonl
+#@-node:scanError
+#@+node:scanf
 # A quick and dirty sscanf.  Understands only %s and %d.
 
 def scanf (s,pat):
@@ -2601,22 +2379,20 @@ def scanf (s,pat):
 if 0: # testing
 	from leoGlobals import trace
 	scanf("1.0","%d.%d",)
-#@-body
-#@-node:5::scanf
-#@+node:6::Scanners: calling scanError
-#@+body
-#@+at
-#  These scanners all call scanError() directly or indirectly, so they will 
+#@nonl
+#@-node:scanf
+#@+node:Scanners: calling scanError
+#@+at 
+#@nonl
+# These scanners all call scanError() directly or indirectly, so they will 
 # call es() if they find an error.  scanError() also bumps 
 # commands.tangleCommands.errors, which is harmless if we aren't tangling, and 
 # useful if we are.
 # 
 # These routines are called by the Import routines and the Tangle routines.
-
 #@-at
-#@-body
-#@+node:1::skip_block_comment
-#@+body
+#@-node:Scanners: calling scanError
+#@+node:skip_block_comment
 # Scans past a block comment (an old_style C comment).
 
 def skip_block_comment (s,i):
@@ -2629,17 +2405,16 @@ def skip_block_comment (s,i):
 		scanError("Run on block comment: " + s[j:i])
 		return n
 	else: return k + 2
-#@-body
-#@-node:1::skip_block_comment
-#@+node:2::skip_braces
-#@+body
-#@+at
-#  Skips from the opening to the matching . If no matching is found i is set 
-# to len(s).
+#@nonl
+#@-node:skip_block_comment
+#@+node:skip_braces
+#@+at 
+#@nonl
+# Skips from the opening to the matching . If no matching is found i is set to 
+# len(s).
 # 
 # This code is called only from the import logic, so we are allowed to try 
 # some tricks.  In particular, we assume all braces are matched in #if blocks.
-
 #@-at
 #@@c
 
@@ -2665,16 +2440,16 @@ def skip_braces(s,i):
 			level += delta
 		else: i += 1
 	return i
-#@-body
-#@-node:2::skip_braces
-#@+node:3::skip_php_braces (Dave Hein)
-#@+body
-#@+at
-#  08-SEP-2002 DTHEIN: Added for PHP import support
-# Skips from the opening to the matching . If no matching is found i is set to len(s).
+#@nonl
+#@-node:skip_braces
+#@+node:skip_php_braces (Dave Hein)
+#@+at 
+#@nonl
+# 08-SEP-2002 DTHEIN: Added for PHP import support
+# Skips from the opening to the matching . If no matching is found i is set to 
+# len(s).
 # 
 # This code is called only from the import logic, and only for PHP imports.
-
 #@-at
 #@@c
 
@@ -2697,15 +2472,12 @@ def skip_php_braces(s,i):
 		elif match(s,i,'/*'): i = skip_block_comment(s,i)
 		else: i += 1
 	return i
-
-#@-body
-#@-node:3::skip_php_braces (Dave Hein)
-#@+node:4::skip_parens
-#@+body
-#@+at
-#  Skips from the opening ( to the matching ) . If no matching is found i is 
+#@-node:skip_php_braces (Dave Hein)
+#@+node:skip_parens
+#@+at 
+#@nonl
+# Skips from the opening ( to the matching ) . If no matching is found i is 
 # set to len(s)
-
 #@-at
 #@@c
 
@@ -2725,15 +2497,14 @@ def skip_parens(s,i):
 		elif match(s,i,"/*"): i = skip_block_comment(s,i)
 		else: i += 1
 	return i
-#@-body
-#@-node:4::skip_parens
-#@+node:5::skip_pascal_begin_end
-#@+body
-#@+at
-#  Skips from begin to matching end.
+#@nonl
+#@-node:skip_parens
+#@+node:skip_pascal_begin_end
+#@+at 
+#@nonl
+# Skips from begin to matching end.
 # If found, i points to the end. Otherwise, i >= len(s)
 # The end keyword matches begin, case, class, record, and try.
-
 #@-at
 #@@c
 
@@ -2761,10 +2532,9 @@ def skip_pascal_begin_end(s,i):
 		else: i += 1
 	# trace(`s[i1:i]`)
 	return i
-#@-body
-#@-node:5::skip_pascal_begin_end
-#@+node:6::skip_pascal_block_comment
-#@+body
+#@nonl
+#@-node:skip_pascal_begin_end
+#@+node:skip_pascal_block_comment
 # Scans past a pascal comment delimited by (* and *).
 
 def skip_pascal_block_comment(s,i):
@@ -2783,10 +2553,9 @@ def skip_pascal_block_comment(s,i):
 #       i += 1
 #   scanError("Run on comment" + s[j:i])
 #   return i
-#@-body
-#@-node:6::skip_pascal_block_comment
-#@+node:7::skip_pascal_string : called by tangle
-#@+body
+#@nonl
+#@-node:skip_pascal_block_comment
+#@+node:skip_pascal_string : called by tangle
 def skip_pascal_string(s,i):
 
 	j = i ; delim = s[i] ; i += 1
@@ -2799,12 +2568,12 @@ def skip_pascal_string(s,i):
 
 	scanError("Run on string: " + s[j:i])
 	return i
-#@-body
-#@-node:7::skip_pascal_string : called by tangle
-#@+node:8::skip_heredoc_string : called by php import (Dave Hein)
-#@+body
-#@+at
-#  08-SEP-2002 DTHEIN:  added function skip_heredoc_string
+#@nonl
+#@-node:skip_pascal_string : called by tangle
+#@+node:skip_heredoc_string : called by php import (Dave Hein)
+#@+at 
+#@nonl
+# 08-SEP-2002 DTHEIN:  added function skip_heredoc_string
 # A heredoc string in PHP looks like:
 # 
 #   <<<EOS
@@ -2816,7 +2585,6 @@ def skip_pascal_string(s,i):
 # It begins with <<< plus a token (naming same as PHP variable names).
 # It ends with the token on a line by itself (must start in first position.
 # 
-
 #@-at
 #@@c
 def skip_heredoc_string(s,i):
@@ -2843,11 +2611,8 @@ def skip_heredoc_string(s,i):
 	elif match(s,i,delim):
 		i += len(delim)
 	return i
-
-#@-body
-#@-node:8::skip_heredoc_string : called by php import (Dave Hein)
-#@+node:9::skip_pp_directive
-#@+body
+#@-node:skip_heredoc_string : called by php import (Dave Hein)
+#@+node:skip_pp_directive
 # Now handles continuation lines and block comments.
 
 def skip_pp_directive(s,i):
@@ -2860,10 +2625,9 @@ def skip_pp_directive(s,i):
 		elif match(s,i,"/*"): i = skip_block_comment(s,i)
 		else: i += 1
 	return i
-#@-body
-#@-node:9::skip_pp_directive
-#@+node:10::skip_pp_if
-#@+body
+#@nonl
+#@-node:skip_pp_directive
+#@+node:skip_pp_if
 # Skips an entire if or if def statement, including any nested statements.
 
 def skip_pp_if(s,i):
@@ -2893,11 +2657,8 @@ def skip_pp_if(s,i):
 		
 	# trace(`delta1` + ":" + start_line)
 	return i,delta1
-
-#@-body
-#@-node:10::skip_pp_if
-#@+node:11::skip_pp_part
-#@+body
+#@-node:skip_pp_if
+#@+node:skip_pp_part
 # Skip to an #else or #endif.  The caller has eaten the #if, #ifdef, #ifndef or #else
 
 def skip_pp_part(s,i):
@@ -2925,10 +2686,9 @@ def skip_pp_part(s,i):
 		elif match(s,i,"/*"): i = skip_block_comment(s,i)
 		else: i += 1
 	return i,delta
-#@-body
-#@-node:11::skip_pp_part
-#@+node:12::skip_python_string
-#@+body
+#@nonl
+#@-node:skip_pp_part
+#@+node:skip_python_string
 def skip_python_string(s,i):
 
 	if match(s,i,"'''") or match(s,i,'"""'):
@@ -2939,10 +2699,9 @@ def skip_python_string(s,i):
 		return len(s)
 	else:
 		return skip_string(s,i)
-#@-body
-#@-node:12::skip_python_string
-#@+node:13::skip_string : called by tangle
-#@+body
+#@nonl
+#@-node:skip_python_string
+#@+node:skip_string : called by tangle
 def skip_string(s,i):
 	
 	j = i ; delim = s[i] ; i += 1
@@ -2957,10 +2716,9 @@ def skip_string(s,i):
 	elif s[i] == delim:
 		i += 1
 	return i
-#@-body
-#@-node:13::skip_string : called by tangle
-#@+node:14::skip_to_semicolon
-#@+body
+#@nonl
+#@-node:skip_string : called by tangle
+#@+node:skip_to_semicolon
 # Skips to the next semicolon that is not in a comment or a string.
 
 def skip_to_semicolon(s,i):
@@ -2974,10 +2732,9 @@ def skip_to_semicolon(s,i):
 		elif match(s,i,"/*"): i = skip_block_comment(s,i)
 		else: i += 1
 	return i
-#@-body
-#@-node:14::skip_to_semicolon
-#@+node:15::skip_typedef
-#@+body
+#@nonl
+#@-node:skip_to_semicolon
+#@+node:skip_typedef
 def skip_typedef(s,i):
 
 	n = len(s)
@@ -2988,12 +2745,9 @@ def skip_typedef(s,i):
 		i = skip_braces(s,i)
 		i = skip_to_semicolon(s,i)
 	return i
-#@-body
-#@-node:15::skip_typedef
-#@-node:6::Scanners: calling scanError
-#@+node:7::Scanners: no error messages
-#@+node:1::escaped
-#@+body
+#@nonl
+#@-node:skip_typedef
+#@+node:escaped
 # Returns true if s[i] is preceded by an odd number of backslashes.
 
 def escaped(s,i):
@@ -3003,20 +2757,18 @@ def escaped(s,i):
 		count += 1
 		i -= 1
 	return (count%2) == 1
-#@-body
-#@-node:1::escaped
-#@+node:2::find_line_start
-#@+body
+#@nonl
+#@-node:escaped
+#@+node:find_line_start
 def find_line_start(s,i):
 
 	# bug fix: 11/2/02: change i to i+1 in rfind
 	i = string.rfind(s,'\n',0,i+1) # Finds the highest index in the range.
 	if i == -1: return 0
 	else: return i + 1
-#@-body
-#@-node:2::find_line_start
-#@+node:3::find_on_line
-#@+body
+#@nonl
+#@-node:find_line_start
+#@+node:find_on_line
 def find_on_line(s,i,pattern):
 
 	# j = skip_line(s,i) ; trace(`s[i:j]`)
@@ -3025,30 +2777,27 @@ def find_on_line(s,i,pattern):
 	k = string.find(s,pattern,i,j)
 	if k > -1: return k
 	else: return None
-#@-body
-#@-node:3::find_on_line
-#@+node:4::is_c_id
-#@+body
+#@nonl
+#@-node:find_on_line
+#@+node:is_c_id
 def is_c_id(ch):
 
 	return ch in string.letters or ch in string.digits or ch == '_'
-#@-body
-#@-node:4::is_c_id
-#@+node:5::is_nl
-#@+body
+#@nonl
+#@-node:is_c_id
+#@+node:is_nl
 def is_nl(s,i):
 
 	return i < len(s) and (s[i] == '\n' or s[i] == '\r')
-#@-body
-#@-node:5::is_nl
-#@+node:6::is_special
-#@+body
-#@+at
-#  Return true if the body text contains the @ directive.
+#@nonl
+#@-node:is_nl
+#@+node:is_special
+#@+at 
+#@nonl
+# Return true if the body text contains the @ directive.
 # 
 # We no longer require that the directive appear befor any @c directive or 
 # section definition.
-
 #@-at
 #@@c
 
@@ -3067,10 +2816,9 @@ def is_special(s,i,directive):
 			if skip_flag:
 				i = skip_ws(s,i)
 	return false, -1
-#@-body
-#@-node:6::is_special
-#@+node:7::is_ws & is_ws_or_nl
-#@+body
+#@nonl
+#@-node:is_special
+#@+node:is_ws & is_ws_or_nl
 def is_ws(c):
 
 	return c == '\t' or c == ' '
@@ -3078,37 +2826,33 @@ def is_ws(c):
 def is_ws_or_nl(s,i):
 
 	return is_nl(s,i) or (i < len(s) and is_ws(s[i]))
-#@-body
-#@-node:7::is_ws & is_ws_or_nl
-#@+node:8::match
-#@+body
+#@nonl
+#@-node:is_ws & is_ws_or_nl
+#@+node:match
 # Warning: this code makes no assumptions about what follows pattern.
 
 def match(s,i,pattern):
 
 	return s and pattern and string.find(s,pattern,i,i+len(pattern)) == i
-#@-body
-#@-node:8::match
-#@+node:9::match_c_word
-#@+body
+#@nonl
+#@-node:match
+#@+node:match_c_word
 def match_c_word (s,i,name):
 
 	if name == None: return false
 	n = len(name)
 	if n == 0: return false
 	return name == s[i:i+n] and (i+n == len(s) or not is_c_id(s[i+n]))
-#@-body
-#@-node:9::match_c_word
-#@+node:10::match_ignoring_case
-#@+body
+#@nonl
+#@-node:match_c_word
+#@+node:match_ignoring_case
 def match_ignoring_case(s1,s2):
 
 	if s1 == None or s2 == None: return false
 	return string.lower(s1) == string.lower(s2)
-#@-body
-#@-node:10::match_ignoring_case
-#@+node:11::match_word
-#@+body
+#@nonl
+#@-node:match_ignoring_case
+#@+node:match_word
 def match_word(s,i,pattern):
 
 	if pattern == None: return false
@@ -3120,10 +2864,9 @@ def match_word(s,i,pattern):
 		return true
 	c = s[i+j]
 	return not (c in string.letters or c in string.digits or c == '_')
-#@-body
-#@-node:11::match_word
-#@+node:12::skip_blank_lines
-#@+body
+#@nonl
+#@-node:match_word
+#@+node:skip_blank_lines
 def skip_blank_lines(s,i):
 
 	while i < len(s):
@@ -3136,10 +2879,9 @@ def skip_blank_lines(s,i):
 			else: break
 		else: break
 	return i
-#@-body
-#@-node:12::skip_blank_lines
-#@+node:13::skip_c_id
-#@+body
+#@nonl
+#@-node:skip_blank_lines
+#@+node:skip_c_id
 def skip_c_id(s,i):
 
 	n = len(s)
@@ -3149,15 +2891,14 @@ def skip_c_id(s,i):
 			i += 1
 		else: break
 	return i
-#@-body
-#@-node:13::skip_c_id
-#@+node:14::skip_line, skip_to_end_of_line
-#@+body
-#@+at
-#  These methods skip to the next newline, regardless of whether the newline 
+#@nonl
+#@-node:skip_c_id
+#@+node:skip_line, skip_to_end_of_line
+#@+at 
+#@nonl
+# These methods skip to the next newline, regardless of whether the newline 
 # may be preceeded by a backslash. Consequently, they should be used only when 
 # we know that we are not in a preprocessor directive or string.
-
 #@-at
 #@@c
 
@@ -3172,10 +2913,9 @@ def skip_to_end_of_line (s,i):
 	i = string.find(s,'\n',i)
 	if i == -1: return len(s)
 	else: return i
-#@-body
-#@-node:14::skip_line, skip_to_end_of_line
-#@+node:15::skip_long
-#@+body
+#@nonl
+#@-node:skip_line, skip_to_end_of_line
+#@+node:skip_long
 def skip_long(s,i):
 	
 	"""Scan s[i:] for a valid int.
@@ -3199,11 +2939,8 @@ def skip_long(s,i):
 		return i, val
 	except:
 		return i,None
-
-#@-body
-#@-node:15::skip_long
-#@+node:16::skip_matching_delims
-#@+body
+#@-node:skip_long
+#@+node:skip_matching_delims
 def skip_matching_delims(s,i,delim1,delim2):
 	
 	assert(match(s,i,delim1))
@@ -3214,14 +2951,13 @@ def skip_matching_delims(s,i,delim1,delim2):
 		return len(s)
 	else:
 		return k + len(delim2)
-#@-body
-#@-node:16::skip_matching_delims
-#@+node:17::skip_nl
-#@+body
-#@+at
-#  This function skips a single "logical" end-of-line character.  We need this 
+#@nonl
+#@-node:skip_matching_delims
+#@+node:skip_nl
+#@+at 
+#@nonl
+# This function skips a single "logical" end-of-line character.  We need this 
 # function because different systems have different end-of-line conventions.
-
 #@-at
 #@@c
 
@@ -3230,20 +2966,18 @@ def skip_nl (s,i):
 	if match(s,i,"\r\n"): return i + 2
 	elif match(s,i,'\n') or match(s,i,'\r'): return i + 1
 	else: return i
-#@-body
-#@-node:17::skip_nl
-#@+node:18::skip_non_ws
-#@+body
+#@nonl
+#@-node:skip_nl
+#@+node:skip_non_ws
 def skip_non_ws (s,i):
 
 	n = len(s)
 	while i < n and not is_ws(s[i]):
 		i += 1
 	return i
-#@-body
-#@-node:18::skip_non_ws
-#@+node:19::skip_pascal_braces
-#@+body
+#@nonl
+#@-node:skip_non_ws
+#@+node:skip_pascal_braces
 # Skips from the opening { to the matching }.
 
 def skip_pascal_braces(s,i):
@@ -3252,10 +2986,9 @@ def skip_pascal_braces(s,i):
 	k = string.find(s,'}',i)
 	if i == -1: return len(s)
 	else: return k
-#@-body
-#@-node:19::skip_pascal_braces
-#@+node:20::skip_to_char
-#@+body
+#@nonl
+#@-node:skip_pascal_braces
+#@+node:skip_to_char
 def skip_to_char(s,i,ch):
 	
 	j = string.find(s,ch,i)
@@ -3263,11 +2996,8 @@ def skip_to_char(s,i,ch):
 		return len(s),s[i:]
 	else:
 		return j,s[i:j]
-
-#@-body
-#@-node:20::skip_to_char
-#@+node:21::skip_ws, skip_ws_and_nl
-#@+body
+#@-node:skip_to_char
+#@+node:skip_ws, skip_ws_and_nl
 def skip_ws(s,i):
 
 	n = len(s)
@@ -3281,12 +3011,9 @@ def skip_ws_and_nl(s,i):
 	while i < n and (is_ws(s[i]) or is_nl(s,i)):
 		i += 1
 	return i
-#@-body
-#@-node:21::skip_ws, skip_ws_and_nl
-#@-node:7::Scanners: no error messages
-#@+node:8::Tk.Text selection (utils)
-#@+node:1::bound_paragraph
-#@+body
+#@nonl
+#@-node:skip_ws, skip_ws_and_nl
+#@+node:bound_paragraph
 def bound_paragraph(t=None):
 	"""Find the bounds of the text paragraph that contains the current cursor position.
 	
@@ -3341,19 +3068,17 @@ endsWithNL: true if the paragraph ends with a newline"""
 	endsWithNL = len(t.get(end))
 
 	return start, end, endsWithNL
-#@-body
-#@-node:1::bound_paragraph
-#@+node:2::getindex
-#@+body
+#@nonl
+#@-node:bound_paragraph
+#@+node:getindex
 def getindex(text, index):
 	
 	"""Convert string index of the form line.col into a tuple of two ints."""
 	
 	return tuple(map(int,string.split(text.index(index), ".")))
-#@-body
-#@-node:2::getindex
-#@+node:3::getSelectedText
-#@+body
+#@nonl
+#@-node:getindex
+#@+node:getSelectedText
 # t is a Tk.Text widget.  Returns the text of the selected range of t.
 
 def getSelectedText (t):
@@ -3363,10 +3088,9 @@ def getSelectedText (t):
 		return t.get(start,end)
 	else:
 		return None
-#@-body
-#@-node:3::getSelectedText
-#@+node:4::getTextSelection
-#@+body
+#@nonl
+#@-node:getSelectedText
+#@+node:getTextSelection
 def getTextSelection (t):
 	
 	"""Return a tuple representing the selected range of t, a Tk.Text widget.
@@ -3381,13 +3105,13 @@ def getTextSelection (t):
 		# 7/1/03: Return the insertion point if there is no selected text.
 		insert = t.index("insert")
 		return insert,insert
-#@-body
-#@-node:4::getTextSelection
-#@+node:5::setTextSelection
-#@+body
-#@+at
-#  t is a Tk.Text widget.  start and end are positions.  Selects from start to end.
-
+#@nonl
+#@-node:getTextSelection
+#@+node:setTextSelection
+#@+at 
+#@nonl
+# t is a Tk.Text widget.  start and end are positions.  Selects from start to 
+# end.
 #@-at
 #@@c
 
@@ -3403,13 +3127,8 @@ def setTextSelection (t,start,end):
 	t.tag_add("sel",start,end)
 	t.tag_remove("sel",end,"end")
 	t.mark_set("insert",end)
-
-#@-body
-#@-node:5::setTextSelection
-#@-node:8::Tk.Text selection (utils)
-#@+node:9::Whitespace...
-#@+node:1::computeLeadingWhitespace
-#@+body
+#@-node:setTextSelection
+#@+node:computeLeadingWhitespace
 # Returns optimized whitespace corresponding to width with the indicated tab_width.
 
 def computeLeadingWhitespace (width, tab_width):
@@ -3422,10 +3141,9 @@ def computeLeadingWhitespace (width, tab_width):
 		return ('\t' * tabs) + (' ' * blanks)
 	else: # 7/3/02: negative tab width always gets converted to blanks.
 		return (' ' * width)
-#@-body
-#@-node:1::computeLeadingWhitespace
-#@+node:2::computeWidth
-#@+body
+#@nonl
+#@-node:computeLeadingWhitespace
+#@+node:computeWidth
 # Returns the width of s, assuming s starts a line, with indicated tab_width.
 
 def computeWidth (s, tab_width):
@@ -3437,10 +3155,9 @@ def computeWidth (s, tab_width):
 		else:
 			w += 1
 	return w
-#@-body
-#@-node:2::computeWidth
-#@+node:3::get_leading_ws
-#@+body
+#@nonl
+#@-node:computeWidth
+#@+node:get_leading_ws
 def get_leading_ws(s):
 	
 	"""Returns the leading whitespace of 's'."""
@@ -3449,11 +3166,8 @@ def get_leading_ws(s):
 	while i < n and s[i] in (' ','\t'):
 		i += 1
 	return s[0:i]
-
-#@-body
-#@-node:3::get_leading_ws
-#@+node:4::optimizeLeadingWhitespace
-#@+body
+#@-node:get_leading_ws
+#@+node:optimizeLeadingWhitespace
 # Optimize leading whitespace in s with the given tab_width.
 
 def optimizeLeadingWhitespace (line,tab_width):
@@ -3461,10 +3175,9 @@ def optimizeLeadingWhitespace (line,tab_width):
 	i, width = skip_leading_ws_with_indent(line,0,tab_width)
 	s = computeLeadingWhitespace(width,tab_width) + line[i:]
 	return s
-#@-body
-#@-node:4::optimizeLeadingWhitespace
-#@+node:5::removeLeadingWhitespace
-#@+body
+#@nonl
+#@-node:optimizeLeadingWhitespace
+#@+node:removeLeadingWhitespace
 # Remove whitespace up to first_ws wide in s, given tab_width, the width of a tab.
 
 def removeLeadingWhitespace (s,first_ws,tab_width):
@@ -3481,10 +3194,9 @@ def removeLeadingWhitespace (s,first_ws,tab_width):
 	if j > 0:
 		s = s[j:]
 	return s
-#@-body
-#@-node:5::removeLeadingWhitespace
-#@+node:6::removeTrailingWs
-#@+body
+#@nonl
+#@-node:removeLeadingWhitespace
+#@+node:removeTrailingWs
 # Warning: string.rstrip also removes newlines!
 
 def removeTrailingWs(s):
@@ -3493,11 +3205,8 @@ def removeTrailingWs(s):
 	while j >= 0 and (s[j] == ' ' or s[j] == '\t'):
 		j -= 1
 	return s[:j+1]
-
-#@-body
-#@-node:6::removeTrailingWs
-#@+node:7::skip_leading_ws
-#@+body
+#@-node:removeTrailingWs
+#@+node:skip_leading_ws
 # Skips leading up to width leading whitespace.
 
 def skip_leading_ws(s,i,ws,tab_width):
@@ -3514,15 +3223,14 @@ def skip_leading_ws(s,i,ws,tab_width):
 		else: break
 
 	return i
-#@-body
-#@-node:7::skip_leading_ws
-#@+node:8::skip_leading_ws_with_indent
-#@+body
-#@+at
-#  Skips leading whitespace and returns (i, indent), where i points after the 
+#@nonl
+#@-node:skip_leading_ws
+#@+node:skip_leading_ws_with_indent
+#@+at 
+#@nonl
+# Skips leading whitespace and returns (i, indent), where i points after the 
 # whitespace and indent is the width of the whitespace, assuming tab_width 
 # wide tabs.
-
 #@-at
 #@@c
 
@@ -3540,13 +3248,9 @@ def skip_leading_ws_with_indent(s,i,tab_width):
 		else: break
 
 	return i, count
-#@-body
-#@-node:8::skip_leading_ws_with_indent
-#@-node:9::Whitespace...
-#@-node:15::Scanning, selection & whitespace...
-#@+node:16::Unicode utils...
-#@+node:1::isValidEncoding
-#@+body
+#@nonl
+#@-node:skip_leading_ws_with_indent
+#@+node:isValidEncoding
 def isValidEncoding (encoding):
 	
 	try:
@@ -3556,11 +3260,8 @@ def isValidEncoding (encoding):
 		return true
 	except:
 		return false
-
-#@-body
-#@-node:1::isValidEncoding
-#@+node:2::reportBadChars
-#@+body
+#@-node:isValidEncoding
+#@+node:reportBadChars
 def reportBadChars (s,encoding):
 	
 	errors = 0
@@ -3580,10 +3281,9 @@ def reportBadChars (s,encoding):
 		if errors:
 			es("%d errors converting %s from %s to unicode" % 
 				(errors, s.encode(encoding,"replace"),encoding))
-#@-body
-#@-node:2::reportBadChars
-#@+node:3::toUnicode & toEncodedString
-#@+body
+#@nonl
+#@-node:reportBadChars
+#@+node:toUnicode & toEncodedString
 def toUnicode (s,encoding,reportErrors=false):
 	
 	if type(s) == type(""):
@@ -3605,10 +3305,9 @@ def toEncodedString (s,encoding,reportErrors=false):
 				reportBadChars(s,encoding)
 			s = s.encode(encoding,"replace")
 	return s
-#@-body
-#@-node:3::toUnicode & toEncodedString
-#@+node:4::getpreferredencoding from 2.3a2
-#@+body
+#@nonl
+#@-node:toUnicode & toEncodedString
+#@+node:getpreferredencoding from 2.3a2
 try:
 	# Use Python's version of getpreferredencoding if it exists.
 	# It is new in Python 2.3.
@@ -3617,10 +3316,8 @@ try:
 except:
 	# Use code copied from locale.py in Python 2.3alpha2.
 	if sys.platform in ('win32', 'darwin', 'mac'):
-		
-		#@<< define getpreferredencoding using _locale >>
-		#@+node:1::<< define getpreferredencoding using _locale >>
-		#@+body
+		#@		<< define getpreferredencoding using _locale >>
+		#@+node:<< define getpreferredencoding using _locale >>
 		# On Win32, this will return the ANSI code page
 		# On the Mac, it should return the system encoding;
 		# it might return "ascii" instead.
@@ -3632,14 +3329,12 @@ except:
 				return _locale._getdefaultlocale()[1]
 			except:
 				return None # Good enough for a.finishCreate.
-		#@-body
-		#@-node:1::<< define getpreferredencoding using _locale >>
-
+		#@nonl
+		#@-node:<< define getpreferredencoding using _locale >>
+		#@nl
 	else:
-		
-		#@<< define getpreferredencoding for *nix >>
-		#@+node:2::<< define getpreferredencoding for *nix >>
-		#@+body
+		#@		<< define getpreferredencoding for *nix >>
+		#@+node:<< define getpreferredencoding for *nix >>
 		# On Unix, if CODESET is available, use that.
 		try:
 			local.CODESET
@@ -3667,14 +3362,11 @@ except:
 						return locale.nl_langinfo(CODESET)
 				except:
 					return None # Good enough for a.finishCreate.
-		#@-body
-		#@-node:2::<< define getpreferredencoding for *nix >>
-
-
-#@-body
-#@-node:4::getpreferredencoding from 2.3a2
-#@-node:16::Unicode utils...
+		#@nonl
+		#@-node:<< define getpreferredencoding for *nix >>
+		#@nl
+#@-node:getpreferredencoding from 2.3a2
 #@-others
-#@-body
-#@-node:0::@file leoGlobals.py
+#@nonl
+#@-node:@file leoGlobals.py
 #@-leo

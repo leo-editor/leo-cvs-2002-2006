@@ -1,6 +1,5 @@
-#@+leo
-#@+node:0::@file leoCompare.py
-#@+body
+#@+leo-ver=4
+#@+node:@file leoCompare.py
 #@@language python
 
 # The code for Leo's Compare Panel and the compare class.
@@ -9,19 +8,14 @@ from leoGlobals import *
 import difflib,filecmp,os,string
 import Tkinter,tkFileDialog
 
-
 #@+others
-#@+node:1::choose
-#@+body
+#@+node:choose
 def choose(cond, a, b): # warning: evaluates all arguments
 
 	if cond: return a
 	else: return b
-
-#@-body
-#@-node:1::choose
-#@+node:2::go
-#@+body
+#@-node:choose
+#@+node:go
 def go ():
 
 	cmp = leoCompare(
@@ -58,16 +52,13 @@ def go ():
 		name1 = "c:\\prog\\test\\compare1.txt"
 		name2 = "c:\\prog\\test\\compare2.txt"
 		cmp.compare_files(name1,name2)
-#@-body
-#@-node:2::go
-#@+node:3::class leoCompare
-#@+body
+#@nonl
+#@-node:go
+#@+node:class leoCompare
 class baseLeoCompare:
 	"""The base class for Leo's compare code."""
-
-	#@+others
-	#@+node:1::compare.__init__
-	#@+body
+	#@	@+others
+	#@+node:compare.__init__
 	# All these ivars are known to the leoComparePanel class.
 	
 	def __init__ (self,
@@ -121,10 +112,9 @@ class baseLeoCompare:
 		self.fileName2 = None
 		# Open files...
 		self.outputFile = None
-	#@-body
-	#@-node:1::compare.__init__
-	#@+node:2::compare_directories (entry)
-	#@+body
+	#@nonl
+	#@-node:compare.__init__
+	#@+node:compare_directories (entry)
 	# We ignore the filename portion of path1 and path2 if it exists.
 	
 	def compare_directories (self,path1,path2):
@@ -204,10 +194,9 @@ class baseLeoCompare:
 		if self.outputFile:
 			self.outputFile.close()
 			self.outputFile = None
-	#@-body
-	#@-node:2::compare_directories (entry)
-	#@+node:3::compare_files (entry)
-	#@+body
+	#@nonl
+	#@-node:compare_directories (entry)
+	#@+node:compare_files (entry)
 	def compare_files (self, name1, name2):
 		
 		if name1 == name2:
@@ -235,10 +224,9 @@ class baseLeoCompare:
 		except:
 			self.show("exception closing files")
 			es_exception()
-	#@-body
-	#@-node:3::compare_files (entry)
-	#@+node:4::compare_lines
-	#@+body
+	#@nonl
+	#@-node:compare_files (entry)
+	#@+node:compare_lines
 	def compare_lines (self,s1,s2):
 		
 		if self.ignoreLeadingWhitespace:
@@ -260,10 +248,9 @@ class baseLeoCompare:
 			s2 = ws2 + tail2
 	
 		return s1 == s2
-	#@-body
-	#@-node:4::compare_lines
-	#@+node:5::compare_open_files
-	#@+body
+	#@nonl
+	#@-node:compare_lines
+	#@+node:compare_open_files
 	def compare_open_files (self, f1, f2, name1, name2):
 	
 		# self.show("compare_open_files")
@@ -274,10 +261,8 @@ class baseLeoCompare:
 			self.show("2: " + name2)
 			self.show("")
 		s1 = s2 = None
-		
-		#@<< handle opening lines >>
-		#@+node:1::<< handle opening lines >>
-		#@+body
+		#@	<< handle opening lines >>
+		#@+node:<< handle opening lines >>
 		if self.ignoreSentinelLines:
 			
 			s1 = readlineForceUnixNewline(f1) ; lines1 += 1
@@ -297,18 +282,16 @@ class baseLeoCompare:
 			if s2 == None:
 				readlineForceUnixNewline(f2) ; lines2 += 1
 			s2 = None
-		#@-body
-		#@-node:1::<< handle opening lines >>
-
+		#@nonl
+		#@-node:<< handle opening lines >>
+		#@nl
 		while 1:
 			if s1 == None:
 				s1 = readlineForceUnixNewline(f1) ; lines1 += 1
 			if s2 == None:
 				s2 = readlineForceUnixNewline(f2) ; lines2 += 1
-			
-			#@<< ignore blank lines and/or sentinels >>
-			#@+node:2::<< ignore blank lines and/or sentinels >>
-			#@+body
+			#@		<< ignore blank lines and/or sentinels >>
+			#@+node:<< ignore blank lines and/or sentinels >>
 			# Completely empty strings denotes end-of-file.
 			if s1 and len(s1) > 0:
 				if self.ignoreBlankLines and len(string.strip(s1)) == 0:
@@ -323,20 +306,16 @@ class baseLeoCompare:
 			
 				if self.ignoreSentinelLines and sentinelComment2 and self.isSentinel(s2,sentinelComment2):
 					s2 = None ; continue
-			
-			#@-body
-			#@-node:2::<< ignore blank lines and/or sentinels >>
-
+			#@-node:<< ignore blank lines and/or sentinels >>
+			#@nl
 			n1 = len(s1) ; n2 = len(s2)
 			if n1==0 and n2 != 0: self.show("1.eof***:")
 			if n2==0 and n1 != 0: self.show("2.eof***:")
 			if n1==0 or n2==0: break
 			match = self.compare_lines(s1,s2)
 			if not match: mismatches += 1
-			
-			#@<< print matches and/or mismatches >>
-			#@+node:3::<< print matches and/or mismatches >>
-			#@+body
+			#@		<< print matches and/or mismatches >>
+			#@+node:<< print matches and/or mismatches >>
 			if self.limitCount == 0 or mismatches <= self.limitCount:
 			
 				if match and self.printMatches:
@@ -351,13 +330,11 @@ class baseLeoCompare:
 					
 					self.dump(string.rjust("1." + `lines1`,6) + '*:',s1)
 					self.dump(string.rjust("2." + `lines2`,6) + '*:',s2)
-			#@-body
-			#@-node:3::<< print matches and/or mismatches >>
-
-			
-			#@<< warn if mismatch limit reached >>
-			#@+node:4::<< warn if mismatch limit reached >>
-			#@+body
+			#@nonl
+			#@-node:<< print matches and/or mismatches >>
+			#@nl
+			#@		<< warn if mismatch limit reached >>
+			#@+node:<< warn if mismatch limit reached >>
 			if self.limitCount > 0 and mismatches >= self.limitCount:
 				
 				if printTrailing:
@@ -365,14 +342,12 @@ class baseLeoCompare:
 					self.show("limit count reached")
 					self.show("")
 					printTrailing = false
-			#@-body
-			#@-node:4::<< warn if mismatch limit reached >>
-
+			#@nonl
+			#@-node:<< warn if mismatch limit reached >>
+			#@nl
 			s1 = s2 = None # force a read of both lines.
-		
-		#@<< handle reporting after at least one eof is seen >>
-		#@+node:5::<< handle reporting after at least one eof is seen >>
-		#@+body
+		#@	<< handle reporting after at least one eof is seen >>
+		#@+node:<< handle reporting after at least one eof is seen >>
 		if n1 > 0: 
 			lines1 += self.dumpToEndOfFile("1.",f1,s1,lines1,printTrailing)
 			
@@ -383,12 +358,12 @@ class baseLeoCompare:
 		self.show("lines1:" + `lines1`)
 		self.show("lines2:" + `lines2`)
 		self.show("mismatches:" + `mismatches`)
-		#@-body
-		#@-node:5::<< handle reporting after at least one eof is seen >>
-	#@-body
-	#@-node:5::compare_open_files
-	#@+node:6::filecmp
-	#@+body
+		#@nonl
+		#@-node:<< handle reporting after at least one eof is seen >>
+		#@nl
+	#@nonl
+	#@-node:compare_open_files
+	#@+node:filecmp
 	def filecmp (self,f1,f2):
 	
 		val = filecmp.cmp(f1,f2)
@@ -400,11 +375,9 @@ class baseLeoCompare:
 			if val: self.show(`val` + " (equal)")
 			else:   self.show(`val` + " (not equal)")
 		return val
-	#@-body
-	#@-node:6::filecmp
-	#@+node:7::utils...
-	#@+node:1::doOpen
-	#@+body
+	#@nonl
+	#@-node:filecmp
+	#@+node:doOpen
 	def doOpen (self,name):
 	
 		try:
@@ -413,10 +386,9 @@ class baseLeoCompare:
 		except:
 			self.show("can not open:" + '"' + name + '"')
 			return None
-	#@-body
-	#@-node:1::doOpen
-	#@+node:2::dump
-	#@+body
+	#@nonl
+	#@-node:doOpen
+	#@+node:dump
 	def dump (self,tag,s):
 	
 		cmp = self ; out = tag
@@ -439,10 +411,9 @@ class baseLeoCompare:
 						out += ch
 	
 		self.show(out)
-	#@-body
-	#@-node:2::dump
-	#@+node:3::dumpToEndOfFile
-	#@+body
+	#@nonl
+	#@-node:dump
+	#@+node:dumpToEndOfFile
 	def dumpToEndOfFile (self,tag,f,s,line,printTrailing):
 	
 		trailingLines = 0
@@ -458,18 +429,18 @@ class baseLeoCompare:
 	
 		self.show(tag + `trailingLines` + " trailing lines")
 		return trailingLines
-	#@-body
-	#@-node:3::dumpToEndOfFile
-	#@+node:4::isLeoHeader & isSentinel
-	#@+body
-	#@+at
-	#  These methods are based on atFile.scanHeader().  They are simpler 
+	#@nonl
+	#@-node:dumpToEndOfFile
+	#@+node:isLeoHeader & isSentinel
+	#@+at 
+	#@nonl
+	# These methods are based on atFile.scanHeader().  They are simpler 
 	# because we only care about the starting sentinel comment: any line 
-	# starting with the starting sentinel comment is presumed to be a sentinel line.
-
+	# starting with the starting sentinel comment is presumed to be a sentinel 
+	# line.
 	#@-at
 	#@@c
-
+	
 	def isLeoHeader (self,s):
 	
 		tag = "@+leo"
@@ -484,10 +455,9 @@ class baseLeoCompare:
 	
 		i = skip_ws(s,0)
 		return match(s,i,sentinelComment)
-	#@-body
-	#@-node:4::isLeoHeader & isSentinel
-	#@+node:5::openOutputFile (compare)
-	#@+body
+	#@nonl
+	#@-node:isLeoHeader & isSentinel
+	#@+node:openOutputFile (compare)
 	def openOutputFile (self):
 		
 		if self.outputFileName == None:
@@ -513,10 +483,9 @@ class baseLeoCompare:
 				self.outputFile = None
 				self.show("exception opening output file")
 				es_exception()
-	#@-body
-	#@-node:5::openOutputFile (compare)
-	#@+node:6::show
-	#@+body
+	#@nonl
+	#@-node:openOutputFile (compare)
+	#@+node:show
 	def show (self,s):
 		
 		# print s
@@ -527,10 +496,9 @@ class baseLeoCompare:
 		else:
 			print s
 			print
-	#@-body
-	#@-node:6::show
-	#@+node:7::showIvars
-	#@+body
+	#@nonl
+	#@-node:show
+	#@+node:showIvars
 	def showIvars (self):
 		
 		self.show("fileName1:"        + `self.fileName1`)
@@ -551,25 +519,20 @@ class baseLeoCompare:
 		self.show("printMatches:"            + `self.printMatches`)
 		self.show("printMismatches:"         + `self.printMismatches`)
 		self.show("printTrailingMismatches:" + `self.printTrailingMismatches`)
-	#@-body
-	#@-node:7::showIvars
-	#@-node:7::utils...
+	#@nonl
+	#@-node:showIvars
 	#@-others
-
 	
 class leoCompare (baseLeoCompare):
 	"""A class containing Leo's compare code."""
 	pass
-#@-body
-#@-node:3::class leoCompare
-#@+node:4::class leoComparePanel
-#@+body
+#@nonl
+#@-node:class leoCompare
+#@+node:class leoComparePanel
 class baseLeoComparePanel:
 	"""The base class for Leo's compare panel."""
-
-	#@+others
-	#@+node:1::browser
-	#@+body
+	#@	@+others
+	#@+node:browser
 	def browser (self,n):
 		
 		types = [
@@ -596,10 +559,9 @@ class baseLeoComparePanel:
 		else: fileName = None
 			
 		return fileName
-	#@-body
-	#@-node:1::browser
-	#@+node:2::comparePanel.__init__
-	#@+body
+	#@nonl
+	#@-node:browser
+	#@+node:comparePanel.__init__
 	def __init__ (self,c,cmp):
 	
 		Tk = Tkinter
@@ -644,10 +606,9 @@ class baseLeoComparePanel:
 		
 		# The default file name in the "output file name" browsers.
 		self.defaultOutputFileName = "CompareResults.txt"
-	#@-body
-	#@-node:2::comparePanel.__init__
-	#@+node:3::finishCreate
-	#@+body
+	#@nonl
+	#@-node:comparePanel.__init__
+	#@+node:finishCreate
 	# Initialize ivars from config parameters.
 	
 	def finishCreate (self):
@@ -738,10 +699,9 @@ class baseLeoComparePanel:
 		b = config.getBoolComparePref("make_whitespace_visible")
 		if b == None: b = 0
 		self.makeWhitespaceVisibleVar.set(b)
-	#@-body
-	#@-node:3::finishCreate
-	#@+node:4::run
-	#@+body
+	#@nonl
+	#@-node:finishCreate
+	#@+node:run
 	def run (self):
 	
 		import leoApp, leoCommands
@@ -750,10 +710,8 @@ class baseLeoComparePanel:
 		self.top = top = Tk.Toplevel(app().root)
 		top.title("Leo Compare files and directories")
 		top.protocol("WM_DELETE_WINDOW", self.onClose)
-		
-		#@<< create the organizer frames >>
-		#@+node:1::<< create the organizer frames >>
-		#@+body
+		#@	<< create the organizer frames >>
+		#@+node:<< create the organizer frames >>
 		outer = Tk.Frame(top, bd=2,relief="groove")
 		outer.pack(pady=4)
 		
@@ -780,13 +738,11 @@ class baseLeoComparePanel:
 		
 		lower = Tk.Frame(outer)
 		lower.pack(pady=6)
-		#@-body
-		#@-node:1::<< create the organizer frames >>
-
-		
-		#@<< create the browser rows >>
-		#@+node:2::<< create the browser rows >>
-		#@+body
+		#@nonl
+		#@-node:<< create the organizer frames >>
+		#@nl
+		#@	<< create the browser rows >>
+		#@+node:<< create the browser rows >>
 		for row,text,text2,command,var in (
 			(row1,"Compare path 1:","Ignore first line",self.onBrowse1,self.ignoreFirstLine1Var),
 			(row2,"Compare path 2:","Ignore first line",self.onBrowse2,self.ignoreFirstLine2Var),
@@ -804,13 +760,11 @@ class baseLeoComparePanel:
 		
 			b = Tk.Checkbutton(row,text=text2,anchor="w",variable=var,width=15)
 			b.pack(side="left")
-		#@-body
-		#@-node:2::<< create the browser rows >>
-
-		
-		#@<< create the extension row >>
-		#@+node:3::<< create the extension row >>
-		#@+body
+		#@nonl
+		#@-node:<< create the browser rows >>
+		#@nl
+		#@	<< create the extension row >>
+		#@+node:<< create the extension row >>
 		b = Tk.Checkbutton(row4,anchor="w",var=self.limitToExtensionVar,
 			text="Limit directory compares to type:")
 		b.pack(side="left",padx=4)
@@ -821,13 +775,11 @@ class baseLeoComparePanel:
 		b = Tk.Checkbutton(row4,anchor="w",var=self.appendOutputVar,
 			text="Append output to output file")
 		b.pack(side="left",padx=4)
-		#@-body
-		#@-node:3::<< create the extension row >>
-
-		
-		#@<< create the whitespace options frame >>
-		#@+node:4::<< create the whitespace options frame >>
-		#@+body
+		#@nonl
+		#@-node:<< create the extension row >>
+		#@nl
+		#@	<< create the whitespace options frame >>
+		#@+node:<< create the whitespace options frame >>
 		w,f = create_labeled_frame(ws,caption="Whitespace options",relief="groove")
 			
 		for text,var in (
@@ -842,13 +794,11 @@ class baseLeoComparePanel:
 			
 		spacer = Tk.Frame(f)
 		spacer.pack(padx="1i")
-		#@-body
-		#@-node:4::<< create the whitespace options frame >>
-
-		
-		#@<< create the print options frame >>
-		#@+node:5::<< create the print options frame >>
-		#@+body
+		#@nonl
+		#@-node:<< create the whitespace options frame >>
+		#@nl
+		#@	<< create the print options frame >>
+		#@+node:<< create the print options frame >>
 		w,f = create_labeled_frame(pr,caption="Print options",relief="groove")
 		
 		row = Tk.Frame(f)
@@ -880,36 +830,32 @@ class baseLeoComparePanel:
 		
 		spacer = Tk.Frame(f)
 		spacer.pack(padx="1i")
-		#@-body
-		#@-node:5::<< create the print options frame >>
-
-		
-		#@<< create the compare buttons >>
-		#@+node:6::<< create the compare buttons >>
-		#@+body
+		#@nonl
+		#@-node:<< create the print options frame >>
+		#@nl
+		#@	<< create the compare buttons >>
+		#@+node:<< create the compare buttons >>
 		for text,command in (
 			("Compare files",      self.onCompareFiles),
 			("Compare directories",self.onCompareDirectories) ):
 			
 			b = Tk.Button(lower,text=text,command=command,width=18)
 			b.pack(side="left",padx=6)
-		#@-body
-		#@-node:6::<< create the compare buttons >>
-
+		#@nonl
+		#@-node:<< create the compare buttons >>
+		#@nl
 		center_dialog(top) # Do this _after_ building the dialog!
 		top.resizable(0,0)
 		self.finishCreate()
-	#@-body
-	#@-node:4::run
-	#@+node:5::show
-	#@+body
+	#@nonl
+	#@-node:run
+	#@+node:show
 	def show (self,s):
 		
 		self.cmp.show(s)
-	#@-body
-	#@-node:5::show
-	#@+node:6::setIvarsFromWidgets
-	#@+body
+	#@nonl
+	#@-node:show
+	#@+node:setIvarsFromWidgets
 	def setIvarsFromWidgets (self):
 	
 		cmp = self.cmp
@@ -969,11 +915,9 @@ class baseLeoComparePanel:
 			except: cmp.limitCount = 0
 		else:
 			cmp.limitCount = 0
-	#@-body
-	#@-node:6::setIvarsFromWidgets
-	#@+node:7::Event handlers...
-	#@+node:1::onBrowse...
-	#@+body
+	#@nonl
+	#@-node:setIvarsFromWidgets
+	#@+node:onBrowse...
 	def onBrowse1 (self):
 		
 		fileName = self.browser("1")
@@ -1006,17 +950,15 @@ class baseLeoComparePanel:
 			e = self.browseEntries[2]
 			e.delete(0,"end")
 			e.insert(0,fileName)
-	#@-body
-	#@-node:1::onBrowse...
-	#@+node:2::onClose
-	#@+body
+	#@nonl
+	#@-node:onBrowse...
+	#@+node:onClose
 	def onClose (self):
 		
 		self.top.withdraw()
-	#@-body
-	#@-node:2::onClose
-	#@+node:3::onCompare...
-	#@+body
+	#@nonl
+	#@-node:onClose
+	#@+node:onCompare...
 	def onCompareDirectories (self):
 	
 		cmp = self.cmp
@@ -1028,33 +970,27 @@ class baseLeoComparePanel:
 		cmp = self.cmp
 		self.setIvarsFromWidgets()
 		cmp.compare_files(cmp.fileName1,cmp.fileName2)
-	#@-body
-	#@-node:3::onCompare...
-	#@+node:4::onPrintMatchedLines
-	#@+body
+	#@nonl
+	#@-node:onCompare...
+	#@+node:onPrintMatchedLines
 	def onPrintMatchedLines (self):
 		
 		v = self.printMatchesVar.get()
 		b = self.printButtons[1]
 		state = choose(v,"normal","disabled")
 		b.configure(state=state)
-	#@-body
-	#@-node:4::onPrintMatchedLines
-	#@-node:7::Event handlers...
+	#@nonl
+	#@-node:onPrintMatchedLines
 	#@-others
-
 	
 class leoComparePanel (baseLeoComparePanel):
 	"""A class that creates Leo's compare panel."""
 	pass
-
-#@-body
-#@-node:4::class leoComparePanel
+#@-node:class leoComparePanel
 #@-others
-
 
 if __name__ == "__main__":
 	pass
-#@-body
-#@-node:0::@file leoCompare.py
+#@nonl
+#@-node:@file leoCompare.py
 #@-leo

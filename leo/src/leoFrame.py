@@ -1,8 +1,6 @@
-#@+leo
-#@+node:0::@file leoFrame.py
-#@+body
+#@+leo-ver=4
+#@+node:@file leoFrame.py
 # To do: Use config params for window height, width and bar color, relief and width.
-
 
 #@@language python
 
@@ -18,19 +16,14 @@ Tk = Tkinter
 class baseLeoFrame:
 	"""A base class for Leo's main frame class."""
 	instances = 0
-
-	#@+others
-	#@+node:1::Birth & Death
-	#@+node:1::f.__init__
-	#@+body
+	#@	@+others
+	#@+node:f.__init__
 	def __init__(self, title = None):
 	
 		Tk = Tkinter
 		LeoFrame.instances += 1
-		
-		#@<< set the LeoFrame ivars >>
-		#@+node:1::<< set the LeoFrame ivars >>
-		#@+body
+		#@	<< set the LeoFrame ivars >>
+		#@+node:<< set the LeoFrame ivars >>
 		# Set title and fileName
 		if title:
 			self.mFileName = title
@@ -91,9 +84,9 @@ class baseLeoFrame:
 		# Previous row and column shown in the status area.
 		self.lastStatusRow = self.lastStatusCol = 0
 		self.tab_width = 0 # The tab width in effect in this pane.
-		#@-body
-		#@-node:1::<< set the LeoFrame ivars >>
-
+		#@nonl
+		#@-node:<< set the LeoFrame ivars >>
+		#@nl
 		self.top = top = Tk.Toplevel()
 		if 0: # No longer needed now that Leo never creates more than one Leo frame on startup.
 			top.withdraw()
@@ -112,10 +105,8 @@ class baseLeoFrame:
 		self.tree = leoTree.leoTree(self.commands, self.canvas)
 		c.tree = self.tree
 		self.setTabWidth(c.tab_width)
-		
-		#@<< create the first tree node >>
-		#@+node:2::<< create the first tree node >>
-		#@+body
+		#@	<< create the first tree node >>
+		#@+node:<< create the first tree node >>
 		t = leoNodes.tnode()
 		v = leoNodes.vnode(c,t)
 		v.initHeadString("NewHeadline")
@@ -126,9 +117,9 @@ class baseLeoFrame:
 		c.tree.canvas.focus_get()
 		c.editVnode(v)
 		c.endUpdate(false)
-		#@-body
-		#@-node:2::<< create the first tree node >>
-
+		#@nonl
+		#@-node:<< create the first tree node >>
+		#@nl
 		v = c.currentVnode()
 		if not doHook("menu1",c=c,v=v):
 			self.createMenuBar(top)
@@ -175,18 +166,14 @@ class baseLeoFrame:
 		c.beadList = []
 		c.visitedList = []
 		doHook("after-create-leo-frame",c=c)
-	#@-body
-	#@-node:1::f.__init__
-	#@+node:2::f.__repr__
-	#@+body
+	#@nonl
+	#@-node:f.__init__
+	#@+node:f.__repr__
 	def __repr__ (self):
 	
 		return "<leoFrame: %s>" % (self.title)
-	
-	#@-body
-	#@-node:2::f.__repr__
-	#@+node:3::f.setWindowTitle
-	#@+body
+	#@-node:f.__repr__
+	#@+node:f.setWindowTitle
 	def setWindowTitle (self,fileName):
 		
 		path,fn = os.path.split(fileName)
@@ -195,10 +182,9 @@ class baseLeoFrame:
 		else:
 			title = fn
 		return title
-	#@-body
-	#@-node:3::f.setWindowTitle
-	#@+node:4::f.createLeoFrame
-	#@+body
+	#@nonl
+	#@-node:f.setWindowTitle
+	#@+node:f.createLeoFrame
 	def createLeoFrame (self,top):
 	
 		Tk = Tkinter ; config = app().config
@@ -207,10 +193,8 @@ class baseLeoFrame:
 		self.outerFrame.pack(expand=1,fill="both")
 	
 		self.createIconBar()
-		
-		#@<< create both splitters >>
-		#@+node:1::<< create both splitters >>
-		#@+body
+		#@	<< create both splitters >>
+		#@+node:<< create both splitters >>
 		# Splitter 1 is the main splitter containing splitter2 and the body pane.
 		f1,bar1,split1Pane1,split1Pane2 = self.createLeoSplitter(outerFrame, self.splitVerticalFlag)
 		self.f1,self.bar1 = f1,bar1
@@ -219,13 +203,11 @@ class baseLeoFrame:
 		f2,bar2,split2Pane1,split2Pane2 = self.createLeoSplitter(split1Pane1, not self.splitVerticalFlag)
 		self.f2,self.bar2 = f2,bar2
 		self.split2Pane1,self.split2Pane2 = split2Pane1,split2Pane2
-		#@-body
-		#@-node:1::<< create both splitters >>
-
-		
-		#@<< create the body pane >>
-		#@+node:2::<< create the body pane >>
-		#@+body
+		#@nonl
+		#@-node:<< create both splitters >>
+		#@nl
+		#@	<< create the body pane >>
+		#@+node:<< create the body pane >>
 		# A light selectbackground value is needed to make syntax coloring look good.
 		wrap = config.getBoolWindowPref('body_pane_wraps')
 		wrap = choose(wrap,"word","none")
@@ -251,13 +233,11 @@ class baseLeoFrame:
 			bodyXBar.pack(side="bottom", fill="x")
 			
 		body.pack(expand=1, fill="both")
-		#@-body
-		#@-node:2::<< create the body pane >>
-
-		
-		#@<< create the tree pane >>
-		#@+node:3::<< create the tree pane >>
-		#@+body
+		#@nonl
+		#@-node:<< create the body pane >>
+		#@nl
+		#@	<< create the tree pane >>
+		#@+node:<< create the tree pane >>
 		scrolls = config.getBoolWindowPref('outline_pane_scrolls_horizontally')
 		scrolls = choose(scrolls,1,0)
 		
@@ -287,13 +267,11 @@ class baseLeoFrame:
 			treeXBar['command'] = tree.xview 
 			treeXBar.pack(side="bottom", fill="x")
 		tree.pack(expand=1,fill="both")
-		#@-body
-		#@-node:3::<< create the tree pane >>
-
-		
-		#@<< create the log pane >>
-		#@+node:4::<< create the log pane >>
-		#@+body
+		#@nonl
+		#@-node:<< create the tree pane >>
+		#@nl
+		#@	<< create the log pane >>
+		#@+node:<< create the log pane >>
 		wrap = config.getBoolWindowPref('log_pane_wraps')
 		wrap = choose(wrap,"word","none")
 		
@@ -316,18 +294,15 @@ class baseLeoFrame:
 			logXBar['command'] = log.xview 
 			logXBar.pack(side="bottom", fill="x")
 		log.pack(expand=1, fill="both")
-		#@-body
-		#@-node:4::<< create the log pane >>
-
+		#@nonl
+		#@-node:<< create the log pane >>
+		#@nl
 		self.reconfigurePanes()
 		
 		self.createStatusLine()
 		self.putStatusLine("Welcome to Leo")
-	
-	#@-body
-	#@-node:4::f.createLeoFrame
-	#@+node:5::frame.destroyAllPanels
-	#@+body
+	#@-node:f.createLeoFrame
+	#@+node:frame.destroyAllPanels
 	def destroyAllPanels (self):
 		
 		"""Destroy all panels attached to this frame."""
@@ -342,10 +317,9 @@ class baseLeoFrame:
 		self.colorPanel = None
 		self.fontPanel = None
 		self.prefsPanel = None
-	#@-body
-	#@-node:5::frame.destroyAllPanels
-	#@+node:6::frame.promptForSave
-	#@+body
+	#@nonl
+	#@-node:frame.destroyAllPanels
+	#@+node:frame.promptForSave
 	def promptForSave (self):
 		
 		"""Prompt the user to save changes.
@@ -366,10 +340,8 @@ class baseLeoFrame:
 			return false # Don't save and don't veto.
 		else:
 			if not self.mFileName:
-				
-				#@<< Put up a file save dialog to set mFileName >>
-				#@+node:1::<< Put up a file save dialog to set mFileName >>
-				#@+body
+				#@			<< Put up a file save dialog to set mFileName >>
+				#@+node:<< Put up a file save dialog to set mFileName >>
 				# Make sure we never pass None to the ctor.
 				if not self.title:
 					self.title = ""
@@ -379,22 +351,17 @@ class baseLeoFrame:
 					title="Save",
 					filetypes=[("Leo files", "*.leo")],
 					defaultextension=".leo")
-				
-				#@-body
-				#@-node:1::<< Put up a file save dialog to set mFileName >>
-
+				#@-node:<< Put up a file save dialog to set mFileName >>
+				#@nl
 			if self.mFileName:
 				# print "saving", self.mFileName
 				c.fileCommands.save(self.mFileName)
 				return false # Don't veto.
 			else:
 				return true # Veto.
-	#@-body
-	#@-node:6::frame.promptForSave
-	#@-node:1::Birth & Death
-	#@+node:2::Configuration
-	#@+node:1::f.configureBar
-	#@+body
+	#@nonl
+	#@-node:frame.promptForSave
+	#@+node:f.configureBar
 	def configureBar (self, bar, verticalFlag):
 		
 		config = app().config
@@ -423,10 +390,9 @@ class baseLeoFrame:
 			else:
 				# Panes arranged horizontally; vertical splitter bar
 				bar.configure(width=7,cursor="sb_h_double_arrow")
-	#@-body
-	#@-node:1::f.configureBar
-	#@+node:2::f.configureBarsFromConfig
-	#@+body
+	#@nonl
+	#@-node:f.configureBar
+	#@+node:f.configureBarsFromConfig
 	def configureBarsFromConfig (self):
 		
 		config = app().config
@@ -451,10 +417,9 @@ class baseLeoFrame:
 		except: # Could be a user error.
 			es("exception in user configuration for splitbar")
 			es_exception()
-	#@-body
-	#@-node:2::f.configureBarsFromConfig
-	#@+node:3::f.reconfigureFromConfig
-	#@+body
+	#@nonl
+	#@-node:f.configureBarsFromConfig
+	#@+node:f.reconfigureFromConfig
 	def reconfigureFromConfig (self):
 		
 		f = self ; c = f.commands
@@ -475,10 +440,9 @@ class baseLeoFrame:
 		c.redraw()
 		f.setLogFontFromConfig()
 		c.redraw()
-	#@-body
-	#@-node:3::f.reconfigureFromConfig
-	#@+node:4::f.setBodyFontFromConfig
-	#@+body
+	#@nonl
+	#@-node:f.reconfigureFromConfig
+	#@+node:f.setBodyFontFromConfig
 	def setBodyFontFromConfig (self):
 		
 		config = app().config ; body = self.body
@@ -516,10 +480,9 @@ class baseLeoFrame:
 				except:
 					import traceback
 					traceback.print_exc()
-	#@-body
-	#@-node:4::f.setBodyFontFromConfig
-	#@+node:5::f.setInitialWindowGeometry
-	#@+body
+	#@nonl
+	#@-node:f.setBodyFontFromConfig
+	#@+node:f.setInitialWindowGeometry
 	def setInitialWindowGeometry(self):
 		
 		"""Set the position and size of the frame to config params."""
@@ -537,10 +500,9 @@ class baseLeoFrame:
 		y = max(y,0) ; x = max(x,0)
 	
 		self.top.geometry("%dx%d%+d%+d" % (w,h,x,y))
-	#@-body
-	#@-node:5::f.setInitialWindowGeometry
-	#@+node:6::f.setLogFontFromConfig
-	#@+body
+	#@nonl
+	#@-node:f.setInitialWindowGeometry
+	#@+node:f.setLogFontFromConfig
 	def setLogFontFromConfig (self):
 	
 		log = self.log ; config = app().config
@@ -562,11 +524,8 @@ class baseLeoFrame:
 			try: log.configure(fg=fg)
 			except: pass
 	
-	
-	#@-body
-	#@-node:6::f.setLogFontFromConfig
-	#@+node:7::f.setTabWidth
-	#@+body
+	#@-node:f.setLogFontFromConfig
+	#@+node:f.setTabWidth
 	def setTabWidth (self, w):
 		
 		try: # This can fail when called from scripts
@@ -582,11 +541,8 @@ class baseLeoFrame:
 		except:
 			es_exception()
 			pass
-	
-	#@-body
-	#@-node:7::f.setTabWidth
-	#@+node:8::f.setTreeColorsFromConfig
-	#@+body
+	#@-node:f.setTabWidth
+	#@+node:f.setTreeColorsFromConfig
 	def setTreeColorsFromConfig (self):
 		
 		config = app().config ; tree = self.tree
@@ -595,11 +551,8 @@ class baseLeoFrame:
 		if bg:
 			try: self.canvas.configure(bg=bg)
 			except: pass
-	
-	#@-body
-	#@-node:8::f.setTreeColorsFromConfig
-	#@+node:9::f.setWrap
-	#@+body
+	#@-node:f.setTreeColorsFromConfig
+	#@+node:f.setWrap
 	def setWrap (self,v):
 		
 		c = self.commands
@@ -613,11 +566,8 @@ class baseLeoFrame:
 			else:
 				self.body.configure(wrap="none")
 				self.bodyXBar.pack(side="bottom",fill="x")
-	
-	#@-body
-	#@-node:9::f.setWrap
-	#@+node:10::reconfigurePanes (use config bar_width)
-	#@+body
+	#@-node:f.setWrap
+	#@+node:reconfigurePanes (use config bar_width)
 	def reconfigurePanes (self):
 		
 		border = app().config.getIntWindowPref('additional_body_text_border')
@@ -630,11 +580,9 @@ class baseLeoFrame:
 		# The log pane needs a slightly bigger border when tiling vertically.
 		border = choose(self.splitVerticalFlag,4,2) 
 		self.log.configure(bd=border)
-	#@-body
-	#@-node:10::reconfigurePanes (use config bar_width)
-	#@-node:2::Configuration
-	#@+node:3::Scrolling callbacks (frame)
-	#@+body
+	#@nonl
+	#@-node:reconfigurePanes (use config bar_width)
+	#@+node:Scrolling callbacks (frame)
 	def setCallback (self,*args,**keys):
 		
 		"""Callback to adjust the scrollbar.
@@ -660,22 +608,17 @@ class baseLeoFrame:
 		apply(self.canvas.yview,args,keys)
 		
 		
-	
-	#@-body
-	#@-node:3::Scrolling callbacks (frame)
-	#@+node:4::Event handlers (Frame)
-	#@+node:1::frame.OnCloseLeoEvent
-	#@+body
+	#@-node:Scrolling callbacks (frame)
+	#@+node:frame.OnCloseLeoEvent
 	# Called from quit logic and when user closes the window.
 	# Returns true if the close happened.
 	
 	def OnCloseLeoEvent(self):
 	
 		app().closeLeoWindow(self)
-	#@-body
-	#@-node:1::frame.OnCloseLeoEvent
-	#@+node:2::frame.OnControlKeyUp/Down
-	#@+body
+	#@nonl
+	#@-node:frame.OnCloseLeoEvent
+	#@+node:frame.OnControlKeyUp/Down
 	def OnControlKeyDown (self,event=None):
 		
 		self.controlKeyIsDown = true
@@ -683,11 +626,8 @@ class baseLeoFrame:
 	def OnControlKeyUp (self,event=None):
 	
 		self.controlKeyIsDown = false
-	
-	#@-body
-	#@-node:2::frame.OnControlKeyUp/Down
-	#@+node:3::frame.OnVisibility
-	#@+body
+	#@-node:frame.OnControlKeyUp/Down
+	#@+node:frame.OnVisibility
 	# Handle the "visibility" event and attempt to attach the Leo icon.
 	# This code must be executed whenever the window is redrawn.
 	
@@ -697,10 +637,9 @@ class baseLeoFrame:
 	
 			# print "OnVisibility"
 			self.icon.attach(self.top)
-	#@-body
-	#@-node:3::frame.OnVisibility
-	#@+node:4::OnActivateBody
-	#@+body
+	#@nonl
+	#@-node:frame.OnVisibility
+	#@+node:OnActivateBody
 	def OnActivateBody (self,event=None):
 	
 		try:
@@ -712,11 +651,8 @@ class baseLeoFrame:
 			es_event_exception("activate body")
 	
 	
-	
-	#@-body
-	#@-node:4::OnActivateBody
-	#@+node:5::OnActivateLeoEvent, OnDeactivateLeoEvent
-	#@+body
+	#@-node:OnActivateBody
+	#@+node:OnActivateLeoEvent, OnDeactivateLeoEvent
 	def OnActivateLeoEvent(self,event=None):
 	
 		try:
@@ -730,10 +666,9 @@ class baseLeoFrame:
 			app().setLog(None,"OnDeactivateLeoEvent")
 		except:
 			es_event_exception("deactivate Leo")
-	#@-body
-	#@-node:5::OnActivateLeoEvent, OnDeactivateLeoEvent
-	#@+node:6::OnActivateLog
-	#@+body
+	#@nonl
+	#@-node:OnActivateLeoEvent, OnDeactivateLeoEvent
+	#@+node:OnActivateLog
 	def OnActivateLog (self,event=None):
 	
 		try:
@@ -741,10 +676,9 @@ class baseLeoFrame:
 			self.tree.OnDeactivate()
 		except:
 			es_event_exception("activate log")
-	#@-body
-	#@-node:6::OnActivateLog
-	#@+node:7::OnActivateTree
-	#@+body
+	#@nonl
+	#@-node:OnActivateLog
+	#@+node:OnActivateTree
 	def OnActivateTree (self,event=None):
 	
 		try:
@@ -754,11 +688,8 @@ class baseLeoFrame:
 			set_focus(c,c.frame.body) # 7/12/03
 		except:
 			es_event_exception("activate tree")
-	
-	#@-body
-	#@-node:7::OnActivateTree
-	#@+node:8::OnBodyClick, OnBodyRClick (Events)
-	#@+body
+	#@-node:OnActivateTree
+	#@+node:OnBodyClick, OnBodyRClick (Events)
 	def OnBodyClick (self,event=None):
 	
 		try:
@@ -778,10 +709,9 @@ class baseLeoFrame:
 			doHook("bodyrclick2",c=c,v=v,event=event)
 		except:
 			es_event_exception("iconrclick")
-	#@-body
-	#@-node:8::OnBodyClick, OnBodyRClick (Events)
-	#@+node:9::OnBodyDoubleClick (Events)
-	#@+body
+	#@nonl
+	#@-node:OnBodyClick, OnBodyRClick (Events)
+	#@+node:OnBodyDoubleClick (Events)
 	def OnBodyDoubleClick (self,event=None):
 	
 		try:
@@ -798,10 +728,9 @@ class baseLeoFrame:
 			es_event_exception("bodydclick")
 	
 		return "break" # Inhibit all further event processing.
-	#@-body
-	#@-node:9::OnBodyDoubleClick (Events)
-	#@+node:10::OnMouseWheel (Tomaz Ficko)
-	#@+body
+	#@nonl
+	#@-node:OnBodyDoubleClick (Events)
+	#@+node:OnMouseWheel (Tomaz Ficko)
 	# Contributed by Tomaz Ficko.  This works on some systems.
 	# On XP it causes a crash in tcl83.dll.  Clearly a Tk bug.
 	
@@ -816,12 +745,9 @@ class baseLeoFrame:
 			es_event_exception("scroll wheel")
 	
 		return "break"
-	#@-body
-	#@-node:10::OnMouseWheel (Tomaz Ficko)
-	#@-node:4::Event handlers (Frame)
-	#@+node:5::Icon area: convenience routines
-	#@+node:1::createIconBar
-	#@+body
+	#@nonl
+	#@-node:OnMouseWheel (Tomaz Ficko)
+	#@+node:createIconBar
 	def createIconBar (self):
 		
 		"""Create an empty icon bar in the packer's present position"""
@@ -829,10 +755,9 @@ class baseLeoFrame:
 		if not self.iconFrame:
 			self.iconFrame = Tk.Frame(self.outerFrame,height="5m",bd=2,relief="groove")
 			self.iconFrame.pack(fill="x",pady=2)
-	#@-body
-	#@-node:1::createIconBar
-	#@+node:2::hideIconBar
-	#@+body
+	#@nonl
+	#@-node:createIconBar
+	#@+node:hideIconBar
 	def hideIconBar (self):
 		
 		"""Hide the icon bar by unpacking it.
@@ -841,11 +766,8 @@ class baseLeoFrame:
 		
 		if self.iconFrame:
 			self.iconFrame.pack_forget()
-	
-	#@-body
-	#@-node:2::hideIconBar
-	#@+node:3::clearIconBar
-	#@+body
+	#@-node:hideIconBar
+	#@+node:clearIconBar
 	def clearIconBar(self):
 		
 		"""Destroy all the widgets in the icon bar"""
@@ -859,20 +781,16 @@ class baseLeoFrame:
 		f.configure(height="5m") # The default height.
 		a.iconWidgetCount = 0
 		a. iconImageRefs = []
-	
-	#@-body
-	#@-node:3::clearIconBar
-	#@+node:4::showIconBar
-	#@+body
+	#@-node:clearIconBar
+	#@+node:showIconBar
 	def showIconBar(self):
 		
 		"""Show the icon bar by repacking it"""
 	
 		self.iconFrame.pack(fill="x",pady=2)
-	#@-body
-	#@-node:4::showIconBar
-	#@+node:5::addIconButton
-	#@+body
+	#@nonl
+	#@-node:showIconBar
+	#@+node:addIconButton
 	def addIconButton(self,text=None,imagefile=None,image=None,command=None,bg=None):
 		
 		"""Add a button containing text or a picture to the icon bar.
@@ -894,10 +812,8 @@ class baseLeoFrame:
 				print "command for widget %s" % (n)
 	
 		if imagefile or image:
-			
-			#@<< create a picture >>
-			#@+node:1::<< create a picture >>
-			#@+body
+			#@		<< create a picture >>
+			#@+node:<< create a picture >>
 			try:
 				if imagefile:
 					# Create the image.  Throws an exception if file not found
@@ -923,9 +839,9 @@ class baseLeoFrame:
 			except:
 				es_exception()
 				return None
-			#@-body
-			#@-node:1::<< create a picture >>
-
+			#@nonl
+			#@-node:<< create a picture >>
+			#@nl
 		elif text:
 			w = min(6,len(text))
 			b = Tk.Button(f,text=text,width=w,relief="groove",bd=2,command=command)
@@ -933,20 +849,17 @@ class baseLeoFrame:
 			return b
 			
 		return None
-	#@-body
-	#@-node:5::addIconButton
-	#@-node:5::Icon area: convenience routines
-	#@+node:6::f.longFileName & shortFileName
-	#@+body
+	#@nonl
+	#@-node:addIconButton
+	#@+node:f.longFileName & shortFileName
 	def longFileName (self):
 		return self.mFileName
 		
 	def shortFileName (self):
 		return shortFileName(self.mFileName)
-	#@-body
-	#@-node:6::f.longFileName & shortFileName
-	#@+node:7::f.put, putnl
-	#@+body
+	#@nonl
+	#@-node:f.longFileName & shortFileName
+	#@+node:f.put, putnl
 	# All output to the log stream eventually comes here.
 	
 	def put (self,s,color=None):
@@ -986,10 +899,9 @@ class baseLeoFrame:
 			app().logWaiting.append(('\n',"black"),) # 6/28/03
 			print "Null log"
 			print
-	#@-body
-	#@-node:7::f.put, putnl
-	#@+node:8::f.getFocus
-	#@+body
+	#@nonl
+	#@-node:f.put, putnl
+	#@+node:f.getFocus
 	def getFocus(self):
 		
 		"""Returns the widget that has focus, or body if None."""
@@ -999,13 +911,12 @@ class baseLeoFrame:
 			return f
 		else:
 			return self.body
-	#@-body
-	#@-node:8::f.getFocus
-	#@+node:9:: Menus
-	#@+node:1::canonicalizeShortcut
-	#@+body
-	#@+at
-	#  This code "canonicalizes" both the shortcuts that appear in menus and 
+	#@nonl
+	#@-node:f.getFocus
+	#@+node:canonicalizeShortcut
+	#@+at 
+	#@nonl
+	# This code "canonicalizes" both the shortcuts that appear in menus and 
 	# the arguments to bind, mostly ignoring case and the order in which 
 	# special keys are specified in leoConfig.txt.
 	# 
@@ -1014,10 +925,9 @@ class baseLeoFrame:
 	# Control+A as the argument to bind.
 	# 
 	# Returns (bind_shortcut, menu_shortcut)
-
 	#@-at
 	#@@c
-
+	
 	def canonicalizeShortcut (self,shortcut):
 		
 		if shortcut == None or len(shortcut) == 0:
@@ -1026,10 +936,8 @@ class baseLeoFrame:
 		has_alt   = s.find("alt") >= 0
 		has_ctrl  = s.find("control") >= 0 or s.find("ctrl") >= 0
 		has_shift = s.find("shift") >= 0   or s.find("shft") >= 0
-		
-		#@<< set the last field, preserving case >>
-		#@+node:2::<< set the last field, preserving case >>
-		#@+body
+		#@	<< set the last field, preserving case >>
+		#@+node:<< set the last field, preserving case >>
 		s2 = shortcut
 		s2 = string.strip(s2)
 		
@@ -1051,13 +959,11 @@ class baseLeoFrame:
 			if not app().menuWarningsGiven:
 				print "bad shortcut specifier:", s
 			return None,None
-		#@-body
-		#@-node:2::<< set the last field, preserving case >>
-
-		
-		#@<< canonicalize the last field >>
-		#@+node:1::<< canonicalize the last field >>
-		#@+body
+		#@nonl
+		#@-node:<< set the last field, preserving case >>
+		#@nl
+		#@	<< canonicalize the last field >>
+		#@+node:<< canonicalize the last field >>
 		bind_last = menu_last = last
 		if len(last) == 1:
 			ch = last[0]
@@ -1070,10 +976,8 @@ class baseLeoFrame:
 			elif ch in string.digits:
 				bind_last = "Key-" + ch # 1-5 refer to mouse buttons, not keys.
 			else:
-				
-				#@<< define dict of Tk bind names >>
-				#@+node:1::<< define dict of Tk bind names >>
-				#@+body
+				#@		<< define dict of Tk bind names >>
+				#@+node:<< define dict of Tk bind names >>
 				# These are defined at http://tcl.activestate.com/man/tcl8.4/TkCmd/keysyms.htm.
 				dict = {
 					"!" : "exclam",
@@ -1108,16 +1012,14 @@ class baseLeoFrame:
 					"|" : "bar",
 					"}" : "braceright",
 					"~" : "asciitilde" }
-				#@-body
-				#@-node:1::<< define dict of Tk bind names >>
-
+				#@nonl
+				#@-node:<< define dict of Tk bind names >>
+				#@nl
 				if ch in dict.keys():
 					bind_last = dict[ch]
 		elif len(last) > 0:
-			
-			#@<< define dict of special names >>
-			#@+node:2::<< define dict of special names >>
-			#@+body
+			#@	<< define dict of special names >>
+			#@+node:<< define dict of special names >>
 			# These keys are simply made-up names.  The menu_bind values are known to Tk.
 			# Case is not significant in the keys.
 			
@@ -1134,10 +1036,10 @@ class baseLeoFrame:
 				"pagedn"  : ("Next", "PgDn")
 			}
 			
-
-			#@+at
-			#   The following are not translated, so what appears in the menu 
-			# is the same as what is passed to Tk.  Case is significant.
+			#@+at  
+			#@nonl
+			# The following are not translated, so what appears in the menu is 
+			# the same as what is passed to Tk.  Case is significant.
 			# 
 			# Note: the Tk documentation states that not all of these may be 
 			# available on all platforms.
@@ -1151,21 +1053,17 @@ class baseLeoFrame:
 			# KP_Multiply, KP_Separator,KP_Space, KP_Subtract, KP_Tab,
 			# KP_F1,KP_F2,KP_F3,KP_F4,
 			# KP_0,KP_1,KP_2,KP_3,KP_4,KP_5,KP_6,KP_7,KP_8,KP_9
-
 			#@-at
-			#@-body
-			#@-node:2::<< define dict of special names >>
-
+			#@-node:<< define dict of special names >>
+			#@nl
 			last2 = string.lower(last)
 			if last2 in dict.keys():
 				bind_last,menu_last = dict[last2]
-		#@-body
-		#@-node:1::<< canonicalize the last field >>
-
-		
-		#@<< synthesize the shortcuts from the information >>
-		#@+node:3::<< synthesize the shortcuts from the information >>
-		#@+body
+		#@nonl
+		#@-node:<< canonicalize the last field >>
+		#@nl
+		#@	<< synthesize the shortcuts from the information >>
+		#@+node:<< synthesize the shortcuts from the information >>
 		bind_head = menu_head = ""
 		
 		if has_shift:
@@ -1184,15 +1082,14 @@ class baseLeoFrame:
 			
 		bind_shortcut = "<" + bind_head + bind_last + ">"
 		menu_shortcut = menu_head + menu_last
-		#@-body
-		#@-node:3::<< synthesize the shortcuts from the information >>
-
+		#@nonl
+		#@-node:<< synthesize the shortcuts from the information >>
+		#@nl
 		# print shortcut,bind_shortcut,menu_shortcut
 		return bind_shortcut,menu_shortcut
-	#@-body
-	#@-node:1::canonicalizeShortcut
-	#@+node:2::createMenuBar
-	#@+body
+	#@nonl
+	#@-node:canonicalizeShortcut
+	#@+node:createMenuBar
 	def createMenuBar(self, top):
 	
 		c = self.commands
@@ -1201,22 +1098,18 @@ class baseLeoFrame:
 		self.setMenu("top",topMenu)
 		self.menuShortcuts = []
 		# To do: use Meta rathter than Control for accelerators for Unix
-		
-		#@<< create the file menu >>
-		#@+node:2::<< create the file menu >>
-		#@+body
+		#@	<< create the file menu >>
+		#@+node:<< create the file menu >>
 		fileMenu = self.createNewMenu("&File")
-		
 		#@<< create the top-level file entries >>
-		#@+node:1::<< create the top-level file entries >>
-		#@+body
-		#@+at
-		#  leo.py will probably never have a Print command.  Instead, export 
+		#@+node:<< create the top-level file entries >>
+		#@+at 
+		#@nonl
+		# leo.py will probably never have a Print command.  Instead, export 
 		# text files that may be formatted and printed as desired.
-
 		#@-at
 		#@@c
-
+		
 		table = (
 			("&New","Ctrl+N",self.OnNew),
 			("&Open...","Ctrl+O",self.OnOpen))
@@ -1233,27 +1126,23 @@ class baseLeoFrame:
 			("Save To",None,self.OnSaveTo), # &Tangle
 			("Re&vert To Saved",None,self.OnRevert)) # &Read/Write
 		self.createMenuEntries(fileMenu,table)
-		#@-body
-		#@-node:1::<< create the top-level file entries >>
-
-		
+		#@nonl
+		#@-node:<< create the top-level file entries >>
+		#@nl
 		#@<< create the recent files submenu >>
-		#@+node:2::<< create the recent files submenu >>
-		#@+body
+		#@+node:<< create the recent files submenu >>
 		recentFilesMenu = self.createNewMenu("Recent &Files...","File")
 		self.recentFiles = app().config.getRecentFiles()
 		self.createRecentFilesMenuItems()
 		
 		table = (("Clear Recent Files",None,self.OnClearRecentFiles),)
 		self.createMenuEntries(fileMenu,table)
-		#@-body
-		#@-node:2::<< create the recent files submenu >>
-
+		#@nonl
+		#@-node:<< create the recent files submenu >>
+		#@nl
 		fileMenu.add_separator()
-		
 		#@<< create the read/write submenu >>
-		#@+node:3::<< create the read/write submenu >>
-		#@+body
+		#@+node:<< create the read/write submenu >>
 		readWriteMenu = self.createNewMenu("&Read/Write...","File")
 		
 		table = (
@@ -1269,13 +1158,11 @@ class baseLeoFrame:
 				("Write 3.x Derived Files",None,self.OnWriteOldDerivedFiles))
 		
 		self.createMenuEntries(readWriteMenu,table)
-		#@-body
-		#@-node:3::<< create the read/write submenu >>
-
-		
+		#@nonl
+		#@-node:<< create the read/write submenu >>
+		#@nl
 		#@<< create the tangle submenu >>
-		#@+node:4::<< create the tangle submenu >>
-		#@+body
+		#@+node:<< create the tangle submenu >>
 		tangleMenu = self.createNewMenu("&Tangle...","File")
 		
 		table = (
@@ -1285,14 +1172,10 @@ class baseLeoFrame:
 		
 		self.createMenuEntries(tangleMenu,table)
 		
-		
-		#@-body
-		#@-node:4::<< create the tangle submenu >>
-
-		
+		#@-node:<< create the tangle submenu >>
+		#@nl
 		#@<< create the untangle submenu >>
-		#@+node:5::<< create the untangle submenu >>
-		#@+body
+		#@+node:<< create the untangle submenu >>
 		untangleMenu = self.createNewMenu("&Untangle...","File")
 		
 		table = (
@@ -1302,14 +1185,10 @@ class baseLeoFrame:
 			
 		self.createMenuEntries(untangleMenu,table)
 		
-		
-		#@-body
-		#@-node:5::<< create the untangle submenu >>
-
-		
+		#@-node:<< create the untangle submenu >>
+		#@nl
 		#@<< create the import submenu >>
-		#@+node:6::<< create the import submenu >>
-		#@+body
+		#@+node:<< create the import submenu >>
 		importMenu = self.createNewMenu("&Import...","File")
 		
 		table = (
@@ -1323,14 +1202,10 @@ class baseLeoFrame:
 			
 		self.createMenuEntries(importMenu,table)
 		
-		
-		#@-body
-		#@-node:6::<< create the import submenu >>
-
-		
+		#@-node:<< create the import submenu >>
+		#@nl
 		#@<< create the export submenu >>
-		#@+node:7::<< create the export submenu >>
-		#@+body
+		#@+node:<< create the export submenu >>
 		exportMenu = self.createNewMenu("&Export...","File")
 		
 		table = [
@@ -1342,28 +1217,20 @@ class baseLeoFrame:
 			("&Weave",None,self.OnWeave)]
 		
 		self.createMenuEntries(exportMenu,table)
-		
-		#@-body
-		#@-node:7::<< create the export submenu >>
-
+		#@-node:<< create the export submenu >>
+		#@nl
 		fileMenu.add_separator()
 		# Create the last entries.
 		exitTable = (("E&xit","Ctrl-Q",self.OnQuit),)
 		self.createMenuEntries(fileMenu,exitTable)
 		
-		
-		#@-body
-		#@-node:2::<< create the file menu >>
-
-		
-		#@<< create the edit menu >>
-		#@+node:1::<< create the edit menu >>
-		#@+body
+		#@-node:<< create the file menu >>
+		#@nl
+		#@	<< create the edit menu >>
+		#@+node:<< create the edit menu >>
 		editMenu = self.createNewMenu("&Edit")
-		
 		#@<< create the first top-level edit entries >>
-		#@+node:1::<< create the first top-level edit entries >>
-		#@+body
+		#@+node:<< create the first top-level edit entries >>
 		table = (
 			("Can't Undo","Ctrl+Z",self.OnUndo), # &U reserved for Undo
 			("Can't Redo","Shift+Ctrl+Z",self.OnRedo), # &R reserved for Redo
@@ -1376,14 +1243,10 @@ class baseLeoFrame:
 			("-",None,None))
 		
 		self.createMenuEntries(editMenu,table)
-		
-		#@-body
-		#@-node:1::<< create the first top-level edit entries >>
-
-		
+		#@-node:<< create the first top-level edit entries >>
+		#@nl
 		#@<< create the edit body submenu >>
-		#@+node:2::<< create the edit body submenu >>
-		#@+body
+		#@+node:<< create the edit body submenu >>
 		editBodyMenu = self.createNewMenu("Edit &Body...","Edit")
 		
 		table = (
@@ -1404,14 +1267,10 @@ class baseLeoFrame:
 			
 		self.createMenuEntries(editBodyMenu,table)
 		
-		
-		#@-body
-		#@-node:2::<< create the edit body submenu >>
-
-		
+		#@-node:<< create the edit body submenu >>
+		#@nl
 		#@<< create the edit headline submenu >>
-		#@+node:3::<< create the edit headline submenu >>
-		#@+body
+		#@+node:<< create the edit headline submenu >>
 		editHeadlineMenu = self.createNewMenu("Edit &Headline...","Edit")
 		
 		table = (
@@ -1425,14 +1284,10 @@ class baseLeoFrame:
 			
 		self.createMenuEntries(editHeadlineMenu,table)
 		
-		
-		#@-body
-		#@-node:3::<< create the edit headline submenu >>
-
-		
+		#@-node:<< create the edit headline submenu >>
+		#@nl
 		#@<< create the find submenu >>
-		#@+node:4::<< create the find submenu >>
-		#@+body
+		#@+node:<< create the find submenu >>
 		findMenu = self.createNewMenu("&Find...","Edit")
 		
 		table = (
@@ -1444,14 +1299,10 @@ class baseLeoFrame:
 			("Replace, &Then Find","Ctrl+-",self.OnReplaceThenFind))
 		
 		self.createMenuEntries(findMenu,table)
-		
-		#@-body
-		#@-node:4::<< create the find submenu >>
-
-		
+		#@-node:<< create the find submenu >>
+		#@nl
 		#@<< create the last top-level edit entries >>
-		#@+node:5::<< create the last top-level edit entries >>
-		#@+body
+		#@+node:<< create the last top-level edit entries >>
 		label = choose(c.tree.colorizer.showInvisibles,"Hide In&visibles","Show In&visibles")
 		
 		table = (
@@ -1464,22 +1315,16 @@ class baseLeoFrame:
 			("Prefere&nces","Ctrl+Y",self.OnPreferences))
 		
 		self.createMenuEntries(editMenu,table)
-		#@-body
-		#@-node:5::<< create the last top-level edit entries >>
-
-		
-		#@-body
-		#@-node:1::<< create the edit menu >>
-
-		
-		#@<< create the outline menu >>
-		#@+node:3::<< create the outline menu >>
-		#@+body
+		#@nonl
+		#@-node:<< create the last top-level edit entries >>
+		#@nl
+		#@-node:<< create the edit menu >>
+		#@nl
+		#@	<< create the outline menu >>
+		#@+node:<< create the outline menu >>
 		outlineMenu = self.createNewMenu("&Outline")
-		
 		#@<< create top-level outline menu >>
-		#@+node:1::<< create top-level outline menu >>
-		#@+body
+		#@+node:<< create top-level outline menu >>
 		table = (
 			("C&ut Node","Shift+Ctrl+X",self.OnCutNode),
 			("C&opy Node","Shift+Ctrl+C",self.OnCopyNode),
@@ -1493,13 +1338,11 @@ class baseLeoFrame:
 			("-",None,None))
 		
 		self.createMenuEntries(outlineMenu,table)
-		#@-body
-		#@-node:1::<< create top-level outline menu >>
-
-		
+		#@nonl
+		#@-node:<< create top-level outline menu >>
+		#@nl
 		#@<< create expand/contract submenu >>
-		#@+node:2::<< create expand/contract submenu >>
-		#@+body
+		#@+node:<< create expand/contract submenu >>
 		expandMenu = self.createNewMenu("&Expand/Contract...","Outline")
 		
 		table = (
@@ -1525,13 +1368,11 @@ class baseLeoFrame:
 		
 		
 		self.createMenuEntries(expandMenu,table)
-		#@-body
-		#@-node:2::<< create expand/contract submenu >>
-
-		
+		#@nonl
+		#@-node:<< create expand/contract submenu >>
+		#@nl
 		#@<< create move submenu >>
-		#@+node:3::<< create move submenu >>
-		#@+body
+		#@+node:<< create move submenu >>
 		moveSelectMenu = self.createNewMenu("&Move...","Outline")
 		
 		table = (
@@ -1544,14 +1385,10 @@ class baseLeoFrame:
 			("&Demote", "Ctrl+}",self.OnDemote))
 			
 		self.createMenuEntries(moveSelectMenu,table)
-		
-		#@-body
-		#@-node:3::<< create move submenu >>
-
-		
+		#@-node:<< create move submenu >>
+		#@nl
 		#@<< create mark submenu >>
-		#@+node:4::<< create mark submenu >>
-		#@+body
+		#@+node:<< create mark submenu >>
 		markMenu = self.createNewMenu("M&ark/Unmark...","Outline")
 		
 		table = (
@@ -1563,14 +1400,10 @@ class baseLeoFrame:
 			("&Unmark All","Alt+U",self.OnUnmarkAll))
 			
 		self.createMenuEntries(markMenu,table)
-		
-		#@-body
-		#@-node:4::<< create mark submenu >>
-
-		
+		#@-node:<< create mark submenu >>
+		#@nl
 		#@<< create goto submenu >>
-		#@+node:5::<< create goto submenu >>
-		#@+body
+		#@+node:<< create goto submenu >>
 		gotoMenu = self.createNewMenu("&Go To...","Outline")
 		
 		table = (
@@ -1593,17 +1426,14 @@ class baseLeoFrame:
 			("Go To Next Node","Alt-Shift-DnArrow",self.OnGoNext))
 			
 		self.createMenuEntries(gotoMenu,table)
-		
-		#@-body
-		#@-node:5::<< create goto submenu >>
-		#@-body
-		#@-node:3::<< create the outline menu >>
-
+		#@-node:<< create goto submenu >>
+		#@nl
+		#@nonl
+		#@-node:<< create the outline menu >>
+		#@nl
 		doHook("create-optional-menus",c=c)
-		
-		#@<< create the window menu >>
-		#@+node:4::<< create the window menu >>
-		#@+body
+		#@	<< create the window menu >>
+		#@+node:<< create the window menu >>
 		windowMenu = self.createNewMenu("&Window")
 		
 		table = (
@@ -1620,14 +1450,10 @@ class baseLeoFrame:
 			# ("Open &Python Window","Alt+P",self.OnOpenPythonWindow))
 		
 		self.createMenuEntries(windowMenu,table)
-		
-		#@-body
-		#@-node:4::<< create the window menu >>
-
-		
-		#@<< create the help menu >>
-		#@+node:5::<< create the help menu >>
-		#@+body
+		#@-node:<< create the window menu >>
+		#@nl
+		#@	<< create the help menu >>
+		#@+node:<< create the help menu >>
 		helpMenu = self.createNewMenu("&Help")
 		
 		table = (
@@ -1649,27 +1475,24 @@ class baseLeoFrame:
 			("Apply &Settings",None,self.OnApplyConfig))
 		
 		self.createMenuEntries(helpMenu,table)
-		#@-body
-		#@-node:5::<< create the help menu >>
-
+		#@nonl
+		#@-node:<< create the help menu >>
+		#@nl
 		top.config(menu=topMenu) # Display the menu.
 		app().menuWarningsGiven = true
-	
-	#@-body
-	#@-node:2::createMenuBar
-	#@+node:3::frame.doCommand
-	#@+body
-	#@+at
-	#  Executes the given command, invoking hooks and catching exceptions.
+	#@-node:createMenuBar
+	#@+node:frame.doCommand
+	#@+at 
+	#@nonl
+	# Executes the given command, invoking hooks and catching exceptions.
 	# Command handlers no longer need to return "break".  Yippee!
 	# 
 	# The code assumes that the "command1" hook has completely handled the 
 	# command if doHook("command1") returns false.  This provides a very 
 	# simple mechanism for overriding commands.
-
 	#@-at
 	#@@c
-
+	
 	def doCommand (self,command,label,event=None):
 		
 		# A horrible kludge: set app().log to cover for a possibly missing activate event.
@@ -1690,11 +1513,8 @@ class baseLeoFrame:
 		doHook("command2",c=c,v=v,label=label)
 				
 		return "break" # Inhibit all other handlers.
-	
-	#@-body
-	#@-node:3::frame.doCommand
-	#@+node:4::get/set/destroyMenu
-	#@+body
+	#@-node:frame.doCommand
+	#@+node:get/set/destroyMenu
 	def getMenu (self,menuName):
 	
 		cmn = canonicalizeMenuName(menuName)
@@ -1709,14 +1529,8 @@ class baseLeoFrame:
 		
 		cmn = canonicalizeMenuName(menuName)
 		del self.menus[cmn]
-	
-	#@-body
-	#@-node:4::get/set/destroyMenu
-	#@+node:5::Menu Command Handlers
-	#@+node:1::File Menu
-	#@+node:1::top level
-	#@+node:1::OnNew
-	#@+body
+	#@-node:get/set/destroyMenu
+	#@+node:OnNew
 	def OnNew (self,event=None):
 	
 		config = app().config
@@ -1756,22 +1570,20 @@ class baseLeoFrame:
 		c.endUpdate()
 		
 		set_focus(c,frame.body)
-	#@-body
-	#@-node:1::OnNew
-	#@+node:2::frame.OnOpen
-	#@+body
+	#@nonl
+	#@-node:OnNew
+	#@+node:frame.OnOpen
 	def OnOpen(self,event=None):
 	
 		c = self.commands
-		
-		#@<< Set closeFlag if the only open window is empty >>
-		#@+node:1::<< Set closeFlag if the only open window is empty >>
-		#@+body
-		#@+at
-		#  If this is the only open window was opened when the app started, 
-		# and the window has never been written to or saved, then we will 
-		# automatically close that window if this open command completes successfully.
-
+		#@	<< Set closeFlag if the only open window is empty >>
+		#@+node:<< Set closeFlag if the only open window is empty >>
+		#@+at 
+		#@nonl
+		# If this is the only open window was opened when the app started, and 
+		# the window has never been written to or saved, then we will 
+		# automatically close that window if this open command completes 
+		# successfully.
 		#@-at
 		#@@c
 			
@@ -1779,10 +1591,8 @@ class baseLeoFrame:
 			self.startupWindow==true and # The window was open on startup
 			c.changed==false and self.saved==false and # The window has never been changed
 			app().numberOfWindows == 1) # Only one untitled window has ever been opened
-		
-		#@-body
-		#@-node:1::<< Set closeFlag if the only open window is empty >>
-
+		#@-node:<< Set closeFlag if the only open window is empty >>
+		#@nl
 		# trace(`closeFlag`)
 	
 		fileName = tkFileDialog.askopenfilename(
@@ -1794,18 +1604,17 @@ class baseLeoFrame:
 			ok, frame = self.OpenWithFileName(fileName)
 			if ok and closeFlag:
 				app().destroyWindow(self)
-	#@-body
-	#@-node:2::frame.OnOpen
-	#@+node:3::frame.OnOpenWith and allies
-	#@+body
-	#@+at
-	#  This routine handles the items in the Open With... menu.
+	#@nonl
+	#@-node:frame.OnOpen
+	#@+node:frame.OnOpenWith and allies
+	#@+at 
+	#@nonl
+	# This routine handles the items in the Open With... menu.
 	# These items can only be created by createOpenWithMenuFromTable().
 	# Typically this would be done from the "open2" hook.
-
 	#@-at
 	#@@c
-
+	
 	def OnOpenWith(self,data=None):
 		
 		a = app() ; c = self.commands ; v = c.currentVnode()
@@ -1814,10 +1623,8 @@ class baseLeoFrame:
 			# print "OnOpenWith:",`data`
 			openType,arg,ext=data
 			if not doHook("openwith1",c=c,v=v,openType=openType,arg=arg,ext=ext):
-				
-				#@<< set ext based on the present language >>
-				#@+node:1::<< set ext based on the present language >>
-				#@+body
+				#@			<< set ext based on the present language >>
+				#@+node:<< set ext based on the present language >>
 				if not ext:
 					dict = scanDirectives(c)
 					language = dict.get("language")
@@ -1830,18 +1637,14 @@ class baseLeoFrame:
 					ext = "."+ext
 					
 				# print "ext",`ext`
-				#@-body
-				#@-node:1::<< set ext based on the present language >>
-
-				
-				#@<< create or reopen temp file, testing for conflicting changes >>
-				#@+node:2::<< create or reopen temp file, testing for conflicting changes >>
-				#@+body
+				#@nonl
+				#@-node:<< set ext based on the present language >>
+				#@nl
+				#@			<< create or reopen temp file, testing for conflicting changes >>
+				#@+node:<< create or reopen temp file, testing for conflicting changes >>
 				dict = None ; path = None
-				
 				#@<< set dict and path if a temp file already refers to v.t >>
-				#@+node:1::<<set dict and path if a temp file already refers to v.t >>
-				#@+body
+				#@+node:<<set dict and path if a temp file already refers to v.t >>
 				searchPath = self.openWithTempFilePath(v,ext)
 				
 				if os.path.exists(searchPath):
@@ -1849,27 +1652,23 @@ class baseLeoFrame:
 						if v.t == dict.get("v") and searchPath == dict.get("path"):
 							path = searchPath
 							break
-				
-				#@-body
-				#@-node:1::<<set dict and path if a temp file already refers to v.t >>
-
+				#@-node:<<set dict and path if a temp file already refers to v.t >>
+				#@nl
 				if path:
-					
-					#@<< create or recreate temp file as needed >>
-					#@+node:2::<< create or recreate temp file as needed >>
-					#@+body
-					#@+at
-					#  We test for changes in both v and the temp file:
+					#@	<< create or recreate temp file as needed >>
+					#@+node:<< create or recreate temp file as needed >>
+					#@+at 
+					#@nonl
+					# We test for changes in both v and the temp file:
 					# 
 					# - If only v's body text has changed, we recreate the 
 					# temp file.
 					# - If only the temp file has changed, do nothing here.
 					# - If both have changed we must prompt the user to see 
 					# which code to use.
-
 					#@-at
 					#@@c
-
+					
 					encoding = dict.get("encoding")
 					old_body = dict.get("body")
 					new_body = v.bodyString()
@@ -1885,10 +1684,8 @@ class baseLeoFrame:
 					temp_changed = old_time != new_time
 					
 					if body_changed and temp_changed:
-						
-						#@<< Raise dialog about conflict and set result >>
-						#@+node:1::<< Raise dialog about conflict and set result >>
-						#@+body
+						#@	<< Raise dialog about conflict and set result >>
+						#@+node:<< Raise dialog about conflict and set result >>
 						message = (
 							"Conflicting changes in outline and temp file\n\n" +
 							"Do you want to use the code in the outline or the temp file?\n\n")
@@ -1899,10 +1696,8 @@ class baseLeoFrame:
 							noMessage = "File",
 							defaultButton = "Cancel").run(modal=1)
 						
-						
-						#@-body
-						#@-node:1::<< Raise dialog about conflict and set result >>
-
+						#@-node:<< Raise dialog about conflict and set result >>
+						#@nl
 						if result == "cancel": return
 						rewrite = result == "outline"
 					else:
@@ -1912,21 +1707,19 @@ class baseLeoFrame:
 						path = self.createOpenWithTempFile(v,ext)
 					else:
 						es("reopening: " + shortFileName(path),color="blue")
-					#@-body
-					#@-node:2::<< create or recreate temp file as needed >>
-
+					#@nonl
+					#@-node:<< create or recreate temp file as needed >>
+					#@nl
 				else:
 					path = self.createOpenWithTempFile(v,ext)
 				
 				if not path:
 					return # An error has occured.
-				#@-body
-				#@-node:2::<< create or reopen temp file, testing for conflicting changes >>
-
-				
-				#@<< execute a command to open path in external editor >>
-				#@+node:3::<< execute a command to open path in external editor >>
-				#@+body
+				#@nonl
+				#@-node:<< create or reopen temp file, testing for conflicting changes >>
+				#@nl
+				#@			<< execute a command to open path in external editor >>
+				#@+node:<< execute a command to open path in external editor >>
 				try:
 					if arg == None: arg = ""
 					shortPath = path # shortFileName(path)
@@ -1954,18 +1747,18 @@ class baseLeoFrame:
 				except:
 					es("exception executing: "+command)
 					es_exception()
-				#@-body
-				#@-node:3::<< execute a command to open path in external editor >>
-
+				#@nonl
+				#@-node:<< execute a command to open path in external editor >>
+				#@nl
 			doHook("openwith2",c=c,v=v,openType=openType,arg=arg,ext=ext)
 		except:
 			es("exception in OnOpenWith")
 			es_exception()
 	
 		return "break"
-	#@-body
-	#@+node:4::frame.createOpenWithTempFile
-	#@+body
+	#@nonl
+	#@-node:frame.OnOpenWith and allies
+	#@+node:frame.createOpenWithTempFile
 	def createOpenWithTempFile (self, v, ext):
 		
 		c = self.commands ; a = app()
@@ -1991,17 +1784,16 @@ class baseLeoFrame:
 			# es("time: " + str(time))
 			# 4/22/03: add body and encoding entries to dict for later comparisons.
 			dict = {"body":s, "c":c, "encoding":encoding, "f":file, "path":path, "time":time, "v":v}
-			
-			#@<< remove previous entry from a.openWithFiles if it exists >>
-			#@+node:1::<< remove previous entry from a.openWithFiles if it exists >>
-			#@+body
+			#@		<< remove previous entry from a.openWithFiles if it exists >>
+			#@+node:<< remove previous entry from a.openWithFiles if it exists >>
 			for d in a.openWithFiles[:]: # 6/30/03
 				v2 = d.get("v")
 				if v.t == v2.t:
 					print "removing previous entry in a.openWithFiles for",v
 					a.openWithFiles.remove(d)
-			#@-body
-			#@-node:1::<< remove previous entry from a.openWithFiles if it exists >>
+			#@nonl
+			#@-node:<< remove previous entry from a.openWithFiles if it exists >>
+	#@afterref
  # 4/22/03
 			a.openWithFiles.append(dict)
 			return path
@@ -2010,10 +1802,9 @@ class baseLeoFrame:
 			es("exception creating temp file",color="red")
 			es_exception()
 			return None
-	#@-body
-	#@-node:4::frame.createOpenWithTempFile
-	#@+node:5::frame.openWithTempFilePath
-	#@+body
+	#@nonl
+	#@-node:frame.createOpenWithTempFile
+	#@+node:frame.openWithTempFilePath
 	def openWithTempFilePath (self,v,ext):
 		
 		"""Return the path to the temp file corresponding to v and ext."""
@@ -2024,27 +1815,23 @@ class baseLeoFrame:
 		
 		# print "openWithTempFilePath",path
 		return path
-	#@-body
-	#@-node:5::frame.openWithTempFilePath
-	#@-node:3::frame.OnOpenWith and allies
-	#@+node:4::frame.OpenWithFileName
-	#@+body
+	#@nonl
+	#@-node:frame.openWithTempFilePath
+	#@+node:frame.OpenWithFileName
 	def OpenWithFileName(self,fileName):
 		
 		return openWithFileName(fileName,self.commands)
-	#@-body
-	#@-node:4::frame.OpenWithFileName
-	#@+node:5::frame.OnClose
-	#@+body
+	#@nonl
+	#@-node:frame.OpenWithFileName
+	#@+node:frame.OnClose
 	def OnClose(self,event=None):
 		
 		"""Handle the File-Close command."""
 		
 		app().closeLeoWindow(self)
-	#@-body
-	#@-node:5::frame.OnClose
-	#@+node:6::OnSave
-	#@+body
+	#@nonl
+	#@-node:frame.OnClose
+	#@+node:OnSave
 	def OnSave(self,event=None):
 	
 		c = self.commands
@@ -2072,10 +1859,9 @@ class baseLeoFrame:
 			self.top.title(self.setWindowTitle(self.mFileName)) # 3/25/03
 			c.fileCommands.save(self.mFileName)
 			self.updateRecentFiles(self.mFileName)
-	#@-body
-	#@-node:6::OnSave
-	#@+node:7::OnSaveAs
-	#@+body
+	#@nonl
+	#@-node:OnSave
+	#@+node:OnSaveAs
 	def OnSaveAs(self,event=None):
 	
 		# Make sure we never pass None to the ctor.
@@ -2095,10 +1881,9 @@ class baseLeoFrame:
 			self.top.title(self.setWindowTitle(self.mFileName)) # 3/25/03
 			self.commands.fileCommands.saveAs(self.mFileName)
 			self.updateRecentFiles(self.mFileName)
-	#@-body
-	#@-node:7::OnSaveAs
-	#@+node:8::OnSaveTo
-	#@+body
+	#@nonl
+	#@-node:OnSaveAs
+	#@+node:OnSaveTo
 	def OnSaveTo(self,event=None):
 	
 		# Make sure we never pass None to the ctor.
@@ -2116,11 +1901,8 @@ class baseLeoFrame:
 			fileName = ensure_extension(fileName, ".leo")
 			self.commands.fileCommands.saveTo(fileName)
 			self.updateRecentFiles(self.mFileName)
-	
-	#@-body
-	#@-node:8::OnSaveTo
-	#@+node:9::frame.OnRevert
-	#@+body
+	#@-node:OnSaveTo
+	#@+node:frame.OnRevert
 	def OnRevert(self,event=None):
 		
 		a = app()
@@ -2147,18 +1929,14 @@ class baseLeoFrame:
 			app().destroyWindow(self)
 		else:
 			self.mFileName = fileName
-	
-	#@-body
-	#@-node:9::frame.OnRevert
-	#@+node:10::frame.OnQuit
-	#@+body
+	#@-node:frame.OnRevert
+	#@+node:frame.OnQuit
 	def OnQuit(self,event=None):
 		
 		app().onQuit()
-	#@-body
-	#@-node:10::frame.OnQuit
-	#@+node:11::frame.updateRecentFiles
-	#@+body
+	#@nonl
+	#@-node:frame.OnQuit
+	#@+node:frame.updateRecentFiles
 	def updateRecentFiles (self, fileName):
 		
 		if not fileName or len(fileName) == 0:
@@ -2181,12 +1959,9 @@ class baseLeoFrame:
 		# Update the config file.
 		app().config.setRecentFiles(frame.recentFiles)
 		app().config.update()
-	#@-body
-	#@-node:11::frame.updateRecentFiles
-	#@-node:1::top level
-	#@+node:2::Recent Files submenu & allies
-	#@+node:1::OnClearRecentFiles
-	#@+body
+	#@nonl
+	#@-node:frame.updateRecentFiles
+	#@+node:OnClearRecentFiles
 	def OnClearRecentFiles (self,event=None):
 		
 		"""Clear the recent files list, then add the present file."""
@@ -2198,22 +1973,20 @@ class baseLeoFrame:
 		f.recentFiles = []
 		f.createRecentFilesMenuItems()
 		f.updateRecentFiles(f.mFileName)
-	#@-body
-	#@-node:1::OnClearRecentFiles
-	#@+node:2::frame.OnOpenRecentFile
-	#@+body
+	#@nonl
+	#@-node:OnClearRecentFiles
+	#@+node:frame.OnOpenRecentFile
 	def OnOpenRecentFile(self,name=None):
 		
 		c = self.commands ; v = c.currentVnode()
-		
-		#@<< Set closeFlag if the only open window is empty >>
-		#@+node:1::<< Set closeFlag if the only open window is empty >>
-		#@+body
-		#@+at
-		#  If this is the only open window was opened when the app started, 
-		# and the window has never been written to or saved, then we will 
-		# automatically close that window if this open command completes successfully.
-
+		#@	<< Set closeFlag if the only open window is empty >>
+		#@+node:<< Set closeFlag if the only open window is empty >>
+		#@+at 
+		#@nonl
+		# If this is the only open window was opened when the app started, and 
+		# the window has never been written to or saved, then we will 
+		# automatically close that window if this open command completes 
+		# successfully.
 		#@-at
 		#@@c
 			
@@ -2221,10 +1994,8 @@ class baseLeoFrame:
 			self.startupWindow==true and # The window was open on startup
 			c.changed==false and self.saved==false and # The window has never been changed
 			app().numberOfWindows == 1) # Only one untitled window has ever been opened
-		
-		#@-body
-		#@-node:1::<< Set closeFlag if the only open window is empty >>
-
+		#@-node:<< Set closeFlag if the only open window is empty >>
+		#@nl
 		if not name:
 			return
 	
@@ -2236,10 +2007,9 @@ class baseLeoFrame:
 				app().setLog(frame,"OnOpenRecentFile") # Sets the log stream for es()
 	
 		doHook("recentfiles2",c=c,v=v,fileName=fileName,closeFlag=closeFlag)
-	#@-body
-	#@-node:2::frame.OnOpenRecentFile
-	#@+node:3::createRecentFilesMenuItems
-	#@+body
+	#@nonl
+	#@-node:frame.OnOpenRecentFile
+	#@+node:createRecentFilesMenuItems
 	def createRecentFilesMenuItems (self):
 		
 		f = self
@@ -2251,12 +2021,9 @@ class baseLeoFrame:
 			label = "%d %s" % (i,self.setWindowTitle(name))
 			recentFilesMenu.add_command(label=label,command=callback,underline=0)
 			i += 1
-	#@-body
-	#@-node:3::createRecentFilesMenuItems
-	#@-node:2::Recent Files submenu & allies
-	#@+node:3::Read/Write submenu
-	#@+node:1::fileCommands.OnReadOutlineOnly
-	#@+body
+	#@nonl
+	#@-node:createRecentFilesMenuItems
+	#@+node:fileCommands.OnReadOutlineOnly
 	def OnReadOutlineOnly (self,event=None):
 	
 		fileName = tkFileDialog.askopenfilename(
@@ -2276,10 +2043,9 @@ class baseLeoFrame:
 			frame.commands.fileCommands.readOutlineOnly(file,fileName) # closes file.
 		except:
 			es("can not open:" + fileName)
-	#@-body
-	#@-node:1::fileCommands.OnReadOutlineOnly
-	#@+node:2::OnReadAtFileNodes
-	#@+body
+	#@nonl
+	#@-node:fileCommands.OnReadOutlineOnly
+	#@+node:OnReadAtFileNodes
 	def OnReadAtFileNodes (self,event=None):
 	
 		c = self.commands
@@ -2294,43 +2060,29 @@ class baseLeoFrame:
 		if answer=="ok":
 			c.fileCommands.readAtFileNodes()
 			c.undoer.clearUndoState()
-	#@-body
-	#@-node:2::OnReadAtFileNodes
-	#@+node:3::OnWriteDirtyAtFileNodes
-	#@+body
+	#@nonl
+	#@-node:OnReadAtFileNodes
+	#@+node:OnWriteDirtyAtFileNodes
 	def OnWriteDirtyAtFileNodes (self,event=None):
 	
 		self.commands.fileCommands.writeDirtyAtFileNodes()
-	
-	#@-body
-	#@-node:3::OnWriteDirtyAtFileNodes
-	#@+node:4::OnWriteMissingAtFileNodes
-	#@+body
+	#@-node:OnWriteDirtyAtFileNodes
+	#@+node:OnWriteMissingAtFileNodes
 	def OnWriteMissingAtFileNodes (self,event=None):
 	
 		self.commands.fileCommands.writeMissingAtFileNodes()
-	
-	#@-body
-	#@-node:4::OnWriteMissingAtFileNodes
-	#@+node:5::OnWriteOutlineOnly
-	#@+body
+	#@-node:OnWriteMissingAtFileNodes
+	#@+node:OnWriteOutlineOnly
 	def OnWriteOutlineOnly (self,event=None):
 	
 		self.commands.fileCommands.writeOutlineOnly()
-	
-	#@-body
-	#@-node:5::OnWriteOutlineOnly
-	#@+node:6::OnWriteAtFileNodes
-	#@+body
+	#@-node:OnWriteOutlineOnly
+	#@+node:OnWriteAtFileNodes
 	def OnWriteAtFileNodes (self,event=None):
 	
 		self.commands.fileCommands.writeAtFileNodes()
-	
-	#@-body
-	#@-node:6::OnWriteAtFileNodes
-	#@+node:7::4.0 Commands
-	#@+node:1::OnImportDerivedFile
-	#@+body
+	#@-node:OnWriteAtFileNodes
+	#@+node:OnImportDerivedFile
 	def OnImportDerivedFile (self,event=None):
 		
 		"""Create a new outline from a 4.0 derived file."""
@@ -2351,10 +2103,9 @@ class baseLeoFrame:
 		v.initHeadString("Imported @file " + name)
 		at.read(v,importFileName=name)
 		c.endUpdate()
-	#@-body
-	#@-node:1::OnImportDerivedFile
-	#@+node:2::OnWriteNew/OldDerivedFiles
-	#@+body
+	#@nonl
+	#@-node:OnImportDerivedFile
+	#@+node:OnWriteNew/OldDerivedFiles
 	def OnWriteNewDerivedFiles (self,event=None):
 		
 		c = self.commands ; v = c.currentVnode()
@@ -2370,71 +2121,45 @@ class baseLeoFrame:
 		c.atFileCommands.writeOldDerivedFiles(v)
 		es("auto-saving outline",color="blue")
 		self.OnSave() # Must be done to clear tnodeList.
-	#@-body
-	#@-node:2::OnWriteNew/OldDerivedFiles
-	#@-node:7::4.0 Commands
-	#@-node:3::Read/Write submenu
-	#@+node:4::Tangle submenu
-	#@+node:1::OnTangleAll
-	#@+body
+	#@nonl
+	#@-node:OnWriteNew/OldDerivedFiles
+	#@+node:OnTangleAll
 	def OnTangleAll(self,event=None):
 	
 		self.commands.tangleCommands.tangleAll()
-	
-	#@-body
-	#@-node:1::OnTangleAll
-	#@+node:2::OnTangleMarked
-	#@+body
+	#@-node:OnTangleAll
+	#@+node:OnTangleMarked
 	def OnTangleMarked(self,event=None):
 	
 		self.commands.tangleCommands.tangleMarked()
-	
-	#@-body
-	#@-node:2::OnTangleMarked
-	#@+node:3::OnTangle
-	#@+body
+	#@-node:OnTangleMarked
+	#@+node:OnTangle
 	def OnTangle (self,event=None):
 	
 		self.commands.tangleCommands.tangle()
-	
-	#@-body
-	#@-node:3::OnTangle
-	#@-node:4::Tangle submenu
-	#@+node:5::Untangle submenu
-	#@+node:1::OnUntangleAll
-	#@+body
+	#@-node:OnTangle
+	#@+node:OnUntangleAll
 	def OnUntangleAll(self,event=None):
 	
 		c = self.commands
 		c.tangleCommands.untangleAll()
 		c.undoer.clearUndoState()
-	
-	#@-body
-	#@-node:1::OnUntangleAll
-	#@+node:2::OnUntangleMarked
-	#@+body
+	#@-node:OnUntangleAll
+	#@+node:OnUntangleMarked
 	def OnUntangleMarked(self,event=None):
 	
 		c = self.commands
 		self.commands.tangleCommands.untangleMarked()
 		c.undoer.clearUndoState()
-	
-	#@-body
-	#@-node:2::OnUntangleMarked
-	#@+node:3::OnUntangle
-	#@+body
+	#@-node:OnUntangleMarked
+	#@+node:OnUntangle
 	def OnUntangle(self,event=None):
 	
 		c = self.commands
 		self.commands.tangleCommands.untangle()
 		c.undoer.clearUndoState()
-	
-	#@-body
-	#@-node:3::OnUntangle
-	#@-node:5::Untangle submenu
-	#@+node:6::Import&Export submenu
-	#@+node:1::OnExportHeadlines
-	#@+body
+	#@-node:OnUntangle
+	#@+node:OnExportHeadlines
 	def OnExportHeadlines (self,event=None):
 		
 		filetypes = [("Text files", "*.txt"),("All files", "*")]
@@ -2445,11 +2170,8 @@ class baseLeoFrame:
 	
 		if fileName and len(fileName) > 0:
 			self.commands.importCommands.exportHeadlines(fileName)
-	
-	#@-body
-	#@-node:1::OnExportHeadlines
-	#@+node:2::OnFlattenOutline
-	#@+body
+	#@-node:OnExportHeadlines
+	#@+node:OnFlattenOutline
 	def OnFlattenOutline (self,event=None):
 		
 		filetypes = [("Text files", "*.txt"),("All files", "*")]
@@ -2461,11 +2183,8 @@ class baseLeoFrame:
 		if fileName and len(fileName) > 0:
 			c = self.commands
 			c.importCommands.flattenOutline(fileName)
-	
-	#@-body
-	#@-node:2::OnFlattenOutline
-	#@+node:3::OnImportAtRoot
-	#@+body
+	#@-node:OnFlattenOutline
+	#@+node:OnImportAtRoot
 	def OnImportAtRoot (self,event=None):
 		
 		types = [
@@ -2484,11 +2203,8 @@ class baseLeoFrame:
 			c = self.commands
 			paths = [fileName] # alas, askopenfilename returns only a single name.
 			c.importCommands.importFilesCommand (paths,"@root")
-	
-	#@-body
-	#@-node:3::OnImportAtRoot
-	#@+node:4::OnImportAtFile
-	#@+body
+	#@-node:OnImportAtRoot
+	#@+node:OnImportAtFile
 	def OnImportAtFile (self,event=None):
 		
 		types = [
@@ -2507,11 +2223,8 @@ class baseLeoFrame:
 			c = self.commands
 			paths = [fileName] # alas, askopenfilename returns only a single name.
 			c.importCommands.importFilesCommand (paths,"@file")
-	
-	#@-body
-	#@-node:4::OnImportAtFile
-	#@+node:5::OnImportCWEBFiles
-	#@+body
+	#@-node:OnImportAtFile
+	#@+node:OnImportCWEBFiles
 	def OnImportCWEBFiles (self,event=None):
 		
 		filetypes = [
@@ -2526,11 +2239,8 @@ class baseLeoFrame:
 			c = self.commands
 			paths = [fileName] # alas, askopenfilename returns only a single name.
 			c.importCommands.importWebCommand(paths,"cweb")
-	
-	#@-body
-	#@-node:5::OnImportCWEBFiles
-	#@+node:6::OnImportFlattenedOutline
-	#@+body
+	#@-node:OnImportCWEBFiles
+	#@+node:OnImportFlattenedOutline
 	def OnImportFlattenedOutline (self,event=None):
 		
 		types = [("Text files","*.txt"), ("All files","*")]
@@ -2543,11 +2253,8 @@ class baseLeoFrame:
 			c = self.commands
 			paths = [fileName] # alas, askopenfilename returns only a single name.
 			c.importCommands.importFlattenedOutline(paths)
-	
-	#@-body
-	#@-node:6::OnImportFlattenedOutline
-	#@+node:7::OnImportNowebFiles
-	#@+body
+	#@-node:OnImportFlattenedOutline
+	#@+node:OnImportNowebFiles
 	def OnImportNowebFiles (self,event=None):
 		
 		filetypes = [
@@ -2562,11 +2269,8 @@ class baseLeoFrame:
 			c = self.commands
 			paths = [fileName] # alas, askopenfilename returns only a single name.
 			c.importCommands.importWebCommand(paths,"noweb")
-	
-	#@-body
-	#@-node:7::OnImportNowebFiles
-	#@+node:8::OnOutlineToCWEB
-	#@+body
+	#@-node:OnImportNowebFiles
+	#@+node:OnOutlineToCWEB
 	def OnOutlineToCWEB (self,event=None):
 		
 		filetypes=[
@@ -2581,11 +2285,8 @@ class baseLeoFrame:
 		if fileName and len(fileName) > 0:
 			c = self.commands
 			c.importCommands.outlineToWeb(fileName,"cweb")
-	
-	#@-body
-	#@-node:8::OnOutlineToCWEB
-	#@+node:9::OnOutlineToNoweb
-	#@+body
+	#@-node:OnOutlineToCWEB
+	#@+node:OnOutlineToNoweb
 	def OnOutlineToNoweb (self,event=None):
 		
 		filetypes=[
@@ -2601,11 +2302,8 @@ class baseLeoFrame:
 			c = self.commands
 			c.importCommands.outlineToWeb(fileName,"noweb")
 			self.outlineToNowebDefaultFileName = fileName
-	
-	#@-body
-	#@-node:9::OnOutlineToNoweb
-	#@+node:10::OnRemoveSentinels
-	#@+body
+	#@-node:OnOutlineToNoweb
+	#@+node:OnRemoveSentinels
 	def OnRemoveSentinels (self,event=None):
 		
 		types = [
@@ -2625,11 +2323,8 @@ class baseLeoFrame:
 			c = self.commands
 			# alas, askopenfilename returns only a single name.
 			c.importCommands.removeSentinelsCommand (fileName)
-	
-	#@-body
-	#@-node:10::OnRemoveSentinels
-	#@+node:11::OnWeave
-	#@+body
+	#@-node:OnRemoveSentinels
+	#@+node:OnWeave
 	def OnWeave (self,event=None):
 		
 		filetypes = [("Text files", "*.txt"),("All files", "*")]
@@ -2641,32 +2336,18 @@ class baseLeoFrame:
 		if fileName and len(fileName) > 0:
 			c = self.commands
 			c.importCommands.weave(fileName)
-	
-	#@-body
-	#@-node:11::OnWeave
-	#@-node:6::Import&Export submenu
-	#@-node:1::File Menu
-	#@+node:2::Edit Menu (change to handle log pane too)
-	#@+node:1::Edit top level
-	#@+node:1::OnUndo
-	#@+body
+	#@-node:OnWeave
+	#@+node:OnUndo
 	def OnUndo(self,event=None):
 	
 		self.commands.undoer.undo()
-	
-	#@-body
-	#@-node:1::OnUndo
-	#@+node:2::OnRedo
-	#@+body
+	#@-node:OnUndo
+	#@+node:OnRedo
 	def OnRedo(self,event=None):
 	
 		self.commands.undoer.redo()
-	
-	#@-body
-	#@-node:2::OnRedo
-	#@+node:3::Cut/Copy/Paste body text
-	#@+node:1::frame.OnCut, OnCutFrom Menu
-	#@+body
+	#@-node:OnRedo
+	#@+node:frame.OnCut, OnCutFrom Menu
 	def OnCut (self,event=None):
 	
 		# Activate the body key handler by hand.
@@ -2681,11 +2362,8 @@ class baseLeoFrame:
 		# 11/2/02: Make sure the event sticks.
 		c = self.commands ; v = c.currentVnode()
 		c.tree.onHeadChanged(v) # Works even if it wasn't the headline that changed.
-	
-	#@-body
-	#@-node:1::frame.OnCut, OnCutFrom Menu
-	#@+node:2::frame.OnCopy, OnCopyFromMenu
-	#@+body
+	#@-node:frame.OnCut, OnCutFrom Menu
+	#@+node:frame.OnCopy, OnCopyFromMenu
 	def OnCopy (self,event=None):
 	
 		# Copy never changes dirty bits or syntax coloring.
@@ -2696,11 +2374,8 @@ class baseLeoFrame:
 		# trace()
 		w = self.getFocus()
 		w.event_generate(virtual_event_name("Copy"))
-	
-	#@-body
-	#@-node:2::frame.OnCopy, OnCopyFromMenu
-	#@+node:3::frame.OnPaste, OnPasteNode, OnPasteFromMenu
-	#@+body
+	#@-node:frame.OnCopy, OnCopyFromMenu
+	#@+node:frame.OnPaste, OnPasteNode, OnPasteFromMenu
 	def OnPaste (self,event=None):
 	
 		# Activate the body key handler by hand.
@@ -2720,12 +2395,8 @@ class baseLeoFrame:
 		# 10/23/02: Make sure the event sticks.
 		c = self.commands ; v = c.currentVnode()
 		c.tree.onHeadChanged(v) # Works even if it wasn't the headline that changed.
-	
-	#@-body
-	#@-node:3::frame.OnPaste, OnPasteNode, OnPasteFromMenu
-	#@-node:3::Cut/Copy/Paste body text
-	#@+node:4::OnDelete
-	#@+body
+	#@-node:frame.OnPaste, OnPasteNode, OnPasteFromMenu
+	#@+node:OnDelete
 	def OnDelete(self,event=None):
 	
 		c = self.commands ; v = c.currentVnode()
@@ -2733,18 +2404,15 @@ class baseLeoFrame:
 		if first and last and first != last:
 			self.body.delete(first,last)
 			c.tree.onBodyChanged(v,"Delete",oldSel=oldSel)
-	
-	#@-body
-	#@-node:4::OnDelete
-	#@+node:5::OnExecuteScript
-	#@+body
-	#@+at
-	#  This executes body text as a Python script.  We execute the selected 
+	#@-node:OnDelete
+	#@+node:OnExecuteScript
+	#@+at 
+	#@nonl
+	# This executes body text as a Python script.  We execute the selected 
 	# text, or the entire body text if no text is selected.
-
 	#@-at
 	#@@c
-
+	
 	def OnExecuteScript(self,event=None,v=None):
 		
 		c = self.commands ; body = self.body ; s = None
@@ -2771,17 +2439,14 @@ class baseLeoFrame:
 				es_exception(full=false)
 		else:
 			es("no script selected")
-	#@-body
-	#@-node:5::OnExecuteScript
-	#@+node:6::OnGoToLineNumber & allies
-	#@+body
+	#@nonl
+	#@-node:OnExecuteScript
+	#@+node:OnGoToLineNumber & allies
 	def OnGoToLineNumber (self,event=None):
 	
 		c = self.commands
-		
-		#@<< set root to the nearest @file, @silentfile or @rawfile ancestor node >>
-		#@+node:1::<< set root to the nearest @file, @silentfile or @rawfile ancestor node >>
-		#@+body
+		#@	<< set root to the nearest @file, @silentfile or @rawfile ancestor node >>
+		#@+node:<< set root to the nearest @file, @silentfile or @rawfile ancestor node >>
 		v = c.currentVnode()
 		fileName = None
 		while v and not fileName:
@@ -2797,13 +2462,11 @@ class baseLeoFrame:
 		root = v
 		if not root:
 			es("no @file node found") ; return
-		#@-body
-		#@-node:1::<< set root to the nearest @file, @silentfile or @rawfile ancestor node >>
-
-		
-		#@<< read the file into lines >>
-		#@+node:2::<< read the file into lines >>
-		#@+body
+		#@nonl
+		#@-node:<< set root to the nearest @file, @silentfile or @rawfile ancestor node >>
+		#@nl
+		#@	<< read the file into lines >>
+		#@+node:<< read the file into lines >>
 		# 1/26/03: calculate the full path.
 		d = scanDirectives(c)
 		path = d.get("path")
@@ -2817,23 +2480,19 @@ class baseLeoFrame:
 			es("not found: " + fileName)
 			return
 			
-		
-		#@-body
-		#@-node:2::<< read the file into lines >>
-
-		
-		#@<< get n, the line number, from a dialog >>
-		#@+node:3::<< get n, the line number, from a dialog >>
-		#@+body
+		#@-node:<< read the file into lines >>
+		#@nl
+		#@	<< get n, the line number, from a dialog >>
+		#@+node:<< get n, the line number, from a dialog >>
 		import leoDialog
 		
 		d = leoDialog.askOkCancelNumber("Enter Line Number","Line number:")
 		n = d.run(modal=true)
 		if n == -1:
 			return
-		#@-body
-		#@-node:3::<< get n, the line number, from a dialog >>
-
+		#@nonl
+		#@-node:<< get n, the line number, from a dialog >>
+		#@nl
 		# trace("n:"+`n`)
 		if n==1:
 			v = root ; n2 = 1 ; found = true
@@ -2841,10 +2500,8 @@ class baseLeoFrame:
 			v = root ; found = false
 			n2 = v.bodyString().count('\n')
 		elif root.isAtSilentFileNode():
-			
-			#@<< count outline lines, setting v,n2,found >>
-			#@+node:4::<< count outline lines, setting v,n2,found >>
-			#@+body
+			#@		<< count outline lines, setting v,n2,found >>
+			#@+node:<< count outline lines, setting v,n2,found >>
 			v = lastv = root ; after = root.nodeAfterTree()
 			prev = 0 ; found = false
 			while v and v != after:
@@ -2861,9 +2518,9 @@ class baseLeoFrame:
 			
 			v = lastv
 			n2 = max(1,n-prev)
-			#@-body
-			#@-node:4::<< count outline lines, setting v,n2,found >>
-
+			#@nonl
+			#@-node:<< count outline lines, setting v,n2,found >>
+			#@nl
 		else:
 			# To do: choose a "suitable line" for searching.
 			vnodeName,childIndex,n2 = self.convertLineToVnodeNameIndexLine(lines,n,root)
@@ -2871,10 +2528,8 @@ class baseLeoFrame:
 			if not vnodeName:
 				es("invalid derived file: " + fileName)
 				return
-			
-			#@<< set v to the node given by vnodeName and childIndex >>
-			#@+node:5::<< set v to the node given by vnodeName and childIndex >>
-			#@+body
+			#@		<< set v to the node given by vnodeName and childIndex >>
+			#@+node:<< set v to the node given by vnodeName and childIndex >>
 			after = root.nodeAfterTree()
 			while v and v != after:
 				if v.matchHeadline(vnodeName):
@@ -2885,37 +2540,35 @@ class baseLeoFrame:
 			if not v or v == after:
 				es("not found: %s" % vnodeName )
 				return
-			#@-body
-			#@-node:5::<< set v to the node given by vnodeName and childIndex >>
-
+			#@nonl
+			#@-node:<< set v to the node given by vnodeName and childIndex >>
+			#@nl
 		# To do: search for the "suitable line".
-		
-		#@<< select v and make it visible >>
-		#@+node:6::<< select v and make it visible >>
-		#@+body
+		#@	<< select v and make it visible >>
+		#@+node:<< select v and make it visible >>
 		c.beginUpdate()
 		c.tree.expandAllAncestors(v)
 		c.selectVnode(v)
 		c.endUpdate()
-		#@-body
-		#@-node:6::<< select v and make it visible >>
-
-		
-		#@<< put the cursor on line n2 of the body text >>
-		#@+node:7::<< put the cursor on line n2 of the body text >>
-		#@+body
+		#@nonl
+		#@-node:<< select v and make it visible >>
+		#@nl
+		#@	<< put the cursor on line n2 of the body text >>
+		#@+node:<< put the cursor on line n2 of the body text >>
 		if found:
 			c.frame.body.mark_set("insert",str(n2)+".0 linestart")
 		else:
 			c.frame.body.mark_set("insert","end-1c")
 			es("%d lines" % len(lines), color="blue")
-		#@-body
-		#@-node:7::<< put the cursor on line n2 of the body text >>
-	#@-body
-	#@+node:8::convertLineToVnodeNameIndexLine
-	#@+body
-	#@+at
-	#  We count "real" lines in the derived files, ignoring all sentinels that 
+		#@nonl
+		#@-node:<< put the cursor on line n2 of the body text >>
+		#@nl
+	#@nonl
+	#@-node:OnGoToLineNumber & allies
+	#@+node:convertLineToVnodeNameIndexLine
+	#@+at 
+	#@nonl
+	# We count "real" lines in the derived files, ignoring all sentinels that 
 	# do not arise from source lines.  When the indicated line is found, we 
 	# scan backwards for an @+body line, get the vnode's name from that line 
 	# and set v to the indicated vnode.  This will fail if vnode names have 
@@ -2925,19 +2578,16 @@ class baseLeoFrame:
 	# 
 	# vnodeName: the name found in the previous @+body sentinel.
 	# offset: the offset within v of the desired line.
-
 	#@-at
 	#@@c
-
+	
 	def convertLineToVnodeNameIndexLine (self,lines,n,root):
 		
 		"""Convert a line number n to a vnode name, child index and line number."""
 		
 		childIndex = 0
-		
-		#@<< set delim, leoLine from the @+leo line >>
-		#@+node:1::<< set delim, leoLine from the @+leo line >>
-		#@+body
+		#@	<< set delim, leoLine from the @+leo line >>
+		#@+node:<< set delim, leoLine from the @+leo line >>
 		# Find the @+leo line.
 		tag = "@+leo"
 		i = 0 
@@ -2957,16 +2607,14 @@ class baseLeoFrame:
 				delim=None
 			else:
 				delim += '@'
-		#@-body
-		#@-node:1::<< set delim, leoLine from the @+leo line >>
-
+		#@nonl
+		#@-node:<< set delim, leoLine from the @+leo line >>
+		#@nl
 		if not delim:
 			es("bad @+leo sentinel")
 			return None,None
-		
-		#@<< scan back to @+node, setting offset,nodeSentinelLine >>
-		#@+node:2::<< scan back to  @+node, setting offset,nodeSentinelLine >>
-		#@+body
+		#@	<< scan back to @+node, setting offset,nodeSentinelLine >>
+		#@+node:<< scan back to  @+node, setting offset,nodeSentinelLine >>
 		offset = 0 # This is essentially the Tk line number.
 		nodeSentinelLine = -1
 		line = n - 1
@@ -2975,10 +2623,8 @@ class baseLeoFrame:
 			# trace(`s`)
 			i = skip_ws(s,0)
 			if match(s,i,delim):
-				
-				#@<< handle delim while scanning backward >>
-				#@+node:1::<< handle delim while scanning backward >>
-				#@+body
+				#@		<< handle delim while scanning backward >>
+				#@+node:<< handle delim while scanning backward >>
 				if line == n:
 					es("line "+str(n)+" is a sentinel line")
 				i += len(delim)
@@ -2991,25 +2637,23 @@ class baseLeoFrame:
 					break
 				elif match(s,i,"<<") or match(s,i,"@first"):
 					offset += 1 # Count these as a "real" lines.
-				#@-body
-				#@-node:1::<< handle delim while scanning backward >>
-
+				#@nonl
+				#@-node:<< handle delim while scanning backward >>
+				#@nl
 			else:
 				offset += 1 # Assume the line is real.  A dubious assumption.
 			line -= 1
-		#@-body
-		#@-node:2::<< scan back to  @+node, setting offset,nodeSentinelLine >>
-
+		#@nonl
+		#@-node:<< scan back to  @+node, setting offset,nodeSentinelLine >>
+		#@nl
 		if nodeSentinelLine == -1:
 			# The line precedes the first @+node sentinel
 			# trace("before first line")
 			return root.headString(),0,1
 		s = lines[nodeSentinelLine]
 		# trace(s)
-		
-		#@<< set vnodeName and childIndex from s >>
-		#@+node:3::<< set vnodeName and childIndex from s >>
-		#@+body
+		#@	<< set vnodeName and childIndex from s >>
+		#@+node:<< set vnodeName and childIndex from s >>
 		# vnode name is everything following the third ':'
 		
 		# trace("last body:"+`s`)
@@ -3029,15 +2673,14 @@ class baseLeoFrame:
 			vnodeName = None
 		if not vnodeName:
 			es("bad @+node sentinel")
-		#@-body
-		#@-node:3::<< set vnodeName and childIndex from s >>
-
+		#@nonl
+		#@-node:<< set vnodeName and childIndex from s >>
+		#@nl
 		# trace("childIndex,offset",childIndex,offset,vnodeName)
 		return vnodeName,childIndex,offset
-	#@-body
-	#@-node:8::convertLineToVnodeNameIndexLine
-	#@+node:9::skipToMatchingNodeSentinel
-	#@+body
+	#@nonl
+	#@-node:convertLineToVnodeNameIndexLine
+	#@+node:skipToMatchingNodeSentinel
 	def skipToMatchingNodeSentinel (self,lines,n,delim):
 		
 		s = lines[n]
@@ -3064,19 +2707,14 @@ class baseLeoFrame:
 			
 		# trace(n)
 		return n
-	#@-body
-	#@-node:9::skipToMatchingNodeSentinel
-	#@-node:6::OnGoToLineNumber & allies
-	#@+node:7::OnSelectAll
-	#@+body
+	#@nonl
+	#@-node:skipToMatchingNodeSentinel
+	#@+node:OnSelectAll
 	def OnSelectAll(self,event=None):
 	
 		setTextSelection(self.body,"1.0","end")
-	
-	#@-body
-	#@-node:7::OnSelectAll
-	#@+node:8::OnFontPanel
-	#@+body
+	#@-node:OnSelectAll
+	#@+node:OnFontPanel
 	def OnFontPanel(self,event=None):
 	
 		if self.fontPanel:
@@ -3086,11 +2724,8 @@ class baseLeoFrame:
 		else:
 			self.fontPanel = fp =  leoFontPanel.leoFontPanel(self.commands)
 			fp.run()
-	
-	#@-body
-	#@-node:8::OnFontPanel
-	#@+node:9::OnColorPanel
-	#@+body
+	#@-node:OnFontPanel
+	#@+node:OnColorPanel
 	def OnColorPanel(self,event=None):
 		
 		if self.colorPanel:
@@ -3101,11 +2736,8 @@ class baseLeoFrame:
 			self.colorPanel = cp = leoColor.leoColorPanel(self.commands)
 			cp.run()
 	
-	
-	#@-body
-	#@-node:9::OnColorPanel
-	#@+node:10::OnViewAllCharacters
-	#@+body
+	#@-node:OnColorPanel
+	#@+node:OnViewAllCharacters
 	def OnViewAllCharacters (self, event=None):
 	
 		c = self.commands ; v = c.currentVnode() ; colorizer = c.tree.colorizer
@@ -3120,11 +2752,8 @@ class baseLeoFrame:
 			setMenuLabel(menu,"Hide Invisibles","Show Invisibles")
 	
 		c.tree.recolor_now(v)
-	
-	#@-body
-	#@-node:10::OnViewAllCharacters
-	#@+node:11::OnPreferences
-	#@+body
+	#@-node:OnViewAllCharacters
+	#@+node:OnPreferences
 	def OnPreferences(self,event=None):
 		
 		c = self.commands
@@ -3141,13 +2770,8 @@ class baseLeoFrame:
 				top.grab_set() # Make the dialog a modal dialog.
 				top.focus_set() # Get all keystrokes.
 				app().root.wait_window(top)
-	
-	#@-body
-	#@-node:11::OnPreferences
-	#@-node:1::Edit top level
-	#@+node:2::Edit Body submenu
-	#@+node:1::OnConvertBlanks & OnConvertAllBlanks
-	#@+body
+	#@-node:OnPreferences
+	#@+node:OnConvertBlanks & OnConvertAllBlanks
 	def OnConvertBlanks(self,event=None):
 	
 		self.commands.convertBlanks()
@@ -3156,11 +2780,8 @@ class baseLeoFrame:
 	def OnConvertAllBlanks(self,event=None):
 	
 		self.commands.convertAllBlanks()
-	
-	#@-body
-	#@-node:1::OnConvertBlanks & OnConvertAllBlanks
-	#@+node:2::OnConvertTabs & OnConvertAllTabs
-	#@+body
+	#@-node:OnConvertBlanks & OnConvertAllBlanks
+	#@+node:OnConvertTabs & OnConvertAllTabs
 	def OnConvertTabs(self,event=None):
 	
 		self.commands.convertTabs()
@@ -3172,43 +2793,28 @@ class baseLeoFrame:
 	def OnReformatParagraph(self,event=None):
 		
 		self.commands.reformatParagraph()
-	
-	#@-body
-	#@-node:2::OnConvertTabs & OnConvertAllTabs
-	#@+node:3::OnDedent
-	#@+body
+	#@-node:OnConvertTabs & OnConvertAllTabs
+	#@+node:OnDedent
 	def OnDedent (self,event=None):
 	
 		self.commands.dedentBody()
-	
-	#@-body
-	#@-node:3::OnDedent
-	#@+node:4::OnExtract
-	#@+body
+	#@-node:OnDedent
+	#@+node:OnExtract
 	def OnExtract(self,event=None):
 	
 		self.commands.extract()
-	
-	#@-body
-	#@-node:4::OnExtract
-	#@+node:5::OnExtractNames
-	#@+body
+	#@-node:OnExtract
+	#@+node:OnExtractNames
 	def OnExtractNames(self,event=None):
 	
 		self.commands.extractSectionNames()
-	
-	#@-body
-	#@-node:5::OnExtractNames
-	#@+node:6::OnExtractSection
-	#@+body
+	#@-node:OnExtractNames
+	#@+node:OnExtractSection
 	def OnExtractSection(self,event=None):
 	
 		self.commands.extractSection()
-	
-	#@-body
-	#@-node:6::OnExtractSection
-	#@+node:7::OnFindMatchingBracket
-	#@+body
+	#@-node:OnExtractSection
+	#@+node:OnFindMatchingBracket
 	def OnFindMatchingBracket (self,event=None):
 		
 		c = self ; body = c.body
@@ -3234,10 +2840,8 @@ class baseLeoFrame:
 			body.see(index2+"+1c")
 		else:
 			es("unmatched " + `ch`)
-	
-	#@-body
-	#@+node:1::findMatchingBracket
-	#@+body
+	#@-node:OnFindMatchingBracket
+	#@+node:findMatchingBracket
 	# Test  unmatched())
 	def findMatchingBracket(self,ch,body,index):
 	
@@ -3269,19 +2873,14 @@ class baseLeoFrame:
 	# Test  (
 	# ([(x){y}]))
 	# Test  ((x)(unmatched
-	#@-body
-	#@-node:1::findMatchingBracket
-	#@-node:7::OnFindMatchingBracket
-	#@+node:8::OnIndent
-	#@+body
+	#@nonl
+	#@-node:findMatchingBracket
+	#@+node:OnIndent
 	def OnIndent(self,event=None):
 	
 		self.commands.indentBody()
-	
-	#@-body
-	#@-node:8::OnIndent
-	#@+node:9::OnInsertBody/HeadlineTime & allies
-	#@+body
+	#@-node:OnIndent
+	#@+node:OnInsertBody/HeadlineTime & allies
 	def OnInsertBodyTime (self,event=None):
 		
 		c = self.commands ; v = c.currentVnode()
@@ -3306,9 +2905,9 @@ class baseLeoFrame:
 		# A kludge to get around not knowing whether we are editing or not.
 		if s.strip() == v.headString().strip():
 			es("Edit headline to append date/time")
-	#@-body
-	#@+node:1::getTime
-	#@+body
+	#@nonl
+	#@-node:OnInsertBody/HeadlineTime & allies
+	#@+node:getTime
 	def getTime (self,body=true):
 		
 		import time
@@ -3336,40 +2935,27 @@ class baseLeoFrame:
 			es_exception() # Probably a bad format string in leoConfig.txt.
 			s = time.strftime(default_format,time.gmtime())
 		return s
-	
-	#@-body
-	#@-node:1::getTime
-	#@-node:9::OnInsertBody/HeadlineTime & allies
-	#@-node:2::Edit Body submenu
-	#@+node:3::Edit Headline submenu
-	#@+node:1::OnEditHeadline
-	#@+body
+	#@-node:getTime
+	#@+node:OnEditHeadline
 	def OnEditHeadline(self,event=None):
 	
 		tree = self.commands.tree
 		tree.editLabel(tree.currentVnode)
-	#@-body
-	#@-node:1::OnEditHeadline
-	#@+node:2::OnEndEditHeadline
-	#@+body
+	#@nonl
+	#@-node:OnEditHeadline
+	#@+node:OnEndEditHeadline
 	def OnEndEditHeadline(self,event=None):
 		
 		tree = self.commands.tree
 		tree.endEditLabelCommand()
-	
-	#@-body
-	#@-node:2::OnEndEditHeadline
-	#@+node:3::OnAbortEditHeadline
-	#@+body
+	#@-node:OnEndEditHeadline
+	#@+node:OnAbortEditHeadline
 	def OnAbortEditHeadline(self,event=None):
 		
 		tree = self.commands.tree
 		tree.abortEditLabelCommand()
-	
-	#@-body
-	#@-node:3::OnAbortEditHeadline
-	#@+node:4::OnToggleAngleBrackets
-	#@+body
+	#@-node:OnAbortEditHeadline
+	#@+node:OnToggleAngleBrackets
 	def OnToggleAngleBrackets (self,event=None):
 		
 		c = self.commands ; v = c.currentVnode()
@@ -3387,13 +2973,8 @@ class baseLeoFrame:
 			v.edit_text().delete("1.0","end")
 			v.edit_text().insert("1.0",s)
 			c.tree.onHeadChanged(v)
-	
-	#@-body
-	#@-node:4::OnToggleAngleBrackets
-	#@-node:3::Edit Headline submenu
-	#@+node:4::Find submenu (frame methods)
-	#@+node:1::OnFindPanel
-	#@+body
+	#@-node:OnToggleAngleBrackets
+	#@+node:OnFindPanel
 	def OnFindPanel(self,event=None):
 	
 		c = self.commands
@@ -3409,98 +2990,63 @@ class baseLeoFrame:
 		set_focus(c,t)
 		setTextSelection (t,"1.0","end") # Thanks Rich.
 		find.commands = self
-	
-	#@-body
-	#@-node:1::OnFindPanel
-	#@+node:2::OnFindNext
-	#@+body
+	#@-node:OnFindPanel
+	#@+node:OnFindNext
 	def OnFindNext(self,event=None):
 	
 		c = self.commands
 		app().findFrame.findNextCommand(c)
-	
-	#@-body
-	#@-node:2::OnFindNext
-	#@+node:3::OnFindPrevious
-	#@+body
+	#@-node:OnFindNext
+	#@+node:OnFindPrevious
 	def OnFindPrevious(self,event=None):
 	
 		c = self.commands
 		app().findFrame.findPreviousCommand(c)
-	
-	#@-body
-	#@-node:3::OnFindPrevious
-	#@+node:4::OnReplace
-	#@+body
+	#@-node:OnFindPrevious
+	#@+node:OnReplace
 	def OnReplace(self,event=None):
 	
 		c = self.commands
 		app().findFrame.changeCommand(c)
-	
-	#@-body
-	#@-node:4::OnReplace
-	#@+node:5::OnReplaceThenFind
-	#@+body
+	#@-node:OnReplace
+	#@+node:OnReplaceThenFind
 	def OnReplaceThenFind(self,event=None):
 	
 		c = self.commands
 		app().findFrame.changeThenFindCommand(c)
-	
-	#@-body
-	#@-node:5::OnReplaceThenFind
-	#@-node:4::Find submenu (frame methods)
-	#@-node:2::Edit Menu (change to handle log pane too)
-	#@+node:3::Outline Menu
-	#@+node:1::top level
-	#@+node:1::OnCutNode
-	#@+body
+	#@-node:OnReplaceThenFind
+	#@+node:OnCutNode
 	def OnCutNode(self,event=None):
 	
 		self.commands.cutOutline()
-	
-	#@-body
-	#@-node:1::OnCutNode
-	#@+node:2::OnCopyNode
-	#@+body
+	#@-node:OnCutNode
+	#@+node:OnCopyNode
 	def OnCopyNode(self,event=None):
 	
 		self.commands.copyOutline()
-	
-	#@-body
-	#@-node:2::OnCopyNode
-	#@+node:3::OnPasteNodee
-	#@+body
+	#@-node:OnCopyNode
+	#@+node:OnPasteNodee
 	def OnPasteNode(self,event=None):
 	
 		self.commands.pasteOutline()
-	
-	#@-body
-	#@-node:3::OnPasteNodee
-	#@+node:4::OnDeleteNode
-	#@+body
+	#@-node:OnPasteNodee
+	#@+node:OnDeleteNode
 	def OnDeleteNode(self,event=None):
 	
 		self.commands.deleteHeadline()
-	
-	#@-body
-	#@-node:4::OnDeleteNode
-	#@+node:5::OnInsertNode
-	#@+body
+	#@-node:OnDeleteNode
+	#@+node:OnInsertNode
 	def OnInsertNode(self,event=None):
 	
 		self.commands.insertHeadline()
-	#@-body
-	#@-node:5::OnInsertNode
-	#@+node:6::OnCloneNode
-	#@+body
+	#@nonl
+	#@-node:OnInsertNode
+	#@+node:OnCloneNode
 	def OnCloneNode(self,event=None):
 	
 		self.commands.clone()
-	
-	#@-body
-	#@-node:6::OnCloneNode
-	#@+node:7::OnSortChildren, OnSortSiblings
-	#@+body
+	#@-node:OnCloneNode
+	#@+node:OnSortChildren, OnSortSiblings
 	def OnSortChildren(self,event=None):
 	
 		self.commands.sortChildren()
@@ -3508,102 +3054,64 @@ class baseLeoFrame:
 	def OnSortSiblings(self,event=None):
 	
 		self.commands.sortSiblings()
-	#@-body
-	#@-node:7::OnSortChildren, OnSortSiblings
-	#@-node:1::top level
-	#@+node:2::Expand/Contract
-	#@+node:1::No longer used
-	#@+node:1::OnContractChildren (no longer used)
-	#@+body
+	#@nonl
+	#@-node:OnSortChildren, OnSortSiblings
+	#@+node:OnContractChildren (no longer used)
 	def OnContractChildren(self,event=None):
 	
 		self.commands.contractSubheads()
-	
-	#@-body
-	#@-node:1::OnContractChildren (no longer used)
-	#@+node:2::OnContractAllChildren (no longer used)
-	#@+body
+	#@-node:OnContractChildren (no longer used)
+	#@+node:OnContractAllChildren (no longer used)
 	def OnContractAllChildren(self,event=None):
 	
 		self.commands.contractAllSubheads()
-	
-	#@-body
-	#@-node:2::OnContractAllChildren (no longer used)
-	#@+node:3::OnExpandAllChildren (no longer used)
-	#@+body
+	#@-node:OnContractAllChildren (no longer used)
+	#@+node:OnExpandAllChildren (no longer used)
 	def OnExpandAllChildren(self,event=None):
 	
 		self.commands.expandAllSubheads()
-	
-	#@-body
-	#@-node:3::OnExpandAllChildren (no longer used)
-	#@+node:4::OnExpandChildren (no longer used)
-	#@+body
+	#@-node:OnExpandAllChildren (no longer used)
+	#@+node:OnExpandChildren (no longer used)
 	def OnExpandChildren(self,event=None):
 	
 		self.commands.expandSubheads()
-	
-	#@-body
-	#@-node:4::OnExpandChildren (no longer used)
-	#@-node:1::No longer used
-	#@+node:2::OnContractAll
-	#@+body
+	#@-node:OnExpandChildren (no longer used)
+	#@+node:OnContractAll
 	def OnContractAll(self,event=None):
 	
 		self.commands.contractAllHeadlines()
-	
-	#@-body
-	#@-node:2::OnContractAll
-	#@+node:3::OnContractNode
-	#@+body
+	#@-node:OnContractAll
+	#@+node:OnContractNode
 	def OnContractNode(self,event=None):
 	
 		self.commands.contractNode()
-	
-	#@-body
-	#@-node:3::OnContractNode
-	#@+node:4::OnContractParent
-	#@+body
+	#@-node:OnContractNode
+	#@+node:OnContractParent
 	def OnContractParent(self,event=None):
 	
 		self.commands.contractParent()
-	
-	#@-body
-	#@-node:4::OnContractParent
-	#@+node:5::OnExpandAll
-	#@+body
+	#@-node:OnContractParent
+	#@+node:OnExpandAll
 	def OnExpandAll(self,event=None):
 	
 		self.commands.expandAllHeadlines()
-	
-	#@-body
-	#@-node:5::OnExpandAll
-	#@+node:6::OnExpandNextLevel
-	#@+body
+	#@-node:OnExpandAll
+	#@+node:OnExpandNextLevel
 	def OnExpandNextLevel(self,event=None):
 	
 		self.commands.expandNextLevel()
-	
-	#@-body
-	#@-node:6::OnExpandNextLevel
-	#@+node:7::OnExpandNode
-	#@+body
+	#@-node:OnExpandNextLevel
+	#@+node:OnExpandNode
 	def OnExpandNode(self,event=None):
 	
 		self.commands.expandNode()
-	
-	#@-body
-	#@-node:7::OnExpandNode
-	#@+node:8::OnExpandPrevLevel
-	#@+body
+	#@-node:OnExpandNode
+	#@+node:OnExpandPrevLevel
 	def OnExpandPrevLevel(self,event=None):
 	
 		self.commands.expandPrevLevel()
-	
-	#@-body
-	#@-node:8::OnExpandPrevLevel
-	#@+node:9::OnExpandToLevel1..9
-	#@+body
+	#@-node:OnExpandPrevLevel
+	#@+node:OnExpandToLevel1..9
 	def OnExpandToLevel1(self,event=None): self.commands.expandLevel1()
 	def OnExpandToLevel2(self,event=None): self.commands.expandLevel2()
 	def OnExpandToLevel3(self,event=None): self.commands.expandLevel3()
@@ -3613,95 +3121,58 @@ class baseLeoFrame:
 	def OnExpandToLevel7(self,event=None): self.commands.expandLevel7()
 	def OnExpandToLevel8(self,event=None): self.commands.expandLevel8()
 	def OnExpandToLevel9(self,event=None): self.commands.expandLevel9()
-	
-	#@-body
-	#@-node:9::OnExpandToLevel1..9
-	#@-node:2::Expand/Contract
-	#@+node:3::Move/Select
-	#@+node:1::OnMoveDownwn
-	#@+body
+	#@-node:OnExpandToLevel1..9
+	#@+node:OnMoveDownwn
 	def OnMoveDown(self,event=None):
 	
 		self.commands.moveOutlineDown()
-	
-	#@-body
-	#@-node:1::OnMoveDownwn
-	#@+node:2::OnMoveLeft
-	#@+body
+	#@-node:OnMoveDownwn
+	#@+node:OnMoveLeft
 	def OnMoveLeft(self,event=None):
 	
 		self.commands.moveOutlineLeft()
-	
-	#@-body
-	#@-node:2::OnMoveLeft
-	#@+node:3::OnMoveRight
-	#@+body
+	#@-node:OnMoveLeft
+	#@+node:OnMoveRight
 	def OnMoveRight(self,event=None):
 	
 		self.commands.moveOutlineRight()
-	
-	#@-body
-	#@-node:3::OnMoveRight
-	#@+node:4::OnMoveUp
-	#@+body
+	#@-node:OnMoveRight
+	#@+node:OnMoveUp
 	def OnMoveUp(self,event=None):
 	
 		self.commands.moveOutlineUp()
-	
-	#@-body
-	#@-node:4::OnMoveUp
-	#@+node:5::OnPromote
-	#@+body
+	#@-node:OnMoveUp
+	#@+node:OnPromote
 	def OnPromote(self,event=None):
 	
 		self.commands.promote()
-	
-	#@-body
-	#@-node:5::OnPromote
-	#@+node:6::OnDemote
-	#@+body
+	#@-node:OnPromote
+	#@+node:OnDemote
 	def OnDemote(self,event=None):
 	
 		self.commands.demote()
-	
-	#@-body
-	#@-node:6::OnDemote
-	#@+node:7::OnGoPrevVisible
-	#@+body
+	#@-node:OnDemote
+	#@+node:OnGoPrevVisible
 	def OnGoPrevVisible(self,event=None):
 	
 		self.commands.selectVisBack()
-	
-	#@-body
-	#@-node:7::OnGoPrevVisible
-	#@+node:8::OnGoNextVisible
-	#@+body
+	#@-node:OnGoPrevVisible
+	#@+node:OnGoNextVisible
 	def OnGoNextVisible(self,event=None):
 	
 		self.commands.selectVisNext()
-	
-	#@-body
-	#@-node:8::OnGoNextVisible
-	#@+node:9::OnGoBack
-	#@+body
+	#@-node:OnGoNextVisible
+	#@+node:OnGoBack
 	def OnGoBack(self,event=None):
 	
 		self.commands.selectThreadBack()
-	
-	#@-body
-	#@-node:9::OnGoBack
-	#@+node:10::OnGoNext
-	#@+body
+	#@-node:OnGoBack
+	#@+node:OnGoNext
 	def OnGoNext(self,event=None):
 	
 		self.commands.selectThreadNext()
-	
-	#@-body
-	#@-node:10::OnGoNext
-	#@-node:3::Move/Select
-	#@+node:4::Mark/Goto
-	#@+node:1::OnGoPrevVisitedNode
-	#@+body
+	#@-node:OnGoNext
+	#@+node:OnGoPrevVisitedNode
 	def OnGoPrevVisitedNode(self,event=None):
 		
 		c = self.commands
@@ -3716,11 +3187,8 @@ class baseLeoFrame:
 				c.endUpdate()
 				c.tree.idle_scrollTo(v)
 				return
-	
-	#@-body
-	#@-node:1::OnGoPrevVisitedNode
-	#@+node:2::OnGoNextVisitedNode
-	#@+body
+	#@-node:OnGoPrevVisitedNode
+	#@+node:OnGoNextVisitedNode
 	def OnGoNextVisitedNode(self,event=None):
 		
 		c = self.commands
@@ -3735,10 +3203,9 @@ class baseLeoFrame:
 				c.endUpdate()
 				c.tree.idle_scrollTo(v)
 				return
-	#@-body
-	#@-node:2::OnGoNextVisitedNode
-	#@+node:3::OnGoToFirstNode
-	#@+body
+	#@nonl
+	#@-node:OnGoNextVisitedNode
+	#@+node:OnGoToFirstNode
 	def OnGoToFirstNode(self,event=None):
 		
 		c = self.commands
@@ -3747,10 +3214,9 @@ class baseLeoFrame:
 			c.beginUpdate()
 			c.selectVnode(v)
 			c.endUpdate()
-	#@-body
-	#@-node:3::OnGoToFirstNode
-	#@+node:4::OnGoToLastNode
-	#@+body
+	#@nonl
+	#@-node:OnGoToFirstNode
+	#@+node:OnGoToLastNode
 	def OnGoToLastNode(self,event=None):
 		
 		c = self.commands
@@ -3762,35 +3228,23 @@ class baseLeoFrame:
 			c.tree.expandAllAncestors(v)
 			c.selectVnode(v)
 			c.endUpdate()
-	
-	#@-body
-	#@-node:4::OnGoToLastNode
-	#@+node:5::OnGoToNextChanged
-	#@+body
+	#@-node:OnGoToLastNode
+	#@+node:OnGoToNextChanged
 	def OnGoToNextChanged(self,event=None):
 	
 		self.commands.goToNextDirtyHeadline()
-	
-	#@-body
-	#@-node:5::OnGoToNextChanged
-	#@+node:6::OnGoToNextClone
-	#@+body
+	#@-node:OnGoToNextChanged
+	#@+node:OnGoToNextClone
 	def OnGoToNextClone(self,event=None):
 	
 		self.commands.goToNextClone()
-	
-	#@-body
-	#@-node:6::OnGoToNextClone
-	#@+node:7::OnGoToNextMarked
-	#@+body
+	#@-node:OnGoToNextClone
+	#@+node:OnGoToNextMarked
 	def OnGoToNextMarked(self,event=None):
 	
 		self.commands.goToNextMarkedHeadline()
-	
-	#@-body
-	#@-node:7::OnGoToNextMarked
-	#@+node:8::OnGoToNextSibling
-	#@+body
+	#@-node:OnGoToNextMarked
+	#@+node:OnGoToNextSibling
 	def OnGoToNextSibling(self,event=None):
 		
 		c = self.commands
@@ -3801,10 +3255,9 @@ class baseLeoFrame:
 			c.beginUpdate()
 			c.selectVnode(next)
 			c.endUpdate()
-	#@-body
-	#@-node:8::OnGoToNextSibling
-	#@+node:9::OnGoToParent
-	#@+body
+	#@nonl
+	#@-node:OnGoToNextSibling
+	#@+node:OnGoToParent
 	def OnGoToParent(self,event=None):
 		
 		c = self.commands
@@ -3815,11 +3268,8 @@ class baseLeoFrame:
 			c.beginUpdate()
 			c.selectVnode(p)
 			c.endUpdate()
-	
-	#@-body
-	#@-node:9::OnGoToParent
-	#@+node:10::OnGoToPrevSibling
-	#@+body
+	#@-node:OnGoToParent
+	#@+node:OnGoToPrevSibling
 	def OnGoToPrevSibling(self,event=None):
 		
 		c = self.commands
@@ -3830,72 +3280,45 @@ class baseLeoFrame:
 			c.beginUpdate()
 			c.selectVnode(back)
 			c.endUpdate()
-	
-	#@-body
-	#@-node:10::OnGoToPrevSibling
-	#@+node:11::OnMark
-	#@+body
+	#@-node:OnGoToPrevSibling
+	#@+node:OnMark
 	def OnMark(self,event=None):
 	
 		self.commands.markHeadline()
-	
-	#@-body
-	#@-node:11::OnMark
-	#@+node:12::OnMarkChangedItems
-	#@+body
+	#@-node:OnMark
+	#@+node:OnMarkChangedItems
 	def OnMarkChangedItems(self,event=None):
 	
 		self.commands.markChangedHeadlines()
-	
-	#@-body
-	#@-node:12::OnMarkChangedItems
-	#@+node:13::OnMarkChangedRoots
-	#@+body
+	#@-node:OnMarkChangedItems
+	#@+node:OnMarkChangedRoots
 	def OnMarkChangedRoots(self,event=None):
 	
 		self.commands.markChangedRoots()
-	
-	#@-body
-	#@-node:13::OnMarkChangedRoots
-	#@+node:14::OnMarkClones
-	#@+body
+	#@-node:OnMarkChangedRoots
+	#@+node:OnMarkClones
 	def OnMarkClones(self,event=None):
 	
 		self.commands.markClones()
-	
-	#@-body
-	#@-node:14::OnMarkClones
-	#@+node:15::OnMarkSubheads
-	#@+body
+	#@-node:OnMarkClones
+	#@+node:OnMarkSubheads
 	def OnMarkSubheads(self,event=None):
 	
 		self.commands.markSubheads()
-	
-	#@-body
-	#@-node:15::OnMarkSubheads
-	#@+node:16::OnUnmarkAll
-	#@+body
+	#@-node:OnMarkSubheads
+	#@+node:OnUnmarkAll
 	def OnUnmarkAll(self,event=None):
 	
 		self.commands.unmarkAll()
-	
-	#@-body
-	#@-node:16::OnUnmarkAll
-	#@-node:4::Mark/Goto
-	#@-node:3::Outline Menu
-	#@+node:4::Window Menu
-	#@+node:1::OnEqualSizedPanes
-	#@+body
+	#@-node:OnUnmarkAll
+	#@+node:OnEqualSizedPanes
 	def OnEqualSizedPanes(self,event=None):
 	
 		frame = self
 	
 		frame.resizePanesToRatio(0.5,frame.secondary_ratio)
-	
-	#@-body
-	#@-node:1::OnEqualSizedPanes
-	#@+node:2::OnToggleActivePane
-	#@+body
+	#@-node:OnEqualSizedPanes
+	#@+node:OnToggleActivePane
 	def OnToggleActivePane (self,event=None):
 	
 		# trace(`event`)
@@ -3905,10 +3328,9 @@ class baseLeoFrame:
 			set_focus(c,self.canvas)
 		else:
 			set_focus(c,self.body)
-	#@-body
-	#@-node:2::OnToggleActivePane
-	#@+node:3::OnToggleSplitDirection
-	#@+body
+	#@nonl
+	#@-node:OnToggleActivePane
+	#@+node:OnToggleSplitDirection
 	# The key invariant: self.splitVerticalFlag tells the alignment of the main splitter.
 	
 	def OnToggleSplitDirection(self,event=None):
@@ -3934,10 +3356,9 @@ class baseLeoFrame:
 		# Redraw with an appropriate ratio.
 		vflag,ratio,secondary_ratio = frame.initialRatios()
 		self.resizePanesToRatio(ratio,secondary_ratio)
-	#@-body
-	#@-node:3::OnToggleSplitDirection
-	#@+node:4::OnCascade
-	#@+body
+	#@nonl
+	#@-node:OnToggleSplitDirection
+	#@+node:OnCascade
 	def OnCascade(self,event=None):
 		
 		c = self ; x,y,delta = 10,10,10
@@ -3956,11 +3377,8 @@ class baseLeoFrame:
 			if x > 200:
 				x = 10 + delta ; y = 40 + delta
 				delta += 10
-	
-	#@-body
-	#@-node:4::OnCascade
-	#@+node:5::OnMinimizeAll
-	#@+body
+	#@-node:OnCascade
+	#@+node:OnMinimizeAll
 	def OnMinimizeAll(self,event=None):
 	
 		self.minimize(app().findFrame)
@@ -3972,18 +3390,16 @@ class baseLeoFrame:
 	
 		if frame and frame.top.state() == "normal":
 			frame.top.iconify()
-	#@-body
-	#@-node:5::OnMinimizeAll
-	#@+node:6::OnHideLogWindow
-	#@+body
+	#@nonl
+	#@-node:OnMinimizeAll
+	#@+node:OnHideLogWindow
 	def OnHideLogWindow (self):
 		
 		c = self.commands ; frame = c.frame
 		frame.divideLeoSplitter2(0.99, not frame.splitVerticalFlag)
-	#@-body
-	#@-node:6::OnHideLogWindow
-	#@+node:7::OnOpenCompareWindow
-	#@+body
+	#@nonl
+	#@-node:OnHideLogWindow
+	#@+node:OnOpenCompareWindow
 	def OnOpenCompareWindow (self,event=None):
 		
 		c = self.commands
@@ -3996,17 +3412,14 @@ class baseLeoFrame:
 			cmp = leoCompare.leoCompare(c)
 			self.comparePanel = cp =  leoCompare.leoComparePanel(c,cmp)
 			cp.run()
-	#@-body
-	#@-node:7::OnOpenCompareWindow
-	#@+node:8::OnOpenPythonWindow (Dave Hein)
-	#@+body
+	#@nonl
+	#@-node:OnOpenCompareWindow
+	#@+node:OnOpenPythonWindow (Dave Hein)
 	def OnOpenPythonWindow(self,event=None):
 	
 		if sys.platform == "linux2":
-			
-			#@<< open idle in Linux >>
-			#@+node:1::<< open idle in Linux >>
-			#@+body
+			#@		<< open idle in Linux >>
+			#@+node:<< open idle in Linux >>
 			# 09-SEP-2002 DHEIN: Open Python window under linux
 			
 			try:
@@ -4024,15 +3437,11 @@ class baseLeoFrame:
 					es("Can not import idle")
 					es_exception() # This can fail!!
 				except: pass
-			
-			#@-body
-			#@-node:1::<< open idle in Linux >>
-
+			#@-node:<< open idle in Linux >>
+			#@nl
 		else:
-			
-			#@<< open idle in Windows >>
-			#@+node:2::<< open idle in Windows >>
-			#@+body
+			#@		<< open idle in Windows >>
+			#@+node:<< open idle in Windows >>
 			try:
 				executable_dir = os.path.dirname(sys.executable)
 				idle_dir=os.path.join(executable_dir,"Tools","idle")
@@ -4055,23 +3464,21 @@ class baseLeoFrame:
 					es("Please add " + `idle_dir` + " to sys.path")
 					es_exception() # This can fail!!
 				except: pass
-			#@-body
-			#@-node:2::<< open idle in Windows >>
-
-	
-	#@-body
-	#@+node:3::leoPyShellMain
-	#@+body
-	#@+at
-	#  The key parts of Pyshell.main(), but using Leo's root window instead of 
+			#@nonl
+			#@-node:<< open idle in Windows >>
+			#@nl
+	#@-node:OnOpenPythonWindow (Dave Hein)
+	#@+node:leoPyShellMain
+	#@+at 
+	#@nonl
+	# The key parts of Pyshell.main(), but using Leo's root window instead of 
 	# a new Tk root window.
 	# 
 	# This does _not_ work.  Using Leo's root window means that Idle will shut 
 	# down Leo without warning when the Idle window is closed!
-
 	#@-at
 	#@@c
-
+	
 	def leoPyShellMain(self):
 		
 		import PyShell
@@ -4081,13 +3488,9 @@ class baseLeoFrame:
 		shell = PyShell.PyShell(flist)
 		flist.pyshell = shell
 		shell.begin()
-	#@-body
-	#@-node:3::leoPyShellMain
-	#@-node:8::OnOpenPythonWindow (Dave Hein)
-	#@-node:4::Window Menu
-	#@+node:5::Help Menu
-	#@+node:1::OnAbout (version number & date)
-	#@+body
+	#@nonl
+	#@-node:leoPyShellMain
+	#@+node:OnAbout (version number & date)
 	def OnAbout(self,event=None):
 		
 		# Don't use triple-quoted strings or continued strings here.
@@ -4104,11 +3507,8 @@ class baseLeoFrame:
 	
 		import leoDialog
 		leoDialog.aboutLeo(version,copyright,url,email).run(modal=false)
-	
-	#@-body
-	#@-node:1::OnAbout (version number & date)
-	#@+node:2::OnLeoDocumentation
-	#@+body
+	#@-node:OnAbout (version number & date)
+	#@+node:OnLeoDocumentation
 	def OnLeoDocumentation (self,event=None):
 	
 		fileName = os.path.join(app().loadDir,"..","doc","LeoDocs.leo")
@@ -4116,11 +3516,8 @@ class baseLeoFrame:
 			self.OpenWithFileName(fileName)
 		except:
 			es("not found: LeoDocs.leo")
-	
-	#@-body
-	#@-node:2::OnLeoDocumentation
-	#@+node:3::OnLeoHome
-	#@+body
+	#@-node:OnLeoDocumentation
+	#@+node:OnLeoHome
 	def OnLeoHome (self,event=None):
 		
 		import webbrowser
@@ -4130,10 +3527,9 @@ class baseLeoFrame:
 			webbrowser.open_new(url)
 		except:
 			es("not found: " + url)
-	#@-body
-	#@-node:3::OnLeoHome
-	#@+node:4::OnLeoHelp
-	#@+body
+	#@nonl
+	#@-node:OnLeoHome
+	#@+node:OnLeoHelp
 	def OnLeoHelp (self,event=None):
 		
 		file = os.path.join(app().loadDir,"..","doc","sbooks.chm")
@@ -4162,33 +3558,29 @@ class baseLeoFrame:
 				except:
 					es("exception dowloading sbooks.chm")
 					es_exception()
-	#@-body
-	#@+node:1::showProgressBar
-	#@+body
+	#@nonl
+	#@-node:OnLeoHelp
+	#@+node:showProgressBar
 	def showProgressBar (self,count,size,total):
 	
 		# trace("count,size,total:" + `count` + "," + `size` + "," + `total`)
 		if self.scale == None:
-			
-			#@<< create the scale widget >>
-			#@+node:1::<< create the scale widget >>
-			#@+body
+			#@		<< create the scale widget >>
+			#@+node:<< create the scale widget >>
 			Tk = Tkinter
 			top = Tk.Toplevel()
 			top.title("Download progress")
 			self.scale = scale = Tk.Scale(top,state="normal",orient="horizontal",from_=0,to=total)
 			scale.pack()
 			top.lift()
-			#@-body
-			#@-node:1::<< create the scale widget >>
-
+			#@nonl
+			#@-node:<< create the scale widget >>
+			#@nl
 		self.scale.set(count*size)
 		self.scale.update_idletasks()
-	#@-body
-	#@-node:1::showProgressBar
-	#@-node:4::OnLeoHelp
-	#@+node:5::OnLeoTutorial (version number)
-	#@+body
+	#@nonl
+	#@-node:showProgressBar
+	#@+node:OnLeoTutorial (version number)
 	def OnLeoTutorial (self,event=None):
 		
 		import webbrowser
@@ -4201,10 +3593,9 @@ class baseLeoFrame:
 			webbrowser.open_new(url)
 		except:
 			es("not found: " + url)
-	#@-body
-	#@-node:5::OnLeoTutorial (version number)
-	#@+node:6::OnLeoConfig, OnApplyConfig
-	#@+body
+	#@nonl
+	#@-node:OnLeoTutorial (version number)
+	#@+node:OnLeoConfig, OnApplyConfig
 	def OnLeoConfig (self,event=None):
 	
 		# 4/21/03 new code suggested by fBechmann@web.de
@@ -4227,44 +3618,38 @@ class baseLeoFrame:
 	
 		app().config.init()
 		self.commands.frame.reconfigureFromConfig()
-	#@-body
-	#@-node:6::OnLeoConfig, OnApplyConfig
-	#@-node:5::Help Menu
-	#@-node:5::Menu Command Handlers
-	#@+node:6::Menu Convenience Routines
-	#@+body
-	#@+at
-	#  The following convenience routines make creating menus easier.
+	#@nonl
+	#@-node:OnLeoConfig, OnApplyConfig
+	#@+node:Menu Convenience Routines
+	#@+at 
+	#@nonl
+	# The following convenience routines make creating menus easier.
 	# 
 	# The Plugins section gives examples of how to use these routines to 
 	# create custom menus and to add items to the Open With menu.
-
 	#@-at
-	#@-body
-	#@+node:1::createMenuEntries
-	#@+body
-	#@+at
-	#  The old, non-user-configurable code bound shortcuts in createMenuBar.  
+	#@-node:Menu Convenience Routines
+	#@+node:createMenuEntries
+	#@+at 
+	#@nonl
+	# The old, non-user-configurable code bound shortcuts in createMenuBar.  
 	# The new user-configurable code binds shortcuts here.
 	# 
 	# Centralized tables of shortscuts no longer exist as they did in 
 	# createAccelerators.  To check for duplicates, (possibly arising from 
 	# leoConfig.txt) we add entries to a central dictionary here, and report 
 	# duplicates if an entry for a canonicalized shortcut already exists.
-
 	#@-at
 	#@@c
-
+	
 	def createMenuEntries (self,menu,table,openWith=0):
 		
 		for label,accel,command in table:
 			if label == None or command == None or label == "-":
 				menu.add_separator()
 			else:
-				
-				#@<< set name to the label for doCommand >>
-				#@+node:1::<< set name to the label for doCommand >>
-				#@+body
+				#@			<< set name to the label for doCommand >>
+				#@+node:<< set name to the label for doCommand >>
 				name = label.strip().lower()
 				
 				# Remove special characters from command names.
@@ -4273,14 +3658,10 @@ class baseLeoFrame:
 					if ch in string.letters or ch in string.digits:
 						name2 = name2 + ch
 				name = name2
-				
-				#@-body
-				#@-node:1::<< set name to the label for doCommand >>
-
-				
-				#@<< set accel to the shortcut for name >>
-				#@+node:2::<< set accel to the shortcut for name >>
-				#@+body
+				#@-node:<< set name to the label for doCommand >>
+				#@nl
+				#@			<< set accel to the shortcut for name >>
+				#@+node:<< set accel to the shortcut for name >>
 				config = app().config
 				accel2 = config.getShortcut(name)
 				
@@ -4291,13 +3672,11 @@ class baseLeoFrame:
 					accel = None # Remove the default shortcut.
 				else:
 					accel = accel2 # Override the default shortcut.
-				#@-body
-				#@-node:2::<< set accel to the shortcut for name >>
-
-				
-				#@<< set bind_shortcut and menu_shortcut using accel >>
-				#@+node:3::<< set bind_shortcut and menu_shortcut using accel >>
-				#@+body
+				#@nonl
+				#@-node:<< set accel to the shortcut for name >>
+				#@nl
+				#@			<< set bind_shortcut and menu_shortcut using accel >>
+				#@+node:<< set bind_shortcut and menu_shortcut using accel >>
 				bind_shortcut,menu_shortcut = self.canonicalizeShortcut(accel)
 				
 				# Kludge: disable the shortcuts for cut, copy, paste.
@@ -4307,25 +3686,23 @@ class baseLeoFrame:
 				if sys.platform not in ("linux1","linux2"):
 					if bind_shortcut in ("<Control-c>","<Control-v>","<Control-x>"):
 						bind_shortcut = None
-				#@-body
-				#@-node:3::<< set bind_shortcut and menu_shortcut using accel >>
-
-				
-				#@<< define callback function >>
-				#@+node:4::<< define callback function >>
-				#@+body
-				#@+at
-				#  Tkinter will call the callback function with:
+				#@nonl
+				#@-node:<< set bind_shortcut and menu_shortcut using accel >>
+				#@nl
+				#@			<< define callback function >>
+				#@+node:<< define callback function >>
+				#@+at 
+				#@nonl
+				# Tkinter will call the callback function with:
 				# 
 				# 	- one event argument if the user uses a menu shortcut.
 				# 	- no arguments otherwise.
 				# 
 				# Therefore, the first parameter must be event, and it must 
 				# default to None.
-
 				#@-at
 				#@@c
-
+				
 				if openWith:
 					def callback(event=None,self=self,data=command):
 						# print "event",`event` ; print "self",`self` ; print "data",`data`
@@ -4335,30 +3712,26 @@ class baseLeoFrame:
 					def callback(event=None,self=self,command=command,label=name):
 						# print "event",`event` ; print "self",`self` ; print "command",`command`
 						return self.doCommand(command,label,event)
-				#@-body
-				#@-node:4::<< define callback function >>
-
-				
-				#@<< set realLabel, amp_index and menu_shortcut >>
-				#@+node:5::<< set realLabel, amp_index and menu_shortcut >>
-				#@+body
+				#@nonl
+				#@-node:<< define callback function >>
+				#@nl
+				#@			<< set realLabel, amp_index and menu_shortcut >>
+				#@+node:<< set realLabel, amp_index and menu_shortcut >>
 				realLabel = app().getRealMenuName(label)
 				amp_index = realLabel.find("&")
 				realLabel = realLabel.replace("&","")
 				if not menu_shortcut:
 					menu_shortcut = ""
-				#@-body
-				#@-node:5::<< set realLabel, amp_index and menu_shortcut >>
-
+				#@nonl
+				#@-node:<< set realLabel, amp_index and menu_shortcut >>
+				#@nl
 	
 				menu.add_command(label=realLabel,accelerator=menu_shortcut,
 					command=callback,underline=amp_index)
 	
 				if bind_shortcut:
-					
-					#@<< handle bind_shorcut >>
-					#@+node:6::<< handle bind_shorcut >>
-					#@+body
+					#@				<< handle bind_shorcut >>
+					#@+node:<< handle bind_shorcut >>
 					if bind_shortcut in self.menuShortcuts:
 						if not app().menuWarningsGiven:
 							es("duplicate shortcut:", accel, bind_shortcut, label,color="red")
@@ -4374,12 +3747,12 @@ class baseLeoFrame:
 								print bind_shortcut
 								es_exception()
 								app().menuWarningsGive = true
-					#@-body
-					#@-node:6::<< handle bind_shorcut >>
-	#@-body
-	#@-node:1::createMenuEntries
-	#@+node:2::createMenuItemsFromTable
-	#@+body
+					#@nonl
+					#@-node:<< handle bind_shorcut >>
+					#@nl
+	#@nonl
+	#@-node:createMenuEntries
+	#@+node:createMenuItemsFromTable
 	def createMenuItemsFromTable (self,menuName,table,openWith=0):
 		
 		try:
@@ -4393,10 +3766,9 @@ class baseLeoFrame:
 			print "exception creating items for ", menuName," menu"
 			es("exception creating items for " + `menuName` + " menu")
 			es_exception()
-	#@-body
-	#@-node:2::createMenuItemsFromTable
-	#@+node:3::createNewMenu
-	#@+body
+	#@nonl
+	#@-node:createMenuItemsFromTable
+	#@+node:createNewMenu
 	def createNewMenu (self,menuName,parentName="top",before=None):
 		
 		import Tkinter
@@ -4429,26 +3801,28 @@ class baseLeoFrame:
 			es("exception creating " + menuName + " menu")
 			es_exception()
 			return None
-	#@-body
-	#@-node:3::createNewMenu
-	#@+node:4::createOpenWithMenuFromTable
-	#@+body
-	#@+at
-	#  Entries in the table passed to createOpenWithMenuFromTable are
+	#@nonl
+	#@-node:createNewMenu
+	#@+node:createOpenWithMenuFromTable
+	#@+at 
+	#@nonl
+	# Entries in the table passed to createOpenWithMenuFromTable are
 	# tuples of the form (commandName,shortcut,data).
 	# 
 	# - command is one of "os.system", "os.startfile", "os.spawnl", 
 	# "os.spawnv" or "exec".
-	# - shortcut is a string describing a shortcut, just as for createMenuItemsFromTable.
+	# - shortcut is a string describing a shortcut, just as for 
+	# createMenuItemsFromTable.
 	# - data is a tuple of the form (command,arg,ext).
 	# 
-	# Leo executes command(arg+path) where path is the full path to the temp file.
+	# Leo executes command(arg+path) where path is the full path to the temp 
+	# file.
 	# If ext is not None, the temp file has the given extension.
-	# Otherwise, Leo computes an extension based on the @language directive in effect.
-
+	# Otherwise, Leo computes an extension based on the @language directive in 
+	# effect.
 	#@-at
 	#@@c
-
+	
 	def createOpenWithMenuFromTable (self,table):
 	
 		a = app()
@@ -4481,11 +3855,8 @@ class baseLeoFrame:
 				
 		# for i in shortcut_table: print i
 		self.createMenuItemsFromTable("Open &With...",shortcut_table,openWith=1)
-	
-	#@-body
-	#@-node:4::createOpenWithMenuFromTable
-	#@+node:5::deleteMenu
-	#@+body
+	#@-node:createOpenWithMenuFromTable
+	#@+node:deleteMenu
 	def deleteMenu (self,menuName):
 	
 		try:
@@ -4498,10 +3869,9 @@ class baseLeoFrame:
 		except:
 			es("exception deleting " + menuName + " menu")
 			es_exception()
-	#@-body
-	#@-node:5::deleteMenu
-	#@+node:6::deleteMenuItem
-	#@+body
+	#@nonl
+	#@-node:deleteMenu
+	#@+node:deleteMenuItem
 	# Delete itemName from the menu whose name is menuName.
 	def deleteMenuItem (self,itemName,menuName="top"):
 	
@@ -4516,10 +3886,9 @@ class baseLeoFrame:
 		except:
 			es("exception deleting " + itemName + " from " + menuName + " menu")
 			es_exception()
-	#@-body
-	#@-node:6::deleteMenuItem
-	#@+node:7::setRealMenuNamesFromTable
-	#@+body
+	#@nonl
+	#@-node:deleteMenuItem
+	#@+node:setRealMenuNamesFromTable
 	def setRealMenuNamesFromTable (self,table):
 	
 		try:
@@ -4527,13 +3896,8 @@ class baseLeoFrame:
 		except:
 			es("exception in setRealMenuNamesFromTable")
 			es_exception()
-	
-	#@-body
-	#@-node:7::setRealMenuNamesFromTable
-	#@-node:6::Menu Convenience Routines
-	#@+node:7::Menu enablers (Frame)
-	#@+node:1::frame.OnMenuClick (enables and disables all menu items)
-	#@+body
+	#@-node:setRealMenuNamesFromTable
+	#@+node:frame.OnMenuClick (enables and disables all menu items)
 	# This is the Tk "postcommand" callback.  It should update all menu items.
 	
 	def OnMenuClick (self):
@@ -4548,11 +3912,8 @@ class baseLeoFrame:
 			self.updateEditMenu()
 			self.updateOutlineMenu()
 	
-	
-	#@-body
-	#@-node:1::frame.OnMenuClick (enables and disables all menu items)
-	#@+node:2::hasSelection
-	#@+body
+	#@-node:frame.OnMenuClick (enables and disables all menu items)
+	#@+node:hasSelection
 	# Returns true if text in the outline or body text is selected.
 	
 	def hasSelection (self):
@@ -4562,10 +3923,9 @@ class baseLeoFrame:
 			return first != last
 		else:
 			return false
-	#@-body
-	#@-node:2::hasSelection
-	#@+node:3::updateFileMenu
-	#@+body
+	#@nonl
+	#@-node:hasSelection
+	#@+node:updateFileMenu
 	def updateFileMenu (self):
 		
 		c = self.commands
@@ -4581,11 +3941,8 @@ class baseLeoFrame:
 		except:
 			es("exception updating File menu")
 			es_exception()
-	
-	#@-body
-	#@-node:3::updateFileMenu
-	#@+node:4::updateEditMenu
-	#@+body
+	#@-node:updateFileMenu
+	#@+node:updateEditMenu
 	def updateEditMenu (self):
 	
 		c = self.commands
@@ -4613,10 +3970,9 @@ class baseLeoFrame:
 		except:
 			es("exception updating Edit menu")
 			es_exception()
-	#@-body
-	#@-node:4::updateEditMenu
-	#@+node:5::updateOutlineMenu
-	#@+body
+	#@nonl
+	#@-node:updateEditMenu
+	#@+node:updateOutlineMenu
 	def updateOutlineMenu (self):
 	
 		c = self.commands ; v = c.currentVnode()
@@ -4673,37 +4029,31 @@ class baseLeoFrame:
 		except:
 			es("exception updating Outline menu")
 			es_exception()
-	#@-body
-	#@-node:5::updateOutlineMenu
-	#@-node:7::Menu enablers (Frame)
-	#@-node:9:: Menus
-	#@+node:10::Splitter stuff
-	#@+body
-	#@+at
-	#  The key invariants used throughout this code:
+	#@nonl
+	#@-node:updateOutlineMenu
+	#@+node:Splitter stuff
+	#@+at 
+	#@nonl
+	# The key invariants used throughout this code:
 	# 
 	# 1. self.splitVerticalFlag tells the alignment of the main splitter and
-	# 2. not self.splitVerticalFlag tells the alignment of the secondary splitter.
+	# 2. not self.splitVerticalFlag tells the alignment of the secondary 
+	# splitter.
 	# 
 	# Only the general-purpose divideAnySplitter routine doesn't know about 
 	# these invariants.  So most of this code is specialized for Leo's 
 	# window.  OTOH, creating a single splitter window would be much easier 
 	# than this code.
-
 	#@-at
-	#@-body
-	#@+node:1::resizePanesToRatio
-	#@+body
+	#@-node:Splitter stuff
+	#@+node:resizePanesToRatio
 	def resizePanesToRatio(self,ratio,secondary_ratio):
 	
 		self.divideLeoSplitter(self.splitVerticalFlag, ratio)
 		self.divideLeoSplitter(not self.splitVerticalFlag, secondary_ratio)
 		# trace(`ratio`)
-	
-	#@-body
-	#@-node:1::resizePanesToRatio
-	#@+node:2::bindBar
-	#@+body
+	#@-node:resizePanesToRatio
+	#@+node:bindBar
 	def bindBar (self, bar, verticalFlag):
 		
 		if verticalFlag == self.splitVerticalFlag:
@@ -4711,11 +4061,8 @@ class baseLeoFrame:
 	
 		else:
 			bar.bind("<B1-Motion>", self.onDragSecondarySplitBar)
-	
-	#@-body
-	#@-node:2::bindBar
-	#@+node:3::createLeoSplitter
-	#@+body
+	#@-node:bindBar
+	#@+node:createLeoSplitter
 	# 5/20/03: Removed the ancient kludge for forcing the height & width of f.
 	# The code in leoFileCommands.getGlobals now works!
 	
@@ -4740,10 +4087,9 @@ class baseLeoFrame:
 		self.placeSplitter(bar,pane1,pane2,verticalFlag)
 	
 		return f, bar, pane1, pane2
-	#@-body
-	#@-node:3::createLeoSplitter
-	#@+node:4::divideAnySplitter
-	#@+body
+	#@nonl
+	#@-node:createLeoSplitter
+	#@+node:divideAnySplitter
 	# This is the general-purpose placer for splitters.
 	# It is the only general-purpose splitter code in Leo.
 	
@@ -4759,10 +4105,9 @@ class baseLeoFrame:
 			bar.place(relx=frac)
 			pane1.place(relwidth=frac)
 			pane2.place(relwidth=1-frac)
-	#@-body
-	#@-node:4::divideAnySplitter
-	#@+node:5::divideLeoSplitter
-	#@+body
+	#@nonl
+	#@-node:divideAnySplitter
+	#@+node:divideLeoSplitter
 	# Divides the main or secondary splitter, using the key invariant.
 	def divideLeoSplitter (self, verticalFlag, frac):
 		if self.splitVerticalFlag == verticalFlag:
@@ -4781,10 +4126,9 @@ class baseLeoFrame:
 	def divideLeoSplitter2 (self, frac, verticalFlag): 
 		self.divideAnySplitter (frac, verticalFlag,
 			self.bar2, self.split2Pane1, self.split2Pane2)
-	#@-body
-	#@-node:5::divideLeoSplitter
-	#@+node:6::initialRatios
-	#@+body
+	#@nonl
+	#@-node:divideLeoSplitter
+	#@+node:initialRatios
 	def initialRatios (self):
 	
 		config = app().config
@@ -4804,10 +4148,9 @@ class baseLeoFrame:
 	
 		# print (`r`,`r2`)
 		return verticalFlag,r,r2
-	#@-body
-	#@-node:6::initialRatios
-	#@+node:7::onDrag...
-	#@+body
+	#@nonl
+	#@-node:initialRatios
+	#@+node:onDrag...
 	def onDragMainSplitBar (self, event):
 		self.onDragSplitterBar(event,self.splitVerticalFlag)
 	
@@ -4842,10 +4185,9 @@ class baseLeoFrame:
 		frac = float(offset) / wMax
 		# trace(`frac`)
 		self.divideLeoSplitter(verticalFlag, frac)
-	#@-body
-	#@-node:7::onDrag...
-	#@+node:8::placeSplitter
-	#@+body
+	#@nonl
+	#@-node:onDrag...
+	#@+node:placeSplitter
 	def placeSplitter (self,bar,pane1,pane2,verticalFlag):
 	
 		if verticalFlag:
@@ -4860,15 +4202,12 @@ class baseLeoFrame:
 			pane1.place(rely=0.5, relx =   0, anchor="w", relheight=1.0, relwidth=adj)
 			pane2.place(rely=0.5, relx = 1.0, anchor="e", relheight=1.0, relwidth=1.0-adj)
 			bar.place  (rely=0.5, relx = adj, anchor="c", relheight=1.0)
-	#@-body
-	#@-node:8::placeSplitter
-	#@-node:10::Splitter stuff
-	#@+node:11::Status line: convenience routines
-	#@+body
+	#@nonl
+	#@-node:placeSplitter
+	#@+node:Status line: convenience routines
 	#@@tabwidth 4
-	#@-body
-	#@+node:1::createStatusLine
-	#@+body
+	#@-node:Status line: convenience routines
+	#@+node:createStatusLine
 	def createStatusLine (self):
 		
 		if self.statusFrame and self.statusLabel:
@@ -4892,21 +4231,17 @@ class baseLeoFrame:
 	
 		# Register an idle-time handler to update the row and column indicators.
 		self.statusFrame.after_idle(self.updateStatusRowCol)
-	#@-body
-	#@-node:1::createStatusLine
-	#@+node:2::clearStatusLine
-	#@+body
+	#@nonl
+	#@-node:createStatusLine
+	#@+node:clearStatusLine
 	def clearStatusLine (self):
 		
 		t = self.statusText
 		t.configure(state="normal")
 		t.delete("1.0","end")
 		t.configure(state="disabled")
-	
-	#@-body
-	#@-node:2::clearStatusLine
-	#@+node:3::putStatusLine
-	#@+body
+	#@-node:clearStatusLine
+	#@+node:putStatusLine
 	def putStatusLine (self,s,color=None):
 		
 		t = self.statusText ; tags = self.statusColorTags
@@ -4930,10 +4265,9 @@ class baseLeoFrame:
 			t.insert("end",s)
 		
 		t.configure(state="disabled")
-	#@-body
-	#@-node:3::putStatusLine
-	#@+node:4::updateStatusRowCol()
-	#@+body
+	#@nonl
+	#@-node:putStatusLine
+	#@+node:updateStatusRowCol()
 	def updateStatusRowCol (self):
 		
 		c = self.commands ; body = self.body ; lab = self.statusLabel
@@ -4957,16 +4291,12 @@ class baseLeoFrame:
 		# Reschedule this routine 100 ms. later.
 		# Don't use after_idle: it hangs Leo.
 		self.statusFrame.after(100,self.updateStatusRowCol)
-	#@-body
-	#@-node:4::updateStatusRowCol()
-	#@-node:11::Status line: convenience routines
+	#@nonl
+	#@-node:updateStatusRowCol()
 	#@-others
-
 
 class LeoFrame (baseLeoFrame):
 	"""A class that represents a Leo window."""
 	pass
-
-#@-body
-#@-node:0::@file leoFrame.py
+#@-node:@file leoFrame.py
 #@-leo

@@ -1,21 +1,20 @@
 #! /usr/bin/env python
-#@+leo
-#@+node:0::@file leo.py 
-#@+body
-#@@first
+#@+leo-ver=4
+#@+node:@file leo.py 
+#@@first #! /usr/bin/env python
 # Entry point for Leo in Python.
-
 
 #@@language python
 #@<< Import pychecker >>
-#@+node:1::<< Import pychecker >>
-#@+body
-#@+at
-#  pychecker is extremely useful, and it sometimes reports problems 
+#@+node:<< Import pychecker >>
+#@+at 
+#@nonl
+# pychecker is extremely useful, and it sometimes reports problems 
 # erroneously.  In particular, the following warnings are invalid:
 # 
 # in leoFrame.py and leoNodes.py: warnings about the event param not being 
-# used. pychecker doesn't understand that these routines are Tkinter callbacks.
+# used. pychecker doesn't understand that these routines are Tkinter 
+# callbacks.
 # 
 # in leoApp.py and leoGlobals.py: pychecker doesn't seem to handle globals 
 # very well.  There are spurious warnings about globals.
@@ -23,7 +22,6 @@
 # several files: pychecker complains about several routines being "too big", 
 # i.e., pychecker doesn't understand about literate programming.
 # 
-
 #@-at
 #@@c
 
@@ -31,17 +29,15 @@ if 0: # Set to 1 for lint-like testing.  This can also be done in idle.
 	try:
 		import pychecker.checker
 	except: pass
-#@-body
-#@-node:1::<< Import pychecker >>
-
+#@nonl
+#@-node:<< Import pychecker >>
+#@nl
 from leoGlobals import *
 import leoApp,leoFrame
 import os,string,sys,Tkinter
 
-
 #@+others
-#@+node:2::runMainLoop
-#@+body
+#@+node:runMainLoop
 def runMainLoop(root):
 	
 	"""A function that runs root.mainloop()
@@ -49,11 +45,8 @@ def runMainLoop(root):
 	LeoN may replace this fuction entirely."""
 	
 	root.mainloop()
-
-#@-body
-#@-node:2::runMainLoop
-#@+node:3::run & allies
-#@+body
+#@-node:runMainLoop
+#@+node:run & allies
 def run(fileName=None,*args,**keywords):
 	
 	"""Initialize and run Leo"""
@@ -88,9 +81,9 @@ def run(fileName=None,*args,**keywords):
 	set_focus(frame.commands,frame.body)
 
 	app.runMainLoop(root)
-#@-body
-#@+node:1::createTkRoot
-#@+body
+#@nonl
+#@-node:run & allies
+#@+node:createTkRoot
 def createTkRoot ():
 	
 	"""Step 1 of Leo startup process:
@@ -100,10 +93,8 @@ def createTkRoot ():
 	# Create a hidden main window: this window never becomes visible!
 	root = Tkinter.Tk()
 
-	
-	#@<< set the icon image >>
-	#@+node:1::<< set the icon image >>
-	#@+body
+	#@	<< set the icon image >>
+	#@+node:<< set the icon image >>
 	if 0: # not yet
 		fullname = r"c:\prog\LeoPy\Icons\box05.GIF"
 		image = Tkinter.PhotoImage(file=fullname)
@@ -113,18 +104,15 @@ def createTkRoot ():
 		image = Tkinter.BitmapImage("stop")
 		trace(`image`)
 		root.iconbitmap(image)
-	#@-body
-	#@-node:1::<< set the icon image >>
-
+	#@nonl
+	#@-node:<< set the icon image >>
+	#@nl
 	root.title("Leo Main Window")
 	root.withdraw()
 	return root
 	
-
-#@-body
-#@-node:1::createTkRoot
-#@+node:2::createAppObject
-#@+body
+#@-node:createTkRoot
+#@+node:createAppObject
 def createAppObject(root):
 
 	# Create the application object.
@@ -137,10 +125,9 @@ def createAppObject(root):
 		root = None
 
 	return app
-#@-body
-#@-node:2::createAppObject
-#@+node:3::createFrame (leo.py)
-#@+body
+#@nonl
+#@-node:createAppObject
+#@+node:createFrame (leo.py)
 def createFrame (app,fileName):
 	
 	"""Step 2 of Leo startup process:
@@ -167,10 +154,9 @@ def createFrame (app,fileName):
 		es("File not found: " + fileName)
 
 	return frame
-#@-body
-#@-node:3::createFrame (leo.py)
-#@+node:4::initSherlock
-#@+body
+#@nonl
+#@-node:createFrame (leo.py)
+#@+node:initSherlock
 def initSherlock (app,args):
 	
 	"""Initialize Sherlock."""
@@ -178,19 +164,17 @@ def initSherlock (app,args):
 	# Initialze Sherlock & stats.
 	init_sherlock(args)
 	clear_stats()
-#@-body
-#@-node:4::initSherlock
-#@-node:3::run & allies
-#@+node:4::profile
-#@+body
-#@+at
-#  To gather statistics, do the following in a Python window, not idle:
+#@nonl
+#@-node:initSherlock
+#@+node:profile
+#@+at 
+#@nonl
+# To gather statistics, do the following in a Python window, not idle:
 # 
 # 	import leo
 # 	leo.profile()  (this runs leo)
 # 	load leoDocs.leo (it is very slow)
 # 	quit Leo.
-
 #@-at
 #@@c
 
@@ -207,10 +191,9 @@ def profile ():
 	p.strip_dirs()
 	p.sort_stats('cum','file','name')
 	p.print_stats()
-#@-body
-#@-node:4::profile
+#@nonl
+#@-node:profile
 #@-others
-
 
 if __name__ == "__main__":
 	if len(sys.argv) > 1:
@@ -223,7 +206,5 @@ if __name__ == "__main__":
 		run()
 
 
-
-#@-body
-#@-node:0::@file leo.py 
+#@-node:@file leo.py 
 #@-leo

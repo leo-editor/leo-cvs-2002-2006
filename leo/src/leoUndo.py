@@ -1,16 +1,14 @@
-#@+leo
-#@+node:0::@file leoUndo.py
-#@+body
+#@+leo-ver=4
+#@+node:@file leoUndo.py
 #@@language python
 
 # Undo manager for leo.py.
 
-
 #@<< How Leo implements unlimited undo >>
-#@+node:1::<< How Leo implements unlimited undo >>
-#@+body
-#@+at
-#  Only leo.py supports unlimited undo.  Unlimited undo is straightforward; it 
+#@+node:<< How Leo implements unlimited undo >>
+#@+at 
+#@nonl
+# Only leo.py supports unlimited undo.  Unlimited undo is straightforward; it 
 # merely requires that all commands that affect the outline or body text must 
 # be undoable. In other words, everything that affects the outline or body 
 # text must be remembered.
@@ -32,15 +30,11 @@
 # 
 # I did not invent this model of unlimited undo.  I first came across it in 
 # the documentation for Apple's Yellow Box classes.
-
 #@-at
-#@-body
-#@-node:1::<< How Leo implements unlimited undo >>
-
-
+#@-node:<< How Leo implements unlimited undo >>
+#@nl
 #@<< Define optional ivars >>
-#@+node:2::<< Define optional ivars >>
-#@+body
+#@+node:<< Define optional ivars >>
 optionalIvars = (
 	"lastChild",
 	"parent","oldParent",
@@ -55,18 +49,16 @@ optionalIvars = (
 	"leading","trailing",
 	"oldMiddleLines","newMiddleLines",
 	"oldNewlines","newNewlines")
-#@-body
-#@-node:2::<< Define optional ivars >>
-
+#@nonl
+#@-node:<< Define optional ivars >>
+#@nl
 from leoGlobals import *
 import types
 
 class baseUndoer:
 	"""The base class of the undoer class."""
-
-	#@+others
-	#@+node:3::undo.__init__ & clearIvars
-	#@+body
+	#@	@+others
+	#@+node:undo.__init__ & clearIvars
 	def __init__ (self,commands):
 		
 		u = self ; u.commands = commands
@@ -92,27 +84,24 @@ class baseUndoer:
 		u.redoing = false # True if executing a Redo command.
 	
 		u.clearUndoState()
-	#@-body
-	#@+node:1::clearIvars
-	#@+body
+	#@nonl
+	#@-node:undo.__init__ & clearIvars
+	#@+node:clearIvars
 	def clearIvars (self):
 		
 		self.v = None # The node being operated upon for undo and redo.
 		for ivar in optionalIvars:
 			setattr(self,ivar,None)
-	#@-body
-	#@-node:1::clearIvars
-	#@-node:3::undo.__init__ & clearIvars
-	#@+node:4::State routines...
-	#@+node:1::clearUndoState
-	#@+body
-	#@+at
-	#  This method clears then entire Undo state.  All non-undoable commands 
+	#@nonl
+	#@-node:clearIvars
+	#@+node:clearUndoState
+	#@+at 
+	#@nonl
+	# This method clears then entire Undo state.  All non-undoable commands 
 	# should call this method.
-
 	#@-at
 	#@@c
-
+	
 	def clearUndoState (self):
 		
 		u = self
@@ -132,10 +121,9 @@ class baseUndoer:
 		u.beads = [] # List of undo nodes.
 		u.bead = -1 # Index of the present bead: -1:len(beads)
 		u.clearIvars()
-	#@-body
-	#@-node:1::clearUndoState
-	#@+node:2::canRedo & canUndo
-	#@+body
+	#@nonl
+	#@-node:clearUndoState
+	#@+node:canRedo & canUndo
 	# Translation does not affect these routines.
 	
 	def canRedo (self):
@@ -147,11 +135,8 @@ class baseUndoer:
 	
 		u = self
 		return u.undoMenuLabel != "Can't Undo"
-	
-	#@-body
-	#@-node:2::canRedo & canUndo
-	#@+node:3::enableMenuItems
-	#@+body
+	#@-node:canRedo & canUndo
+	#@+node:enableMenuItems
 	def enableMenuItems (self):
 	
 		u = self ; c = u.commands
@@ -159,11 +144,8 @@ class baseUndoer:
 	
 		enableMenu(menu,u.redoMenuLabel,u.canRedo())
 		enableMenu(menu,u.undoMenuLabel,u.canUndo())
-	
-	#@-body
-	#@-node:3::enableMenuItems
-	#@+node:4::getBead, peekBead, setBead
-	#@+body
+	#@-node:enableMenuItems
+	#@+node:getBead, peekBead, setBead
 	def getBead (self,n):
 		
 		u = self
@@ -222,10 +204,9 @@ class baseUndoer:
 					# trace(`u.oldText`)
 		# trace(`d`)
 		return d
-	#@-body
-	#@-node:4::getBead, peekBead, setBead
-	#@+node:5::redoMenuName, undoMenuName
-	#@+body
+	#@nonl
+	#@-node:getBead, peekBead, setBead
+	#@+node:redoMenuName, undoMenuName
 	def redoMenuName (self,name):
 	
 		if name=="Can't Redo":
@@ -239,10 +220,9 @@ class baseUndoer:
 			return name
 		else:
 			return "Undo " + name
-	#@-body
-	#@-node:5::redoMenuName, undoMenuName
-	#@+node:6::setRedoType, setUndoType
-	#@+body
+	#@nonl
+	#@-node:redoMenuName, undoMenuName
+	#@+node:setRedoType, setUndoType
 	# These routines update both the ivar and the menu label.
 	def setRedoType (self,type):
 		u = self ; c = u.commands
@@ -276,18 +256,17 @@ class baseUndoer:
 			u.undoType = type
 			u.undoMenuLabel = name
 			u.realUndoMenuLabel = realLabel
-	#@-body
-	#@-node:6::setRedoType, setUndoType
-	#@+node:7::setUndoParams
-	#@+body
-	#@+at
-	#  This routine saves enough information so an operation can be undone and 
+	#@nonl
+	#@-node:setRedoType, setUndoType
+	#@+node:setUndoParams
+	#@+at 
+	#@nonl
+	# This routine saves enough information so an operation can be undone and 
 	# redone.  We do nothing when called from the undo/redo logic because the 
 	# Undo and Redo commands merely reset the bead pointer.
-
 	#@-at
 	#@@c
-
+	
 	def setUndoParams (self,undo_type,v,**keywords):
 	
 		u = self
@@ -313,20 +292,19 @@ class baseUndoer:
 		# Recalculate the menu labels.
 		u.setUndoTypes()
 		return d
-	#@-body
-	#@-node:7::setUndoParams
-	#@+node:8::setUndoTypingParams
-	#@+body
-	#@+at
-	#  This routine saves enough information so a typing operation can be 
+	#@nonl
+	#@-node:setUndoParams
+	#@+node:setUndoTypingParams
+	#@+at 
+	#@nonl
+	# This routine saves enough information so a typing operation can be 
 	# undone and redone.
 	# 
 	# We do nothing when called from the undo/redo logic because the Undo and 
 	# Redo commands merely reset the bead pointer.
-
 	#@-at
 	#@@c
-
+	
 	def setUndoTypingParams (self,v,undo_type,oldText,newText,oldSel,newSel,oldYview=None):
 	
 		u = self ; c = u.commands
@@ -345,20 +323,18 @@ class baseUndoer:
 		# Set the params.
 		u.undoType = undo_type
 		u.v = v
-		
-		#@<< compute leading, middle & trailing  lines >>
-		#@+node:1::<< compute leading, middle & trailing  lines >>
-		#@+body
-		#@+at
-		#  Incremental undo typing is similar to incremental syntax coloring.  
+		#@	<< compute leading, middle & trailing  lines >>
+		#@+node:<< compute leading, middle & trailing  lines >>
+		#@+at 
+		#@nonl
+		# Incremental undo typing is similar to incremental syntax coloring.  
 		# We compute the number of leading and trailing lines that match, and 
 		# save both the old and new middle lines.
 		# 
 		# NB: the number of old and new middle lines may be different.
-
 		#@-at
 		#@@c
-
+		
 		old_lines = string.split(oldText,'\n')
 		new_lines = string.split(newText,'\n')
 		new_len = len(new_lines)
@@ -412,26 +388,25 @@ class baseUndoer:
 			#print "old mid:",old_middle_lines
 			#print "new mid:",new_middle_lines
 			print "---------------------"
-		#@-body
-		#@-node:1::<< compute leading, middle & trailing  lines >>
-
-		
-		#@<< save undo text info >>
-		#@+node:2::<< save undo text info >>
-		#@+body
-		#@+at
-		#  This is the start of the incremental undo algorithm.
+		#@nonl
+		#@-node:<< compute leading, middle & trailing  lines >>
+		#@nl
+		#@	<< save undo text info >>
+		#@+node:<< save undo text info >>
+		#@+at 
+		#@nonl
+		# This is the start of the incremental undo algorithm.
 		# 
 		# We must save enough info to do _both_ of the following:
 		# 
 		# Undo: Given newText, recreate oldText.
 		# Redo: Given oldText, recreate oldText.
 		# 
-		# The "given" texts for the undo and redo routines are simply v.bodyString().
-
+		# The "given" texts for the undo and redo routines are simply 
+		# v.bodyString().
 		#@-at
 		#@@c
-
+		
 		if u.new_undo:
 			if u.debug:
 				# Remember the complete text for comparisons...
@@ -456,9 +431,9 @@ class baseUndoer:
 		self.newMiddleLines = new_middle_lines
 		self.oldNewlines = old_newlines
 		self.newNewlines = new_newlines
-		#@-body
-		#@-node:2::<< save undo text info >>
-
+		#@nonl
+		#@-node:<< save undo text info >>
+		#@nl
 		u.oldSel = oldSel ; u.newSel = newSel
 		# 11/13/02: Remember the scrolling position.
 		if oldYview:
@@ -472,11 +447,8 @@ class baseUndoer:
 		# trace(`u.bead` + ":" + `len(u.beads)`)
 		u.setUndoTypes() # Recalculate the menu labels.
 		return d
-	
-	#@-body
-	#@-node:8::setUndoTypingParams
-	#@+node:9::setUndoTypes
-	#@+body
+	#@-node:setUndoTypingParams
+	#@+node:setUndoTypes
 	def setUndoTypes (self):
 		
 		u = self
@@ -498,12 +470,8 @@ class baseUndoer:
 	
 	
 	
-	
-	#@-body
-	#@-node:9::setUndoTypes
-	#@-node:4::State routines...
-	#@+node:5::u.redo
-	#@+body
+	#@-node:setUndoTypes
+	#@+node:u.redo
 	def redo (self):
 		
 		# clear_stats() ; stat()
@@ -518,10 +486,8 @@ class baseUndoer:
 		c.beginUpdate()
 		redoType = u.undoType # Use the type of the next bead.
 		if 1: # range...
-			
-			#@<< redo clone cases >>
-			#@+node:1::<< redo clone cases >>
-			#@+body
+			#@		<< redo clone cases >>
+			#@+node:<< redo clone cases >>
 			if redoType in ("Clone","Drag & Clone"):
 			
 				if u.back:
@@ -536,14 +502,10 @@ class baseUndoer:
 				u.v.createDependents()
 				c.initAllCloneBits()
 				c.selectVnode(u.v)
-			
-			#@-body
-			#@-node:1::<< redo clone cases >>
-
-			
-			#@<< redo insert cases >>
-			#@+node:3::<< redo insert cases >>
-			#@+body
+			#@-node:<< redo clone cases >>
+			#@nl
+			#@		<< redo insert cases >>
+			#@+node:<< redo insert cases >>
 			elif redoType in ["Import", "Insert Outline", "Paste Node"]:
 			
 				if u.back:
@@ -558,24 +520,20 @@ class baseUndoer:
 				u.v.createDependents()
 				c.initAllCloneBits()
 				c.selectVnode(u.v)
-			#@-body
-			#@-node:3::<< redo insert cases >>
-
-			
-			#@<< redo delete cases >>
-			#@+node:2::<< redo delete cases >>
-			#@+body
+			#@nonl
+			#@-node:<< redo insert cases >>
+			#@nl
+			#@		<< redo delete cases >>
+			#@+node:<< redo delete cases >>
 			elif redoType == "Delete Outline" or redoType == "Cut Node":
 			
 				c.selectVnode(u.v)
 				c.deleteHeadline()
-			#@-body
-			#@-node:2::<< redo delete cases >>
-
-			
-			#@<< redo move & drag cases >>
-			#@+node:4::<< redo move & drag cases >>
-			#@+body
+			#@nonl
+			#@-node:<< redo delete cases >>
+			#@nl
+			#@		<< redo move & drag cases >>
+			#@+node:<< redo move & drag cases >>
 			elif redoType in ["Drag","Move Down","Move Left","Move Right","Move Up"]:
 			
 				if u.parent:
@@ -596,13 +554,11 @@ class baseUndoer:
 				u.v.moveToNthChildOf(u.parent,u.n)
 				c.initJoinedCloneBits(u.v) # 7/6/02
 				c.selectVnode(u.v)
-			#@-body
-			#@-node:4::<< redo move & drag cases >>
-
-			
-			#@<< redo promote and demote cases >>
-			#@+node:5::<< redo promote and demote cases >>
-			#@+body
+			#@nonl
+			#@-node:<< redo move & drag cases >>
+			#@nl
+			#@		<< redo promote and demote cases >>
+			#@+node:<< redo promote and demote cases >>
 			elif redoType == "Demote":
 			
 				c.selectVnode(u.v)
@@ -612,13 +568,11 @@ class baseUndoer:
 			
 				c.selectVnode(u.v)
 				c.promote()
-			#@-body
-			#@-node:5::<< redo promote and demote cases >>
-
-			
-			#@<< redo replace cases >>
-			#@+node:6::<< redo replace cases >>
-			#@+body
+			#@nonl
+			#@-node:<< redo promote and demote cases >>
+			#@nl
+			#@		<< redo replace cases >>
+			#@+node:<< redo replace cases >>
 			elif redoType in (
 				"Convert All Blanks","Convert All Tabs",
 				"Extract","Extract Names","Extract Section"):
@@ -629,14 +583,10 @@ class baseUndoer:
 					start,end=u.newSel
 					setTextSelection(c.frame.body,start,end)
 				redrawFlag = redoType in ("Extract","Extract Names","Extract Section")
-			
-			#@-body
-			#@-node:6::<< redo replace cases >>
-
-			
-			#@<< redo sort cases >>
-			#@+node:7::<< redo sort cases >>
-			#@+body
+			#@-node:<< redo replace cases >>
+			#@nl
+			#@		<< redo sort cases >>
+			#@+node:<< redo sort cases >>
 			elif redoType == "Sort Children":
 			
 				c.selectVnode(u.v)
@@ -652,14 +602,10 @@ class baseUndoer:
 				c.selectVnode(u.v)
 				c.sortTopLevel()
 				u.v = None # don't mark u.v dirty
-			
-			#@-body
-			#@-node:7::<< redo sort cases >>
-
-			
-			#@<< redo typing cases >>
-			#@+node:8::<< redo typing cases >>
-			#@+body
+			#@-node:<< redo sort cases >>
+			#@nl
+			#@		<< redo typing cases >>
+			#@+node:<< redo typing cases >>
 			elif redoType in ( "Typing",
 				"Change","Convert Blanks","Convert Tabs","Cut",
 				"Delete","Indent","Paste","Reformat Paragraph","Undent"):
@@ -709,9 +655,9 @@ class baseUndoer:
 					if v2 != u.v:
 						v2.setHeadString(u.newText)
 				c.selectVnode(u.v)
-			#@-body
-			#@-node:8::<< redo typing cases >>
-
+			#@nonl
+			#@-node:<< redo typing cases >>
+			#@nl
 			else: trace("Unknown case: " + `redoType`)
 			c.setChanged(true)
 			if u.v: u.v.setDirty()
@@ -720,16 +666,16 @@ class baseUndoer:
 		u.bead += 1
 		u.setUndoTypes()
 		# print_stats()
-	#@-body
-	#@-node:5::u.redo
-	#@+node:6::u.undo
-	#@+body
-	#@+at
-	#  This function and its allies undo the operation described by the undo parmaters.
-
+	#@nonl
+	#@-node:u.redo
+	#@+node:u.undo
+	#@+at 
+	#@nonl
+	# This function and its allies undo the operation described by the undo 
+	# parmaters.
 	#@-at
 	#@@c
-
+	
 	def undo (self):
 		
 		# clear_stats() ; # stat()
@@ -745,10 +691,8 @@ class baseUndoer:
 		undoType = u.undoType
 		redrawFlag = true
 		if 1: # range...
-			
-			#@<< undo clone cases >>
-			#@+node:1::<< undo clone cases >>
-			#@+body
+			#@		<< undo clone cases >>
+			#@+node:<< undo clone cases >>
 			# We can immediately delete the clone because clone() can recreate it using only v.
 			
 			if undoType == "Clone":
@@ -762,21 +706,19 @@ class baseUndoer:
 				c.selectVnode(u.v)
 				c.deleteHeadline()
 				c.selectVnode(u.oldV)
-			#@-body
-			#@-node:1::<< undo clone cases >>
-
-			
-			#@<< undo delete cases >>
-			#@+node:2::<< undo delete cases >>
-			#@+body
-			#@+at
-			#  Deleting a clone is _not_ the same as undoing a clone: the 
-			# clone may have been moved, so there is no necessary relationship 
+			#@nonl
+			#@-node:<< undo clone cases >>
+			#@nl
+			#@		<< undo delete cases >>
+			#@+node:<< undo delete cases >>
+			#@+at 
+			#@nonl
+			# Deleting a clone is _not_ the same as undoing a clone: the clone 
+			# may have been moved, so there is no necessary relationship 
 			# between the two nodes.
-
 			#@-at
 			#@@c
-
+			
 			elif undoType == "Delete Outline" or undoType == "Cut Node":
 				
 				if u.back:
@@ -790,13 +732,11 @@ class baseUndoer:
 				u.v.createDependents()
 				c.initAllCloneBits()
 				c.selectVnode(u.v)
-			#@-body
-			#@-node:2::<< undo delete cases >>
-
-			
-			#@<< undo insert cases >>
-			#@+node:3::<< undo insert cases >>
-			#@+body
+			#@nonl
+			#@-node:<< undo delete cases >>
+			#@nl
+			#@		<< undo insert cases >>
+			#@+node:<< undo insert cases >>
 			elif undoType in ["Import", "Insert Outline", "Paste Node"]:
 				
 				c.selectVnode(u.v)
@@ -804,13 +744,11 @@ class baseUndoer:
 				if u.select:
 					# trace("Insert/Paste:" + `u.select`)
 					c.selectVnode(u.select)
-			#@-body
-			#@-node:3::<< undo insert cases >>
-
-			
-			#@<< undo move & drag cases >>
-			#@+node:4::<< undo move  & drag cases >>
-			#@+body
+			#@nonl
+			#@-node:<< undo insert cases >>
+			#@nl
+			#@		<< undo move & drag cases >>
+			#@+node:<< undo move  & drag cases >>
 			elif undoType in ["Drag", "Move Down","Move Left","Move Right","Move Up"]:
 			
 				if u.oldParent:
@@ -826,22 +764,18 @@ class baseUndoer:
 				
 				c.initJoinedCloneBits(u.v) # 7/6/02
 				c.selectVnode(u.v)
-			
-			#@-body
-			#@-node:4::<< undo move  & drag cases >>
-
-			
-			#@<< undo promote and demote cases >>
-			#@+node:6::<< undo promote and demote cases >>
-			#@+body
-			#@+at
-			#  Promote and demote operations are the hard to undo, because 
-			# they involve relinking a list of nodes. We pass the work off to 
+			#@-node:<< undo move  & drag cases >>
+			#@nl
+			#@		<< undo promote and demote cases >>
+			#@+node:<< undo promote and demote cases >>
+			#@+at 
+			#@nonl
+			# Promote and demote operations are the hard to undo, because they 
+			# involve relinking a list of nodes. We pass the work off to 
 			# routines dedicated to the task.
-
 			#@-at
 			#@@c
-
+			
 			elif undoType == "Demote":
 			
 				u.undoDemote()
@@ -849,13 +783,11 @@ class baseUndoer:
 			elif undoType == "Promote":
 				
 				u.undoPromote()
-			#@-body
-			#@-node:6::<< undo promote and demote cases >>
-
-			
-			#@<< undo replace cases >>
-			#@+node:5::<< undo replace cases >>
-			#@+body
+			#@nonl
+			#@-node:<< undo promote and demote cases >>
+			#@nl
+			#@		<< undo replace cases >>
+			#@+node:<< undo replace cases >>
 			elif undoType in (
 				"Convert All Blanks","Convert All Tabs",
 				"Extract","Extract Names","Extract Section"):
@@ -866,21 +798,19 @@ class baseUndoer:
 					start,end=u.oldSel
 					setTextSelection(c.frame.body,start,end)
 				redrawFlag = true
-			#@-body
-			#@-node:5::<< undo replace cases >>
-
-			
-			#@<< undo sort cases >>
-			#@+node:7::<< undo sort cases >>
-			#@+body
-			#@+at
-			#  Sort operations are the hard to undo, because they involve 
+			#@nonl
+			#@-node:<< undo replace cases >>
+			#@nl
+			#@		<< undo sort cases >>
+			#@+node:<< undo sort cases >>
+			#@+at 
+			#@nonl
+			# Sort operations are the hard to undo, because they involve 
 			# relinking a list of nodes. We pass the work off to routines 
 			# dedicated to the task.
-
 			#@-at
 			#@@c
-
+			
 			elif undoType == "Sort Children":
 				
 				u.undoSortChildren()
@@ -893,15 +823,14 @@ class baseUndoer:
 				
 				u.undoSortTopLevel()
 				u.v = None # don't mark u.v dirty
-			#@-body
-			#@-node:7::<< undo sort cases >>
-
-			
-			#@<< undo typing cases >>
-			#@+node:8::<< undo typing cases >>
-			#@+body
-			#@+at
-			#  When making "large" changes to text, we simply save the old and 
+			#@nonl
+			#@-node:<< undo sort cases >>
+			#@nl
+			#@		<< undo typing cases >>
+			#@+node:<< undo typing cases >>
+			#@+at 
+			#@nonl
+			# When making "large" changes to text, we simply save the old and 
 			# new text for undo and redo.  This happens rarely, so the expense 
 			# is minor.
 			# 
@@ -909,7 +838,6 @@ class baseUndoer:
 			# character, saving both the old and new text wastes a huge amount 
 			# of space and puts extreme stress on the garbage collector.  This 
 			# in turn can cause big performance problems.
-
 			#@-at
 			#@@c
 				
@@ -961,9 +889,9 @@ class baseUndoer:
 					if v2 != u.v:
 						v2.setHeadString(u.oldText)
 				c.selectVnode(u.v)
-			#@-body
-			#@-node:8::<< undo typing cases >>
-
+			#@nonl
+			#@-node:<< undo typing cases >>
+			#@nl
 			else: trace("Unknown case: " + `u.undoType`)
 			c.setChanged(true)
 			if u.v: u.v.setDirty()
@@ -972,11 +900,9 @@ class baseUndoer:
 		u.bead -= 1
 		u.setUndoTypes()
 		# print_stats()
-	#@-body
-	#@-node:6::u.undo
-	#@+node:7::Undo helpers
-	#@+node:1::findSharedVnode
-	#@+body
+	#@nonl
+	#@-node:u.undo
+	#@+node:findSharedVnode
 	def findSharedVnode (self,target):
 	
 		u = self ; c = u.commands ; v = c.rootVnode()
@@ -985,10 +911,9 @@ class baseUndoer:
 				return v
 			v = v.threadNext()
 		return None
-	#@-body
-	#@-node:1::findSharedVnode
-	#@+node:2::undoDemote
-	#@+body
+	#@nonl
+	#@-node:findSharedVnode
+	#@+node:undoDemote
 	# undoes the previous demote operation.
 	def undoDemote (self):
 	
@@ -1011,10 +936,9 @@ class baseUndoer:
 			child = next
 		c.selectVnode(v)
 		c.endUpdate()
-	#@-body
-	#@-node:2::undoDemote
-	#@+node:3::undoPromote
-	#@+body
+	#@nonl
+	#@-node:undoDemote
+	#@+node:undoPromote
 	# Undoes the previous promote operation.
 	def undoPromote (self):
 	
@@ -1033,21 +957,20 @@ class baseUndoer:
 			if v == last: break
 		c.selectVnode(v1)
 		c.endUpdate()
-	#@-body
-	#@-node:3::undoPromote
-	#@+node:4::undoReplace
-	#@+body
-	#@+at
-	#  This routine implements undo for any kind of operation, no matter how 
+	#@nonl
+	#@-node:undoPromote
+	#@+node:undoReplace
+	#@+at 
+	#@nonl
+	# This routine implements undo for any kind of operation, no matter how 
 	# complex.  Just do:
 	# 
 	# 	v_copy = v.copyTree(v)
 	# 	(make arbitrary changes to v's tree.)
 	# 	c.undoer.setUndoParams("Op Name",v,select=current,oldTree=v_copy)
-
 	#@-at
 	#@@c
-
+	
 	def undoReplace (self,new_v,old_v,text):
 		
 		"""Replace new_v with old_v during undo."""
@@ -1089,10 +1012,9 @@ class baseUndoer:
 	
 		c.initAllCloneBits()
 		return result
-	#@-body
-	#@-node:4::undoReplace
-	#@+node:5::undoRedoText
-	#@+body
+	#@nonl
+	#@-node:undoReplace
+	#@+node:undoRedoText
 	# Handle text undo and redo.
 	# The terminology is for undo: converts _new_ text into _old_ text.
 	
@@ -1105,10 +1027,8 @@ class baseUndoer:
 		u = self ; c = u.commands
 		assert(v == c.currentVnode())
 	
-		
-		#@<< Incrementally update the Tk.Text widget >>
-		#@+node:1::<< Incrementally update the Tk.Text widget >>
-		#@+body
+		#@	<< Incrementally update the Tk.Text widget >>
+		#@+node:<< Incrementally update the Tk.Text widget >>
 		# Only update the changed lines.
 		mid_text = string.join(oldMidLines,'\n')
 		new_mid_len = len(newMidLines)
@@ -1138,14 +1058,10 @@ class baseUndoer:
 			newlines -= 1
 		if oldNewlines > newlines:
 			c.frame.body.insert("end",'\n'*(oldNewlines-newlines))
-		
-		#@-body
-		#@-node:1::<< Incrementally update the Tk.Text widget >>
-
-		
-		#@<< Compute the result using v's body text >>
-		#@+node:2::<< Compute the result using v's body text >>
-		#@+body
+		#@-node:<< Incrementally update the Tk.Text widget >>
+		#@nl
+		#@	<< Compute the result using v's body text >>
+		#@+node:<< Compute the result using v's body text >>
 		# Recreate the text using the present body text.
 		body = v.bodyString()
 		body = toUnicode(body,"utf-8")
@@ -1168,17 +1084,15 @@ class baseUndoer:
 		if u.debug_print:
 			print "body:  ",`body`
 			print "result:",`result`
-		#@-body
-		#@-node:2::<< Compute the result using v's body text >>
-
+		#@nonl
+		#@-node:<< Compute the result using v's body text >>
+		#@nl
 		#trace(`v`)
 		#trace("old:"+`v.bodyString()`)
 		v.t.setTnodeText(result)
 		#trace("new:"+`v.bodyString()`)
-		
-		#@<< Get textResult from the Tk.Text widget >>
-		#@+node:3::<< Get textResult from the Tk.Text widget >>
-		#@+body
+		#@	<< Get textResult from the Tk.Text widget >>
+		#@+node:<< Get textResult from the Tk.Text widget >>
 		textResult = c.frame.body.get("1.0","end")
 		textResult = toUnicode(textResult,app().tkEncoding) # 2/25/03
 		
@@ -1186,32 +1100,25 @@ class baseUndoer:
 			# Remove the newline from textResult if that is the only difference.
 			if len(textResult) > 0 and textResult[:-1] == result:
 				textResult = result
-		#@-body
-		#@-node:3::<< Get textResult from the Tk.Text widget >>
-
+		#@nonl
+		#@-node:<< Get textResult from the Tk.Text widget >>
+		#@nl
 		if textResult == result:
 			# print "incremental undo:",leading,trailing
 			c.tree.recolor_range(v,leading,trailing)
 		else: # 11/19/02: # Rewrite the pane and do a full recolor.
 			if u.debug_print:
-				
-				#@<< print mismatch trace >>
-				#@+node:4::<< print mismatch trace >>
-				#@+body
+				#@			<< print mismatch trace >>
+				#@+node:<< print mismatch trace >>
 				print "undo mismatch"
 				print "expected:",`result`
 				print "actual  :",`textResult`
-				
-				#@-body
-				#@-node:4::<< print mismatch trace >>
-
+				#@-node:<< print mismatch trace >>
+				#@nl
 			# print "non-incremental undo"
 			v.setBodyStringOrPane(result)
-	
-	#@-body
-	#@-node:5::undoRedoText
-	#@+node:6::undoSortChildren
-	#@+body
+	#@-node:undoRedoText
+	#@+node:undoSortChildren
 	def undoSortChildren (self):
 	
 		u = self ; c = u.commands ; v = u.v
@@ -1226,10 +1133,9 @@ class baseUndoer:
 			v.setDirty()
 			c.setChanged(true)
 		c.endUpdate()
-	#@-body
-	#@-node:6::undoSortChildren
-	#@+node:7::undoSortSiblings
-	#@+body
+	#@nonl
+	#@-node:undoSortChildren
+	#@+node:undoSortSiblings
 	def undoSortSiblings (self):
 		
 		u = self ; c = u.commands ; v = u.v
@@ -1245,10 +1151,9 @@ class baseUndoer:
 			parent.setDirty()
 			c.setChanged(true)
 		c.endUpdate()
-	#@-body
-	#@-node:7::undoSortSiblings
-	#@+node:8::undoSortTopLevel
-	#@+body
+	#@nonl
+	#@-node:undoSortSiblings
+	#@+node:undoSortTopLevel
 	def undoSortTopLevel (self):
 		
 		u = self ; c = u.commands
@@ -1263,16 +1168,12 @@ class baseUndoer:
 			v = next
 		c.setChanged(true)
 		c.endUpdate()
-	
-	#@-body
-	#@-node:8::undoSortTopLevel
-	#@-node:7::Undo helpers
+	#@-node:undoSortTopLevel
 	#@-others
-
 	
 class undoer (baseUndoer):
 	"""A class that implements unlimited undo and redo."""
 	pass
-#@-body
-#@-node:0::@file leoUndo.py
+#@nonl
+#@-node:@file leoUndo.py
 #@-leo
