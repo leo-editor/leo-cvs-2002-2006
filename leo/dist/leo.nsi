@@ -180,6 +180,7 @@ ok:
   File c:\prog\leoCVS\leo\src\LeoPy.leo
   File c:\prog\leoCVS\leo\src\leo*.py
   File c:\prog\leoCVS\leo\src\leoProjects.txt
+  File c:\prog\leoCVS\leo\src\oldLeoProjects.leo
   
   SetOutPath $INSTDIR\test
   File c:\prog\leoCVS\leo\test\test.leo

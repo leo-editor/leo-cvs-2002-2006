@@ -89,22 +89,23 @@
 </v>
 <v t="EKR.20040519090846.8"><vh>@silentfile ../doc/PKG-INFO.TXT</vh></v>
 <v t="EKR.20040519090846.9"><vh>@silentfile ../doc/README.TXT</vh></v>
-<v t="EKR.20040519100230" a="E"><vh>In leo directory</vh>
+<v t="EKR.20040519100230"><vh>In leo directory</vh>
 <v t="EKR.20040519090846.10"><vh>@silentfile ../manifest.in</vh></v>
-<v t="EKR.20040519082027.32" a="E"><vh>Linux install/uninstall scripts</vh>
+<v t="EKR.20040519082027.32"><vh>Linux install/uninstall scripts</vh>
 <v t="EKR.20040519082027.33"><vh>@file-thin ../install</vh></v>
 <v t="EKR.20040519082027.34"><vh>@file-thin ../uninstall</vh></v>
 </v>
 </v>
 </v>
-<v t="EKR.20040519082027"><vh>Distribution scripts</vh>
+<v t="EKR.20040519082027" a="TV"><vh>Distribution scripts</vh>
 <v t="EKR.20040519082027.28"><vh>&lt;&lt; setup info for createLeoDist.py &gt;&gt; (no spaces in file names)</vh></v>
 <v t="EKR.20040519083717"><vh>@thin leo.nsi</vh></v>
 <v t="EKR.20040519082027.20"><vh>@thin preSetup.py</vh></v>
-<v t="EKR.20040519082027.23"><vh>@thin ../createLeoDist.py</vh></v>
+<v t="EKR.20040519082027.23"
+marks="EKR.20040519082027.28,"><vh>@thin ../createLeoDist.py</vh></v>
 <v t="EKR.20040519082027.29"><vh>@thin postSetup.py</vh></v>
 </v>
-<v t="ekr.20040629175400" a="TV"><vh>Pychecker stuff</vh>
+<v t="ekr.20040629175400"><vh>Pychecker stuff</vh>
 <v t="ekr.20040701160830"><vh>@url http://pychecker.sourceforge.net/</vh></v>
 <v t="ekr.20040701160830.1"><vh>names for use in suppressions</vh></v>
 <v t="ekr.20040629180414"><vh>pycheckrc (reference)</vh></v>
@@ -112,7 +113,7 @@
 <v t="ekr.20040701193853"><vh>blacklist</vh></v>
 <v t="ekr.20040701193853.1"><vh>defaults</vh></v>
 <v t="ekr.20040701193853.2"><vh>max...</vh></v>
-<v t="ekr.20040701193853.3"><vh>suppressions</vh></v>
+<v t="ekr.20040701193853.3" a="M"><vh>suppressions</vh></v>
 <v t="ekr.20040701193853.4"><vh>unusedNames</vh></v>
 <v t="ekr.20040701193853.5"><vh>variablesToIgnore</vh></v>
 </v>
@@ -395,7 +396,7 @@ if 1: # Replace config settings and create .zip file.
 	os.chdir(r"c:\prog\leoCvs\leo")
 	os.system(r"c:\python23\python c:\prog\leoCvs\leo\createLeoDist.py sdist --formats=zip")</t>
 <t tx="EKR.20040519082027.28">name="leo",
-version="4.2-b1",
+version="4.2-b2",
 author="Edward K. Ream",
 author_email="edreamleo@charter.net",
 url="http://webpages.charter.net/edreamleo/front.html",
@@ -624,6 +625,7 @@ include src/LeoPy.leo
 # Exclude LeoPyRef.leo.
 include src/leo*.py
 include src/leoProjects.txt
+include src/oldLeoProjects.leo
 
 include scripts/leoScripts.txt
 include scripts/tangle_done.py
@@ -2987,16 +2989,10 @@ suppressions = {
         'leoMenu'  : '--no-argsused',
         'leoGui'   : '--no-argsused',
     # leo.py must do strange things with imports.
-        'leo' : '--no-import --no-reimportself --no-reimport ',  # --no-miximport
-    # A bad warning following while(1)...
-        'leoFind.leoFind.search'               : '--no-implicitreturns',
-        'leoTkinterFind.leoTkinterFind.search' : '--no-implicitreturns',
-    # A bad warning...
-        'leoCommands.Commands.canExtractSection'     : '--no-implicitreturns',
-        'leoCommands.baseCommands.canExtractSection' : '--no-implicitreturns',
+        # 'leo' : '--no-import --no-reimportself --no-reimport ',  # --no-miximport
     # A bad warning about lastVnode.  BOTH MUST BE SPECIFIED
-        'leoImport.baseLeoImportCommands.convertMoreStringsToOutlineAfter' : '--no-objattrs', 
-        'leoImport.leoImportCommands.convertMoreStringsToOutlineAfter'     : '--no-objattrs',
+        #'leoImport.baseLeoImportCommands.convertMoreStringsToOutlineAfter' : '--no-objattrs', 
+        #'leoImport.leoImportCommands.convertMoreStringsToOutlineAfter'     : '--no-objattrs',
 }
 
 # dict: suppress warnings where keys can be regular expressions
