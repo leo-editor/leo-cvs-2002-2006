@@ -289,7 +289,7 @@ class leoGui:
 	#@-others
 #@nonl
 #@-node:class leoGui
-#@+node:class nullGui
+#@+node:class nullGui (runs scripts)
 class nullGui(leoGui):
 	
 	"""Null gui class."""
@@ -301,6 +301,7 @@ class nullGui(leoGui):
 		leoGui.__init__ (self,guiName) # init the base class.
 		
 		self.script = None
+		self.lastFrame = None
 	#@nonl
 	#@-node: nullGui.__init__
 	#@+node:createLeoFrame
@@ -308,7 +309,8 @@ class nullGui(leoGui):
 		
 		"""Create a null Leo Frame."""
 	
-		return leoFrame.nullFrame(title)
+		self.lastFrame = leoFrame.nullFrame(title)
+		return self.lastFrame
 	#@nonl
 	#@-node:createLeoFrame
 	#@+node:createRootWindow
@@ -327,10 +329,13 @@ class nullGui(leoGui):
 		"""Run the gui's main loop."""
 		
 		if self.script:
-			print "Start of batch script...\n\n"
-			top().executeScript(script=self.script)
-			print "\nEnd of batch script"
+			frame = self.lastFrame
+			app.log = frame.log
+			# es("Start of batch script...\n")
+			self.lastFrame.c.executeScript(script=self.script)
+			# es("\nEnd of batch script")
 		
+		# Getting here will terminate Leo.
 	#@nonl
 	#@-node:runMainLoop
 	#@+node:oops
@@ -353,7 +358,7 @@ class nullGui(leoGui):
 	#@-node:setScript
 	#@-others
 #@nonl
-#@-node:class nullGui
+#@-node:class nullGui (runs scripts)
 #@-others
 #@nonl
 #@-node:@file leoGui.py
