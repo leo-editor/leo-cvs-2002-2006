@@ -1107,7 +1107,7 @@ class baseCommands:
     #@nonl
     #@-node:ekr.20031218072017.2863:delete
     #@+node:ekr.20031218072017.2140:c.executeScript
-    def executeScript(self,p=None,script=None):
+    def executeScript(self,p=None,script=None,useSelectedText=True):
     
         """This executes body text as a Python script.
         
@@ -1116,7 +1116,7 @@ class baseCommands:
         c = self ; error = False ; s = None ; script1 = script
     
         if not script:
-            script = g.getScript(c,p)
+            script = g.getScript(c,p,useSelectedText=useSelectedText)
         #@    << redirect output >>
         #@+node:ekr.20031218072017.2143:<< redirect output >>
         if g.app.config.redirect_execute_script_output_to_log_pane:
