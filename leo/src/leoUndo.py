@@ -98,6 +98,12 @@ class baseUndoer:
         #@    << define redoDispatchDict >>
         #@+node:EKR.20040526072519:<< define redoDispatchDict >>
         u.redoDispatchDict = {
+            # New, general purpose types.
+            'group':  u.redoGroup,
+            'node':   u.redoNode,
+            'tree':   u.redoTree,
+            
+            # Old, deprecated types.
             "Add Comments":       u.redoTyping,
             "Change":             u.redoTyping,
             "Change All":         u.redoChangeAll,
@@ -145,6 +151,12 @@ class baseUndoer:
         #@    << define undoDispatchDict >>
         #@+node:EKR.20040526075238:<< define undoDispatchDict >>
         u.undoDispatchDict = {
+            # New, general purpose types.
+            'group':  u.undoGroup,
+            'node':   u.undoNode,
+            'tree':   u.undoTree,
+        
+            # Old, deprecated types.
             "Add Comments":       u.undoTyping,
             "Change":             u.undoTyping,
             "Change All":         u.undoChangeAll,
@@ -405,7 +417,7 @@ class baseUndoer:
     #@nonl
     #@-node:ekr.20031218072017.3616:setUndoTypes
     #@-node:ekr.20031218072017.3608:State routines...
-    #@+node:EKR.20040606195417:Top-level entries
+    #@+node:EKR.20040606195417:Top-level entries...
     #@+node:ekr.20031218072017.3615:setUndoParams
     #@+at 
     #@nonl
@@ -861,7 +873,223 @@ class baseUndoer:
         return treeInfo
     #@nonl
     #@-node:EKR.20040606195417.3:u.saveListOfNodes
-    #@-node:EKR.20040606195417:Top-level entries
+    #@-node:EKR.20040606195417:Top-level entries...
+    #@+node:ekr.20050315133212.1:New top-level entries...
+    #@+node:ekr.20050318090951:common before/after data
+    #@+node:ekr.20050318085432.2:getCommonBunch
+    def getCommonBunch (self,kind,p):
+        
+        u = self
+        
+        return g.Bunch(
+            changed = u.c.isChanged(),
+            kind=kind,
+            p = p.copy(),
+            old_parent = p.parent(),
+            old_back = p.back(),
+            old_n = p.childIndex(),
+            v = p.copy(), ## To be deleted later!
+        )
+    #@nonl
+    #@-node:ekr.20050318085432.2:getCommonBunch
+    #@+node:ekr.20050318091828:getNodeBunch
+    def getNodeBunch (self,p):
+    
+        return g.Bunch(
+            kind = 'node_info',
+            v = p.v,
+            t_info = p.v.t.createUndoInfo(),
+            v_info = p.v.createUndoInfo(),
+        )
+    #@nonl
+    #@-node:ekr.20050318091828:getNodeBunch
+    #@+node:ekr.20050315135213.3:getTreeList
+    def getTreeList (self,kind,p,command):
+        
+        u = self
+        
+        return [u.getNodeBunch(p) for p in p.self_and_subtree_iter()]
+    #@nonl
+    #@-node:ekr.20050315135213.3:getTreeList
+    #@-node:ekr.20050318090951:common before/after data
+    #@+node:ekr.20050318085432.3:before undo handlers...
+    #@+node:ekr.20050315133212.2:beforeChangeNode
+    def beforeChangeNode (self,p):
+        
+        '''Return data that gets passed to afterChangeNode'''
+        
+        u = self ; body = u.c.frame.body
+    
+        d = u.getCommonBunch('node',p)
+        d['oldSel']  = body.getTextSelection()
+        d['oldText'] = body.getAllText()
+        d['old_node_info'] = getNodeBunch(p)
+        return d
+            
+        if 0: #ref 
+            v_copy = c.undoer.saveTree(v)
+            oldText = body.getAllText()
+            oldSel = body.getTextSelection()
+    
+            u.optionalIvars = [
+                "lastChild",
+                "parent","oldParent",
+                "back","oldBack",
+                "n","oldN","oldV",
+                "oldText","newText",
+                "oldSel","newSel",
+                "sort","select",
+                "oldTree","newTree", # Added newTree 10/14/03
+                # For incremental undo typing...
+                "yview",
+                "leading","trailing",
+                "oldMiddleLines","newMiddleLines",
+                "oldNewlines","newNewlines",
+            ]
+    #@nonl
+    #@-node:ekr.20050315133212.2:beforeChangeNode
+    #@+node:ekr.20050315134017.6:beforeChangeTree
+    def beforeChangeNode (self,p):
+        
+        u = self
+    
+        if u.redoing or u.undoing:
+            return None
+        else:
+            d = u.getCommonBunch('tree',p,command)
+            d ['oldSel']  = body.getTextSelection()
+            d ['oldText'] = body.getAllText()
+            d ['old_tree_list'] = u.getTreeList(p)
+            return d
+    #@nonl
+    #@-node:ekr.20050315134017.6:beforeChangeTree
+    #@+node:ekr.20050315134017.7:beforeGroup
+    def beforeTransaction (self,p):
+    
+        return g.Bunch(kind='group',p=p,command=command)
+    #@nonl
+    #@-node:ekr.20050315134017.7:beforeGroup
+    #@+node:ekr.20050315134017.8:beforeTyping (Not used?)
+    def beforeChangeNode (self,p,command):
+        
+        u = self
+    
+        if u.redoing or u.undoing:
+            return None
+        else:
+            return self.getDataForNode('typing',p,command)
+    #@nonl
+    #@-node:ekr.20050315134017.8:beforeTyping (Not used?)
+    #@-node:ekr.20050318085432.3:before undo handlers...
+    #@+node:ekr.20050318085432.4:after undo handlers...
+    #@+node:ekr.20050315134017.2:afterChangeNode
+    def afterChangeNode (self,p,command,d):
+    
+        '''Create an undo node using d created by beforeChangeNode.'''
+        
+        u = self
+    
+        d ['command'] = command
+        d ['newSel'] = body.getTextSelection()
+        d ['newText'] = body.getAllText()
+        d ['after_node_info'] = u.getNodeBunch(p)
+        d ['old_parent'] = p.parent()
+        d ['old_back'] = p.back()
+        d ['old_n'] = p.childIndex()
+        
+        u.putNodeOnStack(data)
+    #@nonl
+    #@-node:ekr.20050315134017.2:afterChangeNode
+    #@+node:ekr.20050315134017.3:afterChangeTree
+    def afterChangeTree (self,p,command,d):
+    
+        '''Create an undo node for general tree operations using d created by beforeChangeTree'''
+        
+        u = self
+    
+        d ['command'] = command
+        d ['newSel'] = body.getTextSelection()
+        d ['newText'] = body.getAllText()
+        d ['new_tree_list'] = u.getTreeList(p)
+        d ['old_parent'] = p.parent()
+        d ['old_back'] = p.back()
+        d ['old_n'] = p.childIndex()
+        
+        u.putNodeOnStack(data)
+    #@nonl
+    #@-node:ekr.20050315134017.3:afterChangeTree
+    #@+node:ekr.20050315134017.4:afterGroup
+    def afterGroup (self,p,command,d):
+    
+        '''Create an undo node for general tree operations using d created by beforeChangeTree'''
+        
+        u = self
+    
+        d ['command'] = command
+        
+        u.putNodeOnStack(data)
+    #@nonl
+    #@-node:ekr.20050315134017.4:afterGroup
+    #@+node:ekr.20050315134017.5:afterTyping (not used?)
+    #@-node:ekr.20050315134017.5:afterTyping (not used?)
+    #@-node:ekr.20050318085432.4:after undo handlers...
+    #@+node:ekr.20050318111939:putNodeOnStack (not finished)
+    def putNodeOnStack(self,data):
+        
+        # Similar to setUndoParams
+    
+        u = self
+    
+        if u.redoing or u.undoing: return
+        
+        # Push params on undo stack, clearing all forward entries.
+        u.bead += 1
+        u.beads[u.bead:] = [data]
+        # g.trace(len(u.beads),u.bead,data)
+        # Recalculate the menu labels.
+        u.undo_type = data.get('command')
+        u.setUndoTypes()
+    #@nonl
+    #@-node:ekr.20050318111939:putNodeOnStack (not finished)
+    #@-node:ekr.20050315133212.1:New top-level entries...
+    #@+node:ekr.20050318085432.5:New undo/redo allies
+    #@+node:ekr.20050318085432.6:redoGroup
+    def redoGroup (self):
+        
+        pass
+    #@nonl
+    #@-node:ekr.20050318085432.6:redoGroup
+    #@+node:ekr.20050318085432.7:redoNode
+    def redoNode (self):
+        
+        pass
+    #@nonl
+    #@-node:ekr.20050318085432.7:redoNode
+    #@+node:ekr.20050318085432.8:redoTree
+    def redoTree (self):
+        
+        pass
+    #@nonl
+    #@-node:ekr.20050318085432.8:redoTree
+    #@+node:ekr.20050318085713:undoGroup
+    def undoGroup (self):
+        
+        pass
+    #@nonl
+    #@-node:ekr.20050318085713:undoGroup
+    #@+node:ekr.20050318085713.1:undoNode
+    def undoNode (self):
+        
+        pass
+    #@nonl
+    #@-node:ekr.20050318085713.1:undoNode
+    #@+node:ekr.20050318085713.2:undoTree
+    def undoTree (self):
+        
+        pass
+    #@nonl
+    #@-node:ekr.20050318085713.2:undoTree
+    #@-node:ekr.20050318085432.5:New undo/redo allies
     #@+node:ekr.20031218072017.2030:redo & allies
     def redo (self):
     
