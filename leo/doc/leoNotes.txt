@@ -5992,6 +5992,33 @@ return new_v
 #@nonl
 #@-node:EKR.20040530114124.1:<< old code >> from v.copyTree
 #@-node:EKR.20040528080541:From undo
+#@+node:EKR.20040604162138:<< old code from removeSentinelsCommand >>
+# old code: too similar to atFile::scanHeader.
+tag2 = "-ver="
+# We should be at the @+leo line.
+i = j = g.skip_ws(s,i)
+# The opening comment delim is the initial non-whitespace.
+while i < len(s) and not g.match(s,i,tag) and not g.is_ws(s[i]) and not g.is_nl(s,i):
+	i += 1
+if j < i: line_delim = s[j:i]
+else: valid = false
+# Make sure we have @+leo
+i = g.skip_ws(s,i)
+if g.match(s,i,tag): i += len(tag)
+else: valid = false
+# Skip a version tag. Bug fix: 10/15/03
+if valid and g.match(s,i,tag2):
+	i += len(tag2) + 1 # Skip the tag and the actual version.
+# The closing comment delim is the trailing non-whitespace.
+i = j = g.skip_ws(s,i)
+while i < len(s) and not g.is_ws(s[i]) and not g.is_nl(s,i):
+	i += 1
+if j < i:
+	start_delim = line_delim
+	end_delim = s[j:i]
+	line_delim = None
+#@nonl
+#@-node:EKR.20040604162138:<< old code from removeSentinelsCommand >>
 #@-node:ekr.20040311143141:No longer used in 4.2
 #@-node:ekr.20031218072017.434:Unused code
 #@-all

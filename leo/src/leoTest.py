@@ -161,7 +161,7 @@ def fail ():
 	
 	"""Mark a unit test as having failed."""
 	
-	g.app.unitTestDict["fail"] = callerName(2)
+	g.app.unitTestDict["fail"] = g.callerName(2)
 #@nonl
 #@-node:ekr.20040303062846.10: fail
 #@+node:ekr.20040327115825:Batch mode tests

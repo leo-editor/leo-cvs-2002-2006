@@ -626,7 +626,14 @@
 <v t="ekr.20040317185041"><vh>&lt;&lt; define event callbacks &gt;&gt;</vh></v>
 </v>
 <v t="EKR.20040603064545"><vh>Print timestamps of all nodes</vh></v>
-<v t="EKR.20040603103118" a="TV"><vh>String bug in html</vh></v>
+<v t="EKR.20040603103118"><vh>String bug in html</vh></v>
+<v t="EKR.20040603143325"><vh>AssertionError test</vh></v>
+<v t="EKR.20040603174633"><vh>test of focus</vh></v>
+<v t="EKR.20040604082113"><vh>Test of @tabwidth</vh></v>
+<v t="EKR.20040604143253" a="E"><vh>Test of Remove sentinels</vh>
+<v t="EKR.20040604143253.1" a="E"><vh>@thin removeSentTest.txt</vh></v>
+</v>
+<v t="EKR.20040604170105" a="TV"><vh>Mini test of Remove sentinels</vh></v>
 </vnodes>
 <tnodes>
 <t tx="EKR.20040424065452">import leoGlobals as g
@@ -2083,6 +2090,31 @@ for p in c.all_positions_iter():
 b = "cd"
 d
 </t>
+<t tx="EKR.20040603143325">try:
+	assert(0)
+except (AttributeError, AssertionError):
+	print "caught"
+</t>
+<t tx="EKR.20040603174633">import leoGlobals as g
+c = g.top()
+print c.frame.bodyCtrl.focus()</t>
+<t tx="EKR.20040604082113">@tabwidth -4
+
+	
+    a   b   c
+a   b   c   d
+aa  b   c   d
+aaa b   c   d
+end</t>
+<t tx="EKR.20040604143253"></t>
+<t tx="EKR.20040604170105">import leoGlobals as g
+import os
+
+c = g.top()
+
+print os.getcwd()
+name = g.os_path_join("test","removeSentTest.txt")
+c.importCommands.removeSentinelsCommand(name)</t>
 <t tx="ekr.20040126105605"></t>
 <t tx="ekr.20040126105605.2"></t>
 <t tx="ekr.20040126105605.3"></t>
