@@ -2055,6 +2055,9 @@ class leoTkinterFrame (leoFrame.leoFrame):
     # Rather than calling g.app.gui.set_focus directly, the code calls
     # self.xWantsFocus. This defers to idle-time code in the status-line 
     # class.
+    # 
+    # N.B.  This code never calls select, so there can be no race condition 
+    # here that alters text improperly.
     #@-at
     #@nonl
     #@+node:ekr.20050120092028:xWantsFocus
@@ -2120,16 +2123,7 @@ class leoTkinterFrame (leoFrame.leoFrame):
                             tag='frame.setFocus')
                     self.wantedWidget = None
                     g.app.wantedCommander = None
-                    
-                    #if (
-                    #    widget == c.frame.wantedWidget
-                    #    and c == g.app.wantedCommander
-                    #    and not g.app.unitTesting
-                    #):
-                        # g.trace(repr(c.shortFileName()))
-                        # g.app.gui.set_focus(c,widget,tag='frame.setFocus')
-                   
-                    
+                        
                 # Crucial: This may change what the callback does.
                 self.wantedWidget = widget
                 g.app.wantedCommander = c

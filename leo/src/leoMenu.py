@@ -49,6 +49,9 @@ class leoMenu:
             ("&Delete",None,c.delete),
             ("Select &All","Ctrl+A",f.body.selectAllText),
             ("-",None,None))
+            
+        # Top-level shortcuts here:  a,d,p,t,u,y,z
+        # Top-level shortcuts later: e,g,n,v
         #@nonl
         #@-node:ekr.20031218072017.839:<< define editMenuTopTable >>
         #@nl
@@ -112,8 +115,11 @@ class leoMenu:
             # ("Set &Colors...",None,c.colorPanel), # To be replaced by general settings dialog.
             (label,"Alt+V",c.viewAllCharacters),
             # ("-",None,None),
-            ("Prefere&nces",None,c.preferences)
+            ("Setti&ngs",None,c.preferences)
         )
+        
+        # Top-level shortcuts earlier: a,d,p,t,u,y,z
+        # Top-level shortcuts here: e,g,n,v
         #@nonl
         #@-node:ekr.20031218072017.3757:<< define editMenuTop2Table >>
         #@nl

@@ -2,7 +2,7 @@
 <?xml-stylesheet ekr_stylesheet?>
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="12849" clone_windows="0"/>
-<globals body_outline_ratio="0.294117647059">
+<globals body_outline_ratio="0.53452685422">
 	<global_window_position top="37" left="202" height="782" width="932"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
@@ -51,7 +51,7 @@
 <v t="edream.110203163054.61"><vh>Putting the Leo icon in Leo windows</vh></v>
 <v t="edream.110203163054.62"><vh>Quick start</vh></v>
 </v>
-<v t="edream.110203163054.63" a="E"><vh>Latest versions</vh>
+<v t="edream.110203163054.63"><vh>Latest versions</vh>
 <v t="ekr.20050126100405"><vh>4.3-a2</vh>
 <v t="ekr.20050130112336"><vh>Still to do</vh>
 <v t="ekr.20050130112336.1"><vh>Improve how Leo handles recent files</vh></v>
@@ -62,7 +62,7 @@
 </v>
 <v t="ekr.20050122090311"><vh>4.3-a1</vh>
 <v t="ekr.20050123112834"><vh>Defining features of 4.3</vh>
-<v t="ekr.20050123110009"><vh>@settings trees and leoSettings.leo</vh>
+<v t="ekr.20050123110009" a="E"><vh>@settings trees and leoSettings.leo</vh>
 <v t="ekr.20050122084954"><vh>Using leoSettings.leo and @settings trees</vh></v>
 <v t="ekr.20050122091036"><vh>Unfinished configuration features</vh></v>
 </v>
@@ -168,7 +168,7 @@
 <v t="edream.110203163054.117"><vh>leo.py versions</vh>
 <v t="ekr.20050122090311"><vh>4.3-a1</vh>
 <v t="ekr.20050123112834"><vh>Defining features of 4.3</vh>
-<v t="ekr.20050123110009"><vh>@settings trees and leoSettings.leo</vh>
+<v t="ekr.20050123110009" a="E"><vh>@settings trees and leoSettings.leo</vh>
 <v t="ekr.20050122084954"><vh>Using leoSettings.leo and @settings trees</vh></v>
 <v t="ekr.20050122091036"><vh>Unfinished configuration features</vh></v>
 </v>
@@ -302,7 +302,7 @@
 </v>
 </v>
 <v t="ekr.20040713110718"><vh>4.2 beta 3</vh>
-<v t="ekr.20040804165258.1"><vh>Bug fixes</vh>
+<v t="ekr.20040804165258.1" a="E"><vh>Bug fixes</vh>
 <v t="ekr.20040804164600.16"><vh>Leo gives the user a chance to save read-only files</vh></v>
 <v t="ekr.20040804164600.36"><vh>Fixed some unit-test bugs</vh></v>
 <v t="ekr.20040804164600.56"><vh>Added 3 .cascading style sheets to the distribution list</vh></v>
@@ -426,9 +426,9 @@
 <v t="EKR.20040518070940"><vh>Fixed problems with missing tnodeList with @file-noref</vh></v>
 <v t="EKR.20040518070940.164"><vh>Added t.writeBit</vh></v>
 </v>
-<v t="edream.110203163054.890"><vh>Chapter 7: Scripting Leo with Python</vh>
+<v t="edream.110203163054.890" a="E"><vh>Chapter 7: Scripting Leo with Python</vh>
 <v t="edream.110203163054.891"><vh>Overview</vh></v>
-<v t="edream.110203163054.892"><vh>Basic scripts</vh>
+<v t="edream.110203163054.892" a="E"><vh>Basic scripts</vh>
 <v t="ekr.20040403051340"><vh>Writing to log window</vh></v>
 <v t="edream.110203163054.893"><vh>Getting commanders and frames</vh></v>
 <v t="edream.110203163054.894"><vh>Redirecting output from scripts</vh></v>
@@ -840,8 +840,8 @@
 <v t="edream.110203163054.272"><vh>Worked around bugs in Python 2.3 a1</vh></v>
 </v>
 </v>
-<v t="edream.110203163054.273"><vh>3.10</vh>
-<v t="edream.110203163054.274"><vh>Fixed bugs</vh>
+<v t="edream.110203163054.273" a="E"><vh>3.10</vh>
+<v t="edream.110203163054.274" a="E"><vh>Fixed bugs</vh>
 <v t="edream.110203163054.275"><vh>Allowed abbreviated xml tags.</vh></v>
 <v t="edream.110203163054.276"><vh>Changed shortcut to Find Previous so Alt - F4 closes Leo</vh></v>
 <v t="edream.110203163054.277"><vh>Changed url of help file</vh></v>
@@ -886,14 +886,15 @@
 <v t="edream.110203163054.312"><vh>Fixed bugs when importing Java files.</vh></v>
 <v t="edream.110203163054.313"><vh>Convert All Blanks/Tabs  commands honor @tabwidth directives</vh></v>
 </v>
-<v t="edream.110203163054.314"><vh>New documentation for leo.py 3.9</vh>
+<v t="edream.110203163054.314" a="E"><vh>New documentation for leo.py 3.9</vh>
 <v t="edream.110203163054.315"><vh>Major performance improvements</vh>
 <v t="edream.110203163054.316"><vh>Incremental syntax coloring speeds redraws</vh></v>
 <v t="edream.110203163054.317"><vh>Incremental undo reduces memory usages significantly</vh></v>
 </v>
-<v t="edream.110203163054.318"><vh>Major configuration improvements</vh>
-<v t="edream.110203163054.319"><vh>Chapter 8: Customizing Leo</vh>
-<v t="edream.110203163054.320"><vh>Using leoConfig.leo and leoConfig.txt</vh></v>
+<v t="edream.110203163054.318" a="E"><vh>Major configuration improvements</vh>
+<v t="edream.110203163054.319" a="E"><vh>Chapter 8: Customizing Leo</vh>
+<v t="ekr.20050122084954"><vh>Using leoSettings.leo and @settings trees</vh></v>
+<v t="edream.110203163054.320"><vh>Obsolete: Using leoConfig.leo and leoConfig.txt</vh></v>
 <v t="edream.110203163054.321"><vh>Using plugins and hooks</vh>
 <v t="edream.110203163054.322"><vh>Overview of plugins and hooks</vh></v>
 <v t="edream.110203163054.323"><vh>New plugin architecture</vh>
@@ -945,12 +946,12 @@
 </v>
 <v t="edream.110203163054.349"><vh>More flexible creation of non-existent directories</vh></v>
 </v>
-<v t="edream.110203163054.350"><vh>New commands &amp; features</vh>
+<v t="edream.110203163054.350" a="E"><vh>New commands &amp; features</vh>
 <v t="edream.110203163054.351"><vh>@url</vh></v>
 <v t="edream.110203163054.352"><vh>Execute Script command</vh></v>
 <v t="edream.110203163054.353"><vh>Go To Line Number command</vh></v>
 <v t="edream.110203163054.349"><vh>More flexible creation of non-existent directories</vh></v>
-<v t="edream.110203163054.354"><vh>Much better support for cweb</vh>
+<v t="edream.110203163054.354" a="E"><vh>Much better support for cweb</vh>
 <v t="edream.110203163054.355"><vh>About cweb mode </vh></v>
 </v>
 <v t="edream.110203163054.356"><vh>Open With command</vh>
@@ -1018,7 +1019,7 @@
 <v t="edream.110203163054.402"><vh>Coming soon: Leo 4.0, a major improvement</vh></v>
 </v>
 <v t="edream.110203163054.403"><vh>leo.py 3.7</vh>
-<v t="edream.110203163054.404"><vh>Fixed Bugs</vh>
+<v t="edream.110203163054.404" a="E"><vh>Fixed Bugs</vh>
 <v t="edream.110203163054.405"><vh>Language and syntax coloring bugs</vh>
 <v t="edream.110203163054.406"><vh>Fixed @comment bug</vh></v>
 <v t="edream.110203163054.407"><vh>Fixed colorizing for "while" in C</vh></v>
@@ -1032,7 +1033,7 @@
 <v t="edream.110203163054.406"><vh>Fixed @comment bug</vh></v>
 <v t="edream.110203163054.414"><vh>Fixed a bug that affected wrapping in doc parts</vh></v>
 </v>
-<v t="edream.110203163054.415"><vh>Other bugs</vh>
+<v t="edream.110203163054.415" a="E"><vh>Other bugs</vh>
 <v t="edream.110203163054.416"><vh>Fixed reversion in Tangle/Untangle code</vh></v>
 <v t="edream.110203163054.417"><vh>Fixed undo cloned headline bug</vh></v>
 <v t="edream.110203163054.418"><vh>Fixed Find previous bug</vh></v>
@@ -1068,7 +1069,7 @@
 </v>
 <v t="edream.110203163054.443"><vh>leo.py 3.6</vh>
 <v t="edream.110203163054.444"><vh>Known bug: problems with Python window</vh></v>
-<v t="edream.110203163054.445"><vh>Bug fixes</vh>
+<v t="edream.110203163054.445" a="E"><vh>Bug fixes</vh>
 <v t="edream.110203163054.446"><vh>Fixed problems with opening and writing leoConfig.txt on Linux</vh></v>
 <v t="edream.110203163054.447"><vh>Fixed problems renaming files on Linux</vh></v>
 <v t="edream.110203163054.448"><vh>Fixed missing headline bug on startup</vh></v>
@@ -1111,7 +1112,7 @@
 </v>
 </v>
 <v t="edream.110203163054.480"><vh>leo.py 3.4</vh>
-<v t="edream.110203163054.481"><vh>Configuration settings and leoConfig.leo</vh>
+<v t="edream.110203163054.481" a="E"><vh>Configuration settings and leoConfig.leo</vh>
 <v t="edream.110203163054.482"><vh>Added comments to leoConfig.txt about split direction and ratio</vh></v>
 <v t="edream.110203163054.483"><vh>Added save_clears_undo_buffer config option</vh></v>
 <v t="edream.110203163054.484"><vh>Corrected spelling of limit_directory_search_extenstion </vh></v>
@@ -1155,7 +1156,7 @@
 <v t="edream.110203163054.516"><vh>Fixed problems with negative tab widths</vh></v>
 <v t="edream.110203163054.517"><vh>Fixed numerous problems related to configuration settings</vh></v>
 </v>
-<v t="edream.110203163054.518"><vh>leo.py 3.2</vh>
+<v t="edream.110203163054.518" a="E"><vh>leo.py 3.2</vh>
 <v t="edream.110203163054.519"><vh>Nested @others directives now valid</vh>
 <v t="edream.110203163054.520"><vh>@file test.txt</vh>
 <v t="edream.110203163054.521"><vh>class a</vh>
@@ -1176,7 +1177,7 @@
 <v t="edream.110203163054.532"><vh>Added email address &amp; URL to About Leo dialog</vh></v>
 <v t="edream.110203163054.533"><vh>added disStats.py</vh></v>
 </v>
-<v t="edream.110203163054.534"><vh>leo.py 3.1</vh>
+<v t="edream.110203163054.534" a="E"><vh>leo.py 3.1</vh>
 <v t="edream.110203163054.535"><vh>Added compare panel</vh></v>
 <v t="edream.110203163054.536"><vh>Added new settings to leoConfig.txt</vh></v>
 <v t="edream.110203163054.537"><vh>Changed precedence scheme for preferences</vh></v>
@@ -1222,7 +1223,7 @@
 <v t="edream.110203163054.571"><vh>Negative tab width converts tabs to spaces</vh></v>
 </v>
 <v t="edream.110203163054.572"><vh>Improved Preferences panel</vh></v>
-<v t="edream.110203163054.320"><vh>Using leoConfig.leo and leoConfig.txt</vh></v>
+<v t="edream.110203163054.320"><vh>Obsolete: Using leoConfig.leo and leoConfig.txt</vh></v>
 <v t="edream.110203163054.573"><vh>Cut and Paste now works properly in all situations</vh></v>
 <v t="edream.110203163054.574"><vh>Added Recent Files menu</vh></v>
 <v t="edream.110203163054.575"><vh>All Extract and Import commands are now undoable</vh></v>
@@ -1416,7 +1417,7 @@
 </v>
 </v>
 </v>
-<v t="EKR.20040524104904"><vh>Users Guide</vh>
+<v t="EKR.20040524104904" a="E"><vh>Users Guide</vh>
 <v t="EKR.20040524104904.2"><vh>An overview of Leo</vh></v>
 <v t="EKR.20040524104904.3"><vh>Front material</vh>
 <v t="EKR.20040524104904.4"><vh>Title Page &amp; Summary</vh></v>
@@ -1488,7 +1489,7 @@
 </v>
 </v>
 </v>
-<v t="EKR.20040524104904.26"><vh>Chapter 3: Using Outlines &amp; Body text</vh>
+<v t="EKR.20040524104904.26" a="E"><vh>Chapter 3: Using Outlines &amp; Body text</vh>
 <v t="EKR.20040524104904.27"><vh>Cloning headlines</vh>
 <v t="EKR.20040524104904.28"><vh>read me</vh></v>
 <v t="EKR.20040524104904.29"><vh>a</vh>
@@ -1555,7 +1556,7 @@
 <v t="EKR.20040524104904.47"><vh>Resizing panes</vh></v>
 <v t="EKR.20040524104904.48"><vh>Undoing operations</vh></v>
 </v>
-<v t="EKR.20040524104904.49"><vh>Chapter 4: Writing Programs in Leo</vh>
+<v t="EKR.20040524104904.49" a="E"><vh>Chapter 4: Writing Programs in Leo</vh>
 <v t="EKR.20040524104904.50"><vh>Overview</vh></v>
 <v t="EKR.20040524104904.51"><vh>Sections and section references</vh></v>
 <v t="EKR.20040524104904.52"><vh>Organizing @file trees.</vh>
@@ -1597,7 +1598,7 @@
 </v>
 </v>
 </v>
-<v t="EKR.20040524104904.79"><vh>More about directives</vh>
+<v t="EKR.20040524104904.79" a="E"><vh>More about directives</vh>
 <v t="EKR.20040608091134"><vh>@all directive copies all nodes in @thin trees</vh></v>
 <v t="EKR.20040524104904.80"><vh>@color, @nocolor and @killcolor control syntax coloring</vh></v>
 <v t="EKR.20040524104904.81"><vh>@comment sets comment delimiters in @root and @unit trees</vh></v>
@@ -1613,7 +1614,7 @@
 </v>
 <v t="EKR.20040524104904.91"><vh>About cweb mode</vh></v>
 <v t="EKR.20040524104904.92"><vh>Appendix 1 to Chapter 4: Using @asis, @noref and @nosent trees</vh></v>
-<v t="EKR.20040524104904.93"><vh>Appendix 2 to Chapter 4: Using the @root directive, Tangling and Untangling</vh>
+<v t="EKR.20040524104904.93" a="E"><vh>Appendix 2 to Chapter 4: Using the @root directive, Tangling and Untangling</vh>
 <v t="EKR.20040524104904.94"><vh>@root vs. @file trees</vh></v>
 <v t="EKR.20040524104904.95"><vh>Sections and section definitions</vh></v>
 <v t="EKR.20040524104904.96"><vh>Tangling @root trees with the Tangle commands</vh></v>
@@ -1622,7 +1623,7 @@
 </v>
 <v t="EKR.20040608091134.1"><vh>Appendix 3 to Chapter 4: Using @thin instead of @file</vh></v>
 </v>
-<v t="EKR.20040524104904.99"><vh>Chapter 5: Using Leo's Commands</vh>
+<v t="EKR.20040524104904.99" a="E"><vh>Chapter 5: Using Leo's Commands</vh>
 <v t="EKR.20040524104904.100"><vh> The File Menu</vh>
 <v t="EKR.20040524104904.101"><vh>Loading, Saving and Reverting Files</vh></v>
 <v t="EKR.20040524104904.102"><vh>Communicating with external editors</vh>
@@ -1637,7 +1638,7 @@
 <v t="EKR.20040524104904.109"><vh>Exporting Files from Leo Outlines</vh></v>
 <v t="EKR.20040524104904.110"><vh>Quitting Leo</vh></v>
 </v>
-<v t="EKR.20040524104904.111"><vh> The Edit Menu</vh>
+<v t="EKR.20040524104904.111" a="E"><vh> The Edit Menu</vh>
 <v t="EKR.20040524104904.112"><vh>Undoing changes</vh></v>
 <v t="EKR.20040524104904.113"><vh>Cutting, pasting and selecting text</vh></v>
 <v t="EKR.20040524104904.114"><vh>Shifting body text</vh></v>
@@ -1670,7 +1671,8 @@
 <v t="EKR.20040524104904.138"><vh>Reformat Paragraph command</vh></v>
 </v>
 <v t="EKR.20040524104904.139"><vh>Matching brackets and parenthesis</vh></v>
-<v t="EKR.20040524104904.140"><vh>Setting Preferences</vh>
+<v t="EKR.20040524104904.140" a="E"><vh>Specifying settings</vh>
+<v t="ekr.20050122084954"><vh>Using leoSettings.leo and @settings trees</vh></v>
 <v t="EKR.20040524104904.141"><vh>PHP keywords</vh></v>
 <v t="EKR.20040524104904.142"><vh>LaTex keywords</vh></v>
 </v>
@@ -1771,9 +1773,9 @@
 </v>
 <v t="EKR.20040524104904.181"><vh>How Leo Changes the Notion of Literate Programming</vh></v>
 </v>
-<v t="EKR.20040524104904.182"><vh>Chapter 7: Scripting Leo with Python</vh>
+<v t="EKR.20040524104904.182" a="E"><vh>Chapter 7: Scripting Leo with Python</vh>
 <v t="EKR.20040524104904.183"><vh>Overview of Leo's code</vh></v>
-<v t="EKR.20040524104904.184"><vh>Basic scripts</vh>
+<v t="EKR.20040524104904.184" a="E"><vh>Basic scripts</vh>
 <v t="EKR.20040524104904.185"><vh>Writing to log window</vh></v>
 <v t="EKR.20040524104904.186"><vh>Getting commanders and frames</vh></v>
 <v t="EKR.20040524104904.187"><vh>Redirecting output from scripts</vh></v>
@@ -1818,8 +1820,8 @@
 </v>
 <v t="ekr.20040906100024"><vh>Unit testing with @test, @suite</vh></v>
 </v>
-<v t="EKR.20040524104904.211"><vh>Chapter 8: Customizing Leo</vh>
-<v t="ekr.20050122090016"><vh>Setting options...</vh>
+<v t="EKR.20040524104904.211" a="E"><vh>Chapter 8: Customizing Leo</vh>
+<v t="ekr.20050122090016" a="E"><vh>Setting options...</vh>
 <v t="ekr.20050122084954"><vh>Using leoSettings.leo and @settings trees</vh></v>
 <v t="EKR.20040524104904.212"><vh>Obsolete: Using leoConfig.leo and leoConfig.txt</vh></v>
 </v>
@@ -1891,7 +1893,7 @@
 <v t="EKR.20040524104904.260"><vh>Why I like Python</vh></v>
 </v>
 </v>
-<v t="EKR.20040524104904.261"><vh>Chapter 10: Theory of Operation</vh>
+<v t="EKR.20040524104904.261" a="E"><vh>Chapter 10: Theory of Operation</vh>
 <v t="EKR.20040524104904.262"><vh>Overview</vh></v>
 <v t="EKR.20040524104904.263"><vh>Nodes</vh></v>
 <v t="EKR.20040524104904.264"><vh>Drawing and events</vh></v>
@@ -1902,7 +1904,7 @@
 <v t="EKR.20040524104904.269"><vh>Unlimited undo</vh></v>
 <v t="EKR.20040524104904.273"><vh>4.0 Theory of operation</vh></v>
 </v>
-<v t="EKR.20040524104904.274"><vh>Appendices</vh>
+<v t="EKR.20040524104904.274" a="E"><vh>Appendices</vh>
 <v t="EKR.20040524104904.275"><vh>Code hidden in leo.py</vh>
 <v t="EKR.20040524104904.276"><vh>c2py.py</vh></v>
 <v t="EKR.20040524104904.277"><vh>disStats.py</vh></v>
@@ -1912,7 +1914,7 @@
 <v t="EKR.20040524104904.281"><vh>Tree code</vh></v>
 </v>
 <v t="EKR.20040524104904.282"><vh>Converting @root trees to @file trees</vh></v>
-<v t="EKR.20040524104904.283"><vh>Directives</vh>
+<v t="EKR.20040524104904.283" a="E"><vh>Directives</vh>
 <v t="EKR.20040524104904.284"><vh>@c and @code</vh></v>
 <v t="EKR.20040524104904.285"><vh>@chapter (Macintosh only)</vh></v>
 <v t="EKR.20040524104904.286"><vh>@color</vh></v>
@@ -1927,7 +1929,7 @@
 <v t="EKR.20040524104904.295"><vh>@nocolor</vh></v>
 <v t="EKR.20040524104904.296"><vh>@others (valid only in @file trees)</vh></v>
 <v t="EKR.20040524104904.297"><vh>@pagewidth</vh></v>
-<v t="EKR.20040524104904.298"><vh>@path</vh></v>
+<v t="EKR.20040524104904.298" a="TV"><vh>@path</vh></v>
 <v t="EKR.20040524104904.299"><vh>@root  (not valid in @file trees)</vh></v>
 <v t="EKR.20040524104904.300"><vh>@section (Macintosh only)</vh></v>
 <v t="EKR.20040524104904.301"><vh>@silent (not valid in @file trees)</vh></v>
@@ -2084,7 +2086,7 @@
 <v t="EKR.20040524104904.429"><vh>Weaving</vh></v>
 </v>
 </v>
-<v t="edream.110203163054.1050" a="E"><vh>FAQ</vh>
+<v t="edream.110203163054.1050"><vh>FAQ</vh>
 <v t="edream.110203163054.1051"><vh>Learning about Leo</vh>
 <v t="edream.110203163054.1052"><vh>What's the best way to learn to use Leo?</vh></v>
 <v t="edream.110203163054.1053"><vh>Where are the simple examples?</vh></v>
@@ -2122,7 +2124,8 @@
 <v t="edream.110203163054.1070"><vh>How can I add support for a new language?</vh></v>
 <v t="ekr.20041220095419"><vh>How do I submit a plugin?</vh></v>
 <v t="edream.110203163054.319"><vh>Chapter 8: Customizing Leo</vh>
-<v t="edream.110203163054.320"><vh>Using leoConfig.leo and leoConfig.txt</vh></v>
+<v t="ekr.20050122084954"><vh>Using leoSettings.leo and @settings trees</vh></v>
+<v t="edream.110203163054.320"><vh>Obsolete: Using leoConfig.leo and leoConfig.txt</vh></v>
 <v t="edream.110203163054.321"><vh>Using plugins and hooks</vh>
 <v t="edream.110203163054.322"><vh>Overview of plugins and hooks</vh></v>
 <v t="edream.110203163054.323"><vh>New plugin architecture</vh>
@@ -2176,7 +2179,7 @@
 <v t="edream.120903151103"><vh>Importing files</vh>
 <v t="edream.120903151103.1"><vh>How can I import many files at once?</vh></v>
 </v>
-<v t="ekr.20050208054557" a="TV"><vh>Leo is hanging on my Linux box.  What should I do?</vh></v>
+<v t="ekr.20050208054557"><vh>Leo is hanging on my Linux box.  What should I do?</vh></v>
 <v t="edream.110203163054.1071"><vh>Other topics</vh>
 <v t="ekr.20040805102623"><vh>How can I use Python's pdb debugger with Leo?</vh></v>
 <v t="edream.110203163054.1073"><vh>How can I add support in Leo for a new language?</vh>
@@ -2896,7 +2899,7 @@ Leo scrolls the outline pane as the result of mouse-moved events, so to continue
 Leo only allows dragging from one icon to another.  In particular, you can't move a node to the first child of another node unless that node is already expanded.   I experimented with automatically open nodes when the cursor moves over an unexpanded node with children.  However, this was confusing and alarming.  It seems best to expand and contract nodes explicitly.</t>
 <t tx="EKR.20040524104904.39">Body text in leo.py has the following features:
 
-Leo auto indents when @nocolor is not in effect.  That is, typing a newline automatically inserts the same leading whitespace present on the previous line.  If the present language is Python (set either in the preferences or with an @language Python command), Leo inserts an additional tab if the previous line ends with a colon.
+Leo auto indents when @nocolor is not in effect.  That is, typing a newline automatically inserts the same leading whitespace present on the previous line.  If the present language is Python (set either in the Settings dialog or with an @language Python command), Leo inserts an additional tab if the previous line ends with a colon.
 
 The default features of Leo's body text derive from the Tk Text widget, described at:
 http://www.tcl.tk/man/tcl8.3/TkCmd/text.htm
@@ -3324,7 +3327,7 @@ Similarly, @last directives are recognized only at the end of body text of @file
 	...
 	@last ?&gt;</t>
 <t tx="EKR.20040524104904.85">@nocolor
-The @language directive specifies the comment delimiters and string types used by the Tangle and Untangle commands. This directive over-rides the default specified in the Preferences panel. The form of this directive is:
+The @language directive specifies the comment delimiters and string types used by the Tangle and Untangle commands. This directive over-rides the default specified in the Settings dialog. The form of this directive is:
 @color
 
 @language x
@@ -3351,14 +3354,14 @@ The valid forms of the new @lineending directive are:
 @lineending platform (same as platform value for output_newline setting in leoConfig.txt)</t>
 <t tx="EKR.20040524104904.87">@nocolor
 
-The @path, @pagewidth and @tabwidth directives allow preferences to be set on a file-by-file basis: they override the corresponding defaults in the Preferences panel.
+The @path, @pagewidth and @tabwidth directives allow preferences to be set on a file-by-file basis: they override the corresponding defaults in the Settings dialog.
 
 The form of the @path directive is @path filename, where filename is taken to be everything following @path to the end of the line.
 
 If the filename in @file pathname or @root pathname is an absolute filename the location of the derived file is specified only by the filename.  Otherwise, if the filename is a relative filename, the location of the derived file is relative to:
 	
 1. the directory specified the applicable @path directive, or
-2. the "Default Tangle Directory" in the Preferences panel if no @path directive is in effect, or
+2. the "Default Tangle Directory" in the Settings dialog if no @path directive is in effect, or
 3. the directory in which the .leo resides if the .leo file has ever been saved.
 
 An error occurs if no absolute path can be computed according to these rules, or if the filename or directory does not exist.
@@ -3377,7 +3380,7 @@ These @root options override the new at_root_bodies_start_in_doc_mode option in 
 By default, at_root_bodies_start_in_doc_mode = 1 for compatibility for old @root trees.  I actually don't think this option is good for much; I created it before I created @root-doc and @root-code, and I decided it wouldn't hurt to leave it in.  Anyway, you now have complete flexibility about how @root works, and in particular you can make @root work just like @file.</t>
 <t tx="EKR.20040524104904.90">New in version 3.12: By default, the body_pane_wraps setting in leoConfig.txt controls whether body text wraps.  You may override this setting for a particular tree using the @wrap and @nowrap directives.
 </t>
-<t tx="EKR.20040524104904.91">Cweb mode refers to how Leo tangles an outline when @language cweb is in effect or the cweb option in the Preferences Panel is in effect.
+<t tx="EKR.20040524104904.91">Cweb mode refers to how Leo tangles an outline when @language cweb is in effect or the cweb option in the Settings dialog is in effect.
 
 Leo treats _all_ cweb code in cweb mode as unevaluated text.  That is, Leo treats cweb control codes, including @&lt;...@&gt;, @&lt;...@&gt;=, @c, @space, @* and @** as "raw" text within cweb mode.  Leo does _not_ expand _cweb_ section references when writing derived files in cweb mode.  However, Leo _does_ expand _noweb_ section references, so you may use noweb sections to organize cweb files! You can create _noweb_ code and doc sections using the @code and @doc directives in place of @c and @space directives.
 
@@ -3547,7 +3550,7 @@ The @root directive has three forms. All three forms mean exactly the same thing
 If filename is an absolute filename the location of the derived file is specified only by the filename.  Otherwise, if the @root node contains a relative filename, the location of the derived file is relative to:
 	
 1. the directory specified the applicable @path directive, or
-2. the "Default Tangle Directory" in the Preferences panel if no @path directive is in effect, or
+2. the "Default Tangle Directory" in the Settings dialog if no @path directive is in effect, or
 3. the directory in which the .leo resides if the .leo file has ever been saved.
 
 An error occurs if no absolute path can be computed according to these rules, or if the filename or directory does not exist.
@@ -3729,7 +3732,7 @@ The Extract Section Names command creates one or more child nodes, one for each 
 
 The Convert Tabs command converts leading tabs to blanks in a single node.  The Convert Blanks command converts blanks to tabs in a single node.  The Convert All Tabs converts leading tabs to blanks throughout the selected tree.  The Convert All Blanks command converts leading blanks to tabs throughout the selected tree.
 
-All these commands convert between tabs and blanks using the tab width shown in the Preferences panel.</t>
+All these commands convert between tabs and blanks using the tab width shown in the Settings dialog.</t>
 <t tx="EKR.20040524104904.117">The Execute Script command executes body text as a Python script.  Leo execute the selected text, or the entire body text if no text is selected.
 
 Scripts are executed in a "pristine" environment, that is, with __builtins__ as both the local and global environments.
@@ -3944,15 +3947,15 @@ NOTE: Lines with hanging indentation are handled so that the hanging indentation
 This command looks for the matching character, searching backwards through the body text if the cursor is next to ) ] } or &gt; and searching forward through the text otherwise.  If the cursor is between two brackets the search is made for the bracket matching the leftmost bracket.
 
 If a match is found, the entire range of characters delimited by the brackets is highlighted and the cursor is placed just to the left of the matching characters.  Thus, executing this command twice highlights the range of matched characters without changing the cursor.</t>
-<t tx="EKR.20040524104904.140">New in leo.py 3.11:  The Preferences Panel now contains a checkbox called "Replace tabs with spaces".  It is no longer necessary to type a negative tab width to indicate that tabs are to be converted to spaces.
+<t tx="EKR.20040524104904.140">New in 4.3:
 
-New in leo.py 3.0: The Set Colors command brings up a dialog specifying colors for syntax coloring.  You can specify colors for each syntax coloring construct using a color wheel or by choosing one of the standard Tk color names.  When a color becomes active Leo writes its value or color name to the log pane for your reference.  This is useful when setting coloring options in leoConfig.txt.
+Leo now stores options in @settings trees, that is, outlines whose headline is '@settings'. When opening a .leo file, Leo looks for @settings trees not only in the outline being opened but also in various leoSettings.leo files.
 
-New in leo.py 3.0:  The Set Font command brings allows you to specify the fonts used in the body pane, the outline pane (in headlines) and in the log pane. A font becomes active when you double-click its name, or check or uncheck any checkbox.  When a font becomes "active", the new font appears in the panes whose check boxes are selected. Font sizes must be greater than 0 and less than 100 for them to become in effect.  When you choose OK or Cancel Leo writes the fonts presently active in each pane to the log pane for your reference.  This is useful when setting font options in leoConfig.txt.
+The key design goal of @settings trees was that Leo's user options must be infinitely flexible. That goal has been accomplished. Indeed, users can create arbitrarily complex user options with @settings trees. Leo settings outlines are, in fact, infinitely more flexible and powerful than any scheme based on flat text.
 
-The Preferences command brings up the preferences dialog. The Page Width option determines where Tangle will break lines. The other two global options control whether the Tangle and Untangle commands will execute a batch file when they are finished. The Default Target Language determines the default syntax coloring and the comment delimiters used by default when Tangling.
+The Settings command temporarily replaces the outline pane with an outline showing all the @settings trees in effect. The Settings command also replaces the body pane with a "settings pane". This settings pane allows you to change the settings selected in the outline pane using standard gui widgets. The settings pane is dynamically created from nodes in the settings tree; it is as extensible as the @settings tree itself.
 
-New in leo.py 2.5, negative tab widths: Leo converts tabs to blanks as you type when a negative tab width is specified.</t>
+For full details, see the children of this node.</t>
 <t tx="EKR.20040524104904.141">Leo understands the following PHP keywords:
 
 &lt;?php, ?&gt;, __CLASS__, __FILE__, __FUNCTION__, __LINE__, and,	as, break, case, cfunction, class, const, continue, declare, default, do, else, elseif,  enddeclare, endfor, endforeach, endif, endswitch, endwhile, eval,  extends, for, foreach, function, global, if, new, old_function, or, static, switch, unset(), use, var, while, xor,
@@ -4705,18 +4708,23 @@ p.setVisited()</t>
 
 You may customize Leo in several ways:
 
-I.  Using leoConfig.txt
+I.  With leoSettings.leo files and @settings trees.
 
-When Leo first starts, Leo looks for a file called leoConfig.txt, derived from leoConfig.leo, which contains extensive documentation for each setting.  The settings in leoConfig.txt include:
+When opening a .leo file, Leo looks for @settings trees in the following places:
+
+- The file called leoSettings.leo in the leo/config directory.
+- The file called leoSettings.leo in the users home directory.
+- The file being loaded.
+
+@settings tree specify settings such as:
 
 - Fonts used in Leo's body, outline and log panes.
 - Colors used for syntax coloring.
 - Menu shortcuts for all menu items.
 - Sizes and splitter orientation for newly created windows.
-- Initial entries in the Recent Files menu, and the Find, Preferences and Compare panels.
 - The format of .leo files.
 
-The section called "Using leoConfig.leo and leoConfig.txt" gives the rules for how Leo uses these two files.
+The section called "Using leoSettings.leo and @settings trees" provides full details for using leoSettings.leo files.
 
 II. Using plugins and hooks
 
@@ -9038,24 +9046,21 @@ Treat interface like class.</t>
 
 You may customize Leo in several ways:
 
-I.  Using leoConfig.txt
+I.  Using leoSettings.leo
 
-When Leo first starts, Leo looks for a file called leoConfig.txt, derived from leoConfig.leo, which contains extensive documentation for each setting.  The settings in leoConfig.txt include:
+The following information discusses how Leo 4.3 and all later versions handle user configuration settings. For all previous versions, see the node called 'Obsolete: Using leoConfig.leo and leoConfig.txt'
 
-- Fonts used in Leo's body, outline and log panes.
-- Colors used for syntax coloring.
-- Menu shortcuts for all menu items.
-- Sizes and splitter orientation for newly created windows.
-- Initial entries in the Recent Files menu, and the Find, Preferences and Compare panels.
-- The format of .leo files.
+Leo stores options in @settings trees, that is, parts of Leo outlines whose root node has the headline @settings.  When opening a .leo file, Leo looks for @settings trees in the following places:
 
-The section called "Using leoConfig.leo and leoConfig.txt" gives the rules for how Leo uses these two files.
+- The file called leoSettings.leo in the leo/config directory.
+- The file called leoSettings.leo in the users home directory.
+- The file being loaded.
+
+Settings that later in the above list override settings found earlier. For example, any setting specified in an @settings tree in the file being loaded overrides any setting seen in any leoSettings.leo file.
 
 II. Using plugins and hooks
 
-New in 3.11:  It is no longer necessary to modify customizeLeo.py.  Instead of modifying customizeLeo.py you now should add plugins to the plugins directory.  In fact, customizeLeo.py will soon disappear entirely.
-
-During startup, Leo looks for plugins, i.e., files whose name matches mod_*.py in the plugins directory.  These plugins register functions called "hooks" to be called a various times during execution.  Full details are provided below.
+During startup, Leo looks for plugins, i.e., .py files in the plugins directory.  These plugins register functions called "hooks" to be called a various times during execution.  Full details are provided below.
 
 Plugins provide the following advantages:
 
@@ -9663,7 +9668,7 @@ Similarly, Leo colors C comments in cweb mode using LaTeX coloring by default. T
 
 See the child of this node for full details about cweb mode.
 </t>
-<t tx="edream.110203163054.355">Cweb mode refers to how Leo tangles an outline when @language cweb is in effect or the cweb option in the Preferences Panel is in effect.
+<t tx="edream.110203163054.355">Cweb mode refers to how Leo tangles an outline when @language cweb is in effect or the cweb option in the Settings Panel is in effect.
 
 Leo treats _all_ cweb code in cweb mode as unevaluated text.  That is, Leo treats cweb control codes, including @&lt;...@&gt;, @&lt;...@&gt;=, @c, @space, @* and @** as "raw" text within cweb mode.  Leo does _not_ expand _cweb_ section references when writing derived files in cweb mode.  However, Leo _does_ expand _noweb_ section references, so you may use noweb sections to organize cweb files! You can create _noweb_ code and doc sections using the @code and @doc directives in place of @c and @space directives.
 
@@ -14113,7 +14118,7 @@ opened with PythonLauncher.
 
     http://pmw.sourceforge.net/
 
-Pmw must be installed in order to use the Preferences panel.
+Pmw must be installed in order to use the Settings panel.
 
 Drag the downloaded gzip file into
  
@@ -15664,7 +15669,7 @@ Leo stores options in @settings trees, that is, parts of Leo outlines whose root
 
 Settings that later in the above list override settings found earlier. For example, any setting specified in an @settings tree in the file being loaded overrides any setting seen in any leoSettings.leo file.
 
-In Leo 4.3 Preferences command temporarily replaces the outline pane with an outline showing all the @settings trees in effect. The Preferences command also replaces the body pane with a "settings dialog" pane. This settings dialog pane
+The Settings command temporarily replaces the outline pane with an outline showing all the @settings trees in effect. The Settings command also replaces the body pane with a "settings dialog" pane. This settings dialog pane
 allows you to change the settings selected in the outline pane using standard gui widgets.
 
 The format of nodes in @settings trees are as follows:
@@ -15726,10 +15731,16 @@ Such nodes have the effect of gathering all descendant settings nodes into a sin
 
 Notes:
 
-A.  At present, you can not change @settings trees while executing the Preferences command.  You can, however, change any @settings tree normally when not executing the Preferences command.
+A.  At present, you can not change @settings trees while executing the Settings command.  You can, however, change any @settings tree normally when not executing the Settings command.
 
 B. Other kinds of settings nodes are planned for future releases.</t>
-<t tx="ekr.20050122090016"></t>
+<t tx="ekr.20050122090016">Leo now stores options in @settings trees, that is, outlines whose headline is '@settings'. When opening a .leo file, Leo looks for @settings trees not only in the outline being opened but also in various leoSettings.leo files.
+
+The key design goal of @settings trees was that Leo's user options must be infinitely flexible. That goal has been accomplished. Indeed, users can create arbitrarily complex user options with @settings trees. Leo settings outlines are, in fact, infinitely more flexible and powerful than any scheme based on flat text.
+
+The Settings command temporarily replaces the outline pane with an outline showing all the @settings trees in effect. The Settings command also replaces the body pane with a "settings pane". This settings pane allows you to change the settings selected in the outline pane using standard gui widgets. The settings pane is dynamically created from nodes in the settings tree; it is as extensible as the @settings tree itself.
+
+For full details, see the children of this node.</t>
 <t tx="ekr.20050122090311">Leo 4.3 alpha 1                 January 24, 2005
 
 Leo 4.3 is the culmination of more than four months of work. 
@@ -15746,8 +15757,8 @@ arbitrarily complex user options with @settings trees. Leo settings outlines
 are, in fact, infinitely more flexible and powerful than any scheme based on
 flat text.  Readers of Python's configParser shootout take note!
 
-2. The Preferences command temporarily replaces the outline pane with an outline
-showing all the @settings trees in effect. The Preferences command also replaces
+2. The Settings command temporarily replaces the outline pane with an outline
+showing all the @settings trees in effect. The Settings command also replaces
 the body pane with a "settings pane". This settings pane allows you to change
 the settings selected in the outline pane using standard gui widgets. The
 settings pane is dynamically created from nodes in the settings tree; it is as
@@ -16116,7 +16127,7 @@ the last registered hook was ever being remembered!</t>
 
 The key design goal of @settings trees was that Leo's user options must be infinitely flexible. That goal has been accomplished. Indeed, users can create arbitrarily complex user options with @settings trees. Leo settings outlines are, in fact, infinitely more flexible and powerful than any scheme based on flat text.
 
-The Preferences command temporarily replaces the outline pane with an outline showing all the @settings trees in effect. The Preferences command also replaces the body pane with a "settings pane". This settings pane allows you to change the settings selected in the outline pane using standard gui widgets. The settings pane is dynamically created from nodes in the settings tree; it is as extensible as the @settings tree itself.
+The Settings command temporarily replaces the outline pane with an outline showing all the @settings trees in effect. The Settings command also replaces the body pane with a "settings pane". This settings pane allows you to change the settings selected in the outline pane using standard gui widgets. The settings pane is dynamically created from nodes in the settings tree; it is as extensible as the @settings tree itself.
 
 For full details, see the children of this node.</t>
 <t tx="ekr.20050123111723"></t>
@@ -16304,8 +16315,8 @@ arbitrarily complex user options with @settings trees. Leo settings outlines
 are, in fact, infinitely more flexible and powerful than any scheme based on
 flat text.  Readers of Python's configParser shootout take note!
 
-2. The Preferences command temporarily replaces the outline pane with an outline
-showing all the @settings trees in effect. The Preferences command also replaces
+2. The Settings command temporarily replaces the outline pane with an outline
+showing all the @settings trees in effect. The Settings command also replaces
 the body pane with a "settings pane". This settings pane allows you to change
 the settings selected in the outline pane using standard gui widgets. The
 settings pane is dynamically created from nodes in the settings tree; it is as

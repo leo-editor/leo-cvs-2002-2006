@@ -8308,6 +8308,9 @@ self.editMenuTopTable = (
     ("&Delete",None,c.delete),
     ("Select &All","Ctrl+A",f.body.selectAllText),
     ("-",None,None))
+    
+# Top-level shortcuts here:  a,d,p,t,u,y,z
+# Top-level shortcuts later: e,g,n,v
 #@nonl
 #@-node:ekr.20031218072017.839:<< define editMenuTopTable >>
 #@+node:ekr.20031218072017.840:Cut/Copy/Paste body text
