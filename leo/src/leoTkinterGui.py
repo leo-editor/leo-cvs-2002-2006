@@ -55,7 +55,8 @@ class tkinterGui(leoGui.leoGui):
         root.withdraw()
         
         self.setDefaultIcon()
-        self.getDefaultConfigFont(g.app.config)
+        if g.app.config:
+            self.getDefaultConfigFont(g.app.config)
         self.createGlobalWindows()
     
         return root
@@ -240,7 +241,8 @@ class tkinterGui(leoGui.leoGui):
         
     def createLeoFrame(self,title):
         """Create a new Leo frame."""
-        return leoTkinterFrame.leoTkinterFrame(title)
+        gui = self
+        return leoTkinterFrame.leoTkinterFrame(title,gui)
     
     def createPrefsPanel(self,c):
         """Create a Tkinter find panel."""

@@ -35,10 +35,9 @@ class leoColorPanel:
         self.top = None # Created in subclass.
     
         self.revertColors = {}
-        
-        config = g.app.config
+    
         for name,option_name,default_color in self.colorPanelData:
-            self.revertColors[option_name] = config.getColorsPref(option_name)
+            self.revertColors[option_name] = c.config.getString(option_name)
     #@nonl
     #@-node:ekr.20031218072017.3628:leoColorPanels.__init__
     #@+node:ekr.20031218072017.3629:Must be overridden in subclasses

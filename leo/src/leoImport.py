@@ -2436,8 +2436,9 @@ class baseLeoImportCommands:
     
     def convertVnodeToWeb (self,v):
     
-        if not v: return ""
-        startInCode = not g.app.config.at_root_bodies_start_in_doc_mode
+        c = self.c
+        if not v or not c: return ""
+        startInCode = not c.config.at_root_bodies_start_in_doc_mode
         nl = self.output_newline
         s = v.bodyString()
         lb = g.choose(self.webType=="cweb","@<","<<")
@@ -2530,7 +2531,7 @@ class baseLeoImportCommands:
         if not p: return
         self.setEncoding()
         firstLevel = p.level()
-        mode = g.app.config.output_newline
+        mode = c.config.output_newline
         mode = g.choose(mode=="platform",'w','wb')
         try:
             theFile = open(fileName,mode)
@@ -2555,7 +2556,7 @@ class baseLeoImportCommands:
         firstLevel = p.level()
     
         # 10/14/02: support for output_newline setting.
-        mode = g.app.config.output_newline
+        mode = c.config.output_newline
         mode = g.choose(mode=="platform",'w','wb')
         try:
             theFile = open(fileName,mode)
@@ -2584,7 +2585,7 @@ class baseLeoImportCommands:
         self.setEncoding()
         self.webType = webType
         # 10/14/02: support for output_newline setting.
-        mode = g.app.config.output_newline
+        mode = c.config.output_newline
         mode = g.choose(mode=="platform",'w','wb')
         try:
             theFile = open(fileName,mode)
@@ -2611,6 +2612,8 @@ class baseLeoImportCommands:
     #@-node:ekr.20031218072017.1148:outlineToWeb
     #@+node:ekr.20031218072017.3300:removeSentinelsCommand
     def removeSentinelsCommand (self,paths):
+        
+        c = self.c
     
         self.setEncoding()
     
@@ -2656,7 +2659,7 @@ class baseLeoImportCommands:
             #@nl
             # g.trace("line: '%s', start: '%s', end: '%s'" % (line_delim,start_delim,end_delim))
             s = self.removeSentinelLines(s,line_delim,start_delim,end_delim)
-            ext = g.app.config.remove_sentinels_extension
+            ext = c.config.remove_sentinels_extension
             if not ext:
                 ext = ".txt"
             if ext[0] == '.':
@@ -2667,7 +2670,7 @@ class baseLeoImportCommands:
             #@        << Write s into newFileName >>
             #@+node:ekr.20031218072017.1149:<< Write s into newFileName >>
             try:
-                mode = g.app.config.output_newline
+                mode = c.config.output_newline
                 mode = g.choose(mode=="platform",'w','wb')
                 theFile = open(newFileName,mode)
                 s = g.toEncodedString(s,self.encoding,reportErrors=True)
@@ -2755,7 +2758,7 @@ class baseLeoImportCommands:
         #@+node:ekr.20031218072017.1150:<< open filename to f, or return >>
         try:
             # 10/14/02: support for output_newline setting.
-            mode = g.app.config.output_newline
+            mode = c.config.output_newline
             mode = g.choose(mode=="platform",'w','wb')
             f = open(filename,mode)
             if not f: return

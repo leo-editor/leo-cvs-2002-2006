@@ -244,8 +244,8 @@ class leoTkinterPrefs (leoPrefs.leoPrefs,leoTkinterDialog.leoTkinterDialog):
     #@+node:ekr.20031218072017.4134:onOK, onCancel, onRevert
     def onOK (self):
         """Handle a click in the OK button in the tkinter Prefs panel."""
-        g.app.config.setConfigIvars(self.c)
-        g.app.config.update()
+        c = self.c
+        c.config.setConfigIvars()
         self.hide()
     
     def onCancel (self):

@@ -432,8 +432,8 @@ def scanDirectives(c,p=None):
     delim1, delim2, delim3 = g.set_delims_from_language(c.target_language)
     path = None
     encoding = None # 2/25/03: This must be none so that the caller can set a proper default.
-    lineending = g.getOutputNewline() # 4/24/03 initialize from config settings.
-    wrap = app.config.getBoolWindowPref("body_pane_wraps") # 7/7/03: this is a window pref.
+    lineending = g.getOutputNewline() # Init from config settings.
+    wrap = c.config.getBool("body_pane_wraps")
     #@nonl
     #@-node:ekr.20031218072017.1392:<< Set local vars >>
     #@nl
@@ -560,9 +560,6 @@ def scanDirectives(c,p=None):
 def openWithFileName(fileName,old_c,enableLog=True):
     
     """Create a Leo Frame for the indicated fileName if the file exists."""
-
-    # g.trace(fileName)
-    assert(app.config)
 
     if not fileName or len(fileName) == 0:
         return False, None
@@ -756,7 +753,7 @@ def es_error (s,color=None):
     config = app.config
 
     if color is None and config: # May not exist during initialization.
-        color = config.getWindowPref("log_error_color")
+        color = config.getString("log_error_color")
         g.es(s,color=color)
     else:
         g.es(s,color=color)
@@ -2070,7 +2067,7 @@ def os_path_isabs(path,encoding=None):
     return os.path.isabs(path)
 #@nonl
 #@-node:ekr.20031218072017.2151:os_path_isabs
-#@+node:ekr.20031218072017.2152:os_path_isdir (not used)
+#@+node:ekr.20031218072017.2152:os_path_isdir
 def os_path_isdir(path,encoding=None):
     
     """Normalize the path and convert it to an absolute path."""
@@ -2079,7 +2076,7 @@ def os_path_isdir(path,encoding=None):
 
     return os.path.isdir(path)
 #@nonl
-#@-node:ekr.20031218072017.2152:os_path_isdir (not used)
+#@-node:ekr.20031218072017.2152:os_path_isdir
 #@+node:ekr.20031218072017.2153:os_path_isfile
 def os_path_isfile(path,encoding=None):
     

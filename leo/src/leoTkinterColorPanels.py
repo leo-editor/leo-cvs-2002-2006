@@ -257,8 +257,7 @@ class leoTkinterColorPanel (leoColorPanel.leoColorPanel):
     #@+node:ekr.20031218072017.1875:createFrame (color panel)
     def createFrame (self):
         
-        c = self.c ; config = g.app.config ; gui = g.app.gui
-        
+        c = self.c ; gui = g.app.gui
         self.top = top = Tk.Toplevel(g.app.root)
         top.title("Syntax colors for " + c.frame.shortFileName()) # DS, 10/28/03
         top.protocol("WM_DELETE_WINDOW", self.onOk)
@@ -272,7 +271,7 @@ class leoTkinterColorPanel (leoColorPanel.leoColorPanel):
         # Create all the rows.
         for name,option_name,default_color in self.colorPanelData:
             # Get the color.
-            option_color = config.getColorsPref(option_name)
+            option_color = c.config.getString(option_name)
             color = g.choose(option_color,option_color,default_color)
             # Create the row.
             f = Tk.Frame(outer,bd=2)
@@ -321,8 +320,9 @@ class leoTkinterColorPanel (leoColorPanel.leoColorPanel):
     #@+node:ekr.20031218072017.3834:showColorPicker
     def showColorPicker (self,name):
         
+        c = self.c
         option_name = self.option_names[name]
-        color = g.app.config.getColorsPref(option_name)
+        color = c.config.getString(option_name)
         rgb,val = tkColorChooser.askcolor(color=color)
         if val != None:
             self.update(name,val)
@@ -340,10 +340,9 @@ class leoTkinterColorPanel (leoColorPanel.leoColorPanel):
     #@+node:ekr.20031218072017.3836:colorPanel.onOk, onCancel, onRevert
     def onOk (self):
         # Update the revert colors
-        config = g.app.config
         for name in self.changed_options:
             option_name = self.option_names[name]
-            self.revertColors[option_name] = config.getColorsPref(option_name)
+            self.revertColors[option_name] = self.c.config.getString(option_name)
         self.changed_options = []
         if 1: # Hide the window, preserving its position.
             self.top.withdraw()
@@ -360,12 +359,12 @@ class leoTkinterColorPanel (leoColorPanel.leoColorPanel):
             self.top.destroy()
         
     def onRevert (self):
-        config = g.app.config
+        c = self.c
         for name in self.changed_options:
             option_name = self.option_names[name]
             old_val = self.revertColors[option_name]
             # Update the current settings.
-            config.setColorsPref(option_name,old_val)
+            c.config.setString(option_name,old_val)
             # Update the buttons.
             b = self.buttons[name]
             b.configure(bg=old_val)
@@ -378,7 +377,7 @@ class leoTkinterColorPanel (leoColorPanel.leoColorPanel):
     #@+node:ekr.20031218072017.3837:update
     def update (self,name,val):
         
-        config = g.app.config
+        c = self.c
         # g.es(str(name) + " = " + str(val))
         
         # Put the new color in the button.
@@ -398,7 +397,7 @@ class leoTkinterColorPanel (leoColorPanel.leoColorPanel):
             self.changed_options.append(name)
     
         # Set the new value and recolor.
-        config.setColorsPref(option_name,val)
+        c.config.setString(option_name,val)
         self.c.recolor()
     #@nonl
     #@-node:ekr.20031218072017.3837:update

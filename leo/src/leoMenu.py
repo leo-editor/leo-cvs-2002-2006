@@ -802,6 +802,7 @@ class leoMenu:
     
     def createMenuEntries (self,menu,table,openWith=False,dontBind=False):
         
+        c = self.c
         for label,accel,command in table:
             if label == None or command == None or label == "-":
                 self.add_separator(menu)
@@ -820,8 +821,7 @@ class leoMenu:
                 #@nl
                 #@            << set accel to the shortcut for name >>
                 #@+node:ekr.20031218072017.1725:<< set accel to the shortcut for name >>
-                config = g.app.config
-                rawKey,accel2 = config.getShortcut(name)
+                rawKey,accel2 = c.config.getShortcut(name)
                 
                 # 7/19/03: Make sure "None" overrides the default shortcut.
                 if accel2 == None or len(accel2) == 0:
@@ -942,7 +942,7 @@ class leoMenu:
         #@<< create the recent files submenu >>
         #@+node:ekr.20031218072017.3791:<< create the recent files submenu >>
         self.createNewMenu("Recent &Files...","File")
-        c.recentFiles = g.app.config.getRecentFiles()
+        c.recentFiles = c.config.getRecentFiles()
         
         if 0: # Not needed, and causes problems in wxWindows...
             self.createRecentFilesMenuItems()

@@ -35,7 +35,7 @@ The code is based on code found in Python's IDLE program."""
 #@+node:ekr.20040928101836:<< imports >>
 import leoGlobals as g
 
-if g.app.config.use_psyco:
+if g.app.use_psyco:
     # print "enabled psyco classes",__file__
     try: from psyco.classes import *
     except ImportError: pass
@@ -276,7 +276,7 @@ class leoTkinterTree (leoFrame.leoTree):
         self.generation = 0
         self.dragging = False
         self.prevPositions = 0
-        self.expanded_click_area = g.app.config.getBoolWindowPref("expanded_click_area")
+        self.expanded_click_area = c.config.getBool("expanded_click_area")
         
         self.createPermanentBindings()
         self.setEditPosition(None) # Set positions returned by leoTree.editPosition()
@@ -664,11 +664,11 @@ class leoTkinterTree (leoFrame.leoTree):
         
     # Called by ctor and when config params are reloaded.
     def setFontFromConfig (self):
-    
-        font = g.app.config.getFontFromParams(
+        c = self.c
+        font = c.config.getFontFromParams(
             "headline_text_font_family", "headline_text_font_size",
             "headline_text_font_slant",  "headline_text_font_weight",
-            g.app.config.defaultTreeFontSize)
+            c.config.defaultTreeFontSize)
     
         self.setFont(font)
     #@nonl
@@ -705,8 +705,10 @@ class leoTkinterTree (leoFrame.leoTree):
     #@-node:ekr.20040803072955.29:setLineHeight
     #@+node:ekr.20040803072955.30:setTreeColorsFromConfig
     def setTreeColorsFromConfig (self):
+        
+        c = self.c
     
-        bg = g.app.config.getWindowPref("outline_pane_background_color")
+        bg = c.config.getString("outline_pane_background_color")
         if bg:
             try: self.canvas.configure(bg=bg)
             except: pass
@@ -1924,7 +1926,7 @@ class leoTkinterTree (leoFrame.leoTree):
         """The official helper of the onEndDrag event handler."""
         
         c = self.c ; p = self.drag_p
-        canvas = self.canvas ; config = g.app.config
+        canvas = self.canvas
         if not event: return
     
         #@    << set vdrag, childFlag >>
@@ -1941,8 +1943,8 @@ class leoTkinterTree (leoFrame.leoTree):
         #@nonl
         #@-node:ekr.20040803072955.104:<< set vdrag, childFlag >>
         #@nl
-        if config.getBoolWindowPref("allow_clone_drags"):
-            if not config.getBoolWindowPref("look_for_control_drag_on_mouse_down"):
+        if c.config.getBool("allow_clone_drags"):
+            if not c.config.getBool("look_for_control_drag_on_mouse_down"):
                 self.controlDrag = c.frame.controlKeyIsDown
     
         if vdrag and vdrag.v.t != p.v.t: # Disallow drag to joined node.
@@ -1995,13 +1997,12 @@ class leoTkinterTree (leoFrame.leoTree):
         self.dragging = True
         if self.trace and self.verbose:
             g.trace("*** start drag ***",theId,self.drag_p.headString())
-        windowPref = g.app.config.getBoolWindowPref
         # Only do this once: greatly speeds drags.
         self.savedNumberOfVisibleNodes = self.numberOfVisibleNodes()
-        if windowPref("allow_clone_drags"):
+        if c.config.getBool("allow_clone_drags"):
             self.controlDrag = c.frame.controlKeyIsDown
-            if windowPref("look_for_control_drag_on_mouse_down"):
-                if windowPref("enable_drag_messages"):
+            if c.config.getBool("look_for_control_drag_on_mouse_down"):
+                if c.config.getBool("enable_drag_messages"):
                     if self.controlDrag:
                         g.es("dragged node will be cloned")
                     else:
@@ -2682,15 +2683,15 @@ class leoTkinterTree (leoFrame.leoTree):
     #@+node:ekr.20040803072955.139:setDisabledHeadlineColors
     def setDisabledHeadlineColors (self,p):
     
-        config = g.app.config ; w = p.edit_text()
+        c = self.c ; w = p.edit_text()
         
         if self.trace and self.verbose:
             if not self.redrawing:
                 print "%10s %d %s" % ("disabled",id(w),p.headString())
                 # import traceback ; traceback.print_stack(limit=6)
     
-        fg = config.getWindowPref("headline_text_selected_foreground_color")
-        bg = config.getWindowPref("headline_text_selected_background_color")
+        fg = c.config.getString("headline_text_selected_foreground_color")
+        bg = c.config.getString("headline_text_selected_background_color")
         
         if not fg or not bg:
             fg,bg = "black","gray80"
@@ -2704,16 +2705,16 @@ class leoTkinterTree (leoFrame.leoTree):
     #@+node:ekr.20040803072955.140:setEditHeadlineColors
     def setEditHeadlineColors (self,p):
     
-        config = g.app.config ; w = p.edit_text()
+        c = self.c ; w = p.edit_text()
         
         if self.trace and self.verbose:
             if not self.redrawing:
                 print "%10s %d %s" % ("edit",id(2),p.headString())
         
-        fg   = config.getWindowPref("headline_text_editing_foreground_color")
-        bg   = config.getWindowPref("headline_text_editing_background_color")
-        selfg = config.getWindowPref("headline_text_editing_selection_foreground_color")
-        selbg = config.getWindowPref("headline_text_editing_selection_background_color")
+        fg    = c.config.getString("headline_text_editing_foreground_color")
+        bg    = c.config.getString("headline_text_editing_background_color")
+        selfg = c.config.getString("headline_text_editing_selection_foreground_color")
+        selbg = c.config.getString("headline_text_editing_selection_background_color")
         
         if not fg or not bg:
             fg,bg = "black","white"
@@ -2733,15 +2734,15 @@ class leoTkinterTree (leoFrame.leoTree):
     #@+node:ekr.20040803072955.141:setUnselectedHeadlineColors
     def setUnselectedHeadlineColors (self,p):
         
-        config = g.app.config ; w = p.edit_text()
+        c = self.c ; w = p.edit_text()
         
         if self.trace and self.verbose:
             if not self.redrawing:
                 print "%10s %d %s" % ("unselect",id(w),p.headString())
                 # import traceback ; traceback.print_stack(limit=6)
         
-        fg = config.getWindowPref("headline_text_unselected_foreground_color")
-        bg = config.getWindowPref("headline_text_unselected_background_color")
+        fg = c.config.getString("headline_text_unselected_foreground_color")
+        bg = c.config.getString("headline_text_unselected_background_color")
         
         if not fg or not bg:
             fg,bg = "black","white"

@@ -5,15 +5,15 @@
 
 from __future__ import generators # To make the code work in Python 2.2.
 
-#@<< imports for leoCommands >>
-#@+node:ekr.20040712045933:<< imports for leoCommands >>
+#@<< imports >>
+#@+node:ekr.20040712045933:<< imports  >>
 import leoGlobals as g
 
-if g.app.config.use_psyco:
+if g.app.use_psyco:
     # print "enabled psyco classes",__file__
     try: from psyco.classes import *
     except ImportError: pass
-    
+
 import leoAtFile
 import leoFileCommands
 import leoImport
@@ -31,9 +31,11 @@ import tabnanny # for Check Python command
 import token    # for Check Python command
 import tokenize # for Check Python command
 #@nonl
-#@-node:ekr.20040712045933:<< imports for leoCommands >>
+#@-node:ekr.20040712045933:<< imports  >>
 #@nl
 
+#@+others
+#@+node:ekr.20041118104831:class commands
 class baseCommands:
     """The base class for Leo's main commander."""
     #@    @+others
@@ -62,6 +64,8 @@ class baseCommands:
     #@+node:ekr.20040731071037:initIvars
     def initIvars(self):
     
+        c = self
+        self.config = configSettings(c)
         #@    << initialize ivars >>
         #@+node:ekr.20031218072017.2813:<< initialize ivars >>
         self._currentPosition = self.nullPosition()
@@ -204,7 +208,7 @@ class baseCommands:
     def signOnWithVersion (self):
     
         c = self
-        color = g.app.config.getWindowPref("log_error_color")
+        color = c.config.getString("log_error_color")
         signon = c.getSignOnLine()
         n1,n2,n3,junk,junk=sys.version_info
         tkLevel = c.frame.top.getvar("tk_patchLevel")
@@ -504,7 +508,7 @@ class baseCommands:
             theDict = g.scanDirectives(c,p=v)
             encoding = theDict.get("encoding",None)
             if encoding == None:
-                encoding = g.app.config.default_derived_file_encoding
+                encoding = c.config.default_derived_file_encoding
             s = g.toEncodedString(s,encoding,reportErrors=True) 
             theFile.write(s)
             theFile.flush()
@@ -749,8 +753,7 @@ class baseCommands:
                 frame.menu.createRecentFilesMenuItems()
             
         # Update the config file.
-        g.app.config.setRecentFiles(self.recentFiles) # Use self, _not_ c.
-        g.app.config.update()
+        self.config.setRecentFiles(self.recentFiles) # Use self, _not_ c.
     #@nonl
     #@-node:ekr.20031218072017.2083:updateRecentFiles
     #@-node:ekr.20031218072017.2079:Recent Files submenu & allies
@@ -1132,7 +1135,7 @@ class baseCommands:
             script = g.getScript(c,p,useSelectedText=useSelectedText)
         #@    << redirect output >>
         #@+node:ekr.20031218072017.2143:<< redirect output >>
-        if g.app.config.redirect_execute_script_output_to_log_pane:
+        if c.config.redirect_execute_script_output_to_log_pane:
         
             g.redirectStdout() # Redirect stdout
             g.redirectStderr() # Redirect stderr
@@ -1150,7 +1153,7 @@ class baseCommands:
                 exec script in {} # Use {} to get a pristine environment!
                 #@            << unredirect output >>
                 #@+node:EKR.20040627100424:<< unredirect output >>
-                if g.app.config.redirect_execute_script_output_to_log_pane:
+                if c.config.redirect_execute_script_output_to_log_pane:
                 
                     g.restoreStderr()
                     g.restoreStdout()
@@ -1162,7 +1165,7 @@ class baseCommands:
             except:
                 #@            << unredirect output >>
                 #@+node:EKR.20040627100424:<< unredirect output >>
-                if g.app.config.redirect_execute_script_output_to_log_pane:
+                if c.config.redirect_execute_script_output_to_log_pane:
                 
                     g.restoreStderr()
                     g.restoreStdout()
@@ -1213,7 +1216,7 @@ class baseCommands:
         elif not error:
             #@        << unredirect output >>
             #@+node:EKR.20040627100424:<< unredirect output >>
-            if g.app.config.redirect_execute_script_output_to_log_pane:
+            if c.config.redirect_execute_script_output_to_log_pane:
             
                 g.restoreStderr()
                 g.restoreStdout()
@@ -2286,16 +2289,16 @@ class baseCommands:
     #@+node:ekr.20031218072017.1832:getTime
     def getTime (self,body=True):
     
-        config = g.app.config
+        c = self
         default_format =  "%m/%d/%Y %H:%M:%S" # E.g., 1/30/2003 8:31:55
         
         # Try to get the format string from leoConfig.txt.
         if body:
-            format = config.getWindowPref("body_time_format_string")
-            gmt = config.getBoolWindowPref("body_gmt_time")
+            format = c.config.getString("body_time_format_string")
+            gmt    = c.config.getString("body_gmt_time")
         else:
-            format = config.getWindowPref("headline_time_format_string")
-            gmt = config.getBoolWindowPref("headline_gmt_time")
+            format = c.config.getString("headline_time_format_string")
+            gmt     = c.config.getString("headline_gmt_time")
     
         if format == None:
             format = default_format
@@ -4489,7 +4492,7 @@ class baseCommands:
         # 4/21/03 new code suggested by fBechmann@web.de
         c = self
         loadDir = g.app.loadDir
-        configDir = g.app.config.configDir
+        configDir = g.app.globalConfigDir
     
         # Look in configDir first.
         fileName = g.os_path_join(configDir, "leoConfig.leo")
@@ -4507,14 +4510,6 @@ class baseCommands:
                     g.es("leoConfig.leo not found in " + configDir + " or " + loadDir)
     #@nonl
     #@-node:ekr.20031218072017.2943:leoConfig
-    #@+node:ekr.20031218072017.2944:applyConfig
-    def applyConfig (self):
-    
-        c = self
-        g.app.config.init()
-        c.frame.reconfigureFromConfig()
-    #@nonl
-    #@-node:ekr.20031218072017.2944:applyConfig
     #@-node:ekr.20031218072017.2938:Help Menu
     #@-node:ekr.20031218072017.2818:Command handlers...
     #@+node:ekr.20031218072017.2945:Dragging (commands)
@@ -5443,6 +5438,166 @@ class baseCommands:
 class Commands (baseCommands):
     """A class that implements most of Leo's commands."""
     pass
+#@nonl
+#@-node:ekr.20041118104831:class commands
+#@+node:ekr.20041118104831.1:class configSettings
+class configSettings:
+    
+    """A class to hold config settings for commanders."""
+    
+    #@    @+others
+    #@+node:ekr.20041118104831.2:configSettings.__init__
+    def __init__ (self,c):
+        
+        self.c = c
+        
+        self.defaultBodyFontSize = g.app.config.defaultBodyFontSize
+        self.defaultLogFontSize  = g.app.config.defaultLogFontSize
+        self.defaultTreeFontSize = g.app.config.defaultTreeFontSize
+        
+        for ivar in g.app.config.encodingIvarsDict.keys():
+            self.initEncoding(ivar)
+            
+        for ivar in g.app.config.ivarsDict.keys():
+            self.initIvar(ivar)
+            
+        c.use_plugins = True ### Testing only.
+    #@nonl
+    #@+node:ekr.20041118104240:initIvar
+    def initIvar(self,ivarName):
+    
+        data = g.app.config.ivarsDict.get(ivarName)
+        
+        if data:
+            theType,val = data
+        else:
+            theType,val = None,None
+    
+        # g.trace(ivarName,val)
+    
+        setattr(self,ivarName,val)
+    #@nonl
+    #@-node:ekr.20041118104240:initIvar
+    #@+node:ekr.20041118104414:initEncoding
+    def initEncoding (self,encodingName):
+    
+        data = g.app.config.ivarsDict.get(encodingName)
+    
+        if data:
+            theType,encoding = data
+        else:
+            encoding = "utf-8" ##  This probably should be none until late in the init process.
+            theType = None
+    
+        # g.trace(encodingName,encoding)
+    
+        setattr(self,encodingName,encoding)
+    
+        if encoding and not g.isValidEncoding(encoding):
+            g.es("bad %s: %s" % (encodingName,encoding))
+    #@nonl
+    #@-node:ekr.20041118104414:initEncoding
+    #@-node:ekr.20041118104831.2:configSettings.__init__
+    #@+node:ekr.20041118053731:Getters
+    def getFontFromParams(self,family,size,slant,weight,defaultSize=12,tag=""):
+        return g.app.config.getFontFromParams(self.c,
+            family,size,slant,weight,defaultSize=defaultSize,tag=tag)
+    
+    def getRecentFiles (self):
+        return g.app.config.getRecentFiles(self.c)
+    
+    def getBool      (self,setting): return g.app.config.getBool     (self.c,setting)
+    def getColor     (self,setting): return g.app.config.getColor    (self.c,setting)
+    def getDirectory (self,setting): return g.app.config.getDirectory(self.c,setting)
+    def getInt       (self,setting): return g.app.config.getInt      (self.c,setting)
+    def getFloat     (self,setting): return g.app.config.getFloat    (self.c,setting)
+    def getFontDict  (self,setting): return g.app.config.getFontDict (self.c,setting)
+    def getLanguage  (self,setting): return g.app.config.getLanguage (self.c,setting)
+    def getShortcut  (self,setting): return g.app.config.getShortcut (self.c,setting)
+    def getString    (self,setting): return g.app.config.getString   (self.c,setting)
+    #@nonl
+    #@-node:ekr.20041118053731:Getters
+    #@+node:ekr.20041118195812:Setters...
+    #@+node:ekr.20041118195812.1:setCommandsFindIvars
+    def setCommandsFindIvars(self):
+        
+        return g.app.config.setCommandsFindIvars(self.c)
+    
+    #@-node:ekr.20041118195812.1:setCommandsFindIvars
+    #@+node:ekr.20041118195812.2:setString
+    def setString (self,setting,val):
+        
+        return g.app.config.setString(self.c,setting,val)
+    
+    #@-node:ekr.20041118195812.2:setString
+    #@+node:ekr.20041118195812.3:setRecentFiles
+    def setRecentFiles (self,files):
+        
+        return g.app.config.setRecentFiles(self.c,files)
+    #@-node:ekr.20041118195812.3:setRecentFiles
+    #@+node:ekr.20041117062717.20:setConfigIvars
+    # Sets config ivars from c.
+    
+    def setConfigIvars (self):
+        
+        c = self.c
+        config = g.app.config
+        
+        if c.target_language and g.app.language_delims_dict.get(c.target_language):
+            language = c.target_language
+        else:
+            language = "plain"
+    
+        self.setPref("default_tangle_directory",c.tangle_directory)
+        self.setPref("default_target_language",language)
+        self.setPref("output_doc_chunks",str(c.output_doc_flag))
+        self.setPref("page_width",str(c.page_width))
+        self.setPref("run_tangle_done.py",str(c.tangle_batch_flag))
+        self.setPref("run_untangle_done.py",str(c.untangle_batch_flag))
+        self.setPref("tab_width",str(c.tab_width))
+        self.setPref("tangle_outputs_header",str(c.use_header_flag))
+        
+        self.setPref("batch",str(c.batch_flag))
+        self.setPref("ignore_case",str(c.ignore_case_flag))
+        self.setPref("mark_changes",str(c.mark_changes_flag))
+        self.setPref("mark_finds",str(c.mark_finds_flag))
+        self.setPref("pattern_match",str(c.pattern_match_flag))
+        self.setPref("reverse",str(c.reverse_flag))
+        self.setPref("script_change",str(c.script_change_flag))
+        self.setPref("script_search",str(c.script_search_flag))
+        self.setPref("search_body",str(c.search_body_flag))
+        self.setPref("search_headline",str(c.search_headline_flag))
+        self.setPref("selection_only",str(c.selection_only_flag)) # 11/9/03
+        self.setPref("suboutline_only",str(c.suboutline_only_flag))
+        self.setPref("wrap",str(c.wrap_flag))
+        self.setPref("whole_word",str(c.whole_word_flag))
+        
+        self.setPref("change_string",c.change_text)
+        self.setPref("find_string",c.find_text)
+    #@nonl
+    #@-node:ekr.20041117062717.20:setConfigIvars
+    #@+node:ekr.20041117062717.19:setConfigFindIvars (not used)
+    def setConfigFindIvars (self):
+        
+        """Set the config ivars from the commander."""
+        
+        c = self.c
+    
+        # N.B.: separate c.ivars are much more convenient than a dict.
+        for s in g.app.findFrame.intKeys: # These _are_ gui-independent.
+            val = getattr(c,s+"_flag")
+            g.app.config.setPref(s,val)
+            # g.trace(s,val)
+        
+        g.app.config.setPref("change_string",c.change_text)
+        g.app.config.setPref("find_string",c.find_text)
+    #@nonl
+    #@-node:ekr.20041117062717.19:setConfigFindIvars (not used)
+    #@-node:ekr.20041118195812:Setters...
+    #@-others
+#@nonl
+#@-node:ekr.20041118104831.1:class configSettings
+#@-others
 #@nonl
 #@-node:ekr.20031218072017.2810:@thin leoCommands.py
 #@-leo

@@ -5,7 +5,7 @@
 
 import leoGlobals as g
 
-if g.app.config.use_psyco:
+if g.app.use_psyco:
     # print "enabled psyco classes",__file__
     try: from psyco.classes import *
     except ImportError: pass
@@ -55,12 +55,13 @@ class baseFileCommands:
     def initIvars(self):
     
         # General
+        c = self.c
         self.maxTnodeIndex = 0
         self.numberOfTnodes = 0
         self.topPosition = None
         self.mFileName = ""
         self.fileDate = -1
-        self.leo_file_encoding = g.app.config.new_leo_file_encoding
+        self.leo_file_encoding = c.config.new_leo_file_encoding
         # For reading
         self.descendentExpandedList = []
         self.descendentMarksList = []
@@ -492,7 +493,7 @@ class baseFileCommands:
     #@+node:ekr.20031218072017.2064:getFindPanelSettings
     def getFindPanelSettings (self):
     
-        c = self.c ; config = g.app.config ; findFrame = g.app.findFrame
+        c = self.c ; findFrame = g.app.findFrame
         #@    << Set defaults of all flags >>
         #@+node:ekr.20031218072017.2065:<< Set defaults of all flags >>
         if g.app.gui.guiName() == "tkinter":
@@ -539,7 +540,7 @@ class baseFileCommands:
             self.getTag("</find_panel_settings>")
         
         # Override .leo file's preferences if settings are in leoConfig.txt.
-        config.setCommandsFindIvars(c)
+        c.config.setCommandsFindIvars()
         # Update the settings immediately.
         if g.app.gui.guiName() == "tkinter":
             g.app.findFrame.init(c)
@@ -790,7 +791,7 @@ class baseFileCommands:
     #@+node:ekr.20031218072017.2062:getPrefs
     def getPrefs (self):
     
-        c = self.c ; config = g.app.config
+        c = self.c
         
         if self.getOpenTag("<preferences"):
             return # <preferences/> seeen
@@ -826,7 +827,7 @@ class baseFileCommands:
                 else: # New in 4.1: ignore all other tags.
                     self.getUnknownTag()
     
-        if not done: # 8/31/04
+        if not done:
             while 1:
                 if self.matchTag("<defaultDirectory>"):
                     # New in version 0.16.
@@ -839,10 +840,6 @@ class baseFileCommands:
                     self.getTag("</TSyntaxMemo_options>")
                 else: break
             self.getTag("</preferences>")
-    
-        # Override .leo file's preferences if settings are in leoConfig.txt.
-        if config.configsExist:
-            config.setCommandsIvars(c)
     #@nonl
     #@+node:ekr.20031218072017.2063:getTargetLanguage
     def getTargetLanguage (self):
@@ -1575,52 +1572,10 @@ class baseFileCommands:
     #@-node:ekr.20031218072017.3034:putEscapedString
     #@+node:ekr.20031218072017.3035:putFindSettings
     def putFindSettings (self):
-    
-        c = self.c ; config = g.app.config
         
-        if 1: # New in 4.3:  This settings never get written here.
-            self.put("<find_panel_settings/>") ; self.put_nl()
-        else:
-            self.put("<find_panel_settings")
-            #@        << put find settings that may exist in leoConfig.txt >>
-            #@+node:ekr.20031218072017.3036:<< put find settings that may exist in leoConfig.txt >>
-            if config.configsExist and not config.read_only:
-                pass # config.update has already been called.
-            else:
-                self.put_flag(c.batch_flag,"batch")
-                self.put_flag(c.ignore_case_flag,"ignore_case")
-                self.put_flag(c.mark_changes_flag,"mark_changes")
-                self.put_flag(c.mark_finds_flag,"mark_finds")
-                self.put_flag(c.pattern_match_flag,"pattern_match")
-                self.put_flag(c.reverse_flag,"reverse")
-                self.put_flag(c.search_headline_flag,"search_headline")
-                self.put_flag(c.search_body_flag,"search_body")
-                self.put_flag(c.suboutline_only_flag,"suboutline_only")
-                self.put_flag(c.whole_word_flag,"whole_word")
-                self.put_flag(c.wrap_flag,"wrap")
-                self.put_flag(c.node_only_flag,"node_only")
-            
-            self.put(">") ; self.put_nl()
-            
-            if config.configsExist and not config.read_only: # 8/6/02
-                self.put_tab()
-                self.put("<find_string></find_string>") ; self.put_nl()
-            else:
-                self.put_tab()
-                self.put("<find_string>") ; self.putEscapedString(c.find_text)
-                self.put("</find_string>") ; self.put_nl()
-            
-            if config.configsExist and not config.read_only: # 8/6/02
-                self.put_tab()
-                self.put("<change_string></change_string>") ; self.put_nl()
-            else:
-                self.put_tab()
-                self.put("<change_string>") ; self.putEscapedString(c.change_text)
-                self.put("</change_string>") ; self.put_nl()
-            #@nonl
-            #@-node:ekr.20031218072017.3036:<< put find settings that may exist in leoConfig.txt >>
-            #@nl
-            self.put("</find_panel_settings>") ; self.put_nl()
+        # New in 4.3:  These settings never get written to the .leo file.
+        self.put("<find_panel_settings/>")
+        self.put_nl()
     #@nonl
     #@-node:ekr.20031218072017.3035:putFindSettings
     #@+node:ekr.20031218072017.3041:putHeader
@@ -1663,61 +1618,16 @@ class baseFileCommands:
     #@-node:ekr.20031218072017.3042:putPostlog
     #@+node:ekr.20031218072017.2066:putPrefs
     def putPrefs (self):
-    
-        c = self.c ; config = g.app.config
         
-        if 1: # New in 4.3:  This settings never get written here.
-            self.put("<preferences/>") ; self.put_nl()
-        else:
-            self.put("<preferences")
-            if 0:
-                self.put(" allow_rich_text=") ; self.put_dquoted_bool(0) # no longer used
-            #@        << put prefs that may exist in leoConfig.txt >>
-            #@+node:ekr.20031218072017.2067:<< put prefs that may exist in leoConfig.txt >> (putPrefs)
-            language = c.target_language
-            for name in xml_language_names:
-                s = string.lower(name)
-                s = string.replace(s,"/","")
-                if s == language:
-                    language = name ; break
-            
-            if config.configsExist and not config.read_only: # 8/6/02
-                pass # config.update has already been called.
-            else:
-                self.put(" defaultTargetLanguage=") ; self.put_in_dquotes(language)
-                self.put(" node_only=") ; self.put_dquoted_bool(c.node_only_flag)
-                self.put(" output_doc_chunks=") ; self.put_dquoted_bool(c.output_doc_flag)
-                self.put(" page_width=") ; self.put_in_dquotes(str(c.page_width))
-                self.put(" tab_width=") ; self.put_in_dquotes(str(c.tab_width))
-                self.put(" tangle_bat=") ; self.put_dquoted_bool(c.tangle_batch_flag)
-                self.put(" untangle_bat=") ; self.put_dquoted_bool(c.untangle_batch_flag)
-                self.put(" use_header_flag=") ; self.put_dquoted_bool(c.use_header_flag)
-            
-            self.put(">") ; self.put_nl()
-            # New in version 0.16
-            #@<< put default directory >>
-            #@+node:ekr.20031218072017.2068:<< put default directory >>
-            if config.configsExist:
-                pass # Has been done earlier.
-            elif len(c.tangle_directory) > 0:
-                self.put_tab()
-                self.put("<defaultDirectory>")
-                self.putEscapedString(c.tangle_directory)
-                self.put("</defaultDirectory>")
-                self.put_nl()
-            #@nonl
-            #@-node:ekr.20031218072017.2068:<< put default directory >>
-            #@nl
-            #@nonl
-            #@-node:ekr.20031218072017.2067:<< put prefs that may exist in leoConfig.txt >> (putPrefs)
-            #@nl
-            self.put("</preferences>") ; self.put_nl()
+        # New in 4.3:  These settings never get written to the .leo file.
+        self.put("<preferences/>")
+        self.put_nl()
     #@nonl
     #@-node:ekr.20031218072017.2066:putPrefs
     #@+node:ekr.20031218072017.1246:putProlog
     def putProlog (self):
     
-        c = self.c ; config = g.app.config
+        c = self.c
     
         #@    << Put the <?xml...?> line >>
         #@+node:ekr.20031218072017.1247:<< Put the <?xml...?> line >>
@@ -1730,13 +1640,13 @@ class baseFileCommands:
         #@nl
         #@    << Put the optional <?xml-stylesheet...?> line >>
         #@+node:ekr.20031218072017.1248:<< Put the optional <?xml-stylesheet...?> line >>
-        if config.stylesheet or c.frame.stylesheet:
+        if c.config.stylesheet or c.frame.stylesheet:
             
             # The stylesheet in the .leo file takes precedence over the default stylesheet.
             if c.frame.stylesheet:
                 s = c.frame.stylesheet
             else:
-                s = config.stylesheet
+                s = c.config.stylesheet
                 
             tag = "<?xml-stylesheet "
             # print "writing:", tag + s + "?>"
@@ -2020,7 +1930,7 @@ class baseFileCommands:
             if ok:
                 c.setChanged(False) # Clears all dirty bits.
                 g.es("saved: " + g.shortFileName(fileName))
-                if g.app.config.save_clears_undo_buffer:
+                if c.config.save_clears_undo_buffer:
                     g.es("clearing undo")
                     c.undoer.clearUndoState()
             c.endUpdate()
@@ -2075,7 +1985,7 @@ class baseFileCommands:
     #@+node:ekr.20031218072017.3046:write_Leo_file
     def write_Leo_file(self,fileName,outlineOnlyFlag):
     
-        c = self.c ; config = g.app.config
+        c = self.c
     
         self.assignFileIndices()
         if not outlineOnlyFlag:
@@ -2161,17 +2071,6 @@ class baseFileCommands:
                 return False
             #@nonl
             #@-node:ekr.20040324080359.2:<< create the output file >>
-            #@nl
-            #@        << update leoConfig.txt >>
-            #@+node:ekr.20040324080819:<< update leoConfig.txt >>
-            if 0: # Not done in 4.3.
-                c.setIvarsFromFind()
-                config.setConfigFindIvars(c)
-                c.setIvarsFromPrefs()
-                config.setCommandsIvars(c)
-                config.update()
-            #@nonl
-            #@-node:ekr.20040324080819:<< update leoConfig.txt >>
             #@nl
             #@        << put the .leo file >>
             #@+node:ekr.20040324080819.1:<< put the .leo file >>

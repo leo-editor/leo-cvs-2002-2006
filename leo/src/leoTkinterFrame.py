@@ -29,10 +29,10 @@ class leoTkinterFrame (leoFrame.leoFrame):
     #@    @+others
     #@+node:ekr.20031218072017.3941: frame.Birth & Death
     #@+node:ekr.20031218072017.1801:f.__init__
-    def __init__(self,title):
+    def __init__(self,title,gui):
     
         # Init the base class.
-        leoFrame.leoFrame.__init__(self)
+        leoFrame.leoFrame.__init__(self,gui)
     
         self.title = title
         leoTkinterFrame.instances += 1
@@ -73,9 +73,9 @@ class leoTkinterFrame (leoFrame.leoFrame):
     #@+node:ekr.20031218072017.3944:f.createCanvas
     def createCanvas (self,parentFrame):
         
-        frame = self ; config = g.app.config
+        frame = self ; c = frame.c
         
-        scrolls = config.getBoolWindowPref('outline_pane_scrolls_horizontally')
+        scrolls = c.config.getBool('outline_pane_scrolls_horizontally')
         scrolls = g.choose(scrolls,1,0)
     
         canvas = Tk.Canvas(parentFrame,name="canvas",
@@ -159,6 +159,9 @@ class leoTkinterFrame (leoFrame.leoFrame):
     def finishCreate (self,c):
         
         frame = self ; frame.c = c ; gui = g.app.gui
+        
+        # This must be done after creating the commander.
+        self.splitVerticalFlag,self.ratio,self.secondary_ratio = frame.initialRatios()
     
         #@    << create the toplevel frame >>
         #@+node:ekr.20031218072017.2177:<< create the toplevel frame >>
@@ -746,14 +749,14 @@ class leoTkinterFrame (leoFrame.leoFrame):
     #@+node:ekr.20031218072017.3968:configureBar
     def configureBar (self, bar, verticalFlag):
         
-        config = g.app.config
+        c = self.c
     
         # Get configuration settings.
-        w = config.getWindowPref("split_bar_width")
+        w = c.config.getInt("split_bar_width")
         if not w or w < 1: w = 7
-        relief = config.getWindowPref("split_bar_relief")
+        relief = c.config.getString("split_bar_relief")
         if not relief: relief = "flat"
-        color = config.getWindowPref("split_bar_color")
+        color = c.config.getString("split_bar_color")
         if not color: color = "LightSteelBlue2"
     
         try:
@@ -777,15 +780,15 @@ class leoTkinterFrame (leoFrame.leoFrame):
     #@+node:ekr.20031218072017.3969:configureBarsFromConfig
     def configureBarsFromConfig (self):
         
-        config = g.app.config
+        c = self.c
     
-        w = config.getWindowPref("split_bar_width")
+        w = c.config.getInt("split_bar_width")
         if not w or w < 1: w = 7
         
-        relief = config.getWindowPref("split_bar_relief")
+        relief = c.config.getString("split_bar_relief")
         if not relief or relief == "": relief = "flat"
     
-        color = config.getWindowPref("split_bar_color")
+        color = c.config.getString("split_bar_color")
         if not color or color == "": color = "LightSteelBlue2"
     
         if self.splitVerticalFlag:
@@ -828,12 +831,12 @@ class leoTkinterFrame (leoFrame.leoFrame):
         
         """Set the position and size of the frame to config params."""
         
-        config = g.app.config
+        c = self.c
     
-        h = config.getIntWindowPref("initial_window_height")
-        w = config.getIntWindowPref("initial_window_width")
-        x = config.getIntWindowPref("initial_window_left")
-        y = config.getIntWindowPref("initial_window_top")
+        h = c.config.getInt("initial_window_height")
+        w = c.config.getInt("initial_window_width")
+        x = c.config.getInt("initial_window_left")
+        y = c.config.getInt("initial_window_top")
         
         if h and w and x and y:
             self.setTopGeometry(w,h,x,y)
@@ -897,7 +900,9 @@ class leoTkinterFrame (leoFrame.leoFrame):
     #@+node:ekr.20031218072017.3970:reconfigurePanes (use config bar_width)
     def reconfigurePanes (self):
         
-        border = g.app.config.getIntWindowPref('additional_body_text_border')
+        c = self.c
+        
+        border = c.config.getInt('additional_body_text_border')
         if border == None: border = 0
         
         # The body pane needs a _much_ bigger border when tiling horizontally.
@@ -1254,14 +1259,14 @@ class leoTkinterFrame (leoFrame.leoFrame):
     # The key invariant: self.splitVerticalFlag tells the alignment of the main splitter.
     def toggleSplitDirection(self):
         # Abbreviations.
-        frame = self
+        frame = self ; c = frame.c
         bar1 = self.bar1 ; bar2 = self.bar2
         split1Pane1,split1Pane2 = self.split1Pane1,self.split1Pane2
         split2Pane1,split2Pane2 = self.split2Pane1,self.split2Pane2
         # Switch directions.
         verticalFlag = self.splitVerticalFlag = not self.splitVerticalFlag
         orientation = g.choose(verticalFlag,"vertical","horizontal")
-        g.app.config.setWindowPref("initial_splitter_orientation",orientation)
+        c.config.setString("initial_splitter_orientation",orientation)
         # Reconfigure the bars.
         bar1.place_forget()
         bar2.place_forget()
@@ -1451,10 +1456,10 @@ class leoTkinterBody (leoFrame.leoBody):
     #@+node:ekr.20031218072017.3998:tkBody.createControl
     def createControl (self,frame,parentFrame):
         
-        config = g.app.config
+        c = self.c
     
         # A light selectbackground value is needed to make syntax coloring look good.
-        wrap = config.getBoolWindowPref('body_pane_wraps')
+        wrap = c.config.getBool('body_pane_wraps')
         wrap = g.choose(wrap,"word","none")
         
         # Setgrid=1 cause severe problems with the font panel.
@@ -1490,33 +1495,33 @@ class leoTkinterBody (leoFrame.leoBody):
     #@+node:ekr.20031218072017.2183:tkBody.setFontFromConfig
     def setFontFromConfig (self):
     
-        config = g.app.config ; body = self.bodyCtrl
+        c = self.c ; body = self.bodyCtrl
         
-        font = config.getFontFromParams(
+        font = c.config.getFontFromParams(
             "body_text_font_family", "body_text_font_size",
             "body_text_font_slant",  "body_text_font_weight",
-            config.defaultBodyFontSize, tag = "body")
+            c.config.defaultBodyFontSize, tag = "body")
     
         if g.app.trace:
             g.trace(body.cget("font"),font.cget("family"),font.cget("weight"))
     
         body.configure(font=font)
         
-        bg = config.getWindowPref("body_text_background_color")
+        bg = c.config.getString("body_text_background_color")
         if bg:
             try: body.configure(bg=bg)
             except:
                 g.es("exception setting body background color")
                 g.es_exception()
         
-        fg = config.getWindowPref("body_text_foreground_color")
+        fg = c.config.getString("body_text_foreground_color")
         if fg:
             try: body.configure(fg=fg)
             except:
                 g.es("exception setting body foreground color")
                 g.es_exception()
     
-        bg = config.getWindowPref("body_insertion_cursor_color")
+        bg = c.config.getString("body_insertion_cursor_color")
         if bg:
             try: body.configure(insertbackground=bg)
             except:
@@ -1524,8 +1529,8 @@ class leoTkinterBody (leoFrame.leoBody):
                 g.es_exception()
             
         if sys.platform != "win32": # Maybe a Windows bug.
-            fg = config.getWindowPref("body_cursor_foreground_color")
-            bg = config.getWindowPref("body_cursor_background_color")
+            fg = c.config.getString("body_cursor_foreground_color")
+            bg = c.config.getString("body_cursor_background_color")
             # print fg, bg
             if fg and bg:
                 cursor="xterm" + " " + fg + " " + bg
@@ -1650,7 +1655,7 @@ class leoTkinterBody (leoFrame.leoBody):
                         # For Python: increase auto-indent after colons.
                         if self.colorizer.scanColorDirectives(p) == "python":
                             width += abs(tab_width)
-                    if g.app.config.getBoolWindowPref("smart_auto_indent"):
+                    if c.config.getBool("smart_auto_indent"):
                         # Added Nov 18 by David McNab, david@rebirthing.co.nz
                         # Determine if prev line has unclosed parens/brackets/braces
                         brackets = [width]
@@ -2424,9 +2429,9 @@ class leoTkinterLog (leoFrame.leoLog):
     #@+node:ekr.20031218072017.4042:tkLog.createControl
     def createControl (self,parentFrame):
         
-        config = g.app.config
+        c = self.c
         
-        wrap = config.getBoolWindowPref('log_pane_wraps')
+        wrap = c.config.getBool('log_pane_wraps')
         wrap = g.choose(wrap,"word","none")
     
         log = Tk.Text(parentFrame,name="log",
@@ -2561,21 +2566,21 @@ class leoTkinterLog (leoFrame.leoLog):
     #@+node:ekr.20031218072017.4046:tkLog.setFontFromConfig
     def setFontFromConfig (self):
     
-        logCtrl = self.logCtrl ; config = g.app.config
+        c = self.c ; logCtrl = self.logCtrl
     
-        font = config.getFontFromParams(
+        font = c.config.getFontFromParams(
             "log_text_font_family", "log_text_font_size",
             "log_text_font_slant",  "log_text_font_weight",
-            config.defaultLogFontSize)
+            c.config.defaultLogFontSize)
         
         logCtrl.configure(font=font)
     
-        bg = config.getWindowPref("log_text_background_color")
+        bg = c.config.getString("log_text_background_color")
         if bg:
             try: logCtrl.configure(bg=bg)
             except: pass
         
-        fg = config.getWindowPref("log_text_foreground_color")
+        fg = c.config.getString("log_text_foreground_color")
         if fg:
             try: logCtrl.configure(fg=fg)
             except: pass

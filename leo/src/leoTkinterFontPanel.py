@@ -252,11 +252,11 @@ class leoTkinterFontPanel (leoFontPanel.leoFontPanel):
     def onOk (self):
     
         c = self.c
+        self.update() # It is natural for OK to apply the settings.
         self.showSettings()
-        
         #@    << update the configuration settings >>
         #@+node:ekr.20031218072017.3927:<< update the configuration settings >>
-        set = g.app.config.setWindowPref
+        set = c.config.setString
         
         fn = c.frame.body.cget("font")
         font = tkFont.Font(font=fn)
@@ -283,7 +283,6 @@ class leoTkinterFontPanel (leoFontPanel.leoFontPanel):
         #@nonl
         #@-node:ekr.20031218072017.3927:<< update the configuration settings >>
         #@nl
-    
         self.setRevertVars()
         self.hide()
     #@nonl
@@ -481,7 +480,6 @@ class leoTkinterFontPanel (leoFontPanel.leoFontPanel):
         if not bodyChecked and not logChecked and not treeChecked:
             g.es("no pane selected")
             return
-        
     
         # c.frame.body.configure(setgrid=0) # Disable body resizes.
         c.beginUpdate()

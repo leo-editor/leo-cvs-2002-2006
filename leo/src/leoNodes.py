@@ -221,7 +221,7 @@ from __future__ import generators # To make the code work in Python 2.2.
 
 import leoGlobals as g
 
-if g.app.config.use_psyco:
+if g.app.use_psyco:
     # print "enabled psyco classes",__file__
     try: from psyco.classes import *
     except ImportError: pass
@@ -374,8 +374,9 @@ class baseTnode (object):
         s = g.toUnicode(s,encoding,reportErrors=True)
         
         if 0: # DANGEROUS:  This automatically converts everything when reading files.
-    
-            option = g.app.config.trailing_body_newlines
+        
+            ## Self c does not exist yet.
+            option = c.config.trailing_body_newlines
             
             if option == "one":
                 s = s.rstrip() + '\n'
@@ -1306,12 +1307,12 @@ class nodeIndices (object):
     
     #@    @+others
     #@+node:ekr.20031218072017.1992:nodeIndices.__init__
-    def __init__ (self):
+    def __init__ (self,id):
         
         """ctor for nodeIndices class"""
     
-        self.userId = g.app.leoID # 5/1/03: This never changes.
-        self.defaultId = g.app.leoID # This probably will change.
+        self.userId = id
+        self.defaultId = id
         self.lastIndex = None
         self.timeString = None
     #@nonl

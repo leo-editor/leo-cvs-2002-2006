@@ -361,10 +361,11 @@ class leoFrame:
     
     #@    @+others
     #@+node:ekr.20031218072017.3679:  leoFrame.__init__
-    def __init__ (self):
+    def __init__ (self,gui):
         
         self.c = None # Must be created by subclasses.
         self.title = None # Must be created by subclasses.
+        self.gui = gui
         
         # Objects attached to this frame.
         self.menu = None
@@ -378,7 +379,7 @@ class leoFrame:
         self.es_newlines = 0 # newline count for this log stream
         self.openDirectory = ""
         self.saved=False # True if ever saved
-        self.splitVerticalFlag,self.ratio, self.secondary_ratio = self.initialRatios()
+        self.splitVerticalFlag,self.ratio, self.secondary_ratio = True,0.5,0.5 # Set by initialRatios later.
         self.startupWindow=False # True if initially opened window
         self.stylesheet = None # The contents of <?xml-stylesheet...?> line.
     
@@ -474,21 +475,21 @@ class leoFrame:
     #@-node:ekr.20031218072017.3688:getTitle & setTitle
     #@+node:ekr.20031218072017.3689:initialRatios
     def initialRatios (self):
+        
+        c = self.c
     
-        config = g.app.config
-    
-        s = config.getWindowPref("initial_splitter_orientation")
+        s = c.config.getString("initial_splitter_orientation")
         verticalFlag = s == None or (s != "h" and s != "horizontal")
     
         if verticalFlag:
-            r = config.getFloatWindowPref("initial_vertical_ratio")
+            r = c.config.getString("initial_vertical_ratio")
             if r == None or r < 0.0 or r > 1.0: r = 0.5
-            r2 = config.getFloatWindowPref("initial_vertical_secondary_ratio")
+            r2 = c.config.getString("initial_vertical_secondary_ratio")
             if r2 == None or r2 < 0.0 or r2 > 1.0: r2 = 0.8
         else:
-            r = config.getFloatWindowPref("initial_horizontal_ratio")
+            r = c.config.getString("initial_horizontal_ratio")
             if r == None or r < 0.0 or r > 1.0: r = 0.3
-            r2 = config.getFloatWindowPref("initial_horizontal_secondary_ratio")
+            r2 = c.config.getString("initial_horizontal_secondary_ratio")
             if r2 == None or r2 < 0.0 or r2 > 1.0: r2 = 0.8
     
         # print r,r2
@@ -697,7 +698,7 @@ class leoTree:
     def redraw(self,event=None): # May be bound to an event.
         self.oops()
     
-    def redraw_now(self):
+    def redraw_now(self,scroll=True):
         self.oops()
         
     def redrawAfterException (self):
@@ -1309,9 +1310,9 @@ class nullFrame (leoFrame):
     
     #@    @+others
     #@+node:ekr.20040327105706:__init__
-    def __init__ (self,title,useNullUndoer=False):
+    def __init__ (self,title,gui,useNullUndoer=False):
     
-        leoFrame.__init__(self) # Init the base class.
+        leoFrame.__init__(self,gui) # Init the base class.
         assert(self.c is None)
         self.title = title
         self.useNullUndoer = useNullUndoer
@@ -1325,10 +1326,17 @@ class nullFrame (leoFrame):
             return nullObject()
     #@nonl
     #@-node:ekr.20040327105706.1:__getattr__ NOT USED
+    #@+node:ekr.20041120073824:destroySelf
+    def destroySelf (self):
+        
+        pass
+    #@nonl
+    #@-node:ekr.20041120073824:destroySelf
     #@+node:ekr.20040327105706.2:finishCreate
     def finishCreate(self,c):
     
         self.c = c
+    
         # Create do-nothing component objects.
         self.tree = nullTree(frame=self)
         self.body = nullBody(frame=self,parentFrame=None)
@@ -1426,7 +1434,7 @@ class nullTree (leoTree):
     def redraw(self,event=None):
         pass
     
-    def redraw_now(self):
+    def redraw_now(self,scroll=True):
         pass
     #@nonl
     #@-node:ekr.20031218072017.2237:Drawing

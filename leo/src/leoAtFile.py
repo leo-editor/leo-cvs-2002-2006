@@ -9,7 +9,7 @@
 #@+node:ekr.20041005105605.2:<< imports >>
 import leoGlobals as g
 
-if g.app.config.use_psyco:
+if g.app.use_psyco:
     # print "enabled psyco classes",__file__
     try: from psyco.classes import *
     except ImportError: pass
@@ -176,11 +176,10 @@ class atFile:
         
         The defaults set here may be changed later."""
         
-        at = self
+        at = self ; c = at.c
         
         if self.testing:
             # Save "permanent" ivars
-            c = at.c
             fileCommands = at.fileCommands
             dispatch_dict = at.dispatch_dict
             # Clear all ivars.
@@ -199,7 +198,7 @@ class atFile:
         self.output_newline = g.getOutputNewline()
         
         # Set by scanHeader when reading and scanAllDirectives when writing.
-        self.encoding = g.app.config.default_derived_file_encoding
+        self.encoding = c.config.default_derived_file_encoding
         self.endSentinelComment = ""
         self.startSentinelComment = ""
         
@@ -2324,7 +2323,7 @@ class atFile:
     #@+node:ekr.20041005105605.120:parseLeoSentinel
     def parseLeoSentinel (self,s):
         
-        at = self
+        at = self ; c = at.c
         new_df = False ; valid = True ; n = len(s)
         isThinDerivedFile = False
         encoding_tag = "-encoding="
@@ -2396,7 +2395,7 @@ class atFile:
         #@    << read optional encoding param >>
         #@+node:ekr.20041005105605.125:<< read optional encoding param >>
         # Set the default encoding
-        at.encoding = g.app.config.default_derived_file_encoding
+        at.encoding = c.config.default_derived_file_encoding
         
         if g.match(s,i,encoding_tag):
             # Read optional encoding param, e.g., -encoding=utf-8,
@@ -2597,7 +2596,7 @@ class atFile:
             at.putOpenLeoSentinel("@+leo-ver=4")
             #@<< put optional @comment sentinel lines >>
             #@+node:ekr.20041005105605.139:<< put optional @comment sentinel lines >>
-            s2 = g.app.config.output_initial_comment
+            s2 = c.config.output_initial_comment
             if s2:
                 lines = string.split(s2,"\\n")
                 for line in lines:
@@ -3341,7 +3340,7 @@ class atFile:
         j = g.skip_line(s,i)
         line = s[i:j]
     
-        # g.app.config.write_strips_blank_lines
+        # c.config.write_strips_blank_lines
         if 0: # 7/22/04: Don't put any whitespace in otherwise blank lines.
             if line.strip(): # The line has non-empty content.
                 if not at.raw:
@@ -4104,7 +4103,8 @@ class atFile:
     #@+node:ekr.20041005105605.211:putInitialComment
     def putInitialComment (self):
         
-        s2 = g.app.config.output_initial_comment
+        c = self.c
+        s2 = c.config.output_initial_comment
         if s2:
             lines = string.split(s2,"\\n")
             for line in lines:
@@ -4309,7 +4309,7 @@ class atFile:
         delim1, delim2, delim3 = g.set_delims_from_language(c.target_language)
         self.language = c.target_language
         
-        self.encoding = g.app.config.default_derived_file_encoding
+        self.encoding = c.config.default_derived_file_encoding
         self.output_newline = g.getOutputNewline() # 4/24/03: initialize from config settings.
         #@nonl
         #@-node:ekr.20041005105605.223:<< Set ivars >>

@@ -773,9 +773,8 @@ class baseColorizer:
         self.rb = None
         self.rootMode = None # None, "code" or "doc"
         
-        config = g.app.config
-        self.latex_cweb_docs     = config.getBoolColorsPref("color_cweb_doc_parts_with_latex")
-        self.latex_cweb_comments = config.getBoolColorsPref("color_cweb_comments_with_latex")
+        self.latex_cweb_docs     = c.config.getBool("color_cweb_doc_parts_with_latex")
+        self.latex_cweb_comments = c.config.getBool("color_cweb_comments_with_latex")
         # print "docs,comments",self.latex_cweb_docs,self.latex_cweb_comments
         #@nonl
         #@-node:ekr.20031218072017.1606:<< ivars for communication between colorizeAnyLanguage and its allies >>
@@ -852,32 +851,33 @@ class baseColorizer:
         #@nl
         #@    << define fonts and data for wiki tags >>
         #@+node:ekr.20031218072017.1608:<< define fonts and data for wiki tags >>
-        self.bold_font = config.getFontFromParams(
+        self.bold_font = c.config.getFontFromParams(
             "body_text_font_family", "body_text_font_size",
             "body_text_font_slant",  "body_text_font_weight",
-            config.defaultBodyFontSize)
+            c.config.defaultBodyFontSize)
         
         if self.bold_font:
             self.bold_font.configure(weight="bold")
         
-        self.italic_font = config.getFontFromParams(
+        self.italic_font = c.config.getFontFromParams(
             "body_text_font_family", "body_text_font_size",
             "body_text_font_slant",  "body_text_font_weight",
-            config.defaultBodyFontSize)
+            c.config.defaultBodyFontSize)
             
         if self.italic_font:
             self.italic_font.configure(slant="italic",weight="normal")
         
-        self.bolditalic_font = config.getFontFromParams(
+        self.bolditalic_font = c.config.getFontFromParams(
             "body_text_font_family", "body_text_font_size",
             "body_text_font_slant",  "body_text_font_weight",
-            config.defaultBodyFontSize)
+            c.config.defaultBodyFontSize)
             
         if self.bolditalic_font:
             self.bolditalic_font.configure(weight="bold",slant="italic")
         
         self.color_tags_list = []
         self.image_references = []
+        #@nonl
         #@-node:ekr.20031218072017.1608:<< define fonts and data for wiki tags >>
         #@nl
         #@    << extend forth words from files >>
@@ -946,6 +946,8 @@ class baseColorizer:
         
         """Color the body pane either incrementally or non-incrementally"""
         
+        c = self.c
+        
         # g.trace("incremental",self.incremental,p)
         if self.killFlag:
             self.removeAllTags()
@@ -980,12 +982,9 @@ class baseColorizer:
             
             #@<< configure tags >>
             #@+node:ekr.20031218072017.1603:<< configure tags >>
-            config = g.app.config
-            assert(config)
-            
             for name in default_colors_dict.keys(): # Python 2.1 support.
                 option_name,default_color = default_colors_dict[name]
-                option_color = config.getColorsPref(option_name)
+                option_color = c.config.getString(option_name)
                 color = g.choose(option_color,option_color,default_color)
                 # Must use foreground, not fg.
                 try:
@@ -993,8 +992,8 @@ class baseColorizer:
                 except: # Recover after a user error.
                     self.body.tag_configure(name, foreground=default_color)
             
-            underline_undefined = config.getBoolColorsPref("underline_undefined_section_names")
-            use_hyperlinks      = config.getBoolColorsPref("use_hyperlinks")
+            underline_undefined = c.config.getBool("underline_undefined_section_names")
+            use_hyperlinks      = c.config.getBool("use_hyperlinks")
             self.use_hyperlinks = use_hyperlinks
             
             # underline=var doesn't seem to work.
@@ -1013,7 +1012,7 @@ class baseColorizer:
                 for name,option_name,default_color in (
                     ("blank","show_invisibles_space_background_color","Gray90"),
                     ("tab",  "show_invisibles_tab_background_color",  "Gray80")):
-                    option_color = config.getColorsPref(option_name)
+                    option_color = c.config.getString(option_name)
                     color = g.choose(option_color,option_color,default_color)
                     try:
                         self.body.tag_configure(name,background=color)
@@ -2113,7 +2112,7 @@ class baseColorizer:
                 elif g.match_word(s,k,"@root-doc"):
                     self.rootMode = "doc"
                 else:
-                    doc = g.app.config.at_root_bodies_start_in_doc_mode
+                    doc = c.config.at_root_bodies_start_in_doc_mode
                     self.rootMode = g.choose(doc,"doc","code")
             #@-node:ekr.20031218072017.1379:<< Test for @root, @root-doc or @root-code >>
             #@nl

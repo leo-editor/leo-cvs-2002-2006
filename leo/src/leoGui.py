@@ -93,6 +93,8 @@ class leoGui:
         
         """Create a commander and its view frame for the Leo main window."""
         
+        gui = self
+        
         import leoCommands
         
         if not fileName: fileName = ""
@@ -113,7 +115,7 @@ class leoGui:
         #@nl
     
         # Create an unfinished frame to pass to the commanders.
-        frame = g.app.gui.createLeoFrame(title)
+        frame = gui.createLeoFrame(title)
         
         # Create the commander and its subcommanders.
         c = leoCommands.Commands(frame,fileName)
@@ -357,7 +359,7 @@ class leoGui:
     #@-node:ekr.20031218072017.3741:oops
     #@-others
 #@-node:ekr.20031218072017.3720:class leoGui
-#@+node:ekr.20031218072017.2223:class nullGui (runs scripts)
+#@+node:ekr.20031218072017.2223:class nullGui (leoGui)
 class nullGui(leoGui):
     
     """Null gui class."""
@@ -366,6 +368,8 @@ class nullGui(leoGui):
     #@+node:ekr.20031218072017.2224:Birth & death
     #@+node:ekr.20031218072017.2225: nullGui.__init__
     def __init__ (self,guiName):
+        
+        # g.trace("nullGui")
         
         leoGui.__init__ (self,guiName) # init the base class.
         
@@ -386,8 +390,8 @@ class nullGui(leoGui):
     def createLeoFrame(self,title):
         
         """Create a null Leo Frame."""
-    
-        self.lastFrame = leoFrame.nullFrame(title)
+        gui = self
+        self.lastFrame = leoFrame.nullFrame(title,gui)
         return self.lastFrame
     #@nonl
     #@-node:ekr.20031218072017.2226:createLeoFrame
@@ -437,8 +441,8 @@ class nullGui(leoGui):
     #@-node:ekr.20031218072017.2231:setScript
     #@-others
 #@nonl
-#@-node:ekr.20031218072017.2223:class nullGui (runs scripts)
-#@+node:ekr.20031218072017.3742:class unitTestGui
+#@-node:ekr.20031218072017.2223:class nullGui (leoGui)
+#@+node:ekr.20031218072017.3742:class unitTestGui (leoGui)
 class unitTestGui(leoGui):
     
     """gui class for use by unit tests."""
@@ -515,7 +519,7 @@ class unitTestGui(leoGui):
     #@-node:ekr.20031218072017.3747:simulateDialog
     #@-others
 #@nonl
-#@-node:ekr.20031218072017.3742:class unitTestGui
+#@-node:ekr.20031218072017.3742:class unitTestGui (leoGui)
 #@-others
 #@nonl
 #@-node:ekr.20031218072017.3719:@thin leoGui.py

@@ -72,8 +72,8 @@ class leoTkinterComparePanel (leoCompare.leoCompare,leoTkinterDialog.leoTkinterD
     # Initialize ivars from config parameters.
     
     def finishCreate (self):
-    
-        config = g.app.config
+        
+        c = self.c
         
         # File names.
         for i,option in (
@@ -81,30 +81,30 @@ class leoTkinterComparePanel (leoCompare.leoCompare,leoTkinterDialog.leoTkinterD
             (1,"compare_file_2"),
             (2,"output_file") ):
                 
-            name = config.getComparePref(option)
+            name = c.config.getString(option)
             if name and len(name) > 0:
                 e = self.browseEntries[i]
                 e.delete(0,"end")
                 e.insert(0,name)
                 
-        name = config.getComparePref("output_file")
+        name = c.config.getString("output_file")
         b = g.choose(name and len(name) > 0,1,0)
         self.useOutputFileVar.set(b)
     
         # File options.
-        b = config.getBoolComparePref("ignore_first_line_of_file_1")
+        b = c.config.getBool("ignore_first_line_of_file_1")
         if b == None: b = 0
         self.ignoreFirstLine1Var.set(b)
         
-        b = config.getBoolComparePref("ignore_first_line_of_file_2")
+        b = c.config.getBool("ignore_first_line_of_file_2")
         if b == None: b = 0
         self.ignoreFirstLine2Var.set(b)
         
-        b = config.getBoolComparePref("append_output_to_output_file")
+        b = c.config.getBool("append_output_to_output_file")
         if b == None: b = 0
         self.appendOutputVar.set(b)
     
-        ext = config.getComparePref("limit_directory_search_extension")
+        ext = c.config.getString("limit_directory_search_extension")
         b = ext and len(ext) > 0
         b = g.choose(b and b != 0,1,0)
         self.limitToExtensionVar.set(b)
@@ -114,23 +114,23 @@ class leoTkinterComparePanel (leoCompare.leoCompare,leoTkinterDialog.leoTkinterD
             e.insert(0,ext)
             
         # Print options.
-        b = config.getBoolComparePref("print_both_lines_for_matches")
+        b = c.config.getBool("print_both_lines_for_matches")
         if b == None: b = 0
         self.printBothMatchesVar.set(b)
         
-        b = config.getBoolComparePref("print_matching_lines")
+        b = c.config.getBool("print_matching_lines")
         if b == None: b = 0
         self.printMatchesVar.set(b)
         
-        b = config.getBoolComparePref("print_mismatching_lines")
+        b = c.config.getBool("print_mismatching_lines")
         if b == None: b = 0
         self.printMismatchesVar.set(b)
         
-        b = config.getBoolComparePref("print_trailing_lines")
+        b = c.config.getBool("print_trailing_lines")
         if b == None: b = 0
         self.printTrailingMismatchesVar.set(b)
         
-        n = config.getIntComparePref("limit_count")
+        n = c.config.getInt("limit_count")
         b = n and n > 0
         b = g.choose(b and b != 0,1,0)
         self.stopAfterMismatchVar.set(b)
@@ -139,26 +139,39 @@ class leoTkinterComparePanel (leoCompare.leoCompare,leoTkinterDialog.leoTkinterD
             e.delete(0,"end")
             e.insert(0,str(n))
     
-        # Whitespace options.
-        b = config.getBoolComparePref("ignore_blank_lines")
-        if b == None: b = 1 # unusual default.
-        self.ignoreBlankLinesVar.set(b)
+        # bool options...
+        for option,var,default in (
+            # Whitespace options.
+            ("ignore_blank_lines",self.ignoreBlankLinesVar,1),
+            ("ignore_interior_whitespace",self.ignoreInteriorWhitespaceVar,0),
+            ("ignore_leading_whitespace",self.ignoreLeadingWhitespaceVar,0),
+            ("ignore_sentinel_lines",self.ignoreSentinelLinesVar,0),
+            ("make_whitespace_visible", self.makeWhitespaceVisibleVar,0),
+        ):
+            b = c.config.getBool(option)
+            if b is None: b = default
+            var.set(b)
         
-        b = config.getBoolComparePref("ignore_interior_whitespace")
-        if b == None: b = 0
-        self.ignoreInteriorWhitespaceVar.set(b)
-        
-        b = config.getBoolComparePref("ignore_leading_whitespace")
-        if b == None: b = 0
-        self.ignoreLeadingWhitespaceVar.set(b)
-        
-        b = config.getBoolComparePref("ignore_sentinel_lines")
-        if b == None: b = 0
-        self.ignoreSentinelLinesVar.set(b)
-        
-        b = config.getBoolComparePref("make_whitespace_visible")
-        if b == None: b = 0
-        self.makeWhitespaceVisibleVar.set(b)
+        if 0: # old code
+            b = c.config.getBool("ignore_blank_lines")
+            if b == None: b = 1 # unusual default.
+            self.ignoreBlankLinesVar.set(b)
+            
+            b = c.config.getBool("ignore_interior_whitespace")
+            if b == None: b = 0
+            self.ignoreInteriorWhitespaceVar.set(b)
+            
+            b = c.config.getBool("ignore_leading_whitespace")
+            if b == None: b = 0
+            self.ignoreLeadingWhitespaceVar.set(b)
+            
+            b = c.config.getBool("ignore_sentinel_lines")
+            if b == None: b = 0
+            self.ignoreSentinelLinesVar.set(b)
+            
+            b = c.config.getBool("make_whitespace_visible")
+            if b == None: b = 0
+            self.makeWhitespaceVisibleVar.set(b)
     #@nonl
     #@-node:ekr.20031218072017.3842:finishCreate
     #@+node:ekr.20031218072017.3843:createFrame
