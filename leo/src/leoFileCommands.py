@@ -63,11 +63,10 @@ class baseFileCommands:
 		self.tnodesDict = {}
 	#@nonl
 	#@-node:leoFileCommands._init_
-	#@+node:cononicalTnodeIndex
-	def cononicalTnodeIndex(self,index):
+	#@+node:canonicalTnodeIndex
+	def canonicalTnodeIndex(self,index):
 		
 		"""Convert Tnnn to nnn, leaving gnx's unchanged."""
-	
 	
 		# index might be Tnnn, nnn, or gnx.
 		id,time,n = app.nodeIndices.scanGnx(index,0)
@@ -77,7 +76,7 @@ class baseFileCommands:
 	
 		return index
 	#@nonl
-	#@-node:cononicalTnodeIndex
+	#@-node:canonicalTnodeIndex
 	#@+node:createVnode
 	def createVnode(self,parent,back,tref,headline,attrDict):
 		
@@ -87,7 +86,7 @@ class baseFileCommands:
 		if tref == -1:
 			t = leoNodes.tnode()
 		else:
-			tref = self.cononicalTnodeIndex(tref)
+			tref = self.canonicalTnodeIndex(tref)
 			t = self.tnodesDict.get(tref)
 			if not t:
 				t = self.newTnode(tref)
@@ -687,7 +686,7 @@ class baseFileCommands:
 				if index[0] == "T":
 					index = index[1:]
 	
-		index = self.cononicalTnodeIndex(index)
+		index = self.canonicalTnodeIndex(index)
 		t = self.tnodesDict.get(index)
 		# trace(t)
 		#@	<< handle unknown attributes >>
@@ -826,7 +825,7 @@ class baseFileCommands:
 		indexList = s.split(',') # The list never ends in a comma.
 		tnodeList = []
 		for index in indexList:
-			index = self.cononicalTnodeIndex(index)
+			index = self.canonicalTnodeIndex(index)
 			t = fc.tnodesDict.get(index)
 			if not t:
 				# Not an error: create a new tnode and put it in fc.tnodesDict.
@@ -926,9 +925,9 @@ class baseFileCommands:
 			# Create the tnode.  Use the _original_ index as the key in tnodesDict.
 			t = leoNodes.tnode()
 			self.tnodesDict[index] = t
-			
-			# trace(index,t)
-			assert(type(index) == type("s"))
+		
+			if type(index) not in (type(""),type(u"")):
+				es("newTnode: unexpected index type:"+`type(index)`+`index`,color="red")
 			
 			# Convert any pre-4.1 index to a gnx.
 			id,time,n = gnx = app.nodeIndices.scanGnx(index,0)
