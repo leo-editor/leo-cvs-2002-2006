@@ -3,18 +3,18 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="23" clone_windows="0"/>
 <globals body_outline_ratio="0.5">
-	<global_window_position top="14" left="246" height="924" width="789"/>
+	<global_window_position top="10" left="308" height="924" width="789"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
-<preferences defaultTargetLanguage="Python" node_only="0" output_doc_chunks="1" page_width="132" tab_width="-4" tangle_bat="0" untangle_bat="0" use_header_flag="1">
+<preferences>
 </preferences>
-<find_panel_settings search_body="1" whole_word="1">
+<find_panel_settings>
 	<find_string></find_string>
 	<change_string></change_string>
 </find_panel_settings>
 <vnodes>
 <v t="edream.110203150636" a="E"><vh>leoConfig.leo</vh>
-<v t="edream.110203150636.1" a="TV"><vh>@root leoConfig.txt</vh>
+<v t="edream.110203150636.1" a="E"><vh>@root leoConfig.txt</vh>
 <v t="edream.110203150636.2"><vh>&lt;&lt; general comments and warnings &gt;&gt;</vh></v>
 <v t="edream.110203150636.3"><vh>&lt;&lt; General configuration options, especially read-only mode &gt;&gt;</vh>
 <v t="ekr.20040720065653.6"><vh>&lt;&lt; .leo file options &gt;&gt;</vh></v>
@@ -28,9 +28,9 @@
 <v t="edream.110203150636.4"><vh>&lt;&lt; The "Recent Files" menu &gt;&gt;</vh></v>
 <v t="edream.110203150636.5"><vh>&lt;&lt; Compare Panel settings &gt;&gt;</vh></v>
 <v t="edream.110203150636.6"><vh>&lt;&lt; Find/Change Panel settings &gt;&gt;</vh></v>
-<v t="edream.110203150636.7"><vh>&lt;&lt; Keyboard shortcuts settings &gt;&gt;</vh>
+<v t="edream.110203150636.7" a="E"><vh>&lt;&lt; Keyboard shortcuts settings &gt;&gt;</vh>
 <v t="edream.110203150636.8"><vh>&lt;&lt; About keyboard shortcuts &gt;&gt;</vh></v>
-<v t="edream.110203150636.9"><vh>&lt;&lt; Alt and Shift-Alt&gt;&gt;</vh></v>
+<v t="edream.110203150636.9" a="TV"><vh>&lt;&lt; Alt and Shift-Alt&gt;&gt;</vh></v>
 <v t="edream.110203150636.10"><vh>&lt;&lt; Control &gt;&gt;</vh></v>
 <v t="edream.110203150636.11"><vh>&lt;&lt; Shift-Control &gt;&gt;</vh></v>
 <v t="edream.110203150636.12"><vh>&lt;&lt; F-keys and others &gt;&gt;</vh></v>
@@ -345,8 +345,10 @@ KP_Multiply, KP_Separator, KP_Space, KP_Subtract, KP_Tab,
 KP_F1, KP_F2, KP_F3, KP_F4,
 KP_0, KP_1, KP_2, KP_3, KP_4, KP_5, KP_6, KP_7, KP_8, KP_9</t>
 <t tx="edream.110203150636.9">ExpandNextLevel   = Alt+=
+ExpandNode        = Alt+]
 ExpandPrevLevel   = Alt+.
 ContractAll       = Alt+-
+ContractNode      = Alt+[
 ContractParent    = Alt+0
 ExpandToLevel1    = Alt+1
 ExpandToLevel2    = Alt+2
