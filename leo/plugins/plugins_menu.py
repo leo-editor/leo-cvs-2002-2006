@@ -57,7 +57,7 @@ import sys
 #@nonl
 #@-node:ekr.20050101090207.10:<< imports >>
 #@nl
-__version__ = "1.5"
+__version__ = "1.7"
 #@<< version history >>
 #@+node:ekr.20050101100033:<< version history >>
 #@+at
@@ -75,7 +75,11 @@ __version__ = "1.5"
 # 1.6 Paul Paterson:
 #     - Add support for plugin groups. Each group gets its own sub menu now
 #     - Set __plugin_group__ to "Core"
+# 1.7 EKR:
+#     - Set default version in Plugin.__init__ so plugins without version 
+# still appear in plugin menu.
 #@-at
+#@nonl
 #@-node:ekr.20050101100033:<< version history >>
 #@nl
 
@@ -165,7 +169,7 @@ class PlugIn:
                 self.priority = 200 - ord(self.name[0])
             #
             self.doc = self.mod.__doc__
-            self.version = self.mod.__dict__.get("__version__") # "<unknown>")
+            self.version = self.mod.__dict__.get("__version__","<unknown>") # EKR: 3/17/05
             # if self.version: print self.version,g.shortFileName(filename)
         except ImportError:
             # s = 'Can not import %s in plugins_menu plugin' % g.shortFileName(filename)
