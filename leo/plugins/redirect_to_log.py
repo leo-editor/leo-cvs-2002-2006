@@ -3,15 +3,14 @@
 """Send all output to the log pane"""
 
 #@@language python
+#@@tabwidth -4
 
-import leoPlugins
 import leoGlobals as g
-from leoGlobals import true,false
+import leoPlugins
 
 def onStart (tag,keywords):
-	from leoGlobals import redirectStdout,redirectStderr
-	g.redirectStdout() # Redirect stdout
-	g.redirectStderr() # Redirect stderr
+    g.redirectStdout() # Redirect stdout
+    g.redirectStderr() # Redirect stderr
 
 # Register the handlers...
 leoPlugins.registerHandler("start2", onStart)

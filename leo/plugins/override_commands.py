@@ -3,18 +3,18 @@
 """Override the Equal Sized Pane command"""
 
 #@@language python
+#@@tabwidth -4
 
-import leoPlugins
 import leoGlobals as g
-from leoGlobals import true,false
+import leoPlugins
 
 #@+others
 #@+node:edream.110203113231.920:onCommand
 def onCommand (tag,keywords):
 
-	if keywords.get("label")=="equalsizedpanes":
-		g.es("over-riding Equal Sized Panes")
-		return "override" # Anything other than None overrides.
+    if keywords.get("label")=="equalsizedpanes":
+        g.es("over-riding Equal Sized Panes")
+        return "override" # Anything other than None overrides.
 #@nonl
 #@-node:edream.110203113231.920:onCommand
 #@-others

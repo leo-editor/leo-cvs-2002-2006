@@ -5,17 +5,16 @@ Requires Pmw (Python Mega Widgets)."""
 
 #@<< autocompleter imports >>
 #@+node:EKR.20040605183135:<< autocompleter imports >>
-import leoTkinterFrame
-import leoColor
+import leoGlobals as g
 import leoPlugins
 
+import leoColor
+import leoTkinterFrame
 import ConfigParser 
 import re
 import sets 
 import string
 import threading
-
-import leoGlobals as g
 
 try: import Tkinter as Tk
 except ImportError:
@@ -254,55 +253,55 @@ def add_item (event,canvas,body,colorizer):
 	canvas.which = 0
 	b = None
 	if event.char == '.':
-		#@		<< handle '.' >>
-		#@+node:EKR.20040605184409.4:<< handle '.' >>
-		canvas.on = True
-		f = Tk.Frame(canvas)
-		ww = list(watchwords[txt])
-		ww.sort()
-		
-		b = Pmw.ScrolledListBox(f,items=tuple(ww),hscrollmode='none')
-		canvas.sl = b.component('listbox')
-		h = b.component('hull')
-		
-		height = min(5,len(ww))
-		
-		canvas.sl.configure(background='white',foreground='blue',height=height)
-		b.pack()
-		
-		calculatePlace(body, canvas.sl,canvas,f)
-		canvas.sl.select_set(0)
-		canvas.which = 0
-		#@nonl
-		#@-node:EKR.20040605184409.4:<< handle '.' >>
-		#@nl
+        #@		<< handle '.' >>
+        #@+node:EKR.20040605184409.4:<< handle '.' >>
+        canvas.on = True
+        f = Tk.Frame(canvas)
+        ww = list(watchwords[txt])
+        ww.sort()
+        
+        b = Pmw.ScrolledListBox(f,items=tuple(ww),hscrollmode='none')
+        canvas.sl = b.component('listbox')
+        h = b.component('hull')
+        
+        height = min(5,len(ww))
+        
+        canvas.sl.configure(background='white',foreground='blue',height=height)
+        b.pack()
+        
+        calculatePlace(body, canvas.sl,canvas,f)
+        canvas.sl.select_set(0)
+        canvas.which = 0
+        #@nonl
+        #@-node:EKR.20040605184409.4:<< handle '.' >>
+        #@nl
 	elif event.char == '(':
-		#@		<< handle '(' >>
-		#@+node:EKR.20040605184409.5:<< handle '(' >>
-		language = colorizer.language
-		
-		if 0:
-			g.trace(language,calltips.has_key(language),calltips[language].has_key(txt))
-			g.trace(txt)
-			d = calltips[language]
-			for key in d.keys():
-				print key # ,d[key]
-		
-		if calltips.has_key(language):
-			if calltips[language].has_key(txt):
-				canvas.on = True
-				ct = Tk.Label(canvas,background ='lightyellow',foreground = 'black')
-				s = list(calltips[language][txt])
-				t = '\n'.join(s)
-				ct.configure(text = t)
-				calculatePlace(body,ct,canvas,ct)
-				canvas.which = 1
-		else: 
-			canvas.on = False
-			return None
-		#@nonl
-		#@-node:EKR.20040605184409.5:<< handle '(' >>
-		#@nl
+        #@		<< handle '(' >>
+        #@+node:EKR.20040605184409.5:<< handle '(' >>
+        language = colorizer.language
+        
+        if 0:
+        	g.trace(language,calltips.has_key(language),calltips[language].has_key(txt))
+        	g.trace(txt)
+        	d = calltips[language]
+        	for key in d.keys():
+        		print key # ,d[key]
+        
+        if calltips.has_key(language):
+        	if calltips[language].has_key(txt):
+        		canvas.on = True
+        		ct = Tk.Label(canvas,background ='lightyellow',foreground = 'black')
+        		s = list(calltips[language][txt])
+        		t = '\n'.join(s)
+        		ct.configure(text = t)
+        		calculatePlace(body,ct,canvas,ct)
+        		canvas.which = 1
+        else: 
+        	canvas.on = False
+        	return None
+        #@nonl
+        #@-node:EKR.20040605184409.5:<< handle '(' >>
+        #@nl
 
 	if b :
 		event = Tk.Event() ; event.keysym = ''
@@ -402,30 +401,30 @@ def doScan (c):
 	pth = g.os_path_split(g.app.loadDir)
 	ini_path = pth[0] + r"/plugins/autocompleter.ini" 
 	if g.os_path_exists(ini_path):
-		#@		<< get config settings >>
-		#@+node:EKR.20040605184409.2:<< get config settings >>
-		cp = ConfigParser.ConfigParser()
-		cp.read(ini_path)
-		ac = None
-		
-		for z in cp.sections():
-			if z.strip() == 'autocompleter':
-				ac = z
-				continue
-			ipats = r'' + cp.get(z, 'pat').strip()
-			z = z.strip()
-			pats[z] = re.compile(ipats)
-		
-		if cp.has_section(ac):
-			if cp.has_option(ac, 'useauto'):
-				useauto = int(cp.get(ac, 'useauto'))
-			if cp.has_option(ac, 'usecalltips'):
-				usecall = int(cp.get(ac, 'usecalltips'))
-			if cp.has_option(ac, 'autopattern'):
-				pat = re.compile(cp.get(ac, 'autopattern'))
-		#@nonl
-		#@-node:EKR.20040605184409.2:<< get config settings >>
-		#@nl
+        #@		<< get config settings >>
+        #@+node:EKR.20040605184409.2:<< get config settings >>
+        cp = ConfigParser.ConfigParser()
+        cp.read(ini_path)
+        ac = None
+        
+        for z in cp.sections():
+        	if z.strip() == 'autocompleter':
+        		ac = z
+        		continue
+        	ipats = r'' + cp.get(z, 'pat').strip()
+        	z = z.strip()
+        	pats[z] = re.compile(ipats)
+        
+        if cp.has_section(ac):
+        	if cp.has_option(ac, 'useauto'):
+        		useauto = int(cp.get(ac, 'useauto'))
+        	if cp.has_option(ac, 'usecalltips'):
+        		usecall = int(cp.get(ac, 'usecalltips'))
+        	if cp.has_option(ac, 'autopattern'):
+        		pat = re.compile(cp.get(ac, 'autopattern'))
+        #@nonl
+        #@-node:EKR.20040605184409.2:<< get config settings >>
+        #@nl
 
 	bankpath = pth[0] + r"/plugins/autocompleter/"
 	for z in pats:

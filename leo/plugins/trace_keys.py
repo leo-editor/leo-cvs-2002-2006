@@ -3,18 +3,18 @@
 """Trace keystrokes in the outline and body panes"""
 
 #@@language python
+#@@tabwidth -4
 
-import leoPlugins
 import leoGlobals as g
-from leoGlobals import true,false
+import leoPlugins
 
 #@+others
 #@+node:edream.110203113231.737:onKey
 def onKey (tag,keywords):
 
-	ch = keywords.get("ch")
-	if ch and len(ch) > 0:
-		g.es("key",`ch`)
+    ch = keywords.get("ch")
+    if ch and len(ch) > 0:
+        g.es("key",`ch`)
 #@nonl
 #@-node:edream.110203113231.737:onKey
 #@-others

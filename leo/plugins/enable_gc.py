@@ -3,19 +3,19 @@
 """Enable debugging for garbage collector"""
 
 #@@language python
+#@@tabwidth -4
 
-import leoPlugins
 import leoGlobals as g
-from leoGlobals import true,false
+import leoPlugins
 
 #@+others
 #@+node:edream.110203113231.733:onStart
 def onStart (tag,keywords):
 
-	try:
-		import gc
-		gc.set_debug(gc.DEBUG_LEAK)
-	except: pass
+    try:
+        import gc
+        gc.set_debug(gc.DEBUG_LEAK)
+    except: pass
 #@nonl
 #@-node:edream.110203113231.733:onStart
 #@-others

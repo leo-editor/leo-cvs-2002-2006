@@ -1,6 +1,7 @@
 #@+leo-ver=4-thin
 #@+node:edream.120603093808:@file-thin pluginsManager.txt
 #@@language python
+#@@tabwidth -4
 
 # Leo enables only those plugins whose filenames appear here.
 # Leo loads plugins in the order they appear in this file.

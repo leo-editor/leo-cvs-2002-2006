@@ -8,14 +8,14 @@ If the name of the <filename> has the extension .html, .htm or .tex, and if you 
 docutils installed, it will generate HTML or LaTeX, respectively."""
 
 #@@language python
+#@@tabwidth -4
 
 # By Josef Dalcolmo: contributed under the same licensed as Leo.py itself.
 
 # EKR: The code now lets other plugins handle @folder and @url nodes.
 
-import leoPlugins
 import leoGlobals as g
-from leoGlobals import true,false
+import leoPlugins
 
 import os
 
@@ -41,9 +41,9 @@ import os
 # may
 # be used for a title as in::
 # 
-# 	#####
-# 	Title
-# 	#####
+#     #####
+#     Title
+#     #####
 # 
 # Otherwise, section underlining is discouraged, since it is automatically 
 # generated.
@@ -98,105 +98,105 @@ import os
 
 def onIconDoubleClick(tag,keywords):
 
-	v = keywords.get("v")
-	c = keywords.get("c")
-	h = v.headString().strip()
-	if g.match_word(h,0,"@rst"):
-		fname = h[5:]
-		ext = os.path.splitext(fname)[1].lower()
-		if ext in ('.htm','.html','.tex'):
-			#@			<< write rST as HTML/LaTeX >>
-			#@+node:edream.111803100242.4:<< write rST as HTML/LaTeX >>
-			try:
-				import docutils
-			except ImportError:
-				docutils = None
-				g.es('HTML/LaTeX generation requires docutils')
-			
-			if docutils:
-				import StringIO
-				rstFile = StringIO.StringIO()
-				writeTreeAsRst(rstFile, fname, v, c)
-				rstText = rstFile.getvalue()
-				# Set the writer and encoding for the converted file
-				if ext in ('.html','.htm'):
-					writer='html'
-					enc="utf-8"
-				else:
-					writer='latex'
-					enc="iso-8859-1"
-				#@	<< convert rST to HTML/LaTeX >>
-				#@+node:edream.111803100242.5:<< convert rST to HTML/LaTeX >>
-				# this code snipped has been taken from code contributed by Paul Paterson 2002-12-05
-				from docutils.core import Publisher
-				from docutils.io import StringOutput, StringInput
-				
-				pub = Publisher()
-				# Initialize the publisher
-				pub.source = StringInput(source=rstText)
-				pub.destination = StringOutput(pub.settings, encoding=enc)
-				pub.set_reader('standalone', None, 'restructuredtext')
-				pub.set_writer(writer)
-				output = pub.publish()
-				#@nonl
-				#@-node:edream.111803100242.5:<< convert rST to HTML/LaTeX >>
-				#@nl
-				convertedFile = file(fname,'w')
-				convertedFile.write(output)
-				convertedFile.close()
-				rstFile.close()
-				g.es('written: '+str(fname))
-			#@nonl
-			#@-node:edream.111803100242.4:<< write rST as HTML/LaTeX >>
-			#@nl
-		else:
-			#@			<< write rST file >>
-			#@+node:edream.111803100242.6:<< write rST file >>
-			rstFile = file(fname,'w')
-			writeTreeAsRst(rstFile, fname, v, c)
-			rstFile.close()
-			g.es('written: '+str(fname))
-			#@nonl
-			#@-node:edream.111803100242.6:<< write rST file >>
-			#@nl
+    v = keywords.get("v")
+    c = keywords.get("c")
+    h = v.headString().strip()
+    if g.match_word(h,0,"@rst"):
+        fname = h[5:]
+        ext = os.path.splitext(fname)[1].lower()
+        if ext in ('.htm','.html','.tex'):
+            #@            << write rST as HTML/LaTeX >>
+            #@+node:edream.111803100242.4:<< write rST as HTML/LaTeX >>
+            try:
+                import docutils
+            except ImportError:
+                docutils = None
+                g.es('HTML/LaTeX generation requires docutils')
+            
+            if docutils:
+                import StringIO
+                rstFile = StringIO.StringIO()
+                writeTreeAsRst(rstFile, fname, v, c)
+                rstText = rstFile.getvalue()
+                # Set the writer and encoding for the converted file
+                if ext in ('.html','.htm'):
+                    writer='html'
+                    enc="utf-8"
+                else:
+                    writer='latex'
+                    enc="iso-8859-1"
+                #@    << convert rST to HTML/LaTeX >>
+                #@+node:edream.111803100242.5:<< convert rST to HTML/LaTeX >>
+                # this code snipped has been taken from code contributed by Paul Paterson 2002-12-05
+                from docutils.core import Publisher
+                from docutils.io import StringOutput, StringInput
+                
+                pub = Publisher()
+                # Initialize the publisher
+                pub.source = StringInput(source=rstText)
+                pub.destination = StringOutput(pub.settings, encoding=enc)
+                pub.set_reader('standalone', None, 'restructuredtext')
+                pub.set_writer(writer)
+                output = pub.publish()
+                #@nonl
+                #@-node:edream.111803100242.5:<< convert rST to HTML/LaTeX >>
+                #@nl
+                convertedFile = file(fname,'w')
+                convertedFile.write(output)
+                convertedFile.close()
+                rstFile.close()
+                g.es('written: '+str(fname))
+            #@nonl
+            #@-node:edream.111803100242.4:<< write rST as HTML/LaTeX >>
+            #@nl
+        else:
+            #@            << write rST file >>
+            #@+node:edream.111803100242.6:<< write rST file >>
+            rstFile = file(fname,'w')
+            writeTreeAsRst(rstFile, fname, v, c)
+            rstFile.close()
+            g.es('written: '+str(fname))
+            #@nonl
+            #@-node:edream.111803100242.6:<< write rST file >>
+            #@nl
 #@-node:edream.111803100242.3:onIconDoubleClick
 #@+node:edream.111803100242.7:writeTreeAsRst
 def writeTreeAsRst(rstFile, fname, vnode, c):
-	'Writes the tree under vnode to the file rstFile (fname is the filename)'
-	# we don't write a title, so the titlepage can be customized
-	# use '#' for title under/overline
-	# 3/7/03
-	dict = g.scanDirectives(c,p=vnode)
-	encoding = dict.get("encoding",None)
-	if encoding == None:
-		encoding = g.app.config.default_derived_file_encoding
-	# 3/7/03
-	s = g.toEncodedString(fname,encoding,reportErrors=true)
-	rstFile.write('.. filename: '+s+'\n')
-	rstFile.write('\n')
-	# 3/7/03
-	s = vnode.bodyString()
-	s = g.toEncodedString(s,encoding,reportErrors=true)
-	rstFile.write(s+'\n')		# write body of titlepage
-	rstFile.write('\n')
-	
-	toplevel = vnode.level()
-	stopHere = vnode.nodeAfterTree()
-	v = vnode.threadNext()
-	# repeat for all nodes in this tree
-	while v != stopHere:
-		# 3/7/03
-		h = v.headString()
-		h = g.toEncodedString(h,encoding,reportErrors=true)
-		rstFile.write(h+'\n')
-		rstFile.write(underline(h,v.level()-toplevel))
-		rstFile.write('\n')
-		# 3/7/03
-		s = v.bodyString()
-		s = g.toEncodedString(s,encoding,reportErrors=true)
-		rstFile.write(s+'\n')
-		rstFile.write('\n')
-		v = v.threadNext()
+    'Writes the tree under vnode to the file rstFile (fname is the filename)'
+    # we don't write a title, so the titlepage can be customized
+    # use '#' for title under/overline
+    # 3/7/03
+    dict = g.scanDirectives(c,p=vnode)
+    encoding = dict.get("encoding",None)
+    if encoding == None:
+        encoding = g.app.config.default_derived_file_encoding
+    # 3/7/03
+    s = g.toEncodedString(fname,encoding,reportErrors=True)
+    rstFile.write('.. filename: '+s+'\n')
+    rstFile.write('\n')
+    # 3/7/03
+    s = vnode.bodyString()
+    s = g.toEncodedString(s,encoding,reportErrors=True)
+    rstFile.write(s+'\n')		# write body of titlepage
+    rstFile.write('\n')
+    
+    toplevel = vnode.level()
+    stopHere = vnode.nodeAfterTree()
+    v = vnode.threadNext()
+    # repeat for all nodes in this tree
+    while v != stopHere:
+        # 3/7/03
+        h = v.headString()
+        h = g.toEncodedString(h,encoding,reportErrors=True)
+        rstFile.write(h+'\n')
+        rstFile.write(underline(h,v.level()-toplevel))
+        rstFile.write('\n')
+        # 3/7/03
+        s = v.bodyString()
+        s = g.toEncodedString(s,encoding,reportErrors=True)
+        rstFile.write(s+'\n')
+        rstFile.write('\n')
+        v = v.threadNext()
 #@nonl
 #@-node:edream.111803100242.7:writeTreeAsRst
 #@+node:edream.111803100242.8:underline
@@ -204,15 +204,15 @@ def writeTreeAsRst(rstFile, fname, vnode, c):
 # character in a title (in the body of the @rst node)
 
 def underline(h,level):
-	str = """#=+*^~"'`-:><_"""[level]
-	return str*max(len(h),4)+'\n'
+    str = """#=+*^~"'`-:><_"""[level]
+    return str*max(len(h),4)+'\n'
 #@nonl
 #@-node:edream.111803100242.8:underline
 #@-others
 
 # Register the handlers...
 leoPlugins.registerHandler("icondclick1",onIconDoubleClick)
-	
+    
 __version__ = "1.5" # Set version for the plugin handler.
 g.plugin_signon(__name__)
 #@nonl

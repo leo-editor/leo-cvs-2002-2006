@@ -16,6 +16,8 @@
 #@@c
 
 import leoGlobals as g
+import leoPlugins
+
 import leoAtFile
 import re
 
@@ -25,16 +27,16 @@ linere = re.compile("^#line 1 \".*\"$")
 #@+node:ekr.20040419105219.1:writing derived files
 oldOpenNodeSentinel = leoAtFile.newDerivedFile.putOpenNodeSentinel
 
-def putLineNumberDirective(self,v,inAtAll=false,inAtOthers=false,middle=false):
+def putLineNumberDirective(self,v,inAtAll=False,inAtOthers=False,middle=False):
 
-	oldOpenNodeSentinel(self,v,inAtAll,inAtOthers,middle)
+    oldOpenNodeSentinel(self,v,inAtAll,inAtOthers,middle)
 
-	if self.language in ("perl","perlpod"):
-		line = 'line 1 "node:%s (%s)"' % (self.nodeSentinelText(v),self.shortFileName)
-		self.putSentinel(line)
-		
+    if self.language in ("perl","perlpod"):
+        line = 'line 1 "node:%s (%s)"' % (self.nodeSentinelText(v),self.shortFileName)
+        self.putSentinel(line)
+        
 g.funcToMethod(putLineNumberDirective,	
-	leoAtFile.newDerivedFile,"putOpenNodeSentinel")
+    leoAtFile.newDerivedFile,"putOpenNodeSentinel")
 #@nonl
 #@-node:ekr.20040419105219.1:writing derived files
 #@+node:ekr.20040419105219.2:reading derived files
@@ -42,20 +44,20 @@ readNormalLine = leoAtFile.newDerivedFile.readNormalLine
 
 def skipLineNumberDirective(self, s, i):
 
-	if linere.search(s): 
-		return  # Skipt the line.
-	else:		
-		readNormalLine(self,s,i)
+    if linere.search(s): 
+        return  # Skipt the line.
+    else:		
+        readNormalLine(self,s,i)
 
 g.funcToMethod(skipLineNumberDirective,
-	leoAtFile.newDerivedFile,"readNormalLine")
+    leoAtFile.newDerivedFile,"readNormalLine")
 #@nonl
 #@-node:ekr.20040419105219.2:reading derived files
 #@-others
 
 __version__ = "0.2"
-	# 0.1: Mark Ng
-	# 0.2: EKR: Convert to new coding conventions.
+    # 0.1: Mark Ng
+    # 0.2: EKR: Convert to new coding conventions.
 
 g.plugin_signon(__name__)
 #@nonl

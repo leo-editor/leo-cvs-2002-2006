@@ -10,8 +10,9 @@ supported under Linux.
 
 # By Josef Dalcolmo: contributed under the same license as Leo.py itself.
 
-import leoPlugins
 import leoGlobals as g
+import leoPlugins
+
 import os
 
 #@<< about this plugin >>
@@ -57,48 +58,48 @@ import os
 
 def onIconDoubleClick(tag,keywords):
 
-	v = keywords.get("p") or keywords.get("v") # Use p for 4.2 code base, v for 4.1 code base.
-	c = keywords.get("c")
+    v = keywords.get("p") or keywords.get("v") # Use p for 4.2 code base, v for 4.1 code base.
+    c = keywords.get("c")
 
-	if c and v:
-		h = v.headString().strip()
-		if len(h)==0 or h[0]=='@':
-			return # Let other plugins handle these
-		else:
-			# open file with associated application
-			#@			<< find path and start file >>
-			#@+node:EKR.20040422094618.4:<< find path and start file >>
-			# Set the base directory by searching for @folder directives in ancestors.
-			thisdir = os.path.abspath(os.curdir) # remember the current dir
-			basedir = thisdir[:]	# use current dir as default.
-			parv = v.parent()	# start with parent
-			while parv:	# stop when no more parent found
-				p = parv.headString().strip()
-				if g.match_word(p,0,'@folder'):
-					basedir = p[8:]	# take rest of headline as pathname
-					break	# we found the closest @folder
-				else:
-					parv = parv.parent()	# try the parent of the parent
-			
-			fname = os.path.join(basedir,h) # join path and filename
-			startdir, filename = os.path.split(fname)
-			try:
-				os.chdir(startdir)
-				dirfound = 1
-			except:
-				g.es(startdir+' - folder not found')
-				dirfound = 0
-			
-			if dirfound:
-				try:
-					os.startfile(filename)	# Try to open the file; it may not work for all file types.
-				except:
-					g.es(filename+' - file not found in '+startdir)
-					# g.es_exception()
-			os.chdir(thisdir) # restore the original current dir.
-			#@nonl
-			#@-node:EKR.20040422094618.4:<< find path and start file >>
-			#@nl
+    if c and v:
+        h = v.headString().strip()
+        if len(h)==0 or h[0]=='@':
+            return # Let other plugins handle these
+        else:
+            # open file with associated application
+            #@            << find path and start file >>
+            #@+node:EKR.20040422094618.4:<< find path and start file >>
+            # Set the base directory by searching for @folder directives in ancestors.
+            thisdir = os.path.abspath(os.curdir) # remember the current dir
+            basedir = thisdir[:]	# use current dir as default.
+            parv = v.parent()	# start with parent
+            while parv:	# stop when no more parent found
+                p = parv.headString().strip()
+                if g.match_word(p,0,'@folder'):
+                    basedir = p[8:]	# take rest of headline as pathname
+                    break	# we found the closest @folder
+                else:
+                    parv = parv.parent()	# try the parent of the parent
+            
+            fname = os.path.join(basedir,h) # join path and filename
+            startdir, filename = os.path.split(fname)
+            try:
+                os.chdir(startdir)
+                dirfound = 1
+            except:
+                g.es(startdir+' - folder not found')
+                dirfound = 0
+            
+            if dirfound:
+                try:
+                    os.startfile(filename)	# Try to open the file; it may not work for all file types.
+                except:
+                    g.es(filename+' - file not found in '+startdir)
+                    # g.es_exception()
+            os.chdir(thisdir) # restore the original current dir.
+            #@nonl
+            #@-node:EKR.20040422094618.4:<< find path and start file >>
+            #@nl
 #@nonl
 #@-node:EKR.20040422094618.3:onIconDoubleClick
 #@-others
@@ -110,7 +111,7 @@ __version__ = "1.3"
 g.plugin_signon(__name__)
 
 def unitTest ():
-	pass
+    pass
 #@nonl
 #@-node:EKR.20040422094618:@file-thin startfile.py
 #@-leo

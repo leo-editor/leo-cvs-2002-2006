@@ -3,35 +3,35 @@
 """Modify the way exported outlines are displayed"""
 
 #@@language python
+#@@tabwidth -4
 
-import leoPlugins
 import leoGlobals as g
-from leoGlobals import true,false
+import leoPlugins
 
 def onStart (tag,keywords):
-	import leoNodes
-	g.funcToMethod(newMoreHead,leoNodes.vnode,"moreHead")
+    import leoNodes
+    g.funcToMethod(newMoreHead,leoNodes.vnode,"moreHead")
 
 #@+others
 #@+node:edream.110203113231.721:newMoreHead
 # Returns the headline string in MORE format.
 
-def newMoreHead (self,firstLevel,useVerticalBar=true):
+def newMoreHead (self,firstLevel,useVerticalBar=True):
 
-	useVerticalBar = true # Force the vertical bar
+    useVerticalBar = True # Force the vertical bar
 
-	v = self
-	level = self.level() - firstLevel
-	if level > 0:
-		if useVerticalBar:
-			s = " |\t" * level
-		else:
-			s = "\t"
-	else:
-		s = ""
-	s += g.choose(v.hasChildren(), "+ ", "- ")
-	s += v.headString()
-	return s
+    v = self
+    level = self.level() - firstLevel
+    if level > 0:
+        if useVerticalBar:
+            s = " |\t" * level
+        else:
+            s = "\t"
+    else:
+        s = ""
+    s += g.choose(v.hasChildren(), "+ ", "- ")
+    s += v.headString()
+    return s
 #@-node:edream.110203113231.721:newMoreHead
 #@-others
 

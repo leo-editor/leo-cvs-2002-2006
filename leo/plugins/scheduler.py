@@ -37,9 +37,8 @@
 #@-node:ekr.20040331153923.1:<< about this plugin >>
 #@nl
 
-import leoPlugins
 import leoGlobals as g
-from leoGlobals import true,false
+import leoPlugins
 
 import leoNodes
 
@@ -63,304 +62,304 @@ svs = []
 #@nl
 
 __version__ = "0.2"
-	# 0.1: Original version by ?
-	# 0.2: EKR: converted to 4.2 code standards.
+    # 0.1: Original version by ?
+    # 0.2: EKR: converted to 4.2 code standards.
 
 #@+others
 #@+node:ekr.20040331153923.3:wait_sleep
 def wait_sleep(i):
-	lk.acquire()
-	lk.wait(i)
-	lk.release()
+    lk.acquire()
+    lk.wait(i)
+    lk.release()
 #@nonl
 #@-node:ekr.20040331153923.3:wait_sleep
 #@+node:ekr.20040331153923.4:class Schedule
 class Schedule(threading.Thread):
 
-	def __init__(self):
-		threading.Thread.__init__(self)
-		self.setDaemon(true)
-	def run(self):
-		while 1:
-			lk.acquire()
-			lk.wait()
-			lk.release()
-			sc.run()
+    def __init__(self):
+        threading.Thread.__init__(self)
+        self.setDaemon(True)
+    def run(self):
+        while 1:
+            lk.acquire()
+            lk.wait()
+            lk.release()
+            sc.run()
 #@nonl
 #@-node:ekr.20040331153923.4:class Schedule
 #@+node:ekr.20040331153923.5:viewQueue
 def viewQueue():
-	
-	'''Brings up a dialog showing qscheduled commands and messages'''
+    
+    '''Brings up a dialog showing qscheduled commands and messages'''
 
-	tl = Tk.Toplevel()
-	tl.title("The Queue")
-	f = Tk.Frame(tl)
-	f.pack(fill="both")
-	lb = Tk.Listbox(f,background='white')
-	for z in sc.queue:
-		if z[2] == prepareCom:
-			#s = z[3][3]+" "+ z[3][0].headString()+"  "+time.ctime(z[0])
-			s = "%s %s %s" % (z[3][3],z[3][0].headString(),time.ctime(z[0]))
-		else:
-			s = "Message at " + time.ctime(z[0])
-		lb.insert("end",s)
-	lb.pack(fill="both")
-	#@	<< define cancel and close callbacks >>
-	#@+node:ekr.20040331160627:<< define cancel and close callbacks >>
-	def cancel(lb=lb):
-	
-		try:
-			i = int(lb.curselection()[0])
-			x = sc.queue[i]
-			sc.cancel(x)
-			lb.delete(i,i)
-		except:
-			print "BOOM!"
-	
-	def close(tl=tl):
-		
-		tl.withdraw()
-		tl.destroy()
-	#@nonl
-	#@-node:ekr.20040331160627:<< define cancel and close callbacks >>
-	#@nl
-	f2 = Tk.Frame(tl)
-	f2.pack()
-	b = Tk.Button(f2,text="Close",command=close)
-	b.pack(side="right")
-	b2 = Tk.Button(f2,text="Cancel",command=cancel)
-	b2.pack(side="left")
-	sh = tl.winfo_screenheight()/4
-	sw = tl.winfo_screenwidth()/4
-	tl.geometry(str(525)+"x"+str(400)+"+"+str(sw)+"+"+str(sh))
+    tl = Tk.Toplevel()
+    tl.title("The Queue")
+    f = Tk.Frame(tl)
+    f.pack(fill="both")
+    lb = Tk.Listbox(f,background='white')
+    for z in sc.queue:
+        if z[2] == prepareCom:
+            #s = z[3][3]+" "+ z[3][0].headString()+"  "+time.ctime(z[0])
+            s = "%s %s %s" % (z[3][3],z[3][0].headString(),time.ctime(z[0]))
+        else:
+            s = "Message at " + time.ctime(z[0])
+        lb.insert("end",s)
+    lb.pack(fill="both")
+    #@    << define cancel and close callbacks >>
+    #@+node:ekr.20040331160627:<< define cancel and close callbacks >>
+    def cancel(lb=lb):
+    
+        try:
+            i = int(lb.curselection()[0])
+            x = sc.queue[i]
+            sc.cancel(x)
+            lb.delete(i,i)
+        except:
+            print "BOOM!"
+    
+    def close(tl=tl):
+        
+        tl.withdraw()
+        tl.destroy()
+    #@nonl
+    #@-node:ekr.20040331160627:<< define cancel and close callbacks >>
+    #@nl
+    f2 = Tk.Frame(tl)
+    f2.pack()
+    b = Tk.Button(f2,text="Close",command=close)
+    b.pack(side="right")
+    b2 = Tk.Button(f2,text="Cancel",command=cancel)
+    b2.pack(side="left")
+    sh = tl.winfo_screenheight()/4
+    sw = tl.winfo_screenwidth()/4
+    tl.geometry(str(525)+"x"+str(400)+"+"+str(sw)+"+"+str(sh))
 #@nonl
 #@-node:ekr.20040331153923.5:viewQueue
 #@+node:ekr.20040331153923.6:popupMessage
 def popupMessage(message):
 
-	'''Pops up a message when the time comes'''
+    '''Pops up a message when the time comes'''
 
-	dialog = Tk.Toplevel()
-	dialog.title("You've Got a Message!")
-	#@	<< define close callback >>
-	#@+node:ekr.20040331155341:<< define close callback >>
-	def close(dialog=dialog):
-	
-		dialog.withdraw()
-		dialog.destroy()
-	#@nonl
-	#@-node:ekr.20040331155341:<< define close callback >>
-	#@nl
-	l = Tk.Label(dialog,text=message,background='white')
-	l.pack()
-	b = Tk.Button(dialog,text='Close',command=close)
-	b.pack()
-	sh = dialog.winfo_screenheight()/4
-	sw = dialog.winfo_screenwidth()/4
-	dialog.geometry(str(525)+"x"+str(400)+"+"+str(sw)+"+"+str(sh))
+    dialog = Tk.Toplevel()
+    dialog.title("You've Got a Message!")
+    #@    << define close callback >>
+    #@+node:ekr.20040331155341:<< define close callback >>
+    def close(dialog=dialog):
+    
+        dialog.withdraw()
+        dialog.destroy()
+    #@nonl
+    #@-node:ekr.20040331155341:<< define close callback >>
+    #@nl
+    l = Tk.Label(dialog,text=message,background='white')
+    l.pack()
+    b = Tk.Button(dialog,text='Close',command=close)
+    b.pack()
+    sh = dialog.winfo_screenheight()/4
+    sw = dialog.winfo_screenwidth()/4
+    dialog.geometry(str(525)+"x"+str(400)+"+"+str(sw)+"+"+str(sh))
 #@nonl
 #@-node:ekr.20040331153923.6:popupMessage
 #@+node:ekr.20040331153923.7:createMessage
 def createMessage():
-	'''Creates dialog to enter message to self in'''
-	
-	dialog = Tk.Toplevel()
-	dialog.title("Enter Message")
-	t = Tk.StringVar()
-	tv = Tk.Text(dialog,background='white')
-	tv.pack(side="top")
-	ts = Tk.StringVar()
-	ti = Tk.Entry(dialog,text=ts,background='white')
-	ti.pack()
-	#@	<< define schedule callback >>
-	#@+node:ekr.20040331155341.1:<< define schedule callback >>
-	def schedule(dialog=dialog,lk=lk,sc=sc):
-	
-		dialog.withdraw()
-		lk.acquire()
-		lt = time.localtime()
-		p = ts.get().split(':')
-		nt = (lt[0],lt [1],lt[2],int(p[0]),int(p[1]),lt[5],lt[6],lt[7],lt[8])
-		sse = time.mktime(nt)
-		sc.enterabs(sse,1,popupMessage,tuple([tv.get('1.0',"end")]))
-		lk.notify()
-		lk.release()
-		dialog.destroy()
-	#@nonl
-	#@-node:ekr.20040331155341.1:<< define schedule callback >>
-	#@nl
-	b = Tk.Button(dialog,text='Schedule',command=schedule)
-	b.pack(side="bottom")  
-	tv.focus_set()
-	sh = dialog.winfo_screenheight()/4
-	sw = dialog.winfo_screenwidth()/4
-	dialog.geometry(str(525)+"x"+str(400)+"+"+str(sw)+"+"+str(sh))
+    '''Creates dialog to enter message to self in'''
+    
+    dialog = Tk.Toplevel()
+    dialog.title("Enter Message")
+    t = Tk.StringVar()
+    tv = Tk.Text(dialog,background='white')
+    tv.pack(side="top")
+    ts = Tk.StringVar()
+    ti = Tk.Entry(dialog,text=ts,background='white')
+    ti.pack()
+    #@    << define schedule callback >>
+    #@+node:ekr.20040331155341.1:<< define schedule callback >>
+    def schedule(dialog=dialog,lk=lk,sc=sc):
+    
+        dialog.withdraw()
+        lk.acquire()
+        lt = time.localtime()
+        p = ts.get().split(':')
+        nt = (lt[0],lt [1],lt[2],int(p[0]),int(p[1]),lt[5],lt[6],lt[7],lt[8])
+        sse = time.mktime(nt)
+        sc.enterabs(sse,1,popupMessage,tuple([tv.get('1.0',"end")]))
+        lk.notify()
+        lk.release()
+        dialog.destroy()
+    #@nonl
+    #@-node:ekr.20040331155341.1:<< define schedule callback >>
+    #@nl
+    b = Tk.Button(dialog,text='Schedule',command=schedule)
+    b.pack(side="bottom")  
+    tv.focus_set()
+    sh = dialog.winfo_screenheight()/4
+    sw = dialog.winfo_screenwidth()/4
+    dialog.geometry(str(525)+"x"+str(400)+"+"+str(sw)+"+"+str(sh))
 #@nonl
 #@-node:ekr.20040331153923.7:createMessage
 #@+node:ekr.20040331153923.8:startRecord
 def startRecord(c):
 
-	'''begins recording'''
+    '''begins recording'''
 
-	global record
+    global record
 
-	cmds[c] = c.doCommand
-	c.doCommand = doCommand
-	record = True
+    cmds[c] = c.doCommand
+    c.doCommand = doCommand
+    record = True
 #@nonl
 #@-node:ekr.20040331153923.8:startRecord
 #@+node:ekr.20040331153923.9:setTime
 def setTime():
 
-	'''adds Commands to the Queue for timely processing'''
+    '''adds Commands to the Queue for timely processing'''
 
-	global commands
+    global commands
 
-	timepanel.withdraw()
-	lk.acquire()
-	lt = time.localtime()
-	priority = 1
-	for i in xrange(len(commands)):
-		z = commands[i]
-		tm = svs[i].get()
-		p = tm.split(':')
-		g.trace(p)
-		nt = (lt[0],lt[1],lt[2],int(p[0]),int(p[1]),lt[5],lt[6],lt[7],lt[8])
-		sse = time.mktime(nt)
-		sc.enterabs(sse,priority,prepareCom,z)
-		priority += 1
+    timepanel.withdraw()
+    lk.acquire()
+    lt = time.localtime()
+    priority = 1
+    for i in xrange(len(commands)):
+        z = commands[i]
+        tm = svs[i].get()
+        p = tm.split(':')
+        g.trace(p)
+        nt = (lt[0],lt[1],lt[2],int(p[0]),int(p[1]),lt[5],lt[6],lt[7],lt[8])
+        sse = time.mktime(nt)
+        sc.enterabs(sse,priority,prepareCom,z)
+        priority += 1
 
-	commands = []
-	lk.notify()
-	lk.release()
+    commands = []
+    lk.notify()
+    lk.release()
 #@nonl
 #@-node:ekr.20040331153923.9:setTime
 #@+node:ekr.20040331153923.10:endRecord
 def endRecord(c):
-	'''what happens when recording is ended.  To be cleaned up :) '''
-	#@	<< setAll and set_time callbacks >>
-	#@+node:ekr.20040331155341.2:<< setAll and set_time callbacks >>
-	def setAll():
-		value = timepanel.e.get()
-		for z in svs:
-			z.set(value)
-	
-	def set_time(*ignore):
-		which = timepanel.lb.curselection()
-		which = int(which[0])
-		item = timepanel.lb.get(which)
-		sv = svs[which]
-		timepanel.e.config(textvariable=sv)
-	#@nonl
-	#@-node:ekr.20040331155341.2:<< setAll and set_time callbacks >>
-	#@nl
-	global record,timepanel
-	record = False
-	c.doCommand = cmds[c]
-	if timepanel == None:
-		timepanel = Tk.Toplevel()
-		f1 = Tk.Frame(timepanel)
-		f1.pack(side="top",fill="both")
-		timepanel.e = Tk.Entry(f1)
-		b = Tk.Button(f1,text ='Schedule',command=setTime)
-		sa = Tk.Button(f1,text ='Set_All',command=setAll)
-		timepanel.e.pack()
-		b.pack(side="left") 
-		sa.pack(side="right")
-		f = Tk.Frame(timepanel)
-		f.pack(side="bottom",fill="both")
-		bottom = Tk.Scrollbar(f,orient="horizontal")
-		bottom.pack(side="bottom",fill=Tk.X)
-		timepanel.lb = Tk.Listbox(f,background='white')
-		timepanel.lb.bind('<ButtonRelease-1>',set_time)
-		timepanel.lb.pack(side="left",fill="both")
-		right = Tk.Scrollbar(f)
-		right.pack(side="right",fill="y")
-		right.config(command=timepanel.lb.yview)
-		timepanel.lb.config(yscrollcommand=right.set)
-		bottom.config(command=timepanel.lb.xview)
-		timepanel.lb.config(xscrollcommand=bottom.set)
-		sh = timepanel.winfo_screenheight()/4
-		sw = timepanel.winfo_screenwidth()/4
-		timepanel.geometry(str(525)+"x"+str(400)+"+"+str(sw)+"+"+str(sh))
-	else: 
-		timepanel.deiconify()
-	timepanel.lb.delete(0,"end")
-	global svs
-	svs = []
-	for z in commands:
-		sv = Tk.StringVar()
-		s = z[3] + ': ' + z[0].headString() + "   " + sv.get()
-		svs.append(sv)
-		timepanel.lb.insert("end",s)
-	timepanel.e.focus_set()    
+    '''what happens when recording is ended.  To be cleaned up :) '''
+    #@    << setAll and set_time callbacks >>
+    #@+node:ekr.20040331155341.2:<< setAll and set_time callbacks >>
+    def setAll():
+        value = timepanel.e.get()
+        for z in svs:
+            z.set(value)
+    
+    def set_time(*ignore):
+        which = timepanel.lb.curselection()
+        which = int(which[0])
+        item = timepanel.lb.get(which)
+        sv = svs[which]
+        timepanel.e.config(textvariable=sv)
+    #@nonl
+    #@-node:ekr.20040331155341.2:<< setAll and set_time callbacks >>
+    #@nl
+    global record,timepanel
+    record = False
+    c.doCommand = cmds[c]
+    if timepanel == None:
+        timepanel = Tk.Toplevel()
+        f1 = Tk.Frame(timepanel)
+        f1.pack(side="top",fill="both")
+        timepanel.e = Tk.Entry(f1)
+        b = Tk.Button(f1,text ='Schedule',command=setTime)
+        sa = Tk.Button(f1,text ='Set_All',command=setAll)
+        timepanel.e.pack()
+        b.pack(side="left") 
+        sa.pack(side="right")
+        f = Tk.Frame(timepanel)
+        f.pack(side="bottom",fill="both")
+        bottom = Tk.Scrollbar(f,orient="horizontal")
+        bottom.pack(side="bottom",fill=Tk.X)
+        timepanel.lb = Tk.Listbox(f,background='white')
+        timepanel.lb.bind('<ButtonRelease-1>',set_time)
+        timepanel.lb.pack(side="left",fill="both")
+        right = Tk.Scrollbar(f)
+        right.pack(side="right",fill="y")
+        right.config(command=timepanel.lb.yview)
+        timepanel.lb.config(yscrollcommand=right.set)
+        bottom.config(command=timepanel.lb.xview)
+        timepanel.lb.config(xscrollcommand=bottom.set)
+        sh = timepanel.winfo_screenheight()/4
+        sw = timepanel.winfo_screenwidth()/4
+        timepanel.geometry(str(525)+"x"+str(400)+"+"+str(sw)+"+"+str(sh))
+    else: 
+        timepanel.deiconify()
+    timepanel.lb.delete(0,"end")
+    global svs
+    svs = []
+    for z in commands:
+        sv = Tk.StringVar()
+        s = z[3] + ': ' + z[0].headString() + "   " + sv.get()
+        svs.append(sv)
+        timepanel.lb.insert("end",s)
+    timepanel.e.focus_set()    
 #@nonl
 #@-node:ekr.20040331153923.10:endRecord
 #@+node:ekr.20040331153923.11:prepareCom
 def prepareCom(p,c,command,label):
 
-	''' a simple method that executes commands'''
-	
-	c.selectPosition(p)
-	command()
+    ''' a simple method that executes commands'''
+    
+    c.selectPosition(p)
+    command()
 #@nonl
 #@-node:ekr.20040331153923.11:prepareCom
 #@+node:ekr.20040331153923.12:doCommand
 def doCommand (command,label,event=None):
-	
-	''' a swap method.  When Leo is recording, most methods pass through here,
+    
+    ''' a swap method.  When Leo is recording, most methods pass through here,
 we record them'''
 
-	if label == 'exit': shutdown(None,None)
-	if record:
-		if label == 'endrecording':
-			command()
-			return None
-		lk.acquire()
-		c = g.top()
-		commands.append((c.currentVnode(),c,command,label))
-		lk.release()
-		return True
-	else:
-		return None
+    if label == 'exit': shutdown(None,None)
+    if record:
+        if label == 'endrecording':
+            command()
+            return None
+        lk.acquire()
+        c = g.top()
+        commands.append((c.currentVnode(),c,command,label))
+        lk.release()
+        return True
+    else:
+        return None
 #@nonl
 #@-node:ekr.20040331153923.12:doCommand
 #@+node:ekr.20040331153923.13:addScheduleMenu
 def addScheduleMenu(tag,keywords):
 
-	men = None
-	if keywords.has_key('c'):
-		men = keywords['c'].frame.menu
-	else:
-		men = keywords['new_c'].frame.menu
+    men = None
+    if keywords.has_key('c'):
+        men = keywords['c'].frame.menu
+    else:
+        men = keywords['new_c'].frame.menu
 
-	if men in haveseen:
-		return None
-	
-	haveseen.append(men)
-	name = 'Schedule'
-	men.createNewMenu(name)
-	
-	table = (
-		('Begin Recording',None,lambda c = g.top(): startRecord(c)),
-		('End Recording',None,lambda c = g.top(): endRecord(c)),
-		('Schedule Message',None,createMessage),
-		('View Queue',None,viewQueue))
+    if men in haveseen:
+        return None
+    
+    haveseen.append(men)
+    name = 'Schedule'
+    men.createNewMenu(name)
+    
+    table = (
+        ('Begin Recording',None,lambda c = g.top(): startRecord(c)),
+        ('End Recording',None,lambda c = g.top(): endRecord(c)),
+        ('Schedule Message',None,createMessage),
+        ('View Queue',None,viewQueue))
 
-	men.createMenuItemsFromTable(name,table)
+    men.createMenuItemsFromTable(name,table)
 #@nonl
 #@-node:ekr.20040331153923.13:addScheduleMenu
 #@-others
 
 if Tk:
-	global sd
-	sc = sched.scheduler(time.time,time.sleep)
-	lk = threading.Condition(threading.RLock())
-	sd = Schedule()
-	sd.start()
-	leoPlugins.registerHandler(('start2','open2','new'),addScheduleMenu)
-	g.plugin_signon(__name__)
+    global sd
+    sc = sched.scheduler(time.time,time.sleep)
+    lk = threading.Condition(threading.RLock())
+    sd = Schedule()
+    sd.start()
+    leoPlugins.registerHandler(('start2','open2','new'),addScheduleMenu)
+    g.plugin_signon(__name__)
 #@nonl
 #@-node:ekr.20040331153923:@file-thin scheduler.py
 #@-leo

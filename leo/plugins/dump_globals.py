@@ -3,24 +3,24 @@
 """Dump globals at startup"""
 
 #@@language python
+#@@tabwidth -4
 
-import leoPlugins
 import leoGlobals as g
-from leoGlobals import true,false
+import leoPlugins
 
 #@+others
 #@+node:edream.110203113231.731:onStart
 def onStart (tag,keywords):
 
-	print "\nglobals..."
-	for s in globals():
-		if s not in __builtins__:
-			print s
-	
-	print "\nlocals..."
-	for s in locals():
-		if s not in __builtins__:
-			print s
+    print "\nglobals..."
+    for s in globals():
+        if s not in __builtins__:
+            print s
+    
+    print "\nlocals..."
+    for s in locals():
+        if s not in __builtins__:
+            print s
 #@-node:edream.110203113231.731:onStart
 #@-others
 

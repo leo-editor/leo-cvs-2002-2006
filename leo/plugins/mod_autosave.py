@@ -3,48 +3,49 @@
 """Autosave the Leo document every so often"""
 
 #@@language python
+#@@tabwidth -4
 
 # By Paul Paterson.
-import leoPlugins
 import leoGlobals as g
-from leoGlobals import true,false
+import leoPlugins
 
 import ConfigParser
-import time, os
+import os
+import time
 
 #@+others
 #@+node:edream.110203113231.725:applyConfiguration
 def applyConfiguration(config=None):
-	
-	"""Called when the user presses the "Apply" button on the Properties form"""
+    
+    """Called when the user presses the "Apply" button on the Properties form"""
 
-	global LAST_AUTOSAVE, ACTIVE, AUTOSAVE_INTERVAL
+    global LAST_AUTOSAVE, ACTIVE, AUTOSAVE_INTERVAL
 
-	if config is None:
-		fileName = os.path.join(g.app.loadDir,"../","plugins","mod_autosave.ini")
-		config = ConfigParser.ConfigParser()
-		config.read(fileName)
+    if config is None:
+        fileName = os.path.join(g.app.loadDir,"../","plugins","mod_autosave.ini")
+        config = ConfigParser.ConfigParser()
+        config.read(fileName)
 
-	ACTIVE = config.get("Main", "Active")
-	AUTOSAVE_INTERVAL = int(config.get("Main", "Interval"))
+    ACTIVE = config.get("Main", "Active")
+    AUTOSAVE_INTERVAL = int(config.get("Main", "Interval"))
 #@nonl
 #@-node:edream.110203113231.725:applyConfiguration
 #@+node:edream.110203113231.726:autosave
 def autosave(tag, keywords):
-	
-	"""Save the current document if it has a name"""
+    
+    """Save the current document if it has a name"""
 
-	global LAST_AUTOSAVE
-	
-	if g.app.killed: return # Work around a Tk bug.
+    global LAST_AUTOSAVE
+    
+    if g.app.killed: return # Work around a Tk bug.
 
-	if ACTIVE == "Yes":
-		if time.time() - LAST_AUTOSAVE > AUTOSAVE_INTERVAL:
-			c = g.top()
-			if c.mFileName and c.changed:
-				g.es("Autosave: %s" % time.ctime(),color="orange")
-				c.fileCommands.save(c.mFileName)
-			LAST_AUTOSAVE = time.time()
+    if ACTIVE == "Yes":
+        if time.time() - LAST_AUTOSAVE > AUTOSAVE_INTERVAL:
+            c = g.top()
+            if c.mFileName and c.changed:
+                g.es("Autosave: %s" % time.ctime(),color="orange")
+                c.fileCommands.save(c.mFileName)
+            LAST_AUTOSAVE = time.time()
 #@nonl
 #@-node:edream.110203113231.726:autosave
 #@-others

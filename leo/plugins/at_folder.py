@@ -3,10 +3,10 @@
 """Synchronize @folder nodes with folders"""
 
 #@@language python
+#@@tabwidth -4
 
-import leoPlugins
 import leoGlobals as g
-from leoGlobals import true,false
+import leoPlugins
 
 #@<< about this plugin >>
 #@+node:edream.110203113231.874:<< about this plugin >>
@@ -33,39 +33,39 @@ from leoGlobals import true,false
 #@+node:edream.110203113231.875:sync_node_to_folder
 def sync_node_to_folder(parent,d):
 
-	oldlist = {}
-	newlist = []
-	#get children info
-	v = parent
-	after_v = parent.nodeAfterTree()
-	while v != after_v:
-		if not v.hasChildren():
-			oldlist[v.headString()] = v.bodyString()
-		v = v.threadNext()
-	#compare folder content to children
-	for name in os.listdir(d):
-		if name in oldlist:
-			del oldlist[name]
-		else:
-			newlist.append(name)
-	#insert newlist
-	newlist.sort()
-	newlist.reverse()
-	for name in newlist:
-		v = parent.insertAsNthChild(0)
-		v.setHeadStringOrHeadline(name)
-		v.setMarked()
-	#warn for orphan oldlist
-	if len(oldlist)>0:
-		g.es('missing: '+','.join(oldlist.keys()))
+    oldlist = {}
+    newlist = []
+    #get children info
+    v = parent
+    after_v = parent.nodeAfterTree()
+    while v != after_v:
+        if not v.hasChildren():
+            oldlist[v.headString()] = v.bodyString()
+        v = v.threadNext()
+    #compare folder content to children
+    for name in os.listdir(d):
+        if name in oldlist:
+            del oldlist[name]
+        else:
+            newlist.append(name)
+    #insert newlist
+    newlist.sort()
+    newlist.reverse()
+    for name in newlist:
+        v = parent.insertAsNthChild(0)
+        v.setHeadStringOrHeadline(name)
+        v.setMarked()
+    #warn for orphan oldlist
+    if len(oldlist)>0:
+        g.es('missing: '+','.join(oldlist.keys()))
 #@-node:edream.110203113231.875:sync_node_to_folder
 #@-others
 
 def onSelect (tag,keywords):
-	v = keywords.get("new_v")
-	h = v.headString()
-	if g.match_word(h,0,"@folder"):
-		sync_node_to_folder(v,h[8:])
+    v = keywords.get("new_v")
+    h = v.headString()
+    if g.match_word(h,0,"@folder"):
+        sync_node_to_folder(v,h[8:])
 
 # Register the handlers...
 leoPlugins.registerHandler("select1", onSelect)

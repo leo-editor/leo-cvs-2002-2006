@@ -378,7 +378,6 @@ with:
 
 import leoPlugins
 import leoGlobals as g
-from leoGlobals import true,false
 
 This removes a major source of namespace pollution and it makes clear where all functions are defined.  To access functions in leoGlobals.py you must preceed the names of such functions with g. N.B. script in the node called
 
@@ -586,8 +585,8 @@ child = parent
 #@+node:edream.110203113231.13:settings_menu.py
 """Create a settings menu to replace LeoConfig.leo"""
 
+import leoGlobals as g
 import leoPlugins
-from leoGlobals import *
 
 try: import Tkinter as Tk
 except ImportError: Tk = None
@@ -604,7 +603,7 @@ if Tk and 0: # Register the handlers...
 	leoPlugins.registerHandler("create-optional-menus",createSettingsMenu)
 
 	__version__ = "0.1"
-	plugin_signon(__name__)
+	g.plugin_signon(__name__)
 #@nonl
 #@+node:edream.110203113231.14:createSettingsMenu
 def createSettingsMenu (tag,keywords):
@@ -853,12 +852,11 @@ if 1: # Register the handlers...
 
 __version__ = "0.1"
 
-import leoPlugins
 import leoGlobals as g
-from leoGlobals import true,false
+import leoPlugins
 
 import leoAtFile
-import os.path
+import os
 #@nonl
 #@-node:ekr.20040331072431.19:<< atfile_dispatch declarations >>
 #@+node:ekr.20040331072431.20:class dispatchedDerivedFile
@@ -1017,11 +1015,8 @@ if 1: # Register the handlers...
 
 __version__ = "0.1"
 
-import leoPlugins
-
 import leoGlobals as g
-from leoGlobals import true,false
-
+import leoPlugins
 #@-node:ekr.20040331072431.29:<< freemind_export declarations >>
 #@+node:ekr.20040331072431.30:class MindMapNode
 << freemind_export methods >>=
@@ -1263,7 +1258,7 @@ I don't understand the code yet, but already I love this plugin!
 #@-node:ekr.20040320121631:Changes made
 #@+node:ekr.20040320072156.1:@file-thin extender.py
 import leoGlobals as g
-
+import leoPlugins
 import re
 
 @others
@@ -1473,9 +1468,8 @@ def test():
 #@+node:ekr.20040320072156.20:@file-thin wordcompleter.py
 """Plugin to add word completion to the edit pane"""
 
-import leoPlugins
 import leoGlobals as g
-from leoGlobals import true,false
+import leoPlugins
 
 try: import Tkinter as Tk
 except ImportError: Tk = None
@@ -1695,8 +1689,10 @@ def suggestions(self, base, start=None, number=None):
 @language python
 
 import leoGlobals as g
-from leoGlobals import true,false
+import leoPlugins
+
 import string
+
 c = g.top()
 
 @others
@@ -1716,7 +1712,7 @@ else:
 if 1:
 	p = g.findTopLevelNode("New or improved in 4.2") ## Change this to have this script work on other subtrees.
 	g.enl() ; g.enl()
-	count = prependNamesInTree(p,nameList,"g.",replace=true) # Just prints if replace==false.
+	count = prependNamesInTree(p,nameList,"g.",replace=True) # Just prints if replace==False.
 	s = "%d --- done --- " % count
 	print s ; g.es(s)
 #@nonl
@@ -1917,7 +1913,7 @@ def findDefs(body):
 #@nonl
 #@-node:EKR.20040517075110.3:findDefs
 #@+node:EKR.20040517075110.4:prependNamesInTree
-def prependNamesInTree(p,nameList,prefix,replace=false):
+def prependNamesInTree(p,nameList,prefix,replace=False):
 	
 	c = p.c
 	
@@ -1930,7 +1926,7 @@ def prependNamesInTree(p,nameList,prefix,replace=false):
 	c.beginUpdate()
 	for p in p.self_and_subtree_iter():
 		count = 0 ; s = p.bodyString()
-		printFlag = false
+		printFlag = False
 		if s:
 			for name in nameList:
 				i = 0 ; n = len(name)
@@ -1968,10 +1964,10 @@ else:
 	else: # Replace name by prefix+name
 		s = s[:i] + prefix + name + s[i+n:]
 		i += n ; count += 1
-		# g.es('.',newline=false)
+		# g.es('.',newline=False)
 		if 1:
 			if not printFlag:
-				printFlag = true
+				printFlag = True
 				# print p.headString()
 			print g.get_line(s,i-n)
 #@nonl
