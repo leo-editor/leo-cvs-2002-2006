@@ -100,7 +100,10 @@ class config:
 		"undefined_section_name_color" )
 		
 	# Window section...
-	boolWindowNames = ( "body_pane_wraps", )
+	boolWindowNames = (
+		"body_pane_wraps",
+		"log_pane_wraps",
+		"outline_pane_scrolls_horizontally")
 	
 	intWindowNames = (
 		"additional_body_text_border",
@@ -222,6 +225,7 @@ class config:
 		"headline_text_font_size" : 12,
 		"headline_text_font_slant" : "roman",
 		"headline_text_font_weight" : "normal",
+		"log_pane_wraps" : 0,
 		"log_text_font_family" : None,
 		"log_text_font_size" : 12,
 		"log_text_font_slant" : "roman",
@@ -233,6 +237,7 @@ class config:
 		"initial_splitter_orientation" : "vertical",
 		"initial_vertical_ratio" : 0.5,
 		"initial_horizontal_ratio" : 0.3,
+		"outline_pane_scrolls_horizontally" : 0,
 		"split_bar_color" : "LightSteelBlue2",
 		"split_bar_relief" : "groove",
 		"split_bar_width" : 7 }

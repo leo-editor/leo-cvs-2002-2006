@@ -2527,7 +2527,7 @@ class LeoFrame:
 		
 		f = os.path.join(app().loadDir,"sbooks.chm")
 		if os.path.exists(f):
-			os.system("start " + f)
+			os.startfile(f)
 		else:
 			d = leoDialog.leoDialog()
 			answer = d.askYesNo(
@@ -2643,11 +2643,7 @@ class LeoFrame:
 			setgrid=1,wrap=wrap,
 			# selectforeground="white",
 			selectbackground="Gray80")
-			
-		#hilite-foreground= #000068
-		#hilite-background= #006868
 		
-			
 		font = config.getFontFromParams(
 			"body_text_font_family", "body_text_font_size",
 			"body_text_font_slant",  "body_text_font_weight")
@@ -2675,6 +2671,9 @@ class LeoFrame:
 		#@<< create the tree pane >>
 		#@+node:2::<< create the tree pane >>
 		#@+body
+		scrolls = config.getBoolWindowPref('outline_pane_scrolls_horizontally')
+		scrolls = choose(scrolls,1,0)
+		
 		self.canvas = tree = Tk.Canvas(split2Pane1,name="tree",
 			bd=0,bg="white",relief="flat")
 		
@@ -2688,6 +2687,12 @@ class LeoFrame:
 		treeBar['command'] = tree.yview
 		
 		treeBar.pack(side="right", fill="y")
+		if scrolls: 
+			treeXBar = Tk.Scrollbar( 
+				split2Pane1,name='treeXBar',orient="horizontal") 
+			tree['xscrollcommand'] = treeXBar.set 
+			treeXBar['command'] = tree.xview 
+			treeXBar.pack(side="bottom", fill="x")
 		tree.pack(expand=1,fill="both")
 		#@-body
 		#@-node:2::<< create the tree pane >>
@@ -2696,6 +2701,9 @@ class LeoFrame:
 		#@<< create the log pane >>
 		#@+node:3::<< create the log pane >>
 		#@+body
+		wrap = config.getBoolWindowPref('log_pane_wraps')
+		wrap = choose(wrap,"word","none")
+		
 		self.log = log = Tk.Text(split2Pane2,name="log",
 			setgrid=1,wrap="word",bd=2,bg="white",relief="flat")
 			
@@ -2712,6 +2720,13 @@ class LeoFrame:
 		logBar['command'] = log.yview
 		
 		logBar.pack(side="right", fill="y")
+		# rr 8/14/02 added horizontal elevator 
+		if wrap == "none": 
+			logXBar = Tk.Scrollbar( 
+				split2Pane2,name='logXBar',orient="horizontal") 
+			log['xscrollcommand'] = logXBar.set 
+			logXBar['command'] = log.xview 
+			logXBar.pack(side="bottom", fill="x")
 		log.pack(expand=1, fill="both")
 		#@-body
 		#@-node:3::<< create the log pane >>

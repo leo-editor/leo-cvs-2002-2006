@@ -2,7 +2,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="16" clone_windows="0"/>
 <globals body_outline_ratio="0.5">
-	<global_window_position top="86" left="142" height="20" width="77"/>
+	<global_window_position top="0" left="162" height="20" width="77"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences allow_rich_text="0">
@@ -13,7 +13,7 @@
 </find_panel_settings>
 <vnodes>
 <v t="T1" a="E"><vh>leoConfig.leo</vh>
-<v t="T2" a="V"><vh>leoConfig.txt</vh>
+<v t="T2" a="EV"><vh>@root leoConfig.txt</vh>
 <v t="T3"><vh>&lt;&lt; general comments and warnings &gt;&gt;</vh></v>
 <v t="T4"><vh>&lt;&lt; General configuration options, especially read-only mode &gt;&gt;</vh></v>
 <v t="T5"><vh>&lt;&lt; The "Recent Files" menu &gt;&gt;</vh></v>
@@ -21,7 +21,7 @@
 <v t="T7"><vh>&lt;&lt; Find/Change Panel settings &gt;&gt;</vh></v>
 <v t="T8"><vh>&lt;&lt; Preferences Panel settings &gt;&gt;</vh></v>
 <v t="T9"><vh>&lt;&lt; Syntax coloring options and colors &gt;&gt;</vh></v>
-<v t="T10"><vh>&lt;&lt; Window options &gt;&gt;</vh>
+<v t="T10" a="E"><vh>&lt;&lt; Window options &gt;&gt;</vh>
 <v t="T11"><vh>&lt;&lt; body pane options &gt;&gt;</vh></v>
 <v t="T12"><vh>&lt;&lt; outline pane options&gt;&gt;</vh></v>
 <v t="T13"><vh>&lt;&lt; log pane options &gt;&gt;</vh></v>
@@ -47,7 +47,7 @@ This is the file that creates leoConfig.txt.  We use this file for two reasons:
 @root leoConfig.txt
 
 # leoConfig.txt: configuration file for Leo.
-# 8/6/2002 by Edward K. Ream
+# 8/14/2002 by Edward K. Ream
 
 &lt;&lt; general comments and warnings &gt;&gt;
 
@@ -337,6 +337,9 @@ body_text_font_weight = normal
 #	The Tk -weight setting: normal or bold.  Default is normal.</t>
 <t tx="T12">@c
 
+outline_pane_scrolls_horizontally = 0
+#	0/1: 1: Use horizontal scrollbar in outline pane.
+
 headline_text_font_family =
 #	Font family for headline text.
 #	Default is default font for Tk.Text widgets.
@@ -352,6 +355,9 @@ headline_text_font_slant = roman
 headline_text_font_weight = normal
 #	The Tk -weight setting: normal or bold.  Default is normal.</t>
 <t tx="T13">@c
+
+log_pane_wraps = 1
+#	0/1: Wrap body text if 1.
 
 log_text_font_family =
 #	Font family for text in the log pane.
