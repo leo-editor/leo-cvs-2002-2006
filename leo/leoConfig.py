@@ -6,7 +6,7 @@
 
 from leoGlobals import *
 from leoUtils import *
-import exceptions, os, sys, traceback, ConfigParser, tkFont
+import exceptions, os, string, sys, traceback, ConfigParser, tkFont
 
 class config:
 	
@@ -890,6 +890,15 @@ class config:
 				config.write(cf)
 				cf.flush()
 				cf.close()
+				if sys.platform != "win32": # Delete Windows newlines
+					cf = open(self.configFileName)
+					lines = cf.read()
+					cf.close()
+					string.replace(lines,"\r","")
+					cf = open(self.configFileName,"w")
+					cf.write(lines)
+					cf.flush()
+					cf.close()
 			else:
 				es("can not open: " + self.configFileName)
 		except:
