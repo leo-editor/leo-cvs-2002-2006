@@ -1,3 +1,21 @@
+leo.py 3.1                                     July 20, 2002
+
+This version fixes a blunder that affects only leo.py 3.0.
+I recommend that all users of 3.0 upgrade to 3.1.
+
+With this release Leo's to-do list is now empty!
+I shall fix bugs as they are reported.
+I'll add new features only if convinced that they contribute significantly to Leo.
+
+The highlights:
+
+- Fixed a blunder: Leo 3.0 did nothing when it was opened directly from leo.py.
+  (Opening leo using openLeo.py did work.)
+- Created a compare panel to control scripts in leoCompare.py.
+- Added many new settings in leoConfig.txt to initialize the compare panel.
+- The FAQ tells how to add support for new languages.
+- The usual minor improvements and bug fixes.
+
 leo.py 3.0                                     July 16, 2002
 
 This version is called 3.0 because it can optionally produce files that

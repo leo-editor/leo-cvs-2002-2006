@@ -2464,7 +2464,7 @@ class LeoFrame:
 		tkMessageBox.showinfo(
 			"About Leo",
 			"Leo in Python/Tk\n" +
-			"Version 3.0, July 16, 2002\n\n" +
+			"Version 3.1, July 20, 2002\n\n" +
 	
 			"Copyright 1999-2002 by Edward K. Ream\n" +
 			"All Rights Reserved\n" +

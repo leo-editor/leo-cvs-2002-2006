@@ -36,7 +36,7 @@ modules.sort()
 # print "modules:", `modules`
 
 setup( name="leo",
-	version="3.0",
+	version="3.1",
 	author="Edward K. Ream",
 	author_email="edream@tds.net",
 	url="http://personalpages.tds.net/~edream/front.html",

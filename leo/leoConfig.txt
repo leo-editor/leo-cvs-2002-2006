@@ -1,5 +1,5 @@
 # leoConfig.txt: configuration file for Leo.
-# 7/16/2002 by Edward K. Ream
+# 7/20/2002 by Edward K. Ream
 #
 # Leo looks for this file using the directory in sys.leo_config_directory.
 # 	(You would typically set this attribute in sitecustomize.py).
