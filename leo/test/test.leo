@@ -2,7 +2,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="2330" clone_windows="0"/>
 <globals body_outline_ratio="0.32115869017632243">
-	<global_window_position top="10" left="10" height="1102" width="1585"/>
+	<global_window_position top="14" left="115" height="990" width="1270"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences>
@@ -2785,12 +2785,12 @@
 <v t="edream.110803170022"><vh>Count pages</vh></v>
 <v t="edream.120203185502"><vh>PyUno script</vh></v>
 </v>
-<v t="edream.121303091808" a="E"><vh>Batch test</vh>
-<v t="edream.112203144347" a="M" tnodeList="edream.112203144347"><vh>@file ..\test\batchScript.py</vh></v>
+<v t="edream.121303091808"><vh>Batch test</vh>
+<v t="edream.112203144347" tnodeList="edream.112203144347"><vh>@file ..\test\batchScript.py</vh></v>
 </v>
 <v t="edream.110203161858.2119" a="E"><vh>Unit Tests</vh>
 <v t="edream.110203161858.2124" a="E"><vh>tempNode</vh></v>
-<v t="dthein.20040108213304" a="E"><vh>reformatParagraphsTests</vh>
+<v t="dthein.20040108213304"><vh>reformatParagraphsTests</vh>
 <v t="dthein.20040108213304.1"><vh>testNoTrailingNewline</vh>
 <v t="dthein.20040108213304.2"><vh>before</vh></v>
 <v t="dthein.20040108213304.3"><vh>after</vh></v>
@@ -2844,7 +2844,7 @@
 <v t="dthein.20040110062310.2"><vh>after</vh></v>
 </v>
 <v t="dthein.20040121204705" a="E"><vh>testWithLeadingWSOnEmptyLines</vh>
-<v t="dthein.20040121204705.1" a="V"><vh>before</vh></v>
+<v t="dthein.20040121204705.1"><vh>before</vh></v>
 <v t="dthein.20040121204705.2"><vh>after</vh></v>
 </v>
 </v>
@@ -2876,11 +2876,6 @@
 <v t="edream.110203161858.2146"><vh>before</vh></v>
 <v t="edream.110203161858.2147"><vh>after</vh></v>
 <v t="edream.121003084958.1"><vh>selection</vh></v>
-</v>
-<v t="edream.121003102638"><vh>reformatParagraph</vh>
-<v t="edream.121003102638.1"><vh>before</vh></v>
-<v t="edream.121003102648"><vh>after</vh></v>
-<v t="edream.121003102738"><vh>insert</vh></v>
 </v>
 <v t="edream.121003103633"><vh>extractSection</vh>
 <v t="edream.112303064255"><vh>before</vh></v>
@@ -2956,7 +2951,7 @@
 <v t="edream.110903064653.3"><vh>c:\prog\leoCvs\leo\plugins\leoPlugins.leo</vh></v>
 <v t="edream.110903064653.4"><vh>c:\prog\leoCvs\leo\doc\LeoDocs.leo</vh></v>
 </v>
-<v t="edream.110203161858.2153" a="E"><vh>Run all tests</vh></v>
+<v t="edream.110203161858.2153" a="EV"><vh>Run all tests</vh></v>
 </v>
 </vnodes>
 <tnodes>
@@ -2979,9 +2974,7 @@ reload(leoTest) # Allows us to rerun this script when leoTest.py changes.
 suite = leoTest.makeReformatParagraphSuite()
 result = unittest.TestResult()
 runner = unittest.TextTestRunner()
-runner.run(suite)
-
-</t>
+runner.run(suite)</t>
 <t tx="dthein.20040108213304.1">@language plain
 @pagewidth 40
 @tabwidth 8
@@ -34569,15 +34562,18 @@ reload(leoTest) # Allows us to rerun this script when leoTest.py changes.
 
 mainSuite = unittest.makeSuite(unittest.TestCase)
 
+suite = leoTest.makeReformatParagraphSuite()
+mainSuite.addTest(suite)
+
 for f,arg in (
 	(leoTest.makeColorSuite,"colorizerTests"),
 	(leoTest.makeEditBodySuite,"editBodyTests"),
 	(leoTest.makeImportExportSuite,"exportTests"),
 	(leoTest.makeImportExportSuite,"importTests"),
 	(leoTest.makeTestLeoFilesSuite,"testLeoFiles"),
-	(leoTest.makeOutlineSuite,"outlineTests"),
+	# (leoTest.makeOutlineSuite,"outlineTests")
 	# These tests presently have problem with the gui when run with other tests...
-	(leoTest.makePluginsSuite,false) # verbose
+	# (leoTest.makePluginsSuite,false) # verbose
 ):
 	suite = f(arg,"tempNode")
 	mainSuite.addTest(suite)
@@ -34759,6 +34755,11 @@ if app.batchMode:
 		print "Disabling log"
 		
 	flag,frame = openWithFileName(path,old_c=None,enableLog=enable)
+	c = frame.c
+	v = c.rootVnode()
+	while v:
+		print v.headString()
+		v = v.threadNext()
 	
 	print app.log
 	
@@ -34766,7 +34767,8 @@ if app.batchMode:
 		print "Enabling log"
 		frame.log.enable()
 		es(frame)
-	print "End of batchScript.py"</t>
+	print "End of batchScript.py"
+</t>
 <t tx="edream.112303064255">before
 &lt;&lt; section &gt;&gt;
 sec line 1
@@ -36086,42 +36088,6 @@ This line should be ignored.</t>
 3.0 lineend - 1c</t>
 <t tx="edream.121003084958.1">2.0
 3.0 lineend - 1c</t>
-<t tx="edream.121003102638"></t>
-<t tx="edream.121003102638.1">@language plain
-@pagewidth 72
-@tabwidth 2
-
-The intent of this tool is to provide 
-an aid to memorization practice.  The 
-tool is directed at memorization of 
-prose or poetry, not music or 
-mathematics.  It would probably not 
-be useful for memorization of dialog.  The 
-purpose of such memorization is 
-to be able to recreate a chunk of 
-text in your head or on paper, and perhaps verbally.
-
-The steps might be as follows:
-
-Wraps the concatenated text to present page width setting. Leading tabs are sized to present tab width setting.
-First and second line of original text is used to determine leading whitespace
-in reformatted text.  Hanging indentation is honored.</t>
-<t tx="edream.121003102648">@language plain
-@pagewidth 72
-@tabwidth 2
-
-The intent of this tool is to provide an aid to memorization practice.
-The tool is directed at memorization of prose or poetry, not music or
-mathematics. It would probably not be useful for memorization of
-dialog. The purpose of such memorization is to be able to recreate a
-chunk of text in your head or on paper, and perhaps verbally.
-
-The steps might be as follows:
-
-Wraps the concatenated text to present page width setting. Leading tabs are sized to present tab width setting.
-First and second line of original text is used to determine leading whitespace
-in reformatted text.  Hanging indentation is honored.</t>
-<t tx="edream.121003102738">5.0</t>
 <t tx="edream.121003103633"></t>
 <t tx="edream.121003103729">before
 &lt;&lt; section &gt;&gt;

@@ -505,6 +505,397 @@ class editBodyTestCase(unittest.TestCase):
 	#@-others
 #@nonl
 #@-node:class editBodyTestCase
+#@+node:Reformat Paragraph tests
+# DTHEIN 2004.01.11: Added unit tests for reformatParagraph
+#@nonl
+#@-node:Reformat Paragraph tests
+#@+node:makeReformatParagraphSuite
+# DTHEIN 2004.01.11: Added method
+def makeReformatParagraphSuite():
+	
+	"""makeReformatParagraphSuite() -> suite
+	
+	Create a Reformat Paragraph test for each of the 
+	unit tests in the reformatParagraphTestCase class."""
+	
+	suite = unittest.TestSuite()
+	suite.addTest(reformatParagraphTestCase("testNoTrailingNewline"))
+	suite.addTest(reformatParagraphTestCase("testTrailingNewline"))
+	suite.addTest(reformatParagraphTestCase("testMixedLineLengths"))
+	suite.addTest(reformatParagraphTestCase("testMixedLinesWithLeadingWS"))
+	suite.addTest(reformatParagraphTestCase("testNoChangeRequired"))
+	suite.addTest(reformatParagraphTestCase("testHonorLeadingWS"))
+	suite.addTest(reformatParagraphTestCase("testHonorLeadingWSVar1"))
+	suite.addTest(reformatParagraphTestCase("testSimpleHangingIndent"))
+	suite.addTest(reformatParagraphTestCase("testSimpleHangingIndentVar1"))
+	suite.addTest(reformatParagraphTestCase("testSimpleHangingIndentVar2"))
+	suite.addTest(reformatParagraphTestCase("testMultiParagraph"))
+	suite.addTest(reformatParagraphTestCase("testMultiParagraphWithList"))
+	suite.addTest(reformatParagraphTestCase("testDirectiveBreaksParagraph"))
+	suite.addTest(reformatParagraphTestCase("testWithLeadingWSOnEmptyLines"))
+	return suite
+	#	suite = reformatParagraphTestCase().suite();
+	#return suite
+#@nonl
+#@-node:makeReformatParagraphSuite
+#@+node:class reformatParagraphTestCase
+# DTHEIN 2004.01.11: Added class
+class reformatParagraphTestCase(unittest.TestCase):
+	
+	"""Unit tests for Leo's reformat paragraph command."""
+	
+	#@	@+others
+	#@+node:setUp
+	# DTHEIN 2004.01.11: Added method
+	def setUp(self):
+	
+		self.u = testUtils()
+		self.c = top()
+		self.current_v = self.c.currentVnode()
+		self.old_v = self.c.currentVnode()
+		root = self.u.findRootNode(self.current_v)
+		self.temp_v = self.u.findNodeInTree(root,"tempNode")
+		self.tempChild_v = None
+		self.dataParent_v = self.u.findNodeInTree(root,"reformatParagraphsTests")
+		self.before_v = None
+		self.after_v = None
+		self.case_v = None
+		self.wasChanged = self.c.changed
+		
+	
+	#@-node:setUp
+	#@+node:tearDown
+	# DTHEIN 2004.01.11: Added method
+	def tearDown(self):
+		
+		# local variables for class fields, for ease
+		# of reading and ease of typeing.
+		#	
+		c = self.c ; temp_v = self.temp_v
+		
+		# clear the temp node and mark it unchanged
+		#
+		temp_v.t.setTnodeText("",app.tkEncoding)
+		temp_v.clearDirty()
+		
+		if not self.wasChanged:
+			c.setChanged (false)
+			
+		# Delete all children of temp node.
+		#
+		while temp_v.firstChild():
+			temp_v.firstChild().doDelete(temp_v)
+	
+		# make the original node the current node
+		#
+		c.selectVnode(self.old_v)
+	#@nonl
+	#@-node:tearDown
+	#@+node:testNoTrailingNewline
+	# DTHEIN 2004.01.11: Added method
+	def testNoTrailingNewline(self):
+		
+		self.singleParagraphTest("testNoTrailingNewline",2,24)
+	#@-node:testNoTrailingNewline
+	#@+node:testTrailingNewline
+	# DTHEIN 2004.01.11: Added method
+	def testTrailingNewline(self):
+		
+		self.singleParagraphTest("testTrailingNewline",3,0)
+	#@-node:testTrailingNewline
+	#@+node:testMixedLineLengths
+	# DTHEIN 2004.01.11: Added method
+	def testMixedLineLengths(self):
+		
+		self.singleParagraphTest("testMixedLineLengths",4,10)
+	#@-node:testMixedLineLengths
+	#@+node:testMixedLinesWithLeadingWS
+	# DTHEIN 2004.01.11: Added method
+	def testMixedLinesWithLeadingWS(self):
+		
+		self.singleParagraphTest("testMixedLinesWithLeadingWS",4,12)
+	#@-node:testMixedLinesWithLeadingWS
+	#@+node:testNoChangeRequired
+	# DTHEIN 2004.01.11: Added method
+	def testNoChangeRequired(self):
+		
+		self.singleParagraphTest("testNoChangeRequired",1,28)
+	#@-node:testNoChangeRequired
+	#@+node:testHonorLeadingWS
+	# DTHEIN 2004.01.11: Added method
+	def testHonorLeadingWS(self):
+		
+		self.singleParagraphTest("testHonorLeadingWS",5,16)
+	#@-node:testHonorLeadingWS
+	#@+node:testHonorLeadingWSVar1
+	# DTHEIN 2004.01.11: Added method
+	def testHonorLeadingWSVar1(self):
+		
+		self.singleParagraphTest("testHonorLeadingWSVar1",5,16)
+	#@-node:testHonorLeadingWSVar1
+	#@+node:testSimpleHangingIndent
+	# DTHEIN 2004.01.11: Added method
+	def testSimpleHangingIndent(self):
+		
+		self.singleParagraphTest("testSimpleHangingIndent",5,8)
+	#@-node:testSimpleHangingIndent
+	#@+node:testSimpleHangingIndentVar1
+	# DTHEIN 2004.01.11: Added method
+	def testSimpleHangingIndentVar1(self):
+		
+		self.singleParagraphTest("testSimpleHangingIndentVar1",5,8)
+	#@-node:testSimpleHangingIndentVar1
+	#@+node:testSimpleHangingIndentVar2
+	# DTHEIN 2004.01.11: Added method
+	def testSimpleHangingIndentVar2(self):
+		
+		self.singleParagraphTest("testSimpleHangingIndentVar2",5,8)
+	#@-node:testSimpleHangingIndentVar2
+	#@+node:testMultiParagraph
+	# DTHEIN 2004.01.11: Added method
+	def testMultiParagraph(self):
+		
+		# Locate the test data
+		#
+		self.getCaseDataNodes("testMultiParagraph")
+		
+		# Setup the temp node
+		#
+		self.copyBeforeToTemp()
+		
+		# reformat the paragraph and check insertion cursor position
+		#
+		self.c.reformatParagraph()
+		self.checkPosition(13,0)
+		
+		# Keep going, in the same manner
+		#
+		self.c.reformatParagraph()
+		self.checkPosition(25,0)
+		self.c.reformatParagraph()
+		self.checkPosition(32,11)
+		
+		# Compare the computed result to the reference result.
+		self.checkText()
+	#@-node:testMultiParagraph
+	#@+node:testMultiParagraphWithList
+	# DTHEIN 2004.01.11: Added method
+	def testMultiParagraphWithList(self):
+		
+		# Locate the test data
+		#
+		self.getCaseDataNodes("testMultiParagraphWithList")
+		
+		# Setup the temp node
+		#
+		self.copyBeforeToTemp()
+		
+		# reformat the paragraph and check insertion cursor position
+		#
+		self.c.reformatParagraph()
+		self.checkPosition(4,0)
+		
+		# Keep going, in the same manner
+		#
+		self.c.reformatParagraph()
+		self.checkPosition(7,0)
+		self.c.reformatParagraph()
+		self.checkPosition(10,0)
+		self.c.reformatParagraph()
+		self.checkPosition(13,0)
+		self.c.reformatParagraph()
+		self.checkPosition(14,18)
+		
+		# Compare the computed result to the reference result.
+		self.checkText()
+	#@-node:testMultiParagraphWithList
+	#@+node:testDirectiveBreaksParagraph
+	# DTHEIN 2004.01.11: Added method
+	def testDirectiveBreaksParagraph(self):
+		
+		# Locate the test data
+		#
+		self.getCaseDataNodes("testDirectiveBreaksParagraph")
+		
+		# Setup the temp node
+		#
+		self.copyBeforeToTemp()
+		
+		# reformat the paragraph and check insertion cursor position
+		#
+		self.c.reformatParagraph()
+		self.checkPosition(13,0) # at next paragraph
+		
+		# Keep going, in the same manner
+		#
+		self.c.reformatParagraph()
+		self.checkPosition(25,0) # at next paragraph
+	
+		self.c.reformatParagraph()
+		self.checkPosition(32,11)
+		
+		# Compare the computed result to the reference result.
+		self.checkText()
+	#@-node:testDirectiveBreaksParagraph
+	#@+node:testWithLeadingWSOnEmptyLines
+	# DTHEIN 2004.01.11: Added method
+	def testWithLeadingWSOnEmptyLines(self):
+		
+		# Locate the test data
+		#
+		self.getCaseDataNodes("testWithLeadingWSOnEmptyLines")
+		
+		# Setup the temp node
+		#
+		self.copyBeforeToTemp()
+		
+		# reformat the paragraph and check insertion cursor position
+		#
+		self.c.reformatParagraph()
+		self.checkPosition(4,0)
+		
+		# Keep going, in the same manner
+		#
+		self.c.reformatParagraph()
+		self.checkPosition(7,0)
+		self.c.reformatParagraph()
+		self.checkPosition(10,0)
+		self.c.reformatParagraph()
+		self.checkPosition(13,0)
+		self.c.reformatParagraph()
+		self.checkPosition(14,18)
+		
+		# Compare the computed result to the reference result.
+		self.checkText()
+	#@-node:testWithLeadingWSOnEmptyLines
+	#@+node:singleParagraphTest
+	# DTHEIN 2004.01.11: Added method
+	def singleParagraphTest(self,caseName,finalRow,finalCol):
+		
+		# Locate the test data
+		#
+		self.getCaseDataNodes(caseName)
+		
+		# Setup the temp node
+		#
+		self.copyBeforeToTemp()
+		
+		# reformat the paragraph
+		#
+		self.c.reformatParagraph()
+		
+		# Compare the computed result to the reference result.
+		self.checkText()
+		self.checkPosition(finalRow,finalCol)
+	
+	#@-node:singleParagraphTest
+	#@+node:checkPosition
+	# DTHEIN 2004.01.11: Added method
+	def checkPosition(self,expRow,expCol):
+	
+		row,col = self.getRowCol()
+		self.failUnlessEqual(expCol,col,
+			"Current position is (" + str(row) + "," + str(col) 
+			+ ");  expected cursor to be at column " + str(expCol) + ".")
+		self.failUnlessEqual(expRow,row,
+			"Current position is (" + str(row) + "," + str(col) 
+			+ ");  expected cursor to be at line " + str(expRow) + ".")
+	#@-node:checkPosition
+	#@+node:checkText
+	# DTHEIN 2004.01.11: Added method
+	def checkText(self):
+	
+		new_text = self.tempChild_v.bodyString()
+		ref_text = self.after_v.bodyString()
+		newLines = new_text.splitlines(1)
+		refLines = ref_text.splitlines(1)
+		newLinesCount = len(newLines)
+		refLinesCount = len(refLines)
+		for i in range(min(newLinesCount,refLinesCount)):
+			self.failUnlessEqual(newLines[i],refLines[i],
+				"Mismatch on line " + str(i) + "."
+				+ "\nExpected text: " + `refLines[i]`
+				+ "\n  Actual text: "	+ `newLines[i]`)
+		self.failUnlessEqual(newLinesCount,refLinesCount,
+			"Expected " + str(refLinesCount) + " lines, but "
+			+ "received " + str(newLinesCount) + " lines.")
+	#@nonl
+	#@-node:checkText
+	#@+node:copyBeforeToTemp
+	# DTHEIN 2004.01.11: Added method
+	# Warning: this is Tk-specific code.
+	#
+	def copyBeforeToTemp(self):
+	
+		# local variables for class fields, for ease
+		# of reading and ease of typeing.
+		#	
+		c = self.c ; temp_v = self.temp_v
+	
+		# Delete all children of temp node.
+		#
+		while temp_v.firstChild():
+			temp_v.firstChild().doDelete(temp_v)
+	
+		# Copy the test case node text to the temp node
+		#
+		text = self.case_v.bodyString()
+		temp_v.t.setTnodeText(text,app.tkEncoding)
+		
+		# create the child node that holds the text
+		#
+		t = leoNodes.tnode(headString="tempChildNode")
+		self.tempChild_v = self.temp_v.insertAsNthChild(0,t)
+	
+		# copy the before text to the temp text
+		#
+		text = self.before_v.bodyString()
+		self.tempChild_v.t.setTnodeText(text,app.tkEncoding)
+		
+		# make the temp child node current, and put the
+		# cursor at the beginning
+		#
+		c.selectVnode(self.tempChild_v)
+		c.frame.body.setInsertPointToStartOfLine( 0 )
+		c.frame.body.setTextSelection(None,None)
+		#app.gui.setInsertPoint(t,"1.0")
+		#app.gui.setTextSelection(t,"1.0","1.0")
+	#@-node:copyBeforeToTemp
+	#@+node:getCaseDataNodes
+	# DTHEIN 2004.01.11: Added method
+	def getCaseDataNodes(self,caseNodeName):
+	
+		self.case_v = self.u.findNodeInTree(self.dataParent_v,caseNodeName)
+		self.before_v = self.u.findNodeInTree(self.case_v,"before")
+		self.after_v  = self.u.findNodeInTree(self.case_v,"after")
+	#@-node:getCaseDataNodes
+	#@+node:getRowCol
+	# DTHEIN 2004.01.11: Added method
+	def getRowCol(self):
+		
+		# local variables for class fields, for ease
+		# of reading and ease of typeing.
+		#	
+		c = self.c ; body = c.frame.body.bodyCtrl ; gui = app.gui
+		tab_width = c.frame.tab_width
+	
+		# Get the Tkinter row col position of the insert cursor
+		#	
+		index = body.index("insert")
+		row,col = gui.getindex(body,index)
+		
+		# Adjust col position for tabs
+		#
+		if col > 0:
+			s = body.get("%d.0" % (row),index)
+			s = toUnicode(s,app.tkEncoding)
+			col = computeWidth(s,tab_width)
+	
+		return (row,col)
+	#@-node:getRowCol
+	#@-others
+#@nonl
+#@-node:class reformatParagraphTestCase
 #@+node:makeImportExportSuite
 def makeImportExportSuite(testParentHeadline,tempHeadline):
 	
@@ -812,35 +1203,35 @@ class outlineTestCase(unittest.TestCase):
 		self.c.selectVnode(self.old_v)
 	#@nonl
 	#@-node:tearDown
-	#@-others
-#@nonl
-#@-node:class outlineTestCase
-#@+node: makePluginsSuite
-def makePluginsSuite(verbose=false,*args,**keys):
+	#@+node: makePluginsSuite
+	def makePluginsSuite(verbose=false,*args,**keys):
+		
+		"""Create an plugins test for every .py file in the plugins directory."""
+		
+		plugins_path = os_path_join(app.loadDir,"..","plugins")
+		
+		files = glob.glob(os_path_join(plugins_path,"*.py"))
+		files = [os_path_abspath(file) for file in files]
+		files.sort()
 	
-	"""Create an plugins test for every .py file in the plugins directory."""
+		# Create the suite and add all test cases.
+		suite = unittest.makeSuite(unittest.TestCase)
+		
+		for file in files:
+			test = pluginTestCase(file,verbose)
+			suite.addTest(test)
 	
-	plugins_path = os_path_join(app.loadDir,"..","plugins")
-	
-	files = glob.glob(os_path_join(plugins_path,"*.py"))
-	files = [os_path_abspath(file) for file in files]
-	files.sort()
-
-	# Create the suite and add all test cases.
-	suite = unittest.makeSuite(unittest.TestCase)
-	
-	for file in files:
-		test = pluginTestCase(file,verbose)
-		suite.addTest(test)
-
-	return suite
-#@-node: makePluginsSuite
-#@+node:class pluginTestCase
-class pluginTestCase(unittest.TestCase):
-	
-	"""Unit tests for one Leo plugin."""
-	
-	#@	@+others
+		return suite
+	#@-node: makePluginsSuite
+	#@+node:class pluginTestCase
+	class pluginTestCase(unittest.TestCase):
+		
+		"""Unit tests for one Leo plugin."""
+		
+		#@	@+others
+		#@-others
+	#@nonl
+	#@-node:class pluginTestCase
 	#@+node:__init__
 	def __init__ (self,fileName,verbose):
 		
@@ -902,7 +1293,7 @@ class pluginTestCase(unittest.TestCase):
 	#@-node:tearDown
 	#@-others
 #@nonl
-#@-node:class pluginTestCase
+#@-node:class outlineTestCase
 #@-others
 #@nonl
 #@-node:@file leoTest.py
