@@ -339,7 +339,7 @@ class fileCommands:
 	
 		while self.matchTag("<clone_window vtag=\"V"):
 			self.getLong() ; self.getDquote() ; self.getTag(">")
-			if not self.getCollapsedOpenTag("<global_window_position"):
+			if not self.getOpenTag("<global_window_position"):
 				self.getTag("<global_window_position")
 				self.getPosition()
 				self.getTag("/>")
