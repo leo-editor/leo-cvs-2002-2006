@@ -11,7 +11,9 @@ if g.app.config.use_psyco:
     except ImportError: pass
 
 import leoNodes
+import binascii
 import os
+import pickle
 import string
 import time
 
@@ -58,6 +60,7 @@ class baseFileCommands:
         self.fileDate = -1
         self.leo_file_encoding = g.app.config.new_leo_file_encoding
         # For reading
+        self.descendentUnknownAttributesDictList = []
         self.fileFormatNumber = 0
         self.ratio = 0.5
         self.fileBuffer = None ; self.fileIndex = 0
@@ -358,32 +361,6 @@ class baseFileCommands:
             print "getTag(", tag, ") failed:"
             raise BadLeoFile("expecting" + tag)
     #@-node:EKR.20040526204706.9:getTag
-    #@+node:EKR.20040526204036.1:getUnknownAttribute
-    def getUnknownAttribute(self,nodeType):
-        
-        """Parse an unknown attribute in a <v> or <t> element."""
-        
-        import binascii
-        import pickle
-        
-        # New in 4.2.  The unknown tag has been pickled and hexlify'd.
-        attr,val = self.getUnknownTag()
-        if not attr:
-            return None,None
-        
-        try:
-            bin = binascii.unhexlify(val) # Throws a TypeError if val is not a hex string.
-            val2 = pickle.loads(bin)
-            return attr,val2
-    
-        except (TypeError,pickle.UnpicklingError,ImportError):
-            # Ignore the attribute:
-            g.es("Ignoring mal-formaed %s attribute: %s" % (nodeType,attr),color="blue")
-            return None,None
-    
-       
-    #@nonl
-    #@-node:EKR.20040526204036.1:getUnknownAttribute
     #@+node:EKR.20040526204036:getUnknownTag
     def getUnknownTag(self):
         
@@ -470,6 +447,18 @@ class baseFileCommands:
         self.getTag("</clone_windows>")
     #@nonl
     #@-node:ekr.20031218072017.3023:getCloneWindows
+    #@+node:EKR.20040627114602:getDescendentUnknownAttributes
+    def getDescendentUnknownAttributes (self,s):
+        
+        try:
+            bin = binascii.unhexlify(s) # Throws a TypeError if val is not a hex string.
+            val = pickle.loads(bin)
+            return val
+    
+        except (TypeError,pickle.UnpicklingError,ImportError):
+            return None
+    #@nonl
+    #@-node:EKR.20040627114602:getDescendentUnknownAttributes
     #@+node:ekr.20031218072017.3024:getEscapedString
     def getEscapedString (self):
     
@@ -583,6 +572,7 @@ class baseFileCommands:
         #@nl
         self.mFileName = c.mFileName
         self.tnodesDict = {}
+        self.descendentUnknownAttributesDictList = []
         ok = True
         c.loading = True # disable c.changed
         
@@ -631,6 +621,20 @@ class baseFileCommands:
         c.selectVnode(c.currentPosition()) # load body pane
         c.loading = False # reenable c.changed
         c.setChanged(c.changed) # Refresh the changed marker.
+        #@    << restore unknown attributes in descendent tnodes >>
+        #@+node:EKR.20040627120120:<< restore unknown attributes in descendent tnodes >>
+        for resultDict in self.descendentUnknownAttributesDictList:
+            for gnx in resultDict.keys():
+                tref = self.canonicalTnodeIndex(gnx)
+                t = self.tnodesDict.get(tref)
+                if t:
+                    t.unknownAttributes = resultDict[gnx]
+                else:
+                    g.trace("can not find tnode: gnx = %s" % gnx,color="red")
+        #@nonl
+        #@-node:EKR.20040627120120:<< restore unknown attributes in descendent tnodes >>
+        #@nl
+        self.descendentUnknownAttributesDictList = []
         self.tnodesDict = {}
         return ok, self.ratio
     #@nonl
@@ -669,6 +673,7 @@ class baseFileCommands:
         self.usingClipboard = True
         self.fileBuffer = s ; self.fileIndex = 0
         self.tnodesDict = {}
+        self.descendentUnknownAttributesDictList = []
         
         if not reassignIndices:
             #@        << recreate tnodesDict >>
@@ -855,6 +860,29 @@ class baseFileCommands:
             g.es("no tnode with index: %s.  The text will be discarded" % str(index))
         self.getTag("</t>")
     #@-node:ekr.20031218072017.1561:getTnode
+    #@+node:ekr.20031218072017.2008:getTnodeList (4.0,4.2)
+    def getTnodeList (self,s):
+    
+        """Parse a list of tnode indices in string s."""
+        
+        # Remember: entries in the tnodeList correspond to @+node sentinels, _not_ to tnodes!
+        
+        fc = self ; 
+    
+        indexList = s.split(',') # The list never ends in a comma.
+        tnodeList = []
+        for index in indexList:
+            index = self.canonicalTnodeIndex(index)
+            t = fc.tnodesDict.get(index)
+            if not t:
+                # Not an error: create a new tnode and put it in fc.tnodesDict.
+                # g.trace("not allocated: %s" % index)
+                t = self.newTnode(index)
+            tnodeList.append(t)
+            
+        # if tnodeList: g.trace(len(tnodeList))
+        return tnodeList
+    #@-node:ekr.20031218072017.2008:getTnodeList (4.0,4.2)
     #@+node:ekr.20031218072017.1560:getTnodes
     def getTnodes (self):
     
@@ -867,6 +895,29 @@ class baseFileCommands:
     
         self.getTag("</tnodes>")
     #@-node:ekr.20031218072017.1560:getTnodes
+    #@+node:EKR.20040526204036.1:getUnknownAttribute
+    def getUnknownAttribute(self,nodeType):
+        
+        """Parse an unknown attribute in a <v> or <t> element."""
+        
+        import binascii
+        import pickle
+        
+        # New in 4.2.  The unknown tag has been pickled and hexlify'd.
+        attr,val = self.getUnknownTag()
+        if not attr:
+            return None,None
+        
+        try:
+            bin = binascii.unhexlify(val) # Throws a TypeError if val is not a hex string.
+            val2 = pickle.loads(bin)
+            return attr,val2
+    
+        except (TypeError,pickle.UnpicklingError,ImportError):
+            # Assume that Leo 4.1 wrote the attribute.
+            return attr,val
+    #@nonl
+    #@-node:EKR.20040526204036.1:getUnknownAttribute
     #@+node:ekr.20031218072017.1566:getVnode changed for 4.2)
     def getVnode (self,parent,back,skip,appendToCurrentStack,appendToTopStack):
     
@@ -901,6 +952,12 @@ class baseFileCommands:
             elif self.matchTag("tnodeList="):
                 s = self.getDqString()
                 tnodeList = self.getTnodeList(s) # New for 4.0
+            elif self.matchTag("descendentTnodeUnknownAttributes="):
+                # New for 4.2
+                s = self.getDqString()
+                dict = self.getDescendentUnknownAttributes(s)
+                if dict:
+                    self.descendentUnknownAttributesDictList.append(dict)
             elif self.matchTag(">"):
                 break
             else: # New for 4.0: allow unknown attributes.
@@ -966,29 +1023,6 @@ class baseFileCommands:
         return v
     #@nonl
     #@-node:ekr.20031218072017.1566:getVnode changed for 4.2)
-    #@+node:ekr.20031218072017.2008:getTnodeList (4.0,4.2)
-    def getTnodeList (self,s):
-    
-        """Parse a list of tnode indices in string s."""
-        
-        # Remember: entries in the tnodeList correspond to @+node sentinels, _not_ to tnodes!
-        
-        fc = self ; 
-    
-        indexList = s.split(',') # The list never ends in a comma.
-        tnodeList = []
-        for index in indexList:
-            index = self.canonicalTnodeIndex(index)
-            t = fc.tnodesDict.get(index)
-            if not t:
-                # Not an error: create a new tnode and put it in fc.tnodesDict.
-                # g.trace("not allocated: %s" % index)
-                t = self.newTnode(index)
-            tnodeList.append(t)
-            
-        # if tnodeList: g.trace(len(tnodeList))
-        return tnodeList
-    #@-node:ekr.20031218072017.2008:getTnodeList (4.0,4.2)
     #@+node:ekr.20031218072017.1565:getVnodes
     def getVnodes (self):
     
@@ -1277,6 +1311,51 @@ class baseFileCommands:
     #@nonl
     #@-node:ekr.20031218072017.1570:assignFileIndices & compactFileIndices
     #@+node:ekr.20031218072017.3033:put routines
+    #@+node:ekr.20031218072017.3037:fileCommands.putGlobals (changed for 4.0)
+    def putGlobals (self):
+    
+        c = self.c
+        self.put("<globals")
+        #@    << put the body/outline ratio >>
+        #@+node:ekr.20031218072017.3038:<< put the body/outline ratio >>
+        # Puts an innumerate number of digits
+        
+        self.put(" body_outline_ratio=")
+        self.put_in_dquotes(str(c.frame.ratio))
+        #@nonl
+        #@-node:ekr.20031218072017.3038:<< put the body/outline ratio >>
+        #@nl
+        self.put(">") ; self.put_nl()
+        #@    << put the position of this frame >>
+        #@+node:ekr.20031218072017.3039:<< put the position of this frame >>
+        width,height,left,top = c.frame.get_window_info()
+        
+        self.put_tab()
+        self.put("<global_window_position")
+        self.put(" top=") ; self.put_in_dquotes(str(top))
+        self.put(" left=") ; self.put_in_dquotes(str(left))
+        self.put(" height=") ; self.put_in_dquotes(str(height))
+        self.put(" width=") ; self.put_in_dquotes(str(width))
+        self.put("/>") ; self.put_nl()
+        #@nonl
+        #@-node:ekr.20031218072017.3039:<< put the position of this frame >>
+        #@nl
+        #@    << put the position of the log window >>
+        #@+node:ekr.20031218072017.3040:<< put the position of the log window >>
+        top = left = height = width = 0 # no longer used
+        self.put_tab()
+        self.put("<global_log_window_position")
+        self.put(" top=") ; self.put_in_dquotes(str(top))
+        self.put(" left=") ; self.put_in_dquotes(str(left))
+        self.put(" height=") ; self.put_in_dquotes(str(height))
+        self.put(" width=") ; self.put_in_dquotes(str(width))
+        self.put("/>") ; self.put_nl()
+        #@nonl
+        #@-node:ekr.20031218072017.3040:<< put the position of the log window >>
+        #@nl
+        self.put("</globals>") ; self.put_nl()
+    #@nonl
+    #@-node:ekr.20031218072017.3037:fileCommands.putGlobals (changed for 4.0)
     #@+node:ekr.20031218072017.1470:put (basic)(leoFileCommands)
     # All output eventually comes here.
     def put (self,s):
@@ -1337,6 +1416,57 @@ class baseFileCommands:
         self.put_in_dquotes(str(tnodes))
         self.put("/>") ; self.put_nl()
     #@-node:ekr.20031218072017.1971:putClipboardHeader
+    #@+node:EKR.20040627113418:putDescendentUnknownAttributes
+    def putDescendentUnknownAttributes (self,p):
+    
+        # Create a list of all tnodes having a valid unknownAttributes dict.
+        tnodes = []
+        for p2 in p.subtree_iter():
+            t = p2.v.t
+            if hasattr(t,"unknownAttributes"):
+                if t not in tnodes :
+                    tnodes.append((p,t),)    
+        # g.trace(tnodes)
+        
+        # Create a list of pairs (t,d) where d contains only pickleable entries.
+        data = []
+        for p,t in tnodes:
+            if type(t.unknownAttributes) != type({}):
+                 g.es("ignoring non-dictionary unknownAttributes for",p,color="blue")
+            else:
+                # Create a new dict containing only entries that can be pickled.
+                d = dict(t.unknownAttributes) # Copy the dict.
+                for key in d.keys():
+                    try: pickle.dumps(d[key],bin=True)
+                    except pickle.PicklingError:
+                        del d[key]
+                        g.es("ignoring bad unknownAttributes key %s in %s" % (
+                            key,p),color="blue")
+                data.append((t,d),)
+                
+        # Create resultDict, an enclosing dict to hold all the data.
+        resultDict = {}
+        nodeIndices = g.app.nodeIndices
+        for t,d in data:
+            gnx = nodeIndices.toString(t.fileIndex)
+            resultDict[gnx]=d
+        
+        if 0:
+            print "resultDict"
+            for key in resultDict:
+                print ; print key,resultDict[key]
+            
+        # Pickle and hexlify resultDict.
+        if resultDict:
+            try:
+                tag = "descendentTnodeUnknownAttributes"
+                s = pickle.dumps(resultDict,bin=True)
+                field = ' %s="%s"' % (tag,binascii.hexlify(s))
+                self.put(field)
+            except pickle.PicklingError:
+                g.trace("can't happen",color="red")
+    #@nonl
+    #@-node:EKR.20040627113418:putDescendentUnknownAttributes
     #@+node:ekr.20031218072017.3034:putEscapedString
     # Surprisingly, the call to xmlEscape here is _much_ faster than calling put for each characters of s.
     
@@ -1395,51 +1525,6 @@ class baseFileCommands:
         self.put("</find_panel_settings>") ; self.put_nl()
     #@nonl
     #@-node:ekr.20031218072017.3035:putFindSettings
-    #@+node:ekr.20031218072017.3037:fileCommands.putGlobals (changed for 4.0)
-    def putGlobals (self):
-    
-        c = self.c
-        self.put("<globals")
-        #@    << put the body/outline ratio >>
-        #@+node:ekr.20031218072017.3038:<< put the body/outline ratio >>
-        # Puts an innumerate number of digits
-        
-        self.put(" body_outline_ratio=")
-        self.put_in_dquotes(str(c.frame.ratio))
-        #@nonl
-        #@-node:ekr.20031218072017.3038:<< put the body/outline ratio >>
-        #@nl
-        self.put(">") ; self.put_nl()
-        #@    << put the position of this frame >>
-        #@+node:ekr.20031218072017.3039:<< put the position of this frame >>
-        width,height,left,top = c.frame.get_window_info()
-        
-        self.put_tab()
-        self.put("<global_window_position")
-        self.put(" top=") ; self.put_in_dquotes(str(top))
-        self.put(" left=") ; self.put_in_dquotes(str(left))
-        self.put(" height=") ; self.put_in_dquotes(str(height))
-        self.put(" width=") ; self.put_in_dquotes(str(width))
-        self.put("/>") ; self.put_nl()
-        #@nonl
-        #@-node:ekr.20031218072017.3039:<< put the position of this frame >>
-        #@nl
-        #@    << put the position of the log window >>
-        #@+node:ekr.20031218072017.3040:<< put the position of the log window >>
-        top = left = height = width = 0 # no longer used
-        self.put_tab()
-        self.put("<global_log_window_position")
-        self.put(" top=") ; self.put_in_dquotes(str(top))
-        self.put(" left=") ; self.put_in_dquotes(str(left))
-        self.put(" height=") ; self.put_in_dquotes(str(height))
-        self.put(" width=") ; self.put_in_dquotes(str(width))
-        self.put("/>") ; self.put_nl()
-        #@nonl
-        #@-node:ekr.20031218072017.3040:<< put the position of the log window >>
-        #@nl
-        self.put("</globals>") ; self.put_nl()
-    #@nonl
-    #@-node:ekr.20031218072017.3037:fileCommands.putGlobals (changed for 4.0)
     #@+node:ekr.20031218072017.3041:putHeader
     def putHeader (self):
     
@@ -1655,12 +1740,11 @@ class baseFileCommands:
     #@nonl
     #@-node:ekr.20031218072017.1575:putTnodes
     #@+node:EKR.20040526202501:putUnknownAttributes
-    def putUnknownAttributes (self,torv):
+    def putUnknownAttributes (self,torv,toString=False):
         
         """Put pickleable values for all keys in torv.unknownAttributes dictionary."""
-    
-        import binascii,pickle
         
+        result = []
         attrDict = torv.unknownAttributes
         if type(attrDict) != type({}):
             g.es("ignoring non-dictionary unknownAttributes for",torv,color="blue")
@@ -1740,6 +1824,10 @@ class baseFileCommands:
         
         if hasattr(v,"unknownAttributes"): # New in 4.0
             self.putUnknownAttributes(v)
+            
+        if p.hasChildren() and isThin and not p.isOrphan() and not self.usingClipboard:
+            # We put the entire tree when using the clipboard, so no need for this.
+            self.putDescendentUnknownAttributes(p)
         #@nonl
         #@-node:ekr.20040324082713:<< Put tnodeList and unKnownAttributes >>
         #@nl
@@ -1758,16 +1846,8 @@ class baseFileCommands:
     
         # New in 4.2: don't write child nodes of @file-thin trees (except when writing to clipboard)
         if p.hasChildren():
-            if isThin:
-                if p.isOrphan():
-                    g.es("Writing entire tree for %s to outline" % p.headString(),color="blue")
-                else:
-                    #@                << write unknownAttributes for all descendent tnodes >>
-                    #@+node:EKR.20040625170343:<< write unknownAttributes for all descendent tnodes >>
-                    pass
-                    #@nonl
-                    #@-node:EKR.20040625170343:<< write unknownAttributes for all descendent tnodes >>
-                    #@nl
+            if isThin and p.isOrphan():
+                g.es("Writing entire tree for %s to outline" % p.headString(),color="blue")
             if not isThin or p.isOrphan() or self.usingClipboard:
                 fc.put_nl()
                 # This optimization eliminates all "recursive" copies.
