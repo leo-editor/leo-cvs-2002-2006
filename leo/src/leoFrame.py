@@ -604,7 +604,7 @@ class baseLeoFrame:
 	def getColorizer(self): return self.tree.colorizer
 	def recolor_now(self,v): return self.tree.recolor_now(v)
 	def recolor_range(self,v,leading,trailing): return self.tree.recolor_range(v,leading,trailing)
-	def recolor(self,v,incremental): return self.tree.recolor(v,incremental)
+	def recolor(self,v,incremental=false): return self.tree.recolor(v,incremental)
 	def updateSyntaxColorer(self,v): return self.tree.colorizer.updateSyntaxColorer(v)
 	
 	# Drawing.
