@@ -259,6 +259,7 @@ class labelsController(object):
             if not hasattr(p.v,'unknownAttributes'):
                     p.v.unknownAttributes = {}
             p.v.unknownAttributes['labels'] = hexstring
+            p.setDirty()
     #@nonl
     #@-node:ekr.20050301095332.23:set_labels_dict
     #@+node:ekr.20050301095332.24:add_label
@@ -415,7 +416,7 @@ class labelsController(object):
             - the content of that label at that node.
         """
         result = []
-        for p in c.allNodes_iter():
+        for p in self.c.allNodes_iter():
             labels = self.get_labels_dict(p)
             if labels.has_key(labelname):
                 result.append ((p.copy(), labelname, labels[labelname]))
