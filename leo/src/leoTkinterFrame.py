@@ -1132,45 +1132,6 @@ class leoTkinterFrame (leoFrame.leoFrame):
     #@-node:ekr.20041223102225:class iconBarClass
     #@+node:ekr.20041222060024:tkFrame.unpack/repack...
     #@+node:ekr.20041223160653:pane packers
-    if 0: # placeSplitter and divideAnySplitter.
-        #@    << reference code >>
-        #@+node:ekr.20041223165701:<< reference code >>
-        #@+at 
-        #@nonl
-        # Reference code.  The placer code is a combination of these...
-        # Most args come from placeSplitter.
-        # The relheight/width args come from divideAnySplitter.
-        #@-at
-        #@@c
-        
-        def divideAnySplitter (self, frac, verticalFlag, bar, pane1, pane2):
-            if verticalFlag:
-                # Panes arranged vertically; horizontal splitter bar
-                bar.place(rely=frac)
-                pane1.place(relheight=frac)
-                pane2.place(relheight=1-frac)
-            else:
-                # Panes arranged horizontally; vertical splitter bar
-                bar.place(relx=frac)
-                pane1.place(relwidth=frac)
-                pane2.place(relwidth=1-frac)
-        
-        def placeSplitter (self,bar,pane1,pane2,verticalFlag):
-            if verticalFlag:
-                # Panes arranged vertically; horizontal splitter bar
-                pane1.place(relx=0.5, rely =   0, anchor="n", relwidth=1.0, relheight=0.5)
-                pane2.place(relx=0.5, rely = 1.0, anchor="s", relwidth=1.0, relheight=0.5)
-                bar.place  (relx=0.5, rely = 0.5, anchor="c", relwidth=1.0)
-            else:
-                # Panes arranged horizontally; vertical splitter bar
-                # adj gives tree pane more room when tiling vertically.
-                adj = g.choose(verticalFlag != self.splitVerticalFlag,0.65,0.5)
-                pane1.place(rely=0.5, relx =   0, anchor="w", relheight=1.0, relwidth=adj)
-                pane2.place(rely=0.5, relx = 1.0, anchor="e", relheight=1.0, relwidth=1.0-adj)
-                bar.place  (rely=0.5, relx = adj, anchor="c", relheight=1.0)
-        #@-node:ekr.20041223165701:<< reference code >>
-        #@nl
-    
     def placePane1(self,verticalFlag,pane1,frac):
         if verticalFlag:
             pane1.place(relx=0.5,rely=0,anchor="n",relwidth=1.0,relheight=frac)
@@ -1287,26 +1248,6 @@ class leoTkinterFrame (leoFrame.leoFrame):
             g.es("showComponent: no component named %s" % name,color='blue')
     #@nonl
     #@-node:ekr.20041224072631:show/hideComponent
-    #@+node:ekr.20041222061331:pack/unpack/FrameWidgets
-    if 0: # This obscure the generality of components.
-    
-        def packFrameWidgets (self):
-            for name in ('splitter1','statusLine'):
-                component = self.component(name)
-                if component:
-                    component.pack()
-                    
-        def unpackFrameWidgets (self):
-            for name in ('splitter1','statusLine'):
-                component = self.component(name)
-                if component:
-                    component.unpack()
-    #@nonl
-    #@-node:ekr.20041222061331:pack/unpack/FrameWidgets
-    #@+node:ekr.20041222061331.1:unpackFrameWidgets
-    
-    
-    #@-node:ekr.20041222061331.1:unpackFrameWidgets
     #@-node:ekr.20041222060024:tkFrame.unpack/repack...
     #@+node:ekr.20031218072017.3953:Icon area methods (compatibility)
     def getIconBarObject(self):
@@ -1499,23 +1440,29 @@ class leoTkinterFrame (leoFrame.leoFrame):
             g.es_exception()
             pass
     #@-node:ekr.20031218072017.722:setTabWidth
-    #@+node:ekr.20031218072017.1540:setWrap
+    #@+node:ekr.20031218072017.1540:f.setWrap
     def setWrap (self,p):
         
         c = self.c
         theDict = g.scanDirectives(c,p)
-        if theDict != None:
-            # Add scroll bars if we aren't wrapping.
-            wrap = theDict.get("wrap")
-            # g.trace(wrap,p.headString())
-            if wrap:
-                self.bodyCtrl.configure(wrap="word")
-                self.bodyXBar.pack_forget()
-            else:
-                self.bodyCtrl.configure(wrap="none")
-                self.bodyXBar.pack(side="bottom",fill="x")
+        if not theDict: return
+        
+        wrap = theDict.get("wrap")
+        if self.body.wrapState == wrap: return
+    
+        self.body.wrapState = wrap
+        # g.trace(wrap)
+        if wrap:
+            self.bodyCtrl.configure(wrap="word")
+            self.bodyXBar.pack_forget()
+        else:
+            self.bodyCtrl.configure(wrap="none")
+            # Bug fix: 3/10/05: We must unpack the text area to make the scrollbar visible.
+            self.bodyCtrl.pack_forget()
+            self.bodyXBar.pack(side="bottom", fill="x")
+            self.bodyCtrl.pack(expand=1,fill="both")
     #@nonl
-    #@-node:ekr.20031218072017.1540:setWrap
+    #@-node:ekr.20031218072017.1540:f.setWrap
     #@+node:ekr.20031218072017.2307:setTopGeometry
     def setTopGeometry(self,w,h,x,y,adjustSize=True):
         
@@ -2264,9 +2211,12 @@ class leoTkinterBody (leoFrame.leoBody):
         self.bodyXbar = frame.bodyXBar = bodyXBar
         
         if wrap == "none":
+            g.trace(parentFrame)
             bodyXBar.pack(side="bottom", fill="x")
             
-        body.pack(expand=1, fill="both")
+        body.pack(expand=1,fill="both")
+    
+        self.wrapState = wrap
     
         if 0: # Causes the cursor not to blink.
             body.configure(insertofftime=0)
