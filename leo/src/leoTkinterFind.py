@@ -71,6 +71,9 @@ class underlinedTkButton:
         # g.trace(self.text)
     
         self.button.invoke ()
+        
+        # See if this helps.
+        return 'break'
     #@-node:ekr.20041025152717:callback
     #@-others
 #@nonl
@@ -257,9 +260,13 @@ class leoTkinterFind (leoFind.leoFind,leoTkinterDialog.leoTkinterDialog):
         # HotKeys used for check/radio buttons:  a,b,c,e,h,i,l,m,n,o,p,r,s,t,w
         # HotKeys used for plain buttons (enter),d,g,t
         
+        def findButtonCallback(event=None):
+            self.findButton()
+            return 'break'
+        
         # Create the first row of buttons
         findButton=Tk.Button(buttons,
-            width=9,text="Find",bd=4,command=self.findButton) # The default.
+            width=9,text="Find",bd=4,command=findButtonCallback) # The default.
         findButton.pack(pady="1p",padx="25p",side="left")
         
         contextBox = underlinedTkButton("check",buttons,
@@ -303,7 +310,7 @@ class leoTkinterFind (leoFind.leoFind,leoTkinterDialog.leoTkinterDialog):
             #widget.bind(g.virtual_event_name("SelectAll"),self.selectAll)
         
         for widget in (outer, self.find_ctrl, self.change_ctrl):
-            widget.bind("<Key-Return>", self.findButton)
+            widget.bind("<Key-Return>", findButtonCallback)
             widget.bind("<Key-Escape>", self.onCloseWindow)
         
         self.top.protocol("WM_DELETE_WINDOW", self.onCloseWindow)
@@ -390,6 +397,7 @@ class leoTkinterFind (leoFind.leoFind,leoTkinterDialog.leoTkinterDialog):
         # Among other things, this allows Leo to search for a single trailing space.
         s = self.find_ctrl.get("1.0","end")
         s = g.toUnicode(s,g.app.tkEncoding)
+        g.trace(repr(s))
         if s and s[-1] in ('\r','\n'):
             s = s[:-1]
         self.find_text = s
