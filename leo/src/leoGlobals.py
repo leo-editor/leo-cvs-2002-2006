@@ -1428,24 +1428,6 @@ def ensure_extension (name, ext):
         return theFile + ext
 #@nonl
 #@-node:ekr.20031218072017.3118:ensure_extension
-#@+node:ekr.20031218072017.1264:getBaseDirectory
-# Handles the conventions applying to the "relative_path_base_directory" configuration option.
-
-def getBaseDirectory():
-
-    base = app.config.relative_path_base_directory
-
-    if base and base == "!":
-        base = app.loadDir
-    elif base and base == ".":
-        base = g.top().openDirectory
-
-    # g.trace(base)
-    if base and len(base) > 0 and g.os_path_isabs(base):
-        return base # base need not exist yet.
-    else:
-        return "" # No relative base given.
-#@-node:ekr.20031218072017.1264:getBaseDirectory
 #@+node:EKR.20040504154039:g.is_sentinel
 def is_sentinel (line,delims):
     
@@ -1493,6 +1475,158 @@ def is_sentinel (line,delims):
         g.es("Can't happen: is_sentinel",color="red")
         return False
 #@-node:EKR.20040504154039:g.is_sentinel
+#@+node:ekr.20050104135720:Used by tangle code & leoFileCommands
+#@+node:ekr.20031218072017.1241:g.update_file_if_changed
+# This is part of the tangle code.
+
+def update_file_if_changed(file_name,temp_name):
+
+    """Compares two files.
+    
+    If they are different, we replace file_name with temp_name.
+    Otherwise, we just delete temp_name. Both files should be closed."""
+
+    if g.os_path_exists(file_name):
+        import filecmp
+        if filecmp.cmp(temp_name, file_name):
+            kind = 'unchanged'
+            ok = g.utils_remove(temp_name)
+        else:
+            kind = '***updating'
+            mode = g.utils_stat(file_name)
+            ok = g.utils_rename(temp_name,file_name,mode)
+    else:
+        kind = 'creating'
+        ok = g.utils_rename(temp_name,file_name)
+        
+    if ok:
+        g.es('%12s: %s' % (kind,file_name))
+    else:
+        g.es("rename failed: no file created!",color="red")
+        g.es(file_name," may be read-only or in use")
+#@nonl
+#@-node:ekr.20031218072017.1241:g.update_file_if_changed
+#@+node:ekr.20050104123726.3:g.utils_remove
+def utils_remove (fileName,verbose=True):
+
+    try:
+        os.remove(fileName)
+        return True
+    except:
+        if verbose:
+            g.es("exception removing:" + fileName)
+            g.es_exception()
+        return False
+#@nonl
+#@-node:ekr.20050104123726.3:g.utils_remove
+#@+node:ekr.20031218072017.1263:g.utils_rename
+#@<< about os.rename >>
+#@+node:ekr.20050104123726.1:<< about os.rename >>
+#@+at 
+#@nonl
+# Here is the Python 2.4 documentation for rename (same as Python 2.3)
+# 
+# Rename the file or directory src to dst.  If dst is a directory, OSError 
+# will be raised.
+# 
+# On Unix, if dst exists and is a file, it will be removed silently if the 
+# user
+# has permission. The operation may fail on some Unix flavors if src and dst 
+# are
+# on different filesystems. If successful, the renaming will be an atomic
+# operation (this is a POSIX requirement).
+# 
+# On Windows, if dst already exists, OSError will be raised even if it is a 
+# file;
+# there may be no way to implement an atomic rename when dst names an existing
+# file.
+#@-at
+#@nonl
+#@-node:ekr.20050104123726.1:<< about os.rename >>
+#@nl
+
+def utils_rename(src,dst,mode=None,verbose=True):
+
+    '''Platform independent rename.'''
+    
+    head,tail=g.os_path_split(dst)
+    if head and len(head) > 0:
+        g.makeAllNonExistentDirectories(head)
+        
+    if g.os_path_exists(dst):
+        if not g.utils_remove(dst):
+            return False
+        
+    try:
+        if 1: # Use rename in all cases.
+            os.rename(src,dst)
+            if mode:
+                g.utils_chmod(dst,mode,verbose)
+            return True
+        else:
+            # This isn't a great solution: distutils.file_util may not exist.
+            if sys.platform=="win32":
+                os.rename(src,dst)
+            else:
+                from distutils.file_util import move_file
+                move_file(src,dst)
+            if mode:
+                g.utils_chmod(dst,mode,verbose)
+            return True
+
+    except Exception:
+        if verbose:
+            g.es('Exception renaming %s to %s' % (src,dst),color='red')
+            g.es_exception()
+        return False
+#@nonl
+#@-node:ekr.20031218072017.1263:g.utils_rename
+#@+node:ekr.20050104124903:g.utils_chmod
+def utils_chmod (fileName,mode,verbose=True):
+    
+    if mode is None:
+        return
+
+    try:
+        os.chmod(fileName,mode)
+    except:
+        if verbose:
+            g.es("exception in os.chmod(%s)" % (fileName))
+            g.es_exception()
+#@nonl
+#@-node:ekr.20050104124903:g.utils_chmod
+#@+node:ekr.20050104123726.4:g.utils_stat
+def utils_stat (fileName):
+
+    '''Return the access mode of named file, removing any setuid, setgid, and sticky bits.'''
+
+    try:
+        mode = (os.stat(fileName))[0] & 0777
+    except:
+        mode = None
+        
+    return mode
+#@nonl
+#@-node:ekr.20050104123726.4:g.utils_stat
+#@-node:ekr.20050104135720:Used by tangle code & leoFileCommands
+#@+node:ekr.20031218072017.1264:getBaseDirectory
+# Handles the conventions applying to the "relative_path_base_directory" configuration option.
+
+def getBaseDirectory():
+
+    base = app.config.relative_path_base_directory
+
+    if base and base == "!":
+        base = app.loadDir
+    elif base and base == ".":
+        base = g.top().openDirectory
+
+    # g.trace(base)
+    if base and len(base) > 0 and g.os_path_isabs(base):
+        return base # base need not exist yet.
+    else:
+        return "" # No relative base given.
+#@-node:ekr.20031218072017.1264:getBaseDirectory
 #@+node:ekr.20031218072017.3119:makeAllNonExistentDirectories
 # This is a generalization of os.makedir.
 
@@ -1583,90 +1717,6 @@ def shortFileName (fileName):
 shortFilename = shortFileName
 #@nonl
 #@-node:ekr.20031218072017.3125:shortFileName & shortFilename
-#@+node:ekr.20031218072017.1241:update_file_if_changed
-def update_file_if_changed(file_name,temp_name):
-
-    """Compares two files.
-    
-    If they are different, we replace file_name with temp_name.
-    Otherwise, we just delete temp_name.
-    Both files should be closed."""
-
-    if g.os_path_exists(file_name):
-        import filecmp
-        if filecmp.cmp(temp_name, file_name):
-            try: # Just delete the temp file.
-                os.remove(temp_name)
-            except: pass
-            g.es("unchanged: " + file_name)
-        else:
-            try:
-                # 10/6/02: retain the access mode of the previous file,
-                # removing any setuid, setgid, and sticky bits.
-                mode = (os.stat(file_name))[0] & 0777
-            except:
-                mode = None
-            try: # Replace file with temp file.
-                os.remove(file_name)
-                g.utils_rename(temp_name, file_name)
-                if mode: # 10/3/02: retain the access mode of the previous file.
-                    os.chmod(file_name,mode)
-                g.es("***updating: " + file_name)
-            except:
-                g.es("Rename failed: no file created!",color="red")
-                g.es(file_name," may be read-only or in use")
-                g.es_exception()
-    else:
-        try:
-            # os.rename(temp_name, file_name)
-            g.utils_rename(temp_name, file_name)
-            g.es("creating: " + file_name)
-        except:
-            g.es("rename failed: no file created!",color="red")
-            g.es(file_name," may be read-only or in use")
-            g.es_exception()
-#@-node:ekr.20031218072017.1241:update_file_if_changed
-#@+node:ekr.20031218072017.1263:utils_rename
-#@+at 
-#@nonl
-# Here is the Python 2.4 documentation for rename (same as Python 2.3)
-# 
-# Rename the file or directory src to dst.  If dst is a directory, OSError 
-# will be raised.
-# 
-# On Unix, if dst exists and is a file, it will be removed silently if the 
-# user
-# has permission. The operation may fail on some Unix flavors if src and dst 
-# are
-# on different filesystems. If successful, the renaming will be an atomic
-# operation (this is a POSIX requirement).
-# 
-# On Windows, if dst already exists, OSError will be raised even if it is a 
-# file;
-# there may be no way to implement an atomic rename when dst names an existing
-# file.
-#@-at
-#@@c
-
-def utils_rename(src,dst):
-
-    """Platform-independent rename."""
-    
-    head,tail=g.os_path_split(dst)
-    if head and len(head) > 0:
-        g.makeAllNonExistentDirectories(head)
-        
-    if 1: # Use rename in all cases.
-        os.rename(src,dst)
-    else:
-        # This isn't a great solution: distutils.file_util may not exist.
-        if sys.platform=="win32":
-            os.rename(src,dst)
-        else:
-            from distutils.file_util import move_file
-            move_file(src,dst)
-#@nonl
-#@-node:ekr.20031218072017.1263:utils_rename
 #@-node:ekr.20031218072017.3116:Files & Directories...
 #@+node:ekr.20031218072017.1588:Garbage Collection
 debugGC = False # Must be true to enable traces below.
@@ -3103,7 +3153,7 @@ def initScriptFind(findHeadline,changeHeadline=None,firstNode=None,
         c.change_text = change_text.strip() + "\n"
     else:
         c.change_text = change_text
-    c.frame.frame.findPanel.init(c)
+    c.frame.findPanel.init(c)
     c.showFindPanel()
 #@nonl
 #@-node:ekr.20031218072017.2418:g.initScriptFind (set up dialog)
