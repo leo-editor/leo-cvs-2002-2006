@@ -61,7 +61,7 @@
 <v t="T44"><vh>Dan Winkler 1</vh></v>
 <v t="T45"><vh>Dan Winkler 2</vh></v>
 </v>
-<v t="T46" a="E"><vh>Release Notes</vh>
+<v t="T46"><vh>Release Notes</vh>
 <v t="T47"><vh>Warnings</vh></v>
 <v t="T48"><vh>Installation notes</vh>
 <v t="T49" a="C"><vh>System requirements</vh></v>
@@ -82,7 +82,7 @@
 <v t="T62" a="C"><vh>Quick start</vh></v>
 </v>
 <v t="T63" a="E"><vh>Latest version</vh>
-<v t="T64" a="CEV"><vh>4.0 beta 1</vh>
+<v t="T64" a="CE"><vh>4.0 beta 1</vh>
 <v t="T65" a="C"><vh>4.0 Theory of operation</vh></v>
 <v t="T66"><vh>Coming in 4.0 final</vh></v>
 <v t="T67"><vh>New commands &amp; options</vh>
@@ -878,7 +878,7 @@
 </v>
 </v>
 </v>
-<v t="T698"><vh>Users Guide</vh>
+<v t="T698" a="V"><vh>Users Guide</vh>
 <v t="T699"><vh>An overview of Leo</vh></v>
 <v t="T700"><vh>Front material</vh>
 <v t="T701"><vh>Title Page &amp; Summary</vh></v>
@@ -2910,9 +2910,11 @@ The first  line opens Leo files with no console window.
 The second line opens Leo files with a console window and leaves the window open after Leo exits.
 
 You should now be able to double click on a leo file in explorer with leo.py.</t>
-<t tx="T61">Leo will now draw the LeoDoc.ico from the Icons directory in Leo windows, provided you have installed Fredrik Lundh's PIL and tkIcon packages. 
+<t tx="T61">New in Leo 4.0 and Python 2.3: Leo will draw a Leo icon in all Leo windows.  There is no need to install PIL or tkIcon.
 
-Download PIL    from http://www.pythonware.com/downloads/index.htm#pil
+Otherwise (for versions of Leo before 4.0 and for versions of Python before 2.3) Leo will draw a Leo icon in Leo windows only if you have installed Fredrik Lundh's PIL and tkIcon packages.
+
+Download PIL from http://www.pythonware.com/downloads/index.htm#pil
 Download tkIcon from http://www.effbot.org/downloads/#tkIcon
 
 Many thanks to Jonathan M. Gilligan for suggesting this code.</t>

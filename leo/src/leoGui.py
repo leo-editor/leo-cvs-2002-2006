@@ -202,6 +202,9 @@ class tkinterGui(leoGui):
 		
 		# Initialize the base class.
 		leoGui.__init__(self,"tkinter")
+		
+		self.bitmap_name = None
+		self.bitmap = None
 	#@nonl
 	#@-node: tkinterGui.__init__
 	#@+node:createRootWindow & allies
@@ -226,35 +229,19 @@ class tkinterGui(leoGui):
 	#@+node:setDefaultIcon
 	def setDefaultIcon(self):
 		
-		# print "setDefaultIcon"
 		
-		gui = self ; a = app()
-		try:
-			bitmap_name = os.path.join(a.loadDir,"..","Icons","LeoApp.ico")
-			bitmap = Tkinter.BitmapImage(bitmap_name)
-		except:
-			print "exception creating bitmap"
-			traceback.print_exc()
 		
+		gui = self
+	
 		try:
 			version = gui.root.getvar("tk_patchLevel")
-			v834 = CheckVersion(version, "8.3.4") # v834 true if 8.3.4 or greater.
+			if CheckVersion(version,"8.3.4"):
+				# tk 8.3.4 or greater: load a 16 by 16 icon.
+				bitmap_name = os.path.join(app().loadDir,"..","Icons","LeoApp16.ico")
+				self.bitmap = Tkinter.BitmapImage(bitmap_name)
 		except:
-			print "exception getting version"
+			print "exception setting bitmap"
 			traceback.print_exc()
-			v834 = None
-			
-		if v834:
-			print "setting tk 8.3.4 default icon bitmap"
-			try:
-				if sys.platform=="win32": # Windows
-					gui.root.wm_iconbitmap(bitmap,default=1)
-				else:
-					gui.root.wm_iconbitmap(bitmap)
-			except:
-				if 1: # Let's ignore this for now until I understand the issues better.
-					es("exception setting bitmap")
-					es_exception()
 	#@nonl
 	#@-node:setDefaultIcon
 	#@+node:setEncoding
@@ -439,45 +426,56 @@ class tkinterGui(leoGui):
 			widget.focus_force() # Apparently it is not a good idea to call focus_force.
 	#@nonl
 	#@-node:force_focus
-	#@+node:attachLeoIcon & allies
-	#@+at 
-	#@nonl
-	# This code requires Fredrik Lundh's PIL and tkIcon packages:
-	# 
-	# Download PIL    from http://www.pythonware.com/downloads/index.htm#pil
-	# Download tkIcon from http://www.effbot.org/downloads/#tkIcon
-	# 
-	# We wait until the window has been drawn once before attaching the icon 
-	# in OnVisiblity.
-	# 
-	# Many thanks to Jonathan M. Gilligan for suggesting this code.
-	#@-at
-	#@@c
-	
+	#@+node:attachLeoIcon & createLeoIcon
 	def attachLeoIcon (self,w):
 		
-		# print "tkinterGui:attachLeoIcon"
-		try:
-			import Image,_tkicon
-			import tkIcon
+		"""Try to attach a Leo icon to the Leo Window.
+		
+		Use tk's wm_iconbitmap function if available (tk 8.3.4 or greater).
+		Otherwise, try to use the Python Imaging Library and the tkIcon package."""
+	
+		if self.bitmap:
+			# We don't need PIL or tkicon: this is tk 8.3.4 or greater.
+			w.wm_iconbitmap(self.bitmap)
+		else:
+			#@		<< try to use the PIL and tkIcon packages to draw the icon >>
+			#@+node:<< try to use the PIL and tkIcon packages to draw the icon >>
+			#@+at 
+			#@nonl
+			# This code requires Fredrik Lundh's PIL and tkIcon packages:
+			# 
+			# Download PIL    from 
+			# http://www.pythonware.com/downloads/index.htm#pil
+			# Download tkIcon from http://www.effbot.org/downloads/#tkIcon
+			# 
+			# Many thanks to Jonathan M. Gilligan for suggesting this code.
+			#@-at
+			#@@c
 			
-			f = self.onVisibility
-			callback = lambda event,w=w,f=f:f(w,event)
-			w.bind("<Visibility>",callback)
-			if not self.leoIcon:
-				# Using a .gif rather than an .ico allows us to specify transparency.
-				icon_file_name = os.path.join(app().loadDir,'..','Icons','LeoWin.gif')
-				icon_file_name = os.path.normpath(icon_file_name)
-				icon_image = Image.open(icon_file_name)
-				if 1: # Doesn't resize.
-					self.leoIcon = self.createLeoIcon(icon_image)
-				else: # Assumes 64x64
-					self.leoIcon = tkIcon.Icon(icon_image)
-		except:
-			# es_exception()
-			self.leoIcon = None
+			try:
+				import Image,tkIcon,_tkicon
+				# Wait until the window has been drawn once before attaching the icon in OnVisiblity.
+				def visibilityCallback(event,self=self,w=w):
+					try: self.leoIcon.attach(w.winfo_id())
+					except: pass
+				w.bind("<Visibility>",visibilityCallback)
+				if not self.leoIcon:
+					# Load a 16 by 16 gif.  Using .gif rather than an .ico allows us to specify transparency.
+					icon_file_name = os.path.join(app().loadDir,'..','Icons','LeoWin.gif')
+					icon_file_name = os.path.normpath(icon_file_name)
+					icon_image = Image.open(icon_file_name)
+					if 1: # Doesn't resize.
+						self.leoIcon = self.createLeoIcon(icon_image)
+					else: # Assumes 64x64
+						self.leoIcon = tkIcon.Icon(icon_image)
+			except:
+				# traceback.print_exc()
+				self.leoIcon = None
+			#@nonl
+			#@-node:<< try to use the PIL and tkIcon packages to draw the icon >>
+			#@nl
 	#@nonl
-	#@-node:attachLeoIcon & allies
+	#@-node:attachLeoIcon & createLeoIcon
 	#@+node:createLeoIcon
 	# This code is adapted from tkIcon.__init__
 	# Unlike the tkIcon code, this code does _not_ resize the icon file.
@@ -485,8 +483,7 @@ class tkinterGui(leoGui):
 	def createLeoIcon (self,icon):
 		
 		try:
-			import Image,_tkicon
-			import tkIcon
+			import Image,tkIcon,_tkicon
 			
 			i = icon ; m = None
 			# create transparency mask
@@ -511,23 +508,6 @@ class tkinterGui(leoGui):
 			return None
 	#@nonl
 	#@-node:createLeoIcon
-	#@+node:onVisibility
-	# Handle the "visibility" event and attempt to attach the Leo icon.
-	# This code must be executed whenever the window is redrawn.
-	
-	def onVisibility (self,w,event):
-	
-		try:
-			import Image,_tkicon
-			import tkIcon
-			if self.leoIcon and w and event and event.widget == w:
-				if 1: # Allows us not to resize the icon.
-					self.leoIcon.attach(w.winfo_id())
-				else:
-					self.leoIcon.attach(w)
-		except: pass
-	#@nonl
-	#@-node:onVisibility
 	#@+node:get_window_info
 	# WARNING: Call this routine _after_ creating a dialog.
 	# (This routine inhibits the grid and pack geometry managers.)
