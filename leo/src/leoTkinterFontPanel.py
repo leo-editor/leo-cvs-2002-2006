@@ -188,9 +188,9 @@ class leoTkinterFontPanel (leoFontPanel.leoFontPanel):
 		
 		"""Bring the tkinter Font Panel to the front."""
 		
-		frame = self.frame
-		frame.top.deiconify()
-		frame.top.lift()
+		self.top.deiconify()
+		self.top.lift()
+	#@nonl
 	#@-node:bringToFront
 	#@+node:selectFont
 	def selectFont (self,font):
@@ -299,16 +299,8 @@ class leoTkinterFontPanel (leoFontPanel.leoFontPanel):
 	def hide (self):
 		
 		"""Hide the font panel."""
-		
-		c = self.c
-		
-		# c.frame.top.resizable(1,1)
-		
-		if 1: # Hide the window, preserving its position.
-			self.top.withdraw()
-		else: # works.
-			c.frame.fontPanel=None
-			self.top.destroy()
+	
+		self.top.withdraw()
 	#@nonl
 	#@-node:hide
 	#@+node:getActiveFont
