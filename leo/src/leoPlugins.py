@@ -77,7 +77,7 @@ def doHandlersForTag (tag,keywords):
     if handlers.has_key("all"):
         bunches = handlers.get('all')
         for bunch in bunches:
-            callTagHandler(bunch.fn,tag,keywords)
+            callTagHandler(bunch,tag,keywords)
 
     return None
 #@nonl
