@@ -2,9 +2,9 @@ Metadata-Version: 1.0
 Name: leo
 Version: 4.0 beta 3
 Summary: Leo: Literate Editor with Outlines
-Home-page: http://personalpages.tds.net/~edream/front.html
+Home-page: http://webpages.charter.net/edreamleo/front.html
 Author: Edward K. Ream
-Author-email: edream@tds.net
+Author-email: edreamleo@charter.net
 License: Python
 Description: Leo is an outline-oriented editor written in 100% pure Python.
 		Leo works on any platform that supports Python 2.1 or 2.2 and the Tk toolkit.
