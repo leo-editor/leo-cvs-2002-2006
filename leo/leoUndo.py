@@ -1128,7 +1128,7 @@ class undoer:
 		# This may be off by one, and we don't care because
 		# we never use body text to compute undo results!
 		s = c.frame.body.get("1.0","end")
-		s = toUnicode(s,"utf-8")
+		s = toUnicode(s,sys.getdefaultencoding()) # 2/19/03
 		newlines = 0 ; i = len(s) - 1
 		while i >= 0 and s[i] == '\n':
 			newlines += 1 ; i -= 1
@@ -1179,7 +1179,7 @@ class undoer:
 		#@+node:3::<< Get textResult from the Tk.Text widget >>
 		#@+body
 		textResult = c.frame.body.get("1.0","end")
-		textResult = toUnicode(textResult,"utf-8")
+		textResult = toUnicode(textResult,sys.getdefaultencoding()) # 2/19/03
 		
 		if textResult != result:
 			# Remove the newline from textResult if that is the only difference.

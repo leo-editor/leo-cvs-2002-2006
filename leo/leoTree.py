@@ -863,7 +863,9 @@ class leoTree:
 		first,last = getTextSelection(c.body)
 		newSel = (first,last)
 		if s == None: s = u""
-		s = toUnicode(s,"UTF-8")
+		if type(s) == type(""):
+			s = toUnicode(s,sys.getdefaultencoding()) # 2/19/03
+			# if len(ch) > 0: print `s`
 		# Do nothing if nothing has changed.
 		if ch not in ('\n','\r'):
 			if s == body: return "break"
@@ -974,7 +976,7 @@ class leoTree:
 			#@-node:3::<< convert leading tab to blanks >>
 
 		s = c.body.get("1.0", "end")
-		s = toUnicode(s,"UTF-8")
+		s = toUnicode(s,sys.getdefaultencoding()) # 2/19/03
 		if len(s) > 0 and s[-1] == '\n' and removeTrailing:
 			s = s[:-1]
 		c.undoer.setUndoTypingParams(v,undoType,body,s,oldSel,newSel,oldYview=oldYview)
@@ -1185,7 +1187,7 @@ class leoTree:
 		if handleLeoHook("headkey1",c=c,v=v,ch=ch) != None:
 			return "break" # The hook claims to have handled the event.
 		s = v.edit_text.get("1.0","end")
-		s = toUnicode(s,"utf-8")
+		s = toUnicode(s,sys.getdefaultencoding()) # 2/19/03
 	
 		# remove all newlines and update the vnode
 		if not s: s = u""

@@ -1574,6 +1574,7 @@ def listToString(theList):
 #@+node:8::Most common functions
 #@+body
 # These are guaranteed always to exist for scripts.
+
 #@-body
 #@+node:1::app, setApp
 #@+body

@@ -57,7 +57,7 @@
 
 
 from leoGlobals import *
-import Tkinter,types
+import sys,Tkinter,types
 
 # Abbreviations
 set_undo_params = true ; dont_set_undo_params = false
@@ -260,11 +260,11 @@ class LeoFind:
 			exec("c.%s_flag = self.%s_flag.get()" % (var,var))
 	
 		s = self.find_text.get("1.0","end - 1c") # Remove trailing newline
-		s = toUnicode(s,"utf-8")
+		s = toUnicode(s,sys.getdefaultencoding()) # 2/19/03
 		c.find_text = s
 	
 		s = self.change_text.get("1.0","end - 1c") # Remove trailing newline
-		s = toUnicode(s,"utf-8")
+		s = toUnicode(s,sys.getdefaultencoding()) # 2/19/03
 		c.change_text = s
 	
 	#@-body
