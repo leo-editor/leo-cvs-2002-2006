@@ -1,22 +1,15 @@
 #@+leo-ver=4-thin
 #@+node:bwmulder.20041017125718:@thin mod_shadow.py
-# WARNING:  WARNING:  Untested code.
+# Warning: this code has not been heavily tested.
 
 #@<<docstring>>
 #@+node:bwmulder.20041017125718.1:<< docstring >>
 """
-Warning: experimental code.  Use with caution.
+Adapted for post 4.2 (cvs versoin).
 
-Requires Leo 4.2 or above.
+This code has not been testing much. Please use with caution.
 
 Use a Leo subfolder for files with Leo comments.
-
-The hookup with Leo is not satisfactory. I am missing suitable hooks for
-implementing an input / output filter, and the read / write functions are too
-big to overwrite.
-
-The goToLineNumber has been copied from 4.2, with the insertions marked by
-"bwm:" I do not know how to avoid the code duplication.
 
 To start using this plugin:
     - Go to the directories where the sources are.
@@ -29,11 +22,16 @@ To start using this plugin:
     
     After starting, Leo will copy the files from the Leo subfolder to the old
     location after removing all sentinels.
+    
+You can change the name of the shadow subfolder, default Leo, via the mod_shadow.ini
+configuration file.
+
+Still to do:
+    - fix bug (insertion at end of file insertions are ignored).
+    - maybe: fix bad inserts at beginning of node (instead of end of previous node).
 """
 #@-node:bwmulder.20041017125718.1:<< docstring >>
 #@nl
-
-# The code can be used either in a free standing script, or integrated with Leo.
 
 # Terminology:
 # 'push' create a file without sentinels from a file with sentinels.
@@ -42,7 +40,7 @@ To start using this plugin:
 #@@language python
 #@@tabwidth -4
 
-__version__ = "0.2"
+__version__ = "0.9"
 #@<< version history >>
 #@+node:ekr.20041110090700:<< version history >>
 #@@killcolor 
@@ -58,6 +56,8 @@ __version__ = "0.2"
 # - Modified code to work with simplified atFile class.
 # - Changed the name of the .ini file to mod_shadow.ini.
 # - Use import leoGlobals as g.
+# 
+# 0.9 Adapt to cvs post 4.2 by Bernhard Mulder
 #@-at
 #@nonl
 #@-node:ekr.20041110090700:<< version history >>
@@ -69,12 +69,38 @@ testing = True
 print_copy_operations = True # True: tell when files are copied.
 
 do_backups = False # True: always make backups of each file.
+
+shadow_subdir = "Leo" # subdirectory for shadow files.
+
+active = True # The plugin can be switched off by this switch
 #@nonl
 #@-node:ekr.20041110091737:<< globals >>
 #@nl
+#@<< Notes >>
+#@+node:bwmulder.20041231171842:<< Notes >>
+#@+doc
+# 1. Not sure if I should do something about read-only files. Are they a 
+# problem? Should I check for them?
+# 
+# 2. Introduced openForRead and openForWrite. Both are introduced only as a 
+# hook for the mod_shadow plugin, and default to
+# the predefined open.
+# 
+# 3. Changed replaceTargetFileIfDifferent to return True if the file has been 
+# replaced (otherwise, it still returns None).
+# 
+# 4. In gotoLineNumber: encapsulated
+#                 theFile=open(fileName)
+#                 lines = theFile.readlines()
+#                 theFile.close()
+# into a new method "gotoLinenumberOpen"
+# 
+# 5. Introduced a new function "applyLineNumberMappingIfAny" in 
+# gotoLineNumber. The default implementation returns the argument.
+#@-doc
+#@-node:bwmulder.20041231171842:<< Notes >>
+#@nl
    
-applyConfiguration()
-
 #@+others
 #@+node:bwmulder.20041017130018:imports
 import leoGlobals as g 
@@ -93,222 +119,6 @@ import sys
 import shutil
 #@nonl
 #@-node:bwmulder.20041017130018:imports
-#@+node:bwmulder.20041018233934:4.1 code
-if 0:
-    #@    @+others
-    #@+node:bwmulder.20041017125718.34:read_old
-    def read (leofilename,filename):
-       """
-       Loefilename is the name of the Leo File.
-       Filename is the name of the file specified by the user.
-       """
-       sq = sentinel_squasher()
-       # special check for filelength 0:
-       if os.path.getsize(filename)==0:
-          # assume that we have to copy the file leofilename to
-          # filename.
-          g.es("Copy %s to %s without sentinels"%(leofilename,filename))
-          push_file(sourcefilename=leofilename,targetfilename=filename)
-       else:
-          sq.pull_source(sourcefile=leofilename,targetfile=filename)
-       return open(leofilename,'rb')
-    #@-node:bwmulder.20041017125718.34:read_old
-    #@+node:bwmulder.20041017125718.38:write_old
-    def write (leofilename,filename):
-       """
-       Loefilename is the name of the Leo File.
-       Filename is the name of the file specified by the user.
-       This case is slightly more complicated:
-          everything must be done at the close.
-       """
-       return writeclass(leofilename,filename)
-    #@-node:bwmulder.20041017125718.38:write_old
-    #@+node:bwmulder.20041017125718.32:goToLineNumber_4.1
-    def goToLineNumber (self):
-    
-       c = self ; v = c.currentVnode()
-       # Search the present node first.
-       j = v.t.joinList 
-       if v in j:
-          j.remove(v)
-       j.insert(0,v)
-       
-       # 10/15/03: search joined nodes if first search fails.
-       root = None ; fileName = None 
-       for v in j:
-          while v and not fileName:
-             if v.isAtFileNode():
-                fileName = v.atFileNodeName()
-             elif v.isAtSilentFileNode():
-                fileName = v.atSilentFileNodeName()
-             elif v.isAtRawFileNode():
-                fileName = v.atRawFileNodeName()
-             else:
-                v = v.parent()
-          if fileName:
-             root = v 
-             # g.trace("root,fileName",root,fileName)
-             break # Bug fix: 10/25/03
-       if not root:
-          g.es("Go to line number: ancestor must be @file node",color="blue")
-          return 
-       # 1/26/03: calculate the full path.
-       d = g.scanDirectives(c)
-       path = d.get("path")
-       
-       fileName = g.os_path_join(path,fileName)
-       
-       dir, simple_filename = os.path.split(fileName)
-       leo_subfolder_filename = os.path.join(dir,'Leo',simple_filename)
-       leo_subfolder = os.path.exists(leo_subfolder_filename)
-       if leo_subfolder:
-          fileName = leo_subfolder_filename 
-       try:
-          file = open(fileName)
-          lines = file.readlines()
-          file.close()
-       except:
-          g.es("not found: "+fileName)
-          return 
-          
-       if leo_subfolder:
-          line_mapping = push_filter_mapping(lines,marker_from_extension(leo_subfolder_filename))
-       n = app.gui.runAskOkCancelNumberDialog("Enter Line Number","Line number:")
-       if n==-1:
-          return 
-       # g.trace("n:"+`n`)
-       if n==1:
-          v = root ; n2 = 1 ; found = true 
-       elif n>=len(lines):
-          v = root ; found = false 
-          n2 = v.bodyString().count('\n')
-       elif root.isAtSilentFileNode():
-          v = lastv = root ; after = root.nodeAfterTree()
-          prev = 0 ; found = false 
-          while v and v!=after:
-             lastv = v 
-             s = v.bodyString()
-             lines = s.count('\n')
-             if len(s)>0and s[-1]!='\n':
-                lines+=1
-             # print lines,prev,v
-             if prev+lines>=n:
-                found = true ; break 
-             prev+=lines 
-             v = v.threadNext()
-          
-          v = lastv 
-          n2 = max(1,n-prev)
-       else:
-          if leo_subfolder:
-             n = line_mapping[n]
-          vnodeName, childIndex, n2, delim = self.convertLineToVnodeNameIndexLine(lines,n,root)
-          found = true 
-          if not vnodeName:
-             g.es("invalid derived file: "+fileName)
-             return 
-          after = root.nodeAfterTree()
-          
-          if childIndex==-1:
-             # This is about the best that can be done without replicating the entire atFile write logic.
-             
-             ok = true 
-             
-             if not hasattr(root,"tnodeList"):
-                s = "no child index for "+root.headString()
-                print s ; g.es(s,color="red")
-                ok = false 
-             
-             if ok:
-                tnodeList = root.tnodeList 
-                tnodeIndex =-1# Don't count the @file node.
-                scanned = 0# count of lines scanned.
-                
-                for s in lines:
-                   if scanned>=n:
-                      break 
-                   i = g.skip_ws(s,0)
-                   if g.match(s,i,delim):
-                      i+=len(delim)
-                      if g.match(s,i,"+node"):
-                         # g.trace(tnodeIndex,s.rstrip())
-                         tnodeIndex+=1
-                   scanned+=1
-                tnodeIndex = max(0,tnodeIndex)
-                # We use the tnodeList to find a _tnode_ corresponding to the 
-                # proper node, so the user will for sure be editing the proper 
-                # text, even if several nodes happen to have the same headline.  
-                # This is really all that we need.
-                # 
-                # However, this code has no good way of distinguishing between 
-                # different cloned vnodes in the file: they all have the same 
-                # tnode.  So this code just picks v = t.joinList[0] and leaves it 
-                # at that.
-                # 
-                # The only way to do better is to scan the outline, replicating 
-                # the write logic to determine which vnode created the given 
-                # line.  That's way too difficult, and it would create an unwanted 
-                # dependency in this code.
-                
-                # g.trace("tnodeIndex",tnodeIndex)
-                if tnodeIndex<len(tnodeList):
-                   t = tnodeList[tnodeIndex]
-                   # Find the first vnode whose tnode is t.
-                   v = root 
-                   while v and v!=after:
-                      if v.t==t:
-                         break 
-                      v = v.threadNext()
-                   if not v:
-                      s = "tnode not found for "+vnodeName 
-                      print s ; g.es(s,color="red") ; ok = false 
-                   elif v.headString().strip()!=vnodeName:
-                      if 0:# Apparently this error doesn't prevent a later scan for working properly.
-                         s = "Mismatched vnodeName\nExpecting: %s\n got: %s"%(v.headString(),vnodeName)
-                         print s ; g.es(s,color="red")
-                      ok = false 
-                else:
-                   s = "Invalid computed tnodeIndex: %d"%tnodeIndex 
-                   print s ; g.es(s,color="red") ; ok = false 
-                      
-             if not ok:
-                # Fall back to the old logic.
-                v = root 
-                while v and v!=after:
-                   if v.matchHeadline(vnodeName):
-                      break 
-                   v = v.threadNext()
-                
-                if not v or v==after:
-                   s = "not found: "+vnodeName 
-                   print s ; g.es(s,color="red")
-                   return 
-          else:
-             v = root 
-             while v and v!=after:
-                if v.matchHeadline(vnodeName):
-                   if childIndex<=0or v.childIndex()+1==childIndex:
-                      break 
-                v = v.threadNext()
-             
-             if not v or v==after:
-                g.es("not found: "+vnodeName,color="red")
-                return 
-       c.beginUpdate()
-       c.frame.tree.expandAllAncestors(v)
-       c.selectVnode(v)
-       c.endUpdate()
-       if found:
-          c.frame.body.setInsertPointToStartOfLine(n2-1)
-       else:
-          c.frame.body.setInsertionPointToEnd()
-          g.es("%d lines"%len(lines),color="blue")
-       
-       c.frame.body.makeInsertPointVisible()
-    #@-node:bwmulder.20041017125718.32:goToLineNumber_4.1
-    #@-others
-#@nonl
-#@-node:bwmulder.20041018233934:4.1 code
 #@+node:bwmulder.20041018233934.1:plugin core
 #@+node:bwmulder.20041017130118:auxilary functions
 #@+node:bwmulder.20041017125718.4:copy_time
@@ -916,49 +726,37 @@ class sentinel_squasher:
 def putInHooks ():
     """Modify methods in Leo's core to support this plugin."""
     
+    # Need to modify Leos Kernel first
     # Overwrite existing Leo methods.
-    if 1:
-        g.funcToMethod(read,leoAtFile.atFile)
-        g.funcToMethod(openWriteFile,leoAtFile.atFile)
-        g.funcToMethod(replaceTargetFileIfDifferent,leoAtFile.atFile)
-        g.funcToMethod(goToLineNumber,leoCommands.Commands)
-        g.funcToMethod(massageComment,leoImport.leoImportCommands)
-    else: # older 4.2 code.
-        setattr(leoAtFile.atFile,'read',read)
-        setattr(newDerivedFile,'openWriteFile',openWriteFile)
-        setattr(newDerivedFile,'replaceTargetFileIfDifferent',replaceTargetFileIfDifferent)
-        setattr(leoCommands.Commands,'goToLineNumber',goToLineNumber)
-        setattr(leoImport.leoImportCommands,'massageComment',massageComment)
-        
+    g.funcToMethod(replaceTargetFileIfDifferent,leoAtFile.atFile)
+    g.funcToMethod(massageComment,leoImport.leoImportCommands)
+
     # Add new methods used by this plugin to various classes.
-    if 1:
-        g.funcToMethod(openRead,leoAtFile.atFile)
-        g.funcToMethod(openWrite,leoAtFile.atFile)
-        g.funcToMethod(gotoLineNumberOpen,leoCommands.Commands)
-    else:
-        setattr(leoAtFile.atFile,'openRead',openRead)
-        setattr(newDerivedFile,'openWrite',openWrite)
-        setattr(leoCommands.Commands,'gotoLineNumberOpen',gotoLineNumberOpen)
-#@nonl
+    g.funcToMethod(openForRead,leoAtFile.atFile)
+    g.funcToMethod(openForWrite,leoAtFile.atFile)
+    g.funcToMethod(gotoLineNumberOpen,leoCommands.Commands)
+    g.funcToMethod(applyLineNumberMappingIfAny, leoCommands.Commands)
 #@-node:bwmulder.20041017125718.27:putInHooks
 #@+node:bwmulder.20041017125718.26:applyConfiguration
 def applyConfiguration (config=None):
 
-   """Called when the user presses the "Apply" button on the Properties form.
+    """Called when the user presses the "Apply" button on the Properties form.
    
-   Not sure yet if we need configuration options for this plugin."""
+    Not sure yet if we need configuration options for this plugin."""
 
-   global active
+    global active, testing, print_copy_operations, do_backups, shadow_subdir
    
-   if config is None:
-      fileName = os.path.join(g.app.loadDir,"..","plugins","mod_shadow.ini")
-   config = ConfigParser.ConfigParser()
-   if os.path.exists(fileName):
-      config.read(fileName)
-      active = config.get("Main","Active")
-   else:
-      active = True
-#@nonl
+    if config is None:
+        fileName = os.path.join(g.app.loadDir,"..","plugins","mod_shadow.ini")
+        if os.path.exists(fileName):
+            config = ConfigParser.ConfigParser()
+            config.read(fileName)
+    if config:
+        active = config.getboolean("Main","Active")
+        testing = config.getboolean("Main", "testing")
+        print_copy_operations = config.get("Main", "print_copy_operations")
+        shadow_subdir = config.get("Main", "shadow_subdir")
+
 #@-node:bwmulder.20041017125718.26:applyConfiguration
 #@+node:bwmulder.20041017184636:check_for_shadow_file
 def check_for_shadow_file (self,filename):
@@ -972,14 +770,14 @@ def check_for_shadow_file (self,filename):
     dir, simplename = os.path.split(filename)
     rootname, ext = os.path.splitext(simplename)
     if ext=='.tmp':
-        shadow_filename = os.path.join(dir,'Leo',rootname)
+        shadow_filename = os.path.join(dir,shadow_subdir,rootname)
         if os.path.exists(shadow_filename):
-            resultname = os.path.join(dir,'Leo',simplename)
+            resultname = os.path.join(dir,shadow_subdir,simplename)
             return resultname, False 
         else:
             return '', False 
     else:
-        shadow_filename = os.path.join(dir,'Leo',simplename)
+        shadow_filename = os.path.join(dir,shadow_subdir,simplename)
         if os.path.exists(shadow_filename):
             return shadow_filename, os.path.getsize(filename)==0
         else:
@@ -987,8 +785,8 @@ def check_for_shadow_file (self,filename):
 #@-node:bwmulder.20041017184636:check_for_shadow_file
 #@-node:bwmulder.20041019071205:plugin specific functions
 #@+node:bwmulder.20041019071909:additional core functions
-#@+node:bwmulder.20041017135327:openRead
-def openRead (self,filename,rb):
+#@+node:bwmulder.20041017135327:openForRead
+def openForRead (self,filename,rb):
     """
     Replaces the standard open for reads.
     Checks and handles shadow files:
@@ -999,7 +797,7 @@ def openRead (self,filename,rb):
     """
     try:
         dir, simplename = os.path.split(filename)
-        shadow_filename = os.path.join(dir,'Leo',simplename)
+        shadow_filename = os.path.join(dir,shadow_subdir,simplename)
         if os.path.exists(shadow_filename):
             file_to_read_from = shadow_filename 
             if os.path.exists(filename)and os.path.getsize(filename)<=2:
@@ -1007,7 +805,7 @@ def openRead (self,filename,rb):
                 push_file(sourcefilename=shadow_filename,targetfilename=filename)
             else:
                 sq = sentinel_squasher()
-                g.es("reading %s instead of %s"%(shadow_filename,filename),color="orange")
+                g.es("reading in shadow directory %s"% shadow_subdir,color="orange")
                 sq.pull_source(sourcefile=shadow_filename,targetfile=filename)
         else:
             file_to_read_from = filename 
@@ -1017,9 +815,9 @@ def openRead (self,filename,rb):
         g.es_exception()
         raise 
 #@nonl
-#@-node:bwmulder.20041017135327:openRead
-#@+node:bwmulder.20041017131319:openWrite
-def openWrite (self,filename,wb):
+#@-node:bwmulder.20041017135327:openForRead
+#@+node:bwmulder.20041017131319:openForWrite
+def openForWrite (self,filename,wb):
     """
     Replaces the standard open for writes:
         - Check if filename designates a file
@@ -1030,23 +828,22 @@ def openWrite (self,filename,wb):
     dir, simplename = os.path.split(filename)
     rootname, ext = os.path.splitext(simplename)
     assert ext=='.tmp'
-    shadow_filename = os.path.join(dir,'Leo',rootname)
-    if os.path.exists(shadow_filename):
-        self.writing_to_shadow_directory = True 
+    shadow_filename = os.path.join(dir,shadow_subdir,rootname)
+    self.writing_to_shadow_directory = os.path.exists(shadow_filename)
+    if self.writing_to_shadow_directory:
         self.shadow_filename = shadow_filename 
-        g.es("Updating shadow file",color="orange")
-        file_to_use = os.path.join(dir,'Leo',simplename)
+        g.es("Using shadow file in folder %s" % shadow_subdir,color="orange")
+        file_to_use = os.path.join(dir,shadow_subdir,simplename)
     else:
         file_to_use = filename 
-        self.writing_to_shadow_directory = False 
     return open(file_to_use,'wb')
-#@-node:bwmulder.20041017131319:openWrite
+#@-node:bwmulder.20041017131319:openForWrite
 #@+node:bwmulder.20041018075528:gotoLineNumberOpen
 def gotoLineNumberOpen (self,filename):
 
     try:
         dir, simplename = os.path.split(filename)
-        shadow_filename = os.path.join(dir,'Leo',simplename)
+        shadow_filename = os.path.join(dir,shadow_subdir,simplename)
         if os.path.exists(shadow_filename):
             lines = file(shadow_filename).readlines()
             self.line_mapping = push_filter_mapping(lines,marker_from_extension(simplename))
@@ -1062,173 +859,19 @@ def gotoLineNumberOpen (self,filename):
 #@-node:bwmulder.20041018075528:gotoLineNumberOpen
 #@-node:bwmulder.20041019071909:additional core functions
 #@+node:bwmulder.20041019071205.1:Leo overwrites
-#@+node:bwmulder.20041019071205.2:reading
-#@+doc 
-# The only change we need here is to replace the standard open with openRead.
-# 
-# OpenRead checks if the current file has a shadow file.
-# 
-#     If so, it checks if the 'real'file is of zero length.
-# 
-#         If the 'real'file is of zero length, it synchronizes the 'real'file 
-# with the
-#         shadow file.
-#     If there is a shadow file, it returns a file descriptor for this file, 
-# instead of
-#     the 'real'file.
-# 
-#@-doc
-#@+node:bwmulder.20041017131310:top_df.read
-# The caller has enclosed this code in beginUpdate/endUpdate.
-
-def read (self,root,importFileName=None,thinFile=False):
-    
-    """Common read logic for any derived file."""
-    
-    at = self ; c = at.c 
-    at.errors = 0
-    importing = importFileName is not None 
-    #@    <<set fileName from root and importFileName>>
-    #@+node:bwmulder.20041017131310.1:<< set fileName from root and importFileName >>
-    at.scanDefaultDirectory(root,importing=importing)
-    if at.errors:return 
-    
-    if importFileName:
-        fileName = importFileName 
-    elif root.isAnyAtFileNode():
-        fileName = root.anyAtFileNodeName()
+#@+node:bwmulder.20041231222931:gotoLineNumber
+#@+node:bwmulder.20041231222931.1:applyLineNumberMappingIfAny
+def applyLineNumberMappingIfAny(self, n):
+    """
+    Hook for mod_shadow plugin.
+    """
+    if self.line_mapping:
+        return self.line_mapping[n]
     else:
-        fileName = None 
-    
-    if not fileName:
-        at.error("Missing file name.  Restoring @file tree from .leo file.")
-        return False 
-    #@nonl
-    #@-node:bwmulder.20041017131310.1:<< set fileName from root and importFileName >>
-    #@nl
-    #@    <<open file or return False>>
-    #@+node:bwmulder.20041017131310.2:<< open file or return false >>
-    fn = g.os_path_join(at.default_directory,fileName)
-    fn = g.os_path_normpath(fn)
-    
-    try:
-        # 11/4/03: open the file in binary mode to allow 0x1a in bodies & headlines.
-        file = self.openRead(fn,'rb')# bwm
-        if file:
-            #@        <<warn on read-only file>>
-            #@+node:bwmulder.20041017131310.3:<< warn on read-only file >>
-            try:
-                read_only = not os.access(fn,os.W_OK)
-                if read_only:
-                    g.es("read only: "+fn,color="red")
-            except:
-                pass # os.access() may not exist on all platforms.
-            #@nonl
-            #@-node:bwmulder.20041017131310.3:<< warn on read-only file >>
-            #@nl
-        else:return False 
-    except:
-        g.es_exception()
-        at.error("Can not open: "+'"@file '+fn+'"')
-        root.setDirty()
-        return False 
-    #@nonl
-    #@-node:bwmulder.20041017131310.2:<< open file or return false >>
-    #@nl
-    g.es("reading: "+root.headString())
-    firstLines, read_new = at.scanHeader(file,fileName)
-    df = g.choose(read_new,at.new_df,at.old_df)
-    # g.trace(g.choose(df==at.new_df,"new","old"))
-    #@    <<copy ivars to df>>
-    #@+node:bwmulder.20041017131310.4:<< copy ivars to df >>
-    # Telling what kind of file we are reading.
-    df.importing = importFileName!=None 
-    df.raw = False 
-    if importing and df==at.new_df:
-        thinFile = True 
-    df.thinFile = thinFile 
-    
-    # Set by scanHeader.
-    df.encoding = at.encoding 
-    df.endSentinelComment = at.endSentinelComment 
-    df.startSentinelComment = at.startSentinelComment 
-    
-    # Set other common ivars.
-    df.errors = 0
-    df.file = file 
-    df.importRootSeen = False 
-    df.indent = 0
-    df.targetFileName = fileName 
-    df.root = root 
-    df.root_seen = False 
-    df.perfectImportRoot = None # Set only in readOpenFile.
-    #@nonl
-    #@-node:bwmulder.20041017131310.4:<< copy ivars to df >>
-    #@nl
-    root.clearVisitedInTree()
-    try:
-        # 1/28/04: Don't set comment delims when importing.
-        # 1/28/04: Call scanAllDirectives here, not in readOpenFile.
-        importing = importFileName is not None 
-        df.scanAllDirectives(root,importing=importing,reading=True)
-        df.readOpenFile(root,file,firstLines)
-    except:
-        at.error("Unexpected exception while reading derived file")
-        g.es_exception()
-    file.close()
-    root.clearDirty()# May be set dirty below.
-    after = root.nodeAfterTree()
-    #@    <<warn about non-empty unvisited nodes>>
-    #@+node:bwmulder.20041017131310.5:<< warn about non-empty unvisited nodes >>
-    for p in root.self_and_subtree_iter():
-    
-        # g.trace(p)
-        try:s = p.v.t.tempBodyString 
-        except:s = ""
-        if s and not p.v.t.isVisited():
-            at.error("Not in derived file:"+p.headString())
-            p.v.t.setVisited()# One message is enough.
-    #@nonl
-    #@-node:bwmulder.20041017131310.5:<< warn about non-empty unvisited nodes >>
-    #@nl
-    if df.errors==0:
-        if not df.importing:
-            #@            <<copy all tempBodyStrings to tnodes>>
-            #@+node:bwmulder.20041017131310.6:<< copy all tempBodyStrings to tnodes >>
-            for p in root.self_and_subtree_iter():
-                try:s = p.v.t.tempBodyString 
-                except:s = ""
-                if s!=p.bodyString():
-                    if 0:# For debugging.
-                        print ; print "changed: "+p.headString()
-                        print ; print "new:", s 
-                        print ; print "old:", p.bodyString()
-                    if thinFile:
-                        p.v.setTnodeText(s)
-                        if p.v.isDirty():
-                            p.setAllAncestorAtFileNodesDirty()
-                    else:
-                        p.setBodyStringOrPane(s)# Sets v and v.c dirty.
-                        
-                    if not thinFile or(thinFile and p.v.isDirty()):
-                        g.es("changed: "+p.headString(),color="blue")
-                        p.setMarked()
-            #@nonl
-            #@-node:bwmulder.20041017131310.6:<< copy all tempBodyStrings to tnodes >>
-            #@nl
-    #@    <<delete all tempBodyStrings>>
-    #@+node:bwmulder.20041017131310.7:<< delete all tempBodyStrings >>
-    for p in c.allNodes_iter():
-        
-        if hasattr(p.v.t,"tempBodyString"):
-            delattr(p.v.t,"tempBodyString")
-    #@nonl
-    #@-node:bwmulder.20041017131310.7:<< delete all tempBodyStrings >>
-    #@nl
-    return df.errors==0
+        return n
 #@nonl
-#@-node:bwmulder.20041017131310:top_df.read
-#@-node:bwmulder.20041019071205.2:reading
+#@-node:bwmulder.20041231222931.1:applyLineNumberMappingIfAny
+#@-node:bwmulder.20041231222931:gotoLineNumber
 #@+node:bwmulder.20041019071205.3:writing
 #@+doc 
 # Just like for reading, we redirect the writing to the shadow file, if
@@ -1244,80 +887,11 @@ def read (self,root,importFileName=None,thinFile=False):
 #     -When Leo renames the file(replaceTargetFileIfDifferent).
 #@-doc
 #@nonl
-#@+node:bwmulder.20041017135227:atFile.openWriteFile (used by both old and new code)
-# Open files.  Set root.orphan and root.dirty flags and return on errors.
-
-def openWriteFile (self,root,toString):
-    
-    self.toStringFlag = toString 
-    self.errors = 0# Bug fix: 6/25/04.
-    self.root = root # Bug fix: 7/30/04: needed by error logic.
-
-    try:
-        self.scanAllDirectives(root)
-        valid = self.errors==0
-    except:
-        self.writeError("exception in atFile.scanAllDirectives")
-        g.es_exception()
-        valid = False 
-        
-    if valid and toString:
-        self.targetFileName = self.outputFileName = "<string-file>"
-        self.outputFile = g.fileLikeObject()
-        self.stringOutput = ""
-        return valid 
-
-    if valid:
-        try:
-            fn = self.targetFileName 
-            self.shortFileName = fn # name to use in status messages.
-            self.targetFileName = g.os_path_join(self.default_directory,fn)
-            self.targetFileName = g.os_path_normpath(self.targetFileName)
-            path = g.os_path_dirname(self.targetFileName)
-            if not path or not g.os_path_exists(path):
-                self.writeError("path does not exist: "+path)
-                valid = False 
-        except:
-            self.writeError("exception creating path:"+fn)
-            g.es_exception()
-            valid = False 
-
-    if valid and g.os_path_exists(self.targetFileName):
-        try:
-            if not os.access(self.targetFileName,os.W_OK):
-                self.writeError("can not create: read only: "+self.targetFileName)
-                valid = False 
-        except:
-            pass # os.access() may not exist on all platforms.
-        
-    if valid:
-        try:
-            root.clearOrphan()# Bug fix: 5/25/04.
-            self.outputFileName = self.targetFileName+".tmp"
-            self.outputFile = self.openWrite(self.outputFileName,'wb')# bwm
-            if self.outputFile is None:
-                self.writeError("can not create "+self.outputFileName)
-                valid = False 
-        except:
-            g.es("exception creating:"+self.outputFileName)
-            g.es_exception()
-            valid = False 
-            self.outputFile = None # 3/22/04
-
-    if not valid:
-        root.setOrphan()
-        root.setDirty()
-        self.outputFile = None # 1/29/04
-    
-    return valid 
-#@nonl
-#@-node:bwmulder.20041017135227:atFile.openWriteFile (used by both old and new code)
 #@+node:bwmulder.20041018224835:atFile.replaceTargetFileIfDifferent
+original_replaceTargetFileIfDifferent = leoAtFile.atFile.replaceTargetFileIfDifferent
+
 def replaceTargetFileIfDifferent (self):
     
-    assert(self.outputFile is None)
-    
-    self.fileChangedFlag = False 
     # Check if we are dealing with a shadow file
     try:
         targetFileName = self.targetFileName 
@@ -1325,508 +899,24 @@ def replaceTargetFileIfDifferent (self):
         if self.writing_to_shadow_directory:
             self.targetFileName = self.shadow_filename 
             self.outputFileName = self.shadow_filename+'.tmp'
-        if g.os_path_exists(self.targetFileName):
-            if self.compareFilesIgnoringLineEndings(
-                self.outputFileName,self.targetFileName):
-                #@                <<delete the output file>>
-                #@+node:bwmulder.20041018224835.1:<< delete the output file >>
-                try:# Just delete the temp file.
-                    os.remove(self.outputFileName)
-                except:
-                    g.es("exception deleting:"+self.outputFileName)
-                    g.es_exception()
-                
-                g.es("unchanged: "+self.shortFileName)
-                #@nonl
-                #@-node:bwmulder.20041018224835.1:<< delete the output file >>
-                #@nl
-            else:
-                #@                <<replace the target file with the output file>>
-                #@+node:bwmulder.20041018224835.2:<< replace the target file with the output file >>
-                try:
-                    # 10/6/02: retain the access mode of the previous file,
-                    # removing any setuid, setgid, and sticky bits.
-                    mode =(os.stat(self.targetFileName))[0]&0777
-                except:
-                    mode = None 
-                
-                try:# Replace target file with temp file.
-                    os.remove(self.targetFileName)
-                    try:
-                        g.utils_rename(self.outputFileName,self.targetFileName)
-                        if mode!=None:# 10/3/02: retain the access mode of the previous file.
-                            try:
-                                os.chmod(self.targetFileName,mode)
-                            except:
-                                g.es("exception in os.chmod(%s)"%(self.targetFileName))
-                        g.es("writing: "+self.shortFileName)
-                        self.fileChangedFlag = True 
-                    except:
-                        # 6/28/03
-                        self.writeError("exception renaming: %s to: %s"%(self.outputFileName,self.targetFileName))
-                        g.es_exception()
-                except:
-                    self.writeError("exception removing:"+self.targetFileName)
-                    g.es_exception()
-                    try:# Delete the temp file when the deleting the target file fails.
-                        os.remove(self.outputFileName)
-                    except:
-                        g.es("exception deleting:"+self.outputFileName)
-                        g.es_exception()
-                #@nonl
-                #@-node:bwmulder.20041018224835.2:<< replace the target file with the output file >>
-                #@nl
-                if self.writing_to_shadow_directory:
-                    g.es("Updating %s with %s"%(targetFileName,self.shadow_filename),color='orange')
-                    push_file(self.shadow_filename,targetFileName)
-        else:
-            #@            <<rename the output file to be the target file>>
-            #@+node:bwmulder.20041018224835.3:<< rename the output file to be the target file >>
-            try:
-                g.utils_rename(self.outputFileName,self.targetFileName)
-                g.es("creating: "+self.targetFileName)
-                self.fileChangedFlag = True 
-            except:
-                self.writeError("exception renaming:"+self.outputFileName+
-                    " to "+self.targetFileName)
-                g.es_exception()
-            #@nonl
-            #@-node:bwmulder.20041018224835.3:<< rename the output file to be the target file >>
-            #@nl
+        if original_replaceTargetFileIfDifferent(self):
+            # Original_replaceTargetFileIfDifferent should be oblivious
+            # to the existance of the shadow directory.
+            if self.writing_to_shadow_directory:
+                g.es("Updating file from shadow folder %s" % shadow_subdir,color='orange')
+                push_file(self.shadow_filename,targetFileName)
+
     finally:
-        # not sure if that is needed or not
-        self.targetFileName = targetFileName 
+        assert self.targetFileName == self.shadow_filename 
+        assert self.outputFileName == self.shadow_filename+'.tmp'
+        # We need to check what's going on if the targetFileName or the outputFileName is changed.
+        
+        # Not sure if this finally clause is needed or not
+        self.targetFileName = targetFileName
         self.outputFileName = outputFileName 
 #@nonl
 #@-node:bwmulder.20041018224835:atFile.replaceTargetFileIfDifferent
 #@-node:bwmulder.20041019071205.3:writing
-#@+node:bwmulder.20041019071205.4:goto Linenumber
-#@+doc 
-# For gotoLineNumber we must map the line number in the shadow file to the 
-# line number in the
-# non-shadow file.
-#@-doc
-#@+node:bwmulder.20041017221549:goToLineNumber & allies
-def goToLineNumber (self,root=None,lines=None,n=None):
-
-    c = self ; p = c.currentPosition() ; root1 = root 
-    if root is None:
-        #@        <<set root to the nearest ancestor  @file node>>
-        #@+node:bwmulder.20041017221549.1:<< set root to the nearest ancestor @file node >>
-        fileName = None 
-        for p in p.self_and_parents_iter():
-            fileName = p.anyAtFileNodeName()
-            if fileName:break 
-        
-        # New in 4.2: Search the entire tree for joined nodes.
-        if not fileName:
-            p1 = c.currentPosition()
-            for p in c.all_positions_iter():
-                if p.v.t==p1.v.t and p!=p1:
-                    # Found a joined position.
-                    for p in p.self_and_parents_iter():
-                        fileName = p.anyAtFileNodeName()
-                        # New in 4.2 b3: ignore @all nodes.
-                        if fileName and not p.isAtAllNode():break 
-                if fileName:break 
-            
-        if fileName:
-            root = p.copy()
-        else:
-            g.es("Go to line number: ancestor must be @file node",color="blue")
-            return 
-        #@nonl
-        #@-node:bwmulder.20041017221549.1:<< set root to the nearest ancestor @file node >>
-        #@nl
-    if lines is None:
-        #@        <<read the file into lines>>
-        #@+node:bwmulder.20041017221549.2:<< read the file into lines >>
-        # 1/26/03: calculate the full path.
-        d = g.scanDirectives(c)
-        path = d.get("path")
-        
-        fileName = g.os_path_join(path,fileName)
-        
-        try:
-        #    file=open(fileName) # bwm
-            lines = self.gotoLineNumberOpen(fileName)
-        except:
-            g.es("not found: "+fileName)
-            return 
-        #@nonl
-        #@-node:bwmulder.20041017221549.2:<< read the file into lines >>
-        #@nl
-    if n is None:
-        #@        <<get n, the line number, from a dialog>>
-        #@+node:bwmulder.20041017221549.3:<< get n, the line number, from a dialog >>
-        n = g.app.gui.runAskOkCancelNumberDialog("Enter Line Number","Line number:")
-        if n==-1:
-            return 
-        #@nonl
-        #@-node:bwmulder.20041017221549.3:<< get n, the line number, from a dialog >>
-        #@nl
-        #@        <<Adjust line number for mapping>>
-        #@+node:bwmulder.20041018075929:<<Adjust line number for mapping>>
-        if self.line_mapping:
-            try:
-                n = self.line_mapping[n]
-            except:
-                g.es("In real file: line %s not found: "%n,color="red")
-            self.line_mapping = None 
-                
-            
-            
-        #@-node:bwmulder.20041018075929:<<Adjust line number for mapping>>
-        #@nl
-    if n==1:
-        p = root ; n2 = 1 ; found = True 
-    elif n>=len(lines):
-        p = root ; found = False 
-        n2 = p.bodyString().count('\n')
-    elif root.isAtAsisFileNode():
-        #@        <<count outline lines, setting p, n2, found>>
-        #@+node:bwmulder.20041017221549.4:<< count outline lines, setting p,n2,found >> (@file-nosent only)
-        p = lastv = root 
-        prev = 0 ; found = False 
-        
-        for p in p.self_and_subtree_iter():
-            lastv = p.copy()
-            s = p.bodyString()
-            lines = s.count('\n')
-            if len(s)>0and s[-1]!='\n':
-                lines+=1
-            # print lines,prev,p
-            if prev+lines>=n:
-                found = True ; break 
-            prev+=lines 
-        
-        p = lastv 
-        n2 = max(1,n-prev)
-        #@nonl
-        #@-node:bwmulder.20041017221549.4:<< count outline lines, setting p,n2,found >> (@file-nosent only)
-        #@nl
-    else:
-        vnodeName, childIndex, gnx, n2, delim = self.convertLineToVnodeNameIndexLine(lines,n,root)
-        found = True 
-        if not vnodeName:
-            g.es("error handling: "+root.headString())
-            return 
-        #@        <<set p to the node given by vnodeName and gnx or childIndex or n>>
-        #@+node:bwmulder.20041017221549.5:<< set p to the node given by vnodeName and gnx or childIndex or n >>
-        if gnx:
-            #@    <<4.2:get node from gnx>>
-            #@+node:bwmulder.20041017221549.6:<< 4.2: get node from gnx >>
-            found = False 
-            gnx = g.app.nodeIndices.scanGnx(gnx,0)
-            
-            # g.trace(vnodeName)
-            # g.trace(gnx)
-            
-            for p in root.self_and_subtree_iter():
-                if p.matchHeadline(vnodeName):
-                    # g.trace(p.v.t.fileIndex)
-                    if p.v.t.fileIndex==gnx:
-                        found = True ; break 
-            
-            if not found:
-                g.es("not found: "+vnodeName,color="red")
-                return 
-            #@nonl
-            #@-node:bwmulder.20041017221549.6:<< 4.2: get node from gnx >>
-            #@nl
-        elif childIndex==-1:
-            #@    <<4.x:scan for the node using tnodeList and n>>
-            #@+node:bwmulder.20041017221549.7:<< 4.x: scan for the node using tnodeList and n >>
-            # This is about the best that can be done without replicating the entire atFile write logic.
-            
-            ok = True 
-            
-            if not hasattr(root.v.t,"tnodeList"):
-                s = "no child index for "+root.headString()
-                print s ; g.es(s,color="red")
-                ok = False 
-            
-            if ok:
-                tnodeList = root.v.t.tnodeList 
-                #@    <<set tnodeIndex to the number of+node sentinels before line n>>
-                #@+node:bwmulder.20041017221549.8:<< set tnodeIndex to the number of +node sentinels before line n >>
-                tnodeIndex =-1# Don't count the @file node.
-                scanned = 0# count of lines scanned.
-                
-                for s in lines:
-                    if scanned>=n:
-                        break 
-                    i = g.skip_ws(s,0)
-                    if g.match(s,i,delim):
-                        i+=len(delim)
-                        if g.match(s,i,"+node"):
-                            # g.trace(tnodeIndex,s.rstrip())
-                            tnodeIndex+=1
-                    scanned+=1
-                #@nonl
-                #@-node:bwmulder.20041017221549.8:<< set tnodeIndex to the number of +node sentinels before line n >>
-                #@nl
-                tnodeIndex = max(0,tnodeIndex)
-                #@    <<set p to the first vnode whose tnode is tnodeList[tnodeIndex]or set ok = False>>
-                #@+node:bwmulder.20041017221549.9:<< set p to the first vnode whose tnode is tnodeList[tnodeIndex] or set ok = false >>
-                #@+at 
-                #@nonl
-                # We use the tnodeList to find a _tnode_ corresponding to the 
-                # proper node, so the user will for sure be editing the proper 
-                # text, even if several nodes happen to have the same 
-                # headline.This is really all that we need.
-                # 
-                # However, this code has no good way of distinguishing between 
-                # different cloned vnodes in the file:they all have the same 
-                # tnode.So this code just picks p = t.vnodeList[0]and leaves 
-                # it at that.
-                # 
-                # The only way to do better is to scan the outline, 
-                # replicating the write logic to determine which vnode created 
-                # the given line.That 's way too difficult, and it would 
-                # create an unwanted dependency in this code.
-                #@-at
-                #@@c 
-                
-                # g.trace("tnodeIndex",tnodeIndex)
-                if tnodeIndex<len(tnodeList):
-                    t = tnodeList[tnodeIndex]
-                    # Find the first vnode whose tnode is t.
-                    found = False 
-                    for p in root.self_and_subtree_iter():
-                        if p.v.t==t:
-                            found = True ; break 
-                    if not found:
-                        s = "tnode not found for "+vnodeName 
-                        print s ; g.es(s,color="red") ; ok = False 
-                    elif p.headString().strip()!=vnodeName:
-                        if 0:# Apparently this error doesn't prevent a later scan for working properly.
-                            s = "Mismatched vnodeName\nExpecting: %s\n got: %s"%(p.headString(),vnodeName)
-                            print s ; g.es(s,color="red")
-                        ok = False 
-                else:
-                    if root1 is None:# Kludge: disable this message when called by goToScriptLineNumber.
-                        s = "Invalid computed tnodeIndex: %d"%tnodeIndex 
-                        print s ; g.es(s,color="red")
-                    ok = False 
-                #@nonl
-                #@-node:bwmulder.20041017221549.9:<< set p to the first vnode whose tnode is tnodeList[tnodeIndex] or set ok = false >>
-                #@nl
-                        
-            if not ok:
-                # Fall back to the old logic.
-                #@    <<set p to the first node whose headline matches vnodeName>>
-                #@+node:bwmulder.20041017221549.10:<< set p to the first node whose headline matches vnodeName >>
-                found = False 
-                for p in root.self_and_subtree_iter():
-                    if p.matchHeadline(vnodeName):
-                        found = True ; break 
-                
-                if not found:
-                    s = "not found: "+vnodeName 
-                    print s ; g.es(s,color="red")
-                    return 
-                #@nonl
-                #@-node:bwmulder.20041017221549.10:<< set p to the first node whose headline matches vnodeName >>
-                #@nl
-            #@nonl
-            #@-node:bwmulder.20041017221549.7:<< 4.x: scan for the node using tnodeList and n >>
-            #@nl
-        else:
-            #@    <<3.x:scan for the node with the given childIndex>>
-            #@+node:bwmulder.20041017221549.11:<< 3.x: scan for the node with the given childIndex >>
-            found = False 
-            for p in root.self_and_subtree_iter():
-                if p.matchHeadline(vnodeName):
-                    if childIndex<=0or p.childIndex()+1==childIndex:
-                        found = True ; break 
-            
-            if not found:
-                g.es("not found: "+vnodeName,color="red")
-                return 
-            #@nonl
-            #@-node:bwmulder.20041017221549.11:<< 3.x: scan for the node with the given childIndex >>
-            #@nl
-        #@nonl
-        #@-node:bwmulder.20041017221549.5:<< set p to the node given by vnodeName and gnx or childIndex or n >>
-        #@nl
-    #@    <<select p and make it visible>>
-    #@+node:bwmulder.20041017221549.12:<< select p and make it visible >>
-    c.beginUpdate()
-    c.frame.tree.expandAllAncestors(p)
-    c.selectVnode(p)
-    c.endUpdate()
-    #@nonl
-    #@-node:bwmulder.20041017221549.12:<< select p and make it visible >>
-    #@nl
-    #@    <<put the cursor on line n2 of the body text>>
-    #@+node:bwmulder.20041017221549.13:<< put the cursor on line n2 of the body text >>
-    if found:
-        c.frame.body.setInsertPointToStartOfLine(n2-1)
-    else:
-        c.frame.body.setInsertionPointToEnd()
-        g.es("%d lines"%len(lines),color="blue")
-    
-    c.frame.body.makeInsertPointVisible()
-    #@nonl
-    #@-node:bwmulder.20041017221549.13:<< put the cursor on line n2 of the body text >>
-    #@nl
-#@nonl
-#@+node:bwmulder.20041017221549.14:convertLineToVnodeNameIndexLine
-#@+at 
-#@nonl
-# We count "real"lines in the derived files, ignoring all sentinels that do 
-# not arise from source lines.When the indicated line is found, we scan 
-# backwards for an  @+body line, get the vnode 's name from that line and set 
-# p to the indicated vnode.  This will fail if vnode names have been changed, 
-# and that can't be helped.
-# 
-# Returns(vnodeName,offset)
-# 
-# vnodeName:the name found in the previous  @+body sentinel.
-# offset:the offset within p of the desired line.
-#@-at
-#@@c 
-
-def convertLineToVnodeNameIndexLine (self,lines,n,root):
-    
-    """Convert a line number n to a vnode name, (child index or gnx) and line number."""
-    
-    c = self ; at = c.atFileCommands 
-    childIndex = 0 ; gnx = None ; newDerivedFile = False 
-    thinFile = root.isAtThinFileNode()
-    #@    <<set delim, leoLine from the  @+leo line>>
-    #@+node:bwmulder.20041017221549.15:<< set delim, leoLine from the @+leo line >>
-    # Find the @+leo line.
-    tag = "@+leo"
-    i = 0
-    while i<len(lines)and lines[i].find(tag)==-1:
-        i+=1
-    leoLine = i # Index of the line containing the leo sentinel
-    
-    if leoLine<len(lines):
-        s = lines[leoLine]
-        valid, newDerivedFile, start, end = at.parseLeoSentinel(s)
-        if valid:delim = start+'@'
-        else:delim = None 
-    else:
-        delim = None 
-    #@-node:bwmulder.20041017221549.15:<< set delim, leoLine from the @+leo line >>
-    #@nl
-    if not delim:
-        g.es("bad @+leo sentinel")
-        return None, None, None, None, None 
-    #@    <<scan back to  @+node, setting offset, nodeSentinelLine>>
-    #@+node:bwmulder.20041017221549.16:<< scan back to  @+node, setting offset,nodeSentinelLine >>
-    offset = 0# This is essentially the Tk line number.
-    nodeSentinelLine =-1
-    line = n-1
-    while line>=0:
-        s = lines[line]
-        # g.trace(s)
-        i = g.skip_ws(s,0)
-        if g.match(s,i,delim):
-            #@        <<handle delim while scanning backward>>
-            #@+node:bwmulder.20041017221549.17:<< handle delim while scanning backward >>
-            if line==n:
-                g.es("line "+str(n)+" is a sentinel line")
-            i+=len(delim)
-            
-            if g.match(s,i,"-node"):
-                # The end of a nested section.
-                line = self.skipToMatchingNodeSentinel(lines,line,delim)
-            elif g.match(s,i,"+node"):
-                nodeSentinelLine = line 
-                break 
-            elif g.match(s,i,"<<")or g.match(s,i,"@first"):
-                offset+=1# Count these as a "real" lines.
-            #@nonl
-            #@-node:bwmulder.20041017221549.17:<< handle delim while scanning backward >>
-            #@nl
-        else:
-            offset+=1# Assume the line is real.  A dubious assumption.
-        line-=1
-    #@nonl
-    #@-node:bwmulder.20041017221549.16:<< scan back to  @+node, setting offset,nodeSentinelLine >>
-    #@nl
-    if nodeSentinelLine==-1:
-        # The line precedes the first @+node sentinel
-        # g.trace("before first line")
-        return root.headString(), 0, gnx, 1, delim # 10/13/03
-    s = lines[nodeSentinelLine]
-    # g.trace(s)
-    #@    <<set vnodeName and(childIndex or gnx)from s>>
-    #@+node:bwmulder.20041017221549.18:<< set vnodeName and (childIndex or gnx) from s >>
-    if newDerivedFile:
-        i = 0
-        if thinFile:
-            # gnx is lies between the first and second ':':
-            i = s.find(':',i)
-            if i>0:
-                i+=1
-                j = s.find(':',i)
-                if j>0:
-                    gnx = s[i:j]
-                else:i = len(s)
-            else:i = len(s)
-        # vnode name is everything following the first or second':'
-        # childIndex is -1 as a flag for later code.
-        i = s.find(':',i)
-        if i>-1:vnodeName = s[i+1:].strip()
-        else:vnodeName = None 
-        childIndex =-1
-    else:
-        # vnode name is everything following the third ':'
-        i = 0 ; colons = 0
-        while i<len(s)and colons<3:
-            if s[i]==':':
-                colons+=1
-                if colons==1and i+1<len(s)and s[i+1]in string.digits:
-                    junk, childIndex = g.skip_long(s,i+1)
-            i+=1
-        vnodeName = s[i:].strip()
-        
-    # g.trace("gnx",gnx,"vnodeName:",vnodeName)
-    if not vnodeName:
-        vnodeName = None 
-        g.es("bad @+node sentinel")
-    #@nonl
-    #@-node:bwmulder.20041017221549.18:<< set vnodeName and (childIndex or gnx) from s >>
-    #@nl
-    # g.trace("childIndex,offset",childIndex,offset,vnodeName)
-    return vnodeName, childIndex, gnx, offset, delim 
-#@-node:bwmulder.20041017221549.14:convertLineToVnodeNameIndexLine
-#@+node:bwmulder.20041017221549.19:skipToMatchingNodeSentinel
-def skipToMatchingNodeSentinel (self,lines,n,delim):
-    
-    s = lines[n]
-    i = g.skip_ws(s,0)
-    assert(g.match(s,i,delim))
-    i+=len(delim)
-    if g.match(s,i,"+node"):
-        start = "+node" ; end = "-node" ; delta = 1
-    else:
-        assert(g.match(s,i,"-node"))
-        start = "-node" ; end = "+node" ; delta =-1
-    # Scan to matching @+-node delim.
-    n+=delta ; level = 0
-    while 0<=n<len(lines):
-        s = lines[n] ; i = g.skip_ws(s,0)
-        if g.match(s,i,delim):
-            i+=len(delim)
-            if g.match(s,i,start):
-                level+=1
-            elif g.match(s,i,end):
-                if level==0:break 
-                else:level-=1
-        n+=delta 
-        
-    # g.trace(n)
-    return n 
-#@nonl
-#@-node:bwmulder.20041017221549.19:skipToMatchingNodeSentinel
-#@-node:bwmulder.20041017221549:goToLineNumber & allies
-#@-node:bwmulder.20041019071205.4:goto Linenumber
 #@+node:bwmulder.20041017125718.33:massageComment
 def massageComment (self,s):
 
@@ -1842,6 +932,15 @@ def stop_testing ():
    testing = False 
 #@-node:bwmulder.20041017125718.39:stop_testing
 #@-others
+
+try:
+    g.app
+    # if g.app is not defined, we are not
+    # imported from Leo
+except:
+    active = False
+else:
+    applyConfiguration()
 
 if active:
    putInHooks()
