@@ -27,6 +27,11 @@ __version__ = "0.6"
 #     This eliminates problems when multiple windows are open.
 # - Limit size of recent menu to 25 entries.
 # - Limit width of entries to 40 characters.
+# 
+# 0.7 EKR, following suggestions of Bernhard Mulder.
+# - Fix problems with initialization:
+#     - Bind onCreate to the "open2" hook.
+#     - Set c = keywords.get("new_c") in onCreate.
 #@-at
 #@nonl
 #@-node:ekr.20040908093511.2:<< version history >>
@@ -50,7 +55,7 @@ USE_FIXED_SIZES = sys.platform != "darwin"
 #@+node:ekr.20040909132810:onCreate
 def onCreate(tag, keywords):
 
-    c = keywords.get("c")
+    c = keywords.get("new_c")
     nav = Navigator(c)
     nav.addWidgets()
     leoPlugins.registerHandler("set-mark",nav.addMark)
@@ -248,7 +253,7 @@ if Tk: # OK for unit testing.
         g.app.createTkGui(__file__)
 
     if g.app.gui.guiName() == "tkinter":
-        leoPlugins.registerHandler("after-create-leo-frame", onCreate)
+        leoPlugins.registerHandler("open2", onCreate)
         g.plugin_signon("nodenavigator")
 #@nonl
 #@-node:ekr.20040108062655:@thin nodenavigator.py
