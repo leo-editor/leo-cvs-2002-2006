@@ -2615,18 +2615,18 @@ class atFile:
 		import leoDialog
 		d = leoDialog.leoDialog()
 		if v:
-			if v.atFileNodeName() == "leoCustomize.py":
+			if v.atFileNodeName() == "customizeLeo.py":
 				d.askOk("Security Alert!",
-					"@ignore not in effect for @node leoCustomize.py!")
+					"@ignore not in effect for @node customizeLeo.py!")
 			return None
 		else:
 			fn = os.path.basename(self.targetFileName)
-			if fn == "leoCustomize.py":
+			if fn == "customizeLeo.py":
 				result = d.askYesNo("Security Alert!",
-					"You are about to create or change leoCustomize.py.\n" +
+					"You are about to create or change customizeLeo.py.\n" +
 					"Are you sure you trust the code in this file?")
 				if result!="yes":
-					es("not written: leoCustomize.py")
+					es("not written: customizeLeo.py")
 					return false
 			return true
 	#@-body

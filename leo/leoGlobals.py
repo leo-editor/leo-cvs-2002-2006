@@ -2281,7 +2281,7 @@ def CheckVersion( version, againstVersion, condition=">=", stringCompare="0.0.0.
 # We look for a hook routine in three places:
 # 1. top().hookFunction
 # 2. app().hookFunction
-# 3. leoCustomize.customizeLeo()
+# 3. customizeLeo.customizeLeo()
 # We set app().hookError on all exceptions.  Scripts that reset 
 # app().hookError to try again.
 
@@ -2307,15 +2307,15 @@ def handleLeoHook(tag):
 			es("exception in app().hookFunction")
 	else:
 		try:
-			from leoCustomize import customizeLeo
+			from customizeLeo import customizeLeo
 			try:
 				a.hookFunction = customizeLeo
 				return customizeLeo(tag)
 			except:
 				a.hookFunction = None
-				es("exception in leoCustomize.customizeLeo")
+				es("exception in customizeLeo")
 		except exceptions.SyntaxError:
-			es("syntax error in leoCustomize.customizeLeo")
+			es("syntax error in customizeLeo")
 		except:
 			# Import failed.  This is not an error.
 			a.hookError = true # Supress this function.
