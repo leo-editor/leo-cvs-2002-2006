@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="1410" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="1419" clone_windows="0"/>
 <globals body_outline_ratio="0.5">
-	<global_window_position top="59" left="376" height="856" width="742"/>
+	<global_window_position top="39" left="254" height="856" width="795"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences>
@@ -12,7 +12,8 @@
 	<change_string></change_string>
 </find_panel_settings>
 <vnodes>
-<v t="edream.110203113231"><vh>Diary</vh>
+<v t="edream.110203113231" a="V"><vh>Diary</vh>
+<v t="edream.111803100856"><vh>11/18 Added new version of rst plugin from Timo Honkasalo</vh></v>
 <v t="edream.111603130528"><vh>11/17</vh></v>
 <v t="edream.110703035301"><vh>11/7</vh></v>
 <v t="edream.110203113231.1"><vh>10/27/02</vh></v>
@@ -549,7 +550,407 @@
 </v>
 <v t="edream.110803170600"><vh>Count pages</vh></v>
 </v>
-<v t="edream.110203113231.618"><vh>Plugins &amp; scripts</vh>
+<v t="edream.110203113231.233"><vh>wxPython plugin (alpha quality)</vh>
+<v t="edream.110203113231.234"><vh> Diary</vh>
+<v t="edream.111503110300"><vh>11/15/03  Leo becomes usuable (!)</vh></v>
+<v t="edream.111403093253"><vh>11/13 &amp; 11/14</vh></v>
+<v t="edream.110203113231.235"><vh>10/26 Code works with reorganized core</vh></v>
+<v t="edream.110203113231.236"><vh>10/13/03: Added icons (Windows only)</vh></v>
+<v t="edream.110203113231.237"><vh>10/12/03: Houston, we have ignition</vh></v>
+<v t="edream.110203113231.238"><vh>10/11/03: converted code using c2py, then hand converted code</vh></v>
+</v>
+<v t="edream.111403093253.1"><vh>Projects</vh>
+<v t="edream.110203113231.243"><vh>invoke c2py</vh></v>
+<v t="edream.111503111146"><vh>Finished or mostly finished</vh>
+<v t="edream.111303205442"><vh>(colorizing) (demo only)</vh>
+<v t="edream.111303204025" a=""><vh>Indices</vh>
+<v t="edream.111303204025.1"><vh>adjustIndex</vh></v>
+<v t="edream.111303204025.2"><vh>compareIndices</vh></v>
+<v t="edream.111303204025.3"><vh>convertRowColumnToIndex</vh></v>
+<v t="edream.111303204025.4"><vh>convertIndexToRowColumn</vh></v>
+<v t="edream.111303204025.5"><vh>getImageIndex</vh></v>
+<v t="edream.111403080609"><vh>maxWxIndex (internal use)</vh></v>
+</v>
+<v t="edream.111303204517" a=""><vh>Color tags (hacks for styles)</vh>
+<v t="edream.111403082513"><vh>tkColorToWxColor (internal use)</vh></v>
+<v t="edream.111303205611"><vh>tag_add</vh></v>
+<v t="edream.111303205611.1"><vh>tag_bind</vh></v>
+<v t="edream.111303205611.2"><vh>tag_configure (hack for wxStyles)</vh></v>
+<v t="edream.111303205611.3"><vh>tag_delete</vh></v>
+<v t="edream.111303205611.4"><vh>tag_remove</vh></v>
+</v>
+</v>
+</v>
+<v t="edream.111503111350"><vh>Unfinished</vh>
+<v t="edream.111303184347"><vh>(delete_range) doesn't work</vh>
+<v t="edream.111303103141.3" a=""><vh>delete_range</vh></v>
+</v>
+<v t="edream.111303100039" a=""><vh>Gui-dependent commands (to do)</vh>
+<v t="edream.111303100039.1"><vh>Edit Menu...</vh>
+<v t="edream.111303101257"><vh>abortEditLabelCommand</vh></v>
+<v t="edream.111303101257.1"><vh>endEditLabelCommand</vh></v>
+<v t="edream.111303100039.6"><vh>insertHeadlineTime</vh></v>
+</v>
+<v t="edream.111303100039.7"><vh>Window Menu</vh>
+<v t="edream.111303100039.8"><vh>cascade</vh></v>
+<v t="edream.111303100039.9"><vh>equalSizedPanes</vh></v>
+<v t="edream.111303100039.10"><vh>hideLogWindow</vh></v>
+<v t="edream.111303100039.11"><vh>minimizeAll</vh></v>
+<v t="edream.111303101709"><vh>toggleActivePane</vh></v>
+<v t="edream.111303100039.12"><vh>toggleSplitDirection</vh></v>
+</v>
+<v t="edream.111703103908"><vh>Help Menu...</vh>
+<v t="edream.111703103908.2"><vh>leoHelp</vh>
+<v t="edream.111703103908.3"><vh>showProgressBar</vh>
+<v t="edream.111703103908.4"><vh>&lt;&lt; create the scale widget &gt;&gt;</vh></v>
+</v>
+</v>
+</v>
+</v>
+</v>
+</v>
+<v t="edream.110203113231.242"><vh>Unused code</vh>
+<v t="edream.110203113231.257"><vh>updateJoinedHeadlines</vh></v>
+<v t="edream.111303202917.1"><vh>Syntax coloring REMOVED: now in base body class</vh></v>
+</v>
+<v t="edream.110203113231.302" tnodeList="edream.110203113231.302,edream.110203113231.303,edream.110203113231.259,edream.110203113231.305,edream.110203113231.307,edream.110203113231.308,edream.110203113231.309,edream.110203113231.310,edream.110203113231.311,edream.110203113231.312,edream.111303085447.1,edream.110203113231.317,edream.110203113231.314,edream.110203113231.315,edream.110203113231.316,edream.110203113231.322,edream.110203113231.323,edream.110203113231.324,edream.110203113231.325,edream.110203113231.326,edream.110203113231.327,edream.110203113231.328,edream.111403104835,edream.111303092328,edream.111303092328.1,edream.111303092328.2,edream.111303092328.3,edream.111303092328.4,edream.111303092328.5,edream.110203113231.333,edream.110203113231.320,edream.111403151611,edream.110203113231.343,edream.110203113231.344,edream.110203113231.336,edream.110203113231.337,edream.110203113231.319,edream.110203113231.340,edream.110203113231.341,edream.110203113231.342,edream.111303093843,edream.111303093843.1,edream.111303093953.2,edream.111303093953.3,edream.111303093953.4,edream.111303093953.5,edream.111303093953.6,edream.111303093953.7,edream.111303093953.9,edream.111303093953.10,edream.111303093953.12,edream.111303093953.13,edream.111303093953.14,edream.111303093953.15,edream.111303093953.16,edream.111303093953.18,edream.111303093953.19,edream.111303093953.20,edream.111303093953.21,edream.111303093953.22,edream.111303093953.23,edream.111303093953.25,edream.110203113231.346,edream.110203113231.347,edream.110203113231.348,edream.110203113231.539,edream.110203113231.541,edream.110203113231.542,edream.110203113231.543,edream.111403082513,edream.111303205611,edream.111303205611.1,edream.111303205611.2,edream.111303205611.3,edream.111303205611.4,edream.110203113231.544,edream.110203113231.545,edream.111303204025.1,edream.111303204025.2,edream.111303204025.3,edream.111303204025.4,edream.111303204025.5,edream.111403080609,edream.110203113231.548,edream.110203113231.549,edream.111303171218,edream.111603222048,edream.111303171218.1,edream.111303171238,edream.111303171238.1,edream.111303171238.2,edream.111303171238.3,edream.111303171238.4,edream.110203113231.552,edream.110203113231.275,edream.111303201144.6,edream.111303201144.7,edream.110203113231.349,edream.110203113231.266,edream.110203113231.351,edream.110203113231.260,edream.110203113231.261,edream.110203113231.265,edream.110203113231.264,edream.111403141810,edream.111503105816,edream.111303141147,edream.111503213533,edream.110203113231.269,edream.110203113231.270,edream.110203113231.273,edream.110203113231.379,edream.110203113231.380,edream.110203113231.381,edream.111303135410,edream.111303101257,edream.111303101257.1,edream.111303100039.6,edream.111303100039.8,edream.111303100039.9,edream.111303100039.10,edream.111303100039.11,edream.111303101709,edream.111303100039.12,edream.111703103908.2,edream.111703103908.3,edream.111703103908.4,edream.110203113231.384,edream.110203113231.553,edream.110203113231.554,edream.110203113231.555,edream.110203113231.556,edream.110203113231.557,edream.110203113231.558,edream.110203113231.559,edream.111303095242,edream.111303095242.3,edream.111303111942.1,edream.111303103141,edream.111303121150,edream.111303103141.1,edream.111303103141.2,edream.111303103141.3,edream.111303103141.4,edream.111303111942,edream.111303110018,edream.111303103457.2,edream.111603112846.1,edream.111303103254,edream.111303095242.6,edream.111303163727.2,edream.111303163727.1,edream.111303163727.3,edream.110203113231.598,edream.110203113231.599,edream.110203113231.600,edream.110203113231.601,edream.110203113231.602,edream.110203113231.603,edream.110203113231.605,edream.110203113231.606,edream.110203113231.607,edream.110203113231.608,edream.110203113231.609,edream.110203113231.610,edream.110203113231.611,edream.110203113231.612,edream.110203113231.613,edream.110203113231.614,edream.110203113231.615,edream.110203113231.616,edream.110203113231.617,edream.111603213219,edream.111603213219.1,edream.111603213329,edream.111603221005,edream.111403090242,edream.111403090242.1,edream.111403093559,edream.111403093559.1,edream.110203113231.295,edream.110203113231.296,edream.110203113231.298,edream.110203113231.299,edream.110203113231.300,edream.111603221343.1,edream.111603221343.3,edream.111603221343.4,edream.111603221343.5,edream.111603221343.6,edream.111603221343.7,edream.110203113231.280,edream.110203113231.281,edream.110203113231.283,edream.110203113231.284,edream.110203113231.286,edream.110203113231.287,edream.110203113231.288,edream.110203113231.289,edream.110203113231.290,edream.110203113231.291,edream.110203113231.292,edream.110203113231.293,edream.111503093140,edream.111503094014,edream.111503094322,edream.111503094014.1,edream.110203113231.561,edream.110203113231.563,edream.111503074302,edream.110203113231.564,edream.111503085739,edream.111503085739.1,edream.111403151611.1,edream.111503213733,edream.111503211508,edream.111403135745,edream.111503091617,edream.111503093522,edream.111503204508,edream.110203113231.588,edream.110203113231.589,edream.110203113231.590,edream.110203113231.591,edream.110203113231.592,edream.110203113231.593,edream.110203113231.594,edream.111503133933.2,edream.111503133933.3,edream.110203113231.595,edream.110203113231.596,edream.110203113231.597,edream.110203113231.304"><vh>@file __wx_gui.py</vh>
+<v t="edream.110203113231.259"><vh>&lt;&lt; constants for wx plugin &gt;&gt;</vh></v>
+<v t="edream.110203113231.303"><vh>&lt;&lt; imports for wx plugin &gt;&gt;</vh></v>
+<v t="edream.110203113231.304"><vh>&lt;&lt; set app.gui &gt;&gt;</vh></v>
+<v t="edream.110203113231.305"><vh>wxGui class</vh>
+<v t="edream.110203113231.307"><vh> wxGui.__init__</vh></v>
+<v t="edream.111303091300"><vh>app.gui.wx birth &amp; death</vh>
+<v t="edream.110203113231.308"><vh>createRootWindow &amp; allies</vh>
+<v t="edream.110203113231.309"><vh>setDefaultIcon</vh></v>
+<v t="edream.110203113231.310"><vh>setEncoding</vh></v>
+<v t="edream.110203113231.311"><vh>getDefaultConfigFont</vh></v>
+<v t="edream.110203113231.312"><vh>createGlobalWindows</vh></v>
+</v>
+<v t="edream.111303085447.1"><vh>destroySelf</vh></v>
+<v t="edream.110203113231.317"><vh>runMainLoop</vh></v>
+<v t="edream.110203113231.306"><vh>stubs</vh>
+<v t="edream.110203113231.314"><vh>finishCreate</vh></v>
+<v t="edream.110203113231.315"><vh>killGui</vh></v>
+<v t="edream.110203113231.316"><vh>recreateRootWindow</vh></v>
+</v>
+</v>
+<v t="edream.110203113231.321"><vh>app.gui wx dialogs</vh>
+<v t="edream.110203113231.322"><vh>runAboutLeoDialog</vh></v>
+<v t="edream.110203113231.323"><vh>runAskOkDialog</vh></v>
+<v t="edream.110203113231.324"><vh>runAskOkCancelNumberDialog TODO</vh></v>
+<v t="edream.110203113231.325"><vh>runAskYesNoDialog</vh></v>
+<v t="edream.110203113231.326"><vh>runAskYesNoCancelDialog</vh></v>
+<v t="edream.110203113231.327"><vh>runOpenFileDialog</vh></v>
+<v t="edream.110203113231.328"><vh>runSaveFileDialog</vh></v>
+<v t="edream.111403104835"><vh>getWildcardList</vh></v>
+</v>
+<v t="edream.111303091857"><vh>app.gui wx panels</vh>
+<v t="edream.111303092328"><vh>createColorPanel</vh></v>
+<v t="edream.111303092328.1"><vh>createComparePanel</vh></v>
+<v t="edream.111303092328.2"><vh>createFindPanel</vh></v>
+<v t="edream.111303092328.3"><vh>createFontPanel</vh></v>
+<v t="edream.111303092328.4"><vh>createLeoFrame</vh></v>
+<v t="edream.111303092328.5"><vh>createPrefsPanel</vh></v>
+<v t="edream.110203113231.333"><vh>destroyLeoFrame (used??)</vh></v>
+</v>
+<v t="edream.111303090930"><vh>app.gui.wx utils</vh>
+<v t="edream.110203113231.320"><vh>Clipboard</vh></v>
+<v t="edream.110203113231.339"><vh>Dialog</vh>
+<v t="edream.111403151611"><vh>bringToFront</vh></v>
+<v t="edream.110203113231.343"><vh>get_window_info</vh></v>
+<v t="edream.110203113231.344"><vh>center_dialog</vh></v>
+</v>
+<v t="edream.110203113231.335"><vh>Focus </vh>
+<v t="edream.110203113231.336"><vh>get_focus</vh></v>
+<v t="edream.110203113231.337"><vh>set_focus</vh></v>
+</v>
+<v t="edream.110203113231.318"><vh>Font</vh>
+<v t="edream.110203113231.319"><vh>getFontFromParams</vh></v>
+</v>
+<v t="edream.111303092854"><vh>Icons</vh>
+<v t="edream.110203113231.340"><vh>attachLeoIcon</vh>
+<v t="edream.110203113231.341"><vh>&lt;&lt; try to use the PIL and tkIcon packages to draw the icon &gt;&gt;</vh></v>
+</v>
+<v t="edream.110203113231.342"><vh>createLeoIcon</vh></v>
+</v>
+<v t="edream.110203113231.329"><vh>Idle time</vh>
+<v t="edream.111303093843"><vh>setIdleTimeHook</vh></v>
+<v t="edream.111303093843.1"><vh>setIdleTimeHookAfterDelay</vh></v>
+</v>
+<v t="edream.111303093953.1"><vh>Indices</vh>
+<v t="edream.111303093953.2"><vh>firstIndex</vh></v>
+<v t="edream.111303093953.3"><vh>lastIndex</vh></v>
+<v t="edream.111303093953.4"><vh>moveIndexBackward</vh></v>
+<v t="edream.111303093953.5"><vh>moveIndexForward</vh></v>
+<v t="edream.111303093953.6"><vh>compareIndices</vh></v>
+<v t="edream.111303093953.7"><vh>getindex</vh></v>
+</v>
+<v t="edream.111303093953.8"><vh>Insert Point</vh>
+<v t="edream.111303093953.9"><vh>getInsertPoint</vh></v>
+<v t="edream.111303093953.10"><vh>setInsertPoint</vh></v>
+</v>
+<v t="edream.111303093953.11"><vh>Selection</vh>
+<v t="edream.111303093953.12"><vh>getSelectionRange</vh></v>
+<v t="edream.111303093953.13"><vh>getTextSelection</vh></v>
+<v t="edream.111303093953.14"><vh>setSelectionRange</vh></v>
+<v t="edream.111303093953.15"><vh>setSelectionRangeWithLength</vh></v>
+<v t="edream.111303093953.16"><vh>setTextSelection</vh></v>
+</v>
+<v t="edream.111303093953.17"><vh>Text</vh>
+<v t="edream.111303093953.18"><vh>getAllText</vh></v>
+<v t="edream.111303093953.19"><vh>getCharAfterIndex</vh></v>
+<v t="edream.111303093953.20"><vh>getCharAtIndex</vh></v>
+<v t="edream.111303093953.21"><vh>getCharBeforeIndex</vh></v>
+<v t="edream.111303093953.22"><vh>getLineContainingIndex</vh></v>
+<v t="edream.111303093953.23"><vh>replaceSelectionRangeWithText</vh></v>
+</v>
+<v t="edream.111303093953.24"><vh>Visibility</vh>
+<v t="edream.111303093953.25"><vh>makeIndexVisible</vh></v>
+</v>
+</v>
+</v>
+<v t="edream.110203113231.346"><vh>wxLeoApp class</vh>
+<v t="edream.110203113231.347"><vh>OnInit</vh></v>
+<v t="edream.110203113231.348"><vh>OnExit</vh></v>
+</v>
+<v t="edream.110203113231.539"><vh>wxLeoBody class</vh>
+<v t="edream.110203113231.540"><vh>Birth &amp; death</vh>
+<v t="edream.110203113231.541"><vh>wxLeoBody.__init__</vh></v>
+<v t="edream.110203113231.542"><vh>wxLeoBody.createControl</vh></v>
+</v>
+<v t="edream.111303204836"><vh>Tk wrappers wxLeoBody TO DO</vh>
+<v t="edream.110203113231.543"><vh>Bounding box...</vh></v>
+<v t="edream.111303204517" a=""><vh>Color tags (hacks for styles)</vh>
+<v t="edream.111403082513"><vh>tkColorToWxColor (internal use)</vh></v>
+<v t="edream.111303205611"><vh>tag_add</vh></v>
+<v t="edream.111303205611.1"><vh>tag_bind</vh></v>
+<v t="edream.111303205611.2"><vh>tag_configure (hack for wxStyles)</vh></v>
+<v t="edream.111303205611.3"><vh>tag_delete</vh></v>
+<v t="edream.111303205611.4"><vh>tag_remove</vh></v>
+</v>
+<v t="edream.110203113231.544"><vh>Config... TO DO</vh></v>
+<v t="edream.110203113231.545"><vh>Focus...</vh></v>
+<v t="edream.111303204025" a=""><vh>Indices</vh>
+<v t="edream.111303204025.1"><vh>adjustIndex</vh></v>
+<v t="edream.111303204025.2"><vh>compareIndices</vh></v>
+<v t="edream.111303204025.3"><vh>convertRowColumnToIndex</vh></v>
+<v t="edream.111303204025.4"><vh>convertIndexToRowColumn</vh></v>
+<v t="edream.111303204025.5"><vh>getImageIndex</vh></v>
+<v t="edream.111403080609"><vh>maxWxIndex (internal use)</vh></v>
+</v>
+<v t="edream.110203113231.548"><vh>Idle-time callback...</vh></v>
+<v t="edream.110203113231.549"><vh>Height &amp; width info...</vh></v>
+<v t="edream.111303171218"><vh>Insert point</vh></v>
+<v t="edream.111603222048"><vh>Menu</vh></v>
+<v t="edream.111303171218.1"><vh>Selection</vh></v>
+<v t="edream.111303171238"><vh>Text</vh>
+<v t="edream.111303171238.1"><vh>delete... (untested)</vh></v>
+<v t="edream.111303171238.2"><vh>get... TO DO</vh></v>
+<v t="edream.111303171238.3"><vh>insert...</vh></v>
+<v t="edream.111303171238.4"><vh>setSelectionAreas</vh></v>
+</v>
+<v t="edream.110203113231.552"><vh>Visibility &amp; scrolling...</vh></v>
+</v>
+<v t="edream.110203113231.275"><vh>onBodyTextUpdated MORE WORK NEEDED</vh>
+<v t="edream.111303201144.6"><vh>&lt;&lt; recolor the body &gt;&gt;</vh></v>
+<v t="edream.111303201144.7"><vh>&lt;&lt; redraw the screen if necessary &gt;&gt;</vh></v>
+</v>
+</v>
+<v t="edream.110203113231.349"><vh>wxLeoFrame class</vh>
+<v t="edream.110203113231.350"><vh>Birth &amp; death</vh>
+<v t="edream.110203113231.266"><vh>__init__</vh></v>
+<v t="edream.110203113231.351"><vh>__repr__</vh></v>
+<v t="edream.110203113231.260"><vh>finishCreate</vh>
+<v t="edream.110203113231.261"><vh>&lt;&lt; create the splitters &gt;&gt;</vh></v>
+<v t="edream.110203113231.264"><vh>&lt;&lt; declare event handlers for frame &gt;&gt;</vh></v>
+<v t="edream.110203113231.265"><vh>&lt;&lt; set the window icon &gt;&gt;</vh></v>
+</v>
+<v t="edream.111403141810"><vh>initialRatios</vh></v>
+<v t="edream.111503105816"><vh>injectCallbacks</vh></v>
+<v t="edream.111303141147"><vh>signOnWithVersion</vh></v>
+<v t="edream.111503213533"><vh>destroySelf</vh></v>
+</v>
+<v t="edream.110203113231.267"><vh>event handlers</vh>
+<v t="edream.110203113231.268"><vh>Frame events</vh>
+<v t="edream.110203113231.269"><vh>onActivate &amp; OnSetFocus</vh></v>
+<v t="edream.110203113231.270"><vh>onCloseLeoFrame</vh></v>
+<v t="edream.110203113231.273"><vh>onResize</vh></v>
+</v>
+</v>
+<v t="edream.110203113231.379"><vh>wxFrame dummy routines: (to do: minor)</vh></v>
+<v t="edream.110203113231.378"><vh>Externally visible routines...</vh>
+<v t="edream.110203113231.380"><vh>deiconify</vh></v>
+<v t="edream.110203113231.381"><vh>getTitle</vh></v>
+<v t="edream.111303135410"><vh>setTitle</vh></v>
+</v>
+<v t="edream.111303100039" a=""><vh>Gui-dependent commands (to do)</vh>
+<v t="edream.111303100039.1"><vh>Edit Menu...</vh>
+<v t="edream.111303101257"><vh>abortEditLabelCommand</vh></v>
+<v t="edream.111303101257.1"><vh>endEditLabelCommand</vh></v>
+<v t="edream.111303100039.6"><vh>insertHeadlineTime</vh></v>
+</v>
+<v t="edream.111303100039.7"><vh>Window Menu</vh>
+<v t="edream.111303100039.8"><vh>cascade</vh></v>
+<v t="edream.111303100039.9"><vh>equalSizedPanes</vh></v>
+<v t="edream.111303100039.10"><vh>hideLogWindow</vh></v>
+<v t="edream.111303100039.11"><vh>minimizeAll</vh></v>
+<v t="edream.111303101709"><vh>toggleActivePane</vh></v>
+<v t="edream.111303100039.12"><vh>toggleSplitDirection</vh></v>
+</v>
+<v t="edream.111703103908"><vh>Help Menu...</vh>
+<v t="edream.111703103908.2"><vh>leoHelp</vh>
+<v t="edream.111703103908.3"><vh>showProgressBar</vh>
+<v t="edream.111703103908.4"><vh>&lt;&lt; create the scale widget &gt;&gt;</vh></v>
+</v>
+</v>
+</v>
+</v>
+<v t="edream.110203113231.384"><vh>updateAllMenus (wxFrame)</vh></v>
+</v>
+<v t="edream.110203113231.553"><vh>wxLeoLog class</vh>
+<v t="edream.110203113231.554"><vh>leoLog.__init__</vh></v>
+<v t="edream.110203113231.555"><vh>leoLog.configure</vh></v>
+<v t="edream.110203113231.556"><vh>leoLog.configureBorder</vh></v>
+<v t="edream.110203113231.557"><vh>leoLog.createControl</vh></v>
+<v t="edream.110203113231.558"><vh>leoLog.setLogFontFromConfig</vh></v>
+<v t="edream.110203113231.559"><vh>wxLeoLog.put &amp; putnl</vh></v>
+</v>
+<v t="edream.111303095242"><vh>wxLeoMenu class</vh>
+<v t="edream.111303095242.3"><vh>  wxLeoMenu.__init__</vh></v>
+<v t="edream.111303103457"><vh>wx menu bindings</vh>
+<v t="edream.111603104327"><vh>9 Routines with Tk names</vh>
+<v t="edream.111303111942.1"><vh>add_cascade</vh></v>
+<v t="edream.111303103141"><vh>add_command</vh></v>
+<v t="edream.111303121150"><vh>add_separator</vh></v>
+<v t="edream.111303103141.1"><vh>bind (wx has a different key model than tk)</vh></v>
+<v t="edream.111303103141.2"><vh>delete (not called?)</vh></v>
+<v t="edream.111303103141.3" a=""><vh>delete_range</vh></v>
+<v t="edream.111303103141.4"><vh>destroy (not called ?)</vh></v>
+<v t="edream.111303111942"><vh>insert_cascade</vh></v>
+<v t="edream.111303110018"><vh>new_menu</vh></v>
+</v>
+<v t="edream.111603112846"><vh>7 Routines with other names...</vh>
+<v t="edream.111303103457.2"><vh>createMenuBar</vh></v>
+<v t="edream.111603112846.1"><vh>createOpenWithMenuFromTable (not ready yet)</vh></v>
+<v t="edream.111303103254"><vh>defineMenuCallback</vh></v>
+<v t="edream.111303095242.6"><vh>defineOpenWithMenuCallback</vh></v>
+<v t="edream.111303163727.2"><vh>disableMenu</vh></v>
+<v t="edream.111303163727.1"><vh>enableMenu</vh></v>
+<v t="edream.111303163727.3"><vh>setMenuLabel</vh></v>
+</v>
+</v>
+</v>
+<v t="edream.110203113231.598"><vh>wxLeoPrefs class</vh>
+<v t="edream.110203113231.599"><vh>wxLeoPrefs.__init__</vh>
+<v t="edream.110203113231.600"><vh>&lt;&lt; define event handlers for wxLeoPrefsFrame &gt;&gt;</vh></v>
+</v>
+<v t="edream.110203113231.601"><vh>initialize</vh></v>
+<v t="edream.110203113231.602"><vh>targetToLanguage (should be in Leo's core)</vh></v>
+<v t="edream.110203113231.603"><vh>languageToTarget (should be in Leo's core)</vh></v>
+<v t="edream.110203113231.604"><vh>Event handlers</vh>
+<v t="edream.110203113231.605"><vh>OnActivatePrefsFrame</vh></v>
+<v t="edream.110203113231.606"><vh>OnClosePrefsFrame</vh></v>
+<v t="edream.110203113231.607"><vh>OnPageWidthText</vh></v>
+<v t="edream.110203113231.608"><vh>OnDoneBatCheckBox</vh></v>
+<v t="edream.110203113231.609"><vh>OnUnBatCheckBox</vh></v>
+<v t="edream.110203113231.610"><vh>OnTangleDirectoryText</vh></v>
+<v t="edream.110203113231.611"><vh>OnHeaderCheckBox</vh></v>
+<v t="edream.110203113231.612"><vh>OnDocChunksCheckBox</vh></v>
+<v t="edream.110203113231.613"><vh>OnTargetLanguageRadioBox</vh></v>
+</v>
+<v t="edream.110203113231.614"><vh>PrefsPanel.__init__</vh>
+<v t="edream.110203113231.615"><vh>&lt;&lt; Create the Global Options static box &gt;&gt;</vh></v>
+<v t="edream.110203113231.616"><vh>&lt;&lt; Create the Default Tangle Options static box &gt;&gt;</vh></v>
+<v t="edream.110203113231.617"><vh>&lt;&lt; Create the Default Target Language radio buttons &gt;&gt;</vh></v>
+</v>
+</v>
+<v t="edream.111603213219"><vh>wxLeoTree class</vh>
+<v t="edream.111603213219.1"><vh>__init__</vh>
+<v t="edream.111603213329"><vh>&lt;&lt; declare event handlers &gt;&gt;</vh></v>
+</v>
+<v t="edream.111603221005"><vh>expandAllAncestors</vh></v>
+<v t="edream.111403090242"><vh>Drawing  &amp; scrolling TO DO</vh></v>
+<v t="edream.111403090242.1"><vh>Editing TO DO</vh></v>
+<v t="edream.111403093559"><vh>Focus</vh></v>
+<v t="edream.111403093559.1"><vh>Fonts TO DO</vh></v>
+<v t="edream.111303202917"><vh>Tree refresh</vh>
+<v t="edream.110203113231.295"><vh>beginUpdate</vh></v>
+<v t="edream.110203113231.296"><vh>endUpdate</vh></v>
+<v t="edream.110203113231.298"><vh>redraw &amp; redraw_now</vh></v>
+<v t="edream.110203113231.299"><vh>redraw_node</vh></v>
+<v t="edream.110203113231.300"><vh>redraw_subtree</vh></v>
+</v>
+<v t="edream.111603221343.1"><vh>select</vh>
+<v t="edream.111603221343.3"><vh>&lt;&lt; unselect the old node &gt;&gt;</vh></v>
+<v t="edream.111603221343.4"><vh>&lt;&lt; select the new node &gt;&gt;</vh></v>
+<v t="edream.111603221343.5"><vh>&lt;&lt; update c.beadList or c.beadPointer &gt;&gt;</vh></v>
+<v t="edream.111603221343.6"><vh>&lt;&lt; update c.visitedList &gt;&gt;</vh></v>
+<v t="edream.111603221343.7"><vh>&lt;&lt; set the current node and redraw &gt;&gt;</vh></v>
+</v>
+<v t="edream.110203113231.278"><vh>Event handlers</vh>
+<v t="edream.110203113231.279"><vh>Expand/contract</vh>
+<v t="edream.110203113231.280"><vh>onTreeCollapsed &amp; onTreeExpanded</vh></v>
+<v t="edream.110203113231.281"><vh>onTreeCollapsing &amp; onTreeExpanding</vh></v>
+</v>
+<v t="edream.110203113231.282"><vh>Selecting</vh>
+<v t="edream.110203113231.283"><vh>onTreeChanged</vh></v>
+<v t="edream.110203113231.284"><vh>onTreeChanging</vh></v>
+</v>
+<v t="edream.110203113231.285"><vh>Editing labels</vh>
+<v t="edream.110203113231.286"><vh>onTreeBeginLabelEdit</vh></v>
+<v t="edream.110203113231.287"><vh>onTreeEndLabelEdit</vh></v>
+<v t="edream.110203113231.288"><vh>onTreeKeyDown</vh></v>
+</v>
+<v t="edream.110203113231.289"><vh>onTreeBeginDrag</vh></v>
+<v t="edream.110203113231.290"><vh>onTreeEndDrag (NOT READY YET)</vh>
+<v t="edream.110203113231.291"><vh>&lt;&lt; Define onTreeEndDrag vars &gt;&gt;</vh></v>
+<v t="edream.110203113231.292"><vh>&lt;&lt; Insert src as the first child of dst &gt;&gt;</vh></v>
+<v t="edream.110203113231.293"><vh>&lt;&lt; Insert src after dst &gt;&gt;</vh></v>
+</v>
+</v>
+</v>
+<v t="edream.110203113231.560"><vh>Find...</vh>
+<v t="edream.111503093140"><vh>wxSearchWidget</vh>
+<v t="edream.111503094014"><vh>wxSearchWidget.__init__</vh></v>
+<v t="edream.111503094322"><vh>Insert point</vh></v>
+<v t="edream.111503094014.1"><vh>Selection</vh></v>
+</v>
+<v t="edream.110203113231.561"><vh>wxFindFrame class</vh>
+<v t="edream.110203113231.563"><vh>FindFrame.__init__</vh>
+<v t="edream.110203113231.564"><vh>&lt;&lt; define event handlers &gt;&gt;</vh>
+<v t="edream.111503085739"><vh>&lt;&lt; create event handlers for buttons &gt;&gt;</vh></v>
+<v t="edream.111503085739.1"><vh>&lt;&lt; create event handlers for check boxes and text &gt;&gt;</vh></v>
+</v>
+<v t="edream.111503074302"><vh>&lt;&lt; resize the frame to fit the panel &gt;&gt;</vh></v>
+</v>
+<v t="edream.111403151611.1"><vh>bringToFront</vh></v>
+<v t="edream.111503213733"><vh>destroySelf</vh></v>
+<v t="edream.111503211508"><vh>onCloseFindFrame</vh></v>
+<v t="edream.111403135745"><vh>set_ivars</vh></v>
+<v t="edream.111503091617"><vh>init_s_text</vh></v>
+<v t="edream.111503093522"><vh>gui_search</vh></v>
+<v t="edream.111503204508"><vh>init</vh></v>
+</v>
+<v t="edream.110203113231.588"><vh>wxFindPanel class</vh>
+<v t="edream.110203113231.589"><vh>FindPanel.__init__</vh>
+<v t="edream.110203113231.590"><vh>&lt;&lt; Create the find text box &gt;&gt;</vh></v>
+<v t="edream.110203113231.591"><vh>&lt;&lt; Create the change text box &gt;&gt;</vh></v>
+<v t="edream.110203113231.592"><vh>&lt;&lt; Create all the find check boxes &gt;&gt;</vh>
+<v t="edream.110203113231.593"><vh>&lt;&lt; Create the first column of widgets &gt;&gt;</vh></v>
+<v t="edream.110203113231.594"><vh>&lt;&lt; Create the second column of widgets &gt;&gt;</vh></v>
+<v t="edream.111503133933.2"><vh>&lt;&lt; Create the third column of widgets &gt;&gt;</vh></v>
+<v t="edream.111503133933.3"><vh>&lt;&lt; Create the fourth column of widgets &gt;&gt;</vh></v>
+</v>
+<v t="edream.110203113231.595"><vh>&lt;&lt; Create all the find buttons &gt;&gt;</vh>
+<v t="edream.110203113231.596"><vh>&lt;&lt; Create the first row of buttons &gt;&gt;</vh></v>
+<v t="edream.110203113231.597"><vh>&lt;&lt; Create the second row of buttons &gt;&gt;</vh></v>
+</v>
+</v>
+</v>
+</v>
+</v>
+</v>
+<v t="edream.110203113231.618" a="E"><vh>Plugins &amp; scripts</vh>
 <v t="edream.110203113231.619"><vh>Contributed scripts</vh>
 <v t="edream.110203113231.620" tnodeList="edream.110203113231.620,edream.110203113231.621,edream.110203113231.622,edream.110203113231.623,edream.110203113231.624,edream.110203113231.625,edream.110203113231.626,edream.110203113231.627,edream.110203113231.628,edream.110203113231.629"><vh>@file ../scripts/foldersize_leo.py</vh>
 <v t="edream.110203113231.621"><vh>normalize</vh></v>
@@ -910,7 +1311,7 @@
 <v t="edream.110203113231.874"><vh>&lt;&lt; about this plugin &gt;&gt;</vh></v>
 <v t="edream.110203113231.875"><vh>sync_node_to_folder</vh></v>
 </v>
-<v t="edream.110203113231.876" a="M" tnodeList="edream.110203113231.876,edream.110203113231.877,edream.110203113231.878,edream.110203113231.879,edream.110203113231.880,edream.110203113231.882,edream.110203113231.883,edream.110203113231.885,edream.110203113231.887,edream.110203113231.888,edream.110203113231.889,edream.110203113231.890,edream.110203113231.891,edream.110203113231.892,edream.110203113231.893,edream.110203113231.894,edream.110203113231.895,edream.110203113231.896,edream.110203113231.897,edream.110203113231.898,edream.110203113231.899,edream.110203113231.900"><vh>@file read_only_nodes.py</vh>
+<v t="edream.110203113231.876" tnodeList="edream.110203113231.876,edream.110203113231.877,edream.110203113231.878,edream.110203113231.879,edream.110203113231.880,edream.110203113231.882,edream.110203113231.883,edream.110203113231.885,edream.110203113231.887,edream.110203113231.888,edream.110203113231.889,edream.110203113231.890,edream.110203113231.891,edream.110203113231.892,edream.110203113231.893,edream.110203113231.894,edream.110203113231.895,edream.110203113231.896,edream.110203113231.897,edream.110203113231.898,edream.110203113231.899,edream.110203113231.900"><vh>@file read_only_nodes.py</vh>
 <v t="edream.110203113231.877"><vh>documentation for @read-only nodes</vh>
 <v t="edream.110203113231.878"><vh>ftp/http access</vh></v>
 </v>
@@ -942,17 +1343,17 @@
 <v t="edream.110203113231.899"><vh>on_select1</vh></v>
 <v t="edream.110203113231.900"><vh>on_select2</vh></v>
 </v>
-<v t="edream.110203113231.901" tnodeList="edream.110203113231.901,edream.110203113231.902,edream.110203113231.903,edream.110203113231.904,edream.110203113231.905,edream.110203113231.906,edream.110203113231.907,edream.110203113231.908,edream.110203113231.909"><vh>@file rst.py</vh>
-<v t="edream.110203113231.902"><vh>&lt;&lt;about this plugin &gt;&gt;</vh></v>
-<v t="edream.110203113231.903"><vh>&lt;&lt; change log &gt;&gt;</vh></v>
-<v t="edream.110203113231.904"><vh>onIconDoubleClick</vh>
-<v t="edream.110203113231.905"><vh>&lt;&lt; write rST as HTML &gt;&gt;</vh>
-<v t="edream.110203113231.906"><vh>&lt;&lt; convert rST to HTML &gt;&gt;</vh></v>
+<v t="edream.111803100242" tnodeList="edream.111803100242,edream.111803100242.1,edream.111803100242.2,edream.111803100242.3,edream.111803100242.4,edream.111803100242.5,edream.111803100242.6,edream.111803100242.7,edream.111803100242.8"><vh>@file rst.py</vh>
+<v t="edream.111803100242.1"><vh>&lt;&lt;about this plugin &gt;&gt;</vh></v>
+<v t="edream.111803100242.2"><vh>&lt;&lt; change log &gt;&gt;</vh></v>
+<v t="edream.111803100242.3"><vh>onIconDoubleClick</vh>
+<v t="edream.111803100242.4"><vh>&lt;&lt; write rST as HTML/LaTeX &gt;&gt;</vh>
+<v t="edream.111803100242.5"><vh>&lt;&lt; convert rST to HTML/LaTeX &gt;&gt;</vh></v>
 </v>
-<v t="edream.110203113231.907"><vh>&lt;&lt; write rST file &gt;&gt;</vh></v>
+<v t="edream.111803100242.6"><vh>&lt;&lt; write rST file &gt;&gt;</vh></v>
 </v>
-<v t="edream.110203113231.908"><vh>writeTreeAsRst</vh></v>
-<v t="edream.110203113231.909"><vh>underline</vh></v>
+<v t="edream.111803100242.7"><vh>writeTreeAsRst</vh></v>
+<v t="edream.111803100242.8"><vh>underline</vh></v>
 </v>
 <v t="edream.110203113231.910" tnodeList="edream.110203113231.910,edream.110203113231.911,edream.110203113231.912,edream.110203113231.913,edream.110203113231.914"><vh>@file startfile.py</vh>
 <v t="edream.110203113231.911"><vh>&lt;&lt;about this plugin &gt;&gt;</vh></v>
@@ -1071,406 +1472,6 @@
 <v t="edream.110203113231.999"><vh>getPlugin</vh></v>
 <v t="edream.110203113231.1000"><vh>getPluginVersion</vh></v>
 <v t="edream.110203113231.1001"><vh>getPluginFilenames</vh></v>
-</v>
-</v>
-</v>
-</v>
-<v t="edream.110203113231.233" a="V"><vh>wxPython plugin (alpha quality)</vh>
-<v t="edream.110203113231.234"><vh> Diary</vh>
-<v t="edream.111503110300"><vh>11/15/03  Leo becomes usuable (!)</vh></v>
-<v t="edream.111403093253"><vh>11/13 &amp; 11/14</vh></v>
-<v t="edream.110203113231.235"><vh>10/26 Code works with reorganized core</vh></v>
-<v t="edream.110203113231.236"><vh>10/13/03: Added icons (Windows only)</vh></v>
-<v t="edream.110203113231.237"><vh>10/12/03: Houston, we have ignition</vh></v>
-<v t="edream.110203113231.238"><vh>10/11/03: converted code using c2py, then hand converted code</vh></v>
-</v>
-<v t="edream.111403093253.1"><vh>Projects</vh>
-<v t="edream.110203113231.243"><vh>invoke c2py</vh></v>
-<v t="edream.111503111146"><vh>Finished or mostly finished</vh>
-<v t="edream.111303205442"><vh>(colorizing) (demo only)</vh>
-<v t="edream.111303204025" a=""><vh>Indices</vh>
-<v t="edream.111303204025.1"><vh>adjustIndex</vh></v>
-<v t="edream.111303204025.2"><vh>compareIndices</vh></v>
-<v t="edream.111303204025.3"><vh>convertRowColumnToIndex</vh></v>
-<v t="edream.111303204025.4"><vh>convertIndexToRowColumn</vh></v>
-<v t="edream.111303204025.5"><vh>getImageIndex</vh></v>
-<v t="edream.111403080609"><vh>maxWxIndex (internal use)</vh></v>
-</v>
-<v t="edream.111303204517" a=""><vh>Color tags (hacks for styles)</vh>
-<v t="edream.111403082513"><vh>tkColorToWxColor (internal use)</vh></v>
-<v t="edream.111303205611"><vh>tag_add</vh></v>
-<v t="edream.111303205611.1"><vh>tag_bind</vh></v>
-<v t="edream.111303205611.2"><vh>tag_configure (hack for wxStyles)</vh></v>
-<v t="edream.111303205611.3"><vh>tag_delete</vh></v>
-<v t="edream.111303205611.4"><vh>tag_remove</vh></v>
-</v>
-</v>
-</v>
-<v t="edream.111503111350"><vh>Unfinished</vh>
-<v t="edream.111303184347"><vh>(delete_range) doesn't work</vh>
-<v t="edream.111303103141.3" a=""><vh>delete_range</vh></v>
-</v>
-<v t="edream.111303100039" a=""><vh>Gui-dependent commands (to do)</vh>
-<v t="edream.111303100039.1"><vh>Edit Menu...</vh>
-<v t="edream.111303101257"><vh>abortEditLabelCommand</vh></v>
-<v t="edream.111303101257.1"><vh>endEditLabelCommand</vh></v>
-<v t="edream.111303100039.6"><vh>insertHeadlineTime</vh></v>
-</v>
-<v t="edream.111303100039.7"><vh>Window Menu</vh>
-<v t="edream.111303100039.8"><vh>cascade</vh></v>
-<v t="edream.111303100039.9"><vh>equalSizedPanes</vh></v>
-<v t="edream.111303100039.10"><vh>hideLogWindow</vh></v>
-<v t="edream.111303100039.11"><vh>minimizeAll</vh></v>
-<v t="edream.111303101709"><vh>toggleActivePane</vh></v>
-<v t="edream.111303100039.12"><vh>toggleSplitDirection</vh></v>
-</v>
-<v t="edream.111703103908"><vh>Help Menu...</vh>
-<v t="edream.111703103908.2"><vh>leoHelp</vh>
-<v t="edream.111703103908.3"><vh>showProgressBar</vh>
-<v t="edream.111703103908.4"><vh>&lt;&lt; create the scale widget &gt;&gt;</vh></v>
-</v>
-</v>
-</v>
-</v>
-</v>
-</v>
-<v t="edream.110203113231.242"><vh>Unused code</vh>
-<v t="edream.110203113231.257"><vh>updateJoinedHeadlines</vh></v>
-<v t="edream.111303202917.1"><vh>Syntax coloring REMOVED: now in base body class</vh></v>
-</v>
-<v t="edream.110203113231.302" tnodeList="edream.110203113231.302,edream.110203113231.303,edream.110203113231.259,edream.110203113231.305,edream.110203113231.307,edream.110203113231.308,edream.110203113231.309,edream.110203113231.310,edream.110203113231.311,edream.110203113231.312,edream.111303085447.1,edream.110203113231.317,edream.110203113231.314,edream.110203113231.315,edream.110203113231.316,edream.110203113231.322,edream.110203113231.323,edream.110203113231.324,edream.110203113231.325,edream.110203113231.326,edream.110203113231.327,edream.110203113231.328,edream.111403104835,edream.111303092328,edream.111303092328.1,edream.111303092328.2,edream.111303092328.3,edream.111303092328.4,edream.111303092328.5,edream.110203113231.333,edream.110203113231.320,edream.111403151611,edream.110203113231.343,edream.110203113231.344,edream.110203113231.336,edream.110203113231.337,edream.110203113231.319,edream.110203113231.340,edream.110203113231.341,edream.110203113231.342,edream.111303093843,edream.111303093843.1,edream.111303093953.2,edream.111303093953.3,edream.111303093953.4,edream.111303093953.5,edream.111303093953.6,edream.111303093953.7,edream.111303093953.9,edream.111303093953.10,edream.111303093953.12,edream.111303093953.13,edream.111303093953.14,edream.111303093953.15,edream.111303093953.16,edream.111303093953.18,edream.111303093953.19,edream.111303093953.20,edream.111303093953.21,edream.111303093953.22,edream.111303093953.23,edream.111303093953.25,edream.110203113231.346,edream.110203113231.347,edream.110203113231.348,edream.110203113231.539,edream.110203113231.541,edream.110203113231.542,edream.110203113231.543,edream.111403082513,edream.111303205611,edream.111303205611.1,edream.111303205611.2,edream.111303205611.3,edream.111303205611.4,edream.110203113231.544,edream.110203113231.545,edream.111303204025.1,edream.111303204025.2,edream.111303204025.3,edream.111303204025.4,edream.111303204025.5,edream.111403080609,edream.110203113231.548,edream.110203113231.549,edream.111303171218,edream.111603222048,edream.111303171218.1,edream.111303171238,edream.111303171238.1,edream.111303171238.2,edream.111303171238.3,edream.111303171238.4,edream.110203113231.552,edream.110203113231.275,edream.111303201144.6,edream.111303201144.7,edream.110203113231.349,edream.110203113231.266,edream.110203113231.351,edream.110203113231.260,edream.110203113231.261,edream.110203113231.265,edream.110203113231.264,edream.111403141810,edream.111503105816,edream.111303141147,edream.111503213533,edream.110203113231.269,edream.110203113231.270,edream.110203113231.273,edream.110203113231.379,edream.110203113231.380,edream.110203113231.381,edream.111303135410,edream.111303101257,edream.111303101257.1,edream.111303100039.6,edream.111303100039.8,edream.111303100039.9,edream.111303100039.10,edream.111303100039.11,edream.111303101709,edream.111303100039.12,edream.111703103908.2,edream.111703103908.3,edream.111703103908.4,edream.110203113231.384,edream.110203113231.553,edream.110203113231.554,edream.110203113231.555,edream.110203113231.556,edream.110203113231.557,edream.110203113231.558,edream.110203113231.559,edream.111303095242,edream.111303095242.3,edream.111303111942.1,edream.111303103141,edream.111303121150,edream.111303103141.1,edream.111303103141.2,edream.111303103141.3,edream.111303103141.4,edream.111303111942,edream.111303110018,edream.111303103457.2,edream.111603112846.1,edream.111303103254,edream.111303095242.6,edream.111303163727.2,edream.111303163727.1,edream.111303163727.3,edream.110203113231.598,edream.110203113231.599,edream.110203113231.600,edream.110203113231.601,edream.110203113231.602,edream.110203113231.603,edream.110203113231.605,edream.110203113231.606,edream.110203113231.607,edream.110203113231.608,edream.110203113231.609,edream.110203113231.610,edream.110203113231.611,edream.110203113231.612,edream.110203113231.613,edream.110203113231.614,edream.110203113231.615,edream.110203113231.616,edream.110203113231.617,edream.111603213219,edream.111603213219.1,edream.111603213329,edream.111603221005,edream.111403090242,edream.111403090242.1,edream.111403093559,edream.111403093559.1,edream.110203113231.295,edream.110203113231.296,edream.110203113231.298,edream.110203113231.299,edream.110203113231.300,edream.111603221343.1,edream.111603221343.3,edream.111603221343.4,edream.111603221343.5,edream.111603221343.6,edream.111603221343.7,edream.110203113231.280,edream.110203113231.281,edream.110203113231.283,edream.110203113231.284,edream.110203113231.286,edream.110203113231.287,edream.110203113231.288,edream.110203113231.289,edream.110203113231.290,edream.110203113231.291,edream.110203113231.292,edream.110203113231.293,edream.111503093140,edream.111503094014,edream.111503094322,edream.111503094014.1,edream.110203113231.561,edream.110203113231.563,edream.111503074302,edream.110203113231.564,edream.111503085739,edream.111503085739.1,edream.111403151611.1,edream.111503213733,edream.111503211508,edream.111403135745,edream.111503091617,edream.111503093522,edream.111503204508,edream.110203113231.588,edream.110203113231.589,edream.110203113231.590,edream.110203113231.591,edream.110203113231.592,edream.110203113231.593,edream.110203113231.594,edream.111503133933.2,edream.111503133933.3,edream.110203113231.595,edream.110203113231.596,edream.110203113231.597,edream.110203113231.304"><vh>@file __wx_gui.py</vh>
-<v t="edream.110203113231.259"><vh>&lt;&lt; constants for wx plugin &gt;&gt;</vh></v>
-<v t="edream.110203113231.303"><vh>&lt;&lt; imports for wx plugin &gt;&gt;</vh></v>
-<v t="edream.110203113231.304"><vh>&lt;&lt; set app.gui &gt;&gt;</vh></v>
-<v t="edream.110203113231.305"><vh>wxGui class</vh>
-<v t="edream.110203113231.307"><vh> wxGui.__init__</vh></v>
-<v t="edream.111303091300"><vh>app.gui.wx birth &amp; death</vh>
-<v t="edream.110203113231.308"><vh>createRootWindow &amp; allies</vh>
-<v t="edream.110203113231.309"><vh>setDefaultIcon</vh></v>
-<v t="edream.110203113231.310"><vh>setEncoding</vh></v>
-<v t="edream.110203113231.311"><vh>getDefaultConfigFont</vh></v>
-<v t="edream.110203113231.312"><vh>createGlobalWindows</vh></v>
-</v>
-<v t="edream.111303085447.1"><vh>destroySelf</vh></v>
-<v t="edream.110203113231.317"><vh>runMainLoop</vh></v>
-<v t="edream.110203113231.306"><vh>stubs</vh>
-<v t="edream.110203113231.314"><vh>finishCreate</vh></v>
-<v t="edream.110203113231.315"><vh>killGui</vh></v>
-<v t="edream.110203113231.316"><vh>recreateRootWindow</vh></v>
-</v>
-</v>
-<v t="edream.110203113231.321"><vh>app.gui wx dialogs</vh>
-<v t="edream.110203113231.322"><vh>runAboutLeoDialog</vh></v>
-<v t="edream.110203113231.323"><vh>runAskOkDialog</vh></v>
-<v t="edream.110203113231.324"><vh>runAskOkCancelNumberDialog TODO</vh></v>
-<v t="edream.110203113231.325"><vh>runAskYesNoDialog</vh></v>
-<v t="edream.110203113231.326"><vh>runAskYesNoCancelDialog</vh></v>
-<v t="edream.110203113231.327"><vh>runOpenFileDialog</vh></v>
-<v t="edream.110203113231.328"><vh>runSaveFileDialog</vh></v>
-<v t="edream.111403104835"><vh>getWildcardList</vh></v>
-</v>
-<v t="edream.111303091857"><vh>app.gui wx panels</vh>
-<v t="edream.111303092328"><vh>createColorPanel</vh></v>
-<v t="edream.111303092328.1"><vh>createComparePanel</vh></v>
-<v t="edream.111303092328.2"><vh>createFindPanel</vh></v>
-<v t="edream.111303092328.3"><vh>createFontPanel</vh></v>
-<v t="edream.111303092328.4"><vh>createLeoFrame</vh></v>
-<v t="edream.111303092328.5"><vh>createPrefsPanel</vh></v>
-<v t="edream.110203113231.333"><vh>destroyLeoFrame (used??)</vh></v>
-</v>
-<v t="edream.111303090930"><vh>app.gui.wx utils</vh>
-<v t="edream.110203113231.320"><vh>Clipboard</vh></v>
-<v t="edream.110203113231.339"><vh>Dialog</vh>
-<v t="edream.111403151611"><vh>bringToFront</vh></v>
-<v t="edream.110203113231.343"><vh>get_window_info</vh></v>
-<v t="edream.110203113231.344"><vh>center_dialog</vh></v>
-</v>
-<v t="edream.110203113231.335"><vh>Focus </vh>
-<v t="edream.110203113231.336"><vh>get_focus</vh></v>
-<v t="edream.110203113231.337"><vh>set_focus</vh></v>
-</v>
-<v t="edream.110203113231.318"><vh>Font</vh>
-<v t="edream.110203113231.319"><vh>getFontFromParams</vh></v>
-</v>
-<v t="edream.111303092854"><vh>Icons</vh>
-<v t="edream.110203113231.340"><vh>attachLeoIcon</vh>
-<v t="edream.110203113231.341"><vh>&lt;&lt; try to use the PIL and tkIcon packages to draw the icon &gt;&gt;</vh></v>
-</v>
-<v t="edream.110203113231.342"><vh>createLeoIcon</vh></v>
-</v>
-<v t="edream.110203113231.329"><vh>Idle time</vh>
-<v t="edream.111303093843"><vh>setIdleTimeHook</vh></v>
-<v t="edream.111303093843.1"><vh>setIdleTimeHookAfterDelay</vh></v>
-</v>
-<v t="edream.111303093953.1"><vh>Indices</vh>
-<v t="edream.111303093953.2"><vh>firstIndex</vh></v>
-<v t="edream.111303093953.3"><vh>lastIndex</vh></v>
-<v t="edream.111303093953.4"><vh>moveIndexBackward</vh></v>
-<v t="edream.111303093953.5"><vh>moveIndexForward</vh></v>
-<v t="edream.111303093953.6"><vh>compareIndices</vh></v>
-<v t="edream.111303093953.7"><vh>getindex</vh></v>
-</v>
-<v t="edream.111303093953.8"><vh>Insert Point</vh>
-<v t="edream.111303093953.9"><vh>getInsertPoint</vh></v>
-<v t="edream.111303093953.10"><vh>setInsertPoint</vh></v>
-</v>
-<v t="edream.111303093953.11"><vh>Selection</vh>
-<v t="edream.111303093953.12"><vh>getSelectionRange</vh></v>
-<v t="edream.111303093953.13"><vh>getTextSelection</vh></v>
-<v t="edream.111303093953.14"><vh>setSelectionRange</vh></v>
-<v t="edream.111303093953.15"><vh>setSelectionRangeWithLength</vh></v>
-<v t="edream.111303093953.16"><vh>setTextSelection</vh></v>
-</v>
-<v t="edream.111303093953.17"><vh>Text</vh>
-<v t="edream.111303093953.18"><vh>getAllText</vh></v>
-<v t="edream.111303093953.19"><vh>getCharAfterIndex</vh></v>
-<v t="edream.111303093953.20"><vh>getCharAtIndex</vh></v>
-<v t="edream.111303093953.21"><vh>getCharBeforeIndex</vh></v>
-<v t="edream.111303093953.22"><vh>getLineContainingIndex</vh></v>
-<v t="edream.111303093953.23"><vh>replaceSelectionRangeWithText</vh></v>
-</v>
-<v t="edream.111303093953.24"><vh>Visibility</vh>
-<v t="edream.111303093953.25"><vh>makeIndexVisible</vh></v>
-</v>
-</v>
-</v>
-<v t="edream.110203113231.346"><vh>wxLeoApp class</vh>
-<v t="edream.110203113231.347"><vh>OnInit</vh></v>
-<v t="edream.110203113231.348"><vh>OnExit</vh></v>
-</v>
-<v t="edream.110203113231.539"><vh>wxLeoBody class</vh>
-<v t="edream.110203113231.540"><vh>Birth &amp; death</vh>
-<v t="edream.110203113231.541"><vh>wxLeoBody.__init__</vh></v>
-<v t="edream.110203113231.542"><vh>wxLeoBody.createControl</vh></v>
-</v>
-<v t="edream.111303204836"><vh>Tk wrappers wxLeoBody TO DO</vh>
-<v t="edream.110203113231.543"><vh>Bounding box...</vh></v>
-<v t="edream.111303204517" a=""><vh>Color tags (hacks for styles)</vh>
-<v t="edream.111403082513"><vh>tkColorToWxColor (internal use)</vh></v>
-<v t="edream.111303205611"><vh>tag_add</vh></v>
-<v t="edream.111303205611.1"><vh>tag_bind</vh></v>
-<v t="edream.111303205611.2"><vh>tag_configure (hack for wxStyles)</vh></v>
-<v t="edream.111303205611.3"><vh>tag_delete</vh></v>
-<v t="edream.111303205611.4"><vh>tag_remove</vh></v>
-</v>
-<v t="edream.110203113231.544"><vh>Config... TO DO</vh></v>
-<v t="edream.110203113231.545"><vh>Focus...</vh></v>
-<v t="edream.111303204025" a=""><vh>Indices</vh>
-<v t="edream.111303204025.1"><vh>adjustIndex</vh></v>
-<v t="edream.111303204025.2"><vh>compareIndices</vh></v>
-<v t="edream.111303204025.3"><vh>convertRowColumnToIndex</vh></v>
-<v t="edream.111303204025.4"><vh>convertIndexToRowColumn</vh></v>
-<v t="edream.111303204025.5"><vh>getImageIndex</vh></v>
-<v t="edream.111403080609"><vh>maxWxIndex (internal use)</vh></v>
-</v>
-<v t="edream.110203113231.548"><vh>Idle-time callback...</vh></v>
-<v t="edream.110203113231.549"><vh>Height &amp; width info...</vh></v>
-<v t="edream.111303171218" a="M"><vh>Insert point</vh></v>
-<v t="edream.111603222048"><vh>Menu</vh></v>
-<v t="edream.111303171218.1"><vh>Selection</vh></v>
-<v t="edream.111303171238"><vh>Text</vh>
-<v t="edream.111303171238.1"><vh>delete... (untested)</vh></v>
-<v t="edream.111303171238.2"><vh>get... TO DO</vh></v>
-<v t="edream.111303171238.3"><vh>insert...</vh></v>
-<v t="edream.111303171238.4"><vh>setSelectionAreas</vh></v>
-</v>
-<v t="edream.110203113231.552"><vh>Visibility &amp; scrolling...</vh></v>
-</v>
-<v t="edream.110203113231.275"><vh>onBodyTextUpdated MORE WORK NEEDED</vh>
-<v t="edream.111303201144.6"><vh>&lt;&lt; recolor the body &gt;&gt;</vh></v>
-<v t="edream.111303201144.7"><vh>&lt;&lt; redraw the screen if necessary &gt;&gt;</vh></v>
-</v>
-</v>
-<v t="edream.110203113231.349" a="M"><vh>wxLeoFrame class</vh>
-<v t="edream.110203113231.350"><vh>Birth &amp; death</vh>
-<v t="edream.110203113231.266"><vh>__init__</vh></v>
-<v t="edream.110203113231.351"><vh>__repr__</vh></v>
-<v t="edream.110203113231.260"><vh>finishCreate</vh>
-<v t="edream.110203113231.261"><vh>&lt;&lt; create the splitters &gt;&gt;</vh></v>
-<v t="edream.110203113231.264"><vh>&lt;&lt; declare event handlers for frame &gt;&gt;</vh></v>
-<v t="edream.110203113231.265"><vh>&lt;&lt; set the window icon &gt;&gt;</vh></v>
-</v>
-<v t="edream.111403141810"><vh>initialRatios</vh></v>
-<v t="edream.111503105816"><vh>injectCallbacks</vh></v>
-<v t="edream.111303141147"><vh>signOnWithVersion</vh></v>
-<v t="edream.111503213533"><vh>destroySelf</vh></v>
-</v>
-<v t="edream.110203113231.267"><vh>event handlers</vh>
-<v t="edream.110203113231.268"><vh>Frame events</vh>
-<v t="edream.110203113231.269"><vh>onActivate &amp; OnSetFocus</vh></v>
-<v t="edream.110203113231.270"><vh>onCloseLeoFrame</vh></v>
-<v t="edream.110203113231.273"><vh>onResize</vh></v>
-</v>
-</v>
-<v t="edream.110203113231.379"><vh>wxFrame dummy routines: (to do: minor)</vh></v>
-<v t="edream.110203113231.378"><vh>Externally visible routines...</vh>
-<v t="edream.110203113231.380"><vh>deiconify</vh></v>
-<v t="edream.110203113231.381"><vh>getTitle</vh></v>
-<v t="edream.111303135410"><vh>setTitle</vh></v>
-</v>
-<v t="edream.111303100039" a=""><vh>Gui-dependent commands (to do)</vh>
-<v t="edream.111303100039.1"><vh>Edit Menu...</vh>
-<v t="edream.111303101257"><vh>abortEditLabelCommand</vh></v>
-<v t="edream.111303101257.1"><vh>endEditLabelCommand</vh></v>
-<v t="edream.111303100039.6"><vh>insertHeadlineTime</vh></v>
-</v>
-<v t="edream.111303100039.7"><vh>Window Menu</vh>
-<v t="edream.111303100039.8"><vh>cascade</vh></v>
-<v t="edream.111303100039.9"><vh>equalSizedPanes</vh></v>
-<v t="edream.111303100039.10"><vh>hideLogWindow</vh></v>
-<v t="edream.111303100039.11"><vh>minimizeAll</vh></v>
-<v t="edream.111303101709"><vh>toggleActivePane</vh></v>
-<v t="edream.111303100039.12"><vh>toggleSplitDirection</vh></v>
-</v>
-<v t="edream.111703103908"><vh>Help Menu...</vh>
-<v t="edream.111703103908.2"><vh>leoHelp</vh>
-<v t="edream.111703103908.3"><vh>showProgressBar</vh>
-<v t="edream.111703103908.4"><vh>&lt;&lt; create the scale widget &gt;&gt;</vh></v>
-</v>
-</v>
-</v>
-</v>
-<v t="edream.110203113231.384"><vh>updateAllMenus (wxFrame)</vh></v>
-</v>
-<v t="edream.110203113231.553"><vh>wxLeoLog class</vh>
-<v t="edream.110203113231.554"><vh>leoLog.__init__</vh></v>
-<v t="edream.110203113231.555"><vh>leoLog.configure</vh></v>
-<v t="edream.110203113231.556"><vh>leoLog.configureBorder</vh></v>
-<v t="edream.110203113231.557"><vh>leoLog.createControl</vh></v>
-<v t="edream.110203113231.558"><vh>leoLog.setLogFontFromConfig</vh></v>
-<v t="edream.110203113231.559"><vh>wxLeoLog.put &amp; putnl</vh></v>
-</v>
-<v t="edream.111303095242"><vh>wxLeoMenu class</vh>
-<v t="edream.111303095242.3"><vh>  wxLeoMenu.__init__</vh></v>
-<v t="edream.111303103457"><vh>wx menu bindings</vh>
-<v t="edream.111603104327"><vh>9 Routines with Tk names</vh>
-<v t="edream.111303111942.1"><vh>add_cascade</vh></v>
-<v t="edream.111303103141"><vh>add_command</vh></v>
-<v t="edream.111303121150"><vh>add_separator</vh></v>
-<v t="edream.111303103141.1"><vh>bind (wx has a different key model than tk)</vh></v>
-<v t="edream.111303103141.2"><vh>delete (not called?)</vh></v>
-<v t="edream.111303103141.3" a=""><vh>delete_range</vh></v>
-<v t="edream.111303103141.4"><vh>destroy (not called ?)</vh></v>
-<v t="edream.111303111942"><vh>insert_cascade</vh></v>
-<v t="edream.111303110018"><vh>new_menu</vh></v>
-</v>
-<v t="edream.111603112846"><vh>7 Routines with other names...</vh>
-<v t="edream.111303103457.2"><vh>createMenuBar</vh></v>
-<v t="edream.111603112846.1"><vh>createOpenWithMenuFromTable (not ready yet)</vh></v>
-<v t="edream.111303103254"><vh>defineMenuCallback</vh></v>
-<v t="edream.111303095242.6"><vh>defineOpenWithMenuCallback</vh></v>
-<v t="edream.111303163727.2"><vh>disableMenu</vh></v>
-<v t="edream.111303163727.1"><vh>enableMenu</vh></v>
-<v t="edream.111303163727.3"><vh>setMenuLabel</vh></v>
-</v>
-</v>
-</v>
-<v t="edream.110203113231.598"><vh>wxLeoPrefs class</vh>
-<v t="edream.110203113231.599"><vh>wxLeoPrefs.__init__</vh>
-<v t="edream.110203113231.600"><vh>&lt;&lt; define event handlers for wxLeoPrefsFrame &gt;&gt;</vh></v>
-</v>
-<v t="edream.110203113231.601"><vh>initialize</vh></v>
-<v t="edream.110203113231.602"><vh>targetToLanguage (should be in Leo's core)</vh></v>
-<v t="edream.110203113231.603"><vh>languageToTarget (should be in Leo's core)</vh></v>
-<v t="edream.110203113231.604"><vh>Event handlers</vh>
-<v t="edream.110203113231.605"><vh>OnActivatePrefsFrame</vh></v>
-<v t="edream.110203113231.606"><vh>OnClosePrefsFrame</vh></v>
-<v t="edream.110203113231.607"><vh>OnPageWidthText</vh></v>
-<v t="edream.110203113231.608"><vh>OnDoneBatCheckBox</vh></v>
-<v t="edream.110203113231.609"><vh>OnUnBatCheckBox</vh></v>
-<v t="edream.110203113231.610"><vh>OnTangleDirectoryText</vh></v>
-<v t="edream.110203113231.611"><vh>OnHeaderCheckBox</vh></v>
-<v t="edream.110203113231.612"><vh>OnDocChunksCheckBox</vh></v>
-<v t="edream.110203113231.613"><vh>OnTargetLanguageRadioBox</vh></v>
-</v>
-<v t="edream.110203113231.614"><vh>PrefsPanel.__init__</vh>
-<v t="edream.110203113231.615"><vh>&lt;&lt; Create the Global Options static box &gt;&gt;</vh></v>
-<v t="edream.110203113231.616"><vh>&lt;&lt; Create the Default Tangle Options static box &gt;&gt;</vh></v>
-<v t="edream.110203113231.617"><vh>&lt;&lt; Create the Default Target Language radio buttons &gt;&gt;</vh></v>
-</v>
-</v>
-<v t="edream.111603213219"><vh>wxLeoTree class</vh>
-<v t="edream.111603213219.1"><vh>__init__</vh>
-<v t="edream.111603213329"><vh>&lt;&lt; declare event handlers &gt;&gt;</vh></v>
-</v>
-<v t="edream.111603221005"><vh>expandAllAncestors</vh></v>
-<v t="edream.111403090242"><vh>Drawing  &amp; scrolling TO DO</vh></v>
-<v t="edream.111403090242.1"><vh>Editing TO DO</vh></v>
-<v t="edream.111403093559"><vh>Focus</vh></v>
-<v t="edream.111403093559.1"><vh>Fonts TO DO</vh></v>
-<v t="edream.111303202917"><vh>Tree refresh</vh>
-<v t="edream.110203113231.295"><vh>beginUpdate</vh></v>
-<v t="edream.110203113231.296"><vh>endUpdate</vh></v>
-<v t="edream.110203113231.298"><vh>redraw &amp; redraw_now</vh></v>
-<v t="edream.110203113231.299"><vh>redraw_node</vh></v>
-<v t="edream.110203113231.300"><vh>redraw_subtree</vh></v>
-</v>
-<v t="edream.111603221343.1"><vh>select</vh>
-<v t="edream.111603221343.3"><vh>&lt;&lt; unselect the old node &gt;&gt;</vh></v>
-<v t="edream.111603221343.4"><vh>&lt;&lt; select the new node &gt;&gt;</vh></v>
-<v t="edream.111603221343.5"><vh>&lt;&lt; update c.beadList or c.beadPointer &gt;&gt;</vh></v>
-<v t="edream.111603221343.6"><vh>&lt;&lt; update c.visitedList &gt;&gt;</vh></v>
-<v t="edream.111603221343.7"><vh>&lt;&lt; set the current node and redraw &gt;&gt;</vh></v>
-</v>
-<v t="edream.110203113231.278"><vh>Event handlers</vh>
-<v t="edream.110203113231.279"><vh>Expand/contract</vh>
-<v t="edream.110203113231.280"><vh>onTreeCollapsed &amp; onTreeExpanded</vh></v>
-<v t="edream.110203113231.281"><vh>onTreeCollapsing &amp; onTreeExpanding</vh></v>
-</v>
-<v t="edream.110203113231.282"><vh>Selecting</vh>
-<v t="edream.110203113231.283"><vh>onTreeChanged</vh></v>
-<v t="edream.110203113231.284"><vh>onTreeChanging</vh></v>
-</v>
-<v t="edream.110203113231.285"><vh>Editing labels</vh>
-<v t="edream.110203113231.286"><vh>onTreeBeginLabelEdit</vh></v>
-<v t="edream.110203113231.287"><vh>onTreeEndLabelEdit</vh></v>
-<v t="edream.110203113231.288"><vh>onTreeKeyDown</vh></v>
-</v>
-<v t="edream.110203113231.289"><vh>onTreeBeginDrag</vh></v>
-<v t="edream.110203113231.290"><vh>onTreeEndDrag (NOT READY YET)</vh>
-<v t="edream.110203113231.291"><vh>&lt;&lt; Define onTreeEndDrag vars &gt;&gt;</vh></v>
-<v t="edream.110203113231.292"><vh>&lt;&lt; Insert src as the first child of dst &gt;&gt;</vh></v>
-<v t="edream.110203113231.293"><vh>&lt;&lt; Insert src after dst &gt;&gt;</vh></v>
-</v>
-</v>
-</v>
-<v t="edream.110203113231.560"><vh>Find...</vh>
-<v t="edream.111503093140"><vh>wxSearchWidget</vh>
-<v t="edream.111503094014"><vh>wxSearchWidget.__init__</vh></v>
-<v t="edream.111503094322"><vh>Insert point</vh></v>
-<v t="edream.111503094014.1"><vh>Selection</vh></v>
-</v>
-<v t="edream.110203113231.561"><vh>wxFindFrame class</vh>
-<v t="edream.110203113231.563"><vh>FindFrame.__init__</vh>
-<v t="edream.110203113231.564"><vh>&lt;&lt; define event handlers &gt;&gt;</vh>
-<v t="edream.111503085739"><vh>&lt;&lt; create event handlers for buttons &gt;&gt;</vh></v>
-<v t="edream.111503085739.1"><vh>&lt;&lt; create event handlers for check boxes and text &gt;&gt;</vh></v>
-</v>
-<v t="edream.111503074302"><vh>&lt;&lt; resize the frame to fit the panel &gt;&gt;</vh></v>
-</v>
-<v t="edream.111403151611.1"><vh>bringToFront</vh></v>
-<v t="edream.111503213733"><vh>destroySelf</vh></v>
-<v t="edream.111503211508"><vh>onCloseFindFrame</vh></v>
-<v t="edream.111403135745"><vh>set_ivars</vh></v>
-<v t="edream.111503091617"><vh>init_s_text</vh></v>
-<v t="edream.111503093522"><vh>gui_search</vh></v>
-<v t="edream.111503204508"><vh>init</vh></v>
-</v>
-<v t="edream.110203113231.588"><vh>wxFindPanel class</vh>
-<v t="edream.110203113231.589"><vh>FindPanel.__init__</vh>
-<v t="edream.110203113231.590"><vh>&lt;&lt; Create the find text box &gt;&gt;</vh></v>
-<v t="edream.110203113231.591"><vh>&lt;&lt; Create the change text box &gt;&gt;</vh></v>
-<v t="edream.110203113231.592"><vh>&lt;&lt; Create all the find check boxes &gt;&gt;</vh>
-<v t="edream.110203113231.593"><vh>&lt;&lt; Create the first column of widgets &gt;&gt;</vh></v>
-<v t="edream.110203113231.594"><vh>&lt;&lt; Create the second column of widgets &gt;&gt;</vh></v>
-<v t="edream.111503133933.2"><vh>&lt;&lt; Create the third column of widgets &gt;&gt;</vh></v>
-<v t="edream.111503133933.3"><vh>&lt;&lt; Create the fourth column of widgets &gt;&gt;</vh></v>
-</v>
-<v t="edream.110203113231.595"><vh>&lt;&lt; Create all the find buttons &gt;&gt;</vh>
-<v t="edream.110203113231.596"><vh>&lt;&lt; Create the first row of buttons &gt;&gt;</vh></v>
-<v t="edream.110203113231.597"><vh>&lt;&lt; Create the second row of buttons &gt;&gt;</vh></v>
-</v>
-</v>
 </v>
 </v>
 </v>
@@ -4788,8 +4789,7 @@ def runTest(frame, nb, log):
 - Update joined headlines when any headline changes.
 
 - Minor:
-	- (Maybe) Eliminate duplicate callbacks
-	- Finish all redirection utils.
+	- Finish all callbacks.
 	- Finish dragging code.
 	- Handle exception when starting by double-clicking LeoPy.leo.</t>
 <t tx="edream.110203113231.234">@nocolor</t>
@@ -9876,165 +9876,6 @@ def on_headkey2 (tag,keywords):
 	else:
 		enable_body(c.frame.body)
 </t>
-<t tx="edream.110203113231.901">"""If a headline starts with @rst &lt;filename&gt;, double-clicking on it will 
-write a file in outline order, with the headlines converted to reStructuredText 
-section headings.
-If the name of the &lt;filename&gt; has the extension .html or .htm, and if you have
-docutils installed, it will generate HTML."""
-
-# By Josef Dalcolmo: contributed under the same licensed as Leo.py itself.
-
-# EKR: The code now lets other plugins handle @folder and @url nodes.
-
-from leoPlugins import *
-from leoGlobals import *
-import os
-
-&lt;&lt; about this plugin &gt;&gt;
-&lt;&lt; change log &gt;&gt;
-
-@others
-
-if 0: # Register the handlers...
-	registerHandler("icondclick1",onIconDoubleClick)
-	
-	__version__ = "1.5" # Set version for the plugin handler.
-	plugin_signon(__name__)
-</t>
-<t tx="edream.110203113231.902">@ This plugin writes out @rst nodes as a reStructuredText file.
-
-If the filename ends in .html or .htm and if you have docutils_ (a Python
-module) installed, then it will be written as HTML. The HTML converter is far
-from bug-free, but remember, docutils is alpha software. (Perhaps a future
-version will allow automatic translation to other formats, like OpenOffice.org
-as well).
-
-Headlines are translated into reStructuredText headlines, e.g. underlined
-depending on the level and empty line separated from body text otherwise, text
-is written as it is. The "#" character is not used for underlining, so it may
-be used for a title as in::
-
-	#####
-	Title
-	#####
-
-Otherwise, section underlining is discouraged, since it is automatically generated.
-
-.. _docutils: http://docutils.sourceforge.net
-</t>
-<t tx="edream.110203113231.903">@ Change log:
-
-- New tree types: @rst has been added.
-
-- EKR: The code now lets other plugins handle @folder and @url nodes.
-
-- HTML generation: @rst nodes can now generate HTML, if Python docutils_ are
-  installed. Simply give the filename an extension .htm or .html. You can try
-  this out by renaming the filename in this @rst tree.
-
-- underlines: I changed the order of the underline characters again. The "&gt;" is
-  doesn't really look good as an underline in my opinion, so I moved it to a very
-  low level.
-
-- JD 2003-03-10 (rev 1.3): some more corrections to the unicode-&gt; encoding translation.
-  No only check for missing docutils (doesn't mask other errors any more).
-
-- JD 2003-03-11 (rev 1.4): separated out the file launching code to a different pluging.
-
-
-
-</t>
-<t tx="edream.110203113231.904"># by Josef Dalcolmo 2003-01-13
-#
-# this does not check for proper filename syntax.
-# path is the current dir, or the place @folder points to
-# this should probably be changed to @path or so.
-
-def onIconDoubleClick(tag,keywords):
-
-	v = keywords.get("v")
-	c = keywords.get("c")
-	h = v.headString().strip()
-	if match_word(h,0,"@rst"):
-		fname = h[5:]
-		ext = os.path.splitext(fname)[1].lower()
-		if ext in ('.htm','.html'):
-			&lt;&lt; write rST as HTML &gt;&gt;
-		else:
-			&lt;&lt; write rST file &gt;&gt;
-</t>
-<t tx="edream.110203113231.905">try:
-	import docutils
-except:
-	docutils = None
-	es('HTML generation requires docutils')
-if docutils:
-	import StringIO
-	rstFile = StringIO.StringIO()
-	writeTreeAsRst(rstFile, fname, v, c)
-	rstText = rstFile.getvalue()
-	&lt;&lt; convert rST to HTML &gt;&gt;
-	htmlFile = file(fname,'w')
-	htmlFile.write(output)
-	htmlFile.close()
-	rstFile.close()
-	es('written: '+`fname`)</t>
-<t tx="edream.110203113231.906"># this code snipped has been taken from code contributed by Paul Paterson 2002-12-05
-from docutils.core import Publisher
-from docutils.io import StringOutput, StringInput
-
-pub = Publisher()
-# Initialize the publisher
-pub.source = StringInput(source=rstText)
-pub.destination = StringOutput(pub.settings, encoding="utf-8")
-pub.set_reader('standalone', None, 'restructuredtext')
-pub.set_writer('html')
-output = pub.publish()</t>
-<t tx="edream.110203113231.907">rstFile = file(fname,'w')
-writeTreeAsRst(rstFile, fname, v, c)
-rstFile.close()
-es('written: '+`fname`)</t>
-<t tx="edream.110203113231.908">def writeTreeAsRst(rstFile, fname, vnode, c):
-	'Writes the tree under vnode to the file rstFile (fname is the filename)'
-	# we don't write a title, so the titlepage can be customized
-	# use '#' for title under/overline
-	# 3/7/03
-	dict = scanDirectives(c,v=vnode)
-	encoding = dict.get("encoding",None)
-	if encoding == None:
-		encoding = app().config.default_derived_file_encoding
-	# 3/7/03
-	s = toEncodedString(fname,encoding,reportErrors=true)
-	rstFile.write('.. filename: '+s+'\n')
-	rstFile.write('\n')
-	# 3/7/03
-	s = vnode.bodyString()
-	s = toEncodedString(s,encoding,reportErrors=true)
-	rstFile.write(s+'\n')		# write body of titlepage
-	rstFile.write('\n')
-	
-	toplevel = vnode.level()
-	stopHere = vnode.nodeAfterTree()
-	v = vnode.threadNext()
-	# repeat for all nodes in this tree
-	while v != stopHere:
-		# 3/7/03
-		h = v.headString()
-		h = toEncodedString(h,encoding,reportErrors=true)
-		rstFile.write(h+'\n')
-		rstFile.write(underline(h,v.level()-toplevel))
-		rstFile.write('\n')
-		# 3/7/03
-		s = v.bodyString()
-		s = toEncodedString(s,encoding,reportErrors=true)
-		rstFile.write(s+'\n')
-		rstFile.write('\n')
-		v = v.threadNext()</t>
-<t tx="edream.110203113231.909"># note the first character is intentionally unused, to serve as the underline
-# character in a title (in the body of the @rst node)
-def underline(h,level):
-	str = """#=+*^~"'`-:&gt;&lt;_"""[level]
-	return str*max(len(h),4)+'\n'</t>
 <t tx="edream.110203113231.910">"""Lauches (starts) a file with the name of the headline on double-clicking it.
 Uses the @folder path if the headline is under an @folder headline.
 Otherwise the path is relative to the Leo file.
@@ -15228,5 +15069,173 @@ top.title("Download progress")
 self.scale = scale = Tk.Scale(top,state="normal",orient="horizontal",from_=0,to=total)
 scale.pack()
 top.lift()</t>
+<t tx="edream.111803100242">"""If a headline starts with @rst &lt;filename&gt;, double-clicking on it will 
+write a file in outline order, with the headlines converted to reStructuredText 
+section headings.
+
+If the name of the &lt;filename&gt; has the extension .html, .htm or .tex, and if you have
+docutils installed, it will generate HTML or LaTeX, respectively."""
+
+# By Josef Dalcolmo: contributed under the same licensed as Leo.py itself.
+
+# EKR: The code now lets other plugins handle @folder and @url nodes.
+
+from leoPlugins import *
+from leoGlobals import *
+
+import os
+
+&lt;&lt; about this plugin &gt;&gt;
+&lt;&lt; change log &gt;&gt;
+
+@others
+
+if 1: # Register the handlers...
+	registerHandler("icondclick1",onIconDoubleClick)
+	
+	__version__ = "1.5" # Set version for the plugin handler.
+	plugin_signon(__name__)
+</t>
+<t tx="edream.111803100242.1">@ This plugin writes out @rst nodes as a reStructuredText file.
+
+If the filename ends in .html, .htm or .tex and if you have docutils_ (a Python
+module) installed, then it will be written as HTML or LaTeX, respectively. The HTML converter is far
+from bug-free, but remember, docutils is alpha software. (Perhaps a future
+version will allow automatic translation to other formats, like OpenOffice.org
+as well).
+
+Headlines are translated into reStructuredText headlines, e.g. underlined
+depending on the level and empty line separated from body text otherwise, text
+is written as it is. The "#" character is not used for underlining, so it may
+be used for a title as in::
+
+	#####
+	Title
+	#####
+
+Otherwise, section underlining is discouraged, since it is automatically generated.
+
+.. _docutils: http://docutils.sourceforge.net</t>
+<t tx="edream.111803100242.2">@ Change log:
+
+- New tree types: @rst has been added.
+
+- EKR: The code now lets other plugins handle @folder and @url nodes.
+
+- HTML generation: @rst nodes can now generate HTML, if Python docutils_ are
+  installed. Simply give the filename an extension .htm or .html. You can try
+  this out by renaming the filename in this @rst tree.
+
+- underlines: I changed the order of the underline characters again. The "&gt;" is
+  doesn't really look good as an underline in my opinion, so I moved it to a very
+  low level.
+
+- JD 2003-03-10 (rev 1.3): some more corrections to the unicode-&gt; encoding translation.
+  No only check for missing docutils (doesn't mask other errors any more).
+
+- JD 2003-03-11 (rev 1.4): separated out the file launching code to a different pluging.
+
+- 2003-11-02 Added generation of LaTeX files, just make the extension of the filename '.tex'. --Timo Honkasalo</t>
+<t tx="edream.111803100242.3"># by Josef Dalcolmo 2003-01-13
+#
+# this does not check for proper filename syntax.
+# path is the current dir, or the place @folder points to
+# this should probably be changed to @path or so.
+
+def onIconDoubleClick(tag,keywords):
+
+	v = keywords.get("v")
+	c = keywords.get("c")
+	h = v.headString().strip()
+	if match_word(h,0,"@rst"):
+		fname = h[5:]
+		ext = os.path.splitext(fname)[1].lower()
+		if ext in ('.htm','.html','.tex'):
+			&lt;&lt; write rST as HTML/LaTeX &gt;&gt;
+		else:
+			&lt;&lt; write rST file &gt;&gt;
+</t>
+<t tx="edream.111803100242.4">try:
+	import docutils
+except:
+	docutils = None
+	es('HTML/LaTeX generation requires docutils')
+
+if docutils:
+	import StringIO
+	rstFile = StringIO.StringIO()
+	writeTreeAsRst(rstFile, fname, v, c)
+	rstText = rstFile.getvalue()
+	# Set the writer and encoding for the converted file
+	if ext in ('.html','.htm'):
+		writer='html'
+		enc="utf-8"
+	else:
+		writer='latex'
+		enc="iso-8859-1"
+	&lt;&lt; convert rST to HTML/LaTeX &gt;&gt;
+	convertedFile = file(fname,'w')
+	convertedFile.write(output)
+	convertedFile.close()
+	rstFile.close()
+	es('written: '+str(fname))</t>
+<t tx="edream.111803100242.5"># this code snipped has been taken from code contributed by Paul Paterson 2002-12-05
+from docutils.core import Publisher
+from docutils.io import StringOutput, StringInput
+
+pub = Publisher()
+# Initialize the publisher
+pub.source = StringInput(source=rstText)
+pub.destination = StringOutput(pub.settings, encoding=enc)
+pub.set_reader('standalone', None, 'restructuredtext')
+pub.set_writer(writer)
+output = pub.publish()</t>
+<t tx="edream.111803100242.6">rstFile = file(fname,'w')
+writeTreeAsRst(rstFile, fname, v, c)
+rstFile.close()
+es('written: '+str(fname))</t>
+<t tx="edream.111803100242.7">def writeTreeAsRst(rstFile, fname, vnode, c):
+	'Writes the tree under vnode to the file rstFile (fname is the filename)'
+	# we don't write a title, so the titlepage can be customized
+	# use '#' for title under/overline
+	# 3/7/03
+	dict = scanDirectives(c,v=vnode)
+	encoding = dict.get("encoding",None)
+	if encoding == None:
+		encoding = app().config.default_derived_file_encoding
+	# 3/7/03
+	s = toEncodedString(fname,encoding,reportErrors=true)
+	rstFile.write('.. filename: '+s+'\n')
+	rstFile.write('\n')
+	# 3/7/03
+	s = vnode.bodyString()
+	s = toEncodedString(s,encoding,reportErrors=true)
+	rstFile.write(s+'\n')		# write body of titlepage
+	rstFile.write('\n')
+	
+	toplevel = vnode.level()
+	stopHere = vnode.nodeAfterTree()
+	v = vnode.threadNext()
+	# repeat for all nodes in this tree
+	while v != stopHere:
+		# 3/7/03
+		h = v.headString()
+		h = toEncodedString(h,encoding,reportErrors=true)
+		rstFile.write(h+'\n')
+		rstFile.write(underline(h,v.level()-toplevel))
+		rstFile.write('\n')
+		# 3/7/03
+		s = v.bodyString()
+		s = toEncodedString(s,encoding,reportErrors=true)
+		rstFile.write(s+'\n')
+		rstFile.write('\n')
+		v = v.threadNext()</t>
+<t tx="edream.111803100242.8"># note the first character is intentionally unused, to serve as the underline
+# character in a title (in the body of the @rst node)
+
+def underline(h,level):
+	str = """#=+*^~"'`-:&gt;&lt;_"""[level]
+	return str*max(len(h),4)+'\n'</t>
+<t tx="edream.111803100856"></t>
 </tnodes>
 </leo_file>
