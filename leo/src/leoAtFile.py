@@ -175,6 +175,120 @@ class baseAtFile:
 			g.es("no @file nodes in the selected tree")
 	#@nonl
 	#@-node:ekr.20031218072017.2626: top_df.readAll
+	#@+node:EKR.20040604155223.1:top_df.parseLeoSentinel
+	def parseLeoSentinel (self,s):
+		
+		at = self
+		new_df = false ; valid = true ; n = len(s)
+		encoding_tag = "-encoding="
+		version_tag = "-ver="
+		tag = "@+leo"
+		thin_tag = "-thin"
+		#@	<< set the opening comment delim >>
+		#@+node:EKR.20040604155223:<< set the opening comment delim >>
+		# s contains the tag
+		i = j = g.skip_ws(s,0)
+		
+		# The opening comment delim is the initial non-tag
+		while i < n and not g.match(s,i,tag) and not g.is_nl(s,i):
+			i += 1
+		
+		if j < i:
+			start = s[j:i]
+		else:
+			valid = false
+		#@nonl
+		#@-node:EKR.20040604155223:<< set the opening comment delim >>
+		#@nl
+		#@	<< make sure we have @+leo >>
+		#@+node:ekr.20031218072017.2635:<< make sure we have @+leo >>
+		#@+at 
+		#@nonl
+		# REM hack: leading whitespace is significant before the @+leo.  We do 
+		# this so that sentinelKind need not skip whitespace following 
+		# self.startSentinelComment.  This is correct: we want to be as 
+		# restrictive as possible about what is recognized as a sentinel.  
+		# This minimizes false matches.
+		#@-at
+		#@@c
+		
+		if 0: # Make leading whitespace significant.
+			i = g.skip_ws(s,i)
+		
+		if g.match(s,i,tag):
+			i += len(tag)
+		else: valid = false
+		#@nonl
+		#@-node:ekr.20031218072017.2635:<< make sure we have @+leo >>
+		#@nl
+		#@	<< read optional version param >>
+		#@+node:ekr.20031218072017.2636:<< read optional version param >>
+		new_df = g.match(s,i,version_tag)
+		
+		if new_df:
+			# Skip to the next minus sign or end-of-line
+			i += len(version_tag)
+			j = i
+			while i < len(s) and not g.is_nl(s,i) and s[i] != '-':
+				i += 1
+		
+			if j < i:
+				pass # version = s[j:i]
+			else:
+				valid = false
+		#@-node:ekr.20031218072017.2636:<< read optional version param >>
+		#@nl
+		#@	<< read optional thin param >>
+		#@+node:EKR.20040503105354:<< read optional thin param >>
+		if g.match(s,i,thin_tag):
+			i += len(tag)
+		#@nonl
+		#@-node:EKR.20040503105354:<< read optional thin param >>
+		#@nl
+		#@	<< read optional encoding param >>
+		#@+node:ekr.20031218072017.2637:<< read optional encoding param >>
+		# Set the default encoding
+		at.encoding = g.app.config.default_derived_file_encoding
+		
+		if g.match(s,i,encoding_tag):
+			# Read optional encoding param, e.g., -encoding=utf-8,
+			i += len(encoding_tag)
+			# Skip to the next end of the field.
+			j = s.find(",.",i)
+			if j > -1:
+				# The encoding field was written by 4.2 or after:
+				encoding = s[i:j]
+			else:
+				# The encoding field was written before 4.2.
+				j = s.find('.',i)
+				if j > -1:
+					encoding = s[i:j]
+				else:
+					encoding = None
+			# g.trace("encoding:",encoding)
+			if encoding:
+				if g.isValidEncoding(encoding):
+					at.encoding = encoding
+				else:
+					print "bad encoding in derived file:",encoding
+					g.es("bad encoding in derived file:",encoding)
+			else:
+				valid = false
+		#@-node:ekr.20031218072017.2637:<< read optional encoding param >>
+		#@nl
+		#@	<< set the closing comment delim >>
+		#@+node:ekr.20031218072017.2638:<< set the closing comment delim >>
+		# The closing comment delim is the trailing non-whitespace.
+		i = j = g.skip_ws(s,i)
+		while i < n and not g.is_ws(s[i]) and not g.is_nl(s,i):
+			i += 1
+		end = s[j:i]
+		#@nonl
+		#@-node:ekr.20031218072017.2638:<< set the closing comment delim >>
+		#@nl
+		return valid,new_df,start,end
+	#@nonl
+	#@-node:EKR.20040604155223.1:top_df.parseLeoSentinel
 	#@+node:ekr.20031218072017.1812:top_df.read
 	# The caller has enclosed this code in beginUpdate/endUpdate.
 	
@@ -315,6 +429,16 @@ class baseAtFile:
 		return df.errors == 0
 	#@nonl
 	#@-node:ekr.20031218072017.1812:top_df.read
+	#@+node:ekr.20031218072017.2639:top_df.readLine
+	def readLine (self,file):
+	
+		"""Reads one line from file using the present encoding"""
+		
+		s = g.readlineForceUnixNewline(file)
+		u = g.toUnicode(s,self.encoding)
+		return u
+	#@nonl
+	#@-node:ekr.20031218072017.2639:top_df.readLine
 	#@+node:ekr.20031218072017.2627:top_df.scanDefaultDirectory
 	def scanDefaultDirectory(self,p):
 		
@@ -434,12 +558,9 @@ class baseAtFile:
 		new_df is true if we are reading a new-format derived file."""
 		
 		at = self
-		new_df = false # Set default.
 		firstLines = [] # The lines before @+leo.
-		version_tag = "-ver="
-		thin_tag = "-thin"
-		tag = "@+leo" ; encoding_tag = "-encoding="
-		valid = true
+		tag = "@+leo"
+		valid = true ; new_df = false
 		#@	<< skip any non @+leo lines >>
 		#@+node:ekr.20031218072017.2634:<< skip any non @+leo lines >>
 		#@+at 
@@ -461,123 +582,22 @@ class baseAtFile:
 			if j != -1: break
 			firstLines.append(s) # Queue the line
 			s = at.readLine(file)
+			
 		n = len(s)
 		valid = n > 0
-		# s contains the tag
-		i = j = g.skip_ws(s,0)
-		# The opening comment delim is the initial non-whitespace.
-		# 7/8/02: The opening comment delim is the initial non-tag
-		while i < n and not g.match(s,i,tag) and not g.is_nl(s,i):
-			i += 1
-		if j < i:
-			at.startSentinelComment = s[j:i]
-			# g.trace(at.startSentinelComment)
-		else: valid = false
-		#@nonl
 		#@-node:ekr.20031218072017.2634:<< skip any non @+leo lines >>
 		#@nl
-		#@	<< make sure we have @+leo >>
-		#@+node:ekr.20031218072017.2635:<< make sure we have @+leo >>
-		#@+at 
-		#@nonl
-		# REM hack: leading whitespace is significant before the @+leo.  We do 
-		# this so that sentinelKind need not skip whitespace following 
-		# self.startSentinelComment.  This is correct: we want to be as 
-		# restrictive as possible about what is recognized as a sentinel.  
-		# This minimizes false matches.
-		#@-at
-		#@@c
-		
-		if 0:# 7/8/02: make leading whitespace significant.
-			i = g.skip_ws(s,i)
-		
-		if g.match(s,i,tag):
-			i += len(tag)
-		else: valid = false
-		#@nonl
-		#@-node:ekr.20031218072017.2635:<< make sure we have @+leo >>
-		#@nl
-		#@	<< read optional version param >>
-		#@+node:ekr.20031218072017.2636:<< read optional version param >>
-		new_df = g.match(s,i,version_tag)
-		
-		if new_df:
-			# Skip to the next minus sign or end-of-line
-			i += len(version_tag)
-			j = i
-			while i < len(s) and not g.is_nl(s,i) and s[i] != '-':
-				i += 1
-		
-			if j < i:
-				pass # version = s[j:i]
-			else:
-				valid = false
-		#@-node:ekr.20031218072017.2636:<< read optional version param >>
-		#@nl
-		#@	<< read optional thin param >>
-		#@+node:EKR.20040503105354:<< read optional thin param >>
-		if g.match(s,i,thin_tag):
-			i += len(tag)
-		#@nonl
-		#@-node:EKR.20040503105354:<< read optional thin param >>
-		#@nl
-		#@	<< read optional encoding param >>
-		#@+node:ekr.20031218072017.2637:<< read optional encoding param >>
-		# Set the default encoding
-		at.encoding = g.app.config.default_derived_file_encoding
-		
-		if g.match(s,i,encoding_tag):
-			# Read optional encoding param, e.g., -encoding=utf-8,
-			i += len(encoding_tag)
-			# Skip to the next end of the field.
-			j = s.find(",.",i)
-			if j > -1:
-				# The encoding field was written by 4.2 or after:
-				encoding = s[i:j]
-			else:
-				# The encoding field was written before 4.2.
-				j = s.find('.',i)
-				if j > -1:
-					encoding = s[i:j]
-				else:
-					encoding = None
-			# g.trace("encoding:",encoding)
-			if encoding:
-				if g.isValidEncoding(encoding):
-					at.encoding = encoding
-				else:
-					print "bad encoding in derived file:",encoding
-					g.es("bad encoding in derived file:",encoding)
-			else:
-				valid = false
-		#@-node:ekr.20031218072017.2637:<< read optional encoding param >>
-		#@nl
-		#@	<< set the closing comment delim >>
-		#@+node:ekr.20031218072017.2638:<< set the closing comment delim >>
-		# The closing comment delim is the trailing non-whitespace.
-		i = j = g.skip_ws(s,i)
-		while i < n and not g.is_ws(s[i]) and not g.is_nl(s,i):
-			i += 1
-		at.endSentinelComment = s[j:i]
-		#@nonl
-		#@-node:ekr.20031218072017.2638:<< set the closing comment delim >>
-		#@nl
-		if not valid:
+		if valid:
+			valid,new_df,start,end = at.parseLeoSentinel(s)
+		if valid:
+			at.startSentinelComment = start
+			at.endSentinelComment = end
+		else:
 			at.error("Bad @+leo sentinel in " + fileName)
 		# g.trace("start,end",at.startSentinelComment,at.endSentinelComment)
 		return firstLines, new_df
 	#@nonl
 	#@-node:ekr.20031218072017.2633:top_df.scanHeader
-	#@+node:ekr.20031218072017.2639:top_df.readLine
-	def readLine (self,file):
-	
-		"""Reads one line from file using the present encoding"""
-		
-		s = g.readlineForceUnixNewline(file)
-		u = g.toUnicode(s,self.encoding)
-		return u
-	#@nonl
-	#@-node:ekr.20031218072017.2639:top_df.readLine
 	#@-node:ekr.20031218072017.2625:Reading
 	#@+node:ekr.20031218072017.2640:Writing
 	#@+node:ekr.20031218072017.2015:top_df.writeAll
