@@ -96,7 +96,7 @@ class LeoFrame:
 		try:
 			import Image,tkIcon
 			self.top.bind("<Visibility>", self.OnVisibility)
-			icon_file_name = os.path.join(app().loadDir,'Icons','LeoDoc.ico')
+			icon_file_name = os.path.join(app().loadDir,'Icons','LeoDoc.ico') # LeoDoc64.ico looks worse :-(
 			icon_file_name = os.path.normpath(icon_file_name)
 			icon_image = Image.open(icon_file_name)
 			self.icon = tkIcon.Icon(icon_image)
@@ -646,6 +646,7 @@ class LeoFrame:
 		label = choose(c.tree.colorizer.showInvisibles,"Hide Invisibles","Show Invisibles")
 		
 		table = (
+			("Go To Line Number","Alt+G",self.OnGoToLineNumber),
 			("Execute Script","Alt+E",self.OnExecuteScript),
 			("Set Font...","Shift+Alt+T",self.OnFontPanel),
 			("Set Colors...","Shift+Alt+S",self.OnColorPanel),
@@ -654,7 +655,6 @@ class LeoFrame:
 			("Preferences","Ctrl+Y",self.OnPreferences))
 		
 		self.createMenuEntries(editMenu,table)
-		
 		#@-body
 		#@-node:5::<< create the last top-level edit entries >>
 		#@-body
@@ -2172,15 +2172,72 @@ class LeoFrame:
 			es("no script selected")
 	#@-body
 	#@-node:7::OnExecuteScript
-	#@+node:8::OnSelectAll
+	#@+node:8::OnGoToLineNumber
+	#@+body
+	def OnGoToLineNumber (self,event=None):
+	
+		c = self.commands ; v = c.currentVnode()
+		body = c.frame.body
+		
+		#@<< find the @file node or return >>
+		#@+node:1::<< find the @file node or return >>
+		#@+body
+		while v and not v.isAtFileNode():
+			v = v.parent()
+		if not v:
+			es("no @file node found")
+			return
+		#@-body
+		#@-node:1::<< find the @file node or return >>
+
+		
+		#@<< create a dialog to get n >>
+		#@+node:2::<< create a dialog to get n >>
+		#@+body
+		import leoDialog
+		
+		d = leoDialog.leoDialog()
+		n = d.askOkCancelNumber("Enter Line Number","Line number:")
+		if n == -1:
+			return
+		#@-body
+		#@-node:2::<< create a dialog to get n >>
+
+		n = max(n,1)
+		after = v.nodeAfterTree()
+		prev = 0 ; lastv = root = v ; found = false
+		while v and v != after:
+			lastv = v
+			s = v.bodyString()
+			lines = s.count('\n')
+			if len(s) > 0 and s[-1] != '\n':
+				lines += 1
+			# print `lines`,`prev`,`v`
+			if prev + lines >= n:
+				found = true ; break
+			prev += lines
+			v = v.threadNext()
+		c.beginUpdate()
+		c.tree.expandAllAncestors(lastv)
+		c.selectVnode(lastv)
+		c.endUpdate()
+		# Put the cursor line n-prev of the body text.
+		if found:
+			body.mark_set("insert",str(n-prev)+".0 linestart")
+		else:
+			body.mark_set("insert","end-1line")
+			es(root.headString() + " has " + str(prev) + " lines.")
+	#@-body
+	#@-node:8::OnGoToLineNumber
+	#@+node:9::OnSelectAll
 	#@+body
 	def OnSelectAll(self,event=None):
 	
 		setTextSelection(self.body,"1.0","end")
 	
 	#@-body
-	#@-node:8::OnSelectAll
-	#@+node:9::OnFontPanel
+	#@-node:9::OnSelectAll
+	#@+node:10::OnFontPanel
 	#@+body
 	def OnFontPanel(self,event=None):
 	
@@ -2192,8 +2249,8 @@ class LeoFrame:
 			fp.run()
 	
 	#@-body
-	#@-node:9::OnFontPanel
-	#@+node:10::OnColorPanel
+	#@-node:10::OnFontPanel
+	#@+node:11::OnColorPanel
 	#@+body
 	def OnColorPanel(self,event=None):
 		
@@ -2206,8 +2263,8 @@ class LeoFrame:
 	
 	
 	#@-body
-	#@-node:10::OnColorPanel
-	#@+node:11::OnViewAllCharacters
+	#@-node:11::OnColorPanel
+	#@+node:12::OnViewAllCharacters
 	#@+body
 	def OnViewAllCharacters (self, event=None):
 	
@@ -2223,8 +2280,8 @@ class LeoFrame:
 		c.tree.recolor_now(v)
 	
 	#@-body
-	#@-node:11::OnViewAllCharacters
-	#@+node:12::OnPreferences
+	#@-node:12::OnViewAllCharacters
+	#@+node:13::OnPreferences
 	#@+body
 	def OnPreferences(self,event=None):
 		
@@ -2243,7 +2300,7 @@ class LeoFrame:
 				app().root.wait_window(top)
 	
 	#@-body
-	#@-node:12::OnPreferences
+	#@-node:13::OnPreferences
 	#@-node:1::Edit top level
 	#@+node:2::Edit Body submenu
 	#@+node:1::OnConvertBlanks & OnConvertAllBlanks

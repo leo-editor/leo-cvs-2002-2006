@@ -14,6 +14,7 @@ class leoDialog:
 	def __init__(self):
 	
 		self.answer = ""
+		self.number = -1
 		self.top = None
 		self.email = None
 		self.url = None
@@ -162,7 +163,39 @@ class leoDialog:
 		return self.answer
 	#@-body
 	#@-node:4::askOkCancel
-	#@+node:5::askYesNo
+	#@+node:5::askOkCancelNumber
+	#@+body
+	def askOkCancelNumber(self,title,message):
+	
+		Tk = Tkinter ; root = app().root
+		self.number=-1
+		self.top = top = Tk.Toplevel(root)
+		top.title(title)
+		top.resizable(0,0) # neither height or width is resizable.
+		frame = Tk.Frame(top)
+		self.top.bind("<Key>", self.OnOkCancelKey)
+		frame.pack(padx=6,pady=4)
+		label = Tk.Label(frame,text=message)
+		label.pack(pady=10,side="left")
+		self.number_text = txt = Tk.Text(frame,height=1,width=10)
+		txt.pack(side="left")
+	
+		center = Tk.Frame(top)
+		center.pack(side="top")
+		ok = Tk.Button(center,width=6,text="OK",bd=4, # default button
+			underline=0,command=self.okNumberButton)
+		cancel = Tk.Button(center,width=6,text="Cancel",
+			underline=0,command=self.cancelButton)
+		ok.pack(side="left",padx=5,pady=10)
+		cancel.pack(side="left",padx=5,pady=10)
+		self.center() # Do this after packing.
+		top.grab_set() # Make the dialog a modal dialog.
+		top.focus_force() # Get all keystrokes.
+		root.wait_window(top)
+		return self.number
+	#@-body
+	#@-node:5::askOkCancelNumber
+	#@+node:6::askYesNo
 	#@+body
 	def askYesNo(self, title, message):
 	
@@ -190,8 +223,8 @@ class leoDialog:
 		root.wait_window(top)
 		return self.answer
 	#@-body
-	#@-node:5::askYesNo
-	#@+node:6::askYesNoCancel
+	#@-node:6::askYesNo
+	#@+node:7::askYesNoCancel
 	#@+body
 	def askYesNoCancel(self, title, message):
 	
@@ -222,16 +255,16 @@ class leoDialog:
 		root.wait_window(top)
 		return self.answer
 	#@-body
-	#@-node:6::askYesNoCancel
-	#@+node:7::dialog.center
+	#@-node:7::askYesNoCancel
+	#@+node:8::dialog.center
 	#@+body
 	def center(self):
 		
 		center_dialog(self.top)
 		return
 	#@-body
-	#@-node:7::dialog.center
-	#@+node:8::Event handlers & command handlers
+	#@-node:8::dialog.center
+	#@+node:9::Event handlers & command handlers
 	#@+node:1::cancelButton, noButton, okButton, yesButton
 	#@+body
 	# Command handlers.
@@ -291,7 +324,24 @@ class leoDialog:
 			self.text.configure(cursor="xterm")
 	#@-body
 	#@-node:3::setArrowCursor, setDefaultCursor
-	#@-node:8::Event handlers & command handlers
+	#@+node:4::okNumberButton, cancelNumberButton
+	#@+body
+	def okNumberButton(self):
+	
+		t = self.number_text.get("1.0","end")
+		try:
+			self.number=int(t)
+		except:
+			es("invalid line number:" + t)
+			self.number=-1
+		self.top.destroy() # terminates wait_window
+		
+	def cancelButton(self):
+		self.number=-1
+		self.top.destroy() # terminates wait_window
+	#@-body
+	#@-node:4::okNumberButton, cancelNumberButton
+	#@-node:9::Event handlers & command handlers
 	#@-others
 #@-body
 #@-node:0::@file leoDialog.py
