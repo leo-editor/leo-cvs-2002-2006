@@ -549,28 +549,36 @@ class leoTkinterFrame (leoFrame.leoFrame):
     #@nonl
     #@-node:ekr.20031218072017.3962:clearStatusLine
     #@+node:EKR.20040424153344:enable/disableStatusLine & isEnabled
-    def disableStatusLine (self):
+    def disableStatusLine (self,background=None):
         
         t = self.statusText
         if t:
-            t.configure(state="disabled",background="gray")
+            if not background:
+                background = self.statusFrame.cget("background")
+            t.configure(state="disabled",background=background)
+        self.statusIsEnabled = False
         
-    def enableStatusLine (self):
+    def enableStatusLine (self,background="white"):
         
         t = self.statusText
         if t:
-            t.configure(state="normal",background="pink")
+            t.configure(state="normal",background=background)
             t.focus_set()
+        self.statusIsEnabled = True
             
     def statusLineIsEnabled(self):
-        t = self.statusText
-        if t:
-            state = t.cget("state")
-            return state == "normal"
-        else:
-            return False
+        return self.statusIsEnabled
     #@nonl
     #@-node:EKR.20040424153344:enable/disableStatusLine & isEnabled
+    #@+node:ekr.20041026132435:getStatusLine
+    def getStatusLine (self):
+        
+        t = self.statusText
+        if t:
+            return t.get("1.0","end")
+        else:
+            return ""
+    #@-node:ekr.20041026132435:getStatusLine
     #@+node:ekr.20031218072017.3963:putStatusLine
     def putStatusLine (self,s,color=None):
         
@@ -611,7 +619,7 @@ class leoTkinterFrame (leoFrame.leoFrame):
         c = self.c ; body = self.bodyCtrl ; lab = self.statusLabel
         gui = g.app.gui
         if not lab: return
-        
+    
         # New for Python 2.3: may be called during shutdown.
         if g.app.killed:
             return
@@ -640,6 +648,9 @@ class leoTkinterFrame (leoFrame.leoFrame):
     
         if 0: # The caller is now responsible for rescheduling.
             self.statusFrame.after(500,self.updateStatusRowCol)
+            
+        if c.frame.statusLineIsEnabled():
+            c.frame.setFocusStatusLine()
     #@nonl
     #@-node:ekr.20031218072017.1733:updateStatusRowCol
     #@-node:ekr.20031218072017.3960:Creating the status area
