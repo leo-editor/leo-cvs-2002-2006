@@ -45,7 +45,7 @@
 <v t="T28"><vh>Kent Tenney</vh></v>
 <v t="T29"><vh>Jim Vickroy</vh></v>
 </v>
-<v t="T30" a="E"><vh>Release Notes</vh>
+<v t="T30" a="V"><vh>Release Notes</vh>
 <v t="T31"><vh>Warnings</vh></v>
 <v t="T32"><vh>Installation notes</vh>
 <v t="T33" a="C"><vh>System requirements</vh></v>
@@ -530,493 +530,493 @@
 </v>
 </v>
 </v>
-<v t="T348" a="E"><vh>Users Guide</vh>
-<v t="T349"><vh>An overview of Leo</vh></v>
+<v t="T348"><vh>Users Guide</vh>
+<v t="T349" a="E"><vh>An overview of Leo</vh></v>
 <v t="T350"><vh>Front material</vh>
-<v t="T351"><vh>Title Page &amp; Summary</vh></v>
-<v t="T352"><vh>Preface</vh></v>
-<v t="T353"><vh>Leo's Design Goals</vh></v>
-<v t="T8" a="C"><vh>Acknowledgements</vh></v>
-<v t="T354"><vh>Legal Notices: Leo uses the Python license</vh></v>
+<v t="T351" a="E"><vh>Title Page &amp; Summary</vh></v>
+<v t="T352" a="E"><vh>Preface</vh></v>
+<v t="T353" a="E"><vh>Leo's Design Goals</vh></v>
+<v t="T8" a="CE"><vh>Acknowledgements</vh></v>
+<v t="T354" a="E"><vh>Legal Notices: Leo uses the Python license</vh></v>
 </v>
 <v><vh>Chapter 1: Introducing Leo</vh>
-<v t="T355"><vh>Overview</vh></v>
-<v t="T356"><vh>Leo's main window</vh></v>
-<v t="T357"><vh>Body text and sections</vh></v>
+<v t="T355" a="E"><vh>Overview</vh></v>
+<v t="T356" a="E"><vh>Leo's main window</vh></v>
+<v t="T357" a="E"><vh>Body text and sections</vh></v>
 <v t="T358"><vh>Outlines organize sections</vh>
 <v t="T359"><vh>removeSentinelsCommand</vh>
-<v t="T360"><vh>&lt;&lt; Read file into s &gt;&gt;</vh></v>
-<v t="T361"><vh>&lt;&lt; set delims from the header line &gt;&gt;</vh></v>
-<v t="T362"><vh>&lt;&lt; Write s into newFileName &gt;&gt;</vh></v>
+<v t="T360" a="E"><vh>&lt;&lt; Read file into s &gt;&gt;</vh></v>
+<v t="T361" a="E"><vh>&lt;&lt; set delims from the header line &gt;&gt;</vh></v>
+<v t="T362" a="E"><vh>&lt;&lt; Write s into newFileName &gt;&gt;</vh></v>
 </v>
 </v>
-<v t="T363"><vh>Clones manage tasks</vh></v>
-<v t="T364"><vh>Outlines generate derived files</vh></v>
+<v t="T363" a="E"><vh>Clones manage tasks</vh></v>
+<v t="T364" a="E"><vh>Outlines generate derived files</vh></v>
 </v>
 <v t="T365"><vh>Chapter 2: Installing Leo</vh>
-<v t="T33" a="C"><vh>System requirements</vh></v>
-<v t="T35" a="C"><vh>How to install leo.py on Windows</vh></v>
-<v t="T39" a="C"><vh>How to associate leo.py with .leo files on Windows</vh></v>
-<v t="T42" a="C"><vh>Quick start</vh></v>
+<v t="T33" a="CE"><vh>System requirements</vh></v>
+<v t="T35" a="CE"><vh>How to install leo.py on Windows</vh></v>
+<v t="T39" a="CE"><vh>How to associate leo.py with .leo files on Windows</vh></v>
+<v t="T42" a="CE"><vh>Quick start</vh></v>
 </v>
 <v t="T366"><vh>Chapter 3: Using Outlines &amp; Body text</vh>
 <v t="T367" a="C"><vh>Cloning headlines</vh>
-<v t="T368"><vh>read me</vh></v>
-<v t="T369" a="C"><vh>a</vh>
-<v t="T370" a="C"><vh>b</vh>
-<v t="T371" a="C"><vh>c</vh>
-<v t="T372"><vh>d</vh></v>
-<v t="T373"><vh>e</vh></v>
+<v t="T368" a="E"><vh>read me</vh></v>
+<v t="T369" a="CE"><vh>a</vh>
+<v t="T370" a="CE"><vh>b</vh>
+<v t="T371" a="CE"><vh>c</vh>
+<v t="T372" a="E"><vh>d</vh></v>
+<v t="T373" a="E"><vh>e</vh></v>
 </v>
-<v t="T371" a="C"><vh>c</vh>
-<v t="T372"><vh>d</vh></v>
-<v t="T373"><vh>e</vh></v>
-</v>
-</v>
-<v t="T374"><vh>g</vh></v>
-<v t="T370" a="C"><vh>b</vh>
-<v t="T371" a="C"><vh>c</vh>
-<v t="T372"><vh>d</vh></v>
-<v t="T373"><vh>e</vh></v>
-</v>
-<v t="T371" a="C"><vh>c</vh>
-<v t="T372"><vh>d</vh></v>
-<v t="T373"><vh>e</vh></v>
+<v t="T371" a="CE"><vh>c</vh>
+<v t="T372" a="E"><vh>d</vh></v>
+<v t="T373" a="E"><vh>e</vh></v>
 </v>
 </v>
+<v t="T374" a="E"><vh>g</vh></v>
+<v t="T370" a="CE"><vh>b</vh>
+<v t="T371" a="CE"><vh>c</vh>
+<v t="T372" a="E"><vh>d</vh></v>
+<v t="T373" a="E"><vh>e</vh></v>
 </v>
-<v t="T369" a="C"><vh>a</vh>
-<v t="T370" a="C"><vh>b</vh>
-<v t="T371" a="C"><vh>c</vh>
-<v t="T372"><vh>d</vh></v>
-<v t="T373"><vh>e</vh></v>
-</v>
-<v t="T371" a="C"><vh>c</vh>
-<v t="T372"><vh>d</vh></v>
-<v t="T373"><vh>e</vh></v>
-</v>
-</v>
-<v t="T374"><vh>g</vh></v>
-<v t="T370" a="C"><vh>b</vh>
-<v t="T371" a="C"><vh>c</vh>
-<v t="T372"><vh>d</vh></v>
-<v t="T373"><vh>e</vh></v>
-</v>
-<v t="T371" a="C"><vh>c</vh>
-<v t="T372"><vh>d</vh></v>
-<v t="T373"><vh>e</vh></v>
+<v t="T371" a="CE"><vh>c</vh>
+<v t="T372" a="E"><vh>d</vh></v>
+<v t="T373" a="E"><vh>e</vh></v>
 </v>
 </v>
 </v>
-<v t="T375"><vh>f</vh></v>
+<v t="T369" a="CE"><vh>a</vh>
+<v t="T370" a="CE"><vh>b</vh>
+<v t="T371" a="CE"><vh>c</vh>
+<v t="T372" a="E"><vh>d</vh></v>
+<v t="T373" a="E"><vh>e</vh></v>
 </v>
-<v t="T376"><vh>Creating and destroying headlines</vh></v>
-<v t="T196" a="C"><vh>Dragging headlines</vh></v>
-<v t="T377" a="M"><vh>Editing body text</vh></v>
-<v t="T378"><vh>Expanding &amp; contracting headlines</vh></v>
-<v t="T379"><vh>Marking headlines</vh></v>
-<v t="T380"><vh>Moving &amp; Reorganizing headlines</vh></v>
-<v t="T381"><vh>Resizing panes</vh></v>
-<v t="T382"><vh>Undoing operations</vh></v>
+<v t="T371" a="CE"><vh>c</vh>
+<v t="T372" a="E"><vh>d</vh></v>
+<v t="T373" a="E"><vh>e</vh></v>
 </v>
-<v t="T383" a="E"><vh>Chapter 4: Writing Programs in Leo</vh>
-<v t="T384"><vh>Overview</vh></v>
-<v t="T385"><vh>Sections and section references</vh></v>
+</v>
+<v t="T374" a="E"><vh>g</vh></v>
+<v t="T370" a="CE"><vh>b</vh>
+<v t="T371" a="CE"><vh>c</vh>
+<v t="T372" a="E"><vh>d</vh></v>
+<v t="T373" a="E"><vh>e</vh></v>
+</v>
+<v t="T371" a="CE"><vh>c</vh>
+<v t="T372" a="E"><vh>d</vh></v>
+<v t="T373" a="E"><vh>e</vh></v>
+</v>
+</v>
+</v>
+<v t="T375" a="E"><vh>f</vh></v>
+</v>
+<v t="T376" a="E"><vh>Creating and destroying headlines</vh></v>
+<v t="T196" a="CE"><vh>Dragging headlines</vh></v>
+<v t="T377" a="EM"><vh>Editing body text</vh></v>
+<v t="T378" a="E"><vh>Expanding &amp; contracting headlines</vh></v>
+<v t="T379" a="E"><vh>Marking headlines</vh></v>
+<v t="T380" a="E"><vh>Moving &amp; Reorganizing headlines</vh></v>
+<v t="T381" a="E"><vh>Resizing panes</vh></v>
+<v t="T382" a="E"><vh>Undoing operations</vh></v>
+</v>
+<v t="T383"><vh>Chapter 4: Writing Programs in Leo</vh>
+<v t="T384" a="E"><vh>Overview</vh></v>
+<v t="T385" a="E"><vh>Sections and section references</vh></v>
 <v t="T386"><vh>Organizing @file trees.</vh>
 <v t="T387"><vh>Examples</vh>
 <v t="T388"><vh>@file f.c</vh>
-<v t="T389"><vh>&lt;&lt; constants &gt;&gt;</vh></v>
-<v t="T390"><vh>&lt;&lt; declarations &gt;&gt;</vh></v>
-<v t="T391"><vh>function 1</vh></v>
-<v t="T392"><vh>function 2</vh></v>
+<v t="T389" a="E"><vh>&lt;&lt; constants &gt;&gt;</vh></v>
+<v t="T390" a="E"><vh>&lt;&lt; declarations &gt;&gt;</vh></v>
+<v t="T391" a="E"><vh>function 1</vh></v>
+<v t="T392" a="E"><vh>function 2</vh></v>
 </v>
 <v t="T393"><vh>@file classX.py</vh>
-<v><vh>&lt;&lt; imports for classX &gt;&gt;</vh></v>
+<v a="E"><vh>&lt;&lt; imports for classX &gt;&gt;</vh></v>
 <v t="T394"><vh>Getters</vh>
-<v><vh>getter 1</vh></v>
-<v><vh>getter 2</vh></v>
+<v a="E"><vh>getter 1</vh></v>
+<v a="E"><vh>getter 2</vh></v>
 </v>
 <v t="T395"><vh>Setters</vh>
-<v><vh>setter 1</vh></v>
-<v><vh>setter 2</vh></v>
+<v a="E"><vh>setter 1</vh></v>
+<v a="E"><vh>setter 2</vh></v>
 </v>
 </v>
 <v t="T396"><vh>@file mainClass.py</vh>
-<v><vh>&lt;&lt;mainClass imports &gt;&gt;</vh></v>
+<v a="E"><vh>&lt;&lt;mainClass imports &gt;&gt;</vh></v>
 <v t="T397"><vh>&lt;&lt;class mainClass&gt;&gt;</vh>
-<v><vh>method 1</vh></v>
-<v><vh>method 2</vh></v>
+<v a="E"><vh>method 1</vh></v>
+<v a="E"><vh>method 2</vh></v>
 </v>
 <v t="T398"><vh>&lt;&lt;class helperClass&gt;&gt;</vh>
-<v><vh>method 1</vh></v>
-<v><vh>method 2</vh></v>
+<v a="E"><vh>method 1</vh></v>
+<v a="E"><vh>method 2</vh></v>
 </v>
 </v>
 <v t="T399"><vh>@file bad</vh>
 <v t="T400"><vh>Methods</vh>
 <v t="T401"><vh>&lt;&lt; section 1 &gt;&gt;</vh>
-<v t="T402"><vh>A</vh></v>
+<v t="T402" a="E"><vh>A</vh></v>
 </v>
 </v>
 </v>
 </v>
 </v>
 <v t="T403"><vh>More about directives</vh>
-<v t="T404"><vh>@CWEB and @noweb specify the source language</vh></v>
-<v t="T405"><vh>@color and @nocolor control syntax coloring</vh></v>
-<v t="T406"><vh>@comment sets comment delimiters in @root and @unit trees</vh></v>
-<v t="T407"><vh>@delims directive specifies comment delimiters in @file trees</vh></v>
-<v t="T408"><vh>@first and @last directives allow leading and trailing lines in @file trees</vh></v>
-<v t="T409"><vh>@language specifying the target language</vh></v>
-<v t="T410" a="M"><vh>@path, @pagewidth and @tabwidth directives set preferences</vh></v>
+<v t="T404" a="E"><vh>@CWEB and @noweb specify the source language</vh></v>
+<v t="T405" a="E"><vh>@color and @nocolor control syntax coloring</vh></v>
+<v t="T406" a="E"><vh>@comment sets comment delimiters in @root and @unit trees</vh></v>
+<v t="T407" a="E"><vh>@delims directive specifies comment delimiters in @file trees</vh></v>
+<v t="T408" a="E"><vh>@first and @last directives allow leading and trailing lines in @file trees</vh></v>
+<v t="T409" a="E"><vh>@language specifying the target language</vh></v>
+<v t="T410" a="EM"><vh>@path, @pagewidth and @tabwidth directives set preferences</vh></v>
 </v>
-<v t="T315" a="C"><vh>About CWEB   </vh></v>
-<v t="T411"><vh>Appendix 1 to Chapter 4: Using the @rawfile directive</vh></v>
-<v a="E"><vh>Appendix 2 to Chapter 4: Using the @root directive, Tangling and Untangling</vh>
-<v t="T412"><vh>@root vs. @file trees</vh></v>
-<v t="T413" a="M"><vh>Sections and section definitions</vh></v>
-<v t="T414"><vh>Tangling @root trees with the Tangle commands</vh></v>
-<v t="T415"><vh>Untangling @root trees with the Untangle commands</vh></v>
-<v t="T416" a="V"><vh>@verbose, @terse, @silent and @silent directives control comments in @root trees</vh></v>
+<v t="T315" a="CE"><vh>About CWEB   </vh></v>
+<v t="T411" a="E"><vh>Appendix 1 to Chapter 4: Using the @rawfile directive</vh></v>
+<v><vh>Appendix 2 to Chapter 4: Using the @root directive, Tangling and Untangling</vh>
+<v t="T412" a="E"><vh>@root vs. @file trees</vh></v>
+<v t="T413" a="EM"><vh>Sections and section definitions</vh></v>
+<v t="T414" a="E"><vh>Tangling @root trees with the Tangle commands</vh></v>
+<v t="T415" a="E"><vh>Untangling @root trees with the Untangle commands</vh></v>
+<v t="T416" a="E"><vh>@verbose, @terse, @silent and @silent directives control comments in @root trees</vh></v>
 </v>
 </v>
 <v t="T417"><vh>Chapter 5: Using Leo's Commands</vh>
 <v><vh> The File Menu</vh>
-<v t="T418"><vh>Loading, Saving and Reverting Files</vh></v>
-<v t="T419"><vh>Tangling an outline: Producing Derived Files</vh></v>
-<v t="T278" a="C"><vh>Untangling: updating an outline</vh></v>
-<v t="T420"><vh>Tangling and Untangling: the Interface with the IDE</vh></v>
-<v t="T421"><vh>Importing Files into Leo Outlines</vh></v>
-<v t="T422"><vh>Exporting Files from Leo Outlines</vh></v>
-<v t="T423"><vh>Quitting Leo</vh></v>
+<v t="T418" a="E"><vh>Loading, Saving and Reverting Files</vh></v>
+<v t="T419" a="E"><vh>Tangling an outline: Producing Derived Files</vh></v>
+<v t="T278" a="CE"><vh>Untangling: updating an outline</vh></v>
+<v t="T420" a="E"><vh>Tangling and Untangling: the Interface with the IDE</vh></v>
+<v t="T421" a="E"><vh>Importing Files into Leo Outlines</vh></v>
+<v t="T422" a="E"><vh>Exporting Files from Leo Outlines</vh></v>
+<v t="T423" a="E"><vh>Quitting Leo</vh></v>
 </v>
 <v><vh> The Edit Menu</vh>
-<v t="T424"><vh>Undoing changes</vh></v>
-<v t="T425"><vh>Cutting, pasting and selecting text</vh></v>
-<v t="T426"><vh>Shifting body text</vh></v>
-<v t="T427"><vh>Creating nodes from body text</vh></v>
-<v t="T428"><vh>Converting leading blanks and tabs in body text</vh></v>
-<v t="T429"><vh>Matching brackets and parenthesis</vh></v>
+<v t="T424" a="E"><vh>Undoing changes</vh></v>
+<v t="T425" a="E"><vh>Cutting, pasting and selecting text</vh></v>
+<v t="T426" a="E"><vh>Shifting body text</vh></v>
+<v t="T427" a="E"><vh>Creating nodes from body text</vh></v>
+<v t="T428" a="E"><vh>Converting leading blanks and tabs in body text</vh></v>
+<v t="T429" a="E"><vh>Matching brackets and parenthesis</vh></v>
 <v t="T430"><vh>Finding and changing text</vh>
-<v t="T431"><vh>Batch</vh></v>
-<v t="T432"><vh>Ignore Case</vh></v>
-<v t="T433"><vh>Mark Changes</vh></v>
-<v t="T434"><vh>Mark Matches</vh></v>
-<v t="T435"><vh>Pattern Match</vh></v>
-<v t="T436"><vh>Reverse</vh></v>
-<v t="T437"><vh>Search Body Text</vh></v>
-<v t="T438"><vh>Search Headline Text</vh></v>
-<v t="T439"><vh>Suboutline Only</vh></v>
-<v t="T440"><vh>Whole Word</vh></v>
-<v t="T441"><vh>Wrap Around</vh></v>
+<v t="T431" a="E"><vh>Batch</vh></v>
+<v t="T432" a="E"><vh>Ignore Case</vh></v>
+<v t="T433" a="E"><vh>Mark Changes</vh></v>
+<v t="T434" a="E"><vh>Mark Matches</vh></v>
+<v t="T435" a="E"><vh>Pattern Match</vh></v>
+<v t="T436" a="E"><vh>Reverse</vh></v>
+<v t="T437" a="E"><vh>Search Body Text</vh></v>
+<v t="T438" a="E"><vh>Search Headline Text</vh></v>
+<v t="T439" a="E"><vh>Suboutline Only</vh></v>
+<v t="T440" a="E"><vh>Whole Word</vh></v>
+<v t="T441" a="E"><vh>Wrap Around</vh></v>
 </v>
-<v t="T442"><vh>Setting Preferences</vh>
-<v t="T443"><vh>PHP keywords</vh></v>
-<v t="T444"><vh>LaTex keywords</vh></v>
+<v t="T442" a="E"><vh>Setting Preferences</vh>
+<v t="T443" a="E"><vh>PHP keywords</vh></v>
+<v t="T444" a="E"><vh>LaTex keywords</vh></v>
 </v>
 </v>
 <v><vh> The Outline Menu</vh>
-<v t="T445"><vh> Creating and deleting headlines</vh></v>
-<v t="T446"><vh> Cutting, pasting and deleting headlines</vh></v>
-<v t="T447"><vh> Expanding and contracting headlines</vh></v>
-<v t="T448"><vh> Moving, sorting and reorganizing headlines</vh></v>
-<v t="T449"><vh> Marking headlines</vh></v>
+<v t="T445" a="E"><vh> Creating and deleting headlines</vh></v>
+<v t="T446" a="E"><vh> Cutting, pasting and deleting headlines</vh></v>
+<v t="T447" a="E"><vh> Expanding and contracting headlines</vh></v>
+<v t="T448" a="E"><vh> Moving, sorting and reorganizing headlines</vh></v>
+<v t="T449" a="E"><vh> Marking headlines</vh></v>
 <v t="T367" a="C"><vh>Cloning headlines</vh>
-<v t="T368"><vh>read me</vh></v>
-<v t="T369" a="C"><vh>a</vh>
-<v t="T370" a="C"><vh>b</vh>
-<v t="T371" a="C"><vh>c</vh>
-<v t="T372"><vh>d</vh></v>
-<v t="T373"><vh>e</vh></v>
+<v t="T368" a="E"><vh>read me</vh></v>
+<v t="T369" a="CE"><vh>a</vh>
+<v t="T370" a="CE"><vh>b</vh>
+<v t="T371" a="CE"><vh>c</vh>
+<v t="T372" a="E"><vh>d</vh></v>
+<v t="T373" a="E"><vh>e</vh></v>
 </v>
-<v t="T371" a="C"><vh>c</vh>
-<v t="T372"><vh>d</vh></v>
-<v t="T373"><vh>e</vh></v>
-</v>
-</v>
-<v t="T374"><vh>g</vh></v>
-<v t="T370" a="C"><vh>b</vh>
-<v t="T371" a="C"><vh>c</vh>
-<v t="T372"><vh>d</vh></v>
-<v t="T373"><vh>e</vh></v>
-</v>
-<v t="T371" a="C"><vh>c</vh>
-<v t="T372"><vh>d</vh></v>
-<v t="T373"><vh>e</vh></v>
+<v t="T371" a="CE"><vh>c</vh>
+<v t="T372" a="E"><vh>d</vh></v>
+<v t="T373" a="E"><vh>e</vh></v>
 </v>
 </v>
+<v t="T374" a="E"><vh>g</vh></v>
+<v t="T370" a="CE"><vh>b</vh>
+<v t="T371" a="CE"><vh>c</vh>
+<v t="T372" a="E"><vh>d</vh></v>
+<v t="T373" a="E"><vh>e</vh></v>
 </v>
-<v t="T369" a="C"><vh>a</vh>
-<v t="T370" a="C"><vh>b</vh>
-<v t="T371" a="C"><vh>c</vh>
-<v t="T372"><vh>d</vh></v>
-<v t="T373"><vh>e</vh></v>
-</v>
-<v t="T371" a="C"><vh>c</vh>
-<v t="T372"><vh>d</vh></v>
-<v t="T373"><vh>e</vh></v>
-</v>
-</v>
-<v t="T374"><vh>g</vh></v>
-<v t="T370" a="C"><vh>b</vh>
-<v t="T371" a="C"><vh>c</vh>
-<v t="T372"><vh>d</vh></v>
-<v t="T373"><vh>e</vh></v>
-</v>
-<v t="T371" a="C"><vh>c</vh>
-<v t="T372"><vh>d</vh></v>
-<v t="T373"><vh>e</vh></v>
+<v t="T371" a="CE"><vh>c</vh>
+<v t="T372" a="E"><vh>d</vh></v>
+<v t="T373" a="E"><vh>e</vh></v>
 </v>
 </v>
 </v>
-<v t="T375"><vh>f</vh></v>
+<v t="T369" a="CE"><vh>a</vh>
+<v t="T370" a="CE"><vh>b</vh>
+<v t="T371" a="CE"><vh>c</vh>
+<v t="T372" a="E"><vh>d</vh></v>
+<v t="T373" a="E"><vh>e</vh></v>
+</v>
+<v t="T371" a="CE"><vh>c</vh>
+<v t="T372" a="E"><vh>d</vh></v>
+<v t="T373" a="E"><vh>e</vh></v>
+</v>
+</v>
+<v t="T374" a="E"><vh>g</vh></v>
+<v t="T370" a="CE"><vh>b</vh>
+<v t="T371" a="CE"><vh>c</vh>
+<v t="T372" a="E"><vh>d</vh></v>
+<v t="T373" a="E"><vh>e</vh></v>
+</v>
+<v t="T371" a="CE"><vh>c</vh>
+<v t="T372" a="E"><vh>d</vh></v>
+<v t="T373" a="E"><vh>e</vh></v>
+</v>
+</v>
+</v>
+<v t="T375" a="E"><vh>f</vh></v>
 </v>
 </v>
 <v><vh> The Window Menu</vh>
-<v t="T450"><vh> Resizing panes</vh></v>
-<v t="T451"><vh> Cascading &amp; minimizing windows</vh></v>
-<v t="T452"><vh>Toggling the active pane</vh></v>
-<v t="T453"><vh>Toggling the orientation of the Leo window</vh></v>
+<v t="T450" a="E"><vh> Resizing panes</vh></v>
+<v t="T451" a="E"><vh> Cascading &amp; minimizing windows</vh></v>
+<v t="T452" a="E"><vh>Toggling the active pane</vh></v>
+<v t="T453" a="E"><vh>Toggling the orientation of the Leo window</vh></v>
 </v>
-<v a="E"><vh>The Help Menu</vh>
-<v t="T454"><vh>Getting Leo's version</vh></v>
-<v t="T455"><vh>Reading documentation</vh></v>
-<v t="T456"><vh>Configuring Leo</vh></v>
+<v><vh>The Help Menu</vh>
+<v t="T454" a="E"><vh>Getting Leo's version</vh></v>
+<v t="T455" a="E"><vh>Reading documentation</vh></v>
+<v t="T456" a="E"><vh>Configuring Leo</vh></v>
 </v>
 </v>
 <v t="T457"><vh>Chapter 6: Leo and Literate Programming</vh>
 <v t="T458"><vh>Why I like Literate Programming</vh>
-<v t="T459"><vh>Literate programming creates a new design dimension</vh></v>
-<v t="T460"><vh>Design and coding happen at the highest possible level</vh></v>
-<v t="T461"><vh>The visual weight of code is separate from its actual length</vh></v>
-<v t="T462"><vh>Sections show relations between snippets of code</vh></v>
-<v t="T463"><vh>Complex section names invite improvements</vh></v>
-<v t="T464"><vh>Sections create a place for extensive comments</vh></v>
-<v t="T465"><vh>Section names eliminate mundane comments</vh></v>
-<v t="T466"><vh>Sections create comments automatically</vh></v>
-<v t="T467"><vh>Literate programming clarifies the shape of functions</vh></v>
-<v t="T468"><vh>I spend less time formatting code</vh></v>
+<v t="T459" a="E"><vh>Literate programming creates a new design dimension</vh></v>
+<v t="T460" a="E"><vh>Design and coding happen at the highest possible level</vh></v>
+<v t="T461" a="E"><vh>The visual weight of code is separate from its actual length</vh></v>
+<v t="T462" a="E"><vh>Sections show relations between snippets of code</vh></v>
+<v t="T463" a="E"><vh>Complex section names invite improvements</vh></v>
+<v t="T464" a="E"><vh>Sections create a place for extensive comments</vh></v>
+<v t="T465" a="E"><vh>Section names eliminate mundane comments</vh></v>
+<v t="T466" a="E"><vh>Sections create comments automatically</vh></v>
+<v t="T467" a="E"><vh>Literate programming clarifies the shape of functions</vh></v>
+<v t="T468" a="E"><vh>I spend less time formatting code</vh></v>
 </v>
 <v t="T469"><vh>How Leo Improves Literate Programming</vh>
-<v t="T470"><vh>Outlines add context</vh></v>
-<v t="T471"><vh>Outlines provide scope for commands</vh></v>
-<v t="T472"><vh>Clones create different views and focus attention</vh></v>
-<v t="T473"><vh>Outlines increase flexibility</vh></v>
-<v t="T474"><vh>Outlines express hierarchy directly</vh></v>
-<v t="T475"><vh>Outlines create new design dimensions</vh></v>
-<v t="T476"><vh>Leo improves tangling and adds untangling</vh></v>
+<v t="T470" a="E"><vh>Outlines add context</vh></v>
+<v t="T471" a="E"><vh>Outlines provide scope for commands</vh></v>
+<v t="T472" a="E"><vh>Clones create different views and focus attention</vh></v>
+<v t="T473" a="E"><vh>Outlines increase flexibility</vh></v>
+<v t="T474" a="E"><vh>Outlines express hierarchy directly</vh></v>
+<v t="T475" a="E"><vh>Outlines create new design dimensions</vh></v>
+<v t="T476" a="E"><vh>Leo improves tangling and adds untangling</vh></v>
 </v>
-<v t="T477"><vh>How Leo Changes the Notion of Literate Programming</vh></v>
+<v t="T477" a="E"><vh>How Leo Changes the Notion of Literate Programming</vh></v>
 </v>
 <v t="T478"><vh>Chapter 7: Scripting Leo with Python</vh>
-<v t="T479"><vh>Installing Python</vh></v>
+<v t="T479" a="E"><vh>Installing Python</vh></v>
 <v><vh>Overview</vh>
-<v t="T480"><vh>Terminology</vh></v>
-<v t="T481"><vh>Type conventions</vh></v>
-<v t="T482"><vh>The Python Window in Leo</vh></v>
-<v t="T483"><vh>A basic script</vh></v>
-<v t="T484"><vh>Traversing outlines</vh></v>
-<v t="T485"><vh>How to get and change body text</vh></v>
-<v t="T486"><vh>How Scripts create objects &amp; change properties</vh></v>
-<v t="T487"><vh>Updating the screen</vh></v>
+<v t="T480" a="E"><vh>Terminology</vh></v>
+<v t="T481" a="E"><vh>Type conventions</vh></v>
+<v t="T482" a="E"><vh>The Python Window in Leo</vh></v>
+<v t="T483" a="E"><vh>A basic script</vh></v>
+<v t="T484" a="E"><vh>Traversing outlines</vh></v>
+<v t="T485" a="E"><vh>How to get and change body text</vh></v>
+<v t="T486" a="E"><vh>How Scripts create objects &amp; change properties</vh></v>
+<v t="T487" a="E"><vh>Updating the screen</vh></v>
 </v>
 <v><vh>Functions</vh>
-<v t="T488"><vh>topCommand</vh></v>
-<v t="T489"><vh>getCommands</vh></v>
-<v t="T490"><vh>getLeoPyWindow</vh></v>
+<v t="T488" a="E"><vh>topCommand</vh></v>
+<v t="T489" a="E"><vh>getCommands</vh></v>
+<v t="T490" a="E"><vh>getLeoPyWindow</vh></v>
 </v>
 <v t="T491"><vh>The Commands class</vh>
-<v t="T492"><vh>File menu commands</vh></v>
-<v t="T493"><vh>Edit menu commands</vh></v>
-<v t="T494"><vh>Outline menu commands</vh></v>
-<v t="T495"><vh>Window menu commands</vh></v>
-<v t="T496"><vh>Menu enablers</vh></v>
-<v t="T497"><vh>Commands Utilities</vh></v>
+<v t="T492" a="E"><vh>File menu commands</vh></v>
+<v t="T493" a="E"><vh>Edit menu commands</vh></v>
+<v t="T494" a="E"><vh>Outline menu commands</vh></v>
+<v t="T495" a="E"><vh>Window menu commands</vh></v>
+<v t="T496" a="E"><vh>Menu enablers</vh></v>
+<v t="T497" a="E"><vh>Commands Utilities</vh></v>
 </v>
-<v t="T498"><vh>The LeoPyWindow class</vh></v>
-<v t="T499"><vh>The Preferences class</vh></v>
+<v t="T498" a="E"><vh>The LeoPyWindow class</vh></v>
+<v t="T499" a="E"><vh>The Preferences class</vh></v>
 <v t="T500"><vh>The vnode class</vh>
-<v t="T501"><vh>Getters</vh></v>
-<v t="T502"><vh>Setters</vh></v>
+<v t="T501" a="E"><vh>Getters</vh></v>
+<v t="T502" a="E"><vh>Setters</vh></v>
 </v>
 <v t="T503"><vh>(High-level routines)</vh>
 <v t="T290" a="C"><vh>High-level Find/Change functions</vh>
 <v t="T291"><vh>leoFind.py</vh>
-<v t="T292"><vh>changeAll</vh></v>
-<v t="T293"><vh>changeNext</vh></v>
-<v t="T294"><vh>changePrev</vh></v>
-<v t="T295"><vh>findAll</vh></v>
-<v t="T296"><vh>findNext</vh></v>
-<v t="T297"><vh>findPrev</vh></v>
-<v t="T298"><vh>reChangeAll</vh></v>
-<v t="T299"><vh>reChangeNext</vh></v>
-<v t="T300"><vh>reChangePrev</vh></v>
-<v t="T301"><vh>reFindAll</vh></v>
-<v t="T302"><vh>reFindNext</vh></v>
-<v t="T303"><vh>reFindPrev</vh></v>
-<v t="T304"><vh>lineAtPos</vh></v>
-<v t="T305"><vh>printFindList</vh></v>
+<v t="T292" a="E"><vh>changeAll</vh></v>
+<v t="T293" a="E"><vh>changeNext</vh></v>
+<v t="T294" a="E"><vh>changePrev</vh></v>
+<v t="T295" a="E"><vh>findAll</vh></v>
+<v t="T296" a="E"><vh>findNext</vh></v>
+<v t="T297" a="E"><vh>findPrev</vh></v>
+<v t="T298" a="E"><vh>reChangeAll</vh></v>
+<v t="T299" a="E"><vh>reChangeNext</vh></v>
+<v t="T300" a="E"><vh>reChangePrev</vh></v>
+<v t="T301" a="E"><vh>reFindAll</vh></v>
+<v t="T302" a="E"><vh>reFindNext</vh></v>
+<v t="T303" a="E"><vh>reFindPrev</vh></v>
+<v t="T304" a="E"><vh>lineAtPos</vh></v>
+<v t="T305" a="E"><vh>printFindList</vh></v>
 </v>
 </v>
 <v t="T504"><vh>High-level Commands methods</vh>
-<v t="T505"><vh>flatVlist</vh></v>
-<v t="T506"><vh>printFlatVlist</vh></v>
-<v t="T507"><vh>printVlist</vh></v>
-<v t="T508"><vh>vHeadList</vh></v>
-<v t="T509"><vh>vlist</vh></v>
+<v t="T505" a="E"><vh>flatVlist</vh></v>
+<v t="T506" a="E"><vh>printFlatVlist</vh></v>
+<v t="T507" a="E"><vh>printVlist</vh></v>
+<v t="T508" a="E"><vh>vHeadList</vh></v>
+<v t="T509" a="E"><vh>vlist</vh></v>
 </v>
 <v t="T510"><vh>High-level vnode methods</vh>
-<v t="T511"><vh>children</vh></v>
+<v t="T511" a="E"><vh>children</vh></v>
 </v>
 </v>
 </v>
 <v t="T512"><vh>Chapter 8: History of Leo</vh>
-<v t="T513"><vh>Beginnings</vh></v>
-<v t="T514"><vh>Versions, and more versions</vh></v>
+<v t="T513" a="E"><vh>Beginnings</vh></v>
+<v t="T514" a="E"><vh>Versions, and more versions</vh></v>
 <v t="T515"><vh>Designing @file trees</vh>
-<v t="T516"><vh>Deciding to do Leo2</vh></v>
-<v t="T517"><vh>A prototype</vh></v>
-<v t="T518"><vh>User interaction</vh></v>
-<v t="T519"><vh>The write code</vh></v>
-<v t="T520"><vh>The read code</vh></v>
-<v t="T521"><vh>The load/save code</vh></v>
-<v t="T522"><vh>Attributes, mirroring and dummy nodes</vh></v>
-<v t="T523"><vh>Clones</vh></v>
-<v t="T524"><vh>Error recovery, at last</vh></v>
+<v t="T516" a="E"><vh>Deciding to do Leo2</vh></v>
+<v t="T517" a="E"><vh>A prototype</vh></v>
+<v t="T518" a="E"><vh>User interaction</vh></v>
+<v t="T519" a="E"><vh>The write code</vh></v>
+<v t="T520" a="E"><vh>The read code</vh></v>
+<v t="T521" a="E"><vh>The load/save code</vh></v>
+<v t="T522" a="E"><vh>Attributes, mirroring and dummy nodes</vh></v>
+<v t="T523" a="E"><vh>Clones</vh></v>
+<v t="T524" a="E"><vh>Error recovery, at last</vh></v>
 </v>
 </v>
 <v t="T525"><vh>Chapter 9: Theory of Operation</vh>
-<v t="T526"><vh>Overview</vh></v>
-<v t="T527"><vh>Nodes</vh></v>
-<v t="T528"><vh>Drawing and events</vh></v>
-<v t="T529"><vh>Clones</vh></v>
-<v t="T530"><vh>Find and change commands</vh></v>
-<v t="T531"><vh>Tangle and Untangle commands</vh></v>
-<v t="T532"><vh>Unlimited undo</vh></v>
+<v t="T526" a="E"><vh>Overview</vh></v>
+<v t="T527" a="E"><vh>Nodes</vh></v>
+<v t="T528" a="E"><vh>Drawing and events</vh></v>
+<v t="T529" a="E"><vh>Clones</vh></v>
+<v t="T530" a="E"><vh>Find and change commands</vh></v>
+<v t="T531" a="E"><vh>Tangle and Untangle commands</vh></v>
+<v t="T532" a="E"><vh>Unlimited undo</vh></v>
 </v>
 <v t="T533"><vh>Appendices</vh>
 <v t="T114" a="C"><vh>Code hidden in leo.py</vh>
-<v t="T115"><vh>c2py.py</vh></v>
-<v t="T116"><vh>disStats.py</vh></v>
-<v t="T117"><vh>Tkinter utilities</vh></v>
-<v t="T118"><vh>Font dialog</vh></v>
-<v t="T119"><vh>Syntax coloring code</vh></v>
-<v t="T120"><vh>Tree code</vh></v>
+<v t="T115" a="E"><vh>c2py.py</vh></v>
+<v t="T116" a="E"><vh>disStats.py</vh></v>
+<v t="T117" a="E"><vh>Tkinter utilities</vh></v>
+<v t="T118" a="E"><vh>Font dialog</vh></v>
+<v t="T119" a="E"><vh>Syntax coloring code</vh></v>
+<v t="T120" a="E"><vh>Tree code</vh></v>
 </v>
-<v t="T534"><vh>Converting @root trees to @file trees</vh></v>
+<v t="T534" a="E"><vh>Converting @root trees to @file trees</vh></v>
 <v t="T535"><vh>Directives</vh>
-<v t="T536"><vh>@c and @code</vh></v>
-<v t="T537"><vh>@chapter (Macintosh only)</vh></v>
-<v t="T538"><vh>@color</vh></v>
-<v t="T539"><vh>@comment</vh></v>
-<v t="T540"><vh>@cweb</vh></v>
-<v t="T541"><vh>@delims (not valid in @root or @unit trees)</vh></v>
-<v t="T542"><vh>@doc and @(space)</vh></v>
-<v t="T543"><vh>@file (not valid in @root or @unit trees)</vh></v>
-<v t="T544"><vh>@first (not valid in @root or @unit trees)</vh></v>
-<v t="T545"><vh>@ignore  (not valid in @file trees)</vh></v>
-<v t="T546"><vh>@language</vh></v>
-<v t="T547"><vh>@nocolor</vh></v>
-<v t="T548"><vh>@noweb</vh></v>
-<v t="T549"><vh>@others (valid only in @file trees)</vh></v>
-<v t="T550"><vh>@pagewidth</vh></v>
-<v t="T551" a="M"><vh>@path</vh></v>
-<v t="T552"><vh>@root  (not valid in @file trees)</vh></v>
-<v t="T553"><vh>@section (Macintosh only)</vh></v>
-<v t="T554"><vh>@silent (not valid in @file trees)</vh></v>
-<v t="T555"><vh>@tabwidth</vh></v>
-<v t="T556"><vh>@terse  (not valid in @file trees)</vh></v>
-<v t="T557"><vh>@unit   (not valid in @file trees)</vh></v>
-<v t="T558"><vh>@verbose, @terse and @silent directives</vh></v>
+<v t="T536" a="E"><vh>@c and @code</vh></v>
+<v t="T537" a="E"><vh>@chapter (Macintosh only)</vh></v>
+<v t="T538" a="E"><vh>@color</vh></v>
+<v t="T539" a="E"><vh>@comment</vh></v>
+<v t="T540" a="E"><vh>@cweb</vh></v>
+<v t="T541" a="E"><vh>@delims (not valid in @root or @unit trees)</vh></v>
+<v t="T542" a="E"><vh>@doc and @(space)</vh></v>
+<v t="T543" a="E"><vh>@file (not valid in @root or @unit trees)</vh></v>
+<v t="T544" a="E"><vh>@first (not valid in @root or @unit trees)</vh></v>
+<v t="T545" a="E"><vh>@ignore  (not valid in @file trees)</vh></v>
+<v t="T546" a="E"><vh>@language</vh></v>
+<v t="T547" a="E"><vh>@nocolor</vh></v>
+<v t="T548" a="E"><vh>@noweb</vh></v>
+<v t="T549" a="E"><vh>@others (valid only in @file trees)</vh></v>
+<v t="T550" a="E"><vh>@pagewidth</vh></v>
+<v t="T551" a="EM"><vh>@path</vh></v>
+<v t="T552" a="E"><vh>@root  (not valid in @file trees)</vh></v>
+<v t="T553" a="E"><vh>@section (Macintosh only)</vh></v>
+<v t="T554" a="E"><vh>@silent (not valid in @file trees)</vh></v>
+<v t="T555" a="E"><vh>@tabwidth</vh></v>
+<v t="T556" a="E"><vh>@terse  (not valid in @file trees)</vh></v>
+<v t="T557" a="E"><vh>@unit   (not valid in @file trees)</vh></v>
+<v t="T558" a="E"><vh>@verbose, @terse and @silent directives</vh></v>
 </v>
 <v><vh>Error Messages</vh>
 <v t="T559"><vh>Errors while tangling</vh>
-<v t="T560"><vh>Can not re-open temp file</vh></v>
-<v t="T561"><vh>Can not rename temporary file name</vh></v>
-<v t="T562"><vh>@code expects the header: [text of header] to contain a section name</vh></v>
-<v t="T563"><vh>@directive not valid here</vh></v>
-<v t="T564"><vh>Halting Tangle: too many errors</vh></v>
-<v t="T565"><vh>Invalid recursive reference of &lt;&lt; section name &gt;&gt;</vh></v>
-<v t="T277" a="C"><vh>Multiple parts not allowed for &lt;&lt; section name &gt;&gt;</vh></v>
-<v t="T566"><vh>No file written because of errors</vh></v>
-<v t="T567"><vh>Run on comment</vh></v>
-<v t="T568"><vh>Run on file name in @root directive</vh></v>
-<v t="T569"><vh>Run on section name</vh></v>
-<v t="T570"><vh>Run on string</vh></v>
-<v t="T571"><vh>Section definition not valid here.</vh></v>
-<v t="T572"><vh>Sections nested too deeply</vh></v>
-<v t="T573"><vh>The outline contains no roots</vh></v>
-<v t="T574"><vh>Undefined section:  &lt;&lt;&lt; section name &gt;&gt;&gt;</vh></v>
-<v t="T575"><vh>Unexpected @directive while putting code</vh></v>
-<v t="T576"><vh>Warning: possible duplicate definition of: &lt;&lt;&lt; section name &gt;&gt;&gt;</vh></v>
-<v t="T577"><vh>Warning: &lt;&lt;&lt; section name &gt;&gt;&gt; has been defined but not used</vh></v>
+<v t="T560" a="E"><vh>Can not re-open temp file</vh></v>
+<v t="T561" a="E"><vh>Can not rename temporary file name</vh></v>
+<v t="T562" a="E"><vh>@code expects the header: [text of header] to contain a section name</vh></v>
+<v t="T563" a="E"><vh>@directive not valid here</vh></v>
+<v t="T564" a="E"><vh>Halting Tangle: too many errors</vh></v>
+<v t="T565" a="E"><vh>Invalid recursive reference of &lt;&lt; section name &gt;&gt;</vh></v>
+<v t="T277" a="CE"><vh>Multiple parts not allowed for &lt;&lt; section name &gt;&gt;</vh></v>
+<v t="T566" a="E"><vh>No file written because of errors</vh></v>
+<v t="T567" a="E"><vh>Run on comment</vh></v>
+<v t="T568" a="E"><vh>Run on file name in @root directive</vh></v>
+<v t="T569" a="E"><vh>Run on section name</vh></v>
+<v t="T570" a="E"><vh>Run on string</vh></v>
+<v t="T571" a="E"><vh>Section definition not valid here.</vh></v>
+<v t="T572" a="E"><vh>Sections nested too deeply</vh></v>
+<v t="T573" a="E"><vh>The outline contains no roots</vh></v>
+<v t="T574" a="E"><vh>Undefined section:  &lt;&lt;&lt; section name &gt;&gt;&gt;</vh></v>
+<v t="T575" a="E"><vh>Unexpected @directive while putting code</vh></v>
+<v t="T576" a="E"><vh>Warning: possible duplicate definition of: &lt;&lt;&lt; section name &gt;&gt;&gt;</vh></v>
+<v t="T577" a="E"><vh>Warning: &lt;&lt;&lt; section name &gt;&gt;&gt; has been defined but not used</vh></v>
 </v>
 <v t="T578"><vh>Errors while untangling</vh>
-<v t="T579"><vh>Incompatible definitions of &lt;&lt;&lt; section name &gt;&gt;&gt;</vh></v>
-<v t="T580"><vh>Missing root part</vh></v>
-<v t="T581"><vh>Missing root section</vh></v>
-<v t="T582"><vh>Missing sentinel line for &lt;&lt;&lt; section name &gt;&gt;&gt;</vh></v>
-<v t="T583"><vh>Unterminated section: &lt;&lt;&lt; section name &gt;&gt;&gt;</vh></v>
+<v t="T579" a="E"><vh>Incompatible definitions of &lt;&lt;&lt; section name &gt;&gt;&gt;</vh></v>
+<v t="T580" a="E"><vh>Missing root part</vh></v>
+<v t="T581" a="E"><vh>Missing root section</vh></v>
+<v t="T582" a="E"><vh>Missing sentinel line for &lt;&lt;&lt; section name &gt;&gt;&gt;</vh></v>
+<v t="T583" a="E"><vh>Unterminated section: &lt;&lt;&lt; section name &gt;&gt;&gt;</vh></v>
 </v>
 <v><vh>Errors while reading @file nodes</vh>
-<v t="T584"><vh>Minor errors</vh></v>
-<v t="T585"><vh>Serious errors</vh></v>
+<v t="T584" a="E"><vh>Minor errors</vh></v>
+<v t="T585" a="E"><vh>Serious errors</vh></v>
 </v>
-<v t="T586"><vh>Errors while writing @file nodes</vh></v>
+<v t="T586" a="E"><vh>Errors while writing @file nodes</vh></v>
 </v>
 <v t="T587"><vh>Formats of Files Derived from @file</vh>
 <v t="T588"><vh>Sentinels in derived files</vh>
-<v t="T589"><vh>The @delims directive </vh></v>
-<v t="T590"><vh>@leo &amp; comment delimiters</vh></v>
-<v t="T591"><vh>@node</vh></v>
-<v t="T592"><vh>@body</vh></v>
-<v t="T593"><vh>@at and @doc &amp; the trailing whitespace convention</vh></v>
-<v t="T594"><vh>@others</vh></v>
-<v t="T595"><vh>@@delims</vh></v>
-<v t="T596"><vh>@@&lt;text&gt;</vh></v>
-<v t="T597"><vh>@verbatim and @verbatimAfterRef</vh></v>
-<v t="T598"><vh>@&lt;&lt;section name&gt;&gt;</vh></v>
+<v t="T589" a="E"><vh>The @delims directive </vh></v>
+<v t="T590" a="E"><vh>@leo &amp; comment delimiters</vh></v>
+<v t="T591" a="E"><vh>@node</vh></v>
+<v t="T592" a="E"><vh>@body</vh></v>
+<v t="T593" a="E"><vh>@at and @doc &amp; the trailing whitespace convention</vh></v>
+<v t="T594" a="E"><vh>@others</vh></v>
+<v t="T595" a="E"><vh>@@delims</vh></v>
+<v t="T596" a="E"><vh>@@&lt;text&gt;</vh></v>
+<v t="T597" a="E"><vh>@verbatim and @verbatimAfterRef</vh></v>
+<v t="T598" a="E"><vh>@&lt;&lt;section name&gt;&gt;</vh></v>
 </v>
 </v>
-<v t="T599"><vh>Future Features</vh></v>
-<v t="T347" a="C"><vh>Known Bugs &amp; Limitations</vh></v>
-<v t="T600"><vh>Reference for @file trees</vh></v>
+<v t="T599" a="E"><vh>Future Features</vh></v>
+<v t="T347" a="CE"><vh>Known Bugs &amp; Limitations</vh></v>
+<v t="T600" a="E"><vh>Reference for @file trees</vh></v>
 <v><vh>Macintosh Notes</vh>
-<v t="T601"><vh>Differences Between the PC and Mac Versions</vh></v>
-<v t="T602"><vh>Transferring Files</vh></v>
+<v t="T601" a="E"><vh>Differences Between the PC and Mac Versions</vh></v>
+<v t="T602" a="E"><vh>Transferring Files</vh></v>
 </v>
-<v t="T603"><vh>Sherlock</vh></v>
+<v t="T603" a="E"><vh>Sherlock</vh></v>
 <v t="T40" a="C"><vh>Configuring leo.py using leoConfig.leo and leoConfig.txt</vh>
-<v t="T41"><vh>Example of leoConfig.txt</vh></v>
+<v t="T41" a="E"><vh>Example of leoConfig.txt</vh></v>
 </v>
 <v t="T604"><vh>XML file format</vh>
-<v t="T605"><vh>&lt;?xml ... ?&gt;</vh></v>
+<v t="T605" a="E"><vh>&lt;?xml ... ?&gt;</vh></v>
 <v t="T606"><vh>&lt;leo_file&gt; ... &lt;/leo_file&gt;</vh>
-<v t="T607"><vh>&lt;leo_header ... /&gt;</vh></v>
-<v t="T608"><vh>&lt;globals ... &gt; ... &lt;/globals&gt;</vh></v>
-<v t="T609"><vh>&lt;preferences ... &gt; ... &lt;/preferences&gt;</vh></v>
-<v t="T610"><vh>&lt;find_panel_settings ... &gt; ... &lt;/find_panel_settings&gt;</vh></v>
+<v t="T607" a="E"><vh>&lt;leo_header ... /&gt;</vh></v>
+<v t="T608" a="E"><vh>&lt;globals ... &gt; ... &lt;/globals&gt;</vh></v>
+<v t="T609" a="E"><vh>&lt;preferences ... &gt; ... &lt;/preferences&gt;</vh></v>
+<v t="T610" a="E"><vh>&lt;find_panel_settings ... &gt; ... &lt;/find_panel_settings&gt;</vh></v>
 <v t="T611"><vh>&lt;vnodes&gt;...&lt;/vnodes&gt;</vh>
-<v t="T612"><vh>&lt;v...&gt; ... &lt;/v&gt;</vh></v>
+<v t="T612" a="E"><vh>&lt;v...&gt; ... &lt;/v&gt;</vh></v>
 </v>
 <v t="T613"><vh>&lt;tnodes&gt; ... &lt;/tnodes&gt;</vh>
-<v t="T614"><vh>&lt;t...&gt; ... &lt;/t&gt;</vh></v>
+<v t="T614" a="E"><vh>&lt;t...&gt; ... &lt;/t&gt;</vh></v>
 </v>
 <v t="T615"><vh>&lt;clone_windows&gt; ... &lt;/clone_windows&gt;</vh>
-<v t="T616"><vh>&lt;clone_window ...&gt; ... &lt;/clone_window&gt;</vh></v>
+<v t="T616" a="E"><vh>&lt;clone_window ...&gt; ... &lt;/clone_window&gt;</vh></v>
 </v>
 </v>
-<v t="T617"><vh>DTD for Leo's File Format</vh></v>
+<v t="T617" a="E"><vh>DTD for Leo's File Format</vh></v>
 <v t="T618"><vh>An example file</vh>
-<v t="T619"><vh>The file itself</vh></v>
+<v t="T619" a="E"><vh>The file itself</vh></v>
 <v><vh>The outline  from which the example file was created</vh>
 <v t="T620"><vh>Headline 1</vh>
-<v t="T621"><vh>Headline 2</vh>
-<v><vh>Headline 3 ( No body text)</vh></v>
+<v t="T621" a="E"><vh>Headline 2</vh>
+<v a="E"><vh>Headline 3 ( No body text)</vh></v>
 </v>
 </v>
 <v t="T622" a="C"><vh>Headline 4 ( a clone )</vh>
-<v t="T623"><vh>Headline 5</vh></v>
+<v t="T623" a="E"><vh>Headline 5</vh></v>
 </v>
 <v t="T622" a="C"><vh>Headline 4 ( a clone )</vh>
 <v t="T623"><vh>Headline 5</vh></v>
@@ -5137,7 +5137,7 @@ Leo and MORE have superb outlining facilities; each provides true outline object
 
 All parts of Leo are distributed under the following copyright.  This is intended to be the same as the Python license, namely that Leo is absolutely free, even for commercial use, including resale.  There is no GNU-like "copyleft" restriction.  This license is compatible with the GPL.
 
-Copyright © 1997-2002 by Edward K. Ream.  All Rights Reserved.
+Copyright 1997-2002 by Edward K. Ream.  All Rights Reserved.
 
 Permission to use, copy, modify, and distribute this software and its documentation for any purpose and without fee is hereby granted, provided that the above copyright notice appears in all copies and that both that copyright notice and this permission notice appear in supporting documentation, and that the names of Edward K. Ream or Leo not be used in advertising or publicity pertaining to distribution of the software without specific, written prior permission from Edward K. Ream. 
 
@@ -5611,9 +5611,9 @@ Note: Leo can not revert to previous delimiters automatically; you must change b
 
 @color
 
-@delims /* */ 
-Javascript stuff 
-@delims &lt;-- --&gt; 
+@delims /* */?
+Javascript stuff?
+@delims &lt;-- --&gt;?
 HTML stuff
 
 @nocolor
@@ -5725,11 +5725,11 @@ Here is a typical example of body text within an @root tree:
 @ This method puts an open node sentinel for node v.
 &lt;&lt;atFile methods&gt;&gt;=
 def putOpenNodeSentinel(self,v):
-    if v.isAtFileNode() and v != self.root:
-        &lt;&lt; issue an error message &gt;&gt;
-    else:
-        s = self.nodeSentinelText(v)
-        self.putSentinel("@+node:" + s)
+	if v.isAtFileNode() and v != self.root:
+		&lt;&lt; issue an error message &gt;&gt;
+	else:
+		s = self.nodeSentinelText(v)
+		self.putSentinel("@+node:" + s)
 
 @nocolor
 Provided that the node's headline starts with &lt;&lt;atFile methods&gt;&gt;, the example above is equivalent to:
@@ -5738,11 +5738,11 @@ Provided that the node's headline starts with &lt;&lt;atFile methods&gt;&gt;, th
 @ This method puts an open node sentinel for node v.
 @c
 def putOpenNodeSentinel(self,v):
-    if v.isAtFileNode() and v != self.root:
-        &lt;&lt; issue an error message &gt;&gt;
-    else:
-        s = self.nodeSentinelText(v)
-        self.putSentinel("@+node:" + s)
+	if v.isAtFileNode() and v != self.root:
+		&lt;&lt; issue an error message &gt;&gt;
+	else:
+		s = self.nodeSentinelText(v)
+		self.putSentinel("@+node:" + s)
 
 @nocolor
 We may not eliminate @c directives in @root trees.  If we convert the doc part to a comment we are left with:
@@ -5751,11 +5751,11 @@ We may not eliminate @c directives in @root trees.  If we convert the doc part t
 @c
 # This method puts an open node sentinel for node v.
 def putOpenNodeSentinel(self,v):
-    if v.isAtFileNode() and v != self.root:
-        &lt;&lt; issue an error message &gt;&gt;
-    else:
-        s = self.nodeSentinelText(v)
-        self.putSentinel("@+node:" + s)
+??? if v.isAtFileNode() and v != self.root:
+??????? &lt;&lt; issue an error message &gt;&gt;
+??? else:
+??????? s = self.nodeSentinelText(v)
+??????? self.putSentinel("@+node:" + s)
 
 @nocolor
 The following escape convention applies only in @root trees.  Within a code parts @@ in the first column (and only in the first column) stands for a single @ sign.</t>
@@ -7111,9 +7111,9 @@ Note: Leo can not revert to previous delimiters automatically; you must change b
 
 @color
 
-@delims /* */ 
-Javascript stuff 
-@delims &lt;-- --&gt; 
+@delims /* */
+Javascript stuff
+@delims &lt;-- --&gt;
 HTML stuff
 
 @nocolor

@@ -35,7 +35,7 @@ class atFile:
 	# The kind of at_directives.
 	
 	noDirective		=  1 # not an at-directive.
-	delimsDirective =  2 # @delims
+	delimsDirective =  2 # @delims (not used!)
 	docDirective	=  3 # @doc.
 	atDirective		=  4 # @<space> or @<newline>
 	codeDirective	=  5 # @code
@@ -309,6 +309,7 @@ class atFile:
 
 	sentinelDict = {
 		"@comment" : startComment, # 10/16/02
+		"@delims" : startDelims, # 10/26/02
 		"@newline" : startNewline,
 		"@nonewline" : startNoNewline,
 		"@verbatim": startVerbatim,
@@ -1570,41 +1571,42 @@ class atFile:
 				#@+node:7::unpaired sentinels
 				#@+node:3::<< scan @delims >>
 				#@+body
-				assert(match(s,i,"@delims"));
+				assert(match(s,i-1,"@delims"));
 				
 				# Skip the keyword and whitespace.
-				i0 = i
-				i = skip_ws(s,i+7)
+				i0 = i-1
+				i = skip_ws(s,i-1+7)
 					
 				# Get the first delim.
-				i1 = i
-				while i < len(s) and is_ws(s[i]) and not is_nl(s,i):
+				j = i
+				while i < len(s) and not is_ws(s[i]) and not is_nl(s,i):
 					i += 1
-				if i1 < i:
-					self.startSentinelComment = s[i1,i]
+				
+				if j < i:
+					self.startSentinelComment = s[j:i]
+					# print "delim1:", self.startSentinelComment
 				
 					# Get the optional second delim.
-					i1 = i = skip_ws(s,i)
-					while i < len(s) and not is_ws(*i) and not is_nl(*i):
+					j = i = skip_ws(s,i)
+					while i < len(s) and not is_ws(s[i]) and not is_nl(s,i):
 						i += 1
-					end = choose(i > i1, s[i1:i], "")
+					end = choose(j<i,s[j:i],"")
 					i2 = skip_ws(s,i)
 					if end == self.endSentinelComment and (i2 >= len(s) or is_nl(s,i2)):
 						self.endSentinelComment = "" # Not really two params.
-						line = s[i0:i1]
+						line = s[i0:j]
 						line = string.rstrip(line)
-						out.append(line)
+						out.append(line+'\n')
 					else:
 						self.endSentinelComment = end
+						# print "delim2:",end
 						line = s[i0:i]
 						line = string.rstrip(line)
-						out.append(line)
+						out.append(line+'\n')
 				else:
 					self.readError("Bad @delims")
 					# Append the bad @delims line to the body text.
 					out.append("@delims")
-				
-				
 				#@-body
 				#@-node:3::<< scan @delims >>
 				#@-node:7::unpaired sentinels
@@ -2415,7 +2417,7 @@ class atFile:
 			#@+node:1::<< handle @delims >>
 			#@+body
 			# Put a space to protect the last delim.
-			self.putSentinel("@" + directive + " ")
+			self.putSentinel(directive + " ") # 10/23/02: put @delims, not @@delims
 			
 			# Skip the keyword and whitespace.
 			j = i = skip_ws(s,k+len(tag))
