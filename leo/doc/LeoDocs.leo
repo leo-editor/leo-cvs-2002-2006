@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="2807" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="2911" clone_windows="0"/>
 <globals body_outline_ratio="0.5">
 	<global_window_position top="33" left="211" height="836" width="833"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
@@ -62,7 +62,7 @@
 <v t="edream.110203163054.44"><vh>Dan Winkler 1</vh></v>
 <v t="edream.110203163054.45"><vh>Dan Winkler 2</vh></v>
 </v>
-<v t="edream.110203163054.46" a="E"><vh>Release Notes</vh>
+<v t="edream.110203163054.46" a="EV"><vh>Release Notes</vh>
 <v t="edream.110203163054.47"><vh>Warnings</vh></v>
 <v t="edream.110203163054.48"><vh>Installation notes</vh>
 <v t="edream.110203163054.49" a=""><vh>System requirements</vh></v>
@@ -83,74 +83,21 @@
 <v t="edream.110203163054.62" a=""><vh>Quick start</vh></v>
 </v>
 <v t="edream.110203163054.63" a="E"><vh>Latest version</vh>
-<v t="edream.110203163054.64" a="V"><vh>4.1 alpha 1</vh></v>
+<v t="edream.110203163054.64" a=""><vh>4.1 alpha 1</vh>
+<v t="edream.110303182719" a="E"><vh>New config settings</vh></v>
+<v t="edream.110303182253.39"><vh>Made app.forceShutdown work in "idle" hook</vh></v>
+<v t="edream.110303182253.3"><vh>Leo now does an auto-save only if files have actually been changed.</vh></v>
+</v>
 <v t="edream.110203163054.66" a=""><vh>4.0.1, 4.0.2, 4.0.3 &amp; 4.0.4</vh></v>
-<v t="edream.110203163054.67" a=""><vh>4.0 final</vh>
-<v t="edream.110203163054.68"><vh>4.0 beta 4</vh></v>
-<v t="edream.110203163054.69"><vh>4.0 beta 3</vh>
-<v t="edream.110203163054.70"><vh>Fixed bugs</vh>
-<v t="edream.110203163054.71"><vh>Fixed bug that caused some clones not to be marked as clones</vh></v>
-<v t="edream.110203163054.72"><vh>Corrected problems with setting icons on Linux</vh></v>
-<v t="edream.110203163054.73"><vh>Fixed crasher in sentinelName</vh></v>
-<v t="edream.110203163054.74"><vh>Reenabled orphans &amp; ignored test in new write logic</vh></v>
-</v>
-<v t="edream.110203163054.75"><vh>New features</vh>
-<v t="edream.110203163054.76"><vh>Added support for unknown tnode and vnode attributes</vh></v>
-<v t="edream.110203163054.77"><vh>Added build number to signon</vh></v>
-<v t="edream.110203163054.78"><vh>Added better error message in setDefaultIcon</vh></v>
-</v>
-</v>
-<v t="edream.110203163054.79"><vh>4.0 beta 2</vh>
-<v t="edream.110203163054.80"><vh>To-do for 4.0 final</vh></v>
-<v t="edream.110203163054.81"><vh>Fixed Bugs</vh>
-<v t="edream.110203163054.82"><vh>Added crucial defensive checks in v.headString() and v.bodySting()</vh></v>
-<v t="edream.110203163054.83"><vh>Ensured newlines before all sentinels in @rawfile</vh></v>
-<v t="edream.110203163054.84"><vh>Fixed bugs involving find params</vh></v>
-<v t="edream.110203163054.85"><vh>Fixed Python Import bug</vh></v>
-<v t="edream.110203163054.86"><vh>Fixed several more unicode bugs</vh></v>
-<v t="edream.110203163054.87"><vh>Fixed crasher in Go To Outline command.</vh></v>
-<v t="edream.110203163054.88"><vh>Fixed @rawfile write problem</vh></v>
-</v>
-<v t="edream.110203163054.89"><vh>Improved commands</vh>
-<v t="edream.110203163054.90"><vh>Finished Import Derived File command and made it undoable</vh></v>
-<v t="edream.110203163054.91"><vh>Moved Clear Recent Files menu item into Recent Files menu</vh></v>
-<v t="edream.110203163054.92"><vh>Added better log message for Convert All Tabs/Blanks commands</vh></v>
-<v t="edream.110203163054.93"><vh>Marked changed nodes &amp; make the @file node and the outline dirty.</vh></v>
-<v t="edream.110203163054.94"><vh>Rewrote icon code so it doesn't use PIL or tkIcon in Python 2.3</vh></v>
-<v t="edream.110203163054.95"><vh>Created leoGui base class for tkinterGui class</vh></v>
-</v>
-<v t="edream.110203163054.96"><vh>New and improved settings</vh>
-<v t="edream.110203163054.97"><vh>Added support for two new settings affecting drags</vh></v>
-<v t="edream.110203163054.98"><vh>changed default for config.write_old_format_derived_files</vh></v>
-</v>
-</v>
-<v t="edream.110203163054.99"><vh>4.0 beta 1</vh>
-<v t="edream.110203163054.100" a=""><vh>4.0 Theory of operation</vh></v>
-<v t="edream.110203163054.101"><vh>New commands &amp; options</vh>
-<v t="edream.110203163054.102"><vh>New write_old_format_derived_files option</vh></v>
-<v t="edream.110203163054.103"><vh>New Clear Recent Files command</vh></v>
-<v t="edream.110203163054.104"><vh>New Import Derived File command</vh></v>
-<v t="edream.110203163054.105"><vh>New Write 3.x/4.x Derived Files &amp; autosave</vh></v>
-</v>
-<v t="edream.110203163054.106"><vh>New plugins</vh></v>
-<v t="edream.110203163054.107"><vh>New read logic and greatly inproved error recovery</vh>
-<v t="edream.110203163054.108"><vh>Added test for unvisited nodes in read logic</vh></v>
-<v t="edream.110203163054.109"><vh>Error recovery is _much_ better than before</vh></v>
-</v>
-<v t="edream.110203163054.110"><vh>Improvements &amp; bug fixes</vh>
-<v t="edream.110203163054.111"><vh>Added horizontal scrollbar in body pane when @nowrap in effect</vh></v>
-<v t="edream.110203163054.112"><vh>Added support for Python 2.3</vh></v>
-<v t="edream.110203163054.113"><vh>Leo recycles window objects only if more than one window open</vh></v>
-<v t="edream.110203163054.114"><vh>Removed "not undoable" message from Read @file Nodes command</vh></v>
-<v t="edream.110203163054.115"><vh>Removed Open Python Window command</vh></v>
-<v t="edream.110203163054.116"><vh>Simplified read and write code</vh></v>
-</v>
-</v>
-</v>
 </v>
 <v t="edream.110203163054.117"><vh>leo.py versions</vh>
+<v t="edream.110203163054.64" a=""><vh>4.1 alpha 1</vh>
+<v t="edream.110303182719"><vh>New config settings</vh></v>
+<v t="edream.110303182253.39"><vh>Made app.forceShutdown work in "idle" hook</vh></v>
+<v t="edream.110303182253.3"><vh>Leo now does an auto-save only if files have actually been changed.</vh></v>
+</v>
 <v t="edream.110203163054.66" a=""><vh>4.0.1, 4.0.2, 4.0.3 &amp; 4.0.4</vh></v>
-<v t="edream.110203163054.67" a=""><vh>4.0 final</vh>
+<v t="edream.110203163054.67"><vh>4.0 final</vh>
 <v t="edream.110203163054.68"><vh>4.0 beta 4</vh></v>
 <v t="edream.110203163054.69"><vh>4.0 beta 3</vh>
 <v t="edream.110203163054.70"><vh>Fixed bugs</vh>
@@ -24746,5 +24693,13 @@ Still to do:
 		file commands,
 		find commands,
 		tangle/untangle commands</t>
+<t tx="edream.110303182253.3">- Added df.fileChanged flag.  This is set by replaceTargetFileIfDifferent.
+
+- Separated the "written" logic from the "changed" logic.  We do an auto-save only if something has actually been changed.  The "written" logic is used to warn if a tree contains no @file nodes.</t>
+<t tx="edream.110303182253.39"></t>
+<t tx="edream.110303182719">The config_encoding setting controls the encoding of non-ascii characters in leoConfig.txt.
+
+The use_gnx setting in leoConfig.txt determines whether uses gnx's (cvs friendly) or ints.  No version of Leo before 4.1 can read .leo files containing gnx.   Only gnx's are immutable.  Leo recomputes all non-gnx indices from scratch whenever writing a .leo file. It is possible to convert between 3.x and 4.1 file formats by changing the use_gnx setting.
+</t>
 </tnodes>
 </leo_file>

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="3809" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="3810" clone_windows="0"/>
 <globals body_outline_ratio="0.5">
-	<global_window_position top="8" left="291" height="872" width="905"/>
+	<global_window_position top="14" left="249" height="872" width="905"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences allow_rich_text="0">
@@ -14,6 +14,13 @@
 <vnodes>
 <v t="edream.110203160744"><vh> Diary</vh>
 <v t="edream.110203160744.1"><vh>November 2003</vh>
+<v t="edream.110403085725"><vh>11/4</vh>
+<v t="edream.110403085725.1"><vh>Added Hoist/De-Hoist commands</vh></v>
+</v>
+<v t="edream.110303152216"><vh>11/3</vh>
+<v t="edream.110303161742"><vh>Leo now does an auto-save only if files have actually been changed.</vh></v>
+<v t="edream.110303152216.1"><vh>Changed all .leo files to use the -ko cvs option</vh></v>
+</v>
 <v t="edream.110203160744.2"><vh>11/2</vh>
 <v t="edream.110203161223" a=""><vh>Script to clean unused tnodeLists</vh></v>
 <v t="edream.110203160744.3"><vh>Added use_gnx config setting</vh></v>
@@ -949,7 +956,7 @@
 <v t="edream.110203160744.751"><vh>force_redraw</vh></v>
 <v t="edream.110203160744.752"><vh>redraw_now</vh></v>
 <v t="edream.110203160744.753" a=""><vh>idle_redraw</vh></v>
-<v t="edream.110203160744.754"><vh>idle_second_redraw</vh></v>
+<v t="edream.110203160744.754" a=""><vh>idle_second_redraw</vh></v>
 </v>
 <v t="edream.110203160744.755" a=""><vh>tree.__init__</vh></v>
 <v t="edream.110203160744.756" a=""><vh>tree.idle_scrollTo</vh></v>
@@ -1460,7 +1467,7 @@
 <v t="edream.110203160744.1072"><vh>&lt;&lt; create the export submenu &gt;&gt;</vh></v>
 </v>
 <v t="edream.110203160744.1073"><vh>&lt;&lt; create the outline menu &gt;&gt;</vh>
-<v t="edream.110203160744.1074"><vh>&lt;&lt; create top-level outline menu &gt;&gt;</vh></v>
+<v t="edream.110203160744.1074" a=""><vh>&lt;&lt; create top-level outline menu &gt;&gt;</vh></v>
 <v t="edream.110203160744.1075"><vh>&lt;&lt; create expand/contract submenu &gt;&gt;</vh></v>
 <v t="edream.110203160744.1076"><vh>&lt;&lt; create move submenu &gt;&gt;</vh></v>
 <v t="edream.110203160744.1077"><vh>&lt;&lt; create mark submenu &gt;&gt;</vh></v>
@@ -1517,7 +1524,7 @@
 <v t="edream.110203160744.1118" a=""><vh>OnWriteAtFileNodes</vh></v>
 <v t="edream.110203160744.1119" a=""><vh>4.0 Commands</vh>
 <v t="edream.110203160744.1120" a=""><vh>OnImportDerivedFile</vh></v>
-<v t="edream.110203160744.1121"><vh>OnWriteNew/OldDerivedFiles</vh></v>
+<v t="edream.110203160744.1121" a=""><vh>OnWriteNew/OldDerivedFiles</vh></v>
 </v>
 </v>
 <v t="edream.110203160744.1122"><vh>Tangle submenu</vh>
@@ -1626,6 +1633,7 @@
 <v t="edream.110203160744.1207"><vh>OnInsertNode</vh></v>
 <v t="edream.110203160744.1208"><vh>OnCloneNode</vh></v>
 <v t="edream.110203160744.1209"><vh>OnSortChildren, OnSortSiblings</vh></v>
+<v t="edream.110403081646" a=""><vh>f.OnHoist,OnDehoist</vh></v>
 </v>
 <v t="edream.110203160744.1210"><vh>Expand/Contract</vh>
 <v t="edream.110203160744.1211"><vh>No longer used</vh>
@@ -1725,7 +1733,7 @@
 <v t="edream.110203160744.1291"><vh>hasSelection</vh></v>
 <v t="edream.110203160744.1292"><vh>updateFileMenu</vh></v>
 <v t="edream.110203160744.1293"><vh>updateEditMenu</vh></v>
-<v t="edream.110203160744.1294"><vh>updateOutlineMenu</vh></v>
+<v t="edream.110203160744.1294" a=""><vh>updateOutlineMenu</vh></v>
 </v>
 </v>
 <v t="edream.110203160744.1295"><vh>(Convenience routines for hooks)</vh>
@@ -2723,7 +2731,7 @@
 <v t="edream.110203160744.751"><vh>force_redraw</vh></v>
 <v t="edream.110203160744.752"><vh>redraw_now</vh></v>
 <v t="edream.110203160744.753" a=""><vh>idle_redraw</vh></v>
-<v t="edream.110203160744.754"><vh>idle_second_redraw</vh></v>
+<v t="edream.110203160744.754" a=""><vh>idle_second_redraw</vh></v>
 </v>
 <v t="edream.110203160744.740" a=""><vh>drawIcon (tag_bind)</vh>
 <v t="edream.110203160744.741"><vh>&lt;&lt; define icon click callbacks &gt;&gt;</vh></v>
@@ -2953,7 +2961,7 @@
 <v t="edream.110203160744.1858"><vh>Report</vh></v>
 <v t="edream.110203160744.1119" a=""><vh>4.0 Commands</vh>
 <v t="edream.110203160744.1120" a=""><vh>OnImportDerivedFile</vh></v>
-<v t="edream.110203160744.1121"><vh>OnWriteNew/OldDerivedFiles</vh></v>
+<v t="edream.110203160744.1121" a=""><vh>OnWriteNew/OldDerivedFiles</vh></v>
 </v>
 <v t="edream.110203160744.1118" a=""><vh>OnWriteAtFileNodes</vh></v>
 <v t="edream.110203160744.1859" a=""><vh>writeAtFileNodes</vh></v>
@@ -3800,6 +3808,7 @@
 </v>
 </v>
 <v t="edream.110203160744.2145"><vh>4.1 Projects</vh>
+<v t="edream.110303162034"><vh>alpha 1 projects</vh>
 <v t="edream.110203160744.2146"><vh>(Calling forceShutdown in an "idle" hook)</vh>
 <v t="edream.110203160744.1583" a=""><vh>run &amp; allies</vh>
 <v t="edream.110203160744.1584"><vh>isValidPython</vh></v>
@@ -4158,7 +4167,7 @@
 <v t="edream.110203160744.1072"><vh>&lt;&lt; create the export submenu &gt;&gt;</vh></v>
 </v>
 <v t="edream.110203160744.1073"><vh>&lt;&lt; create the outline menu &gt;&gt;</vh>
-<v t="edream.110203160744.1074"><vh>&lt;&lt; create top-level outline menu &gt;&gt;</vh></v>
+<v t="edream.110203160744.1074" a=""><vh>&lt;&lt; create top-level outline menu &gt;&gt;</vh></v>
 <v t="edream.110203160744.1075"><vh>&lt;&lt; create expand/contract submenu &gt;&gt;</vh></v>
 <v t="edream.110203160744.1076"><vh>&lt;&lt; create move submenu &gt;&gt;</vh></v>
 <v t="edream.110203160744.1077"><vh>&lt;&lt; create mark submenu &gt;&gt;</vh></v>
@@ -4215,7 +4224,7 @@
 <v t="edream.110203160744.1118" a=""><vh>OnWriteAtFileNodes</vh></v>
 <v t="edream.110203160744.1119" a=""><vh>4.0 Commands</vh>
 <v t="edream.110203160744.1120" a=""><vh>OnImportDerivedFile</vh></v>
-<v t="edream.110203160744.1121"><vh>OnWriteNew/OldDerivedFiles</vh></v>
+<v t="edream.110203160744.1121" a=""><vh>OnWriteNew/OldDerivedFiles</vh></v>
 </v>
 </v>
 <v t="edream.110203160744.1122"><vh>Tangle submenu</vh>
@@ -4324,6 +4333,7 @@
 <v t="edream.110203160744.1207"><vh>OnInsertNode</vh></v>
 <v t="edream.110203160744.1208"><vh>OnCloneNode</vh></v>
 <v t="edream.110203160744.1209"><vh>OnSortChildren, OnSortSiblings</vh></v>
+<v t="edream.110403081646" a=""><vh>f.OnHoist,OnDehoist</vh></v>
 </v>
 <v t="edream.110203160744.1210"><vh>Expand/Contract</vh>
 <v t="edream.110203160744.1211"><vh>No longer used</vh>
@@ -4423,7 +4433,7 @@
 <v t="edream.110203160744.1291"><vh>hasSelection</vh></v>
 <v t="edream.110203160744.1292"><vh>updateFileMenu</vh></v>
 <v t="edream.110203160744.1293"><vh>updateEditMenu</vh></v>
-<v t="edream.110203160744.1294"><vh>updateOutlineMenu</vh></v>
+<v t="edream.110203160744.1294" a=""><vh>updateOutlineMenu</vh></v>
 </v>
 </v>
 <v t="edream.110203160744.2270"><vh>Splitter stuff</vh>
@@ -4840,11 +4850,198 @@
 <v t="edream.110203160744.884" a=""><vh>&lt;&lt; write recent files section &gt;&gt;</vh></v>
 <v t="edream.110203160744.1402" a=""><vh>update_section</vh></v>
 </v>
+<v t="edream.110203160744.3806"><vh>(Use gnx's in .leo files)</vh>
+<v t="edream.110203161223" a=""><vh>Script to clean unused tnodeLists</vh></v>
+<v t="edream.110203160744.1583" a=""><vh>run &amp; allies</vh>
+<v t="edream.110203160744.1584"><vh>isValidPython</vh></v>
+<v t="edream.110203160744.1585" a=""><vh>computeLoadDir</vh></v>
+<v t="edream.110203160744.1586" a=""><vh>createFrame (leo.py)</vh></v>
 </v>
-<v t="edream.110203160744.2412" a="MV"><vh>To do: 4.1</vh>
-<v t="edream.110203160744.2416"><vh>After 4.1 alpha 1</vh>
+<v t="edream.110203160744.1398" a=""><vh>app.__init__</vh>
+<v t="edream.110203160744.1399"><vh>&lt;&lt; define global constants &gt;&gt;</vh></v>
+<v t="edream.110203160744.220" a=""><vh>&lt;&lt; define global data structures &gt;&gt; app</vh></v>
+</v>
+<v t="edream.110203160744.1403" a=""><vh>&lt;&lt; get config options &gt;&gt;</vh></v>
+<v t="edream.110203160744.2642" a=""><vh>app.setLeoID</vh>
+<v t="edream.110203160744.2643"><vh>&lt;&lt; return if we can set self.leoID from sys.leoID&gt;&gt;</vh></v>
+<v t="edream.110203160744.2644"><vh>&lt;&lt; return if we can set self.leoID from "leoID.txt" &gt;&gt;</vh></v>
+<v t="edream.110203160744.2645"><vh>&lt;&lt; put up a dialog requiring a valid id &gt;&gt;</vh></v>
+<v t="edream.110203160744.2646"><vh>&lt;&lt; attempt to create leoID.txt &gt;&gt;</vh></v>
+</v>
+<v t="edream.110203160744.3614" a=""><vh>class tkinterAskLeoID</vh>
+<v t="edream.110203160744.3615"><vh>tkinterAskLeoID.__init__</vh></v>
+<v t="edream.110203160744.3616"><vh>tkinterAskLeoID.createFrame</vh></v>
+<v t="edream.110203160744.3617"><vh>tkinterAskLeoID.onCloseWindow</vh></v>
+<v t="edream.110203160744.3618"><vh>tkinterAskLeoID.onButton</vh></v>
+<v t="edream.110203160744.3619"><vh>tkinterAskLeoID.onKey</vh>
+<v t="edream.110203160744.3620"><vh>&lt;&lt; eliminate invalid characters &gt;&gt;</vh></v>
+<v t="edream.110203160744.3621"><vh>&lt;&lt; enable the ok button if there are 4 or more valid characters &gt;&gt;</vh></v>
+</v>
+</v>
+<v t="edream.110203160744.2388" a=""><vh>Creating and running tkinter dialogs</vh></v>
+<v t="edream.110203160744.3323" a=""><vh>class nodeIndices</vh>
+<v t="edream.110203160744.3324"><vh>nodeIndices.__init__</vh></v>
+<v t="edream.110203160744.3325"><vh>areEqual</vh></v>
+<v t="edream.110203160744.3326"><vh>get/setDefaultId</vh></v>
+<v t="edream.110203160744.3327"><vh>getNewIndex</vh></v>
+<v t="edream.110203160744.3328"><vh>isGnx</vh></v>
+<v t="edream.110203160744.3329"><vh>scanGnx</vh></v>
+<v t="edream.110203160744.3330"><vh>setTimeString</vh></v>
+<v t="edream.110203160744.3331"><vh>toString</vh></v>
+</v>
+<v t="edream.110203160744.3807"><vh>Writing gnx's</vh>
+<v t="edream.110203160744.2836" a=""><vh>putOpenNodeSentinel</vh></v>
+<v t="edream.110203160744.1564" a=""><vh>assignFileIndices &amp; compactFileIndices</vh>
+<v t="edream.110203160744.1565"><vh>&lt;&lt; assign missing gnx's, converting ints to gnx's &gt;&gt;</vh></v>
+<v t="edream.110203160744.1566"><vh>&lt;&lt; reassign all tnode indices &gt;&gt;</vh></v>
+</v>
+<v t="edream.110203160744.2119" a=""><vh>putVnode (3.x and 4.x)</vh>
+<v t="edream.110203160744.2120"><vh>&lt;&lt; Put tnode index &gt;&gt;</vh></v>
+<v t="edream.110203160744.2121"><vh>&lt;&lt; Put attribute bits &gt;&gt;</vh></v>
+<v t="edream.110203160744.2122"><vh>&lt;&lt; write the head text &gt;&gt;</vh></v>
+<v t="edream.110203160744.2123"><vh>&lt;&lt; put unknown vnode attributes &gt;&gt;</vh></v>
+</v>
+<v t="edream.110203160744.1571" a=""><vh>putTnode</vh>
+<v t="edream.110203160744.1572"><vh>&lt;&lt; put unknown tnode attributes &gt;&gt;</vh></v>
+</v>
+<v t="edream.110203160744.2992" a=""><vh>putTnodeList (4.0)</vh></v>
+</v>
+<v t="edream.110203160744.3808"><vh>Reading gnx's</vh>
+<v t="edream.110203160744.2964" a=""><vh>cononicalTnodeIndex</vh></v>
+<v t="edream.110203160744.2978" a=""><vh>fileCommands.setAllJoinLinks</vh></v>
+<v t="edream.110203160744.2108" a=""><vh>t.__init__</vh></v>
+<v t="edream.110203160744.2060" a=""><vh>createVnode</vh>
+<v t="edream.110203160744.2061"><vh>&lt;&lt; handle unknown vnode attributes &gt;&gt;</vh></v>
+</v>
+<v t="edream.110203160744.1842" a=""><vh>findChild</vh></v>
+<v t="edream.110203160744.1555" a=""><vh>getTnode</vh>
+<v t="edream.110203160744.1556"><vh>&lt;&lt; handle read from file &gt;&gt;</vh></v>
+<v t="edream.110203160744.1557"><vh>&lt;&lt; handle read from clipboard &gt;&gt;</vh></v>
+<v t="edream.110203160744.1558"><vh>&lt;&lt; handle unknown attributes &gt;&gt;</vh></v>
+</v>
+<v t="edream.110203160744.1560" a=""><vh>getVnode</vh>
+<v t="edream.110203160744.1561"><vh>&lt;&lt; Handle vnode attribute bits  &gt;&gt;</vh></v>
+<v t="edream.110203160744.1562"><vh>&lt;&lt; Set the remembered status bits &gt;&gt;</vh></v>
+</v>
+<v t="edream.110203160744.2973" a="M"><vh>getTnodeList (4.0)</vh></v>
+<v t="edream.110203160744.2976" a=""><vh>newTnode</vh></v>
+</v>
+</v>
+</v>
+<v t="edream.110303162034.1"><vh>beta 1 projects</vh>
+<v t="edream.110303154904.1"><vh>(Don't auto-save if noting changed)</vh>
+<v t="edream.110203160744.1859" a=""><vh>writeAtFileNodes</vh></v>
+<v t="edream.110203160744.1668" a=""><vh>writeDirtyAtFileNodes</vh></v>
+<v t="edream.110203160744.1860" a=""><vh>writeMissingAtFileNodes</vh></v>
+<v t="edream.110203160744.1121" a=""><vh>OnWriteNew/OldDerivedFiles</vh></v>
+<v t="edream.110203160744.1865" a=""><vh>top_df.writeAll</vh>
+<v t="edream.110203160744.1866"><vh>&lt;&lt; Clear all orphan bits &gt;&gt;</vh></v>
+<v t="edream.110203160744.1867"><vh>&lt;&lt; handle v's tree &gt;&gt;</vh></v>
+<v t="edream.110203160744.1868"><vh>&lt;&lt; say the command is finished &gt;&gt;</vh></v>
+</v>
+<v t="edream.110203160744.1861" a=""><vh>top_df.writeMissing</vh>
+<v t="edream.110203160744.1862"><vh>&lt;&lt; set missing if the file does not exist &gt;&gt;</vh></v>
+<v t="edream.110203160744.1863"><vh>&lt;&lt; create df.outputFile &gt;&gt;</vh></v>
+<v t="edream.110203160744.1864"><vh>&lt;&lt; write the @file node &gt;&gt;</vh></v>
+</v>
+<v t="edream.110203160744.2766" a=""><vh>atFile.replaceTargetFileIfDifferent</vh>
+<v t="edream.110203160744.2767"><vh>&lt;&lt; delete the output file &gt;&gt;</vh></v>
+<v t="edream.110203160744.2768"><vh>&lt;&lt; replace the target file with the output file &gt;&gt;</vh></v>
+<v t="edream.110203160744.2769"><vh>&lt;&lt; rename the output file to be the target file &gt;&gt;</vh></v>
+</v>
+</v>
+<v t="edream.110403081646.2"><vh>(Hoist/dehoist)</vh>
+<v t="edream.110203160744.1294" a=""><vh>updateOutlineMenu</vh></v>
+<v t="edream.110203160744.1074" a=""><vh>&lt;&lt; create top-level outline menu &gt;&gt;</vh></v>
+<v t="edream.110403081646" a=""><vh>f.OnHoist,OnDehoist</vh></v>
+<v t="edream.110403081646.1" a=""><vh>c.Hoist &amp; dehoist &amp; enablers</vh></v>
+<v t="edream.110403082224" a=""><vh>drawTopTree</vh></v>
+<v t="edream.110203160744.746" a=""><vh>drawTree</vh>
+<v t="edream.110203160744.747"><vh>&lt;&lt; draw vertical line &gt;&gt;</vh></v>
+</v>
+<v t="edream.110203160744.753" a=""><vh>idle_redraw</vh></v>
+<v t="edream.110203160744.754" a=""><vh>idle_second_redraw</vh></v>
+<v t="edream.110203160744.3503" a=""><vh>u.redo</vh>
+<v t="edream.110203160744.3504"><vh>&lt;&lt; redo clone cases &gt;&gt;</vh></v>
+<v t="edream.110203160744.3505"><vh>&lt;&lt; redo delete cases &gt;&gt;</vh></v>
+<v t="edream.110403090228"><vh>&lt;&lt; redo hoist cases &gt;&gt;</vh></v>
+<v t="edream.110203160744.3506"><vh>&lt;&lt; redo insert cases &gt;&gt;</vh></v>
+<v t="edream.110203160744.3507"><vh>&lt;&lt; redo move &amp; drag cases &gt;&gt;</vh></v>
+<v t="edream.110203160744.3508"><vh>&lt;&lt; redo promote and demote cases &gt;&gt;</vh></v>
+<v t="edream.110203160744.1810" a=""><vh>&lt;&lt; redo replace cases &gt;&gt;</vh></v>
+<v t="edream.110203160744.3509"><vh>&lt;&lt; redo sort cases &gt;&gt;</vh></v>
+<v t="edream.110203160744.1931" a=""><vh>&lt;&lt; redo typing cases &gt;&gt;</vh></v>
+</v>
+<v t="edream.110203160744.3510" a=""><vh>u.undo</vh>
+<v t="edream.110203160744.3511"><vh>&lt;&lt; undo clone cases &gt;&gt;</vh></v>
+<v t="edream.110203160744.3512"><vh>&lt;&lt; undo delete cases &gt;&gt;</vh></v>
+<v t="edream.110403090228.1"><vh>&lt;&lt; undo hoist cases &gt;&gt;</vh></v>
+<v t="edream.110203160744.3513"><vh>&lt;&lt; undo insert cases &gt;&gt;</vh></v>
+<v t="edream.110203160744.3514"><vh>&lt;&lt; undo move  &amp; drag cases &gt;&gt;</vh></v>
+<v t="edream.110203160744.1809" a=""><vh>&lt;&lt; undo replace cases &gt;&gt;</vh></v>
+<v t="edream.110203160744.3515"><vh>&lt;&lt; undo promote and demote cases &gt;&gt;</vh></v>
+<v t="edream.110203160744.3516"><vh>&lt;&lt; undo sort cases &gt;&gt;</vh></v>
+<v t="edream.110203160744.1932" a=""><vh>&lt;&lt; undo typing cases &gt;&gt;</vh></v>
+</v>
+<v t="edream.110203160744.2875" a=""><vh>Enabling Menu Items (Commands)</vh>
+<v t="edream.110203160744.2876"><vh>canContractAllHeadlines</vh></v>
+<v t="edream.110203160744.2877"><vh>canContractAllSubheads</vh></v>
+<v t="edream.110203160744.2878"><vh>canContractParent</vh></v>
+<v t="edream.110203160744.2879"><vh>canContractSubheads</vh></v>
+<v t="edream.110203160744.2880"><vh>canCutOutline &amp; canDeleteHeadline</vh></v>
+<v t="edream.110203160744.2881"><vh>canDemote</vh></v>
+<v t="edream.110203160744.2882"><vh>canExpandAllHeadlines</vh></v>
+<v t="edream.110203160744.2883"><vh>canExpandAllSubheads</vh></v>
+<v t="edream.110203160744.2884"><vh>canExpandSubheads</vh></v>
+<v t="edream.110203160744.2885"><vh>canExtract, canExtractSection &amp; canExtractSectionNames</vh></v>
+<v t="edream.110203160744.2886"><vh>canFindMatchingBracket</vh></v>
+<v t="edream.110203160744.2887"><vh>canGoToNextDirtyHeadline</vh></v>
+<v t="edream.110203160744.2888"><vh>canGoToNextMarkedHeadline</vh></v>
+<v t="edream.110203160744.2889"><vh>canMarkChangedHeadline</vh></v>
+<v t="edream.110203160744.2890"><vh>canMarkChangedRoots</vh></v>
+<v t="edream.110203160744.2891"><vh>canMoveOutlineDown (changed for hoist)</vh></v>
+<v t="edream.110203160744.2892"><vh>canMoveOutlineLeft (changed for hoist)</vh></v>
+<v t="edream.110203160744.2893"><vh>canMoveOutlineRight (changed for hoist)</vh></v>
+<v t="edream.110203160744.2894"><vh>canMoveOutlineUp (changed for hoist)</vh></v>
+<v t="edream.110203160744.2395" a=""><vh>canPasteOutline</vh></v>
+<v t="edream.110203160744.2895"><vh>canPromote</vh></v>
+<v t="edream.110203160744.2896"><vh>canRevert</vh></v>
+<v t="edream.110203160744.2897"><vh>canSelect....</vh></v>
+<v t="edream.110203160744.2898"><vh>canShiftBodyLeft/Right</vh></v>
+<v t="edream.110203160744.2899"><vh>canSortChildren, canSortSiblings</vh></v>
+<v t="edream.110203160744.2900"><vh>canUndo &amp; canRedo</vh></v>
+<v t="edream.110203160744.2901"><vh>canUnmarkAll</vh></v>
+</v>
+<v t="edream.110203160744.3271" a=""><vh>isAncestorOf</vh></v>
+<v t="edream.110203160744.1911" a=""><vh>Moving, Dragging, Promote, Demote, Sort (commands)</vh>
+<v t="edream.110203160744.1912"><vh>c.dragAfter</vh></v>
+<v t="edream.110203160744.1913"><vh>c.dragCloneToNthChildOf (changed in 3.11.1)</vh></v>
+<v t="edream.110203160744.1914"><vh>c.dragToNthChildOf</vh></v>
+<v t="edream.110203160744.926" a=""><vh>c.sortChildren, sortSiblings</vh>
+<v t="edream.110203160744.927"><vh>&lt;&lt; Set the undo info for sortChildren &gt;&gt;</vh></v>
+<v t="edream.110203160744.928"><vh>&lt;&lt; Set the undo info for sortSiblings &gt;&gt;</vh></v>
+</v>
+<v t="edream.110203160744.1769" a=""><vh>c.sortTopLevel</vh>
+<v t="edream.110203160744.1770"><vh>&lt;&lt; Set the undo info for sortTopLevel &gt;&gt;</vh></v>
+</v>
+<v t="edream.110203160744.1915"><vh>demote</vh></v>
+<v t="edream.110203160744.1916"><vh>moveOutlineDown</vh>
+<v t="edream.110203160744.1917"><vh>&lt;&lt; Move v down &gt;&gt;</vh></v>
+</v>
+<v t="edream.110203160744.1918"><vh>moveOutlineLeft</vh></v>
+<v t="edream.110203160744.1919"><vh>moveOutlineRight</vh></v>
+<v t="edream.110203160744.1920"><vh>moveOutlineUp</vh>
+<v t="edream.110203160744.1921"><vh>&lt;&lt; Move v up &gt;&gt;</vh></v>
+</v>
+<v t="edream.110203160744.1922"><vh>promote</vh></v>
+<v t="edream.110203160744.1923"><vh>c.dragCloneAfter (changed in 3.11.1)</vh></v>
+</v>
+</v>
+</v>
+</v>
+<v t="edream.110203160744.2412" a="M"><vh>To do: 4.1 beta 1</vh>
+<v t="edream.110403083824"><vh>To do: use @nocolor when no explicit @language is in effect ??</vh></v>
 <v t="edream.110203163105" a="M"><vh>Fix Extract commands</vh></v>
-<v t="edream.110203163105.1" a="M"><vh>Don't autosave if nothing has changed</vh></v>
 <v t="edream.110203160744.3805" a="M"><vh>(Make sure that finishPaste nodes never have join lists)</vh>
 <v t="edream.110203160744.2978" a=""><vh>fileCommands.setAllJoinLinks</vh></v>
 <v t="edream.110203160744.2976" a=""><vh>newTnode</vh></v>
@@ -4864,10 +5061,8 @@
 <v t="edream.110203160744.1552"><vh>&lt;&lt; reassign tnode indices and clear all clone links &gt;&gt;</vh></v>
 </v>
 </v>
-<v t="edream.110203163105.2"><vh>Test all file dialogs</vh></v>
-<v t="edream.110203160744.2417"><vh>Cleanup</vh></v>
+<v t="edream.110303154904"><vh>Check for unused tnodeLists on read/write??</vh></v>
 <v t="edream.110203160744.2418"><vh>Create a command to catch _user_ clone errors</vh></v>
-<v t="edream.110203160744.2419"><vh>Improve how plugins are loaded</vh></v>
 <v t="edream.110203160744.2420"><vh>Support Unicode file names (see other to-do list)</vh></v>
 <v t="edream.110203160744.2421"><vh>Bugs to fix asap</vh>
 <v t="edream.110203160744.2422"><vh>Urgent 4</vh>
@@ -4944,10 +5139,14 @@
 <v t="edream.110203160744.2457"><vh>Scroll improvement</vh></v>
 </v>
 </v>
+<v t="edream.110303152216.2"><vh>gui &amp; plugin stuff</vh>
+<v t="edream.110203160744.2419"><vh>Improve how plugins are loaded</vh></v>
+<v t="edream.110203163105.2"><vh>Test all file dialogs</vh></v>
 <v t="edream.110203160744.2415"><vh>Revise mod_spelling.py to use the new c.body methods</vh></v>
+<v t="edream.110303152216.3"><vh>Remove instances of bodyCtrl from non-gui code (undo, etc)</vh></v>
 </v>
 </v>
-<v t="edream.110203160744.2458"><vh>Code</vh>
+<v t="edream.110203160744.2458" a="E"><vh>Code</vh>
 <v t="edream.110203160744.2459"><vh>  Overview of code</vh>
 <v t="edream.110203160744.2460" a=""><vh>&lt;&lt; About clones &gt;&gt;</vh></v>
 <v t="edream.110203160744.2461" a=""><vh>&lt;&lt; About drawing and events &gt;&gt;</vh></v>
@@ -5159,7 +5358,7 @@
 </v>
 </v>
 </v>
-<v t="edream.110203160744.2630"><vh>Core classes...</vh>
+<v t="edream.110203160744.2630" a="E"><vh>Core classes...</vh>
 <v t="edream.110203160744.2631" tnodeList="edream.110203160744.2631,edream.110203160744.2632,edream.110203160744.1583,edream.110203160744.1584,edream.110203160744.1585,edream.110203160744.1586,edream.110203160744.2633"><vh>@file leo.py </vh>
 <v t="edream.110203160744.2632"><vh>&lt;&lt; Import pychecker &gt;&gt;</vh></v>
 <v t="edream.110203160744.1583" a=""><vh>run &amp; allies</vh>
@@ -5232,7 +5431,7 @@
 <v t="edream.110203160744.2664"><vh>Writing</vh>
 <v t="edream.110203160744.1865" a=""><vh>top_df.writeAll</vh>
 <v t="edream.110203160744.1866"><vh>&lt;&lt; Clear all orphan bits &gt;&gt;</vh></v>
-<v t="edream.110203160744.1867"><vh>&lt;&lt; handle v's tree &gt;&gt;</vh></v>
+<v t="edream.110203160744.1867" a="M"><vh>&lt;&lt; handle v's tree &gt;&gt;</vh></v>
 <v t="edream.110203160744.1868"><vh>&lt;&lt; say the command is finished &gt;&gt;</vh></v>
 </v>
 <v t="edream.110203160744.2665"><vh>top_df.write, rawWrite, silentWrite</vh></v>
@@ -5240,7 +5439,7 @@
 <v t="edream.110203160744.1861" a=""><vh>top_df.writeMissing</vh>
 <v t="edream.110203160744.1862"><vh>&lt;&lt; set missing if the file does not exist &gt;&gt;</vh></v>
 <v t="edream.110203160744.1863"><vh>&lt;&lt; create df.outputFile &gt;&gt;</vh></v>
-<v t="edream.110203160744.1864"><vh>&lt;&lt; write the @file node &gt;&gt;</vh></v>
+<v t="edream.110203160744.1864" a="M"><vh>&lt;&lt; write the @file node &gt;&gt;</vh></v>
 </v>
 </v>
 </v>
@@ -5369,7 +5568,7 @@
 <v t="edream.110203160744.2764"><vh>atFile.handleWriteException</vh></v>
 <v t="edream.110203160744.2372" a=""><vh>atFile.openWriteFile</vh></v>
 <v t="edream.110203160744.2765"><vh>atFile.putInitialComment</vh></v>
-<v t="edream.110203160744.2766"><vh>atFile.replaceTargetFileIfDifferent</vh>
+<v t="edream.110203160744.2766" a=""><vh>atFile.replaceTargetFileIfDifferent</vh>
 <v t="edream.110203160744.2767"><vh>&lt;&lt; delete the output file &gt;&gt;</vh></v>
 <v t="edream.110203160744.2768"><vh>&lt;&lt; replace the target file with the output file &gt;&gt;</vh></v>
 <v t="edream.110203160744.2769"><vh>&lt;&lt; rename the output file to be the target file &gt;&gt;</vh></v>
@@ -5639,7 +5838,7 @@
 </v>
 </v>
 </v>
-<v t="edream.110203160744.2866" tnodeList="edream.110203160744.2866,edream.110203160744.1844,edream.110203160744.1845,edream.110203160744.1873,edream.110203160744.2867,edream.110203160744.2868,edream.110203160744.1543,edream.110203160744.1544,edream.110203160744.1545,edream.110203160744.2870,edream.110203160744.2871,edream.110203160744.2872,edream.110203160744.2873,edream.110203160744.2874,edream.110203160744.1801,edream.110203160744.1802,edream.110203160744.2011,edream.110203160744.2012,edream.110203160744.2013,edream.110203160744.2014,edream.110203160744.1803,edream.110203160744.1804,edream.110203160744.1805,edream.110203160744.1806,edream.110203160744.1807,edream.110203160744.1808,edream.110203160744.2015,edream.110203160744.2016,edream.110203160744.1779,edream.110203160744.2017,edream.110203160744.2018,edream.110203160744.2019,edream.110203160744.2020,edream.110203160744.2021,edream.110203160744.2022,edream.110203160744.2023,edream.110203160744.2876,edream.110203160744.2877,edream.110203160744.2878,edream.110203160744.2879,edream.110203160744.2880,edream.110203160744.2881,edream.110203160744.2882,edream.110203160744.2883,edream.110203160744.2884,edream.110203160744.2885,edream.110203160744.2886,edream.110203160744.2887,edream.110203160744.2888,edream.110203160744.2889,edream.110203160744.2890,edream.110203160744.2891,edream.110203160744.2892,edream.110203160744.2893,edream.110203160744.2894,edream.110203160744.2395,edream.110203160744.2895,edream.110203160744.2896,edream.110203160744.2897,edream.110203160744.2898,edream.110203160744.2899,edream.110203160744.2900,edream.110203160744.2901,edream.110203160744.2904,edream.110203160744.2905,edream.110203160744.2906,edream.110203160744.2907,edream.110203160744.2908,edream.110203160744.2909,edream.110203160744.2910,edream.110203160744.2911,edream.110203160744.2912,edream.110203160744.2914,edream.110203160744.2915,edream.110203160744.2916,edream.110203160744.2918,edream.110203160744.2919,edream.110203160744.2920,edream.110203160744.2921,edream.110203160744.2922,edream.110203160744.2923,edream.110203160744.1968,edream.110203160744.1907,edream.110203160744.931,edream.110203160744.1773,edream.110203160744.1781,edream.110203160744.1908,edream.110203160744.1909,edream.110203160744.1910,edream.110203160744.2925,edream.110203160744.2926,edream.110203160744.2927,edream.110203160744.2928,edream.110203160744.2929,edream.110203160744.2930,edream.110203160744.2931,edream.110203160744.2932,edream.110203160744.2933,edream.110203160744.2934,edream.110203160744.2935,edream.110203160744.1912,edream.110203160744.1913,edream.110203160744.1914,edream.110203160744.926,edream.110203160744.927,edream.110203160744.928,edream.110203160744.1769,edream.110203160744.1770,edream.110203160744.1915,edream.110203160744.1916,edream.110203160744.1917,edream.110203160744.1918,edream.110203160744.1919,edream.110203160744.1920,edream.110203160744.1921,edream.110203160744.1922,edream.110203160744.1923,edream.110203160744.2937,edream.110203160744.2938,edream.110203160744.2939,edream.110203160744.2940,edream.110203160744.2941,edream.110203160744.2942,edream.110203160744.2943,edream.110203160744.2944,edream.110203160744.2945,edream.110203160744.2946"><vh>@file leoCommands.py</vh>
+<v t="edream.110203160744.2866" tnodeList="edream.110203160744.2866,edream.110203160744.1844,edream.110203160744.1845,edream.110203160744.1873,edream.110203160744.2867,edream.110203160744.2868,edream.110203160744.1543,edream.110203160744.1544,edream.110203160744.1545,edream.110203160744.2870,edream.110203160744.2871,edream.110203160744.2872,edream.110203160744.2873,edream.110203160744.2874,edream.110203160744.1801,edream.110203160744.1802,edream.110203160744.2011,edream.110203160744.2012,edream.110203160744.2013,edream.110203160744.2014,edream.110203160744.1803,edream.110203160744.1804,edream.110203160744.1805,edream.110203160744.1806,edream.110203160744.1807,edream.110203160744.1808,edream.110203160744.2015,edream.110203160744.2016,edream.110203160744.1779,edream.110203160744.2017,edream.110203160744.2018,edream.110203160744.2019,edream.110203160744.2020,edream.110203160744.2021,edream.110203160744.2022,edream.110203160744.2023,edream.110203160744.2876,edream.110203160744.2877,edream.110203160744.2878,edream.110203160744.2879,edream.110203160744.2880,edream.110203160744.2881,edream.110203160744.2882,edream.110203160744.2883,edream.110203160744.2884,edream.110203160744.2885,edream.110203160744.2886,edream.110203160744.2887,edream.110203160744.2888,edream.110203160744.2889,edream.110203160744.2890,edream.110203160744.2891,edream.110203160744.2892,edream.110203160744.2893,edream.110203160744.2894,edream.110203160744.2395,edream.110203160744.2895,edream.110203160744.2896,edream.110203160744.2897,edream.110203160744.2898,edream.110203160744.2899,edream.110203160744.2900,edream.110203160744.2901,edream.110203160744.2904,edream.110203160744.2905,edream.110203160744.2906,edream.110203160744.2907,edream.110203160744.2908,edream.110203160744.2909,edream.110203160744.2910,edream.110203160744.2911,edream.110203160744.2912,edream.110203160744.2914,edream.110203160744.2915,edream.110203160744.2916,edream.110203160744.2918,edream.110203160744.2919,edream.110203160744.2920,edream.110203160744.2921,edream.110203160744.2922,edream.110203160744.2923,edream.110203160744.1968,edream.110403081646.1,edream.110203160744.1907,edream.110203160744.931,edream.110203160744.1773,edream.110203160744.1781,edream.110203160744.1908,edream.110203160744.1909,edream.110203160744.1910,edream.110203160744.2925,edream.110203160744.2926,edream.110203160744.2927,edream.110203160744.2928,edream.110203160744.2929,edream.110203160744.2930,edream.110203160744.2931,edream.110203160744.2932,edream.110203160744.2933,edream.110203160744.2934,edream.110203160744.2935,edream.110203160744.1912,edream.110203160744.1913,edream.110203160744.1914,edream.110203160744.926,edream.110203160744.927,edream.110203160744.928,edream.110203160744.1769,edream.110203160744.1770,edream.110203160744.1915,edream.110203160744.1916,edream.110203160744.1917,edream.110203160744.1918,edream.110203160744.1919,edream.110203160744.1920,edream.110203160744.1921,edream.110203160744.1922,edream.110203160744.1923,edream.110203160744.2937,edream.110203160744.2938,edream.110203160744.2939,edream.110203160744.2940,edream.110203160744.2941,edream.110203160744.2942,edream.110203160744.2943,edream.110203160744.2944,edream.110203160744.2945,edream.110203160744.2946"><vh>@file leoCommands.py</vh>
 <v t="edream.110203160744.1872" a=""><vh>c.Birth &amp; death</vh>
 <v t="edream.110203160744.1844" a=""><vh>c.__init__, initIvars</vh>
 <v t="edream.110203160744.1845"><vh>&lt;&lt; initialize ivars &gt;&gt;</vh></v>
@@ -5689,7 +5888,7 @@
 </v>
 <v t="edream.110203160744.2023" a=""><vh>updateBodyPane (handles undo)</vh></v>
 </v>
-<v t="edream.110203160744.2875"><vh>Enabling Menu Items (Commands)</vh>
+<v t="edream.110203160744.2875" a=""><vh>Enabling Menu Items (Commands)</vh>
 <v t="edream.110203160744.2876"><vh>canContractAllHeadlines</vh></v>
 <v t="edream.110203160744.2877"><vh>canContractAllSubheads</vh></v>
 <v t="edream.110203160744.2878"><vh>canContractParent</vh></v>
@@ -5705,10 +5904,10 @@
 <v t="edream.110203160744.2888"><vh>canGoToNextMarkedHeadline</vh></v>
 <v t="edream.110203160744.2889"><vh>canMarkChangedHeadline</vh></v>
 <v t="edream.110203160744.2890"><vh>canMarkChangedRoots</vh></v>
-<v t="edream.110203160744.2891"><vh>canMoveOutlineDown</vh></v>
-<v t="edream.110203160744.2892"><vh>canMoveOutlineLeft</vh></v>
-<v t="edream.110203160744.2893"><vh>canMoveOutlineRight</vh></v>
-<v t="edream.110203160744.2894"><vh>canMoveOutlineUp</vh></v>
+<v t="edream.110203160744.2891"><vh>canMoveOutlineDown (changed for hoist)</vh></v>
+<v t="edream.110203160744.2892"><vh>canMoveOutlineLeft (changed for hoist)</vh></v>
+<v t="edream.110203160744.2893"><vh>canMoveOutlineRight (changed for hoist)</vh></v>
+<v t="edream.110203160744.2894"><vh>canMoveOutlineUp (changed for hoist)</vh></v>
 <v t="edream.110203160744.2395" a=""><vh>canPasteOutline</vh></v>
 <v t="edream.110203160744.2895"><vh>canPromote</vh></v>
 <v t="edream.110203160744.2896"><vh>canRevert</vh></v>
@@ -5745,6 +5944,7 @@
 <v t="edream.110203160744.2923"><vh>rootVnode</vh></v>
 <v t="edream.110203160744.1968" a=""><vh>c.setChanged</vh></v>
 </v>
+<v t="edream.110403081646.1" a=""><vh>c.Hoist &amp; dehoist &amp; enablers</vh></v>
 <v t="edream.110203160744.1906" a=""><vh>Insert, Delete &amp; Clone (Commands)</vh>
 <v t="edream.110203160744.1907"><vh>c.checkMoveWithParentWithWarning</vh></v>
 <v t="edream.110203160744.931" a=""><vh>c.deleteHeadline</vh></v>
@@ -6366,7 +6566,7 @@
 <v t="edream.110203160744.3210"><vh>undentBody</vh></v>
 </v>
 </v>
-<v t="edream.110203160744.3211" tnodeList="edream.110203160744.3211,edream.110203160744.2463,edream.110203160744.2460,edream.110203160744.3212,edream.110203160744.3213,edream.110203160744.2108,edream.110203160744.3214,edream.110203160744.2028,edream.110203160744.3216,edream.110203160744.3217,edream.110203160744.3219,edream.110203160744.3220,edream.110203160744.3221,edream.110203160744.1466,edream.110203160744.1467,edream.110203160744.3224,edream.110203160744.3225,edream.110203160744.3226,edream.110203160744.3227,edream.110203160744.3228,edream.110203160744.3229,edream.110203160744.3230,edream.110203160744.3231,edream.110203160744.3232,edream.110203160744.689,edream.110203160744.3234,edream.110203160744.3235,edream.110203160744.2352,edream.110203160744.3236,edream.110203160744.3238,edream.110203160744.3239,edream.110203160744.3240,edream.110203160744.3241,edream.110203160744.3242,edream.110203160744.3243,edream.110203160744.3244,edream.110203160744.3246,edream.110203160744.3247,edream.110203160744.3248,edream.110203160744.2029,edream.110203160744.3251,edream.110203160744.3252,edream.110203160744.3253,edream.110203160744.3254,edream.110203160744.3255,edream.110203160744.3256,edream.110203160744.3258,edream.110203160744.3259,edream.110203160744.3260,edream.110203160744.3261,edream.110203160744.3262,edream.110203160744.3263,edream.110203160744.3264,edream.110203160744.3265,edream.110203160744.3266,edream.110203160744.3267,edream.110203160744.2110,edream.110203160744.3268,edream.110203160744.3269,edream.110203160744.3270,edream.110203160744.1575,edream.110203160744.3271,edream.110203160744.3272,edream.110203160744.3273,edream.110203160744.1460,edream.110203160744.1461,edream.110203160744.1462,edream.110203160744.1463,edream.110203160744.3275,edream.110203160744.3277,edream.110203160744.3278,edream.110203160744.3279,edream.110203160744.3280,edream.110203160744.1792,edream.110203160744.3281,edream.110203160744.3282,edream.110203160744.3283,edream.110203160744.3284,edream.110203160744.3285,edream.110203160744.923,edream.110203160744.924,edream.110203160744.3286,edream.110203160744.925,edream.110203160744.1791,edream.110203160744.3287,edream.110203160744.3288,edream.110203160744.3289,edream.110203160744.3290,edream.110203160744.3291,edream.110203160744.3292,edream.110203160744.3294,edream.110203160744.3295,edream.110203160744.3296,edream.110203160744.3297,edream.110203160744.3298,edream.110203160744.3299,edream.110203160744.3300,edream.110203160744.3301,edream.110203160744.3302,edream.110203160744.3303,edream.110203160744.3306,edream.110203160744.3307,edream.110203160744.3308,edream.110203160744.3309,edream.110203160744.3310,edream.110203160744.3311,edream.110203160744.1783,edream.110203160744.3312,edream.110203160744.3313,edream.110203160744.3314,edream.110203160744.3315,edream.110203160744.930,edream.110203160744.929,edream.110203160744.1782,edream.110203160744.1784,edream.110203160744.3317,edream.110203160744.1785,edream.110203160744.1568,edream.110203160744.1786,edream.110203160744.1787,edream.110203160744.3318,edream.110203160744.3319,edream.110203160744.1649,edream.110203160744.3320,edream.110203160744.3321,edream.110203160744.1650,edream.110203160744.3322,edream.110203160744.592,edream.110203160744.593,edream.110203160744.594,edream.110203160744.595,edream.110203160744.3323,edream.110203160744.3324,edream.110203160744.3325,edream.110203160744.3326,edream.110203160744.3327,edream.110203160744.3328,edream.110203160744.3329,edream.110203160744.3330,edream.110203160744.3331"><vh>@file leoNodes.py</vh>
+<v t="edream.110203160744.3211" a="E" tnodeList="edream.110203160744.3211,edream.110203160744.2463,edream.110203160744.2460,edream.110203160744.3212,edream.110203160744.3213,edream.110203160744.2108,edream.110203160744.3214,edream.110203160744.2028,edream.110203160744.3216,edream.110203160744.3217,edream.110203160744.3219,edream.110203160744.3220,edream.110203160744.3221,edream.110203160744.1466,edream.110203160744.1467,edream.110203160744.3224,edream.110203160744.3225,edream.110203160744.3226,edream.110203160744.3227,edream.110203160744.3228,edream.110203160744.3229,edream.110203160744.3230,edream.110203160744.3231,edream.110203160744.3232,edream.110203160744.689,edream.110203160744.3234,edream.110203160744.3235,edream.110203160744.2352,edream.110203160744.3236,edream.110203160744.3238,edream.110203160744.3239,edream.110203160744.3240,edream.110203160744.3241,edream.110203160744.3242,edream.110203160744.3243,edream.110203160744.3244,edream.110203160744.3246,edream.110203160744.3247,edream.110203160744.3248,edream.110203160744.2029,edream.110203160744.3251,edream.110203160744.3252,edream.110203160744.3253,edream.110203160744.3254,edream.110203160744.3255,edream.110203160744.3256,edream.110203160744.3258,edream.110203160744.3259,edream.110203160744.3260,edream.110203160744.3261,edream.110203160744.3262,edream.110203160744.3263,edream.110203160744.3264,edream.110203160744.3265,edream.110203160744.3266,edream.110203160744.3267,edream.110203160744.2110,edream.110203160744.3268,edream.110203160744.3269,edream.110203160744.3270,edream.110203160744.1575,edream.110203160744.3271,edream.110203160744.3272,edream.110203160744.3273,edream.110203160744.1460,edream.110203160744.1461,edream.110203160744.1462,edream.110203160744.1463,edream.110203160744.3275,edream.110203160744.3277,edream.110203160744.3278,edream.110203160744.3279,edream.110203160744.3280,edream.110203160744.1792,edream.110203160744.3281,edream.110203160744.3282,edream.110203160744.3283,edream.110203160744.3284,edream.110203160744.3285,edream.110203160744.923,edream.110203160744.924,edream.110203160744.3286,edream.110203160744.925,edream.110203160744.1791,edream.110203160744.3287,edream.110203160744.3288,edream.110203160744.3289,edream.110203160744.3290,edream.110203160744.3291,edream.110203160744.3292,edream.110203160744.3294,edream.110203160744.3295,edream.110203160744.3296,edream.110203160744.3297,edream.110203160744.3298,edream.110203160744.3299,edream.110203160744.3300,edream.110203160744.3301,edream.110203160744.3302,edream.110203160744.3303,edream.110203160744.3306,edream.110203160744.3307,edream.110203160744.3308,edream.110203160744.3309,edream.110203160744.3310,edream.110203160744.3311,edream.110203160744.1783,edream.110203160744.3312,edream.110203160744.3313,edream.110203160744.3314,edream.110203160744.3315,edream.110203160744.930,edream.110203160744.929,edream.110203160744.1782,edream.110203160744.1784,edream.110203160744.3317,edream.110203160744.1785,edream.110203160744.1568,edream.110203160744.1786,edream.110203160744.1787,edream.110203160744.3318,edream.110203160744.3319,edream.110203160744.1649,edream.110203160744.3320,edream.110203160744.3321,edream.110203160744.1650,edream.110203160744.3322,edream.110203160744.592,edream.110203160744.593,edream.110203160744.594,edream.110203160744.595,edream.110203160744.3323,edream.110203160744.3324,edream.110203160744.3325,edream.110203160744.3326,edream.110203160744.3327,edream.110203160744.3328,edream.110203160744.3329,edream.110203160744.3330,edream.110203160744.3331"><vh>@file leoNodes.py</vh>
 <v t="edream.110203160744.2460" a=""><vh>&lt;&lt; About clones &gt;&gt;</vh></v>
 <v t="edream.110203160744.2463" a=""><vh>&lt;&lt; About the vnode and tnode classes &gt;&gt;</vh></v>
 <v t="edream.110203160744.3212"><vh>class tnode</vh>
@@ -6400,7 +6600,7 @@
 <v t="edream.110203160744.3231"><vh>setFileIndex</vh></v>
 </v>
 </v>
-<v t="edream.110203160744.3232"><vh>class vnode</vh>
+<v t="edream.110203160744.3232" a="E"><vh>class vnode</vh>
 <v t="edream.110203160744.689" a=""><vh>&lt;&lt; vnode constants &gt;&gt;</vh></v>
 <v t="edream.110203160744.3233"><vh>Birth &amp; death</vh>
 <v t="edream.110203160744.3234"><vh>v.__cmp__ (not used)</vh></v>
@@ -6424,7 +6624,7 @@
 <v t="edream.110203160744.3248"><vh>v.moreBody</vh></v>
 </v>
 <v t="edream.110203160744.2029" a=""><vh>v.extraAttributes &amp; setExtraAttributes</vh></v>
-<v t="edream.110203160744.3249"><vh>Getters</vh>
+<v t="edream.110203160744.3249" a="E"><vh>Getters</vh>
 <v t="edream.110203160744.3250"><vh>Children</vh>
 <v t="edream.110203160744.3251"><vh>childIndex</vh></v>
 <v t="edream.110203160744.3252"><vh>firstChild</vh></v>
@@ -6433,7 +6633,7 @@
 <v t="edream.110203160744.3255"><vh>nthChild</vh></v>
 <v t="edream.110203160744.3256"><vh>numberOfChildren (n)</vh></v>
 </v>
-<v t="edream.110203160744.3257"><vh>Status Bits</vh>
+<v t="edream.110203160744.3257" a="E"><vh>Status Bits</vh>
 <v t="edream.110203160744.3258"><vh>isCloned</vh></v>
 <v t="edream.110203160744.3259"><vh>isDirty</vh></v>
 <v t="edream.110203160744.3260"><vh>isExpanded</vh></v>
@@ -6441,7 +6641,7 @@
 <v t="edream.110203160744.3262"><vh>isOrphan</vh></v>
 <v t="edream.110203160744.3263"><vh>isSelected</vh></v>
 <v t="edream.110203160744.3264"><vh>isTopBitSet</vh></v>
-<v t="edream.110203160744.3265"><vh>isVisible</vh></v>
+<v t="edream.110203160744.3265" a="V"><vh>isVisible</vh></v>
 <v t="edream.110203160744.3266"><vh>isVisited</vh></v>
 <v t="edream.110203160744.3267"><vh>status</vh></v>
 </v>
@@ -6450,7 +6650,7 @@
 <v t="edream.110203160744.3269"><vh>edit_text</vh></v>
 <v t="edream.110203160744.3270"><vh>findRoot</vh></v>
 <v t="edream.110203160744.1575" a=""><vh>headString &amp; cleanHeadString</vh></v>
-<v t="edream.110203160744.3271"><vh>isAncestorOf</vh></v>
+<v t="edream.110203160744.3271" a=""><vh>isAncestorOf</vh></v>
 <v t="edream.110203160744.3272"><vh>isRoot</vh></v>
 <v t="edream.110203160744.3273"><vh>v.exists</vh></v>
 </v>
@@ -6792,7 +6992,7 @@
 </v>
 </v>
 </v>
-<v t="edream.110203160744.3493" tnodeList="edream.110203160744.3493,edream.110203160744.2464,edream.110203160744.3494,edream.110203160744.1871,edream.110203160744.1829,edream.110203160744.3496,edream.110203160744.3497,edream.110203160744.3498,edream.110203160744.1830,edream.110203160744.3499,edream.110203160744.3500,edream.110203160744.3501,edream.110203160744.1471,edream.110203160744.1472,edream.110203160744.1473,edream.110203160744.3502,edream.110203160744.3503,edream.110203160744.3504,edream.110203160744.3506,edream.110203160744.3505,edream.110203160744.3507,edream.110203160744.3508,edream.110203160744.1810,edream.110203160744.3509,edream.110203160744.1931,edream.110203160744.3510,edream.110203160744.3511,edream.110203160744.3512,edream.110203160744.3513,edream.110203160744.3514,edream.110203160744.3515,edream.110203160744.1809,edream.110203160744.3516,edream.110203160744.1932,edream.110203160744.2027,edream.110203160744.3518,edream.110203160744.3519,edream.110203160744.3520,edream.110203160744.1811,edream.110203160744.1474,edream.110203160744.1475,edream.110203160744.1476,edream.110203160744.1477,edream.110203160744.1478,edream.110203160744.3521,edream.110203160744.3522,edream.110203160744.3523"><vh>@file leoUndo.py</vh>
+<v t="edream.110203160744.3493" tnodeList="edream.110203160744.3493,edream.110203160744.2464,edream.110203160744.3494,edream.110203160744.1871,edream.110203160744.1829,edream.110203160744.3496,edream.110203160744.3497,edream.110203160744.3498,edream.110203160744.1830,edream.110203160744.3499,edream.110203160744.3500,edream.110203160744.3501,edream.110203160744.1471,edream.110203160744.1472,edream.110203160744.1473,edream.110203160744.3502,edream.110203160744.3503,edream.110203160744.3504,edream.110403090228,edream.110203160744.3506,edream.110203160744.3505,edream.110203160744.3507,edream.110203160744.3508,edream.110203160744.1810,edream.110203160744.3509,edream.110203160744.1931,edream.110203160744.3510,edream.110203160744.3511,edream.110203160744.3512,edream.110403090228.1,edream.110203160744.3513,edream.110203160744.3514,edream.110203160744.3515,edream.110203160744.1809,edream.110203160744.3516,edream.110203160744.1932,edream.110203160744.2027,edream.110203160744.3518,edream.110203160744.3519,edream.110203160744.3520,edream.110203160744.1811,edream.110203160744.1474,edream.110203160744.1475,edream.110203160744.1476,edream.110203160744.1477,edream.110203160744.1478,edream.110203160744.3521,edream.110203160744.3522,edream.110203160744.3523"><vh>@file leoUndo.py</vh>
 <v t="edream.110203160744.2464" a=""><vh>&lt;&lt; How Leo implements unlimited undo &gt;&gt;</vh></v>
 <v t="edream.110203160744.3494"><vh>&lt;&lt; Define optional ivars &gt;&gt;</vh></v>
 <v t="edream.110203160744.1871" a=""><vh>undo.__init__ &amp; clearIvars</vh>
@@ -6812,9 +7012,10 @@
 </v>
 <v t="edream.110203160744.3502"><vh>setUndoTypes</vh></v>
 </v>
-<v t="edream.110203160744.3503"><vh>u.redo</vh>
+<v t="edream.110203160744.3503" a=""><vh>u.redo</vh>
 <v t="edream.110203160744.3504"><vh>&lt;&lt; redo clone cases &gt;&gt;</vh></v>
 <v t="edream.110203160744.3505"><vh>&lt;&lt; redo delete cases &gt;&gt;</vh></v>
+<v t="edream.110403090228"><vh>&lt;&lt; redo hoist cases &gt;&gt;</vh></v>
 <v t="edream.110203160744.3506"><vh>&lt;&lt; redo insert cases &gt;&gt;</vh></v>
 <v t="edream.110203160744.3507"><vh>&lt;&lt; redo move &amp; drag cases &gt;&gt;</vh></v>
 <v t="edream.110203160744.3508"><vh>&lt;&lt; redo promote and demote cases &gt;&gt;</vh></v>
@@ -6822,9 +7023,10 @@
 <v t="edream.110203160744.3509"><vh>&lt;&lt; redo sort cases &gt;&gt;</vh></v>
 <v t="edream.110203160744.1931" a=""><vh>&lt;&lt; redo typing cases &gt;&gt;</vh></v>
 </v>
-<v t="edream.110203160744.3510"><vh>u.undo</vh>
+<v t="edream.110203160744.3510" a=""><vh>u.undo</vh>
 <v t="edream.110203160744.3511"><vh>&lt;&lt; undo clone cases &gt;&gt;</vh></v>
 <v t="edream.110203160744.3512"><vh>&lt;&lt; undo delete cases &gt;&gt;</vh></v>
+<v t="edream.110403090228.1"><vh>&lt;&lt; undo hoist cases &gt;&gt;</vh></v>
 <v t="edream.110203160744.3513"><vh>&lt;&lt; undo insert cases &gt;&gt;</vh></v>
 <v t="edream.110203160744.3514"><vh>&lt;&lt; undo move  &amp; drag cases &gt;&gt;</vh></v>
 <v t="edream.110203160744.1809" a=""><vh>&lt;&lt; undo replace cases &gt;&gt;</vh></v>
@@ -7162,7 +7364,7 @@
 </v>
 </v>
 </v>
-<v t="edream.110203160744.3681" tnodeList="edream.110203160744.3681,edream.110203160744.2260,edream.110203160744.1693,edream.110203160744.1694,edream.110203160744.1875,edream.110203160744.1876,edream.110203160744.1877,edream.110203160744.1878,edream.110203160744.1591,edream.110203160744.1879,edream.110203160744.1880,edream.110203160744.1881,edream.110203160744.1882,edream.110203160744.1883,edream.110203160744.1884,edream.110203160744.1592,edream.110203160744.1593,edream.110203160744.1885,edream.110203160744.2262,edream.110203160744.2263,edream.110203160744.2264,edream.110203160744.1629,edream.110203160744.2265,edream.110203160744.2266,edream.110203160744.1520,edream.110203160744.2267,edream.110203160744.1850,edream.110203160744.1851,edream.110203160744.736,edream.110203160744.1683,edream.110203160744.1684,edream.110203160744.1685,edream.110203160744.1686,edream.110203160744.1687,edream.110203160744.1688,edream.110203160744.1689,edream.110203160744.1690,edream.110203160744.1691,edream.110203160744.1525,edream.110203160744.1526,edream.110203160744.1527,edream.110203160744.1528,edream.110203160744.1529,edream.110203160744.1530,edream.110203160744.2268,edream.110203160744.2269,edream.110203160744.1052,edream.110203160744.1056,edream.110203160744.1053,edream.110203160744.1054,edream.110203160744.1055,edream.110203160744.1057,edream.110203160744.1058,edream.110203160744.1065,edream.110203160744.1066,edream.110203160744.1067,edream.110203160744.1068,edream.110203160744.1069,edream.110203160744.1070,edream.110203160744.1071,edream.110203160744.1072,edream.110203160744.1059,edream.110203160744.1060,edream.110203160744.1061,edream.110203160744.1062,edream.110203160744.1063,edream.110203160744.1064,edream.110203160744.1073,edream.110203160744.1074,edream.110203160744.1075,edream.110203160744.1076,edream.110203160744.1077,edream.110203160744.1078,edream.110203160744.1079,edream.110203160744.1080,edream.110203160744.1081,edream.110203160744.1082,edream.110203160744.1086,edream.110203160744.1087,edream.110203160744.1088,edream.110203160744.1089,edream.110203160744.1090,edream.110203160744.1091,edream.110203160744.1092,edream.110203160744.1093,edream.110203160744.1094,edream.110203160744.1095,edream.110203160744.1096,edream.110203160744.1097,edream.110203160744.1098,edream.110203160744.1099,edream.110203160744.1100,edream.110203160744.1101,edream.110203160744.1102,edream.110203160744.1103,edream.110203160744.1104,edream.110203160744.1105,edream.110203160744.1106,edream.110203160744.1108,edream.110203160744.1109,edream.110203160744.1110,edream.110203160744.1111,edream.110203160744.1113,edream.110203160744.1114,edream.110203160744.1115,edream.110203160744.1116,edream.110203160744.1117,edream.110203160744.1118,edream.110203160744.1120,edream.110203160744.1121,edream.110203160744.1123,edream.110203160744.1124,edream.110203160744.1125,edream.110203160744.1127,edream.110203160744.1128,edream.110203160744.1129,edream.110203160744.1131,edream.110203160744.1132,edream.110203160744.1133,edream.110203160744.1134,edream.110203160744.1135,edream.110203160744.1136,edream.110203160744.1137,edream.110203160744.1138,edream.110203160744.1139,edream.110203160744.1140,edream.110203160744.1141,edream.110203160744.1144,edream.110203160744.1145,edream.110203160744.1147,edream.110203160744.1148,edream.110203160744.1149,edream.110203160744.1150,edream.110203160744.1151,edream.110203160744.1152,edream.110203160744.1153,edream.110203160744.1154,edream.110203160744.1155,edream.110203160744.1156,edream.110203160744.1157,edream.110203160744.1158,edream.110203160744.1159,edream.110203160744.1160,edream.110203160744.1161,edream.110203160744.1162,edream.110203160744.1163,edream.110203160744.1164,edream.110203160744.1165,edream.110203160744.1166,edream.110203160744.1167,edream.110203160744.1168,edream.110203160744.1169,edream.110203160744.1170,edream.110203160744.1171,edream.110203160744.1172,edream.110203160744.1173,edream.110203160744.1174,edream.110203160744.1175,edream.110203160744.1176,edream.110203160744.1177,edream.110203160744.1179,edream.110203160744.1180,edream.110203160744.1181,edream.110203160744.1182,edream.110203160744.1183,edream.110203160744.1184,edream.110203160744.1185,edream.110203160744.1186,edream.110203160744.1187,edream.110203160744.1188,edream.110203160744.1189,edream.110203160744.1191,edream.110203160744.1192,edream.110203160744.1193,edream.110203160744.1194,edream.110203160744.1196,edream.110203160744.1197,edream.110203160744.1198,edream.110203160744.1199,edream.110203160744.1200,edream.110203160744.1203,edream.110203160744.1204,edream.110203160744.1205,edream.110203160744.1206,edream.110203160744.1207,edream.110203160744.1208,edream.110203160744.1209,edream.110203160744.1212,edream.110203160744.1213,edream.110203160744.1214,edream.110203160744.1215,edream.110203160744.1216,edream.110203160744.1217,edream.110203160744.1218,edream.110203160744.1219,edream.110203160744.1220,edream.110203160744.1221,edream.110203160744.1222,edream.110203160744.1223,edream.110203160744.1225,edream.110203160744.1226,edream.110203160744.1227,edream.110203160744.1228,edream.110203160744.1229,edream.110203160744.1230,edream.110203160744.1231,edream.110203160744.1232,edream.110203160744.1233,edream.110203160744.1234,edream.110203160744.1236,edream.110203160744.1237,edream.110203160744.1238,edream.110203160744.1239,edream.110203160744.1240,edream.110203160744.1241,edream.110203160744.1242,edream.110203160744.1243,edream.110203160744.1244,edream.110203160744.1245,edream.110203160744.1246,edream.110203160744.1247,edream.110203160744.1248,edream.110203160744.1249,edream.110203160744.1250,edream.110203160744.1251,edream.110203160744.1253,edream.110203160744.1254,edream.110203160744.1255,edream.110203160744.1256,edream.110203160744.1257,edream.110203160744.1258,edream.110203160744.1259,edream.110203160744.1260,edream.110203160744.1261,edream.110203160744.1262,edream.110203160744.1263,edream.110203160744.1264,edream.110203160744.1265,edream.110203160744.1267,edream.110203160744.1268,edream.110203160744.1269,edream.110203160744.1270,edream.110203160744.1271,edream.110203160744.1272,edream.110203160744.1273,edream.110203160744.1274,edream.110203160744.1275,edream.110203160744.1276,edream.110203160744.1277,edream.110203160744.1278,edream.110203160744.1279,edream.110203160744.1280,edream.110203160744.1281,edream.110203160744.1282,edream.110203160744.1283,edream.110203160744.1284,edream.110203160744.1285,edream.110203160744.1286,edream.110203160744.1287,edream.110203160744.1288,edream.110203160744.1290,edream.110203160744.1291,edream.110203160744.1292,edream.110203160744.1293,edream.110203160744.1294,edream.110203160744.2270,edream.110203160744.2271,edream.110203160744.2272,edream.110203160744.1523,edream.110203160744.2273,edream.110203160744.2274,edream.110203160744.2275,edream.110203160744.2276,edream.110203160744.2277,edream.110203160744.1531,edream.110203160744.1532,edream.110203160744.1533,edream.110203160744.1534,edream.110203160744.1535,edream.110203160744.2284,edream.110203160744.2286,edream.110203160744.2287,edream.110203160744.2288,edream.110203160744.2289,edream.110203160744.2290,edream.110203160744.2291,edream.110203160744.2292,edream.110203160744.2293,edream.110203160744.2294,edream.110203160744.2295,edream.110203160744.2296,edream.110203160744.2297,edream.110203160744.2299,edream.110203160744.2300,edream.110203160744.2148,edream.110203160744.2301,edream.110203160744.2302,edream.110203160744.2303,edream.110203160744.2304,edream.110203160744.2305,edream.110203160744.2306,edream.110203160744.2308,edream.110203160744.2309,edream.110203160744.2310,edream.110203160744.2311,edream.110203160744.2312,edream.110203160744.333,edream.110203160744.2314,edream.110203160744.2315,edream.110203160744.2316,edream.110203160744.2317,edream.110203160744.2318,edream.110203160744.2319,edream.110203160744.2320,edream.110203160744.2321,edream.110203160744.2332,edream.110203160744.2333,edream.110203160744.2334,edream.110203160744.2335,edream.110203160744.2336,edream.110203160744.2337,edream.110203160744.2338,edream.110203160744.1455,edream.110203160744.2339"><vh>@file leoTkinterFrame.py</vh>
+<v t="edream.110203160744.3681" tnodeList="edream.110203160744.3681,edream.110203160744.2260,edream.110203160744.1693,edream.110203160744.1694,edream.110203160744.1875,edream.110203160744.1876,edream.110203160744.1877,edream.110203160744.1878,edream.110203160744.1591,edream.110203160744.1879,edream.110203160744.1880,edream.110203160744.1881,edream.110203160744.1882,edream.110203160744.1883,edream.110203160744.1884,edream.110203160744.1592,edream.110203160744.1593,edream.110203160744.1885,edream.110203160744.2262,edream.110203160744.2263,edream.110203160744.2264,edream.110203160744.1629,edream.110203160744.2265,edream.110203160744.2266,edream.110203160744.1520,edream.110203160744.2267,edream.110203160744.1850,edream.110203160744.1851,edream.110203160744.736,edream.110203160744.1683,edream.110203160744.1684,edream.110203160744.1685,edream.110203160744.1686,edream.110203160744.1687,edream.110203160744.1688,edream.110203160744.1689,edream.110203160744.1690,edream.110203160744.1691,edream.110203160744.1525,edream.110203160744.1526,edream.110203160744.1527,edream.110203160744.1528,edream.110203160744.1529,edream.110203160744.1530,edream.110203160744.2268,edream.110203160744.2269,edream.110203160744.1052,edream.110203160744.1056,edream.110203160744.1053,edream.110203160744.1054,edream.110203160744.1055,edream.110203160744.1057,edream.110203160744.1058,edream.110203160744.1065,edream.110203160744.1066,edream.110203160744.1067,edream.110203160744.1068,edream.110203160744.1069,edream.110203160744.1070,edream.110203160744.1071,edream.110203160744.1072,edream.110203160744.1059,edream.110203160744.1060,edream.110203160744.1061,edream.110203160744.1062,edream.110203160744.1063,edream.110203160744.1064,edream.110203160744.1073,edream.110203160744.1074,edream.110203160744.1075,edream.110203160744.1076,edream.110203160744.1077,edream.110203160744.1078,edream.110203160744.1079,edream.110203160744.1080,edream.110203160744.1081,edream.110203160744.1082,edream.110203160744.1086,edream.110203160744.1087,edream.110203160744.1088,edream.110203160744.1089,edream.110203160744.1090,edream.110203160744.1091,edream.110203160744.1092,edream.110203160744.1093,edream.110203160744.1094,edream.110203160744.1095,edream.110203160744.1096,edream.110203160744.1097,edream.110203160744.1098,edream.110203160744.1099,edream.110203160744.1100,edream.110203160744.1101,edream.110203160744.1102,edream.110203160744.1103,edream.110203160744.1104,edream.110203160744.1105,edream.110203160744.1106,edream.110203160744.1108,edream.110203160744.1109,edream.110203160744.1110,edream.110203160744.1111,edream.110203160744.1113,edream.110203160744.1114,edream.110203160744.1115,edream.110203160744.1116,edream.110203160744.1117,edream.110203160744.1118,edream.110203160744.1120,edream.110203160744.1121,edream.110203160744.1123,edream.110203160744.1124,edream.110203160744.1125,edream.110203160744.1127,edream.110203160744.1128,edream.110203160744.1129,edream.110203160744.1131,edream.110203160744.1132,edream.110203160744.1133,edream.110203160744.1134,edream.110203160744.1135,edream.110203160744.1136,edream.110203160744.1137,edream.110203160744.1138,edream.110203160744.1139,edream.110203160744.1140,edream.110203160744.1141,edream.110203160744.1144,edream.110203160744.1145,edream.110203160744.1147,edream.110203160744.1148,edream.110203160744.1149,edream.110203160744.1150,edream.110203160744.1151,edream.110203160744.1152,edream.110203160744.1153,edream.110203160744.1154,edream.110203160744.1155,edream.110203160744.1156,edream.110203160744.1157,edream.110203160744.1158,edream.110203160744.1159,edream.110203160744.1160,edream.110203160744.1161,edream.110203160744.1162,edream.110203160744.1163,edream.110203160744.1164,edream.110203160744.1165,edream.110203160744.1166,edream.110203160744.1167,edream.110203160744.1168,edream.110203160744.1169,edream.110203160744.1170,edream.110203160744.1171,edream.110203160744.1172,edream.110203160744.1173,edream.110203160744.1174,edream.110203160744.1175,edream.110203160744.1176,edream.110203160744.1177,edream.110203160744.1179,edream.110203160744.1180,edream.110203160744.1181,edream.110203160744.1182,edream.110203160744.1183,edream.110203160744.1184,edream.110203160744.1185,edream.110203160744.1186,edream.110203160744.1187,edream.110203160744.1188,edream.110203160744.1189,edream.110203160744.1191,edream.110203160744.1192,edream.110203160744.1193,edream.110203160744.1194,edream.110203160744.1196,edream.110203160744.1197,edream.110203160744.1198,edream.110203160744.1199,edream.110203160744.1200,edream.110203160744.1203,edream.110203160744.1204,edream.110203160744.1205,edream.110203160744.1206,edream.110203160744.1207,edream.110203160744.1208,edream.110203160744.1209,edream.110403081646,edream.110203160744.1212,edream.110203160744.1213,edream.110203160744.1214,edream.110203160744.1215,edream.110203160744.1216,edream.110203160744.1217,edream.110203160744.1218,edream.110203160744.1219,edream.110203160744.1220,edream.110203160744.1221,edream.110203160744.1222,edream.110203160744.1223,edream.110203160744.1225,edream.110203160744.1226,edream.110203160744.1227,edream.110203160744.1228,edream.110203160744.1229,edream.110203160744.1230,edream.110203160744.1231,edream.110203160744.1232,edream.110203160744.1233,edream.110203160744.1234,edream.110203160744.1236,edream.110203160744.1237,edream.110203160744.1238,edream.110203160744.1239,edream.110203160744.1240,edream.110203160744.1241,edream.110203160744.1242,edream.110203160744.1243,edream.110203160744.1244,edream.110203160744.1245,edream.110203160744.1246,edream.110203160744.1247,edream.110203160744.1248,edream.110203160744.1249,edream.110203160744.1250,edream.110203160744.1251,edream.110203160744.1253,edream.110203160744.1254,edream.110203160744.1255,edream.110203160744.1256,edream.110203160744.1257,edream.110203160744.1258,edream.110203160744.1259,edream.110203160744.1260,edream.110203160744.1261,edream.110203160744.1262,edream.110203160744.1263,edream.110203160744.1264,edream.110203160744.1265,edream.110203160744.1267,edream.110203160744.1268,edream.110203160744.1269,edream.110203160744.1270,edream.110203160744.1271,edream.110203160744.1272,edream.110203160744.1273,edream.110203160744.1274,edream.110203160744.1275,edream.110203160744.1276,edream.110203160744.1277,edream.110203160744.1278,edream.110203160744.1279,edream.110203160744.1280,edream.110203160744.1281,edream.110203160744.1282,edream.110203160744.1283,edream.110203160744.1284,edream.110203160744.1285,edream.110203160744.1286,edream.110203160744.1287,edream.110203160744.1288,edream.110203160744.1290,edream.110203160744.1291,edream.110203160744.1292,edream.110203160744.1293,edream.110203160744.1294,edream.110203160744.2270,edream.110203160744.2271,edream.110203160744.2272,edream.110203160744.1523,edream.110203160744.2273,edream.110203160744.2274,edream.110203160744.2275,edream.110203160744.2276,edream.110203160744.2277,edream.110203160744.1531,edream.110203160744.1532,edream.110203160744.1533,edream.110203160744.1534,edream.110203160744.1535,edream.110203160744.2284,edream.110203160744.2286,edream.110203160744.2287,edream.110203160744.2288,edream.110203160744.2289,edream.110203160744.2290,edream.110203160744.2291,edream.110203160744.2292,edream.110203160744.2293,edream.110203160744.2294,edream.110203160744.2295,edream.110203160744.2296,edream.110203160744.2297,edream.110203160744.2299,edream.110203160744.2300,edream.110203160744.2148,edream.110203160744.2301,edream.110203160744.2302,edream.110203160744.2303,edream.110203160744.2304,edream.110203160744.2305,edream.110203160744.2306,edream.110203160744.2308,edream.110203160744.2309,edream.110203160744.2310,edream.110203160744.2311,edream.110203160744.2312,edream.110203160744.333,edream.110203160744.2314,edream.110203160744.2315,edream.110203160744.2316,edream.110203160744.2317,edream.110203160744.2318,edream.110203160744.2319,edream.110203160744.2320,edream.110203160744.2321,edream.110203160744.2332,edream.110203160744.2333,edream.110203160744.2334,edream.110203160744.2335,edream.110203160744.2336,edream.110203160744.2337,edream.110203160744.2338,edream.110203160744.1455,edream.110203160744.2339"><vh>@file leoTkinterFrame.py</vh>
 <v t="edream.110203160744.2260" a=""><vh>class leoTkinterFrame</vh>
 <v t="edream.110203160744.1874" a=""><vh>frame.Birth &amp; Death</vh>
 <v t="edream.110203160744.1693" a=""><vh>f.__init__</vh>
@@ -7251,7 +7453,7 @@
 <v t="edream.110203160744.1072"><vh>&lt;&lt; create the export submenu &gt;&gt;</vh></v>
 </v>
 <v t="edream.110203160744.1073"><vh>&lt;&lt; create the outline menu &gt;&gt;</vh>
-<v t="edream.110203160744.1074"><vh>&lt;&lt; create top-level outline menu &gt;&gt;</vh></v>
+<v t="edream.110203160744.1074" a=""><vh>&lt;&lt; create top-level outline menu &gt;&gt;</vh></v>
 <v t="edream.110203160744.1075"><vh>&lt;&lt; create expand/contract submenu &gt;&gt;</vh></v>
 <v t="edream.110203160744.1076"><vh>&lt;&lt; create move submenu &gt;&gt;</vh></v>
 <v t="edream.110203160744.1077"><vh>&lt;&lt; create mark submenu &gt;&gt;</vh></v>
@@ -7308,7 +7510,7 @@
 <v t="edream.110203160744.1118" a=""><vh>OnWriteAtFileNodes</vh></v>
 <v t="edream.110203160744.1119" a=""><vh>4.0 Commands</vh>
 <v t="edream.110203160744.1120" a=""><vh>OnImportDerivedFile</vh></v>
-<v t="edream.110203160744.1121"><vh>OnWriteNew/OldDerivedFiles</vh></v>
+<v t="edream.110203160744.1121" a=""><vh>OnWriteNew/OldDerivedFiles</vh></v>
 </v>
 </v>
 <v t="edream.110203160744.1122"><vh>Tangle submenu</vh>
@@ -7417,6 +7619,7 @@
 <v t="edream.110203160744.1207"><vh>OnInsertNode</vh></v>
 <v t="edream.110203160744.1208"><vh>OnCloneNode</vh></v>
 <v t="edream.110203160744.1209"><vh>OnSortChildren, OnSortSiblings</vh></v>
+<v t="edream.110403081646" a=""><vh>f.OnHoist,OnDehoist</vh></v>
 </v>
 <v t="edream.110203160744.1210"><vh>Expand/Contract</vh>
 <v t="edream.110203160744.1211"><vh>No longer used</vh>
@@ -7516,7 +7719,7 @@
 <v t="edream.110203160744.1291"><vh>hasSelection</vh></v>
 <v t="edream.110203160744.1292"><vh>updateFileMenu</vh></v>
 <v t="edream.110203160744.1293"><vh>updateEditMenu</vh></v>
-<v t="edream.110203160744.1294"><vh>updateOutlineMenu</vh></v>
+<v t="edream.110203160744.1294" a=""><vh>updateOutlineMenu</vh></v>
 </v>
 </v>
 <v t="edream.110203160744.2270"><vh>Splitter stuff</vh>
@@ -7628,7 +7831,7 @@
 <v t="edream.110203160744.3699"><vh>create_labeled_frame</vh></v>
 </v>
 </v>
-<v t="edream.110203160744.3700" tnodeList="edream.110203160744.3700,edream.110203160744.3701,edream.110203160744.2461,edream.110203160744.3702,edream.110203160744.755,edream.110203160744.1726,edream.110203160744.1727,edream.110203160744.1728,edream.110203160744.1729,edream.110203160744.1730,edream.110203160744.1731,edream.110203160744.1732,edream.110203160744.1733,edream.110203160744.1734,edream.110203160744.1735,edream.110203160744.1736,edream.110203160744.1737,edream.110203160744.1738,edream.110203160744.1739,edream.110203160744.3704,edream.110203160744.3705,edream.110203160744.738,edream.110203160744.739,edream.110203160744.740,edream.110203160744.741,edream.110203160744.750,edream.110203160744.751,edream.110203160744.752,edream.110203160744.753,edream.110203160744.754,edream.110203160744.742,edream.110203160744.743,edream.110203160744.744,edream.110203160744.745,edream.110203160744.746,edream.110203160744.747,edream.110203160744.3706,edream.110203160744.3707,edream.110203160744.748,edream.110203160744.3708,edream.110203160744.3709,edream.110203160744.3710,edream.110203160744.3711,edream.110203160744.3712,edream.110203160744.756,edream.110203160744.3713,edream.110203160744.1930,edream.110203160744.3714,edream.110203160744.1740,edream.110203160744.1741,edream.110203160744.1742,edream.110203160744.1743,edream.110203160744.1692,edream.110203160744.1744,edream.110203160744.1301,edream.110203160744.1302,edream.110203160744.1303,edream.110203160744.1304,edream.110203160744.1305,edream.110203160744.1306,edream.110203160744.1307,edream.110203160744.1308,edream.110203160744.1309,edream.110203160744.1310,edream.110203160744.1311,edream.110203160744.1312,edream.110203160744.1745,edream.110203160744.1746,edream.110203160744.1747,edream.110203160744.1748,edream.110203160744.1749,edream.110203160744.1750,edream.110203160744.1751,edream.110203160744.1313,edream.110203160744.1314,edream.110203160744.1315,edream.110203160744.1316,edream.110203160744.1317,edream.110203160744.1318,edream.110203160744.1319,edream.110203160744.1320,edream.110203160744.1321,edream.110203160744.1752,edream.110203160744.1753,edream.110203160744.1754,edream.110203160744.1755,edream.110203160744.1756,edream.110203160744.1757,edream.110203160744.1673,edream.110203160744.1674,edream.110203160744.1675,edream.110203160744.1676,edream.110203160744.1677,edream.110203160744.1678,edream.110203160744.1679,edream.110203160744.765,edream.110203160744.766,edream.110203160744.3716,edream.110203160744.768,edream.110203160744.767,edream.110203160744.769,edream.110203160744.1697,edream.110203160744.1698,edream.110203160744.1699,edream.110203160744.1700,edream.110203160744.1701,edream.110203160744.1357,edream.110203160744.1358,edream.110203160744.757,edream.110203160744.758,edream.110203160744.759,edream.110203160744.760,edream.110203160744.761,edream.110203160744.762,edream.110203160744.763,edream.110203160744.1702,edream.110203160744.1703,edream.110203160744.1704,edream.110203160744.1705,edream.110203160744.879"><vh>@file leoTkinterTree.py</vh>
+<v t="edream.110203160744.3700" tnodeList="edream.110203160744.3700,edream.110203160744.3701,edream.110203160744.2461,edream.110203160744.3702,edream.110203160744.755,edream.110203160744.1726,edream.110203160744.1727,edream.110203160744.1728,edream.110203160744.1729,edream.110203160744.1730,edream.110203160744.1731,edream.110203160744.1732,edream.110203160744.1733,edream.110203160744.1734,edream.110203160744.1735,edream.110203160744.1736,edream.110203160744.1737,edream.110203160744.1738,edream.110203160744.1739,edream.110203160744.3704,edream.110203160744.3705,edream.110203160744.738,edream.110203160744.739,edream.110203160744.740,edream.110203160744.741,edream.110203160744.750,edream.110203160744.751,edream.110203160744.752,edream.110203160744.753,edream.110203160744.754,edream.110203160744.742,edream.110203160744.743,edream.110203160744.744,edream.110203160744.745,edream.110403082224,edream.110203160744.746,edream.110203160744.747,edream.110203160744.3706,edream.110203160744.3707,edream.110203160744.748,edream.110203160744.3708,edream.110203160744.3709,edream.110203160744.3710,edream.110203160744.3711,edream.110203160744.3712,edream.110203160744.756,edream.110203160744.3713,edream.110203160744.1930,edream.110203160744.3714,edream.110203160744.1740,edream.110203160744.1741,edream.110203160744.1742,edream.110203160744.1743,edream.110203160744.1692,edream.110203160744.1744,edream.110203160744.1301,edream.110203160744.1302,edream.110203160744.1303,edream.110203160744.1304,edream.110203160744.1305,edream.110203160744.1306,edream.110203160744.1307,edream.110203160744.1308,edream.110203160744.1309,edream.110203160744.1310,edream.110203160744.1311,edream.110203160744.1312,edream.110203160744.1745,edream.110203160744.1746,edream.110203160744.1747,edream.110203160744.1748,edream.110203160744.1749,edream.110203160744.1750,edream.110203160744.1751,edream.110203160744.1313,edream.110203160744.1314,edream.110203160744.1315,edream.110203160744.1316,edream.110203160744.1317,edream.110203160744.1318,edream.110203160744.1319,edream.110203160744.1320,edream.110203160744.1321,edream.110203160744.1752,edream.110203160744.1753,edream.110203160744.1754,edream.110203160744.1755,edream.110203160744.1756,edream.110203160744.1757,edream.110203160744.1673,edream.110203160744.1674,edream.110203160744.1675,edream.110203160744.1676,edream.110203160744.1677,edream.110203160744.1678,edream.110203160744.1679,edream.110203160744.765,edream.110203160744.766,edream.110203160744.3716,edream.110203160744.768,edream.110203160744.767,edream.110203160744.769,edream.110203160744.1697,edream.110203160744.1698,edream.110203160744.1699,edream.110203160744.1700,edream.110203160744.1701,edream.110203160744.1357,edream.110203160744.1358,edream.110203160744.757,edream.110203160744.758,edream.110203160744.759,edream.110203160744.760,edream.110203160744.761,edream.110203160744.762,edream.110203160744.763,edream.110203160744.1702,edream.110203160744.1703,edream.110203160744.1704,edream.110203160744.1705,edream.110203160744.879"><vh>@file leoTkinterTree.py</vh>
 <v t="edream.110203160744.3701"><vh>&lt;&lt; about the tree classes &gt;&gt;</vh></v>
 <v t="edream.110203160744.2461" a=""><vh>&lt;&lt; About drawing and events &gt;&gt;</vh></v>
 <v t="edream.110203160744.3702"><vh>&lt;&lt; drawing constants &gt;&gt;</vh></v>
@@ -7665,13 +7868,14 @@
 <v t="edream.110203160744.751"><vh>force_redraw</vh></v>
 <v t="edream.110203160744.752"><vh>redraw_now</vh></v>
 <v t="edream.110203160744.753" a=""><vh>idle_redraw</vh></v>
-<v t="edream.110203160744.754"><vh>idle_second_redraw</vh></v>
+<v t="edream.110203160744.754" a=""><vh>idle_second_redraw</vh></v>
 </v>
 <v t="edream.110203160744.742" a=""><vh>drawNode &amp; force_draw_node</vh></v>
 <v t="edream.110203160744.743" a=""><vh>drawText (bind)</vh>
 <v t="edream.110203160744.744"><vh>&lt;&lt; configure the text depending on state &gt;&gt;</vh></v>
 <v t="edream.110203160744.745"><vh>&lt;&lt; define the headline click callbacks &gt;&gt;</vh></v>
 </v>
+<v t="edream.110403082224" a=""><vh>drawTopTree</vh></v>
 <v t="edream.110203160744.746" a=""><vh>drawTree</vh>
 <v t="edream.110203160744.747"><vh>&lt;&lt; draw vertical line &gt;&gt;</vh></v>
 </v>
@@ -7892,83 +8096,6 @@
 </v>
 </v>
 </v>
-</v>
-</v>
-<v t="edream.110203160744.3806"><vh>(Use gnx's in .leo files)</vh>
-<v t="edream.110203161223" a=""><vh>Script to clean unused tnodeLists</vh></v>
-<v t="edream.110203160744.1583" a=""><vh>run &amp; allies</vh>
-<v t="edream.110203160744.1584"><vh>isValidPython</vh></v>
-<v t="edream.110203160744.1585" a=""><vh>computeLoadDir</vh></v>
-<v t="edream.110203160744.1586" a=""><vh>createFrame (leo.py)</vh></v>
-</v>
-<v t="edream.110203160744.1398" a=""><vh>app.__init__</vh>
-<v t="edream.110203160744.1399"><vh>&lt;&lt; define global constants &gt;&gt;</vh></v>
-<v t="edream.110203160744.220" a=""><vh>&lt;&lt; define global data structures &gt;&gt; app</vh></v>
-</v>
-<v t="edream.110203160744.1403" a=""><vh>&lt;&lt; get config options &gt;&gt;</vh></v>
-<v t="edream.110203160744.2642" a=""><vh>app.setLeoID</vh>
-<v t="edream.110203160744.2643"><vh>&lt;&lt; return if we can set self.leoID from sys.leoID&gt;&gt;</vh></v>
-<v t="edream.110203160744.2644"><vh>&lt;&lt; return if we can set self.leoID from "leoID.txt" &gt;&gt;</vh></v>
-<v t="edream.110203160744.2645"><vh>&lt;&lt; put up a dialog requiring a valid id &gt;&gt;</vh></v>
-<v t="edream.110203160744.2646"><vh>&lt;&lt; attempt to create leoID.txt &gt;&gt;</vh></v>
-</v>
-<v t="edream.110203160744.3614" a=""><vh>class tkinterAskLeoID</vh>
-<v t="edream.110203160744.3615"><vh>tkinterAskLeoID.__init__</vh></v>
-<v t="edream.110203160744.3616"><vh>tkinterAskLeoID.createFrame</vh></v>
-<v t="edream.110203160744.3617"><vh>tkinterAskLeoID.onCloseWindow</vh></v>
-<v t="edream.110203160744.3618"><vh>tkinterAskLeoID.onButton</vh></v>
-<v t="edream.110203160744.3619"><vh>tkinterAskLeoID.onKey</vh>
-<v t="edream.110203160744.3620"><vh>&lt;&lt; eliminate invalid characters &gt;&gt;</vh></v>
-<v t="edream.110203160744.3621"><vh>&lt;&lt; enable the ok button if there are 4 or more valid characters &gt;&gt;</vh></v>
-</v>
-</v>
-<v t="edream.110203160744.2388" a=""><vh>Creating and running tkinter dialogs</vh></v>
-<v t="edream.110203160744.3323" a=""><vh>class nodeIndices</vh>
-<v t="edream.110203160744.3324"><vh>nodeIndices.__init__</vh></v>
-<v t="edream.110203160744.3325"><vh>areEqual</vh></v>
-<v t="edream.110203160744.3326"><vh>get/setDefaultId</vh></v>
-<v t="edream.110203160744.3327"><vh>getNewIndex</vh></v>
-<v t="edream.110203160744.3328"><vh>isGnx</vh></v>
-<v t="edream.110203160744.3329"><vh>scanGnx</vh></v>
-<v t="edream.110203160744.3330"><vh>setTimeString</vh></v>
-<v t="edream.110203160744.3331"><vh>toString</vh></v>
-</v>
-<v t="edream.110203160744.3807"><vh>Writing gnx's</vh>
-<v t="edream.110203160744.2836" a=""><vh>putOpenNodeSentinel</vh></v>
-<v t="edream.110203160744.1564" a=""><vh>assignFileIndices &amp; compactFileIndices</vh>
-<v t="edream.110203160744.1565"><vh>&lt;&lt; assign missing gnx's, converting ints to gnx's &gt;&gt;</vh></v>
-<v t="edream.110203160744.1566"><vh>&lt;&lt; reassign all tnode indices &gt;&gt;</vh></v>
-</v>
-<v t="edream.110203160744.2119" a=""><vh>putVnode (3.x and 4.x)</vh>
-<v t="edream.110203160744.2120"><vh>&lt;&lt; Put tnode index &gt;&gt;</vh></v>
-<v t="edream.110203160744.2121"><vh>&lt;&lt; Put attribute bits &gt;&gt;</vh></v>
-<v t="edream.110203160744.2122"><vh>&lt;&lt; write the head text &gt;&gt;</vh></v>
-<v t="edream.110203160744.2123"><vh>&lt;&lt; put unknown vnode attributes &gt;&gt;</vh></v>
-</v>
-<v t="edream.110203160744.1571" a=""><vh>putTnode</vh>
-<v t="edream.110203160744.1572"><vh>&lt;&lt; put unknown tnode attributes &gt;&gt;</vh></v>
-</v>
-<v t="edream.110203160744.2992" a=""><vh>putTnodeList (4.0)</vh></v>
-</v>
-<v t="edream.110203160744.3808"><vh>Reading gnx's</vh>
-<v t="edream.110203160744.2964" a=""><vh>cononicalTnodeIndex</vh></v>
-<v t="edream.110203160744.2978" a=""><vh>fileCommands.setAllJoinLinks</vh></v>
-<v t="edream.110203160744.2108" a=""><vh>t.__init__</vh></v>
-<v t="edream.110203160744.2060" a=""><vh>createVnode</vh>
-<v t="edream.110203160744.2061"><vh>&lt;&lt; handle unknown vnode attributes &gt;&gt;</vh></v>
-</v>
-<v t="edream.110203160744.1842" a=""><vh>findChild</vh></v>
-<v t="edream.110203160744.1555" a=""><vh>getTnode</vh>
-<v t="edream.110203160744.1556"><vh>&lt;&lt; handle read from file &gt;&gt;</vh></v>
-<v t="edream.110203160744.1557"><vh>&lt;&lt; handle read from clipboard &gt;&gt;</vh></v>
-<v t="edream.110203160744.1558"><vh>&lt;&lt; handle unknown attributes &gt;&gt;</vh></v>
-</v>
-<v t="edream.110203160744.1560" a=""><vh>getVnode</vh>
-<v t="edream.110203160744.1561"><vh>&lt;&lt; Handle vnode attribute bits  &gt;&gt;</vh></v>
-<v t="edream.110203160744.1562"><vh>&lt;&lt; Set the remembered status bits &gt;&gt;</vh></v>
-</v>
-<v t="edream.110203160744.2973" a="M"><vh>getTnodeList (4.0)</vh></v>
-<v t="edream.110203160744.2976" a=""><vh>newTnode</vh></v>
 </v>
 </v>
 </vnodes>
@@ -17575,9 +17702,8 @@ def onHeadlineRightClickCallback(event,tree=tree,v=v):
 		doHook("headrclick2",c=c,v=v,event=event)
 	except:
 		es_event_exception("headrclick")</t>
-<t tx="edream.110203160744.746">def drawTree(self,v,x,y,h,level):
+<t tx="edream.110203160744.746">def drawTree(self,v,x,y,h,level,hoistFlag=false):
 	
-	# Recursive routine, stat() not useful.
 	yfirst = ylast = y
 	if level==0: yfirst += 10
 	while v:
@@ -17586,7 +17712,10 @@ def onHeadlineRightClickCallback(event,tree=tree,v=v):
 		y += h ; ylast = y
 		if v.isExpanded() and v.firstChild():
 			y = self.drawTree(v.firstChild(),x+child_indent,y,h,level+1)
-		v = v.next()
+		if hoistFlag:
+			v = None
+		else:
+			v = v.next()
 	&lt;&lt; draw vertical line &gt;&gt;
 	return y</t>
 <t tx="edream.110203160744.747">id = self.canvas.create_line(
@@ -17670,7 +17799,7 @@ def redraw_now (self):
 		self.canvas.delete("all")
 		self.deleteWidgets()
 		self.setVisibleAreaToFullCanvas()
-		self.drawTree(self.rootVnode,root_left,root_top,0,0)
+		self.drawTopTree()
 		# Set up the scroll region after the tree has been redrawn.
 		x0, y0, x1, y1 = self.canvas.bbox("all")
 		self.canvas.configure(scrollregion=(0, 0, x1, y1))
@@ -17694,7 +17823,7 @@ def redraw_now (self):
 	self.setVisibleArea(args)
 	self.deleteBindings()
 	self.canvas.delete("all")
-	self.drawTree(self.rootVnode,root_left,root_top,0,0)
+	self.drawTopTree()
 	
 	if self.trace:
 		print "idle_second_redraw allocated:",self.redrawCount, self.allocatedNodes</t>
@@ -22467,6 +22596,9 @@ self.createMenuEntries(exportMenu,table)
 	("&amp;Clone Node","Ctrl+`",self.OnCloneNode),
 	("Sort C&amp;hildren",None,self.OnSortChildren),
 	("&amp;Sort Siblings","Alt-A",self.OnSortSiblings),
+	("-",None,None),
+	("Hoist",None,self.OnHoist),
+	("De-Hoist",None,self.OnDehoist),
 	("-",None,None))
 
 self.createMenuEntries(outlineMenu,table)</t>
@@ -24835,6 +24967,8 @@ def hasSelection (self):
 		enableMenu(menu,"Delete Node",c.canDeleteHeadline())
 		enableMenu(menu,"Paste Node",c.canPasteOutline())
 		enableMenu(menu,"Sort Siblings",c.canSortSiblings())
+		enableMenu(menu,"Hoist",c.canHoist())
+		enableMenu(menu,"De-Hoist",c.canDehoist())
 		# Expand/Contract submenu...
 		menu = self.getMenu("Expand/Contract...")
 		hasChildren = v.hasChildren()
@@ -29103,8 +29237,9 @@ clonedAtFileNodes: 9
 	if app.killed: return # Support for app.forceShutdown.
 	# Create the default gui if needed.
 	if app.gui == None: app.createTkGui()
-	if not app.leoID: app.setLeoID() # Forces the user to set app.leoID.
-	app.nodeIndices = leoNodes.nodeIndices()
+	if app.use_gnx:
+		if not app.leoID: app.setLeoID() # Forces the user to set app.leoID.
+		app.nodeIndices = leoNodes.nodeIndices()
 	# Initialize tracing and statistics.
 	init_sherlock(args)
 	clear_stats()
@@ -30340,10 +30475,10 @@ def endElementNS(self,name,qname):
 	
 	c = self.commands
 
-	writtenFiles = c.atFileCommands.writeAll(writeDirtyAtFileNodesFlag=true)
+	changedFiles = c.atFileCommands.writeAll(writeDirtyAtFileNodesFlag=true)
 	
-	assert(writtenFiles != None)
-	if writtenFiles:
+	assert(changedFiles != None)
+	if changedFiles:
 		es("auto-saving outline",color="blue")
 		c.frame.OnSave() # Must be done to set or clear tnodeList.</t>
 <t tx="edream.110203160744.1669"></t>
@@ -33001,7 +33136,10 @@ self.target_language = "python" # 8/11/02: Required if leoConfig.txt does not ex
 # These are defined here, and updated by the tree.select()
 self.beadList = [] # list of vnodes for the Back and Forward commands.
 self.beadPointer = -1 # present item in the list.
-self.visitedList = [] # list of vnodes for the Nodes dialog.</t>
+self.visitedList = [] # list of vnodes for the Nodes dialog.
+
+# 4.1: for hoist/dehoist commands.
+self.hoistStack = [] # Stack of nodes to be root of drawn tree.  Affects only drawing routines.</t>
 <t tx="edream.110203160744.1846">def newLeoCommanderAndFrame(self,fileName):
 	
 	"""Create a commander and its view frame for the Leo main window."""
@@ -33265,9 +33403,9 @@ This allows the caller to do an auto-save only if something was really written.<
 	
 	c = self.commands
 
-	writtenFiles = c.atFileCommands.writeAll(writeAtFileNodesFlag=true)
-	assert(writtenFiles != None)
-	if writtenFiles:
+	changedFiles = c.atFileCommands.writeAll(writeAtFileNodesFlag=true)
+	assert(changedFiles != None)
+	if changedFiles:
 		es("auto-saving outline",color="blue")
 		c.frame.OnSave() # Must be done to set or clear tnodeList.</t>
 <t tx="edream.110203160744.1860">def writeMissingAtFileNodes (self):
@@ -33276,9 +33414,9 @@ This allows the caller to do an auto-save only if something was really written.<
 
 	if v:
 		at = c.atFileCommands
-		writtenFiles = at.writeMissing(v)
-		assert(writtenFiles != None)
-		if writtenFiles:
+		changedFiles = at.writeMissing(v)
+		assert(changedFiles != None)
+		if changedFiles:
 			es("auto-saving outline",color="blue")
 			c.frame.OnSave() # Must be done to set or clear tnodeList.</t>
 <t tx="edream.110203160744.1861">def writeMissing(self,v):
@@ -33289,7 +33427,7 @@ This allows the caller to do an auto-save only if something was really written.<
 	write_new = not app.config.write_old_format_derived_files
 	df = choose(write_new,at.new_df,at.old_df)
 	df.initIvars()
-	writtenFiles = false
+	writtenFiles = false ; changedFiles = false
 	after = v.nodeAfterTree()
 	while v and v != after:
 		if v.isAtSilentFileNode() or (v.isAnyAtFileNode() and not v.isAtIgnoreNode()):
@@ -33311,7 +33449,7 @@ This allows the caller to do an auto-save only if something was really written.<
 	else:
 		es("no missing @file node in the selected tree")
 		
-	return writtenFiles # 9/23/03: so caller knows whether to do an auto-save.</t>
+	return changedFiles # So caller knows whether to do an auto-save.</t>
 <t tx="edream.110203160744.1862"># This is similar, but not the same as, the logic in openWriteFile.
 
 valid = df.targetFileName and len(df.targetFileName) &gt; 0
@@ -33363,7 +33501,9 @@ elif v.isAtFileNode():
 else: assert(0)
 
 writtenFiles = true
-</t>
+
+if df.fileChangedFlag: # Set by replaceTargetFileIfDifferent.
+	changedFiles = true</t>
 <t tx="edream.110203160744.1865">def writeAll(self,writeAtFileNodesFlag=false,writeDirtyAtFileNodesFlag=false):
 	
 	"""Write @file nodes in all or part of the outline"""
@@ -33372,6 +33512,7 @@ writtenFiles = true
 	write_new = not app.config.write_old_format_derived_files
 	df = choose(write_new,at.new_df,at.old_df)
 	df.initIvars()
+	changedFiles = [] # Files that were actually changed.
 	writtenFiles = [] # Files that might be written again.
 
 	if writeAtFileNodesFlag:
@@ -33392,8 +33533,8 @@ writtenFiles = true
 			v = v.threadNext()
 
 	&lt;&lt; say the command is finished &gt;&gt;
-	
-	return len(writtenFiles) # 9/23/03: so caller knows whether to do an auto-save.</t>
+	return len(changedFiles) &gt; 0 # So caller knows whether to do an auto-save.
+</t>
 <t tx="edream.110203160744.1866">@ We must clear these bits because they may have been set on a previous write.  Calls to atFile::write may set the orphan bits in @file nodes.  If so, write_LEO_file will write the entire @file tree.
 @c
 
@@ -33417,7 +33558,10 @@ if v.isDirty() or writeAtFileNodesFlag or v.t in writtenFiles:
 		at.write(v)
 
 	if not v.isAtIgnoreNode():
-		writtenFiles.append(v.t)</t>
+		writtenFiles.append(v.t)
+
+	if df.fileChangedFlag: # Set by replaceTargetFileIfDifferent.
+		changedFiles.append(v.t)</t>
 <t tx="edream.110203160744.1868">if writeAtFileNodesFlag or writeDirtyAtFileNodesFlag:
 	if len(writtenFiles) &gt; 0:
 		es("finished")
@@ -34178,6 +34322,9 @@ def moveOutlineDown(self):
 	c = self
 	v = c.currentVnode()
 	if not v: return
+	if not c.canMoveOutlineDown(): # 11/4/03: Support for hoist.
+		if c.hoistStack: es("Can't move node out of hoisted outline",color="blue")
+		return
 	# Set next to the node after which v will be moved.
 	next = v.visNext()
 	while next and v.isAncestorOf(next):
@@ -34217,6 +34364,9 @@ else:
 	c = self
 	v = c.currentVnode()
 	if not v: return
+	if not c.canMoveOutlineLeft(): # 11/4/03: Support for hoist.
+		if c.hoistStack: es("Can't move node out of hoisted outline",color="blue")
+		return
 	parent = v.parent()
 	if not parent: return
 	# Remember both the before state and the after state for undo/redo
@@ -34243,6 +34393,9 @@ else:
 	c = self
 	v = c.currentVnode()
 	if not v: return
+	if not c.canMoveOutlineRight(): # 11/4/03: Support for hoist.
+		if c.hoistStack: es("Can't move node out of hoisted outline",color="blue")
+		return
 	back = v.back()
 	if not back: return
 	if not c.checkMoveWithParentWithWarning(v,back,true): return
@@ -34270,6 +34423,9 @@ else:
 	c = self
 	v = c.currentVnode()
 	if not v: return
+	if not c.canMoveOutlineUp(): # 11/4/03: Support for hoist.
+		if c.hoistStack: es("Can't move node out of hoisted outline",color="blue")
+		return
 	back = v.visBack()
 	if not back: return
 	back2 = back.visBack()
@@ -34284,7 +34440,8 @@ else:
 		c.setChanged(true)
 		c.initJoinedCloneBits(v) # 10/8/03
 	c.endUpdate()
-	c.updateSyntaxColorer(v) # Moving can change syntax coloring.</t>
+	c.updateSyntaxColorer(v) # Moving can change syntax coloring.
+</t>
 <t tx="edream.110203160744.1921"># Remember both the before state and the after state for undo/redo
 oldBack = v.back()
 oldParent = v.parent()
@@ -40496,14 +40653,8 @@ def setDict (self,name,val,dict):
 		
 getStringFromDict = getFromDict
 </t>
-<t tx="edream.110203160744.2412">@nocolor
-
-Change .leo files to -ko mode.
-Remove instances of bodyCtrl from non-gui code (undo, etc)</t>
+<t tx="edream.110203160744.2412">@nocolor</t>
 <t tx="edream.110203160744.2415"></t>
-<t tx="edream.110203160744.2416"></t>
-<t tx="edream.110203160744.2417">- Create esp, es_warning, es_error.
-</t>
 <t tx="edream.110203160744.2418"></t>
 <t tx="edream.110203160744.2419">@nocolor
 
@@ -44938,25 +45089,22 @@ at.endSentinelComment = s[j:i]</t>
 	return u</t>
 <t tx="edream.110203160744.2664"></t>
 <t tx="edream.110203160744.2665">def rawWrite (self,v):
-	
 	at = self
 	write_new = not app.config.write_old_format_derived_files
 	df = choose(write_new,at.new_df,at.old_df)
-	try: df.rawWrite(v)
+	try:    df.rawWrite(v)
 	except: at.writeException(v)
 	
 def silentWrite (self,v):
-
-	at = self # 9/26/03
+	at = self
 	try: at.old_df.silentWrite(v) # No new_df.silentWrite method.
 	except: at.writeException(v)
 	
 def write (self,v,nosentinels=false):
-	
 	at = self
 	write_new = not app.config.write_old_format_derived_files
 	df = choose(write_new,at.new_df,at.old_df)
-	try: df.write(v,nosentinels)
+	try:    df.write(v,nosentinels)
 	except: at.writeException(v)
 		
 def writeException(self,v):
@@ -45035,7 +45183,10 @@ self.encoding = app.config.default_derived_file_encoding
 # For interface between 3.x and 4.x read code.
 self.file = None
 self.importing = false
-self.importRootSeen = false</t>
+self.importRootSeen = false
+
+# Set when a file has actually been updated.
+self.fileChangedFlag = false</t>
 <t tx="edream.110203160744.2670"></t>
 <t tx="edream.110203160744.2671">def readOpenFile(self,root,file,firstLines):
 	
@@ -46306,6 +46457,7 @@ else:
 	
 	assert(self.outputFile == None)
 	
+	self.fileChangedFlag = false
 	if os.path.exists(self.targetFileName):
 		if filecmp.cmp(self.outputFileName,self.targetFileName):
 			&lt;&lt; delete the output file &gt;&gt;
@@ -46338,6 +46490,7 @@ try: # Replace target file with temp file.
 			except:
 				es("exception in os.chmod(%s)" % (self.targetFileName))
 		es("writing: " + self.shortFileName)
+		self.fileChangedFlag = true
 	except:
 		# 6/28/03
 		self.writeError("exception renaming: %s to: %s" % (self.outputFileName,self.targetFileName))
@@ -46353,6 +46506,7 @@ except:
 <t tx="edream.110203160744.2769">try:
 	utils_rename(self.outputFileName,self.targetFileName)
 	es("creating: " + self.targetFileName)
+	self.fileChangedFlag = true
 except:
 	self.writeError("exception renaming:" + self.outputFileName +
 		" to " + self.targetFileName)
@@ -47997,7 +48151,12 @@ canExtractSectionNames = canExtract</t>
 		v = current.visNext()
 		while v and current.isAncestorOf(v):
 			v = v.visNext()
-		return v != None
+			
+		if c.hoistStack:
+			h = c.hoistStack[-1]
+			return v and v != h and h.isAncestorOf(v)
+		else:
+			return v != None
 	else: # The MORE way.
 		return c.currentVnode().next() != None</t>
 <t tx="edream.110203160744.2892">def canMoveOutlineLeft (self):
@@ -48006,16 +48165,32 @@ canExtractSectionNames = canExtract</t>
 	if 0: # Old code: assumes multiple leftmost nodes.
 		return v and v.parent()
 	else: # Can't move a child of the root left.
-		return v and v.parent() and v.parent().parent()</t>
+		if c.hoistStack:
+			h = c.hoistStack[-1]
+			if v and v.parent() and v.parent().parent():
+				p = v.parent()
+				return p != h and h.isAncestorOf(p)
+			else:
+				return false
+		else:
+			return v and v.parent() and v.parent().parent()</t>
 <t tx="edream.110203160744.2893">def canMoveOutlineRight (self):
 
 	c = self ; v = c.currentVnode()
-	return v and v.back()</t>
+	if c.hoistStack:
+		h = c.hoistStack[-1]
+		return v and v.back() and v != h
+	else:
+		return v and v.back()</t>
 <t tx="edream.110203160744.2894">def canMoveOutlineUp (self):
 
 	c = self ; v = c.currentVnode()
 	if 1: # The permissive way.
-		return v and v.visBack()
+		if c.hoistStack:
+			h = c.hoistStack[-1] ; vback = v.visBack()
+			return v and vback and h != v and h.isAncestorOf(vback)
+		else:
+			return v and v.visBack()
 	else: # The MORE way.
 		return v and v.back()</t>
 <t tx="edream.110203160744.2895">def canPromote (self):
@@ -52735,7 +52910,7 @@ def nthChild (self, n):
 <t tx="edream.110203160744.3265"># Returns true if all parents are expanded.
 
 def isVisible (self):
-
+	
 	v = self.parent()
 	while v:
 		if not v.isExpanded():
@@ -56027,8 +56202,10 @@ def setUndoParams (self,undo_type,v,**keywords):
 	redrawFlag = true
 	c.beginUpdate()
 	redoType = u.undoType # Use the type of the next bead.
+	updateSetChangedFlag = true
 	if 1: # range...
 		&lt;&lt; redo clone cases &gt;&gt;
+		&lt;&lt; redo hoist cases &gt;&gt;
 		&lt;&lt; redo insert cases &gt;&gt;
 		&lt;&lt; redo delete cases &gt;&gt;
 		&lt;&lt; redo move &amp; drag cases &gt;&gt;
@@ -56037,8 +56214,9 @@ def setUndoParams (self,undo_type,v,**keywords):
 		&lt;&lt; redo sort cases &gt;&gt;
 		&lt;&lt; redo typing cases &gt;&gt;
 		else: trace("Unknown case: " + `redoType`)
-		c.setChanged(true)
-		if u.v: u.v.setDirty()
+		if updateSetChangedFlag:
+			c.setChanged(true)
+			if u.v: u.v.setDirty()
 	c.endUpdate(redrawFlag) # 11/08/02
 	u.redoing = false
 	u.bead += 1
@@ -56138,9 +56316,11 @@ def undo (self):
 	c.beginUpdate()
 	undoType = u.undoType
 	redrawFlag = true
+	updateSetChangedFlag = true
 	if 1: # range...
 		&lt;&lt; undo clone cases &gt;&gt;
 		&lt;&lt; undo delete cases &gt;&gt;
+		&lt;&lt; undo hoist cases &gt;&gt;
 		&lt;&lt; undo insert cases &gt;&gt;
 		&lt;&lt; undo move &amp; drag cases &gt;&gt;
 		&lt;&lt; undo promote and demote cases &gt;&gt;
@@ -56148,8 +56328,9 @@ def undo (self):
 		&lt;&lt; undo sort cases &gt;&gt;
 		&lt;&lt; undo typing cases &gt;&gt;
 		else: trace("Unknown case: " + `u.undoType`)
-		c.setChanged(true)
-		if u.v: u.v.setDirty()
+		if updateSetChangedFlag:
+			c.setChanged(true)
+			if u.v: u.v.setDirty()
 	c.endUpdate(redrawFlag) # 11/9/02
 	u.undoing = false
 	u.bead -= 1
@@ -59689,7 +59870,7 @@ class leoNodeError(Exception):
 <t tx="edream.110203160744.3804">def undo (self):
 	
 	pass</t>
-<t tx="edream.110203160744.3805">@ The 4.0.x paste code (and all previous versions) is buggy: pasted nodes can share tnodes.  This never happens when cutting and pasting in the same outline, because the indices are reassigned when _cutting_.
+<t tx="edream.110203160744.3805">@ The 4.0.x paste code (and all previous versions) may be buggy: pasted nodes can share tnodes.  This never happens when cutting and pasting in the same outline, because the indices are reassigned when _cutting_.
 
 finishPaste must create _new_ tnodes for all indices.  But notice, new_tnodes already warns if there are "overlap" problems, and this rarely if ever happens.  So maybe the code isn't buggy?  Or maybe the bug only happens very rarely???
 
@@ -59710,7 +59891,101 @@ while v:
 es("tnodeList script complete")
 </t>
 <t tx="edream.110203163105"></t>
-<t tx="edream.110203163105.1"></t>
 <t tx="edream.110203163105.2"></t>
+<t tx="edream.110303152216"></t>
+<t tx="edream.110303152216.1"></t>
+<t tx="edream.110303152216.2"></t>
+<t tx="edream.110303152216.3"></t>
+<t tx="edream.110303154904"></t>
+<t tx="edream.110303154904.1"></t>
+<t tx="edream.110303161742">- Added df.fileChanged flag.  This is set by replaceTargetFileIfDifferent.
+
+- Separated the "written" logic from the "changed" logic.  We do an auto-save only if something has actually been changed.  The "written" logic is used to warn if a tree contains no @file nodes.</t>
+<t tx="edream.110303162034"></t>
+<t tx="edream.110303162034.1"></t>
+<t tx="edream.110403081646">def OnHoist(self,event=None):
+
+	self.commands.hoist()
+	
+def OnDehoist(self,event=None):
+
+	self.commands.dehoist()</t>
+<t tx="edream.110403081646.1">def dehoist(self):
+
+	c = self ; v = c.currentVnode()
+	if v and c.canDehoist():
+		c.undoer.setUndoParams("De-Hoist",v)
+		c.hoistStack.pop()
+		v.contract()
+		c.redraw()
+		c.frame.clearStatusLine()
+		if c.hoistStack:
+			h = c.hoistStack[-1]
+			c.frame.putStatusLine("Hoist: " + h.headString())
+		else:
+			c.frame.putStatusLine("No hoist")
+
+def hoist(self):
+
+	c = self ; v = c.currentVnode()
+	if v and c.canHoist():
+		c.undoer.setUndoParams("Hoist",v)
+		c.hoistStack.append(v)
+		v.expand()
+		c.redraw()
+		c.frame.clearStatusLine()
+		c.frame.putStatusLine("Hoist: " + v.headString())
+
+def canDehoist(self):
+	
+	return len(self.hoistStack) &gt; 0
+		
+def canHoist(self):
+	
+	c = self ; v = c.currentVnode()
+	if v == c.rootVnode():
+		return v.next() != None
+	elif not c.hoistStack:
+		return true
+	else:
+		return c.hoistStack[-1] != v</t>
+<t tx="edream.110403081646.2"></t>
+<t tx="edream.110403082224">def drawTopTree (self):
+	
+	"""Draws the top-level tree, taking into account the hoist state."""
+	
+	c = self.frame.commands
+	
+	if c.hoistStack:
+		v = c.hoistStack[-1]
+		self.drawTree(v,root_left,root_top,0,0,hoistFlag=true)
+	else:
+		self.drawTree(self.rootVnode,root_left,root_top,0,0)</t>
+<t tx="edream.110403083824"></t>
+<t tx="edream.110403085725"></t>
+<t tx="edream.110403085725.1">Hoisting itself is easy.  The biggest challenge was preventing moves outside the hoisted area, which would too confusing.</t>
+<t tx="edream.110403090228">elif redoType == "Hoist":
+	
+	c.selectVnode(u.v)
+	c.hoist()
+	updateSetChangedFlag = false
+	
+elif redoType == "De-Hoist":
+	
+	c.selectVnode(u.v)
+	c.dehoist()
+	updateSetChangedFlag = false</t>
+<t tx="edream.110403090228.1">elif undoType == "Hoist":
+	
+	c.selectVnode(u.v)
+	c.dehoist()
+	updateSetChangedFlag = false
+
+elif undoType == "De-Hoist":
+	
+	c.selectVnode(u.v)
+	c.hoist()
+	updateSetChangedFlag = false
+</t>
 </tnodes>
 </leo_file>

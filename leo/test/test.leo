@@ -20,7 +20,7 @@
 <v t="edream.110203161858.4"><vh>How to get screenshots</vh></v>
 </v>
 <v t="edream.110203161858.5" tnodeList="edream.110203161858.5"><vh>@file-nosent c:\prog\leoCVS\.pycheckrc</vh></v>
-<v t="edream.110203161858.6"><vh>Tests...</vh>
+<v t="edream.110203161858.6" a="E"><vh>Tests...</vh>
 <v t="edream.110203161858.7"><vh>4.0 tests</vh>
 <v t="edream.110203161858.8"><vh>unicode test for find all</vh>
 <v t="edream.110203161858.9"><vh>a</vh></v>
@@ -169,9 +169,9 @@
 <v t="edream.110203161858.109"><vh>Settings...</vh>
 <v t="edream.110203161858.110"><vh>Redirect test</vh></v>
 </v>
-<v t="edream.110203161858.111"><vh>Test Files...</vh>
+<v t="edream.110203161858.111" a="E"><vh>Test Files...</vh>
 <v t="edream.110203161858.18" a=""><vh>&lt;&lt; ref &gt;&gt; (cloned)</vh></v>
-<v t="edream.110203161858.112" tnodeList="edream.110203161858.112,edream.110203161858.113,edream.110203161858.113"><vh>@file c:\prog\test\atRawTest.txt</vh>
+<v t="edream.110203161858.112" a="V" tnodeList="edream.110203161858.112,edream.110203161858.113,edream.110203161858.113"><vh>@file c:\prog\test\atRawTest.txt</vh>
 <v t="edream.110203161858.113"><vh>&lt;&lt; ref &gt;&gt;</vh></v>
 </v>
 <v t="edream.110203161858.114" tnodeList="edream.110203161858.114"><vh>@file c:\prog\test\delimsTest.txt</vh></v>
@@ -2633,7 +2633,7 @@
 <v t="edream.110203161858.2117"><vh>@nonl in @doc parts</vh>
 <v t="edream.110203161858.2118" a="M" tnodeList="edream.110203161858.2118"><vh>@file c:\prog\test\docTest.txt</vh></v>
 </v>
-<v t="edream.110203161858.2119" a="EV"><vh>Unit Tests</vh>
+<v t="edream.110203161858.2119"><vh>Unit Tests</vh>
 <v t="edream.110203161858.2120"><vh>Bug reports</vh>
 <v t="edream.110203161858.2121" a="E"><vh>Colorizer</vh>
 <v t="edream.110203161858.2122"><vh> Report</vh></v>

@@ -781,7 +781,7 @@ class baseVnode:
 	# Returns true if all parents are expanded.
 	
 	def isVisible (self):
-	
+		
 		v = self.parent()
 		while v:
 			if not v.isExpanded():
