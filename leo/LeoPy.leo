@@ -2,7 +2,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="2132" clone_windows="0"/>
 <globals body_outline_ratio="0.52017937219730936">
-	<global_window_position top="24" left="232" height="27" width="75"/>
+	<global_window_position top="24" left="103" height="27" width="75"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences allow_rich_text="0" tab_width="4" page_width="132" tangle_bat="0" untangle_bat="0" output_doc_chunks="1" use_header_flag="1" defaultTargetLanguage="Python">
@@ -830,14 +830,10 @@
 <v t="T502" a="E"><vh>Unused code</vh></v>
 </v>
 <v t="T503" a="E"><vh>To do</vh>
-<v><vh>Testing in beta 1</vh>
-<v><vh>Linux line feeds</vh></v>
-<v><vh>Operation of leoConfig.txt</vh></v>
-</v>
-<v a="E"><vh>Release 3.6 beta 1</vh>
-<v t="T504"><vh>Update readme file (done for 3.6.b1)</vh></v>
-<v><vh>Update version info (done for 3.6b1)</vh></v>
-<v a="V"><vh>always use leosetup.exe as name for installer</vh></v>
+<v a="V"><vh>Release 3.6</vh>
+<v t="T504"><vh>Update readme file</vh></v>
+<v><vh>Update version info </vh></v>
+<v><vh>always use leosetup.exe as name for installer</vh></v>
 </v>
 <v a="E"><vh>3.7</vh>
 <v t="T505"><vh>Test r+ access mode in leoConfig.py</vh></v>
@@ -3112,7 +3108,7 @@
 <v t="T1465"><vh>Code</vh>
 <v t="T1466"><vh> Overview of code</vh></v>
 <v t="T1467"><vh> Scripts &amp; Batch Files (Change version in setup.py)</vh>
-<v t="T1468"><vh> Batch Files &amp; other @root trees</vh>
+<v t="T1468" a="E"><vh> Batch Files &amp; other @root trees</vh>
 <v t="T1469"><vh>go.bat</vh></v>
 <v t="T1470"><vh>help.bat</vh></v>
 <v t="T1471"><vh>sdist.bat</vh></v>
@@ -18474,7 +18470,7 @@ def finishCreate (self):
 	# Doing so would add unwanted leading tabs.
 	ver = "$Revision$" # CVS will update this.
 	build = ver[10:-1] # Strip off "$Reversion" and "$"
-	version = "leo.py 3.6 beta 1, Build " + build + ", September 10, 2002\n\n"
+	version = "leo.py 3.6 beta 2, Build " + build + ", September 10, 2002\n\n"
 	copyright = (
 		"Copyright 1999-2002 by Edward K. Ream\n" +
 		"All Rights Reserved\n" +
@@ -22581,11 +22577,11 @@ top.lift()</t>
 	
 	import webbrowser
 	
-	version = "?vernum=3.6 beta 1"
+	version = "?vernum=3.6 beta 2" # not used now.
 	url = "http://www.evisa.com/e/sbooks/leo/sbframetoc_ie.htm"
 
 	try:
-		webbrowser.open(url + version)
+		webbrowser.open(url) # + version)
 	except:
 		es("not found: " + url)
 	
@@ -23952,6 +23948,7 @@ include leoConfig.leo
 include leo*.py
 include leoConfig.txt
 include c2py.py
+include disStats.py
 include openLeo.py
 include tangle_done.py
 include untangle_done.py
@@ -25656,7 +25653,7 @@ modules.sort()
 &lt;&lt; setup info for setup.py &gt;&gt;</t>
 <t tx="T1561">
 setup( name="leo",
-	version="3.6 beta 1",
+	version="3.6b2",
 	author="Edward K. Ream",
 	author_email="edream@tds.net",
 	url="http://personalpages.tds.net/~edream/front.html",
@@ -25961,6 +25958,7 @@ def skipIndent(self,s,i,width):
 	# This is useful now that we don't print the actual messages.
 	if self.errors == 0:
 		es("----- error reading @file " + self.targetFileName)
+		self.error(message) # 9/10/02: we must increment self.errors!
 
 	if 0: # CVS conflicts create too many messages.
 		self.error(message)
