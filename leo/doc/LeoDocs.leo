@@ -82,11 +82,11 @@
 <v t="edream.110203163054.62"><vh>Quick start</vh></v>
 </v>
 <v t="edream.110203163054.63" a="E"><vh>Latest versions</vh>
-<v t="ekr.20040914103359" a="ETV"><vh>4.2 rc1</vh>
+<v t="ekr.20040914103359" a="TV"><vh>4.2 rc1</vh>
 <v t="ekr.20040914103743.1"><vh>Added new features</vh>
-<v t="ekr.20040914103359.137" a="E"><vh>Added c.frame.openDirectory to sys.path when executing scripts</vh></v>
-<v t="ekr.20040914103359.37" a="E"><vh>Added expanded_click_area option to disable left click logic in outline pane</vh></v>
-<v t="ekr.20040914103359.2" a="E"><vh>Restored the "iconclick1/2" hooks</vh></v>
+<v t="ekr.20040914103359.137"><vh>Added c.frame.openDirectory to sys.path when executing scripts</vh></v>
+<v t="ekr.20040914103359.37"><vh>Added expanded_click_area option to disable left click logic in outline pane</vh></v>
+<v t="ekr.20040914103359.2"><vh>Restored the "iconclick1/2" hooks</vh></v>
 <v t="ekr.20040914103359.19"><vh>(Allow longer headlines for to support long url's)</vh>
 <v t="ekr.20040914103359.20"><vh>Report</vh></v>
 <v t="ekr.20040914103359.21"><vh>idle_head_key</vh>
@@ -100,16 +100,16 @@
 </v>
 </v>
 <v t="ekr.20040914103743"><vh>Fixed bugs</vh>
-<v t="ekr.20040914103359.47" a="E"><vh>Disabled perfect import</vh></v>
-<v t="ekr.20040914103359.127" a="E"><vh>Fixed bugs in Tangle/Untangle</vh></v>
-<v t="ekr.20040914103359.12" a="E"><vh>Fixed Import Derived Files command</vh></v>
-<v t="ekr.20040914103359.15" a="E"><vh>Fixed parsing of minimal &lt;preferences&gt; tag</vh></v>
-<v t="ekr.20040914103359.7" a="E"><vh>Fixed problem with tabs on MacOs</vh></v>
-<v t="ekr.20040914103359.28" a="E"><vh>Fixed read errors with @language html</vh></v>
-<v t="ekr.20040914103359.4" a="E"><vh>Made sure a proper message is given with invalid versions of Python</vh></v>
-<v t="ekr.20040914103359.110" a="E"><vh>Removed failed assert from colorizer</vh></v>
-<v t="ekr.20040914103359.31" a="E"><vh>Removed spurious "Warning: updating changed text" messages</vh></v>
-<v t="ekr.20040914103359.129" a="E"><vh>Shifted all Alt-shortcuts to Ctrl shortcuts on the Mac</vh></v>
+<v t="ekr.20040914103359.47"><vh>Disabled perfect import</vh></v>
+<v t="ekr.20040914103359.127"><vh>Fixed bugs in Tangle/Untangle</vh></v>
+<v t="ekr.20040914103359.12"><vh>Fixed Import Derived Files command</vh></v>
+<v t="ekr.20040914103359.15"><vh>Fixed parsing of minimal &lt;preferences&gt; tag</vh></v>
+<v t="ekr.20040914103359.7"><vh>Fixed problem with tabs on MacOs</vh></v>
+<v t="ekr.20040914103359.28"><vh>Fixed read errors with @language html</vh></v>
+<v t="ekr.20040914103359.4"><vh>Made sure a proper message is given with invalid versions of Python</vh></v>
+<v t="ekr.20040914103359.110"><vh>Removed failed assert from colorizer</vh></v>
+<v t="ekr.20040914103359.31"><vh>Removed spurious "Warning: updating changed text" messages</vh></v>
+<v t="ekr.20040914103359.129"><vh>Shifted all Alt-shortcuts to Ctrl shortcuts on the Mac</vh></v>
 </v>
 </v>
 <v t="ekr.20040713110718"><vh>4.2 beta 3</vh>
@@ -3475,9 +3475,9 @@ The Select All command selects all text in the body pane.
 <t tx="EKR.20040524104904.114">The Shift Left and Shift Right commands shift selected lines in the body text left or right one tab position. The entire line is shifted if any characters of the line are selected.</t>
 <t tx="EKR.20040524104904.115">The Extract, Extract Section and Extract Section Names commands create child nodes whose headline is the first line of the selected body text.
 
-The Extract command creates a new node whose headline is the first line of selected body text and whose body is all other lines of selected text.  All selected text is deleted from the original body text. This command is enabled only if the first line contains a section name (enclosed in angle brackets) on a line by itself.
+The Extract command creates a new node whose headline is the first line of selected body text and whose body is all other lines of selected text.  All selected text is deleted from the original body text. 
 
-The Extract Section command creates a new node whose headline is the first line of selected text and whose body is @code followed by all the other lines of selected text.  All selected text lines except the first line are deleted from the original body text. 
+The Extract Section command creates a new node whose headline is the first line of selected text and whose body is @code followed by all the other lines of selected text.  All selected text lines except the first line are deleted from the original body text. This command is enabled only if the first line contains a section name (enclosed in angle brackets) on a line by itself.
 
 The Extract Section Names command creates one or more child nodes, one for each section name (enclosed in angle brackets) in the selected body text.  The headline of each created node is the section name and the body text of each created node is just @code followed by a newline.</t>
 <t tx="EKR.20040524104904.116">New in leo.py v2.5.
