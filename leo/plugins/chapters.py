@@ -275,7 +275,7 @@ def newCreateCanvas( self, parentFrame, createCanvas = leoTkinterFrame.leoTkinte
     createBalloon( tab, sv )
     canvas.name = pname
     
-    g.trace(repr(canvas.name),canvas)
+    # g.trace(repr(canvas.name),canvas)
 
     return canvas
 #@nonl
@@ -322,7 +322,7 @@ def getNameMaker( notebook ):
 #@+node:mork.20040926105355.24:newTreeinit
 def newTreeinit( self, c,frame,canvas, oinit = leoTkinterTree.leoTkinterTree.__init__ ):
     
-    g.trace(canvas)
+    # g.trace(canvas)
 
     sv = getSV( canvas.name, c )
     oinit( self, c, frame, canvas )
