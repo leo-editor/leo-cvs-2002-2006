@@ -149,10 +149,13 @@ class baseLeoPrefs:
 		
 		# Left column of radio buttons.
 		left_data = [
-			("C/C++","c"), ("CWEB", "cweb"),
-			("HTML", "html"), ("Java", "java"),
-			("LaTeX", "latex"), ("Pascal", "pascal"),
-			("Rebol", "rebol")]
+			("ActionScript", "actionscript"),
+			("C/C++","c"),
+			("CWEB", "cweb"),
+			("HTML", "html"),
+			("Java", "java"),
+			("LaTeX", "latex"),
+			("Pascal", "pascal")]
 		
 		for text,value in left_data:
 			button = Tk.Radiobutton(lt,anchor="w",text=text,
@@ -161,9 +164,13 @@ class baseLeoPrefs:
 			
 		# Right column of radio buttons.
 		right_data = [
-			("Perl", "perl"), ("Perl+POD", "perlpod"),
-			("PHP", "php"), ("Plain Text", "plain"),
-			("Python", "python"), ("tcl/tk", "tcltk") ]
+			("Perl", "perl"),
+			("Perl+POD", "perlpod"),
+			("PHP", "php"),
+			("Plain Text", "plain"),
+			("Python", "python"),
+			("Rebol", "rebol"),
+			("tcl/tk", "tcltk")]
 			
 		for text,value in right_data:
 			button = Tk.Radiobutton(rt,anchor="w",text=text,
