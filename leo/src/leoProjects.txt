@@ -7184,7 +7184,8 @@ except:
 #@+node:ekr.20031218072017.1555:<< scan all the xml elements >>
 self.getXmlVersionTag()
 self.getXmlStylesheetTag()
-self.getTag("<leo_file>")
+
+self.getTag("<leo_file>") # Must match exactly.
 self.getLeoHeader()
 self.getGlobals()
 self.getPrefs()
@@ -7245,7 +7246,7 @@ def getVnodes (self):
     c = self.c
 
     if self.getOpenTag("<vnodes>"):
-        return
+        return # <vnodes/> seen.
         
     if self.usingClipboard:
         oldRoot = c.rootPosition()
@@ -7443,9 +7444,9 @@ if keys:
 #@+node:ekr.20031218072017.1560:getTnodes
 def getTnodes (self):
 
-    # A slight change: we require a tnode element.  But Leo always writes this.
+    # A slight change: we require a tnodes element.  But Leo always writes this.
     if self.getOpenTag("<tnodes>"):
-        return
+        return # <tnodes/> seen.
         
     while self.matchTag("<t"):
         self.getTnode()
@@ -7517,7 +7518,7 @@ def getLeoOutline (self,s,reassignIndices=True):
     try:
         self.getXmlVersionTag() # leo.py 3.0
         self.getXmlStylesheetTag() # 10/25/02
-        self.getTag("<leo_file>")
+        self.getTag("<leo_file>") # <leo_file/> is not valid.
         self.getClipboardHeader()
         self.getVnodes()
         self.getTnodes()
@@ -7531,6 +7532,7 @@ def getLeoOutline (self,s,reassignIndices=True):
     self.usingClipboard = False
     self.tnodesDict = {}
     return v
+#@nonl
 #@+node:EKR.20040610134756:<< recreate tnodesDict >>
 nodeIndices = g.app.nodeIndices
 
@@ -7623,7 +7625,7 @@ def getVnodes (self):
     c = self.c
 
     if self.getOpenTag("<vnodes>"):
-        return
+        return # <vnodes/> seen.
         
     if self.usingClipboard:
         oldRoot = c.rootPosition()
@@ -8685,6 +8687,8 @@ def checkOutline (self,verbose=True,unittest=False,full=True):
     Remove any unused tnodeLists."""
     
     c = self ; count = 1 ; errors = 0
+    isTkinter = g.app.gui and g.app.gui.guiName() == "tkinter"
+
     if full and not unittest:
         g.es("all tests enabled: this may take awhile",color="blue")
 
@@ -8837,6 +8841,17 @@ for v in vnodeList:
         assert len(vnodeList) == 1, "len(vnodeList) == 1"
 #@nonl
 #@-node:ekr.20040314043623:assert consistency of vnodeList
+#@+node:ekr.20040731053740:assert that p.headString() matches p.edit_text.get
+# Not a great test: it only tests visible nodes.
+# This test may fail if a joined node is being editred.
+
+if isTkinter:
+    t = p.edit_text()
+    if t:
+        s = t.get("1.0","end")
+        assert p.headString().strip() == s.strip(), "May fail if joined node is being edited"
+#@nonl
+#@-node:ekr.20040731053740:assert that p.headString() matches p.edit_text.get
 #@-node:ekr.20040323155951:<< do full tests >>
 #@+node:ekr.20040314043900:<<print summary message >>
 if full:
@@ -15901,7 +15916,7 @@ def getVnodes (self):
     c = self.c
 
     if self.getOpenTag("<vnodes>"):
-        return
+        return # <vnodes/> seen.
         
     if self.usingClipboard:
         oldRoot = c.rootPosition()
@@ -16861,7 +16876,8 @@ except:
 #@+node:ekr.20031218072017.1555:<< scan all the xml elements >>
 self.getXmlVersionTag()
 self.getXmlStylesheetTag()
-self.getTag("<leo_file>")
+
+self.getTag("<leo_file>") # Must match exactly.
 self.getLeoHeader()
 self.getGlobals()
 self.getPrefs()
@@ -17405,7 +17421,8 @@ except:
 #@+node:ekr.20031218072017.1555:<< scan all the xml elements >>
 self.getXmlVersionTag()
 self.getXmlStylesheetTag()
-self.getTag("<leo_file>")
+
+self.getTag("<leo_file>") # Must match exactly.
 self.getLeoHeader()
 self.getGlobals()
 self.getPrefs()
@@ -17991,7 +18008,7 @@ def getVnodes (self):
     c = self.c
 
     if self.getOpenTag("<vnodes>"):
-        return
+        return # <vnodes/> seen.
         
     if self.usingClipboard:
         oldRoot = c.rootPosition()
@@ -23178,7 +23195,8 @@ except:
 #@+node:ekr.20031218072017.1555:<< scan all the xml elements >>
 self.getXmlVersionTag()
 self.getXmlStylesheetTag()
-self.getTag("<leo_file>")
+
+self.getTag("<leo_file>") # Must match exactly.
 self.getLeoHeader()
 self.getGlobals()
 self.getPrefs()
@@ -32723,7 +32741,7 @@ Both are equivalent and so I think leo should accept both. Some applications for
 def getClipboardHeader (self):
 
     if self.getOpenTag("<leo_header"):
-        return # 11/24/02
+        return # <leo_header> or <leo_header/> has been seen.
 
     while 1:
         if self.matchTag("file_format="):
@@ -32745,8 +32763,9 @@ def getLeoHeader (self):
     # Set defaults.
     self.maxTnodeIndex = 0
     self.numberOfTnodes = 0
+
     if self.getOpenTag("<leo_header"):
-        return
+        return # <leo_header/> seen.
 
     # New in version 1.7: attributes may appear in any order.
     while 1:
@@ -37983,7 +38002,7 @@ def getLeoOutline (self,s,reassignIndices=True):
     try:
         self.getXmlVersionTag() # leo.py 3.0
         self.getXmlStylesheetTag() # 10/25/02
-        self.getTag("<leo_file>")
+        self.getTag("<leo_file>") # <leo_file/> is not valid.
         self.getClipboardHeader()
         self.getVnodes()
         self.getTnodes()
@@ -37997,6 +38016,7 @@ def getLeoOutline (self,s,reassignIndices=True):
     self.usingClipboard = False
     self.tnodesDict = {}
     return v
+#@nonl
 #@+node:EKR.20040610134756:<< recreate tnodesDict >>
 nodeIndices = g.app.nodeIndices
 
@@ -41021,7 +41041,7 @@ def getVnodes (self):
     c = self.c
 
     if self.getOpenTag("<vnodes>"):
-        return
+        return # <vnodes/> seen.
         
     if self.usingClipboard:
         oldRoot = c.rootPosition()
@@ -46923,7 +46943,8 @@ except:
 #@+node:ekr.20031218072017.1555:<< scan all the xml elements >>
 self.getXmlVersionTag()
 self.getXmlStylesheetTag()
-self.getTag("<leo_file>")
+
+self.getTag("<leo_file>") # Must match exactly.
 self.getLeoHeader()
 self.getGlobals()
 self.getPrefs()
@@ -49690,6 +49711,8 @@ def checkOutline (self,verbose=True,unittest=False,full=True):
     Remove any unused tnodeLists."""
     
     c = self ; count = 1 ; errors = 0
+    isTkinter = g.app.gui and g.app.gui.guiName() == "tkinter"
+
     if full and not unittest:
         g.es("all tests enabled: this may take awhile",color="blue")
 
@@ -49842,6 +49865,17 @@ for v in vnodeList:
         assert len(vnodeList) == 1, "len(vnodeList) == 1"
 #@nonl
 #@-node:ekr.20040314043623:assert consistency of vnodeList
+#@+node:ekr.20040731053740:assert that p.headString() matches p.edit_text.get
+# Not a great test: it only tests visible nodes.
+# This test may fail if a joined node is being editred.
+
+if isTkinter:
+    t = p.edit_text()
+    if t:
+        s = t.get("1.0","end")
+        assert p.headString().strip() == s.strip(), "May fail if joined node is being edited"
+#@nonl
+#@-node:ekr.20040731053740:assert that p.headString() matches p.edit_text.get
 #@-node:ekr.20040323155951:<< do full tests >>
 #@+node:ekr.20040314043900:<<print summary message >>
 if full:
@@ -53773,6 +53807,8 @@ def checkOutline (self,verbose=True,unittest=False,full=True):
     Remove any unused tnodeLists."""
     
     c = self ; count = 1 ; errors = 0
+    isTkinter = g.app.gui and g.app.gui.guiName() == "tkinter"
+
     if full and not unittest:
         g.es("all tests enabled: this may take awhile",color="blue")
 
@@ -53925,6 +53961,17 @@ for v in vnodeList:
         assert len(vnodeList) == 1, "len(vnodeList) == 1"
 #@nonl
 #@-node:ekr.20040314043623:assert consistency of vnodeList
+#@+node:ekr.20040731053740:assert that p.headString() matches p.edit_text.get
+# Not a great test: it only tests visible nodes.
+# This test may fail if a joined node is being editred.
+
+if isTkinter:
+    t = p.edit_text()
+    if t:
+        s = t.get("1.0","end")
+        assert p.headString().strip() == s.strip(), "May fail if joined node is being edited"
+#@nonl
+#@-node:ekr.20040731053740:assert that p.headString() matches p.edit_text.get
 #@-node:ekr.20040323155951:<< do full tests >>
 #@+node:ekr.20040314043900:<<print summary message >>
 if full:
@@ -56943,6 +56990,8 @@ def checkOutline (self,verbose=True,unittest=False,full=True):
     Remove any unused tnodeLists."""
     
     c = self ; count = 1 ; errors = 0
+    isTkinter = g.app.gui and g.app.gui.guiName() == "tkinter"
+
     if full and not unittest:
         g.es("all tests enabled: this may take awhile",color="blue")
 
@@ -57095,6 +57144,17 @@ for v in vnodeList:
         assert len(vnodeList) == 1, "len(vnodeList) == 1"
 #@nonl
 #@-node:ekr.20040314043623:assert consistency of vnodeList
+#@+node:ekr.20040731053740:assert that p.headString() matches p.edit_text.get
+# Not a great test: it only tests visible nodes.
+# This test may fail if a joined node is being editred.
+
+if isTkinter:
+    t = p.edit_text()
+    if t:
+        s = t.get("1.0","end")
+        assert p.headString().strip() == s.strip(), "May fail if joined node is being edited"
+#@nonl
+#@-node:ekr.20040731053740:assert that p.headString() matches p.edit_text.get
 #@-node:ekr.20040323155951:<< do full tests >>
 #@+node:ekr.20040314043900:<<print summary message >>
 if full:
@@ -57694,7 +57754,8 @@ except:
 #@+node:ekr.20031218072017.1555:<< scan all the xml elements >>
 self.getXmlVersionTag()
 self.getXmlStylesheetTag()
-self.getTag("<leo_file>")
+
+self.getTag("<leo_file>") # Must match exactly.
 self.getLeoHeader()
 self.getGlobals()
 self.getPrefs()
@@ -57906,6 +57967,512 @@ def writeError(self,message):
 #@nonl
 #@-node:ekr.20031218072017.2707:writeError
 #@-node:ekr.20040709053152:(Fixed bug: @thin badDirectory/name caused too much traceback)
+#@+node:ekr.20040702064435:(Allow collapsed xml tags in .leo files)
+#@+node:ekr.20040730165221:Request
+@nocolor
+@language html
+http://sourceforge.net/forum/message.php?msg_id=2645776
+By: billp9619
+
+Yes this works now. However, the opposite should also be true ...that instead
+of <find_string></find_string> an outside process or editor is free to change
+it to <find_string/>. This currently causes Leo to fail to load the file reprting
+it was looking for </find_string>.
+
+This is original Leo xml:
+
+@color
+<preferences> 
+</preferences>
+<find_panel_settings>
+<find_string></find_string>
+<change_string></change_string>
+</find_panel_settings>
+@nocolor
+
+My xml editor automatically changed it to this:
+
+@color
+<preferences/> <!-- was ok -->
+<find_panel_settings>
+<find_string/> <!-- now ok -->
+<change_string/> <!-- now ok -->
+</find_panel_settings>
+@nocolor
+
+Leo will not load the edited "/>" type empty tags. 
+
+Both forms of empty tags should always be accepted because it is officially
+identical in meaning for xml.
+#@nonl
+#@-node:ekr.20040730165221:Request
+#@+node:ekr.20040730174218:Notes
+@nocolor
+
+- getOpenTag returns True if the end of the tag was seen. (It throws an exception if the tag isn't seen at all).
+
+- Add comments in several places to make what getOpenTag clearer.
+
+- getFindPanelSettings has allowed <find_panel_settings/> for some time.
+
+- For compatibility with older versions of Leo, Leo still writes:
+
+<find_panel_settings>
+    <find_string></find_string>
+    <change_string></change_string>
+</find_panel_settings>
+
+- Leo now allows the <find_string> and <change_string> tags to be collapsed.  For example,
+
+<find_panel_settings>
+    <find_string/>
+    <change_string/>
+</find_panel_settings>
+
+- Changed getPrefs to allow <preferences/>
+
+- Changed getGlobals to set reasonable defaults for <globals/>
+
+- The <leo_file> and <globals tags must not be terminated immediately.
+
+- Leo writes <defaultDirectory> and <TSyntaxMemo_options> tags only if there is non-empty text between the opening and closing tags, so collapsing the tags is invalid.
+
+- Therefore, the absolutely minimal .leo file is:
+
+@color
+@language html
+
+<?xml version="1.0" encoding="UTF-8"?>
+<leo_file>
+<leo_header/>
+<globals/>
+<preferences/>
+<find_panel_settings/>
+<vnodes/>
+<tnodes/>
+</leo_file>
+
+@nocolor
+
+I updated the empty_leo_file plugin to use this code.  This is also the contents test/minimalLeoFile.leo.
+
+- The minimal .leo file that Leo might actually write is more like this:
+
+@color
+
+<?xml version="1.0" encoding="UTF-8"?>
+<leo_file>
+<leo_header/>
+<globals/>
+<preferences/>
+<find_panel_settings>
+    <find_string/>
+    <change_string/>
+</find_panel_settings>
+<vnodes/>
+<tnodes/>
+</leo_file>
+
+This is the contents of test/minimalLeoFile2.leo.
+#@nonl
+#@-node:ekr.20040730174218:Notes
+#@+node:EKR.20040526204706.7:getOpenTag
+def getOpenTag (self,tag):
+    
+    """
+    Look ahead for collapsed tag: tag may or may not end in ">"
+    Skips tag and /> if found, otherwise does not alter index.
+    Returns True if the closing part was found.
+    Throws BadLeoFile if the tag does not exist.
+    """
+
+    if tag[-1] == ">":
+        # Only the tag itself or a collapsed tag are valid.
+        if self.matchTag(tag):
+            return False # Not a collapsed tag.
+        elif self.matchTag(tag[:-1]):
+            # It must be a collapsed tag.
+            self.skipWs()
+            if self.matchTag("/>"):
+                return True
+        print "getOpenTag(", tag, ") failed:"
+        raise BadLeoFile("expecting" + tag)
+    else:
+        # The tag need not be followed by "/>"
+        if self.matchTag(tag):
+            old_index = self.fileIndex
+            self.skipWs()
+            if self.matchTag("/>"):
+                return True
+            else:
+                self.fileIndex = old_index
+                return False
+        else:
+            print "getOpenTag(", tag, ") failed:"
+            raise BadLeoFile("expecting" + tag)
+#@nonl
+#@-node:EKR.20040526204706.7:getOpenTag
+#@+node:ekr.20031218072017.3023:getCloneWindows
+# For compatibility with old file formats.
+
+def getCloneWindows (self):
+
+    if not self.matchTag("<clone_windows>"):
+        return # <clone_windows/> seen.
+
+    while self.matchTag("<clone_window vtag=\"V"):
+        self.getLong() ; self.getDquote() ; self.getTag(">")
+        if not self.getOpenTag("<global_window_position"):
+            self.getTag("<global_window_position")
+            self.getPosition()
+            self.getTag("/>")
+        self.getTag("</clone_window>")
+    self.getTag("</clone_windows>")
+#@nonl
+#@-node:ekr.20031218072017.3023:getCloneWindows
+#@+node:ekr.20031218072017.2064:getFindPanelSettings
+def getFindPanelSettings (self):
+
+    c = self.c ; config = g.app.config ; findFrame = g.app.findFrame
+    << Set defaults of all flags >>
+    if not self.getOpenTag("<find_panel_settings"):
+        while 1:
+            if   self.matchTag("batch="): c.batch_flag = self.getDqBool()
+            elif self.matchTag("ignore_case="): c.ignore_case_flag = self.getDqBool()
+            elif self.matchTag("mark_changes="): c.mark_changes_flag = self.getDqBool()
+            elif self.matchTag("mark_finds="): c.mark_finds_flag = self.getDqBool()
+            elif self.matchTag("node_only="): c.node_only_flag = self.getDqBool()
+            elif self.matchTag("pattern_match="): c.pattern_match_flag = self.getDqBool()
+            elif self.matchTag("reverse="): c.reverse_flag = self.getDqBool()
+            elif self.matchTag("script_change="): c.script_change_flag = self.getDqBool() # 11/05/03
+            elif self.matchTag("script_search="): c.script_search_flag = self.getDqBool() # 11/05/03
+            elif self.matchTag("search_headline="): c.search_headline_flag = self.getDqBool()
+            elif self.matchTag("search_body="): c.search_body_flag = self.getDqBool()
+            elif self.matchTag("selection_only="): c.selection_only_flag = self.getDqBool() # 11/9/03
+            elif self.matchTag("suboutline_only="): c.suboutline_only_flag = self.getDqBool()
+            elif self.matchTag("whole_word="): c.whole_word_flag = self.getDqBool()
+            elif self.matchTag("wrap="): c.wrap_flag = self.getDqBool()
+            elif self.matchTag(">"): break
+            else: self.getUnknownTag() # New in 4.1: ignore all other tags.
+        #
+        if not self.getOpenTag("<find_string"): # 7/30/04: Allow <find_string/>
+            c.find_text = self.getEscapedString()
+            self.getTag("</find_string>")
+        #
+        if not self.getOpenTag("<change_string"): # 7/30/04: Allow <change_string/>
+            c.change_text = self.getEscapedString()
+            self.getTag("</change_string>")
+        #
+        self.getTag("</find_panel_settings>")
+    
+    # Override .leo file's preferences if settings are in leoConfig.txt.
+    config.setCommandsFindIvars(c)
+    # Update the settings immediately.
+    if g.app.gui.guiName() == "tkinter":
+        g.app.findFrame.init(c)
+#@nonl
+#@+node:ekr.20031218072017.2065:<< Set defaults of all flags >>
+if g.app.gui.guiName() == "tkinter":
+
+    for var in findFrame.intKeys:
+        attr = "%s_flag" % (var)
+        setattr(c,attr,False)
+        # g.trace(attr)
+#@-node:ekr.20031218072017.2065:<< Set defaults of all flags >>
+#@-node:ekr.20031218072017.2064:getFindPanelSettings
+#@+node:ekr.20031218072017.2306:getGlobals
+def getGlobals (self):
+
+    if self.getOpenTag("<globals"):
+        # <globals/> seen: set reasonable defaults:
+        self.ratio = 0.5
+        y,x,h,w = 50,50,500,700
+    else:
+        self.getTag("body_outline_ratio=\"")
+        self.ratio = self.getDouble() ; self.getDquote() ; self.getTag(">")
+
+        self.getTag("<global_window_position")
+        y,x,h,w = self.getPosition()
+        self.getTag("/>")
+
+        self.getTag("<global_log_window_position")
+        self.getPosition()
+        self.getTag("/>") # no longer used.
+
+        self.getTag("</globals>")
+
+    # 7/15/02: Redraw the window before writing into it.
+    self.frame.setTopGeometry(w,h,x,y)
+    self.frame.deiconify()
+    self.frame.lift()
+    self.frame.update()
+#@nonl
+#@-node:ekr.20031218072017.2306:getGlobals
+#@+node:ekr.20031218072017.2062:getPrefs
+def getPrefs (self):
+
+    c = self.c ; config = g.app.config
+    
+    if self.getOpenTag("<preferences"):
+        return # <preferences/> seeen
+
+    table = (
+        ("allow_rich_text",None,None), # Ignored.
+        ("tab_width","tab_width",self.getLong),
+        ("page_width","page_width",self.getLong),
+        ("tangle_bat","tangle_batch_flag",self.getBool),
+        ("untangle_bat","untangle_batch_flag",self.getBool),
+        ("output_doc_chunks","output_doc_flag",self.getBool),
+        ("noweb_flag",None,None), # Ignored.
+        ("extended_noweb_flag",None,None), # Ignored.
+        ("defaultTargetLanguage","target_language",self.getTargetLanguage),
+        ("use_header_flag","use_header_flag",self.getBool))
+    
+    while 1:
+        found = False
+        for tag,var,f in table:
+            if self.matchTag("%s=" % tag):
+                if var:
+                    self.getDquote() ; val = f() ; self.getDquote()
+                    setattr(c,var,val)
+                else:
+                    self.getDqString()
+                found = True ; break
+        if not found:
+            if self.matchTag(">"):
+                break
+            else: # New in 4.1: ignore all other tags.
+                self.getUnknownTag()
+
+    while 1:
+        if self.matchTag("<defaultDirectory>"):
+            # New in version 0.16.
+            c.tangle_directory = self.getEscapedString()
+            self.getTag("</defaultDirectory>")
+            if not g.os_path_exists(c.tangle_directory):
+                g.es("default tangle directory not found:" + c.tangle_directory)
+        elif self.matchTag("<TSyntaxMemo_options>"):
+            self.getEscapedString() # ignored
+            self.getTag("</TSyntaxMemo_options>")
+        else: break
+    self.getTag("</preferences>")
+    
+    # Override .leo file's preferences if settings are in leoConfig.txt.
+    if config.configsExist:
+        config.setCommandsIvars(c)
+#@nonl
+#@+node:ekr.20031218072017.2063:getTargetLanguage
+def getTargetLanguage (self):
+    
+    # Must match longer tags before short prefixes.
+    for name in g.app.language_delims_dict.keys():
+        if self.matchTagWordIgnoringCase(name):
+            language = name.replace("/","")
+            # self.getDquote()
+            return language
+            
+    return "c" # default
+#@nonl
+#@-node:ekr.20031218072017.2063:getTargetLanguage
+#@-node:ekr.20031218072017.2062:getPrefs
+#@-node:ekr.20040702064435:(Allow collapsed xml tags in .leo files)
+#@+node:ekr.20040730191553:Fixed bug: new outline code wasn't updating cloned and joined headlines.
+#@-node:ekr.20040730191553:Fixed bug: new outline code wasn't updating cloned and joined headlines.
+#@+node:ekr.20040731053740.1:Check outline now checks that p.edit_text.get matches p.headString()
+#@+node:ekr.20031218072017.2072:c.checkOutline
+def checkOutline (self,verbose=True,unittest=False,full=True):
+    
+    """Report any possible clone errors in the outline.
+    
+    Remove any unused tnodeLists."""
+    
+    c = self ; count = 1 ; errors = 0
+    isTkinter = g.app.gui and g.app.gui.guiName() == "tkinter"
+
+    if full and not unittest:
+        g.es("all tests enabled: this may take awhile",color="blue")
+
+    p = c.rootPosition()
+    << assert equivalence of lastVisible methods >>
+    for p in c.allNodes_iter():
+        try:
+            count += 1
+            << remove unused tnodeList >>
+            if full: # Unit tests usually set this false.
+                << do full tests >>
+        except AssertionError,message:
+            errors += 1
+            << give test failed message >>
+    if verbose or not unittest:
+        << print summary message >>
+    return errors
+#@nonl
+#@+node:ekr.20040314062338:<< assert equivalence of lastVisible methods >>
+if 0:
+    g.app.debug = True
+
+    p1 = p.oldLastVisible()
+    p2 = p.lastVisible()
+    
+    if p1 != p2:
+        print "oldLastVisible",p1
+        print "   lastVisible",p2
+    
+    assert p1 and p2 and p1 == p2, "oldLastVisible==lastVisible"
+    assert p1.isVisible() and p2.isVisible(), "p1.isVisible() and p2.isVisible()"
+    
+    g.app.debug = False
+#@nonl
+#@-node:ekr.20040314062338:<< assert equivalence of lastVisible methods >>
+#@+node:ekr.20040313150633:<< remove unused tnodeList >>
+# Empty tnodeLists are not errors.
+v = p.v
+
+# New in 4.2: tnode list is in tnode.
+if hasattr(v.t,"tnodeList") and len(v.t.tnodeList) > 0 and not v.isAnyAtFileNode():
+    if 0:
+        s = "deleting tnodeList for " + repr(v)
+        print ; print s ; g.es(s,color="blue")
+    delattr(v.t,"tnodeList")
+#@nonl
+#@-node:ekr.20040313150633:<< remove unused tnodeList >>
+#@+node:ekr.20040323155951:<< do full tests >>
+if not unittest:
+    if count % 100 == 0:
+        g.es('.',newline=False)
+    if count % 2000 == 0:
+        g.enl()
+
+@others
+#@nonl
+#@+node:ekr.20040314035615:assert consistency of threadNext & threadBack links
+threadBack = p.threadBack()
+threadNext = p.threadNext()
+
+if threadBack:
+    assert p == threadBack.threadNext(), "p==threadBack.threadNext"
+
+if threadNext:
+    assert p == threadNext.threadBack(), "p==threadNext.threadBack"
+#@nonl
+#@-node:ekr.20040314035615:assert consistency of threadNext & threadBack links
+#@+node:ekr.20040314035615.1:assert consistency of next and back links
+back = p.back()
+next = p.next()
+
+if back:
+    assert p == back.next(), "p==back.next"
+        
+if next:
+    assert p == next.back(), "p==next.back"
+#@nonl
+#@-node:ekr.20040314035615.1:assert consistency of next and back links
+#@+node:ekr.20040314035615.2:assert consistency of parent and child links
+if p.hasParent():
+    n = p.childIndex()
+    assert p == p.parent().moveToNthChild(n), "p==parent.moveToNthChild"
+    
+for child in p.children_iter():
+    assert p == child.parent(), "p==child.parent"
+
+if p.hasNext():
+    assert p.next().parent() == p.parent(), "next.parent==parent"
+    
+if p.hasBack():
+    assert p.back().parent() == p.parent(), "back.parent==parent"
+#@nonl
+#@-node:ekr.20040314035615.2:assert consistency of parent and child links
+#@+node:ekr.20040323155951.1:assert consistency of directParents and parent
+if p.hasParent():
+    t = p.parent().v.t
+    for v in p.directParents():
+        try:
+            assert v.t == t
+        except:
+            print "p",p
+            print "p.directParents",p.directParents()
+            print "v",v
+            print "v.t",v.t
+            print "t = p.parent().v.t",t
+            raise AssertionError,"v.t == t"
+#@-node:ekr.20040323155951.1:assert consistency of directParents and parent
+#@+node:ekr.20040323161837:assert consistency of p.v.t.vnodeList, & v.parents for cloned nodes
+if p.isCloned():
+    parents = p.v.t.vnodeList
+    for child in p.children_iter():
+        vparents = child.directParents()
+        assert len(parents) == len(vparents), "len(parents) == len(vparents)"
+        for parent in parents:
+            assert parent in vparents, "parent in vparents"
+        for parent in vparents:
+            assert parent in parents, "parent in parents"
+#@nonl
+#@-node:ekr.20040323161837:assert consistency of p.v.t.vnodeList, & v.parents for cloned nodes
+#@+node:ekr.20040323162707:assert that clones actually share subtrees
+if p.isCloned() and p.hasChildren():
+    childv = p.firstChild().v
+    assert childv == p.v.t._firstChild, "childv == p.v.t._firstChild"
+    assert id(childv) == id(p.v.t._firstChild), "id(childv) == id(p.v.t._firstChild)"
+    for v in p.v.t.vnodeList:
+        assert v.t._firstChild == childv, "v.t._firstChild == childv"
+        assert id(v.t._firstChild) == id(childv), "id(v.t._firstChild) == id(childv)"
+#@nonl
+#@-node:ekr.20040323162707:assert that clones actually share subtrees
+#@+node:ekr.20040314043623:assert consistency of vnodeList
+vnodeList = p.v.t.vnodeList
+    
+for v in vnodeList:
+    
+    try:
+        assert v.t == p.v.t
+    except AssertionError:
+        print "p",p
+        print "v",v
+        print "p.v",p.v
+        print "v.t",v.t
+        print "p.v.t",p.v.t
+        raise AssertionError, "v.t == p.v.t"
+
+    if p.v.isCloned():
+        assert v.isCloned(), "v.isCloned"
+        assert len(vnodeList) > 1, "len(vnodeList) > 1"
+    else:
+        assert not v.isCloned(), "not v.isCloned"
+        assert len(vnodeList) == 1, "len(vnodeList) == 1"
+#@nonl
+#@-node:ekr.20040314043623:assert consistency of vnodeList
+#@+node:ekr.20040731053740:assert that p.headString() matches p.edit_text.get
+# Not a great test: it only tests visible nodes.
+# This test may fail if a joined node is being editred.
+
+if isTkinter:
+    t = p.edit_text()
+    if t:
+        s = t.get("1.0","end")
+        assert p.headString().strip() == s.strip(), "May fail if joined node is being edited"
+#@nonl
+#@-node:ekr.20040731053740:assert that p.headString() matches p.edit_text.get
+#@-node:ekr.20040323155951:<< do full tests >>
+#@+node:ekr.20040314043900:<<print summary message >>
+if full:
+    print
+    g.enl()
+
+s = "%d nodes checked, %d errors" % (count,errors)
+if errors or verbose:
+    print s ; g.es(s,color="red")
+elif verbose:
+    g.es(s,color="green")
+#@nonl
+#@-node:ekr.20040314043900:<<print summary message >>
+#@+node:ekr.20040314044652:<< give test failed message >>
+s = "test failed: %s %s" % (message,repr(p))
+print s ; print
+g.es(s,color="red")
+#@nonl
+#@-node:ekr.20040314044652:<< give test failed message >>
+#@-node:ekr.20031218072017.2072:c.checkOutline
+#@-node:ekr.20040731053740.1:Check outline now checks that p.edit_text.get matches p.headString()
 #@-node:ekr.20040706080316:Projects: 4.2 b3
 #@-node:ekr.20040107064101.1:4.2 Projects
 #@-all

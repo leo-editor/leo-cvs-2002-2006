@@ -2,7 +2,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="5922" clone_windows="0"/>
 <globals body_outline_ratio="0.481481481481">
-	<global_window_position top="63" left="107" height="864" width="913"/>
+	<global_window_position top="67" left="305" height="864" width="913"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences>
@@ -22,7 +22,7 @@
 </v>
 </v>
 <v t="ekr.20040312021734"><vh>Scripts</vh>
-<v t="ekr.20040715105834" a="E"><vh>Fun...</vh>
+<v t="ekr.20040715105834"><vh>Fun...</vh>
 <v t="EKR.20040626212434"><vh>Drawing experiments</vh>
 <v t="EKR.20040626212434.1"><vh>Rectangles &amp; ovals</vh></v>
 <v t="EKR.20040626212434.2"><vh>Lines &amp; arcs</vh></v>
@@ -31,9 +31,9 @@
 </v>
 <v t="ekr.20040714055306"><vh>elispToPy</vh>
 <v t="ekr.20040715133744"><vh>To do</vh></v>
-<v t="ekr.20040713123617.1" a="E"><vh>e2pyScript</vh>
-<v t="ekr.20040713200238" a="E"><vh>Ref</vh>
-<v t="ekr.20040713131315" a="E"><vh>To do</vh>
+<v t="ekr.20040713123617.1"><vh>e2pyScript</vh>
+<v t="ekr.20040713200238"><vh>Ref</vh>
+<v t="ekr.20040713131315"><vh>To do</vh>
 <v t="ekr.20040713133131"><vh>Tokens</vh></v>
 <v t="ekr.20040713133131.1"><vh>Statements</vh></v>
 <v t="ekr.20040713133131.2"><vh>Expressions</vh></v>
@@ -334,11 +334,11 @@
 <v t="ekr.20040706071823"><vh>test of Python's parser module</vh></v>
 <v t="ekr.20040717121014"><vh>tellGnxScript</vh></v>
 </v>
-<v t="ekr.20040708205841"><vh>Other tests...</vh>
-<v t="ekr.20040414082806"><vh>Clone test</vh>
-<v t="ekr.20040409140301"><vh>clone test</vh>
-<v t="ekr.20040409140301.1"><vh>b</vh>
-<v t="ekr.20040409140301.2"><vh>c</vh>
+<v t="ekr.20040708205841" a="E"><vh>Other tests...</vh>
+<v t="ekr.20040414082806" a="E"><vh>Clone test</vh>
+<v t="ekr.20040409140301" a="E"><vh>clone test</vh>
+<v t="ekr.20040409140301.1" a="E"><vh>b</vh>
+<v t="ekr.20040409140301.2" a="TV"><vh>c</vh>
 <v t="ekr.20040409142108"><vh>firstChild</vh></v>
 <v t="ekr.20040409142108.1"><vh>secondChild</vh></v>
 </v>
@@ -346,7 +346,7 @@
 </v>
 <v t="ekr.20040409140301.3"><vh>a</vh></v>
 </v>
-<v t="ekr.20040409140343"><vh>d</vh>
+<v t="ekr.20040409140343" a="E"><vh>d</vh>
 <v t="ekr.20040409140301.2"><vh>c</vh>
 <v t="ekr.20040409142108"><vh>firstChild</vh></v>
 <v t="ekr.20040409142108.1"><vh>secondChild</vh></v>
@@ -638,13 +638,13 @@
 </v>
 </v>
 <v t="EKR.20040623200709"><vh>@thin ../src/leoTest.py</vh></v>
-<v t="EKR.20040619133116" a="TV"><vh>Unit testing...</vh>
+<v t="EKR.20040619133116" a="E"><vh>Unit testing...</vh>
 <v t="ekr.20040723064143.1"><vh>To do</vh>
 <v t="ekr.20040723064143.2"><vh>Finish unit tests for @asis</vh></v>
 <v t="ekr.20040723064143.3"><vh>Test error recovery when reading descendentTnodeUa's</vh></v>
 </v>
 <v t="ekr.20040327114250" tnodeList="ekr.20040327114250"><vh>@file c:\prog\test\unittest\batchTest.py</vh></v>
-<v t="ekr.20040712101754" a="E"><vh>Unit Tests</vh>
+<v t="ekr.20040712101754"><vh>Unit Tests</vh>
 <v t="ekr.20040716144017"><vh>Perfect Import tests</vh>
 <v t="ekr.20040716071029.6"><vh>@test inserting a line: no trailing newline</vh>
 <v t="ekr.20040716071856.1"><vh>-input</vh></v>

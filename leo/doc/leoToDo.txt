@@ -5,44 +5,6 @@
 #@+all
 #@+node:EKR.20040430163619:To do: 4.2
 #@+node:ekr.20040716055314:Bugs 3
-#@+node:ekr.20040702064435:(Fix problem with xml parsing)
-@nocolor
-@language html
-https://sourceforge.net/forum/message.php?msg_id=2645776
-By: billp9619
-
-Yes this works now. However, the opposite should also be true ...that instead
-of <find_string></find_string> an outside process or editor is free to change
-it to <find_string/>. This currently causes Leo to fail to load the file reprting
-it was looking for </find_string>.
-
-This is original Leo xml:
-
-@color
-<preferences>
-</preferences>
-<find_panel_settings>
-<find_string></find_string>
-<change_string></change_string>
-</find_panel_settings>
-@nocolor
-
-My xml editor automatically changed it to this:
-
-@color
-<preferences/>
-<find_panel_settings>
-<find_string/>
-<change_string/>
-</find_panel_settings>
-@nocolor
-
-Leo will not load the edited "/>" type empty tags. 
-
-Both forms of empty tags should always be accepted because it is officially
-identical in meaning for xml.
-#@nonl
-#@-node:ekr.20040702064435:(Fix problem with xml parsing)
 #@+node:ekr.20040630214448.1:(Use inspect module to improve Go To Line Number)
 #@+node:ekr.20040706115641:Report 2
 @killcolor
@@ -590,13 +552,34 @@ def getScript (c,p,oneNodeOnly=False):
 #@+node:ekr.20040723050756:Make sure executing scripts don't interfere with tnodeList
 #@-node:ekr.20040723050756:Make sure executing scripts don't interfere with tnodeList
 #@-node:ekr.20040713062342:Fully investigate tnodeList
+#@+node:ekr.20040731055419:Fix problems with confirm save box
+@killcolor
+
+https://sourceforge.net/forum/message.php?msg_id=2683931
+By: billp9619
+
+Using Win XP:
+
+On closing an unsaved file with changes , a Confirm" message box pops up. The
+Leo main outline is locked but this Confirm box could be underneath the
+Outline...acting like an independent window(if outline receives focus again
+by clicking on it, etc.) Normally applications force these type of prompts to
+stay on top of the related appl. window.
+
+The above can can be confusing.  But it can be worse.
+
+If I right click on the Leo icon on the task bar and select "Close" (say I am
+confused now), what happens is it pops up another Confirm box.
+
+After closing ...the extra Confirm boxes are left behind with no associated
+Leo outline.
+
+Leo Log Window...
+Leo 4.2 beta 2, build  1.128 , July 5, 2004
+Python 2.3.4, Tk 8.4.3, win32
+#@nonl
+#@-node:ekr.20040731055419:Fix problems with confirm save box
 #@-node:ekr.20040716055314:Bugs 3
-#@+node:ekr.20040722132104:Write script to report underindented lines
-#@-node:ekr.20040722132104:Write script to report underindented lines
-#@+node:ekr.20040722132104.1:Write support stuff to write files to nodes for testing
-#@-node:ekr.20040722132104.1:Write support stuff to write files to nodes for testing
-#@+node:ekr.20040720073339:Remove use_gnx and write_old_format_derived_files options
-#@-node:ekr.20040720073339:Remove use_gnx and write_old_format_derived_files options
 #@+node:EKR.20040422132037:Linux bugs 4
 @nocolor
 #@nonl
@@ -3000,6 +2983,7 @@ Guenther.
 #@-node:ekr.20040629110559:Cool Mac stuff
 #@-node:EKR.20040430163619:To do: 4.2
 #@+node:EKR.20040609091327:To do: 4.3: configuration, plugins & translation
+#@+node:ekr.20040730191332:Must do...
 #@+node:ekr.20040323084434:(Add granularity setting for undo)
 #@+node:ekr.20040328111626:Notes
 @nocolor
@@ -3647,7 +3631,7 @@ print "actual  :",textResult
 #@-node:ekr.20031218072017.1497:<< print mismatch trace >>
 #@-node:ekr.20031218072017.1493:undoRedoText
 #@-node:ekr.20040323084434:(Add granularity setting for undo)
-#@+node:ekr.20031218072017.828:(Must do) Rewrite the config manager
+#@+node:ekr.20031218072017.828:Rewrite the config manager
 http://sourceforge.net/forum/message.php?msg_id=2329053
 By: dsalomoni
 
@@ -4044,7 +4028,7 @@ def getPrefs (self):
     c = self.c ; config = g.app.config
     
     if self.getOpenTag("<preferences"):
-        return
+        return # <preferences/> seeen
 
     table = (
         ("allow_rich_text",None,None), # Ignored.
@@ -4115,8 +4099,8 @@ Every time I get a new copy, I need to do a side-by-side compare and edit with t
 #@nonl
 #@-node:ekr.20040225061559:Look at older config files when reading config data the first time for a new install
 #@-node:ekr.20040327050211:Fix problems with updating leoConfig.txt
-#@-node:ekr.20031218072017.828:(Must do) Rewrite the config manager
-#@+node:ekr.20031218072017.829:(Must do) gui interface for plugins manager
+#@-node:ekr.20031218072017.828:Rewrite the config manager
+#@+node:ekr.20031218072017.829:gui interface for plugins manager
 @nocolor
 
 Interim design:
@@ -4136,8 +4120,8 @@ Simplest graphical interface:
 
 This is like the Spell-check plugin.
 #@nonl
-#@-node:ekr.20031218072017.829:(Must do) gui interface for plugins manager
-#@+node:ekr.20031218072017.734:(Must do) Rewrite colorizer to use jEdit language descriptionfiles
+#@-node:ekr.20031218072017.829:gui interface for plugins manager
+#@+node:ekr.20031218072017.734:Rewrite colorizer to use jEdit language descriptionfiles
 #@+node:ekr.20031218072017.735:Option: case insensitive keywords
 Read and respond to this message at: 
 https://sourceforge.net/forum/message.php?msg_id=2097076
@@ -4150,8 +4134,8 @@ a big problem with modern editors, but it _would_ be nicer...
 
 --Rich
 #@-node:ekr.20031218072017.735:Option: case insensitive keywords
-#@-node:ekr.20031218072017.734:(Must do) Rewrite colorizer to use jEdit language descriptionfiles
-#@+node:ekr.20040130073846:(Must do) Use Python indices instead of Tk indices
+#@-node:ekr.20031218072017.734:Rewrite colorizer to use jEdit language descriptionfiles
+#@+node:ekr.20040130073846:Use Python indices instead of Tk indices
 This would really help when writing gui plugins.
 
 The first place it would be useful would be in eliminating calls to the Tk search routine.
@@ -4161,8 +4145,10 @@ The first place it would be useful would be in eliminating calls to the Tk searc
 #@+node:ekr.20040203075059:use pos linestart + 1 lines to go to next line?
 This might be the best way to reliably have Tk move to the next line!
 #@-node:ekr.20040203075059:use pos linestart + 1 lines to go to next line?
-#@-node:ekr.20040130073846:(Must do) Use Python indices instead of Tk indices
-#@+node:EKR.20040507095329.1:(Must do) More flexible atFile classes
+#@-node:ekr.20040130073846:Use Python indices instead of Tk indices
+#@+node:EKR.20040507095329.1:More flexible atFile classes
+#@+node:ekr.20040722132104.1:Write support stuff to write files to nodes for testing
+#@-node:ekr.20040722132104.1:Write support stuff to write files to nodes for testing
 #@+node:ekr.20040713062858:Design new atFile organization
 @killcolor
 
@@ -5262,7 +5248,7 @@ for line in lines[j+1:k+1]:
 #@nonl
 #@-node:ekr.20031218072017.2119:<< put all @last lines in root >> (4.x)
 #@-node:EKR.20040506075328:new_df.writeOpenFile
-#@-node:EKR.20040507095329.1:(Must do) More flexible atFile classes
+#@-node:EKR.20040507095329.1:More flexible atFile classes
 #@+node:EKR.20040628085831:(Must do) @import, etc.
 #@+node:ekr.20040718033104:@shadow
 #@-node:ekr.20040718033104:@shadow
@@ -5271,6 +5257,9 @@ for line in lines[j+1:k+1]:
 #@+node:EKR.20040503160843:@directory-import (Generalization of @import)
 #@-node:EKR.20040503160843:@directory-import (Generalization of @import)
 #@-node:EKR.20040628085831:(Must do) @import, etc.
+#@+node:ekr.20040720073339:Remove use_gnx and write_old_format_derived_files options
+#@-node:ekr.20040720073339:Remove use_gnx and write_old_format_derived_files options
+#@-node:ekr.20040730191332:Must do...
 #@+node:EKR.20040601133022.1:(Finish the new undo)
 #@+node:EKR.20040606195417.5:To do
 @nocolor
@@ -7572,6 +7561,8 @@ Alas, this really does not solve problems with Import.
 
 Special case code is required so empty nodes stay empty with "one" option.
 #@nonl
+#@+node:ekr.20040722132104:Write script to report underindented lines
+#@-node:ekr.20040722132104:Write script to report underindented lines
 #@-node:EKR.20040603092958.1:Add new options for handling newlines in body text
 #@+node:ekr.20040217153407:User customizeable tangling and untangling
 #@+node:ekr.20031218072017.805:Allow other section delims besides << and >>

@@ -2956,14 +2956,14 @@ class baseCommands:
                     #@nonl
                     #@-node:ekr.20040314043623:assert consistency of vnodeList
                     #@+node:ekr.20040731053740:assert that p.headString() matches p.edit_text.get
-                    # Not a great test.  Only tests visible nodes.
-                    # Also, will fail if recent changes to cloned nodes haven't been committed.
+                    # Not a great test: it only tests visible nodes.
+                    # This test may fail if a joined node is being editred.
                     
                     if isTkinter:
                         t = p.edit_text()
                         if t:
                             s = t.get("1.0","end")
-                            assert(p.headString().strip() == s.strip())
+                            assert p.headString().strip() == s.strip(), "May fail if joined node is being edited"
                     #@nonl
                     #@-node:ekr.20040731053740:assert that p.headString() matches p.edit_text.get
                     #@-others
