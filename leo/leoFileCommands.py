@@ -1125,9 +1125,12 @@ class fileCommands:
 	#@+body
 	# All output eventually comes here.
 	def put (self,s):
-		if s and len(s) > 0 and self.outputFile:
-			s = toEncodedString(s,self.leo_file_encoding,reportErrors=true)
-			self.outputFile.write(s)
+		if s and len(s) > 0:
+			if self.outputFile:
+				s = toEncodedString(s,self.leo_file_encoding,reportErrors=true)
+				self.outputFile.write(s)
+			elif self.outputString != None: # Write to a string
+				self.outputString += s
 	
 	def put_dquote (self):
 		self.put('"')
