@@ -10,25 +10,16 @@ import leoPlugins
 
 #@<< define minimal .leo file >>
 #@+node:EKR.20040517080049.2:<< define minimal .leo file >>
-empty_leo_file = """<?xml version="1.0" encoding="iso-8859-1"?>
+empty_leo_file = """<?xml version="1.0" encoding="UTF-8"?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="0" clone_windows="0"/>
-<globals body_outline_ratio="0.5">
-    <global_window_position top="145" left="110" height="24" width="80"/>
-    <global_log_window_position top="0" left="0" height="0" width="0"/>
-</globals>
-<preferences allow_rich_text="0">
-</preferences>
-<find_panel_settings>
-    <find_string></find_string>
-    <change_string></change_string>
-</find_panel_settings>
-<vnodes>
-<v a="V"><vh>NewHeadline</vh></v>
-</vnodes>
-<tnodes>
-</tnodes>
-</leo_file>"""
+<leo_header/>
+<globals/>
+<preferences/>
+<find_panel_settings/>
+<vnodes/>
+<tnodes/>
+</leo_file>
+"""
 #@nonl
 #@-node:EKR.20040517080049.2:<< define minimal .leo file >>
 #@nl
