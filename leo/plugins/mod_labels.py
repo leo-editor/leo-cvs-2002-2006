@@ -704,7 +704,7 @@ class labelsController(object):
                 labels_dict = self.get_labels_dict(p)
                 if labels_dict:
                     if labels_dict.has_key(labelname):
-                        child = v.firstChild()
+                        child = p.firstChild()
                         while child and child.headString() != labelname:
                             child = child.next()
                         if child:
