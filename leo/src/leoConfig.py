@@ -25,6 +25,8 @@ class baseConfig:
     defaultLogFontSize  = g.choose(sys.platform=="win32",8,12)
     defaultTreeFontSize = g.choose(sys.platform=="win32",9,12)
     
+    # Defaults for ivars are specified in the ctor, _not_ here.
+    
     defaultsDict = {
         # compare options...
         "ignore_blank_lines" : 1,
@@ -134,14 +136,13 @@ class baseConfig:
         #@nl
         #@    << initialize ivars that may be set by config options >>
         #@+node:ekr.20031218072017.3004:<< initialize ivars that may be set by config options >>
-        # 10/11/02: Defaults are specified only here.
+        # Defaults for these ivaars are specified here, _not_ in defaultsDict.
         
         self.at_root_bodies_start_in_doc_mode = True # For compatibility with previous versions.
         self.config = None # The current instance of ConfigParser
         self.config_encoding = "utf-8" # Encoding used for leoConfig.txt.
         self.create_nonexistent_directories = False
         self.default_derived_file_encoding = "utf-8"
-        self.load_derived_files_immediately = 0
         self.new_leo_file_encoding = "UTF-8" # Upper case for compatibility with previous versions.
         self.output_initial_comment = "" # "" or None for compatibility with previous versions.
         self.output_newline = "nl"
@@ -152,9 +153,13 @@ class baseConfig:
         self.save_clears_undo_buffer = False
         self.stylesheet = None
         self.tkEncoding = None # Defaults to None so it doesn't override better defaults.
+        self.trailing_body_newlines = "asis"
         self.use_plugins = False # Should never be True here!
         self.use_psyco = False
         self.undo_granularity = "word" # "char","word","line","node"
+        self.write_strips_blank_lines = False
+        
+        # TO BE REMOVED:
         self.write_old_format_derived_files = False # Use new format if leoConfig.txt does not exist.
         #@nonl
         #@-node:ekr.20031218072017.3004:<< initialize ivars that may be set by config options >>
@@ -538,9 +543,6 @@ class baseConfig:
             else:
                 g.es("bad default_derived_file_encoding: " + encoding)
                 
-            self.load_derived_files_immediately = self.initBooleanConfigParam(
-                "load_derived_files_immediately",self.load_derived_files_immediately)
-                
             encoding = self.initConfigParam(
                 "new_leo_file_encoding",
                 self.new_leo_file_encoding)
@@ -584,11 +586,13 @@ class baseConfig:
                 else:
                     g.es("bad tk_encoding: " + encoding)
                     
-            # g.trace("config.self.tkEncoding",self.tkEncoding)
+            # New in 4.2
+            self.trailing_body_newlines = self.initConfigParam(
+                "trailing_body_newlines",self.trailing_body_newlines)
             
+            # TO BE REMOVED
             g.app.use_gnx = self.initBooleanConfigParam(
                 "use_gnx",g.app.use_gnx)
-            # g.trace("g.app.use_gnx",g.app.use_gnx)
                 
             self.use_plugins = self.initBooleanConfigParam(
                 "use_plugins",self.use_plugins)
@@ -599,8 +603,17 @@ class baseConfig:
             self.undo_granularity = self.initConfigParam(
                 "undo_granularity",self.undo_granularity)
                 
+            # TO BE REMOVED
             self.write_old_format_derived_files = self.initBooleanConfigParam(
                 "write_old_format_derived_files",self.write_old_format_derived_files)
+            
+            # New in 4.2
+            self.write_strips_blank_lines = self.initBooleanConfigParam(
+                "write_strips_blank_lines",self.write_strips_blank_lines)
+                
+            #g.trace("write_strips_blank_lines",self.write_strips_blank_lines)
+            #g.trace("trailing_body_newlines",self.trailing_body_newlines)
+            #@nonl
             #@-node:ekr.20031218072017.1421:<< get config options >>
             #@nl
             #@        << get recent files >>
