@@ -21,6 +21,7 @@ import os
 print
 print "Remember to update version numbers!"
 print "Remember to clear Default Tangle Directory!"
+print "Distribute both leox-y.zip and leosetup.exe"
 print
 
 # Generate the list of modules.
@@ -36,7 +37,7 @@ modules.sort()
 # print "modules:", `modules`
 
 setup( name="leo",
-	version="3.3",
+	version="3.4",
 	author="Edward K. Ream",
 	author_email="edream@tds.net",
 	url="http://personalpages.tds.net/~edream/front.html",

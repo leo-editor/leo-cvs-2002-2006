@@ -21,7 +21,8 @@ class config:
 	
 	# Config section... (Not used in the code)
 	
-	boolConfigNames = ( "read_only", )
+	boolConfigNames = ( "read_only", "save_clears_undo_buffer")
+	
 	stringConfigNames = ( "xml_version_string", )
 	
 	# Compare section
@@ -142,6 +143,7 @@ class config:
 	#@+body
 	defaultConfigDict = {
 		"read_only" : 1,
+		"save_clears_undo_buffer" : 0,
 		"xml_version_string" : "UTF-8" } # By default, we write leo.py 2.x files.
 	
 	defaultRecentFiles = {}
@@ -282,6 +284,7 @@ class config:
 		self.configsExist = false # True when we successfully open leoConfig.txt.
 		self.config = None # The current instance of ConfigParser
 		self.read_only = true # Make _sure_ we don't alter an illegal leoConfig.txt file!
+		self.save_clears_undo_buffer = false
 		self.xml_version_string = None
 		self.compareDict = {}
 		self.findDict = {}
@@ -487,6 +490,11 @@ class config:
 				self.read_only = config.getboolean(self.configSection, "read_only")
 			except:
 				self.read_only = false # not an error.
+				
+			try:
+				self.save_clears_undo_buffer = config.getboolean(self.configSection, "save_clears_undo_buffer")
+			except:
+				self.save_clears_undo_buffer = false # not an error.
 				
 			try:
 				self.xml_version_string = config.get(self.configSection, "xml_version_string")
@@ -829,7 +837,9 @@ class config:
 			config.add_section(section)
 			
 			config.set(section,"read_only",self.read_only)
+			config.set(section,"save_clears_undo_buffer",self.save_clears_undo_buffer)
 			config.set(section,"xml_version_string",self.xml_version_string)
+
 			#@-body
 			#@-node:1::<< write config section >>
 

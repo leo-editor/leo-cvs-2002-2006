@@ -1163,14 +1163,13 @@ class LeoFrame:
 	
 		if not fileName or len(fileName) == 0:
 			return false, None
-			
-		# Display the _unnormalized_ file name
-		oldFileName = fileName
-			
-		# Create a full normalized path name only for comparison.
+	
+		# Create a full normalized path name.
+		# Display the file name with case intact.
 		fileName = os.path.join(os.getcwd(), fileName)
-		fileName = os.path.normcase(fileName)
 		fileName = os.path.normpath(fileName)
+		oldFileName = fileName 
+		fileName = os.path.normcase(fileName)
 	
 		# If the file is already open just bring its window to the front.
 		list = app().windowList
@@ -1199,9 +1198,14 @@ class LeoFrame:
 				normFileName = os.path.normcase(fileName)
 				
 				for frame in app().windowList:
-					if normFileName in frame.recentFiles:
-						frame.recentFiles.remove(normFileName)
-					frame.recentFiles.insert(0,normFileName)
+				
+					# Make sure we remove all versions of the file name.
+					for name in frame.recentFiles:
+						name2 = os.path.normcase(name)
+						name2 = os.path.normpath(name2)
+						if normFileName == name2:
+							frame.recentFiles.remove(name)
+					frame.recentFiles.insert(0,fileName)
 					
 					# Delete all elements of frame.recentFilesMenu.
 					frame.recentFilesMenu.delete(0,len(frame.recentFiles))
@@ -1267,6 +1271,7 @@ class LeoFrame:
 			self.title = self.mFileName
 			self.top.title(self.mFileName)
 			c.fileCommands.save(self.mFileName)
+	
 		return "break" # inhibit further command processing
 	#@-body
 	#@-node:5:C=20:OnSave

@@ -183,7 +183,11 @@ def run(*args):
 	#@-node:1:C=2:<< set the icon image >>
 
 	root.title("Leo Main Window")
-	root.withdraw()
+	if 1:
+		root.withdraw()
+	else: # Works badly in Idle, not at all from the console window.
+		root.deiconify()
+		root.protocol("WM_DELETE_WINDOW", onKillLeoEvent)
 	# Initialize application globals
 	app = leoApp.LeoApp(root)
 	leoGlobals.setApp(app)
@@ -198,7 +202,25 @@ def run(*args):
 	root.mainloop()
 #@-body
 #@-node:7:C=4:run (leo.py)
-#@+node:8::profile
+#@+node:8::onKillLeoEvent
+#@+body
+# Apparently the value returned from this routine is ignored.
+
+def onKillLeoEvent (event=None):
+	
+	print "onKillLeoEvent"
+	import leoDialog
+	d = leoDialog.leoDialog()
+	answer = d.askYesNo("Save Before Shutdown?", "Save files before shutting down")
+	if answer == "yes":
+		print "0"
+		return 0
+	else:
+		print "1"
+		return 1
+#@-body
+#@-node:8::onKillLeoEvent
+#@+node:9::profile
 #@+body
 def profile ():
 
@@ -212,7 +234,7 @@ def profile ():
 	p.sort_stats('cum','file','name')
 	p.print_stats()
 #@-body
-#@-node:8::profile
+#@-node:9::profile
 #@-others
 
 

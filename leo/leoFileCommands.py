@@ -1416,7 +1416,7 @@ class fileCommands:
 	#@-body
 	#@-node:14::putVnode (Leo2)
 	#@-node:4::put routines
-	#@+node:5::save
+	#@+node:5:C=17:save
 	#@+body
 	def save(self,fileName):
 	
@@ -1428,9 +1428,12 @@ class fileCommands:
 			if self.write_LEO_file(fileName,false): # outlineOnlyFlag
 				c.setChanged(false) # Clears all dirty bits.
 				es("saved: " + shortFileName(fileName))
+				if app().config.save_clears_undo_buffer:
+					es("clearing undo")
+					c.undoer.clearUndoState()
 		c.endUpdate()
 	#@-body
-	#@-node:5::save
+	#@-node:5:C=17:save
 	#@+node:6::saveAs
 	#@+body
 	def saveAs(self,fileName):
@@ -1494,7 +1497,7 @@ class fileCommands:
 		self.write_LEO_file(self.mFileName,true) # outlineOnlyFlag
 	#@-body
 	#@-node:10::writeOutlineOnly
-	#@+node:11:C=17:write_LEO_file
+	#@+node:11:C=18:write_LEO_file
 	#@+body
 	def write_LEO_file(self,fileName,outlineOnlyFlag):
 	
@@ -1653,7 +1656,7 @@ class fileCommands:
 
 			return false
 	#@-body
-	#@-node:11:C=17:write_LEO_file
+	#@-node:11:C=18:write_LEO_file
 	#@-node:3::Writing
 	#@-others
 #@-body

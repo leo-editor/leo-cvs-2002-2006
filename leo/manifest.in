@@ -1,3 +1,4 @@
+include leo_license.txt
 include LeoPy.leo
 include LeoDocs.leo
 include leo*.py

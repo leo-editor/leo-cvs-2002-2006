@@ -1257,7 +1257,7 @@ class tangleCommands:
 	#@-node:5::skip_headline
 	#@-node:1:C=7:Pass 1
 	#@+node:2::Pass 2
-	#@+node:1:C=9:oblank, oblanks, os, otab, otabs
+	#@+node:1:C=9:oblank, oblanks, os, otab, otabs (Tangle)
 	#@+body
 	def oblank (self):
 		self.oblanks(1)
@@ -1271,7 +1271,12 @@ class tangleCommands:
 			
 	def os (self,s):
 		s = string.replace(s,body_ignored_newline,body_newline)
-		self.output_file.write(s)
+		try:
+			self.output_file.write(s)
+		except UnicodeError: # 8/9/02
+			xml_encoding = app().config.xml_version_string
+			s = s.encode(xml_encoding)
+			self.outputFile.write(s)
 	
 	def otab (self):
 		self.otabs(1)
@@ -1280,7 +1285,7 @@ class tangleCommands:
 		if abs(n) > 0:
 			self.output_file.write('\t' * abs(n))
 	#@-body
-	#@-node:1:C=9:oblank, oblanks, os, otab, otabs
+	#@-node:1:C=9:oblank, oblanks, os, otab, otabs (Tangle)
 	#@+node:2:C=10:tangle.put_all_roots
 	#@+body
 	#@+at

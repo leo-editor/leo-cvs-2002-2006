@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="15" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="16" clone_windows="0"/>
 <globals body_outline_ratio="0.5">
-	<global_window_position top="42" left="312" height="20" width="60"/>
+	<global_window_position top="86" left="142" height="20" width="77"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences allow_rich_text="0">
@@ -12,28 +12,37 @@
 	<change_string></change_string>
 </find_panel_settings>
 <vnodes>
-<v a="E"><vh>leoConfig.leo</vh>
-<v t="T1" a="E"><vh>leoConfig.txt</vh>
-<v t="T2"><vh>&lt;&lt; general comments and warnings &gt;&gt;</vh></v>
-<v t="T3" a="V"><vh>&lt;&lt; General configuration options, especially read-only mode &gt;&gt;</vh></v>
-<v t="T4"><vh>&lt;&lt; The "Recent Files" menu &gt;&gt;</vh></v>
-<v t="T5"><vh>&lt;&lt; Compare Panel settings &gt;&gt;</vh></v>
-<v t="T6"><vh>&lt;&lt; Find/Change Panel settings &gt;&gt;</vh></v>
-<v t="T7"><vh>&lt;&lt; Preferences Panel settings &gt;&gt;</vh></v>
-<v t="T8"><vh>&lt;&lt; Syntax coloring options and colors &gt;&gt;</vh></v>
-<v t="T9"><vh>&lt;&lt; Window options &gt;&gt;</vh>
-<v t="T10"><vh>&lt;&lt; body pane options &gt;&gt;</vh></v>
-<v t="T11"><vh>&lt;&lt; outline pane options&gt;&gt;</vh></v>
-<v t="T12"><vh>&lt;&lt; log pane options &gt;&gt;</vh></v>
-<v t="T13"><vh>&lt;&lt; Options for new windows &gt;&gt;</vh></v>
-<v t="T14"><vh>&lt;&lt; Options for newly opened windows &gt;&gt;</vh></v>
-<v t="T15"><vh>&lt;&lt; Options for the bar that separates panes in the Leo window &gt;&gt;</vh></v>
+<v t="T1" a="E"><vh>leoConfig.leo</vh>
+<v t="T2" a="V"><vh>leoConfig.txt</vh>
+<v t="T3"><vh>&lt;&lt; general comments and warnings &gt;&gt;</vh></v>
+<v t="T4"><vh>&lt;&lt; General configuration options, especially read-only mode &gt;&gt;</vh></v>
+<v t="T5"><vh>&lt;&lt; The "Recent Files" menu &gt;&gt;</vh></v>
+<v t="T6"><vh>&lt;&lt; Compare Panel settings &gt;&gt;</vh></v>
+<v t="T7"><vh>&lt;&lt; Find/Change Panel settings &gt;&gt;</vh></v>
+<v t="T8"><vh>&lt;&lt; Preferences Panel settings &gt;&gt;</vh></v>
+<v t="T9"><vh>&lt;&lt; Syntax coloring options and colors &gt;&gt;</vh></v>
+<v t="T10"><vh>&lt;&lt; Window options &gt;&gt;</vh>
+<v t="T11"><vh>&lt;&lt; body pane options &gt;&gt;</vh></v>
+<v t="T12"><vh>&lt;&lt; outline pane options&gt;&gt;</vh></v>
+<v t="T13"><vh>&lt;&lt; log pane options &gt;&gt;</vh></v>
+<v t="T14"><vh>&lt;&lt; Options for new windows &gt;&gt;</vh></v>
+<v t="T15"><vh>&lt;&lt; Options for newly opened windows &gt;&gt;</vh></v>
+<v t="T16"><vh>&lt;&lt; Options for the bar that separates panes in the Leo window &gt;&gt;</vh></v>
 </v>
 </v>
 </v>
 </vnodes>
 <tnodes>
-<t tx="T1">@comment #
+<t tx="T1">@nocolor
+
+This is the file that creates leoConfig.txt.  We use this file for two reasons:
+	
+1. It is easier to update this file than a large text file.
+
+2. When read_only = 0, all comments are lost in Leo updates leoConfig.txt, so using this file is a way of keeping these comments.
+
+@color</t>
+<t tx="T2">@comment #
 @ We use an @root node here to suppress automatic untangling, so we don't lose all these nice comments in read-write mode.
 @root leoConfig.txt
 
@@ -52,7 +61,7 @@
 &lt;&lt; Syntax coloring options and colors &gt;&gt;
 &lt;&lt; Window options &gt;&gt;
 </t>
-<t tx="T2">@ Leo looks for this file using the directory in sys.leo_config_directory.
+<t tx="T3">@ Leo looks for this file using the directory in sys.leo_config_directory.
 (You would typically set this attribute in sitecustomize.py).
 If sys.leo_config_directory does not exist,
 Leo attempts to load this file from the directory from which Leo was loaded.
@@ -66,7 +75,7 @@ with all of ConfigParser's features (and bugs!).
 Comments start with a pound character in the leftmost column.
 You may specify booleans as 0/1, no/yes, false/true, off/on (case insensitive).
 These get converted to 0/1 if the file is not read_only.</t>
-<t tx="T3">@c
+<t tx="T4">@c
 
 [config options]
 
@@ -78,8 +87,12 @@ read_only = 0
 xml_version_string = UTF-8
 #	The version used at the start of .leo files.
 #	Default is UTF-8.  Better is ISO-8859-1.
-#	Use UTF-8 to write leo.py 2.x files.</t>
-<t tx="T4">@c
+#	Use UTF-8 to write leo.py 2.x files.
+
+save_clears_undo_buffer = 0
+#	1: Save command clears undo buffer.
+#	0: Undo buffer persists across saves.</t>
+<t tx="T5">@c
 
 # The list of files in the "Recent Files" menu at startup.
 
@@ -90,7 +103,7 @@ file1 = c:\prog\leocvs\leo\leopy.leo
 file0 = c:\prog\leocvs\leo\leodocs.leo
 #	Paths to recent files.
 #	Valid option names: file0 through file9.</t>
-<t tx="T5">@c
+<t tx="T6">@c
 
 # 	These correspond to the keyword parameters of the leoCompare constructor.
 # 	Exception: there are no keywords for compare file names in the constructor.
@@ -173,7 +186,7 @@ print_mismatching_lines = 1
 
 print_trailing_lines = 1
 #	1: Print lines all lines in one file after an end-of-file is seen on the other file.</t>
-<t tx="T6">@c
+<t tx="T7">@c
 
 # The initial settings of the Find/Change panel.
 
@@ -198,7 +211,7 @@ search_headline = 0
 suboutline_only = 0
 whole_word = 1
 wrap = 0</t>
-<t tx="T7">@c
+<t tx="T8">@c
 
 # The initial settings of the Preferences panel.
 
@@ -233,7 +246,7 @@ run_tangle_done.py = 0
 
 run_untangle_done.py = 0
 # 	1/0: Run tangle_done.py after explicit Untangle commands.</t>
-<t tx="T8">@c
+<t tx="T9">@c
 
 [syntax coloring options]
 
@@ -286,7 +299,7 @@ string_color = #00aa00
 
 undefined_section_name_color = red
 #	The color of name in &lt; &lt; name &gt; &gt; when name is undefined.</t>
-<t tx="T9">@ Options that affect the appearance of windows.
+<t tx="T10">@ Options that affect the appearance of windows.
 
 Options that require pixel values can be any Python expression that yields an int.
 Warning: the number of pixels per inch varies...
@@ -300,7 +313,7 @@ Warning: the number of pixels per inch varies...
 &lt;&lt; Options for new windows &gt;&gt;
 &lt;&lt; Options for newly opened windows &gt;&gt;
 &lt;&lt; Options for the bar that separates panes in the Leo window &gt;&gt;</t>
-<t tx="T10">@c
+<t tx="T11">@c
 
 body_pane_wraps = 1
 #	0/1: Wrap body text if 1.
@@ -322,7 +335,7 @@ body_text_font_slant = roman
 
 body_text_font_weight = normal
 #	The Tk -weight setting: normal or bold.  Default is normal.</t>
-<t tx="T11">@c
+<t tx="T12">@c
 
 headline_text_font_family =
 #	Font family for headline text.
@@ -338,7 +351,7 @@ headline_text_font_slant = roman
 
 headline_text_font_weight = normal
 #	The Tk -weight setting: normal or bold.  Default is normal.</t>
-<t tx="T12">@c
+<t tx="T13">@c
 
 log_text_font_family =
 #	Font family for text in the log pane.
@@ -354,7 +367,7 @@ log_text_font_slant = roman
 
 log_text_font_weight = normal
 #	The Tk -weight setting: normal or bold.  Default is normal.</t>
-<t tx="T13">@ Leo now properly opens windows for existing files where they were last positioned.
+<t tx="T14">@ Leo now properly opens windows for existing files where they were last positioned.
 @c
 
 initial_window_height = 20
@@ -370,7 +383,7 @@ initial_window_left = 10
 
 initial_window_top = 10
 #	Distance from top of screen of window, in pixels (must be an integer).</t>
-<t tx="T14">@c
+<t tx="T15">@c
 
 initial_splitter_orientation = v
 #	valid values: h or horizontal or v or vertical.
@@ -391,7 +404,7 @@ initial_horizontal_ratio = 0.3
 #	tree pane/body pane size when spitting pane horizontally.
 #	Applies only to new windows. Overridden by ratio in .leo files.
 #	Valid values: 0.0 to 1.0.</t>
-<t tx="T15">@ Leo should save these to .leo files, and it doesn't.
+<t tx="T16">@ Leo should save these to .leo files, and it doesn't.
 @c
 
 split_bar_color = LightSteelBlue2

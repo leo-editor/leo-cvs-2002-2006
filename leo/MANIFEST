@@ -27,6 +27,7 @@ leoTangle.py
 leoTree.py
 leoUndo.py
 leoUtils.py
+leo_license.txt
 manifest.in
 openLeo.py
 sdist.bat
@@ -69,5 +70,9 @@ Icons\box14.bmp
 Icons\box15.GIF
 Icons\box15.bmp
 Icons\boxes.bmp
+Icons\leo_inst.ico
+Icons\leo_off.bmp
+Icons\leo_on.bmp
 Icons\minusnode.gif
 Icons\plusnode.gif
+Icons\uninst.ico

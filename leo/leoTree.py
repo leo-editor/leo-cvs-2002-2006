@@ -897,13 +897,18 @@ class leoTree:
 		s = c.body.get("1.0", "end")
 		
 		# This may be all that is needed to support Unicode !!
+		xml_encoding = app().config.xml_version_string
+		
 		if type(s) == types.UnicodeType:
-			xml_encoding = app().config.xml_version_string
 			s = s.encode(xml_encoding)
-			
 		if len(s) > 0 and s[-1]=='\n': s = s[:-1]
+		
 		body = v.bodyString()
+		if type(body) == types.UnicodeType:
+			body = body.encode(xml_encoding)
+			
 		if s == body: return
+		
 		# trace(`ch`)
 		# trace(`ch` + ":" + `s`)
 		# trace(c.body.index("insert")+":"+c.body.get("insert linestart","insert lineend"))
@@ -958,7 +963,7 @@ class leoTree:
 
 		# Update the tnode.
 		if s == None: s = ""
-		c.undoer.setUndoTypingParams(v,undoType,v.bodyString(),s,oldSel,newSel)
+		c.undoer.setUndoTypingParams(v,undoType,body,s,oldSel,newSel)
 		v.t.bodyString = s
 		# Recolor the body.
 		self.recolor_now(v) # We are already at idle time, so this doesn't help much.
@@ -1013,16 +1018,22 @@ class leoTree:
 		# remove all newlines and update the vnode
 		s = string.replace(s,'\n','')
 		s = string.replace(s,'\r','')
+		
+		xml_encoding = app().config.xml_version_string
 		if type(s) == types.UnicodeType:
-			xml_encoding = app().config.xml_version_string
 			s = s.encode(xml_encoding)
 		if not s: s = ""
-		changed = s != v.headString()
+		
+		head = v.headString()
+		if type(head) == types.UnicodeType:
+			head = head.encode(xml_encoding)
+		
+		changed = s != head
 		done = ch and (ch == '\r' or ch == '\n')
 		if not changed and not done:
 			return
 		if changed:
-			c.undoer.setUndoParams("Change Headline",v,newText=s,oldText=v.headString())
+			c.undoer.setUndoParams("Change Headline",v,newText=s,oldText=head)
 		index = v.edit_text.index("insert")
 		# trace(`s`)
 		if changed:
