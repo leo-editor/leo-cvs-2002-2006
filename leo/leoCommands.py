@@ -335,10 +335,22 @@ class Commands:
 		c = self ; v = current = c.currentVnode()
 		head, lines, tail = c.getBodyLines()
 		result = [] ; changed = false
-		for line in lines:
-			s = optimizeLeadingWhitespace(line,c.tab_width)
-			if s != line: changed = true
-			result.append(s)
+	
+		# DTHEIN 3-NOV-2002: use the relative @tabwidth, not the global one
+		dict = scanDirectives(c)
+		tabWidth  = dict.get("tabwidth")
+	
+		if 0: # DTHEIN 3-NOV-2002: don't use the global @tabwidth
+			for line in lines:
+				s = optimizeLeadingWhitespace(line,c.tab_width)
+				if s != line: changed = true
+				result.append(s)
+		else: # DTHEIN 3-NOV-2002: use relative @tabwidth (tabWidth)
+			for line in lines:
+				s = optimizeLeadingWhitespace(line,tabWidth)
+				if s != line: changed = true
+				result.append(s)
+	
 		if changed:
 			result = string.join(result,'\n')
 			c.updateBodyPane(head,result,tail,"Convert Blanks") # Handles undo
@@ -352,16 +364,28 @@ class Commands:
 		c = self
 		head, lines, tail = self.getBodyLines()
 		result = [] ; changed = false
-		for line in lines:
-			i,w = skip_leading_ws_with_indent(line,0,c.tab_width)
-			s = computeLeadingWhitespace(w,-abs(c.tab_width)) + line[i:] # use negative width.
-			if s != line: changed = true
-			result.append(s)
+		
+		# DTHEIN 3-NOV-2002: use the relative @tabwidth, not the global one
+		dict = scanDirectives(c)
+		tabWidth  = dict.get("tabwidth")
+	
+		if 0: # DTHEIN 3-NOV-2002: don't use the global @tabwidth
+			for line in lines:
+				i,w = skip_leading_ws_with_indent(line,0,c.tab_width)
+				s = computeLeadingWhitespace(w,-abs(c.tab_width)) + line[i:] # use negative width.
+				if s != line: changed = true
+				result.append(s)
+		else: # DTHEIN 3-NOV-2002: use the relative @tabwidth (tabWidth)
+			for line in lines:
+				i,w = skip_leading_ws_with_indent(line,0,tabWidth)
+				s = computeLeadingWhitespace(w,-abs(tabWidth)) + line[i:] # use negative width.
+				if s != line: changed = true
+				result.append(s)
+	
 		if changed:
 			result = string.join(result,'\n')
 			c.updateBodyPane(head,result,tail,"Convert Tabs") # Handles undo
 			setTextSelection(c.body,"1.0","1.0")
-	
 	#@-body
 	#@-node:4::convertTabs
 	#@+node:5::createLastChildNode
