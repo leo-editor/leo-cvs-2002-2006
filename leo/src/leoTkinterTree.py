@@ -872,6 +872,8 @@ class leoTkinterTree (leoFrame.leoTree):
 				
 		if self.allocateOnlyVisibleNodes:
 			self.canvas.after_idle(self.idle_second_redraw)
+			
+		self.setTopVnode(v) # 1/30/04: remember a pseudo "top" node.
 	
 		# print "%3d %3d %1.3f %1.3f %1.3f %1.3f" % (h1,h2,frac,frac2,lo,hi)
 	#@-node:tree.idle_scrollTo
