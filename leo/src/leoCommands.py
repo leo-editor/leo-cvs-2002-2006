@@ -534,7 +534,7 @@ class baseCommands:
 		c.undoer.setUndoParams("Extract Names",v,select=current,oldTree=v_copy)
 		# Restore the selection.
 		setTextSelection(c.body,i,j)
-		c.body.focus_force()
+		set_focus(c.body)
 	#@-body
 	#@-node:9::extractSectionNames
 	#@+node:10::getBodyLines
@@ -710,6 +710,7 @@ class baseCommands:
 	def updateBodyPane (self,head,middle,tail,undoType,oldSel,oldYview):
 		
 		c = self ; v = c.currentVnode()
+		# trace(v)
 		# Update the text and set start, end.
 		c.body.delete("1.0","end")
 		# The caller must do rstrip.head if appropriate.
@@ -746,7 +747,7 @@ class baseCommands:
 			c.body.yview("moveto",first)
 		else:
 			c.body.see("insert")
-		c.body.focus_force()
+		set_focus(c.body)
 		c.recolor() # 7/5/02
 	#@-body
 	#@-node:14::updateBodyPane (handles undo)
@@ -1474,6 +1475,7 @@ class baseCommands:
 	
 		c = self ; current = c.currentVnode()
 		if not current: return
+	
 		c.beginUpdate()
 		if 1: # inside update...
 			if current.hasChildren() and current.isExpanded():
@@ -1483,11 +1485,10 @@ class baseCommands:
 			c.undoer.setUndoParams(op_name,v,select=current)
 			v.createDependents() # To handle effects of clones.
 			c.selectVnode(v)
+			c.editVnode(v)
 			v.setDirty() # Essential in Leo2.
 			c.setChanged(true)
-		c.endUpdate(false)
-		c.tree.redraw_now()
-		c.editVnode(v)
+		c.endUpdate()
 	#@-body
 	#@-node:3::c.insertHeadline
 	#@+node:4::c.clone
@@ -2213,6 +2214,7 @@ class baseCommands:
 	def editVnode(self,v):
 	
 		c = self
+		# trace(v)
 		if v:
 			c.selectVnode(v)
 			c.tree.editLabel(v)
@@ -2298,7 +2300,8 @@ class baseCommands:
 		c = self
 		c.tree.endEditLabel()
 		c.tree.select(v,updateBeadList)
-		c.body.focus_force()
+		# trace(v)
+		set_focus(c.body)
 		self.editing = false
 	#@-body
 	#@-node:7::c.selectVnode (calls tree.select)
