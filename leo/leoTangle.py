@@ -1080,7 +1080,6 @@ class tangleCommands:
 			# We expect to see only @doc,@c or @root directives
 			# while scanning a code section.
 			i = skip_to_end_of_line(s,i)
-			trace(`kind`)
 			self.error("directive not valid here: " + s[j:i])
 		elif kind == bad_section_name:
 			if self.use_cweb_flag:
