@@ -305,6 +305,8 @@ class baseFileCommands:
         """
         Look ahead for collapsed tag: tag may or may not end in ">"
         Skips tag and /> if found, otherwise does not alter index.
+        Returns True if the closing part was found.
+        Throws BadLeoFile if the tag does not exist.
         """
     
         if tag[-1] == ">":
@@ -414,7 +416,7 @@ class baseFileCommands:
     def getClipboardHeader (self):
     
         if self.getOpenTag("<leo_header"):
-            return # 11/24/02
+            return # <leo_header> or <leo_header/> has been seen.
     
         while 1:
             if self.matchTag("file_format="):
@@ -436,7 +438,7 @@ class baseFileCommands:
     def getCloneWindows (self):
     
         if not self.matchTag("<clone_windows>"):
-            return
+            return # <clone_windows/> seen.
     
         while self.matchTag("<clone_window vtag=\"V"):
             self.getLong() ; self.getDquote() ; self.getTag(">")
@@ -517,13 +519,13 @@ class baseFileCommands:
                 elif self.matchTag(">"): break
                 else: self.getUnknownTag() # New in 4.1: ignore all other tags.
             #
-            self.getTag("<find_string>")
-            c.find_text = self.getEscapedString()
-            self.getTag("</find_string>")
+            if not self.getOpenTag("<find_string"): # 7/30/04: Allow <find_string/>
+                c.find_text = self.getEscapedString()
+                self.getTag("</find_string>")
             #
-            self.getTag("<change_string>")
-            c.change_text = self.getEscapedString()
-            self.getTag("</change_string>")
+            if not self.getOpenTag("<change_string"): # 7/30/04: Allow <change_string/>
+                c.change_text = self.getEscapedString()
+                self.getTag("</change_string>")
             #
             self.getTag("</find_panel_settings>")
         
@@ -538,25 +540,28 @@ class baseFileCommands:
     def getGlobals (self):
     
         if self.getOpenTag("<globals"):
-            return
+            # <globals/> seen: set reasonable defaults:
+            self.ratio = 0.5
+            y,x,h,w = 50,50,500,700
+        else:
+            self.getTag("body_outline_ratio=\"")
+            self.ratio = self.getDouble() ; self.getDquote() ; self.getTag(">")
     
-        self.getTag("body_outline_ratio=\"")
-        self.ratio = self.getDouble() ; self.getDquote() ; self.getTag(">")
+            self.getTag("<global_window_position")
+            y,x,h,w = self.getPosition()
+            self.getTag("/>")
     
-        self.getTag("<global_window_position")
-        y,x,h,w = self.getPosition() ; self.getTag("/>")
-        self.frame.setTopGeometry(w,h,x,y)
+            self.getTag("<global_log_window_position")
+            self.getPosition()
+            self.getTag("/>") # no longer used.
+    
+            self.getTag("</globals>")
     
         # 7/15/02: Redraw the window before writing into it.
+        self.frame.setTopGeometry(w,h,x,y)
         self.frame.deiconify()
         self.frame.lift()
         self.frame.update()
-    
-        self.getTag("<global_log_window_position")
-        self.getPosition() ;
-        self.getTag("/>") # no longer used.
-    
-        self.getTag("</globals>")
     #@nonl
     #@-node:ekr.20031218072017.2306:getGlobals
     #@+node:ekr.20031218072017.1553:getLeoFile
@@ -593,7 +598,8 @@ class baseFileCommands:
             #@+node:ekr.20031218072017.1555:<< scan all the xml elements >>
             self.getXmlVersionTag()
             self.getXmlStylesheetTag()
-            self.getTag("<leo_file>")
+            
+            self.getTag("<leo_file>") # Must match exactly.
             self.getLeoHeader()
             self.getGlobals()
             self.getPrefs()
@@ -679,8 +685,9 @@ class baseFileCommands:
         # Set defaults.
         self.maxTnodeIndex = 0
         self.numberOfTnodes = 0
+    
         if self.getOpenTag("<leo_header"):
-            return
+            return # <leo_header/> seen.
     
         # New in version 1.7: attributes may appear in any order.
         while 1:
@@ -731,7 +738,7 @@ class baseFileCommands:
         try:
             self.getXmlVersionTag() # leo.py 3.0
             self.getXmlStylesheetTag() # 10/25/02
-            self.getTag("<leo_file>")
+            self.getTag("<leo_file>") # <leo_file/> is not valid.
             self.getClipboardHeader()
             self.getVnodes()
             self.getTnodes()
@@ -745,6 +752,7 @@ class baseFileCommands:
         self.usingClipboard = False
         self.tnodesDict = {}
         return v
+    #@nonl
     #@-node:ekr.20031218072017.1559:getLeoOutline (from clipboard)
     #@+node:ekr.20031218072017.3025:getPosition
     def getPosition (self):
@@ -770,7 +778,7 @@ class baseFileCommands:
         c = self.c ; config = g.app.config
         
         if self.getOpenTag("<preferences"):
-            return
+            return # <preferences/> seeen
     
         table = (
             ("allow_rich_text",None,None), # Ignored.
@@ -920,9 +928,9 @@ class baseFileCommands:
     #@+node:ekr.20031218072017.1560:getTnodes
     def getTnodes (self):
     
-        # A slight change: we require a tnode element.  But Leo always writes this.
+        # A slight change: we require a tnodes element.  But Leo always writes this.
         if self.getOpenTag("<tnodes>"):
-            return
+            return # <tnodes/> seen.
             
         while self.matchTag("<t"):
             self.getTnode()
@@ -1066,7 +1074,7 @@ class baseFileCommands:
         c = self.c
     
         if self.getOpenTag("<vnodes>"):
-            return
+            return # <vnodes/> seen.
             
         if self.usingClipboard:
             oldRoot = c.rootPosition()
