@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="2705" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="2799" clone_windows="0"/>
 <globals body_outline_ratio="0.4370860927152318">
-	<global_window_position top="70" left="290" height="755" width="891"/>
+	<global_window_position top="96" left="353" height="755" width="891"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences>
@@ -18,7 +18,7 @@
 </v>
 <v t="ekr.20040303062846"><vh>Unit Testing</vh>
 <v t="ekr.20040303062846.1"><vh>To do</vh></v>
-<v t="ekr.20040303062846.2" a="E" tnodeList="ekr.20040303062846.2,ekr.20040303062846.3,ekr.20040303062846.4,ekr.20040303062846.5,ekr.20040303062846.6,ekr.20040303062846.7,ekr.20040303062846.8,ekr.20040303062846.9,ekr.20040303062846.10,ekr.20040303062846.12,ekr.20040303062846.13,ekr.20040303062846.14,ekr.20040303062846.15,ekr.20040303062846.16,ekr.20040303062846.17,ekr.20040303062846.18,ekr.20040303062846.20,ekr.20040303062846.21,ekr.20040303062846.22,ekr.20040303062846.23,ekr.20040303062846.24,ekr.20040303062846.25,ekr.20040303062846.26,ekr.20040303062846.28,ekr.20040303062846.29,ekr.20040303062846.30,ekr.20040303062846.31,ekr.20040303062846.32,ekr.20040303062846.33,ekr.20040303062846.34,ekr.20040303062846.35,ekr.20040303062846.37,ekr.20040303062846.38,ekr.20040303062846.39,ekr.20040303062846.40,ekr.20040303062846.41,ekr.20040303062846.42,ekr.20040303062846.64,ekr.20040303062846.65,ekr.20040303062846.66,ekr.20040303062846.67,ekr.20040303062846.68,ekr.20040303062846.69,ekr.20040303062846.70,ekr.20040303062846.71,ekr.20040303062846.73,ekr.20040303062846.74,ekr.20040303062846.75,ekr.20040303062846.76,ekr.20040303062846.77,ekr.20040303062846.78,ekr.20040303062846.79,ekr.20040303064013,ekr.20040303063118,ekr.20040309101454,ekr.20040303063118.4,ekr.20040309101454.15,ekr.20040309101454.17,ekr.20040309101454.13,ekr.20040303064020.5,ekr.20040309101454.16,ekr.20040309101454.14,ekr.20040303064020.7,ekr.20040303091606,ekr.20040303092153,ekr.20040303092153.1,ekr.20040303064020.6,ekr.20040303062846.80,ekr.20040303062846.81,ekr.20040303062846.82,ekr.20040303062846.83,ekr.20040303062846.84,ekr.20040303062846.85,ekr.20040303062846.86,ekr.20040303062846.87,ekr.20040303062846.88,ekr.20040303062846.89,ekr.20040303062846.90,ekr.20040303062846.91,ekr.20040303062846.92,ekr.20040303062846.93,ekr.20040303062846.94,ekr.20040303062846.95,ekr.20040303062846.96,ekr.20040303062846.97,ekr.20040303062846.98,ekr.20040303062846.99,ekr.20040303062846.100,ekr.20040303062846.101,ekr.20040303062846.102,ekr.20040303062846.103,ekr.20040303062846.104"><vh>@file ..\src\leoTest.py</vh>
+<v t="ekr.20040303062846.2" a="E" tnodeList="ekr.20040303062846.2,ekr.20040303062846.3,ekr.20040303062846.4,ekr.20040303062846.5,ekr.20040303062846.6,ekr.20040303062846.7,ekr.20040303062846.8,ekr.20040303062846.9,ekr.20040303062846.10,ekr.20040303062846.12,ekr.20040303062846.13,ekr.20040303062846.14,ekr.20040303062846.15,ekr.20040303062846.16,ekr.20040303062846.17,ekr.20040303062846.18,ekr.20040303062846.20,ekr.20040303062846.21,ekr.20040303062846.22,ekr.20040303062846.23,ekr.20040303062846.24,ekr.20040303062846.25,ekr.20040303062846.26,ekr.20040303062846.28,ekr.20040303062846.29,ekr.20040303062846.30,ekr.20040303062846.31,ekr.20040303062846.32,ekr.20040303062846.33,ekr.20040303062846.34,ekr.20040303062846.35,ekr.20040303062846.37,ekr.20040303062846.38,ekr.20040303062846.39,ekr.20040303062846.40,ekr.20040303062846.41,ekr.20040303062846.42,ekr.20040303062846.64,ekr.20040303062846.65,ekr.20040303062846.66,ekr.20040303062846.67,ekr.20040303062846.68,ekr.20040303062846.69,ekr.20040303062846.70,ekr.20040303062846.71,ekr.20040303062846.73,ekr.20040303062846.74,ekr.20040303062846.75,ekr.20040303062846.76,ekr.20040303062846.77,ekr.20040303062846.78,ekr.20040303062846.79,ekr.20040303064013,ekr.20040303063118,ekr.20040303063118.4,ekr.20040309105731,ekr.20040309101454.15,ekr.20040309101454.17,ekr.20040309101454.13,ekr.20040303064020.5,ekr.20040309101454.16,ekr.20040309101454.14,ekr.20040303064020.7,ekr.20040303091606,ekr.20040303092153,ekr.20040303092153.1,ekr.20040303064020.6,ekr.20040303062846.80,ekr.20040303062846.81,ekr.20040303062846.82,ekr.20040303062846.83,ekr.20040303062846.84,ekr.20040303062846.85,ekr.20040303062846.86,ekr.20040303062846.87,ekr.20040303062846.88,ekr.20040303062846.89,ekr.20040303062846.90,ekr.20040303062846.91,ekr.20040303062846.92,ekr.20040303062846.93,ekr.20040303062846.94,ekr.20040303062846.95,ekr.20040303062846.96,ekr.20040303062846.97,ekr.20040303062846.98,ekr.20040303062846.99,ekr.20040303062846.100,ekr.20040303062846.101,ekr.20040303062846.102,ekr.20040303062846.103,ekr.20040303062846.104"><vh>@file ..\src\leoTest.py</vh>
 <v t="ekr.20040303062846.3"><vh> class testUtils</vh>
 <v t="ekr.20040303062846.4"><vh>compareOutlines</vh></v>
 <v t="ekr.20040303062846.5"><vh>findChildrenOf &amp; findSubnodesOf</vh></v>
@@ -92,8 +92,9 @@
 <v t="ekr.20040303063644"><vh>Position tests</vh>
 <v t="ekr.20040303064013"><vh> makePositionSuite</vh></v>
 <v t="ekr.20040303063118"><vh>class positionTestCase</vh>
-<v t="ekr.20040309101454"><vh> To do</vh></v>
 <v t="ekr.20040303063118.4"><vh>setUp</vh></v>
+<v t="ekr.20040309105731"><vh>testComparisons</vh></v>
+<v t="ekr.20040312101853"><vh>Consistency tests...</vh>
 <v t="ekr.20040309101454.15"><vh>testConsistencyOfAllNodesThreadNext</vh></v>
 <v t="ekr.20040309101454.17"><vh>testConsistencyOfFirstChildAndChildrenIter</vh></v>
 <v t="ekr.20040309101454.13"><vh>testConsistencyOfLevel</vh></v>
@@ -105,6 +106,7 @@
 <v t="ekr.20040303092153"><vh>testHasParentChild</vh></v>
 <v t="ekr.20040303092153.1"><vh>testHasThreadNextBack</vh></v>
 <v t="ekr.20040303064020.6"><vh>testVnodeList</vh></v>
+</v>
 </v>
 </v>
 <v t="ekr.20040303062846.80"><vh>Reformat Paragraph tests</vh>
@@ -182,8 +184,9 @@
 <v t="ekr.20040303063644" a="E"><vh>Position tests</vh>
 <v t="ekr.20040303064013"><vh> makePositionSuite</vh></v>
 <v t="ekr.20040303063118" a="E"><vh>class positionTestCase</vh>
-<v t="ekr.20040309101454"><vh> To do</vh></v>
 <v t="ekr.20040303063118.4"><vh>setUp</vh></v>
+<v t="ekr.20040309105731"><vh>testComparisons</vh></v>
+<v t="ekr.20040312101853" a="TV"><vh>Consistency tests...</vh>
 <v t="ekr.20040309101454.15"><vh>testConsistencyOfAllNodesThreadNext</vh></v>
 <v t="ekr.20040309101454.17"><vh>testConsistencyOfFirstChildAndChildrenIter</vh></v>
 <v t="ekr.20040309101454.13"><vh>testConsistencyOfLevel</vh></v>
@@ -197,7 +200,9 @@
 <v t="ekr.20040303064020.6"><vh>testVnodeList</vh></v>
 </v>
 </v>
-<v t="ekr.20040303063549" a="E"><vh>Unit Tests</vh>
+</v>
+<v t="ekr.20040303063549"><vh>Unit Tests</vh>
+<v t="ekr.20040309101454"><vh> To do</vh></v>
 <v t="ekr.20040303063549.1"><vh>tempNode</vh></v>
 <v t="ekr.20040303063549.45"><vh>colorizerTests</vh>
 <v t="ekr.20040303063549.46"><vh>Actionscript</vh></v>
@@ -366,98 +371,79 @@
 <v t="ekr.20040303063549.125"><vh>Run all tests</vh></v>
 <v t="ekr.20040303080010"><vh>Run all tests except files tests</vh></v>
 </v>
-<v t="ekr.20040303071432" a="TV"><vh>Mini tests</vh>
-<v t="ekr.20040309091917" a="EM"><vh>To do</vh></v>
+<v t="ekr.20040311111734" tnodeList="ekr.20040311111734,ekr.20040311111734.1,ekr.20040311111734.2,ekr.20040311111734.3"><vh>@file c:\prog\test\leo42test.txt</vh>
+<v t="ekr.20040311111734.1"><vh>&lt;&lt; node one &gt;&gt;</vh></v>
+<v t="ekr.20040311111734.2"><vh>node a</vh></v>
+<v t="ekr.20040311111734.3"><vh>node b</vh></v>
+</v>
+<v t="ekr.20040303071432"><vh>Mini tests, scripts &amp; experiments</vh>
+<v t="ekr.20040309091917" a="E"><vh>To do</vh></v>
+<v t="ekr.20040312101720"><vh>Experiments</vh>
 <v t="ekr.20040302091705"><vh>Test of moving positions</vh></v>
-<v t="ekr.20040301162657"><vh>Mini tests of position class</vh>
-<v t="ekr.20040301203156"><vh>test p.level</vh></v>
-<v t="ekr.20040302103704"><vh>test test parent/child links</vh>
-<v t="ekr.20040302110220"><vh>&lt;&lt; check that the parent of p's first child is p &gt;&gt;</vh></v>
-<v t="ekr.20040302110220.1"><vh>&lt;&lt; check that the parent of all parent's children is parent &gt;&gt;</vh></v>
 </v>
-<v t="ekr.20040302110925"><vh>test next/back links</vh></v>
-<v t="ekr.20040302113435"><vh>test vnodeList</vh></v>
-<v t="ekr.20040302114642"><vh>test threadNext/threadBack</vh></v>
-<v t="ekr.20040303215834"><vh>Test p == p.copy()</vh></v>
-</v>
-<v t="ekr.20040305165016"><vh>iter mini tests</vh>
-<v t="ekr.20040309091507"><vh>Clone test data</vh>
-<v t="ekr.20040309091507.1"><vh>aa</vh></v>
-<v t="ekr.20040309091507.2"><vh>a</vh>
-<v t="ekr.20040309091507.3"><vh>b</vh>
-<v t="ekr.20040309091507.4"><vh>c</vh>
-<v t="ekr.20040309091507.5"><vh>c2</vh>
-<v t="ekr.20040309091507.6"><vh>c3</vh></v>
-<v t="ekr.20040309091507.7"><vh>c4</vh></v>
+<v t="ekr.20040312101720.1"><vh>Mini tests</vh>
+<v t="ekr.20040309111054"><vh>Print iterations: do not delete</vh>
+<v t="ekr.20040309111102"><vh>Clone test data</vh>
+<v t="ekr.20040309111102.1"><vh>aa</vh></v>
+<v t="ekr.20040309111102.2"><vh>a</vh>
+<v t="ekr.20040309111102.3"><vh>b</vh>
+<v t="ekr.20040309111102.4"><vh>c</vh>
+<v t="ekr.20040309111102.5"><vh>c2</vh>
+<v t="ekr.20040309111102.6"><vh>c3</vh></v>
+<v t="ekr.20040309111102.7"><vh>c4</vh></v>
 </v>
 </v>
 </v>
-<v t="ekr.20040309091507.3"><vh>b</vh>
-<v t="ekr.20040309091507.4"><vh>c</vh>
-<v t="ekr.20040309091507.5"><vh>c2</vh>
-<v t="ekr.20040309091507.6"><vh>c3</vh></v>
-<v t="ekr.20040309091507.7"><vh>c4</vh></v>
+<v t="ekr.20040309111102.3"><vh>b</vh>
+<v t="ekr.20040309111102.4"><vh>c</vh>
+<v t="ekr.20040309111102.5"><vh>c2</vh>
+<v t="ekr.20040309111102.6"><vh>c3</vh></v>
+<v t="ekr.20040309111102.7"><vh>c4</vh></v>
 </v>
 </v>
 </v>
 </v>
-<v t="ekr.20040309091507.8"><vh>d</vh>
-<v t="ekr.20040309091507.2"><vh>a</vh>
-<v t="ekr.20040309091507.3"><vh>b</vh>
-<v t="ekr.20040309091507.4"><vh>c</vh>
-<v t="ekr.20040309091507.5"><vh>c2</vh>
-<v t="ekr.20040309091507.6"><vh>c3</vh></v>
-<v t="ekr.20040309091507.7"><vh>c4</vh></v>
+<v t="ekr.20040309111102.8"><vh>d</vh>
+<v t="ekr.20040309111102.2"><vh>a</vh>
+<v t="ekr.20040309111102.3"><vh>b</vh>
+<v t="ekr.20040309111102.4"><vh>c</vh>
+<v t="ekr.20040309111102.5"><vh>c2</vh>
+<v t="ekr.20040309111102.6"><vh>c3</vh></v>
+<v t="ekr.20040309111102.7"><vh>c4</vh></v>
 </v>
 </v>
 </v>
-<v t="ekr.20040309091507.3"><vh>b</vh>
-<v t="ekr.20040309091507.4"><vh>c</vh>
-<v t="ekr.20040309091507.5"><vh>c2</vh>
-<v t="ekr.20040309091507.6"><vh>c3</vh></v>
-<v t="ekr.20040309091507.7"><vh>c4</vh></v>
+<v t="ekr.20040309111102.3"><vh>b</vh>
+<v t="ekr.20040309111102.4"><vh>c</vh>
+<v t="ekr.20040309111102.5"><vh>c2</vh>
+<v t="ekr.20040309111102.6"><vh>c3</vh></v>
+<v t="ekr.20040309111102.7"><vh>c4</vh></v>
 </v>
 </v>
 </v>
 </v>
 </v>
-<v t="ekr.20040309091507.9"><vh>e</vh></v>
-<v t="ekr.20040309091507.10"><vh>z</vh></v>
+<v t="ekr.20040309111102.9"><vh>e</vh></v>
+<v t="ekr.20040309111102.10"><vh>z</vh></v>
 </v>
+<v t="ekr.20040309111232"><vh>last node</vh></v>
 </v>
-<v t="ekr.20040302142502"><vh>Consistency of p.level</vh></v>
-<v t="ekr.20040309094323"><vh>Consistency of p.parent &amp; p.child</vh></v>
-<v t="ekr.20040309095428"><vh>Consistency of p.moveToThreadNext and p.allNodes_iter</vh></v>
-<v t="ekr.20040309095654"><vh>Consistency of p.moveToParent and p.parents_iter</vh></v>
-<v t="ekr.20040309100325"><vh>Consistency of p.moveToFirstChild/Next and p.children_iter</vh></v>
+<v t="ekr.20040311125054"><vh>Test that p.t == p.v.t</vh></v>
+<v t="ekr.20040310145919"><vh>Change python keywords</vh></v>
+</v>
+<v t="ekr.20040312021734" a="E"><vh>Testing scripts</vh>
+<v t="ekr.20040311090054"><vh>Dump fileIndex</vh></v>
+<v t="ekr.20040312021734.1"><vh>Script to clean unused tnodeLists</vh></v>
+</v>
 </v>
 </vnodes>
 <tnodes>
 <t tx="ekr.20040126105605"></t>
 <t tx="ekr.20040126105605.2"></t>
 <t tx="ekr.20040126105605.3"></t>
-<t tx="ekr.20040301162657"></t>
 <t tx="ekr.20040301191933"></t>
 <t tx="ekr.20040301191933.1"></t>
 <t tx="ekr.20040301191933.2"></t>
-<t tx="ekr.20040301203156">from leoGlobals import *
-
-c = top()
-c.convertTreeToSharedNodes()
-c.disableSaveCommands()
-
-print ; print "start"
-
-p = c.rootPosition()
-while p and p.v.headString().strip().lower() != "clone test":
-	p.moveToThreadNext()
-	
-after = p.getNodeAfterTree()
-while p and p != after:
-	print p.level(), p.v.headString()
-	p.moveToThreadNext()
-		
-print ; print "done"</t>
 <t tx="ekr.20040302091705">from leoGlobals import *
 
 class position:
@@ -476,135 +462,6 @@ print "after ", v, p.v, v is p.v</t>
 <t tx="ekr.20040302092753.2"></t>
 <t tx="ekr.20040302092753.3"></t>
 <t tx="ekr.20040302092753.4"></t>
-<t tx="ekr.20040302103704">from leoGlobals import *
-
-c = top()
-c.convertTreeToSharedNodes()
-c.disableSaveCommands()
-
-print ; print "checking parent/child relationships"
-
-p = c.rootPosition() ; count = 0
-while p:
-	count += 1
-	&lt;&lt; check that the parent of p's first child is p &gt;&gt;
-	parent = p.getParent()
-	if parent:
-		&lt;&lt; check that the parent of all parent's children is parent &gt;&gt;
-	p.moveToThreadNext()
-		
-print ; print "checked %d nodes" % count</t>
-<t tx="ekr.20040302110220">firstChild = p.getFirstChild()
-if firstChild:
-	parent = firstChild.getParent()
-	if p != parent:
-		print "mismatch:p,parent,child",p,parent,firstChild</t>
-<t tx="ekr.20040302110220.1">found = false
-child = parent.getFirstChild()
-if not child:
-	print "parent has no children"
-while child:
-	if child == p: found
-	childParent = child.getParent()
-	if childParent != parent:
-		print "mismatch:parent,childParent",parent,childParent
-	child = child.moveToNext()</t>
-<t tx="ekr.20040302110925">from leoGlobals import *
-
-c = top()
-c.convertTreeToSharedNodes()
-c.disableSaveCommands()
-
-print ; print "checking next/back links"
-
-p = c.rootPosition() ; count = 0
-while p:
-	back = p.getBack()
-	next = p.getNext()
-	if back:
-		count += 1
-		assert(back.getNext() == p)
-	if next:
-		count += 1
-		assert(next.getBack() == p)
-	p.moveToThreadNext()
-		
-print ; print "checked %d nodes" % count</t>
-<t tx="ekr.20040302113435">from leoGlobals import *
-
-c = top()
-c.convertTreeToSharedNodes()
-c.disableSaveCommands()
-
-print ; print "checking consistency of vnodeList"
-
-p = c.rootPosition() ; count = 0
-while p:
-	vnodeList = p.v.t.vnodeList
-	for v in vnodeList:
-		count += 1
-		assert(v.t == p.v.t)
-		if p.v.isCloned():
-			assert(v.isCloned())
-			assert(len(vnodeList) &gt; 1)
-		else:
-			assert(not v.isCloned())
-			assert(len(vnodeList) == 1)
-	
-	p.moveToThreadNext()
-		
-print ; print "checked %d cloned nodes" % count</t>
-<t tx="ekr.20040302114642">from leoGlobals import *
-
-c = top()
-c.convertTreeToSharedNodes()
-c.disableSaveCommands()
-
-print ; print "checking threadBack/threadNext"
-
-p = c.rootPosition() ; count = 0
-
-while p:
-	count += 1
-	threadBack = p.getThreadBack()
-	threadNext = p.getThreadNext()
-	if threadBack:
-		if threadBack.getThreadNext() != p:
-			print "p.threadBack.threadNext != p"
-			print "p,threadBack,threadBack.threadNext:"
-			print p,threadBack,threadBack.getThreadNext()
-		assert(threadBack.getThreadNext()==p)
-	if threadNext:
-		if threadNext.getThreadBack() != p:
-			print "p.threadNext.threadBack != p"
-			print "p,threadNext,threadNext.threadBack:"
-			print p,threadNext,threadNext.getThreadBack()
-		assert(threadNext.getThreadBack()==p)
-	p.moveToThreadNext()
-
-print ; print "checked %d nodes" % count</t>
-<t tx="ekr.20040302142502">import leoGlobals as g
-
-c = g.top() ; p = c.rootPosition()
-
-count = 0
-for p in p.allNodes_iter():
-	
-	count += 1
-	
-	if p.hasParent():
-		assert(p.parent().level() == p.level() - 1)
-
-	if p.hasChildren():
-		assert(p.firstChild().level() == p.level() + 1)
-		
-	if p.hasNext():
-		assert(p.next().level() == p.level())
-
-	if p.hasBack():
-		assert(p.back().level() == p.level())
-		
-s = "%d done" % count ; g.es(s) ; print s</t>
 <t tx="ekr.20040303062846"># Run the unit tests in test.leo using the Execute Script command.</t>
 <t tx="ekr.20040303062846.1">@nocolor
 
@@ -1626,13 +1483,10 @@ def getRowCol(self):
 	import leoGlobals as g
 	
 	self.c = c = g.top()
-	self.root = c.rootPosition()
-	self.verbose = true
 
-	if 0: # no longer needed.
-		c.convertTreeToSharedNodes()
-		c.disableSaveCommands()
-</t>
+	self.verbose = true
+	
+	self.root = c.rootPosition()</t>
 <t tx="ekr.20040303063549"></t>
 <t tx="ekr.20040303063549.1"></t>
 <t tx="ekr.20040303063549.2">@ 
@@ -2752,157 +2606,17 @@ runner.run(mainSuite)</t>
 		assert(
 			(threadNext and p.hasThreadNext()) or
 			(not threadNext and not p.hasThreadNext()))</t>
-<t tx="ekr.20040303215834">import leoGlobals as g
-import leoNodes
-
-c = g.top()
-
-t = leoNodes.tnode()
-v = leoNodes.vnode(c,t)
-p = leoNodes.position(v,[])
-
-p2 = p.copy()
-print p == p2</t>
-<t tx="ekr.20040305165016">import leoGlobals as g
-from leoGlobals import true,false
-import leoNodes
-
-position = leoNodes.position
-
-@others
-
-c = g.top()
-if g.sharedNodes:
-	pos = current = c.currentPosition()
-else:
-	current = c.currentVnode()
-	pos = position(current,[]) # default position.
-
-child1 = current.firstChild()
-child2 = child1.firstChild()
-
-if 1:
-	print '-'*10, "parents"
-	for porv in child2.parents_iter(): print porv
-if 1:
-	print '-'*10, "subtree"
-	for porv in pos.subtree_iter(): print porv
-if 1:
-	print '-'*10, "children"
-	for porv in child1.children_iter(): print porv
-if 1:
-	print '-'*10, "siblings"
-	for porv in pos.siblings_iter(): print porv
-if 0:
-	print '-'*10, "all nodes"
-	for porv in pos.allNodes_iter(): print porv</t>
-<t tx="ekr.20040309091507"></t>
-<t tx="ekr.20040309091507.1"></t>
-<t tx="ekr.20040309091507.2"></t>
-<t tx="ekr.20040309091507.3"></t>
-<t tx="ekr.20040309091507.4"></t>
-<t tx="ekr.20040309091507.5"></t>
-<t tx="ekr.20040309091507.6"></t>
-<t tx="ekr.20040309091507.7"></t>
-<t tx="ekr.20040309091507.8"></t>
-<t tx="ekr.20040309091507.9"></t>
-<t tx="ekr.20040309091507.10"></t>
 <t tx="ekr.20040309091917">@nocolor
 
-To do:
-	
+- Test read logic: test created tree against already existing tree.
+
+- Test isExpanded.
 - For related Commands methods.
 - Menu enablers
 - Test new p and v routines.
 - Test undo/redo for all commands.
-
-@color
 </t>
-<t tx="ekr.20040309094323">import leoGlobals as g
-
-c = g.top() ; p = c.rootPosition()
-
-count = 0
-for p in p.allNodes_iter():
-	
-	count += 1
-	
-	if p.hasParent():
-		n = p.childIndex()
-		assert(p == p.parent().moveToNthChild(n))
-
-	if p.hasChildren():
-		assert(p.hasFirstChild()) # These are synonyms.
-		assert(p == p.firstChild().parent())
-		
-	if p.hasNext():
-		assert(p.next().parent() == p.parent())
-		
-	if p.hasBack():
-		assert(p.back().parent() == p.parent())
-		
-s = "%d done" % count ; g.es(s) ; print s</t>
 <t tx="ekr.20040309095121"></t>
-<t tx="ekr.20040309095428">import leoGlobals as g
-
-c = g.top() ; p = c.rootPosition()
-
-count = 0
-p2 = p.copy()
-
-for p in p.allNodes_iter():
-	
-	count += 1
-	if p != p2: print p,p2
-	assert(p==p2)
-	p2.moveToThreadNext()
-
-if p2: print p2
-assert(not p2)
-
-s = "%d done" % count ; g.es(s) ; print s</t>
-<t tx="ekr.20040309095654">import leoGlobals as g
-
-c = g.top() ; p = c.rootPosition()
-
-count = 0
-
-for p in p.allNodes_iter():
-	
-	count += 1
-	
-	p2 = p.parent()
-	for p3 in p.parents_iter():
-		
-		if p3 != p2: print p3,p2
-		assert(p3==p2)
-		p2.moveToParent()
-
-	if p2: print p2
-	assert(not p2)
-
-s = "%d done" % count ; g.es(s) ; print s</t>
-<t tx="ekr.20040309100325">import leoGlobals as g
-
-c = g.top() ; p = c.rootPosition()
-
-count = 0
-
-for p in p.allNodes_iter():
-	
-	count += 1
-	
-	p2 = p.firstChild()
-	for p3 in p.children_iter():
-		
-		if p3 != p2: print p3,p2
-		assert(p3==p2)
-		p2.moveToNext()
-
-	if p2: print p2
-	assert(not p2)
-
-s = "%d done" % count ; g.es(s) ; print s</t>
 <t tx="ekr.20040309101454">@
 	
 - Tests for c.rootPosition, c.currentPosition, c.setCurrentPosition.
@@ -2947,22 +2661,35 @@ s = "%d done" % count ; g.es(s) ; print s</t>
 			
 		if p.hasBack():
 			assert(p.back().parent() == p.parent())</t>
-<t tx="ekr.20040309101454.15">def testConsistencyOfAllNodesThreadNext (self):
+<t tx="ekr.20040309101454.15">def testConsistencyOfAllNodesThreadNextWithCopy(self):
+	self.doConsistencyOfAllNodesThreadNext(true)
+	
+def testConsistencyOfAllNodesThreadNext(self):
+	self.doConsistencyOfAllNodesThreadNext(false)
+
+def doConsistencyOfAllNodesThreadNext (self,copy):
 	
 	"""Test consistency of p.moveToThreadNext and p.allNodes_iter."""
 
 	root = self.c.rootPosition()
 	p2 = root.copy()
 
-	for p in root.allNodes_iter():
+	for p in root.allNodes_iter(copy=copy):
 
 		if p != p2: print p,p2
 		assert(p==p2)
 		p2.moveToThreadNext()
 		
 	if p2: print p2
-	assert(not p2)</t>
-<t tx="ekr.20040309101454.16">def testConsistencyOfParentAndParentsIter (self):
+	assert(not p2)
+</t>
+<t tx="ekr.20040309101454.16">def testConsistencyOfParentAndParentsIterWithCopy(self):
+	self.doConsistencyOfParentAndParentsIter(true)
+	
+def testConsistencyOfParentAndParentsIter(self):
+	self.doConsistencyOfParentAndParentsIter(false)
+
+def doConsistencyOfParentAndParentsIter (self,copy):
 	
 	"""Test consistency of p.parent and p.parents_iter."""
 
@@ -2971,7 +2698,7 @@ s = "%d done" % count ; g.es(s) ; print s</t>
 	for p in root.allNodes_iter():
 		
 		p2 = p.parent()
-		for p3 in p.parents_iter():
+		for p3 in p.parents_iter(copy=copy):
 			
 			if p3 != p2: print p3,p2
 			assert(p3==p2)
@@ -2979,16 +2706,22 @@ s = "%d done" % count ; g.es(s) ; print s</t>
 	
 		if p2: print p2
 		assert(not p2)</t>
-<t tx="ekr.20040309101454.17">def testConsistencyOfFirstChildAndChildrenIter (self):
+<t tx="ekr.20040309101454.17">def testConsistencyOfFirstChildAndChildrenIterWithCopy(self):
+	self.doConsistencyOfFirstChildAndChildrenIter(true)
+	
+def testConsistencyOfFirstChildAndChildrenIter(self):
+	self.doConsistencyOfFirstChildAndChildrenIter(false)
+
+def doConsistencyOfFirstChildAndChildrenIter (self,copy):
 	
 	"""Test consistency of p.moveToFirstChild/Next and p.children_iter."""
 
 	root = self.c.rootPosition()
 
-	for p in root.allNodes_iter():
+	for p in root.allNodes_iter(copy=copy):
 		
 		p2 = p.firstChild()
-		for p3 in p.children_iter():
+		for p3 in p.children_iter(copy=copy):
 			
 			if p3 != p2: print p3,p2
 			assert(p3==p2)
@@ -2996,5 +2729,108 @@ s = "%d done" % count ; g.es(s) ; print s</t>
 
 	if p2: print p2
 	assert(not p2)</t>
+<t tx="ekr.20040309105731">def testComparisons (self):
+	
+	p = self.root
+	assert(p == p.copy())
+	assert(p != p.threadNext())</t>
+<t tx="ekr.20040309111054">import leoGlobals as g
+from leoGlobals import true,false
+import leoNodes
+
+c = g.top()
+position = leoNodes.position
+
+@others
+
+assert(g.sharedNodes)
+if g.sharedNodes:
+	current = pos = c.currentPosition()
+else: # no longer used.
+	current = c.currentVnode()
+	pos = position(current,[]) # default position.
+
+child1 = current.firstChild()
+child2 = child1.firstChild()
+
+if 1:
+	print '-'*10, "parents"
+	for porv in child2.parents_iter(): print porv
+if 1:
+	print '-'*10, "subtree"
+	for porv in pos.subtree_iter(): print porv
+if 1:
+	print '-'*10, "children"
+	for porv in child1.children_iter(): print porv
+if 1:
+	print '-'*10, "siblings"
+	for porv in pos.siblings_iter(): print porv
+if 1:
+	print '-'*10, "all nodes"
+	for porv in pos.allNodes_iter(): print porv</t>
+<t tx="ekr.20040309111102"></t>
+<t tx="ekr.20040309111102.1"></t>
+<t tx="ekr.20040309111102.2"></t>
+<t tx="ekr.20040309111102.3"></t>
+<t tx="ekr.20040309111102.4"></t>
+<t tx="ekr.20040309111102.5"></t>
+<t tx="ekr.20040309111102.6"></t>
+<t tx="ekr.20040309111102.7"></t>
+<t tx="ekr.20040309111102.8"></t>
+<t tx="ekr.20040309111102.9"></t>
+<t tx="ekr.20040309111102.10"></t>
+<t tx="ekr.20040309111232"></t>
+<t tx="ekr.20040310145919">import leoGlobals as g
+c = g.top()
+c.frame.body.colorizer.python_keywords.append("as")
+</t>
+<t tx="ekr.20040311090054">import leoGlobals as g
+import leoNodes
+
+c = g.top() ; root = c.rootPosition()
+
+for p in root.allNodes_iter():
+	print p.v.t.fileIndex</t>
+<t tx="ekr.20040311111734">@language python
+
+# Test of Leo 42 derived files.
+
+&lt;&lt; node one &gt;&gt;
+
+@others</t>
+<t tx="ekr.20040311111734.1">node one text</t>
+<t tx="ekr.20040311111734.2">node a text</t>
+<t tx="ekr.20040311111734.3">node b text</t>
+<t tx="ekr.20040311125054">import leoGlobals as g
+c = g.top()
+root = c.rootPosition()
+
+# NOTE: p.__getattr__ must be enabled for this test to work.
+
+for p in root.allNodes_iter():
+	assert(p.t == p.v.t)
+	
+print "done"</t>
+<t tx="ekr.20040312021734"></t>
+<t tx="ekr.20040312021734.1">import leoGlobals as g
+from leoGlobals import true,false
+
+c = g.top()
+
+count = 0
+for p in c.rootPosition().allNodes_iter():
+	count += 1
+	# Empty tnodeLists are not errors because they never get written to the .leo file.
+	v = p.v
+	if hasattr(v,"tnodeList") and len(v.tnodeList) &gt; 0 and not v.isAnyAtFileNode():
+		g.es("deleting tnodeList for " + `v`,color="blue")
+		delattr(v,"tnodeList")
+		c.setChanged(true)
+
+s = "%d nodes" % count
+print s ; g.es(s)</t>
+<t tx="ekr.20040312101720"></t>
+<t tx="ekr.20040312101720.1"></t>
+<t tx="ekr.20040312101853"></t>
 </tnodes>
 </leo_file>
