@@ -77,6 +77,10 @@ class undoer:
 		self.debug_print = false # true: enable print statements in debug code.
 		self.new_undo = true # true: enable new debug code.
 		
+		# Statistics comparing old and new ways (only if self.debug is on).
+		self.new_mem = 0
+		self.old_mem = 0
+		
 		# State ivars...
 	
 		self.redoMenuLabel = "Can't Redo" # Set here to indicate initial menu entry.
@@ -160,7 +164,8 @@ class undoer:
 				exec('u.%s = d["%s"]' % (ivar,ivar))
 			else:
 				exec('u.%s = None' % ivar)
-		if 1: # Recreate an "oldText" entry if necessary.
+	
+		if not u.new_undo: # Recreate an "oldText" entry if necessary.
 			if u.undoType == "Typing" and u.oldText == None:
 				assert(n > 0)
 				old_d = u.beads[n-1]
@@ -195,7 +200,7 @@ class undoer:
 					d[key] = keywords[key]
 		# Clear the "oldText" entry if the previous entry was a "Typing" entry.
 		# This optimization halves the space needed for Undo/Redo Typing.
-		if 1:
+		if not u.new_undo:
 			if u.undoType == "Typing" and n > 0:
 				old_d = u.beads[n-1]
 				if old_d["undoType"] == "Typing" and old_d["v"] == u.v:
@@ -395,9 +400,19 @@ class undoer:
 		#@-at
 		#@@c
 
-		if self.debug: # Save these for testing.  Don't save them in production code.
+		if self.new_undo:
+			if self.debug:
+				# Remember the complete text for comparisons...
+				u.oldText = oldText
+				u.newText = newText
+				# Compute statistics comparing old and new ways...
+				self.old_mem += len(oldText) + len(newText)
+				s1 = string.join(old_middle_lines,'\n')
+				s2 = string.join(new_middle_lines,'\n')
+				self.new_mem += len(s1) + len(s2)
+		else:
 			u.oldText = oldText
-			u.newText = newText # same as body text, except possibly for last newline.
+			u.newText = newText
 		
 		self.leading = leading
 		self.trailing = trailing
@@ -405,7 +420,6 @@ class undoer:
 		self.newMiddleLines = new_middle_lines
 		self.oldNewlines = old_newlines
 		self.newNewlines = new_newlines
-		
 		#@-body
 		#@-node:2::<< save undo text info >>
 

@@ -1508,8 +1508,12 @@ class LeoFrame:
 	
 	def OnClose(self,event=None):
 		
+		u = self.commands.undoer
+		if u and u.new_undo and u.debug:
+			print "old undo mem:",`u.old_mem`
+			print "new undo mem:",`u.new_mem`
+		
 		self.OnCloseLeoEvent() # Destroy the frame unless the user cancels.
-	
 	#@-body
 	#@-node:5::OnClose
 	#@+node:6::OnSave

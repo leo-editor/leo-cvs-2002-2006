@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="2635" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="2636" clone_windows="0"/>
 <globals body_outline_ratio="0.5">
-	<global_window_position top="3" left="304" height="28" width="69"/>
+	<global_window_position top="12" left="217" height="28" width="69"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences allow_rich_text="0">
@@ -3205,7 +3205,7 @@
 <v t="T897" a="C"><vh>frame.OpenWithFileName</vh>
 <v t="T898"><vh>&lt;&lt; make fileName the most recent file of frame &gt;&gt;</vh></v>
 </v>
-<v t="T1437"><vh>OnClose</vh></v>
+<v t="T1437" a="C"><vh>OnClose</vh></v>
 <v t="T1368" a="C"><vh>OnSave</vh></v>
 <v t="T1438"><vh>OnSaveAs</vh></v>
 <v t="T1439"><vh>OnSaveTo</vh></v>
@@ -4174,7 +4174,7 @@
 <v t="T897" a="C"><vh>frame.OpenWithFileName</vh>
 <v t="T898"><vh>&lt;&lt; make fileName the most recent file of frame &gt;&gt;</vh></v>
 </v>
-<v t="T1437"><vh>OnClose</vh></v>
+<v t="T1437" a="C"><vh>OnClose</vh></v>
 <v t="T1368" a="C"><vh>OnSave</vh></v>
 <v t="T1438"><vh>OnSaveAs</vh></v>
 <v t="T1439"><vh>OnSaveTo</vh></v>
@@ -4493,7 +4493,7 @@
 </v>
 </v>
 </v>
-<v t="T1834" a="V"><vh>(Incremental Syntax Coloring)</vh>
+<v t="T1834"><vh>(Incremental Syntax Coloring)</vh>
 <v><vh> Tests</vh>
 <v t="T1835"><vh>Dave Hein</vh>
 <v t="T1836"><vh>Test</vh></v>
@@ -4551,11 +4551,11 @@
 </v>
 <v t="T1844" a="C"><vh>colorize &amp; recolor_range</vh></v>
 <v t="T504" a="C"><vh>colorizeAnyLanguage &amp; allies</vh>
-<v t="T505" a="E"><vh>&lt;&lt; initialize ivars &amp; tags &gt;&gt;</vh>
+<v t="T505"><vh>&lt;&lt; initialize ivars &amp; tags &gt;&gt;</vh>
 <v t="T506"><vh>&lt;&lt; configure tags &gt;&gt;</vh></v>
 <v t="T507"><vh>&lt;&lt; configure language-specific settings &gt;&gt;</vh></v>
 </v>
-<v t="T508" a="E"><vh>&lt;&lt; incrementally color the text &gt;&gt;</vh>
+<v t="T508"><vh>&lt;&lt; incrementally color the text &gt;&gt;</vh>
 <v t="T509"><vh>&lt;&lt; compute leading, middle &amp; trailing  lines &gt;&gt;</vh></v>
 <v t="T510"><vh>&lt;&lt; initialize new states &gt;&gt;</vh></v>
 <v t="T511"><vh>&lt;&lt; colorize until the states match &gt;&gt;</vh></v>
@@ -5047,7 +5047,7 @@
 </v>
 </v>
 </v>
-<v t="T2037" a="E"><vh>@file leoColor.py</vh>
+<v t="T2037"><vh>@file leoColor.py</vh>
 <v t="T488" a="C"><vh>&lt;&lt; define colorizer keywords &gt;&gt;</vh>
 <v t="T489"><vh>&lt;&lt; leo keywords &gt;&gt;</vh></v>
 <v t="T490"><vh>&lt;&lt; c keywords &gt;&gt;</vh></v>
@@ -5063,7 +5063,7 @@
 <v t="T2038"><vh>&lt;&lt; define colorizer constants &gt;&gt;</vh></v>
 <v t="T2039"><vh>&lt;&lt; define colorizer functions &gt;&gt;</vh></v>
 <v t="T2040"><vh>&lt;&lt; define color panel data &gt;&gt;</vh></v>
-<v t="T2041" a="E"><vh>class colorizer</vh>
+<v t="T2041"><vh>class colorizer</vh>
 <v t="T1226" a="C"><vh>color.__init__</vh>
 <v t="T1227"><vh>&lt;&lt; ivars for communication between colorAllDirectives and its allies &gt;&gt;</vh></v>
 <v t="T1228"><vh>&lt;&lt; define dispatch dicts &gt;&gt;</vh></v>
@@ -5074,12 +5074,12 @@
 <v t="T2044"><vh>OnHyperLinkLeave</vh></v>
 </v>
 <v t="T1844" a="C"><vh>colorize &amp; recolor_range</vh></v>
-<v t="T504" a="CE"><vh>colorizeAnyLanguage &amp; allies</vh>
+<v t="T504" a="C"><vh>colorizeAnyLanguage &amp; allies</vh>
 <v t="T505"><vh>&lt;&lt; initialize ivars &amp; tags &gt;&gt;</vh>
 <v t="T506"><vh>&lt;&lt; configure tags &gt;&gt;</vh></v>
 <v t="T507"><vh>&lt;&lt; configure language-specific settings &gt;&gt;</vh></v>
 </v>
-<v t="T508" a="E"><vh>&lt;&lt; incrementally color the text &gt;&gt;</vh>
+<v t="T508"><vh>&lt;&lt; incrementally color the text &gt;&gt;</vh>
 <v t="T509"><vh>&lt;&lt; compute leading, middle &amp; trailing  lines &gt;&gt;</vh></v>
 <v t="T510"><vh>&lt;&lt; initialize new states &gt;&gt;</vh></v>
 <v t="T511"><vh>&lt;&lt; colorize until the states match &gt;&gt;</vh></v>
@@ -5152,7 +5152,7 @@
 <v t="T905" a="C"><vh>c.__init__</vh>
 <v t="T906"><vh>&lt;&lt; initialize ivars &gt;&gt;</vh></v>
 </v>
-<v t="T2058"><vh>c.__del__</vh></v>
+<v t="T2058" a="C"><vh>c.__del__</vh></v>
 <v t="T2059"><vh>c.__repr__</vh></v>
 <v t="T868" a="C"><vh>c.destroy</vh></v>
 <v t="T2060"><vh>c.setIvarsFromPrefs</vh></v>
@@ -5689,7 +5689,7 @@
 <v t="T897" a="C"><vh>frame.OpenWithFileName</vh>
 <v t="T898"><vh>&lt;&lt; make fileName the most recent file of frame &gt;&gt;</vh></v>
 </v>
-<v t="T1437"><vh>OnClose</vh></v>
+<v t="T1437" a="C"><vh>OnClose</vh></v>
 <v t="T1368" a="C"><vh>OnSave</vh></v>
 <v t="T1438"><vh>OnSaveAs</vh></v>
 <v t="T1439"><vh>OnSaveTo</vh></v>
@@ -6651,7 +6651,7 @@
 <v t="T1165" a="C"><vh>tree.findVnodeWithIconId</vh></v>
 <v t="T1162" a="C"><vh>tree.getFont,setFont,setFontFromConfig</vh></v>
 <v t="T1163" a="C"><vh>setLineHeight</vh></v>
-<v a="E"><vh>Drawing</vh>
+<v><vh>Drawing</vh>
 <v t="T2594"><vh>About drawing and updating</vh></v>
 <v t="T1213" a="C"><vh>beginUpdate</vh></v>
 <v t="T2595"><vh>drawBox</vh></v>
@@ -6796,7 +6796,7 @@
 <v t="T2609" a="C"><vh>State routines...</vh>
 <v t="T2610"><vh>canRedo &amp; canUndo</vh></v>
 <v t="T2611"><vh>enableMenuItems</vh></v>
-<v t="T2612"><vh>getBead, peekBead, setBead</vh></v>
+<v t="T2612" a="M"><vh>getBead, peekBead, setBead</vh></v>
 <v t="T2613"><vh>redoMenuName, undoMenuName</vh></v>
 <v t="T2614"><vh>setRedoType, setUndoType</vh></v>
 <v t="T2615"><vh>setUndoParams</vh></v>
@@ -6862,16 +6862,25 @@
 <v t="T755" a="C"><vh>&lt;&lt; redo typing cases &gt;&gt;</vh></v>
 </v>
 </v>
-<v t="T2630"><vh>(Undo typing)</vh>
-<v><vh>Unused code</vh>
-<v t="T2631" a="E"><vh>from undoRedoText</vh>
-<v t="T2632"><vh>&lt;&lt; Recreate entire old text &gt;&gt;</vh></v>
-<v t="T2633"><vh>&lt;&lt; Do consistency checks &gt;&gt;</vh></v>
+<v t="T2630" a="E"><vh>(Undo typing)</vh>
+<v t="T2631"><vh> test</vh></v>
+<v><vh> test2</vh></v>
+<v t="T2607" a="CV"><vh> undo.__init__</vh>
+<v t="T2608"><vh>clearUndoState &amp; clearIvars</vh></v>
 </v>
+<v t="T755" a="C"><vh>&lt;&lt; redo typing cases &gt;&gt;</vh></v>
+<v t="T746" a="C"><vh>&lt;&lt; undo typing cases &gt;&gt;</vh></v>
+<v t="T2619" a="C"><vh>setUndoTypes</vh></v>
+<v t="T2616" a="C"><vh>setUndoTypingParams</vh>
+<v t="T2617"><vh>&lt;&lt; compute leading, middle &amp; trailing  lines &gt;&gt;</vh></v>
+<v t="T2618"><vh>&lt;&lt; save undo text info &gt;&gt;</vh></v>
 </v>
-<v t="T2634"><vh> test</vh></v>
-<v><vh>test2</vh></v>
-<v t="T2635"><vh>Trailing newline problems</vh>
+<v><vh>Statistics</vh>
+<v t="T1437" a="C"><vh>OnClose</vh></v>
+<v t="T2058" a="C"><vh>c.__del__</vh></v>
+<v t="T2632"><vh>Test</vh></v>
+</v>
+<v t="T2633"><vh>Trailing newline problems</vh>
 <v t="T793" a="CM"><vh>tree.onBodyChanged, onBodyWillChange, OnBodyKey, idle_body_key</vh>
 <v t="T794"><vh>&lt;&lt; set removeTrailing &gt;&gt;</vh></v>
 <v t="T795"><vh>&lt;&lt; Do Auto indent &gt;&gt;</vh></v>
@@ -6882,23 +6891,19 @@
 <v t="T1586" a="C"><vh>setBodyStringOrPane &amp; setBodyTextOrPane</vh></v>
 <v t="T1202" a="C"><vh>setTnodeText</vh></v>
 </v>
-<v t="T779" a="C"><vh>tree.select</vh></v>
 <v t="T1156" a="C"><vh>tree.recolor, recolor_now, recolor_range</vh></v>
-<v t="T2616" a="C"><vh>setUndoTypingParams</vh>
-<v t="T2617"><vh>&lt;&lt; compute leading, middle &amp; trailing  lines &gt;&gt;</vh></v>
-<v t="T2618" a="E"><vh>&lt;&lt; save undo text info &gt;&gt;</vh></v>
-</v>
-<v t="T2623" a="CE"><vh>undoRedoText</vh>
+<v t="T779" a="C"><vh>tree.select</vh></v>
+<v t="T2623" a="C"><vh>undoRedoText</vh>
 <v t="T2624" a="M"><vh>&lt;&lt; Incrementally update the Tk.Text widget &gt;&gt;</vh></v>
 <v t="T2625"><vh>&lt;&lt; Compute the result using v's body text &gt;&gt;</vh></v>
 <v t="T2626"><vh>&lt;&lt; Compare the result with the expected result &gt;&gt;</vh></v>
 </v>
-<v t="T2607" a="C"><vh>undo.__init__</vh>
-<v t="T2608"><vh>clearUndoState &amp; clearIvars</vh></v>
+<v><vh>Unused code</vh>
+<v t="T2634"><vh>from undoRedoText</vh>
+<v t="T2635"><vh>&lt;&lt; Recreate entire old text &gt;&gt;</vh></v>
+<v t="T2636"><vh>&lt;&lt; Do consistency checks &gt;&gt;</vh></v>
 </v>
-<v t="T2619" a="C"><vh>setUndoTypes</vh></v>
-<v t="T755" a="C"><vh>&lt;&lt; redo typing cases &gt;&gt;</vh></v>
-<v t="T746" a="C"><vh>&lt;&lt; undo typing cases &gt;&gt;</vh></v>
+</v>
 </v>
 </vnodes>
 <tnodes>
@@ -21646,12 +21651,12 @@ def setTnodeText (self,s):
 		xml_encoding = app().config.xml_version_string
 		s = s.encode(xml_encoding)
 
-	if len(old_s) != len(s):
-		trace("old_s != s")
+	if 0:
+		if len(old_s) != len(s):
+			trace("old_s != s")
 		
 	assert(type(s)==types.StringType)
 	self.bodyString = s
-
 </t>
 <t tx="T1203">def setSelection (self, start, length):
 
@@ -24878,8 +24883,12 @@ except:
 
 def OnClose(self,event=None):
 	
-	self.OnCloseLeoEvent() # Destroy the frame unless the user cancels.
-</t>
+	u = self.commands.undoer
+	if u and u.new_undo and u.debug:
+		print "old undo mem:",`u.old_mem`
+		print "new undo mem:",`u.new_mem`
+	
+	self.OnCloseLeoEvent() # Destroy the frame unless the user cancels.</t>
 <t tx="T1438">def OnSaveAs(self,event=None):
 
 	# Make sure we never pass None to the ctor.
@@ -41440,6 +41449,10 @@ optionalIvars = (
 	self.debug_print = false # true: enable print statements in debug code.
 	self.new_undo = true # true: enable new debug code.
 	
+	# Statistics comparing old and new ways (only if self.debug is on).
+	self.new_mem = 0
+	self.old_mem = 0
+	
 	# State ivars...
 
 	self.redoMenuLabel = "Can't Redo" # Set here to indicate initial menu entry.
@@ -41503,7 +41516,8 @@ def canUndo (self):
 			exec('u.%s = d["%s"]' % (ivar,ivar))
 		else:
 			exec('u.%s = None' % ivar)
-	if 1: # Recreate an "oldText" entry if necessary.
+
+	if not u.new_undo: # Recreate an "oldText" entry if necessary.
 		if u.undoType == "Typing" and u.oldText == None:
 			assert(n &gt; 0)
 			old_d = u.beads[n-1]
@@ -41538,7 +41552,7 @@ def setBead (self,n,keywords=None):
 				d[key] = keywords[key]
 	# Clear the "oldText" entry if the previous entry was a "Typing" entry.
 	# This optimization halves the space needed for Undo/Redo Typing.
-	if 1:
+	if not u.new_undo:
 		if u.undoType == "Typing" and n &gt; 0:
 			old_d = u.beads[n-1]
 			if old_d["undoType"] == "Typing" and old_d["v"] == u.v:
@@ -41705,17 +41719,26 @@ Redo: Given oldText, recreate oldText.
 The "given" texts for the undo and redo routines are simply v.bodyString().
 @c
 
-if self.debug: # Save these for testing.  Don't save them in production code.
+if self.new_undo:
+	if self.debug:
+		# Remember the complete text for comparisons...
+		u.oldText = oldText
+		u.newText = newText
+		# Compute statistics comparing old and new ways...
+		self.old_mem += len(oldText) + len(newText)
+		s1 = string.join(old_middle_lines,'\n')
+		s2 = string.join(new_middle_lines,'\n')
+		self.new_mem += len(s1) + len(s2)
+else:
 	u.oldText = oldText
-	u.newText = newText # same as body text, except possibly for last newline.
+	u.newText = newText
 
 self.leading = leading
 self.trailing = trailing
 self.oldMiddleLines = old_middle_lines
 self.newMiddleLines = new_middle_lines
 self.oldNewlines = old_newlines
-self.newNewlines = new_newlines
-</t>
+self.newNewlines = new_newlines</t>
 <t tx="T2619">def setUndoTypes (self):
 	
 	u = self
@@ -41901,18 +41924,47 @@ if self.debug_print:
 		c.setChanged(true)
 	c.endUpdate()</t>
 <t tx="T2629">@ignore</t>
-<t tx="T2630">@ignore
+<t tx="T2630">@ignore</t>
+<t tx="T2631">a
+b
+c
+d
+e</t>
+<t tx="T2632"># Handle text undo and redo.
+# The terminology is for undo: converts _new_ text into _old_ text.
+# Some more tests of statistics.
+# And some more.
 
-@ To do:
+def ----- Testing----- (self, v,
+	leading,trailing, # Number of matching leading &amp; trailing lines.
+	oldMidLines,newMidLines, # Lists of unmatched lines.
+	oldNewlines,newNewlines, # Number of trailing newlines.
+	tag="undo", # "undo" or "redo".
+	expectedStart=None,expectedResult=None):
+		# For debugging. The expected starting &amp; result text.
+	
+	c = self.commands
+	assert(v == c.currentVnode())
 
-- Restore the selection range.
-- Restore the top spot.</t>
-<t tx="T2631">if self.debug and expectedStart and expectedResult: # Consistency checks.
+	if self.new_undo:
+		&lt;&lt; Incrementally update the Tk.Text widget &gt;&gt;
+		&lt;&lt; Compute the result using v's body text &gt;&gt;
+		&lt;&lt; Compare the result with the expected result &gt;&gt;
+		v.t.setTnodeText(result)
+		if 1: # A bit of protection in case the trailing newline doesn't match.
+			c.tree.recolor_range(v,leading,trailing)
+		else:
+			c.tree.recolor(v,incremental=true)
+
+	else: # Rewrite the body pane and do a full recolor.
+		v.setBodyStringOrPane(expectedResult)</t>
+<t tx="T2633">@ Trailing newlines must be handled with _extreme_ care.</t>
+<t tx="T2634">if self.debug and expectedStart and expectedResult: # Consistency checks.
 		&lt;&lt; Do consistency checks &gt;&gt;
 		&lt;&lt; Recreate entire old text &gt;&gt;
 
 </t>
-<t tx="T2632">if 0:
+<t tx="T2635">if 0:
 	# Start with the new leading lines.
 	newText = v.bodyString()
 	new_lines = newText.split('\n')
@@ -41936,7 +41988,7 @@ if self.debug_print:
 		print "lead,trail",`leading`,`trailing`
 		print "oldMidLines:",`oldMidLines`
 </t>
-<t tx="T2633">if 0: # self.debug_print:
+<t tx="T2636">if 0: # self.debug_print:
 
 	if v.bodyString() != expectedStart:
 		print "----- expectedStart != v.bodyString() in", tag
@@ -41950,11 +42002,5 @@ if self.debug_print:
 		print "----- expectedStart != Tk.Text in", tag
 		print "body.get:     ", `s`
 		print "expectedStart:", `expectedStart`</t>
-<t tx="T2634">a
-b
-c
-d
-e</t>
-<t tx="T2635">@ Trailing newlines must be handled with _extreme_ care.</t>
 </tnodes>
 </leo_file>
