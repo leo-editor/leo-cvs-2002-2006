@@ -11532,7 +11532,6 @@ self.canvas.tag_lower(id)
 def dehoist(self):
 
     c = self ; p = c.currentPosition()
-    g.trace(p)
     if p and c.canDehoist():
         c.undoer.setUndoParams("De-Hoist",p)
         h,expanded = c.hoistStack.pop()
@@ -23187,8 +23186,6 @@ def readAll(self,root,partialFlag=False):
 def norefWrite(self,root):
 
     at = self
-    
-    g.trace(root)
 
     c = at.c ; at.root = root
     at.errors = 0
@@ -23318,7 +23315,6 @@ def putOpenNodeSentinel(self,p,inAtAll=False,inAtOthers=False,middle=False):
 def dehoist(self):
 
     c = self ; p = c.currentPosition()
-    g.trace(p)
     if p and c.canDehoist():
         c.undoer.setUndoParams("De-Hoist",p)
         h,expanded = c.hoistStack.pop()
@@ -29855,8 +29851,6 @@ def writeException(self,p):
 def norefWrite(self,root):
 
     at = self
-    
-    g.trace(root)
 
     c = at.c ; at.root = root
     at.errors = 0
@@ -40789,18 +40783,22 @@ def selectAllText (self):
 #@nonl
 #@-node:ekr.20031218072017.4023:selectAllText
 #@-node:EKR.20040611081747.2:(Fixed bug in delete command)
-#@+node:EKR.20040612091306:Removed from leoGlobals import true,false
-#@-node:EKR.20040612091306:Removed from leoGlobals import true,false
-#@+node:EKR.20040610200340:Replaced true,false with True,False
-#@-node:EKR.20040610200340:Replaced true,false with True,False
-#@+node:EKR.20040612080920:Changed Tkinter to Tk
-The code uniformly imports Tkinter as:
-	
-import Tkinter as Tk.
+#@+node:EKR.20040612112111:Mass code changes to test.leo, leoPy.leo and leoPlugins.leo
+@nocolor
 
-Also removed all assignments: Tk = Tkinter
+What I did:
+    
+- Removed from leoGlobals import true,false
+- Replaced true,false with True,False
+- Properly import Tkinter as follows:
+
+try: import Tkinter as Tk
+except ImportError: Tk = None
+
+- Removed all assignments: Tk = Tkinter
+- Converted leading tabs to spaces
 #@nonl
-#@-node:EKR.20040612080920:Changed Tkinter to Tk
+#@-node:EKR.20040612112111:Mass code changes to test.leo, leoPy.leo and leoPlugins.leo
 #@-node:EKR.20040610102329:In 4.2 a4
 #@-node:EKR.20040517090500:May 2004
 #@-node:ekr.20040107064101.1:4.2 Projects

@@ -2696,7 +2696,6 @@ class baseCommands:
     def dehoist(self):
     
         c = self ; p = c.currentPosition()
-        g.trace(p)
         if p and c.canDehoist():
             c.undoer.setUndoParams("De-Hoist",p)
             h,expanded = c.hoistStack.pop()

@@ -4777,8 +4777,6 @@ class baseNewDerivedFile(oldDerivedFile):
     def norefWrite(self,root):
     
         at = self
-        
-        g.trace(root)
     
         c = at.c ; at.root = root
         at.errors = 0
