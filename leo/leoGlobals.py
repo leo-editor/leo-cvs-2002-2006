@@ -1324,7 +1324,8 @@ if 0: # Test code: may be safely and conveniently executed in the child node.
 #@+at
 #  This prepares string s to be a valid file name:
 # 
-# - substitute '_' for forbidden characters.
+# - substitute '_' whitespace and characters used special path characters.
+# - eliminate all other non-alphabetic characters.
 # - strip leading and trailing whitespace.
 # - return at most 128 characters.
 
@@ -1332,15 +1333,22 @@ if 0: # Test code: may be safely and conveniently executed in the child node.
 #@@c
 
 def sanitize_filename(s):
-	
-	import re
-	s = s.strip()
-	ws = re.compile('[ \t]')
-	bad_chars = re.compile('[()\\/&<>\'"`@|?*:]') # 1/7/03 Rich Ries: make colon a bad char.
-	s = bad_chars.sub('',s)
-	s = s.strip()
-	s = ws.sub('_',s)
-	return s[:128]
+
+	result = ""
+	for ch in s.strip():
+		if ch in string.letters:
+			result += ch
+		elif ch in string.whitespace: # Translate whitespace.
+			result += '_'
+		elif ch in ('.','\\','/',':'): # Translate special path characters.
+			result += '_'
+	while 1:
+		n = len(result)
+		result = result.replace('__','_')
+		if len(result) == n:
+			break
+	result = result.strip()
+	return result [:128]
 #@-body
 #@-node:8::sanitize_filename
 #@+node:9::shortFileName
