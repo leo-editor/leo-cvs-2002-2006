@@ -974,7 +974,7 @@ class baseCommands:
             multiple=True)
     
         if names:
-            c.importCommands.importFlattenedOutline(paths)
+            c.importCommands.importFlattenedOutline(names)
     #@-node:ekr.20031218072017.2855:importFlattenedOutline
     #@+node:ekr.20031218072017.2856:importNowebFiles
     def importNowebFiles (self):
