@@ -7,9 +7,11 @@ A plugin to manage Leo's Plugins:
 - Shows plugin details.
 - Checks for conflicting hook handlers.
 - Checks for and updates plugins from the web.
+
+This plugin does not work with Python 2.2.x because it imports Sets.
 """
 
-__version__ = "0.5"
+__version__ = "0.7"
 __plugin_name__ = "Plugin Manager"
 __plugin_priority__ = 10000
 __plugin_requires__ = ["plugin_menu"]
@@ -39,28 +41,39 @@ __plugin_requires__ = ["plugin_menu"]
 #     - Now always detects a file as a plugin (previously only did this if it 
 # imported leoPlugins)
 #     - Fixed incorrect detection of handlers if single quotes used
-#     - Fixed incorrect detection of multiple handlers in a single line
+#     - Fixed incorrect detection of multiple handlers in a single line.
+# 0.7 EKR:
+#     - Grrrrrrrrrr.  The Sets module is not defined in Python 2.2.
+#       This must be replaced.  This is too important a plugin for it not to 
+# work everywhere.
+#     - Added better import tests, and message when import fails.
+#     - Added an init method, although a simple raise would also work.
 #@-at
 #@-node:pap.20041006184225.2:<< version history >>
 #@nl
 #@<< imports >>
 #@+node:pap.20041006184225.3:<< imports >>
-import leoGlobals as g
-import leoPlugins
-
-import os
-import sys
-
-Pmw = g.importExtension("Pmw",    pluginName=__name__,verbose=True)
-Tk  = g.importExtension('Tkinter',pluginName=__name__,verbose=True)
-
-import fnmatch
-import re
-import sha
-import urllib
-import threading
-import webbrowser
-import sets
+try:
+    import leoGlobals as g
+    import leoPlugins
+    Pmw = g.importExtension("Pmw",    pluginName=__name__,verbose=True)
+    Tk  = g.importExtension('Tkinter',pluginName=__name__,verbose=True)
+    import fnmatch
+    import os
+    import re
+    import sha
+    import sets
+    import sys
+    import urllib
+    import threading
+    import webbrowser
+    import traceback
+    ok = True
+except Exception:
+    import sys
+    s = 'plugins_manager.py: %s: %s' % (sys.exc_type,sys.exc_value)
+    print s ; g.es(s,color='blue')
+    ok = False
 #@nonl
 #@-node:pap.20041006184225.3:<< imports >>
 #@nl
@@ -93,11 +106,22 @@ Done
 USE_PRIORITY = False # True: show non-functional priority field.
 
 #@+others
+#@+node:ekr.20050213122944:init
+def init():
+    
+    # Ok for unit testing: adds menu.
+    if ok:
+        g.plugin_signon(__name__)
+
+    return ok
+#@nonl
+#@-node:ekr.20050213122944:init
 #@+node:ekr.20041231134702:topLevelMenu
 def topLevelMenu():
     # This is called from plugins_menu plugin.
     # It should only be defined if the extension has been registered.
     """Manage the plugins"""
+    g.trace()
     dlg = ManagerDialog()
 #@nonl
 #@-node:ekr.20041231134702:topLevelMenu
@@ -1432,9 +1456,6 @@ class EnableManager:
 #@-node:pap.20041006232717:class EnableManager
 #@-node:pap.20041009140132.1:Implementation
 #@-others
-
-if Tk and Pmw: # Ok for unit testing: adds menu.
-    g.plugin_signon(__name__)
 #@nonl
 #@-node:pap.20041006184225:@thin plugin_manager.py
 #@-leo

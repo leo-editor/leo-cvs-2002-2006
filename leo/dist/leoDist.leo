@@ -3,7 +3,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="1001" clone_windows="0"/>
 <globals body_outline_ratio="0.428571428571">
-	<global_window_position top="61" left="195" height="833" width="953"/>
+	<global_window_position top="75" left="315" height="833" width="953"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -77,6 +77,12 @@
 </v>
 </v>
 </v>
+<v t="ekr.20050116151024"><vh>To do (someday)</vh>
+<v t="ekr.20050117031116"><vh>Make sure nsi scripts are in synch with manifest</vh></v>
+<v t="ekr.20050116150710.90"><vh>Handle installation with Python 2.4 installed for Current User only</vh></v>
+<v t="ekr.20050118125236"><vh>Write a script to make sure .nsi and main install scripts create the same files</vh></v>
+<v t="ekr.20050119191034"><vh>Create manifest.in from manifest-nn.in</vh></v>
+</v>
 <v t="EKR.20040519080201.1"><vh>Distribution checklist</vh>
 <v t="EKR.20040519080201.2" tnodeList="EKR.20040519080201.2"><vh>@file-nosent c:\prog\leoCVS\.pycheckrc</vh></v>
 <v t="EKR.20040519080201.3"><vh>@url http://www.python.org/pypi?:action=submit_form</vh></v>
@@ -113,7 +119,7 @@
 <v t="ekr.20040701193853"><vh>blacklist</vh></v>
 <v t="ekr.20040701193853.1"><vh>defaults</vh></v>
 <v t="ekr.20040701193853.2"><vh>max...</vh></v>
-<v t="ekr.20040701193853.3" a="M"><vh>suppressions</vh></v>
+<v t="ekr.20040701193853.3"><vh>suppressions</vh></v>
 <v t="ekr.20040701193853.4"><vh>unusedNames</vh></v>
 <v t="ekr.20040701193853.5"><vh>variablesToIgnore</vh></v>
 </v>
@@ -121,7 +127,7 @@
 <v t="ekr.20040701160830.1"><vh>names for use in suppressions</vh></v>
 <v t="ekr.20040629180414"><vh>pycheckrc (reference)</vh></v>
 </v>
-<v t="ekr.20050118095021" a="E"><vh>Leo 4.3 installer</vh>
+<v t="ekr.20050118095021"><vh>Leo 4.3 installer</vh>
 <v t="ekr.20050118124408"><vh>&lt;&lt; 4.3 nsi installer version &gt;&gt;</vh></v>
 <v t="ekr.20050118092706.4"><vh>&lt;&lt; Settings &gt;&gt;</vh></v>
 <v t="ekr.20050118103207"><vh>Keeping installer/uninstallers in synch</vh>
@@ -167,11 +173,9 @@
 <v t="ekr.20050118103447.1"><vh>&lt;&lt; uninstall top-level files &gt;&gt;</vh></v>
 </v>
 </v>
-<v t="ekr.20050118092706" a="E"
-marks="ekr.20050118092706.3,ekr.20050118092706.5,ekr.20050118092706.6,ekr.20050118092706.10,ekr.20050118092706.11,ekr.20050118092706.13,ekr.20050118092706.22,"
-expanded="ekr.20050118092706.13,ekr.20050118092706.22,"><vh>@thin leo-4-3.nsi</vh></v>
+<v t="ekr.20050118092706"><vh>@thin leo-4-3.nsi</vh></v>
 </v>
-<v t="ekr.20050118113631" a="E"><vh>Main distribution script</vh>
+<v t="ekr.20050118113631" a="ETV"><vh>Main distribution script</vh>
 <v t="EKR.20040519082027.28"><vh>&lt;&lt; setup info for createLeoDist.py &gt;&gt;</vh></v>
 <v t="EKR.20040519090846.10"><vh>@silentfile ../manifest.in</vh></v>
 <v t="ekr.20050117032444"><vh>@button Create Leo-4.3.zip</vh>
@@ -184,13 +188,6 @@ expanded="ekr.20050118092706.13,ekr.20050118092706.22,"><vh>@thin leo-4-3.nsi</v
 <v t="ekr.20050117032444.3"><vh>&lt;&lt; remove temp createLeoDist.py &gt;&gt;</vh></v>
 </v>
 </v>
-<v t="ekr.20050116151024"><vh>To do (someday)</vh>
-<v t="ekr.20050117031116"><vh>Make sure nsi scripts are in synch with manifest</vh></v>
-<v t="ekr.20050116150710.90"><vh>Handle installation with Python 2.4 installed for Current User only</vh></v>
-<v t="ekr.20050118125236" a="M"><vh>Write a script to make sure .nsi and main install scripts create the same files</vh></v>
-<v t="ekr.20050119191034"><vh>Create manifest.in from manifest-nn.in</vh></v>
-</v>
-<v t="ekr.20050213082753"><vh>print path</vh></v>
 </vnodes>
 <tnodes>
 <t tx="EKR.20040519080201.1">@color
@@ -3491,7 +3488,7 @@ File "leoDist.leo"
 File "leo-4-3.nsi"
 
 File ".pycheckrc"</t>
-<t tx="ekr.20050118104149.5">Delete "$INSTDIR\dist\createLeoDist.py"
+<t tx="ekr.20050118104149.5">Delete "$INSTDIR\dist\createLeoDist.p*"
 
 Delete "$INSTDIR\dist\leoDist.leo"
 
@@ -3544,8 +3541,7 @@ Delete "$INSTDIR\plugins\leoPlugins.leo"
 Delete "$INSTDIR\plugins\*.txt"
 Delete "$INSTDIR\plugins\*.ini"
 
-Delete "$INSTDIR\plugins\*.py"
-Delete "$INSTDIR\plugins\*.pyc"
+Delete "$INSTDIR\plugins\*.p*"
 </t>
 <t tx="ekr.20050118104901.9"></t>
 <t tx="ekr.20050118104901.10">File "..\src\leoProjects.txt"
@@ -3559,18 +3555,16 @@ File "..\src\leo*.py"
 Delete "$INSTDIR\src\LeoPy.leo"
 Delete "$INSTDIR\src\oldLeoProjects.leo"
 
-Delete "$INSTDIR\src\__init__.py"
-Delete "$INSTDIR\src\leo*.py"
+Delete "$INSTDIR\src\__init__.p*"
 
-Delete "$INSTDIR\src\leo*.pyc"</t>
+Delete "$INSTDIR\src\leo*.p*"</t>
 <t tx="ekr.20050118104901.12"></t>
 <t tx="ekr.20050118104901.13">File "..\scripts\leoScripts.txt"
 
 File "..\scripts\*.py"</t>
 <t tx="ekr.20050118104901.14">Delete "$INSTDIR\scripts\leoScripts.txt"
 
-Delete "$INSTDIR\scripts\*.py"
-Delete "$INSTDIR\scripts\*.pyc"</t>
+Delete "$INSTDIR\scripts\*.p*"</t>
 <t tx="ekr.20050118113631"></t>
 <t tx="ekr.20050118122404">File "..\extensions\__init__.py"
 File "..\extensions\path.py"
@@ -3601,12 +3595,13 @@ File "..\extensions\Pmw\Pmw_1_2\tests\*.*"</t>
 <t tx="ekr.20050118122404.1">File "..\test\__init__.py"
 File "..\test\test.leo"</t>
 <t tx="ekr.20050118122740"></t>
-<t tx="ekr.20050118122740.1">Delete "$INSTDIR\extensions\__init__.py"
-Delete "$INSTDIR\extensions\path.py"
+<t tx="ekr.20050118122740.1">Delete "$INSTDIR\extensions\__init__.p*"
 
-Delete "$INSTDIR\extensions\Pmw\__init__.py"
+Delete "$INSTDIR\extensions\path.p*"
 
-Delete "$INSTDIR\extensions\Pmw\Pmw_1_2\__init__.py"
+Delete "$INSTDIR\extensions\Pmw\__init__.p*"
+
+Delete "$INSTDIR\extensions\Pmw\Pmw_1_2\__init__.p*"
 
 Delete "$INSTDIR\extensions\Pmw\Pmw_1_2\bin\*.*"
 Delete "$INSTDIR\extensions\Pmw\Pmw_1_2\contrib\*.*"
@@ -3882,8 +3877,5 @@ I solved two problems by brute force:
         # we may not know, or ref could be something funky [e for e].method()
         pass
 </t>
-<t tx="ekr.20050213082753">import sys
-for s in sys.path:
-    print s</t>
 </tnodes>
 </leo_file>

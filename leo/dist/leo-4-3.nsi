@@ -506,7 +506,7 @@ Section Uninstall
   ;@nl
   ;@  << uninstall dist files >>
   ;@+node:ekr.20050118104149.5:<< uninstall dist files >>
-  Delete "$INSTDIR\dist\createLeoDist.py"
+  Delete "$INSTDIR\dist\createLeoDist.p*"
   
   Delete "$INSTDIR\dist\leoDist.leo"
   
@@ -537,12 +537,13 @@ Section Uninstall
   ;@nl
   ;@  << uninstall extensions files >>
   ;@+node:ekr.20050118122740.1:<< uninstall extensions files >>
-  Delete "$INSTDIR\extensions\__init__.py"
-  Delete "$INSTDIR\extensions\path.py"
+  Delete "$INSTDIR\extensions\__init__.p*"
   
-  Delete "$INSTDIR\extensions\Pmw\__init__.py"
+  Delete "$INSTDIR\extensions\path.p*"
   
-  Delete "$INSTDIR\extensions\Pmw\Pmw_1_2\__init__.py"
+  Delete "$INSTDIR\extensions\Pmw\__init__.p*"
+  
+  Delete "$INSTDIR\extensions\Pmw\Pmw_1_2\__init__.p*"
   
   Delete "$INSTDIR\extensions\Pmw\Pmw_1_2\bin\*.*"
   Delete "$INSTDIR\extensions\Pmw\Pmw_1_2\contrib\*.*"
@@ -567,16 +568,14 @@ Section Uninstall
   Delete "$INSTDIR\plugins\*.txt"
   Delete "$INSTDIR\plugins\*.ini"
   
-  Delete "$INSTDIR\plugins\*.py"
-  Delete "$INSTDIR\plugins\*.pyc"
+  Delete "$INSTDIR\plugins\*.p*"
   ;@-node:ekr.20050118104901.8:<< uninstall plugins >>
   ;@nl
   ;@  << uninstall scripts >>
   ;@+node:ekr.20050118104901.14:<< uninstall scripts >>
   Delete "$INSTDIR\scripts\leoScripts.txt"
   
-  Delete "$INSTDIR\scripts\*.py"
-  Delete "$INSTDIR\scripts\*.pyc"
+  Delete "$INSTDIR\scripts\*.p*"
   ;@nonl
   ;@-node:ekr.20050118104901.14:<< uninstall scripts >>
   ;@nl
@@ -586,10 +585,9 @@ Section Uninstall
   Delete "$INSTDIR\src\LeoPy.leo"
   Delete "$INSTDIR\src\oldLeoProjects.leo"
   
-  Delete "$INSTDIR\src\__init__.py"
-  Delete "$INSTDIR\src\leo*.py"
+  Delete "$INSTDIR\src\__init__.p*"
   
-  Delete "$INSTDIR\src\leo*.pyc"
+  Delete "$INSTDIR\src\leo*.p*"
   ;@nonl
   ;@-node:ekr.20050118104901.11:<< uninstall src files >>
   ;@nl

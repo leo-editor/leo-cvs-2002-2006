@@ -16392,7 +16392,7 @@ massage the data to my heart's content as I learn more about it and
 decide to use it in different ways for different purposes.  It's the 
 difference between the pick axe and the steam shovel for me.
 </t>
-<t tx="ekr.20050126100405">Leo 4.3 alpha 2                 February 12, 2005
+<t tx="ekr.20050126100405">Leo 4.3 alpha 2                 February 14, 2005
 
 Leo 4.3 is the culmination of more than four months of work. This alpha 2
 release corrects various bugs and distribution problems.

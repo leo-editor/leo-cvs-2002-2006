@@ -21134,13 +21134,7 @@ This is important, the settings node found by findSettingsPosition may be a clon
 #@nonl
 #@-node:ekr.20050122104754.1:What I did
 #@+node:ekr.20041122162610:@recent_files
-C:\Documents and Settings\Ed\My Documents\ekr.leo
-C:\prog\leoCVS\leo\test\test.leo
-c:\prog\leoCVS\leo\doc\LeoDocs.leo
 C:\prog\leoCVS\leo\src\LeoPy.leo
-C:\prog\leoCVS\leo\config\leoSettings.leo
-c:\prog\leoCVS\leo\plugins\leoPlugins.leo
-C:\prog\Leo Stuff\oldLeoFiles.leo
 #@nonl
 #@-node:ekr.20041122162610:@recent_files
 #@+node:ekr.20040305223522:p.setBodyStringOrPane & p.setBodyTextOrPane
@@ -26291,14 +26285,13 @@ def loadOnePlugin (moduleOrFileName, verbose=False):
             # Guess that the module was loaded correctly.
             loadedModules[moduleName] = result
         loadingModuleNameStack.pop()
-    
-    if verbose:
-        if result is None:
-            s = 'can not load %s plugin' % moduleName
-            print s ; g.es(s,color="blue")
-        else:
-            s = 'loaded %s plugin' % moduleName
-            print s ; g.es(s,color="blue")
+        
+    if result is None:
+        s = 'can not load enabled %s plugin' % moduleName
+        print s ; g.es(s,color="red")
+    elif verbose:
+        s = 'loaded %s plugin' % moduleName
+        print s ; g.es(s,color="blue")
     
     return result
 #@-node:ekr.20041113113140:loadOnePlugin
@@ -31801,14 +31794,13 @@ def loadOnePlugin (moduleOrFileName, verbose=False):
             # Guess that the module was loaded correctly.
             loadedModules[moduleName] = result
         loadingModuleNameStack.pop()
-    
-    if verbose:
-        if result is None:
-            s = 'can not load %s plugin' % moduleName
-            print s ; g.es(s,color="blue")
-        else:
-            s = 'loaded %s plugin' % moduleName
-            print s ; g.es(s,color="blue")
+        
+    if result is None:
+        s = 'can not load enabled %s plugin' % moduleName
+        print s ; g.es(s,color="red")
+    elif verbose:
+        s = 'loaded %s plugin' % moduleName
+        print s ; g.es(s,color="blue")
     
     return result
 #@-node:ekr.20041113113140:loadOnePlugin
@@ -32229,6 +32221,93 @@ def test_g_removeExtraLws():
 #@-node:ekr.20050211120837:test_g_removeExtraLws
 #@-node:ekr.20050211120242.2:g.removeExtraLws & tests
 #@-node:ekr.20050211124103:(Several scripting improvements)
+#@+node:ekr.20050213112731:(Give better error message when loading an enabled plugin fails)
+#@+node:ekr.20041113113140:loadOnePlugin
+def loadOnePlugin (moduleOrFileName, verbose=False):
+    
+    global loadedModules,loadingModuleNameStack
+    
+    if moduleOrFileName [-3:] == ".py":
+        moduleName = moduleOrFileName [:-3]
+    else:
+        moduleName = moduleOrFileName
+    moduleName = g.shortFileName(moduleName)
+
+    if isLoaded(moduleName):
+        module = loadedModules.get(moduleName)
+        if verbose:
+            s = 'plugin %s already loaded' % moduleName
+            print s ; g.es(s,color="blue")
+        return module
+
+    plugins_path = g.os_path_join(g.app.loadDir,"..","plugins")
+    moduleName = g.toUnicode(moduleName,g.app.tkEncoding)
+    
+    # This import will typically result in calls to registerHandler.
+    # if the plugin does _not_ use the init top-level function.
+    loadingModuleNameStack.append(moduleName)
+    result = g.importFromPath(moduleName,plugins_path)
+    loadingModuleNameStack.pop()
+
+    if result:
+        loadingModuleNameStack.append(moduleName)
+        try:
+            # Indicate success only if init_result is True.
+            init_result = result.init()
+            # g.trace('%s.init() returns %s' % (moduleName,init_result))
+            if init_result:
+                loadedModules[moduleName] = result
+            else:
+                result = None
+        except AttributeError:
+            # No top-level init function.
+            # Guess that the module was loaded correctly.
+            loadedModules[moduleName] = result
+        loadingModuleNameStack.pop()
+        
+    if result is None:
+        s = 'can not load enabled %s plugin' % moduleName
+        print s ; g.es(s,color="red")
+    elif verbose:
+        s = 'loaded %s plugin' % moduleName
+        print s ; g.es(s,color="blue")
+    
+    return result
+#@-node:ekr.20041113113140:loadOnePlugin
+#@+node:ekr.20031218072017.2278:g.importFromPath
+def importFromPath (name,path,pluginName=None,verbose=False):
+    
+    fn = g.shortFileName(name)
+    moduleName,ext = g.os_path_splitext(fn)
+    path = g.os_path_normpath(path)
+    path = g.toEncodedString(path,app.tkEncoding)
+    
+    # g.trace(verbose,name,pluginName)
+    module = sys.modules.get(moduleName)
+    if not module:
+        try:
+            theFile = None
+            import imp
+            try:
+                data = imp.find_module(moduleName,[path]) # This can open the file.
+                theFile,pathname,description = data
+                module = imp.load_module(moduleName,theFile,pathname,description)
+            except ImportError:
+                pass
+            except Exception:
+                g.es("unexpected exception in g.importFromPath",color='blue')
+                g.es_exception()
+        # Put no return statements before here!
+        finally: 
+            if theFile: theFile.close()
+        
+    if not module:
+        g.cantImport(moduleName,pluginName=pluginName,verbose=verbose)
+
+    return module
+#@nonl
+#@-node:ekr.20031218072017.2278:g.importFromPath
+#@-node:ekr.20050213112731:(Give better error message when loading an enabled plugin fails)
 #@-node:ekr.20050125203059.2:New features...
 #@-node:ekr.20050125203059:4.3 a2 projects
 #@-all

@@ -34,10 +34,10 @@
 <v t="ekr.20041119035704.3"><vh>@type type-name: base-type = [list of valid values]</vh></v>
 <v t="ekr.20041120155431.2"><vh>@type type-name: script: script-name</vh></v>
 </v>
-<v t="ekr.20041119034357.1" a="E"><vh>@settings</vh>
-<v t="ekr.20041119034357.3" a="E"><vh>@page General configuration options</vh>
+<v t="ekr.20041119034357.1" a="ETV"><vh>@settings</vh>
+<v t="ekr.20041119034357.3"><vh>@page General configuration options</vh>
 <v t="ekr.20041119034357.5"><vh>@bool read_only = False</vh></v>
-<v t="ekr.20041119034357.13" a="TV"><vh>@bool use_plugins = True</vh></v>
+<v t="ekr.20041119034357.13"><vh>@bool use_plugins = True</vh></v>
 <v t="ekr.20041119034357.7"><vh>.leo file options</vh>
 <v t="ekr.20041119034357.8"><vh>@string output_initial_comment = None</vh></v>
 <v t="ekr.20041119034357.9"><vh>@string stylesheet = None</vh></v>
@@ -129,7 +129,7 @@
 <v t="ekr.20050203090810"><vh>@page For unit tests</vh>
 <v t="ekr.20050203085250"><vh>@int global_setting_for_unit_tests = 132</vh></v>
 </v>
-<v t="ekr.20041119034357.21" a="E"><vh>Keyboard shortcuts</vh>
+<v t="ekr.20041119034357.21"><vh>Keyboard shortcuts</vh>
 <v t="ekr.20041119034357.22"><vh>About keyboard shortcuts</vh></v>
 <v t="ekr.20041119034357.23"><vh>@shortcuts Alt and Shift-Alt</vh></v>
 <v t="ekr.20041119034357.24"><vh>@shortcuts Control</vh></v>
@@ -139,8 +139,8 @@
 </v>
 <v t="ekr.20041213105007"><vh>@page Fonts</vh>
 <v t="ekr.20041213105508"><vh>@font log font</vh></v>
-<v t="ekr.20041119034357.45" a="E"><vh>@font body text font</vh></v>
-<v t="ekr.20041119051246.4" a="E"><vh>@font outline font</vh></v>
+<v t="ekr.20041119034357.45"><vh>@font body text font</vh></v>
+<v t="ekr.20041119051246.4"><vh>@font outline font</vh></v>
 </v>
 <v t="ekr.20041213105007.1"><vh>Colors</vh>
 <v t="ekr.20041213105007.3"><vh>@page Log pane colors</vh>
