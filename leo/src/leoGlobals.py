@@ -3701,6 +3701,14 @@ def funcToMethod(f,theClass,name=None):
 #@nonl
 #@-node:ekr.20031218072017.3126:g,funcToMethod
 #@+node:ekr.20031218072017.2278:g,importFromPath
+#@+at 
+#@nonl
+# Warning:
+# g.importFromPath uses imp.load_module, and that is equivalent to reload!
+# Calling this function to reload Leo files will crash Leo!
+#@-at
+#@@c
+
 def importFromPath (name,path,verbose=False):
     
     import imp

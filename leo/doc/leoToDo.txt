@@ -2848,7 +2848,8 @@ def drawText(self,p,x,y,box_id=None):
         self.bindings.append((t,id3,"<Key>"),)
         self.bindings.append((t,id4,"<Control-t>"),)
     
-    << highlight text widget on enter events >>
+    if 0: # I like underlining only when the cursor is outside the text widget.
+        << highlight text widget on enter events >>
         
     id = self.canvas.create_window(x,y+self.lineyoffset,anchor="nw",window=t,tag="textBox")
     self.canvas.tag_lower(id)
@@ -3145,7 +3146,7 @@ def drawClickFrame (self,p,y):
     id_click = self.canvas.tag_bind(click_rect, "<1>", p.OnBoxClick)
     self.tagBindings.append((click_rect,id_click,"<1>"),)
     
-    if 1: # A major change to the user interface.
+    if 0: # A major change to the user interface.
         
         # Define a slighly smaller rect to colorize.
         color_rect = self.canvas.create_rectangle(0,y,1000,y+h-4,tag="colorBox")
@@ -4806,6 +4807,27 @@ This might be the best way to reliably have Tk move to the next line!
 #@-node:ekr.20040203075059:use pos linestart + 1 lines to go to next line?
 #@-node:ekr.20040130073846:(Must do) Use Python indices instead of Tk indices
 #@+node:EKR.20040507095329.1:(Must do) More flexible atFile classes
+#@+node:ekr.20040710124416:(string-based i/o & unit tests)
+@nocolor
+
+To do:
+
+- atFile.readFromString
+
+- atFile.writeToList
+
+- atFile.writeToString:
+@color
+    def writeToString(self,p):
+        aList = self.writeToList(p)
+        return string.join(aList,'')
+@nocolor
+        
+* Problem: Don't want to put @file nodes in test.leo
+    - solution: unit test calls atFile.writeToString.
+        - This will allow us to create unit tests much more easily.
+#@nonl
+#@-node:ekr.20040710124416:(string-based i/o & unit tests)
 #@+node:EKR.20040507100502:about calling scanDirectives
 - called by top_df.read just before calling df.readOpenFile.
 

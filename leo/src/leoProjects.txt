@@ -1363,7 +1363,8 @@ def drawText(self,p,x,y,box_id=None):
         self.bindings.append((t,id3,"<Key>"),)
         self.bindings.append((t,id4,"<Control-t>"),)
     
-    << highlight text widget on enter events >>
+    if 0: # I like underlining only when the cursor is outside the text widget.
+        << highlight text widget on enter events >>
         
     id = self.canvas.create_window(x,y+self.lineyoffset,anchor="nw",window=t,tag="textBox")
     self.canvas.tag_lower(id)
@@ -2995,7 +2996,8 @@ def drawText(self,p,x,y,box_id=None):
         self.bindings.append((t,id3,"<Key>"),)
         self.bindings.append((t,id4,"<Control-t>"),)
     
-    << highlight text widget on enter events >>
+    if 0: # I like underlining only when the cursor is outside the text widget.
+        << highlight text widget on enter events >>
         
     id = self.canvas.create_window(x,y+self.lineyoffset,anchor="nw",window=t,tag="textBox")
     self.canvas.tag_lower(id)
@@ -7931,7 +7933,8 @@ def drawText(self,p,x,y,box_id=None):
         self.bindings.append((t,id3,"<Key>"),)
         self.bindings.append((t,id4,"<Control-t>"),)
     
-    << highlight text widget on enter events >>
+    if 0: # I like underlining only when the cursor is outside the text widget.
+        << highlight text widget on enter events >>
         
     id = self.canvas.create_window(x,y+self.lineyoffset,anchor="nw",window=t,tag="textBox")
     self.canvas.tag_lower(id)
@@ -10086,7 +10089,8 @@ def drawText(self,p,x,y,box_id=None):
         self.bindings.append((t,id3,"<Key>"),)
         self.bindings.append((t,id4,"<Control-t>"),)
     
-    << highlight text widget on enter events >>
+    if 0: # I like underlining only when the cursor is outside the text widget.
+        << highlight text widget on enter events >>
         
     id = self.canvas.create_window(x,y+self.lineyoffset,anchor="nw",window=t,tag="textBox")
     self.canvas.tag_lower(id)
@@ -15475,7 +15479,8 @@ def drawText(self,p,x,y,box_id=None):
         self.bindings.append((t,id3,"<Key>"),)
         self.bindings.append((t,id4,"<Control-t>"),)
     
-    << highlight text widget on enter events >>
+    if 0: # I like underlining only when the cursor is outside the text widget.
+        << highlight text widget on enter events >>
         
     id = self.canvas.create_window(x,y+self.lineyoffset,anchor="nw",window=t,tag="textBox")
     self.canvas.tag_lower(id)
@@ -15772,7 +15777,7 @@ def drawClickFrame (self,p,y):
     id_click = self.canvas.tag_bind(click_rect, "<1>", p.OnBoxClick)
     self.tagBindings.append((click_rect,id_click,"<1>"),)
     
-    if 1: # A major change to the user interface.
+    if 0: # A major change to the user interface.
         
         # Define a slighly smaller rect to colorize.
         color_rect = self.canvas.create_rectangle(0,y,1000,y+h-4,tag="colorBox")
@@ -18876,7 +18881,8 @@ def drawText(self,p,x,y,box_id=None):
         self.bindings.append((t,id3,"<Key>"),)
         self.bindings.append((t,id4,"<Control-t>"),)
     
-    << highlight text widget on enter events >>
+    if 0: # I like underlining only when the cursor is outside the text widget.
+        << highlight text widget on enter events >>
         
     id = self.canvas.create_window(x,y+self.lineyoffset,anchor="nw",window=t,tag="textBox")
     self.canvas.tag_lower(id)
@@ -19271,7 +19277,8 @@ def drawText(self,p,x,y,box_id=None):
         self.bindings.append((t,id3,"<Key>"),)
         self.bindings.append((t,id4,"<Control-t>"),)
     
-    << highlight text widget on enter events >>
+    if 0: # I like underlining only when the cursor is outside the text widget.
+        << highlight text widget on enter events >>
         
     id = self.canvas.create_window(x,y+self.lineyoffset,anchor="nw",window=t,tag="textBox")
     self.canvas.tag_lower(id)
@@ -19568,7 +19575,7 @@ def drawClickFrame (self,p,y):
     id_click = self.canvas.tag_bind(click_rect, "<1>", p.OnBoxClick)
     self.tagBindings.append((click_rect,id_click,"<1>"),)
     
-    if 1: # A major change to the user interface.
+    if 0: # A major change to the user interface.
         
         # Define a slighly smaller rect to colorize.
         color_rect = self.canvas.create_rectangle(0,y,1000,y+h-4,tag="colorBox")
@@ -32588,7 +32595,8 @@ def drawText(self,p,x,y,box_id=None):
         self.bindings.append((t,id3,"<Key>"),)
         self.bindings.append((t,id4,"<Control-t>"),)
     
-    << highlight text widget on enter events >>
+    if 0: # I like underlining only when the cursor is outside the text widget.
+        << highlight text widget on enter events >>
         
     id = self.canvas.create_window(x,y+self.lineyoffset,anchor="nw",window=t,tag="textBox")
     self.canvas.tag_lower(id)
@@ -32885,7 +32893,7 @@ def drawClickFrame (self,p,y):
     id_click = self.canvas.tag_bind(click_rect, "<1>", p.OnBoxClick)
     self.tagBindings.append((click_rect,id_click,"<1>"),)
     
-    if 1: # A major change to the user interface.
+    if 0: # A major change to the user interface.
         
         # Define a slighly smaller rect to colorize.
         color_rect = self.canvas.create_rectangle(0,y,1000,y+h-4,tag="colorBox")
@@ -49978,6 +49986,1411 @@ File c:\prog\leoCVS\leo\doc\silver_city.css
 - Uploaded leo-stylesheets.zip to plugins package at SourceForge.
 #@nonl
 #@-node:ekr.20040709065122:(Added 3 .css files to cvs and distribution)
+#@+node:ekr.20040709075150:(Fixed double-click-drag)
+#@+node:ekr.20040709075150.1:Patch
+@nocolor
+
+http://sourceforge.net/forum/message.php?msg_id=2655535
+By: nobody
+
+I think this solves your request:
+
+@color
+
+def selectWord( event ):
+    event.widget.tag_add( 'sel', 'insert wordstart', 'insert' )
+textwidget.bind( '<Double-Button-1>', selectWord )
+
+@nocolor
+
+add it to the code where the Text widget editor is created and you should have
+the behavior and not feel grief anymore.  Oh yeah, 'textwidget' needs to be
+the reference to the Text editor, whatever it's called.  This is actually shorter
+than I thought it was going to be. :)
+
+EKR: This doesn't seem to work, regardless of where it is placed.
+#@-node:ekr.20040709075150.1:Patch
+#@+node:ekr.20040709094545:In app.gui.Tkinter.utils
+#@+node:ekr.20031218072017.4089:setTextSelection
+def setTextSelection (self,t,start,end):
+    
+    """tk gui: set the selection range in Tk.Text widget t."""
+
+    if not start or not end:
+        return
+
+    if t.compare(start, ">", end):
+        start,end = end,start
+        
+    t.tag_remove("sel","1.0",start)
+    t.tag_add("sel",start,end)
+    t.tag_remove("sel",end,"end")
+    t.mark_set("insert",end)
+#@nonl
+#@-node:ekr.20031218072017.4089:setTextSelection
+#@-node:ekr.20040709094545:In app.gui.Tkinter.utils
+#@+node:ekr.20031218072017.3978:OnBodyDoubleClick (Events)
+def OnBodyDoubleClick (self,event=None):
+
+    try:
+        c = self.c ; v = c.currentVnode()
+        if not g.doHook("bodydclick1",c=c,v=v,event=event):
+            if event: # 8/4/02: prevent wandering insertion point.
+                index = "@%d,%d" % (event.x, event.y) # Find where we clicked
+                # 7/9/04
+                event.widget.tag_add('sel', 'insert wordstart', 'insert wordend')
+            body = self.bodyCtrl
+            start = body.index(index + " wordstart")
+            end = body.index(index + " wordend")
+            self.body.setTextSelection(start,end)
+        g.doHook("bodydclick2",c=c,v=v,event=event)
+    except:
+        g.es_event_exception("bodydclick")
+        
+    return "break" # Restore this to handle proper double-click logic.
+#@nonl
+#@-node:ekr.20031218072017.3978:OnBodyDoubleClick (Events)
+#@+node:ekr.20031218072017.838:tkBody.createBindings
+def createBindings (self,frame):
+    
+    t = self.bodyCtrl
+    
+    # Event handlers...
+    t.bind("<Button-1>", frame.OnBodyClick)
+    t.bind("<Button-3>", frame.OnBodyRClick)
+    t.bind("<Double-Button-1>", frame.OnBodyDoubleClick)
+    t.bind("<Key>", frame.body.onBodyKey)
+
+    # Gui-dependent commands...
+    t.bind(g.virtual_event_name("Cut"), frame.OnCut)
+    t.bind(g.virtual_event_name("Copy"), frame.OnCopy)
+    t.bind(g.virtual_event_name("Paste"), frame.OnPaste)
+#@nonl
+#@-node:ekr.20031218072017.838:tkBody.createBindings
+#@+node:ekr.20031218072017.3977:OnBodyClick, OnBodyRClick (Events)
+def OnBodyClick (self,event=None):
+
+    try:
+        c = self.c ; v = c.currentVnode()
+        if not g.doHook("bodyclick1",c=c,v=v,event=event):
+            self.OnActivateBody(event=event)
+        g.doHook("bodyclick2",c=c,v=v,event=event)
+    except:
+        g.es_event_exception("bodyclick")
+
+def OnBodyRClick(self,event=None):
+    
+    try:
+        c = self.c ; v = c.currentVnode()
+        if not g.doHook("bodyrclick1",c=c,v=v,event=event):
+            pass # By default Leo does nothing.
+        g.doHook("bodyrclick2",c=c,v=v,event=event)
+    except:
+        g.es_event_exception("iconrclick")
+#@nonl
+#@-node:ekr.20031218072017.3977:OnBodyClick, OnBodyRClick (Events)
+#@+node:ekr.20031218072017.3975:OnActivateBody
+def OnActivateBody (self,event=None):
+
+    try:
+        frame = self ; c = frame.c ; gui = g.app.gui
+        g.app.setLog(frame.log,"OnActivateBody")
+        w = gui.get_focus(frame)
+        if w != frame.body.bodyCtrl:
+            self.tree.OnDeactivate()
+            # Reference to bodyCtrl is allowable in an event handler.
+            gui.set_focus(c,frame.body.bodyCtrl) 
+    except:
+        g.es_event_exception("activate body")
+#@nonl
+#@-node:ekr.20031218072017.3975:OnActivateBody
+#@-node:ekr.20040709075150:(Fixed double-click-drag)
+#@+node:ekr.20040709080432:(Scroll the tree pane on Shift left/right click)
+http://sourceforge.net/forum/message.php?msg_id=2649750
+#@nonl
+#@+node:ekr.20040709151825:Changed find_closest to find_overlapping
+#@+node:ekr.20031218072017.2343:<< continue dragging >>
+# g.trace(p)
+assert(p == self.drag_p)
+
+canvas = self.canvas
+frame = self.c.frame
+
+if event:
+    x,y = event.x,event.y
+else:
+    x,y = frame.top.winfo_pointerx(),frame.top.winfo_pointery()
+    if x == -1 or y == -1: return # Stop the scrolling if we go outside the entire window.
+
+if 0: # no longer used.
+    canvas_x = canvas.canvasx(x)
+    canvas_y = canvas.canvasy(y)
+    id = self.canvas.find_closest(canvas_x,canvas_y)
+    # id = self.canvas.find_overlapping(canvas_x,canvas_y,canvas_x,canvas_y)
+    
+
+# OnEndDrag() halts the scrolling by clearing self.drag_id when the mouse button goes up.
+if self.drag_id: # This gets cleared by OnEndDrag()
+    << scroll the canvas as needed >>
+#@nonl
+#@+node:ekr.20031218072017.2344:<< scroll the canvas as needed >>
+# Scroll the screen up or down one line if the cursor (y) is outside the canvas.
+h = canvas.winfo_height()
+if y < 0 or y > h:
+    lo, hi = frame.treeBar.get()
+    n = self.savedNumberOfVisibleNodes
+    line_frac = 1.0 / float(n)
+    frac = g.choose(y < 0, lo - line_frac, lo + line_frac)
+    frac = min(frac,1.0)
+    frac = max(frac,0.0)
+    # g.es("lo,hi,frac:",lo,hi,frac)
+    canvas.yview("moveto", frac)
+    
+    # Queue up another event to keep scrolling while the cursor is outside the canvas.
+    lo, hi = frame.treeBar.get()
+    if (y < 0 and lo > 0.1) or (y > h and hi < 0.9):
+        canvas.after_idle(self.OnContinueDrag,p,None) # Don't propagate the event.
+#@nonl
+#@-node:ekr.20031218072017.2344:<< scroll the canvas as needed >>
+#@-node:ekr.20031218072017.2343:<< continue dragging >>
+#@+node:ekr.20031218072017.1778:<< set vdrag, childFlag >>
+x,y = event.x,event.y
+canvas_x = canvas.canvasx(x)
+canvas_y = canvas.canvasy(y)
+
+id = self.canvas.find_closest(canvas_x,canvas_y)
+# id = self.canvas.find_overlapping(canvas_x,canvas_y,canvas_x,canvas_y)
+
+vdrag = self.findVnodeWithIconId(id)
+childFlag = vdrag and vdrag.hasChildren() and vdrag.isExpanded()
+#@nonl
+#@-node:ekr.20031218072017.1778:<< set vdrag, childFlag >>
+#@+node:ekr.20031218072017.2346:tree.OnIconClick & OnIconRightClick
+def OnIconClick (self,p,event):
+    
+    # g.trace(p)
+    
+    p = p.copy() # Make sure callbacks use the _present_ position.
+
+    tree = self ; canvas = tree.canvas
+    if event:
+        canvas_x = canvas.canvasx(event.x)
+        canvas_y = canvas.canvasy(event.y)
+        id = canvas.find_closest(canvas_x,canvas_y)
+        # id = canvas.find_overlapping(canvas_x,canvas_y,canvas_x,canvas_y)
+        if id != None:
+            try: id = id[0]
+            except: pass
+            self.drag_p = p
+            self.drag_id = id
+            
+            # Create the bindings.
+            id4 = canvas.tag_bind(id,"<B1-Motion>", p.OnDrag)
+            id5 = canvas.tag_bind(id,"<Any-ButtonRelease-1>", p.OnEndDrag)
+            
+            # Remember the bindings so deleteBindings can delete them.
+            self.tagBindings.append((id,id4,"<B1-Motion>"),)
+            self.tagBindings.append((id,id5,"<Any-ButtonRelease-1>"),)
+    tree.select(p)
+    g.app.findFrame.handleUserClick(p) # 4/3/04
+    return "break" # disable expanded box handling.
+    
+def OnIconRightClick (self,p,event):
+
+    self.select(p)
+    g.app.findFrame.handleUserClick(p) # 4/3/04
+    return "break" # disable expanded box handling.
+#@nonl
+#@-node:ekr.20031218072017.2346:tree.OnIconClick & OnIconRightClick
+#@-node:ekr.20040709151825:Changed find_closest to find_overlapping
+#@+node:ekr.20031218072017.3944:f.createCanvas
+def createCanvas (self,parentFrame):
+    
+    frame = self ; config = g.app.config
+    
+    scrolls = config.getBoolWindowPref('outline_pane_scrolls_horizontally')
+    scrolls = g.choose(scrolls,1,0)
+
+    canvas = Tk.Canvas(parentFrame,name="canvas",
+        bd=0,bg="white",relief="flat")
+
+    frame.treeBar = treeBar = Tk.Scrollbar(parentFrame,name="treeBar")
+    
+    # Bind mouse wheel event to canvas
+    if sys.platform != "win32": # Works on 98, crashes on XP.
+        canvas.bind("<MouseWheel>", self.OnMouseWheel)
+        
+    canvas['yscrollcommand'] = self.setCallback
+    treeBar['command']     = self.yviewCallback
+    
+    treeBar.pack(side="right", fill="y")
+    if scrolls: 
+        treeXBar = Tk.Scrollbar( 
+            parentFrame,name='treeXBar',orient="horizontal") 
+        canvas['xscrollcommand'] = treeXBar.set 
+        treeXBar['command'] = canvas.xview 
+        treeXBar.pack(side="bottom", fill="x")
+    
+    canvas.pack(expand=1,fill="both")
+
+    canvas.bind("<Button-1>", frame.OnActivateTree)
+
+    # Handle mouse wheel in the outline pane.
+    if sys.platform == "linux2": # This crashes tcl83.dll
+        canvas.bind("<MouseWheel>", frame.OnMouseWheel)
+    if 1:
+        << do scrolling by hand in a separate thread >>
+    
+    # g.print_bindings("canvas",canvas)
+    return canvas
+#@nonl
+#@+node:ekr.20040709081208:<< do scrolling by hand in a separate thread >>
+import threading
+import time
+way = 'Down' # global.
+ev = threading.Event()
+
+def run(ev = ev):
+    global way
+    while 1:
+        ev.wait()
+        if way=='Down': canvas.yview("scroll", 1,"units")
+        else:           canvas.yview("scroll",-1,"units")
+        time.sleep(.1)
+
+t = threading.Thread(target = run)
+t.setDaemon(True)
+t.start()
+    
+def exe(event,ev=ev,theWay='Down',canvas=canvas):
+    global way
+    if event.widget!=canvas: return
+    if canvas.find_overlapping(event.x,event.y,event.x,event.y): return
+    ev.set()
+    way = theWay
+        
+def off(event,ev=ev,canvas=canvas):
+    if event.widget!=canvas: return
+    ev.clear()
+
+if 1: # Use shift-click
+    canvas.bind_all('<Shift Button-3>',exe)
+    canvas.bind_all('<Shift Button-1>',lambda event,way='Up': exe(event,theWay=way))
+    canvas.bind_all('<Shift ButtonRelease-1>', off)
+    canvas.bind_all('<Shift ButtonRelease-3>', off)
+else: # Use plain click.
+    canvas.bind_all( '<Button-3>', exe)
+    canvas.bind_all( '<Button-1>', lambda event,way='Up': exe(event,theWay=way))
+    canvas.bind_all( '<ButtonRelease-1>', off)
+    canvas.bind_all( '<ButtonRelease-3>', off)
+#@nonl
+#@-node:ekr.20040709081208:<< do scrolling by hand in a separate thread >>
+#@-node:ekr.20031218072017.3944:f.createCanvas
+#@+node:ekr.20031218072017.1000:drawBox (tag_bind)
+def drawBox (self,p,x,y):
+    
+    tree = self ; canvas = self.canvas
+    y += 7 # draw the box at x, y+7
+    
+    if not g.doHook("draw-outline-box",tree=tree,p=p,v=p,x=x,y=y):
+
+        iconname = g.choose(p.isExpanded(),"minusnode.gif", "plusnode.gif")
+        image = self.getIconImage(iconname)
+        box_id = canvas.create_image(x,y+self.lineyoffset,image=image)
+    
+        id1 = canvas.tag_bind(box_id, "<1>", p.OnBoxClick)
+        id2 = canvas.tag_bind(box_id, "<Double-1>", lambda x2: None)
+
+        self.tagBindings.append((box_id,id1,"<1>"),)
+        self.tagBindings.append((box_id,id2,"<Double-1>"),)
+        
+        return box_id
+#@nonl
+#@-node:ekr.20031218072017.1000:drawBox (tag_bind)
+#@-node:ekr.20040709080432:(Scroll the tree pane on Shift left/right click)
+#@+node:ekr.20040709144318.1:(Underline tree nodes when entered)
+#@+node:ekr.20031218072017.1002:drawIcon (tag_bind)
+def drawIcon(self,p,x=None,y=None):
+    
+    """Draws icon for position p at x,y, or at p.v.iconx,p.v.icony if x,y = None,None"""
+
+    tree = self ; v = p.v # Make sure the bindings refer to the _present_ position.
+
+    << compute x,y and iconVal >>
+
+    if not g.doHook("draw-outline-icon",tree=tree,p=p,v=v,x=x,y=y):
+
+        # Get the image.
+        imagename = "box%02d.GIF" % val
+        image = self.getIconImage(imagename)
+        id = self.canvas.create_image(x,y+self.lineyoffset,anchor="nw",image=image,tag="iconBox")
+        self.icon_id_dict[id] = p # Remember which vnode belongs to the icon.
+    
+        id1 = self.canvas.tag_bind(id,"<1>",p.OnIconClick)
+        id2 = self.canvas.tag_bind(id,"<Double-1>",p.OnIconDoubleClick)
+        id3 = self.canvas.tag_bind(id,"<3>",p.OnIconRightClick)
+        
+        # Remember the bindings so deleteBindings can delete them.
+        self.tagBindings.append((id,id1,"<1>"),)
+        self.tagBindings.append((id,id2,"<Double-1>"),)
+        self.tagBindings.append((id,id3,"<3>"),)
+    
+    return 0,icon_width # dummy icon height,width
+#@nonl
+#@+node:EKR.20040602150338:<< compute x,y and iconVal >>
+
+if x is None and y is None:
+    try:
+        x,y = v.iconx, v.icony
+    except:
+        # Inject the ivars.
+        x,y = v.iconx, v.icony = 0,0
+else:
+    # Inject the ivars.
+    v.iconx, v.icony = x,y
+
+y += 2 # draw icon at y + 2
+
+# Always recompute v.iconVal.
+# This is an important drawing optimization.
+val = v.iconVal = v.computeIcon()
+assert(0 <= val <= 15)
+#@nonl
+#@-node:EKR.20040602150338:<< compute x,y and iconVal >>
+#@-node:ekr.20031218072017.1002:drawIcon (tag_bind)
+#@+node:ekr.20031218072017.4162:tree.set...LabelState
+def setNormalLabelState (self,p): # selected, editing
+
+    # g.trace(p)
+    if p and p.edit_text():
+        << set editing headline colors >>
+        p.edit_text().tag_remove("sel","1.0","end")
+        p.edit_text().tag_add("sel","1.0","end")
+        g.app.gui.set_focus(self.c,p.edit_text())
+
+def setDisabledLabelState (self,p): # selected, disabled
+
+    # g.trace(p,g.callerName(2),g.callerName(3))
+    if p and p.edit_text():
+        << set selected, disabled headline colors >>
+
+def setSelectedLabelState (self,p): # selected, not editing
+
+    # g.trace(p)
+    self.setDisabledLabelState(p)
+
+def setUnselectedLabelState (self,p): # not selected.
+
+    # g.trace(p)
+    if p and p.edit_text():
+        << set unselected headline colors >>
+#@+node:ekr.20031218072017.4163:<< set editing headline colors >>
+config = g.app.config
+fg   = config.getWindowPref("headline_text_editing_foreground_color")
+bg   = config.getWindowPref("headline_text_editing_background_color")
+selfg = config.getWindowPref("headline_text_editing_selection_foreground_color")
+selbg = config.getWindowPref("headline_text_editing_selection_background_color")
+
+if not fg or not bg:
+    fg,bg = "black","white"
+
+try:
+    if selfg and selbg:
+        p.edit_text().configure(
+            selectforeground=selfg,selectbackground=selbg,
+            state="normal",highlightthickness=1,fg=fg,bg=bg)
+    else:
+        p.edit_text().configure(
+            state="normal",highlightthickness=1,fg=fg,bg=bg)
+except:
+    g.es_exception()
+#@nonl
+#@-node:ekr.20031218072017.4163:<< set editing headline colors >>
+#@+node:ekr.20031218072017.4164:<< set selected, disabled headline colors >>
+config = g.app.config
+fg = config.getWindowPref("headline_text_selected_foreground_color")
+bg = config.getWindowPref("headline_text_selected_background_color")
+
+if not fg or not bg:
+    fg,bg = "black","gray80"
+
+try:
+    p.edit_text().configure(
+        state="disabled",highlightthickness=0,fg=fg,bg=bg)
+except:
+    g.es_exception()
+#@nonl
+#@-node:ekr.20031218072017.4164:<< set selected, disabled headline colors >>
+#@+node:ekr.20031218072017.4165:<< set unselected headline colors >>
+config = g.app.config
+fg = config.getWindowPref("headline_text_unselected_foreground_color")
+bg = config.getWindowPref("headline_text_unselected_background_color")
+
+if not fg or not bg:
+    fg,bg = "black","white"
+
+try:
+    p.edit_text().configure(
+        state="disabled",highlightthickness=0,fg=fg,bg=bg)
+except:
+    g.es_exception()
+#@nonl
+#@-node:ekr.20031218072017.4165:<< set unselected headline colors >>
+#@-node:ekr.20031218072017.4162:tree.set...LabelState
+#@+node:ekr.20031218072017.2029:drawTopTree (tag_bind)
+def drawTopTree (self):
+    
+    """Draws the top-level tree, taking into account the hoist state."""
+    
+    c = self.c ; canvas = self.canvas
+    
+    if 0:
+        try: self.redrawCount += 1
+        except: self.radrawCount = 1
+        g.trace(self.redrawCount)
+    # import traceback ; traceback.print_stack()
+    
+    self.lastClickFrameId = None # id of last entered clickBox.
+    self.lastColoredText = None # last colored text widget.
+    
+    if c.hoistStack:
+        p,junk = c.hoistStack[-1]
+        self.drawTree(p.copy(),root_left,root_top,0,0,hoistFlag=True)
+    else:
+        self.drawTree(c.rootPosition(),root_left,root_top,0,0)
+        
+    canvas.lower("lines")
+    canvas.lower("colorBox")
+    canvas.lift("clickBox")
+    canvas.lift("iconBox")
+    
+    if 0:
+        << define callbacks >>
+        # Use vnode or postion callbacks.
+        canvas.tag_bind("textBox","<1>",onHeadlineClickCallback)
+        canvas.tag_bind("textBox","<3>",onHeadlineRightClickCallback)
+        canvas.tag_bind("textBox","<Key>", onHeadlineKeyCallback)
+        canvas.tag_bind("textBox","<Control-t>",self.OnControlT)
+            # Stamp out erroneous control-t binding.
+#@nonl
+#@+node:ekr.20040710060809:<< define callbacks >>
+def onHeadlineClickCallback(tree=self):
+    
+    g.trace()
+    c = tree.c
+    p = c.currentPosition()
+    p.onHeadlineClick()
+    
+def onHeadlineRightClickCallback(tree=self):
+    
+    g.trace()
+    c = tree.c
+    p = c.currentPosition()
+    p.OnHeadlineRightClick()
+    
+def onHeadlineKeyCallback(tree=self):
+    
+    g.trace()
+    c = tree.c
+    p = c.currentPosition()
+    p.OnHeadlineKey()
+    
+    
+#@nonl
+#@-node:ekr.20040710060809:<< define callbacks >>
+#@-node:ekr.20031218072017.2029:drawTopTree (tag_bind)
+#@+node:ekr.20031218072017.1008:drawTree
+def drawTree(self,p,x,y,h,level,hoistFlag=False):
+
+    tree = self ; v = p.v
+    yfirst = ylast = y
+    if level==0: yfirst += 10
+    w = 0
+    
+    # We must make copies for drawText and drawBox and drawIcon,
+    # So making copies here actually reduces the total number of copies.
+    ### This will change for incremental redraw.
+    p = p.copy()
+    
+    data = g.doHook("draw-sub-outline",tree=tree,p=p,v=v,x=x,y=y,h=h,level=level,hoistFlag=hoistFlag)
+    if data is not None: return data
+    
+    while p: # Do not use iterator.
+        h,w = self.drawNode(p,x,y)
+        y += h ; ylast = y
+        if p.isExpanded() and p.hasFirstChild():
+            # Must make an additional copy here by calling firstChild.
+            y,w2 = self.drawTree(p.firstChild(),x+child_indent+w,y,h,level+1)
+            x += w2 ; w += w2
+        if hoistFlag: break
+        else:         p = p.next()
+    << draw vertical line >>
+    return y,w
+#@nonl
+#@+node:ekr.20031218072017.1009:<< draw vertical line >>
+id = self.canvas.create_line(
+    x, yfirst-hline_y,
+    x, ylast+hline_y-h,
+    fill="gray50", # stipple="gray50"
+    tag="lines")
+
+# self.canvas.tag_lower(id)
+#@nonl
+#@-node:ekr.20031218072017.1009:<< draw vertical line >>
+#@-node:ekr.20031218072017.1008:drawTree
+#@+node:ekr.20031218072017.4147:tree.getIconImage
+def getIconImage (self, name):
+
+    # Return the image from the cache if possible.
+    if self.iconimages.has_key(name):
+        return self.iconimages[name]
+        
+    try:
+        fullname = g.os_path_join(g.app.loadDir,"..","Icons",name)
+        fullname = g.os_path_normpath(fullname)
+        image = Tk.PhotoImage(master=self.canvas,file=fullname)
+        self.iconimages[name] = image
+        return image
+    except:
+        g.es("Exception loading: " + fullname)
+        g.es_exception()
+        return None
+#@nonl
+#@-node:ekr.20031218072017.4147:tree.getIconImage
+#@+node:ekr.20031218072017.1005:drawText (bind)
+def drawText(self,p,x,y,box_id=None):
+    
+    """draw text for v at nominal coordinates x,y."""
+
+    tree = self ; c = self.c ; v = p.v
+    h = self.line_height
+    x += text_indent
+    
+    data = g.doHook("draw-outline-text-box",tree=tree,p=p,v=v,x=x,y=y)
+    if data is not None: return data
+
+    self.lastText = t = Tk.Text(self.canvas,
+        font=self.font,bd=0,relief="flat",width=self.headWidth(v),height=1)
+
+    # New in 4.2: entries are pairs (p,t) indexed by v.
+    # Remember which text widget belongs to v.
+    d = self.edit_text_dict
+    val = d.get(v,[])
+    val.append((p,t),)
+    d[v] = val
+    # g.trace("entry",d[p.v])
+
+    # Remember the widget so deleteBindings can delete it.
+    self.widgets.append(t) # Fixes a _huge_ memory leak.
+
+    t.insert("end", v.headString())
+    << configure the text depending on state >>
+
+    if 1: # use bind here, else use bind_tag in drawTopTree.
+        # Use vnode or postion callbacks.
+        id1 = t.bind("<1>",p.OnHeadlineClick)
+        id2 = t.bind("<3>",p.OnHeadlineRightClick)
+        id3 = t.bind("<Key>", p.OnHeadlineKey)
+        id4 = t.bind("<Control-t>",self.OnControlT)
+            # 10/16/02: Stamp out the erroneous control-t binding.
+        # Remember the bindings so deleteBindings can delete them.
+        self.bindings.append((t,id1,"<1>"),)
+        self.bindings.append((t,id2,"<3>"),)
+        self.bindings.append((t,id3,"<Key>"),)
+        self.bindings.append((t,id4,"<Control-t>"),)
+    
+    if 0: # I like underlining only when the cursor is outside the text widget.
+        << highlight text widget on enter events >>
+        
+    id = self.canvas.create_window(x,y+self.lineyoffset,anchor="nw",window=t,tag="textBox")
+    self.canvas.tag_lower(id)
+    
+    # This doesn't work: must call update_idletasks first, and that's hard here.
+    # g.trace(t,t.winfo_height(),t.winfo_width())
+    
+    return self.line_height
+#@nonl
+#@+node:ekr.20031218072017.1006:<< configure the text depending on state >>
+if p and p == c.currentPosition():
+    if p == self.editPosition():
+        self.setNormalLabelState(p)
+    else:
+        self.setDisabledLabelState(p) # selected, disabled
+else:
+    self.setUnselectedLabelState(p) # unselected
+#@nonl
+#@-node:ekr.20031218072017.1006:<< configure the text depending on state >>
+#@+node:ekr.20040709194954:<< highlight text widget on enter events >>
+if 0: # Define a rect to colorize.
+
+    color_rect = self.canvas.create_rectangle(0,y,1000,y+h-4,tag="colorBox")
+    self.canvas.itemconfig(color_rect,fill="",outline="")
+
+    def enterRect(event,id=color_rect):
+        if self.lastClickFrameId:
+            self.canvas.itemconfig(self.lastClickFrameId,fill="",outline="")
+        self.lastClickFrameId = id
+        color = "LightSteelBlue1"
+        self.canvas.itemconfig(id,fill=color,outline=color)
+    
+    bind_enter = t.bind( '<Enter>', enterRect, '+' )
+    self.bindings.append((t,bind_enter,"<Enter>"),)
+    
+if 1: # Colorize only the headline.
+
+    def enterRect(event,p=p,t=t):
+        t2 = self.lastColoredText
+        if t2:
+            if 1: # deunderline
+                t2.tag_delete('underline')
+            else: # color
+                t2.configure(background="white")
+        if p == self.editPosition():
+            self.lastColoredText = None
+        else:
+            self.lastColoredText = t
+            if 1: # underline
+                t.tag_add('underline','1.0', 'end')
+                t.tag_configure('underline',underline = True)
+            else: #color
+                t.configure(background="LightSteelBlue1")
+    
+    bind_enter = t.bind( '<Enter>', enterRect, '+' )
+    self.bindings.append((t,bind_enter,"<Enter>"),)
+#@nonl
+#@-node:ekr.20040709194954:<< highlight text widget on enter events >>
+#@-node:ekr.20031218072017.1005:drawText (bind)
+#@+node:ekr.20031218072017.1000:drawBox (tag_bind)
+def drawBox (self,p,x,y):
+    
+    tree = self ; canvas = self.canvas
+    y += 7 # draw the box at x, y+7
+    
+    if not g.doHook("draw-outline-box",tree=tree,p=p,v=p,x=x,y=y):
+
+        iconname = g.choose(p.isExpanded(),"minusnode.gif", "plusnode.gif")
+        image = self.getIconImage(iconname)
+        box_id = canvas.create_image(x,y+self.lineyoffset,image=image)
+    
+        id1 = canvas.tag_bind(box_id, "<1>", p.OnBoxClick)
+        id2 = canvas.tag_bind(box_id, "<Double-1>", lambda x2: None)
+
+        self.tagBindings.append((box_id,id1,"<1>"),)
+        self.tagBindings.append((box_id,id2,"<Double-1>"),)
+        
+        return box_id
+#@nonl
+#@-node:ekr.20031218072017.1000:drawBox (tag_bind)
+#@+node:ekr.20040317171729:force_draw_node (new)
+def force_draw_node(self,p,x,y):
+
+    self.allocatedNodes += 1
+    h,w = self.drawUserIcons(p,"beforeBox",x,y)
+    xw = w # The extra indentation before the icon box.
+    if p.hasChildren():
+        box_id = self.drawBox(p,x+w,y)
+    else:
+        box_id = None
+
+    w += box_width # even if box isn't drawn.
+
+    h2,w2 = self.drawUserIcons(p,"beforeIcon",x+w,y)
+    h = max(h,h2) ; w += w2 ; xw += w2
+
+    h2,w2 = self.drawIcon(p,x+w,y)
+    h = max(h,h2) ; w += w2
+
+    h2,w2 = self.drawUserIcons(p,"beforeHeadline",x+w,y)
+    h = max(h,h2) ; w += w2
+
+    expand_x = x+w # save this for later.
+    h2 = self.drawText(p,x+w,y,box_id)
+    h = max(h,h2)
+    w += self.widthInPixels(p.headString())
+
+    h2,w2 = self.drawUserIcons(p,"afterHeadline",x+w,y)
+    h = max(h,h2)
+    
+    self.drawClickFrame(p,y)
+
+    return h,xw
+#@nonl
+#@-node:ekr.20040317171729:force_draw_node (new)
+#@+node:ekr.20040710050236:tree.drawClickFrame
+def drawClickFrame (self,p,y):
+    
+    h = self.line_height ;  defaultColor = ""
+    
+    # Define a slighly larger rect to catch clicks.
+
+    click_rect = self.canvas.create_rectangle(0,y,1000,y+h-3,tag="clickBox")
+    self.canvas.itemconfig(click_rect,fill=defaultColor,outline=defaultColor)
+    
+    id_click = self.canvas.tag_bind(click_rect, "<1>", p.OnBoxClick)
+    self.tagBindings.append((click_rect,id_click,"<1>"),)
+    
+    if 0: # A major change to the user interface.
+        
+        # Define a slighly smaller rect to colorize.
+        color_rect = self.canvas.create_rectangle(0,y,1000,y+h-4,tag="colorBox")
+        self.canvas.itemconfig(color_rect,fill=defaultColor,outline=defaultColor)
+        
+        # Color the click box or the headline
+        def enterRect(event,id=color_rect,p=p,t=self.lastText):
+            if 1: # Color or underline the headline
+                t2 = self.lastColoredText
+                if t2: # decolor the old headline.
+                    if 1: # deunderline
+                        t2.tag_delete('underline')
+                    else: # decolor
+                        t2.configure(background="white")
+                if t and p != self.editPosition():
+                    if 1: # underline
+                        t.tag_add('underline','1.0','end')
+                        t.tag_configure('underline',underline=True)
+                    else: # color
+                        t.configure(background="LightSteelBlue1")
+                    self.lastColoredText = t
+                else: self.lastColoredText = None
+            else: # Color the click box.
+                if self.lastClickFrameId:
+                    self.canvas.itemconfig(self.lastClickFrameId,fill=defaultColor,outline=defaultColor)
+                self.lastClickFrameId = id
+                color = "LightSteelBlue1"
+                self.canvas.itemconfig(id,fill=color,outline=color)
+    
+        bind_id = self.canvas.tag_bind(click_rect, "<Enter>", enterRect) # , '+')
+        self.tagBindings.append((click_rect,bind_id,"<Enter>"),)
+    
+#@nonl
+#@-node:ekr.20040710050236:tree.drawClickFrame
+#@-node:ekr.20040709144318.1:(Underline tree nodes when entered)
+#@+node:ekr.20040709064521:(Allowed multiple files in import dialogs)
+#@+node:ekr.20040709101338:Report
+@killcolor
+
+http://sourceforge.net/forum/message.php?msg_id=2653456
+By: nobody
+
+askopenfilenames allows you to select and return multiple file names. This does
+work on Windows.  I haven't tested it on Linux.
+#@nonl
+#@-node:ekr.20040709101338:Report
+#@+node:ekr.20031218072017.3097:CheckVersion (Dave Hein)
+@
+g.CheckVersion() is a generic version checker.  Assumes a
+version string of up to four parts, or tokens, with
+leftmost token being most significant and each token
+becoming less signficant in sequence to the right.
+
+RETURN VALUE
+
+1 if comparison is True
+0 if comparison is False
+
+PARAMETERS
+
+version: the version string to be tested
+againstVersion: the reference version string to be
+              compared against
+condition: can be any of "==", "!=", ">=", "<=", ">", or "<"
+stringCompare: whether to test a token using only the
+             leading integer of the token, or using the
+             entire token string.  For example, a value
+             of "0.0.1.0" means that we use the integer
+             value of the first, second, and fourth
+             tokens, but we use a string compare for the
+             third version token.
+delimiter: the character that separates the tokens in the
+         version strings.
+
+The comparison uses the precision of the version string
+with the least number of tokens.  For example a test of
+"8.4" against "8.3.3" would just compare the first two
+tokens.
+
+The version strings are limited to a maximum of 4 tokens.
+@c
+
+def CheckVersion( version, againstVersion, condition=">=", stringCompare="0.0.0.0", delimiter='.' ):
+    import sre  # Unicode-aware regular expressions
+    #
+    # tokenize the stringCompare flags
+    compareFlag = string.split( stringCompare, '.' )
+    #
+    # tokenize the version strings
+    testVersion = string.split( version, delimiter )
+    testAgainst = string.split( againstVersion, delimiter )
+    #
+    # find the 'precision' of the comparison
+    tokenCount = 4
+    if tokenCount > len(testAgainst):
+        tokenCount = len(testAgainst)
+    if tokenCount > len(testVersion):
+        tokenCount = len(testVersion)
+    #
+    # Apply the stringCompare flags
+    justInteger = sre.compile("^[0-9]+")
+    for i in range(tokenCount):
+        if "0" == compareFlag[i]:
+            m = justInteger.match( testVersion[i] )
+            testVersion[i] = m.group()
+            m = justInteger.match( testAgainst[i] )
+            testAgainst[i] = m.group()
+        elif "1" != compareFlag[i]:
+            errMsg = "stringCompare argument must be of " +\
+                 "the form \"x.x.x.x\" where each " +\
+                 "'x' is either '0' or '1'."
+            raise EnvironmentError,errMsg
+    #
+    # Compare the versions
+    if condition == ">=":
+        for i in range(tokenCount):
+            if testVersion[i] < testAgainst[i]:
+                return 0
+            if testVersion[i] > testAgainst[i]:
+                return 1 # it was greater than
+        return 1 # it was equal
+    if condition == ">":
+        for i in range(tokenCount):
+            if testVersion[i] < testAgainst[i]:
+                return 0
+            if testVersion[i] > testAgainst[i]:
+                return 1 # it was greater than
+        return 0 # it was equal
+    if condition == "==":
+        for i in range(tokenCount):
+            if testVersion[i] != testAgainst[i]:
+                return 0 # any token was not equal
+        return 1 # every token was equal
+    if condition == "!=":
+        for i in range(tokenCount):
+            if testVersion[i] != testAgainst[i]:
+                return 1 # any token was not equal
+        return 0 # every token was equal
+    if condition == "<":
+        for i in range(tokenCount):
+            if testVersion[i] >= testAgainst[i]:
+                return 0
+            if testVersion[i] < testAgainst[i]:
+                return 1 # it was less than
+        return 0 # it was equal
+    if condition == "<=":
+        for i in range(tokenCount):
+            if testVersion[i] > testAgainst[i]:
+                return 0
+            if testVersion[i] < testAgainst[i]:
+                return 1 # it was less than
+        return 1 # it was equal
+    #
+    # didn't find a condition that we expected.
+    raise EnvironmentError,"condition must be one of '>=', '>', '==', '!=', '<', or '<='."
+#@nonl
+#@-node:ekr.20031218072017.3097:CheckVersion (Dave Hein)
+#@+node:ekr.20031218072017.4057:app.gui.Tkinter file dialogs
+def runOpenFileDialog(self,title,filetypes,defaultextension,multiple=False):
+
+    """Create and run an Tkinter open file dialog ."""
+    
+    # askopenfilenames only exists in Python 2.3 or later
+    if multiple and g.CheckVersion(sys.version,"2.3"):
+        f = tkFileDialog.askopenfilenames
+    else:
+        f = tkFileDialog.askopenfilename
+
+    files = f(title=title, filetypes=filetypes)
+    return list(files)
+        # DTHEIN 2004.01.31: remove default extension on open,
+        # so that we can open files without extensions
+
+def runSaveFileDialog(self,initialfile,title,filetypes,defaultextension):
+
+    """Create and run an Tkinter save file dialog ."""
+
+    return tkFileDialog.asksaveasfilename(
+        initialfile=initialfile,
+        title=title,
+        filetypes=filetypes)
+    # EKR: 2004.01.31: remove default extensions on save too.
+    # defaultextension=defaultextension)
+#@nonl
+#@-node:ekr.20031218072017.4057:app.gui.Tkinter file dialogs
+#@+node:ekr.20040709104835:Changed import commands to accept lists of paths
+#@+node:ekr.20031218072017.2849:Import&Export submenu
+#@+node:ekr.20031218072017.2850:exportHeadlines
+def exportHeadlines (self):
+    
+    c = self
+
+    filetypes = [("Text files", "*.txt"),("All files", "*")]
+
+    fileName = g.app.gui.runSaveFileDialog(
+        initialfile="headlines.txt",
+        title="Export Headlines",
+        filetypes=filetypes,
+        defaultextension=".txt")
+
+    if fileName and len(fileName) > 0:
+        c.importCommands.exportHeadlines(fileName)
+
+#@-node:ekr.20031218072017.2850:exportHeadlines
+#@+node:ekr.20031218072017.2851:flattenOutline
+def flattenOutline (self):
+    
+    c = self
+
+    filetypes = [("Text files", "*.txt"),("All files", "*")]
+
+    fileName = g.app.gui.runSaveFileDialog(
+        initialfile="flat.txt",
+        title="Flatten Outline",
+        filetypes=filetypes,
+        defaultextension=".txt")
+
+    if fileName and len(fileName) > 0:
+        c.importCommands.flattenOutline(fileName)
+
+#@-node:ekr.20031218072017.2851:flattenOutline
+#@+node:ekr.20031218072017.2852:importAtRoot
+def importAtRoot (self):
+    
+    c = self
+    
+    types = [
+        ("All files","*"),
+        ("C/C++ files","*.c"),
+        ("C/C++ files","*.cpp"),
+        ("C/C++ files","*.h"),
+        ("C/C++ files","*.hpp"),
+        ("Java files","*.java"),
+        ("Pascal files","*.pas"),
+        ("Python files","*.py") ]
+
+    names = g.app.gui.runOpenFileDialog(
+        title="Import To @root",
+        filetypes=types,
+        defaultextension=".py",
+        multiple=True)
+
+    if names:
+        c.importCommands.importFilesCommand (names,"@root")
+#@-node:ekr.20031218072017.2852:importAtRoot
+#@+node:ekr.20031218072017.2853:importAtFile
+def importAtFile (self):
+    
+    c = self
+
+    types = [
+        ("All files","*"),
+        ("C/C++ files","*.c"),
+        ("C/C++ files","*.cpp"),
+        ("C/C++ files","*.h"),
+        ("C/C++ files","*.hpp"),
+        ("Java files","*.java"),
+        ("Pascal files","*.pas"),
+        ("Python files","*.py") ]
+
+    names = g.app.gui.runOpenFileDialog(
+        title="Import To @file",
+        filetypes=types,
+        defaultextension=".py",
+        multiple=True)
+
+    if names:
+        c.importCommands.importFilesCommand (names,"@file")
+#@nonl
+#@-node:ekr.20031218072017.2853:importAtFile
+#@+node:ekr.20031218072017.2854:importCWEBFiles
+def importCWEBFiles (self):
+    
+    c = self
+    
+    filetypes = [
+        ("CWEB files", "*.w"),
+        ("Text files", "*.txt"),
+        ("All files", "*")]
+
+    names = g.app.gui.runOpenFileDialog(
+        title="Import CWEB Files",
+        filetypes=filetypes,
+        defaultextension=".w",
+        multiple=True)
+
+    if names:
+        c.importCommands.importWebCommand(names,"cweb")
+#@-node:ekr.20031218072017.2854:importCWEBFiles
+#@+node:ekr.20031218072017.2855:importFlattenedOutline
+def importFlattenedOutline (self):
+    
+    c = self
+    
+    types = [("Text files","*.txt"), ("All files","*")]
+
+    names = g.app.gui.runOpenFileDialog(
+        title="Import MORE Text",
+        filetypes=types,
+        defaultextension=".py",
+        multiple=True)
+
+    if names:
+        c.importCommands.importFlattenedOutline(names)
+#@-node:ekr.20031218072017.2855:importFlattenedOutline
+#@+node:ekr.20031218072017.2856:importNowebFiles
+def importNowebFiles (self):
+    
+    c = self
+
+    filetypes = [
+        ("Noweb files", "*.nw"),
+        ("Text files", "*.txt"),
+        ("All files", "*")]
+
+    names = g.app.gui.runOpenFileDialog(
+        title="Import Noweb Files",
+        filetypes=filetypes,
+        defaultextension=".nw",
+        multiple=True)
+
+    if names:
+        c.importCommands.importWebCommand(names,"noweb")
+#@-node:ekr.20031218072017.2856:importNowebFiles
+#@+node:ekr.20031218072017.2857:outlineToCWEB
+def outlineToCWEB (self):
+    
+    c = self
+
+    filetypes=[
+        ("CWEB files", "*.w"),
+        ("Text files", "*.txt"),
+        ("All files", "*")]
+
+    fileName = g.app.gui.runSaveFileDialog(
+        initialfile="cweb.w",
+        title="Outline To CWEB",
+        filetypes=filetypes,
+        defaultextension=".w")
+
+    if fileName and len(fileName) > 0:
+        c.importCommands.outlineToWeb(fileName,"cweb")
+
+#@-node:ekr.20031218072017.2857:outlineToCWEB
+#@+node:ekr.20031218072017.2858:outlineToNoweb
+def outlineToNoweb (self):
+    
+    c = self
+    
+    filetypes=[
+        ("Noweb files", "*.nw"),
+        ("Text files", "*.txt"),
+        ("All files", "*")]
+
+    fileName = g.app.gui.runSaveFileDialog(
+        initialfile=self.outlineToNowebDefaultFileName,
+        title="Outline To Noweb",
+        filetypes=filetypes,
+        defaultextension=".nw")
+
+    if fileName and len(fileName) > 0:
+        c.importCommands.outlineToWeb(fileName,"noweb")
+        c.outlineToNowebDefaultFileName = fileName
+
+#@-node:ekr.20031218072017.2858:outlineToNoweb
+#@+node:ekr.20031218072017.2859:removeSentinels
+def removeSentinels (self):
+    
+    c = self
+    
+    types = [
+        ("All files","*"),
+        ("C/C++ files","*.c"),
+        ("C/C++ files","*.cpp"),
+        ("C/C++ files","*.h"),
+        ("C/C++ files","*.hpp"),
+        ("Java files","*.java"),
+        ("Pascal files","*.pas"),
+        ("Python files","*.py") ]
+
+    names = g.app.gui.runOpenFileDialog(
+        title="Remove Sentinels",
+        filetypes=types,
+        defaultextension=".py")
+
+    if names:
+        c.importCommands.removeSentinelsCommand (names)
+#@nonl
+#@-node:ekr.20031218072017.2859:removeSentinels
+#@+node:ekr.20031218072017.2860:weave
+def weave (self):
+    
+    c = self
+
+    filetypes = [("Text files", "*.txt"),("All files", "*")]
+
+    fileName = g.app.gui.runSaveFileDialog(
+        initialfile="weave.txt",
+        title="Weave",
+        filetypes=filetypes,
+        defaultextension=".txt")
+
+    if fileName and len(fileName) > 0:
+        c.importCommands.weave(fileName)
+#@-node:ekr.20031218072017.2860:weave
+#@-node:ekr.20031218072017.2849:Import&Export submenu
+#@-node:ekr.20040709104835:Changed import commands to accept lists of paths
+#@+node:ekr.20040709104835.1:Changed import helpers to accept lists of paths
+#@+node:ekr.20031218072017.3300:removeSentinelsCommand
+def removeSentinelsCommand (self,paths):
+
+    self.setEncoding()
+
+    for fileName in paths:
+        path, self.fileName = g.os_path_split(fileName) # path/fileName
+        << Read file into s >>
+        << set delims from the header line >>
+        # g.trace("line: '%s', start: '%s', end: '%s'" % (line_delim,start_delim,end_delim))
+        s = self.removeSentinelLines(s,line_delim,start_delim,end_delim)
+        ext = g.app.config.remove_sentinels_extension
+        if ext == None or len(ext) == 0:
+            ext = ".txt"
+        if ext[0] == '.':
+            newFileName = g.os_path_join(path,fileName+ext)
+        else:
+            head,ext2 = g.os_path_splitext(fileName) 
+            newFileName = g.os_path_join(path,head+ext+ext2)
+        # g.trace(repr(s))
+        << Write s into newFileName >>
+#@nonl
+#@+node:ekr.20031218072017.3301:<< Read file into s >>
+try:
+    file = open(fileName)
+    s = file.read()
+    s = g.toUnicode(s,self.encoding)
+    file.close()
+except:
+    g.es("Can not open " + fileName, color="blue")
+    import leoTest ; leoTest.fail()
+    return
+#@nonl
+#@-node:ekr.20031218072017.3301:<< Read file into s >>
+#@+node:ekr.20031218072017.3302:<< set delims from the header line >>
+# Skip any non @+leo lines.
+i = 0
+while i < len(s) and not g.find_on_line(s,i,"@+leo"):
+    i = g.skip_line(s,i)
+
+# Get the comment delims from the @+leo sentinel line.
+at = self.c.atFileCommands
+j = g.skip_line(s,i) ; line = s[i:j]
+
+valid,new_df,start_delim,end_delim = at.parseLeoSentinel(line)
+if not valid:
+    g.es("invalid @+leo sentinel in " + fileName)
+    return
+
+if end_delim:
+    line_delim = None
+else:
+    line_delim,start_delim = start_delim,None
+#@nonl
+#@-node:ekr.20031218072017.3302:<< set delims from the header line >>
+#@+node:ekr.20031218072017.1149:<< Write s into newFileName >>
+try:
+    mode = g.app.config.output_newline
+    mode = g.choose(mode=="platform",'w','wb')
+    file = open(newFileName,mode)
+    s = g.toEncodedString(s,self.encoding,reportErrors=True)
+    file.write(s)
+    file.close()
+    g.es("created: " + newFileName)
+except:
+    g.es("exception creating: " + newFileName)
+    g.es_exception()
+#@nonl
+#@-node:ekr.20031218072017.1149:<< Write s into newFileName >>
+#@-node:ekr.20031218072017.3300:removeSentinelsCommand
+#@+node:ekr.20031218072017.3226:importWebCommand
+def importWebCommand (self,files,webType):
+
+    c = self.c ; current = c.currentVnode()
+    if current == None: return
+    if not files: return
+    self.webType = webType
+
+    c.beginUpdate()
+    for fileName in files:
+        v = self.createOutlineFromWeb(fileName,current)
+        v.contract()
+        v.setDirty()
+        c.setChanged(True)
+    c.selectVnode(current)
+    c.endUpdate()
+#@nonl
+#@-node:ekr.20031218072017.3226:importWebCommand
+#@+node:ekr.20031218072017.3212:importFilesCommand
+def importFilesCommand (self,files,treeType):
+
+    c = self.c
+    if c == None: return
+    v = current = c.currentVnode()
+    if current == None: return
+    if len(files) < 1: return
+    self.treeType = treeType
+    c.beginUpdate()
+    if 1: # range of update...
+        if len(files) == 2:
+            << Create a parent for two files having a common prefix >>
+        for fileName in files:
+            v = self.createOutline(fileName,current)
+            self.perfectImport(fileName,v)
+            if v: # 8/11/02: createOutline may fail.
+                g.es("imported " + fileName)
+                v.contract()
+                v.setDirty()
+                c.setChanged(True)
+        c.validateOutline()
+        current.expand()
+    c.endUpdate()
+    c.selectVnode(current)
+#@nonl
+#@+node:ekr.20031218072017.3213:<< Create a parent for two files having a common prefix >>
+@ The two filenames have a common prefix everything before the last period is the same.  For example, x.h and x.cpp.
+@c
+
+name0 = files[0]
+name1 = files[1]
+prefix0, junk = g.os_path_splitext(name0)
+prefix1, junk = g.os_path_splitext(name1)
+if len(prefix0) > 0 and prefix0 == prefix1:
+    current = current.insertAsLastChild()
+    junk, nameExt = g.os_path_split(prefix1)
+    name,ext = g.os_path_splitext(prefix1)
+    current.initHeadString(name)
+#@nonl
+#@-node:ekr.20031218072017.3213:<< Create a parent for two files having a common prefix >>
+#@-node:ekr.20031218072017.3212:importFilesCommand
+#@+node:ekr.20031218072017.1810:importDerivedFiles
+def importDerivedFiles (self,parent,paths):
+    
+    c = self.c ; at = c.atFileCommands
+    current = c.currentVnode()
+    
+    c.beginUpdate()
+    
+    for fileName in paths:
+        v = parent.insertAfter()
+        v.initHeadString("Imported @file " + fileName)
+        c.undoer.setUndoParams("Import",v,select=current)
+        at.read(v,importFileName=fileName)
+        c.selectVnode(v)
+        v.expand()
+
+    c.endUpdate()
+#@nonl
+#@-node:ekr.20031218072017.1810:importDerivedFiles
+#@+node:ekr.20031218072017.3210:createOutline
+def createOutline (self,fileName,parent):
+
+    c = self.c ; current = c.currentVnode()
+    junk,self.fileName = g.os_path_split(fileName)
+    self.methodName,ext = g.os_path_splitext(self.fileName)
+    self.fileType = ext
+    self.setEncoding()
+    # g.trace(self.fileName,self.fileType)
+    # All file types except the following just get copied to the parent node.
+    ext = ext.lower()
+    appendFileFlag = ext not in (
+        ".c", ".cpp", ".cxx", ".el", ".java", ".pas", ".py", ".pyw", ".php")
+    << Read file into s >>
+    # Create the top-level headline.
+    v = parent.insertAsLastChild()
+    c.undoer.setUndoParams("Import",v,select=current)
+    if self.treeType == "@file":
+        v.initHeadString("@file " + fileName)
+    else:
+        v.initHeadString(fileName)
+        
+    self.rootLine = g.choose(self.treeType=="@file","","@root-code "+self.fileName+'\n')
+
+    if appendFileFlag:
+        body = "@ignore\n"
+        if ext in (".html",".htm"): body += "@language html\n"
+        if ext in (".txt",".text"): body += "@nocolor\n"
+        v.setBodyStringOrPane(body + self.rootLine + s)
+    elif ext in (".c", ".cpp", ".cxx"):
+        self.scanCText(s,v)
+    elif ext == ".el":
+        self.scanElispText(s,v)
+    elif ext == ".java":
+        self.scanJavaText(s,v,True) #outer level
+    elif ext == ".pas":
+        self.scanPascalText(s,v)
+    elif ext in (".py", ".pyw"):
+        self.scanPythonText(s,v)
+    elif ext == ".php":
+        self.scanPHPText(s,v) # 08-SEP-2002 DTHEIN
+    else:
+        g.es("createOutline: can't happen")
+    return v
+#@nonl
+#@+node:ekr.20031218072017.3211:<< Read file into s >>
+try:
+    file = open(fileName)
+    s = file.read()
+    s = g.toUnicode(s,self.encoding)
+    file.close()
+except:
+    g.es("can not open " + fileName)
+    import leoTest ; leoTest.fail()
+    return None
+#@nonl
+#@-node:ekr.20031218072017.3211:<< Read file into s >>
+#@-node:ekr.20031218072017.3210:createOutline
+#@-node:ekr.20040709104835.1:Changed import helpers to accept lists of paths
+#@-node:ekr.20040709064521:(Allowed multiple files in import dialogs)
+#@+node:ekr.20040711135244:(Improved g.importFromPath)
+#@+node:ekr.20031218072017.2278:g,importFromPath
+@ Warning:
+g.importFromPath uses imp.load_module, and that is equivalent to reload!
+Calling this function to reload Leo files will crash Leo!
+@c
+
+def importFromPath (name,path,verbose=False):
+    
+    import imp
+
+    try:
+        file = None ; data = None ; result = None
+        try:
+            fn = g.shortFileName(name)
+            mod_name,ext = g.os_path_splitext(fn)
+            path = g.os_path_normpath(path)
+            if g.CheckVersion(sys.version,"2.3"):
+                path = g.toEncodedString(path,app.tkEncoding)
+            else:
+                path = str(path) # May throw exception.
+            try:
+                data = imp.find_module(mod_name,[path]) # This can open the file.
+            except ImportError:
+                if verbose:
+                    s = "Can not import %s from %s" % (mod_name,path)
+                    print s ; g.es(s,color="blue")
+            if data:
+                file,pathname,description = data
+                try:
+                    result = imp.load_module(mod_name,file,pathname,description)
+                except ImportError:
+                    g.es_exception()
+        except:
+            g.es_exception()
+
+    # Put no return statements before here!
+    finally: 
+        if file: file.close()
+
+    return result
+#@nonl
+#@-node:ekr.20031218072017.2278:g,importFromPath
+#@-node:ekr.20040711135244:(Improved g.importFromPath)
 #@-node:ekr.20040706080316:in 4.2 b3
 #@-node:ekr.20040107064101.1:4.2 Projects
 #@-all
