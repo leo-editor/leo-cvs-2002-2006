@@ -1173,7 +1173,9 @@ class leoTkinterTree (leoFrame.leoTree):
 				if not config.getBoolWindowPref("look_for_control_drag_on_mouse_down"):
 					self.controlDrag = c.frame.controlKeyIsDown
 	
-			if vdrag and vdrag != v:
+			if vdrag and vdrag != v and ( # 12/6/03
+				vdrag not in v.t.joinList or v.childIndex() != vdrag.childIndex()):
+	
 				if self.controlDrag: # Clone v and move the clone.
 					if childFlag:
 						c.dragCloneToNthChildOf(v,vdrag,0)
