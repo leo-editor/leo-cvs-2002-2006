@@ -1,5 +1,7 @@
 #@+leo-ver=4-thin
 #@+node:ktenney.20041211072654.1:@thin at_view.py
+#@<< docstring >>
+#@+node:ekr.20041231104454:<< docstring >>
 '''A plugin that supports @clip, @view and @strip nodes.
 
 - Selecting a headline containing @clip places the contents of the clipboard in
@@ -13,23 +15,15 @@ places the contents of the file in the body pane, with all sentinels removed.
 
 This plugin also accumulates the effect of all @path nodes.
 '''
+#@nonl
+#@-node:ekr.20041231104454:<< docstring >>
+#@nl
 
 #@@language python
 #@@tabwidth -4
 #@@pagewidth 80
 
-#@<< about this plugin >>
-#@+node:ktenney.20041211072654.2:<< about this plugin >>
-#@+at 
-#@nonl
-# if the headline of a node starts with @view, load the body with the file 
-# contents
-#   if
-#@-at
-#@nonl
-#@-node:ktenney.20041211072654.2:<< about this plugin >>
-#@nl
-__version__ = "0.2"
+__version__ = "0.5"
 #@<< version history >>
 #@+node:ktenney.20041211072654.3:<< version history >>
 #@+at
@@ -49,6 +43,8 @@ __version__ = "0.2"
 #     - Fix bug in strip: set path = currentPath.abspath()
 # 0.4 EKR:
 #     - Handle case where self.c has been destroyed in idle handler.
+# 0.5 EKR:
+#     - Corrected and expanded doc string.
 #@-at
 #@nonl
 #@-node:ktenney.20041211072654.3:<< version history >>
@@ -180,9 +176,12 @@ class View:
         # get a path object for this position
         currentPath = self.getCurrentPath()
         
+        g.trace(currentPath)
+        
         if currentPath.exists():
             path = currentPath.abspath()
-            g.es('currentPath: %s' % path)
+            s = 'currentPath: %s' % path
+            print s ; g.es(s)
             filelines = path.lines()
             # Add an @ignore directive.
             lines = ['@ignore\n']
