@@ -1346,77 +1346,80 @@ class LeoFrame:
 		if not data: return
 		
 		openType,arg,ext=data
-		
-		#@<< set ext based on the present language >>
-		#@+node:1::<< set ext based on the present language >>
-		#@+body
-		if ext == None or len(ext) == 0:
-			dict = scanDirectives(c)
-			language = dict.get("language")
-			ext = a.language_extension_dict.get(language)
-			if ext == None:
-				ext = "txt"
+		flag = handleLeoHook("openwith1",c=c,v=v,openType=openType,arg=arg,ext=ext)
+		if flag != true:
 			
-		if ext[0] != ".":
-			ext = "."+ext
-		#@-body
-		#@-node:1::<< set ext based on the present language >>
+			#@<< set ext based on the present language >>
+			#@+node:1::<< set ext based on the present language >>
+			#@+body
+			if ext == None or len(ext) == 0:
+				dict = scanDirectives(c)
+				language = dict.get("language")
+				ext = a.language_extension_dict.get(language)
+				if ext == None:
+					ext = "txt"
+				
+			if ext[0] != ".":
+				ext = "."+ext
+			#@-body
+			#@-node:1::<< set ext based on the present language >>
 
-		
-		#@<< set path to the full pathname of a temp file using ext >>
-		#@+node:2::<< set path to the full pathname of a temp file using ext >>
-		#@+body
-		f = None
-		while f == None:
-			a.openWithFileNum += 1
-			name = "LeoTemp" + str(a.openWithFileNum) + ext
-			path = os.path.join(a.loadDir,name)
-			if not os.path.exists(path):
-				try:
-					f = open(path,"w")
-					f.write(v.bodyString())
-					f.flush()
-					f.close()
+			
+			#@<< set path to the full pathname of a temp file using ext >>
+			#@+node:2::<< set path to the full pathname of a temp file using ext >>
+			#@+body
+			f = None
+			while f == None:
+				a.openWithFileNum += 1
+				name = "LeoTemp" + str(a.openWithFileNum) + ext
+				path = os.path.join(a.loadDir,name)
+				if not os.path.exists(path):
 					try:
-						time=os.path.getmtime(path)
+						f = open(path,"w")
+						f.write(v.bodyString())
+						f.flush()
+						f.close()
+						try:
+							time=os.path.getmtime(path)
+						except:
+							time=None
+						es("creating: " + path)
+						es("time: " + str(time))
+						dict = {"c":c, "v":v, "f":f, "path":path, "time":time}
+						a.openWithFiles.append(dict)
 					except:
-						time=None
-					es("creating: " + path)
-					es("time: " + str(time))
-					dict = {"c":c, "v":v, "f":f, "path":path, "time":time}
-					a.openWithFiles.append(dict)
-				except:
-					f = None
-					es("exception opening temp file")
-					es_exception()
-		if not f: return
-		#@-body
-		#@-node:2::<< set path to the full pathname of a temp file using ext >>
+						f = None
+						es("exception opening temp file")
+						es_exception()
+			if not f: return
+			#@-body
+			#@-node:2::<< set path to the full pathname of a temp file using ext >>
 
-		
-		#@<< execute a command to open path >>
-		#@+node:3::<< execute a command to open path >>
-		#@+body
-		try:
-			if arg == None: arg = ""
-			if openType == "os.system":
-				command  = "os.system("+arg+path+")"
-				os.system(arg+path)
-			elif openType == "os.startfile":
-				command    = "os.startfile("+arg+path+")"
-				os.startfile(arg+path)
-			elif openType == "exec":
-				command    = "exec("+arg+path+")"
-				exec(arg+path)
-			else:
-				command="bad command:"+str(openType)
-			es(command)
-		except:
-			es("exception executing: "+command)
-			es_exception()
-		#@-body
-		#@-node:3::<< execute a command to open path >>
+			
+			#@<< execute a command to open path >>
+			#@+node:3::<< execute a command to open path >>
+			#@+body
+			try:
+				if arg == None: arg = ""
+				if openType == "os.system":
+					command  = "os.system("+arg+path+")"
+					os.system(arg+path)
+				elif openType == "os.startfile":
+					command    = "os.startfile("+arg+path+")"
+					os.startfile(arg+path)
+				elif openType == "exec":
+					command    = "exec("+arg+path+")"
+					exec(arg+path)
+				else:
+					command="bad command:"+str(openType)
+				es(command)
+			except:
+				es("exception executing: "+command)
+				es_exception()
+			#@-body
+			#@-node:3::<< execute a command to open path >>
 
+			handleLeoHook("openwith2",c=c,v=v,openType=openType,arg=arg,ext=ext)
 		return "break"
 	#@-body
 	#@-node:3::frame.OnOpenWith
@@ -1642,7 +1645,7 @@ class LeoFrame:
 	#@-node:10::frame.OnQuit
 	#@-node:1::top level
 	#@+node:2::Recent Files submenu
-	#@+node:1::OnOpenFileN
+	#@+node:1::frame.OnOpenFileN (Recent files)
 	#@+body
 	def OnOpenRecentFile(self,n):
 		
@@ -1669,14 +1672,16 @@ class LeoFrame:
 
 		if n < len(self.recentFiles):
 			fileName = self.recentFiles[n]
-			ok, frame = self.OpenWithFileName(fileName)
-			if ok and closeFlag:
-				app().windowList.remove(self)
-				self.destroy() # force the window to go away now.
-				app().log = frame # Sets the log stream for es()
-	
+			flag = handleLeoHook("recentfiles1",c=c,fileName=fileName,closeFlag=closeFlag)
+			if flag != false:
+				ok, frame = self.OpenWithFileName(fileName)
+				if ok and closeFlag:
+					app().windowList.remove(self)
+					self.destroy() # force the window to go away now.
+					app().log = frame # Sets the log stream for es()
+				handleLeoHook("recentfiles2",c=c,fileName=fileName,closeFlag=closeFlag)
 	#@-body
-	#@-node:1::OnOpenFileN
+	#@-node:1::frame.OnOpenFileN (Recent files)
 	#@-node:2::Recent Files submenu
 	#@+node:3::Read/Write submenu
 	#@+node:1::fileCommands.OnReadOutlineOnly

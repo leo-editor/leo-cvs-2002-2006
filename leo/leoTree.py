@@ -1244,84 +1244,89 @@ class leoTree:
 		self.select(v)
 	#@-body
 	#@-node:11::tree.OnIconClick
-	#@+node:12::tree.OnIconDoubleClick
+	#@+node:12::tree.OnIconDoubleClick (@url)
 	#@+body
 	def OnIconDoubleClick (self,v,event=None):
 	
+		c = self.commands
 		s = v.headString().strip()
 		if match_word(s,0,"@url"):
-			url = s[4:].strip()
-			
-			#@<< stop the url after any embedded blank and issue warning >>
-			#@+node:1::<< stop the url after any embedded blank and issue warning >>
-			#@+body
-			# For safety, the URL string should end at the first whitespace.
-			
-			url = url.replace('\t',' ')
-			i = url.find(' ')
-			if i > -1:
-				es("ignoring characters after space in url:"+url[i:])
-				es("use %20 instead of spaces")
-				url = url[:i]
-			
-			#@-body
-			#@-node:1::<< stop the url after any embedded blank and issue warning >>
-
-			
-			#@<< check the url; return if bad >>
-			#@+node:2::<< check the url; return if bad >>
-			#@+body
-			if not url or len(url) == 0:
-				es("no url following @url")
-				return
+			flag = handleLeoHook("@url1",c=c,v=v)
+			if flag != true:
+				url = s[4:].strip()
 				
+				#@<< stop the url after any embedded blank and issue warning >>
+				#@+node:1::<< stop the url after any embedded blank and issue warning >>
+				#@+body
+				# For safety, the URL string should end at the first whitespace.
+				
+				url = url.replace('\t',' ')
+				i = url.find(' ')
+				if i > -1:
+					es("ignoring characters after space in url:"+url[i:])
+					es("use %20 instead of spaces")
+					url = url[:i]
+				
+				#@-body
+				#@-node:1::<< stop the url after any embedded blank and issue warning >>
 
-			#@+at
-			#  A valid url is (according to D.T.Hein):
-			# 
-			# 3 or more lowercase alphas, followed by,
-			# one ':', followed by,
-			# one or more of: (excludes !"#;<>[\]^`|)
-			# 	$%&'()*+,-./0-9:=?@A-Z_a-z{}~
-			# followed by one of: (same as above, except no minus sign or comma).
-			# 	$%&'()*+/0-9:=?@A-Z_a-z}~
+				
+				#@<< check the url; return if bad >>
+				#@+node:2::<< check the url; return if bad >>
+				#@+body
+				if not url or len(url) == 0:
+					es("no url following @url")
+					return
+					
 
-			#@-at
-			#@@c
-			urlPattern = "[a-z]{3,}:[\$-:=?-Z_a-z{}~]+[\$-+\/-:=?-Z_a-z}~]"
-			import re
-			if not re.match(urlPattern,url):
-				es("invalid url: "+url)
-				return
-			#@-body
-			#@-node:2::<< check the url; return if bad >>
+				#@+at
+				#  A valid url is (according to D.T.Hein):
+				# 
+				# 3 or more lowercase alphas, followed by,
+				# one ':', followed by,
+				# one or more of: (excludes !"#;<>[\]^`|)
+				# 	$%&'()*+,-./0-9:=?@A-Z_a-z{}~
+				# followed by one of: (same as above, except no minus sign or comma).
+				# 	$%&'()*+/0-9:=?@A-Z_a-z}~
 
-			
-			#@<< pass the url to the web browser >>
-			#@+node:3::<< pass the url to the web browser >>
-			#@+body
-			#@+at
-			#  Most browsers should handle the following urls:
-			# 	ftp://ftp.uu.net/public/whatever.
-			# 	http://localhost/MySiteUnderDevelopment/index.html
-			# 	file:///home/me/todolist.html
+				#@-at
+				#@@c
+				urlPattern = "[a-z]{3,}:[\$-:=?-Z_a-z{}~]+[\$-+\/-:=?-Z_a-z}~]"
+				import re
+				if not re.match(urlPattern,url):
+					es("invalid url: "+url)
+					return
+				#@-body
+				#@-node:2::<< check the url; return if bad >>
 
-			#@-at
-			#@@c
+				
+				#@<< pass the url to the web browser >>
+				#@+node:3::<< pass the url to the web browser >>
+				#@+body
+				#@+at
+				#  Most browsers should handle the following urls:
+				# 	ftp://ftp.uu.net/public/whatever.
+				# 	http://localhost/MySiteUnderDevelopment/index.html
+				# 	file:///home/me/todolist.html
 
-			try:
-				import os
-				import webbrowser
-				os.chdir(app().loadDir)
-				# print "url:",`url`
-				webbrowser.open(url)
-			except:
-				es("exception opening " + url)
-				es_exception()
-			#@-body
-			#@-node:3::<< pass the url to the web browser >>
+				#@-at
+				#@@c
+
+				try:
+					import os
+					import webbrowser
+					os.chdir(app().loadDir)
+					# print "url:",`url`
+					webbrowser.open(url)
+				except:
+					es("exception opening " + url)
+					es_exception()
+				#@-body
+				#@-node:3::<< pass the url to the web browser >>
+
+				handleLeoHook("@url2",c=c,v=v)
 	#@-body
-	#@-node:12::tree.OnIconDoubleClick
+	#@-node:12::tree.OnIconDoubleClick (@url)
 	#@+node:13::tree.OnPopup
 	#@+body
 	# 20-SEP-2002 DTHEIN:
