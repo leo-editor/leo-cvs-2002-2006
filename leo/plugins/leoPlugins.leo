@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="1506" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="1507" clone_windows="0"/>
 <globals body_outline_ratio="0.42888165038002174">
-	<global_window_position top="17" left="287" height="921" width="957"/>
+	<global_window_position top="10" left="253" height="921" width="957"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences>
@@ -14,6 +14,11 @@
 <vnodes>
 <v t="edream.110203113231"><vh>Diary</vh>
 <v t="ekr.20040119102021"><vh>2004</vh>
+<v t="ekr.20040201061422"><vh>February 2004</vh>
+<v t="ekr.20040201061422.1" a="E"><vh>2/1/2004</vh>
+<v t="ekr.20040201061422.2"><vh>Created status_line.py plugin</vh></v>
+</v>
+</v>
 <v t="ekr.20040130165735"><vh>1/30 Fixed crashers in open_shell.py</vh></v>
 <v t="ekr.20040129151121"><vh>1/29 Activate xemacs plugin only on double-clicks</vh></v>
 <v t="ekr.20040119102021.1"><vh>1/19 Added http plugin</vh></v>
@@ -499,7 +504,7 @@
 </v>
 </v>
 <v t="edream.110603185221.169"><vh>python23\Lib\idlelib\Debugger.py</vh>
-<v t="edream.110603185221.170" a=""><vh>class Idb (Bdb)</vh>
+<v t="edream.110603185221.170"><vh>class Idb (Bdb)</vh>
 <v t="edream.110603185221.171"><vh>__init__</vh></v>
 <v t="edream.110603185221.172"><vh>user_line</vh></v>
 <v t="edream.110603185221.173"><vh>Idb.user_exception</vh></v>
@@ -515,8 +520,8 @@
 <v t="edream.110603185221.182"><vh>&lt;&lt; create top widget &amp; bindings &gt;&gt;</vh></v>
 </v>
 <v t="edream.110603185221.183"><vh>interaction</vh></v>
-<v t="edream.110603185221.184" a=""><vh>Debugger.sync_source_line</vh></v>
-<v t="edream.110603185221.185" a=""><vh>Debugger.__frame2fileline</vh></v>
+<v t="edream.110603185221.184"><vh>Debugger.sync_source_line</vh></v>
+<v t="edream.110603185221.185"><vh>Debugger.__frame2fileline</vh></v>
 <v t="edream.110603185221.186"><vh>Button handlers: these call the corresponding idb functions</vh>
 <v t="edream.110603185221.187"><vh>cont</vh></v>
 <v t="edream.110603185221.188"><vh>step</vh></v>
@@ -557,15 +562,15 @@
 </v>
 </v>
 <v t="edream.110603185221.218"><vh>Most important routines</vh>
-<v t="edream.110603185221.170" a=""><vh>class Idb (Bdb)</vh>
+<v t="edream.110603185221.170"><vh>class Idb (Bdb)</vh>
 <v t="edream.110603185221.171"><vh>__init__</vh></v>
 <v t="edream.110603185221.172"><vh>user_line</vh></v>
 <v t="edream.110603185221.173"><vh>Idb.user_exception</vh></v>
 <v t="edream.110603185221.174"><vh>Idb.in_rpc_code</vh></v>
 <v t="edream.110603185221.175"><vh>Idb.__frame2message</vh></v>
 </v>
-<v t="edream.110603185221.184" a=""><vh>Debugger.sync_source_line</vh></v>
-<v t="edream.110603185221.185" a=""><vh>Debugger.__frame2fileline</vh></v>
+<v t="edream.110603185221.184"><vh>Debugger.sync_source_line</vh></v>
+<v t="edream.110603185221.185"><vh>Debugger.__frame2fileline</vh></v>
 </v>
 </v>
 <v t="edream.110803170600"><vh>Count pages</vh></v>
@@ -584,7 +589,7 @@
 <v t="edream.110203113231.243"><vh>invoke c2py</vh></v>
 <v t="edream.111503111146"><vh>Finished or mostly finished</vh>
 <v t="edream.111303205442"><vh>(colorizing) (demo only)</vh>
-<v t="edream.111303204025" a=""><vh>Indices</vh>
+<v t="edream.111303204025"><vh>Indices</vh>
 <v t="edream.111303204025.1"><vh>adjustIndex</vh></v>
 <v t="edream.111303204025.2"><vh>compareIndices</vh></v>
 <v t="edream.111303204025.3"><vh>convertRowColumnToIndex</vh></v>
@@ -592,7 +597,7 @@
 <v t="edream.111303204025.5"><vh>getImageIndex</vh></v>
 <v t="edream.111403080609"><vh>maxWxIndex (internal use)</vh></v>
 </v>
-<v t="edream.111303204517" a=""><vh>Color tags (hacks for styles)</vh>
+<v t="edream.111303204517"><vh>Color tags (hacks for styles)</vh>
 <v t="edream.111403082513"><vh>tkColorToWxColor (internal use)</vh></v>
 <v t="edream.111303205611"><vh>tag_add</vh></v>
 <v t="edream.111303205611.1"><vh>tag_bind</vh></v>
@@ -604,9 +609,9 @@
 </v>
 <v t="edream.111503111350"><vh>Unfinished</vh>
 <v t="edream.111303184347"><vh>(delete_range) doesn't work</vh>
-<v t="edream.111303103141.3" a=""><vh>delete_range</vh></v>
+<v t="edream.111303103141.3"><vh>delete_range</vh></v>
 </v>
-<v t="edream.111303100039" a=""><vh>Gui-dependent commands (to do)</vh>
+<v t="edream.111303100039"><vh>Gui-dependent commands (to do)</vh>
 <v t="edream.111303100039.1"><vh>Edit Menu...</vh>
 <v t="edream.111303101257"><vh>abortEditLabelCommand</vh></v>
 <v t="edream.111303101257.1"><vh>endEditLabelCommand</vh></v>
@@ -741,7 +746,7 @@
 </v>
 <v t="edream.111303204836"><vh>Tk wrappers wxLeoBody TO DO</vh>
 <v t="edream.110203113231.543"><vh>Bounding box...</vh></v>
-<v t="edream.111303204517" a=""><vh>Color tags (hacks for styles)</vh>
+<v t="edream.111303204517"><vh>Color tags (hacks for styles)</vh>
 <v t="edream.111403082513"><vh>tkColorToWxColor (internal use)</vh></v>
 <v t="edream.111303205611"><vh>tag_add</vh></v>
 <v t="edream.111303205611.1"><vh>tag_bind</vh></v>
@@ -751,7 +756,7 @@
 </v>
 <v t="edream.110203113231.544"><vh>Config... TO DO</vh></v>
 <v t="edream.110203113231.545"><vh>Focus...</vh></v>
-<v t="edream.111303204025" a=""><vh>Indices</vh>
+<v t="edream.111303204025"><vh>Indices</vh>
 <v t="edream.111303204025.1"><vh>adjustIndex</vh></v>
 <v t="edream.111303204025.2"><vh>compareIndices</vh></v>
 <v t="edream.111303204025.3"><vh>convertRowColumnToIndex</vh></v>
@@ -804,7 +809,7 @@
 <v t="edream.110203113231.381"><vh>getTitle</vh></v>
 <v t="edream.111303135410"><vh>setTitle</vh></v>
 </v>
-<v t="edream.111303100039" a=""><vh>Gui-dependent commands (to do)</vh>
+<v t="edream.111303100039"><vh>Gui-dependent commands (to do)</vh>
 <v t="edream.111303100039.1"><vh>Edit Menu...</vh>
 <v t="edream.111303101257"><vh>abortEditLabelCommand</vh></v>
 <v t="edream.111303101257.1"><vh>endEditLabelCommand</vh></v>
@@ -845,7 +850,7 @@
 <v t="edream.111303121150"><vh>add_separator</vh></v>
 <v t="edream.111303103141.1"><vh>bind (wx has a different key model than tk)</vh></v>
 <v t="edream.111303103141.2"><vh>delete (not called?)</vh></v>
-<v t="edream.111303103141.3" a=""><vh>delete_range</vh></v>
+<v t="edream.111303103141.3"><vh>delete_range</vh></v>
 <v t="edream.111303103141.4"><vh>destroy (not called ?)</vh></v>
 <v t="edream.111303111942"><vh>insert_cascade</vh></v>
 <v t="edream.111303110018"><vh>new_menu</vh></v>
@@ -1646,8 +1651,9 @@
 </v>
 <v t="ekr.20040127114616"><vh>main code</vh></v>
 </v>
+<v t="ekr.20040201060959" tnodeList="ekr.20040201060959"><vh>@file status_line.py</vh></v>
 </v>
-<v t="edream.120603093808" a="MV" tnodeList="edream.120603093808"><vh>@file pluginsManager.txt</vh></v>
+<v t="edream.120603093808" a="MTV" tnodeList="edream.120603093808"><vh>@file pluginsManager.txt</vh></v>
 </vnodes>
 <tnodes>
 <t tx="edream.031216103123">@nocolor
@@ -15679,6 +15685,7 @@ plugin_signon(__name__)</t>
 	# nav_buttons.py
 	plugins_menu.py
 	rowcol.py
+	# status_line.py
 	# word_export.py
 	# xemacs.py
 	
@@ -15776,7 +15783,7 @@ if Tkinter and app.gui.guiName() == "tkinter":
 		last_key = keycode
 	else:
 		last_key = None</t>
-<t tx="ekr.20040107092135">These were written by Paul Paterson.  EKR added the Recent Menu.</t>
+<t tx="ekr.20040107092135">Most of these were written by Paul Paterson.  EKR added the Recent Menu.</t>
 <t tx="ekr.20040107092135.2">&lt;&lt; doc string &gt;&gt;
 
 __version__ = "0.3"
@@ -16195,7 +16202,11 @@ if Tkinter:
 1/9/04: rowcol.py
 
 - Call updatedRowColWidget immediately from addWidgets.
-  This seems to be necessary to reserve the proper place in the icon area.</t>
+  This seems to be necessary to reserve the proper place in the icon area.
+
+2/1/04: status_line.py:
+
+Adds status line to bottom of Leo window</t>
 <t tx="ekr.20040111053758">@nocolor
 
 I now have a version of the plugin that produces HTML output that has syntax
@@ -17510,5 +17521,32 @@ def setUp(self):
 '''</t>
 <t tx="ekr.20040129151121"></t>
 <t tx="ekr.20040130165735"></t>
+<t tx="ekr.20040201060959">"""Adds status line to Leo window."""
+
+from leoPlugins import *
+from leoGlobals import *
+
+try:
+	import Tkinter
+except ImportError:
+	Tkinter = None
+
+if Tkinter: # Register the handlers...
+
+	def createStatusLine(tag,keywords):
+		c = keywords.get("c")
+		c.frame.createStatusLine()
+		c.frame.putStatusLine("Welcome to Leo")
+
+	if app.gui is None:
+		app.createTkGui(__file__)
+
+	if app.gui.guiName() == "tkinter":
+		registerHandler("after-create-leo-frame", createStatusLine)
+		__version__ = "0.1"
+		plugin_signon(__name__)</t>
+<t tx="ekr.20040201061422"></t>
+<t tx="ekr.20040201061422.1"></t>
+<t tx="ekr.20040201061422.2">This creates a status area at the bottom of the Leo Window.  Plugins may write to this area using the status area convenience routines in leoTkinterFrame.py.</t>
 </tnodes>
 </leo_file>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="2331" clone_windows="0"/>
-<globals body_outline_ratio="0.32115869017632243">
+<globals body_outline_ratio="0.44343434343434346">
 	<global_window_position top="10" left="182" height="990" width="1072"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
@@ -2816,7 +2816,7 @@
 <v t="ekr.20040126105605.3"><vh>b</vh></v>
 </v>
 </v>
-<v t="edream.110203161858.2119" a="TV"><vh>Unit Tests</vh>
+<v t="edream.110203161858.2119" a="E"><vh>Unit Tests</vh>
 <v t="edream.110203161858.2124"><vh>tempNode</vh></v>
 <v t="dthein.20040108213304"><vh>reformatParagraphsTests</vh>
 <v t="dthein.20040108213304.1"><vh>testNoTrailingNewline</vh>
@@ -2979,7 +2979,7 @@
 <v t="edream.110903064653.3"><vh>c:\prog\leoCvs\leo\plugins\leoPlugins.leo</vh></v>
 <v t="edream.110903064653.4"><vh>c:\prog\leoCvs\leo\doc\LeoDocs.leo</vh></v>
 </v>
-<v t="edream.110203161858.2153" a="E"><vh>Run all tests</vh></v>
+<v t="edream.110203161858.2153" a="ETV"><vh>Run all tests</vh></v>
 </v>
 </vnodes>
 <tnodes>

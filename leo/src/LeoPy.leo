@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="4109" clone_windows="0"/>
-<globals body_outline_ratio="0.43326039387308535">
-	<global_window_position top="38" left="165" height="914" width="919"/>
+<globals body_outline_ratio="0.35010940919037198">
+	<global_window_position top="10" left="265" height="914" width="919"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences>
@@ -14,6 +14,11 @@
 <vnodes>
 <v t="ekr.20031218072017"><vh> Diary</vh>
 <v t="ekr.20040105070023"><vh>2004</vh>
+<v t="ekr.20040201113342"><vh>February 2004</vh>
+<v t="ekr.20040201113342.1"><vh>2/1</vh>
+<v t="ekr.20040201113342.2"><vh>Fixed bugs in Script-Find/change and improved documentation</vh></v>
+</v>
+</v>
 <v t="ekr.20040105070023.1"><vh>January 2004</vh>
 <v t="ekr.20040130183451"><vh>1/30</vh>
 <v t="ekr.20040130160615"><vh>Added script to look for blanks preceding tabs in leading whitespace</vh></v>
@@ -895,7 +900,7 @@
 <v t="ekr.20040107090240"><vh>~Research</vh>
 <v t="ekr.20040107064101.5"><vh>Zope notes</vh>
 <v t="ekr.20040107065006"><vh>posting</vh></v>
-<v t="ekr.20040107064854"><vh>Code</vh></v>
+<v t="ekr.20040107064854"><vh>example Code</vh></v>
 <v t="ekr.20040107080609.1"><vh>Zshell</vh></v>
 <v t="ekr.20040107064854.1"><vh>@url http://zope.org/Products/StandaloneZODB</vh></v>
 <v t="ekr.20040107064854.2"><vh>@url http://jace.seacrow.com/tech/zope/blug-zodb</vh></v>
@@ -4572,6 +4577,33 @@
 <v t="ekr.20031218072017.1765"><vh>validateOutline</vh></v>
 </v>
 </v>
+<v t="ekr.20040131093452"><vh>(Improve handling of file extensions)</vh>
+<v t="ekr.20040131101109"><vh>Report: Dave Hein</vh>
+<v t="ekr.20040131103531.1"><vh>Removed defaultextension from runOpenFileDialog</vh></v>
+</v>
+<v t="ekr.20031218072017.4057"><vh>app.gui.Tkinter file dialogs</vh></v>
+<v t="ekr.20040131103531"><vh>&lt;&lt; define leoGui file types &gt;&gt; (not used yet)</vh></v>
+</v>
+</v>
+<v t="ekr.20040201101905"><vh>2/04</vh>
+<v t="ekr.20040201070415" a="M"><vh>(Added done message to Mark Changed commands)</vh>
+<v t="ekr.20031218072017.2923" a="M"><vh>markChangedHeadlines</vh></v>
+<v t="ekr.20031218072017.2924"><vh>markChangedRoots</vh></v>
+</v>
+<v t="ekr.20040201103324"><vh>(Fixed major bug in tkFind.init)</vh>
+<v t="ekr.20040201103324.1"><vh>Traceback</vh></v>
+<v t="ekr.20031218072017.2059"><vh>find.init</vh>
+<v t="ekr.20031218072017.2060"><vh>&lt;&lt; set find/change widgets &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.2061"><vh>&lt;&lt; set radio buttons from ivars &gt;&gt;</vh></v>
+</v>
+</v>
+<v t="ekr.20040201070919"><vh>(Changed script-find/change so it is more intuitive)</vh>
+<v t="ekr.20040201101905.1"><vh>What I did</vh></v>
+<v t="ekr.20040201070845"><vh>Routines that execute script-find and script-change</vh>
+<v t="ekr.20031218072017.3072"><vh>doFind...Script</vh></v>
+<v t="ekr.20031218072017.2417"><vh>doChange...Script</vh></v>
+</v>
+</v>
 </v>
 </v>
 <v t="ekr.20040130171643"><vh> To do: 4.1 rc5</vh>
@@ -4602,12 +4634,43 @@
 <v t="ekr.20031218072017.2414"><vh>&lt;&lt; Theory of operation of find/change &gt;&gt;</vh></v>
 </v>
 <v t="ekr.20031218072017.2415"><vh>  Scripts</vh>
-<v t="ekr.20040105065037"><vh>Import scripts</vh>
+<v t="ekr.20031218072017.2416" a="E"><vh>Fnd/change scripts</vh>
+<v t="ekr.20031218072017.2418"><vh>initScriptFind (use this to set up Leo's Find/Change dialog for scripting)</vh></v>
+<v t="ekr.20040201070845"><vh>Routines that execute script-find and script-change</vh>
+<v t="ekr.20031218072017.3072" a="M"><vh>doFind...Script</vh></v>
+<v t="ekr.20031218072017.2417"><vh>doChange...Script</vh></v>
+</v>
+<v t="ekr.20040201061928"><vh>Find script to check for dubious leading whitespace</vh>
+<v t="ekr.20040130112145"><vh>Find script</vh></v>
+<v t="ekr.20040201104001"><vh>test</vh></v>
+</v>
+<v t="ekr.20031218072017.2419"><vh>Find script to clean whitespace</vh>
+<v t="ekr.20031218072017.2420"><vh>Find script</vh></v>
+<v t="ekr.20031218072017.2421"><vh>Change script</vh></v>
+</v>
+<v t="ekr.20031218072017.2422"><vh>Find scripts to convert @doc comments to doc strings</vh>
+<v t="ekr.20031218072017.2423"><vh>Find script</vh></v>
+<v t="ekr.20031218072017.2424"><vh>Change script</vh></v>
+<v t="ekr.20031218072017.2425"><vh>re tests</vh></v>
+<v t="ekr.20031218072017.2426"><vh>early find script</vh></v>
+</v>
+</v>
+<v t="ekr.20040201063019"><vh>Other scripts</vh>
+<v t="ekr.20031218072017.4251"><vh>Clear all timestamps</vh></v>
+<v t="ekr.20031218072017.4248"><vh>Create a graphviz file</vh>
+<v t="ekr.20031218072017.4249"><vh>&lt;&lt;about this script&gt;&gt;</vh></v>
+<v t="ekr.20040201063200"><vh>rPrint</vh></v>
+<v t="ekr.20040201063200.1"><vh>newLineize</vh></v>
+<v t="ekr.20040201063200.2"><vh>graphvizString</vh></v>
+</v>
+<v t="ekr.20031218072017.2429"><vh>Count pages</vh></v>
+<v t="ekr.20031218072017.2428"><vh>Find script to change OnX to x in body (didn't quite work :-)</vh></v>
+<v t="ekr.20031218072017.2427"><vh>Find scripts to change OnX to x in headline</vh></v>
+</v>
 <v t="ekr.20040104184644"><vh>Recursive import script</vh>
 <v t="ekr.20040104184913.1"><vh>importFiles</vh></v>
 <v t="ekr.20040104184913.2"><vh>importDir</vh></v>
 <v t="ekr.20040104184913.3"><vh>createLastChildOf</vh></v>
-</v>
 </v>
 <v t="ekr.20031218072017.2431"><vh>Testing scripts</vh>
 <v t="ekr.20031218072017.2432"><vh>Script to clean unused tnodeLists</vh></v>
@@ -4732,29 +4795,6 @@
 </v>
 </v>
 <v t="ekr.20031218072017.2537"><vh>@file ../scripts/untangle_done.py</vh></v>
-</v>
-<v t="ekr.20031218072017.4251"><vh>Script to clear all timestamps</vh></v>
-<v t="ekr.20031218072017.4248"><vh>Script to create a graphviz file</vh>
-<v t="ekr.20031218072017.4249"><vh>About this script</vh></v>
-<v t="ekr.20031218072017.4250"><vh>The script</vh></v>
-</v>
-<v t="ekr.20031218072017.2416"><vh>Editing scripts</vh>
-<v t="ekr.20040130112145"><vh>Script-Find to check for dubious leading whitespace</vh></v>
-<v t="ekr.20031218072017.2417"><vh>doChange...Script</vh></v>
-<v t="ekr.20031218072017.2418"><vh>initScriptFind</vh></v>
-<v t="ekr.20031218072017.2419"><vh>Find script to clean whitespace</vh>
-<v t="ekr.20031218072017.2420"><vh>Find script</vh></v>
-<v t="ekr.20031218072017.2421"><vh>Change script</vh></v>
-</v>
-<v t="ekr.20031218072017.2422"><vh>Find scripts to convert @doc comments to doc strings</vh>
-<v t="ekr.20031218072017.2423"><vh>Find script</vh></v>
-<v t="ekr.20031218072017.2424"><vh>Change script</vh></v>
-<v t="ekr.20031218072017.2425"><vh>re tests</vh></v>
-<v t="ekr.20031218072017.2426"><vh>early find script</vh></v>
-</v>
-<v t="ekr.20031218072017.2427"><vh>Find scripts to change OnX to x in headline</vh></v>
-<v t="ekr.20031218072017.2428"><vh>Find script to change OnX to x in body (didn't quite work :-)</vh></v>
-<v t="ekr.20031218072017.2429"><vh>Count pages</vh></v>
 </v>
 </v>
 <v t="ekr.20031218072017.2538"><vh> Distribution &amp; version stuff</vh>
@@ -5334,7 +5374,7 @@
 <v t="ekr.20031218072017.2221"><vh>hyperlink callbacks...</vh></v>
 </v>
 </v>
-<v t="ekr.20031218072017.2810" tnodeList="ekr.20031218072017.2810,ekr.20031218072017.2812,ekr.20031218072017.2813,ekr.20031218072017.2814,ekr.20031218072017.2815,ekr.20031218072017.2816,ekr.20031218072017.2817,ekr.20031218072017.2582,ekr.20031218072017.1623,ekr.20031218072017.2821,ekr.20031218072017.2822,ekr.20031218072017.2823,ekr.20031218072017.2824,ekr.20031218072017.2825,ekr.20031218072017.2826,ekr.20031218072017.2827,ekr.20031218072017.2828,ekr.20031218072017.2829,ekr.20031218072017.2830,ekr.20031218072017.2831,ekr.20031218072017.2832,ekr.20031218072017.2833,ekr.20031218072017.2834,ekr.20031218072017.2835,ekr.20031218072017.2836,ekr.20031218072017.2837,ekr.20031218072017.2080,ekr.20031218072017.2081,ekr.20031218072017.2082,ekr.20031218072017.2083,ekr.20031218072017.2839,ekr.20031218072017.1839,ekr.20031218072017.1809,ekr.20031218072017.2014,ekr.20031218072017.2842,ekr.20031218072017.2843,ekr.20031218072017.2844,ekr.20031218072017.2846,ekr.20031218072017.2847,ekr.20031218072017.2848,ekr.20031218072017.2850,ekr.20031218072017.2851,ekr.20031218072017.2852,ekr.20031218072017.2853,ekr.20031218072017.2854,ekr.20031218072017.2855,ekr.20031218072017.2856,ekr.20031218072017.2857,ekr.20031218072017.2858,ekr.20031218072017.2859,ekr.20031218072017.2860,ekr.20031218072017.2863,ekr.20031218072017.2140,ekr.20031218072017.2141,ekr.20031218072017.2142,ekr.20031218072017.2143,ekr.20031218072017.2864,ekr.20031218072017.2865,ekr.20031218072017.2866,ekr.20031218072017.2867,ekr.20031218072017.2868,ekr.20031218072017.2869,ekr.20031218072017.2870,ekr.20031218072017.2871,ekr.20031218072017.2872,ekr.20031218072017.2873,ekr.20031218072017.2874,ekr.20031218072017.2875,ekr.20031218072017.2876,ekr.20031218072017.2877,ekr.20031218072017.2878,ekr.20031218072017.2879,ekr.20031218072017.2880,ekr.20031218072017.2881,ekr.20031218072017.2882,ekr.20031218072017.2088,ekr.20031218072017.2090,ekr.20031218072017.2883,ekr.20031218072017.2086,ekr.20031218072017.1704,ekr.20031218072017.1705,ekr.20031218072017.1821,ekr.20031218072017.1822,ekr.20031218072017.1823,ekr.20031218072017.1824,ekr.20031218072017.1706,ekr.20031218072017.1707,ekr.20031218072017.1708,ekr.20031218072017.1709,ekr.20031218072017.1710,ekr.20031218072017.1711,ekr.20031218072017.1825,ekr.20031218072017.1826,ekr.20031218072017.1827,ekr.20031218072017.1828,ekr.20031218072017.1829,ekr.20031218072017.1830,ekr.20031218072017.1831,ekr.20031218072017.1832,ekr.20031218072017.1833,ekr.20031218072017.1834,ekr.20031218072017.1835,ekr.20031218072017.1836,ekr.20031218072017.1837,ekr.20031218072017.1838,ekr.20031218072017.2886,ekr.20031218072017.2290,ekr.20031218072017.2888,ekr.20031218072017.2889,ekr.20031218072017.2890,ekr.20031218072017.2891,ekr.20031218072017.2892,ekr.20031218072017.2893,ekr.20031218072017.1549,ekr.20031218072017.1550,ekr.20031218072017.1551,ekr.20031218072017.2072,ekr.20031218072017.2028,ekr.20031218072017.1760,ekr.20031218072017.1193,ekr.20031218072017.1761,ekr.20031218072017.1762,ekr.20031218072017.1763,ekr.20031218072017.1764,ekr.20031218072017.1765,ekr.20031218072017.1188,ekr.20031218072017.1189,ekr.20031218072017.1190,ekr.20031218072017.2896,ekr.20031218072017.2897,ekr.20031218072017.2900,ekr.20031218072017.2901,ekr.20031218072017.2902,ekr.20031218072017.2903,ekr.20031218072017.2904,ekr.20031218072017.2905,ekr.20031218072017.2906,ekr.20031218072017.2907,ekr.20031218072017.2908,ekr.20031218072017.2910,ekr.20031218072017.2911,ekr.20031218072017.2912,ekr.20031218072017.1628,ekr.20031218072017.1627,ekr.20031218072017.2914,ekr.20031218072017.2915,ekr.20031218072017.2916,ekr.20031218072017.2917,ekr.20031218072017.2918,ekr.20031218072017.2919,ekr.20031218072017.2920,ekr.20031218072017.2921,ekr.20031218072017.2923,ekr.20031218072017.2924,ekr.20031218072017.2925,ekr.20031218072017.2926,ekr.20031218072017.2927,ekr.20031218072017.2928,ekr.20031218072017.2929,ekr.20031218072017.2930,ekr.20031218072017.1767,ekr.20031218072017.1768,ekr.20031218072017.1769,ekr.20031218072017.1770,ekr.20031218072017.1771,ekr.20031218072017.1772,ekr.20031218072017.1773,ekr.20031218072017.1774,ekr.20031218072017.2092,ekr.20031218072017.2932,ekr.20031218072017.2933,ekr.20031218072017.2934,ekr.20031218072017.2936,ekr.20031218072017.2935,ekr.20031218072017.2937,ekr.20031218072017.2939,ekr.20031218072017.2940,ekr.20031218072017.2941,ekr.20031218072017.2942,ekr.20031218072017.2943,ekr.20031218072017.2944,ekr.20031218072017.2353,ekr.20031218072017.2946,ekr.20031218072017.2947,ekr.20031218072017.2948,ekr.20031218072017.2950,ekr.20031218072017.2951,ekr.20031218072017.2952,ekr.20031218072017.2953,ekr.20031218072017.2954,ekr.20040131170659,ekr.20031218072017.2956,ekr.20031218072017.2957,ekr.20031218072017.2958,ekr.20031218072017.2959,ekr.20031218072017.2960,ekr.20031218072017.2961,ekr.20031218072017.2962,ekr.20031218072017.2963,ekr.20031218072017.2964,ekr.20031218072017.2287,ekr.20031218072017.2965,ekr.20031218072017.2966,ekr.20031218072017.2967,ekr.20031218072017.2968,ekr.20031218072017.2969,ekr.20031218072017.2970,ekr.20031218072017.2971,ekr.20031218072017.2972,ekr.20031218072017.2973,ekr.20031218072017.2974,ekr.20031218072017.2975,ekr.20031218072017.2976,ekr.20031218072017.2977,ekr.20031218072017.2978,ekr.20031218072017.2979,ekr.20031218072017.2980,ekr.20031218072017.2981,ekr.20031218072017.2983,ekr.20031218072017.2984,ekr.20031218072017.2985,ekr.20031218072017.2986,ekr.20031218072017.2987,ekr.20031218072017.2988,ekr.20031218072017.2989,ekr.20031218072017.2991,ekr.20031218072017.2992,ekr.20031218072017.2993,ekr.20031218072017.2994,ekr.20031218072017.2995,ekr.20031218072017.2996,ekr.20031218072017.2997,ekr.20031218072017.2998,ekr.20031218072017.2999,ekr.20031218072017.3000"><vh>@file leoCommands.py</vh>
+<v t="ekr.20031218072017.2810" a="M" tnodeList="ekr.20031218072017.2810,ekr.20031218072017.2812,ekr.20031218072017.2813,ekr.20031218072017.2814,ekr.20031218072017.2815,ekr.20031218072017.2816,ekr.20031218072017.2817,ekr.20031218072017.2582,ekr.20031218072017.1623,ekr.20031218072017.2821,ekr.20031218072017.2822,ekr.20031218072017.2823,ekr.20031218072017.2824,ekr.20031218072017.2825,ekr.20031218072017.2826,ekr.20031218072017.2827,ekr.20031218072017.2828,ekr.20031218072017.2829,ekr.20031218072017.2830,ekr.20031218072017.2831,ekr.20031218072017.2832,ekr.20031218072017.2833,ekr.20031218072017.2834,ekr.20031218072017.2835,ekr.20031218072017.2836,ekr.20031218072017.2837,ekr.20031218072017.2080,ekr.20031218072017.2081,ekr.20031218072017.2082,ekr.20031218072017.2083,ekr.20031218072017.2839,ekr.20031218072017.1839,ekr.20031218072017.1809,ekr.20031218072017.2014,ekr.20031218072017.2842,ekr.20031218072017.2843,ekr.20031218072017.2844,ekr.20031218072017.2846,ekr.20031218072017.2847,ekr.20031218072017.2848,ekr.20031218072017.2850,ekr.20031218072017.2851,ekr.20031218072017.2852,ekr.20031218072017.2853,ekr.20031218072017.2854,ekr.20031218072017.2855,ekr.20031218072017.2856,ekr.20031218072017.2857,ekr.20031218072017.2858,ekr.20031218072017.2859,ekr.20031218072017.2860,ekr.20031218072017.2863,ekr.20031218072017.2140,ekr.20031218072017.2141,ekr.20031218072017.2142,ekr.20031218072017.2143,ekr.20031218072017.2864,ekr.20031218072017.2865,ekr.20031218072017.2866,ekr.20031218072017.2867,ekr.20031218072017.2868,ekr.20031218072017.2869,ekr.20031218072017.2870,ekr.20031218072017.2871,ekr.20031218072017.2872,ekr.20031218072017.2873,ekr.20031218072017.2874,ekr.20031218072017.2875,ekr.20031218072017.2876,ekr.20031218072017.2877,ekr.20031218072017.2878,ekr.20031218072017.2879,ekr.20031218072017.2880,ekr.20031218072017.2881,ekr.20031218072017.2882,ekr.20031218072017.2088,ekr.20031218072017.2090,ekr.20031218072017.2883,ekr.20031218072017.2086,ekr.20031218072017.1704,ekr.20031218072017.1705,ekr.20031218072017.1821,ekr.20031218072017.1822,ekr.20031218072017.1823,ekr.20031218072017.1824,ekr.20031218072017.1706,ekr.20031218072017.1707,ekr.20031218072017.1708,ekr.20031218072017.1709,ekr.20031218072017.1710,ekr.20031218072017.1711,ekr.20031218072017.1825,ekr.20031218072017.1826,ekr.20031218072017.1827,ekr.20031218072017.1828,ekr.20031218072017.1829,ekr.20031218072017.1830,ekr.20031218072017.1831,ekr.20031218072017.1832,ekr.20031218072017.1833,ekr.20031218072017.1834,ekr.20031218072017.1835,ekr.20031218072017.1836,ekr.20031218072017.1837,ekr.20031218072017.1838,ekr.20031218072017.2886,ekr.20031218072017.2290,ekr.20031218072017.2888,ekr.20031218072017.2889,ekr.20031218072017.2890,ekr.20031218072017.2891,ekr.20031218072017.2892,ekr.20031218072017.2893,ekr.20031218072017.1549,ekr.20031218072017.1550,ekr.20031218072017.1551,ekr.20031218072017.2072,ekr.20031218072017.2028,ekr.20031218072017.1760,ekr.20031218072017.1193,ekr.20031218072017.1761,ekr.20031218072017.1762,ekr.20031218072017.1763,ekr.20031218072017.1764,ekr.20031218072017.1765,ekr.20031218072017.1188,ekr.20031218072017.1189,ekr.20031218072017.1190,ekr.20031218072017.2896,ekr.20031218072017.2897,ekr.20031218072017.2900,ekr.20031218072017.2901,ekr.20031218072017.2902,ekr.20031218072017.2903,ekr.20031218072017.2904,ekr.20031218072017.2905,ekr.20031218072017.2906,ekr.20031218072017.2907,ekr.20031218072017.2908,ekr.20031218072017.2910,ekr.20031218072017.2911,ekr.20031218072017.2912,ekr.20031218072017.1628,ekr.20031218072017.1627,ekr.20031218072017.2914,ekr.20031218072017.2915,ekr.20031218072017.2916,ekr.20031218072017.2917,ekr.20031218072017.2918,ekr.20031218072017.2919,ekr.20031218072017.2920,ekr.20031218072017.2921,ekr.20031218072017.2923,ekr.20031218072017.2924,ekr.20031218072017.2925,ekr.20031218072017.2926,ekr.20031218072017.2927,ekr.20031218072017.2928,ekr.20031218072017.2929,ekr.20031218072017.2930,ekr.20031218072017.1767,ekr.20031218072017.1768,ekr.20031218072017.1769,ekr.20031218072017.1770,ekr.20031218072017.1771,ekr.20031218072017.1772,ekr.20031218072017.1773,ekr.20031218072017.1774,ekr.20031218072017.2092,ekr.20031218072017.2932,ekr.20031218072017.2933,ekr.20031218072017.2934,ekr.20031218072017.2936,ekr.20031218072017.2935,ekr.20031218072017.2937,ekr.20031218072017.2939,ekr.20031218072017.2940,ekr.20031218072017.2941,ekr.20031218072017.2942,ekr.20031218072017.2943,ekr.20031218072017.2944,ekr.20031218072017.2353,ekr.20031218072017.2946,ekr.20031218072017.2947,ekr.20031218072017.2948,ekr.20031218072017.2950,ekr.20031218072017.2951,ekr.20031218072017.2952,ekr.20031218072017.2953,ekr.20031218072017.2954,ekr.20040131170659,ekr.20031218072017.2956,ekr.20031218072017.2957,ekr.20031218072017.2958,ekr.20031218072017.2959,ekr.20031218072017.2960,ekr.20031218072017.2961,ekr.20031218072017.2962,ekr.20031218072017.2963,ekr.20031218072017.2964,ekr.20031218072017.2287,ekr.20031218072017.2965,ekr.20031218072017.2966,ekr.20031218072017.2967,ekr.20031218072017.2968,ekr.20031218072017.2969,ekr.20031218072017.2970,ekr.20031218072017.2971,ekr.20031218072017.2972,ekr.20031218072017.2973,ekr.20031218072017.2974,ekr.20031218072017.2975,ekr.20031218072017.2976,ekr.20031218072017.2977,ekr.20031218072017.2978,ekr.20031218072017.2979,ekr.20031218072017.2980,ekr.20031218072017.2981,ekr.20031218072017.2983,ekr.20031218072017.2984,ekr.20031218072017.2985,ekr.20031218072017.2986,ekr.20031218072017.2987,ekr.20031218072017.2988,ekr.20031218072017.2989,ekr.20031218072017.2991,ekr.20031218072017.2992,ekr.20031218072017.2993,ekr.20031218072017.2994,ekr.20031218072017.2995,ekr.20031218072017.2996,ekr.20031218072017.2997,ekr.20031218072017.2998,ekr.20031218072017.2999,ekr.20031218072017.3000"><vh>@file leoCommands.py</vh>
 <v t="ekr.20031218072017.2811"><vh> c.Birth &amp; death</vh>
 <v t="ekr.20031218072017.2812"><vh>c.__init__, initIvars</vh>
 <v t="ekr.20031218072017.2813"><vh>&lt;&lt; initialize ivars &gt;&gt;</vh></v>
@@ -5555,7 +5595,7 @@
 <v t="ekr.20031218072017.2921"><vh>goToPrevSibling</vh></v>
 </v>
 <v t="ekr.20031218072017.2922"><vh>Mark...</vh>
-<v t="ekr.20031218072017.2923"><vh>markChangedHeadlines</vh></v>
+<v t="ekr.20031218072017.2923" a="M"><vh>markChangedHeadlines</vh></v>
 <v t="ekr.20031218072017.2924"><vh>markChangedRoots</vh></v>
 <v t="ekr.20031218072017.2925"><vh>markAllAtFileNodesDirty</vh></v>
 <v t="ekr.20031218072017.2926"><vh>markAtFileNodesDirty</vh></v>
@@ -5849,8 +5889,8 @@
 <v t="ekr.20031218072017.3069"><vh>changeAll</vh></v>
 <v t="ekr.20031218072017.3070"><vh>changeSelection</vh></v>
 <v t="ekr.20031218072017.3071"><vh>changeThenFind</vh></v>
-<v t="ekr.20031218072017.2417"><vh>doChange...Script</vh></v>
-<v t="ekr.20031218072017.3072"><vh>doFind...Script</vh></v>
+<v t="ekr.20031218072017.2417" a="M"><vh>doChange...Script</vh></v>
+<v t="ekr.20031218072017.3072" a="M"><vh>doFind...Script</vh></v>
 <v t="ekr.20031218072017.3073"><vh>findAll</vh></v>
 <v t="ekr.20031218072017.3074"><vh>findNext</vh></v>
 <v t="ekr.20031218072017.3075"><vh>findNextMatch</vh></v>
@@ -6071,7 +6111,7 @@
 <v t="ekr.20031218072017.3195"><vh>splitLines &amp; joinLines</vh></v>
 </v>
 <v t="ekr.20031218072017.3196"><vh>Script utils...</vh>
-<v t="ekr.20031218072017.2418"><vh>initScriptFind</vh></v>
+<v t="ekr.20031218072017.2418"><vh>initScriptFind (use this to set up Leo's Find/Change dialog for scripting)</vh></v>
 </v>
 <v t="ekr.20031218072017.1498"><vh>Unicode utils...</vh>
 <v t="ekr.20031218072017.1499"><vh>isUnicode</vh></v>
@@ -7887,19 +7927,8 @@
 </v>
 </v>
 </v>
-<v t="ekr.20031219082559"><vh>To do: 4.1 rc4</vh>
-<v t="ekr.20040131041113"><vh>Create a plugin to simulate the old-style status area</vh></v>
-<v t="ekr.20040105080119.3"><vh>Posting to report bugs fixed</vh></v>
-<v t="ekr.20040130161236"><vh>Better docs for script find/change</vh></v>
-<v t="ekr.20040105080119.2"><vh>Document new stuff: review all 4.x changes</vh></v>
-<v t="ekr.20031218072017.854"><vh>Put tips in LeoDocs.leo</vh></v>
-</v>
-<v t="ekr.20040131093452" a="E"><vh>(Improve handling of file extensions)</vh>
-<v t="ekr.20040131101109"><vh>Report: Dave Hein</vh>
-<v t="ekr.20040131103531.1"><vh>Removed defaultextension from runOpenFileDialog</vh></v>
-</v>
-<v t="ekr.20031218072017.4057" a="TV"><vh>app.gui.Tkinter file dialogs</vh></v>
-<v t="ekr.20040131103531"><vh>&lt;&lt; define leoGui file types &gt;&gt; (not used yet)</vh></v>
+<v t="ekr.20031219082559" a="E"><vh>To do: 4.1 rc4</vh>
+<v t="ekr.20040105080119.2" a="TV"><vh>Document new stuff: review all 4.x changes</vh></v>
 </v>
 </vnodes>
 <tnodes>
@@ -8159,10 +8188,11 @@ The app.gui routines no longer require a "run" routine.  Instead, calling app.gu
 percentile) for the LaTeX comment delimiter (plain percentile sign).
 
 The fix was:
-	
+
 1. Add "\\%" to the list of LaTeX keywords.
 2. Create latex_special_keyword_characters = "@(){}%"
-3. Use latex_special_keyword_characters when scanning for possible LaTeX keywords.</t>
+3. Use latex_special_keyword_characters when scanning for possible LaTeX keywords.
+</t>
 <t tx="ekr.20031218072017.116">The problem is that a successful search _must_ reset the selection range, so there isn't much point to this command.  Moreover, the Find All and Change All commands would loop if they aren't equivalent to the Find and Change commands when this option is in effect.  All in all, an almost useless option.  Too bad.</t>
 <t tx="ekr.20031218072017.117"></t>
 <t tx="ekr.20031218072017.118"></t>
@@ -8343,7 +8373,7 @@ LeoColorPanel, LeoColorNamePanel, leoCompare, leoDialog, leoFind, leoFont, leoPr
 - The text param is no longer used and could be removed.
 
 Undo tests:
-	
+
 (passed) Read @file Nodes.
 (passed) Import Derived Files
 
@@ -8351,7 +8381,8 @@ Undo tests:
 (passed) Extract Section Names.
 (passed) Extract
 
-(passed) Convert Tabs &amp; Convert All Tabs.</t>
+(passed) Convert Tabs &amp; Convert All Tabs.
+</t>
 <t tx="ekr.20031218072017.190"></t>
 <t tx="ekr.20031218072017.191"></t>
 <t tx="ekr.20031218072017.192">This is too distracting while typing the directive.</t>
@@ -8392,10 +8423,11 @@ xyz" cons)</t>
 <t tx="ekr.20031218072017.209"></t>
 <t tx="ekr.20031218072017.210"></t>
 <t tx="ekr.20031218072017.211">This was tricky to get right:
-	
+
 - There are several calls to after_idle(idle_body_key), so which gets scheduled is a matter of timing.  To handle that I added the tree.forceFullRedraw() routine.
 
-- The undo/redo code also recolors the text.  Added a new param to undoRedoText so that it could force a full redraw after cut/paste.</t>
+- The undo/redo code also recolors the text.  Added a new param to undoRedoText so that it could force a full redraw after cut/paste.
+</t>
 <t tx="ekr.20031218072017.212">The new code is now guaranteed to go to the proper node of the outline.  However, @doc parts may disrupt line counts within a node.</t>
 <t tx="ekr.20031218072017.213"></t>
 <t tx="ekr.20031218072017.214"></t>
@@ -9774,7 +9806,7 @@ Edward K. Ream</t>
 <t tx="ekr.20031218072017.360">leo.py 3.11.1 is now available at:  http://sourceforge.net/projects/leo/
 
 This version fixes two bugs found in the recent 3.11 version:
-	
+
 - Leo had startup problems on some Linux systems.
 
 - Creating clones by control dragging did not always work.
@@ -9801,7 +9833,8 @@ Download: http://sourceforge.net/project/showfiles.php?group_id=3458
 CVS:      http://sourceforge.net/cvs/?group_id=3458
 Wiki:     http://leo.hd1.org/
 
-Edward K. Ream</t>
+Edward K. Ream
+</t>
 <t tx="ekr.20031218072017.361">leo.py 3.12                              July 17, 2003
 
 leo.py 3.12 is now available at: http://sourceforge.net/projects/leo/
@@ -10012,9 +10045,9 @@ remove readme*.doc
 - Add an entry to the languages list in &lt;&lt;configure language-specific settings&gt;&gt;
 
 - Add a list of the keywords of the language to &lt;&lt; define colorizer keywords &gt;&gt;
-	
+
   N.B.: the name of this list must be x_keywords, where x is the entry in language in step a.
-	
+
 - Add any language-specifig code to leoColor.colorizeAnyLanguage.
   For most languages nothing need be done in this step.
 
@@ -10035,7 +10068,8 @@ but with the name of your new language instead of "Python".
 
 - Create an @root node and verify that you can Tangle it.
 
-@color</t>
+@color
+</t>
 <t tx="ekr.20031218072017.368"># Internally, lower case is used for all language names.
 self.language_delims_dict = {
 	"actionscript" : "// /* */", #jason 2003-07-03
@@ -10058,10 +10092,10 @@ self.language_delims_dict = {
 	"shell" : "#",  # shell scripts
 	"tcltk" : "#",
 	"unknown" : "#" } # Set when @comment is seen.
-	
+
 self.language_extension_dict = {
 	"actionscript" : "as", #jason 2003-07-03
-	"c" : "c", 
+	"c" : "c",
 	"cweb" : "w",
 	"elisp" : "el",
 	"forth" : "forth",
@@ -10073,7 +10107,7 @@ self.language_extension_dict = {
 	"noweb" : "nw",
 	"pascal" : "p",
 	"perl" : "perl",
-	"perlpod" : "perl", 
+	"perlpod" : "perl",
 	"php" : "php",
 	"plain" : "txt",
 	"python" : "py",
@@ -10081,7 +10115,8 @@ self.language_extension_dict = {
 	"shell" : "txt",
 	"tex" : "tex",
 	"tcltk" : "tcl",
-	"unknown" : "txt" } # Set when @comment is seen.</t>
+	"unknown" : "txt" } # Set when @comment is seen.
+</t>
 <t tx="ekr.20031218072017.369"># Frame and title
 w,target = gui.create_labeled_frame (outer,caption="Default Target Language")
 w.pack(padx=2,pady=2,expand=1,fill="x")
@@ -10106,8 +10141,8 @@ left_data = [
 for text,value in left_data:
 	button = Tk.Radiobutton(lt,anchor="w",text=text,
 		variable=self.lang_var,value=value,command=self.set_lang)
-	button.pack(fill="x") 
-	
+	button.pack(fill="x")
+
 # Right column of radio buttons.
 right_data = [
 	("Perl", "perl"),
@@ -10117,7 +10152,7 @@ right_data = [
 	("Python", "python"),
 	("Rebol", "rebol"),
 	("tcl/tk", "tcltk")]
-	
+
 for text,value in right_data:
 	button = Tk.Radiobutton(rt,anchor="w",text=text,
 		variable=self.lang_var,value=value,command=self.set_lang)
@@ -16802,45 +16837,6 @@ I understand the difficulty of making it otherwise, but hey, here is my algo any
 so you see, only the last _Changed_ instance of a clone would have precedence in the untangling process. I understand it would need some memory &amp; more process time for each clone in an outline! but I dont care if untangle takes 3 minutes instead of 3 seconds... and it just doubles the memory requirements... but untangling is a killer-Feature.
 --
 bolt  </t>
-<t tx="ekr.20031218072017.854">@nocolor
-
-http://sourceforge.net/forum/message.php?msg_id=2300457
-By: nobody ( Nobody/Anonymous ) 
- Have discoverd &amp; started using LEO 2 days ago   
-2003-11-23 04:44  
-
- I really like the concept, literate prog, and i find it delivers.
-
-I have easily made some code with it for some other languages and have found that the "@first" directive is the key to output useable code in unsupported languages.
-...as example, for a BASIC language compiler: 
--&gt;body of a "@file" header:
------------------------------Snippet
-@first $IFDEF LEOHEADER
-@delims '
-@c
-$ENDIF
------------------------------End of snippet
-So this would enable a basic compiler to "jump" over the "true" LEO-header-lines; wich gives you:
------------------------Derived file begins with:
-$IFDEF LEOHEADER &lt;-conditionnal compilation directive 
-#@+leo-ver=4 &lt;-these lines not compiled
-#@+node:@file QParser005.INC
-#@@first
-#@delims ' 
-'@@c
-$ENDIF &lt;-... Until here!
-&lt;rest of derived code file ... &gt;
------------------------end of snippet
-The thing it does is mostly changing the comment symbol to " ' " apostrophe... making comments parseable by a BASIC (or other language.)
-
-The thing that I really like is the fact that LEO untangles my code if I change it externally, in an IDE or editor of some kind! 
-
-hope this helps, if you have any tricks to share for adding compatibility / productivity using LEO, please tell me!
-
---
-bolt
- 
-</t>
 <t tx="ekr.20031218072017.855"></t>
 <t tx="ekr.20031218072017.856">Read and respond to this message at: 
 https://sourceforge.net/forum/message.php?msg_id=2311537
@@ -33300,6 +33296,7 @@ aa</t>
 	# N.B.: separate c.ivars are much more convenient than a dict.
 	for key in self.intKeys:
 		val = getattr(c, key + "_flag")
+		val = choose(val,1,0) # 2/1/04: work around major Tk problem.
 		self.dict[key].set(val)
 		# trace(key,`val`)
 
@@ -36316,7 +36313,7 @@ if len(s) &gt; 0 and s[-1]=='\n': s = s[:-1]
 if s != v.bodyString():
 	if count == 1:
 		c.undoer.setUndoParams("Change All",v) # Tag the start of the Change all.
-		
+
 	# 11/5/03: Changed setUndoTypingParams to setUndoParams (avoids incremental undo).
 	c.undoer.setUndoParams("Change",v,
 		oldText=v.bodyString(), newText=s,
@@ -37801,31 +37798,35 @@ On windows: do the following from inside a console window:
 On Linux do the following:
 	cd LeoPy
 	python setup.py sdist --force-manifest --formats=gztar,zip</t>
-<t tx="ekr.20031218072017.2416"></t>
+<t tx="ekr.20031218072017.2416"># Note:  the initScriptFind script makes setting up Find/Change scripts very easy.</t>
 <t tx="ekr.20031218072017.2417">def doChangeScript (self):
-	
+
 	app.searchDict["type"] = "change"
 	self.runChangeScript()
-	
+
 def doChangeAllScript (self):
 
-	d = app.searchDict ; d["type"] = "changeAll"
+	"""The user has just pressed the Change All button with script-change box checked.
+
+	N.B. Only this code is executed."""
+
+	app.searchDict["type"] = "changeAll"
 	while 1:
 		self.runChangeScript()
-		if not d.get("continue"): break
-	
+		if not app.searchDict.get("continue"):
+			break
+
 def runChangeScript (self):
-	
-	c = self.c ; 
+
+	c = self.c
 	try:
-		if c.script_change_flag:
-			exec c.change_text in {} # Use {} to get a pristine environment!
-		else:
-			self.changeSelection()
+		assert(c.script_change_flag) # 2/1/04
+		exec c.change_text in {} # Use {} to get a pristine environment.
 	except:
 		es("exception executing change script")
-		es_exception(full=false)</t>
-<t tx="ekr.20031218072017.2418">def initScriptFind(findHeadline,changeHeadline,firstNode=None,
+		es_exception(full=false)
+		app.searchDict["continue"] = false # 2/1/04</t>
+<t tx="ekr.20031218072017.2418">def initScriptFind(findHeadline,changeHeadline=None,firstNode=None,
 	script_search=true,script_change=true):
 	
 	import leoTest
@@ -37840,7 +37841,10 @@ def runChangeScript (self):
 	else:
 		es("no Find script node",color="red")
 		return
-	change_v = u.findNodeInTree(v,changeHeadline)
+	if changeHeadline:
+		change_v = u.findNodeInTree(v,changeHeadline)
+	else:
+		change_v = None
 	if change_v:
 		change_text = change_v.bodyString()
 	else:
@@ -37849,7 +37853,7 @@ def runChangeScript (self):
 	
 	# Initialize the find panel.
 	c.script_search_flag = script_search
-	c.script_change_flag = script_change
+	c.script_change_flag = script_change and change_text
 	if script_search:
 		c.find_text = find_text.strip() + "\n"
 	else:
@@ -37891,6 +37895,8 @@ while v and v != after and not found:
 				c.frame.tree.expandAllAncestors(v)
 				c.selectVnode(v)
 				c.redraw() # Necessary to make the new node visible.
+				if not findAll:
+					es("found node with whitespace to clean")
 				found = true 
 			break
 	v = v.threadNext()
@@ -37899,7 +37905,8 @@ if not found:
 	if findAll:
 		es("found %d nodes" % (count), color="blue")
 	else:
-		es("not found")</t>
+		es("not found")
+</t>
 <t tx="ekr.20031218072017.2421">from leoGlobals import *
 
 c = top() ; d = app.searchDict
@@ -38107,9 +38114,15 @@ u = leoTest.testUtils()
 nodes = 0 ; lines = 0
 c = top()
 c.clearAllVisited()
-v = u.findNodeAnywhere(c,"Code")
+if 0:
+	v = u.findNodeAnywhere(c,"Code")
+else:
+	root = u.findRootNode (c.currentVnode())
+	v = u.findNodeInTree(root,"Code")
+
 after = v.nodeAfterTree()
-trace(v,after)
+# trace(v,after)
+
 while v and v != after:
 	if not v.t.isVisited():
 		v.t.setVisited()
@@ -38117,7 +38130,7 @@ while v and v != after:
 		lines += len(splitLines(v.bodyString()))
 	v = v.threadNext()
 	
-pages = ((nodes * 10) + lines) / 50
+pages = ((nodes * 10) + lines) / 60
 print "nodes,lines,pages",nodes,lines,pages
 es("nodes,lines,pages",nodes,lines,pages)</t>
 <t tx="ekr.20031218072017.2431"></t>
@@ -45711,7 +45724,7 @@ def expandLevel9 (self): self.expandToLevel(9)
 		c.endUpdate()
 </t>
 <t tx="ekr.20031218072017.2922"></t>
-<t tx="ekr.20031218072017.2923">def markChangedHeadlines (self):
+<t tx="ekr.20031218072017.2923">def markChangedHeadlines (self): 
 
 	c = self ; v = c.rootVnode()
 	c.beginUpdate()
@@ -45720,7 +45733,9 @@ def expandLevel9 (self): self.expandToLevel(9)
 			v.setMarked()
 			c.setChanged(true)
 		v = v.threadNext()
-	c.endUpdate()</t>
+	c.endUpdate()
+	es("done",color="blue")
+</t>
 <t tx="ekr.20031218072017.2924">def markChangedRoots (self):
 
 	c = self ; v = c.rootVnode()
@@ -45733,7 +45748,8 @@ def expandLevel9 (self): self.expandToLevel(9)
 				v.setMarked()
 				c.setChanged(true)
 		v = v.threadNext()
-	c.endUpdate()</t>
+	c.endUpdate()
+	es("done",color="blue")</t>
 <t tx="ekr.20031218072017.2925">def markAllAtFileNodesDirty (self):
 
 	c = self ; v = c.rootVnode()
@@ -47331,7 +47347,7 @@ def changeAllButton(self):
 
 	c = self.setup_button()
 	c.clearAllVisited() # Clear visited for context reporting.
-	
+
 	if c.script_change_flag:
 		self.doChangeAllScript()
 	elif c.selection_only_flag:
@@ -47343,7 +47359,7 @@ def changeAllButton(self):
 def changeThenFindButton(self):
 
 	c = self.setup_button()
-	
+
 	if c.script_change_flag:
 		self.doChangeScript()
 		if c.script_search_flag:
@@ -47361,7 +47377,7 @@ def changeThenFindButton(self):
 def findButton(self,event=None):
 
 	c = self.setup_button()
-	
+
 	if c.script_search_flag:
 		self.doFindScript()
 	else:
@@ -47372,7 +47388,7 @@ def findAllButton(self):
 
 	c = self.setup_button()
 	c.clearAllVisited() # Clear visited for context reporting.
-	
+
 	if c.script_search_flag:
 		self.doFindAllScript()
 	elif c.selection_only_flag:
@@ -47384,7 +47400,7 @@ def findAllButton(self):
 def changeCommand(self,c):
 
 	self.setup_command(c)
-	
+
 	if c.script_search_flag:
 		self.doChangeScript()
 	else:
@@ -47394,7 +47410,7 @@ def changeCommand(self,c):
 def changeThenFindCommand(self,c):
 
 	self.setup_command(c)
-	
+
 	if c.script_search_flag:
 		self.doChangeScript()
 		self.doFindScript()
@@ -47405,7 +47421,7 @@ def changeThenFindCommand(self,c):
 def findNextCommand(self,c):
 
 	self.setup_command(c)
-	
+
 	if c.script_search_flag:
 		self.doFindScript()
 	else:
@@ -47415,9 +47431,9 @@ def findNextCommand(self,c):
 def findPreviousCommand(self,c):
 
 	self.setup_command(c)
-	
+
 	c.reverse_flag = not c.reverse_flag
-	
+
 	if c.script_search_flag:
 		self.doFindScript()
 	else:
@@ -47481,7 +47497,7 @@ def setup_command(self,c):
 # If no selection, insert c.change_text at the cursor.
 
 def changeSelection(self):
-	
+
 	c = self.c ; v = self.v ; gui = app.gui
 	# trace(`self.in_headline`)
 	t = choose(self.in_headline,v.edit_text(),c.frame.bodyCtrl)
@@ -47524,26 +47540,32 @@ def changeSelection(self):
 	if self.changeSelection():
 		self.findNext(false) # don't reinitialize</t>
 <t tx="ekr.20031218072017.3072">def doFindScript (self):
-	
+
 	app.searchDict["type"] = "find"
 	self.runFindScript()
-	
+
 def doFindAllScript (self):
-	
+
+	"""The user has just pressed the Find All button with script-find radio button checked.
+
+	N.B. Only this code is executed."""
+
 	app.searchDict["type"] = "findAll"
-	self.runFindScript()
+	while 1:
+		self.runFindScript()
+		if not app.searchDict.get("continue"):
+			break
 
 def runFindScript (self):
 
 	c = self.c
 	try:
-		while 1:
-			exec c.find_text in {} # Use {} to get a pristine environment!
-			flag = app.searchDict.get("continue")
-			if not flag: break
+		exec c.find_text in {} # Use {} to get a pristine environment.
 	except:
 		es("exception executing find script")
-		es_exception(full=false)</t>
+		es_exception(full=false)
+		app.searchDict["continue"] = false # 2/1/04
+</t>
 <t tx="ekr.20031218072017.3073">def findAll(self):
 
 	c = self.c ; t = self.s_text ; gui = app.gui
@@ -47569,18 +47591,18 @@ def runFindScript (self):
 	c = self.c
 	if not self.checkArgs():
 		return
-		
+
 	if initFlag:
 		self.initInHeadline()
 		data = self.save()
 		self.initInteractiveCommands()
 	else:
 		data = self.save()
-	
+
 	c.beginUpdate()
 	pos, newpos = self.findNextMatch()
 	c.endUpdate(false) # Inhibit redraws so that headline remains selected.
-	
+
 	if pos:
 		self.showSuccess(pos,newpos)
 	else:
@@ -47601,7 +47623,7 @@ def findNextMatch(self):
 
 	if len(c.find_text) == 0:
 		return None, None
-		
+
 	v = self.v
 	while v:
 		pos, newpos = self.search()
@@ -47696,10 +47718,10 @@ def selectNextVnode(self):
 
 	c = self.c ; v = self.v
 	# trace(`v`)
-	
+
 	if c.selection_only_flag:
 		return None
-	
+
 	# Start suboutline only searches.
 	if c.suboutline_only_flag and not self.onlyVnode:
 		self.onlyVnode = v
@@ -47734,7 +47756,7 @@ def selectNextVnode(self):
 	if self.wrapping and v and v == self.wrapVnode:
 		# trace("ending wrapped search")
 		v = None ; self.resetWrap()
-		
+
 	# End suboutline only searches.
 	if (c.suboutline_only_flag and self.onlyVnode and v and
 		(v == self.onlyVnode or not self.onlyVnode.isAncestorOf(v))):
@@ -47749,7 +47771,7 @@ def selectNextVnode(self):
 <t tx="ekr.20031218072017.3082"></t>
 <t tx="ekr.20031218072017.3083">def checkArgs (self):
 
-	c = self.c 
+	c = self.c
 	val = true
 	if not c.search_headline_flag and not c.search_body_flag:
 		es("not searching headline or body")
@@ -47778,7 +47800,7 @@ def initBatchCommands (self):
 				v = v.next()
 			v = v.lastNode()
 		self.v = v
-	
+
 	# Set the insert point.
 	self.initBatchText()</t>
 <t tx="ekr.20031218072017.3085"># Returns s_text with "insert" point set properly for batch searches.
@@ -47800,7 +47822,7 @@ def initNextText(self):
 def initInHeadline (self):
 
 	c = self.c ; v = self.v
-	
+
 	if c.search_headline_flag and c.search_body_flag:
 		# Do not change this line without careful thought and extensive testing!
 		self.in_headline = (v == c.frame.tree.editVnode())
@@ -47811,7 +47833,7 @@ def initInHeadline (self):
 def initInteractiveCommands(self):
 
 	c = self.c ; v = self.v ; gui = app.gui
-	
+
 	self.errors = 0
 	if self.in_headline:
 		c.frame.tree.setEditVnode(v)
@@ -47857,14 +47879,14 @@ def restore (self,data):
 	in_headline,v,t,insert,start,end = data
 
 	# Don't try to reedit headline.
-	c.selectVnode(v) 
+	c.selectVnode(v)
 	if not in_headline:
 
 		if 0: # Looks bad.
 			gui.setSelectionRange(t,start,end)
 		else: # Looks good and provides clear indication of failure or termination.
 			gui.setSelectionRange(t,insert,insert)
-	
+
 		gui.setInsertPoint(t,insert)
 		gui.makeIndexVisible(t,insert)
 		gui.set_focus(c,t)</t>
@@ -47882,12 +47904,12 @@ def restore (self,data):
 <t tx="ekr.20031218072017.3091">def showSuccess(self,pos,newpos):
 
 	"""Displays the final result.
-	
+
 	Returns self.dummy_vnode, v.edit_text() or c.frame.bodyCtrl with
 	"insert" and "sel" points set properly."""
 
 	c = self.c ; v = self.v ; gui = app.gui
-	
+
 	c.beginUpdate()
 	if 1: # range of update...
 		c.selectVnode(v)
@@ -47914,13 +47936,13 @@ def restore (self,data):
 </t>
 <t tx="ekr.20031218072017.3092">def init_s_text (self,s):
 	self.oops()
-	
+
 def bringToFront (self):
 	self.oops()
-	
+
 def gui_search (self,t,*args,**keys):
 	self.oops()
-	
+
 def oops(self):
 	print ("leoFind oops:",
 		callerName(2),
@@ -61378,51 +61400,17 @@ except:
 	Have script create a file, fail if the file does not exist.
 
 - Unit tests for read/write commands.</t>
-<t tx="ekr.20031218072017.4248"></t>
-<t tx="ekr.20031218072017.4249">@nocolor
-
-http://sourceforge.net/forum/message.php?msg_id=2337165
-By: nobody
-
-Here's a simple script to create a graphviz .DOT file from a Leo outline. The
-output is in /tmp/leo.dot. You then need to run "dot" (part of the graphviz
-package) on the .dot file to produce a graph in whatever format you want (JPEG,
-PNG, Postscript, etc).
-
-It's really simple and it doesn't seem to work on leodocs.leo because of some
-unicode issues. But anyway, here it is, maybe someone can improve on it.
-This code is hereby released as public domain - do whatever you want with it,
-but hopefully, improve it and post it back here :-)</t>
-<t tx="ekr.20031218072017.4250"># Warning: changes by EKR have not been properly tested!
+<t tx="ekr.20031218072017.4248"># Warning: changes by EKR have not been properly tested!
 from leoGlobals import *
 import re
 
-c = top()
+&lt;&lt; about this script &gt;&gt;
 
-def rPrint(node,level):
-	indent = "%*s" % (4*level,"")
-	print indent + str(node.headString())
-	child = node.firstChild()
-	while(child):
-		rPrint(child,level+1)
-		child = child.next()
+@others
 
-def newLineize(s):
-	return re.sub('"',"'",re.sub(r"\s", r"\n", s))
-
-def graphvizString(node):
-	result = []
-	child = node.firstChild()
-	while child:
-		result.append('"%s" -&gt; "%s";\n%s' % (
-			newLineize(node.headString()),
-			newLineize(child.headString()),
-			graphvizString(child)))
-		child = child.next()
-	return ''.join(result)
+c = top() ; v = c.rootVnode()
 
 s = []
-v = c.rootVnode()
 while v:
 	s.append(graphvizString(v))
 	v = v.next()
@@ -61431,9 +61419,9 @@ s = ''.join(s)
 # Look for an @encoding directive.
 dict = scanDirectives(c,c.rootVnode())
 encoding = dict.get("encoding",None)
-if encoding == None:
+if encoding is None:
 	encoding = app.config.default_derived_file_encoding
-	
+
 if 0: # testing
 	print s
 else:
@@ -61442,18 +61430,34 @@ else:
 	gvFile.write(toEncodedString(s,encoding))
 	gvFile.write('}\n')
 	gvFile.close()</t>
+<t tx="ekr.20031218072017.4249">@
+
+http://sourceforge.net/forum/message.php?msg_id=2337165
+
+Here's a simple script to create a graphviz .DOT file from a Leo outline. The
+output is in /tmp/leo.dot. You then need to run "dot" (part of the graphviz
+package) on the .dot file to produce a graph in whatever format you want (JPEG,
+PNG, Postscript, etc).
+
+It's really simple and it doesn't seem to work on leodocs.leo because of some
+unicode issues. But anyway, here it is, maybe someone can improve on it.
+
+This code is hereby released as public domain - do whatever you want with it,
+but hopefully, improve it and post it back here :-)</t>
 <t tx="ekr.20031218072017.4251"># About the only time you should run this script is when:
 # - changing the format of timestamps in nodeIndices.setTimestamp or
 # - when making a retroactive change to leoID.txt.
 
 from leoGlobals import *
 
-c = top() ; v = c.rootVnode()
-while v:
-	v.t.fileIndex = None
-	v = v.threadNext()
-	
-es("all timestamps cleared")</t>
+if 0: # This is usually a very bad idea.
+
+	c = top() ; v = c.rootVnode()
+	while v:
+		v.t.fileIndex = None
+		v = v.threadNext()
+		
+	es("all timestamps cleared")</t>
 <t tx="ekr.20031218192539">Added at = self</t>
 <t tx="ekr.20031218192539.1"></t>
 <t tx="ekr.20031219071829"></t>
@@ -61839,7 +61843,6 @@ es("done",color="blue")</t>
 </t>
 <t tx="ekr.20040104200407"></t>
 <t tx="ekr.20040105064959">@nocolor</t>
-<t tx="ekr.20040105065037"></t>
 <t tx="ekr.20040105070023"></t>
 <t tx="ekr.20040105070023.1">
 </t>
@@ -61915,22 +61918,18 @@ panel.
 RodrigoB.
 
 </t>
-<t tx="ekr.20040105080119.2">Read and respond to this message at: 
-https://sourceforge.net/forum/message.php?msg_id=2356591
+<t tx="ekr.20040105080119.2">@nocolor
+
+http://sourceforge.net/forum/message.php?msg_id=2356591
 By: dthein
 
-I noticed that LeoDocs.leo doesn't have much of the new changes documented ...
-for instance @root-doc/code and the @file-* options are not documented.  And
-the doc for @language doesn't list all the builtin languages.
+Much of the new changes documented in LeoDocs.leo:
 
-This probably needs some serious review.
+- @root-doc/code and the @file-* options are not documented.
 
-Dave </t>
-<t tx="ekr.20040105080119.3">@nocolor
+- The documentation for @language doesn't list all the builtin languages.
 
-http://sourceforge.net/forum/message.php?msg_id=2357964
-
-thats the short list of buggyness I've noticed.</t>
+This probably needs some serious review.</t>
 <t tx="ekr.20040105080119.4">Read and respond to this message at: 
 https://sourceforge.net/forum/message.php?msg_id=2342120
 By: rodrigo_b
@@ -65691,7 +65690,10 @@ The problem was in the write logic.</t>
 <t tx="ekr.20040130112145">from leoGlobals import *
 
 c = top() ; v = c.currentVnode()
-done = False
+last_v = app.searchDict.get("v")
+if last_v and v == last_v:
+	v = v.threadNext()
+found = False
 while v:
 	lines = v.bodyString().split('\n')
 	for s in lines:
@@ -65705,16 +65707,18 @@ while v:
 				if ch == '\t':
 					tabs += 1 ; break
 			if blanks &gt; 0 and tabs &gt; 0:
-				trace(leading)
+				# trace(leading)
 				es("blanks precede leading tab: " + v.headString())
-				done = True ; break
-	if done: break
+				found = True ; break
+	if found: break
 	v = v.threadNext()
-if done:
+if found:
+	app.searchDict["v"] = v
 	c.selectVnode(v)
 	c.redraw()
 else:
 	es("done",color="blue")
+	app.searchDict["v"] = None
 app.searchDict["continue"] = False</t>
 <t tx="ekr.20040130112427">- Fixed Dan Winkler's bug with CashRegister.ss.
 
@@ -65735,7 +65739,6 @@ app.searchDict["continue"] = False</t>
 
 </t>
 <t tx="ekr.20040130160615"></t>
-<t tx="ekr.20040130161236">The present documentation is either missing or out-of-date.</t>
 <t tx="ekr.20040130161634">@nocolor
 
 was busy so I just read protected it.
@@ -65782,7 +65785,6 @@ Another possibility would be to save the scrolling state, but that is very gui-d
 <t tx="ekr.20040130183451"></t>
 <t tx="ekr.20040130185920"></t>
 <t tx="ekr.20040130185920.1"></t>
-<t tx="ekr.20040131041113"></t>
 <t tx="ekr.20040131093452"></t>
 <t tx="ekr.20040131094356"></t>
 <t tx="ekr.20040131095315">@nocolor
@@ -65953,5 +65955,76 @@ enable(menu,"Mark Subheads",(v and v.hasChildren()))
 enable(menu,"Mark Changed Items",c.canMarkChangedHeadlines())
 enable(menu,"Mark Changed Roots",c.canMarkChangedRoots())
 enable(menu,"Mark Clones",v.isCloned())</t>
+<t tx="ekr.20040201061928"># Initialize Leo's find panel using the named children of this node.
+from leoGlobals import *
+
+app.searchDict = {} # Clear dict.get("v") logic.
+initScriptFind("Find script")
+
+c = top()
+c.selectVnode(c.rootVnode())
+c.redraw()</t>
+<t tx="ekr.20040201063019"></t>
+<t tx="ekr.20040201063200">def rPrint(node,level):
+
+	indent = "%*s" % (4*level,"")
+	print indent + str(node.headString())
+	child = node.firstChild()
+	while(child):
+		rPrint(child,level+1)
+		child = child.next()
+
+</t>
+<t tx="ekr.20040201063200.1">def newLineize(s):
+
+	return re.sub('"',"'",re.sub(r"\s", r"\n", s))
+
+</t>
+<t tx="ekr.20040201063200.2">def graphvizString(node):
+
+	result = []
+	child = node.firstChild()
+	while child:
+		result.append('"%s" -&gt; "%s";\n%s' % (
+			newLineize(node.headString()),
+			newLineize(child.headString()),
+			graphvizString(child)))
+		child = child.next()
+	return ''.join(result)
+</t>
+<t tx="ekr.20040201070415"></t>
+<t tx="ekr.20040201070845"></t>
+<t tx="ekr.20040201070919"></t>
+<t tx="ekr.20040201101905"></t>
+<t tx="ekr.20040201101905.1">@nocolor
+
+- Script-find commands now call runFindScript repeatedly only for the Find All Command.
+
+- Set app.searchDict.get("continue") = false in exception handlers.</t>
+<t tx="ekr.20040201103324"></t>
+<t tx="ekr.20040201103324.1">After setting up script/find and hitting Find button.
+(And then after every save!)
+
+Exception in Tkinter callback
+Traceback (most recent call last):
+  File "C:\PYTHON23\lib\lib-tk\Tkinter.py", line 1345, in __call__
+    return self.func(*args)
+  File "c:\prog\leoCVS\leo\src\leoFind.py", line 167, in findButton
+    c = self.setup_button()
+  File "c:\prog\leoCVS\leo\src\leoFind.py", line 258, in setup_button
+    c.setIvarsFromFind()
+  File "c:\prog\leoCVS\leo\src\leoCommands.py", line 92, in setIvarsFromFind
+    find.set_ivars(c)
+  File "C:\prog\leoCVS\leo\src\leoTkinterFind.py", line 235, in set_ivars
+    val = self.dict[key].get()
+  File "C:\PYTHON23\lib\lib-tk\Tkinter.py", line 254, in get
+    return getint(self._tk.globalgetvar(self._name))
+ValueError: invalid literal for int():
+</t>
+<t tx="ekr.20040201104001">if 1:
+ 	dubious line</t>
+<t tx="ekr.20040201113342"></t>
+<t tx="ekr.20040201113342.1"></t>
+<t tx="ekr.20040201113342.2"></t>
 </tnodes>
 </leo_file>
