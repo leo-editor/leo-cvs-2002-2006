@@ -2,7 +2,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="11731" clone_windows="0"/>
 <globals body_outline_ratio="0.452928870293">
-	<global_window_position top="24" left="270" height="860" width="988"/>
+	<global_window_position top="15" left="133" height="860" width="988"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -18,7 +18,7 @@
 </v>
 <v t="edream.110203163054.6"><vh>Please use SourceForge to ask questions and make comments</vh></v>
 <v t="edream.110203163054.7"><vh>Acknowledgements</vh></v>
-<v t="edream.110203163054.8" a="TV"><vh>What people are saying about Leo</vh>
+<v t="edream.110203163054.8"><vh>What people are saying about Leo</vh>
 <v t="edream.110203163054.15"><vh> Open Software award nominations</vh></v>
 <v t="edream.110203163054.14"><vh> Speed Ream's slashdot article (Why Leo is interesting)</vh></v>
 <v t="edream.110203163054.16"><vh>Alex Abacus</vh></v>
@@ -66,12 +66,12 @@
 <v t="edream.110203163054.26"><vh>Travers A. Hough</vh></v>
 <v t="edream.110203163054.23"><vh>Zak Greant</vh></v>
 </v>
-<v t="edream.110203163054.46"><vh>Release Notes</vh>
+<v t="edream.110203163054.46" a="E"><vh>Release Notes</vh>
 <v t="edream.110203163054.47"><vh>Warnings</vh></v>
-<v t="edream.110203163054.48"><vh>Installation notes</vh>
+<v t="edream.110203163054.48" a="E"><vh>Installation notes</vh>
 <v t="edream.110203163054.49"><vh>System requirements</vh></v>
 <v t="edream.110203163054.50"><vh>How to install leo.py on Linux</vh></v>
-<v t="edream.110203163054.51"><vh>How to install leo.py on Windows</vh></v>
+<v t="edream.110203163054.51" a="TV"><vh>How to install leo.py on Windows</vh></v>
 <v t="ekr.20040219100738"><vh>How to install Leo on MacOS Panther (10.3)</vh></v>
 <v t="edream.110203163054.59"><vh>How to install the Borland version of Leo on Windows</vh></v>
 <v t="edream.110203163054.60"><vh>How to associate leo.py with .leo files on Windows</vh></v>
@@ -7297,7 +7297,16 @@ leo.py requires Python 2.1 and tcl/tk 8.3 or above.
 	Download Python from http://python.org/ 
 	Download tcl/Tk from http://tcl.activestate.com/software/tcltk/
 
-Leo is distributed as a single compressed folder.  Simply uncompress this folder and run leo.py.  You can run leo.py by double-clicking leo.py.  You can also run leo.py from a Python interpreter as follows:
+Leo is distributed either as an executable installer (.exe) file or as a .zip file.
+
+Note: the present version of the installer does not work properly with Python 2.4.  You can install Leo from the .zip file as follows:
+
+- Unzip the .zip file and and place the leo folder somewhere, say under the python directory.
+- Copy your existing Leo shortcut then modify the original so that it points to pythonw.exe (in the python24 dir) and
+  has the location of leo.py within quotes.
+- Set the working directory wherever you want the leo files to reside (eg \leo\usr).
+
+Run leo.py by double-clicking leo.py. You can also run leo.py from a Python interpreter as follows:
 
 @color
 

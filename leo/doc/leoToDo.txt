@@ -3,7 +3,7 @@
 #@@nocolor
 
 #@+all
-#@+node:ekr.20041130125500:First
+#@+node:ekr.20041130125500:To do first
 #@+node:ekr.20041130103128:(killcolor also kills autoindenting )
 By: Roger Erens - rogererens
 @
@@ -72,34 +72,6 @@ more a supporting anomaly report
 than a bug report or feature request.
 #@nonl
 #@-node:ekr.20041130123243:(Add clear undo command)
-#@+node:ekr.20041130125213:(Fix minor bugs in spelling plugin)
-@killcolor
-
-http://sourceforge.net/forum/message.php?msg_id=2866490
-
-I've noticed that even if the mod_speling.ini is changed, the language is alway
-set as en_US !
-
-to Correct this and being able to launch the correct language, i've changed
-he following code :
-
-''''''Ctor for the Aspell clas.''''''
-self.sc = aspell.spell_checker(prefix=aspell_dir)
-
-by :
-''''''Ctor for the Aspell clas.''''''
-self.sc = aspell.spell_checker(prefix=aspell_dir, lang=local_language_code)
-
-..................
-This seem to work on my install !
-
-BUT
-the hardcodding of the aspell_dir in the plugin code is UGLY !!!
-
-It should also be fine to add a directive or a menu under the plugins_menu"
-to change the language and reinitialise the spell_checker for spelling multilingual
-documents.....
-#@-node:ekr.20041130125213:(Fix minor bugs in spelling plugin)
 #@+node:ekr.20041201072431:(Can hoist cause a hang?)
 @nocolor
 
@@ -139,7 +111,14 @@ Between the two of them there should be enough information to help you achieve w
 It is possible to do pretty much anything you want but you will have to provide the infrastructure yourself because Leo doesn't natively support it.  
 #@nonl
 #@-node:ekr.20041201084142:It is possible to change individual headlines directly
-#@-node:ekr.20041130125500:First
+#@+node:ekr.20041211022140:Specify key binding  in @button
+@killcolor
+
+- Specify the binding in the headline:  @button(alt-shift-9)
+- Change createDynamicButton in the script plugin to honor the binding.
+#@nonl
+#@-node:ekr.20041211022140:Specify key binding  in @button
+#@-node:ekr.20041130125500:To do first
 #@+node:ekr.20041128172446:add a 3rd party extension mechanism for Leo
 http://sourceforge.net/forum/message.php?msg_id=2871977
 
@@ -159,6 +138,119 @@ Then you could dump Pmw into that directory and have Leo easily import it from t
 #@-node:ekr.20041126102902:(Handle blanks better in imports)
 #@+node:ekr.20041126102946:(Use pyclbr to parse Python imports)
 #@-node:ekr.20041126102946:(Use pyclbr to parse Python imports)
+#@+node:ekr.20041214131745:Python 2.4 installer problem
+#@+node:ekr.20041214131745.1:Notes
+@killcolor
+
+http://sourceforge.net/forum/message.php?msg_id=2877749
+By: djsg
+
+The Leo 4.2-final installer checks a Windows Registry key to figure out the
+location of Python home folder. It handles the format of the data left in that
+key by the Python 2.3.4 installer, but does not handle the format of the data
+left in some cases by the Python 2.4-final installer.
+
+http://sourceforge.net/forum/message.php?msg_id=2875823
+By: djsg
+
+The installer for Python 2.3.4 is a Nullsoft installer. 
+
+The installer for Python 2.4 Final is a Microsoft installer. 
+
+The leo.nsi file that creates the installer for Leo 2.4-final finds the installed
+copy of Python by checking the Registry key
+HKEY_LOCAL_MACHINE\SOFTWARE\Classes\Python.NoConFile\shell\open\command -- for
+a value left by the installer for Python.  The format of the Registry key value
+stored by the installer for Python 2.4 Final does not match the for Python
+2.3.4.
+
+To prove this: 
+
+A. install Python 2.3.4 for all users;
+B. use RegEdit to export this Registry key to a file called "23key.reg". 
+C. uninstall Python 2.3.4
+D. install Python 2.4 Final
+E. Use RegEdit to export this registry key to a file called "24key.reg". 
+
+The 23key.reg file gives the key the value @="C:\Python23\pythonw.exe \%1\
+%*
+
+where the 24key.reg file gives it the value 
+@="\C:\Python23\pythonw.exe\ \%1\ %*
+
+I duplicated Srdjan's problem, and installed Leo 4.2-final by: 
+
+1. creating a copy of the 23key.reg file called 24keyhack.reg;
+
+2. Editing 24keyhack.reg, changing the value of the key to point at the C:\Python24
+folder -- i.e., changing it to
+@="C:\Python24\pythonw.exe \%1\ %*
+
+3. Right-clicking the 24keyhack.reg file and merging it -- thereby changing
+the value of the Registry key.
+
+4. Running the Leosetup-4-2 installer. No problem this time!
+
+5. Right-clicking the 24key.reg file and merging it -- thereby restoring the
+orthodox Python 2.4 value of the Registry key.
+
+Looks to me as though the 2.4 key surrounds the path to pythonw.exe in quotation
+marks. Perhaps this allows the Microsoft Installer to install Python in a folder
+whose name includes a space.
+#@-node:ekr.20041214131745.1:Notes
+#@-node:ekr.20041214131745:Python 2.4 installer problem
+#@+node:ekr.20041214135556:How to use Tile
+@nocolor
+https://sourceforge.net/forum/message.php?msg_id=2882718
+By: nobody
+
+if anyone is interested here is some code that Tilefied my Leo instance, its
+does some patching in the LeoGui program.
+
+@color
+
+def createRootWindow(self):
+
+    """Create a hidden Tk root window."""
+    #import Tix
+    self.root = root = Tk.Tk()
+    root.tk.call( 'package', 'require', 'tile' )
+    #root.tk.call( 'namespace', 'import', '-force', 'ttk::*' )
+    root.tk.call( 'namespace', 'import', '-force', 'ttk::scrollbar' )
+    root.tk.call( 'namespace', 'import', '-force', 'ttk::label' )
+    root.tk.call( 'namespace', 'import', '-force', 'ttk::entry' )
+    root.tk.call( 'namespace', 'import', '-force', 'ttk::menu' )
+    root.tk.call( 'namespace', 'import', '-force', 'ttk::button' )
+    root.tk.call( 'namespace', 'import', '-force', 'ttk::frame' )
+    root.tk.call( 'namespace', 'import', '-force', 'ttk::menubutton' )
+    root.tk.call( 'tile::setTheme', 'clam' )
+    #self.root = root = Tix.Tk()
+    root.title("Leo Main Window")
+    root.withdraw()
+    
+    self.setDefaultIcon()
+    self.getDefaultConfigFont(g.app.config)
+    self.createGlobalWindows()
+
+    return root
+#@nonl
+#@-node:ekr.20041214135556:How to use Tile
+#@+node:ekr.20041214132052:Mac issues
+#@+node:ekr.20041214132052.1:NewHeadline
+@killcolor
+
+http://sourceforge.net/forum/message.php?msg_id=2881302
+By: genthaler  Günther
+
+I'm happy to provide scripts, icons, whatever. The application bundles I've
+created previously should really provide enough of a pattern to do the job.
+What I was referring to, is what other scripts/tools I would have to integrate
+with. I'm not familiar enough with the SF way of doing things to know what I
+should provide, access to CVS etc. I also don't know whether you bundle things
+up a home and post them on SF, or if you do the compile/archive on the SF boxen.
+#@nonl
+#@-node:ekr.20041214132052.1:NewHeadline
+#@-node:ekr.20041214132052:Mac issues
 #@+node:EKR.20040609091327:To do: 4.3
 #@+node:ekr.20041018195347:Docs
 #@+node:ekr.20041018195347.1:Improve MacOS Docs
@@ -315,10 +407,6 @@ if sys.platform == "linux2": # This crashes tcl83.dll
 #@-node:ekr.20040226094105.3:The actual workaround
 #@-node:ekr.20040226094105:Put the scrollWheel workaround in the FAQ (or in the code??)
 #@-node:ekr.20041018195347:Docs
-#@+node:ekr.20041022091645:Top ROTI
-ROTI: Return on Time Investment
-#@nonl
-#@-node:ekr.20041022091645:Top ROTI
 #@+node:ekr.20041120153700:Cleanup
 #@+node:ekr.20041120153700.1:Change g.app.gui to c.frame.gui
 In:
@@ -3366,6 +3454,9 @@ I'm going to ignore this problem for now...
 #@nonl
 #@-node:EKR.20040606193323:Report
 #@+node:ekr.20031218072017.2062:getPrefs
+# Note: Leo 4.3 does not write these settings to local .leo files.
+# Instead, corresponding settings are contained in leoConfig.leo files.
+
 def getPrefs (self):
 
     c = self.c
@@ -4308,7 +4399,7 @@ Scott
 #@-node:ekr.20040329182535.4:Leo + zodb
 #@-node:ekr.20041022091645.2:Top Big Picture
 #@+node:ekr.20040329182535.7:1 hour to 1 day projects
-#@+node:ekr.20041022083833:New commands 1
+#@+node:ekr.20041022083833:New commands
 #@+node:ekr.20031218072017.792:Double Click Node command
 #@-node:ekr.20031218072017.792:Double Click Node command
 #@+node:ekr.20040315060557:Declone command
@@ -4331,8 +4422,8 @@ Need a good yaml parser first: I don't want to write another parser by hand.
 #@-node:ekr.20031218072017.748:Import/Export to yaml
 #@+node:ekr.20040329094003:Apply patch command
 #@-node:ekr.20040329094003:Apply patch command
-#@-node:ekr.20041022083833:New commands 1
-#@+node:ekr.20041022091645.5:New config options 1
+#@-node:ekr.20041022083833:New commands
+#@+node:ekr.20041022091645.5:New config options
 #@+node:ekr.20040213090121:* Insert at end
 @nocolor
 
@@ -4356,8 +4447,8 @@ diff -r1.76 leoCommands.py
 #@-node:ekr.20040213090121:* Insert at end
 #@+node:ekr.20040311022923:Make sentinel name in @-node optional
 #@-node:ekr.20040311022923:Make sentinel name in @-node optional
-#@-node:ekr.20041022091645.5:New config options 1
-#@+node:ekr.20041022083833.1:Better commands 1
+#@-node:ekr.20041022091645.5:New config options
+#@+node:ekr.20041022083833.1:Better commands
 #@+node:ekr.20031218072017.800:* Enhancements to extract section
 Read and respond to this message at: 
 https://sourceforge.net/forum/message.php?msg_id=1858824
@@ -4444,8 +4535,8 @@ add python -t to test suite to catch mixed tab & space in derived files.
 #@-node:ekr.20041022083005.8:Catch mixed tab & space in derived files
 #@+node:ekr.20031218072017.754:Open text files in text window
 #@-node:ekr.20031218072017.754:Open text files in text window
-#@-node:ekr.20041022083833.1:Better commands 1
-#@+node:ekr.20041022083226:Better directives 1
+#@-node:ekr.20041022083833.1:Better commands
+#@+node:ekr.20041022083226:Better directives
 #@+node:ekr.20031218072017.745:@@first <n>
 @nocolor
 
@@ -4561,7 +4652,7 @@ Scott Powell
 CEO, Dev Designs
 #@-node:ekr.20031218072017.810:Remote access Scott Powell
 #@-node:ekr.20031218072017.797:Allow @file http & @file ftp
-#@-node:ekr.20041022083226:Better directives 1
+#@-node:ekr.20041022083226:Better directives
 #@+node:ekr.20041022083833.2:Better dialogs
 #@+node:ekr.20031218072017.790:Import dialog improvements
 @nocolor
@@ -4586,7 +4677,7 @@ Jason
 #@-node:ekr.20041022083833.2:Better dialogs
 #@+node:ekr.20041022083226.1:Better plugins
 #@-node:ekr.20041022083226.1:Better plugins
-#@+node:ekr.20041022083226.2:Better scripting 2
+#@+node:ekr.20041022083226.2:Better scripting
 #@+node:ekr.20031218072017.733:* Execute scripts like IDE's do
 @nocolor
 
@@ -4731,7 +4822,7 @@ Information Technology
 Rochester Institute of Technology
 schull@digitalgoods.com 585-738-6696
 #@-node:EKR.20040422132037.7:Problems with run script command on Mac x11
-#@-node:ekr.20041022083226.2:Better scripting 2
+#@-node:ekr.20041022083226.2:Better scripting
 #@+node:ekr.20041022083226.3:Better windows
 #@+node:ekr.20041022083005.2:add a Stop button for find/change
 #@-node:ekr.20041022083005.2:add a Stop button for find/change
@@ -8166,6 +8257,21 @@ other times only fix is to exit & restart.
 #@-node:ekr.20040329185649:Known Bugs: can't be fixed or can wait
 #@-node:ekr.20040123102724:Can't or wont
 #@-node:ekr.20041112155009:Others
+#@+node:ekr.20041213161415:Completion List
+Leo will be essentially complete when the following are complete:
+
+- Outline-driven settings dialog.
+- Resolve CVS Conflicts command.
+- @import, perfect import and related issues.
+- Support for zodb.
+- Larger undo granularities.
+- Support for most Emacs-style editing commands.
+- Drive syntax colorer from language description files.
+- More fexible user attributes:  uAstring, uAhex, etc.
+
+Most of these items are less than one-week projects, so the end is in view.
+#@nonl
+#@-node:ekr.20041213161415:Completion List
 #@-all
 #@nonl
 #@-node:ekr.20040117181936:@thin ../doc/leoToDo.txt
