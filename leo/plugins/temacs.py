@@ -7,7 +7,7 @@ Using the setBufferStrokes def will bind callbacks to the widget.'''
 #@@language python
 #@@tabwidth -4
 
-__version__ = ".51"
+__version__ = ".55"
 #@<< version history >>
 #@+node:mork.20041101100635:<<version history>>
 #@+at
@@ -70,6 +70,59 @@ __version__ = ".51"
 # 
 # 
 # 0.51 EKR:  Minor stylistic changes.
+# 
+# 0.55:
+#     added:
+#     Control-z or 'iconify-or-deiconfify-frame'
+#     Control-x Esc Esc - executes last Alt-x command( repeat-complex-command 
+# )
+#     Control-x Control-c shutdown code, as well as a replacement hook if 
+# configured to do so.
+#     re-search-forward, re-search-backward - simple Alt-x regular expression 
+# commands
+#     Control-Alt-s, Control-Alt-r - regular expression cousins of incremental 
+# search( which makes me think that I need to change isearch to python based 
+# searches instead of the Tcl way..
+#     diff - does a diff on 2 files and adds it as a buffer
+#     what-line
+#     keep-lines and flush-lines, two fun new text manipulation commands!(see 
+# help text )
+#     make-directory and remove-directory, two commands that remove and add 
+# directories.
+#     delete-file - removes a file
+#     search-forward search-backward, searchs backward and forward for a word, 
+# non-incrementally.  Accessed by Conrtrol-s Enter and Control-r
+#     word-search-forward and word-search-backward, incredible!  You search 
+# for a group of words ignoring punctuation.  This is mighty stuff, dont know 
+# if Ill use it, but I like what I see.
+#     replace-regex - like replace-string but uses a python regular expression 
+# for the match.
+#     query-replace-regex( Control-Alt-% ) -like query-replace but with a 
+# python regular expression
+#     Esc Esc :, Alt-:, eval-expression  - these evaluate a Python expression 
+# in the minibuffer and puts the value in the current buffer.  This I think is 
+# different than what Emacs does, but I think it makes the value more 
+# accessible if its in the current buffer.  Nice little calculator too.
+#     tabify, untabify - turns spaces to tabs and tabs into spaces( current 
+# does it on 4 spaces to one tab ).
+#     indent-relative - a very nice command that indents from the insert point 
+# until it matches the indentation of a word in the above line.
+#     changed:
+#     replace-string command now will operate on a selection if there is one.  
+# Also the function now uses string functionality to replace the
+#     strings instead of using the Tk Text widget to do the job.
+#     dynamic expansion now will expand with the '-' character, which helps 
+# greatly in some cases.  Alot of work for a what will hopefully be a long 
+# term gain.  Also will now use quoted strings as actual completion targets, 
+# thank goodness.
+#     fixed:
+#     sort-lines will now clear its state after sorting the lines.
+#     Alt-!(shell-command, Alt-|(shell-command-on-region) --now temacs allows 
+# one to execute shell commands.  I dont see a shell being added to temacs, so 
+# thats one area where it will probably not stray.
+#     total 26 new commands added
+#     fixed up: sort-lines and its cousins, if nothing is selected the command 
+# is deactivated.
 #@-at
 #@-node:mork.20041101100635:<<version history>>
 #@nl
@@ -201,21 +254,134 @@ __version__ = ".51"
 #@-at
 #@nonl
 #@-node:mork.20041104095745:A Note on Alt-X
+#@+node:mork.20041122151944:A Note on the volume of methods
+#@+at
+# originally when this project started it was not envisioned that there would 
+# be that many emacs like commands and stuff implemented.
+# But then things changed, it grew.  At one point there were too many 
+# functions for the module to be flexible and understandable anymore.
+# 
+# The first reaction in the development was to decompose the pure module 
+# approach to an object approach.  This has helped immensely in
+# making temacs more manageable.  But, an Emacs instance now has over 200+ 
+# methods in it.  If it continues to grow, there may be
+# the need to decompose the families of methods into their own objects.  This 
+# could have two benefits:
+# 1. More intellectually managable.
+# 2. Swapable functionality.  Though its possible to do so now with python, 
+# this could be made much easier by having all
+# calls to a certain family be made through the __call__ operator.  Then 
+# swaping could be simply done by changing the object
+# the call is made to.
+# 
+# 
+# We will see if this approach may be taken.  At this point I can say for 
+# certain that the original pure functional design was a mistake, but one that 
+# was correctable by using Leo and pychecker.  Without these 2 tools, I think 
+# it may have been better to start over from scratch.
+#@-at
+#@-node:mork.20041122151944:A Note on the volume of methods
+#@+node:mork.20041126091717:plans for .7
+#@+at
+# 
+# I believe in .7 the transition from one big Emacs object to an Emacs object 
+# composed of many method-family objects
+# will begin.  This may be as a big as a transition as the change from the 
+# flat module structure to the Emacs class based
+# structure.  The .6 cycle Ill reserve for improving the functionality and 
+# documentation.  The current command crop may be
+# froze in that cycle.
+#@-at
+#@nonl
+#@-node:mork.20041126091717:plans for .7
+#@+node:mork.20041123150836:the master command is the center of an Emacs instance
+#@+at
+# 
+# just a short note to anyone, including myself, that is working on temacs.  
+# Currently all( well all the ones that we have registered interest in ) key 
+# events get
+# routed through:
+# 
+# def masterCommand( self, event, method , stroke):
+# 
+# 
+# to understand the flow of the Emacs class, you need to understand this 
+# method.  Everything goes through it, there are no sidecuts or anything.  
+# This offers the implementor complete control over what happens, and for the 
+# stateful commands it is essential to
+# keep states from being corrupted.
+# 
+# 
+# dont mess with this method lightly.
+#@-at
+#@-node:mork.20041123150836:the master command is the center of an Emacs instance
+#@+node:mork.20041122152311:adding stateful commands to temacs
+#@+at
+# Ive noticed a general strategy that works for adding commands that need 
+# state to develop.
+# 
+# 1. Create a start method.  This sets the mcStateManager into a specific 
+# state
+# 2. Create a process method.  This watches events as they happen in the state
+# 3. Create endpoint methods. These perform the final steps in processing the 
+# stateful command.
+# 
+# 
+# This general strategy works well so far.  A whole family of methods can be 
+# created in this manner.  Steps 1 and 2
+# could be combined but at a cost of more complexity, so Id recommend keeping 
+# them separate.
+#@-at
+#@-node:mork.20041122152311:adding stateful commands to temacs
+#@+node:mork.20041123150144:how to mix python regular expressions and the Text widget
+#@+at
+# Using python regular expressions and the Text widget may seem difficult but 
+# in reality it is very easy.
+# A simple formula:
+# 1. get the text you are interested in from the Text widget.
+# 2. Do a python regex on it, get the start value from the match object: 
+# match.start()
+# 3. This gives you the position in the text widget where the regex matched.  
+# Change the 'insert' point
+# in the Text like so:
+# 
+# tbuffer.mark_set( 'insert', 'insert +%sc' % match.start() )
+# 
+# 
+# this will change the insert point to where the match started.  Since you can 
+# move forward in the Text widget
+# by the character amount, bridging python regexes and Text is a simple 
+# operation.
+#   Need to go after the match, just use
+# match.end() instead of match.start().
+# 
+# I puzzled over this for awhile, so this note is a reminder that it is easy.  
+# See the implementation for query-replace-regex for
+# an example.  Doing this with just plain string can follow a similar pattern.
+# 
+#@-at
+#@@c
+#@nonl
+#@-node:mork.20041123150144:how to mix python regular expressions and the Text widget
 #@-others
 #@nonl
 #@-node:ekr.20041106101311:<< documentation >>
 #@nl
 #@<< imports >>
 #@+node:mork.20041030164547.1:<< imports >>
-try:
-    import Tkinter
-except ImportError:
-    Tkinter = g.cantImport("Tkinter")
+#@+at
+# pretty low level imports. These may be all the imports the module needs
+# 
+#@-at
+#@@c
 
+import Tkinter
 import string
 import weakref
 import new
-#@nonl
+import sys
+import re
+import os
 #@-node:mork.20041030164547.1:<< imports >>
 #@nl
 
@@ -273,7 +439,7 @@ class ControlXHandler:
         self.previous.insert( 0, event.keysym )
         emacs = self.emacs 
         if len( self.previous ) > 10: self.previous.pop()
-        if stroke == '<Key>':
+        if stroke in ('<Key>', '<Escape>' ):
             return self.processKey( event )
         if stroke in emacs.xcommands:
             emacs.xcommands[ stroke ]( event )
@@ -331,7 +497,11 @@ class ControlXHandler:
             event.keysym = 's' 
             emacs.setNextRegister( event )
             return 'break'
-            
+        
+        if event.keysym == 'Escape':
+            if len( previous ) > 1:
+                if previous[ 1 ] == 'Escape':
+                    return emacs.repeatComplexCommand( event )
         #if event.keysym == 'r':
         #    return emacs.activateRectangleMethods( event )
         #if self.rect_commands.has_key( event.keysym ):# and emacs.registermode == 1:
@@ -434,7 +604,7 @@ class MC_StateManager:
                         return 'break'
             
             
-            self.stateCommands = {
+            self.stateCommands = { #1 == one parameter, 2 == all
                 'uC': ( 2, emacs.universalDispatch ),
                 'controlx': ( 2, emacs.doControlX ),
                 'isearch':( 2, emacs.iSearch ),
@@ -450,6 +620,16 @@ class MC_StateManager:
                 'set-fill-column': ( 1, emacs.setFillColumn ),
                 'chooseBuffer': ( 1, emacs.chooseBuffer ),
                 'renameBuffer': ( 1, emacs.renameBuffer ),
+                're_search': ( 1, emacs.re_search ),
+                'alterlines': ( 1, emacs.processLines ),
+                'make_directory': ( 1, emacs.makeDirectory ),
+                'remove_directory': ( 1, emacs.removeDirectory ),
+                'delete_file': ( 1, emacs.deleteFile ),
+                'nonincr-search': ( 2, emacs.nonincrSearch ),
+                'word-search':( 1, emacs.wordSearch ),
+                'last-altx': ( 1, emacs.executeLastAltX ),
+                'escape': ( 1, emacs.watchEscape ),
+                'subprocess': ( 1, emacs.subprocesser ),
                 }
                 
             #@nonl
@@ -475,6 +655,11 @@ class MC_StateManager:
         if self.state: return self.states[ self.state ]
     #@nonl
     #@-node:mork.20041031162857.3:hasState
+    #@+node:mork.20041124094511:whichState
+    def whichState( self ):
+        
+        return self.state
+    #@-node:mork.20041124094511:whichState
     #@+node:mork.20041031162857.4:__call__
     def __call__( self, *args ):
             
@@ -606,7 +791,7 @@ class Emacs:
     #@+node:mork.20041030165020.1:__init__
     def __init__( self , tbuffer = None , minibuffer = None, useGlobalKillbuffer = False, useGlobalRegisters = False):
         '''Sets up Emacs instance.
-        	  If a Tkinter Text widget and Tkinter Label are passed in
+              If a Tkinter Text widget and Tkinter Label are passed in
            via the tbuffer and minibuffer parameters, these are bound to.
            Otherwise an explicit call to setBufferStrokes must be done.
            useGlobalRegisters set to True indicates that the Emacs instance should use a class attribute that functions
@@ -614,7 +799,7 @@ class Emacs:
            useGlobalKillbuffer set to True indicates that the Emacs instances should use a class attribute that functions
            as a global killbuffer.'''
         
-        self.mbuffers = {}
+        self.mbuffers = {} 
         self.svars = {}
         
         
@@ -631,7 +816,11 @@ class Emacs:
         self.macro = []
         self.namedMacros = {}
         self.macroing = False
+        self.dynaregex = re.compile( r'[%s%s\-_]+' %( string.ascii_letters, string.digits ) ) #for dynamic abbreviations
+        self.altx_history = []
+        self.keysymhistory = [] 
         
+        #This section sets up the buffer data structures
         self.bufferListGetters = {}
         self.bufferSetters = {}
         self.bufferGotos = {}
@@ -689,17 +878,20 @@ class Emacs:
         self.qQ = None
         self.qR = None
         #self.qlisten = False
-        self.lqR = Tkinter.StringVar()
-        self.lqR.set( 'Query with: ' )
+        #self.lqR = Tkinter.StringVar()
+        #self.lqR.set( 'Query with: ' ) # replaced with using the svar and self.mcStateManager
         self.qgetQuery = False
-        self.lqQ = Tkinter.StringVar()
-        self.lqQ.set( 'Replace with:' ) 
+        #self.lqQ = Tkinter.StringVar()
+        #self.lqQ.set( 'Replace with:' )# replaced with using the svar and self.mcStateManager
         self.qgetReplace = False
-        self.qrexecute = False 
+        self.qrexecute = False
+        self.querytype = 'normal'
         
         #self.rString = False
+        #These attributes are for replace-string and replace-regex
         self._sString = ''
         self._rpString = ''
+        self._useRegex = False
         
         self.sRect = False  #State indicating string rectangle.  May be moved to MC_StateManager
         self.krectangle = None #The kill rectangle
@@ -728,6 +920,8 @@ class Emacs:
         self.cxHandler = ControlXHandler( self ) #Creates the handler for Control-x commands
         self.mcStateManager = MC_StateManager( self ) #Manages state for the master command
         self.kstrokeManager = MC_KeyStrokeManager( self ) #Manages some keystroke state for the master command.
+        self.shutdownhook = None #If this is set via setShutdownHook, it is executed instead of sys.exit when Control-x Control-c is fired
+        self.shuttingdown = False #indicates that the Emacs instance is shutting down and no work needs to be done.
         
         if tbuffer and minibuffer:
             self.setBufferStrokes( tbuffer, minibuffer )
@@ -767,6 +961,8 @@ class Emacs:
         '<Alt-e>: move forward one sentence',
         '<Alt-}>: move forward one paragraph',
         '<Alt-{>: move backwards one paragraph',
+        '<Alt-:> evaluate a Python expression in the minibuffer and insert the value in the current buffer',
+        'Esc Esc : evaluate a Python expression in the minibuffer and insert the value in the current buffer',
         '<Control-x . >: set fill prefix',
         '<Alt-q>: fill paragraph',
         '<Alt-h>: select current or next paragraph',
@@ -777,9 +973,12 @@ class Emacs:
         '<Control-x ) > : stop definition of kbd macro',
         '<Control-x e : execute last macro defined',
         '<Control-u Control-x ( >: execute last macro and edit',
+        '<Control-x Esc Esc >: execute last complex command( last Alt-x command',
+        '<Control-x Control-c >: save buffers kill Emacs',
         '''<Control-x u > : advertised undo.   This function utilizes the environments.
         If the buffer is not configure explicitly, there is no operation.''',
         '<Control-_>: advertised undo.  See above',
+        '<Control-z>: iconfify frame',
         '----------------------------------------\n',
         '<Delete> : delete previous character',
         '<Control d>: delete next character',
@@ -815,14 +1014,24 @@ class Emacs:
         '<Control-x semicolon>: set comment column',
         '<Alt-semicolon>: indent to comment column',
         '----------------------------------------\n',
+        'M-! cmd -- Run the shell command line cmd and display the output',
+        'M-| cmd -- Run the shell command line cmd with region contents as input',
+        '----------------------------------------\n',
         '<Control-x a e>: Expand the abbrev before point (expand-abbrev). This is effective even when Abbrev mode is not enabled',
         '<Control-x a g>: Define an abbreviation for previous word',
         '<Control-x a i g>: Define a word as abbreviation for word before point, or in point',                        
         '----------------------------------------\n',
         '<Control s>: forward search, using pattern in Mini buffer.\n',
         '<Control r>: backward search, using pattern in Mini buffer.\n' ,
+        '<Control s Enter>: search forward for a word, nonincremental\n',
+        '<Control r Enter>: search backward for a word, nonincremental\n',
+        '<Control s Enter Control w>: Search for words, ignoring details of punctuation',
+        '<Control r Enter Control w>: Search backward for words, ignoring details of punctuation',
+        '<Control-Alt s>: forward regular expression search, using pattern in Mini buffer\n',
+        '<Control-Alt r>: backward regular expression search, using pattern in Mini buffer\n',
         '''<Alt-%>: begin query search/replace. n skips to next match. y changes current match.  
         q or Return exits. ! to replace all remaining matches with no more questions''',
+        '''<Control Alt %> begin regex search replace, like Alt-%''',
         '<Alt-=>: count lines and characters in regions',
         '<Alt-( >: insert parentheses()',
         '<Alt-) >:  move past close',
@@ -860,6 +1069,7 @@ class Emacs:
         'Alt-x commands:\n',
         '(Pressing Tab will result in auto completion of the options if an appropriate match is found',
         'replace-string  -  replace string with string',
+        'replace-regex - replace python regular expression with string',
         'append-to-register  - append region to register',
         'prepend-to-register - prepend region to register\n'
         'sort-lines - sort selected lines',
@@ -878,6 +1088,7 @@ class Emacs:
         'how-many - counts occurances of python regular expression',
         'kill-paragraph - delete from cursor to end of paragraph',
         'backward-kill-paragraph - delete from cursor to start of paragraph',
+        'backward-kill-sentence - delete from the cursor to the start of the sentence',
         'name-last-kbd-macro - give the last kbd-macro a name',
         'insert-keyboard-macro - save macros to file',
         'load-file - load a macro file',
@@ -891,11 +1102,14 @@ class Emacs:
         'delete-char - delete character under cursor' , 
         'isearch-forward - start forward incremental search',
         'isearch-backward - start backward incremental search',
+        'isearch-forward-regexp - start forward regular expression incremental search',
+        'isearch-backward-regexp - start backward return expression incremental search',
         'capitalize-word - capitalize the current word',
         'upcase-word - switch word to upper case',
         'downcase-word - switch word to lower case',
         'indent-region - indent region to first line in region',
         'indent-rigidly - indent region by a tab',
+        'indent-relative - Indent from point to under an indentation point in the previous line',
         'set-mark-command - mark the beginning or end of a region',
          'kill-rectangle - kill the rectangle',
         'delete-rectangle - delete the rectangle',
@@ -916,6 +1130,7 @@ class Emacs:
         'end-of-buffer - move to the end of the buffer',
         'newline-and-indent - insert a newline and tab',
         'keyboard-quit - abort current command',
+        'iconify-or-deiconify-frame - iconfiy current frame',
         'advertised-undo - undo the last operation',
         'back-to-indentation - move to first non-blank character of line',
         'delete-indentation - join this line to the previous one',
@@ -923,12 +1138,15 @@ class Emacs:
         'transpose-chars - transpose two letters',
         'transpose-words - transpose two words',
         'transpose-line - transpose two lines',
+        'flush-lines - delete lines that match regex',
+        'keep-lines - keep lines that only match regex',
         'insert-file - insert file at current position',
         'save-buffer - save file',
         'split-line - split line at cursor. indent to column of cursor',
         'upcase-region - Upper case region',
         'downcase-region - lower case region',
         'goto-line - goto a line in the buffer',
+        'what-line - display what line the cursor is on',
         'goto-char - goto a char in the buffer',
         'set-fill-column - sets the fill column',
         'center-line - centers the current line within the fill column',
@@ -951,12 +1169,32 @@ class Emacs:
         'kill-buffer - kill the specified buffer',
         'rename-buffer - rename the buffer',
         'query-replace - query buffer for pattern and replace it.  The user will be asked for a pattern, and for text to replace the pattern with.',
+        'query-replace-regex - query buffer with regex and replace it.  The user will be asked for a pattern, and for text to replace the regex matches with.',
         'inverse-add-global-abbrev - add global abbreviation from previous word.  Will ask user for word to expand to',
         'expand-abbrev - Expand the abbrev before point. This is effective even when Abbrev mode is not enabled',
+        're-search-forward - do a python regular expression search forward',
+        're-search-backward - do a python regular expression search backward',
+        'diff - compares two files, displaying the differences in an Emacs buffer named *diff*',
+        'make-directory - create a new directory',
+        'remove-directory - remove an existing directory if its empty',
+        'delete-file - remove an existing file',
+        'search-forward - search forward for a word',
+        'search-backward - search backward for a word',
+        'word-search-forward - Search for words, ignoring details of punctuation.', 
+        'word-search-backward - Search backward for words, ignoring details of punctuation',
+        'repeat-complex-command - repeat the last Alt-x command',
+        'eval-expression - evaluate a Python expression and put the value in the current buffer',
+        'tabify - turn the selected text\'s spaces into tabs',
+        'untabify - turn the selected text\'s tabs into spaces',
+        'shell-command -Run the shell command line cmd and display the output',
+        'shell-command-on-region -Run the shell command line cmd with region contents as input',
         ]
+        
         return '\n'.join( help_t )
     
     getHelpText = staticmethod( getHelpText )
+    
+    
     
     
     
@@ -978,11 +1216,15 @@ class Emacs:
         '''The masterCommand is the central routing method of the Emacs method.
            All commands and keystrokes pass through here.'''
         #global previousStroke, regXKey
-        
         Emacs.lossage.pop() #The lossage list is already at 100, we keep it at 100 by popping it
         Emacs.lossage.reverse()
         Emacs.lossage.append( event.char )#Then we add the new char.  Hopefully this will keep Python from allocating a new array each time.
         Emacs.lossage.reverse()
+        #print event.keysym
+        #print stroke
+        self.keysymhistory.reverse()
+        self.keysymhistory.append( event.keysym )
+        self.keysymhistory.reverse()
         
         if self.macroing:
             if self.macroing == 2 and stroke != '<Control-x>':
@@ -1077,6 +1319,7 @@ class Emacs:
             self.previousStroke = stroke
             return rt
     
+    
     #@-node:mork.20041030164547.43:masterCommand
     #@+node:mork.20041102082023:keyboardQuit
     def keyboardQuit( self, event ):
@@ -1088,6 +1331,9 @@ class Emacs:
     #@+at
     # These methods create the dispatch dictionarys that the
     # Emacs instance uses to execute specific keystrokes and commands.
+    # Dont mess with it if you dont understand this section, without these 
+    # dictionarys
+    # the Emacs system cant work.
     # 
     #@-at
     #@@c
@@ -1145,6 +1391,7 @@ class Emacs:
         'Alt-parenleft': self.insertParentheses,
         'Alt-parenright': self.movePastClose,
         'Alt-percent' : None,
+        'Control-c': None,
         'Delete': lambda event, which = 'BackSpace': self.manufactureKeyPress( event, which ),
         'Control-p': lambda event, which = 'Up': self.manufactureKeyPress( event, which ),
         'Control-n': lambda event, which = 'Down': self.manufactureKeyPress( event, which ),
@@ -1176,7 +1423,14 @@ class Emacs:
         'Alt-9': lambda event, stroke = '<Alt-9>', number = 9: self.numberCommand( event, stroke, number ) ,
         'Control-underscore': self.doUndo,
         'Alt-s': self.centerLine,
-        
+        'Control-z': self.suspend, 
+        'Control-Alt-s': lambda event, stroke='<Control-s>': self.startIncremental( event, stroke, which='regexp' ),
+        'Control-Alt-r': lambda event, stroke='<Control-r>': self.startIncremental( event, stroke, which='regexp' ),
+        'Control-Alt-percent': lambda event: self.startRegexReplace() and self.masterQR( event ),
+        'Escape': self.watchEscape,
+        'Alt-colon': self.startEvaluate,
+        'Alt-exclam': self.startSubprocess,
+        'Alt-bar': lambda event: self.startSubprocess( event, which = 1 ),
         }
         
         return cbDict
@@ -1193,6 +1447,7 @@ class Emacs:
         '<Control-i>': self.insertFile,
         '<Control-s>': self.saveFile,
         '<Control-x>': self.exchangePointMark,
+        '<Control-c>': self.shutdown,
         '<Control-b>': self.listBuffers,
         '<Control-Shift-at>': lambda event: event.widget.selection_clear(),
         '<Delete>' : lambda event, back = True: self.killsentence( event, back ),
@@ -1209,6 +1464,7 @@ class Emacs:
         'prepend-to-register': self.prependToRegister,
         'append-to-register': self.appendToRegister,
         'replace-string': self.replaceString,
+        'replace-regex': lambda event:  self.activateReplaceRegex() and self.replaceString( event ),
         'sort-lines': self.sortLines,
         'sort-columns': self.sortColumns,
         'reverse-region': self.reverseRegion,
@@ -1224,6 +1480,7 @@ class Emacs:
         'how-many': self.startHowMany,
         'kill-paragraph': self.killParagraph,
         'backward-kill-paragraph': self.backwardKillParagraph,
+        'backward-kill-sentence': lambda event: self.keyboardQuit( event ) and self.killsentence( event, back = True ),
         'name-last-kbd-macro': self.nameLastMacro,
         'load-file': self.loadMacros,
         'insert-keyboard-macro' : self.getMacroName,
@@ -1239,11 +1496,14 @@ class Emacs:
         'delete-char': lambda event: self.deleteNextChar( event ) and self.keyboardQuit( event ) , 
         'isearch-forward': lambda event: self.keyboardQuit( event ) and self.startIncremental( event, '<Control-s>' ),
         'isearch-backward': lambda event: self.keyboardQuit( event ) and self.startIncremental( event, '<Control-r>' ),
+        'isearch-forward-regexp': lambda event: self.keyboardQuit( event ) and self.startIncremental( event, '<Control-s>', which = 'regexp' ),
+        'isearch-backward-regexp': lambda event: self.keyboardQuit( event ) and self.startIncremental( event, '<Control-r>', which = 'regexp' ),
         'capitalize-word': lambda event, which = 'cap' : self.capitalize( event, which ) and self.keyboardQuit( event ),
         'upcase-word': lambda event, which = 'up' : self.capitalize( event, which ) and self.keyboardQuit( event ),
         'downcase-word': lambda event, which = 'low' : self.capitalize( event, which ) and self.keyboardQuit( event ),
         'indent-region': lambda event: self.indentRegion( event ) and self.keyboardQuit( event ),
         'indent-rigidly': lambda event: self.tabIndentRegion( event ) and self.keyboardQuit( event ),
+        'indent-relative': self.indent_relative,
         'set-mark-command': lambda event: self.setRegion( event ) and self.keyboardQuit( event ),
         'kill-rectangle': lambda event: self.killRectangle( event ),
         'delete-rectangle': lambda event: self.deleteRectangle( event ),
@@ -1301,9 +1561,30 @@ class Emacs:
          'kill-buffer' : lambda event, which = 'kill-buffer': self.setInBufferMode( event, which ),
          'rename-buffer': lambda event: self.renameBuffer( event ),
          'query-replace': lambda event: self.masterQR( event ), 
+         'query-replace-regex': lambda event: self.startRegexReplace() and self.masterQR( event ),
          'inverse-add-global-abbrev': lambda event: self.abbreviationDispatch( event, 2 ) ,  
          'expand-abbrev': lambda event : self.keyboardQuit( event ) and self.expandAbbrev( event ), 
-    
+         'iconfify-or-deiconify-frame': lambda event: self.suspend( event ) and self.keyboardQuit( event ),
+         'save-buffers-kill-emacs': lambda event: self.keyboardQuit( event ) and self.shutdown( event ),
+         're-search-forward': lambda event: self.reStart( event ),
+         're-search-backward': lambda event: self.reStart( event, which = 'backward' ),
+         'diff': self.diff, 
+         'what-line': self.whatLine,
+         'flush-lines': lambda event: self.startLines( event ),
+         'keep-lines': lambda event: self.startLines( event, which = 'keep' ),
+         'make-directory': lambda event: self.makeDirectory( event ),
+         'remove-directory': lambda event: self.removeDirectory( event ),
+         'delete-file': lambda event: self.deleteFile( event ),
+         'search-forward': lambda event: self.startNonIncrSearch( event, 'for' ),
+         'search-backward': lambda event: self.startNonIncrSearch( event, 'bak' ),
+         'word-search-forward': lambda event : self.startWordSearch( event, 'for' ),
+         'word-search-backward': lambda event: self.startWordSearch( event, 'bak' ),
+         'repeat-complex-command': lambda event: self.repeatComplexCommand( event ),
+         'eval-expression': self.startEvaluate,
+         'tabify': self.tabify,
+         'untabify': lambda event: self.tabify( event, which = 'untabify' ),
+         'shell-command': self.startSubprocess,
+         'shell-command-on-region': lambda event: self.startSubprocess( event, which=1 ),
         }    
         #Note: if we are reusing some of the cbDict lambdas we need to alter many by adding: self.keyboardQuit( event )
         #Otherwise the darn thing just sits in Alt-X land.  Putting the 'and self.keyboardQuit( event )' part in the killbuffer
@@ -1315,6 +1596,8 @@ class Emacs:
     
     
     
+     
+    #@nonl
     #@-node:mork.20041030190903:addAltXCommands
     #@+node:mork.20041030190729:addRegisterItems
     def addRegisterItems( self ):
@@ -1447,6 +1730,16 @@ class Emacs:
         tbuffer.mark_set( 'insert', 'insert -1c' )
         return self._tailEnd( tbuffer )
     #@-node:mork.20041030164547.103:insertParentheses
+    #@+node:mork.20041123095436:replace-string and replace-regex
+    #@+at
+    # both commands use the replaceString method, differentiated by a state 
+    # variable
+    # 
+    #@-at
+    #@@c
+    
+    
+    #@+others
     #@+node:mork.20041030164547.115:replaceString
     #self.rString = False
     #self._sString = ''
@@ -1457,12 +1750,16 @@ class Emacs:
         if event.keysym in ( 'Control_L', 'Control_R' ):
             return
         rS = self.mcStateManager.getState( 'rString' )
+        regex = self._useRegex
         if not rS:
             #self.rString = 1
             self.mcStateManager.setState( 'rString', 1 )
             self._sString = ''
             self._rpString = ''
-            svar.set( 'Replace String' )
+            if regex:
+                svar.set( 'Replace Regex' )
+            else:
+                svar.set( 'Replace String' )
             return
         if event.keysym == 'Return':
             #self.rString = self.rString + 1
@@ -1479,7 +1776,10 @@ class Emacs:
             self._sString = svar.get()
             return 'break'
         if rS == 3:
-            svar.set( 'Replace string %s with:' % self._sString )
+            if regex:
+                svar.set( 'Replace regex %s with:' % self._sString )
+            else:
+                svar.set( 'Replace string %s with:' % self._sString )
             self.mcStateManager.setState( 'rString',rS + 1 )
             #self.rString = self.rString + 1
             return 'break'
@@ -1495,20 +1795,53 @@ class Emacs:
         if rS == 6:
             tbuffer = event.widget
             i = 'insert'
+            end = 'end'
             ct = 0
-            while i:
-                i = tbuffer.search( self._sString, i, stopindex = 'end' )
-                if i:
-                    tbuffer.delete( i, '%s +%sc' %( i, len( self._sString) ))
-                    tbuffer.insert( i, self._rpString )
-                    ct = ct +1
+            if tbuffer.tag_ranges( 'sel' ):
+                i = tbuffer.index( 'sel.first' )
+                end = tbuffer.index( 'sel.last' )
+            if regex:
+                txt = tbuffer.get( i, end )
+                try:
+                    pattern = re.compile( self._sString )
+                except:
+                    self.keyboardQuit( event )
+                    svar.set( "Illegal regular expression" )
+                    return 'break'
+                ct = len( pattern.findall( txt ) )
+                if ct:
+                    ntxt = pattern.sub( self._rpString, txt )
+                    tbuffer.delete( i, end )
+                    tbuffer.insert( i, ntxt )
+            else:
+                txt = tbuffer.get( i, end )
+                ct = txt.count( self._sString )
+                if ct:
+                    ntxt = txt.replace( self._sString, self._rpString )
+                    tbuffer.delete( i, end )
+                    tbuffer.insert( i, ntxt )
+                    
             svar.set( 'Replaced %s occurances' % ct )
-            label.configure( background = 'lightgrey' ) 
+            #label.configure( background = 'lightgrey' )
+            self.setLabelGrey( label ) 
             #self.rString = False
             self.mcStateManager.clear()
+            self._useRegex = False
             #self.mcStateManager.setState( 'rString', False )
             return self._tailEnd( tbuffer )
+    
     #@-node:mork.20041030164547.115:replaceString
+    #@+node:mork.20041123095123:activateReplaceRegex
+    def activateReplaceRegex( self ):
+        '''This method turns regex replace on for replaceString'''
+        self._useRegex = True
+        return True
+        
+    
+    #@-node:mork.20041123095123:activateReplaceRegex
+    #@-others
+    #@nonl
+    #@-node:mork.20041123095436:replace-string and replace-regex
     #@+node:mork.20041030164547.116:swapCharacters
     def swapCharacters( self, event ):
         tbuffer = event.widget
@@ -1522,6 +1855,8 @@ class Emacs:
         tbuffer.mark_set( 'insert', i )
         return self._tailEnd( tbuffer )
     #@-node:mork.20041030164547.116:swapCharacters
+    #@+node:mork.20041123095507:insert new line methods
+    #@+others
     #@+node:mork.20041030164547.117:insertNewLine
     def insertNewLine( self,event ):
         tbuffer = event.widget
@@ -1556,6 +1891,9 @@ class Emacs:
         tbuffer.mark_set( 'insert', '%s lineend' % i )
         return self._tailEnd( tbuffer )
     #@-node:mork.20041103135515:insertNewLineAndTab
+    #@-others
+    #@nonl
+    #@-node:mork.20041123095507:insert new line methods
     #@+node:mork.20041030164547.148:transposeLines
     def transposeLines( self, event ):
         tbuffer = event.widget
@@ -1674,6 +2012,35 @@ class Emacs:
         tbuffer.update_idletasks()
         return 'break'
     #@-node:mork.20041030164547.96:backToIndentation
+    #@+node:mork.20041124130434:indent-relative
+    def indent_relative( self, event ):
+        
+        tbuffer = event.widget
+        i = tbuffer.index( 'insert' )
+        l,c = i.split( '.' )
+        c2 = int( c )
+        l2 = int( l ) - 1
+        if l2 < 1: return self.keyboardQuit( event )
+        txt = tbuffer.get( '%s.%s' % (l2, c2 ), '%s.0 lineend' % l2 )
+        if len( txt ) <= len( tbuffer.get( 'insert', 'insert lineend' ) ):
+            tbuffer.insert(  'insert', '\t' )
+        else:
+            reg = re.compile( '(\s+)' )
+            ntxt = reg.split( txt )
+            replace_word = re.compile( '\w' )
+            for z in ntxt:
+                if z.isspace():
+                    tbuffer.insert( 'insert', z )
+                    break
+                else:
+                    z = replace_word.subn( ' ', z )
+                    tbuffer.insert( 'insert', z[ 0 ] )
+                    tbuffer.update_idletasks()
+            
+            
+        self.keyboardQuit( event )
+        return self._tailEnd( tbuffer )
+    #@-node:mork.20041124130434:indent-relative
     #@+node:mork.20041030164547.129:negativeArgument
     #self.negativeArg = False
     def negativeArgument( self, event, stroke = None ):
@@ -1745,6 +2112,12 @@ class Emacs:
         return 'break'
         
     #@-node:mork.20041031202438:selectAll
+    #@+node:mork.20041120195951:suspend
+    def suspend( self, event ):
+        
+        widget = event.widget
+        widget.winfo_toplevel().iconify()
+    #@-node:mork.20041120195951:suspend
     #@-others
     #@nonl
     #@-node:mork.20041031195549:buffer altering methods
@@ -1774,6 +2147,16 @@ class Emacs:
         svar.set( loss )
     #@nonl
     #@-node:mork.20041102161859:viewLossage
+    #@+node:mork.20041121195816:whatLine
+    def whatLine( self, event ):
+        
+        tbuffer = event.widget
+        svar, label = self.getSvarLabel( event )
+        i = tbuffer.index( 'insert' )
+        i1, i2 = i.split( '.' )
+        self.keyboardQuit( event )
+        svar.set( "Line %s" % i1 )
+    #@-node:mork.20041121195816:whatLine
     #@-others
     #@nonl
     #@-node:mork.20041031195908:informational methods
@@ -1897,6 +2280,27 @@ class Emacs:
     #@-others
     #@nonl
     #@-node:mork.20041031183614:general utility methods
+    #@+node:mork.20041120223251:shutdown methods
+    #@+others
+    #@+node:mork.20041120222336:shutdown
+    def shutdown( self, event ):
+        
+        self.shuttingdown = True
+        if self.shutdownhook:
+            self.shutdownhook()
+        else:
+            sys.exit( 0 )
+    #@nonl
+    #@-node:mork.20041120222336:shutdown
+    #@+node:mork.20041120223251.1:setShutdownHook
+    def setShutdownHook( self, hook ):
+            
+        self.shutdownhook = hook
+    #@nonl
+    #@-node:mork.20041120223251.1:setShutdownHook
+    #@-others
+    #@nonl
+    #@-node:mork.20041120223251:shutdown methods
     #@+node:mork.20041031182215:Label( minibuffer ) and svar methods
     #@+at
     # Two closely related categories under this one heading.  Svars are the 
@@ -2050,6 +2454,10 @@ class Emacs:
                 svar = self.svars[ event.widget ]
                 label.configure( textvariable = svar )
             tbuffer.bind( '<FocusIn>', setVar, '+' )
+            def scrollTo( event ):
+                event.widget.see( 'insert' )
+            
+            #tbuffer.bind( '<Enter>', scrollTo, '+' )
             cb( 'Key' )
     #@-node:mork.20041030164547.30:setBufferStrokes
     #@+node:mork.20041101190309:extendAltX
@@ -2687,7 +3095,8 @@ class Emacs:
             i2 = tbuffer.search( '.' , i, backwards = True , stopindex = '1.0' )
             if i2 == '':
                 i2 = '1.0'
-                return self.kill( event, i2, '%s + 1c' % i )
+            return self.kill( event, i2, '%s + 1c' % i )
+            #return self.kill( event , '%s +1c' % i, 'insert' )
         else:
             i = tbuffer.search( '.' , 'insert', stopindex = 'end' )
             i2 = tbuffer.search( '.', 'insert', backwards = True, stopindex = '1.0' )
@@ -3567,6 +3976,15 @@ class Emacs:
     #@-others
     #@nonl
     #@-node:mork.20041031183136:region methods
+    #@+node:mork.20041122190403:searching
+    #@+at
+    # A tremendous variety of searching methods are available.
+    # 
+    #@-at
+    #@@c
+    
+    
+    #@+others
     #@+node:mork.20041031182837:incremental search methods
     #@+at
     # These methods enable the incremental search functionality.
@@ -3576,40 +3994,44 @@ class Emacs:
     
     #@+others
     #@+node:mork.20041030164547.79:startIncremental
-    def startIncremental( self, event, stroke ):
+    def startIncremental( self, event, stroke, which='normal' ):
         #global isearch, pref
         #widget = event.widget
         #if self.isearch:
-        if self.mcStateManager.getState( 'isearch' ):
-            self.search( event, way = self.csr[ stroke ] )
+        isearch = self.mcStateManager.getState( 'isearch' )
+        if isearch:
+            self.search( event, way = self.csr[ stroke ], useregex = self.useRegex() )
             self.pref = self.csr[ stroke ]
             self.scolorizer( event )
             return 'break'
         else:
             svar, label = self.getSvarLabel( event )
             #self.isearch = True'
-            self.mcStateManager.setState( 'isearch', True )
+            self.mcStateManager.setState( 'isearch', which )
             self.pref = self.csr[ stroke ]
             label.configure( background = 'lightblue' )
             label.configure( textvariable = svar )
             return 'break'
     #@-node:mork.20041030164547.79:startIncremental
     #@+node:mork.20041030164547.38:search
-    def search( self, event, way ):
+    def search( self, event, way , useregex=False):
         '''This method moves the insert spot to position that matches the pattern in the minibuffer'''
         tbuffer = event.widget
         svar, label = self.getSvarLabel( event )
         stext = svar.get()
         if stext == '': return 'break'
-        if way == 'bak': #Means search backwards.
-            i = tbuffer.search( stext, 'insert', backwards = True,  stopindex = '1.0' )
-            if not i: #If we dont find one we start again at the bottom of the buffer. 
-                i = tbuffer.search( stext, 'end', backwards = True, stopindex = 'insert' )
-        else: #Since its not 'bak' it means search forwards.
-            i = tbuffer.search(  stext, "insert + 1c", stopindex = 'end') 
-            if not i: #If we dont find one we start at the top of the buffer. 
-                i = tbuffer.search( stext, '1.0', stopindex = 'insert' )
-        if i.isspace() or not i : return 'break'
+        try:
+            if way == 'bak': #Means search backwards.
+                i = tbuffer.search( stext, 'insert', backwards = True,  stopindex = '1.0' , regexp = useregex )
+                if not i: #If we dont find one we start again at the bottom of the buffer. 
+                    i = tbuffer.search( stext, 'end', backwards = True, stopindex = 'insert', regexp = useregex)
+            else: #Since its not 'bak' it means search forwards.
+                i = tbuffer.search(  stext, "insert + 1c", stopindex = 'end', regexp = useregex ) 
+                if not i: #If we dont find one we start at the top of the buffer. 
+                    i = tbuffer.search( stext, '1.0', stopindex = 'insert', regexp = useregex )
+        except:
+            return 'break'
+        if not i or i.isspace(): return 'break'
         tbuffer.mark_set( 'insert', i )
         tbuffer.see( 'insert' )
     #@-node:mork.20041030164547.38:search
@@ -3618,11 +4040,14 @@ class Emacs:
         if len( event.char ) == 0: return
         
         if stroke in self.csr: return self.startIncremental( event, stroke )
+        svar, label = self.getSvarLabel( event )
         if event.keysym == 'Return':
-              return self.stopControlX( event )
+              if svar.get() == '':
+                  return self.startNonIncrSearch( event, self.pref )
+              else:
+                return self.stopControlX( event )
               #return self._tailEnd( event.widget )
         widget = event.widget
-        svar, label = self.getSvarLabel( event )
         label.configure( textvariable = svar )
         #if event.keysym == 'Return':
         #      return self.stopControlX( event )
@@ -3631,7 +4056,7 @@ class Emacs:
            stext = svar.get()
            z = widget.search( stext , 'insert' , stopindex = 'insert +%sc' % len( stext ) )
            if not z:
-               self.search( event, self.pref )
+               self.search( event, self.pref, useregex= self.useRegex() )
         self.scolorizer( event )
         return 'break'
     #@-node:mork.20041030164547.80:iSearch
@@ -3646,7 +4071,10 @@ class Emacs:
         if stext == '': return 'break'
         ind = '1.0'
         while ind:
-            ind = tbuffer.search( stext, ind, stopindex = 'end')
+            try:
+                ind = tbuffer.search( stext, ind, stopindex = 'end', regexp = self.useRegex() )
+            except:
+                break
             if ind:
                 i, d = ind.split('.')
                 d = str(int( d ) + len( stext ))
@@ -3658,9 +4086,275 @@ class Emacs:
         tbuffer.tag_config( 'color', foreground = 'red' ) 
         tbuffer.tag_config( 'color1', background = 'lightblue' ) 
     #@-node:mork.20041030164547.153:scolorizer
+    #@+node:mork.20041121125455:useRegex
+    def useRegex( self ):
+    
+        isearch = self.mcStateManager.getState( 'isearch' )
+        risearch = False
+        if isearch != 'normal':
+            risearch=True
+        return risearch
+    #@nonl
+    #@-node:mork.20041121125455:useRegex
     #@-others
     #@nonl
     #@-node:mork.20041031182837:incremental search methods
+    #@+node:mork.20041122154604:non-incremental search methods
+    #@+at
+    # Accessed by Control-s Enter or Control-r Enter.  Alt-x forward-search or 
+    # backward-search, just looks for words...
+    # 
+    # 
+    #@-at
+    #@@c
+    
+    
+    #@+others
+    #@+node:mork.20041122154604.1:nonincrSearch
+    def nonincrSearch( self, event, stroke ):
+        
+        if event.keysym in ('Control_L', 'Control_R' ): return
+        state = self.mcStateManager.getState( 'nonincr-search' )
+        svar, label = self.getSvarLabel( event )
+        if state.startswith( 'start' ):
+            state = state[ 5: ]
+            self.mcStateManager.setState( 'nonincr-search', state )
+            svar.set( '' )
+            
+        if svar.get() == '' and stroke=='<Control-w>':
+            return self.startWordSearch( event, state )
+        
+        if event.keysym == 'Return':
+            
+            tbuffer = event.widget
+            i = tbuffer.index( 'insert' )
+            word = svar.get()
+            if state == 'for':
+                s = tbuffer.search( word, i , stopindex = 'end' )
+                if s:
+                    s = tbuffer.index( '%s +%sc' %( s, len( word ) ) )
+            else:            
+                s = tbuffer.search( word,i, stopindex = '1.0', backwards = True )
+                
+            if s:
+                tbuffer.mark_set( 'insert', s )    
+            self.keyboardQuit( event )
+            return self._tailEnd( tbuffer )        
+                
+        else:
+            self.setSvar( event, svar )
+            return 'break'
+    
+    
+    #@-node:mork.20041122154604.1:nonincrSearch
+    #@+node:mork.20041122155708:startNonIncrSearch
+    def startNonIncrSearch( self, event, which ):
+        
+        self.keyboardQuit( event )
+        tbuffer = event.widget
+        self.mcStateManager.setState( 'nonincr-search', 'start%s' % which )
+        svar, label = self.getSvarLabel( event )
+        self.setLabelBlue( label )
+        svar.set( 'Search:' )
+        return 'break'
+    #@-node:mork.20041122155708:startNonIncrSearch
+    #@-others
+    #@nonl
+    #@-node:mork.20041122154604:non-incremental search methods
+    #@+node:mork.20041122171601:word search methods
+    #@+at
+    # 
+    # Control-s(r) Enter Control-w words Enter, pattern entered is treated as 
+    # a regular expression.
+    # 
+    # for example in the buffer we see:
+    #     cats......................dogs
+    # if we are after this and we enter the backwards look, search for 'cats 
+    # dogs' if will take us to the match.
+    # 
+    #@-at
+    #@@c
+    
+    #@+others
+    #@+node:mork.20041122171601.1:startWordSearch
+    def startWordSearch( self, event, which ):
+    
+        self.keyboardQuit( event )
+        tbuffer = event.widget
+        self.mcStateManager.setState( 'word-search', 'start%s' % which )
+        svar, label = self.getSvarLabel( event )
+        self.setLabelBlue( label )
+        if which == 'bak':
+            txt = 'Backward'
+        else:
+            txt = 'Forward'
+        svar.set( 'Word Search %s:' % txt ) 
+        return 'break'
+    #@-node:mork.20041122171601.1:startWordSearch
+    #@+node:mork.20041122171601.2:wordSearch
+    def wordSearch( self, event ):
+    
+        state = self.mcStateManager.getState( 'word-search' )
+        svar, label = self.getSvarLabel( event )
+        if state.startswith( 'start' ):
+            state = state[ 5: ]
+            self.mcStateManager.setState( 'word-search', state )
+            svar.set( '' )
+            
+        
+        if event.keysym == 'Return':
+            
+            tbuffer = event.widget
+            i = tbuffer.index( 'insert' )
+            words = svar.get().split()
+            sep = '[%s%s]+' %( string.punctuation, string.whitespace )
+            pattern = sep.join( words )
+            cpattern = re.compile( pattern )
+            if state == 'for':
+                
+                txt = tbuffer.get( 'insert', 'end' )
+                match = cpattern.search( txt )
+                if not match: return self.keyboardQuit( event )
+                end = match.end()
+                
+            else:            
+                txt = tbuffer.get( '1.0', 'insert' ) #initially the reverse words formula for Python Cookbook was going to be used.
+                a = re.split( pattern, txt )         #that didnt quite work right.  This one apparently does.   
+                if len( a ) > 1:
+                    b = re.findall( pattern, txt )
+                    end = len( a[ -1 ] ) + len( b[ -1 ] )
+                else:
+                    return self.keyboardQuit( event )
+                
+            wdict ={ 'for': 'insert +%sc', 'bak': 'insert -%sc' }
+            
+            tbuffer.mark_set( 'insert', wdict[ state ] % end )                                
+            tbuffer.see( 'insert' )    
+            self.keyboardQuit( event )
+            return self._tailEnd( tbuffer )        
+                
+        else:
+            self.setSvar( event, svar )
+            return 'break'
+    #@nonl
+    #@-node:mork.20041122171601.2:wordSearch
+    #@-others
+    #@nonl
+    #@-node:mork.20041122171601:word search methods
+    #@+node:mork.20041121103034:re-search methods
+    #@+at
+    # For the re-search-backward and re-search-forward Alt-x commands
+    # 
+    #@-at
+    #@@c
+    
+    
+    
+    #@+others
+    #@+node:mork.20041121103034.1:reStart
+    def reStart( self, event, which='forward' ):
+        self.keyboardQuit( event )
+        tbuffer = event.widget
+        self.mcStateManager.setState( 're_search', 'start%s' % which )
+        svar, label = self.getSvarLabel( event )
+        label.configure( background = 'lightblue' )
+        svar.set( 'RE Search:' )
+        return 'break'
+    #@-node:mork.20041121103034.1:reStart
+    #@+node:mork.20041121103034.2:re_search
+    def re_search( self, event ):
+        svar, label = self.getSvarLabel( event )
+    
+        state = self.mcStateManager.getState( 're_search' )
+        if state.startswith( 'start' ):
+            state = state[ 5: ]
+            self.mcStateManager.setState( 're_search', state )
+            svar.set( '' )
+           
+    
+            
+        if event.keysym == 'Return':
+           
+            tbuffer = event.widget
+            pattern = svar.get()
+            cpattern = re.compile( pattern )
+            end = None
+            if state == 'forward':
+                
+                txt = tbuffer.get( 'insert', 'end' )
+                match = cpattern.search( txt )
+                end = match.end()
+            
+            else:
+    
+                txt = tbuffer.get( '1.0', 'insert' ) #initially the reverse words formula for Python Cookbook was going to be used.
+                a = re.split( pattern, txt )         #that didnt quite work right.  This one apparently does.   
+                if len( a ) > 1:
+                    b = re.findall( pattern, txt )
+                    end = len( a[ -1 ] ) + len( b[ -1 ] )
+            
+            if end:
+                
+                wdict ={ 'forward': 'insert +%sc', 'backward': 'insert -%sc' }
+                    
+                tbuffer.mark_set( 'insert', wdict[ state ] % end )                                
+                self._tailEnd( tbuffer )
+                tbuffer.see( 'insert' )
+                
+            return self.keyboardQuit( event )    
+            
+            
+        else:
+            self.setSvar( event, svar )
+            return 'break'
+    
+    #@-node:mork.20041121103034.2:re_search
+    #@-others
+    #@nonl
+    #@-node:mork.20041121103034:re-search methods
+    #@-others
+    #@nonl
+    #@-node:mork.20041122190403:searching
+    #@+node:mork.20041121140620:diff methods
+    #@+at
+    # the diff command, accessed by Alt-x diff.  Creates a buffer and puts the 
+    # diff between 2 files into it.
+    # 
+    #@-at
+    #@@c
+    
+    
+    #@+others
+    #@+node:mork.20041121140620.1:diff
+    def diff( self, event ):
+        
+        try:
+            f, name = self.getReadableTextFile()
+            txt1 = f.read()
+            f.close()
+            
+            f2, name2 = self.getReadableTextFile()
+            txt2 = f2.read()
+            f2.close()
+        except:
+            return self.keyboardQuit( event )
+        
+        
+        self.switchToBuffer( event, "*diff* of ( %s , %s )" %( name, name2 ) )
+        import difflib
+        data = difflib.ndiff( txt1, txt2 )
+        idata = []
+        for z in data:
+            idata.append( z )
+        tbuffer = event.widget
+        tbuffer.delete( '1.0', 'end' )
+        tbuffer.insert( '1.0', ''.join( idata ) )
+        self._tailEnd( tbuffer )
+        return self.keyboardQuit( event )
+    #@-node:mork.20041121140620.1:diff
+    #@-others
+    #@nonl
+    #@-node:mork.20041121140620:diff methods
     #@+node:mork.20041031182332:Zap methods
     #@+at
     # These methods start and execute the Zap to functionality.
@@ -3723,6 +4417,7 @@ class Emacs:
         #self.howM = False
         #self.controlx = False
         #self.isearch = False
+        if self.shuttingdown: return
         self.sRect = False
         #self.uC = False
         #self.negativeArg = False
@@ -3918,60 +4613,22 @@ class Emacs:
     #@-others
     #@nonl
     #@-node:mork.20041031182402:delete methods
-    #@+node:mork.20041031194858:query search methods
-    #@+others
-    #@+node:mork.20041030164547.104:listenQR
-    #self.qQ = None
-    #self.qR = None
-    #self.qlisten = False
-    #self.lqR = Tkinter.StringVar()
-    #self.lqR.set( 'Query with: ' )
-    def listenQR( self, event ):
-        #global qgetQuery, qlisten
-        #self.qlisten = True
-        self.mcStateManager.setState( 'qlisten', True )
-        #tbuffer = event.widget
-        svar, label = self.getSvarLabel( event )
-        label.configure( background = 'lightblue' , textvariable = self.lqR)
-        self.qgetQuery = True
-    #@-node:mork.20041030164547.104:listenQR
-    #@+node:mork.20041030164547.105:qsearch
-    def qsearch( self, event ):
-        if self.qQ:
-            tbuffer = event.widget
-            i = tbuffer.search( self.qQ, 'insert', stopindex = 'end' )
-            tbuffer.tag_delete( 'qR' )
-            if i:
-                tbuffer.mark_set( 'insert', i )
-                tbuffer.update_idletasks()
-                tbuffer.tag_add( 'qR', 'insert', 'insert +%sc'% len( self.qQ ) )
-                tbuffer.tag_config( 'qR', background = 'lightblue' )
-                return True
-            self.quitQSearch( event )
-            return False
-    #@-node:mork.20041030164547.105:qsearch
-    #@+node:mork.20041030164547.106:quitQSearch
-    def quitQSearch( self,event ):
-        #global qQ, qR, qlisten, qrexecute
-        event.widget.tag_delete( 'qR' )
-        self.qQ = None
-        self.qR = None
-        #self.qlisten = False
-        self.mcStateManager.setState( 'qlisten', False )
-        self.qrexecute = False
-        svar, label = self.getSvarLabel( event )
-        svar.set( '' )
-        label.configure( background = 'lightgrey' )
-        event.widget.event_generate( '<Key>' )
-        event.widget.update_idletasks()
-    #@-node:mork.20041030164547.106:quitQSearch
-    #@-others
-    #@nonl
-    #@-node:mork.20041031194858:query search methods
     #@+node:mork.20041031181701.1:query replace methods
+    #@+at
+    # These methods handle the query-replace and query-replace-regex 
+    # commands.  They need to be fully migrated
+    # to the self.mcStateManager mechanism, which should simplify things 
+    # greatly, or at least the amount of variables its required
+    # so far.
+    # 
+    #@-at
+    #@@c
+    
+    
     #@+others
     #@+node:mork.20041030164547.107:qreplace
     def qreplace( self, event ):
+    
         if event.keysym == 'y':
             self._qreplace( event )
             return
@@ -4006,9 +4663,13 @@ class Emacs:
             self.qgetQuery = False
             self.qgetReplace = True
             self.qQ = svar.get()
-            svar.set( '')
-            label.configure( textvariable = self.lqQ)
+            svar.set( "Replace with:" )
+            self.mcStateManager.setState( 'qlisten', 'replace-caption' )
+            #label.configure( textvariable = self.lqQ)
             return
+        if self.mcStateManager.getState( 'qlisten' ) == 'replace-caption':
+            svar.set( '' )
+            self.mcStateManager.setState( 'qlisten', True )
         self.setSvar( event, svar )
     #@-node:mork.20041030164547.109:getQuery
     #@+node:mork.20041030164547.110:getReplace
@@ -4021,10 +4682,21 @@ class Emacs:
         if l == 'Return':
             self.qgetReplace = False
             self.qR = svar.get()
-            svar.set( 'Replace %s with %s y/n' %( self.qQ, self.qR ) )
             self.qrexecute = True
             ok = self.qsearch( event )
+            if self.querytype == 'regex' and ok:
+                tbuffer = event.widget
+                range = tbuffer.tag_ranges( 'qR' )
+                txt = tbuffer.get( range[ 0 ], range[ 1 ] )
+                svar.set( 'Replace %s with %s y/n(! for all )' %( txt, self.qR ) )
+            elif ok:
+                svar.set( 'Replace %s with %s y/n(! for all )' %( self.qQ, self.qR ) )
+            #self.qrexecute = True
+            #ok = self.qsearch( event )
             return
+        if self.mcStateManager.getState( 'qlisten' ) == 'replace-caption':
+            svar.set( '' )
+            self.mcStateManager.setState( 'qlisten', True )
         self.setSvar( event, svar )
     #@-node:mork.20041030164547.110:getReplace
     #@+node:mork.20041030164547.111:masterQR
@@ -4038,11 +4710,99 @@ class Emacs:
         elif self.qrexecute:
             self.qreplace( event )
         else:
-            svar, label = self.getSvarLabel( event )
-            svar.set( '' )
+            #svar, label = self.getSvarLabel( event )
+            #svar.set( '' )
             self.listenQR( event )
         return 'break'
     #@-node:mork.20041030164547.111:masterQR
+    #@+node:mork.20041123113640:startRegexReplace
+    def startRegexReplace( self ):
+        
+        self.querytype = 'regex'
+        return True
+    #@-node:mork.20041123113640:startRegexReplace
+    #@+node:mork.20041031194858:query search methods
+    #@+others
+    #@+node:mork.20041030164547.104:listenQR
+    #self.qQ = None
+    #self.qR = None
+    #self.qlisten = False
+    #self.lqR = Tkinter.StringVar()
+    #self.lqR.set( 'Query with: ' )
+    def listenQR( self, event ):
+        #global qgetQuery, qlisten
+        #self.qlisten = True
+        self.mcStateManager.setState( 'qlisten', 'replace-caption' )
+        #tbuffer = event.widget
+        svar, label = self.getSvarLabel( event )
+        self.setLabelBlue( label )
+        if self.querytype == 'regex':
+            svar.set( "Regex Query with:" )
+        else:
+            svar.set( "Query with:" )
+        #label.configure( background = 'lightblue' , textvariable = self.lqR)
+        self.qgetQuery = True
+    #@-node:mork.20041030164547.104:listenQR
+    #@+node:mork.20041030164547.105:qsearch
+    def qsearch( self, event ):
+        if self.qQ:
+            tbuffer = event.widget
+            tbuffer.tag_delete( 'qR' )
+            svar, label = self.getSvarLabel( event )
+            if self.querytype == 'regex':
+                try:
+                    regex = re.compile( self.qQ )
+                except:
+                    self.keyboardQuit( event )
+                    svar.set( "Illegal regular expression" )
+                    
+                txt = tbuffer.get( 'insert', 'end' )
+                match = regex.search( txt )
+                if match:
+                    start = match.start()
+                    end = match.end()
+                    length = end - start
+                    tbuffer.mark_set( 'insert', 'insert +%sc' % start )
+                    tbuffer.update_idletasks()
+                    tbuffer.tag_add( 'qR', 'insert', 'insert +%sc' % length )
+                    tbuffer.tag_config( 'qR', background = 'lightblue' )
+                    txt = tbuffer.get( 'insert', 'insert +%sc' % length )
+                    svar.set( "Replace %s with %s? y/n(! for all )" % ( txt, self.qR ) )
+                    return True
+            else:
+                i = tbuffer.search( self.qQ, 'insert', stopindex = 'end' )
+                if i:
+                    tbuffer.mark_set( 'insert', i )
+                    tbuffer.update_idletasks()
+                    tbuffer.tag_add( 'qR', 'insert', 'insert +%sc'% len( self.qQ ) )
+                    tbuffer.tag_config( 'qR', background = 'lightblue' )
+                    self._tailEnd( tbuffer )
+                    return True
+            self.quitQSearch( event )
+            return False
+    
+    #@-node:mork.20041030164547.105:qsearch
+    #@+node:mork.20041030164547.106:quitQSearch
+    def quitQSearch( self,event ):
+        #global qQ, qR, qlisten, qrexecute
+        event.widget.tag_delete( 'qR' )
+        self.qQ = None
+        self.qR = None
+        #self.qlisten = False
+        self.mcStateManager.setState( 'qlisten', False )
+        self.qrexecute = False
+        svar, label = self.getSvarLabel( event )
+        svar.set( '' )
+        label.configure( background = 'lightgrey' )
+        #self.keyboardQuit( event )
+        self.querytype = 'normal'
+        self._tailEnd( event.widget )
+        #event.widget.event_generate( '<Key>' )
+        #event.widget.update_idletasks()
+    #@-node:mork.20041030164547.106:quitQSearch
+    #@-others
+    #@nonl
+    #@-node:mork.20041031194858:query search methods
     #@-others
     #@nonl
     #@-node:mork.20041031181701.1:query replace methods
@@ -4226,20 +4986,24 @@ class Emacs:
         txt = tbuffer.get( i, i2 )
         dA = tbuffer.tag_ranges( 'dA' )
         tbuffer.tag_delete( 'dA' )
-        def doDa( txt ):
-            tbuffer.delete( 'insert -1c wordstart', 'insert -1c wordend' ) 
-            tbuffer.insert( 'insert', txt )
-            tbuffer.tag_add( 'dA', 'insert -1c wordstart', 'insert -1c wordend' )
+        def doDa( txt, from_ = 'insert -1c wordstart', to_ = 'insert -1c wordend' ):
+    
+            tbuffer.delete( from_, to_ ) 
+            tbuffer.insert( 'insert', txt, 'dA' )
             return self._tailEnd( tbuffer )
             
         if dA:
-            if i == dA[ 0 ] and i2 == dA[ 1 ]:
+            dA1, dA2 = dA
+            dtext = tbuffer.get( dA1, dA2 )
+            if dtext.startswith( stext ) and i2 == dA2: #This seems reasonable, since we cant get a whole word that has the '-' char in it, we do a good guess
                 if rlist:
                     txt = rlist.pop()
                 else:
                     txt = stext
+                    tbuffer.delete( dA1, dA2 )
+                    dA2 = dA1 #since the text is going to be reread, we dont want to include the last dynamic abbreviation
                     self.getDynamicList( tbuffer, txt, rlist )
-                return doDa( txt )
+                return doDa( txt, dA1, dA2 )
             else:
                 dA = None
                 
@@ -4268,21 +5032,21 @@ class Emacs:
     #@-node:mork.20041030164547.133:dynamicExpansion2
     #@+node:mork.20041030164547.134:getDynamicList
     def getDynamicList( self, tbuffer, txt , rlist ):
-         i = '1.0'
-         while i:
-             i = tbuffer.search( txt, i,  stopindex = 'end' )
-             if i == tbuffer.index( 'insert -1c wordstart' ): 
-                i = '%s wordend' % i
-                continue
-             if i:
-                if i == tbuffer.index( '%s wordstart' % i ):
-                    word = tbuffer.get( i, '%s wordend' % i )
-                    if word not in rlist:
-                        rlist.append ( word )
-                    else:
-                        rlist.remove( word )
-                        rlist.append( word )
-                i = '%s wordend' % i
+    
+         ttext = tbuffer.get( '1.0', 'end' )
+         items = self.dynaregex.findall( ttext ) #make a big list of what we are considering a 'word'
+         if items:
+             for word in items:
+                 if not word.startswith( txt ) or word == txt: continue #dont need words that dont match or == the pattern
+                 if word not in rlist:
+                     rlist.append( word )
+                 else:
+                     rlist.remove( word )
+                     rlist.append( word )
+                     
+            
+    
+    
     #@-node:mork.20041030164547.134:getDynamicList
     #@-others
     #@nonl
@@ -4293,7 +5057,8 @@ class Emacs:
     def sortLines( self, event , which = None ):
         tbuffer = event.widget  
         if not self._chckSel( event ):
-            return
+            return self.keyboardQuit( event )
+    
         i = tbuffer.index( 'sel.first' )
         i2 = tbuffer.index( 'sel.last' )
         is1 = i.split( '.' )
@@ -4310,13 +5075,15 @@ class Emacs:
             tbuffer.insert( '%s.0' % inum, '%s\n' % z ) 
             inum = inum + 1
         tbuffer.mark_set( 'insert', ins )
+        self.keyboardQuit( event )
         return self._tailEnd( tbuffer )
     #@-node:mork.20041030164547.136:sortLines
     #@+node:mork.20041030164547.137:sortColumns
     def sortColumns( self, event ):
         tbuffer = event.widget
         if not self._chckSel( event ):
-            return
+            return self.keyboardQuit( event )
+            
         ins = tbuffer.index( 'insert' )
         is1 = tbuffer.index( 'sel.first' )
         is2 = tbuffer.index( 'sel.last' )   
@@ -4342,15 +5109,18 @@ class Emacs:
              i = i + 1
         tbuffer.mark_set( 'insert', ins )
         return self._tailEnd( tbuffer ) 
+    
     #@-node:mork.20041030164547.137:sortColumns
     #@+node:mork.20041030164547.139:sortFields
     def sortFields( self, event, which = None ):
         tbuffer = event.widget
         if not self._chckSel( event ):
-            return
+            return self.keyboardQuit( event )
+    
         ins = tbuffer.index( 'insert' )
         is1 = tbuffer.index( 'sel.first' )
-        is2 = tbuffer.index( 'sel.last' )    
+        is2 = tbuffer.index( 'sel.last' )
+        
         txt = tbuffer.get( '%s linestart' % is1, '%s lineend' % is2 )
         txt = txt.split( '\n' )
         fields = []
@@ -4378,6 +5148,7 @@ class Emacs:
             int1 = int1 + 1
         tbuffer.mark_set( 'insert' , ins )
         return self._tailEnd( tbuffer )
+    
     #@-node:mork.20041030164547.139:sortFields
     #@-others
     #@nonl
@@ -4417,6 +5188,10 @@ class Emacs:
         if event.keysym == 'Return':
             txt = svar.get()
             if self.doAltX.has_key( txt ):
+                if txt != 'repeat-complex-command':
+                    self.altx_history.reverse()
+                    self.altx_history.append( txt )
+                    self.altx_history.reverse()
                 aX = self.mcStateManager.getState( 'altx' )
                 if aX.isdigit() and txt in self.x_hasNumeric:
                     self.doAltX[ txt]( event, aX )
@@ -4445,6 +5220,32 @@ class Emacs:
         self.setSvar( event, svar )
         return 'break'
     #@-node:mork.20041030164547.141:doAlt_X
+    #@+node:mork.20041123093234:execute last altx methods
+    #@+others
+    #@+node:mork.20041122223754:executeLastAltX
+    def executeLastAltX( self, event ):
+        
+        if event.keysym == 'Return' and self.altx_history:
+            last = self.altx_history[ 0 ]
+            self.doAltX[ last ]( event )
+            return 'break'
+        else:
+            return self.keyboardQuit( event )
+    #@-node:mork.20041122223754:executeLastAltX
+    #@+node:mork.20041122225107:repeatComplexCommand
+    def repeatComplexCommand( self, event ):
+    
+        self.keyboardQuit( event )
+        if self.altx_history:
+            svar, label = self.getSvarLabel( event )
+            self.setLabelBlue( label )
+            svar.set( "Redo: %s" % self.altx_history[ 0 ] )
+            self.mcStateManager.setState( 'last-altx', True )
+        return 'break'
+    #@-node:mork.20041122225107:repeatComplexCommand
+    #@-others
+    #@nonl
+    #@-node:mork.20041123093234:execute last altx methods
     #@-others
     #@nonl
     #@-node:mork.20041031181929.1:Alt_X methods
@@ -4538,39 +5339,103 @@ class Emacs:
     #@-others
     #@nonl
     #@-node:mork.20041031155455:universal methods
-    #@+node:mork.20041031182449:file methods
+    #@+node:mork.20041121201041:line methods
     #@+at
-    # These methods load files into buffers and save buffers to files
+    # 
+    # flush-lines
+    # Delete each line that contains a match for regexp, operating on the text 
+    # after point. In Transient Mark mode, if the region is active, the 
+    # command operates on the region instead.
+    # 
+    # 
+    # keep-lines
+    # Delete each line that does not contain a match for regexp, operating on 
+    # the text after point. In Transient Mark mode, if the region is active, 
+    # the command operates on the region instead.
     # 
     #@-at
     #@@c
     
-    
     #@+others
-    #@+node:mork.20041030164547.151:insertFile
-    def insertFile( self, event ):
+    #@+node:mork.20041121201041.1:alterLines
+    def alterLines( self, event, which ):
+        
         tbuffer = event.widget
-        import tkFileDialog
-        f = tkFileDialog.askopenfile()
-        if f == None: return None
-        txt = f.read()
-        f.close()
-        tbuffer.insert( 'insert', txt )
-        return self._tailEnd( tbuffer )
-    #@-node:mork.20041030164547.151:insertFile
-    #@+node:mork.20041030164547.152:saveFile
-    def saveFile( self, event ):
+        i = tbuffer.index( 'insert' )
+        end = 'end'
+        if tbuffer.tag_ranges( 'sel' ):
+            i = tbuffer.index( 'sel.first' )
+            end = tbuffer.index( 'sel.last' )
+            
+        txt = tbuffer.get( i, end )
+        tlines = txt.splitlines( True )
+        if which == 'flush':
+            keeplines = list( tlines )
+        else:
+            keeplines = []
+        svar, label = self.getSvarLabel( event )
+        pattern = svar.get()
+        try:
+            regex = re.compile( pattern )
+            for n , z in enumerate( tlines ):
+                f = regex.findall( z )
+                if which == 'flush' and f:
+                    keeplines[ n ] = None
+                elif f:
+                    keeplines.append( z )
+        except Exception,x:
+            return
+        
+        if which == 'flush':
+            keeplines = [ x for x in keeplines if x != None ]
+        tbuffer.delete( i, end )
+        tbuffer.insert( i, ''.join( keeplines ) )
+        tbuffer.mark_set( 'insert', i )
+        self._tailEnd( tbuffer )
+            
+        
+    
+    
+    
+    #@-node:mork.20041121201041.1:alterLines
+    #@+node:mork.20041121210221:processLines
+    def processLines( self, event ):
+        svar, label = self.getSvarLabel( event )
+    
+        state = self.mcStateManager.getState( 'alterlines' )
+        if state.startswith( 'start' ):
+            state = state[ 5: ]
+            self.mcStateManager.setState( 'alterlines', state )
+            svar.set( '' )
+           
+    
+            
+        if event.keysym == 'Return':
+           
+            self.alterLines( event, state )
+                
+            return self.keyboardQuit( event )    
+            
+            
+        else:
+            self.setSvar( event, svar )
+            return 'break'
+    #@nonl
+    #@-node:mork.20041121210221:processLines
+    #@+node:mork.20041121201112:startLines
+    def startLines( self , event, which = 'flush' ):
+    
+        self.keyboardQuit( event )
         tbuffer = event.widget
-        import tkFileDialog
-        txt = tbuffer.get( '1.0', 'end' )
-        f = tkFileDialog.asksaveasfile()
-        if f == None : return None
-        f.write( txt )
-        f.close()
-    #@-node:mork.20041030164547.152:saveFile
+        self.mcStateManager.setState( 'alterlines', 'start%s' % which )
+        svar, label = self.getSvarLabel( event )
+        label.configure( background = 'lightblue' )
+        return 'break'
+        
+    #@-node:mork.20041121201112:startLines
     #@-others
     #@nonl
-    #@-node:mork.20041031182449:file methods
+    #@-node:mork.20041121201041:line methods
     #@+node:mork.20041031160002:goto methods
     #@+at
     # These methods take the user to a specific line or a specific character 
@@ -4631,6 +5496,323 @@ class Emacs:
     #@-others
     #@nonl
     #@-node:mork.20041031160002:goto methods
+    #@+node:mork.20041122110739:directory methods
+    #@+others
+    #@+node:mork.20041122110739.1:makeDirectory
+    def makeDirectory( self, event ):
+        
+        svar,label = self.getSvarLabel( event )
+        state = self.mcStateManager.getState( 'make_directory' )
+        if not state:
+            self.mcStateManager.setState( 'make_directory', True )
+            self.setLabelBlue( label )
+            directory = os.getcwd()
+            svar.set( '%s%s' %( directory, os.sep ) )
+            return 'break'
+        
+        if event.keysym == 'Return':
+            
+            ndirectory = svar.get()
+            self.keyboardQuit( event )
+            try:
+                os.mkdir( ndirectory )
+            except:
+                svar.set( "Could not make %s%" % ndirectory  )
+            return 'break'
+        else:
+            self.setSvar( event, svar )
+            return 'break'
+    #@nonl
+    #@-node:mork.20041122110739.1:makeDirectory
+    #@+node:mork.20041122111431:removeDirectory
+    def removeDirectory( self, event ):
+        
+        svar,label = self.getSvarLabel( event )
+        state = self.mcStateManager.getState( 'remove_directory' )
+        if not state:
+            self.mcStateManager.setState( 'remove_directory', True )
+            self.setLabelBlue( label )
+            directory = os.getcwd()
+            svar.set( '%s%s' %( directory, os.sep ) )
+            return 'break'
+        
+        if event.keysym == 'Return':
+            
+            ndirectory = svar.get()
+            self.keyboardQuit( event )
+            try:
+                os.rmdir( ndirectory )
+            except:
+                svar.set( "Could not remove %s%" % ndirectory  )
+            return 'break'
+        else:
+            self.setSvar( event, svar )
+            return 'break'
+    #@nonl
+    #@-node:mork.20041122111431:removeDirectory
+    #@-others
+    #@nonl
+    #@-node:mork.20041122110739:directory methods
+    #@+node:mork.20041031182449:file methods
+    #@+at
+    # These methods load files into buffers and save buffers to files
+    # 
+    #@-at
+    #@@c
+    
+    
+    #@+others
+    #@+node:mork.20041122112210:deleteFile
+    def deleteFile( self, event ):
+    
+        svar,label = self.getSvarLabel( event )
+        state = self.mcStateManager.getState( 'delete_file' )
+        if not state:
+            self.mcStateManager.setState( 'delete_file', True )
+            self.setLabelBlue( label )
+            directory = os.getcwd()
+            svar.set( '%s%s' %( directory, os.sep ) )
+            return 'break'
+        
+        if event.keysym == 'Return':
+            
+            dfile = svar.get()
+            self.keyboardQuit( event )
+            try:
+                os.remove( dfile )
+            except:
+                svar.set( "Could not delete %s%" % dfile  )
+            return 'break'
+        else:
+            self.setSvar( event, svar )
+            return 'break'
+    #@-node:mork.20041122112210:deleteFile
+    #@+node:mork.20041030164547.151:insertFile
+    def insertFile( self, event ):
+        tbuffer = event.widget
+        f, name = self.getReadableTextFile()
+        if not f: return None
+        txt = f.read()
+        f.close()
+        tbuffer.insert( 'insert', txt )
+        return self._tailEnd( tbuffer )
+    #@-node:mork.20041030164547.151:insertFile
+    #@+node:mork.20041030164547.152:saveFile
+    def saveFile( self, event ):
+        tbuffer = event.widget
+        import tkFileDialog
+        txt = tbuffer.get( '1.0', 'end' )
+        f = tkFileDialog.asksaveasfile()
+        if f == None : return None
+        f.write( txt )
+        f.close()
+    #@-node:mork.20041030164547.152:saveFile
+    #@+node:mork.20041121140620.2:getReadableFile
+    def getReadableTextFile( self ):
+        
+        import tkFileDialog
+        fname = tkFileDialog.askopenfilename()
+        if fname == None: return None, None
+        f = open( fname, 'rt' )
+        return f, fname
+    #@-node:mork.20041121140620.2:getReadableFile
+    #@-others
+    #@nonl
+    #@-node:mork.20041031182449:file methods
+    #@+node:mork.20041123192555:Esc methods for Python evaluation
+    #@+others
+    #@+node:mork.20041123192555.1:watchEscape
+    def watchEscape( self, event ):
+        
+        svar, label = self.getSvarLabel( event )
+        if not self.mcStateManager.hasState():
+            self.mcStateManager.setState( 'escape' , 'start' )
+            self.setLabelBlue( label )
+            svar.set( 'Esc' )
+            return 'break'
+        if self.mcStateManager.whichState() == 'escape':
+            
+            state = self.mcStateManager.getState( 'escape' )
+            hi1 = self.keysymhistory[ 0 ]
+            hi2 = self.keysymhistory[ 1 ]
+            if state == 'esc esc' and event.keysym == 'colon':
+                return self.startEvaluate( event )
+            elif state == 'evaluate':
+                return self.escEvaluate( event )    
+            elif hi1 == hi2 == 'Escape':
+                self.mcStateManager.setState( 'escape', 'esc esc' )
+                svar.set( 'Esc Esc -' )
+                return 'break'
+            elif event.keysym in ( 'Shift_L', 'Shift_R' ):
+                return
+            else:
+                return self.keyboardQuit( event )
+        
+    
+    
+    #@-node:mork.20041123192555.1:watchEscape
+    #@+node:mork.20041124095452:escEvaluate
+    def escEvaluate( self, event ):
+        
+        svar, label = self.getSvarLabel( event )
+        if svar.get() == 'Eval:':
+            svar.set( '' )
+        
+        if event.keysym =='Return':
+        
+            expression = svar.get()
+            try:
+                ok = False
+                tbuffer = event.widget
+                result = eval( expression, {}, {} )
+                result = str( result )
+                tbuffer.insert( 'insert', result )
+                ok = True
+            finally:
+                self.keyboardQuit( event )
+                if not ok:
+                    svar.set( 'Error: Invalid Expression' )
+                return self._tailEnd( tbuffer )
+            
+            
+        else:
+            
+            self.setSvar( event, svar )
+            return 'break'
+        
+    #@-node:mork.20041124095452:escEvaluate
+    #@+node:mork.20041124102729:startEvaluate
+    def startEvaluate( self, event ):
+        
+        svar, label = self.getSvarLabel( event )
+        self.setLabelBlue( label )
+        svar.set( 'Eval:' )
+        self.mcStateManager.setState( 'escape', 'evaluate' )
+        return 'break'
+    #@-node:mork.20041124102729:startEvaluate
+    #@-others
+    #@nonl
+    #@-node:mork.20041123192555:Esc methods for Python evaluation
+    #@+node:mork.20041124123825:tabify/untabify
+    #@+at
+    # For the tabify and untabify Alt-x commands.  Turns tabs to spaces and 
+    # spaces to tabs in the selection
+    # 
+    #@-at
+    #@@c
+    
+    
+    #@+others
+    #@+node:mork.20041124123825.1:tabify
+    def tabify( self, event, which='tabify' ):
+        
+        tbuffer = event.widget
+        if tbuffer.tag_ranges( 'sel' ):
+            i = tbuffer.index( 'sel.first' )
+            end = tbuffer.index( 'sel.last' )
+            txt = tbuffer.get( i, end )
+            if which == 'tabify':
+                
+                pattern = re.compile( ' {4,4}' )
+                ntxt = pattern.sub( '\t', txt )
+    
+            else:
+                
+                pattern = re.compile( '\t' )
+                ntxt = pattern.sub( '    ', txt )
+            tbuffer.delete( i, end )
+            tbuffer.insert( i , ntxt )
+            self.keyboardQuit( event )
+            return self._tailEnd( tbuffer )
+        self.keyboardQuit( event )
+    
+    #@-node:mork.20041124123825.1:tabify
+    #@-others
+    #@nonl
+    #@-node:mork.20041124123825:tabify/untabify
+    #@+node:mork.20041208120232:shell and subprocess
+    #@+others
+    #@+node:mork.20041208120232.1:def startSubprocess
+    def startSubprocess( self, event, which = 0 ):
+        
+        svar, label = self.getSvarLabel( event )
+        statecontents = { 'state':'start', 'payload': None }
+        self.mcStateManager.setState( 'subprocess', statecontents )
+        if which:
+            tbuffer = event.widget
+            svar.set( "Shell command on region:" )
+            is1 = is2 = None
+            try:
+                is1 = tbuffer.index( 'sel.first' )
+                is2 = tbuffer.index( 'sel.last' )
+            finally:
+                if is1:
+                    statecontents[ 'payload' ] = tbuffer.get( is1, is2 )
+                else:
+                    return self.keyboardQuit( event )
+        else:
+            svar.set( "Alt - !:" )
+        self.setLabelBlue( label )
+        return 'break'    
+    #@-node:mork.20041208120232.1:def startSubprocess
+    #@+node:mork.20041208120232.2:subprocess
+    def subprocesser( self, event ):
+        
+        state = self.mcStateManager.getState( 'subprocess' )
+        svar, label = self.getSvarLabel( event )
+        if state[ 'state' ] == 'start':
+            state[ 'state' ] = 'watching'
+            svar.set( "" )
+        
+        if event.keysym == "Return":
+            #cmdline = svar.get().split()
+            cmdline = svar.get()
+            return self.executeSubprocess( event, cmdline, input=state[ 'payload' ] )
+           
+        else:
+            self.setSvar(  event, svar )
+            return 'break'
+    #@-node:mork.20041208120232.2:subprocess
+    #@+node:mork.20041208121502:executeSubprocess
+    def executeSubprocess( self, event, command  ,input = None ):
+        import subprocess
+        try:
+            try:
+                out ,err = os.tmpnam(), os.tmpnam()
+                ofile = open( out, 'wt+' ) 
+                efile = open( err, 'wt+' )
+                process = subprocess.Popen( command, bufsize=-1, 
+                                            stdout = ofile.fileno(), 
+                                            stderr= ofile.fileno(), 
+                                            stdin=subprocess.PIPE,
+                                            shell=True )
+                if input:
+                    process.communicate( input )
+                process.wait()   
+                tbuffer = event.widget
+                efile.seek( 0 )
+                errinfo = efile.read()
+                if errinfo:
+                    tbuffer.insert( 'insert', errinfo )
+                ofile.seek( 0 )
+                okout = ofile.read()
+                if okout:
+                    tbuffer.insert( 'insert', okout )
+            except Exception, x:
+                tbuffer = event.widget
+                tbuffer.insert( 'insert', x )
+        finally:
+            os.remove( out )
+            os.remove( err )
+        self.keyboardQuit( event )
+        return self._tailEnd( tbuffer )
+    
+    
+    
+    #@-node:mork.20041208121502:executeSubprocess
+    #@-others
+    #@nonl
+    #@-node:mork.20041208120232:shell and subprocess
     #@-others
     
 #@nonl
