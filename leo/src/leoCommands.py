@@ -27,6 +27,7 @@ import string
 import sys
 import tempfile
 import tabnanny # for Check Python command
+import token    # for Check Python command
 import tokenize # for Check Python command
 #@nonl
 #@-node:ekr.20040712045933:<< imports for leoCommands >>
@@ -2797,7 +2798,7 @@ class baseCommands:
     #@nonl
     #@-node:ekr.20031218072017.2896:c.sortTopLevel
     #@-node:ekr.20031218072017.2895: Top Level...
-    #@+node:ekr.20040711135959:Check Outline...
+    #@+node:ekr.20040711135959.2:Check Outline submenu...
     #@+node:ekr.20031218072017.2072:c.checkOutline
     def checkOutline (self,verbose=True,unittest=False,full=True):
         
@@ -2995,31 +2996,26 @@ class baseCommands:
             p.dump()
     #@nonl
     #@-node:ekr.20040412060927:c.dumpOutline
-    #@+node:ekr.20040711135959.1:Pretty Print commands
-    #@+node:ekr.20040712053025:prettyPrintAllPythonCode
-    def prettyPrintAllPythonCode (self):
-    
-        c = self ; p = c.currentPosition()
-        
-        g.es("not ready yet: Pretty Print All Python Code",color="blue")
-    #@nonl
-    #@-node:ekr.20040712053025:prettyPrintAllPythonCode
-    #@+node:ekr.20040712053025.1:prettyPrintPythonCode
-    def prettyPrintPythonCode (self):
-    
-        c = self ; p = c.currentPosition()
-        
-        g.es("not ready yet: Pretty Print Python Code",color="blue")
-    #@nonl
-    #@-node:ekr.20040712053025.1:prettyPrintPythonCode
-    #@-node:ekr.20040711135959.1:Pretty Print commands
-    #@+node:ekr.20040711135959.2:Check Python Code commands
+    #@+node:ekr.20040712144216:Check Outline commands & allies
     #@+node:ekr.20040712045933.2:checkAllPythonCode
-    def checkAllPythonCode(self):
+    def checkAllPythonCode(self,unittest=False):
         
-        c = self
+        c = self ; count = 0
         
         for p in c.all_positions_iter():
+            
+            count += 1
+            if not unittest:
+                #@            << print dots >>
+                #@+node:ekr.20040712150530:<< print dots >>
+                if count % 100 == 0:
+                    g.es('.',newline=False)
+                
+                if count % 2000 == 0:
+                    g.enl()
+                #@nonl
+                #@-node:ekr.20040712150530:<< print dots >>
+                #@nl
             
             # Unlike scanDirectives, scanForAtLanguage ignores @comment.
             if g.scanForAtLanguage(c,p) == "python":
@@ -3030,15 +3026,27 @@ class baseCommands:
     #@nonl
     #@-node:ekr.20040712045933.2:checkAllPythonCode
     #@+node:ekr.20040712045933.1:checkPythonCode
-    def checkPythonCode (self):
+    def checkPythonCode (self,unittest=False):
         
-        c = self
+        c = self ; count = 0
         
         for p in c.currentPosition().self_and_subtree_iter():
+            
+            count += 1
+            if not unittest:
+                #@            << print dots >>
+                #@+node:ekr.20040712150822:<< print dots >>
+                if count % 100 == 0:
+                    g.es('.',newline=False)
+                
+                if count % 2000 == 0:
+                    g.enl()
+                #@nonl
+                #@-node:ekr.20040712150822:<< print dots >>
+                #@nl
     
             # Unlike scanDirectives, scanForAtLanguage ignores @comment.
             if g.scanForAtLanguage(c,p) == "python":
-    
                 c.checkPythonNode(p)
                 
         g.es("Check complete",color="blue")
@@ -3058,12 +3066,13 @@ class baseCommands:
         except SyntaxError:
             g.es("Syntax error in: %s" % h,color="blue")
             g.es_exception(full=False,color="black")
+            p.setMarked()
             
-        c.tabNannyNode(h,body)
+        c.tabNannyNode(p,h,body)
     #@nonl
     #@-node:ekr.20040712045933.3:checkPythonNode
     #@+node:ekr.20040711135244.18:tabNannyNode
-    def tabNannyNode (self,headline,body):
+    def tabNannyNode (self,p,headline,body):
     
         """Check indentation using tabnanny.process_tokens."""
     
@@ -3077,6 +3086,7 @@ class baseCommands:
         except tokenize.TokenError, msg:
             g.es("Token error in %s" % headline,color="blue")
             g.es(str(msg))
+            p.setMarked()
             return
     
         except tabnanny.NannyNag, nag:
@@ -3087,6 +3097,7 @@ class baseCommands:
             g.es("Indentation error in %s, line %d" % (headline, badline),color="blue")
             g.es(message)
             g.es("offending line:\n%s" % repr(str(line))[1:-1])
+            p.setMarked()
             return
             
         except:
@@ -3097,8 +3108,252 @@ class baseCommands:
         # g.es("Indentation OK: %s" % headline,color="blue")
     #@nonl
     #@-node:ekr.20040711135244.18:tabNannyNode
-    #@-node:ekr.20040711135959.2:Check Python Code commands
-    #@-node:ekr.20040711135959:Check Outline...
+    #@-node:ekr.20040712144216:Check Outline commands & allies
+    #@+node:ekr.20040711135959.1:Pretty Print commands
+    #@+node:ekr.20040712053025:prettyPrintAllPythonCode
+    def prettyPrintAllPythonCode (self,dump=False):
+    
+        c = self ; pp = c.prettyPrinter(c)
+    
+        for p in c.all_positions_iter():
+            
+            # Unlike scanDirectives, scanForAtLanguage ignores @comment.
+            if g.scanForAtLanguage(c,p) == "python":
+    
+                pp.prettyPrintNode(p,dump=dump)
+                
+        pp.endUndo()
+    #@nonl
+    #@-node:ekr.20040712053025:prettyPrintAllPythonCode
+    #@+node:ekr.20040712053025.1:prettyPrintPythonCode
+    def prettyPrintPythonCode (self,dump=False):
+    
+        c = self ; pp = c.prettyPrinter(c)
+        
+        for p in c.currentPosition().self_and_subtree_iter():
+            
+            # Unlike scanDirectives, scanForAtLanguage ignores @comment.
+            if g.scanForAtLanguage(c,p) == "python":
+        
+                pp.prettyPrintNode(p,dump=dump)
+              
+        pp.endUndo()
+    #@nonl
+    #@-node:ekr.20040712053025.1:prettyPrintPythonCode
+    #@+node:ekr.20040711135244.5:class prettyPrinter
+    class prettyPrinter:
+        
+        #@    @+others
+        #@+node:ekr.20040711135244.6:__init__
+        def __init__ (self,c):
+            
+            self.changed = False
+            self.line = 0
+            self.lines = []
+            self.col = 0
+            self.array = []
+            self.parenLevel = 0
+            self.bracketLevel = 0
+            self.c = c
+            self.p = c.currentPosition()
+        #@nonl
+        #@-node:ekr.20040711135244.6:__init__
+        #@+node:ekr.20040713093048:clear
+        def clear (self):
+            self.lines = []
+        #@nonl
+        #@-node:ekr.20040713093048:clear
+        #@+node:ekr.20040713064323:dumpLines
+        def dumpLines (self,p,lines):
+        
+            encoding = g.app.tkEncoding
+            
+            print ; print '-'*10, p.headString()
+            
+            if 1:
+                for line in lines:
+                    line2 = g.toEncodedString(line,encoding,reportErrors=True)
+                    print line2, # Don't add a trailing newline!
+            else:
+                for i in xrange(len(lines)):
+                    line = g.toEncodedString(line,encoding,reportErrors=True)
+                    print "%3d" % i, repr(lines[i])
+        #@nonl
+        #@-node:ekr.20040713064323:dumpLines
+        #@+node:ekr.20040711135244.7:dumpToken
+        def dumpToken (self,token5tuple):
+        
+            t1,t2,t3,t4,t5 = token5tuple
+            srow,scol = t3 ; erow,ecol = t4
+            line = str(t5) # can fail
+            name = token.tok_name[t1].lower()
+            val = str(t2) # can fail
+        
+            startLine = self.line != srow
+            if startLine:
+                print "----- line",srow,repr(line)
+            self.line = srow
+        
+            print "%10s (%2d,%2d) %-8s" % (name,scol,ecol,repr(val))
+        #@nonl
+        #@-node:ekr.20040711135244.7:dumpToken
+        #@+node:ekr.20040711135244.8:get
+        def get (self):
+            
+            return self.lines
+        #@nonl
+        #@-node:ekr.20040711135244.8:get
+        #@+node:ekr.20040711135244.4:prettyPrintNode
+        def prettyPrintNode(self,p,dump):
+        
+            pp = self ; c = self.c
+            h = p.headString()
+            s = p.bodyString()
+            if not s: return
+            
+            readlines = g.readLinesGenerator(s).next
+        
+            try:
+                pp.clear()
+                for token5tuple in tokenize.generate_tokens(readlines):
+                    pp.putToken(token5tuple)
+                lines = pp.get()
+        
+            except tokenize.TokenError:
+                g.es("Error pretty-printing %s.  Not changed." % h, color="blue")
+                return
+        
+            if dump:
+                pp.dumpLines(p,lines)
+            else:
+                pp.replaceBody(p,lines)
+        #@nonl
+        #@-node:ekr.20040711135244.4:prettyPrintNode
+        #@+node:ekr.20040711135244.9:put
+        def put (self,s,strip=True):
+            
+            if self.array and strip:
+                prev = self.array[-1]
+                if len(self.array) == 1:
+                    if prev.rstrip():
+                        # We aren't stripping all leading whitespace.
+                        self.array[-1] = prev.rstrip()
+                else:
+                    # The previous entry isn't leading whitespace.
+                    self.array[-1] = prev.rstrip()
+        
+            self.array.append(s)
+        #@nonl
+        #@-node:ekr.20040711135244.9:put
+        #@+node:ekr.20040711135244.10:putNormalToken
+        def putNormalToken (self,token5tuple):
+        
+            a = self.array
+            t1,t2,t3,t4,t5 = token5tuple
+            srow,scol = t3 ; erow,ecol = t4
+            line = t5 # str(t5) # May fail
+            name = token.tok_name[t1].lower()
+            val = t2 # str(t2) # May fail
+            startLine = self.line != srow
+            self.line = srow
+        
+            if startLine:
+                ws = line[0:scol]
+                if ws: a.append(ws)
+        
+            if name in ("nl","newline","endmarker"):
+                if name in ("nl","newline"):
+                    a.append('\n')
+                self.lines.append(''.join(self.array))
+                self.array = []
+            elif name == "op":
+                self.putOperator(val)
+            elif name == "name":
+                a.append("%s " % val)
+            elif name in ("comment","string","number"):
+                a.append(val)
+            elif name == "errortoken":
+                a.append(val)
+                if val == '@':
+                    # Preserve whitespace after @.
+                    i = g.skip_ws(line,scol+1)
+                    ws = line[scol+1:i]
+                    if ws: a.append(ws)
+            elif name == "indent":
+                a.append(val)
+            elif name == "dedent":
+                pass
+            else:
+                print "unknown: %s" % (name)
+        #@nonl
+        #@-node:ekr.20040711135244.10:putNormalToken
+        #@+node:ekr.20040711135244.11:putOperator
+        def putOperator (self,val):
+            
+            if val == '(':
+                self.parenLevel += 1
+                self.put(val)
+            elif val == ')':
+                self.parenLevel -= 1
+                self.put(val)
+            elif val == '=':
+                if self.parenLevel > 0: self.put('=')
+                else:                   self.put(' = ')
+            elif val == ',':
+                if self.parenLevel > 0: self.put(',')
+                else:                   self.put(', ')
+            elif val == ';':
+                self.put(" ; ")
+            else:
+                self.put(val)
+        #@nonl
+        #@-node:ekr.20040711135244.11:putOperator
+        #@+node:ekr.20040711135244.12:putToken
+        def putToken (self,token5tuple):
+            
+            if 1:
+                self.putNormalToken(token5tuple)
+            else:
+                self.dumpToken(token5tuple)
+        #@nonl
+        #@-node:ekr.20040711135244.12:putToken
+        #@+node:ekr.20040713070356:replaceBody
+        def replaceBody (self,p,lines):
+            
+            c = self.c
+            
+            sel = c.frame.body.getInsertionPoint()
+            oldBody = p.bodyString()
+            body = string.join(lines,'')
+            
+            p.setBodyStringOrPane(body)
+            
+            if not self.changed:
+        
+                # Tag the start of the command.
+                c.undoer.setUndoParams("Pretty Print",self.p) 
+                self.changed = True
+            
+            self.c.undoer.setUndoParams("Change",p,
+                oldText=oldBody,newText=body,oldSel=sel, newSel=sel)
+        #@nonl
+        #@-node:ekr.20040713070356:replaceBody
+        #@+node:ekr.20040713091855:endUndo
+        def endUndo (self):
+            
+            c = self.c
+            
+            if self.changed:
+        
+                # Tag the end of the command.
+                c.undoer.setUndoParams("Pretty Print",self.p)
+        #@nonl
+        #@-node:ekr.20040713091855:endUndo
+        #@-others
+    #@nonl
+    #@-node:ekr.20040711135244.5:class prettyPrinter
+    #@-node:ekr.20040711135959.1:Pretty Print commands
+    #@-node:ekr.20040711135959.2:Check Outline submenu...
     #@+node:ekr.20031218072017.2898:Expand & Contract...
     #@+node:ekr.20031218072017.2899:Commands
     #@+node:ekr.20031218072017.2900:contractAllHeadlines
