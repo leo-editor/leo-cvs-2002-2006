@@ -2003,9 +2003,8 @@ def plugin_signon(module_name,verbose=false):
 
 		print m.__name__, m.__version__
 		
-	# Increment a global count.
-	import leoPlugins
-	leoPlugins.count += 1
+	app.loadedPlugins.append(module_name)
+#@nonl
 #@-node:plugin_signon
 #@+node:importFromPath
 def importFromPath (name,path):
@@ -2623,6 +2622,7 @@ def skip_string(s,i):
 	
 	j = i ; delim = s[i] ; i += 1
 	assert(delim == '"' or delim == '\'')
+	
 	n = len(s)
 	while i < n and s[i] != delim:
 		if s[i] == '\\' : i += 2
@@ -2632,8 +2632,9 @@ def skip_string(s,i):
 		scanError("Run on string: " + s[j:i])
 	elif s[i] == delim:
 		i += 1
+
+	# trace(s[j:i])
 	return i
-#@nonl
 #@-node:skip_string : called by tangle
 #@+node:skip_to_semicolon
 # Skips to the next semicolon that is not in a comment or a string.
