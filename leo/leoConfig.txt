@@ -1,30 +1,36 @@
+# Created by Leo from: c:\prog\leocvs\leo\leoConfig.leo
+
+#	@comment #
+#	@ We use an @root node here to suppress automatic untangling, so we don't lose all these nice comments in read-write mode.
+
 # leoConfig.txt: configuration file for Leo.
-# 7/20/2002 by Edward K. Ream
-#
-# Leo looks for this file using the directory in sys.leo_config_directory.
-# 	(You would typically set this attribute in sitecustomize.py).
-# 	If sys.leo_config_directory does not exist,
-#	 Leo attempts to load this file from the directory from which Leo was loaded.
-#
-# Settings in this file override settings in all .leo files.
-# (But not always, see below for the real truth.)
-#
-# 	Leo does not write settings to the <preferences> and <find_panel_settings>
-# 	elements of .leo files that exist in this file.
-#
-# Leo uses Python's ConfigParser module to parse this file,
-# with all of ConfigParser's features (and bugs!).
-#
-# 	Comments start with a pound character in the leftmost column.
-# 	You may specify booleans as 0/1, no/yes, false/true, off/on (case insensitive).
-# 	These get converted to 0/1 if the file is not read_only
-#
+# 8/6/2002 by Edward K. Ream
+
+# << general comments and warnings >>
+#	Leo looks for this file using the directory in sys.leo_config_directory.
+#	(You would typically set this attribute in sitecustomize.py).
+#	If sys.leo_config_directory does not exist,
+#	Leo attempts to load this file from the directory from which Leo was loaded.
+#	
+#	Settings in this file override settings in all .leo files.
+#	(But not always, see below for the real truth.)
+#	
+#	Leo does not write settings to the <preferences> and <find_panel_settings>
+#	elements of .leo files that exist in this file.
+#	
+#	Leo uses Python's ConfigParser module to parse this file,
+#	with all of ConfigParser's features (and bugs!).
+#	
+#	Comments start with a pound character in the leftmost column.
+#	You may specify booleans as 0/1, no/yes, false/true, off/on (case insensitive).
+#	These get converted to 0/1 if the file is not read_only
+
+
+# -- end -- << general comments and warnings >>
 
 # WARNING: !! Do not place anything except comments before here !!
 
-# -----------------------------------------------------------------------------
-# General configuration options
-
+# << General configuration options, especially read-only mode >>
 [config options]
 
 read_only = 1
@@ -36,19 +42,19 @@ xml_version_string = UTF-8
 #	The version used at the start of .leo files.
 #	Default is UTF-8.  Better is ISO-8859-1.
 #	Use UTF-8 to write leo.py 2.x files.
-
-# -----------------------------------------------------------------------------
+# -- end -- << General configuration options, especially read-only mode >>
+# << The "Recent Files" menu >>
 # The list of files in the "Recent Files" menu at startup.
 
 [recent files]
 
+file2 = c:\prog\leocvs\leo\leoConfig.leo
 file1 = c:\prog\leocvs\leo\leopy.leo
 file0 = c:\prog\leocvs\leo\leodocs.leo
 #	Paths to recent files.
 #	Valid option names: file0 through file9.
-
-# -----------------------------------------------------------------------------
-# Initial settings of the Compare panel.
+# -- end -- << The "Recent Files" menu >>
+# << Compare Panel settings >>
 # 	These correspond to the keyword parameters of the leoCompare constructor.
 # 	Exception: there are no keywords for compare file names in the constructor.
 
@@ -130,8 +136,8 @@ print_mismatching_lines = 1
 
 print_trailing_lines = 1
 #	1: Print lines all lines in one file after an end-of-file is seen on the other file.
-
-# -----------------------------------------------------------------------------
+# -- end -- << Compare Panel settings >>
+# << Find/Change Panel settings >>
 # The initial settings of the Find/Change panel.
 
 [find/change options]
@@ -155,8 +161,8 @@ search_headline = 0
 suboutline_only = 0
 whole_word = 1
 wrap = 0
-
-# -----------------------------------------------------------------------------
+# -- end -- << Find/Change Panel settings >>
+# << Preferences Panel settings >>
 # The initial settings of the Preferences panel.
 
 [prefs panel options]
@@ -190,10 +196,8 @@ run_tangle_done.py = 0
 
 run_untangle_done.py = 0
 # 	1/0: Run tangle_done.py after explicit Untangle commands.
-
-# -----------------------------------------------------------------------------
-# Syntax coloring options and colors.
-
+# -- end -- << Preferences Panel settings >>
+# << Syntax coloring options and colors >>
 [syntax coloring options]
 
 color_directives_in_plain_text = 1
@@ -235,31 +239,31 @@ leo_keyword_color = #00aa00
 #	For example, the color of @ignore, @color, etc.
 
 section_name_color = red
-#	The color of name in <<name>> when name is defined.
+#	The color of name in < < name > > when name is defined.
 
 section_name_brackets_color = blue
-#	The color of << and >> in <<name>>
+#	The color of the double angle brackets in < < name > >
 
 string_color = #00aa00
 #	The color of strings and their delimiters.
 
 undefined_section_name_color = red
-#	The color of name in <<name>> when name is undefined.
-
-# -----------------------------------------------------------------------------
-# Options that affect the appearance of windows.
-# Options that require pixel values can be any Python expression that yields an int.
-# Warning: the number of pixels per inch varies...
+#	The color of name in < < name > > when name is undefined.
+# -- end -- << Syntax coloring options and colors >>
+# << Window options >>
+#	Options that affect the appearance of windows.
+#	
+#	Options that require pixel values can be any Python expression that yields an int.
+#	Warning: the number of pixels per inch varies...
 
 [window options]
 
+# << body pane options >>
 body_pane_wraps = 1
 #	0/1: Wrap body text if 1.
 
 additional_body_text_border = 0
 #	Additional border in body text pane, in pixels (must be an integer).
-
-# ----- body pane options...
 
 body_text_font_family = Courier
 #	Font family for body text.
@@ -275,9 +279,8 @@ body_text_font_slant = roman
 
 body_text_font_weight = normal
 #	The Tk -weight setting: normal or bold.  Default is normal.
-
-# ----- outline pane options...
-
+# -- end -- << body pane options >>
+# << outline pane options >>
 headline_text_font_family =
 #	Font family for headline text.
 #	Default is default font for Tk.Text widgets.
@@ -292,9 +295,8 @@ headline_text_font_slant = roman
 
 headline_text_font_weight = normal
 #	The Tk -weight setting: normal or bold.  Default is normal.
-
-# ----- log pane options...
-
+# -- end -- << outline pane options >>
+# << log pane options >>
 log_text_font_family =
 #	Font family for text in the log pane.
 #	Default is default font for Tk.Text widgets.
@@ -309,14 +311,14 @@ log_text_font_slant = roman
 
 log_text_font_weight = normal
 #	The Tk -weight setting: normal or bold.  Default is normal.
-
-# ----- Options for new windows...
-# (Leo now properly opens windows for existing files where they were last positioned.
+# -- end -- << log pane options >>
+# << Options for new windows >>
+#	Leo now properly opens windows for existing files where they were last positioned.
 
 initial_window_height = 20
 #	Height of window, Tk grid units (must be an integer).
 #	Grid units must be specified because Leo windows are gridded.
-	
+
 initial_window_width = 60
 #	Width window, in Tk grid units (must be an integer).
 #	Grid units must be specified because Leo windows are gridded.
@@ -326,9 +328,8 @@ initial_window_left = 10
 
 initial_window_top = 10
 #	Distance from top of screen of window, in pixels (must be an integer).
-
-# ----- Options for newly opened windows...
-
+# -- end -- << Options for new windows >>
+# << Options for newly opened windows >>
 initial_splitter_orientation = v
 #	valid values: h or horizontal or v or vertical.
 #	(Actually, anything but h or horizontal is considered vertical.)
@@ -348,9 +349,9 @@ initial_horizontal_ratio = 0.3
 #	tree pane/body pane size when spitting pane horizontally.
 #	Applies only to new windows. Overridden by ratio in .leo files.
 #	Valid values: 0.0 to 1.0.
-
-# ----- Options for the bar that separates panes in the Leo window...
-# (Leo should save these to .leo files, and it doesn't)
+# -- end -- << Options for newly opened windows >>
+# << Options for the bar that separates panes in the Leo window >>
+#	Leo should save these to .leo files, and it doesn't.
 
 split_bar_color = LightSteelBlue2
 #	The color of the split bar.
@@ -359,6 +360,8 @@ split_bar_color = LightSteelBlue2
 split_bar_relief = groove
 #	The Tk -relief option for the split bar.
 #	Valid values: raised, sunken, flat, ridge, solid, groove.
-	
+
 split_bar_width = 7
 #	The width of the split bar, in pixels (must be an integer).
+# -- end -- << Options for the bar that separates panes in the Leo window >>
+# -- end -- << Window options >>
