@@ -6,7 +6,7 @@
 #@@tabwidth -4
 
 __name__ = "Row/Column indicators"
-__version__ = "0.1"
+__version__ = "0.2"
 
 #@<< imports >>
 #@+node:ekr.20040908094021.2:<< imports >>
@@ -19,8 +19,32 @@ except ImportError: Tk = None
 #@nonl
 #@-node:ekr.20040908094021.2:<< imports >>
 #@nl
+#@<< version history >>
+#@+node:ekr.20041120114651:<< version history >>
+#@+at
+#@@killcolor
+# 
+# 0.1 Initial version.
+# 
+# 0.2 EKR:
+# 
+# Make sure this works properly with multiple windows.
+#@-at
+#@nonl
+#@-node:ekr.20041120114651:<< version history >>
+#@nl
 
 #@+others
+#@+node:ekr.20041120114651.1:onCreate
+def onCreate (tag,keywords):
+    
+    c = keywords.get("c")
+    if c:
+        rowCol = rowColClass(c)
+        rowCol.addWidgets()
+        leoPlugins.registerHandler("idle",rowCol.updateRowColWidget)
+#@nonl
+#@-node:ekr.20041120114651.1:onCreate
 #@+node:ekr.20040108095351.1:class rowColClass
 class rowColClass:
     
@@ -28,19 +52,17 @@ class rowColClass:
     
     #@    @+others
     #@+node:ekr.20040108100040:__init__
-    def __init__ (self):
+    def __init__ (self,c):
         
         self.lastStatusRow, self.lastStatusCol = -1,-1
-        self.c = None # Will be set later.  Needed for idle handling.
+        self.c = c
     #@nonl
     #@-node:ekr.20040108100040:__init__
     #@+node:ekr.20040108095351.2:addWidgets
-    def addWidgets (self,tag,keywords):
+    def addWidgets (self):
     
-        self.c = c = keywords.get("c")
-        assert(c)
-    
-        toolbar = self.c.frame.iconFrame
+        c = self.c
+        toolbar = c.frame.iconFrame
     
         # Main container 
         self.rowColFrame = f = Tk.Frame(toolbar) 
@@ -93,9 +115,7 @@ if Tk and not g.app.unitTesting:
         g.app.createTkGui(__file__)
 
     if g.app.gui.guiName() == "tkinter":
-        rowCol = rowColClass()
-        leoPlugins.registerHandler("after-create-leo-frame",rowCol.addWidgets)
-        leoPlugins.registerHandler("idle",rowCol.updateRowColWidget) 
+        leoPlugins.registerHandler("after-create-leo-frame",onCreate) 
         g.plugin_signon("rowcol")
 #@nonl
 #@-node:ekr.20040108095351:@thin rowcol.py
