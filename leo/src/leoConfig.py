@@ -628,13 +628,16 @@ class baseConfig:
         
         munge = self.munge
         
+        seen = []
+        
         # Init settings from leoSettings.leo files.
         for path,setOptionsFlag in (
             (self.globalConfigFile,False),
             (self.homeFile,False),
             (fileName,True),
         ):
-            if path:
+            if path and path.lower() not in seen:
+                seen.append(path.lower())
                 if verbose:
                     # A print statement here is clearest.
                     print "reading settings in %s" % path
@@ -713,8 +716,8 @@ class parserBaseClass:
     
     basic_types = [
         # Headlines have the form @kind name = var
-        'bool','color','directory','int',
-        'float','path','ratio','shortcut','string']
+        'bool','color','directory','int','ints',
+        'float','path','ratio','shortcut','string','strings']
     
     control_types = [
         'font','if','ifgui','ifplatform','ignore','page',
@@ -744,13 +747,15 @@ class parserBaseClass:
             'ifplatform':   self.doIfPlatform,
             'ignore':       self.doIgnore,
             'int':          self.doInt,
+            'ints':         self.doInts,
             'float':        self.doFloat,
             'path':         self.doPath,
             'page':         self.doPage,
             'ratio':        self.doRatio,
-            'recentfiles': self.doRecentFiles,
+            'recentfiles':  self.doRecentFiles,
             'shortcuts':    self.doShortcuts,
             'string':       self.doString,
+            'strings':      self.doStrings,
         }
     #@nonl
     #@-node:ekr.20041119204700: ctor
@@ -856,6 +861,30 @@ class parserBaseClass:
             self.valueError(p,kind,name,val)
     #@nonl
     #@-node:ekr.20041120094940.5:doInt
+    #@+node:ekr.20041217132253:doInts
+    def doInts (self,p,kind,name,val):
+    
+        name = name.strip()
+        i = name.find('[')
+        j = name.find(']')
+    
+        if -1 < i < j:
+            items = name[i+1:j]
+            items = items.split(',')
+            try:
+                items = [int(item.strip()) for item in items]
+            except ValueError:
+                items = []
+                self.valueError(p,kind,name,val)
+        
+            name = name[:i].strip()
+            kind = "ints[%s]" % (','.join([str(item) for item in items]))
+            g.trace(kind,name,val)
+    
+            # At present no checking is done.
+            self.set(kind,name,val)
+    #@nonl
+    #@-node:ekr.20041217132253:doInts
     #@+node:ekr.20041120104215.2:doPage
     def doPage(self,p,kind,name,val):
     
@@ -907,13 +936,32 @@ class parserBaseClass:
                     self.set("shortcut",name,val)
     #@nonl
     #@-node:ekr.20041120105609:doShortcuts
-    #@+node:ekr.20041120094940.8:doString
+    #@+node:ekr.20041217132028:doString
     def doString (self,p,kind,name,val):
         
         # At present no checking is done.
         self.set(kind,name,val)
+    #@-node:ekr.20041217132028:doString
+    #@+node:ekr.20041120094940.8:doStrings
+    def doStrings (self,p,kind,name,val):
+        
+        name = name.strip()
+        i = name.find('[')
+        j = name.find(']')
+    
+        if -1 < i < j:
+            items = name[i+1:j]
+            items = items.split(',')
+            items = [item.strip() for item in items]
+    
+            name = name[:i].strip()
+            kind = "strings[%s]" % (','.join(items))
+            g.trace(kind,name,val)
+    
+            # At present no checking is done.
+            self.set(kind,name,val)
     #@nonl
-    #@-node:ekr.20041120094940.8:doString
+    #@-node:ekr.20041120094940.8:doStrings
     #@-node:ekr.20041120094940:kind handlers
     #@+node:ekr.20041124063257:munge
     def munge(self,s):
