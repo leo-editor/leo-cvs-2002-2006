@@ -734,15 +734,19 @@ class baseCommands:
         
         if g.app.unitTesting: return
         
+        def munge(name):
+            name = name or ''
+            return g.os_path_normpath(name).lower()
+    
         # Update the recent files list in all windows.
         if fileName:
-            compareFileName = g.os_path_normpath(g.os_path_abspath(fileName))
+            compareFileName = munge(fileName)
             # g.trace(fileName)
             for frame in g.app.windowList:
                 c = frame.c
                 # Remove all versions of the file name.
                 for name in c.recentFiles:
-                    if compareFileName == g.os_path_normpath(g.os_path_abspath(name)):
+                    if compareFileName == munge(name):
                         c.recentFiles.remove(name)
                 c.recentFiles.insert(0,fileName)
                 # g.trace(fileName)

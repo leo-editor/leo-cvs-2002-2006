@@ -584,32 +584,22 @@ def openWithFileName(fileName,old_c,enableLog=True,readAtFileNodesFlag=True):
 
     if not fileName or len(fileName) == 0:
         return False, None
+        
+    def munge(name):
+        name = name or ''
+        return g.os_path_normpath(name).lower()
 
-    # Create a full normalized path name.
-    # Display the file name with case intact.
-    if 1: # New code, also appears to work.
-        fileName = g.os_path_abspath(fileName)
-    else: # Old code, works.
-        fileName = g.os_path_join(os.getcwd(),fileName)
-
-    fileName = g.os_path_normpath(fileName)
-    oldFileName = fileName
-    
-    fileName = g.os_path_normcase(fileName)
+    # Create a full normalized path name, preserving case.
+    fileName = g.os_path_normpath(g.os_path_abspath(fileName))
 
     # If the file is already open just bring its window to the front.
     list = app.windowList
     for frame in list:
-        fn = g.os_path_normcase(frame.c.mFileName)
-        fn = g.os_path_normpath(fn)
-        if fileName == fn:
-            frame.deiconify()
+        if munge(fileName) == munge(frame.c.mFileName):
+            frame.bringToFront()
             app.setLog(frame.log,"openWithFileName")
             # g.es("This window already open")
             return True, frame
-            
-    fileName = oldFileName # Use the idiosyncratic file name.
-
     try:
         # Open the file in binary mode to allow 0x1a in bodies & headlines.
         theFile = open(fileName,'rb')

@@ -1072,11 +1072,17 @@ class baseConfig:
     #@+node:ekr.20041201080436:config.appendToRecentFiles
     def appendToRecentFiles (self,files):
         
-        for theFile in files:
-            if theFile in self.recentFiles:
-                self.recentFiles.remove(theFile)
-            # g.trace(theFile)
-            self.recentFiles.append(theFile)
+        def munge(name):
+            name = name or ''
+            return g.os_path_normpath(name).lower()
+        
+        for name in files:
+            # Remove all variants of name.
+            for name2 in self.recentFiles:
+                if munge(name) == munge(name2):
+                    self.recentFiles.remove(name2)
+    
+            self.recentFiles.append(name)
     #@nonl
     #@-node:ekr.20041201080436:config.appendToRecentFiles
     #@-node:ekr.20041118084146:Setters
