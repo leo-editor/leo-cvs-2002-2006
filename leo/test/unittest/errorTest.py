@@ -1,7 +1,7 @@
 #@+leo-ver=4-thin
 #@+node:ekr.20041012101944:@thin ../test/unittest/errorTest.py
 # A file that contains functions with errors in them.
-# This is used to test error reporing in scripts
+# This is used to test error reporting in scripts
 
 #@@language python
 #@@tabwidth -4
