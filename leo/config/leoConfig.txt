@@ -220,20 +220,17 @@ expandtolevel1 = Alt+1
 expandtolevel8 = Alt+8
 
 [recent files]
-file3 = c:\prog\leoCVS\leo\doc\LeoDocs.leo
-file2 = C:\Documents and Settings\default\Desktop\Paul Paterson custom @file plugin\test.leo
-file1 = C:\Documents and Settings\default\Desktop\leo_shell_support.leo
+file3 = C:\prog\leoCVS\leo\plugins\leoPlugins.leo
+file2 = C:\Documents and Settings\default\My Documents\ekr.leo
+file1 = C:\Documents and Settings\default\Desktop\OrphanNodeBug\temp.leo
 file0 = C:\prog\leoCVS\leo\src\LeoPy.leo
-file7 = C:\prog\leoCVS\leo\test\test.leo
-file6 = C:\Documents and Settings\default\Desktop\Updated_rst2\rst2 plugin.leo
-file5 = C:\Documents and Settings\default\Desktop\Updated_rst2\wxListManager.leo
-file4 = C:\prog\leoCVS\leo\plugins\leoPlugins.leo
+file4 = C:\prog\leoCVS\leo\doc\LeoDocs.leo
 
 [find/change options]
 mark_changes = 0
 ignore_case = 0
 change_string = 
-whole_word = 1
+whole_word = 0
 script_search = 0
 node_only = 0
 selection_only = 0
@@ -241,7 +238,7 @@ batch = 0
 search_headline = 0
 script_change = 0
 search_body = 1
-find_string = output = pub.publish()
+find_string = def replaceTargetFileIfDifferent
 pattern_match = 0
 wrap = 0
 mark_finds = 0
