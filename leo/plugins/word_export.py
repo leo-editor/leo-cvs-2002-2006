@@ -17,13 +17,17 @@ __version__ = "0.4"
 #@+at
 # 
 # 0.3 EKR:
+#     - Changed os.path.x to g.os_path_x for better handling of unicode 
+# filenames.
+#     - Better error messages.
 # 
-# - Changed os.path.x to g.os_path_x for better handling of unicode filenames.
-# - Better error messages.
 # 0.4 EKR:
-# 
-# - Added autostart code per 
+#     - Added autostart code per 
 # http://sourceforge.net/forum/message.php?msg_id=2842589
+# 
+# 0.5 EKR:
+#     - Added init function so that a proper message is given if win32com can 
+# not be imported.
 #@-at
 #@nonl
 #@-node:ekr.20040909110753:<< version history >>
@@ -46,6 +50,18 @@ import ConfigParser
 #@nl
 
 #@+others
+#@+node:ekr.20050311165238:init
+def init ():
+    
+    ok = client is not None # Ok for unit test: just uses Plugins menu.
+
+    if ok:
+        # No hooks, we just use the cmd_Export to trigger an export
+        g.plugin_signon("word_export")
+        
+    return ok
+#@nonl
+#@-node:ekr.20050311165238:init
 #@+node:EKR.20040517075715.15:getConfiguration
 def getConfiguration():
     
@@ -144,11 +160,6 @@ def cmd_Export(event=None):
 #@nonl
 #@-node:EKR.20040517075715.19:cmd_Export
 #@-others
-
-if client: # Ok for unit test: just uses Plugins menu.
-
-    # No hooks, we just use the cmd_Export to trigger an export
-    g.plugin_signon("word_export")
 #@nonl
 #@-node:EKR.20040517075715.14:@thin word_export.py
 #@-leo
