@@ -3701,29 +3701,36 @@ def funcToMethod(f,theClass,name=None):
 #@nonl
 #@-node:ekr.20031218072017.3126:g,funcToMethod
 #@+node:ekr.20031218072017.2278:g,importFromPath
-def importFromPath (name,path):
+def importFromPath (name,path,verbose=False):
     
     import imp
 
     try:
-        file = None ; result = None
+        file = None ; data = None ; result = None
         try:
             fn = g.shortFileName(name)
             mod_name,ext = g.os_path_splitext(fn)
             path = g.os_path_normpath(path)
             if g.CheckVersion(sys.version,"2.3"):
-                path = g.toEncodedString(path,app.tkEncoding) # 12/01/03
+                path = g.toEncodedString(path,app.tkEncoding)
             else:
-                path = str(path) # 1/29/04: May throw exception.
-            # g.trace(path)
-            data = imp.find_module(mod_name,[path]) # This can open the file.
+                path = str(path) # May throw exception.
+            try:
+                data = imp.find_module(mod_name,[path]) # This can open the file.
+            except ImportError:
+                if verbose:
+                    s = "Can not import %s from %s" % (mod_name,path)
+                    print s ; g.es(s,color="blue")
             if data:
                 file,pathname,description = data
-                result = imp.load_module(mod_name,file,pathname,description)
+                try:
+                    result = imp.load_module(mod_name,file,pathname,description)
+                except ImportError:
+                    g.es_exception()
         except:
             g.es_exception()
 
-    # Bug fix: 6/12/03: Put no return statements before here!
+    # Put no return statements before here!
     finally: 
         if file: file.close()
 
