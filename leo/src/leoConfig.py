@@ -82,30 +82,36 @@ class baseConfig:
     #@+node:ekr.20041118062709:<< define encodingIvarsDict >>
     encodingIvarsDict = {
         "default_derived_file_encoding" : ("unicode-encoding","utf-8"),
-        "new_leo_file_encoding" : ("unicode-encoding","UTF-8"), # Upper case for compatibility with previous versions.
-        "tkEncoding" : ("unicode-encoding",None), # Defaults to None so it doesn't override better defaults.
+        "new_leo_file_encoding" : ("unicode-encoding","UTF-8"),
+            # Upper case for compatibility with previous versions.
+        "tkEncoding" : ("unicode-encoding",None),
+            # Defaults to None so it doesn't override better defaults.
     }
     #@-node:ekr.20041118062709:<< define encodingIvarsDict >>
     #@nl
     #@    << define ivarsDict >>
     #@+node:ekr.20041117072055:<< define ivarsDict >>
     # Each of these settings sets the ivar with the same name.
-    
     ivarsDict = {
-        "at_root_bodies_start_in_doc_mode" : ("bool",True), # For compatibility with previous versions.
+        "at_root_bodies_start_in_doc_mode" : ("bool",True),
+            # For compatibility with previous versions.
         "create_nonexistent_directories" : ("bool",False),
-        "output_initial_comment" : ("string",""), # "" for compatibility with previous versions.
+        "output_initial_comment" : ("string",""),
+            # "" for compatibility with previous versions.
         "output_newline" : ("newline-type","nl"),
-        "read_only" : ("bool",True), # Make sure we don't alter an illegal leoConfig.txt file!
+        "read_only" : ("bool",True),
+            # Make sure we don't alter an illegal leoConfig.txt file!
         "redirect_execute_script_output_to_log_pane" : ("bool",False),
         "relative_path_base_directory" : ("directory","!"),
         "remove_sentinels_extension" : ("string",".txt"),
         "save_clears_undo_buffer" : ("bool",False),
         "stylesheet" : ("string",None),
         "trailing_body_newlines" : ("newline-type","asis"),
-        "use_plugins" : ("bool",False), # Should never be True here!
+        "use_plugins" : ("bool",False),
+            # Should never be True here!
         "use_psyco" : ("bool",False),
-        "undo_granularity" : ("undo_granularity","word"), # "char","word","line","node"
+        "undo_granularity" : ("undo_granularity","word"),
+            # "char","word","line","node"
         "write_strips_blank_lines" : ("bool",False),
     }
     #@nonl
@@ -270,7 +276,7 @@ class baseConfig:
         val = self.get(c,setting,"bool")
         
         if val in (True,False):
-            return True
+            return val
         else:
             return None
     #@nonl
@@ -423,30 +429,6 @@ class baseConfig:
                 setattr(c,setting,val)
     #@nonl
     #@-node:ekr.20041117062717.17:setCommandsIvars
-    #@+node:ekr.20041117062717.16:setCommandsFindIvars
-    def setCommandsFindIvars (self,c):
-        
-        """Set c.name_flag for each name in findFrame.intKeys."""
-        
-        if g.app.gui.guiName() != "tkinter":
-            return
-    
-        findFrame = g.app.findFrame
-    
-        for s in findFrame.intKeys:
-            val = self.getBool(c,s)
-            if val != None:
-                setattr(c,s+"_flag",val)
-                # g.trace(s+"_flag",val)
-    
-        for name in ("change_string","find_string"):
-            val = self.getString(c,name)
-            if val:
-                settattr(c,name,val)
-    
-        g.app.findFrame.init(c)
-    #@nonl
-    #@-node:ekr.20041117062717.16:setCommandsFindIvars
     #@-node:ekr.20041117081009:Getters...
     #@+node:ekr.20041118084146:Setters
     #@+node:ekr.20041118084146.1:set
@@ -454,7 +436,7 @@ class baseConfig:
         
         """Set the setting and make sure its type matches the given type."""
         
-        g.trace(c,setting,type,val)
+        # g.trace(c,setting,type,val)
     
         return ####
         

@@ -750,10 +750,11 @@ def oldDump(s):
 #@+node:ekr.20031218072017.3110:es_error
 def es_error (s,color=None):
     
+    c = None
     config = app.config
 
     if color is None and config: # May not exist during initialization.
-        color = config.getString("log_error_color")
+        color = app.config.getString(c,"log_error_color")
         g.es(s,color=color)
     else:
         g.es(s,color=color)
@@ -3018,7 +3019,7 @@ def initScriptFind(findHeadline,changeHeadline=None,firstNode=None,
         c.change_text = change_text.strip() + "\n"
     else:
         c.change_text = change_text
-    g.app.findFrame.init(c)
+    c.findFrame.init(c)
     c.findPanel()
 #@nonl
 #@-node:ekr.20031218072017.2418:g.initScriptFind (set up dialog)

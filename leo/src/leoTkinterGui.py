@@ -57,7 +57,6 @@ class tkinterGui(leoGui.leoGui):
         self.setDefaultIcon()
         if g.app.config:
             self.getDefaultConfigFont(g.app.config)
-        self.createGlobalWindows()
     
         return root
     #@nonl
@@ -100,15 +99,6 @@ class tkinterGui(leoGui.leoGui):
         config.defaultFontFamily = font.cget("family")
     #@nonl
     #@-node:ekr.20031218072017.2186:tkGui.getDefaultConfigFont
-    #@+node:ekr.20031218072017.4050:createGlobalWindows
-    def createGlobalWindows (self):
-        
-        """Create the global windows for the application."""
-    
-        g.app.findFrame = g.app.gui.createFindPanel()
-        g.app.globalWindows.append(g.app.findFrame)
-    #@nonl
-    #@-node:ekr.20031218072017.4050:createGlobalWindows
     #@-node:ekr.20031218072017.4049:createRootWindow & allies
     #@+node:ekr.20031218072017.4051:destroySelf
     def destroySelf (self):
@@ -229,9 +219,9 @@ class tkinterGui(leoGui.leoGui):
         """Create a Tkinter color picker panel."""
         return leoTkinterComparePanel.leoTkinterComparePanel(c)
     
-    def createFindPanel(self): # The find panel is global, so no c param.
+    def createFindPanel(self,c):
         """Create a hidden Tkinter find panel."""
-        panel = leoTkinterFind.leoTkinterFind()
+        panel = leoTkinterFind.leoTkinterFind(c)
         panel.top.withdraw()
         return panel
     

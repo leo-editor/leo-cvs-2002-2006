@@ -79,15 +79,17 @@ class leoTkinterFind (leoFind.leoFind,leoTkinterDialog.leoTkinterDialog):
     #@    @+others
     #@+node:ekr.20031218072017.3898:Birth & death
     #@+node:ekr.20031218072017.3899:__init__
-    def __init__(self,title="Find/Change",resizeable=False):
+    def __init__(self,c,resizeable=False):
+    
+        # g.trace("leoTkinterFind",c)
+        title = "Find/Change for %s" %  g.shortFileName(c.frame.title)
         
         # Init the base classes...
-    
-        leoFind.leoFind.__init__(self)
+        leoFind.leoFind.__init__(self,c)
         leoTkinterDialog.leoTkinterDialog.__init__(self,title,resizeable)
     
-        #@    << init the tkinter ivars >>
-        #@+node:ekr.20031218072017.3900:<< init the tkinter ivars >>
+        #@    << create the tkinter intVars >>
+        #@+node:ekr.20031218072017.3900:<< create the tkinter intVars >>
         self.dict = {}
         
         for key in self.intKeys:
@@ -96,13 +98,14 @@ class leoTkinterFind (leoFind.leoFind,leoTkinterDialog.leoTkinterDialog):
         for key in self.newStringKeys:
             self.dict[key] = Tk.StringVar()
             
-        self.s_text = Tk.Text() # Used by find.search()
+        self.s_ctrl = Tk.Text() # Used by find.search()
         #@nonl
-        #@-node:ekr.20031218072017.3900:<< init the tkinter ivars >>
+        #@-node:ekr.20031218072017.3900:<< create the tkinter intVars >>
         #@nl
         
         self.createTopFrame() # Create the outer tkinter dialog frame.
         self.createFrame()
+        self.init(c) # New in 4.3: init only once.
     #@nonl
     #@-node:ekr.20031218072017.3899:__init__
     #@+node:ekr.20031218072017.3901:destroySelf
@@ -135,8 +138,8 @@ class leoTkinterFind (leoFind.leoFind,leoTkinterDialog.leoTkinterDialog):
         clab = Tk.Label(cpane, width=8, text="Change:")
         
         # Use bigger boxes for scripts.
-        self.find_text   = ftxt = Tk.Text(fpane,bd=1,relief="groove",height=4,width=20)
-        self.change_text = ctxt = Tk.Text(cpane,bd=1,relief="groove",height=4,width=20)
+        self.find_ctrl   = ftxt = Tk.Text(fpane,bd=1,relief="groove",height=4,width=20)
+        self.change_ctrl = ctxt = Tk.Text(cpane,bd=1,relief="groove",height=4,width=20)
         #@<< Bind Tab and control-tab >>
         #@+node:ekr.20041026092141:<< Bind Tab and control-tab >>
         def setFocus(w):
@@ -290,13 +293,13 @@ class leoTkinterFind (leoFind.leoFind,leoTkinterDialog.leoTkinterDialog):
         #@-node:ekr.20031218072017.3905:<< Create two rows of buttons >>
         #@nl
         
-        for widget in (self.find_text, self.change_text):
+        for widget in (self.find_ctrl, self.change_ctrl):
             widget.bind ("<1>",  self.resetWrap)
             widget.bind("<Key>", self.resetWrap)
             widget.bind("<Control-a>",self.selectAll)
             #widget.bind(g.virtual_event_name("SelectAll"),self.selectAll)
         
-        for widget in (outer, self.find_text, self.change_text):
+        for widget in (outer, self.find_ctrl, self.change_ctrl):
             widget.bind("<Key-Return>", self.findButton)
             widget.bind("<Key-Escape>", self.onCloseWindow)
         
@@ -307,18 +310,26 @@ class leoTkinterFind (leoFind.leoFind,leoTkinterDialog.leoTkinterDialog):
     
         # N.B.: separate c.ivars are much more convenient than a dict.
         for key in self.intKeys:
-            val = getattr(c, key + "_flag")
-            val = g.choose(val,1,0) # 2/1/04: work around major Tk problem.
+            # New in 4.3: get ivars from @settings.
+            val = c.config.getBool(key)
+            setattr(self,key,val)
+            val = g.choose(val,1,0) # Work around major Tk problem.
             self.dict[key].set(val)
             # g.trace(key,val)
     
         #@    << set find/change widgets >>
         #@+node:ekr.20031218072017.2060:<< set find/change widgets >>
-        self.find_text.delete("1.0","end")
-        self.find_text.insert("end",c.find_text)
+        self.find_ctrl.delete("1.0","end")
+        self.change_ctrl.delete("1.0","end")
         
-        self.change_text.delete("1.0","end")
-        self.change_text.insert("end",c.change_text)
+        # New in 4.3: Get setting from @settings.
+        for w,setting in (
+            (self.find_ctrl,"find_text"),
+            (self.change_ctrl,"change_text"),
+        ):
+            s = c.config.getString(setting)
+            if s is None: s = ""
+            w.insert("end",s)
         #@nonl
         #@-node:ekr.20031218072017.2060:<< set find/change widgets >>
         #@nl
@@ -351,35 +362,36 @@ class leoTkinterFind (leoFind.leoFind,leoTkinterDialog.leoTkinterDialog):
         #@nl
     #@nonl
     #@-node:ekr.20031218072017.2059:find.init
-    #@+node:ekr.20031218072017.1460:find.set_ivars
-    def set_ivars (self,c):
+    #@-node:ekr.20031218072017.3898:Birth & death
+    #@+node:ekr.20031218072017.1460:find.update_ivars
+    def update_ivars (self):
         
-        # N.B.: separate c.ivars are much more convenient than a dict.
+        """Called just before doing a find to update ivars from the find panel."""
+    
         for key in self.intKeys:
             val = self.dict[key].get()
-            setattr(c, key + "_flag", val)
+            setattr(self, key, val) # No more _flag hack.
             # g.trace(key,val)
     
-        # Set ivars from radio buttons. 10/2/01: convert these to 1 or 0.
+        # Set ivars from radio buttons. Convert these to 1 or 0.
         find_type = self.dict["radio-find-type"].get()
-        c.pattern_match_flag = g.choose(find_type == "pattern-search",1,0)
-        c.script_search_flag = g.choose(find_type == "script-search",1,0)
+        self.pattern_match = g.choose(find_type == "pattern-search",1,0)
+        self.script_search = g.choose(find_type == "script-search",1,0)
     
         search_scope = self.dict["radio-search-scope"].get()
-        c.suboutline_only_flag = g.choose(search_scope == "suboutline-only",1,0)
-        c.node_only_flag       = g.choose(search_scope == "node-only",1,0)
-        c.selection_only_flag  = g.choose(search_scope == "selection-only",1,0) # 11/9/03
+        self.suboutline_only = g.choose(search_scope == "suboutline-only",1,0)
+        self.node_only       = g.choose(search_scope == "node-only",1,0)
+        self.selection       = g.choose(search_scope == "selection-only",1,0) # 11/9/03
     
-        s = self.find_text.get("1.0","end - 1c") # Remove trailing newline
-        s = g.toUnicode(s,g.app.tkEncoding) # 2/25/03
-        c.find_text = s
+        s = self.find_ctrl.get("1.0","end - 1c") # Remove trailing newline
+        s = g.toUnicode(s,g.app.tkEncoding)
+        self.find_text = s
     
-        s = self.change_text.get("1.0","end - 1c") # Remove trailing newline
-        s = g.toUnicode(s,g.app.tkEncoding) # 2/25/03
-        c.change_text = s
+        s = self.change_ctrl.get("1.0","end - 1c") # Remove trailing newline
+        s = g.toUnicode(s,g.app.tkEncoding)
+        self.change_text = s
     #@nonl
-    #@-node:ekr.20031218072017.1460:find.set_ivars
-    #@-node:ekr.20031218072017.3898:Birth & death
+    #@-node:ekr.20031218072017.1460:find.update_ivars
     #@+node:ekr.20031218072017.3906:onCloseWindow
     def onCloseWindow(self,event=None):
     
@@ -391,7 +403,7 @@ class leoTkinterFind (leoFind.leoFind,leoTkinterDialog.leoTkinterDialog):
         
         """Bring the tkinter Find Panel to the front."""
         
-        c = g.top() ; t = self.find_text ; gui = g.app.gui
+        c = g.top() ; t = self.find_ctrl ; gui = g.app.gui
                 
         self.top.withdraw() # Helps bring the window to the front.
         self.top.deiconify()
@@ -416,17 +428,18 @@ class leoTkinterFind (leoFind.leoFind,leoTkinterDialog.leoTkinterDialog):
     def gui_search (self,t,*args,**keys):
         return t.search(*args,**keys)
     
-    def init_s_text (self,s):
-        c = self.c ; t = self.s_text	
+    def init_s_ctrl (self,s):
+        c = self.c ; t = self.s_ctrl	
         t.delete("1.0","end")
         t.insert("end",s)
-        t.mark_set("insert",g.choose(c.reverse_flag,"end","1.0"))
+        t.mark_set("insert",g.choose(self.reverse,"end","1.0"))
         return t
+    #@nonl
     #@-node:ekr.20031218072017.3908:Tkinter wrappers (leoTkinterFind)
     #@-others
 #@nonl
 #@-node:ekr.20041025152343.1:class leoTkinterFind
 #@-others
-
+#@nonl
 #@-node:ekr.20031218072017.3897:@thin leoTkinterFind.py
 #@-leo

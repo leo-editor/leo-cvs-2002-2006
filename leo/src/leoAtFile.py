@@ -2983,7 +2983,6 @@ class atFile:
         
         at = self ; c = at.c
     
-        c.setIvarsFromPrefs()
         root.clearAllVisitedInTree() # Clear both vnode and tnode bits.
         root.clearVisitedInTree()
     

@@ -40,32 +40,34 @@ class baseCommands:
     """The base class for Leo's main commander."""
     #@    @+others
     #@+node:ekr.20031218072017.2811: c.Birth & death
-    #@+node:ekr.20031218072017.2812:c.__init__ &  initIvars
+    #@+node:ekr.20031218072017.2812:c.__init__
     def __init__(self,frame,fileName):
     
-        self.frame = frame
-        self.mFileName = fileName
-        self.initIvars()
+        c = self ; c.frame = frame ; c.mFileName = fileName
+    
+        # g.trace(c) # Do this after setting c.mFileName.
+        c.initIvars()
     
         # initialize the sub-commanders
-        self.fileCommands = leoFileCommands.fileCommands(self)
-        self.atFileCommands = leoAtFile.atFile(self)
-        self.importCommands = leoImport.leoImportCommands(self)
-        self.tangleCommands = leoTangle.tangleCommands(self)
+        c.fileCommands = leoFileCommands.fileCommands(c)
+        c.atFileCommands = leoAtFile.atFile(c)
+        c.importCommands = leoImport.leoImportCommands(c)
+        c.tangleCommands = leoTangle.tangleCommands(c)
         
+        # Create the find panel.  It will be inited later.
+        c.findFrame = g.app.gui.createFindPanel(c)
+    
         if 0 and g.debugGC:
-            print
-            print "*** using Null undoer ***"
-            print
+            print ; print "*** using Null undoer ***" ; print
             self.undoer = leoUndo.nullUndoer(self)
         else:
             self.undoer = leoUndo.undoer(self)
     #@nonl
+    #@-node:ekr.20031218072017.2812:c.__init__
     #@+node:ekr.20040731071037:initIvars
     def initIvars(self):
     
         c = self
-        self.config = configSettings(c)
         #@    << initialize ivars >>
         #@+node:ekr.20031218072017.2813:<< initialize ivars >>
         self._currentPosition = self.nullPosition()
@@ -110,46 +112,17 @@ class baseCommands:
         #@nonl
         #@-node:ekr.20031218072017.2813:<< initialize ivars >>
         #@nl
-        self.setIvarsFromFind()
+        self.config = configSettings(c)
     #@nonl
     #@-node:ekr.20040731071037:initIvars
-    #@-node:ekr.20031218072017.2812:c.__init__ &  initIvars
     #@+node:ekr.20031218072017.2814:c.__repr__ & __str__
     def __repr__ (self):
         
-        try:
-            return "Commander %d: %s" % (id(self),repr(self.mFileName))
-        except:
-            return "Commander: %d: bad mFileName" % id(self)
+        return "Commander %d: %s" % (id(self),repr(self.mFileName))
             
     __str__ = __repr__
     
     #@-node:ekr.20031218072017.2814:c.__repr__ & __str__
-    #@+node:ekr.20031218072017.2815:c.setIvarsFromFind
-    # This should be called whenever we need to use find values:
-    # i.e., before reading or writing
-    
-    def setIvarsFromFind (self):
-    
-        c = self ; find = g.app.findFrame
-        if find != None:
-            find.set_ivars(c)
-    #@-node:ekr.20031218072017.2815:c.setIvarsFromFind
-    #@+node:ekr.20031218072017.2816:c.setIvarsFromPrefs
-    #@+at 
-    #@nonl
-    # This should be called whenever we need to use preference:
-    # i.e., before reading, writing, tangling, untangling.
-    # 
-    # 7/2/02: We no longer need this now that the Prefs dialog is modal.
-    #@-at
-    #@@c
-    
-    def setIvarsFromPrefs (self):
-    
-        pass
-    #@nonl
-    #@-node:ekr.20031218072017.2816:c.setIvarsFromPrefs
     #@-node:ekr.20031218072017.2811: c.Birth & death
     #@+node:ekr.20031218072017.2817: doCommand
     def doCommand (self,command,label,event=None):
@@ -2497,33 +2470,32 @@ class baseCommands:
     
         c = self
     
-        find = g.app.findFrame
-        find.bringToFront()
-        find.c = self
+        c.findFrame.bringToFront()
+    #@nonl
     #@-node:ekr.20031218072017.2888:findPanel
     #@+node:ekr.20031218072017.2889:findNext
     def findNext(self):
     
         c = self
-        g.app.findFrame.findNextCommand(c)
+        c.findFrame.findNextCommand(c)
     #@-node:ekr.20031218072017.2889:findNext
     #@+node:ekr.20031218072017.2890:findPrevious
     def findPrevious(self):
     
         c = self
-        g.app.findFrame.findPreviousCommand(c)
+        c.findFrame.findPreviousCommand(c)
     #@-node:ekr.20031218072017.2890:findPrevious
     #@+node:ekr.20031218072017.2891:replace
     def replace(self):
     
         c = self
-        g.app.findFrame.changeCommand(c)
+        c.findFrame.changeCommand(c)
     #@-node:ekr.20031218072017.2891:replace
     #@+node:ekr.20031218072017.2892:replaceThenFind
     def replaceThenFind(self):
     
         c = self
-        g.app.findFrame.changeThenFindCommand(c)
+        c.findFrame.changeThenFindCommand(c)
     #@-node:ekr.20031218072017.2892:replaceThenFind
     #@-node:ekr.20031218072017.2887:Find submenu (frame methods)
     #@+node:ekr.20031218072017.2893:notValidInBatchMode
@@ -5516,26 +5488,8 @@ class configSettings:
     #@nonl
     #@-node:ekr.20041118053731:Getters
     #@+node:ekr.20041118195812:Setters...
-    #@+node:ekr.20041118195812.1:setCommandsFindIvars
-    def setCommandsFindIvars(self):
-        
-        return g.app.config.setCommandsFindIvars(self.c)
-    
-    #@-node:ekr.20041118195812.1:setCommandsFindIvars
-    #@+node:ekr.20041118195812.2:setString
-    def setString (self,setting,val):
-        
-        return g.app.config.setString(self.c,setting,val)
-    
-    #@-node:ekr.20041118195812.2:setString
-    #@+node:ekr.20041118195812.3:setRecentFiles
-    def setRecentFiles (self,files):
-        
-        return g.app.config.setRecentFiles(self.c,files)
-    #@-node:ekr.20041118195812.3:setRecentFiles
     #@+node:ekr.20041117062717.20:setConfigIvars
     # Sets config ivars from c.
-    
     def setConfigIvars (self):
         
         c = self.c
@@ -5574,23 +5528,17 @@ class configSettings:
         self.setPref("find_string",c.find_text)
     #@nonl
     #@-node:ekr.20041117062717.20:setConfigIvars
-    #@+node:ekr.20041117062717.19:setConfigFindIvars (not used)
-    def setConfigFindIvars (self):
+    #@+node:ekr.20041118195812.3:setRecentFiles
+    def setRecentFiles (self,files):
         
-        """Set the config ivars from the commander."""
+        return g.app.config.setRecentFiles(self.c,files)
+    #@-node:ekr.20041118195812.3:setRecentFiles
+    #@+node:ekr.20041118195812.2:setString
+    def setString (self,setting,val):
         
-        c = self.c
+        return g.app.config.setString(self.c,setting,val)
     
-        # N.B.: separate c.ivars are much more convenient than a dict.
-        for s in g.app.findFrame.intKeys: # These _are_ gui-independent.
-            val = getattr(c,s+"_flag")
-            g.app.config.setPref(s,val)
-            # g.trace(s,val)
-        
-        g.app.config.setPref("change_string",c.change_text)
-        g.app.config.setPref("find_string",c.find_text)
-    #@nonl
-    #@-node:ekr.20041117062717.19:setConfigFindIvars (not used)
+    #@-node:ekr.20041118195812.2:setString
     #@-node:ekr.20041118195812:Setters...
     #@-others
 #@nonl

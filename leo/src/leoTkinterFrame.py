@@ -1244,10 +1244,11 @@ class leoTkinterFrame (leoFrame.leoFrame):
     #@+node:ekr.20031218072017.3989:minimizeAll
     def minimizeAll(self):
     
-        self.minimize(g.app.findFrame)
+        
         self.minimize(g.app.pythonFrame)
         for frame in g.app.windowList:
             self.minimize(frame)
+            self.minimize(frame.c.findFrame)
         
     def minimize(self, frame):
     

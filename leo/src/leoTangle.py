@@ -576,7 +576,6 @@ class baseTangleCommands:
         c.endEditing()
         
         g.es("Tangling...")
-        c.setIvarsFromPrefs()
         self.init_ivars()
         self.tangling = True
     #@nonl
@@ -588,7 +587,6 @@ class baseTangleCommands:
         c.endEditing()
         
         g.es("Untangling...")
-        c.setIvarsFromPrefs()
         self.init_ivars()
         self.tangling = False
     #@nonl

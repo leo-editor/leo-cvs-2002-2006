@@ -492,58 +492,40 @@ class baseFileCommands:
     #@-node:ekr.20031218072017.3024:getEscapedString
     #@+node:ekr.20031218072017.2064:getFindPanelSettings
     def getFindPanelSettings (self):
-    
-        c = self.c ; findFrame = g.app.findFrame
-        #@    << Set defaults of all flags >>
-        #@+node:ekr.20031218072017.2065:<< Set defaults of all flags >>
-        if g.app.gui.guiName() == "tkinter":
         
-            for var in findFrame.intKeys:
-                attr = "%s_flag" % (var)
-                setattr(c,attr,False)
-                # g.trace(attr)
-        #@-node:ekr.20031218072017.2065:<< Set defaults of all flags >>
-        #@nl
-        if not self.getOpenTag("<find_panel_settings"):
-            while 1:
-                if   self.matchTag("batch="): c.batch_flag = self.getDqBool()
-                elif self.matchTag("ignore_case="): c.ignore_case_flag = self.getDqBool()
-                elif self.matchTag("mark_changes="): c.mark_changes_flag = self.getDqBool()
-                elif self.matchTag("mark_finds="): c.mark_finds_flag = self.getDqBool()
-                elif self.matchTag("node_only="): c.node_only_flag = self.getDqBool()
-                elif self.matchTag("pattern_match="): c.pattern_match_flag = self.getDqBool()
-                elif self.matchTag("reverse="): c.reverse_flag = self.getDqBool()
-                elif self.matchTag("script_change="): c.script_change_flag = self.getDqBool() # 11/05/03
-                elif self.matchTag("script_search="): c.script_search_flag = self.getDqBool() # 11/05/03
-                elif self.matchTag("search_headline="): c.search_headline_flag = self.getDqBool()
-                elif self.matchTag("search_body="): c.search_body_flag = self.getDqBool()
-                elif self.matchTag("selection_only="): c.selection_only_flag = self.getDqBool() # 11/9/03
-                elif self.matchTag("suboutline_only="): c.suboutline_only_flag = self.getDqBool()
-                elif self.matchTag("whole_word="): c.whole_word_flag = self.getDqBool()
-                elif self.matchTag("wrap="): c.wrap_flag = self.getDqBool()
-                elif self.matchTag(">"): break
-                else: self.getUnknownTag() # New in 4.1: ignore all other tags.
-    
-            # # 7/31/04: Allow only <find_string> or <find_string/>
-            if self.getOpenTag("<find_string>"): 
-                c.find_text = ""
-            else:
-                c.find_text = self.getEscapedString()
-                self.getTag("</find_string>")
-            # 7/31/04: Allow only <change_string> or <change_string/>
-            if self.getOpenTag("<change_string>"): 
-                c.change_text = ""
-            else:
-                c.change_text = self.getEscapedString()
-                self.getTag("</change_string>")
-            #
-            self.getTag("</find_panel_settings>")
+        if self.getOpenTag("<find_panel_settings"):
+            return # <find_panel_settings/> 
         
-        # Override .leo file's preferences if settings are in leoConfig.txt.
-        c.config.setCommandsFindIvars()
-        # Update the settings immediately.
-        if g.app.gui.guiName() == "tkinter":
-            g.app.findFrame.init(c)
+        # New in 4.3: ignore all pre-4.3 find settings.
+        while 1:
+            if   self.matchTag("batch="):           self.getDqBool()
+            elif self.matchTag("ignore_case="):     self.getDqBool()
+            elif self.matchTag("mark_changes="):    self.getDqBool()
+            elif self.matchTag("mark_finds="):      self.getDqBool()
+            elif self.matchTag("node_only="):       self.getDqBool()
+            elif self.matchTag("pattern_match="):   self.getDqBool()
+            elif self.matchTag("reverse="):         self.getDqBool()
+            elif self.matchTag("script_change="):   self.getDqBool()
+            elif self.matchTag("script_search="):   self.getDqBool()
+            elif self.matchTag("search_headline="): self.getDqBool()
+            elif self.matchTag("search_body="):     self.getDqBool()
+            elif self.matchTag("selection_only="):  self.getDqBool()
+            elif self.matchTag("suboutline_only="): self.getDqBool()
+            elif self.matchTag("whole_word="):      self.getDqBool()
+            elif self.matchTag("wrap="):            self.getDqBool()
+            elif self.matchTag(">"): break
+            else: self.getUnknownTag() # Ignore all other tags.
+        # Allow only <find_string> or <find_string/>
+        if self.getOpenTag("<find_string>"): 
+            pass
+        else:
+            self.getEscapedString() ; self.getTag("</find_string>")
+        # Allow only <change_string> or <change_string/>
+        if self.getOpenTag("<change_string>"): 
+            pass
+        else:
+            self.getEscapedString() ; self.getTag("</change_string>")
+        self.getTag("</find_panel_settings>")
     #@nonl
     #@-node:ekr.20031218072017.2064:getFindPanelSettings
     #@+node:ekr.20031218072017.2306:getGlobals

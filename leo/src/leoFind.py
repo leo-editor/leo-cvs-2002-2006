@@ -38,7 +38,7 @@ import leoGlobals as g
 # fails and after any Find All and Change All command.
 # 
 # Initialization involves setting the self.c, self.v, self.in_headline, 
-# self.wrapping and self.s_text ivars. Setting self.in_headline is tricky; we 
+# self.wrapping and self.s_ctrl ivars. Setting self.in_headline is tricky; we 
 # must be sure to retain the state of the outline pane until initialization is 
 # complete. Initializing the Find All and Change All commands is much easier 
 # because such initialization does not depend on the state of the Leo window.
@@ -46,11 +46,11 @@ import leoGlobals as g
 # Using Tk.Text widgets for both headlines and body text results in a huge 
 # simplification of the code. Indeed, the searching code does not know whether 
 # it is searching headline or body text. The search code knows only that 
-# self.s_text is a Tk.Text widget that contains the text to be searched or 
+# self.s_ctrl is a Tk.Text widget that contains the text to be searched or 
 # changed and the insert and sel Tk attributes of self.search_text indicate 
 # the range of text to be searched. Searching headline and body text 
 # simultaneously is complicated. The selectNextVnode() method handles the many 
-# details involved by setting self.s_text and its insert and sel attributes.
+# details involved by setting self.s_ctrl and its insert and sel attributes.
 #@-at
 #@-node:ekr.20031218072017.2414:<< Theory of operation of find/change >>
 #@nl
@@ -61,33 +61,42 @@ class leoFind:
 
     #@    @+others
     #@+node:ekr.20031218072017.3053:leoFind.__init__
-    def __init__ (self):
+    def __init__ (self,c):
     
+        self.c = c
         #@    << init the gui-independent ivars >>
         #@+node:ekr.20031218072017.3054:<< init the gui-independent ivars >>
         self.wrapVnode = None
         self.onlyVnode = None
+        self.find_text = ""
+        self.change_text = ""
         
-        # Note: the ivars have _flag appended.
-        # We can't easily change this hack because the corresponding config ivars do _not_ have _flag appended.
+        #@+at
+        # New in 4.3:
+        # - These are the names of leoFind ivars. (no more _flag hack).
+        # - There are no corresponding commander ivars to keep in synch 
+        # (hurray!)
+        # - These ivars are inited (in the subclass by init) when this class 
+        # is created.
+        # - These ivars are updated (in the subclass by by update_ivars) just 
+        # before doing any find.
+        #@-at
+        #@@c
         self.intKeys = [
             "batch", "wrap", "whole_word", "ignore_case", "node_only",
             "pattern_match", "search_headline", "search_body",
             "suboutline_only", "mark_changes", "mark_finds", "reverse",
-            "script_search","script_change","selection_only"] # 11/9/03
+            "script_search","script_change","selection_only"]
         
         self.newStringKeys = ["radio-find-type", "radio-search-scope"]
-        
-        # The c.x_flag ivars contain the user preferences.
-        # These are updated just before executing any find/change command.
         
         # Ivars containing internal state...
         self.c = None # The commander for this search.
         self.v = None # The vnode being searched.  Never saved between searches!
         self.in_headline = False # True: searching headline text.
-        self.s_text = None # The search text for this search.
+        self.s_ctrl = None # The search text for this search.
         self.wrapping = False # True: wrapping is enabled.
-            # This is _not_ the same as c.wrap_flag for batch searches.
+            # This is _not_ the same as self.wrap for batch searches.
         
         #@+at 
         #@nonl
@@ -118,9 +127,9 @@ class leoFind:
         c = self.setup_button()
         c.clearAllVisited() # Clear visited for context reporting.
     
-        if c.script_change_flag:
+        if self.script_change:
             self.doChangeAllScript()
-        elif c.selection_only_flag:
+        elif self.selection_only:
             self.change()
         else:
             self.changeAll()
@@ -134,7 +143,7 @@ class leoFind:
     
         c  = self.setup_button()
     
-        if c.script_change_flag:
+        if self.script_change:
             self.doChangeScript()
         else:
             self.change()
@@ -147,7 +156,7 @@ class leoFind:
     
         self.setup_command(c)
     
-        if c.script_search_flag:
+        if self.script_search:
             self.doChangeScript()
         else:
             self.change()
@@ -160,34 +169,34 @@ class leoFind:
     
         c = self.setup_button()
     
-        if c.script_change_flag:
+        if self.script_change:
             self.doChangeScript()
-            if c.script_search_flag:
+            if self.script_search:
                 self.doFindScript()
             else:
                 self.findNext()
         else:
-            if c.script_search_flag:
+            if self.script_search:
                 self.change()
                 self.doFindScript()
             else:
                 self.changeThenFind()
     #@nonl
     #@-node:ekr.20031218072017.3058:changeThenFindButton
-    #@+node:ekr.20031218072017.3062:changeThenFindCommandd
+    #@+node:ekr.20031218072017.3062:changeThenFindCommand
     # The user has pushed the "Change Then Find" button from the Find menu.
     
     def changeThenFindCommand(self,c):
     
         self.setup_command(c)
     
-        if c.script_search_flag:
+        if self.script_search:
             self.doChangeScript()
             self.doFindScript()
         else:
             self.changeThenFind()
     #@nonl
-    #@-node:ekr.20031218072017.3062:changeThenFindCommandd
+    #@-node:ekr.20031218072017.3062:changeThenFindCommand
     #@+node:ekr.20031218072017.3060:findAllButton
     # The user has pushed the "Find All" button from the find panel.
     
@@ -196,9 +205,9 @@ class leoFind:
         c = self.setup_button()
         c.clearAllVisited() # Clear visited for context reporting.
     
-        if c.script_search_flag:
+        if self.script_search:
             self.doFindAllScript()
-        elif c.selection_only_flag:
+        elif self.selection_only:
             self.findNext()
         else:
             self.findAll()
@@ -211,7 +220,7 @@ class leoFind:
     
         c = self.setup_button()
     
-        if c.script_search_flag:
+        if self.script_search:
             self.doFindScript()
         else:
             self.findNext()
@@ -224,7 +233,7 @@ class leoFind:
     
         self.setup_command(c)
     
-        if c.script_search_flag:
+        if self.script_search:
             self.doFindScript()
         else:
             self.findNext()
@@ -237,14 +246,14 @@ class leoFind:
     
         self.setup_command(c)
     
-        c.reverse_flag = not c.reverse_flag
+        self.reverse = not self.reverse
     
-        if c.script_search_flag:
+        if self.script_search:
             self.doFindScript()
         else:
             self.findNext()
     
-        c.reverse_flag = not c.reverse_flag
+        self.reverse = not self.reverse
     #@nonl
     #@-node:ekr.20031218072017.3064:fndPreviousCommand
     #@+node:EKR.20040503070514:handleUserClick
@@ -253,7 +262,7 @@ class leoFind:
         """Reset suboutline-only search when the user clicks a headline."""
         
         try:
-            if self.c and self.c.suboutline_only_flag:
+            if self.c and self.suboutline_only:
                 # g.trace(p)
                 self.onlyVnode = p.copy() # Bug fix: 7/26/04
         except: pass
@@ -271,7 +280,7 @@ class leoFind:
         if 0: # We _must_ retain the editing status for incremental searches!
             c.endEditing()
     
-        c.setIvarsFromFind()
+        self.update_ivars()
     
         return c
     #@nonl
@@ -288,7 +297,7 @@ class leoFind:
         if 0: # We _must_ retain the editing status for incremental searches!
             c.endEditing()
     
-        c.setIvarsFromFind()
+        self.update_ivars()
     #@nonl
     #@-node:ekr.20031218072017.3066:setup_command
     #@-node:ekr.20031218072017.3055:Top Level Commands
@@ -297,10 +306,10 @@ class leoFind:
     #@+at 
     #@nonl
     # This routine performs a single batch change operation, updating the head 
-    # or body string of v and leaving the result in s_text.  We update the 
+    # or body string of v and leaving the result in s_ctrl.  We update the 
     # body if we are changing the body text of c.currentVnode().
     # 
-    # s_text contains the found text on entry and contains the changed text on 
+    # s_ctrl contains the found text on entry and contains the changed text on 
     # exit.  pos and pos2 indicate the selection.  The selection will never be 
     # empty. NB: we can not assume that self.v is visible.
     #@-at
@@ -308,14 +317,14 @@ class leoFind:
     
     def batchChange (self,pos1,pos2,count):
     
-        c = self.c ; v = self.v ; st = self.s_text ; gui = g.app.gui
-        # Replace the selection with c.change_text
+        c = self.c ; v = self.v ; st = self.s_ctrl ; gui = g.app.gui
+        # Replace the selection with self.change_text
         if gui.compareIndices(st,pos1, ">", pos2):
             pos1,pos2=pos2,pos1
-        gui.replaceSelectionRangeWithText(st,pos1,pos2,c.change_text)
+        gui.replaceSelectionRangeWithText(st,pos1,pos2,self.change_text)
         s = gui.getAllText(st)
         # Update the selection.
-        insert=g.choose(c.reverse_flag,pos1,pos1+'+'+str(len(c.change_text))+'c')
+        insert=g.choose(self.reverse,pos1,pos1+'+'+str(len(self.change_text))+'c')
         gui.setSelectionRange(st,insert,insert)
         gui.setInsertPoint(st,insert)
         # Update the node
@@ -357,7 +366,7 @@ class leoFind:
             #@nl
             v.setBodyStringOrPane(s)
         # Set mark, changed and dirty bits.
-        if c.mark_changes_flag:
+        if c.mark_changes:
             v.setMarked()
         if not c.isChanged():
             c.setChanged(True)
@@ -375,7 +384,7 @@ class leoFind:
     #@+node:ekr.20031218072017.3069:changeAll
     def changeAll(self):
     
-        c = self.c ; st = self.s_text ; gui = g.app.gui
+        c = self.c ; st = self.s_ctrl ; gui = g.app.gui
         if not self.checkArgs():
             return
         self.initInHeadline()
@@ -404,8 +413,8 @@ class leoFind:
     #@nonl
     #@-node:ekr.20031218072017.3069:changeAll
     #@+node:ekr.20031218072017.3070:changeSelection
-    # Replace selection with c.change_text.
-    # If no selection, insert c.change_text at the cursor.
+    # Replace selection with self.change_text.
+    # If no selection, insert self.change_text at the cursor.
     
     def changeSelection(self):
     
@@ -423,16 +432,16 @@ class leoFind:
     
         # Replace the selection in _both_ controls.
         start,end = oldSel
-        gui.replaceSelectionRangeWithText(t,          start,end,c.change_text)
-        gui.replaceSelectionRangeWithText(self.s_text,start,end,c.change_text)
+        gui.replaceSelectionRangeWithText(t,          start,end,self.change_text)
+        gui.replaceSelectionRangeWithText(self.s_ctrl,start,end,self.change_text)
     
         # Update the selection for the next match.
-        gui.setSelectionRangeWithLength(t,start,len(c.change_text))
+        gui.setSelectionRangeWithLength(t,start,len(self.change_text))
         newSel = gui.getTextSelection(t)
         gui.set_focus(c,t)
     
         c.beginUpdate()
-        if c.mark_changes_flag:
+        if self.mark_changes:
             v.setMarked()
         # update node, undo status, dirty flag, changed mark & recolor
         if self.in_headline:
@@ -477,8 +486,8 @@ class leoFind:
     
         c = self.c
         try:
-            assert(c.script_change_flag) # 2/1/04
-            exec c.change_text in {} # Use {} to get a pristine environment.
+            assert(self.script_change)
+            exec self.change_text in {} # Use {} to get a pristine environment.
         except:
             g.es("exception executing change script")
             g.es_exception(full=False)
@@ -507,7 +516,7 @@ class leoFind:
     
         c = self.c
         try:
-            exec c.find_text in {} # Use {} to get a pristine environment.
+            exec self.find_text in {} # Use {} to get a pristine environment.
         except:
             g.es("exception executing find script")
             g.es_exception(full=False)
@@ -516,7 +525,7 @@ class leoFind:
     #@+node:ekr.20031218072017.3073:findAll
     def findAll(self):
     
-        c = self.c ; t = self.s_text ; gui = g.app.gui
+        c = self.c ; t = self.s_ctrl ; gui = g.app.gui
         if not self.checkArgs():
             return
         self.initInHeadline()
@@ -560,7 +569,7 @@ class leoFind:
             if self.wrapping:
                 g.es("end of wrapped search")
             else:
-                g.es("not found: " + "'" + c.find_text + "'")
+                g.es("not found: " + "'" + self.find_text + "'")
             self.restore(data)
     #@nonl
     #@-node:ekr.20031218072017.3074:findNext
@@ -572,23 +581,23 @@ class leoFind:
     
         c = self.c
     
-        if not c.search_headline_flag and not c.search_body_flag:
+        if not self.search_headline and not self.search_body:
             return None, None
     
-        if len(c.find_text) == 0:
+        if len(self.find_text) == 0:
             return None, None
     
         v = self.v
         while v:
             pos, newpos = self.search()
             if pos:
-                if c.mark_finds_flag:
+                if self.mark_finds:
                     v.setMarked()
                     c.frame.tree.drawIcon(v) # redraw only the icon.
                 return pos, newpos
             elif self.errors:
                 return None,None # Abort the search.
-            elif c.node_only_flag:
+            elif self.node_only:
                 return None,None # We are only searching one node.
             else:
                 v = self.v = self.selectNextVnode()
@@ -605,54 +614,54 @@ class leoFind:
     #@+node:ekr.20031218072017.3077:search
     def search (self):
     
-        """Searches the present headline or body text for c.find_text and returns True if found.
+        """Searches the present headline or body text for self.find_text and returns True if found.
     
-        c.whole_word_flag, c.ignore_case_flag, and c.pattern_match_flag control the search."""
+        self.whole_word, self.ignore_case, and self.pattern_match control the search."""
         
         __pychecker__ = '--no-implicitreturns' # Suppress bad warning.
     
-        c = self.c ; v = self.v ; t = self.s_text ; gui = g.app.gui
+        c = self.c ; v = self.v ; t = self.s_ctrl ; gui = g.app.gui
         assert(c and t and v)
-        if c.selection_only_flag: # 11/9/03
+        if self.selection_only:
             index,stopindex = self.selStart, self.selEnd
             # g.trace(index,stopindex,v)
             if index == stopindex:
                 return None, None
         else:
             index = gui.getInsertPoint(t)
-            stopindex = g.choose(c.reverse_flag,gui.firstIndex(),gui.lastIndex())
+            stopindex = g.choose(self.reverse,gui.firstIndex(),gui.lastIndex())
         while 1:
             try:
-                pos = self.gui_search(t,c.find_text,index,
-                    stopindex=stopindex,backwards=c.reverse_flag,
-                    regexp=c.pattern_match_flag,nocase=c.ignore_case_flag)
+                pos = self.gui_search(t,self.find_text,index,
+                    stopindex=stopindex,backwards=self.reverse,
+                    regexp=self.pattern_match,nocase=self.ignore_case)
             except:
                 g.es_exception(full=False)
                 self.errors += 1
                 return None, None
             if not pos:
                 return None, None
-            if c.find_text == '\n':
+            if self.find_text == '\n':
                 # 2/3/04: A hack.  Time to get rid of gui indices!
                 newpos = gui.moveIndexToNextLine(t,pos)
                 # g.trace(pos,t.index(newpos))
             else:
-                newpos = gui.moveIndexForward(t,pos,len(c.find_text))
+                newpos = gui.moveIndexForward(t,pos,len(self.find_text))
             if newpos is None:
                 return None, None
-            if c.reverse_flag and gui.compareIndices(t,newpos,"==",index):
+            if self.reverse and gui.compareIndices(t,newpos,"==",index):
                 #@            << search again after getting stuck going backward >>
                 #@+node:ekr.20031218072017.3078:<< search again after getting stuck going backward >>
-                index = gui.moveIndexBackward(newpos,len(c.find_text))
+                index = gui.moveIndexBackward(newpos,len(self.find_text))
                 
-                pos = self.gui_search(t,c.find_text,index,
-                    stopindex=stopindex,backwards=c.reverse_flag,
-                    regexp=c.pattern_match_flag,nocase=c.ignore_case_flag)
+                pos = self.gui_search(t,self.find_text,index,
+                    stopindex=stopindex,backwards=self.reverse,
+                    regexp=self.pattern_match,nocase=self.ignore_case)
                 
                 if not pos:
                     return None, None
                 
-                newpos = gui.moveIndexForward(t,pos,len(c.find_text))
+                newpos = gui.moveIndexForward(t,pos,len(self.find_text))
                 #@nonl
                 #@-node:ekr.20031218072017.3078:<< search again after getting stuck going backward >>
                 #@nl
@@ -660,17 +669,17 @@ class leoFind:
             #@+node:ekr.20031218072017.3079:<< return if we are passed the wrap point >>
             if self.wrapping and self.wrapPos and self.wrapVnode and self.v == self.wrapVnode:
             
-                if c.reverse_flag and gui.compareIndices(t,pos, "<", self.wrapPos):
+                if self.reverse and gui.compareIndices(t,pos, "<", self.wrapPos):
                     # g.trace("wrap done")
                     return None, None
             
-                if not c.reverse_flag and gui.compareIndices(t,newpos, ">", self.wrapPos):
+                if not self.reverse and gui.compareIndices(t,newpos, ">", self.wrapPos):
                     return None, None
             #@nonl
             #@-node:ekr.20031218072017.3079:<< return if we are passed the wrap point >>
             #@nl
-            if c.whole_word_flag:
-                index = t.index(g.choose(c.reverse_flag,pos,newpos))
+            if self.whole_word:
+                index = t.index(g.choose(self.reverse,pos,newpos))
                 #@            << continue if not whole word match >>
                 #@+node:ekr.20031218072017.3080:<< continue if not whole word match >>
                 # Set pos to None if word characters preceed or follow the selection.
@@ -702,11 +711,11 @@ class leoFind:
     
         c = self.c ; v = self.v
     
-        if c.selection_only_flag:
+        if self.selection_only:
             return None
     
         # Start suboutline only searches.
-        if c.suboutline_only_flag and not self.onlyVnode:
+        if self.suboutline_only and not self.onlyVnode:
             # v.copy not needed because the find code never calls p.moveToX.
             # Furthermore, v might be None, so v.copy() would be wrong!
             self.onlyVnode = v 
@@ -718,20 +727,20 @@ class leoFind:
             # Furthermore, v might be None, so v.copy() would be wrong!
             self.wrapVnode = v 
     
-        if self.in_headline and c.search_body_flag:
+        if self.in_headline and self.search_body:
             # just switch to body pane.
             self.in_headline = False
             self.initNextText()
             # g.trace(v)
             return v
     
-        if c.reverse_flag: v = v.threadBack()
+        if self.reverse: v = v.threadBack()
         else:              v = v.threadNext()
     
         # Wrap if needed.
-        if not v and self.wrapping and not c.suboutline_only_flag:
+        if not v and self.wrapping and not self.suboutline_only:
             v = c.rootVnode()
-            if c.reverse_flag:
+            if self.reverse:
                 # Set search_v to the last node of the tree.
                 while v and v.next():
                     v = v.next()
@@ -743,7 +752,7 @@ class leoFind:
             v = None ; self.resetWrap()
     
         # End suboutline only searches.
-        if (c.suboutline_only_flag and self.onlyVnode and v and
+        if (self.suboutline_only and self.onlyVnode and v and
             (v == self.onlyVnode or not self.onlyVnode.isAncestorOf(v))):
             # g.trace("end outline-only")
             v = None ; self.onlyVnode = None
@@ -752,7 +761,7 @@ class leoFind:
         # Furthermore, v might be None, so v.copy() would be wrong!
         self.v = v # used in initNextText().
         if v: # select v and set the search point within v.
-            self.in_headline = c.search_headline_flag
+            self.in_headline = self.search_headline
             self.initNextText()
         return v
     #@nonl
@@ -764,10 +773,10 @@ class leoFind:
     
         c = self.c
         val = True
-        if not c.search_headline_flag and not c.search_body_flag:
+        if not self.search_headline and not self.search_body:
             g.es("not searching headline or body")
             val = False
-        if len(c.find_text) == 0:
+        if len(self.find_text) == 0:
             g.es("empty find patttern")
             val = False
         return val
@@ -779,17 +788,17 @@ class leoFind:
     def initBatchCommands (self):
     
         c = self.c
-        self.in_headline = c.search_headline_flag # Search headlines first.
+        self.in_headline = self.search_headline # Search headlines first.
         self.errors = 0
     
         # Select the first node.
-        if c.suboutline_only_flag or c.node_only_flag or c.selection_only_flag: # 11/9/03
+        if self.suboutline_only or self.node_only or self.selection_only:
             self.v = c.currentVnode()
-            if c.selection_only_flag: self.selStart,self.selEnd = c.frame.body.getTextSelection()
-            else:                     self.selStart,self.selEnd = None,None
+            if self.selection_only: self.selStart,self.selEnd = c.frame.body.getTextSelection()
+            else:                   self.selStart,self.selEnd = None,None
         else:
             v = c.rootVnode()
-            if c.reverse_flag:
+            if self.reverse:
                 while v and v.next():
                     v = v.next()
                 v = v.lastNode()
@@ -800,19 +809,19 @@ class leoFind:
     #@nonl
     #@-node:ekr.20031218072017.3084:initBatchCommands
     #@+node:ekr.20031218072017.3085:initBatchText & initNextText
-    # Returns s_text with "insert" point set properly for batch searches.
+    # Returns s_ctrl with "insert" point set properly for batch searches.
     def initBatchText(self):
         v = self.v
         self.wrapping = False # Only interactive commands allow wrapping.
         s = g.choose(self.in_headline,v.headString(), v.bodyString())
-        return self.init_s_text(s)
+        return self.init_s_ctrl(s)
     
     # Call this routine when moving to the next node when a search fails.
     # Same as above except we don't reset wrapping flag.
     def initNextText(self):
         v = self.v
         s = g.choose(self.in_headline,v.headString(), v.bodyString())
-        return self.init_s_text(s)
+        return self.init_s_ctrl(s)
     #@nonl
     #@-node:ekr.20031218072017.3085:initBatchText & initNextText
     #@+node:ekr.20031218072017.3086:initInHeadline
@@ -823,11 +832,11 @@ class leoFind:
     
         c = self.c ; v = self.v
     
-        if c.search_headline_flag and c.search_body_flag:
+        if self.search_headline and self.search_body:
             # Do not change this line without careful thought and extensive testing!
             self.in_headline = (v == c.frame.tree.editPosition())
         else:
-            self.in_headline = c.search_headline_flag
+            self.in_headline = self.search_headline
     #@nonl
     #@-node:ekr.20031218072017.3086:initInHeadline
     #@+node:ekr.20031218072017.3087:initInteractiveCommands
@@ -853,8 +862,8 @@ class leoFind:
             self.selStart,self.selEnd = sel
         else:
             self.selStart,self.selEnd = None,None
-        self.wrapping = c.wrap_flag
-        if c.wrap_flag and self.wrapVnode == None:
+        self.wrapping = self.wrap
+        if self.wrap and self.wrapVnode == None:
             self.wrapPos = pos
             # Do not set self.wrapVnode here: that must be done after the first search.
     #@nonl
@@ -863,8 +872,8 @@ class leoFind:
     def printLine (self,line,allFlag=False):
     
         c = self.c
-        both = c.search_body_flag and c.search_headline_flag
-        context = c.batch_flag # "batch" now indicates context
+        both = self.search_body and self.search_headline
+        context = self.batch # "batch" now indicates context
     
         if allFlag and both and context:
             g.es(self.v)
@@ -947,18 +956,18 @@ class leoFind:
     
         t = g.choose(self.in_headline,v.edit_text(),c.frame.bodyCtrl)
         
-        insert = g.choose(c.reverse_flag,pos,newpos)
+        insert = g.choose(self.reverse,pos,newpos)
         # g.trace(pos,newpos,t)
         gui.setInsertPoint(t,insert)
         gui.setSelectionRange(t,pos,newpos)
         gui.makeIndexVisible(t,insert)
         gui.set_focus(c,t)
-        if c.wrap_flag and not self.wrapVnode:
+        if self.wrap and not self.wrapVnode:
             self.wrapVnode = self.v
     #@-node:ekr.20031218072017.3091:showSuccess
     #@-node:ekr.20031218072017.3082:Initing & finalizing
     #@+node:ekr.20031218072017.3092:Must be overridden in subclasses
-    def init_s_text (self,s):
+    def init_s_ctrl (self,s):
         self.oops()
     
     def bringToFront (self):

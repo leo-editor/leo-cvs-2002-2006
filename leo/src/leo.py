@@ -65,7 +65,7 @@ def run(fileName=None,*args,**keywords):
     if g.app.killed: return # Support for g.app.forceShutdown.
     # Create the default gui if needed.
     if g.app.gui == None:
-        g.app.createTkGui()
+        g.app.createTkGui() # Creates global windows.
     # Initialize tracing and statistics.
     g.init_sherlock(args)
     g.clear_stats()
