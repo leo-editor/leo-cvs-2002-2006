@@ -5925,7 +5925,7 @@ else:
 #@-node:ekr.20031218072017.2772:readEndNode (4.x)
 #@-node:ekr.20040831113849:(Removed spurious "Warning: updating changed text" message)
 #@+node:ekr.20040901061935:(Added option to disable left click logic in outline pane)
-#@+node:ekr.20040906081644:Notes
+#@+node:ekr.20040906081644:Notes: expanded_click_area
 @killcolor
 
 http://sourceforge.net/forum/message.php?msg_id=2706676
@@ -5938,7 +5938,7 @@ So do I need to hack the leo code to do this?
 
 Option name: expanded_click_area
 #@nonl
-#@-node:ekr.20040906081644:Notes
+#@-node:ekr.20040906081644:Notes: expanded_click_area
 #@+node:ekr.20040803072955.16:__init__
 def __init__(self,c,frame,canvas):
     
@@ -7950,10 +7950,11 @@ def executeScript(self,p=None,script=None):
         except:
             << unredirect output >>
             g.es("exception executing script")
-            n = g.es_exception(full=False,c=c)
+            fileName,n = g.es_exception(full=False,c=c)
+            g.trace(fileName)
             if n is not None:
-                << dump the lines of script near the error >>
-                if p and not script1:
+                << dump the lines near the error >>
+                if p and not script1 and not fileName:
                     c.goToScriptLineNumber(p,script,n)
             c.frame.tree.redrawAfterException()
         del sys.path[0]
@@ -7978,8 +7979,13 @@ if g.app.config.redirect_execute_script_output_to_log_pane:
     g.restoreStdout()
 #@nonl
 #@-node:EKR.20040627100424:<< unredirect output >>
-#@+node:EKR.20040612215018:<< dump the lines of script near the error >>
-lines = g.splitLines(script)
+#@+node:EKR.20040612215018:<< dump the lines near the error >>
+if g.os_path_exists(fileName):
+    f = file(fileName)
+    lines = f.readlines()
+    f.close()
+else:
+    lines = g.splitLines(script)
 
 s = '-' * 20
 print s; g.es(s)
@@ -7987,10 +7993,10 @@ print s; g.es(s)
 if 1:
     # Just print the error line.
     try:
-        s = "line %d: %s" % (n,lines[n-1])
+        s = "%s line %d: %s" % (fileName,n,lines[n-1])
         print s, ; g.es(s,newline=False)
     except IndexError:
-        s = "line %d" % (n)
+        s = "%s line %d" % (fileName,n)
         print s, ; g.es(s,newline=False)
 else:
     i = max(0,n-2)
@@ -8002,7 +8008,7 @@ else:
         print s, ; g.es(s,newline=False)
         i += 1
 #@nonl
-#@-node:EKR.20040612215018:<< dump the lines of script near the error >>
+#@-node:EKR.20040612215018:<< dump the lines near the error >>
 #@-node:ekr.20031218072017.2140:c.executeScript
 #@-node:ekr.20040914082436:(Added c.frame.openDirectory to sys.path when executing scripts)
 #@-node:ekr.20040809102904:4.2 rc1 projects
@@ -9297,7 +9303,6 @@ class fileLikeObject:
 #@nonl
 #@-node:ekr.20040331083824.1:g.fileLikeObject
 #@-node:ekr.20041004095703:(Added support for readFromString to fileLikeObject)
-#@-node:ekr.20040929081120:4.3 a1 projects
 #@+node:ekr.20041005110502:(Converted to new leoAtFile code)
 #@+node:ekr.20041005112818.2:What I did
 @killcolor
@@ -9419,6 +9424,567 @@ else:
 #@-node:ekr.20041005105605.16:<< init ivars for writing >>>
 #@-node:ekr.20041005105605.15:initWriteIvars
 #@-node:ekr.20041005110502:(Converted to new leoAtFile code)
+#@+node:ekr.20041007081134.2:(Fixed unbounded recursion with --script)
+#@+node:ekr.20041007081134.3:Report
+@killcolor
+
+http://sourceforge.net/forum/message.php?msg_id=2792616
+By: e
+
+The recursion was happening in nullLog put & write.
+
+EKR:  The problem is that nullLog.write calls print, and if print is redirected we end up calling nullLog.write again.
+
+sys.stdout.write() doesn't work any better than print
+but inside g.app.log.disable/enable doesn't error.
+
+redirect_execute_script_output_to_log_pane = 1
+is not good in batch mode!
+
+should that should be always zeroed in batch mode?
+set to 0 and both sys.stdout.write and print works.
+no recursion.
+#@-node:ekr.20041007081134.3:Report
+#@+node:ekr.20041012082437.6:What I did
+@killcolor
+
+- g.redirectClass.redirect does nothing if g.app.batchMode is True.
+- added g.rawPrint.
+- Changed self.old.write(s) to self.old.write(s+'\n') throughout.
+#@nonl
+#@-node:ekr.20041012082437.6:What I did
+#@+node:ekr.20031218072017.3121:redirecting stderr and stdout
+class redirectClass:
+    
+    """A class to redirect stdout and stderr."""
+
+    << redirectClass methods >>
+
+# Create two redirection objects, one for each stream.
+redirectStdErrObj = redirectClass()
+redirectStdOutObj = redirectClass()
+
+<< define convenience methods for redirecting streams >>
+
+if 0: # Test code: may be executed in the child node.
+    << test code >>
+#@nonl
+#@+node:ekr.20031218072017.1656:<< redirectClass methods >>
+@others
+#@nonl
+#@+node:ekr.20041012082437:redirectClass.__init__
+def __init__ (self):
+    
+    self.old = None
+#@nonl
+#@-node:ekr.20041012082437:redirectClass.__init__
+#@+node:ekr.20041012082437.1:isRedirected
+def isRedirected (self):
+
+    return self.old != None
+#@nonl
+#@-node:ekr.20041012082437.1:isRedirected
+#@+node:ekr.20041012082437.2:flush
+# For LeoN: just for compatibility.
+
+def flush(self, *args):
+    return 
+
+#@-node:ekr.20041012082437.2:flush
+#@+node:ekr.20041012091252:rawPrint
+def rawPrint (self,s):
+
+    if self.old:
+        self.old.write(s+'\n')
+    else:
+        print s
+#@nonl
+#@-node:ekr.20041012091252:rawPrint
+#@+node:ekr.20041012082437.3:redirect
+def redirect (self,stdout=1):
+
+    import sys
+
+    if g.app.batchMode:
+        # Redirection is futile in batch mode.
+        return
+
+    if not self.old:
+        if stdout:
+            self.old,sys.stdout = sys.stdout,self
+        else:
+            self.old,sys.stderr = sys.stderr,self
+#@nonl
+#@-node:ekr.20041012082437.3:redirect
+#@+node:ekr.20041012082437.4:undirect
+def undirect (self,stdout=1):
+
+    import sys
+
+    if self.old:
+        if stdout:
+            sys.stdout,self.old = self.old,None
+        else:
+            sys.stderr,self.old = self.old,None
+#@nonl
+#@-node:ekr.20041012082437.4:undirect
+#@+node:ekr.20041012082437.5:write
+def write(self,s):
+
+    if self.old:
+        if app.log:
+            app.log.put(s)
+        else:
+            self.old.write(s+'\n')
+    else:
+        # Can happen when g.batchMode is True.
+        print s
+#@nonl
+#@-node:ekr.20041012082437.5:write
+#@-node:ekr.20031218072017.1656:<< redirectClass methods >>
+#@+node:ekr.20031218072017.3122:<< define convenience methods for redirecting streams >>
+@others
+#@nonl
+#@+node:ekr.20041012090942:redirectStderr & redirectStdout
+# Redirect streams to the current log window.
+def redirectStderr():
+    global redirectStdErrObj
+    redirectStdErrObj.redirect(stdout=False)
+
+def redirectStdout():
+    global redirectStdOutObj
+    redirectStdOutObj.redirect()
+#@nonl
+#@-node:ekr.20041012090942:redirectStderr & redirectStdout
+#@+node:ekr.20041012090942.1:restoreStderr & restoreStdout
+# Restore standard streams.
+def restoreStderr():
+    global redirectStdErrObj
+    redirectStdErrObj.undirect(stdout=False)
+    
+def restoreStdout():
+    global redirectStdOutObj
+    redirectStdOutObj.undirect()
+#@nonl
+#@-node:ekr.20041012090942.1:restoreStderr & restoreStdout
+#@+node:ekr.20041012090942.2:stdErrIsRedirected & stdOutIsRedirected
+def stdErrIsRedirected():
+    global redirectStdErrObj
+    return redirectStdErrObj.isRedirected()
+    
+def stdOutIsRedirected():
+    global redirectStdOutObj
+    return redirectStdOutObj.isRedirected()
+#@nonl
+#@-node:ekr.20041012090942.2:stdErrIsRedirected & stdOutIsRedirected
+#@+node:ekr.20041012090942.3:rawPrint
+# Send output to original stdout.
+
+def rawPrint(s):
+
+    global redirectStdOutObj
+
+    redirectStdOutObj.rawPrint(s)
+#@nonl
+#@-node:ekr.20041012090942.3:rawPrint
+#@-node:ekr.20031218072017.3122:<< define convenience methods for redirecting streams >>
+#@+node:ekr.20031218072017.3123:<< test code >>
+import leoGlobals as g
+
+print "stdout isRedirected:", g.stdOutIsRedirected()
+print "stderr isRedirected:", g.stdErrIsRedirected()
+
+g.redirectStderr()
+g.redirectStdout()
+
+print "stdout isRedirected:", g.stdOutIsRedirected()
+print "stderr isRedirected:", g.stdErrIsRedirected()
+
+g.restoreStderr()
+
+print "stdout isRedirected:", g.stdOutIsRedirected()
+print "stderr isRedirected:", g.stdErrIsRedirected()
+
+g.restoreStdout()
+
+print "stdout isRedirected:", g.stdOutIsRedirected()
+print "stderr isRedirected:", g.stdErrIsRedirected()
+#@nonl
+#@-node:ekr.20031218072017.3123:<< test code >>
+#@-node:ekr.20031218072017.3121:redirecting stderr and stdout
+#@+node:ekr.20031218072017.3695:leoLog.__init__
+def __init__ (self,frame,parentFrame):
+    
+    self.frame = frame
+    self.c = frame.c
+    self.enabled = True
+    self.newlines = 0
+
+    # Note: self.logCtrl is None for nullLog's.
+    self.logCtrl = self.createControl(parentFrame)
+    self.setFontFromConfig()
+#@nonl
+#@-node:ekr.20031218072017.3695:leoLog.__init__
+#@+node:ekr.20031218072017.2232:class nullLog
+class nullLog (leoLog):
+    
+    @others
+#@nonl
+#@+node:ekr.20041012083237:nullLog.__init__
+def __init__ (self,frame=None,parentFrame=None):
+        
+    # Init the base class.
+    leoLog.__init__(self,frame,parentFrame)
+#@nonl
+#@-node:ekr.20041012083237:nullLog.__init__
+#@+node:ekr.20041012083237.1:createControl
+def createControl (self,parentFrame):
+    
+    return None
+#@nonl
+#@-node:ekr.20041012083237.1:createControl
+#@+node:ekr.20041012083237.2:oops
+def oops(self):
+
+    g.trace("nullLog:", g.callerName(2))
+    
+#@-node:ekr.20041012083237.2:oops
+#@+node:ekr.20041012083237.3:put and putnl
+def put (self,s,color=None):
+    if self.enabled:
+        g.rawPrint(s)
+
+def putnl (self):
+    if self.enabled:
+        g.rawPrint("")
+#@nonl
+#@-node:ekr.20041012083237.3:put and putnl
+#@+node:ekr.20041012083237.4:setFontFromConfig
+def setFontFromConfig (self):
+    pass
+#@nonl
+#@-node:ekr.20041012083237.4:setFontFromConfig
+#@-node:ekr.20031218072017.2232:class nullLog
+#@+node:ekr.20031218072017.2222:class nullFrame
+class nullFrame (leoFrame):
+    
+    """A null frame class for tests and batch execution."""
+    
+    @others
+#@nonl
+#@+node:ekr.20040327105706:__init__
+def __init__ (self,title,useNullUndoer=False):
+
+    leoFrame.__init__(self) # Init the base class.
+    assert(self.c is None)
+    self.title = title
+    self.useNullUndoer = useNullUndoer
+#@nonl
+#@-node:ekr.20040327105706:__init__
+#@+node:ekr.20040327105706.1:__getattr__ NOT USED
+if 0: # This causes no end of problems.
+
+    def __getattr__(self,attr):
+        g.trace("nullFrame",attr)
+        return nullObject()
+#@nonl
+#@-node:ekr.20040327105706.1:__getattr__ NOT USED
+#@+node:ekr.20040327105706.2:finishCreate
+def finishCreate(self,c):
+
+    self.c = c
+    # Create do-nothing component objects.
+    self.tree = nullTree(frame=self)
+    self.body = nullBody(frame=self,parentFrame=None)
+    self.log  = nullLog (frame=self,parentFrame=None)
+    self.menu = leoMenu.nullMenu(frame=self)
+    
+    assert(c.undoer)
+    if self.useNullUndoer:
+        c.undoer = leoUndo.nullUndoer(c)
+#@nonl
+#@-node:ekr.20040327105706.2:finishCreate
+#@+node:ekr.20040327105706.3:oops
+def oops(self):
+    
+    # g.trace("nullFrame:", g.callerName(2))
+
+    pass # This is NOT an error.
+#@nonl
+#@-node:ekr.20040327105706.3:oops
+#@-node:ekr.20031218072017.2222:class nullFrame
+#@-node:ekr.20041007081134.2:(Fixed unbounded recursion with --script)
+#@+node:ekr.20041004094706:(Fixed error reporting in executeScript when the error happens outside the script)
+@
+
+The old code assumed that the error is always in the script itself.  Not true!  The error could happen in methods called by the script.
+
+This code works with Python 2.3.4: it may be version dependent.
+#@nonl
+#@+node:ekr.20041007080346:Report from e
+@killcolor
+https://sourceforge.net/forum/message.php?msg_id=2792394
+
+I've narrowed down when the IndexError happens,
+probably any similar error would be the same.
+
+import leoGlobals as g
+c = g.top() 
+p = c.currentPosition()
+cv = c.currentVnode()
+cv.moveOutlineRight()  #error
+
+gives this error
+unknown position attribute: moveOutlineRight
+exception executing script
+AttributeError
+--------------------
+
+and this  additional traceback from 
+leoCommands.py", line 1171, in executeScript
+    s = "line %d: %s" % (n,lines[n-1])
+IndexError: list index out of range
+
+when run this script inside a def wrapper,
+
+import leoGlobals as g
+def x():
+....c = g.top() 
+....p = c.currentPosition()
+....cv = c.currentVnode()  #insert sets the current node
+....cv.moveOutlineRight()  #error
+x()
+
+all you get is
+unknown position attribute: moveOutlineRight
+exception executing script
+AttributeError
+--------------------
+so it appears the frame in the code that determines the 
+line number n is off at least one.
+in neither case is the line number of the error correct, so no error line
+shows.
+
+maybe getLastTracebackLineNumber needs to check for ValueError?
+there is still a piece missing, how to tell what frame your in.
+
+in #@+node: getLastTracebackLineNumber leoGlobals.py
+data = traceback.extract_tb(tb, 2) seems like a good idea
+and seems to fix the IndexError error shown above.
+but now with error inside a def you get the function name
+instead of the line the error is on. not good enough.
+
+change to:
+data = traceback.extract_tb(tb)
+item = data[-2] or data[-1] 
+
+this seems to work w/ error code indented 0 from far left, 
+or nested inside a def inside another def or another,
+I'll leave it in and see if there are additional problems.
+the line number still doesn't match with row,col display.
+thats confusing if you don't account for the sentinals.
+maybe the line number minus a simple count of sentinal lines?
+
+#@-node:ekr.20041007080346:Report from e
+#@+node:ekr.20041007080346.1:Report 2 from e
+@killcolor
+http://sourceforge.net/forum/message.php?msg_id=2792620
+
+not a trivial simple count after all.
+if the error is inside a node then would need to 
+start count from the previous +node sentinal.
+I didn't attempt to fix that,
+
+lets see if the line number is always right first.
+
+item = data[-2] or data[-1]
+
+isn't fixing all cases.
+
+this works better:
+
+item = data[-1]
+if not item[-1] is None:
+    item = data[-2]
+#@-node:ekr.20041007080346.1:Report 2 from e
+#@+node:ekr.20031218072017.2140:c.executeScript
+def executeScript(self,p=None,script=None):
+
+    """This executes body text as a Python script.
+    
+    We execute the selected text, or the entire body text if no text is selected."""
+    
+    c = self ; error = False ; s = None ; script1 = script
+
+    if not script:
+        script = g.getScript(c,p)
+    << redirect output >>
+    # g.trace(script)
+    if script:
+        script = script.strip()
+    if script:
+        # 9/14/04: Temporarily add the open directory to sys.path.
+        sys.path.insert(0,c.frame.openDirectory)
+        script += '\n' # Make sure we end the script properly.
+        try:
+            exec script in {} # Use {} to get a pristine environment!
+            << unredirect output >>
+            if not script1:
+                g.es("end of script",color="purple")
+        except:
+            << unredirect output >>
+            g.es("exception executing script")
+            fileName,n = g.es_exception(full=False,c=c)
+            g.trace(fileName)
+            if n is not None:
+                << dump the lines near the error >>
+                if p and not script1 and not fileName:
+                    c.goToScriptLineNumber(p,script,n)
+            c.frame.tree.redrawAfterException()
+        del sys.path[0]
+    elif not error:
+        << unredirect output >>
+        g.es("no script selected",color="blue")
+        
+    # Force a redraw _after_ all messages have been output.
+    c.redraw() 
+#@nonl
+#@+node:ekr.20031218072017.2143:<< redirect output >>
+if g.app.config.redirect_execute_script_output_to_log_pane:
+
+    g.redirectStdout() # Redirect stdout
+    g.redirectStderr() # Redirect stderr
+#@nonl
+#@-node:ekr.20031218072017.2143:<< redirect output >>
+#@+node:EKR.20040627100424:<< unredirect output >>
+if g.app.config.redirect_execute_script_output_to_log_pane:
+
+    g.restoreStderr()
+    g.restoreStdout()
+#@nonl
+#@-node:EKR.20040627100424:<< unredirect output >>
+#@+node:EKR.20040612215018:<< dump the lines near the error >>
+if g.os_path_exists(fileName):
+    f = file(fileName)
+    lines = f.readlines()
+    f.close()
+else:
+    lines = g.splitLines(script)
+
+s = '-' * 20
+print s; g.es(s)
+
+if 1:
+    # Just print the error line.
+    try:
+        s = "%s line %d: %s" % (fileName,n,lines[n-1])
+        print s, ; g.es(s,newline=False)
+    except IndexError:
+        s = "%s line %d" % (fileName,n)
+        print s, ; g.es(s,newline=False)
+else:
+    i = max(0,n-2)
+    j = min(n+2,len(lines))
+    # g.trace(n,i,j)
+    while i < j:
+        ch = g.choose(i==n-1,'*',' ')
+        s = "%s line %d: %s" % (ch,i+1,lines[i])
+        print s, ; g.es(s,newline=False)
+        i += 1
+#@nonl
+#@-node:EKR.20040612215018:<< dump the lines near the error >>
+#@-node:ekr.20031218072017.2140:c.executeScript
+#@+node:ekr.20040731204831:getLastTracebackFileAndLineNumber
+def getLastTracebackFileAndLineNumber():
+    
+    typ,val,tb = sys.exc_info()
+    
+    if typ is exceptions.SyntaxError:
+        # Syntax errors are a special case.
+        # extract_tb does _not_ return the proper line number!
+        # This code is similar to the code in format_exception_only(!!)
+        try:
+            msg,(filename, lineno, offset, line) = val
+            return filename,lineno
+        except:
+            g.trace("bad line number")
+            return None,0
+
+    else:
+        # The proper line number is the second element in the last tuple.
+        data = traceback.extract_tb(tb)
+        # g.trace(data)
+        item = data[-1]
+        filename = item[0]
+        n = item[1]
+        return filename,n
+#@nonl
+#@-node:ekr.20040731204831:getLastTracebackFileAndLineNumber
+#@+node:ekr.20031218072017.3112:es_exception
+def es_exception (full=True,c=None,color="red"):
+    
+    typ,val,tb = sys.exc_info()
+
+    if full:
+        lines = traceback.format_exception(typ,val,tb)
+    else:
+        lines = traceback.format_exception_only(typ,val)
+        
+    if 1:
+        fileName,n = g.getLastTracebackFileAndLineNumber()
+    else:
+        # old, kludgy code...
+        << look for lines containing a specific message >>
+
+    for line in lines:
+        g.es_error(line,color=color)
+        if not g.stdErrIsRedirected():
+            print line
+
+    return fileName,n
+#@nonl
+#@+node:ekr.20040731211839:<< look for lines containing a specific message >>
+errList = traceback.format_exception(typ,val,tb)
+
+print ; print "es_exception (format_exception)"
+for item in errList:
+    print item
+# Strip cruft lines.
+s1 = "Traceback (most recent call last):"
+s2 = "exec script in {}"
+lines = []
+for line in errList[-4:]:
+    if n is None:
+        tag = 'File "<string>", line'
+        i = line.find(tag)
+        if i > -1:
+            << compute n from the line >>
+    if not g.match(line,0,s1) and line.find(s2) == -1:
+        lines.append(line)
+#@nonl
+#@+node:EKR.20040612223431:<< compute n from the line >>
+i += len(tag)
+j = line.find(',',i)
+if j > i: n = line[i:j]
+else:     n = line[i:].strip()
+# g.trace(n)
+try: n = int(n)
+except (TypeError,ValueError): n = None
+#@nonl
+#@-node:EKR.20040612223431:<< compute n from the line >>
+#@-node:ekr.20040731211839:<< look for lines containing a specific message >>
+#@-node:ekr.20031218072017.3112:es_exception
+#@+node:EKR.20040612232221:goToScriptLineNumber
+def goToScriptLineNumber (self,root,script,n):
+
+    c = self
+    
+    lines = g.splitLines(script)
+    c.goToLineNumber(root=root,lines=lines,n=n)
+#@nonl
+#@-node:EKR.20040612232221:goToScriptLineNumber
+#@-node:ekr.20041004094706:(Fixed error reporting in executeScript when the error happens outside the script)
+#@-node:ekr.20040929081120:4.3 a1 projects
 #@-all
 #@nonl
 #@-node:EKR.20040429143933:@thin leoProjects.txt

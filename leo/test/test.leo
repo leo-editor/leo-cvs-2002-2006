@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="6001" clone_windows="0"/>
-<globals body_outline_ratio="0.365740740741">
-	<global_window_position top="21" left="277" height="864" width="907"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="6008" clone_windows="0"/>
+<globals body_outline_ratio="0.633101851852">
+	<global_window_position top="9" left="283" height="864" width="907"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences>
@@ -373,6 +373,7 @@
 </v>
 <v t="ekr.20040922064156"><vh>Test of reportBadChars</vh></v>
 <v t="ekr.20040920104357"><vh>Tix Tests</vh></v>
+<v t="ekr.20041012091500"><vh>@test g.rawPrint</vh></v>
 </v>
 <v t="ekr.20040312021734"><vh>Scripts</vh>
 <v t="ekr.20040318091620"><vh>Clear all uAs (unknown attributes)</vh></v>
@@ -721,6 +722,7 @@
 </v>
 <v t="EKR.20040619133116" a="E"><vh>Unit testing...</vh>
 <v t="ekr.20040327114250"><vh>@thin ../test/unittest/batchTest.py</vh></v>
+<v t="ekr.20041012101944"><vh>@thin ../test/unittest/errorTest.py</vh></v>
 <v t="ekr.20040712101754"><vh>Unit Tests</vh>
 <v t="ekr.20040716144017"><vh>Perfect Import tests</vh>
 <v t="ekr.20040716071029.6"><vh>@test inserting a line: no trailing newline</vh>
@@ -1198,7 +1200,7 @@
 <v t="ekr.20040903102217"><vh>Test multi-line @doc parts with @language html</vh></v>
 </v>
 <v t="ekr.20041011160953"><vh>Test of xsltWithNodes plugin</vh>
-<v t="ekr.20041011160953.1"><vh>stylesheet</vh>
+<v t="ekr.20041011160953.1" a="E"><vh>stylesheet</vh>
 <v t="ekr.20041011161235"><vh>The actual stylesheet</vh></v>
 </v>
 <v t="ekr.20041011160953.2"><vh>From xsltWithNodes.py</vh>
@@ -1216,10 +1218,16 @@
 <v t="ekr.20041011160953.14"><vh>NewHeadline</vh></v>
 </v>
 </v>
-<v t="ekr.20040712101754.186"><vh>@test batch mode</vh>
-<v t="ekr.20041012084201"><vh>removeFile</vh></v>
+<v t="ekr.20041012101530"><vh>Test reporting of SyntaxError</vh>
+<v t="ekr.20041012101634"><vh>syntax error</vh></v>
 </v>
-<v t="ekr.20041012091500" a="TV"><vh>@test g.rawPrint</vh></v>
+<v t="ekr.20041012101720"><vh>Test reporting of IndexError</vh>
+<v t="ekr.20041012101720.1"><vh>index error</vh></v>
+</v>
+<v t="ekr.20041012101836"><vh>Test reporting of SyntaxError</vh>
+<v t="ekr.20041012101836.1"><vh>syntax error</vh></v>
+</v>
+<v t="ekr.20041012102030" a="ETV"><vh>Test reporting of IndexError in another file</vh></v>
 </vnodes>
 <tnodes>
 <t tx="EKR.20040424065452">import leoGlobals as g
@@ -1873,7 +1881,7 @@ print '
 import leoGlobals as g
 print g.app.config.redirect_execute_script_output_to_log_pane</t>
 <t tx="EKR.20040627103732">@ignore</t>
-<t tx="EKR.20040627103902" lineYOffset="4b032e" icons="5d7100287d710128550577686572657102550a6265666f726549636f6e710355047870616471044b025504747970657105550466696c6571066806582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286805680668084afdffffff6806582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6802550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e"></t>
+<t tx="EKR.20040627103902" lineYOffset="4b032e" icons="5d7100287d7101285504747970657102550466696c65710355047870616471044b02550577686572657105550a6265666f726549636f6e71066803582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286802680368084afdffffff6803582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6805550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e"></t>
 <t tx="EKR.20040627121836">import leoGlobals as g
 
 c = g.top() ; p = c.currentPosition()
@@ -2004,7 +2012,7 @@ for p in c.rootPosition().allNodes_iter():
 s = "%d nodes" % count
 print s ; g.es(s)</t>
 <t tx="ekr.20040312101720"></t>
-<t tx="ekr.20040317101155" lineYOffset="4b032e" icons="5d7100287d7101285504747970657102550466696c65710355047870616471044b02550577686572657105550a6265666f726549636f6e710668035834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286802680368084afdffffff68035834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6805550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">import leoGlobals as g
+<t tx="ekr.20040317101155" lineYOffset="4b032e" icons="5d7100287d710128550577686572657102550a6265666f726549636f6e710355047870616471044b025504747970657105550466696c65710668065834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286805680668084afdffffff68065834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6802550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">import leoGlobals as g
 
 c = g.top()
 
@@ -10040,5 +10048,25 @@ g.rawPrint("Test of g.rawPrint")
 g.redirectStdout()
 g.rawPrint("Test of g.rawPrint")
 g.restoreStdout()</t>
+<t tx="ekr.20041012101530">import leoGlobals as g
+
+@others</t>
+<t tx="ekr.20041012101634">a = a[)</t>
+<t tx="ekr.20041012101720">import leoGlobals as g
+
+@others</t>
+<t tx="ekr.20041012101720.1">a = []
+b = a[2]</t>
+<t tx="ekr.20041012101836">import leoGlobals as g
+
+@others</t>
+<t tx="ekr.20041012101836.1">a = a[)</t>
+<t tx="ekr.20041012102030">import leoGlobals as g
+
+path = g.os_path_join(g.app.loadDir,"..","test","unittest")
+
+errorTest = g.importFromPath ("errorTest",path,verbose=True)
+
+errorTest.testIndexError()</t>
 </tnodes>
 </leo_file>

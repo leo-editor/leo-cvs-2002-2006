@@ -252,7 +252,7 @@
 #@+node:ekr.20041009112303.1:Plugins manager and menu
 # Enable or disable plugins using a proper plugins manager rather than this file!
 #pluginsTest.py
-#xsltWithNodes.py
+xsltWithNodes.py
 
 	plugin_manager.py
 #@nonl

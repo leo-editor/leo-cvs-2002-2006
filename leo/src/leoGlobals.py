@@ -781,7 +781,7 @@ def es_exception (full=True,c=None,color="red"):
         lines = traceback.format_exception_only(typ,val)
         
     if 1:
-        n = g.getLastTracebackLineNumber()
+        fileName,n = g.getLastTracebackFileAndLineNumber()
     else:
         # old, kludgy code...
         #@        << look for lines containing a specific message >>
@@ -823,33 +823,35 @@ def es_exception (full=True,c=None,color="red"):
         if not g.stdErrIsRedirected():
             print line
 
-    return n
+    return fileName,n
 #@nonl
 #@-node:ekr.20031218072017.3112:es_exception
-#@+node:ekr.20040731204831:getLastTracebackLineNumber
-def getLastTracebackLineNumber():
+#@+node:ekr.20040731204831:getLastTracebackFileAndLineNumber
+def getLastTracebackFileAndLineNumber():
     
     typ,val,tb = sys.exc_info()
     
     if typ is exceptions.SyntaxError:
         # Syntax errors are a special case.
         # extract_tb does _not_ return the proper line number!
-        # This code similar to the code in format_exception_only(!!)
+        # This code is similar to the code in format_exception_only(!!)
         try:
             msg,(filename, lineno, offset, line) = val
-            return lineno
+            return filename,lineno
         except:
             g.trace("bad line number")
-            return 0
+            return None,0
 
     else:
         # The proper line number is the second element in the last tuple.
         data = traceback.extract_tb(tb)
+        # g.trace(data)
         item = data[-1]
+        filename = item[0]
         n = item[1]
-        return n
+        return filename,n
 #@nonl
-#@-node:ekr.20040731204831:getLastTracebackLineNumber
+#@-node:ekr.20040731204831:getLastTracebackFileAndLineNumber
 #@+node:ekr.20031218072017.3113:printBindings
 def print_bindings (name,window):
 
@@ -987,7 +989,7 @@ class redirectClass:
     
         if self.old:
             if app.log:
-                app.log.put(s+'\n')
+                app.log.put(s)
             else:
                 self.old.write(s+'\n')
         else:

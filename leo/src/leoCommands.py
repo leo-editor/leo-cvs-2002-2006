@@ -1157,11 +1157,17 @@ class baseCommands:
                 #@-node:EKR.20040627100424:<< unredirect output >>
                 #@nl
                 g.es("exception executing script")
-                n = g.es_exception(full=False,c=c)
+                fileName,n = g.es_exception(full=False,c=c)
+                g.trace(fileName)
                 if n is not None:
-                    #@                << dump the lines of script near the error >>
-                    #@+node:EKR.20040612215018:<< dump the lines of script near the error >>
-                    lines = g.splitLines(script)
+                    #@                << dump the lines near the error >>
+                    #@+node:EKR.20040612215018:<< dump the lines near the error >>
+                    if g.os_path_exists(fileName):
+                        f = file(fileName)
+                        lines = f.readlines()
+                        f.close()
+                    else:
+                        lines = g.splitLines(script)
                     
                     s = '-' * 20
                     print s; g.es(s)
@@ -1169,10 +1175,10 @@ class baseCommands:
                     if 1:
                         # Just print the error line.
                         try:
-                            s = "line %d: %s" % (n,lines[n-1])
+                            s = "%s line %d: %s" % (fileName,n,lines[n-1])
                             print s, ; g.es(s,newline=False)
                         except IndexError:
-                            s = "line %d" % (n)
+                            s = "%s line %d" % (fileName,n)
                             print s, ; g.es(s,newline=False)
                     else:
                         i = max(0,n-2)
@@ -1184,9 +1190,9 @@ class baseCommands:
                             print s, ; g.es(s,newline=False)
                             i += 1
                     #@nonl
-                    #@-node:EKR.20040612215018:<< dump the lines of script near the error >>
+                    #@-node:EKR.20040612215018:<< dump the lines near the error >>
                     #@nl
-                    if p and not script1:
+                    if p and not script1 and not fileName:
                         c.goToScriptLineNumber(p,script,n)
                 c.frame.tree.redrawAfterException()
             del sys.path[0]
