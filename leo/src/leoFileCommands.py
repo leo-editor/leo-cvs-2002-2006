@@ -578,15 +578,15 @@ class baseFileCommands:
         c.setChanged(False) # 10/1/03: May be set when reading @file nodes.
         #@    << warn on read-only files >>
         #@+node:ekr.20031218072017.1554:<< warn on read-only files >>
+        # os.access may not exist on all platforms.
+        
         try:
-            self.read_only = False
             self.read_only = not os.access(fileName,os.W_OK)
-            if self.read_only:
-                g.es("read only: " + fileName,color="red")
-        except:
-            if 0: # testing only: access may not exist on all platforms.
-                g.es("exception getting file access")
-                g.es_exception()
+        except AttributeError:
+            self.read_only = False
+                
+        if self.read_only:
+            g.es("read only: " + fileName,color="red")
         #@nonl
         #@-node:ekr.20031218072017.1554:<< warn on read-only files >>
         #@nl
