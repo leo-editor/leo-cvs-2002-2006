@@ -2,7 +2,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="1506" clone_windows="0"/>
 <globals body_outline_ratio="0.42888165038002174">
-	<global_window_position top="18" left="232" height="921" width="957"/>
+	<global_window_position top="10" left="184" height="921" width="957"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences>
@@ -43,7 +43,7 @@
 <v t="edream.110203113231.7"><vh>Hooks should never blindly Python scripts</vh></v>
 <v t="edream.110203113231.8"><vh>NEVER use this kind of code in a hook!!</vh></v>
 </v>
-<v t="ekr.20040126115840" a="V"><vh>Other</vh>
+<v t="ekr.20040126115840"><vh>Other</vh>
 <v t="edream.110203113231.9"><vh>Unfinished projects</vh>
 <v t="edream.110203113231.10"><vh>(Settings menu)</vh>
 <v t="edream.110203113231.11"><vh>To do</vh></v>
@@ -1519,7 +1519,7 @@
 </v>
 </v>
 </v>
-<v t="ekr.20040107092135"><vh>New plugins:  very cool</vh>
+<v t="ekr.20040107092135" a="E"><vh>New plugins:  very cool</vh>
 <v t="ekr.20040109080300"><vh> Changes made by EKR</vh></v>
 <v t="ekr.20040111053758"><vh> Description of rst2 by Steve Zatz</vh></v>
 <v t="ekr.20040118081748" tnodeList="ekr.20040118081748,ekr.20040118081748.1,ekr.20040118081748.2,ekr.20040118081748.3,ekr.20040118081748.4,ekr.20040118081748.5,ekr.20040118081748.6,ekr.20040118081748.7,ekr.20040118081748.8"><vh>@file rst2.py</vh>
@@ -1569,7 +1569,7 @@
 <v t="ekr.20040108095351.4"><vh>updateRowColWidget</vh></v>
 </v>
 </v>
-<v t="ekr.20040119044414" a="E"><vh>Minimal http plugin</vh>
+<v t="ekr.20040119044414"><vh>Minimal http plugin</vh>
 <v t="ekr.20040119044414.1" tnodeList="ekr.20040119044414.1,ekr.20040119102021.3,ekr.20040119044414.3,ekr.20040119044414.5,ekr.20040119044414.6,ekr.20040119044414.7,ekr.20040119044414.8,ekr.20040119044414.9,ekr.20040119044414.10,ekr.20040119044414.11,ekr.20040119044414.12,ekr.20040119044414.13,ekr.20040119044414.14,ekr.20040119044414.17,ekr.20040119044414.15,ekr.20040119044414.16,ekr.20040119044414.18,ekr.20040119044414.19,ekr.20040119044414.20,ekr.20040119044414.22,ekr.20040119044414.23,ekr.20040119044414.24,ekr.20040119044414.25,ekr.20040119044414.26,ekr.20040119044414.27,ekr.20040119044414.28,ekr.20040119044414.29,ekr.20040119044414.30,ekr.20040119044414.31,ekr.20040119044414.32,ekr.20040119044414.33,ekr.20040119044414.34,ekr.20040119044414.35,ekr.20040119044414.36,ekr.20040119044414.37,ekr.20040119044414.38,ekr.20040119044414.39,ekr.20040119044414.40,ekr.20040119044414.41,ekr.20040119064609,ekr.20040119064609.1,ekr.20040119064609.2,ekr.20040119044414.42,ekr.20040119044414.43,ekr.20040119044414.45,ekr.20040119044414.46"><vh>@file mod_http.py</vh>
 <v t="ekr.20040119102021.3"><vh>&lt;&lt; how to use this plugin &gt;&gt;</vh></v>
 <v t="ekr.20040119044414.3"><vh>&lt;&lt; imports &gt;&gt;</vh></v>
@@ -1627,6 +1627,23 @@
 <v t="ekr.20040119044414.46"><vh>applyConfiguration</vh></v>
 </v>
 <v t="ekr.20040119044414.48" tnodeList="ekr.20040119044414.48"><vh>@file mod_http.ini</vh></v>
+</v>
+<v t="ekr.20040127111517" a="V" tnodeList="ekr.20040127111517,ekr.20040127111023,ekr.20040127111023.1,ekr.20040127111023.2,ekr.20040127111023.3,ekr.20040127111023.4,ekr.20040127113621.5,ekr.20040127120834,ekr.20040127113621.6,ekr.20040127113621.7,ekr.20040127113621.8,ekr.20040127113621.9,ekr.20040127113621.10,ekr.20040127114616"><vh>@file-noref newButtons.py</vh>
+<v t="ekr.20040127111023"><vh>Helper classes</vh>
+<v t="ekr.20040127111023.1"><vh>class FlatOptionMenu</vh></v>
+<v t="ekr.20040127111023.2"><vh>class Node</vh></v>
+<v t="ekr.20040127111023.3"><vh>class NodeAdder</vh></v>
+<v t="ekr.20040127111023.4" a="E"><vh>class Helper</vh></v>
+</v>
+<v t="ekr.20040127113621.5" a="E"><vh>Modifiable classes to add buttons</vh>
+<v t="ekr.20040127120834"><vh>body text used by AddTestModule &amp; AddTestClass</vh></v>
+<v t="ekr.20040127113621.6" a="E"><vh>class AddTestModule</vh></v>
+<v t="ekr.20040127113621.7"><vh>class AddTestClass</vh></v>
+<v t="ekr.20040127113621.8"><vh>class AddTestMethod</vh></v>
+<v t="ekr.20040127113621.9"><vh>class AddClass</vh></v>
+<v t="ekr.20040127113621.10"><vh>class AddClassMethod</vh></v>
+</v>
+<v t="ekr.20040127114616"><vh>main code</vh></v>
 </v>
 </v>
 </vnodes>
@@ -15664,6 +15681,7 @@ rowcol.py
 # New from Paul Paterson.
 nodenavigator.py
 searchbox.py
+newButtons.py
 # word_export.py
 # xemacs.py
 
@@ -17179,5 +17197,306 @@ You will see a a "top" level page containing one link for every open .leo file. 
 
 You can use the browser's refresh button to update the top-level view in the browser after you have opened or closed files.</t>
 <t tx="ekr.20040126115840"></t>
+<t tx="ekr.20040127111023">"""Classes to add helpers to the toolbar 
+ 
+A helper is a class that adds a set of preconfigured nodes to the outline. This 
+can be used to generate boiler plate code to quickly build an outline. The nodes 
+and body text added can have an adjustable parameter, which is defined from 
+the text entry box. 
+ 
+"""
+
+USE_FIXED_SIZES = 1</t>
+<t tx="ekr.20040127111023.1">class FlatOptionMenu(Tkinter.OptionMenu):
+
+	"""Flat version of OptionMenu which allows the user to select a value from a menu."""
+
+	def __init__(self, master, variable, value, *values, **kwargs):
+		"""Construct an optionmenu widget with the parent MASTER, with 
+		the resource textvariable set to VARIABLE, the initially selected 
+		value VALUE, the other menu values VALUES and an additional 
+		keyword argument command.""" 
+		kw = {
+			"borderwidth": 2, "textvariable": variable,
+			"indicatoron": 1, "relief": "flat", "anchor": "c",
+			"highlightthickness": 2}
+		Tkinter.Widget.__init__(self, master, "menubutton", kw)
+		self.widgetName = 'tk_optionMenu' 
+		menu = self.__menu = Tkinter.Menu(self, name="menu", tearoff=0)
+		self.menuname = menu._w
+		# 'command' is the only supported keyword 
+		callback = kwargs.get('command')
+		if kwargs.has_key('command'):
+			del kwargs['command']
+		if kwargs:
+			raise TclError, 'unknown option -'+kwargs.keys()[0]
+		menu.add_command(label=value,
+			command=Tkinter._setit(variable, value, callback))
+		for v in values:
+			menu.add_command(label=v,
+				command=Tkinter._setit(variable, v, callback))
+		self["menu"] = menu</t>
+<t tx="ekr.20040127111023.2">class Node: 
+	"""A node to add"""
+
+	def __init__(self, name="", body="", inherit=0, subnodes=None):
+		"""Initialise the node"""
+		self.name = name
+		self.body = body
+		self.subnodes = subnodes or []
+		self.inherit = inherit # Set true to inherit the first line from our immediate sibling 
+
+	def processText(self, text, name):
+		"""Process some boiler plate text"""
+		if name: 
+			text = text.replace("XXX", name)
+			text = text.replace("xxx", name.lower())
+		return text.strip()
+
+	def addTo(self, c, text, parent=None): 
+		"""Add our nodes etc"""
+		if self.inherit:
+			header = c.currentVnode().bodyString().split("\n")[0] + "\n"
+		else:
+			header = ""
+		# 
+		c.insertHeadline()
+		main = c.currentVnode()
+		main.setHeadString(self.processText(self.name, text))
+		# 
+		main.setBodyStringOrPane(self.processText(header+self.body, text))
+		if parent: 
+			c.currentVnode().moveToNthChildOf(parent, 0) 
+		# 
+		parent = c.currentVnode()
+		for node in self.subnodes:
+			node.addTo(c, text, parent)
+			parent = None # Only want first node to be moved, others will go automatically </t>
+<t tx="ekr.20040127111023.3">class NodeAdder:
+
+	"""A Class to add a helper button to the toolbar which adds nodes to the outline""" 
+
+	button_name = "Add"
+
+	nodes = () # Should be set in the subclasses 
+
+	def doIt(self, entry):
+		"""Create the nodes"""
+		c = top()
+		name = entry.get()
+		for node in self.nodes:
+			node.addTo(c, name)</t>
+<t tx="ekr.20040127111023.4">class Helper:
+
+	"""A Class to aid in the creating and maintenance of unit test files"""
+
+	def __init__(self, adders):
+
+		"""Initialise with a set of adders"""
+	
+		self.adders = adders
+
+	def addWidgets(self, tags, keywords):
+
+		"""Add the widgets to Leo"""
+		self.commander = keywords['c']
+		toolbar = self.commander.frame.iconFrame
+		# 
+		self.frame = Tkinter.Frame(toolbar)
+		self.frame.pack(side="right", padx=2)
+		# 
+		self.text = Tkinter.Entry(self._getSizer(self.frame, 24, 130))
+		self.text.pack(side="left", padx=3, fill="both", expand=1)
+		self.text.bind("&lt;Return&gt;", self.doCallback)
+		# 
+		self.pseudobutton = Tkinter.Frame(self._getSizer(self.frame, 24, 142), relief="raised", borderwidth=2) 
+		self.pseudobutton.pack(side="right")
+		# 
+		self.doit = Tkinter.Button(self._getSizer(self.pseudobutton, 25, 32), text="New", relief="flat", command=self.doCallback)
+		self.doit.pack(side="left")
+		# 
+		options = [adder.button_name for adder in self.adders]
+		self.option_value = Tkinter.StringVar()
+		self.options = FlatOptionMenu(self._getSizer(self.pseudobutton, 29, 110), self.option_value, *options)
+		self.option_value.set(options[0])
+		self.options.pack(side="right", fill="both", expand=1)
+		
+	def _getSizer(self, parent, height, width, pack="left"):
+	
+		"""Return a sizer object to force a Tk widget to be the right size"""
+	
+		if USE_FIXED_SIZES:
+			sizer = Tkinter.Frame(parent, height=height, width=width)
+			sizer.pack_propagate(0) # don't shrink 
+			sizer.pack(side=pack)
+			return sizer
+		else:
+			return parent
+			
+	def doCallback(self, event=None):
+
+		"""Generate a callback to call the specific adder"""
+		for adder in self.adders:
+			if adder.button_name == self.option_value.get():
+				adder.doIt(self.text)
+				break
+		else:
+			raise ValueError("Button name not found: '%s'" % self.option_value.get())</t>
+<t tx="ekr.20040127111517">'''Automatically add nodes for common tasks'''
+
+# We must use @file-noref because data below might look like section references,
+# so ORDER IS IMPORTANT throughout this tree (we can't use @others).
+
+__name__ = "New Buttons"
+__version__ = "0.2" # Converted to @file-noref by EKR.
+ 
+from leoPlugins import *
+from leoGlobals import *
+import leoFind
+
+try:    import Tkinter
+except: Tkinter = None
+Tk = Tkinter</t>
+<t tx="ekr.20040127113621.5"># Modify these classes or data as you like to create templates that suit you.</t>
+<t tx="ekr.20040127113621.6">class AddTestModule(NodeAdder):
+
+	"""Add unit testing node"""
+
+	button_name = "test module"
+
+	nodes = [
+		Node(
+			name="testxxx.py",
+			body=TEST_NODE_BODY,
+			subnodes=[ 
+				Node(
+					name="TestXXX",
+					body=TEST_CLASS_BODY,
+					subnodes=[ 
+						Node(name="setUp",
+						body=TEST_SETUP_BODY)])])]</t>
+<t tx="ekr.20040127113621.7">class AddTestClass(NodeAdder):
+
+	"""Add unit testing class"""
+
+	button_name = "test class"
+
+	nodes = [
+		Node(
+			name="TestXXX",
+			body=TEST_CLASS_BODY,
+			subnodes=[
+				Node(
+					name="setUp",
+					body=TEST_SETUP_BODY)])]</t>
+<t tx="ekr.20040127113621.8">TEST_METHOD_BODY = '''
+def testXXX(self):
+
+	"""testXXX: TestDescriptionGoesHere"""
+
+'''
+
+class AddTestMethod(NodeAdder):
+
+	"""Add unit testing method"""
+
+	button_name = "test method"
+
+	nodes = [
+	Node(
+		name="testXXX",
+		body=TEST_METHOD_BODY,
+		inherit=0)] # EKR: was 1.</t>
+<t tx="ekr.20040127113621.9">NEW_CLASS_BODY = '''
+class XXX:
+
+	"""DocStringGoesHere"""
+
+	@others
+'''
+
+NEW_INIT_BODY = '''
+def __init__(self):
+
+	"""Initialise the XXX instance"""
+
+'''
+
+class AddClass(NodeAdder):
+	
+	"""Add new class"""
+
+	button_name = "class"
+
+	nodes = [
+		Node(
+			name="class XXX",
+			body=NEW_CLASS_BODY,
+			subnodes=[
+				#Node(
+				#	name="&lt;&lt; class XXX declarations &gt;&gt;",
+				#	body="@c\npass"),
+				Node(
+					name="__init__",
+					body=NEW_INIT_BODY)] )]
+</t>
+<t tx="ekr.20040127113621.10">CLASS_METHOD_BODY = '''
+def XXX(self):
+
+	"""MethodDocstringGoesHere"""
+
+'''
+
+class AddClassMethod(NodeAdder):
+
+	"""Add class method"""
+
+	button_name = "method"
+
+	nodes = [
+		Node(
+			name="XXX",
+			body=CLASS_METHOD_BODY,
+			inherit=0)] # EKR: was 1.</t>
+<t tx="ekr.20040127114616">if Tkinter:
+
+	if app.gui is None:
+		app.createTkGui(__file__)
+
+	if app.gui.guiName() == "tkinter":
+	
+		es("Activating newButtons", color="orange")
+
+		buttonList = [
+			AddTestModule(),AddTestClass(),
+			AddTestMethod(),AddClass(),AddClassMethod()]
+	
+		helper = Helper(buttonList)
+
+		registerHandler("after-create-leo-frame", helper.addWidgets)
+		plugin_signon("newButtons")</t>
+<t tx="ekr.20040127120834">TEST_NODE_BODY = '''
+import unittest
+
+@others
+
+if __name__ == "__main__":
+	unittest.main()
+'''
+
+TEST_CLASS_BODY = '''
+class TestXXX(unittest.TestCase):
+
+	"""Tests for the XXX class"""
+
+	@others
+'''
+
+TEST_SETUP_BODY = '''
+def setUp(self):
+
+	"""Create the test fixture"""
+
+'''</t>
 </tnodes>
 </leo_file>
