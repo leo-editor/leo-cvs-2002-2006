@@ -588,8 +588,10 @@ def openWithFileName(fileName,old_c,enableLog=True,readAtFileNodesFlag=True):
         fileName = g.os_path_abspath(fileName)
     else: # Old code, works.
         fileName = g.os_path_join(os.getcwd(),fileName)
+
     fileName = g.os_path_normpath(fileName)
-    oldFileName = fileName 
+    oldFileName = fileName
+    
     fileName = g.os_path_normcase(fileName)
 
     # If the file is already open just bring its window to the front.
@@ -636,7 +638,6 @@ def openWithFileName(fileName,old_c,enableLog=True,readAtFileNodesFlag=True):
             g.es("exceptions opening: " + fileName,color="red")
             g.es_exception()
         return False, None
-#@nonl
 #@-node:ekr.20031218072017.2052:g.openWithFileName
 #@+node:ekr.20031218072017.3100:wrap_lines
 #@+at 

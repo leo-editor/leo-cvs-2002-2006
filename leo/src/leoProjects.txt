@@ -13611,15 +13611,16 @@ def updateRecentFiles (self,fileName):
     
     # Update the recent files list in all windows.
     if fileName:
-        absFileName = g.os_path_abspath(fileName)
+        compareFileName = g.os_path_normpath(g.os_path_abspath(fileName))
         # g.trace(fileName)
         for frame in g.app.windowList:
             c = frame.c
             # Remove all versions of the file name.
             for name in c.recentFiles:
-                if absFileName == g.os_path_abspath(name):
+                if compareFileName == g.os_path_normpath(g.os_path_abspath(name)):
                     c.recentFiles.remove(name)
             c.recentFiles.insert(0,fileName)
+            g.trace(fileName)
             # Recreate the Recent Files menu.
             frame.menu.createRecentFilesMenuItems()
     else:
@@ -13641,8 +13642,10 @@ def openWithFileName(fileName,old_c,enableLog=True,readAtFileNodesFlag=True):
         fileName = g.os_path_abspath(fileName)
     else: # Old code, works.
         fileName = g.os_path_join(os.getcwd(),fileName)
+
     fileName = g.os_path_normpath(fileName)
-    oldFileName = fileName 
+    oldFileName = fileName
+    
     fileName = g.os_path_normcase(fileName)
 
     # If the file is already open just bring its window to the front.
@@ -13689,7 +13692,6 @@ def openWithFileName(fileName,old_c,enableLog=True,readAtFileNodesFlag=True):
             g.es("exceptions opening: " + fileName,color="red")
             g.es_exception()
         return False, None
-#@nonl
 #@-node:ekr.20031218072017.2052:g.openWithFileName
 #@+node:ekr.20031218072017.2188:newLeoCommanderAndFrame (gui-independent)
 def newLeoCommanderAndFrame(self,fileName,updateRecentFiles=True):
@@ -13864,17 +13866,16 @@ def setRecentFiles (self,files):
     
     # Do nothing if there is no @settings tree or no @recent-files node.
     p = g.app.config.findSettingsPosition(c,"@recent-files")
-    if p:
-        pass
-        # g.trace("updating @recent-files for ",c.mFileName)
-    else:
+    if not p:
         # g.trace("no @recent-files node for ",c.mFileName)
         return
+
+    # g.trace("updating @recent-files for ",c.mFileName)
 
     # Update the @recent-files entry, leaving c's changed status untouched.
     changed = c.isChanged()
     body = '\n'.join(files)
-    p.setBodyStringOrPane (body,encoding=g.app.tkEncoding)
+    p.setBodyStringOrPane(body,encoding=g.app.tkEncoding)
     c.setChanged(changed)
 #@nonl
 #@-node:ekr.20041118195812.3:setRecentFiles (configSettings)
@@ -13898,17 +13899,16 @@ def setRecentFiles (self,files):
     
     # Do nothing if there is no @settings tree or no @recent-files node.
     p = g.app.config.findSettingsPosition(c,"@recent-files")
-    if p:
-        pass
-        # g.trace("updating @recent-files for ",c.mFileName)
-    else:
+    if not p:
         # g.trace("no @recent-files node for ",c.mFileName)
         return
+
+    # g.trace("updating @recent-files for ",c.mFileName)
 
     # Update the @recent-files entry, leaving c's changed status untouched.
     changed = c.isChanged()
     body = '\n'.join(files)
-    p.setBodyStringOrPane (body,encoding=g.app.tkEncoding)
+    p.setBodyStringOrPane(body,encoding=g.app.tkEncoding)
     c.setChanged(changed)
 #@nonl
 #@-node:ekr.20041118195812.3:setRecentFiles (configSettings)
@@ -14065,8 +14065,10 @@ def openWithFileName(fileName,old_c,enableLog=True,readAtFileNodesFlag=True):
         fileName = g.os_path_abspath(fileName)
     else: # Old code, works.
         fileName = g.os_path_join(os.getcwd(),fileName)
+
     fileName = g.os_path_normpath(fileName)
-    oldFileName = fileName 
+    oldFileName = fileName
+    
     fileName = g.os_path_normcase(fileName)
 
     # If the file is already open just bring its window to the front.
@@ -14113,7 +14115,6 @@ def openWithFileName(fileName,old_c,enableLog=True,readAtFileNodesFlag=True):
             g.es("exceptions opening: " + fileName,color="red")
             g.es_exception()
         return False, None
-#@nonl
 #@-node:ekr.20031218072017.2052:g.openWithFileName
 #@+node:ekr.20031218072017.1934:run & allies
 def run(fileName=None,*args,**keywords):
@@ -16137,17 +16138,16 @@ def setRecentFiles (self,files):
     
     # Do nothing if there is no @settings tree or no @recent-files node.
     p = g.app.config.findSettingsPosition(c,"@recent-files")
-    if p:
-        pass
-        # g.trace("updating @recent-files for ",c.mFileName)
-    else:
+    if not p:
         # g.trace("no @recent-files node for ",c.mFileName)
         return
+
+    # g.trace("updating @recent-files for ",c.mFileName)
 
     # Update the @recent-files entry, leaving c's changed status untouched.
     changed = c.isChanged()
     body = '\n'.join(files)
-    p.setBodyStringOrPane (body,encoding=g.app.tkEncoding)
+    p.setBodyStringOrPane(body,encoding=g.app.tkEncoding)
     c.setChanged(changed)
 #@nonl
 #@-node:ekr.20041118195812.3:setRecentFiles (configSettings)
@@ -16181,8 +16181,10 @@ def openWithFileName(fileName,old_c,enableLog=True,readAtFileNodesFlag=True):
         fileName = g.os_path_abspath(fileName)
     else: # Old code, works.
         fileName = g.os_path_join(os.getcwd(),fileName)
+
     fileName = g.os_path_normpath(fileName)
-    oldFileName = fileName 
+    oldFileName = fileName
+    
     fileName = g.os_path_normcase(fileName)
 
     # If the file is already open just bring its window to the front.
@@ -16229,7 +16231,6 @@ def openWithFileName(fileName,old_c,enableLog=True,readAtFileNodesFlag=True):
             g.es("exceptions opening: " + fileName,color="red")
             g.es_exception()
         return False, None
-#@nonl
 #@-node:ekr.20031218072017.2052:g.openWithFileName
 #@+node:ekr.20041123092357:config.findSettingsPosition
 def findSettingsPosition (self,c,setting):
@@ -19784,17 +19785,16 @@ def setRecentFiles (self,files):
     
     # Do nothing if there is no @settings tree or no @recent-files node.
     p = g.app.config.findSettingsPosition(c,"@recent-files")
-    if p:
-        pass
-        # g.trace("updating @recent-files for ",c.mFileName)
-    else:
+    if not p:
         # g.trace("no @recent-files node for ",c.mFileName)
         return
+
+    # g.trace("updating @recent-files for ",c.mFileName)
 
     # Update the @recent-files entry, leaving c's changed status untouched.
     changed = c.isChanged()
     body = '\n'.join(files)
-    p.setBodyStringOrPane (body,encoding=g.app.tkEncoding)
+    p.setBodyStringOrPane(body,encoding=g.app.tkEncoding)
     c.setChanged(changed)
 #@nonl
 #@-node:ekr.20041118195812.3:setRecentFiles (configSettings)
@@ -21015,6 +21015,130 @@ def createStrings (self,parent,p,kind,name,val):
 #@-node:ekr.20041225063637.49:createStrings
 #@-node:ekr.20041225063637.25:createWidgets & helpers
 #@-node:ekr.20050121094515:(Improved appearance of settings panel)
+#@+node:ekr.20050122104754:(Clear Recent Files now updates @recent_files node properly)
+#@+node:ekr.20050122104857:To do: implement 'Undo Clear Recent Files'
+#@-node:ekr.20050122104857:To do: implement 'Undo Clear Recent Files'
+#@+node:ekr.20050122104754.1:What I did
+@killcolor
+
+- Fixed latent bug in setBodyStringOrPane.
+
+This method now updates the body pane if any clone of the current node changes.
+
+This is important, the settings node found by findSettingsPosition may be a clone of the current node!
+
+- clearRecentFiles now calls c.config.setRecentFiles.
+#@nonl
+#@-node:ekr.20050122104754.1:What I did
+#@+node:ekr.20041122162610:@recent_files
+C:\prog\leoCVS\leo\doc\leoDocs.leo
+C:\prog\leoCVS\leo\config\leoSettings.leo
+C:\prog\leoCVS\leo\plugins\leoPlugins.leo
+C:\prog\leoCVS\leo\src\LeoPy.leo
+#@nonl
+#@-node:ekr.20041122162610:@recent_files
+#@+node:ekr.20040305223522:p.setBodyStringOrPane & p.setBodyTextOrPane
+def setBodyStringOrPane (self,s,encoding="utf-8"):
+
+    p = self ; v = p.v ; c = p.c
+    if not c or not v: return
+
+    s = g.toUnicode(s,encoding)
+    current = c.currentPosition()
+    # 1/22/05: Major change: the previous test was: 'if p == current:'
+    # This worked because commands work on the presently selected node.
+    # But setRecentFiles may change a _clone_ of the selected node!
+    if current and p.v.t==current.v.t:
+        # Revert to previous code, but force an empty selection.
+        c.frame.body.setSelectionAreas(s,None,None)
+        c.frame.body.setTextSelection(None)
+        # This code destoys all tags, so we must recolor.
+        c.recolor()
+        
+    # Keep the body text in the tnode up-to-date.
+    if v.t.bodyString != s:
+        v.setTnodeText(s)
+        v.t.setSelection(0,0)
+        p.setDirty()
+        if not c.isChanged():
+            c.setChanged(True)
+
+setBodyTextOrPane = setBodyStringOrPane # Compatibility with old scripts
+#@nonl
+#@-node:ekr.20040305223522:p.setBodyStringOrPane & p.setBodyTextOrPane
+#@+node:ekr.20041118195812.3:setRecentFiles (configSettings)
+def setRecentFiles (self,files):
+    
+    c = self.c
+    
+    # Append the files to the global list.
+    g.app.config.appendToRecentFiles(files)
+    
+    # Do nothing if there is no @settings tree or no @recent-files node.
+    p = g.app.config.findSettingsPosition(c,"@recent-files")
+    if not p:
+        # g.trace("no @recent-files node for ",c.mFileName)
+        return
+
+    # g.trace("updating @recent-files for ",c.mFileName)
+
+    # Update the @recent-files entry, leaving c's changed status untouched.
+    changed = c.isChanged()
+    body = '\n'.join(files)
+    p.setBodyStringOrPane(body,encoding=g.app.tkEncoding)
+    c.setChanged(changed)
+#@nonl
+#@-node:ekr.20041118195812.3:setRecentFiles (configSettings)
+#@+node:ekr.20031218072017.2080:clearRecentFiles
+def clearRecentFiles (self):
+    
+    """Clear the recent files list, then add the present file."""
+
+    c = self ; f = c.frame
+    
+    recentFilesMenu = f.menu.getMenu("Recent Files...")
+    f.menu.delete_range(recentFilesMenu,0,len(c.recentFiles))
+    
+    c.recentFiles = []
+    f.menu.createRecentFilesMenuItems()
+    c.updateRecentFiles(c.mFileName)
+    c.config.setRecentFiles(c.recentFiles)
+#@nonl
+#@-node:ekr.20031218072017.2080:clearRecentFiles
+#@-node:ekr.20050122104754:(Clear Recent Files now updates @recent_files node properly)
+#@+node:ekr.20041231104531:(Made sure recent files have correct capitalization)
+#@+node:ekr.20050122105504:What I did
+@killcolor
+
+c.updateRecentFiles now 'munges' all names during the compare, so capitalization difference don't matter:  all files matching the file name get removed.
+#@-node:ekr.20050122105504:What I did
+#@+node:ekr.20031218072017.2083:c.updateRecentFiles
+def updateRecentFiles (self,fileName):
+    
+    """Create the RecentFiles menu.  May be called with Null fileName."""
+    
+    if g.app.unitTesting: return
+    
+    # Update the recent files list in all windows.
+    if fileName:
+        compareFileName = g.os_path_normpath(g.os_path_abspath(fileName))
+        # g.trace(fileName)
+        for frame in g.app.windowList:
+            c = frame.c
+            # Remove all versions of the file name.
+            for name in c.recentFiles:
+                if compareFileName == g.os_path_normpath(g.os_path_abspath(name)):
+                    c.recentFiles.remove(name)
+            c.recentFiles.insert(0,fileName)
+            g.trace(fileName)
+            # Recreate the Recent Files menu.
+            frame.menu.createRecentFilesMenuItems()
+    else:
+        for frame in g.app.windowList:
+            frame.menu.createRecentFilesMenuItems()
+#@nonl
+#@-node:ekr.20031218072017.2083:c.updateRecentFiles
+#@-node:ekr.20041231104531:(Made sure recent files have correct capitalization)
 #@-node:ekr.20041115111203:Config...
 #@+node:ekr.20041228052527.2:New features...
 #@+node:ekr.20040930064232.2:(Added new expand/contract or go commands)
@@ -24894,8 +25018,10 @@ def openWithFileName(fileName,old_c,enableLog=True,readAtFileNodesFlag=True):
         fileName = g.os_path_abspath(fileName)
     else: # Old code, works.
         fileName = g.os_path_join(os.getcwd(),fileName)
+
     fileName = g.os_path_normpath(fileName)
-    oldFileName = fileName 
+    oldFileName = fileName
+    
     fileName = g.os_path_normcase(fileName)
 
     # If the file is already open just bring its window to the front.
@@ -24942,7 +25068,6 @@ def openWithFileName(fileName,old_c,enableLog=True,readAtFileNodesFlag=True):
             g.es("exceptions opening: " + fileName,color="red")
             g.es_exception()
         return False, None
-#@nonl
 #@-node:ekr.20031218072017.2052:g.openWithFileName
 #@-node:ekr.20050119211822.2:(Added support for Leo-relative files)
 #@-node:ekr.20041228052527.2:New features...
@@ -26196,6 +26321,8 @@ def registerOneHandler(tag,fn):
 #@nonl
 #@-node:ekr.20031218072017.3443:registerHandler
 #@-node:ekr.20041201072431:(Fixed several plugin bugs)
+#@+node:ekr.20050121163053:Fixed bug in Plugins Manager plugin: only triple-double quotes work in docstrings
+#@-node:ekr.20050121163053:Fixed bug in Plugins Manager plugin: only triple-double quotes work in docstrings
 #@-node:ekr.20041228052527.3:Plugins...
 #@-node:ekr.20040929081120:4.3 a1 projects
 #@-all
