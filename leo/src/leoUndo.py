@@ -615,12 +615,15 @@ class baseUndoer:
 				# trace(`redoType` + ":" + `u.v`)
 				# selectVnode causes recoloring, so avoid if possible.
 				if current != u.v:
-					c.selectVnode(u.v) ## Optimize this away??
+					c.selectVnode(u.v)
+				elif redoType in ("Cut","Paste"):
+					c.frame.tree.forceFullRecolor()
+			
 				self.undoRedoText(
 					u.v,u.leading,u.trailing,
 					u.newMiddleLines,u.oldMiddleLines,
 					u.newNewlines,u.oldNewlines,
-					tag="redo")
+					tag="redo",undoType=redoType)
 				
 				if u.newSel:
 					start,end=u.newSel
@@ -851,12 +854,15 @@ class baseUndoer:
 				# trace(`undoType` + ":" + `u.v`)
 				# selectVnode causes recoloring, so don't do this unless needed.
 				if current != u.v:
-					c.selectVnode(u.v) ## Optimize this away??
+					c.selectVnode(u.v)
+				elif undoType in ("Cut","Paste"):
+					c.frame.tree.forceFullRecolor()
+			
 				self.undoRedoText(
 					u.v,u.leading,u.trailing,
 					u.oldMiddleLines,u.newMiddleLines,
 					u.oldNewlines,u.newNewlines,
-					tag="undo")
+					tag="undo",undoType=undoType)
 				if u.oldSel:
 					start,end=u.oldSel
 					setTextSelection (c.frame.body,start,end)
@@ -1025,7 +1031,8 @@ class baseUndoer:
 		leading,trailing, # Number of matching leading & trailing lines.
 		oldMidLines,newMidLines, # Lists of unmatched lines.
 		oldNewlines,newNewlines, # Number of trailing newlines.
-		tag="undo"): # "undo" or "redo"
+		tag="undo", # "undo" or "redo"
+		undoType=None):
 	
 		u = self ; c = u.commands
 		assert(v == c.currentVnode())
@@ -1107,8 +1114,12 @@ class baseUndoer:
 		#@-node:<< Get textResult from the Tk.Text widget >>
 		#@nl
 		if textResult == result:
-			# print "incremental undo:",leading,trailing
-			c.frame.recolor_range(v,leading,trailing)
+			if undoType in ("Cut","Paste"):
+				# trace("non-incremental undo")
+				c.frame.recolor(v,incremental=false)
+			else:
+				# trace("incremental undo:",leading,trailing)
+				c.frame.recolor_range(v,leading,trailing)
 		else: # 11/19/02: # Rewrite the pane and do a full recolor.
 			if u.debug_print:
 				#@			<< print mismatch trace >>
@@ -1118,7 +1129,7 @@ class baseUndoer:
 				print "actual  :",`textResult`
 				#@-node:<< print mismatch trace >>
 				#@nl
-			# print "non-incremental undo"
+			# trace("non-incremental undo")
 			v.setBodyStringOrPane(result)
 	#@-node:undoRedoText
 	#@+node:undoSortChildren
