@@ -22,7 +22,7 @@
 <v><vh>This node contains no text</vh></v>
 </v>
 <v t="T7"><vh>Please use SourceForge to ask questions and make comments</vh></v>
-<v t="T8" a="C"><vh>Acknowledgements</vh></v>
+<v t="T8" a="CV"><vh>Acknowledgements</vh></v>
 <v t="T9"><vh>What people are saying about Leo</vh>
 <v t="T10"><vh>Alex Abacus</vh></v>
 <v t="T11"><vh>Steve Allen</vh></v>
@@ -61,7 +61,7 @@
 <v t="T42" a="C"><vh>Quick start</vh></v>
 </v>
 <v a="EM"><vh>Latest version</vh>
-<v t="T43" a="CV"><vh>leo.py 3.9</vh>
+<v t="T43" a="C"><vh>leo.py 3.9</vh>
 <v t="T44"><vh>Fixed bugs</vh>
 <v t="T45"><vh>Fixed bug involving @language</vh></v>
 <v t="T46"><vh>Correctly colors Pascal's "private" and "uses" keywords</vh></v>
@@ -2014,7 +2014,7 @@ to ask questions or suggest improvements.  That way other people can share in th
 
 Leo owes much of its visual design to MORE, possibly the most elegant computer program ever written. Leo's clone nodes are inspired by MORE.
 
-The following people reported bugs, answered questions, and made suggestions for improving Leo: Alex Abacus, Shakeeb Alireze, Bruce Arnold, Chris Barker, Eric Brown, Darius Clarke, Bill Drissel, Wenshan Du, Allen Edwards, Chris Elliot, Mark Engleberg, Dethe Elza, Stephen Ferg, Tom Fetherston, Tomaz Ficko, Fred Gansevles, Thomas Guettler, Zak Greant, Thomas Guettler, Dave Hein, Tiago Castro Henriques, Gary Herron, Steve Holden, Klass Holwerda, Matthias Huening, Robert Hustead, John Jacob, Christopher P. Jobling, Eric S. Johansson, Garold Johnson, Romain Guy, James Kerwin, Nicola Larosa, David LeBlank, Chris Liechti, Steve Litt, Martin v. Loewis, Robert Low, Fredrik Lundh, Alex Martelli, Marcus A. Martin, David McNab, Naud Olivier, Joe Orr, Marc-Antoine Parent, Sean Shaleh Perry, Tim Peters, Bruce Rafnel, Walter H. Rauser, David Speed Ream, Rich Ries, Guido van Rossum, Steven Schaefer, Wolfram Schwenzer, Jurjen Stellingwerff, Paul Snively, Jeffrey Thompson, Gabriel Valiente, Jim Vickroy, Tony Vignaux, Ying-Chao Wang, Cliff Wells, Dan Wharton, Wim Wijnders, Vadim Zeitlin.
+The following people reported bugs, answered questions, and made suggestions for improving Leo: Alex Abacus, Shakeeb Alireze, Bruce Arnold, Chris Barker, Eric Brown, Darius Clarke, Bill Drissel, Wenshan Du, Allen Edwards, Chris Elliot, Mark Engleberg, Dethe Elza, Stephen Ferg, Tom Fetherston, Tomaz Ficko, Fred Gansevles, Thomas Guettler, Zak Greant, Thomas Guettler, Dave Hein, Tiago Castro Henriques, Gary Herron, Steve Holden, Klass Holwerda, Matthias Huening, Robert Hustead, John Jacob, Christopher P. Jobling, Eric S. Johansson, Garold Johnson, Romain Guy, James Kerwin, Nicola Larosa, David LeBlank, Chris Liechti, Steve Litt, Martin v. Loewis, Robert Low, Fredrik Lundh, Alex Martelli, Marcus A. Martin, David McNab, Chad Netzer, Naud Olivier, Joe Orr, Marc-Antoine Parent, Sean Shaleh Perry, Tim Peters, Bruce Rafnel, Walter H. Rauser, David Speed Ream, Rich Ries, Guido van Rossum, Steven Schaefer, Wolfram Schwenzer, Jurjen Stellingwerff, Paul Snively, Jeffrey Thompson, Gabriel Valiente, Jim Vickroy, Tony Vignaux, Ying-Chao Wang, Cliff Wells, Dan Wharton, Wim Wijnders, Vadim Zeitlin.
 
 The following people have written code for Leo: Dave Hein wrote code to support PHP, to handle Tk version numbers properly and to open the Python window properly on Linux.  Marcus A. Martin wrote code to support LaTex. Steven P. Schaefer eliminated problems with end-of-line on Linux and fixed bugs in how directives were handled in @root trees.
 

@@ -184,7 +184,7 @@ class LeoApp:
 		
 		try:
 			version = self.root.getvar("tk_patchLevel")
-			# print "tcl version:" + version
+			# print "tcl version:", version
 			
 			#@<< set v834 if version is 8.3.4 or greater >>
 			#@+node:1::<< set v834 if version is 8.3.4 or greater >>

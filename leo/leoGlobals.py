@@ -32,14 +32,15 @@ assert(false!=None)
 #@+node:2::collectGarbage
 #@+body
 def collectGarbage():
-
-	try:
-		import gc
-		gc.collect()
-		es("len(garbage):"+`len(gc.garbage)`)
-	except:
-		# es_exception()
-		pass
+	
+	if 0: # not needed.
+		try:
+			import gc
+			gc.collect()
+			# es("len(garbage):"+`len(gc.garbage)`)
+		except:
+			# es_exception()
+			pass
 
 #@-body
 #@-node:2::collectGarbage
@@ -886,7 +887,7 @@ def get_Sherlock_args (args):
 
 	# No args means trace everything.
 	if not args or len(args)==0: args = ["+*"] 
-	# print "get_Sherlock_args:" + args
+	# print "get_Sherlock_args:", args
 	return args
 #@-body
 #@-node:1::get_Sherlock_args

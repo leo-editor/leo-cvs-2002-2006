@@ -3448,7 +3448,10 @@ class LeoFrame:
 		
 		import webbrowser
 	
-		url = "http://www.evisa.com/e/sbooks/leo/sbframetoc_ie.htm"
+		if 1: # new url
+			url = "http://www.3dtree.com/ev/e/sbooks/leo/sbframetoc_ie.htm"
+		else:
+			url = "http://www.evisa.com/e/sbooks/leo/sbframetoc_ie.htm"
 		try:
 			webbrowser.open_new(url)
 		except:

@@ -142,7 +142,7 @@ class leoTree:
 		self.setFontFromConfig()
 		
 		# Recycling bindings.
-		self.recycleBindings = false # true: remember bindings and unbind them explicitly.
+		self.recycleBindings = true # true: remember bindings and unbind them explicitly.
 		self.bindings = [] # List of bindings to be unbound when redrawing.
 		self.tagBindings = [] # List of tag bindings to be unbound when redrawing.
 	
@@ -175,16 +175,16 @@ class leoTree:
 		if self.recycleBindings:
 			count = 0
 			# Unbind all the tag bindings.
-			for id,binding in self.tagBindings:
-				self.canvas.tag_unbind(id,binding)
+			for id,id2,binding in self.tagBindings:
+				self.canvas.tag_unbind(id,binding,id2)
 				count += 1
 			self.tagBindings = []
 			# Unbind all the text bindings.
-			for t,binding in self.bindings:
-				t.bind(binding,"")
+			for t,id,binding in self.bindings:
+				t.unbind(binding,id)
 				count += 1
 			self.bindings = []
-			es("bindings freed:"+`count`)
+			# es("bindings freed:"+`count`)
 		else:
 			self.tagBindings = []
 			self.bindings = []
@@ -274,12 +274,12 @@ class leoTree:
 		id = self.canvas.create_image(x,y,image=image)
 		if 0: # don't create a reference to this!
 			v.box_id = id
-		self.canvas.tag_bind(id, "<1>", v.OnBoxClick)
-		self.canvas.tag_bind(id, "<Double-1>", lambda x: None)
+		id1 = self.canvas.tag_bind(id, "<1>", v.OnBoxClick)
+		id2 = self.canvas.tag_bind(id, "<Double-1>", lambda x: None)
 		
 		if self.recycleBindings:
-			self.tagBindings.append((id,"<1>"),)
-			self.tagBindings.append((id,"<Double-1>"),)
+			self.tagBindings.append((id,id1,"<1>"),)
+			self.tagBindings.append((id,id2,"<Double-1>"),)
 	#@-body
 	#@-node:3::drawBox (tag_bind)
 	#@+node:4::drawNode
@@ -318,18 +318,19 @@ class leoTree:
 		#@-body
 		#@-node:1::<< configure the text depending on state >>
 
-		t.bind("<1>", v.OnHeadlineClick)
-		t.bind("<3>", v.OnHeadlinePopup) # 9/11/02.
+		id1 = t.bind("<1>", v.OnHeadlineClick)
+		id2 = t.bind("<3>", v.OnHeadlinePopup) # 9/11/02.
 		if 0: # 6/15/02: Bill Drissel objects to this binding.
 			t.bind("<Double-1>", v.OnBoxClick)
-		t.bind("<Key>", v.OnHeadlineKey)
-		t.bind("<Control-t>",self.OnControlT) # 10/16/02: Stamp out the erroneous control-t binding.
+		id3 = t.bind("<Key>", v.OnHeadlineKey)
+		id4 = t.bind("<Control-t>",self.OnControlT)
+			# 10/16/02: Stamp out the erroneous control-t binding.
 		# Remember the bindings so we can delete them by hand on redraws.
 		if self.recycleBindings:
-			self.bindings.append((t,"<1>"),)
-			self.bindings.append((t,"<3>"),)
-			self.bindings.append((t,"<Key>"),)
-			self.bindings.append((t,"<Control-t>"),)
+			self.bindings.append((t,id1,"<1>"),)
+			self.bindings.append((t,id2,"<3>"),)
+			self.bindings.append((t,id3,"<Key>"),)
+			self.bindings.append((t,id4,"<Control-t>"),)
 		id = self.canvas.create_window(x,y,anchor="nw",window=t)
 		if 0: # don't create this reference!
 			v.edit_text_id = id
@@ -483,11 +484,11 @@ class leoTree:
 		id = self.canvas.create_image(x,y,anchor="nw",image=image)
 		if 1: # 6/15/02: this reference is now cleared in v.__del__
 			v.icon_id = id
-		self.canvas.tag_bind(id, "<1>", v.OnIconClick)
-		self.canvas.tag_bind(id, "<Double-1>", v.OnIconDoubleClick)
+		id1 = self.canvas.tag_bind(id,"<1>",v.OnIconClick)
+		id2 = self.canvas.tag_bind(id,"<Double-1>",v.OnIconDoubleClick)
 		if self.recycleBindings:
-			self.tagBindings.append((id,"<1>"),)
-			self.tagBindings.append((id,"<Double-1>"),)
+			self.tagBindings.append((id,id1,"<1>"),)
+			self.tagBindings.append((id,id2,"<Double-1>"),)
 	
 		return 0 # dummy icon height
 	
