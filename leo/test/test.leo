@@ -2,7 +2,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="2164" clone_windows="0"/>
 <globals body_outline_ratio="0.5">
-	<global_window_position top="56" left="188" height="835" width="858"/>
+	<global_window_position top="48" left="92" height="835" width="858"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences>
@@ -2630,9 +2630,12 @@
 <v t="edream.110203161858.2115"><vh>Test of app.gui.runAskYesNoDialog</vh></v>
 <v t="edream.110203161858.2116" a="M"><vh>Test of app.gui.runAskYesNoCancelDialog</vh></v>
 </v>
+<v t="edream.110503093114"><vh>Binary file test</vh>
+<v t="edream.110403171311" tnodeList="edream.110403171311"><vh>@file c:\prog\test\binaryText.txt</vh></v>
 </v>
 <v t="edream.110203161858.2117"><vh>@nonl in @doc parts</vh>
 <v t="edream.110203161858.2118" a="M" tnodeList="edream.110203161858.2118"><vh>@file c:\prog\test\docTest.txt</vh></v>
+</v>
 </v>
 <v t="edream.110203161858.2119"><vh>Unit Tests</vh>
 <v t="edream.110203161858.2120"><vh>Bug reports</vh>
@@ -2683,21 +2686,17 @@
 <v t="edream.110203161858.2156"><vh>run outline tests</vh></v>
 </v>
 </v>
-<v t="edream.110503093114"><vh>Binary file test</vh>
-<v t="edream.110403171311" tnodeList="edream.110403171311"><vh>@file c:\prog\test\binaryText.txt</vh></v>
-</v>
 <v t="edream.110503055320"><vh>Node only options</vh>
 <v t="edream.110503055320.1"><vh>Search only this node in "node only" mode</vh>
 <v t="edream.110503055320.2"><vh>NewHeadline</vh></v>
 </v>
 <v t="edream.110503055556"><vh>More </vh></v>
 </v>
-<v t="edream.110503134336"><vh>eval tests</vh></v>
-<v t="edream.110503161232"><vh>find script</vh></v>
-<v t="edream.110503215752" a="E"><vh>Find scripts to convert @doc comments to doc strings</vh>
+<v t="edream.110503215752" a="V"><vh>Find scripts to convert @doc comments to doc strings</vh>
 <v t="edream.110503231822"><vh>Find script</vh></v>
 <v t="edream.110503231822.1"><vh>Change script</vh></v>
-<v t="edream.110503215752.1" a="V"><vh>re tests</vh></v>
+<v t="edream.110503215752.1"><vh>re tests</vh></v>
+<v t="edream.110503161232"><vh>early find script</vh></v>
 </v>
 </vnodes>
 <tnodes>
@@ -5493,11 +5492,12 @@ if not single:
 	del out[:]
 	out.append(s)
 </t>
-<t tx="edream.110203161858.202">def scanText (self,file,v,out,endSentinelKind,nextLine=None):
+<t tx="edream.110203161858.202">@ This method is the read code.
 
-	"""This method is the read code.
-	
-	scanText reads lines from the file until the given ending sentinel is found, and warns if any other ending sentinel is found instead.  It calls itself recursively to handle most nested sentinels."""
+scanText reads lines from the file until the given ending sentinel is found, and warns if any other ending sentinel is found instead.  It calls itself recursively to handle most nested sentinels.
+
+@c
+def scanText (self,file,v,out,endSentinelKind,nextLine=None):
 
 	a = app() ; c = self.commands ; config = a.config
 	lastLines = [] # The lines after @-leo
@@ -5871,9 +5871,9 @@ if end and len(end) &gt; 0:
 
 	s = self.nodeSentinelText(v)
 	self.putSentinel("@-node:" + s)</t>
-<t tx="edream.110203161858.233">def putCloseSentinels(self,root,v):
-
-	"""root is an ancestor of v, or root == v.  We call putCloseSentinel for v up to, but not including, root."""
+<t tx="edream.110203161858.233">@ root is an ancestor of v, or root == v.  We call putCloseSentinel for v up to, but not including, root.
+@c
+def putCloseSentinels(self,root,v):
 
 	self.putCloseNodeSentinel(v)
 	while 1:
@@ -5881,9 +5881,9 @@ if end and len(end) &gt; 0:
 		assert(v) # root must be an ancestor of v.
 		if  v == root: break
 		self.putCloseNodeSentinel(v)</t>
-<t tx="edream.110203161858.234">def putOpenLeoSentinel(self,s):
-
-	"""This method is the same as putSentinel except we don't put an opening newline and leading whitespace."""
+<t tx="edream.110203161858.234">@ This method is the same as putSentinel except we don't put an opening newline and leading whitespace.
+@c
+def putOpenLeoSentinel(self,s):
 	
 	if not self.sentinels:
 		return # Handle @nosentinelsfile.
@@ -5901,9 +5901,9 @@ if end and len(end) &gt; 0:
 	else:
 		self.onl() # End of sentinel.
 </t>
-<t tx="edream.110203161858.235">def putOpenNodeSentinel(self,v):
-
-	"""This method puts an open node sentinel for node v."""
+<t tx="edream.110203161858.235">@ This method puts an open node sentinel for node v.
+@c
+def putOpenNodeSentinel(self,v):
 
 	if v.isAtFileNode() and v != self.root:
 		self.writeError("@file not valid in: " + v.headString())
@@ -34024,4 +34024,115 @@ line after</t>
 	s = body.getAllText()
 	s = s + chr(0x1a)
 	print s
-	v.setBodyStringOrPane(s)
+	v.setBodyStringOrPane(s)</t>
+<t tx="edream.110503055320"></t>
+<t tx="edream.110503055320.1">a
+
+aa</t>
+<t tx="edream.110503055320.2">This node should not be searched.
+
+a
+
+aa</t>
+<t tx="edream.110503055556">a</t>
+<t tx="edream.110503093114">@ignore</t>
+<t tx="edream.110503161232"># This script was a breakthrough.
+# Executing this script initializes the Find text from the given script string.
+# To do: get the script from a named child of this node.
+
+from leoGlobals import *
+
+script = """from leoGlobals import *
+c = top() ; v = c.currentVnode()
+print `v`
+v = v.threadNext()
+c.selectVnode(v)"""
+
+app.searchDict = {} # Communication between search &amp; change scripts
+c = top()
+c.script_search_flag = true
+c.find_text = script
+app.findFrame.init(c)
+c.frame.OnFindPanel()</t>
+<t tx="edream.110503215752"># Initialize Leo's find panel using the named children of this node.
+from leoGlobals import *
+initScriptFind("Find script","Change script")
+
+# Start searching at the top.
+c = top()
+c.selectVnode(c.rootVnode())</t>
+<t tx="edream.110503215752.1">import re
+from leoGlobals import *
+
+s = """@doc line 0
+line 1d
+line 2
+@c
+
+# a comment
+
+def abc(self): xx
+
+after 1
+after 2"""
+
+pat = re.compile("""^(@$|@ |@doc)(.*?)$
+^@c[ \t]*(.*?)$
+^(def[ \t]*.*?:.*?)$
+(.*)""", re.MULTILINE | re.DOTALL)
+
+m = pat.match(s)
+print "---"
+if m:
+	print "doc:   ", `m.group(2).strip()`
+	print "blanks:", `m.group(3).strip()`
+	print "def:   ", `m.group(4).strip()`
+	print "rest:  ", `m.group(5).strip()`
+else:
+	print "no match"
+</t>
+<t tx="edream.110503231822">from leoGlobals import *
+
+docPart = re.compile("""^(@$|@ |@doc)(.*)$
+^@c[ \t]*(.*?)$
+^(def[ \t]*.*?:.*?)$
+(.*)""", re.MULTILINE | re.DOTALL)
+
+c = top() ; d = app.searchDict
+v = c.currentVnode() ; last_v = d.get("last_v")
+if last_v:
+	v = last_v.threadNext()
+d["m"] = None
+found = false
+while v and not found:
+	s = v.bodyString()
+	m = docPart.match(s)
+	if m:
+		d["m"] = m ; d["last_v"] = v
+		c.selectVnode(v)
+		found = true # To do: select the found text.
+	v = v.threadNext()
+if not found:
+	es("no @doc part found",color="blue")</t>
+<t tx="edream.110503231822.1">from leoGlobals import *
+
+def replaceDocPart(m):
+	doc = m.group(2).strip()
+	blanks = m.group(3).strip()
+	if blanks: blanks += "\n\n"
+	else: blanks = ""
+	defLine = m.group(4)
+	rest = m.group(5)
+	docList = doc.split('\n')
+	doc = string.join(docList,"\n\t")
+	return blanks + defLine + '\n\n\t"""' + doc + '"""\n' + rest
+
+c = top() ; v = c.currentVnode()
+d = app.searchDict ; m = d.get("m")
+if m:
+	s = replaceDocPart(m)
+	oldText = v.bodyString()
+	v.setBodyStringOrPane(s,encoding=app.tkEncoding)
+	c.frame.onBodyChanged(v,"Change",oldText=oldText) # Handles undo.</t>
+</tnodes>
+</leo_file>
