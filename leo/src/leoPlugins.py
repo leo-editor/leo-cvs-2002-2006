@@ -29,6 +29,11 @@ loadedModules = {} # Keys are module names, values are modules.
 def callTagHandler (handler,tag,keywords):
     
     if tag == 'idle':
+        
+        if 0:
+            c = keywords.get('c')
+            g.trace(c.shortFileName(),handler)
+
         # Make sure all commanders exist.
         for key in ('c','old_c','new_c'):
             c = keywords.get(key)
@@ -49,6 +54,7 @@ def doPlugins(tag,keywords):
         return
     if tag == "start1":
         loadHandlers()
+
     return doHandlersForTag(tag,keywords)
 #@nonl
 #@-node:ekr.20041001161108:doPlugins
@@ -147,16 +153,18 @@ def doHandlersForTag (tag,keywords):
         return None
 
     if handlers.has_key(tag):
-        handle_fns = handlers[tag]
-        handle_fns.sort()
-        for handler in handle_fns:
-            return callTagHandler(handler,tag,keywords)
+        fns = handlers.get(tag)
+        # Execute hooks in some random order.
+        # Return if one of them returns a non-None result.
+        for fn in fns:
+            val = callTagHandler(fn,tag,keywords)
+            if val is not None:
+                return val
 
     if handlers.has_key("all"):
-        handle_fns = handlers["all"]
-        handle_fns.sort()
-        for handler in handle_fns:
-            return callTagHandler(handler,tag,keywords)
+        fns = handlers.get("all")
+        for fn in fns:
+            callTagHandler(fn,tag,keywords)
 
     return None
 #@nonl
@@ -214,10 +222,13 @@ def registerOneHandler(tag,fn):
     """Register one handler"""
 
     global handlers
-
-    existing = handlers.setdefault(tag,[])
-    if fn not in existing:
-        existing.append(fn)
+    
+    items = handlers.get(tag,[])
+    if fn not in items:
+        items.append(fn)
+        
+    # g.trace(tag) ; g.printList(items)
+    handlers[tag] = items
 #@nonl
 #@-node:ekr.20031218072017.3443:registerHandler
 #@+node:ekr.20031218072017.3444:registerExclusiveHandler
