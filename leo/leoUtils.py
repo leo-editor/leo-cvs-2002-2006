@@ -1906,6 +1906,9 @@ def utils_rename(src,dst):
 #@@c
 
 def wrap_lines (lines,pageWidth):
+	
+	if pageWidth < 10:
+		pageWidth = 10
 
 	# trace(`lines`)
 	result = [] # The lines of the result.

@@ -596,9 +596,10 @@ class Commands:
 	# 1. Use the values returned by getBodyLines when there is a real selection.
 	# This should be safe, especially because of undo!
 	# 
-	# 2. tnodes are always up-to-date, so that the body text is c.currentVnode().bodyString().
+	# 2. tnodes are always up-to-date, so the body text is c.currentVnode().bodyString().
 	# It should be much easier to deal with a tuple or list of lines than to 
 	# deal with the Tk.Text widget!
+	# (Yes, other Edit Body commands could certainly be simplified as well.)
 	# 
 
 	#@-at
@@ -631,7 +632,7 @@ class Commands:
 		selStart, selEnd = getTextSelection(body)
 		if selStart != selEnd: return
 	
-		# Find the paragraph range
+		# Find the paragraph range.
 		data = bound_paragraph(body)
 		if data:
 			start, end, endsWithNL = data
@@ -648,7 +649,7 @@ class Commands:
 				indents[i] = computeWidth(ws,tabWidth)
 		indent = max(indents)
 	
-	    # put the leading unchanged lines.
+	    # Put the leading unchanged lines.
 		for i in range(0,firstLine):
 			result.append(lines[i])
 			
@@ -661,26 +662,20 @@ class Commands:
 		for line in wrapped_lines:
 			result.append(leading_ws + line)
 	
-		# Put the trailing unchanged lines
+		# Put the trailing unchanged lines.
 		for i in range(lastLine,len(lines)):
 			result.append(lines[i])
 	
-		# was there a change?
-		changed = false
+		# Replace the text if it changed.
 		for i in range(firstLine,lineCount+firstLine):
 			if i >= lastLine or lines[i] != result[i]:
-				changed = true ; break
+				result = string.join(result,'\n')
+				if not endsWithNL:
+					result = result[:-1] # Remove the trailing newline.
+				c.updateBodyPane(head,result,tail,"Reformat Paragraph") # Handles undo
+				break
 	
-		# replace current text
-		if changed:
-			result = string.join(result,'\n')
-			# remove the trailing newline, if needed
-			if not endsWithNL:
-				k = len(result)
-				result = result[0:k-1]
-			c.updateBodyPane(head,result,tail,"Reformat Paragraph") # Handles undo
-	
-		# Set the new insert at the start of the next paragraph
+		# Set the new insert at the start of the next paragraph.
 		# EKR: very ugly.
 		lastLine = firstLine + lineCount
 		if not endsWithNL:
@@ -700,8 +695,6 @@ class Commands:
 	
 		# Make sure we can see the new insert cursor
 		body.see("insert")
-	
-		return
 	#@-body
 	#@-node:13::reformatParagraph
 	#@+node:14::updateBodyPane (handles undo)
