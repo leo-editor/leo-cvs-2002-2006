@@ -493,6 +493,18 @@
 <v t="ekr.20041230085841"><vh>test that of standalone imports of leo files</vh></v>
 <v t="ekr.20041230090756"><vh>Script to run in Idle</vh></v>
 </v>
+<v t="ekr.20041231083027"><vh>Test of double @doc parts</vh>
+<v t="ekr.20041231083651"><vh>file c:\test\doubleAtDoc.py</vh>
+<v t="ekr.20041231083651.1"><vh>foo</vh></v>
+<v t="ekr.20041231083651.2"><vh>bar</vh></v>
+<v t="ekr.20041231083651.3"><vh>spam</vh></v>
+</v>
+<v t="ekr.20041231083027.1" tnodeList="ekr.20041231083027.1,ekr.20041231083027.2,ekr.20041231083027.3,ekr.20041231083027.4"><vh>@file c:\prog\test\doubleAtDoc.py</vh>
+<v t="ekr.20041231083027.2"><vh>foo</vh></v>
+<v t="ekr.20041231083027.3"><vh>bar (double doc parts)</vh></v>
+<v t="ekr.20041231083027.4"><vh>spam</vh></v>
+</v>
+</v>
 </v>
 <v t="ekr.20041126132604"><vh>Prototypes</vh>
 <v t="ekr.20041220080654"><vh>Setting Tk config values safely</vh>
@@ -1387,33 +1399,16 @@
 </v>
 <v t="ekr.20040707081532.1"><vh>Do @test</vh></v>
 </v>
-<v t="ekr.20041231083027"><vh>Test of double @doc parts</vh>
-<v t="ekr.20041231083651"><vh>file c:\test\doubleAtDoc.py</vh>
-<v t="ekr.20041231083651.1"><vh>foo</vh></v>
-<v t="ekr.20041231083651.2"><vh>bar</vh></v>
-<v t="ekr.20041231083651.3"><vh>spam</vh></v>
-</v>
-<v t="ekr.20041231083027.1" tnodeList="ekr.20041231083027.1,ekr.20041231083027.2,ekr.20041231083027.3,ekr.20041231083027.4"><vh>@file c:\prog\test\doubleAtDoc.py</vh>
-<v t="ekr.20041231083027.2"><vh>foo</vh></v>
-<v t="ekr.20041231083027.3"><vh>bar</vh></v>
-<v t="ekr.20041231083027.4"><vh>spam</vh></v>
-</v>
-</v>
 <v t="ekr.20041126055818.2"><vh>pyclbr module (parses python)</vh></v>
-<v t="ekr.20041225051328"><vh>Tests of at_view plugin</vh>
-<v t="ekr.20041225051328.1"><vh>@clip</vh></v>
-<v t="ekr.20041225051328.2"><vh>@strip c:/prog/test/atSignTest.txt</vh></v>
-<v t="ekr.20041225051445"><vh>@view c:\prog\leoCVS\leo\config\leoConfig.txt</vh></v>
-</v>
 <v t="ekr.20041228135008"><vh>HTML to Browser</vh>
 <v t="ekr.20041228140714"><vh>&lt;&lt; alternate code doesn't work well for me &gt;&gt;</vh></v>
 </v>
-<v t="ekr.20041229163210" a="EM"><vh>dyna htmlize</vh>
+<v t="ekr.20041229163210" a="M"><vh>dyna htmlize</vh>
 <v t="ekr.20041229164609"><vh>&lt;&lt; imports &gt;&gt;</vh></v>
 <v t="ekr.20041229163210.2"><vh>&lt;&lt; init globals &gt;&gt;</vh></v>
 <v t="ekr.20041229170824"><vh>stripSentinels</vh></v>
 <v t="ekr.20041229165956"><vh>sanitize</vh></v>
-<v t="ekr.20041229163210.3" a="TV"><vh>class Parser</vh>
+<v t="ekr.20041229163210.3"><vh>class Parser</vh>
 <v t="ekr.20041229163210.4"><vh>__init__</vh></v>
 <v t="ekr.20041229163210.5"><vh>format</vh></v>
 <v t="ekr.20041229163210.6"><vh>__call__</vh></v>
@@ -1421,6 +1416,17 @@
 <v t="ekr.20041229164609.2"><vh>htmlize</vh>
 <v t="ekr.20041229163210.7"><vh>&lt;&lt; colorize with silvercity &gt;&gt;</vh></v>
 </v>
+</v>
+<v t="ekr.20041225051328" a="E"><vh>Tests of at_view plugin</vh>
+<v t="ekr.20041225051328.1"><vh>@clip</vh></v>
+<v t="ekr.20041231105348" a="E"><vh>Test of @strip</vh>
+<v t="ekr.20041231105200.2" a="TV"><vh>@strip atStripTest.txt</vh></v>
+</v>
+<v t="ekr.20041225051328.2" a="E"><vh>@file c:/prog/test/atStripTest.txt</vh>
+<v t="ekr.20041231105200"><vh>Node 1</vh></v>
+<v t="ekr.20041231105200.1"><vh>Node 2</vh></v>
+</v>
+<v t="ekr.20041225051445"><vh>@view c:\prog\leoCVS\leo\config\leoConfig.txt</vh></v>
 </v>
 </vnodes>
 <tnodes>
@@ -2042,7 +2048,7 @@ import leoGlobals as g
 print g.app.config.redirect_execute_script_output_to_log_pane</t>
 <t tx="EKR.20040627103732">@ignore</t>
 <t tx="EKR.20040627103801"></t>
-<t tx="EKR.20040627103902" lineYOffset="4b032e" icons="5d7100287d710128550577686572657102550a6265666f726549636f6e710355047870616471044b025504747970657105550466696c6571066806582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286805680668084afdffffff6806582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6802550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e"></t>
+<t tx="EKR.20040627103902" lineYOffset="4b032e" icons="5d7100287d7101285504747970657102550466696c65710355047870616471044b02550577686572657105550a6265666f726549636f6e71066803582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286802680368084afdffffff6803582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6805550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e"></t>
 <t tx="EKR.20040627121836">import leoGlobals as g
 
 c = g.top() ; p = c.currentPosition()
@@ -2173,7 +2179,7 @@ for p in c.rootPosition().allNodes_iter():
 s = "%d nodes" % count
 print s ; g.es(s)</t>
 <t tx="ekr.20040312101720"></t>
-<t tx="ekr.20040317101155" lineYOffset="4b032e" icons="5d7100287d7101285504747970657102550466696c65710355047870616471044b02550577686572657105550a6265666f726549636f6e710668035834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286802680368084afdffffff68035834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6805550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">import leoGlobals as g
+<t tx="ekr.20040317101155" lineYOffset="4b032e" icons="5d7100287d710128550577686572657102550a6265666f726549636f6e710355047870616471044b025504747970657105550466696c65710668065834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286805680668084afdffffff68065834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6802550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">import leoGlobals as g
 
 c = g.top()
 
@@ -10816,12 +10822,12 @@ if spellpyx:
         spellFrame.checkSpelling()</t>
 <t tx="ekr.20041121151002">@nocolor</t>
 <t tx="ekr.20041121151002.1">C:\prog\leoCVS\leo\src\LeoPy.leo
-C:\prog\leoCVS\leo\test\unittest\minimalLeoFile.leo
-C:\prog\leoCVS\leo\test\unittest\minimalLeoFile3.leo
-C:\prog\leoCVS\leo\dist\leoDist.leo
 C:\prog\leoCVS\leo\test\unittest\minimalLeoFile2.leo
-C:\prog\leoCVS\leo\plugins\leoPlugins.leo
+C:\prog\leoCVS\leo\test\unittest\minimalLeoFile.leo
 C:\prog\leoCVS\leo\doc\LeoDocs.leo
+C:\prog\leoCVS\leo\test\unittest\minimalLeoFile3.leo
+C:\prog\leoCVS\leo\plugins\leoPlugins.leo
+C:\prog\leoCVS\leo\dist\leoDist.leo
 C:\prog\leoCVS\leo\test\test.leo</t>
 <t tx="ekr.20041124063401"></t>
 <t tx="ekr.20041124144944">import os
@@ -11245,13 +11251,263 @@ c.frame.packComponent('splitter1')
 c.frame.packComponent('statusLine')</t>
 <t tx="ekr.20041225051328">@language python
 @ignore</t>
-<t tx="ekr.20041225051328.1">zx
+<t tx="ekr.20041225051328.1">'currentPath: %s' % path
+_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-
+zx
 _-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-
 &gt;
 _-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-
 </t>
-<t tx="ekr.20041225051328.2">zx</t>
-<t tx="ekr.20041225051445"></t>
+<t tx="ekr.20041225051328.2">@others</t>
+<t tx="ekr.20041225051445">[syntax coloring options]
+color_cweb_comments_with_latex = 1
+section_name_color = red
+doc_part_color = firebrick3
+color_cweb_doc_parts_with_latex = 1
+directive_color = blue
+cweb_section_name_color = red
+undefined_section_name_color = red
+use_hyperlinks = 1
+keyword_color = blue
+comment_color = firebrick3
+leo_keyword_color = #00aa00
+underline_undefined_section_names = 1
+show_invisibles_space_background_color = Gray90
+string_color = #00aa00
+section_name_brackets_color = blue
+show_invisibles_tab_background_color = Gray80
+color_directives_in_plain_text = 1
+
+[window options]
+body_text_background_color = 
+body_time_format_string = %m/%d/%Y %H:%M:%S
+headline_gmt_time = 0
+body_text_font_size = None
+body_insertion_cursor_color = 
+log_text_foreground_color = 
+headline_text_editing_foreground_color = black
+headline_text_unselected_background_color = white
+headline_text_unselected_foreground_color = black
+look_for_control_drag_on_mouse_down = 1
+allow_clone_drags = 0
+log_text_font_weight = normal
+headline_text_selected_background_color = gray80
+enable_drag_messages = 0
+headline_text_editing_selection_background_color = DarkBlue
+headline_text_font_weight = normal
+headline_text_selected_foreground_color = black
+log_error_color = red
+log_pane_wraps = 0
+headline_text_font_family = 
+initial_window_top = 20
+split_bar_relief = groove
+initial_window_width = 800
+additional_body_text_border = 0
+log_text_font_family = 
+body_text_font_weight = normal
+body_cursor_background_color = 
+log_text_font_slant = roman
+body_text_font_family = Courier New
+initial_vertical_secondary_ratio = 0.7
+initial_vertical_ratio = 0.5
+log_text_background_color = 
+body_text_foreground_color = 
+initial_splitter_orientation = v
+initial_horizontal_secondary_ratio = 0.5
+headline_time_format_string = %m/%d
+outline_pane_scrolls_horizontally = 0
+smart_auto_indent = 0
+log_text_font_size = None
+initial_horizontal_ratio = 0.3
+headline_text_editing_background_color = white
+outline_pane_background_color = 
+body_text_font_slant = roman
+split_bar_color = LightSteelBlue2
+initial_window_left = 20
+headline_text_font_size = None
+split_bar_width = 6
+initial_window_height = 600
+body_cursor_foreground_color = 
+body_pane_wraps = 1
+body_gmt_time = 0
+headline_text_font_slant = roman
+headline_text_editing_selection_foreground_color = white
+expanded_click_area = 1
+
+[prefs panel options]
+output_doc_chunks = 1
+run_untangle_done.py = 0
+page_width = 80
+tangle_outputs_header = 1
+default_target_language = Python
+run_tangle_done.py = 0
+default_tangle_directory = 
+tab_width = -4
+
+[compare options]
+limit_count = 9
+ignore_interior_whitespace = 0
+append_output_to_output_file = 0
+make_whitespace_visible = 0
+output_file = 
+ignore_first_line_of_file_1 = 0
+ignore_leading_whitespace = 0
+ignore_first_line_of_file_2 = 0
+limit_directory_search_extension = .py
+compare_file_1 = 
+compare_file_2 = 
+ignore_sentinel_lines = 0
+print_mismatching_lines = 1
+print_both_lines_for_matches = 0
+print_trailing_lines = 1
+print_matching_lines = 0
+ignore_blank_lines = 1
+
+[config options]
+read_only = 0
+redirect_execute_script_output_to_log_pane = 0
+relative_path_base_directory = .
+use_psyco = 0
+new_leo_file_encoding = UTF-8
+output_initial_comment = 
+default_derived_file_encoding = UTF-8
+config_encoding = utf-8
+write_strips_blank_lines = 1
+trailing_body_newlines = one
+remove_sentinels_extension = .txt
+tk_encoding = 
+output_newline = nl
+stylesheet = 
+at_root_bodies_start_in_doc_mode = 1
+write_old_format_derived_files = 0
+create_nonexistent_directories = 0
+use_plugins = 1
+save_clears_undo_buffer = 0
+use_gnx = 1
+
+[keyboard shortcuts]
+writefilenodes = Shift+Ctrl+W
+contractnode = Alt+[
+markchangeditems = Alt+C
+markclones = Alt+K
+extractnames = Shift+Ctrl+N
+marksubheads = Alt+S
+deletenode = Shift+Ctrl+BkSp
+promote = Ctrl+{
+gotoprevsibling = Alt+Shift+R
+aboutleo = None
+gotoparent = Alt+Shift+P
+expandnode = Alt+]
+save = Ctrl+S
+gotofirstnode = Alt+Shift+G
+gotolastnode = Alt+Shift+H
+gotoprevvisible = Alt+UpArrow
+markchangedroots = Alt+R
+cantredo = Shift+Ctrl+Z
+gotonextmarked = Alt+M
+sortsiblings = Alt-A
+matchbrackets = Ctrl+K
+writedirtyatfilenodes = Shift+Ctrl+Q
+unmarkall = Alt+U
+untangle = Shift+Ctrl+U
+reformatparagraph = Shift+Ctrl+P
+readoutlineonly = Shift+Ctrl+R
+close = Ctrl+W
+extract = Shift+Ctrl+D
+expandprevlevel = Alt+.
+preferences = Ctrl+Y
+cantundo = Ctrl+Z
+insertheadlinetimedate = Shift+Ctrl+H
+gotonextnode = Alt+Shift+DnArrow
+exit = Ctrl-Q
+new = Ctrl+N
+tanglemarked = Shift+Ctrl+M
+moveup = Ctrl+U
+contractparent = Alt+0
+cut = Ctrl+X
+contractall = Alt+-
+paste = Ctrl+V
+expandall = Alt+9
+unindent = Ctrl+[
+indent = Ctrl+]
+executescript = Ctrl+E
+clonenode = Ctrl+`
+extractsection = Shift+Ctrl+E
+editheadline = Ctrl+H
+replace = Ctrl+=
+toggleactivepane = Ctrl+T
+demote = Ctrl+}
+tangle = Shift+Ctrl+T
+open = Ctrl+O
+setcolors = Alt+Shift+C
+selectall = Ctrl+A
+saveas = Shift+Ctrl+S
+mark = Ctrl+M
+insertbodytimedate = Shift+Ctrl+G
+aborteditheadline = Shift+Esc
+gotonextcloned = Alt+N
+copy = Ctrl+C
+convertblanks = Shift+Ctrl+B
+movedown = Ctrl+D
+contractorgoleft = Alt+LtArrow
+equalsizedpanes = None
+moveright = Ctrl+R
+replacethenfind = Ctrl+-
+pastenode = Shift+Ctrl+V
+moveleft = Ctrl+L
+importtofile = Shift+Ctrl+F
+setfont = Alt+Shift+F
+findpanel = Ctrl+F
+openpythonwindow = Alt+P
+gotonextvisible = Alt+DnArrow
+expandtolevel5 = Alt+5
+showinvisibles = Alt+V
+insertnode = Ctrl+I
+findprevious = F2
+expandnextlevel = Alt+=
+expandorgoright = Alt+RtArrow
+copynode = Shift+Ctrl+C
+gotolinenumber = Alt+G
+checkspelling = Alt+Shift+A
+findnext = F3
+tangleall = Shift+Ctrl+A
+endeditheadline = Esc
+gotonextsibling = Alt+Shift+S
+cutnode = Shift+Ctrl+X
+gotonextchanged = Alt+D
+converttabs = Shift+Ctrl+J
+expandtolevel7 = Alt+7
+expandtolevel6 = Alt+6
+gotoprevnode = Alt+Shift+UpArrow
+expandtolevel4 = Alt+4
+expandtolevel3 = Alt+3
+expandtolevel2 = Alt+2
+expandtolevel1 = Alt+1
+expandtolevel8 = Alt+8
+
+[recent files]
+file0 = C:\prog\leoCVS\leo\src\LeoPy.leo
+
+[find/change options]
+mark_changes = 0
+ignore_case = 0
+change_string = 
+whole_word = 1
+script_search = 0
+node_only = 0
+selection_only = 0
+batch = 0
+search_headline = 0
+script_change = 0
+search_body = 1
+find_string = .update
+pattern_match = 0
+wrap = 0
+mark_finds = 0
+suboutline_only = 0
+reverse = 0
+
+</t>
 <t tx="ekr.20041225092227"></t>
 <t tx="ekr.20041225092227.1">import leoGlobals as g
 import Tkinter as Tk
@@ -11714,7 +11970,7 @@ def doHelp():
     help('leo')
 
 threading.Thread(target=doHelp).start()</t>
-<t tx="ekr.20041231083027"></t>
+<t tx="ekr.20041231083027">@ignore</t>
 <t tx="ekr.20041231083027.1">@others</t>
 <t tx="ekr.20041231083027.2">def foo():
     pass</t>
@@ -11723,7 +11979,6 @@ threading.Thread(target=doHelp).start()</t>
     
 @ doc part 1
 more
-@c
 
 @ doc part 2
 still more</t>
@@ -11743,5 +11998,9 @@ still more</t>
 <t tx="ekr.20041231083651.3">def spam():
     pass</t>
 <t tx="ekr.20041231092350"></t>
+<t tx="ekr.20041231105200">node 1, line 1</t>
+<t tx="ekr.20041231105200.1">node 2, line 1</t>
+<t tx="ekr.20041231105200.2"></t>
+<t tx="ekr.20041231105348">@path c:\prog\test\atStripTest.txt</t>
 </tnodes>
 </leo_file>
