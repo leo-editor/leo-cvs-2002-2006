@@ -575,7 +575,7 @@ class baseCommands:
 			
 		closeFlag = (
 			c.frame.startupWindow==true and # The window was open on startup
-			c.changed==false and c.saved==false and # The window has never been changed
+			c.changed==false and c.frame.saved==false and # The window has never been changed
 			app.numberOfWindows == 1) # Only one untitled window has ever been opened
 		#@nonl
 		#@-node:<< Set closeFlag if the only open window is empty >>
@@ -667,7 +667,7 @@ class baseCommands:
 		
 		"""Create a new outline from a 4.0 derived file."""
 		
-		frame = self ; c = frame.c ; v = c.currentVnode()
+		c = self ; frame = c.frame ; v = c.currentVnode()
 		
 		if v.isAtFileNode():
 			fileName = v.atFileNodeName()
