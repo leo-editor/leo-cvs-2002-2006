@@ -465,15 +465,15 @@ class baseLeoCompare:
         
         if self.outputFileName == None:
             return
-        dir,name = g.os_path_split(self.outputFileName)
-        if len(dir) == 0:
+        theDir,name = g.os_path_split(self.outputFileName)
+        if len(theDir) == 0:
             self.show("empty output directory")
             return
         if len(name) == 0:
             self.show("empty output file name")
             return
-        if not g.os_path_exists(dir):
-            self.show("output directory not found: " + dir)
+        if not g.os_path_exists(theDir):
+            self.show("output directory not found: " + theDir)
         else:
             try:
                 if self.appendOutput:

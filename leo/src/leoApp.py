@@ -400,9 +400,9 @@ class LeoApp:
         #@nl
         #@    << return if we can set self.leoID from "leoID.txt" >>
         #@+node:ekr.20031218072017.1980:<< return if we can set self.leoID from "leoID.txt" >>
-        for dir in (configDir,loadDir):
+        for theDir in (configDir,loadDir):
             try:
-                fn = g.os_path_join(dir, tag)
+                fn = g.os_path_join(theDir, tag)
                 f = open(fn,'r')
                 if f:
                     s = f.readline()
@@ -412,7 +412,7 @@ class LeoApp:
                         g.es("leoID = " + g.app.leoID, color="red")
                         return
                     else:
-                        g.es("empty " + tag + " in " + dir, color = "red")
+                        g.es("empty " + tag + " in " + theDir, color = "red")
             except:
                 g.app.leoID = None
         
@@ -433,15 +433,15 @@ class LeoApp:
         #@nl
         #@    << attempt to create leoID.txt >>
         #@+node:ekr.20031218072017.1982:<< attempt to create leoID.txt >>
-        for dir in (configDir,loadDir):
+        for theDir in (configDir,loadDir):
             try:
                 # Look in configDir first.
-                fn = g.os_path_join(dir, tag)
+                fn = g.os_path_join(theDir, tag)
                 f = open(fn,'w')
                 if f:
                     f.write(g.app.leoID)
                     f.close()
-                    g.es("created leoID.txt in " + dir, color="red")
+                    g.es("created leoID.txt in " + theDir, color="red")
                     return
             except: pass
             

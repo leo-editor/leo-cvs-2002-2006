@@ -471,15 +471,15 @@ class baseAtFile:
         
         name = p.anyAtFileNodeName() # 4/28/04
             
-        dir = g.choose(name,g.os_path_dirname(name),None)
+        theDir = g.choose(name,g.os_path_dirname(name),None)
         
-        if dir and g.os_path_isabs(dir):
-            if g.os_path_exists(dir):
-                at.default_directory = dir
+        if theDir and g.os_path_isabs(theDir):
+            if g.os_path_exists(theDir):
+                at.default_directory = theDir
             else:
-                at.default_directory = g.makeAllNonExistentDirectories(dir)
+                at.default_directory = g.makeAllNonExistentDirectories(theDir)
                 if not at.default_directory:
-                    at.error("Directory \"" + dir + "\" does not exist")
+                    at.error("Directory \"" + theDir + "\" does not exist")
         #@nonl
         #@-node:ekr.20031218072017.2628:<< Set path from @file node >>  in df.scanDeafaultDirectory in leoAtFile.py
         #@nl
@@ -547,14 +547,14 @@ class baseAtFile:
         
         if c.frame :
             base = g.getBaseDirectory() # returns "" on error.
-            for dir in (c.tangle_directory,c.frame.openDirectory,c.openDirectory):
-                if dir and len(dir) > 0:
-                    dir = g.os_path_join(base,dir)
-                    if g.os_path_isabs(dir): # Errors may result in relative or invalid path.
-                        if g.os_path_exists(dir):
-                            at.default_directory = dir ; break
+            for theDir in (c.tangle_directory,c.frame.openDirectory,c.openDirectory):
+                if theDir and len(theDir) > 0:
+                    theDir = g.os_path_join(base,theDir)
+                    if g.os_path_isabs(theDir): # Errors may result in relative or invalid path.
+                        if g.os_path_exists(theDir):
+                            at.default_directory = theDir ; break
                         else:
-                            at.default_directory = g.makeAllNonExistentDirectories(dir)
+                            at.default_directory = g.makeAllNonExistentDirectories(theDir)
         #@-node:ekr.20031218072017.2632:<< Set current directory >>
         #@nl
         if not at.default_directory and not importing:
@@ -2139,15 +2139,15 @@ class baseOldDerivedFile:
         
         name = p.anyAtFileNodeName() # 4/28/04
         
-        dir = g.choose(name,g.os_path_dirname(name),None)
+        theDir = g.choose(name,g.os_path_dirname(name),None)
         
-        if dir and len(dir) > 0 and g.os_path_isabs(dir):
-            if g.os_path_exists(dir):
-                self.default_directory = dir
+        if theDir and len(theDir) > 0 and g.os_path_isabs(theDir):
+            if g.os_path_exists(theDir):
+                self.default_directory = theDir
             else: # 9/25/02
-                self.default_directory = g.makeAllNonExistentDirectories(dir)
+                self.default_directory = g.makeAllNonExistentDirectories(theDir)
                 if not self.default_directory:
-                    self.error("Directory \"" + dir + "\" does not exist")
+                    self.error("Directory \"" + theDir + "\" does not exist")
         #@nonl
         #@-node:ekr.20031218072017.2389:<< Set path from @file node >> in scanDirectory in leoGlobals.py
         #@nl
@@ -2275,14 +2275,14 @@ class baseOldDerivedFile:
         
         if c.frame and not self.default_directory:
             base = g.getBaseDirectory() # returns "" on error.
-            for dir in (c.tangle_directory,c.frame.openDirectory,c.openDirectory):
-                if dir and len(dir) > 0:
-                    dir = g.os_path_join(base,dir)
-                    if g.os_path_isabs(dir): # Errors may result in relative or invalid path.
-                        if g.os_path_exists(dir):
-                            self.default_directory = dir ; break
+            for theDir in (c.tangle_directory,c.frame.openDirectory,c.openDirectory):
+                if theDir and len(theDir) > 0:
+                    theDir = g.os_path_join(base,theDir)
+                    if g.os_path_isabs(theDir): # Errors may result in relative or invalid path.
+                        if g.os_path_exists(theDir):
+                            self.default_directory = theDir ; break
                         else: # 9/25/02
-                            self.default_directory = g.makeAllNonExistentDirectories(dir)
+                            self.default_directory = g.makeAllNonExistentDirectories(theDir)
         
         if not self.default_directory and not scripting and not importing:
             # This should never happen: c.openDirectory should be a good last resort.

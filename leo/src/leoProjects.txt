@@ -524,15 +524,15 @@ self.output_newline = g.getOutputNewline() # 4/24/03: initialize from config set
 
 name = p.anyAtFileNodeName() # 4/28/04
 
-dir = g.choose(name,g.os_path_dirname(name),None)
+theDir = g.choose(name,g.os_path_dirname(name),None)
 
-if dir and len(dir) > 0 and g.os_path_isabs(dir):
-    if g.os_path_exists(dir):
-        self.default_directory = dir
+if theDir and len(theDir) > 0 and g.os_path_isabs(theDir):
+    if g.os_path_exists(theDir):
+        self.default_directory = theDir
     else: # 9/25/02
-        self.default_directory = g.makeAllNonExistentDirectories(dir)
+        self.default_directory = g.makeAllNonExistentDirectories(theDir)
         if not self.default_directory:
-            self.error("Directory \"" + dir + "\" does not exist")
+            self.error("Directory \"" + theDir + "\" does not exist")
 #@nonl
 #@-node:ekr.20031218072017.2389:<< Set path from @file node >> in scanDirectory in leoGlobals.py
 #@+node:ekr.20031218072017.2390:<< Test for @comment and @language >>
@@ -637,14 +637,14 @@ if theDict.has_key("tabwidth") and not old.has_key("tabwidth"):
 
 if c.frame and not self.default_directory:
     base = g.getBaseDirectory() # returns "" on error.
-    for dir in (c.tangle_directory,c.frame.openDirectory,c.openDirectory):
-        if dir and len(dir) > 0:
-            dir = g.os_path_join(base,dir)
-            if g.os_path_isabs(dir): # Errors may result in relative or invalid path.
-                if g.os_path_exists(dir):
-                    self.default_directory = dir ; break
+    for theDir in (c.tangle_directory,c.frame.openDirectory,c.openDirectory):
+        if theDir and len(theDir) > 0:
+            theDir = g.os_path_join(base,theDir)
+            if g.os_path_isabs(theDir): # Errors may result in relative or invalid path.
+                if g.os_path_exists(theDir):
+                    self.default_directory = theDir ; break
                 else: # 9/25/02
-                    self.default_directory = g.makeAllNonExistentDirectories(dir)
+                    self.default_directory = g.makeAllNonExistentDirectories(theDir)
 
 if not self.default_directory and not scripting and not importing:
     # This should never happen: c.openDirectory should be a good last resort.
@@ -935,15 +935,15 @@ if require_path_flag and not old.has_key("path") and theDict.has_key("path"):
 
     k = theDict["path"]
     << compute dir and relative_path from s[k:] >>
-    if len(dir) > 0:
+    if len(theDir) > 0:
         base = g.getBaseDirectory() # May return "".
-        if dir and len(dir) > 0:
-            dir = g.os_path_join(base,dir)
-            if g.os_path_isabs(dir):
+        if theDir and len(theDir) > 0:
+            theDir = g.os_path_join(base,theDir)
+            if g.os_path_isabs(theDir):
                 << handle absolute @path >>
             elif issue_error_flag and not self.path_warning_given:
                 self.path_warning_given = True # supress future warnings
-                self.error("ignoring relative path in @path:" + dir)
+                self.error("ignoring relative path in @path:" + theDir)
     elif issue_error_flag and not self.path_warning_given:
         self.path_warning_given = True # supress future warnings
         self.error("ignoring empty @path")
@@ -958,22 +958,22 @@ if len(path) > 2 and (
     (path[0]=='"' and path[-1] == '"') ):
     path = path[1:-1]
 
-dir = relative_path = string.strip(path)
+theDir = relative_path = string.strip(path)
 if 0: # 11/14/02: we want a _relative_ path, not an absolute path.
-    dir = g.os_path_join(g.app.loadDir,dir)
+    theDir = g.os_path_join(g.app.loadDir,theDir)
 
-# g.trace("dir: " + dir)
+# g.trace("theDir: " + theDir)
 #@nonl
 #@-node:ekr.20031218072017.1367:<< compute dir and relative_path from s[k:] >>
 #@+node:ekr.20031218072017.1368:<< handle absolute @path >>
-if g.os_path_exists(dir):
-    self.tangle_directory = dir
+if g.os_path_exists(theDir):
+    self.tangle_directory = theDir
 else: # 11/19/02
-    self.tangle_directory = g.makeAllNonExistentDirectories(dir)
+    self.tangle_directory = g.makeAllNonExistentDirectories(theDir)
     if not self.tangle_directory:
         if issue_error_flag and not self.path_warning_given:
             self.path_warning_given = True # supress future warnings
-            self.error("@path directory does not exist: " + dir)
+            self.error("@path directory does not exist: " + theDir)
             if base and len(base) > 0:
                 g.es("relative_path_base_directory: " + base)
             if relative_path and len(relative_path) > 0:
@@ -1045,25 +1045,25 @@ if c.frame and require_path_flag and not self.tangle_directory:
 
     for dir2, kind in table:
         if dir2 and len(dir2) > 0:
-            # print "base,dir:",base,dir
-            dir = g.os_path_join(base,dir2)
-            if g.os_path_isabs(dir): # Errors may result in relative or invalid path.
+            # print "base,theDir:",base,theDir
+            theDir = g.os_path_join(base,dir2)
+            if g.os_path_isabs(theDir): # Errors may result in relative or invalid path.
                 << handle absolute path >>
 
 if not self.tangle_directory and require_path_flag: # issue_error_flag:
     self.pathError("No absolute directory specified by @root, @path or Preferences.")
 #@+node:ekr.20031218072017.1374:<< handle absolute path >>
-if g.os_path_exists(dir):
+if g.os_path_exists(theDir):
     if kind == "@root" and not g.os_path_isabs(root_dir):
         self.tangle_directory = base
     else:
-        self.tangle_directory = dir 
+        self.tangle_directory = theDir 
     break
 else: # 9/25/02
-    self.tangle_directory = g.makeAllNonExistentDirectories(dir)
+    self.tangle_directory = g.makeAllNonExistentDirectories(theDir)
     if not self.tangle_directory:
         # 10/27/02: It is an error for this not to exist now.
-        self.error("@root directory does not exist:" + dir)
+        self.error("@root directory does not exist:" + theDir)
         if base and len(base) > 0:
             g.es("relative_path_base_directory: " + base)
         if dir2 and len(dir2) > 0:

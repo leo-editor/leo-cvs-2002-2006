@@ -292,8 +292,8 @@ class leoTkinterPrefs (leoPrefs.leoPrefs,leoTkinterDialog.leoTkinterDialog):
         self.untangle_batch_flag = self.untangle_batch_var.get()
         
         # Default Tangle options
-        dir = self.tangleDirectoryText.get("1.0","end")
-        self.tangle_directory = string.strip(dir)
+        theDir = self.tangleDirectoryText.get("1.0","end")
+        self.tangle_directory = string.strip(theDir)
         
         self.use_header_flag = self.use_header_var.get()
         self.output_doc_flag = self.output_doc_var.get()

@@ -1241,10 +1241,10 @@ class baseFileCommands:
         #@-at
         #@@c
         
-        dir = g.os_path_dirname(fileName)
+        theDir = g.os_path_dirname(fileName)
         
-        if len(dir) > 0:
-            c.openDirectory = dir
+        if len(theDir) > 0:
+            c.openDirectory = theDir
         #@nonl
         #@-node:ekr.20031218072017.2298:<< Set the default directory >> in fileCommands.readOutlineOnly
         #@nl
@@ -1282,10 +1282,10 @@ class baseFileCommands:
         #@-at
         #@@c
         
-        dir = g.os_path_dirname(fileName)
+        theDir = g.os_path_dirname(fileName)
         
-        if len(dir) > 0:
-            c.openDirectory = dir
+        if len(theDir) > 0:
+            c.openDirectory = theDir
         #@nonl
         #@-node:ekr.20031218072017.2298:<< Set the default directory >> in fileCommands.readOutlineOnly
         #@nl
@@ -2056,10 +2056,10 @@ class baseFileCommands:
         c = self.c
     
         if not c.openDirectory or len(c.openDirectory) == 0:
-            dir = g.os_path_dirname(fileName)
+            theDir = g.os_path_dirname(fileName)
     
-            if len(dir) > 0 and g.os_path_isabs(dir) and g.os_path_exists(dir):
-                c.openDirectory = dir
+            if len(theDir) > 0 and g.os_path_isabs(theDir) and g.os_path_exists(theDir):
+                c.openDirectory = theDir
     #@nonl
     #@-node:ekr.20031218072017.3045:setDefaultDirectoryForNewFiles
     #@+node:ekr.20031218072017.3046:write_Leo_file

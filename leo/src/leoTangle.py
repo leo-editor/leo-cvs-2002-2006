@@ -537,12 +537,12 @@ class baseTangleCommands:
             #@+node:ekr.20031218072017.3469:<< call tangle_done.run() or untangle_done.run() >>
             # Create a list of root names:
             root_names = []
-            dir = self.tangle_directory # Bug fix: 12/04/02
-            if not dir: dir = ""
+            theDir = self.tangle_directory # Bug fix: 12/04/02
+            if not theDir: theDir = ""
             for section in self.root_list:
                 for part in section.parts:
                     if part.is_root:
-                        root_names.append(g.os_path_join(dir,part.name))
+                        root_names.append(g.os_path_join(theDir,part.name))
             
             if self.tangling and self.tangle_batch_flag:
                 try:
@@ -3654,29 +3654,29 @@ class baseTangleCommands:
                     (path[0]=='"' and path[-1] == '"') ):
                     path = path[1:-1]
                 
-                dir = relative_path = string.strip(path)
+                theDir = relative_path = string.strip(path)
                 if 0: # 11/14/02: we want a _relative_ path, not an absolute path.
-                    dir = g.os_path_join(g.app.loadDir,dir)
+                    theDir = g.os_path_join(g.app.loadDir,theDir)
                 
-                # g.trace("dir: " + dir)
+                # g.trace("theDir: " + theDir)
                 #@nonl
                 #@-node:ekr.20031218072017.1367:<< compute dir and relative_path from s[k:] >>
                 #@nl
-                if len(dir) > 0:
+                if len(theDir) > 0:
                     base = g.getBaseDirectory() # May return "".
-                    if dir and len(dir) > 0:
-                        dir = g.os_path_join(base,dir)
-                        if g.os_path_isabs(dir):
+                    if theDir and len(theDir) > 0:
+                        theDir = g.os_path_join(base,theDir)
+                        if g.os_path_isabs(theDir):
                             #@                << handle absolute @path >>
                             #@+node:ekr.20031218072017.1368:<< handle absolute @path >>
-                            if g.os_path_exists(dir):
-                                self.tangle_directory = dir
+                            if g.os_path_exists(theDir):
+                                self.tangle_directory = theDir
                             else: # 11/19/02
-                                self.tangle_directory = g.makeAllNonExistentDirectories(dir)
+                                self.tangle_directory = g.makeAllNonExistentDirectories(theDir)
                                 if not self.tangle_directory:
                                     if issue_error_flag and not self.path_warning_given:
                                         self.path_warning_given = True # supress future warnings
-                                        self.error("@path directory does not exist: " + dir)
+                                        self.error("@path directory does not exist: " + theDir)
                                         if base and len(base) > 0:
                                             g.es("relative_path_base_directory: " + base)
                                         if relative_path and len(relative_path) > 0:
@@ -3686,7 +3686,7 @@ class baseTangleCommands:
                             #@nl
                         elif issue_error_flag and not self.path_warning_given:
                             self.path_warning_given = True # supress future warnings
-                            self.error("ignoring relative path in @path:" + dir)
+                            self.error("ignoring relative path in @path:" + theDir)
                 elif issue_error_flag and not self.path_warning_given:
                     self.path_warning_given = True # supress future warnings
                     self.error("ignoring empty @path")
@@ -3777,22 +3777,22 @@ class baseTangleCommands:
         
             for dir2, kind in table:
                 if dir2 and len(dir2) > 0:
-                    # print "base,dir:",base,dir
-                    dir = g.os_path_join(base,dir2)
-                    if g.os_path_isabs(dir): # Errors may result in relative or invalid path.
+                    # print "base,theDir:",base,theDir
+                    theDir = g.os_path_join(base,dir2)
+                    if g.os_path_isabs(theDir): # Errors may result in relative or invalid path.
                         #@                << handle absolute path >>
                         #@+node:ekr.20031218072017.1374:<< handle absolute path >>
-                        if g.os_path_exists(dir):
+                        if g.os_path_exists(theDir):
                             if kind == "@root" and not g.os_path_isabs(root_dir):
                                 self.tangle_directory = base
                             else:
-                                self.tangle_directory = dir 
+                                self.tangle_directory = theDir 
                             break
                         else: # 9/25/02
-                            self.tangle_directory = g.makeAllNonExistentDirectories(dir)
+                            self.tangle_directory = g.makeAllNonExistentDirectories(theDir)
                             if not self.tangle_directory:
                                 # 10/27/02: It is an error for this not to exist now.
-                                self.error("@root directory does not exist:" + dir)
+                                self.error("@root directory does not exist:" + theDir)
                                 if base and len(base) > 0:
                                     g.es("relative_path_base_directory: " + base)
                                 if dir2 and len(dir2) > 0:
