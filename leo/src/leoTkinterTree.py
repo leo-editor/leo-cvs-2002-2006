@@ -794,15 +794,19 @@ class leoTkinterTree (leoFrame.leoTree):
 		
 		c = self.c
 		
+		if 0:
+			try: self.redrawCount += 1
+			except: self.radrawCount = 1
+			g.trace(self.redrawCount)
+		# import traceback ; traceback.print_stack()
+		
 		if c.hoistStack:
 			p,junk = c.hoistStack[-1]
 			self.drawTree(p.copy(),root_left,root_top,0,0,hoistFlag=true)
 		else:
 			self.drawTree(c.rootPosition(),root_left,root_top,0,0)
 			
-		# g.trace(g.app.copies) ; g.app.copies = 0
-		# g.trace()
-		# import traceback ; traceback.print_stack()
+		
 	#@-node:ekr.20031218072017.2029:drawTopTree
 	#@+node:ekr.20031218072017.1008:drawTree
 	def drawTree(self,p,x,y,h,level,hoistFlag=false):
