@@ -2,7 +2,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="3379" clone_windows="0"/>
 <globals body_outline_ratio="0.47009569377990429">
-	<global_window_position top="-4" left="376" height="836" width="837"/>
+	<global_window_position top="10" left="376" height="836" width="837"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences>
@@ -22,8 +22,9 @@
 </v>
 <v t="edream.110203163054.6"><vh>Please use SourceForge to ask questions and make comments</vh></v>
 <v t="edream.110203163054.7" a=""><vh>Acknowledgements</vh></v>
-<v t="edream.110203163054.8"><vh>What people are saying about Leo</vh>
-<v t="edream.110203163054.9" a="M"><vh>Quotes of the Month</vh>
+<v t="edream.110203163054.8" a="E"><vh>What people are saying about Leo</vh>
+<v t="edream.110203163054.9" a="EM"><vh>Quotes of the Month</vh>
+<v t="ekr.20040118085921" a="V"><vh>Tarvin Rhodes (not yet)</vh></v>
 <v t="ekr.20031219090156"><vh>Anon (not yet)</vh></v>
 <v t="edream.121503192354.1"><vh>John Benson (not yet)</vh></v>
 <v t="edream.120703081642"><vh>Anon</vh></v>
@@ -1715,7 +1716,7 @@
 <v t="edream.110203163054.1156"><vh>Untangling</vh></v>
 <v t="edream.110203163054.1157"><vh>Weaving</vh></v>
 </v>
-<v t="edream.110203163054.1158" a="V"><vh>Sample Code</vh>
+<v t="edream.110203163054.1158"><vh>Sample Code</vh>
 <v t="edream.112303173638" a=""><vh>Running Leo in batch mode</vh></v>
 <v t="edream.110203163054.1159"><vh>Hello World using @root</vh>
 <v t="edream.110203163054.1160"><vh>&lt;&lt; includes &gt;&gt;</vh></v>
@@ -24555,5 +24556,32 @@ thoughts.
 The excellent ideas which are already implemented and the new ideas mentioned
 above make this a very exciting time for Leo. Thanks for a great tool, and I'm
 sure I'm not alone when I say I look forward to great things with Leo!</t>
+<t tx="ekr.20040118085921">I *LIKE* it; After coding a larger-than-normal DOS (sometimes one doesn't have
+the luxury of choice:) batchfile with Leo (my first Leo project, auto-emailing
+based on filename substring... trivial but ugly in DOS, since no string/email
+functions), I was amazed at how different the experience was compared to flat-filing.
+It was almost Forth-like in the way that it was possible to work top-down or
+bottom-up at will (I believe this is the key to its strength, btw).
+
+Also, I think that Leo has intrinsic qualities that make it work better than
+other things.  For example:
+* the ideal comprehendible code/module size (at least for small-brains like
+mine) seems to be roughly what fits (with a largish font and default-sized window
+split) in the bottom pane; It is probably a good chunk size for non-programming
+tasks, also.
+*  @ documentation is much cleaner than inline comments in a text file.
+* the fact that it is Python-based gives a feeling of freedom 
+* The simplicity of text-only. For example,the MS-Word97 outliner is great,
+but how much time is wasted trying to un-screwup your text formatting. At first,
+I thought that I wanted rich-text, html-ish panes (like TreePad Plus, for example)
+for non-programming use of Leo; but on second thought,  it would be probably
+be a distraction ~80% of the time.
+
+Thanks for sharing! I hope to be able to contribute something (besides commentary),
+once I get more comfortable using Python.
+
+Thanks again,
+Tarvin Rhodes
+</t>
 </tnodes>
 </leo_file>
