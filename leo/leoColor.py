@@ -43,6 +43,9 @@ default_colors_dict = {
 #@<< define colorizer keywords >>
 #@+node:2:C=1:<< define colorizer keywords >>
 #@+body
+#@<< leo keywords >>
+#@+node:1::<< leo keywords >>
+#@+body
 leoKeywords = (
 	# Leo 2 directives.
 	"@","@c","@code","@doc","@color","@comment",
@@ -54,6 +57,13 @@ leoKeywords = (
 	"@pagewidth","@path","@tabwidth",
 	# Leo 1 directives.
 	"@cweb","@ignore","@noweb","@root","@unit","@silent","@terse","@verbose")
+#@-body
+#@-node:1::<< leo keywords >>
+
+
+#@<< c keywords >>
+#@+node:2::<< c keywords >>
+#@+body
 	
 c_keywords = (
 	# C keywords
@@ -69,9 +79,14 @@ c_keywords = (
 	"private","protected","public","reinterpret_cast","static_cast",
 	"template","this","throw","true","try",
 	"typeid","typename","using","virtual","wchar_t")
-	
+#@-body
+#@-node:2::<< c keywords >>
+
 cweb_keywords = c_keywords
 
+#@<< html keywords >>
+#@+node:3::<< html keywords >>
+#@+body
 html_keywords = (
 	# HTML constructs.
 	"<","</",">",
@@ -98,7 +113,13 @@ html_keywords = (
 	"<script","</script",
 	# Escapes
 	"&amp;", "&lt;", "&gt;", "&quot;" )
+#@-body
+#@-node:3::<< html keywords >>
 
+
+#@<< java keywords >>
+#@+node:4::<< java keywords >>
+#@+body
 java_keywords = (
 	"abstract","boolean","break","byte","byvalue",
 	"case","cast","catch","char","class","const","continue",
@@ -111,7 +132,13 @@ java_keywords = (
 	"short","static","super","switch","synchronized",
 	"this","throw","transient","true","try",
 	"var","void","volatile","while")
+#@-body
+#@-node:4::<< java keywords >>
 
+
+#@<< latex keywords >>
+#@+node:5::<< latex keywords >>
+#@+body
 #If you see two idenitical words, with minor capitalization differences
 #DO NOT ASSUME that they are the same word. For example \vert produces
 #a single vertical line and \Vert produces a double vertical line
@@ -237,8 +264,13 @@ latex_keywords = (
 	"\\Xi", "\\xi",
 	#Z
 	"\\zeta" )
+#@-body
+#@-node:5::<< latex keywords >>
 
 
+#@<< pascal keywords >>
+#@+node:6::<< pascal keywords >>
+#@+body
 pascal_keywords = (
 	"and","array","as","begin",
 	"case","const","class","constructor","cdecl"
@@ -261,7 +293,13 @@ pascal_keywords = (
 	"threadvar",
 	# limited contexts
 	"exports","property","default","write","stored","index","name" )
+#@-body
+#@-node:6::<< pascal keywords >>
 
+
+#@<< perl keywords >>
+#@+node:7::<< perl keywords >>
+#@+body
 perl_keywords = (
 	"continue","do","else","elsif","format","for","format","for","foreach",
 	"if","local","package","sub","tr","unless","until","while","y",
@@ -325,9 +363,14 @@ perl_keywords = (
 	"chmod","chown","die","exec","kill",
 	"print","printf","return","reverse",
 	"sort","system","syscall","unlink","utime","warn")
+#@-body
+#@-node:7::<< perl keywords >>
 
 perlpod_keywords = perl_keywords
-	
+
+#@<< python keywords >>
+#@+node:8::<< python keywords >>
+#@+body
 python_keywords = (
 	"and",       "del",       "for",       "is",        "raise",    
 	"assert",    "elif",      "from",      "lambda",    "return",   
@@ -335,7 +378,13 @@ python_keywords = (
 	"class",     "except",    "if",        "or",        "yield",   
 	"continue",  "exec",      "import",    "pass",      "while",
 	"def",       "finally",   "in",        "print")
-	
+#@-body
+#@-node:8::<< python keywords >>
+
+
+#@<< tcl/tk keywords >>
+#@+node:9::<< tcl/tk keywords >>
+#@+body
 tcltk_keywords = ( # Only the tcl keywords are here.
 	"after",     "append",    "array",
 	"bgerror",   "binary",    "break",
@@ -365,22 +414,36 @@ tcltk_keywords = ( # Only the tcl keywords are here.
 	"unknown",   "unset",     "update",     "uplevel",   "upvar",
 	"variable",  "vwait",
 	"while" )
+#@-body
+#@-node:9::<< tcl/tk keywords >>
 
+
+#@<< php keywords >>
+#@+node:10::<< php keywords >>
+#@+body
 php_keywords = ( # 08-SEP-2002 DTHEIN
-	"and",            "or",         "xor",       "__FILE__",
-	"__LINE__",       "array()",    "as",        "break",
-	"case",           "cfunction",  "class",     "const",
-	"continue",       "declare",    "default",   "die()",
-	"do",             "echo()",     "else",      "elseif",
-	"empty()",        "enddeclare", "endfor",    "endforeach",
-	"endif",          "endswitch",  "endwhile",  "eval",
-	"exit()",         "extends",    "for",       "foreach",
-	"function",       "global",     "if",        "include()",
-	"include_once()", "isset()",    "list()",    "new",
-	"old_function",   "print()",    "require()", "require_once()",
-	"return()",       "static",     "switch",    "unset()",
-	"use",            "var",        "while",     "__FUNCTION__",
-	"__CLASS__",      "<?php",      "?>" )
+	"__CLASS__", "__FILE__", "__FUNCTION__", "__LINE__",
+	"and", "as", "break",
+	"case", "cfunction", "class", "const", "continue",
+	"declare", "default", "do",
+	"else", "elseif", "enddeclare", "endfor", "endforeach",
+	"endif", "endswitch",  "endwhile", "eval", "extends",
+	"for", "foreach", "function", "global", "if",
+	"new", "old_function", "or", "static", "switch",
+	"use", "var", "while", "xor" )
+	
+# The following are supposed to be followed by ()
+php_paren_keywords = (
+	"array", "die", "echo", "empty", "exit",
+	"include", "include_once", "isset", "list",
+	"print", "require", "require_once", "return",
+	"unset" )
+	
+# The following are handled by special case code:
+# "<?php", "?>"
+
+#@-body
+#@-node:10::<< php keywords >>
 #@-body
 #@-node:2:C=1:<< define colorizer keywords >>
 
@@ -996,7 +1059,7 @@ class colorizer:
 					#@-body
 					#@-node:9::<< handle possible @keyword >>
 
-				elif ch in string.letters or (ch == '\\' and language == latex_language):
+				elif ch in string.letters or ch == '_' or (ch == '\\' and language == latex_language):
 					
 					#@<< handle possible keyword >>
 					#@+node:10::<< handle possible  keyword >>
@@ -1009,42 +1072,63 @@ class colorizer:
 					word = s[i:j]
 					if word in keywords:
 						body.tag_add("keyword", index(n,i), index(n,j))
+					elif language == php_language:
+						if word in php_paren_keywords and match(s,j,"()"):
+							body.tag_add("keyword", index(n,i), index(n,j+2))
+							j += 2
 					i = j
 					#@-body
 					#@-node:10::<< handle possible  keyword >>
 
+				elif language == php_language and (match(s,i,"<") or match(s,i,"?")):
+					
+					#@<< handle special php keywords >>
+					#@+node:11::<< handle special php keywords >>
+					#@+body
+					if match(s,i,"<?php"):
+						body.tag_add("keyword", index(n,i), index(n,i+5))
+						i += 5
+					elif match(s,i,"?>"):
+						body.tag_add("keyword", index(n,i), index(n,i+2))
+						i += 2
+					else:
+						i += 1
+
+					#@-body
+					#@-node:11::<< handle special php keywords >>
+
 				elif ch == ' ':
 					
 					#@<< handle blank >>
-					#@+node:11::<< handle blank >>
+					#@+node:12::<< handle blank >>
 					#@+body
 					if self.showInvisibles:
 						body.tag_add("blank", index(n,i))
 					i += 1
 					#@-body
-					#@-node:11::<< handle blank >>
+					#@-node:12::<< handle blank >>
 
 				elif ch == '\t':
 					
 					#@<< handle tab >>
-					#@+node:12::<< handle tab >>
+					#@+node:13::<< handle tab >>
 					#@+body
 					if self.showInvisibles:
 						body.tag_add("tab", index(n,i))
 					i += 1
 					#@-body
-					#@-node:12::<< handle tab >>
+					#@-node:13::<< handle tab >>
 
 				else:
 					
 					#@<< handle normal character >>
-					#@+node:13::<< handle normal character >>
+					#@+node:14::<< handle normal character >>
 					#@+body
 					# body.tag_add("normal", index(n,i))
 					i += 1
 
 					#@-body
-					#@-node:13::<< handle normal character >>
+					#@-node:14::<< handle normal character >>
 
 				assert(progress < i)
 	#@-body
