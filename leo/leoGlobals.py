@@ -152,37 +152,76 @@ def windows():
 
 leoIcon = None
 
+import Image,_tkicon
+import tkIcon
+
 def attachLeoIcon (w):
 	try:
 		global leoIcon
-		import Image,tkIcon
+		
 		f = onVisibility
 		callback = lambda event,w=w,f=f:f(w,event)
 		w.bind("<Visibility>",callback)
 		if not leoIcon:
-			icon_file_name = os.path.join(app().loadDir,'Icons','LeoDoc.ico') # LeoDoc64.ico looks worse :-(
+			# Using a .gif rather than an .ico allows us to specify transparency.
+			icon_file_name = os.path.join(app().loadDir,'Icons','LeoWin.gif')
 			icon_file_name = os.path.normpath(icon_file_name)
 			icon_image = Image.open(icon_file_name)
-			leoIcon = tkIcon.Icon(icon_image)
+			if 1: # Doesn't resize.
+				leoIcon = createLeoIcon(icon_image)
+			else: # Stupid code: assumes 64x64
+				leoIcon = tkIcon.Icon(icon_image)
+			
 	except:
 		# es_exception()
 		leoIcon = None
 #@-body
-#@+node:1::onVisibility
+#@+node:1::createLeoIcon
+#@+body
+# This code is adapted from tkIcon.__init__
+# Unlike the tkIcon code, this code does _not_ resize the icon file.
+
+def createLeoIcon (icon):
+	
+	i = icon ; m = None
+	# create transparency mask
+	if i.mode == "P":
+		try:
+			t = i.info["transparency"]
+			m = i.point(lambda i, t=t: i==t, "1")
+		except KeyError: pass
+	elif i.mode == "RGBA":
+		# get transparency layer
+		m = i.split()[3].point(lambda i: i == 0, "1")
+	if not m:
+		m = Image.new("1", i.size, 0) # opaque
+	# clear unused parts of the original image
+	i = i.convert("RGB")
+	i.paste((0, 0, 0), (0, 0), m)
+	# create icon
+	m = m.tostring("raw", ("1", 0, 1))
+	c = i.tostring("raw", ("BGRX", 0, -1))
+	return _tkicon.new(i.size, c, m)
+#@-body
+#@-node:1::createLeoIcon
+#@+node:2::onVisibility
 #@+body
 # Handle the "visibility" event and attempt to attach the Leo icon.
 # This code must be executed whenever the window is redrawn.
 
 def onVisibility (w,event):
 
-	# print "globals.onVisibility"
 	global leoIcon
+	
 	if leoIcon and w and event and event.widget == w:
+		if 1: # Allows us not to resize the icon.
+			leoIcon.attach(w.winfo_id())
+		else:
+			leoIcon.attach(w)
+		
 
-		# print "OnVisibility"
-		leoIcon.attach(w)
 #@-body
-#@-node:1::onVisibility
+#@-node:2::onVisibility
 #@-node:1::attachLeoIcon & allies
 #@+node:2::get_window_info
 #@+body
