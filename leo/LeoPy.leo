@@ -2,13 +2,13 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="2132" clone_windows="0"/>
 <globals body_outline_ratio="0.52017937219730936">
-	<global_window_position top="0" left="165" height="27" width="75"/>
+	<global_window_position top="24" left="232" height="27" width="75"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences allow_rich_text="0" tab_width="4" page_width="132" tangle_bat="0" untangle_bat="0" output_doc_chunks="1" use_header_flag="1" defaultTargetLanguage="Python">
 </preferences>
-<find_panel_settings search_body="1" suboutline_only="1">
-	<find_string>	</find_string>
+<find_panel_settings search_body="1" suboutline_only="1" whole_word="1">
+	<find_string>None</find_string>
 	<change_string></change_string>
 </find_panel_settings>
 <vnodes>
@@ -834,45 +834,45 @@
 <v><vh>Linux line feeds</vh></v>
 <v><vh>Operation of leoConfig.txt</vh></v>
 </v>
-<v a="MV"><vh>Finish release notes</vh></v>
-<v><vh>Release 3.6 beta 1</vh>
-<v t="T504"><vh>Update readme file</vh></v>
-<v t="T505"><vh>Make sure CVS doesn't trash icons</vh></v>
-<v><vh>always use leosetup.exe as name for installer</vh></v>
+<v a="E"><vh>Release 3.6 beta 1</vh>
+<v t="T504"><vh>Update readme file (done for 3.6.b1)</vh></v>
 <v><vh>Update version info (done for 3.6b1)</vh></v>
+<v a="V"><vh>always use leosetup.exe as name for installer</vh></v>
 </v>
-<v t="T506"><vh>Test r+ access mode in leoConfig.py</vh></v>
-<v t="T507"><vh>Linux-only Bugs</vh>
-<v t="T508" a="M"><vh>Idle doesn't create a window on Linux!</vh></v>
-<v t="T509"><vh>Fix horiz scrollbar bug when tiling horizontally</vh></v>
+<v a="E"><vh>3.7</vh>
+<v t="T505"><vh>Test r+ access mode in leoConfig.py</vh></v>
+<v><vh>Easy</vh>
+<v t="T506"><vh>Fix misc bugs</vh></v>
+<v t="T507"><vh>Avoid 'dead' keys as accelerators</vh></v>
+<v><vh>@last directive (PHP)</vh>
+<v t="T508"><vh>Add PHP support</vh></v>
+<v t="T509"><vh>Second posting</vh></v>
+<v t="T510"><vh>Third posting</vh></v>
+</v>
+<v t="T511"><vh>perlpod hack</vh></v>
+<v t="T512"><vh>F key as meta key?</vh></v>
+<v><vh>Go to line x (in @file trees)</vh></v>
+<v t="T513"><vh>@codepage iso-8859-1</vh></v>
+<v t="T514"><vh>Executable nodes (Execute Python script)</vh></v>
+</v>
+<v><vh>Important</vh>
+<v t="T515"><vh>Popup menus</vh>
+<v t="T516"><vh>Another suggestion</vh></v>
+</v>
+<v t="T517"><vh>Open With command</vh>
+<v t="T518"><vh>What's *Your* Opinion</vh>
+<v t="T519"><vh>Comment2</vh></v>
+<v t="T520"><vh>Comment1</vh></v>
+</v>
+</v>
+</v>
+</v>
+<v t="T521"><vh>Linux-only Bugs</vh>
+<v t="T522" a="M"><vh>Idle doesn't create a window on Linux!</vh></v>
+<v t="T523"><vh>Fix horiz scrollbar bug when tiling horizontally</vh></v>
 <v><vh>Control-v doesn't paste</vh></v>
 </v>
 <v><vh>Improvements</vh>
-<v><vh>copy positive comments from slashdot</vh></v>
-<v><vh>Easy: First</vh>
-<v t="T510"><vh>Avoid 'dead' keys as accelerators</vh></v>
-<v><vh>@last directive (PHP)</vh>
-<v t="T511"><vh>Add PHP support</vh></v>
-<v t="T512"><vh>Second posting</vh></v>
-<v t="T513"><vh>Third posting</vh></v>
-</v>
-<v t="T514"><vh>perlpod hack</vh></v>
-<v t="T515"><vh>F key as meta key?</vh></v>
-<v><vh>Go to line x (in @file trees)</vh></v>
-<v t="T516"><vh>@codepage iso-8859-1</vh></v>
-<v t="T517"><vh>Executable nodes (Execute Python script)</vh></v>
-</v>
-<v><vh>Important: Next</vh>
-<v t="T518"><vh>Popup menus</vh>
-<v t="T519"><vh>Another suggestion</vh></v>
-</v>
-<v t="T520"><vh>Open With command</vh>
-<v t="T521"><vh>What's *Your* Opinion</vh>
-<v t="T522"><vh>Comment2</vh></v>
-<v t="T523"><vh>Comment1</vh></v>
-</v>
-</v>
-</v>
 <v><vh>Important: Later</vh>
 <v t="T524"><vh>Resolve CVS conflicts command</vh></v>
 <v t="T525"><vh>Remote access Scott Powell</vh></v>
@@ -9302,25 +9302,7 @@ proc myFrame {w args} {
 <t tx="T503">@nocolor
 </t>
 <t tx="T504">Tell how to get Python &amp; tcl/tk.</t>
-<t tx="T505">The GIF is again trashed.  I think CVS is doing it.
-
-When a binary file, like a GIF, is added to CVS, it needs to be added with the "-kb" option and perhaps the "-ko" option.  -kb tells CVS that it's binary and -ko tells CVS not to do keyword expansion.
-
-So "cvs add -kb Leoapp.GIF" would have been good to do.
-
-You can mark the file binary after the fact with:
-
-cvs admin -kb Leoapp.GIF
-
-It looks like all the GIFs are currently marked as test, but the "bmp"s are not.
-I suggest it's because the filename extension was "GIF" rather than "gif".  CVS is normally setup by default to recognize GIF files as binary, but it is probably case sensitive and didn't recognize *.GIF as the same as *.gif. 
-
-Anyway, we really need to use "cvs admin -kb" to mark all the GIFs as binary.  And then you'll need to checkin new copies of any GIFs that have more than one version because they have been trashed on checkin (by CVS doing a text 'diff').
-
--- 
-Dave Hein &lt;dhein@acm.org&gt;
-</t>
-<t tx="T506">In my last mail, I wrote:
+<t tx="T505">In my last mail, I wrote:
 
 &gt; &gt; If you change the file-open mode from "w" to "r+" then the comments stay
 &gt; &gt; in the config-file.
@@ -9333,20 +9315,119 @@ cf.seek(0)
 before
 config.write(cf)
 </t>
-<t tx="T507">These may indicate problems with Tk on Linux.  I can not reproduce them on XP.</t>
-<t tx="T508">Oooooops.  What am I going to do about this? </t>
-<t tx="T509">When in 'vertical split' mode (with viewpane on right, and tree pane over log pane on left), the horixontal scrollbar at bottom of screen is at full width, despite the fact that not all of the tree pane area is displayed. 
+<t tx="T506">The following was noted while running leo-3.6b1 from CVS on Linux Mandrake 8.2 with Python 2.2.1 compiled from sources. 
 
-Another way of saying this - I narrow the tree and log panes, to the extent that the display of tree node headings is truncated. But the horizontal scrollbar at the bottom doesn't contract, and doesn't allow me to horizontally scroll the tree pane to expose the rest of the node headings. 
+And yes, I've been using Leo a few hours every day for more than a week, now. :^) Actually, it's become my main development platform, and I do this for a living. 
+
+I'm glad to report no show-stopper bugs, after a few hours of usage. 
+
+
+-- Minor bugs 
+
+
+- It's probably another Tk problem, but tabs display a three character indentation, when tab_width is set to 4 in leoConfig.txt . It's been this way in Leo 3.5 too. 
+
+
+- The already lamented problems about keyboard shortcuts on international keyobards are still giving grief. Currently I cannot access the following shortcuts, on an Italian keyboard: 
+
+In Edit: 
+Edit Body...|Indent Ctrl+] 
+Edit Body...|Unindent Ctrl+[ 
+Find...|Replace Ctrl+= 
+Find...|Replace, Then Find Ctrl+- 
+
+In Outline: 
+Clone Node Ctrl+` 
+Expand/Contract...|Expand Next Level Alt+= 
+Move/Select...|Promote Shift+Ctrl+[ 
+Move/Select...|Demote Shift+Ctrl+] 
+
+
+-- General considerations: 
+
+
+- I agree with a former poster that, in a typical usage pattern, moving the cursor around over the outline is far more often used then reshaping same outline. 
+
+I have a proposal to correct this, but first you need to free the Alt+U shortcut: 
+
+Outline|Mark/Go To...|Unmark All -&gt; Alt+L (instead of Alt+U) 
+
+Now you are able to use the following, more intuitive, shortcuts in Outline|Move/Select...: 
+
+Move Up Ctrl+U (same as before) 
+Move Down Ctrl+D (same as before) 
+Move Left Ctrl+L (same as before) 
+Move Right Ctrl+R (same as before) 
+Go Prev Visible -&gt; Alt+U (instead of Alt-Shift+U) 
+Go Next Visible -&gt; Alt+D (instead of Alt-Shift+D) 
+Go Back -&gt; Alt+B (instead of Alt-Shift+V) 
+Go Next -&gt; Alt+N (instead of Alt-Shift+W) 
+Toggle Last Alt+T (new) 
+
+Go Back and Go Next are very useful, but are not documented in LeoDocs.leo. Even more useful would be a new command, Toggle Last, that alternates between the current node and the last visited one. 
+
+That is, the first time it is pressed it works like Go Back, the second time like Go Next, the third like Go Back again and so on. I would give it Alt+T as a shortcut. 
+
+
+- Source files still have the dreaded \r in them. Why don't you switch to \n only, once and for all, and live happily ever after? ;^) 
+
+
+- In file leoUtils.py there is the following astounding comment: 
+
+# The Unix readline() routine delivers "\r\n" line end strings 
+# verbatim, while the windows versions force the string to use 
+# the Unix convention of using only "\n". This routine causes 
+# the Unix readline to do the same. 
+
+Did anybody report this to the python-dev ML? (I know you, Edward, are pressed for time.) This kind of inconsistency should be eradicated from the Python sources. 
+
+
+-- Quibbles 
+
+
+- Having done a Find with Search Body Text and Mark Finds set, the Find Next command is able to jump to following nodes, while the Find Previous command cannot go to previous ones. 
+
+
+- The font settings in leoConfig.txt are not active when I open Leo. They instantly activate when opening the Edit|Set Font... dialog, without having to click anything in said dialog. Then, once the .leo file is saved, the problem goes away. 
+
+
+- The "initial_vertical ratio = 0.5" setting is not enforced. The bar between the layout and the log panes always opens at about 2/3 of the main window width, towards the right side. 
+
+
+- In file leoConfig.leo you say: 
+
+# The version used at the start of .leo files. 
+# Default is UTF-8. Better is ISO-8859-1. 
+# Use UTF-8 to write leo.py 2.x files. 
+
+You may want to suggest the use of ISO-8859-15 instead, which is the same as ISO-8859-1, apart from the inclusion of the newly defined Euro symbol. 
+
+
+- In file PKG-INFO there is this line: 
+
+Version: 2.0 
+
+In version 3.5 it said "3.5" . 
+
+
+- Since you took back the Python version to 2.1.1 in the file PKG-INFO, you should take it back in the file setup.py too. 
+
+
+And that's all, for now. 
+
+
+P.S.: the almost complete absence of quoting in the generated emails erase the chance to follow the thread of discussion via email, on these forums. 
+
+Also, the fact that one is forced to post via Web is truly awful. After all, the good old mailing lists have a web archive too, so what's the advantage of these forums? 
 </t>
-<t tx="T510">The subject of this thread is about the use of the combination Ctrl+Backquote as accelerator key for Clone Node. I am using a US-International keyboard configuration and that means that the backquote is a 'dead key' (used in combination to generate accented characters). On such a keyboard, this accelerator for that frequent operation becomes unavailable. 
+<t tx="T507">The subject of this thread is about the use of the combination Ctrl+Backquote as accelerator key for Clone Node. I am using a US-International keyboard configuration and that means that the backquote is a 'dead key' (used in combination to generate accented characters). On such a keyboard, this accelerator for that frequent operation becomes unavailable. 
 
 On my system, I have modified leoFrame.py to use Ctrl+/ instead. It may not be the most mnemonic combination but it solved my problem. 
 
 In conclusion, I would suggest avoiding the use as an accelerator of a modifier (CTRL, ALT or SHIFT) in combination with a character frequently used as a 'dead key' (tilde, carret, quote, backquote and doublequote). 
 
 </t>
-<t tx="T511">More on the issues involved in munging PHP with Leo.
+<t tx="T508">More on the issues involved in munging PHP with Leo.
 
 By its nature, PHP is a difficult language for toolsmiths to accommodate, especially
 with its 'dual-mode' nature (ability to switch between 'HTML mode' and 'code
@@ -9427,7 +9508,7 @@ close(FILEOUT);
   }
 
 </t>
-<t tx="T512">We definitely need a @last directive to handle php.  I know this is in the TODO
+<t tx="T509">We definitely need a @last directive to handle php.  I know this is in the TODO
 list, but its at the end of the list and I'm hoping that it can be done sooner
 rather than later.
 
@@ -9464,7 +9545,7 @@ If someone can tackle "@last", I might be able to tackle some explicit import
 functionality for PHP files.
 
 </t>
-<t tx="T513">Read and respond to this message at: 
+<t tx="T510">Read and respond to this message at: 
 http://sourceforge.net/forum/message.php?msg_id=1673863
 By: dthein
 
@@ -9488,7 +9569,7 @@ PS: By the way, some of the keyword strings are not getting highlighted -- becau
 they don't use standard variable naming characters (e.g. "array()" is considered
 a keyword, not a function call).  We might think about what to do about that.
 </t>
-<t tx="T514">Have double underscore denote newline, e.g. __=pod__ and __=cut__.
+<t tx="T511">Have double underscore denote newline, e.g. __=pod__ and __=cut__.
 
 I have done some investigating with version 3.5 of leo and the perl+pod 
 language setting.  What I Did was setup an outline that basically had in it
@@ -9600,12 +9681,12 @@ Cheers,
 Ed Taekema
 Toronto, Canada
 </t>
-<t tx="T515">Sorry for nagging so much, but how about a Emacs style meta-key(Esc?) followed by up or down? or F1/F2 ? anything to escape having to hold down three keys at the same time -- which seems to be common to other shortcut combinations too. so if you could put this in as an option in the preferences -- to turn on or off meta-key binding, that would let people choose what they prefer... 
+<t tx="T512">Sorry for nagging so much, but how about a Emacs style meta-key(Esc?) followed by up or down? or F1/F2 ? anything to escape having to hold down three keys at the same time -- which seems to be common to other shortcut combinations too. so if you could put this in as an option in the preferences -- to turn on or off meta-key binding, that would let people choose what they prefer... 
 
 
 EKR:  This could be interesting:  f1 arrow for outline.</t>
-<t tx="T516">@codepage iso-8859-1</t>
-<t tx="T517">Read and respond to this message at: 
+<t tx="T513">@codepage iso-8859-1</t>
+<t tx="T514">Read and respond to this message at: 
 http://sourceforge.net/forum/message.php?msg_id=1674498
 By: rich_ries
 
@@ -9641,7 +9722,7 @@ This could also be used to launch an editor:
 
 Probably "goto" would be frowned upon, but it gives the idea.
 </t>
-<t tx="T518">Here's what I'd like to see pop up when right clicking on a headline:
+<t tx="T515">Here's what I'd like to see pop up when right clicking on a headline:
 A popup menu with the following items:
 Read
 Read Outline Only
@@ -9666,7 +9747,7 @@ it might be nice to have in the popup.
 -Joe
 
 </t>
-<t tx="T519">For example, I'd love to be able to right-click on a '@file' node and choose 'Read @file Node' or 'Write @file Node'. 
+<t tx="T516">For example, I'd love to be able to right-click on a '@file' node and choose 'Read @file Node' or 'Write @file Node'. 
 
 Options in context menu could include: 
 * Read @file Node 
@@ -9677,7 +9758,7 @@ Options in context menu could include:
 * Copy Node 
 and possibly others. 
 </t>
-<t tx="T520">&gt; But the quick and dirty way to make this work is just to push the filename
+<t tx="T517">&gt; But the quick and dirty way to make this work is just to push the filename
 &gt; with the complete path on to the command line, and let the OS figure out
 &gt; what the user is trying to do. In Windows, the file will open w the
 &gt; associated program... come to think of it, not sure what will happen when
@@ -9713,7 +9794,7 @@ os.startfile(f)
 &gt; this would kill flexibility, because people wouldn't be able to load
 &gt; viewpane contents into an existing editor instance.
 </t>
-<t tx="T521">After some discussion with Edward, I've agreed to summarise on the public webboard for all to discuss. 
+<t tx="T518">After some discussion with Edward, I've agreed to summarise on the public webboard for all to discuss. 
 
 I've been thinking about the subject of external editors. 
 
@@ -9731,7 +9812,7 @@ The solution I've thought of is:
 
 What are *your* thoughts, folks? 
 </t>
-<t tx="T522">That's a Great Idea!
+<t tx="T519">That's a Great Idea!
 
 Zope just came out with an "ExternalEditor" product that works very similar
 to what you describe.  You might get some ideas by checking out the docs for it.
@@ -9763,12 +9844,18 @@ would let you put a hook on the file to call some code when the file is updated.
 
 -Rob
 </t>
-<t tx="T523">I think this would do a lot to increase the viability of Leo. 
+<t tx="T520">I think this would do a lot to increase the viability of Leo. 
 
 Leo shouldn't try to compete with an editor which has been customized over years
 of use.
 
 Seamless access to MyFavoriteTextEditor from Leo would be cool.
+</t>
+<t tx="T521">These may indicate problems with Tk on Linux.  I can not reproduce them on XP.</t>
+<t tx="T522">Oooooops.  What am I going to do about this? </t>
+<t tx="T523">When in 'vertical split' mode (with viewpane on right, and tree pane over log pane on left), the horixontal scrollbar at bottom of screen is at full width, despite the fact that not all of the tree pane area is displayed. 
+
+Another way of saying this - I narrow the tree and log panes, to the extent that the display of tree node headings is truncated. But the horizontal scrollbar at the bottom doesn't contract, and doesn't allow me to horizontally scroll the tree pane to expose the rest of the node headings. 
 </t>
 <t tx="T524">There have been a couple different suggestions on how to obtain a .leo file
 that presents the conflicts for resolution.  My initial thought was to have
@@ -12469,27 +12556,25 @@ if backupName:
 		&lt;&lt; open idle in Windows &gt;&gt;
 
 	return "break" # inhibit further command processing.</t>
-<t tx="T697"># 07-SEP-2002 DHEIN: Open Python window under linux
+<t tx="T697"># 09-SEP-2002 DHEIN: Open Python window under linux
 
 try:
-	from idlelib import IdleConf
+	pathToLeo = os.path.join(app().loadDir,"leo.py")
+	sys.argv = [pathToLeo]
+	from idlelib import idle
+	if app().idle_imported:
+		reload(idle)
+	app().idle_imported = true
 except:
-	es("idlelib could not be imported.")
-	es("Probably IDLE is not installed.")
-	es("Run Tools/idle/setup.py to build idlelib.")
-	return "break" # inhibit further command processing.
-
-idle_dir = os.path.dirname(IdleConf.__file__)
-IdleConf.load(idle_dir)
-
-# defer importing Pyshell until IdleConf is loaded
-from idlelib import PyShell
-pathToLeo = os.path.join(app().loadDir,"leo.py")
-# first arg is required but ignored by PyShell.main()
-# "-d" means debug
-# "-t" means title
-sys.argv = ["leo","-d","-t", pathToLeo, pathToLeo]
-PyShell.main()</t>
+	try:
+		es("idlelib could not be imported.")
+		es("Probably IDLE is not installed.")
+		es("Run Tools/idle/setup.py to build idlelib.")
+		es("Can not import idle")
+		import traceback
+		traceback.print_exc() # This can fail!!
+	except: pass
+</t>
 <t tx="T698">try:
 	executable_dir = os.path.dirname(sys.executable)
 	idle_dir=os.path.join(executable_dir,"Tools","idle")

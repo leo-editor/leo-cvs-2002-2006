@@ -1,3 +1,20 @@
+Note: leo.py requires Python 2.2 or greater and tk/tcl 8.3 or greater.
+
+Download Python from http://www.python.org/download/
+Download tk/tcl from http://www.tcl.tk/software/tcltk/downloadnow83.tml
+
+leo.py 3.6 beta 1                             September 10, 2002
+
+Highlights:
+
+- Fixed a large number of bugs, especially bugs that appear only on Linux.
+- Leo now remembers the previous insertion point and location of the scrollbar when switching between nodes.
+- Added Match Brackets command.
+- Added support for MouseWheel (Linux only).
+- Added support for LaTex and PHP.
+- Improved all aspects of the Help menu.
+- Discovered a minor bug involving the Python (Idle) window and documented a workaround.
+
 leo.py 3.5                                    August 14, 2002
 
 The many bugs were reported in 3.4 show that leo.py is being heavily used.  This version corrects all known bugs and adds some new features:
