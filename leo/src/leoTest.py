@@ -8,6 +8,7 @@ Run the unit tests in test.leo using the Execute Script command.
 
 """
 
+#@@language python
 #@@tabwidth -4
 
 import leoGlobals as g
@@ -1604,5 +1605,6 @@ class reformatParagraphTestCase(unittest.TestCase):
 #@-node:ekr.20040303062846.82:class reformatParagraphTestCase
 #@-node:ekr.20040303062846.80:Reformat Paragraph tests
 #@-others
+#@nonl
 #@-node:ekr.20040303062846.2:@thin ../src/leoTest.py
 #@-leo
