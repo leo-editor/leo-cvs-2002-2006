@@ -159,7 +159,7 @@ class baseCommands:
 	
 	def getSignOnLine (self):
 		c = self
-		return "Leo 4.2 alpha 2, build %s, May 18, 2004" % c.getBuildNumber()
+		return "Leo 4.2 alpha 2a, build %s, May 19, 2004" % c.getBuildNumber()
 		
 	def initVersion (self):
 		c = self
