@@ -63,6 +63,7 @@ class LeoApp:
         self.tkEncoding = "utf-8"
         self.unicodeErrorGiven = True # True: suppres unicode tracebacks.
         self.unitTestDict = {} # For communication between unit tests and code.
+        self.unitTesting = False # True if unit testing.
         self.use_gnx = True # True: generate gnx's instead of tnode indices.
         self.windowList = [] # Global list of all frames.  Does not include hidden root window.
     
