@@ -347,8 +347,8 @@ class config:
 				`family`+':'+`size`+':'+`slant`+':'+`weight`)
 			es_exception()
 			return self.defaultFont
-		#print `family_name`,`family`,`size`,`slant`,`weight`
-		#print "actual_name:",`font.cget("family")`
+		#print family_name,family,size,slant,weight
+		#print "actual_name:",font.cget("family")
 		return font
 	#@-body
 	#@-node:8::config.getFontFromParams
@@ -453,7 +453,7 @@ class config:
 						c.target_language = val
 				else: #old
 					for language,name in self.languageNameDict.items():
-						# print `language`, `name`
+						# print language, name
 						if string.lower(name) == val:
 							c.target_language = language
 			except: pass
@@ -630,15 +630,15 @@ class config:
 			#@+node:3::<< print options >>
 			#@+body
 			if 0:
-				print "\n\ncolorsDict:\n\n" + `self.colorsDict`
-				print "\n\ncompareDict:\n\n"+ `self.compareDict`
-				print "\n\nfindDict:\n\n"   + `self.findDict`
-				print "\n\nprefsDict:\n\n"  + `self.prefsDict`
-				print "\n\nwindowDict:\n\n" + `self.windowDict`
+				print "\n\ncolorsDict:\n" ,self.colorsDict
+				print "\n\ncompareDict:\n",self.compareDict
+				print "\n\nfindDict:\n"   ,self.findDict
+				print "\n\nprefsDict:\n"  ,self.prefsDict
+				print "\n\nwindowDict:\n" ,self.windowDict
 			if 0:
 				print "\n\nkeysDict:\n\n"
 				for i in self.keysDict.items():
-					print `i`
+					print i
 			if 0:
 				print "\n\nwindowDict:\n\n"
 				for i in self.windowDict.keys():

@@ -494,7 +494,7 @@ class vnode:
 	def __del__ (self):
 	
 		# Can't trace while destroying.
-		# print "v.__del__" + `self`
+		# print "v.__del__" + self
 		try:
 			self.icon_id = None
 		except: pass
@@ -1817,7 +1817,7 @@ class vnode:
 		assert(unlinked.mBack == None)
 		assert(unlinked.mNext == None)
 		assert(unlinked.joinList == None)
-		#print "swap_links:unlinked.last,linked.last",`unlinked.lastChild()`,`linked.lastChild()`
+		#print "swap_links:unlinked.last,linked.last",unlinked.lastChild(),linked.lastChild()
 	
 		# Copy links to unlinked.
 		unlinked.mParent = linked.mParent

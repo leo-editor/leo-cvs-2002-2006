@@ -34,7 +34,7 @@ for f in files:
 		modules.append(root)
 		
 modules.sort()
-# print "modules:", `modules`
+# print "modules:", modules
 
 #@<< setup info for setup.py >>
 #@+node:1::<< setup info for setup.py >> (version number)

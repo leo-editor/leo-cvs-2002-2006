@@ -93,7 +93,7 @@ class LeoFrame:
 		self.top = top = Tk.Toplevel()
 		top.withdraw() # 7/15/02
 		attachLeoIcon(top)
-		# print `top`
+		# print top
 		
 		if sys.platform=="win32":
 			self.hwnd = top.frame()
@@ -170,7 +170,7 @@ class LeoFrame:
 	def destroy (self):
 	
 		# don't trace during shutdown logic.
-		# print "frame.destroy:", `self`, `self.top`
+		# print "frame.destroy:", self, self.top
 		self.tree.destroy()
 		self.tree = None
 		self.commands.destroy()
@@ -270,7 +270,7 @@ class LeoFrame:
 	def setBodyFontFromConfig (self):
 		
 		config = app().config ; body = self.body
-		#print "body",`self.body`
+		#print "body",self.body
 		
 		font = config.getFontFromParams(
 			"body_text_font_family", "body_text_font_size",
@@ -291,7 +291,7 @@ class LeoFrame:
 		if sys.platform != "win32": # Maybe a Windows bug.
 			fg = config.getWindowPref("body_cursor_foreground_color")
 			bg = config.getWindowPref("body_cursor_background_color")
-			# print `fg`, `bg`
+			# print fg, bg
 			if fg and bg:
 				cursor="xterm" + " " + fg + " " + bg
 				try: body.configure(cursor=cursor)
@@ -305,7 +305,7 @@ class LeoFrame:
 	def setLogFontFromConfig (self):
 	
 		log = self.log ; config = app().config
-		#print "log",`self.log`
+		#print "log",self.log
 	
 		font = config.getFontFromParams(
 			"log_text_font_family", "log_text_font_size",
@@ -732,7 +732,7 @@ class LeoFrame:
 		#@-body
 		#@-node:3::<< synthesize the shortcuts from the information >>
 
-		# print `shortcut`,`bind_shortcut`,`menu_shortcut`
+		# print shortcut,bind_shortcut,menu_shortcut
 		return bind_shortcut,menu_shortcut
 	#@-body
 	#@-node:1::canonicalizeShortcut
@@ -1184,10 +1184,10 @@ class LeoFrame:
 				accel2 = config.getShortcut(name)
 				if accel2 and len(accel2) > 0:
 					accel = accel2
-					# print `name`,`accel`
+					# print name,accel
 				else:
 					pass
-					# print "no default:",`name`
+					# print "no default:",name
 				
 				bind_shortcut,menu_shortcut = self.canonicalizeShortcut(accel)
 				
@@ -1213,7 +1213,7 @@ class LeoFrame:
 				if bind_shortcut:
 					if bind_shortcut in self.menuShortcuts:
 						if not app().menuWarningsGiven:
-							print "duplicate shortcut:", accel, `bind_shortcut`, label
+							print "duplicate shortcut:", accel, bind_shortcut, label
 					else:
 						self.menuShortcuts.append(bind_shortcut)
 						try:
@@ -1231,7 +1231,7 @@ class LeoFrame:
 						except: # could be a user error
 							if not app().menuWarningsGiven:
 								print "exception binding menu shortcut..."
-								print `bind_shortcut`
+								print bind_shortcut
 								es_exception()
 								app().menuWarningsGive = true
 	#@-body
@@ -1544,9 +1544,9 @@ class LeoFrame:
 		u = self.commands.undoer
 		if 0:
 			if u and u.new_undo and u.debug:
-				print "old undo mem:",`u.old_mem`
-				print "new undo mem:",`u.new_mem`
-				print "ratio new/old:",`float(u.new_mem)/float(u.old_mem)`
+				print "old undo mem:",u.old_mem
+				print "new undo mem:",u.new_mem
+				print "ratio new/old:",float(u.new_mem)/float(u.old_mem)
 		
 		self.OnCloseLeoEvent() # Destroy the frame unless the user cancels.
 	#@-body
@@ -2249,7 +2249,7 @@ class LeoFrame:
 				lines = s.count('\n')
 				if len(s) > 0 and s[-1] != '\n':
 					lines += 1
-				# print `lines`,`prev`,`v`
+				# print lines,prev,v
 				if prev + lines >= n:
 					found = true ; break
 				prev += lines
@@ -3491,12 +3491,12 @@ class LeoFrame:
 		try:
 			menu = self.menus.get(menuName)
 			if menu == None:
-				print "menu does not exist: ", `menuName`
+				print "menu does not exist: ", menuName
 				es("menu does not exist: " + `menuName`)
 				return
 			self.createMenuEntries(menu,table,openWith)
 		except:
-			print "exception creating items for ",`menuName`," menu"
+			print "exception creating items for ", menuName," menu"
 			es("exception creating items for " + `menuName` + " menu")
 			es_exception()
 	#@-body

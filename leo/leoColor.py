@@ -696,7 +696,7 @@ class colorizer:
 	def colorize(self,v,body,incremental=false):
 	
 		if self.enabled:
-			# print "colorize:incremental",`incremental`
+			# print "colorize:incremental",incremental
 			self.incremental=incremental
 			flag,language = self.updateSyntaxColorer(v)
 			self.colorizeAnyLanguage(v,body,language,flag)
@@ -707,7 +707,7 @@ class colorizer:
 	def recolor_range(self,v,body,leading,trailing):
 		
 		if self.enabled:
-			# print "recolor_range:leading,trailing",`leading`,`trailing`
+			# print "recolor_range:leading,trailing",leading,trailing
 			self.incremental=true
 			flag,language = self.updateSyntaxColorer(v)
 			self.colorizeAnyLanguage(
@@ -906,7 +906,7 @@ class colorizer:
 				
 				# Bug fix: 11/21/02: must test against None.
 				if leading != None and trailing != None:
-					# print "leading,trailing:",`leading`,`trailing`
+					# print "leading,trailing:",leading,trailing
 					leading_lines = leading
 					trailing_lines = trailing
 				else:
@@ -1082,7 +1082,7 @@ class colorizer:
 	#@+body
 	def colorizeLine (self,s,n,state):
 	
-		# print "inc,state,s:",`self.incremental`,state,s
+		# print "inc,state,s:",self.incremental,state,s
 	
 		if self.incremental:
 			self.removeTagsFromLine(n)
@@ -1435,7 +1435,7 @@ class colorizer:
 			#@+node:1::Valid regardless of latex mode
 			#@+node:3::<< handle single-line comment >>
 			#@+body
-			# print "single-line comment n,i,s:",`n`,`i`,`s`
+			# print "single-line comment n,i,s:",n,i,s
 			
 			if self.language == "cweb" and self.latex_cweb_comments:
 				j = i + len(self.single_comment_start)

@@ -41,7 +41,6 @@
 #@<< Define optionl ivars >>
 #@+node:2::<< Define optionl ivars >>
 #@+body
-
 optionalIvars = (
 	"lastChild",
 	"parent","oldParent",
@@ -373,12 +372,12 @@ class undoer:
 		
 		if self.debug_print:
 			trace()
-			print "lead,trail",`leading`,`trailing`
-			print "old mid,nls:",`len(old_middle_lines)`,`old_newlines`,`oldText`
-			print "new mid,nls:",`len(new_middle_lines)`,`new_newlines`,`newText`
+			print "lead,trail",leading,trailing
+			print "old mid,nls:",len(old_middle_lines),old_newlines,oldText
+			print "new mid,nls:",len(new_middle_lines),new_newlines,newText
 			#print "lead,trail:",leading,trailing
-			#print "old mid:",`old_middle_lines`
-			#print "new mid:",`new_middle_lines`
+			#print "old mid:",old_middle_lines
+			#print "new mid:",new_middle_lines
 			print "---------------------"
 		#@-body
 		#@-node:1::<< compute leading, middle & trailing  lines >>
@@ -1155,7 +1154,7 @@ class undoer:
 		#@-node:3::<< Get textResult from the Tk.Text widget >>
 
 		if textResult == result:
-			# print "incremental undo:",`leading`,`trailing`
+			# print "incremental undo:",leading,trailing
 			c.tree.recolor_range(v,leading,trailing)
 		else: # 11/19/02: # Rewrite the pane and do a full recolor.
 			if self.debug_print:
@@ -1170,7 +1169,7 @@ class undoer:
 				#@-body
 				#@-node:4::<< print mismatch trace >>
 
-			# print"non-incremental undo"
+			# print "non-incremental undo"
 			v.setBodyStringOrPane(result)
 	#@-body
 	#@-node:5::undoRedoText

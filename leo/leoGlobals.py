@@ -780,7 +780,7 @@ def print_bindings (name,window):
 	print
 	print "Bindings for", name
 	for b in bindings:
-		print `b`
+		print b
 #@-body
 #@-node:6::printBindings
 #@+node:7::printGlobals
@@ -886,7 +886,7 @@ def get_Sherlock_args (args):
 
 	# No args means trace everything.
 	if not args or len(args)==0: args = ["+*"] 
-	# print "get_Sherlock_args:" + `args`
+	# print "get_Sherlock_args:" + args
 	return args
 #@-body
 #@-node:1::get_Sherlock_args
@@ -902,7 +902,7 @@ def init_trace(args):
 		else: prefix = arg[0] ; arg = arg[1:]
 		
 		if prefix == '?':
-			print "trace list:", `t`
+			print "trace list:", t
 		elif prefix == '+' and not arg in t:
 			t.append(string.lower(arg))
 			# print "enabling:", arg
@@ -938,7 +938,7 @@ def trace (s1=None,s2=None):
 			if 1: print s
 			else: es(s)
 		else: # assume we have a method and try to execute it.
-			# print `type(message)`
+			# print type(message)
 			message()
 #@-body
 #@-node:3::trace

@@ -452,7 +452,7 @@ class leoTree:
 			metrics = font.metrics()
 			linespace = metrics ["linespace"]
 			self.line_height = linespace + 5 # Same as before for the default font on Windows.
-			# print `metrics`
+			# print metrics
 		except:
 			self.line_height = line_height # was 17 + 2
 			es("exception setting outline line height")
@@ -964,7 +964,7 @@ class leoTree:
 		c.undoer.setUndoTypingParams(v,undoType,body,s,oldSel,newSel,oldYview=oldYview)
 		v.t.bodyString = s
 		v.t.insertSpot = c.body.index("insert") # 9/1/02
-		# print `v.t.insertSpot`,`v`
+		# print v.t.insertSpot,v
 		# Recolor the body.
 		self.scanForTabWidth(v) # 9/13/02
 		self.recolor_now(v,incremental=true)
@@ -1274,7 +1274,7 @@ class leoTree:
 	def OnIconClick (self,v,event):
 	
 		canvas = self.canvas
-		# print "OnIconClick1:", `v`
+		# print "OnIconClick1:", v
 		
 		if event:
 			canvas_x = canvas.canvasx(event.x)
@@ -1363,7 +1363,7 @@ class leoTree:
 					import os
 					import webbrowser
 					os.chdir(app().loadDir)
-					# print "url:",`url`
+					# print "url:",url
 					webbrowser.open(url)
 				except:
 					es("exception opening " + url)
@@ -1390,7 +1390,7 @@ class leoTree:
 	
 	def OnPopup (self,v,event):
 		
-		# print `v`,`event`
+		# print v,event
 		if event == None: return
 		
 		c = self.commands ; frame = c.frame
@@ -1672,13 +1672,13 @@ class leoTree:
 			self.setUnselectedLabelState(old)
 			old.t.scrollBarSpot = yview
 			old.t.insertSpot = insertSpot # 9/21/02
-			# print yview,`old`
+			# print yview,old
 		if v and v.t.scrollBarSpot != None:
 			first,last = v.t.scrollBarSpot
 			body.yview("moveto",first)
-			# print first,last,`v`
+			# print first,last,v
 		if v.t.insertSpot != None: # 9/21/02: moved from c.selectVnode
-			# print `v.t.insertSpot`,`v`
+			# print v.t.insertSpot,v
 			c.body.mark_set("insert",v.t.insertSpot)
 			c.body.see(v.t.insertSpot)
 		else:

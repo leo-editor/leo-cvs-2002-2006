@@ -909,7 +909,7 @@ class atFile:
 		if not self.targetFileName or len(self.targetFileName) == 0:
 			self.readError("Missing file name.  Restoring @file tree from .leo file.")
 		else:
-			# print `self.default_directory`, `self.targetFileName`
+			# print self.default_directory, self.targetFileName
 			fn = os.path.join(self.default_directory, self.targetFileName)
 			fn = os.path.normpath(fn)
 			try:
@@ -1763,7 +1763,7 @@ class atFile:
 				#@-node:3::<< Set headline and ref >>
 
 				
-				# print `childIndex`,`headline`
+				# print childIndex,headline
 				
 				if childIndex == 0: # The root node.
 					

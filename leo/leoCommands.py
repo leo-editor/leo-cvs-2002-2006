@@ -98,7 +98,7 @@ class Commands:
 	def destroy (self):
 	
 		# Can't trace while destroying.
-		# print "c.destroy:", `self.frame`
+		# print "c.destroy:", self.frame
 	
 		# Remove all links from this object to other objects.
 		self.frame = None

@@ -9,10 +9,6 @@ from leoGlobals import *
 import difflib,filecmp,os,string
 import Tkinter,tkFileDialog
 
-# We try to interfere with scripts as little as possible.
-true = 1
-false = 0 # Better than none.
-
 
 #@+others
 #@+node:1::choose

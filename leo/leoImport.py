@@ -5,9 +5,6 @@
 
 from leoGlobals import *
 
-# Synonyms
-indent_refs = true ; dont_indent_refs = false
-
 
 #@<< scripts >>
 #@+node:2::<< scripts >>
@@ -773,7 +770,7 @@ class leoImportCommands:
 		savedMethodName = self.methodName
 		self.methodName = headline
 		# Create a node for leading declarations of the class.
-		i = self.scanPythonDecls(s,i,class_vnode,indent_refs)
+		i = self.scanPythonDecls(s,i,class_vnode,indent_parent_ref_flag=true)
 		
 		#@<< create nodes for all defs of the class >>
 		#@+node:3::<< create nodes for all defs of the class >>
@@ -915,7 +912,7 @@ class leoImportCommands:
 	#@-node:2::scanPythonDef
 	#@+node:3::scanPythonDecls
 	#@+body
-	def scanPythonDecls (self,s,i,parent,indent_parent_ref_flag):
+	def scanPythonDecls (self,s,i,parent,indent_parent_ref_flag=true):
 		
 		done = false ; start = i
 		while not done and i < len(s):
@@ -994,7 +991,7 @@ class leoImportCommands:
 					isDef = match_c_word(s,i,"def")
 					if not decls_seen:
 						parent.appendStringToBody("@ignore\n" + self.rootLine + "@language python\n")
-						i = start = self.scanPythonDecls(s,start,parent,dont_indent_refs)
+						i = start = self.scanPythonDecls(s,start,parent,indent_parent_ref_flag=false)
 						decls_seen = true
 						if self.treeType == "@file": # 7/29/02
 							parent.appendStringToBody("@others\n") # 7/29/02

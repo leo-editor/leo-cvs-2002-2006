@@ -789,7 +789,7 @@ class LeoFind:
 				first  = t.get(pos)
 				last   = t.get(newpos)
 				after  = t.get(newpos, newpos + "+1c")
-				# print `before`, `first`, `last`, `after`
+				# print before, first, last, after
 				
 				if before and is_c_id(before) and first and is_c_id(first):
 					pos = None

@@ -318,7 +318,7 @@ class LeoPrefs:
 		language = self.lang_var.get()
 		c.target_language = self.target_language = language
 		c.tree.recolor(v)
-		# print "set_lang",`language`
+		# print "set_lang",language
 	#@-body
 	#@-node:2::set_lang
 	#@+node:3::OnClosePrefsFrame

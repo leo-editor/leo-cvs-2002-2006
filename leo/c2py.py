@@ -538,7 +538,7 @@ def convertCodeList(list, firstPart, leoFlag):
 #@+body
 def convertDocList(docList):
 
-	# print "convertDocList:", `docList`
+	# print "convertDocList:", docList
 	if matchWord(docList, 0, "@doc"):
 		i = skipWs(docList, 4)
 		if match(docList, i, "\n"):
@@ -550,7 +550,7 @@ def convertDocList(docList):
 #@+body
 def skipDocPart(list, i):
 	
-	# print "skipDocPart", `i`
+	# print "skipDocPart", i
 	while i < len(list):
 		if matchWord(list, i, "@code") or matchWord(list, i, "@c"):
 			break
@@ -564,7 +564,7 @@ def skipDocPart(list, i):
 #@+body
 def skipCodePart(codeList, i):
 	
-	# print "skipCodePart", `i`
+	# print "skipCodePart", i
 	if matchWord(codeList, i, "@doc") or matchWord(codeList, i, "@"):
 		return i
 	while i < len(codeList):

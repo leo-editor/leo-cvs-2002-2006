@@ -7,7 +7,7 @@
 
 def run(root_list):
 
-	print "untangle_done roots:", `root_list`
+	print "untangle_done roots:", root_list
 #@-body
 #@-node:0::@file untangle_done.py
 #@-leo

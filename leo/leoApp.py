@@ -166,7 +166,7 @@ class LeoApp:
 			print "Setting load directory to:", self.loadDir
 		
 		# Trace hasn't been enabled yet.
-		# print `self.loadDir`
+		# print self.loadDir
 		#@-body
 		#@-node:2::<< set loadDir >>
 
@@ -184,7 +184,7 @@ class LeoApp:
 		
 		try:
 			version = self.root.getvar("tk_patchLevel")
-			# print "tcl version:" + `version`
+			# print "tcl version:" + version
 			
 			#@<< set v834 if version is 8.3.4 or greater >>
 			#@+node:1::<< set v834 if version is 8.3.4 or greater >>

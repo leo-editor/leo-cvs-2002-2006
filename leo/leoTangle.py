@@ -114,15 +114,12 @@ allow_multiple_parts = 1
 disallow_multiple_parts = 2
 unused_parts_flag = 3
 
-# Synonyms for root_flag to st_enter.
+# Synonyms for is_root_flag to st_enter.
 is_root_name = 1 ; not_root_name = 0
 
 # Synonyms for scanAllDirectives
 report_errors = 1 ; dont_report_errors = 0
 require_path = 1 ; done_require_path = 0
-
-# Synonyms for verbose_flag.
-verbose = true ; brief = 0
 
 # Constants...
 max_errors = 20
@@ -163,6 +160,7 @@ if 1: # A single enum...
 	# Stephen P. Schaefer 9/13/2002
 	# add support for @first
 	at_last    = 18
+
 #@-body
 #@-node:2::<< constants & synonyms >>
 
@@ -729,7 +727,7 @@ class tangleCommands:
 	
 		if self.tangling:
 			self.st_check()
-			# trace(self.st_dump(verbose))
+			# trace(self.st_dump(verbose_flag=true))
 	#@-body
 	#@-node:7::tanglePass1
 	#@+node:8::tanglePass2
@@ -2197,7 +2195,7 @@ class tangleCommands:
 	#@+body
 	# Dumps the given symbol table in a readable format.
 	
-	def st_dump(self,verbose_flag):
+	def st_dump(self,verbose_flag=true):
 		
 		s = "\ndump of symbol table...\n"
 		keys = self.tst.keys()
@@ -4118,7 +4116,7 @@ class tangleCommands:
 				root_dir = os.path.dirname(self.root_name)
 			else:
 				root_dir = None
-			# print "root_dir", `root_dir`
+			# print "root_dir:", root_dir
 		
 			table = ( # This is a precedence table.
 				(root_dir,"@root"), 
@@ -4129,7 +4127,7 @@ class tangleCommands:
 		
 			for dir2, kind in table:
 				if dir2 and len(dir2) > 0:
-					# print "base,dir",`base`,`dir`
+					# print "base,dir:",`base`,`dir`
 					dir = os.path.join(base,dir2)
 					if os.path.isabs(dir): # Errors may result in relative or invalid path.
 						

@@ -137,7 +137,7 @@ def print_stats (stats):
 	stats2.reverse()
 	for stat,i in stats2:
 		print string.rjust(`stat`,6), dis.opname[i]
-	print "total", `total`
+	print "total", total
 #@-body
 #@-node:6::print_stats
 #@-others
