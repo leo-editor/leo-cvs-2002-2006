@@ -380,6 +380,7 @@ class baseAtFile:
         df.targetFileName = fileName
         df.root = root
         df.root_seen = False
+        df.perfectImportRoot = None # Set only in readOpenFile.
         #@nonl
         #@-node:ekr.20031218072017.1816:<< copy ivars to df >>
         #@nl
@@ -3528,6 +3529,7 @@ class baseNewDerivedFile(oldDerivedFile):
         
         # For reading thin derived files.
         at.lastThinNode = None ; at.thinNodeStack = [] # Used by createThinChild.
+        at.perfectImportRoot = None # The root of the perfect import command.
     
         #@    << Create the dispatch dictionary used by scanText4 >>
         #@+node:EKR.20040427134616:<< Create the dispatch dictionary used by scanText4 >>
@@ -3620,15 +3622,18 @@ class baseNewDerivedFile(oldDerivedFile):
     #@nonl
     #@-node:ekr.20040321064134.5:createThinChild (4.2)
     #@+node:ekr.20031218072017.2757:new_df.readOpenFile
-    def readOpenFile(self,root,file,firstLines):
+    def readOpenFile(self,root,file,firstLines,perfectImportRoot=None):
         
         """Read an open 4.x thick or thin derived file."""
         
         at = self
+        
+        # This is safe (just barely) because only this method calls scanText4>
+        at.perfectImportRoot = perfectImportRoot
     
         # Scan the 4.x file.
         at.tnodeListIndex = 0
-        # 4/27/04: at.thinFile tells scanText4 whether this is a thin file or not.
+        # at.thinFile tells scanText4 whether this is a thin file or not.
         lastLines = at.scanText4(file,root)
         root.v.t.setVisited() # Disable warning about set nodes.
         
@@ -3677,7 +3682,8 @@ class baseNewDerivedFile(oldDerivedFile):
         return t
         
         if 0: # Old code:
-            # Check the headline.
+            #@        << Check the headlines >>
+            #@+node:ekr.20040716061450:<< Check the headlines >>
             if headline.strip() == v.headString().strip():
                 t.setVisited() # Supress warning about unvisited node.
                 return t
@@ -3688,6 +3694,9 @@ class baseNewDerivedFile(oldDerivedFile):
                 g.trace("Mismatched headline",headline,v.headString())
                 g.trace(at.tnodeListIndex,len(at.root.v.t.tnodeList))
                 return None
+            #@nonl
+            #@-node:ekr.20040716061450:<< Check the headlines >>
+            #@nl
     #@nonl
     #@-node:ekr.20031218072017.2007:findChild 4.x
     #@+node:ekr.20031218072017.2758:scanText4 & allies
@@ -4055,11 +4064,48 @@ class baseNewDerivedFile(oldDerivedFile):
             else:
                 old = None
             if old:
-                g.es("Warning: updating cloned text",color="blue")
-                #g.es("old...\n%s\n" % old)
-                #g.es("new...\n%s\n" % s)
-                at.t.setDirty() # Mark the node dirty.  Ancestors will be marked dirty later.
-                at.c.setChanged(True)
+                if at.perfectImportRoot:
+                    #@                << bump at.correctedLines and tell about the correction >>
+                    #@+node:ekr.20040717133944:<< bump at.correctedLines and tell about the correction >>
+                    # Report the number of corrected nodes.
+                    at.correctedLines += 1
+                    
+                    found = False
+                    for p in at.perfectImportRoot.self_and_subtree_iter():
+                        if p.v.t == at.t:
+                            found = True ; break
+                    
+                    if found:
+                        if 0: # Not needed: we mark all corrected nodes.
+                            g.es("Correcting %s" % p.headString(),color="blue")
+                        if 0: # For debugging.
+                            print ; print '-' * 40
+                            print "old",len(old)
+                            for line in g.splitLines(old):
+                                #line = line.replace(' ','< >').replace('\t','<TAB>')
+                                print repr(str(line))
+                            print ; print '-' * 40
+                            print "new",len(s)
+                            for line in g.splitLines(s):
+                                #line = line.replace(' ','< >').replace('\t','<TAB>')
+                                print repr(str(line))
+                            print ; print '-' * 40
+                    else:
+                        # This should never happen.
+                        g.es("Correcting hidden node: t=%s" % repr(at.t),color="red")
+                    #@nonl
+                    #@-node:ekr.20040717133944:<< bump at.correctedLines and tell about the correction >>
+                    #@nl
+                    p.setMarked()
+                    at.t.bodyString = s # Just etting at.t.tempBodyString won't work here.
+                    at.t.setDirty() # Mark the node dirty.  Ancestors will be marked dirty later.
+                    at.c.setChanged(True)
+                else:
+                    g.es("Warning: updating cloned text",color="blue")
+                    #g.es("old...\n%s\n" % old)
+                    #g.es("new...\n%s\n" % s)
+                    at.t.setDirty() # Mark the node dirty.  Ancestors will be marked dirty later.
+                    at.c.setChanged(True)
             at.t.tempBodyString = s
     
         # Indicate that the tnode has been set in the derived file.
@@ -4705,7 +4751,7 @@ class baseNewDerivedFile(oldDerivedFile):
         #@    << open the file; return on error >>
         #@+node:ekr.20031218072017.2116:<< open the file; return on error >>
         if toString:
-            at.targetFileName = "<string-file>"
+            at.targetFileName = "<new_df.write string-file>"
         elif nosentinels:
             at.targetFileName = root.atNoSentFileNodeName()
         elif thinFile:
@@ -4725,6 +4771,7 @@ class baseNewDerivedFile(oldDerivedFile):
             if toString:
                 at.closeWriteFile()
                 # Major bug: failure to clear this wipes out headlines!
+                # Minor bug: sometimes this causes slight problems...
                 at.root.v.t.tnodeList = [] 
             else:
                 at.closeWriteFile()
@@ -5285,9 +5332,10 @@ class baseNewDerivedFile(oldDerivedFile):
     
         ref = g.findReference(name,p)
         if not ref:
-            at.writeError(
-                "undefined section: %s\n\treferenced from: %s" %
-                ( name,p.headString()))
+            if not at.perfectImportRoot: # A kludge: we shouldn't be importing derived files here!
+                at.writeError(
+                    "undefined section: %s\n\treferenced from: %s" %
+                    ( name,p.headString()))
             return None
         
         # Expand the ref.
