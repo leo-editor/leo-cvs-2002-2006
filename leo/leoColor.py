@@ -1037,7 +1037,7 @@ class colorizer:
 				# Start in the state _after_ the last leading line, which may be unknown.
 				i = leading_lines
 				while i > 0:
-					if i < old_len:
+					if i < old_len and i < new_len:
 						state = new_states[i]
 						assert(state!="unknown")
 						break
