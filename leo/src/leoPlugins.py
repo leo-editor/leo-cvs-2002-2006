@@ -16,18 +16,19 @@ After startup:
 """
 
 import leoGlobals as g
-import leoTest # Support for unit tests.
 
 handlers = {}
 
+#@+others
+#@+node:ekr.20041001161108:doPlugins
 def doPlugins(tag,keywords):
     if g.app.killed:
         return
     if tag == "start1":
         loadHandlers()
     return doHandlersForTag(tag,keywords)
-        
-#@+others
+#@nonl
+#@-node:ekr.20041001161108:doPlugins
 #@+node:ekr.20031218072017.3440:loadHandlers
 def loadHandlers(loadAllFlag=False):
 
@@ -60,7 +61,8 @@ def loadHandlers(loadAllFlag=False):
             theFile.close()
         except IOError:
             g.es("Can not open: " + manager_path)
-            leoTest.fail()
+            # Don't import leoTest initially.  It causes problems.
+            import leoTest ; leoTest.fail()
             return
         #@nonl
         #@-node:ekr.20031218072017.3441:<< set enabled_files from pluginsManager.txt >>
@@ -110,6 +112,12 @@ def doHandlersForTag (tag,keywords):
                 return ret
     return None
 #@-node:ekr.20031218072017.3442:doHandlersForTag
+#@+node:ekr.20041001160216:isLoaded
+def isLoaded (name):
+    
+    return name in g.app.loadedPlugins
+#@nonl
+#@-node:ekr.20041001160216:isLoaded
 #@+node:ekr.20031218072017.3443:registerHandler
 def registerHandler(tags,fn):
     
