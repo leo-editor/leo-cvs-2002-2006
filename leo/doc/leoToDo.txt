@@ -3,49 +3,9 @@
 #@@nocolor
 
 #@+all
-#@+node:EKR.20040609091327: To do: 4.3
-Send book query after 4.3 alpha 1.
-#@nonl
 #@+node:ekr.20050102180943.1:4.3 a1
 #@+node:ekr.20041228093733:First (Top Roti)
-#@+node:ekr.20050102180943:Small bugs
-#@+node:ekr.20041201072431:(Can hoist plugin cause a hang?)
-@nocolor
-
-http://sourceforge.net/forum/message.php?msg_id=2876473
-
-I'm using 4.2 final, build 1.173, on Linux, and experience intermittent lockups
-exactly as described here.
-
-I've turned off almost all plugins, except for mod_tempfname, nodenavigator,
-plugin_manager, and plugins_menu. It seems that I never experience the lockups
-if I disable the hoist plugin, but that I do sometimes experience the lockups
-if I enable hoist. Maybe a quick review of hoist might be in order to see if
-anything looks suspicious. I believe hoist uses an idle handler, which I vaguely
-feel might be able to lead to lockups of this sort.
-
-Anyway, I'm not sure about this, but it is kind of frustrating to have leo lock
-up totally, so hopefully this small data tidbit will help flush out this bug.
-#@nonl
-#@-node:ekr.20041201072431:(Can hoist plugin cause a hang?)
-#@+node:ekr.20050102092149:Fix problems with Control-E
-@killcolor
-
-http://sourceforge.net/forum/message.php?msg_id=2918938
-By: ktenney
-
-Any idea what might prevent the Control-E shortcut key from working? 
-
-Edit -> Execute Script works fine
-
-current cvs, Win2000, Python 2.3
-#@nonl
-#@-node:ekr.20050102092149:Fix problems with Control-E
-#@+node:ekr.20041231104531:Remove duplicate entries in recent files list
-Add traces...
-#@nonl
-#@-node:ekr.20041231104531:Remove duplicate entries in recent files list
-#@+node:ekr.20050101093544:Investigate whether it is still necessary to use distutils in utils_rename
+#@+node:ekr.20050101093544:Is it still necessary to use distutils in utils_rename?
 # apparently distutils.file_util is not present in all Python distributions!
 #@nonl
 #@+node:ekr.20031218072017.1263:utils_rename
@@ -66,247 +26,8 @@ def utils_rename(src,dst):
         move_file(src,dst)
 #@nonl
 #@-node:ekr.20031218072017.1263:utils_rename
-#@-node:ekr.20050101093544:Investigate whether it is still necessary to use distutils in utils_rename
-#@-node:ekr.20050102180943:Small bugs
-#@+node:ekr.20041231110704:Release new installer for Leo 4.2, test with Python 2.4
-#@-node:ekr.20041231110704:Release new installer for Leo 4.2, test with Python 2.4
-#@-node:ekr.20041228093733:First (Top Roti)
-#@+node:ekr.20041214131745:Python 2.4 installer problem
-#@+node:ekr.20041214131745.1:Notes
-@killcolor
-
-http://sourceforge.net/forum/message.php?msg_id=2877749
-By: djsg
-
-The Leo 4.2-final installer checks a Windows Registry key to figure out the
-location of Python home folder. It handles the format of the data left in that
-key by the Python 2.3.4 installer, but does not handle the format of the data
-left in some cases by the Python 2.4-final installer.
-
-http://sourceforge.net/forum/message.php?msg_id=2875823
-By: djsg
-
-The installer for Python 2.3.4 is a Nullsoft installer. 
-
-The installer for Python 2.4 Final is a Microsoft installer. 
-
-The leo.nsi file that creates the installer for Leo 2.4-final finds the installed
-copy of Python by checking the Registry key
-HKEY_LOCAL_MACHINE\SOFTWARE\Classes\Python.NoConFile\shell\open\command -- for
-a value left by the installer for Python.  The format of the Registry key value
-stored by the installer for Python 2.4 Final does not match the for Python
-2.3.4.
-
-To prove this: 
-
-A. install Python 2.3.4 for all users;
-B. use RegEdit to export this Registry key to a file called "23key.reg". 
-C. uninstall Python 2.3.4
-D. install Python 2.4 Final
-E. Use RegEdit to export this registry key to a file called "24key.reg". 
-
-The 23key.reg file gives the key the value @="C:\Python23\pythonw.exe \%1\
-%*
-
-where the 24key.reg file gives it the value 
-@="\C:\Python23\pythonw.exe\ \%1\ %*
-
-I duplicated Srdjan's problem, and installed Leo 4.2-final by: 
-
-1. creating a copy of the 23key.reg file called 24keyhack.reg;
-
-2. Editing 24keyhack.reg, changing the value of the key to point at the C:\Python24
-folder -- i.e., changing it to
-@="C:\Python24\pythonw.exe \%1\ %*
-
-3. Right-clicking the 24keyhack.reg file and merging it -- thereby changing
-the value of the Registry key.
-
-4. Running the Leosetup-4-2 installer. No problem this time!
-
-5. Right-clicking the 24key.reg file and merging it -- thereby restoring the
-orthodox Python 2.4 value of the Registry key.
-
-Looks to me as though the 2.4 key surrounds the path to pythonw.exe in quotation
-marks. Perhaps this allows the Microsoft Installer to install Python in a folder
-whose name includes a space.
-#@-node:ekr.20041214131745.1:Notes
-#@+node:ekr.20041219162724.1:Notes 2
-@killcolor
-
-http://sourceforge.net/forum/message.php?msg_id=2898633
-By: djsg
-
-Having no experience with writing installers for Windows, I can't comment. I
-can report with three items of interest, though.
-
-One. The documentation for NSIS 2.0.3 indicates that NSIS can extract single
-characters from strings and compare strings with constants, and that it supports
-looping. It seems to me that it should be possible to use that version of NSIS
-to handle both the Python 2.3-style and Python 2.4-style registry entries. I
-am willing to research this after Christmas.
-
-Two. The installer for the Python 2.4 version of Mark Hammond's Python for Windows
-extensions runs afoul of the Python 2.4 installer, too -- see
-http://sourceforge.net/tracker/index.php?func=detail&aid=1066510&group_id=78018&
-atid=551954
-
-Three. Fredrik Lundh documents a method for "Adding Python Information to the
-Windows Registry", at http://effbot.org/zone/python-register.htm. He comments
-that this is useful for Hammond's Python for Windows extensions and for Windows
-installers generated by the distutils package.
-
-Lundh's Web page is dated February, 2003, so it may be out of date. 
-#@-node:ekr.20041219162724.1:Notes 2
-#@-node:ekr.20041214131745:Python 2.4 installer problem
-#@+node:EKR.20040606193130:(Fix problems with negative tab width in prefs)
-#@+node:EKR.20040606193323:Report
-@nocolor
-
-Open discussion
-http://sourceforge.net/forum/message.php?msg_id=2603738
-
-I always set tabs to -4 in the config. when you open the prefs it says 4 but
-there is a checkmark for convert tabs to space. open a new leo, open prefs. its
-not checked! open another leo, its checked.
-
-The problem is that tab_width is usually stored in leoConfig.txt, not the .leo file.
-I'm going to ignore this problem for now...
-#@nonl
-#@-node:EKR.20040606193323:Report
-#@+node:ekr.20031218072017.2062:getPrefs
-# Note: Leo 4.3 does not write these settings to local .leo files.
-# Instead, corresponding settings are contained in leoConfig.leo files.
-
-def getPrefs (self):
-
-    c = self.c
-    
-    if self.getOpenTag("<preferences"):
-        return # <preferences/> seen
-
-    table = (
-        ("allow_rich_text",None,None), # Ignored.
-        ("tab_width","tab_width",self.getLong),
-        ("page_width","page_width",self.getLong),
-        ("tangle_bat","tangle_batch_flag",self.getBool),
-        ("untangle_bat","untangle_batch_flag",self.getBool),
-        ("output_doc_chunks","output_doc_flag",self.getBool),
-        ("noweb_flag",None,None), # Ignored.
-        ("extended_noweb_flag",None,None), # Ignored.
-        ("defaultTargetLanguage","target_language",self.getTargetLanguage),
-        ("use_header_flag","use_header_flag",self.getBool))
-    
-    done = False
-    while 1:
-        found = False
-        for tag,var,f in table:
-            if self.matchTag("%s=" % tag):
-                if var:
-                    self.getDquote() ; val = f() ; self.getDquote()
-                    setattr(c,var,val)
-                else:
-                    self.getDqString()
-                found = True ; break
-        if not found:
-            if self.matchTag("/>"):
-                done = True ; break
-            if self.matchTag(">"):
-                break
-            else: # New in 4.1: ignore all other tags.
-                self.getUnknownTag()
-
-    if not done:
-        while 1:
-            if self.matchTag("<defaultDirectory>"):
-                # New in version 0.16.
-                c.tangle_directory = self.getEscapedString()
-                self.getTag("</defaultDirectory>")
-                if not g.os_path_exists(c.tangle_directory):
-                    g.es("default tangle directory not found:" + c.tangle_directory)
-            elif self.matchTag("<TSyntaxMemo_options>"):
-                self.getEscapedString() # ignored
-                self.getTag("</TSyntaxMemo_options>")
-            else: break
-        self.getTag("</preferences>")
-#@nonl
-#@+node:ekr.20031218072017.2063:getTargetLanguage
-def getTargetLanguage (self):
-    
-    # Must match longer tags before short prefixes.
-    for name in g.app.language_delims_dict.keys():
-        if self.matchTagWordIgnoringCase(name):
-            language = name.replace("/","")
-            # self.getDquote()
-            return language
-            
-    return "c" # default
-#@nonl
-#@-node:ekr.20031218072017.2063:getTargetLanguage
-#@-node:ekr.20031218072017.2062:getPrefs
-#@-node:EKR.20040606193130:(Fix problems with negative tab width in prefs)
-#@+node:ekr.20041228053704:Finish Config...
-#@+node:ekr.20041228090344:Major
-- Cancel should revert all settings.
-    (Revert doesn't work after a node changes:this is confusing and dangerous.)
-
-- Support generalized widget settings (see child node)
-
-- Copy expansion state when writing @settings trees.
-
-- Handle undo/redo properly.
-#@nonl
-#@+node:ekr.20041123100100:support @fixed-recent-files in Leo's core
-The config classes do nothing special.
-
-The core must put fixed files first in the menu.
-#@nonl
-#@-node:ekr.20041123100100:support @fixed-recent-files in Leo's core
-#@+node:ekr.20041228100139:Support for general component settings
-@list name
-    - name specifies the component to configure.
-    - parser creates a list of name,kind,value tuples from the body.
-
-Leo's core would support one 'name' for:
-    each Tk widget,
-    each Pmw megawidget,
-    each megawidget component.
-
-Examples:
-    headline:
-        @list outline_canvas_settings
-    body:
-        height,int,1
-        text,string,my widget
-
-g.setGeneralTkSetting(widget,setting_name) would do the following:
-    - get the setting_name and the associated list of tuples/bunches from the config class.
-    - safely set the widget's setting using the settings list as is done in the prototype code.
-#@nonl
-#@-node:ekr.20041228100139:Support for general component settings
-#@-node:ekr.20041228090344:Major
-#@+node:ekr.20041228090344.1:Minor
-- Remove label in settings pane.
-- Make sure comment area is always visible.
-- Disable all commands while in dialog.
-- Print changes to log.
-- Unit tests: there are too many cases to test by hand.
-- move findCorrespondingNode into leoNodes class.
-- Fix bug: findSettingsRoot doesn't work if no summary node.
-- findSettingsPostion should honor if-gui and if-platform nodes.
-#@nonl
-#@-node:ekr.20041228090344.1:Minor
-#@+node:ekr.20041118135306.1:Testing
-- Create unit tests for essential features
-
-- Test all dialogs.
-
-- Make sure proper values from Prefs panel are used in Tangle/Untangle commands.
-#@nonl
-#@-node:ekr.20041118135306.1:Testing
-#@-node:ekr.20041228053704:Finish Config...
+#@-node:ekr.20050101093544:Is it still necessary to use distutils in utils_rename?
 #@+node:ekr.20050102180943.2:Docs...
-#@-node:ekr.20050102180943.2:Docs...
 #@+node:ekr.20040226094105:Put the scrollWheel workaround in the FAQ (or in the code??)
 @nocolor
 #@nonl
@@ -535,11 +256,302 @@ Similarly for @string, @color, etc.
 #@nonl
 #@-node:ekr.20041116125049:Improvements
 #@-node:ekr.20041117163258:Document design of new config manager
+#@-node:ekr.20050102180943.2:Docs...
+#@+node:ekr.20041231110704:Release new installer for Leo 4.2, test with Python 2.4
+#@+node:ekr.20041214131745:Python 2.4 installer problem
+#@+node:ekr.20041214131745.1:Notes
+@killcolor
+
+http://sourceforge.net/forum/message.php?msg_id=2877749
+By: djsg
+
+The Leo 4.2-final installer checks a Windows Registry key to figure out the
+location of Python home folder. It handles the format of the data left in that
+key by the Python 2.3.4 installer, but does not handle the format of the data
+left in some cases by the Python 2.4-final installer.
+
+http://sourceforge.net/forum/message.php?msg_id=2875823
+By: djsg
+
+The installer for Python 2.3.4 is a Nullsoft installer. 
+
+The installer for Python 2.4 Final is a Microsoft installer. 
+
+The leo.nsi file that creates the installer for Leo 2.4-final finds the installed
+copy of Python by checking the Registry key
+HKEY_LOCAL_MACHINE\SOFTWARE\Classes\Python.NoConFile\shell\open\command -- for
+a value left by the installer for Python.  The format of the Registry key value
+stored by the installer for Python 2.4 Final does not match the for Python
+2.3.4.
+
+To prove this: 
+
+A. install Python 2.3.4 for all users;
+B. use RegEdit to export this Registry key to a file called "23key.reg". 
+C. uninstall Python 2.3.4
+D. install Python 2.4 Final
+E. Use RegEdit to export this registry key to a file called "24key.reg". 
+
+The 23key.reg file gives the key the value @="C:\Python23\pythonw.exe \%1\
+%*
+
+where the 24key.reg file gives it the value 
+@="\C:\Python23\pythonw.exe\ \%1\ %*
+
+I duplicated Srdjan's problem, and installed Leo 4.2-final by: 
+
+1. creating a copy of the 23key.reg file called 24keyhack.reg;
+
+2. Editing 24keyhack.reg, changing the value of the key to point at the C:\Python24
+folder -- i.e., changing it to
+@="C:\Python24\pythonw.exe \%1\ %*
+
+3. Right-clicking the 24keyhack.reg file and merging it -- thereby changing
+the value of the Registry key.
+
+4. Running the Leosetup-4-2 installer. No problem this time!
+
+5. Right-clicking the 24key.reg file and merging it -- thereby restoring the
+orthodox Python 2.4 value of the Registry key.
+
+Looks to me as though the 2.4 key surrounds the path to pythonw.exe in quotation
+marks. Perhaps this allows the Microsoft Installer to install Python in a folder
+whose name includes a space.
+#@-node:ekr.20041214131745.1:Notes
+#@+node:ekr.20041219162724.1:Notes 2
+@killcolor
+
+http://sourceforge.net/forum/message.php?msg_id=2898633
+By: djsg
+
+Having no experience with writing installers for Windows, I can't comment. I
+can report with three items of interest, though.
+
+One. The documentation for NSIS 2.0.3 indicates that NSIS can extract single
+characters from strings and compare strings with constants, and that it supports
+looping. It seems to me that it should be possible to use that version of NSIS
+to handle both the Python 2.3-style and Python 2.4-style registry entries. I
+am willing to research this after Christmas.
+
+Two. The installer for the Python 2.4 version of Mark Hammond's Python for Windows
+extensions runs afoul of the Python 2.4 installer, too -- see
+http://sourceforge.net/tracker/index.php?func=detail&aid=1066510&group_id=78018&
+atid=551954
+
+Three. Fredrik Lundh documents a method for "Adding Python Information to the
+Windows Registry", at http://effbot.org/zone/python-register.htm. He comments
+that this is useful for Hammond's Python for Windows extensions and for Windows
+installers generated by the distutils package.
+
+Lundh's Web page is dated February, 2003, so it may be out of date. 
+#@-node:ekr.20041219162724.1:Notes 2
+#@-node:ekr.20041214131745:Python 2.4 installer problem
+#@-node:ekr.20041231110704:Release new installer for Leo 4.2, test with Python 2.4
+#@-node:ekr.20041228093733:First (Top Roti)
+#@+node:ekr.20041228053704:Finish Config...
+#@+node:EKR.20040606193130:(Fix problems with negative tab width in prefs)
+#@+node:EKR.20040606193323:Report
+@nocolor
+
+Open discussion
+http://sourceforge.net/forum/message.php?msg_id=2603738
+
+I always set tabs to -4 in the config. when you open the prefs it says 4 but
+there is a checkmark for convert tabs to space. open a new leo, open prefs. its
+not checked! open another leo, its checked.
+
+The problem is that tab_width is usually stored in leoConfig.txt, not the .leo file.
+I'm going to ignore this problem for now...
+#@nonl
+#@-node:EKR.20040606193323:Report
+#@+node:ekr.20031218072017.2062:getPrefs
+# Note: Leo 4.3 does not write these settings to local .leo files.
+# Instead, corresponding settings are contained in leoConfig.leo files.
+
+def getPrefs (self):
+
+    c = self.c
+    
+    if self.getOpenTag("<preferences"):
+        return # <preferences/> seen
+
+    table = (
+        ("allow_rich_text",None,None), # Ignored.
+        ("tab_width","tab_width",self.getLong),
+        ("page_width","page_width",self.getLong),
+        ("tangle_bat","tangle_batch_flag",self.getBool),
+        ("untangle_bat","untangle_batch_flag",self.getBool),
+        ("output_doc_chunks","output_doc_flag",self.getBool),
+        ("noweb_flag",None,None), # Ignored.
+        ("extended_noweb_flag",None,None), # Ignored.
+        ("defaultTargetLanguage","target_language",self.getTargetLanguage),
+        ("use_header_flag","use_header_flag",self.getBool))
+    
+    done = False
+    while 1:
+        found = False
+        for tag,var,f in table:
+            if self.matchTag("%s=" % tag):
+                if var:
+                    self.getDquote() ; val = f() ; self.getDquote()
+                    setattr(c,var,val)
+                else:
+                    self.getDqString()
+                found = True ; break
+        if not found:
+            if self.matchTag("/>"):
+                done = True ; break
+            if self.matchTag(">"):
+                break
+            else: # New in 4.1: ignore all other tags.
+                self.getUnknownTag()
+
+    if not done:
+        while 1:
+            if self.matchTag("<defaultDirectory>"):
+                # New in version 0.16.
+                c.tangle_directory = self.getEscapedString()
+                self.getTag("</defaultDirectory>")
+                if not g.os_path_exists(c.tangle_directory):
+                    g.es("default tangle directory not found:" + c.tangle_directory)
+            elif self.matchTag("<TSyntaxMemo_options>"):
+                self.getEscapedString() # ignored
+                self.getTag("</TSyntaxMemo_options>")
+            else: break
+        self.getTag("</preferences>")
+#@nonl
+#@+node:ekr.20031218072017.2063:getTargetLanguage
+def getTargetLanguage (self):
+    
+    # Must match longer tags before short prefixes.
+    for name in g.app.language_delims_dict.keys():
+        if self.matchTagWordIgnoringCase(name):
+            language = name.replace("/","")
+            # self.getDquote()
+            return language
+            
+    return "c" # default
+#@nonl
+#@-node:ekr.20031218072017.2063:getTargetLanguage
+#@-node:ekr.20031218072017.2062:getPrefs
+#@-node:EKR.20040606193130:(Fix problems with negative tab width in prefs)
+#@+node:ekr.20041228090344:Major
+- Cancel should revert all settings.
+    (Revert doesn't work after a node changes:this is confusing and dangerous.)
+
+- Support generalized widget settings (see child node)
+
+- Copy expansion state when writing @settings trees.
+
+- Handle undo/redo properly.
+#@nonl
+#@+node:ekr.20041123100100:support @fixed-recent-files in Leo's core
+The config classes do nothing special.
+
+The core must put fixed files first in the menu.
+#@nonl
+#@-node:ekr.20041123100100:support @fixed-recent-files in Leo's core
+#@+node:ekr.20041228100139:Support for general component settings
+@list name
+    - name specifies the component to configure.
+    - parser creates a list of name,kind,value tuples from the body.
+
+Leo's core would support one 'name' for:
+    each Tk widget,
+    each Pmw megawidget,
+    each megawidget component.
+
+Examples:
+    headline:
+        @list outline_canvas_settings
+    body:
+        height,int,1
+        text,string,my widget
+
+g.setGeneralTkSetting(widget,setting_name) would do the following:
+    - get the setting_name and the associated list of tuples/bunches from the config class.
+    - safely set the widget's setting using the settings list as is done in the prototype code.
+#@nonl
+#@-node:ekr.20041228100139:Support for general component settings
+#@+node:ekr.20041231104531:(Fix problems with the recent files list)
+#@+node:ekr.20050104083804:Clear Recent Files command should clear @recentfiles nodes
+#@-node:ekr.20050104083804:Clear Recent Files command should clear @recentfiles nodes
+#@+node:ekr.20031218072017.2083:c.updateRecentFiles
+def updateRecentFiles (self,fileName):
+    
+    """Create the RecentFiles menu.  May be called with Null fileName."""
+    
+    if g.app.unitTesting: return
+    
+    # Update the recent files list in all windows.
+    if fileName:
+        absFileName = g.os_path_abspath(fileName)
+        # g.trace(fileName)
+        for frame in g.app.windowList:
+            c = frame.c
+            # Remove all versions of the file name.
+            for name in c.recentFiles:
+                if absFileName == g.os_path_abspath(name):
+                    c.recentFiles.remove(name)
+            c.recentFiles.insert(0,fileName)
+            # Recreate the Recent Files menu.
+            frame.menu.createRecentFilesMenuItems()
+    else:
+        for frame in g.app.windowList:
+            frame.menu.createRecentFilesMenuItems()
+#@nonl
+#@-node:ekr.20031218072017.2083:c.updateRecentFiles
+#@+node:ekr.20041117085625:openSettingsFile
+def openSettingsFile (self,path):
+    
+    try:
+        # Open the file in binary mode to allow 0x1a in bodies & headlines.
+        theFile = open(path,'rb')
+    except IOError:
+        g.es("can not open: " + path, color="blue")
+        return None
+        
+    # Similar to g.openWithFileName except it uses a null gui.
+    # Changing g.app.gui here is a major hack.
+    oldGui = g.app.gui
+    g.app.gui = leoGui.nullGui("nullGui")
+    c,frame = g.app.gui.newLeoCommanderAndFrame(path,updateRecentFiles=False)
+    frame.log.enable(False)
+    g.app.setLog(frame.log,"openWithFileName")
+    g.app.lockLog()
+    frame.c.fileCommands.open(theFile,path,readAtFileNodesFlag=False) # closes theFile.
+    g.app.unlockLog()
+    frame.openDirectory = g.os_path_dirname(path)
+    g.app.gui = oldGui
+    return c
+#@nonl
+#@-node:ekr.20041117085625:openSettingsFile
+#@-node:ekr.20041231104531:(Fix problems with the recent files list)
+#@-node:ekr.20041228090344:Major
+#@+node:ekr.20041228090344.1:Minor
+- Remove label in settings pane.
+- Make sure comment area is always visible.
+- Disable all commands while in dialog.
+- Print changes to log.
+- Unit tests: there are too many cases to test by hand.
+- move findCorrespondingNode into leoNodes class.
+- Fix bug: findSettingsRoot doesn't work if no summary node.
+- findSettingsPostion should honor if-gui and if-platform nodes.
+#@nonl
+#@-node:ekr.20041228090344.1:Minor
+#@+node:ekr.20041118135306.1:Testing
+- Create unit tests for essential features
+
+- Test all dialogs.
+
+- Make sure proper values from Prefs panel are used in Tangle/Untangle commands.
+#@nonl
+#@-node:ekr.20041118135306.1:Testing
+#@-node:ekr.20041228053704:Finish Config...
 #@-node:ekr.20050102180943.1:4.3 a1
-#@+node:ekr.20041228073219: To do: 4.3.x
-#@+node:ekr.20050102180943.3:4.3 a2
-#@+node:ekr.20041231102453:Design new uA scheme
-#@-node:ekr.20041231102453:Design new uA scheme
+#@+node:ekr.20041228084018.1:4.3.a2 plugins & dist
+Edit and commit all plugins.
+#@nonl
 #@+node:ekr.20041231102453.1:Move emacs commands into core
 #@-node:ekr.20041231102453.1:Move emacs commands into core
 #@+node:ekr.20041214132052:Distribution...
@@ -665,6 +677,65 @@ Rochester Institute of Technology
 schull@digitalgoods.com 585-738-6696
 #@-node:EKR.20040422132037.7:Problems with run script command on Mac x11
 #@-node:ekr.20041214132052:Distribution...
+#@+node:ekr.20041018195347.1:Improve MacOS Docs
+I just succeeded at installing Leo under os x (10.2.8) by folliwing  
+your instructions with modification.  It would be nice to get the  
+modification added to your page for others. I actually found the mods  
+by doing a search for help after following the present instructions  
+failed. The step that is missing (as clearly as I can see) is step 3  
+(using the Package Manager) in the following that comes from
+
+http://coding.derkeiler.com/Archive/Python/comp.lang.python/2003-12/ 
+3431.html
+
+> What I did that worked on Jaguar:
+>  - Installed MacPython 2.3 for Jaguar using the binary installer from:
+>  <http://homepages.cwi.nl/~jack/macpython/macpython-osx.html>
+>  - Installed Tcl/Tk 8.4.4 using the binary installer from
+>  <http://www.maths.mq.edu.au/~steffen/tcltk/TclTkAqua/>
+>  - Used Package Manager (in /Applications/MacPython) to install  
+> _tkinter
+>  (and also readlines and some other useful stuff)
+>
+[x]
+   - type "rehash" in a terminal
+   - type pythonw to start Python and then test Tkinter with the  
+following:
+>
+> import Tkinter
+>  root = Tkinter.Tk()
+>
+>
+> should bring up a window.
+
+(It was also nice to have a test included so you could see that  
+everything was installed properly.)
+
+I also edited the leo file that is part of the leo distribution so it  
+read:
+
+pythonw /usr/local/lib/leo/src/leo.pyw "$1"
+
+That way I can just type "leo" to start leo rather than doing
+
+/usr/local/bin/pythonw leo.pyw
+
+Finally, when leo is run for the first time, it creates a window that  
+is centered on the screen asking for an ID. The screen happened to  
+appear under existing terminal windows and I didn't see it there and  
+thought something was wrong with leo on my system. After I found it  
+(accidentally) and entered a user name, all went as advertised.
+
+Seeing the leo project in python is inspiring.  Thanks for making this  
+available.
+
+/c
+#@nonl
+#@-node:ekr.20041018195347.1:Improve MacOS Docs
+#@-node:ekr.20041228084018.1:4.3.a2 plugins & dist
+#@+node:ekr.20050104083128:4.3 b1 drawing and uA's
+#@+node:ekr.20041231102453:Design new uA scheme
+#@-node:ekr.20041231102453:Design new uA scheme
 #@+node:ekr.20041228074125:Drawing...
 #@+node:ekr.20041228092223:Play with wiki markup
 http://sourceforge.net/forum/message.php?msg_id=2205285
@@ -879,68 +950,9 @@ It is possible to do pretty much anything you want but you will have to provide 
 #@-node:EKR.20040517090625.1:@url http://komodo.nique.net/~grayrest/leoUIproposal.txt
 #@-node:ekr.20041228092223.1:Used tabbed log for find dialog?
 #@-node:ekr.20041228074125:Drawing...
-#@+node:ekr.20041231102453.3:Easy
-#@+node:ekr.20041022083005.8:Catch mixed tab & space in derived files
-add python -t to test suite to catch mixed tab & space in derived files.
-#@nonl
-#@-node:ekr.20041022083005.8:Catch mixed tab & space in derived files
-#@-node:ekr.20041231102453.3:Easy
-#@+node:ekr.20041018195347.1:Improve MacOS Docs
-I just succeeded at installing Leo under os x (10.2.8) by folliwing  
-your instructions with modification.  It would be nice to get the  
-modification added to your page for others. I actually found the mods  
-by doing a search for help after following the present instructions  
-failed. The step that is missing (as clearly as I can see) is step 3  
-(using the Package Manager) in the following that comes from
-
-http://coding.derkeiler.com/Archive/Python/comp.lang.python/2003-12/ 
-3431.html
-
-> What I did that worked on Jaguar:
->  - Installed MacPython 2.3 for Jaguar using the binary installer from:
->  <http://homepages.cwi.nl/~jack/macpython/macpython-osx.html>
->  - Installed Tcl/Tk 8.4.4 using the binary installer from
->  <http://www.maths.mq.edu.au/~steffen/tcltk/TclTkAqua/>
->  - Used Package Manager (in /Applications/MacPython) to install  
-> _tkinter
->  (and also readlines and some other useful stuff)
->
-[x]
-   - type "rehash" in a terminal
-   - type pythonw to start Python and then test Tkinter with the  
-following:
->
-> import Tkinter
->  root = Tkinter.Tk()
->
->
-> should bring up a window.
-
-(It was also nice to have a test included so you could see that  
-everything was installed properly.)
-
-I also edited the leo file that is part of the leo distribution so it  
-read:
-
-pythonw /usr/local/lib/leo/src/leo.pyw "$1"
-
-That way I can just type "leo" to start leo rather than doing
-
-/usr/local/bin/pythonw leo.pyw
-
-Finally, when leo is run for the first time, it creates a window that  
-is centered on the screen asking for an ID. The screen happened to  
-appear under existing terminal windows and I didn't see it there and  
-thought something was wrong with leo on my system. After I found it  
-(accidentally) and entered a user name, all went as advertised.
-
-Seeing the leo project in python is inspiring.  Thanks for making this  
-available.
-
-/c
-#@nonl
-#@-node:ekr.20041018195347.1:Improve MacOS Docs
-#@+node:ekr.20040916122326.1:Undo...
+#@-node:ekr.20050104083128:4.3 b1 drawing and uA's
+#@+node:ekr.20041228073219:4.3.x
+#@+node:ekr.20050104083249:4.3.1 undo
 #@+node:ekr.20041011092930:Fix undo bug
 http://sourceforge.net/forum/message.php?msg_id=2795653
 
@@ -1702,693 +1714,12 @@ print "actual  :",textResult
 #@-node:ekr.20031218072017.1497:<< print mismatch trace >>
 #@-node:ekr.20031218072017.1493:undoRedoText
 #@-node:ekr.20040323084434:(Add granularity setting for undo)
-#@-node:ekr.20040916122326.1:Undo...
-#@-node:ekr.20050102180943.3:4.3 a2
-#@+node:ekr.20041228084018:4.3.1 to 4.3.n Easy commands, directives, options, etc.
-- There may be several releases needed.
-
-- Note everything on this list needs to be done first.
-
-- Most of these will take 1 hour to 1 day. They have been delayed far too long.
-#@+node:ekr.20031218072017.801:Zipped .leo files (see chapters plugin for how to do this)
-By: samcollett ( Sam Collett ) 
- Compressed LEO files   
-2003-01-07 16:57
-
-
-Would it be possible to have a new file format that was basically a compressed
-version of LEO files? Maybe using the gzip compression method. You could then
-save a lot of space when you do large files. Not being a professional
-programmer myself (I mainly dabble in web design - HTML and Active Server
-Pages) how difficult would this be to implement? You would just output using a
-different file extension so users of the older versions can still use files
-with the LEO extension.
-#@+node:ekr.20040226092546:Saving .leo files with file compression
-@nocolor
-http://sourceforge.net/forum/message.php?msg_id=2442772
-By: ejoy
-
-I made an experiment last night. I replaced the call to open()in leofilecommand.py
-with a call to gzip.open().
-The LeoPy.leo file saved this way is only 600K! And there is no significant
-speed down in saving.
-
-I think it is a good idea to add compression support for load/save .leo files.
-When reading or writing file with name ending with ".leo.gz", leo can call gzip
-module to uncompress/compress the file, saving a lot of disk space.
-
-What do you think of this?
-#@-node:ekr.20040226092546:Saving .leo files with file compression
-#@-node:ekr.20031218072017.801:Zipped .leo files (see chapters plugin for how to do this)
-#@+node:ekr.20041022083833.1:Commands
-#@+node:ekr.20040918165519:Mark Task & Clone To Task commands
-@nocolor
-
-http://sourceforge.net/forum/message.php?msg_id=2415033
-By: nobody
-
-Ive been scanning Speed Reams Slash post and the Faq and saw an interesting
-usage pattern: Creating a node called a Task and adding cloned nodes to it that
-represent that task(I hope that explains it).  I can see myself using this idiom
-in the future.  Now my question is does the Task/clone idiom warrant special
-commands in Leo?  My basis:
-
-1. Do enough Leo users work with this idiom that making it easier to utilize
-would be desirable?  I guess a good rule of thumb might be, if the sequence
-of actions occur more frequently than the primitive commands like opening a
-file it should be considered.
-
-Maybe a way of doing it:
-
-1. A special mark node as Task command.
-2. A Add to lask marked task command, that clones a node and moves that node
-into the Task node.
+#@-node:ekr.20050104083249:4.3.1 undo
+#@+node:ekr.20040919182750.1:4.3.2 better handling of whitespace
+#@+node:ekr.20041022083005.8:Catch mixed tab & space in derived files
+add python -t to test suite to catch mixed tab & space in derived files.
 #@nonl
-#@-node:ekr.20040918165519:Mark Task & Clone To Task commands
-#@+node:ekr.20041022091645.1:Find Next Clone command
-#@-node:ekr.20041022091645.1:Find Next Clone command
-#@+node:ekr.20040315060557:Declone command
-By: nobody ( Nobody/Anonymous ) 
- having a declone() method for vnodes?   
-2004-03-15 04:36  
-
- hi,
-
-Ive had a use for a declone() method in vnodes recently. Have you ever thought about adding a method that declones a clone? This would entail:
-
-1. Making a clone node a normal node.
-
-I can see this happening when cutting a node and pasting a node that is a clone. But there doesn't seem to be a dedicated function to do the operation. :)  
-#@nonl
-#@-node:ekr.20040315060557:Declone command
-#@+node:ekr.20031218072017.792:Double Click Node command
-#@-node:ekr.20031218072017.792:Double Click Node command
-#@+node:ekr.20041219162724:Add dialog to insert recent directories
-http://sourceforge.net/forum/message.php?msg_id=2903742
-By: nobody
-
-In the multifile plugin there is an option to insert a directory string.  I
-use it alot for the @path directive.  What happens is that when executed a FileDialog
-opens up and the user selects the directory he wants to use as a directory string.
-When chosen the directory string is inserted into the text editor.
-
-The good of this:
-1. It makes using path simpler, you dont have to type out the directory path
-yourself, just use the tkFileDialog to select it and have Leo insert the string.
-For long directories this saves a lot of typing.
-
-simple, short and quite helpful.  Thoughts? :)
-
------------
-
-Time to create a directory class??
-
-#@-node:ekr.20041219162724:Add dialog to insert recent directories
-#@+node:ekr.20031218072017.800:Improve extract section command
-Read and respond to this message at: 
-https://sourceforge.net/forum/message.php?msg_id=1858824
-By: gilshwartz
-Open discusstion
-
-Currently Extract Section is only available if the first line in a selection
-is a section name <<x>>. I would like to propose a few enhancements I think
-should be useful, while I believe most of the code is already implemented in
-Leo.
-
-1. If the first line in a selection is not <<x>>, than Extract Section WILL
-make a section name from the first line (or a version of it, see below), leave
-the section name in the body, create a new node with that section name, and
-will copy the selection including the first line to the new node.
-
-Rational: this is useful when selecting a function or a class. Thus the section
-name becomes the function or the class definition. The section name can either
-be the full first line, or, knowing the language, Leo can make a nice section
-name like it does in import, e.g. "function foo", or "class bar", without the
-parameters list.
-
-2. Even better, when Extract Section is called WITHOUT a selection it will look
-for the first function/class definition before the cursor's position and will
-either use it as a selection and do 1 above, or just mark it as selection, which
-will enable 1 above upon a second Extract Section.
-
-Rational: Leo does it beautifully in import and when a node's code starts to
-build it is most convenient. Also, I think a variation on this was recently
-asked by another user.
-
-3. Add an option Merge Section, which when called from a named section will
-merge it back to all the sections containing it.
-
-Rational: make it easy (together with 2) to create/delete sections until the
-sections picture of a new code becomes clear.
-
-Gil
-
---
-
-Read and respond to this message at: 
-https://sourceforge.net/forum/message.php?msg_id=1859516
-By: nobody
-
-Simpler & more intutive:
-Mark text, select from menu - 'extract section', this presents a dialog box
-in which you fill in the section name. It is too much work to type <<name>>
-then select the whole thing...
-
-As an enhancement, the dialog can show the first line of the selection as the
-default section name, which obviously can be changed.
-
-- Rajiv Bhagwat
-#@-node:ekr.20031218072017.800:Improve extract section command
-#@+node:ekr.20041130123243:Clear Undo command
-@killcolor
-
-http://sourceforge.net/forum/message.php?msg_id=2859273
-e
-
-theres a config option to clear undo on save.
-can that be a menu choice as well? 
-clear undo now.
-enable clear undo on save.
-moot as it will be with the new config options
-and any undo changes on the table.
-maybe there is a single point to involke clear 
-undo that could be run from a button?
-
-with py2.3 after allot of small edits on an open leo after a few hours gc can
-hit unexpectedly and last several minutes
-and return at any time lasting several more minutes.
-I think its gc related because the memory use and disk grinding demanding I
-free up memory or kill python.
-
-I have no idea if undo is the cause,
- just guessing.
-using cvs of last week. I just updated, 
-will let you know if it happens again.
-(new error reporting jump to error is great)
-
-usually I don't edit in the same process that long.
-I have run scripts from leo that run 6, 12 
-or 24 hours no problem. 
-maybe I can turn on some internals reporting and
-get some feedback on whats going on from python if it happens again. 
-or run the gc script before and after.
-
- win98 128meg w/maxmem memory defrager that works well.
-but I go from 50% free to 10% when this starts happening.
-I haven't noticed this problem yet in py2.4, and it is peppier,
-but don't use py2.4 enough. it doesn't happen every day.
-I reboot at least once a day for various reasons.
-so it isn't that either. 
-you do need to reboot and or exit python once it starts.
-this was never an issue with py2.2 and Leo 4.1 or less with only 64 megs.
-I don't really have any other long running python processes to compare to Leo. 
-can't say what it is.
-Aha, progress. 
-this started sometime early in 4.2 or late 4.1
-but I can still be persuaded something in my 
-local system is to blame, some install or dll update. or script, psyco or plugin
-related.
-
-nonwithstanding, I should be taking better advantage Moore's law in my CPU and
-memory.
-I only notice this when I'm running the same leo over a few hours of constant
-editing and running scrips.
-and when I exit python and restart leo everything returns to normal.
-more a supporting anomaly report 
-than a bug report or feature request.
-#@nonl
-#@-node:ekr.20041130123243:Clear Undo command
-#@+node:ekr.20031218072017.790:Import dialog improvements
-@nocolor
-
-Other options I though would be really handy:
-
-1. Use an existing node as a source also
-
-2. Use an node from another Leo file.. I am not sure what the syntax for that
-would be exactly
-
-3. From a URL.. this would be really cool. People could post outlines not only
-as existing Leo xml files, but as text files or even dynamic scripts. The code
-to handle these would presumably need to deal with http:// intelligently. But
-that's easy in Python. Rebol is great at that too.
-
-4. Other XML file with valid filepaths in them.
-That's probably a much bigger project like Leo 3.10  
-
-Jason
-#@-node:ekr.20031218072017.790:Import dialog improvements
-#@+node:ekr.20031218072017.807:Put up file dialog on empty @url, etc.
-@nocolor
-
-Open Discussion
-https://sourceforge.net/forum/message.php?msg_id=2003457
-By: dsalomoni
-
-Proposal: modify the code for @url so that if you type for example just "@url"
-(no file specified) in a headline, a window pops up allowing you to browse the
-local file system and select the file (similar to what browsers do when you
-want to open a file).
-
-This would be more convenient than manually writing @url
-file://a/long/path/to/the/file. @read-only nodes already allow this, it would
-perhaps be nice if all these types of plugins (@folder might be another one
-for example) and directives (@file etc) had the same behavior (and this should
-probably be specified in some guidelines for writing new plugins -see e.g. the
-jedit plugin guidelines).
-
-Davide
-#@-node:ekr.20031218072017.807:Put up file dialog on empty @url, etc.
-#@+node:ekr.20040217153407:User customizeable tangling and untangling
-@template plugin does some (most?) of this.
-#@nonl
-#@-node:ekr.20040217153407:User customizeable tangling and untangling
-#@-node:ekr.20041022083833.1:Commands
-#@+node:ekr.20041022083226:Directives
-#@+node:ekr.20041130103128:(killcolor also kills autoindenting )
-By: Roger Erens - rogererens
-@
-2004-11-25 09:14
-On leo4.2, winXP, my default language is Python and smart_auto_indent=0. 
-Normally, after ending a line with a colon, the next line gets indented by 1 tab, also in comment-sections. 
-When using an @killcolor directive in a node, the line following one that ends with a colon starts at column zero. 
-I think it is unreasonable for @killcolor to interfere with indenting.
-#@-node:ekr.20041130103128:(killcolor also kills autoindenting )
-#@+node:ekr.20031218072017.833:Use @file extension by default if no @language
-@nocolor
-
-Open discussion
-By: jasonic ( Jason Cunliffe ) 
- use of @language   
-2003-07-16 03:40  
-
-I am wondering why Leo does not default to just use the file suffix in @file nodes, instead of obliging @language line in in the body pane 
-
-For example any @file ending with a suffix as defined in the language extensions could just default to use those. 
-
-".py" for python 
-".r" for rebol 
-".as" for actionscript etc.. 
-
-Should anyone need to over-ride those, they could use @language.
-#@nonl
-#@-node:ekr.20031218072017.833:Use @file extension by default if no @language
-#@+node:ekr.20041016134312.1:Allow multiple @language directives in a single node
-@killcolor
-
-Treat @language like @color: ambiguous nodes (nodes containing more than one
-@language directive) should not affect descendent nodes.
-#@nonl
-#@-node:ekr.20041016134312.1:Allow multiple @language directives in a single node
-#@+node:ekr.20041001182730.2:Allow other directive lead-ins besides @
-#@-node:ekr.20041001182730.2:Allow other directive lead-ins besides @
-#@+node:ekr.20031218072017.805:Allow other section delims besides << and >>
-Maybe the section operator could be customizable, 
-I personally prefer the wiki way [[name of section]]. 
-
-@setlink-tag [[ ]] 
-#@-node:ekr.20031218072017.805:Allow other section delims besides << and >>
-#@+node:ekr.20031218072017.745:@@first <n>
-@nocolor
-
-Hate to break into the grand design discussions, but here's a hopefully small thing. If you need to place a good sized copyright statement at the top of your files, LEO doesn't handle this case very cleanly. As I'm sure you're aware, you wind up with a matching number of @@first lines for each leading line in your source. 
-
-As an example: 
-# 1 
-# 2 
-# 3 
-# 4 
-# 5 
-#@verbatim
-#@+leo 
-#@verbatim
-#@+node:0::@file /tmp/firstcheck.py 
-#@verbatim
-#@+body 
-#@verbatim
-#@@first 
-#@verbatim
-#@@first 
-#@verbatim
-#@@first 
-#@verbatim
-#@@first 
-#@verbatim
-#@@first 
-#@verbatim
-#@+doc 
-# 
-# How many firsts do I get? 
-
-#@verbatim
-#@-doc 
-#@verbatim
-#@@c 
-Start code. 
-#@verbatim
-#@-body 
-#@verbatim
-#@-node:0::@file /tmp/firstcheck.py 
-#@verbatim
-#@-leo 
-
-My fellow co-workers who don't use LEO, aren't exactly loving me here. 
-
-Might we introduce an: 
-
-@@first <num> 
-
-Type tag instead? So one '@@first 5' could represent all 5 of the above @@first lines? It makes for a smaller, cleaner LEO footprint and will tick off non-LEO users much less. 
-
-Thanks. 
-
-- ordinarius 
-#@nonl
-#@-node:ekr.20031218072017.745:@@first <n>
-#@+node:ekr.20031218072017.795:Metatags
-@nocolor
-
-By: nobody ( Nobody/Anonymous ) 
- RE: 3.11 todo list & schedule   
-2003-02-11 03:25  
-
-Here are some features I'd like to see: 
- 
-3. Metatags. @sectionname or @savedate are expanded to the appropriate text when saved.
-
--marshall-  
-
-There are quite a few of these now.  It would be good to generalize:
-- Register @node type.
-#@-node:ekr.20031218072017.795:Metatags
-#@+node:ekr.20041130104552:(Support bird-track programs/comments?)
-@killcolor
-
-By: Guenther Enthaler - genthaler
-RE: Haskell support  
-2004-11-18 22:55
-
-There's a literate programming mode in Haskell (and in a number of other functional programming languages such as Clean & Curry), where the program is in a comment, usually where the line starts with ">" (bird track style, I think it's called), and the comments/documentation are freeform. It would be difficult but cool if Leo could support it, if only because the sentinels in the derived files wouldn't make whole file look so busy. 
- 
-Günther 
-#@nonl
-#@-node:ekr.20041130104552:(Support bird-track programs/comments?)
-#@-node:ekr.20041022083226:Directives
-#@+node:ekr.20041228093301:Directories
-#@+node:ekr.20041022070154:(options for setting working directory during startup)
-#@+node:ekr.20041022070154.1:Request & response
-@killcolor
-
-http://sourceforge.net/forum/message.php?msg_id=2815599
-By: Antonio Pala
-
-All plugins I have tried (notably @run and the @rst variants) have their working
-directory set to my home directory, regardless of the position of the Leo file
-and all @path directives. This renders most of them useless, since I would have
-to use absolute pathnames. Is this the way they were meant to work, or is there
-a bug somewhere? Or maybe I have missed some configuration parameter?
-
-I am using Leo 4.2 with Python 2.3 on Linux.
-
-> All plugins I have tried (notably @run and the @rst variants) have their working directory set to my home directory, regardless of the position of the Leo file and all @path directives.
-
-Directory issues are different on different platforms.
-
-I would welcome specific proposals for setting directories during startup.  Early in the startup process Leo sets g.app.loadDir to the directory from which Leo was loaded.  Plugins can use this directory to set the working directory as they choose.
-
-@path directives will have no effect on plugins:  they are loaded before the outline.
-
-> This renders most [plugins] useless, since I would have to use absolute pathnames.
-
-No, it means you might have to add a few lines of code to your plugin to make it work just as you would like it to work.
-
-> Is this the way they were meant to work?
-
-I don't have much control over how plugins were "meant" to work.  However, an improved plugin manager might have facilities for setting the working directory.
-
-This is a non-trivial issue;   Leo uses and sets paths in many places in the code.  It seems dubious to have plugins change the working directory at random times.  Perhaps an option that inits the working directory would be good.  The new config system will allow per-outline options as well as global option. I believe such options could be loaded before plugins.
-
-Edward
-#@nonl
-#@-node:ekr.20041022070154.1:Request & response
-#@-node:ekr.20041022070154:(options for setting working directory during startup)
-#@+node:ekr.20041029083459:Remember Import directory
-By: Kent Tenney - ktenney
-Import to @file request  
-2004-10-28 11:27
-Howdy, 
- 
-Please ignore if this is a difficult feature to implement. 
- 
-File->Import->Import to @file  
-always starts in .../leo/src 
- 
-I would prefer if it opened to the last directory from 
-which a file was imported. 
- 
-I often find myself importing several files from the same area of the directory tree, and repeatedly navigating there from leo/src gets tiresome. 
- 
-Thanks, 
-Kent
-#@-node:ekr.20041029083459:Remember Import directory
-#@-node:ekr.20041228093301:Directories
-#@+node:ekr.20041228085245:Options
-#@+node:ekr.20031218072017.740:Disallow writes outside a "top-level" folder
-1. Warn when creating _any_ new file.
-
-2. Warn when rewriting any file that was not read properly.
-
-This prevents "hijacking" an already existing file.
-#@nonl
-#@-node:ekr.20031218072017.740:Disallow writes outside a "top-level" folder
-#@+node:ekr.20040213090121:* Insert at end
-@nocolor
-
-By: tibi ( Thiébaut Champenier ) 
- inserting a new node   
-2004-02-13 13:23  
-
- Hi,
-
-When doing ctrl+i I on the node that has children I would prefer Leo to insert the new node as the last children instead of the first. It just makes more sense to me, for exemple when you take a big file and cut it in subnodes you typically start at the top and create new nodes while paging down the file.
-What do you think ?
-To try it just make this little change:
-RCS file: /cvsroot/leo/leo/src/leoCommands.py,v
-retrieving revision 1.76
-diff -r1.76 leoCommands.py
-2516c2516
-< v = current.insertAsNthChild(0)
----
-> v = current.insertAsLastChild()  
-#@nonl
-#@-node:ekr.20040213090121:* Insert at end
-#@+node:ekr.20040311022923:Make sentinel name in @-node optional
-#@-node:ekr.20040311022923:Make sentinel name in @-node optional
-#@-node:ekr.20041228085245:Options
-#@+node:ekr.20041022083226.2:Scripting
-#@+node:ekr.20041211022140:Specify key binding  in @button
-@killcolor
-
-- Specify the binding in the headline:  @button(alt-shift-9)
-- Change createDynamicButton in the script plugin to honor the binding.
-#@nonl
-#@-node:ekr.20041211022140:Specify key binding  in @button
-#@+node:ekr.20041004193600:Add safeguards on @button and @script
-#@+node:ekr.20041004193600.1:Paul's first posting
-@killcolor
-http://sourceforge.net/forum/message.php?msg_id=2788477
-By: paulpaterson
-
-Perhaps some minor bridling ...
-
-What about managing the security of scripts using some algorithm like this,
-
-1. When Leo scans for @buttons, @scripts etc it makes a list of scripts
-2. For each script ...
-3.   Calculate a secure hash of the script contents
-4.   Consult central repository to see if hash is recognized
-5.   If hash recognized
-6.     Accept it
-7.   Else
-8.     Force user to acknowledge the script or disable it
-
-The cental repository could be a file in your Leo directory which stores "approved"
-hashes.
-
-Clicking on a @buttons, @script node and selecting "Approve script" would add
-the hash to the repository. Selecting "Disable script" would remove it. There
-could also be a menu item to bring up a window of approved/not approved script
-nodes so that you could centrally manage them.
-
-
-Additional housekeeping on the list of hashes is possible but probably isn't
-required since the size is small and there shouldn't be any collisions. If required
-you could just blow away the file and then re-enable all scripts.
-
-Using this approach, no new script would be able to run without being enabled
-by the user. There is still the possibility that another plugin or script could
-disable the security mechanism or tamper with the repository but with Leo's
-architecture a plugin could already do anything anyway so this isn't an additional
-hole.
-
-It would protect from 
-
-@script
-import os
-os.system("del *.*")
-
-being submitted to an OS project!
-#@nonl
-#@-node:ekr.20041004193600.1:Paul's first posting
-#@+node:ekr.20041005075955:Pault's second posting
-@killcolor
-
-http://sourceforge.net/forum/message.php?msg_id=2789123
-By: paulpaterson
-
-I'm not an expert but from the Python docs this looks like the way to do it,
-
-> import sha
-> s = sha.sha("hello there")
-> s.hexdigest()
-'6e71b3cac15d32fe2d36c270887df9479c25c640'
-
-> s = sha.sha("hello there hacked")
-'a42837bba84c53cabd52a98f3671809d475c707f'
-
-It looks like the md5 module offers a similar function but uses less bits.
-
-From what I understand the hexdigest should be different for any change in the
-text. Also no two strings should give the same hash (although I seem to recall
-that someone found a collision recently).
-#@-node:ekr.20041005075955:Pault's second posting
-#@+node:ekr.20041003115036:Add --noscripting command-line option
-This will disable @button, @script, etc.
-#@nonl
-#@-node:ekr.20041003115036:Add --noscripting command-line option
-#@-node:ekr.20041004193600:Add safeguards on @button and @script
-#@-node:ekr.20041022083226.2:Scripting
-#@+node:ekr.20041022083226.3:Windows
-#@+node:ekr.20041022083005.2:add a Stop button for find/change
-#@-node:ekr.20041022083005.2:add a Stop button for find/change
-#@+node:ekr.20041022083005.4:insert/overstrike mode in body
-#@-node:ekr.20041022083005.4:insert/overstrike mode in body
-#@+node:ekr.20031218072017.746:Minimizing/maximizing windows
-@nocolor
-
-Open Discussion
-https://sourceforge.net/forum/message.php?msg_id=2090601
-By: jasonic
-
-I'll be happy to run some test and report to you. But  I suspect from your post
-a slight misunderstanding about Alt+Tab.
-
-Alt+Tab just toggles the active window.
-It works fine with Leo on Windows wherver I have tried it.
-
-Resizing wondows via hotkeys is another matter.
-The special "Windows" Key + m will minimize all windows. 
-
-But unfortunately I've not yet discovered any opposite shortcut to  maximize
-all windows :-(
-I've tried various 3rd party hotkey utililties, but somehow always end up dropping
-them.
-
-<rant>
-I really hate wasting any time dragging windows around and resizing them or
-clicking to bring them into top focus. As I work mainly with graphics, and mult-task
-intesenlty bwetn apps,  it is especially important to reduce visual clutter
-on screen.
-
-For many years the way to do this has been combining maximized [or minimized]
-windows with  Alt+Tab. Alt+Tab  lets one jump rapidly betwen open apps and windows
-without ever need to repostion or resize them.
-
-As a consultant, its one of the first things I ever teach clients. Often it
-transforms their perception of using Windows.
-
-It is so painful to watch people dragging and rescaling  windows all over the
-place. Ironically, I've witnessed some very smart programmers fly through vi
-or emacs but then slow to tortoises when navigation mice and windows. I beleive
-as long as we have the curertn wnidows UI paradigm,  use of Alt+Tab is an essential
-part of  GUI 'litteracy' - an essentail skill all shoudl have. Alas its still
-little known or discussed.
-
-There is also a nice toggle feature so one can jump back to the last app/window
-as its first "stop". Typically one is working between two apps for some specific
-task, even though many are open.
-
-Keeping one's finger on the 'Alt' key then tapping 'Tab' lets one hop along
-the list.
-
-Adding 'shift' to the mix helps one to go in reverse. 
-
-Above all one can keep one hand on the mouse, the other on the keyboard [ALt+Tab]
-and ones mind/eye on teh screen. For me it means left hand "plays" the bass
-pattern using Alt+Tab along with the clipboard shortcuts [CTRL+ z,x,c,v] ,while
-right hand on the mouse mouse  provides the melody.
-
-I've been using variations on the above since 1987 when I bought an Amiga2000.
-I seem to recall SGI had one also. And after learning about Alt+Tab on windows,
-I  found a utility to work the same way on Macintosh.  I am very happy to discover
-that MacOSX now has built-in ALt+Tab :-)
-</rant>
-
-Meanwhile, Iam  still wondering how to set Leo [3.12 beta 1, Python 2.2.2, Tk
-8.3.2] default to a maxmimized or minimized window size by itself.
-
-And also to remember the last size/position it had. I vaguely remember that
-it used to do that, but perhaps I am mistaking it for some other software ?
-
-thanks
-Jason
-#@-node:ekr.20031218072017.746:Minimizing/maximizing windows
-#@+node:ekr.20031218072017.852:Scroll improvement
-@nocolor
-
-By: jwashin ( James Washington ) 
- Scrolling and the Tree Frame in Linux   
-2003-10-20 12:13  
-
-I'm using tk-8.4.3, python-2.2.3 on linux. The MouseWheel events do not work for me in the Tree Frame.
-
-I added <Button-4> and <Button-5> bindings similar to the existing <MouseWheel> binding in LeoFrame.finishCreate(), associating them with two methods, LeoFrame.OnMouseScrollDown and LeoFrame.OnMouseScrollUp that took the appropriate parts of OnMouseWheel()
-
-Now it works, sort-of. It scrolls properly unless the cursor is an I-Bar, e.g., over text. But at least this removes in-part the most glaring UI problem for me with Leo in tk. I suppose I am spoiled with the mouse wheel and want it to work everywhere.
-
-Thanks for the great program.
-
--- Jim Washington  
-#@-node:ekr.20031218072017.852:Scroll improvement
-#@+node:ekr.20040220110030:Change cursor when caps lock is down
-@nocolor
-
-http://sourceforge.net/forum/message.php?msg_id=2431552
-By: nobody
-
-From: Rich
-
- I just got nipped twice by the following effect: the Caps-Lock key is ON, but
-because the LED is on the Caps-Lock key, it is hidden behind my hand. I hit
-Ctrl-x, expecting to cut my selection, but the entire node is cut.
-
-   I know there's a problem with tk and the shift key status, so I'm wondering
-if it would be possible to change the shape of the cursor when the Caps-Lock
-is ON (preferrably a big red flashing blot 8-), or otherwise show that Caps-Lock
-is active ( "CAPS" on a status line, for instance).
-
-  Another way: I don't know if this goes against an "anti-modalism rule," but
-only allowing Ctrl-Shift-x|c|v in the outline pane would also be acceptable
-to me.
-#@nonl
-#@-node:ekr.20040220110030:Change cursor when caps lock is down
-#@-node:ekr.20041022083226.3:Windows
-#@-node:ekr.20041228084018:4.3.1 to 4.3.n Easy commands, directives, options, etc.
-#@+node:ekr.20041228084018.1:4.3.n+1 Plugins
-Edit and commit all plugins.
-#@nonl
-#@-node:ekr.20041228084018.1:4.3.n+1 Plugins
-#@+node:ekr.20040919182750.1:4.3.n+2 better handling of whitespace
+#@-node:ekr.20041022083005.8:Catch mixed tab & space in derived files
 #@+node:ekr.20040916122326:Check Import command
 - Ignore position of blank lines wrt sentinels.
 - Ignore (optionally?) underindented blank lines.
@@ -3657,8 +2988,688 @@ def putCodeLine (self,s,i):
 #@+node:EKR.20040503160843:@directory-import (Generalization of @import)
 #@-node:EKR.20040503160843:@directory-import (Generalization of @import)
 #@-node:EKR.20040628085831:@import, @shadow
-#@-node:ekr.20040919182750.1:4.3.n+2 better handling of whitespace
-#@+node:ekr.20041228084018.3:4.3.n+3 Syntax coloring
+#@-node:ekr.20040919182750.1:4.3.2 better handling of whitespace
+#@+node:ekr.20041228084018:4.3.3 to 4.3.5 Easy commands, directives, options, etc.
+- There may be several releases needed.
+
+- Note everything on this list needs to be done first.
+
+- Most of these will take 1 hour to 1 day. They have been delayed far too long.
+#@+node:ekr.20031218072017.801:Zipped .leo files (see chapters plugin for how to do this)
+By: samcollett ( Sam Collett ) 
+ Compressed LEO files   
+2003-01-07 16:57
+
+
+Would it be possible to have a new file format that was basically a compressed
+version of LEO files? Maybe using the gzip compression method. You could then
+save a lot of space when you do large files. Not being a professional
+programmer myself (I mainly dabble in web design - HTML and Active Server
+Pages) how difficult would this be to implement? You would just output using a
+different file extension so users of the older versions can still use files
+with the LEO extension.
+#@+node:ekr.20040226092546:Saving .leo files with file compression
+@nocolor
+http://sourceforge.net/forum/message.php?msg_id=2442772
+By: ejoy
+
+I made an experiment last night. I replaced the call to open()in leofilecommand.py
+with a call to gzip.open().
+The LeoPy.leo file saved this way is only 600K! And there is no significant
+speed down in saving.
+
+I think it is a good idea to add compression support for load/save .leo files.
+When reading or writing file with name ending with ".leo.gz", leo can call gzip
+module to uncompress/compress the file, saving a lot of disk space.
+
+What do you think of this?
+#@-node:ekr.20040226092546:Saving .leo files with file compression
+#@-node:ekr.20031218072017.801:Zipped .leo files (see chapters plugin for how to do this)
+#@+node:ekr.20041022083833.1:Commands
+#@+node:ekr.20040918165519:Mark Task & Clone To Task commands
+@nocolor
+
+http://sourceforge.net/forum/message.php?msg_id=2415033
+By: nobody
+
+Ive been scanning Speed Reams Slash post and the Faq and saw an interesting
+usage pattern: Creating a node called a Task and adding cloned nodes to it that
+represent that task(I hope that explains it).  I can see myself using this idiom
+in the future.  Now my question is does the Task/clone idiom warrant special
+commands in Leo?  My basis:
+
+1. Do enough Leo users work with this idiom that making it easier to utilize
+would be desirable?  I guess a good rule of thumb might be, if the sequence
+of actions occur more frequently than the primitive commands like opening a
+file it should be considered.
+
+Maybe a way of doing it:
+
+1. A special mark node as Task command.
+2. A Add to lask marked task command, that clones a node and moves that node
+into the Task node.
+#@nonl
+#@-node:ekr.20040918165519:Mark Task & Clone To Task commands
+#@+node:ekr.20041022091645.1:Find Next Clone command
+#@-node:ekr.20041022091645.1:Find Next Clone command
+#@+node:ekr.20040315060557:Declone command
+By: nobody ( Nobody/Anonymous ) 
+ having a declone() method for vnodes?   
+2004-03-15 04:36  
+
+ hi,
+
+Ive had a use for a declone() method in vnodes recently. Have you ever thought about adding a method that declones a clone? This would entail:
+
+1. Making a clone node a normal node.
+
+I can see this happening when cutting a node and pasting a node that is a clone. But there doesn't seem to be a dedicated function to do the operation. :)  
+#@nonl
+#@-node:ekr.20040315060557:Declone command
+#@+node:ekr.20031218072017.792:Double Click Node command
+#@-node:ekr.20031218072017.792:Double Click Node command
+#@+node:ekr.20041219162724:Add dialog to insert recent directories
+http://sourceforge.net/forum/message.php?msg_id=2903742
+By: nobody
+
+In the multifile plugin there is an option to insert a directory string.  I
+use it alot for the @path directive.  What happens is that when executed a FileDialog
+opens up and the user selects the directory he wants to use as a directory string.
+When chosen the directory string is inserted into the text editor.
+
+The good of this:
+1. It makes using path simpler, you dont have to type out the directory path
+yourself, just use the tkFileDialog to select it and have Leo insert the string.
+For long directories this saves a lot of typing.
+
+simple, short and quite helpful.  Thoughts? :)
+
+-----------
+
+Time to create a directory class??
+
+#@-node:ekr.20041219162724:Add dialog to insert recent directories
+#@+node:ekr.20031218072017.800:Improve extract section command
+Read and respond to this message at: 
+https://sourceforge.net/forum/message.php?msg_id=1858824
+By: gilshwartz
+Open discusstion
+
+Currently Extract Section is only available if the first line in a selection
+is a section name <<x>>. I would like to propose a few enhancements I think
+should be useful, while I believe most of the code is already implemented in
+Leo.
+
+1. If the first line in a selection is not <<x>>, than Extract Section WILL
+make a section name from the first line (or a version of it, see below), leave
+the section name in the body, create a new node with that section name, and
+will copy the selection including the first line to the new node.
+
+Rational: this is useful when selecting a function or a class. Thus the section
+name becomes the function or the class definition. The section name can either
+be the full first line, or, knowing the language, Leo can make a nice section
+name like it does in import, e.g. "function foo", or "class bar", without the
+parameters list.
+
+2. Even better, when Extract Section is called WITHOUT a selection it will look
+for the first function/class definition before the cursor's position and will
+either use it as a selection and do 1 above, or just mark it as selection, which
+will enable 1 above upon a second Extract Section.
+
+Rational: Leo does it beautifully in import and when a node's code starts to
+build it is most convenient. Also, I think a variation on this was recently
+asked by another user.
+
+3. Add an option Merge Section, which when called from a named section will
+merge it back to all the sections containing it.
+
+Rational: make it easy (together with 2) to create/delete sections until the
+sections picture of a new code becomes clear.
+
+Gil
+
+--
+
+Read and respond to this message at: 
+https://sourceforge.net/forum/message.php?msg_id=1859516
+By: nobody
+
+Simpler & more intutive:
+Mark text, select from menu - 'extract section', this presents a dialog box
+in which you fill in the section name. It is too much work to type <<name>>
+then select the whole thing...
+
+As an enhancement, the dialog can show the first line of the selection as the
+default section name, which obviously can be changed.
+
+- Rajiv Bhagwat
+#@-node:ekr.20031218072017.800:Improve extract section command
+#@+node:ekr.20041130123243:Clear Undo command
+@killcolor
+
+http://sourceforge.net/forum/message.php?msg_id=2859273
+e
+
+theres a config option to clear undo on save.
+can that be a menu choice as well? 
+clear undo now.
+enable clear undo on save.
+moot as it will be with the new config options
+and any undo changes on the table.
+maybe there is a single point to involke clear 
+undo that could be run from a button?
+
+with py2.3 after allot of small edits on an open leo after a few hours gc can
+hit unexpectedly and last several minutes
+and return at any time lasting several more minutes.
+I think its gc related because the memory use and disk grinding demanding I
+free up memory or kill python.
+
+I have no idea if undo is the cause,
+ just guessing.
+using cvs of last week. I just updated, 
+will let you know if it happens again.
+(new error reporting jump to error is great)
+
+usually I don't edit in the same process that long.
+I have run scripts from leo that run 6, 12 
+or 24 hours no problem. 
+maybe I can turn on some internals reporting and
+get some feedback on whats going on from python if it happens again. 
+or run the gc script before and after.
+
+ win98 128meg w/maxmem memory defrager that works well.
+but I go from 50% free to 10% when this starts happening.
+I haven't noticed this problem yet in py2.4, and it is peppier,
+but don't use py2.4 enough. it doesn't happen every day.
+I reboot at least once a day for various reasons.
+so it isn't that either. 
+you do need to reboot and or exit python once it starts.
+this was never an issue with py2.2 and Leo 4.1 or less with only 64 megs.
+I don't really have any other long running python processes to compare to Leo. 
+can't say what it is.
+Aha, progress. 
+this started sometime early in 4.2 or late 4.1
+but I can still be persuaded something in my 
+local system is to blame, some install or dll update. or script, psyco or plugin
+related.
+
+nonwithstanding, I should be taking better advantage Moore's law in my CPU and
+memory.
+I only notice this when I'm running the same leo over a few hours of constant
+editing and running scrips.
+and when I exit python and restart leo everything returns to normal.
+more a supporting anomaly report 
+than a bug report or feature request.
+#@nonl
+#@-node:ekr.20041130123243:Clear Undo command
+#@+node:ekr.20031218072017.790:Import dialog improvements
+@nocolor
+
+Other options I though would be really handy:
+
+1. Use an existing node as a source also
+
+2. Use an node from another Leo file.. I am not sure what the syntax for that
+would be exactly
+
+3. From a URL.. this would be really cool. People could post outlines not only
+as existing Leo xml files, but as text files or even dynamic scripts. The code
+to handle these would presumably need to deal with http:// intelligently. But
+that's easy in Python. Rebol is great at that too.
+
+4. Other XML file with valid filepaths in them.
+That's probably a much bigger project like Leo 3.10  
+
+Jason
+#@-node:ekr.20031218072017.790:Import dialog improvements
+#@+node:ekr.20031218072017.807:Put up file dialog on empty @url, etc.
+@nocolor
+
+Open Discussion
+https://sourceforge.net/forum/message.php?msg_id=2003457
+By: dsalomoni
+
+Proposal: modify the code for @url so that if you type for example just "@url"
+(no file specified) in a headline, a window pops up allowing you to browse the
+local file system and select the file (similar to what browsers do when you
+want to open a file).
+
+This would be more convenient than manually writing @url
+file://a/long/path/to/the/file. @read-only nodes already allow this, it would
+perhaps be nice if all these types of plugins (@folder might be another one
+for example) and directives (@file etc) had the same behavior (and this should
+probably be specified in some guidelines for writing new plugins -see e.g. the
+jedit plugin guidelines).
+
+Davide
+#@-node:ekr.20031218072017.807:Put up file dialog on empty @url, etc.
+#@+node:ekr.20040217153407:User customizeable tangling and untangling
+@template plugin does some (most?) of this.
+#@nonl
+#@-node:ekr.20040217153407:User customizeable tangling and untangling
+#@-node:ekr.20041022083833.1:Commands
+#@+node:ekr.20041022083226:Directives
+#@+node:ekr.20041130103128:(killcolor also kills autoindenting )
+By: Roger Erens - rogererens
+@
+2004-11-25 09:14
+On leo4.2, winXP, my default language is Python and smart_auto_indent=0. 
+Normally, after ending a line with a colon, the next line gets indented by 1 tab, also in comment-sections. 
+When using an @killcolor directive in a node, the line following one that ends with a colon starts at column zero. 
+I think it is unreasonable for @killcolor to interfere with indenting.
+#@-node:ekr.20041130103128:(killcolor also kills autoindenting )
+#@+node:ekr.20031218072017.833:Use @file extension by default if no @language
+@nocolor
+
+Open discussion
+By: jasonic ( Jason Cunliffe ) 
+ use of @language   
+2003-07-16 03:40  
+
+I am wondering why Leo does not default to just use the file suffix in @file nodes, instead of obliging @language line in in the body pane 
+
+For example any @file ending with a suffix as defined in the language extensions could just default to use those. 
+
+".py" for python 
+".r" for rebol 
+".as" for actionscript etc.. 
+
+Should anyone need to over-ride those, they could use @language.
+#@nonl
+#@-node:ekr.20031218072017.833:Use @file extension by default if no @language
+#@+node:ekr.20041016134312.1:Allow multiple @language directives in a single node
+@killcolor
+
+Treat @language like @color: ambiguous nodes (nodes containing more than one
+@language directive) should not affect descendent nodes.
+#@nonl
+#@-node:ekr.20041016134312.1:Allow multiple @language directives in a single node
+#@+node:ekr.20041001182730.2:Allow other directive lead-ins besides @
+#@-node:ekr.20041001182730.2:Allow other directive lead-ins besides @
+#@+node:ekr.20031218072017.805:Allow other section delims besides << and >>
+Maybe the section operator could be customizable, 
+I personally prefer the wiki way [[name of section]]. 
+
+@setlink-tag [[ ]] 
+#@-node:ekr.20031218072017.805:Allow other section delims besides << and >>
+#@+node:ekr.20031218072017.745:@@first <n>
+@nocolor
+
+Hate to break into the grand design discussions, but here's a hopefully small thing. If you need to place a good sized copyright statement at the top of your files, LEO doesn't handle this case very cleanly. As I'm sure you're aware, you wind up with a matching number of @@first lines for each leading line in your source. 
+
+As an example: 
+# 1 
+# 2 
+# 3 
+# 4 
+# 5 
+#@verbatim
+#@+leo 
+#@verbatim
+#@+node:0::@file /tmp/firstcheck.py 
+#@verbatim
+#@+body 
+#@verbatim
+#@@first 
+#@verbatim
+#@@first 
+#@verbatim
+#@@first 
+#@verbatim
+#@@first 
+#@verbatim
+#@@first 
+#@verbatim
+#@+doc 
+# 
+# How many firsts do I get? 
+
+#@verbatim
+#@-doc 
+#@verbatim
+#@@c 
+Start code. 
+#@verbatim
+#@-body 
+#@verbatim
+#@-node:0::@file /tmp/firstcheck.py 
+#@verbatim
+#@-leo 
+
+My fellow co-workers who don't use LEO, aren't exactly loving me here. 
+
+Might we introduce an: 
+
+@@first <num> 
+
+Type tag instead? So one '@@first 5' could represent all 5 of the above @@first lines? It makes for a smaller, cleaner LEO footprint and will tick off non-LEO users much less. 
+
+Thanks. 
+
+- ordinarius 
+#@nonl
+#@-node:ekr.20031218072017.745:@@first <n>
+#@+node:ekr.20031218072017.795:Metatags
+@nocolor
+
+By: nobody ( Nobody/Anonymous ) 
+ RE: 3.11 todo list & schedule   
+2003-02-11 03:25  
+
+Here are some features I'd like to see: 
+ 
+3. Metatags. @sectionname or @savedate are expanded to the appropriate text when saved.
+
+-marshall-  
+
+There are quite a few of these now.  It would be good to generalize:
+- Register @node type.
+#@-node:ekr.20031218072017.795:Metatags
+#@+node:ekr.20041130104552:(Support bird-track programs/comments?)
+@killcolor
+
+By: Guenther Enthaler - genthaler
+RE: Haskell support  
+2004-11-18 22:55
+
+There's a literate programming mode in Haskell (and in a number of other functional programming languages such as Clean & Curry), where the program is in a comment, usually where the line starts with ">" (bird track style, I think it's called), and the comments/documentation are freeform. It would be difficult but cool if Leo could support it, if only because the sentinels in the derived files wouldn't make whole file look so busy. 
+ 
+Günther 
+#@nonl
+#@-node:ekr.20041130104552:(Support bird-track programs/comments?)
+#@-node:ekr.20041022083226:Directives
+#@+node:ekr.20041228093301:Directories
+#@+node:ekr.20041022070154:(options for setting working directory during startup)
+#@+node:ekr.20041022070154.1:Request & response
+@killcolor
+
+http://sourceforge.net/forum/message.php?msg_id=2815599
+By: Antonio Pala
+
+All plugins I have tried (notably @run and the @rst variants) have their working
+directory set to my home directory, regardless of the position of the Leo file
+and all @path directives. This renders most of them useless, since I would have
+to use absolute pathnames. Is this the way they were meant to work, or is there
+a bug somewhere? Or maybe I have missed some configuration parameter?
+
+I am using Leo 4.2 with Python 2.3 on Linux.
+
+> All plugins I have tried (notably @run and the @rst variants) have their working directory set to my home directory, regardless of the position of the Leo file and all @path directives.
+
+Directory issues are different on different platforms.
+
+I would welcome specific proposals for setting directories during startup.  Early in the startup process Leo sets g.app.loadDir to the directory from which Leo was loaded.  Plugins can use this directory to set the working directory as they choose.
+
+@path directives will have no effect on plugins:  they are loaded before the outline.
+
+> This renders most [plugins] useless, since I would have to use absolute pathnames.
+
+No, it means you might have to add a few lines of code to your plugin to make it work just as you would like it to work.
+
+> Is this the way they were meant to work?
+
+I don't have much control over how plugins were "meant" to work.  However, an improved plugin manager might have facilities for setting the working directory.
+
+This is a non-trivial issue;   Leo uses and sets paths in many places in the code.  It seems dubious to have plugins change the working directory at random times.  Perhaps an option that inits the working directory would be good.  The new config system will allow per-outline options as well as global option. I believe such options could be loaded before plugins.
+
+Edward
+#@nonl
+#@-node:ekr.20041022070154.1:Request & response
+#@-node:ekr.20041022070154:(options for setting working directory during startup)
+#@+node:ekr.20041029083459:Remember Import directory
+By: Kent Tenney - ktenney
+Import to @file request  
+2004-10-28 11:27
+Howdy, 
+ 
+Please ignore if this is a difficult feature to implement. 
+ 
+File->Import->Import to @file  
+always starts in .../leo/src 
+ 
+I would prefer if it opened to the last directory from 
+which a file was imported. 
+ 
+I often find myself importing several files from the same area of the directory tree, and repeatedly navigating there from leo/src gets tiresome. 
+ 
+Thanks, 
+Kent
+#@-node:ekr.20041029083459:Remember Import directory
+#@-node:ekr.20041228093301:Directories
+#@+node:ekr.20041228085245:Options
+#@+node:ekr.20031218072017.740:Disallow writes outside a "top-level" folder
+1. Warn when creating _any_ new file.
+
+2. Warn when rewriting any file that was not read properly.
+
+This prevents "hijacking" an already existing file.
+#@nonl
+#@-node:ekr.20031218072017.740:Disallow writes outside a "top-level" folder
+#@+node:ekr.20040213090121:* Insert at end
+@nocolor
+
+By: tibi ( Thiébaut Champenier ) 
+ inserting a new node   
+2004-02-13 13:23  
+
+ Hi,
+
+When doing ctrl+i I on the node that has children I would prefer Leo to insert the new node as the last children instead of the first. It just makes more sense to me, for exemple when you take a big file and cut it in subnodes you typically start at the top and create new nodes while paging down the file.
+What do you think ?
+To try it just make this little change:
+RCS file: /cvsroot/leo/leo/src/leoCommands.py,v
+retrieving revision 1.76
+diff -r1.76 leoCommands.py
+2516c2516
+< v = current.insertAsNthChild(0)
+---
+> v = current.insertAsLastChild()  
+#@nonl
+#@-node:ekr.20040213090121:* Insert at end
+#@+node:ekr.20040311022923:Make sentinel name in @-node optional
+#@-node:ekr.20040311022923:Make sentinel name in @-node optional
+#@-node:ekr.20041228085245:Options
+#@+node:ekr.20041022083226.2:Scripting
+#@+node:ekr.20041211022140:Specify key binding  in @button
+@killcolor
+
+- Specify the binding in the headline:  @button(alt-shift-9)
+- Change createDynamicButton in the script plugin to honor the binding.
+#@nonl
+#@-node:ekr.20041211022140:Specify key binding  in @button
+#@+node:ekr.20041004193600:Add safeguards on @button and @script
+#@+node:ekr.20041004193600.1:Paul's first posting
+@killcolor
+http://sourceforge.net/forum/message.php?msg_id=2788477
+By: paulpaterson
+
+Perhaps some minor bridling ...
+
+What about managing the security of scripts using some algorithm like this,
+
+1. When Leo scans for @buttons, @scripts etc it makes a list of scripts
+2. For each script ...
+3.   Calculate a secure hash of the script contents
+4.   Consult central repository to see if hash is recognized
+5.   If hash recognized
+6.     Accept it
+7.   Else
+8.     Force user to acknowledge the script or disable it
+
+The cental repository could be a file in your Leo directory which stores "approved"
+hashes.
+
+Clicking on a @buttons, @script node and selecting "Approve script" would add
+the hash to the repository. Selecting "Disable script" would remove it. There
+could also be a menu item to bring up a window of approved/not approved script
+nodes so that you could centrally manage them.
+
+
+Additional housekeeping on the list of hashes is possible but probably isn't
+required since the size is small and there shouldn't be any collisions. If required
+you could just blow away the file and then re-enable all scripts.
+
+Using this approach, no new script would be able to run without being enabled
+by the user. There is still the possibility that another plugin or script could
+disable the security mechanism or tamper with the repository but with Leo's
+architecture a plugin could already do anything anyway so this isn't an additional
+hole.
+
+It would protect from 
+
+@script
+import os
+os.system("del *.*")
+
+being submitted to an OS project!
+#@nonl
+#@-node:ekr.20041004193600.1:Paul's first posting
+#@+node:ekr.20041005075955:Pault's second posting
+@killcolor
+
+http://sourceforge.net/forum/message.php?msg_id=2789123
+By: paulpaterson
+
+I'm not an expert but from the Python docs this looks like the way to do it,
+
+> import sha
+> s = sha.sha("hello there")
+> s.hexdigest()
+'6e71b3cac15d32fe2d36c270887df9479c25c640'
+
+> s = sha.sha("hello there hacked")
+'a42837bba84c53cabd52a98f3671809d475c707f'
+
+It looks like the md5 module offers a similar function but uses less bits.
+
+From what I understand the hexdigest should be different for any change in the
+text. Also no two strings should give the same hash (although I seem to recall
+that someone found a collision recently).
+#@-node:ekr.20041005075955:Pault's second posting
+#@+node:ekr.20041003115036:Add --noscripting command-line option
+This will disable @button, @script, etc.
+#@nonl
+#@-node:ekr.20041003115036:Add --noscripting command-line option
+#@-node:ekr.20041004193600:Add safeguards on @button and @script
+#@-node:ekr.20041022083226.2:Scripting
+#@+node:ekr.20041022083226.3:Windows
+#@+node:ekr.20041022083005.2:add a Stop button for find/change
+#@-node:ekr.20041022083005.2:add a Stop button for find/change
+#@+node:ekr.20041022083005.4:insert/overstrike mode in body
+#@-node:ekr.20041022083005.4:insert/overstrike mode in body
+#@+node:ekr.20031218072017.746:Minimizing/maximizing windows
+@nocolor
+
+Open Discussion
+https://sourceforge.net/forum/message.php?msg_id=2090601
+By: jasonic
+
+I'll be happy to run some test and report to you. But  I suspect from your post
+a slight misunderstanding about Alt+Tab.
+
+Alt+Tab just toggles the active window.
+It works fine with Leo on Windows wherver I have tried it.
+
+Resizing wondows via hotkeys is another matter.
+The special "Windows" Key + m will minimize all windows. 
+
+But unfortunately I've not yet discovered any opposite shortcut to  maximize
+all windows :-(
+I've tried various 3rd party hotkey utililties, but somehow always end up dropping
+them.
+
+<rant>
+I really hate wasting any time dragging windows around and resizing them or
+clicking to bring them into top focus. As I work mainly with graphics, and mult-task
+intesenlty bwetn apps,  it is especially important to reduce visual clutter
+on screen.
+
+For many years the way to do this has been combining maximized [or minimized]
+windows with  Alt+Tab. Alt+Tab  lets one jump rapidly betwen open apps and windows
+without ever need to repostion or resize them.
+
+As a consultant, its one of the first things I ever teach clients. Often it
+transforms their perception of using Windows.
+
+It is so painful to watch people dragging and rescaling  windows all over the
+place. Ironically, I've witnessed some very smart programmers fly through vi
+or emacs but then slow to tortoises when navigation mice and windows. I beleive
+as long as we have the curertn wnidows UI paradigm,  use of Alt+Tab is an essential
+part of  GUI 'litteracy' - an essentail skill all shoudl have. Alas its still
+little known or discussed.
+
+There is also a nice toggle feature so one can jump back to the last app/window
+as its first "stop". Typically one is working between two apps for some specific
+task, even though many are open.
+
+Keeping one's finger on the 'Alt' key then tapping 'Tab' lets one hop along
+the list.
+
+Adding 'shift' to the mix helps one to go in reverse. 
+
+Above all one can keep one hand on the mouse, the other on the keyboard [ALt+Tab]
+and ones mind/eye on teh screen. For me it means left hand "plays" the bass
+pattern using Alt+Tab along with the clipboard shortcuts [CTRL+ z,x,c,v] ,while
+right hand on the mouse mouse  provides the melody.
+
+I've been using variations on the above since 1987 when I bought an Amiga2000.
+I seem to recall SGI had one also. And after learning about Alt+Tab on windows,
+I  found a utility to work the same way on Macintosh.  I am very happy to discover
+that MacOSX now has built-in ALt+Tab :-)
+</rant>
+
+Meanwhile, Iam  still wondering how to set Leo [3.12 beta 1, Python 2.2.2, Tk
+8.3.2] default to a maxmimized or minimized window size by itself.
+
+And also to remember the last size/position it had. I vaguely remember that
+it used to do that, but perhaps I am mistaking it for some other software ?
+
+thanks
+Jason
+#@-node:ekr.20031218072017.746:Minimizing/maximizing windows
+#@+node:ekr.20031218072017.852:Scroll improvement
+@nocolor
+
+By: jwashin ( James Washington ) 
+ Scrolling and the Tree Frame in Linux   
+2003-10-20 12:13  
+
+I'm using tk-8.4.3, python-2.2.3 on linux. The MouseWheel events do not work for me in the Tree Frame.
+
+I added <Button-4> and <Button-5> bindings similar to the existing <MouseWheel> binding in LeoFrame.finishCreate(), associating them with two methods, LeoFrame.OnMouseScrollDown and LeoFrame.OnMouseScrollUp that took the appropriate parts of OnMouseWheel()
+
+Now it works, sort-of. It scrolls properly unless the cursor is an I-Bar, e.g., over text. But at least this removes in-part the most glaring UI problem for me with Leo in tk. I suppose I am spoiled with the mouse wheel and want it to work everywhere.
+
+Thanks for the great program.
+
+-- Jim Washington  
+#@-node:ekr.20031218072017.852:Scroll improvement
+#@+node:ekr.20040220110030:Change cursor when caps lock is down
+@nocolor
+
+http://sourceforge.net/forum/message.php?msg_id=2431552
+By: nobody
+
+From: Rich
+
+ I just got nipped twice by the following effect: the Caps-Lock key is ON, but
+because the LED is on the Caps-Lock key, it is hidden behind my hand. I hit
+Ctrl-x, expecting to cut my selection, but the entire node is cut.
+
+   I know there's a problem with tk and the shift key status, so I'm wondering
+if it would be possible to change the shape of the cursor when the Caps-Lock
+is ON (preferrably a big red flashing blot 8-), or otherwise show that Caps-Lock
+is active ( "CAPS" on a status line, for instance).
+
+  Another way: I don't know if this goes against an "anti-modalism rule," but
+only allowing Ctrl-Shift-x|c|v in the outline pane would also be acceptable
+to me.
+#@nonl
+#@-node:ekr.20040220110030:Change cursor when caps lock is down
+#@-node:ekr.20041022083226.3:Windows
+#@-node:ekr.20041228084018:4.3.3 to 4.3.5 Easy commands, directives, options, etc.
+#@+node:ekr.20041228084018.3:4.3.6 Syntax coloring
 #@+node:ekr.20031218072017.1032:(Syntax coloring a la jEdit) (do not delete)
 @ To do:
 
@@ -4033,8 +4044,8 @@ a big problem with modern editors, but it _would_ be nicer...
 #@-node:ekr.20041002112001:Use threaded Colorizer
 #@+node:ekr.20040217154134:XML as a @language
 #@-node:ekr.20040217154134:XML as a @language
-#@-node:ekr.20041228084018.3:4.3.n+3 Syntax coloring
-#@+node:ekr.20041228092223.2:4.3 n+4 Integrated Leo debugger
+#@-node:ekr.20041228084018.3:4.3.6 Syntax coloring
+#@+node:ekr.20041228092223.2:4.3.7 Integrated Leo debugger
 #@+node:ekr.20041029085429:Use pdb.pm as starting point for integrated Leo debugger
 @killcolor
 
@@ -4043,8 +4054,8 @@ a big problem with modern editors, but it _would_ be nicer...
 Whaterver pdb.pm does (I haven't used it) this might be the starting point for the design of a better interface between pdb and Leo.
 
 #@-node:ekr.20041029085429:Use pdb.pm as starting point for integrated Leo debugger
-#@-node:ekr.20041228092223.2:4.3 n+4 Integrated Leo debugger
-#@+node:ekr.20041228084018.5:4.3.n+5 zodb
+#@-node:ekr.20041228092223.2:4.3.7 Integrated Leo debugger
+#@+node:ekr.20041228084018.5:4.3.8 zodb
 #@+node:ekr.20040226114127: Zope test
 @color
 
@@ -4664,10 +4675,11 @@ Scott
 #@nonl
 #@-node:ekr.20031218072017.737:Leo & data bases
 #@-node:ekr.20031218072017.412:Zope postings
-#@-node:ekr.20041228084018.5:4.3.n+5 zodb
-#@-node:ekr.20041228073219: To do: 4.3.x
-#@-node:EKR.20040609091327: To do: 4.3
-#@+node:ekr.20041228094138: To do: 4.4  LeoN and collaboration
+#@-node:ekr.20041228084018.5:4.3.8 zodb
+#@-node:ekr.20041228073219:4.3.x
+#@+node:ekr.20041228094138:4.4  LeoN and collaboration
+This may not be so big a project.  LeoN already exists.
+#@nonl
 #@+node:ekr.20031218072017.420:Jabber
 Open Discussion
 https://sourceforge.net/forum/message.php?msg_id=2016634
@@ -4850,7 +4862,7 @@ well that is by the moment, I hope that we will be able to create a Finite, clea
 RodrigoB.  
 
 #@-node:ekr.20031218072017.411:From Rodrigo
-#@-node:ekr.20041228094138: To do: 4.4  LeoN and collaboration
+#@-node:ekr.20041228094138:4.4  LeoN and collaboration
 #@+node:ekr.20041228090855.3:All others
 #@+node:ekr.20041228091154:  Commands
 #@+node:ekr.20040329094003:Apply patch command

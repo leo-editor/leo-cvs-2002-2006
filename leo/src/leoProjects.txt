@@ -8774,7 +8774,7 @@ bunch = d.get(bind_shortcut)
 
 if bunch and not g.app.menuWarningsGiven:
     if bunch.init:
-        if 0: # Testing only.
+        if 1: # Testing only.
             s = 'overriding default shortcut\nnew: %s %s\nold: %s %s' % (
                 accel,label,bunch.accel,bunch.label)
             g.es(s,color="red")
@@ -9555,6 +9555,1311 @@ except IOError:
 #@-node:ekr.20040930135204:<< set isThin if fileName is a thin derived file >>
 #@-node:ekr.20031218072017.1810:importDerivedFiles
 #@-node:ekr.20050102181816:(Fixed crasher in Import Derived Files command)
+#@+node:ekr.20041201072431:(Fixed several plugin bugs)
+#@+node:ekr.20050104062535:Report
+@nocolor
+
+http://sourceforge.net/forum/message.php?msg_id=2876473
+
+I'm using 4.2 final, build 1.173, on Linux, and experience intermittent lockups
+exactly as described here.
+
+I've turned off almost all plugins, except for mod_tempfname, nodenavigator,
+plugin_manager, and plugins_menu. It seems that I never experience the lockups
+if I disable the hoist plugin, but that I do sometimes experience the lockups
+if I enable hoist. Maybe a quick review of hoist might be in order to see if
+anything looks suspicious. I believe hoist uses an idle handler, which I vaguely
+feel might be able to lead to lockups of this sort.
+
+Anyway, I'm not sure about this, but it is kind of frustrating to have leo lock
+up totally, so hopefully this small data tidbit will help flush out this bug.
+#@nonl
+#@-node:ekr.20050104062535:Report
+#@+node:ekr.20050104080957:Fixes
+@killcolor
+
+- leoPlugins.registerOneHandler wasn't working properly at all.  In effect, only the last registered hook was ever being remembered!
+
+- leoPlugins.doHandlersForTag now executes the list of hook handlers for a particular tag (hook name) until one of the handlers returns a non-None result.  doHandersForTag no longer tries to "sort" handlers, so the order that the handlers are executed is the order in which they were registered.
+
+I finally understand the concerns people have raised several times about hooks interfering with each other.  If two handlers try to return a non-None result only one of them will ever execute.  doHandlersForTag can't do much about this: a better solution would require more conceptual framework.  Not now...
+
+3.  g.idleTimeHookHandler works for me as it stands.  N.B.  It may have changed since 4.2.  At present the code calls g.doHook('idle',...), which in turn calls doHandlersForTag('idle').  The code then queues itself up for re-execution after a nominal delay of at least 100 msec.  This queuing is done (eventually) by the Tk call g.app.root.after  This works for me on XP.  However, g.app.root.after_idle does tend to hang on XP.
+#@-node:ekr.20050104080957:Fixes
+#@+node:ekr.20031218072017.1596:g.doHook
+@ This global function calls a hook routine.  Hooks are identified by the tag param.
+Returns the value returned by the hook routine, or None if the there is an exception.
+
+We look for a hook routine in three places:
+1. g.top().hookFunction
+2. app.hookFunction
+3. leoPlugins.doPlugins()
+We set app.hookError on all exceptions.  Scripts may reset app.hookError to try again.
+@c
+
+def doHook(tag,*args,**keywords):
+    
+    if g.app.killed or g.app.hookError or (g.app.gui and g.app.gui.isNullGui):
+        return None
+        
+    if args:
+        # A minor error in Leo's core.
+        print "***ignoring args param.  tag = %s" % tag
+
+    if not g.app.config.use_plugins:
+        if tag == "start1":
+            s = "Plugins disabled: use_plugins is 0"
+            print s ; g.es(s,color="blue")
+        return None
+
+    # New in 4.2.  We call the idle-time handlers for all open windows.
+    c = keywords.get("c")
+            
+    # Get the hook handler function.  Usually this is doPlugins.
+    f = (c and c.hookFunction) or g.app.hookFunction
+    if not f:
+        import leoPlugins
+        g.app.hookFunction = f = leoPlugins.doPlugins
+
+    if 0: # Don't use trace here!
+        if 1:
+            old_c = keywords.get('old_c')
+            if old_c: print 'doHook %24s %s' % (tag,old_c.shortFileName())
+        else:
+            if tag != "idle": print 'doHook %24s old_c: %s' % (tag,c and c.shortFileName())
+        
+    try:
+        # Pass the hook to the hook handler.
+        return f(tag,keywords)
+    except Exception:
+        g.es_exception()
+        g.app.hookError = True # Supress this function.
+        g.app.idleTimeHook = False # Supress idle-time hook
+        return None # No return value
+#@nonl
+#@-node:ekr.20031218072017.1596:g.doHook
+#@+node:ekr.20031218072017.4072:tkinterGui.setIdleTimeHook
+def setIdleTimeHook (self,idleTimeHookHandler,*args,**keys):
+    
+    # g.trace(idleTimeHookHandler,self.root)
+
+    if self.root:
+        self.root.after_idle(idleTimeHookHandler,*args,**keys)
+#@nonl
+#@-node:ekr.20031218072017.4072:tkinterGui.setIdleTimeHook
+#@+node:ekr.20031218072017.1315:idle time functions (leoGlobals)
+#@+node:EKR.20040602125018:enableIdleTimeHook
+@ Enables the "idle" hook.
+After enableIdleTimeHook is called, Leo will call the "idle" hook
+approximately every g.idleTimeDelay milliseconds.
+@c
+
+def enableIdleTimeHook(idleTimeDelay=100):
+
+    if not g.app.idleTimeHook:
+        # Start idle-time processing only after the first idle-time event.
+        g.app.gui.setIdleTimeHook(g.idleTimeHookHandler)
+        g.app.afterHandler = g.idleTimeHookHandler
+        
+    # 1/4/05: Always update these.
+    g.app.idleTimeHook = True
+    g.app.idleTimeDelay = idleTimeDelay # Delay in msec.
+#@nonl
+#@-node:EKR.20040602125018:enableIdleTimeHook
+#@+node:EKR.20040602125018.1:disableIdleTimeHook
+# Disables the "idle" hook.
+def disableIdleTimeHook():
+    
+    g.app.idleTimeHook = False
+#@nonl
+#@-node:EKR.20040602125018.1:disableIdleTimeHook
+#@+node:EKR.20040602125018.2:idleTimeHookHandler
+# An internal routine used to dispatch the "idle" hook.
+trace_count = 0
+
+def idleTimeHookHandler(*args,**keys):
+    
+    if 0: # Do not use g.trace here!
+        global trace_count ; trace_count += 1
+        if trace_count % 10 == 0:
+            for w in g.app.windowList:
+                c = w.c
+                print "idleTimeHookHandler",trace_count,c.shortFileName()
+
+    # New for Python 2.3: may be called during shutdown.
+    if g.app.killed: return
+    
+    for w in g.app.windowList:
+        c = w.c
+        # New in 4.2 Beta 3. Do NOT compute c.currentPosition.
+        # This would be a MAJOR leak of positions.
+        g.doHook("idle",c=c)
+
+    # Requeue this routine after 100 msec.  Faster requeues overload the system.
+    if g.app.idleTimeHook:
+        g.app.gui.setIdleTimeHookAfterDelay(g.app.idleTimeDelay,g.idleTimeHookHandler)
+        # g.app.gui.setIdleTimeHook(g.idleTimeHookHandler)
+        g.app.afterHandler = g.idleTimeHookHandler
+    else:
+        g.app.afterHandler = None
+#@-node:EKR.20040602125018.2:idleTimeHookHandler
+#@-node:ekr.20031218072017.1315:idle time functions (leoGlobals)
+#@+node:ekr.20050102094729:callTagHandler
+def callTagHandler (handler,tag,keywords):
+    
+    if tag == 'idle':
+        
+        if 0:
+            c = keywords.get('c')
+            g.trace(c.shortFileName(),handler)
+
+        # Make sure all commanders exist.
+        for key in ('c','old_c','new_c'):
+            c = keywords.get(key)
+            if c:
+                try:
+                    if c.frame not in g.app.windowList:
+                        return None # c has (or will be) destroyed.
+                except AttributeError:
+                    # c has been destroyed: c.frame ivar does not exist.
+                    return None
+
+    return handler(tag,keywords)
+#@nonl
+#@-node:ekr.20050102094729:callTagHandler
+#@+node:ekr.20041001161108:doPlugins
+def doPlugins(tag,keywords):
+    if g.app.killed:
+        return
+    if tag == "start1":
+        loadHandlers()
+
+    return doHandlersForTag(tag,keywords)
+#@nonl
+#@-node:ekr.20041001161108:doPlugins
+#@+node:ekr.20031218072017.3442:doHandlersForTag
+def doHandlersForTag (tag,keywords):
+    
+    """Execute all handlers for a given tag, in alphabetical order.
+    
+    All exceptions are caught by the caller, doHook."""
+
+    global handlers
+
+    if g.app.killed:
+        return None
+
+    if handlers.has_key(tag):
+        fns = handlers.get(tag)
+        # Execute hooks in some random order.
+        # Return if one of them returns a non-None result.
+        for fn in fns:
+            val = callTagHandler(fn,tag,keywords)
+            if val is not None:
+                return val
+
+    if handlers.has_key("all"):
+        fns = handlers.get("all")
+        for fn in fns:
+            callTagHandler(fn,tag,keywords)
+
+    return None
+#@nonl
+#@-node:ekr.20031218072017.3442:doHandlersForTag
+#@+node:ekr.20031218072017.3443:registerHandler
+def registerHandler(tags,fn):
+    
+    """ Register one or more handlers"""
+    
+    import types
+
+    if type(tags) in (types.TupleType,types.ListType):
+        for tag in tags:
+            registerOneHandler(tag,fn)
+    else:
+        registerOneHandler(tags,fn)
+
+def registerOneHandler(tag,fn):
+    
+    """Register one handler"""
+
+    global handlers
+    
+    items = handlers.get(tag,[])
+    if fn not in items:
+        items.append(fn)
+        
+    # g.trace(tag) ; g.printList(items)
+    handlers[tag] = items
+#@nonl
+#@-node:ekr.20031218072017.3443:registerHandler
+#@-node:ekr.20041201072431:(Fixed several plugin bugs)
+#@+node:ekr.20050102092149:(Fixed problems with Control-E)
+#@+node:ekr.20050104084310: Report
+@killcolor
+
+http://sourceforge.net/forum/message.php?msg_id=2918938
+By: ktenney
+
+Any idea what might prevent the Control-E shortcut key from working?  Edit -> Execute Script works fine
+
+current cvs, Win2000, Python 2.3
+#@nonl
+#@-node:ekr.20050104084310: Report
+#@+node:ekr.20050104094308.1: What I did
+@killcolor
+
+- Restored non Pmw code in resizePanesToRatio.  This code got deleted by mistake.  The Equal Sized Panes works again.
+
+- Added many do-nothing methods to nullMenu class.
+
+This should prevent the startup logic from messing with shortcuts in any way.  It's also the right thing to do.
+
+- Added an entry for EqualSizedPanes to leoSettings.leo.  This overrides the default (Ctrl-E) and thereby prevents the default from overrideing the entry for ExecuteScript!
+
+- Re-enabled code in createMenuEntries that warns when shortcuts have been redefined.  Not sure if this is a wise idea, or indeed if it actually does anything :-)
+
+I am tempted to remove all the default entries entirely.  This would simplify error reporting, but then Leo would hardly work at all if leoSettings.leo were not present.
+#@nonl
+#@-node:ekr.20050104094308.1: What I did
+#@+node:ekr.20031218072017.3811:class nullMenu
+class nullMenu(leoMenu):
+    
+    """A null menu class for testing and batch execution."""
+    
+    @others
+#@nonl
+#@+node:ekr.20050104094308:ctor
+def __init__ (self,frame):
+    
+    # Init the base class.
+    leoMenu.__init__(self,frame)
+#@nonl
+#@-node:ekr.20050104094308:ctor
+#@+node:ekr.20050104094029:oops
+def oops (self):
+
+    g.trace("leoMenu", g.callerName(2))
+    pass
+#@nonl
+#@-node:ekr.20050104094029:oops
+#@+node:ekr.20050104093323:Gui-independent menu routines
+def createMenuEntries (self,menu,table,openWith=False,dontBind=False,init=False):
+    pass
+def createMenuItemsFromTable (self,menuName,table,openWith=False):
+    pass
+def createMenusFromTables (self):
+    pass
+def defineMenuTables (self):
+    pass
+def createNewMenu (self,menuName,parentName="top",before=None):
+    pass
+def createRecentFilesMenuItems (self):
+    pass
+def deleteMenu (self,menuName):
+    pass
+def deleteMenuItem (self,itemName,menuName="top"):
+    pass
+def destroyMenu (self,menuName):
+    pass
+def getMenu (self,menuName):
+    pass
+def setMenu (self,menuName,menu):
+    pass
+#@nonl
+#@-node:ekr.20050104093323:Gui-independent menu routines
+#@+node:ekr.20050104092958:Gui-independent menu enablers
+def updateAllMenus (self):
+    pass
+def updateEditMenu (self):
+    pass
+def updateFileMenu (self):
+    pass
+def updateOutlineMenu (self):
+    pass
+#@nonl
+#@-node:ekr.20050104092958:Gui-independent menu enablers
+#@-node:ekr.20031218072017.3811:class nullMenu
+#@+node:ekr.20031218072017.3946:resizePanesToRatio
+def resizePanesToRatio(self,ratio,ratio2):
+    
+    # g.trace(ratio,ratio2)
+    
+    if use_Pmw and Pmw:
+        << resize the Pmw panes >>
+    else:
+        self.divideLeoSplitter(self.splitVerticalFlag,ratio)
+        self.divideLeoSplitter(not self.splitVerticalFlag,ratio2)
+#@nonl
+#@+node:ekr.20050104084531:<< resize the Pmw panes >>
+self.ratio = ratio
+self.secondary_ratio = ratio2
+splitter1 = self.component('splitter1').getObject()
+splitter2 = self.component('splitter2').getObject()
+
+if self.splitVerticalFlag:
+    # Use ratio to set splitter2 height.
+    size = ratio * float(splitter1.winfo_height())
+    splitter1.configurepane('splitter2Frame',size=int(size))
+    # Use ratio2 to set outline width.
+    size = ratio2 * float(splitter2.winfo_width())
+    splitter2.configurepane('outline',size=int(size))
+else:
+    # Use ratio to set splitter2 width.
+    size = ratio * float(splitter1.winfo_width())
+    splitter1.configurepane('splitter2Frame',size=int(size))
+    # Use ratio2 to set outline height.
+    size = ratio2 * float(splitter2.winfo_height())
+    splitter2.configurepane('outline',size=int(size))
+#@nonl
+#@-node:ekr.20050104084531:<< resize the Pmw panes >>
+#@-node:ekr.20031218072017.3946:resizePanesToRatio
+#@+node:ekr.20031218072017.3752:defineMenuTables
+def defineMenuTables (self):
+    
+    c = self.c ; f = self.frame
+    
+    # g.trace(c.shortFileName(),self,f)
+    
+    << define edit menu tables >>
+    << define file menu tables >>
+    << define outline menu tables >>
+    << define window menu tables >>
+    << define help menu tables >>
+#@nonl
+#@+node:ekr.20031218072017.3753:<< define edit menu tables >>
+<< define editMenuTopTable >>
+<< define editMenuEditBodyTable >>
+<< define editMenuEditHeadlineTable >>
+<< define editMenuFindMenuTable >>
+<< define editMenuTop2Table >>
+#@nonl
+#@+node:ekr.20031218072017.839:<< define editMenuTopTable >>
+self.editMenuTopTable = (
+    ("Can't Undo","Ctrl+Z",c.undoer.undo), # &U reserved for Undo
+    ("Can't Redo","Shift+Ctrl+Z",c.undoer.redo), # &R reserved for Redo
+    ("-",None,None),
+    ("Cu&t","Ctrl+X",f.OnCutFromMenu), 
+    ("Cop&y","Ctrl+C",f.OnCopyFromMenu),
+    ("&Paste","Ctrl+V",f.OnPasteFromMenu),
+    ("&Delete",None,c.delete),
+    ("Select &All","Ctrl+A",f.body.selectAllText),
+    ("-",None,None))
+#@nonl
+#@-node:ekr.20031218072017.839:<< define editMenuTopTable >>
+#@+node:ekr.20031218072017.3754:<< define editMenuEditBodyTable >>
+self.editMenuEditBodyTable = (
+    ("Extract &Section","Shift+Ctrl+E",c.extractSection),
+    ("Extract &Names","Shift+Ctrl+N",c.extractSectionNames),
+    ("&Extract","Shift+Ctrl+D",c.extract),
+    ("-",None,None),
+    ("Convert All B&lanks",None,c.convertAllBlanks),
+    ("Convert All T&abs",None,c.convertAllTabs),
+    ("Convert &Blanks","Shift+Ctrl+B",c.convertBlanks),
+    ("Convert &Tabs","Shift+Ctrl+J",c.convertTabs),
+    ("Insert Body Time/&Date","Shift+Ctrl+G",c.insertBodyTime),
+    ("&Reformat Paragraph","Shift+Ctrl+P",c.reformatParagraph),
+    ("-",None,None),
+    ("&Indent","Ctrl+]",c.indentBody),
+    ("&Unindent","Ctrl+[",c.dedentBody),
+    ("&Match Brackets","Ctrl+K",c.findMatchingBracket))
+#@nonl
+#@-node:ekr.20031218072017.3754:<< define editMenuEditBodyTable >>
+#@+node:ekr.20031218072017.3755:<< define editMenuEditHeadlineTable >>
+self.editMenuEditHeadlineTable = (
+    ("Edit &Headline","Ctrl+H",c.editHeadline),
+    ("&End Edit Headline","Escape",f.endEditLabelCommand),
+    ("&Abort Edit Headline","Shift+Escape",f.abortEditLabelCommand),
+    ("Insert Headline Time/&Date","Shift+Ctrl+H",f.insertHeadlineTime),
+    # 2/16/04: restore Toggle Angle Brackets command without any default shortcut.
+    ("Toggle Angle Brackets",None,c.toggleAngleBrackets))
+#@nonl
+#@-node:ekr.20031218072017.3755:<< define editMenuEditHeadlineTable >>
+#@+node:ekr.20031218072017.3756:<< define editMenuFindMenuTable >>
+self.editMenuFindMenuTable = (
+    ("&Find Panel","Ctrl+F",c.showFindPanel),
+    ("-",None,None),
+    ("Find &Next","F3",c.findNext),
+    ("Find &Previous","F4",c.findPrevious),
+    ("&Replace","Ctrl+=",c.replace),
+    ("Replace, &Then Find","Ctrl+-",c.replaceThenFind))
+#@nonl
+#@-node:ekr.20031218072017.3756:<< define editMenuFindMenuTable >>
+#@+node:ekr.20031218072017.3757:<< define editMenuTop2Table >>
+try:
+    show = c.frame.body.getColorizer().showInvisibles
+except:
+    show = False
+
+label = g.choose(show,"Hide In&visibles","Show In&visibles")
+    
+self.editMenuTop2Table = (
+    ("&Go To Line Number","Alt+G",c.goToLineNumber),
+    ("&Execute Script","Alt+Shift+E",c.executeScript),
+    # ("Set Fon&t...",None,c.fontPanel), # To be replaced by general settings dialog.
+    # ("Set &Colors...",None,c.colorPanel), # To be replaced by general settings dialog.
+    (label,"Alt+V",c.viewAllCharacters),
+    # ("-",None,None),
+    ("Prefere&nces",None,c.preferences)
+)
+#@nonl
+#@-node:ekr.20031218072017.3757:<< define editMenuTop2Table >>
+#@-node:ekr.20031218072017.3753:<< define edit menu tables >>
+#@+node:ekr.20031218072017.3758:<< define file menu tables >>
+<< define fileMenuTopTable >>
+<< define fileMenuTop2Table >>
+<< define fileMenuReadWriteMenuTable >>
+<< define fileMenuTangleMenuTable >>
+<< define fileMenuUntangleMenuTable >>
+<< define fileMenuImportMenuTable >>
+<< define fileMenuExportMenuTable >>
+<< define fileMenuTop3MenuTable >>
+#@nonl
+#@+node:ekr.20031218072017.3759:<< define fileMenuTopTable >>
+self.fileMenuTopTable = (
+    ("&New","Ctrl+N",c.new),
+    ("&Open...","Ctrl+O",c.open))
+#@nonl
+#@-node:ekr.20031218072017.3759:<< define fileMenuTopTable >>
+#@+node:ekr.20031218072017.3760:<< define fileMenuTop2Table >>
+self.fileMenuTop2Table = (
+    ("-",None,None),
+    ("&Close","Ctrl+W",c.close),
+    ("&Save","Ctrl+S",c.save),
+    ("Save &As","Shift+Ctrl+S",c.saveAs),
+    ("Save To",None,c.saveTo), # &Tangle
+    ("Re&vert To Saved",None,c.revert)) # &Read/Write
+#@nonl
+#@-node:ekr.20031218072017.3760:<< define fileMenuTop2Table >>
+#@+node:ekr.20031218072017.3761:<< define fileMenuReadWriteMenuTable >>
+self.fileMenuReadWriteMenuTable = (
+    ("&Read Outline Only","Shift+Ctrl+R",c.readOutlineOnly),
+    ("Read @file &Nodes",None,c.readAtFileNodes),
+    ("-",None,None),
+    ("Write &Dirty @file Nodes","Shift+Ctrl+Q",c.fileCommands.writeDirtyAtFileNodes),
+    ("Write &Missing @file Nodes",None,c.fileCommands.writeMissingAtFileNodes),
+    ("Write &Outline Only",None,c.fileCommands.writeOutlineOnly),
+    ("&Write @file Nodes","Shift+Ctrl+W",c.fileCommands.writeAtFileNodes))
+#@nonl
+#@-node:ekr.20031218072017.3761:<< define fileMenuReadWriteMenuTable >>
+#@+node:ekr.20031218072017.3762:<< define fileMenuTangleMenuTable >>
+self.fileMenuTangleMenuTable = (
+    ("Tangle &All","Shift+Ctrl+A",c.tangleAll),
+    ("Tangle &Marked","Shift+Ctrl+M",c.tangleMarked),
+    ("&Tangle","Shift+Ctrl+T",c.tangle))
+#@nonl
+#@-node:ekr.20031218072017.3762:<< define fileMenuTangleMenuTable >>
+#@+node:ekr.20031218072017.3763:<< define fileMenuUntangleMenuTable >>
+self.fileMenuUntangleMenuTable = (
+    ("Untangle &All",None,c.untangleAll),
+    ("Untangle &Marked",None,c.untangleMarked),
+    ("&Untangle","Shift+Ctrl+U",c.untangle))
+#@nonl
+#@-node:ekr.20031218072017.3763:<< define fileMenuUntangleMenuTable >>
+#@+node:ekr.20031218072017.3764:<< define fileMenuImportMenuTable >>
+self.fileMenuImportMenuTable = (
+    ("Import Derived File",None,c.importDerivedFile),
+    ("Import To @&file","Shift+Ctrl+F",c.importAtFile),
+    ("Import To @&root",None,c.importAtRoot),
+    ("Import &CWEB Files",None,c.importCWEBFiles),
+    
+    ("Import &noweb Files",None,c.importNowebFiles),
+    ("Import Flattened &Outline",None,c.importFlattenedOutline))
+#@nonl
+#@-node:ekr.20031218072017.3764:<< define fileMenuImportMenuTable >>
+#@+node:ekr.20031218072017.3765:<< define fileMenuExportMenuTable >>
+self.fileMenuExportMenuTable = [
+    ("Export &Headlines",None,c.exportHeadlines),
+    ("Outline To &CWEB",None,c.outlineToCWEB),
+    ("Outline To &Noweb",None,c.outlineToNoweb),
+    ("&Flatten Outline",None,c.flattenOutline),
+    ("&Remove Sentinels",None,c.removeSentinels),
+    ("&Weave",None,c.weave)]
+#@nonl
+#@-node:ekr.20031218072017.3765:<< define fileMenuExportMenuTable >>
+#@+node:ekr.20031218072017.3766:<< define fileMenuTop3MenuTable >>
+self.fileMenuTop3MenuTable = (
+    ("E&xit","Ctrl+Q",g.app.onQuit),)
+#@nonl
+#@-node:ekr.20031218072017.3766:<< define fileMenuTop3MenuTable >>
+#@-node:ekr.20031218072017.3758:<< define file menu tables >>
+#@+node:ekr.20031218072017.3767:<< define outline menu tables >>
+<< define outlineMenuTopMenuTable >>
+<< define outlineMenuCheckOutlineMenuTable >>
+<< define outlineMenuExpandContractMenuTable >>
+<< define outlineMenuMoveMenuTable >>
+<< define outlineMenuMarkMenuTable >>
+<< define outlineMenuGoToMenuTable >>
+#@nonl
+#@+node:ekr.20031218072017.3768:<< define outlineMenuTopMenuTable >>
+self.outlineMenuTopMenuTable = (
+    ("C&ut Node","Shift+Ctrl+X",c.cutOutline),
+    ("C&opy Node","Shift+Ctrl+C",c.copyOutline),
+    ("&Paste Node","Shift+Ctrl+V",c.pasteOutline),
+    ("Paste &Retaining Clones",None,c.pasteOutlineRetainingClones),
+    ("&Delete Node","Shift+Ctrl+BkSp",c.deleteOutline),
+    ("-",None,None),
+    ("&Insert Node","Ctrl+I",c.insertHeadline),
+    ("&Clone Node","Ctrl+`",c.clone),
+    ("Sort Childre&n",None,c.sortChildren), # Conflicted with Hoist.
+    ("&Sort Siblings","Alt+A",c.sortSiblings),
+    ("-",None,None),
+    ("&Hoist",None,c.hoist),
+    ("D&e-Hoist",None,f.c.dehoist),
+    ("-",None,None))
+    
+# Ampersand bindings:  c,d,e,h,i,k,m,n,o,p,r,s,u
+#@-node:ekr.20031218072017.3768:<< define outlineMenuTopMenuTable >>
+#@+node:ekr.20040711140738:<< define outlineMenuCheckOutlineMenuTable >>
+self.outlineMenuCheckOutlineMenuTable = (
+
+    ("Check &Outline",None,c.checkOutline),
+    ("&Dump Outline",None,c.dumpOutline),
+    ("-",None,None),
+    ("Check &All Python Code",None,c.checkAllPythonCode),
+    ("&Check Python &Code",None,c.checkPythonCode),
+    ("-",None,None),
+    ("Pretty P&rint All Python Code",None,c.prettyPrintAllPythonCode),
+    ("&Pretty Print Python Code",None,c.prettyPrintPythonCode),
+    
+)
+
+# shortcuts used: a,c,d,o,p,r
+#@nonl
+#@-node:ekr.20040711140738:<< define outlineMenuCheckOutlineMenuTable >>
+#@+node:ekr.20031218072017.3769:<< define outlineMenuExpandContractMenuTable >>
+self.outlineMenuExpandContractMenuTable = (
+    ("&Contract All","Alt+-",c.contractAllHeadlines),
+    ("Contract &Node","Alt+[",c.contractNode),
+    ("Contract &Parent","Alt+0",c.contractParent),
+    ("Contract Or Go Left","Alt+LtArrow",c.contractNodeOrGoToParent),
+    ("-",None,None),
+    ("Expand P&rev Level","Alt+.",c.expandPrevLevel),
+    ("Expand N&ext Level","Alt+=",c.expandNextLevel),
+    ("Expand Or Go Right","Alt+RtArrow",c.expandNodeOrGoToFirstChild),
+    ("-",None,None),
+    ("Expand To Level &1","Alt+1",c.expandLevel1),
+    ("Expand To Level &2","Alt+2",c.expandLevel2),
+    ("Expand To Level &3","Alt+3",c.expandLevel3),
+    ("Expand To Level &4","Alt+4",c.expandLevel4),
+    ("Expand To Level &5","Alt+5",c.expandLevel5),
+    ("Expand To Level &6","Alt+6",c.expandLevel6),
+    ("Expand To Level &7","Alt+7",c.expandLevel7),
+    ("Expand To Level &8","Alt+8",c.expandLevel8),
+    # ("Expand To Level &9","Alt+9",c.expandLevel9),
+    ("-",None,None),
+    ("Expand &All","Alt+9",c.expandAllHeadlines),
+    ("Expand N&ode","Alt+]",c.expandNode))
+#@nonl
+#@-node:ekr.20031218072017.3769:<< define outlineMenuExpandContractMenuTable >>
+#@+node:ekr.20031218072017.3770:<< define outlineMenuMoveMenuTable >>
+self.outlineMenuMoveMenuTable = (
+    ("Move &Down", "Ctrl+D",c.moveOutlineDown),
+    ("Move &Left", "Ctrl+L",c.moveOutlineLeft),
+    ("Move &Right","Ctrl+R",c.moveOutlineRight),
+    ("Move &Up",   "Ctrl+U",c.moveOutlineUp),
+    ("-",None,None),
+    ("&Promote","Ctrl+{",c.promote),
+    ("&Demote", "Ctrl+}",c.demote))
+#@nonl
+#@-node:ekr.20031218072017.3770:<< define outlineMenuMoveMenuTable >>
+#@+node:ekr.20031218072017.3771:<< define outlineMenuMarkMenuTable >>
+self.outlineMenuMarkMenuTable = (
+    ("&Mark","Ctrl+M",c.markHeadline),
+    ("Mark &Subheads","Alt+S",c.markSubheads),
+    ("Mark Changed &Items","Alt+C",c.markChangedHeadlines),
+    ("Mark Changed &Roots","Alt+R",c.markChangedRoots),
+    ("Mark &Clones","Alt+K",c.markClones),
+    ("&Unmark All","Alt+U",c.unmarkAll))
+#@nonl
+#@-node:ekr.20031218072017.3771:<< define outlineMenuMarkMenuTable >>
+#@+node:ekr.20031218072017.3772:<< define outlineMenuGoToMenuTable >>
+self.outlineMenuGoToMenuTable = (
+    ("Go Back",None,c.goPrevVisitedNode), # Usually use buttons for this.
+    ("Go Forward",None,c.goNextVisitedNode),
+    ("-",None,None),
+    ("Go To Next &Marked","Alt+M",c.goToNextMarkedHeadline),
+    ("Go To Next C&hanged","Alt+D",c.goToNextDirtyHeadline),
+    ("Go To Next &Clone","Alt+N",c.goToNextClone),
+    ("-",None,None),
+    ("Go To &First Node","Alt+Shift+G",c.goToFirstNode),
+    ("Go To &Last Node","Alt+Shift+H",c.goToLastNode),
+    ("Go To &Parent","Alt+Shift+P",c.goToParent),
+    ("Go To P&rev Sibling","Alt+Shift+R",c.goToPrevSibling),
+    ("Go To Next &Sibling","Alt+Shift+S",c.goToNextSibling),
+    ("-",None,None),
+    ("Go To Prev V&isible","Alt+UpArrow",c.selectVisBack),
+    ("Go To Next &Visible","Alt+DnArrow",c.selectVisNext),
+    ("Go To Prev Node","Alt+Shift+UpArrow",c.selectThreadBack),
+    ("Go To Next Node","Alt+Shift+DnArrow",c.selectThreadNext))
+#@nonl
+#@-node:ekr.20031218072017.3772:<< define outlineMenuGoToMenuTable >>
+#@-node:ekr.20031218072017.3767:<< define outline menu tables >>
+#@+node:ekr.20031218072017.3773:<< define window menu tables >>
+self.windowMenuTopTable = (
+    ("&Equal Sized Panes","Ctrl+E",f.equalSizedPanes),
+    ("Toggle &Active Pane","Ctrl+T",f.toggleActivePane),
+    ("Toggle &Split Direction",None,f.toggleSplitDirection),
+    ("-",None,None),
+    ("Resize To Screen",None,f.resizeToScreen),
+    ("Casca&de",None,f.cascade),
+    ("&Minimize All",None,f.minimizeAll),
+    ("-",None,None),
+    ("Open &Compare Window",None,c.openCompareWindow),
+    ("Open &Python Window","Alt+P",c.openPythonWindow))
+#@nonl
+#@-node:ekr.20031218072017.3773:<< define window menu tables >>
+#@+node:ekr.20031218072017.3774:<< define help menu tables >>
+self.helpMenuTopTable = (
+    ("&About Leo...",None,c.about),
+    ("Online &Home Page",None,c.leoHome),
+    ("-",None,None),
+    ("Open Online &Tutorial",None,c.leoTutorial),
+)
+    
+self.helpMenuTop2Table = (
+    ("Open &Offline Tutorial",None,f.leoHelp),
+)
+    
+self.helpMenuTop3Table = (
+    ("Open Leo&Docs.leo",None,c.leoDocumentation),
+    ("-",None,None),
+    ("Open Leo&Config.leo",None,c.leoConfig),
+    # ("Apply &Settings",None,c.applyConfig),
+)
+#@nonl
+#@-node:ekr.20031218072017.3774:<< define help menu tables >>
+#@-node:ekr.20031218072017.3752:defineMenuTables
+#@+node:ekr.20031218072017.3781:Gui-independent menu routines
+#@+node:ekr.20031218072017.3782:get/setRealMenuName & setRealMenuNamesFromTable
+# Returns the translation of a menu name or an item name.
+
+def getRealMenuName (self,menuName):
+
+    cmn = self.canonicalizeTranslatedMenuName(menuName)
+    return g.app.realMenuNameDict.get(cmn,menuName)
+    
+def setRealMenuName (self,untrans,trans):
+
+    cmn = self.canonicalizeTranslatedMenuName(untrans)
+    g.app.realMenuNameDict[cmn] = trans
+
+def setRealMenuNamesFromTable (self,table):
+
+    try:
+        for untrans,trans in table:
+            self.setRealMenuName(untrans,trans)
+    except:
+        g.es("exception in setRealMenuNamesFromTable")
+        g.es_exception()
+#@nonl
+#@-node:ekr.20031218072017.3782:get/setRealMenuName & setRealMenuNamesFromTable
+#@+node:ekr.20031218072017.3783:canonicalizeMenuName & cononicalizeTranslatedMenuName
+def canonicalizeMenuName (self,name):
+    
+    name = name.lower() ; newname = ""
+    for ch in name:
+        # if ch not in (' ','\t','\n','\r','&'):
+        if ch in string.ascii_letters:
+            newname = newname+ch
+    return newname
+    
+def canonicalizeTranslatedMenuName (self,name):
+    
+    name = name.lower() ; newname = ""
+    for ch in name:
+        if ch not in (' ','\t','\n','\r','&'):
+        # if ch in string.ascii_letters:
+            newname = newname+ch
+    return newname
+#@-node:ekr.20031218072017.3783:canonicalizeMenuName & cononicalizeTranslatedMenuName
+#@+node:ekr.20031218072017.2098:canonicalizeShortcut
+@ This code "canonicalizes" both the shortcuts that appear in menus and the arguments to bind, mostly ignoring case and the order in which special keys are specified in leoConfig.txt.
+
+For example, Ctrl+Shift+a is the same as Shift+Control+A.  Either may appear in leoConfig.txt.  Each generates Shift+Ctrl-A in the menu and Control+A as the argument to bind.
+
+Returns (bind_shortcut, menu_shortcut)
+@c
+
+def canonicalizeShortcut (self,shortcut):
+    
+    if shortcut == None or len(shortcut) == 0:
+        return None,None
+    s = shortcut.strip().lower()
+    
+    has_cmd   = s.find("cmd") >= 0     or s.find("command") >= 0 # 11/18/03
+    has_ctrl  = s.find("control") >= 0 or s.find("ctrl") >= 0
+    has_alt   = s.find("alt") >= 0
+    has_shift = s.find("shift") >= 0   or s.find("shft") >= 0
+    if sys.platform == "darwin":
+        if has_ctrl and not has_cmd:
+            has_cmd = True ; has_ctrl = False
+        if has_alt and not has_ctrl: # 9/14/04
+            has_ctrl = True ; has_alt = False
+    << set the last field, preserving case >>
+    << canonicalize the last field >>
+    << synthesize the shortcuts from the information >>
+    # print shortcut,bind_shortcut,menu_shortcut
+    return bind_shortcut,menu_shortcut
+#@nonl
+#@+node:ekr.20031218072017.2102:<< set the last field, preserving case >>
+s2 = shortcut
+s2 = string.strip(s2)
+
+# Replace all minus signs by plus signs, except a trailing minus:
+if len(s2) > 0 and s2[-1] == "-":
+    s2 = string.replace(s2,"-","+")
+    s2 = s2[:-1] + "-"
+else:
+    s2 = string.replace(s2,"-","+")
+
+fields = string.split(s2,"+")
+if fields == None or len(fields) == 0:
+    if not g.app.menuWarningsGiven:
+        print "bad shortcut specifier:", s
+    return None,None
+
+last = fields[-1]
+if last == None or len(last) == 0:
+    if not g.app.menuWarningsGiven:
+        print "bad shortcut specifier:", s
+    return None,None
+#@nonl
+#@-node:ekr.20031218072017.2102:<< set the last field, preserving case >>
+#@+node:ekr.20031218072017.2099:<< canonicalize the last field >>
+bind_last = menu_last = last
+if len(last) == 1:
+    ch = last[0]
+    if ch in string.ascii_letters:
+        menu_last = string.upper(last)
+        if has_shift:
+            bind_last = string.upper(last)
+        else:
+            bind_last = string.lower(last)
+    elif ch in string.digits:
+        bind_last = "Key-" + ch # 1-5 refer to mouse buttons, not keys.
+    else:
+        << define dict of Tk bind names >>
+        if ch in theDict.keys():
+            bind_last = theDict[ch]
+elif len(last) > 0:
+    << define dict of special names >>
+    last2 = string.lower(last)
+    if last2 in theDict.keys():
+        bind_last,menu_last = theDict[last2]
+#@nonl
+#@+node:ekr.20031218072017.2100:<< define dict of Tk bind names >>
+# These are defined at http://tcl.activestate.com/man/tcl8.4/TkCmd/keysyms.htm.
+theDict = {
+    "!" : "exclam",
+    '"' : "quotedbl",
+    "#" : "numbersign",
+    "$" : "dollar",
+    "%" : "percent",
+    "&" : "ampersand",
+    "'" : "quoteright",
+    "(" : "parenleft",
+    ")" : "parenright",
+    "*" : "asterisk",
+    "+" : "plus",
+    "," : "comma",
+    "-" : "minus",
+    "." : "period",
+    "/" : "slash",
+    ":" : "colon",
+    ";" : "semicolon",
+    "<" : "less",
+    "=" : "equal",
+    ">" : "greater",
+    "?" : "question",
+    "@" : "at",
+    "[" : "bracketleft",
+    "\\": "backslash",
+    "]" : "bracketright",
+    "^" : "asciicircum",
+    "_" : "underscore",
+    "`" : "quoteleft",
+    "{" : "braceleft",
+    "|" : "bar",
+    "}" : "braceright",
+    "~" : "asciitilde" }
+#@nonl
+#@-node:ekr.20031218072017.2100:<< define dict of Tk bind names >>
+#@+node:ekr.20031218072017.2101:<< define dict of special names >>
+# These keys are simply made-up names.  The menu_bind values are known to Tk.
+# Case is not significant in the keys.
+
+theDict = {
+    "bksp"    : ("BackSpace","BkSp"),
+    "esc"     : ("Escape","Esc"),
+    # Arrow keys...
+    "dnarrow" : ("Down", "DnArrow"),
+    "ltarrow" : ("Left", "LtArrow"),
+    "rtarrow" : ("Right","RtArrow"),
+    "uparrow" : ("Up",   "UpArrow"),
+    # Page up/down keys...
+    "pageup"  : ("Prior","PgUp"),
+    "pagedn"  : ("Next", "PgDn")
+}
+
+@  The following are not translated, so what appears in the menu is the same as what is passed to Tk.  Case is significant.
+
+Note: the Tk documentation states that not all of these may be available on all platforms.
+
+F1,F2,F3,F4,F5,F6,F7,F8,F9,F10,
+BackSpace, Break, Clear, Delete, Escape, Linefeed, Return, Tab,
+Down, Left, Right, Up,
+Begin, End, Home, Next, Prior,
+Num_Lock, Pause, Scroll_Lock, Sys_Req,
+KP_Add, KP_Decimal, KP_Divide, KP_Enter, KP_Equal,
+KP_Multiply, KP_Separator,KP_Space, KP_Subtract, KP_Tab,
+KP_F1,KP_F2,KP_F3,KP_F4,
+KP_0,KP_1,KP_2,KP_3,KP_4,KP_5,KP_6,KP_7,KP_8,KP_9
+#@-node:ekr.20031218072017.2101:<< define dict of special names >>
+#@-node:ekr.20031218072017.2099:<< canonicalize the last field >>
+#@+node:ekr.20031218072017.2103:<< synthesize the shortcuts from the information >>
+bind_head = menu_head = ""
+
+if has_shift:
+    menu_head = "Shift+"
+    if len(last) > 1 or (len(last)==1 and last[0] not in string.ascii_letters):
+        bind_head = "Shift-"
+if has_alt:
+    bind_head = bind_head + "Alt-"
+    menu_head = menu_head + "Alt+"
+
+if has_ctrl:
+    bind_head = bind_head + "Control-"
+    menu_head = menu_head + "Ctrl+"
+    
+if has_cmd: # 11/18/03
+    bind_head = bind_head + "Command-"
+    menu_head = menu_head + "Command+"
+    
+bind_shortcut = "<" + bind_head + bind_last + ">"
+menu_shortcut = menu_head + menu_last
+#@nonl
+#@-node:ekr.20031218072017.2103:<< synthesize the shortcuts from the information >>
+#@-node:ekr.20031218072017.2098:canonicalizeShortcut
+#@+node:ekr.20031218072017.1723:createMenuEntries
+@ The old, non-user-configurable code bound shortcuts in createMenuBar.  The new user-configurable code binds shortcuts here.
+
+Centralized tables of shortscuts no longer exist as they did in createAccelerators.  To check for duplicates, (possibly arising from leoConfig.txt) we add entries to a central dictionary here, and report duplicates if an entry for a canonicalized shortcut already exists.
+@c
+
+def createMenuEntries (self,menu,table,openWith=False,dontBind=False,init=False):
+    
+    c = self.c
+    for label,accel,command in table:
+        if label == None or command == None or label == "-":
+            self.add_separator(menu)
+        else:
+            << set name to the label for doCommand >>
+            << set accel to the shortcut for name >>
+            << set bind_shortcut and menu_shortcut using accel >>
+            << define callback function >>
+            << set realLabel, amp_index and menu_shortcut >>
+    
+            self.add_command(menu,label=realLabel,accelerator=menu_shortcut,
+                command=callback,underline=amp_index)
+                
+            if 0: # testing
+                dontBind = True
+
+            if bind_shortcut and not dontBind:
+                << handle bind_shorcut >>
+#@nonl
+#@+node:ekr.20031218072017.1724:<< set name to the label for doCommand >>
+name = label.strip().lower()
+
+# Remove special characters from command names.
+name2 = ""
+for ch in name:
+    if ch in string.ascii_letters or ch in string.digits:
+        name2 = name2 + ch
+name = name2
+#@-node:ekr.20031218072017.1724:<< set name to the label for doCommand >>
+#@+node:ekr.20031218072017.1725:<< set accel to the shortcut for name >>
+rawKey,accel2 = c.config.getShortcut(name)
+
+# 7/19/03: Make sure "None" overrides the default shortcut.
+if accel2 == None or len(accel2) == 0:
+    pass # Use default shortcut, if any.
+elif accel2.lower() == "none":
+    accel = None # Remove the default shortcut.
+else:
+    accel = accel2 # Override the default shortcut.
+#@nonl
+#@-node:ekr.20031218072017.1725:<< set accel to the shortcut for name >>
+#@+node:ekr.20031218072017.1726:<< set bind_shortcut and menu_shortcut using accel >>
+bind_shortcut,menu_shortcut = self.canonicalizeShortcut(accel)
+
+# Kludge: disable the shortcuts for cut, copy, paste.
+# This has already been bound in leoTkinterFrame.__init__
+# 2/13/03: A _possible_ fix for the Linux control-v bug.
+
+if sys.platform not in ("darwin","freebsd4","freebsd5","linux1","linux2"):
+    if bind_shortcut in ("<Control-c>","<Control-v>","<Control-x>"):
+        bind_shortcut = None
+#@nonl
+#@-node:ekr.20031218072017.1726:<< set bind_shortcut and menu_shortcut using accel >>
+#@+node:ekr.20031218072017.1727:<< define callback function >>
+if openWith:
+    callback = self.defineOpenWithMenuCallback(command)
+else:
+    callback = self.defineMenuCallback(command,name)
+#@nonl
+#@-node:ekr.20031218072017.1727:<< define callback function >>
+#@+node:ekr.20031218072017.1728:<< set realLabel, amp_index and menu_shortcut >>
+realLabel = self.getRealMenuName(label)
+
+# A bad hack:  this does not allow for translations!
+# We need a way of specifying shortcuts, & bindings and translations all in the same place.
+
+amp_index = -1
+if rawKey:
+    amp_index = rawKey.find("&")
+if amp_index == -1:
+    amp_index = realLabel.find("&")
+
+realLabel = realLabel.replace("&","")
+
+if 0: # trace
+    if rawKey and rawKey.lower().startswith("exit"):
+        g.trace(amp_index,rawKey,label,realLabel,menu_shortcut)
+
+if not menu_shortcut:
+    menu_shortcut = ""
+#@nonl
+#@-node:ekr.20031218072017.1728:<< set realLabel, amp_index and menu_shortcut >>
+#@+node:ekr.20031218072017.1729:<< handle bind_shorcut >>
+d = self.menuShortcuts
+bunch = d.get(bind_shortcut)
+
+if bunch and not g.app.menuWarningsGiven:
+    if bunch.init:
+        if 1: # Testing only.
+            s = 'overriding default shortcut\nnew: %s %s\nold: %s %s' % (
+                accel,label,bunch.accel,bunch.label)
+            g.es(s,color="red")
+            print s
+        # Unbind the previous accelerator.
+        if menu != bunch.menu or label != bunch.label:
+            self.clearAccel(bunch.menu,bunch.label)
+    else:
+        s = 'duplicate shortcut\nnew: %s %s\nold: %s %s' % (
+            accel,label,bunch.accel,bunch.label)
+        g.es(s,color="red")
+        print s
+
+d[bind_shortcut] = g.Bunch(label=label,accel=accel,init=init,menu=menu)
+    
+try:
+    self.frame.body.bind(bind_shortcut,callback)
+    self.bind(bind_shortcut,callback)
+except: # could be a user error
+    if not g.app.menuWarningsGiven:
+        print "exception binding menu shortcut..."
+        print bind_shortcut
+        g.es_exception()
+        g.app.menuWarningsGive = True
+#@nonl
+#@-node:ekr.20031218072017.1729:<< handle bind_shorcut >>
+#@-node:ekr.20031218072017.1723:createMenuEntries
+#@+node:ekr.20031218072017.3784:createMenuItemsFromTable
+def createMenuItemsFromTable (self,menuName,table,openWith=False):
+    
+    try:
+        menu = self.getMenu(menuName)
+        if menu == None:
+            print "menu does not exist: ",menuName
+            g.es("menu does not exist: ",menuName)
+            return
+        self.createMenuEntries(menu,table,openWith)
+    except:
+        s = "exception creating items for %s menu" % menuName
+        print s ; g.es(s)
+        g.es_exception()
+        
+    g.app.menuWarningsGiven = True
+#@nonl
+#@-node:ekr.20031218072017.3784:createMenuItemsFromTable
+#@+node:ekr.20031218072017.3785:createMenusFromTables
+def createMenusFromTables (self):
+
+    c = self.c
+    << create the file menu >>
+    << create the edit menu >>
+    << create the outline menu >>
+    g.doHook("create-optional-menus",c=c)
+    << create the window menu >>
+    << create the help menu >>
+#@nonl
+#@+node:ekr.20031218072017.3790:<< create the file menu >>
+fileMenu = self.createNewMenu("&File")
+
+self.createMenuEntries(fileMenu,self.fileMenuTopTable,init=True)
+self.createNewMenu("Open &With...","File")
+self.createMenuEntries(fileMenu,self.fileMenuTop2Table,init=True)
+<< create the recent files submenu >>
+self.add_separator(fileMenu)
+<< create the read/write submenu >>
+<< create the tangle submenu >>
+<< create the untangle submenu >>
+<< create the import submenu >>
+<< create the export submenu >>
+self.add_separator(fileMenu)
+self.createMenuEntries(fileMenu,self.fileMenuTop3MenuTable,init=True)
+#@nonl
+#@+node:ekr.20031218072017.3791:<< create the recent files submenu >>
+self.createNewMenu("Recent &Files...","File")
+c.recentFiles = c.config.getRecentFiles()
+
+if 0: # Not needed, and causes problems in wxWindows...
+    self.createRecentFilesMenuItems()
+#@nonl
+#@-node:ekr.20031218072017.3791:<< create the recent files submenu >>
+#@+node:ekr.20031218072017.3792:<< create the read/write submenu >>
+readWriteMenu = self.createNewMenu("&Read/Write...","File")
+
+self.createMenuEntries(readWriteMenu,self.fileMenuReadWriteMenuTable,init=True)
+#@nonl
+#@-node:ekr.20031218072017.3792:<< create the read/write submenu >>
+#@+node:ekr.20031218072017.3793:<< create the tangle submenu >>
+tangleMenu = self.createNewMenu("&Tangle...","File")
+
+self.createMenuEntries(tangleMenu,self.fileMenuTangleMenuTable,init=True)
+#@nonl
+#@-node:ekr.20031218072017.3793:<< create the tangle submenu >>
+#@+node:ekr.20031218072017.3794:<< create the untangle submenu >>
+untangleMenu = self.createNewMenu("&Untangle...","File")
+
+self.createMenuEntries(untangleMenu,self.fileMenuUntangleMenuTable,init=True)
+#@nonl
+#@-node:ekr.20031218072017.3794:<< create the untangle submenu >>
+#@+node:ekr.20031218072017.3795:<< create the import submenu >>
+importMenu = self.createNewMenu("&Import...","File")
+
+self.createMenuEntries(importMenu,self.fileMenuImportMenuTable,init=True)
+#@nonl
+#@-node:ekr.20031218072017.3795:<< create the import submenu >>
+#@+node:ekr.20031218072017.3796:<< create the export submenu >>
+exportMenu = self.createNewMenu("&Export...","File")
+
+self.createMenuEntries(exportMenu,self.fileMenuExportMenuTable,init=True)
+#@nonl
+#@-node:ekr.20031218072017.3796:<< create the export submenu >>
+#@-node:ekr.20031218072017.3790:<< create the file menu >>
+#@+node:ekr.20031218072017.3786:<< create the edit menu >>
+editMenu = self.createNewMenu("&Edit")
+
+self.createMenuEntries(editMenu,self.editMenuTopTable,init=True)
+
+<< create the edit body submenu >>
+<< create the edit headline submenu >>
+<< create the find submenu >>
+
+self.createMenuEntries(editMenu,self.editMenuTop2Table,init=True)
+#@nonl
+#@+node:ekr.20031218072017.3787:<< create the edit body submenu >>
+editBodyMenu = self.createNewMenu("Edit &Body...","Edit")
+
+self.createMenuEntries(editBodyMenu,self.editMenuEditBodyTable,init=True)
+#@nonl
+#@-node:ekr.20031218072017.3787:<< create the edit body submenu >>
+#@+node:ekr.20031218072017.3788:<< create the edit headline submenu >>
+editHeadlineMenu = self.createNewMenu("Edit &Headline...","Edit")
+
+self.createMenuEntries(editHeadlineMenu,self.editMenuEditHeadlineTable,init=True)
+#@nonl
+#@-node:ekr.20031218072017.3788:<< create the edit headline submenu >>
+#@+node:ekr.20031218072017.3789:<< create the find submenu >>
+findMenu = self.createNewMenu("&Find...","Edit")
+
+self.createMenuEntries(findMenu,self.editMenuFindMenuTable,init=True)
+#@nonl
+#@-node:ekr.20031218072017.3789:<< create the find submenu >>
+#@-node:ekr.20031218072017.3786:<< create the edit menu >>
+#@+node:ekr.20031218072017.3797:<< create the outline menu >>
+outlineMenu = self.createNewMenu("&Outline")
+
+self.createMenuEntries(outlineMenu,self.outlineMenuTopMenuTable,init=True)
+
+<< create check submenu >>
+<< create expand/contract submenu >>
+<< create move submenu >>
+<< create mark submenu >>
+<< create goto submenu >>
+#@nonl
+#@+node:ekr.20040711140738.1:<< create check submenu >>
+checkOutlineMenu = self.createNewMenu("Chec&k...","Outline")
+
+self.createMenuEntries(checkOutlineMenu,self.outlineMenuCheckOutlineMenuTable,init=True)
+#@nonl
+#@-node:ekr.20040711140738.1:<< create check submenu >>
+#@+node:ekr.20031218072017.3798:<< create expand/contract submenu >>
+expandMenu = self.createNewMenu("&Expand/Contract...","Outline")
+
+self.createMenuEntries(expandMenu,self.outlineMenuExpandContractMenuTable,init=True)
+#@nonl
+#@-node:ekr.20031218072017.3798:<< create expand/contract submenu >>
+#@+node:ekr.20031218072017.3799:<< create move submenu >>
+moveSelectMenu = self.createNewMenu("&Move...","Outline")
+
+self.createMenuEntries(moveSelectMenu,self.outlineMenuMoveMenuTable,init=True)
+#@nonl
+#@-node:ekr.20031218072017.3799:<< create move submenu >>
+#@+node:ekr.20031218072017.3800:<< create mark submenu >>
+markMenu = self.createNewMenu("M&ark/Unmark...","Outline")
+
+self.createMenuEntries(markMenu,self.outlineMenuMarkMenuTable,init=True)
+#@nonl
+#@-node:ekr.20031218072017.3800:<< create mark submenu >>
+#@+node:ekr.20031218072017.3801:<< create goto submenu >>
+gotoMenu = self.createNewMenu("&Go To...","Outline")
+
+self.createMenuEntries(gotoMenu,self.outlineMenuGoToMenuTable,init=True)
+#@nonl
+#@-node:ekr.20031218072017.3801:<< create goto submenu >>
+#@-node:ekr.20031218072017.3797:<< create the outline menu >>
+#@+node:ekr.20031218072017.3802:<< create the window menu >>
+windowMenu = self.createNewMenu("&Window")
+
+self.createMenuEntries(windowMenu,self.windowMenuTopTable,init=True)
+#@nonl
+#@-node:ekr.20031218072017.3802:<< create the window menu >>
+#@+node:ekr.20031218072017.3803:<< create the help menu >>
+helpMenu = self.createNewMenu("&Help")
+
+self.createMenuEntries(helpMenu,self.helpMenuTopTable,init=True)
+
+if sys.platform=="win32":
+    self.createMenuEntries(helpMenu,self.helpMenuTop2Table,init=True)
+
+self.createMenuEntries(helpMenu,self.helpMenuTop3Table,init=True)
+#@nonl
+#@-node:ekr.20031218072017.3803:<< create the help menu >>
+#@-node:ekr.20031218072017.3785:createMenusFromTables
+#@+node:ekr.20031218072017.3804:createNewMenu
+def createNewMenu (self,menuName,parentName="top",before=None):
+
+    try:
+        parent = self.getMenu(parentName)
+        
+        if 0: # 11/13/03: Allow parent to be None.
+            if parent == None:
+                g.es("unknown parent menu: " + parentName)
+                return None
+
+        menu = self.getMenu(menuName)
+        if menu:
+            g.es("menu already exists: " + menuName,color="red")
+        else:
+            menu = self.new_menu(parent,tearoff=0)
+            self.setMenu(menuName,menu)
+            label = self.getRealMenuName(menuName)
+            amp_index = label.find("&")
+            label = label.replace("&","")
+            if before: # Insert the menu before the "before" menu.
+                index_label = self.getRealMenuName(before)
+                amp_index = index_label.find("&")
+                index_label = index_label.replace("&","")
+                index = parent.index(index_label)
+                self.insert_cascade(parent,index=index,label=label,menu=menu,underline=amp_index)
+            else:
+                self.add_cascade(parent,label=label,menu=menu,underline=amp_index)
+            return menu
+    except:
+        g.es("exception creating " + menuName + " menu")
+        g.es_exception()
+        return None
+#@nonl
+#@-node:ekr.20031218072017.3804:createNewMenu
+#@+node:ekr.20031218072017.2078:createRecentFilesMenuItems (leoMenu)
+def createRecentFilesMenuItems (self):
+    
+    c = self.c ; frame = c.frame
+    recentFilesMenu = self.getMenu("Recent Files...")
+    
+    # Delete all previous entries.
+    self.delete_range(recentFilesMenu,0,len(c.recentFiles)+2)
+    
+    # Create the first two entries.
+    table = (
+        ("Clear Recent Files",None,c.clearRecentFiles),
+        ("-",None,None))
+    self.createMenuEntries(recentFilesMenu,table,init=True)
+    
+    # Create all the other entries.
+    i = 3
+    for name in c.recentFiles:
+        def callback (event=None,c=c,name=name): # 12/9/03
+            c.openRecentFile(name)
+        label = "%d %s" % (i-2,g.computeWindowTitle(name))
+        self.add_command(recentFilesMenu,label=label,command=callback,underline=0)
+        i += 1
+#@nonl
+#@-node:ekr.20031218072017.2078:createRecentFilesMenuItems (leoMenu)
+#@+node:ekr.20031218072017.3805:deleteMenu
+def deleteMenu (self,menuName):
+
+    try:
+        menu = self.getMenu(menuName)
+        if menu:
+            self.destroy(menu)
+            self.destroyMenu(menuName)
+        else:
+            g.es("can't delete menu: " + menuName)
+    except:
+        g.es("exception deleting " + menuName + " menu")
+        g.es_exception()
+#@nonl
+#@-node:ekr.20031218072017.3805:deleteMenu
+#@+node:ekr.20031218072017.3806:deleteMenuItem
+def deleteMenuItem (self,itemName,menuName="top"):
+    
+    """Delete itemName from the menu whose name is menuName."""
+
+    try:
+        menu = self.getMenu(menuName)
+        if menu:
+            realItemName = self.getRealMenuName(itemName)
+            self.delete(menu,realItemName)
+        else:
+            g.es("menu not found: " + menuName)
+    except:
+        g.es("exception deleting " + itemName + " from " + menuName + " menu")
+        g.es_exception()
+#@nonl
+#@-node:ekr.20031218072017.3806:deleteMenuItem
+#@+node:ekr.20031218072017.3807:getMenu, setMenu, destroyMenu
+def getMenu (self,menuName):
+
+    cmn = self.canonicalizeMenuName(menuName)
+    return self.menus.get(cmn)
+    
+def setMenu (self,menuName,menu):
+    
+    cmn = self.canonicalizeMenuName(menuName)
+    self.menus [cmn] = menu
+    
+def destroyMenu (self,menuName):
+    
+    cmn = self.canonicalizeMenuName(menuName)
+    del self.menus[cmn]
+#@nonl
+#@-node:ekr.20031218072017.3807:getMenu, setMenu, destroyMenu
+#@-node:ekr.20031218072017.3781:Gui-independent menu routines
+#@+node:ekr.20041228063406:clearAccel
+def clearAccel(self,menu,name):
+    
+    realName = self.getRealMenuName(name)
+    realName = realName.replace("&","")
+
+    menu.entryconfig(realName,accelerator='')
+#@nonl
+#@-node:ekr.20041228063406:clearAccel
+#@-node:ekr.20050102092149:(Fixed problems with Control-E)
 #@-node:ekr.20041228052527:Bug fixes...
 #@+node:ekr.20041228052527.1:Cleanup...
 #@+node:ekr.20040917080403.1:(Cleaned up code in runOpenFileDialog)
@@ -10562,9 +11867,12 @@ def updateRecentFiles (self,fileName):
     
     """Create the RecentFiles menu.  May be called with Null fileName."""
     
+    if g.app.unitTesting: return
+    
     # Update the recent files list in all windows.
     if fileName:
         absFileName = g.os_path_abspath(fileName)
+        # g.trace(fileName)
         for frame in g.app.windowList:
             c = frame.c
             # Remove all versions of the file name.
@@ -14459,28 +15767,36 @@ def onPmwResizeSplitter2 (self,sizes):
 #@+node:ekr.20031218072017.3946:resizePanesToRatio
 def resizePanesToRatio(self,ratio,ratio2):
     
+    # g.trace(ratio,ratio2)
+    
     if use_Pmw and Pmw:
-        # g.trace(ratio,ratio2)
-        self.ratio = ratio
-        self.secondary_ratio = ratio2
-        splitter1 = self.component('splitter1').getObject()
-        splitter2 = self.component('splitter2').getObject()
-
-        if self.splitVerticalFlag:
-            # Use ratio to set splitter2 height.
-            size = ratio * float(splitter1.winfo_height())
-            splitter1.configurepane('splitter2Frame',size=int(size))
-            # Use ratio2 to set outline width.
-            size = ratio2 * float(splitter2.winfo_width())
-            splitter2.configurepane('outline',size=int(size))
-        else:
-            # Use ratio to set splitter2 width.
-            size = ratio * float(splitter1.winfo_width())
-            splitter1.configurepane('splitter2Frame',size=int(size))
-            # Use ratio2 to set outline height.
-            size = ratio2 * float(splitter2.winfo_height())
-            splitter2.configurepane('outline',size=int(size))
+        << resize the Pmw panes >>
+    else:
+        self.divideLeoSplitter(self.splitVerticalFlag,ratio)
+        self.divideLeoSplitter(not self.splitVerticalFlag,ratio2)
 #@nonl
+#@+node:ekr.20050104084531:<< resize the Pmw panes >>
+self.ratio = ratio
+self.secondary_ratio = ratio2
+splitter1 = self.component('splitter1').getObject()
+splitter2 = self.component('splitter2').getObject()
+
+if self.splitVerticalFlag:
+    # Use ratio to set splitter2 height.
+    size = ratio * float(splitter1.winfo_height())
+    splitter1.configurepane('splitter2Frame',size=int(size))
+    # Use ratio2 to set outline width.
+    size = ratio2 * float(splitter2.winfo_width())
+    splitter2.configurepane('outline',size=int(size))
+else:
+    # Use ratio to set splitter2 width.
+    size = ratio * float(splitter1.winfo_width())
+    splitter1.configurepane('splitter2Frame',size=int(size))
+    # Use ratio2 to set outline height.
+    size = ratio2 * float(splitter2.winfo_height())
+    splitter2.configurepane('outline',size=int(size))
+#@nonl
+#@-node:ekr.20050104084531:<< resize the Pmw panes >>
 #@-node:ekr.20031218072017.3946:resizePanesToRatio
 #@+node:ekr.20031218072017.3987:equalSizedPanes
 def equalSizedPanes(self):
@@ -14555,28 +15871,36 @@ def createLeoPmwSplitter (self,parent,verticalFlag,name):
 #@+node:ekr.20031218072017.3946:resizePanesToRatio
 def resizePanesToRatio(self,ratio,ratio2):
     
+    # g.trace(ratio,ratio2)
+    
     if use_Pmw and Pmw:
-        # g.trace(ratio,ratio2)
-        self.ratio = ratio
-        self.secondary_ratio = ratio2
-        splitter1 = self.component('splitter1').getObject()
-        splitter2 = self.component('splitter2').getObject()
-
-        if self.splitVerticalFlag:
-            # Use ratio to set splitter2 height.
-            size = ratio * float(splitter1.winfo_height())
-            splitter1.configurepane('splitter2Frame',size=int(size))
-            # Use ratio2 to set outline width.
-            size = ratio2 * float(splitter2.winfo_width())
-            splitter2.configurepane('outline',size=int(size))
-        else:
-            # Use ratio to set splitter2 width.
-            size = ratio * float(splitter1.winfo_width())
-            splitter1.configurepane('splitter2Frame',size=int(size))
-            # Use ratio2 to set outline height.
-            size = ratio2 * float(splitter2.winfo_height())
-            splitter2.configurepane('outline',size=int(size))
+        << resize the Pmw panes >>
+    else:
+        self.divideLeoSplitter(self.splitVerticalFlag,ratio)
+        self.divideLeoSplitter(not self.splitVerticalFlag,ratio2)
 #@nonl
+#@+node:ekr.20050104084531:<< resize the Pmw panes >>
+self.ratio = ratio
+self.secondary_ratio = ratio2
+splitter1 = self.component('splitter1').getObject()
+splitter2 = self.component('splitter2').getObject()
+
+if self.splitVerticalFlag:
+    # Use ratio to set splitter2 height.
+    size = ratio * float(splitter1.winfo_height())
+    splitter1.configurepane('splitter2Frame',size=int(size))
+    # Use ratio2 to set outline width.
+    size = ratio2 * float(splitter2.winfo_width())
+    splitter2.configurepane('outline',size=int(size))
+else:
+    # Use ratio to set splitter2 width.
+    size = ratio * float(splitter1.winfo_width())
+    splitter1.configurepane('splitter2Frame',size=int(size))
+    # Use ratio2 to set outline height.
+    size = ratio2 * float(splitter2.winfo_height())
+    splitter2.configurepane('outline',size=int(size))
+#@nonl
+#@-node:ekr.20050104084531:<< resize the Pmw panes >>
 #@-node:ekr.20031218072017.3946:resizePanesToRatio
 #@+node:ekr.20041221075743:onPmwResizeSplitter1/2
 @ These methods cause problems because Pmw.PanedWidget's calls these methods way too often.
@@ -16043,28 +17367,36 @@ def createLeoPmwSplitter (self,parent,verticalFlag,name):
 #@+node:ekr.20031218072017.3946:resizePanesToRatio
 def resizePanesToRatio(self,ratio,ratio2):
     
+    # g.trace(ratio,ratio2)
+    
     if use_Pmw and Pmw:
-        # g.trace(ratio,ratio2)
-        self.ratio = ratio
-        self.secondary_ratio = ratio2
-        splitter1 = self.component('splitter1').getObject()
-        splitter2 = self.component('splitter2').getObject()
-
-        if self.splitVerticalFlag:
-            # Use ratio to set splitter2 height.
-            size = ratio * float(splitter1.winfo_height())
-            splitter1.configurepane('splitter2Frame',size=int(size))
-            # Use ratio2 to set outline width.
-            size = ratio2 * float(splitter2.winfo_width())
-            splitter2.configurepane('outline',size=int(size))
-        else:
-            # Use ratio to set splitter2 width.
-            size = ratio * float(splitter1.winfo_width())
-            splitter1.configurepane('splitter2Frame',size=int(size))
-            # Use ratio2 to set outline height.
-            size = ratio2 * float(splitter2.winfo_height())
-            splitter2.configurepane('outline',size=int(size))
+        << resize the Pmw panes >>
+    else:
+        self.divideLeoSplitter(self.splitVerticalFlag,ratio)
+        self.divideLeoSplitter(not self.splitVerticalFlag,ratio2)
 #@nonl
+#@+node:ekr.20050104084531:<< resize the Pmw panes >>
+self.ratio = ratio
+self.secondary_ratio = ratio2
+splitter1 = self.component('splitter1').getObject()
+splitter2 = self.component('splitter2').getObject()
+
+if self.splitVerticalFlag:
+    # Use ratio to set splitter2 height.
+    size = ratio * float(splitter1.winfo_height())
+    splitter1.configurepane('splitter2Frame',size=int(size))
+    # Use ratio2 to set outline width.
+    size = ratio2 * float(splitter2.winfo_width())
+    splitter2.configurepane('outline',size=int(size))
+else:
+    # Use ratio to set splitter2 width.
+    size = ratio * float(splitter1.winfo_width())
+    splitter1.configurepane('splitter2Frame',size=int(size))
+    # Use ratio2 to set outline height.
+    size = ratio2 * float(splitter2.winfo_height())
+    splitter2.configurepane('outline',size=int(size))
+#@nonl
+#@-node:ekr.20050104084531:<< resize the Pmw panes >>
 #@-node:ekr.20031218072017.3946:resizePanesToRatio
 #@+node:ekr.20041221075743:onPmwResizeSplitter1/2
 @ These methods cause problems because Pmw.PanedWidget's calls these methods way too often.
@@ -20349,28 +21681,36 @@ def createLeoPmwSplitter (self,parent,verticalFlag,name):
 #@+node:ekr.20031218072017.3946:resizePanesToRatio
 def resizePanesToRatio(self,ratio,ratio2):
     
+    # g.trace(ratio,ratio2)
+    
     if use_Pmw and Pmw:
-        # g.trace(ratio,ratio2)
-        self.ratio = ratio
-        self.secondary_ratio = ratio2
-        splitter1 = self.component('splitter1').getObject()
-        splitter2 = self.component('splitter2').getObject()
-
-        if self.splitVerticalFlag:
-            # Use ratio to set splitter2 height.
-            size = ratio * float(splitter1.winfo_height())
-            splitter1.configurepane('splitter2Frame',size=int(size))
-            # Use ratio2 to set outline width.
-            size = ratio2 * float(splitter2.winfo_width())
-            splitter2.configurepane('outline',size=int(size))
-        else:
-            # Use ratio to set splitter2 width.
-            size = ratio * float(splitter1.winfo_width())
-            splitter1.configurepane('splitter2Frame',size=int(size))
-            # Use ratio2 to set outline height.
-            size = ratio2 * float(splitter2.winfo_height())
-            splitter2.configurepane('outline',size=int(size))
+        << resize the Pmw panes >>
+    else:
+        self.divideLeoSplitter(self.splitVerticalFlag,ratio)
+        self.divideLeoSplitter(not self.splitVerticalFlag,ratio2)
 #@nonl
+#@+node:ekr.20050104084531:<< resize the Pmw panes >>
+self.ratio = ratio
+self.secondary_ratio = ratio2
+splitter1 = self.component('splitter1').getObject()
+splitter2 = self.component('splitter2').getObject()
+
+if self.splitVerticalFlag:
+    # Use ratio to set splitter2 height.
+    size = ratio * float(splitter1.winfo_height())
+    splitter1.configurepane('splitter2Frame',size=int(size))
+    # Use ratio2 to set outline width.
+    size = ratio2 * float(splitter2.winfo_width())
+    splitter2.configurepane('outline',size=int(size))
+else:
+    # Use ratio to set splitter2 width.
+    size = ratio * float(splitter1.winfo_width())
+    splitter1.configurepane('splitter2Frame',size=int(size))
+    # Use ratio2 to set outline height.
+    size = ratio2 * float(splitter2.winfo_height())
+    splitter2.configurepane('outline',size=int(size))
+#@nonl
+#@-node:ekr.20050104084531:<< resize the Pmw panes >>
 #@-node:ekr.20031218072017.3946:resizePanesToRatio
 #@+node:ekr.20041221075743:onPmwResizeSplitter1/2
 @ These methods cause problems because Pmw.PanedWidget's calls these methods way too often.
@@ -20836,6 +22176,11 @@ This checks 'idle' hooks to make sure that any commander referenced by the 'c','
 def callTagHandler (handler,tag,keywords):
     
     if tag == 'idle':
+        
+        if 0:
+            c = keywords.get('c')
+            g.trace(c.shortFileName(),handler)
+
         # Make sure all commanders exist.
         for key in ('c','old_c','new_c'):
             c = keywords.get(key)
@@ -20863,16 +22208,18 @@ def doHandlersForTag (tag,keywords):
         return None
 
     if handlers.has_key(tag):
-        handle_fns = handlers[tag]
-        handle_fns.sort()
-        for handler in handle_fns:
-            return callTagHandler(handler,tag,keywords)
+        fns = handlers.get(tag)
+        # Execute hooks in some random order.
+        # Return if one of them returns a non-None result.
+        for fn in fns:
+            val = callTagHandler(fn,tag,keywords)
+            if val is not None:
+                return val
 
     if handlers.has_key("all"):
-        handle_fns = handlers["all"]
-        handle_fns.sort()
-        for handler in handle_fns:
-            return callTagHandler(handler,tag,keywords)
+        fns = handlers.get("all")
+        for fn in fns:
+            callTagHandler(fn,tag,keywords)
 
     return None
 #@nonl
@@ -20883,6 +22230,7 @@ def doPlugins(tag,keywords):
         return
     if tag == "start1":
         loadHandlers()
+
     return doHandlersForTag(tag,keywords)
 #@nonl
 #@-node:ekr.20041001161108:doPlugins
