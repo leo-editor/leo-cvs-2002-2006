@@ -3,13 +3,16 @@
 '''Automatically add nodes for common tasks'''
 
 # We must use @file-noref because data below might look like section references,
-# so ORDER IS IMPORTANT throughout this tree (we can't use @others).
+# so ORDER IS IMPORTANT throughout this tree.
 
+# Directives are not valid in @nosent files.
 #@language python
 #@tabwidth -4
 
 __name__ = "New Buttons"
-__version__ = "0.2" # Converted to @file-noref by EKR.
+__version__ = "0.3"
+# 0.2 EKR: Converted to @file-noref
+# 0.3 EKR: Added 4 new plugin templates.  Added init function.
  
 import leoGlobals as g
 import leoPlugins
@@ -17,7 +20,7 @@ import leoFind
 
 Tk = g.importExtension('Tkinter',pluginName=__name__,verbose=True)
 
-# N.B. We can NOT put the top-level code here: we are using @nosent!
+# We can not use @others in an @nosent tree.
 #@nonl
 #@-node:@file-noref newButtons.py
 #@+node:Helper classes
@@ -145,15 +148,18 @@ class Helper:
         self.text.pack(side="left", padx=3, fill="both", expand=1)
         self.text.bind("<Return>", self.doCallback)
         # 
-        self.pseudobutton = Tk.Frame(self._getSizer(self.frame, 24, 142), relief="raised", borderwidth=2) 
+        self.pseudobutton = Tk.Frame(self._getSizer(self.frame, 24, 142),
+            relief="raised", borderwidth=2) 
         self.pseudobutton.pack(side="right")
         # 
-        self.doit = Tk.Button(self._getSizer(self.pseudobutton, 25, 32), text="New", relief="flat", command=self.doCallback)
+        self.doit = Tk.Button(self._getSizer(self.pseudobutton, 25, 32),
+            text="New", relief="flat", command=self.doCallback)
         self.doit.pack(side="left")
         # 
         options = [adder.button_name for adder in self.adders]
         self.option_value = Tk.StringVar()
-        self.options = FlatOptionMenu(self._getSizer(self.pseudobutton, 29, 110), self.option_value, *options)
+        self.options = FlatOptionMenu(self._getSizer(self.pseudobutton, 29, 110),
+            self.option_value, *options)
         self.option_value.set(options[0])
         self.options.pack(side="right", fill="both", expand=1)
         
@@ -180,10 +186,134 @@ class Helper:
             raise ValueError("Button name not found: '%s'" % self.option_value.get())
 #@nonl
 #@-node:class Helper
-#@+node:Modifiable classes to add buttons
-# Modify these classes or data as you like to create templates that suit you.
+#@+node:text definitions used in plugins templates
+#@-node:text definitions used in plugins templates
+#@+node:DOCSTRING_BODY
+DOCSTRING_BODY ="""
+'''This docstring should be a clear, concise description of
+what the plugin does and how to use it.
+'''
+"""
+#@-node:DOCSTRING_BODY
+#@+node:GENERIC_IMPORTS_BODY
+GENERIC_IMPORTS_BODY = '''
+import leoGlobals as g
+import leoPlugins
+'''
 #@nonl
-#@-node:Modifiable classes to add buttons
+#@-node:GENERIC_IMPORTS_BODY
+#@+node:GENERIC_INIT_FUNCTION_BODY
+GENERIC_INIT_FUNCTION_BODY = '''
+def init():
+
+    ok = True # May depend on imports.
+
+    if ok:
+        # Register any hooks here.
+        # See the Tk init function for an example of using per-commander classes.
+
+        g.plugin_signon(__name__)
+    
+    return ok
+'''
+#@nonl
+#@-node:GENERIC_INIT_FUNCTION_BODY
+#@+node:PLUGIN_ROOT_BODY
+PLUGIN_ROOT_BODY = '''
+<< docstring >>
+
+@language python
+@tabwidth -4
+
+<< imports >>
+
+__version__ = '.1'
+<< version history >>
+
+@others
+'''
+#@-node:PLUGIN_ROOT_BODY
+#@+node:TK_IMPORTS_BODY
+TK_IMPORTS_BODY = '''
+import leoGlobals as g
+import leoPlugins
+
+Tk = g.importExtension('Tkinter',pluginName=__name__,verbose=True)
+'''
+#@nonl
+#@-node:TK_IMPORTS_BODY
+#@+node:TK_INIT_FUNCTION_BODY
+TK_INIT_FUNCTION_BODY = '''
+def init():
+
+    ok = True # Pmw or Tk
+
+    if ok:
+        if g.app.gui is None:
+            g.app.createTkGui(__file__)
+            
+        ok = g.app.gui.guiName() == "tkinter"
+
+        if ok:
+            if 1: # Use this if you want to create the commander class before the frame is fully created.
+                leoPlugins.registerHandler('before-create-leo-frame',onCreate)
+            else: # Use this if you want to create the commander class after the frame is fully created.
+                leoPlugins.registerHandler('after-create-leo-frame',onCreate)
+            g.plugin_signon(__name__)
+        
+    return ok
+'''
+#@nonl
+#@-node:TK_INIT_FUNCTION_BODY
+#@+node:TK_ON_CREATE_FUNCTION
+TK_ON_CREATE_FUNCTION = '''
+def onCreate (tag, keys):
+    
+    c = keys.get('c')
+    if not c: return
+    
+    thePluginController = pluginController(c)
+'''
+#@nonl
+#@-node:TK_ON_CREATE_FUNCTION
+#@+node:TK_PLUGIN_CONTROLLER
+TK_PLUGIN_CONTROLLER = """
+
+class pluginController:
+    
+    @others
+
+"""
+#@nonl
+#@-node:TK_PLUGIN_CONTROLLER
+#@+node:TK_PLUGIN_CONTROLLER_INIT
+TK_PLUGIN_CONTROLLER_INIT = '''
+def __init__ (self,c):
+    
+    self.c = c
+'''
+#@nonl
+#@-node:TK_PLUGIN_CONTROLLER_INIT
+#@+node:VERSION_HISTORY_BODY
+VERSION_HISTORY_BODY = '''
+@killcolor
+@
+
+Version .1: Initial version by (your name here)
+'''
+#@-node:VERSION_HISTORY_BODY
+#@+node: Casses to add buttons
+# (Note to myself: we can't use @doc in @nosent trees.)
+#
+# Modify these classes or data as you like to create templates that suit you.
+#
+# You can add new classes as follows:
+# 1. Create your new class using an existing AddXXX class as a guide. Your new
+#    class should be in a child node of this node.
+#
+# 2. Add the name of the new class to the buttonList tuple in the init function.
+#@nonl
+#@-node: Casses to add buttons
 #@+node:body text used by AddTestModule & AddTestClass
 TEST_NODE_BODY = '''
 import unittest
@@ -323,24 +453,168 @@ class AddClassMethod(NodeAdder):
             inherit=0)] # EKR: was 1.
 #@nonl
 #@-node:class AddClassMethod
-#@+node:main code
-if Tk: # OK for unit testing.
+#@+node:class AddGenericPlugin
+class AddGenericPlugin(NodeAdder):
 
-    if g.app.gui is None:
-        g.app.createTkGui(__file__)
+    """Add tree for generic plugin"""
 
-    if g.app.gui.guiName() == "tkinter":
-    
-        g.es("Activating newButtons", color="orange")
+    button_name = "generic plugin"
 
-        buttonList = [
-            AddTestModule(),AddTestClass(),
-            AddTestMethod(),AddClass(),AddClassMethod()]
-    
-        helper = Helper(buttonList)
-
-        leoPlugins.registerHandler("after-create-leo-frame", helper.addWidgets)
-        g.plugin_signon("newButtons")
+    nodes = [
+        Node(
+            name="@thin myGenericPlugin.py",
+            body=PLUGIN_ROOT_BODY,
+            subnodes=[
+                Node(
+                    name="<< docstring >>",
+                    body=DOCSTRING_BODY),
+                 Node(
+                    name="<< imports >>",
+                    body=GENERIC_IMPORTS_BODY),
+                Node(
+                    name="<< version history >>",
+                    body=VERSION_HISTORY_BODY),
+                Node(
+                    name="init",
+                    body=GENERIC_INIT_FUNCTION_BODY),
+            ]
+        )
+    ]
 #@nonl
-#@-node:main code
+#@-node:class AddGenericPlugin
+#@+node:class AddPluginImportsSection
+class AddPluginImportsSection(NodeAdder):
+
+    '''Add Tk plugin imports section.'''
+
+    button_name = "<<imports>>"
+
+    nodes = [
+        Node(
+            name="<< imports >>",
+            body=TK_IMPORTS_BODY,
+            inherit=0
+    )]
+#@nonl
+#@-node:class AddPluginImportsSection
+#@+node:class AddPluginInitFunction
+class AddPluginInitFunction(NodeAdder):
+
+    '''Add plugin init.'''
+
+    button_name = "plugin init"
+
+    nodes = [
+        Node(
+            name="init",
+            body=GENERIC_INIT_FUNCTION_BODY,
+            inherit=0
+    )]
+#@nonl
+#@-node:class AddPluginInitFunction
+#@+node:class AddTkPlugin
+class AddTkPlugin(NodeAdder):
+
+    """Add tree for Tk plugin"""
+
+    button_name = "Tk plugin"
+    nodes = [
+        Node(
+            name="@thin myTkPlugin.py",
+            body=PLUGIN_ROOT_BODY,
+            subnodes=[
+                Node(
+                    name="<< docstring >>",
+                    body=DOCSTRING_BODY),
+                Node(
+                    name="<< imports >>",
+                    body=TK_IMPORTS_BODY),
+                Node(
+                    name="<< version history >>",
+                    body=VERSION_HISTORY_BODY),
+                Node(
+                    name="init",
+                    body=TK_INIT_FUNCTION_BODY),
+                Node(
+                    name="onCreate",
+                    body=TK_ON_CREATE_FUNCTION),
+                Node(
+                    name="class pluginController",
+                    body=TK_PLUGIN_CONTROLLER,
+                    subnodes=[
+                        Node(
+                            name="__init__",
+                            body=TK_PLUGIN_CONTROLLER_INIT),
+                    ]
+                )
+            ]
+        )
+    ]
+#@nonl
+#@-node:class AddTkPlugin
+#@+node:class AddPluginTkInitFunction
+class AddPluginTkInitFunction(NodeAdder):
+
+    '''Add plugin init(tk).'''
+
+    button_name = "plugin init(tk)"
+
+    nodes = [
+        Node(
+            name="init",
+            body=TK_INIT_FUNCTION_BODY,
+            inherit=0
+    )]
+#@nonl
+#@-node:class AddPluginTkInitFunction
+#@+node:class AddPluginVersionHistorySection
+class AddPluginVersionHistorySection(NodeAdder):
+
+    '''Add plugin version history section.'''
+
+    button_name = "<<version history>>"
+
+    nodes = [
+        Node(
+            name="<< version history >>",
+            body=VERSION_HISTORY_BODY,
+            inherit=0
+    )]
+#@nonl
+#@-node:class AddPluginVersionHistorySection
+#@+node:init
+def init():
+    
+    # The list of buttons to insert.  
+    buttonList = (
+        AddTestModule(),
+        AddTestClass(),
+        AddTestMethod(),
+        AddClass(),
+        AddClassMethod(),
+        # EKR, v0.3...
+        AddGenericPlugin(),
+        AddTkPlugin(),
+        AddPluginInitFunction(),
+        AddPluginTkInitFunction(),
+        AddPluginImportsSection(),
+        AddPluginVersionHistorySection(),
+    )
+
+    ok = Tk is not None
+
+    if ok:
+        if g.app.gui is None:
+            g.app.createTkGui(__file__)
+            
+        ok = g.app.gui.guiName() == "tkinter"
+        if ok:
+            # g.es("Activating newButtons", color="orange")
+            helper = Helper(buttonList)
+            leoPlugins.registerHandler("after-create-leo-frame", helper.addWidgets)
+            g.plugin_signon("newButtons")
+        
+    return ok
+#@nonl
+#@-node:init
 #@-leo
