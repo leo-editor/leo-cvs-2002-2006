@@ -482,7 +482,7 @@ class leoFind:
         if count > 0:
             # A change was made.  Tag the end of the Change All command.
             c.undoer.setUndoParams("Change All",v)
-        g.es("changed: ",count)
+        g.es("changed: %d instances" % (count))
         self.restore(data)
     #@nonl
     #@-node:ekr.20031218072017.3069:changeAll
@@ -610,12 +610,13 @@ class leoFind:
         while 1:
             pos, newpos = self.findNextMatch()
             if pos:
+                # g.trace(pos,newpos,self.v.headString())
                 count += 1
                 line = gui.getLineContainingIndex(t,pos)
                 self.printLine(line,allFlag=True)
             else: break
         c.endUpdate()
-        g.es("found: ",count)
+        g.es("found: %d matches" % (count))
         self.restore(data)
     #@nonl
     #@-node:ekr.20031218072017.3073:findAll
