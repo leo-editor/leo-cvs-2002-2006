@@ -170,6 +170,8 @@ def center_dialog(top):
 	x = (sw - w)/2
 	y = (sh - h)/2
 	top.geometry("%dx%d%+d%+d" % (w,h,x,y))
+	
+	return w,h,x,y
 #@-body
 #@-node:1::center_dialog
 #@+node:2:C=4:create_labeled_frame

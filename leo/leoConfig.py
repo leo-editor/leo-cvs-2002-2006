@@ -113,10 +113,15 @@ stringWindowNames = (
 #@-node:1::<< Define names of settings >>
 
 
+#@<< define default tables for settings >>
+#@+node:2::<< define default tables for settings >>
+#@-node:2::<< define default tables for settings >>
+
+
 class config:
 
 	#@+others
-	#@+node:2:C=1:config.__init__
+	#@+node:3:C=1:config.__init__
 	#@+body
 	def __init__ (self):
 		
@@ -166,8 +171,8 @@ class config:
 		# Initialize the ivars from the config file.
 		self.open()
 	#@-body
-	#@-node:2:C=1:config.__init__
-	#@+node:3::get...FromDict & setDict
+	#@-node:3:C=1:config.__init__
+	#@+node:4::get...FromDict & setDict
 	#@+body
 	def getBoolFromDict (self,name,dict):
 		val = self.getIntFromDict(name,dict)
@@ -209,8 +214,8 @@ class config:
 			
 	getStringFromDict = getFromDict
 	#@-body
-	#@-node:3::get...FromDict & setDict
-	#@+node:4::get/setFindPref (test)
+	#@-node:4::get...FromDict & setDict
+	#@+node:5::get/setFindPref
 	#@+body
 	def getBoolFindPref (self,name):
 		return self.getIntFromDict(name,self.findDict)
@@ -225,8 +230,8 @@ class config:
 		
 	getStringFindPref = getFindPref
 	#@-body
-	#@-node:4::get/setFindPref (test)
-	#@+node:5::get/setPref (test)
+	#@-node:5::get/setFindPref
+	#@+node:6::get/setPref
 	#@+body
 	def getBoolPref (self,name):
 		return self.getBoolFromDict(name,self.prefsDict)
@@ -244,8 +249,8 @@ class config:
 		
 	getStringPref = getPref
 	#@-body
-	#@-node:5::get/setPref (test)
-	#@+node:6:C=2:get/setRecentFiles
+	#@-node:6::get/setPref
+	#@+node:7:C=2:get/setRecentFiles
 	#@+body
 	def getRecentFiles (self):
 		
@@ -256,8 +261,8 @@ class config:
 		self.recentFiles = files
 
 	#@-body
-	#@-node:6:C=2:get/setRecentFiles
-	#@+node:7::get/setColors (test)
+	#@-node:7:C=2:get/setRecentFiles
+	#@+node:8::get/setColors
 	#@+body
 	def getBoolColorsPref (self,name):
 		return self.getBoolFromDict(name,self.colorsDict)
@@ -272,8 +277,8 @@ class config:
 		
 	getStringColorsPref = getColorsPref
 	#@-body
-	#@-node:7::get/setColors (test)
-	#@+node:8::get/setWindowPrefs(test)
+	#@-node:8::get/setColors
+	#@+node:9::get/setWindowPrefs
 	#@+body
 	def getBoolWindowPref (self,name):
 		return self.getBoolFromDict(name,self.windowDict)
@@ -294,8 +299,8 @@ class config:
 		
 	getStringWindowPref = getWindowPref
 	#@-body
-	#@-node:8::get/setWindowPrefs(test)
-	#@+node:9::open
+	#@-node:9::get/setWindowPrefs
+	#@+node:10::open
 	#@+body
 	def open (self):
 		
@@ -409,8 +414,8 @@ class config:
 			pass
 		self.config = None
 	#@-body
-	#@-node:9::open
-	#@+node:10::setAllDicts
+	#@-node:10::open
+	#@+node:11::setAllDicts
 	#@+body
 	def setAllDicts (self, dict, section,
 		bools=(),floats=(),ints=(),strings=()):
@@ -433,8 +438,8 @@ class config:
 			
 		# print "setAllDicts:" + `dict`
 	#@-body
-	#@-node:10::setAllDicts
-	#@+node:11::setCommandsFindIvars
+	#@-node:11::setAllDicts
+	#@+node:12::setCommandsFindIvars
 	#@+body
 	# Sets ivars of c that can be overridden by leoConfig.txt
 	
@@ -489,8 +494,8 @@ class config:
 
 		app().findFrame.init(c)
 	#@-body
-	#@-node:11::setCommandsFindIvars
-	#@+node:12::setCommandsIvars
+	#@-node:12::setCommandsFindIvars
+	#@+node:13::setCommandsIvars
 	#@+body
 	# Sets ivars of c that can be overridden by leoConfig.txt
 	
@@ -540,8 +545,8 @@ class config:
 		#@-body
 		#@-node:1::<< set prefs ivars >>
 	#@-body
-	#@-node:12::setCommandsIvars
-	#@+node:13::setConfigFindIvars
+	#@-node:13::setCommandsIvars
+	#@+node:14::setConfigFindIvars
 	#@+body
 	# Sets config ivars from c.
 	
@@ -564,8 +569,8 @@ class config:
 		self.setFindPref("find_string",c.find_text)
 
 	#@-body
-	#@-node:13::setConfigFindIvars
-	#@+node:14::setConfigIvars
+	#@-node:14::setConfigFindIvars
+	#@+node:15::setConfigIvars
 	#@+body
 	# Sets config ivars from c.
 	
@@ -601,8 +606,8 @@ class config:
 		self.setFindPref("find_string",c.find_text)
 
 	#@-body
-	#@-node:14::setConfigIvars
-	#@+node:15::update
+	#@-node:15::setConfigIvars
+	#@+node:16::update
 	#@+body
 	# Rewrites the entire config file from ivars.
 	# This is called when a .leo file is written and when the preferences panel changes.
@@ -676,8 +681,8 @@ class config:
 			traceback.print_exc()
 		self.config = None
 	#@-body
-	#@-node:15::update
-	#@+node:16::update_section
+	#@-node:16::update
+	#@+node:17::update_section
 	#@+body
 	def update_section (self,config,section,dict):
 		
@@ -691,7 +696,7 @@ class config:
 			val = dict [name]
 			config.set(section,name,val)
 	#@-body
-	#@-node:16::update_section
+	#@-node:17::update_section
 	#@-others
 #@-body
 #@-node:0::@file leoConfig.py

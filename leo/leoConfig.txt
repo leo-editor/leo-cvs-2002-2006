@@ -270,7 +270,7 @@ split_bar_color = LightSteelBlue2
 #	The color of the split bar.
 #	Valid values: Tk color names or Tk color values.
 
-split_bar_relief = raised
+split_bar_relief = groove
 #	The Tk -relief option for the split bar.
 #	Valid values: raised, sunken, flat, ridge, solid, groove.
 	

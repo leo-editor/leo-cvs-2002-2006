@@ -6,7 +6,7 @@
 
 from leoGlobals import *
 from leoUtils import *
-import sys,string,Tkinter
+import exceptions,sys,string,Tkinter,tkFont,traceback
 
 class leoFontPanel:
 
@@ -18,129 +18,474 @@ class leoFontPanel:
 		Tk = Tkinter
 		self.commands = c
 		self.frame = c.frame
+		self.default_font = "Courier"
+		self.last_selected_font = None
+		# Variables for revert.
+		self.revertBodyFontName = fn = c.body.cget("font")
+		self.revertBodyFont = tkFont.Font(font=fn)
+		self.revertLogFontName = fn = c.log.cget("font")
+		self.revertLogFont = tkFont.Font(font=fn)
+		self.revertTreeFont = c.tree.getFont()
+		# Variables to track values of style checkboxes.
 		self.sizeVar = Tk.IntVar()
+		self.boldVar = Tk.IntVar()
+		self.italVar = Tk.IntVar()
+		# Variables to track values of pane checkboxes.
+		self.bodyVar = Tk.IntVar()
+		self.logVar = Tk.IntVar()
+		self.treeVar = Tk.IntVar()
+		# Slots for callbacks
+		self.listBoxIndex = 0
+		self.family_list_box = None
+		self.size_entry = None
+		self.example_entry = None
+		self.outer = None
 	#@-body
 	#@-node:1::fontPanel.__init__
-	#@+node:2::run
+	#@+node:2::create_outer
+	#@+body
+	def create_outer(self):
+	
+		Tk = Tkinter
+		top = self.top
+		
+		#@<< Create the organizer frames >>
+		#@+node:1::<< create the organizer frames >>
+		#@+body
+		self.outer = outer = Tk.Frame(top,bd=2,relief="groove",width="8i")
+		outer.pack(padx=2,pady=2,expand=1,fill="both")
+		
+		upper = Tk.Frame(outer)
+		upper.pack(fill="both",expand=1)
+		
+		lt = Tk.Frame(upper)
+		lt.pack(side="left",fill="both",expand=1)
+		
+		rt = Tk.Frame(upper)
+		rt.pack(side="right",anchor="n",padx=4) # Not filling or expanding centers contents.
+		
+		# Not filling or expanding centers contents.
+		# padx=20 gives more room to the Listbox in the lt frame!
+		lower = Tk.Frame(outer)
+		lower.pack(side="top",anchor="w",padx=20)
+		#@-body
+		#@-node:1::<< create the organizer frames >>
+
+		
+		#@<< create the font pane >>
+		#@+node:2::<< create the font pane >>
+		#@+body
+		# Create the list box and its scrollbar.
+		self.family_list_box = box = Tk.Listbox(lt,height=7)
+		
+		# Fill the listbox to set the width.
+		names = tkFont.families()
+		names = list(names)
+		names.sort()
+		for name in names:
+			box.insert("end", name)
+		
+		box.pack(padx=4,pady=4,fill="both",expand=1)
+		box.bind("<Double-Button-1>", self.update)
+		
+		bar = Tk.Scrollbar(box)
+		bar.pack(side="right", fill="y")
+		
+		bar.config(command=box.yview)
+		box.config(yscrollcommand=bar.set)
+		#@-body
+		#@-node:2::<< create the font pane >>
+
+		
+		#@<< create the checkboxes >>
+		#@+node:3::<< create the checkboxes >>
+		#@+body
+		# Create the style checkboxes.
+		for text,var in (
+			("Bold",self.boldVar),
+			("Italic",self.italVar)):
+		
+			b = Tk.Checkbutton(rt,text=text,variable=var,command=self.update)
+			b.pack(side="top",anchor="w")
+		
+		# Create the size label and entry widget.
+		row = Tk.Frame(rt)
+		row.pack(side="top")
+		
+		lab = Tk.Label(row,text="Size:")
+		lab.pack(side="left")
+		
+		self.size_entry = e = Tk.Entry(row,width=4)
+		e.pack(side="left")
+		e.bind("<Key>",self.onSizeEntryKey)
+		
+		# Create the pane checkboxes.
+		for text,var,command in (
+			("Body",self.bodyVar,self.onBodyBoxChanged),
+			("Outline",self.treeVar,self.onTreeBoxChanged),
+			("Log",self.logVar,self.onLogBoxChanged)):
+				
+			b = Tk.Checkbutton(rt,text=text,variable=var,command=command)
+			b.pack(side="top",anchor="w")
+		#@-body
+		#@-node:3::<< create the checkboxes >>
+
+		
+		#@<< create Ok, Cancel and Revert buttons >>
+		#@+node:4::<< create Ok, Cancel and Revert buttons >>
+		#@+body
+		for name,command in (
+			("OK",self.onOk),
+			("Cancel",self.onCancel),
+			("Revert",self.onRevert)):
+				
+			b = Tk.Button(lower,width=7,text=name,command=command)
+			b.pack(side="left",anchor="w",pady=6,padx=4,expand=0) #,fill="y")
+		#@-body
+		#@-node:4::<< create Ok, Cancel and Revert buttons >>
+	#@-body
+	#@-node:2::create_outer
+	#@+node:3::finishCreate
+	#@+body
+	def finishCreate (self):
+		
+		# These do not get changed when reverted.
+		self.bodyVar.set(1)
+		self.logVar.set(0)
+		self.treeVar.set(0)
+		
+		# All other vars do change when reverted.
+		self.revertIvars()
+		self.update()
+
+	#@-body
+	#@-node:3::finishCreate
+	#@+node:4::getActiveFont
+	#@+body
+	#@+at
+	#  Returns a font corresponding to present visual state of the font panel.  As a benign side effect, this routine selects the 
+	# font in the list box.
+	# 
+	# Alas, the selection in the list box may have been cleared.  In that case, we must figure out what it should be. We recreate 
+	# the family name (and only the family name!) from self.last_selected_font, or in an emergency the font returned from getImpliedFont().
+
+	#@-at
+	#@@c
+	
+	def getActiveFont (self):
+	
+		box = self.family_list_box
+		family = font = None
+	
+		# Get the family name if possible, or font otherwise.
+		items = box.curselection()
+		if len(items) == 0:
+			# Nothing selected.
+			if self.last_selected_font:
+				font =self.last_selected_font
+			else:
+				font = self.getImpliedFont()
+		else:
+			try: # This shouldn't fail now.
+				items = map(int, items)
+				family = box.get(items[0])
+			except: 
+				traceback.print_exc()
+				font = self.getImpliedFont()
+		# At this point we either have family or font.
+		assert(font or family)
+		if not family:
+			# Extract the family from the computed font.
+			family,junk,junk,junk = self.getFontSettings(font)
+		# At last we have a valid family name!
+		# Get all other font settings from the font panel.
+		bold = self.boldVar.get()
+		ital = self.italVar.get()
+		size = self.sizeVar.get()
+		slant=choose(ital,"italic","roman")
+		weight=choose(bold,"bold","normal")
+		# Compute the font from all the settings.
+		font = tkFont.Font(family=family,size=size,slant=slant,weight=weight)
+		self.selectFont(font)
+		return font
+	#@-body
+	#@-node:4::getActiveFont
+	#@+node:5::getFontSettings
+	#@+body
+	def getFontSettings (self, font):
+	
+		name   = font.cget("family")
+		size   = font.cget("size")
+		slant  = font.cget("slant")
+		weight = font.cget("weight")
+	
+		return name, size, slant, weight
+	#@-body
+	#@-node:5::getFontSettings
+	#@+node:6::getImpliedFont
+	#@+body
+	# If a single pane's checkbox is checked, select that pane's present font.
+	# Otherwise, select the present font of some checked pane, it doesn't much matter which.
+	# If none are check, select the body pane's present font.
+	
+	def getImpliedFont (self):
+	
+		c = self.commands
+	
+		body = self.bodyVar.get()
+		log  = self.logVar.get()
+		tree = self.treeVar.get()
+		
+		fn = c.body.cget("font")
+		bodyFont = tkFont.Font(font=fn)
+		fn = c.log.cget("font")
+		logFont = tkFont.Font(font=fn)
+		treeFont = c.tree.getFont()
+		
+		if log and not body and not tree:
+			font = logFont
+		elif tree and not body and not log:
+			font = treeFont
+		elif body: font = bodyFont
+		elif tree: font = treeFont
+		elif log:  font = logFont # Exercise for the reader: prove this case will never happen.
+		else:      font = bodyFont
+		return font
+	#@-body
+	#@-node:6::getImpliedFont
+	#@+node:7::on...BoxChanged
+	#@+body
+	#@+at
+	#  We define these routines so that changing one pane box affects only that pane.
+	# 
+	# When we turn a box on, we expect that the present font will instantly apply to the new pane, and when we turn a box off we 
+	# call implied font to see which font should be highlighted and we revert the pane's font. It is crucial that unchecking a box 
+	# be equivalent to a "small revert".  This is the _only_ scheme that isn't confusing to the user.
+	# 
+	# Note: if we just called update instead of these routines we could do something unexpected after after a revert.  For 
+	# example, suppose all three pane boxes are checked and we do a revert.  If we then uncheck a box, we expect only that pane to 
+	# change, but if we call update the other two panes might also change...
+
+	#@-at
+	#@@c
+	def onBodyBoxChanged(self):
+		font = choose(self.bodyVar.get(),
+			self.getActiveFont(),self.revertBodyFont)
+		self.commands.body.configure(font=font)
+	
+	def onLogBoxChanged(self):
+		font = choose(self.logVar.get(),
+			self.getActiveFont(),self.revertLogFont)
+		self.commands.log.configure(font=font)
+			
+	def onTreeBoxChanged(self):
+		c = self.commands
+		font = choose(self.treeVar.get(),
+			self.getActiveFont(),self.revertTreeFont)
+		c.tree.setFont(font=font)
+		c.redraw()
+	#@-body
+	#@-node:7::on...BoxChanged
+	#@+node:8::onOk, onCancel, onRevert
+	#@+body
+	def onOk (self):
+		c = self.commands
+		self.showSettings()
+		
+		#@<< update the configuration settings >>
+		#@+node:1::<< update the configuration settings >>
+		#@+body
+		set = app().config.setWindowPref
+		
+		if self.bodyVar.get():
+			fn = c.body.cget("font")
+			font = tkFont.Font(font=fn)
+			name,size,slant,weight = self.getFontSettings(font)
+			set("body_text_font_family",name)
+			set("body_text_font_size",`size`)
+			set("body_text_font_slant",slant)
+			set("body_text_font_weight",weight)
+			
+		if self.logVar.get():
+			fn = c.log.cget("font")
+			font = tkFont.Font(font=fn)
+			name,size,slant,weight = self.getFontSettings(font)
+			set("log_text_font_family",name)
+			set("log_text_font_size",`size`)
+			set("log_text_font_slant",slant)
+			set("log_text_font_weight",weight)
+			
+		if self.treeVar.get():
+			font = c.tree.getFont()
+			name,size,slant,weight = self.getFontSettings(font)
+			set("headline_text_font_family",name)
+			set("headline_text_font_size",`size`)
+			set("headline_text_font_slant",slant)
+			set("headline_text_font_weight",weight)
+
+		#@-body
+		#@-node:1::<< update the configuration settings >>
+
+		self.top.destroy()
+	
+	def onCancel (self):
+		self.onRevert()
+		self.showSettings()
+		self.top.destroy()
+		
+	def onRevert (self):
+		c = self.commands
+		c.body.configure(font=self.revertBodyFont)
+		c.log.configure (font=self.revertLogFont)
+		c.tree.setFont  (font=self.revertTreeFont)
+		c.redraw()
+		self.revertIvars()
+		# Don't call update here.
+	#@-body
+	#@-node:8::onOk, onCancel, onRevert
+	#@+node:9::onSizeEntryKey
+	#@+body
+	def onSizeEntryKey (self,event=None):
+		
+		self.size_entry.after_idle(self.idle_entry_key)
+		
+	def idle_entry_key (self):
+		
+		size = self.size_entry.get() # Doesn't work until idle time.
+		try:
+			size = int(size)
+		except: # This just means the user didn't type a valid number.
+			# trace("exception")
+			return
+		# trace(`size`)
+		self.sizeVar.set(size)
+		if 1 < size < 100: # Choosing very small or large fonts drives Tk crazy.
+			self.update()
+	#@-body
+	#@-node:9::onSizeEntryKey
+	#@+node:10::revertIvars
+	#@+body
+	def revertIvars (self):
+			
+		self.last_selected_font = None # Use the font for the selected panes.
+		font = self.getImpliedFont()
+		self.selectFont(font)
+		try:
+			name, size, slant, weight = self.getFontSettings(font)
+			size=int(size)
+		except: pass
+		self.sizeVar.set(size)
+		self.boldVar.set(choose(weight=="bold",1,0))
+		self.italVar.set(choose(slant=="italic",1,0))
+		
+		e = self.size_entry
+		e.delete(0,"end")
+		e.insert(0,`size`)
+	#@-body
+	#@-node:10::revertIvars
+	#@+node:11::run
 	#@+body
 	def run (self):
 		
-		
-		#@<< Create the font dialog >>
-		#@+node:1::<< Create the font dialog >>
-		#@+body
-		Tk = Tkinter
-		
-		top = Tk.Toplevel(app().root)
-		top.title("Select a font")
-		
-		# Create the outer frame
-		outer = Tk.Frame(top)
-		outer.pack(fill="both",expand=1,padx=2,pady=2)
-		
-		w,ff = create_labeled_frame(outer)
-		w.pack(fill="both",expand=1,padx=2,pady=2)
-		
-		# Create a frame containing the grid of inner boxes.
-		g = Tk.Frame(ff)
-		g.grid()
-		
-		# Create the inner frames of the grid.
-		family = Tk.Frame(g)
-		family.grid(row=1,col=1)
-		
-		style = Tk.Frame(g)
-		style.grid(row=1,col=2,sticky="n",)
-		
-		buttons = Tk.Frame(g)
-		buttons.grid(row=1,col=3)
-		
-		size = Tk.Frame(g)
-		size.grid(row=2,col=1,columnspan=3,sticky="news")
-		
-		sample = Tk.Frame(g)
-		sample.grid(row=3,col=1,columnspan=3,sticky="news")
-		
-		# Create the Family pane.
-		w,f = create_labeled_frame(family,caption="Family")
-		w.pack(padx=2)
-		
-		b = Tk.Listbox(f,height=7,width=12)
-		b.pack(padx=2)
-		
-		# Create the Style frame.
-		w,f = create_labeled_frame(style,caption="Style")
-		w.pack(padx=2,anchor="n")
-		
-		styles = Tk.Frame(f)
-		styles.pack()
-		i = 1
-		for name in ("Bold","Italic"): # "Underline","OverStrike"
-			b = Tk.Checkbutton(styles,text=name)
-			b.pack(anchor="w",pady=1)
-			i += 1
-		
-		# Create the column of buttons.
-		buttonFrame = Tk.Frame(buttons)
-		buttonFrame.pack(padx=2)
-		
-		b = Tk.Button(buttonFrame,width=7,text="OK")
-		b.pack(side="top")
-		b = Tk.Button(buttonFrame,width=7,text="Cancel")
-		b.pack(side="top",fill="y",expand=1,pady=10)
-		b = Tk.Button(buttonFrame,width=7,text="Apply")
-		b.pack(side="bottom")
-		
-		
-		#@<< create the size pane >>
-		#@+node:1::<< create the size pane >>
-		#@+body
-		w,f = create_labeled_frame(size,caption="Size")
-		w.pack(padx=2,fill="both",expand=1)
-		
-		sizes = Tk.Frame(f)
-		f.grid(sticky="news")
-		
-		row = col = 0
-		for i in (8,10,12,14,18,24):
-			b = Tk.Radiobutton(f,text=`i`,variable=self.sizeVar,value=i)
-			if i==12:
-				print "b.select"
-				b.select()
-			b.grid(row=row,column=col,sticky="w")
-			row += 1
-			if row == 2:
-				col += 1 ; row = 0
-		
-		sizeBox = Tk.Entry(f,width=12)
-		sizeBox.grid(row=1,rowspan=2,column=3,padx=10)
-		#@-body
-		#@-node:1::<< create the size pane >>
-
-		
-		# Create the sample pane.
-		w,f  = create_labeled_frame(sample,caption="Sample",pady=2)
-		w.pack(side="top",fill="both",expand=1,padx=2,pady=2)
-		color = f.cget("bg")
-		e = Tk.Entry(f,bd=0,bg=color)
-		e.insert(0, "Sample Text Here (May be edited)") 
-		e.pack(fill="x",expand=1,padx=5,pady=5)
-		#@-body
-		#@-node:1::<< Create the font dialog >>
-
-		self.sizeVar.set(12)
+		Tk = Tkinter ; c = self.commands
+		self.top = top = Tk.Toplevel(app().root)
+		top.title("Fonts for " + shortFileName(c.frame.title))
+		self.create_outer()
 		
 		# This must be done _after_ the dialog has been built!
-		center_dialog(top)
-		top.resizable(0,0)
+		w,h,x,y = center_dialog(top)
+		top.wm_minsize(height=h,width=w)
 		
-		# Bring up the modal dialog.
-		top.grab_set()
-		top.focus_force() # Get all keystrokes.
+		# Finish up after the dialog is frozen.
+		self.outer.after_idle(self.finishCreate)
 	
-		## To do: set body text font, size based on dialog
+		if 0: # The pane now looks decent when resized!
+			top.resizable(0,0)
+	
+		# Bring up the dialog.
+		if 0: # It need not be modal: it will go away if the owning window closes!
+			top.grab_set()
+			top.focus_force() # Get all keystrokes.
+
 	#@-body
-	#@-node:2::run
+	#@-node:11::run
+	#@+node:12::selectFont
+	#@+body
+	def selectFont (self,font):
+		
+		box = self.family_list_box
+		
+		# All selections come here.
+		self.last_selected_font = font
+	
+		# The name should be on the list!
+		name, size, slant, weight = self.getFontSettings(font)
+		for i in xrange(0,box.size()):
+			item = box.get(i)
+			if name == item:
+				box.select_clear(0,"end")
+				box.select_set(i)
+				box.see(i)
+				self.last_selected_font = font
+				# trace(name)
+				return
+		# print "not found:" + name
+	#@-body
+	#@-node:12::selectFont
+	#@+node:13::showSettings
+	#@+body
+	# Write all settings to the log panel.
+	# Note that just after a revert all three setting may be different.
+	
+	def showSettings (self):
+		c = self.commands
+		es("---------------")
+		# Body pane.
+		fn = c.body.cget("font")
+		font = tkFont.Font(font=fn)
+		name,size,slant,weight = self.getFontSettings(font)
+		es("body font:" + name + "," + `size` + "," + slant + "," + weight)
+		# Log pane.
+		fn = c.log.cget("font")
+		font = tkFont.Font(font=fn)
+		name,size,slant,weight = self.getFontSettings(font)
+		es("log font:" + name + "," + `size` + "," + slant + "," + weight)
+		# Tree pane.
+		font = c.tree.getFont()
+		name,size,slant,weight = self.getFontSettings(font)
+		es("headline font:" + name + "," + `size` + "," + slant + "," + weight)
+	#@-body
+	#@-node:13::showSettings
+	#@+node:14::update
+	#@+body
+	# Updates size box and example box when something changes.
+	
+	def update (self,event=None):
+		
+		Tk = Tkinter ; c = self.commands
+		size = self.sizeVar.get()
+		
+		# Insert the new text in the size box.
+		e = self.size_entry
+		e.delete(0,"end")
+		e.insert(0,`size`)
+		
+		font = self.getActiveFont()
+		
+		if not self.bodyVar.get() and not self.logVar.get() and not self.treeVar.get():
+			es("no pane selected")
+	
+		f = choose(self.bodyVar.get(),font,self.revertBodyFont)
+		self.commands.body.configure(font=f)
+		
+		f = choose(self.logVar.get(),font,self.revertLogFont)
+		self.commands.log.configure(font=f)
+		
+		f = choose(self.treeVar.get(),font,self.revertTreeFont)
+		c.tree.setFont(font=f)
+		c.redraw()
+	#@-body
+	#@-node:14::update
 	#@-others
 #@-body
 #@-node:0::@file leoFontPanel.py

@@ -10,7 +10,7 @@
 from leoGlobals import *
 from leoUtils import *
 import leoColor,leoDialog,leoFontPanel,leoNodes, leoPrefs
-import Tkinter, tkFileDialog, tkFont
+import traceback,Tkinter, tkFileDialog, tkFont
 
 # Needed for menu commands
 import leoCommands, leoNodes, leoTree
@@ -2423,19 +2423,38 @@ class LeoFrame:
 			bar.bind("<B1-Motion>", self.onDragSecondarySplitBar)
 	#@-body
 	#@-node:1::bindBar
-	#@+node:2::configureBar (use config.bar_width)
+	#@+node:2:C=39:configureBar
 	#@+body
 	def configureBar (self, bar, verticalFlag):
+		
+		config = app().config
 	
-		if verticalFlag:
-			# Panes arranged vertically; horizontal splitter bar
-			bar.configure(height=7,cursor="sb_v_double_arrow")
-		else:
-			# Panes arranged horizontally; vertical splitter bar
-			bar.configure(width=7,cursor="sb_h_double_arrow")
+		# Get configuration settings.
+		w = config.getWindowPref("split_bar_width")
+		if not w: w = 7
+		relief = config.getWindowPref("split_bar_relief")
+		if not relief: relief = "flat"
+		color = config.getWindowPref("split_bar_color")
+		if not color: color = "LightSteelBlue2"
+		try:
+			if verticalFlag:
+				# Panes arranged vertically; horizontal splitter bar
+				bar.configure(relief=relief,height=w,bg=color,cursor="sb_v_double_arrow")
+			else:
+				# Panes arranged horizontally; vertical splitter bar
+				bar.configure(relief=relief,width=w,bg=color,cursor="sb_h_double_arrow")
+		except: # Could be a user error. Use all defaults
+			es("error in user configuration for splitbar")
+			traceback.print_exc()
+			if verticalFlag:
+				# Panes arranged vertically; horizontal splitter bar
+				bar.configure(height=7,cursor="sb_v_double_arrow")
+			else:
+				# Panes arranged horizontally; vertical splitter bar
+				bar.configure(width=7,cursor="sb_h_double_arrow")
 	#@-body
-	#@-node:2::configureBar (use config.bar_width)
-	#@+node:3::createBothLeoSplitters (use config.body_font,etc)
+	#@-node:2:C=39:configureBar
+	#@+node:3:C=40:createBothLeoSplitters (use config.body_font,etc)
 	#@+body
 	def createBothLeoSplitters (self,top):
 	
@@ -2521,7 +2540,7 @@ class LeoFrame:
 		# Give the log and body panes the proper borders.
 		self.reconfigurePanes()
 	#@-body
-	#@-node:3::createBothLeoSplitters (use config.body_font,etc)
+	#@-node:3:C=40:createBothLeoSplitters (use config.body_font,etc)
 	#@+node:4::createLeoSplitter (use config params)
 	#@+body
 	# Create a splitter window and panes into which the caller packs widgets.

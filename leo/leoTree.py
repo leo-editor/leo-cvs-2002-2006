@@ -19,7 +19,7 @@
 from leoGlobals import *
 from leoUtils import *
 import leoColor
-import os, string, Tkinter
+import os, string, Tkinter, tkFont
 
 
 #@<< about drawing and events >>
@@ -107,6 +107,14 @@ class leoTree:
 		self.vnode_alloc_list = [] # List of all vnodes ever allocated in this tree.
 		self.active = false # true if tree is active
 		
+		# Font: default, use system default.
+		# Setting self.font will affect the next redraw.
+		t = Tkinter.Text()
+		self.fontName = fn = t.cget("font")
+		self.font = tkFont.Font(font=fn)
+		#print `self.fontName`
+		#print `self.font`
+		
 		# Controlling redraws
 		self.updateCount = 0 # self.redraw does nothing unless this is zero.
 		self.redrawCount = 0 # For traces
@@ -186,7 +194,23 @@ class leoTree:
 		return None
 	#@-body
 	#@-node:7:C=4:tree.findVnodeWithIconId
-	#@+node:8::Drawing
+	#@+node:8::getFont/setFont
+	#@+body
+	def getFont (self):
+	
+		return self.font
+	
+	def setFont (self, font=None, fontName=None):
+		
+		if fontName:
+			self.fontName = fontName
+			self.font = tkFont.Font(font=fontName)
+		else:
+			self.fontName = None
+			self.font = font
+	#@-body
+	#@-node:8::getFont/setFont
+	#@+node:9::Drawing
 	#@+node:1::About drawing and updating
 	#@+body
 	#@+at
@@ -318,7 +342,8 @@ class leoTree:
 		x += text_indent
 		if v.edit_text: # self.canvas.delete("all") may already have done this, but do it anyway.
 			v.edit_text.destroy()
-		v.edit_text = t = Tkinter.Text(self.canvas,bd=0,relief="flat",width=self.headWidth(v),height=1)
+		v.edit_text = t = Tkinter.Text(self.canvas,
+			font=self.font,bd=0,relief="flat",width=self.headWidth(v),height=1)
 		t.insert("end", v.headString())
 		
 		#@<< configure the text depending on state >>
@@ -592,8 +617,8 @@ class leoTree:
 		return n
 	#@-body
 	#@-node:19:C=16:tree.numberOfVisibleNodes
-	#@-node:8::Drawing
-	#@+node:9::Event handers
+	#@-node:9::Drawing
+	#@+node:10::Event handers
 	#@+node:1::OnActivate
 	#@+body
 	def OnActivate (self,v):
@@ -1010,8 +1035,8 @@ class leoTree:
 			self.drawIcon(v,v.iconx,v.icony) # just redraw the icon.
 	#@-body
 	#@-node:8:C=21:tree.OnHeadlineKey, onHeadlineChanged, idle_head_key
-	#@-node:9::Event handers
-	#@+node:10::Selecting & editing (tree)
+	#@-node:10::Event handers
+	#@+node:11::Selecting & editing (tree)
 	#@+node:1::dimEditLabel, undimEditLabel
 	#@+body
 	# Convenience methods so the caller doesn't have to know the present edit node.
@@ -1116,7 +1141,7 @@ class leoTree:
 			v.edit_text.configure(state="disabled",highlightthickness=0,fg="black",bg="white")
 	#@-body
 	#@-node:5:C=25:tree.set...LabelState
-	#@-node:10::Selecting & editing (tree)
+	#@-node:11::Selecting & editing (tree)
 	#@-others
 #@-body
 #@-node:0::@file leoTree.py
