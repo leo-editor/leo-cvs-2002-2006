@@ -3136,7 +3136,7 @@ class LeoFrame:
 	
 		bg = config.getWindowPref("outline_pane_background_color")
 		if bg:
-			try: tree.configure(bg=bg)
+			try: self.canvas.configure(bg=bg)
 			except: pass
 	
 	#@-body

@@ -1067,7 +1067,7 @@ class tangleCommands:
 			ref = s[i:end]
 			self.st_enter_section_name(ref,None,None,unused_parts_flag)
 		# DTHEIN 13-OCT-2002: @first directives are OK in code sections
-		elif (kind == at_other) and s.startswith("@first",j):
+		elif (kind == at_other) and match_word(s,j,"@first"):
 			pass
 		elif kind == at_other or kind == at_chapter or kind == at_section:
 			# We expect to see only @doc,@c or @root directives
@@ -3824,7 +3824,7 @@ class tangleCommands:
 			i = 0
 			while 1:
 				# DTHEIN 13-OCT-2002: directives must start at beginning of a line
-				if not s.startswith(tag,i):
+				if not match_word(s,i,tag):
 					i = skip_line(s,i)
 				else:
 					i = i + len(tag)
