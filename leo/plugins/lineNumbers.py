@@ -25,12 +25,11 @@ linere = re.compile("^#line 1 \".*\"$")
 #@+node:ekr.20040419105219.1:writing derived files
 oldOpenNodeSentinel = leoAtFile.newDerivedFile.putOpenNodeSentinel
 
-def putLineNumberDirective(self, v):
+def putLineNumberDirective(self,v,inAtAll=false,inAtOthers=false,middle=false):
 
-	oldOpenNodeSentinel(self,v)
-	
+	oldOpenNodeSentinel(self,v,inAtAll,inAtOthers,middle)
+
 	if self.language in ("perl","perlpod"):
-		# line = "line 1 \"node:" + self.nodeSentinelText(v)	+ " (" + self.shortFileName + ")"		+ "\""  # no need '#'
 		line = 'line 1 "node:%s (%s)"' % (self.nodeSentinelText(v),self.shortFileName)
 		self.putSentinel(line)
 		
