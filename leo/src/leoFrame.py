@@ -2612,7 +2612,7 @@ class baseLeoFrame:
 		#@nl
 		if not delim:
 			es("bad @+leo sentinel")
-			return None,None
+			return None,None,None
 		#@	<< scan back to @+node, setting offset,nodeSentinelLine >>
 		#@+node:<< scan back to  @+node, setting offset,nodeSentinelLine >>
 		offset = 0 # This is essentially the Tk line number.

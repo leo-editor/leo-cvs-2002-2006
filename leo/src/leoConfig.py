@@ -82,6 +82,10 @@ class baseConfig:
 		self.configFileName = os.path.join(self.configDir,"leoConfig.txt")
 		self.configsExist = false # True when we successfully open leoConfig.txt.
 		
+		# These are now set in gui.getDefaultConfigFont
+		self.defaultFont = None
+		self.defaultFontFamily = None
+		
 		#@	<< initialize constant ivars, lists & dicts >>
 		#@+node:<< initialize constant ivars, lists & dicts >> (leoConfig)
 		# Names of sections.
@@ -288,8 +292,6 @@ class baseConfig:
 	#@@c
 	
 	def getFontFromParams(self,family,size,slant,weight):
-		
-		tag = "getFont..." ; family_name = family
 	
 		family = self.getWindowPref(family)
 		if not family or family == "":

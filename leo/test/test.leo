@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="2170" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="2171" clone_windows="0"/>
 <globals body_outline_ratio="0.5">
-	<global_window_position top="54" left="228" height="835" width="981"/>
+	<global_window_position top="18" left="213" height="835" width="981"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences allow_rich_text="0">
@@ -259,7 +259,7 @@
 </v>
 <v t="T160"><vh>wx Leo</vh></v>
 </v>
-<v t="T161" a="V"><vh>4.0 Test files</vh>
+<v t="T161"><vh>4.0 Test files</vh>
 <v t="T162"><vh>Script to compare 3.x and 4.x derived files</vh></v>
 <v t="T163"><vh>Test Files...</vh>
 <v t="T164" a="E"><vh>@nosentinelsfile c:\prog\test\nosentinelstest.txt</vh>
@@ -2726,6 +2726,7 @@
 </v>
 </v>
 </v>
+<v t="T2171" a="EV"><vh>Pychecker results for 4.0 beta 1</vh></v>
 </vnodes>
 <tnodes>
 <t tx="T1">@color
@@ -33784,5 +33785,21 @@ print "actual  :",`textResult`
 	c.setChanged(true)
 	c.endUpdate()
 </t>
+<t tx="T2171"># The following are real bugs. All have been fixed.
+
+# The assignment family_name = family was moved from the leoCnfig routine to the leoGui routine.
+
+c:\prog\leoCVS\leo\src\leoConfig.py:290: Local variable (family_name) not used
+c:\prog\leoCVS\leo\src\leoGui.py:256: No global (family_name) found
+
+# Added self to createLeoIcon and onVisibility
+# *** However, the present code is actually using the global routines in leoGlobals.py !!
+
+c:\prog\leoCVS\leo\src\leoGui.py:90: self is not first method argument
+c:\prog\leoCVS\leo\src\leoGui.py:123: self is not first method argument
+
+# Return None,None,None on error in convertLineToVnodeNameIndexLine.
+
+:\prog\leoCVS\leo\src\leoFrame.py:2584: Function return types are inconsistent</t>
 </tnodes>
 </leo_file>

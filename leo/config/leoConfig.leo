@@ -206,7 +206,7 @@ tk_encoding =
 #	2. locale.getdefaultlocale()[1] if it is exists.
 #	3. sys.getdefaultencoding()
 
-use_plugins = 1
+use_plugins = 0
 #	1: Leo enables plugins.
 #      Naive or hostile hooks may execute HOSTILE CODE contained in .leo files.
 #	   See the warnings in LeoDocs.leo.

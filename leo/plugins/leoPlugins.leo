@@ -12,7 +12,7 @@
 	<change_string></change_string>
 </find_panel_settings>
 <vnodes>
-<v t="T1" a="EV"><vh>Diary</vh>
+<v t="T1" a="E"><vh>Diary</vh>
 <v t="T2"><vh>7/7 Created leoPlugins.leo</vh></v>
 </v>
 <v t="T3"><vh>Documentation and security warnings</vh>
@@ -384,7 +384,7 @@
 </v>
 </v>
 </v>
-<v t="T337"><vh>Plugins</vh>
+<v t="T337" a="EV"><vh>Plugins</vh>
 <v t="T338"><vh>Commands</vh>
 <v t="T339"><vh> Importing Cisco configuration files</vh>
 <v t="T340" tnodeList="340,341,342,343,344,345,346,347"><vh>@file import_cisco_config.py</vh>
@@ -463,28 +463,28 @@
 </v>
 </v>
 <v t="T400"><vh>Debugging</vh>
-<v t="T401"><vh>@file dump_globals.py</vh>
+<v t="T401" tnodeList="401,402"><vh>@file dump_globals.py</vh>
 <v t="T402"><vh>onStart</vh></v>
 </v>
-<v t="T403"><vh>@file enable_gc.py</vh>
+<v t="T403" tnodeList="403,404"><vh>@file enable_gc.py</vh>
 <v t="T404"><vh>onStart</vh></v>
 </v>
-<v t="T405"><vh>@file trace_gc.py</vh></v>
-<v t="T406"><vh>@file trace_keys.py</vh>
+<v t="T405" tnodeList="405"><vh>@file trace_gc.py</vh></v>
+<v t="T406" tnodeList="406,407"><vh>@file trace_keys.py</vh>
 <v t="T407"><vh>onKey</vh></v>
 </v>
-<v t="T408"><vh>@file trace_tags.py</vh>
+<v t="T408" tnodeList="408,409"><vh>@file trace_tags.py</vh>
 <v t="T409"><vh>trace_tags</vh></v>
 </v>
 </v>
 <v t="T410"><vh>Directives</vh>
-<v t="T411"><vh>@file add_directives.py</vh>
+<v t="T411" tnodeList="411,412,413"><vh>@file add_directives.py</vh>
 <v t="T412"><vh>addPluginDirectives</vh></v>
 <v t="T413"><vh>scanPluginDirectives</vh></v>
 </v>
 </v>
 <v t="T414"><vh>Drawing, graphics &amp; styled text</vh>
-<v t="T415"><vh>@file color_markup.py</vh>
+<v t="T415" tnodeList="415,416,417,418,419,420,421,422"><vh>@file color_markup.py</vh>
 <v t="T416"><vh>initAnyMarkup</vh></v>
 <v t="T417"><vh>colorWikiMarkup</vh></v>
 <v t="T418"><vh>doWikiText</vh>
@@ -503,7 +503,7 @@
 <v t="T427"><vh>&lt;&lt; Unselect Image &gt;&gt;</vh></v>
 </v>
 </v>
-<v t="T428"><vh>@file nav_buttons.py</vh>
+<v t="T428" tnodeList="428,429,430,431,432,433,434,436,437,438,439,440,441,442,443,444,445,446,447,448,449,450,451,452,453,454,455,456,457,458,459"><vh>@file nav_buttons.py</vh>
 <v t="T429"><vh>class commanderInfoClass</vh>
 <v t="T430"><vh>__init__ (commanderInfoClass)</vh></v>
 <v t="T431"><vh>addWidgets</vh>
@@ -545,7 +545,7 @@
 </v>
 </v>
 <v t="T460"><vh>External editors &amp; Open With</vh>
-<v t="T461"><vh>@file open_with.py</vh>
+<v t="T461" tnodeList="461,462,463,464,465,466"><vh>@file open_with.py</vh>
 <v t="T462"><vh>on_idle</vh>
 <v t="T463"><vh>&lt;&lt; update v's body text &gt;&gt;</vh>
 <v t="T464"><vh>&lt;&lt; set s to the file text &gt;&gt;</vh></v>
@@ -555,10 +555,10 @@
 <v t="T466"><vh>&lt;&lt; create the Open With menu &gt;&gt;</vh></v>
 </v>
 </v>
-<v t="T467"><vh>@file vim.py</vh>
+<v t="T467" tnodeList="467,468"><vh>@file vim.py</vh>
 <v t="T468"><vh>open_in_vim</vh></v>
 </v>
-<v t="T469"><vh>@file xemacs.py</vh></v>
+<v t="T469" tnodeList="469"><vh>@file xemacs.py</vh></v>
 <v t="T470"><vh>word export</vh>
 <v t="T471" tnodeList="471,472,473,474,475,476"><vh>@file word_export.py</vh>
 <v t="T472"><vh>getConfiguration</vh></v>
@@ -571,11 +571,11 @@
 </v>
 </v>
 <v t="T478"><vh>Files</vh>
-<v t="T479"><vh>@file empty_leo_file.py</vh>
+<v t="T479" tnodeList="479,480,481"><vh>@file empty_leo_file.py</vh>
 <v t="T480"><vh>&lt;&lt; define minimal .leo file &gt;&gt;</vh></v>
 <v t="T481"><vh>onOpen</vh></v>
 </v>
-<v t="T482"><vh>@file open_shell.py</vh>
+<v t="T482" tnodeList="482,483,484,485,486,487,488,489"><vh>@file open_shell.py</vh>
 <v t="T483"><vh>&lt;&lt; about the open shell plugin &gt;&gt;</vh></v>
 <v t="T484"><vh>load_menu</vh></v>
 <v t="T485"><vh>_getpath</vh></v>
@@ -586,21 +586,21 @@
 </v>
 </v>
 <v t="T490"><vh>Foreign languages</vh>
-<v t="T491"><vh>@file french.py</vh>
+<v t="T491" tnodeList="491,492"><vh>@file french.py</vh>
 <v t="T492"><vh>onMenu</vh></v>
 </v>
-<v t="T493"><vh>@file french_fm.py</vh>
+<v t="T493" tnodeList="493,494"><vh>@file french_fm.py</vh>
 <v t="T494"><vh>onMenu</vh></v>
 </v>
 </v>
 <v t="T495"><vh>Key bindings</vh>
-<v t="T496"><vh>@file arrows.py</vh>
+<v t="T496" tnodeList="496,497"><vh>@file arrows.py</vh>
 <v t="T497"><vh>onOpen</vh></v>
 </v>
 </v>
 <v t="T498"><vh>Menus</vh>
 <v t="T499"><vh> Plugins menu</vh>
-<v t="T500"><vh>@file plugins_menu.py</vh>
+<v t="T500" tnodeList="500,501,502,503,504,505,506,507,508,509,510,511,512,513,514,515,516,517,518,519,520,521,522"><vh>@file plugins_menu.py</vh>
 <v t="T501"><vh>class Plugin</vh>
 <v t="T502"><vh>__init__</vh>
 <v t="T503"><vh>&lt;&lt; Check if this can be configured &gt;&gt;</vh></v>
@@ -648,7 +648,7 @@
 <v t="T533"><vh> Initial suggestion from Paul Paterson</vh></v>
 </v>
 </v>
-<v t="T534"><vh>@file scripts_menu.py</vh>
+<v t="T534" tnodeList="534,535,536,537,538"><vh>@file scripts_menu.py</vh>
 <v t="T535"><vh>createScriptsMenu</vh>
 <v t="T536"><vh>&lt;&lt; Return if no scripts exist anywhere &gt;&gt;</vh></v>
 <v t="T537"><vh>&lt;&lt; Create top-level entries for every script in top_scripts &gt;&gt;</vh></v>
@@ -657,11 +657,11 @@
 </v>
 </v>
 <v t="T539"><vh>New kinds of nodes</vh>
-<v t="T540"><vh>@file at_folder.py</vh>
+<v t="T540" tnodeList="540,541,542"><vh>@file at_folder.py</vh>
 <v t="T541"><vh>&lt;&lt; about this plugin &gt;&gt;</vh></v>
 <v t="T542"><vh>sync_node_to_folder</vh></v>
 </v>
-<v t="T543"><vh>@file read_only_nodes.py</vh>
+<v t="T543" tnodeList="543,544,545,546,547,549,550,552,554,555,556,557,558,559,560,561,562,563,564,565,566,567"><vh>@file read_only_nodes.py</vh>
 <v t="T544"><vh>documentation for @read-only nodes</vh>
 <v t="T545"><vh>ftp/http access</vh></v>
 </v>
@@ -693,7 +693,7 @@
 <v t="T566"><vh>on_select1</vh></v>
 <v t="T567"><vh>on_select2</vh></v>
 </v>
-<v t="T568"><vh>@file rst.py</vh>
+<v t="T568" tnodeList="568,569,570,571,572,573,574,575,576"><vh>@file rst.py</vh>
 <v t="T569"><vh>&lt;&lt;about this plugin &gt;&gt;</vh></v>
 <v t="T570"><vh>&lt;&lt; change log &gt;&gt;</vh></v>
 <v t="T571"><vh>onIconDoubleClick</vh>
@@ -705,7 +705,7 @@
 <v t="T575"><vh>writeTreeAsRst</vh></v>
 <v t="T576"><vh>underline</vh></v>
 </v>
-<v t="T577"><vh>@file startfile.py</vh>
+<v t="T577" tnodeList="577,578,579,580,581"><vh>@file startfile.py</vh>
 <v t="T578"><vh>&lt;&lt;about this plugin &gt;&gt;</vh></v>
 <v t="T579"><vh>&lt;&lt; change log &gt;&gt;</vh></v>
 <v t="T580"><vh>onIconDoubleClick</vh>
@@ -714,19 +714,19 @@
 </v>
 </v>
 <v t="T582"><vh>Overriding functions, methods &amp; classes</vh>
-<v t="T583"><vh>@file __overrideClasses.py</vh>
+<v t="T583" tnodeList="583,584,585"><vh>@file __overrideClasses.py</vh>
 <v t="T584"><vh>&lt;&lt; override the LeoFrame class &gt;&gt;</vh></v>
 <v t="T585"><vh>&lt;&lt; override methods of the LeoApp class &gt;&gt;</vh></v>
 </v>
-<v t="T586"><vh>@file override_commands.py</vh>
+<v t="T586" tnodeList="586,587"><vh>@file override_commands.py</vh>
 <v t="T587"><vh>onCommand</vh></v>
 </v>
-<v t="T588"><vh>@file redefine_put.py</vh>
+<v t="T588" tnodeList="588,589,590"><vh>@file redefine_put.py</vh>
 <v t="T589"><vh>onStart</vh></v>
 <v t="T590"><vh>newPut and newPutNl</vh></v>
 </v>
-<v t="T591"><vh>@file redirect_to_log.py</vh></v>
-<v t="T592"><vh>@file script_io_to_body.py</vh>
+<v t="T591" tnodeList="591"><vh>@file redirect_to_log.py</vh></v>
+<v t="T592" tnodeList="592,593,594,595,596"><vh>@file script_io_to_body.py</vh>
 <v t="T593"><vh>onStart</vh></v>
 <v t="T594"><vh>newExecuteScript</vh></v>
 <v t="T595"><vh>newPut and newPutNl</vh></v>
@@ -735,8 +735,8 @@
 </v>
 <v t="T597"><vh>Spell Checking</vh>
 <v t="T598"><vh>@silentfile mod_spelling.txt</vh></v>
-<v t="T599"><vh>@file mod_spelling.ini</vh></v>
-<v t="T600"><vh>@file mod_spelling.py</vh>
+<v t="T599" tnodeList="599"><vh>@file mod_spelling.ini</vh></v>
+<v t="T600" tnodeList="600,602,603,604,605,607,608,609,610,611,612,613,614,615,617,618,619,620,621,622,623,624,626,627,628,629,630,631,633,634,635,636,637,639,640,641,642,643,644,645,646,647,648"><vh>@file mod_spelling.py</vh>
 <v t="T601"><vh>Functions</vh>
 <v t="T602"><vh>createSpellMenu</vh></v>
 <v t="T603"><vh>onSelect</vh></v>
@@ -6405,9 +6405,7 @@ def const(name):
 		const_lastVal += 1
 		return const_lastVal</t>
 <t tx="T337">@ It is usually best not to catch exceptions in plugins.  doHook catches all exceptions and disables further calls to plugins.
-@c
-
-@ignore</t>
+@c</t>
 <t tx="T338"></t>
 <t tx="T339"></t>
 <t tx="T340">"""Import cisco configuration files"""
@@ -7589,7 +7587,7 @@ else:
 	if old_v:
 		h = old_v.headString()
 		if h[:7] == "@image ":
-			&lt;&lt; Unselect Image &gt;&gt;					
+			&lt;&lt; Unselect Image &gt;&gt;
 	else: # Leo is initializing.
 		a.gsphoto = None # Holds our photo file
 		a.gsimage = None # Holds our image instance within the text pane</t>

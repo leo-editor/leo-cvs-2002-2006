@@ -87,7 +87,7 @@ class tkinterGuiClass:
 	# This code is adapted from tkIcon.__init__
 	# Unlike the tkIcon code, this code does _not_ resize the icon file.
 	
-	def createLeoIcon (icon):
+	def createLeoIcon (self,icon):
 		
 		try:
 			import Image,_tkicon
@@ -120,7 +120,7 @@ class tkinterGuiClass:
 	# Handle the "visibility" event and attempt to attach the Leo icon.
 	# This code must be executed whenever the window is redrawn.
 	
-	def onVisibility (w,event):
+	def onVisibility (self,w,event):
 	
 		global leoIcon
 	
@@ -256,6 +256,8 @@ class tkinterGuiClass:
 	def getFontFromParams(self,family,size,slant,weight):
 		
 		# print "getFontFromParams"
+		
+		family_name = family
 		
 		try:
 			font = tkFont.Font(family=family,size=size,slant=slant,weight=weight)

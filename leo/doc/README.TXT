@@ -6,22 +6,23 @@ leo.py will work on Linux, Windows and MacOs X Jaguar.
 
 leo.py 4.0 beta 1                      September 26, 2003
 
-This is the first official release of Leo 4.0.
+This is the first public release of Leo 4.0.  Version 4.0 is the culmination of over a year of collaborative design work and several months of actual implementation.
 
-Please use caution: this version has been tested by only a few people.
+Please use caution when using this beta version of Leo.  It appears very solid and it has been tested by only a few people.
 
-Highlights of this version:
+Highlights of 4.0:
 
-** Improved format of derived files.
-	- Eliminated child indices.
-	- Eliminated extraneous blank lines.
-	- Eliminated @body sentinels.
+** Improved and simplified format of derived files.
+	- Eliminated child indices, extraneous blank lines and @body sentinels.
 	- Eliminated @node sentinels that indicate outline structure.
+	- New @nl and @nonl sentinels indicate where newlines are and aren't.
+	- These changes will largely eliminate unwanted cvs conflicts.
 
 ** Greatly improved error handling.
+	- Reading derived files _never_ alter outline structure or links.
 	- Read errors leave the outline completely unchanged.
 	- Broken clone links are gone forever.
-	- 4.0 is much safer than all previous versions.
+	- As a result, using 4.0 is much safer than all previous versions.
 
 ** Full compatibility will previous versions of Leo.
 	- Leo reads all derived files properly, regardless of version.
@@ -34,6 +35,7 @@ Highlights of this version:
 	- Import Derived File.
 	- Clear Recent Files.
 
+- Several new plugins.
 - Several minor bug fixes.
 
 leo.py 3.12.1 beta 1                     July 25, 2003
