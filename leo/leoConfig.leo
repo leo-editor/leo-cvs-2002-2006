@@ -171,7 +171,7 @@ stylesheet =
 #	Note 2: Please set this field empty when uploading to CVS.
 #	Note 3: This field must be empty for compatibility with older versions of Leo.
 
-use_configureLeo_dot_py = 1
+use_configureLeo_dot_py = 0
 
 #	1: Leo calls code "hooks" in configureLeo.py.
 #      Naive or hostile hooks may execute HOSTILE CODE contained in .leo files.

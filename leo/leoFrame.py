@@ -1411,8 +1411,8 @@ class LeoFrame:
 						time=None
 					es("creating: " + path)
 					es("time: " + str(time))
-					data = (c,v,f,path,time)
-					a.openWithFiles.append(data)
+					dict = {"c":c, "v":v, "f":f, "path":path, "time":time}
+					a.openWithFiles.append(dict)
 				except:
 					f = None
 					es("exception opening temp file")

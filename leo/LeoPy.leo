@@ -2,7 +2,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="2673" clone_windows="0"/>
 <globals body_outline_ratio="0.5">
-	<global_window_position top="0" left="114" height="25" width="89"/>
+	<global_window_position top="7" left="155" height="25" width="89"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences allow_rich_text="0">
@@ -3164,7 +3164,7 @@
 </v>
 </v>
 </v>
-<v t="T1408" a="CE"><vh>createMenuBar</vh>
+<v t="T1408" a="C"><vh>createMenuBar</vh>
 <v t="T1409"><vh>&lt;&lt; create the edit menu &gt;&gt;</vh>
 <v t="T1410"><vh>&lt;&lt; create the first top-level edit entries &gt;&gt;</vh></v>
 <v t="T1411"><vh>&lt;&lt; create the edit body submenu &gt;&gt;</vh></v>
@@ -3172,7 +3172,7 @@
 <v t="T1413"><vh>&lt;&lt; create the find submenu &gt;&gt;</vh></v>
 <v t="T1414"><vh>&lt;&lt; create the last top-level edit entries &gt;&gt;</vh></v>
 </v>
-<v t="T1415" a="E"><vh>&lt;&lt; create the file menu &gt;&gt;</vh>
+<v t="T1415"><vh>&lt;&lt; create the file menu &gt;&gt;</vh>
 <v t="T1416"><vh>&lt;&lt; create the top-level file entries &gt;&gt;</vh></v>
 <v t="T1417" a="C"><vh>&lt;&lt; create the recent files submenu &gt;&gt;</vh></v>
 <v t="T1418"><vh>&lt;&lt; create the read/write submenu &gt;&gt;</vh></v>
@@ -7118,6 +7118,7 @@
 </v>
 </v>
 <v t="T2673"><vh>(Open with)</vh>
+<v><vh>To do: replace data list by a dict</vh></v>
 <v t="T1218" a="C"><vh>&lt;&lt; create the popup menu &gt;&gt;</vh>
 <v t="T1219"><vh>&lt;&lt; set isAtRoot and isAtFile if v's tree contains @root or @file nodes &gt;&gt;</vh></v>
 </v>
@@ -7131,9 +7132,9 @@
 </v>
 <v t="T1823" a="C"><vh>createMenuItemsFromTable</vh></v>
 <v t="T1825" a="CM"><vh>createOpenWithMenuFromTable</vh></v>
-<v t="T2066" a="C"><vh>customizeLeo</vh>
+<v t="T2066" a="CE"><vh>customizeLeo</vh>
 <v t="T2067"><vh>&lt;&lt; create the Open With menu &gt;&gt;</vh></v>
-<v t="T2068"><vh>&lt;&lt; check the temp files created by the Open With command &gt;&gt;</vh></v>
+<v t="T2068" a="M"><vh>&lt;&lt; check the temp files created by the Open With command &gt;&gt;</vh></v>
 <v t="T2069"><vh>unused</vh>
 <v t="T2070"><vh>&lt;&lt; unused code &gt;&gt;</vh>
 <v t="T2071"><vh>&lt;&lt; create Scripts menu for LeoPy.leo &gt;&gt;</vh></v>
@@ -7144,7 +7145,7 @@
 </v>
 <v t="T1458" a="C"><vh>frame.OnOpenWith</vh>
 <v t="T1459"><vh>&lt;&lt; set ext based on the present language &gt;&gt;</vh></v>
-<v t="T1460"><vh>&lt;&lt; set path to the full pathname of a temp file using ext &gt;&gt;</vh></v>
+<v t="T1460" a="M"><vh>&lt;&lt; set path to the full pathname of a temp file using ext &gt;&gt;</vh></v>
 <v t="T1461"><vh>&lt;&lt; execute a command to open path &gt;&gt;</vh></v>
 </v>
 </v>
@@ -25401,8 +25402,8 @@ while f == None:
 				time=None
 			es("creating: " + path)
 			es("time: " + str(time))
-			data = (c,v,f,path,time)
-			a.openWithFiles.append(data)
+			dict = {"c":c, "v":v, "f":f, "path":path, "time":time}
+			a.openWithFiles.append(dict)
 		except:
 			f = None
 			es("exception opening temp file")
@@ -30229,13 +30230,14 @@ def handleLeoHook(tag,**keywords):
 			except:
 				a.hookFunction = None
 				es("exception in customizeLeo")
-		except exceptions.SyntaxError:
-			es("syntax error in customizeLeo")
-		except:
+		except exceptions.ImportError:
+			# print "import customizeLeo failed"
 			# Import failed.  This is not an error.
 			a.hookError = true # Supress this function.
 			a.idleTimeHook = false # Supress idle-time hook
 			return None
+		except:
+			es("error error in customizeLeo")
 
 	# Handle all exceptions except import failure.
 	es_exception()
@@ -34650,7 +34652,7 @@ None != false, so simply returning is always safe.
 @c
 
 def customizeLeo(tag,keywords):
-	
+
 	if tag == "start2":
 		# Announce the presence of this file.
 		es("customizeLeo loaded. EKR 11/8/02")
@@ -34680,22 +34682,25 @@ table = (
 top().frame.createOpenWithMenuFromTable(table)</t>
 <t tx="T2068">import os
 a = app()
-i = 0
-while i &lt; len(a.openWithFiles):
-	data = a.openWithFiles[i]
-	c,v,f,path,old_time = data
-	if os.path.exists(path):
+
+# frame.OnOpenWith creates the dict as follows:
+# dict = {"c":c, "v":v, "f":f, "path":path, "time":time}
+for dict in a.openWithFiles:
+	path = dict.get("path")
+	if path and os.path.exists(path):
 		try:
 			time=os.path.getmtime(path)
 		except:
 			time=None
+		old_time = dict.get("time")
 		if time and time!=old_time:
-			print "changed: ", shortFileName(path)
+			print "changed: "+ shortFileName(path)
 			es("changed: "+ shortFileName(path))
-			data = (c,v,f,path,time)
-			a.openWithFiles[i] = data
+			dict["time"]=time
 			try:
 				# Update v from the changed temp file.
+				c = dict.get("c")
+				v = dict.get("v")
 				f=open(path)
 				s=f.read()
 				f.close()
@@ -34707,9 +34712,8 @@ while i &lt; len(a.openWithFiles):
 				c.frame.body.focus_force()
 			except:
 				es("exception updating: "+ v.headString())
-				es_exception()
-	i += 1</t>
-<t tx="T2069"></t>
+				es_exception()</t>
+<t tx="T2069">#</t>
 <t tx="T2070">print "customizeLeo", tag
 
 if tag == "open2":
@@ -34935,8 +34939,9 @@ We can't use es here because the log stream no longer exists.
 
 def handleOpenTempFiles (self):
 	
-	for c,v,f,path,time in self.openWithFiles:
-		if os.path.exists(path):
+	for dict in self.openWithFiles:
+		path = dict.get("path")
+		if path and os.path.exists(path):
 			try:
 				os.remove(path)
 				print "deleting temp file:", path

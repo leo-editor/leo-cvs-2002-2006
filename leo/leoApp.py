@@ -236,8 +236,9 @@ class LeoApp:
 
 	def handleOpenTempFiles (self):
 		
-		for c,v,f,path,time in self.openWithFiles:
-			if os.path.exists(path):
+		for dict in self.openWithFiles:
+			path = dict.get("path")
+			if path and os.path.exists(path):
 				try:
 					os.remove(path)
 					print "deleting temp file:", path

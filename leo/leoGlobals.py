@@ -678,13 +678,14 @@ def handleLeoHook(tag,**keywords):
 			except:
 				a.hookFunction = None
 				es("exception in customizeLeo")
-		except exceptions.SyntaxError:
-			es("syntax error in customizeLeo")
-		except:
+		except exceptions.ImportError:
+			# print "import customizeLeo failed"
 			# Import failed.  This is not an error.
 			a.hookError = true # Supress this function.
 			a.idleTimeHook = false # Supress idle-time hook
 			return None
+		except:
+			es("error error in customizeLeo")
 
 	# Handle all exceptions except import failure.
 	es_exception()
