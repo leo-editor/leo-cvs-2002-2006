@@ -1178,33 +1178,27 @@ def importAllModulesInPath (path):
 #@-node:ekr.20040711043551.1:importAllModulesInPath
 #@+node:ekr.20040711061551:safeImportModule
 #@+at 
+#@nonl
 # Warning: do NOT use g.importFromPath here!
-# g.importFromPath uses imp.load_module, and that is equivalent to reload!
-# reload Leo files while running will crash Leo.
 # 
-# Instead, we use exec to do a "plain" import
+# g.importFromPath uses imp.load_module, and that is equivalent to reload!
+# reloading Leo files while running will crash Leo.
 #@-at
 #@@c
 
 def safeImportModule (fileName):
-    
-    scriptString = """
-try:
-    import %s
-    module = %s
-except ImportError:
-    module = None
-"""
 
     fileName = g.os_path_abspath(fileName)
     head,tail = g.os_path_split(fileName)
     moduleName,ext = g.os_path_splitext(tail)
+
     if ext == ".py":
-        script = scriptString % (moduleName,moduleName)
-        exec(script.strip() + '\n')
-        return module
+        try:
+            return __import__(moduleName)
+        except ImportError:
+            return None
     else:
-        print "Bad .py file:",fileName
+        print "Not a .py file:",fileName
         return None
 #@nonl
 #@-node:ekr.20040711061551:safeImportModule
