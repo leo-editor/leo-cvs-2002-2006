@@ -4,21 +4,29 @@
 #@@tabwidth -4
 #@@pagewidth 80
 
+#@<< imports >>
+#@+node:ekr.20050405141130:<< imports >>
 import leoGlobals as g
 
 if g.app and g.app.use_psyco:
     # print "enabled psyco classes",__file__
     try: from psyco.classes import *
     except ImportError: pass
-
+    
 import leoNodes
+
 import binascii
+import cStringIO
 import os
 import pickle
 import string
-
-#@+at 
 #@nonl
+#@-node:ekr.20050405141130:<< imports >>
+#@nl
+#@<< xml_language_names >>
+#@+node:ekr.20050405141130.1:<< xml_language_names >>
+#@+at
+# 
 # The list of language names that are written differently from the names in 
 # language_delims_dict in leoGlobals.py.  This is needed for compatibility 
 # with the borland version of Leo.
@@ -31,6 +39,9 @@ import string
 xml_language_names = (
     "CWEB","C","HTML","Java","LaTeX",
     "Pascal","PerlPod","Perl","Plain","Python","tcl/tk")
+#@nonl
+#@-node:ekr.20050405141130.1:<< xml_language_names >>
+#@nl
 
 class BadLeoFile(Exception):
     def __init__(self, message):
@@ -75,8 +86,7 @@ class baseFileCommands:
         self.topVnodeStack     = [] # A stack of vnodes giving the top position.
         # For writing
         self.read_only = False
-        self.outputFile = None # File for normal writing
-        self.outputList = None # List of strings for pasting
+        self.outputFile = None
         self.openDirectory = None
         self.topVnode = None
         self.usingClipboard = False
@@ -1374,6 +1384,36 @@ class baseFileCommands:
     compactFileIndices = assignFileIndices
     #@nonl
     #@-node:ekr.20031218072017.1570:assignFileIndices & compactFileIndices
+    #@+node:ekr.20050404190914.2:deleteFileWithMessage
+    def deleteFileWithMessage(self,fileName,kind):
+    
+        try:
+            os.remove(fileName)
+    
+        except Exception:
+            if self.read_only:
+                g.es("read only",color="red")
+            g.es("exception deleting backup file:" + fileName)
+            g.es_exception(full=False)
+            return False
+    #@nonl
+    #@+node:ekr.20050404212949:test_atFile_deleteFileWithMessage
+    def test_atFile_deleteFileWithMessage(self):
+        
+        g.trace()
+        return
+        
+        fc=c.fileCommands # Self is a dummy argument.
+        fc.deleteFileWithMessage('xyzzy','test')
+        
+    if 0: # one-time test of es statements.
+        fileName = 'fileName' ; kind = 'kind'
+        g.es("read only",color="red")
+        g.es("exception deleting %s file: %s" % (fileName,kind))
+        g.es("exception deleting backup file:" + fileName)
+    #@nonl
+    #@-node:ekr.20050404212949:test_atFile_deleteFileWithMessage
+    #@-node:ekr.20050404190914.2:deleteFileWithMessage
     #@+node:ekr.20031218072017.3033:put routines
     #@+node:ekr.20031218072017.3037:fileCommands.putGlobals (changed for 4.0)
     def putGlobals (self):
@@ -1421,14 +1461,15 @@ class baseFileCommands:
     #@nonl
     #@-node:ekr.20031218072017.3037:fileCommands.putGlobals (changed for 4.0)
     #@+node:ekr.20031218072017.1470:put (basic)(leoFileCommands)
-    # All output eventually comes here.
     def put (self,s):
-        if s and len(s) > 0:
-            if self.outputFile:
-                s = g.toEncodedString(s,self.leo_file_encoding,reportErrors=True)
-                self.outputFile.write(s)
-            elif self.outputList != None: # Write to a list.
-                self.outputList.append(s) # 1/8/04: avoid using string concatenation here!
+        '''
+        Put string s to self.outputFile.
+        All output eventually comes here.
+        '''
+        # Improved code: self.outputFile (a cStringIO object) always exists.
+        if s:
+            s = g.toEncodedString(s,self.leo_file_encoding,reportErrors=True)
+            self.outputFile.write(s)
     
     def put_dquote (self):
         self.put('"')
@@ -1457,6 +1498,7 @@ class baseFileCommands:
         while n > 0:
             self.put("\t")
             n -= 1
+    #@nonl
     #@-node:ekr.20031218072017.1470:put (basic)(leoFileCommands)
     #@+node:ekr.20031218072017.1971:putClipboardHeader
     def putClipboardHeader (self):
@@ -1591,7 +1633,7 @@ class baseFileCommands:
     
     def putLeoOutline (self):
     
-        self.outputList = [] ; self.outputFile = None
+        self.outputFile = g.fileLikeObject()
         self.usingClipboard = True
         self.assignFileIndices() # 6/11/03: Must do this for 3.x code.
         self.putProlog()
@@ -1599,8 +1641,8 @@ class baseFileCommands:
         self.putVnodes()
         self.putTnodes()
         self.putPostlog()
-        s = ''.join(self.outputList) # 1/8/04: convert the list to a string.
-        self.outputList = []
+        s = self.outputFile.getvalue()
+        self.outputFile = None
         self.usingClipboard = False
         return s
     #@nonl
@@ -1983,7 +2025,6 @@ class baseFileCommands:
     def write_Leo_file(self,fileName,outlineOnlyFlag):
     
         c = self.c
-    
         self.assignFileIndices()
         if not outlineOnlyFlag:
             #@        << write all @file nodes >>
@@ -1991,7 +2032,7 @@ class baseFileCommands:
             try:
                 # Write all @file nodes and set orphan bits.
                 c.atFileCommands.writeAll()
-            except:
+            except Exception:
                 g.es_error("exception writing derived files")
                 g.es_exception()
                 return False
@@ -2013,6 +2054,7 @@ class baseFileCommands:
         #@-node:ekr.20040324080359.1:<< return if the .leo file is read-only >>
         #@nl
         try:
+            theActualFile = None
             #@        << create backup file >>
             #@+node:ekr.20031218072017.3047:<< create backup file >>
             # rename fileName to fileName.bak if fileName exists.
@@ -2032,33 +2074,8 @@ class baseFileCommands:
             #@-node:ekr.20031218072017.3047:<< create backup file >>
             #@nl
             self.mFileName = fileName
-            #@        << create the output file >>
-            #@+node:ekr.20040324080359.2:<< create the output file >>
-            self.outputFile = open(fileName, 'wb') # 9/18/02
-            if not self.outputFile:
-                g.es("can not open " + fileName)
-                #@    << delete backup file >>
-                #@+node:ekr.20031218072017.3048:<< delete backup file >>
-                if backupName and g.os_path_exists(backupName):
-                    try:
-                        os.remove(backupName)
-                    except OSError:
-                        if self.read_only:
-                            g.es("read only",color="red")
-                        else:
-                            g.es("exception deleting backup file:" + backupName)
-                            g.es_exception()
-                        return False
-                    except:
-                        g.es("exception deleting backup file:" + backupName)
-                        g.es_exception()
-                        return False
-                #@-node:ekr.20031218072017.3048:<< delete backup file >>
-                #@nl
-                return False
-            #@nonl
-            #@-node:ekr.20040324080359.2:<< create the output file >>
-            #@nl
+            self.outputFile = cStringIO.StringIO() # or g.fileLikeObject()
+            theActualFile = open(fileName, 'wb')
             #@        << put the .leo file >>
             #@+node:ekr.20040324080819.1:<< put the .leo file >>
             self.putProlog()
@@ -2075,124 +2092,39 @@ class baseFileCommands:
             #@nonl
             #@-node:ekr.20040324080819.1:<< put the .leo file >>
             #@nl
-        except:
-            #@        << report the exception >>
-            #@+node:ekr.20040324080819.2:<< report the exception >>
-            g.es("exception writing: " + fileName)
-            g.es_exception() 
-            if self.outputFile:
-                try:
-                    self.outputFile.close()
-                    self.outputFile = None
-                except:
-                    g.es("exception closing: " + fileName)
-                    g.es_exception()
-            #@nonl
-            #@-node:ekr.20040324080819.2:<< report the exception >>
-            #@nl
-            #@        << erase filename and rename backupName to fileName >>
-            #@+node:ekr.20031218072017.3049:<< erase filename and rename backupName to fileName >>
-            g.es("error writing " + fileName)
-            
-            if fileName and g.os_path_exists(fileName):
-                try:
-                    os.remove(fileName)
-                except OSError:
-                    if self.read_only:
-                        g.es("read only",color="red")
-                    else:
-                        g.es("exception deleting: " + fileName)
-                        g.es_exception()
-                except:
-                    g.es("exception deleting: " + fileName)
-                    g.es_exception()
-                    
-            if backupName:
-                g.es("restoring " + fileName + " from " + backupName)
-                try:
-                    g.utils_rename(backupName, fileName)
-                except OSError:
-                    if self.read_only:
-                        g.es("read only",color="red")
-                    else:
-                        g.es("exception renaming " + backupName + " to " + fileName)
-                        g.es_exception()
-                except:
-                    g.es("exception renaming " + backupName + " to " + fileName)
-                    g.es_exception()
-            #@nonl
-            #@-node:ekr.20031218072017.3049:<< erase filename and rename backupName to fileName >>
-            #@nl
-            return False
-        if self.outputFile:
-            #@        << close the output file >>
-            #@+node:ekr.20040324080819.3:<< close the output file >>
-            try:
-                self.outputFile.close()
-                self.outputFile = None
-            except:
-                g.es("exception closing: " + fileName)
-                g.es_exception()
-            #@nonl
-            #@-node:ekr.20040324080819.3:<< close the output file >>
-            #@nl
+            theActualFile.write(self.outputFile.getvalue())
+            theActualFile.close()
+            self.outputFile = None
             #@        << delete backup file >>
-            #@+middle:ekr.20040324080359.2:<< create the output file >>
             #@+node:ekr.20031218072017.3048:<< delete backup file >>
             if backupName and g.os_path_exists(backupName):
-                try:
-                    os.remove(backupName)
-                except OSError:
-                    if self.read_only:
-                        g.es("read only",color="red")
-                    else:
-                        g.es("exception deleting backup file:" + backupName)
-                        g.es_exception()
-                    return False
-                except:
-                    g.es("exception deleting backup file:" + backupName)
-                    g.es_exception()
-                    return False
+            
+                self.deleteFileWithMessage(backupName,'backup')
+            #@nonl
             #@-node:ekr.20031218072017.3048:<< delete backup file >>
-            #@-middle:ekr.20040324080359.2:<< create the output file >>
             #@nl
             return True
-        else: # This probably will never happen because errors should raise exceptions.
-            #@        << erase filename and rename backupName to fileName >>
-            #@+node:ekr.20031218072017.3049:<< erase filename and rename backupName to fileName >>
-            g.es("error writing " + fileName)
-            
+        except Exception:
+            g.es("exception writing: " + fileName)
+            g.es_exception(full=False)
+            if theActualFile: theActualFile.close()
+            self.outputFile = None
+            #@        << delete fileName >>
+            #@+node:ekr.20050405103712:<< delete fileName >>
             if fileName and g.os_path_exists(fileName):
-                try:
-                    os.remove(fileName)
-                except OSError:
-                    if self.read_only:
-                        g.es("read only",color="red")
-                    else:
-                        g.es("exception deleting: " + fileName)
-                        g.es_exception()
-                except:
-                    g.es("exception deleting: " + fileName)
-                    g.es_exception()
-                    
+                self.deleteFileWithMessage(fileName,'')
+            #@-node:ekr.20050405103712:<< delete fileName >>
+            #@nl
+            #@        << rename backupName to fileName >>
+            #@+node:ekr.20050405103712.1:<< rename backupName to fileName >>
             if backupName:
                 g.es("restoring " + fileName + " from " + backupName)
-                try:
-                    g.utils_rename(backupName, fileName)
-                except OSError:
-                    if self.read_only:
-                        g.es("read only",color="red")
-                    else:
-                        g.es("exception renaming " + backupName + " to " + fileName)
-                        g.es_exception()
-                except:
-                    g.es("exception renaming " + backupName + " to " + fileName)
-                    g.es_exception()
+                g.utils_rename(backupName,fileName)
             #@nonl
-            #@-node:ekr.20031218072017.3049:<< erase filename and rename backupName to fileName >>
+            #@-node:ekr.20050405103712.1:<< rename backupName to fileName >>
             #@nl
             return False
-            
+    
     write_LEO_file = write_Leo_file # For compatibility with old plugins.
     #@nonl
     #@-node:ekr.20031218072017.3046:write_Leo_file
@@ -2265,5 +2197,6 @@ class baseFileCommands:
 class fileCommands (baseFileCommands):
     """A class creating the fileCommands subcommander."""
     pass
+#@nonl
 #@-node:ekr.20031218072017.3018:@thin leoFileCommands.py
 #@-leo
