@@ -5,8 +5,8 @@
 #@<<docstring>>
 #@+node:bwmulder.20041017125718.1:<< docstring >>
 """
-INTERMEDIATE VERSION: I AM WAITING FOR
-TEST FRAMEWORK FOR PLUGINS.
+WAITING FOR PLUGIN UNIT TEST ENVIRONMENT, SO THAT I CAN
+ADD UNIT TESTS.
 
 Use a subfolder for files with Leo comments.
 
@@ -38,6 +38,10 @@ To start using this plugin:
     
 You can change the name of the shadow subfolder, default Leo, via the mod_shadow.ini
 configuration file.
+
+Configuraton:
+    verbosity >= 1: print logon message in status pane.
+    verbosity >= 2: print message each time the subfolder is used.
 """
 #@-node:bwmulder.20041017125718.1:<< docstring >>
 #@nl
@@ -83,7 +87,13 @@ do_backups = False # True: always make backups of each file.
 shadow_subdir = "Leo" # subdirectory for shadow files.
 
 active = True # The plugin can be switched off by this switch
-#@nonl
+
+verbosity = 1
+
+__version__ = "$Rev: 1765 $"
+__author__  = "Bernhard Mulder"
+__date__    = "$Date$"
+__cvsid__   = "$Id$"
 #@-node:ekr.20041110091737:<< globals >>
 #@nl
 #@<< Notes >>
@@ -117,15 +127,12 @@ import leoGlobals as g
 
 import leoAtFile
 import leoCommands
-import leoFileCommands
 import leoImport 
 import leoPlugins
 
 import ConfigParser 
 import difflib
-import inspect
 import os
-import sys
 import shutil
 #@nonl
 #@-node:bwmulder.20041017130018:imports
@@ -412,14 +419,20 @@ class sentinel_squasher:
        print "================================="
        print lines1_message 
        print "---------------------------------"
+       f1 = file("mod_shadow.tmp1", "w")
        for line in lines1:
           print line, 
+          f1.write(line)
+       f1.close()
        print "=================================="
        print lines2_message 
        print "---------------------------------"
+       f1 = file("mod_shadow.tmp2", "w")
        for line in lines2:
           print line, 
-       assert 0, message 
+          f1.write(line)
+       f1.close()
+       g.es("'push' did not re-create the output file; please check mod_shadow.tmp1 and mod_shadow.tmp2 for differences")
     #@-node:bwmulder.20041017125718.22:check_lines_for_equality
     #@+node:bwmulder.20041017125718.23:create_back_mapping
     def create_back_mapping (self,sourcelines,marker):
@@ -542,7 +555,6 @@ class sentinel_squasher:
         This is the heart of the script.
         """
         if testing: g.trace(sourcefile, targetfile)
-        import pdb; pdb.set_trace() 
         #@    << init vars >>
         #@+node:ekr.20041110094810:<< init vars >>
         marker = marker_from_extension(sourcefile)
@@ -770,7 +782,7 @@ class sentinel_squasher:
           # Check that 'push' will re-create the changed file.
           self.check_lines_for_equality(
               s_outlines,targetlines,
-              "Pull did not work as expected",
+              "Pull did not work as expected (source: %s, target: %s):" % (sourcefile, targetfile),
               "Content of sourcefile:",
               "Content of modified file:")
           
@@ -778,7 +790,7 @@ class sentinel_squasher:
           old_sentinel_lines = push_filter_lines(reader_leo_file.lines[:reader_leo_file.i],marker)[1]
           self.check_lines_for_equality(
               sentinel_lines,old_sentinel_lines,
-              "Pull modified sentinel lines:",
+              "Pull modified sentinel lines (source: %s, target: %s):" % (sourcefile, targetfile),
               "Current sentinel lines:",
               "Old sentinel lines:")
           #@nonl
@@ -813,7 +825,7 @@ def applyConfiguration (config=None):
    
     Not sure yet if we need configuration options for this plugin."""
 
-    global active, testing, print_copy_operations, do_backups, shadow_subdir
+    global active, testing, print_copy_operations, do_backups, shadow_subdir, verbosity
    
     if config is None:
         fileName = os.path.join(g.app.loadDir,"..","plugins","mod_shadow.ini")
@@ -823,6 +835,7 @@ def applyConfiguration (config=None):
     if config:
         active = config.getboolean("Main","Active")
         testing = config.getboolean("Main", "testing")
+        verbosity = config.getint("Main", "verbosity")
         print_copy_operations = config.get("Main", "print_copy_operations")
         shadow_subdir = config.get("Main", "shadow_subdir")
 
@@ -870,10 +883,12 @@ def openForRead (self,filename,rb):
         if os.path.exists(shadow_filename):
             file_to_read_from = shadow_filename 
             if os.path.exists(filename)and os.path.getsize(filename)<=2:
+                if verbosity >= 2:
                 g.es("Copy %s to %s without sentinels"%(shadow_filename,filename))
                 push_file(sourcefilename=shadow_filename,targetfilename=filename)
             else:
                 sq = sentinel_squasher()
+                if verbosity >= 2:
                 g.es("reading in shadow directory %s"% shadow_subdir,color="orange")
                 sq.pull_source(sourcefile=shadow_filename,targetfile=filename)
         else:
@@ -901,6 +916,7 @@ def openForWrite (self,filename,wb):
     self.writing_to_shadow_directory = os.path.exists(shadow_filename)
     if self.writing_to_shadow_directory:
         self.shadow_filename = shadow_filename 
+        if verbosity >= 2: 
         g.es("Using shadow file in folder %s" % shadow_subdir,color="orange")
         file_to_use = os.path.join(dir,shadow_subdir,simplename)
     else:
@@ -977,6 +993,7 @@ def replaceTargetFileIfDifferent (self):
             # Original_replaceTargetFileIfDifferent should be oblivious
             # to the existance of the shadow directory.
             if self.writing_to_shadow_directory:
+                if verbosity >= 2:
                 g.es("Updating file from shadow folder %s" % shadow_subdir,color='orange')
                 push_file(self.shadow_filename,targetFileName)
 
@@ -1024,7 +1041,8 @@ if active:
    putInHooks()
    # Register the handlers...
    # leoPlugins.registerHandler("idle", autosave)
-   g.es("Shadow plugin enabled!",color="orange")
+   if verbosity >= 1:
+      g.es("Shadow plugin enabled!",color="orange")
 #@nonl
 #@-node:bwmulder.20041017125718:@thin mod_shadow.py
 #@-leo
