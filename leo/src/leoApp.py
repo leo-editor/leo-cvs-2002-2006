@@ -36,6 +36,7 @@ class LeoApp:
 		self.quitting = false # True if quitting.  Locks out some events.
 		self.realMenuNameDict = {} # Contains translations of menu names and menu item names.
 		self.root = root # The hidden main window
+		self.sectionDialogs = []
 		self.trace_list = [] # "Sherlock" argument list for tracing().
 		self.tkEncoding = "utf-8" # Set by finishCreate
 		self.unicodeErrorGiven = false # true: suppres unicode tracebacks.
@@ -120,6 +121,12 @@ class LeoApp:
 	
 		if self.findFrame:
 			self.findFrame.top.destroy()
+			
+		for d in self.sectionDialogs:
+			try:
+				d.top.destroy() # actually destroy the Tk window.
+			except: pass
+	
 	#@-body
 	#@-node:2::app.destroyAllGlobalWindows
 	#@+node:3::app.finishCreate
@@ -166,6 +173,7 @@ class LeoApp:
 			self.loadDir = os.path.dirname(leo.__file__)
 			if self.loadDir in (None,""):
 				self.loadDir = os.getcwd()
+			self.loadDir = os.path.abspath(self.loadDir)
 		except:
 			# Emergency defaults.  Hopefully we will never have to use them.
 			if sys.platform=="win32": # Windows
@@ -261,6 +269,8 @@ class LeoApp:
 		self.findFrame = leoFind.LeoFind()
 		self.findFrame.top.withdraw()
 		attachLeoIcon(self.findFrame.top)
+		
+		print "finishCreate returns"
 		return true # all went well.
 	#@-body
 	#@-node:3::app.finishCreate

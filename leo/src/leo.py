@@ -46,7 +46,7 @@ def run(fileName=None,*args,**keywords):
 	
 	"""Initialize and run Leo"""
 
-	app,root = doStep1()
+	app,root = doStep1() # Create app object and call app().finishCreate.
 	if root:
 		doHook("start1") # Load plugins before doing step 2.
 		frame = doStep2(app,fileName)
