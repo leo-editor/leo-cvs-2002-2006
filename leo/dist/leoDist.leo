@@ -2,7 +2,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="938" clone_windows="0"/>
 <globals body_outline_ratio="0.428571428571">
-	<global_window_position top="61" left="173" height="833" width="953"/>
+	<global_window_position top="77" left="312" height="833" width="953"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -129,7 +129,7 @@
 </v>
 <v t="ekr.20050116150710"><vh>(Fix distribution problems)</vh>
 <v t="ekr.20050116150710.59"><vh>@url http://nsis.sourceforge.net</vh></v>
-<v t="ekr.20050116150710.57" a="E"><vh>Notes</vh>
+<v t="ekr.20050116150710.57"><vh>Notes</vh>
 <v t="ekr.20050116150710.58"><vh>Rebuilding the installer</vh>
 <v t="ekr.20050116150710.60"><vh>&lt;&lt; custom defines &gt;&gt;</vh></v>
 </v>
@@ -170,7 +170,7 @@
 <v t="EKR.20040519083717.4"><vh>&lt;&lt; the user license &gt;&gt;</vh></v>
 <v t="EKR.20040519083717.5"><vh>&lt;&lt; the installation dir &gt;&gt;</vh></v>
 </v>
-<v t="EKR.20040519083717.6" a="E"><vh>&lt;&lt; required files section &gt;&gt;</vh>
+<v t="EKR.20040519083717.6"><vh>&lt;&lt; required files section &gt;&gt;</vh>
 <v t="EKR.20040519083717.7"><vh>&lt;&lt; check to see whether Python is installed &gt;&gt;</vh></v>
 </v>
 <v t="EKR.20040519083717.8"><vh>&lt;&lt; optional files section&gt;&gt;</vh></v>
@@ -183,13 +183,12 @@
 </v>
 </v>
 <v t="ekr.20050118092622"
-marks="ekr.20050118092622.3,ekr.20050118092622.5,ekr.20050118092622.6,ekr.20050118092622.10,ekr.20050118092622.11,ekr.20050118092622.22,"
-expanded="ekr.20050118092622.22,ekr.20050118092622.23,"><vh>@thin leo-4-2.nsi</vh></v>
+marks="ekr.20050118092622.3,ekr.20050118092622.5,ekr.20050118092622.6,ekr.20050118092622.10,ekr.20050118092622.11,ekr.20050118092622.22,"><vh>@thin leo-4-2.nsi</vh></v>
 </v>
-<v t="ekr.20050118095021" a="E"><vh>Leo 4.3 installer</vh>
+<v t="ekr.20050118095021"><vh>Leo 4.3 installer</vh>
+<v t="ekr.20050118124408"><vh>&lt;&lt; 4.3 nsi installer version &gt;&gt;</vh></v>
 <v t="ekr.20050118110807"><vh>Understanding uninstall issues</vh></v>
 <v t="ekr.20050118094209"><vh>What I did</vh></v>
-<v t="ekr.20050118102514"><vh>To do</vh></v>
 <v t="ekr.20050118103207"><vh>Keeping installer/uninstallers in synch</vh>
 <v t="ekr.20050118104149"><vh>config files</vh>
 <v t="ekr.20050118104149.1"><vh>&lt;&lt; install config files &gt;&gt;</vh></v>
@@ -203,6 +202,10 @@ expanded="ekr.20050118092622.22,ekr.20050118092622.23,"><vh>@thin leo-4-2.nsi</v
 <v t="ekr.20050118104901.1"><vh>&lt;&lt; install doc files &gt;&gt;</vh></v>
 <v t="ekr.20050118104901.2"><vh>&lt;&lt; uninstall doc files &gt;&gt;</vh></v>
 </v>
+<v t="ekr.20050118122740"><vh>extensions files</vh>
+<v t="ekr.20050118122404"><vh>&lt;&lt; install extensions files &gt;&gt;</vh></v>
+<v t="ekr.20050118122740.1"><vh>&lt;&lt; uninstall extensions files &gt;&gt;</vh></v>
+</v>
 <v t="ekr.20050118104901.3"><vh>icons</vh>
 <v t="ekr.20050118104901.4"><vh>&lt;&lt; install icons &gt;&gt;</vh></v>
 <v t="ekr.20050118104901.5"><vh>&lt;&lt; uninstall icons &gt;&gt;</vh></v>
@@ -215,9 +218,13 @@ expanded="ekr.20050118092622.22,ekr.20050118092622.23,"><vh>@thin leo-4-2.nsi</v
 <v t="ekr.20050118104901.13"><vh>&lt;&lt; install scripts &gt;&gt;</vh></v>
 <v t="ekr.20050118104901.14"><vh>&lt;&lt; uninstall scripts &gt;&gt;</vh></v>
 </v>
-<v t="ekr.20050118104901.9" a="E"><vh>src files</vh>
+<v t="ekr.20050118104901.9"><vh>src files</vh>
 <v t="ekr.20050118104901.10"><vh>&lt;&lt; install src files &gt;&gt;</vh></v>
 <v t="ekr.20050118104901.11"><vh>&lt;&lt; uninstall src files &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20050118122740.2"><vh>test files</vh>
+<v t="ekr.20050118122404.1"><vh>&lt;&lt; install test files &gt;&gt;</vh></v>
+<v t="ekr.20050118122740.3"><vh>&lt;&lt; uninstall test files &gt;&gt;</vh></v>
 </v>
 <v t="ekr.20050118103447"><vh>top-level</vh>
 <v t="ekr.20050118103207.1"><vh>&lt;&lt; install top-level files &gt;&gt;</vh></v>
@@ -226,20 +233,21 @@ expanded="ekr.20050118092622.22,ekr.20050118092622.23,"><vh>@thin leo-4-2.nsi</v
 </v>
 <v t="ekr.20050118092706"
 marks="ekr.20050118092706.3,ekr.20050118092706.5,ekr.20050118092706.6,ekr.20050118092706.10,ekr.20050118092706.11,ekr.20050118092706.13,ekr.20050118092706.22,"
-expanded="ekr.20050118092706.6,ekr.20050118092706.13,"><vh>@thin leo-4-3.nsi</vh></v>
+expanded="ekr.20050118092706.1,"><vh>@thin leo-4-3.nsi</vh></v>
 </v>
-<v t="ekr.20050118113631" a="E"><vh>Main distribution script</vh>
+<v t="ekr.20050118113631" a="MTV"><vh>Main distribution script</vh>
 <v t="EKR.20040519082027.28"><vh>&lt;&lt; setup info for createLeoDist.py &gt;&gt; (no spaces in file names)</vh></v>
-<v t="ekr.20050117032444" a="EM"><vh>Create zip file</vh>
+<v t="ekr.20050117032444" a="M"><vh>Create zip file</vh>
 <v t="ekr.20050118080857"><vh>&lt;&lt; about this script &gt;&gt;</vh></v>
 <v t="ekr.20050118083936.1"><vh>&lt;&lt; version history &gt;&gt;</vh></v>
 <v t="ekr.20050118082301"><vh>&lt;&lt; imports &gt;&gt;</vh></v>
 <v t="ekr.20050117032444.1"><vh>&lt;&lt; define files &amp; directories &gt;&gt;</vh></v>
 <v t="ekr.20050117032444.2"><vh>&lt;&lt; copy createLeoDist.py to top directory &gt;&gt;</vh></v>
-<v t="ekr.20050117032703" a="TV"><vh>&lt;&lt; run createLeoDist from the top directory &gt;&gt;</vh></v>
+<v t="ekr.20050117032703"><vh>&lt;&lt; run createLeoDist from the top directory &gt;&gt;</vh></v>
 <v t="ekr.20050117032444.3"><vh>&lt;&lt; remove temp createLeoDist.py &gt;&gt;</vh></v>
 </v>
 </v>
+<v t="ekr.20050118125236" a="M"><vh>To do:  write a script to make sure .nsi and main install scripts create the same files</vh></v>
 </vnodes>
 <tnodes>
 <t tx="EKR.20040519080201.1">@color
@@ -1088,6 +1096,8 @@ include doc/default.css
 include doc/leo_rst.css
 include doc/silver_city.css
 
+include extensions/__init__.py
+
 include Icons/*.*
 
 include plugins/*.*
@@ -1097,6 +1107,7 @@ include plugins/aspell.pyd
 
 include src/LeoPy.leo
 # Exclude LeoPyRef.leo.
+include src/__init__.py
 include src/leo*.py
 include src/leoProjects.txt
 include src/oldLeoProjects.leo
@@ -1105,6 +1116,7 @@ include scripts/leoScripts.txt
 include scripts/tangle_done.py
 include scripts/untangle_done.py
 
+include test/__init__.py
 include test/test.leo</t>
 <t tx="EKR.20040519091259">@pagewidth 70
 @killcolor</t>
@@ -4270,33 +4282,17 @@ RMDir "$INSTDIR"</t>
 - Added leoSetup.py to dist directory.
 - Removed doc\leoDiary.txt
 - Changed leo/.pycheckrc to leo/dist/.pycheckrc
-- Changed
-    UninstallIcon c:\prog\leoCVS\Icons\uninst.ico
-to:
-    UninstallIcon c:\prog\leoCVS\leo\Icons\uninst.ico
+- Changed location of uninst.ico to: c:\prog\leoCVS\leo\Icons\uninst.ico
 - Added dist/leo-4-2.nsi and dist/leo-4-3.nsi
-- Changed
-    OutFile "LeoSetupNSIS203.exe"
-to:
-    OutFile "LeoSetup-4-3.exe"</t>
+- Changed: OutFile "LeoSetupNSIS203.exe" to: OutFile "LeoSetup-4-3.exe"
+- Created test and extensions folders.
+- Added __init__.py to extensions, src and test folders.
+- Added Delete "$DESKTOP\Leo.lnk" to uninstaller script.</t>
 <t tx="ekr.20050118095021"></t>
 <t tx="ekr.20050118100239">@killcolor
 
 - Removed &lt;&lt; Uninstall section from Version 1.0 Leo Installer &gt;&gt;
   This was nothing but comments anyway.</t>
-<t tx="ekr.20050118102514">@killcolor
-
-Errors reading leoDist.leo:
-    
-    - (fixed) can not open: '@file C:\Program Files\Leo\dist\postSetup.py'
-    - (fixed) can not open: '@file C:\Program Files\Leo\dist\preSetup.py'
-    - (fixed) can not open: '@file C:\Program Files\Leo\dist\leo-4-2.nsi'
-    - (fixed) can not open: '@file C:\Program Files\Leo\dist\leo-4-3.nsi'
-    - reading: @file c:\prog\leoCVS\.pycheckrc  (This should be relative to install directory)
-
-Uninstall errors:
-     - (fixed) The config and src folders were not removed.
-     - (fixed) config/leoSettings.leo was not removed.</t>
 <t tx="ekr.20050118103207">@comment ;</t>
 <t tx="ekr.20050118103207.1">File "..\__init__.py"
 File "..\install"
@@ -4389,13 +4385,16 @@ Delete "$INSTDIR\plugins\*.pyc"
 File "..\src\LeoPy.leo"
 File "..\src\oldLeoProjects.leo"
 
+File "..\src\__init__.py"
 File "..\src\leo*.py"
 </t>
 <t tx="ekr.20050118104901.11">Delete "$INSTDIR\src\leoProjects.txt"
 Delete "$INSTDIR\src\LeoPy.leo"
 Delete "$INSTDIR\src\oldLeoProjects.leo"
 
+Delete "$INSTDIR\src\__init__.py"
 Delete "$INSTDIR\src\leo*.py"
+
 Delete "$INSTDIR\src\leo*.pyc"</t>
 <t tx="ekr.20050118104901.12"></t>
 <t tx="ekr.20050118104901.13">File "..\scripts\leoScripts.txt"
@@ -4417,5 +4416,15 @@ It appears to me that the design of the Version 1.0 installer would allow for th
 4. Version 1.0 installer deletes the files user desired to keep in step 1.</t>
 <t tx="ekr.20050118113452"></t>
 <t tx="ekr.20050118113631"># ***** This script uses createLeoDist.py *****</t>
+<t tx="ekr.20050118122404">File "..\extensions\__init__.py"</t>
+<t tx="ekr.20050118122404.1">File "..\test\__init__.py"
+File "..\test\test.leo"</t>
+<t tx="ekr.20050118122740"></t>
+<t tx="ekr.20050118122740.1">Delete "$INSTDIR\extensions\__init__.py"</t>
+<t tx="ekr.20050118122740.2"></t>
+<t tx="ekr.20050118122740.3">Delete "$INSTDIR\test\__init__.py"
+Delete "$INSTDIR\test\test.leo"</t>
+<t tx="ekr.20050118124408">!define PRODUCT_VERSION "4.3-alpha 1"</t>
+<t tx="ekr.20050118125236"></t>
 </tnodes>
 </leo_file>
