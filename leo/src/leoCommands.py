@@ -1168,8 +1168,12 @@ class baseCommands:
                     
                     if 1:
                         # Just print the error line.
-                        s = "line %d: %s" % (n,lines[n-1])
-                        print s, ; g.es(s,newline=False)
+                        try:
+                            s = "line %d: %s" % (n,lines[n-1])
+                            print s, ; g.es(s,newline=False)
+                        except IndexError:
+                            s = "line %d" % (n)
+                            print s, ; g.es(s,newline=False)
                     else:
                         i = max(0,n-2)
                         j = min(n+2,len(lines))
