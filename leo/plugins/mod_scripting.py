@@ -4,15 +4,16 @@
 
 Based on ideas from e's dynabutton plugin."""
 
-__version__ = "0.4"
+__version__ = "0.5"
 #@<< version history >>
 #@+node:ekr.20040908094021:<< version history >>
 #@+at
 # 
 # 0.3 EKR: Don't mess with button sizes or fonts on MacOs/darwin
 # 
-# 0.4 EKR:
-# - Added support for @button, @script and @plugin.
+# 0.4 EKR: Added support for @button, @script and @plugin.
+# 
+# 0.4 EKR: Added patch by Davide Salomoni: added start2 hook and related code.
 #@-at
 #@nonl
 #@-node:ekr.20040908094021:<< version history >>
@@ -80,11 +81,13 @@ def mouseLeave(c):
 def onOpenWindow (tag, keys):
 
     """Add scripting buttons to the icon bar."""
-
-    c = keys.get("new_c")
+    
+    if tag == "start2": c = g.top()
+    else: c = keys.get("new_c")
     if not c: return
     
     global data ; d = data.get(c,{})
+    if d: return
     
     createStandardButtons(c,d)
 
@@ -309,7 +312,7 @@ if Tk and not g.app.unitTesting:
         g.app.createTkGui(__file__)
 
     if g.app.gui.guiName() == "tkinter":
-        leoPlugins.registerHandler(('open2','new'),onOpenWindow)
+        leoPlugins.registerHandler(('start2','open2','new'),onOpenWindow)
         g.plugin_signon(__name__)
 #@nonl
 #@-node:EKR.20040613213623:@thin mod_scripting.py
