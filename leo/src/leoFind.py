@@ -129,7 +129,7 @@ class leoFind:
 	
 		c = self.setup_button()
 		c.clearAllVisited() # Clear visited for context reporting.
-		
+	
 		if c.script_change_flag:
 			self.doChangeAllScript()
 		elif c.selection_only_flag:
@@ -144,7 +144,7 @@ class leoFind:
 	def changeThenFindButton(self):
 	
 		c = self.setup_button()
-		
+	
 		if c.script_change_flag:
 			self.doChangeScript()
 			if c.script_search_flag:
@@ -165,7 +165,7 @@ class leoFind:
 	def findButton(self,event=None):
 	
 		c = self.setup_button()
-		
+	
 		if c.script_search_flag:
 			self.doFindScript()
 		else:
@@ -179,7 +179,7 @@ class leoFind:
 	
 		c = self.setup_button()
 		c.clearAllVisited() # Clear visited for context reporting.
-		
+	
 		if c.script_search_flag:
 			self.doFindAllScript()
 		elif c.selection_only_flag:
@@ -194,7 +194,7 @@ class leoFind:
 	def changeCommand(self,c):
 	
 		self.setup_command(c)
-		
+	
 		if c.script_search_flag:
 			self.doChangeScript()
 		else:
@@ -207,7 +207,7 @@ class leoFind:
 	def changeThenFindCommand(self,c):
 	
 		self.setup_command(c)
-		
+	
 		if c.script_search_flag:
 			self.doChangeScript()
 			self.doFindScript()
@@ -221,7 +221,7 @@ class leoFind:
 	def findNextCommand(self,c):
 	
 		self.setup_command(c)
-		
+	
 		if c.script_search_flag:
 			self.doFindScript()
 		else:
@@ -234,9 +234,9 @@ class leoFind:
 	def findPreviousCommand(self,c):
 	
 		self.setup_command(c)
-		
+	
 		c.reverse_flag = not c.reverse_flag
-		
+	
 		if c.script_search_flag:
 			self.doFindScript()
 		else:
@@ -324,7 +324,7 @@ class leoFind:
 			if s != v.bodyString():
 				if count == 1:
 					c.undoer.setUndoParams("Change All",v) # Tag the start of the Change all.
-					
+			
 				# 11/5/03: Changed setUndoTypingParams to setUndoParams (avoids incremental undo).
 				c.undoer.setUndoParams("Change",v,
 					oldText=v.bodyString(), newText=s,
@@ -385,7 +385,7 @@ class leoFind:
 	# If no selection, insert c.change_text at the cursor.
 	
 	def changeSelection(self):
-		
+	
 		c = self.c ; v = self.v ; gui = app.gui
 		# trace(`self.in_headline`)
 		t = choose(self.in_headline,v.edit_text(),c.frame.bodyCtrl)
@@ -434,53 +434,61 @@ class leoFind:
 	#@-node:changeThenFind
 	#@+node:doChange...Script
 	def doChangeScript (self):
-		
+	
 		app.searchDict["type"] = "change"
 		self.runChangeScript()
-		
+	
 	def doChangeAllScript (self):
 	
-		d = app.searchDict ; d["type"] = "changeAll"
+		"""The user has just pressed the Change All button with script-change box checked.
+	
+		N.B. Only this code is executed."""
+	
+		app.searchDict["type"] = "changeAll"
 		while 1:
 			self.runChangeScript()
-			if not d.get("continue"): break
-		
+			if not app.searchDict.get("continue"):
+				break
+	
 	def runChangeScript (self):
-		
-		c = self.c ; 
+	
+		c = self.c
 		try:
-			if c.script_change_flag:
-				exec c.change_text in {} # Use {} to get a pristine environment!
-			else:
-				self.changeSelection()
+			assert(c.script_change_flag) # 2/1/04
+			exec c.change_text in {} # Use {} to get a pristine environment.
 		except:
 			es("exception executing change script")
 			es_exception(full=false)
+			app.searchDict["continue"] = false # 2/1/04
 	#@nonl
 	#@-node:doChange...Script
 	#@+node:doFind...Script
 	def doFindScript (self):
-		
+	
 		app.searchDict["type"] = "find"
 		self.runFindScript()
-		
+	
 	def doFindAllScript (self):
-		
+	
+		"""The user has just pressed the Find All button with script-find radio button checked.
+	
+		N.B. Only this code is executed."""
+	
 		app.searchDict["type"] = "findAll"
-		self.runFindScript()
+		while 1:
+			self.runFindScript()
+			if not app.searchDict.get("continue"):
+				break
 	
 	def runFindScript (self):
 	
 		c = self.c
 		try:
-			while 1:
-				exec c.find_text in {} # Use {} to get a pristine environment!
-				flag = app.searchDict.get("continue")
-				if not flag: break
+			exec c.find_text in {} # Use {} to get a pristine environment.
 		except:
 			es("exception executing find script")
 			es_exception(full=false)
-	#@nonl
+			app.searchDict["continue"] = false # 2/1/04
 	#@-node:doFind...Script
 	#@+node:findAll
 	def findAll(self):
@@ -511,18 +519,18 @@ class leoFind:
 		c = self.c
 		if not self.checkArgs():
 			return
-			
+	
 		if initFlag:
 			self.initInHeadline()
 			data = self.save()
 			self.initInteractiveCommands()
 		else:
 			data = self.save()
-		
+	
 		c.beginUpdate()
 		pos, newpos = self.findNextMatch()
 		c.endUpdate(false) # Inhibit redraws so that headline remains selected.
-		
+	
 		if pos:
 			self.showSuccess(pos,newpos)
 		else:
@@ -546,7 +554,7 @@ class leoFind:
 	
 		if len(c.find_text) == 0:
 			return None, None
-			
+	
 		v = self.v
 		while v:
 			pos, newpos = self.search()
@@ -662,10 +670,10 @@ class leoFind:
 	
 		c = self.c ; v = self.v
 		# trace(`v`)
-		
+	
 		if c.selection_only_flag:
 			return None
-		
+	
 		# Start suboutline only searches.
 		if c.suboutline_only_flag and not self.onlyVnode:
 			self.onlyVnode = v
@@ -700,7 +708,7 @@ class leoFind:
 		if self.wrapping and v and v == self.wrapVnode:
 			# trace("ending wrapped search")
 			v = None ; self.resetWrap()
-			
+	
 		# End suboutline only searches.
 		if (c.suboutline_only_flag and self.onlyVnode and v and
 			(v == self.onlyVnode or not self.onlyVnode.isAncestorOf(v))):
@@ -717,7 +725,7 @@ class leoFind:
 	#@+node:checkArgs
 	def checkArgs (self):
 	
-		c = self.c 
+		c = self.c
 		val = true
 		if not c.search_headline_flag and not c.search_body_flag:
 			es("not searching headline or body")
@@ -749,7 +757,7 @@ class leoFind:
 					v = v.next()
 				v = v.lastNode()
 			self.v = v
-		
+	
 		# Set the insert point.
 		self.initBatchText()
 	#@nonl
@@ -777,7 +785,7 @@ class leoFind:
 	def initInHeadline (self):
 	
 		c = self.c ; v = self.v
-		
+	
 		if c.search_headline_flag and c.search_body_flag:
 			# Do not change this line without careful thought and extensive testing!
 			self.in_headline = (v == c.frame.tree.editVnode())
@@ -791,7 +799,7 @@ class leoFind:
 	def initInteractiveCommands(self):
 	
 		c = self.c ; v = self.v ; gui = app.gui
-		
+	
 		self.errors = 0
 		if self.in_headline:
 			c.frame.tree.setEditVnode(v)
@@ -843,14 +851,14 @@ class leoFind:
 		in_headline,v,t,insert,start,end = data
 	
 		# Don't try to reedit headline.
-		c.selectVnode(v) 
+		c.selectVnode(v)
 		if not in_headline:
 	
 			if 0: # Looks bad.
 				gui.setSelectionRange(t,start,end)
 			else: # Looks good and provides clear indication of failure or termination.
 				gui.setSelectionRange(t,insert,insert)
-		
+	
 			gui.setInsertPoint(t,insert)
 			gui.makeIndexVisible(t,insert)
 			gui.set_focus(c,t)
@@ -874,12 +882,12 @@ class leoFind:
 	def showSuccess(self,pos,newpos):
 	
 		"""Displays the final result.
-		
+	
 		Returns self.dummy_vnode, v.edit_text() or c.frame.bodyCtrl with
 		"insert" and "sel" points set properly."""
 	
 		c = self.c ; v = self.v ; gui = app.gui
-		
+	
 		c.beginUpdate()
 		if 1: # range of update...
 			c.selectVnode(v)
@@ -907,13 +915,13 @@ class leoFind:
 	#@+node:Must be overridden in subclasses
 	def init_s_text (self,s):
 		self.oops()
-		
+	
 	def bringToFront (self):
 		self.oops()
-		
+	
 	def gui_search (self,t,*args,**keys):
 		self.oops()
-		
+	
 	def oops(self):
 		print ("leoFind oops:",
 			callerName(2),
