@@ -990,7 +990,7 @@ class leoImportCommands:
 				#@<< handle possible Python function or class >>
 				#@+node:1::<< handle possible Python function or class >>
 				#@+body
-				if match_c_word(s,i,"def") or match(s,i,"class"):
+				if match_c_word(s,i,"def") or match_word(s,i,"class"):
 					isDef = match_c_word(s,i,"def")
 					if not decls_seen:
 						parent.appendStringToBody("@ignore\n" + self.rootLine + "@language python\n")
