@@ -931,6 +931,7 @@ def oldDump(s):
 def es_error (s):
 	
 	config = app.config
+
 	if config: # May not exist during initialization.
 		color = config.getWindowPref("log_error_color")
 		es(s,color=color)
@@ -948,9 +949,12 @@ def es_event_exception (eventName,full=false):
 		errList = traceback.format_exception(typ,val,tb)
 	else:
 		errList = traceback.format_exception_only(typ,val)
+
 	for i in errList:
 		es(i)
-	traceback.print_exc()
+		
+	if not stdErrIsRedirected(): # 2/16/04
+		traceback.print_exc()
 #@nonl
 #@-node:es_event_exception
 #@+node:es_exception
@@ -962,10 +966,12 @@ def es_exception (full=true,c=None):
 		errList = traceback.format_exception(typ,val,tb)
 	else:
 		errList = traceback.format_exception_only(typ,val)
+
 	for i in errList:
 		es_error(i)
-	
-	traceback.print_exc()
+
+	if not stdErrIsRedirected(): # 2/16/04
+		traceback.print_exc()
 #@nonl
 #@-node:es_exception
 #@+node:printBindings
@@ -1130,113 +1136,6 @@ def readlineForceUnixNewline(f):
 		s = s[0:-2] + "\n"
 	return s
 #@-node:readlineForceUnixNewline (Steven P. Schaefer)
-#@+node:redirecting stderr and stdout
-class redirectClass:
-	#@	<< redirectClass methods >>
-	#@+node:<< redirectClass methods >>
-	# To redirect stdout a class only needs to implement a write(self,s) method.
-	def __init__ (self):
-		self.old = None
-		
-	def isRedirected (self):
-		return self.old != None
-		
-	def flush(self, *args):
-		return # 6/14/03:  For LeoN: just for compatibility.
-	
-	def redirect (self,stdout=1):
-		import sys
-		if not self.old:
-			if stdout:
-				self.old,sys.stdout = sys.stdout,self
-			else:
-				self.old,sys.stderr = sys.stderr,self
-	
-	def undirect (self,stdout=1):
-		import sys
-		if self.old:
-			if stdout:
-				sys.stdout,self.old = self.old,None
-			else:
-				sys.stderr,self.old = self.old,None
-	
-	def write(self,s):
-		if self.old:
-			if app.log: app.log.put(s)
-			else: self.old.write(s)
-		else: print s # Typically will not happen.
-	#@-node:<< redirectClass methods >>
-	#@nl
-
-# Create two redirection objects, one for each stream.
-redirectStdErrObj = redirectClass()
-redirectStdOutObj = redirectClass()
-
-#@<< define convenience methods for redirecting streams >>
-#@+node:<< define convenience methods for redirecting streams >>
-
-# Redirect streams to the current log window.
-def redirectStderr():
-	global redirectStdErrObj
-	redirectStdErrObj.redirect(stdout=false)
-
-def redirectStdout():
-	global redirectStdOutObj
-	redirectStdOutObj.redirect()
-
-# Restore standard streams.
-def restoreStderr():
-	global redirectStdErrObj
-	redirectStdErrObj.undirect(stdout=false)
-	
-def restoreStdout():
-	global redirectStdOutObj
-	redirectStdOutObj.undirect()
-		
-def stdErrIsRedirected():
-	global redirectStdErrObj
-	return redirectStdErrObj.isRedirected()
-	
-def stdOutIsRedirected():
-	global redirectStdOutObj
-	return redirectStdOutObj.isRedirected()
-#@nonl
-#@-node:<< define convenience methods for redirecting streams >>
-#@nl
-
-if 0: # Test code: may be safely and conveniently executed in the child node.
-	#@	<< test code >>
-	#@+node:<< test code >>
-	from leoGlobals import stdErrIsRedirected,stdOutIsRedirected
-	print "stdout isRedirected:", stdOutIsRedirected()
-	print "stderr isRedirected:", stdErrIsRedirected()
-	
-	from leoGlobals import redirectStderr,redirectStdout
-	redirectStderr()
-	redirectStdout()
-	
-	from leoGlobals import stdErrIsRedirected,stdOutIsRedirected
-	print "stdout isRedirected:", stdOutIsRedirected()
-	print "stderr isRedirected:", stdErrIsRedirected()
-	
-	from leoGlobals import restoreStderr
-	restoreStderr()
-	
-	from leoGlobals import stdErrIsRedirected,stdOutIsRedirected
-	print "stdout isRedirected:", stdOutIsRedirected()
-	print "stderr isRedirected:", stdErrIsRedirected()
-	
-	from leoGlobals import restoreStdout
-	restoreStdout()
-	
-	from leoGlobals import stdErrIsRedirected,stdOutIsRedirected
-	print "stdout isRedirected:", stdOutIsRedirected()
-	print "stderr isRedirected:", stdErrIsRedirected()
-	#@nonl
-	#@-node:<< test code >>
-	#@nl
-#@nonl
-#@-node:redirecting stderr and stdout
 #@+node:sanitize_filename
 def sanitize_filename(s):
 
@@ -1331,30 +1230,113 @@ def utils_rename(src,dst):
 		move_file(src,dst)
 #@nonl
 #@-node:utils_rename
-#@+node:funcToMethod
-#@+at 
-#@nonl
-# The following is taken from page 188 of the Python Cookbook.
-# 
-# The following method allows you to add a function as a method of any class.  
-# That is, it converts the function to a method of the class.  The method just 
-# added is available instantly to all existing instances of the class, and to 
-# all instances created in the future.
-# 
-# The function's first argument should be self.
-# 
-# The newly created method has the same name as the function unless the 
-# optional name argument is supplied, in which case that name is used as the 
-# method name.
-#@-at
-#@@c
+#@+node:redirecting stderr and stdout
+class redirectClass:
+	#@	<< redirectClass methods >>
+	#@+node:<< redirectClass methods >>
+	# To redirect stdout a class only needs to implement a write(self,s) method.
+	def __init__ (self):
+		self.old = None
+		
+	def isRedirected (self):
+		return self.old != None
+		
+	def flush(self, *args):
+		return # 6/14/03:  For LeoN: just for compatibility.
+	
+	def redirect (self,stdout=1):
+		import sys
+		if not self.old:
+			if stdout:
+				self.old,sys.stdout = sys.stdout,self
+			else:
+				self.old,sys.stderr = sys.stderr,self
+	
+	def undirect (self,stdout=1):
+		import sys
+		if self.old:
+			if stdout:
+				sys.stdout,self.old = self.old,None
+			else:
+				sys.stderr,self.old = self.old,None
+	
+	def write(self,s):
+		# trace(s)
+		if self.old:
+			if app.log: app.log.put(s)
+			else: self.old.write(s)
+		else: print s # Typically will not happen.
+	#@-node:<< redirectClass methods >>
+	#@nl
 
-def funcToMethod(f,theClass,name=None):
+# Create two redirection objects, one for each stream.
+redirectStdErrObj = redirectClass()
+redirectStdOutObj = redirectClass()
 
-	setattr(theClass,name or f.__name__,f)
-	# trace(`name`)
+#@<< define convenience methods for redirecting streams >>
+#@+node:<< define convenience methods for redirecting streams >>
+# Redirect streams to the current log window.
+def redirectStderr():
+	global redirectStdErrObj
+	redirectStdErrObj.redirect(stdout=false)
+
+def redirectStdout():
+	global redirectStdOutObj
+	redirectStdOutObj.redirect()
+
+# Restore standard streams.
+def restoreStderr():
+	global redirectStdErrObj
+	redirectStdErrObj.undirect(stdout=false)
+	
+def restoreStdout():
+	global redirectStdOutObj
+	redirectStdOutObj.undirect()
+		
+def stdErrIsRedirected():
+	global redirectStdErrObj
+	return redirectStdErrObj.isRedirected()
+	
+def stdOutIsRedirected():
+	global redirectStdOutObj
+	return redirectStdOutObj.isRedirected()
 #@nonl
-#@-node:funcToMethod
+#@-node:<< define convenience methods for redirecting streams >>
+#@nl
+
+if 0: # Test code: may be safely and conveniently executed in the child node.
+	#@	<< test code >>
+	#@+node:<< test code >>
+	from leoGlobals import stdErrIsRedirected,stdOutIsRedirected
+	print "stdout isRedirected:", stdOutIsRedirected()
+	print "stderr isRedirected:", stdErrIsRedirected()
+	
+	from leoGlobals import redirectStderr,redirectStdout
+	redirectStderr()
+	redirectStdout()
+	
+	from leoGlobals import stdErrIsRedirected,stdOutIsRedirected
+	print "stdout isRedirected:", stdOutIsRedirected()
+	print "stderr isRedirected:", stdErrIsRedirected()
+	
+	from leoGlobals import restoreStderr
+	restoreStderr()
+	
+	from leoGlobals import stdErrIsRedirected,stdOutIsRedirected
+	print "stdout isRedirected:", stdOutIsRedirected()
+	print "stderr isRedirected:", stdErrIsRedirected()
+	
+	from leoGlobals import restoreStdout
+	restoreStdout()
+	
+	from leoGlobals import stdErrIsRedirected,stdOutIsRedirected
+	print "stdout isRedirected:", stdOutIsRedirected()
+	print "stderr isRedirected:", stdErrIsRedirected()
+	#@nonl
+	#@-node:<< test code >>
+	#@nl
+#@nonl
+#@-node:redirecting stderr and stdout
 #@+node:get_line & get_line_after
 # Very useful for tracing.
 
@@ -1615,6 +1597,30 @@ def esDiffTime(message, start):
 	return time.clock()
 #@nonl
 #@-node:Timing
+#@+node:funcToMethod
+#@+at 
+#@nonl
+# The following is taken from page 188 of the Python Cookbook.
+# 
+# The following method allows you to add a function as a method of any class.  
+# That is, it converts the function to a method of the class.  The method just 
+# added is available instantly to all existing instances of the class, and to 
+# all instances created in the future.
+# 
+# The function's first argument should be self.
+# 
+# The newly created method has the same name as the function unless the 
+# optional name argument is supplied, in which case that name is used as the 
+# method name.
+#@-at
+#@@c
+
+def funcToMethod(f,theClass,name=None):
+
+	setattr(theClass,name or f.__name__,f)
+	# trace(`name`)
+#@nonl
+#@-node:funcToMethod
 #@+node:executeScript
 def executeScript (name):
 	
