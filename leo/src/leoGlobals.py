@@ -7,7 +7,7 @@
 
 #@@language python
 
-import exceptions,os,re,string,sys,time,Tkinter,traceback,types
+import exceptions,os,re,string,sys,time,traceback,types
 
 #@<< define general constants >>
 #@+node:<< define general constants >>
@@ -686,6 +686,8 @@ def scanDirectives(c,v=None):
 			if path and len(path) > 0:
 				base = getBaseDirectory() # returns "" on error.
 				path = os.path.join(base,path)
+				path = toUnicode(path,app.tkEncoding) # 10/20/03
+				
 		#@nonl
 		#@-node:<< Test for @path >>
 		#@nl
@@ -733,8 +735,8 @@ def scanDirectives(c,v=None):
 def openWithFileName(fileName,old_c=None):
 	
 	"""Create a Leo Frame for the indicated fileName if the file exists."""
-	
-	from leoFrame import LeoFrame
+
+	# trace(fileName)
 	assert(app.config)
 
 	if not fileName or len(fileName) == 0:
@@ -744,17 +746,20 @@ def openWithFileName(fileName,old_c=None):
 	# Display the file name with case intact.
 	fileName = os.path.join(os.getcwd(), fileName)
 	fileName = os.path.normpath(fileName)
+	fileName = toUnicode(fileName,app.tkEncoding) # 10/20/03
 	oldFileName = fileName 
 	fileName = os.path.normcase(fileName)
+	fileName = toUnicode(fileName,app.tkEncoding) # 10/20/03
 
 	# If the file is already open just bring its window to the front.
 	list = app.windowList
 	for frame in list:
 		fn = os.path.normcase(frame.commands.mFileName)
 		fn = os.path.normpath(fn)
+		fn = toUnicode(fn,app.tkEncoding) # 10/20/03
 		if fileName == fn:
 			frame.deiconify()
-			app.setLog(frame,"OpenWithFileName")
+			app.setLog(frame.log,"OpenWithFileName")
 			# es("This window already open")
 			return true, frame
 			
@@ -766,11 +771,12 @@ def openWithFileName(fileName,old_c=None):
 			c,frame = app.gui.newLeoCommanderAndFrame(fileName)
 			if not doHook("open1",
 				old_c=old_c,new_c=c,fileName=fileName):
-				app.setLog(frame,"OpenWithFileName") # 5/12/03
+				app.setLog(frame.log,"OpenWithFileName") # 5/12/03
 				app.lockLog() # 6/30/03
 				frame.commands.fileCommands.open(file,fileName) # closes file.
 				app.unlockLog() # 6/30/03
 			frame.openDirectory=os.path.dirname(fileName)
+			frame.openDirectory = toUnicode(frame.openDirectory,app.tkEncoding) # 10/20/03
 			frame.updateRecentFiles(fileName)
 			doHook("open2",
 				old_c=old_c,new_c=frame.commands,fileName=fileName)
@@ -782,10 +788,12 @@ def openWithFileName(fileName,old_c=None):
 		es("can not open: " + fileName, color="blue")
 		return false, None
 	except:
-		es("exceptions opening: " + fileName,color="red")
-		es_exception()
-		if 0: # Do not do this here!
-			if frame: app.gui.destroyLeoFrame(frame)
+		if 1:
+			print "exceptions opening:", fileName
+			traceback.print_exc()
+		else:
+			es("exceptions opening: " + fileName,color="red")
+			es_exception()
 		return false, None
 #@-node:openWithFileName (leoGlobals)
 #@+node:wrap_lines
@@ -919,6 +927,7 @@ def makeAllNonExistentDirectories (dir):
 		return None
 
 	dir1 = dir = os.path.normpath(dir)
+	dir1 = dir = toUnicode(dir,app.tkEncoding) # 10/20/03
 	# Split dir into all its component parts.
 	paths = []
 	while len(dir) > 0:
@@ -932,7 +941,8 @@ def makeAllNonExistentDirectories (dir):
 	path = ""
 	paths.reverse()
 	for s in paths:
-		path=os.path.join(path,s)
+		path = os.path.join(path,s)
+		path = toUnicode(path,app.tkEncoding) # 10/20/03
 		if not os.path.exists(path):
 			try:
 				os.mkdir(path)
@@ -1241,7 +1251,9 @@ def get_Sherlock_args (args):
 
 	if not args or len(args)==0:
 		try:
-			f = open(os.path.join(app.loadDir,"SherlockArgs"))
+			fn = os.path.join(app.loadDir,"SherlockArgs")
+			fn = toUnicode(fn,app.tkEncoding) # 10/20/03
+			f = open(fn)
 			args = f.readlines()
 			f.close()
 		except: pass
@@ -1502,11 +1514,13 @@ def es_exception (full=true):
 #@+node:file/module/plugin_date
 def module_date (mod,format=None):
 	file = os.path.join(app.loadDir,mod.__file__)
+	file = toUnicode(file,app.tkEncoding) # 10/20/03
 	root,ext = os.path.splitext(file) 
 	return file_date(root + ".py",format=format)
 
 def plugin_date (plugin_mod,format=None):
 	file = os.path.join(app.loadDir,"..","plugins",plugin_mod.__file__)
+	file = toUnicode(file,app.tkEncoding) # 10/20/03
 	root,ext = os.path.splitext(file) 
 	return file_date(root + ".py",format=format)
 
@@ -1641,6 +1655,37 @@ def executeScript (name):
 		file.close()
 
 #@-node:executeScript
+#@+node:File utils (unicode filenames)
+#@+at 
+# 
+# - Probably should use app.fnEncoding = "mbcs" for Windows.
+# 
+# - Probably only works for Python 2.3
+# 
+#@-at
+#@-node:File utils (unicode filenames)
+#@+node:fn_norm
+def fn_norm(arg,encoding=None):
+
+	if not encoding:
+		encoding = app.tkEncoding
+	arg = toUnicode(arg,encoding)
+	arg = os.path.normpath(arg)
+	arg = os.path.normcase(arg)
+	return arg
+#@nonl
+#@-node:fn_norm
+#@+node:fn_join
+def fn_join(*args,**keys):
+	
+	encoding = keys.get("encoding")
+	if not encoding:
+		encoding = app.tkEncoding
+	uargs = [fn_norm(arg,encoding) for arg in args]
+	fn = os.path.join(*uargs)
+	return fn
+#@nonl
+#@-node:fn_join
 #@+node:Garbage Collection
 lastObjectCount = 0
 lastObjectsDict = {}
@@ -1740,15 +1785,6 @@ def printGcRefs (verbose=true):
 		print "refs of", app.windowList[0]
 		for ref in refs:
 			print type(ref)
-			if 0:
-				import leoFrame
-				if type(ref) == type({}):
-					keys = ref.keys()
-					keys.sort()
-					for key in keys:
-						val = ref[key]
-						if isinstance(val,leoFrame.LeoFrame):
-							print key,ref[key]
 	else:
 		print "%d referers" % len(refs)
 #@nonl
@@ -1775,10 +1811,11 @@ def get_window_info (window):
 #@-node:Dialog utils...
 #@+node:Focus (leoGlobals)
 # These convenience routines just call the corresponding method of the app.gui class.
+# Note: at present these are not called from Leo's core.
 
-def get_focus(top):
+def get_focus(frame):
 	"""Return the widget that has focus, or the body widget if None."""
-	return app.gui.get_focus(top)
+	return app.gui.get_focus(frame)
 	
 def set_focus(commands,widget):
 	"""Set the focus of the widget in the given commander if it needs to be changed."""
@@ -1866,31 +1903,35 @@ def setMenuLabel (menu,name,label,underline=-1):
 def enableIdleTimeHook(idleTimeDelay=100):
 	app.idleTimeHook = true
 	app.idleTimeDelay = idleTimeDelay # Delay in msec.
-	app.root.after_idle(idleTimeHookHandler)
+	app.gui.setIdleTimeHook(idleTimeHookHandler)
 	
 # Disables the "idle" hook.
 def disableIdleTimeHook():
 	app.idleTimeHook = false
 	
 # An internal routine used to dispatch the "idle" hook.
-def idleTimeHookHandler(*args):
+trace_count = 0
+def idleTimeHookHandler(*args,**keys):
 	
+	if 0:
+		global trace_count ; trace_count += 1
+		if trace_count % 10 == 0: trace(trace_count)
+
 	# New for Python 2.3: may be called during shutdown.
-	if app.killed:
-		return
+	if app.killed: return
 	c = top()
 	if c: v = c.currentVnode()
 	else: v = None
 	doHook("idle",c=c,v=v)
-	# Requeue this routine after 100 msec.
-	# Faster requeues overload the system.
+	# Requeue this routine after 100 msec.  Faster requeues overload the system.
 	if app.idleTimeHook:
-		app.afterHandler = app.root.after(app.idleTimeDelay,idleTimeHookHandler)
+		app.gui.setIdleTimeHookAfterDelay(app.idleTimeDelay,idleTimeHookHandler)
+		app.afterHandler = idleTimeHookHandler
 	else:
 		app.afterHandler = None
 #@nonl
 #@-node:enableIdleTimeHook, disableIdleTimeHook, idleTimeHookHandler
-#@+node:doHook
+#@+node:frame.doHook
 #@+at 
 #@nonl
 # This global function calls a hook routine.  Hooks are identified by the tag 
@@ -1911,7 +1952,7 @@ def doHook(tag,*args,**keywords):
 
 	c = top() # c may be None during startup.
 	
-	if not app.config.use_plugins:
+	if app.killed or not app.config.use_plugins:
 		return None
 	elif app.hookError:
 		return None
@@ -1919,7 +1960,7 @@ def doHook(tag,*args,**keywords):
 		try:
 			return c.hookFunction(tag,keywords)
 		except:
-			es("exception in c.hookFunction for " + c.frame.top.title())
+			es("exception in c.hookFunction for " + c.frame.getTitle())
 	elif app.hookFunction:
 		try:
 			return app.hookFunction(tag,keywords)
@@ -1940,7 +1981,7 @@ def doHook(tag,*args,**keywords):
 	app.idleTimeHook = false # Supress idle-time hook
 	return None # No return value
 #@nonl
-#@-node:doHook
+#@-node:frame.doHook
 #@+node:plugin_signon
 def plugin_signon(module_name,verbose=false):
 	
@@ -1967,6 +2008,7 @@ def importFromPath (name,path):
 			fn = shortFileName(name)
 			mod_name,ext = os.path.splitext(fn)
 			path = os.path.normpath(path)
+			path = toUnicode(path,app.tkEncoding) # 10/20/03
 			data = imp.find_module(mod_name,[path]) # This can open the file.
 			if data:
 				file,pathname,description = data
@@ -2057,16 +2099,18 @@ def ecnl():
 def ecnls(n):
 	log = app.log
 	if log:
-		while log.es_newlines < n:
+		while log.newlines < n:
 			enl()
 
 def enl():
 	log = app.log
 	if log:
-		log.es_newlines += 1
+		log.newlines += 1
 		log.putnl()
 
 def es(s,*args,**keys):
+	if app.killed:
+		return
 	newline = keys.get("newline",true)
 	color = keys.get("color",None)
 	if type(s) != type("") and type(s) != type(u""): # 1/20/03
@@ -2079,10 +2123,9 @@ def es(s,*args,**keys):
 	if log:
 		# print s
 		log.put(s,color=color)
-		# 6/2/02: This logic will fail if log is None.
 		for ch in s:
-			if ch == '\n': log.es_newlines += 1
-			else: log.es_newlines = 0
+			if ch == '\n': log.newlines += 1
+			else: log.newlines = 0
 		if newline:
 			ecnl() # only valid here
 	elif newline:
@@ -2111,7 +2154,7 @@ def top():
 	
 	# Warning: may be called during startup or shutdown when nothing exists.
 	try:
-		return app.log.commands
+		return app.log.c
 	except:
 		return None
 #@nonl
@@ -2891,65 +2934,30 @@ def skip_ws_and_nl(s,i):
 	return i
 #@nonl
 #@-node:skip_ws, skip_ws_and_nl
-#@+node:bound_paragraph (TK stuff)
-def bound_paragraph(t=None):
-	"""Find the bounds of the text paragraph that contains the current cursor position.
+#@+node:splitLines & joinLines
+# These two routines preserve the state of trailing newlines.
+# Each line of the list ends in a newline, except possibly the last line.
+
+def splitLines (s):
 	
-t: a Tk.Text widget
-
-Returns:
-	None if the cursor is on a whitespace line or a delimeter line.
-	Otherwise: (start,end,endsWithNL,wsFirst,wsSecond)
-
-start: the paragraph starting position,
-end: the paragraph ending position,
-endsWithNL: true if the paragraph ends with a newline"""
-
-	if not t: return None
-	x=t.index("insert")
+	if not s:
+		return []
+	else:
+		if s[-1] == '\n':
+			lines = s.split('\n')
+			lines = [line + '\n' for line in lines[:-1]]
+		else:
+			lines = s.split('\n')
+			last = lines[-1]
+			lines = [line + '\n' for line in lines[:-1]]
+			lines.extend(last)
+		return lines
+		
+def joinLines (aList):
 	
-	# Return if the selected line is all whitespace or a Leo directive.
-	s = t.get(x+"linestart",x+"lineend")
-	s = toUnicode(s,app.tkEncoding) # 9/28/03
-	if not s or s.isspace() or s[0] == '@':
-		return None 
-
-	# Point start and end at the start and end of the selected line.
-	start = t.index(x+"linestart")
-	tmpLine = int(float(start))
-	end = str(tmpLine + 1) + ".0"
-	
-	# EKR: This is needlessly complex.
-	# It would be much easier to use a list of lines,
-	# rather than asking TK to do so much work.
-
-	# Set start to the start of the paragraph.
-	while (tmpLine > 1):
-		tmpLine -= 1
-		tmp = str(tmpLine) + ".0"
-		s = t.get(tmp,tmp+"lineend")
-		if len(s)==0 or s.isspace() or s[0] == '@':
-			break
-		start = tmp
-
-	# Set end to the end of the paragraph.
-	tmpLine = int(float(end))
-	bodyEnd = t.index("end")
-
-	while end != bodyEnd:
-		end = str(tmpLine) + ".0"
-		s = t.get(end,end+"lineend")
-		s = toUnicode(s,app.tkEncoding) # 9/28/03
-		if not s or s.isspace() or s[0] == '@':
-			break
-		tmpLine += 1
-
-	# do we insert a trailing NL?
-	endsWithNL = len(t.get(end))
-
-	return start, end, endsWithNL
+	return ''.join(aList)
 #@nonl
-#@-node:bound_paragraph (TK stuff)
+#@-node:splitLines & joinLines
 #@+node:getindex
 def getindex(text, index):
 	
@@ -2958,7 +2966,7 @@ def getindex(text, index):
 	return tuple(map(int,string.split(text.index(index), ".")))
 #@nonl
 #@-node:getindex
-#@+node:getAllText & getSelectedText
+#@+node:getAllText
 def getAllText (t):
 	
 	"""Return all the text of Tk.Text t converted to unicode."""
@@ -2966,20 +2974,8 @@ def getAllText (t):
 	s = t.get("1.0","end")
 	if s is None: s = u""
 	return toUnicode(s,app.tkEncoding)
-
-def getSelectedText (t):
-	
-	"""Return the selected text of Tk.Text t converted to unicode."""
-
-	start, end = getTextSelection(t)
-	if start and end and start != end:
-		s = t.get(start,end)
-		if s is None: s = u""
-		return toUnicode(s,app.tkEncoding)
-	else:
-		return None
 #@nonl
-#@-node:getAllText & getSelectedText
+#@-node:getAllText
 #@+node:getTextSelection
 def getTextSelection (t):
 	
@@ -3160,7 +3156,7 @@ def isValidEncoding (encoding):
 #@-node:isValidEncoding
 #@+node:reportBadChars
 def reportBadChars (s,encoding):
-
+	
 	errors = 0
 	if type(s) == type(u""):
 		for ch in s:
