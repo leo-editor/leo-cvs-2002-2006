@@ -1,5 +1,5 @@
-#@+leo-ver=4
-#@+node:@file /home/timo/leo/plugins/bibtex.py
+#@+leo-ver=4-thin
+#@+node:timo.20050213160555:@thin /home/timo/leo/plugins/bibtex.py
 """Manage BibTeX files with Leo.
 
 Create a bibliographic database by putting '@bibtex filename' in a headline.
@@ -23,7 +23,7 @@ into a @bibtex tree.
 
 
 #@<< about this plugin >>
-#@+node:<<about this plugin >>
+#@+node:timo.20050213160555.1:<<about this plugin >>
 #@+at 
 #@nonl
 # This plugin can be used to manage BibTeX files with Leo.
@@ -80,11 +80,11 @@ into a @bibtex tree.
 # in the headline. Double-clicking it will read the file 'filename' and parse it
 # into a @bibtex tree. No syntax checking is made, 'filename' is expected to be a valid BibTeX file.
 #@-at
-#@-node:<<about this plugin >>
+#@-node:timo.20050213160555.1:<<about this plugin >>
 #@nl
 __version__ = "0.4" # Set version for the plugin handler.
 #@<< change log >>
-#@+node:<<change log>>
+#@+node:timo.20050213160555.2:<<change log>>
 #@+at 
 # 
 # Change log
@@ -120,19 +120,19 @@ __version__ = "0.4" # Set version for the plugin handler.
 #   Timo Honkasalo 2005/03/02
 #@-at
 #@nonl
-#@-node:<<change log>>
+#@-node:timo.20050213160555.2:<<change log>>
 #@nl
 #@<< imports >>
-#@+node:<<imports>>
+#@+node:timo.20050213193129:<<imports>>
 import leoGlobals as g
 import leoPlugins
 
 import os
 #@nonl
-#@-node:<<imports>>
+#@-node:timo.20050213193129:<<imports>>
 #@nl
 #@<< globals >>
-#@+node:<<globals>>
+#@+node:timo.20050215183130:<<globals>>
 templates = {'@article':'author       = {},\ntitle        = {},\njournal      = {},\nyear         = ',
              '@book':'author       = {},\ntitle        = {},\npublisher    = {},\nyear         = ',
              '@booklet':'title        = {}',
@@ -152,10 +152,10 @@ templates = {'@article':'author       = {},\ntitle        = {},\njournal      = 
 entrytypes = templates.keys()
 entrytypes.append('@string') 
 #@nonl
-#@-node:<<globals>>
+#@-node:timo.20050215183130:<<globals>>
 #@nl
 #@<< to do >>
-#@+node:<<to do>>
+#@+node:timo.20050213185039:<<to do>>
 #@+at 
 #@nonl
 # To do list (in approximate order of importance):
@@ -173,11 +173,11 @@ entrytypes.append('@string')
 # - Syntax highligting
 # 
 #@-at
-#@-node:<<to do>>
+#@-node:timo.20050213185039:<<to do>>
 #@nl
 
 #@+others
-#@+node:onIconDoubleClick
+#@+node:timo.20050213160555.3:onIconDoubleClick
 #
 # this does not check for proper filename syntax.
 # path is the current dir, or the place @folder points to
@@ -196,18 +196,18 @@ def onIconDoubleClick(tag,keywords):
         fname = h[8:]
         if v.hasChildren():
             #@            << write bibtex file >>
-            #@+node:<< write bibtex file >>
+            #@+node:timo.20050213160555.6:<< write bibtex file >>
             bibFile = file(fname,'w')
             writeTreeAsBibTex(bibFile, v, c)
             
             bibFile.close()
             g.es('written: '+str(fname))
             #@nonl
-            #@-node:<< write bibtex file >>
+            #@-node:timo.20050213160555.6:<< write bibtex file >>
             #@nl
         else:
             #@            << read bibtex file >>
-            #@+node:<< read bibtex file >>
+            #@+node:timo.20050214174623:<< read bibtex file >>
             g.es('reading: ' + str(fname))
             try: 
                 bibFile = file(fname,'r')
@@ -217,12 +217,12 @@ def onIconDoubleClick(tag,keywords):
             readBibTexFileIntoTree(bibFile, c)
             
             bibFile.close()
-            #@-node:<< read bibtex file >>
+            #@-node:timo.20050214174623:<< read bibtex file >>
             #@nl
        
                
-#@-node:onIconDoubleClick
-#@+node:onHeadKey
+#@-node:timo.20050213160555.3:onIconDoubleClick
+#@+node:timo.20050215222802:onHeadKey
 def onHeadKey(tag,keywords):
     """Write template for the entry in body pane.
     
@@ -237,18 +237,18 @@ def onHeadKey(tag,keywords):
         for p in v.parents_iter():
             if p.headString()[:8] == '@bibtex ':
                 #@                << write template >>
-                #@+node:<< write template >>
+                #@+node:timo.20050215232157:<< write template >>
                 v.setBodyStringOrPane(templates[h[:h.find(' ')]])
                 c.frame.body.setInsertionPoint('1.16')
                 return
                 #@nonl
-                #@-node:<< write template >>
+                #@-node:timo.20050215232157:<< write template >>
                 #@nl
                 
        
 #@nonl
-#@-node:onHeadKey
-#@+node:writeTreeAsBibTex
+#@-node:timo.20050215222802:onHeadKey
+#@+node:timo.20050213160555.7:writeTreeAsBibTex
 def writeTreeAsBibTex(bibFile, vnode, c):
     """Write the tree under vnode to the file bibFile"""
     
@@ -280,8 +280,8 @@ def writeTreeAsBibTex(bibFile, vnode, c):
     if strings:
         bibFile.write(strings + '\n\n')
     bibFile.write(entries)  
-#@-node:writeTreeAsBibTex
-#@+node:readBibTexFileIntoTree
+#@-node:timo.20050213160555.7:writeTreeAsBibTex
+#@+node:timo.20050214174623.1:readBibTexFileIntoTree
 def readBibTexFileIntoTree(bibFile, c):
     """Read BibTeX file and parse it into @bibtex tree
     
@@ -317,7 +317,7 @@ def readBibTexFileIntoTree(bibFile, c):
 
 
 
-#@-node:readBibTexFileIntoTree
+#@-node:timo.20050214174623.1:readBibTexFileIntoTree
 #@-others
 
 if not g.app.unitTesting:
@@ -327,5 +327,5 @@ if not g.app.unitTesting:
     leoPlugins.registerHandler("headkey2",onHeadKey)
     g.plugin_signon(__name__)
 #@nonl
-#@-node:@file /home/timo/leo/plugins/bibtex.py
+#@-node:timo.20050213160555:@thin /home/timo/leo/plugins/bibtex.py
 #@-leo
