@@ -9,7 +9,7 @@ A plugin to manage Leo's Plugins:
 - Checks for and updates plugins from the web.
 """
 
-__version__ = "0.11"
+__version__ = "0.12"
 __plugin_name__ = "Plugin Manager"
 __plugin_priority__ = 10000
 __plugin_requires__ = ["plugin_menu"]
@@ -71,6 +71,8 @@ __plugin_group__ = "Core"
 #     - Can now be run stand-alone to aid in debugging problems
 # 0.11 EKR:
 #     - Use stand-alone leoGlobals module to simplify code.
+# 0.12 EKR:
+#     - Folded in some minor changes from Paul to support AutoTrees plugin.
 #@-at
 #@nonl
 #@-node:pap.20041006184225.2:<< version history >>
@@ -627,11 +629,13 @@ class RemotePluginList(PluginList):
 class ManagerDialog:
     """The dialog to show manager functions"""
     
+    dialog_caption = "Plugin Manager"
+    
     #@    @+others
     #@+node:pap.20041006215108.1:ManagerDialog._init__
     def __init__(self):
         """Initialise the dialog"""
-        
+        self.setPaths()
         #@    << create top level window >>
         #@+node:ekr.20041010110321:<< create top level window >>
         root = g.app.root
@@ -640,7 +644,7 @@ class ManagerDialog:
         else:
             self.top = top = Tk.Toplevel(root)
         g.app.gui.attachLeoIcon(self.top)
-        top.title("Plugin Manager")
+        top.title(self.dialog_caption)
         #@-node:ekr.20041010110321:<< create top level window >>
         #@nl
         self.initLocalCollection()
@@ -749,6 +753,13 @@ class ManagerDialog:
         self.plugin_list.populateList()
     #@nonl
     #@-node:pap.20041006224151:enablePlugin
+    #@+node:ekr.20050329080427:setPaths
+    def setPaths(self):
+        """Set paths to the plugin locations"""
+        self.local_path = g.os_path_join(g.app.loadDir,"..","plugins")
+        self.remote_path = r"cvs.sourceforge.net/viewcvs.py/leo/leo/plugins"
+    #@nonl
+    #@-node:ekr.20050329080427:setPaths
     #@+node:pap.20041006224206:disablePlugin
     def disablePlugin(self):
         """Disable a plugin"""
@@ -765,11 +776,11 @@ class ManagerDialog:
     
         # Get the local plugins information
         self.local = LocalPluginCollection()
-        self.local.initFrom(g.os_path_join(g.app.loadDir,"..","plugins"))
+        self.local.initFrom(self.local_path)
     
         # Get the active status of the plugins
         self.enable = EnableManager()
-        self.enable.initFrom(g.os_path_join(g.app.loadDir,"..","plugins"))
+        self.enable.initFrom(self.local_path)
         self.local.setEnabledStateFrom(self.enable)
         
     #@nonl
@@ -777,7 +788,7 @@ class ManagerDialog:
     #@+node:pap.20041006224216:checkUpdates
     def checkUpdates(self):
         """Check for updates"""
-        url = r"cvs.sourceforge.net/viewcvs.py/leo/leo/plugins"
+        url = self.remote_path
         self.status_message = "Searching for plugin list"
         self.messagebar.message("busy", "Searching for plugin list")
         #@    << define callbackPrint >>
@@ -1602,6 +1613,7 @@ class EnableManager:
     def initFrom(self, location):
         """Initialize the manager from a folder"""
         manager_filename = os.path.join(location, "pluginsManager.txt")
+        self.location = location
     
         # Get the text of the plugin manager file
         try:
@@ -1721,7 +1733,7 @@ class EnableManager:
                 str(newentry),
                 self.text[self.manager.start():])
     
-        self.writeFile(g.os_path_join(g.app.loadDir,"..","plugins"))
+        self.writeFile(self.location)
     #@nonl
     #@-node:pap.20041008234256:updateState
     #@-others
