@@ -1,48 +1,55 @@
 Important note: See INSTALL.TXT for installation instructions.
 
-leo.py is available at:  http://sourceforge.net/projects/leo/
-leo.py requires Python 2.1 or above and tcl/tk 8.3 or above.
-leo.py will work on Linux, Windows and MacOs X Jaguar.
+Leo is available at:  http://sourceforge.net/projects/leo/
+Leo requires Python 2.1 or above and tcl/tk 8.3 or above.
+Leo will work on Linux, Windows and MacOs X Jaguar.
 
-leo.py 4.0 beta 1                      September 26, 2003
+Leo 4.0 beta 2                      October 3, 2003
 
-This is the first public release of Leo 4.0.  Version 4.0 is the culmination of over a year of collaborative design work and several months of actual implementation.
+This is the second public release of Leo 4.0. There are no known serious bugs
+in this version of Leo.  Version 4.0 is the culmination of over a year of
+collaborative design work and several months of actual implementation.
 
-Please use caution when using this beta version of Leo.  It appears very solid and it has been tested by only a few people.
+Highlights of 4.0 beta 2
+------------------------
+* Fixed several bugs:
+  - Fixed several problems with reading and writing 4.0 derived files.
+  - Fixed several Unicode-related bugs.
+  - Fixed a crasher in the Go To Line Number command.
+  - Fixed a problem with Importing Python files.
+* Important improvements:
+  - Added allow_clone_drags setting.  N.B. Allows Leo to be used with Aqua.
+  - When running Python 2.3 Leo can now create window icons without third-party packages.
+- The usual minor improvements and bug fixes.
 
-Highlights of 4.0:
-
+Highlights of 4.0 beta 1
+------------------------
 ** Improved and simplified format of derived files.
-	- Eliminated child indices, extraneous blank lines and @body sentinels.
-	- Eliminated @node sentinels that indicate outline structure.
-	- New @nl and @nonl sentinels indicate where newlines are and aren't.
-	- These changes will largely eliminate unwanted cvs conflicts.
-
+  - Eliminated child indices, extraneous blank lines and @body sentinels.
+  - Eliminated @node sentinels that indicate outline structure.
+  - New @nl and @nonl sentinels indicate where newlines are and aren't.
+  - These changes will largely eliminate unwanted cvs conflicts.
 ** Greatly improved error handling.
-	- Reading derived files _never_ alter outline structure or links.
-	- Read errors leave the outline completely unchanged.
-	- Broken clone links are gone forever.
-	- As a result, using 4.0 is much safer than all previous versions.
-
+  - Reading derived files _never_ alter outline structure or links.
+  - Read errors leave the outline completely unchanged.
+  - Broken clone links are gone forever.
+  - As a result, using 4.0 is much safer than all previous versions.
 ** Full compatibility will previous versions of Leo.
-	- Leo reads all derived files properly, regardless of version.
-	- Leo writes new-format derived files by default, and this default may be changed.
-	- New commands in the read/write menu allow you to explicitly specify the format of derived files.
-
+  - Leo reads all derived files properly, regardless of version.
+  - Leo writes new-format derived files by default, and this default may be changed.
 * New commands:
-	- Write 3.x Derived File.
-	- Write 4.x Derived File.
-	- Import Derived File.
-	- Clear Recent Files.
+  - Write 3.x Derived File command and Write 4.x Derived File command.
+  - Import Derived File.
+  - Clear Recent Files.
 
 - Several new plugins.
 - Several minor bug fixes.
 
-leo.py 3.12.1 beta 1                     July 25, 2003
+Leo 3.12.1 beta 1                     July 25, 2003
 
 This version exists to test the new Linux install scripts and the related distribution stuff.
 
-leo.py 3.12                              July 17, 2003
+Leo 3.12                              July 17, 2003
 
 Window sizes are now in pixels rather than grid units, so you must resize existing outlines (.leo files) when opening them for the first time using this version of Leo.  Don't panic!
 
@@ -75,7 +82,7 @@ Highlights of this version:
 * The usual assortment of bug fixes and minor improvements.
   - There are no known bugs in this version of Leo.
 
-leo.py 3.11.1                       May 1, 2003
+Leo 3.11.1                       May 1, 2003
 
 This version fixes two bugs:
 	
@@ -84,7 +91,7 @@ This version fixes two bugs:
 
 This code contains permanently disabled 4.0 code.
 
-leo.py 3.11                         April 27, 2003
+Leo 3.11                         April 27, 2003
 
 This version of Leo contains many important improvements since 3.10,
 especially support for unicode and a new plugin architecture.
@@ -92,36 +99,36 @@ especially support for unicode and a new plugin architecture.
 The Highlights of 3.11:
 
 ** Leo supports unicode properly.
-	- New @encoding directives specifies encoding for derived files.
-	- New settings specify default encodings for .leo and derived files.
-	- Derived files specify encodings used to create them.
+  - New @encoding directives specifies encoding for derived files.
+  - New settings specify default encodings for .leo and derived files.
+  - Derived files specify encodings used to create them.
 ** A new plugin architecture for customizing Leo.
 - New commands:
-	- Toggle Angle Brackets.
-	- Insert Time/Date (in headline or body text).
-	- Go To First/Last Node, Parent, Next/Previous Sibling.
-	- Write Missing @file Nodes.
-	- Expand/Contract Node.
+  - Toggle Angle Brackets.
+  - Insert Time/Date (in headline or body text).
+  - Go To First/Last Node, Parent, Next/Previous Sibling.
+  - Write Missing @file Nodes.
+  - Expand/Contract Node.
 - Improved commands:
-	- Fixed a huge performance bug that slowed moving nodes left.
-	- Expand/Contract commands now operate on the selected tree.
+  - Fixed a huge performance bug that slowed moving nodes left.
+  - Expand/Contract commands now operate on the selected tree.
 	  ( A major improvement)
-	- Sort Siblings command can now sort top-level nodes.
-	- Leo now allows multiple writes of cloned nodes.
+  - Sort Siblings command can now sort top-level nodes.
+  - Leo now allows multiple writes of cloned nodes.
 	  (Useful when different @path directives are in effect.)
 - Other improvements:
-	- New @lineending directive specifies line endings.
-	- Improved syntax coloring for html and xml.
-	- Leo scrolls partially visible headlines into full view.
-	- Added "Replace tabs with spaces" checkbox in Prefs panel.
+  - New @lineending directive specifies line endings.
+  - Improved syntax coloring for html and xml.
+  - Leo scrolls partially visible headlines into full view.
+  - Added "Replace tabs with spaces" checkbox in Prefs panel.
 - New settings in leoConfig.leo/.txt.
-	- Added "tk_encoding" setting and related logic.
-	- Colors for Show Invisibibles command and body_insertion_cursor
-	- Settings affecting when control-drags start.
-	- Defaults for unicode (see above).
+  - Added "tk_encoding" setting and related logic.
+  - Colors for Show Invisibibles command and body_insertion_cursor
+  - Settings affecting when control-drags start.
+  - Defaults for unicode (see above).
 - Many other bug fixes and improvements.
 
-leo.py 3.10                             December 14, 2002
+Leo 3.10                             December 14, 2002
 
 This version of Leo corrects bugs, improves Leo's documentation and adds many new features:
 
@@ -154,7 +161,7 @@ This version of Leo corrects bugs, improves Leo's documentation and adds many ne
 - The usual assortment of bug fixes and minor improvements.
   Actually, this release fixes more than the usual number of bugs.
 
-leo.py 3.9                               Nov 23, 2002
+Leo 3.9                               Nov 23, 2002
 
 This is one of the most interesting versions of Leo ever released:
 
@@ -190,7 +197,7 @@ This is one of the most interesting versions of Leo ever released:
 	installed Fredrik Lundh's PIL and tkIcon packages.
   - The usual assortment of bug fixes.
 
-leo.py 3.8                                 October 29, 2002
+Leo 3.8                                 October 29, 2002
 
 Many major improvements have been made to Leo, all made as the result of user requests:
 
@@ -209,7 +216,7 @@ Many major improvements have been made to Leo, all made as the result of user re
 - New commands in the help menu make it much easier to change configuration options.
 - Dozens of minor improvements and bug fixes.
 
-leo.py 3.7                                 October 9, 2002
+Leo 3.7                                 October 9, 2002
 
 Many improvements have been made to Leo.  The highlights:
 
@@ -227,7 +234,7 @@ Many improvements have been made to Leo.  The highlights:
 - Simplified sentinels reduce spurious CVS diffs.
 - Many other minor improvements and bug fixes.
 
-leo.py 3.6                                   September 11, 2002
+Leo 3.6                                   September 11, 2002
 
 Highlights:
 
@@ -239,9 +246,9 @@ Highlights:
 - Improved all aspects of the Help menu.
 - Discovered a minor bug involving the Python (Idle) window and documented a workaround.
 
-leo.py 3.5                                    August 14, 2002
+Leo 3.5                                    August 14, 2002
 
-The many bugs were reported in 3.4 show that leo.py is being heavily used.  This version corrects all known bugs and adds some new features:
+The many bugs were reported in 3.4 show that  Leo is being heavily used.  This version corrects all known bugs and adds some new features:
 
 - Added new entries in the help menu,
   (Including a link to Joe Orr's excellent ScreenBook tutorial).
@@ -253,7 +260,7 @@ The many bugs were reported in 3.4 show that leo.py is being heavily used.  This
 - Fixed crasher when leoConfig.txt did not exist.
 - Many small improvements and bug fixes.
 
-leo.py 3.4                                     August 11, 2002
+Leo 3.4                                     August 11, 2002
 
 This version contains many small improvements and bug fixes:
 
@@ -264,7 +271,7 @@ This version contains many small improvements and bug fixes:
 - Fixed a large number of problems with the configuration code.
 - The usual minor improvements and bug fixes.
 
-leo.py 3.3                                     August 3, 2002
+Leo 3.3                                     August 3, 2002
 
 This version of Leo:
 
@@ -273,7 +280,7 @@ This version of Leo:
 - Fixed numerous bugs related to configuration settings.
 - Fixed the "Javadoc" bug and several latent bugs related to it.
 
-leo.py 3.2                                     July 30, 2002
+Leo 3.2                                     July 30, 2002
 
 This version generalizes the @others directive, improves the Import command and fixes several bugs.  See the children of this node for full details.
 
@@ -289,9 +296,9 @@ The highlights:
 - Fixed syntax coloring of C strings that span multiple lines.
 - The usual minor improvements and bug fixes.
 
-leo.py 3.1                                     July 20, 2002
+Leo 3.1                                     July 20, 2002
 
-This version fixes a blunder that affects only leo.py 3.0.
+This version fixes a blunder that affects only  Leo 3.0.
 I recommend that all users of 3.0 upgrade to 3.1.
 
 With this release Leo's to-do list is now empty!
@@ -300,18 +307,18 @@ I'll add new features only if convinced that they contribute significantly to Le
 
 The highlights:
 
-- Fixed a blunder: Leo 3.0 did nothing when it was opened directly from leo.py.
+- Fixed a blunder: Leo 3.0 did nothing when it was opened directly from  Leo.
   (Opening leo using openLeo.py did work.)
 - Created a compare panel to control scripts in leoCompare.py.
 - Added many new settings in leoConfig.txt to initialize the compare panel.
 - The FAQ tells how to add support for new languages.
 - The usual minor improvements and bug fixes.
 
-leo.py 3.0                                     July 16, 2002
+Leo 3.0                                     July 16, 2002
 
 This version is called 3.0 because it can optionally produce files that
-can _not_ be read by the leo.py 2.x or the Borland version of Leo.
-By default, leo.py 3.0 _does_ produce files that all previous versions of Leo can read.
+can _not_ be read by the  Leo 2.x or the Borland version of Leo.
+By default,  Leo 3.0 _does_ produce files that all previous versions of Leo can read.
 
 As always, see LeoDocs.leo for full details.  The highlights:
 
@@ -330,14 +337,14 @@ As always, see LeoDocs.leo for full details.  The highlights:
 - Leo warns and aborts if Python 2.2 or above is not running.
 - The usual bug fixes.
 
-leo.py version 2.5.1                           July 7, 2002
+Leo version 2.5.1                           July 7, 2002
 
 This version corrects crashers that affect undo/redo move commands.
 Version 2.5 has been withdrawn.
 
 ANYONE USING 2.5 SHOULD IMMEDIATELY SWITCH TO 2.5.1.
 
-leo.py version 2.5                             July 7, 2002
+Leo version 2.5                             July 7, 2002
 
 See LeoDocs.leo for full details.  The highlights:
 
@@ -359,7 +366,7 @@ See LeoDocs.leo for full details.  The highlights:
 - Leo will no longer abort reading if it detects an invalid directory name
   in the Default Tangle Directory in the Preferences panel.
 
-leo.py version 2.4                             June 20, 2002
+Leo version 2.4                             June 20, 2002
 
 This version fixes some annoying bugs and adds some nice features:
 
@@ -368,12 +375,12 @@ This version fixes some annoying bugs and adds some nice features:
   Double and triple clicking in a headline now works as expected.
 - You can now reorganize drag headlines around.
   You must drag from a node's icon and release on another node's icon.
-- You can now open .leo files in leo.py by double clicking on .leo files,
-  provided that you associate leo.py with .leo files.
+- You can now open .leo files in  Leo by double clicking on .leo files,
+  provided that you associate  Leo with .leo files.
 - Improved error recovery when there are errors writing .leo files.
 - All parts of LeoDocs.leo now match the documentation on Leo's web site.
 
-leo.py version 2.3                             June 12, 2002
+Leo version 2.3                             June 12, 2002
 
 This version fixes a minor problem with Leo.
 
@@ -383,18 +390,18 @@ This version fixes a minor problem with Leo.
 - This default allows us to distribute LeoPy.leo without specifying
   a directory in the Preferences Panel.
 
-leo.py version 2.2                             June 2, 2002
+Leo version 2.2                             June 2, 2002
 
 The version fixes two bugs that happen rarely and can cause loss of data when they do happen.
 
-- In certain circumstances leo.py v2.1 would delete most of an outline when
+- In certain circumstances  Leo v2.1 would delete most of an outline when
   a node was moved in front of the previous root node!
-- All previous versions of leo.py will crash when saving body text containing unicode characters.
+- All previous versions of Leo will crash when saving body text containing unicode characters.
   This could occur as the result of cutting and pasting text from another application into the body pane.
-- Leo.py now writes body text containing unicode characters using Python's u-prefixed notation.
+- Leo now writes body text containing unicode characters using Python's u-prefixed notation.
   That is, the body text is written as: u'escaped_text', where escaped text replaces unicode characters
   not in the ascii character set by escape sequences of the form \uxxxx.
-- The result contains nothing but ascii characters, so leo.py will have no problem reading it.
+- The result contains nothing but ascii characters, so Leo will have no problem reading it.
   Naturally, compilers and other tools may not understand Python's notation,
   so you may have to convert escaped text to something that your tools can understand.
 

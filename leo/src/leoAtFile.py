@@ -76,21 +76,6 @@ sentinelDict = {
 #@nonl
 #@-node:<< global atFile constants >>
 #@nl
-#@<< global functions >>
-#@+node:<< global functions >>
-def importDerivedFileNode(root,c,headline):
-	
-	moveRight = c.currentVnode() == root
-	c.insertHeadline() # op_name="Insert Outline"
-	if moveRight:
-		c.moveOutlineRight()
-	v = c.currentVnode()
-	v.initHeadString(headline)
-	v.t.setVisited() # Suppress warning about unvisited node.
-	return v
-#@nonl
-#@-node:<< global functions >>
-#@nl
 
 class baseAtFile:
 	"""The base class for the top-level atFile subcommander."""
@@ -228,13 +213,8 @@ class baseAtFile:
 		df = choose(read_new,at.new_df,at.old_df)
 		#@	<< copy ivars to df >>
 		#@+node:<< copy ivars to df >>
-		if importFileName:
-			df.importing = true
-			df.importRoot = c.currentVnode()
-			
-		else:
-			df.importing = false
-			df.importRoot = None
+		df.importing = importFileName != None
+		df.importRootSeen = false
 		
 		# Set by scanHeader.
 		df.encoding = at.encoding
@@ -862,11 +842,28 @@ class baseOldDerivedFile:
 		# For interface between 3.x and 4.x read code.
 		self.file = None
 		self.importing = false
-		self.importRoot = None
+		self.importRootSeen = false
 		#@nonl
 		#@-node:<< init atFile ivars >>
 		#@nl
 	#@-node: old_df.__init__& initIvars
+	#@+node:createImportedNode
+	def createImportedNode (self,root,c,headline):
+		
+		at = self
+	
+		if at.importRootSeen:
+			v = at.root.insertAsLastChild()
+			v.initHeadString(headline)
+		else:
+			# Put the text into the already-existing root node.
+			v = at.root
+			at.importRootSeen = true
+			
+		v.t.setVisited() # Suppress warning about unvisited node.
+		return v
+	#@nonl
+	#@-node:createImportedNode
 	#@+node:old_df.readOpenFile
 	def readOpenFile(self,root,file,firstLines):
 		
@@ -977,7 +974,7 @@ class baseOldDerivedFile:
 		assert(n > 0)
 		
 		if at.importing:
-			return importDerivedFileNode(at.root,at.commands,headline)
+			return at.createImportedNode(at.root,at.commands,headline)
 	
 		# Create any needed dummy children.
 		dummies = n - parent.numberOfChildren() - 1
@@ -3366,7 +3363,6 @@ class baseNewDerivedFile(oldDerivedFile):
 		at.done = false # true when @-leo seen.
 		at.endSentinelStack = []
 		at.importing = false
-		at.importRoot = None
 		at.indent = 0 ; at.indentStack = []
 		at.lastLines = [] # The lines after @-leo
 		at.leadingWs = ""
@@ -3438,7 +3434,7 @@ class baseNewDerivedFile(oldDerivedFile):
 		at = self
 	
 		if at.importing:
-			v = importDerivedFileNode(at.root,at.commands,headline)
+			v = at.createImportedNode(at.root,at.commands,headline)
 			return v.t
 	
 		if not hasattr(at.root,"tnodeList"):

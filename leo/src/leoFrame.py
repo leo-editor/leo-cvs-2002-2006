@@ -128,7 +128,7 @@ class baseLeoFrame:
 		# Sign on.
 		color = app.config.getWindowPref("log_error_color")
 		es("Leo Log Window...",color=color)
-		es("Leo 4.0 beta 1, ",newline=0)
+		es("Leo 4.0 beta 2, ",newline=0)
 		n1,n2,n3,junk,junk=sys.version_info
 		ver1 = "Python %d.%d.%d" % (n1,n2,n3)
 		ver2 = ", Tk " + self.top.getvar("tk_patchLevel")
@@ -2040,19 +2040,25 @@ class baseLeoFrame:
 	#@+node:OnReadAtFileNodes
 	def OnReadAtFileNodes (self,event=None):
 	
-		c = self.commands
-	
-		if 0: # highly annoying during testing.
-			answer = leoDialog.askOkCancel("Proceed?",
-				"Read @file Nodes is not undoable." +
-				"\nProceed?").run(modal=true)
+		c = self.commands ; v = c.currentVnode()
+		
+		if 1: # undo not ready yet.
+				c.fileCommands.readAtFileNodes()
 		else:
-			answer = "ok"
-	
-		if answer=="ok":
+			# Create copy for undo.
+			v_copy = v.copyTree()
+			oldText = getAllText(c.body)
+			oldSel = getTextSelection(c.body)
+		
 			c.fileCommands.readAtFileNodes()
-			c.undoer.clearUndoState()
-	#@nonl
+	
+			newText = getAllText(c.body)
+			newSel = getTextSelection(c.body)
+		
+			c.undoer.setUndoParams("Read @file Nodes",
+				v,select=v.currentVnode(),oldTree=v_copy,
+				oldText=oldText,newText=newText,
+				oldSel=oldSel,newSel=newSel)
 	#@-node:OnReadAtFileNodes
 	#@+node:OnWriteDirtyAtFileNodes
 	def OnWriteDirtyAtFileNodes (self,event=None):
@@ -2083,18 +2089,10 @@ class baseLeoFrame:
 		at = c.atFileCommands
 		
 		if v.isAtFileNode():
-			name = v.atFileNodeName()
+			fileName = v.atFileNodeName()
+			c.importCommands.importDerivedFiles(v,fileName)
 		else:
 			es("not an @file node",color="blue")
-			return
-		
-		c.beginUpdate()
-		c.insertHeadline() # op_name="Import Derived File" (was "Insert Outline")
-		c.moveOutlineLeft()
-		v = c.currentVnode()
-		v.initHeadString("Imported @file " + name)
-		at.read(v,importFileName=name)
-		c.endUpdate()
 	#@nonl
 	#@-node:OnImportDerivedFile
 	#@+node:OnWriteNew/OldDerivedFiles
@@ -3506,7 +3504,7 @@ class baseLeoFrame:
 		# Doing so would add unwanted leading tabs.
 		ver = "$Revision$" # CVS will update this.
 		build = ver[10:-1] # Strip off "$Reversion" and "$"
-		version = "leo.py 4.0 beta 1, Build " + build + ", July 25, 2003\n\n"
+		version = "leo.py 4.0 beta 2, Build " + build + ", October 3, 2003\n\n"
 		copyright = (
 			"Copyright 1999-2003 by Edward K. Ream\n" +
 			"All Rights Reserved\n" +

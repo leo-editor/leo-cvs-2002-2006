@@ -508,7 +508,7 @@ class baseUndoer:
 			#@nl
 			#@		<< redo insert cases >>
 			#@+node:<< redo insert cases >>
-			elif redoType in ["Import", "Insert Outline", "Paste Node"]:
+			elif redoType in ["Import","Insert Outline","Paste Node"]:
 			
 				if u.back:
 					u.v.linkAfter(u.back)
@@ -577,14 +577,15 @@ class baseUndoer:
 			#@+node:<< redo replace cases >>
 			elif redoType in (
 				"Convert All Blanks","Convert All Tabs",
-				"Extract","Extract Names","Extract Section"):
+				"Extract","Extract Names","Extract Section",
+				"Read @file Nodes"):
 				
 				u.v = self.undoReplace(u.oldTree,u.v,u.newText)
 				c.selectVnode(u.v) # Does full recolor.
 				if u.newSel:
 					start,end=u.newSel
 					setTextSelection(c.frame.body,start,end)
-				redrawFlag = redoType in ("Extract","Extract Names","Extract Section")
+				redrawFlag = redoType in ("Extract","Extract Names","Extract Section","Read @file Nodes")
 			#@-node:<< redo replace cases >>
 			#@nl
 			#@		<< redo sort cases >>
@@ -739,7 +740,7 @@ class baseUndoer:
 			#@nl
 			#@		<< undo insert cases >>
 			#@+node:<< undo insert cases >>
-			elif undoType in ["Import", "Insert Outline", "Paste Node"]:
+			elif undoType in ["Import","Insert Outline","Paste Node"]:
 				
 				c.selectVnode(u.v)
 				c.deleteHeadline()
@@ -792,7 +793,8 @@ class baseUndoer:
 			#@+node:<< undo replace cases >>
 			elif undoType in (
 				"Convert All Blanks","Convert All Tabs",
-				"Extract","Extract Names","Extract Section"):
+				"Extract","Extract Names","Extract Section",
+				"Read @file Nodes"):
 					
 				u.v = self.undoReplace(u.v,u.oldTree,u.oldText)
 				c.selectVnode(u.v) # Does full recolor.

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="2174" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="2175" clone_windows="0"/>
 <globals body_outline_ratio="0.5">
 	<global_window_position top="18" left="213" height="835" width="981"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
@@ -264,7 +264,7 @@
 <v t="T163"><vh>Ý</vh></v>
 </v>
 <v t="T164"><vh>Script to find which modules define names</vh></v>
-<v t="T165" a="V"><vh>4.0 Test files</vh>
+<v t="T165"><vh>4.0 Test files</vh>
 <v t="T166"><vh>Script to compare 3.x and 4.x derived files</vh></v>
 <v t="T167"><vh>Test Files...</vh>
 <v t="T168" a="C"><vh>&lt;&lt; ref &gt;&gt; (cloned)</vh></v>
@@ -2717,18 +2717,20 @@
 <v t="T2164"><vh>node3</vh></v>
 </v>
 </v>
-<v t="T2165" tnodeList="2165,2166,2167,2168,2169,2170,2171,2172,2173,2174"><vh>@file c:\prog\test\leo.py </vh>
-<v t="T2166" a="M"><vh>&lt;&lt; Import pychecker &gt;&gt;</vh></v>
-<v t="T2167"><vh>runMainLoop</vh></v>
-<v t="T2168"><vh>run &amp; allies</vh>
-<v t="T2169"><vh>createTkRoot</vh>
-<v t="T2170"><vh>&lt;&lt; set the icon image &gt;&gt;</vh></v>
 </v>
-<v t="T2171"><vh>createAppObject</vh></v>
-<v t="T2172"><vh>createFrame (leo.py)</vh></v>
-<v t="T2173"><vh>initSherlock</vh></v>
+<v t="T2165" a="E"><vh>Import tests</vh>
+<v t="T2166" a="E" tnodeList="2166,2167,2168,2169,2170,2171,2172,2173,2174,2175"><vh>@file c:\prog\test\leo.py </vh>
+<v t="T2167" a="MV"><vh>&lt;&lt; Import pychecker &gt;&gt;</vh></v>
+<v t="T2168"><vh>runMainLoop</vh></v>
+<v t="T2169"><vh>run &amp; allies</vh>
+<v t="T2170"><vh>createTkRoot</vh>
+<v t="T2171"><vh>&lt;&lt; set the icon image &gt;&gt;</vh></v>
 </v>
-<v t="T2174"><vh>profile</vh></v>
+<v t="T2172"><vh>createAppObject</vh></v>
+<v t="T2173"><vh>createFrame (leo.py)</vh></v>
+<v t="T2174"><vh>initSherlock</vh></v>
+</v>
+<v t="T2175"><vh>profile</vh></v>
 </v>
 </v>
 </vnodes>
@@ -33647,7 +33649,8 @@ node 1, line2 (no newline)</t>
 node 2, line2 (newline)</t>
 <t tx="T2164">node 3, line1 (changed)
 node 3, line2 (no newline)</t>
-<t tx="T2165">@first #! /usr/bin/env python
+<t tx="T2165"></t>
+<t tx="T2166">@first #! /usr/bin/env python
 # Entry point for Leo in Python.
 
 @language python
@@ -33669,8 +33672,10 @@ if __name__ == "__main__":
 		run()
 
 
+
+
 </t>
-<t tx="T2166">@ pychecker is extremely useful, and it sometimes reports problems erroneously.  In particular, the following warnings are invalid:
+<t tx="T2167">@ pychecker is extremely useful, and it sometimes reports problems erroneously.  In particular, the following warnings are invalid:
 
 in leoFrame.py and leoNodes.py: warnings about the event param not being used. pychecker doesn't understand that these routines are Tkinter callbacks.
 
@@ -33681,10 +33686,10 @@ several files: pychecker complains about several routines being "too big", i.e.,
 @c
 
 if 0: # Set to 1 for lint-like testing.  This can also be done in idle.
-	try: #changed 8
+	try: # changed
 		import pychecker.checker
 	except: pass</t>
-<t tx="T2167">def runMainLoop(root):
+<t tx="T2168">def runMainLoop(root):
 	
 	"""A function that runs root.mainloop()
 	
@@ -33692,7 +33697,7 @@ if 0: # Set to 1 for lint-like testing.  This can also be done in idle.
 	
 	root.mainloop()
 </t>
-<t tx="T2168">def run(fileName=None,*args,**keywords):
+<t tx="T2169">def run(fileName=None,*args,**keywords):
 	
 	"""Initialize and run Leo"""
 
@@ -33726,7 +33731,7 @@ if 0: # Set to 1 for lint-like testing.  This can also be done in idle.
 	set_focus(frame.commands,frame.body)
 
 	app.runMainLoop(root)</t>
-<t tx="T2169">def createTkRoot ():
+<t tx="T2170">def createTkRoot ():
 	
 	"""Step 1 of Leo startup process:
 	
@@ -33741,7 +33746,7 @@ if 0: # Set to 1 for lint-like testing.  This can also be done in idle.
 	return root
 	
 </t>
-<t tx="T2170">if 0: # not yet
+<t tx="T2171">if 0: # not yet
 	fullname = r"c:\prog\LeoPy\Icons\box05.GIF"
 	image = Tkinter.PhotoImage(file=fullname)
 	trace(`image`)
@@ -33750,7 +33755,7 @@ if 0: # Set to 1 for lint-like testing.  This can also be done in idle.
 	image = Tkinter.BitmapImage("stop")
 	trace(`image`)
 	root.iconbitmap(image)</t>
-<t tx="T2171">def createAppObject(root):
+<t tx="T2172">def createAppObject(root):
 
 	# Create the application object.
 	app = leoApp.LeoApp(root)
@@ -33762,7 +33767,7 @@ if 0: # Set to 1 for lint-like testing.  This can also be done in idle.
 		root = None
 
 	return app</t>
-<t tx="T2172">def createFrame (app,fileName):
+<t tx="T2173">def createFrame (app,fileName):
 	
 	"""Step 2 of Leo startup process:
 		
@@ -33788,14 +33793,14 @@ if 0: # Set to 1 for lint-like testing.  This can also be done in idle.
 		es("File not found: " + fileName)
 
 	return frame</t>
-<t tx="T2173">def initSherlock (app,args):
+<t tx="T2174">def initSherlock (app,args):
 	
 	"""Initialize Sherlock."""
 	
 	# Initialze Sherlock &amp; stats.
 	init_sherlock(args)
 	clear_stats()</t>
-<t tx="T2174">@ To gather statistics, do the following in a Python window, not idle:
+<t tx="T2175">@ To gather statistics, do the following in a Python window, not idle:
 
 	import leo
 	leo.profile()  (this runs leo)

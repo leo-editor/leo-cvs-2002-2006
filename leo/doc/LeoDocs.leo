@@ -2980,11 +2980,11 @@ This is the minimum you need to use Leo effectively.
 
 See the Appendices for a concise summary of information about Leo.</t>
 <t tx="T63"></t>
-<t tx="T64">leo.py 4.0 beta 2                      October 3, 2003
+<t tx="T64">Leo 4.0 beta 2                      October 3, 2003
 
-This is the second public release of Leo 4.0.  There are no known serious bugs in this version of Leo.
-
-Version 4.0 is the culmination of over a year of collaborative design work and several months of actual implementation.  
+This is the second public release of Leo 4.0. There are no known serious bugs
+in this version of Leo. Version 4.0 is the culmination of over a year of
+collaborative design work and several months of actual implementation.
 
 Highlights of 4.0 beta 2
 ------------------------

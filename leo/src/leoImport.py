@@ -129,6 +129,21 @@ class baseLeoImportCommands:
 		return v
 	#@nonl
 	#@-node:createOutline
+	#@+node:importDerivedFiles
+	def importDerivedFiles (self,parent,fileName):
+		
+		c = self.commands ; at = c.atFileCommands
+		current = c.currentVnode()
+		
+		c.beginUpdate()
+		v = parent.insertAfter()
+		v.initHeadString("Imported @file " + fileName)
+		c.undoer.setUndoParams("Import",v,select=current)
+		at.read(v,importFileName=fileName)
+		c.selectVnode(v)
+		v.expand()
+		c.endUpdate()
+	#@-node:importDerivedFiles
 	#@+node:importFilesCommand
 	def importFilesCommand (self,files,treeType):
 	
