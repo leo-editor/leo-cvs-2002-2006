@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="3535" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="3538" clone_windows="0"/>
 <globals body_outline_ratio="0.5">
-	<global_window_position top="0" left="388" height="872" width="836"/>
+	<global_window_position top="19" left="426" height="872" width="836"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences allow_rich_text="0">
@@ -2274,7 +2274,7 @@
 <v t="T1583"><vh>isUnicode</vh></v>
 <v t="T1584"><vh>isValidEncoding</vh></v>
 <v t="T1585" a="C"><vh>reportBadChars</vh></v>
-<v t="T1586"><vh>toUnicode &amp; toEncodedString</vh></v>
+<v t="T1586" a="C"><vh>toUnicode &amp; toEncodedString</vh></v>
 <v t="T1587"><vh>getpreferredencoding from 2.3a2</vh>
 <v t="T1588"><vh>&lt;&lt; define getpreferredencoding using _locale &gt;&gt;</vh></v>
 <v t="T1589"><vh>&lt;&lt; define getpreferredencoding for *nix &gt;&gt;</vh></v>
@@ -3570,7 +3570,7 @@
 <v t="T1583"><vh>isUnicode</vh></v>
 <v t="T1584"><vh>isValidEncoding</vh></v>
 <v t="T1585" a="C"><vh>reportBadChars</vh></v>
-<v t="T1586"><vh>toUnicode &amp; toEncodedString</vh></v>
+<v t="T1586" a="C"><vh>toUnicode &amp; toEncodedString</vh></v>
 <v t="T1587"><vh>getpreferredencoding from 2.3a2</vh>
 <v t="T1588"><vh>&lt;&lt; define getpreferredencoding using _locale &gt;&gt;</vh></v>
 <v t="T1589"><vh>&lt;&lt; define getpreferredencoding for *nix &gt;&gt;</vh></v>
@@ -3744,7 +3744,7 @@
 <v t="T1583"><vh>isUnicode</vh></v>
 <v t="T1584"><vh>isValidEncoding</vh></v>
 <v t="T1585" a="C"><vh>reportBadChars</vh></v>
-<v t="T1586"><vh>toUnicode &amp; toEncodedString</vh></v>
+<v t="T1586" a="C"><vh>toUnicode &amp; toEncodedString</vh></v>
 <v t="T1587"><vh>getpreferredencoding from 2.3a2</vh>
 <v t="T1588"><vh>&lt;&lt; define getpreferredencoding using _locale &gt;&gt;</vh></v>
 <v t="T1589"><vh>&lt;&lt; define getpreferredencoding for *nix &gt;&gt;</vh></v>
@@ -3905,7 +3905,7 @@
 </v>
 </v>
 </v>
-<v t="T2171"><vh>Code</vh>
+<v t="T2171" a="V"><vh>Code</vh>
 <v t="T2172"><vh>  Overview of code</vh>
 <v t="T2173" a="C"><vh>&lt;&lt; About clones &gt;&gt;</vh></v>
 <v t="T2174" a="C"><vh>&lt;&lt; About drawing and events &gt;&gt;</vh></v>
@@ -5596,7 +5596,7 @@
 <v t="T2916"><vh>dump</vh></v>
 <v t="T2917"><vh>es_error</vh></v>
 <v t="T2918"><vh>es_event_exception</vh></v>
-<v t="T2919"><vh>es_exception</vh></v>
+<v t="T2919" a="C"><vh>es_exception</vh></v>
 <v t="T1406" a="C"><vh>file/module/plugin_date</vh></v>
 <v t="T2920"><vh>funcToMethod</vh></v>
 <v t="T2921"><vh>get_line &amp; get_line_after</vh></v>
@@ -5714,7 +5714,7 @@
 <v t="T1583"><vh>isUnicode</vh></v>
 <v t="T1584"><vh>isValidEncoding</vh></v>
 <v t="T1585" a="C"><vh>reportBadChars</vh></v>
-<v t="T1586"><vh>toUnicode &amp; toEncodedString</vh></v>
+<v t="T1586" a="C"><vh>toUnicode &amp; toEncodedString</vh></v>
 <v t="T1587"><vh>getpreferredencoding from 2.3a2</vh>
 <v t="T1588"><vh>&lt;&lt; define getpreferredencoding using _locale &gt;&gt;</vh></v>
 <v t="T1589"><vh>&lt;&lt; define getpreferredencoding for *nix &gt;&gt;</vh></v>
@@ -6235,7 +6235,7 @@
 <v t="T3303"><vh>untangleAll</vh></v>
 <v t="T3304"><vh>untangleMarked</vh></v>
 <v t="T3305"><vh>untangleRoot (calls cleanup)</vh>
-<v t="T3306"><vh>&lt;&lt; return if @silent or unknown language &gt;&gt;</vh></v>
+<v t="T3306" a="C"><vh>&lt;&lt; return if @silent or unknown language &gt;&gt;</vh></v>
 <v t="T3307"><vh>&lt;&lt; Set path &amp; root_name to the file specified in the @root directive &gt;&gt;</vh></v>
 <v t="T3308"><vh>&lt;&lt; Read the file into file_buf  &gt;&gt;</vh></v>
 <v t="T3309"><vh>&lt;&lt; Pass 2:  Untangle the outline using the UST and a newly-created TST &gt;&gt;</vh></v>
@@ -6701,7 +6701,7 @@
 </v>
 </v>
 </v>
-<v t="T3531" a="EV"><vh>(Bugs fixed in 4.0.1)</vh>
+<v t="T3531"><vh>(Bugs fixed in 4.0.1)</vh>
 <v t="T2777" a="C"><vh>&lt;&lt; check for syntax coloring prefs &gt;&gt; (getPrefs)</vh></v>
 <v t="T2023" a="C"><vh>putLeadInSentinel</vh></v>
 <v t="T1802" a="C"><vh>openWithFileName (leoGlobals)</vh></v>
@@ -6733,6 +6733,15 @@
 <v t="T2805"><vh>&lt;&lt; put unknown vnode attributes &gt;&gt;</vh></v>
 </v>
 </v>
+</v>
+</v>
+<v t="T3536" a="E"><vh>(Bugs fixed in 4.0.2)</vh>
+<v t="T3537"><vh>Test of report bad chars</vh></v>
+<v t="T2919" a="C"><vh>es_exception</vh></v>
+<v t="T1585" a="C"><vh>reportBadChars</vh></v>
+<v t="T1586" a="C"><vh>toUnicode &amp; toEncodedString</vh></v>
+<v t="T3538"><vh>(Better message when @comment inhibits Untangle command)</vh>
+<v t="T3306" a="C"><vh>&lt;&lt; return if @silent or unknown language &gt;&gt;</vh></v>
 </v>
 </v>
 </vnodes>
@@ -28681,7 +28690,7 @@ self.newNewlines = new_newlines</t>
 		return false
 </t>
 <t tx="T1585">def reportBadChars (s,encoding):
-	
+
 	errors = 0
 	if type(s) == type(u""):
 		for ch in s:
@@ -28697,8 +28706,8 @@ self.newNewlines = new_newlines</t>
 			try: unicode(ch,encoding,"strict")
 			except: errors += 1
 		if errors:
-			es("%d errors converting %s from %s to unicode" % 
-				(errors, s.encode(encoding,"replace"),encoding))</t>
+			es("%d errors converting %s (%s encoding) to unicode" % 
+				(errors, unicode(s,encoding,"replace"),encoding)) # 10/23/03</t>
 <t tx="T1586">def toUnicode (s,encoding,reportErrors=false):
 	
 	if s is None:
@@ -33939,7 +33948,7 @@ __str__ = __repr__
 	return self.ver[10:-1] # Strip off "$Reversion" and the trailing "$"
 
 def getSignOnLine (self):
-	return "Leo 4.0.1, build %s, October 22, 2003" % self.getBuildNumber()
+	return "Leo 4.0.2, build %s, October 22, 2003" % self.getBuildNumber()
 	
 def initVersion (self):
 	self.ver = "$Revision$" # CVS will update this.
@@ -37560,7 +37569,7 @@ c:\python22\python &lt;leopath&gt;leo.py %1
 </t>
 <t tx="T2203">Metadata-Version: 1.0
 Name: leo
-Version: 4.0.1
+Version: 4.0.2
 Summary: Leo: Literate Editor with Outlines
 Home-page: http://webpages.charter.net/edreamleo/front.html
 Author: Edward K. Ream
@@ -37585,6 +37594,20 @@ Platform: Windows, Linux, Macintosh
 Leo is available at:  http://sourceforge.net/projects/leo/
 Leo requires Python 2.1 or above and tcl/tk 8.3 or above.
 Leo will work on Linux, Windows and MacOs X Jaguar.
+
+Leo 4.0.2                         October 24, 2003
+
+Yet another bug-fix release:
+
+- Fixes a crasher in reportBadChars when a .leo file contains a character that
+  can not be represented in the encoding specified in the first line of the
+  .leo file.
+- Leo now sends full tracebacks to the log window when Leo takes an unexpected
+ exception.
+- Leo now issues a more informative message when the @comment directive
+  inhibits the Untangle command.
+
+Note: This version does _not_ support Unicode file names or directory names.
 
 Leo 4.0.1                         October 22, 2003
 
@@ -37758,7 +37781,7 @@ setup (
 if sys.argv[1] == "sdist":
 	print "setup complete"</t>
 <t tx="T2211">name="leo",
-version="4.0.1",
+version="4.0.2",
 author="Edward K. Ream",
 author_email="edream@tds.net",
 url="http://personalpages.tds.net/~edream/front.html",
@@ -48482,7 +48505,7 @@ def oldDump(s):
 	for i in errList:
 		es(i)
 	traceback.print_exc()</t>
-<t tx="T2919">def es_exception (full=false):
+<t tx="T2919">def es_exception (full=true):
 
 	import traceback
 	typ,val,tb = sys.exc_info()
@@ -53067,11 +53090,11 @@ def untangleRoot(self,root,begin,end):
 		&lt;&lt; Pass 2: Untangle the outline using the UST and a newly-created TST &gt;&gt;
 	self.cleanup()</t>
 <t tx="T3306">if self.language == "unknown":
-	es("**Unknown language for " + path)
+	es("@comment disables Untangle for " + path, color="blue")
 	return
 
 if self.print_mode in ("quiet","silent"):
-	es("@" + self.print_mode +  " inhibits untangle for " + path)
+	es("@" + self.print_mode +  " inhibits Untangle for " + path, color="blue")
 	return
 </t>
 <t tx="T3307">s = root.bodyString()
@@ -56224,5 +56247,11 @@ checkTopologyOfAllClones()</t>
 <t tx="T3533"># Disabled traces for 4.0.1</t>
 <t tx="T3534"></t>
 <t tx="T3535"></t>
+<t tx="T3536"></t>
+<t tx="T3537">from leoGlobals import *
+
+reportBadChars ("\u9999","ascii")
+</t>
+<t tx="T3538"></t>
 </tnodes>
 </leo_file>

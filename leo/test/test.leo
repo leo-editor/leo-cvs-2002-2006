@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="2123" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="2129" clone_windows="0"/>
 <globals body_outline_ratio="0.5">
-	<global_window_position top="42" left="175" height="835" width="843"/>
+	<global_window_position top="62" left="257" height="835" width="843"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences allow_rich_text="0">
@@ -2487,156 +2487,165 @@
 </v>
 </v>
 </v>
-<v t="T2016"><vh>Body pane &amp; typing</vh>
-<v t="T2017"><vh>@file c:\prog\test\wrap_test.txt</vh>
-<v t="T2018"><vh>wrap node</vh></v>
-<v t="T2019"><vh>nowrap node</vh></v>
+<v t="T2016"><vh>4.0.1 tests</vh>
+<v t="T2017"><vh>Test of app.forceShutdown</vh></v>
+</v>
+<v t="T2018"><vh>4.0.2 tests</vh>
+<v t="T2019"><vh>Test of report bad chars</vh></v>
+<v t="T2020"><vh>Tangle/Untangle test</vh>
+<v t="T2021" a="M"><vh>&lt;&lt;nsolve&gt;&gt;</vh></v>
 </v>
 </v>
-<v t="T2020"><vh>Colorizer tests</vh>
-<v t="T2021"><vh>(colorizing bug)</vh>
-<v t="T2022"><vh>report</vh></v>
-<v t="T2023"><vh>@file c:\prog\test\Enroll SerNum.c</vh>
-<v t="T2024"><vh>&lt;&lt; Defines &gt;&gt;</vh></v>
-<v t="T2025"><vh>&lt;&lt; Head &gt;&gt;</vh></v>
+<v t="T2022"><vh>Body pane &amp; typing</vh>
+<v t="T2023"><vh>@file c:\prog\test\wrap_test.txt</vh>
+<v t="T2024"><vh>wrap node</vh></v>
+<v t="T2025"><vh>nowrap node</vh></v>
 </v>
 </v>
-<v t="T2026"><vh>(Fixed syntax coloring bugs when language/comments change)</vh>
-<v t="T2027"><vh>Test</vh></v>
-</v>
-<v t="T2028"><vh>(html syntax coloring)</vh>
-<v t="T2029"><vh>test</vh></v>
-</v>
-<v t="T2030"><vh>(Incremental Syntax Coloring)</vh>
-<v t="T2031"><vh> Tests</vh>
-<v t="T2032"><vh> Long text for tests</vh></v>
-<v t="T2033"><vh>Dave Hein</vh>
-<v t="T2034"><vh>Test</vh></v>
-</v>
-<v t="T2035"><vh>Dave Hein2</vh>
-<v t="T2036"><vh>NewHeadline</vh></v>
-</v>
-<v t="T2037"><vh>Long test</vh></v>
-<v t="T2038"><vh>problems</vh></v>
+<v t="T2026"><vh>Colorizer tests</vh>
+<v t="T2027"><vh>(colorizing bug)</vh>
+<v t="T2028"><vh>report</vh></v>
+<v t="T2029"><vh>@file c:\prog\test\Enroll SerNum.c</vh>
+<v t="T2030"><vh>&lt;&lt; Defines &gt;&gt;</vh></v>
+<v t="T2031"><vh>&lt;&lt; Head &gt;&gt;</vh></v>
 </v>
 </v>
-<v t="T2039"><vh>php test</vh></v>
-<v t="T2040"><vh>tests</vh></v>
-<v t="T2041"><vh>wiki tests</vh>
-<v t="T2042"><vh>test 1</vh></v>
-<v t="T2043"><vh>test 2</vh></v>
-<v t="T2044"><vh>test 3</vh></v>
+<v t="T2032"><vh>(Fixed syntax coloring bugs when language/comments change)</vh>
+<v t="T2033"><vh>Test</vh></v>
 </v>
-<v t="T2045"><vh>Actionscript keywords</vh></v>
-<v t="T2046"><vh>@file c:\prog\test\tab_test.txt</vh></v>
-<v t="T2047"><vh>Rebol keywords (- ? ~ ! recognized as a part of a keyword)</vh></v>
+<v t="T2034"><vh>(html syntax coloring)</vh>
+<v t="T2035"><vh>test</vh></v>
 </v>
-<v t="T2048"><vh>Commands...</vh>
-<v t="T2049"><vh>Read @file nodes</vh>
-<v t="T2050"><vh>@file c:\prog\test\atFileTest.txt</vh>
-<v t="T2051"><vh>Node 1</vh></v>
+<v t="T2036"><vh>(Incremental Syntax Coloring)</vh>
+<v t="T2037"><vh> Tests</vh>
+<v t="T2038"><vh> Long text for tests</vh></v>
+<v t="T2039"><vh>Dave Hein</vh>
+<v t="T2040"><vh>Test</vh></v>
 </v>
+<v t="T2041"><vh>Dave Hein2</vh>
+<v t="T2042"><vh>NewHeadline</vh></v>
 </v>
-<v t="T2052"><vh>Write Missing @file nodes test</vh>
-<v t="T2053"><vh>@file ../test/missing_test.txt</vh></v>
-</v>
-<v t="T2054"><vh>reformatParagraph test</vh></v>
-<v t="T2055"><vh>Go to line number test</vh>
-<v t="T2056"><vh>@file c:\prog\test\goToLineNumber.txt</vh>
-<v t="T2057"><vh>__init__</vh></v>
-<v t="T2058"><vh>__init__</vh></v>
+<v t="T2043"><vh>Long test</vh></v>
+<v t="T2044"><vh>problems</vh></v>
 </v>
 </v>
-<v t="T2059" tnodeList="2059,2060,2061,2062"><vh>@file c:\prog\test\undoTest</vh>
-<v t="T2060"><vh>&lt;&lt; ref 1 &gt;&gt;</vh></v>
-<v t="T2061"><vh>node 1</vh></v>
-<v t="T2062"><vh>node 2</vh></v>
+<v t="T2045"><vh>php test</vh></v>
+<v t="T2046"><vh>tests</vh></v>
+<v t="T2047"><vh>wiki tests</vh>
+<v t="T2048"><vh>test 1</vh></v>
+<v t="T2049"><vh>test 2</vh></v>
+<v t="T2050"><vh>test 3</vh></v>
 </v>
-<v t="T2063"><vh>Undo tests...</vh>
-<v t="T2064"><vh>Simple</vh>
-<v t="T2065"><vh>A</vh>
-<v t="T2066" a="E"><vh>B</vh>
-<v t="T2067"><vh>C</vh></v>
-<v t="T2068"><vh>C2</vh></v>
+<v t="T2051"><vh>Actionscript keywords</vh></v>
+<v t="T2052"><vh>@file c:\prog\test\tab_test.txt</vh></v>
+<v t="T2053"><vh>Rebol keywords (- ? ~ ! recognized as a part of a keyword)</vh></v>
 </v>
-</v>
-</v>
-<v t="T2069"><vh>extract commands</vh></v>
-</v>
-</v>
-<v t="T2070"><vh>Dialog tests</vh>
-<v t="T2071"><vh>Test askOk</vh></v>
-<v t="T2072"><vh>Test aboutLeo</vh></v>
-<v t="T2073"><vh>Test askLeoID</vh></v>
-<v t="T2074"><vh>Test askOkCancelNumber</vh></v>
-<v t="T2075"><vh>Test askOkCancel</vh></v>
-<v t="T2076"><vh>Test askYesNo</vh></v>
-<v t="T2077"><vh>Test askYesNoCancel</vh></v>
-</v>
-<v t="T2078"><vh>Directives...</vh>
-<v t="T2079"><vh>@encoding test</vh>
-<v t="T2080"><vh>@file c:\prog\test\encodingTest.txt</vh>
-<v t="T2081"><vh>Umlaut in headline ë</vh></v>
+<v t="T2054"><vh>Commands...</vh>
+<v t="T2055"><vh>Read @file nodes</vh>
+<v t="T2056"><vh>@file c:\prog\test\atFileTest.txt</vh>
+<v t="T2057"><vh>Node 1</vh></v>
 </v>
 </v>
-<v t="T2082"><vh>@lineending and @encoding tests</vh></v>
-<v t="T2083"><vh>@url file:///C:/prog/test/sortText.leo</vh></v>
+<v t="T2058"><vh>Write Missing @file nodes test</vh>
+<v t="T2059"><vh>@file ../test/missing_test.txt</vh></v>
 </v>
-<v t="T2084"><vh>Leo Unit Tests</vh></v>
-<v t="T2085"><vh>Plugins...</vh>
-<v t="T2086"><vh>@image Icons/Leoapp.GIF</vh></v>
-<v t="T2087"><vh>Spell test </vh>
-<v t="T2088"><vh>node two</vh></v>
-<v t="T2089"><vh>node two no misspellings</vh></v>
-</v>
-<v t="T2090"><vh>Status line</vh>
-<v t="T2091"><vh>put message</vh></v>
-<v t="T2092"><vh>clear</vh></v>
-<v t="T2093"><vh>tab width tests</vh>
-<v t="T2094"><vh>2</vh></v>
-<v t="T2095"><vh>4</vh></v>
-<v t="T2096"><vh>6</vh></v>
-<v t="T2097"><vh>8</vh></v>
+<v t="T2060"><vh>reformatParagraph test</vh></v>
+<v t="T2061"><vh>Go to line number test</vh>
+<v t="T2062"><vh>@file c:\prog\test\goToLineNumber.txt</vh>
+<v t="T2063"><vh>__init__</vh></v>
+<v t="T2064"><vh>__init__</vh></v>
 </v>
 </v>
-<v t="T2098"><vh>Test of recent sections &amp; clones</vh>
-<v t="T2099" a="C"><vh>&lt;&lt; section a &gt;&gt;</vh></v>
-<v t="T2100" a="C"><vh>hyper link test</vh>
-<v t="T2099" a="C"><vh>&lt;&lt; section a &gt;&gt;</vh></v>
-<v t="T2101"><vh>&lt;&lt; section b &gt;&gt;</vh></v>
+<v t="T2065" tnodeList="2065,2066,2067,2068"><vh>@file c:\prog\test\undoTest</vh>
+<v t="T2066"><vh>&lt;&lt; ref 1 &gt;&gt;</vh></v>
+<v t="T2067"><vh>node 1</vh></v>
+<v t="T2068"><vh>node 2</vh></v>
 </v>
-<v t="T2100" a="C"><vh>hyper link test</vh>
-<v t="T2099" a="C"><vh>&lt;&lt; section a &gt;&gt;</vh></v>
-<v t="T2102"><vh>&lt;&lt; section b &gt;&gt;</vh></v>
-</v>
-</v>
-<v t="T2103"><vh>Icon bar</vh>
-<v t="T2104"><vh>add some buttons</vh></v>
-<v t="T2105"><vh>add all gif files</vh></v>
-<v t="T2106"><vh>clear</vh></v>
-<v t="T2107"><vh>hide</vh></v>
-<v t="T2108"><vh>configure</vh></v>
-<v t="T2109"><vh>show (puts at bottom)</vh></v>
+<v t="T2069"><vh>Undo tests...</vh>
+<v t="T2070"><vh>Simple</vh>
+<v t="T2071"><vh>A</vh>
+<v t="T2072" a="E"><vh>B</vh>
+<v t="T2073"><vh>C</vh></v>
+<v t="T2074"><vh>C2</vh></v>
 </v>
 </v>
-<v t="T2110"><vh>Python related...</vh>
-<v t="T2111"><vh>Assignment tests</vh></v>
-<v t="T2112"><vh>alloc tests</vh></v>
-<v t="T2113"><vh>Use xml.sax</vh></v>
-<v t="T2114"><vh>New import</vh></v>
-<v t="T2115"><vh>Singleton sequences</vh></v>
 </v>
-<v t="T2116"><vh>Settings...</vh>
-<v t="T2117"><vh>Redirect test</vh></v>
+<v t="T2075"><vh>extract commands</vh></v>
 </v>
 </v>
-<v t="T2118"><vh>Scripts...</vh>
-<v t="T2119"><vh>Script to find which modules define names</vh></v>
-<v t="T2120"><vh>Script to compare 3.x and 4.x derived files</vh></v>
+<v t="T2076"><vh>Dialog tests</vh>
+<v t="T2077"><vh>Test askOk</vh></v>
+<v t="T2078"><vh>Test aboutLeo</vh></v>
+<v t="T2079"><vh>Test askLeoID</vh></v>
+<v t="T2080"><vh>Test askOkCancelNumber</vh></v>
+<v t="T2081"><vh>Test askOkCancel</vh></v>
+<v t="T2082"><vh>Test askYesNo</vh></v>
+<v t="T2083"><vh>Test askYesNoCancel</vh></v>
 </v>
-<v t="T2121"><vh>Test of app.forceShutdown</vh></v>
-<v t="T2122" a="EV"><vh>Distribution checklist for 4.0.1</vh>
-<v t="T2123"><vh>Pychecker</vh></v>
+<v t="T2084"><vh>Directives...</vh>
+<v t="T2085"><vh>@encoding test</vh>
+<v t="T2086"><vh>@file c:\prog\test\encodingTest.txt</vh>
+<v t="T2087"><vh>Umlaut in headline ë</vh></v>
+</v>
+</v>
+<v t="T2088"><vh>@lineending and @encoding tests</vh></v>
+<v t="T2089"><vh>@url file:///C:/prog/test/sortText.leo</vh></v>
+</v>
+<v t="T2090"><vh>Leo Unit Tests</vh></v>
+<v t="T2091"><vh>Plugins...</vh>
+<v t="T2092"><vh>@image Icons/Leoapp.GIF</vh></v>
+<v t="T2093"><vh>Spell test </vh>
+<v t="T2094"><vh>node two</vh></v>
+<v t="T2095"><vh>node two no misspellings</vh></v>
+</v>
+<v t="T2096"><vh>Status line</vh>
+<v t="T2097"><vh>put message</vh></v>
+<v t="T2098"><vh>clear</vh></v>
+<v t="T2099"><vh>tab width tests</vh>
+<v t="T2100"><vh>2</vh></v>
+<v t="T2101"><vh>4</vh></v>
+<v t="T2102"><vh>6</vh></v>
+<v t="T2103"><vh>8</vh></v>
+</v>
+</v>
+<v t="T2104"><vh>Test of recent sections &amp; clones</vh>
+<v t="T2105" a="C"><vh>&lt;&lt; section a &gt;&gt;</vh></v>
+<v t="T2106" a="C"><vh>hyper link test</vh>
+<v t="T2105" a="C"><vh>&lt;&lt; section a &gt;&gt;</vh></v>
+<v t="T2107"><vh>&lt;&lt; section b &gt;&gt;</vh></v>
+</v>
+<v t="T2106" a="C"><vh>hyper link test</vh>
+<v t="T2105" a="C"><vh>&lt;&lt; section a &gt;&gt;</vh></v>
+<v t="T2108"><vh>&lt;&lt; section b &gt;&gt;</vh></v>
+</v>
+</v>
+<v t="T2109"><vh>Icon bar</vh>
+<v t="T2110"><vh>add some buttons</vh></v>
+<v t="T2111"><vh>add all gif files</vh></v>
+<v t="T2112"><vh>clear</vh></v>
+<v t="T2113"><vh>hide</vh></v>
+<v t="T2114"><vh>configure</vh></v>
+<v t="T2115"><vh>show (puts at bottom)</vh></v>
+</v>
+</v>
+<v t="T2116"><vh>Python related...</vh>
+<v t="T2117"><vh>Assignment tests</vh></v>
+<v t="T2118"><vh>alloc tests</vh></v>
+<v t="T2119"><vh>Use xml.sax</vh></v>
+<v t="T2120"><vh>New import</vh></v>
+<v t="T2121"><vh>Singleton sequences</vh></v>
+</v>
+<v t="T2122"><vh>Settings...</vh>
+<v t="T2123"><vh>Redirect test</vh></v>
+</v>
+</v>
+<v t="T2124"><vh>Scripts...</vh>
+<v t="T2125"><vh>Script to find which modules define names</vh></v>
+<v t="T2126"><vh>Script to compare 3.x and 4.x derived files</vh></v>
+</v>
+<v t="T2127" a="EV"><vh>Distribution checklist for 4.0.2</vh>
+<v t="T2128"><vh>@url http://www.python.org/pypi?:action=submit_form</vh></v>
+<v t="T2129"><vh>Pychecker</vh></v>
 </v>
 </vnodes>
 <tnodes>
@@ -2654,8 +2663,9 @@ Documentation
 	- Update LeoDocs.leo
 	- Update web site.
 Version numbers
-	- Update version number in Help menu.
-	- Update version number in setup.py (@ignore'd!!)
+	- Update version number in the Version stuff node
+		** Update version number in setup.py (@ignore'd!!)
+	- Update version number in Leo's front page.
 @color
 
 # Note: paths are hard-coded into nsi script, so trying to generalize this is useless.
@@ -32295,16 +32305,53 @@ node 2, line2 (newline)</t>
 <t tx="T2015">node 3, line1 (changed)
 node 3, line2 (no newline)</t>
 <t tx="T2016"></t>
-<t tx="T2017">@others</t>
-<t tx="T2018">@wrap
+<t tx="T2017"># Executing this script will close all windows immediately, even if they have been changed!
+
+from leoGlobals import app
+app.forceShutdown()</t>
+<t tx="T2018">@ignore</t>
+<t tx="T2019">from leoGlobals import *
+
+reportBadChars ("aëbc","ascii")
+</t>
+<t tx="T2020">@comment //
+@language C
+@doc
+@root "c:\prog\test\calib.txt"
+&lt;&lt;nsolve&gt;&gt;</t>
+<t tx="T2021">@ 
+Returns the number of unknowns nu, and equations ne given: -
+
+nf frequencies
+na aerials
+ea enable for aerial position solve = {0,1}
+ec enable for coupling matrix solve = {0,1}
+erg enable for absolute channel gain solve = {0,1}
+ns source positions
+es enable for source position solve
+lin true (1) if linear array, else false (0)
+
+@code
+function [nu,ne]=nsolve(nf,na,ea,ec,erg,ns,es,lin)
+	ne = 2*nf*na*ns; // total number of real+imag error values
+	if lin           // if a linear array
+		nu = ea*(na-1)  + ec*nf*na*(na-1) + (1+erg)*nf*(na-1) + 2*nf*ns
++ es*ns*2;
+	else
+		nu = ea*(na*3-6) + ec*nf*na*(na-1) + (1+erg)*nf*(na-1) + 2*nf*ns
++ es*ns*3;
+	end</t>
+<t tx="T2022"></t>
+<t tx="T2023">@others</t>
+<t tx="T2024">@wrap
 
 this should wrap aaaaaaaaaaaaaaaaaaa bbbbbbbbbbbbbbbbbbbbb cccccccccccccccccc ddddddddddddddddddd eeeeeeeeeeeeeeeeeeeeee ffffffffffffffffffff</t>
-<t tx="T2019">@nowrap
+<t tx="T2025">@nowrap
 
 this should NOT wrap aaaaaaaaaaaaaaaaaaa bbbbbbbbbbbbbbbbbbbbb cccccccccccccccccc ddddddddddddddddddd eeeeeeeeeeeeeeeeeeeeee ffffffffffffffffffff</t>
-<t tx="T2020"></t>
-<t tx="T2021"></t>
-<t tx="T2022">@nocolor
+<t tx="T2026"></t>
+<t tx="T2027"></t>
+<t tx="T2028">@nocolor
 
 Read and respond to this message at: 
 http://sourceforge.net/forum/message.php?msg_id=1719215
@@ -32335,14 +32382,14 @@ the lines between the '/*' and '*/' are NOT comment-colored...
 
 --Rich
 </t>
-<t tx="T2023">@language c
+<t tx="T2029">@language c
 @comment /* */
 @path .
 @ignore
 
 &lt;&lt; Defines &gt;&gt;
 &lt;&lt; Head &gt;&gt;</t>
-<t tx="T2024">@
+<t tx="T2030">@
 @c
 
 #define WIPEOUT 0 /* 
@@ -32356,14 +32403,14 @@ the lines between the '/*' and '*/' are NOT comment-colored...
 #include "eeprom.h"
 #include &lt;hpc_ram.h&gt;
 #include &lt;rlydef.h&gt;</t>
-<t tx="T2025"></t>
-<t tx="T2026">@ Enabling or disabling @language or @comment now recolors entire text.</t>
-<t tx="T2027">@language c
+<t tx="T2031"></t>
+<t tx="T2032">@ Enabling or disabling @language or @comment now recolors entire text.</t>
+<t tx="T2033">@language c
  @comment /* */
 
 /* comment */
 # test</t>
-<t tx="T2028">@language html
+<t tx="T2034">@language html
 @
 To do:
 
@@ -32375,7 +32422,7 @@ done: complete test of syntax coloring.
 
 - add @language html when importing html file.
 </t>
-<t tx="T2029">@color
+<t tx="T2035">@color
 @ignore
 &lt;HTML&gt;
 &lt;!-- Author: Edward K. Ream, edream@tds.net --&gt;
@@ -32469,7 +32516,7 @@ HEIGHT="32" ALIGN="left" NATURALSIZEFLAG="3"&gt;
 &lt;/BODY&gt;
 &lt;/HTML&gt;
 </t>
-<t tx="T2030">@ignore
+<t tx="T2036">@ignore
 
 @
 
@@ -32480,8 +32527,8 @@ We must do a _full_ recoloring when selecting any node, even for two cloned node
 Furthermore, at present undo must always do a full recoloring because setBodyStringOrPane just replaces the old text with the new, and that destroys all the coloring tags.  The only possible solution would be to do an "incremental update" in setBodyStringOrPane.  It would also be good to do that in tree.select.
 
 The present code _is_ faster than the old code because it avoids redundant drawing.</t>
-<t tx="T2031"></t>
-<t tx="T2032"># This creates a free-floating copy of v's tree for undo.
+<t tx="T2037"></t>
+<t tx="T2038"># This creates a free-floating copy of v's tree for undo.
 # The copied trees must use different tnodes than the original.
 
 def copyTree(self,root):
@@ -32518,8 +32565,8 @@ def copyTree(self,root):
         v.t = leoNodes.tnode(0, v.t.bodyString)
         v = v.threadNext()
     return result</t>
-<t tx="T2033">@language c</t>
-<t tx="T2034">@
+<t tx="T2039">@language c</t>
+<t tx="T2040">@
 This is just a test
 @c
 aprocedure(
@@ -32563,7 +32610,7 @@ int main()
 {
   return 0
 }</t>
-<t tx="T2035">Here's another issue
+<t tx="T2041">Here's another issue
 
 Create a @file node[snip]
 
@@ -32578,12 +32625,12 @@ black.
 
 This is a nit, really.
 </t>
-<t tx="T2036">@language html
+<t tx="T2042">@language html
 &lt;? xml version="1.0"&gt;
 &lt;!-- test --&gt;
 &lt;project name="Converter" default="dist"&gt;
 &lt;/project&gt;</t>
-<t tx="T2037">def colorizeAnyLanguage (self,v,body,language,flag):
+<t tx="T2043">def colorizeAnyLanguage (self,v,body,language,flag):
 	
 	try:		
 		self.incremental = 1
@@ -32946,12 +32993,12 @@ def colorizeAnyLanguage (self,v,body,language,flag):
 
 
 </t>
-<t tx="T2038">"""python
+<t tx="T2044">"""python
 string"""d
 
 'this\
 is</t>
-<t tx="T2039">@language php
+<t tx="T2045">@language php
 @ doc
 @c
 
@@ -32962,7 +33009,7 @@ this is a test.
 __CLASS__
 &lt;?php and or array() ?&gt;
 </t>
-<t tx="T2040">@ignore
+<t tx="T2046">@ignore
 @ doc
 @c
 @language c
@@ -32992,8 +33039,8 @@ c "string" d
 // C keywords
 switch, case
 </t>
-<t tx="T2041">@markup wiki</t>
-<t tx="T2042">@language python
+<t tx="T2047">@markup wiki</t>
+<t tx="T2048">@language python
 
 """ {picture file=../Icons/Leoapp.GIF}this """ # Problems with correct indexing following a graphic.
 
@@ -33029,7 +33076,7 @@ string"""
 and if
 
 from leoGlobals import * ; print app().loadDir</t>
-<t tx="T2043">""" continued
+<t tx="T2049">""" continued
 string"""
 
 @ ''ab'' __xxx__ ''wx'' __xyz__  __''bolditalic''__ and ''__italicbold__''
@@ -33059,10 +33106,10 @@ and if
 
 from leoGlobals import * ; print app().loadDir
 </t>
-<t tx="T2044">""" text~~red:some text~~more text"""
+<t tx="T2050">""" text~~red:some text~~more text"""
 
 """ text~~#ee0ff:some text~~more text"""</t>
-<t tx="T2045">@language actionscript
+<t tx="T2051">@language actionscript
 
 break
 call, continue
@@ -33119,12 +33166,12 @@ _width
 _x, _xmouse, _xscale
 _y, _ymouse, _yscale
 and, add, eq, ge, gt, le, lt, ne, not, or, Array, Boolean, Color, Date, Key, Math, MovieClip, Mouse, Number, Object, Selection, Sound, String, XML, XMLSocket</t>
-<t tx="T2046">----*---*---*---*---*---*
+<t tx="T2052">----*---*---*---*---*---*
 	.	.	.	.	.	
                         
 .   ..  ... ....    .   
         .   ..</t>
-<t tx="T2047">@language rebol
+<t tx="T2053">@language rebol
 
 ; a comment
 about abs absolute add alert alias all alter and and~ any append arccosine arcsine arctangent array ask at  
@@ -33190,15 +33237,15 @@ unset? url?
 value? view? 
 within? word?  
 zero?</t>
-<t tx="T2048"></t>
-<t tx="T2049">@ignore</t>
-<t tx="T2050">@nocolor
+<t tx="T2054"></t>
+<t tx="T2055">@ignore</t>
+<t tx="T2056">@nocolor
 This is a test file
 @others</t>
-<t tx="T2051">Node one text.  changed 2.</t>
-<t tx="T2052">@ignore</t>
-<t tx="T2053"></t>
-<t tx="T2054">@language plain
+<t tx="T2057">Node one text.  changed 2.</t>
+<t tx="T2058">@ignore</t>
+<t tx="T2059"></t>
+<t tx="T2060">@language plain
 @pagewidth 72
 @tabwidth 2
 
@@ -33213,15 +33260,15 @@ to be able to recreate a chunk of
 text in your head or on paper, and perhaps verbally.
 
 The steps might be as follows:</t>
-<t tx="T2055"></t>
-<t tx="T2056">@others</t>
-<t tx="T2057">def __init__ (self):
+<t tx="T2061"></t>
+<t tx="T2062">@others</t>
+<t tx="T2063">def __init__ (self):
 	
 	pass # line 9</t>
-<t tx="T2058">def __init__ (self):
+<t tx="T2064">def __init__ (self):
 	
 	pass # line 16</t>
-<t tx="T2059">root line 1
+<t tx="T2065">root line 1
 
 &lt;&lt; ref 1 &gt;&gt;
 after ref1 line 1
@@ -33231,13 +33278,13 @@ after ref1 line 1
 
 root last line.
 </t>
-<t tx="T2060">    ref 1 line 1</t>
-<t tx="T2061">    node 1 line 1</t>
-<t tx="T2062">    node 2 line 1</t>
-<t tx="T2063">@ignore</t>
-<t tx="T2064"></t>
-<t tx="T2065"></t>
-<t tx="T2066"># The following corrupts the outline: extract section, undo.
+<t tx="T2066">    ref 1 line 1</t>
+<t tx="T2067">    node 1 line 1</t>
+<t tx="T2068">    node 2 line 1</t>
+<t tx="T2069">@ignore</t>
+<t tx="T2070"></t>
+<t tx="T2071"></t>
+<t tx="T2072"># The following corrupts the outline: extract section, undo.
 
 &lt;&lt; test &gt;&gt;
 line 1
@@ -33245,7 +33292,7 @@ line 1
 
 	after
 </t>
-<t tx="T2067"># The following corrupts the outline: extract section, undo.
+<t tx="T2073"># The following corrupts the outline: extract section, undo.
 
 &lt;&lt; test &gt;&gt;
 line 1
@@ -33254,14 +33301,14 @@ line 1
 	after
 
 </t>
-<t tx="T2068"></t>
-<t tx="T2069">line 1
+<t tx="T2074"></t>
+<t tx="T2075">line 1
 &lt;&lt; sec &gt;&gt;
 	line s1
 line 2
 	indented</t>
-<t tx="T2070"></t>
-<t tx="T2071">from leoGlobals import *
+<t tx="T2076"></t>
+<t tx="T2077">from leoGlobals import *
 import leoDialog
 
 if 1: # passed
@@ -33279,7 +33326,7 @@ if 1: # passed
 	fileName = "xyzzy"
 	print leoDialog.askOk("Read-only ouline",
 		"Warning: the outline: " + fileName + " is read-only.").run(modal=true)</t>
-<t tx="T2072">from leoGlobals import *
+<t tx="T2078">from leoGlobals import *
 import leoDialog
 
 ver = "version 3.14159 "
@@ -33293,18 +33340,18 @@ url = "http://webpages.charter.net/edreamleo/front.html"
 email = "edreamleo@charter.net"
 
 leoDialog.aboutLeo(version,copyright,url,email).run(modal=false)</t>
-<t tx="T2073">import leoDialog
+<t tx="T2079">import leoDialog
 
 print leoDialog.askLeoID().run(modal=1)</t>
-<t tx="T2074">import leoDialog
+<t tx="T2080">import leoDialog
 
 print leoDialog.askOkCancelNumber("Enter Line Number","Line number:").run(modal=1)
 </t>
-<t tx="T2075">import leoDialog
+<t tx="T2081">import leoDialog
 
 print leoDialog.askOkCancel("Proceed?",
 	"Read @file Nodes is not undoable.\nProceed?").run(modal=1)</t>
-<t tx="T2076">import leoDialog
+<t tx="T2082">import leoDialog
 
 if 1: # passed
 	message = "Replace changed outline with external changes?"
@@ -33318,7 +33365,7 @@ if 1: # passed
 	print leoDialog.askYesNo(
 		"Download Tutorial?",
 		"Download tutorial (sbooks.chm) from SourceForge?").run(modal=1)</t>
-<t tx="T2077">import leoDialog
+<t tx="T2083">import leoDialog
 
 if 1: # passed
 	print leoDialog.askYesNoCancel("Confirm",
@@ -33334,21 +33381,21 @@ if 1: # passed
 		yesMessage = "Outline",
 		noMessage = "File",
 		defaultButton = "Cancel").run(modal=1)</t>
-<t tx="T2078"></t>
-<t tx="T2079">@encoding iso-8859-1</t>
-<t tx="T2080">@others
+<t tx="T2084"></t>
+<t tx="T2085">@encoding iso-8859-1</t>
+<t tx="T2086">@others
 
 This is an umlaute ë</t>
-<t tx="T2081"></t>
-<t tx="T2082">@lineending nl         (the default, Linux)
+<t tx="T2087"></t>
+<t tx="T2088">@lineending nl         (the default, Linux)
 @lineending cr         (Mac)
 @lineending crlf       (Windows)
 @lineending lf          (same as nl, not recommended)
 @lineending platform (same as platform value for output_newline setting in leoConfig.txt)
 
 @encoding utf-8</t>
-<t tx="T2083"></t>
-<t tx="T2084">import unittest
+<t tx="T2089"></t>
+<t tx="T2090">import unittest
 import leoTest
 reload(leoTest)
 
@@ -33363,12 +33410,12 @@ else:
 
 runner = unittest.TextTestRunner()
 runner.run(suite)</t>
-<t tx="T2085"></t>
-<t tx="T2086"></t>
-<t tx="T2087">a b leoDialogs leoFind leoAtFile leoFileCommands leoGlobals modal end
+<t tx="T2091"></t>
+<t tx="T2092"></t>
+<t tx="T2093">a b leoDialogs leoFind leoAtFile leoFileCommands leoGlobals modal end
 line tooo changed 9
 </t>
-<t tx="T2088">this is another test.
+<t tx="T2094">this is another test.
 
 hello there jkk this is werg
 		
@@ -33376,9 +33423,9 @@ the cht sat on the marh
 the cat was sitting phew, another day. by zz z z 
 two initabc
 </t>
-<t tx="T2089">everything good.</t>
-<t tx="T2090"></t>
-<t tx="T2091">from leoGlobals import *
+<t tx="T2095">everything good.</t>
+<t tx="T2096"></t>
+<t tx="T2097">from leoGlobals import *
 f = top().frame
 
 f.clearStatusLine()
@@ -33389,46 +33436,46 @@ for color in ("red","blue","yellow","green","orange"):
 	f.putStatusLine (" %s " % (color),color=color)
 
 f.putStatusLine(" World")</t>
-<t tx="T2092">from leoGlobals import *
+<t tx="T2098">from leoGlobals import *
 f = top().frame
 
 f.clearStatusLine()
 </t>
-<t tx="T2093"></t>
-<t tx="T2094">@tabwidth 2
+<t tx="T2099"></t>
+<t tx="T2100">@tabwidth 2
 
 a
 	b
 		c	d</t>
-<t tx="T2095">@tabwidth 4
+<t tx="T2101">@tabwidth 4
 
 a
 	b
 		c	d</t>
-<t tx="T2096">@tabwidth 6
+<t tx="T2102">@tabwidth 6
 
 a
 	b
 		c	d</t>
-<t tx="T2097">@tabwidth 8
+<t tx="T2103">@tabwidth 8
 
 a
 	b
 		c	d</t>
-<t tx="T2098"></t>
-<t tx="T2099">This is section a.</t>
-<t tx="T2100">&lt;&lt; section a &gt;&gt;</t>
-<t tx="T2101"></t>
-<t tx="T2102"></t>
-<t tx="T2103"></t>
-<t tx="T2104">from leoGlobals import *
+<t tx="T2104"></t>
+<t tx="T2105">This is section a.</t>
+<t tx="T2106">&lt;&lt; section a &gt;&gt;</t>
+<t tx="T2107"></t>
+<t tx="T2108"></t>
+<t tx="T2109"></t>
+<t tx="T2110">from leoGlobals import *
 
 top().frame.addIconButton(imagefile="../Icons/Leoapp.gif")
 
 top().frame.addIconButton(text="hi")
 
 top().frame.addIconButton(imagefile="../Icons/Leodoc.gif")</t>
-<t tx="T2105">from leoGlobals import *
+<t tx="T2111">from leoGlobals import *
 import glob,os
 
 f = top().frame
@@ -33440,20 +33487,20 @@ files.sort()
 f.clearIconBar()
 for file in files:
 	f.addIconButton(imagefile=file,bg="lightBlue")</t>
-<t tx="T2106">from leoGlobals import *
+<t tx="T2112">from leoGlobals import *
 
 top().frame.clearIconBar()</t>
-<t tx="T2107">from leoGlobals import *
+<t tx="T2113">from leoGlobals import *
 
 top().frame.hideIconBar()</t>
-<t tx="T2108">from leoGlobals import *
+<t tx="T2114">from leoGlobals import *
 
 top().frame.iconFrame.configure(height="15m")</t>
-<t tx="T2109">from leoGlobals import *
+<t tx="T2115">from leoGlobals import *
 
 top().frame.showIconBar()</t>
-<t tx="T2110"></t>
-<t tx="T2111"># The output of this is 5 5 6
+<t tx="T2116"></t>
+<t tx="T2117"># The output of this is 5 5 6
 # This shows that o2 is merely an alias for o.
 
 class obj:
@@ -33463,7 +33510,7 @@ class obj:
 o = obj(5) ; print o.n,
 o2  = o    ; print o2.n,
 o.n = 6    ; print o2.n</t>
-<t tx="T2112">import gc,Tkinter
+<t tx="T2118">import gc,Tkinter
 
 # gc.set_debug(gc.DEBUG_STATS)
 
@@ -33503,7 +33550,7 @@ printGarbage("end 2")
 top = frame = canvas = None
 gc.collect()
 printGarbage("end 3")</t>
-<t tx="T2113">from leoGlobals import *
+<t tx="T2119">from leoGlobals import *
 import gc,os,time,leoNodes
 from xml.sax import saxutils, make_parser
 from xml.sax.xmlreader import InputSource
@@ -33586,7 +33633,7 @@ try:
 	except: es_exception()
 finally:
 	if f: f.close()</t>
-<t tx="T2114"># This shows that Python programs _could_ use .xpy files (xml files containing Leo/Python code).
+<t tx="T2120"># This shows that Python programs _could_ use .xpy files (xml files containing Leo/Python code).
 
 from leoGlobals import *
 import imp
@@ -33609,7 +33656,7 @@ def leo_import(name,old_import,globals=None, locals=None, fromlist=None):
 		
 m = leo_import("leoTest",__import__)
 es(m,color="red")</t>
-<t tx="T2115"># Empty tuples are constructed by an empty pair of parentheses.
+<t tx="T2121"># Empty tuples are constructed by an empty pair of parentheses.
 # tuple with one item is constructed by following a value with a comma.
 # Examples:
 
@@ -33625,12 +33672,12 @@ s = {"x":1, "y":2},
 
 for i in s:
 	print `i`</t>
-<t tx="T2116"></t>
-<t tx="T2117">from leoGlobals import *
+<t tx="T2122"></t>
+<t tx="T2123">from leoGlobals import *
 print app.config.redirect_execute_script_output_to_log_pane
 print "test"</t>
-<t tx="T2118"></t>
-<t tx="T2119">import inspect,sys
+<t tx="T2124"></t>
+<t tx="T2125">import inspect,sys
 
 def findGlobalId(name):
 
@@ -33654,7 +33701,7 @@ def findGlobalId(name):
 	print name,"in %d" % found,"modules"
 			
 findGlobalId("count")</t>
-<t tx="T2120">from leoGlobals import *
+<t tx="T2126">from leoGlobals import *
 
 def compare(name):
 	path1 = r"c:\prog\leoCvs\leo\src"
@@ -33708,11 +33755,26 @@ if 1: # 9/19/03: all files pass
 	compare("leoTree.py")
 	compare("leoUndo.py")
 print ; print "end of compare"</t>
-<t tx="T2121"># Executing this script will close all windows immediately, even if they have been changed!
+<t tx="T2127">@color
 
-from leoGlobals import app
-app.forceShutdown()</t>
-<t tx="T2122">@color
+# Update version number in Leo's front page.
+
+if 1: # Save all files and tangle leoConfig.leo
+	from leoGlobals import importFromPath
+	preSetup = importFromPath("preSetup","c:\prog\leoCvs\leo")
+	preSetup.setup()
+
+if 1: # Replace config settings and create .zip file.
+	import os
+	os.system(r"c:\python22\python c:\prog\leoCvs\leo\setup.py sdist --formats=zip")
+
+@nocolor
+Create and test leosetup.exe.
+	- Create leosetup.exe by right-clicking leo.nsi and choosing "compile with NSI (bz2)"
+	- Test created leosetup.exe file.
+	- test the files created in c:\program files\leo
+
+@color
 # **** Scan all folders &amp; files before uploading.
 @nocolor
 
@@ -33729,7 +33791,8 @@ Announcements
 	- Announce to comp.lang.python
 	- Announce to comp.programming.literate
 	- Register Leo at http://www.python.org/pypi?:action=submit_form</t>
-<t tx="T2123">C:/prog/leoCVS/leo/src\leoAtFile.py:852: Parameter (root) not used
+<t tx="T2128"></t>
+<t tx="T2129">C:/prog/leoCVS/leo/src\leoAtFile.py:852: Parameter (root) not used
 C:/prog/leoCVS/leo/src\leoConfig.py:80: No module attribute (leo_config_directory) found
 C:/prog/leoCVS/leo/src\leoFileCommands.py:429: Parameter (frame) not used</t>
 </tnodes>

@@ -4,6 +4,20 @@ Leo is available at:  http://sourceforge.net/projects/leo/
 Leo requires Python 2.1 or above and tcl/tk 8.3 or above.
 Leo will work on Linux, Windows and MacOs X Jaguar.
 
+Leo 4.0.2                         October 24, 2003
+
+Yet another bug-fix release:
+
+- Fixes a crasher in reportBadChars when a .leo file contains a character that
+  can not be represented in the encoding specified in the first line of the
+  .leo file.
+- Leo now sends full tracebacks to the log window when Leo takes an unexpected
+ exception.
+- Leo now issues a more informative message when the @comment directive
+  inhibits the Untangle command.
+
+Note: This version does _not_ support Unicode file names or directory names.
+
 Leo 4.0.1                         October 22, 2003
 
 This is a bug fix release:
