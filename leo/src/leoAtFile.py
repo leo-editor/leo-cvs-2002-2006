@@ -5292,16 +5292,32 @@ class baseNewDerivedFile(oldDerivedFile):
     
         j = g.skip_line(s,i)
         line = s[i:j]
-        
-        # 1/29/04: Don't put leading indent if the line is empty!
-        if line and not at.raw:
-            at.putIndent(at.indent)
     
-        if line[-1:]=="\n":
-            at.os(line[:-1])
-            at.onl()
+        # g.app.config.write_strips_blank_lines
+        if 0: # 7/22/04: Don't put any whitespace in otherwise blank lines.
+            if line.strip(): # The line has non-empty content.
+                if not at.raw:
+                    at.putIndent(at.indent)
+            
+                if line[-1:]=="\n":
+                    at.os(line[:-1])
+                    at.onl()
+                else:
+                    at.os(line)
+            elif line and line[-1] == '\n':
+                at.onl()
+            else:
+                g.trace("Can't happen: completely empty line")
         else:
-            at.os(line)
+            # 1/29/04: Don't put leading indent if the line is empty!
+            if line and not at.raw:
+                at.putIndent(at.indent)
+        
+            if line[-1:]=="\n":
+                at.os(line[:-1])
+                at.onl()
+            else:
+                at.os(line)
     #@nonl
     #@-node:ekr.20031218072017.2134:putCodeLine
     #@+node:ekr.20031218072017.2106:putRefLine & allies
