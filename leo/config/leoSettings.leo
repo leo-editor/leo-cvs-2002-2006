@@ -157,15 +157,15 @@
 <v t="ekr.20041119034357.48"><vh>@color body_text_foreground_color = None</vh></v>
 </v>
 <v t="ekr.20041119051246.1" a="E"><vh>@page Outline pane colors</vh>
-<v t="ekr.20041119051246.2"><vh>@color headline_text_unselected_background_color = #ffffe1</vh></v>
+<v t="ekr.20041119051246.2" a="TV"><vh>@color headline_text_unselected_background_color = #ffffec</vh></v>
 <v t="ekr.20041119050749.6"><vh>@color headline_text_unselected_foreground_color = None</vh></v>
-<v t="ekr.20041119051246.3" a="TV"><vh>@color headline_text_selected_background_color = #dbdbdb</vh></v>
+<v t="ekr.20041119051246.3"><vh>@color headline_text_selected_background_color = #dbdbdb</vh></v>
 <v t="ekr.20041119050749.7"><vh>@color headline_text_selected_foreground_color = None</vh></v>
 <v t="ekr.20041119051901"><vh>@color headline_text_editing_background_color = None</vh></v>
 <v t="ekr.20041119050749.8"><vh>@color headline_text_editing_foreground_color = None</vh></v>
 <v t="ekr.20041119050749.9"><vh>@color headline_text_editing_selection_foreground_color = None</vh></v>
 <v t="ekr.20041119051901.1"><vh>@color headline_text_editing_selection_background_color = None</vh></v>
-<v t="ekr.20041119050749.12"><vh>@color outline_pane_background_color = #ffffe1</vh></v>
+<v t="ekr.20041119050749.12"><vh>@color outline_pane_background_color = #ffffec</vh></v>
 </v>
 <v t="ekr.20041119034357.70"><vh>@page Syntax colors &amp; options</vh>
 <v t="ekr.20041119034357.78"><vh>@color comment_color=firebrick3</vh></v>
@@ -912,7 +912,8 @@ False: use local time.</t>
 <t tx="ekr.20041119050749.12">Background color of outline pane itself.
 
 LavenderBlush1
-#ffffe1</t>
+#ffffe1 # a little too yellow.
+#ffffec</t>
 <t tx="ekr.20041119050749.17">This option controls the interpretation of the control key when dragging nodes in the outline pane.
 
 True: A drag is a control-drag if the control key is down at the start of the drag.
