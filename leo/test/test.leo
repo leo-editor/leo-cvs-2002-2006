@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="2860" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="4098" clone_windows="0"/>
 <globals body_outline_ratio="0.463110102157">
-	<global_window_position top="36" left="354" height="881" width="866"/>
+	<global_window_position top="10" left="303" height="881" width="866"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences>
@@ -24,7 +24,7 @@
 <v t="ekr.20040303080938.1"><vh>3/3: created position tests</vh></v>
 </v>
 </v>
-<v t="ekr.20040303062846.2" tnodeList="ekr.20040303062846.2,ekr.20040303062846.1,ekr.20040303062846.3,ekr.20040303062846.4,ekr.20040303062846.5,ekr.20040303062846.6,ekr.20040303062846.7,ekr.20040303062846.8,ekr.20040303062846.10,ekr.20040327115832.1,ekr.20040327115832.2,ekr.20040327120228,ekr.20040303062846.12,ekr.20040303062846.13,ekr.20040303062846.14,ekr.20040303062846.15,ekr.20040303062846.16,ekr.20040303062846.17,ekr.20040303062846.18,ekr.20040303062846.20,ekr.20040303062846.21,ekr.20040303062846.22,ekr.20040303062846.23,ekr.20040303062846.24,ekr.20040303062846.25,ekr.20040303062846.26,ekr.20040315202250,ekr.20040315202314,ekr.20040315202314.1,ekr.20040315202347,ekr.20040315202718,ekr.20040315202718.1,ekr.20040303062846.28,ekr.20040303062846.29,ekr.20040303062846.30,ekr.20040303062846.31,ekr.20040303062846.32,ekr.20040303062846.33,ekr.20040303062846.34,ekr.20040303062846.35,ekr.20040303062846.37,ekr.20040303062846.38,ekr.20040303062846.39,ekr.20040303062846.40,ekr.20040303062846.41,ekr.20040303062846.42,ekr.20040303062846.64,ekr.20040303062846.65,ekr.20040303062846.66,ekr.20040303062846.67,ekr.20040303062846.68,ekr.20040303062846.69,ekr.20040303062846.70,ekr.20040303062846.71,ekr.20040303062846.73,ekr.20040303062846.74,ekr.20040303062846.75,ekr.20040303062846.76,ekr.20040303062846.77,ekr.20040303062846.78,ekr.20040303062846.79,ekr.20040303064013,ekr.20040303063118,ekr.20040303063118.4,ekr.20040309105731,ekr.20040323163413,ekr.20040309101454.15,ekr.20040309101454.17,ekr.20040309101454.13,ekr.20040303064020.5,ekr.20040309101454.16,ekr.20040309101454.14,ekr.20040303064020.7,ekr.20040323163643,ekr.20040303091606,ekr.20040303092153,ekr.20040303092153.1,ekr.20040303064020.6,ekr.20040303062846.80,ekr.20040303062846.81,ekr.20040303062846.82,ekr.20040303062846.83,ekr.20040303062846.84,ekr.20040303062846.85,ekr.20040303062846.86,ekr.20040303062846.87,ekr.20040303062846.88,ekr.20040303062846.89,ekr.20040303062846.90,ekr.20040303062846.91,ekr.20040303062846.92,ekr.20040303062846.93,ekr.20040303062846.94,ekr.20040303062846.95,ekr.20040303062846.96,ekr.20040303062846.97,ekr.20040303062846.98,ekr.20040303062846.99,ekr.20040303062846.100,ekr.20040303062846.101,ekr.20040303062846.102,ekr.20040303062846.103,ekr.20040303062846.104"><vh>@file ..\src\leoTest.py</vh>
+<v t="ekr.20040303062846.2" tnodeList="ekr.20040303062846.2,ekr.20040303062846.1,ekr.20040303062846.3,ekr.20040303062846.4,ekr.20040303062846.5,ekr.20040303062846.6,ekr.20040303062846.7,ekr.20040303062846.8,ekr.20040303062846.10,ekr.20040327115832.1,ekr.20040327115832.2,ekr.20040327120228,ekr.20040303062846.12,ekr.20040303062846.13,ekr.20040303062846.14,ekr.20040303062846.15,ekr.20040303062846.16,ekr.20040303062846.17,ekr.20040303062846.18,ekr.20040303062846.20,ekr.20040303062846.21,ekr.20040303062846.22,ekr.20040303062846.23,ekr.20040303062846.24,ekr.20040303062846.25,ekr.20040303062846.26,ekr.20040315202250,ekr.20040315202314,ekr.20040315202314.1,ekr.20040315202347,ekr.20040315202718,ekr.20040315202718.1,ekr.20040303062846.28,ekr.20040303062846.29,ekr.20040303062846.30,ekr.20040303062846.31,ekr.20040303062846.32,ekr.20040303062846.33,ekr.20040303062846.34,ekr.20040303062846.35,ekr.20040303062846.37,ekr.20040303062846.38,ekr.20040303062846.39,ekr.20040303062846.40,ekr.20040303062846.41,ekr.20040303062846.42,ekr.20040303062846.64,ekr.20040303062846.65,ekr.20040303062846.66,ekr.20040303062846.67,ekr.20040303062846.68,ekr.20040303062846.69,ekr.20040303062846.70,ekr.20040303062846.71,ekr.20040303062846.73,ekr.20040303062846.74,ekr.20040303062846.75,ekr.20040303062846.76,ekr.20040303062846.77,ekr.20040303062846.78,ekr.20040303062846.79,ekr.20040303064013,ekr.20040303063118,ekr.20040303063118.4,ekr.20040309105731,ekr.20040323163413,ekr.20040309101454.15,ekr.20040309101454.17,ekr.20040309101454.13,ekr.20040303064020.5,ekr.20040309101454.16,ekr.20040309101454.14,ekr.20040303064020.7,ekr.20040323163643,ekr.20040303091606,ekr.20040303092153,ekr.20040303092153.1,ekr.20040303064020.6,ekr.20040303062846.80,ekr.20040303062846.81,ekr.20040303062846.82,ekr.20040303062846.83,ekr.20040303062846.84,ekr.20040303062846.85,ekr.20040303062846.86,ekr.20040303062846.87,ekr.20040303062846.88,ekr.20040303062846.89,ekr.20040303062846.90,ekr.20040303062846.91,ekr.20040303062846.92,ekr.20040303062846.93,ekr.20040303062846.94,ekr.20040303062846.95,ekr.20040303062846.96,ekr.20040303062846.97,ekr.20040303062846.98,ekr.20040303062846.99,ekr.20040303062846.100,ekr.20040303062846.101,ekr.20040303062846.102,ekr.20040303062846.103,ekr.20040303062846.104"><vh>@file ../src/leoTest.py</vh>
 <v t="ekr.20040303062846.1"><vh>&lt;&lt; to do &gt;&gt;</vh></v>
 <v t="ekr.20040303062846.3"><vh> class testUtils</vh>
 <v t="ekr.20040303062846.4"><vh>compareOutlines</vh></v>
@@ -467,6 +467,10 @@
 </v>
 <v t="ekr.20040330103006" a="E" tnodeList="ekr.20040330103006"><vh>@file c:\prog\test\testSectionDelims.txt</vh></v>
 <v t="ekr.20040327105955"><vh>test of batch mode</vh></v>
+<v t="ekr.20040419105536" tnodeList="ekr.20040419105536,ekr.20040419105536.1,ekr.20040419105536.2"><vh>@file c:\prog\test\perlLineNumbersTest.txt</vh>
+<v t="ekr.20040419105536.1"><vh>one</vh></v>
+<v t="ekr.20040419105536.2"><vh>two</vh></v>
+</v>
 </v>
 <v t="ekr.20040312021734"><vh>Scripts</vh>
 <v t="ekr.20040311090054"><vh>Dump fileIndex</vh></v>
@@ -484,8 +488,9 @@
 </v>
 <v t="ekr.20040322120331"><vh>script to print tnodeList's</vh></v>
 <v t="ekr.20040330095252"><vh>script to clear log frame</vh></v>
+<v t="EKR.20040424065452"><vh>Compare script</vh></v>
+<v t="EKR.20040424091411"><vh>Compare script using text mode to ignore newlines</vh></v>
 </v>
-<v t="ekr.20040321091021"><vh>@file-thin c:\prog\test\at-file-thin-test.txt</vh></v>
 </v>
 <v t="ekr.20040402043516"><vh>A pretty printer for Leo</vh>
 <v t="ekr.20040402043516.1" a="E"><vh>leoReadlines</vh></v>
@@ -521,16 +526,86 @@
 <v t="ekr.20040409142108"><vh>firstChild</vh></v>
 <v t="ekr.20040409140343.1"><vh>last</vh></v>
 </v>
-<v t="ekr.20040419105536" tnodeList="ekr.20040419105536,ekr.20040419105536.1,ekr.20040419105536.2"><vh>@file c:\prog\test\perlLineNumbersTest.txt</vh>
-<v t="ekr.20040419105536.1"><vh>one</vh></v>
-<v t="ekr.20040419105536.2"><vh>two</vh></v>
+<v t="EKR.20040427092657"><vh>@ file-thin c:\prog\test\at-file-thin-test.txt</vh>
+<v t="EKR.20040427092657.1"><vh>node 1</vh>
+<v t="EKR.20040428145741" a="E"><vh>&lt;&lt; node 1 ref &gt;&gt;</vh>
+<v t="EKR.20040428145741.1"><vh>child node 1</vh></v>
+<v t="EKR.20040428145741.2"><vh>child node 2</vh></v>
 </v>
-<v t="EKR.20040422095741"><vh>.</vh></v>
-<v t="EKR.20040424065452"><vh>Compare script</vh></v>
-<v t="EKR.20040424091411" a="TV"><vh>Compare script using text mode to ignore newlines</vh></v>
+</v>
+<v t="EKR.20040427092657.2" a="E"><vh>&lt;&lt; ref &gt;&gt;</vh>
+<v t="EKR.20040428150018" a="E"><vh>organizer node</vh>
+<v t="EKR.20040428145826"><vh>ref child 1</vh></v>
+<v t="EKR.20040428145826.1"><vh>ref child 2</vh></v>
+</v>
+</v>
+</v>
+<v t="EKR.20040428074641"><vh>@file-thin c:\prog\test\at-file-thin-test2.txt</vh></v>
+<v t="EKR.20040429085213"><vh>@file-thin c:\prog\test\at-file-thin-test.txt</vh></v>
+<v t="EKR.20040429090143"><vh>@file-thin c:\prog\test\leoAtFile2.txt</vh></v>
+<v t="EKR.20040430083550" a="E"><vh>@ file-thin c:\prog\test\atAllTest.txt</vh></v>
+<v t="EKR.20040430083543"><vh>@file-thin c:\prog\test\atAllTest.txt</vh></v>
+<v t="EKR.20040430160416" a="TV"><vh>Tests: for unit tests</vh>
+<v t="EKR.20040430160416.1"><vh>jEdit modes Colorizer tests (bugs here)</vh>
+<v t="EKR.20040430160416.2"><vh>tex.xml</vh>
+<v t="EKR.20040430160416.3"><vh>&lt;&lt; general rules &gt;&gt;</vh></v>
+<v t="EKR.20040430160416.4"><vh>&lt;&lt; math rules &gt;&gt;</vh></v>
+</v>
+<v t="EKR.20040430160416.5"><vh>python.xml</vh>
+<v t="EKR.20040430160416.6"><vh>&lt;&lt; remarks &gt;&gt;</vh></v>
+<v t="EKR.20040430160416.7"><vh>&lt;&lt; comments &gt;&gt;</vh></v>
+<v t="EKR.20040430160416.8"><vh>&lt;&lt; literals &gt;&gt;</vh></v>
+<v t="EKR.20040430160416.9"><vh>&lt;&lt; operators &gt;&gt;</vh></v>
+<v t="EKR.20040430160416.10"><vh>&lt;&lt; keywords &gt;&gt;</vh>
+<v t="EKR.20040430160416.11"><vh>&lt;&lt; reserved words &gt;&gt;</vh></v>
+<v t="EKR.20040430160416.12"><vh>&lt;&lt; builtins &gt;&gt;</vh></v>
+<v t="EKR.20040430160416.13"><vh>&lt;&lt; exceptions &gt;&gt;</vh></v>
+<v t="EKR.20040430160416.14"><vh>&lt;&lt; types &gt;&gt;</vh></v>
+</v>
+</v>
+</v>
+<v t="EKR.20040430160416.15"><vh> Colorizing Test</vh></v>
+<v t="EKR.20040430162649.1"><vh>Unicode tests</vh>
+<v t="EKR.20040430162649.2"><vh> Tests</vh>
+<v t="EKR.20040430162649.3"><vh>@file-asis c:\prog\test\asisTest.txt</vh></v>
+<v t="EKR.20040430162649.4"><vh>@file-nosent c:\prog\test\nosentTest.txt</vh></v>
+<v t="EKR.20040430162649.5"><vh>@file-noref c:\prog\test\norefTest.txt</vh></v>
+</v>
+<v t="EKR.20040430162649.6"><vh> Tests</vh>
+<v t="EKR.20040430162649.7"><vh>Import/export tests</vh>
+<v t="EKR.20040430162649.8"><vh>test</vh>
+<v t="EKR.20040430162649.9"><vh>NewHeadlineë</vh></v>
+</v>
+</v>
+<v t="EKR.20040430162649.10"><vh>@file c:/prog/test/unicodeTest.doc</vh>
+<v t="EKR.20040430162649.11"><vh>NewÖ</vh></v>
+</v>
+</v>
+</v>
+<v t="EKR.20040430162649.12"><vh>REM_ hack and perlpod hacks</vh>
+<v t="EKR.20040430162649.13"><vh>perlpod test</vh>
+<v t="EKR.20040430162649.14"><vh>perlpod test</vh>
+<v t="EKR.20040430162649.15"><vh>&lt;&lt; ref &gt;&gt;</vh></v>
+</v>
+</v>
+<v t="EKR.20040430162649.16"><vh>REM test</vh>
+<v t="EKR.20040430162649.17"><vh>@file c:/prog/test/remTest.txt</vh></v>
+</v>
+</v>
+<v t="EKR.20040430162649.18"><vh>Allow @comment after @language plain</vh>
+<v t="EKR.20040430162649.19"><vh>Test</vh></v>
+</v>
+<v t="EKR.20040430162649.20"><vh>Suppress @@ sentinel unless leading @ starts a directive</vh>
+<v t="EKR.20040430162649.21"><vh>@file c:\prog\test\perltest.txt</vh></v>
+</v>
+<v t="EKR.20040430162649.22"><vh>Reformat Paragraph tests</vh></v>
+<v t="EKR.20040430162649.23"><vh>(double @root bug)</vh>
+<v t="EKR.20040430162649.24"><vh>Assert fails</vh></v>
+<v t="EKR.20040430162649.25"><vh>double at-root test (assert fails)</vh></v>
+</v>
+</v>
 </vnodes>
 <tnodes>
-<t tx="EKR.20040422095741"></t>
 <t tx="EKR.20040424065452">import leoGlobals as g
 p1 = r"c:\prog\leoMenu(1).py"
 p2 = r"c:\prog\leoMenu(2).py"
@@ -564,6 +639,686 @@ f1.close() ; f2.close()
 f1 = open(p1) ; f2 = open(p2)
 g.es("equal (text mode)",f1.read()==f2.read())
 f1.close() ; f2.close()</t>
+<t tx="EKR.20040427092657">root line 1
+
+@others
+
+root after at-others
+
+&lt;&lt; ref &gt;&gt;
+</t>
+<t tx="EKR.20040427092657.1">node 1 line 1
+
+&lt;&lt; node 1 ref &gt;&gt;
+
+node 1 last line</t>
+<t tx="EKR.20040427092657.2">ref line 1
+
+@others</t>
+<t tx="EKR.20040428074641">import leoGlobals as g
+c = g.top()
+
+print '-'*20
+p = c.currentPosition()
+print "isAtThinFileNode:",p.v.isAtThinFileNode()
+
+@others
+
+&lt;&lt; ref &gt;&gt;
+</t>
+<t tx="EKR.20040428145741">node 1 ref line 1
+
+@others</t>
+<t tx="EKR.20040428145741.1"></t>
+<t tx="EKR.20040428145741.2"></t>
+<t tx="EKR.20040428145826"></t>
+<t tx="EKR.20040428145826.1"></t>
+<t tx="EKR.20040428150018">text of organizer node</t>
+<t tx="EKR.20040429085213">root line 1
+
+@others
+
+root after at-others
+
+&lt;&lt; ref &gt;&gt;
+</t>
+<t tx="EKR.20040429090143">"""Classes to read and write @file nodes."""
+
+@language python
+
+import leoGlobals as g
+from leoGlobals import true,false
+
+if g.app.config.use_psyco:
+	# print "enabled psyco classes",__file__
+	try: from psyco.classes import *
+	except ImportError: pass
+
+import leoColor,leoNodes
+import filecmp,os,string,time
+
+&lt;&lt; global atFile constants &gt;&gt;
+
+class baseAtFile:
+	"""The base class for the top-level atFile subcommander."""
+	&lt;&lt; class baseAtFile methods &gt;&gt;
+	
+class atFile (baseAtFile):
+	pass # May be overridden in plugins.
+	
+class baseOldDerivedFile:
+	"""The base class to read and write 3.x derived files."""
+	&lt;&lt; class baseOldDerivedFile methods &gt;&gt;
+	
+class oldDerivedFile(baseOldDerivedFile):
+	pass # May be overridden in plugins.
+	
+class baseNewDerivedFile(oldDerivedFile):
+	"""The base class to read and write 4.x derived files."""
+	&lt;&lt; class baseNewDerivedFile methods &gt;&gt;
+
+class newDerivedFile(baseNewDerivedFile):
+	pass # May be overridden in plugins.
+</t>
+<t tx="EKR.20040430083543">before all
+
+@all
+
+after all</t>
+<t tx="EKR.20040430083550">before all
+
+@all
+
+after all</t>
+<t tx="EKR.20040430160416">@ignore</t>
+<t tx="EKR.20040430160416.1">@language html</t>
+<t tx="EKR.20040430160416.2">&lt;!-- ekr uses the MARK_FOLLOWING to mark _anything_ after \ --&gt;
+
+&lt;?xml version="1.0"?&gt;
+
+&lt;!DOCTYPE MODE SYSTEM "xmode.dtd"&gt;
+
+&lt;MODE&gt;
+	&lt;PROPS&gt;
+		&lt;PROPERTY NAME="lineComment" VALUE="%" /&gt;
+	&lt;/PROPS&gt;
+
+	&lt;RULES&gt;
+		&lt;&lt; general rules &gt;&gt;
+	&lt;/RULES&gt;
+
+	&lt;RULES SET="MATH" DEFAULT="MARKUP"&gt;
+		&lt;&lt; math rules &gt;&gt;
+	&lt;/RULES&gt;
+&lt;/MODE&gt;</t>
+<t tx="EKR.20040430160416.3">&lt;!-- $$...$$ --&gt;
+&lt;SPAN TYPE="MARKUP" DELEGATE="MATH"&gt;
+	&lt;BEGIN&gt;$$&lt;/BEGIN&gt;
+	&lt;END&gt;$$&lt;/END&gt;
+&lt;/SPAN&gt;
+
+&lt;!-- $...$ --&gt;
+&lt;SPAN TYPE="MARKUP" DELEGATE="MATH"&gt;
+	&lt;BEGIN&gt;$&lt;/BEGIN&gt;
+	&lt;END&gt;$&lt;/END&gt;
+&lt;/SPAN&gt;
+
+&lt;!-- \[...\] (LaTeX math mode) --&gt;
+&lt;SPAN TYPE="MARKUP" DELEGATE="MATH"&gt;
+	&lt;BEGIN&gt;\[&lt;/BEGIN&gt;
+	&lt;END&gt;\]&lt;/END&gt;
+&lt;/SPAN&gt;
+
+&lt;!-- some commands must be handled specially --&gt;
+&lt;SEQ TYPE="KEYWORD1"&gt;\$&lt;/SEQ&gt;
+&lt;SEQ TYPE="KEYWORD1"&gt;\\&lt;/SEQ&gt;
+&lt;SEQ TYPE="KEYWORD1"&gt;\%&lt;/SEQ&gt;
+
+&lt;!-- \... commands --&gt;
+&lt;MARK_FOLLOWING TYPE="KEYWORD1"&gt;\&lt;/MARK_FOLLOWING&gt;
+
+&lt;!-- comments --&gt;
+&lt;EOL_SPAN TYPE="COMMENT1"&gt;%&lt;/EOL_SPAN&gt;
+
+&lt;!-- word separators --&gt;
+&lt;SEQ TYPE="OPERATOR"&gt;{&lt;/SEQ&gt;
+&lt;SEQ TYPE="OPERATOR"&gt;}&lt;/SEQ&gt;
+&lt;SEQ TYPE="OPERATOR"&gt;[&lt;/SEQ&gt;
+&lt;SEQ TYPE="OPERATOR"&gt;]&lt;/SEQ&gt;</t>
+<t tx="EKR.20040430160416.4">&lt;!-- some commands must be handled specially --&gt;
+&lt;SEQ TYPE="KEYWORD3"&gt;\$&lt;/SEQ&gt;
+&lt;SEQ TYPE="KEYWORD3"&gt;\\&lt;/SEQ&gt;
+&lt;SEQ TYPE="KEYWORD3"&gt;\%&lt;/SEQ&gt;
+
+&lt;!-- \... commands --&gt;
+&lt;MARK_FOLLOWING TYPE="KEYWORD3"&gt;\&lt;/MARK_FOLLOWING&gt;
+
+&lt;!-- word separators --&gt;
+&lt;SEQ TYPE="KEYWORD2"&gt;)&lt;/SEQ&gt;
+&lt;SEQ TYPE="KEYWORD2"&gt;(&lt;/SEQ&gt;
+&lt;SEQ TYPE="KEYWORD2"&gt;{&lt;/SEQ&gt;
+&lt;SEQ TYPE="KEYWORD2"&gt;}&lt;/SEQ&gt;
+&lt;SEQ TYPE="KEYWORD2"&gt;[&lt;/SEQ&gt;
+&lt;SEQ TYPE="KEYWORD2"&gt;]&lt;/SEQ&gt;
+&lt;SEQ TYPE="KEYWORD2"&gt;=&lt;/SEQ&gt;
+&lt;SEQ TYPE="KEYWORD2"&gt;!&lt;/SEQ&gt;
+&lt;SEQ TYPE="KEYWORD2"&gt;+&lt;/SEQ&gt;
+&lt;SEQ TYPE="KEYWORD2"&gt;-&lt;/SEQ&gt;
+&lt;SEQ TYPE="KEYWORD2"&gt;/&lt;/SEQ&gt;
+&lt;SEQ TYPE="KEYWORD2"&gt;*&lt;/SEQ&gt;
+&lt;SEQ TYPE="KEYWORD2"&gt;&amp;gt;&lt;/SEQ&gt;
+&lt;SEQ TYPE="KEYWORD2"&gt;&amp;lt;&lt;/SEQ&gt;
+&lt;SEQ TYPE="KEYWORD2"&gt;&amp;amp;&lt;/SEQ&gt;
+&lt;SEQ TYPE="KEYWORD2"&gt;|&lt;/SEQ&gt;
+&lt;SEQ TYPE="KEYWORD2"&gt;^&lt;/SEQ&gt;
+&lt;SEQ TYPE="KEYWORD2"&gt;~&lt;/SEQ&gt;
+&lt;SEQ TYPE="KEYWORD2"&gt;.&lt;/SEQ&gt;
+&lt;SEQ TYPE="KEYWORD2"&gt;,&lt;/SEQ&gt;
+&lt;SEQ TYPE="KEYWORD2"&gt;;&lt;/SEQ&gt;
+&lt;SEQ TYPE="KEYWORD2"&gt;?&lt;/SEQ&gt;
+&lt;SEQ TYPE="KEYWORD2"&gt;:&lt;/SEQ&gt;
+&lt;SEQ TYPE="KEYWORD2"&gt;'&lt;/SEQ&gt;
+&lt;SEQ TYPE="KEYWORD2"&gt;"&lt;/SEQ&gt;
+&lt;SEQ TYPE="KEYWORD2"&gt;`&lt;/SEQ&gt;
+
+&lt;!-- comments --&gt;
+&lt;EOL_SPAN TYPE="COMMENT1"&gt;%&lt;/EOL_SPAN&gt;</t>
+<t tx="EKR.20040430160416.5">&lt;?xml version="1.0"?&gt;
+
+&lt;!DOCTYPE MODE SYSTEM "xmode.dtd"&gt;
+&lt;&lt; remarks &gt;&gt;
+
+&lt;MODE&gt;
+	&lt;PROPS&gt;
+		&lt;PROPERTY NAME="indentPrevLine" VALUE="\s*.{3,}:\s*(#.*)?" /&gt;
+		&lt;PROPERTY NAME="lineComment" VALUE="#" /&gt;
+	&lt;/PROPS&gt;
+	&lt;RULES ESCAPE="\" IGNORE_CASE="FALSE" HIGHLIGHT_DIGITS="TRUE"&gt;
+		&lt;&lt; comments &gt;&gt;
+		&lt;&lt; literals &gt;&gt;
+		&lt;&lt; operators &gt;&gt;
+		&lt;MARK_PREVIOUS TYPE="FUNCTION" EXCLUDE_MATCH="TRUE"&gt;(&lt;/MARK_PREVIOUS&gt;
+		&lt;&lt; keywords &gt;&gt;
+	&lt;/RULES&gt;
+&lt;/MODE&gt;</t>
+<t tx="EKR.20040430160416.6">&lt;!-- Python mode, by Slava Pestov. Based on PythonTokenMarker by --&gt;
+&lt;!-- Jonathan Revusky --&gt;
+
+&lt;!-- Modified 19-Jul-00 by Ivan Frohne to: --&gt;
+&lt;!--  (a) implement 'indentOnEnter'; --&gt;
+&lt;!--  (b) indent next line automatically after control structures followed --&gt;
+&lt;!--	  by ':'; --&gt;
+&lt;!--  (c) make """ or ''' multiline quotes TYPE LITERAL2; --&gt;
+&lt;!--  (d) add TYPE FUNCTION identified by a following '(' --&gt;
+&lt;!--  (e) eliminate the '?' SEQ TYPE ('?' has no meaning in Python); --&gt;
+&lt;!--  (f) change the TYPE of 'and', 'or', and 'not' to KEYWORD1; and --&gt;
+&lt;!--  (g) add all builtin functions, builtin exceptions, --&gt;
+&lt;!--	  builtin type methods, File object methods, and special type --&gt;
+&lt;!--	  attributes as TYPE KEYWORD3. --&gt;</t>
+<t tx="EKR.20040430160416.7">&lt;!-- Comment --&gt;
+&lt;EOL_SPAN TYPE="COMMENT1"&gt;#&lt;/EOL_SPAN&gt;
+
+&lt;!-- Triple-quotes --&gt;
+&lt;SPAN TYPE="LITERAL2"&gt;
+	&lt;BEGIN&gt;"""&lt;/BEGIN&gt;
+	&lt;END&gt;"""&lt;/END&gt;
+&lt;/SPAN&gt;
+
+&lt;SPAN TYPE="LITERAL2"&gt;
+	&lt;BEGIN&gt;'''&lt;/BEGIN&gt;
+	&lt;END&gt;'''&lt;/END&gt;
+&lt;/SPAN&gt;</t>
+<t tx="EKR.20040430160416.8">&lt;!-- Standard literals --&gt;
+&lt;SPAN TYPE="LITERAL1"&gt;
+	&lt;BEGIN&gt;"&lt;/BEGIN&gt;
+	&lt;END&gt;"&lt;/END&gt;
+&lt;/SPAN&gt;
+
+&lt;SPAN TYPE="LITERAL1"&gt;
+	&lt;BEGIN&gt;'&lt;/BEGIN&gt;
+	&lt;END&gt;'&lt;/END&gt;
+&lt;/SPAN&gt;
+</t>
+<t tx="EKR.20040430160416.9">&lt;SEQ TYPE="OPERATOR"&gt;=&lt;/SEQ&gt;
+&lt;SEQ TYPE="OPERATOR"&gt;!&lt;/SEQ&gt;
+&lt;SEQ TYPE="OPERATOR"&gt;&amp;gt;=&lt;/SEQ&gt;
+&lt;SEQ TYPE="OPERATOR"&gt;&amp;lt;=&lt;/SEQ&gt;
+&lt;SEQ TYPE="OPERATOR"&gt;+&lt;/SEQ&gt;
+&lt;SEQ TYPE="OPERATOR"&gt;-&lt;/SEQ&gt;
+&lt;SEQ TYPE="OPERATOR"&gt;/&lt;/SEQ&gt;
+&lt;SEQ TYPE="OPERATOR"&gt;*&lt;/SEQ&gt;
+&lt;SEQ TYPE="OPERATOR"&gt;&amp;gt;&lt;/SEQ&gt;
+&lt;SEQ TYPE="OPERATOR"&gt;&amp;lt;&lt;/SEQ&gt;
+&lt;SEQ TYPE="OPERATOR"&gt;%&lt;/SEQ&gt;
+&lt;SEQ TYPE="OPERATOR"&gt;&amp;amp;&lt;/SEQ&gt;
+&lt;SEQ TYPE="OPERATOR"&gt;|&lt;/SEQ&gt;
+&lt;SEQ TYPE="OPERATOR"&gt;^&lt;/SEQ&gt;
+&lt;SEQ TYPE="OPERATOR"&gt;~&lt;/SEQ&gt;</t>
+<t tx="EKR.20040430160416.10">&lt;KEYWORDS&gt;
+	&lt;&lt; reserved words &gt;&gt;
+	&lt;&lt; builtins &gt;&gt;
+	&lt;&lt; exceptions &gt;&gt;
+	&lt;&lt; types &gt;&gt;
+&lt;/KEYWORDS&gt;</t>
+<t tx="EKR.20040430160416.11">&lt;!--  Reserved Words  --&gt;
+&lt;KEYWORD1&gt;and&lt;/KEYWORD1&gt;
+&lt;KEYWORD1&gt;as&lt;/KEYWORD1&gt;
+&lt;KEYWORD1&gt;assert&lt;/KEYWORD1&gt;
+&lt;KEYWORD1&gt;break&lt;/KEYWORD1&gt;
+&lt;KEYWORD1&gt;class&lt;/KEYWORD1&gt;
+&lt;KEYWORD1&gt;continue&lt;/KEYWORD1&gt;
+&lt;KEYWORD1&gt;def&lt;/KEYWORD1&gt;
+&lt;KEYWORD1&gt;del&lt;/KEYWORD1&gt;
+&lt;KEYWORD1&gt;elif&lt;/KEYWORD1&gt;
+&lt;KEYWORD1&gt;else&lt;/KEYWORD1&gt;
+&lt;KEYWORD1&gt;except&lt;/KEYWORD1&gt;
+&lt;KEYWORD1&gt;exec&lt;/KEYWORD1&gt;
+&lt;KEYWORD1&gt;finally&lt;/KEYWORD1&gt;
+&lt;KEYWORD1&gt;for&lt;/KEYWORD1&gt;
+&lt;KEYWORD1&gt;from&lt;/KEYWORD1&gt;
+&lt;KEYWORD1&gt;global&lt;/KEYWORD1&gt;
+&lt;KEYWORD1&gt;if&lt;/KEYWORD1&gt;
+&lt;KEYWORD1&gt;import&lt;/KEYWORD1&gt;
+&lt;KEYWORD1&gt;in&lt;/KEYWORD1&gt;
+&lt;KEYWORD1&gt;is&lt;/KEYWORD1&gt;
+&lt;KEYWORD1&gt;lambda&lt;/KEYWORD1&gt;
+&lt;KEYWORD1&gt;not&lt;/KEYWORD1&gt;
+&lt;KEYWORD1&gt;or&lt;/KEYWORD1&gt;
+&lt;KEYWORD1&gt;pass&lt;/KEYWORD1&gt;
+&lt;KEYWORD1&gt;print&lt;/KEYWORD1&gt;
+&lt;KEYWORD1&gt;raise&lt;/KEYWORD1&gt;
+&lt;KEYWORD1&gt;return&lt;/KEYWORD1&gt;
+&lt;KEYWORD1&gt;try&lt;/KEYWORD1&gt;
+&lt;KEYWORD1&gt;while&lt;/KEYWORD1&gt;
+&lt;KEYWORD1&gt;yield&lt;/KEYWORD1&gt;</t>
+<t tx="EKR.20040430160416.12">&lt;!-- builtins --&gt;
+&lt;KEYWORD2&gt;abs&lt;/KEYWORD2&gt;
+&lt;KEYWORD2&gt;apply&lt;/KEYWORD2&gt;
+&lt;KEYWORD2&gt;bool&lt;/KEYWORD2&gt;
+&lt;KEYWORD2&gt;buffer&lt;/KEYWORD2&gt;
+&lt;KEYWORD2&gt;callable&lt;/KEYWORD2&gt;
+&lt;KEYWORD2&gt;chr&lt;/KEYWORD2&gt;
+&lt;KEYWORD2&gt;classmethod&lt;/KEYWORD2&gt;
+&lt;KEYWORD2&gt;cmp&lt;/KEYWORD2&gt;
+&lt;KEYWORD2&gt;coerce&lt;/KEYWORD2&gt;
+&lt;KEYWORD2&gt;compile&lt;/KEYWORD2&gt;
+&lt;KEYWORD2&gt;complex&lt;/KEYWORD2&gt;
+&lt;KEYWORD2&gt;delattr&lt;/KEYWORD2&gt;
+&lt;KEYWORD2&gt;dict&lt;/KEYWORD2&gt;
+&lt;KEYWORD2&gt;dir&lt;/KEYWORD2&gt;
+&lt;KEYWORD2&gt;divmod&lt;/KEYWORD2&gt;
+&lt;KEYWORD2&gt;eval&lt;/KEYWORD2&gt;
+&lt;KEYWORD2&gt;execfile&lt;/KEYWORD2&gt;
+&lt;KEYWORD2&gt;file&lt;/KEYWORD2&gt;
+&lt;KEYWORD2&gt;filter&lt;/KEYWORD2&gt;
+&lt;KEYWORD2&gt;float&lt;/KEYWORD2&gt;
+&lt;KEYWORD2&gt;getattr&lt;/KEYWORD2&gt;
+&lt;KEYWORD2&gt;globals&lt;/KEYWORD2&gt;
+&lt;KEYWORD2&gt;hasattr&lt;/KEYWORD2&gt;
+&lt;KEYWORD2&gt;hash&lt;/KEYWORD2&gt;
+&lt;KEYWORD2&gt;hex&lt;/KEYWORD2&gt;
+&lt;KEYWORD2&gt;id&lt;/KEYWORD2&gt;
+&lt;KEYWORD2&gt;input&lt;/KEYWORD2&gt;
+&lt;KEYWORD2&gt;int&lt;/KEYWORD2&gt;
+&lt;KEYWORD2&gt;intern&lt;/KEYWORD2&gt;
+&lt;KEYWORD2&gt;isinstance&lt;/KEYWORD2&gt;
+&lt;KEYWORD2&gt;issubclass&lt;/KEYWORD2&gt;
+&lt;KEYWORD2&gt;iter&lt;/KEYWORD2&gt;
+&lt;KEYWORD2&gt;len&lt;/KEYWORD2&gt;
+&lt;KEYWORD2&gt;list&lt;/KEYWORD2&gt;
+&lt;KEYWORD2&gt;locals&lt;/KEYWORD2&gt;
+&lt;KEYWORD2&gt;long&lt;/KEYWORD2&gt;
+&lt;KEYWORD2&gt;map&lt;/KEYWORD2&gt;
+&lt;KEYWORD2&gt;max&lt;/KEYWORD2&gt;
+&lt;KEYWORD2&gt;min&lt;/KEYWORD2&gt;
+&lt;KEYWORD2&gt;object&lt;/KEYWORD2&gt;
+&lt;KEYWORD2&gt;oct&lt;/KEYWORD2&gt;
+&lt;KEYWORD2&gt;open&lt;/KEYWORD2&gt;
+&lt;KEYWORD2&gt;ord&lt;/KEYWORD2&gt;
+&lt;KEYWORD2&gt;pow&lt;/KEYWORD2&gt;
+&lt;KEYWORD2&gt;property&lt;/KEYWORD2&gt;
+&lt;KEYWORD2&gt;range&lt;/KEYWORD2&gt;
+&lt;KEYWORD2&gt;raw_input&lt;/KEYWORD2&gt;
+&lt;KEYWORD2&gt;reduce&lt;/KEYWORD2&gt;
+&lt;KEYWORD2&gt;reload&lt;/KEYWORD2&gt;
+&lt;KEYWORD2&gt;repr&lt;/KEYWORD2&gt;
+&lt;KEYWORD2&gt;round&lt;/KEYWORD2&gt;
+&lt;KEYWORD2&gt;setattr&lt;/KEYWORD2&gt;
+&lt;KEYWORD2&gt;slice&lt;/KEYWORD2&gt;
+&lt;KEYWORD2&gt;staticmethod&lt;/KEYWORD2&gt;
+&lt;KEYWORD2&gt;str&lt;/KEYWORD2&gt;
+&lt;KEYWORD2&gt;super&lt;/KEYWORD2&gt;
+&lt;KEYWORD2&gt;tuple&lt;/KEYWORD2&gt;
+&lt;KEYWORD2&gt;type&lt;/KEYWORD2&gt;
+&lt;KEYWORD2&gt;unichr&lt;/KEYWORD2&gt;
+&lt;KEYWORD2&gt;unicode&lt;/KEYWORD2&gt;
+&lt;KEYWORD2&gt;vars&lt;/KEYWORD2&gt;
+&lt;KEYWORD2&gt;xrange&lt;/KEYWORD2&gt;
+&lt;KEYWORD2&gt;zip&lt;/KEYWORD2&gt;</t>
+<t tx="EKR.20040430160416.13">&lt;!-- exceptions --&gt;
+&lt;KEYWORD3&gt;ArithmeticError&lt;/KEYWORD3&gt;
+&lt;KEYWORD3&gt;AssertionError&lt;/KEYWORD3&gt;
+&lt;KEYWORD3&gt;AttributeError&lt;/KEYWORD3&gt;
+&lt;KEYWORD3&gt;DeprecationWarning&lt;/KEYWORD3&gt;
+&lt;KEYWORD3&gt;EOFError&lt;/KEYWORD3&gt;
+&lt;KEYWORD3&gt;EnvironmentError&lt;/KEYWORD3&gt;
+&lt;KEYWORD3&gt;Exception&lt;/KEYWORD3&gt;
+&lt;KEYWORD3&gt;FloatingPointError&lt;/KEYWORD3&gt;
+&lt;KEYWORD3&gt;IOError&lt;/KEYWORD3&gt;
+&lt;KEYWORD3&gt;ImportError&lt;/KEYWORD3&gt;
+&lt;KEYWORD3&gt;IndentationError&lt;/KEYWORD3&gt;
+&lt;KEYWORD3&gt;IndexError&lt;/KEYWORD3&gt;
+&lt;KEYWORD3&gt;KeyError&lt;/KEYWORD3&gt;
+&lt;KEYWORD3&gt;KeyboardInterrupt&lt;/KEYWORD3&gt;
+&lt;KEYWORD3&gt;LookupError&lt;/KEYWORD3&gt;
+&lt;KEYWORD3&gt;MemoryError&lt;/KEYWORD3&gt;
+&lt;KEYWORD3&gt;NameError&lt;/KEYWORD3&gt;
+&lt;KEYWORD3&gt;NotImplemented&lt;/KEYWORD3&gt;
+&lt;KEYWORD3&gt;NotImplementedError&lt;/KEYWORD3&gt;
+&lt;KEYWORD3&gt;OSError&lt;/KEYWORD3&gt;
+&lt;KEYWORD3&gt;OverflowError&lt;/KEYWORD3&gt;
+&lt;KEYWORD3&gt;OverflowWarning&lt;/KEYWORD3&gt;
+&lt;KEYWORD3&gt;ReferenceError&lt;/KEYWORD3&gt;
+&lt;KEYWORD3&gt;RuntimeError&lt;/KEYWORD3&gt;
+&lt;KEYWORD3&gt;RuntimeWarning&lt;/KEYWORD3&gt;
+&lt;KEYWORD3&gt;StandardError&lt;/KEYWORD3&gt;
+&lt;KEYWORD3&gt;StopIteration&lt;/KEYWORD3&gt;
+&lt;KEYWORD3&gt;SyntaxError&lt;/KEYWORD3&gt;
+&lt;KEYWORD3&gt;SyntaxWarning&lt;/KEYWORD3&gt;
+&lt;KEYWORD3&gt;SystemError&lt;/KEYWORD3&gt;
+&lt;KEYWORD3&gt;SystemExit&lt;/KEYWORD3&gt;
+&lt;KEYWORD3&gt;TabError&lt;/KEYWORD3&gt;
+&lt;KEYWORD3&gt;TypeError&lt;/KEYWORD3&gt;
+&lt;KEYWORD3&gt;UnboundLocalError&lt;/KEYWORD3&gt;
+&lt;KEYWORD3&gt;UnicodeError&lt;/KEYWORD3&gt;
+&lt;KEYWORD3&gt;UserWarning&lt;/KEYWORD3&gt;
+&lt;KEYWORD3&gt;ValueError&lt;/KEYWORD3&gt;
+&lt;KEYWORD3&gt;Warning&lt;/KEYWORD3&gt;
+&lt;KEYWORD3&gt;WindowsError&lt;/KEYWORD3&gt;
+&lt;KEYWORD3&gt;ZeroDivisionError&lt;/KEYWORD3&gt;</t>
+<t tx="EKR.20040430160416.14">&lt;!-- types (from types module) --&gt;
+&lt;KEYWORD3&gt;BufferType&lt;/KEYWORD3&gt;
+&lt;KEYWORD3&gt;BuiltinFunctionType&lt;/KEYWORD3&gt;
+&lt;KEYWORD3&gt;BuiltinMethodType&lt;/KEYWORD3&gt;
+&lt;KEYWORD3&gt;ClassType&lt;/KEYWORD3&gt;
+&lt;KEYWORD3&gt;CodeType&lt;/KEYWORD3&gt;
+&lt;KEYWORD3&gt;ComplexType&lt;/KEYWORD3&gt;
+&lt;KEYWORD3&gt;DictProxyType&lt;/KEYWORD3&gt;
+&lt;KEYWORD3&gt;DictType&lt;/KEYWORD3&gt;
+&lt;KEYWORD3&gt;DictionaryType&lt;/KEYWORD3&gt;
+&lt;KEYWORD3&gt;EllipsisType&lt;/KEYWORD3&gt;
+&lt;KEYWORD3&gt;FileType&lt;/KEYWORD3&gt;
+&lt;KEYWORD3&gt;FloatType&lt;/KEYWORD3&gt;
+&lt;KEYWORD3&gt;FrameType&lt;/KEYWORD3&gt;
+&lt;KEYWORD3&gt;FunctionType&lt;/KEYWORD3&gt;
+&lt;KEYWORD3&gt;GeneratorType&lt;/KEYWORD3&gt;
+&lt;KEYWORD3&gt;InstanceType&lt;/KEYWORD3&gt;
+&lt;KEYWORD3&gt;IntType&lt;/KEYWORD3&gt;
+&lt;KEYWORD3&gt;LambdaType&lt;/KEYWORD3&gt;
+&lt;KEYWORD3&gt;ListType&lt;/KEYWORD3&gt;
+&lt;KEYWORD3&gt;LongType&lt;/KEYWORD3&gt;
+&lt;KEYWORD3&gt;MethodType&lt;/KEYWORD3&gt;
+&lt;KEYWORD3&gt;ModuleType&lt;/KEYWORD3&gt;
+&lt;KEYWORD3&gt;NoneType&lt;/KEYWORD3&gt;
+&lt;KEYWORD3&gt;ObjectType&lt;/KEYWORD3&gt;
+&lt;KEYWORD3&gt;SliceType&lt;/KEYWORD3&gt;
+&lt;KEYWORD3&gt;StringType&lt;/KEYWORD3&gt;
+&lt;KEYWORD3&gt;StringTypes&lt;/KEYWORD3&gt;
+&lt;KEYWORD3&gt;TracebackType&lt;/KEYWORD3&gt;
+&lt;KEYWORD3&gt;TupleType&lt;/KEYWORD3&gt;
+&lt;KEYWORD3&gt;TypeType&lt;/KEYWORD3&gt;
+&lt;KEYWORD3&gt;UnboundMethodType&lt;/KEYWORD3&gt;
+&lt;KEYWORD3&gt;UnicodeType&lt;/KEYWORD3&gt;
+&lt;KEYWORD3&gt;XRangeType&lt;/KEYWORD3&gt;
+
+&lt;KEYWORD3&gt;false&lt;/KEYWORD3&gt;
+&lt;KEYWORD3&gt;None&lt;/KEYWORD3&gt;
+&lt;KEYWORD3&gt;true&lt;/KEYWORD3&gt;
+
+&lt;KEYWORD3&gt;__abs__&lt;/KEYWORD3&gt;
+&lt;KEYWORD3&gt;__add__&lt;/KEYWORD3&gt;
+&lt;KEYWORD3&gt;__all__&lt;/KEYWORD3&gt;
+&lt;KEYWORD3&gt;__author__&lt;/KEYWORD3&gt;
+&lt;KEYWORD3&gt;__bases__&lt;/KEYWORD3&gt;
+&lt;KEYWORD3&gt;__builtins__&lt;/KEYWORD3&gt;
+&lt;KEYWORD3&gt;__call__&lt;/KEYWORD3&gt;
+&lt;KEYWORD3&gt;__class__&lt;/KEYWORD3&gt;
+&lt;KEYWORD3&gt;__cmp__&lt;/KEYWORD3&gt;
+&lt;KEYWORD3&gt;__coerce__&lt;/KEYWORD3&gt;
+&lt;KEYWORD3&gt;__contains__&lt;/KEYWORD3&gt;
+&lt;KEYWORD3&gt;__debug__&lt;/KEYWORD3&gt;
+&lt;KEYWORD3&gt;__del__&lt;/KEYWORD3&gt;
+&lt;KEYWORD3&gt;__delattr__&lt;/KEYWORD3&gt;
+&lt;KEYWORD3&gt;__delitem__&lt;/KEYWORD3&gt;
+&lt;KEYWORD3&gt;__delslice__&lt;/KEYWORD3&gt;
+&lt;KEYWORD3&gt;__dict__&lt;/KEYWORD3&gt;
+&lt;KEYWORD3&gt;__div__&lt;/KEYWORD3&gt;
+&lt;KEYWORD3&gt;__divmod__&lt;/KEYWORD3&gt;
+&lt;KEYWORD3&gt;__doc__&lt;/KEYWORD3&gt;
+&lt;KEYWORD3&gt;__eq__&lt;/KEYWORD3&gt;
+&lt;KEYWORD3&gt;__file__&lt;/KEYWORD3&gt;
+&lt;KEYWORD3&gt;__float__&lt;/KEYWORD3&gt;
+&lt;KEYWORD3&gt;__floordiv__&lt;/KEYWORD3&gt;
+&lt;KEYWORD3&gt;__future__&lt;/KEYWORD3&gt;
+&lt;KEYWORD3&gt;__ge__&lt;/KEYWORD3&gt;
+&lt;KEYWORD3&gt;__getattr__&lt;/KEYWORD3&gt;
+&lt;KEYWORD3&gt;__getattribute__&lt;/KEYWORD3&gt;
+&lt;KEYWORD3&gt;__getitem__&lt;/KEYWORD3&gt;
+&lt;KEYWORD3&gt;__getslice__&lt;/KEYWORD3&gt;
+&lt;KEYWORD3&gt;__gt__&lt;/KEYWORD3&gt;
+&lt;KEYWORD3&gt;__hash__&lt;/KEYWORD3&gt;
+&lt;KEYWORD3&gt;__hex__&lt;/KEYWORD3&gt;
+&lt;KEYWORD3&gt;__iadd__&lt;/KEYWORD3&gt;
+&lt;KEYWORD3&gt;__import__&lt;/KEYWORD3&gt;
+&lt;KEYWORD3&gt;__imul__&lt;/KEYWORD3&gt;
+&lt;KEYWORD3&gt;__init__&lt;/KEYWORD3&gt;
+&lt;KEYWORD3&gt;__int__&lt;/KEYWORD3&gt;
+&lt;KEYWORD3&gt;__invert__&lt;/KEYWORD3&gt;
+&lt;KEYWORD3&gt;__iter__&lt;/KEYWORD3&gt;
+&lt;KEYWORD3&gt;__le__&lt;/KEYWORD3&gt;
+&lt;KEYWORD3&gt;__len__&lt;/KEYWORD3&gt;
+&lt;KEYWORD3&gt;__long__&lt;/KEYWORD3&gt;
+&lt;KEYWORD3&gt;__lshift__&lt;/KEYWORD3&gt;
+&lt;KEYWORD3&gt;__lt__&lt;/KEYWORD3&gt;
+&lt;KEYWORD3&gt;__members__&lt;/KEYWORD3&gt;
+&lt;KEYWORD3&gt;__metaclass__&lt;/KEYWORD3&gt;
+&lt;KEYWORD3&gt;__mod__&lt;/KEYWORD3&gt;
+&lt;KEYWORD3&gt;__mro__&lt;/KEYWORD3&gt;
+&lt;KEYWORD3&gt;__mul__&lt;/KEYWORD3&gt;
+&lt;KEYWORD3&gt;__name__&lt;/KEYWORD3&gt;
+&lt;KEYWORD3&gt;__ne__&lt;/KEYWORD3&gt;
+&lt;KEYWORD3&gt;__neg__&lt;/KEYWORD3&gt;
+&lt;KEYWORD3&gt;__new__&lt;/KEYWORD3&gt;
+&lt;KEYWORD3&gt;__nonzero__&lt;/KEYWORD3&gt;
+&lt;KEYWORD3&gt;__oct__&lt;/KEYWORD3&gt;
+&lt;KEYWORD3&gt;__or__&lt;/KEYWORD3&gt;
+&lt;KEYWORD3&gt;__path__&lt;/KEYWORD3&gt;
+&lt;KEYWORD3&gt;__pos__&lt;/KEYWORD3&gt;
+&lt;KEYWORD3&gt;__pow__&lt;/KEYWORD3&gt;
+&lt;KEYWORD3&gt;__radd__&lt;/KEYWORD3&gt;
+&lt;KEYWORD3&gt;__rdiv__&lt;/KEYWORD3&gt;
+&lt;KEYWORD3&gt;__rdivmod__&lt;/KEYWORD3&gt;
+&lt;KEYWORD3&gt;__reduce__&lt;/KEYWORD3&gt;
+&lt;KEYWORD3&gt;__repr__&lt;/KEYWORD3&gt;
+&lt;KEYWORD3&gt;__rfloordiv__&lt;/KEYWORD3&gt;
+&lt;KEYWORD3&gt;__rlshift__&lt;/KEYWORD3&gt;
+&lt;KEYWORD3&gt;__rmod__&lt;/KEYWORD3&gt;
+&lt;KEYWORD3&gt;__rmul__&lt;/KEYWORD3&gt;
+&lt;KEYWORD3&gt;__ror__&lt;/KEYWORD3&gt;
+&lt;KEYWORD3&gt;__rpow__&lt;/KEYWORD3&gt;
+&lt;KEYWORD3&gt;__rrshift__&lt;/KEYWORD3&gt;
+&lt;KEYWORD3&gt;__rsub__&lt;/KEYWORD3&gt;
+&lt;KEYWORD3&gt;__rtruediv__&lt;/KEYWORD3&gt;
+&lt;KEYWORD3&gt;__rxor__&lt;/KEYWORD3&gt;
+&lt;KEYWORD3&gt;__setattr__&lt;/KEYWORD3&gt;
+&lt;KEYWORD3&gt;__setitem__&lt;/KEYWORD3&gt;
+&lt;KEYWORD3&gt;__setslice__&lt;/KEYWORD3&gt;
+&lt;KEYWORD3&gt;__self__&lt;/KEYWORD3&gt;
+&lt;KEYWORD3&gt;__slots__&lt;/KEYWORD3&gt;
+&lt;KEYWORD3&gt;__str__&lt;/KEYWORD3&gt;
+&lt;KEYWORD3&gt;__sub__&lt;/KEYWORD3&gt;
+&lt;KEYWORD3&gt;__truediv__&lt;/KEYWORD3&gt;
+&lt;KEYWORD3&gt;__version__&lt;/KEYWORD3&gt;
+&lt;KEYWORD3&gt;__xor__&lt;/KEYWORD3&gt;</t>
+<t tx="EKR.20040430160416.15">@language python
+@markup wiki
+
+""" continued
+string"""
+
+@ ''ab'' __xxx__ ''wx'' __xyz__
+@c
+
+# /* ''ab'' __xxx__ ''wx'' __xyz__ */
+
+# Test
+
+""" ''' """ ''' """'''  # Leo handles the common cases correctly.
+
+''' ''ab'' __xxx__ ''wx'' __xyz__ ''' # No wiki markup in ''' strings.
+
+""" ''ab'' __xxx__ ''wx'' __xyz__ """
+
+# ''ab'' __xxx__ ''wx'' __xyz__
+
+""" ''y'' """
+
+""" text~~#ee00ff:some text~~more text"""
+
+""" {picture file=../Icons/Leoapp.GIF}this """ # There are probdlems \with correct indexing following a graphic.
+
+and if
+
+from leoGlobals import * ; print `app().loadDir`</t>
+<t tx="EKR.20040430162649.1"></t>
+<t tx="EKR.20040430162649.2"></t>
+<t tx="EKR.20040430162649.3">@nocolor
+
+I tried to write out text containing characters like:
+ä ö ü Ä Ö Ü ß ø ó
+with @file-asis and get:
+
+UnicodeError: ASCII encoding error: ordinal not in range(128)
+
+@file (without option) works fine.</t>
+<t tx="EKR.20040430162649.4">@nocolor
+
+I tried to write out text containing characters like:
+ä ö ü Ä Ö Ü ß ø ó
+with @file-asis and get:
+
+UnicodeError: ASCII encoding error: ordinal not in range(128)
+
+@file (without option) works fine.</t>
+<t tx="EKR.20040430162649.5">@nocolor
+
+I tried to write out text containing characters like:
+ä ö ü Ä Ö Ü ß ø ó
+with @file-asis and get:
+
+UnicodeError: ASCII encoding error: ordinal not in range(128)
+
+@file (without option) works fine.</t>
+<t tx="EKR.20040430162649.6">@ignore
+
+Ä á Û</t>
+<t tx="EKR.20040430162649.7">@encoding iso-8859-1</t>
+<t tx="EKR.20040430162649.8"></t>
+<t tx="EKR.20040430162649.9"></t>
+<t tx="EKR.20040430162649.10">@encoding cp1252
+@others</t>
+<t tx="EKR.20040430162649.11">aÖb</t>
+<t tx="EKR.20040430162649.12">@ignore</t>
+<t tx="EKR.20040430162649.13">@language perlpod
+@path c:\prog\test</t>
+<t tx="EKR.20040430162649.14">@root perlpod.txt
+@ Multi-line
+doc part
+&lt;&lt;ref&gt;&gt;</t>
+<t tx="EKR.20040430162649.15">@ doc part2
+@c
+code line1
+code line2
+@ more doc part</t>
+<t tx="EKR.20040430162649.16">@comment REM_</t>
+<t tx="EKR.20040430162649.17">test 6</t>
+<t tx="EKR.20040430162649.18">@ignore</t>
+<t tx="EKR.20040430162649.19">@language plain
+@comment # /* */
+
+This is plain text.
+
+# This is a comment.
+
+More plain text.
+
+/* A block comment
+ths continues */
+
+More plain text.</t>
+<t tx="EKR.20040430162649.20">@ atFile.directiveKind is return miscDirective on _any_ line that starts with @</t>
+<t tx="EKR.20040430162649.21">@ignore
+
+line 1
+@line 2
+	@line 3
+line 4</t>
+<t tx="EKR.20040430162649.22">@nocolor
+@pagewidth 40
+
+A one-line paragraph one two three four five six seven eight nine ten...
+
+An @rawfile tree is a tree whose root headline starts with
+@rawfile &lt;filename&gt;. Similarly, an @silentfile tree is a
+tree whose root headline starts with an @silentfile
+&lt;filename&gt; directive.
+
+    Leo creates derived files from @rawfile and @silentfile trees by writing the body text of all nodes of the tree in outline order.  Leo writes the body text _as is_, without recognizing section definitions, without expanding section references, and without treating directives specially in any way.  In particular, Leo copies all directives, including @space or @c directives, to the derived file as text. Exception: Leo recognizes the @ignore directive in @rawfile or @silentfile nodes, so you may use the @ignore directive as usual to prevent Leo from writing @rawfile and @silentfile trees.
+
+There are several difference between @rawfile and @silentfile trees:
+	
+  This
+  is
+  a
+  test.
+
+  1. This is the first line and it is really really really long. And it has
+	 a hanging indentation.
+     and another line.
+
+  2. This is a lllllllllllllllllllllllllllllllllllloooooooooooooooooong
+     next item.
+     And it too has a hanging indentation.
+
+  3. This is an exxxxxxxxxxxxxxxxxxxxxxxxtrrrrrrrrrrrrrrreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeemlylong
+     word.
+And it too has a hanging indentation.</t>
+<t tx="EKR.20040430162649.23">@ignore</t>
+<t tx="EKR.20040430162649.24">enabling: *
+Exception in Tkinter callback
+Traceback (most recent call last):
+  File "c:\python22\lib\lib-tk\Tkinter.py", line 1292, in __call__
+    return apply(self.func, args)
+  File "leoFrame.py", line 1368, in OnTangle
+    self.commands.tangleCommands.tangle()
+  File "leoTangle.py", line 507, in tangle
+    self.tangleTree(v,report_errors)
+  File "leoTangle.py", line 644, in tangleTree
+    self.tanglePass1(v) # sets self.v
+  File "leoTangle.py", line 589, in tanglePass1
+    self.skip_body(v)
+  File "leoTangle.py", line 1062, in skip_body
+    self.st_enter_root_name(old_root_name,code,doc)
+  File "leoTangle.py", line 2040, in st_enter_root_name
+    assert(code)
+AssertionError
+</t>
+<t tx="EKR.20040430162649.25">@root a.txt
+@ 
+
+@root a.txt 
+some text 
+@ </t>
 <t tx="ekr.20040126105605"></t>
 <t tx="ekr.20040126105605.2"></t>
 <t tx="ekr.20040126105605.3"></t>
@@ -3321,18 +4076,6 @@ approach to tree walking.</t>
 	c.hoist()
 	fhp.withdraw()
 </t>
-<t tx="ekr.20040321091021">import leoGlobals as g
-c = g.top()
-
-
-print '-'*20
-p = c.currentPosition()
-print p.v.isAtThinFileNode()
-
-@others
-
-&lt;&lt; ref &gt;&gt;
-</t>
 <t tx="ekr.20040322120331">import leoGlobals as g
 c = g.top()
 
@@ -4183,7 +4926,8 @@ else: # Doesn't work
 suppressionRegexs = {}</t>
 <t tx="ekr.20040414082422.2"></t>
 <t tx="ekr.20040414082806"></t>
-<t tx="ekr.20040419105536">@language perl
+<t tx="ekr.20040419105536">@ignore
+@language perl
 
 @others</t>
 <t tx="ekr.20040419105536.1">line 1</t>
