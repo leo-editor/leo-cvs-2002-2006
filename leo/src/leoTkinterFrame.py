@@ -74,7 +74,7 @@ class leoTkinterFrame (leoFrame.leoFrame):
 		scrolls = g.choose(scrolls,1,0)
 	
 		canvas = Tk.Canvas(parentFrame,name="canvas",
-			bd=0,bg="white",relief="flat")
+			bd=0,bg="white",relief="flat",highlightthickness=0) # Solves border problem.
 	
 		frame.treeBar = treeBar = Tk.Scrollbar(parentFrame,name="treeBar")
 		

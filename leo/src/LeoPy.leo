@@ -4205,7 +4205,7 @@
 </v>
 </v>
 </v>
-<v t="ekr.20040107064101.1" a="E"><vh>4.2 Projects</vh>
+<v t="ekr.20040107064101.1"><vh>4.2 Projects</vh>
 <v t="ekr.20040326032652"><vh> Notes</vh>
 <v t="ekr.20040301192211"><vh> What I did</vh>
 <v t="ekr.20040311124726"><vh>Features of 4.2</vh></v>
@@ -6170,7 +6170,7 @@
 <v t="ekr.20040414093055"><vh>Shadow files plugin</vh></v>
 <v t="ekr.20040414093758"><vh>Suggestions</vh></v>
 </v>
-<v t="ekr.20031218072017.2406"><vh>Code</vh>
+<v t="ekr.20031218072017.2406" a="TV"><vh>Code</vh>
 <v t="ekr.20031218072017.2407"><vh>  Overview of code</vh>
 <v t="ekr.20031218072017.2408"><vh>&lt;&lt; About clones &gt;&gt;</vh></v>
 <v t="ekr.20031218072017.2409"><vh>&lt;&lt; About drawing &gt;&gt;</vh></v>
@@ -7628,7 +7628,7 @@
 </v>
 <v t="ekr.20031218072017.3942"><vh>f.__repr__</vh></v>
 <v t="ekr.20031218072017.3943"><vh>Creating the frame</vh>
-<v t="ekr.20031218072017.3944"><vh>f.createCanvas</vh></v>
+<v t="ekr.20031218072017.3944" a="M"><vh>f.createCanvas</vh></v>
 <v t="ekr.20031218072017.2176"><vh>f.finishCreate</vh>
 <v t="ekr.20031218072017.2177"><vh>&lt;&lt; create the toplevel frame &gt;&gt;</vh></v>
 <v t="ekr.20031218072017.2178"><vh>&lt;&lt; create all the subframes &gt;&gt;</vh>
@@ -9471,7 +9471,7 @@
 <v t="EKR.20040422132037.7"><vh>Bug: vpython and mac</vh></v>
 <v t="EKR.20040422132037.8"><vh>Mouse / Paste Anomalies  </vh></v>
 </v>
-<v t="EKR.20040422091601" a="TV"><vh>New bugs</vh>
+<v t="EKR.20040422091601"><vh>New bugs</vh>
 <v t="EKR.20040422091601.1"><vh>Syntax Colouring Bug - html mode   </vh></v>
 </v>
 </vnodes>
@@ -57903,7 +57903,7 @@ Tk = Tkinter
 	scrolls = g.choose(scrolls,1,0)
 
 	canvas = Tk.Canvas(parentFrame,name="canvas",
-		bd=0,bg="white",relief="flat")
+		bd=0,bg="white",relief="flat",highlightthickness=0) # Solves border problem.
 
 	frame.treeBar = treeBar = Tk.Scrollbar(parentFrame,name="treeBar")
 	
