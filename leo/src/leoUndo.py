@@ -52,7 +52,6 @@ class baseUndoer:
         # Ivars to transition to new undo scheme...
         u.debug = False # True: enable debugging code in new undo scheme.
         u.debug_print = False # True: enable print statements in debug code.
-        u.new_undo = True # True: enable new debug code.
     
         # Statistics comparing old and new ways (only if u.debug is on).
         u.new_mem = 0
@@ -264,13 +263,14 @@ class baseUndoer:
         frame.menu.enableMenu(menu,u.redoMenuLabel,u.canRedo())
         frame.menu.enableMenu(menu,u.undoMenuLabel,u.canUndo())
     #@-node:ekr.20031218072017.3611:enableMenuItems
-    #@+node:ekr.20031218072017.3612:getBead, peekBead, setBead
+    #@+node:ekr.20031218072017.3612:getBead, peekBead, makeBeadDict
     #@+node:EKR.20040526150818:getBeed
     def getBead (self,n):
         
         u = self
         if n < 0 or n >= len(u.beads):
             return None
+    
         d = u.beads[n]
         # g.trace(n,len(u.beads),d)
         self.clearIvars()
@@ -281,15 +281,6 @@ class baseUndoer:
             val = d.get(ivar,None)
             setattr(u,ivar,val)
     
-        if not u.new_undo: # Recreate an "oldText" entry if necessary.
-            if u.undoType == "Typing" and u.oldText == None:
-                assert(n > 0)
-                old_d = u.beads[n-1]
-                # The user will lose data if these asserts fail.
-                assert(old_d["undoType"] == "Typing")
-                assert(old_d["v"] == u.p)
-                u.oldText = old_d["newText"]
-                # g.trace(u.oldText)
         return d
     #@nonl
     #@-node:EKR.20040526150818:getBeed
@@ -304,35 +295,32 @@ class baseUndoer:
         return d
     #@nonl
     #@-node:EKR.20040526150818.1:peekBeed
-    #@+node:EKR.20040526150818.2:setBeed
-    def setBead (self,n,keywords=None):
+    #@+node:EKR.20040526150818.2:makeBeadDict
+    def makeBeadDict (self,keywords=None):
+        
+        '''Create a new bead dictionary from the undo ivars and optional keywords.'''
     
         u = self ; d = {}
         d["undoType"]=u.undoType
         d["v"]=u.p
+    
         # Only enter significant entries into the dictionary.
         # This is an important space optimization for typing.
         for ivar in u.optionalIvars:
             if getattr(u,ivar) != None:
                 d[ivar] = getattr(u,ivar)
-        # copy all significant keywords to d.
+    
+        # Copy all optional keywords to d.
         if keywords:
             for key in keywords.keys():
                 if keywords[key] != None:
                     d[key] = keywords[key]
-        # Clear the "oldText" entry if the previous entry was a "Typing" entry.
-        # This optimization halves the space needed for Undo/Redo Typing.
-        if not u.new_undo:
-            if u.undoType == "Typing" and n > 0:
-                old_d = u.beads[n-1]
-                if old_d["undoType"] == "Typing" and old_d["v"] == u.p:
-                    del d["oldText"] # We can recreate this entry from old_d["newText"]
-                    # g.trace(u.oldText)
+    
         # g.trace(d)
         return d
     #@nonl
-    #@-node:EKR.20040526150818.2:setBeed
-    #@-node:ekr.20031218072017.3612:getBead, peekBead, setBead
+    #@-node:EKR.20040526150818.2:makeBeadDict
+    #@-node:ekr.20031218072017.3612:getBead, peekBead, makeBeadDict
     #@+node:ekr.20031218072017.3613:redoMenuName, undoMenuName
     def redoMenuName (self,name):
     
@@ -438,7 +426,7 @@ class baseUndoer:
         u.n = p.childIndex()
         # Push params on undo stack, clearing all forward entries.
         u.bead += 1
-        d = u.setBead(u.bead,keywords)
+        d = u.makeBeadDict(keywords)
         u.beads[u.bead:] = [d]
         # g.trace(len(u.beads),u.bead,keywords)
         # Recalculate the menu labels.
@@ -534,7 +522,7 @@ class baseUndoer:
         else:
             old_middle_lines = old_lines[leading:-trailing]
             new_middle_lines = new_lines[leading:-trailing]
-            
+        
         # Remember how many trailing newlines in the old and new text.
         i = len(oldText) - 1 ; old_newlines = 0
         while i >= 0 and oldText[i] == '\n':
@@ -574,23 +562,19 @@ class baseUndoer:
         #@-at
         #@@c
         
-        if u.new_undo:
-            if u.debug:
-                # Remember the complete text for comparisons...
-                u.oldText = oldText
-                u.newText = newText
-                # Compute statistics comparing old and new ways...
-                # The old doesn't often store the old text, so don't count it here.
-                u.old_mem += len(newText)
-                s1 = string.join(old_middle_lines,'\n')
-                s2 = string.join(new_middle_lines,'\n')
-                u.new_mem += len(s1) + len(s2)
-            else:
-                u.oldText = None
-                u.newText = None
-        else:
+        if u.debug:
+            # Remember the complete text for comparisons...
             u.oldText = oldText
             u.newText = newText
+            # Compute statistics comparing old and new ways...
+            # The old doesn't often store the old text, so don't count it here.
+            u.old_mem += len(newText)
+            s1 = string.join(old_middle_lines,'\n')
+            s2 = string.join(new_middle_lines,'\n')
+            u.new_mem += len(s1) + len(s2)
+        else:
+            u.oldText = None
+            u.newText = None
         
         self.leading = leading
         self.trailing = trailing
@@ -616,12 +600,117 @@ class baseUndoer:
         #@nl
         #@    << adjust the undo stack, clearing all forward entries >>
         #@+node:ekr.20040324061854.3:<< adjust the undo stack, clearing all forward entries >>
-        # Push params on undo stack, clearing all forward entries.
-        u.bead += 1
-        d = u.setBead(u.bead)
-        u.beads[u.bead:] = [d]
+        #@+at 
+        #@nonl
+        # New in Leo 4.3. Instead of creating a new bead on every character, 
+        # we may adjust the top bead:
+        # 
+        # word granularity: adjust the top bead if the typing would continue 
+        # the word.
+        # line granularity: adjust the top bead if the typing is on the same 
+        # line.
+        # node granularity: adjust the top bead if the typing is anywhere on 
+        # the same node.
+        #@-at
+        #@@c
         
-        # g.trace(len(u.beads), u.bead)
+        granularity = 'word'
+        if granularity not in ('node','line','word','char'):
+            granularity = 'word'
+        
+        old_d = u.peekBead(u.bead)
+        old_p = old_d and old_d.get('v')
+        
+        #@<< set newBead if we can't share the previous bead >>
+        #@+node:ekr.20050125220613:<< set newBead if we can't share the previous bead >>
+        if (
+            not old_d or
+            old_d.get('v') != p or
+            old_d.get('undoType') != undo_type
+        ):
+            newBead = True # We can't share the previous node.
+        elif granularity == 'char':
+            newBead = True # This was the old way.
+        elif granularity == 'node':
+            newBead = False # Always replace previous bead.
+        else:
+            assert granularity in ('line','word')
+            # Replace the previous bead if only the middle lines have changed.
+            newBead = (
+                old_d.get('leading')  != u.leading or 
+                old_d.get('trailing') != u.trailing
+            )
+            if granularity == 'word' and not newBead:
+                try:  # This should never fail, but what the heck...
+                    #@            << set newBead if the change does not continue a word >>
+                    #@+node:ekr.20050125203937:<< set newBead if the change does not continue a word >>
+                    old_start,old_end = oldSel
+                    new_start,new_end = newSel
+                    if old_start != old_end or new_start != new_end:
+                        # The new and old characters are not contiguous.
+                        newBead = True
+                    else:
+                        old_row,old_col = old_start.split('.')
+                        new_row,new_col = new_start.split('.')
+                        old_row,old_col = int(old_row),int(old_col)
+                        new_row,new_col = int(new_row),int(new_col)
+                        old_lines = g.splitLines(oldText)
+                        new_lines = g.splitLines(newText)
+                        #g.trace(old_row,old_col,len(old_lines))
+                        #g.trace(new_row,new_col,len(new_lines))
+                        if old_row != new_row or old_col != new_col - 1:
+                            # The new and old characters are not contiguous.
+                            newBead = True
+                        elif old_col == 0 or new_col == 0:
+                            pass # We have just inserted a line.
+                        else:
+                            old_s = old_lines[old_row-1]
+                            new_s = new_lines[new_row-1]
+                            old_ch = old_s[old_col-1]
+                            new_ch = new_s[new_col-1]
+                            # g.trace(repr(old_ch),repr(new_ch))
+                            if 1: # This is the best way.
+                                sep = string.whitespace
+                                if old_ch not in sep and new_ch in sep:
+                                    newBead = True # new_ch begins whitespace + word
+                            elif 1:
+                                sep = string.whitespace #  + string.punctuation
+                                if old_ch in sep and new_ch not in sep:
+                                    newBead = True # new_ch begins a word.
+                            else:
+                                word_chars = string.letters + string.digits + '_'
+                                if new_ch in word_chars and not old_ch in word_chars:
+                                    newBead = True # new_ch begins a word.
+                    #@nonl
+                    #@-node:ekr.20050125203937:<< set newBead if the change does not continue a word >>
+                    #@nl
+                except Exception:
+                    if 0:
+                        g.trace('old_lines',old_lines)
+                        g.trace('new_lines',new_lines)
+                    g.es('Exception in setUndoRedoTypingParams',color='blue')
+                    g.es_exception()
+                    newBead = True
+        #@nonl
+        #@-node:ekr.20050125220613:<< set newBead if we can't share the previous bead >>
+        #@nl
+        if newBead:
+            # Push params on undo stack, clearing all forward entries.
+            u.bead += 1
+            d = u.makeBeadDict()
+            u.beads[u.bead:] = [d]
+        else:
+            # Replace all the information in the old bead with the new info.
+            old_d['leading'] = u.leading
+            old_d['trailing'] = u.trailing
+            old_d['newNewlines'] = u.newNewlines
+            old_d['newMiddleLines'] = u.newMiddleLines
+            old_d['newSel'] = u.newSel
+            old_d['yview']  = u.yview
+            d = old_d
+            u.beads[u.bead:] = [d]
+            
+        # g.trace(newBead,'u.bead',u.bead,undo_type,old_p)
         #@nonl
         #@-node:ekr.20040324061854.3:<< adjust the undo stack, clearing all forward entries >>
         #@nl
@@ -1398,6 +1487,7 @@ class baseUndoer:
         u = self ; c = u.c ; current = c.currentPosition()
     
         # g.trace(u.undoType,u.p)
+    
         # selectVnode causes recoloring, so don't do this unless needed.
         if current != u.p:
             c.selectVnode(u.p)
@@ -1409,6 +1499,7 @@ class baseUndoer:
             u.oldMiddleLines,u.newMiddleLines,
             u.oldNewlines,u.newNewlines,
             tag="undo",undoType=u.undoType)
+    
         if u.oldSel:
             c.frame.body.setTextSelection(u.oldSel)
         if u.yview:
@@ -1450,7 +1541,7 @@ class nullUndoer (undoer):
     def peekBead (self,n):
         return {}
 
-    def setBead (self,n,keywords=None):
+    def makeBeadDict (self,keywords=None):
         return {}
 
     def redoMenuName (self,name):
