@@ -234,6 +234,7 @@ def computeLoadDir():
 #@+node:ekr.20041117151301.1:startupEncoding
 def startupEncoding ():
     
+    import leoGlobals as g
     import sys
     
     if sys.platform=="win32": # "mbcs" exists only on Windows.
