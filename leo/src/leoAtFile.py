@@ -3574,7 +3574,7 @@ class baseNewDerivedFile(oldDerivedFile):
     #@nonl
     #@-node:ekr.20031218072017.2755:newDerivedFile.__init__
     #@+node:ekr.20031218072017.2756:Reading (4.x)
-    #@+node:ekr.20040321064134.5:createThinChild (4.2)
+    #@+node:ekr.20040321064134.5:createThinChild (4.2: @thin only)
     def createThinChild (self,gnxString,headline):
     
         """Find or create a new vnode whose parent is at.lastThinNode."""
@@ -3622,7 +3622,7 @@ class baseNewDerivedFile(oldDerivedFile):
     
         return child
     #@nonl
-    #@-node:ekr.20040321064134.5:createThinChild (4.2)
+    #@-node:ekr.20040321064134.5:createThinChild (4.2: @thin only)
     #@+node:ekr.20031218072017.2757:new_df.readOpenFile
     def readOpenFile(self,root,file,firstLines,perfectImportRoot=None):
         
@@ -3649,7 +3649,7 @@ class baseNewDerivedFile(oldDerivedFile):
         root.v.t.tempBodyString = s
     #@nonl
     #@-node:ekr.20031218072017.2757:new_df.readOpenFile
-    #@+node:ekr.20031218072017.2007:findChild 4.x
+    #@+node:ekr.20031218072017.2007:findChild 4.x (@file only)
     def findChild (self,headline):
         
         """Return the next tnode in at.root.t.tnodeList."""
@@ -3700,7 +3700,7 @@ class baseNewDerivedFile(oldDerivedFile):
             #@-node:ekr.20040716061450:<< Check the headlines >>
             #@nl
     #@nonl
-    #@-node:ekr.20031218072017.2007:findChild 4.x
+    #@-node:ekr.20031218072017.2007:findChild 4.x (@file only)
     #@+node:ekr.20031218072017.2758:scanText4 & allies
     def scanText4 (self,file,p):
         
@@ -3876,7 +3876,7 @@ class baseNewDerivedFile(oldDerivedFile):
         at.readStartNode(s,i,middle=True)
     #@nonl
     #@-node:EKR.20040524070500:readStartMiddle
-    #@+node:ekr.20031218072017.2766:readStartNode
+    #@+node:ekr.20031218072017.2766:readStartNode (4.x)
     def readStartNode (self,s,i,middle=False):
         
         """Read an @+node or @+middle sentinel."""
@@ -3963,7 +3963,7 @@ class baseNewDerivedFile(oldDerivedFile):
         
         at.endSentinelStack.append(endNode)
     #@nonl
-    #@-node:ekr.20031218072017.2766:readStartNode
+    #@-node:ekr.20031218072017.2766:readStartNode (4.x)
     #@+node:ekr.20031218072017.2769:readStartOthers
     def readStartOthers (self,s,i):
         
