@@ -2616,7 +2616,7 @@ class position (object):
     #@+node:ekr.20040303175026.3:p.insertAfter
     def insertAfter (self,t=None):
     
-        """Inserts a new vnode after self.
+        """Inserts a new position after self.
         
         Returns the newly created position."""
         
@@ -2700,33 +2700,24 @@ class position (object):
         return p2
     #@nonl
     #@-node:ekr.20040303175026.8:p.clone
-    #@+node:ekr.20040303175026.9:p.copyTreeWithNewTnodes: used by unit tests TO DO
-    if 0: # Not yet.
+    #@+node:ekr.20040303175026.9:p.copyTreeAfter, copyTreeTo
+    # This is used by unit tests.
     
-        def copyTreeWithNewTnodes (self):
-            
-            """Return a copy of self with all new tnodes"""
-            
-            c = self.c
-            
-            # Create the root node.
-            old_v = self
-            new_v = vnode(c,tnode())
-            new_v.t.headString = old_v.t.headString
-            new_v.t.bodyString = old_v.t.bodyString
-            
-            # Recursively create all descendents.
-            old_child = old_v.firstChild() ; n = 0
-            while old_child:
-                new_child = old_child.copyTreeWithNewTnodes()
-                new_child.linkAsNthChild (new_v, n)
-                n += 1
-                old_child = old_child.next()
-                
-            # Return the root of the new tree.
-            return new_v
+    def copyTreeAfter(self):
+        p = self
+        p2 = p.insertAfter()
+        p.copyTreeFromSelfTo(p2)
+        return p2
+        
+    def copyTreeFromSelfTo(self,p2):
+        p = self
+        p2.v.t.headString = p.headString()
+        p2.v.t.bodyString = p.bodyString()
+        for child in p.children_iter(copy=True):
+            child2 = p2.insertAsLastChild()
+            child.copyTreeFromSelfTo(child2)
     #@nonl
-    #@-node:ekr.20040303175026.9:p.copyTreeWithNewTnodes: used by unit tests TO DO
+    #@-node:ekr.20040303175026.9:p.copyTreeAfter, copyTreeTo
     #@+node:ekr.20040303175026.10:p.moveAfter
     def moveAfter (self,a):
     
