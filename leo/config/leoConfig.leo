@@ -20,19 +20,19 @@
 <v t="edream.110203150636.4"><vh>&lt;&lt; The "Recent Files" menu &gt;&gt;</vh></v>
 <v t="edream.110203150636.5"><vh>&lt;&lt; Compare Panel settings &gt;&gt;</vh></v>
 <v t="edream.110203150636.6"><vh>&lt;&lt; Find/Change Panel settings &gt;&gt;</vh></v>
-<v t="edream.110203150636.7" a="E"><vh>&lt;&lt; Keyboard shortcuts settings &gt;&gt;</vh>
+<v t="edream.110203150636.7"><vh>&lt;&lt; Keyboard shortcuts settings &gt;&gt;</vh>
 <v t="edream.110203150636.8"><vh>&lt;&lt; About keyboard shortcuts &gt;&gt;</vh></v>
 <v t="edream.110203150636.9"><vh>&lt;&lt; Alt and Shift-Alt&gt;&gt;</vh></v>
 <v t="edream.110203150636.10"><vh>&lt;&lt; Control &gt;&gt;</vh></v>
 <v t="edream.110203150636.11"><vh>&lt;&lt; Shift-Control &gt;&gt;</vh></v>
 <v t="edream.110203150636.12"><vh>&lt;&lt; F-keys and others &gt;&gt;</vh></v>
-<v t="edream.110203150636.13" a="V"><vh>&lt;&lt; None &gt;&gt;</vh></v>
+<v t="edream.110203150636.13"><vh>&lt;&lt; None &gt;&gt;</vh></v>
 </v>
 <v t="edream.110203150636.14"><vh>&lt;&lt; Preferences Panel settings &gt;&gt;</vh></v>
 <v t="edream.110203150636.15"><vh>&lt;&lt; Syntax coloring options and colors &gt;&gt;</vh></v>
 <v t="edream.110203150636.16" a="E"><vh>&lt;&lt; Window options &gt;&gt;</vh>
 <v t="edream.110203150636.17"><vh>&lt;&lt; body pane options &gt;&gt;</vh></v>
-<v t="edream.110203150636.18"><vh>&lt;&lt; outline pane options&gt;&gt;</vh></v>
+<v t="edream.110203150636.18" a="V"><vh>&lt;&lt; outline pane options&gt;&gt;</vh></v>
 <v t="edream.110203150636.19"><vh>&lt;&lt; log pane options &gt;&gt;</vh></v>
 <v t="edream.110203150636.20"><vh>&lt;&lt; Options for new windows &gt;&gt;</vh></v>
 <v t="edream.110203150636.21"><vh>&lt;&lt; Options for newly opened windows &gt;&gt;</vh></v>
@@ -758,9 +758,9 @@ body_text_font_family = Courier New
 #	Default is default font for Tk.Text widgets.
 #	Invalid font names are translated to a font in a system-dependent way.
 
-body_text_font_size = 9
+body_text_font_size = None
 #	Size of body text. Must be an integer.
-#	Default is 12.
+#	Default is 12 for Linux, 9 for Windows.
 
 body_text_font_slant = roman
 #	The Tk -slant setting: roman or italic.  Default is roman.
@@ -837,9 +837,9 @@ headline_text_font_family =
 #	Default is default font for Tk.Text widgets.
 #	Invalid font names are translated to a font in a system-dependent way.
 
-headline_text_font_size = 9
+headline_text_font_size = None
 #	Size of headline text. Must be an integer.
-#	Default is 12
+#	Default is 12 for Linux, 9 for Windows.
 
 headline_text_font_slant = roman
 #	The Tk -slant setting: roman or italic. Default is roman.
@@ -870,9 +870,9 @@ log_text_font_family =
 #	Default is default font for Tk.Text widgets.
 #	Invalid font names are translated to a font in a system-dependent way.
 
-log_text_font_size = 9
+log_text_font_size = None
 #	Size of text in the log pane. Must be an integer.
-#	Default is 12
+#	Default is 12 for Linux, 8 otherwise.
 
 log_text_font_slant = roman
 #	The Tk -slant setting: roman or italic. Default is roman.

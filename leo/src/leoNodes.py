@@ -2045,7 +2045,9 @@ class nodeIndices:
 		"""Set the timestamp string to be used by getNewIndex until further notice"""
 	
 		self.timeString = time.strftime(
-			"%m%d%y%H%M%S", time.localtime()) # compact timestamp is best
+			# "%m%d%y%H%M%S",
+			"%y%m%d%H%M%S", # Best for time comparisons.
+			time.localtime()) # compact timestamp is best
 	#@nonl
 	#@-node:setTimeString
 	#@+node:toString
