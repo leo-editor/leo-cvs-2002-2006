@@ -1,8 +1,10 @@
 #@+leo-ver=4-thin
-#@+node:ekr.20040916153817.70:@thin dynacommon.py
-"""
+#@+node:ekr.20041030091736.79:@thin dynacommon.py
+"""not needed in pluginManager.txt
+generate this file to exist in the Leo plugins directory.
+you have to edit in your correct paths. < set filenames > section 
+
 helper code your macro can call from dyna_menu or other Leo script/plugin.
-the first section is filenames, you have to edit in your correct path.
 
 check your sys.path that plugins is there before import
 from dynacommon import *
@@ -10,71 +12,19 @@ was clone, is common to dynabutton, dynatester & dyna_menu
 exSButtton & htmlize use ScrollMenu
 
 some things common like the dynaBunch & init you probably wont call
-generate this file to exist in the Leo plugins directory.
+
+    rearrange things carelessly at your own peril
+
+have to lazy eval the filename creation till after leoID is defined til Leo4.3
 """
 
 #__all__ = 'tmpfile py ptpath leosrc reindent pycheck2 pycheck '.split()
 #this needs its own dictionary dopylint doreindent
 
-#note, these changes are at the time the button or menu is created
-#to effect these changes you have to 
-#write the plugin and start a new python and leo. maybe reload
-#execute script on the dynaclick node for the dynabutton
-#they will take effect in dynatester imediatly
-#preserve the space after to allow for parameters
-#those that will be joined to pypath start with seperator \ or /
-#any scripts should have their own full path, 
 
 import sys, os
 import leoGlobals as g
 import Tkinter as Tk
-
-#pypath = r'C:\c\py\Python233'         #nospace
-pypath = g.os_path_split(sys.executable)[0]
-
-#py =  pypath + '/python.exe -tOO '     #_space_
-py =  g.os_path_join(pypath, 'python.exe') + ' -tOO '
-
-#leosrc = r'c:\c\leo\leo4CVS233\src'
-leosrc = g.app.loadDir
-
-reindent = pypath + '/Tools/scripts/reindent.py '  #space
-
-#print pypath, py, leosrc
-
-#classic pychecker
-pycheck = pypath + '/Lib/site-packages/pychecker/checker.py '  #space
-#pychecker2, doesnt import, is alot slower and less details.
-# and leaves some temp files, I guess its still experimental.
-pycheck2 = pypath + '/Lib/site-packages/pychecker2/main.py '
-
-
-#
-#classic pychecker I think does import regex which causes a warning when called from plugin. maybe they fixed that in the latest version.
-#not sure why dont see it when run from dynabutton. output on stderr?
-#DeprecationWarning: the regsub module is deprecated; please use re.sub()
-# was caused by tim1crunch, I supress the warning now.
-
-#set to 1 to call pylint after pychecker or 0 for just pychecker
-dopylint = 1  #this call in makatemp is too complicated to code in here
-doreindent = 0 #in makatemp to forgo reindent step
-
-#it might be preferable to generate a new tmpfile w/pid or something 
-# ok for singleuser no security multiuser issues for now.
-#YMMV, I set tmp and temp in autoexec, 
-#use lower if on *nix. 
-#windos may set TEMP and TMP by default, case insensitive.
-#
-#tmpfile = os.path.join(os.environ['tmp'],'tmptest.py')
-
-#it seems pylint has to be able to import from site-packages
-#look in makatemp trying to add tmp to syspath isnt easy from Leo
-tmpfile = os.path.join(pypath, 'lib/site-packages', 'tmptest.py')
-
-#replace forwardslash to backslash if required
-#frd slash usually ok except for cd and sometimes openfile
-#with filename as parameter in windos frdslash might be taken as option
-tmpfile = tmpfile.replace('/', '\\')
 
 try:
     True and False
@@ -92,11 +42,11 @@ try:
 except ImportError:
     import StringIO
 
-__version__ = '0.0137'  #r04909p04:58
-
+__version__ = '0.0138'  #t04A26p02:57
 #@+others
-#@+node:ekr.20040916153817.71:others
+#@+node:ekr.20041030091736.80:others
 
+#@+node:ekr.20041030091736.81:_caller_symbols
 def _caller_symbols():
     """aspncookbook/52278
     Print an expression and its value, 
@@ -110,7 +60,8 @@ def _caller_symbols():
     except StandardError:
         t = sys.exc_info()[2].tb_frame
         return (t.f_back.f_back.f_globals, t.f_back.f_back.f_locals)
-#@+node:ekr.20040916153817.72:DDList
+#@-node:ekr.20041030091736.81:_caller_symbols
+#@+node:ekr.20041030091736.82:DDList
 """Tkinter Drag'n'drop list John Fouhy
 Last update: 2004/07/06, Version: 1.0, Category: User 
 A Tkinter listbox which supports drag'n'drop reordering of the list.
@@ -171,8 +122,8 @@ if __name__ == '__main__':
     #
 
 #
-#@-node:ekr.20040916153817.72:DDList
-#@+node:ekr.20040916153817.73:ScrolledMenu
+#@-node:ekr.20041030091736.82:DDList
+#@+node:ekr.20041030091736.83:ScrolledMenu
 
 class ScrolledMenu(Tk.Toplevel):
     def __init__(self, command=None):
@@ -237,9 +188,143 @@ class _Test(Tk.Tk):
 #    mw = _Test()
 #    mw.mainloop()
 #@nonl
-#@-node:ekr.20040916153817.73:ScrolledMenu
-#@-node:ekr.20040916153817.71:others
-#@+node:ekr.20040916153817.74:fixbody
+#@-node:ekr.20041030091736.83:ScrolledMenu
+#@-node:ekr.20041030091736.80:others
+#@+node:ekr.20041030091736.84:functs w/doctest
+
+#@+others
+#@+node:ekr.20041030091736.85:deangle
+def deangle(s, repl=  '+'):
+    """
+    use repl so output can be pasted w/o appearing as named nodes to leo
+    
+    >>> deangle( '<%s'%'< whatever >>')
+    '<+< whatever >>'
+    >>> deangle('< whatever >>')
+    '< whatever >>'
+    >>> deangle('''|\\ /!@=\\#$%,^&?:;."\'<>`~*+''')
+    \'|\\\\ /!@=\\\\#$%,^&?:;."\\\'<>`~*+\'
+
+    """
+    if s.startswith('<<') and s.endswith('>'+'>'):
+        return '<%s%s'%(repl, s[1:])
+    return s
+#@nonl
+#@-node:ekr.20041030091736.85:deangle
+#@+node:ekr.20041030091736.86:commafy
+def commafy(val, sep= ','):
+    """Bengt , added sep
+    mod to use leading seperator if . maybe
+    also explore using locale instead. ok for now,
+    could using specifyer like k so under 1024 is leading zero?
+    >>> commafy(2222)
+    '2,222'
+    >>> commafy(2222, '.')
+    '2.222'
+    """
+    sign, val = '-'[:val<0], str(abs(val))
+    val, dec =  (val.split('.')+[''])[:2]
+    if dec: dec = '.'+dec
+    rest = ''
+    while val: val, rest = val[:-3], '%s%s%s'%(val[-3:], sep, rest)
+    return '%s%s%s' %(sign, rest[:-1], dec)
+#@nonl
+#@-node:ekr.20041030091736.86:commafy
+#@+node:ekr.20041030091736.87:sentstrip
+
+def sentstrip(s):
+    """strip sentinals from the script script passed
+     need to add strip all comments as well
+    """
+    l = []
+    for x in s.splitlines():
+        if x.lstrip().startswith('#@'): continue
+        l.append(x)
+    return '\n'.join(l)
+#@-node:ekr.20041030091736.87:sentstrip
+#@+node:ekr.20041030091736.88:sanitize_
+
+def sanitize_(s):
+    """ Leo's sanitize_filename is too aggressive and too lax
+    origional regex from away.js
+    this should make nobody happy equally.
+    strips most characters, space and replaces with underscore, len<128
+    the doctest is in a subnode to allow syntax highlighting
+    #@    << chk sanitize >>
+    #@+node:ekr.20041030091736.89:<< chk sanitize >>
+    the best of both worlds, doctest with syntax highlighting!
+    >>> sanitize_("|\\ /!@=#$%,^&?:;.\\"'<>`~*+")
+    '_____________'
+    >>> sanitize_("@abc123[],(),{}")
+    '_abc123[]_()_{}'
+    >>> #one comment line required when use subnode this way 
+    >>> #to avoid doctest seeing node sentinals. don't ask...
+    #@nonl
+    #@-node:ekr.20041030091736.89:<< chk sanitize >>
+    #@nl
+    """
+    if not s: return
+    import re
+
+    res = re.compile(r"""
+    [|\\ /!@=\#\$%,\x5E&\x3F:;.\x22\x27<>`~\*\+\t\n\f\r\b\a]
+    """, re.IGNORECASE | re.VERBOSE);  
+    #  ^?"' \xnn,  [],(),{} ok, * not sure always ok
+
+    #should test for unicode before str()
+    return res.sub('_', str(s.strip())).replace('__','_')[:128]
+#@nonl
+#@-node:ekr.20041030091736.88:sanitize_
+#@+node:ekr.20041030091736.90:leotmp
+def leotmp(name = None, tmp= None):
+    """ attempt to divine the user tmp dir add to input name
+    later prepend leoID unless no leoID flag or something
+    """
+    #factor out later into combined find @home thing + leoID
+    for x in ['tmp', 'temp', 'home']:
+        try:
+            tmp = os.environ[x]
+            break
+        except KeyError:
+            pass
+    else:
+        tmp = './'
+
+    if not g.os_path_isdir(tmp):
+        tmp = './'
+
+    if name is None:
+        return tmp
+    return g.os_path_join(tmp, name)
+
+#@-node:ekr.20041030091736.90:leotmp
+#@-others
+#@+at
+# others not required except to enable du_test for all these subnodes
+# candidates for adding to g. or g.app at least while dyna running
+# have to weigh scripts and macros import common or just assume exists in g.
+# comafy, sanitize_ actually more usefull in site-packages/myutils.py
+# but I script and run nearly everything in Leo anyway.
+# 
+# '7 tests in 5 items.'
+# '7 passed and 0 failed.'
+#@-at
+#@-node:ekr.20041030091736.84:functs w/doctest
+#@+node:ekr.20041030091736.91:dynastuff
+
+
+#@+at
+# #code for dyna
+# 
+#     - dynaBunch
+#     - dynaerrout
+#     - captureStd
+#     - runcmd
+#     - dynadoc
+# 
+# 
+#@-at
+#@+node:ekr.20041030091736.92:fixbody
 
 def scriptbody(c, p):
     """AttributeError: vnode instance has no attribute 'copy'
@@ -422,20 +507,8 @@ def fixbody(data, c= g.top()):
 
     return data
 #@nonl
-#@-node:ekr.20040916153817.74:fixbody
-#@+node:ekr.20040916153817.75:dynastuff
-#@+at
-# #code for dyna
-# 
-#     - dynaBunch
-#     - dynaerrout
-#     - captureStd
-#     - runcmd
-#     - dynadoc
-# 
-# 
-#@-at
-#@+node:ekr.20040916153817.76:AskYesNo
+#@-node:ekr.20041030091736.92:fixbody
+#@+node:ekr.20041030091736.93:AskYesNo
 
 #file leoTkinterGui.py
 #import tkFont,Tkinter,tkFileDialog leoTkinterDialog
@@ -455,8 +528,9 @@ def runAskYesNoCancelDialog(title,
 
     return d.run(modal=true)
 #@nonl
-#@-node:ekr.20040916153817.76:AskYesNo
-#@+node:ekr.20040916153817.77:dynaBunch
+#@-node:ekr.20041030091736.93:AskYesNo
+#@+node:ekr.20041030091736.94:dynaBunch
+import operator
 
 def init_dyna(c, *a, **k):
     """same for both button and menu
@@ -496,8 +570,7 @@ class dynaBunch(object):
     alot are taking credit for this idea through the years,
 
         """
-    import operator
-
+    
     def __init__(self, **kwargs):
         self.__dict__.update(kwargs)
 
@@ -540,8 +613,48 @@ class dynaBunch(object):
 
     def save(self, outfile):"""
 #@nonl
-#@-node:ekr.20040916153817.77:dynaBunch
-#@+node:ekr.20040916153817.78:dynaerrout
+#@-node:ekr.20041030091736.94:dynaBunch
+#@+node:ekr.20041030091736.95:names and colors
+#Leo log Tk names & HTML names and colors
+dycolors = dynaBunch( 
+    gAqua = 'aquamarine3',
+    gBlack = 'black',
+    gBlue = 'blue',
+    gFuchsia = 'DeepPink3',
+    gGray = 'gray48',
+    gGreen = 'LimeGreen',
+    gLime = 'PaleGreen2',
+    gMaroon = 'maroon4',
+    gNavy = 'midnightblue',
+    gOlive = 'OliveDrab4',
+    gPurple = 'purple3',
+    gRed = 'red',
+    gSilver = 'SlateGray3',
+    gTeal = 'steelblue4',
+    gWhite = 'white',
+    gYellow = 'Yellow2',
+    gError = 'tomato',
+
+    hAqua = '#00FFFF',
+    hBlack = '#000000',
+    hBlue = '#0000FF',
+    hFuchsia = '#FF00FF',
+    hGray = '#808080',
+    hGreen = '#008000',
+    hLime = '#00FF00',
+    hMaroon = '#800000',
+    hNavy = '#000080',
+    hOlive = '#808000',
+    hPurple = '#800080',
+    hRed = '#FF0000',
+    hSilver = '#C0C0C0',
+    hTeal = '#008080',
+    hWhite = '#FFFFFF',
+    hYellow = '#FFFF00',
+    )
+#print dycolors.gYellow
+#@-node:ekr.20041030091736.95:names and colors
+#@+node:ekr.20041030091736.96:dynaerrout
 
 #quiet warnings from pychecker and tim1 about regex
 
@@ -590,16 +703,16 @@ def dynaerrout(err, msg):
     
     from traceback import print_exc
 
-    g.es(msg, color= 'tomato')
+    g.es(msg, color= dycolors.gError)
     f = StringIO.StringIO()
     print_exc(file= f)
     a = f.getvalue().splitlines()
     for line in a:
         #g.app.goToLineNumber(int(newSel))
-        g.es(line, color= 'tomato')
+        g.es(line, color= dycolors.gError)
 #@nonl
-#@-node:ekr.20040916153817.78:dynaerrout
-#@+node:ekr.20040916153817.79:getsubnodes
+#@-node:ekr.20041030091736.96:dynaerrout
+#@+node:ekr.20041030091736.97:getsubnodes
 
 #code to operate dynamenu, no user code
 
@@ -641,8 +754,8 @@ def dyna_getsubnodes(c, globs= {}):
     #es('dynamenu macros %s'%(lst,) )
     return lst
 #@nonl
-#@-node:ekr.20040916153817.79:getsubnodes
-#@+node:ekr.20040916153817.80:captureStd
+#@-node:ekr.20041030091736.97:getsubnodes
+#@+node:ekr.20041030091736.98:captureStd
 class captureStd(object):
     """the typical redirect stdout
     add stderr and stdin later
@@ -668,10 +781,28 @@ class captureStd(object):
         sys.stdout = sys.__stdout__
         return captured
 #@nonl
-#@-node:ekr.20040916153817.80:captureStd
-#@+node:ekr.20040916153817.81:runcmd
+#@-node:ekr.20041030091736.98:captureStd
+#@+node:ekr.20041030091736.99:runcmd
 
 #runcmd(cmds) & forklike(*cmds)
+def fixupCmdStr(cmd, args):#_ignoredindoctests
+    """fromc.l.py,
+    needswork
+  os.system('program %s' % filename)
+  will not work as expected if `filename` contains
+  spaces or shell-metacharacters.
+        If you need more fine-grained control look at os.spawn*.
+        return spawnvp(P_WAIT, cmd, (cmd,) + args)
+
+    >>> fixupCmdStr('echo', ("whatever",))
+    \'echo "whatever"\'
+    >>> fixupCmdStr('$!echo', ("what ever",))
+    \'$!echo "what ever"\'
+    """
+    import re
+    escape = lambda s:'"%s"' % re.sub(r'\"$!', r'\\\1', s ) #FIXME
+    return " ".join([cmd ] + map(escape, args ))
+
 
 def runcmd(cmds):
     """for win9x this works better than other popen for me.
@@ -704,7 +835,7 @@ cmds
 params, para
 ['C:\\c\\py\\Python233\\python.exe', '-tOO'] ['-tOO', 'C:\\c\\py\\Python233\\lib\\site-packages\\tmptest.py']
 says needs string only
-startfile( os.path.normpath(path) ) 
+startfile( g.os_path_normpath(path) ) 
 
 times( ) Return a 5-tuple of floating point numbers indicating accumulated (processor or other) times, in seconds. The items are: user time, system time, children's user time, children's system time, and elapsed real time since a fixed point in the past, in that order. 
 (2868845789.5628495, 0.0, 0.0, 0.0, 0.0)
@@ -721,7 +852,7 @@ WindowsError: [Errno 2] The system cannot find the file specified: 'C:\\c\\py\\P
     para = ''
     if len(params) > 1:
         para = params[1:] + list(cmds[1:])
-        # os.path.normpath(path) 
+        # g.os_path_normpath(path) 
 
     #print os.times()
     print cmds
@@ -739,8 +870,8 @@ WindowsError: [Errno 2] The system cannot find the file specified: 'C:\\c\\py\\P
     
     return output
 #@nonl
-#@-node:ekr.20040916153817.81:runcmd
-#@+node:ekr.20040916153817.82:dynadoc
+#@-node:ekr.20041030091736.99:runcmd
+#@+node:ekr.20041030091736.100:dynadoc
 
 def dynadoc(c, sub= 'all' , globs= {}):
     """read dynadeflst and createdoc for them
@@ -760,6 +891,7 @@ def dynadoc(c, sub= 'all' , globs= {}):
     
     expand to show macro's internal __dict__
     getting doc for fliper for ex, might be nice to know
+    add quit sentinal to docs
     
   """
     import sys
@@ -814,7 +946,7 @@ def dynadoc(c, sub= 'all' , globs= {}):
             g.es('cant find', x)
             continue
         
-        coln = 460
+        coln = 520
 
         #if no doc problems
         #try to get len of unsized object or unscriptable object
@@ -850,9 +982,9 @@ def dynadoc(c, sub= 'all' , globs= {}):
     #g.es(text.docroutine(f, x))
     
 #@nonl
-#@-node:ekr.20040916153817.82:dynadoc
-#@-node:ekr.20040916153817.75:dynastuff
-#@+node:ekr.20040916153817.83:dynaput
+#@-node:ekr.20041030091736.100:dynadoc
+#@-node:ekr.20041030091736.91:dynastuff
+#@+node:ekr.20041030091736.101:dynaput
 
 def dynaput(c, slst):
     """return the text selection or put it if slst is not None
@@ -941,8 +1073,8 @@ def dynaput(c, slst):
                          cg.dynapasteFlag.get() )
 
     else: g.es("no text selected", color= 'orangered' )
-#@-node:ekr.20040916153817.83:dynaput
-#@+node:ekr.20040916153817.84:dynaplay
+#@-node:ekr.20041030091736.101:dynaput
+#@+node:ekr.20041030091736.102:dynaplay
 
 def dynaplay(c, splst):
     """playback commands from a list into the selected or body text
@@ -1024,9 +1156,157 @@ def dynaplay(c, splst):
 
     dynaput(c, sx[1:])
     c.frame.body.setInsertionPoint(ip)
-#@-node:ekr.20040916153817.84:dynaplay
+#@-node:ekr.20041030091736.102:dynaplay
+#@+node:ekr.20041030091736.103:python -O
+#make part of a larger basic python sanity check
+import leoGlobals as g
+
+#indented def's priblem in doctest < py2.4b2?
+def x():
+    """__ """
+    pass
+
+try:
+    assert(1 == 0)
+    g.es('assert disabled, use g.app._t.assert_()',
+        color= 'tomato')
+
+    #how to tell if also -OO? 
+    #if hasattr(x,"__doc__") and x.__doc__:
+    #if not hasattr(dynaB_Clip_dtef, '__doc__'):  #
+    #if not len(dynaB_Clip_dtef.__doc__):
+        
+    #print dynaplay.__doc__  
+    #when printed is not None of -O, of not printed is None if -O!
+    #x()
+    print x.__doc__, #will this fail on pyw?
+
+    #doc apparently is always defined, even if empty? just None if -OO
+    #further caviet, is None untill run regardless if -O due to late binding
+    #even if run is None, has to be specifically accessed! weird...
+    #if printed is totally unreliable the difference between -O and -OO
+    #back to the drawing board.
+    if x.__doc__ is None:
+        pyO = 'OO'
+        g.es('YOU MAY HAVE RUN python -OO \ndoctest Will fail, @test ok',
+            color= 'tomato')
+    else:
+        pyO = 'O'
+        g.es('YOU HAVE RUN python -O',
+            color= 'tomato')
+
+
+except AssertionError: 
+    pyO = 'I'  #used in du_test
+    pass
+del x
+#@nonl
+#@-node:ekr.20041030091736.103:python -O
 #@-others
+
+#depandance on sanitize_ and leoID
+#@<< set filenames >>
+#@+node:ekr.20041030091736.104:<< set filenames >>
+#note, these changes are at the time the button or menu is created
+#to effect these changes you have to 
+#write the plugin and start a new python and leo. maybe reload
+#execute script on the dynaclick node for the dynabutton
+#they will take effect in dynatester imediatly
+#preserve the space after to allow for parameters
+#those that will be joined to pypath start with seperator \ or /
+#any other scripts should have their own full path, 
+
+#pypath = r'C:\c\py\Python233'         #nospace
+pypath = g.os_path_split(sys.executable)[0]
+
+#py =  pypath + '/python.exe -tOO '     #_space_
+py =  g.os_path_join(pypath, 'python.exe') + ' -tOO '
+
+#leosrc = r'c:\c\leo\leo4CVS233\src'
+leosrc = g.app.loadDir
+
+#reindent = g.os_path_join(pypath, '/Tools/Scripts/reindent.py ')  #space
+reindent = pypath +  '/Tools/Scripts/reindent.py '  #space
+
+#print pypath, py, leosrc
+
+#classic pychecker
+pycheck = pypath + '/Lib/site-packages/pychecker/checker.py '  #space
+#pychecker2, doesnt import, is alot slower and less details.
+# and leaves some temp files, I guess its still experimental.
+pycheck2 = pypath + '/Lib/site-packages/pychecker2/main.py '
+
+
+#
+#classic pychecker I think does import regex which causes a warning when called from plugin. maybe they fixed that in the latest version.
+#not sure why dont see it when run from dynabutton. output on stderr?
+#DeprecationWarning: the regsub module is deprecated; please use re.sub()
+# was caused by tim1crunch, I supress the warning now.
+
+#set to 1 to call pylint after pychecker or 0 for just pychecker
+dopylint = 1  #this call in makatemp is too complicated to code in here
+doreindent = 0 #in makatemp to forgo reindent step
+
+
+#@+at
+# it might be preferable to generate a new tmpfile w/pid or something
+#  ok for singleuser no security multiuser issues for now.
+# YMMV, I set tmp and temp in autoexec,
+# 
+# it seems pylint has to be able to import from site-packages
+# look in makatemp trying to add tmp to syspath isnt easy from Leo
+# add leoID, and sanitize, leoID may not exist at this point.
+# why would it be None though?
+# that seems odd since plugins should be able to call on it at creation
+# should create an hname for htmlize also
+# or maybe the macro should add the extension
+# 
+# putting an html file in tmp could still be a huge secuity risk
+# maybe should be in user HOME instead?
+# also create in site-packages might not be enabled for everyone.
+# have to check better for write access
+# 
+# later generate the filenames inside a function
+# and add them to a Bunch allong with the colors
+# maybe a Bunch of Bunches class dynaMvar will overtake
+#@-at
+#@@c
+
+#print 'leoID=', g.app.leoID
+Id = g.choose(g.app.leoID, g.app.leoID, 'Leo')
+tname = sanitize_('tmptest' + Id )+ '.py'
+
+#use lower if on *nix. 
+#windos may set TEMP and TMP by default, case insensitive.
+#tmpfile = g.os_path_join(os.environ['tmp'],'tmptest.py')
+
+tmpfile = g.os_path_join(pypath, 'lib/site-packages', tname)
+#
+tname = sanitize_('python' + Id )+ '.html'
+htmlfile = g.os_path_join(
+           os.getenv('tmp', default= g.os_path_abspath('./')), tname)
+
+
+del Id, tname
+
+#replace forwardslash to backslash if required
+#frd slash usually ok except for cd and sometimes openfile
+#with filename as parameter in windos frdslash might be taken as option
+if sys.platform[:3] == 'win':
+    #generally win doesn't care mixed slashes
+    #but you might pass py, pypath et al thru here too
+    tmpfile = g.os_path_abspath(tmpfile)  #.replace('/', '\\')
+    htmlfile = g.os_path_abspath(htmlfile)
+
+#enable the print if not sure its working to satisfaction.
+#print tmpfile, htmlfile, py, pypath
+
+#should check is valid and have access and create if doesn't exist...
+#may have to defer the creat w/properties so is created on first use
+#leoID doesnt exist when dyna imports common and shouldent import * either
+#@-node:ekr.20041030091736.104:<< set filenames >>
+#@nl
 #
 #@nonl
-#@-node:ekr.20040916153817.70:@thin dynacommon.py
+#@-node:ekr.20041030091736.79:@thin dynacommon.py
 #@-leo

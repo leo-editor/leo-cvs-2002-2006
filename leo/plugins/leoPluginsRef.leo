@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="2988" clone_windows="0"/>
-<globals body_outline_ratio="0.390086206897">
-	<global_window_position top="28" left="424" height="928" width="834"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="3121" clone_windows="0"/>
+<globals body_outline_ratio="0.54525862069">
+	<global_window_position top="15" left="332" height="928" width="834"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences>
@@ -195,19 +195,17 @@
 <v t="ekr.20040918165144.10"><vh>New atFile organization (user tangle/untangle)</vh></v>
 <v t="ekr.20040918165350"><vh>Create status line class</vh></v>
 </v>
-<v t="ekr.20040918165427.2"><vh>** Add incremental search to search plugin (make find panel smaller)</vh></v>
 <v t="ekr.20040918165427.4"><vh>Autocompletion dictionary files</vh></v>
 <v t="ekr.20040918165427.5"><vh>Leo to docbook xml plugin: Leo2AsciiDoc</vh></v>
 <v t="ekr.20040918165427.6"><vh>Finish wx plugin &amp; improve how Leo uses indices</vh></v>
 </v>
-<v t="edream.110203113231.618"><vh>Plugins</vh>
+<v t="edream.110203113231.618" a="TV"><vh>Plugins</vh>
 <v t="EKR.20040517090508"><vh>  Enable plugins by changing pluginsManager.txt or using plugin_manager plugin</vh>
 <v t="edream.120603093808"><vh>@thin pluginsManager.txt</vh></v>
 </v>
 <v t="ekr.20040919094459"><vh> PLEASE follow this style guide</vh>
 <v t="ekr.20040919081244"><vh>@thin style_guide.py</vh></v>
 </v>
-<v t="ekr.20040809110900"><vh>Tested (All these work in 4.2)</vh></v>
 <v t="edream.110203113231.667"><vh>Commands &amp; directives</vh>
 <v t="edream.110203113231.668"><vh> Importing Cisco configuration files</vh>
 <v t="edream.110203113231.669"><vh>@thin import_cisco_config.py</vh></v>
@@ -292,52 +290,14 @@
 <v t="ekr.20040205071616.10"><vh>create_UserMenu</vh></v>
 </v>
 </v>
-<v t="ekr.20040916153817"><vh>Dyna plugins</vh>
-<v t="ekr.20040916153817.1"><vh>@thin dyna_menu.py</vh></v>
-<v t="ekr.20040916153817.66"><vh>@thin exSButton.py</vh></v>
-<v t="ekr.20040916153817.70"><vh>@thin dynacommon.py</vh></v>
-<v t="ekr.20040916153817.86"><vh>leo css</vh>
-<v t="ekr.20040916153817.87" tnodeList="ekr.20040916153817.87"><vh>@file silver_city.css</vh></v>
-<v t="ekr.20040916153817.88" tnodeList="ekr.20040916153817.88"><vh>@file leo_rst.css</vh></v>
-<v t="ekr.20040916153817.89" tnodeList="ekr.20040916153817.89"><vh>@file default.css</vh></v>
-</v>
-</v>
-<v t="ekr.20040722141148"><vh>Example code</vh>
-<v t="ekr.20040919081244"><vh>@thin style_guide.py</vh></v>
-<v t="edream.110203113231.916"><vh>@thin __overrideClasses.py</vh></v>
-<v t="edream.110203113231.919"><vh>@thin override_commands.py</vh></v>
-<v t="edream.110203113231.921"><vh>@thin redefine_put.py</vh></v>
-</v>
-<v t="ekr.20040722135402"><vh>Enhancing the icon and status areas</vh>
-<v t="ekr.20040108095351"><vh>@thin rowcol.py</vh></v>
-<v t="EKR.20040517075915" tnodeList="EKR.20040517075915,EKR.20040517075915.1,EKR.20040517075915.2,EKR.20040517075915.3,EKR.20040517075915.4,EKR.20040517075915.5,EKR.20040517075915.6,EKR.20040517075915.7,EKR.20040517075915.8,EKR.20040517075915.9,EKR.20040517075915.10,EKR.20040517075915.11,EKR.20040517075915.12,EKR.20040517075915.13"><vh>@file-noref newButtons.py</vh>
-<v t="EKR.20040517075915.1"><vh>Helper classes</vh>
-<v t="EKR.20040517075915.2"><vh>class FlatOptionMenu</vh></v>
-<v t="EKR.20040517075915.3"><vh>class Node</vh></v>
-<v t="EKR.20040517075915.4"><vh>class NodeAdder</vh></v>
-<v t="EKR.20040517075915.5"><vh>class Helper</vh></v>
-</v>
-<v t="EKR.20040517075915.6"><vh>Modifiable classes to add buttons</vh>
-<v t="EKR.20040517075915.7"><vh>body text used by AddTestModule &amp; AddTestClass</vh></v>
-<v t="EKR.20040517075915.8"><vh>class AddTestModule</vh></v>
-<v t="EKR.20040517075915.9"><vh>class AddTestClass</vh></v>
-<v t="EKR.20040517075915.10"><vh>class AddTestMethod</vh></v>
-<v t="EKR.20040517075915.11"><vh>class AddClass</vh></v>
-<v t="EKR.20040517075915.12"><vh>class AddClassMethod</vh></v>
-</v>
-<v t="EKR.20040517075915.13"><vh>main code</vh></v>
-</v>
-<v t="ekr.20040331072607"><vh>@thin hoist.py</vh></v>
-<v t="ekr.20040108062655"><vh>@thin nodenavigator.py</vh></v>
-<v t="ekr.20040107092135.2"><vh>@thin searchbox.py</vh></v>
-<v t="ekr.20041002162608"><vh>Status Line</vh>
-<v t="ekr.20041002162608.1"><vh>Notes</vh>
-<v t="ekr.20041002163806" a="M"><vh>*** How to use Tk bindtags</vh></v>
-<v t="ekr.20041002162608.2"><vh>Delay body display so alt+arrow keys aren't slowed</vh></v>
-<v t="ekr.20041002162608.5"><vh>Request for meta key (see bindtags)</vh></v>
-<v t="ekr.20041002162608.6" a="M"><vh>How to detect changes in text</vh></v>
-</v>
-<v t="ekr.20040201060959"><vh>@thin status_line.py</vh></v>
+<v t="ekr.20041030092101"><vh>Dyna plugins by e</vh>
+<v t="ekr.20041030092835"><vh>v138 highlights</vh></v>
+<v t="ekr.20041030091736.1"><vh> dyna plugins 138</vh>
+<v t="ekr.20041030091736.2"><vh>&lt;&lt; insertAplug &gt;&gt;</vh></v>
+<v t="ekr.20041030091736.3"><vh>@thin dyna_menu.py</vh></v>
+<v t="ekr.20041030091736.75"><vh>@thin exSButton.py</vh></v>
+<v t="ekr.20041030091736.79"><vh>@thin dynacommon.py</vh></v>
+<v t="ekr.20041030091736.105"><vh>@thin dyna.txt</vh></v>
 </v>
 </v>
 <v t="ekr.20040722135402.1"><vh>Enhancing the body pane</vh>
@@ -366,6 +326,39 @@
 </v>
 <v t="edream.110203113231.925"><vh>@thin script_io_to_body.py</vh></v>
 </v>
+<v t="ekr.20040722135402"><vh>Enhancing the icon and status areas</vh>
+<v t="ekr.20040108095351"><vh>@thin rowcol.py</vh></v>
+<v t="EKR.20040517075915" tnodeList="EKR.20040517075915,EKR.20040517075915.1,EKR.20040517075915.2,EKR.20040517075915.3,EKR.20040517075915.4,EKR.20040517075915.5,EKR.20040517075915.6,EKR.20040517075915.7,EKR.20040517075915.8,EKR.20040517075915.9,EKR.20040517075915.10,EKR.20040517075915.11,EKR.20040517075915.12,EKR.20040517075915.13"><vh>@file-noref newButtons.py</vh>
+<v t="EKR.20040517075915.1"><vh>Helper classes</vh>
+<v t="EKR.20040517075915.2"><vh>class FlatOptionMenu</vh></v>
+<v t="EKR.20040517075915.3"><vh>class Node</vh></v>
+<v t="EKR.20040517075915.4"><vh>class NodeAdder</vh></v>
+<v t="EKR.20040517075915.5"><vh>class Helper</vh></v>
+</v>
+<v t="EKR.20040517075915.6"><vh>Modifiable classes to add buttons</vh>
+<v t="EKR.20040517075915.7"><vh>body text used by AddTestModule &amp; AddTestClass</vh></v>
+<v t="EKR.20040517075915.8"><vh>class AddTestModule</vh></v>
+<v t="EKR.20040517075915.9"><vh>class AddTestClass</vh></v>
+<v t="EKR.20040517075915.10"><vh>class AddTestMethod</vh></v>
+<v t="EKR.20040517075915.11"><vh>class AddClass</vh></v>
+<v t="EKR.20040517075915.12"><vh>class AddClassMethod</vh></v>
+</v>
+<v t="EKR.20040517075915.13"><vh>main code</vh></v>
+</v>
+<v t="ekr.20040331072607"><vh>@thin hoist.py</vh></v>
+<v t="ekr.20040108062655"><vh>@thin nodenavigator.py</vh></v>
+<v t="ekr.20040107092135.2"><vh>@thin searchbox.py</vh></v>
+<v t="ekr.20041002162608"><vh>Status Line</vh>
+<v t="ekr.20041002162608.1"><vh>Tk Notes</vh>
+<v t="ekr.20041002163806" a="M"><vh>*** How to use Tk bindtags</vh></v>
+<v t="ekr.20041002162608.2"><vh>Delay body display so alt+arrow keys aren't slowed (threaded colorizer?)</vh></v>
+<v t="ekr.20041002162608.6" a="M"><vh>How to detect changes in text</vh></v>
+</v>
+<v t="ekr.20041027065222"><vh>To do</vh></v>
+<v t="ekr.20040201060959"
+marks="ekr.20041026133619,"><vh>@thin status_line.py</vh></v>
+</v>
+</v>
 <v t="ekr.20040915073259" a="M"><vh>Enhancing windows</vh>
 <v t="ekr.20040915073259.1"><vh>@thin maximizeNewWindows.py</vh></v>
 <v t="edream.110203113231.924"><vh>@thin redirect_to_log.py</vh></v>
@@ -373,6 +366,12 @@
 <v t="ekr.20040915075530"><vh>@thin UASearch.py</vh></v>
 <v t="ekr.20040831122004"><vh>@thin UniversalScrolling.py</vh></v>
 <v t="ekr.20040831115238"><vh>@thin URLloader.py</vh></v>
+</v>
+<v t="ekr.20040722141148"><vh>Example code</vh>
+<v t="ekr.20040919081244"><vh>@thin style_guide.py</vh></v>
+<v t="edream.110203113231.916"><vh>@thin __overrideClasses.py</vh></v>
+<v t="edream.110203113231.919"><vh>@thin override_commands.py</vh></v>
+<v t="edream.110203113231.921"><vh>@thin redefine_put.py</vh></v>
 </v>
 <v t="ekr.20040722134535"><vh>Experimental/unfinished plugins</vh>
 <v t="EKR.20040609213754"><vh>@thin Configurator.py</vh></v>
@@ -652,9 +651,9 @@ marks="ekr.20040915052810,"><vh>@thin spellpyx.py</vh></v>
 </v>
 </v>
 </v>
+<v t="ekr.20040809110900"><vh>Tested (All these work in 4.2)</vh></v>
 </v>
-<v t="ekr.20040929104807" a="TV"><vh>4.3 prototype plugins</vh>
-<v t="ekr.20041017043108"><vh>To do: improve g.cantImport</vh></v>
+<v t="ekr.20040929104807"><vh>4.3 prototype plugins</vh>
 <v t="ekr.20041003172238"><vh>@thin Library.py</vh></v>
 <v t="ekr.20041011102931"><vh>@thin xsltWithNodes.py</vh></v>
 <v t="ekr.20041017035937"><vh>@thin table.py</vh></v>
@@ -667,14 +666,16 @@ marks="ekr.20040915052810,"><vh>@thin spellpyx.py</vh></v>
 </v>
 <v t="bwmulder.20041017125718"><vh>@thin mod_shadow.py</vh></v>
 <v t="ekr.20041019072849"><vh>Note:  word_export.ini mysteriously changed</vh></v>
+<v t="mork.20041022155742.1"><vh>@thin nodebar.py</vh></v>
+<v t="mork.20041022090036.1"><vh>@thin templates.py</vh></v>
+<v t="mork.20041013092542.1"><vh>@thin usetemacs.py</vh></v>
+<v t="mork.20041014112843.1"><vh>@thin temacs.py</vh></v>
 <v t="ekr.20040915144649"><vh>chapters.py (DOES NOT WORK WITH 4.2)</vh>
 <v t="ekr.20040915144649.1"><vh>About .2</vh></v>
 <v t="mork.20040926105355.1"><vh>@thin chapters.py</vh></v>
 <v t="ekr.20040915144649.17"><vh>Patch1</vh></v>
 <v t="ekr.20040915144649.18"><vh>Patch2</vh></v>
 </v>
-<v t="mork.20041022090036.1"><vh>@thin templates.py</vh></v>
-<v t="mork.20041022155742.1"><vh>@thin nodebar.py</vh></v>
 </v>
 </vnodes>
 <tnodes>
@@ -7722,1027 +7723,6 @@ PageBreak
         v = v.threadNext() 
     Story.append( PageBreak() )
 </t>
-<t tx="ekr.20040916153817">@language python
-@color
-
-@
-
-This section contains several plugins written by 'e'.
-
-There is a lot of good stuff here, including a wealth of scripts.
-</t>
-<t tx="ekr.20040916153817.86">@ignore
-@path c:\windows\temp\
-path c:\c\leo\HTML\
-@language css
-
-make htmlize use one of these by option
-to get the colors? to get the styles?
-use w/rst nodes also
-
-fixed colors to be more Leo like
-uped the fonts a little
-</t>
-<t tx="ekr.20040916153817.87">
-.code_default
-{
-    FONT-FAMILY: "Courier New", Courier, monospace;
-    FONT-SIZE: 80%;
-}
-
-.c_character
-{
-	color: olive;
-}
-
-.c_comment
-{
-	color: firebrick;
-	font-style: italic;
-}
-
-.c_commentdoc
-{
-	color: green;
-	font-style: italic;
-}
-
-.c_commentdockeyword
-{
-	color: navy;
-	font-weight: bold;
-}
-
-.c_commentdockeyworderror
-{
-	color: red;
-	font-weight: bold;
-}
-
-.c_commentline
-{
-	color: green;
-	font-style: italic;
-}
-
-.c_commentlinedoc
-{
-	color: firebrick;
-	font-style: italic;
-}
-
-.c_default
-{
-}
-
-.c_identifier
-{
-	color: black;
-}
-
-.c_number
-{
-    color: #009999;
-}
-
-.c_operator
-{
-	color: black;
-}
-
-.c_preprocessor
-{
-	color: navy;
-	font-weight: bold;
-}
-
-.c_regex
-{
-	color: #00aa00;
-}
-
-.c_string
-{
-	color: #00aa00;
-}
-
-.c_stringeol
-{
-	color: #00aa00;
-}
-
-.c_uuid
-{
-	color: olive;
-}
-
-.c_verbatim
-{
-	color: olive;
-}
-
-.c_word
-{
-	color: navy;
-	font-weight: bold;
-}
-
-.c_word2
-{
-	color: navy;
-	font-weight: bold;
-}
-
-.h_asp
-{
-    color: #ffff00;
-}
-
-.h_aspat
-{
-    color: #ffdf00;
-}
-
-.h_attribute
-{
-    color: #008080;
-}
-
-.h_attributeunknown
-{
-    color: #ff0000;
-}
-
-.h_cdata
-{
-    color: #ffdf00;
-}
-
-.h_comment
-{
-    color: #808000;
-}
-
-.h_default
-{
-}
-
-.h_doublestring
-{
-	color: olive;
-}
-
-.h_entity
-{
-    color: #800080;
-}
-
-.h_number
-{
-    color: #009999;
-}
-
-.h_other
-{
-    color: #800080;
-}
-
-.h_script
-{
-    color: #000080;
-}
-
-.h_singlestring
-{
-	color: olive;
-}
-
-.h_tag
-{
-    color: #000080;
-}
-
-.h_tagend
-{
-    color: #000080;
-}
-
-.h_tagunknown
-{
-    color: #ff0000;
-}
-
-.h_xmlend
-{
-    color: #0000ff;
-}
-
-.h_xmlstart
-{
-    color: #0000ff;
-}
-
-.pl_array
-{
-	color: black;
-}
-
-.pl_backticks
-{
-	color: olive;
-}
-
-.pl_character
-{
-	color: olive;
-}
-
-.pl_commentline
-{
-	color: green;
-	font-style: italic;
-}
-
-.pl_datasection
-{
-	color: olive;
-}
-
-.pl_default
-{
-}
-
-.pl_error
-{
-	color: red;
-	font-style: bold;
-}
-
-.pl_hash
-{
-	color: black;
-}
-
-.pl_here_delim
-{
-	color: olive;
-}
-
-.pl_here_q
-{
-	color: olive;
-}
-
-.pl_here_qq
-{
-	color: olive;
-}
-
-.pl_here_qx
-{
-	color: olive;
-}
-
-.pl_identifier
-{
-	color: black;
-}
-
-.pl_longquote
-{
-	color: olive;
-}
-
-.pl_number
-{
-    color: #009999;
-}
-
-.pl_operator
-{
-	color: black;
-}
-
-.pl_pod
-{
-	color: black;
-	font-style: italic;
-}
-
-.pl_preprocessor
-{
-	color: navy;
-	font-weight: bold;
-}
-
-.pl_punctuation
-{
-	color: black;
-}
-
-.pl_regex
-{
-	color: olive;
-}
-
-.pl_regsubst
-{
-	color: olive;
-}
-
-.pl_scalar
-{
-	color: black;
-}
-
-.pl_string
-{
-	color: olive;
-}
-
-.pl_string_q
-{
-	color: olive;
-}
-
-.pl_string_qq
-{
-	color: olive;
-}
-
-.pl_string_qr
-{
-	color: olive;
-}
-
-.pl_string_qw
-{
-	color: olive;
-}
-
-.pl_string_qx
-{
-	color: olive;
-}
-
-.pl_symboltable
-{
-	color: black;
-}
-
-.pl_word
-{
-	color: navy;
-	font-weight: bold;
-}
-
-.p_character
-{
-	color: olive;
-}
-
-.p_classname
-{
-	color: blue;
-	font-weight: bold;
-}
-
-.p_commentblock
-{
-	color: firebrick;
-	font-style: italic;
-}
-
-.p_commentline
-{
-	color: firebrick;
-	font-style: italic;
-}
-
-.p_default
-{
-}
-
-.p_defname
-{
-    color: blue;
-	font-weight: bold;
-}
-
-.p_identifier
-{
-	color: black;
-}
-
-.p_number
-{
-    color: black;
-}
-
-.p_operator
-{
-	color: olive;
-}
-
-.p_string
-{
-	color: #00aa00;
-}
-
-.p_stringeol
-{
-	color: #00aa00;
-}
-
-.p_triple
-{
-	color: #00aa00;
-}
-
-.p_tripledouble
-{
-	color: #00aa00;
-}
-
-.p_word
-{
-	color: navy;
-	font-weight: bold;
-}
-
-.yaml_comment
-{
-    color: #008800;
-	font-style: italic;
-}
-
-.yaml_default
-{
-}
-
-.yaml_document
-{
-    color: #808080;
-	font-style: italic;
-}
-
-.yaml_identifier
-{
-	color: navy;
-	font-weight: bold;
-}
-
-.yaml_keyword
-{
-    color: #880088;
-}
-
-.yaml_number
-{
-    color: #880000;
-}
-
-.yaml_reference
-{
-    color: #008888;
-}
-
-</t>
-<t tx="ekr.20040916153817.88">/* Some of these styles taken from Gunnar Schwant's (g.schwant@gmx.de) DocFactory */
-
-/* tt is the class of the inline literal
-as 10pt
-*/
-
-tt { background-color: #ffffee } 
-
-.first {
-  font-size: 110% }
-
-.last {
-  font-size: 110% }
-
-a {
-  text-decoration: none }
-
-a.reference {
-  color: #00009F }
-
-a:hover {
-  background-color: #00009F ;
-  color: white }
-
-body {
-  font-family: arial,helvetica,univers ;
-  font-size: 110% ;
-  padding-top: 0.6cm ;
-  margin-left:0.5cm ;
-  margin-right:0.5cm ;
-  margin-bottom:0.5cm }
-
-/* dd appears to be the text of the definitions  padding-top: 0.1cm */
-dd {
-  font-size: 110% }
-  
- dt {
-   font-style: italic }
-
-/* dt appears to be the word in a definition list line-height: 110%
-
-dt {
-  font-size: 110% ;
-  font-family: "Courier New", Courier;
-  }
-*/
-
-div.abstract {
-  font-size: 110% }
-
-div.abstract p.topic-title {
-  font-size: 110% }
-
-div.attention, div.caution, div.danger, div.error, div.hint,
-div.important, div.note, div.tip, div.warning {
-  font-size: 110% }
-
-div.attention p.admonition-title, div.caution p.admonition-title,
-div.danger p.admonition-title, div.error p.admonition-title,
-div.warning p.admonition-title, div.hint p.admonition-title, 
-div.important p.admonition-title, div.note p.admonition-title, 
-div.tip p.admonition-title {
-  margin-top: 0em ;
-  font-size: 120% ;
-  font-family: arial,helvetica,univers }
-
-div.dedication {
-  font-size: 110% }
-
-div.dedication p.topic-title {
-  font-size: 110% }
-
-div.figure {
-  font-size: 110% }
-
-div.footer, div.header {
-  font-size: 8pt }
-
-div.system-messages {
-  font-size: 110% }
-
-div.system-messages h1 {
-  font-size: 120% }
-
-div.system-message {
-  font-size: 110% }
-
-div.system-message p.system-message-title {
-  font-size: 110% }
-
-div.topic {
-  font-size: 110% }
-
-h1, h2, h3, h4, h5, h6 {
-  padding-top: 0.5cm ;
-  page-break-after: avoid ;
-  font-family: arial,helvetica,univers }
-
-#content .subtitle {
-	font-size: .9em;
-}
-
-#content .title {
-	font-size: 1.6em;
-	font-weight: normal;
-}
-
-#content ul {
-    margin-left: 20px;
-    margin-bottom: 10px;
-}
-
-p {
-	margin-bottom: 10px;
-}
-
-h1, h2, h3, h4, h5, h6 {
-	margin-top: 10px;
-	margin-bottom: 5px;
-}
-
-
-h1 {
-	font-size: 1.4em;
-	border-bottom: .25pt solid #ccc;
-}
-
-h1.title {
-         font-size: 1.6em;
-         border-bottom:none}
-
-h2 {
-	font-size: 1.2em;
-}
-
-h3, h4, h5, h6 {
-	font-size: 1.0em;}
-
-hr {
-  width: 100%;
-  page-break-after: always }
-
-/* the following was creating too much space in the table of contents*/
-/*li {
-  padding-top: 1mm ;
-  padding-bottom: 1mm }*/
-  
-li {font-size: 9pt}
-
-ol.simple, ul.simple {
-  font-size: 110% }
-
-ol.arabic {
-  font-size: 110% }
-
-ol.loweralpha {
-  font-size: 110% }
-
-ol.upperalpha {
-  font-size: 110% }
-
-ol.lowerroman {
-  font-size: 110% }
-
-ol.upperroman {
-  font-size: 110% }
-
-p.caption {
-  font-size: 110% }
-
-p.credits {
-  font-style: italic ;
-  font-size: 8pt }
-
-p.label {
-  font-size: 110% }
-
-p.topic-title {
-  font-size: 110% }
-
-pre.address {
-  font-family: arial,helvetica,univers ;
-  font-size: 110% }
-
-pre.line-block {
-  background-color: #eeeeee ;
-  border-color: #999999 ;
-  border-width: 1pt ;
-  font-size: 9pt;
-  font-family: "Courier New", Courier }
-  
-  /*border: 1px dotted #999;*/
-
-pre.literal-block, pre.doctest-block {
-  border-width: 1pt ;
-  border-style: solid ;
-  border-color: #999999 ;
-  background-color: #ffffee ;
-  padding-left: 0.5ex ;
-  margin-left:0.5cm ;
-  font-size: 110% }
-  
-/*code class - this allows us to use literal-block for program code and make it gray with small text*/
-  pre.code {
-  background-color: #eeeeee ;
-  font-size: 9pt }
-
-span.classifier {
-  font-size: 110% ;
-  font-family: arial,helvetica,univers }
-
-span.classifier-delimiter {
-  font-size: 110% ;
-  font-family: arial,helvetica,univers }
-
-span.field-argument {
-  font-size: 110% }
-
-span.interpreted {
-  font-size: 110% ;
-  font-family: arial,helvetica,univers }
-
-span.option-argument {
-  font-size: 110% }
-
-span.problematic {
-  font-size: 110% }
-
-table {
-  font-size: 110% ;
-  border-collapse: collapse ;
-  border-width: 1.5pt ;
-  border-color: #003366 }
-
-table.citation {
-  font-size: 110% }
-
-table.docinfo {
-  font-size: 110% }
-
-table.footnote {
-  font-size: 8pt ;
-  text-align: left }
-
-/*table.table {
-  width: 100% } */
-
-th {
-  border-width: 1.5pt }
-
-td {
-  border-width: 1pt }
-
-td, th {
-  font-size: 9pt ;
-  border-style: thin ;
-  border-color: #003366 }
-
-td.docinfo-name, th.field-name {
-  font-size: 110% }
-
-h1 tt, h2 tt, h3 tt, h4 tt, h5 tt, h6 tt {
-  font-size: 110% }
-  
-  /* SZ CHANGES*/
-  
-  div.system-messages {
-    margin: 5em }
-  
-  div.system-messages h1 {
-    color: red }
-  
-  div.system-message {
-    border: medium outset ;
-    padding: 1em }
-  
-  div.system-message p.system-message-title {
-    color: red ;
-  font-weight: bold }
-  
-  div.hint p.admonition-title, div.important p.admonition-title,
-  div.note p.admonition-title, div.tip p.admonition-title,
-  div.admonition p.admonition-title {
-  color: maroon }
-  
-  p.topic-title {
-  font-weight: bold }
-  
-  p.rubric {
-    text-align: left} ;
-    
-/* Following added for code-blocks if SilverCity is present*/
-    
-  div.code-block{
-    margin-left: 2em ;
-    margin-right: 2em ;
-    background-color: #eeeeee;
-    font-family: "Courier New", Courier, monospace;
-    font-size: 9pt;
-    white-space: nowrap;
-    }
-</t>
-<t tx="ekr.20040916153817.89">/*ORIGINAL GOODGER + changes; up to line 224 it's standard reST stylesheet
-:Author: David Goodger
-:Contact: goodger@users.sourceforge.net
-:date: $Date$
-:version: $Revision$
-:copyright: This stylesheet has been placed in the public domain.
-
-Default cascading style sheet for the HTML output of Docutils.
-*/
-
-.first {
-  margin-top: 0 }
-
-.last {
-  margin-bottom: 0 }
-
-a.toc-backref {
-  text-decoration: none ;
-  color: black }
-
-dd {
-  margin-bottom: 0.5em }
-
-div.abstract {
-  margin: 2em 5em }
-
-div.abstract p.topic-title {
-  font-weight: bold ;
-  text-align: center }
-
-div.attention, div.caution, div.danger, div.error, div.hint,
-div.important, div.note, div.tip, div.warning, div.admonition {
-  margin: 2em ;
-  border: medium outset ;
-  padding: 1em }
-
-div.attention p.admonition-title, div.caution p.admonition-title,
-div.danger p.admonition-title, div.error p.admonition-title,
-div.warning p.admonition-title {
-  color: red ;
-  font-weight: bold ;
-  font-family: sans-serif }
-
-div.hint p.admonition-title, div.important p.admonition-title,
-div.note p.admonition-title, div.tip p.admonition-title,
-div.admonition p.admonition-title {
-  font-weight: bold ;
-  font-family: sans-serif }
-
-div.dedication {
-  margin: 2em 5em ;
-  text-align: center ;
-  font-style: italic }
-
-div.dedication p.topic-title {
-  font-weight: bold ;
-  font-style: normal }
-
-div.figure {
-  margin-left: 2em }
-
-div.footer, div.header {
-  font-size: smaller }
-
-div.sidebar {
-  margin-left: 1em ;
-  border: medium outset ;
-  padding: 0em 1em ;
-  background-color: #ffffee ;
-  width: 40% ;
-  float: right ;
-  clear: right }
-
-div.sidebar p.rubric {
-  font-family: sans-serif ;
-  font-size: medium }
-
-div.system-messages {
-  margin: 5em }
-
-div.system-messages h1 {
-  color: red }
-
-div.system-message {
-  border: medium outset ;
-  padding: 1em }
-
-div.system-message p.system-message-title {
-  color: red ;
-  font-weight: bold }
-
-div.topic {
-  margin: 2em }
-
-h1.title {
-  text-align: center }
-
-h2.subtitle {
-  text-align: center }
-
-hr {
-  width: 75% }
-
-ol.simple, ul.simple {
-  margin-bottom: 1em }
-
-ol.arabic {
-  list-style: decimal }
-
-ol.loweralpha {
-  list-style: lower-alpha }
-
-ol.upperalpha {
-  list-style: upper-alpha }
-
-ol.lowerroman {
-  list-style: lower-roman }
-
-ol.upperroman {
-  list-style: upper-roman }
-
-p.attribution {
-  text-align: right ;
-  margin-left: 50% }
-
-p.caption {
-  font-style: italic }
-
-p.credits {
-  font-style: italic ;
-  font-size: smaller }
-
-p.label {
-  white-space: nowrap }
-
-p.rubric {
-  font-weight: bold ;
-  font-size: larger ;
-  color: maroon ;
-  text-align: center }
-
-p.sidebar-title {
-  font-family: sans-serif ;
-  font-weight: bold ;
-  font-size: larger }
-
-p.sidebar-subtitle {
-  font-family: sans-serif ;
-  font-weight: bold }
-
-p.topic-title {
-  font-weight: bold }
-
-pre.address {
-  margin-bottom: 0 ;
-  margin-top: 0 ;
-  font-family: serif ;
-  font-size: 110% }
-
-pre.line-block {
-  font-family: serif ;
-  font-size: 110% }
-
-pre.literal-block, pre.doctest-block {
-  margin-left: 2em ;
-  margin-right: 2em ;}
-  /*background-color: #eeeeee }*/
-  /*for some reason i can't overide in an import*/
-
-span.classifier {
-  font-family: sans-serif ;
-  font-style: oblique }
-
-span.classifier-delimiter {
-  font-family: sans-serif ;
-  font-weight: bold }
-
-span.interpreted {
-  font-family: sans-serif }
-
-span.option {
-  white-space: nowrap }
-
-span.option-argument {
-  font-style: italic }
-
-span.pre {
-  white-space: pre }
-
-span.problematic {
-  color: red }
-
-table {
-  margin-top: 0.5em ;
-  margin-bottom: 0.5em }
-
-table.citation {
-  border-left: solid thin gray ;
-  padding-left: 0.5ex }
-
-table.docinfo {
-  margin: 2em 4em }
-
-table.footnote {
-  border-left: solid thin black ;
-  padding-left: 0.5ex }
-
-td, th {
-  padding-left: 0.5em ;
-  padding-right: 0.5em ;
-  vertical-align: top }
-
-th.docinfo-name, th.field-name {
-  font-weight: bold ;
-  text-align: left ;
-  white-space: nowrap }
-
-h1 tt, h2 tt, h3 tt, h4 tt, h5 tt, h6 tt {
-  font-size: 110% }
-
-/*for some reason, the following isn't being overridden by the imports
-at the end of this style sheet so I've commented it out*/
-/*tt {
-  background-color: #eeeeee }*/
-
-ul.auto-toc {
-  list-style-type: none }
-
-/*import not working in firefox*/
-@import url(leo_rst.css);
-@import url(silver_city.css);
-
-</t>
 <t tx="ekr.20040918165144">@
 Each can be done without impacting other code.
 Each can be done relatively easily: one week or less</t>
@@ -8758,7 +7738,6 @@ Each can be done relatively easily: one week or less</t>
 <t tx="ekr.20040918165144.10"></t>
 <t tx="ekr.20040918165350"></t>
 <t tx="ekr.20040918165427"></t>
-<t tx="ekr.20040918165427.2"></t>
 <t tx="ekr.20040918165427.4">@nocolor
 
 Developers
@@ -8830,7 +7809,6 @@ That web site is produced from a Leo outline.
 
 EKR: Alt-Up and Alt-Down are bound to Go To Next/Prev visible. The idea is that
 if we don't display the body text these keys will work faster.</t>
-<t tx="ekr.20041002162608.5">How about a Emacs style meta-key(Esc?) followed by up or down? or F1/F2 ? anything to escape having to hold down three keys at the same time -- which seems to be common to other shortcut combinations too. so if you could put this in as an option in the preferences -- to turn on or off meta-key binding, that would let people choose what they prefer...</t>
 <t tx="ekr.20041002162608.6">http://sourceforge.net/forum/message.php?msg_id=1864564
 By: btheado
 
@@ -8920,12 +7898,90 @@ top.title(title)
 
 self.frame = frame = Tk.Frame(top)
 frame.pack(side="top", fill='both', expand=1, padx=5, pady=5)</t>
-<t tx="ekr.20041017043108">@killcolor
-
-- Tell the name of the plugin that contains the failed import.
-- Give only one message per plugin.</t>
 <t tx="ekr.20041019072632"></t>
 <t tx="ekr.20041019072849"></t>
+<t tx="ekr.20041027065222">** Incremental find.
+
+- A good way to show options without showing find panel?
+    - why not just show/hide find panel?  We already have that!
+
+- Does change command make sense?
+    - How about changing the selection?  Simple, but why bother?  Just type!</t>
+<t tx="ekr.20041030091736.1"># change/comment this to match your path if your leo isn't in the plugins dir
+
+## @path C:\c\leo\V42leos\leo\plugins\
+
+@
+several plugins of the dyna variety and support files
+newer than the version included in Leo4.2 final and 10/04 cvs
+
+executeScript on this node to insert your plugin path
+if it looks ok remove the #comment
+@c
+
+&lt;&lt; insertAplug &gt;&gt;
+insertAplug()
+
+@language python
+@color
+</t>
+<t tx="ekr.20041030091736.2">def insertAplug(wch= 'i'): #i/r
+    """use to insertAt 1.0 #@path plugindir
+   
+    """
+    import leoGlobals as g
+    import os, sys
+
+
+    k = g.os_path_split(g.app.loadDir)[0]
+    #this should fix the slashes and lower cases' it on win9x
+    path = g.os_path_norm(g.os_path_abspath(g.os_path_join(k, "plugins")))
+
+
+    if not g.os_path_isdir(path):
+        print 'give up', path; raise NameError
+
+    if 'i' in wch:
+        c = g.top()
+        p = c.currentPosition()
+        Tx = c.frame.body
+        Tx.setInsertionPoint(1.0)
+        Tx.insertAtInsertPoint('#@path %s\n'%(path,))
+        Tx.onBodyWillChange(p, "Typing")  
+
+    #if 'r' in wch:  i forget why dtef shouldent do this in every case...
+    #return home
+</t>
+<t tx="ekr.20041030092101">@ Notes by EKR:  The enclose is a remarkable body of work by 'e'.  Have fun with it.
+
+I am enclosing this code as-is; use with reasonable caution.
+
+You may download the latest version at: http://rclick.netfirms.com/dyna_menu.py.html</t>
+<t tx="ekr.20041030092835">@killcolor
+
+http://sourceforge.net/forum/message.php?msg_id=2823715
+
+v0.138 highlights,
+new macro for basic file info on selected filename,
+filename in copybuffer, current @file or current leo. 
+
+resurected the EKR Graphvizoutline as a macro, will 
+eventually use to graph class mro or import dependancies borrowing from some
+cookbook entries.
+ 
+new toy to insert @path to your home dir into 
+the first line of current node, used in the rc node.
+some sample rc files for pychecker and pylint and urls.
+please advise how if it fails to find the correct 
+directory for home on your system. (if you know)
+
+cleaned up redirected output to log from unittest in du_test,
+should now work with pyw and not clutter the console
+when running @test or @suite nodes. needed reload unittest.
+
+htmlize now calls the python webbrowser module for output.
+
+e</t>
 <t tx="pap.20041006194759">def getDetails(self, text):
     """Get the details of the plugin
     

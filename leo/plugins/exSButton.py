@@ -1,5 +1,5 @@
 #@+leo-ver=4-thin
-#@+node:ekr.20040916153817.66:@thin exSButton.py
+#@+node:ekr.20041030091736.75:@thin exSButton.py
 #unfinshed, works, but, selectable options do nothing.
 """
 you can execute script from every leo buttonbar.
@@ -39,7 +39,7 @@ on my comment page from:
 or sourceforge forum
 """
 #@<< initilize >>
-#@+node:ekr.20040916153817.67:<< initilize >>
+#@+node:ekr.20041030091736.76:<< initilize >>
 
 import leoPlugins as lp
 import leoGlobals as g
@@ -139,14 +139,14 @@ except ImportError: Tk = None
 # or a toolbar between the log and headlines
 # smaller text and fonts by default in all buttons.
 #@-at
-#@-node:ekr.20040916153817.67:<< initilize >>
+#@-node:ekr.20041030091736.76:<< initilize >>
 #@nl
 
 def add_exSb(a, msg, *arg, **kwd):
     """your basic execute script enabler
     """
     #@    << callbacks >>
-    #@+node:ekr.20040916153817.68:<< callbacks >>
+    #@+node:ekr.20041030091736.77:<< callbacks >>
     #at this point code from plugins isnt importable
     if g.os_path_join(g.app.loadDir, "..", "plugins") not in sys.path:
         sys.path.append(g.os_path_join(g.app.loadDir, "..", "plugins"))
@@ -182,11 +182,11 @@ def add_exSb(a, msg, *arg, **kwd):
             cf.putStatusLine(msg)
         return doit
     #@nonl
-    #@-node:ekr.20040916153817.68:<< callbacks >>
+    #@-node:ekr.20041030091736.77:<< callbacks >>
     #@nl
 
     #@    @+others
-    #@+node:ekr.20040916153817.69:result
+    #@+node:ekr.20041030091736.78:result
     def result(van):
         #should be able to get which, currently first letter
         #can we deduce the rest of the items text? last 2 chars?
@@ -198,7 +198,7 @@ def add_exSb(a, msg, *arg, **kwd):
         #should be able to update list first?
         eb.sm.popup(eb)
     #@nonl
-    #@-node:ekr.20040916153817.69:result
+    #@-node:ekr.20041030091736.78:result
     #@-others
     
     if not a: 
@@ -252,7 +252,7 @@ elif Tk:  #must be running as plugin
 
     if g.app.gui and g.app.gui.guiName() == "tkinter":
 
-        __version__ = '0.018'  #f04730p05:38:32 
+        __version__ = '0.018'  #f04730p05:38 
 
         if sys.platform == 'win32':  #'after-create-leo-frame?', 
             lp.registerHandler(('open2', 'new'),
@@ -264,5 +264,5 @@ elif Tk:  #must be running as plugin
 #@@language python
 #@@color
 #@nonl
-#@-node:ekr.20040916153817.66:@thin exSButton.py
+#@-node:ekr.20041030091736.75:@thin exSButton.py
 #@-leo
