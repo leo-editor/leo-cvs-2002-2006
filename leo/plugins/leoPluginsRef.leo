@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet ekr_stylesheet?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="3155" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="3182" clone_windows="0"/>
 <globals body_outline_ratio="0.506329113924">
-	<global_window_position top="53" left="230" height="869" width="906"/>
+	<global_window_position top="38" left="285" height="861" width="722"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -164,6 +164,7 @@ marks="ekr.20041017043622.4,ekr.20041017043622.10,ekr.20041017043622.13,"><vh>@t
 <v t="edream.110203113231.925"><vh>@thin script_io_to_body.py</vh></v>
 </v>
 <v t="ekr.20040722135402"><vh>Enhancing the icon and status areas</vh>
+<v t="edream.110203113231.758"><vh>@thin nav_buttons.py</vh></v>
 <v t="EKR.20040517075915" tnodeList="EKR.20040517075915,EKR.20040517075915.1,EKR.20040517075915.2,EKR.20040517075915.3,EKR.20040517075915.4,EKR.20040517075915.5,EKR.20040517075915.6,EKR.20040517075915.7,EKR.20040517075915.8,EKR.20040517075915.9,EKR.20040517075915.10,EKR.20040517075915.11,EKR.20040517075915.12,ekr.20050111095936"><vh>@file-noref newButtons.py</vh>
 <v t="EKR.20040517075915.1"><vh>Helper classes</vh>
 <v t="EKR.20040517075915.2"><vh>class FlatOptionMenu</vh></v>
@@ -189,7 +190,7 @@ marks="ekr.20041017043622.4,ekr.20041017043622.10,ekr.20041017043622.13,"><vh>@t
 </v>
 <v t="ekr.20040915073259"><vh>Enhancing windows</vh>
 <v t="mork.20040926105355.1"><vh>@thin chapters.py</vh></v>
-<v t="ekr.20040722142445"><vh>@thin editAttributes.py</vh></v>
+<v t="mork.20041018162155.1"><vh>@thin EditAttributes.py</vh></v>
 <v t="ekr.20040915073259.1"><vh>@thin maximizeNewWindows.py</vh></v>
 <v t="mork.20041022155742.1"><vh>@thin nodebar.py</vh></v>
 <v t="edream.110203113231.924"><vh>@thin redirect_to_log.py</vh></v>
@@ -243,7 +244,6 @@ marks="ekr.20041017043622.4,ekr.20041017043622.10,ekr.20041017043622.13,"><vh>@t
 <v t="edream.111803100242"><vh>@thin rst.py</vh></v>
 <v t="ekr.20040910070811.1"><vh>@thin run_nodes.py</vh></v>
 <v t="ekr.20040828103325"><vh>@thin startfile.py</vh></v>
-<v t="mork.20041010095009"><vh>@thin xsltWithNodes.py</vh></v>
 <v t="ekr.20040408161258"><vh>rst2 plugin</vh>
 <v t="ekr.20040408192158"><vh>Documentation for the rST plugin using rst</vh>
 <v t="ekr.20040408192158.1"><vh>@rst ../doc/rstplugin.html</vh>
@@ -266,6 +266,7 @@ marks="ekr.20041017043622.4,ekr.20041017043622.10,ekr.20041017043622.13,"><vh>@t
 </v>
 <v t="ekr.20040331071319"><vh>@thin rst2.py</vh></v>
 </v>
+<v t="mork.20041010095009"><vh>@thin xsltWithNodes.py</vh></v>
 </v>
 <v t="ekr.20041009112303"><vh>Plugins manager &amp; menu</vh>
 <v t="EKR.20040517080555.1"><vh> Plugins menu</vh>
@@ -658,7 +659,18 @@ marks="pap.20041006193013,pap.20041006194759,"><vh>@thin plugin_manager.py</vh><
 </v>
 </v>
 </v>
-<v t="ekr.20041211035618"><vh>Scripts &amp; script buttons</vh>
+<v t="ekr.20050226090248"><vh>New/updated from Leo User</vh>
+<v t="mork.20041020082242.1"><vh>@thin base64Packager.py</vh></v>
+<v t="mork.20041018162155.1"><vh>@thin EditAttributes.py</vh></v>
+<v t="mork.20041018091414.1"><vh>@thin fastGotoNode.py</vh></v>
+<v t="mork.20041018131258.1"><vh>@thin groupOperations.py</vh></v>
+<v t="mork.20041018204908.1"><vh>@thin multifile.py</vh></v>
+<v t="mork.20041010095009"><vh>@thin xsltWithNodes.py</vh></v>
+</v>
+<v t="ekr.20041211035618"><vh>Scripts, buttons &amp; settings</vh>
+<v t="ekr.20050217093214" a="E"><vh>@settings</vh>
+<v t="ekr.20050217093214.1"><vh>@recentfiles </vh></v>
+</v>
 <v t="ekr.20041103052443"><vh>Script to find and replace all functions in leoGlobals.py</vh>
 <v t="ekr.20041103052443.1"><vh>findFunctionsInTree</vh></v>
 <v t="ekr.20041103052443.2"><vh>findDefs</vh></v>
@@ -3172,7 +3184,7 @@ Very little remains to be done, and nothing big.</t>
     if os.path.exists(file):
         os.startfile(file)
     else:	
-        answer = g.app.gui.runAskYesNoDialog(
+        answer = g.app.gui.runAskYesNoDialog(c,
             "Download Tutorial?",
             "Download tutorial (sbooks.chm) from SourceForge?")
 
@@ -5918,7 +5930,7 @@ if Tk: # Register the handlers...
                             # See how the user wants to resolve the conflict.
                             g.es("conflict in " + g.shortFileName(path),color="red")
                             message = "Replace changed outline with external changes?"
-                            result = g.app.gui.runAskYesNoDialog("Conflict!",message)
+                            result = g.app.gui.runAskYesNoDialog(c,"Conflict!",message)
                             update = result.lower() == "yes"
                         else:
                             update = s != body
@@ -7037,7 +7049,7 @@ A Pyrex wrapper for the aspell api.
     return r</t>
 <t tx="ekr.20040809161108">@killcolor
 
-Pyrex is     *SO    * great! I wrote this in about 1 hour from the
+Pyrex is *SO* great! I wrote this in about 1 hour from the
 Aspell doc. I spent most of that hour figuring out that I needed to
 set the Aspell "prefix" to get it to work!
 
@@ -7096,10 +7108,21 @@ mod_spelling.py is the older spell checker.  It is slower, but will work with al
 Both spelling plugins use a configuration files and a dictionary.  The configuration files are mod_spelling.ini and spellpyx.ini respectively.  The .ini files contain a few configuration settings.  One of these settings is the name of the dictionary.  By default, the names of the dictionary are mod_spelling.txt and spellpyx.txt.
 
 It would be quite dangerous to create a dictionary in an @asis node here: only the plugin code should typically change this file.  You may, of course, edit mod_spelling.txt and spellpyx.txt yourself: just make sure that Leo isn't running when you do this.</t>
-<t tx="ekr.20040809165421.1">- Set aspell_dir to the top-level Aspell directory.
-- Copy aspell.pyd to this directory
+<t tx="ekr.20040809165421.1">@nocolor
 
-** python pyd compiled dlls are python version specific.</t>
+Notes for version 0.10
+
+1.  Each aspell.pyd is specific to a particular Python (and aspell?) version.
+
+    - This code has been tested only with Python 2.4 and the dll given to me by 'e'.
+
+2. On XP, aspell.pyd must be in the apell\bin folder, presumably so it can find aspell-15.dll.
+
+3.  In the &lt;&lt; spellpx imports &gt;&gt; section in spellpyx.py, do the following
+
+    - Set aspell_dir to the top-level Aspell directory.
+
+    - Set aspell_bin_dir to the bin subdirectory.</t>
 <t tx="ekr.20040828105233">@first # -*- coding: utf-8 -*-
 @language python
 @tabwidth -4
@@ -8023,10 +8046,10 @@ used. Maybe this information can be centralized.
 
 - Set use visible_initially setting from .ini file rather than visibleInitially.
 
-- Make sense of directory settings.
-
-- Make sure menu gets created properly.
-
-- Rewrite and simplify the installation docs. </t>
+- Simplify the directory settings.</t>
+<t tx="ekr.20050217093214">@nocolor</t>
+<t tx="ekr.20050217093214.1">C:\prog\leoCVS\leo\test\test.leo
+C:\prog\leoCVS\leo\plugins\leoPlugins.leo</t>
+<t tx="ekr.20050226090248"></t>
 </tnodes>
 </leo_file>
