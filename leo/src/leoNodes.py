@@ -1437,7 +1437,7 @@ class position (object):
 	__repr__ = __str__
 	#@nonl
 	#@-node:p.__str__ and p.__repr__
-	#@+node:p.dump
+	#@+node:p.dump & p.vnodeListIds
 	def dumpLink (self,link):
 	
 		return g.choose(link,link,"<none>")
@@ -1450,8 +1450,13 @@ class position (object):
 	
 		if p.v:
 			p.v.dump() # Don't print a label
+			
+	def vnodeListIds (self):
+		
+		p = self
+		return [id(v) for v in p.v.t.vnodeList]
 	#@nonl
-	#@-node:p.dump
+	#@-node:p.dump & p.vnodeListIds
 	#@+node:p.Comparisons
 	def anyAtFileNodeName         (self): return self.v.anyAtFileNodeName()
 	def atFileNodeName            (self): return self.v.atFileNodeName()
@@ -2885,10 +2890,10 @@ class position (object):
 			return None,n
 	#@nonl
 	#@-node:p.vParentWithStack
-	#@+node:p.restoreLinksInTree/Suibtree
+	#@+node:p.restoreLinksInTree
 	def restoreLinksInTree (self):
 	
-		"""Restore and otherwise adjust links when undoing a delete node operation."""
+		"""Restore links when undoing a delete node operation."""
 		
 		root = p = self
 	
@@ -2896,29 +2901,18 @@ class position (object):
 			p.v.t.vnodeList.append(p.v)
 			
 		for p in root.children_iter():
-			p.restoreLinksInSubtree()
-			
-	def restoreLinksInSubtree (self):
-		
-		p = self
-	
-		if p.v not in p.v.t.vnodeList:
-			p.v.t.vnodeList.append(p.v)
+			p.restoreLinksInTree()
 	#@nonl
-	#@-node:p.restoreLinksInTree/Suibtree
+	#@-node:p.restoreLinksInTree
 	#@+node:p.deleteLinksInTree & allies
 	def deleteLinksInTree (self):
 		
 		"""Delete and otherwise adjust links when deleting node."""
 		
 		root = self
+	
+		root.deleteLinksInSubtree()
 		
-		# The root has been unlinked.
-		assert(root.v not in root.v.t.vnodeList)
-		
-		for p in root.children_iter():
-			p.deleteLinksInSubtree()
-			
 		for p in root.children_iter():
 			p.adjustParentLinksInSubtree(parent=root)
 	#@nonl
@@ -2932,12 +2926,13 @@ class position (object):
 		if p.v in p.v.t.vnodeList:
 			p.v.t.vnodeList.remove(p.v)
 			assert(p.v not in p.v.t.vnodeList)
-	
-		if len(p.v.t.vnodeList) > 0:
-			# This node is shared by other nodes. Don't delete anything more.
-			# g.trace("stopping deletes at",p)
-			return
+			g.trace("deleted",p.v,p.vnodeListIds())
 		else:
+			g.trace("not in vnodeList",p.v,p.vnodeListIds())
+			pass
+	
+		if len(p.v.t.vnodeList) == 0:
+			# This node is not shared by other nodes.
 			for p in root.children_iter():
 				p.deleteLinksInSubtree()
 	#@nonl
