@@ -755,7 +755,7 @@ class Plugin:
         self.name = None
         self.is_plugin = False
         self.version = None
-        self.description = None
+        self.description = ''
         self.handlers = []
         self.commands = []
         self.has_config = False
@@ -771,20 +771,21 @@ class Plugin:
     #@+node:pap.20041006193013:initFrom
     def initFrom(self, location):
         """Initialize the plugin from the specified location"""
-        #
+    
         # Initial properties
         self.filename = location
         self.name = self.getName(location)
-        #
+    
         # Get the contents of the file
         try:
             text = self.getContents()
+            self.getDetails(text)
         except InvalidPlugin, err:
+            print 'InvalidPlugin',str(err)
             self.description = str(err)
-            return
-        #
-        # Now get the details of the plugin
-        self.getDetails(text)
+        except:
+            g.es('Unexpected exception in initFrom')
+            g.es_exception()
     #@nonl
     #@-node:pap.20041006193013:initFrom
     #@+node:ekr.20041113095851:Must be overridden in subclasses...
@@ -817,10 +818,18 @@ class Plugin:
         """
         self.is_plugin = self.hasImport(text, "leoPlugins") 
         self.version = self.getPattern(text, r'__version__\s*=\s*"(.*?)"', "-")
-        # Bug fix: 11/9/04: allow both single and double triple-quoted strings.
-        pat1 = self.getPattern(text, r'"""(.*?)"""',"")
-        pat2 = self.getPattern(text, r"'''(.*?)'''","")
-        self.description = pat1 or pat2 or "Unknown"
+        # Allow both single and double triple-quoted strings.
+        match1 = self.getMatch(text, r'"""(.*?)"""')
+        match2 = self.getMatch(text, r"'''(.*?)'''")
+        pat1 = match1 and match1.group(1)
+        pat2 = match2 and match2.group(1)
+        if pat1 and pat2:
+            # Take the first pattern that appears.
+            self.description = g.choose(match1.start() < match2.start(),pat1,pat2)
+        else:
+            # Take whatever.
+            self.description = pat1 or pat2 or 'Unknown'
+        # g.trace('%4d %s' % (len(self.description),self.name))
         self.commands = sets.Set(self.getPatterns(text, "def cmd_(\w*?)\("))
         self.handlers = sets.Set(self.getPatterns(text, r'registerHandler\("(.*?)"'))
         # Look for the matching .ini file.
@@ -857,6 +866,14 @@ class Plugin:
         return False
     #@nonl
     #@-node:pap.20041009230351:hasImport
+    #@+node:ekr.20050121183012:getMatch (new)
+    def getMatch(self, text, pattern):
+    
+        """Return a single match for the specified pattern in the text"""
+        
+        return re.search(pattern,text,re.MULTILINE + re.DOTALL)
+    #@nonl
+    #@-node:ekr.20050121183012:getMatch (new)
     #@+node:pap.20041006194759.1:getPattern
     def getPattern(self, text, pattern, default=None):
     
@@ -985,7 +1002,7 @@ class Plugin:
     #@-others
 #@nonl
 #@-node:pap.20041006184225.6:class Plugin
-#@+node:pap.20041006192557:class LocalPlugin
+#@+node:pap.20041006192557:class LocalPlugin(Plugin)
 class LocalPlugin(Plugin):
     """A plugin on the local file system"""
     
@@ -1005,26 +1022,30 @@ class LocalPlugin(Plugin):
     def getContents(self):
     
         """Return the contents of the file"""
+        
+        # g.trace('local')
     
         try:
             f = file(self.filename, "r")
         except (IOError, OSError), err:
-            raise InvalidPlugin("Unable to open plugin file '%s': %s" % 
-                                    (self.name, err))
+            s = "Unable to open plugin file '%s': %s" % (self.name, err)
+            print s
+            raise InvalidPlugin(s)
         try:
             try:
                 self.text = text = f.read()
             finally:
                 f.close()
         except Exception, err:
-            raise InvalidPlugin("Unable to read plugin file '%s': %s" % 
-                                    (self.name, err))              
+            s = "Unable to read plugin file '%s': %s" % (self.name, err)
+            print s
+            raise InvalidPlugin(s)              
         return text
     #@nonl
     #@-node:pap.20041006193459.1:getContents
     #@-others
 #@nonl
-#@-node:pap.20041006192557:class LocalPlugin
+#@-node:pap.20041006192557:class LocalPlugin(Plugin)
 #@+node:pap.20041006203049:class CVSPlugin
 class CVSPlugin(Plugin):
      """A plugin on CVS"""
@@ -1042,6 +1063,8 @@ class CVSPlugin(Plugin):
      def getContents(self):
      
          """Return the contents of the file"""
+         
+         # g.trace('cvs')
      
          # Connect to CVS
          try:
