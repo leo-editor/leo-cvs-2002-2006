@@ -386,14 +386,24 @@ class leoMenu:
 			enable = frame.menu.enableMenu
 			menu = frame.menu.getMenu("Edit")
 			c.undoer.enableMenuItems()
-			# Enable cut/paste.
-			data = frame.body.getSelectedText()
-			canCut = data and len(data) > 0
+			#@		<< enable cut/paste >>
+			#@+node:<< enable cut/paste >>
+			if frame.body.hasFocus():
+				data = frame.body.getSelectedText()
+				canCut = data and len(data) > 0
+			else:
+				# This isn't strictly correct, but we can't get the Tk headline selection.
+				canCut = true
+			
 			enable(menu,"Cut",canCut)
 			enable(menu,"Copy",canCut)
+			
 			data = gui.getTextFromClipboard()
 			canPaste = data and len(data) > 0
 			enable(menu,"Paste",canPaste)
+			#@nonl
+			#@-node:<< enable cut/paste >>
+			#@nl
 			if 0: # Always on for now.
 				menu = frame.menu.getMenu("Find...")
 				enable(menu,"Find Next",c.canFind())
