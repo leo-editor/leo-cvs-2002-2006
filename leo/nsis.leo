@@ -2,7 +2,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="20" clone_windows="0"/>
 <globals body_outline_ratio="0.5">
-	<global_window_position top="0" left="25" height="31" width="87"/>
+	<global_window_position top="-18" left="116" height="31" width="87"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences allow_rich_text="0">
@@ -131,7 +131,9 @@ ok:
   File leo*.py
   File leoConfig.txt
   File c2py.py
+  File disStats.py
   File openLeo.py
+  File setup.py
   File tangle_done.py
   File untangle_done.py
   File __init__.py

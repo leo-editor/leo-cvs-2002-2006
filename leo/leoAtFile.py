@@ -1571,9 +1571,16 @@ class atFile:
 				#@+body
 				if kind == endSentinelKind:
 					if kind == atFile.endLeo:
-						s = readlineForceUnixNewline(file)
-						if len(s) > 0:
-							self.readError("Ignoring text after @-leo")
+						# 9/11/02: ignore everything after @-leo.
+						# Such lines were presumably written by @last
+						if 1: # new code
+							while 1:
+								s = readlineForceUnixNewline(file)
+								if len(s) == 0: break
+						else: #old code
+							s = readlineForceUnixNewline(file)
+							if len(s) > 0:
+								self.readError("Ignoring text after @-leo")
 					# nextLine != None only if we have a non-sentinel line.
 					# Therefore, nextLine == None whenever scanText returns.
 					assert(nextLine==None)
@@ -2148,11 +2155,11 @@ class atFile:
 			self.updateCloneIndices(root, next)
 			
 			#@<< put all @first lines in root >>
-			#@+node:2::<< put all @first lines in root >>
+			#@+node:2:C=18:<< put all @first lines in root >>
 			#@+body
 			#@+at
-			#  Write any @first lines to ms.  These lines are also converted to @verbatim lines, so the read logic simply ignores 
-			# these lines.
+			#  Write any @first lines.  These lines are also converted to @verbatim lines, so the read logic simply ignores lines 
+			# preceding the @+leo sentinel.
 
 			#@-at
 			#@@c
@@ -2160,7 +2167,7 @@ class atFile:
 			s = root.t.bodyString
 			tag = "@first"
 			i = 0
-			while match(s,i,"@first"):
+			while match(s,i,tag):
 				i += len(tag)
 				i = skip_ws(s,i)
 				j = i
@@ -2170,7 +2177,7 @@ class atFile:
 					self.os(line) ; self.onl()
 				i = skip_nl(s,i)
 			#@-body
-			#@-node:2::<< put all @first lines in root >>
+			#@-node:2:C=18:<< put all @first lines in root >>
 
 			if 1: # write the entire file
 				self.putOpenLeoSentinel("@+leo")
@@ -2179,6 +2186,35 @@ class atFile:
 				root.setVisited()
 				self.putCloseNodeSentinel(root)
 				self.putSentinel("@-leo")
+				
+				#@<< put all @last lines in root >>
+				#@+node:6:C=20:<< put all @last lines in root >>
+				#@+body
+				#@+at
+				#  Write any @last lines.  These lines are also converted to @verbatim lines, so the read logic simply ignores 
+				# lines following the @-leo sentinel.
+
+				#@-at
+				#@@c
+				
+				tag = "@last"
+				lines = string.split(root.t.bodyString,'\n')
+				n = len(lines) ; j = k = n - 1
+				# Don't write an empty last line.
+				if j >= 0 and len(lines[j])==0:
+					j = k = n - 2
+				# Scan backwards for @last directives.
+				while j >= 0:
+					line = lines[j]
+					if match(line,0,tag): j -= 1
+					else: break
+				# Write the @last lines.
+				for line in lines[j+1:k+1]:
+					i = len(tag) ; i = skip_ws(line,i)
+					self.os(line[i:]) ; self.onl()
+				#@-body
+				#@-node:6:C=20:<< put all @last lines in root >>
+
 			if self.outputFile:
 				if self.suppress_newlines and self.newline_pending:
 					self.newline_pending = false
@@ -2210,7 +2246,7 @@ class atFile:
 				root.clearDirty()
 				
 				#@<< Replace the target with the temp file if different >>
-				#@+node:4:C=18:<< Replace the target with the temp file if different >>
+				#@+node:4:C=19:<< Replace the target with the temp file if different >>
 				#@+body
 				assert(self.outputFile == None)
 				
@@ -2242,7 +2278,7 @@ class atFile:
 							" to " + self.targetFileName)
 						traceback.print_exc()
 				#@-body
-				#@-node:4:C=18:<< Replace the target with the temp file if different >>
+				#@-node:4:C=19:<< Replace the target with the temp file if different >>
 
 		except:
 			
@@ -2373,6 +2409,13 @@ class atFile:
 	#@-node:2::scanFile
 	#@-node:7::Testing
 	#@-others
+
+
+
+#@@last # test1
+#@@last # test2
 #@-body
 #@-node:0::@file leoAtFile.py
 #@-leo
+# test1
+# test2

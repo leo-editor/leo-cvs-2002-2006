@@ -2,13 +2,13 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="1117" clone_windows="0"/>
 <globals body_outline_ratio="0.5">
-	<global_window_position top="7" left="279" height="27" width="73"/>
+	<global_window_position top="7" left="279" height="27" width="64"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
-<preferences allow_rich_text="0" tab_width="4" page_width="132" tangle_bat="0" untangle_bat="0" output_doc_chunks="1" use_header_flag="1" defaultTargetLanguage="Python">
+<preferences allow_rich_text="0">
 </preferences>
-<find_panel_settings search_body="1" suboutline_only="1" whole_word="1">
-	<find_string>None</find_string>
+<find_panel_settings>
+	<find_string></find_string>
 	<change_string></change_string>
 </find_panel_settings>
 <vnodes>
@@ -57,7 +57,7 @@
 <v t="T37" a="C"><vh>Quick start</vh></v>
 </v>
 <v a="E"><vh>Latest version</vh>
-<v t="T38" a="EV"><vh>leo.py 3.6 beta 1</vh>
+<v t="T38" a="EV"><vh>leo.py 3.6</vh>
 <v t="T39"><vh>Known bug: problems with Python window</vh></v>
 <v><vh>Bug fixes</vh>
 <v><vh>Fixed problems with opening and writing leoConfig.txt on Linux</vh></v>
@@ -1720,9 +1720,10 @@ I have just tried leo for 2-3 days, yet I am certain this will be a revolution. 
 
 The main concept that impress me is that the source listing isn't the main focus any more. You focus on the "non-linear", hierarchical, collapsible outline of the source code. </t>
 <t tx="T15">I have been playing around with Leo and am really very impressed! It should either replace or greatly augment the development tools that I use."</t>
-<t tx="T16">Leo absolutely ROCKS! :) It's exactly the tool I've been wanting for years but have never got around to writing. 
+<t tx="T16">I've tried Literate Programming tools off and on for more than 10 years, mainly because the promise was so great.  I've abandoned them every time because working with the various CWeb-like tools was so awkward.
 
-One thing I really like is the ability to create functions in any order I please, and not think about what files to put them into till later. This ability alone has freed up a lot of my thought processes with coding. </t>
+Leo changes all that.  The most important benefits promised by Literate Programming are realized by using Leo, without the awkwardness of the other tools.
+</t>
 <t tx="T17">I wanted to thank you for the effort you've put into Leo.  It looks fantastic.  I've always though that Literate Programming was a good idea, but the tools were completely un-workable. </t>
 <t tx="T18">I was turned on too a very cool tool written in Python. Leo is a marrage of outlining and literate programming. Pure genious. The main reason I am impressed with this tool is that it doesn't affect your choice of tools. You can use whatever IDE for whatever language and switch back and forth between leo and it. </t>
 <t tx="T19">And yes, I've been using Leo a few hours every day for more than a week, now. :^) Actually, it's become my main development platform, and I do this for a living. </t>
@@ -1733,7 +1734,10 @@ I am very impressed that you developed this app single handedly. It looks like a
 <t tx="T21">Hey, Edward, please bear with us. I know you're overwhelmed, but you've come up with perhaps the most powerful new concept in code manipulation since VI and Emacs.
 
 I'm blown away with how Leo can slice'n'dice C and Python files into their component parts.
-</t>
+
+Leo absolutely ROCKS! :) It's exactly the tool I've been wanting for years but have never got around to writing. 
+
+One thing I really like is the ability to create functions in any order I please, and not think about what files to put them into till later. This ability alone has freed up a lot of my thought processes with coding.</t>
 <t tx="T22">We who use Leo know that it is a breakthrough tool and a whole new way of writing code.
 
 Leo is a powerful tool for organizing text into tree structures, and for just generally attacking a number of problems from a tree-based perspective.
@@ -1769,7 +1773,7 @@ Choice 1: Use the "Read Outline Only" command to recover the outline using only 
 
 Choice 2: Use one or move "Read @file Nodes" commands to update the outline from derived files.  This way is will break any clone links from the outline into the </t>
 <t tx="T31">This node duplicates the information in Chapter 2: Installing Leo.</t>
-<t tx="T32">leo.py is Leo2 written in Python and Tk.  It should work on any platform that supports Python 2.0 or later and Tk 8.0 or later.
+<t tx="T32">leo.py is Leo2 written in Python and Tk.  It should work on any platform that supports Python 2.2 or later and Tk 8.3 or later.
 
 Download Python from http://python.org/
 Download tcl/Tk from http://tcl.activestate.com/software/tcltk/</t>
@@ -2143,7 +2147,7 @@ This is the minimum you need to use Leo effectively.
 4. Many command key abbreviations are specified in the Syntax Coloring panel.
 
 See the Appendices for a concise summary of information about Leo.</t>
-<t tx="T38">leo.py 3.6 beta 1                                 September 10, 2002
+<t tx="T38">leo.py 3.6                                 September 11, 2002
 
 Highlights:
 

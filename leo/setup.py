@@ -19,8 +19,9 @@ from distutils.core import setup
 import os
 
 print
-print "Remember to update version numbers!"
-print "Remember to clear Default Tangle Directory!"
+print "Update version numbers"
+print "Clear Default Tangle Directory"
+print "Recreate leoConfig.txt"
 print "Distribute both leox-y.zip and leosetup.exe"
 print
 

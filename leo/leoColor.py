@@ -48,7 +48,7 @@ leoKeywords = (
 	"@","@c","@code","@doc","@color","@comment",
 	"@delims","@first",
 	"@header", # Stephen P. Scahefer, 9/2/2002
-	"@language","@nocolor",
+	"@language","@last","@nocolor",
 	"@noheader", # Stephen P.Schaefer,9/2/2002
 	"@others",
 	"@pagewidth","@path","@tabwidth",
