@@ -4027,11 +4027,16 @@ class LeoFrame:
 		c = self.commands
 		if not c: return
 	
-		menu = self.getMenu("File")
-		enableMenu(menu,"Revert To Saved", c.canRevert())
-		
-		openWithMenu = self.getMenu("Open With...")
-		enableMenu(menu,"Open With...", openWithMenu != None)
+		try:
+			menu = self.getMenu("File")
+			enableMenu(menu,"Revert To Saved", c.canRevert())
+				
+			openWithMenu = self.getMenu("Open With...")
+			enableMenu(menu,"Open With...", openWithMenu != None)
+		except:
+			es("exception updating File menu")
+			es_exception()
+	
 	#@-body
 	#@-node:3::updateFileMenu
 	#@+node:4::updateEditMenu
@@ -4040,26 +4045,29 @@ class LeoFrame:
 	
 		c = self.commands
 		if not c: return
-		
-		# Top level Edit menu...
-		menu = self.getMenu("Edit")
-		c.undoer.enableMenuItems()
-		if 0: # Always on for now.
-			enableMenu(menu,"Cut",c.canCut())
-			enableMenu(menu,"Copy",c.canCut()) # delete
-			enableMenu(menu,"Paste",c.canPaste())
-		if 0: # Always on for now.
-			menu = self.getMenu("Find...")
-			enableMenu(menu,"Find Next",c.canFind())
-			flag = c.canReplace()
-			enableMenu(menu,"Replace",flag)
-			enableMenu(menu,"Replace, Then Find",flag)
-		# Edit Body submenu...
-		menu = self.getMenu("Edit Body...")
-		enableMenu(menu,"Extract Section",c.canExtractSection())
-		enableMenu(menu,"Extract Names",c.canExtractSectionNames())
-		enableMenu(menu,"Extract",c.canExtract())
-		enableMenu(menu,"Match Brackets",c.canFindMatchingBracket())
+		try:
+			# Top level Edit menu...
+			menu = self.getMenu("Edit")
+			c.undoer.enableMenuItems()
+			if 0: # Always on for now.
+				enableMenu(menu,"Cut",c.canCut())
+				enableMenu(menu,"Copy",c.canCut())
+				enableMenu(menu,"Paste",c.canPaste())
+			if 0: # Always on for now.
+				menu = self.getMenu("Find...")
+				enableMenu(menu,"Find Next",c.canFind())
+				flag = c.canReplace()
+				enableMenu(menu,"Replace",flag)
+				enableMenu(menu,"Replace, Then Find",flag)
+			# Edit Body submenu...
+			menu = self.getMenu("Edit Body...")
+			enableMenu(menu,"Extract Section",c.canExtractSection())
+			enableMenu(menu,"Extract Names",c.canExtractSectionNames())
+			enableMenu(menu,"Extract",c.canExtract())
+			enableMenu(menu,"Match Brackets",c.canFindMatchingBracket())
+		except:
+			es("exception updating Edit menu")
+			es_exception()
 	#@-body
 	#@-node:4::updateEditMenu
 	#@+node:5::updateOutlineMenu
@@ -4068,53 +4076,56 @@ class LeoFrame:
 	
 		c = self.commands ; v = c.currentVnode()
 		if not c: return
-	
-		# Top level outline menu...
-		menu = self.getMenu("Outline")
-		enableMenu(menu,"Cut Node",c.canCutOutline())
-		enableMenu(menu,"Delete Node",c.canDeleteHeadline())
-		enableMenu(menu,"Paste Node",c.canPasteOutline())
-		enableMenu(menu,"Sort Siblings",c.canSortSiblings())
-		# Expand/Contract submenu...
-		menu = self.getMenu("Expand/Contract...")
-		hasChildren = v.hasChildren()
-		isExpanded = v.isExpanded()
-		enableMenu(menu,"Contract Parent",c.canContractParent())
-		enableMenu(menu,"Contract Node",hasChildren and isExpanded)
-		enableMenu(menu,"Expand Node",hasChildren and not isExpanded)
-		enableMenu(menu,"Expand Prev Level",hasChildren and isExpanded)
-		enableMenu(menu,"Expand Next Level",hasChildren)
-		enableMenu(menu,"Expand To Level 1",hasChildren and isExpanded)
-		for i in xrange(2,9):
-			enableMenu(menu,"Expand To Level " + str(i), hasChildren)
-		# Move submenu...
-		menu = self.getMenu("Move...")
-		enableMenu(menu,"Move Down",c.canMoveOutlineDown())
-		enableMenu(menu,"Move Left",c.canMoveOutlineLeft())
-		enableMenu(menu,"Move Right",c.canMoveOutlineRight())
-		enableMenu(menu,"Move Up",c.canMoveOutlineUp())
-		enableMenu(menu,"Promote",c.canPromote())
-		enableMenu(menu,"Demote",c.canDemote())
-		# Go To submenu
-		menu = self.getMenu("Go To...")
-		enableMenu(menu,"Go To Prev Visible",c.canSelectVisBack())
-		enableMenu(menu,"Go To Next Visible",c.canSelectVisNext())
-		enableMenu(menu,"Go To Next Marked",c.canGoToNextMarkedHeadline())
-		enableMenu(menu,"Go To Next Changed",c.canGoToNextDirtyHeadline())
-		enableMenu(menu,"Go To Next Clone",v.isCloned())
-		enableMenu(menu,"Go Back",c.canSelectThreadBack())
-		enableMenu(menu,"Go Next",c.canSelectThreadNext())
-		enableMenu(menu,"Go To Parent",v.parent() != None)
-		enableMenu(menu,"Go To Prev Sibling",v.back() != None)
-		enableMenu(menu,"Go To Next Sibling",v.next() != None)
-		# Mark submenu
-		menu = self.getMenu("Mark/Unmark...")
-		label = choose(v and v.isMarked(),"Unmark","Mark")
-		setMenuLabel(menu,0,label)
-		enableMenu(menu,"Mark Subheads",(v and v.hasChildren()))
-		enableMenu(menu,"Mark Changed Items",c.canMarkChangedHeadlines())
-		enableMenu(menu,"Mark Changed Roots",c.canMarkChangedRoots())
-		enableMenu(menu,"Mark Clones",v.isCloned())
+		try:
+			# Top level outline menu...
+			menu = self.getMenu("Outline")
+			enableMenu(menu,"Cut Node",c.canCutOutline())
+			enableMenu(menu,"Delete Node",c.canDeleteHeadline())
+			enableMenu(menu,"Paste Node",c.canPasteOutline())
+			enableMenu(menu,"Sort Siblings",c.canSortSiblings())
+			# Expand/Contract submenu...
+			menu = self.getMenu("Expand/Contract...")
+			hasChildren = v.hasChildren()
+			isExpanded = v.isExpanded()
+			enableMenu(menu,"Contract Parent",c.canContractParent())
+			enableMenu(menu,"Contract Node",hasChildren and isExpanded)
+			enableMenu(menu,"Expand Node",hasChildren and not isExpanded)
+			enableMenu(menu,"Expand Prev Level",hasChildren and isExpanded)
+			enableMenu(menu,"Expand Next Level",hasChildren)
+			enableMenu(menu,"Expand To Level 1",hasChildren and isExpanded)
+			for i in xrange(2,9):
+				enableMenu(menu,"Expand To Level " + str(i), hasChildren)
+			# Move submenu...
+			menu = self.getMenu("Move...")
+			enableMenu(menu,"Move Down",c.canMoveOutlineDown())
+			enableMenu(menu,"Move Left",c.canMoveOutlineLeft())
+			enableMenu(menu,"Move Right",c.canMoveOutlineRight())
+			enableMenu(menu,"Move Up",c.canMoveOutlineUp())
+			enableMenu(menu,"Promote",c.canPromote())
+			enableMenu(menu,"Demote",c.canDemote())
+			# Go To submenu
+			menu = self.getMenu("Go To...")
+			enableMenu(menu,"Go To Prev Visible",c.canSelectVisBack())
+			enableMenu(menu,"Go To Next Visible",c.canSelectVisNext())
+			enableMenu(menu,"Go To Next Marked",c.canGoToNextMarkedHeadline())
+			enableMenu(menu,"Go To Next Changed",c.canGoToNextDirtyHeadline())
+			enableMenu(menu,"Go To Next Clone",v.isCloned())
+			enableMenu(menu,"Go Back",c.canSelectThreadBack())
+			enableMenu(menu,"Go Next",c.canSelectThreadNext())
+			enableMenu(menu,"Go To Parent",v.parent() != None)
+			enableMenu(menu,"Go To Prev Sibling",v.back() != None)
+			enableMenu(menu,"Go To Next Sibling",v.next() != None)
+			# Mark submenu
+			menu = self.getMenu("Mark/Unmark...")
+			label = choose(v and v.isMarked(),"Unmark","Mark")
+			setMenuLabel(menu,0,label)
+			enableMenu(menu,"Mark Subheads",(v and v.hasChildren()))
+			enableMenu(menu,"Mark Changed Items",c.canMarkChangedHeadlines())
+			enableMenu(menu,"Mark Changed Roots",c.canMarkChangedRoots())
+			enableMenu(menu,"Mark Clones",v.isCloned())
+		except:
+			es("exception updating Outline menu")
+			es_exception()
 	#@-body
 	#@-node:5::updateOutlineMenu
 	#@-node:9::Menu enablers (Frame)
