@@ -168,7 +168,7 @@ class baseCommands:
     #@+node:ekr.20040629121554.1:getSignOnLine
     def getSignOnLine (self):
         c = self
-        return "Leo 4.2 beta 1, build %s, June 30, 2004" % c.getBuildNumber()
+        return "Leo 4.2 beta 2, build %s, July 2, 2004" % c.getBuildNumber()
     #@-node:ekr.20040629121554.1:getSignOnLine
     #@+node:ekr.20040629121554.2:initVersion
     def initVersion (self):
@@ -4189,9 +4189,9 @@ class baseCommands:
     #@+node:ekr.20031218072017.2964:canExpandSubheads
     def canExpandSubheads (self):
     
-        c = self
+        c = self ; current = c.currentPosition()
         
-        for p in c.currentPosition().children_iter():
+        for p in current.children_iter():
             if p != current and not p.isExpanded():
                 return True
     
