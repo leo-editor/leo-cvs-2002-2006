@@ -27,7 +27,7 @@ However, that interfere's with Leo's dragging logic.
 #@@language python
 #@@tabwidth -4
 
-__version__ = "1.5"
+__version__ = "1.6"
 #@<< version history >>
 #@+node:ekr.20050226184411.1:<< version history >>
 #@@killcolor
@@ -43,6 +43,14 @@ __version__ = "1.5"
 #     - Added useDoubleClick variable.
 #     - Added init function.
 #     - Init _vim_cmd depending on sys.platform.
+# 
+# 1.6 EKR:
+#     - Use keywords to get c, not g.top().
+#     - Don't use during unit testing: prefer xemacs instead.
+#     - Added _vim_exe
+#     - Use "os.spawnv" instead of os.system.
+#     - Simplified the search of g.app.openWithFiles.
+#     - Fixed bug in open_in_vim: hanged v.bodyString to v.bodyString()
 #@-at
 #@nonl
 #@-node:ekr.20050226184411.1:<< version history >>
@@ -64,30 +72,32 @@ useDoubleClick = True # True: double-click opens VIM.  False: single-click opens
 
 if sys.platform == 'win32':
     # Works on XP with vim in the folder indicated.
-    _vim_cmd = r"c:\vim\vim61\gvim --servername LEO"
+    _vim_cmd = r"c:\vim\vim63\gvim --servername LEO"
+    _vim_exe = r"c:\vim\vim63\gvim"
 else: 
     _vim_cmd = "vim --servername LEO"
-   
+    _vim_exe = "vim"
+
 #@+others
 #@+node:ekr.20050226184624:init
 def init ():
     
-    ok = True # Safe for unit testing.
+    ok = not g.app.unitTesting # Don't conflict with xemacs plugin.
     
-    if g.app.unitTesting:
-        print '\nvim plugin installed: double-clicking icons will start vim.'
-
-    # Register the handlers...
-    if useDoubleClick: # Open on double click
-        leoPlugins.registerHandler("icondclick2", open_in_vim)
-    else: # Open on single click: interferes with dragging.
-        leoPlugins.registerHandler("iconclick2", open_in_vim,val=True)
-    
-    # Enable the os.system call if you want to start a (g)vim server.
-    if g.app.unitTesting:
-        os.system(_vim_cmd)
-    
-    g.plugin_signon(__name__)
+    if ok:
+        # Register the handlers...
+        if useDoubleClick:
+            # Open on double click
+            leoPlugins.registerHandler("icondclick2", open_in_vim)
+        else:
+            # Open on single click: interferes with dragging.
+            leoPlugins.registerHandler("iconclick2",open_in_vim,val=True)
+        
+        # Enable the os.system call if you want to start a (g)vim server when Leo starts.
+        if 0:
+            os.system(_vim_cmd)
+        
+        g.plugin_signon(__name__)
     
     return ok
 #@nonl
@@ -95,44 +105,43 @@ def init ():
 #@+node:EKR.20040517075715.11:open_in_vim
 def open_in_vim (tag,keywords,val=None):
     
-    c = g.top()
-    if not c: return
+    c = keywords.get('c')
     p = keywords.get("p")
-    if not p: return
+    if not c or not p: return
     v = p.v
-
-    # Find dictionary with infos about this node
-    this=filter(lambda x: id(x['v'])==id(v),g.app.openWithFiles)
     
-    # Retrieve the name of the temporary file (if any).
-    if this != []:  path=this[0]['path']
-    else:           path=''
+    # Search g.app.openWithFiles for a file corresponding to v.
+    for d in g.app.openWithFiles:
+        if d.get('v') == id(v):
+            path = d.get('path','') ; break
+    else: path = ''
 
     # if the body has changed we need to open a new 
     # temp file containing the new body in vim
-    if  not g.os_path_exists(path) or \
-        not hasattr(v,'OpenWithOldBody') or \
-        v.bodyString!=v.OpenWithOldBody:
-        # if there is an old temp file we need to delete it,
-        # remove it from the dictionary and delete the old
-        # buffer from vim
-        if path != '':
+    if (
+        not g.os_path_exists(path) or 
+        not hasattr(v,'OpenWithOldBody') or
+        v.bodyString() != v.OpenWithOldBody
+    ):
+        # Open a new temp file.
+        if path:
+            # Remove the old file and the entry in g.app.openWithFiles.
             os.remove(path)
-            g.app.openWithFiles=filter(lambda x: x['path']!=path,g.app.openWithFiles)
+            g.app.openWithFiles = [d for d in g.app.openWithFiles if d.get('path') != path]
             os.system(_vim_cmd+"--remote-send '<C-\\><C-N>:bd! "+path+"<CR>'")
-        # update old body with new contents
-        v.OpenWithOldBody=v.bodyString()
+        v.OpenWithOldBody=v.bodyString() # Remember the previous contents.
         # open the node in vim (note the space after --remote)
-        g.top().openWith(("os.system", _vim_cmd+"--remote ", None),) # 6/27/03: add comma.
-    # else, display the old temp file in vim because other files 
-    # may have been opened in the meantime
+        if 0: # Works, but hangs Leo until vim exits on XP.
+            # Note space after --remote.
+            c.openWith(("os.system", _vim_cmd+"--remote ", None),)
+        else: # Works, but gives weird error message on first open of Vim.
+            c.openWith(("os.spawnv", [_vim_exe,"--servername LEO ","--remote "], None),)
     else:
-        # We reopen the file. if it is still open, the buffer is raised
-        # if the changes to the current buffer were not saved, vim will
-        # notify the user of that fact at this point
+        # Reopen the old temp file.
         os.system(_vim_cmd+"--remote-send '<C-\\><C-N>:e "+path+"<CR>'")
         
     return val
+#@nonl
 #@-node:EKR.20040517075715.11:open_in_vim
 #@-others
 #@nonl
