@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet ekr_stylesheet?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="3132" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="3155" clone_windows="0"/>
 <globals body_outline_ratio="0.506329113924">
-	<global_window_position top="22" left="365" height="869" width="906"/>
+	<global_window_position top="53" left="230" height="869" width="906"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -81,6 +81,7 @@ marks="pap.20041006194759,pap.20041006193013,"><vh>@thin pluginsNotes.txt</vh></
 </v>
 </v>
 <v t="edream.110203113231.741"><vh>@thin add_directives.py</vh></v>
+<v t="ekr.20050217091823"><vh>@thin bibtex.py</vh></v>
 <v t="ekr.20040916073636"><vh>@thin ConceptualSort.py</vh></v>
 <v t="ekr.20040915105758.13"><vh>@thin FileActions.py</vh></v>
 <v t="ekr.20041003172238"><vh>@thin Library.py</vh></v>
@@ -293,9 +294,10 @@ marks="pap.20041006193013,pap.20041006194759,"><vh>@thin plugin_manager.py</vh><
 <v t="ekr.20040809165421"><vh>Read me or suffer</vh></v>
 <v t="edream.110203113231.932"><vh>@thin mod_spelling.ini</vh></v>
 <v t="edream.110203113231.933"><vh>@thin mod_spelling.py</vh></v>
+<v t="ekr.20050216110126"><vh>Spelling to do</vh></v>
 <v t="ekr.20040809151600"><vh>spellpyx</vh>
 <v t="ekr.20040809165421.1"><vh>Installing this plugin</vh></v>
-<v t="ekr.20040809151600.4"><vh>Notes: e</vh></v>
+<v t="ekr.20040809151600.4"><vh>Links</vh></v>
 <v t="ekr.20041009165858"><vh>@thin spellpyx.ini</vh></v>
 <v t="ekr.20040809151600.1"><vh>@thin spellpyx.py</vh></v>
 <v t="ekr.20040809151600.52"><vh>aspell-1.1</vh>
@@ -6893,28 +6895,6 @@ These plugins contain example code only.</t>
 <t tx="ekr.20040809151600"></t>
 <t tx="ekr.20040809151600.4">@killcolor
 
-there is pyrex 9.3 and v1.1 of aspell.pyx just released.
-the 1.1 version doesn't have a precompiled aspell.pyd
-the 1.0 pyd from the author didn't load well for me.
-
-I'm drawing the line at pyrex9.2 aspell-15 aspell.pyx1.1 py2.3
-since I just got done checking it all out!
-
-What I did:
-
-- Ripped out the mod_spelling pipe code.
-- Left in everything else.
-- Increased the font size overall.
-- Added self.body.bodyCtrl.see(start)
-- Converted true/false to True/False.
-
-To do next:
-
-- Explore letting aspell.pyx do the update of local as well.
-    This would remove the dependence on the exe for update.
-- Add learn word mode which will automatically change words that have been
-  marked always fix or something like that.
-
 Links:
 
 &lt;http://aspell.net&gt;
@@ -6932,91 +6912,7 @@ you can just copy the python*.dll and *aspell.dll
 to mingw/lib now instead of the grueling lib building steps. &lt;http://www.mingw.org&gt;
 
 http://sourceforge.net/forum/forum.php?thread_id=1107275&amp;forum_id=10226
-
-
-s04710p04:59:01
-the suplied pyd in aspell pyx 1.0 wouldn't load for me py2.3
-I finally got compiled on mingw by updateing to the latest g++
-and binutils and msys and pyrex not sure what the hangup was
-you dont have to build the python lib anymore with gcc &gt;3?
-
-there is a bit of dloading and dir moving and setup.py editing
-and create a distutils.cfg put in the distutils dir for mingw
-this should be alot cleaner than the pipe trick uded by pauls spellcheck
-cvrt to newstyle, make sure it all still works
-would be nice to default back to pipes if aspell cant be imported
-should get that part going first.
-string not defined... am I working from an older copy of mod_spell?
-alot of stuff reading/updateing the local dict, all of it good
-riped out the pipe and its use in a few place.
-commented out a bunch of open and close pipe
-errors if you check spelling then close instead of hide the popup
-
-also my select color on the body is less than ideal
-probably alot of other people too since its Leo defaults mostly
-and not easy to change. its confused by several similar settings
-and aparently grey80 in leo src itself.
-and the listbox is not resizable? wtf!
-u04711a08:49:18 why no learn word button? guess its add or ignore.
-fixed, if you close the spell window with the upper right close button
-when you try to reopen it gives a nasty traceback. just hide now.
-
-wonder if could quickly add an @language keywords if its in the node
-or only check comments and strings if in a code node
-seems to ignore dotted words sometimes and words bounded by puncts.
-
-removed the create string duplicating what the pipe version did
-only to have the next function reparse and turn back into list!
-
-addword still works. maybe have to add this to the pyrex wrap
-so you don't need to know the path to the executable.
-that may make it more nix/mac compatible
-
-fixes some outstanding anomalies since pyrex or before
-lets assume all problems are post the pyrex version.
-post answers or questions,
-&lt;http://sourceforge.net/forum/forum.php?thread_id=1107275&amp;forum_id=10226&gt;
-
-upped the fonts in the label &amp; listbox &amp; buttons
-the default size of buttons and text is never good
-plugins should always set the font to make this easier.
-this is going to be resolution and taste dependent
-should be an ini setting... next version maybe
-
-
-Restart aspell so that it re-reads its dictionary if you add words.
-due to the dict being init in the pyrex, not sure how to do this
-apparently add is to local dict and this is checked separately
-not sure why the restart was needed, seems to work after add as is.
-
-"doesn't" isn't highlighted because selector stops at \'
-this makes a whole range of misspellings harder to fix.
-aspell has soundslike mode, may want single word lookup
- or does it use soundslike to find suggestions?
-
-fixed scroll if the select is not in visible window
- happens too often
-
-to fix:
-fix weird focus bounce forcing you to make it side by side w/leo
-
-fix body highlight color lighter while window active.
-
-change to default is node only, node subnode via checkbox
-the searchbox too should stop at the subnode if not found
-at least the speller is easy enough to restart from anywhere
-needs a backto last word found in addition to undo/redo
-
-something highlighted, then look it up when startup.
-
-verify can override the default location of the dicts in the pyrex
-in-case people (most) wont compile their own or forget to change it
-it should be read from the ini? its already there?
-expect it to be relitive location to the exe?
-
-cutback on the traceback if no dict found
-
-is anyone on nix/mac using this plugin already?</t>
+</t>
 <t tx="ekr.20040809151600.52"></t>
 <t tx="ekr.20040809151600.53">"""A Pyrex wrapper for the aspell api."""
 
@@ -8123,5 +8019,14 @@ file extension to determine if C or python type annotations are
 used. Maybe this information can be centralized.
 </t>
 <t tx="ekr.20050128070307"></t>
+<t tx="ekr.20050216110126">@nocolor
+
+- Set use visible_initially setting from .ini file rather than visibleInitially.
+
+- Make sense of directory settings.
+
+- Make sure menu gets created properly.
+
+- Rewrite and simplify the installation docs. </t>
 </tnodes>
 </leo_file>
