@@ -610,10 +610,11 @@ class leoFind:
 			if c.find_text == '\n':
 				# 2/3/04: A hack.  Time to get rid of gui indices!
 				newpos = gui.moveIndexToNextLine(t,pos)
-				if newpos is None: return None, None
 				# trace(pos,t.index(newpos))
 			else:
-				newpos = gui.moveIndexForward(pos,len(c.find_text))
+				newpos = gui.moveIndexForward(t,pos,len(c.find_text))
+			if newpos is None:
+				return None, None
 			if c.reverse_flag and gui.compareIndices(t,newpos,"==",index):
 				#@			<< search again after getting stuck going backward >>
 				#@+node:<< search again after getting stuck going backward >>
@@ -626,7 +627,7 @@ class leoFind:
 				if not pos:
 					return None, None
 				
-				newpos = gui.moveIndexForward(pos,len(c.find_text))
+				newpos = gui.moveIndexForward(t,pos,len(c.find_text))
 				#@nonl
 				#@-node:<< search again after getting stuck going backward >>
 				#@nl
