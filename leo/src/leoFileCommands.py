@@ -642,25 +642,27 @@ class baseFileCommands:
                 if t: t.unknownAttributes = resultDict[gnx]
                 else: g.trace("can not find tnode: gnx = %s" % gnx,color="red")
                     
-        marks = [] ; expanded = []
+        marks = {} ; expanded = {}
         for gnx in self.descendentExpandedList:
             t = self.tnodesDict.get(gnx)
-            if t: expanded.append(t)
+            if t: expanded[t]=t
             else: g.trace("can not find tnode: gnx = %s" % gnx,color="red")
             
         for gnx in self.descendentMarksList:
             t = self.tnodesDict.get(gnx)
-            if t: marks.append(t)
+            if t: marks[t]=t
             else: g.trace("can not find tnode: gnx = %s" % gnx,color="red")
-            
+        
         if marks or expanded:
+            # g.trace("marks",len(marks),"expanded",len(expanded))
             for p in c.all_positions_iter():
-                if p.v.t in marks:
-                    p.setMarked()
-                    # g.trace("mark",str(p.headString()))
-                if p.v.t in expanded:
+                if marks.get(p.v.t):
+                    p.v.initMarkedBit()
+                        # This was the problem: was p.setMark.
+                        # There was a big performance bug in the mark hook in the Node Navigator plugin.
+                if expanded.get(p.v.t):
                     p.expand()
-                    # g.trace("expand",str(p.headString()))
+            # g.trace("done")
         #@nonl
         #@-node:EKR.20040627120120:<< restore attributes in descendent tnodes >>
         #@nl
