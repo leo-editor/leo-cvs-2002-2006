@@ -155,33 +155,6 @@ def registerOneExclusiveHandler(tag, fn):
 	else:
 		handlers[tag] = (fn,)
 #@-node:registerExclusiveHandler
-#@+node:funcToMethod
-#@+at 
-#@nonl
-# The following is taken from page 188 of the Python Cookbook.
-# 
-# The following method allows you to add a function as a method of any class.  
-# That is, it converts the function to a method of the class.  The method just 
-# added is available instantly to all existing instances of the class, and to 
-# all instances created in the future.
-# 
-# The function's first argument should be self.
-# 
-# The newly created method has the same name as the function unless the 
-# optional name argument is supplied, in which case that name is used as the 
-# method name.
-#@-at
-#@@c
-
-def funcToMethod(f,theClass,name=None):
-	
-	"""Converts the function f to a method of theClass with the given optional name."""
-
-	setattr(theClass,name or f.__name__,f)
-	
-# That's all!
-#@nonl
-#@-node:funcToMethod
 #@-others
 #@nonl
 #@-node:@file leoPlugins.py
