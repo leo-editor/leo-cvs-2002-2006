@@ -12,8 +12,9 @@
 	<change_string></change_string>
 </find_panel_settings>
 <vnodes>
-<v t="edream.110203113231"><vh>Diary</vh>
-<v t="edream.112103192146"><vh>11/21</vh>
+<v t="edream.110203113231" a="E"><vh>Diary</vh>
+<v t="edream.112103192146" a="E"><vh>11/21</vh>
+<v t="edream.112303075625" a="V"><vh>Added wxVersion to signon</vh></v>
 <v t="edream.112103192146.1"><vh>Fixed and test vim plugin</vh></v>
 </v>
 <v t="edream.111903190444"><vh>11/19</vh>
@@ -958,7 +959,7 @@
 </v>
 </v>
 </v>
-<v t="edream.110203113231.618" a="EV"><vh>Plugins &amp; scripts</vh>
+<v t="edream.110203113231.618"><vh>Plugins &amp; scripts</vh>
 <v t="edream.110203113231.619"><vh>Contributed scripts</vh>
 <v t="edream.110203113231.620" tnodeList="edream.110203113231.620,edream.110203113231.621,edream.110203113231.622,edream.110203113231.623,edream.110203113231.624,edream.110203113231.625,edream.110203113231.626,edream.110203113231.627,edream.110203113231.628,edream.110203113231.629"><vh>@file ../scripts/foldersize_leo.py</vh>
 <v t="edream.110203113231.621"><vh>normalize</vh></v>
@@ -14226,7 +14227,7 @@ def toggleSplitDirection(self):
 	
 	es("Leo Log Window...",color=color)
 	es(signon)
-	es("Python %d.%d.%d" % (n1,n2,n3))
+	es("Python %d.%d.%d wxWindows %s" % (n1,n2,n3,wx.wxVERSION_STRING))
 	enl()</t>
 <t tx="edream.111303163727.1">def enableMenu (self,menu,name,val):
 	
@@ -15318,5 +15319,6 @@ can handle plug-in development at this stage.  :-)
 (But I might be up to refining the html/script environment further. )</t>
 <t tx="edream.112103192146"></t>
 <t tx="edream.112103192146.1"></t>
+<t tx="edream.112303075625"></t>
 </tnodes>
 </leo_file>
