@@ -489,6 +489,10 @@
 </v>
 <v t="ekr.20041223124541"><vh>Trace components</vh></v>
 </v>
+<v t="ekr.20041231092350"><vh>Standalone imports</vh>
+<v t="ekr.20041230085841"><vh>test that of standalone imports of leo files</vh></v>
+<v t="ekr.20041230090756"><vh>Script to run in Idle</vh></v>
+</v>
 </v>
 <v t="ekr.20041126132604"><vh>Prototypes</vh>
 <v t="ekr.20041220080654"><vh>Setting Tk config values safely</vh>
@@ -992,7 +996,7 @@
 </v>
 </v>
 </v>
-<v t="ekr.20040716144017" a="E"><vh>Perfect Import tests</vh>
+<v t="ekr.20040716144017"><vh>Perfect Import tests</vh>
 <v t="ekr.20040716071029.6"><vh>@test inserting a line: no trailing newline</vh>
 <v t="ekr.20040716071856.1"><vh>-input</vh></v>
 <v t="ekr.20040716081019"><vh>-input-after</vh></v>
@@ -1039,8 +1043,8 @@
 <v t="ekr.20040712101754.7"><vh>Import/Export tests</vh>
 <v t="ekr.20040712101754.8"><vh>@suite Import tests</vh></v>
 <v t="ekr.20040712101754.9"><vh>@suite Export tests</vh></v>
-<v t="ekr.20040712101754.10" a="E"><vh>importTests</vh>
-<v t="ekr.20040712101754.11" a="E"><vh>tempNode</vh></v>
+<v t="ekr.20040712101754.10"><vh>importTests</vh>
+<v t="ekr.20040712101754.11"><vh>tempNode</vh></v>
 <v t="ekr.20040712101754.12"><vh>importAtRoot</vh>
 <v t="ekr.20040712101754.13"><vh>dialog</vh></v>
 </v>
@@ -1063,8 +1067,8 @@
 <v t="ekr.20040712101754.15"><vh>dialog</vh></v>
 </v>
 </v>
-<v t="ekr.20040712101754.24" a="E"><vh>exportTests</vh>
-<v t="ekr.20040712101754.25" a="E"><vh>tempNode</vh></v>
+<v t="ekr.20040712101754.24"><vh>exportTests</vh>
+<v t="ekr.20040712101754.25"><vh>tempNode</vh></v>
 <v t="ekr.20040712101754.26"><vh>exportHeadlines</vh>
 <v t="ekr.20040712101754.27"><vh>dialog</vh></v>
 </v>
@@ -1082,7 +1086,7 @@
 </v>
 </v>
 </v>
-<v t="ekr.20040712101754.2" a="E"><vh>Test .leo files...</vh>
+<v t="ekr.20040712101754.2"><vh>Test .leo files...</vh>
 <v t="ekr.20040730181601"><vh>@test minimalLeoFile.leo</vh></v>
 <v t="ekr.20040730181610"><vh>@test minimalLeoFile2.leo</vh></v>
 <v t="ekr.20040831104758"><vh>@test minimalLeoFile3.leo</vh></v>
@@ -1099,9 +1103,9 @@
 <v t="ekr.20041012084201"><vh>removeFile</vh></v>
 </v>
 </v>
-<v t="ekr.20040712101754.36" a="E"><vh>Non-file tests</vh>
-<v t="ekr.20040712101754.37" a="E"><vh>@suite Edit body tests</vh>
-<v t="ekr.20040712101754.38" a="E"><vh>editBodyTests</vh>
+<v t="ekr.20040712101754.36"><vh>Non-file tests</vh>
+<v t="ekr.20040712101754.37"><vh>@suite Edit body tests</vh>
+<v t="ekr.20040712101754.38"><vh>editBodyTests</vh>
 <v t="ekr.20040712101754.39"><vh>tempNode</vh></v>
 <v t="ekr.20040712101754.40"><vh>extractSection</vh>
 <v t="ekr.20040712101754.41"><vh>before</vh></v>
@@ -1122,9 +1126,9 @@
 </v>
 </v>
 </v>
-<v t="ekr.20040712101754.53" a="E"><vh>@suite Reformat Paragraph Tests</vh>
+<v t="ekr.20040712101754.53"><vh>@suite Reformat Paragraph Tests</vh>
 <v t="ekr.20040712101754.54"><vh>What I did</vh></v>
-<v t="ekr.20040712101754.55" a="E"><vh>Reformat Paragraph tests</vh>
+<v t="ekr.20040712101754.55"><vh>Reformat Paragraph tests</vh>
 <v t="ekr.20040712101754.56"><vh>tempNode</vh></v>
 <v t="ekr.20040712101754.57"><vh>testNoTrailingNewline</vh>
 <v t="ekr.20040712101754.58"><vh>before</vh></v>
@@ -1312,7 +1316,7 @@
 <v t="ekr.20040712101754.184"><vh>@test consistency of p.v.t.vnodeList &amp; v.parents for cloned nodes</vh></v>
 <v t="ekr.20040712101754.185"><vh>@test that cloned nodes actually share subtrees</vh></v>
 </v>
-<v t="ekr.20040712101754.187" a="E"><vh>Position tests...</vh>
+<v t="ekr.20040712101754.187"><vh>Position tests...</vh>
 <v t="ekr.20040712101754.188"><vh>@test p.iters and v.iters</vh>
 <v t="ekr.20040712101754.189"><vh>child1</vh>
 <v t="ekr.20040712101754.190"><vh>a</vh>
@@ -1383,6 +1387,18 @@
 </v>
 <v t="ekr.20040707081532.1"><vh>Do @test</vh></v>
 </v>
+<v t="ekr.20041231083027"><vh>Test of double @doc parts</vh>
+<v t="ekr.20041231083651"><vh>file c:\test\doubleAtDoc.py</vh>
+<v t="ekr.20041231083651.1"><vh>foo</vh></v>
+<v t="ekr.20041231083651.2"><vh>bar</vh></v>
+<v t="ekr.20041231083651.3"><vh>spam</vh></v>
+</v>
+<v t="ekr.20041231083027.1" tnodeList="ekr.20041231083027.1,ekr.20041231083027.2,ekr.20041231083027.3,ekr.20041231083027.4"><vh>@file c:\prog\test\doubleAtDoc.py</vh>
+<v t="ekr.20041231083027.2"><vh>foo</vh></v>
+<v t="ekr.20041231083027.3"><vh>bar</vh></v>
+<v t="ekr.20041231083027.4"><vh>spam</vh></v>
+</v>
+</v>
 <v t="ekr.20041126055818.2"><vh>pyclbr module (parses python)</vh></v>
 <v t="ekr.20041225051328"><vh>Tests of at_view plugin</vh>
 <v t="ekr.20041225051328.1"><vh>@clip</vh></v>
@@ -1392,32 +1408,18 @@
 <v t="ekr.20041228135008"><vh>HTML to Browser</vh>
 <v t="ekr.20041228140714"><vh>&lt;&lt; alternate code doesn't work well for me &gt;&gt;</vh></v>
 </v>
-<v t="ekr.20041229163210" a="M"><vh> htmlize  (dyna plugin)</vh>
+<v t="ekr.20041229163210" a="EM"><vh>dyna htmlize</vh>
 <v t="ekr.20041229164609"><vh>&lt;&lt; imports &gt;&gt;</vh></v>
 <v t="ekr.20041229163210.2"><vh>&lt;&lt; init globals &gt;&gt;</vh></v>
 <v t="ekr.20041229170824"><vh>stripSentinels</vh></v>
 <v t="ekr.20041229165956"><vh>sanitize</vh></v>
-<v t="ekr.20041229163210.3" a="M"><vh>class Parser</vh>
-<v t="ekr.20041229163210.4" a="M"><vh>__init__</vh></v>
+<v t="ekr.20041229163210.3" a="TV"><vh>class Parser</vh>
+<v t="ekr.20041229163210.4"><vh>__init__</vh></v>
 <v t="ekr.20041229163210.5"><vh>format</vh></v>
 <v t="ekr.20041229163210.6"><vh>__call__</vh></v>
 </v>
 <v t="ekr.20041229164609.2"><vh>htmlize</vh>
 <v t="ekr.20041229163210.7"><vh>&lt;&lt; colorize with silvercity &gt;&gt;</vh></v>
-</v>
-</v>
-<v t="ekr.20041230085841"><vh>test that of standalone imports of leo files</vh></v>
-<v t="ekr.20041230090756" a="E"><vh>Script to run in Idle</vh></v>
-<v t="ekr.20041231083027" a="E"><vh>Test of double @doc parts</vh>
-<v t="ekr.20041231083651"><vh>file c:\test\doubleAtDoc.py</vh>
-<v t="ekr.20041231083651.1"><vh>foo</vh></v>
-<v t="ekr.20041231083651.2"><vh>bar</vh></v>
-<v t="ekr.20041231083651.3"><vh>spam</vh></v>
-</v>
-<v t="ekr.20041231083027.1" a="E" tnodeList="ekr.20041231083027.1,ekr.20041231083027.2,ekr.20041231083027.3,ekr.20041231083027.4"><vh>@file c:\prog\test\doubleAtDoc.py</vh>
-<v t="ekr.20041231083027.2"><vh>foo</vh></v>
-<v t="ekr.20041231083027.3" a="TV"><vh>bar</vh></v>
-<v t="ekr.20041231083027.4"><vh>spam</vh></v>
 </v>
 </v>
 </vnodes>
@@ -2040,7 +2042,7 @@ import leoGlobals as g
 print g.app.config.redirect_execute_script_output_to_log_pane</t>
 <t tx="EKR.20040627103732">@ignore</t>
 <t tx="EKR.20040627103801"></t>
-<t tx="EKR.20040627103902" lineYOffset="4b032e" icons="5d7100287d7101285504747970657102550466696c65710355047870616471044b02550577686572657105550a6265666f726549636f6e71066803582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286802680368084afdffffff6803582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6805550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e"></t>
+<t tx="EKR.20040627103902" lineYOffset="4b032e" icons="5d7100287d710128550577686572657102550a6265666f726549636f6e710355047870616471044b025504747970657105550466696c6571066806582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286805680668084afdffffff6806582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6802550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e"></t>
 <t tx="EKR.20040627121836">import leoGlobals as g
 
 c = g.top() ; p = c.currentPosition()
@@ -2171,7 +2173,7 @@ for p in c.rootPosition().allNodes_iter():
 s = "%d nodes" % count
 print s ; g.es(s)</t>
 <t tx="ekr.20040312101720"></t>
-<t tx="ekr.20040317101155" lineYOffset="4b032e" icons="5d7100287d710128550577686572657102550a6265666f726549636f6e710355047870616471044b025504747970657105550466696c65710668065834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286805680668084afdffffff68065834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6802550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">import leoGlobals as g
+<t tx="ekr.20040317101155" lineYOffset="4b032e" icons="5d7100287d7101285504747970657102550466696c65710355047870616471044b02550577686572657105550a6265666f726549636f6e710668035834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286802680368084afdffffff68035834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6805550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">import leoGlobals as g
 
 c = g.top()
 
@@ -10814,12 +10816,12 @@ if spellpyx:
         spellFrame.checkSpelling()</t>
 <t tx="ekr.20041121151002">@nocolor</t>
 <t tx="ekr.20041121151002.1">C:\prog\leoCVS\leo\src\LeoPy.leo
-C:\prog\leoCVS\leo\test\unittest\minimalLeoFile2.leo
 C:\prog\leoCVS\leo\test\unittest\minimalLeoFile.leo
-C:\prog\leoCVS\leo\doc\LeoDocs.leo
 C:\prog\leoCVS\leo\test\unittest\minimalLeoFile3.leo
-C:\prog\leoCVS\leo\plugins\leoPlugins.leo
 C:\prog\leoCVS\leo\dist\leoDist.leo
+C:\prog\leoCVS\leo\test\unittest\minimalLeoFile2.leo
+C:\prog\leoCVS\leo\plugins\leoPlugins.leo
+C:\prog\leoCVS\leo\doc\LeoDocs.leo
 C:\prog\leoCVS\leo\test\test.leo</t>
 <t tx="ekr.20041124063401"></t>
 <t tx="ekr.20041124144944">import os
@@ -11345,15 +11347,13 @@ Based on a dynascript by 'e'.'''
 @language python
 @tabwidth -4
 
-# To do: show directives if stripdirectives is False.
-
 &lt;&lt; imports &gt;&gt;
 
 hopts = {
   'stripcomments':  False,
   'stripsentinals': True,
   'stripnodesents': False, # False: leave node sentinels.
-  'stripdirectives':False, # Not used.
+  'stripdirectives':False,
   'noNUMBER':       False,
   'noOP':           False,
   'noNAME':         True,  
@@ -11621,6 +11621,9 @@ import webbrowser</t>
             verbatim = False
         elif s.startswith('#@verbatim'):
             verbatim = True
+        elif s.startswith('#@@'):
+            if not hopts['stripdirectives']:
+                result.append(line)
         elif s.startswith(tag1):
             if not hopts['stripnodesents']:
                 i = line.find(tag1)
@@ -11739,5 +11742,6 @@ more
 still more</t>
 <t tx="ekr.20041231083651.3">def spam():
     pass</t>
+<t tx="ekr.20041231092350"></t>
 </tnodes>
 </leo_file>
