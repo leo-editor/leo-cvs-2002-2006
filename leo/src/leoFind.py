@@ -252,9 +252,11 @@ class leoFind:
 		
 		"""Reset suboutline-only search when the user clicks a headline."""
 		
-		if self.c and self.c.suboutline_only_flag:
-			# g.trace(p)
-			self.onlyVnode = p
+		try:
+			if self.c and self.c.suboutline_only_flag:
+				# g.trace(p)
+				self.onlyVnode = p
+		except: pass
 	#@nonl
 	#@-node:EKR.20040503070514:handleUserClick
 	#@+node:ekr.20031218072017.3065:setup_button
