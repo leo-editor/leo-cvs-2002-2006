@@ -2030,7 +2030,7 @@ def doHook(tag,*args,**keywords):
 
     if not g.app.config.use_plugins:
         if tag == "start1":
-            s = "Plugins disabled: use_plugins is 0"
+            s = "Plugins disabled: use_plugins is 0 in a leoSettings.leo file."
             print s ; g.es(s,color="blue")
         return None
 
