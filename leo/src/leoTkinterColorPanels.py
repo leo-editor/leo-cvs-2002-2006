@@ -271,7 +271,7 @@ class leoTkinterColorPanel (leoColorPanel.leoColorPanel):
         # Create all the rows.
         for name,option_name,default_color in self.colorPanelData:
             # Get the color.
-            option_color = c.config.getString(option_name)
+            option_color = c.config.getColor(option_name)
             color = g.choose(option_color,option_color,default_color)
             # Create the row.
             f = Tk.Frame(outer,bd=2)
@@ -322,7 +322,7 @@ class leoTkinterColorPanel (leoColorPanel.leoColorPanel):
         
         c = self.c
         option_name = self.option_names[name]
-        color = c.config.getString(option_name)
+        color = c.config.getColor(option_name)
         rgb,val = tkColorChooser.askcolor(color=color)
         if val != None:
             self.update(name,val)
@@ -342,7 +342,7 @@ class leoTkinterColorPanel (leoColorPanel.leoColorPanel):
         # Update the revert colors
         for name in self.changed_options:
             option_name = self.option_names[name]
-            self.revertColors[option_name] = self.c.config.getString(option_name)
+            self.revertColors[option_name] = self.c.config.getColor(option_name)
         self.changed_options = []
         if 1: # Hide the window, preserving its position.
             self.top.withdraw()

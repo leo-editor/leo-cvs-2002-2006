@@ -984,7 +984,7 @@ class baseColorizer:
             #@+node:ekr.20031218072017.1603:<< configure tags >>
             for name in default_colors_dict.keys(): # Python 2.1 support.
                 option_name,default_color = default_colors_dict[name]
-                option_color = c.config.getString(option_name)
+                option_color = c.config.getColor(option_name)
                 color = g.choose(option_color,option_color,default_color)
                 # Must use foreground, not fg.
                 try:
@@ -1012,7 +1012,7 @@ class baseColorizer:
                 for name,option_name,default_color in (
                     ("blank","show_invisibles_space_background_color","Gray90"),
                     ("tab",  "show_invisibles_tab_background_color",  "Gray80")):
-                    option_color = c.config.getString(option_name)
+                    option_color = c.config.getColor(option_name)
                     color = g.choose(option_color,option_color,default_color)
                     try:
                         self.body.tag_configure(name,background=color)

@@ -15,8 +15,10 @@ import sys
 #@+node:ekr.20041119203941:class config
 class baseConfig:
     """The base class for Leo's configuration handler."""
-    #@    << define defaultsDict >>
-    #@+node:ekr.20041117062717.1:<< define defaultsDict >>
+    #@    << baseConfig data >>
+    #@+node:ekr.20041122094813:<<  baseConfig data >>
+    #@+others
+    #@+node:ekr.20041117062717.1:defaultsDict
     #@+at 
     #@nonl
     # This contains only the "interesting" defaults.
@@ -51,14 +53,14 @@ class baseConfig:
         "allow_clone_drags" : ("bool",True),
         "body_pane_wraps" : ("bool",True),
         "body_text_font_family" : ("family","Courier"),
-        "body_text_font_size" : ("int",defaultBodyFontSize),
+        "body_text_font_size" : ("size",defaultBodyFontSize),
         "body_text_font_slant" : ("slant","roman"),
         "body_text_font_weight" : ("weight","normal"),
         "enable_drag_messages" : ("bool",True),
-        "headline_text_font_size" : ("int",defaultLogFontSize),
+        "headline_text_font_size" : ("size",defaultLogFontSize),
         "headline_text_font_slant" : ("slant","roman"),
         "headline_text_font_weight" : ("weight","normal"),
-        "log_text_font_size" : ("int",defaultLogFontSize),
+        "log_text_font_size" : ("size",defaultLogFontSize),
         "log_text_font_slant" : ("slant","roman"),
         "log_text_font_weight" : ("weight","normal"),
         "initial_window_height" : ("int",600),
@@ -76,10 +78,8 @@ class baseConfig:
         "split_bar_width" : ("int",7),
     }
     #@nonl
-    #@-node:ekr.20041117062717.1:<< define defaultsDict >>
-    #@nl
-    #@    << define encodingIvarsDict >>
-    #@+node:ekr.20041118062709:<< define encodingIvarsDict >>
+    #@-node:ekr.20041117062717.1:defaultsDict
+    #@+node:ekr.20041118062709:define encodingIvarsDict
     encodingIvarsDict = {
         "default_derived_file_encoding" : ("unicode-encoding","utf-8"),
         "new_leo_file_encoding" : ("unicode-encoding","UTF-8"),
@@ -87,10 +87,8 @@ class baseConfig:
         "tkEncoding" : ("unicode-encoding",None),
             # Defaults to None so it doesn't override better defaults.
     }
-    #@-node:ekr.20041118062709:<< define encodingIvarsDict >>
-    #@nl
-    #@    << define ivarsDict >>
-    #@+node:ekr.20041117072055:<< define ivarsDict >>
+    #@-node:ekr.20041118062709:define encodingIvarsDict
+    #@+node:ekr.20041117072055:ivarsDict
     # Each of these settings sets the ivar with the same name.
     ivarsDict = {
         "at_root_bodies_start_in_doc_mode" : ("bool",True),
@@ -115,12 +113,27 @@ class baseConfig:
         "write_strips_blank_lines" : ("bool",False),
     }
     #@nonl
-    #@-node:ekr.20041117072055:<< define ivarsDict >>
-    #@nl
+    #@-node:ekr.20041117072055:ivarsDict
+    #@-others
+    
+    # Shortcut stuff.
     keysDict = {}
     rawKeysDict = {}
+        
+    # List of dictionaries to search.  Order not too important.
     dictList = [ivarsDict,encodingIvarsDict,defaultsDict]
-    localOptionsDict = {} # Keys are commanders.  Values are optionsDicts.
+        
+    # Keys are commanders.  Values are optionsDicts.
+    localOptionsDict = {}
+    
+    # Keys are type names.  Values are (basic_types,[values]) tuples.
+    types_dict = {}
+        
+    # Keys are setting names, values are type names.
+    warningsDict = {} # Used by get() or allies.
+    #@nonl
+    #@-node:ekr.20041122094813:<<  baseConfig data >>
+    #@nl
     #@    @+others
     #@+node:ekr.20041117083202:Birth...
     #@+node:ekr.20041117062717.2:ctor & init
@@ -269,16 +282,32 @@ class baseConfig:
         return None
     #@nonl
     #@+node:ekr.20041121143823:getValFromDict
-    def getValFromDict (self,d,setting,theType,found):
+    def getValFromDict (self,d,setting,requestedType,found):
     
         data = d.get(setting)
         if data:
             found = True
             dType,val = data
-            
-            if 0: # not ready yet.
-                if dType != type:
-                    g.trace("Expected type %s, got %s for setting %s" % (theType,dType,setting))
+            if dType != requestedType:
+                ok = False
+                for toBeTranslatedType,otherType in (
+                    (requestedType,dType),(dType,requestedType)
+                ):
+                    data = self.types_dict.get(toBeTranslatedType)
+                    if data:
+                        transType,validValues = data
+                        ok = transType == otherType
+                        if ok:
+                            g.trace("translated %12s to %s for %s" %
+                                (toBeTranslatedType,transType,setting))
+                            break
+                if not ok: # Give warning for the first time (setting,dType) is seen.
+                    wTypes = self.warningsDict.get(setting,[])
+                    if dType not in wTypes:
+                        wTypes.append(dType)
+                        self.warningsDict[setting] = wTypes
+                        g.trace("Requested type %s, got %s for setting %s" % (requestedType,dType,setting))
+                        # g.print_stack()
     
             if val not in (u'None',u'none','None','none','',None):
                 # g.trace(theType,repr(val))
@@ -301,6 +330,14 @@ class baseConfig:
             return None
     #@nonl
     #@-node:ekr.20041117081009.3:getBool
+    #@+node:ekr.20041122070339:getColor
+    def getColor (self,c,setting):
+        
+        """Search all dictionaries for the setting & check it's type"""
+        
+        return self.get(c,setting,"color")
+    #@nonl
+    #@-node:ekr.20041122070339:getColor
     #@+node:ekr.20041117093009.1:getDirectory
     def getDirectory (self,c,setting):
         
@@ -355,6 +392,22 @@ class baseConfig:
             return None
     #@nonl
     #@-node:ekr.20041117093009.2:getLanguage FINISH
+    #@+node:ekr.20041122070752:getRatio
+    def getRatio (self,c,setting):
+        
+        """Search all dictionaries for the setting & check it's type"""
+        
+        val = self.get(c,setting,"ratio")
+        try:
+            val = float(val)
+            if 0.0 <= val <= 1.0:
+                return val
+            else:
+                return None
+        except TypeError:
+            return None
+    #@nonl
+    #@-node:ekr.20041122070752:getRatio
     #@+node:ekr.20041117062717.11:getRecentFiles
     def getRecentFiles (self,c):
         
@@ -383,7 +436,7 @@ class baseConfig:
         return self.get(c,setting,"string")
     #@nonl
     #@-node:ekr.20041118055543:getFontDict  FINISH (needed for @settings tree, maybe)
-    #@+node:ekr.20041117062717.13:getFontFromParams
+    #@+node:ekr.20041117062717.13:getFontFromParams (config)
     def getFontFromParams(self,c,family,size,slant,weight,defaultSize=12,tag=""):
     
         """Compute a font from font parameters.
@@ -393,24 +446,24 @@ class baseConfig:
     
         We return None if there is no family setting so we can use system default fonts."""
     
-        family = self.getString(c,family)
+        family = self.get(c,family,"family")
         if family in (None,""):
             family = self.defaultFontFamily
             
-        size = self.getInt(c,size)
+        size = self.get(c,size,"size")
         if size in (None,0): size = defaultSize
         
-        slant = self.getString(c,slant)
+        slant = self.get(c,slant,"slant")
         if slant in (None,""): slant = "roman"
     
-        weight = self.getString(c,weight)
+        weight = self.get(c,weight,"weight")
         if weight in (None,""): weight = "normal"
         
         # if g.app.trace: g.trace(tag,family,size,slant,weight)
         
         return g.app.gui.getFontFromParams(family,size,slant,weight)
     #@nonl
-    #@-node:ekr.20041117062717.13:getFontFromParams
+    #@-node:ekr.20041117062717.13:getFontFromParams (config)
     #@+node:ekr.20041117062717.14:getShortcut
     def getShortcut (self,c,name):
         
@@ -451,12 +504,12 @@ class baseConfig:
     #@-node:ekr.20041117062717.17:setCommandsIvars
     #@-node:ekr.20041117081009:Getters...
     #@+node:ekr.20041118084146:Setters
-    #@+node:ekr.20041118084146.1:set
+    #@+node:ekr.20041118084146.1:set (config)
     def set (self,c,setting,type,val):
         
         """Set the setting and make sure its type matches the given type."""
         
-        # g.trace(c,setting,type,val)
+        g.trace(c,setting,type,val)
     
         return ####
         
@@ -472,7 +525,7 @@ class baseConfig:
             g.trace(setting,type,val)
         
         return val
-    #@-node:ekr.20041118084146.1:set
+    #@-node:ekr.20041118084146.1:set (config)
     #@+node:ekr.20041118084241:setString
     def setString (self,c,setting,val):
         
@@ -552,11 +605,13 @@ class baseConfig:
         
         """Read settings from a file that may contain an @settings tree."""
         
+        # g.trace(c)
+        
         parser = settingsTreeParser(c)
         d = parser.traverse()
         
         if not settingsFile:
-            g.trace("local settings:",d)
+            # g.trace("local settings:",d)
             self.localOptionsDict[c] = d
     
         return d
@@ -579,48 +634,62 @@ class parserBaseClass:
     
     #@    << parserBaseClass data >>
     #@+node:ekr.20041121130043:<< parserBaseClass data >>
+    # These are the canonicalized names.  Case is ignored, as are '_' and '-' characters.
+    
     basic_types = [
         'bool','color','directory','font','int',
         'float','path','ratio','shortcut','string']
     
     control_types = [
-        'if','if-gui','if-platform',
-        'ignore','page','recent-files','settings','shortcuts']
+        'if','ifgui','ifplatform','ignore','page',
+        'recentfiles','settings','shortcuts','type']
     
     # Keys are settings names, values are (type,value) tuples.
     settingsDict = {}
-    
-    type_dict = {}
     #@nonl
     #@-node:ekr.20041121130043:<< parserBaseClass data >>
     #@nl
     
     #@    @+others
-    #@+node:ekr.20041119204700:ctor
+    #@+node:ekr.20041119204700: ctor
     def __init__ (self,c):
         
         self.c = c
         
+        # Keys are canonicalized names.
         self.dispatchDict = {
             'bool':         self.doBool,
             'color':        self.doColor,
             'directory':    self.doDirectory,
             'font':         self.doFont,
             'if':           self.doIf,
-            'if-gui':       self.doIfGui,
-            'if-platform':  self.doIfPlatform,
+            'ifgui':        self.doIfGui,
+            'ifplatform':   self.doIfPlatform,
             'ignore':       self.doIgnore,
             'int':          self.doInt,
             'float':        self.doFloat,
             'path':         self.doPath,
             'page':         self.doPage,
             'ratio':        self.doRatio,
-            'recent-files': self.doRecentFiles,
+            'recentfiles': self.doRecentFiles,
             'shortcuts':    self.doShortcuts,
             'string':       self.doString,
+            'type':         self.doType,
         }
     #@nonl
-    #@-node:ekr.20041119204700:ctor
+    #@-node:ekr.20041119204700: ctor
+    #@+node:ekr.20041122163039:canonicalizeName
+    def canonicalizeName (self,name):
+        
+        if name:
+            name = name.lower()
+            name = name.replace('_','')
+            name = name.replace('-','')
+            return name
+        else:
+            return None
+    #@nonl
+    #@-node:ekr.20041122163039:canonicalizeName
     #@+node:ekr.20041120103012:error
     def error (self,s):
     
@@ -774,6 +843,23 @@ class parserBaseClass:
         self.set(kind,name,val)
     #@nonl
     #@-node:ekr.20041120094940.8:doString
+    #@+node:ekr.20041122095745:doType
+    def doType (self,p,kind,name,val):
+    
+        d =  g.app.config.types_dict
+    
+        name,theType,values = self.parseType(p)
+    
+        if name and theType:
+            if d.get(name):
+                g.es("over-riding @type %s" % (name), color="red")
+            else:
+                # g.trace("defining @type %s = (%s,%s)" % (name,repr(theType),repr(values)))
+                pass
+            d[name] = theType,values
+        else:
+            g.es("invalid @type: %s" % (p.headString()), color="red")
+    #@-node:ekr.20041122095745:doType
     #@-node:ekr.20041120094940:kind handlers
     #@+node:ekr.20041119204700.2:oops
     def oops (self):
@@ -825,6 +911,43 @@ class parserBaseClass:
         return name,val
     #@nonl
     #@-node:ekr.20041120112043:parseShortcutLine
+    #@+node:ekr.20041122100810:parseType
+    def parseType (self,p):
+        
+        """Parse lines of the form:
+        @type name:type
+        @type name:type=values
+        """
+        s = p.headString().strip()
+        assert(g.match(s,0,'@type'))
+        # g.trace(s)
+        i = len('@type')
+        i = g.skip_ws(s,i)
+        j = g.skip_id(s,i)
+        name = s[i:j]
+        # g.trace(name)
+        if not name: return None,None,None
+        i = g.skip_ws(s,j)
+        if not g.match(s,i,':'): return None,None,None
+        i += 1
+        i = g.skip_ws(s,i)
+        j = g.skip_id(s,i,'-')
+        theType = s[i:j]
+        # g.trace(i,j,theType)
+        if not theType: return None,None,None
+        i = g.skip_ws(s,j)
+        if g.match(s,i,'='):
+            splitchar = ',' ; vals = s[i+1:]
+        else:
+            splitchar = '\n' ; vals = p.bodyString()
+        vals = vals.strip()
+        if vals: values = vals.split(splitchar)
+        else: values = []
+        values = [val.strip() for val in values]
+        # g.trace("%s %s %s" %(name,theType,values))
+        return name,theType,values
+    #@nonl
+    #@-node:ekr.20041122100810:parseType
     #@+node:ekr.20041120074536:settingsRoot
     def settingsRoot (self):
         
@@ -914,6 +1037,7 @@ class settingsTreeParser (parserBaseClass):
         # g.trace(p.headString())
     
         kind,name,val = self.parseHeadline(p.headString())
+        kind = self.canonicalizeName(kind)
     
         if kind == "settings":
             pass

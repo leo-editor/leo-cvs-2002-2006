@@ -708,7 +708,7 @@ class leoTkinterTree (leoFrame.leoTree):
         
         c = self.c
     
-        bg = c.config.getString("outline_pane_background_color")
+        bg = c.config.getColor("outline_pane_background_color")
         if bg:
             try: self.canvas.configure(bg=bg)
             except: pass
@@ -2693,8 +2693,8 @@ class leoTkinterTree (leoFrame.leoTree):
                 print "%10s %d %s" % ("disabled",id(w),p.headString())
                 # import traceback ; traceback.print_stack(limit=6)
     
-        fg = c.config.getString("headline_text_selected_foreground_color")
-        bg = c.config.getString("headline_text_selected_background_color")
+        fg = c.config.getColor("headline_text_selected_foreground_color")
+        bg = c.config.getColor("headline_text_selected_background_color")
         
         if not fg or not bg:
             fg,bg = "black","gray80"
@@ -2714,10 +2714,10 @@ class leoTkinterTree (leoFrame.leoTree):
             if not self.redrawing:
                 print "%10s %d %s" % ("edit",id(2),p.headString())
         
-        fg    = c.config.getString("headline_text_editing_foreground_color")
-        bg    = c.config.getString("headline_text_editing_background_color")
-        selfg = c.config.getString("headline_text_editing_selection_foreground_color")
-        selbg = c.config.getString("headline_text_editing_selection_background_color")
+        fg    = c.config.getColor("headline_text_editing_foreground_color")
+        bg    = c.config.getColor("headline_text_editing_background_color")
+        selfg = c.config.getColor("headline_text_editing_selection_foreground_color")
+        selbg = c.config.getColor("headline_text_editing_selection_background_color")
         
         if not fg or not bg:
             fg,bg = "black","white"
@@ -2744,8 +2744,8 @@ class leoTkinterTree (leoFrame.leoTree):
                 print "%10s %d %s" % ("unselect",id(w),p.headString())
                 # import traceback ; traceback.print_stack(limit=6)
         
-        fg = c.config.getString("headline_text_unselected_foreground_color")
-        bg = c.config.getString("headline_text_unselected_background_color")
+        fg = c.config.getColor("headline_text_unselected_foreground_color")
+        bg = c.config.getColor("headline_text_unselected_background_color")
         
         if not fg or not bg:
             fg,bg = "black","white"

@@ -3,14 +3,15 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="90" clone_windows="0"/>
 <globals body_outline_ratio="0.627840909091">
-	<global_window_position top="143" left="367" height="704" width="857"/>
+	<global_window_position top="93" left="260" height="704" width="857"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
 <find_panel_settings/>
 <vnodes>
-<v t="ekr.20041119035137" a="E"><vh>About this file</vh>
-<v t="ekr.20041119035704" a="TV"><vh> Basic setting nodes: @type-name setting-name = value</vh>
+<v t="ekr.20041119035137"><vh>About this file</vh>
+<v t="ekr.20041122163623"><vh>Note about canonicalized names</vh></v>
+<v t="ekr.20041119035704"><vh> Basic setting nodes: @type-name setting-name = value</vh>
 <v t="ekr.20041119042929"><vh>@bool</vh></v>
 <v t="ekr.20041119042929.1"><vh>@color</vh></v>
 <v t="ekr.20041119044139"><vh>@directory</vh></v>
@@ -25,25 +26,25 @@
 </v>
 <v t="ekr.20041119035704.1"><vh> Organizer nodes</vh></v>
 <v t="ekr.20041119035931"><vh>@if expression</vh></v>
-<v t="ekr.20041120175840" a="E"><vh>@if-gui gui-name</vh></v>
-<v t="ekr.20041119110141"><vh>@if-platform platform-name</vh></v>
+<v t="ekr.20041120175840" a="E"><vh>@ifgui gui-name</vh></v>
+<v t="ekr.20041119110141"><vh>@ifplatform platform-name</vh></v>
 <v t="ekr.20041119035704.2"><vh>@ignore comment</vh></v>
 <v t="ekr.20041119035931.1"><vh>@page comment</vh></v>
 <v t="ekr.20041119105509"><vh>@set name = value</vh></v>
 <v t="ekr.20041119035704.3"><vh>@type type-name: base-type = [list of valid values]</vh></v>
 <v t="ekr.20041120155431.2"><vh>@type type-name: script: script-name</vh></v>
 </v>
-<v t="ekr.20041119034357.1" a="E"><vh>@settings</vh>
+<v t="ekr.20041119034357.1" a="TV"><vh>@settings</vh>
 <v t="ekr.20041120180154" a="E"><vh>Types</vh>
 <v t="ekr.20041120180154.1"><vh>@if-gui tkinter</vh>
-<v t="ekr.20041120180707"><vh>@type font: tuple = @family, @size, @slant, @weight</vh>
+<v t="ekr.20041120180707" a="E"><vh>@type font: tuple = @family, @size, @slant, @weight</vh>
 <v t="ekr.20041120180707.1"><vh>@type family: string</vh></v>
 <v t="ekr.20041120180707.2"><vh>@type size: int</vh></v>
 <v t="ekr.20041120180707.3"><vh>@type slant: string = roman, italic</vh></v>
 <v t="ekr.20041120180707.4"><vh>@type weight: string = normal, bold</vh></v>
 </v>
 <v t="ekr.20041120180154.2"><vh>@type relief: string</vh></v>
-<v t="ekr.20041120181045.1"><vh>@type orientation: string = vertical,horizontal</vh></v>
+<v t="ekr.20041120181045.1"><vh>@type orientation: string = vertical, horizontal</vh></v>
 </v>
 </v>
 <v t="ekr.20041119034357.3"><vh>General configuration options</vh>
@@ -171,8 +172,8 @@
 <v t="ekr.20041119034357.89"><vh>@color undefined_section_name_color=red</vh></v>
 </v>
 </v>
-<v t="ekr.20041119034357.37" a="E"><vh>Window options</vh>
-<v t="ekr.20041119050749.1" a="E"><vh>body pane</vh>
+<v t="ekr.20041119034357.37"><vh>Window options</vh>
+<v t="ekr.20041119050749.1"><vh>body pane</vh>
 <v t="ekr.20041119034357.38" a="E"><vh>@page body options</vh>
 <v t="ekr.20041119034357.39"><vh>@bool body_pane_wraps = True</vh></v>
 <v t="ekr.20041119034357.40"><vh>@color body_cursor_foreground_color = None</vh></v>
@@ -194,7 +195,7 @@
 <v t="ekr.20041119034357.52"><vh>@weight body_text_font_weight = normal</vh></v>
 </v>
 </v>
-<v t="ekr.20041119051246"><vh>outline pane</vh>
+<v t="ekr.20041119051246" a="E"><vh>outline pane</vh>
 <v t="ekr.20041119034357.54"><vh>@page outline options</vh>
 <v t="ekr.20041119050749.3"><vh>@bool allow_clone_drags = False</vh></v>
 <v t="ekr.20041119050749.4"><vh>@bool enable_drag_messages = False</vh></v>
@@ -213,21 +214,21 @@
 <v t="ekr.20041119051901.1"><vh>@color headline_text_editing_selection_background_color = DarkBlue</vh></v>
 <v t="ekr.20041119050749.12"><vh>@color outline_pane_background_color = None</vh></v>
 </v>
-<v t="ekr.20041119051246.4"><vh>@font outline font</vh>
+<v t="ekr.20041119051246.4" a="E"><vh>@font outline font</vh>
 <v t="ekr.20041119050749.13"><vh>@family headline_text_font_family = None</vh></v>
-<v t="ekr.20041119050749.14"><vh>@int headline_text_font_size = None</vh></v>
+<v t="ekr.20041119050749.14"><vh>@size headline_text_font_size = None</vh></v>
 <v t="ekr.20041119050749.16"><vh>@weight headline_text_font_weight = normal</vh></v>
 <v t="ekr.20041119050749.15"><vh>@slant headline_text_font_slant = roman</vh></v>
 </v>
 </v>
-<v t="ekr.20041119034357.55"><vh>@page log pane options</vh>
+<v t="ekr.20041119034357.55" a="E"><vh>@page log pane options</vh>
 <v t="ekr.20041119052015.1"><vh>@bool log_pane_wraps = False</vh></v>
 <v t="ekr.20041119052015"><vh>@color log_error_color = red</vh></v>
 <v t="ekr.20041119052015.2"><vh>@color log_text_foreground_color = None</vh></v>
 <v t="ekr.20041119053445"><vh>@color log_text_background_color = None</vh></v>
-<v t="ekr.20041119052015.3"><vh>@page log font</vh>
+<v t="ekr.20041119052015.3" a="E"><vh>@page log font</vh>
 <v t="ekr.20041119052015.4"><vh>@family log_text_font_family = None</vh></v>
-<v t="ekr.20041119052015.5"><vh>@int log_text_font_size = None</vh></v>
+<v t="ekr.20041119052015.5"><vh>@size log_text_font_size = None</vh></v>
 <v t="ekr.20041119052015.6"><vh>@slant log_text_font_slant = roman</vh></v>
 <v t="ekr.20041119052015.7"><vh>@weight log_text_font_weight = normal</vh></v>
 </v>
@@ -1097,5 +1098,13 @@ groove</t>
 <t tx="ekr.20041120180707.4"></t>
 <t tx="ekr.20041120181045">A float value restricted to the range 0.0 to 1.0.</t>
 <t tx="ekr.20041120181045.1"></t>
+<t tx="ekr.20041122163623">When looking at @x, Leo converts to lower case and removes underscore and minus
+characters. Therefore, all the following are equivalent to @ifplatform:
+
+@if-platform
+@if_platform
+@ifPlatform
+
+Take your pick.</t>
 </tnodes>
 </leo_file>

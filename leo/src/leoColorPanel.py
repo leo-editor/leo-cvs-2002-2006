@@ -37,7 +37,7 @@ class leoColorPanel:
         self.revertColors = {}
     
         for name,option_name,default_color in self.colorPanelData:
-            self.revertColors[option_name] = c.config.getString(option_name)
+            self.revertColors[option_name] = c.config.getColor(option_name)
     #@nonl
     #@-node:ekr.20031218072017.3628:leoColorPanels.__init__
     #@+node:ekr.20031218072017.3629:Must be overridden in subclasses

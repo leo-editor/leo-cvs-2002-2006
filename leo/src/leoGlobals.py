@@ -750,12 +750,9 @@ def oldDump(s):
 #@-node:ekr.20031218072017.3109:dump
 #@+node:ekr.20031218072017.3110:es_error
 def es_error (s,color=None):
-    
-    c = None
-    config = app.config
 
     if color is None and config: # May not exist during initialization.
-        color = app.config.getString(c,"log_error_color")
+        color = g.app.config.getColor(None,"log_error_color")
         g.es(s,color=color)
     else:
         g.es(s,color=color)
@@ -1092,6 +1089,13 @@ def pause (s):
         i += 1
 #@nonl
 #@-node:ekr.20031218072017.3128:pause
+#@+node:ekr.20041122153823:print_stack
+def print_stack():
+    
+    import traceback
+    traceback.print_stack()
+#@nonl
+#@-node:ekr.20041122153823:print_stack
 #@+node:ekr.20031218072017.3129:Sherlock... (trace)
 #@+at 
 #@nonl

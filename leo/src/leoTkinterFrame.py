@@ -751,9 +751,9 @@ class leoTkinterFrame (leoFrame.leoFrame):
         # Get configuration settings.
         w = c.config.getInt("split_bar_width")
         if not w or w < 1: w = 7
-        relief = c.config.getString("split_bar_relief")
+        relief = c.config.get("split_bar_relief","relief")
         if not relief: relief = "flat"
-        color = c.config.getString("split_bar_color")
+        color = c.config.getColor("split_bar_color")
         if not color: color = "LightSteelBlue2"
     
         try:
@@ -782,10 +782,10 @@ class leoTkinterFrame (leoFrame.leoFrame):
         w = c.config.getInt("split_bar_width")
         if not w or w < 1: w = 7
         
-        relief = c.config.getString("split_bar_relief")
+        relief = c.config.get("split_bar_relief","relief")
         if not relief or relief == "": relief = "flat"
     
-        color = c.config.getString("split_bar_color")
+        color = c.config.getColor("split_bar_color")
         if not color or color == "": color = "LightSteelBlue2"
     
         if self.splitVerticalFlag:
@@ -1264,7 +1264,7 @@ class leoTkinterFrame (leoFrame.leoFrame):
         # Switch directions.
         verticalFlag = self.splitVerticalFlag = not self.splitVerticalFlag
         orientation = g.choose(verticalFlag,"vertical","horizontal")
-        c.config.setString("initial_splitter_orientation",orientation)
+        c.config.set("initial_splitter_orientation","orientation",orientation)
         # Reconfigure the bars.
         bar1.place_forget()
         bar2.place_forget()
@@ -1505,21 +1505,21 @@ class leoTkinterBody (leoFrame.leoBody):
     
         body.configure(font=font)
         
-        bg = c.config.getString("body_text_background_color")
+        bg = c.config.getColor("body_text_background_color")
         if bg:
             try: body.configure(bg=bg)
             except:
                 g.es("exception setting body background color")
                 g.es_exception()
         
-        fg = c.config.getString("body_text_foreground_color")
+        fg = c.config.getColor("body_text_foreground_color")
         if fg:
             try: body.configure(fg=fg)
             except:
                 g.es("exception setting body foreground color")
                 g.es_exception()
     
-        bg = c.config.getString("body_insertion_cursor_color")
+        bg = c.config.getColor("body_insertion_cursor_color")
         if bg:
             try: body.configure(insertbackground=bg)
             except:
@@ -1527,8 +1527,8 @@ class leoTkinterBody (leoFrame.leoBody):
                 g.es_exception()
             
         if sys.platform != "win32": # Maybe a Windows bug.
-            fg = c.config.getString("body_cursor_foreground_color")
-            bg = c.config.getString("body_cursor_background_color")
+            fg = c.config.getColor("body_cursor_foreground_color")
+            bg = c.config.getColor("body_cursor_background_color")
             # print fg, bg
             if fg and bg:
                 cursor="xterm" + " " + fg + " " + bg
@@ -2573,12 +2573,12 @@ class leoTkinterLog (leoFrame.leoLog):
         
         logCtrl.configure(font=font)
     
-        bg = c.config.getString("log_text_background_color")
+        bg = c.config.getColor("log_text_background_color")
         if bg:
             try: logCtrl.configure(bg=bg)
             except: pass
         
-        fg = c.config.getString("log_text_foreground_color")
+        fg = c.config.getColor("log_text_foreground_color")
         if fg:
             try: logCtrl.configure(fg=fg)
             except: pass

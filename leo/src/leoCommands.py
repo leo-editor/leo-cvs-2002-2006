@@ -178,7 +178,7 @@ class baseCommands:
     def signOnWithVersion (self):
     
         c = self
-        color = c.config.getString("log_error_color")
+        color = c.config.getColor("log_error_color")
         signon = c.getSignOnLine()
         n1,n2,n3,junk,junk=sys.version_info
         tkLevel = c.frame.top.getvar("tk_patchLevel")
@@ -5476,6 +5476,9 @@ class configSettings:
     def getRecentFiles (self):
         return g.app.config.getRecentFiles(self.c)
     
+    def get(self,setting,theType):
+        return g.app.config.get(self.c,setting,theType)
+    
     def getBool      (self,setting): return g.app.config.getBool     (self.c,setting)
     def getColor     (self,setting): return g.app.config.getColor    (self.c,setting)
     def getDirectory (self,setting): return g.app.config.getDirectory(self.c,setting)
@@ -5483,6 +5486,7 @@ class configSettings:
     def getFloat     (self,setting): return g.app.config.getFloat    (self.c,setting)
     def getFontDict  (self,setting): return g.app.config.getFontDict (self.c,setting)
     def getLanguage  (self,setting): return g.app.config.getLanguage (self.c,setting)
+    def getRatio     (self,setting): return g.app.config.getRatio    (self.c,setting)
     def getShortcut  (self,setting): return g.app.config.getShortcut (self.c,setting)
     def getString    (self,setting): return g.app.config.getString   (self.c,setting)
     #@nonl

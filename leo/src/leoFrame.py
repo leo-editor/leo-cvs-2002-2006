@@ -478,18 +478,18 @@ class leoFrame:
         
         c = self.c
     
-        s = c.config.getString("initial_splitter_orientation")
+        s = c.config.get("initial_splitter_orientation","orientation")
         verticalFlag = s == None or (s != "h" and s != "horizontal")
     
         if verticalFlag:
-            r = c.config.getString("initial_vertical_ratio")
+            r = c.config.getRatio("initial_vertical_ratio")
             if r == None or r < 0.0 or r > 1.0: r = 0.5
-            r2 = c.config.getString("initial_vertical_secondary_ratio")
+            r2 = c.config.getRatio("initial_vertical_secondary_ratio")
             if r2 == None or r2 < 0.0 or r2 > 1.0: r2 = 0.8
         else:
-            r = c.config.getString("initial_horizontal_ratio")
+            r = c.config.getRatio("initial_horizontal_ratio")
             if r == None or r < 0.0 or r > 1.0: r = 0.3
-            r2 = c.config.getString("initial_horizontal_secondary_ratio")
+            r2 = c.config.getRatio("initial_horizontal_secondary_ratio")
             if r2 == None or r2 < 0.0 or r2 > 1.0: r2 = 0.8
     
         # print r,r2
