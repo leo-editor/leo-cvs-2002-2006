@@ -433,22 +433,20 @@ class leoFind:
 		self.runChangeScript()
 		
 	def doChangeAllScript (self):
-		
-		app.searchDict["type"] = "changeAll"
-		self.runChangeScript()
+	
+		d = app.searchDict ; d["type"] = "changeAll"
+		while 1:
+			self.runChangeScript()
+			if not d.get("continue"): break
 		
 	def runChangeScript (self):
 		
-		c = self.c ; d = app.searchDict
+		c = self.c ; 
 		try:
-			while 1:
-				if c.script_change_flag:
-					exec c.change_text in {} # Use {} to get a pristine environment!
-					flag = d.get("continue")
-					if not flag: break
-				else:
-					self.changeSelection()
-					break
+			if c.script_change_flag:
+				exec c.change_text in {} # Use {} to get a pristine environment!
+			else:
+				self.changeSelection()
 		except:
 			es("exception executing change script")
 			es_exception(full=false)
