@@ -1230,6 +1230,10 @@ class nodeIndices (object):
 		
 		"""Return true if all fields of gnx1 and gnx2 are equal"""
 	
+		# works whatever the format of gnx1 and gnx2.
+		# This should never throw an exception.
+		return gnx1 == gnx2
+		
 		id1,time1,n1 = gnx1
 		id2,time2,n2 = gnx2
 		# g.trace(id1==id2 and time1==time2 and n1==n2,gnx1,gnx2)
