@@ -45,18 +45,20 @@ class LeoApp:
 	def finishCreate(self):
 	
 		
-		#@<< return false if not v2.2 or above >>
-		#@+node:1::<< return false if not v2.2 or above >>
+		#@<< return false if not v2.1 or above >>
+		#@+node:1::<< return false if not v2.1 or above >>
 		#@+body
+		# Python 2.1 support.
+		
 		try:
 			# 04-SEP-2002 DHEIN: simplify version check
-			if not CheckVersion(sys.version, "2.2"):
+			if not CheckVersion(sys.version, "2.1"):
 				d = leoDialog.leoDialog()
 				d.askOk("Python version error",
 		"""
-		leo.py requires Python 2.2 or higher.
+		leo.py requires Python 2.1 or higher.
 		
-		You may download Python 2.2 from http://python.org/download/
+		You may download Python 2.1 and Python 2.2 from http://python.org/download/
 		""",
 					text="Exit")
 				return false
@@ -66,7 +68,7 @@ class LeoApp:
 			v22 = true # Just hope
 
 		#@-body
-		#@-node:1::<< return false if not v2.2 or above >>
+		#@-node:1::<< return false if not v2.1 or above >>
 
 		
 		#@<< set loadDir >>

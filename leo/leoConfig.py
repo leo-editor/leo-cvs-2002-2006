@@ -322,12 +322,12 @@ class config:
 		return val
 	
 	def getFromDict (self,name,dict,defaultDict):
-		if name in dict:
+		if name in dict.keys(): # Python 2.1 support.
 			val = dict[name]
 			if val == "ignore":
 				val = None
 			return val
-		elif defaultDict and name in defaultDict:
+		elif defaultDict and name in defaultDict.keys(): # Python 2.1 support.
 			val = defaultDict[name]
 			if val == "ignore":
 				val = None
@@ -615,7 +615,7 @@ class config:
 				print "\n\nwindowDict:\n\n" + `self.windowDict`
 			if 0:
 				print "\n\nwindowDict:\n\n"
-				for i in self.windowDict:
+				for i in self.windowDict.keys():
 					print i
 			cf.close()
 			self.configsExist = true

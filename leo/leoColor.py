@@ -637,7 +637,7 @@ class colorizer:
 		config = app().config
 		assert(config)
 		
-		for name in default_colors_dict:
+		for name in default_colors_dict.keys(): # Python 2.1 support.
 			option_name,default_color = default_colors_dict[name]
 			option_color = config.getColorsPref(option_name)
 			color = choose(option_color,option_color,default_color)
