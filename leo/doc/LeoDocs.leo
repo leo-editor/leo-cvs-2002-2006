@@ -1390,6 +1390,7 @@ There are many known bugs in this version: most are minor bugs that have been ar
 The highlights of this version:
 
 - All features of @file-thin are now complete and appear to be stable.
+	- All .leo files in the distribution use @thin files where possible.
 	- Leo ignores all directives within the range of the @all directive.
 	- The @+middle and @-middle sentinels allow sections to be defined in any descendant node.
 	- The @clone sentinel marks duplicate cloned siblings.
