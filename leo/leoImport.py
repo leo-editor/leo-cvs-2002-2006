@@ -779,7 +779,7 @@ class leoImportCommands:
 		savedMethodName = self.methodName
 		self.methodName = headline
 		# Create a node for leading declarations of the class.
-		i = self.scanPythonDecls(s,i,class_vnode,indent_parent_ref_flag=true)
+		i = self.scanPythonDecls(s,i,class_vnode,classIndent,indent_parent_ref_flag=true)
 		
 		#@<< create nodes for all defs of the class >>
 		#@+node:3::<< create nodes for all defs of the class >>
@@ -921,14 +921,21 @@ class leoImportCommands:
 	#@-node:2::scanPythonDef
 	#@+node:3::scanPythonDecls
 	#@+body
-	def scanPythonDecls (self,s,i,parent,indent_parent_ref_flag=true):
+	def scanPythonDecls (self,s,i,parent,indent,indent_parent_ref_flag=true):
 		
 		done = false ; start = i
 		while not done and i < len(s):
 			progress = i
 			# line = get_line(s,i) ; trace(`line`)
 			ch = s[i]
-			if ch == '\n': i = skip_nl(s,i)
+			if ch == '\n':
+				i = skip_nl(s,i)
+				# 2/14/03: break on lesser indention.
+				j = skip_ws(s,i)
+				if not is_nl(s,j) and not match(s,j,"#"):
+					lineIndent = self.getLeadingIndent(s,i)
+					if lineIndent <= indent:
+						break
 			elif ch == '#': i = skip_to_end_of_line(s,i)
 			elif ch == '"' or ch == '\'':
 				i = skip_python_string(s,i)
@@ -1000,7 +1007,7 @@ class leoImportCommands:
 					isDef = match_c_word(s,i,"def")
 					if not decls_seen:
 						parent.appendStringToBody("@ignore\n" + self.rootLine + "@language python\n")
-						i = start = self.scanPythonDecls(s,start,parent,indent_parent_ref_flag=false)
+						i = start = self.scanPythonDecls(s,start,parent,-1,indent_parent_ref_flag=false)
 						decls_seen = true
 						if self.treeType == "@file": # 7/29/02
 							parent.appendStringToBody("@others\n") # 7/29/02
@@ -2688,8 +2695,8 @@ class leoImportCommands:
 		i = find_line_start(s,i)
 		while i < len(s):
 			# trace(`get_line(s,i)`)
-			j = skip_ws(s,i) # Bug fix: 3/14/03
-			if is_nl(s,j) or match(s,j,"#"): # Bug fix: 3/14/03
+			j = skip_ws(s,i) # Bug fix: 2/14/03
+			if is_nl(s,j) or match(s,j,"#"): # Bug fix: 2/14/03
 				i = skip_line(s,i) # ignore blank lines and comment lines.
 			else:
 				i, width = skip_leading_ws_with_indent(s,i,c.tab_width)
