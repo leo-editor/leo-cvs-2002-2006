@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="4108" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="4109" clone_windows="0"/>
 <globals body_outline_ratio="0.55579868708971558">
-	<global_window_position top="10" left="290" height="914" width="919"/>
+	<global_window_position top="10" left="336" height="914" width="919"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences>
@@ -4214,31 +4214,98 @@
 </v>
 </v>
 </v>
+<v t="ekr.20040104162835"><vh>(Fixed bug in Import Derived File: Dan Winkler)</vh>
+<v t="ekr.20040104162835.5"><vh>Report: CashRegister.ss.txt</vh></v>
+<v t="ekr.20040128190248"><vh>What I did</vh></v>
+<v t="ekr.20031218072017.2758" a=""><vh>scanText4 &amp; allies</vh>
+<v t="ekr.20031218072017.2759"><vh>&lt;&lt; init ivars for scanText4 &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.2760"><vh>&lt;&lt; report unexpected end of text &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.2761"><vh>readNormalLine</vh>
+<v t="ekr.20031218072017.2762"><vh>&lt;&lt; Skip the leading stuff &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.2763"><vh>&lt;&lt; Append s to docOut &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20031218072017.2764"><vh>start sentinels</vh>
+<v t="ekr.20031218072017.1752" a=""><vh>readStartAt &amp; readStartDoc</vh></v>
+<v t="ekr.20031218072017.2765"><vh>readStartLeo</vh></v>
+<v t="ekr.20031218072017.2766"><vh>readStartNode</vh>
+<v t="ekr.20031218072017.2767"><vh>&lt;&lt; Set headline, undoing the CWEB hack &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.2768"><vh>&lt;&lt; Check the filename in the sentinel &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20031218072017.2769"><vh>readStartOthers</vh></v>
+</v>
+<v t="ekr.20031218072017.2770"><vh>end sentinels</vh>
+<v t="ekr.20031218072017.1954" a=""><vh>readEndAt &amp; readEndDoc</vh></v>
+<v t="ekr.20031218072017.2771"><vh>readEndLeo</vh></v>
+<v t="ekr.20031218072017.2772"><vh>readEndNode</vh></v>
+<v t="ekr.20031218072017.2773"><vh>readEndOthers</vh></v>
+<v t="ekr.20031218072017.1753" a=""><vh>readLastDocLine</vh>
+<v t="ekr.20031218072017.1754"><vh>&lt;&lt; new code &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.1755"><vh>&lt;&lt; old code &gt;&gt;</vh></v>
+</v>
+</v>
+<v t="ekr.20031218072017.2774"><vh>Unpaired sentinels</vh>
+<v t="ekr.20031218072017.2775"><vh>ignoreOldSentinel</vh></v>
+<v t="ekr.20031218072017.2776"><vh>readAfterRef</vh></v>
+<v t="ekr.20031218072017.2777"><vh>readComment</vh></v>
+<v t="ekr.20031218072017.2778"><vh>readDelims</vh></v>
+<v t="ekr.20031218072017.2779"><vh>readDirective</vh></v>
+<v t="ekr.20031218072017.2780"><vh>readNl</vh></v>
+<v t="ekr.20031218072017.2781"><vh>readNonl</vh></v>
+<v t="ekr.20031218072017.2782"><vh>readRef</vh></v>
+<v t="ekr.20031218072017.2783"><vh>readVerbatim</vh></v>
+</v>
+<v t="ekr.20031218072017.2784"><vh>badEndSentinel, push/popSentinelStack</vh></v>
+</v>
+<v t="ekr.20031218072017.1812" a=""><vh>top_df.read</vh>
+<v t="ekr.20031218072017.1813"><vh>&lt;&lt; set fileName from root and importFileName &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.1814"><vh>&lt;&lt; open file or return false &gt;&gt;</vh>
+<v t="ekr.20031218072017.1815"><vh>&lt;&lt; warn on read-only file &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20031218072017.1816"><vh>&lt;&lt; copy ivars to df &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.1817"><vh>&lt;&lt; warn about non-empty unvisited nodes &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.1818"><vh>&lt;&lt; copy all tempBodyStrings to tnodes &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.1819"><vh>&lt;&lt; delete all tempBodyStrings &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20031218072017.2633" a=""><vh>top_df.scanHeader</vh>
+<v t="ekr.20031218072017.2634"><vh>&lt;&lt; skip any non @+leo lines &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.2635"><vh>&lt;&lt; make sure we have @+leo &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.2636"><vh>&lt;&lt; read optional version param &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.2637"><vh>&lt;&lt; read optional encoding param &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.2638"><vh>&lt;&lt; set the closing comment delim &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20031218072017.2647" a=""><vh>old_df.readOpenFile</vh></v>
+<v t="ekr.20031218072017.2757" a=""><vh>new_df.readOpenFile</vh></v>
+<v t="ekr.20031218072017.2387" a=""><vh>scanAllDirectives</vh>
+<v t="ekr.20031218072017.2388"><vh>&lt;&lt; Set ivars &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.2389"><vh>&lt;&lt; Set path from @file node &gt;&gt; in scanDirectory in leoGlobals.py</vh></v>
+<v t="ekr.20031218072017.2390"><vh>&lt;&lt; Test for @comment and @language &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.2391"><vh>&lt;&lt; Test for @encoding &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.2392"><vh>&lt;&lt; Test for @header and @noheader &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.2393"><vh>&lt;&lt; Test for @lineending &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.2394"><vh>&lt;&lt; Test for @path &gt;&gt;</vh>
+<v t="ekr.20031218072017.2395"><vh>&lt;&lt; compute relative path from s[k:] &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.2396"><vh>&lt;&lt; handle absolute path &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20031218072017.2397"><vh>&lt;&lt; Test for @pagewidth &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.2398"><vh>&lt;&lt; Test for @tabwidth &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.2399"><vh>&lt;&lt; Set current directory &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.2400"><vh>&lt;&lt; Set comment Strings from delims &gt;&gt;</vh></v>
+</v>
+</v>
 </v>
 <v t="ekr.20031219082559"><vh>To do: 4.1 rc4</vh>
 <v t="ekr.20040105064959"><vh>Fix Bugs</vh>
-<v t="ekr.20040118101339.2"><vh>Major:  File problems</vh>
-<v t="ekr.20040109072646"><vh>(Batch-mode problems)</vh>
-<v t="ekr.20040109072646.1"><vh>Report</vh></v>
-</v>
-<v t="ekr.20040109073834"><vh>(Write Dirty/Missing @file Nodes doesn't work)</vh>
-<v t="ekr.20040109073834.1"><vh>Report</vh></v>
-<v t="ekr.20040107161709"><vh>Report2</vh></v>
-<v t="ekr.20031218072017.1666" a=""><vh>writeDirtyAtFileNodes</vh></v>
-<v t="ekr.20031218072017.2015" a=""><vh>top_df.writeAll</vh>
-<v t="ekr.20031218072017.2016"><vh>&lt;&lt; Clear all orphan bits &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.2017"><vh>&lt;&lt; handle v's tree &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.2018"><vh>&lt;&lt; say the command is finished &gt;&gt;</vh></v>
-</v>
-</v>
-<v t="ekr.20040117112808.2"><vh>Saving a read-only file fails</vh></v>
+<v t="ekr.20040129080256.1"><vh>Import problems</vh>
 <v t="ekr.20040117113539.2"><vh>Import bug</vh></v>
 <v t="ekr.20040105103517"><vh>Importing @file issues</vh>
 <v t="ekr.20040105103916"><vh>Fix?</vh></v>
 </v>
 <v t="ekr.20040125114612"><vh>Can't import extensionless file</vh></v>
 </v>
-<v t="ekr.20040118101637"><vh>Minor</vh>
+<v t="ekr.20040109072646"><vh>(Batch-mode problems)</vh>
+<v t="ekr.20040109072646.1"><vh>Report</vh></v>
+</v>
+<v t="ekr.20040118101637"><vh>Other 12</vh>
 <v t="ekr.20040124073929"><vh>Backslashes not handled properly in executeScript</vh></v>
 <v t="ekr.20040104184913"><vh>Script code should make sure all nodes end in a newline.</vh></v>
 <v t="ekr.20040105080119.1"><vh>Linux bug: paste does not work in find panel</vh></v>
@@ -4254,29 +4321,28 @@
 <v t="ekr.20040115162445.1"><vh>Backspace problems on Linux</vh>
 <v t="ekr.20040115162445.2"><vh>Dave Hein: fix</vh></v>
 </v>
-<v t="ekr.20040117112808"><vh>Dan Winkler: import derived file error</vh></v>
 <v t="ekr.20040117112213"><vh>config problem on Linux</vh></v>
 <v t="ekr.20040117112808.1"><vh>small bug in install script</vh></v>
-<v t="ekr.20040105070134"><vh>Bug: reformat paragraph</vh></v>
 <v t="ekr.20040104162835.18"><vh>Bug: vpython and mac</vh></v>
 </v>
 <v t="ekr.20040125114453"><vh>Bug: control-alt-f of python code misalloctes code</vh></v>
 </v>
-<v t="ekr.20040125121521.1"><vh>Install Leo on Mac</vh></v>
-<v t="ekr.20040105070616.2"><vh>Mac bugs</vh></v>
 <v t="ekr.20040118101339.1"><vh>Plugins</vh>
 <v t="ekr.20040115162445"><vh>Create plugin to insert status bar</vh></v>
 <v t="ekr.20040117112213.1"><vh>mod_autosave doesn't work (?)</vh></v>
 <v t="ekr.20040116023408"><vh>xemacs plugin activates on drags!</vh></v>
 <v t="ekr.20040125114744"><vh>Michael Dawson: Leo to docbook xml plugin</vh></v>
 </v>
-<v t="ekr.20040126103304"><vh>Make Import Derived File command work properly</vh></v>
 <v t="ekr.20040126115447"><vh>Docs</vh>
 <v t="ekr.20040105080119.2"><vh>Document new stuff</vh></v>
 <v t="ekr.20031218072017.854"><vh>Put tips in LeoDocs.leo</vh></v>
 </v>
+<v t="ekr.20040129080202"><vh>Mac stuff</vh>
+<v t="ekr.20040125121521.1"><vh>Install Leo on Mac</vh></v>
+<v t="ekr.20040105070616.2"><vh>Mac bugs</vh></v>
 </v>
-<v t="ekr.20031218072017.2406" a="V"><vh>Code</vh>
+</v>
+<v t="ekr.20031218072017.2406"><vh>Code</vh>
 <v t="ekr.20031218072017.2407"><vh>  Overview of code</vh>
 <v t="ekr.20031218072017.2408" a=""><vh>&lt;&lt; About clones &gt;&gt;</vh></v>
 <v t="ekr.20031218072017.2409" a=""><vh>&lt;&lt; About drawing &gt;&gt;</vh></v>
@@ -4713,7 +4779,7 @@
 <v t="ekr.20031218072017.2832"><vh>openWithTempFilePath</vh></v>
 </v>
 <v t="ekr.20031218072017.2833"><vh>close</vh></v>
-<v t="ekr.20031218072017.2834"><vh>save</vh></v>
+<v t="ekr.20031218072017.2834" a=""><vh>save</vh></v>
 <v t="ekr.20031218072017.2835"><vh>saveAs</vh></v>
 <v t="ekr.20031218072017.2836"><vh>saveTo</vh></v>
 <v t="ekr.20031218072017.2837"><vh>revert</vh></v>
@@ -5156,7 +5222,7 @@
 <v t="ekr.20031218072017.3043"><vh>saveAs</vh></v>
 <v t="ekr.20031218072017.3044"><vh>saveTo</vh></v>
 <v t="ekr.20031218072017.3045"><vh>setDefaultDirectoryForNewFiles</vh></v>
-<v t="ekr.20031218072017.3046"><vh>write_LEO_file</vh>
+<v t="ekr.20031218072017.3046" a=""><vh>write_LEO_file</vh>
 <v t="ekr.20031218072017.3047"><vh>&lt;&lt; create backup file &gt;&gt; in write_LEO_file</vh></v>
 <v t="ekr.20031218072017.3048"><vh>&lt;&lt; delete backup file &gt;&gt;</vh></v>
 <v t="ekr.20031218072017.3049"><vh>&lt;&lt; erase filename and rename backupName to fileName &gt;&gt;</vh></v>
@@ -5438,6 +5504,188 @@
 <v t="ekr.20031218072017.3203"><vh>removeTrailingWs</vh></v>
 <v t="ekr.20031218072017.3204"><vh>skip_leading_ws</vh></v>
 <v t="ekr.20031218072017.3205"><vh>skip_leading_ws_with_indent</vh></v>
+</v>
+</v>
+<v t="ekr.20031218072017.3206" tnodeList="ekr.20031218072017.3206,ekr.20031218072017.3207,ekr.20031218072017.3210,ekr.20031218072017.3211,ekr.20031218072017.1810,ekr.20031218072017.3212,ekr.20031218072017.3213,ekr.20031218072017.3215,ekr.20031218072017.3216,ekr.20031218072017.3217,ekr.20031218072017.3218,ekr.20031218072017.3219,ekr.20031218072017.3220,ekr.20031218072017.3221,ekr.20031218072017.3222,ekr.20031218072017.3223,ekr.20031218072017.3225,ekr.20031218072017.3226,ekr.20031218072017.3227,ekr.20031218072017.3228,ekr.20031218072017.3229,ekr.20031218072017.3230,ekr.20031218072017.3231,ekr.20031218072017.3232,ekr.20031218072017.3233,ekr.20031218072017.3234,ekr.20031218072017.3235,ekr.20031218072017.3237,ekr.20031218072017.3238,ekr.20031218072017.3239,ekr.20031218072017.3240,ekr.20031218072017.2257,ekr.20031218072017.2258,ekr.20031218072017.2259,ekr.20031218072017.2260,ekr.20031218072017.2261,ekr.20031218072017.2261,ekr.20031218072017.2262,ekr.20031218072017.2263,ekr.20031218072017.2264,ekr.20031218072017.2265,ekr.20031218072017.2266,ekr.20031218072017.2267,ekr.20031218072017.2268,ekr.20031218072017.2269,ekr.20031218072017.2270,ekr.20031218072017.2271,ekr.20031218072017.2272,ekr.20031218072017.2273,ekr.20031218072017.3242,ekr.20031218072017.3243,ekr.20031218072017.3244,ekr.20031218072017.3246,ekr.20031218072017.3245,ekr.20031218072017.3247,ekr.20031218072017.3248,ekr.20031218072017.3249,ekr.20031218072017.3250,ekr.20031218072017.3251,ekr.20031218072017.3260,ekr.20031218072017.3261,ekr.20031218072017.3262,ekr.20031218072017.3263,ekr.20031218072017.3252,ekr.20031218072017.3253,ekr.20031218072017.3254,ekr.20031218072017.3255,ekr.20031218072017.3256,ekr.20031218072017.3257,ekr.20031218072017.3258,ekr.20031218072017.3259,ekr.20031218072017.3264,ekr.20031218072017.3265,ekr.20031218072017.3266,ekr.20031218072017.3267,ekr.20031218072017.3268,ekr.20031218072017.3269,ekr.20031218072017.3270,ekr.20031218072017.3271,ekr.20031218072017.3277,ekr.20031218072017.3278,ekr.20031218072017.3279,ekr.20031218072017.3280,ekr.20031218072017.3272,ekr.20031218072017.3273,ekr.20031218072017.3274,ekr.20031218072017.3275,ekr.20031218072017.3276,ekr.20031218072017.3264,ekr.20031218072017.3281,ekr.20031218072017.3282,ekr.20031218072017.3285,ekr.20031218072017.3286,ekr.20031218072017.3287,ekr.20031218072017.3283,ekr.20031218072017.3288,ekr.20031218072017.3284,ekr.20031218072017.3264,ekr.20031218072017.3290,ekr.20031218072017.3291,ekr.20031218072017.3292,ekr.20031218072017.3293,ekr.20031218072017.3294,ekr.20031218072017.3295,ekr.20031218072017.3294,ekr.20031218072017.3295,ekr.20031218072017.3296,ekr.20031218072017.3297,ekr.20031218072017.3298,ekr.20031218072017.3298,ekr.20031218072017.3299,ekr.20031218072017.1462,ekr.20031218072017.1147,ekr.20031218072017.1148,ekr.20031218072017.3300,ekr.20031218072017.3301,ekr.20031218072017.3302,ekr.20031218072017.1149,ekr.20031218072017.3303,ekr.20031218072017.3304,ekr.20031218072017.1464,ekr.20031218072017.1150,ekr.20031218072017.1465,ekr.20031218072017.3306,ekr.20031218072017.3307,ekr.20031218072017.3308,ekr.20031218072017.3309,ekr.20031218072017.3310,ekr.20031218072017.3311,ekr.20031218072017.3312,ekr.20031218072017.3313,ekr.20031218072017.3314,ekr.20031218072017.1463,ekr.20031218072017.3315,ekr.20031218072017.3316,ekr.20031218072017.3317,ekr.20031218072017.3318,ekr.20031218072017.3319"><vh>@file leoImport.py</vh>
+<v t="ekr.20031218072017.3207"><vh>import.__init__</vh></v>
+<v t="ekr.20031218072017.3209"><vh>Import</vh>
+<v t="ekr.20031218072017.3210"><vh>createOutline</vh>
+<v t="ekr.20031218072017.3211"><vh>&lt;&lt; Read file into s &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20031218072017.1810" a=""><vh>importDerivedFiles</vh></v>
+<v t="ekr.20031218072017.3212"><vh>importFilesCommand</vh>
+<v t="ekr.20031218072017.3213"><vh>&lt;&lt; Create a parent for two files having a common prefix &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20031218072017.3214"><vh>importFlattenedOutline &amp; allies</vh>
+<v t="ekr.20031218072017.3215"><vh>convertMoreString/StringsToOutlineAfter</vh>
+<v t="ekr.20031218072017.3216"><vh>&lt;&lt; Link a new vnode v into the outline &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.3217"><vh>&lt;&lt; Set the headline string, skipping over the leader &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.3218"><vh>&lt;&lt; Count the number of following body lines &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.3219"><vh>&lt;&lt; Add the lines to the body text of v &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20031218072017.3220"><vh>importFlattenedOutline</vh>
+<v t="ekr.20031218072017.3221"><vh>&lt;&lt; Read the file into array &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20031218072017.3222"><vh>moreHeadlineLevel</vh></v>
+<v t="ekr.20031218072017.3223"><vh>stringIs/stringsAreValidMoreFile</vh></v>
+</v>
+<v t="ekr.20031218072017.3224"><vh>importWebCommand &amp; allies</vh>
+<v t="ekr.20031218072017.3225"><vh>createOutlineFromWeb</vh></v>
+<v t="ekr.20031218072017.3226"><vh>importWebCommand</vh></v>
+<v t="ekr.20031218072017.3227"><vh>findFunctionDef</vh></v>
+<v t="ekr.20031218072017.3228"><vh>scanBodyForHeadline</vh>
+<v t="ekr.20031218072017.3229"><vh>&lt;&lt; scan cweb body for headline &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.3230"><vh>&lt;&lt; scan noweb body for headline &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20031218072017.3231"><vh>scanWebFile (handles limbo)</vh>
+<v t="ekr.20031218072017.3232"><vh>&lt;&lt; Create a symbol table of all section names &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.3233"><vh>&lt;&lt; Create nodes for limbo text and the root section &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.3234"><vh>&lt;&lt; Create a node for the next module &gt;&gt;</vh>
+<v t="ekr.20031218072017.3235"><vh>&lt;&lt; Handle cweb @d, @f, @c and @p directives &gt;&gt;</vh></v>
+</v>
+</v>
+<v t="ekr.20031218072017.3236"><vh>Symbol table</vh>
+<v t="ekr.20031218072017.3237"><vh>cstCanonicalize</vh></v>
+<v t="ekr.20031218072017.3238"><vh>cstDump</vh></v>
+<v t="ekr.20031218072017.3239"><vh>cstEnter</vh></v>
+<v t="ekr.20031218072017.3240"><vh>cstLookup</vh></v>
+</v>
+</v>
+<v t="ekr.20031218072017.3241"><vh>Scanners for createOutline</vh>
+<v t="ekr.20031218072017.2256" a=""><vh>Python scanners</vh>
+<v t="ekr.20031218072017.2257"><vh>scanPythonClass</vh>
+<v t="ekr.20031218072017.2258"><vh>&lt;&lt; set classname and headline, or return i &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.2259"><vh>&lt;&lt; create class_vnode  &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.2260"><vh>&lt;&lt; create nodes for all defs of the class &gt;&gt;</vh>
+<v t="ekr.20031218072017.2261"><vh>&lt;&lt; create parent_vnode &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20031218072017.2262"><vh>&lt;&lt; append any other class material &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20031218072017.2263"><vh>scanPythonDef</vh>
+<v t="ekr.20031218072017.2264"><vh>&lt;&lt; set headline or return i &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.2265"><vh>&lt;&lt; skip the Python def &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.2266"><vh>&lt;&lt; Create def node &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20031218072017.2267"><vh>scanPythonDecls</vh>
+<v t="ekr.20031218072017.2268"><vh>&lt;&lt; break on def or class &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.2269"><vh>&lt;&lt; Create a child node for declarations &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20031218072017.2270"><vh>scanPythonText</vh>
+<v t="ekr.20031218072017.2271"><vh>&lt;&lt; handle possible Python function or class &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.2272"><vh>&lt;&lt; Append a reference to the methods of this file &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.2273"><vh>&lt;&lt; Append any unused python text to the parent's body text &gt;&gt;</vh></v>
+</v>
+</v>
+<v t="ekr.20031218072017.3242"><vh>scanPHPText (Dave Hein)</vh>
+<v t="ekr.20031218072017.3243"><vh>&lt;&lt; Append file if not pure PHP &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.3244"><vh>&lt;&lt; define scanPHPText vars &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.3245"><vh>&lt;&lt; handle possible heredoc string &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.3246"><vh>&lt;&lt; handle possible PHP comments &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.3247"><vh>&lt;&lt; handle possible class or function &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.3248"><vh>&lt;&lt; handle end of class &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.3249"><vh>&lt;&lt; Append any unused text to the parent's body text &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20031218072017.3250"><vh>scanCText</vh>
+<v t="ekr.20031218072017.3251"><vh>&lt;&lt; define scanCText vars &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.3252"><vh>&lt;&lt; handle # sign &gt;&gt;</vh>
+<v t="ekr.20031218072017.3253"><vh>&lt;&lt; create a child node for all #include statements &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20031218072017.3254"><vh>&lt;&lt; handle open curly bracket in C &gt;&gt; (scans function)</vh>
+<v t="ekr.20031218072017.3255"><vh>&lt;&lt; create a declaration node &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.3256"><vh>&lt;&lt; append C function/method reference to parent node &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20031218072017.3257"><vh>&lt;&lt; handle id, class, typedef, struct, union, namespace &gt;&gt;</vh>
+<v t="ekr.20031218072017.3258"><vh>&lt;&lt; create children for the namespace &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.3259"><vh>&lt;&lt; test for operator keyword &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20031218072017.3260"><vh>&lt;&lt; handle possible C comments &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.3261"><vh>&lt;&lt; handle equal sign in C&gt;&gt;</vh></v>
+<v t="ekr.20031218072017.3262"><vh>&lt;&lt; handle open paren in C &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.3263"><vh>&lt;&lt; handle semicolon in C &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.3264" a=""><vh>&lt;&lt; Append any unused text to the parent's body text &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20031218072017.3265"><vh>scanElispText &amp; allies</vh>
+<v t="ekr.20031218072017.3266"><vh>skipElispParens</vh></v>
+<v t="ekr.20031218072017.3267"><vh>skipElispId</vh></v>
+<v t="ekr.20031218072017.3268"><vh>createElispFunction</vh></v>
+<v t="ekr.20031218072017.3269"><vh>createElispDataNode</vh></v>
+</v>
+<v t="ekr.20031218072017.3270"><vh>scanJavaText</vh>
+<v t="ekr.20031218072017.3271"><vh>&lt;&lt; define scanJavaText vars &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.3272"><vh>&lt;&lt; handle open curly bracket in Java &gt;&gt;</vh>
+<v t="ekr.20031218072017.3273"><vh>&lt;&lt; create a Java declaration node &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.3274"><vh>&lt;&lt; append Java method reference to parent node &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.3275"><vh>&lt;&lt; recursively scan the text &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20031218072017.3276"><vh>&lt;&lt; skip and remember the Java id &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.3277"><vh>&lt;&lt; handle possible Java comments &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.3278"><vh>&lt;&lt; handle equal sign in Java &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.3279"><vh>&lt;&lt; handle open paren in Java &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.3280"><vh>&lt;&lt; handle semicolon in Java &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.3264" a=""><vh>&lt;&lt; Append any unused text to the parent's body text &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20031218072017.3281"><vh>scanPascalText</vh>
+<v t="ekr.20031218072017.3282"><vh>&lt;&lt; handle possible Pascal function &gt;&gt;</vh>
+<v t="ekr.20031218072017.3283"><vh>&lt;&lt; create a child node for leading declarations &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.3284"><vh>&lt;&lt; create a child node for the function &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.3285"><vh>&lt;&lt; remember the function name, or continue &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.3286"><vh>&lt;&lt; skip the function definition, or continue &gt;&gt;</vh>
+<v t="ekr.20031218072017.3287"><vh>&lt;&lt; skip past the semicolon &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20031218072017.3288"><vh>&lt;&lt; append noweb method reference to the parent node &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20031218072017.3264" a=""><vh>&lt;&lt; Append any unused text to the parent's body text &gt;&gt;</vh></v>
+</v>
+</v>
+</v>
+<v t="ekr.20031218072017.3289"><vh>Export</vh>
+<v t="ekr.20031218072017.3290"><vh>convertCodePartToWeb</vh>
+<v t="ekr.20031218072017.3291"><vh>&lt;&lt; put v's headline ref in head_ref&gt;&gt;</vh></v>
+<v t="ekr.20031218072017.3292"><vh>&lt;&lt; put name following @root or @file in file_name &gt;&gt;</vh>
+<v t="ekr.20031218072017.3293"><vh>&lt;&lt; Set file_name &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20031218072017.3294"><vh>&lt;&lt; append ref to file_name &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.3295"><vh>&lt;&lt; append head_ref &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20031218072017.3296"><vh>convertDocPartToWeb (handle @ %def)</vh></v>
+<v t="ekr.20031218072017.3297"><vh>convertVnodeToWeb</vh>
+<v t="ekr.20031218072017.3298"><vh>&lt;&lt; Supply a missing doc part &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20031218072017.3299"><vh>copyPart</vh></v>
+<v t="ekr.20031218072017.1462" a=""><vh>exportHeadlines</vh></v>
+<v t="ekr.20031218072017.1147" a=""><vh>flattenOutline</vh></v>
+<v t="ekr.20031218072017.1148" a=""><vh>outlineToWeb</vh></v>
+<v t="ekr.20031218072017.3300"><vh>removeSentinelsCommand</vh>
+<v t="ekr.20031218072017.3301"><vh>&lt;&lt; Read file into s &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.3302"><vh>&lt;&lt; set delims from the header line &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.1149" a=""><vh>&lt;&lt; Write s into newFileName &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20031218072017.3303"><vh>removeSentinelLines</vh>
+<v t="ekr.20031218072017.3304"><vh>&lt;&lt; handle possible sentinel &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20031218072017.1464" a=""><vh>weave</vh>
+<v t="ekr.20031218072017.1150" a=""><vh>&lt;&lt; open filename to f, or return &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.1465"><vh>&lt;&lt; write the context of v to f &gt;&gt;</vh></v>
+</v>
+</v>
+<v t="ekr.20031218072017.3305"><vh>Utilities</vh>
+<v t="ekr.20031218072017.3306"><vh>createHeadline</vh></v>
+<v t="ekr.20031218072017.3307"><vh>error</vh></v>
+<v t="ekr.20031218072017.3308"><vh>getLeadingIndent</vh></v>
+<v t="ekr.20031218072017.3309"><vh>isDocStart and isModuleStart</vh></v>
+<v t="ekr.20031218072017.3310"><vh>massageBody</vh></v>
+<v t="ekr.20031218072017.3311"><vh>massageComment</vh></v>
+<v t="ekr.20031218072017.3312"><vh>massageWebBody</vh>
+<v t="ekr.20031218072017.3313"><vh>&lt;&lt; Remove most newlines from @space and @* sections &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.3314"><vh>&lt;&lt; Replace abbreviated names with full names &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20031218072017.1463" a=""><vh>setEncoding</vh></v>
+<v t="ekr.20031218072017.3315"><vh>skipLeadingComments</vh>
+<v t="ekr.20031218072017.3316"><vh>&lt;&lt; scan for C-style comments &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.3317"><vh>&lt;&lt; scan for Pascal comments &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.3318"><vh>&lt;&lt; scan for Python comments &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20031218072017.3319"><vh>undentBody</vh></v>
 </v>
 </v>
 <v t="ekr.20031218072017.3320" tnodeList="ekr.20031218072017.3320,ekr.20031218072017.2412,ekr.20031218072017.2408,ekr.20031218072017.3321,ekr.20031218072017.3322,ekr.20031218072017.2006,ekr.20031218072017.3323,ekr.20031218072017.3324,ekr.20031218072017.3326,ekr.20031218072017.3328,ekr.20031218072017.3329,ekr.20031218072017.3330,ekr.20031218072017.1485,ekr.20031218072017.1486,ekr.20031218072017.3333,ekr.20031218072017.3334,ekr.20031218072017.3335,ekr.20031218072017.3336,ekr.20031218072017.3337,ekr.20031218072017.3338,ekr.20031218072017.3339,ekr.20031218072017.3340,ekr.20031218072017.3341,ekr.20031218072017.951,ekr.20031218072017.3343,ekr.20031218072017.3344,ekr.20031218072017.1968,ekr.20031218072017.3345,ekr.20031218072017.3347,ekr.20031218072017.3348,ekr.20031218072017.3349,ekr.20031218072017.3350,ekr.20031218072017.3351,ekr.20031218072017.3352,ekr.20031218072017.3353,ekr.20031218072017.3355,ekr.20031218072017.3356,ekr.20031218072017.3357,ekr.20031218072017.3358,ekr.20031218072017.3361,ekr.20031218072017.3362,ekr.20031218072017.3363,ekr.20031218072017.3364,ekr.20031218072017.3365,ekr.20031218072017.3366,ekr.20031218072017.3368,ekr.20031218072017.3369,ekr.20031218072017.3370,ekr.20031218072017.3371,ekr.20031218072017.3372,ekr.20031218072017.3373,ekr.20031218072017.3374,ekr.20031218072017.3375,ekr.20031218072017.3376,ekr.20031218072017.3377,ekr.20031218072017.3378,ekr.20031218072017.3379,ekr.20031218072017.3380,ekr.20031218072017.3381,ekr.20031218072017.1581,ekr.20031218072017.2048,ekr.20031218072017.3382,ekr.20031218072017.3383,ekr.20031218072017.1478,ekr.20031218072017.1479,ekr.20031218072017.1480,ekr.20031218072017.1481,ekr.20031218072017.1482,ekr.20031218072017.3385,ekr.20031218072017.3387,ekr.20031218072017.3388,ekr.20031218072017.3389,ekr.20031218072017.3390,ekr.20031218072017.3391,ekr.20031218072017.3392,ekr.20031218072017.3393,ekr.20031218072017.3394,ekr.20031218072017.3395,ekr.20031218072017.3396,ekr.20031218072017.1185,ekr.20031218072017.1186,ekr.20031218072017.3397,ekr.20031218072017.1187,ekr.20031218072017.3398,ekr.20031218072017.3399,ekr.20031218072017.3400,ekr.20031218072017.3401,ekr.20031218072017.3402,ekr.20031218072017.3403,ekr.20031218072017.3404,ekr.20031218072017.3406,ekr.20031218072017.3407,ekr.20031218072017.3408,ekr.20031218072017.3409,ekr.20031218072017.3410,ekr.20031218072017.3411,ekr.20031218072017.3412,ekr.20031218072017.3413,ekr.20031218072017.3414,ekr.20031218072017.3415,ekr.20031218072017.3418,ekr.20031218072017.3419,ekr.20031218072017.3420,ekr.20031218072017.3421,ekr.20031218072017.3422,ekr.20031218072017.3423,ekr.20031218072017.3424,ekr.20031218072017.2355,ekr.20031218072017.3425,ekr.20031218072017.3426,ekr.20031218072017.2354,ekr.20031218072017.1192,ekr.20031218072017.1191,ekr.20031218072017.3428,ekr.20031218072017.3429,ekr.20031218072017.3430,ekr.20031218072017.3431,ekr.20031218072017.1574,ekr.20031218072017.3432,ekr.20031218072017.3433,ekr.20031218072017.3434,ekr.20031218072017.3435,ekr.20031218072017.1647,ekr.20031218072017.3436,ekr.20031218072017.3437,ekr.20031218072017.1648,ekr.20031218072017.3438,ekr.20031218072017.818,ekr.20031218072017.819,ekr.20031218072017.820,ekr.20031218072017.821,ekr.20031218072017.1991,ekr.20031218072017.1992,ekr.20031218072017.1993,ekr.20031218072017.1994,ekr.20031218072017.1995,ekr.20031218072017.1996,ekr.20031218072017.1997,ekr.20031218072017.1998,ekr.20031218072017.1999,ekr.20031218072017.889,ekr.20040117181936,ekr.20031218072017.890,ekr.20031218072017.891,ekr.20031218072017.892,ekr.20031218072017.893,ekr.20040117170612,ekr.20040117173448,ekr.20040117171654,ekr.20040117162509.16,ekr.20031218072017.915,ekr.20031218072017.916,ekr.20031218072017.917,ekr.20031218072017.918,ekr.20031218072017.919,ekr.20031218072017.920,ekr.20031218072017.921,ekr.20031218072017.922,ekr.20031218072017.923,ekr.20031218072017.924,ekr.20031218072017.925,ekr.20031218072017.926,ekr.20031218072017.927,ekr.20031218072017.928,ekr.20031218072017.930,ekr.20031218072017.931,ekr.20031218072017.932,ekr.20031218072017.933,ekr.20031218072017.934,ekr.20031218072017.935,ekr.20031218072017.936,ekr.20031218072017.937,ekr.20031218072017.938,ekr.20031218072017.939,ekr.20031218072017.940,ekr.20031218072017.941,ekr.20040117201228"><vh>@file leoNodes.py</vh>
@@ -7041,189 +7289,7 @@
 </v>
 </v>
 </v>
-<v t="ekr.20031218072017.3206" tnodeList="ekr.20031218072017.3206,ekr.20031218072017.3207,ekr.20031218072017.3210,ekr.20031218072017.3211,ekr.20031218072017.1810,ekr.20031218072017.3212,ekr.20031218072017.3213,ekr.20031218072017.3215,ekr.20031218072017.3216,ekr.20031218072017.3217,ekr.20031218072017.3218,ekr.20031218072017.3219,ekr.20031218072017.3220,ekr.20031218072017.3221,ekr.20031218072017.3222,ekr.20031218072017.3223,ekr.20031218072017.3225,ekr.20031218072017.3226,ekr.20031218072017.3227,ekr.20031218072017.3228,ekr.20031218072017.3229,ekr.20031218072017.3230,ekr.20031218072017.3231,ekr.20031218072017.3232,ekr.20031218072017.3233,ekr.20031218072017.3234,ekr.20031218072017.3235,ekr.20031218072017.3237,ekr.20031218072017.3238,ekr.20031218072017.3239,ekr.20031218072017.3240,ekr.20031218072017.2257,ekr.20031218072017.2258,ekr.20031218072017.2259,ekr.20031218072017.2260,ekr.20031218072017.2261,ekr.20031218072017.2261,ekr.20031218072017.2262,ekr.20031218072017.2263,ekr.20031218072017.2264,ekr.20031218072017.2265,ekr.20031218072017.2266,ekr.20031218072017.2267,ekr.20031218072017.2268,ekr.20031218072017.2269,ekr.20031218072017.2270,ekr.20031218072017.2271,ekr.20031218072017.2272,ekr.20031218072017.2273,ekr.20031218072017.3242,ekr.20031218072017.3243,ekr.20031218072017.3244,ekr.20031218072017.3246,ekr.20031218072017.3245,ekr.20031218072017.3247,ekr.20031218072017.3248,ekr.20031218072017.3249,ekr.20031218072017.3250,ekr.20031218072017.3251,ekr.20031218072017.3260,ekr.20031218072017.3261,ekr.20031218072017.3262,ekr.20031218072017.3263,ekr.20031218072017.3252,ekr.20031218072017.3253,ekr.20031218072017.3254,ekr.20031218072017.3255,ekr.20031218072017.3256,ekr.20031218072017.3257,ekr.20031218072017.3258,ekr.20031218072017.3259,ekr.20031218072017.3264,ekr.20031218072017.3265,ekr.20031218072017.3266,ekr.20031218072017.3267,ekr.20031218072017.3268,ekr.20031218072017.3269,ekr.20031218072017.3270,ekr.20031218072017.3271,ekr.20031218072017.3277,ekr.20031218072017.3278,ekr.20031218072017.3279,ekr.20031218072017.3280,ekr.20031218072017.3272,ekr.20031218072017.3273,ekr.20031218072017.3274,ekr.20031218072017.3275,ekr.20031218072017.3276,ekr.20031218072017.3264,ekr.20031218072017.3281,ekr.20031218072017.3282,ekr.20031218072017.3285,ekr.20031218072017.3286,ekr.20031218072017.3287,ekr.20031218072017.3283,ekr.20031218072017.3288,ekr.20031218072017.3284,ekr.20031218072017.3264,ekr.20031218072017.3290,ekr.20031218072017.3291,ekr.20031218072017.3292,ekr.20031218072017.3293,ekr.20031218072017.3294,ekr.20031218072017.3295,ekr.20031218072017.3294,ekr.20031218072017.3295,ekr.20031218072017.3296,ekr.20031218072017.3297,ekr.20031218072017.3298,ekr.20031218072017.3298,ekr.20031218072017.3299,ekr.20031218072017.1462,ekr.20031218072017.1147,ekr.20031218072017.1148,ekr.20031218072017.3300,ekr.20031218072017.3301,ekr.20031218072017.3302,ekr.20031218072017.1149,ekr.20031218072017.3303,ekr.20031218072017.3304,ekr.20031218072017.1464,ekr.20031218072017.1150,ekr.20031218072017.1465,ekr.20031218072017.3306,ekr.20031218072017.3307,ekr.20031218072017.3308,ekr.20031218072017.3309,ekr.20031218072017.3310,ekr.20031218072017.3311,ekr.20031218072017.3312,ekr.20031218072017.3313,ekr.20031218072017.3314,ekr.20031218072017.1463,ekr.20031218072017.3315,ekr.20031218072017.3316,ekr.20031218072017.3317,ekr.20031218072017.3318,ekr.20031218072017.3319"><vh>@file leoImport.py</vh>
-<v t="ekr.20031218072017.3207"><vh>import.__init__</vh></v>
-<v t="ekr.20031218072017.3209"><vh>Import</vh>
-<v t="ekr.20031218072017.3210"><vh>createOutline</vh>
-<v t="ekr.20031218072017.3211"><vh>&lt;&lt; Read file into s &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20031218072017.1810" a=""><vh>importDerivedFiles</vh></v>
-<v t="ekr.20031218072017.3212"><vh>importFilesCommand</vh>
-<v t="ekr.20031218072017.3213"><vh>&lt;&lt; Create a parent for two files having a common prefix &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20031218072017.3214"><vh>importFlattenedOutline &amp; allies</vh>
-<v t="ekr.20031218072017.3215"><vh>convertMoreString/StringsToOutlineAfter</vh>
-<v t="ekr.20031218072017.3216"><vh>&lt;&lt; Link a new vnode v into the outline &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.3217"><vh>&lt;&lt; Set the headline string, skipping over the leader &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.3218"><vh>&lt;&lt; Count the number of following body lines &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.3219"><vh>&lt;&lt; Add the lines to the body text of v &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20031218072017.3220"><vh>importFlattenedOutline</vh>
-<v t="ekr.20031218072017.3221"><vh>&lt;&lt; Read the file into array &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20031218072017.3222"><vh>moreHeadlineLevel</vh></v>
-<v t="ekr.20031218072017.3223"><vh>stringIs/stringsAreValidMoreFile</vh></v>
-</v>
-<v t="ekr.20031218072017.3224"><vh>importWebCommand &amp; allies</vh>
-<v t="ekr.20031218072017.3225"><vh>createOutlineFromWeb</vh></v>
-<v t="ekr.20031218072017.3226"><vh>importWebCommand</vh></v>
-<v t="ekr.20031218072017.3227"><vh>findFunctionDef</vh></v>
-<v t="ekr.20031218072017.3228"><vh>scanBodyForHeadline</vh>
-<v t="ekr.20031218072017.3229"><vh>&lt;&lt; scan cweb body for headline &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.3230"><vh>&lt;&lt; scan noweb body for headline &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20031218072017.3231"><vh>scanWebFile (handles limbo)</vh>
-<v t="ekr.20031218072017.3232"><vh>&lt;&lt; Create a symbol table of all section names &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.3233"><vh>&lt;&lt; Create nodes for limbo text and the root section &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.3234"><vh>&lt;&lt; Create a node for the next module &gt;&gt;</vh>
-<v t="ekr.20031218072017.3235"><vh>&lt;&lt; Handle cweb @d, @f, @c and @p directives &gt;&gt;</vh></v>
-</v>
-</v>
-<v t="ekr.20031218072017.3236"><vh>Symbol table</vh>
-<v t="ekr.20031218072017.3237"><vh>cstCanonicalize</vh></v>
-<v t="ekr.20031218072017.3238"><vh>cstDump</vh></v>
-<v t="ekr.20031218072017.3239"><vh>cstEnter</vh></v>
-<v t="ekr.20031218072017.3240"><vh>cstLookup</vh></v>
-</v>
-</v>
-<v t="ekr.20031218072017.3241"><vh>Scanners for createOutline</vh>
-<v t="ekr.20031218072017.2256" a=""><vh>Python scanners</vh>
-<v t="ekr.20031218072017.2257"><vh>scanPythonClass</vh>
-<v t="ekr.20031218072017.2258"><vh>&lt;&lt; set classname and headline, or return i &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.2259"><vh>&lt;&lt; create class_vnode  &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.2260"><vh>&lt;&lt; create nodes for all defs of the class &gt;&gt;</vh>
-<v t="ekr.20031218072017.2261"><vh>&lt;&lt; create parent_vnode &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20031218072017.2262"><vh>&lt;&lt; append any other class material &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20031218072017.2263"><vh>scanPythonDef</vh>
-<v t="ekr.20031218072017.2264"><vh>&lt;&lt; set headline or return i &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.2265"><vh>&lt;&lt; skip the Python def &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.2266"><vh>&lt;&lt; Create def node &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20031218072017.2267"><vh>scanPythonDecls</vh>
-<v t="ekr.20031218072017.2268"><vh>&lt;&lt; break on def or class &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.2269"><vh>&lt;&lt; Create a child node for declarations &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20031218072017.2270"><vh>scanPythonText</vh>
-<v t="ekr.20031218072017.2271"><vh>&lt;&lt; handle possible Python function or class &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.2272"><vh>&lt;&lt; Append a reference to the methods of this file &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.2273"><vh>&lt;&lt; Append any unused python text to the parent's body text &gt;&gt;</vh></v>
-</v>
-</v>
-<v t="ekr.20031218072017.3242"><vh>scanPHPText (Dave Hein)</vh>
-<v t="ekr.20031218072017.3243"><vh>&lt;&lt; Append file if not pure PHP &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.3244"><vh>&lt;&lt; define scanPHPText vars &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.3245"><vh>&lt;&lt; handle possible heredoc string &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.3246"><vh>&lt;&lt; handle possible PHP comments &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.3247"><vh>&lt;&lt; handle possible class or function &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.3248"><vh>&lt;&lt; handle end of class &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.3249"><vh>&lt;&lt; Append any unused text to the parent's body text &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20031218072017.3250"><vh>scanCText</vh>
-<v t="ekr.20031218072017.3251"><vh>&lt;&lt; define scanCText vars &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.3252"><vh>&lt;&lt; handle # sign &gt;&gt;</vh>
-<v t="ekr.20031218072017.3253"><vh>&lt;&lt; create a child node for all #include statements &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20031218072017.3254"><vh>&lt;&lt; handle open curly bracket in C &gt;&gt; (scans function)</vh>
-<v t="ekr.20031218072017.3255"><vh>&lt;&lt; create a declaration node &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.3256"><vh>&lt;&lt; append C function/method reference to parent node &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20031218072017.3257"><vh>&lt;&lt; handle id, class, typedef, struct, union, namespace &gt;&gt;</vh>
-<v t="ekr.20031218072017.3258"><vh>&lt;&lt; create children for the namespace &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.3259"><vh>&lt;&lt; test for operator keyword &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20031218072017.3260"><vh>&lt;&lt; handle possible C comments &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.3261"><vh>&lt;&lt; handle equal sign in C&gt;&gt;</vh></v>
-<v t="ekr.20031218072017.3262"><vh>&lt;&lt; handle open paren in C &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.3263"><vh>&lt;&lt; handle semicolon in C &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.3264" a=""><vh>&lt;&lt; Append any unused text to the parent's body text &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20031218072017.3265"><vh>scanElispText &amp; allies</vh>
-<v t="ekr.20031218072017.3266"><vh>skipElispParens</vh></v>
-<v t="ekr.20031218072017.3267"><vh>skipElispId</vh></v>
-<v t="ekr.20031218072017.3268"><vh>createElispFunction</vh></v>
-<v t="ekr.20031218072017.3269"><vh>createElispDataNode</vh></v>
-</v>
-<v t="ekr.20031218072017.3270"><vh>scanJavaText</vh>
-<v t="ekr.20031218072017.3271"><vh>&lt;&lt; define scanJavaText vars &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.3272"><vh>&lt;&lt; handle open curly bracket in Java &gt;&gt;</vh>
-<v t="ekr.20031218072017.3273"><vh>&lt;&lt; create a Java declaration node &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.3274"><vh>&lt;&lt; append Java method reference to parent node &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.3275"><vh>&lt;&lt; recursively scan the text &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20031218072017.3276"><vh>&lt;&lt; skip and remember the Java id &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.3277"><vh>&lt;&lt; handle possible Java comments &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.3278"><vh>&lt;&lt; handle equal sign in Java &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.3279"><vh>&lt;&lt; handle open paren in Java &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.3280"><vh>&lt;&lt; handle semicolon in Java &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.3264" a=""><vh>&lt;&lt; Append any unused text to the parent's body text &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20031218072017.3281"><vh>scanPascalText</vh>
-<v t="ekr.20031218072017.3282"><vh>&lt;&lt; handle possible Pascal function &gt;&gt;</vh>
-<v t="ekr.20031218072017.3283"><vh>&lt;&lt; create a child node for leading declarations &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.3284"><vh>&lt;&lt; create a child node for the function &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.3285"><vh>&lt;&lt; remember the function name, or continue &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.3286"><vh>&lt;&lt; skip the function definition, or continue &gt;&gt;</vh>
-<v t="ekr.20031218072017.3287"><vh>&lt;&lt; skip past the semicolon &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20031218072017.3288"><vh>&lt;&lt; append noweb method reference to the parent node &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20031218072017.3264" a=""><vh>&lt;&lt; Append any unused text to the parent's body text &gt;&gt;</vh></v>
-</v>
-</v>
-</v>
-<v t="ekr.20031218072017.3289"><vh>Export</vh>
-<v t="ekr.20031218072017.3290"><vh>convertCodePartToWeb</vh>
-<v t="ekr.20031218072017.3291"><vh>&lt;&lt; put v's headline ref in head_ref&gt;&gt;</vh></v>
-<v t="ekr.20031218072017.3292"><vh>&lt;&lt; put name following @root or @file in file_name &gt;&gt;</vh>
-<v t="ekr.20031218072017.3293"><vh>&lt;&lt; Set file_name &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20031218072017.3294"><vh>&lt;&lt; append ref to file_name &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.3295"><vh>&lt;&lt; append head_ref &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20031218072017.3296"><vh>convertDocPartToWeb (handle @ %def)</vh></v>
-<v t="ekr.20031218072017.3297"><vh>convertVnodeToWeb</vh>
-<v t="ekr.20031218072017.3298"><vh>&lt;&lt; Supply a missing doc part &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20031218072017.3299"><vh>copyPart</vh></v>
-<v t="ekr.20031218072017.1462" a=""><vh>exportHeadlines</vh></v>
-<v t="ekr.20031218072017.1147" a=""><vh>flattenOutline</vh></v>
-<v t="ekr.20031218072017.1148" a=""><vh>outlineToWeb</vh></v>
-<v t="ekr.20031218072017.3300"><vh>removeSentinelsCommand</vh>
-<v t="ekr.20031218072017.3301"><vh>&lt;&lt; Read file into s &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.3302"><vh>&lt;&lt; set delims from the header line &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.1149" a=""><vh>&lt;&lt; Write s into newFileName &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20031218072017.3303"><vh>removeSentinelLines</vh>
-<v t="ekr.20031218072017.3304"><vh>&lt;&lt; handle possible sentinel &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20031218072017.1464" a=""><vh>weave</vh>
-<v t="ekr.20031218072017.1150" a=""><vh>&lt;&lt; open filename to f, or return &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.1465"><vh>&lt;&lt; write the context of v to f &gt;&gt;</vh></v>
-</v>
-</v>
-<v t="ekr.20031218072017.3305"><vh>Utilities</vh>
-<v t="ekr.20031218072017.3306"><vh>createHeadline</vh></v>
-<v t="ekr.20031218072017.3307"><vh>error</vh></v>
-<v t="ekr.20031218072017.3308"><vh>getLeadingIndent</vh></v>
-<v t="ekr.20031218072017.3309"><vh>isDocStart and isModuleStart</vh></v>
-<v t="ekr.20031218072017.3310"><vh>massageBody</vh></v>
-<v t="ekr.20031218072017.3311"><vh>massageComment</vh></v>
-<v t="ekr.20031218072017.3312"><vh>massageWebBody</vh>
-<v t="ekr.20031218072017.3313"><vh>&lt;&lt; Remove most newlines from @space and @* sections &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.3314"><vh>&lt;&lt; Replace abbreviated names with full names &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20031218072017.1463" a=""><vh>setEncoding</vh></v>
-<v t="ekr.20031218072017.3315"><vh>skipLeadingComments</vh>
-<v t="ekr.20031218072017.3316"><vh>&lt;&lt; scan for C-style comments &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.3317"><vh>&lt;&lt; scan for Pascal comments &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.3318"><vh>&lt;&lt; scan for Python comments &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20031218072017.3319"><vh>undentBody</vh></v>
-</v>
-</v>
-<v t="ekr.20031218072017.2620" tnodeList="ekr.20031218072017.2620,ekr.20031218072017.2621,ekr.20031218072017.2622,ekr.20031218072017.2623,ekr.20031218072017.2624,ekr.20031218072017.2626,ekr.20031218072017.1812,ekr.20031218072017.1813,ekr.20031218072017.1814,ekr.20031218072017.1815,ekr.20031218072017.1816,ekr.20031218072017.1817,ekr.20031218072017.1818,ekr.20031218072017.1819,ekr.20031218072017.2627,ekr.20031218072017.2628,ekr.20031218072017.2629,ekr.20031218072017.2630,ekr.20031218072017.2631,ekr.20031218072017.2632,ekr.20031218072017.2633,ekr.20031218072017.2634,ekr.20031218072017.2635,ekr.20031218072017.2636,ekr.20031218072017.2637,ekr.20031218072017.2638,ekr.20031218072017.2639,ekr.20031218072017.2015,ekr.20031218072017.2016,ekr.20031218072017.2017,ekr.20031218072017.2018,ekr.20031218072017.2641,ekr.20031218072017.2642,ekr.20031218072017.2019,ekr.20031218072017.2020,ekr.20031218072017.2021,ekr.20031218072017.2022,ekr.20031218072017.2643,ekr.20031218072017.2644,ekr.20031218072017.2645,ekr.20031218072017.1811,ekr.20031218072017.2647,ekr.20031218072017.2648,ekr.20031218072017.2649,ekr.20031218072017.2650,ekr.20031218072017.2651,ekr.20031218072017.2652,ekr.20031218072017.2653,ekr.20031218072017.2654,ekr.20031218072017.2655,ekr.20031218072017.2656,ekr.20031218072017.2657,ekr.20031218072017.2658,ekr.20031218072017.2659,ekr.20031218072017.2660,ekr.20031218072017.2661,ekr.20031218072017.2662,ekr.20031218072017.2663,ekr.20031218072017.2664,ekr.20031218072017.2665,ekr.20031218072017.2666,ekr.20031218072017.2668,ekr.20031218072017.2669,ekr.20031218072017.2670,ekr.20031218072017.2671,ekr.20031218072017.2674,ekr.20031218072017.2676,ekr.20031218072017.2677,ekr.20031218072017.2678,ekr.20031218072017.2679,ekr.20031218072017.2680,ekr.20031218072017.2681,ekr.20031218072017.2672,ekr.20031218072017.2673,ekr.20031218072017.2675,ekr.20031218072017.2682,ekr.20031218072017.2683,ekr.20031218072017.2686,ekr.20031218072017.2687,ekr.20031218072017.2685,ekr.20031218072017.2684,ekr.20031218072017.2688,ekr.20031218072017.2689,ekr.20031218072017.2667,ekr.20031218072017.2691,ekr.20031218072017.2692,ekr.20031218072017.2693,ekr.20031218072017.2694,ekr.20031218072017.2695,ekr.20031218072017.2696,ekr.20031218072017.2697,ekr.20031218072017.2698,ekr.20031218072017.2699,ekr.20031218072017.2700,ekr.20031218072017.2701,ekr.20031218072017.2703,ekr.20031218072017.2704,ekr.20031218072017.2705,ekr.20031218072017.2387,ekr.20031218072017.2388,ekr.20031218072017.2389,ekr.20031218072017.2394,ekr.20031218072017.2395,ekr.20031218072017.2396,ekr.20031218072017.2391,ekr.20031218072017.2390,ekr.20031218072017.2392,ekr.20031218072017.2393,ekr.20031218072017.2397,ekr.20031218072017.2398,ekr.20031218072017.2399,ekr.20031218072017.2400,ekr.20031218072017.2706,ekr.20031218072017.2707,ekr.20031218072017.2710,ekr.20031218072017.2711,ekr.20031218072017.2326,ekr.20031218072017.2712,ekr.20031218072017.2713,ekr.20031218072017.2328,ekr.20031218072017.2714,ekr.20031218072017.2715,ekr.20031218072017.2716,ekr.20031218072017.2322,ekr.20031218072017.2323,ekr.20031218072017.2324,ekr.20031218072017.2325,ekr.20031218072017.2326,ekr.20031218072017.2327,ekr.20031218072017.2328,ekr.20031218072017.2330,ekr.20031218072017.2718,ekr.20031218072017.2719,ekr.20031218072017.2720,ekr.20031218072017.2721,ekr.20031218072017.2023,ekr.20031218072017.2024,ekr.20031218072017.2025,ekr.20031218072017.2026,ekr.20031218072017.2722,ekr.20040128174042,ekr.20031218072017.2723,ekr.20031218072017.2724,ekr.20031218072017.2725,ekr.20031218072017.2726,ekr.20031218072017.2727,ekr.20031218072017.2728,ekr.20031218072017.2729,ekr.20031218072017.2730,ekr.20031218072017.2731,ekr.20031218072017.2732,ekr.20031218072017.2733,ekr.20031218072017.2736,ekr.20031218072017.2734,ekr.20031218072017.2735,ekr.20031218072017.2737,ekr.20031218072017.2738,ekr.20031218072017.2739,ekr.20031218072017.2740,ekr.20031218072017.2741,ekr.20031218072017.2742,ekr.20031218072017.2743,ekr.20031218072017.2744,ekr.20031218072017.2745,ekr.20031218072017.2746,ekr.20031218072017.2748,ekr.20031218072017.2749,ekr.20031218072017.2750,ekr.20031218072017.2751,ekr.20031218072017.2752,ekr.20031218072017.2753,ekr.20031218072017.2754,ekr.20031218072017.2755,ekr.20031218072017.2757,ekr.20031218072017.2007,ekr.20031218072017.2758,ekr.20031218072017.2759,ekr.20031218072017.2760,ekr.20031218072017.2761,ekr.20031218072017.2762,ekr.20031218072017.2763,ekr.20031218072017.1752,ekr.20031218072017.2765,ekr.20031218072017.2766,ekr.20031218072017.2767,ekr.20031218072017.2768,ekr.20031218072017.2769,ekr.20031218072017.1954,ekr.20031218072017.2771,ekr.20031218072017.2772,ekr.20031218072017.2773,ekr.20031218072017.1753,ekr.20031218072017.1754,ekr.20031218072017.1755,ekr.20031218072017.2775,ekr.20031218072017.2776,ekr.20031218072017.2777,ekr.20031218072017.2778,ekr.20031218072017.2779,ekr.20031218072017.2780,ekr.20031218072017.2781,ekr.20031218072017.2782,ekr.20031218072017.2783,ekr.20031218072017.2784,ekr.20031218072017.2786,ekr.20031218072017.2787,ekr.20031218072017.2788,ekr.20031218072017.2789,ekr.20031218072017.2001,ekr.20031218072017.2790,ekr.20031218072017.2791,ekr.20031218072017.2792,ekr.20031218072017.2793,ekr.20031218072017.2113,ekr.20031218072017.2114,ekr.20031218072017.2115,ekr.20031218072017.2116,ekr.20031218072017.2117,ekr.20031218072017.2118,ekr.20031218072017.2119,ekr.20031218072017.2121,ekr.20031218072017.2122,ekr.20031218072017.2123,ekr.20031218072017.2124,ekr.20031218072017.2125,ekr.20031218072017.2126,ekr.20031218072017.2127,ekr.20031218072017.2128,ekr.20031218072017.2129,ekr.20031218072017.2131,ekr.20031218072017.2132,ekr.20031218072017.2133,ekr.20031218072017.2134,ekr.20031218072017.2106,ekr.20031218072017.2107,ekr.20031218072017.2108,ekr.20031218072017.2109,ekr.20031218072017.1746,ekr.20031218072017.1747,ekr.20031218072017.1748,ekr.20031218072017.1749,ekr.20031218072017.1750,ekr.20031218072017.1751,ekr.20031218072017.2136,ekr.20031218072017.2137,ekr.20031218072017.2138,ekr.20031218072017.1921,ekr.20031218072017.1922"><vh>@file leoAtFile.py </vh>
+<v t="ekr.20031218072017.2620" a="V" tnodeList="ekr.20031218072017.2620,ekr.20031218072017.2621,ekr.20031218072017.2622,ekr.20031218072017.2623,ekr.20031218072017.2624,ekr.20031218072017.2626,ekr.20031218072017.1812,ekr.20031218072017.1813,ekr.20031218072017.1814,ekr.20031218072017.1815,ekr.20031218072017.1816,ekr.20031218072017.1817,ekr.20031218072017.1818,ekr.20031218072017.1819,ekr.20031218072017.2627,ekr.20031218072017.2628,ekr.20031218072017.2629,ekr.20031218072017.2630,ekr.20031218072017.2631,ekr.20031218072017.2632,ekr.20031218072017.2633,ekr.20031218072017.2634,ekr.20031218072017.2635,ekr.20031218072017.2636,ekr.20031218072017.2637,ekr.20031218072017.2638,ekr.20031218072017.2639,ekr.20031218072017.2015,ekr.20031218072017.2016,ekr.20031218072017.2017,ekr.20031218072017.2018,ekr.20031218072017.2641,ekr.20031218072017.2642,ekr.20031218072017.2019,ekr.20031218072017.2020,ekr.20031218072017.2021,ekr.20031218072017.2022,ekr.20031218072017.2643,ekr.20031218072017.2644,ekr.20031218072017.2645,ekr.20031218072017.1811,ekr.20031218072017.2647,ekr.20031218072017.2648,ekr.20031218072017.2649,ekr.20031218072017.2650,ekr.20031218072017.2651,ekr.20031218072017.2652,ekr.20031218072017.2653,ekr.20031218072017.2654,ekr.20031218072017.2655,ekr.20031218072017.2656,ekr.20031218072017.2657,ekr.20031218072017.2658,ekr.20031218072017.2659,ekr.20031218072017.2660,ekr.20031218072017.2661,ekr.20031218072017.2662,ekr.20031218072017.2663,ekr.20031218072017.2664,ekr.20031218072017.2665,ekr.20031218072017.2666,ekr.20031218072017.2668,ekr.20031218072017.2669,ekr.20031218072017.2670,ekr.20031218072017.2671,ekr.20031218072017.2674,ekr.20031218072017.2676,ekr.20031218072017.2677,ekr.20031218072017.2678,ekr.20031218072017.2679,ekr.20031218072017.2680,ekr.20031218072017.2681,ekr.20031218072017.2672,ekr.20031218072017.2673,ekr.20031218072017.2675,ekr.20031218072017.2682,ekr.20031218072017.2683,ekr.20031218072017.2686,ekr.20031218072017.2687,ekr.20031218072017.2685,ekr.20031218072017.2684,ekr.20031218072017.2688,ekr.20031218072017.2689,ekr.20031218072017.2667,ekr.20031218072017.2691,ekr.20031218072017.2692,ekr.20031218072017.2693,ekr.20031218072017.2694,ekr.20031218072017.2695,ekr.20031218072017.2696,ekr.20031218072017.2697,ekr.20031218072017.2698,ekr.20031218072017.2699,ekr.20031218072017.2700,ekr.20031218072017.2701,ekr.20031218072017.2703,ekr.20031218072017.2704,ekr.20031218072017.2705,ekr.20031218072017.2387,ekr.20031218072017.2388,ekr.20031218072017.2389,ekr.20031218072017.2394,ekr.20031218072017.2395,ekr.20031218072017.2396,ekr.20031218072017.2391,ekr.20031218072017.2390,ekr.20031218072017.2392,ekr.20031218072017.2393,ekr.20031218072017.2397,ekr.20031218072017.2398,ekr.20031218072017.2399,ekr.20031218072017.2400,ekr.20031218072017.2706,ekr.20031218072017.2707,ekr.20031218072017.2710,ekr.20031218072017.2711,ekr.20031218072017.2326,ekr.20031218072017.2712,ekr.20031218072017.2713,ekr.20031218072017.2328,ekr.20031218072017.2714,ekr.20031218072017.2715,ekr.20031218072017.2716,ekr.20031218072017.2322,ekr.20031218072017.2323,ekr.20031218072017.2324,ekr.20031218072017.2325,ekr.20031218072017.2326,ekr.20031218072017.2327,ekr.20031218072017.2328,ekr.20031218072017.2330,ekr.20031218072017.2718,ekr.20031218072017.2719,ekr.20031218072017.2720,ekr.20031218072017.2721,ekr.20031218072017.2023,ekr.20031218072017.2024,ekr.20031218072017.2025,ekr.20031218072017.2026,ekr.20031218072017.2722,ekr.20040128174042,ekr.20031218072017.2723,ekr.20031218072017.2724,ekr.20031218072017.2725,ekr.20031218072017.2726,ekr.20031218072017.2727,ekr.20031218072017.2728,ekr.20031218072017.2729,ekr.20031218072017.2730,ekr.20031218072017.2731,ekr.20031218072017.2732,ekr.20031218072017.2733,ekr.20031218072017.2736,ekr.20031218072017.2734,ekr.20031218072017.2735,ekr.20031218072017.2737,ekr.20031218072017.2738,ekr.20031218072017.2739,ekr.20031218072017.2740,ekr.20031218072017.2741,ekr.20031218072017.2742,ekr.20031218072017.2743,ekr.20031218072017.2744,ekr.20031218072017.2745,ekr.20031218072017.2746,ekr.20031218072017.2748,ekr.20031218072017.2749,ekr.20031218072017.2750,ekr.20031218072017.2751,ekr.20031218072017.2752,ekr.20031218072017.2753,ekr.20031218072017.2754,ekr.20031218072017.2755,ekr.20031218072017.2757,ekr.20031218072017.2007,ekr.20031218072017.2758,ekr.20031218072017.2759,ekr.20031218072017.2760,ekr.20031218072017.2761,ekr.20031218072017.2762,ekr.20031218072017.2763,ekr.20031218072017.1752,ekr.20031218072017.2765,ekr.20031218072017.2766,ekr.20031218072017.2767,ekr.20031218072017.2768,ekr.20031218072017.2769,ekr.20031218072017.1954,ekr.20031218072017.2771,ekr.20031218072017.2772,ekr.20031218072017.2773,ekr.20031218072017.1753,ekr.20031218072017.1754,ekr.20031218072017.1755,ekr.20031218072017.2775,ekr.20031218072017.2776,ekr.20031218072017.2777,ekr.20031218072017.2778,ekr.20031218072017.2779,ekr.20031218072017.2780,ekr.20031218072017.2781,ekr.20031218072017.2782,ekr.20031218072017.2783,ekr.20031218072017.2784,ekr.20031218072017.2786,ekr.20031218072017.2787,ekr.20031218072017.2788,ekr.20031218072017.2789,ekr.20031218072017.2001,ekr.20031218072017.2790,ekr.20031218072017.2791,ekr.20031218072017.2792,ekr.20031218072017.2793,ekr.20031218072017.2113,ekr.20031218072017.2114,ekr.20031218072017.2115,ekr.20031218072017.2116,ekr.20031218072017.2117,ekr.20031218072017.2118,ekr.20031218072017.2119,ekr.20031218072017.2121,ekr.20031218072017.2122,ekr.20031218072017.2123,ekr.20031218072017.2124,ekr.20031218072017.2125,ekr.20031218072017.2126,ekr.20031218072017.2127,ekr.20031218072017.2128,ekr.20031218072017.2129,ekr.20031218072017.2131,ekr.20031218072017.2132,ekr.20031218072017.2133,ekr.20031218072017.2134,ekr.20031218072017.2106,ekr.20031218072017.2107,ekr.20031218072017.2108,ekr.20031218072017.2109,ekr.20031218072017.1746,ekr.20031218072017.1747,ekr.20031218072017.1748,ekr.20031218072017.1749,ekr.20031218072017.1750,ekr.20031218072017.1751,ekr.20031218072017.2136,ekr.20031218072017.2137,ekr.20031218072017.2138,ekr.20031218072017.1921,ekr.20031218072017.1922"><vh>@file leoAtFile.py </vh>
 <v t="ekr.20031218072017.2621"><vh>&lt;&lt; global atFile constants &gt;&gt;</vh></v>
 <v t="ekr.20031218072017.2622"><vh>&lt;&lt; class baseAtFile methods &gt;&gt;</vh>
 <v t="ekr.20031218072017.2623"><vh>atFile.__init__ &amp; initIvars</vh></v>
@@ -7273,7 +7339,7 @@
 </v>
 </v>
 <v t="ekr.20031218072017.2643"><vh>&lt;&lt; class baseOldDerivedFile methods &gt;&gt;</vh>
-<v t="ekr.20031218072017.2644" a="E"><vh> old_df.__init__&amp; initIvars</vh>
+<v t="ekr.20031218072017.2644"><vh> old_df.__init__&amp; initIvars</vh>
 <v t="ekr.20031218072017.2645"><vh>&lt;&lt; init atFile ivars &gt;&gt;</vh></v>
 </v>
 <v t="ekr.20031218072017.2646"><vh>Reading (3.x)</vh>
@@ -7394,7 +7460,7 @@
 <v t="ekr.20031218072017.2717"><vh>Top level write helpers</vh>
 <v t="ekr.20031218072017.2718"><vh>atFile.closeWriteFile</vh></v>
 <v t="ekr.20031218072017.2719"><vh>atFile.handleWriteException</vh></v>
-<v t="ekr.20031218072017.2720"><vh>atFile.openWriteFile</vh></v>
+<v t="ekr.20031218072017.2720" a=""><vh>atFile.openWriteFile</vh></v>
 <v t="ekr.20031218072017.2721"><vh>atFile.putInitialComment</vh></v>
 <v t="ekr.20031218072017.2023" a=""><vh>atFile.replaceTargetFileIfDifferent</vh>
 <v t="ekr.20031218072017.2024"><vh>&lt;&lt; delete the output file &gt;&gt;</vh></v>
@@ -7450,7 +7516,7 @@
 </v>
 <v t="ekr.20031218072017.2754"><vh>&lt;&lt; class baseNewDerivedFile methods &gt;&gt;</vh>
 <v t="ekr.20031218072017.2755"><vh>newDerivedFile.__init__</vh></v>
-<v t="ekr.20031218072017.2756" a="E"><vh>Reading (4.x)</vh>
+<v t="ekr.20031218072017.2756"><vh>Reading (4.x)</vh>
 <v t="ekr.20031218072017.2757" a=""><vh>new_df.readOpenFile</vh></v>
 <v t="ekr.20031218072017.2007" a=""><vh>findChild</vh></v>
 <v t="ekr.20031218072017.2758" a=""><vh>scanText4 &amp; allies</vh>
@@ -7561,91 +7627,36 @@
 </v>
 </v>
 </v>
-<v t="ekr.20040104162835"><vh>(Problems with Import Derived File and whitespace (marks) (Dan Winkler)</vh>
-<v t="ekr.20040128190248"><vh>What I did</vh></v>
+<v t="ekr.20040128174817"><vh>Files that changed...</vh></v>
+<v t="ekr.20040129074950"><vh>(Problems with cvs diff: Dan Winkler)</vh>
 <v t="ekr.20040104162835.1"><vh>Reports</vh>
 <v t="ekr.20040104162835.2"><vh>Report: marks set when opening file</vh></v>
 <v t="ekr.20040104162835.3"><vh>Report 2: leo reported some files changed when they hadn't</vh></v>
-<v t="ekr.20040104162835.4"><vh>Report 3 (latest)</vh></v>
-<v t="ekr.20040104162835.5"><vh>Another clue</vh></v>
-<v t="ekr.20040128181510"><vh>CashRegister.ss</vh></v>
+<v t="ekr.20040104162835.4"><vh>Report 3: tabs get removed, marks get set</vh></v>
 </v>
-<v t="ekr.20031218072017.2758" a=""><vh>scanText4 &amp; allies</vh>
-<v t="ekr.20031218072017.2759"><vh>&lt;&lt; init ivars for scanText4 &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.2760"><vh>&lt;&lt; report unexpected end of text &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.2761"><vh>readNormalLine</vh>
-<v t="ekr.20031218072017.2762"><vh>&lt;&lt; Skip the leading stuff &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.2763"><vh>&lt;&lt; Append s to docOut &gt;&gt;</vh></v>
+<v t="ekr.20040129080202.1"><vh>Figure out how to do cvs checkout</vh></v>
 </v>
-<v t="ekr.20031218072017.2764"><vh>start sentinels</vh>
-<v t="ekr.20031218072017.1752" a=""><vh>readStartAt &amp; readStartDoc</vh></v>
-<v t="ekr.20031218072017.2765"><vh>readStartLeo</vh></v>
-<v t="ekr.20031218072017.2766"><vh>readStartNode</vh>
-<v t="ekr.20031218072017.2767"><vh>&lt;&lt; Set headline, undoing the CWEB hack &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.2768"><vh>&lt;&lt; Check the filename in the sentinel &gt;&gt;</vh></v>
+<v t="ekr.20040117112808.2"><vh>(Fixed bugs when trying to save a read-only file)</vh>
+<v t="ekr.20040129081333"><vh>Report</vh></v>
+<v t="ekr.20040129090223"><vh>What I did</vh></v>
+<v t="ekr.20031218072017.2720" a=""><vh>atFile.openWriteFile</vh></v>
+<v t="ekr.20031218072017.3046" a=""><vh>write_LEO_file</vh>
+<v t="ekr.20031218072017.3047"><vh>&lt;&lt; create backup file &gt;&gt; in write_LEO_file</vh></v>
+<v t="ekr.20031218072017.3048"><vh>&lt;&lt; delete backup file &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.3049"><vh>&lt;&lt; erase filename and rename backupName to fileName &gt;&gt;</vh></v>
 </v>
-<v t="ekr.20031218072017.2769"><vh>readStartOthers</vh></v>
+<v t="ekr.20031218072017.2834" a=""><vh>save</vh></v>
 </v>
-<v t="ekr.20031218072017.2770"><vh>end sentinels</vh>
-<v t="ekr.20031218072017.1954" a=""><vh>readEndAt &amp; readEndDoc</vh></v>
-<v t="ekr.20031218072017.2771"><vh>readEndLeo</vh></v>
-<v t="ekr.20031218072017.2772"><vh>readEndNode</vh></v>
-<v t="ekr.20031218072017.2773"><vh>readEndOthers</vh></v>
-<v t="ekr.20031218072017.1753" a=""><vh>readLastDocLine</vh>
-<v t="ekr.20031218072017.1754"><vh>&lt;&lt; new code &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.1755"><vh>&lt;&lt; old code &gt;&gt;</vh></v>
+<v t="ekr.20040109073834"><vh>(Write Dirty/Missing @file Nodes bugs)</vh>
+<v t="ekr.20040109073834.1"><vh>Report: never any dirty @file nodes (works for me)</vh></v>
+<v t="ekr.20040107161709"><vh>Report: exception:  at.trace does not exist: fixed: removed at.trace</vh></v>
+<v t="ekr.20031218072017.1666" a=""><vh>writeDirtyAtFileNodes</vh></v>
+<v t="ekr.20031218072017.2015" a=""><vh>top_df.writeAll</vh>
+<v t="ekr.20031218072017.2016"><vh>&lt;&lt; Clear all orphan bits &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.2017"><vh>&lt;&lt; handle v's tree &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.2018"><vh>&lt;&lt; say the command is finished &gt;&gt;</vh></v>
 </v>
 </v>
-<v t="ekr.20031218072017.2774"><vh>Unpaired sentinels</vh>
-<v t="ekr.20031218072017.2775"><vh>ignoreOldSentinel</vh></v>
-<v t="ekr.20031218072017.2776"><vh>readAfterRef</vh></v>
-<v t="ekr.20031218072017.2777"><vh>readComment</vh></v>
-<v t="ekr.20031218072017.2778"><vh>readDelims</vh></v>
-<v t="ekr.20031218072017.2779"><vh>readDirective</vh></v>
-<v t="ekr.20031218072017.2780"><vh>readNl</vh></v>
-<v t="ekr.20031218072017.2781"><vh>readNonl</vh></v>
-<v t="ekr.20031218072017.2782"><vh>readRef</vh></v>
-<v t="ekr.20031218072017.2783"><vh>readVerbatim</vh></v>
-</v>
-<v t="ekr.20031218072017.2784"><vh>badEndSentinel, push/popSentinelStack</vh></v>
-</v>
-<v t="ekr.20031218072017.1812" a=""><vh>top_df.read</vh>
-<v t="ekr.20031218072017.1813"><vh>&lt;&lt; set fileName from root and importFileName &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.1814"><vh>&lt;&lt; open file or return false &gt;&gt;</vh>
-<v t="ekr.20031218072017.1815"><vh>&lt;&lt; warn on read-only file &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20031218072017.1816"><vh>&lt;&lt; copy ivars to df &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.1817"><vh>&lt;&lt; warn about non-empty unvisited nodes &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.1818"><vh>&lt;&lt; copy all tempBodyStrings to tnodes &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.1819"><vh>&lt;&lt; delete all tempBodyStrings &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20031218072017.2633" a=""><vh>top_df.scanHeader</vh>
-<v t="ekr.20031218072017.2634"><vh>&lt;&lt; skip any non @+leo lines &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.2635"><vh>&lt;&lt; make sure we have @+leo &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.2636"><vh>&lt;&lt; read optional version param &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.2637"><vh>&lt;&lt; read optional encoding param &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.2638"><vh>&lt;&lt; set the closing comment delim &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20031218072017.2647" a=""><vh>old_df.readOpenFile</vh></v>
-<v t="ekr.20031218072017.2757" a=""><vh>new_df.readOpenFile</vh></v>
-<v t="ekr.20031218072017.2387" a=""><vh>scanAllDirectives</vh>
-<v t="ekr.20031218072017.2388"><vh>&lt;&lt; Set ivars &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.2389"><vh>&lt;&lt; Set path from @file node &gt;&gt; in scanDirectory in leoGlobals.py</vh></v>
-<v t="ekr.20031218072017.2390"><vh>&lt;&lt; Test for @comment and @language &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.2391"><vh>&lt;&lt; Test for @encoding &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.2392"><vh>&lt;&lt; Test for @header and @noheader &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.2393"><vh>&lt;&lt; Test for @lineending &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.2394"><vh>&lt;&lt; Test for @path &gt;&gt;</vh>
-<v t="ekr.20031218072017.2395"><vh>&lt;&lt; compute relative path from s[k:] &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.2396"><vh>&lt;&lt; handle absolute path &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20031218072017.2397"><vh>&lt;&lt; Test for @pagewidth &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.2398"><vh>&lt;&lt; Test for @tabwidth &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.2399"><vh>&lt;&lt; Set current directory &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.2400"><vh>&lt;&lt; Set comment Strings from delims &gt;&gt;</vh></v>
-</v>
-</v>
-<v t="ekr.20040128174817"><vh>Files that changed...</vh></v>
 </vnodes>
 <tnodes>
 <t tx="ekr.20031218072017">@ignore
@@ -27512,7 +27523,6 @@ def endElementNS(self,name,qname):
 	c = self.c
 
 	changedFiles = c.atFileCommands.writeAll(writeDirtyAtFileNodesFlag=true)
-	trace(changedFiles)
 	if changedFiles:
 		es("auto-saving outline",color="blue")
 		c.save() # Must be done to set or clear tnodeList.</t>
@@ -32382,7 +32392,6 @@ if v.isDirty() or writeAtFileNodesFlag or v.t in writtenFiles:
 <t tx="ekr.20031218072017.2019">def writeMissing(self,v):
 
 	at = self
-	if at.trace: trace("old_df",v)
 
 	write_new = not app.config.write_old_format_derived_files
 	df = choose(write_new,at.new_df,at.old_df)
@@ -33765,7 +33774,6 @@ def write(self,root,nosentinels=false,scriptFile=None):
 	"""Write a 4.x derived file."""
 	
 	at = self ; c = at.c
-	if at.trace: trace("new_df",root)
 
 	at.sentinels = not nosentinels
 	&lt;&lt; initialize &gt;&gt;
@@ -33883,7 +33891,6 @@ else:
 <t tx="ekr.20031218072017.2122">def rawWrite(self,root):
 
 	at = self
-	if at.trace: trace("new_df",root)
 
 	c = at.c ; at.root = root
 	at.errors = 0
@@ -36366,11 +36373,9 @@ def trace_tag (name, *args):
 
 def write(self,root,nosentinels=false):
 	
-	if self.trace: trace("old_df",root)
-	
 	# Remove any old tnodeList.
 	if hasattr(root,"tnodeList"):
-		if self.trace: trace("removing tnodeList for " + `root`)
+		# trace("removing tnodeList for " + `root`)
 		delattr(root,"tnodeList")
 
 	c = self.c
@@ -41761,9 +41766,6 @@ self.output_newline = getOutputNewline()
 self.raw = false # true: in @raw mode
 self.sentinels = true # true: output sentinels while expanding refs.
 
-# Enables tracing (debugging only).
-self.trace = false
-
 # The encoding used to convert from unicode to a byte stream.
 self.encoding = app.config.default_derived_file_encoding
 
@@ -41780,7 +41782,6 @@ self.fileChangedFlag = false</t>
 	"""Read an open 3.x derived file."""
 	
 	at = self
-	if at.trace: trace("old_df",root)
 
 	# Scan the file buffer
 	lastLines = at.scanText(file,root,[],endLeo)
@@ -42693,8 +42694,6 @@ def skipIndent(self,s,i,width):
 <t tx="ekr.20031218072017.2709"></t>
 <t tx="ekr.20031218072017.2710">def rawWrite(self,root):
 
-	if self.trace: trace("old_df",root)
-	
 	c = self.c ; self.root = root
 	self.errors = 0
 	self.sentinels = true # 10/1/03
@@ -42745,8 +42744,6 @@ if s and len(s) &gt; 0:
 self.putCloseNodeSentinel(v)
 </t>
 <t tx="ekr.20031218072017.2714">def silentWrite(self,root):
-
-	if self.trace: trace("old_df",root)
 
 	c = self.c ; self.root = root
 	self.errors = 0
@@ -42839,7 +42836,7 @@ def openWriteFile (self,root):
 	if valid and os_path_exists(self.targetFileName):
 		try:
 			if not os.access(self.targetFileName,os.W_OK):
-				self.writeError("read only: " + self.targetFileName)
+				self.writeError("can not create: read only: " + self.targetFileName)
 				valid = false
 		except:
 			pass # os.access() may not exist on all platforms.
@@ -42849,16 +42846,17 @@ def openWriteFile (self,root):
 			self.outputFileName = self.targetFileName + ".tmp"
 			self.outputFile = open(self.outputFileName,'wb')
 			if self.outputFile is None:
-				self.writeError("can not open " + self.outputFileName)
+				self.writeError("can not create " + self.outputFileName)
 				valid = false
 		except:
-			es("exception opening:" + self.outputFileName)
+			es("exception creating:" + self.outputFileName)
 			es_exception()
 			valid = false
-	
+
 	if not valid:
 		root.setOrphan()
 		root.setDirty()
+		self.outputFile = None # 1/29/04
 	
 	return valid</t>
 <t tx="ekr.20031218072017.2721">def putInitialComment (self):
@@ -43421,7 +43419,6 @@ def putEmptyDirective(self,s,i):
 	"""Read an open 4.x derived file."""
 	
 	at = self
-	if at.trace: trace("new_df",root)
 
 	# Scan the 4.x file.
 	at.tnodeListIndex = 0
@@ -44465,8 +44462,8 @@ except:
 		c.mFileName = ""
 
 	if c.mFileName != "":
-		c.fileCommands.save(c.mFileName)
-		c.setChanged(false)
+		# Calls c.setChanged(false) if no error.
+		c.fileCommands.save(c.mFileName) 
 		return
 
 	fileName = app.gui.runSaveFileDialog(
@@ -44501,6 +44498,7 @@ except:
 		c.mFileName = ensure_extension(fileName, ".leo")
 		c.frame.title = c.mFileName
 		c.frame.setTitle(computeWindowTitle(c.mFileName))
+		# Calls c.setChanged(false) if no error.
 		c.fileCommands.saveAs(c.mFileName)
 		c.updateRecentFiles(c.mFileName)</t>
 <t tx="ekr.20031218072017.2836">def saveTo(self):
@@ -46853,9 +46851,14 @@ self.put("/&gt;") ; self.put_nl()</t>
 			es_exception()
 			return false
 			
-	if self.read_only:
-		es_error("read only: " + fileName)
-		return false
+	# 1/29/03: self.read_only is not valid for Save As and Save To commands.
+	if os_path_exists(fileName):
+		try:
+			if not os.access(fileName,os.W_OK):
+				self.writeError("can not create: read only: " + self.targetFileName)
+				return false
+		except:
+			pass # os.access() may not exist on all platforms.
 
 	try:
 		&lt;&lt; create backup file &gt;&gt;
@@ -46917,7 +46920,7 @@ if os_path_exists(fileName):
 		# os.rename(fileName,backupName)
 		utils_rename(fileName,backupName)
 	except:
-		es("exception creating " + backupName)
+		es("exception creating backup file: " + backupName)
 		es_exception()
 		backupName = None
 else:
@@ -46926,8 +46929,9 @@ else:
 	try:
 		os.unlink(backupName)
 	except:
-		es("exception deleting " + backupName)
+		es("exception deleting backup file:" + backupName)
 		es_exception()
+		return false # 1/29/04: Make sure we indicate failure.
 </t>
 <t tx="ekr.20031218072017.3049">es("error writing " + fileName)
 
@@ -46935,18 +46939,16 @@ if fileName and os_path_exists(fileName):
 	try:
 		os.unlink(fileName)
 	except:
-		es("exception deleting " + fileName)
+		es("exception deleting: " + fileName)
 		es_exception()
 		
 if backupName:
 	es("restoring " + fileName + " from " + backupName)
 	try:
-		# os.rename(backupName, fileName)
 		utils_rename(backupName, fileName)
 	except:
 		es("exception renaming " + backupName + " to " + fileName)
-		es_exception()
-</t>
+		es_exception()</t>
 <t tx="ekr.20031218072017.3050">def writeOutlineOnly (self):
 
 	c = self.c
@@ -61588,18 +61590,6 @@ Here is the two-tab \t\t behavior.
 I hope this is a Leo bug and not a Tk bug. 
 
 Dave Hein </t>
-<t tx="ekr.20040105070134">By: dthein ( Dave Hein ) 
- BUG: Paragraph reformat ignores leading ws   
-2004-01-04 22:43  
-
- Leo 4.1 rc3, build 1.62 , December 19, 2003
-Python 2.3.0, Tk 8.4.2
-Linux 2.4.22-21mdkenterprise
-
-The pargraph reformat is broken with respect to hanging indentation and leading whitespace.
-
-It does not (as it used to) preserve the leading whitespace of the first and second lines ... and, therefore, doesn't properly handle hanging indentation either.
-</t>
 <t tx="ekr.20040105070616">This may be the result of excessive string concatenation.</t>
 <t tx="ekr.20040105070616.2">- beginUpdate does not inhibit redraw!!
 
@@ -62624,24 +62614,6 @@ I found plugin: mod_autosave.py does not work on my pc (4.1 rc3, freebsd). So
 I put a print statement in mod_autosave.py's autosave() method but noticed the
 method is never called. Is this a bug?
 </t>
-<t tx="ekr.20040117112808">@nocolor
-
-See CashRegister.ss
-
-When I tried to import the attached file I get the error:
-
------ error reading @file 
-/Volumes/iDisk/Documents/CashRegister/CashRegister.ss
-Unexpected end of file. Expecting @-leo sentinel
-
-However, when I look at the file with a text editor, I see there is a 
-@-leo sentinel at the end.
-
-This is also the file which changes strangely when I open an outline 
-which refers to it with an @file node (tabs get messed up, nodes get 
-marked).
-
-</t>
 <t tx="ekr.20040117112808.1">@nocolor
 
 https://sourceforge.net/forum/message.php?msg_id=2370629
@@ -62669,30 +62641,7 @@ fi
 #
 #-----------------------------
 </t>
-<t tx="ekr.20040117112808.2">@nocolor
-
-https://sourceforge.net/forum/message.php?msg_id=2378670
-By: thyrsus
-
-If I load a read-only leo file and try to save it under any other name (not
-previously existing) elsewhere, the save does not create a new file, nor do
-anything else substantantive as far as I can tell.  In this example, I'm using
-the "Save As" entry from the file menu and adding a character to the end of
-the file name in the pop up box it prompts me with.  Here's the content of the
-Leo Log Window after I've read the read-only "projects.leo" and tried to save
-it as "projects1.leo":
-
-Leo Log Window...
-Leo 4.1 rc3, build  1.62 , December 19, 2003
-Python 2.3.2, Tk 8.3.5
-
-read only: /home/sps/projects.leo
-File encoding: UTF-8
-reading: /home/sps/projects.leo
-leoConfig.txt encoding: utf-8
-Text encoding: UTF-8
-leoID = thyrsus
-read only: /home/sps/projects1.leo</t>
+<t tx="ekr.20040117112808.2"></t>
 <t tx="ekr.20040117113539.1">@nocolor
 
 I recently wrote a few shell scripts (on linux) with leo, and I noticed
@@ -63112,7 +63061,6 @@ inside Leo.
 
 Dave Hein</t>
 <t tx="ekr.20040118101339.1"></t>
-<t tx="ekr.20040118101339.2"></t>
 <t tx="ekr.20040118101339.4">@
 Add colorizer support for the /bin/sh reserved keywords.
 
@@ -65424,7 +65372,6 @@ def getRowCol(self):
 <t tx="ekr.20040126100803"></t>
 <t tx="ekr.20040126100803.1"></t>
 <t tx="ekr.20040126100852"></t>
-<t tx="ekr.20040126103304"></t>
 <t tx="ekr.20040126104851.1"></t>
 <t tx="ekr.20040126104851.2"></t>
 <t tx="ekr.20040126115428"></t>
@@ -65563,20 +65510,6 @@ unchanged: leoTest.py
 finished
 auto-saving outline
 saved: LeoPy.leo</t>
-<t tx="ekr.20040128181510">Hi Ed,
-
-When I tried to import the attached file I get the error:
-
------ error reading @file 
-/Volumes/iDisk/Documents/CashRegister/CashRegister.ss
-Unexpected end of file. Expecting @-leo sentinel
-
-However, when I look at the file with a text editor, I see there is a 
-@-leo sentinel at the end.
-
-This is also the file which changes strangely when I open an outline 
-which refers to it with an @file node (tabs get messed up, nodes get 
-marked).</t>
 <t tx="ekr.20040128190248">@nocolor
 
 The problem was that scanAllDirectives was setting the comment delimiter after scanHeader had been called.
@@ -65585,5 +65518,42 @@ The solution:
 	
 - Call scanAllDirectives from top_df_read instead of the two versions of readOpenFile.
 - Pass an importing arg to scanAllDirectives which inhibits setting the comment delims.</t>
+<t tx="ekr.20040129074950"></t>
+<t tx="ekr.20040129080202"></t>
+<t tx="ekr.20040129080202.1">@nocolor
+
+- Look up Leo's cvs page.</t>
+<t tx="ekr.20040129080256.1"></t>
+<t tx="ekr.20040129081333">@nocolor
+
+https://sourceforge.net/forum/message.php?msg_id=2378670
+By: thyrsus
+
+If I load a read-only leo file and try to save it under any other name (not
+previously existing) elsewhere, the save does not create a new file, nor do
+anything else substantantive as far as I can tell.  In this example, I'm using
+the "Save As" entry from the file menu and adding a character to the end of
+the file name in the pop up box it prompts me with.  Here's the content of the
+Leo Log Window after I've read the read-only "projects.leo" and tried to save
+it as "projects1.leo":
+
+Leo Log Window...
+Leo 4.1 rc3, build  1.62 , December 19, 2003
+Python 2.3.2, Tk 8.3.5
+
+read only: /home/sps/projects.leo
+File encoding: UTF-8
+reading: /home/sps/projects.leo
+leoConfig.txt encoding: utf-8
+Text encoding: UTF-8
+leoID = thyrsus
+read only: /home/sps/projects1.leo</t>
+<t tx="ekr.20040129090223">@nocolor
+
+- write_LEO_file now ignores the self.read_only attribute and instead tries to call os.access(fileName,os.W_OK).
+
+- &lt;&lt; delete backup file &gt;&gt; now returns false on exceptions so the various save commands won't mistakenly report that the file has been saved.
+
+- Commands.save no longer calls c.setChanged(false).  This is done only in fileCommands.save.  So now if a Save fails the outline will still be marked dirty.</t>
 </tnodes>
 </leo_file>

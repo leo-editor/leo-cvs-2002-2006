@@ -22,9 +22,10 @@
 </v>
 <v t="edream.110203163054.6"><vh>Please use SourceForge to ask questions and make comments</vh></v>
 <v t="edream.110203163054.7" a=""><vh>Acknowledgements</vh></v>
-<v t="edream.110203163054.8" a="E"><vh>What people are saying about Leo</vh>
+<v t="edream.110203163054.8" a="V"><vh>What people are saying about Leo</vh>
 <v t="edream.110203163054.9" a="EM"><vh>Quotes of the Month</vh>
-<v t="ekr.20040118085921" a="V"><vh>Tarvin Rhodes (not yet)</vh></v>
+<v t="ekr.20040129074732"><vh>Annon: (not yet)</vh></v>
+<v t="ekr.20040118085921"><vh>Tarvin Rhodes (not yet)</vh></v>
 <v t="ekr.20031219090156"><vh>Anon (not yet)</vh></v>
 <v t="edream.121503192354.1"><vh>John Benson (not yet)</vh></v>
 <v t="edream.120703081642"><vh>Anon</vh></v>
@@ -24582,6 +24583,8 @@ once I get more comfortable using Python.
 
 Thanks again,
 Tarvin Rhodes
+</t>
+<t tx="ekr.20040129074732">Im a newbie to Leo( a couple of weeks ) and I feel addicted to programming again...in fact it has resurrected a dead project of mine :) The Outline has proven most liberating in terms of testing ideas out...Thanks alot!  
 </t>
 </tnodes>
 </leo_file>
