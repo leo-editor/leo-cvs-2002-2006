@@ -1165,7 +1165,7 @@ class colorizer:
 		if j == -1:
 			# The entire line is part of the triple-quoted string.
 			self.body.tag_add("string", index(n,i), index(n,"end"))
-			return len(s),contineuState # skipt the rest of the line.
+			return len(s),continueState # skip the rest of the line.
 		else:
 			# End the string
 			self.body.tag_add("string", index(n,i), index(n,j+3))
