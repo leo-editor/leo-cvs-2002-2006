@@ -216,6 +216,8 @@
 #@-node:ekr.20031218072017.2408:<< About clones >>
 #@nl
 
+from __future__ import generators # To make the code work in Python 2.2.
+
 import leoGlobals as g
 from leoGlobals import true,false
 
@@ -269,18 +271,34 @@ class baseTnode (object):
 	__str__ = __repr__
 	#@nonl
 	#@-node:ekr.20031218072017.3323:t.__repr__ & t.__str__
-	#@+node:ekr.20031218072017.3324:t.extraAttributes & setExtraAttributes
-	def extraAttributes (self):
+	#@+node:EKR.20040528074559:t.copy
+	def copy (self,copyLinks=true):
+		
+		"""Create an exact copy of a tnode."""
+		
+		t = self ; new_t = tnode()
+		
+		# Essential fields.
+		new_t.cloneIndex   = t.cloneIndex
+		new_t.fileIndex    = t.fileIndex
+		new_t.headString   = t.headString
+		new_t.bodyString   = t.bodyString
+		new_t.vnodeList    = t.vnodeList[:] # Must be updated by caller.
+		new_t.statusBits   = t.statusBits
+		new_t._firstChild  = g.choose(copyLinks,t._firstChild,None)
 	
-		try:    return self.unknownAttributes
-		except: return None
-		
-	def setExtraAttributes (self,attributes):
-		
-		if attributes != None:
-			self.unknownAttributes = attributes
-	#@nonl
-	#@-node:ekr.20031218072017.3324:t.extraAttributes & setExtraAttributes
+		try: new_t.unknownAttributes = t.unknownAttributes
+		except: pass
+	
+		if 0: # probably not needed for undo.
+			new_t.insertSpot      = t.insertSpot
+			new_t.scrollBarSpot   = t.scrollBarSpot
+			new_t.selectionLength = t.selectionLength
+			new_t.selectionStart  = t.selectionStart
+			
+		# g.trace(new_t)
+		return new_t
+	#@-node:EKR.20040528074559:t.copy
 	#@+node:ekr.20031218072017.3325:Getters
 	#@+node:ekr.20031218072017.3326:hasBody
 	def hasBody (self):
@@ -451,6 +469,7 @@ class baseVnode (object):
 		#@nonl
 		#@-node:ekr.20031218072017.1968:<< initialize vnode data members >>
 		#@nl
+	#@nonl
 	#@-node:ekr.20031218072017.3344:v.__init__
 	#@+node:ekr.20031218072017.3345:v.__repr__ & v.__str__
 	def __repr__ (self):
@@ -463,6 +482,35 @@ class baseVnode (object):
 	__str__ = __repr__
 	#@nonl
 	#@-node:ekr.20031218072017.3345:v.__repr__ & v.__str__
+	#@+node:EKR.20040528075936:v.copy
+	def copy (self,copyLinks=true):
+		
+		"""Create an exact copy of a vnode, including a copy of its tnode."""
+		
+		v = self
+		new_t = v.t.copy(copyLinks=copyLinks)
+		new_v = vnode(v.c,new_t)
+	
+		# Update all vnodes.
+		for v2 in new_t.vnodeList:
+			v2.t = new_t
+	
+		# Copy all ivars.
+		new_v.statusBits = v.statusBits
+		
+		if copyLinks:
+			new_v._parent = v._parent
+			new_v._next   = v._next
+			new_v._back   = v._back
+		else:
+			new_v._parent = new_v._next = new_v._back = None
+		
+		try: new_v.unknownAttributes = t.unknownAttributes
+		except: pass
+	
+		return new_v
+	#@nonl
+	#@-node:EKR.20040528075936:v.copy
 	#@+node:ekr.20040312145256:v.dump
 	def dumpLink (self,link):
 		return g.choose(link,link,"<none>")
@@ -1176,29 +1224,141 @@ class baseVnode (object):
 			# Don't set the dirty bit: it would just be annoying.
 	#@-node:ekr.20031218072017.3404:v.trimTrailingLines
 	#@-node:ekr.20031218072017.3384:Setters
-	#@+node:ekr.20031218072017.3358:v.extraAttributes & setExtraAttributes
-	def extraAttributes (self):
-	
-		# New in 4.2: tnode list is in tnode.
-		try:    tnodeList = self.t.tnodeList
-		except: tnodeList = None
+	#@+node:EKR.20040528111420:Used by Undo
+	#@+node:EKR.20040528070309.1:v.copyTree
+	def copyTree (self):
 		
-		try:    unknownAttributes = self.unknownAttributes
-		except: unknownAttributes = None
-	
-		return tnodeList, unknownAttributes
+		"""Returns a free-standing copy of a vnode and all its descendents.
 		
-	def setExtraAttributes (self,data):
+		New in 4.2: we also make a copy of each tnode."""
 		
-		tnodeList, unknownAttributes = data
+		c = self.c ; old_v = self
 	
-		if tnodeList != None:
-			self.tnodeList = tnodeList
+		new_v = old_v.copy(copyLinks=false)
 	
-		if unknownAttributes != None:
-			self.unknownAttributes = unknownAttributes
+		# Recursively copy and link all children.
+		old_child = old_v.firstChild()
+		n = 0
+		while old_child:
+			new_child = old_child.copyTree()
+			new_child.linkAsNthChild(new_v,n)
+			old_child = old_child.next()
+			n += 1
+			
+		# g.trace(new_v)
+		return new_v
+	
+	
+	#@-node:EKR.20040528070309.1:v.copyTree
+	#@+node:EKR.20040528111420.1:v.swapIntoTree, v.swapLinks
+	def swapIntoTree (self,v2):
+		
+		"""Link a vnode into the tree in place of v2."""
+		
+		v1 = self
+	
+		# Set the links in v1.
+		v1._next = v2._next
+		v1._back = v2._back 
+		v1._parent = v2._parent
+		
+		# Set links in other nodes to v1.
+		if v1._next: v1._next._back = v1
+		if v1._back: v1._back._next = v1
+		if v1._parent and v2 == v1._parent.t._firstChild:
+			v1._parent.t._firstChild = v1
+	
+	def swapLinks (self,v2): # not used.
+		
+		"""Swap the next/back links of two vnodes."""
+		
+		v1 = self
+		
+		v1._next,   v2._next   = v2._next,  v1._next
+		v1._back,   v2._back   = v2._back,  v1._back
+		v1._parent, v2._parent = v2._parent,v1._parent
 	#@nonl
-	#@-node:ekr.20031218072017.3358:v.extraAttributes & setExtraAttributes
+	#@-node:EKR.20040528111420.1:v.swapIntoTree, v.swapLinks
+	#@+node:EKR.20040528151551.4:v.updateVnodeListsFrom
+	def updateVnodeListsFrom (self,v2):
+		
+		"""Update the vnodeLists in self's after making self's tree from v2."""
+		
+		v1 = self
+		
+		# Create correspondences between elements of v1 and v2.
+		nodes1 = [v for v in v1.vnode_iter()]
+		nodes2 = [v for v in v2.vnode_iter()]
+		print len(nodes1),len(nodes2)
+		assert(len(nodes1) == len(nodes2))
+		
+		dict2to1 = {}
+		for i in xrange(len(nodes2)):
+			dict2to1[nodes2[i]]=nodes1[1]
+		
+		# Create a list of all vnodes in all of vnodeLists in v2's tree.
+		if 0: # not needed.
+			v2List = []
+			for v in v2.unique_vnode_iter():
+				for v3 in v.t.vnodeList:
+					if v3 not in v2List:
+						v2List.append(v3)
+					
+		# Update all vnodeLists in v1's tree.
+		for v in v1.unique_vnode_iter():
+			for v3 in v.t.vnodeList:
+				if v3 in nodes2:
+					v.t.vnodeList.remove(v3)
+					v4 = dict2to1.get(v3)
+					assert(v4)
+					v.t.vnodeList.append(v4)
+			
+	#@nonl
+	#@-node:EKR.20040528151551.4:v.updateVnodeListsFrom
+	#@-node:EKR.20040528111420:Used by Undo
+	#@+node:EKR.20040528151551:v.Iterators
+	#@+node:EKR.20040528151551.2:vnode_iter
+	def vnode_iter(self):
+	
+		"""Return all nodes of self's tree in outline order."""
+		
+		v = self
+	
+		if v:
+			yield v
+			if v.t._firstChild:
+				for v1 in v.t._firstChild.vnode_iter():
+					yield v1
+			v = v._next
+			while v:
+				for v in v.vnode_iter():
+					yield v
+				v = v._next
+	#@nonl
+	#@-node:EKR.20040528151551.2:vnode_iter
+	#@+node:EKR.20040528151551.3:unique_vnode_iter
+	def unique_vnode_iter(self,marks=None):
+	
+		"""Return all vnodes in self's tree, discarding duplicates """
+		
+		v = self
+	
+		if marks == None: marks = {}
+	
+		if v and v not in marks:
+			marks[v] = v
+			yield v
+			if v.t._firstChild:
+				for v1 in v.t._firstChild.unique_vnode_iter(marks):
+					yield v1
+			v = v._next
+			while v:
+				for v in v.unique_vnode_iter(marks):
+					yield v
+				v = v._next
+	#@nonl
+	#@-node:EKR.20040528151551.3:unique_vnode_iter
+	#@-node:EKR.20040528151551:v.Iterators
 	#@-others
 	
 class vnode (baseVnode):
@@ -2259,6 +2419,8 @@ class position (object):
 	def all_vnodes_iter (self,all=false):
 		
 		return self.all_vnodes_iter_class(self,all)
+		
+	distinct_vnodes_iter = all_vnodes_iter
 	#@nonl
 	#@-node:EKR.20040527065806:all_vnodes_iter
 	#@+node:EKR.20040527065806.1:all_tnodes_iter
@@ -2304,6 +2466,8 @@ class position (object):
 	def all_tnodes_iter (self,all=false):
 		
 		return self.all_tnodes_iter_class(self,all)
+		
+	distinct_tnodes_iter = all_tnodes_iter
 	#@nonl
 	#@-node:EKR.20040527065806.1:all_tnodes_iter
 	#@+node:ekr.20040305173559:subtree_iter
