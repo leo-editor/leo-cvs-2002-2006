@@ -35,7 +35,7 @@ if 0: # Set to 1 for lint-like testing.  This can also be done in idle.
 #@nl
 
 from leoGlobals import *
-import leoApp,leoConfig,leoDialog,leoFrame
+import leoApp,leoConfig,leoFrame,leoNodes
 import os,string,sys,traceback
 
 #@+others
@@ -48,14 +48,18 @@ def run(fileName=None,*args,**keywords):
 	# Create the application object.
 	import leoGlobals
 	leoGlobals.gApp = leoApp.LeoApp()
-	app.loadDir = computeLoadDir()
-	# Initialize the configuration class.
+
+	app.loadDir = computeLoadDir() # Depends on app.tkEncoding: uses utf-8 for now.
 	app.config = leoConfig.config()
+	app.setEncoding() # 10/20/03: do this earlier
+	
 	# Load plugins. Plugins may create app.gui.
 	doHook("start1")
-	if app.killed: return # 10/15/03: allows the plugin to kill the app.
+	if app.killed: return # Support for app.forceShutdown.
 	# Create the default gui if needed.
 	if app.gui == None: app.createTkGui()
+	if not app.leoID: app.setLeoID() # Forces the user to set app.leoID.
+	app.nodeIndices = leoNodes.nodeIndices()
 	# Initialize tracing and statistics.
 	init_sherlock(args)
 	clear_stats()
@@ -66,7 +70,8 @@ def run(fileName=None,*args,**keywords):
 	v = c.currentVnode()
 	doHook("start2",c=c,v=v,fileName=fileName)
 	frame.commands.redraw()
-	app.gui.set_focus(frame.commands,frame.body)
+	frame.body.setFocus()
+	app.initing = false # "idle" hooks may now call app.forceShutdown.
 	app.gui.runMainLoop()
 #@nonl
 #@-node:run & allies
@@ -79,7 +84,7 @@ You may download Python 2.1 and Python 2.2 from http://python.org/download/
 """
 	try:
 		if not CheckVersion(sys.version, "2.1"):
-			leoDialog.askOk("Python version error",message=message,text="Exit").run(modal=true)
+			app.gui.runAskOkDialog("Python version error",message=message,text="Exit")
 			return false
 		else:
 			return true
@@ -94,9 +99,12 @@ def computeLoadDir():
 	
 	"""Returns the directory containing leo.py."""
 	
+	# trace(app.tkEncoding)
+	
 	try:
 		import leo
 		path = os.path.abspath(leo.__file__)
+		path = toUnicode(path,"mbcs") # 10/20/03
 		if path:
 			loadDir = os.path.dirname(path)
 		else:
@@ -104,6 +112,8 @@ def computeLoadDir():
 		if not loadDir:
 			loadDir = os.path.abspath(os.getcwd())
 			print "Using emergency loadDir:",`loadDir`
+
+		loadDir = toUnicode(loadDir,app.tkEncoding) # 10/20/03
 		return loadDir
 	except:
 		print "Exception getting load directory"
@@ -116,12 +126,13 @@ def createFrame (fileName):
 	
 	"""Create a LeoFrame during Leo's startup process."""
 	
-	# trace(fileName)
+	# trace(app.tkEncoding,fileName)
 	
 	# Try to create a frame for the file.
 	if fileName:
 		fileName = os.path.join(os.getcwd(),fileName)
 		fileName = os.path.normpath(fileName)
+		fileName = toUnicode(fileName,app.tkEncoding) # 10/20/03
 		if os.path.exists(fileName):
 			ok, frame = openWithFileName(fileName) # 7/13/03: the global routine.
 			if ok:
