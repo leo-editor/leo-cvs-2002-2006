@@ -2682,8 +2682,6 @@ class settingsController:
             #@+node:ekr.20041225063637.12:<< put s to w >>
             if type(s) == type(u""):
                 s = g.toEncodedString(s,g.app.tkEncoding)
-                
-            if sys.platform == "darwin": print s,
             
             if color:
                 if color not in self.colorTags:
