@@ -894,11 +894,22 @@ def printLeoModules(message=None):
 # "*" will not match an explicit tracepoint name that starts with a minus 
 # sign.  For example,
 # 
-# 	trace("-nocolor", self.disable_color)
+# 	trace_tag("-nocolor", self.disable_color)
 
 #@-at
 #@-body
-#@+node:1::get_Sherlock_args
+#@+node:1::init_sherlock
+#@+body
+# Called by startup code.
+# Args are all the arguments on the command line.
+
+def init_sherlock (args):
+	
+	init_trace(args,echo=0)
+	# trace("argv", "sys.argv: " + `sys.argv`)
+#@-body
+#@-node:1::init_sherlock
+#@+node:2::get_Sherlock_args
 #@+body
 #@+at
 #  It no args are given we attempt to get them from the "SherlockArgs" file.  
@@ -924,10 +935,10 @@ def get_Sherlock_args (args):
 	# print "get_Sherlock_args:", args
 	return args
 #@-body
-#@-node:1::get_Sherlock_args
-#@+node:2::init_trace
+#@-node:2::get_Sherlock_args
+#@+node:3::init_trace
 #@+body
-def init_trace(args):
+def init_trace(args,echo=1):
 
 	t = app().trace_list
 	args = get_Sherlock_args(args)
@@ -940,43 +951,78 @@ def init_trace(args):
 			print "trace list:", t
 		elif prefix == '+' and not arg in t:
 			t.append(string.lower(arg))
-			# print "enabling:", arg
+			if echo:
+				print "enabling:", arg
 		elif prefix == '-' and arg in t:
 			t.remove(string.lower(arg))
-			# print "disabling:", arg
+			if echo:
+				print "disabling:", arg
 		else:
 			print "ignoring:", prefix + arg
 #@-body
-#@-node:2::init_trace
-#@+node:3::trace
+#@-node:3::init_trace
+#@+node:4::trace
 #@+body
-def trace (s1=None,s2=None):
+# Convert all args to strings.
+# Print if tracing for the presently executing function has been enabled.
 
-	if s1 and s2:
-		name = s1 ; message = s2
-	else: # use the funtion name as the tracepoint name.
-		message = s1 # may be None
-		try: # get the function name from the call stack.
-			f1 = sys._getframe(1) # The stack frame, one level up.
-			code1 = f1.f_code # The code object
-			name = code1.co_name # The code name
-		except: name = ""
-		
+def trace (*args):
+
+	s = ""
+	for arg in args:
+		if type(arg) != type(""):
+			arg = repr(arg)
+		if len(s) > 0:
+			s = s + ", " + arg
+		else:
+			s = arg
+	message = s
+	try: # get the function name from the call stack.
+		f1 = sys._getframe(1) # The stack frame, one level up.
+		code1 = f1.f_code # The code object
+		name = code1.co_name # The code name
+	except: name = ""
+	if name == "?":
+		name = "<unknown>"
+
 	t = app().trace_list
 	# tracepoint names starting with '-' must match exactly.
 	minus = len(name) > 0 and name[0] == '-'
 	if minus: name = name[1:]
-	if (not minus and '*' in t) or string.lower(name) in t:
-		if not message: message = ""
-		if type(message) == type("a"):
-			s = name + ": " + message
-			if 1: print s
-			else: es(s)
-		else: # assume we have a method and try to execute it.
-			# print type(message)
-			message()
+	if (not minus and '*' in t) or name.lower() in t:
+		s = name + ": " + message
+		if 1: print s
+		else: es(s)
 #@-body
-#@-node:3::trace
+#@-node:4::trace
+#@+node:5::trace_tag
+#@+body
+# Convert all args to strings.
+# Print if tracing for name has been enabled.
+
+def trace_tag (name, *args):
+	
+	s = ""
+	for arg in args:
+		if type(arg) != type(""):
+			arg = repr(arg)
+		if len(s) > 0:
+			s = s + ", " + arg
+		else:
+			s = arg
+	message = s
+
+	t = app().trace_list
+	# tracepoint names starting with '-' must match exactly.
+	minus = len(name) > 0 and name[0] == '-'
+	if minus: name = name[1:]
+	if (not minus and '*' in t) or name.lower() in t:
+		s = name + ": " + message
+		if 1: print s
+		else: es(s)
+
+#@-body
+#@-node:5::trace_tag
 #@-node:9::Sherlock...
 #@+node:10::Timing
 #@+body
@@ -1500,8 +1546,14 @@ def enl():
 		log.es_newlines += 1
 		log.putnl()
 
-def es(s,newline=true):
-	if s == None or len(s) == 0: return
+def es(s,*args,**keys): # newline=true,
+	newline = keys.get("newline",true)
+	if type(s) != type(""):
+		s = repr(s)
+	for arg in args:
+		if type(arg) != type(""):
+			arg = repr(arg)
+		s = s + ", " + arg
 	log = app().log
 	if log:
 		log.put(s) # No change needed for Unicode!

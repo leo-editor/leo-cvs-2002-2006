@@ -52,9 +52,12 @@ def go(*args):
 #@-node:2::go
 #@+node:3::init_sherlock
 #@+body
+# Called by startup code.
+# Args are all the arguments on the command line.
+
 def init_sherlock (args):
 	
-	init_trace(args)
+	init_trace(args,echo=0)
 	# trace("argv", "sys.argv: " + `sys.argv`)
 #@-body
 #@-node:3::init_sherlock
