@@ -49,7 +49,7 @@ button."""
 #@-node:ekr.20050130155124:<< docstring >>
 #@nl
 
-__version__ = "0.6.1"
+__version__ = "0.7"
 #@<< version history >>
 #@+node:ekr.20040908094021:<< version history >>
 #@+at
@@ -64,6 +64,10 @@ __version__ = "0.6.1"
 #     - Use g.importExtention to import Tk.
 # 0.6.1 EKR:
 #     - Add much better docstring.
+# 0.7 EKR:
+#     - Added support for 'removeMe' hack.
+#         Buttons can asked to be removed by setting 
+# s.app.scriptDict['removeMe'] = True.
 #@-at
 #@nonl
 #@-node:ekr.20040908094021:<< version history >>
@@ -184,17 +188,21 @@ def createStandardButtons(c,d):
         text = h
         statusMessage = "Run script: %s" % text
         buttonText = text[:maxButtonSize]
+        
+        # Create the button.
+        b = c.frame.addIconButton(text=buttonText)
     
         #@    << define callbacks for addScriptButton >>
         #@+node:EKR.20040613231552:<< define callbacks for addScriptButton >>
-        def deleteButtonCallback(event=None,c=c,buttonName=buttonName):
+        def deleteButtonCallback(event=None,c=c,buttonText=buttonText):
             deleteButton(c,buttonName)
             
-        def commandCallback(event=None,c=c,p=p.copy(),script=script,statusMessage=statusMessage):
+        def commandCallback(event=None,b=b,c=c,p=p.copy(),script=script,statusMessage=statusMessage):
             global bindLate
             if script is None: script = ""
             c.frame.clearStatusLine()
             c.frame.putStatusLine("Executing %s..." % statusMessage)
+            g.app.scriptDict = {}
             if bindLate:
                 # New in 4.2.1: always use the entire body string.
                 script = g.getScript(c,p,useSelectedText=False)
@@ -202,6 +210,13 @@ def createStandardButtons(c,d):
                 c.executeScript(script=script)
             else:
                 g.es("No script selected",color="blue")
+                
+            # A useful hack: remove the button if the script asks to be removed.
+            # In particular, this will remove the spelling button if it can't be inited.
+            if g.app.scriptDict.get('removeMe'):
+                g.es("Removing '%s' button at its request" % (buttonText))
+                b.pack_forget()
+                
             
         def mouseEnterCallback(event=None,c=c,statusMessage=statusMessage):
             mouseEnter(c,statusMessage)
@@ -212,13 +227,12 @@ def createStandardButtons(c,d):
         #@-node:EKR.20040613231552:<< define callbacks for addScriptButton >>
         #@nl
         
-        # Create the button: limit the text to twelve characters.
-        b = c.frame.addIconButton(text=buttonText)
         global data ; d = data.get(c,{})
         d [key] = b
         if sys.platform == "win32":
             width = int(len(buttonText) * 0.9)
-            b.configure(width=width,font=('verdana',7,'bold'),bg='MistyRose1')
+            b.configure(width=width,font=('verdana',7,'bold'))
+            b.configure(bg='MistyRose1')
         b.configure(command=commandCallback)
         b.bind('<3>',deleteButtonCallback)
         b.bind('<Enter>', mouseEnterCallback)
@@ -279,13 +293,21 @@ def createDynamicButton (c,p,d):
     statusLine = "Script button: %s" % text
     bg = 'LightSteelBlue1'
     
+    b = c.frame.addIconButton(text=buttonText)
+    
     #@    << define callbacks for dynamic buttons >>
     #@+node:ekr.20041001185413:<< define callbacks for dynamic buttons >>
     def deleteButtonCallback(event=None,c=c,key=key):
         deleteButton(c,key)
         
-    def execCommand (event=None,c=c,script=script):
+    def execCommand (event=None,b=b,c=c,script=script,buttonText=buttonText):
+        g.app.scriptDict = {}
         c.executeScript(script=script)
+        # A useful hack: remove the button if the script asks to be removed.
+        # In particular, this will remove the spelling button if it can't be inited.
+        if g.app.scriptDict.get('removeMe'):
+            g.es("Removing '%s' button at its request" % (buttonText))
+            b.pack_forget()
         
     def mouseEnterCallback(event=None,c=c,statusLine=statusLine):
         mouseEnter(c,statusLine)
@@ -295,8 +317,7 @@ def createDynamicButton (c,p,d):
     #@nonl
     #@-node:ekr.20041001185413:<< define callbacks for dynamic buttons >>
     #@nl
-    
-    b = c.frame.addIconButton(text=buttonText)
+
     if not b: return
     d [key] = b
     if sys.platform == "win32":
