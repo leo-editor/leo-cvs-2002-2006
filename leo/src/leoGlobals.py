@@ -285,6 +285,7 @@ def getOutputNewline (c=None,name=None):
     - Use c.config.output_newline if c given,
     - Otherwise use g.app.config.output_newline.'''
     
+    # g.trace(c,name,c.config.output_newline)
     if name: s = name
     elif c:  s = c.config.output_newline
     else:    s = app.config.output_newline
@@ -4468,6 +4469,10 @@ def getScript (c,p,useSelectedText=True,script=None):
             else:
                 at.write(p.copy(),nosentinels=False,toString=True,scriptWrite=True)
                 script = at.stringOutput
+            # Bug fix: 2/22/04.  Don't use atFile.output_newline ivar.  It may not exist!
+            if g.getOutputNewline(c=c) == '\r\n':
+                if g.app.unitTesting: g.app.unitTestDict['stripping-crlf']=True
+                script = script.replace("\r\n","\n")
             g.app.scriptDict["script2"]=script
             error = len(script) == 0
     except:
@@ -4477,24 +4482,21 @@ def getScript (c,p,useSelectedText=True,script=None):
         script = ''
 
     p.v.setTnodeText(old_body)
-    
-    # g.trace(repr(c.atFileCommands.output_newline))
-    if c.atFileCommands.output_newline == '\r\n':
-        return script.replace("\r\n","\n") # 1/11/05
-    else:
-        return script
+    return script
 #@nonl
-#@+node:ekr.20050211100535:test_g_getScript_strips_returns
-def test_g_getScript_strips_returns():
+#@+node:ekr.20050211100535:test_g_getScript_strips_crlf
+def test_g_getScript_strips_crlf():
 
-    old_output_newline = c.atFileCommands.output_newline
-    c.atFileCommands.output_newline = '\r\n'
-    script = g.getScript(c,p)
-    c.atFileCommands.output_newline = old_output_newline
-    
+    old_output_newline = c.config.output_newline
+    c.config.output_newline = 'crlf' # A config setting, not an actual line ending.
+    g.app.unitTestDict = {}
+    script = g.getScript(c,p) # This will get the text of this node.
+    assert g.app.unitTestDict.get('stripping-crlf')
+    c.config.output_newline = old_output_newline
+
     assert script.find('\r\n') == -1
 #@nonl
-#@-node:ekr.20050211100535:test_g_getScript_strips_returns
+#@-node:ekr.20050211100535:test_g_getScript_strips_crlf
 #@-node:EKR.20040614071102.1:g.getScript & tests
 #@+node:ekr.20041219095213:import wrappers
 #@+at 
