@@ -8,7 +8,7 @@ import compiler,dis,os,string,sys,types,traceback
 
 
 #@+others
-#@+node:+1::go
+#@+node:1::go
 #@+body
 def go():
 	
@@ -36,8 +36,8 @@ def go():
 			
 	print_stats(stats)
 #@-body
-#@-node:+0::go
-#@+node:+1::getFiles
+#@-node:1::go
+#@+node:2::getFiles
 #@+body
 def getFiles (dir):
 
@@ -52,8 +52,8 @@ def getFiles (dir):
 			
 	return files
 #@-body
-#@-node:+0::getFiles
-#@+node:+1::getModules
+#@-node:2::getFiles
+#@+node:3::getModules
 #@+body
 def getModules (dir):
 	
@@ -72,8 +72,8 @@ def getModules (dir):
 			
 	return files
 #@-body
-#@-node:+0::getModules
-#@+node:+1::any
+#@-node:3::getModules
+#@+node:4::any
 #@+body
 def any(x,stats,printName = 0):
 	# based on dis.dis()
@@ -105,8 +105,8 @@ def any(x,stats,printName = 0):
 			  "don't know how to disassemble %s objects" % \
 			  type(x).__name__
 #@-body
-#@-node:+0::any
-#@+node:+1::code
+#@-node:4::any
+#@+node:5::code
 #@+body
 def code (co, stats):
 	"""Gather static count statistics for a code object."""
@@ -122,8 +122,8 @@ def code (co, stats):
 		if op >= dis.HAVE_ARGUMENT:
 			i = i+2
 #@-body
-#@-node:+0::code
-#@+node:+1::print_stats
+#@-node:5::code
+#@+node:6::print_stats
 #@+body
 def print_stats (stats):
 
@@ -139,7 +139,7 @@ def print_stats (stats):
 		print string.rjust(`stat`,6), dis.opname[i]
 	print "total", `total`
 #@-body
-#@-node:+0::print_stats
+#@-node:6::print_stats
 #@-others
 
 

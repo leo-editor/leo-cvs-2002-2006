@@ -11,7 +11,7 @@ import exceptions,sys,string,Tkinter,tkFont,traceback
 class leoFontPanel:
 
 	#@+others
-	#@+node:+1::fontPanel.__init__
+	#@+node:1::fontPanel.__init__
 	#@+body
 	def __init__ (self,c):
 		
@@ -36,8 +36,8 @@ class leoFontPanel:
 		self.example_entry = None
 		self.outer = None
 	#@-body
-	#@-node:+0::fontPanel.__init__
-	#@+node:+1::create_outer
+	#@-node:1::fontPanel.__init__
+	#@+node:2::create_outer
 	#@+body
 	def create_outer(self):
 	
@@ -45,7 +45,7 @@ class leoFontPanel:
 		top = self.top
 		
 		#@<< Create the organizer frames >>
-		#@+node:-1::<< create the organizer frames >>
+		#@+node:1::<< create the organizer frames >>
 		#@+body
 		self.outer = outer = Tk.Frame(top,bd=2,relief="groove",width="8i")
 		outer.pack(padx=2,pady=2,expand=1,fill="both")
@@ -64,11 +64,11 @@ class leoFontPanel:
 		lower = Tk.Frame(outer)
 		lower.pack(side="top",anchor="w",padx=20)
 		#@-body
-		#@-node:+0::<< create the organizer frames >>
+		#@-node:1::<< create the organizer frames >>
 
 		
 		#@<< create the font pane >>
-		#@+node:+1::<< create the font pane >>
+		#@+node:2::<< create the font pane >>
 		#@+body
 		# Create the list box and its scrollbar.
 		self.family_list_box = box = Tk.Listbox(lt,height=7)
@@ -89,11 +89,11 @@ class leoFontPanel:
 		bar.config(command=box.yview)
 		box.config(yscrollcommand=bar.set)
 		#@-body
-		#@-node:+0::<< create the font pane >>
+		#@-node:2::<< create the font pane >>
 
 		
 		#@<< create the checkboxes >>
-		#@+node:+1::<< create the checkboxes >>
+		#@+node:3::<< create the checkboxes >>
 		#@+body
 		# Create the style checkboxes.
 		for text,var in (
@@ -123,11 +123,11 @@ class leoFontPanel:
 			b = Tk.Checkbutton(rt,text=text,variable=var,command=command)
 			b.pack(side="top",anchor="w")
 		#@-body
-		#@-node:+0::<< create the checkboxes >>
+		#@-node:3::<< create the checkboxes >>
 
 		
 		#@<< create Ok, Cancel and Revert buttons >>
-		#@+node:+1::<< create Ok, Cancel and Revert buttons >>
+		#@+node:4::<< create Ok, Cancel and Revert buttons >>
 		#@+body
 		for name,command in (
 			("OK",self.onOk),
@@ -137,10 +137,10 @@ class leoFontPanel:
 			b = Tk.Button(lower,width=7,text=name,command=command)
 			b.pack(side="left",anchor="w",pady=6,padx=4,expand=0) #,fill="y")
 		#@-body
-		#@-node:+0::<< create Ok, Cancel and Revert buttons >>
+		#@-node:4::<< create Ok, Cancel and Revert buttons >>
 	#@-body
-	#@-node:-2::create_outer
-	#@+node:+1::finishCreate
+	#@-node:2::create_outer
+	#@+node:3::finishCreate
 	#@+body
 	def finishCreate (self):
 		
@@ -154,8 +154,8 @@ class leoFontPanel:
 		self.update()
 
 	#@-body
-	#@-node:+0::finishCreate
-	#@+node:+1::getActiveFont
+	#@-node:3::finishCreate
+	#@+node:4::getActiveFont
 	#@+body
 	#@+at
 	#  Returns a font corresponding to present visual state of the font 
@@ -209,8 +209,8 @@ class leoFontPanel:
 		self.selectFont(font)
 		return font
 	#@-body
-	#@-node:+0::getActiveFont
-	#@+node:+1::getFontSettings
+	#@-node:4::getActiveFont
+	#@+node:5::getFontSettings
 	#@+body
 	def getFontSettings (self, font):
 	
@@ -221,8 +221,8 @@ class leoFontPanel:
 	
 		return name, size, slant, weight
 	#@-body
-	#@-node:+0::getFontSettings
-	#@+node:+1::getImpliedFont
+	#@-node:5::getFontSettings
+	#@+node:6::getImpliedFont
 	#@+body
 	# If a single pane's checkbox is checked, select that pane's present font.
 	# Otherwise, select the present font of some checked pane, it doesn't much matter which.
@@ -252,8 +252,8 @@ class leoFontPanel:
 		else:      font = bodyFont
 		return font
 	#@-body
-	#@-node:+0::getImpliedFont
-	#@+node:+1::on...BoxChanged
+	#@-node:6::getImpliedFont
+	#@+node:7::on...BoxChanged
 	#@+body
 	#@+at
 	#  We define these routines so that changing one pane box affects only 
@@ -290,15 +290,15 @@ class leoFontPanel:
 		c.tree.setFont(font=font)
 		c.redraw()
 	#@-body
-	#@-node:+0::on...BoxChanged
-	#@+node:+1::leoFont.onOk, onCancel, onRevert
+	#@-node:7::on...BoxChanged
+	#@+node:8::leoFont.onOk, onCancel, onRevert
 	#@+body
 	def onOk (self):
 		c = self.commands
 		self.showSettings()
 		
 		#@<< update the configuration settings >>
-		#@+node:-7::<< update the configuration settings >>
+		#@+node:1::<< update the configuration settings >>
 		#@+body
 		set = app().config.setWindowPref
 		
@@ -325,7 +325,7 @@ class leoFontPanel:
 		set("headline_text_font_slant",slant)
 		set("headline_text_font_weight",weight)
 		#@-body
-		#@-node:+0::<< update the configuration settings >>
+		#@-node:1::<< update the configuration settings >>
 
 		self.setRevertVars()
 		if 1: # Hide the window, preserving its position.
@@ -353,8 +353,8 @@ class leoFontPanel:
 		self.revertIvars()
 		# Don't call update here.
 	#@-body
-	#@-node:+7::leoFont.onOk, onCancel, onRevert
-	#@+node:+1::onSizeEntryKey
+	#@-node:8::leoFont.onOk, onCancel, onRevert
+	#@+node:9::onSizeEntryKey
 	#@+body
 	def onSizeEntryKey (self,event=None):
 		
@@ -372,8 +372,8 @@ class leoFontPanel:
 		if 0 < size < 100: # Choosing very small or large fonts drives Tk crazy.
 			self.update()
 	#@-body
-	#@-node:+0::onSizeEntryKey
-	#@+node:+1::revertIvars
+	#@-node:9::onSizeEntryKey
+	#@+node:10::revertIvars
 	#@+body
 	def revertIvars (self):
 		
@@ -401,8 +401,8 @@ class leoFontPanel:
 		e.delete(0,"end")
 		e.insert(0,`size`)
 	#@-body
-	#@-node:+0::revertIvars
-	#@+node:+1::run
+	#@-node:10::revertIvars
+	#@+node:11::run
 	#@+body
 	def run (self):
 		
@@ -428,8 +428,8 @@ class leoFontPanel:
 			top.focus_force() # Get all keystrokes.
 
 	#@-body
-	#@-node:+0::run
-	#@+node:+1::selectFont
+	#@-node:11::run
+	#@+node:12::selectFont
 	#@+body
 	def selectFont (self,font):
 		
@@ -451,8 +451,8 @@ class leoFontPanel:
 				return
 		# print "not found:" + name
 	#@-body
-	#@-node:+0::selectFont
-	#@+node:+1::setRevertVars
+	#@-node:12::selectFont
+	#@+node:13::setRevertVars
 	#@+body
 	def setRevertVars (self):
 		
@@ -467,8 +467,8 @@ class leoFontPanel:
 		
 		self.revertTreeFont = c.tree.getFont()
 	#@-body
-	#@-node:+0::setRevertVars
-	#@+node:+1::showSettings
+	#@-node:13::setRevertVars
+	#@+node:14::showSettings
 	#@+body
 	# Write all settings to the log panel.
 	# Note that just after a revert all three setting may be different.
@@ -491,8 +491,8 @@ class leoFontPanel:
 		name,size,slant,weight = self.getFontSettings(font)
 		es("headline font:" + name + "," + `size` + "," + slant + "," + weight)
 	#@-body
-	#@-node:+0::showSettings
-	#@+node:+1::update
+	#@-node:14::showSettings
+	#@+node:15::update
 	#@+body
 	# Updates size box and example box when something changes.
 	
@@ -521,7 +521,7 @@ class leoFontPanel:
 		c.tree.setFont(font=f)
 		c.redraw()
 	#@-body
-	#@-node:+0::update
+	#@-node:15::update
 	#@-others
 #@-body
 #@-node:0::@file leoFontPanel.py

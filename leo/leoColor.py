@@ -12,7 +12,7 @@ import string, Tkinter, tkColorChooser, traceback
 
 
 #@<< define colorizer constants >>
-#@+node:+1::<< define colorizer constants >>
+#@+node:1::<< define colorizer constants >>
 #@+body
 # We only define states that can continue across lines.
 normalState = 1
@@ -37,14 +37,14 @@ default_colors_dict = {
 	"name"         :("undefined_section_name_color","red") }
 
 #@-body
-#@-node:+0::<< define colorizer constants >>
+#@-node:1::<< define colorizer constants >>
 
 
 #@<< define colorizer keywords >>
-#@+node:+1::<< define colorizer keywords >>
+#@+node:2::<< define colorizer keywords >>
 #@+body
 #@<< leo keywords >>
-#@+node:-1::<< leo keywords >>
+#@+node:1::<< leo keywords >>
 #@+body
 leoKeywords = (
 	# Leo 2 directives.
@@ -58,11 +58,11 @@ leoKeywords = (
 	# Leo 1 directives.
 	"@cweb","@ignore","@noweb","@root","@unit","@silent","@terse","@verbose")
 #@-body
-#@-node:+0::<< leo keywords >>
+#@-node:1::<< leo keywords >>
 
 
 #@<< c keywords >>
-#@+node:+1::<< c keywords >>
+#@+node:2::<< c keywords >>
 #@+body
 	
 c_keywords = (
@@ -80,12 +80,12 @@ c_keywords = (
 	"template","this","throw","true","try",
 	"typeid","typename","using","virtual","wchar_t")
 #@-body
-#@-node:+0::<< c keywords >>
+#@-node:2::<< c keywords >>
 
 cweb_keywords = c_keywords
 
 #@<< html keywords >>
-#@+node:+1::<< html keywords >>
+#@+node:3::<< html keywords >>
 #@+body
 html_keywords = (
 	# HTML constructs.
@@ -114,11 +114,11 @@ html_keywords = (
 	# Escapes
 	"&amp;", "&lt;", "&gt;", "&quot;" )
 #@-body
-#@-node:+0::<< html keywords >>
+#@-node:3::<< html keywords >>
 
 
 #@<< java keywords >>
-#@+node:+1::<< java keywords >>
+#@+node:4::<< java keywords >>
 #@+body
 java_keywords = (
 	"abstract","boolean","break","byte","byvalue",
@@ -133,11 +133,11 @@ java_keywords = (
 	"this","throw","transient","true","try",
 	"var","void","volatile","while")
 #@-body
-#@-node:+0::<< java keywords >>
+#@-node:4::<< java keywords >>
 
 
 #@<< latex keywords >>
-#@+node:+1::<< latex keywords >>
+#@+node:5::<< latex keywords >>
 #@+body
 #If you see two idenitical words, with minor capitalization differences
 #DO NOT ASSUME that they are the same word. For example \vert produces
@@ -265,11 +265,11 @@ latex_keywords = (
 	#Z
 	"\\zeta" )
 #@-body
-#@-node:+0::<< latex keywords >>
+#@-node:5::<< latex keywords >>
 
 
 #@<< pascal keywords >>
-#@+node:+1::<< pascal keywords >>
+#@+node:6::<< pascal keywords >>
 #@+body
 pascal_keywords = (
 	"and","array","as","begin",
@@ -294,11 +294,11 @@ pascal_keywords = (
 	# limited contexts
 	"exports","property","default","write","stored","index","name" )
 #@-body
-#@-node:+0::<< pascal keywords >>
+#@-node:6::<< pascal keywords >>
 
 
 #@<< perl keywords >>
-#@+node:+1::<< perl keywords >>
+#@+node:7::<< perl keywords >>
 #@+body
 perl_keywords = (
 	"continue","do","else","elsif","format","for","format","for","foreach",
@@ -364,12 +364,12 @@ perl_keywords = (
 	"print","printf","return","reverse",
 	"sort","system","syscall","unlink","utime","warn")
 #@-body
-#@-node:+0::<< perl keywords >>
+#@-node:7::<< perl keywords >>
 
 perlpod_keywords = perl_keywords
 
 #@<< python keywords >>
-#@+node:+1::<< python keywords >>
+#@+node:8::<< python keywords >>
 #@+body
 python_keywords = (
 	"and",       "del",       "for",       "is",        "raise",    
@@ -379,11 +379,11 @@ python_keywords = (
 	"continue",  "exec",      "import",    "pass",      "while",
 	"def",       "finally",   "in",        "print")
 #@-body
-#@-node:+0::<< python keywords >>
+#@-node:8::<< python keywords >>
 
 
 #@<< tcl/tk keywords >>
-#@+node:+1::<< tcl/tk keywords >>
+#@+node:9::<< tcl/tk keywords >>
 #@+body
 tcltk_keywords = ( # Only the tcl keywords are here.
 	"after",     "append",    "array",
@@ -415,11 +415,11 @@ tcltk_keywords = ( # Only the tcl keywords are here.
 	"variable",  "vwait",
 	"while" )
 #@-body
-#@-node:+0::<< tcl/tk keywords >>
+#@-node:9::<< tcl/tk keywords >>
 
 
 #@<< php keywords >>
-#@+node:+1::<< php keywords >>
+#@+node:10::<< php keywords >>
 #@+body
 php_keywords = ( # 08-SEP-2002 DTHEIN
 	"__CLASS__", "__FILE__", "__FUNCTION__", "__LINE__",
@@ -443,13 +443,13 @@ php_paren_keywords = (
 # "<?php", "?>"
 
 #@-body
-#@-node:+0::<< php keywords >>
+#@-node:10::<< php keywords >>
 #@-body
-#@-node:-8::<< define colorizer keywords >>
+#@-node:2::<< define colorizer keywords >>
 
 
 #@<< define colorizer functions >>
-#@+node:+1::<< define colorizer functions >>
+#@+node:3::<< define colorizer functions >>
 #@+body
 def index(i,j):
 
@@ -460,11 +460,11 @@ def index(i,j):
 	return i + '.' + j
 
 #@-body
-#@-node:+0::<< define colorizer functions >>
+#@-node:3::<< define colorizer functions >>
 
 
 #@<< define color panel data >>
-#@+node:+1::<< define color panel data >>
+#@+node:4::<< define color panel data >>
 #@+body
 colorPanelData = (
 	#Dialog name,                option name,         default color),
@@ -544,17 +544,17 @@ colorNamesList = (
 	"thistle4" )
 
 #@-body
-#@-node:+0::<< define color panel data >>
+#@-node:4::<< define color panel data >>
 
 
 
 #@+others
-#@+node:+1::class colorizer
+#@+node:5::class colorizer
 #@+body
 class colorizer:
 
 	#@+others
-	#@+node:-4::color.__init__
+	#@+node:1::color.__init__
 	#@+body
 	def disable (self):
 	
@@ -572,31 +572,31 @@ class colorizer:
 		self.comment_string = None # Set by scanColorDirectives on @comment
 		trace("-nocolor", self.disable)
 	#@-body
-	#@-node:+0::color.__init__
-	#@+node:+1::color.callbacks...
-	#@+node:-1::OnHyperLinkControlClick
+	#@-node:1::color.__init__
+	#@+node:2::color.callbacks...
+	#@+node:1::OnHyperLinkControlClick
 	#@+body
 	def OnHyperLinkControlClick (self,v):
 	
 		pass
 	#@-body
-	#@-node:+0::OnHyperLinkControlClick
-	#@+node:+1::OnHyperLinkEnter
+	#@-node:1::OnHyperLinkControlClick
+	#@+node:2::OnHyperLinkEnter
 	#@+body
 	def OnHyperLinkEnter (self,v):
 	
 		pass # trace(`v` + ", " + `v.tagName`)
 	#@-body
-	#@-node:+0::OnHyperLinkEnter
-	#@+node:+1::OnHyperLinkLeave
+	#@-node:2::OnHyperLinkEnter
+	#@+node:3::OnHyperLinkLeave
 	#@+body
 	def OnHyperLinkLeave (self,v):
 	
 		pass # trace(`v`)
 	#@-body
-	#@-node:+0::OnHyperLinkLeave
-	#@-node:-1::color.callbacks...
-	#@+node:+1::colorize
+	#@-node:3::OnHyperLinkLeave
+	#@-node:2::color.callbacks...
+	#@+node:3::colorize
 	#@+body
 	def colorize(self,v,body):
 	
@@ -604,8 +604,8 @@ class colorizer:
 			flag,language = self.updateSyntaxColorer(v)
 			self.colorizeAnyLanguage(v,body,language,flag)
 	#@-body
-	#@-node:+0::colorize
-	#@+node:+1::colorizeAnyLanguage
+	#@-node:3::colorize
+	#@+node:4::colorizeAnyLanguage
 	#@+body
 	tags = (
 		"blank", "comment", "cwebName", "docPart", "keyword", "leoKeyword",
@@ -632,7 +632,7 @@ class colorizer:
 				"link", "name", "nameBrackets", "pp", "string", "tab")
 		
 		#@<< configure tags >>
-		#@+node:-3::<< configure tags >>
+		#@+node:1::<< configure tags >>
 		#@+body
 		config = app().config
 		assert(config)
@@ -667,11 +667,11 @@ class colorizer:
 			body.tag_config("blank",background="Gray90")
 			body.tag_config("tab",background="Gray80")
 		#@-body
-		#@-node:+0::<< configure tags >>
+		#@-node:1::<< configure tags >>
 
 		
 		#@<< configure language-specific settings >>
-		#@+node:+1::<< configure language-specific settings >> (colorizer)
+		#@+node:2::<< configure language-specific settings >> (colorizer)
 		#@+body
 		# Define has_string, keywords, single_comment_start, block_comment_start, block_comment_end.
 		
@@ -710,7 +710,7 @@ class colorizer:
 		lb = choose(language==cweb_language,"@<","<<")
 		rb = choose(language==cweb_language,"@>",">>")
 		#@-body
-		#@-node:+0::<< configure language-specific settings >> (colorizer)
+		#@-node:2::<< configure language-specific settings >> (colorizer)
 
 		self.count += 1
 		
@@ -725,8 +725,8 @@ class colorizer:
 				if state == string3State:
 					
 					#@<< continue python triple string >>
-					#@+node:+1::Multiline State Handlers
-					#@+node:-1::<< continue python triple string >>
+					#@+node:3::Multiline State Handlers
+					#@+node:2::<< continue python triple string >>
 					#@+body
 					delim = self.delim
 					if delim=="'''":
@@ -745,20 +745,20 @@ class colorizer:
 						body.tag_add("string", index(n,i), index(n,j+3))
 						i = j + 3 ; state = normalState ; self.delim = None
 					#@-body
-					#@-node:+0::<< continue python triple string >>
-					#@-node:+1::Multiline State Handlers
+					#@-node:2::<< continue python triple string >>
+					#@-node:3::Multiline State Handlers
 
 					continue
 				elif state == docState:
 					
 					#@<< continue doc part >>
-					#@+node:+0::Multiline State Handlers
-					#@+node:-2::<< continue doc part >>
+					#@+node:3::Multiline State Handlers
+					#@+node:1::<< continue doc part >>
 					#@+body
 					if language == cweb_language:
 						
 						#@<< handle cweb doc part >>
-						#@+node:+0::<< handle cweb doc part >>
+						#@+node:1::<< handle cweb doc part >>
 						#@+body
 						word = self.getCwebWord(s,i)
 						if word and len(word) > 0:
@@ -782,12 +782,12 @@ class colorizer:
 							body.tag_add("docPart", index(n,i), index(n,j))
 							i = j
 						#@-body
-						#@-node:+0::<< handle cweb doc part >>
+						#@-node:1::<< handle cweb doc part >>
 
 					else:
 						
 						#@<< handle noweb doc part >>
-						#@+node:+1::<< handle noweb doc part >>
+						#@+node:2::<< handle noweb doc part >>
 						#@+body
 						if i == 0 and match(s,i,lb):
 							# Possible section definition line.
@@ -810,17 +810,17 @@ class colorizer:
 							body.tag_add("docPart", index(n,i), index(n,sLen))
 							i = sLen # skipt the rest of the line.
 						#@-body
-						#@-node:+0::<< handle noweb doc part >>
+						#@-node:2::<< handle noweb doc part >>
 					#@-body
-					#@-node:-1::<< continue doc part >>
-					#@-node:+2::Multiline State Handlers
+					#@-node:1::<< continue doc part >>
+					#@-node:3::Multiline State Handlers
 
 					continue
 				elif state == nocolorState:
 					
 					#@<< continue nocolor state >>
-					#@+node:+0::Multiline State Handlers
-					#@+node:+1::<< continue nocolor state >>
+					#@+node:3::Multiline State Handlers
+					#@+node:4::<< continue nocolor state >>
 					#@+body
 					if i == 0 and ch == '@':
 						j = self.skip_id(s,i+1)
@@ -843,15 +843,15 @@ class colorizer:
 								body.tag_add("tab", index(n,i))
 							i += 1
 					#@-body
-					#@-node:+0::<< continue nocolor state >>
-					#@-node:-1::Multiline State Handlers
+					#@-node:4::<< continue nocolor state >>
+					#@-node:3::Multiline State Handlers
 
 					continue
 				elif state == continueCommentState:
 					
 					#@<< continue string state >>
-					#@+node:+0::Multiline State Handlers
-					#@+node:+2::<< continue string state >>
+					#@+node:3::Multiline State Handlers
+					#@+node:5::<< continue string state >>
 					#@+body
 					# Similar to skip_string.
 					delim = self.delim
@@ -873,15 +873,15 @@ class colorizer:
 					body.tag_add("string", index(n,j), index(n,i))
 					state = choose(continueFlag, continueCommentState, normalState)
 					#@-body
-					#@-node:+0::<< continue string state >>
-					#@-node:-2::Multiline State Handlers
+					#@-node:5::<< continue string state >>
+					#@-node:3::Multiline State Handlers
 
 					continue
 				elif state == blockCommentState:
 					
 					#@<< continue block comment >>
-					#@+node:+0::Multiline State Handlers
-					#@+node:+0::<< continue block comment >>
+					#@+node:3::Multiline State Handlers
+					#@+node:3::<< continue block comment >>
 					#@+body
 					j = string.find(s,block_comment_end,i)
 					if j == -1:
@@ -894,8 +894,8 @@ class colorizer:
 						body.tag_add("comment", index(n,i), index(n,j+k))
 						i = j + k ; state = normalState
 					#@-body
-					#@-node:+0::<< continue block comment >>
-					#@-node:+0::Multiline State Handlers
+					#@-node:3::<< continue block comment >>
+					#@-node:3::Multiline State Handlers
 
 					continue
 				else: assert(state == normalState)
@@ -903,7 +903,7 @@ class colorizer:
 				if has_string and (ch == '"' or ch == "'"):
 					
 					#@<< handle string >>
-					#@+node:+1::<< handle string >>
+					#@+node:4::<< handle string >>
 					#@+body
 					if language == python_language:
 						j, state = self.skip_python_string(s,i)
@@ -914,43 +914,43 @@ class colorizer:
 						body.tag_add("string", index(n,i), index(n,j))
 						i = j
 					#@-body
-					#@-node:+0::<< handle string >>
+					#@-node:4::<< handle string >>
 
 				elif single_comment_start and match(s,i,single_comment_start):
 					
 					#@<< handle single-line comment >>
-					#@+node:+2::<< handle single-line comment >>
+					#@+node:6::<< handle single-line comment >>
 					#@+body
 					body.tag_add("comment", index(n,i), index(n,"end"))
 					i = sLen
 					#@-body
-					#@-node:+0::<< handle single-line comment >>
+					#@-node:6::<< handle single-line comment >>
 
 				elif block_comment_start and match(s,i,block_comment_start):
 					
 					#@<< start block comment >>
-					#@+node:-1::<< start block comment >>
+					#@+node:5::<< start block comment >>
 					#@+body
 					k = len(block_comment_start)
 					body.tag_add("comment", index(n,i), index(n,i+k))
 					i += k ; state = blockCommentState
 					#@-body
-					#@-node:+0::<< start block comment >>
+					#@-node:5::<< start block comment >>
 
 				elif ch == '#' and language in [c_language,cweb_language]:
 					
 					#@<< handle C preprocessor line >>
-					#@+node:+2::<< handle C preprocessor line >>
+					#@+node:7::<< handle C preprocessor line >>
 					#@+body
 					body.tag_add("pp", index(n,i), index(n,"end"))
 					i = sLen
 					#@-body
-					#@-node:+0::<< handle C preprocessor line >>
+					#@-node:7::<< handle C preprocessor line >>
 
 				elif match(s,i,lb) or (language==cweb_language and match(s,i,"@(")):
 					
 					#@<< handle possible section ref or def >>
-					#@+node:+1::<< handle possible section ref or def >>
+					#@+node:8::<< handle possible section ref or def >>
 					#@+body
 					body.tag_add("nameBrackets", index(n,i), index(n,i+2))
 					
@@ -972,7 +972,7 @@ class colorizer:
 							if self.use_hyperlinks:
 								
 								#@<< set the hyperlink >>
-								#@+node:-7::<< set the hyperlink >>
+								#@+node:1::<< set the hyperlink >>
 								#@+body
 								# Set the bindings to vnode callbacks.
 								# Create the tag.
@@ -986,7 +986,7 @@ class colorizer:
 								body.tag_bind(tagName,"<Any-Enter>",ref.OnHyperLinkEnter)
 								body.tag_bind(tagName,"<Any-Leave>",ref.OnHyperLinkLeave)
 								#@-body
-								#@-node:+0::<< set the hyperlink >>
+								#@-node:1::<< set the hyperlink >>
 
 						elif k == 3: # a section definition
 							body.tag_add("link", index(n,i+2), index(n,j))
@@ -995,18 +995,18 @@ class colorizer:
 						body.tag_add("nameBrackets", index(n,j), index(n,j+k))
 						i = j + k
 					#@-body
-					#@-node:+7::<< handle possible section ref or def >>
+					#@-node:8::<< handle possible section ref or def >>
 
 				elif ch == '@':
 					
 					#@<< handle possible @keyword >>
-					#@+node:+1::<< handle possible @keyword >>
+					#@+node:9::<< handle possible @keyword >>
 					#@+body
 					word = None
 					if language == cweb_language:
 						
 						#@<< Handle all cweb control codes >>
-						#@+node:-8::<< Handle all cweb control codes >>
+						#@+node:1::<< Handle all cweb control codes >>
 						#@+body
 						word = self.getCwebWord(s,i)
 						if word:
@@ -1027,12 +1027,12 @@ class colorizer:
 									i = j + 2
 
 						#@-body
-						#@-node:+0::<< Handle all cweb control codes >>
+						#@-node:1::<< Handle all cweb control codes >>
 
 					if not word:
 						
 						#@<< Handle non-cweb @keywords >>
-						#@+node:+1::<< Handle non-cweb @keywords >>
+						#@+node:2::<< Handle non-cweb @keywords >>
 						#@+body
 						j = self.skip_id(s,i+1)
 						word = s[i:j]
@@ -1057,14 +1057,14 @@ class colorizer:
 						else:
 							i = j
 						#@-body
-						#@-node:+0::<< Handle non-cweb @keywords >>
+						#@-node:2::<< Handle non-cweb @keywords >>
 					#@-body
-					#@-node:+7::<< handle possible @keyword >>
+					#@-node:9::<< handle possible @keyword >>
 
 				elif ch in string.letters or ch == '_' or (ch == '\\' and language == latex_language):
 					
 					#@<< handle possible keyword >>
-					#@+node:+1::<< handle possible  keyword >>
+					#@+node:10::<< handle possible  keyword >>
 					#@+body
 					if language == latex_language and match(s,i,"\\"):
 						j = self.skip_id(s,i+1)
@@ -1080,12 +1080,12 @@ class colorizer:
 							j += 2
 					i = j
 					#@-body
-					#@-node:+0::<< handle possible  keyword >>
+					#@-node:10::<< handle possible  keyword >>
 
 				elif language == php_language and (match(s,i,"<") or match(s,i,"?")):
 					
 					#@<< handle special php keywords >>
-					#@+node:+1::<< handle special php keywords >>
+					#@+node:11::<< handle special php keywords >>
 					#@+body
 					if match(s,i,"<?php"):
 						body.tag_add("keyword", index(n,i), index(n,i+5))
@@ -1097,47 +1097,47 @@ class colorizer:
 						i += 1
 
 					#@-body
-					#@-node:+0::<< handle special php keywords >>
+					#@-node:11::<< handle special php keywords >>
 
 				elif ch == ' ':
 					
 					#@<< handle blank >>
-					#@+node:+1::<< handle blank >>
+					#@+node:12::<< handle blank >>
 					#@+body
 					if self.showInvisibles:
 						body.tag_add("blank", index(n,i))
 					i += 1
 					#@-body
-					#@-node:+0::<< handle blank >>
+					#@-node:12::<< handle blank >>
 
 				elif ch == '\t':
 					
 					#@<< handle tab >>
-					#@+node:+1::<< handle tab >>
+					#@+node:13::<< handle tab >>
 					#@+body
 					if self.showInvisibles:
 						body.tag_add("tab", index(n,i))
 					i += 1
 					#@-body
-					#@-node:+0::<< handle tab >>
+					#@-node:13::<< handle tab >>
 
 				else:
 					
 					#@<< handle normal character >>
-					#@+node:+1::<< handle normal character >>
+					#@+node:14::<< handle normal character >>
 					#@+body
 					# body.tag_add("normal", index(n,i))
 					i += 1
 
 					#@-body
-					#@-node:+0::<< handle normal character >>
+					#@-node:14::<< handle normal character >>
 
 				assert(progress < i)
 	#@-body
-	#@+node:-11::Multiline State Handlers
-	#@-node:+0::Multiline State Handlers
-	#@-node:+1::colorizeAnyLanguage
-	#@+node:+1::scanColorDirectives
+	#@+node:3::Multiline State Handlers
+	#@-node:3::Multiline State Handlers
+	#@-node:4::colorizeAnyLanguage
+	#@+node:5::scanColorDirectives
 	#@+body
 	#@+at
 	#  This code scans the node v and all of v's ancestors looking for @color 
@@ -1156,7 +1156,7 @@ class colorizer:
 			bits, dict = is_special_bits(s)
 			
 			#@<< Test for @comment or @language >>
-			#@+node:-4::<< Test for @comment or @language >>
+			#@+node:1::<< Test for @comment or @language >>
 			#@+body
 			#@+at
 			#  Disabling syntax coloring when @comment is seen is stupid and 
@@ -1185,14 +1185,14 @@ class colorizer:
 				language, junk, junk, junk = set_language(s,i,issue_error_flag)
 				break
 			#@-body
-			#@-node:+0::<< Test for @comment or @language >>
+			#@-node:1::<< Test for @comment or @language >>
 
 			v = v.parent()
 		# trace(`language`)
 		return language
 	#@-body
-	#@-node:+4::scanColorDirectives
-	#@+node:+1::color.schedule
+	#@-node:5::scanColorDirectives
+	#@+node:6::color.schedule
 	#@+body
 	def schedule(self,v,body):
 	
@@ -1205,8 +1205,8 @@ class colorizer:
 		if v and body and self.enabled:
 			self.colorize(v,body)
 	#@-body
-	#@-node:+0::color.schedule
-	#@+node:+1::getCwebWord
+	#@-node:6::color.schedule
+	#@+node:7::getCwebWord
 	#@+body
 	def getCwebWord (self,s,i):
 		
@@ -1234,8 +1234,8 @@ class colorizer:
 			
 		return word
 	#@-body
-	#@-node:+0::getCwebWord
-	#@+node:+1::updateSyntaxColorer
+	#@-node:7::getCwebWord
+	#@+node:8::updateSyntaxColorer
 	#@+body
 	# Returns (flag,language)
 	# flag is true unless an unambiguous @nocolor is seen.
@@ -1248,8 +1248,8 @@ class colorizer:
 		return flag,language
 
 	#@-body
-	#@-node:+0::updateSyntaxColorer
-	#@+node:+1::useSyntaxColoring
+	#@-node:8::updateSyntaxColorer
+	#@+node:9::useSyntaxColoring
 	#@+body
 	# Return true if v unless v is unambiguously under the control of @nocolor.
 	
@@ -1275,8 +1275,8 @@ class colorizer:
 		# trace("useSyntaxColoring",`val`)
 		return val
 	#@-body
-	#@-node:+0::useSyntaxColoring
-	#@+node:+1::Utils
+	#@-node:9::useSyntaxColoring
+	#@+node:10::Utils
 	#@+body
 	#@+at
 	#  These methods are like the corresponding functions in leoUtils.py 
@@ -1284,7 +1284,7 @@ class colorizer:
 
 	#@-at
 	#@-body
-	#@+node:-9::skip_id
+	#@+node:1::skip_id
 	#@+body
 	def skip_id(self,s,i):
 	
@@ -1297,8 +1297,8 @@ class colorizer:
 		return i
 
 	#@-body
-	#@-node:+0::skip_id
-	#@+node:+1::skip_python_string
+	#@-node:1::skip_id
+	#@+node:2::skip_python_string
 	#@+body
 	def skip_python_string(self,s,i):
 	
@@ -1312,8 +1312,8 @@ class colorizer:
 		else:
 			return self.skip_string(s,i)
 	#@-body
-	#@-node:+0::skip_python_string
-	#@+node:+1::skip_string
+	#@-node:2::skip_python_string
+	#@+node:3::skip_string
 	#@+body
 	def skip_string(self,s,i):
 	
@@ -1335,17 +1335,17 @@ class colorizer:
 		return i,normalState
 
 	#@-body
-	#@-node:+0::skip_string
-	#@-node:+7::Utils
+	#@-node:3::skip_string
+	#@-node:10::Utils
 	#@-others
 #@-body
-#@-node:-5::class colorizer
-#@+node:+1::class leoColorPanel
+#@-node:5::class colorizer
+#@+node:6::class leoColorPanel
 #@+body
 class leoColorPanel:
 
 	#@+others
-	#@+node:-5::colorPanel.__init__
+	#@+node:1::colorPanel.__init__
 	#@+body
 	def __init__ (self,c):
 		
@@ -1365,8 +1365,8 @@ class leoColorPanel:
 		for name,option_name,default_color in colorPanelData:
 			self.revertColors[option_name] = config.getColorsPref(option_name)
 	#@-body
-	#@-node:+0::colorPanel.__init__
-	#@+node:+1::run
+	#@-node:1::colorPanel.__init__
+	#@+node:2::run
 	#@+body
 	def run (self):
 		
@@ -1379,7 +1379,7 @@ class leoColorPanel:
 	
 		
 		#@<< create color panel >>
-		#@+node:-1::<< create color panel >>
+		#@+node:1::<< create color panel >>
 		#@+body
 		outer = Tk.Frame(top,bd=2,relief="groove")
 		outer.pack(anchor="n",pady=2,ipady=1,expand=1,fill="x")
@@ -1426,7 +1426,7 @@ class leoColorPanel:
 		b = Tk.Button(f,width=6,text="Revert",command=self.onRevert)
 		b.pack(side="right",padx=4)
 		#@-body
-		#@-node:+0::<< create color panel >>
+		#@-node:1::<< create color panel >>
 
 		center_dialog(top) # Do this _after_ building the dialog!
 		top.resizable(0,0)
@@ -1437,8 +1437,8 @@ class leoColorPanel:
 			top.grab_set() # Make the dialog a modal dialog.
 			top.focus_force() # Get all keystrokes.
 	#@-body
-	#@-node:+1::run
-	#@+node:+1::showColorPicker
+	#@-node:2::run
+	#@+node:3::showColorPicker
 	#@+body
 	def showColorPicker (self,name):
 		
@@ -1448,16 +1448,16 @@ class leoColorPanel:
 		if val != None:
 			self.update(name,val)
 	#@-body
-	#@-node:+0::showColorPicker
-	#@+node:+1::showColorName
+	#@-node:3::showColorPicker
+	#@+node:4::showColorName
 	#@+body
 	def showColorName (self,name,color):
 		
 		np = leoColorNamePanel(self,name,color)
 		np.run(name,color)
 	#@-body
-	#@-node:+0::showColorName
-	#@+node:+1::colorPanel.onOk, onCancel, onRevert
+	#@-node:4::showColorName
+	#@+node:5::colorPanel.onOk, onCancel, onRevert
 	#@+body
 	def onOk (self):
 		# Update the revert colors
@@ -1495,8 +1495,8 @@ class leoColorPanel:
 		self.changed_options = []
 		self.commands.recolor()
 	#@-body
-	#@-node:+0::colorPanel.onOk, onCancel, onRevert
-	#@+node:+1::update
+	#@-node:5::colorPanel.onOk, onCancel, onRevert
+	#@+node:6::update
 	#@+body
 	def update (self,name,val):
 		
@@ -1520,16 +1520,16 @@ class leoColorPanel:
 		config.setColorsPref(option_name,val)
 		self.commands.recolor()
 	#@-body
-	#@-node:+0::update
+	#@-node:6::update
 	#@-others
 #@-body
-#@-node:+0::class leoColorPanel
-#@+node:+1::class leoColorNamePanel
+#@-node:6::class leoColorPanel
+#@+node:7::class leoColorNamePanel
 #@+body
 class leoColorNamePanel:
 
 	#@+others
-	#@+node:-6::namePanel.__init__
+	#@+node:1::namePanel.__init__
 	#@+body
 	def __init__ (self, colorPanel, name, color):
 		
@@ -1538,8 +1538,8 @@ class leoColorNamePanel:
 		self.color = color
 		self.revertColor = color
 	#@-body
-	#@-node:+0::namePanel.__init__
-	#@+node:+1::getSelection
+	#@-node:1::namePanel.__init__
+	#@+node:2::getSelection
 	#@+body
 	def getSelection (self):
 	
@@ -1560,8 +1560,8 @@ class leoColorNamePanel:
 			color = self.color
 		return color
 	#@-body
-	#@-node:+0::getSelection
-	#@+node:+1::run
+	#@-node:2::getSelection
+	#@+node:3::run
 	#@+body
 	def run (self,name,color):
 		
@@ -1578,7 +1578,7 @@ class leoColorNamePanel:
 	
 		
 		#@<< create color name panel >>
-		#@+node:-2::<< create color name panel >>
+		#@+node:1::<< create color name panel >>
 		#@+body
 		# Create organizer frames
 		outer = Tk.Frame(top,bd=2,relief="groove")
@@ -1624,7 +1624,7 @@ class leoColorNamePanel:
 			b = Tk.Button(lower,text=text,command=command)
 			b.pack(side="left",pady=6,padx=4)
 		#@-body
-		#@-node:+0::<< create color name panel >>
+		#@-node:1::<< create color name panel >>
 
 		self.select(color)
 		
@@ -1635,8 +1635,8 @@ class leoColorNamePanel:
 		top.grab_set()
 		top.focus_force() # Get all keystrokes.
 	#@-body
-	#@-node:+2::run
-	#@+node:+1::onOk, onCancel, onRevert, OnApply
+	#@-node:3::run
+	#@+node:4::onOk, onCancel, onRevert, OnApply
 	#@+body
 	def onApply (self,event=None):
 		self.color = color = self.getSelection()
@@ -1656,8 +1656,8 @@ class leoColorNamePanel:
 		self.select(self.color)
 		self.colorPanel.update(self.name,color)
 	#@-body
-	#@-node:+0::onOk, onCancel, onRevert, OnApply
-	#@+node:+1::select
+	#@-node:4::onOk, onCancel, onRevert, OnApply
+	#@+node:5::select
 	#@+body
 	def select (self,color):
 	
@@ -1675,12 +1675,12 @@ class leoColorNamePanel:
 	
 		# trace("not found:" + `color`)
 	#@-body
-	#@-node:+0::select
+	#@-node:5::select
 	#@-others
 
 
 #@-body
-#@-node:+2::class leoColorNamePanel
+#@-node:7::class leoColorNamePanel
 #@-others
 #@-body
 #@-node:0::@file leoColor.py

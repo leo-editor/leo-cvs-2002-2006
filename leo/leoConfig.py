@@ -11,7 +11,7 @@ import exceptions, os, string, sys, traceback, ConfigParser, tkFont
 class config:
 	
 	#@<< define default tables for settings >>
-	#@+node:+1::<< define default tables for settings >>
+	#@+node:1::<< define default tables for settings >>
 	#@+body
 	if 0:
 		defaultConfigDict = {
@@ -132,11 +132,11 @@ class config:
 		"split_bar_relief" : "groove",
 		"split_bar_width" : 7 }
 	#@-body
-	#@-node:+0::<< define default tables for settings >>
+	#@-node:1::<< define default tables for settings >>
 
 	
 	#@<< Define names of settings >>
-	#@+node:+1::<< Define names of settings >>
+	#@+node:2::<< Define names of settings >>
 	#@+body
 	#@+at
 	#  Used only by open.  Update just writes whatever is in the various dicts.
@@ -291,11 +291,11 @@ class config:
 	"split_bar_relief",
 	"split_bar_width" )
 	#@-body
-	#@-node:+0::<< Define names of settings >>
+	#@-node:2::<< Define names of settings >>
 
 
 	#@+others
-	#@+node:+1::config.__init__
+	#@+node:3::config.__init__
 	#@+body
 	def __init__ (self):
 		
@@ -307,7 +307,7 @@ class config:
 		self.configFileName = os.path.join(self.configDir,"leoConfig.txt")
 		
 		#@<< initialize constant ivars >>
-		#@+node:-2::<< initialize constant ivars >>
+		#@+node:1::<< initialize constant ivars >>
 		#@+body
 		# Language names.
 		self.languageNameDict = {
@@ -333,7 +333,7 @@ class config:
 		self.colorsSection = "syntax coloring options"
 		self.windowSection = "window options"
 		#@-body
-		#@-node:+0::<< initialize constant ivars >>
+		#@-node:1::<< initialize constant ivars >>
 
 	
 		# Initialize settings in each section.
@@ -357,8 +357,8 @@ class config:
 		# Initialize the ivars from the config file.
 		self.open()
 	#@-body
-	#@-node:+2::config.__init__
-	#@+node:+1::get...FromDict & setDict
+	#@-node:3::config.__init__
+	#@+node:4::get...FromDict & setDict
 	#@+body
 	def getBoolFromDict (self,name,dict,defaultDict):
 		val = self.getIntFromDict(name,dict,defaultDict)
@@ -400,8 +400,8 @@ class config:
 			
 	getStringFromDict = getFromDict
 	#@-body
-	#@-node:+0::get...FromDict & setDict
-	#@+node:+1::get/setColors
+	#@-node:4::get...FromDict & setDict
+	#@+node:5::get/setColors
 	#@+body
 	def getBoolColorsPref (self,name):
 		return self.getBoolFromDict(name,self.colorsDict,self.defaultColorsDict)
@@ -416,8 +416,8 @@ class config:
 		
 	getStringColorsPref = getColorsPref
 	#@-body
-	#@-node:+0::get/setColors
-	#@+node:+1::get/setComparePref
+	#@-node:5::get/setColors
+	#@+node:6::get/setComparePref
 	#@+body
 	def getBoolComparePref (self,name):
 		return self.getBoolFromDict(name,self.compareDict,self.defaultCompareDict)
@@ -435,8 +435,8 @@ class config:
 		
 	getStringComparePref = getComparePref
 	#@-body
-	#@-node:+0::get/setComparePref
-	#@+node:+1::get/setFindPref
+	#@-node:6::get/setComparePref
+	#@+node:7::get/setFindPref
 	#@+body
 	def getBoolFindPref (self,name):
 		return self.getBoolFromDict(name,self.findDict,self.defaultFindDict)
@@ -451,8 +451,8 @@ class config:
 		
 	getStringFindPref = getFindPref
 	#@-body
-	#@-node:+0::get/setFindPref
-	#@+node:+1::get/setPref
+	#@-node:7::get/setFindPref
+	#@+node:8::get/setPref
 	#@+body
 	def getBoolPref (self,name):
 		return self.getBoolFromDict(name,self.prefsDict,self.defaultPrefsDict)
@@ -470,8 +470,8 @@ class config:
 		
 	getStringPref = getPref
 	#@-body
-	#@-node:+0::get/setPref
-	#@+node:+1::get/setRecentFiles
+	#@-node:8::get/setPref
+	#@+node:9::get/setRecentFiles
 	#@+body
 	def getRecentFiles (self):
 		
@@ -482,8 +482,8 @@ class config:
 		self.recentFiles = files
 
 	#@-body
-	#@-node:+0::get/setRecentFiles
-	#@+node:+1::get/setWindowPrefs
+	#@-node:9::get/setRecentFiles
+	#@+node:10::get/setWindowPrefs
 	#@+body
 	def getBoolWindowPref (self,name):
 		return self.getBoolFromDict(name,self.windowDict,self.defaultWindowDict)
@@ -505,8 +505,8 @@ class config:
 		
 	getStringWindowPref = getWindowPref
 	#@-body
-	#@-node:+0::get/setWindowPrefs
-	#@+node:+1::getFontFromParams
+	#@-node:10::get/setWindowPrefs
+	#@+node:11::getFontFromParams
 	#@+body
 	# A convenience method that computes a font from font parameters.
 	# Arguments are the names of settings to be use.
@@ -537,8 +537,8 @@ class config:
 	
 
 	#@-body
-	#@-node:+0::getFontFromParams
-	#@+node:+1::getShortcut
+	#@-node:11::getFontFromParams
+	#@+node:12::getShortcut
 	#@+body
 	# This code is simple because only the caller knows about defaults.
 	
@@ -554,8 +554,8 @@ class config:
 			return None
 
 	#@-body
-	#@-node:+0::getShortcut
-	#@+node:+1::open
+	#@-node:12::getShortcut
+	#@+node:13::open
 	#@+body
 	def open (self):
 		
@@ -566,7 +566,7 @@ class config:
 			config.readfp(cf)
 			
 			#@<< get config options >>
-			#@+node:-12::<< get config options >>
+			#@+node:1::<< get config options >>
 			#@+body
 			try: self.path_directive_creates_directories = config.get(
 				self.configSection, "path_directive_creates_directories")
@@ -597,11 +597,11 @@ class config:
 			except: self.write_clone_indices = 0
 
 			#@-body
-			#@-node:+0::<< get config options >>
+			#@-node:1::<< get config options >>
 
 			
 			#@<< get recent files >>
-			#@+node:+1::<< get recent files >>
+			#@+node:2::<< get recent files >>
 			#@+body
 			section = self.recentFilesSection
 			
@@ -613,11 +613,11 @@ class config:
 						self.recentFiles.append(config.get(section, "file" + `i`))
 				except: pass
 			#@-body
-			#@-node:+0::<< get recent files >>
+			#@-node:2::<< get recent files >>
 
 			
 			#@<< get compare prefs >>
-			#@+node:+1::<< get compare prefs >>
+			#@+node:3::<< get compare prefs >>
 			#@+body
 			section = self.compareSection
 			dict = self.compareDict
@@ -628,11 +628,11 @@ class config:
 				strings=self.stringCompareNames)
 
 			#@-body
-			#@-node:+0::<< get compare prefs >>
+			#@-node:3::<< get compare prefs >>
 
 			
 			#@<< get keyboard shortcut prefs >>
-			#@+node:+3::<< get keyboard shortcut prefs >>
+			#@+node:6::<< get keyboard shortcut prefs >>
 			#@+body
 			#@+at
 			#  Just put all user values in dict.
@@ -656,11 +656,11 @@ class config:
 			except: pass
 
 			#@-body
-			#@-node:+0::<< get keyboard shortcut prefs >>
+			#@-node:6::<< get keyboard shortcut prefs >>
 
 			
 			#@<< get prefs >>
-			#@+node:-2::<< get prefs >>
+			#@+node:4::<< get prefs >>
 			#@+body
 			section = self.prefsSection
 			dict = self.prefsDict
@@ -671,11 +671,11 @@ class config:
 				strings=self.stringPrefsNames)
 
 			#@-body
-			#@-node:+0::<< get prefs >>
+			#@-node:4::<< get prefs >>
 
 			
 			#@<< get find prefs >>
-			#@+node:+1::<< get find prefs >>
+			#@+node:5::<< get find prefs >>
 			#@+body
 			section = self.findSection
 			dict = self.findDict
@@ -685,11 +685,11 @@ class config:
 				strings=self.stringFindNames)
 
 			#@-body
-			#@-node:+0::<< get find prefs >>
+			#@-node:5::<< get find prefs >>
 
 			
 			#@<< get syntax coloring prefs >>
-			#@+node:+2::<< get syntax coloring prefs >>
+			#@+node:7::<< get syntax coloring prefs >>
 			#@+body
 			section = self.colorsSection
 			dict = self.colorsDict
@@ -698,11 +698,11 @@ class config:
 				bools=self.boolColoringNames,
 				strings=self.stringColoringNames)
 			#@-body
-			#@-node:+0::<< get syntax coloring prefs >>
+			#@-node:7::<< get syntax coloring prefs >>
 
 			
 			#@<< get window prefs >>
-			#@+node:+1::<< get window prefs >>
+			#@+node:8::<< get window prefs >>
 			#@+body
 			section = self.windowSection
 			dict = self.windowDict
@@ -713,7 +713,7 @@ class config:
 				ints=self.intWindowNames,
 				strings=self.stringWindowNames)
 			#@-body
-			#@-node:+0::<< get window prefs >>
+			#@-node:8::<< get window prefs >>
 
 			# print `self.recentFiles`
 			if 0:
@@ -740,8 +740,8 @@ class config:
 			pass
 		self.config = None
 	#@-body
-	#@-node:+5::open
-	#@+node:+1::setAllDicts
+	#@-node:13::open
+	#@+node:14::setAllDicts
 	#@+body
 	def setAllDicts (self, dict, section,
 		bools=(),floats=(),ints=(),strings=()):
@@ -764,8 +764,8 @@ class config:
 			
 		# print "setAllDicts:" + `dict`
 	#@-body
-	#@-node:+0::setAllDicts
-	#@+node:+1::setCommandsFindIvars
+	#@-node:14::setAllDicts
+	#@+node:15::setCommandsFindIvars
 	#@+body
 	# Sets ivars of c that can be overridden by leoConfig.txt
 	
@@ -775,7 +775,7 @@ class config:
 		config = self
 		
 		#@<< set find ivars >>
-		#@+node:-14::<< set find ivars >>
+		#@+node:1::<< set find ivars >>
 		#@+body
 		val = config.getBoolFindPref("batch")
 		if val: c.batch_flag = val
@@ -816,12 +816,12 @@ class config:
 		val = config.getStringFindPref("find_string")
 		if val: c.find_text = val
 		#@-body
-		#@-node:+0::<< set find ivars >>
+		#@-node:1::<< set find ivars >>
 
 		app().findFrame.init(c)
 	#@-body
-	#@-node:+14::setCommandsFindIvars
-	#@+node:+1::setCommandsIvars
+	#@-node:15::setCommandsFindIvars
+	#@+node:16::setCommandsIvars
 	#@+body
 	# Sets ivars of c that can be overridden by leoConfig.txt
 	
@@ -830,7 +830,7 @@ class config:
 		config = self
 		
 		#@<< set prefs ivars >>
-		#@+node:-15::<< set prefs ivars >>
+		#@+node:1::<< set prefs ivars >>
 		#@+body
 		val = config.getIntPref("tab_width")
 		if val:
@@ -870,10 +870,10 @@ class config:
 						c.target_language = language
 			except: pass
 		#@-body
-		#@-node:+0::<< set prefs ivars >>
+		#@-node:1::<< set prefs ivars >>
 	#@-body
-	#@-node:+15::setCommandsIvars
-	#@+node:+1::setConfigFindIvars
+	#@-node:16::setCommandsIvars
+	#@+node:17::setConfigFindIvars
 	#@+body
 	# Sets config ivars from c.
 	
@@ -897,8 +897,8 @@ class config:
 		self.setFindPref("find_string",c.find_text)
 
 	#@-body
-	#@-node:+0::setConfigFindIvars
-	#@+node:+1::setConfigIvars
+	#@-node:17::setConfigFindIvars
+	#@+node:18::setConfigIvars
 	#@+body
 	# Sets config ivars from c.
 	
@@ -934,8 +934,8 @@ class config:
 		self.setFindPref("find_string",c.find_text)
 
 	#@-body
-	#@-node:+0::setConfigIvars
-	#@+node:+1::update (config)
+	#@-node:18::setConfigIvars
+	#@+node:19::update (config)
 	#@+body
 	# Rewrites the entire config file from ivars.
 	# This is called when a .leo file is written and when the preferences panel changes.
@@ -960,7 +960,7 @@ class config:
 				config.readfp(cf)
 				
 				#@<< write config section >>
-				#@+node:-18::<< write config section >>
+				#@+node:1::<< write config section >>
 				#@+body
 				section = self.configSection
 				
@@ -973,11 +973,11 @@ class config:
 				config.set(section,"xml_version_string",self.xml_version_string)
 
 				#@-body
-				#@-node:+0::<< write config section >>
+				#@-node:1::<< write config section >>
 
 				
 				#@<< write recent files section >>
-				#@+node:+1::<< write recent files section >>
+				#@+node:2::<< write recent files section >>
 				#@+body
 				section = self.recentFilesSection
 				files = self.recentFiles
@@ -992,15 +992,15 @@ class config:
 					for i in xrange(len(files)):
 						config.set(section, "file"+`i`, files[i])
 				#@-body
-				#@-node:+0::<< write recent files section >>
+				#@-node:2::<< write recent files section >>
 
 				
 				#@<< write prefs section >>
-				#@+node:+1::<< write prefs section >>
+				#@+node:3::<< write prefs section >>
 				#@+body
 				self.update_section(config,self.prefsSection,self.prefsDict)
 				#@-body
-				#@-node:+0::<< write prefs section >>
+				#@-node:3::<< write prefs section >>
 
 				self.update_section(config,
 					self.compareSection,self.compareDict)
@@ -1022,8 +1022,8 @@ class config:
 			traceback.print_exc()
 		self.config = None
 	#@-body
-	#@-node:+16::update (config)
-	#@+node:+1::update_section
+	#@-node:19::update (config)
+	#@+node:20::update_section
 	#@+body
 	def update_section (self,config,section,dict):
 		
@@ -1037,7 +1037,7 @@ class config:
 			val = dict [name]
 			config.set(section,name,val)
 	#@-body
-	#@-node:+0::update_section
+	#@-node:20::update_section
 	#@-others
 #@-body
 #@-node:0::@file leoConfig.py

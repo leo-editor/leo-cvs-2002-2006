@@ -11,7 +11,7 @@ import string,Tkinter,traceback
 class leoDialog:
 
 	#@+others
-	#@+node:+1::dialog.__init__
+	#@+node:1::dialog.__init__
 	#@+body
 	def __init__(self):
 	
@@ -21,8 +21,8 @@ class leoDialog:
 		self.url = None
 		self.text = None
 	#@-body
-	#@-node:+0::dialog.__init__
-	#@+node:+1::aboutLeo
+	#@-node:1::dialog.__init__
+	#@+node:2::aboutLeo
 	#@+body
 	def aboutLeo(self, version, copyright, url, email):
 	
@@ -85,7 +85,7 @@ class leoDialog:
 			top.focus_force() # Get all keystrokes.
 		root.wait_window(top)
 	#@-body
-	#@+node:-1::onAboutLeoUrl
+	#@+node:1::onAboutLeoUrl
 	#@+body
 	def onAboutLeoUrl(self,event=None):
 	
@@ -95,8 +95,8 @@ class leoDialog:
 		except:
 			es("not found: " + self.url)
 	#@-body
-	#@-node:+0::onAboutLeoUrl
-	#@+node:+1::onAboutLeoEmail
+	#@-node:1::onAboutLeoUrl
+	#@+node:2::onAboutLeoEmail
 	#@+body
 	def onAboutLeoEmail(self,event=None):
 		
@@ -106,9 +106,9 @@ class leoDialog:
 		except:
 			es("not found: " + self.url)
 	#@-body
-	#@-node:+0::onAboutLeoEmail
-	#@-node:+0::aboutLeo
-	#@+node:+1::askOk
+	#@-node:2::onAboutLeoEmail
+	#@-node:2::aboutLeo
+	#@+node:3::askOk
 	#@+body
 	def askOk(self, title, message, text="OK"):
 	
@@ -134,8 +134,8 @@ class leoDialog:
 		top.focus_force() # Get all keystrokes.
 		root.wait_window(top)
 	#@-body
-	#@-node:+0::askOk
-	#@+node:+1::askOkCancel
+	#@-node:3::askOk
+	#@+node:4::askOkCancel
 	#@+body
 	def askOkCancel(self, title, message):
 	
@@ -163,8 +163,8 @@ class leoDialog:
 		root.wait_window(top)
 		return self.answer
 	#@-body
-	#@-node:+0::askOkCancel
-	#@+node:+1::askYesNo
+	#@-node:4::askOkCancel
+	#@+node:5::askYesNo
 	#@+body
 	def askYesNo(self, title, message):
 	
@@ -192,8 +192,8 @@ class leoDialog:
 		root.wait_window(top)
 		return self.answer
 	#@-body
-	#@-node:+0::askYesNo
-	#@+node:+1::askYesNoCancel
+	#@-node:5::askYesNo
+	#@+node:6::askYesNoCancel
 	#@+body
 	def askYesNoCancel(self, title, message):
 	
@@ -224,17 +224,17 @@ class leoDialog:
 		root.wait_window(top)
 		return self.answer
 	#@-body
-	#@-node:+0::askYesNoCancel
-	#@+node:+1::dialog.center
+	#@-node:6::askYesNoCancel
+	#@+node:7::dialog.center
 	#@+body
 	def center(self):
 		
 		center_dialog(self.top)
 		return
 	#@-body
-	#@-node:+0::dialog.center
-	#@+node:+1::Event handlers & command handlers
-	#@+node:-7::cancelButton, noButton, okButton, yesButton
+	#@-node:7::dialog.center
+	#@+node:8::Event handlers & command handlers
+	#@+node:1::cancelButton, noButton, okButton, yesButton
 	#@+body
 	# Command handlers.
 	
@@ -254,8 +254,8 @@ class leoDialog:
 		self.answer="yes"
 		self.top.destroy() # terminates wait_window
 	#@-body
-	#@-node:+0::cancelButton, noButton, okButton, yesButton
-	#@+node:+1::OnOkCancelKey, OnYesNoKey, OnYesNoCancelKey
+	#@-node:1::cancelButton, noButton, okButton, yesButton
+	#@+node:2::OnOkCancelKey, OnYesNoKey, OnYesNoCancelKey
 	#@+body
 	def OnOkCancelKey(self,event):
 		ch=string.lower(event.char)
@@ -279,8 +279,8 @@ class leoDialog:
 		elif ch=='y': self.yesButton()
 		return "break"
 	#@-body
-	#@-node:+0::OnOkCancelKey, OnYesNoKey, OnYesNoCancelKey
-	#@+node:+1::setArrowCursor, setDefaultCursor
+	#@-node:2::OnOkCancelKey, OnYesNoKey, OnYesNoCancelKey
+	#@+node:3::setArrowCursor, setDefaultCursor
 	#@+body
 	def setArrowCursor (self,event=None):
 		
@@ -292,8 +292,8 @@ class leoDialog:
 		if self.text:
 			self.text.configure(cursor="xterm")
 	#@-body
-	#@-node:+0::setArrowCursor, setDefaultCursor
-	#@-node:+5::Event handlers & command handlers
+	#@-node:3::setArrowCursor, setDefaultCursor
+	#@-node:8::Event handlers & command handlers
 	#@-others
 #@-body
 #@-node:0::@file leoDialog.py

@@ -13,10 +13,10 @@ indent_refs = true ; dont_indent_refs = false
 
 
 #@<< scripts >>
-#@+node:+2::<< scripts >>
+#@+node:2::<< scripts >>
 #@+body
 #@+others
-#@+node:-1::importFiles
+#@+node:1::importFiles
 #@+body
 # An example of running this script:
 #
@@ -52,16 +52,16 @@ def importFiles (dir, type = None, kind = "@file"):
 		es("exception in importFiles script")
 		traceback.print_exc()
 #@-body
-#@-node:+0::importFiles
+#@-node:1::importFiles
 #@-others
 #@-body
-#@-node:+1::<< scripts >>
+#@-node:2::<< scripts >>
 
 
 class leoImportCommands:
 
 	#@+others
-	#@+node:-1::import.__init__
+	#@+node:1::import.__init__
 	#@+body
 	def __init__ (self,commands):
 	
@@ -81,9 +81,9 @@ class leoImportCommands:
 		self.web_st = []
 
 	#@-body
-	#@-node:+0::import.__init__
-	#@+node:+2::Import
-	#@+node:-2::createOutline
+	#@-node:1::import.__init__
+	#@+node:3::Import
+	#@+node:1::createOutline
 	#@+body
 	def createOutline (self,fileName,parent):
 	
@@ -99,7 +99,7 @@ class leoImportCommands:
 		appendFileFlag = string.lower(type) not in [".c", ".cpp", ".cxx", ".java", ".pas", ".py", ".php"]
 		
 		#@<< Read file into s >>
-		#@+node:+0::<< Read file into s >>
+		#@+node:1::<< Read file into s >>
 		#@+body
 		try:
 			file = open(fileName)
@@ -109,7 +109,7 @@ class leoImportCommands:
 			es("can not read " + fileName)
 			return None
 		#@-body
-		#@-node:+0::<< Read file into s >>
+		#@-node:1::<< Read file into s >>
 
 		# Create the top-level headline.
 		v = parent.insertAsLastChild()
@@ -135,8 +135,8 @@ class leoImportCommands:
 			es("createOutline: can't happen")
 		return v
 	#@-body
-	#@-node:+0::createOutline
-	#@+node:+1::importFilesCommand
+	#@-node:1::createOutline
+	#@+node:2::importFilesCommand
 	#@+body
 	def importFilesCommand (self,files,treeType):
 	
@@ -151,7 +151,7 @@ class leoImportCommands:
 			if len(files) == 2:
 				
 				#@<< Create a parent for two files having a common prefix >>
-				#@+node:-1::<< Create a parent for two files having a common prefix >>
+				#@+node:1::<< Create a parent for two files having a common prefix >>
 				#@+body
 				#@+at
 				#  The two filenames have a common prefix everything before 
@@ -170,7 +170,7 @@ class leoImportCommands:
 					name,ext = os.path.splitext(prefix1)
 					current.initHeadString(name)
 				#@-body
-				#@-node:+0::<< Create a parent for two files having a common prefix >>
+				#@-node:1::<< Create a parent for two files having a common prefix >>
 
 			for i in xrange(len(files)):
 				fileName = files[i]
@@ -185,9 +185,9 @@ class leoImportCommands:
 		c.endUpdate()
 		c.selectVnode(current)
 	#@-body
-	#@-node:+1::importFilesCommand
-	#@+node:+1::importFlattenedOutline & allies
-	#@+node:-2::convertMoreString/StringsToOutlineAfter
+	#@-node:2::importFilesCommand
+	#@+node:3::importFlattenedOutline & allies
+	#@+node:1::convertMoreString/StringsToOutlineAfter
 	#@+body
 	# Used by paste logic.
 	
@@ -215,7 +215,7 @@ class leoImportCommands:
 			if level >= 0:
 				
 				#@<< Link a new vnode v into the outline >>
-				#@+node:+0::<< Link a new vnode v into the outline >>
+				#@+node:1::<< Link a new vnode v into the outline >>
 				#@+body
 				assert(level >= 0)
 				if not lastVnode:
@@ -235,11 +235,11 @@ class leoImportCommands:
 				lastVnode = v
 				lastLevel = level
 				#@-body
-				#@-node:+0::<< Link a new vnode v into the outline >>
+				#@-node:1::<< Link a new vnode v into the outline >>
 
 				
 				#@<< Set the headline string, skipping over the leader >>
-				#@+node:+1::<< Set the headline string, skipping over the leader >>
+				#@+node:2::<< Set the headline string, skipping over the leader >>
 				#@+body
 				j = 0
 				while match(s,j,'\t'):
@@ -249,11 +249,11 @@ class leoImportCommands:
 				
 				v.initHeadString(s[j:])
 				#@-body
-				#@-node:+0::<< Set the headline string, skipping over the leader >>
+				#@-node:2::<< Set the headline string, skipping over the leader >>
 
 				
 				#@<< Count the number of following body lines >>
-				#@+node:+1::<< Count the number of following body lines >>
+				#@+node:3::<< Count the number of following body lines >>
 				#@+body
 				bodyLines = 0
 				index += 1 # Skip the headline.
@@ -269,11 +269,11 @@ class leoImportCommands:
 					bodyLines += 1
 					index += 1
 				#@-body
-				#@-node:+0::<< Count the number of following body lines >>
+				#@-node:3::<< Count the number of following body lines >>
 
 				
 				#@<< Add the lines to the body text of v >>
-				#@+node:+1::<< Add the lines to the body text of v >>
+				#@+node:4::<< Add the lines to the body text of v >>
 				#@+body
 				if bodyLines > 0:
 					body = ""
@@ -285,7 +285,7 @@ class leoImportCommands:
 						n += 1
 					v.t.setTnodeText(body)
 				#@-body
-				#@-node:+0::<< Add the lines to the body text of v >>
+				#@-node:4::<< Add the lines to the body text of v >>
 
 				v.setDirty()
 			else: index += 1
@@ -296,8 +296,8 @@ class leoImportCommands:
 		c.endUpdate()
 		return theRoot
 	#@-body
-	#@-node:-3::convertMoreString/StringsToOutlineAfter
-	#@+node:+1::importFlattenedOutline
+	#@-node:1::convertMoreString/StringsToOutlineAfter
+	#@+node:2::importFlattenedOutline
 	#@+body
 	# On entry,files contains at most one file to convert.
 	def importFlattenedOutline (self,files):
@@ -308,7 +308,7 @@ class leoImportCommands:
 		fileName = files[0]
 		
 		#@<< Read the file into array >>
-		#@+node:-1::<< Read the file into array >>
+		#@+node:1::<< Read the file into array >>
 		#@+body
 		try:
 			file = open(fileName)
@@ -318,7 +318,7 @@ class leoImportCommands:
 			file.close()
 		except: array = []
 		#@-body
-		#@-node:+0::<< Read the file into array >>
+		#@-node:1::<< Read the file into array >>
 
 		# Convert the string to an outline and insert it after the current node.
 		newVnode = self.convertMoreStringsToOutlineAfter(array,current)
@@ -332,8 +332,8 @@ class leoImportCommands:
 		else:
 			es(fileName + " is not a valid MORE file.")
 	#@-body
-	#@-node:+1::importFlattenedOutline
-	#@+node:+1::moreHeadlineLevel
+	#@-node:2::importFlattenedOutline
+	#@+node:3::moreHeadlineLevel
 	#@+body
 	# return the headline level of s,or -1 if the string is not a MORE headline.
 	def moreHeadlineLevel (self,s):
@@ -348,8 +348,8 @@ class leoImportCommands:
 		else:
 			return -1, plusFlag
 	#@-body
-	#@-node:+0::moreHeadlineLevel
-	#@+node:+1::stringIs/stringsAreValidMoreFile
+	#@-node:3::moreHeadlineLevel
+	#@+node:4::stringIs/stringsAreValidMoreFile
 	#@+body
 	# Used by paste logic.
 	
@@ -381,10 +381,10 @@ class leoImportCommands:
 					plusFlag = newFlag
 		return true
 	#@-body
-	#@-node:+0::stringIs/stringsAreValidMoreFile
-	#@-node:-1::importFlattenedOutline & allies
-	#@+node:+1::importWebCommand & allies
-	#@+node:-3::createOutlineFromWeb
+	#@-node:4::stringIs/stringsAreValidMoreFile
+	#@-node:3::importFlattenedOutline & allies
+	#@+node:4::importWebCommand & allies
+	#@+node:1::createOutlineFromWeb
 	#@+body
 	def createOutlineFromWeb (self,path,parent):
 	
@@ -400,8 +400,8 @@ class leoImportCommands:
 		self.scanWebFile(path,v)
 		return v
 	#@-body
-	#@-node:+0::createOutlineFromWeb
-	#@+node:+1::importWebCommand
+	#@-node:1::createOutlineFromWeb
+	#@+node:2::importWebCommand
 	#@+body
 	def importWebCommand (self,files,webType):
 	
@@ -419,8 +419,8 @@ class leoImportCommands:
 		c.selectVnode(current)
 		c.endUpdate()
 	#@-body
-	#@-node:+0::importWebCommand
-	#@+node:+1::findFunctionDef
+	#@-node:2::importWebCommand
+	#@+node:3::findFunctionDef
 	#@+body
 	def findFunctionDef (self,s,i):
 		
@@ -437,8 +437,8 @@ class leoImportCommands:
 			else: i += 1
 		return None
 	#@-body
-	#@-node:+0::findFunctionDef
-	#@+node:+1::scanBodyForHeadline
+	#@-node:3::findFunctionDef
+	#@+node:4::scanBodyForHeadline
 	#@+body
 	#@+at
 	#  This method returns the proper headline text.
@@ -456,7 +456,7 @@ class leoImportCommands:
 		if self.webType == "cweb":
 			
 			#@<< scan cweb body for headline >>
-			#@+node:-3::<< scan cweb body for headline >>
+			#@+node:1::<< scan cweb body for headline >>
 			#@+body
 			i = 0
 			while i < len(s):
@@ -484,12 +484,12 @@ class leoImportCommands:
 						return s[j:k+2] # return the section ref.
 				i = skip_line(s,i)
 			#@-body
-			#@-node:+0::<< scan cweb body for headline >>
+			#@-node:1::<< scan cweb body for headline >>
 
 		else:
 			
 			#@<< scan noweb body for headline >>
-			#@+node:+1::<< scan noweb body for headline >>
+			#@+node:2::<< scan noweb body for headline >>
 			#@+body
 			i = 0
 			while i < len(s):
@@ -508,12 +508,12 @@ class leoImportCommands:
 						return name
 				i = skip_line(s,i)
 			#@-body
-			#@-node:+0::<< scan noweb body for headline >>
+			#@-node:2::<< scan noweb body for headline >>
 
 		return "@" # default.
 	#@-body
-	#@-node:+2::scanBodyForHeadline
-	#@+node:+1::scanWebFile (handles limbo)
+	#@-node:4::scanBodyForHeadline
+	#@+node:5::scanWebFile (handles limbo)
 	#@+body
 	def scanWebFile (self,fileName,parent):
 	
@@ -528,7 +528,7 @@ class leoImportCommands:
 	
 		
 		#@<< Create a symbol table of all section names >>
-		#@+node:-4::<< Create a symbol table of all section names >>
+		#@+node:1::<< Create a symbol table of all section names >>
 		#@+body
 		i = 0 ; 	self.web_st = []
 		while i < len(s):
@@ -546,11 +546,11 @@ class leoImportCommands:
 		
 		# trace(self.cstDump())
 		#@-body
-		#@-node:+0::<< Create a symbol table of all section names >>
+		#@-node:1::<< Create a symbol table of all section names >>
 
 		
 		#@<< Create nodes for limbo text and the root section >>
-		#@+node:+1::<< Create nodes for limbo text and the root section >>
+		#@+node:2::<< Create nodes for limbo text and the root section >>
 		#@+body
 		i = 0
 		while i < len(s):
@@ -574,13 +574,13 @@ class leoImportCommands:
 			
 		# trace(`get_line(s,i)`)
 		#@-body
-		#@-node:+0::<< Create nodes for limbo text and the root section >>
+		#@-node:2::<< Create nodes for limbo text and the root section >>
 
 		while i < len(s):
 			progress = i
 			
 			#@<< Create a node for the next module >>
-			#@+node:+1::<< Create a node for the next module >>
+			#@+node:3::<< Create a node for the next module >>
 			#@+body
 			if type=="cweb":
 				assert(self.isModuleStart(s,i))
@@ -593,7 +593,7 @@ class leoImportCommands:
 						else: i = skip_line(s,i)
 				
 				#@<< Handle cweb @d, @f, @c and @p directives >>
-				#@+node:-2::<< Handle cweb @d, @f, @c and @p directives >>
+				#@+node:1::<< Handle cweb @d, @f, @c and @p directives >>
 				#@+body
 				if match(s,i,"@d") or match(s,i,"@f"):
 					i += 2 ; i = skip_line(s,i)
@@ -616,7 +616,7 @@ class leoImportCommands:
 						if self.isModuleStart(s,i):
 							break
 				#@-body
-				#@-node:+0::<< Handle cweb @d, @f, @c and @p directives >>
+				#@-node:1::<< Handle cweb @d, @f, @c and @p directives >>
 
 			else:
 				assert(self.isDocStart(s,i)) # isModuleStart == isDocStart for noweb.
@@ -631,13 +631,13 @@ class leoImportCommands:
 			headline = self.scanBodyForHeadline(body)
 			self.createHeadline(parent,body,headline)
 			#@-body
-			#@-node:+2::<< Create a node for the next module >>
+			#@-node:3::<< Create a node for the next module >>
 
 			assert(progress < i)
 	#@-body
-	#@-node:+2::scanWebFile (handles limbo)
-	#@+node:+1::Symbol table
-	#@+node:-5::cstCanonicalize
+	#@-node:5::scanWebFile (handles limbo)
+	#@+node:6::Symbol table
+	#@+node:1::cstCanonicalize
 	#@+body
 	#@+at
 	#  We canonicalize strings before looking them up, but strings are entered 
@@ -657,8 +657,8 @@ class leoImportCommands:
 		s = string.strip(s)
 		return s
 	#@-body
-	#@-node:+0::cstCanonicalize
-	#@+node:+1::cstDump
+	#@-node:1::cstCanonicalize
+	#@+node:2::cstDump
 	#@+body
 	def cstDump (self):
 	
@@ -668,8 +668,8 @@ class leoImportCommands:
 			s += name + "\n"
 		return s
 	#@-body
-	#@-node:+0::cstDump
-	#@+node:+1::cstEnter
+	#@-node:2::cstDump
+	#@+node:3::cstEnter
 	#@+body
 	# We only enter the section name into the symbol table if the ... convention is not used.
 	
@@ -687,8 +687,8 @@ class leoImportCommands:
 				return
 		self.web_st.append(upper)
 	#@-body
-	#@-node:+0::cstEnter
-	#@+node:+1::cstLookup
+	#@-node:3::cstEnter
+	#@+node:4::cstLookup
 	#@+body
 	# This method returns a string if the indicated string is a prefix of an entry in the web_st.
 	
@@ -712,12 +712,12 @@ class leoImportCommands:
 					# es("replacing: " + target + " with: " + s)
 		return result
 	#@-body
-	#@-node:+0::cstLookup
-	#@-node:+2::Symbol table
-	#@-node:-2::importWebCommand & allies
-	#@+node:+1::Scanners for createOutline
-	#@+node:-4::Python scanners
-	#@+node:+0::scanPythonClass
+	#@-node:4::cstLookup
+	#@-node:6::Symbol table
+	#@-node:4::importWebCommand & allies
+	#@+node:5::Scanners for createOutline
+	#@+node:1::Python scanners
+	#@+node:1::scanPythonClass
 	#@+body
 	#@+at
 	#  Creates a child node c of parent for the class, and children of c for 
@@ -732,7 +732,7 @@ class leoImportCommands:
 		classIndent = self.getLeadingIndent(s,i)
 		
 		#@<< set classname and headline, or return i >>
-		#@+node:+0::<< set classname and headline, or return i >>
+		#@+node:1::<< set classname and headline, or return i >>
 		#@+body
 		# Skip to the class name.
 		i = skip_ws(s,i)
@@ -745,12 +745,12 @@ class leoImportCommands:
 		else:
 			return i
 		#@-body
-		#@-node:+0::<< set classname and headline, or return i >>
+		#@-node:1::<< set classname and headline, or return i >>
 
 		i = skip_line(s,i) # Skip the class line.
 		
 		#@<< create class_vnode >>
-		#@+node:+1::<< create class_vnode  >>
+		#@+node:2::<< create class_vnode  >>
 		#@+body
 		# Create the section name using the old value of self.methodName.
 		if  self.treeType == "@file":
@@ -764,7 +764,7 @@ class leoImportCommands:
 		class_vnode = self.createHeadline(parent,prefix + body,headline)
 
 		#@-body
-		#@-node:+0::<< create class_vnode  >>
+		#@-node:2::<< create class_vnode  >>
 
 		savedMethodName = self.methodName
 		self.methodName = headline
@@ -772,7 +772,7 @@ class leoImportCommands:
 		i = self.scanPythonDecls(s,i,class_vnode,indent_refs)
 		
 		#@<< create nodes for all defs of the class >>
-		#@+node:+1::<< create nodes for all defs of the class >>
+		#@+node:3::<< create nodes for all defs of the class >>
 		#@+body
 		indent =  self.getLeadingIndent(s,i)
 		start = i = skip_blank_lines(s,i)
@@ -788,7 +788,7 @@ class leoImportCommands:
 				if not parent_vnode:
 					
 					#@<< create parent_vnode >>
-					#@+node:-2::<< create parent_vnode >>
+					#@+node:1::<< create parent_vnode >>
 					#@+body
 					# This must be done after the declaration reference is generated.
 					if self.treeType == "@file":
@@ -798,7 +798,7 @@ class leoImportCommands:
 						class_vnode.appendStringToBody("\t" + ref + "\n\n")
 					parent_vnode = class_vnode
 					#@-body
-					#@-node:+0::<< create parent_vnode >>
+					#@-node:1::<< create parent_vnode >>
 
 				i = start = self.scanPythonDef(s,i,start,parent_vnode)
 				indent = self.getLeadingIndent(s,i)
@@ -806,7 +806,7 @@ class leoImportCommands:
 				if not parent_vnode:
 					
 					#@<< create parent_vnode >>
-					#@+node:+0::<< create parent_vnode >>
+					#@+node:1::<< create parent_vnode >>
 					#@+body
 					# This must be done after the declaration reference is generated.
 					if self.treeType == "@file":
@@ -816,7 +816,7 @@ class leoImportCommands:
 						class_vnode.appendStringToBody("\t" + ref + "\n\n")
 					parent_vnode = class_vnode
 					#@-body
-					#@-node:+0::<< create parent_vnode >>
+					#@-node:1::<< create parent_vnode >>
 
 				i = start = self.scanPythonClass(s,i,start,parent_vnode)
 				indent = self.getLeadingIndent(s,i)
@@ -825,13 +825,13 @@ class leoImportCommands:
 			else: i += 1
 			assert(progress < i)
 		#@-body
-		#@-node:+2::<< create nodes for all defs of the class >>
+		#@-node:3::<< create nodes for all defs of the class >>
 
 		self.methodName = savedMethodName
 		return i
 	#@-body
-	#@-node:-2::scanPythonClass
-	#@+node:+1::scanPythonDef
+	#@-node:1::scanPythonClass
+	#@+node:2::scanPythonDef
 	#@+body
 	#@+at
 	#  Creates a node of parent for the def.
@@ -844,7 +844,7 @@ class leoImportCommands:
 		# line = get_line(s,i) ; trace(`line`)
 		
 		#@<< set headline or return i >>
-		#@+node:-1::<< set headline or return i >>
+		#@+node:1::<< set headline or return i >>
 		#@+body
 		i = skip_ws(s,i)
 		i = skip_c_id(s,i) # Skip the "def"
@@ -855,11 +855,11 @@ class leoImportCommands:
 			# trace("headline:" + `headline`)
 		else: return i
 		#@-body
-		#@-node:+0::<< set headline or return i >>
+		#@-node:1::<< set headline or return i >>
 
 		
 		#@<< skip the Python def >>
-		#@+node:+1::<< skip the Python def >>
+		#@+node:2::<< skip the Python def >>
 		#@+body
 		# Set defIndent to the indentation of the def line.
 		defIndent = self.getLeadingIndent(s,start)
@@ -880,14 +880,14 @@ class leoImportCommands:
 			else: i += 1
 			assert(progress < i)
 		#@-body
-		#@-node:+0::<< skip the Python def >>
+		#@-node:2::<< skip the Python def >>
 
 		# Create the def node.
 		savedMethodName = self.methodName
 		self.methodName = headline
 		
 		#@<< Create def node >>
-		#@+node:+1::<< Create def node >>
+		#@+node:3::<< Create def node >>
 		#@+body
 		# Create the prefix line for @root trees.
 		if self.treeType == "@file":
@@ -903,13 +903,13 @@ class leoImportCommands:
 		# Create the node.
 		self.createHeadline(parent,prefix + body,headline)
 		#@-body
-		#@-node:+0::<< Create def node >>
+		#@-node:3::<< Create def node >>
 
 		self.methodName = savedMethodName
 		return i
 	#@-body
-	#@-node:-1::scanPythonDef
-	#@+node:+1::scanPythonDecls
+	#@-node:2::scanPythonDef
+	#@+node:3::scanPythonDecls
 	#@+body
 	def scanPythonDecls (self,s,i,parent,indent_parent_ref_flag):
 		
@@ -925,7 +925,7 @@ class leoImportCommands:
 			elif is_c_id(ch):
 				
 				#@<< break on def or class >>
-				#@+node:-2::<< break on def or class >>
+				#@+node:1::<< break on def or class >>
 				#@+body
 				if match_c_word(s,i,"def") or match_c_word(s,i,"class"):
 					i = find_line_start(s,i)
@@ -934,7 +934,7 @@ class leoImportCommands:
 				else:
 					i = skip_c_id(s,i)
 				#@-body
-				#@-node:+0::<< break on def or class >>
+				#@-node:1::<< break on def or class >>
 
 			else: i += 1
 			assert(progress < i)
@@ -943,7 +943,7 @@ class leoImportCommands:
 		if j < i:
 			
 			#@<< Create a child node for declarations >>
-			#@+node:+1::<< Create a child node for declarations >>
+			#@+node:2::<< Create a child node for declarations >>
 			#@+body
 			headline = ref = angleBrackets(" " + self.methodName + " declarations ")
 			leading_tab = choose(indent_parent_ref_flag,"\t","")
@@ -957,12 +957,12 @@ class leoImportCommands:
 				body = "@code\n\n" + body
 			self.createHeadline(parent,body,headline)
 			#@-body
-			#@-node:+0::<< Create a child node for declarations >>
+			#@-node:2::<< Create a child node for declarations >>
 
 		return i
 	#@-body
-	#@-node:+1::scanPythonDecls
-	#@+node:+1::scanPythonText
+	#@-node:3::scanPythonDecls
+	#@+node:4::scanPythonText
 	#@+body
 	#@+at
 	#  This code creates a child of parent for each Python function definition 
@@ -984,7 +984,7 @@ class leoImportCommands:
 			elif is_c_id(ch):
 				
 				#@<< handle possible Python function or class >>
-				#@+node:-3::<< handle possible Python function or class >>
+				#@+node:1::<< handle possible Python function or class >>
 				#@+body
 				if match_c_word(s,i,"def") or match(s,i,"class"):
 					isDef = match_c_word(s,i,"def")
@@ -1004,13 +1004,13 @@ class leoImportCommands:
 				else:
 					i = skip_c_id(s,i)
 				#@-body
-				#@-node:+0::<< handle possible Python function or class >>
+				#@-node:1::<< handle possible Python function or class >>
 
 			else: i += 1
 			assert(progress < i)
 		
 		#@<< Append a reference to the methods of this file >>
-		#@+node:+1::<< Append a reference to the methods of this file >>
+		#@+node:2::<< Append a reference to the methods of this file >>
 		#@+body
 		if self.treeType == "@file":
 			pass
@@ -1018,22 +1018,22 @@ class leoImportCommands:
 			parent.appendStringToBody(
 				angleBrackets(" " + self.methodName + " methods ") + "\n\n")
 		#@-body
-		#@-node:+0::<< Append a reference to the methods of this file >>
+		#@-node:2::<< Append a reference to the methods of this file >>
 
 		
 		#@<< Append any unused python text to the parent's body text >>
-		#@+node:+1::<< Append any unused python text to the parent's body text >>
+		#@+node:3::<< Append any unused python text to the parent's body text >>
 		#@+body
 		# Do nothing if only whitespace is left.
 		i = start ; i = skip_ws_and_nl(s,i)
 		if i < len(s):
 			parent.appendStringToBody(s[start:])
 		#@-body
-		#@-node:+0::<< Append any unused python text to the parent's body text >>
+		#@-node:3::<< Append any unused python text to the parent's body text >>
 	#@-body
-	#@-node:+1::scanPythonText
-	#@-node:-3::Python scanners
-	#@+node:+1::scanPHPText (Dave Hein)
+	#@-node:4::scanPythonText
+	#@-node:1::Python scanners
+	#@+node:2::scanPHPText (Dave Hein)
 	#@+body
 	#@+at
 	#   08-SEP-2002 DTHEIN: Added for PHP import support
@@ -1047,7 +1047,7 @@ class leoImportCommands:
 		import re
 		
 		#@<< Append file if not pure PHP >>
-		#@+node:-1::<< Append file if not pure PHP >>
+		#@+node:1::<< Append file if not pure PHP >>
 		#@+body
 		# If the file does not begin with <?php or end with ?> then
 		# it is simply appended like a generic import would do.
@@ -1059,12 +1059,12 @@ class leoImportCommands:
 			return
 
 		#@-body
-		#@-node:+0::<< Append file if not pure PHP >>
+		#@-node:1::<< Append file if not pure PHP >>
 
 	
 		
 		#@<< define scanPHPText vars >>
-		#@+node:+1::<< define scanPHPText vars >>
+		#@+node:2::<< define scanPHPText vars >>
 		#@+body
 		scan_start = 0
 		class_start = 0
@@ -1082,7 +1082,7 @@ class leoImportCommands:
 		endOfCode = s.rfind("?>") # this should be the line containing the last ?>
 
 		#@-body
-		#@-node:+0::<< define scanPHPText vars >>
+		#@-node:2::<< define scanPHPText vars >>
 
 		# 14-SEP-2002 DTHEIN: Make leading <?php use the @first directive
 		parent.appendStringToBody("@first ")	
@@ -1095,7 +1095,7 @@ class leoImportCommands:
 			if ch == '/' or ch == '#':
 				
 				#@<< handle possible PHP comments >>
-				#@+node:+2::<< handle possible PHP comments >>
+				#@+node:4::<< handle possible PHP comments >>
 				#@+body
 				if match(s,i,"//"):
 					i = skip_line(s,i)
@@ -1106,12 +1106,12 @@ class leoImportCommands:
 				else:
 					i += 1
 				#@-body
-				#@-node:+0::<< handle possible PHP comments >>
+				#@-node:4::<< handle possible PHP comments >>
 
 			elif ch == '<':
 				
 				#@<< handle possible heredoc string >>
-				#@+node:-1::<< handle possible heredoc string >>
+				#@+node:3::<< handle possible heredoc string >>
 				#@+body
 				if match(s,i,"<<<"):
 					i = skip_heredoc_string(s,i)
@@ -1119,7 +1119,7 @@ class leoImportCommands:
 					i += 1
 
 				#@-body
-				#@-node:+0::<< handle possible heredoc string >>
+				#@-node:3::<< handle possible heredoc string >>
 
 			elif ch == '"' or ch == '\'':
 				i = skip_string(s,i)
@@ -1128,7 +1128,7 @@ class leoImportCommands:
 			elif ch == 'f' or ch =='c':
 				
 				#@<< handle possible class or function >>
-				#@+node:+2::<< handle possible class or function >>
+				#@+node:5::<< handle possible class or function >>
 				#@+body
 				#@+at
 				#  In PHP, all functions are typeless and start with the 
@@ -1216,12 +1216,12 @@ class leoImportCommands:
 				else:
 					i += 1
 				#@-body
-				#@-node:+0::<< handle possible class or function >>
+				#@-node:5::<< handle possible class or function >>
 
 			elif class_start and (ch == '}'):
 				
 				#@<< handle end of class >>
-				#@+node:+1::<< handle end of class >>
+				#@+node:6::<< handle end of class >>
 				#@+body
 				# Capture the rest of the body
 				class_body += s[scan_start:class_end]
@@ -1238,24 +1238,24 @@ class leoImportCommands:
 				class_body=""
 
 				#@-body
-				#@-node:+0::<< handle end of class >>
+				#@-node:6::<< handle end of class >>
 
 			else: i += 1
 		
 		#@<< Append any unused text to the parent's body text >>
-		#@+node:+1::<< Append any unused text to the parent's body text >>
+		#@+node:7::<< Append any unused text to the parent's body text >>
 		#@+body
 		parent.appendStringToBody(s[scan_start:endOfCode])
 
 		#@-body
-		#@-node:+0::<< Append any unused text to the parent's body text >>
+		#@-node:7::<< Append any unused text to the parent's body text >>
 
 		# 14-SEP-2002 DTHEIN: Make leading <?php use the @first directive
 		parent.appendStringToBody("@last ")	
 		parent.appendStringToBody(s[endOfCode:])
 	#@-body
-	#@-node:-5::scanPHPText (Dave Hein)
-	#@+node:+1::scanCText
+	#@-node:2::scanPHPText (Dave Hein)
+	#@+node:3::scanCText
 	#@+body
 	# Creates a child of parent for each C function definition seen.
 	
@@ -1263,7 +1263,7 @@ class leoImportCommands:
 	
 		
 		#@<< define scanCText vars >>
-		#@+node:-2::<< define scanCText vars >>
+		#@+node:1::<< define scanCText vars >>
 		#@+body
 		c = self.commands
 		include_seen = method_seen = false
@@ -1273,7 +1273,7 @@ class leoImportCommands:
 		name = None
 		i = 0
 		#@-body
-		#@-node:+0::<< define scanCText vars >>
+		#@-node:1::<< define scanCText vars >>
 
 		while i < len(s):
 			# line = get_line(s,i) ; trace(`line`)
@@ -1282,8 +1282,8 @@ class leoImportCommands:
 			if ch == '/':
 				
 				#@<< handle possible C comments >>
-				#@+node:+4::Shared by C and Java
-				#@+node:-4::<< handle possible C comments >>
+				#@+node:5::Shared by C and Java
+				#@+node:1::<< handle possible C comments >>
 				#@+body
 				if match(s,i,"//"):
 					i = skip_line(s,i)
@@ -1292,8 +1292,8 @@ class leoImportCommands:
 				else:
 					i += 1
 				#@-body
-				#@-node:+0::<< handle possible C comments >>
-				#@-node:+4::Shared by C and Java
+				#@-node:1::<< handle possible C comments >>
+				#@-node:5::Shared by C and Java
 
 			elif ch == '"' or ch == '\'':
 				i = skip_string(s,i)
@@ -1301,8 +1301,8 @@ class leoImportCommands:
 			elif ch == '=':
 				
 				#@<< handle equal sign in C or Java >>
-				#@+node:+0::Shared by C and Java
-				#@+node:-3::<< handle equal sign in C or Java >>
+				#@+node:5::Shared by C and Java
+				#@+node:2::<< handle equal sign in C or Java >>
 				#@+body
 				#@+at
 				#  We can not be seeing a function definition when we find an 
@@ -1318,14 +1318,14 @@ class leoImportCommands:
 				if match(s,i,'='):
 					i = skip_braces(s,i)
 				#@-body
-				#@-node:+0::<< handle equal sign in C or Java >>
-				#@-node:+3::Shared by C and Java
+				#@-node:2::<< handle equal sign in C or Java >>
+				#@-node:5::Shared by C and Java
 
 			elif ch == '(':
 				
 				#@<< handle open paren in C or Java >>
-				#@+node:+0::Shared by C and Java
-				#@+node:-2::<< handle open paren in C or Java >>
+				#@+node:5::Shared by C and Java
+				#@+node:3::<< handle open paren in C or Java >>
 				#@+body
 				lparen = i
 				# This will skip any equal signs inside the paren.
@@ -1337,14 +1337,14 @@ class leoImportCommands:
 						lparen = None # not a function definition.
 				else: lparen = None
 				#@-body
-				#@-node:+0::<< handle open paren in C or Java >>
-				#@-node:+2::Shared by C and Java
+				#@-node:3::<< handle open paren in C or Java >>
+				#@-node:5::Shared by C and Java
 
 			elif ch == ';':
 				
 				#@<< handle semicolon in C or Java >>
-				#@+node:+0::Shared by C and Java
-				#@+node:-1::<< handle semicolon in C or Java >>
+				#@+node:5::Shared by C and Java
+				#@+node:4::<< handle semicolon in C or Java >>
 				#@+body
 				#@+at
 				#  A semicolon signals the end of a declaration, thereby 
@@ -1360,14 +1360,14 @@ class leoImportCommands:
 				if lparen == None:
 					function_start = i + 1 # The semicolon ends the declaration.
 				#@-body
-				#@-node:+0::<< handle semicolon in C or Java >>
-				#@-node:+1::Shared by C and Java
+				#@-node:4::<< handle semicolon in C or Java >>
+				#@-node:5::Shared by C and Java
 
 			# These cases and the default case can create child nodes.
 			elif ch == '#':
 				
 				#@<< handle # sign >>
-				#@+node:-3::<< handle # sign >>
+				#@+node:2::<< handle # sign >>
 				#@+body
 				# if statements may contain function definitions.
 				i += 1  # Skip the '#'
@@ -1375,7 +1375,7 @@ class leoImportCommands:
 					include_seen = true
 					
 					#@<< create a child node for all #include statements >>
-					#@+node:-1::<< create a child node for all #include statements >>
+					#@+node:1::<< create a child node for all #include statements >>
 					#@+body
 					# Scan back to the start of the line.
 					include_start = i = find_line_start(s,i)
@@ -1418,18 +1418,18 @@ class leoImportCommands:
 					# Append the headline to the parent's body.
 					parent.appendStringToBody(headline + "\n")
 					#@-body
-					#@-node:+0::<< create a child node for all #include statements >>
+					#@-node:1::<< create a child node for all #include statements >>
 
 				else:
 					j = i
 					i = skip_pp_directive(s,i)
 				#@-body
-				#@-node:+1::<< handle # sign >>
+				#@-node:2::<< handle # sign >>
 
 			elif ch == '{':
 				
 				#@<< handle open curly bracket in C >>
-				#@+node:+1::<< handle open curly bracket in C >> (scans function)
+				#@+node:3::<< handle open curly bracket in C >> (scans function)
 				#@+body
 				j = i = skip_braces(s,i) # Skip all inner blocks.
 				
@@ -1446,7 +1446,7 @@ class leoImportCommands:
 					else:
 						
 						#@<< create a declaration node >>
-						#@+node:-2::<< create a declaration node >>
+						#@+node:1::<< create a declaration node >>
 						#@+body
 						save_ip = i
 						i = scan_start
@@ -1466,11 +1466,11 @@ class leoImportCommands:
 						i = save_ip
 						scan_start = i
 						#@-body
-						#@-node:+0::<< create a declaration node >>
+						#@-node:1::<< create a declaration node >>
 
 						
 						#@<< append C function/method reference to parent node >>
-						#@+node:+1::<< append C function/method reference to parent node >>
+						#@+node:2::<< append C function/method reference to parent node >>
 						#@+body
 						if self.treeType == "@file":
 							parent.appendStringToBody("@others\n")
@@ -1481,7 +1481,7 @@ class leoImportCommands:
 							parent.appendStringToBody(
 								lb + " " + self.methodName + " " + methodKind + " " + rb + "\n")
 						#@-body
-						#@-node:+0::<< append C function/method reference to parent node >>
+						#@-node:2::<< append C function/method reference to parent node >>
 
 					headline = name
 					body = s[function_start:function_end]
@@ -1494,12 +1494,12 @@ class leoImportCommands:
 				else:
 					i += 1
 				#@-body
-				#@-node:+1::<< handle open curly bracket in C >> (scans function)
+				#@-node:3::<< handle open curly bracket in C >> (scans function)
 
 			elif is_c_id(ch):
 				
 				#@<< handle id, class, typedef, struct, union, namespace >>
-				#@+node:+1::<< handle id, class, typedef, struct, union, namespace >>
+				#@+node:4::<< handle id, class, typedef, struct, union, namespace >>
 				#@+body
 				if match_c_word(s,i,"typedef"):
 					i = skip_typedef(s,i)
@@ -1513,7 +1513,7 @@ class leoImportCommands:
 				elif match_c_word(s,i,"namespace"):
 					
 					#@<< create children for the namespace >>
-					#@+node:-3::<< create children for the namespace >>
+					#@+node:1::<< create children for the namespace >>
 					#@+body
 					#@+at
 					#  Namesspaces change the self.moduleName and recursively 
@@ -1554,7 +1554,7 @@ class leoImportCommands:
 							self.methodName = savedMethodName
 							scan_start = function_start = i
 					#@-body
-					#@-node:+0::<< create children for the namespace >>
+					#@-node:1::<< create children for the namespace >>
 
 				# elif match_c_word(s,i,"class"):
 					# < < create children for the class > >
@@ -1566,7 +1566,7 @@ class leoImportCommands:
 						i = skip_c_id(s,i)
 					
 					#@<< test for operator keyword >>
-					#@+node:+1::<< test for operator keyword >>
+					#@+node:2::<< test for operator keyword >>
 					#@+body
 					# We treat a C++ a construct such as operator + as a function name.
 					if match(name,0,"operator"):
@@ -1579,14 +1579,14 @@ class leoImportCommands:
 								i += 1
 							name = s[j:i] # extend the name.
 					#@-body
-					#@-node:+0::<< test for operator keyword >>
+					#@-node:2::<< test for operator keyword >>
 				#@-body
-				#@-node:+2::<< handle id, class, typedef, struct, union, namespace >>
+				#@-node:4::<< handle id, class, typedef, struct, union, namespace >>
 
 			else: i += 1
 		
 		#@<< Append any unused text to the parent's body text >>
-		#@+node:+2::<< Append any unused text to the parent's body text >>
+		#@+node:6::<< Append any unused text to the parent's body text >>
 		#@+body
 		# Used by C, Java and Pascal parsers.
 		# Do nothing if only whitespace is left.
@@ -1595,12 +1595,12 @@ class leoImportCommands:
 		if i < len(s):
 			parent.appendStringToBody(s[scan_start:])
 		#@-body
-		#@-node:+0::<< Append any unused text to the parent's body text >>
+		#@-node:6::<< Append any unused text to the parent's body text >>
 	#@-body
-	#@+node:-1::Shared by C and Java
-	#@-node:+0::Shared by C and Java
-	#@-node:-2::scanCText
-	#@+node:+1::scanJavaText
+	#@+node:5::Shared by C and Java
+	#@-node:5::Shared by C and Java
+	#@-node:3::scanCText
+	#@+node:4::scanJavaText
 	#@+body
 	# Creates a child of parent for each Java function definition seen.
 	
@@ -1608,7 +1608,7 @@ class leoImportCommands:
 	
 		
 		#@<< define scanJavaText vars >>
-		#@+node:-3::<< define scanJavaText vars >>
+		#@+node:1::<< define scanJavaText vars >>
 		#@+body
 		method_seen = false
 		class_seen = false # true if class keyword seen at outer level.
@@ -1618,7 +1618,7 @@ class leoImportCommands:
 		function_start = choose(outerFlag, None, 0)
 		i = 0
 		#@-body
-		#@-node:+0::<< define scanJavaText vars >>
+		#@-node:1::<< define scanJavaText vars >>
 
 		# if not outerFlag: trace("inner:" + `s`)
 		while i < len(s):
@@ -1628,8 +1628,8 @@ class leoImportCommands:
 			if ch == '/':
 				
 				#@<< handle possible C comments >>
-				#@+node:+3::Shared by C and Java
-				#@+node:-3::<< handle possible C comments >>
+				#@+node:4::Shared by C and Java
+				#@+node:1::<< handle possible C comments >>
 				#@+body
 				if match(s,i,"//"):
 					i = skip_line(s,i)
@@ -1638,16 +1638,16 @@ class leoImportCommands:
 				else:
 					i += 1
 				#@-body
-				#@-node:+0::<< handle possible C comments >>
-				#@-node:+3::Shared by C and Java
+				#@-node:1::<< handle possible C comments >>
+				#@-node:4::Shared by C and Java
 
 			elif ch == '"' or ch == '\'': i = skip_string(s,i)
 			# These cases help determine where functions start.
 			elif ch == '=':
 				
 				#@<< handle equal sign in C or Java >>
-				#@+node:+0::Shared by C and Java
-				#@+node:-2::<< handle equal sign in C or Java >>
+				#@+node:4::Shared by C and Java
+				#@+node:2::<< handle equal sign in C or Java >>
 				#@+body
 				#@+at
 				#  We can not be seeing a function definition when we find an 
@@ -1663,14 +1663,14 @@ class leoImportCommands:
 				if match(s,i,'='):
 					i = skip_braces(s,i)
 				#@-body
-				#@-node:+0::<< handle equal sign in C or Java >>
-				#@-node:+2::Shared by C and Java
+				#@-node:2::<< handle equal sign in C or Java >>
+				#@-node:4::Shared by C and Java
 
 			elif ch == '(':
 				
 				#@<< handle open paren in C or Java >>
-				#@+node:+0::Shared by C and Java
-				#@+node:-1::<< handle open paren in C or Java >>
+				#@+node:4::Shared by C and Java
+				#@+node:3::<< handle open paren in C or Java >>
 				#@+body
 				lparen = i
 				# This will skip any equal signs inside the paren.
@@ -1682,14 +1682,14 @@ class leoImportCommands:
 						lparen = None # not a function definition.
 				else: lparen = None
 				#@-body
-				#@-node:+0::<< handle open paren in C or Java >>
-				#@-node:+1::Shared by C and Java
+				#@-node:3::<< handle open paren in C or Java >>
+				#@-node:4::Shared by C and Java
 
 			elif ch == ';':
 				
 				#@<< handle semicolon in C or Java >>
-				#@+node:+0::Shared by C and Java
-				#@+node:+0::<< handle semicolon in C or Java >>
+				#@+node:4::Shared by C and Java
+				#@+node:4::<< handle semicolon in C or Java >>
 				#@+body
 				#@+at
 				#  A semicolon signals the end of a declaration, thereby 
@@ -1705,15 +1705,15 @@ class leoImportCommands:
 				if lparen == None:
 					function_start = i + 1 # The semicolon ends the declaration.
 				#@-body
-				#@-node:+0::<< handle semicolon in C or Java >>
-				#@-node:+0::Shared by C and Java
+				#@-node:4::<< handle semicolon in C or Java >>
+				#@-node:4::Shared by C and Java
 
 				class_seen = false
 			# These cases can create child nodes.
 			elif ch == '{':
 				
 				#@<< handle open curly bracket in Java >>
-				#@+node:-2::<< handle open curly bracket in Java >>
+				#@+node:2::<< handle open curly bracket in Java >>
 				#@+body
 				brace_ip1 = i
 				i = skip_braces(s,i) # Skip all inner blocks.
@@ -1741,7 +1741,7 @@ class leoImportCommands:
 					else:
 						
 						#@<< create a Java declaration node >>
-						#@+node:-1::<< create a Java declaration node >>
+						#@+node:1::<< create a Java declaration node >>
 						#@+body
 						save_ip = i
 						i = scan_start
@@ -1761,11 +1761,11 @@ class leoImportCommands:
 						i = save_ip
 						scan_start = i
 						#@-body
-						#@-node:+0::<< create a Java declaration node >>
+						#@-node:1::<< create a Java declaration node >>
 
 						
 						#@<< append Java method reference to parent node >>
-						#@+node:+1::<< append Java method reference to parent node >>
+						#@+node:2::<< append Java method reference to parent node >>
 						#@+body
 						if self.treeType == "@file":
 							parent.appendStringToBody("\t@others\n")
@@ -1774,7 +1774,7 @@ class leoImportCommands:
 							ref_name = angleBrackets(" " + self.methodName + " " + kind + " ")
 							parent.appendStringToBody(leader + ref_name + "\n")
 						#@-body
-						#@-node:+0::<< append Java method reference to parent node >>
+						#@-node:2::<< append Java method reference to parent node >>
 
 					if outerFlag:
 						# Create a headline for the class.
@@ -1784,7 +1784,7 @@ class leoImportCommands:
 						v = self.createHeadline(parent,body,headline)
 						
 						#@<< recursively scan the text >>
-						#@+node:+1::<< recursively scan the text >>
+						#@+node:3::<< recursively scan the text >>
 						#@+body
 						# These mark the points in the present function.
 						# trace("recursive scan:" + `get_line(s,brace_ip1+ 1)`)
@@ -1797,7 +1797,7 @@ class leoImportCommands:
 						v.appendStringToBody("}")
 						i = brace_ip2 + 1 # Start after the closing brace.
 						#@-body
-						#@-node:+0::<< recursively scan the text >>
+						#@-node:3::<< recursively scan the text >>
 
 					else:
 						# Create a single headline for the method.
@@ -1810,12 +1810,12 @@ class leoImportCommands:
 					lparen = None ; class_seen = false
 				else: i += 1
 				#@-body
-				#@-node:-1::<< handle open curly bracket in Java >>
+				#@-node:2::<< handle open curly bracket in Java >>
 
 			elif is_c_id(s[i]):
 				
 				#@<< skip and remember the Java id >>
-				#@+node:+1::<< skip and remember the Java id >>
+				#@+node:3::<< skip and remember the Java id >>
 				#@+body
 				if match_c_word(s,i,"class"):
 					class_seen = true
@@ -1829,12 +1829,12 @@ class leoImportCommands:
 					j = i ; i = skip_c_id(s,i) ; name = s[j:i]
 				else: i = skip_c_id(s,i)
 				#@-body
-				#@-node:+0::<< skip and remember the Java id >>
+				#@-node:3::<< skip and remember the Java id >>
 
 			else: i += 1
 		
 		#@<< Append any unused text to the parent's body text >>
-		#@+node:+2::<< Append any unused text to the parent's body text >>
+		#@+node:5::<< Append any unused text to the parent's body text >>
 		#@+body
 		# Used by C, Java and Pascal parsers.
 		# Do nothing if only whitespace is left.
@@ -1843,12 +1843,12 @@ class leoImportCommands:
 		if i < len(s):
 			parent.appendStringToBody(s[scan_start:])
 		#@-body
-		#@-node:+0::<< Append any unused text to the parent's body text >>
+		#@-node:5::<< Append any unused text to the parent's body text >>
 	#@-body
-	#@+node:-1::Shared by C and Java
-	#@-node:+0::Shared by C and Java
-	#@-node:+0::scanJavaText
-	#@+node:+1::scanPascalText
+	#@+node:4::Shared by C and Java
+	#@-node:4::Shared by C and Java
+	#@-node:4::scanJavaText
+	#@+node:5::scanPascalText
 	#@+body
 	# Creates a child of parent for each Pascal function definition seen.
 	
@@ -1867,7 +1867,7 @@ class leoImportCommands:
 			elif is_c_id(s[i]):
 				
 				#@<< handle possible Pascal function >>
-				#@+node:-4::<< handle possible Pascal function >>
+				#@+node:1::<< handle possible Pascal function >>
 				#@+body
 				if match_c_word(s,i,"begin"):
 					i = skip_pascal_begin_end(s,i)
@@ -1883,7 +1883,7 @@ class leoImportCommands:
 					i = skip_ws_and_nl(s,i)
 					
 					#@<< remember the function name, or continue >>
-					#@+node:+2::<< remember the function name, or continue >>
+					#@+node:3::<< remember the function name, or continue >>
 					#@+body
 					if i < len(s) and is_c_id(s[i]):
 						j = i ; i = skip_c_id(s,i)
@@ -1893,15 +1893,15 @@ class leoImportCommands:
 						name = s[j:i]
 					else: continue
 					#@-body
-					#@-node:+0::<< remember the function name, or continue >>
+					#@-node:3::<< remember the function name, or continue >>
 
 					
 					#@<< skip the function definition, or continue >>
-					#@+node:+1::<< skip the function definition, or continue >>
+					#@+node:4::<< skip the function definition, or continue >>
 					#@+body
 					
 					#@<< skip past the semicolon >>
-					#@+node:-3::<< skip past the semicolon >>
+					#@+node:1::<< skip past the semicolon >>
 					#@+body
 					while i < len(s) and s[i] != ';':
 						# The paremeter list may contain "inner" semicolons.
@@ -1930,7 +1930,7 @@ class leoImportCommands:
 							elif ch == '"' or ch == '\'': i = skip_pascal_string(s,i)
 							else: i += 1
 					#@-body
-					#@-node:+0::<< skip past the semicolon >>
+					#@-node:1::<< skip past the semicolon >>
 
 					
 					if not match_c_word(s,i,"begin"):
@@ -1947,13 +1947,13 @@ class leoImportCommands:
 							i = skip_nl(s,i)
 					else: continue
 					#@-body
-					#@-node:+3::<< skip the function definition, or continue >>
+					#@-node:4::<< skip the function definition, or continue >>
 
 					if not method_seen:
 						method_seen = true
 						
 						#@<< create a child node for leading declarations >>
-						#@+node:-3::<< create a child node for leading declarations >>
+						#@+node:1::<< create a child node for leading declarations >>
 						#@+body
 						save_ip = i
 						i = scan_start
@@ -1973,11 +1973,11 @@ class leoImportCommands:
 						i = save_ip
 						scan_start = i
 						#@-body
-						#@-node:+0::<< create a child node for leading declarations >>
+						#@-node:1::<< create a child node for leading declarations >>
 
 						
 						#@<< append noweb method reference to the parent node >>
-						#@+node:+4::<< append noweb method reference to the parent node >>
+						#@+node:5::<< append noweb method reference to the parent node >>
 						#@+body
 						# Append the headline to the parent's body.
 						if self.treeType == "@file":
@@ -1986,13 +1986,13 @@ class leoImportCommands:
 							parent.appendStringToBody(
 								angleBrackets(" " + self.methodName + " methods ") + "\n")
 						#@-body
-						#@-node:+0::<< append noweb method reference to the parent node >>
+						#@-node:5::<< append noweb method reference to the parent node >>
 
 						function_start = start
 					else: function_start = scan_start
 					
 					#@<< create a child node for the function >>
-					#@+node:-3::<< create a child node for the function >>
+					#@+node:2::<< create a child node for the function >>
 					#@+body
 					# Point i _after_ the last character of the function.
 					i = skip_ws(s,i)
@@ -2005,16 +2005,16 @@ class leoImportCommands:
 					self.createHeadline(parent,body,headline)
 					scan_start = i
 					#@-body
-					#@-node:+0::<< create a child node for the function >>
+					#@-node:2::<< create a child node for the function >>
 
 				else: i = skip_c_id(s,i)
 				#@-body
-				#@-node:-1::<< handle possible Pascal function >>
+				#@-node:1::<< handle possible Pascal function >>
 
 			else: i += 1
 		
 		#@<< Append any unused text to the parent's body text >>
-		#@+node:+1::<< Append any unused text to the parent's body text >>
+		#@+node:2::<< Append any unused text to the parent's body text >>
 		#@+body
 		# Used by C, Java and Pascal parsers.
 		# Do nothing if only whitespace is left.
@@ -2023,13 +2023,13 @@ class leoImportCommands:
 		if i < len(s):
 			parent.appendStringToBody(s[scan_start:])
 		#@-body
-		#@-node:+0::<< Append any unused text to the parent's body text >>
+		#@-node:2::<< Append any unused text to the parent's body text >>
 	#@-body
-	#@-node:+3::scanPascalText
-	#@-node:+0::Scanners for createOutline
-	#@-node:-2::Import
-	#@+node:+1::Export
-	#@+node:-3::convertCodePartToWeb
+	#@-node:5::scanPascalText
+	#@-node:5::Scanners for createOutline
+	#@-node:3::Import
+	#@+node:4::Export
+	#@+node:1::convertCodePartToWeb
 	#@+body
 	#@+at
 	#  Headlines not containing a section reference are ignored in noweb and 
@@ -2047,7 +2047,7 @@ class leoImportCommands:
 		h = string.strip(v.headString())
 		
 		#@<< put v's headline ref in head_ref >>
-		#@+node:+0::<< put v's headline ref in head_ref>>
+		#@+node:1::<< put v's headline ref in head_ref>>
 		#@+body
 		#@+at
 		#  We look for either noweb or cweb brackets. head_ref does not 
@@ -2070,18 +2070,18 @@ class leoImportCommands:
 			if len(head_ref) == 0:
 				head_ref = None
 		#@-body
-		#@-node:+0::<< put v's headline ref in head_ref>>
+		#@-node:1::<< put v's headline ref in head_ref>>
 
 		
 		#@<< put name following @root or @file in file_name >>
-		#@+node:+1::<< put name following @root or @file in file_name >>
+		#@+node:2::<< put name following @root or @file in file_name >>
 		#@+body
 		if match(h,0,"@file") or match(h,0,"@root"):
 			line = h[5:]
 			line = string.strip(line)
 			
 			#@<< set file_name >>
-			#@+node:-1::<< Set file_name >>
+			#@+node:1::<< Set file_name >>
 			#@+body
 			# set j & k so line[j:k] is the file name.
 			# trace(`line`)
@@ -2099,19 +2099,19 @@ class leoImportCommands:
 			if file_name and len(file_name) == 0:
 				file_name = None
 			#@-body
-			#@-node:+0::<< Set file_name >>
+			#@-node:1::<< Set file_name >>
 
 		else:
 			file_name = line = None
 
 		#@-body
-		#@-node:+1::<< put name following @root or @file in file_name >>
+		#@-node:2::<< put name following @root or @file in file_name >>
 
 		if match_word(s,i,"@root"):
 			i = skip_line(s,i)
 			
 			#@<< append ref to file_name >>
-			#@+node:+1::<< append ref to file_name >>
+			#@+node:3::<< append ref to file_name >>
 			#@+body
 			if self.webType == "cweb":
 				if not file_name:
@@ -2124,13 +2124,13 @@ class leoImportCommands:
 				result += lb + file_name + rb + "=\n"
 
 			#@-body
-			#@-node:+0::<< append ref to file_name >>
+			#@-node:3::<< append ref to file_name >>
 
 		elif match_word(s,i,"@c") or match_word(s,i,"@code"):
 			i = skip_line(s,i)
 			
 			#@<< append head_ref >>
-			#@+node:+1::<< append head_ref >>
+			#@+node:4::<< append head_ref >>
 			#@+body
 			if self.webType == "cweb":
 				if not head_ref:
@@ -2148,13 +2148,13 @@ class leoImportCommands:
 			
 				result += lb + head_ref + rb + "=\n"
 			#@-body
-			#@-node:+0::<< append head_ref >>
+			#@-node:4::<< append head_ref >>
 
 		elif match_word(h,0,"@file"):
 			# Only do this if nothing else matches.
 			
 			#@<< append ref to file_name >>
-			#@+node:-1::<< append ref to file_name >>
+			#@+node:3::<< append ref to file_name >>
 			#@+body
 			if self.webType == "cweb":
 				if not file_name:
@@ -2167,13 +2167,13 @@ class leoImportCommands:
 				result += lb + file_name + rb + "=\n"
 
 			#@-body
-			#@-node:+0::<< append ref to file_name >>
+			#@-node:3::<< append ref to file_name >>
 
 			i = skip_line(s,i) # 4/28/02
 		else:
 			
 			#@<< append head_ref >>
-			#@+node:+1::<< append head_ref >>
+			#@+node:4::<< append head_ref >>
 			#@+body
 			if self.webType == "cweb":
 				if not head_ref:
@@ -2191,7 +2191,7 @@ class leoImportCommands:
 			
 				result += lb + head_ref + rb + "=\n"
 			#@-body
-			#@-node:+0::<< append head_ref >>
+			#@-node:4::<< append head_ref >>
 
 		i,result = self.copyPart(s,i,result)
 		return i, string.strip(result) + "\n"
@@ -2202,8 +2202,8 @@ class leoImportCommands:
 
 	#@-at
 	#@-body
-	#@-node:-3::convertCodePartToWeb
-	#@+node:+1::convertDocPartToWeb (handle @ %def)
+	#@-node:1::convertCodePartToWeb
+	#@+node:2::convertDocPartToWeb (handle @ %def)
 	#@+body
 	def convertDocPartToWeb (self,s,i,result):
 	
@@ -2226,8 +2226,8 @@ class leoImportCommands:
 			result += choose(self.webType=="cweb","\n@ ","\n@\n")
 		return i, result
 	#@-body
-	#@-node:+0::convertDocPartToWeb (handle @ %def)
-	#@+node:+1::convertVnodeToWeb
+	#@-node:2::convertDocPartToWeb (handle @ %def)
+	#@+node:3::convertVnodeToWeb
 	#@+body
 	#@+at
 	#  This code converts a vnode to noweb text as follows:
@@ -2259,25 +2259,25 @@ class leoImportCommands:
 				match_word(s,i,"@c") or match(s,i,lb)):
 				
 				#@<< Supply a missing doc part >>
-				#@+node:-2::<< Supply a missing doc part >>
+				#@+node:1::<< Supply a missing doc part >>
 				#@+body
 				if not docSeen:
 					docSeen = true
 					result += choose(self.webType=="cweb","\n@ ","\n@\n")
 				#@-body
-				#@-node:+0::<< Supply a missing doc part >>
+				#@-node:1::<< Supply a missing doc part >>
 
 				i,result = self.convertCodePartToWeb(s,i,v,result)
 			elif self.treeType == "@file":
 				
 				#@<< Supply a missing doc part >>
-				#@+node:+0::<< Supply a missing doc part >>
+				#@+node:1::<< Supply a missing doc part >>
 				#@+body
 				if not docSeen:
 					docSeen = true
 					result += choose(self.webType=="cweb","\n@ ","\n@\n")
 				#@-body
-				#@-node:+0::<< Supply a missing doc part >>
+				#@-node:1::<< Supply a missing doc part >>
 
 				i,result = self.convertCodePartToWeb(s,i,v,result)
 			else:
@@ -2289,8 +2289,8 @@ class leoImportCommands:
 			result += "\n"
 		return result
 	#@-body
-	#@-node:+2::convertVnodeToWeb
-	#@+node:+1::copyPart
+	#@-node:3::convertVnodeToWeb
+	#@+node:4::copyPart
 	#@+body
 	# Copies characters to result until the end of the present section is seen.
 	
@@ -2330,8 +2330,8 @@ class leoImportCommands:
 			assert(progress < i)
 		return i, string.rstrip(result)
 	#@-body
-	#@-node:+0::copyPart
-	#@+node:+1::flattenOutline
+	#@-node:4::copyPart
+	#@+node:5::flattenOutline
 	#@+body
 	def flattenOutline (self,fileName):
 	
@@ -2353,8 +2353,8 @@ class leoImportCommands:
 			es("exception while flattening outline")
 			traceback.print_exc()
 	#@-body
-	#@-node:+0::flattenOutline
-	#@+node:+1::outlineToWeb
+	#@-node:5::flattenOutline
+	#@+node:6::outlineToWeb
 	#@+body
 	def outlineToWeb (self,fileName,webType):
 	
@@ -2384,8 +2384,8 @@ class leoImportCommands:
 			es("exception in Outline To noweb command")
 			traceback.print_exc()
 	#@-body
-	#@-node:+0::outlineToWeb
-	#@+node:+1::removeSentinelsCommand
+	#@-node:6::outlineToWeb
+	#@+node:7::removeSentinelsCommand
 	#@+body
 	def removeSentinelsCommand (self,fileName):
 	
@@ -2393,7 +2393,7 @@ class leoImportCommands:
 		# trace(`self.fileName`)
 		
 		#@<< Read file into s >>
-		#@+node:-6::<< Read file into s >>
+		#@+node:1::<< Read file into s >>
 		#@+body
 		try:
 			file = open(fileName)
@@ -2404,13 +2404,13 @@ class leoImportCommands:
 			traceback.print_exc()
 			return
 		#@-body
-		#@-node:+0::<< Read file into s >>
+		#@-node:1::<< Read file into s >>
 
 		valid = true
 		line_delim = start_delim = end_delim = None
 		
 		#@<< set delims from the header line >>
-		#@+node:+1::<< set delims from the header line >>
+		#@+node:2::<< set delims from the header line >>
 		#@+body
 		#@+at
 		#  This code is similar to atFile::scanHeader.
@@ -2443,7 +2443,7 @@ class leoImportCommands:
 			end_delim = s[j:i]
 			line_delim = None
 		#@-body
-		#@-node:+0::<< set delims from the header line >>
+		#@-node:2::<< set delims from the header line >>
 
 		if valid == false:
 			es("invalid @+leo sentinel in " + fileName)
@@ -2456,7 +2456,7 @@ class leoImportCommands:
 			newFileName = os.path.join(path,fileName+".txt") # 8/4/02: use txt, not tmp.
 			
 			#@<< Write s into newFileName >>
-			#@+node:+1::<< Write s into newFileName >>
+			#@+node:3::<< Write s into newFileName >>
 			#@+body
 			try:
 				file = open(newFileName,"wb")
@@ -2467,10 +2467,10 @@ class leoImportCommands:
 				es("exception creating: " + newFileName)
 				traceback.print_exc()
 			#@-body
-			#@-node:+0::<< Write s into newFileName >>
+			#@-node:3::<< Write s into newFileName >>
 	#@-body
-	#@-node:+4::removeSentinelsCommand
-	#@+node:+1::removeSentinelLines
+	#@-node:7::removeSentinelsCommand
+	#@+node:8::removeSentinelLines
 	#@+body
 	#@+at
 	#  Properly removes all sentinel lines in s.  Only leading single-line 
@@ -2490,7 +2490,7 @@ class leoImportCommands:
 				first = false
 				
 				#@<< handle possible sentinel >>
-				#@+node:-7::<< handle possible sentinel >>
+				#@+node:1::<< handle possible sentinel >>
 				#@+body
 				i = skip_nl(s,i)
 				i = skip_ws(s,i)
@@ -2508,7 +2508,7 @@ class leoImportCommands:
 						if match(s,j,"@"):
 							continue # Remove the sentinel.
 				#@-body
-				#@-node:+0::<< handle possible sentinel >>
+				#@-node:1::<< handle possible sentinel >>
 
 			elif match(s,i,line_delim):
 				i = skip_to_end_of_line(s,i)
@@ -2522,8 +2522,8 @@ class leoImportCommands:
 			result += s[start:i]
 		return result
 	#@-body
-	#@-node:+7::removeSentinelLines
-	#@+node:+1::weave
+	#@-node:8::removeSentinelLines
+	#@+node:9::weave
 	#@+body
 	def weave (self,filename):
 		
@@ -2531,7 +2531,7 @@ class leoImportCommands:
 		if not v: return
 		
 		#@<< open filename to f, or return >>
-		#@+node:-8::<< open filename to f, or return >>
+		#@+node:1::<< open filename to f, or return >>
 		#@+body
 		try:
 			f = open(filename,'wb')
@@ -2541,7 +2541,7 @@ class leoImportCommands:
 			traceback.print_exc()
 			return
 		#@-body
-		#@-node:+0::<< open filename to f, or return >>
+		#@-node:1::<< open filename to f, or return >>
 
 		after = v.nodeAfterTree()
 		while v and v != after:
@@ -2551,7 +2551,7 @@ class leoImportCommands:
 				f.write("-" * 60) ; f.write('\n')
 				
 				#@<< write the context of v to f >>
-				#@+node:+1::<< write the context of v to f >>
+				#@+node:2::<< write the context of v to f >>
 				#@+body
 				# write the headlines of v, v's parent and v's grandparent.
 				context = [] ; v2 = v
@@ -2569,7 +2569,7 @@ class leoImportCommands:
 					f.write('\n')
 
 				#@-body
-				#@-node:+0::<< write the context of v to f >>
+				#@-node:2::<< write the context of v to f >>
 
 				f.write("-" * 60) ; f.write('\n')
 				f.write(string.rstrip(s) + '\n')
@@ -2577,10 +2577,10 @@ class leoImportCommands:
 		f.flush()
 		f.close()
 	#@-body
-	#@-node:+7::weave
-	#@-node:-5::Export
-	#@+node:+1::Utilities
-	#@+node:-4::createHeadline
+	#@-node:9::weave
+	#@-node:4::Export
+	#@+node:5::Utilities
+	#@+node:1::createHeadline
 	#@+body
 	def createHeadline (self,parent,body,headline):
 	
@@ -2593,13 +2593,13 @@ class leoImportCommands:
 			v.setBodyStringOrPane(body)
 		return v
 	#@-body
-	#@-node:+0::createHeadline
-	#@+node:+1::error
+	#@-node:1::createHeadline
+	#@+node:2::error
 	#@+body
 	def error (self,s): es(s)
 	#@-body
-	#@-node:+0::error
-	#@+node:+1::getLeadingIndent
+	#@-node:2::error
+	#@+node:3::getLeadingIndent
 	#@+body
 	#@+at
 	#  This code returns the leading whitespace of a line, ignoring blank and 
@@ -2623,8 +2623,8 @@ class leoImportCommands:
 		# trace("returns:0")
 		return 0
 	#@-body
-	#@-node:+0::getLeadingIndent
-	#@+node:+1::isDocStart and isModuleStart
+	#@-node:3::getLeadingIndent
+	#@+node:4::isDocStart and isModuleStart
 	#@+body
 	# The start of a document part or module in a noweb or cweb file.
 	# Exporters may have to test for @doc as well.
@@ -2652,8 +2652,8 @@ class leoImportCommands:
 				match(s,i,"@d") or match(s,i,"@f"))
 
 	#@-body
-	#@-node:+0::isDocStart and isModuleStart
-	#@+node:+1::massageBody
+	#@-node:4::isDocStart and isModuleStart
+	#@+node:5::massageBody
 	#@+body
 	def massageBody (self,s,methodKind):
 		
@@ -2690,8 +2690,8 @@ class leoImportCommands:
 				else:
 					return intro + newLine + newBody
 	#@-body
-	#@-node:+0::massageBody
-	#@+node:+1::massageComment
+	#@-node:5::massageBody
+	#@+node:6::massageComment
 	#@+body
 	#@+at
 	#  Returns s with all runs of whitespace and newlines converted to a 
@@ -2711,8 +2711,8 @@ class leoImportCommands:
 		s = string.strip(s)
 		return s
 	#@-body
-	#@-node:+0::massageComment
-	#@+node:+1::massageWebBody
+	#@-node:6::massageComment
+	#@+node:7::massageWebBody
 	#@+body
 	def massageWebBody (self,s):
 	
@@ -2721,7 +2721,7 @@ class leoImportCommands:
 		rb = choose(type=="cweb","@>",">>")
 		
 		#@<< Remove most newlines from @space and @* sections >>
-		#@+node:-6::<< Remove most newlines from @space and @* sections >>
+		#@+node:1::<< Remove most newlines from @space and @* sections >>
 		#@+body
 		i = 0
 		while i < len(s):
@@ -2754,11 +2754,11 @@ class leoImportCommands:
 					i = start + len(doc)
 			else: i = skip_line(s,i)
 		#@-body
-		#@-node:+0::<< Remove most newlines from @space and @* sections >>
+		#@-node:1::<< Remove most newlines from @space and @* sections >>
 
 		
 		#@<< Replace abbreviated names with full names >>
-		#@+node:+1::<< Replace abbreviated names with full names >>
+		#@+node:2::<< Replace abbreviated names with full names >>
 		#@+body
 		i = 0
 		while i < len(s):
@@ -2775,13 +2775,13 @@ class leoImportCommands:
 						i = j + len(name2)
 			i = skip_line(s,i)
 		#@-body
-		#@-node:+0::<< Replace abbreviated names with full names >>
+		#@-node:2::<< Replace abbreviated names with full names >>
 
 		s = string.rstrip(s)
 		return s
 	#@-body
-	#@-node:+5::massageWebBody
-	#@+node:+1::skipLeadingComments
+	#@-node:7::massageWebBody
+	#@+node:8::skipLeadingComments
 	#@+body
 	#@+at
 	#  This skips all leading comments in s, returning the remaining body text 
@@ -2799,7 +2799,7 @@ class leoImportCommands:
 		if self.fileType in [".c", ".cpp", ".java"]:
 			
 			#@<< scan for C-style comments >>
-			#@+node:-7::<< scan for C-style comments >>
+			#@+node:1::<< scan for C-style comments >>
 			#@+body
 			while i < len(s):
 				if match(s,i,"//"): # Handle a C++ comment.
@@ -2826,12 +2826,12 @@ class leoImportCommands:
 					i = skip_blank_lines(s,i)
 				else: break
 			#@-body
-			#@-node:+0::<< scan for C-style comments >>
+			#@-node:1::<< scan for C-style comments >>
 
 		elif self.fileType == ".pas":
 			
 			#@<< scan for Pascal comments >>
-			#@+node:+1::<< scan for Pascal comments >>
+			#@+node:2::<< scan for Pascal comments >>
 			#@+body
 			while i < len(s):
 				if match(s,i,"//"): # Handle a Pascal line comment.
@@ -2850,12 +2850,12 @@ class leoImportCommands:
 					i = skip_blank_lines(s,i)
 				else: break
 			#@-body
-			#@-node:+0::<< scan for Pascal comments >>
+			#@-node:2::<< scan for Pascal comments >>
 
 		elif self.fileType == ".py":
 			
 			#@<< scan for Python comments >>
-			#@+node:+1::<< scan for Python comments >>
+			#@+node:3::<< scan for Python comments >>
 			#@+body
 			while i < len(s) and match(s,i,'#'):
 				j = i + 1 ; i = skip_line(s,i)
@@ -2865,7 +2865,7 @@ class leoImportCommands:
 				i = skip_ws(s,i)
 				i = skip_blank_lines(s,i)
 			#@-body
-			#@-node:+0::<< scan for Python comments >>
+			#@-node:3::<< scan for Python comments >>
 
 		comment = string.strip(comment)
 		if len(comment) == 0:
@@ -2875,8 +2875,8 @@ class leoImportCommands:
 		else:
 			return s[i:], "@ " + comment + "\n"
 	#@-body
-	#@-node:+5::skipLeadingComments
-	#@+node:+1::undentBody
+	#@-node:8::skipLeadingComments
+	#@+node:9::undentBody
 	#@+body
 	#@+at
 	#  Removes extra leading indentation from all lines.  We look at the first 
@@ -2905,8 +2905,8 @@ class leoImportCommands:
 			result += line
 		return result
 	#@-body
-	#@-node:+0::undentBody
-	#@-node:-4::Utilities
+	#@-node:9::undentBody
+	#@-node:5::Utilities
 	#@-others
 #@-body
 #@-node:0::@file leoImport.py

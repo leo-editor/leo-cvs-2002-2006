@@ -18,8 +18,8 @@
 
 
 #@<< what c2py does >>
-#@+node:+1::Documentation
-#@+node:+0::<< what c2py does >>
+#@+node:1::Documentation
+#@+node:1::<< what c2py does >>
 #@+body
 #@+at
 #  c2py converts C or C++ text into python text.  The conversion is not 
@@ -113,13 +113,13 @@
 
 #@-at
 #@-body
-#@-node:+0::<< what c2py does >>
-#@-node:+0::Documentation
+#@-node:1::<< what c2py does >>
+#@-node:1::Documentation
 
 
 #@<< theory of operation >>
-#@+node:+0::Documentation
-#@+node:+1::<< theory of operation >>
+#@+node:1::Documentation
+#@+node:2::<< theory of operation >>
 #@+body
 #@+at
 #  Strategy and Performance
@@ -150,13 +150,13 @@
 
 #@-at
 #@-body
-#@-node:+0::<< theory of operation >>
-#@-node:-1::Documentation
+#@-node:2::<< theory of operation >>
+#@-node:1::Documentation
 
 import string
 
 #@<< specifying user types >>
-#@+node:+1::<< specifying user types >>
+#@+node:2::<< specifying user types >>
 #@+body
 #@+at
 #  Please change the following lists so they contain the types and classes 
@@ -211,7 +211,7 @@ ivarsDict = {
 		"mUndoType", "mUndoVnode", "mUndoParent", "mUndoBack", "mUndoN",
 		"mUndoDVnodes", "mUndoLastChild", "mUndoablyDeletedVnode" ]}
 #@-body
-#@-node:+0::<< specifying user types >>
+#@-node:2::<< specifying user types >>
 
 true = 1 ; false = None
 tabWidth = 4 # how many blanks in a tab.
@@ -219,7 +219,7 @@ printFlag = false
 doLeoTranslations = true ; dontDoLeoTranslations = false
 
 #@<< define testData >>
-#@+node:+1::<< define testData >>
+#@+node:3::<< define testData >>
 #@+body
 testData = [ "\n@doc\n\
 This is a doc part: format, whilest, {};->.\n\
@@ -268,13 +268,13 @@ void vnode::OnPasteNode(wxCommandEvent& WXUNUSED(event))\n\
 	mCommands -> pasteOutline();\n\
 }\n" ]
 #@-body
-#@-node:+0::<< define testData >>
+#@-node:3::<< define testData >>
 
 
 #@+others
-#@+node:-2::Documentation
-#@-node:+0::Documentation
-#@+node:+3::speedTest
+#@+node:1::Documentation
+#@-node:1::Documentation
+#@+node:4::speedTest
 #@+body
 def speedTest(passes):
 
@@ -310,9 +310,9 @@ def speedTest(passes):
 	print "elapsed time:", time2-time1
 	print "time/pass:", (time2-time1)/passes
 #@-body
-#@-node:+0::speedTest
-#@+node:+1::leo1to2
-#@+node:-4::leo1to2
+#@-node:4::speedTest
+#@+node:5::leo1to2
+#@+node:1::leo1to2
 #@+body
 def leo1to2():
 
@@ -322,8 +322,8 @@ def leo1to2():
 	convertLeo1to2(v,c)
 
 #@-body
-#@-node:+0::leo1to2
-#@+node:+1::convertLeo1to2
+#@-node:1::leo1to2
+#@+node:2::convertLeo1to2
 #@+body
 def convertLeo1to2(v,c):
 
@@ -338,8 +338,8 @@ def convertLeo1to2(v,c):
 	c.Repaint() # for backward compatibility
 	print "end of leo1to2"
 #@-body
-#@-node:+0::convertLeo1to2
-#@+node:+1::convertStringLeo1to2
+#@-node:2::convertLeo1to2
+#@+node:3::convertStringLeo1to2
 #@+body
 def convertStringLeo1to2 (s):
 
@@ -369,8 +369,8 @@ def convertStringLeo1to2 (s):
 	if printFlag: print "-----:\n", result
 	return result
 #@-body
-#@-node:+0::convertStringLeo1to2
-#@+node:+1::convertCodeList1to2
+#@-node:3::convertStringLeo1to2
+#@+node:4::convertCodeList1to2
 #@+body
 #@+at
 #  We do _not_ replace @root by @file or insert @others as needed.  Inserting 
@@ -389,9 +389,9 @@ def convertCodeList1to2(list):
 	removeLeadingAtCode(list)
 
 #@-body
-#@-node:+0::convertCodeList1to2
-#@-node:+1::leo1to2
-#@+node:+1::c2py entry points
+#@-node:4::convertCodeList1to2
+#@-node:5::leo1to2
+#@+node:6::c2py entry points
 #@+body
 #@+at
 #  We separate the processing into two parts, 1) a leo-aware driver that 
@@ -400,7 +400,7 @@ def convertCodeList1to2(list):
 
 #@-at
 #@-body
-#@+node:-5::convertCurrentTree
+#@+node:1::convertCurrentTree
 #@+body
 def convertCurrentTree():
 
@@ -409,8 +409,8 @@ def convertCurrentTree():
 	v = c.currentVnode()
 	c2py.convertLeoTree(v,c)
 #@-body
-#@-node:+0::convertCurrentTree
-#@+node:+1::convertLeoTree
+#@-node:1::convertCurrentTree
+#@+node:2::convertLeoTree
 #@+body
 def convertLeoTree(v,c):
 
@@ -424,8 +424,8 @@ def convertLeoTree(v,c):
 	c.Repaint() # for backward compatibility.
 	print "end of c2py"
 #@-body
-#@-node:+0::convertLeoTree
-#@+node:+1::convertCFileToPython
+#@-node:2::convertLeoTree
+#@+node:3::convertCFileToPython
 #@+body
 def convertCFileToPython(file):
 
@@ -439,10 +439,10 @@ def convertCFileToPython(file):
 	f.write(s)
 	f.close()
 #@-body
-#@-node:+0::convertCFileToPython
-#@-node:+3::c2py entry points
-#@+node:+1::c2py Top Level
-#@+node:-6::convertCStringToPython
+#@-node:3::convertCFileToPython
+#@-node:6::c2py entry points
+#@+node:7::c2py Top Level
+#@+node:1::convertCStringToPython
 #@+body
 def convertCStringToPython(s, leoFlag):
 
@@ -480,8 +480,8 @@ def convertCStringToPython(s, leoFlag):
 	if printFlag: print "-----:\n", result
 	return result
 #@-body
-#@-node:+0::convertCStringToPython
-#@+node:+1::convertCodeList
+#@-node:1::convertCStringToPython
+#@+node:2::convertCodeList
 #@+body
 def convertCodeList(list, firstPart, leoFlag):
 	#first
@@ -532,8 +532,8 @@ def convertCodeList(list, firstPart, leoFlag):
 	removeTrailingWs(list)
 	safeReplace(list, "\t ", "\t") # happens when deleting declarations.
 #@-body
-#@-node:+0::convertCodeList
-#@+node:+1::convertDocList
+#@-node:2::convertCodeList
+#@+node:3::convertDocList
 #@+body
 def convertDocList(docList):
 
@@ -544,8 +544,8 @@ def convertDocList(docList):
 			i += 1
 		docList[0:i] = list("@ ")
 #@-body
-#@-node:+0::convertDocList
-#@+node:+1::skipDocPart
+#@-node:3::convertDocList
+#@+node:4::skipDocPart
 #@+body
 def skipDocPart(list, i):
 	
@@ -558,8 +558,8 @@ def skipDocPart(list, i):
 		else: i = skipPastLine(list, i)
 	return i
 #@-body
-#@-node:+0::skipDocPart
-#@+node:+1::skipCodePart
+#@-node:4::skipDocPart
+#@+node:5::skipCodePart
 #@+body
 def skipCodePart(codeList, i):
 	
@@ -580,12 +580,12 @@ def skipCodePart(codeList, i):
 		else: i += 1
 	return i
 #@-body
-#@-node:+0::skipCodePart
-#@-node:+2::c2py Top Level
-#@+node:+1::removeSentinels
-#@-node:+0::removeSentinels
-#@+node:+1::Scanning & Replacing
-#@+node:-8::convertLeadingBlanks
+#@-node:5::skipCodePart
+#@-node:7::c2py Top Level
+#@+node:8::removeSentinels
+#@-node:8::removeSentinels
+#@+node:9::Scanning & Replacing
+#@+node:1::convertLeadingBlanks
 #@+body
 def convertLeadingBlanks(list):
 
@@ -602,8 +602,8 @@ def convertLeadingBlanks(list):
 				n = 0
 		i = skipPastLine(list, i)
 #@-body
-#@-node:+0::convertLeadingBlanks
-#@+node:+1::findInList
+#@-node:1::convertLeadingBlanks
+#@+node:2::findInList
 #@+body
 def findInList(list, i, findStringOrList):
 
@@ -614,8 +614,8 @@ def findInList(list, i, findStringOrList):
 		else: i += 1
 	return -1
 #@-body
-#@-node:+0::findInList
-#@+node:+1::findInCode
+#@-node:2::findInList
+#@+node:3::findInCode
 #@+body
 def findInCode(codeList, i, findStringOrList):
 
@@ -629,8 +629,8 @@ def findInCode(codeList, i, findStringOrList):
 		else: i += 1
 	return -1
 #@-body
-#@-node:+0::findInCode
-#@+node:+1::mungeAllFunctions
+#@-node:3::findInCode
+#@+node:4::mungeAllFunctions
 #@+body
 # We scan for a '{' at the top level that is preceeded by ')'
 # @code and < < x > > = have been replaced by @c
@@ -663,7 +663,7 @@ def mungeAllFunctions(codeList):
 			prevSemi = i ; firstOpen = None # restart the scan
 		else: i += 1
 #@-body
-#@+node:-3::handlePossibleFunctionHeader
+#@+node:1::handlePossibleFunctionHeader
 #@+body
 # converts function header lines from c++ format to python format.
 # That is, converts
@@ -721,8 +721,8 @@ def handlePossibleFunctionHeader(codeList, i, prevSemi, firstOpen):
 	codeList[prevSemi:k] = result
 	return k
 #@-body
-#@-node:+0::handlePossibleFunctionHeader
-#@+node:+1::massageFunctionArgs
+#@-node:1::handlePossibleFunctionHeader
+#@+node:2::massageFunctionArgs
 #@+body
 def massageFunctionArgs(args):
 	global gClassName
@@ -756,8 +756,8 @@ def massageFunctionArgs(args):
 	# print "new args:", listToString(result)
 	return result
 #@-body
-#@-node:+0::massageFunctionArgs
-#@+node:+1::massageFunctionHead (sets gClassName)
+#@-node:2::massageFunctionArgs
+#@+node:3::massageFunctionHead (sets gClassName)
 #@+body
 def massageFunctionHead(head):
 
@@ -799,8 +799,8 @@ def massageFunctionHead(head):
 	# print "new head:", listToString(finalResult)
 	return finalResult
 #@-body
-#@-node:+0::massageFunctionHead (sets gClassName)
-#@+node:+1::massageFunctionBody
+#@-node:3::massageFunctionHead (sets gClassName)
+#@+node:4::massageFunctionBody
 #@+body
 def massageFunctionBody(body):
 
@@ -809,7 +809,7 @@ def massageFunctionBody(body):
 	body = removeTypeNames(body)
 	return body
 #@-body
-#@+node:-3::massageIvars
+#@+node:1::massageIvars
 #@+body
 def massageIvars(body):
 
@@ -839,8 +839,8 @@ def massageIvars(body):
 		else: i += 1
 	return body
 #@-body
-#@-node:+0::massageIvars
-#@+node:+1::removeCasts
+#@-node:1::massageIvars
+#@+node:2::removeCasts
 #@+body
 def removeCasts(body):
 
@@ -868,8 +868,8 @@ def removeCasts(body):
 		else: i += 1
 	return body
 #@-body
-#@-node:+0::removeCasts
-#@+node:+1::removeTypeNames
+#@-node:2::removeCasts
+#@+node:3::removeTypeNames
 #@+body
 # Do _not_ remove type names when preceeded by new.
 
@@ -899,10 +899,10 @@ def removeTypeNames(body):
 		else: i += 1
 	return body
 #@-body
-#@-node:+0::removeTypeNames
-#@-node:+1::massageFunctionBody
-#@-node:+0::mungeAllFunctions
-#@+node:+1::handleAllKeywords
+#@-node:3::removeTypeNames
+#@-node:4::massageFunctionBody
+#@-node:4::mungeAllFunctions
+#@+node:5::handleAllKeywords
 #@+body
 # converts if ( x ) to if x:
 # converts while ( x ) to while x:
@@ -922,7 +922,7 @@ def handleAllKeywords(codeList):
 			i += 1
 	# print "handAllKeywords2:", listToString(codeList)
 #@-body
-#@+node:-4::handleKeyword
+#@+node:1::handleKeyword
 #@+body
 def handleKeyword(codeList,i):
 
@@ -954,9 +954,9 @@ def handleKeyword(codeList,i):
 		return j
 	return i
 #@-body
-#@-node:+0::handleKeyword
-#@-node:+4::handleAllKeywords
-#@+node:+1::isWs and isWOrNl
+#@-node:1::handleKeyword
+#@-node:5::handleAllKeywords
+#@+node:6::isWs and isWOrNl
 #@+body
 def isWs(c):
 	return c == ' ' or c == '\t'
@@ -964,8 +964,8 @@ def isWs(c):
 def isWsOrNl(c):
 	return c == ' ' or c == '\t' or c == '\n'
 #@-body
-#@-node:+0::isWs and isWOrNl
-#@+node:+1::isSectionDef
+#@-node:6::isWs and isWOrNl
+#@+node:7::isSectionDef
 #@+body
 # returns the ending index if i points to < < x > > =
 def isSectionDef(list, i):
@@ -977,15 +977,15 @@ def isSectionDef(list, i):
 		else: i += 1
 	return false
 #@-body
-#@-node:+0::isSectionDef
-#@+node:+1::isStringOrComment
+#@-node:7::isSectionDef
+#@+node:8::isStringOrComment
 #@+body
 def isStringOrComment(list, i):
 
 	return match(list,i,"'") or match(list,i,'"') or match(list,i,"//") or match(list,i,"/*")
 #@-body
-#@-node:+0::isStringOrComment
-#@+node:+1::match
+#@-node:8::isStringOrComment
+#@+node:9::match
 #@+body
 # returns true if findList matches starting at codeList[i]
 
@@ -1003,8 +1003,8 @@ def match (codeList, i, findStringOrList):
 				return i+j
 	return false
 #@-body
-#@-node:+0::match
-#@+node:+1::matchWord
+#@-node:9::match
+#@+node:10::matchWord
 #@+body
 def matchWord (codeList, i, findStringOrList):
 
@@ -1017,8 +1017,8 @@ def matchWord (codeList, i, findStringOrList):
 		c = codeList[j]
 		return not (c in string.letters or c in string.digits or c == '_')
 #@-body
-#@-node:+0::matchWord
-#@+node:+1::prevNonWsChar and prevNonWsOrNlChar
+#@-node:10::matchWord
+#@+node:11::prevNonWsChar and prevNonWsOrNlChar
 #@+body
 def prevNonWsChar(list, i):
 
@@ -1034,8 +1034,8 @@ def prevNonWsOrNlChar(list, i):
 		i -= 1
 	return i
 #@-body
-#@-node:+0::prevNonWsChar and prevNonWsOrNlChar
-#@+node:+1::removeAllCComments
+#@-node:11::prevNonWsChar and prevNonWsOrNlChar
+#@+node:12::removeAllCComments
 #@+body
 def removeAllCComments(list, delim):
 
@@ -1054,8 +1054,8 @@ def removeAllCComments(list, delim):
 		else:
 			i += 1
 #@-body
-#@-node:+0::removeAllCComments
-#@+node:+1::removeAllCSentinels
+#@-node:12::removeAllCComments
+#@+node:13::removeAllCSentinels
 #@+body
 def removeAllCSentinels(list, delim):
 
@@ -1076,8 +1076,8 @@ def removeAllCSentinels(list, delim):
 		else:
 			i = skipPastLine(list,i)
 #@-body
-#@-node:+0::removeAllCSentinels
-#@+node:+1::removeAllPythonComments
+#@-node:13::removeAllCSentinels
+#@+node:14::removeAllPythonComments
 #@+body
 def removeAllPythonComments(list, delim):
 
@@ -1092,8 +1092,8 @@ def removeAllPythonComments(list, delim):
 		else:
 			i += 1
 #@-body
-#@-node:+0::removeAllPythonComments
-#@+node:+1::removeAllPythonSentinels
+#@-node:14::removeAllPythonComments
+#@+node:15::removeAllPythonSentinels
 #@+body
 def removeAllPythonSentinels(list, delim):
 
@@ -1110,8 +1110,8 @@ def removeAllPythonSentinels(list, delim):
 		else:
 			i = skipPastLine(list,i)
 #@-body
-#@-node:+0::removeAllPythonSentinels
-#@+node:+1::removeAtRoot
+#@-node:15::removeAllPythonSentinels
+#@+node:16::removeAtRoot
 #@+body
 def removeAtRoot (codeList):
 
@@ -1131,8 +1131,8 @@ def removeAtRoot (codeList):
 		else: i += 1
 
 #@-body
-#@-node:+0::removeAtRoot
-#@+node:+1::removeBlankLines
+#@-node:16::removeAtRoot
+#@+node:17::removeBlankLines
 #@+body
 def removeBlankLines(codeList):
 
@@ -1147,8 +1147,8 @@ def removeBlankLines(codeList):
 			oldi = i
 			i = skipPastLine(codeList,i)
 #@-body
-#@-node:+0::removeBlankLines
-#@+node:+1::removeExcessWs
+#@-node:17::removeBlankLines
+#@+node:18::removeExcessWs
 #@+body
 def removeExcessWs(codeList):
 
@@ -1162,7 +1162,7 @@ def removeExcessWs(codeList):
 			i = removeExcessWsFromLine(codeList,i)
 		else: i += 1
 #@-body
-#@+node:-17::removeExessWsFromLine
+#@+node:1::removeExessWsFromLine
 #@+body
 def removeExcessWsFromLine(codeList,i):
 
@@ -1180,9 +1180,9 @@ def removeExcessWsFromLine(codeList,i):
 		else: i += 1
 	return i
 #@-body
-#@-node:+0::removeExessWsFromLine
-#@-node:+17::removeExcessWs
-#@+node:+1::removeLeadingAtCode
+#@-node:1::removeExessWsFromLine
+#@-node:18::removeExcessWs
+#@+node:19::removeLeadingAtCode
 #@+body
 def removeLeadingAtCode(codeList):
 
@@ -1194,8 +1194,8 @@ def removeLeadingAtCode(codeList):
 		i = skipWsAndNl(codeList,2)
 		del codeList[0:i]
 #@-body
-#@-node:+0::removeLeadingAtCode
-#@+node:+1::removeMatchingBrackets
+#@-node:19::removeLeadingAtCode
+#@+node:20::removeMatchingBrackets
 #@+body
 def removeMatchingBrackets(codeList, i):
 
@@ -1211,8 +1211,8 @@ def removeMatchingBrackets(codeList, i):
 		else: return j + 1
 	else: return j
 #@-body
-#@-node:+0::removeMatchingBrackets
-#@+node:+1::removeSemicolonsAtEndOfLines
+#@-node:20::removeMatchingBrackets
+#@+node:21::removeSemicolonsAtEndOfLines
 #@+body
 def removeSemicolonsAtEndOfLines(list):
 
@@ -1227,8 +1227,8 @@ def removeSemicolonsAtEndOfLines(list):
 			else: i += 1
 		else: i += 1
 #@-body
-#@-node:+0::removeSemicolonsAtEndOfLines
-#@+node:+1::removeTrailingWs
+#@-node:21::removeSemicolonsAtEndOfLines
+#@+node:22::removeTrailingWs
 #@+body
 def removeTrailingWs(list):
 
@@ -1244,8 +1244,8 @@ def removeTrailingWs(list):
 				i = j
 		else: i += 1
 #@-body
-#@-node:+0::removeTrailingWs
-#@+node:+1::replace
+#@-node:22::removeTrailingWs
+#@+node:23::replace
 #@+body
 # Replaces all occurances of findString by changeString.
 # Deletes all occurances if change is None
@@ -1262,8 +1262,8 @@ def replace(codeList, findString, changeString):
 			i += len(changeList)
 		else: i += 1
 #@-body
-#@-node:+0::replace
-#@+node:+1::replaceComments
+#@-node:23::replace
+#@+node:24::replaceComments
 #@+body
 # For Leo we expect few block comments; doc parts are much more common.
 
@@ -1291,8 +1291,8 @@ def replaceComments(codeList):
 			i = skipString(codeList,i)
 		else: i += 1
 #@-body
-#@-node:+0::replaceComments
-#@+node:+1::replaceSectionDefs
+#@-node:24::replaceComments
+#@+node:25::replaceSectionDefs
 #@+body
 # Replaces < < x > > = by @c (at the start of lines).
 def replaceSectionDefs(codeList):
@@ -1310,8 +1310,8 @@ def replaceSectionDefs(codeList):
 			if j > i: codeList[i:j] = list("@c ")
 		else: i += 1
 #@-body
-#@-node:+0::replaceSectionDefs
-#@+node:+1::safeReplace
+#@-node:25::replaceSectionDefs
+#@+node:26::safeReplace
 #@+body
 # Replaces occurances of findString by changeString outside of C comments and strings.
 # Deletes all occurances if change is None.
@@ -1336,8 +1336,8 @@ def safeReplace(codeList, findString, changeString):
 				i += len(changeList)
 			else: i += 1
 #@-body
-#@-node:+0::safeReplace
-#@+node:+1::skipCBlockComment
+#@-node:26::safeReplace
+#@+node:27::skipCBlockComment
 #@+body
 def skipCBlockComment(codeList, i):
 
@@ -1349,8 +1349,8 @@ def skipCBlockComment(codeList, i):
 		else: i += 1
 	return i
 #@-body
-#@-node:+0::skipCBlockComment
-#@+node:+1::skipPastLine
+#@-node:27::skipCBlockComment
+#@+node:28::skipPastLine
 #@+body
 def skipPastLine(codeList, i):
 
@@ -1360,8 +1360,8 @@ def skipPastLine(codeList, i):
 		i += 1
 	return i
 #@-body
-#@-node:+0::skipPastLine
-#@+node:+1::skipPastWord
+#@-node:28::skipPastLine
+#@+node:29::skipPastWord
 #@+body
 def skipPastWord(list, i):
 
@@ -1378,8 +1378,8 @@ def skipPastWord(list, i):
 		i += 1
 	return i
 #@-body
-#@-node:+0::skipPastWord
-#@+node:+1::skipString
+#@-node:29::skipPastWord
+#@+node:30::skipString
 #@+body
 def skipString(codeList, i):
 
@@ -1393,8 +1393,8 @@ def skipString(codeList, i):
 		else: i += 1
 	return i
 #@-body
-#@-node:+0::skipString
-#@+node:+1::skipStringOrComment
+#@-node:30::skipString
+#@+node:31::skipStringOrComment
 #@+body
 def skipStringOrComment(list,i):
 
@@ -1406,8 +1406,8 @@ def skipStringOrComment(list,i):
 		return skipCBlockComment(list,i)
 	else: assert(0)
 #@-body
-#@-node:+0::skipStringOrComment
-#@+node:+1::skipToMatchingBracket
+#@-node:31::skipStringOrComment
+#@+node:32::skipToMatchingBracket
 #@+body
 def skipToMatchingBracket(codeList, i):
 
@@ -1430,8 +1430,8 @@ def skipToMatchingBracket(codeList, i):
 		else: i += 1
 	return i
 #@-body
-#@-node:+0::skipToMatchingBracket
-#@+node:+1::skipWs and skipWsAndNl
+#@-node:32::skipToMatchingBracket
+#@+node:33::skipWs and skipWsAndNl
 #@+body
 def skipWs(list, i):
 
@@ -1451,8 +1451,8 @@ def skipWsAndNl(list, i):
 		else: break
 	return i
 #@-body
-#@-node:+0::skipWs and skipWsAndNl
-#@+node:+1::stringToList
+#@-node:33::skipWs and skipWsAndNl
+#@+node:34::stringToList
 #@+body
 # converts a string to a list containing one item per character of the list.
 # converts None to the empty string and leaves other types alone.
@@ -1465,15 +1465,15 @@ def stringToList(string):
 	else:
 		return []
 #@-body
-#@-node:+0::stringToList
-#@+node:+1::listToString
+#@-node:34::stringToList
+#@+node:35::listToString
 #@+body
 def listToString(list):
 
 	return string.join(list,"")
 #@-body
-#@-node:+0::listToString
-#@-node:-26::Scanning & Replacing
+#@-node:35::listToString
+#@-node:9::Scanning & Replacing
 #@-others
 
 
