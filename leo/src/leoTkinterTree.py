@@ -9,20 +9,6 @@ The code is based on code found in Python's IDLE program."""
 #@@language python
 #@@tabwidth -4
 
-import leoGlobals as g
-
-if g.app.config.use_psyco:
-    # print "enabled psyco classes",__file__
-    try: from psyco.classes import *
-    except ImportError: pass
-
-# import leoTkinterTree
-import leoFrame
-import leoNodes
-import Tkinter as Tk
-import tkFont
-import sys
-
 #@<< about drawing >>
 #@+node:ekr.20040803072955.1:  << About drawing >>
 #@+at
@@ -44,6 +30,24 @@ import sys
 #@-at
 #@nonl
 #@-node:ekr.20040803072955.1:  << About drawing >>
+#@nl
+#@<< imports >>
+#@+node:ekr.20040928101836:<< imports >>
+import leoGlobals as g
+
+if g.app.config.use_psyco:
+    # print "enabled psyco classes",__file__
+    try: from psyco.classes import *
+    except ImportError: pass
+
+# import leoTkinterTree
+import leoFrame
+import leoNodes
+import Tkinter as Tk
+import tkFont
+import sys
+#@nonl
+#@-node:ekr.20040928101836:<< imports >>
 #@nl
 
 class leoTkinterTree (leoFrame.leoTree):
