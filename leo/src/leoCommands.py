@@ -3618,7 +3618,7 @@ class baseCommands:
 			#@		<< open idle in Windows >>
 			#@+node:ekr.20031218072017.2934:<< open idle in Windows >>
 			# Initialize argv: the -t option sets the title of the Idle interp window.
-			sys.argv = ["leo","-t","leo"]
+			sys.argv = ["leo"] # ,"-t","Leo"]
 			
 			ok = false
 			if g.CheckVersion(sys.version,"2.3"):
