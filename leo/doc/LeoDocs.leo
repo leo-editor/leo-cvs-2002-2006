@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet ekr_stylesheet?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="11740" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="12806" clone_windows="0"/>
 <globals body_outline_ratio="0.501162790698">
-	<global_window_position top="19" left="242" height="860" width="891"/>
+	<global_window_position top="19" left="202" height="860" width="931"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -81,15 +81,379 @@
 <v t="edream.110203163054.62"><vh>Quick start</vh></v>
 </v>
 <v t="edream.110203163054.63" a="E"><vh>Latest versions</vh>
-<v t="ekr.20050122090311" a="E"><vh>4.3-a1</vh>
-<v t="ekr.20050122091036" a="TV"><vh>Unfinished configuration features</vh></v>
+<v t="ekr.20050122090311" a="ETV"><vh>4.3-a1</vh>
+<v t="ekr.20050123092834.1"><vh>Fixed bugs...</vh>
+<v t="ekr.20050123101208"><vh> Major bugs: these bugs corrupted derived files!</vh>
+<v t="ekr.20050123092834.432" a="E"><vh>Fixed double doc part bug</vh></v>
+<v t="ekr.20050123092834.497" a="E"><vh>Fixed bug in how Leo writes thin derived files</vh></v>
+</v>
+<v t="ekr.20050123092834.2"><vh>Commands</vh>
+<v t="ekr.20050123092834.6" a="E"><vh>Fixed problems with spawnv option of openWith</vh></v>
+<v t="ekr.20050123092834.19" a="E"><vh>Fixed bug in  Remove Sentinels command</vh></v>
+<v t="ekr.20050123092834.27" a="E"><vh>Fixed bug re Paste Retaining Clones</vh></v>
+<v t="ekr.20050123092834.42" a="E"><vh>Fixed Pretty Print commands for Python 2.4</vh></v>
+<v t="ekr.20050123092834.71" a="E"><vh>Fixed crasher in Import Derived Files command</vh></v>
+<v t="ekr.20050123092834.510" a="E"><vh>Search commands are now restricted to hoisted area</vh></v>
+</v>
+<v t="ekr.20050123100706.1"><vh>Distribution</vh>
+<v t="ekr.20050123092834.491"><vh>(Fixed file association in leoDist.leo)</vh></v>
+</v>
+<v t="ekr.20050123092834.165"><vh>Files</vh>
+<v t="ekr.20050123092834.492" a="E"><vh>g.import wrappers return module if it is in sys.modules</vh></v>
+<v t="ekr.20050123092834.166" a="E"><vh>Disabled changes to comment delims in @@language and @@comment sentinels</vh></v>
+<v t="ekr.20050123092834.176" a="E"><vh>Made sure files that differ only in line ending get written if @lineending is in effect</vh></v>
+<v t="ekr.20050123092834.196" a="E"><vh>Fixed bug:  @nosent wrote sentinels!</vh></v>
+<v t="ekr.20050123092834.422" a="E"><vh>Fixed bug in replaceTargetFileIfDifferent</vh></v>
+<v t="ekr.20050123092834.424" a="E"><vh>Made sure that @ignore forces writing of inner @thin trees</vh></v>
+<v t="ekr.20050123092834.431" a="E"><vh>Fixed crasher when attempting to write a derived file to an invalid path</vh></v>
+<v t="ekr.20050123092834.434" a="E"><vh>Fixed Python 2.4 deprecation warning when saving .leo files</vh></v>
+<v t="ekr.20050123092834.499" a="E"><vh>Fixed crasher in getOutputNewline</vh></v>
+<v t="ekr.20050123092834.544" a="E"><vh>Always use os.rename in utils_rename</vh></v>
+</v>
+<v t="ekr.20050123103303"><vh>Gui</vh>
+<v t="ekr.20050123092834.502" a="E"><vh>Put the scrollWheel workaround in createTkTreeCanvas</vh></v>
+</v>
+<v t="ekr.20050123100706.2"><vh>Menus</vh>
+<v t="ekr.20050123092834.81" a="E"><vh>Fixed problems with Control-E</vh></v>
+<v t="ekr.20050123092834.490"><vh>Better handling of duplicate menu shortcuts</vh>
+<v t="ekr.20050123092834.158"><vh>clearAccel</vh></v>
+<v t="ekr.20050123092834.125"><vh>createMenuEntries</vh>
+<v t="ekr.20050123092834.126"><vh>&lt;&lt; set name to the label for doCommand &gt;&gt;</vh></v>
+<v t="ekr.20050123092834.127"><vh>&lt;&lt; set accel to the shortcut for name &gt;&gt;</vh></v>
+<v t="ekr.20050123092834.128"><vh>&lt;&lt; set bind_shortcut and menu_shortcut using accel &gt;&gt;</vh></v>
+<v t="ekr.20050123092834.129"><vh>&lt;&lt; define callback function &gt;&gt;</vh></v>
+<v t="ekr.20050123092834.130"><vh>&lt;&lt; set realLabel, amp_index and menu_shortcut &gt;&gt;</vh></v>
+<v t="ekr.20050123092834.131"><vh>&lt;&lt; handle bind_shorcut &gt;&gt;</vh></v>
+</v>
+</v>
+</v>
+<v t="ekr.20050123092834.159"><vh>Nodes</vh>
+<v t="ekr.20050123092834.160" a="E"><vh>Fixed crash after cutting an imported node</vh></v>
+<v t="ekr.20050123092834.163" a="E"><vh>Removed invalid assert in lastVisible</vh></v>
+<v t="ekr.20050123093854.1"><vh>Fixed bugs in tnodes_iter and unique_tnodes_iter</vh></v>
+</v>
+<v t="ekr.20050123111723"><vh>Plugins</vh>
+<v t="ekr.20050123092834.1047" a="E"><vh>Fixed two bugs in Plugins Manager plugin</vh></v>
+<v t="ekr.20050123092834.1052" a="E"><vh>Fixed bug re referencing destroyed ivars</vh></v>
+<v t="ekr.20050123092834.1057"><vh>Fixed bug in registerOneHandler</vh></v>
+<v t="ekr.20050123092834.506" a="E"><vh>Fixed conflict between settings panel and chapters plugin</vh></v>
+</v>
+<v t="ekr.20050123092834.526"><vh>Pychecker</vh>
+<v t="ekr.20050123092834.527"><vh>&lt;&lt; Import pychecker &gt;&gt;</vh></v>
+<v t="ekr.20050123092834.528"><vh>leoApp (done)</vh></v>
+<v t="ekr.20050123092834.529"><vh>leoPlugins (done)</vh></v>
+<v t="ekr.20050123092834.530"><vh>leoColor (done)</vh></v>
+<v t="ekr.20050123092834.531"><vh>leoNodes (done)</vh></v>
+<v t="ekr.20050123092834.532"><vh>leoCompare (done)</vh></v>
+<v t="ekr.20050123092834.533"><vh>leoFind (done)</vh></v>
+<v t="ekr.20050123092834.534"><vh>leoMenu (done)</vh></v>
+<v t="ekr.20050123092834.535"><vh>leoTkinterTree (done)</vh></v>
+<v t="ekr.20050123092834.536"><vh>leoTkinterFrame (done)</vh></v>
+<v t="ekr.20050123092834.537"><vh>leoTkinterPrefs (done)</vh></v>
+<v t="ekr.20050123092834.538"><vh>leoTkinterGui (done)</vh></v>
+<v t="ekr.20050123092834.539"><vh>leoAtFile (done)</vh></v>
+<v t="ekr.20050123092834.540"><vh>leoFileCommands (done)</vh></v>
+<v t="ekr.20050123092834.541"><vh>leoImport (done)</vh></v>
+<v t="ekr.20050123092834.542"><vh>leoTangle (done)</vh></v>
+<v t="ekr.20050123092834.543"><vh>leoCommands (done)</vh></v>
+</v>
+<v t="ekr.20050123092834.438"><vh>Scripting</vh>
+<v t="ekr.20050123092834.439" a="E"><vh>Fixed unbounded recursion with --script and redirected output</vh></v>
+<v t="ekr.20050123092834.474" a="E"><vh>Script buttons now execute the entire script</vh></v>
+<v t="ekr.20050123092834.480"><vh>Fixed error reporting in executeScript when the error happens outside the script</vh>
+<v t="ekr.20050123092834.481"><vh>Report from e</vh></v>
+<v t="ekr.20050123092834.482"><vh>Report 2 from e</vh></v>
+<v t="ekr.20050123092834.475"><vh>c.executeScript</vh>
+<v t="ekr.20050123092834.476"><vh>&lt;&lt; redirect output &gt;&gt;</vh></v>
+<v t="ekr.20050123092834.477"><vh>&lt;&lt; unredirect output &gt;&gt;</vh></v>
+<v t="ekr.20050123092834.478"><vh>&lt;&lt; dump the lines near the error &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20050123092834.483"><vh>getLastTracebackFileAndLineNumber</vh></v>
+<v t="ekr.20050123092834.484"><vh>es_exception</vh></v>
+<v t="ekr.20050123092834.485"><vh>goToScriptLineNumber</vh></v>
+</v>
+</v>
+<v t="ekr.20050123092834.486"><vh>Startup</vh>
+<v t="ekr.20050123092834.487" a="E"><vh>Non-existent command-line file becomes name of new Leo wiindow</vh></v>
+<v t="ekr.20050123092834.1011"><vh>computeHomeDir now handles references to other vars</vh>
+<v t="ekr.20050123092834.1012"><vh>Original posting</vh></v>
+</v>
+</v>
+</v>
+<v t="ekr.20050123092834.896"><vh>New or improved features...</vh>
+<v t="ekr.20050123110009"><vh> Major new feature: @settings trees and leoSettings.leo</vh>
 <v t="ekr.20050122084954"><vh>Using leoSettings.leo and @settings trees</vh></v>
+<v t="ekr.20050122091036"><vh>Unfinished configuration features</vh></v>
+</v>
+<v t="ekr.20050123103303.1"><vh>Code</vh>
+<v t="ekr.20050123092834.520"><vh>Rewrote leoAtFile.py to make overriding methods simpler</vh>
+<v t="ekr.20050123092834.479"><vh>g.getScript</vh></v>
+<v t="ekr.20050123092834.212"><vh>initWriteIvars</vh>
+<v t="ekr.20050123092834.213"><vh>&lt;&lt; init ivars for writing &gt;&gt;&gt;</vh></v>
+</v>
+</v>
+<v t="ekr.20050123092834.173" a="E"><vh>Added g.cantImport</vh></v>
+<v t="ekr.20050123092834.901" a="E"><vh>Added g.fileLikeObject.readline</vh></v>
+<v t="ekr.20050123092834.928" a="E"><vh>Added support for g.app.debugSwitch in es_exception</vh></v>
+<v t="ekr.20050123092834.984" a="E"><vh>Restored drawing/event hooks</vh></v>
+<v t="ekr.20050123092834.1004"><vh>Added p=p param to all hooks containing v=v</vh></v>
+<v t="ekr.20050123092834.565"><vh>Implemented delayed focus scheme</vh>
+<v t="ekr.20050123092834.566"><vh>What I did</vh></v>
+<v t="ekr.20050123092834.567"><vh>set_focus (app.gui)</vh></v>
+<v t="ekr.20050123092834.568"><vh>Activation methods</vh>
+<v t="ekr.20050123092834.569"><vh>OnActivate (tkTree)</vh>
+<v t="ekr.20050123092834.570"><vh>&lt;&lt; activate this window &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20050123092834.571"><vh>OnActivateBody (tkFrame)</vh></v>
+<v t="ekr.20050123092834.572"><vh>OnActivateLeoEvent, OnDeactivateLeoEvent</vh></v>
+<v t="ekr.20050123092834.573"><vh>OnActivateTree</vh></v>
+<v t="ekr.20050123092834.574"><vh>tkLog.onActivateLog</vh></v>
+</v>
+<v t="ekr.20050123092834.575"><vh>tree.select</vh>
+<v t="ekr.20050123092834.576"><vh>&lt;&lt; unselect the old node &gt;&gt; (changed in 4.2)</vh></v>
+<v t="ekr.20050123092834.577"><vh>&lt;&lt; select the new node &gt;&gt;</vh></v>
+<v t="ekr.20050123092834.578"><vh>&lt;&lt; update c.beadList or c.beadPointer &gt;&gt;</vh></v>
+<v t="ekr.20050123092834.579"><vh>&lt;&lt; update c.visitedList &gt;&gt;</vh></v>
+<v t="ekr.20050123092834.580"><vh>&lt;&lt; set the current node &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20050123092834.581"><vh>Delayed Focus (tkFrame)</vh>
+<v t="ekr.20050123092834.582"><vh>xWantsFocus</vh></v>
+<v t="ekr.20050123092834.583"><vh>set_focus (tkFrame)</vh></v>
+</v>
+<v t="ekr.20050123092834.584"><vh>class statusLineClass</vh>
+<v t="ekr.20050123092834.585"><vh> ctor</vh></v>
+<v t="ekr.20050123092834.586"><vh>clear</vh></v>
+<v t="ekr.20050123092834.587"><vh>enable, disable &amp; isEnabled</vh></v>
+<v t="ekr.20050123092834.588"><vh>get</vh></v>
+<v t="ekr.20050123092834.589"><vh>getFrame</vh></v>
+<v t="ekr.20050123092834.590"><vh>onActivate</vh></v>
+<v t="ekr.20050123092834.591"><vh>pack &amp; show</vh></v>
+<v t="ekr.20050123092834.592"><vh>put</vh></v>
+<v t="ekr.20050123092834.593"><vh>setFocus</vh></v>
+<v t="ekr.20050123092834.594"><vh>unpack &amp; hide</vh></v>
+<v t="ekr.20050123092834.595"><vh>update</vh></v>
+</v>
+</v>
+</v>
+<v t="ekr.20050123103521"><vh>Commands</vh>
+<v t="ekr.20050123092834.897" a="E"><vh>Added 'Expand Or Go Right' and 'Contract or Go Left' commands</vh></v>
+<v t="ekr.20050123092834.908" a="E"><vh>Added keyboard shortcuts to find panel</vh></v>
+<v t="ekr.20050123092834.1005"><vh>Find panels are now associated with individual Leo windows</vh>
+<v t="ekr.20050123092834.1006"><vh>What I did</vh></v>
+<v t="ekr.20050123092834.924"><vh>find.init</vh>
+<v t="ekr.20050123092834.925"><vh>&lt;&lt; set find/change widgets &gt;&gt;</vh></v>
+<v t="ekr.20050123092834.926"><vh>&lt;&lt; set radio buttons from ivars &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20050123092834.1007"><vh>find.update_ivars</vh></v>
+<v t="ekr.20050123092834.1008"><vh>getFindPanelSettings</vh></v>
+</v>
+<v t="ekr.20050123105026"><vh>Find panels are now inited from @settings nodes</vh></v>
+<v t="ekr.20050123092834.961" a="E"><vh>Improved Go To Line Number and Execute Script commands</vh></v>
+<v t="ekr.20050123092834.1018" a="E"><vh>Improved support for relative path names</vh></v>
+<v t="ekr.20050123092834.1043" a="E"><vh>Implemented 'Undo Clear Recent Files'</vh></v>
+<v t="ekr.20050123092834.517"><vh>Removed old-style write commands</vh>
+<v t="ekr.20050123092834.518"><vh>top_df.writeOld/NewDerivedFiles (no longer used)</vh></v>
+<v t="ekr.20050123092834.519"><vh>writeNew/OldDerivedFiles (no longer used)</vh></v>
+</v>
+</v>
+<v t="ekr.20050123092834.1044"><vh>Plugins &amp; extensions</vh>
+<v t="ekr.20050123112151"><vh>Improved doHandlersForTag</vh></v>
+<v t="ekr.20050123092834.1013" a="E"><vh>Leo now associates modules with hook handlers</vh></v>
+<v t="ekr.20050123092834.1009" a="E"><vh>Added a 3rd party extension mechanism</vh></v>
+</v>
+<v t="ekr.20050123103753"><vh>Syntax Coloring &amp; languages</vh>
+<v t="ekr.20050123092834.903" a="E"><vh>Added support for Ada</vh></v>
+<v t="ekr.20050123092834.929" a="E"><vh>Added support for Forth</vh></v>
+</v>
+</v>
 </v>
 </v>
 <v t="edream.110203163054.117"><vh>leo.py versions</vh>
 <v t="ekr.20050122090311"><vh>4.3-a1</vh>
-<v t="ekr.20050122091036"><vh>Unfinished configuration features</vh></v>
+<v t="ekr.20050123092834.1"><vh>Fixed bugs...</vh>
+<v t="ekr.20050123101208"><vh> Major bugs: these bugs corrupted derived files!</vh>
+<v t="ekr.20050123092834.432" a="E"><vh>Fixed double doc part bug</vh></v>
+<v t="ekr.20050123092834.497" a="E"><vh>Fixed bug in how Leo writes thin derived files</vh></v>
+</v>
+<v t="ekr.20050123092834.2"><vh>Commands</vh>
+<v t="ekr.20050123092834.6" a="E"><vh>Fixed problems with spawnv option of openWith</vh></v>
+<v t="ekr.20050123092834.19" a="E"><vh>Fixed bug in  Remove Sentinels command</vh></v>
+<v t="ekr.20050123092834.27" a="E"><vh>Fixed bug re Paste Retaining Clones</vh></v>
+<v t="ekr.20050123092834.42" a="E"><vh>Fixed Pretty Print commands for Python 2.4</vh></v>
+<v t="ekr.20050123092834.71" a="E"><vh>Fixed crasher in Import Derived Files command</vh></v>
+<v t="ekr.20050123092834.510" a="E"><vh>Search commands are now restricted to hoisted area</vh></v>
+</v>
+<v t="ekr.20050123100706.1"><vh>Distribution</vh>
+<v t="ekr.20050123092834.491"><vh>(Fixed file association in leoDist.leo)</vh></v>
+</v>
+<v t="ekr.20050123092834.165"><vh>Files</vh>
+<v t="ekr.20050123092834.492" a="E"><vh>g.import wrappers return module if it is in sys.modules</vh></v>
+<v t="ekr.20050123092834.166" a="E"><vh>Disabled changes to comment delims in @@language and @@comment sentinels</vh></v>
+<v t="ekr.20050123092834.176" a="E"><vh>Made sure files that differ only in line ending get written if @lineending is in effect</vh></v>
+<v t="ekr.20050123092834.196" a="E"><vh>Fixed bug:  @nosent wrote sentinels!</vh></v>
+<v t="ekr.20050123092834.422" a="E"><vh>Fixed bug in replaceTargetFileIfDifferent</vh></v>
+<v t="ekr.20050123092834.424" a="E"><vh>Made sure that @ignore forces writing of inner @thin trees</vh></v>
+<v t="ekr.20050123092834.431" a="E"><vh>Fixed crasher when attempting to write a derived file to an invalid path</vh></v>
+<v t="ekr.20050123092834.434" a="E"><vh>Fixed Python 2.4 deprecation warning when saving .leo files</vh></v>
+<v t="ekr.20050123092834.499" a="E"><vh>Fixed crasher in getOutputNewline</vh></v>
+<v t="ekr.20050123092834.544" a="E"><vh>Always use os.rename in utils_rename</vh></v>
+</v>
+<v t="ekr.20050123103303"><vh>Gui</vh>
+<v t="ekr.20050123092834.502" a="E"><vh>Put the scrollWheel workaround in createTkTreeCanvas</vh></v>
+</v>
+<v t="ekr.20050123100706.2"><vh>Menus</vh>
+<v t="ekr.20050123092834.81" a="E"><vh>Fixed problems with Control-E</vh></v>
+<v t="ekr.20050123092834.490"><vh>Better handling of duplicate menu shortcuts</vh>
+<v t="ekr.20050123092834.158"><vh>clearAccel</vh></v>
+<v t="ekr.20050123092834.125"><vh>createMenuEntries</vh>
+<v t="ekr.20050123092834.126"><vh>&lt;&lt; set name to the label for doCommand &gt;&gt;</vh></v>
+<v t="ekr.20050123092834.127"><vh>&lt;&lt; set accel to the shortcut for name &gt;&gt;</vh></v>
+<v t="ekr.20050123092834.128"><vh>&lt;&lt; set bind_shortcut and menu_shortcut using accel &gt;&gt;</vh></v>
+<v t="ekr.20050123092834.129"><vh>&lt;&lt; define callback function &gt;&gt;</vh></v>
+<v t="ekr.20050123092834.130"><vh>&lt;&lt; set realLabel, amp_index and menu_shortcut &gt;&gt;</vh></v>
+<v t="ekr.20050123092834.131"><vh>&lt;&lt; handle bind_shorcut &gt;&gt;</vh></v>
+</v>
+</v>
+</v>
+<v t="ekr.20050123092834.159"><vh>Nodes</vh>
+<v t="ekr.20050123092834.160" a="E"><vh>Fixed crash after cutting an imported node</vh></v>
+<v t="ekr.20050123092834.163" a="E"><vh>Removed invalid assert in lastVisible</vh></v>
+<v t="ekr.20050123093854.1"><vh>Fixed bugs in tnodes_iter and unique_tnodes_iter</vh></v>
+</v>
+<v t="ekr.20050123111723"><vh>Plugins</vh>
+<v t="ekr.20050123092834.1047" a="E"><vh>Fixed two bugs in Plugins Manager plugin</vh></v>
+<v t="ekr.20050123092834.1052" a="E"><vh>Fixed bug re referencing destroyed ivars</vh></v>
+<v t="ekr.20050123092834.1057"><vh>Fixed bug in registerOneHandler</vh></v>
+<v t="ekr.20050123092834.506" a="E"><vh>Fixed conflict between settings panel and chapters plugin</vh></v>
+</v>
+<v t="ekr.20050123092834.526"><vh>Pychecker</vh>
+<v t="ekr.20050123092834.527"><vh>&lt;&lt; Import pychecker &gt;&gt;</vh></v>
+<v t="ekr.20050123092834.528"><vh>leoApp (done)</vh></v>
+<v t="ekr.20050123092834.529"><vh>leoPlugins (done)</vh></v>
+<v t="ekr.20050123092834.530"><vh>leoColor (done)</vh></v>
+<v t="ekr.20050123092834.531"><vh>leoNodes (done)</vh></v>
+<v t="ekr.20050123092834.532"><vh>leoCompare (done)</vh></v>
+<v t="ekr.20050123092834.533"><vh>leoFind (done)</vh></v>
+<v t="ekr.20050123092834.534"><vh>leoMenu (done)</vh></v>
+<v t="ekr.20050123092834.535"><vh>leoTkinterTree (done)</vh></v>
+<v t="ekr.20050123092834.536"><vh>leoTkinterFrame (done)</vh></v>
+<v t="ekr.20050123092834.537"><vh>leoTkinterPrefs (done)</vh></v>
+<v t="ekr.20050123092834.538"><vh>leoTkinterGui (done)</vh></v>
+<v t="ekr.20050123092834.539"><vh>leoAtFile (done)</vh></v>
+<v t="ekr.20050123092834.540"><vh>leoFileCommands (done)</vh></v>
+<v t="ekr.20050123092834.541"><vh>leoImport (done)</vh></v>
+<v t="ekr.20050123092834.542"><vh>leoTangle (done)</vh></v>
+<v t="ekr.20050123092834.543"><vh>leoCommands (done)</vh></v>
+</v>
+<v t="ekr.20050123092834.438"><vh>Scripting</vh>
+<v t="ekr.20050123092834.439" a="E"><vh>Fixed unbounded recursion with --script and redirected output</vh></v>
+<v t="ekr.20050123092834.474" a="E"><vh>Script buttons now execute the entire script</vh></v>
+<v t="ekr.20050123092834.480"><vh>Fixed error reporting in executeScript when the error happens outside the script</vh>
+<v t="ekr.20050123092834.481"><vh>Report from e</vh></v>
+<v t="ekr.20050123092834.482"><vh>Report 2 from e</vh></v>
+<v t="ekr.20050123092834.475"><vh>c.executeScript</vh>
+<v t="ekr.20050123092834.476"><vh>&lt;&lt; redirect output &gt;&gt;</vh></v>
+<v t="ekr.20050123092834.477"><vh>&lt;&lt; unredirect output &gt;&gt;</vh></v>
+<v t="ekr.20050123092834.478"><vh>&lt;&lt; dump the lines near the error &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20050123092834.483"><vh>getLastTracebackFileAndLineNumber</vh></v>
+<v t="ekr.20050123092834.484"><vh>es_exception</vh></v>
+<v t="ekr.20050123092834.485"><vh>goToScriptLineNumber</vh></v>
+</v>
+</v>
+<v t="ekr.20050123092834.486"><vh>Startup</vh>
+<v t="ekr.20050123092834.487" a="E"><vh>Non-existent command-line file becomes name of new Leo wiindow</vh></v>
+<v t="ekr.20050123092834.1011"><vh>computeHomeDir now handles references to other vars</vh>
+<v t="ekr.20050123092834.1012"><vh>Original posting</vh></v>
+</v>
+</v>
+</v>
+<v t="ekr.20050123092834.896"><vh>New or improved features...</vh>
+<v t="ekr.20050123110009"><vh> Major new feature: @settings trees and leoSettings.leo</vh>
 <v t="ekr.20050122084954"><vh>Using leoSettings.leo and @settings trees</vh></v>
+<v t="ekr.20050122091036"><vh>Unfinished configuration features</vh></v>
+</v>
+<v t="ekr.20050123103303.1"><vh>Code</vh>
+<v t="ekr.20050123092834.520"><vh>Rewrote leoAtFile.py to make overriding methods simpler</vh>
+<v t="ekr.20050123092834.479"><vh>g.getScript</vh></v>
+<v t="ekr.20050123092834.212"><vh>initWriteIvars</vh>
+<v t="ekr.20050123092834.213"><vh>&lt;&lt; init ivars for writing &gt;&gt;&gt;</vh></v>
+</v>
+</v>
+<v t="ekr.20050123092834.173" a="E"><vh>Added g.cantImport</vh></v>
+<v t="ekr.20050123092834.901" a="E"><vh>Added g.fileLikeObject.readline</vh></v>
+<v t="ekr.20050123092834.928" a="E"><vh>Added support for g.app.debugSwitch in es_exception</vh></v>
+<v t="ekr.20050123092834.984" a="E"><vh>Restored drawing/event hooks</vh></v>
+<v t="ekr.20050123092834.1004"><vh>Added p=p param to all hooks containing v=v</vh></v>
+<v t="ekr.20050123092834.565"><vh>Implemented delayed focus scheme</vh>
+<v t="ekr.20050123092834.566"><vh>What I did</vh></v>
+<v t="ekr.20050123092834.567"><vh>set_focus (app.gui)</vh></v>
+<v t="ekr.20050123092834.568"><vh>Activation methods</vh>
+<v t="ekr.20050123092834.569"><vh>OnActivate (tkTree)</vh>
+<v t="ekr.20050123092834.570"><vh>&lt;&lt; activate this window &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20050123092834.571"><vh>OnActivateBody (tkFrame)</vh></v>
+<v t="ekr.20050123092834.572"><vh>OnActivateLeoEvent, OnDeactivateLeoEvent</vh></v>
+<v t="ekr.20050123092834.573"><vh>OnActivateTree</vh></v>
+<v t="ekr.20050123092834.574"><vh>tkLog.onActivateLog</vh></v>
+</v>
+<v t="ekr.20050123092834.575"><vh>tree.select</vh>
+<v t="ekr.20050123092834.576"><vh>&lt;&lt; unselect the old node &gt;&gt; (changed in 4.2)</vh></v>
+<v t="ekr.20050123092834.577"><vh>&lt;&lt; select the new node &gt;&gt;</vh></v>
+<v t="ekr.20050123092834.578"><vh>&lt;&lt; update c.beadList or c.beadPointer &gt;&gt;</vh></v>
+<v t="ekr.20050123092834.579"><vh>&lt;&lt; update c.visitedList &gt;&gt;</vh></v>
+<v t="ekr.20050123092834.580"><vh>&lt;&lt; set the current node &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20050123092834.581"><vh>Delayed Focus (tkFrame)</vh>
+<v t="ekr.20050123092834.582"><vh>xWantsFocus</vh></v>
+<v t="ekr.20050123092834.583"><vh>set_focus (tkFrame)</vh></v>
+</v>
+<v t="ekr.20050123092834.584"><vh>class statusLineClass</vh>
+<v t="ekr.20050123092834.585"><vh> ctor</vh></v>
+<v t="ekr.20050123092834.586"><vh>clear</vh></v>
+<v t="ekr.20050123092834.587"><vh>enable, disable &amp; isEnabled</vh></v>
+<v t="ekr.20050123092834.588"><vh>get</vh></v>
+<v t="ekr.20050123092834.589"><vh>getFrame</vh></v>
+<v t="ekr.20050123092834.590"><vh>onActivate</vh></v>
+<v t="ekr.20050123092834.591"><vh>pack &amp; show</vh></v>
+<v t="ekr.20050123092834.592"><vh>put</vh></v>
+<v t="ekr.20050123092834.593"><vh>setFocus</vh></v>
+<v t="ekr.20050123092834.594"><vh>unpack &amp; hide</vh></v>
+<v t="ekr.20050123092834.595"><vh>update</vh></v>
+</v>
+</v>
+</v>
+<v t="ekr.20050123103521"><vh>Commands</vh>
+<v t="ekr.20050123092834.897" a="E"><vh>Added 'Expand Or Go Right' and 'Contract or Go Left' commands</vh></v>
+<v t="ekr.20050123092834.908" a="E"><vh>Added keyboard shortcuts to find panel</vh></v>
+<v t="ekr.20050123092834.1005"><vh>Find panels are now associated with individual Leo windows</vh>
+<v t="ekr.20050123092834.1006"><vh>What I did</vh></v>
+<v t="ekr.20050123092834.924"><vh>find.init</vh>
+<v t="ekr.20050123092834.925"><vh>&lt;&lt; set find/change widgets &gt;&gt;</vh></v>
+<v t="ekr.20050123092834.926"><vh>&lt;&lt; set radio buttons from ivars &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20050123092834.1007"><vh>find.update_ivars</vh></v>
+<v t="ekr.20050123092834.1008"><vh>getFindPanelSettings</vh></v>
+</v>
+<v t="ekr.20050123105026"><vh>Find panels are now inited from @settings nodes</vh></v>
+<v t="ekr.20050123092834.961" a="E"><vh>Improved Go To Line Number and Execute Script commands</vh></v>
+<v t="ekr.20050123092834.1018" a="E"><vh>Improved support for relative path names</vh></v>
+<v t="ekr.20050123092834.1043" a="E"><vh>Implemented 'Undo Clear Recent Files'</vh></v>
+<v t="ekr.20050123092834.517"><vh>Removed old-style write commands</vh>
+<v t="ekr.20050123092834.518"><vh>top_df.writeOld/NewDerivedFiles (no longer used)</vh></v>
+<v t="ekr.20050123092834.519"><vh>writeNew/OldDerivedFiles (no longer used)</vh></v>
+</v>
+</v>
+<v t="ekr.20050123092834.1044"><vh>Plugins &amp; extensions</vh>
+<v t="ekr.20050123112151"><vh>Improved doHandlersForTag</vh></v>
+<v t="ekr.20050123092834.1013" a="E"><vh>Leo now associates modules with hook handlers</vh></v>
+<v t="ekr.20050123092834.1009" a="E"><vh>Added a 3rd party extension mechanism</vh></v>
+</v>
+<v t="ekr.20050123103753"><vh>Syntax Coloring &amp; languages</vh>
+<v t="ekr.20050123092834.903" a="E"><vh>Added support for Ada</vh></v>
+<v t="ekr.20050123092834.929" a="E"><vh>Added support for Forth</vh></v>
+</v>
+</v>
 </v>
 <v t="ekr.20040922074200"><vh>4.2 final</vh></v>
 <v t="ekr.20040914103359"><vh>4.2 rc1</vh>
@@ -480,13 +844,13 @@
 </v>
 </v>
 <v t="edream.110203163054.118"><vh>3.x releases</vh>
-<v t="edream.110203163054.119"><vh>3.12 final</vh>
+<v t="edream.110203163054.119" a="E"><vh>3.12 final</vh>
 <v t="edream.110203163054.120"><vh>Bug fixes (major)</vh>
 <v t="edream.110203163054.121"><vh>Fixed major undo bug</vh></v>
 <v t="edream.110203163054.122"><vh>Fixed huge performance bug when handling read errors</vh></v>
 <v t="edream.110203163054.123"><vh>Fixed memory leaks: one minor, one huge</vh></v>
 </v>
-<v t="edream.110203163054.124"><vh>Bug fixes (minor)</vh>
+<v t="edream.110203163054.124" a="E"><vh>Bug fixes (minor)</vh>
 <v t="edream.110203163054.125"><vh>Fixed bug affecting encoding in headlines</vh></v>
 <v t="edream.110203163054.126"><vh>Fixed bug affecting log pane</vh></v>
 <v t="edream.110203163054.127"><vh>Fixed bug importing files with upper case extensions</vh></v>
@@ -536,7 +900,7 @@
 <v t="edream.110203163054.169"><vh>Updated Marks window in Mark Find and Mark Changes commands</vh></v>
 <v t="edream.110203163054.170"><vh>Use "file in directory" format for entries in Recent Files list</vh></v>
 </v>
-<v t="edream.110203163054.171"><vh>Hooks</vh>
+<v t="edream.110203163054.171" a="E"><vh>Hooks</vh>
 <v t="edream.110203163054.172"><vh>About hooks</vh></v>
 <v t="edream.110203163054.173"><vh>Added "clear-mark" and "set-mark" hooks</vh></v>
 <v t="edream.110203163054.174"><vh>Added hooks to customize popup menus</vh></v>
@@ -555,7 +919,7 @@
 </v>
 </v>
 <v t="edream.110203163054.185"><vh>3.11.1</vh></v>
-<v t="edream.110203163054.186"><vh>3.11</vh>
+<v t="edream.110203163054.186" a="E"><vh>3.11</vh>
 <v t="edream.110203163054.187"><vh>New in 3.11 final</vh>
 <v t="edream.110203163054.188"><vh>Bug fixes</vh>
 <v t="edream.110203163054.189"><vh>Added call to c.redraw() in fileCommands.readAtFileNodes</vh></v>
@@ -581,16 +945,16 @@
 <v t="edream.110203163054.206"><vh>Unicode theory of operation</vh></v>
 <v t="edream.110203163054.207"><vh>Use app().tkEncoding when writing to log pane</vh></v>
 </v>
-<v t="edream.110203163054.208"><vh>** Improved hooks &amp; a new plugin architecture</vh>
-<v t="edream.110203163054.209"><vh>New plugin architecture</vh>
-<v t="edream.110203163054.210"><vh>@file plugins/mod_open_with.py</vh>
+<v t="edream.110203163054.208" a="E"><vh>** Improved hooks &amp; a new plugin architecture</vh>
+<v t="edream.110203163054.209" a="E"><vh>New plugin architecture</vh>
+<v t="edream.110203163054.210" a="E"><vh>@file plugins/mod_open_with.py</vh>
 <v t="edream.110203163054.211"><vh>on_idle</vh>
 <v t="edream.110203163054.212"><vh>&lt;&lt; update v's body text &gt;&gt;</vh>
 <v t="edream.110203163054.213"><vh>&lt;&lt; set s to the new text &gt;&gt;</vh></v>
 <v t="edream.110203163054.214"><vh>&lt;&lt; set conflict flag &gt;&gt;</vh></v>
 </v>
 </v>
-<v t="edream.110203163054.215"><vh>create_open_with_menu</vh>
+<v t="edream.110203163054.215" a="E"><vh>create_open_with_menu</vh>
 <v t="edream.110203163054.216"><vh>&lt;&lt; create the Open With menu &gt;&gt;</vh></v>
 </v>
 </v>
@@ -15793,7 +16157,11 @@ A.  At present, you can not change @settings trees while executing the Preferenc
 
 B. Other kinds of settings nodes are planned for future releases.</t>
 <t tx="ekr.20050122090016"></t>
-<t tx="ekr.20050122090311"></t>
+<t tx="ekr.20050122090311">The defining features of 4.3:
+
+- Leo now reads leoSettings.leo files directly rather than leoConfig.txt.
+
+- Leo's read/write code has bee rewitten to support user-defined tangling and untangling.</t>
 <t tx="ekr.20050122091036">The essential features of @settings trees and the settings dialog appear to be stable.  However, many improvements can be imagined, including the following:
 
 - Allow searching for nodes while in the settings dialog.
@@ -15803,5 +16171,1499 @@ B. Other kinds of settings nodes are planned for future releases.</t>
 - Allow adding, deleting, rearranging recent files while in the settings dialog.
 
 These will be added as time permits and people request.</t>
+<t tx="ekr.20050123092834.1"></t>
+<t tx="ekr.20050123092834.2"></t>
+<t tx="ekr.20050123092834.6">The Open With logic in createOpenWithMenuFromTable for the 'spawnv' case  now actually calls os.spawnv (rather than spawnl) and it allows a variable length list of parameters.</t>
+<t tx="ekr.20050123092834.19">The old code wasn't handling single file selections properly.  The new code works around an apparent bug in Tk.askopenfilename.</t>
+<t tx="ekr.20050123092834.27">The new code forbids Paste Retaining Clones if the paste would result in a node being a clone of itself.</t>
+<t tx="ekr.20050123092834.42">The '@' sign is an operator in Python 2.4, not an error token.</t>
+<t tx="ekr.20050123092834.71">What I did:
+    
+- Created a new top-level method: scanHeaderForThin.
+
+This sets self.encoding temporarily. The actual value of self.encoding does not
+really matter: no errors will be given by readLine and its helpers even if there
+are unicode encoding errors.
+
+- We must _not_ set self.encoding in scanHeader: that would interfere with
+normal initialization.</t>
+<t tx="ekr.20050123092834.81">- Restored non Pmw code in resizePanesToRatio.  This code got deleted by mistake.  The Equal Sized Panes works again.
+
+- Added many do-nothing methods to nullMenu class.
+
+This should prevent the startup logic from messing with shortcuts in any way.  It's also the right thing to do.
+
+- Added an entry for EqualSizedPanes to leoSettings.leo.  This overrides the default (Ctrl-E) and thereby prevents the default from overrideing the entry for ExecuteScript!
+
+- Re-enabled code in createMenuEntries that warns when shortcuts have been redefined.  Not sure if this is a wise idea, or indeed if it actually does anything :-)
+
+I am tempted to remove all the default entries entirely.  This would simplify error reporting, but then Leo would hardly work at all if leoSettings.leo were not present.</t>
+<t tx="ekr.20050123092834.125">@ The old, non-user-configurable code bound shortcuts in createMenuBar.  The new user-configurable code binds shortcuts here.
+
+Centralized tables of shortscuts no longer exist as they did in createAccelerators.  To check for duplicates, (possibly arising from leoConfig.txt) we add entries to a central dictionary here, and report duplicates if an entry for a canonicalized shortcut already exists.
+@c
+
+def createMenuEntries (self,menu,table,openWith=False,dontBind=False,init=False):
+    
+    c = self.c
+    for label,accel,command in table:
+        if label == None or command == None or label == "-":
+            self.add_separator(menu)
+        else:
+            &lt;&lt; set name to the label for doCommand &gt;&gt;
+            &lt;&lt; set accel to the shortcut for name &gt;&gt;
+            &lt;&lt; set bind_shortcut and menu_shortcut using accel &gt;&gt;
+            &lt;&lt; define callback function &gt;&gt;
+            &lt;&lt; set realLabel, amp_index and menu_shortcut &gt;&gt;
+    
+            self.add_command(menu,label=realLabel,accelerator=menu_shortcut,
+                command=callback,underline=amp_index)
+                
+            if 0: # testing
+                dontBind = True
+
+            if bind_shortcut and not dontBind:
+                &lt;&lt; handle bind_shorcut &gt;&gt;</t>
+<t tx="ekr.20050123092834.126">name = label.strip().lower()
+
+# Remove special characters from command names.
+name2 = ""
+for ch in name:
+    if ch in string.ascii_letters or ch in string.digits:
+        name2 = name2 + ch
+name = name2
+</t>
+<t tx="ekr.20050123092834.127">rawKey,accel2 = c.config.getShortcut(name)
+
+# 7/19/03: Make sure "None" overrides the default shortcut.
+if accel2 == None or len(accel2) == 0:
+    pass # Use default shortcut, if any.
+elif accel2.lower() == "none":
+    accel = None # Remove the default shortcut.
+else:
+    accel = accel2 # Override the default shortcut.</t>
+<t tx="ekr.20050123092834.128">bind_shortcut,menu_shortcut = self.canonicalizeShortcut(accel)
+
+# Kludge: disable the shortcuts for cut, copy, paste.
+# This has already been bound in leoTkinterFrame.__init__
+# 2/13/03: A _possible_ fix for the Linux control-v bug.
+
+if sys.platform not in ("darwin","freebsd4","freebsd5","linux1","linux2"):
+    if bind_shortcut in ("&lt;Control-c&gt;","&lt;Control-v&gt;","&lt;Control-x&gt;"):
+        bind_shortcut = None</t>
+<t tx="ekr.20050123092834.129">if openWith:
+    callback = self.defineOpenWithMenuCallback(command)
+else:
+    callback = self.defineMenuCallback(command,name)</t>
+<t tx="ekr.20050123092834.130">realLabel = self.getRealMenuName(label)
+
+# A bad hack:  this does not allow for translations!
+# We need a way of specifying shortcuts, &amp; bindings and translations all in the same place.
+
+amp_index = -1
+if rawKey:
+    amp_index = rawKey.find("&amp;")
+if amp_index == -1:
+    amp_index = realLabel.find("&amp;")
+
+realLabel = realLabel.replace("&amp;","")
+
+if 0: # trace
+    if rawKey and rawKey.lower().startswith("exit"):
+        g.trace(amp_index,rawKey,label,realLabel,menu_shortcut)
+
+if not menu_shortcut:
+    menu_shortcut = ""</t>
+<t tx="ekr.20050123092834.131">d = self.menuShortcuts
+bunch = d.get(bind_shortcut)
+
+if bunch and not g.app.menuWarningsGiven:
+    if bunch.init:
+        if 1: # Testing only.
+            s = 'overriding default shortcut\nnew: %s %s\nold: %s %s' % (
+                accel,label,bunch.accel,bunch.label)
+            g.es(s,color="red")
+            print s
+        # Unbind the previous accelerator.
+        if menu != bunch.menu or label != bunch.label:
+            self.clearAccel(bunch.menu,bunch.label)
+    else:
+        s = 'duplicate shortcut\nnew: %s %s\nold: %s %s' % (
+            accel,label,bunch.accel,bunch.label)
+        g.es(s,color="red")
+        print s
+
+d[bind_shortcut] = g.Bunch(label=label,accel=accel,init=init,menu=menu)
+    
+try:
+    self.frame.body.bind(bind_shortcut,callback)
+    self.bind(bind_shortcut,callback)
+except: # could be a user error
+    if not g.app.menuWarningsGiven:
+        print "exception binding menu shortcut..."
+        print bind_shortcut
+        g.es_exception()
+        g.app.menuWarningsGive = True</t>
+<t tx="ekr.20050123092834.158">def clearAccel(self,menu,name):
+    
+    realName = self.getRealMenuName(name)
+    realName = realName.replace("&amp;","")
+
+    menu.entryconfig(realName,accelerator='')</t>
+<t tx="ekr.20050123092834.159"></t>
+<t tx="ekr.20050123092834.160">p.moveToParent now just returns if p is a null position.</t>
+<t tx="ekr.20050123092834.163"># Leo looped after this assert failed.</t>
+<t tx="ekr.20050123092834.165"></t>
+<t tx="ekr.20050123092834.166">he readDirective method was changing the comment delimiters as the result of
+seeing the sentinels corresponding to @language or @comment directives. But in
+general this makes no sense! Comment delimiters should be set once and for all
+in the @+leo sentinel: there is no compiler in the world that tolerates mixed
+comment delimiters.
+
+BTW, the way to set javascript "inner" comments is to use @delims, not @comment.
+N.B. The @language and @comment delimiters _will_ have an effect, and that
+effect is in the _write_ logic, not the read logic. The effect is to set the
+comment delims in the @+leo sentinel.
+
+The quick fix is to comment out code in readDirective.</t>
+<t tx="ekr.20050123092834.173"></t>
+<t tx="ekr.20050123092834.176">The old code did not honor the @lineending directive if the two files would otherwise be identical.
+
+What I did:
+
+- Added self.explicitLineEnding to remember whether an explicit @lineending directive is in effect.
+
+- Make sure the user knows why an otherwise identical file was written.
+
+- Changed name of compareFilesIgnoringNewlines to compareFiles.
+
+- Added ignoreLineEndings arg to compareFiles.</t>
+<t tx="ekr.20050123092834.196">The fix was to add nosentinels=nosentinels in the call to initWriteIvars in atFile.write.</t>
+<t tx="ekr.20050123092834.212">def initWriteIvars(self,root,targetFileName,
+    nosentinels=False,
+    thinFile=False,
+    scriptWrite=False,
+    toString=False):
+
+    self.initCommonIvars()
+    &lt;&lt; init ivars for writing &gt;&gt;
+    
+    self.scanAllDirectives(root)
+    if scriptWrite:
+        # Force Python comment delims for g.getScript.
+        self.startSentinelComment = "#"
+        self.endSentinelComment = None
+
+    # Init state from arguments.
+    self.targetFileName = targetFileName
+    self.sentinels = not nosentinels
+    self.thinFile = thinFile
+    self.toString = toString
+    self.root = root
+    
+    # Bug fix: 12/31/04: Init all other ivars even if there is an error.
+    if not self.errors: 
+        self.root.v.t.tnodeList = []</t>
+<t tx="ekr.20050123092834.213">@
+When tangling, we first write to a temporary output file. After tangling is
+temporary file. Otherwise we delete the old target file and rename the temporary
+file to be the target file.
+@c
+
+self.docKind = None
+self.explicitLineEnding = False # True: an @lineending directive specifies the ending.
+self.fileChangedFlag = False # True: the file has actually been updated.
+self.shortFileName = "" # short version of file name used for messages.
+self.thinFile = False
+
+if toString:
+    self.outputFile = g.fileLikeObject()
+    self.stringOutput = ""
+    self.targetFileName = self.outputFileName = "&lt;string-file&gt;"
+else:
+    self.outputFile = None # The temporary output file.
+    self.stringOutput = None
+    self.targetFileName = self.outputFileName = u""</t>
+<t tx="ekr.20050123092834.422">This method now does nothing if at.toString is True.</t>
+<t tx="ekr.20050123092834.424"></t>
+<t tx="ekr.20050123092834.431">Directory "c:\test" does not exist
+exception writing:C:\prog\leoCVS\leo\test
+Traceback (most recent call last):
+  File "C:\prog\leoCVS\leo\src\leoAtFile.py", line 2756, in write
+    at.writeOpenFile(root,nosentinels=nosentinels,toString=toString)
+  File "C:\prog\leoCVS\leo\src\leoAtFile.py", line 3020, in writeOpenFile
+    at.putOpenLeoSentinel("@+leo-ver=4")
+  File "C:\prog\leoCVS\leo\src\leoAtFile.py", line 3752, in putOpenLeoSentinel
+    if not at.sentinels:
+AttributeError: atFile instance has no attribute 'sentinels'
+saved: test.leo
+</t>
+<t tx="ekr.20050123092834.432">Leo did not correctly write adjacent @doc parts in @file trees.  Leo could not read the resulting derived files!
+
+The bug happened if any node in an @file tree contains adjacent @doc parts, like this:
+
+@  first doc part
+...
+@ second doc part
+...
+
+Leo failed to write the closing #@-at sentinel that would finish the first @doc part.</t>
+<t tx="ekr.20050123092834.434">The new code uses protocol=1 instead of the deprecated bin argument to Pickler.</t>
+<t tx="ekr.20050123092834.438"></t>
+<t tx="ekr.20050123092834.439">The problem was that nullLog.write calls print, and if print is redirected the
+code ends up calling nullLog.write again.
+
+What I did:
+
+- g.redirectClass.redirect does nothing if g.app.batchMode is True.
+- added g.rawPrint.
+- Changed self.old.write(s) to self.old.write(s+'\n') throughout.</t>
+<t tx="ekr.20050123092834.474">It makes no sense to use only the selected text.</t>
+<t tx="ekr.20050123092834.475">def executeScript(self,p=None,script=None,useSelectedText=True):
+
+    """This executes body text as a Python script.
+    
+    We execute the selected text, or the entire body text if no text is selected."""
+    
+    c = self ; error = False ; s = None ; script1 = script
+
+    if not script:
+        script = g.getScript(c,p,useSelectedText=useSelectedText)
+    &lt;&lt; redirect output &gt;&gt;
+    # g.trace(script)
+    if script:
+        script = script.strip()
+    if script:
+        # 9/14/04: Temporarily add the open directory to sys.path.
+        sys.path.insert(0,c.frame.openDirectory)
+        script += '\n' # Make sure we end the script properly.
+        try:
+            exec script in {} # Use {} to get a pristine environment!
+            &lt;&lt; unredirect output &gt;&gt;
+            if not script1:
+                g.es("end of script",color="purple")
+        except:
+            &lt;&lt; unredirect output &gt;&gt;
+            g.es("exception executing script ")
+            fileName,n = g.es_exception(full=False,c=c)
+            if fileName not in (None,"&lt;string&gt;"):
+                g.es("exception in file %s, line: %d" % (fileName,n))
+            if p and not script1 and fileName == "&lt;string&gt;":
+                c.goToScriptLineNumber(p,script,n)
+            else:
+                &lt;&lt; dump the lines near the error &gt;&gt;
+            c.frame.tree.redrawAfterException()
+        del sys.path[0]
+    elif not error:
+        &lt;&lt; unredirect output &gt;&gt;
+        g.es("no script selected",color="blue")
+        
+    # Force a redraw _after_ all messages have been output.
+    c.redraw() </t>
+<t tx="ekr.20050123092834.476">if c.config.redirect_execute_script_output_to_log_pane:
+
+    g.redirectStdout() # Redirect stdout
+    g.redirectStderr() # Redirect stderr</t>
+<t tx="ekr.20050123092834.477">if c.config.redirect_execute_script_output_to_log_pane:
+
+    g.restoreStderr()
+    g.restoreStdout()</t>
+<t tx="ekr.20050123092834.478">if g.os_path_exists(fileName):
+    f = file(fileName)
+    lines = f.readlines()
+    f.close()
+else:
+    lines = g.splitLines(script)
+
+s = '-' * 20
+print s; g.es(s)
+
+if 1:
+    # Just print the error line.
+    try:
+        s = "%s line %d: %s" % (fileName,n,lines[n-1])
+        print s, ; g.es(s,newline=False)
+    except IndexError:
+        s = "%s line %d" % (fileName,n)
+        print s, ; g.es(s,newline=False)
+else:
+    i = max(0,n-2)
+    j = min(n+2,len(lines))
+    # g.trace(n,i,j)
+    while i &lt; j:
+        ch = g.choose(i==n-1,'*',' ')
+        s = "%s line %d: %s" % (ch,i+1,lines[i])
+        print s, ; g.es(s,newline=False)
+        i += 1</t>
+<t tx="ekr.20050123092834.479">def getScript (c,p,useSelectedText=True):
+
+    if not p: p = c.currentPosition()
+    old_body = p.bodyString()
+
+    try:
+        script = ''
+        # Allow p not to be the present position.
+        if p == c.currentPosition():
+            if useSelectedText and c.frame.body.hasTextSelection():
+                # Temporarily replace v's body text with just the selected text.
+                s = c.frame.body.getSelectedText()
+                p.v.setTnodeText(s)
+            else:
+                s = c.frame.body.getAllText()
+        else:
+            s = p.bodyString()
+    
+        if s.strip():
+            g.app.scriptDict["script1"]=s
+            at = c.atFileCommands
+            at.write(p.copy(),nosentinels=False,toString=True,scriptWrite=True)
+            script = at.stringOutput
+            # g.trace(script)
+            g.app.scriptDict["script2"]=script
+            error = len(script) == 0
+    except:
+        s = "unexpected exception"
+        print s ; g.es(s)
+        g.es_exception()
+        script = ''
+
+    p.v.setTnodeText(old_body)
+    return script</t>
+<t tx="ekr.20050123092834.480">The old code assumed that the error is always in the script itself. Not true!
+The error could happen in methods called by the script.
+
+This code works with Python 2.3.4 and Python 2.4.  It may be version dependent.</t>
+<t tx="ekr.20050123092834.481">@killcolor
+https://sourceforge.net/forum/message.php?msg_id=2792394
+
+I've narrowed down when the IndexError happens,
+probably any similar error would be the same.
+
+import leoGlobals as g
+c = g.top() 
+p = c.currentPosition()
+cv = c.currentVnode()
+cv.moveOutlineRight()  #error
+
+gives this error
+unknown position attribute: moveOutlineRight
+exception executing script
+AttributeError
+--------------------
+
+and this  additional traceback from 
+leoCommands.py", line 1171, in executeScript
+    s = "line %d: %s" % (n,lines[n-1])
+IndexError: list index out of range
+
+when run this script inside a def wrapper,
+
+import leoGlobals as g
+def x():
+....c = g.top() 
+....p = c.currentPosition()
+....cv = c.currentVnode()  #insert sets the current node
+....cv.moveOutlineRight()  #error
+x()
+
+all you get is
+unknown position attribute: moveOutlineRight
+exception executing script
+AttributeError
+--------------------
+so it appears the frame in the code that determines the 
+line number n is off at least one.
+in neither case is the line number of the error correct, so no error line
+shows.
+
+maybe getLastTracebackLineNumber needs to check for ValueError?
+there is still a piece missing, how to tell what frame your in.
+
+in #@+node: getLastTracebackLineNumber leoGlobals.py
+data = traceback.extract_tb(tb, 2) seems like a good idea
+and seems to fix the IndexError error shown above.
+but now with error inside a def you get the function name
+instead of the line the error is on. not good enough.
+
+change to:
+data = traceback.extract_tb(tb)
+item = data[-2] or data[-1] 
+
+this seems to work w/ error code indented 0 from far left, 
+or nested inside a def inside another def or another,
+I'll leave it in and see if there are additional problems.
+the line number still doesn't match with row,col display.
+thats confusing if you don't account for the sentinals.
+maybe the line number minus a simple count of sentinal lines?
+
+</t>
+<t tx="ekr.20050123092834.482">@killcolor
+http://sourceforge.net/forum/message.php?msg_id=2792620
+
+not a trivial simple count after all.
+if the error is inside a node then would need to 
+start count from the previous +node sentinal.
+I didn't attempt to fix that,
+
+lets see if the line number is always right first.
+
+item = data[-2] or data[-1]
+
+isn't fixing all cases.
+
+this works better:
+
+item = data[-1]
+if not item[-1] is None:
+    item = data[-2]
+</t>
+<t tx="ekr.20050123092834.483">def getLastTracebackFileAndLineNumber():
+    
+    typ,val,tb = sys.exc_info()
+    
+    if typ is exceptions.SyntaxError:
+        # Syntax errors are a special case.
+        # extract_tb does _not_ return the proper line number!
+        # This code is similar to the code in format_exception_only(!!)
+        try:
+            msg,(filename, lineno, offset, line) = val
+            return filename,lineno
+        except:
+            g.trace("bad line number")
+            return None,0
+
+    else:
+        # The proper line number is the second element in the last tuple.
+        data = traceback.extract_tb(tb)
+        # g.trace(data)
+        item = data[-1]
+        filename = item[0]
+        n = item[1]
+        return filename,n</t>
+<t tx="ekr.20050123092834.484">def es_exception (full=True,c=None,color="red"):
+    
+    typ,val,tb = sys.exc_info()
+    
+    full = full or g.app.debugSwitch &gt; 0
+
+    if full: lines = traceback.format_exception(typ,val,tb)
+    else:    lines = traceback.format_exception_only(typ,val)
+        
+    fileName,n = g.getLastTracebackFileAndLineNumber()
+
+    for line in lines:
+        g.es_error(line,color=color)
+        if not g.stdErrIsRedirected():
+            print line
+            
+    if g.app.debugSwitch &gt; 1:
+        import pdb ; pdb.set_trace()
+
+    return fileName,n</t>
+<t tx="ekr.20050123092834.485">def goToScriptLineNumber (self,root,script,n):
+
+    """Go to line n of a script."""
+
+    c = self
+    
+    # g.trace(n,root)
+    
+    lines = g.splitLines(script)
+    c.goToLineNumber(root=root,lines=lines,n=n,scriptFind=True)</t>
+<t tx="ekr.20050123092834.486"></t>
+<t tx="ekr.20050123092834.487">Leo now sets the name of the frame to the requested file name on the command line even if the file name does not exist.</t>
+<t tx="ekr.20050123092834.490">The code now clears previous shortcut, and tells what the previous entry was.</t>
+<t tx="ekr.20050123092834.491">Changed the open command associated with .leo files on Windows from:
+
+pythonw.exe "&lt;leodir&gt;\src\leo.py" %1
+
+to:
+
+"pythonw.exe" "&lt;leodir&gt;\src\leo.py" "%1"
+
+The difference is in quotes.  Especially quotes around "%1" seem to matter.</t>
+<t tx="ekr.20050123092834.492">This is an important difference. imp.load_module is equivalent to a reload, so
+we must not call this if the module alread exists!</t>
+<t tx="ekr.20050123092834.497">Leo did not properly write dervived files that contained section references to grand-children.
+
+For example:
+
+&lt;&lt; current level&gt;&gt;
+  reference to &lt;&lt; 3. level&gt;&gt;
+    &lt;&lt; 1.level&gt;&gt;
+        &lt;&lt; 2.level &gt;&gt;
+            &lt;&lt; 3.level&gt;&gt;
+
+The fix was simply to reverse the order in which putRefAt puts +middle and -middle sentinels.</t>
+<t tx="ekr.20050123092834.499">In some cases g.app.config.output_newline was None.  The new code sets the default to '', and then assigns a valid default to ''.</t>
+<t tx="ekr.20050123092834.502">This binds scroll-wheel events to Button-4 and Button-5
+</t>
+<t tx="ekr.20050123092834.506">chapters.py requires that the canvas have a name ivar.
+
+Added treeCanvas.name = '1' in:
+    
+&lt;&lt; replace tree pane with settings tree &gt;&gt;</t>
+<t tx="ekr.20050123092834.510"></t>
+<t tx="ekr.20050123092834.517">Leo can still read such files, but old-style file formats are now deprecated</t>
+<t tx="ekr.20050123092834.518">def writeOldDerivedFiles (self,toString=False):
+    
+    self.writeDerivedFiles(write_old=True,toString=toString)
+
+def writeNewDerivedFiles (self,toString=False):
+
+    self.writeDerivedFiles(write_old=False,toString=toString)
+    
+def writeDerivedFiles (self,write_old,toString=False):
+    
+    config = g.app.config
+    old = config.write_old_format_derived_files
+    config.write_old_format_derived_files = write_old
+    self.writeAll(writeAtFileNodesFlag=True,toString=toString)
+    config.write_old_format_derived_files = old</t>
+<t tx="ekr.20050123092834.519">def writeNewDerivedFiles (self):
+    
+    c = self
+    autoSave = c.atFileCommands.writeNewDerivedFiles()
+    if autoSave:
+        g.es("auto-saving outline",color="blue")
+        c.save() # Must be done to preserve tnodeList.
+    
+def writeOldDerivedFiles (self):
+    
+    c = self
+    c.atFileCommands.writeOldDerivedFiles()
+    g.es("auto-saving outline",color="blue")
+    c.save() # Must be done to clear tnodeList.</t>
+<t tx="ekr.20050123092834.520">The new code greatly simplifies the class structure. The intention is to allow
+plugins to override methods of this file more easily.
+
+The highlights:
+
+- Plugins may now override methods in this file much more easily.
+    - All code is now in a single class.
+    - Resolved the few name conflicts by renaming x to x3 or x4.
+    - The new code generally uses methods instead of sections.
+    - Initialiation is now simple and sane, and is done in dedicated methods.
+    - All constants are class constants: no more module-level constants.
+
+- All top-level methods support toString or fromString arguments.</t>
+<t tx="ekr.20050123092834.526">
+
+The following are all Python global functions:
+
+cmp -&gt; compare
+dict -&gt; theDict
+dir -&gt; theDir
+file -&gt; theFile
+id -&gt; theId
+type -&gt; theType
+input  (suppressed the warning)
+iter -&gt; theIter</t>
+<t tx="ekr.20050123092834.527">@color
+
+# See pycheckrc file in leoDist.leo for a list of erroneous warnings to be suppressed.
+
+if 0: # Set to 1 for lint-like testing.
+    try:
+        import pychecker.checker
+        # This works.  We may want to set options here...
+        # from pychecker import Config 
+        print ; print "Warning: pychecker.checker running..." ; print
+    except:
+        pass</t>
+<t tx="ekr.20050123092834.528">(fixed) c:\prog\leoCVS\leo\src\leoApp.py:209: (dict) shadows builtin
+(fixed) c:\prog\leoCVS\leo\src\leoApp.py:224: (dict) shadows builtin
+(fixed) c:\prog\leoCVS\leo\src\leoApp.py:368: (dir) shadows builtin
+(fixed) c:\prog\leoCVS\leo\src\leoApp.py:401: (dir) shadows builtin</t>
+<t tx="ekr.20050123092834.529">(fixed) C:\prog\leoCVS\leo\src\leoPlugins.py:40: (file) shadows builtin
+(fixed) C:\prog\leoCVS\leo\src\leoPlugins.py:53: (file) shadows builtin
+(fixed) C:\prog\leoCVS\leo\src\leoPlugins.py:67: (file) shadows builtin
+(fixed) C:\prog\leoCVS\leo\src\leoPlugins.py:72: (file) shadows builtin
+(fixed) C:\prog\leoCVS\leo\src\leoPlugins.py:74: (file) shadows builtin</t>
+<t tx="ekr.20050123092834.530">(fixed) C:\prog\leoCVS\leo\src\leoColor.py:1948: (dict) shadows builtin
+(fixed) C:\prog\leoCVS\leo\src\leoColor.py:2059: (dict) shadows builtin</t>
+<t tx="ekr.20050123092834.531">(fixed) C:\prog\leoCVS\leo\src\leoNodes.py:578: (type) shadows builtin
+
+(fixed) C:\prog\leoCVS\leo\src\leoNodes.py:1372: (id) shadows builtin
+(fixed) C:\prog\leoCVS\leo\src\leoNodes.py:1394: (id) shadows builtin
+(fixed) C:\prog\leoCVS\leo\src\leoNodes.py:1411: (id) shadows builtin
+(fixed) C:\prog\leoCVS\leo\src\leoNodes.py:1412: (id) shadows builtin
+(fixed) C:\prog\leoCVS\leo\src\leoNodes.py:1419: (id) shadows builtin
+(fixed) C:\prog\leoCVS\leo\src\leoNodes.py:1443: (id) shadows builtin
+(fixed) C:\prog\leoCVS\leo\src\leoNodes.py:1446: (id) shadows builtin</t>
+<t tx="ekr.20050123092834.532">(fixed) C:\prog\leoCVS\leo\src\leoCompare.py:44: (cmp) shadows builtin
+(fixed) C:\prog\leoCVS\leo\src\leoCompare.py:397: (cmp) shadows builtin
+
+(fixed) C:\prog\leoCVS\leo\src\leoCompare.py:468: (dir) shadows builtin</t>
+<t tx="ekr.20050123092834.533">(fixed) c:\prog\leoCVS\leo\src\leoFind.py:864: (type) shadows builtin</t>
+<t tx="ekr.20050123092834.534">(fixed) c:\prog\leoCVS\leo\src\leoMenu.py:656: (dict) shadows builtin
+(fixed) c:\prog\leoCVS\leo\src\leoMenu.py:700: (dict) shadows builtin</t>
+<t tx="ekr.20050123092834.535">(fixed) C:\prog\leoCVS\leo\src\leoTkinterTree.py:949: (dict) shadows builtin
+
+(fixed) C:\prog\leoCVS\leo\src\leoTkinterTree.py:162: (id) shadows builtin
+(fixed) C:\prog\leoCVS\leo\src\leoTkinterTree.py:167: (id) shadows builtin
+(fixed) C:\prog\leoCVS\leo\src\leoTkinterTree.py:586: (id) shadows builtin
+(fixed) C:\prog\leoCVS\leo\src\leoTkinterTree.py:639: (id) shadows builtin
+(fixed) C:\prog\leoCVS\leo\src\leoTkinterTree.py:783: (id) shadows builtin
+(fixed) C:\prog\leoCVS\leo\src\leoTkinterTree.py:844: (id) shadows builtin
+(fixed) C:\prog\leoCVS\leo\src\leoTkinterTree.py:911: (id) shadows builtin
+(fixed) C:\prog\leoCVS\leo\src\leoTkinterTree.py:1390: (id) shadows builtin
+(fixed) C:\prog\leoCVS\leo\src\leoTkinterTree.py:1588: (id) shadows builtin
+(fixed) C:\prog\leoCVS\leo\src\leoTkinterTree.py:1590: (id) shadows builtin
+
+(fixed) C:\prog\leoCVS\leo\src\leoTkinterTree.py:883: (type) shadows builtin
+
+(fixed) C:\prog\leoCVS\leo\src\leoTkinterTree.py:893: (file) shadows builtin</t>
+<t tx="ekr.20050123092834.536">(fixed) C:\prog\leoCVS\leo\src\leoTkinterFrame.py:807: (dict) shadows builtin
+(fixed) c:\prog\leoCVS\leo\src\leoFrame.py:566: (dict) shadows builtin
+
+(fixed) C:\prog\leoCVS\leo\src\leoTkinterFrame.py:1233: (file) shadows builtin
+
+(fixed) c:\prog\leoCVS\leo\src\leoFrame.py:522: (type) shadows builtin
+</t>
+<t tx="ekr.20050123092834.537">(fixed) c:\prog\leoCVS\leo\src\leoTkinterPrefs.py:295: (dir) shadows builtin</t>
+<t tx="ekr.20050123092834.538">(fixed) c:\prog\leoCVS\leo\src\leoTkinterGui.py:78: (file) shadows builtin</t>
+<t tx="ekr.20050123092834.539">(fixed) C:\prog\leoCVS\leo\src\leoAtFile.py:336: (file) shadows builtin
+
+(fixed) C:\prog\leoCVS\leo\src\leoAtFile.py:490: (dict) shadows builtin
+(fixed) C:\prog\leoCVS\leo\src\leoAtFile.py:2157: (dict) shadows builtin
+
+(fixed) C:\prog\leoCVS\leo\src\leoAtFile.py:473: (dir) shadows builtin
+(fixed) C:\prog\leoCVS\leo\src\leoAtFile.py:549: (dir) shadows builtin
+(fixed) C:\prog\leoCVS\leo\src\leoAtFile.py:551: (dir) shadows builtin
+(fixed) C:\prog\leoCVS\leo\src\leoAtFile.py:2142: (dir) shadows builtin
+(fixed) C:\prog\leoCVS\leo\src\leoAtFile.py:2278: (dir) shadows builtin
+(fixed) C:\prog\leoCVS\leo\src\leoAtFile.py:2280: (dir) shadows builtin
+</t>
+<t tx="ekr.20050123092834.540">(fixed) C:\prog\leoCVS\leo\src\leoFileCommands.py:90: (id) shadows builtin
+(fixed) C:\prog\leoCVS\leo\src\leoFileCommands.py:866: (id) shadows builtin
+(fixed) C:\prog\leoCVS\leo\src\leoFileCommands.py:1191: (id) shadows builtin
+(fixed) C:\prog\leoCVS\leo\src\leoFileCommands.py:1318: (id) shadows builtin
+(fixed) C:\prog\leoCVS\leo\src\leoFileCommands.py:1756: (id) shadows builtin
+
+(fixed) C:\prog\leoCVS\leo\src\leoFileCommands.py:990: (dict) shadows builtin
+
+(fixed) C:\prog\leoCVS\leo\src\leoFileCommands.py:2018: (dir) shadows builtin
+(fixed) C:\prog\leoCVS\leo\src\leoFileCommands.py:1228: (dir) shadows builtin
+(fixed) C:\prog\leoCVS\leo\src\leoFileCommands.py:1269: (dir) shadows builtin</t>
+<t tx="ekr.20050123092834.541">(fixed) C:\prog\leoCVS\leo\src\leoImport.py:2792: (dict) shadows builtin
+
+(fixed) C:\prog\leoCVS\leo\src\leoImport.py:52: (file) shadows builtin
+(fixed) C:\prog\leoCVS\leo\src\leoImport.py:273: (file) shadows builtin
+(fixed) C:\prog\leoCVS\leo\src\leoImport.py:2348: (file) shadows builtin
+(fixed) C:\prog\leoCVS\leo\src\leoImport.py:2371: (file) shadows builtin
+(fixed) C:\prog\leoCVS\leo\src\leoImport.py:2398: (file) shadows builtin
+(fixed) C:\prog\leoCVS\leo\src\leoImport.py:2426: (file) shadows builtin
+(fixed) C:\prog\leoCVS\leo\src\leoImport.py:2476: (file) shadows builtin
+
+(fixed) C:\prog\leoCVS\leo\src\leoImport.py:473: (type) shadows builtin
+
+(fixed) C:\prog\leoCVS\leo\src\leoImport.py:1626: (id) shadows builtin
+(fixed) C:\prog\leoCVS\leo\src\leoImport.py:1648: (id) shadows builtin
+(fixed) :\prog\leoCVS\leo\src\leoImport.py:1650: (id) shadows builtin
+
+(fixed) C:\prog\leoCVS\leo\src\leoImport.py:2303: (type) shadows builtin
+(fixed) C:\prog\leoCVS\leo\src\leoImport.py:2727: (type) shadows builtin
+
+</t>
+<t tx="ekr.20050123092834.542">(fixed) c:\prog\leoCVS\leo\src\leoTangle.py:718: (dict) shadows builtin
+(fixed) c:\prog\leoCVS\leo\src\leoTangle.py:911: (dict) shadows builtin
+(fixed) c:\prog\leoCVS\leo\src\leoTangle.py:924: (dict) shadows builtin
+(fixed) c:\prog\leoCVS\leo\src\leoTangle.py:3563: (dict) shadows builtin
+
+c:\prog\leoCVS\leo\src\leoTangle.py:540: (dir) shadows builtin
+c:\prog\leoCVS\leo\src\leoTangle.py:541: (dir) shadows builtin
+c:\prog\leoCVS\leo\src\leoTangle.py:666: (dict) shadows builtin
+c:\prog\leoCVS\leo\src\leoTangle.py:3656: (dir) shadows builtin
+c:\prog\leoCVS\leo\src\leoTangle.py:3667: (dir) shadows builtin
+c:\prog\leoCVS\leo\src\leoTangle.py:3780: (dir) shadows builtin
+
+(fixed) c:\prog\leoCVS\leo\src\leoTangle.py:2038: (type) shadows builtin
+(fixed) c:\prog\leoCVS\leo\src\leoTangle.py:3865: (type) shadows builtin</t>
+<t tx="ekr.20050123092834.543">(fixed) C:\prog\leoCVS\leo\src\leoCommands.py:324: (dict) shadows builtin
+(fixed) C:\prog\leoCVS\leo\src\leoCommands.py:340: (dict) shadows builtin
+(fixed) C:\prog\leoCVS\leo\src\leoCommands.py:346: (dict) shadows builtin
+(fixed) C:\prog\leoCVS\leo\src\leoCommands.py:468: (dict) shadows builtin
+(fixed) C:\prog\leoCVS\leo\src\leoCommands.py:480: (dict) shadows builtin
+(fixed) C:\prog\leoCVS\leo\src\leoCommands.py:1677: (dict) shadows builtin
+(fixed) C:\prog\leoCVS\leo\src\leoCommands.py:1721: (dict) shadows builtin
+(fixed) C:\prog\leoCVS\leo\src\leoCommands.py:1770: (dict) shadows builtin
+(fixed) C:\prog\leoCVS\leo\src\leoCommands.py:1800: (dict) shadows builtin
+(fixed) C:\prog\leoCVS\leo\src\leoCommands.py:2280: (dict) shadows builtin
+
+(fixed) C:\prog\leoCVS\leo\src\leoCommands.py:465: (file) shadows builtin
+(fixed) C:\prog\leoCVS\leo\src\leoCommands.py:495: (file) shadows builtin
+(fixed) C:\prog\leoCVS\leo\src\leoCommands.py:734: (file) shadows builtin
+(fixed) C:\prog\leoCVS\leo\src\leoCommands.py:1238: (file) shadows builtin</t>
+<t tx="ekr.20050123092834.544">Apparently distutils.file_util is not present in all Python distributions!
+
+New approaches:
+    - Fall back on code in distutils.file_util if import fails.
+    - Make sure the src and dst volumes are the same (so Linux os.rename will always work)
+    - Simplify replaceTargetFileIfDifferent by creating new routines.
+
+What I did:
+    - Rewrote replaceTargetFileIfDifferent in terms of atFile.rename, atFile.remove, etc.
+    - Rewrote update_file_if_changed in terms of g.utils_rename, g.utils_remove, etc.</t>
+<t tx="ekr.20050123092834.565">Leo's code now contains an important simplification to Leo's gui code. This
+arose because of a problem in the UNL plugin. The window that opened when double
+clicking an @url UNL node wasn't staying on top.
+
+It turns out that this was essentially impossible to fix with the old code. The
+proximate cause of the original problem button-1 was bound to OnActivateTree,
+which called g.app.gui.set_focus after the new window was visible, thereby
+bringing the old tree to the front.
+
+Further investigation revealed other problems. For example, the idle-time code
+in the status line logic was also messing with the focus. It turns out that
+repeatedly calling g.app.gui.set_focus is a very bad idea, for lots of reasons
+which I won't go into in detail here.
+
+The old code called g.app.gui.set_focus explicitly whenever it wanted focus to
+change. But there is a much better way, namely to have routines that _indicate_
+where they want the focus to be "after the dust settles", that is, when all gui
+calls have been completed. I call this a "delayed focus" scheme.
+
+So I rewrote all the code that sets the focus. The new code replaces direct
+calls to g.app.gui.set_focus with calls to the following methods in
+leoTkinterFrame class: bodyWantsFocus, statusLineWantsFocus, treeWantsFocus and
+logWantsFocus. Actually, these xWantsFocus methods all do the same thing, but
+using different methods improves traces.
+
+This is an excellent pattern. Again, rather than setting the focus directly,
+these xWantsFocus methods merely signal their intension to set the focus. This
+allows very complex logic to be hidden in leoTkinterFrame.set_focus.
+
+leoTkinterFrame.set_focus is indeed complex. It took me several hours this
+morning to get it just right. It queues up a 'one-shot' callback. That is, at
+most one copy of the callback is ever waiting to be executed. Furthermore, the
+callback is only queued for execution at the result of a call to xWantsFocus; it
+is never run automatically at idle time. Finally, even when executed, the
+callback does nothing if the last requested commander (in the new ivar,
+g.app.wantedFocus) does not match the commander to which the callback was bound.
+
+These checks allow the UNL plugin to open a window properly and keep it topmost.
+
+This is a big step forward for Leo, for the following reasons:
+
+- Delayed focus ensures that the body pane always has focus unless the code has
+a specific, positive reason for the focus to be elsewhere. This was difficult
+(or rather impossible) to do with the old code: there are _many_ Tk calls that
+can affect the focus.
+
+- Delayed focus minimizes calls to g.app.gui.set_focus. Unlike the old code,
+many seconds may elapse between calls. The stress on Tk is much less, and I
+believe this may cure some flakiness in how focus changes, especially in
+headlines.
+
+- There are some cases where focus must change immediately. The xWantsFocus
+methods all support a 'later' keyword argument. By default it is True, but when
+it is False leoTkinterFrame.set_focus calls g.app.gui.set_focus immediately.
+
+- The xWantsFocus methods all support a 'tag' keyword argument that tells what
+routine the method is called from. It is a big help in making sense of traces.
+BTW, extensive traces are the _only_ possible way of tracking down
+focus/selection problems.</t>
+<t tx="ekr.20050123092834.566"></t>
+<t tx="ekr.20050123092834.567">def set_focus(self,c,widget,tag=''):
+    
+    """Put the focus on the widget."""
+    
+    # g.trace(tag,widget)
+    
+    # g.trace(c.frame.top.wm_stackorder())
+    
+    if widget:
+        widget.focus_set()
+
+    if 0: # Causes a weird problem on some machines.
+        if c.frame.top:
+            focus = c.frame.top.focus_displayof()
+            if focus != widget:
+                widget.focus_set()</t>
+<t tx="ekr.20050123092834.568">@
+
+N.B. There is NO WAY to keep track reliably of which window is on top!! Leo must
+never ever depend on this knowledge!!
+</t>
+<t tx="ekr.20050123092834.569">def OnActivate (self,p,event=None):
+
+    try:
+        c = self.c ; gui = g.app.gui
+        # g.trace(c)
+        &lt;&lt; activate this window &gt;&gt;
+    except:
+        g.es_event_exception("activate tree")</t>
+<t tx="ekr.20050123092834.570">current = c.currentPosition()
+
+if p == current:
+    # g.trace("is current")
+    if self.active:
+        self.editLabel(p)
+    else:
+        # Set the focus immediately.  This is essential for proper editing.
+        c.frame.treeWantsFocus(self.canvas,later=False,tag='OnActivate')
+else:
+    # g.trace("not current")
+    self.select(p)
+    if c.frame.findPanel:
+        c.frame.findPanel.handleUserClick(p)
+    if p.v.t.insertSpot != None:
+        c.frame.bodyCtrl.mark_set("insert",p.v.t.insertSpot)
+        c.frame.bodyCtrl.see(p.v.t.insertSpot)
+    else:
+        c.frame.bodyCtrl.mark_set("insert","1.0")
+    c.frame.bodyWantsFocus(c.frame.bodyCtrl,tag='OnActivate')
+
+self.active = True</t>
+<t tx="ekr.20050123092834.571">def OnActivateBody (self,event=None):
+
+    try:
+        frame = self ; c = frame.c ; gui = g.app.gui
+        # g.trace(c.shortFileName())
+        g.app.setLog(frame.log,"OnActivateBody")
+        w = gui.get_focus(frame)
+        if w != frame.body.bodyCtrl:
+            self.tree.OnDeactivate()
+        self.bodyWantsFocus(self.bodyCtrl,tag='OnActivateBody')
+    except:
+        g.es_event_exception("activate body")</t>
+<t tx="ekr.20050123092834.572">def OnActivateLeoEvent(self,event=None):
+    
+    # g.trace(self.c.shortFileName())
+
+    try:
+        g.app.setLog(self.log,"OnActivateLeoEvent")
+    except:
+        g.es_event_exception("activate Leo")
+
+def OnDeactivateLeoEvent(self,event=None):
+    
+    if 0: # This causes problems on the Mac.
+        try:
+            g.app.setLog(None,"OnDeactivateLeoEvent")
+        except:
+            g.es_event_exception("deactivate Leo")</t>
+<t tx="ekr.20050123092834.573">def OnActivateTree (self,event=None):
+    
+    # g.trace(self.c)
+
+    try:
+        frame = self ; c = frame.c ; gui = g.app.gui
+        g.app.setLog(frame.log,"OnActivateTree")
+        if 0: # Do NOT do this here!
+            # OnActivateTree can get called when the tree gets DE-activated!!
+            frame.bodyWantsFocus(frame.bodyCtrl,tag='OnActivateTree')
+            
+    except:
+        g.es_event_exception("activate tree")
+</t>
+<t tx="ekr.20050123092834.574">def onActivateLog (self,event=None):
+
+    try:
+        g.app.setLog(self,"OnActivateLog")
+        self.frame.tree.OnDeactivate()
+        self.frame.logWantsFocus(self.logCtrl,tag='onActivateLog')
+    except:
+        g.es_event_exception("activate log")</t>
+<t tx="ekr.20050123092834.575"># Warning: do not try to "optimize" this by returning if p==tree.currentPosition.
+
+def select (self,p,updateBeadList=True):
+    
+    c = self.c ; frame = c.frame ; body = frame.bodyCtrl
+    old_p = c.currentPosition()
+
+    if not p: return
+
+    # g.trace(len(p.bodyString()),p.headString())
+
+    if not g.doHook("unselect1",c=c,new_p=p,old_p=old_p,new_v=p,old_v=old_p):
+        &lt;&lt; unselect the old node &gt;&gt;
+
+    g.doHook("unselect2",c=c,new_p=p,old_p=old_p,new_v=p,old_v=old_p)
+    
+    if not g.doHook("select1",c=c,new_p=p,old_p=old_p,new_v=p,old_v=old_p):
+        &lt;&lt; select the new node &gt;&gt;
+        if p and p != old_p: # 3/26/03: Suppress duplicate call.
+            try: # may fail during initialization
+                self.idle_scrollTo(p)
+            except: pass
+        &lt;&lt; update c.beadList or c.beadPointer &gt;&gt;
+        &lt;&lt; update c.visitedList &gt;&gt;
+
+    &lt;&lt; set the current node &gt;&gt;
+    
+    g.doHook("select2",c=c,new_p=p,old_p=old_p,new_v=p,old_v=old_p)
+    g.doHook("select3",c=c,new_p=p,old_p=old_p,new_v=p,old_v=old_p)
+    
+    # g.printGc()</t>
+<t tx="ekr.20050123092834.576"># Remember the position of the scrollbar before making any changes.
+yview=body.yview()
+insertSpot = c.frame.body.getInsertionPoint()
+
+if old_p and old_p != p:
+    if self.trace and self.verbose:
+        g.trace("unselect:",old_p.headString())
+    self.endEditLabel() # sets editPosition = None
+    self.setUnselectedLabelState(old_p)
+
+if old_p and old_p.edit_text():
+    old_p.v.t.scrollBarSpot = yview
+    old_p.v.t.insertSpot = insertSpot
+</t>
+<t tx="ekr.20050123092834.577">frame.setWrap(p)
+
+# Always do this.  Otherwise there can be problems with trailing hewlines.
+s = g.toUnicode(p.v.t.bodyString,"utf-8")
+self.setText(body,s,tag="select:set body",isHeadline=False)
+
+# We must do a full recoloring: we may be changing context!
+self.frame.body.recolor_now(p) # recolor now uses p.copy(), so this is safe.
+
+if p.v and p.v.t.scrollBarSpot != None:
+    first,last = p.v.t.scrollBarSpot
+    body.yview("moveto",first)
+
+if p.v.t.insertSpot != None: # 9/21/02: moved from c.selectVnode
+    c.frame.bodyCtrl.mark_set("insert",p.v.t.insertSpot)
+    c.frame.bodyCtrl.see(p.v.t.insertSpot)
+else:
+    c.frame.bodyCtrl.mark_set("insert","1.0")</t>
+<t tx="ekr.20050123092834.578">if updateBeadList:
+    
+    if c.beadPointer &gt; -1:
+        present_p = c.beadList[c.beadPointer]
+    else:
+        present_p = c.nullPosition()
+    
+    if p != present_p:
+        # Replace the tail of c.beadList by c and make c the present node.
+        # print "updating c.beadList"
+        c.beadPointer += 1
+        c.beadList[c.beadPointer:] = []
+        c.beadList.append(p.copy())
+        
+    # g.trace(c.beadPointer,p,present_p)</t>
+<t tx="ekr.20050123092834.579"># Make p the most recently visited position on the list.
+if p in c.visitedList:
+    c.visitedList.remove(p)
+
+c.visitedList.insert(0,p.copy())</t>
+<t tx="ekr.20050123092834.580">self.c.setCurrentPosition(p)
+if p != old_p:
+    self.setSelectedLabelState(p)
+frame.scanForTabWidth(p) #GS I believe this should also get into the select1 hook
+
+frame.bodyWantsFocus(frame.bodyCtrl,tag='select')</t>
+<t tx="ekr.20050123092834.581">@
+
+New in 4.3
+
+Rather than calling g.app.gui.set_focus directly, the code calls
+self.xWantsFocus. This defers to idle-time code in the status-line class.</t>
+<t tx="ekr.20050123092834.582">@ All these do the same thing, but separate names are good for tracing and
+makes the intent of the code clearer.
+@c 
+
+def bodyWantsFocus(self,widget,later=True,tag=''):
+    # g.trace(tag,self.c.shortFileName())
+    self.set_focus(widget,later=later,tag=tag)
+    
+def logWantsFocus(self,widget,later=True,tag=''):
+    # g.trace(tag)
+    self.set_focus(widget,later=later,tag=tag)
+    
+def statusLineWantsFocus(self,widget,later=True,tag=''):
+    # g.trace(tag)
+    self.set_focus(widget,later=later,tag=tag)
+    
+def treeWantsFocus(self,widget,later=True,tag=''):
+    # g.trace(tag,repr(widget))
+    self.set_focus(widget,later=later,tag=tag)</t>
+<t tx="ekr.20050123092834.583">@
+Very tricky code:
+Many Tk calls can mess with the focus, so we must always set the focus,
+regardless of what we did previously.
+
+Alas, because of bugs in Tk and/or window managers, we can not call method at
+idle time: that would interfere with switching between windows. Instead, the
+xWnatFocus routines call this with later=True, to queue up a ONE-SHOT later call
+to g.app.g.app.gui.set_focus.
+@c
+
+def set_focus(self,widget,later=False,tag=''):
+    
+    '''Set the focus to the widget specified in the xWantsFocus methods.'''
+
+    c = self.c
+    
+    # Crucial: disable the callback if we later change our minds.
+    self.wantedWidget = widget
+    g.app.wantedCommander = c
+    # g.trace(c.shortFileName())
+
+    if widget and not g.app.unitTesting:
+        # Messing with focus may be dangerous in unit tests.
+        if later:
+            # Queue up the call (just once) for later.
+            def setFocusCallback(c=c,widget=widget):
+                self.wantedCallbackScheduled = False
+                if (
+                    widget == c.frame.wantedWidget
+                    and c == g.app.wantedCommander
+                    and not g.app.unitTesting
+                ):
+                    # g.trace(repr(c.shortFileName()))
+                    g.app.gui.set_focus(c,widget,tag='frame.setFocus')
+            if not self.wantedCallbackScheduled:
+                self.wantedCallbackScheduled = True
+                # We don't have to wait so long now that we don't call this so often.
+                # The difference between 500 msec. and 200 msec. is significant.
+                self.outerFrame.after(200,setFocusCallback)
+        else:
+            # g.trace(tag,c.shortFileName())
+            g.app.gui.set_focus(c,widget,tag='frame.setFocus')</t>
+<t tx="ekr.20050123092834.584">class statusLineClass:
+    
+    '''A class representing the status line.'''
+    
+    @others</t>
+<t tx="ekr.20050123092834.585">def __init__ (self,c,parentFrame):
+    
+    self.c = c
+    self.bodyCtrl = c.frame.bodyCtrl
+    self.colorTags = [] # list of color names used as tags.
+    self.enabled = False
+    self.isVisible = False
+    self.lastRow = self.lastCol = 0
+    self.log = c.frame.log
+    #if 'black' not in self.log.colorTags:
+    #    self.log.colorTags.append("black")
+    self.parentFrame = parentFrame
+    self.statusFrame = Tk.Frame(parentFrame,bd=2)
+    text = "line 0, col 0"
+    width = len(text) + 4
+    self.labelWidget = Tk.Label(self.statusFrame,text=text,width=width,anchor="w")
+    self.labelWidget.pack(side="left",padx=1)
+    
+    bg = self.statusFrame.cget("background")
+    self.textWidget = Tk.Text(self.statusFrame,
+        height=1,state="disabled",bg=bg,relief="groove")
+    self.textWidget.pack(side="left",expand=1,fill="x")
+    self.textWidget.bind("&lt;Button-1&gt;", self.onActivate)</t>
+<t tx="ekr.20050123092834.586">def clear (self):
+    
+    t = self.textWidget
+    if not t: return
+    
+    t.configure(state="normal")
+    t.delete("1.0","end")
+    t.configure(state="disabled")</t>
+<t tx="ekr.20050123092834.587">def disable (self,background=None):
+    
+    c = self.c ; t = self.textWidget
+    if t:
+        if not background:
+            background = self.statusFrame.cget("background")
+        t.configure(state="disabled",background=background)
+    self.enabled = False
+    c.frame.bodyWantsFocus(c.frame.bodyCtrl,tag='statusLine.disable')
+    
+def enable (self,background="white"):
+    
+    # g.trace()
+    c = self.c ; t = self.textWidget
+    if t:
+        t.configure(state="normal",background=background)
+        c.frame.statusLineWantsFocus(t,tag='statusLine.ensable')
+        t.focus_set()
+    self.enabled = True
+        
+def isEnabled(self):
+    return self.enabled</t>
+<t tx="ekr.20050123092834.588">def get (self):
+    
+    t = self.textWidget
+    if t:
+        return t.get("1.0","end")
+    else:
+        return ""</t>
+<t tx="ekr.20050123092834.589">def getFrame (self):
+    
+    return self.statusFrame</t>
+<t tx="ekr.20050123092834.590">def onActivate (self,event=None):
+    
+    # Don't change background as the result of simple mouse clicks.
+    background = self.statusFrame.cget("background")
+    self.enable(background=background)</t>
+<t tx="ekr.20050123092834.591">def pack (self):
+    
+    if not self.isVisible:
+        self.isVisible = True
+        self.statusFrame.pack(fill="x",pady=1)
+
+        # Register an idle-time handler to update the row and column indicators.
+        self.statusFrame.after_idle(self.update)
+        
+show = pack</t>
+<t tx="ekr.20050123092834.592">def put(self,s,color=None):
+    
+    t = self.textWidget
+    if not t: return
+    
+    t.configure(state="normal")
+        
+    if color and color not in self.colorTags:
+        self.colorTags.append(color)
+        t.tag_config(color,foreground=color)
+
+    if color:
+        t.insert("end",s)
+        t.tag_add(color,"end-%dc" % (len(s)+1),"end-1c")
+        t.tag_config("black",foreground="black")
+        t.tag_add("black","end")
+    else:
+        t.insert("end",s)
+    
+    t.configure(state="disabled")
+    t.update_idletasks()</t>
+<t tx="ekr.20050123092834.593">if 0: # No longer used in 4.3.  Done as the result of statusLineWantsFocus.
+
+    def setFocus (self):
+    
+        # Force the focus to the icon area.
+        t = self.textWidget
+        if t:
+            t.focus_set()</t>
+<t tx="ekr.20050123092834.594">def unpack (self):
+    
+    if self.isVisible:
+        self.isVisible = False
+        self.statusFrame.pack_forget()
+
+hide = unpack</t>
+<t tx="ekr.20050123092834.595">def update (self):
+    
+    c = self.c ; body = self.bodyCtrl ; lab = self.labelWidget
+    if g.app.killed or not self.isVisible:
+        return
+
+    index = body.index("insert")
+    row,col = g.app.gui.getindex(body,index)
+
+    if col &gt; 0:
+        s = body.get("%d.0" % (row),index)
+        s = g.toUnicode(s,g.app.tkEncoding)
+        col = g.computeWidth (s,c.tab_width)
+
+    if row != self.lastRow or col != self.lastCol:
+        s = "line %d, col %d " % (row,col)
+        lab.configure(text=s)
+        self.lastRow = row
+        self.lastCol = col
+
+    self.statusFrame.after(500,self.update)</t>
+<t tx="ekr.20050123092834.896"></t>
+<t tx="ekr.20050123092834.897">These commands work as do the similar commands in Windows Explorer. How did we
+ever live without them?</t>
+<t tx="ekr.20050123092834.901">This supports the fromString option in read commands.</t>
+<t tx="ekr.20050123092834.903">Thanks to Bernhard Mulder for the new code.</t>
+<t tx="ekr.20050123092834.908">- Tab toggles between the Search to the Replace areas.
+
+- Control-Tab inserts a tab.
+
+- Added hot keys for all settings.  Use Alt-x to activate hot key x.
+  The Enter key activates the Find button.
+
+- As usual, Alt-F4 dismisses the Find panel.</t>
+<t tx="ekr.20050123092834.924">def init (self,c):
+
+    # N.B.: separate c.ivars are much more convenient than a dict.
+    for key in self.intKeys:
+        # New in 4.3: get ivars from @settings.
+        val = c.config.getBool(key)
+        setattr(self,key,val)
+        val = g.choose(val,1,0) # Work around major Tk problem.
+        self.dict[key].set(val)
+        # g.trace(key,val)
+
+    &lt;&lt; set find/change widgets &gt;&gt;
+    &lt;&lt; set radio buttons from ivars &gt;&gt;</t>
+<t tx="ekr.20050123092834.925">self.find_ctrl.delete("1.0","end")
+self.change_ctrl.delete("1.0","end")
+
+# New in 4.3: Get setting from @settings.
+for w,setting in (
+    (self.find_ctrl,"find_text"),
+    (self.change_ctrl,"change_text"),
+):
+    s = c.config.getString(setting)
+    if s is None: s = ""
+    w.insert("end",s)</t>
+<t tx="ekr.20050123092834.926">found = False
+for var,setting in (
+    ("pattern_match","pattern-search"),
+    ("script_search","script-search")):
+    val = self.dict[var].get()
+    if val:
+        self.dict["radio-find-type"].set(setting)
+        found = True ; break
+if not found:
+    self.dict["radio-find-type"].set("plain-search")
+    
+found = False
+for var,setting in (
+    ("suboutline_only","suboutline-only"),
+    ("node_only","node-only"),
+    ("selection_only","selection-only")): # 11/9/03
+    val = self.dict[var].get()
+    if val:
+        self.dict["radio-search-scope"].set(setting)
+        found = True ; break
+if not found:
+    self.dict["radio-search-scope"].set("entire-outine")</t>
+<t tx="ekr.20050123092834.928">It's not clear that this support is so useful for debugging scripts.
+
+If g.app.debugSwitch is True es_exception gives a full traceback.</t>
+<t tx="ekr.20050123092834.929">Thanks to David McNab &lt;david@freenet.org.nz&gt; for this work.</t>
+<t tx="ekr.20050123092834.961">- Go To Line Number command now assumes the presently selected node is a script if there is no ancestor @file node.
+
+- Execute Script command uses this new logic to select the proper node and line in a script if there is an error.
+
+How did we ever live without these features?</t>
+<t tx="ekr.20050123092834.984">Restored the following hooks:
+    
+"boxclick1"     before click in +- box            c,p,v,event
+"boxclick2"     after  click in +- box            c,p,v,event
+"drag1"         before start of drag              c,p,v,event
+"drag2"         after  start of drag              c,p,v,event
+"dragging1"     before continuing to drag         c,p,v,event
+"dragging2"     after  continuing to drag         c,p,v,event
+"enddrag1"      before end of drag                c,p,v,event
+"enddrag2"      after  end of drag                c,p,v,event
+
+The following already existed.  I added v=p keyword params:
+
+"iconclick1"    before single click in icon box   c,p,v,event
+"iconclick2"    after  single click in icon box   c,p,v,event
+"iconrclick1"   before right click in icon box    c,p,v,event
+"iconrclick2"   after  right click in icon box    c,p,v,event
+"icondclick1"   before double click in icon box   c,p,v,event
+"icondclick2"   after  double click in icon box   c,p,v,event</t>
+<t tx="ekr.20050123092834.1004">Changed these hooks:
+
+"bodyclick1", "bodyclick2",
+"bodydclick1", "bodydclick2",
+"bodyrclick1", "bodyrclick2",
+"bodykey1", "bodykey2",
+"command1", "command2",
+"headclick1", "headclick2",
+"headrclick1", "headrclick2",
+"headkey1", "headkey2", 
+"hyperclick1", "hyperclick2",
+"hyperenter1", "hyperenter2",
+"hyperleave1", "hyperleave2", 
+"openwith1", "openwith2",
+"menu1", "menu2", 
+"recentfiles1", "recentfiles2",
+"save1", "save2",
+"select1", "select2", "select3",
+"start2",
+"unselect1", "unselect2",
+"url1", "url2", 
+
+"clear-mark", "set-mark", 
+"color-optional-markup",
+"create-popup-menu", 
+"draw-outline-icon",
+"draw-outline-node",
+"draw-outline-text-box",
+"draw-sub-outline", 
+"init-color-markup",
+"scan-directives", 
+"draw-outline-box",
+"enable-popup-menu-items",
+"show-popup-menu",</t>
+<t tx="ekr.20050123092834.1005">Leo no loner has any global windows!
+
+- Each commander has its own find window.
+    - It's title tells to what commander it applies.
+</t>
+<t tx="ekr.20050123092834.1006">@killcolor
+
+
+@color</t>
+<t tx="ekr.20050123092834.1007">def update_ivars (self):
+    
+    """Called just before doing a find to update ivars from the find panel."""
+
+    for key in self.intKeys:
+        val = self.dict[key].get()
+        setattr(self, key, val) # No more _flag hack.
+        # g.trace(key,val)
+
+    # Set ivars from radio buttons. Convert these to 1 or 0.
+    find_type = self.dict["radio-find-type"].get()
+    self.pattern_match = g.choose(find_type == "pattern-search",1,0)
+    self.script_search = g.choose(find_type == "script-search",1,0)
+
+    search_scope = self.dict["radio-search-scope"].get()
+    self.suboutline_only = g.choose(search_scope == "suboutline-only",1,0)
+    self.node_only       = g.choose(search_scope == "node-only",1,0)
+    self.selection       = g.choose(search_scope == "selection-only",1,0) # 11/9/03
+
+    s = self.find_ctrl.get("1.0","end - 1c") # Remove trailing newline
+    s = g.toUnicode(s,g.app.tkEncoding)
+    self.find_text = s
+
+    s = self.change_ctrl.get("1.0","end - 1c") # Remove trailing newline
+    s = g.toUnicode(s,g.app.tkEncoding)
+    self.change_text = s</t>
+<t tx="ekr.20050123092834.1008">def getFindPanelSettings (self):
+    
+    if self.getOpenTag("&lt;find_panel_settings"):
+        return # &lt;find_panel_settings/&gt; seen.
+    
+    # New in 4.3: ignore all pre-4.3 find settings.
+    while 1:
+        if   self.matchTag("batch="):           self.getDqBool()
+        elif self.matchTag("ignore_case="):     self.getDqBool()
+        elif self.matchTag("mark_changes="):    self.getDqBool()
+        elif self.matchTag("mark_finds="):      self.getDqBool()
+        elif self.matchTag("node_only="):       self.getDqBool()
+        elif self.matchTag("pattern_match="):   self.getDqBool()
+        elif self.matchTag("reverse="):         self.getDqBool()
+        elif self.matchTag("script_change="):   self.getDqBool()
+        elif self.matchTag("script_search="):   self.getDqBool()
+        elif self.matchTag("search_headline="): self.getDqBool()
+        elif self.matchTag("search_body="):     self.getDqBool()
+        elif self.matchTag("selection_only="):  self.getDqBool()
+        elif self.matchTag("suboutline_only="): self.getDqBool()
+        elif self.matchTag("whole_word="):      self.getDqBool()
+        elif self.matchTag("wrap="):            self.getDqBool()
+        elif self.matchTag("&gt;"): break
+        else: self.getUnknownTag() # Ignore all other tags.
+    # Allow only &lt;find_string&gt; or &lt;find_string/&gt;
+    if self.getOpenTag("&lt;find_string&gt;"): 
+        pass
+    else:
+        self.getEscapedString() ; self.getTag("&lt;/find_string&gt;")
+    # Allow only &lt;change_string&gt; or &lt;change_string/&gt;
+    if self.getOpenTag("&lt;change_string&gt;"): 
+        pass
+    else:
+        self.getEscapedString() ; self.getTag("&lt;/change_string&gt;")
+    self.getTag("&lt;/find_panel_settings&gt;")</t>
+<t tx="ekr.20050123092834.1009">You can can import any extension to Leo by putting the extension in the 'extensions' directory and using g.importExtension to import it.
+
+- created the 'extensions' directory and g.app.extensionsDir
+
+- created g.importModule and g.importExtension</t>
+<t tx="ekr.20050123092834.1011">computeHomeDir() now test the first retrieval of the %HOME% var and grab it's
+results if it is infact another enviroment variable.</t>
+<t tx="ekr.20050123092834.1012">@nocolor
+
+http://sourceforge.net/forum/message.php?msg_id=2915750
+By: cmbanker
+
+The HOME environment variable on windows machines is often a referrence to yet
+another environment variable.  i.e.  %HOME% --&gt; %USERENVIRONMENT% --&gt; "C:\Documents
+and Settings\...."
+
+
+
+@color
+
+def computeHomeDir():
+    
+    """Returns the user's home directory."""
+    
+    import leoGlobals as g
+
+    encoding = startupEncoding()
+    dotDir = g.os_path_abspath('./',encoding)
+    
+    home = os.getenv('HOME',default=dotDir)
+    
+    #verify that we've not got an indirect reference to true home
+    if (home[0]=='%') and ( home[-1]=='%'):
+	    #yep, must be a win32 machine - get this one
+	    home = os.getenv(home[1:-1],default=dotDir)
+
+
+    home = g.os_path_abspath(home,encoding)
+    
+    if (
+        not home or
+        not g.os_path_exists(home,encoding) or
+        not g.os_path_isdir(home,encoding)
+    ):
+        home = None
+
+    return home
+</t>
+<t tx="ekr.20050123092834.1013"></t>
+<t tx="ekr.20050123092834.1018">Actually, support already existed for them in getBaseDirectly!
+
+What I did.
+
+- Added a c keyword to getBaseDirectory.  It is never a good idea to use g.top().
+- Added similar logic to os_path_join.
+
+- Changed some stupid code in g.openWithFileName (called by @url logic):
+    changed: fileName = g.os_path_join(os.getcwd(),fileName)
+    to:      fileName = g.os_path_abspath(fileName)
+
+MAYBE g.os_path_abspath should force '.' to mean c.openDir, but I kinda doubt
+it. This could be asking for trouble.
+
+OTOH, the various flavors of scanAllDirectives already do this.  Hmmmmmm.</t>
+<t tx="ekr.20050123092834.1043"></t>
+<t tx="ekr.20050123092834.1044"></t>
+<t tx="ekr.20050123092834.1047">- This plugin now handles both kinds of triple-quotes correctly so that both
+kinds of docstrings are recognized.
+
+- This plugin now is controlled by the first reference to a plugin in
+pluginsManager.txt. All other references are ignored.</t>
+<t tx="ekr.20050123092834.1052">Created callTagHandler. This checks 'idle' hooks to make sure that any commander
+referenced by the 'c','new_c' or 'old_c' keywords still exists.</t>
+<t tx="ekr.20050123092834.1057">leoPlugins.registerOneHandler wasn't working properly at all. In effect, only
+the last registered hook was ever being remembered!</t>
+<t tx="ekr.20050123093854.1">tnodes_iter and unique_tnodes_iter were returning vnodes, not tnodes!</t>
+<t tx="ekr.20050123100706.1"></t>
+<t tx="ekr.20050123100706.2"></t>
+<t tx="ekr.20050123101208"></t>
+<t tx="ekr.20050123103303"></t>
+<t tx="ekr.20050123103303.1"></t>
+<t tx="ekr.20050123103521"></t>
+<t tx="ekr.20050123103753"></t>
+<t tx="ekr.20050123105026">- Leo now ignores all find settings in .leo files.  Instead, Leo inits find settings from @settings entries.
+
+- Removed all c ivars corresponding to leoFind ivars.
+    - This eliminates the ugliest code in Leo.
+    - Inits all leoFind ivars from @settings in init, an allie of the ctor.
+    - Updates all the leoFind ivars in update_ivars, called just before doing any find.
+
+- Removed the _flag suffix from leoFind ivars.
+    - Another major mess cleaned up.
+
+- Renamed find/change_text to find/change_ctrl to avoid name conflict.</t>
+<t tx="ekr.20050123110009">This is one of the defining features of Leo 4.3.
+
+Leo now stores options in @settings trees, that is, parts of Leo outlines whose
+root node has the headline @settings. When opening a .leo file, Leo looks for
+@settings in the outline being opened and in various leoSettings.leo files.
+
+For full details, see the children of this node.</t>
+<t tx="ekr.20050123111723"></t>
+<t tx="ekr.20050123112151">- leoPlugins.doHandlersForTag now executes the list of hook handlers for a
+particular tag (hook name) until one of the handlers returns a non-None result.
+doHandersForTag no longer tries to "sort" handlers, so the order that the
+handlers are executed is the order in which they were registered.
+
+I finally understand the concerns people have raised several times about hooks
+interfering with each other. If two handlers try to return a non-None result
+only one of them will ever execute. doHandlersForTag can't do much about this: a
+better solution would require more conceptual framework. Not now...</t>
 </tnodes>
 </leo_file>
