@@ -351,12 +351,12 @@ class tnode:
 			xml_encoding = app().config.xml_version_string
 			s = s.encode(xml_encoding)
 	
-		if len(old_s) != len(s):
-			trace("old_s != s")
+		if 0:
+			if len(old_s) != len(s):
+				trace("old_s != s")
 			
 		assert(type(s)==types.StringType)
 		self.bodyString = s
-	
 	
 	#@-body
 	#@-node:2::setTnodeText
