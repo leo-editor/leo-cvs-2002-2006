@@ -956,16 +956,7 @@ class LeoFrame:
 		return true
 	#@-body
 	#@-node:1:C=12:frame.OnCloseLeoEvent
-	#@+node:2:C=13:OnActivateLeoEvent
-	#@+body
-	def OnActivateLeoEvent(self,event=None):
-	
-		c = self.commands
-		app().log = self
-
-	#@-body
-	#@-node:2:C=13:OnActivateLeoEvent
-	#@+node:3:C=14:OnActivateBody & OnBodyDoubleClick
+	#@+node:2:C=13:OnActivateBody & OnBodyDoubleClick
 	#@+body
 	def OnActivateBody (self,event=None):
 	
@@ -982,7 +973,16 @@ class LeoFrame:
 		setTextSelection(self.body,start,end)
 		return "break" # Inhibit all further event processing.
 	#@-body
-	#@-node:3:C=14:OnActivateBody & OnBodyDoubleClick
+	#@-node:2:C=13:OnActivateBody & OnBodyDoubleClick
+	#@+node:3:C=14:OnActivateLeoEvent
+	#@+body
+	def OnActivateLeoEvent(self,event=None):
+	
+		c = self.commands
+		app().log = self
+
+	#@-body
+	#@-node:3:C=14:OnActivateLeoEvent
 	#@+node:4::OnActivateLog
 	#@+body
 	def OnActivateLog (self,event=None):

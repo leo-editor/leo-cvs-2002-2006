@@ -391,6 +391,7 @@ class leoTree:
 		#@-node:1::<< configure the text depending on state >>
 
 		t.bind("<1>", v.OnHeadlineClick)
+		t.bind("<3>", v.OnHeadlinePopup) # 9/11/02.
 		if 0: # 6/15/02: Bill Drissel objects to this binding.
 			t.bind("<Double-1>", v.OnBoxClick)
 		t.bind("<Key>", v.OnHeadlineKey)
@@ -694,162 +695,16 @@ class leoTree:
 		self.redraw()
 	#@-body
 	#@-node:2::OnBoxClick
-	#@+node:3:C=21:tree.OnDrag
+	#@+node:3::OnDeactivate
 	#@+body
-	# This precomputes numberOfVisibleNodes(), a significant optimization.
-	# We also indicate where findVnodeWithIconId() should start looking for tree id's.
+	def OnDeactivate (self, event=None):
 	
-	def OnDrag(self,v,event):
-		
-		assert(v == self.drag_v)
-	
-		if event:
-			self.savedNumberOfVisibleNodes = self.numberOfVisibleNodes()
-			self.OnContinueDrag(v,event)
+		self.endEditLabel()
+		self.dimEditLabel()
+		self.active = false
 	#@-body
-	#@-node:3:C=21:tree.OnDrag
-	#@+node:4:C=22:tree.OnContinueDrag
-	#@+body
-	def OnContinueDrag(self,v,event):
-		
-		# es("tree.OnContinueDrag" + `v`)
-		assert(v == self.drag_v)
-		
-		c = self.commands 
-		canvas = self.canvas
-		frame = self.commands.frame
-		
-		if event:
-			x,y = event.x,event.y
-		else:
-			x,y = frame.top.winfo_pointerx(),frame.top.winfo_pointery()
-			if x == -1 or y == -1: return # Stop the scrolling if we go outside the entire window.
-	
-		canvas_x = canvas.canvasx(x)
-		canvas_y = canvas.canvasy(y)
-		
-		id = self.canvas.find_closest(canvas_x,canvas_y)
-	
-		if 0: # Confusing: we should only do this if a modifier key is down.
-			# Moreover, this would slow down dragging a lot.
-			vdrag = self.findVnodeWithIconId(id)
-			if vdrag and vdrag != v and expandFlag:
-				
-				#@<< expand vdrag and redraw >>
-				#@+node:1::<< expand vdrag and redraw >> (not used)
-				#@+body
-				# redrawing will change id's.
-				if self.drag_id:
-					canvas.tag_unbind(self.drag_id , "<B1-Motion>")
-					canvas.tag_unbind(self.drag_id , "<Any-ButtonRelease-1>")
-					
-				vdrag.expand()
-				c.dragToNthChildOf(v,vdrag,0)
-				self.redraw_now()
-				self.idle_scrollTo(vdrag)
-				
-				if 0: # This doesn't work, because we haven't had a mouse down event in the new node.
-					# Pretend the expanded node is what we are dragging!
-					self.drag_id = vdrag.icon_id
-					# es("OnDrag expanding:" + `vdrag` + " " + `self.drag_id`)
-					if self.drag_id:
-						canvas.tag_bind(self.drag_id, "<B1-Motion>", v.OnDrag)
-						canvas.tag_bind(self.drag_id, "<Any-ButtonRelease-1>", v.OnEndDrag)
-				else:
-					self.canvas['cursor'] = self.oldcursor
-				#@-body
-				#@-node:1::<< expand vdrag and redraw >> (not used)
-
-	
-		# OnEndDrag() halts the scrolling by clearing self.drag_id when the mouse button goes up.
-		if self.drag_id: # This gets cleared by OnEndDrag()
-			
-			#@<< scroll the canvas as needed >>
-			#@+node:2::<< scroll the canvas as needed >>
-			#@+body
-			# Scroll the screen up or down one line if the cursor (y) is outside the canvas.
-			h = canvas.winfo_height()
-			if y < 0 or y > h:
-				lo, hi = frame.treeBar.get()
-				n = self.savedNumberOfVisibleNodes
-				line_frac = 1.0 / float(n)
-				frac = choose(y < 0, lo - line_frac, lo + line_frac)
-				frac = min(frac,1.0)
-				frac = max(frac,0.0)
-				# es("lo,hi,frac:" + `lo` + " " + `hi` + " " + `frac`)
-				canvas.yview("moveto", frac)
-				
-				# Queue up another event to keep scrolling while the cursor is outside the canvas.
-				lo, hi = frame.treeBar.get()
-				if (y < 0 and lo > 0.1) or (y > h and hi < 0.9):
-					canvas.after_idle(self.OnContinueDrag,v,None) # Don't propagate the event.
-			#@-body
-			#@-node:2::<< scroll the canvas as needed >>
-	#@-body
-	#@-node:4:C=22:tree.OnContinueDrag
-	#@+node:5:C=23:tree.OnEndDrag
-	#@+body
-	def OnEndDrag(self,v,event):
-		
-		# es("tree.OnEndDrag" + `v`)
-		assert(v == self.drag_v)
-		c = self.commands ; canvas = self.canvas
-	
-		if event:
-			
-			#@<< set vdrag, childFlag >>
-			#@+node:1::<< set vdrag, childFlag >>
-			#@+body
-			x,y = event.x,event.y
-			canvas_x = canvas.canvasx(x)
-			canvas_y = canvas.canvasy(y)
-			
-			id = self.canvas.find_closest(canvas_x,canvas_y)
-			vdrag = self.findVnodeWithIconId(id)
-			childFlag = vdrag and vdrag.hasChildren() and vdrag.isExpanded()
-			#@-body
-			#@-node:1::<< set vdrag, childFlag >>
-
-			if vdrag and vdrag != v:
-				if childFlag:
-					c.dragToNthChildOf(v,vdrag,0)
-				else:
-					c.dragAfter(v,vdrag)
-			else:
-				if v and vdrag == None: es("not dragged: " + v.headString())
-				if 0: # Don't undo the scrolling we just did!
-					self.idle_scrollTo(v)
-			self.canvas['cursor'] = self.oldcursor
-	
-		if self.drag_id:
-			canvas.tag_unbind(self.drag_id , "<B1-Motion>")
-			canvas.tag_unbind(self.drag_id , "<Any-ButtonRelease-1>")
-			self.drag_id = None
-	#@-body
-	#@-node:5:C=23:tree.OnEndDrag
-	#@+node:6:C=24:tree.OnIconClick
-	#@+body
-	def OnIconClick (self,v,event):
-	
-		canvas = self.canvas
-		# es("OnIconClick" + `v`)
-		
-		if event:
-			canvas_x = canvas.canvasx(event.x)
-			canvas_y = canvas.canvasy(event.y)
-			id = canvas.find_closest(canvas_x,canvas_y)
-			if id:
-				self.drag_id = id
-				self.drag_v = v
-				canvas.tag_bind(id, "<B1-Motion>", v.OnDrag)
-				canvas.tag_bind(id, "<Any-ButtonRelease-1>", v.OnEndDrag)
-				self.oldcursor = self.canvas['cursor']
-				self.canvas['cursor'] = "hand2" # "center_ptr"
-	
-		self.select(v)
-	#@-body
-	#@-node:6:C=24:tree.OnIconClick
-	#@+node:7:C=25:tree.onBodyChanged, onBodyWillChange, OnBodyKey, idle_body_key
+	#@-node:3::OnDeactivate
+	#@+node:4:C=21:tree.onBodyChanged, onBodyWillChange, OnBodyKey, idle_body_key
 	#@+body
 	#@+at
 	#  The <Key> event generates the event before the body text is changed(!), so we register an idle-event handler to do the work later.
@@ -989,17 +844,141 @@ class leoTree:
 			redraw_flag = true
 		c.endUpdate(redraw_flag) # redraw only if necessary
 	#@-body
-	#@-node:7:C=25:tree.onBodyChanged, onBodyWillChange, OnBodyKey, idle_body_key
-	#@+node:8::OnDeactivate
+	#@-node:4:C=21:tree.onBodyChanged, onBodyWillChange, OnBodyKey, idle_body_key
+	#@+node:5:C=22:tree.OnContinueDrag
 	#@+body
-	def OnDeactivate (self, event=None):
+	def OnContinueDrag(self,v,event):
+		
+		# es("tree.OnContinueDrag" + `v`)
+		assert(v == self.drag_v)
+		
+		c = self.commands 
+		canvas = self.canvas
+		frame = self.commands.frame
+		
+		if event:
+			x,y = event.x,event.y
+		else:
+			x,y = frame.top.winfo_pointerx(),frame.top.winfo_pointery()
+			if x == -1 or y == -1: return # Stop the scrolling if we go outside the entire window.
 	
-		self.endEditLabel()
-		self.dimEditLabel()
-		self.active = false
+		canvas_x = canvas.canvasx(x)
+		canvas_y = canvas.canvasy(y)
+		
+		id = self.canvas.find_closest(canvas_x,canvas_y)
+	
+		if 0: # Confusing: we should only do this if a modifier key is down.
+			# Moreover, this would slow down dragging a lot.
+			vdrag = self.findVnodeWithIconId(id)
+			if vdrag and vdrag != v and expandFlag:
+				
+				#@<< expand vdrag and redraw >>
+				#@+node:1::<< expand vdrag and redraw >> (not used)
+				#@+body
+				# redrawing will change id's.
+				if self.drag_id:
+					canvas.tag_unbind(self.drag_id , "<B1-Motion>")
+					canvas.tag_unbind(self.drag_id , "<Any-ButtonRelease-1>")
+					
+				vdrag.expand()
+				c.dragToNthChildOf(v,vdrag,0)
+				self.redraw_now()
+				self.idle_scrollTo(vdrag)
+				
+				if 0: # This doesn't work, because we haven't had a mouse down event in the new node.
+					# Pretend the expanded node is what we are dragging!
+					self.drag_id = vdrag.icon_id
+					# es("OnDrag expanding:" + `vdrag` + " " + `self.drag_id`)
+					if self.drag_id:
+						canvas.tag_bind(self.drag_id, "<B1-Motion>", v.OnDrag)
+						canvas.tag_bind(self.drag_id, "<Any-ButtonRelease-1>", v.OnEndDrag)
+				else:
+					self.canvas['cursor'] = self.oldcursor
+				#@-body
+				#@-node:1::<< expand vdrag and redraw >> (not used)
+
+	
+		# OnEndDrag() halts the scrolling by clearing self.drag_id when the mouse button goes up.
+		if self.drag_id: # This gets cleared by OnEndDrag()
+			
+			#@<< scroll the canvas as needed >>
+			#@+node:2::<< scroll the canvas as needed >>
+			#@+body
+			# Scroll the screen up or down one line if the cursor (y) is outside the canvas.
+			h = canvas.winfo_height()
+			if y < 0 or y > h:
+				lo, hi = frame.treeBar.get()
+				n = self.savedNumberOfVisibleNodes
+				line_frac = 1.0 / float(n)
+				frac = choose(y < 0, lo - line_frac, lo + line_frac)
+				frac = min(frac,1.0)
+				frac = max(frac,0.0)
+				# es("lo,hi,frac:" + `lo` + " " + `hi` + " " + `frac`)
+				canvas.yview("moveto", frac)
+				
+				# Queue up another event to keep scrolling while the cursor is outside the canvas.
+				lo, hi = frame.treeBar.get()
+				if (y < 0 and lo > 0.1) or (y > h and hi < 0.9):
+					canvas.after_idle(self.OnContinueDrag,v,None) # Don't propagate the event.
+			#@-body
+			#@-node:2::<< scroll the canvas as needed >>
 	#@-body
-	#@-node:8::OnDeactivate
-	#@+node:9:C=26:tree.OnHeadlineKey, onHeadlineChanged, idle_head_key
+	#@-node:5:C=22:tree.OnContinueDrag
+	#@+node:6:C=23:tree.OnDrag
+	#@+body
+	# This precomputes numberOfVisibleNodes(), a significant optimization.
+	# We also indicate where findVnodeWithIconId() should start looking for tree id's.
+	
+	def OnDrag(self,v,event):
+		
+		assert(v == self.drag_v)
+	
+		if event:
+			self.savedNumberOfVisibleNodes = self.numberOfVisibleNodes()
+			self.OnContinueDrag(v,event)
+	#@-body
+	#@-node:6:C=23:tree.OnDrag
+	#@+node:7:C=24:tree.OnEndDrag
+	#@+body
+	def OnEndDrag(self,v,event):
+		
+		# es("tree.OnEndDrag" + `v`)
+		assert(v == self.drag_v)
+		c = self.commands ; canvas = self.canvas
+	
+		if event:
+			
+			#@<< set vdrag, childFlag >>
+			#@+node:1::<< set vdrag, childFlag >>
+			#@+body
+			x,y = event.x,event.y
+			canvas_x = canvas.canvasx(x)
+			canvas_y = canvas.canvasy(y)
+			
+			id = self.canvas.find_closest(canvas_x,canvas_y)
+			vdrag = self.findVnodeWithIconId(id)
+			childFlag = vdrag and vdrag.hasChildren() and vdrag.isExpanded()
+			#@-body
+			#@-node:1::<< set vdrag, childFlag >>
+
+			if vdrag and vdrag != v:
+				if childFlag:
+					c.dragToNthChildOf(v,vdrag,0)
+				else:
+					c.dragAfter(v,vdrag)
+			else:
+				if v and vdrag == None: es("not dragged: " + v.headString())
+				if 0: # Don't undo the scrolling we just did!
+					self.idle_scrollTo(v)
+			self.canvas['cursor'] = self.oldcursor
+	
+		if self.drag_id:
+			canvas.tag_unbind(self.drag_id , "<B1-Motion>")
+			canvas.tag_unbind(self.drag_id , "<Any-ButtonRelease-1>")
+			self.drag_id = None
+	#@-body
+	#@-node:7:C=24:tree.OnEndDrag
+	#@+node:8:C=25:tree.OnHeadlineKey, onHeadlineChanged, idle_head_key
 	#@+body
 	#@+at
 	#  The <Key> event generates the event before the headline text is changed(!), so we register an idle-event handler to do the 
@@ -1092,9 +1071,103 @@ class leoTree:
 			# Redrawing the whole screen now messes up the cursor in the headline.
 			self.drawIcon(v,v.iconx,v.icony) # just redraw the icon.
 	#@-body
-	#@-node:9:C=26:tree.OnHeadlineKey, onHeadlineChanged, idle_head_key
+	#@-node:8:C=25:tree.OnHeadlineKey, onHeadlineChanged, idle_head_key
+	#@+node:9:C=26:tree.OnIconClick
+	#@+body
+	def OnIconClick (self,v,event):
+	
+		canvas = self.canvas
+		# es("OnIconClick" + `v`)
+		
+		if event:
+			canvas_x = canvas.canvasx(event.x)
+			canvas_y = canvas.canvasy(event.y)
+			id = canvas.find_closest(canvas_x,canvas_y)
+			if id:
+				self.drag_id = id
+				self.drag_v = v
+				canvas.tag_bind(id, "<B1-Motion>", v.OnDrag)
+				canvas.tag_bind(id, "<Any-ButtonRelease-1>", v.OnEndDrag)
+				self.oldcursor = self.canvas['cursor']
+				self.canvas['cursor'] = "hand2" # "center_ptr"
+	
+		self.select(v)
+	#@-body
+	#@-node:9:C=26:tree.OnIconClick
+	#@+node:10:C=27:tree.OnPopup
+	#@+body
+	def OnPopup (self,v,event):
+		
+		# print `v`,`event`
+		if event == None: return
+		
+		c = self.commands ; frame = c.frame
+		menu = Tkinter.Menu(app().root, tearoff=0)
+		
+		#@<< create the menu >>
+		#@+node:1::<< create the menu >>
+		#@+body
+		menu.add_command(label="Read @file Nodes", command=frame.OnReadAtFileNodes)
+		menu.add_command(label="Write @file Nodes",command=frame.OnWriteAtFileNodes)
+		menu.add_separator()
+		
+		menu.add_command(label="Tangle",
+			accelerator="Shift+Ctrl+T",command=frame.OnTangle)
+		menu.add_command(label="Untangle",
+			accelerator="Shift+Ctrl+U",command=frame.OnUntangle)
+		menu.add_separator()
+		
+		menu.add_command(label="Cut Node",
+			accelerator="Shift+Ctrl+X",command=frame.OnCutNode)
+		menu.add_command(label="Copy Node",
+			accelerator="Shift+Ctrl+C",command=frame.OnCopyNode)
+		menu.add_command(label="Paste Node",
+			accelerator="Shift+Ctrl+V",command=frame.OnPasteNode)
+		menu.add_command(label="Delete Node",
+			accelerator="Shift+Ctrl+BkSp",command=frame.OnDeleteNode)
+		menu.add_separator()
+		
+		menu.add_command(label="Insert Node",
+			accelerator="Ctrl+I",command=frame.OnInsertNode)
+		menu.add_command(label="Clone Node",
+			accelerator="Ctrl+`",command=frame.OnCloneNode)
+		menu.add_command(label="Sort Children",
+			command=frame.OnSortChildren)
+		menu.add_command(label="Sort Siblings",
+			accelerator="Alt-A",command=frame.OnSortSiblings)
+		menu.add_separator()
+		
+		menu.add_command(label="Contract Parent",
+			accelerator="Alt+0",command=frame.OnContractParent)
+		
+		# Enable and disable.
+		isAtFile = v.isAtFileNode()
+		isAtFile = choose(isAtFile,1,0)
+		isAtRoot, junk = is_special(v.bodyString(),0,"@root")
+		isAtRoot = choose(isAtRoot,1,0)
+		canContract = v.parent() != None
+		canContract = choose(canContract,1,0)
+		
+		for name in ("Read @file Nodes", "Write @file Nodes"):
+			enableMenu(menu,name,isAtFile)
+		for name in ("Tangle", "Untangle"):
+			enableMenu(menu,name,isAtRoot)
+		
+		enableMenu(menu,"Cut Node",c.canCutOutline())
+		enableMenu(menu,"Delete Node",c.canDeleteHeadline())
+		enableMenu(menu,"Paste Node",c.canPasteOutline())
+		enableMenu(menu,"Sort Children",c.canSortChildren())
+		enableMenu(menu,"Sort Siblings",c.canSortSiblings())
+		enableMenu(menu,"Contract Parent",c.canContractParent())
+		#@-body
+		#@-node:1::<< create the menu >>
+
+		menu.post(event.x_root, event.y_root)
+		return "break"
+	#@-body
+	#@-node:10:C=27:tree.OnPopup
 	#@-node:11::Event handers
-	#@+node:12:C=27:Selecting & editing (tree)
+	#@+node:12:C=28:Selecting & editing (tree)
 	#@+node:1::dimEditLabel, undimEditLabel
 	#@+body
 	# Convenience methods so the caller doesn't have to know the present edit node.
@@ -1110,7 +1183,7 @@ class leoTree:
 		self.setSelectedLabelState(v)
 	#@-body
 	#@-node:1::dimEditLabel, undimEditLabel
-	#@+node:2:C=28:editLabel
+	#@+node:2:C=29:editLabel
 	#@+body
 	# Start editing v.edit_text
 	
@@ -1131,8 +1204,8 @@ class leoTree:
 		else:
 			self.editVnode = None
 	#@-body
-	#@-node:2:C=28:editLabel
-	#@+node:3:C=29:endEditLab (es here helps set focus properly!)
+	#@-node:2:C=29:editLabel
+	#@+node:3:C=30:endEditLab (es here helps set focus properly!)
 	#@+body
 	# End editing for self.editText
 	
@@ -1148,8 +1221,8 @@ class leoTree:
 		if v and v.joinList:
 			self.redraw_now() # force a redraw of joined headlines.
 	#@-body
-	#@-node:3:C=29:endEditLab (es here helps set focus properly!)
-	#@+node:4:C=30:tree.select
+	#@-node:3:C=30:endEditLab (es here helps set focus properly!)
+	#@+node:4:C=31:tree.select
 	#@+body
 	#@+at
 	#  Warning: do not try to "optimize" this be returning if v==tree.currentVnode.
@@ -1185,8 +1258,8 @@ class leoTree:
 		else:
 			self.canvas.focus_set()
 	#@-body
-	#@-node:4:C=30:tree.select
-	#@+node:5:C=31:tree.set...LabelState
+	#@-node:4:C=31:tree.select
+	#@+node:5:C=32:tree.set...LabelState
 	#@+body
 	def setNormalLabelState (self,v): # selected, editing
 		if v and v.edit_text:
@@ -1206,8 +1279,8 @@ class leoTree:
 		if v and v.edit_text:
 			v.edit_text.configure(state="disabled",highlightthickness=0,fg="black",bg="white")
 	#@-body
-	#@-node:5:C=31:tree.set...LabelState
-	#@-node:12:C=27:Selecting & editing (tree)
+	#@-node:5:C=32:tree.set...LabelState
+	#@-node:12:C=28:Selecting & editing (tree)
 	#@-others
 #@-body
 #@-node:0::@file leoTree.py
