@@ -69,7 +69,7 @@ class leoImportCommands:
 		else:
 			v.initHeadString(self.fileName)
 		if appendFileFlag:
-			v.setBodyStringOrPane(s)
+			v.setBodyStringOrPane("@ignore\n\n" + s)
 		elif type == ".c" or type == ".cpp":
 			self.scanCText(s,v)
 		elif type == ".java":
@@ -2054,7 +2054,7 @@ class leoImportCommands:
 				v = v.threadNext()
 			file.close()
 		except:
-			es("file error while flattening the outline")
+			es("exception while flattening outline")
 			traceback.print_exc()
 	#@-body
 	#@-node:5:C=12:flattenOutline
@@ -2085,7 +2085,7 @@ class leoImportCommands:
 				v = v.threadNext()
 			file.close()
 		except:
-			es("file error in Outline To noweb command")
+			es("exception in Outline To noweb command")
 			traceback.print_exc()
 	#@-body
 	#@-node:6:C=13:outlineToWeb
@@ -2104,7 +2104,8 @@ class leoImportCommands:
 			s = file.read()
 			file.close()
 		except:
-			es("can not read " + fileName)
+			es("exception while reading " + fileName)
+			traceback.print_exc()
 			return
 		#@-body
 		#@-node:1::<< Read file into s >>
@@ -2156,7 +2157,7 @@ class leoImportCommands:
 					"start:"+`start_delim`+","+
 					"end:"+`end_delim`)
 			s = self.removeSentinelLines(s,line_delim,start_delim,end_delim)
-			newFileName = os.path.join(path,fileName+".tmp")
+			newFileName = os.path.join(path,fileName+".txt") # 8/4/02: use txt, not tmp.
 			
 			#@<< Write s into newFileName >>
 			#@+node:3::<< Write s into newFileName >>
@@ -2165,8 +2166,10 @@ class leoImportCommands:
 				file = open(newFileName,"w")
 				file.write(s)
 				file.close()
+				es("creating: " + newFileName)
 			except:
-				es("can not create " + newFileName)
+				es("exception creating: " + newFileName)
+				traceback.print_exc()
 			#@-body
 			#@-node:3::<< Write s into newFileName >>
 	#@-body

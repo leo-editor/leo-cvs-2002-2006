@@ -401,7 +401,7 @@ class colorizer:
 		"link", "name", "nameBrackets", "pp", "string", "tab")
 	
 	def colorizeAnyLanguage(self,v,body,language,flag):
-		
+	
 		#trace(`language`)
 		hyperCount = 0 # Number of hypertext tags
 		self.body = body # For callbacks
@@ -450,17 +450,11 @@ class colorizer:
 				body.tag_config("name",underline=1)
 			else:
 				body.tag_config("name",underline=0)
-		
+				
+		# 8/4/02: we only create tags for whitespace when showing invisibles.
 		if self.showInvisibles:
-			if 1: # Very poor, and vaguely usable.
-				body.tag_config("blank",background="black",bgstipple="gray25")
-				body.tag_config("tab",background="black",bgstipple="gray50")
-			else: # Doesn't work, but does increase the spacing ;-)
-				body.tag_config("blank",font="Symbol")
-				body.tag_config("tab",font="Symbol")
-		else:
-			body.tag_config("blank",background="white")
-			body.tag_config("tab",background="white")
+			body.tag_config("blank",background="Gray90")
+			body.tag_config("tab",background="Gray80")
 		#@-body
 		#@-node:1:C=5:<< configure tags >>
 
@@ -867,7 +861,9 @@ class colorizer:
 					#@<< handle blank >>
 					#@+node:11::<< handle blank >>
 					#@+body
-					body.tag_add("blank", index(n,i)) ; i += 1
+					if self.showInvisibles:
+						body.tag_add("blank", index(n,i))
+					i += 1
 					#@-body
 					#@-node:11::<< handle blank >>
 
@@ -876,7 +872,9 @@ class colorizer:
 					#@<< handle tab >>
 					#@+node:12::<< handle tab >>
 					#@+body
-					body.tag_add("tab", index(n,i)) ; i += 1
+					if self.showInvisibles:
+						body.tag_add("tab", index(n,i))
+					i += 1
 					#@-body
 					#@-node:12::<< handle tab >>
 

@@ -2464,7 +2464,7 @@ class LeoFrame:
 		tkMessageBox.showinfo("About Leo",
 		# Don't use triple-quoted strings or continued strings here.
 		# Doing so would add unwanted leading tabs.
-		" leo.py 3.3, August 3, 2002\n\n" +
+		" leo.py 3.4 beta 1, August 5, 2002\n\n" +
 	
 		"Copyright 1999-2002 by\n" +
 		"Edward K. Ream, edream@tds.net\n" +
@@ -2570,7 +2570,13 @@ class LeoFrame:
 		
 		self.body = body = Tk.Text(split1Pane2,name='body',
 			bd=2,bg="white",relief="flat",
-			setgrid=1,wrap=wrap,selectbackground="Gray80")
+			setgrid=1,wrap=wrap,
+			# selectforeground="white",
+			selectbackground="Gray80")
+			
+		#hilite-foreground= #000068
+		#hilite-background= #006868
+		
 			
 		font = config.getFontFromParams(
 			"body_text_font_family", "body_text_font_size",

@@ -2085,7 +2085,7 @@ class atFile:
 					if len(path) > 0:
 						valid = os.path.exists(path)
 						if not valid:
-							self.writeError("Path does not exist: " + path)
+							self.writeError("path does not exist: " + path)
 					else:
 						valid = false
 				except:
@@ -2099,7 +2099,7 @@ class atFile:
 					self.outputFile = open(self.outputFileName, 'w')
 					valid = self.outputFile != None
 					if not valid:
-						self.writeError("Can not open " + self.outputFileName)
+						self.writeError("can not open " + self.outputFileName)
 				except:
 					es("exception opening:" + self.outputFileName)
 					traceback.print_exc()

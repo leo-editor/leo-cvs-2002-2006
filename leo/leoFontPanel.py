@@ -20,12 +20,7 @@ class leoFontPanel:
 		self.frame = c.frame
 		self.default_font = "Courier"
 		self.last_selected_font = None
-		# Variables for revert.
-		self.revertBodyFontName = fn = c.body.cget("font")
-		self.revertBodyFont = tkFont.Font(font=fn)
-		self.revertLogFontName = fn = c.log.cget("font")
-		self.revertLogFont = tkFont.Font(font=fn)
-		self.revertTreeFont = c.tree.getFont()
+		self.setRevertVars()
 		# Variables to track values of style checkboxes.
 		self.sizeVar = Tk.IntVar()
 		self.boldVar = Tk.IntVar()
@@ -328,6 +323,7 @@ class leoFontPanel:
 		#@-body
 		#@-node:1::<< update the configuration settings >>
 
+		self.setRevertVars()
 		if 1: # Hide the window, preserving its position.
 			self.top.withdraw()
 		else: # works.
@@ -376,7 +372,16 @@ class leoFontPanel:
 	#@+node:10::revertIvars
 	#@+body
 	def revertIvars (self):
-			
+		
+		c = self.commands
+		# Revert the fonts themselves in the various panes.
+		font = self.revertBodyFont
+		c.body.configure(font=font)
+		font = self.revertLogFont
+		c.log.configure(font=font)
+		font = self.revertTreeFont
+		c.tree.setFont(font=font)
+		# Revert the setting of the items in the font panel
 		self.last_selected_font = None # Use the font for the selected panes.
 		font = self.getImpliedFont()
 		self.selectFont(font)
@@ -443,7 +448,23 @@ class leoFontPanel:
 		# print "not found:" + name
 	#@-body
 	#@-node:12::selectFont
-	#@+node:13::showSettings
+	#@+node:13::setRevertVars
+	#@+body
+	def setRevertVars (self):
+		
+		c = self.commands
+		
+		# Variables for revert.
+		fn = c.body.cget("font")
+		self.revertBodyFont = tkFont.Font(font=fn)
+		
+		fn = c.log.cget("font")
+		self.revertLogFont = tkFont.Font(font=fn)
+		
+		self.revertTreeFont = c.tree.getFont()
+	#@-body
+	#@-node:13::setRevertVars
+	#@+node:14::showSettings
 	#@+body
 	# Write all settings to the log panel.
 	# Note that just after a revert all three setting may be different.
@@ -466,8 +487,8 @@ class leoFontPanel:
 		name,size,slant,weight = self.getFontSettings(font)
 		es("headline font:" + name + "," + `size` + "," + slant + "," + weight)
 	#@-body
-	#@-node:13::showSettings
-	#@+node:14::update
+	#@-node:14::showSettings
+	#@+node:15::update
 	#@+body
 	# Updates size box and example box when something changes.
 	
@@ -496,7 +517,7 @@ class leoFontPanel:
 		c.tree.setFont(font=f)
 		c.redraw()
 	#@-body
-	#@-node:14::update
+	#@-node:15::update
 	#@-others
 #@-body
 #@-node:0::@file leoFontPanel.py
