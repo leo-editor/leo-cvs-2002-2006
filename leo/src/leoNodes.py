@@ -2015,7 +2015,8 @@ class nodeIndices:
 		
 		"""Create a gnx from its string representation"""
 		
-		if type(s) != type("s"):
+		if type(s) not in (type(""),type(u"")):
+			es("scanGnx: unexpected index type:"+`type(index)`+`index`,color="red")
 			return None,None,None
 			
 		s = s.strip()
