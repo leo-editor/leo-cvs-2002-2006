@@ -301,12 +301,10 @@ if ch not in ('\n','\r',chr(8)):
 
     if s == body:
         return "break"
-    
+
     # Do nothing for control characters.
     if (ch == None or len(ch) == 0) and body == s[:-1]:
         return "break"
-    
-# print repr(ch),len(body),len(s)
 #@nonl
 #@-node:ekr.20031218072017.1322:<< return if nothing has changed >>
 #@+node:ekr.20031218072017.1323:<< set removeTrailing >>
@@ -320,24 +318,28 @@ new = s ; old = body
 
 if len(new) == 0 or new[-1] != '\n':
     # There is no newline to remove.  Probably will never happen.
-    # g.trace("False: no newline to remove")
     removeTrailing = False
 elif len(old) == 0:
-    # Ambigous case.
-    # g.trace("False: empty old")
-    removeTrailing = ch != '\n' # False
+    # Ambigous case.  Formerly always returned False.
+    if new == "\n\n":
+        removeTrailing = True # Handle a very strange special case.
+    else:
+        removeTrailing = ch not in ('\r','\n')
 elif old == new[:-1]:
     # A single trailing character has been added.
-    # g.trace("False: only changed trailing.")
-    removeTrailing = False
+    removeTrailing = ch not in ('\r','\n') # 6/12/04: Was false.
 else:
     # The text didn't have a newline, and now it does.
     # Moveover, some other change has been made to the text,
-    # So at worst we have misreprented the user's intentions slightly.
-    # g.trace("True")
+    # So at worst we have misrepresented the user's intentions slightly.
     removeTrailing = True
-    
-# g.trace(ch,removeTrailing)
+
+if 0:
+    print removeTrailing
+    print repr(ch)
+    print repr(oldText)
+    print repr(old)
+    print repr(new)
 #@nonl
 #@-node:ekr.20031218072017.1323:<< set removeTrailing >>
 #@+node:ekr.20031218072017.1324:<< Do auto indent >> (David McNab)
@@ -436,6 +438,11 @@ if deletedChar in (u' ',' '):
 s = c.frame.body.getAllText()
 if len(s) > 0 and s[-1] == '\n' and removeTrailing:
     s = s[:-1]
+    
+# Major change: 6/12/04
+if s == body:
+    # print "no real change"
+    return "break"
 #@nonl
 #@-node:ekr.20031218072017.1326:<< set s to widget text, removing trailing newlines if necessary >>
 #@+node:ekr.20031218072017.1327:<< recolor the body >>
@@ -564,12 +571,10 @@ if ch not in ('\n','\r',chr(8)):
 
     if s == body:
         return "break"
-    
+
     # Do nothing for control characters.
     if (ch == None or len(ch) == 0) and body == s[:-1]:
         return "break"
-    
-# print repr(ch),len(body),len(s)
 #@nonl
 #@-node:ekr.20031218072017.1322:<< return if nothing has changed >>
 #@+node:ekr.20031218072017.1323:<< set removeTrailing >>
@@ -583,24 +588,28 @@ new = s ; old = body
 
 if len(new) == 0 or new[-1] != '\n':
     # There is no newline to remove.  Probably will never happen.
-    # g.trace("False: no newline to remove")
     removeTrailing = False
 elif len(old) == 0:
-    # Ambigous case.
-    # g.trace("False: empty old")
-    removeTrailing = ch != '\n' # False
+    # Ambigous case.  Formerly always returned False.
+    if new == "\n\n":
+        removeTrailing = True # Handle a very strange special case.
+    else:
+        removeTrailing = ch not in ('\r','\n')
 elif old == new[:-1]:
     # A single trailing character has been added.
-    # g.trace("False: only changed trailing.")
-    removeTrailing = False
+    removeTrailing = ch not in ('\r','\n') # 6/12/04: Was false.
 else:
     # The text didn't have a newline, and now it does.
     # Moveover, some other change has been made to the text,
-    # So at worst we have misreprented the user's intentions slightly.
-    # g.trace("True")
+    # So at worst we have misrepresented the user's intentions slightly.
     removeTrailing = True
-    
-# g.trace(ch,removeTrailing)
+
+if 0:
+    print removeTrailing
+    print repr(ch)
+    print repr(oldText)
+    print repr(old)
+    print repr(new)
 #@nonl
 #@-node:ekr.20031218072017.1323:<< set removeTrailing >>
 #@+node:ekr.20031218072017.1324:<< Do auto indent >> (David McNab)
@@ -699,6 +708,11 @@ if deletedChar in (u' ',' '):
 s = c.frame.body.getAllText()
 if len(s) > 0 and s[-1] == '\n' and removeTrailing:
     s = s[:-1]
+    
+# Major change: 6/12/04
+if s == body:
+    # print "no real change"
+    return "break"
 #@nonl
 #@-node:ekr.20031218072017.1326:<< set s to widget text, removing trailing newlines if necessary >>
 #@+node:ekr.20031218072017.1327:<< recolor the body >>
@@ -1255,18 +1269,20 @@ else:
 #@+node:ekr.20031218072017.1728:<< set realLabel, amp_index and menu_shortcut >>
 realLabel = self.getRealMenuName(label)
 
-# 2/8/04: A bad hack:  this does not allow for translations!
+# A bad hack:  this does not allow for translations!
 # We need a way of specifying shortcuts, & bindings and translations all in the same place.
-if rawKey and rawKey != label:
-    amp_index = rawKey.find("&") + 1
-else:
+
+amp_index = -1
+if rawKey:
+    amp_index = rawKey.find("&")
+if amp_index == -1:
     amp_index = realLabel.find("&")
 
 realLabel = realLabel.replace("&","")
 
 if 0: # trace
-    if realLabel.lower().startswith("sort"):
-        g.trace(label,realLabel,rawKey,bind_shortcut)
+    if rawKey and rawKey.lower().startswith("exit"):
+        g.trace(amp_index,rawKey,label,realLabel,menu_shortcut)
 
 if not menu_shortcut:
     menu_shortcut = ""
@@ -3268,7 +3284,6 @@ def select (self,p,updateBeadList=True):
 
     if not g.doHook("unselect1",c=c,new_v=p,old_v=old_p):
         << unselect the old node >>
-    else: old_body = u""
 
     g.doHook("unselect2",c=c,new_v=p,old_v=old_p)
     
@@ -3302,9 +3317,6 @@ self.setUnselectedLabelState(old_p)
 yview=body.yview()
 insertSpot = c.frame.body.getInsertionPoint()
 
-# Remember the old body text
-old_body = body.get("1.0","end")
-
 if old_p and old_p != p:
     # g.trace("different node")
     self.endEditLabel()
@@ -3318,14 +3330,11 @@ if old_p and old_p.edit_text():
 #@+node:ekr.20031218072017.1022:<< select the new node >>
 frame.setWrap(p)
 
-# Delete only if necessary: this may reduce flicker slightly.
-s = p.v.t.bodyString
-s = g.toUnicode(s,"utf-8")
-old_body = g.toUnicode(old_body,"utf-8")
-if old_body != s:
-    body.delete("1.0","end")
-    body.insert("1.0",s)
-    
+# 6/14/04: Always do this.  Otherwise there can be problems with trailing hewlines.
+s = g.toUnicode(p.v.t.bodyString,"utf-8")
+body.delete("1.0","end")
+body.insert("1.0",s)
+
 # We must do a full recoloring: we may be changing context!
 self.frame.body.recolor_now(p)
 
@@ -7809,6 +7818,9 @@ def setChanged (self,changedFlag):
 
     c = self
     if not c.frame: return
+    
+    # import traceback ; traceback.print_stack()
+
     # Clear all dirty bits _before_ setting the caption.
     # 9/15/01 Clear all dirty bits except orphaned @file nodes
     if not changedFlag:
@@ -13477,7 +13489,6 @@ def select (self,p,updateBeadList=True):
 
     if not g.doHook("unselect1",c=c,new_v=p,old_v=old_p):
         << unselect the old node >>
-    else: old_body = u""
 
     g.doHook("unselect2",c=c,new_v=p,old_v=old_p)
     
@@ -13511,9 +13522,6 @@ self.setUnselectedLabelState(old_p)
 yview=body.yview()
 insertSpot = c.frame.body.getInsertionPoint()
 
-# Remember the old body text
-old_body = body.get("1.0","end")
-
 if old_p and old_p != p:
     # g.trace("different node")
     self.endEditLabel()
@@ -13527,14 +13535,11 @@ if old_p and old_p.edit_text():
 #@+node:ekr.20031218072017.1022:<< select the new node >>
 frame.setWrap(p)
 
-# Delete only if necessary: this may reduce flicker slightly.
-s = p.v.t.bodyString
-s = g.toUnicode(s,"utf-8")
-old_body = g.toUnicode(old_body,"utf-8")
-if old_body != s:
-    body.delete("1.0","end")
-    body.insert("1.0",s)
-    
+# 6/14/04: Always do this.  Otherwise there can be problems with trailing hewlines.
+s = g.toUnicode(p.v.t.bodyString,"utf-8")
+body.delete("1.0","end")
+body.insert("1.0",s)
+
 # We must do a full recoloring: we may be changing context!
 self.frame.body.recolor_now(p)
 
@@ -13733,7 +13738,6 @@ def select (self,p,updateBeadList=True):
 
     if not g.doHook("unselect1",c=c,new_v=p,old_v=old_p):
         << unselect the old node >>
-    else: old_body = u""
 
     g.doHook("unselect2",c=c,new_v=p,old_v=old_p)
     
@@ -13767,9 +13771,6 @@ self.setUnselectedLabelState(old_p)
 yview=body.yview()
 insertSpot = c.frame.body.getInsertionPoint()
 
-# Remember the old body text
-old_body = body.get("1.0","end")
-
 if old_p and old_p != p:
     # g.trace("different node")
     self.endEditLabel()
@@ -13783,14 +13784,11 @@ if old_p and old_p.edit_text():
 #@+node:ekr.20031218072017.1022:<< select the new node >>
 frame.setWrap(p)
 
-# Delete only if necessary: this may reduce flicker slightly.
-s = p.v.t.bodyString
-s = g.toUnicode(s,"utf-8")
-old_body = g.toUnicode(old_body,"utf-8")
-if old_body != s:
-    body.delete("1.0","end")
-    body.insert("1.0",s)
-    
+# 6/14/04: Always do this.  Otherwise there can be problems with trailing hewlines.
+s = g.toUnicode(p.v.t.bodyString,"utf-8")
+body.delete("1.0","end")
+body.insert("1.0",s)
+
 # We must do a full recoloring: we may be changing context!
 self.frame.body.recolor_now(p)
 
@@ -15564,7 +15562,6 @@ def select (self,p,updateBeadList=True):
 
     if not g.doHook("unselect1",c=c,new_v=p,old_v=old_p):
         << unselect the old node >>
-    else: old_body = u""
 
     g.doHook("unselect2",c=c,new_v=p,old_v=old_p)
     
@@ -15598,9 +15595,6 @@ self.setUnselectedLabelState(old_p)
 yview=body.yview()
 insertSpot = c.frame.body.getInsertionPoint()
 
-# Remember the old body text
-old_body = body.get("1.0","end")
-
 if old_p and old_p != p:
     # g.trace("different node")
     self.endEditLabel()
@@ -15614,14 +15608,11 @@ if old_p and old_p.edit_text():
 #@+node:ekr.20031218072017.1022:<< select the new node >>
 frame.setWrap(p)
 
-# Delete only if necessary: this may reduce flicker slightly.
-s = p.v.t.bodyString
-s = g.toUnicode(s,"utf-8")
-old_body = g.toUnicode(old_body,"utf-8")
-if old_body != s:
-    body.delete("1.0","end")
-    body.insert("1.0",s)
-    
+# 6/14/04: Always do this.  Otherwise there can be problems with trailing hewlines.
+s = g.toUnicode(p.v.t.bodyString,"utf-8")
+body.delete("1.0","end")
+body.insert("1.0",s)
+
 # We must do a full recoloring: we may be changing context!
 self.frame.body.recolor_now(p)
 
@@ -16812,7 +16803,6 @@ def select (self,p,updateBeadList=True):
 
     if not g.doHook("unselect1",c=c,new_v=p,old_v=old_p):
         << unselect the old node >>
-    else: old_body = u""
 
     g.doHook("unselect2",c=c,new_v=p,old_v=old_p)
     
@@ -16846,9 +16836,6 @@ self.setUnselectedLabelState(old_p)
 yview=body.yview()
 insertSpot = c.frame.body.getInsertionPoint()
 
-# Remember the old body text
-old_body = body.get("1.0","end")
-
 if old_p and old_p != p:
     # g.trace("different node")
     self.endEditLabel()
@@ -16862,14 +16849,11 @@ if old_p and old_p.edit_text():
 #@+node:ekr.20031218072017.1022:<< select the new node >>
 frame.setWrap(p)
 
-# Delete only if necessary: this may reduce flicker slightly.
-s = p.v.t.bodyString
-s = g.toUnicode(s,"utf-8")
-old_body = g.toUnicode(old_body,"utf-8")
-if old_body != s:
-    body.delete("1.0","end")
-    body.insert("1.0",s)
-    
+# 6/14/04: Always do this.  Otherwise there can be problems with trailing hewlines.
+s = g.toUnicode(p.v.t.bodyString,"utf-8")
+body.delete("1.0","end")
+body.insert("1.0",s)
+
 # We must do a full recoloring: we may be changing context!
 self.frame.body.recolor_now(p)
 
@@ -20086,7 +20070,6 @@ def select (self,p,updateBeadList=True):
 
     if not g.doHook("unselect1",c=c,new_v=p,old_v=old_p):
         << unselect the old node >>
-    else: old_body = u""
 
     g.doHook("unselect2",c=c,new_v=p,old_v=old_p)
     
@@ -20120,9 +20103,6 @@ self.setUnselectedLabelState(old_p)
 yview=body.yview()
 insertSpot = c.frame.body.getInsertionPoint()
 
-# Remember the old body text
-old_body = body.get("1.0","end")
-
 if old_p and old_p != p:
     # g.trace("different node")
     self.endEditLabel()
@@ -20136,14 +20116,11 @@ if old_p and old_p.edit_text():
 #@+node:ekr.20031218072017.1022:<< select the new node >>
 frame.setWrap(p)
 
-# Delete only if necessary: this may reduce flicker slightly.
-s = p.v.t.bodyString
-s = g.toUnicode(s,"utf-8")
-old_body = g.toUnicode(old_body,"utf-8")
-if old_body != s:
-    body.delete("1.0","end")
-    body.insert("1.0",s)
-    
+# 6/14/04: Always do this.  Otherwise there can be problems with trailing hewlines.
+s = g.toUnicode(p.v.t.bodyString,"utf-8")
+body.delete("1.0","end")
+body.insert("1.0",s)
+
 # We must do a full recoloring: we may be changing context!
 self.frame.body.recolor_now(p)
 
@@ -22454,7 +22431,6 @@ def select (self,p,updateBeadList=True):
 
     if not g.doHook("unselect1",c=c,new_v=p,old_v=old_p):
         << unselect the old node >>
-    else: old_body = u""
 
     g.doHook("unselect2",c=c,new_v=p,old_v=old_p)
     
@@ -22488,9 +22464,6 @@ self.setUnselectedLabelState(old_p)
 yview=body.yview()
 insertSpot = c.frame.body.getInsertionPoint()
 
-# Remember the old body text
-old_body = body.get("1.0","end")
-
 if old_p and old_p != p:
     # g.trace("different node")
     self.endEditLabel()
@@ -22504,14 +22477,11 @@ if old_p and old_p.edit_text():
 #@+node:ekr.20031218072017.1022:<< select the new node >>
 frame.setWrap(p)
 
-# Delete only if necessary: this may reduce flicker slightly.
-s = p.v.t.bodyString
-s = g.toUnicode(s,"utf-8")
-old_body = g.toUnicode(old_body,"utf-8")
-if old_body != s:
-    body.delete("1.0","end")
-    body.insert("1.0",s)
-    
+# 6/14/04: Always do this.  Otherwise there can be problems with trailing hewlines.
+s = g.toUnicode(p.v.t.bodyString,"utf-8")
+body.delete("1.0","end")
+body.insert("1.0",s)
+
 # We must do a full recoloring: we may be changing context!
 self.frame.body.recolor_now(p)
 
@@ -23548,7 +23518,6 @@ def select (self,p,updateBeadList=True):
 
     if not g.doHook("unselect1",c=c,new_v=p,old_v=old_p):
         << unselect the old node >>
-    else: old_body = u""
 
     g.doHook("unselect2",c=c,new_v=p,old_v=old_p)
     
@@ -23582,9 +23551,6 @@ self.setUnselectedLabelState(old_p)
 yview=body.yview()
 insertSpot = c.frame.body.getInsertionPoint()
 
-# Remember the old body text
-old_body = body.get("1.0","end")
-
 if old_p and old_p != p:
     # g.trace("different node")
     self.endEditLabel()
@@ -23598,14 +23564,11 @@ if old_p and old_p.edit_text():
 #@+node:ekr.20031218072017.1022:<< select the new node >>
 frame.setWrap(p)
 
-# Delete only if necessary: this may reduce flicker slightly.
-s = p.v.t.bodyString
-s = g.toUnicode(s,"utf-8")
-old_body = g.toUnicode(old_body,"utf-8")
-if old_body != s:
-    body.delete("1.0","end")
-    body.insert("1.0",s)
-    
+# 6/14/04: Always do this.  Otherwise there can be problems with trailing hewlines.
+s = g.toUnicode(p.v.t.bodyString,"utf-8")
+body.delete("1.0","end")
+body.insert("1.0",s)
+
 # We must do a full recoloring: we may be changing context!
 self.frame.body.recolor_now(p)
 
@@ -37268,12 +37231,10 @@ if ch not in ('\n','\r',chr(8)):
 
     if s == body:
         return "break"
-    
+
     # Do nothing for control characters.
     if (ch == None or len(ch) == 0) and body == s[:-1]:
         return "break"
-    
-# print repr(ch),len(body),len(s)
 #@nonl
 #@-node:ekr.20031218072017.1322:<< return if nothing has changed >>
 #@+node:ekr.20031218072017.1323:<< set removeTrailing >>
@@ -37287,24 +37248,28 @@ new = s ; old = body
 
 if len(new) == 0 or new[-1] != '\n':
     # There is no newline to remove.  Probably will never happen.
-    # g.trace("False: no newline to remove")
     removeTrailing = False
 elif len(old) == 0:
-    # Ambigous case.
-    # g.trace("False: empty old")
-    removeTrailing = ch != '\n' # False
+    # Ambigous case.  Formerly always returned False.
+    if new == "\n\n":
+        removeTrailing = True # Handle a very strange special case.
+    else:
+        removeTrailing = ch not in ('\r','\n')
 elif old == new[:-1]:
     # A single trailing character has been added.
-    # g.trace("False: only changed trailing.")
-    removeTrailing = False
+    removeTrailing = ch not in ('\r','\n') # 6/12/04: Was false.
 else:
     # The text didn't have a newline, and now it does.
     # Moveover, some other change has been made to the text,
-    # So at worst we have misreprented the user's intentions slightly.
-    # g.trace("True")
+    # So at worst we have misrepresented the user's intentions slightly.
     removeTrailing = True
-    
-# g.trace(ch,removeTrailing)
+
+if 0:
+    print removeTrailing
+    print repr(ch)
+    print repr(oldText)
+    print repr(old)
+    print repr(new)
 #@nonl
 #@-node:ekr.20031218072017.1323:<< set removeTrailing >>
 #@+node:ekr.20031218072017.1324:<< Do auto indent >> (David McNab)
@@ -37403,6 +37368,11 @@ if deletedChar in (u' ',' '):
 s = c.frame.body.getAllText()
 if len(s) > 0 and s[-1] == '\n' and removeTrailing:
     s = s[:-1]
+    
+# Major change: 6/12/04
+if s == body:
+    # print "no real change"
+    return "break"
 #@nonl
 #@-node:ekr.20031218072017.1326:<< set s to widget text, removing trailing newlines if necessary >>
 #@+node:ekr.20031218072017.1327:<< recolor the body >>
