@@ -1767,7 +1767,119 @@ class baseVnode:
 		return v
 	#@-body
 	#@-node:4::insertAsNthChild
-	#@+node:5::v.moveAfter
+	#@+node:5::moveToRoot
+	#@+body
+	def moveToRoot (self, oldRoot = None):
+	
+		"""Moves the receiver to the root position"""
+	
+		v = self
+		v.destroyDependents()
+		v.unlink()
+		v.linkAsRoot(oldRoot)
+		v.createDependents()
+	#@-body
+	#@-node:5::moveToRoot
+	#@+node:6::restoreOutlineFromDVnodes (test)
+	#@+body
+	# Restores (relinks) the dv tree in the position described by back and parent.
+	
+	def restoreOutlineFromDVnodes (self, dv, parent, back):
+	
+		if back:
+			dv.linkAfter(back)
+		elif parent:
+			dv.linkAsNthChild(parent, 0)
+		else:
+			dv.linkAsRoot()
+		return dv
+	#@-body
+	#@-node:6::restoreOutlineFromDVnodes (test)
+	#@+node:7::v.clone
+	#@+body
+	# Creates a clone of back and insert it as the next sibling of back.
+	
+	def clone (self,back):
+		
+		clone = self.cloneTree(back)
+		clone.createDependents()
+	
+		# Set the clone bit in all nodes joined to back.
+		clone.setClonedBit()
+		back.setClonedBit()
+		for v in back.t.joinList:
+			v.setClonedBit()
+	
+		return clone
+	#@-body
+	#@-node:7::v.clone
+	#@+node:8::v.linkAfter
+	#@+body
+	# Links the receiver after v.
+	
+	def linkAfter (self,v):
+	
+		# stat()
+		self.mParent = v.mParent
+		self.mBack = v
+		self.mNext = v.mNext
+		v.mNext = self
+		if self.mNext:
+			self.mNext.mBack = self
+	#@-body
+	#@-node:8::v.linkAfter
+	#@+node:9::v.linkAsNthChild
+	#@+body
+	def linkAsNthChild (self, p, n):
+	
+		"""Links the receiver as the n'th child of p"""
+	
+		v = self
+		# stat() ; # trace(`v` + ", " + `p` + ", " + `n`)
+		v.mParent = p
+		if n == 0:
+			v.mBack = None
+			v.mNext = p.mFirstChild
+			if p.mFirstChild:
+				p.mFirstChild.mBack = v
+			p.mFirstChild = v
+		else:
+			prev = p.nthChild(n-1) # zero based
+			assert(prev)
+			v.mBack = prev
+			v.mNext = prev.mNext
+			prev.mNext = v
+			if v.mNext:
+				v.mNext.mBack = v
+	#@-body
+	#@-node:9::v.linkAsNthChild
+	#@+node:10::v.linkAsRoot
+	#@+body
+	#@+at
+	#  Bug fix: 5/27/02.  We link in the rest of the tree only when oldRoot != 
+	# None.  Otherwise, we are calling this routine from init code and we want 
+	# to start with a pristine tree.
+
+	#@-at
+	#@@c
+	def linkAsRoot(self, oldRoot = None):
+	
+		v = self ; c = v.commands ; tree = c.tree
+		# stat() ; # trace(`v`)
+		# Bug fix 3/16/02:
+		# Clear all links except the child link.
+		# This allows a node with children to be moved up properly to the root position.
+		# v.mFirstChild = None
+		v.mParent = None
+		v.mBack = None
+		# 5/27/02
+		if oldRoot: oldRoot.mBack = v
+		v.mNext = oldRoot
+		tree.rootVnode = v
+	
+	#@-body
+	#@-node:10::v.linkAsRoot
+	#@+node:11::v.moveAfter
 	#@+body
 	# Used by scripts
 	
@@ -1785,8 +1897,8 @@ class baseVnode:
 		if not a.parent() and not a.back():
 			c.tree.rootVnode = a
 	#@-body
-	#@-node:5::v.moveAfter
-	#@+node:6::v.moveToNthChildOf
+	#@-node:11::v.moveAfter
+	#@+node:12::v.moveToNthChildOf
 	#@+body
 	# Compatibility routine for scripts
 	
@@ -1805,92 +1917,8 @@ class baseVnode:
 		if not p.parent() and not p.back():
 			c.tree.rootVnode = p
 	#@-body
-	#@-node:6::v.moveToNthChildOf
-	#@+node:7::moveToRoot
-	#@+body
-	def moveToRoot (self, oldRoot = None):
-	
-		"""Moves the receiver to the root position"""
-	
-		v = self
-		v.destroyDependents()
-		v.unlink()
-		v.linkAsRoot(oldRoot)
-		v.createDependents()
-	#@-body
-	#@-node:7::moveToRoot
-	#@+node:8::restoreOutlineFromDVnodes (test)
-	#@+body
-	# Restores (relinks) the dv tree in the position described by back and parent.
-	
-	def restoreOutlineFromDVnodes (self, dv, parent, back):
-	
-		if back:
-			dv.linkAfter(back)
-		elif parent:
-			dv.linkAsNthChild(parent, 0)
-		else:
-			dv.linkAsRoot()
-		return dv
-	#@-body
-	#@-node:8::restoreOutlineFromDVnodes (test)
-	#@+node:9::swap_links
-	#@+body
-	# 7/5/02: New for undo.
-	# On entry, linked is linked into a tree and unlinked is not.
-	# On exit,  unlinked is linked into a tree and linked is not.
-	
-	# Warning: caller is responsible for hanling join links properly.
-	
-	def swap_links (self,unlinked,linked):
-	
-		assert(unlinked and linked)
-		assert(unlinked.mParent == None)
-		assert(unlinked.mBack == None)
-		assert(unlinked.mNext == None)
-		assert(len(unlinked.t.joinList) == 0)
-		
-		#print "swap_links:unlinked.last,linked.last",unlinked.lastChild(),linked.lastChild()
-	
-		# Copy links to unlinked.
-		unlinked.mParent = linked.mParent
-		unlinked.mBack = linked.mBack
-		unlinked.mNext = linked.mNext
-		# Caller is responsible for handling join links.
-		unlinked.t.joinList = [] 
-		
-		# Change links to linked from other nodes.
-		if linked.mParent and linked.mParent.mFirstChild == linked:
-			linked.mParent.mFirstChild = unlinked
-		if linked.mBack:
-			linked.mBack.mNext = unlinked
-		if linked.mNext:
-			linked.mNext.mBack = unlinked
-			
-		# Clear links in linked.
-		linked.mParent = linked.mBack = linked.mNext = None
-		linked.t.joinList = []
-	#@-body
-	#@-node:9::swap_links
-	#@+node:10::v.clone
-	#@+body
-	# Creates a clone of back and insert it as the next sibling of back.
-	
-	def clone (self,back):
-		
-		clone = self.cloneTree(back)
-		clone.createDependents()
-	
-		# Set the clone bit in all nodes joined to back.
-		clone.setClonedBit()
-		back.setClonedBit()
-		for v in back.t.joinList:
-			v.setClonedBit()
-	
-		return clone
-	#@-body
-	#@-node:10::v.clone
-	#@+node:11::v.sortChildren
+	#@-node:12::v.moveToNthChildOf
+	#@+node:13::v.sortChildren
 	#@+body
 	def sortChildren (self):
 	
@@ -1909,46 +1937,102 @@ class baseVnode:
 			child.moveToNthChildOf(v,index)
 			index += 1
 	#@-body
-	#@-node:11::v.sortChildren
+	#@-node:13::v.sortChildren
 	#@-node:1::Entry Points (vnode)
-	#@+node:2::Public helper functions
-	#@+node:1::v.copyTree
+	#@+node:2::Helper functions
+	#@+node:1::v.addTreeToJoinLists (new in 3.12 beta 2)
 	#@+body
-	#@+at
-	#  This method copies all subtrees of oldRoot to the subtrees of newRoot.  
-	# The caller is responsible for copying the headline text from oldRoot to newRoot.
-	# 
-	# This method must be given the new root as well as the old:  the 
-	# wxWindows classes do not allow us to create an unattached outline.
-
-	#@-at
-	#@@c
-
-	def copyTree (self, oldTree, newTree):
-	
-		old_v = oldTree.firstChild()
-		if not old_v: return
-		# Copy the first child of oldTree to the first child of newTree.
-		new_v = newTree.insertAsNthChild (0, old_v.t)
-		self.copyNode(old_v, new_v)
-		# Copy all other children of oldTree after the first child of newTree.
-		old_v = old_v.next()
-		while old_v:
-			new_v = new_v.insertAfter(old_v.t)
-			self.copyNode(old_v, new_v)
-			old_v = old_v.next()
-		# Recursively copy all descendents of oldTree.
-		new_v = newTree.firstChild()
-		old_v = oldTree.firstChild()
-		while old_v:
-			assert(new_v)
-			self.copyTree(old_v, new_v)
-			old_v = old_v.next()
-			new_v = new_v.next()
-		assert(new_v == None)
+	def addTreeToJoinLists (self):
+		
+		"""Add each v of v's entire tree to v.t.joinList."""
+		
+		v = self ; after = v.nodeAfterTree()
+		
+		while v and v != after:
+			if not v in v.t.joinList:
+				v.t.joinList.append(v)
+			v = v.threadNext()
 	#@-body
-	#@-node:1::v.copyTree
-	#@+node:2::v.copyTreeWithNewTnodes (new after 3.11.1) (not used at present)
+	#@-node:1::v.addTreeToJoinLists (new in 3.12 beta 2)
+	#@+node:2::v.cloneTree
+	#@+body
+	def cloneTree (self, oldTree):
+		
+		"""Create a cloned tree after oldTree."""
+	
+		# Create a new tree following oldTree.
+		newTree = oldTree.copyTree()
+		newTree.linkAfter(oldTree)
+		# Join the trees and copy clone bits.
+		oldTree.joinTreeTo(newTree)
+		oldTree.copyCloneBitsTo(newTree)
+		return newTree
+	#@-body
+	#@-node:2::v.cloneTree
+	#@+node:3::v.copyCloneBitsTo
+	#@+body
+	# This methods propagates clone bits from the receiver's tree to tree2.
+	
+	def copyCloneBitsTo (self, tree2):
+	
+		tree1 = self
+		assert(tree2)
+		# Set the bit in the root.
+		if tree1.isCloned():
+			tree2.setClonedBit()
+		else:
+			tree2.clearClonedBit()
+		# Recursively set the bits in all subtrees.
+		child1 = tree1.firstChild()
+		child2 = tree2.firstChild()
+		while child1:
+			assert(child2)
+			if child1.isCloned():
+				child2.setClonedBit()
+			else:
+				child2.clearClonedBit()
+			child1 = child1.next()
+			child2 = child2.next()
+		assert(child2 == None)
+	#@-body
+	#@-node:3::v.copyCloneBitsTo
+	#@+node:4::v.copyTree
+	#@+body
+	# Rewritten 7/11/03.
+	
+	def copyTree (self):
+		
+		"""Returns a free-standing copy of a vnode and all its descendents.
+		
+		The new tree uses the same tnodes as the old,
+		but the new vnodes are _not_ joined to the old nodes.
+		That is, the new vnodes v do not appear on v.t.joinList."""
+		
+		c = self.commands ; old_v = self
+		
+		# trace(self)
+		
+		# Copy all fields of the root.
+		new_v = vnode(c,old_v.t)
+		new_v.t.headString = old_v.t.headString
+		new_v.iconVal = old_v.iconVal
+		assert(new_v not in new_v.t.joinList)
+	
+		# Recursively copy and link all children.
+		old_child = old_v.firstChild()
+		n = 0
+		while old_child:
+			new_child = old_child.copyTree()
+			new_child.linkAsNthChild(new_v,n)
+			assert(new_child not in new_child.t.joinList)
+			n += 1
+			old_child = old_child.next()
+			
+		return new_v
+	
+	#@-body
+	#@-node:4::v.copyTree
+	#@+node:5::v.copyTreeWithNewTnodes (new after 3.11.1) (not used at present)
 	#@+body
 	def copyTreeWithNewTnodes (self):
 		
@@ -1974,8 +2058,109 @@ class baseVnode:
 		# Return the root of the new tree.
 		return new_v
 	#@-body
-	#@-node:2::v.copyTreeWithNewTnodes (new after 3.11.1) (not used at present)
-	#@+node:3::joinTreeTo
+	#@-node:5::v.copyTreeWithNewTnodes (new after 3.11.1) (not used at present)
+	#@+node:6::v.createDependents
+	#@+body
+	# This method creates all nodes that depend on the receiver.
+	def createDependents (self):
+	
+		v = self ; t = v.t ; parent = v.parent()
+		if not parent: return
+	
+		# Copy v as the nth child of all nodes joined to parent.
+		n = v.childIndex()
+		
+		# 7/11/03: work on copy of join list.
+		joinList = parent.t.joinList[:]
+		if parent in joinList:
+			joinList.remove(parent)
+	
+		for p in joinList:
+			# trace(n,p)
+			copy = v.copyTree()
+			copy.linkAsNthChild(p,n)
+			v.joinTreeTo(copy)
+	#@-body
+	#@-node:6::v.createDependents
+	#@+node:7::v.destroyDependents
+	#@+body
+	# Destroys all dependent vnodes and tree nodes associated with the receiver.
+	
+	def destroyDependents (self):
+		
+		"""Destroy the nth child of all nodes joined to the receiver's parent.."""
+	
+		parent = self.parent()
+		if not parent:
+			# trace("no parent",self)
+			return
+	
+		n = self.childIndex()
+		
+		# 7/11/03: work on copy of join list.
+		joinList = parent.t.joinList[:]
+		if parent in joinList:
+			joinList.remove(parent)
+		#trace(parent,joinList)
+	
+		for join in joinList:
+			# trace(n,join)
+			child = join.nthChild(n)
+			if child:
+				child.unjoinTree()
+				child.unlink()
+				child.destroyTree()
+	#@-body
+	#@-node:7::v.destroyDependents
+	#@+node:8::v.destroyTree (does nothing!)(Called only from destroy dependents)
+	#@+body
+	#@+at
+	#  This method destroys (irrevocably deletes) a vnode tree.
+	# 
+	# This code should be called only when it is no longer possible to undo a 
+	# previous delete.  It is always valid to destroy dependent trees.
+
+	#@-at
+	#@@c
+
+	def destroyTree (self):
+	
+		pass
+	#@-body
+	#@-node:8::v.destroyTree (does nothing!)(Called only from destroy dependents)
+	#@+node:9::v.invalidOutline
+	#@+body
+	def invalidOutline (self, message):
+	
+		s = "invalid outline: " + message + "\n"
+		parent = self.parent()
+	
+		if parent:
+			s += `parent`
+		else:
+			s += `self`
+	
+		alert ( s )
+	#@-body
+	#@-node:9::v.invalidOutline
+	#@+node:10::v.joinNodeTo (rewritten for 4.0)
+	#@+body
+	def joinNodeTo (self, v2):
+		
+		"""Add self or v2 to their common join list"""
+	
+		v1 = self
+		assert(v1.t==v2.t)
+		j = v1.t.joinList
+		
+		if v1 not in j:
+			j.append(v1)
+			
+		if v2 not in j:
+			j.append(v2)
+	#@-body
+	#@-node:10::v.joinNodeTo (rewritten for 4.0)
+	#@+node:11::v.joinTreeTo
 	#@+body
 	#@+at
 	#  This function joins all nodes in the receiver and tree2.  This code 
@@ -2002,8 +2187,8 @@ class baseVnode:
 			child2 = child2.next()
 		assert(child2 == None)
 	#@-body
-	#@-node:3::joinTreeTo
-	#@+node:4::shouldBeClone
+	#@-node:11::v.joinTreeTo
+	#@+node:12::v.shouldBeClone
 	#@+body
 	#@+at
 	#  The receiver is a clone if and only it is structurally _dissimilar_ to 
@@ -2037,8 +2222,51 @@ class baseVnode:
 		# trace("false",v)
 		return false
 	#@-body
-	#@-node:4::shouldBeClone
-	#@+node:5::validateOutlineWithParent
+	#@-node:12::v.shouldBeClone
+	#@+node:13::v.unjoinTree
+	#@+body
+	def unjoinTree (self):
+	
+		"""Remove all v and all its descendents v from v.t.joinList."""
+	
+		v = self
+		after = self.nodeAfterTree()
+		while v and v != after:
+			if v in v.t.joinList:
+				v.t.joinList.remove(v)
+			v = v.threadNext()
+	#@-body
+	#@-node:13::v.unjoinTree
+	#@+node:14::v.unlink
+	#@+body
+	def unlink (self):
+	
+		"""Unlinks the receiver from the tree before moving or deleting.
+		
+		The mFistChild link is not affected in the receiver."""
+	
+		v = self ; c = v.commands ; tree = c.tree
+	
+		# stat() # trace(`v.mParent`+", child:"+`v.mFirstChild`+", back:"+`v.mBack`+", next:"+`v.mNext`)
+		
+		# Special case the root
+		if v == tree.rootVnode:
+			if not v.mNext: return # Should never happen.
+			tree.rootVnode = v.mNext
+	
+		# Clear the links in other nodes
+		if v.mBack:
+			v.mBack.mNext = v.mNext
+		if v.mNext:
+			v.mNext.mBack = v.mBack
+		if v.mParent and v == v.mParent.mFirstChild:
+			v.mParent.mFirstChild = v.mNext
+	
+		# Clear the links in this node
+		v.mParent = v.mNext = v.mBack = None
+	#@-body
+	#@-node:14::v.unlink
+	#@+node:15::validateOutlineWithParent
 	#@+body
 	# This routine checks the structure of the receiver's tree.
 	
@@ -2088,257 +2316,8 @@ class baseVnode:
 			child = child.next()
 		return result
 	#@-body
-	#@-node:5::validateOutlineWithParent
-	#@-node:2::Public helper functions
-	#@+node:3::Private helper functions
-	#@+node:1::cloneTree
-	#@+body
-	# This method creates a cloned tree after oldTree.
-	
-	def cloneTree (self, oldTree):
-	
-		# Create a new tree following oldTree.
-		newTree = self.insertAfter(oldTree.t)
-		newTree.initHeadString (oldTree.headString())
-		self.copyTree(oldTree, newTree)
-		# Join the trees and copy clone bits.
-		oldTree.joinTreeTo(newTree)
-		oldTree.copyCloneBitsTo(newTree)
-		return newTree
-	#@-body
-	#@-node:1::cloneTree
-	#@+node:2::copyCloneBitsTo
-	#@+body
-	# This methods propagates clone bits from the receiver's tree to tree2.
-	
-	def copyCloneBitsTo (self, tree2):
-	
-		tree1 = self
-		assert(tree2)
-		# Set the bit in the root.
-		if tree1.isCloned():
-			tree2.setClonedBit()
-		else:
-			tree2.clearClonedBit()
-		# Recursively set the bits in all subtrees.
-		child1 = tree1.firstChild()
-		child2 = tree2.firstChild()
-		while child1:
-			assert(child2)
-			if child1.isCloned():
-				child2.setClonedBit()
-			else:
-				child2.clearClonedBit()
-			child1 = child1.next()
-			child2 = child2.next()
-		assert(child2 == None)
-	#@-body
-	#@-node:2::copyCloneBitsTo
-	#@+node:3::v.copyNode
-	#@+body
-	def copyNode (self, old_node, new_node):
-	
-		new_node.t.headString = old_node.t.headString
-		new_node.iconVal = old_node.iconVal
-	
-	#@-body
-	#@-node:3::v.copyNode
-	#@+node:4::createDependents (bug fix: 4/22/01)
-	#@+body
-	# This method creates all nodes that depend on the receiver.
-	def createDependents (self):
-	
-		v = self ; t = v.t ; parent = v.parent()
-		if not parent: return
-	
-		# Copy v as the nth child of all nodes joined to parent.
-		n = v.childIndex()
-		# trace(`n` + ", " + `v`)
-		for p in parent.t.joinList:
-			if p != parent:
-				copy = p.insertAsNthChild(n, t)
-				copy.t.headString = v.t.headString
-				copy.iconVal = v.iconVal
-				self.copyTree(v, copy)
-				v.joinTreeTo(copy)
-	#@-body
-	#@-node:4::createDependents (bug fix: 4/22/01)
-	#@+node:5::destroyDependents
-	#@+body
-	# Destroys all dependent vnodes and tree nodes associated with the receiver.
-	
-	def destroyDependents (self):
-	
-		parent = self.parent()
-		if not parent: return
-	
-		# Destroy the nth child of all nodes joined to the receiver's parent.
-		n = self.childIndex()
-		# trace(`n` + ", " + `self`)
-		for join in parent.t.joinList:
-			if join != parent:
-				child = join.nthChild(n)
-				if child:
-					child.unjoinTree()
-					child.unlink()
-					child.destroyTree()
-	#@-body
-	#@-node:5::destroyDependents
-	#@+node:6::destroyTree (does nothing!)
-	#@+body
-	#@+at
-	#  This method destroys (irrevocably deletes) a vnode tree.
-	# 
-	# This code should be called only when it is no longer possible to undo a 
-	# previous delete.  It is always valid to destroy dependent trees.
-
-	#@-at
-	#@@c
-
-	def destroyTree (self):
-	
-		pass
-	#@-body
-	#@-node:6::destroyTree (does nothing!)
-	#@+node:7::invalidOutline
-	#@+body
-	def invalidOutline (self, message):
-	
-		s = "invalid outline: " + message + "\n"
-		parent = self.parent()
-	
-		if parent:
-			s += `parent`
-		else:
-			s += `self`
-	
-		alert ( s )
-	#@-body
-	#@-node:7::invalidOutline
-	#@+node:8::joinNodeTo (rewritten for 4.0)
-	#@+body
-	def joinNodeTo (self, v2):
-		
-		"""Add self or v2 to their common join list"""
-	
-		v1 = self
-		assert(v1.t==v2.t)
-		j = v1.t.joinList
-		
-		if v1 not in j:
-			j.append(v1)
-			
-		if v2 not in j:
-			j.append(v2)
-	#@-body
-	#@-node:8::joinNodeTo (rewritten for 4.0)
-	#@+node:9::linkAfter
-	#@+body
-	# Links the receiver after v.
-	
-	def linkAfter (self,v):
-	
-		# stat()
-		self.mParent = v.mParent
-		self.mBack = v
-		self.mNext = v.mNext
-		v.mNext = self
-		if self.mNext:
-			self.mNext.mBack = self
-	#@-body
-	#@-node:9::linkAfter
-	#@+node:10::linkAsNthChild
-	#@+body
-	def linkAsNthChild (self, p, n):
-	
-		"""Links the receiver as the n'th child of p"""
-	
-		v = self
-		# stat() ; # trace(`v` + ", " + `p` + ", " + `n`)
-		v.mParent = p
-		if n == 0:
-			v.mBack = None
-			v.mNext = p.mFirstChild
-			if p.mFirstChild:
-				p.mFirstChild.mBack = v
-			p.mFirstChild = v
-		else:
-			prev = p.nthChild(n-1) # zero based
-			assert(prev)
-			v.mBack = prev
-			v.mNext = prev.mNext
-			prev.mNext = v
-			if v.mNext:
-				v.mNext.mBack = v
-	#@-body
-	#@-node:10::linkAsNthChild
-	#@+node:11::linkAsRoot
-	#@+body
-	#@+at
-	#  Bug fix: 5/27/02.  We link in the rest of the tree only when oldRoot != 
-	# None.  Otherwise, we are calling this routine from init code and we want 
-	# to start with a pristine tree.
-
-	#@-at
-	#@@c
-	def linkAsRoot(self, oldRoot = None):
-	
-		v = self ; c = v.commands ; tree = c.tree
-		# stat() ; # trace(`v`)
-		# Bug fix 3/16/02:
-		# Clear all links except the child link.
-		# This allows a node with children to be moved up properly to the root position.
-		# v.mFirstChild = None
-		v.mParent = None
-		v.mBack = None
-		# 5/27/02
-		if oldRoot: oldRoot.mBack = v
-		v.mNext = oldRoot
-		tree.rootVnode = v
-	
-	#@-body
-	#@-node:11::linkAsRoot
-	#@+node:12::unlink
-	#@+body
-	def unlink (self):
-	
-		"""Unlinks the receiver from the tree before moving or deleting."""
-		v = self ; c = v.commands ; tree = c.tree
-	
-		# stat() # trace(`v.mParent`+", child:"+`v.mFirstChild`+", back:"+`v.mBack`+", next:"+`v.mNext`)
-		
-		# Special case the root
-		if v == tree.rootVnode:
-			if not v.mNext: return # Should never happen.
-			tree.rootVnode = v.mNext
-	
-		# Clear the links in other nodes
-		if v.mBack:
-			v.mBack.mNext = v.mNext
-		if v.mNext:
-			v.mNext.mBack = v.mBack
-		if v.mParent and v == v.mParent.mFirstChild:
-			v.mParent.mFirstChild = v.mNext
-	
-		# Clear the links in this node
-		v.mParent = v.mNext = v.mBack = None
-	#@-body
-	#@-node:12::unlink
-	#@+node:13::unjoinTree (changed for 4.0)
-	#@+body
-	# This function unjoins all nodes of the receiver's tree.
-	
-	def unjoinTree (self):
-	
-		v = self
-		after = self.nodeAfterTree()
-		while v and v != after:
-			if v in v.t.joinList:
-				v.t.joinList.remove(v)
-			v = v.threadNext()
-	#@-body
-	#@-node:13::unjoinTree (changed for 4.0)
-	#@-node:3::Private helper functions
+	#@-node:15::validateOutlineWithParent
+	#@-node:2::Helper functions
 	#@-node:9::Moving, Inserting, Deleting, Cloning, Sorting (vnode)
 	#@-others
 
