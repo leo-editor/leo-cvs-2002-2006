@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="2592" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="2598" clone_windows="0"/>
 <globals body_outline_ratio="0.5">
-	<global_window_position top="5" left="170" height="28" width="81"/>
+	<global_window_position top="14" left="245" height="28" width="81"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences allow_rich_text="0">
@@ -3933,57 +3933,50 @@
 </v>
 <v t="T1046" a="C"><vh>directiveKind</vh></v>
 </v>
-<v t="T1700"><vh>(Execute script and @pythonscript nodes)</vh>
-<v t="T1701"><vh>@file leoHacks.py</vh></v>
-<v t="T1702"><vh>@pythonscript (test)</vh></v>
-<v t="T1703"><vh>Documentation</vh></v>
-<v t="T1704" a="C"><vh>es_exception</vh></v>
-<v t="T1490" a="C"><vh>OnExecuteScript</vh></v>
+<v t="T1700"><vh>(Java import problems problems)</vh>
+<v t="T1701"><vh>Originals</vh>
+<v t="T1702"><vh>Adventure.java (formatting problems)</vh></v>
+<v t="T1703"><vh>Bath.java (no @language)</vh></v>
+<v t="T1704"><vh>HelloDate.java (javascript problems)</vh></v>
 </v>
-<v t="T1705"><vh>(Java import problems problems)</vh>
-<v t="T1706"><vh>Originals</vh>
-<v t="T1707"><vh>Adventure.java (formatting problems)</vh></v>
-<v t="T1708"><vh>Bath.java (no @language)</vh></v>
-<v t="T1709"><vh>HelloDate.java (javascript problems)</vh></v>
+<v t="T1705"><vh>New tests</vh>
+<v t="T1706"><vh>@file Adventure.java</vh>
+<v t="T1707"><vh>&lt;&lt; Adventure declarations &gt;&gt;</vh></v>
+<v t="T1708"><vh>interface CanFight</vh></v>
+<v t="T1709"><vh>interface CanSwim</vh></v>
+<v t="T1710"><vh>interface CanFly</vh></v>
+<v t="T1711"><vh>class ActionCharacter</vh>
+<v t="T1712"><vh>fight</vh></v>
 </v>
-<v t="T1710"><vh>New tests</vh>
-<v t="T1711"><vh>@file Adventure.java</vh>
-<v t="T1712"><vh>&lt;&lt; Adventure declarations &gt;&gt;</vh></v>
-<v t="T1713"><vh>interface CanFight</vh></v>
-<v t="T1714"><vh>interface CanSwim</vh></v>
-<v t="T1715"><vh>interface CanFly</vh></v>
-<v t="T1716"><vh>class ActionCharacter</vh>
-<v t="T1717"><vh>fight</vh></v>
+<v t="T1713"><vh>class Hero</vh>
+<v t="T1714"><vh>swim</vh></v>
+<v t="T1715"><vh>fly</vh></v>
 </v>
-<v t="T1718"><vh>class Hero</vh>
-<v t="T1719"><vh>swim</vh></v>
-<v t="T1720"><vh>fly</vh></v>
-</v>
-<v t="T1721"><vh>class Adventure</vh>
-<v t="T1722"><vh>t</vh></v>
-<v t="T1723"><vh>u</vh></v>
-<v t="T1724"><vh>v</vh></v>
-<v t="T1725"><vh>w</vh></v>
-<v t="T1726"><vh>main</vh></v>
+<v t="T1716"><vh>class Adventure</vh>
+<v t="T1717"><vh>t</vh></v>
+<v t="T1718"><vh>u</vh></v>
+<v t="T1719"><vh>v</vh></v>
+<v t="T1720"><vh>w</vh></v>
+<v t="T1721"><vh>main</vh></v>
 </v>
 </v>
-<v t="T1727"><vh>@file Bath.java</vh>
-<v t="T1728"><vh>class Soap</vh>
-<v t="T1729"><vh>&lt;&lt; class Soap declarations &gt;&gt;</vh></v>
-<v t="T1730"><vh>Soap</vh></v>
-<v t="T1731"><vh>toString</vh></v>
+<v t="T1722"><vh>@file Bath.java</vh>
+<v t="T1723"><vh>class Soap</vh>
+<v t="T1724"><vh>&lt;&lt; class Soap declarations &gt;&gt;</vh></v>
+<v t="T1725"><vh>Soap</vh></v>
+<v t="T1726"><vh>toString</vh></v>
 </v>
-<v t="T1732"><vh>class Bath</vh>
-<v t="T1733"><vh>&lt;&lt; class Bath declarations &gt;&gt;</vh></v>
-<v t="T1734"><vh>Bath</vh></v>
-<v t="T1735"><vh>print</vh></v>
-<v t="T1736"><vh>main</vh></v>
+<v t="T1727"><vh>class Bath</vh>
+<v t="T1728"><vh>&lt;&lt; class Bath declarations &gt;&gt;</vh></v>
+<v t="T1729"><vh>Bath</vh></v>
+<v t="T1730"><vh>print</vh></v>
+<v t="T1731"><vh>main</vh></v>
 </v>
 </v>
-<v t="T1737"><vh>@file HelloDate.java</vh>
-<v t="T1738"><vh>&lt;&lt; HelloDate declarations &gt;&gt;</vh></v>
-<v t="T1739"><vh>class HelloDate</vh>
-<v t="T1740"><vh>main</vh></v>
+<v t="T1732"><vh>@file HelloDate.java</vh>
+<v t="T1733"><vh>&lt;&lt; HelloDate declarations &gt;&gt;</vh></v>
+<v t="T1734"><vh>class HelloDate</vh>
+<v t="T1735"><vh>main</vh></v>
 </v>
 </v>
 </v>
@@ -4002,35 +3995,35 @@
 <v t="T892" a="C"><vh>&lt;&lt; Append any unused text to the parent's body text &gt;&gt;</vh></v>
 </v>
 <v t="T874" a="C"><vh>skip_braces</vh></v>
-<v t="T1741" a="C"><vh>find_line_start</vh></v>
-<v t="T1742" a="C"><vh>Utilities</vh>
+<v t="T1736" a="C"><vh>find_line_start</vh></v>
+<v t="T1737" a="C"><vh>Utilities</vh>
 <v t="T1366" a="C"><vh>createHeadline</vh></v>
-<v t="T1743"><vh>error</vh></v>
-<v t="T1744"><vh>getLeadingIndent</vh></v>
-<v t="T1745"><vh>isDocStart and isModuleStart</vh></v>
+<v t="T1738"><vh>error</vh></v>
+<v t="T1739"><vh>getLeadingIndent</vh></v>
+<v t="T1740"><vh>isDocStart and isModuleStart</vh></v>
 <v t="T1365" a="C"><vh>massageBody</vh></v>
-<v t="T1746"><vh>massageComment</vh></v>
-<v t="T1747"><vh>massageWebBody</vh>
-<v t="T1748"><vh>&lt;&lt; Remove most newlines from @space and @* sections &gt;&gt;</vh></v>
-<v t="T1749"><vh>&lt;&lt; Replace abbreviated names with full names &gt;&gt;</vh></v>
+<v t="T1741"><vh>massageComment</vh></v>
+<v t="T1742"><vh>massageWebBody</vh>
+<v t="T1743"><vh>&lt;&lt; Remove most newlines from @space and @* sections &gt;&gt;</vh></v>
+<v t="T1744"><vh>&lt;&lt; Replace abbreviated names with full names &gt;&gt;</vh></v>
 </v>
 <v t="T1367" a="C"><vh>skipLeadingComments</vh>
 <v t="T1368"><vh>&lt;&lt; scan for C-style comments &gt;&gt;</vh></v>
 <v t="T1369"><vh>&lt;&lt; scan for Pascal comments &gt;&gt;</vh></v>
 <v t="T1370"><vh>&lt;&lt; scan for Python comments &gt;&gt;</vh></v>
 </v>
-<v t="T1750"><vh>undentBody</vh></v>
+<v t="T1745"><vh>undentBody</vh></v>
 </v>
 </v>
-<v t="T1751"><vh>(raw cweb mode in @root treees) (proper cweb hack not applied yet)</vh>
-<v t="T1752"><vh>Test</vh>
-<v t="T1753"><vh>@root rawCwebTest</vh>
-<v t="T1754"><vh>&lt;&lt; noweb sec1 &gt;&gt;</vh></v>
-<v t="T1755"><vh>noweb sec2</vh></v>
+<v t="T1746"><vh>(raw cweb mode in @root treees) (proper cweb hack not applied yet)</vh>
+<v t="T1747"><vh>Test</vh>
+<v t="T1748"><vh>@root rawCwebTest</vh>
+<v t="T1749"><vh>&lt;&lt; noweb sec1 &gt;&gt;</vh></v>
+<v t="T1750"><vh>noweb sec2</vh></v>
 </v>
 </v>
 <v><vh>Setting raw_cweb_flag</vh>
-<v t="T1756" a="C"><vh>&lt;&lt; constants &amp; synonyms &gt;&gt;</vh></v>
+<v t="T1751" a="C"><vh>&lt;&lt; constants &amp; synonyms &gt;&gt;</vh></v>
 <v t="T1247" a="C"><vh>&lt;&lt; init directive ivars &gt;&gt; (tangle)</vh></v>
 <v t="T1017" a="C"><vh>tangle.scanAllDirectives</vh>
 <v t="T1018"><vh>&lt;&lt; Collect @first attributes &gt;&gt;</vh></v>
@@ -4050,111 +4043,111 @@
 </v>
 </v>
 <v><vh>Using the new raw_cweb_flag</vh>
-<v t="T1757" a="C"><vh>token_type</vh>
-<v t="T1758"><vh>&lt;&lt; set token_type in noweb mode &gt;&gt;</vh></v>
-<v t="T1759"><vh>&lt;&lt; set token_type for CWEB mode &gt;&gt;</vh></v>
-<v t="T1760"><vh>&lt;&lt; set kind for directive &gt;&gt;</vh></v>
+<v t="T1752" a="C"><vh>token_type</vh>
+<v t="T1753"><vh>&lt;&lt; set token_type in noweb mode &gt;&gt;</vh></v>
+<v t="T1754"><vh>&lt;&lt; set token_type for CWEB mode &gt;&gt;</vh></v>
+<v t="T1755"><vh>&lt;&lt; set kind for directive &gt;&gt;</vh></v>
 </v>
 </v>
-<v t="T1761"><vh>contain use_cweb_flag or use_noweb_flag</vh>
+<v t="T1756"><vh>contain use_cweb_flag or use_noweb_flag</vh>
 <v><vh>Tangle pass 1</vh>
-<v t="T1762" a="C"><vh>handle_newline</vh></v>
-<v t="T1763" a="C"><vh>skip_body</vh>
-<v t="T1764"><vh>The interface between tangle and untangle</vh>
-<v t="T1765"><vh>&lt;&lt; Define a section containing only an @doc part &gt;&gt;</vh></v>
-<v t="T1766"><vh>&lt;&lt; Scan and define a section definition &gt;&gt;</vh></v>
-<v t="T1767"><vh>&lt;&lt; Scan and define an @code defininition &gt;&gt;</vh></v>
-<v t="T1768"><vh>&lt;&lt; Scan and define a root section &gt;&gt;</vh></v>
+<v t="T1757" a="C"><vh>handle_newline</vh></v>
+<v t="T1758" a="C"><vh>skip_body</vh>
+<v t="T1759"><vh>The interface between tangle and untangle</vh>
+<v t="T1760"><vh>&lt;&lt; Define a section containing only an @doc part &gt;&gt;</vh></v>
+<v t="T1761"><vh>&lt;&lt; Scan and define a section definition &gt;&gt;</vh></v>
+<v t="T1762"><vh>&lt;&lt; Scan and define an @code defininition &gt;&gt;</vh></v>
+<v t="T1763"><vh>&lt;&lt; Scan and define a root section &gt;&gt;</vh></v>
 </v>
 </v>
-<v t="T1769" a="C"><vh>skip_code</vh>
-<v t="T1770"><vh>&lt;&lt; skip a noweb code section &gt;&gt;</vh>
-<v t="T1771"><vh>&lt;&lt; handle possible noweb section reference &gt;&gt;</vh></v>
+<v t="T1764" a="C"><vh>skip_code</vh>
+<v t="T1765"><vh>&lt;&lt; skip a noweb code section &gt;&gt;</vh>
+<v t="T1766"><vh>&lt;&lt; handle possible noweb section reference &gt;&gt;</vh></v>
 </v>
-<v t="T1772"><vh>&lt;&lt; skip a CWEB code section &gt;&gt;</vh>
-<v t="T1773"><vh>&lt;&lt; handle CWEB control code &gt;&gt;</vh></v>
+<v t="T1767"><vh>&lt;&lt; skip a CWEB code section &gt;&gt;</vh>
+<v t="T1768"><vh>&lt;&lt; handle CWEB control code &gt;&gt;</vh></v>
 </v>
 </v>
 </v>
 <v><vh>Tangle pass 2</vh>
-<v t="T1774" a="C"><vh>put_code</vh>
-<v t="T1775"><vh>&lt;&lt;put possible section reference &gt;&gt;</vh></v>
-<v t="T1776"><vh>&lt;&lt; handle 2-character CWEB control codes &gt;&gt;</vh></v>
-<v t="T1777"><vh>&lt;&lt; handle noweb @ &lt; &lt; convention &gt;&gt;</vh></v>
+<v t="T1769" a="C"><vh>put_code</vh>
+<v t="T1770"><vh>&lt;&lt;put possible section reference &gt;&gt;</vh></v>
+<v t="T1771"><vh>&lt;&lt; handle 2-character CWEB control codes &gt;&gt;</vh></v>
+<v t="T1772"><vh>&lt;&lt; handle noweb @ &lt; &lt; convention &gt;&gt;</vh></v>
 </v>
-<v t="T1778" a="C"><vh>put_newline</vh>
-<v t="T1779"><vh>&lt;&lt; Output leading white space except for blank lines &gt;&gt;</vh></v>
+<v t="T1773" a="C"><vh>put_newline</vh>
+<v t="T1774"><vh>&lt;&lt; Output leading white space except for blank lines &gt;&gt;</vh></v>
 </v>
-<v t="T1780" a="C"><vh>put_section</vh>
-<v t="T1781"><vh>&lt;&lt; Calculate the new value of tangle_indent &gt;&gt;</vh></v>
-<v t="T1782"><vh>&lt;&lt; Set 'newline_flag' if the line ends with the reference &gt;&gt;</vh></v>
-<v t="T1783"><vh>&lt;&lt;put all parts of the section definition&gt;&gt;</vh>
-<v t="T1784"><vh>&lt;&lt; Put the section name in a comment &gt;&gt;</vh>
-<v t="T1785"><vh>&lt;&lt; put ( n of m ) &gt;&gt;</vh></v>
+<v t="T1775" a="C"><vh>put_section</vh>
+<v t="T1776"><vh>&lt;&lt; Calculate the new value of tangle_indent &gt;&gt;</vh></v>
+<v t="T1777"><vh>&lt;&lt; Set 'newline_flag' if the line ends with the reference &gt;&gt;</vh></v>
+<v t="T1778"><vh>&lt;&lt;put all parts of the section definition&gt;&gt;</vh>
+<v t="T1779"><vh>&lt;&lt; Put the section name in a comment &gt;&gt;</vh>
+<v t="T1780"><vh>&lt;&lt; put ( n of m ) &gt;&gt;</vh></v>
 </v>
-<v t="T1786"><vh>&lt;&lt; Put the ending comment &gt;&gt;</vh></v>
+<v t="T1781"><vh>&lt;&lt; Put the ending comment &gt;&gt;</vh></v>
 </v>
-<v t="T1787"><vh>&lt;&lt;Put a comment about the undefined section&gt;&gt;</vh></v>
+<v t="T1782"><vh>&lt;&lt;Put a comment about the undefined section&gt;&gt;</vh></v>
 </v>
 </v>
 <v><vh>Utils...</vh>
-<v t="T1788" a="C"><vh>compare_section_names</vh></v>
-<v t="T1789" a="C"><vh>is_section_name</vh></v>
-<v t="T1790" a="C"><vh>is_sentinel_line &amp; is_sentinel_line_with_data</vh>
-<v t="T1791"><vh>&lt;&lt; Initialize the return values  &gt;&gt;</vh></v>
-<v t="T1792"><vh>&lt;&lt; Make sure the line starts with start_sentinel &gt;&gt;</vh></v>
-<v t="T1793"><vh>&lt;&lt; Set end_flag if we have -- end -- &gt;&gt;</vh></v>
-<v t="T1794"><vh>&lt;&lt; Make sure we have a section reference &gt;&gt;</vh></v>
-<v t="T1795"><vh>&lt;&lt; Set part and of if they exist &gt;&gt;</vh></v>
-<v t="T1796"><vh>&lt;&lt; Set nl_flag to false if !newline exists &gt;&gt;</vh></v>
-<v t="T1797"><vh>&lt;&lt; Make sure the line ends with end_sentinel &gt;&gt;</vh></v>
+<v t="T1783" a="C"><vh>compare_section_names</vh></v>
+<v t="T1784" a="C"><vh>is_section_name</vh></v>
+<v t="T1785" a="C"><vh>is_sentinel_line &amp; is_sentinel_line_with_data</vh>
+<v t="T1786"><vh>&lt;&lt; Initialize the return values  &gt;&gt;</vh></v>
+<v t="T1787"><vh>&lt;&lt; Make sure the line starts with start_sentinel &gt;&gt;</vh></v>
+<v t="T1788"><vh>&lt;&lt; Set end_flag if we have -- end -- &gt;&gt;</vh></v>
+<v t="T1789"><vh>&lt;&lt; Make sure we have a section reference &gt;&gt;</vh></v>
+<v t="T1790"><vh>&lt;&lt; Set part and of if they exist &gt;&gt;</vh></v>
+<v t="T1791"><vh>&lt;&lt; Set nl_flag to false if !newline exists &gt;&gt;</vh></v>
+<v t="T1792"><vh>&lt;&lt; Make sure the line ends with end_sentinel &gt;&gt;</vh></v>
 </v>
-<v t="T1798" a="C"><vh>skip_section_name</vh></v>
-<v t="T1757" a="C"><vh>token_type</vh>
-<v t="T1758"><vh>&lt;&lt; set token_type in noweb mode &gt;&gt;</vh></v>
-<v t="T1759"><vh>&lt;&lt; set token_type for CWEB mode &gt;&gt;</vh></v>
-<v t="T1760"><vh>&lt;&lt; set kind for directive &gt;&gt;</vh></v>
+<v t="T1793" a="C"><vh>skip_section_name</vh></v>
+<v t="T1752" a="C"><vh>token_type</vh>
+<v t="T1753"><vh>&lt;&lt; set token_type in noweb mode &gt;&gt;</vh></v>
+<v t="T1754"><vh>&lt;&lt; set token_type for CWEB mode &gt;&gt;</vh></v>
+<v t="T1755"><vh>&lt;&lt; set kind for directive &gt;&gt;</vh></v>
 </v>
 </v>
 <v><vh>Untangle &amp; ust &amp; st</vh>
-<v t="T1799" a="C"><vh>forgiving_compare</vh>
-<v t="T1800"><vh>&lt;&lt; Define forgiving_compare vars &gt;&gt;</vh></v>
-<v t="T1801" a="C"><vh>&lt;&lt; Check both parts for @ comment conventions &gt;&gt;</vh></v>
-<v t="T1802"><vh>&lt;&lt; Compare non-critical newlines &gt;&gt;</vh></v>
-<v t="T1803"><vh>&lt;&lt; Compare non-critical whitespace &gt;&gt;</vh></v>
-<v t="T1804"><vh>&lt;&lt; Compare possible preprocessor directives &gt;&gt;</vh>
-<v t="T1805" a="C"><vh>&lt;&lt; Compare single characters &gt;&gt;</vh></v>
-<v t="T1806"><vh>&lt;&lt; Compare preprocessor directives &gt;&gt;</vh></v>
+<v t="T1794" a="C"><vh>forgiving_compare</vh>
+<v t="T1795"><vh>&lt;&lt; Define forgiving_compare vars &gt;&gt;</vh></v>
+<v t="T1796" a="C"><vh>&lt;&lt; Check both parts for @ comment conventions &gt;&gt;</vh></v>
+<v t="T1797"><vh>&lt;&lt; Compare non-critical newlines &gt;&gt;</vh></v>
+<v t="T1798"><vh>&lt;&lt; Compare non-critical whitespace &gt;&gt;</vh></v>
+<v t="T1799"><vh>&lt;&lt; Compare possible preprocessor directives &gt;&gt;</vh>
+<v t="T1800" a="C"><vh>&lt;&lt; Compare single characters &gt;&gt;</vh></v>
+<v t="T1801"><vh>&lt;&lt; Compare preprocessor directives &gt;&gt;</vh></v>
 </v>
-<v t="T1807"><vh>&lt;&lt; Compare possible strings &gt;&gt;</vh>
-<v t="T1805" a="C"><vh>&lt;&lt; Compare single characters &gt;&gt;</vh></v>
-<v t="T1808"><vh>&lt;&lt; Compare C strings &gt;&gt;</vh></v>
-<v t="T1809"><vh>&lt;&lt; Compare Pascal strings &gt;&gt;</vh></v>
+<v t="T1802"><vh>&lt;&lt; Compare possible strings &gt;&gt;</vh>
+<v t="T1800" a="C"><vh>&lt;&lt; Compare single characters &gt;&gt;</vh></v>
+<v t="T1803"><vh>&lt;&lt; Compare C strings &gt;&gt;</vh></v>
+<v t="T1804"><vh>&lt;&lt; Compare Pascal strings &gt;&gt;</vh></v>
 </v>
-<v t="T1810"><vh>&lt;&lt; Compare possible section references &gt;&gt;</vh></v>
-<v t="T1811"><vh>&lt;&lt; Compare comments or single characters &gt;&gt;</vh>
-<v t="T1805" a="C"><vh>&lt;&lt; Compare single characters &gt;&gt;</vh></v>
+<v t="T1805"><vh>&lt;&lt; Compare possible section references &gt;&gt;</vh></v>
+<v t="T1806"><vh>&lt;&lt; Compare comments or single characters &gt;&gt;</vh>
+<v t="T1800" a="C"><vh>&lt;&lt; Compare single characters &gt;&gt;</vh></v>
 </v>
-<v t="T1812"><vh>&lt;&lt; Make sure both parts have ended &gt;&gt;</vh></v>
-<v t="T1813"><vh>&lt;&lt; Trace the mismatch &gt;&gt;</vh></v>
+<v t="T1807"><vh>&lt;&lt; Make sure both parts have ended &gt;&gt;</vh></v>
+<v t="T1808"><vh>&lt;&lt; Trace the mismatch &gt;&gt;</vh></v>
 </v>
-<v t="T1814" a="C"><vh>compare_comments</vh>
-<v t="T1801" a="C"><vh>&lt;&lt; Check both parts for @ comment conventions &gt;&gt;</vh></v>
+<v t="T1809" a="C"><vh>compare_comments</vh>
+<v t="T1796" a="C"><vh>&lt;&lt; Check both parts for @ comment conventions &gt;&gt;</vh></v>
 </v>
-<v t="T1815" a="C"><vh>ust_warn_about_orphans</vh></v>
-<v t="T1816" a="C"><vh>st_check</vh></v>
+<v t="T1810" a="C"><vh>ust_warn_about_orphans</vh></v>
+<v t="T1811" a="C"><vh>st_check</vh></v>
 </v>
 </v>
 </v>
-<v t="T1817"><vh>(reformatParagraph)</vh>
-<v t="T1818"><vh>test</vh></v>
+<v t="T1812"><vh>(reformatParagraph)</vh>
+<v t="T1813"><vh>test</vh></v>
 <v><vh>Utilities...</vh>
 <v t="T701" a="C"><vh>computeWidth</vh></v>
 <v t="T702" a="C"><vh>get_leading_ws</vh></v>
-<v t="T1819" a="C"><vh>skip_non_ws</vh></v>
-<v t="T1820" a="C"><vh>wrap_lines</vh>
-<v t="T1821"><vh>&lt;&lt; place blank and word on the present line &gt;&gt;</vh></v>
-<v t="T1822"><vh>&lt;&lt; place word on a new line &gt;&gt;</vh></v>
+<v t="T1814" a="C"><vh>skip_non_ws</vh></v>
+<v t="T1815" a="C"><vh>wrap_lines</vh>
+<v t="T1816"><vh>&lt;&lt; place blank and word on the present line &gt;&gt;</vh></v>
+<v t="T1817"><vh>&lt;&lt; place word on a new line &gt;&gt;</vh></v>
 </v>
 </v>
 <v t="T730" a="C"><vh>getBodyLines</vh></v>
@@ -4162,14 +4155,14 @@
 <v t="T733" a="C"><vh>reformatParagraph</vh>
 <v t="T734"><vh>&lt;&lt; Set the new insert at the start of the next paragraph &gt;&gt;</vh></v>
 </v>
-<v t="T1823" a="C"><vh>scanDirectives (utils)</vh>
-<v t="T1824"><vh>&lt;&lt; Set local vars &gt;&gt;</vh></v>
-<v t="T1825"><vh>&lt;&lt; Test for @comment and @language &gt;&gt;</vh></v>
-<v t="T1826"><vh>&lt;&lt; Test for @pagewidth &gt;&gt;</vh></v>
-<v t="T1827"><vh>&lt;&lt; Test for @path &gt;&gt;</vh>
-<v t="T1828"><vh>&lt;&lt; compute path from s[k:] &gt;&gt;</vh></v>
+<v t="T1818" a="C"><vh>scanDirectives (utils)</vh>
+<v t="T1819"><vh>&lt;&lt; Set local vars &gt;&gt;</vh></v>
+<v t="T1820"><vh>&lt;&lt; Test for @comment and @language &gt;&gt;</vh></v>
+<v t="T1821"><vh>&lt;&lt; Test for @pagewidth &gt;&gt;</vh></v>
+<v t="T1822"><vh>&lt;&lt; Test for @path &gt;&gt;</vh>
+<v t="T1823"><vh>&lt;&lt; compute path from s[k:] &gt;&gt;</vh></v>
 </v>
-<v t="T1829"><vh>&lt;&lt; Test for @tabwidth &gt;&gt;</vh></v>
+<v t="T1824"><vh>&lt;&lt; Test for @tabwidth &gt;&gt;</vh></v>
 </v>
 </v>
 <v><vh>(scanDirectives utility)</vh>
@@ -4200,23 +4193,30 @@
 <v t="T733" a="C"><vh>reformatParagraph</vh>
 <v t="T734"><vh>&lt;&lt; Set the new insert at the start of the next paragraph &gt;&gt;</vh></v>
 </v>
-<v t="T1823" a="C"><vh>scanDirectives (utils)</vh>
-<v t="T1824"><vh>&lt;&lt; Set local vars &gt;&gt;</vh></v>
-<v t="T1825"><vh>&lt;&lt; Test for @comment and @language &gt;&gt;</vh></v>
-<v t="T1826"><vh>&lt;&lt; Test for @pagewidth &gt;&gt;</vh></v>
-<v t="T1827"><vh>&lt;&lt; Test for @path &gt;&gt;</vh>
-<v t="T1828"><vh>&lt;&lt; compute path from s[k:] &gt;&gt;</vh></v>
+<v t="T1818" a="C"><vh>scanDirectives (utils)</vh>
+<v t="T1819"><vh>&lt;&lt; Set local vars &gt;&gt;</vh></v>
+<v t="T1820"><vh>&lt;&lt; Test for @comment and @language &gt;&gt;</vh></v>
+<v t="T1821"><vh>&lt;&lt; Test for @pagewidth &gt;&gt;</vh></v>
+<v t="T1822"><vh>&lt;&lt; Test for @path &gt;&gt;</vh>
+<v t="T1823"><vh>&lt;&lt; compute path from s[k:] &gt;&gt;</vh></v>
 </v>
-<v t="T1829"><vh>&lt;&lt; Test for @tabwidth &gt;&gt;</vh></v>
-</v>
-</v>
-<v t="T1830"><vh>@pythonscript  (unloadAll)</vh>
-<v t="T1831" a="CM"><vh>unloadAll</vh></v>
-<v t="T1832" a="CM"><vh>printLeoModules</vh></v>
+<v t="T1824"><vh>&lt;&lt; Test for @tabwidth &gt;&gt;</vh></v>
 </v>
 </v>
+<v t="T1825"><vh>@pythonscript  (unloadAll)</vh>
+<v t="T1826" a="CM"><vh>unloadAll</vh></v>
+<v t="T1827" a="CM"><vh>printLeoModules</vh></v>
 </v>
-<v t="T1833" a="V"><vh>Code</vh>
+</v>
+</v>
+<v t="T1828"><vh>(Execute script and @pythonscript nodes)</vh>
+<v t="T1829"><vh>@file leoHacks.py</vh></v>
+<v t="T1830"><vh>@pythonscript (test)</vh></v>
+<v t="T1831"><vh>Documentation</vh></v>
+<v t="T1832" a="C"><vh>es_exception</vh></v>
+<v t="T1490" a="C"><vh>OnExecuteScript</vh></v>
+</v>
+<v t="T1833"><vh>Code</vh>
 <v t="T1834"><vh>  Overview of code</vh></v>
 <v t="T1835"><vh> Batch Files</vh>
 <v t="T1836"><vh>@silentfile bdist.bat</vh></v>
@@ -4480,7 +4480,7 @@
 <v t="T1378" a="C"><vh>updateCloneIndices</vh></v>
 <v t="T1983"><vh>writeError</vh></v>
 </v>
-<v><vh>Reading</vh>
+<v a="E"><vh>Reading</vh>
 <v t="T1984"><vh>createNthChild</vh></v>
 <v t="T1985"><vh>joinTrees</vh></v>
 <v t="T1096" a="C"><vh>atFile.read</vh>
@@ -5444,7 +5444,7 @@
 <v t="T1612" a="C"><vh>es, enl, ecnl</vh></v>
 <v t="T2232" a="C"><vh>handleLeoHook</vh></v>
 <v t="T2233"><vh>print_stack</vh></v>
-<v t="T1831" a="C"><vh>unloadAll</vh></v>
+<v t="T1826" a="C"><vh>unloadAll</vh></v>
 <v t="T2234"><vh>top</vh></v>
 </v>
 <v t="T2235"><vh>@file leoImport.py</vh>
@@ -5603,23 +5603,23 @@
 <v t="T1600"><vh>&lt;&lt; write the context of v to f &gt;&gt;</vh></v>
 </v>
 </v>
-<v t="T1742" a="C"><vh>Utilities</vh>
+<v t="T1737" a="C"><vh>Utilities</vh>
 <v t="T1366" a="C"><vh>createHeadline</vh></v>
-<v t="T1743"><vh>error</vh></v>
-<v t="T1744"><vh>getLeadingIndent</vh></v>
-<v t="T1745"><vh>isDocStart and isModuleStart</vh></v>
+<v t="T1738"><vh>error</vh></v>
+<v t="T1739"><vh>getLeadingIndent</vh></v>
+<v t="T1740"><vh>isDocStart and isModuleStart</vh></v>
 <v t="T1365" a="C"><vh>massageBody</vh></v>
-<v t="T1746"><vh>massageComment</vh></v>
-<v t="T1747"><vh>massageWebBody</vh>
-<v t="T1748"><vh>&lt;&lt; Remove most newlines from @space and @* sections &gt;&gt;</vh></v>
-<v t="T1749"><vh>&lt;&lt; Replace abbreviated names with full names &gt;&gt;</vh></v>
+<v t="T1741"><vh>massageComment</vh></v>
+<v t="T1742"><vh>massageWebBody</vh>
+<v t="T1743"><vh>&lt;&lt; Remove most newlines from @space and @* sections &gt;&gt;</vh></v>
+<v t="T1744"><vh>&lt;&lt; Replace abbreviated names with full names &gt;&gt;</vh></v>
 </v>
 <v t="T1367" a="C"><vh>skipLeadingComments</vh>
 <v t="T1368"><vh>&lt;&lt; scan for C-style comments &gt;&gt;</vh></v>
 <v t="T1369"><vh>&lt;&lt; scan for Pascal comments &gt;&gt;</vh></v>
 <v t="T1370"><vh>&lt;&lt; scan for Python comments &gt;&gt;</vh></v>
 </v>
-<v t="T1750"><vh>undentBody</vh></v>
+<v t="T1745"><vh>undentBody</vh></v>
 </v>
 </v>
 <v t="T2296"><vh>@file leoNodes.py</vh>
@@ -5836,7 +5836,7 @@
 </v>
 <v t="T2407"><vh>@file leoTangle.py</vh>
 <v t="T2408"><vh>&lt;&lt; about Tangle and Untangle &gt;&gt;</vh></v>
-<v t="T1756" a="C"><vh>&lt;&lt; constants &amp; synonyms &gt;&gt;</vh></v>
+<v t="T1751" a="C"><vh>&lt;&lt; constants &amp; synonyms &gt;&gt;</vh></v>
 <v><vh>node classes</vh>
 <v t="T2409"><vh>class tst_node</vh>
 <v t="T2410"><vh>tst_node.__init__</vh></v>
@@ -5893,21 +5893,21 @@
 </v>
 <v><vh>tangle</vh>
 <v><vh>Pass 1</vh>
-<v t="T1762" a="C"><vh>handle_newline</vh></v>
-<v t="T1763" a="C"><vh>skip_body</vh>
-<v t="T1764"><vh>The interface between tangle and untangle</vh>
-<v t="T1765"><vh>&lt;&lt; Define a section containing only an @doc part &gt;&gt;</vh></v>
-<v t="T1766"><vh>&lt;&lt; Scan and define a section definition &gt;&gt;</vh></v>
-<v t="T1767"><vh>&lt;&lt; Scan and define an @code defininition &gt;&gt;</vh></v>
-<v t="T1768"><vh>&lt;&lt; Scan and define a root section &gt;&gt;</vh></v>
+<v t="T1757" a="C"><vh>handle_newline</vh></v>
+<v t="T1758" a="C"><vh>skip_body</vh>
+<v t="T1759"><vh>The interface between tangle and untangle</vh>
+<v t="T1760"><vh>&lt;&lt; Define a section containing only an @doc part &gt;&gt;</vh></v>
+<v t="T1761"><vh>&lt;&lt; Scan and define a section definition &gt;&gt;</vh></v>
+<v t="T1762"><vh>&lt;&lt; Scan and define an @code defininition &gt;&gt;</vh></v>
+<v t="T1763"><vh>&lt;&lt; Scan and define a root section &gt;&gt;</vh></v>
 </v>
 </v>
-<v t="T1769" a="C"><vh>skip_code</vh>
-<v t="T1770"><vh>&lt;&lt; skip a noweb code section &gt;&gt;</vh>
-<v t="T1771"><vh>&lt;&lt; handle possible noweb section reference &gt;&gt;</vh></v>
+<v t="T1764" a="C"><vh>skip_code</vh>
+<v t="T1765"><vh>&lt;&lt; skip a noweb code section &gt;&gt;</vh>
+<v t="T1766"><vh>&lt;&lt; handle possible noweb section reference &gt;&gt;</vh></v>
 </v>
-<v t="T1772"><vh>&lt;&lt; skip a CWEB code section &gt;&gt;</vh>
-<v t="T1773"><vh>&lt;&lt; handle CWEB control code &gt;&gt;</vh></v>
+<v t="T1767"><vh>&lt;&lt; skip a CWEB code section &gt;&gt;</vh>
+<v t="T1768"><vh>&lt;&lt; handle CWEB control code &gt;&gt;</vh></v>
 </v>
 </v>
 <v t="T2447"><vh>skip_doc</vh></v>
@@ -5921,10 +5921,10 @@
 <v t="T1290"><vh>&lt;&lt;Write a banner at the start of the output file&gt;&gt;</vh></v>
 <v t="T1291"><vh>&lt;&lt; Erase the temporary file &gt;&gt;</vh></v>
 </v>
-<v t="T1774" a="C"><vh>put_code</vh>
-<v t="T1775"><vh>&lt;&lt;put possible section reference &gt;&gt;</vh></v>
-<v t="T1776"><vh>&lt;&lt; handle 2-character CWEB control codes &gt;&gt;</vh></v>
-<v t="T1777"><vh>&lt;&lt; handle noweb @ &lt; &lt; convention &gt;&gt;</vh></v>
+<v t="T1769" a="C"><vh>put_code</vh>
+<v t="T1770"><vh>&lt;&lt;put possible section reference &gt;&gt;</vh></v>
+<v t="T1771"><vh>&lt;&lt; handle 2-character CWEB control codes &gt;&gt;</vh></v>
+<v t="T1772"><vh>&lt;&lt; handle noweb @ &lt; &lt; convention &gt;&gt;</vh></v>
 </v>
 <v t="T2449"><vh>put_doc</vh>
 <v t="T2450"><vh>&lt;&lt;put the doc part&gt;&gt;</vh>
@@ -5934,26 +5934,26 @@
 </v>
 </v>
 <v t="T1137" a="C"><vh>put_leading_ws</vh></v>
-<v t="T1778" a="C"><vh>put_newline</vh>
-<v t="T1779"><vh>&lt;&lt; Output leading white space except for blank lines &gt;&gt;</vh></v>
+<v t="T1773" a="C"><vh>put_newline</vh>
+<v t="T1774"><vh>&lt;&lt; Output leading white space except for blank lines &gt;&gt;</vh></v>
 </v>
 <v t="T2454"><vh>put_part_node</vh></v>
-<v t="T1780" a="C"><vh>put_section</vh>
-<v t="T1781"><vh>&lt;&lt; Calculate the new value of tangle_indent &gt;&gt;</vh></v>
-<v t="T1782"><vh>&lt;&lt; Set 'newline_flag' if the line ends with the reference &gt;&gt;</vh></v>
-<v t="T1783"><vh>&lt;&lt;put all parts of the section definition&gt;&gt;</vh>
-<v t="T1784"><vh>&lt;&lt; Put the section name in a comment &gt;&gt;</vh>
-<v t="T1785"><vh>&lt;&lt; put ( n of m ) &gt;&gt;</vh></v>
+<v t="T1775" a="C"><vh>put_section</vh>
+<v t="T1776"><vh>&lt;&lt; Calculate the new value of tangle_indent &gt;&gt;</vh></v>
+<v t="T1777"><vh>&lt;&lt; Set 'newline_flag' if the line ends with the reference &gt;&gt;</vh></v>
+<v t="T1778"><vh>&lt;&lt;put all parts of the section definition&gt;&gt;</vh>
+<v t="T1779"><vh>&lt;&lt; Put the section name in a comment &gt;&gt;</vh>
+<v t="T1780"><vh>&lt;&lt; put ( n of m ) &gt;&gt;</vh></v>
 </v>
-<v t="T1786"><vh>&lt;&lt; Put the ending comment &gt;&gt;</vh></v>
+<v t="T1781"><vh>&lt;&lt; Put the ending comment &gt;&gt;</vh></v>
 </v>
-<v t="T1787"><vh>&lt;&lt;Put a comment about the undefined section&gt;&gt;</vh></v>
+<v t="T1782"><vh>&lt;&lt;Put a comment about the undefined section&gt;&gt;</vh></v>
 </v>
 <v t="T2455"><vh>section_check</vh></v>
 </v>
 </v>
 <v><vh>tst</vh>
-<v t="T1816" a="C"><vh>st_check</vh></v>
+<v t="T1811" a="C"><vh>st_check</vh></v>
 <v t="T2456"><vh>st_dump</vh></v>
 <v t="T2457"><vh>st_dump_node</vh></v>
 <v t="T2458"><vh>st_enter</vh>
@@ -5970,33 +5970,33 @@
 <v t="T2466"><vh>&lt;&lt; remove blank lines from the start and end of the text &gt;&gt;</vh></v>
 </v>
 <v t="T2467"><vh>ust_lookup</vh></v>
-<v t="T1815" a="C"><vh>ust_warn_about_orphans</vh></v>
+<v t="T1810" a="C"><vh>ust_warn_about_orphans</vh></v>
 </v>
 <v><vh>untangle</vh>
-<v t="T1814" a="C"><vh>compare_comments</vh>
-<v t="T1801" a="C"><vh>&lt;&lt; Check both parts for @ comment conventions &gt;&gt;</vh></v>
+<v t="T1809" a="C"><vh>compare_comments</vh>
+<v t="T1796" a="C"><vh>&lt;&lt; Check both parts for @ comment conventions &gt;&gt;</vh></v>
 </v>
 <v t="T2468"><vh>massage_block_comment (no longer used)</vh></v>
-<v t="T1799" a="C"><vh>forgiving_compare</vh>
-<v t="T1800"><vh>&lt;&lt; Define forgiving_compare vars &gt;&gt;</vh></v>
-<v t="T1801" a="C"><vh>&lt;&lt; Check both parts for @ comment conventions &gt;&gt;</vh></v>
-<v t="T1802"><vh>&lt;&lt; Compare non-critical newlines &gt;&gt;</vh></v>
-<v t="T1803"><vh>&lt;&lt; Compare non-critical whitespace &gt;&gt;</vh></v>
-<v t="T1804"><vh>&lt;&lt; Compare possible preprocessor directives &gt;&gt;</vh>
-<v t="T1805" a="C"><vh>&lt;&lt; Compare single characters &gt;&gt;</vh></v>
-<v t="T1806"><vh>&lt;&lt; Compare preprocessor directives &gt;&gt;</vh></v>
+<v t="T1794" a="C"><vh>forgiving_compare</vh>
+<v t="T1795"><vh>&lt;&lt; Define forgiving_compare vars &gt;&gt;</vh></v>
+<v t="T1796" a="C"><vh>&lt;&lt; Check both parts for @ comment conventions &gt;&gt;</vh></v>
+<v t="T1797"><vh>&lt;&lt; Compare non-critical newlines &gt;&gt;</vh></v>
+<v t="T1798"><vh>&lt;&lt; Compare non-critical whitespace &gt;&gt;</vh></v>
+<v t="T1799"><vh>&lt;&lt; Compare possible preprocessor directives &gt;&gt;</vh>
+<v t="T1800" a="C"><vh>&lt;&lt; Compare single characters &gt;&gt;</vh></v>
+<v t="T1801"><vh>&lt;&lt; Compare preprocessor directives &gt;&gt;</vh></v>
 </v>
-<v t="T1807"><vh>&lt;&lt; Compare possible strings &gt;&gt;</vh>
-<v t="T1805" a="C"><vh>&lt;&lt; Compare single characters &gt;&gt;</vh></v>
-<v t="T1808"><vh>&lt;&lt; Compare C strings &gt;&gt;</vh></v>
-<v t="T1809"><vh>&lt;&lt; Compare Pascal strings &gt;&gt;</vh></v>
+<v t="T1802"><vh>&lt;&lt; Compare possible strings &gt;&gt;</vh>
+<v t="T1800" a="C"><vh>&lt;&lt; Compare single characters &gt;&gt;</vh></v>
+<v t="T1803"><vh>&lt;&lt; Compare C strings &gt;&gt;</vh></v>
+<v t="T1804"><vh>&lt;&lt; Compare Pascal strings &gt;&gt;</vh></v>
 </v>
-<v t="T1810"><vh>&lt;&lt; Compare possible section references &gt;&gt;</vh></v>
-<v t="T1811"><vh>&lt;&lt; Compare comments or single characters &gt;&gt;</vh>
-<v t="T1805" a="C"><vh>&lt;&lt; Compare single characters &gt;&gt;</vh></v>
+<v t="T1805"><vh>&lt;&lt; Compare possible section references &gt;&gt;</vh></v>
+<v t="T1806"><vh>&lt;&lt; Compare comments or single characters &gt;&gt;</vh>
+<v t="T1800" a="C"><vh>&lt;&lt; Compare single characters &gt;&gt;</vh></v>
 </v>
-<v t="T1812"><vh>&lt;&lt; Make sure both parts have ended &gt;&gt;</vh></v>
-<v t="T1813"><vh>&lt;&lt; Trace the mismatch &gt;&gt;</vh></v>
+<v t="T1807"><vh>&lt;&lt; Make sure both parts have ended &gt;&gt;</vh></v>
+<v t="T1808"><vh>&lt;&lt; Trace the mismatch &gt;&gt;</vh></v>
 </v>
 <v t="T2469"><vh>mismatch</vh></v>
 <v t="T2470"><vh>scan_derived_file (pass 1)</vh>
@@ -6018,21 +6018,21 @@
 <v t="T2483"><vh>update_current_vnode</vh></v>
 </v>
 <v t="T2484"><vh>utility methods</vh>
-<v t="T1788" a="C"><vh>compare_section_names</vh></v>
+<v t="T1783" a="C"><vh>compare_section_names</vh></v>
 <v t="T2485"><vh>copy</vh></v>
 <v t="T1375" a="C"><vh>error, pathError, warning</vh></v>
 <v t="T2486"><vh>is_end_of_directive</vh></v>
 <v t="T2487"><vh>is_end_of_string</vh></v>
 <v t="T2488"><vh>is_escaped</vh></v>
-<v t="T1789" a="C"><vh>is_section_name</vh></v>
-<v t="T1790" a="C"><vh>is_sentinel_line &amp; is_sentinel_line_with_data</vh>
-<v t="T1791"><vh>&lt;&lt; Initialize the return values  &gt;&gt;</vh></v>
-<v t="T1792"><vh>&lt;&lt; Make sure the line starts with start_sentinel &gt;&gt;</vh></v>
-<v t="T1793"><vh>&lt;&lt; Set end_flag if we have -- end -- &gt;&gt;</vh></v>
-<v t="T1794"><vh>&lt;&lt; Make sure we have a section reference &gt;&gt;</vh></v>
-<v t="T1795"><vh>&lt;&lt; Set part and of if they exist &gt;&gt;</vh></v>
-<v t="T1796"><vh>&lt;&lt; Set nl_flag to false if !newline exists &gt;&gt;</vh></v>
-<v t="T1797"><vh>&lt;&lt; Make sure the line ends with end_sentinel &gt;&gt;</vh></v>
+<v t="T1784" a="C"><vh>is_section_name</vh></v>
+<v t="T1785" a="C"><vh>is_sentinel_line &amp; is_sentinel_line_with_data</vh>
+<v t="T1786"><vh>&lt;&lt; Initialize the return values  &gt;&gt;</vh></v>
+<v t="T1787"><vh>&lt;&lt; Make sure the line starts with start_sentinel &gt;&gt;</vh></v>
+<v t="T1788"><vh>&lt;&lt; Set end_flag if we have -- end -- &gt;&gt;</vh></v>
+<v t="T1789"><vh>&lt;&lt; Make sure we have a section reference &gt;&gt;</vh></v>
+<v t="T1790"><vh>&lt;&lt; Set part and of if they exist &gt;&gt;</vh></v>
+<v t="T1791"><vh>&lt;&lt; Set nl_flag to false if !newline exists &gt;&gt;</vh></v>
+<v t="T1792"><vh>&lt;&lt; Make sure the line ends with end_sentinel &gt;&gt;</vh></v>
 </v>
 <v t="T2489"><vh>push_new_def_node</vh></v>
 <v t="T2490"><vh>scan_short_val</vh></v>
@@ -6040,7 +6040,7 @@
 <v t="T1398" a="C"><vh>setRootFromText</vh></v>
 <v t="T2492"><vh>skip_CWEB_section_name</vh></v>
 <v t="T2493"><vh>skip_noweb_section_name</vh></v>
-<v t="T1798" a="C"><vh>skip_section_name</vh></v>
+<v t="T1793" a="C"><vh>skip_section_name</vh></v>
 <v t="T2494"><vh>standardize_name</vh></v>
 <v t="T1017" a="C"><vh>tangle.scanAllDirectives</vh>
 <v t="T1018"><vh>&lt;&lt; Collect @first attributes &gt;&gt;</vh></v>
@@ -6058,10 +6058,10 @@
 <v t="T1029"><vh>&lt;&lt; handle absolute path &gt;&gt;</vh></v>
 </v>
 </v>
-<v t="T1757" a="C"><vh>token_type</vh>
-<v t="T1758"><vh>&lt;&lt; set token_type in noweb mode &gt;&gt;</vh></v>
-<v t="T1759"><vh>&lt;&lt; set token_type for CWEB mode &gt;&gt;</vh></v>
-<v t="T1760"><vh>&lt;&lt; set kind for directive &gt;&gt;</vh></v>
+<v t="T1752" a="C"><vh>token_type</vh>
+<v t="T1753"><vh>&lt;&lt; set token_type in noweb mode &gt;&gt;</vh></v>
+<v t="T1754"><vh>&lt;&lt; set token_type for CWEB mode &gt;&gt;</vh></v>
+<v t="T1755"><vh>&lt;&lt; set kind for directive &gt;&gt;</vh></v>
 </v>
 </v>
 </v>
@@ -6206,11 +6206,11 @@
 </v>
 <v><vh>Dumping, Tracing &amp; Sherlock</vh>
 <v t="T2523"><vh>dump</vh></v>
-<v t="T1704" a="C"><vh>es_exception</vh></v>
+<v t="T1832" a="C"><vh>es_exception</vh></v>
 <v t="T2524"><vh>get_line &amp; get_line_after</vh></v>
 <v t="T2525"><vh>printBindings</vh></v>
 <v t="T2526"><vh>printGlobals</vh></v>
-<v t="T1832" a="C"><vh>printLeoModules</vh></v>
+<v t="T1827" a="C"><vh>printLeoModules</vh></v>
 <v t="T2527"><vh>Sherlock...</vh>
 <v t="T2528"><vh>get_Sherlock_args</vh></v>
 <v t="T2529"><vh>init_trace</vh></v>
@@ -6244,14 +6244,14 @@
 <v t="T2535"><vh>enableMenu &amp; disableMenu &amp; setMenuLabel</vh></v>
 </v>
 <v t="T2536"><vh>readlineForceUnixNewline (Steven P. Schaefer)</vh></v>
-<v t="T1823" a="C"><vh>scanDirectives (utils)</vh>
-<v t="T1824"><vh>&lt;&lt; Set local vars &gt;&gt;</vh></v>
-<v t="T1825"><vh>&lt;&lt; Test for @comment and @language &gt;&gt;</vh></v>
-<v t="T1826"><vh>&lt;&lt; Test for @pagewidth &gt;&gt;</vh></v>
-<v t="T1827"><vh>&lt;&lt; Test for @path &gt;&gt;</vh>
-<v t="T1828"><vh>&lt;&lt; compute path from s[k:] &gt;&gt;</vh></v>
+<v t="T1818" a="C"><vh>scanDirectives (utils)</vh>
+<v t="T1819"><vh>&lt;&lt; Set local vars &gt;&gt;</vh></v>
+<v t="T1820"><vh>&lt;&lt; Test for @comment and @language &gt;&gt;</vh></v>
+<v t="T1821"><vh>&lt;&lt; Test for @pagewidth &gt;&gt;</vh></v>
+<v t="T1822"><vh>&lt;&lt; Test for @path &gt;&gt;</vh>
+<v t="T1823"><vh>&lt;&lt; compute path from s[k:] &gt;&gt;</vh></v>
 </v>
-<v t="T1829"><vh>&lt;&lt; Test for @tabwidth &gt;&gt;</vh></v>
+<v t="T1824"><vh>&lt;&lt; Test for @tabwidth &gt;&gt;</vh></v>
 </v>
 <v t="T2537"><vh>scanError</vh></v>
 <v t="T2538"><vh>Scanners: calling scanError</vh>
@@ -6273,7 +6273,7 @@
 </v>
 <v><vh>Scanners: no error messages</vh>
 <v t="T2550"><vh>escaped</vh></v>
-<v t="T1741" a="C"><vh>find_line_start</vh></v>
+<v t="T1736" a="C"><vh>find_line_start</vh></v>
 <v t="T2551"><vh>find_on_line</vh></v>
 <v t="T2552"><vh>is_c_id</vh></v>
 <v t="T2553"><vh>is_nl</vh></v>
@@ -6289,7 +6289,7 @@
 <v t="T2563"><vh>skip_long</vh></v>
 <v t="T2564"><vh>skip_matching_delims</vh></v>
 <v t="T2565"><vh>skip_nl</vh></v>
-<v t="T1819" a="C"><vh>skip_non_ws</vh></v>
+<v t="T1814" a="C"><vh>skip_non_ws</vh></v>
 <v t="T2566"><vh>skip_pascal_braces</vh></v>
 <v t="T2567"><vh>skip_ws, skip_ws_and_nl</vh></v>
 </v>
@@ -6309,9 +6309,9 @@
 </v>
 <v t="T1373" a="C"><vh>update_file_if_changed</vh></v>
 <v t="T1399" a="C"><vh>utils_rename</vh></v>
-<v t="T1820" a="C"><vh>wrap_lines</vh>
-<v t="T1821"><vh>&lt;&lt; place blank and word on the present line &gt;&gt;</vh></v>
-<v t="T1822"><vh>&lt;&lt; place word on a new line &gt;&gt;</vh></v>
+<v t="T1815" a="C"><vh>wrap_lines</vh>
+<v t="T1816"><vh>&lt;&lt; place blank and word on the present line &gt;&gt;</vh></v>
+<v t="T1817"><vh>&lt;&lt; place word on a new line &gt;&gt;</vh></v>
 </v>
 </v>
 </v>
@@ -6343,9 +6343,16 @@
 <v t="T2587"><vh>A c file?</vh></v>
 </v>
 </v>
-<v t="T2588"><vh>(hooks and leoCustomize.py)</vh>
-<v t="T2589"><vh>@file leoCustomize.py</vh>
-<v t="T2590"><vh>&lt;&lt; about tags &gt;&gt;</vh></v>
+<v t="T2588" a="V"><vh>@onLoadPythonScript (prints message)</vh></v>
+<v t="T2589" a="E"><vh>(hooks and leoCustomize.py)</vh>
+<v t="T2590"><vh>@file leoCustomize.py</vh>
+<v t="T2591"><vh>&lt;&lt; about tags &gt;&gt;</vh></v>
+<v t="T2592"><vh>&lt;&lt; intro to scripts &gt;&gt;</vh></v>
+<v t="T2593"><vh>customizeLeo</vh>
+<v t="T2594"><vh>&lt;&lt; unused code &gt;&gt;</vh></v>
+</v>
+<v t="T2595"><vh>execScript</vh></v>
+<v t="T2596"><vh>onLoadFile</vh></v>
 </v>
 <v t="T2232" a="C"><vh>handleLeoHook</vh></v>
 <v><vh>Code containing hooks</vh>
@@ -6367,8 +6374,8 @@
 </v>
 </v>
 </v>
-<v t="T2591"><vh>(generalized commands calling &amp; menus)</vh>
-<v t="T2592"><vh> Menu test code</vh></v>
+<v t="T2597"><vh>(generalized commands calling &amp; menus)</vh>
+<v t="T2598"><vh> Menu test code</vh></v>
 <v t="T1972" a="C"><vh>app.realMenuName</vh></v>
 <v t="T1401" a="C"><vh>createMenuBar</vh>
 <v t="T1402"><vh>&lt;&lt; create the edit menu &gt;&gt;</vh>
@@ -25030,11 +25037,12 @@ def OnCopyFromMenu (self,event=None):
 <t tx="T1490">@ This executes body text as a Python script.  We execute the selected text, or the entire presently selected body text if no text is selected and the node's headline starts with @pythonscript.
 @c
 
-def OnExecuteScript(self,event=None):
+def OnExecuteScript(self,event=None,v=None):
 	
-	c = self.commands ; body = self.body
-	v = c.currentVnode() ; s = None
-	
+	c = self.commands ; body = self.body ; s = None
+	if v == None:
+		v = c.currentVnode() 
+
 	# Assume any selected body text is a script.
 	if self.getFocus() == body:
 		start,end = getTextSelection(body)
@@ -27692,45 +27700,14 @@ else:
 	assert(i &lt; len(s) and s[i] == '@')
 	return i + 1
 </t>
-<t tx="T1700">@ignore</t>
-<t tx="T1701">@ignore
-
-# File to test leoUtils.unloadAll.
-# This file must be saved and imported again after calling unloadAll for any change to take effect.
-
-def test():
-	print "test7"
-	
-print `test`</t>
-<t tx="T1702">print "hello World!"
-es("Hello World")
-#print "globals:", globals()
-#print "locals:", locals()</t>
-<t tx="T1703">@nocolor
-
-If body text is selected, this command tries to execute it as a Python script.  Otherwise, if the presently selected node's headline starts with @pythonscript the Execute Script command tries to execute the node's entire body text as a Python script.
-
-The print statement sends output to the console window; your scripts may use the es global function to send a line to Leo's log pane.  Exceptions are caught harmlessly and the error messages are printed both to the log window and the console window.
-
-All scripts are executed in the current context, that is, simply by executing exec(s), where s is the script.  Your script can alter context as it sees fit.</t>
-<t tx="T1704">def es_exception (full=false):
-
-	typ,val,tb = sys.exc_info()
-	if full:
-		errList = traceback.format_exception(typ,val,tb)
-	else:
-		errList = traceback.format_exception_only(typ,val)
-	for i in errList:
-		es(i)
-	traceback.print_exc()</t>
-<t tx="T1705">@ignore
+<t tx="T1700">@ignore
 </t>
-<t tx="T1706">@ignore
+<t tx="T1701">@ignore
 @language java
 
 @ Reported by Chris P. Jobling, University of Wales Swansea, UK. C.P.Jobling@Swansea.ac.uk.
 </t>
-<t tx="T1707">//: c08:Adventure.java
+<t tx="T1702">//: c08:Adventure.java
 // From 'Thinking in Java, 2nd ed.' by Bruce Eckel
 // www.BruceEckel.com. See copyright notice in CopyRight.txt.
 // Multiple interfaces.
@@ -27771,7 +27748,7 @@ public class Adventure {
     w(h); // Treat it as an ActionCharacter
   }
 } ///:~</t>
-<t tx="T1708">//: c06:Bath.java
+<t tx="T1703">//: c06:Bath.java
 // From 'Thinking in Java, 2nd ed.' by Bruce Eckel
 // www.BruceEckel.com. See copyright notice in CopyRight.txt.
 // Constructor initialization with composition.
@@ -27818,7 +27795,7 @@ public class Bath {
     b.print();
   }
 } ///:~</t>
-<t tx="T1709">//: c02:HelloDate.java
+<t tx="T1704">//: c02:HelloDate.java
 // From 'Thinking in Java, 2nd ed.' by Bruce Eckel
 // www.BruceEckel.com. See copyright notice in CopyRight.txt.
 import java.util.*;
@@ -27840,59 +27817,59 @@ public class HelloDate {
     System.out.println(new Date());
   }
 } ///:~</t>
-<t tx="T1710">@ignore
+<t tx="T1705">@ignore
 </t>
-<t tx="T1711">@ignore
+<t tx="T1706">@ignore
 @language java
 &lt;&lt; Adventure declarations &gt;&gt;
 
 @others
  ///:~</t>
-<t tx="T1712">//: c08:Adventure.java
+<t tx="T1707">//: c08:Adventure.java
 // From 'Thinking in Java, 2nd ed.' by Bruce Eckel
 // www.BruceEckel.com. See copyright notice in CopyRight.txt.
 // Multiple interfaces.
 import java.util.*;
 </t>
-<t tx="T1713">interface CanFight {
+<t tx="T1708">interface CanFight {
   void fight();
 }</t>
-<t tx="T1714">
+<t tx="T1709">
 interface CanSwim {
   void swim();
 }</t>
-<t tx="T1715">
+<t tx="T1710">
 interface CanFly {
   void fly();
 }</t>
-<t tx="T1716">
+<t tx="T1711">
 class ActionCharacter {
 	@others
 }</t>
-<t tx="T1717">public void fight() {}
+<t tx="T1712">public void fight() {}
 </t>
-<t tx="T1718">
+<t tx="T1713">
 class Hero extends ActionCharacter 
     implements CanFight, CanSwim, CanFly {
 	@others
 }</t>
-<t tx="T1719">public void swim() {}
+<t tx="T1714">public void swim() {}
 </t>
-<t tx="T1720">public void fly() {}
+<t tx="T1715">public void fly() {}
 </t>
-<t tx="T1721">
+<t tx="T1716">
 public class Adventure {
 	@others
 }</t>
-<t tx="T1722">static void t(CanFight x) { x.fight(); }
+<t tx="T1717">static void t(CanFight x) { x.fight(); }
 </t>
-<t tx="T1723">static void u(CanSwim x) { x.swim(); }
+<t tx="T1718">static void u(CanSwim x) { x.swim(); }
 </t>
-<t tx="T1724">static void v(CanFly x) { x.fly(); }
+<t tx="T1719">static void v(CanFly x) { x.fly(); }
 </t>
-<t tx="T1725">static void w(ActionCharacter x) { x.fight(); }
+<t tx="T1720">static void w(ActionCharacter x) { x.fight(); }
 </t>
-<t tx="T1726">public static void main(String[] args) {
+<t tx="T1721">public static void main(String[] args) {
   Hero h = new Hero();
   t(h); // Treat it as a CanFight
   u(h); // Treat it as a CanSwim
@@ -27900,12 +27877,12 @@ public class Adventure {
   w(h); // Treat it as an ActionCharacter
 }
 </t>
-<t tx="T1727">@ignore
+<t tx="T1722">@ignore
 @language java
 
 @others
  ///:~</t>
-<t tx="T1728">//: c06:Bath.java
+<t tx="T1723">//: c06:Bath.java
 // From 'Thinking in Java, 2nd ed.' by Bruce Eckel
 // www.BruceEckel.com. See copyright notice in CopyRight.txt.
 // Constructor initialization with composition.
@@ -27915,22 +27892,22 @@ class Soap {
 
 	@others
 }</t>
-<t tx="T1729">private String s;
+<t tx="T1724">private String s;
 </t>
-<t tx="T1730">Soap() {
+<t tx="T1725">Soap() {
   System.out.println("Soap()");
   s = new String("Constructed");
 }
 </t>
-<t tx="T1731">public String toString() { return s; }
+<t tx="T1726">public String toString() { return s; }
 </t>
-<t tx="T1732">
+<t tx="T1727">
 public class Bath {
 	&lt;&lt; class Bath declarations &gt;&gt;
 
 	@others
 }</t>
-<t tx="T1733">private String 
+<t tx="T1728">private String 
   // Initializing at point of definition:
   s1 = new String("Happy"), 
   s2 = "Happy", 
@@ -27939,7 +27916,7 @@ Soap castille;
 int i;
 float toy;
 </t>
-<t tx="T1734">Bath() {
+<t tx="T1729">Bath() {
   System.out.println("Inside Bath()");
   s3 = new String("Joy");
   i = 47;
@@ -27947,7 +27924,7 @@ float toy;
   castille = new Soap();
 }
 </t>
-<t tx="T1735">void print() {
+<t tx="T1730">void print() {
   // Delayed initialization:
   if(s4 == null)
     s4 = new String("Joy");
@@ -27960,23 +27937,23 @@ float toy;
   System.out.println("castille = " + castille);
 }
 </t>
-<t tx="T1736">public static void main(String[] args) {
+<t tx="T1731">public static void main(String[] args) {
   Bath b = new Bath();
   b.print();
 }
 </t>
-<t tx="T1737">@ignore
+<t tx="T1732">@ignore
 @language java
 &lt;&lt; HelloDate declarations &gt;&gt;
 
 @others
  ///:~</t>
-<t tx="T1738">//: c02:HelloDate.java
+<t tx="T1733">//: c02:HelloDate.java
 // From 'Thinking in Java, 2nd ed.' by Bruce Eckel
 // www.BruceEckel.com. See copyright notice in CopyRight.txt.
 import java.util.*;
 </t>
-<t tx="T1739">/** The first Thinking in Java example program.
+<t tx="T1734">/** The first Thinking in Java example program.
  * Displays a string and today's date.
  * @author Bruce Eckel
  * @author www.BruceEckel.com
@@ -27985,7 +27962,7 @@ import java.util.*;
 public class HelloDate {
 	@others
 }</t>
-<t tx="T1740">/** Sole entry point to class &amp; application
+<t tx="T1735">/** Sole entry point to class &amp; application
  * @param args array of string arguments
  * @return No return value
  * @exception exceptions No exceptions thrown
@@ -27995,15 +27972,15 @@ public static void main(String[] args) {
   System.out.println(new Date());
 }
 </t>
-<t tx="T1741">def find_line_start(s,i):
+<t tx="T1736">def find_line_start(s,i):
 
 	# bug fix: 11/2/02: change i to i+1 in rfind
 	i = string.rfind(s,'\n',0,i+1) # Finds the highest index in the range.
 	if i == -1: return 0
 	else: return i + 1</t>
-<t tx="T1742"></t>
-<t tx="T1743">def error (self,s): es(s)</t>
-<t tx="T1744">@ This code returns the leading whitespace of a line, ignoring blank and comment lines.
+<t tx="T1737"></t>
+<t tx="T1738">def error (self,s): es(s)</t>
+<t tx="T1739">@ This code returns the leading whitespace of a line, ignoring blank and comment lines.
 @c
 
 def getLeadingIndent (self,s,i):
@@ -28020,7 +27997,7 @@ def getLeadingIndent (self,s,i):
 			return width
 	# trace("returns:0")
 	return 0</t>
-<t tx="T1745"># The start of a document part or module in a noweb or cweb file.
+<t tx="T1740"># The start of a document part or module in a noweb or cweb file.
 # Exporters may have to test for @doc as well.
 
 def isDocStart (self,s,i):
@@ -28045,7 +28022,7 @@ def isModuleStart (self,s,i):
 			match(s,i,"@c") or match(s,i,"@p") or
 			match(s,i,"@d") or match(s,i,"@f"))
 </t>
-<t tx="T1746">@ Returns s with all runs of whitespace and newlines converted to a single blank.  It also removes leading and trailing whitespace.
+<t tx="T1741">@ Returns s with all runs of whitespace and newlines converted to a single blank.  It also removes leading and trailing whitespace.
 @c
 
 def massageComment (self,s):
@@ -28058,7 +28035,7 @@ def massageComment (self,s):
 	s = string.replace(s,"  "," ")
 	s = string.strip(s)
 	return s</t>
-<t tx="T1747">def massageWebBody (self,s):
+<t tx="T1742">def massageWebBody (self,s):
 
 	type = self.webType
 	lb = choose(type=="cweb","@&lt;","&lt;&lt;")
@@ -28067,7 +28044,7 @@ def massageComment (self,s):
 	&lt;&lt; Replace abbreviated names with full names &gt;&gt;
 	s = string.rstrip(s)
 	return s</t>
-<t tx="T1748">i = 0
+<t tx="T1743">i = 0
 while i &lt; len(s):
 	i = skip_ws_and_nl(s,i)
 	if self.isDocStart(s,i):
@@ -28097,7 +28074,7 @@ while i &lt; len(s):
 			s = s[:start] + doc + s[end:]
 			i = start + len(doc)
 	else: i = skip_line(s,i)</t>
-<t tx="T1749">i = 0
+<t tx="T1744">i = 0
 while i &lt; len(s):
 	# trace(`get_line(s,i)`)
 	if match(s,i,lb):
@@ -28111,7 +28088,7 @@ while i &lt; len(s):
 				s = s[:j] + name2 + s[k:]
 				i = j + len(name2)
 	i = skip_line(s,i)</t>
-<t tx="T1750">@ Removes extra leading indentation from all lines.  We look at the first line to determine how much leading whitespace to delete.
+<t tx="T1745">@ Removes extra leading indentation from all lines.  We look at the first line to determine how much leading whitespace to delete.
 @c
 
 def undentBody (self,s):
@@ -28133,16 +28110,16 @@ def undentBody (self,s):
 		line = removeLeadingWhitespace(line,undent,c.tab_width)
 		result += line
 	return result</t>
-<t tx="T1751">@ 10/30/02: Rather than messing with the code, I have just set use_noweb_flag = true, use_cweb_flag = false.  This has the effect of allowing the user to use noweb sections to organize cweb code.
+<t tx="T1746">@ 10/30/02: Rather than messing with the code, I have just set use_noweb_flag = true, use_cweb_flag = false.  This has the effect of allowing the user to use noweb sections to organize cweb code.
 
 However, we must disable @c and @ when cweb mode is in effect, so we use the raw_cweb_mode ivar for this.
 @c
 </t>
-<t tx="T1752">@ignore
+<t tx="T1747">@ignore
 
 @language cweb
 </t>
-<t tx="T1753">@root c:/prog/test/rawCwebRootTest.txt
+<t tx="T1748">@root c:/prog/test/rawCwebRootTest.txt
 
 root first line
 
@@ -28155,18 +28132,18 @@ root first line
 root last line
 
 </t>
-<t tx="T1754">@code
+<t tx="T1749">@code
 
 @c
 cweb c section
 
 @&lt; cweb sec def @&gt;=
 cweb section</t>
-<t tx="T1755">&lt;&lt; noweb sec2 &gt;&gt;=
+<t tx="T1750">&lt;&lt; noweb sec2 &gt;&gt;=
 
 @&lt; cweb sec2 @&gt;
 sec 2</t>
-<t tx="T1756"># Synonyms for multiple_parts_flag.
+<t tx="T1751"># Synonyms for multiple_parts_flag.
 allow_multiple_parts = 1
 disallow_multiple_parts = 2
 unused_parts_flag = 3
@@ -28215,7 +28192,7 @@ if 1: # A single enum...
 	# Stephen P. Schaefer 9/13/2002
 	# add support for @first
 	at_last    = 18</t>
-<t tx="T1757">@ This method returns a code indicating the apparent kind of token at the position i. The caller must determine whether section definiton tokens are valid.
+<t tx="T1752">@ This method returns a code indicating the apparent kind of token at the position i. The caller must determine whether section definiton tokens are valid.
 
 returns (kind, end) and sets global root_name using setRootFromText().
 @c
@@ -28231,7 +28208,7 @@ def token_type(self,s,i,err_flag):
 		&lt;&lt; set kind for directive &gt;&gt;
 	# trace(`kind` + ":" + `get_line(s,i)`)
 	return kind, end</t>
-<t tx="T1758">if match(s,i,"&lt;&lt;"):
+<t tx="T1753">if match(s,i,"&lt;&lt;"):
 	i, kind, end = self.skip_section_name(s,i)
 	if kind == bad_section_name:
 		kind = plain_line # not an error.
@@ -28246,7 +28223,7 @@ elif match(s,i,"@ ") or match(s,i,"@\t") or match(s,i,"@\n"):
 elif match(s,i,"@@"): kind = at_at
 elif i &lt; len(s) and s[i] == '@': kind = at_other
 else: kind = plain_line</t>
-<t tx="T1759">i = skip_ws(s,i)
+<t tx="T1754">i = skip_ws(s,i)
 if match(s,i,"@*") or match(s,i,"@ "): kind = at_doc
 elif match(s,i,"@&lt;"): i, kind, end = self.skip_section_name(s,i)
 elif match(s,i,"@@"): kind = at_at
@@ -28257,7 +28234,7 @@ elif i &lt; len(s) and s[i] == '@':
 		kind = at_web
 	else: kind = at_other # Set kind later
 else: kind = plain_line</t>
-<t tx="T1760"># This code will return at_other for any directive other than those listed.
+<t tx="T1755"># This code will return at_other for any directive other than those listed.
 
 if match_word(s,i,"@c"):
 	# 10/30/02: Only @code starts a code section in raw cweb mode.
@@ -28278,8 +28255,8 @@ if self.raw_cweb_flag and kind == at_other:
 
 if kind == at_root:
 	i = self.setRootFromText(s[i+5:],err_flag)</t>
-<t tx="T1761">@ No changes have been made to this code.</t>
-<t tx="T1762">@ This method handles newline processing while skipping a code section. It sets 'done' if the line contains an @directive or section definition that terminates the present code section. On entry: i should point to the first character of a line.  This routine scans past a line only if it could not contain a section reference.
+<t tx="T1756">@ No changes have been made to this code.</t>
+<t tx="T1757">@ This method handles newline processing while skipping a code section. It sets 'done' if the line contains an @directive or section definition that terminates the present code section. On entry: i should point to the first character of a line.  This routine scans past a line only if it could not contain a section reference.
 
 Returns (i, done)
 @c
@@ -28317,7 +28294,7 @@ def handle_newline(self,s,i):
 	else: assert(false)
 
 	return i, done</t>
-<t tx="T1763"># This method handles all the body text.
+<t tx="T1758"># This method handles all the body text.
 
 def skip_body (self,v):
 
@@ -28359,13 +28336,13 @@ def skip_body (self,v):
 	# 3/4/02: Only call v.trimTrailingLines if we have changed its body.
 	if anyChanged:
 		v.trimTrailingLines()</t>
-<t tx="T1764">@ The following subsections contain the interface between the Tangle and Untangle commands.  This interface is an important hack, and allows Untangle to avoid duplicating the logic in skip_tree and its allies.
+<t tx="T1759">@ The following subsections contain the interface between the Tangle and Untangle commands.  This interface is an important hack, and allows Untangle to avoid duplicating the logic in skip_tree and its allies.
 
 The aha is this: just at the time the Tangle command enters a definition into the symbol table, all the information is present that Untangle needs to update that definition.
 
 To get whitespace exactly right we retain the outline's leading whitespace and remove leading whitespace from the updated definition.
 </t>
-<t tx="T1765">@ It's valid for an @doc directive to appear under a headline that does not contain a section name.  In that case, no section is defined.
+<t tx="T1760">@ It's valid for an @doc directive to appear under a headline that does not contain a section name.  In that case, no section is defined.
 @c
 
 if self.header_name:
@@ -28377,7 +28354,7 @@ if self.header_name:
 	# Untangle no longer updates doc parts.
 	
 doc = None</t>
-<t tx="T1766"># We enter the code part and any preceding doc part into the symbol table.
+<t tx="T1761"># We enter the code part and any preceding doc part into the symbol table.
 
 # Skip the section definition line.
 k = i ; i, kind, junk = self.skip_section_name(s,i)
@@ -28398,7 +28375,7 @@ if not self.tangling: # Untangle code.
 	if changed: anyChanged = true
 	
 code = doc = None</t>
-<t tx="T1767"># All @c or @code directives denote &lt; &lt; headline_name &gt; &gt; =
+<t tx="T1762"># All @c or @code directives denote &lt; &lt; headline_name &gt; &gt; =
 if self.header_name:
 
 	# Tangle code.
@@ -28415,7 +28392,7 @@ else:
 
 code_seen = true
 code = doc = None</t>
-<t tx="T1768"># We save the file name in case another @root ends the code section.
+<t tx="T1763"># We save the file name in case another @root ends the code section.
 old_root_name = self.root_name
 
 # Tangle code.
@@ -28435,7 +28412,7 @@ if not self.tangling: # Untangle code.
 	if changed: anyChanged = true
 	
 code = doc = None</t>
-<t tx="T1769">@ This method skips an entire code section. The caller is responsible for entering the completed section into the symbol table. On entry, i points at the line following the @directive or section definition that starts a code section. We skip code until we see the end of the body text or the next @ directive or section defintion that starts a code or doc part.
+<t tx="T1764">@ This method skips an entire code section. The caller is responsible for entering the completed section into the symbol table. On entry, i points at the line following the @directive or section definition that starts a code section. We skip code until we see the end of the body text or the next @ directive or section defintion that starts a code or doc part.
 @c
 
 def skip_code(self,s,i):
@@ -28451,7 +28428,7 @@ def skip_code(self,s,i):
 	code = s[code1:i]
 	# trace(returns: + `code`)
 	return i,code</t>
-<t tx="T1770">@ This code handles the following escape conventions: double at-sign at the start of a line and at-&lt;&lt; and at.&gt;.
+<t tx="T1765">@ This code handles the following escape conventions: double at-sign at the start of a line and at-&lt;&lt; and at.&gt;.
 @c
 
 i, done = self.handle_newline(s,i)
@@ -28466,7 +28443,7 @@ while not done and i &lt; len(s):
 	elif ch == '&lt;':
 		&lt;&lt; handle possible noweb section reference &gt;&gt;
 	else: i += 1</t>
-<t tx="T1771">j, kind, end = self.is_section_name(s,i)
+<t tx="T1766">j, kind, end = self.is_section_name(s,i)
 if kind == section_def:
 	k = skip_to_end_of_line(s,i)
 	# We are in the middle of a line.
@@ -28480,13 +28457,13 @@ else:
 	name = s[i:end]
 	self.st_enter_section_name(name,None,None,unused_parts_flag)
 	i = end</t>
-<t tx="T1772"># This code is simple because CWEB control codes are valid anywhere.
+<t tx="T1767"># This code is simple because CWEB control codes are valid anywhere.
 
 while not done and i &lt; len(s):
 	if s[i] == '@':
 		&lt;&lt; handle CWEB control code &gt;&gt;
 	else: i += 1</t>
-<t tx="T1773">j, kind, end = self.is_section_name(s,i)
+<t tx="T1768">j, kind, end = self.is_section_name(s,i)
 
 if kind == section_def:
 	done = true
@@ -28498,7 +28475,7 @@ else:
 	name = s[i:j]
 	self.st_enter_section_name(name,None,None,unused_parts_flag)
 	i = j</t>
-<t tx="T1774">@ This method outputs a code section, expanding section references by their definition. We should see no @directives or section definitions that would end the code section.
+<t tx="T1769">@ This method outputs a code section, expanding section references by their definition. We should see no @directives or section definitions that would end the code section.
 
 Most of the differences bewteen noweb mode and CWEB mode are handled by token_type(called from put_newline). Here, the only difference is that noweb handles double-@ signs only at the start of a line.
 @c
@@ -28532,7 +28509,7 @@ def put_code(self,s,no_first_lws_flag):
 				self.os('@') ; i += 2
 		else: self.os(s[i]) ; i += 1
 		assert(progress &lt; i)</t>
-<t tx="T1775">j, kind, name_end = self.is_section_name(s,i)
+<t tx="T1770">j, kind, name_end = self.is_section_name(s,i)
 if kind == section_def:
 	# We are in the middle of a code section
 	self.error(
@@ -28547,7 +28524,7 @@ else:
 	name = s[i:name_end]
 	self.put_section(s,i,name,name_end)
 	i = j</t>
-<t tx="T1776">if match(s,i,"@@"):
+<t tx="T1771">if match(s,i,"@@"):
 	# Handle double @ sign.
 	self.os('@') ; i += 2
 else:
@@ -28558,7 +28535,7 @@ else:
 		self.os("/*@" + s[i] + "*/") ; i += 1
 	else:
 		self.os("@") # The at sign is not part of a control code.</t>
-<t tx="T1777">@ The user must ensure that neither @ &lt; &lt; nor @ &gt; &gt; occurs in comments or strings. However, it is valid for @ &lt; &lt; or @ &gt; &gt; to appear in the doc chunk or in a single-line comment.
+<t tx="T1772">@ The user must ensure that neither @ &lt; &lt; nor @ &gt; &gt; occurs in comments or strings. However, it is valid for @ &lt; &lt; or @ &gt; &gt; to appear in the doc chunk or in a single-line comment.
 @c
 
 if match(s,i,"@&lt;&lt;"):
@@ -28568,7 +28545,7 @@ elif match(s,i,"@&gt;&gt;"):
 	self.os("/*@*/&gt;&gt;") ; i += 3
 	
 else: self.os("@") ; i += 1</t>
-<t tx="T1778">@ This method handles scanning when putting the start of a new line. Unlike the corresponding method in pass one, this method doesn't need to set a done flag in the caller because the caller already knows where the code section ends.
+<t tx="T1773">@ This method handles scanning when putting the start of a new line. Unlike the corresponding method in pass one, this method doesn't need to set a done flag in the caller because the caller already knows where the code section ends.
 @c
 
 def put_newline(self,s,i,no_first_lws_flag):
@@ -28586,7 +28563,7 @@ def put_newline(self,s,i,no_first_lws_flag):
 		# These should have set limit in pass 1.
 		assert(kind != section_def and kind != at_chapter and kind != at_section)
 	return i</t>
-<t tx="T1779">j = i ; i = skip_ws(s,i)
+<t tx="T1774">j = i ; i = skip_ws(s,i)
 if i &lt; len(s) and not is_nl(s,i):
 	# Conditionally output the leading previous leading whitespace.
 	if not no_first_lws_flag:
@@ -28594,7 +28571,7 @@ if i &lt; len(s) and not is_nl(s,i):
 	# Always output the leading whitespace of _this_ line.
 	k, width = skip_leading_ws_with_indent(s,j,self.tab_width)
 	self.put_leading_ws(width)</t>
-<t tx="T1780">@ This method outputs the definition of a section and all sections referenced from the section. name is the section's name. This code checks for recursive definitions by calling section_check(). We can not allow section x to expand to code containing another call to section x, either directly or indirectly.
+<t tx="T1775">@ This method outputs the definition of a section and all sections referenced from the section. name is the section's name. This code checks for recursive definitions by calling section_check(). We can not allow section x to expand to code containing another call to section x, either directly or indirectly.
 @c
 
 def put_section(self,s,i,name,name_end):
@@ -28621,7 +28598,7 @@ def put_section(self,s,i,name,name_end):
 		self.put_leading_ws(trailing_ws_indent)
 	self.tangle_indent = outer_old_indent
 	return i, name_end</t>
-<t tx="T1781"># Find the start of the line containing the reference.
+<t tx="T1776"># Find the start of the line containing the reference.
 j = i
 while j &gt; 0 and not is_nl(s,j):
 	j -= 1
@@ -28645,11 +28622,11 @@ if (j &lt; len(s) and self.print_mode != "silent" and
 		((self.use_noweb_flag and s[j] != '&lt;') or
 		(self.use_cweb_flag and s[j] != '@'))):
 	self.tangle_indent += abs(self.tab_width)</t>
-<t tx="T1782">if self.print_mode != "silent":
+<t tx="T1777">if self.print_mode != "silent":
 	i = name_end
 	i = skip_ws(s,i)
 	newline_flag = (i &gt;= len(s) or is_nl(s,i))</t>
-<t tx="T1783">@ This section outputs each part of a section definition. We first count how many parts there are so that the code can output a comment saying 'part x of y'.
+<t tx="T1778">@ This section outputs each part of a section definition. We first count how many parts there are so that the code can output a comment saying 'part x of y'.
 @c
 
 # Output each part of the section.
@@ -28671,7 +28648,7 @@ for part in section.parts:
 		&lt;&lt; Put the ending comment &gt;&gt;
 	# Restore the old indent.
 	self.tangle_indent = inner_old_indent</t>
-<t tx="T1784">if count &gt; 1:
+<t tx="T1779">if count &gt; 1:
 	self.onl()
 	self.put_leading_ws(self.tangle_indent)
 	
@@ -28689,10 +28666,10 @@ else:
 	self.oblank() ; self.os(self.end_comment_string)
 
 self.onl() # Always output a newline.</t>
-<t tx="T1785">if sections &gt; 1:
+<t tx="T1780">if sections &gt; 1:
 	self.oblank()
 	self.os("(" + `count` + " of " + `sections` + ")")</t>
-<t tx="T1786">@ We do not produce an ending comment unless we are ending the last part of the section,and the comment is clearer if we don't say(n of m).
+<t tx="T1781">@ We do not produce an ending comment unless we are ending the last part of the section,and the comment is clearer if we don't say(n of m).
 @c
 
 self.onl() ; self.put_leading_ws(self.tangle_indent)
@@ -28720,7 +28697,7 @@ if not newline_flag:
 		self.os(s[name_end])
 		name_end += 1
 	self.onl() # We must supply the newline!</t>
-<t tx="T1787">self.onl() ; self.put_leading_ws(self.tangle_indent)
+<t tx="T1782">self.onl() ; self.put_leading_ws(self.tangle_indent)
 
 if self.print_mode != "silent":
 	if self.single_comment_string:
@@ -28732,7 +28709,7 @@ if self.print_mode != "silent":
 		self.oblank() ; self.os(self.end_comment_string) ; self.onl()
 
 self.error("Undefined section: " + name)</t>
-<t tx="T1788"># Compares section names or root names.
+<t tx="T1783"># Compares section names or root names.
 # Arbitrary text may follow the section name on the same line.
 
 def compare_section_names (self,s1,s2):
@@ -28755,7 +28732,7 @@ def compare_section_names (self,s1,s2):
 		return false
 	else: # A root name.
 		return s1 == s2</t>
-<t tx="T1789">def is_section_name(self,s,i):
+<t tx="T1784">def is_section_name(self,s,i):
 
 	kind = bad_section_name ; end = -1
 
@@ -28767,7 +28744,7 @@ def compare_section_names (self,s1,s2):
 
 	# trace(`kind` + ":" + `get_line(s,end)`)
 	return i, kind, end</t>
-<t tx="T1790">@ This function returns true if i points to a line a sentinel line of one of the following forms:
+<t tx="T1785">@ This function returns true if i points to a line a sentinel line of one of the following forms:
 
 start_sentinel &lt;&lt;section name&gt;&gt; end_sentinel
 start_sentinel &lt;&lt;section name&gt;&gt; (n of m) end_sentinel
@@ -28805,13 +28782,13 @@ def is_sentinel_line_with_data (self,s,i):
 	&lt;&lt; Make sure the line ends with end_sentinel &gt;&gt;
 	kind = choose(end_flag,end_sentinel_line,start_sentinel_line)
 	return true,i,kind,name,part,of,end,nl_flag</t>
-<t tx="T1791">name = end = None
+<t tx="T1786">name = end = None
 part = of = 1
 kind = non_sentinel_line
 nl_flag = true
 false_data = (false,i,kind,name,part,of,end,nl_flag)
 </t>
-<t tx="T1792">if is_nl(s,i): i = skip_nl(s,i)
+<t tx="T1787">if is_nl(s,i): i = skip_nl(s,i)
 i = skip_ws(s,i)
 
 # 4/18/00: We now require an exact match of the sentinel.
@@ -28819,7 +28796,7 @@ if match(s,i,start_sentinel):
 	i += len(start_sentinel)
 else:
 	return false_data</t>
-<t tx="T1793"># If i points to "-- end --", this code skips it and sets end_flag.
+<t tx="T1788"># If i points to "-- end --", this code skips it and sets end_flag.
 
 end_flag = false
 i = skip_ws(s,i)
@@ -28835,7 +28812,7 @@ if match(s,i,"--"):
 	while i &lt; len(s) and s[i] == '-':
 		i += 1
 	end_flag = true</t>
-<t tx="T1794">i = skip_ws(s,i)
+<t tx="T1789">i = skip_ws(s,i)
 
 if (self.use_noweb_flag and match(s,i,"&lt;&lt;") or
 	self.use_cweb_flag  and match(s,i,"@&lt;") ):
@@ -28846,7 +28823,7 @@ if (self.use_noweb_flag and match(s,i,"&lt;&lt;") or
 	name = s[j:i]
 else:
 	return false_data</t>
-<t tx="T1795"># This code handles (m of n), if it exists.
+<t tx="T1790"># This code handles (m of n), if it exists.
 i = skip_ws(s,i)
 if match(s,i,'('):
 	j = i
@@ -28868,13 +28845,13 @@ if match(s,i,'('):
 			i += 1 # Skip the paren and do _not_ return.
 		else:
 			return false_data</t>
-<t tx="T1796">line = "(!newline)"
+<t tx="T1791">line = "(!newline)"
 i = skip_ws(s,i)
 if match(s,i,line):
 	i += len(line)
 	nl_flag = false
 </t>
-<t tx="T1797">i = skip_ws(s,i)
+<t tx="T1792">i = skip_ws(s,i)
 if end_sentinel:
 	# Make sure the line ends with the end sentinel.
 	if match(s,i,end_sentinel):
@@ -28886,7 +28863,7 @@ end = i # Show the start of the whitespace.
 i = skip_ws(s,i)
 if i &lt; len(s) and not is_nl(s,i):
 	return false_data</t>
-<t tx="T1798"># Returns a tuple (i, kind, end)
+<t tx="T1793"># Returns a tuple (i, kind, end)
 
 def skip_section_name(self,s,i):
 
@@ -28894,7 +28871,7 @@ def skip_section_name(self,s,i):
 		return self.skip_noweb_section_name(s,i)
 	else:
 		return self.skip_cweb_section_name(s,i)</t>
-<t tx="T1799">@ This is the "forgiving compare" function.  It compares two texts and returns true if they are identical except for comments or non-critical whitespace.  Whitespace inside strings or preprocessor directives must match exactly.
+<t tx="T1794">@ This is the "forgiving compare" function.  It compares two texts and returns true if they are identical except for comments or non-critical whitespace.  Whitespace inside strings or preprocessor directives must match exactly.
 @c
 
 def forgiving_compare (self,name,part,s1,s2):
@@ -28928,7 +28905,7 @@ def forgiving_compare (self,name,part,s1,s2):
 	if not result:
 		&lt;&lt; trace the mismatch &gt;&gt;
 	return result</t>
-<t tx="T1800"># scan_derived_file has set the ivars describing comment delims.
+<t tx="T1795"># scan_derived_file has set the ivars describing comment delims.
 first1 = first2 = 0
 
 tot_len = 0
@@ -28936,7 +28913,7 @@ if self.comment: tot_len += len(self.comment)
 if self.comment_end: tot_len += len(self.comment_end)
 
 CWEB_flag = (self.language == "c" and not self.use_noweb_flag)</t>
-<t tx="T1801">@ This code is used in forgiving_compare()and in compare_comments().
+<t tx="T1796">@ This code is used in forgiving_compare()and in compare_comments().
 
 In noweb mode we allow / * @ * /  (without the spaces)to be equal to @.
 In CWEB mode we allow / * @ ? * / (without the spaces)to be equal to @?.
@@ -28967,21 +28944,21 @@ elif p2 &lt; len(s2) and s2[p2] == '@':
 		p1 += tot_len + 2
 		continue
 </t>
-<t tx="T1802">p1 = skip_ws_and_nl(s1,p1)
+<t tx="T1797">p1 = skip_ws_and_nl(s1,p1)
 p2 = skip_ws_and_nl(s2,p2)
 </t>
-<t tx="T1803">p1 = skip_ws(s1,p1)
+<t tx="T1798">p1 = skip_ws(s1,p1)
 p2 = skip_ws(s2,p2)</t>
-<t tx="T1804">if self.language == "c":
+<t tx="T1799">if self.language == "c":
 	&lt;&lt; compare preprocessor directives &gt;&gt;
 else:
 	&lt;&lt; compare single characters &gt;&gt;
 </t>
-<t tx="T1805">assert(p1 &lt; len(s1) and p2 &lt; len(s2))
+<t tx="T1800">assert(p1 &lt; len(s1) and p2 &lt; len(s2))
 result = s1[p1] == s2[p2]
 p1 += 1 ; p2 += 1
 if not result: self.mismatch("Mismatched single characters")</t>
-<t tx="T1806"># We cannot assume that newlines are single characters.
+<t tx="T1801"># We cannot assume that newlines are single characters.
 
 result = s1[p1] == s2[p2]
 p1 += 1 ; p2 += 1
@@ -28997,7 +28974,7 @@ while result and p1 &lt; len(s1) and p2 &lt; len(s2):
 		p1 += 1 ; p2 += 1
 if not result:
 	self.mismatch("Mismatched preprocessor directives")</t>
-<t tx="T1807"># This code implicitly assumes that string1_len == string2_len == 1.
+<t tx="T1802"># This code implicitly assumes that string1_len == string2_len == 1.
 # The match test ensures that the language actually supports strings.
 
 if (match(s1,p1,self.string1) or match(s1,p1,self.string2)) and s1[p1] == s2[p2]:
@@ -29010,7 +28987,7 @@ if (match(s1,p1,self.string1) or match(s1,p1,self.string2)) and s1[p1] == s2[p2]
 		self.mismatch("Mismatched strings")
 else:
 	&lt;&lt; Compare single characters &gt;&gt;</t>
-<t tx="T1808">delim = s1[p1]
+<t tx="T1803">delim = s1[p1]
 result = s1[p1] == s2[p2]
 p1 += 1 ; p2 += 1
 
@@ -29026,7 +29003,7 @@ while result and p1 &lt; len(s1) and p2 &lt; len(s2):
 		result = s1[p1] == s2[p2]
 		p1 += 1 ; p2 += 1
 </t>
-<t tx="T1809">@ We assume the Pascal string is on a single line so the problems with cr/lf do not concern us.
+<t tx="T1804">@ We assume the Pascal string is on a single line so the problems with cr/lf do not concern us.
 @c
 
 first1 = p1 ; first2 = p2
@@ -29034,7 +29011,7 @@ p1 = skip_pascal_string(s1,p1)
 p2 = skip_pascal_string(s2,p2)
 result = s1[first1,p1] == s2[first2,p2]
 </t>
-<t tx="T1810">if s1[p1] == '@' and CWEB_flag:  start_ref = "@&lt;"
+<t tx="T1805">if s1[p1] == '@' and CWEB_flag:  start_ref = "@&lt;"
 elif s1[p1] == '&lt;' and not CWEB_flag:  start_ref = "&lt;&lt;"
 else: start_ref = None
 
@@ -29056,7 +29033,7 @@ else:
 	p1 += 1 ; p2 += 1
 	if not result:
 		self.mismatch("Mismatch at '@' or '&lt;'")</t>
-<t tx="T1811">if match(s1,p1,self.sentinel) and match(s2,p2,self.sentinel):
+<t tx="T1806">if match(s1,p1,self.sentinel) and match(s2,p2,self.sentinel):
 	first1 = p1 ; first2 = p2
 	p1 = skip_to_end_of_line(s1,p1)
 	p2 = skip_to_end_of_line(s2,p2)
@@ -29112,7 +29089,7 @@ elif match(s1,p1,self.comment2) and match(s2,p2,self.comment2):
 		self.mismatch("Mismatched alternalte block comments")
 else:
 	&lt;&lt; Compare single characters &gt;&gt;</t>
-<t tx="T1812">if result:
+<t tx="T1807">if result:
 	p1 = skip_ws_and_nl(s1,p1)
 	p2 = skip_ws_and_nl(s2,p2)
 	result = p1 &gt;= len(s1) and p2 &gt;= len(s2)
@@ -29121,12 +29098,12 @@ else:
 		p1 = len(s1)
 		p2 = len(s2)
 		self.mismatch("One part ends before the other.")</t>
-<t tx="T1813">if 0:
+<t tx="T1808">if 0:
 	trace(self.message +
 		"\nPart " + `part` + ", section " + name +
 		"\n1:" + get_line(s1,p1) +
 		"\n2:" + get_line(s2,p2) )</t>
-<t tx="T1814">@ This function compares the interior of comments and returns true if they are identical except for whitespace or newlines. It is up to the caller to eliminate the opening and closing delimiters from the text to be compared.
+<t tx="T1809">@ This function compares the interior of comments and returns true if they are identical except for whitespace or newlines. It is up to the caller to eliminate the opening and closing delimiters from the text to be compared.
 @c
 
 def compare_comments (self,s1,s2):
@@ -29151,7 +29128,7 @@ def compare_comments (self,s1,s2):
 	p2 = skip_ws_and_nl(s2,p2)
 	return p1 == len(s1) and p2 == len(s2)
 </t>
-<t tx="T1815">@ This function issues a warning about any sections in the derived file for which no corresponding section has been seen in the outline.
+<t tx="T1810">@ This function issues a warning about any sections in the derived file for which no corresponding section has been seen in the outline.
 @c
 
 def ust_warn_about_orphans (self):
@@ -29167,7 +29144,7 @@ def ust_warn_about_orphans (self):
 					choose(self.use_noweb_flag," &gt;&gt;"," @&gt;") +
 					" is not in the outline")
 				break # One warning per section is enough.</t>
-<t tx="T1816">@ This function checks the given symbol table for defined but never referenced sections.
+<t tx="T1811">@ This function checks the given symbol table for defined but never referenced sections.
 @c
 
 def st_check(self):
@@ -29183,8 +29160,8 @@ def st_check(self):
 				section.name +
 				choose(self.use_noweb_flag," &gt;&gt;"," @&gt;") +
 				" has been defined but not used.")</t>
-<t tx="T1817">@ignore</t>
-<t tx="T1818">@nocolor
+<t tx="T1812">@ignore</t>
+<t tx="T1813">@nocolor
 @pagewidth 40
 
 An @rawfile tree is a tree whose root headline starts with
@@ -29212,13 +29189,13 @@ There are several difference between @rawfile and @silentfile trees:
   3. This is an exxxxxxxxxxxxxxxxxxxxxxxxtrrrrrrrrrrrrrrreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeemlylong
      word.
 And it too has a hanging indentation.</t>
-<t tx="T1819">def skip_non_ws (s,i):
+<t tx="T1814">def skip_non_ws (s,i):
 
 	n = len(s)
 	while i &lt; n and not is_ws(s[i]):
 		i += 1
 	return i</t>
-<t tx="T1820">@ Returns a list of lines, consisting of the input lines wrapped to the given pageWidth.
+<t tx="T1815">@ Returns a list of lines, consisting of the input lines wrapped to the given pageWidth.
 
 Important note: this routine need not deal with leading whitespace.  Instead, the caller should simply reduce pageWidth by the width of leading whitespace wanted, then add that whitespace to the lines returned here.
 
@@ -29259,13 +29236,13 @@ def wrap_lines (lines,pageWidth,firstLineWidth=None):
 		result.append(line)
 	# trace(`result`)
 	return result</t>
-<t tx="T1821">if len(line) == 0:
+<t tx="T1816">if len(line) == 0:
 	# Just add the word to the start of the line.
 	line = word
 else:
 	# Add the word, preceeded by a blank.
 	line = string.join((line,' ',word),'')</t>
-<t tx="T1822"># End the previous line.
+<t tx="T1817"># End the previous line.
 if len(line) &gt; 0:
 	result.append(line)
 	outputLineWidth = pageWidth # DTHEIN 3-NOV-2002: width for remaining lines
@@ -29279,7 +29256,7 @@ if len(line) &gt;= pageWidth:
 	outputLineWidth = pageWidth # DTHEIN 3-NOV-2002: width for remaining lines
 	line = ""
 </t>
-<t tx="T1823">@ A general-purpose routine that scans v and its ancestors for directives.  It returns a dict containing the settings in effect as the result of the @comment, @language, @pagewidth, @path and @tabwidth directives.  This code does not check on the existence of paths, and issues no error messages.
+<t tx="T1818">@ A general-purpose routine that scans v and its ancestors for directives.  It returns a dict containing the settings in effect as the result of the @comment, @language, @pagewidth, @path and @tabwidth directives.  This code does not check on the existence of paths, and issues no error messages.
 
 Perhaps this routine should be the basis of atFile.scanAllDirectives and tangle.scanAllDirectives, but I am loath to make any further to these two already-infamous routines.  Also, this code does not check for @color and @nocolor directives: leoColor.useSyntaxColoring does that.
 @c
@@ -29305,7 +29282,7 @@ def scanDirectives(c,v=None):
 		"path"      : path,
 		"tabwidth"  : tab_width }
 </t>
-<t tx="T1824">loadDir = app().loadDir
+<t tx="T1819">loadDir = app().loadDir
 
 page_width = c.page_width
 tab_width  = c.tab_width
@@ -29313,7 +29290,7 @@ language = c.target_language
 delim1, delim2, delim3 = set_delims_from_language(c.target_language)
 path = None
 </t>
-<t tx="T1825"># @language and @comment may coexist in @file trees.
+<t tx="T1820"># @language and @comment may coexist in @file trees.
 # For this to be effective the @comment directive should follow the @language directive.
 
 if not old.has_key("comment") and dict.has_key("comment"):
@@ -29324,21 +29301,21 @@ if not old.has_key("language") and dict.has_key("language"):
 	k = dict["language"]
 	issue_error_flag = false # DTHEIN 3-NOV-2002: define var before function call
 	language, delim1, delim2, delim3 = set_language(s,k,issue_error_flag)</t>
-<t tx="T1826">if dict.has_key("pagewidth") and not old.has_key("pagewidth"):
+<t tx="T1821">if dict.has_key("pagewidth") and not old.has_key("pagewidth"):
 
 	k = dict["pagewidth"]
 	j = i = k + len("@pagewidth")
 	i, val = skip_long(s,i)
 	if val != None and val &gt; 0:
 		page_width = val</t>
-<t tx="T1827">if not path and not old.has_key("path") and dict.has_key("path"):
+<t tx="T1822">if not path and not old.has_key("path") and dict.has_key("path"):
 
 	k = dict["path"]
 	&lt;&lt; compute path from s[k:] &gt;&gt;
 	if path and len(path) &gt; 0:
 		base = getBaseDirectory() # returns "" on error.
 		path = os.path.join(base,path)</t>
-<t tx="T1828">j = i = k + len("@path")
+<t tx="T1823">j = i = k + len("@path")
 i = skip_to_end_of_line(s,i)
 path = string.strip(s[j:i])
 
@@ -29350,18 +29327,18 @@ if len(path) &gt; 2 and (
 
 path = string.strip(path)
 path = os.path.join(loadDir,path)</t>
-<t tx="T1829">if dict.has_key("tabwidth") and not old.has_key("tabwidth"):
+<t tx="T1824">if dict.has_key("tabwidth") and not old.has_key("tabwidth"):
 
 	k = dict["tabwidth"]
 	j = i = k + len("@tabwidth")
 	i, val = skip_long(s, i)
 	if val != None and val != 0:
 		tab_width = val</t>
-<t tx="T1830">import leoUtils
+<t tx="T1825">import leoUtils
 leoUtils.unloadAll()
 import leoFrame
 </t>
-<t tx="T1831">@ Unloads all of Leo's modules.  Based on code from the Python Cookbook.
+<t tx="T1826">@ Unloads all of Leo's modules.  Based on code from the Python Cookbook.
 
 It would be very confusing to call this reloadAll.  In fact, this routine does no reloading at all.  You must understand that modules are reloaded _only_ as the result of a later call to import.
 
@@ -29385,7 +29362,7 @@ def unloadAll():
 	except:
 		import leoUtils
 		leoUtils.es_exception()</t>
-<t tx="T1832">def printLeoModules(message=None):
+<t tx="T1827">def printLeoModules(message=None):
 	
 	# Create the list.
 	mods = []
@@ -29401,6 +29378,37 @@ def unloadAll():
 	for m in mods:
 		print m,
 	print</t>
+<t tx="T1828">@ignore</t>
+<t tx="T1829">@ignore
+
+# File to test leoUtils.unloadAll.
+# This file must be saved and imported again after calling unloadAll for any change to take effect.
+
+def test():
+	print "test7"
+	
+print `test`</t>
+<t tx="T1830">print "hello World!"
+es("Hello World")
+#print "globals:", globals()
+#print "locals:", locals()</t>
+<t tx="T1831">@nocolor
+
+If body text is selected, this command tries to execute it as a Python script.  Otherwise, if the presently selected node's headline starts with @pythonscript the Execute Script command tries to execute the node's entire body text as a Python script.
+
+The print statement sends output to the console window; your scripts may use the es global function to send a line to Leo's log pane.  Exceptions are caught harmlessly and the error messages are printed both to the log window and the console window.
+
+All scripts are executed in the current context, that is, simply by executing exec(s), where s is the script.  Your script can alter context as it sees fit.</t>
+<t tx="T1832">def es_exception (full=false):
+
+	typ,val,tb = sys.exc_info()
+	if full:
+		errList = traceback.format_exception(typ,val,tb)
+	else:
+		errList = traceback.format_exception_only(typ,val)
+	for i in errList:
+		es(i)
+	traceback.print_exc()</t>
 <t tx="T1833">@language python
 
 @ This section contains all the source code of leo.py.
@@ -40280,44 +40288,38 @@ Availability: Unix, Windows. spawnlp(), spawnlpe(), spawnvp() and spawnvpe() are
 
 </t>
 <t tx="T2587">This is a c file.</t>
-<t tx="T2588">@ignore</t>
-<t tx="T2589">@ Leo attempts to call the customizeLeo hook at various times during execution.  The tag field indicates the type of hook.  Leo catches exceptions, including syntax errors in this code, so if is safe to change this file at will.
-@c
+<t tx="T2588"># There are several ways to suppress this script:
+# - Move this node under an @ignore node.
+# - Remove or change the "open2" hook code in leoCustomize.leo.
+# - Change the headline so it doesn't start with @onLoadPythonScript.
+# - Change if 1 to if 0 below.
+
+if 1:
+	print """
+This script illustrates @onLoadPythonScript.
+It merely prints this message.
+
+Note 1: capitalization of onLoadPythonScript is ignored.
+Note 2: exceptions or syntax errors here are harmless.
+"""
+
+# Note that we can execute _any_ python code here,
+# including imports and function calls.
+# For more details about scripting, see the section called
+# &lt;&lt; intro to scripts &gt;&gt; in leoCustomize.py
+</t>
+<t tx="T2589">@ignore</t>
+<t tx="T2590"># leoCustomize.py
 
 &lt;&lt; about tags &gt;&gt;
+&lt;&lt; intro to scripts &gt;&gt;
 
-def customizeLeo(tag):
+# We might as well import verything here.
+from leoGlobals import *
+from leoUtils import *
 
-	from leoGlobals import app, choose, false, top
-	if 1: # production hooks.
-		pass
-	else: # testing
-		print "customizeLeo", tag
-		if tag == "menu1":
-			# Translate a few items into french
-			a=app() ; d = a.realMenuNameDict
-			d["Open..."] = "Ouvre"
-			d["Open With..."] = "Ouvre Avec..."
-			d["Close"] = "Ferme"
-		if tag == "start1":
-			print `app()` # The application object.
-		if tag == "start2":
-			for w in app().windowList:
-				print `w.commands` # The commander for each open window.
-			top().frame.menus.sort()
-			for name,menu in top().frame.menus:
-				print name,
-			print
-		if tag == "end1":
-			print `app().doesNotExist` # Test of exception handling.
-		if tag == "command1":
-			print "start", app().commandName
-			if app().commandName=="equalsizedpanes":
-				print "over-riding Equal Sized Panes"
-				return false
-		if tag == "command2":
-			print "end  ", app().commandName</t>
-<t tx="T2590">@ NOTE: None != false, so simply returning from this routine never override any default action.
+@others</t>
+<t tx="T2591">@  The following is a list of the tags that can be passed to customize Leo.
 
 tag="command1": called before the start of every command.
 
@@ -40352,7 +40354,89 @@ NOTE 3: Leo calls frame.OpenWithFileName, and thus possibly customizeLeo("open1"
 tag="start1": called just after app().finishCreate successfully returns.  The app() function will return the properly initialized leoApp object, but no Leo window exists yet.
 
 tag="start2": called just after the first Leo window has been created.  app().windowList contains the list of all leoFrame objects.  leoGlobals.top() will return the commander of the topmost window.</t>
-<t tx="T2591">@ See the "Menu test code" node for examples of how to create and destroy menus from scripts.
+<t tx="T2592">@ Scripting is fully documented in Leo's Users Guide, and the following should be get you started:
+	
+top() # The commander of the top (current) windows.
+top().rootVnode() # The root vnode of the outline.
+top().currentVnode() # The presently selected vnode.
+
+If v is any vnode:
+	
+v.headString() # The headline of v.
+v.bodyString() # The body of v.
+v.threadNext() # The node after v in outline order.
+
+For example, this prints every headline of an outline:
+	
+v = top().rootVnode()
+while v:
+	print v.headString()
+	v = v.threadNext()</t>
+<t tx="T2593">@ Leo attempts to call this routine at various times during execution.  Leo catches exceptions, including syntax errors in this code, so it is safe to hack away on this code.
+
+The tag field indicates the type of hook.  
+app().commandName indicates the kind of command for "command1" and "command2" hooks.
+
+In some cases, returning false "overrides" Leo's default action.
+None != false, so simply returning is always safe.
+@c
+
+def customizeLeo(tag):
+
+	if tag == "open2":
+		onLoadFile()
+
+	if 0:
+		&lt;&lt; unused code &gt;&gt;
+</t>
+<t tx="T2594">print "customizeLeo", tag
+if tag == "menu1":
+	# Translate a few items into french
+	a=app() ; d = a.realMenuNameDict
+	d["Open..."] = "Ouvre"
+	d["Open With..."] = "Ouvre Avec..."
+	d["Close"] = "Ferme"
+if tag == "start1":
+	print `app()` # The application object.
+if tag == "start2":
+	for w in app().windowList:
+		print `w.commands` # The commander for each open window.
+	top().frame.menus.sort()
+	for name,menu in top().frame.menus:
+		print name,
+	print
+if tag == "end1":
+	print `app().doesNotExist` # Test of exception handling.
+if tag == "command1":
+	print "start", app().commandName
+	if app().commandName=="equalsizedpanes":
+		print "over-riding Equal Sized Panes"
+		return false
+if tag == "command2":
+	print "end  ", app().commandName</t>
+<t tx="T2595"># Executes the script s in the present environment.
+
+def execScript(s):
+
+	if s and len(s) &gt; 0:
+		try:
+			exec(s + '\n',globals(),locals())
+		except:
+			es_exception()
+</t>
+<t tx="T2596">def onLoadFile ():
+
+	v = top().rootVnode()
+	while v:
+		if v.isAtIgnoreNode():
+			v = v.nodeAfterTree()
+		else:
+			h = v.headString().lower()
+			if match_word(h,0,"@onloadpythonscript"):
+				execScript(v.bodyString())
+			v = v.threadNext()
+</t>
+<t tx="T2597">@ See the "Menu test code" node for examples of how to create and destroy menus from scripts.
 
 To do:
 	
@@ -40360,7 +40444,7 @@ To do:
 - Implement @onOpenPythonScript in leoConfigure.py
 	
 </t>
-<t tx="T2592">from leoGlobals import top,app
+<t tx="T2598">from leoGlobals import top,app
 
 # Translate a few items into french.
 a=app() ; d = a.realMenuNameDict

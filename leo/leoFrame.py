@@ -2065,11 +2065,12 @@ class LeoFrame:
 	#@-at
 	#@@c
 
-	def OnExecuteScript(self,event=None):
+	def OnExecuteScript(self,event=None,v=None):
 		
-		c = self.commands ; body = self.body
-		v = c.currentVnode() ; s = None
-		
+		c = self.commands ; body = self.body ; s = None
+		if v == None:
+			v = c.currentVnode() 
+	
 		# Assume any selected body text is a script.
 		if self.getFocus() == body:
 			start,end = getTextSelection(body)
