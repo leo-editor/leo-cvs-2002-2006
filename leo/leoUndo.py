@@ -131,11 +131,13 @@ class undoer:
 	
 	def canRedo (self):
 	
-		return self.redoMenuLabel != "Can't Redo"
+		u = self
+		return u.redoMenuLabel != "Can't Redo"
 	
 	def canUndo (self):
 	
-		return self.undoMenuLabel != "Can't Undo"
+		u = self
+		return u.undoMenuLabel != "Can't Undo"
 	
 	#@-body
 	#@-node:1::canRedo & canUndo
@@ -317,7 +319,7 @@ class undoer:
 
 	def setUndoTypingParams (self,v,undo_type,oldText,newText,oldSel,newSel,oldYview=None):
 	
-		u = self ; c = self.commands
+		u = self ; c = u.commands
 		if u.redoing or u.undoing: return None
 		if undo_type == None:
 			return None
@@ -391,7 +393,7 @@ class undoer:
 			new_newlines += 1
 			i -= 1
 		
-		if self.debug_print:
+		if u.debug_print:
 			trace()
 			print "lead,trail",leading,trailing
 			print "old mid,nls:",len(old_middle_lines),old_newlines,oldText
@@ -420,17 +422,17 @@ class undoer:
 		#@-at
 		#@@c
 
-		if self.new_undo:
-			if self.debug:
+		if u.new_undo:
+			if u.debug:
 				# Remember the complete text for comparisons...
 				u.oldText = oldText
 				u.newText = newText
 				# Compute statistics comparing old and new ways...
 				# The old doesn't often store the old text, so don't count it here.
-				self.old_mem += len(newText)
+				u.old_mem += len(newText)
 				s1 = string.join(old_middle_lines,'\n')
 				s2 = string.join(new_middle_lines,'\n')
-				self.new_mem += len(s1) + len(s2)
+				u.new_mem += len(s1) + len(s2)
 			else:
 				u.oldText = None
 				u.newText = None
@@ -958,7 +960,7 @@ class undoer:
 	#@+body
 	def findSharedVnode (self,target):
 	
-		c = self.commands ; v = c.rootVnode()
+		u = self ; c = u.commands ; v = c.rootVnode()
 		while v:
 			if v != target and v.t == target.t:
 				return v
@@ -1078,7 +1080,7 @@ class undoer:
 		oldNewlines,newNewlines, # Number of trailing newlines.
 		tag="undo"): # "undo" or "redo"
 	
-		c = self.commands
+		u = self ; c = u.commands
 		assert(v == c.currentVnode())
 	
 		
@@ -1141,7 +1143,7 @@ class undoer:
 		
 		result,junk = convertUnicodeToString(s)
 		
-		if self.debug_print:
+		if u.debug_print:
 			print "body:  ",`body`
 			print "result:",`result`
 		#@-body
@@ -1169,7 +1171,7 @@ class undoer:
 			# print "incremental undo:",leading,trailing
 			c.tree.recolor_range(v,leading,trailing)
 		else: # 11/19/02: # Rewrite the pane and do a full recolor.
-			if self.debug_print:
+			if u.debug_print:
 				
 				#@<< print mismatch trace >>
 				#@+node:4::<< print mismatch trace >>

@@ -284,15 +284,6 @@ class LeoApp:
 	
 	#@-body
 	#@-node:6::app.get/setRealMenuName & setRealMenuNamesFromTable
-	#@+node:7::app.testDialogs
-	#@+body
-	def testDialogs (self):
-	
-		import leoDialog
-		d = leoDialog.leoDialog()
-		d.testDialogs()
-	#@-body
-	#@-node:7::app.testDialogs
 	#@-others
 #@-body
 #@-node:0::@file leoApp.py

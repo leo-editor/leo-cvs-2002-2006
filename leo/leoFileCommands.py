@@ -23,7 +23,7 @@ xml_language_names = (
 	"CWEB","C","HTML","Java","LaTeX",
 	"Pascal","PerlPod","Perl","Plain","Python","tcl/tk")
 
-class BadLeoFile:
+class BadLeoFile(Exception):
 	def __init__(self, message):
 		self.message = message
 	def __str__(self):

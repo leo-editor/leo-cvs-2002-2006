@@ -418,11 +418,11 @@ class leoCompare:
 	#@+body
 	def dump (self,tag,s):
 	
-		out = tag
+		cmp = self ; out = tag
 	
 		for ch in s[:-1]: # don't print the newline
 		
-			if self.makeWhitespaceVisible:
+			if cmp.makeWhitespaceVisible:
 				if ch == '\t':
 					out += "[" ; out += "t" ; out += "]"
 				elif ch == ' ':
