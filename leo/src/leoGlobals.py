@@ -1016,7 +1016,63 @@ def setMenuLabel (menu,name,label,underline=-1):
 #@-body
 #@-node:2::enableMenu & disableMenu & setMenuLabel
 #@-node:3::Menus...
-#@+node:4::wrap_lines
+#@+node:4::openWithFileName (leoGlobals)
+#@+body
+def openWithFileName(fileName,old_c=None):
+	
+	"""Create a Leo Frame for the indicated fileName if the file exists."""
+	
+	from leoFrame import LeoFrame
+	assert(app().config)
+
+	if not fileName or len(fileName) == 0:
+		return false, None
+
+	# Create a full normalized path name.
+	# Display the file name with case intact.
+	fileName = os.path.join(os.getcwd(), fileName)
+	fileName = os.path.normpath(fileName)
+	oldFileName = fileName 
+	fileName = os.path.normcase(fileName)
+
+	# If the file is already open just bring its window to the front.
+	list = app().windowList
+	for frame in list:
+		fn = os.path.normcase(frame.mFileName)
+		fn = os.path.normpath(fn)
+		if fileName == fn:
+			frame.top.deiconify()
+			app().setLog(frame,"OpenWithFileName")
+			# es("This window already open")
+			return true, frame
+			
+	fileName = oldFileName # Use the idiosyncratic file name.
+
+	try:
+		file = open(fileName,'r')
+		if file:
+			frame = LeoFrame(fileName)
+			if not doHook("open1",
+				old_c=old_c,new_c=frame.commands,fileName=fileName):
+				app().setLog(frame,"OpenWithFileName") # 5/12/03
+				app().lockLog() # 6/30/03
+				frame.commands.fileCommands.open(file,fileName) # closes file.
+				app().unlockLog() # 6/30/03
+			frame.openDirectory=os.path.dirname(fileName)
+			frame.updateRecentFiles(fileName)
+			doHook("open2",
+				old_c=old_c,new_c=frame.commands,fileName=fileName)
+			return true, frame
+		else:
+			es("can not open" + fileName)
+			return false, None
+	except:
+		es("exceptions opening" + fileName)
+		es_exception()
+		return false, None
+#@-body
+#@-node:4::openWithFileName (leoGlobals)
+#@+node:5::wrap_lines
 #@+body
 #@+at
 #  Returns a list of lines, consisting of the input lines wrapped to the given pageWidth.
@@ -1097,7 +1153,7 @@ def wrap_lines (lines,pageWidth,firstLineWidth=None):
 	# trace(`result`)
 	return result
 #@-body
-#@-node:4::wrap_lines
+#@-node:5::wrap_lines
 #@-node:5::Commands, Dialogs, Directives, & Menus...
 #@+node:6::Debugging, Dumping, Timing, Tracing & Sherlock
 #@+node:1::Files & Directories...
@@ -1945,8 +2001,17 @@ def executeScript (name):
 
 #@-body
 #@-node:7::executeScript
-#@+node:8::Focus
-#@+node:1::set_focus
+#@+node:8::Focus (leoGlobals)
+#@+node:1::get_focus
+#@+body
+def get_focus(top):
+	
+	"""Returns the widget that has focus, or body if None."""
+
+	return top.focus_displayof()
+#@-body
+#@-node:1::get_focus
+#@+node:2::set_focus
 #@+body
 def set_focus(commands,widget):
 	
@@ -1957,8 +2022,8 @@ def set_focus(commands,widget):
 		# trace(`widget`)
 		widget.focus_set()
 #@-body
-#@-node:1::set_focus
-#@+node:2::force_focus
+#@-node:2::set_focus
+#@+node:3::force_focus
 #@+body
 def force_focus(widget):
 	
@@ -1967,8 +2032,8 @@ def force_focus(widget):
 		trace(widget)
 		widget.focus_force() # Apparently it is not a good idea to call focus_force.
 #@-body
-#@-node:2::force_focus
-#@-node:8::Focus
+#@-node:3::force_focus
+#@-node:8::Focus (leoGlobals)
 #@+node:9::Garbage Collection
 #@+body
 lastObjectCount = 0
