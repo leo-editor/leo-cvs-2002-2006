@@ -844,6 +844,7 @@ class baseOldDerivedFile:
 		# Support of @raw
 		self.raw = false # true: in @raw mode
 		self.sentinels = true # true: output sentinels while expanding refs.
+		self.scripting = false # true: generating text for a script.
 		
 		# The encoding used to convert from unicode to a byte stream.
 		self.encoding = app.config.default_derived_file_encoding
@@ -4280,6 +4281,7 @@ class baseNewDerivedFile(oldDerivedFile):
 		at.root = root
 		at.root.tnodeList = []
 		at.raw = false
+		at.scripting = scriptFile is not None # 1/30/04
 		c.endEditing() # Capture the current headline.
 		#@nonl
 		#@-node:<< initialize >>
@@ -4422,6 +4424,7 @@ class baseNewDerivedFile(oldDerivedFile):
 		at.errors = 0
 		at.root.tnodeList = [] # 9/26/03: after beta 1 release.
 		at.sentinels = true # 10/1/03
+		at.scripting = false # 1/30/04
 		c.endEditing() # Capture the current headline.
 		try:
 			at.targetFileName = root.atRawFileNodeName()
@@ -4540,10 +4543,12 @@ class baseNewDerivedFile(oldDerivedFile):
 	
 		inCode = true
 		
-		# Make _sure_ all lines end in a newline (11/20/03: except in nosentinel mode).
+		# Make _sure_ all lines end in a newline
+		# 11/20/03: except in nosentinel mode.
+		# 1/30/04: and especially in scripting mode.
 		# If we add a trailing newline, we'll generate an @nonl sentinel below.
 		trailingNewlineFlag = s and s[-1] == '\n'
-		if at.sentinels and not trailingNewlineFlag:
+		if (at.sentinels or at.scripting) and not trailingNewlineFlag:
 			s = s + '\n'
 	
 		at.putOpenNodeSentinel(v)
