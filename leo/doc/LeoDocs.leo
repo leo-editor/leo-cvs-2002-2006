@@ -3,7 +3,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="12849" clone_windows="0"/>
 <globals body_outline_ratio="0.398837209302">
-	<global_window_position top="10" left="202" height="860" width="982"/>
+	<global_window_position top="50" left="79" height="680" width="843"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -39,7 +39,7 @@
 <v t="edream.110203163054.12"><vh>Dan Winkler 3</vh></v>
 </v>
 </v>
-<v t="edream.110203163054.46" a="E"><vh>Release Notes</vh>
+<v t="edream.110203163054.46"><vh>Release Notes</vh>
 <v t="edream.110203163054.47"><vh>Warnings</vh></v>
 <v t="edream.110203163054.48"><vh>Installation notes</vh>
 <v t="edream.110203163054.49"><vh>System requirements</vh></v>
@@ -52,7 +52,7 @@
 <v t="edream.110203163054.62"><vh>Quick start</vh></v>
 </v>
 <v t="edream.110203163054.63" a="E"><vh>Latest versions</vh>
-<v t="ekr.20050126100405" a="TV"><vh>4.3-a2</vh>
+<v t="ekr.20050126100405"><vh>4.3-a2</vh>
 <v t="ekr.20050130112336"><vh>Still to do</vh>
 <v t="ekr.20050130112336.1"><vh>Improve how Leo handles recent files</vh></v>
 </v>
@@ -2084,13 +2084,14 @@
 <v t="EKR.20040524104904.429"><vh>Weaving</vh></v>
 </v>
 </v>
-<v t="edream.110203163054.1050"><vh>FAQ</vh>
-<v t="edream.110203163054.1051"><vh>Learning about Leo</vh>
+<v t="edream.110203163054.1050" a="E"><vh>FAQ</vh>
+<v t="edream.110203163054.1051" a="E"><vh>Learning about Leo</vh>
 <v t="edream.110203163054.1052"><vh>What's the best way to learn to use Leo?</vh></v>
 <v t="edream.110203163054.1053"><vh>Where are the simple examples?</vh></v>
 <v t="edream.110203163054.1054"><vh>Why should I use clones?</vh></v>
 <v t="edream.110203163054.1055"><vh>Which should I use: @root trees or @file trees?</vh></v>
 <v t="ekr.20040411074926"><vh>How can I use Leo to develop Leo itself?</vh></v>
+<v t="ekr.20050203102830" a="TV"><vh>Why is &lt;&lt; whatever &gt;&gt; better than using a method?</vh></v>
 </v>
 <v t="edream.110203163054.1056"><vh>Unicode and special characters</vh>
 <v t="edream.110203163054.1057"><vh>Some characters in derived files look funny. What can I do?</vh></v>
@@ -2226,7 +2227,7 @@
 <v t="edream.110203163054.1108"><vh>How can I create a template .leo file?</vh></v>
 <v t="ekr.20040908100113"><vh>Control-Shift backspace doesn't work.  What should I do?</vh></v>
 </v>
-<v t="ekr.20041013100216"><vh>Tips and techniques</vh>
+<v t="ekr.20041013100216" a="E"><vh>Tips and techniques</vh>
 <v t="ekr.20040411074926"><vh>How can I use Leo to develop Leo itself?</vh></v>
 <v t="ekr.20041013100216.1"><vh>Using Chapters &amp; multiple editors</vh></v>
 <v t="ekr.20050129065451"><vh>How can I display graphics in Leo?</vh></v>
@@ -16373,5 +16374,69 @@ does not save recent files information in leoSettings.leo files.
 
 - Changing the @rencentfiles node doesn't mark the Leo file as dirty, so if you
 don't save the .leo file the recent files information will not be updated.</t>
+<t tx="ekr.20050203102830">@killcolor
+
+Why is are sections better than methods?
+
+There are several answers to this question:
+
+Answer # 1:
+
+Using a section is more convenient because:
+
+a) you get all local vars for free and
+b) there is no need to actually define a method.    
+
+N.B. These advantages only apply if the section is referred to once, as is
+almost always the case in Leo's code. As soon as a section gets used twice,
+using a function or method is almost always better.
+
+Furthermore, functions/methods are better if there is any likelihood that a
+plugin may want to modify the code. We have seen the migration from sections to
+methods recently in the rewrite of the leoAtFile.py code.
+
+My typical usage is to use a section if it is more convenient to do so
+initially, and then to convert them to full fledged methods as needed later.
+That is how I work, but you are free to use functions throughout. The choice is
+yours. For example, you can immediately define helper methods in child nodes.
+@others works well for this usage, and there are plenty of examples of this
+style in LeoPy.leo as well.
+
+Answer # 2:
+
+If your code can be reused in a method then yes a method is better. But a
+section reference may be better than a method introduced just for clarity's
+sake. Such methods are bad in the sense that they needlessly add to your
+interface. Sections save you from growing the interface needlessly. Sections
+also provide valuable summary information.
+
+Answer # 3 (From Rich Reis):
+
+I work in a mix of C and assembler. Consider &lt;&lt; Wait for Keypress &gt;&gt; 
+instead of:
+
+    Loop:
+        ld A,Port.B
+        ifbit 4,A.B
+        jp Next
+        jp Loop
+    Next:
+
+Also, the micro we use has room for 40 stack entries, total!
+
+Answer # 4:
+
+- Sections can be used where methods can not be used.
+
+Consider the style guide in leoPlugins.leo. Neither the &lt;&lt; imports &gt;&gt; section
+nor the &lt;&lt; version history &gt;&gt; section would make sense as functions.
+
+- Sections summarize code, comments or any other data.
+
+Sections are excellent documentation aids, because they indicate your intention
+in the clearest possible way, that is, with your natural language. Sections
+really are an entirely separate arena from computer syntax; there is NO
+intrinsic reason why such "units of understanding" should correspond with
+classes, functions or methods.</t>
 </tnodes>
 </leo_file>
