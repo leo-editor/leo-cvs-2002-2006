@@ -95,7 +95,7 @@ class fileCommands:
 		return v
 	#@-body
 	#@-node:1::createVnode
-	#@+node:2::finishPaste (Changed for 4.0)
+	#@+node:2::finishPaste (changed from 3.11.1)  (calls initAllCloneBits)
 	#@+body
 	# This method finishes pasting the outline from the clipboard.
 	def finishPaste(self):
@@ -120,13 +120,14 @@ class fileCommands:
 				#@-body
 				#@-node:1::<< Create join lists of all pasted vnodes >>
 
-			c.initAllCloneBits() # 5/3/03
+			if self.a.use_gnx:
+				c.initAllCloneBits()
 			self.compactFileIndices()
 			c.selectVnode(current)
 		c.endUpdate()
 		return current
 	#@-body
-	#@-node:2::finishPaste (Changed for 4.0)
+	#@-node:2::finishPaste (changed from 3.11.1)  (calls initAllCloneBits)
 	#@+node:3::get routines
 	#@+node:1::get & match (basic)(leoFileCommands)
 	#@+node:1::get routines
@@ -441,6 +442,8 @@ class fileCommands:
 		#@-node:1::<< warn on read-only files >>
 
 		self.mFileName = frame.mFileName
+		if not self.a.use_gnx: # 5/30/03: file indices can not be assumed to be distinct!
+			self.tnodesDict = {}
 		ok = true
 		try:
 			c.tree.initing = true # inhibit endEditLabel from marking the file changed.
@@ -488,6 +491,8 @@ class fileCommands:
 		c.initAllCloneBits() # 5/3/03
 		c.selectVnode(c.tree.currentVnode) # load body pane
 		c.tree.initing = false # Enable changes in endEditLabel
+		if not self.a.use_gnx: # 5/30/03: file indices can not be assumed to be distinct!
+			self.tnodesDict = {}
 		return ok, self.ratio
 	#@-body
 	#@-node:7::getLeoFile
@@ -516,16 +521,19 @@ class fileCommands:
 				break
 	#@-body
 	#@-node:8::getLeoHeader
-	#@+node:9::getLeoOutline (from clipboard)
+	#@+node:9::getLeoOutline (from clipboard) (changed from 3.11.1)
 	#@+body
 	# This method reads a Leo outline from string s in clipboard format.
 	def getLeoOutline (self,s):
 		
-		es("can't paste trees yet in 4.0",color="red")
-		return None ## This will create another error message.  Harmless for now.
+		if 0:
+			es("can't paste trees yet in 4.0",color="red")
+			return None ## This will create another error message.  Harmless for now.
 	
 		self.usingClipboard = true
 		self.fileBuffer = s ; self.fileIndex = 0
+		if not self.a.use_gnx: # 5/30/03: file indices can not be assumed to be distinct!
+			self.tnodesDict = {}
 		try:
 			self.getXmlVersionTag() # leo.py 3.0
 			self.getXmlStylesheetTag() # 10/25/02
@@ -540,9 +548,11 @@ class fileCommands:
 		# Clean up.
 		self.fileBuffer = None ; self.fileIndex = 0
 		self.usingClipboard = false
+		if not self.a.use_gnx: # 5/30/03: file indices can not be assumed to be distinct!
+			self.tnodesDict = {}
 		return v
 	#@-body
-	#@-node:9::getLeoOutline (from clipboard)
+	#@-node:9::getLeoOutline (from clipboard) (changed from 3.11.1)
 	#@+node:10::getPosition
 	#@+body
 	def getPosition (self):
@@ -650,7 +660,7 @@ class fileCommands:
 		return height, width
 	#@-body
 	#@-node:12::getSize
-	#@+node:13::getTnode (changed in 4.0)
+	#@+node:13::getTnode (no change from 3.11.1)
 	#@+body
 	def getTnode (self):
 	
@@ -663,6 +673,7 @@ class fileCommands:
 			elif self.matchTag("tx=\"T"): # Pre 4.0
 				# tx overrides tnx for compatibility with pre 4.0 files.
 				index = self.getIndex() ; self.getDquote()
+				if self.usingClipboard: trace(index)
 			elif self.matchTag("rtf=\"1\""): pass # ignored
 			elif self.matchTag("rtf=\"0\""): pass # ignored
 			else: break
@@ -686,8 +697,8 @@ class fileCommands:
 		self.getTag("</t>")
 	
 	#@-body
-	#@-node:13::getTnode (changed in 4.0)
-	#@+node:14::getTnodes
+	#@-node:13::getTnode (no change from 3.11.1)
+	#@+node:14::getTnodes (no change from 3.11.1)
 	#@+body
 	def getTnodes (self):
 	
@@ -700,8 +711,8 @@ class fileCommands:
 		self.getTag("</tnodes>")
 	
 	#@-body
-	#@-node:14::getTnodes
-	#@+node:15::getVnode (changed in 4.0)
+	#@-node:14::getTnodes (no change from 3.11.1)
+	#@+node:15::getVnode (changed from 3.11.1) (removed dummy logic)
 	#@+body
 	def getVnode (self,parent,back):
 	
@@ -776,8 +787,8 @@ class fileCommands:
 		self.getTag("</v>")
 		return v
 	#@-body
-	#@-node:15::getVnode (changed in 4.0)
-	#@+node:16::getVnodes
+	#@-node:15::getVnode (changed from 3.11.1) (removed dummy logic)
+	#@+node:16::getVnodes  (no change from 3.11.1)
 	#@+body
 	def getVnodes (self):
 	
@@ -796,7 +807,7 @@ class fileCommands:
 	
 		self.getTag("</vnodes>")
 	#@-body
-	#@-node:16::getVnodes
+	#@-node:16::getVnodes  (no change from 3.11.1)
 	#@+node:17::getXmlStylesheetTag
 	#@+body
 	#@+at
@@ -1042,7 +1053,7 @@ class fileCommands:
 			v = v.threadNext()
 	#@-body
 	#@-node:1::assignAllGnx
-	#@+node:2::assignFileIndices
+	#@+node:2::assignFileIndices (no change from 3.11.1)
 	#@+body
 	def assignFileIndices (self,root=None):
 		
@@ -1065,9 +1076,10 @@ class fileCommands:
 						t.setFileIndex(self.maxTnodeIndex)
 				else:
 					t.setFileIndex(0)
+				if self.usingClipboard: trace(t.fileIndex)
 				v = v.threadNext()
 	#@-body
-	#@-node:2::assignFileIndices
+	#@-node:2::assignFileIndices (no change from 3.11.1)
 	#@+node:3::compactFileIndices
 	#@+body
 	def compactFileIndices (self):
@@ -1314,7 +1326,7 @@ class fileCommands:
 		self.put("/>") ; self.put_nl()
 	#@-body
 	#@-node:6::putHeader
-	#@+node:7::putLeoOutline (to clipboard)
+	#@+node:7::putLeoOutline (to clipboard) (no change from 3.11.1)
 	#@+body
 	# Writes a Leo outline to s in a format suitable for pasting to the clipboard.
 	
@@ -1333,7 +1345,7 @@ class fileCommands:
 		self.usingClipboard = false
 		return s
 	#@-body
-	#@-node:7::putLeoOutline (to clipboard)
+	#@-node:7::putLeoOutline (to clipboard) (no change from 3.11.1)
 	#@+node:8::putPrefs
 	#@+body
 	def putPrefs (self):
@@ -1435,56 +1447,43 @@ class fileCommands:
 		self.put("</leo_file>") ; self.put_nl()
 	#@-body
 	#@-node:10::putPostlog
-	#@+node:11::putTnodes
+	#@+node:11::putTnodes (reverted to 3.11.1)
 	#@+body
 	def putTnodes (self):
 		
 		"""Puts all tnodes as required for copy or save commands"""
 	
 		c=self.commands
-	
-		if self.usingClipboard: 
-			v = self.copiedTree # write only the copied tree.
-		else: 
-			v = c.rootVnode() # write everything.
+		if self.usingClipboard: # write the current tree.
+			v = c.currentVnode() ; after = v.nodeAfterTree()
+		else: # write everything
+			v = c.rootVnode() ; after = None
 	
 		self.put("<tnodes>") ; self.put_nl()
-		# All tnode indices must have been assigned at this point.
-		if self.usingClipboard:
-			
-			#@<< write all tnodes >>
-			#@+node:1::<< write all tnodes >>
-			#@+body
-			# All vnodes will have distinct tnodes when copying trees.
-			while v:
-				self.putTnode(v.t)
-				v = v.threadNext()
-			#@-body
-			#@-node:1::<< write all tnodes >>
-
-		elif self.a.use_gnx:
+		if self.a.use_gnx:
 			
 			#@<< write all visited tnodes >>
-			#@+node:2::<< write all visited tnodes >>
+			#@+node:1::<< write all visited tnodes >>
 			#@+body
 			# putVnodes sets the visited bit in all tnodes that should be written.
-			while v:
+			while v and v != after:
 				t = v.t
 				if t.isVisited():
 					self.putTnode(t)
 					t.clearVisited() # Don't write the tnode again.
 				v = v.threadNext()
+			
 			#@-body
-			#@-node:2::<< write all visited tnodes >>
+			#@-node:1::<< write all visited tnodes >>
 
 		else:
 			
 			#@<< write only those tnodes that were referenced >>
-			#@+node:3::<< write only those tnodes that were referenced >>
+			#@+node:2::<< write only those tnodes that were referenced >>
 			#@+body
 			# Populate tnodes
 			tnodes = {}
-			while v:
+			while v and v != after:
 				index = v.t.fileIndex
 				if index > 0 and not tnodes.has_key(index):
 					tnodes[index] = v.t
@@ -1498,12 +1497,12 @@ class fileCommands:
 				# Write only those tnodes whose vnodes were written.
 				if t.isVisited(): self.putTnode(t)
 			#@-body
-			#@-node:3::<< write only those tnodes that were referenced >>
+			#@-node:2::<< write only those tnodes that were referenced >>
 
 		self.put("</tnodes>") ; self.put_nl()
 	#@-body
-	#@-node:11::putTnodes
-	#@+node:12::putTnode (changed in 4.0)
+	#@-node:11::putTnodes (reverted to 3.11.1)
+	#@+node:12::putTnode (no change from 3.11.1) (trace)
 	#@+body
 	def putTnode (self,t):
 	
@@ -1513,6 +1512,7 @@ class fileCommands:
 			gnxString = self.nodeIndices.toString(t.gnx,removeDefaultId=true)
 			self.put(" tnx=") ; self.put_in_dquotes(gnxString)
 		else:
+			# if self.usingClipboard: trace(t.fileIndex)
 			self.put(" tx=") ; self.put_in_dquotes("T" + `t.fileIndex`)
 		self.put(">")
 	
@@ -1521,8 +1521,8 @@ class fileCommands:
 	
 		self.put("</t>") ; self.put_nl()
 	#@-body
-	#@-node:12::putTnode (changed in 4.0)
-	#@+node:13::putVnodes
+	#@-node:12::putTnode (no change from 3.11.1) (trace)
+	#@+node:13::putVnodes (reverted 3.11.1)
 	#@+body
 	#@+at
 	#  This method puts all vnodes by starting the recursion.  putVnode will 
@@ -1532,20 +1532,17 @@ class fileCommands:
 	#@@c
 	def putVnodes (self):
 	
+		# 5/30/03: Reverted to 3.11.1 code.
+		# The old code probably broke because self.tnodesDict wasn't cleared when self.a.use_gnx was false.
+	
 		c=self.commands
 		c.clearAllVisited()
 	
 		self.put("<vnodes>") ; self.put_nl()
 		if self.usingClipboard:
-			es("can't copy trees yet in 4.0",color="red")
-			if 0: # This appears to be extremely dangerous.  Don't know why yet.
-				# Bug fix for 4.0: Put a _copy_ of the selected tree so we don't link tnodes!
-				old_v = c.currentVnode()
-				new_v = old_v.copyTreeWithNewTnodes()
-				self.assignFileIndices(new_v)
-				self.putVnode(
-					new_v,None) # Don't write top vnode status bit.
-				self.copiedTree = new_v
+			self.putVnode(
+				c.currentVnode(), # Write only current tree.
+				None) # Don't write top vnode status bit.
 		else: 
 			v = c.rootVnode()
 			while v:
@@ -1555,8 +1552,8 @@ class fileCommands:
 				v = v.next()
 		self.put("</vnodes>") ; self.put_nl()
 	#@-body
-	#@-node:13::putVnodes
-	#@+node:14::putVnode (changed in 4.0)
+	#@-node:13::putVnodes (reverted 3.11.1)
+	#@+node:14::putVnode (no change from 3.11.1)
 	#@+body
 	#@+at
 	#  This writes full headline and body text for all vnodes, even orphan and 
@@ -1640,7 +1637,7 @@ class fileCommands:
 				child = child.next()
 		self.put("</v>") ; self.put_nl()
 	#@-body
-	#@-node:14::putVnode (changed in 4.0)
+	#@-node:14::putVnode (no change from 3.11.1)
 	#@-node:4::put routines
 	#@+node:5::save
 	#@+body

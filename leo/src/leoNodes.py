@@ -1963,7 +1963,7 @@ class vnode:
 		assert(new_v == None)
 	#@-body
 	#@-node:1::v.copyTree
-	#@+node:2::v.copyTreeWithNewTnodes
+	#@+node:2::v.copyTreeWithNewTnodes (new after 3.11.1) (not used at present)
 	#@+body
 	def copyTreeWithNewTnodes (self):
 		
@@ -1989,7 +1989,7 @@ class vnode:
 		# Return the root of the new tree.
 		return new_v
 	#@-body
-	#@-node:2::v.copyTreeWithNewTnodes
+	#@-node:2::v.copyTreeWithNewTnodes (new after 3.11.1) (not used at present)
 	#@+node:3::joinTreeTo
 	#@+body
 	#@+at

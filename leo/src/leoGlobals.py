@@ -433,10 +433,9 @@ def scanAtEncodingDirective(s,dict):
 	"""
 
 	k = dict["encoding"]
+	i = skip_to_end_of_line(s,k)
 	j = len("@encoding")
-	j = skip_ws(s,k+j)
-	i = skip_c_id(s,j)
-	encoding = s[j:i].strip()
+	encoding = s[k+j:i].strip()
 	if isValidEncoding(encoding):
 		# trace(encoding)
 		return encoding
@@ -455,10 +454,10 @@ def scanAtLineendingDirective(s,dict):
 	"""
 
 	k = dict["lineending"]
+	i = skip_to_end_of_line(s,k)
 	j = len("@lineending")
-	j = skip_ws(s,k+j)
-	i = skip_c_id(s,j)
-	e = s[j:i].strip()
+	j = skip_ws(s,j)
+	e = s[k+j:i].strip()
 
 	if e in ("cr","crlf","lf","nl","platform"):
 		lineending = getOutputNewline(e)

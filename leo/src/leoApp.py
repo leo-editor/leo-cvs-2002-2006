@@ -266,8 +266,7 @@ class LeoApp:
 		self.findFrame = leoFind.LeoFind()
 		self.findFrame.top.withdraw()
 		attachLeoIcon(self.findFrame.top)
-		
-		print "finishCreate returns"
+	
 		return true # all went well.
 	#@-body
 	#@-node:3::app.finishCreate

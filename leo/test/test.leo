@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="25" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="34" clone_windows="0"/>
 <globals body_outline_ratio="0.5">
-	<global_window_position top="75" left="322" height="75" width="89"/>
+	<global_window_position top="69" left="263" height="75" width="114"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences allow_rich_text="0">
@@ -20,7 +20,7 @@
 <v t="T5"><vh>Write Missing @file nodes test</vh>
 <v t="T6"><vh>@file ../test/missing_test.txt</vh></v>
 </v>
-<v t="T7" a="V"><vh>Icon bar</vh>
+<v t="T7"><vh>Icon bar</vh>
 <v t="T8"><vh>add some buttons</vh></v>
 <v t="T9"><vh>add all gif files</vh></v>
 <v t="T10"><vh>clear</vh></v>
@@ -38,7 +38,7 @@
 <v t="T21"><vh>8</vh></v>
 </v>
 </v>
-<v t="T22" a="E"><vh>Test of recent sections &amp; clones</vh>
+<v t="T22"><vh>Test of recent sections &amp; clones</vh>
 <v t="T23" a="C"><vh>&lt;&lt; section a &gt;&gt;</vh></v>
 <v t="T24" a="CE"><vh>Hyper link test</vh>
 <v t="T23" a="C"><vh>&lt;&lt; section a &gt;&gt;</vh></v>
@@ -47,6 +47,31 @@
 <v t="T24" a="C"><vh>Hyper link test</vh>
 <v t="T23" a="C"><vh>&lt;&lt; section a &gt;&gt;</vh></v>
 <v t="T25"><vh>&lt;&lt; section b &gt;&gt;</vh></v>
+</v>
+</v>
+<v t="T26"><vh>Copy/Clones test</vh>
+<v t="T27" a="C"><vh>a</vh>
+<v t="T28" a="CE"><vh>b</vh>
+<v t="T29"><vh>c</vh></v>
+</v>
+<v t="T28" a="C"><vh>b</vh>
+<v t="T29"><vh>c</vh></v>
+</v>
+</v>
+<v t="T27" a="CE"><vh>a</vh>
+<v t="T28" a="C"><vh>b</vh>
+<v t="T29"><vh>c</vh></v>
+</v>
+<v t="T28" a="C"><vh>b</vh>
+<v t="T29"><vh>c</vh></v>
+</v>
+</v>
+</v>
+<v t="T30"><vh>@lineending and @encoding tests</vh></v>
+<v t="T31" a="E"><vh>@file test.py</vh>
+<v t="T32" a="V"><vh>Outer</vh>
+<v t="T33"><vh>A2</vh></v>
+<v t="T34"><vh>B</vh></v>
 </v>
 </v>
 </vnodes>
@@ -197,5 +222,22 @@ a
 <t tx="T23">This is section a.</t>
 <t tx="T24">&lt;&lt; section a &gt;&gt;</t>
 <t tx="T25"></t>
+<t tx="T26"></t>
+<t tx="T27"></t>
+<t tx="T28"></t>
+<t tx="T29"></t>
+<t tx="T30">@lineending nl         (the default, Linux)
+@lineending cr         (Mac)
+@lineending crlf       (Windows)
+@lineending lf          (same as nl, not recommended)
+@lineending platform (same as platform value for output_newline setting in leoConfig.txt)
+
+@encoding utf-8</t>
+<t tx="T31"># Test file for cut/paste operations.
+
+@others</t>
+<t tx="T32"></t>
+<t tx="T33">node A Text</t>
+<t tx="T34">node B text</t>
 </tnodes>
 </leo_file>
