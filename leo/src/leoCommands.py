@@ -1530,6 +1530,7 @@ class baseCommands:
 		oldSel = body.getTextSelection()
 		count = 0
 		while v and v != next:
+			vChanged = false
 			if v == current:
 				if c.convertBlanks(setUndoParams=false):
 					count += 1
@@ -1541,7 +1542,9 @@ class baseCommands:
 				for line in lines:
 					s = optimizeLeadingWhitespace(line,tabWidth)
 					if s != line:
-						changed = true ; count += 1
+						changed = true
+						if not vChanged:
+							count += 1 ; vChanged = true
 					result.append(s)
 				if changed:
 					result = string.join(result,'\n')
@@ -1556,7 +1559,6 @@ class baseCommands:
 				oldText=oldText,newText=newText,
 				oldSel=oldSel,newSel=newSel)
 		es("blanks converted to tabs in %d nodes" % count)
-	#@nonl
 	#@-node:convertAllBlanks
 	#@+node:convertAllTabs
 	def convertAllTabs (self):
@@ -1576,6 +1578,7 @@ class baseCommands:
 		oldSel = body.getTextSelection()
 		count = 0
 		while v and v != next:
+			vChanged = false
 			if v == current:
 				if self.convertTabs(setUndoParams=false):
 					count += 1
@@ -1588,7 +1591,9 @@ class baseCommands:
 					i,w = skip_leading_ws_with_indent(line,0,tabWidth)
 					s = computeLeadingWhitespace(w,-abs(tabWidth)) + line[i:] # use negative width.
 					if s != line:
-						changed = true ; count += 1
+						changed = true
+						if not vChanged:
+							count += 1 ; vChanged = true
 					result.append(s)
 				if changed:
 					result = string.join(result,'\n')
