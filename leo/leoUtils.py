@@ -1,5 +1,4 @@
 #@+leo
-#@comment Created by Leo.
 #@+node:0::@file leoUtils.py
 #@+body
 #@@language python

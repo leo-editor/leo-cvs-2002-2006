@@ -32,7 +32,8 @@ prolog_postfix_string = "?>"
 # Internally, lower case is used for all language names.
 language_delims_dict = {
 	"c" : "// /* */", # C, C++ or objective C.
-	"cweb" : "@q @>", 
+	"cweb" : "@q @>",
+	"forth" : "_\\_ _(_ _)_", # Use the "REM hack"
 	"fortran" : "C",
 	"fortran90" : "!",
 	"html" : "<!-- -->",
