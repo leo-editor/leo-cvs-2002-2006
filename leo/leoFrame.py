@@ -876,11 +876,11 @@ class LeoFrame:
 					else:
 						self.menuShortcuts.append(bind_shortcut)
 						try:
-							if 1: # try using bind_all.
+							if 0: # This may cause problems when multiple Leo windows are present.
 								self.top.bind_all(bind_shortcut,command)
 								# This should work, and doesn't.
 								# self.body.bind_class(bind_shortcut,command) # For headlines created later.
-							else:
+							else: # This seems safer.
 								self.body.bind(bind_shortcut,command) # Necessary to override defaults in body.
 								self.top.bind (bind_shortcut,command)
 						except: # could be a user error

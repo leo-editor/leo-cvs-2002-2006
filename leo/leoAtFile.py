@@ -2892,16 +2892,16 @@ class atFile:
 			#@<< warn about @ignored and orphans >>
 			#@+node:3::<< Warn about @ignored and orphans  >>
 			#@+body
-			if self.language != "cweb":
+			# 10/26/02: Always warn, even when language=="cweb"
 			
-				next = root.nodeAfterTree()
-				v = root
-				while v and v != next:
-					if not v.isVisited():
-						self.writeError("Orphan node:  " + v.headString())
-					if v.isAtIgnoreNode():
-						self.writeError("@ignore node: " + v.headString())
-					v = v.threadNext()
+			next = root.nodeAfterTree()
+			v = root
+			while v and v != next:
+				if not v.isVisited():
+					self.writeError("Orphan node:  " + v.headString())
+				if v.isAtIgnoreNode():
+					self.writeError("@ignore node: " + v.headString())
+				v = v.threadNext()
 			
 			#@-body
 			#@-node:3::<< Warn about @ignored and orphans  >>
