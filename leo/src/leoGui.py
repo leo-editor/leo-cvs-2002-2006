@@ -12,6 +12,10 @@ Plugins may define their own gui classes by setting app.gui."""
 
 from leoGlobals import *
 
+import leoFrame # for null gui.
+
+#@+others
+#@+node:class leoGui
 class leoGui:
 	
 	"""The base class of all gui classes.
@@ -19,6 +23,18 @@ class leoGui:
 	Subclasses are expected to override all do-nothing methods of this class."""
 	
 	#@	@+others
+	#@+node: leoGui.__init__
+	def __init__ (self,guiName):
+		
+		# trace("leoGui",guiName)
+		
+		self.leoIcon = None
+		self.mGuiName = guiName
+		self.mainLoop = None
+		self.root = None
+		self.utils = None
+	#@nonl
+	#@-node: leoGui.__init__
 	#@+node:newLeoCommanderAndFrame (gui-independent)
 	def newLeoCommanderAndFrame(self,fileName):
 		
@@ -217,6 +233,12 @@ class leoGui:
 		"""Return the window information."""
 		self.oops()
 	#@-node:Dialog utils
+	#@+node:Font
+	def getFontFromParams(self,family,size,slant,weight):
+		
+		self.oops()
+	#@nonl
+	#@-node:Font
 	#@+node:Focus
 	def get_focus(self,frame):
 	
@@ -258,18 +280,6 @@ class leoGui:
 			return "invalid gui name"
 	#@nonl
 	#@-node:guiName
-	#@+node:leoGui.__init__
-	def __init__ (self,guiName):
-		
-		# trace("leoGui",guiName)
-		
-		self.leoIcon = None
-		self.mGuiName = guiName
-		self.mainLoop = None
-		self.root = None
-		self.utils = None
-	#@nonl
-	#@-node:leoGui.__init__
 	#@+node:oops
 	def oops (self):
 		
@@ -277,6 +287,77 @@ class leoGui:
 	#@nonl
 	#@-node:oops
 	#@-others
+#@nonl
+#@-node:class leoGui
+#@+node:class nullGui
+class nullGui(leoGui):
+	
+	"""Null gui class."""
+	
+	#@	@+others
+	#@+node: nullGui.__init__
+	def __init__ (self,guiName):
+		
+		leoGui.__init__ (self,guiName) # init the base class.
+		
+		self.script = None
+	#@nonl
+	#@-node: nullGui.__init__
+	#@+node:createLeoFrame
+	def createLeoFrame(self,title):
+		
+		"""Create a null Leo Frame."""
+	
+		return leoFrame.nullFrame(title)
+	#@nonl
+	#@-node:createLeoFrame
+	#@+node:createRootWindow
+	def createRootWindow(self):
+		pass
+	#@nonl
+	#@-node:createRootWindow
+	#@+node:finishCreate
+	def finishCreate (self):
+		pass
+	#@nonl
+	#@-node:finishCreate
+	#@+node:runMainLoop
+	def runMainLoop(self):
+	
+		"""Run the gui's main loop."""
+		
+		script = self.script
+		
+		if script:
+			trace("nullGui executing script...\n\n")
+			from leoGlobals import top
+			top().executeScript(script=script)
+		else:
+			trace("nullGui: main loop: no script")
+	#@nonl
+	#@-node:runMainLoop
+	#@+node:oops
+	def oops(self):
+			
+		"""Default do-nothing method for nullGui class.
+		
+		It is NOT an error to use this method."""
+		
+		trace("nullGui",callerName(2))
+		pass
+	#@nonl
+	#@-node:oops
+	#@+node:setScript
+	def setScript (self,script=None,scriptFileName=None):
+	
+		self.script = script
+		self.scriptFileName = scriptFileName
+	#@nonl
+	#@-node:setScript
+	#@-others
+#@nonl
+#@-node:class nullGui
+#@-others
 #@nonl
 #@-node:@file leoGui.py
 #@-leo
