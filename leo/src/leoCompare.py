@@ -20,7 +20,7 @@ def choose(cond, a, b): # warning: evaluates all arguments
 #@+node:ekr.20031218072017.3632:go
 def go ():
 
-    cmp = leoCompare(
+    compare = leoCompare(
         commands = None,
         
         appendOutput = True,
@@ -47,13 +47,13 @@ def go ():
 
         path1 = "c:\\prog\\test\\tangleTest\\"
         path2 = "c:\\prog\\test\\tangleTestCB\\"
-        cmp.compare_directories(path1,path2)
+        compare.compare_directories(path1,path2)
 
     else: # Compare two files.
 
         name1 = "c:\\prog\\test\\compare1.txt"
         name2 = "c:\\prog\\test\\compare2.txt"
-        cmp.compare_files(name1,name2)
+        compare.compare_files(name1,name2)
 #@nonl
 #@-node:ekr.20031218072017.3632:go
 #@+node:ekr.20031218072017.3633:class leoCompare
@@ -394,11 +394,11 @@ class baseLeoCompare:
     #@+node:ekr.20031218072017.3647:dump
     def dump (self,tag,s):
     
-        cmp = self ; out = tag
+        compare = self ; out = tag
     
         for ch in s[:-1]: # don't print the newline
         
-            if cmp.makeWhitespaceVisible:
+            if compare.makeWhitespaceVisible:
                 if ch == '\t':
                     out += "[" ; out += "t" ; out += "]"
                 elif ch == ' ':
