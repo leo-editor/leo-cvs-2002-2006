@@ -4101,11 +4101,15 @@ class baseNewDerivedFile(oldDerivedFile):
                     at.t.setDirty() # Mark the node dirty.  Ancestors will be marked dirty later.
                     at.c.setChanged(True)
                 else:
-                    g.es("Warning: updating cloned text",color="blue")
+                    g.es("Warning: updating changed text",color="blue")
                     #g.es("old...\n%s\n" % old)
                     #g.es("new...\n%s\n" % s)
-                    at.t.setDirty() # Mark the node dirty.  Ancestors will be marked dirty later.
-                    at.c.setChanged(True)
+                    # Just set the dirty bit. Ancestors will be marked dirty later.
+                    at.t.setDirty()
+                    if 1: # We must avoid the full setChanged logic here!
+                        c.changed = True
+                    else: # Far too slow for mass changes.
+                        at.c.setChanged(True)
             at.t.tempBodyString = s
     
         # Indicate that the tnode has been set in the derived file.
