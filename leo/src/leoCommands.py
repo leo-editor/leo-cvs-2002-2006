@@ -966,7 +966,7 @@ class baseCommands:
 	#@nonl
 	#@-node:delete
 	#@+node:executeScript
-	def executeScript(self,v=None):
+	def executeScript(self,v=None,script=None):
 	
 		"""This executes body text as a Python script.
 		
@@ -974,65 +974,67 @@ class baseCommands:
 		
 		error = false
 		c = self ; s = None
-		if v == None:
-			v = c.currentVnode()
 	
-		#@	<< define class fileLikeObject >>
-		#@+node:<< define class fileLikeObject >>
-		class fileLikeObject:
+		if script:
+			s = script
+		else:
+			#@		<< define class fileLikeObject >>
+			#@+node:<< define class fileLikeObject >>
+			class fileLikeObject:
+				
+				def __init__(self):
+					self.s = ""
+					
+				def clear (self):
+					self.s = ""
+					
+				def close (self):
+					pass
+					
+				def flush (self):
+					pass
+					
+				def get (self):
+					return self.s
+					
+				def write (self,s):
+					if s:
+						self.s = self.s + s
+			#@nonl
+			#@-node:<< define class fileLikeObject >>
+			#@nl
+			#@		<< get script into s >>
+			#@+node:<< get script into s >>
+			try:
+				if v is None:
+					v = c.currentVnode()
+				old_body = v.bodyString()
+				
+				if c.frame.body.hasTextSelection():
+					# Temporarily replace v's body text with just the selected text.
+					s = c.frame.body.getSelectedText()
+					v.t.setTnodeText(s) 
+				else:
+					s = c.frame.body.getAllText()
 			
-			def __init__(self):
-				self.s = ""
-				
-			def clear (self):
-				self.s = ""
-				
-			def close (self):
-				pass
-				
-			def flush (self):
-				pass
-				
-			def get (self):
-				return self.s
-				
-			def write (self,s):
-				if s:
-					self.s = self.s + s
-		#@nonl
-		#@-node:<< define class fileLikeObject >>
-		#@nl
-		#@	<< get script into s >>
-		#@+node:<< get script into s >>
-		try:
-			old_body = v.bodyString()
+				if s.strip():
+					app.scriptDict["script1"]=s
+					df = c.atFileCommands.new_df
+					df.scanAllDirectives(v)
+					# Force Python comment delims.
+					df.startSentinelComment = "#"
+					df.endSentinelComment = None
+					# Write the "derived file" into fo.
+					fo = fileLikeObject()
+					df.write(v,nosentinels=true,scriptFile=fo)
+					s = fo.get()
+					app.scriptDict["script2"]=s
+					error = len(s) == 0
 			
-			if c.frame.body.hasTextSelection():
-				# Temporarily replace v's body text with just the selected text.
-				s = c.frame.body.getSelectedText()
-				v.t.setTnodeText(s) 
-			else:
-				s = c.frame.body.getAllText()
-		
-			if s.strip():
-				app.scriptDict["script1"]=s
-				df = c.atFileCommands.new_df
-				df.scanAllDirectives(v)
-				# Force Python comment delims.
-				df.startSentinelComment = "#"
-				df.endSentinelComment = None
-				# Write the "derived file" into fo.
-				fo = fileLikeObject()
-				df.write(v,nosentinels=false,scriptFile=fo)
-				s = fo.get()
-				app.scriptDict["script2"]=s
-				error = len(s) == 0
-		
-		finally:
-			v.t.setTnodeText(old_body)
-		#@nonl
-		#@-node:<< get script into s >>
-		#@nl
+			finally:
+				v.t.setTnodeText(old_body)
+			#@-node:<< get script into s >>
+			#@nl
 		#@	<< redirect output if redirect_execute_script_output_to_log_pane >>
 		#@+node:<< redirect output if redirect_execute_script_output_to_log_pane >>
 		if app.config.redirect_execute_script_output_to_log_pane:
