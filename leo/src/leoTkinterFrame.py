@@ -1545,7 +1545,7 @@ class leoTkinterBody (leoFrame.leoBody):
         c = self.c
         if not c: return "break"
         if not p: return "break"
-        if p != c.currentPosition(): return "break"
+        if not c.isCurrentPosition(p): return "break"
     
         if g.doHook("bodykey1",c=c,v=p,ch=ch,oldSel=oldSel,undoType=undoType):
             return "break" # The hook claims to have handled the event.
