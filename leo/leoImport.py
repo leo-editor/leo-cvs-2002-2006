@@ -2342,7 +2342,30 @@ class leoImportCommands:
 		return i, string.rstrip(result)
 	#@-body
 	#@-node:4::copyPart
-	#@+node:5::flattenOutline
+	#@+node:5::exportHeadlines
+	#@+body
+	def exportHeadlines (self,fileName):
+		
+		c = self.commands ; v = c.currentVnode()
+		nl = self.output_newline
+		if not v: return
+		after = v.nodeAfterTree()
+		firstLevel = v.level()
+		try:
+			mode = app().config.output_newline
+			mode = choose(mode=="platform",'w','wb')
+			file = open(fileName,mode)
+			while v and v != after:
+				head = v.moreHead(firstLevel)
+				file.write(head + nl)
+				v = v.threadNext()
+			file.close()
+		except:
+			es("exception while exporting headlines")
+			es_exception()
+	#@-body
+	#@-node:5::exportHeadlines
+	#@+node:6::flattenOutline
 	#@+body
 	def flattenOutline (self,fileName):
 	
@@ -2368,8 +2391,8 @@ class leoImportCommands:
 			es("exception while flattening outline")
 			es_exception()
 	#@-body
-	#@-node:5::flattenOutline
-	#@+node:6::outlineToWeb
+	#@-node:6::flattenOutline
+	#@+node:7::outlineToWeb
 	#@+body
 	def outlineToWeb (self,fileName,webType):
 	
@@ -2403,8 +2426,8 @@ class leoImportCommands:
 			es("exception in Outline To noweb command")
 			es_exception()
 	#@-body
-	#@-node:6::outlineToWeb
-	#@+node:7::removeSentinelsCommand
+	#@-node:7::outlineToWeb
+	#@+node:8::removeSentinelsCommand
 	#@+body
 	def removeSentinelsCommand (self,fileName):
 	
@@ -2499,8 +2522,8 @@ class leoImportCommands:
 			#@-body
 			#@-node:3::<< Write s into newFileName >>
 	#@-body
-	#@-node:7::removeSentinelsCommand
-	#@+node:8::removeSentinelLines
+	#@-node:8::removeSentinelsCommand
+	#@+node:9::removeSentinelLines
 	#@+body
 	#@+at
 	#  Properly removes all sentinel lines in s.  Only leading single-line 
@@ -2552,8 +2575,8 @@ class leoImportCommands:
 			result += s[start:i]
 		return result
 	#@-body
-	#@-node:8::removeSentinelLines
-	#@+node:9::weave
+	#@-node:9::removeSentinelLines
+	#@+node:10::weave
 	#@+body
 	def weave (self,filename):
 		
@@ -2611,7 +2634,7 @@ class leoImportCommands:
 		f.flush()
 		f.close()
 	#@-body
-	#@-node:9::weave
+	#@-node:10::weave
 	#@-node:4::Export
 	#@+node:5::Utilities
 	#@+node:1::createHeadline

@@ -857,6 +857,7 @@ class LeoFrame:
 			("Import noweb Files",None,self.OnImportNowebFiles),
 			("Import Flattened Outline",None,self.OnImportFlattenedOutline),
 			("-",None,None),
+			("Export Headlines",None,self.OnExportHeadlines),
 			("Outline To CWEB",None,self.OnOutlineToCWEB),
 			("Outline To Noweb",None,self.OnOutlineToNoweb),
 			("Flatten Outline",None,self.OnFlattenOutline),
@@ -1826,7 +1827,22 @@ class LeoFrame:
 	#@-node:3::OnUntangle
 	#@-node:5::Untangle submenu
 	#@+node:6::Import&Export submenu
-	#@+node:1::OnFlattenOutline
+	#@+node:1::OnExportHeadlines
+	#@+body
+	def OnExportHeadlines (self,event=None):
+		
+		filetypes = [("Text files", "*.txt"),("All files", "*")]
+	
+		fileName = tkFileDialog.asksaveasfilename(
+			title="Export Headlines",filetypes=filetypes,
+			initialfile="headlines.txt",defaultextension=".txt")
+	
+		if fileName and len(fileName) > 0:
+			self.commands.importCommands.exportHeadlines(fileName)
+	
+	#@-body
+	#@-node:1::OnExportHeadlines
+	#@+node:2::OnFlattenOutline
 	#@+body
 	def OnFlattenOutline (self,event=None):
 		
@@ -1841,8 +1857,8 @@ class LeoFrame:
 			c.importCommands.flattenOutline(fileName)
 	
 	#@-body
-	#@-node:1::OnFlattenOutline
-	#@+node:2::OnImportAtRoot
+	#@-node:2::OnFlattenOutline
+	#@+node:3::OnImportAtRoot
 	#@+body
 	def OnImportAtRoot (self,event=None):
 		
@@ -1864,8 +1880,8 @@ class LeoFrame:
 			c.importCommands.importFilesCommand (paths,"@root")
 	
 	#@-body
-	#@-node:2::OnImportAtRoot
-	#@+node:3::OnImportAtFile
+	#@-node:3::OnImportAtRoot
+	#@+node:4::OnImportAtFile
 	#@+body
 	def OnImportAtFile (self,event=None):
 		
@@ -1887,8 +1903,8 @@ class LeoFrame:
 			c.importCommands.importFilesCommand (paths,"@file")
 	
 	#@-body
-	#@-node:3::OnImportAtFile
-	#@+node:4::OnImportCWEBFiles
+	#@-node:4::OnImportAtFile
+	#@+node:5::OnImportCWEBFiles
 	#@+body
 	def OnImportCWEBFiles (self,event=None):
 		
@@ -1906,8 +1922,8 @@ class LeoFrame:
 			c.importCommands.importWebCommand(paths,"cweb")
 	
 	#@-body
-	#@-node:4::OnImportCWEBFiles
-	#@+node:5::OnImportFlattenedOutline
+	#@-node:5::OnImportCWEBFiles
+	#@+node:6::OnImportFlattenedOutline
 	#@+body
 	def OnImportFlattenedOutline (self,event=None):
 		
@@ -1923,8 +1939,8 @@ class LeoFrame:
 			c.importCommands.importFlattenedOutline(paths)
 	
 	#@-body
-	#@-node:5::OnImportFlattenedOutline
-	#@+node:6::OnImportNowebFiles
+	#@-node:6::OnImportFlattenedOutline
+	#@+node:7::OnImportNowebFiles
 	#@+body
 	def OnImportNowebFiles (self,event=None):
 		
@@ -1942,8 +1958,8 @@ class LeoFrame:
 			c.importCommands.importWebCommand(paths,"noweb")
 	
 	#@-body
-	#@-node:6::OnImportNowebFiles
-	#@+node:7::OnOutlineToCWEB
+	#@-node:7::OnImportNowebFiles
+	#@+node:8::OnOutlineToCWEB
 	#@+body
 	def OnOutlineToCWEB (self,event=None):
 		
@@ -1961,8 +1977,8 @@ class LeoFrame:
 			c.importCommands.outlineToWeb(fileName,"cweb")
 	
 	#@-body
-	#@-node:7::OnOutlineToCWEB
-	#@+node:8::OnOutlineToNoweb
+	#@-node:8::OnOutlineToCWEB
+	#@+node:9::OnOutlineToNoweb
 	#@+body
 	def OnOutlineToNoweb (self,event=None):
 		
@@ -1981,8 +1997,8 @@ class LeoFrame:
 			self.outlineToNowebDefaultFileName = fileName
 	
 	#@-body
-	#@-node:8::OnOutlineToNoweb
-	#@+node:9::OnRemoveSentinels
+	#@-node:9::OnOutlineToNoweb
+	#@+node:10::OnRemoveSentinels
 	#@+body
 	def OnRemoveSentinels (self,event=None):
 		
@@ -2005,8 +2021,8 @@ class LeoFrame:
 			c.importCommands.removeSentinelsCommand (fileName)
 	
 	#@-body
-	#@-node:9::OnRemoveSentinels
-	#@+node:10::OnWeave
+	#@-node:10::OnRemoveSentinels
+	#@+node:11::OnWeave
 	#@+body
 	def OnWeave (self,event=None):
 		
@@ -2021,7 +2037,7 @@ class LeoFrame:
 			c.importCommands.weave(fileName)
 	
 	#@-body
-	#@-node:10::OnWeave
+	#@-node:11::OnWeave
 	#@-node:6::Import&Export submenu
 	#@-node:1::File Menu
 	#@+node:2::Edit Menu (change to handle log pane too)
