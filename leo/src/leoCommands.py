@@ -129,6 +129,7 @@ class baseCommands:
 				es("exception executing command")
 				print "exception executing command"
 				es_exception()
+				c.redraw() # 11/23/03
 		
 		doHook("command2",c=c,v=v,label=label)
 				
@@ -1221,8 +1222,10 @@ class baseCommands:
 							s = "tnode not found for " + vnodeName
 							print s ; es(s, color="red") ; ok = false
 						elif v.headString().strip() != vnodeName:
-							s = "Mismatched vnodeName\nExpecting: %s\n got: %s" % (v.headString(),vnodeName)
-							print s ; es(s, color="red") ; ok = false
+							if 0: # Apparently this error doesn't prevent a later scan for working properly.
+								s = "Mismatched vnodeName\nExpecting: %s\n got: %s" % (v.headString(),vnodeName)
+								print s ; es(s, color="red")
+							ok = false
 					else:
 						s = "Invalid computed tnodeIndex: %d" % tnodeIndex
 						print s ; es(s, color = "red") ; ok = false
@@ -1714,12 +1717,12 @@ class baseCommands:
 			line = removeLeadingWhitespace(line,ws,c.tab_width)
 			result.append(line)
 		# Create a new node from lines.
-		body = string.join(result,'\n')
+		newBody = string.join(result,'\n') # 11/23/03
 		if head and len(head) > 0:
 			head = string.rstrip(head)
 		c.beginUpdate()
 		if 1: # update range...
-			c.createLastChildNode(v,headline,body)
+			c.createLastChildNode(v,headline,newBody) # 11/23/03
 			undoType =  "Can't Undo" # 12/8/02: None enables further undoes, but there are bugs now.
 			c.updateBodyPane(head,None,tail,undoType,oldSel,oldYview,setSel=false)
 			newText = body.getAllText()
@@ -1771,12 +1774,12 @@ class baseCommands:
 			line = removeLeadingWhitespace(line,ws,c.tab_width)
 			result.append(line)
 		# Create a new node from lines.
-		body = string.join(result,'\n')
+		newBody = string.join(result,'\n')  # 11/23/03
 		if head and len(head) > 0:
 			head = string.rstrip(head)
 		c.beginUpdate()
 		if 1: # update range...
-			c.createLastChildNode(v,headline,body)
+			c.createLastChildNode(v,headline,newBody)  # 11/23/03
 			undoType = None # Set undo params later.
 			c.updateBodyPane(head+line1,None,tail,undoType,oldSel,oldYview,setSel=false)
 			newText = body.getAllText()
@@ -1786,6 +1789,7 @@ class baseCommands:
 				oldText=oldText,newText=newText,
 				oldSel=oldSel,newSel=newSel)
 		c.endUpdate()
+	#@nonl
 	#@-node:extractSection
 	#@+node:extractSectionNames
 	def extractSectionNames(self):
