@@ -424,6 +424,8 @@ class baseAtFile:
                             print ; print "old:",p.bodyString()
                         if thinFile:
                             p.v.setTnodeText(s)
+                            if p.v.isDirty():
+                                p.setAllAncestorAtFileNodesDirty()
                         else:
                             g.es("changed: " + p.headString(),color="blue")
                             p.setMarked()
@@ -437,9 +439,6 @@ class baseAtFile:
             
             if hasattr(p.v.t,"tempBodyString"):
                 delattr(p.v.t,"tempBodyString")
-                
-            #if hasattr(p.v.t,"tempRefBodyString"):
-            #    delattr(p.v.t,"tempRefBodyString")
         #@nonl
         #@-node:ekr.20031218072017.1819:<< delete all tempBodyStrings >>
         #@nl
@@ -4045,8 +4044,18 @@ class baseNewDerivedFile(oldDerivedFile):
         elif middle: 
             pass # Middle sentinels never alter text.
         else:
-            if hasattr(at.t,"tempBodyString") and at.t.tempBodyString != s:
-                g.trace("multiple copies of node text",at.t)
+            if hasattr(at.t,"tempBodyString") and s != at.t.tempBodyString:
+                old = at.t.tempBodyString
+            elif at.t.hasBody() and s != at.t.getBody():
+                old = at.t.getBody()
+            else:
+                old = None
+            if old:
+                g.es("Warning: updating cloned text",color="blue")
+                g.es("old...\n%s\n" % old)
+                g.es("new...\n%s\n" % s)
+                at.t.setDirty() # Mark the node dirty.  Ancestors will be marked dirty later.
+                at.c.setChanged(True)
             at.t.tempBodyString = s
     
         # Indicate that the tnode has been set in the derived file.
