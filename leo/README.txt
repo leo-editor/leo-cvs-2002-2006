@@ -1,5 +1,9 @@
 Important note: See INSTALL.TXT for installation instructions.
 
+leo.py 3.11 beta 2                       February 24, 2003
+
+This version of Leo fixes some unicode problems when the system encoding is not "utf-8".
+
 leo.py 3.11 beta 1                       February 17, 2003
 
 This version of Leo contains a very large number of improvements.  The highlights:

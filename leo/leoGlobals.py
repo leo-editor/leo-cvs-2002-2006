@@ -858,7 +858,32 @@ def get_line_after (s,i):
 
 #@-body
 #@-node:6::get_line & get_line_after
-#@+node:7::printBindings
+#@+node:7::file/module/plugin_date
+#@+body
+def module_date (mod,format=None):
+	file = os.path.join(app().loadDir,mod.__file__)
+	root,ext = os.path.splitext(file) 
+	return file_date(root + ".py",format=format)
+
+def plugin_date (plugin_mod,format=None):
+	file = os.path.join(app().loadDir,"plugins",plugin_mod.__file__)
+	root,ext = os.path.splitext(file) 
+	return file_date(root + ".py",format=format)
+
+def file_date (file,format=None):
+	if file and len(file)and os.path.exists(file):
+		try:
+			import time
+			n = os.path.getmtime(file)
+			if format == None:
+				format = "%d %b %Y %H:%M:%S"
+			return time.strftime(format,time.gmtime(n))
+		except: pass
+	return ""
+
+#@-body
+#@-node:7::file/module/plugin_date
+#@+node:8::printBindings
 #@+body
 def print_bindings (name,window):
 
@@ -868,8 +893,8 @@ def print_bindings (name,window):
 	for b in bindings:
 		print b
 #@-body
-#@-node:7::printBindings
-#@+node:8::printGlobals
+#@-node:8::printBindings
+#@+node:9::printGlobals
 #@+body
 def printGlobals(message=None):
 	
@@ -884,8 +909,8 @@ def printGlobals(message=None):
 	for glob in globs:
 		print glob
 #@-body
-#@-node:8::printGlobals
-#@+node:9::printLeoModules
+#@-node:9::printGlobals
+#@+node:10::printLeoModules
 #@+body
 def printLeoModules(message=None):
 	
@@ -904,8 +929,8 @@ def printLeoModules(message=None):
 		print m,
 	print
 #@-body
-#@-node:9::printLeoModules
-#@+node:10::Sherlock...
+#@-node:10::printLeoModules
+#@+node:11::Sherlock...
 #@+body
 #@+at
 #  Starting with this release, you will see trace statements throughout the 
@@ -1074,8 +1099,8 @@ def trace_tag (name, *args):
 
 #@-body
 #@-node:5::trace_tag
-#@-node:10::Sherlock...
-#@+node:11::Timing
+#@-node:11::Sherlock...
+#@+node:12::Timing
 #@+body
 #@+at
 #  pychecker bug: pychecker complains that there is no attribute time.clock
@@ -1090,7 +1115,7 @@ def esDiffTime(message, start):
 	es(message + ("%6.3f" % (time.clock()-start)))
 	return time.clock()
 #@-body
-#@-node:11::Timing
+#@-node:12::Timing
 #@-node:4::Dumping, Timing, Tracing & Sherlock
 #@+node:5::Files & Directories...
 #@+node:1::create_temp_name
