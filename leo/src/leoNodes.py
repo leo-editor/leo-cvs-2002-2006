@@ -1014,7 +1014,29 @@ class vnode:
 		return self.commands.tree.currentVnode
 	#@-body
 	#@-node:3::currentVnode (vnode)
-	#@+node:4::findRoot
+	#@+node:4::v.exists
+	#@+body
+	def exists(self,c):
+		
+		"""Return true if v exists in c's tree"""
+		
+		v = self ; c = v.commands
+		
+		# This code must be fast.
+		root = c.rootVnode()
+		while v:
+			if v == root:
+				return true
+			p = v.parent()
+			if p:
+				v = p
+			else:
+				v = v.back()
+			
+		return false
+	#@-body
+	#@-node:4::v.exists
+	#@+node:5::findRoot
 	#@+body
 	# Compatibility routine for scripts
 	
@@ -1023,8 +1045,8 @@ class vnode:
 		return self.commands.tree.rootVnode
 	
 	#@-body
-	#@-node:4::findRoot
-	#@+node:5::headString
+	#@-node:5::findRoot
+	#@+node:6::headString
 	#@+body
 	def headString (self):
 	
@@ -1035,8 +1057,8 @@ class vnode:
 	
 	
 	#@-body
-	#@-node:5::headString
-	#@+node:6::isAncestorOf
+	#@-node:6::headString
+	#@+node:7::isAncestorOf
 	#@+body
 	def isAncestorOf (self, v):
 	
@@ -1049,15 +1071,15 @@ class vnode:
 			v = v.parent()
 		return false
 	#@-body
-	#@-node:6::isAncestorOf
-	#@+node:7::isRoot
+	#@-node:7::isAncestorOf
+	#@+node:8::isRoot
 	#@+body
 	def isRoot (self):
 	
 		return not self.parent() and not self.back()
 	#@-body
-	#@-node:7::isRoot
-	#@+node:8::Status Bits
+	#@-node:8::isRoot
+	#@+node:9::Status Bits
 	#@+node:1::isCloned
 	#@+body
 	def isCloned (self):
@@ -1135,8 +1157,8 @@ class vnode:
 		return self.statusBits
 	#@-body
 	#@-node:10::status
-	#@-node:8::Status Bits
-	#@+node:9::Structure Links
+	#@-node:9::Status Bits
+	#@+node:10::Structure Links
 	#@+node:1::back
 	#@+body
 	# Compatibility routine for scripts
@@ -1274,7 +1296,7 @@ class vnode:
 		return v
 	#@-body
 	#@-node:10::visNext
-	#@-node:9::Structure Links
+	#@-node:10::Structure Links
 	#@-node:9::Getters
 	#@+node:10::Setters
 	#@+node:1::Head and body text
