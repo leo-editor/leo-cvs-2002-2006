@@ -1364,8 +1364,8 @@
 <v t="ekr.20031218072017.1000"><vh>drawBox (tag_bind)</vh></v>
 <v t="ekr.20031218072017.1002"><vh>drawIcon (tag_bind)</vh></v>
 <v t="ekr.20031218072017.1004"><vh>drawNode &amp; force_draw_node (good trace)</vh>
-<v t="ekr.20040317171729"><vh>force_draw_nodeNew</vh></v>
-<v t="ekr.20040318090335"><vh>force_draw_node</vh></v>
+<v t="ekr.20040317171729"><vh>force_draw_node (new)</vh></v>
+<v t="ekr.20040318090335"><vh>force_draw_node (old)</vh></v>
 </v>
 <v t="ekr.20031218072017.1005"><vh>drawText (bind)</vh>
 <v t="ekr.20031218072017.1006"><vh>&lt;&lt; configure the text depending on state &gt;&gt;</vh></v>
@@ -4453,8 +4453,8 @@
 <v t="ekr.20031218072017.1000"><vh>drawBox (tag_bind)</vh></v>
 <v t="ekr.20031218072017.1002"><vh>drawIcon (tag_bind)</vh></v>
 <v t="ekr.20031218072017.1004"><vh>drawNode &amp; force_draw_node (good trace)</vh>
-<v t="ekr.20040317171729"><vh>force_draw_nodeNew</vh></v>
-<v t="ekr.20040318090335"><vh>force_draw_node</vh></v>
+<v t="ekr.20040317171729"><vh>force_draw_node (new)</vh></v>
+<v t="ekr.20040318090335"><vh>force_draw_node (old)</vh></v>
 </v>
 <v t="ekr.20031218072017.1005"><vh>drawText (bind)</vh>
 <v t="ekr.20031218072017.1006"><vh>&lt;&lt; configure the text depending on state &gt;&gt;</vh></v>
@@ -4972,8 +4972,8 @@
 </v>
 <v t="ekr.20040313083810.1"><vh>tree stuff...</vh>
 <v t="ekr.20031218072017.1004"><vh>drawNode &amp; force_draw_node (good trace)</vh>
-<v t="ekr.20040317171729"><vh>force_draw_nodeNew</vh></v>
-<v t="ekr.20040318090335"><vh>force_draw_node</vh></v>
+<v t="ekr.20040317171729"><vh>force_draw_node (new)</vh></v>
+<v t="ekr.20040318090335"><vh>force_draw_node (old)</vh></v>
 </v>
 <v t="ekr.20031218072017.1005"><vh>drawText (bind)</vh>
 <v t="ekr.20031218072017.1006"><vh>&lt;&lt; configure the text depending on state &gt;&gt;</vh></v>
@@ -5036,33 +5036,6 @@
 <v t="ekr.20031218072017.2695"><vh>putOpenLeoSentinel 3.x</vh></v>
 </v>
 <v t="ekr.20040318150556"><vh>(Script to count number of nodes)</vh></v>
-<v t="ekr.20040317094229"><vh>(Draw optional icons)(Very slow?)</vh>
-<v t="ekr.20031218072017.4140"><vh>&lt;&lt; drawing constants &gt;&gt;</vh></v>
-<v t="ekr.20040317184631.2"><vh>Changes</vh></v>
-<v t="ekr.20040317184631"><vh>Design</vh></v>
-<v t="ekr.20031218072017.1000"><vh>drawBox (tag_bind)</vh></v>
-<v t="ekr.20031218072017.1002"><vh>drawIcon (tag_bind)</vh></v>
-<v t="ekr.20031218072017.1004"><vh>drawNode &amp; force_draw_node (good trace)</vh>
-<v t="ekr.20040317171729"><vh>force_draw_nodeNew</vh></v>
-<v t="ekr.20040318090335"><vh>force_draw_node</vh></v>
-</v>
-<v t="ekr.20031218072017.1005"><vh>drawText (bind)</vh>
-<v t="ekr.20031218072017.1006"><vh>&lt;&lt; configure the text depending on state &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20031218072017.2029"><vh>drawTopTree</vh></v>
-<v t="ekr.20031218072017.1008"><vh>drawTree</vh>
-<v t="ekr.20031218072017.1009"><vh>&lt;&lt; draw vertical line &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20040317095510"><vh>drawUserIcon</vh>
-<v t="ekr.20040317173849"><vh>&lt;&lt; set offsets and pads &gt;&gt;</vh></v>
-<v t="ekr.20040317095153"><vh>&lt;&lt; draw the icon in string s &gt;&gt;</vh></v>
-<v t="ekr.20040317095153.1"><vh>&lt;&lt; draw the icon at url &gt;&gt;</vh></v>
-<v t="ekr.20040317100702"><vh>&lt;&lt; draw the icon at file &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20040317094609"><vh>drawUserIcons</vh></v>
-<v t="ekr.20040317184631.1"><vh>To do</vh></v>
-<v t="ekr.20031218072017.4147"><vh>tree.getIconImage</vh></v>
-</v>
 <v t="ekr.20040312092455.2"><vh>(Enable and test atFile read logic)</vh>
 <v t="ekr.20031218072017.2759"><vh>&lt;&lt; init ivars for scanText4 &gt;&gt;</vh></v>
 <v t="ekr.20040316075317"><vh>reading...</vh>
@@ -5158,8 +5131,6 @@
 </v>
 </v>
 </v>
-</v>
-</v>
 <v t="ekr.20040318092028"><vh>(Big performance bug in selecting/redraw/expand/contract)</vh>
 <v t="ekr.20040318100124"><vh>Coloringing...</vh>
 <v t="ekr.20031218072017.3677"><vh>Coloring </vh></v>
@@ -5191,6 +5162,92 @@
 <v t="ekr.20031218072017.2339"><vh>OnBoxClick</vh></v>
 <v t="ekr.20031218072017.3395"><vh>contract &amp; expand &amp; initExpandedBit</vh></v>
 <v t="ekr.20031218072017.4161"><vh>tree.expandAllAncestors</vh></v>
+</v>
+</v>
+<v t="ekr.20040318161816"><vh>(Moving,expanding,contracting nodes can create HUGE numbers of positions)</vh>
+<v t="ekr.20031218072017.1772"><vh>moveOutlineUp</vh>
+<v t="ekr.20031218072017.1773"><vh>&lt;&lt; Move v up &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20031218072017.1760"><vh>c.checkMoveWithParentWithWarning</vh></v>
+<v t="ekr.20040303214038"><vh>p.setAllAncestorAtFileNodesDirty</vh></v>
+</v>
+<v t="ekr.20040318164450"><vh>(Saving a .leo file created too many positions)</vh>
+<v t="ekr.20031218072017.1760"><vh>c.checkMoveWithParentWithWarning</vh></v>
+<v t="ekr.20031218072017.1416"><vh>app.__init__</vh>
+<v t="ekr.20031218072017.1417"><vh>&lt;&lt; define global constants &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.368"><vh>&lt;&lt; define global data structures &gt;&gt; app</vh></v>
+</v>
+<v t="ekr.20040305162628.1"><vh>p.Iterators</vh>
+<v t="ekr.20040305171133"><vh>allNodes_iter</vh>
+<v t="ekr.20040305171133.1"><vh>__init__ &amp; __iter__</vh></v>
+<v t="ekr.20040305171133.3"><vh>next</vh></v>
+</v>
+<v t="ekr.20040305173559"><vh>subtree_iter</vh>
+<v t="ekr.20040305173559.1"><vh>__init__ &amp; __iter__</vh></v>
+<v t="ekr.20040305173559.2"><vh>next</vh></v>
+</v>
+<v t="ekr.20040305172211.1"><vh>children_iter</vh>
+<v t="ekr.20040305172211.2"><vh>__init__ &amp; __iter__</vh></v>
+<v t="ekr.20040305172211.3"><vh>next</vh></v>
+</v>
+<v t="ekr.20040305172855"><vh>parents_iter</vh>
+<v t="ekr.20040305172855.1"><vh>__init__ &amp; __iter__</vh></v>
+<v t="ekr.20040305172855.2"><vh>next</vh></v>
+</v>
+<v t="ekr.20040305173343"><vh>siblings_iter</vh>
+<v t="ekr.20040305173343.1"><vh>__init__ &amp; __iter__</vh></v>
+<v t="ekr.20040305173343.2"><vh>next</vh></v>
+</v>
+</v>
+<v t="ekr.20031218072017.928"><vh>p.moveToX</vh>
+<v t="ekr.20031218072017.930"><vh>p.moveToBack</vh></v>
+<v t="ekr.20031218072017.931"><vh>p.moveToFirstChild (pushes stack for cloned nodes)</vh></v>
+<v t="ekr.20031218072017.932"><vh>p.moveToLastChild (pushes stack for cloned nodes)</vh></v>
+<v t="ekr.20031218072017.933" a="M"><vh>p.moveToLastNode (Big improvement for 4.2)</vh></v>
+<v t="ekr.20031218072017.934"><vh>p.moveToNext</vh></v>
+<v t="ekr.20031218072017.935"><vh>p.moveToNodeAfterTree</vh></v>
+<v t="ekr.20031218072017.936"><vh>p.moveToNthChild (pushes stack for cloned nodes)</vh></v>
+<v t="ekr.20031218072017.937"><vh>p.moveToParent (pops stack when multiple parents)</vh></v>
+<v t="ekr.20031218072017.938" a="M"><vh>p.moveToThreadBack</vh></v>
+<v t="ekr.20031218072017.939"><vh>p.moveToThreadNext</vh></v>
+<v t="ekr.20031218072017.940" a="M"><vh>p.moveToVisBack </vh></v>
+<v t="ekr.20031218072017.941"><vh>p.moveToVisNext</vh></v>
+</v>
+<v t="ekr.20031218072017.1579"><vh>putVnodes</vh></v>
+<v t="ekr.20031218072017.1863"><vh>putVnode (3.x and 4.x)</vh>
+<v t="ekr.20031218072017.1864"><vh>&lt;&lt; Put tnode index &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.1865"><vh>&lt;&lt; Put attribute bits &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.1866"><vh>&lt;&lt; write the head text &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.1867"><vh>&lt;&lt; put unknown vnode attributes &gt;&gt;</vh></v>
+</v>
+</v>
+<v t="ekr.20040317094229"><vh>(Draw user icons)</vh>
+<v t="ekr.20031218072017.4140"><vh>&lt;&lt; drawing constants &gt;&gt;</vh></v>
+<v t="ekr.20040317184631.2"><vh>Changes</vh></v>
+<v t="ekr.20040317184631"><vh>Design</vh></v>
+<v t="ekr.20031218072017.1000"><vh>drawBox (tag_bind)</vh></v>
+<v t="ekr.20031218072017.1002"><vh>drawIcon (tag_bind)</vh></v>
+<v t="ekr.20031218072017.1004" a="E"><vh>drawNode &amp; force_draw_node (good trace)</vh>
+<v t="ekr.20040317171729"><vh>force_draw_node (new)</vh></v>
+<v t="ekr.20040318090335"><vh>force_draw_node (old)</vh></v>
+</v>
+<v t="ekr.20031218072017.1005"><vh>drawText (bind)</vh>
+<v t="ekr.20031218072017.1006"><vh>&lt;&lt; configure the text depending on state &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20031218072017.2029"><vh>drawTopTree</vh></v>
+<v t="ekr.20031218072017.1008"><vh>drawTree</vh>
+<v t="ekr.20031218072017.1009"><vh>&lt;&lt; draw vertical line &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20040317095510"><vh>drawUserIcon</vh>
+<v t="ekr.20040317173849"><vh>&lt;&lt; set offsets and pads &gt;&gt;</vh></v>
+<v t="ekr.20040317095153"><vh>&lt;&lt; draw the icon in string s &gt;&gt;</vh></v>
+<v t="ekr.20040317095153.1"><vh>&lt;&lt; draw the icon at url &gt;&gt;</vh></v>
+<v t="ekr.20040317100702"><vh>&lt;&lt; draw the icon at file &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20040317094609"><vh>drawUserIcons</vh></v>
+<v t="ekr.20040317184631.1"><vh>To do</vh></v>
+<v t="ekr.20031218072017.4147"><vh>tree.getIconImage</vh></v>
+</v>
 </v>
 </v>
 <v t="ekr.20040228154544"><vh>(Transition to 4.2) p.__getattr__ OFF (must be ON if use_plugins)</vh>
@@ -5524,7 +5581,7 @@
 </v>
 </v>
 </v>
-<v t="ekr.20040318134209"><vh>TO DO NOW</vh></v>
+<v t="ekr.20040318134209" a="V"><vh>TO DO NOW</vh></v>
 <v t="ekr.20031218072017.2406"><vh>Code</vh>
 <v t="ekr.20031218072017.2407"><vh>  Overview of code</vh>
 <v t="ekr.20031218072017.2408"><vh>&lt;&lt; About clones &gt;&gt;</vh></v>
@@ -8598,8 +8655,8 @@
 <v t="ekr.20031218072017.1000"><vh>drawBox (tag_bind)</vh></v>
 <v t="ekr.20031218072017.1002"><vh>drawIcon (tag_bind)</vh></v>
 <v t="ekr.20031218072017.1004"><vh>drawNode &amp; force_draw_node (good trace)</vh>
-<v t="ekr.20040317171729"><vh>force_draw_nodeNew</vh></v>
-<v t="ekr.20040318090335"><vh>force_draw_node</vh></v>
+<v t="ekr.20040317171729"><vh>force_draw_node (new)</vh></v>
+<v t="ekr.20040318090335"><vh>force_draw_node (old)</vh></v>
 </v>
 <v t="ekr.20031218072017.1005"><vh>drawText (bind)</vh>
 <v t="ekr.20031218072017.1006"><vh>&lt;&lt; configure the text depending on state &gt;&gt;</vh></v>
@@ -8759,63 +8816,6 @@
 </v>
 </v>
 <v t="ekr.20031218072017.2243"><vh>class nullUndoer</vh></v>
-</v>
-</v>
-<v t="ekr.20040318161816"><vh>(Moving,expanding,contracting nodes can create HUGE numbers of positions)</vh>
-<v t="ekr.20031218072017.1772"><vh>moveOutlineUp</vh>
-<v t="ekr.20031218072017.1773"><vh>&lt;&lt; Move v up &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20031218072017.1760"><vh>c.checkMoveWithParentWithWarning</vh></v>
-<v t="ekr.20040303214038"><vh>p.setAllAncestorAtFileNodesDirty</vh></v>
-</v>
-<v t="ekr.20040318164450" a="EV"><vh>(Saving a .leo file created too many positions)</vh>
-<v t="ekr.20031218072017.1760"><vh>c.checkMoveWithParentWithWarning</vh></v>
-<v t="ekr.20031218072017.1416"><vh>app.__init__</vh>
-<v t="ekr.20031218072017.1417"><vh>&lt;&lt; define global constants &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.368"><vh>&lt;&lt; define global data structures &gt;&gt; app</vh></v>
-</v>
-<v t="ekr.20040305162628.1"><vh>p.Iterators</vh>
-<v t="ekr.20040305171133"><vh>allNodes_iter</vh>
-<v t="ekr.20040305171133.1"><vh>__init__ &amp; __iter__</vh></v>
-<v t="ekr.20040305171133.3"><vh>next</vh></v>
-</v>
-<v t="ekr.20040305173559"><vh>subtree_iter</vh>
-<v t="ekr.20040305173559.1"><vh>__init__ &amp; __iter__</vh></v>
-<v t="ekr.20040305173559.2"><vh>next</vh></v>
-</v>
-<v t="ekr.20040305172211.1"><vh>children_iter</vh>
-<v t="ekr.20040305172211.2"><vh>__init__ &amp; __iter__</vh></v>
-<v t="ekr.20040305172211.3"><vh>next</vh></v>
-</v>
-<v t="ekr.20040305172855"><vh>parents_iter</vh>
-<v t="ekr.20040305172855.1"><vh>__init__ &amp; __iter__</vh></v>
-<v t="ekr.20040305172855.2"><vh>next</vh></v>
-</v>
-<v t="ekr.20040305173343"><vh>siblings_iter</vh>
-<v t="ekr.20040305173343.1"><vh>__init__ &amp; __iter__</vh></v>
-<v t="ekr.20040305173343.2"><vh>next</vh></v>
-</v>
-</v>
-<v t="ekr.20031218072017.928"><vh>p.moveToX</vh>
-<v t="ekr.20031218072017.930"><vh>p.moveToBack</vh></v>
-<v t="ekr.20031218072017.931"><vh>p.moveToFirstChild (pushes stack for cloned nodes)</vh></v>
-<v t="ekr.20031218072017.932"><vh>p.moveToLastChild (pushes stack for cloned nodes)</vh></v>
-<v t="ekr.20031218072017.933" a="M"><vh>p.moveToLastNode (Big improvement for 4.2)</vh></v>
-<v t="ekr.20031218072017.934"><vh>p.moveToNext</vh></v>
-<v t="ekr.20031218072017.935"><vh>p.moveToNodeAfterTree</vh></v>
-<v t="ekr.20031218072017.936"><vh>p.moveToNthChild (pushes stack for cloned nodes)</vh></v>
-<v t="ekr.20031218072017.937"><vh>p.moveToParent (pops stack when multiple parents)</vh></v>
-<v t="ekr.20031218072017.938" a="M"><vh>p.moveToThreadBack</vh></v>
-<v t="ekr.20031218072017.939"><vh>p.moveToThreadNext</vh></v>
-<v t="ekr.20031218072017.940" a="M"><vh>p.moveToVisBack </vh></v>
-<v t="ekr.20031218072017.941"><vh>p.moveToVisNext</vh></v>
-</v>
-<v t="ekr.20031218072017.1579"><vh>putVnodes</vh></v>
-<v t="ekr.20031218072017.1863"><vh>putVnode (3.x and 4.x)</vh>
-<v t="ekr.20031218072017.1864"><vh>&lt;&lt; Put tnode index &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.1865"><vh>&lt;&lt; Put attribute bits &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.1866"><vh>&lt;&lt; write the head text &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.1867"><vh>&lt;&lt; put unknown vnode attributes &gt;&gt;</vh></v>
 </v>
 </v>
 </vnodes>
@@ -66683,7 +66683,7 @@ if image:
 	self.canvas.lift(id)
 	h = image.height() + yoffset + ypad
 	w = image.width()  + xoffset + xpad</t>
-<t tx="ekr.20040317171729">def force_draw_nodeNew(self,p,x,y):
+<t tx="ekr.20040317171729">def force_draw_node(self,p,x,y):
 
 	self.allocatedNodes += 1
 	h,w = self.drawUserIcons(p,"beforeBox",x,y)
@@ -66832,7 +66832,7 @@ This key won't be used.
 t.unknownAttributes["lineYOffset"] 
 
 An integer y offset for the entire line (except user icons, which are flexible enough).  You can use this to center the following vertically: the plus/minus box, the horizontal line to the plus/minus box, the standard headline box, and the Tk.Text widget for the headline.</t>
-<t tx="ekr.20040318090335">def force_draw_node(self,p,x,y):
+<t tx="ekr.20040318090335">def force_draw_nodeOLD(self,p,x,y):
 
 	self.allocatedNodes += 1
 
@@ -66845,7 +66845,8 @@ An integer y offset for the entire line (except user icons, which are flexible e
 
 	h = self.drawText(p,x+w,y)
 	
-	return h,0</t>
+	return h,0
+</t>
 <t tx="ekr.20040318092028">@
 
 At first, disabling the call to recolor_now in select speeded things up.  Now it doesn't (!!).
@@ -66889,25 +66890,23 @@ At first, disabling the call to recolor_now in select speeded things up.  Now it
 </t>
 <t tx="ekr.20040318134209">@nocolor
 
+CHANGES
+	- Don't clear v._parent field when more than one parent.
+		- use v._parent.t.vnodeList instead of v.parents.
+		- add v.parents() method: change v.parents to v.parentList
+	- Look at windows delete code.
+		- Break position links?
+
 TESTS
 	- Unit tests for v.parents.
 		- Test consistency of v.parents, v._parent.t.vnodeList
 	- "integrated" consistency checks in redraw code:
 
 BUGS
-	*** Moving a node creates a HUGE number of positions.
-	** Saving a file creates too many postions.
 	- redraw is being called too many times (in select, probably)
 	- Headline clicks are not handled properly (another select problem?)
 	- Typing creates lots of positions.
-		- Improve typing undo code.
-
-CHANGES
-	- Don't clear v._parent field when more than one parent.
-		- use v._parent.t.vnodeList instead of v.parents.
-		- add v.parents() method: change v.parents to v.parentList
-	- Look at windows delete code.
-		- Break position links?</t>
+		- Improve typing undo code.</t>
 <t tx="ekr.20040318150305"></t>
 <t tx="ekr.20040318150305.1"></t>
 <t tx="ekr.20040318150556">import leoGlobals as g
