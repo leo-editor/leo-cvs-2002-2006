@@ -82,6 +82,7 @@ def replacePatterns (file,pats):
 	except:
 		traceback.print_exc()
 		sys.exit()
+
 #@-body
 #@-node:4::replacePatterns
 #@+node:5::setDefaultParams
@@ -99,18 +100,6 @@ def setDefaultParams():
 	replacePatterns("leoConfig.txt",pats)
 #@-body
 #@-node:5::setDefaultParams
-#@+node:6::unsetDefaultParams
-#@+body
-def unsetDefaultParams():
-
-	print "unsetDefaultParams"
-	
-	pats = (("use_plugins = 0","use_plugins = 1"),)
-
-	replacePatterns("leoConfig.leo",pats)
-	replacePatterns("leoConfig.txt",pats)
-#@-body
-#@-node:6::unsetDefaultParams
 #@-others
 
 
@@ -157,7 +146,6 @@ setup (
 )
 
 if sys.argv[1] == "sdist":
-	unsetDefaultParams()
 	print "setup complete"
 #@-body
 #@-node:0::@file setup.py

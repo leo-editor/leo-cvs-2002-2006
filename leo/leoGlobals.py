@@ -1520,8 +1520,7 @@ def handleLeoHook(tag,**keywords):
 #@+node:3::issueHookWarning
 #@+body
 #@+at
-#  This global function issues a warning if customizeLeo.py exists but 
-# use_customizeLeo.py = 0.
+#  This global function issues a warning if use_plugins = 0.
 # 
 # This should be called after creating the first window so the message appears 
 # in the log pane.

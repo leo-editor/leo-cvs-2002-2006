@@ -159,6 +159,8 @@ class LeoApp:
 		
 		try:
 			self.loadDir = os.path.dirname(leo.__file__)
+			if self.loadDir in (None,""):
+				self.loadDir = os.getcwd()
 		except:
 			# Emergency defaults.  Hopefully we will never have to use them.
 			if sys.platform=="win32": # Windows

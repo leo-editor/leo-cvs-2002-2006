@@ -29,6 +29,7 @@ leoFrame.py
 leoGlobals.py
 leoImport.py
 leoNodes.py
+leoPlugins.py
 leoPrefs.py
 leoTangle.py
 leoTree.py

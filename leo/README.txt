@@ -1,6 +1,6 @@
 Important note: See INSTALL.TXT for installation instructions.
 
-leo.py 3.11 beta 1                       February 16, 2003
+leo.py 3.11 beta 1                       February 17, 2003
 
 This version of Leo contains a very large number of improvements.  The highlights:
 
