@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="2259" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="2284" clone_windows="0"/>
 <globals body_outline_ratio="0.50724637681159424">
-	<global_window_position top="27" left="237" height="784" width="822"/>
+	<global_window_position top="46" left="356" height="784" width="842"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences>
@@ -29,7 +29,7 @@
 </v>
 </v>
 <v t="edream.110203161858.6"><vh>Tests...</vh>
-<v t="edream.110203161858.25" a="E"><vh>Body pane &amp; typing</vh>
+<v t="edream.110203161858.25"><vh>Body pane &amp; typing</vh>
 <v t="edream.110203161858.26"><vh>@file c:\prog\test\wrap_test.txt</vh>
 <v t="edream.110203161858.27"><vh>wrap node</vh></v>
 <v t="edream.110203161858.28"><vh>nowrap node</vh></v>
@@ -2593,7 +2593,14 @@
 </v>
 </v>
 </v>
-<v t="edream.110203161858.2105"><vh>~4.1 tests</vh>
+</v>
+<v t="edream.110203161858.2102"><vh>Scripts...</vh>
+<v t="edream.110203161858.2103"><vh>Script to find which modules define names</vh></v>
+<v t="edream.110203161858.2104"><vh>Script to compare 3.x and 4.x derived files</vh></v>
+<v t="edream.110803170022"><vh>Count pages</vh></v>
+<v t="edream.120203185502"><vh>PyUno script</vh></v>
+</v>
+<v t="edream.110203161858.2105"><vh>4.1 tests</vh>
 <v t="edream.110203161858.2106"><vh>Extract tests</vh></v>
 <v t="edream.110403110104"><vh>Extract tests2</vh></v>
 <v t="edream.110203161858.2107"><vh>reformatParagraph test</vh></v>
@@ -2615,78 +2622,15 @@
 <v t="edream.110203161858.2118" tnodeList="edream.110203161858.2118"><vh>@file c:\prog\test\docTest.txt</vh></v>
 </v>
 </v>
-</v>
-<v t="edream.110203161858.2102"><vh>Scripts...</vh>
-<v t="edream.110203161858.2103"><vh>Script to find which modules define names</vh></v>
-<v t="edream.110203161858.2104"><vh>Script to compare 3.x and 4.x derived files</vh></v>
-<v t="edream.110803170022"><vh>Count pages</vh></v>
-<v t="edream.120203185502" tnodeList="edream.120203185502"><vh>PyUno script</vh></v>
-</v>
-<v t="edream.110203161858.2119"><vh>Unit Tests</vh>
-<v t="edream.110203161858.2120"><vh>Bug reports</vh>
-<v t="edream.110203161858.2121"><vh>Colorizer</vh>
-<v t="edream.110203161858.2122"><vh> Report</vh></v>
-</v>
-</v>
-<v t="edream.110203161858.2123"><vh>Test data</vh>
-<v t="edream.110203161858.2124"><vh>tempNode</vh></v>
-<v t="edream.110203161858.2125"><vh>colorizerTests</vh>
-<v t="edream.110203161858.2126"><vh>Actionscript</vh></v>
-<v t="edream.110203161858.2127"><vh>C</vh></v>
-<v t="edream.110203161858.2128"><vh>CWEB</vh>
-<v t="edream.110203161858.2129"><vh>&lt;&lt; section ref &gt;&gt;</vh></v>
-</v>
-<v t="edream.110203161858.2130"><vh>HTML1</vh></v>
-<v t="edream.110203161858.2131"><vh>HTML2</vh></v>
-<v t="edream.110203161858.2132"><vh>LaTex</vh></v>
-<v t="edream.110203161858.2133"><vh>Mixed</vh></v>
-<v t="edream.110203161858.2134"><vh>PHP</vh></v>
-<v t="edream.110203161858.2135"><vh>Python1</vh></v>
-<v t="edream.110203161858.2136"><vh>Python2</vh></v>
-<v t="edream.110203161858.2137"><vh>Rebol</vh></v>
-<v t="edream.110203161858.2138"><vh>wikiTest1</vh></v>
-<v t="edream.110203161858.2139"><vh>wikiTest2</vh></v>
-<v t="edream.110203161858.2140"><vh>wikiTest3</vh></v>
-</v>
-<v t="edream.110203161858.2141"><vh>editBodyTests</vh>
-<v t="edream.110203161858.2142"><vh>dedentBody</vh>
-<v t="edream.110203161858.2143"><vh>before</vh></v>
-<v t="edream.110203161858.2144"><vh>after</vh></v>
-</v>
-<v t="edream.110203161858.2145"><vh>indentBody</vh>
-<v t="edream.110203161858.2146"><vh>before</vh></v>
-<v t="edream.110203161858.2147"><vh>after</vh></v>
-</v>
-</v>
-<v t="edream.110203161858.2148"><vh>outlineTests</vh>
-<v t="edream.110203161858.2149"><vh>moveOutlineDown</vh></v>
-<v t="edream.110203161858.2150"><vh>moveOutlineLeft</vh></v>
-<v t="edream.110203161858.2151"><vh>moveOutlineRight</vh></v>
-<v t="edream.110203161858.2152"><vh>moveOutlineUp</vh></v>
-</v>
-<v t="edream.110903064653"><vh>testLeoFiles</vh>
-<v t="edream.110903064653.1"><vh>c:\prog\leoCvs\leo\test\test.leo</vh></v>
-<v t="edream.110903064653.2"><vh>c:\prog\leoCvs\leo\src\LeoPy.leo</vh></v>
-<v t="edream.110903064653.3"><vh>c:\prog\leoCvs\leo\plugins\leoPlugins.leo</vh></v>
-<v t="edream.110903064653.4"><vh>c:\prog\leoCvs\leo\doc\LeoDocs.leo</vh></v>
-</v>
-</v>
-<v t="edream.110203161858.2153"><vh>Drivers</vh>
-<v t="edream.110903064653.5"><vh>run testLeo tests</vh></v>
-<v t="edream.110203161858.2154"><vh>run color tests</vh></v>
-<v t="edream.110203161858.2155"><vh>run edit body tests</vh></v>
-<v t="edream.110203161858.2156"><vh>run outline tests</vh></v>
-</v>
-</v>
 <v t="edream.111803061611"><vh>4.1 beta 3 tests</vh>
 <v t="edream.110903121744"><vh>Latex colorizer</vh></v>
 <v t="edream.111103091713"><vh>Test of match brackets</vh></v>
 <v t="edream.111303082913"><vh>Redirect script output</vh></v>
 </v>
 <v t="edream.112003103554"><vh>4.1 beta 4 tests</vh>
-<v t="edream.111903143504" tnodeList="edream.111903143504,edream.111903143504.1,edream.111903144347"><vh>Handle Leo constructs when executing scripts</vh>
-<v t="edream.111903144347" tnodeList="edream.111903144347"><vh>&lt;&lt; ref &gt;&gt;</vh></v>
-<v t="edream.111903143504.1" tnodeList="edream.111903143504.1"><vh>more</vh></v>
+<v t="edream.111903143504"><vh>Handle Leo constructs when executing scripts</vh>
+<v t="edream.111903144347"><vh>&lt;&lt; ref &gt;&gt;</vh></v>
+<v t="edream.111903143504.1"><vh>more</vh></v>
 </v>
 <v t="edream.111803110909"><vh>Two refs on the same line</vh>
 <v t="edream.111803110909.1" a="M" tnodeList="edream.111803110909.1,edream.111803110909.2,edream.111803110909.3,edream.111803110909.2,edream.111803110909.3"><vh>@file c:\prog\test\ref.txt</vh>
@@ -2694,10 +2638,10 @@
 <v t="edream.111803110909.3"><vh>&lt;&lt; rhe &gt;&gt;</vh></v>
 </v>
 </v>
-<v t="edream.112003090130" tnodeList="edream.112003090130,edream.112003090753"><vh>Script crash</vh>
+<v t="edream.112003090130"><vh>Script crash</vh>
 <v t="edream.112003090753"><vh>test</vh></v>
 </v>
-<v t="edream.112003094004" a="M" tnodeList="edream.112003094004,edream.112003094004.1,edream.112003094004.1,edream.112003094004.1,edream.112003094004.1"><vh>Another test script</vh>
+<v t="edream.112003094004" a="M"><vh>Another test script</vh>
 <v t="edream.112003094004.1"><vh>&lt;&lt; 2 &gt;&gt;</vh></v>
 </v>
 <v t="edream.110203161858.2090" tnodeList="edream.110203161858.2090,edream.110203161858.2091,edream.110203161858.2092"><vh>@nosentinelsfile c:\prog\test\nosentinelstest.txt</vh>
@@ -2707,7 +2651,6 @@
 </v>
 <v t="edream.120303092653"><vh>4.1 beta 5 tests</vh>
 <v t="edream.112203144347" tnodeList="edream.112203144347"><vh>@file ..\test\batchScript.py</vh></v>
-<v t="edream.112303064255"><vh>Extract section test</vh></v>
 <v t="edream.112303110337"><vh>Change all headlines/Undo test</vh>
 <v t="edream.112303110337.1"><vh>a</vh></v>
 <v t="edream.112303110337.2"><vh>Ba</vh></v>
@@ -2833,13 +2776,115 @@
 </v>
 <v t="edream.120803164752"><vh>paste</vh></v>
 </v>
-</v>
-<v t="edream.120803091715"><vh>using pdb</vh></v>
-<v t="edream.120903112952" a="E" tnodeList="edream.120903112952,edream.120903113034"><vh>@file-nosent c:\prog\test\atIgnoreInAtNosentTest.txt</vh>
-<v t="edream.120903113034" a="EV"><vh>&lt;&lt; ref &gt;&gt;</vh>
+<v t="edream.120903112952" tnodeList="edream.120903112952,edream.120903113034"><vh>@file-nosent c:\prog\test\atIgnoreInAtNosentTest.txt</vh>
+<v t="edream.120903113034"><vh>&lt;&lt; ref &gt;&gt;</vh>
 <v t="edream.120903112952.1"><vh>orphan node</vh></v>
 </v>
 <v t="edream.120903113034.1"><vh>@ignore</vh></v>
+</v>
+</v>
+<v t="edream.120803091715"><vh>using pdb</vh></v>
+<v t="edream.110203161858.2119" a="E"><vh>Unit Tests</vh>
+<v t="edream.110203161858.2120"><vh>Bug reports</vh>
+<v t="edream.110203161858.2121" a="E"><vh>Colorizer</vh>
+<v t="edream.110203161858.2122"><vh> Report</vh></v>
+</v>
+</v>
+<v t="edream.110203161858.2123" a="V"><vh>Tests and data</vh>
+<v t="edream.110203161858.2124" a="E"><vh>tempNode</vh></v>
+<v t="edream.110203161858.2125" tnodeList="edream.110203161858.2125"><vh>colorizerTests</vh>
+<v t="edream.110203161858.2126"><vh>Actionscript</vh></v>
+<v t="edream.110203161858.2127"><vh>C</vh></v>
+<v t="edream.110203161858.2128"><vh>CWEB</vh>
+<v t="edream.110203161858.2129"><vh>&lt;&lt; section ref &gt;&gt;</vh></v>
+</v>
+<v t="edream.110203161858.2130"><vh>HTML1</vh></v>
+<v t="edream.110203161858.2131"><vh>HTML2</vh></v>
+<v t="edream.110203161858.2132"><vh>LaTex</vh></v>
+<v t="edream.110203161858.2133"><vh>Mixed</vh></v>
+<v t="edream.110203161858.2134"><vh>PHP</vh></v>
+<v t="edream.110203161858.2135"><vh>Python1</vh></v>
+<v t="edream.110203161858.2136"><vh>Python2</vh></v>
+<v t="edream.110203161858.2137"><vh>Rebol</vh></v>
+<v t="edream.110203161858.2138"><vh>wikiTest1</vh></v>
+<v t="edream.110203161858.2139"><vh>wikiTest2</vh></v>
+<v t="edream.110203161858.2140"><vh>wikiTest3</vh></v>
+</v>
+<v t="edream.110203161858.2141" tnodeList="edream.110203161858.2141"><vh>editBodyTests</vh>
+<v t="edream.110203161858.2142"><vh>dedentBody</vh>
+<v t="edream.110203161858.2143"><vh>before</vh></v>
+<v t="edream.110203161858.2144"><vh>after</vh></v>
+<v t="edream.121003084958"><vh>selection</vh></v>
+</v>
+<v t="edream.110203161858.2145"><vh>indentBody</vh>
+<v t="edream.110203161858.2146"><vh>before</vh></v>
+<v t="edream.110203161858.2147"><vh>after</vh></v>
+<v t="edream.121003084958.1"><vh>selection</vh></v>
+</v>
+<v t="edream.121003102638"><vh>reformatParagraph</vh>
+<v t="edream.121003102638.1"><vh>before</vh></v>
+<v t="edream.121003102648"><vh>after</vh></v>
+<v t="edream.121003102738"><vh>insert</vh></v>
+</v>
+<v t="edream.121003103633"><vh>extractSection</vh>
+<v t="edream.112303064255"><vh>before</vh></v>
+<v t="edream.121003103729"><vh>after</vh>
+<v t="edream.121003103729.1"><vh>&lt;&lt; section &gt;&gt;</vh></v>
+</v>
+<v t="edream.121003103729.3"><vh>selection</vh></v>
+</v>
+</v>
+<v t="edream.121103114537" tnodeList="edream.121103114537"><vh>exportTests</vh>
+<v t="edream.121103115910.1"><vh>exportHeadlines</vh>
+<v t="edream.121103120126.1"><vh>dialog</vh></v>
+</v>
+<v t="edream.121103115910.2"><vh>flattenOutline</vh>
+<v t="edream.121103121130"><vh>dialog</vh></v>
+</v>
+<v t="edream.121103115910.11"><vh>weave</vh>
+<v t="edream.121103175216"><vh>dialog</vh></v>
+</v>
+<v t="edream.121103115910.9"><vh>outlineToNoweb</vh>
+<v t="edream.121103180347"><vh>dialog</vh></v>
+</v>
+<v t="edream.121103115910.8"><vh>outlineToCWEB</vh>
+<v t="edream.121103180308"><vh>dialog</vh></v>
+</v>
+<v t="edream.121103115910.10"><vh>removeSentinels</vh>
+<v t="edream.121103175314"><vh>dialog</vh></v>
+</v>
+</v>
+<v t="edream.121103175121" tnodeList="edream.121103175121"><vh>importTests</vh>
+<v t="edream.121103114537.1"><vh>importAtRoot</vh>
+<v t="edream.121103114537.2"><vh>dialog</vh></v>
+</v>
+<v t="edream.121103115910.4"><vh>importAtFile</vh>
+<v t="edream.121103121159"><vh>dialog</vh></v>
+</v>
+<v t="edream.121103115910.7"><vh>importNowebFiles</vh>
+<v t="edream.121103121417"><vh>dialog</vh></v>
+</v>
+<v t="edream.121103115910.6"><vh>importFlattenedOutline</vh>
+<v t="edream.121103121417.1"><vh>dialog</vh></v>
+</v>
+<v t="edream.121103115910.5"><vh>importCWEBFiles</vh>
+<v t="edream.121103121417.2"><vh>dialog</vh></v>
+</v>
+</v>
+<v t="edream.110203161858.2148"><vh>outlineTests (F(NISH)</vh>
+<v t="edream.110203161858.2149"><vh>moveOutlineDown</vh></v>
+<v t="edream.110203161858.2150"><vh>moveOutlineLeft</vh></v>
+<v t="edream.110203161858.2151"><vh>moveOutlineRight</vh></v>
+<v t="edream.110203161858.2152"><vh>moveOutlineUp</vh></v>
+</v>
+<v t="edream.110903064653"><vh>testLeoFiles (ERRORS)</vh>
+<v t="edream.110903064653.1"><vh>c:\prog\leoCvs\leo\test\test.leo</vh></v>
+<v t="edream.110903064653.2"><vh>c:\prog\leoCvs\leo\src\LeoPy.leo</vh></v>
+<v t="edream.110903064653.3"><vh>c:\prog\leoCvs\leo\plugins\leoPlugins.leo</vh></v>
+<v t="edream.110903064653.4"><vh>c:\prog\leoCvs\leo\doc\LeoDocs.leo</vh></v>
+</v>
+</v>
+<v t="edream.110203161858.2153" a="E" tnodeList="edream.110203161858.2153"><vh>Run all tests</vh></v>
 </v>
 </vnodes>
 <tnodes>
@@ -33667,7 +33712,15 @@ location.
 </t>
 <t tx="edream.110203161858.2123"></t>
 <t tx="edream.110203161858.2124"></t>
-<t tx="edream.110203161858.2125">@color</t>
+<t tx="edream.110203161858.2125">@color
+
+import unittest
+import leoTest
+reload(leoTest) # Allows us to rerun this script when leoTest.py changes.
+
+suite = leoTest.makeColorSuite("colorizerTests","tempNode")
+runner = unittest.TextTestRunner()
+runner.run(suite)</t>
 <t tx="edream.110203161858.2126">@language actionscript
 
 break
@@ -34093,7 +34146,21 @@ from leoGlobals import * ; print app().loadDir
 """ text~~#ee0ff:some text~~more text"""</t>
 <t tx="edream.110203161858.2141">@ The names of child nodes are the names of commander methods to be called to do the test.
 
-Each child node will in turn have two children: a "before" node and an "after" node.</t>
+Each child node will in turn have two or more children:
+	
+- a "before" node
+- an "after" node
+- an optional selection node containing two lines giving the selection range in Tk coordinates.
+- An optional insert node containing one line giving the insert point in Tk coordinates.
+@c
+
+import unittest
+import leoTest
+reload(leoTest) # Allows us to rerun this script when leoTest.py changes.
+
+suite = leoTest.makeEditBodySuite("editBodyTests","tempNode")
+runner = unittest.TextTestRunner()
+runner.run(suite)</t>
 <t tx="edream.110203161858.2142"></t>
 <t tx="edream.110203161858.2143">line 1
 	line 2
@@ -34114,7 +34181,17 @@ line 4</t>
 line 4</t>
 <t tx="edream.110203161858.2148">@ The names of child nodes are the names of commander methods to be called to do the test.
 
-Each child node will in turn have two children: a "before" tree and an "after" tree.</t>
+Each child node will in turn have two children: a "before" tree and an "after" tree.
+
+@c
+
+import unittest
+import leoTest
+reload(leoTest) # Allows us to rerun this script when leoTest.py changes.
+
+suite = leoTest.makeOutlineSuite("outlineTests")
+runner = unittest.TextTestRunner()
+runner.run(suite)</t>
 <t tx="edream.110203161858.2149"></t>
 <t tx="edream.110203161858.2150"></t>
 <t tx="edream.110203161858.2151"></t>
@@ -34126,42 +34203,23 @@ reload(leoTest) # Allows us to rerun this script when leoTest.py changes.
 
 mainSuite = unittest.makeSuite(unittest.TestCase)
 
-colorSuite = leoTest.makeColorSuite("colorizerTests","tempNode")
-mainSuite.addTest(colorSuite)
-	
-editBodySuite = leoTest.makeEditBodySuite("editBodyTests","tempNode")
-mainSuite.addTest(editBodySuite)
+for makeTestSuiteFunction,headline in (
+	(leoTest.makeColorSuite,"colorizerTests"),
+	(leoTest.makeEditBodySuite,"editBodyTests"),
+	(leoTest.makeImportExportSuite,"exportTests"),
+	(leoTest.makeImportExportSuite,"importTests")):
 
-testLeoFilesSuite = leoTest.makeTestLeoFilesSuite("cloneTestLeoFiles")
-mainSuite.addTest(testLeoFilesSuite)
+	suite = makeTestSuiteFunction(headline,"tempNode")
+	mainSuite.addTest(suite)
+
+runner = unittest.TextTestRunner()
+runner.run(mainSuite)
+
+if 0: # generates errors
+	(leoTest.makeTestLeoFilesSuite,"cloneTestLeoFiles")
 
 if 0: # not ready yet.
-	outlineSuite = leoTest.makeOutlineSuite("outlineTests")
-	mainSuite.addTest(outlineSuite)
-
-runner = unittest.TextTestRunner()
-runner.run(mainSuite)</t>
-<t tx="edream.110203161858.2154">import unittest
-import leoTest
-reload(leoTest) # Allows us to rerun this script when leoTest.py changes.
-
-suite = leoTest.makeColorSuite("colorizerTests","tempNode")
-runner = unittest.TextTestRunner()
-runner.run(suite)</t>
-<t tx="edream.110203161858.2155">import unittest
-import leoTest
-reload(leoTest) # Allows us to rerun this script when leoTest.py changes.
-
-suite = leoTest.makeEditBodySuite("editBodyTests","tempNode")
-runner = unittest.TextTestRunner()
-runner.run(suite)</t>
-<t tx="edream.110203161858.2156">import unittest
-import leoTest
-reload(leoTest) # Allows us to rerun this script when leoTest.py changes.
-
-suite = leoTest.makeOutlineSuite("outlineTests")
-runner = unittest.TextTestRunner()
-runner.run(suite)</t>
+	(leoTest.makeOutlineSuite,"outlineTests")</t>
 <t tx="edream.110403110104">line 1
 &lt;&lt; sec1 &gt;&gt;
 sec1
@@ -34197,12 +34255,7 @@ pages = ((nodes * 10) + lines) / 50
 print "nodes,lines,pages",nodes,lines,pages
 es("nodes,lines,pages",nodes,lines,pages)
 </t>
-<t tx="edream.110903064653"></t>
-<t tx="edream.110903064653.1"></t>
-<t tx="edream.110903064653.2"></t>
-<t tx="edream.110903064653.3"></t>
-<t tx="edream.110903064653.4"></t>
-<t tx="edream.110903064653.5"># To do: use a null-gui to open the .leo files.
+<t tx="edream.110903064653"># To do: use a null-gui to open the .leo files.
 
 import unittest
 import leoTest
@@ -34211,6 +34264,10 @@ reload(leoTest) # Allows us to rerun this script when leoTest.py changes.
 suite = testLeoFilesSuite = leoTest.makeTestLeoFilesSuite("testLeoFiles")
 runner = unittest.TextTestRunner()
 runner.run(suite)</t>
+<t tx="edream.110903064653.1"></t>
+<t tx="edream.110903064653.2"></t>
+<t tx="edream.110903064653.3"></t>
+<t tx="edream.110903064653.4"></t>
 <t tx="edream.110903121744">@language latex
 
 Test \% test.</t>
@@ -34352,9 +34409,9 @@ else:
 	print "End of batchScript.py"</t>
 <t tx="edream.112303064255">before
 &lt;&lt; section &gt;&gt;
-	sec line 1
-		sec line 2 indented
-	sec line 3
+sec line 1
+	sec line 2 indented
+sec line 3
 after</t>
 <t tx="edream.112303110337"></t>
 <t tx="edream.112303110337.1"></t>
@@ -35665,5 +35722,101 @@ This should be more doc part
 <t tx="edream.120903113034.1">@ignore
 
 This line should be ignored.</t>
+<t tx="edream.121003084958">2.0
+3.0 lineend - 1c</t>
+<t tx="edream.121003084958.1">2.0
+3.0 lineend - 1c</t>
+<t tx="edream.121003102638"></t>
+<t tx="edream.121003102638.1">@language plain
+@pagewidth 72
+@tabwidth 2
+
+The intent of this tool is to provide 
+an aid to memorization practice.  The 
+tool is directed at memorization of 
+prose or poetry, not music or 
+mathematics.  It would probably not 
+be useful for memorization of dialog.  The 
+purpose of such memorization is 
+to be able to recreate a chunk of 
+text in your head or on paper, and perhaps verbally.
+
+The steps might be as follows:
+
+Wraps the concatenated text to present page width setting. Leading tabs are sized to present tab width setting.
+First and second line of original text is used to determine leading whitespace
+in reformatted text.  Hanging indentation is honored.</t>
+<t tx="edream.121003102648">@language plain
+@pagewidth 72
+@tabwidth 2
+
+The intent of this tool is to provide an aid to memorization practice.
+The tool is directed at memorization of prose or poetry, not music or
+mathematics. It would probably not be useful for memorization of
+dialog. The purpose of such memorization is to be able to recreate a
+chunk of text in your head or on paper, and perhaps verbally.
+
+The steps might be as follows:
+
+Wraps the concatenated text to present page width setting. Leading tabs are sized to present tab width setting.
+First and second line of original text is used to determine leading whitespace
+in reformatted text.  Hanging indentation is honored.</t>
+<t tx="edream.121003102738">5.0</t>
+<t tx="edream.121003103633"></t>
+<t tx="edream.121003103729">before
+&lt;&lt; section &gt;&gt;
+after</t>
+<t tx="edream.121003103729.1">sec line 1
+	sec line 2 indented
+sec line 3</t>
+<t tx="edream.121003103729.3">2.0
+5.0 lineend -1c</t>
+<t tx="edream.121103114537">import unittest
+import leoTest
+reload(leoTest) # Allows us to rerun this script when leoTest.py changes.
+
+suite = leoTest.makeImportExportSuite("exportTests","tempNode")
+runner = unittest.TextTestRunner()
+runner.run(suite)</t>
+<t tx="edream.121103114537.1"></t>
+<t tx="edream.121103114537.2">openFileDialog
+c:\\prog\\test\\leoAtFile.py</t>
+<t tx="edream.121103115910.1"></t>
+<t tx="edream.121103115910.2"></t>
+<t tx="edream.121103115910.4"></t>
+<t tx="edream.121103115910.5"></t>
+<t tx="edream.121103115910.6"></t>
+<t tx="edream.121103115910.7"></t>
+<t tx="edream.121103115910.8"></t>
+<t tx="edream.121103115910.9"></t>
+<t tx="edream.121103115910.10"></t>
+<t tx="edream.121103115910.11"></t>
+<t tx="edream.121103120126.1">saveFileDialog
+c:\\prog\\test\\unittest\\output\\exportHeadlines.txt</t>
+<t tx="edream.121103121130">saveFileDialog
+c:\\prog\\test\\unittest\\output\\flattenOutline.txt</t>
+<t tx="edream.121103121159">openFileDialog
+c:\\prog\\test\\leoAtFile.py</t>
+<t tx="edream.121103121417">openFileDialog
+c:\\prog\\test\\test.nw</t>
+<t tx="edream.121103121417.1">openFileDialog
+c:\\prog\\test\\flat.py</t>
+<t tx="edream.121103121417.2">openFileDialog
+c:\\prog\\test\\test.cweb</t>
+<t tx="edream.121103175121">import unittest
+import leoTest
+reload(leoTest) # Allows us to rerun this script when leoTest.py changes.
+
+suite = leoTest.makeImportExportSuite("importTests","tempNode")
+runner = unittest.TextTestRunner()
+runner.run(suite)</t>
+<t tx="edream.121103175216">saveFileDialog
+c:\\prog\\test\\unittest\\output\\weave.txt</t>
+<t tx="edream.121103175314">openFileDialog
+c:\\prog\\test\\unittest\\input\\leoAtFile.py</t>
+<t tx="edream.121103180308">saveFileDialog
+c:\\prog\\test\\unittest\\output\\outlineToCweb.txt</t>
+<t tx="edream.121103180347">saveFileDialog
+c:\\prog\\test\\unittest\\output\\outlineToNoweb.txt</t>
 </tnodes>
 </leo_file>

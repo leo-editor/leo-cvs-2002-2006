@@ -5,12 +5,20 @@
 from leoGlobals import *
 import unittest
 
-import leoColor,leoCommands,leoFrame,leoNodes
+import leoColor,leoCommands,leoFrame,leoGui,leoNodes
 import Tkinter
 import os,sys
 Tk = Tkinter
 
 #@+others
+#@+node:fail
+def fail ():
+	
+	"""Mark a unit test as having failed."""
+	
+	app.unitTestDict["fail"] = callerName(2)
+#@nonl
+#@-node:fail
 #@+node: testUtils
 class testUtils:
 	
@@ -333,7 +341,7 @@ class colorTestCase(unittest.TestCase):
 	def color (self):
 		
 		c = self.c
-		val = c.frame.tree.colorizer.colorize(self.temp_v,incremental=false)
+		val = c.frame.body.colorizer.colorize(self.temp_v,incremental=false)
 		assert(val=="ok")
 	#@nonl
 	#@-node:color
@@ -365,10 +373,10 @@ class colorTestCase(unittest.TestCase):
 	#@-others
 #@nonl
 #@-node:class colorTestCase
-#@+node: makeEditBodySuite
-def makeEditBodySuite(testParentHeadline,tempHeadline):
+#@+node:makeImportExportSuite
+def makeImportExportSuite(testParentHeadline,tempHeadline):
 	
-	"""Create a colorizer test for every descendant of testParentHeadline.."""
+	"""Create an Edit Body test for every descendant of testParentHeadline.."""
 	
 	u = testUtils() ; c = top() ; v = c.currentVnode()
 	root = u.findRootNode(v)
@@ -378,12 +386,126 @@ def makeEditBodySuite(testParentHeadline,tempHeadline):
 	# Create the suite and add all test cases.
 	suite = unittest.makeSuite(unittest.TestCase)
 	for v in vList:
-		v1 = v.firstChild()
-		v2 = v1.next()
-		test = editBodyTestCase(c,v,v1,v2,temp_v)
+		dialog = u.findNodeInTree(v,"dialog")
+		test = importExportTestCase(c,v,dialog,temp_v)
 		suite.addTest(test)
 
 	return suite
+#@nonl
+#@-node:makeImportExportSuite
+#@+node:class importExportTestCase
+class importExportTestCase(unittest.TestCase):
+	
+	"""Data-driven unit tests for Leo's edit body commands."""
+	
+	#@	@+others
+	#@+node:__init__
+	def __init__ (self,c,v,dialog,temp_v):
+		
+		# Init the base class.
+		unittest.TestCase.__init__(self)
+		
+		self.c = c
+		self.dialog = dialog
+		self.v = v
+		self.temp_v = temp_v
+		
+		self.gui = None
+		self.wasChanged = c.changed
+	
+		self.old_v = c.currentVnode()
+	#@-node:__init__
+	#@+node:importExport
+	def importExport (self):
+		
+		c = self.c ; v = self.v
+		
+		app.unitTestDict = {}
+	
+		commandName = v.headString()
+		command = getattr(c,commandName) # Will fail if command does not exist.
+		command()
+	
+		failedMethod = app.unitTestDict.get("fail")
+		self.failIf(failedMethod,failedMethod)
+	#@nonl
+	#@-node:importExport
+	#@+node:tearDown
+	def tearDown (self):
+		
+		c = self.c ; temp_v = self.temp_v
+		
+		if self.gui:
+			self.gui.destroySelf()
+			self.gui = None
+		
+		temp_v.t.setTnodeText("",app.tkEncoding)
+		temp_v.clearDirty()
+		
+		if not self.wasChanged:
+			c.setChanged (false)
+			
+		# Delete all children of temp node.
+		while temp_v.firstChild():
+			temp_v.firstChild().doDelete(temp_v)
+	
+		c.selectVnode(self.old_v)
+	#@nonl
+	#@-node:tearDown
+	#@+node:setUp
+	def setUp(self,*args,**keys):
+		
+		c = self.c ; temp_v = self.temp_v ; d = self.dialog
+		
+		temp_v.t.setTnodeText('',app.tkEncoding)
+	
+		c.selectVnode(temp_v)
+		
+		if d: # Use unitTestDialog.
+			s = d.bodyString()
+			lines = s.split('\n')
+			name = lines[0]
+			val = lines[1]
+			dict = {name: val}
+			self.gui = leoGui.unitTestGui(dict,trace=false)
+		else:
+			self.gui = None
+	#@nonl
+	#@-node:setUp
+	#@+node:runTest
+	def runTest(self):
+	
+		self.importExport()
+	#@nonl
+	#@-node:runTest
+	#@-others
+#@nonl
+#@-node:class importExportTestCase
+#@+node: makeEditBodySuite
+def makeEditBodySuite(testParentHeadline,tempHeadline):
+	
+	"""Create an Edit Body test for every descendant of testParentHeadline.."""
+	
+	u = testUtils() ; c = top() ; v = c.currentVnode()
+	root = u.findRootNode(v)
+	temp_v = u.findNodeInTree(root,tempHeadline)
+	vList = u.findChildrenOf(testParentHeadline)
+
+	# Create the suite and add all test cases.
+	suite = unittest.makeSuite(unittest.TestCase)
+	for v in vList:
+		before = u.findNodeInTree(v,"before")
+		after  = u.findNodeInTree(v,"after")
+		sel    = u.findNodeInTree(v,"selection")
+		ins    = u.findNodeInTree(v,"insert")
+		if before and after:
+			test = editBodyTestCase(c,v,before,after,sel,ins,temp_v)
+			suite.addTest(test)
+		else:
+			print 'missing "before" or "after" for', v.headString()
+
+	return suite
+#@nonl
 #@-node: makeEditBodySuite
 #@+node:class editBodyTestCase
 class editBodyTestCase(unittest.TestCase):
@@ -392,56 +514,116 @@ class editBodyTestCase(unittest.TestCase):
 	
 	#@	@+others
 	#@+node:__init__
-	def __init__ (self,c,parent,v1,v2,temp_v):
+	def __init__ (self,c,parent,before,after,sel,ins,temp_v):
 		
 		# Init the base class.
 		unittest.TestCase.__init__(self)
 	
 		self.c = c
 		self.parent = parent
-		self.v1 = v1
-		self.v2 = v2
+		self.before = before
+		self.after  = after
+		self.sel    = sel # Two lines giving the selection range in tk coordinates.
+		self.ins    = ins # One line giveing the insert point in tk coordinate.
 		self.temp_v = temp_v
 		
 		self.old_v = c.currentVnode()
+		
+		self.wasChanged = c.changed
 	#@nonl
 	#@-node:__init__
 	#@+node:editBody
 	def editBody (self):
+		
+		c = self.c ; temp_v = self.temp_v ; after = self.after
 	
 		# Compute the result in temp_v.bodyString()
 		commandName = self.parent.headString()
-		command = getattr(self.c,commandName)
+		command = getattr(c,commandName)
 		command()
 		
 		# Compare the computed result to the reference result.
-		new_text = self.temp_v.bodyString()
-		ref_text = self.v2.bodyString()
+		new_text = temp_v.bodyString().rstrip()
+		ref_text = after.bodyString().rstrip()
+	
 		if new_text != ref_text:
-			print "test failed"
+			print ; print "test failed", commandName
 			trace("new",new_text)
 			trace("ref",ref_text)
-	
+			
 		assert(new_text == ref_text)
+		
+		# Compare subtrees.
+		
+		assert(temp_v.numberOfChildren() == after.numberOfChildren())
+		
+		ref_child = after.firstChild()
+		new_child = temp_v.firstChild()
+		
+		while new_child:
+			new_text = new_child.bodyString().rstrip()
+			ref_text = ref_child.bodyString().rstrip()
+	
+			if new_text != ref_text:
+				print ; print "test failed", commandName
+				trace("new",new_text)
+				trace("ref",ref_text)
+			
+			assert(new_text == ref_text)
+			
+			new_child = new_child.next()
+			ref_child = ref_child.next()
 	#@nonl
 	#@-node:editBody
-	#@+node:setUp: TODO: set selection...
-	def setUp(self,*args,**keys):
-	
-		# Initialize the text in the temp node.
-		text = self.v1.bodyString()
-		self.c.selectVnode(self.temp_v)
-		self.temp_v.t.setTnodeText(text,app.tkEncoding)
-		self.c.frame.body.setSelectionAreas(None,text,None)
-	#@nonl
-	#@-node:setUp: TODO: set selection...
 	#@+node:tearDown
 	def tearDown (self):
 		
-		self.temp_v.t.setTnodeText("",app.tkEncoding)
-		self.c.selectVnode(self.old_v)
+		c = self.c ; temp_v = self.temp_v
+		
+		temp_v.t.setTnodeText("",app.tkEncoding)
+		temp_v.clearDirty()
+		
+		if not self.wasChanged:
+			c.setChanged (false)
+			
+		# Delete all children of temp node.
+		while temp_v.firstChild():
+			temp_v.firstChild().doDelete(temp_v)
+	
+		c.selectVnode(self.old_v)
 	#@nonl
 	#@-node:tearDown
+	#@+node:setUp
+	# Warning: this is Tk-specific code.
+	
+	def setUp(self,*args,**keys):
+		
+		c = self.c ; temp_v = self.temp_v
+		
+		# Delete all children of temp node.
+		while temp_v.firstChild():
+			temp_v.firstChild().doDelete(temp_v)
+	
+		text = self.before.bodyString()
+		
+		temp_v.t.setTnodeText(text,app.tkEncoding)
+		c.selectVnode(self.temp_v)
+		
+		t = c.frame.body.bodyCtrl
+		if self.sel:
+			s = self.sel.bodyString()
+			lines = s.split('\n')
+			app.gui.setTextSelection(t,lines[0],lines[1])
+	
+		if self.ins:
+			s = self.ins.bodyString()
+			lines = s.split('\n')
+			app.gui.setInsertPoint(t,lines[0])
+			
+		if not self.sel and not self.ins:
+			app.gui.setInsertPoint(t,"1.0")
+			app.gui.setTextSelection(t,"1.0","1.0")
+	#@-node:setUp
 	#@+node:runTest
 	def runTest(self):
 	
