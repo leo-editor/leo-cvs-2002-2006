@@ -3972,9 +3972,9 @@ def level(self,verbose=False):
         v,n = p.vParentWithStack(v,p.stack,n)
         if v:
             level += 1
-            if verbose: g.trace(level,"level,n: %2d" % (level,n))
+            if verbose: g.trace(level,"level %2d, n: %2d" % (level,n))
         else:
-            if verbose: g.trace(level,"level,n: %2d" % (level,n))
+            if verbose: g.trace(level,"level %2d, n: %2d" % (level,n))
             # if g.app.debug: assert(level==simpleLevel)
             return level
 #@nonl
@@ -5105,19 +5105,6 @@ def showPopupMenu (self,event):
 
 # These are private routines:  the position class does not define proxies for these.
 #@nonl
-#@+node:ekr.20040310062332.1:p.invalidOutline
-def invalidOutline (self, message):
-    
-    p = self
-
-    if p.hasParent():
-        node = p.parent()
-    else:
-        node = p
-
-    g.alert("invalid outline: %s\n%s" % (message,node))
-#@nonl
-#@-node:ekr.20040310062332.1:p.invalidOutline
 #@+node:ekr.20040310062332.2:p.linkAfter
 def linkAfter (self,after):
 
@@ -8886,19 +8873,6 @@ def promote(self):
 
 # These are private routines:  the position class does not define proxies for these.
 #@nonl
-#@+node:ekr.20040310062332.1:p.invalidOutline
-def invalidOutline (self, message):
-    
-    p = self
-
-    if p.hasParent():
-        node = p.parent()
-    else:
-        node = p
-
-    g.alert("invalid outline: %s\n%s" % (message,node))
-#@nonl
-#@-node:ekr.20040310062332.1:p.invalidOutline
 #@+node:ekr.20040310062332.2:p.linkAfter
 def linkAfter (self,after):
 
@@ -9300,20 +9274,19 @@ if not p.v.t and pv:
 #@nonl
 #@-node:ekr.20040303175026.16:<< validate x ivar >>
 #@-node:ekr.20040303175026.13:p.validateOutlineWithParent
-#@+node:ekr.20040303175026.18:p.invalidOutline
+#@+node:ekr.20040310062332.1:p.invalidOutline
 def invalidOutline (self, message):
+    
+    p = self
 
-    s = "invalid outline: " + message + "\n"
-    parent = self.getParent()
-
-    if parent:
-        s += repr(parent)
+    if p.hasParent():
+        node = p.parent()
     else:
-        s += repr(self)
+        node = p
 
-    g.alert(s)
+    g.alert("invalid outline: %s\n%s" % (message,node))
 #@nonl
-#@-node:ekr.20040303175026.18:p.invalidOutline
+#@-node:ekr.20040310062332.1:p.invalidOutline
 #@-node:ekr.20040303175026:p.Moving, Inserting, Deleting, Cloning, Sorting (position)
 #@+node:ekr.20040301205720:p.__str__ and p.__repr__
 def __str__ (self):
@@ -9385,9 +9358,9 @@ def level(self,verbose=False):
         v,n = p.vParentWithStack(v,p.stack,n)
         if v:
             level += 1
-            if verbose: g.trace(level,"level,n: %2d" % (level,n))
+            if verbose: g.trace(level,"level %2d, n: %2d" % (level,n))
         else:
-            if verbose: g.trace(level,"level,n: %2d" % (level,n))
+            if verbose: g.trace(level,"level %2d, n: %2d" % (level,n))
             # if g.app.debug: assert(level==simpleLevel)
             return level
 #@nonl
@@ -11277,13 +11250,6 @@ def clearDirty (self):
     p.v.clearDirty()
 #@nonl
 #@-node:ekr.20040311113514:p.clearDirty
-#@+node:ekr.20040303163717:p.isDirty
-def isDirty (self):
-    
-    p = self
-    return p.v and p.v.isDirty()
-#@nonl
-#@-node:ekr.20040303163717:p.isDirty
 #@+node:ekr.20040318125934:p.findAllPotentiallyDirtyNodes
 def findAllPotentiallyDirtyNodes(self):
     
@@ -13440,13 +13406,6 @@ def clearDirty (self):
     p.v.clearDirty()
 #@nonl
 #@-node:ekr.20040311113514:p.clearDirty
-#@+node:ekr.20040303163717:p.isDirty
-def isDirty (self):
-    
-    p = self
-    return p.v and p.v.isDirty()
-#@nonl
-#@-node:ekr.20040303163717:p.isDirty
 #@+node:ekr.20040318125934:p.findAllPotentiallyDirtyNodes
 def findAllPotentiallyDirtyNodes(self):
     
@@ -13860,19 +13819,6 @@ def moveToParent (self):
 
 # These are private routines:  the position class does not define proxies for these.
 #@nonl
-#@+node:ekr.20040310062332.1:p.invalidOutline
-def invalidOutline (self, message):
-    
-    p = self
-
-    if p.hasParent():
-        node = p.parent()
-    else:
-        node = p
-
-    g.alert("invalid outline: %s\n%s" % (message,node))
-#@nonl
-#@-node:ekr.20040310062332.1:p.invalidOutline
 #@+node:ekr.20040310062332.2:p.linkAfter
 def linkAfter (self,after):
 
@@ -21097,19 +21043,6 @@ def dump (self,label=""):
 
 # These are private routines:  the position class does not define proxies for these.
 #@nonl
-#@+node:ekr.20040310062332.1:p.invalidOutline
-def invalidOutline (self, message):
-    
-    p = self
-
-    if p.hasParent():
-        node = p.parent()
-    else:
-        node = p
-
-    g.alert("invalid outline: %s\n%s" % (message,node))
-#@nonl
-#@-node:ekr.20040310062332.1:p.invalidOutline
 #@+node:ekr.20040310062332.2:p.linkAfter
 def linkAfter (self,after):
 
@@ -29502,7 +29435,7 @@ def registerHandler (self,undoName,func,kind,dict,verbose=False):
         if verbose:
             print "%s registered as %s handler for %s" % (func.__name__,kind,undoName)
     except KeyError:
-        s = "Bad key: $s for %s: %s" % (kind,undoName,repr(func))
+        s = "Bad key: %s for %s: %s" % (kind,undoName,repr(func))
         g.trace(s) ; g.es(s, color="red")
 #@nonl
 #@-node:EKR.20040526094429:registerUndoHandlers & registerHandler
@@ -36251,7 +36184,7 @@ def convertLineToVnodeNameIndexLine (self,lines,n,root):
     if nodeSentinelLine == -1:
         # The line precedes the first @+node sentinel
         # g.trace("before first line")
-        return root.headString(),0,1,delim # 10/13/03
+        return root.headString(),0,gnx,1,delim # 10/13/03
     s = lines[nodeSentinelLine]
     # g.trace(s)
     << set vnodeName and (childIndex or gnx) from s >>
@@ -38708,7 +38641,7 @@ def convertLineToVnodeNameIndexLine (self,lines,n,root):
     if nodeSentinelLine == -1:
         # The line precedes the first @+node sentinel
         # g.trace("before first line")
-        return root.headString(),0,1,delim # 10/13/03
+        return root.headString(),0,gnx,1,delim # 10/13/03
     s = lines[nodeSentinelLine]
     # g.trace(s)
     << set vnodeName and (childIndex or gnx) from s >>
@@ -43174,6 +43107,7 @@ elif delim2 and delim3:
     self.startSentinelComment = delim2
     self.endSentinelComment = delim3
 else:
+    line = g.get_line(s,i)
     g.es("Ignoring bad @language directive: %s" % line,color="blue")
 #@nonl
 #@-node:EKR.20040625103148:<< handle @language >>
@@ -43372,6 +43306,7 @@ elif delim2 and delim3:
     self.startSentinelComment = delim2
     self.endSentinelComment = delim3
 else:
+    line = g.get_line(s,i)
     g.es("Ignoring bad @language directive: %s" % line,color="blue")
 #@nonl
 #@-node:EKR.20040625103148:<< handle @language >>
