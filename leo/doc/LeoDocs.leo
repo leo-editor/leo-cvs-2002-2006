@@ -83,7 +83,7 @@
 <v t="T63" a="C"><vh>Quick start</vh></v>
 </v>
 <v t="T64" a="E"><vh>Latest version</vh>
-<v t="T65" a="CV"><vh>4.0.1 &amp; 4.0.2</vh></v>
+<v t="T65" a="CV"><vh>4.0.1, 4.0.2 &amp; 4.0.3</vh></v>
 <v t="T66" a="C"><vh>4.0 final</vh>
 <v t="T67"><vh>4.0 beta 4</vh></v>
 <v t="T68"><vh>4.0 beta 3</vh>
@@ -148,7 +148,7 @@
 </v>
 </v>
 <v t="T116"><vh>leo.py versions</vh>
-<v t="T65" a="C"><vh>4.0.1 &amp; 4.0.2</vh></v>
+<v t="T65" a="C"><vh>4.0.1, 4.0.2 &amp; 4.0.3</vh></v>
 <v t="T66" a="C"><vh>4.0 final</vh>
 <v t="T67"><vh>4.0 beta 4</vh></v>
 <v t="T68"><vh>4.0 beta 3</vh>
@@ -4424,9 +4424,14 @@ This is the minimum you need to use Leo effectively.
 
 See the Appendices for a concise summary of information about Leo.</t>
 <t tx="T64"></t>
-<t tx="T65">Leo 4.0.2                         October 23, 2003
+<t tx="T65">Leo 4.0.3                         October 25, 2003
 
-Yet another bug-fix release:
+- Fixes several problems with the auto_save and plugin menu plugins.
+- Fixes a problem with the Go To Line Number command.
+
+Note: This version does _not_ support Unicode file names or directory names.
+
+Leo 4.0.2                         October 23, 2003
 
 - Fixes a crasher in reportBadChars when a .leo file contains a character that
   can not be represented in the encoding specified in the first line of the
@@ -4436,12 +4441,7 @@ Yet another bug-fix release:
 - Leo now issues a more informative message when the @comment directive
   inhibits the Untangle command.
 
-Note: This version does _not_ support Unicode file names or directory names.
-
-
 Leo 4.0.1                         October 22, 2003
-
-This is a bug-fix release:
 
 - Fixes several crashers, one of which may prevent Leo from starting.
 - Fixes indentation for section references that are preceded by something

@@ -4,9 +4,14 @@ Leo is available at:  http://sourceforge.net/projects/leo/
 Leo requires Python 2.1 or above and tcl/tk 8.3 or above.
 Leo will work on Linux, Windows and MacOs X Jaguar.
 
-Leo 4.0.2                         October 23, 2003
+Leo 4.0.3                         October 25, 2003
 
-Yet another bug-fix release:
+- Fixes several problems with the auto_save and plugin menu plugins.
+- Fixes a problem with the Go To Line Number command.
+
+Note: This version does _not_ support Unicode file names or directory names.
+
+Leo 4.0.2                         October 23, 2003
 
 - Fixes a crasher in reportBadChars when a .leo file contains a character that
   can not be represented in the encoding specified in the first line of the
@@ -16,11 +21,7 @@ Yet another bug-fix release:
 - Leo now issues a more informative message when the @comment directive
   inhibits the Untangle command.
 
-Note: This version does _not_ support Unicode file names or directory names.
-
 Leo 4.0.1                         October 22, 2003
-
-This is a bug fix release:
 	
 - Fixes several crashers.
 - Fixes indentation for section references that are preceded by something
@@ -29,7 +30,6 @@ This is a bug fix release:
 - Removes some improperly cloned nodes from LeoDocs.leo.
 - Adds the checkTopologyOfAllClones script.
 - Fixes some problems with plugins.
-
 
 Leo 4.0 final                     October 17, 2003
 
