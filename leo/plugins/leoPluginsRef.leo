@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet ekr_stylesheet?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="4099" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="4402" clone_windows="0"/>
 <globals body_outline_ratio="0.494983277592">
 	<global_window_position top="48" left="202" height="897" width="1014"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
@@ -169,12 +169,13 @@ marks="pap.20041008200028,pap.20041006194759,pap.20041008224625,pap.200410061930
 </v>
 </v>
 <v t="ekr.20041030092101"><vh>Dyna plugins by e</vh>
-<v t="ekr.20050328091952"><vh> dyna plugin 139</vh>
-<v t="ekr.20050328091952.1"><vh>&lt;&lt; insertAplug &gt;&gt;</vh></v>
-<v t="ekr.20050328091952.2"><vh>@thin dyna_menu.py</vh></v>
-<v t="ekr.20050328091952.93"><vh>@thin dynacommon.py</vh></v>
-<v t="ekr.20050328091952.121" tnodeList="ekr.20050328091952.121"><vh>@nosent dyna_menu.ini</vh></v>
-<v t="ekr.20050328091952.122"><vh>@thin dyna.txt</vh></v>
+<v t="ekr.20050329163946"><vh> dyna plugin 139</vh>
+<v t="ekr.20050329163946.1" a="E"><vh>&lt;&lt; insertAplug &gt;&gt;</vh></v>
+<v t="ekr.20050329163946.2"
+expanded="ekr.20050329163946.59,ekr.20050329163946.72,"><vh>@thin dyna_menu.py</vh></v>
+<v t="ekr.20050329163946.97"><vh>@thin dynacommon.py</vh></v>
+<v t="ekr.20050329163946.125" tnodeList="ekr.20050329163946.125"><vh>@nosent dyna_menu.ini</vh></v>
+<v t="ekr.20050329163946.126"><vh>@thin dyna.txt</vh></v>
 </v>
 </v>
 <v t="edream.110203113231.872"><vh>Enhanced nodes...</vh>
@@ -198,7 +199,7 @@ marks="pap.20041008200028,pap.20041006194759,pap.20041008224625,pap.200410061930
 </v>
 </v>
 <v t="ekr.20050329082101.15"><vh>RSS</vh>
-<v t="ekr.20050329082101.16" a="E"><vh>@auto-rss http://news.bbc.co.uk/rss/newsonline_uk_edition/world/rss091.xml</vh>
+<v t="ekr.20050329082101.16"><vh>@auto-rss http://news.bbc.co.uk/rss/newsonline_uk_edition/world/rss091.xml</vh>
 <v t="ekr.20050329092553"><vh>Hundreds die in Indonesia quake</vh></v>
 <v t="ekr.20050329092553.1"><vh>Ousted Kyrgyz president defiant</vh></v>
 <v t="ekr.20050329092553.2"><vh>Hair 'good source of stem cells'</vh></v>
@@ -226,7 +227,7 @@ marks="pap.20041008200028,pap.20041006194759,pap.20041008224625,pap.200410061930
 </v>
 <v t="ekr.20050329082101.40" annotate="7d71002e"><vh>@auto-rss http://slashdot.org/index.rss</vh>
 <v t="ekr.20050329092553.24"><vh>Followup on MS and Brazil in NY Times</vh></v>
-<v t="ekr.20050329092553.25" a="E"><vh>A9.com with Syndicated Search</vh></v>
+<v t="ekr.20050329092553.25"><vh>A9.com with Syndicated Search</vh></v>
 <v t="ekr.20050329092553.26"><vh>What's Next At Apple</vh></v>
 <v t="ekr.20050329092553.27"><vh>Berkeley Grads' Identity Data Stolen</vh></v>
 <v t="ekr.20050329092553.28"><vh>South Korean Gov't. Advocates Linux</vh></v>
@@ -254,12 +255,12 @@ marks="pap.20041008200028,pap.20041006194759,pap.20041008224625,pap.200410061930
 <v t="ekr.20050329082101.66"><vh>Cameron Laird receives the Frank Willison Award</vh></v>
 </v>
 </v>
-<v t="ekr.20050329082101.67" a="E"><vh>Remote</vh>
+<v t="ekr.20050329082101.67"><vh>Remote</vh>
 <v t="ekr.20050329082101.68"><vh>@auto-remote http://www.bbc.co.uk/news.html</vh></v>
 </v>
-<v t="ekr.20050329082101.69" a="E"><vh>Documentation</vh>
+<v t="ekr.20050329082101.69"><vh>Documentation</vh>
 <v t="ekr.20050329082101.70"><vh>@auto-doc docutils.core</vh>
-<v t="ekr.20050329082101.71" a="E"><vh>Component</vh>
+<v t="ekr.20050329082101.71"><vh>Component</vh>
 <v t="ekr.20050329082101.72"><vh>component_type</vh></v>
 <v t="ekr.20050329082101.73"><vh>default_transforms</vh></v>
 <v t="ekr.20050329082101.74"><vh>supports</vh></v>
@@ -295,7 +296,7 @@ marks="pap.20041008200028,pap.20041006194759,pap.20041008224625,pap.200410061930
 <v t="ekr.20050329082101.101"><vh>writers</vh></v>
 </v>
 </v>
-<v t="ekr.20050329082101.102" a="E"><vh>News Reader</vh>
+<v t="ekr.20050329082101.102"><vh>News Reader</vh>
 <v t="ekr.20050329082101.103"><vh>@auto-news news-server.houston.rr.com/comp.lang.python</vh>
 <v t="ekr.20050329082101.104"><vh>@auto-newsitem 356970 - Easy way to check modules for python version compatibility?</vh></v>
 <v t="ekr.20050329082101.105"><vh>@auto-newsitem 356972 - Q: Module Shared Data</vh></v>
@@ -310,13 +311,12 @@ marks="pap.20041008200028,pap.20041006194759,pap.20041008224625,pap.200410061930
 </v>
 </v>
 </v>
-<v t="ekr.20050329082101.114" a="E"><vh>AutoTrees Code</vh>
-<v t="ekr.20050329082101.115"
-expanded="ekr.20050329082101.134,"><vh>@thin autotrees.py</vh></v>
+<v t="ekr.20050329082101.114"><vh>AutoTrees Code</vh>
+<v t="ekr.20050329082101.115"><vh>@thin autotrees.py</vh></v>
 <v t="ekr.20050329082101.145"><vh>@--thin trees\pluginsManager.txt</vh></v>
 <v t="ekr.20050329082101.146"><vh>Example tree handlers</vh>
 <v t="ekr.20050329082101.147"><vh>@thin trees\test.py</vh></v>
-<v t="ekr.20050329082101.150" a="E"><vh>@thin trees\rss.py</vh></v>
+<v t="ekr.20050329082101.150"><vh>@thin trees\rss.py</vh></v>
 <v t="ekr.20050329082101.153"><vh>@thin trees\news.py</vh></v>
 <v t="ekr.20050329082101.162"><vh>@thin trees\remote.py</vh></v>
 <v t="ekr.20050329082101.165"><vh>@thin trees\doc.py</vh></v>
@@ -449,8 +449,7 @@ marks="ekr.20041017043622.4,ekr.20041017043622.10,ekr.20041017043622.13,"><vh>@t
 <v t="pap.20041020001240"><vh>@thin footprints.py</vh></v>
 </v>
 <v t="mork.20040926105355.1"
-marks="mork.20040930091035,mork.20040930091624,"
-expanded="mork.20040930091035.1,"><vh>@thin chapters.py</vh></v>
+marks="mork.20040930091035,mork.20040930091624,"><vh>@thin chapters.py</vh></v>
 <v t="mork.20041018162155.1"><vh>@thin EditAttributes.py</vh></v>
 <v t="ekr.20040915073259.1"><vh>@thin maximizeNewWindows.py</vh></v>
 <v t="mork.20041022155742.1"><vh>@thin nodebar.py</vh></v>
@@ -766,8 +765,7 @@ marks="EKR.20040517080555.4,"><vh>@thin plugins_menu.py</vh></v>
 </v>
 </v>
 <v t="pap.20041006184225"
-marks="pap.20041008224625,pap.20041006193013,pap.20041006194759,pap.20041008200028,"
-expanded="pap.20050317185409,pap.20041009140132,pap.20041006224216,pap.20041006232717,"><vh>@thin plugin_manager.py</vh></v>
+marks="pap.20041008224625,pap.20041006193013,pap.20041006194759,pap.20041008200028,"><vh>@thin plugin_manager.py</vh></v>
 </v>
 <v t="ekr.20041001210557"><vh>Scripting</vh>
 <v t="EKR.20040613213623"><vh>@thin mod_scripting.py</vh></v>
@@ -898,207 +896,18 @@ expanded="pap.20050317185409,pap.20041009140132,pap.20041006224216,pap.200410062
 </v>
 </v>
 </v>
-<v t="ekr.20040331071319"><vh>@thin rst2.py</vh></v>
+<v t="ekr.20040331071319"
+expanded="ekr.20040331071319.4,"><vh>@thin rst2.py</vh></v>
 </v>
 </v>
 </v>
-<v t="ekr.20050226090248"><vh>New/updated from Leo User</vh>
+<v t="ekr.20050226090248" a="TV"><vh>New/updated from Leo User</vh>
 <v t="mork.20041020082242.1"><vh>@thin base64Packager.py</vh></v>
 <v t="mork.20041018162155.1"><vh>@thin EditAttributes.py</vh></v>
 <v t="mork.20041018091414.1"><vh>@thin fastGotoNode.py</vh></v>
 <v t="mork.20041018131258.1"><vh>@thin groupOperations.py</vh></v>
 <v t="mork.20041018204908.1"><vh>@thin multifile.py</vh></v>
 <v t="mork.20041010095009"><vh>@thin xsltWithNodes.py</vh></v>
-</v>
-<v t="ekr.20040331071319"><vh>@thin rst2.py</vh></v>
-<v t="EKR.20040517080250.1"><vh>@thin mod_http.py</vh></v>
-<v t="pap.20041006184225"
-marks="pap.20041008224625,pap.20041006193013,pap.20041006194759,pap.20041008200028,"
-expanded="pap.20050317185409,pap.20041009140132,pap.20041006224216,pap.20041006232717,"><vh>@thin plugin_manager.py</vh></v>
-<v t="EKR.20040517075915" tnodeList="EKR.20040517075915,EKR.20040517075915.1,EKR.20040517075915.2,EKR.20040517075915.3,EKR.20040517075915.4,EKR.20040517075915.5,ekr.20050313123322,ekr.20050313123600,ekr.20050313124016,ekr.20050313123322.1,ekr.20050329033007,ekr.20050313123322.2,ekr.20050313124016.1,ekr.20050313123322.3,ekr.20050313124619,ekr.20050313124954,ekr.20050313125536,ekr.20050313123322.4,EKR.20040517075915.6,EKR.20040517075915.7,EKR.20040517075915.11,EKR.20040517075915.12,ekr.20050313123322.5,ekr.20050329033007.1,ekr.20050313120714,ekr.20050313120345,ekr.20050313115107,ekr.20050313121102,EKR.20040517075915.9,EKR.20040517075915.10,EKR.20040517075915.8,ekr.20050313124212,ekr.20050313120113"><vh>@file-noref newButtons.py</vh>
-<v t="EKR.20040517075915.1"><vh>Helper classes</vh>
-<v t="EKR.20040517075915.2"><vh>class FlatOptionMenu</vh></v>
-<v t="EKR.20040517075915.3"><vh>class Node</vh></v>
-<v t="EKR.20040517075915.4"><vh>class NodeAdder</vh></v>
-<v t="EKR.20040517075915.5"><vh>class Helper</vh></v>
-</v>
-<v t="ekr.20050313123322"><vh>text definitions used in plugins templates</vh>
-<v t="ekr.20050313123600"><vh>DOCSTRING_BODY</vh></v>
-<v t="ekr.20050313124016"><vh>GENERIC_IMPORTS_BODY</vh></v>
-<v t="ekr.20050313123322.1"><vh>GENERIC_INIT_FUNCTION_BODY</vh></v>
-<v t="ekr.20050329033007"><vh>IMPORT_LEO_GLOBALS_BODY</vh></v>
-<v t="ekr.20050313123322.2"><vh>PLUGIN_ROOT_BODY</vh></v>
-<v t="ekr.20050313124016.1"><vh>TK_IMPORTS_BODY</vh></v>
-<v t="ekr.20050313123322.3"><vh>TK_INIT_FUNCTION_BODY</vh></v>
-<v t="ekr.20050313124619"><vh>TK_ON_CREATE_FUNCTION</vh></v>
-<v t="ekr.20050313124954"><vh>TK_PLUGIN_CONTROLLER</vh></v>
-<v t="ekr.20050313125536"><vh>TK_PLUGIN_CONTROLLER_INIT</vh></v>
-<v t="ekr.20050313123322.4"><vh>VERSION_HISTORY_BODY</vh></v>
-</v>
-<v t="EKR.20040517075915.6"><vh> Casses to add buttons</vh>
-<v t="EKR.20040517075915.7"><vh>body text used by AddTestModule &amp; AddTestClass</vh></v>
-<v t="EKR.20040517075915.11"><vh>class AddClass</vh></v>
-<v t="EKR.20040517075915.12"><vh>class AddClassMethod</vh></v>
-<v t="ekr.20050313123322.5"><vh>class AddGenericPlugin</vh></v>
-<v t="ekr.20050329033007.1" a="M"><vh>class AddImportLeoGlobalsFunction</vh></v>
-<v t="ekr.20050313120714"><vh>class AddPluginImportsSection</vh></v>
-<v t="ekr.20050313120345"><vh>class AddPluginInitFunction</vh></v>
-<v t="ekr.20050313115107"><vh>class AddPluginTkInitFunction</vh></v>
-<v t="ekr.20050313121102"><vh>class AddPluginVersionHistorySection</vh></v>
-<v t="EKR.20040517075915.9"><vh>class AddTestClass</vh></v>
-<v t="EKR.20040517075915.10"><vh>class AddTestMethod</vh></v>
-<v t="EKR.20040517075915.8"><vh>class AddTestModule</vh></v>
-<v t="ekr.20050313124212"><vh>class AddTkPlugin</vh></v>
-</v>
-<v t="ekr.20050313120113"><vh>init</vh></v>
-</v>
-<v t="mork.20040926105355.1"
-marks="mork.20040930091035,mork.20040930091624,"
-expanded="mork.20040930091035.1,"><vh>@thin chapters.py</vh></v>
-<v t="ekr.20050329082101" a="TV"><vh>AutoTrees</vh>
-<v t="ekr.20050329082101.1"><vh>AutoTrees plugin</vh>
-<v t="ekr.20050329082101.2"><vh>Introduction</vh></v>
-<v t="ekr.20050329082101.3"><vh>Why use this?</vh></v>
-<v t="ekr.20050329082101.4"><vh>Details</vh></v>
-<v t="ekr.20050329082101.5"><vh>How do I create my own handlers?</vh></v>
-</v>
-<v t="ekr.20050329082101.6" annotate="7d71002e"><vh>Example handlers</vh>
-<v t="ekr.20050329082101.7"><vh>Testing</vh>
-<v t="ekr.20050329082101.8" annotate="7d71002e"><vh>@auto-test something</vh>
-<v t="ekr.20050329082101.9"><vh>one</vh></v>
-<v t="ekr.20050329082101.10"><vh>two</vh></v>
-<v t="ekr.20050329082101.11"><vh>three</vh>
-<v t="ekr.20050329082101.12"><vh>three-one</vh></v>
-<v t="ekr.20050329082101.13"><vh>three-two</vh></v>
-<v t="ekr.20050329082101.14"><vh>three-three</vh></v>
-</v>
-</v>
-</v>
-<v t="ekr.20050329082101.15"><vh>RSS</vh>
-<v t="ekr.20050329082101.16" a="E"><vh>@auto-rss http://news.bbc.co.uk/rss/newsonline_uk_edition/world/rss091.xml</vh>
-<v t="ekr.20050329092553"><vh>Hundreds die in Indonesia quake</vh></v>
-<v t="ekr.20050329092553.1"><vh>Ousted Kyrgyz president defiant</vh></v>
-<v t="ekr.20050329092553.2"><vh>Hair 'good source of stem cells'</vh></v>
-<v t="ekr.20050329092553.3"><vh>Ashdown sacks top Bosnian Croat</vh></v>
-<v t="ekr.20050329092553.4"><vh>Splits paralyse Iraqi parliament</vh></v>
-<v t="ekr.20050329092553.5"><vh>Mongolians protest for new poll</vh></v>
-<v t="ekr.20050329092553.6"><vh>Libya's Bulgarian medics appeal</vh></v>
-<v t="ekr.20050329092553.7"><vh>Schiavo rivals 'agree to autopsy'</vh></v>
-<v t="ekr.20050329092553.8"><vh>Would-be sex tourist, 87, jailed</vh></v>
-<v t="ekr.20050329092553.9"><vh>Golf: Funk claims Players title</vh></v>
-<v t="ekr.20050329092553.10"><vh>Cricket: Series win for Aussies</vh></v>
-<v t="ekr.20050329092553.11"><vh>Angola says virus 'under control'</vh></v>
-<v t="ekr.20050329092553.12"><vh>Mugabe criticises MDC 'traitors'</vh></v>
-<v t="ekr.20050329092553.13"><vh>Ex-US diplomats round on Bolton</vh></v>
-<v t="ekr.20050329092553.14"><vh>Brazil quits loan accord with IMF</vh></v>
-<v t="ekr.20050329092553.15"><vh>Japanese economy hit by weak data</vh></v>
-<v t="ekr.20050329092553.16"><vh>Donors pledge $40m for KR trials</vh></v>
-<v t="ekr.20050329092553.17"><vh>Three Romanians missing in Iraq</vh></v>
-<v t="ekr.20050329092553.18"><vh>Wolfowitz 'to meet EU officials'</vh></v>
-<v t="ekr.20050329092553.19"><vh>Knesset rejects Gaza referendum</vh></v>
-<v t="ekr.20050329092553.20"><vh>Militants to attend PLO meeting</vh></v>
-<v t="ekr.20050329092553.21"><vh>South Asia cancels tsunami alerts</vh></v>
-<v t="ekr.20050329092553.22"><vh>Devastation as Afghan dam bursts</vh></v>
-<v t="ekr.20050329092553.23"><vh>Kyrgyzstan's friendly revolution</vh></v>
-</v>
-<v t="ekr.20050329082101.40" annotate="7d71002e"><vh>@auto-rss http://slashdot.org/index.rss</vh>
-<v t="ekr.20050329092553.24"><vh>Followup on MS and Brazil in NY Times</vh></v>
-<v t="ekr.20050329092553.25" a="E"><vh>A9.com with Syndicated Search</vh></v>
-<v t="ekr.20050329092553.26"><vh>What's Next At Apple</vh></v>
-<v t="ekr.20050329092553.27"><vh>Berkeley Grads' Identity Data Stolen</vh></v>
-<v t="ekr.20050329092553.28"><vh>South Korean Gov't. Advocates Linux</vh></v>
-<v t="ekr.20050329092553.29"><vh>MS, EU Agree on Name for Windows Sans Media Player</vh></v>
-<v t="ekr.20050329092553.30"><vh>Blackbox (Finally) Updated</vh></v>
-<v t="ekr.20050329092553.31"><vh>Your Face On the Big Screen</vh></v>
-<v t="ekr.20050329092553.32"><vh>Ars Technica Builds Make Magazine's Steadicam</vh></v>
-<v t="ekr.20050329092553.33"><vh>New Photovoltaics Made with Titanium Foil</vh></v>
-</v>
-<v t="ekr.20050329082101.51"><vh>@auto-rss http://www.python.org/channews.rdf</vh>
-<v t="ekr.20050329082101.52"><vh>Python 2.4.1 (release candidate 1)</vh></v>
-<v t="ekr.20050329082101.53"><vh>Greg Stein, of Google and Apache Software Foundation, to deliver keynote at PyCon</vh></v>
-<v t="ekr.20050329082101.54"><vh>New RSS feed for python-dev summaries</vh></v>
-<v t="ekr.20050329082101.55"><vh>Guido van Rossum speaking in Palo Alto</vh></v>
-<v t="ekr.20050329082101.56"><vh>Python 2.3.5 (final)</vh></v>
-<v t="ekr.20050329082101.57"><vh>Security advisory for SimpleXMLRPCServer.py.</vh></v>
-<v t="ekr.20050329082101.58"><vh>Deadline for OSCON proposals</vh></v>
-<v t="ekr.20050329082101.59"><vh>PyCon abstracts now available</vh></v>
-<v t="ekr.20050329082101.60"><vh>PyCon preliminary schedule now available</vh></v>
-<v t="ekr.20050329082101.61"><vh>PSF has awarded three grants</vh></v>
-<v t="ekr.20050329082101.62"><vh>Python for Nokia Series 60 now available</vh></v>
-<v t="ekr.20050329082101.63"><vh>Python 2.4 (final)</vh></v>
-<v t="ekr.20050329082101.64"><vh>PyZine issue 7</vh></v>
-<v t="ekr.20050329082101.65"><vh>PyCon 2005 Call for Proposals</vh></v>
-<v t="ekr.20050329082101.66"><vh>Cameron Laird receives the Frank Willison Award</vh></v>
-</v>
-</v>
-<v t="ekr.20050329082101.67" a="E"><vh>Remote</vh>
-<v t="ekr.20050329082101.68"><vh>@auto-remote http://www.bbc.co.uk/news.html</vh></v>
-</v>
-<v t="ekr.20050329082101.69" a="E"><vh>Documentation</vh>
-<v t="ekr.20050329082101.70"><vh>@auto-doc docutils.core</vh>
-<v t="ekr.20050329082101.71" a="E"><vh>Component</vh>
-<v t="ekr.20050329082101.72"><vh>component_type</vh></v>
-<v t="ekr.20050329082101.73"><vh>default_transforms</vh></v>
-<v t="ekr.20050329082101.74"><vh>supports</vh></v>
-</v>
-<v t="ekr.20050329082101.75"><vh>ConfigParser</vh>
-<v t="ekr.20050329082101.76"><vh>OPTCRE</vh></v>
-<v t="ekr.20050329082101.77"><vh>SECTCRE</vh></v>
-<v t="ekr.20050329082101.78"><vh>add_section</vh></v>
-<v t="ekr.20050329082101.79"><vh>standard_config_files</vh></v>
-<v t="ekr.20050329082101.80"><vh>validation</vh></v>
-</v>
-<v t="ekr.20050329082101.81"><vh>OptionParser</vh>
-<v t="ekr.20050329082101.82"><vh>default_error_encoding_error_handler</vh></v>
-<v t="ekr.20050329082101.83"><vh>relative_path_settings</vh></v>
-<v t="ekr.20050329082101.84"><vh>settings_defaults</vh></v>
-<v t="ekr.20050329082101.85"><vh>settings_spec</vh></v>
-<v t="ekr.20050329082101.86"><vh>standard_option_list</vh></v>
-<v t="ekr.20050329082101.87"><vh>threshold_choices</vh></v>
-<v t="ekr.20050329082101.88"><vh>thresholds</vh></v>
-<v t="ekr.20050329082101.89"><vh>version_template</vh></v>
-</v>
-<v t="ekr.20050329082101.90"><vh>Publisher</vh></v>
-<v t="ekr.20050329082101.91"><vh>default_description</vh></v>
-<v t="ekr.20050329082101.92"><vh>default_usage</vh></v>
-<v t="ekr.20050329082101.93"><vh>frontend</vh></v>
-<v t="ekr.20050329082101.94"><vh>io</vh></v>
-<v t="ekr.20050329082101.95"><vh>parsers</vh></v>
-<v t="ekr.20050329082101.96"><vh>publish_cmdline</vh></v>
-<v t="ekr.20050329082101.97"><vh>publish_file</vh></v>
-<v t="ekr.20050329082101.98"><vh>publish_string</vh></v>
-<v t="ekr.20050329082101.99"><vh>readers</vh></v>
-<v t="ekr.20050329082101.100"><vh>sys</vh></v>
-<v t="ekr.20050329082101.101"><vh>writers</vh></v>
-</v>
-</v>
-<v t="ekr.20050329082101.102" a="E"><vh>News Reader</vh>
-<v t="ekr.20050329082101.103"><vh>@auto-news news-server.houston.rr.com/comp.lang.python</vh>
-<v t="ekr.20050329082101.104"><vh>@auto-newsitem 356970 - Easy way to check modules for python version compatibility?</vh></v>
-<v t="ekr.20050329082101.105"><vh>@auto-newsitem 356972 - Q: Module Shared Data</vh></v>
-<v t="ekr.20050329082101.106"><vh>@auto-newsitem 356978 - Re: __contains__ inconsistencies between Python 2.2 and 2.3</vh></v>
-<v t="ekr.20050329082101.107"><vh>@auto-newsitem 356979 - Re: [Numeric] column vector faster than row vector in mat multiply?</vh></v>
-<v t="ekr.20050329082101.108"><vh>@auto-newsitem 356986 - Python 2.4 removes None data type?</vh></v>
-<v t="ekr.20050329082101.109"><vh>@auto-newsitem 356987 - Re: Integer From A Float List?!?</vh></v>
-<v t="ekr.20050329082101.110"><vh>@auto-newsitem 356988 - Suspicious header</vh></v>
-<v t="ekr.20050329082101.111"><vh>@auto-newsitem 356991 - Re: Suspicious header</vh></v>
-<v t="ekr.20050329082101.112"><vh>@auto-newsitem 356992 - survey</vh></v>
-<v t="ekr.20050329082101.113"><vh>@auto-newsitem 356993 - Re: Python 2.4 removes None data type?</vh></v>
-</v>
-</v>
-</v>
-<v t="ekr.20050329082101.114" a="E"><vh>AutoTrees Code</vh>
-<v t="ekr.20050329082101.115"
-expanded="ekr.20050329082101.134,"><vh>@thin autotrees.py</vh></v>
-<v t="ekr.20050329082101.145"><vh>@--thin trees\pluginsManager.txt</vh></v>
-<v t="ekr.20050329082101.146"><vh>Example tree handlers</vh>
-<v t="ekr.20050329082101.147"><vh>@thin trees\test.py</vh></v>
-<v t="ekr.20050329082101.150" a="E"><vh>@thin trees\rss.py</vh></v>
-<v t="ekr.20050329082101.153"><vh>@thin trees\news.py</vh></v>
-<v t="ekr.20050329082101.162"><vh>@thin trees\remote.py</vh></v>
-<v t="ekr.20050329082101.165"><vh>@thin trees\doc.py</vh></v>
-</v>
-</v>
 </v>
 </vnodes>
 <tnodes>
@@ -7820,7 +7629,7 @@ That web site is produced from a Leo outline.
 <t tx="ekr.20041002162608"># Note: this work has been superceded by the temacs plugin.</t>
 <t tx="ekr.20041009112303"></t>
 <t tx="ekr.20041019072632"></t>
-<t tx="ekr.20041030092101">@ Notes by EKR:  The enclose is a remarkable body of work by 'e'.  Have fun with it.
+<t tx="ekr.20041030092101">@ Notes by EKR:  The enclosed is a remarkable body of work by 'e'.  Have fun with it.
 
 I am enclosing this code as-is; use with reasonable caution.
 
@@ -8263,8 +8072,8 @@ used. Maybe this information can be centralized.
 
 - Simplify the directory settings.</t>
 <t tx="ekr.20050217093214">@nocolor</t>
-<t tx="ekr.20050217093214.1">c:\prog\leoCVS\leo\doc\LeoDocs.leo
-C:\prog\leoCVS\leo\plugins\leoPlugins.leo
+<t tx="ekr.20050217093214.1">C:\prog\leoCVS\leo\plugins\leoPlugins.leo
+c:\prog\leoCVS\leo\doc\LeoDocs.leo
 C:\prog\leoCVS\leo\src\LeoPy.leo</t>
 <t tx="ekr.20050226090248"> </t>
 <t tx="ekr.20050227071948"></t>
@@ -8821,118 +8630,6 @@ def __init__ (self,c):
     
     self.c = c
 '''</t>
-<t tx="ekr.20050328091952"># change/comment this to match your path if your leo isn't in the plugins dir
-
-## @path C:\c\leo\V43leos\leo\plugins\
-
-@
-several plugins of the dyna variety and support files
-newer than the version included in Leo4.3 alpha 4, March 15, 2005
-exS all but retired, newer dynaclick not ready for distribution.
-look in version history for a few minor changes to bring
-dyna_menu up to Leo4.3 code. and some cosmetic changes
-for htmlize and du_test and their config and a few option flippers.
-
-executeScript on this node to insert your plugin path
-if it looks ok remove the #comment
-@c
-
-&lt;&lt; insertAplug &gt;&gt;
-insertAplug()
-
-@language python
-@color
-@tabwidth -4
-</t>
-<t tx="ekr.20050328091952.1">def insertAplug(wch= 'i'): #i/r
-    """use to insertAt 1.0 #@path plugindir
-   
-    """
-    import leoGlobals as g
-    import os, sys
-
-
-    k = g.os_path_split(g.app.loadDir)[0]
-    #this should fix the slashes and lower cases' it on win9x
-    path = g.os_path_normpath(g.os_path_abspath(g.os_path_join(k, "plugins")))
-
-
-    if not g.os_path_isdir(path):
-        print 'give up', path; raise NameError
-
-    if 'i' in wch:
-        c = g.top()
-        p = c.currentPosition()
-        Tx = c.frame.body
-        Tx.setInsertionPoint(1.0)
-        Tx.insertAtInsertPoint('#@path %s\n'%(path,))
-        Tx.onBodyWillChange(p, "Typing")  
-
-    #if 'r' in wch:  i forget why dtef shouldent do this in every case...
-    #return home
-</t>
-<t tx="ekr.20050328091952.121">@language elisp
-;ini may be shortlived in favor of @settings when thats feasible
-;leave nosent so it isn't updated on leo open and all comments lost
-; but if you change something here, it will overwrite any previous ini on disk.
-;
-;current properties ini editor will not have enough room for all these.
-;pick only about a dozzen of your favorites more if you have more screen size
-; True==1 False==0 just like the old days works too, case insensitive
-;case sensitive on section names, insensitive on item names
-;untested with spaces or Unicode in filenames please report any problem. 
-
-
-[main]
-verbosity=0
-;verbosity for du_test and @test
-;tempfile used in makatemp and tim1crunch, not active yet, edit dynacommon
-;tmpfile = site-packages
-
-;no source print after checks
-justPyChecker=1
-
-[htmlize]
-;which external colorizer for @language other than python
-;leave blank for none or comment out
-;hiliter=silvercity
-;hiliter=source-highlight
-hiliter=
-
-;codefold = False
-stripcomments = False
-stripsentinals = True
-stripnodesents = False
-stripdirectives = False
-noNUMBER = False
-noOP = False
-noNAME = True
-
-;filename = c:\temp\htmlize.html
-timestring = default
-
-;use leodefault if Leo has one or default for whats hardwired in dyna_menu
-;non existant or commented out values use the default in dyna_menu
-
-;have to invent a new node, a clone with languageformatconversion
-;hate duplicating here the defaults hardwired in htmlize, but anyways
-;colors
-;token_NUMBER  =  #483D8B  ;black/darkslateblue
-;token_OP      =  #000080  ;black/navy
-;token_STRING  =  #00AA00  ;green 00cc66
-;token_COMMENT =  #DD0000  ;red cc0033
-;token_NAME     = #4B0082  ;black/indigo
-;token_ERRORTOKEN= #FF8080  ;redred bare null does it
-;token_KEYWORD    =  #0066ff  ;blue
-;token_TEXT       =  #000000  ;black /is text fg color too
-;token_LeoDir     =  #228B22  ;directive, forest comment
-token_LeoSen     =  #BC8F8F  ;sentinal, tan fade comment
-token_bg         =  #FFFAFA  ;snow
-
-; comments can be after values but not spaces or commas?
-;comments can be between values?
-;configparser needs a complete testsuite to answer these questions
-;maybe there is one already?</t>
 <t tx="ekr.20050328092641">from Library.py for Leo4.3
 see forum &lt;http://sourceforge.net/forum/forum.php?thread_id=1244564&amp;forum_id=10226&gt;
 a better configparser would be nice.
@@ -9897,5 +9594,110 @@ http://hardware.slashdot.org/article.pl?shttp://hardware.slashdot.org/article.pl
 Memorize writes "A company called Daystartech has released a new type of photovoltaic cell which, unlike almost all the cells currently in use, does not silicon. This is based on a thin titanium film. Given the current shortage of solar-grade silicon, and all-time high oil prices, maybe titanium solar panels are here at the right time. The questions are, will they release it as a consumer solar product, and what will be the price per kilowatt hour?"
 
 http://science.slashdot.org/article.pl?shttp://science.slashdot.org/article.pl?sid=05/03/28/2320211&amp;from=rss=05/03/28/2320211&amp;from=rss</t>
+<t tx="ekr.20050329163946">
+@
+several plugins of the dyna variety and support files
+newer than the version included in Leo4.3 alpha 4, March 15, 2005
+exS all but retired, newer dynaclick not ready for distribution.
+look in version history for a few minor changes to bring
+dyna_menu up to Leo4.3 code. and some cosmetic changes
+for htmlize and du_test and their config and a few option flippers.
+
+executeScript on this node to insert your plugin path
+if it looks ok remove the #comment
+@c
+
+&lt;&lt; insertAplug &gt;&gt;
+insertAplug()
+
+@language python
+@color
+@tabwidth -4
+</t>
+<t tx="ekr.20050329163946.1">def insertAplug(wch= 'i'): #i/r
+    """use to insertAt 1.0 #@path plugindir
+   
+    """
+    import leoGlobals as g
+    import os, sys
+
+
+    k = g.os_path_split(g.app.loadDir)[0]
+    #this should fix the slashes and lower cases' it on win9x
+    path = g.os_path_normpath(g.os_path_abspath(g.os_path_join(k, "plugins")))
+
+    if not g.os_path_isdir(path):
+        print 'give up', path; raise NameError
+
+    if 'i' in wch:
+        c = g.top()
+        p = c.currentPosition()
+        Tx = c.frame.body
+        Tx.setInsertionPoint(1.0)
+        Tx.insertAtInsertPoint('#@path %s\n'%(path,))
+        Tx.onBodyWillChange(p, "Typing")  
+</t>
+<t tx="ekr.20050329163946.125">@language elisp
+;ini may be shortlived in favor of @settings when thats feasible
+;leave nosent so it isn't updated on leo open and all comments lost
+; but if you change something here, it will overwrite any previous ini on disk.
+;
+;current properties ini editor will not have enough room for all these.
+;pick only about a dozzen of your favorites more if you have more screen size
+; True==1 False==0 just like the old days works too, case insensitive
+;case sensitive on section names, insensitive on item names
+;untested with spaces or Unicode in filenames please report any problem. 
+
+
+[main]
+verbosity=0
+;verbosity for du_test and @test
+;tempfile used in makatemp and tim1crunch, not active yet, edit dynacommon
+;tmpfile = site-packages
+
+;no source print after checks
+justPyChecker=1
+
+[htmlize]
+;which external colorizer for @language other than python
+;leave blank for none or comment out
+;hiliter=silvercity
+;hiliter=source-highlight
+hiliter=
+
+;codefold = False
+stripcomments = False
+stripsentinals = True
+stripnodesents = False
+stripdirectives = False
+noNUMBER = False
+noOP = False
+noNAME = True
+
+;filename = c:\temp\htmlize.html
+timestring = default
+
+;use leodefault if Leo has one or default for whats hardwired in dyna_menu
+;non existant or commented out values use the default in dyna_menu
+
+;have to invent a new node, a clone with languageformatconversion
+;hate duplicating here the defaults hardwired in htmlize, but anyways
+;colors
+;token_NUMBER  =  #483D8B  ;black/darkslateblue
+;token_OP      =  #000080  ;black/navy
+;token_STRING  =  #00AA00  ;green 00cc66
+;token_COMMENT =  #DD0000  ;red cc0033
+;token_NAME     = #4B0082  ;black/indigo
+;token_ERRORTOKEN= #FF8080  ;redred bare null does it
+;token_KEYWORD    =  #0066ff  ;blue
+;token_TEXT       =  #000000  ;black /is text fg color too
+;token_LeoDir     =  #228B22  ;directive, forest comment
+token_LeoSen     =  #BC8F8F  ;sentinal, tan fade comment
+token_bg         =  #FFFAFA  ;snow
+
+; comments can be after values but not spaces or commas?
+;comments can be between values?
+;configparser needs a complete testsuite to answer these questions
+;maybe there is one already?</t>
 </tnodes>
 </leo_file>
