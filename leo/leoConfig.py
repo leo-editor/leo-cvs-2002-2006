@@ -345,9 +345,9 @@ class config:
 		self.relative_path_base_directory = "!"
 		self.save_clears_undo_buffer = false
 		self.use_relative_node_indices = 1
-		self.remove_sentinels_extension = None
+		self.remove_sentinels_extension = ".txt" # 10/4/02
 		self.write_clone_indices = 0
-		self.xml_version_string = None
+		self.xml_version_string = "utf-8" # 10/4/02
 		self.compareDict = {}
 		self.findDict = {}
 		self.keysDict = {}
@@ -588,7 +588,7 @@ class config:
 				
 			try:self.xml_version_string = config.get(
 				self.configSection,"xml_version_string")
-			except: self.xml_version_string = prolog_version_string
+			except: self.xml_version_string = "utf-8" # 10/4/02
 			
 			try: self.use_relative_node_indices = config.getboolean(
 				self.configSection,"use_relative_node_indices")
@@ -596,7 +596,7 @@ class config:
 			
 			try: self.remove_sentinels_extension = config.get(
 				self.configSection,"remove_sentinels_extension")
-			except: self.remove_sentinels_extension = None # New style: this module won't know defaults.
+			except: self.remove_sentinels_extension = ".txt"
 			
 			try: self.write_clone_indices = config.getboolean(
 				self.configSection,"write_clone_indices")
