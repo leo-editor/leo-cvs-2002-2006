@@ -303,10 +303,33 @@ class testUtils:
         outline1.doDelete(copy)
     #@nonl
     #@-node:EKR.20040623223148.11:replaceOutline
-    #@+node:ekr.20040716073021:testUtils.writeNodeToNode
+    #@+node:ekr.20040716073021:testUtils.writeNode/sToNode
+    #@+node:ekr.20040716144643:writeNodesToNode
+    def writeNodesToNode (self,c,input,output,sentinels=True):
+        
+        result = []
+        for p in input.self_and_subtree_iter():
+            s = self.writeNodeToString(c,p,sentinels)
+            result.append(s)
+        result = ''.join(result)
+        output.scriptSetBodyString (result)
+    #@nonl
+    #@-node:ekr.20040716144643:writeNodesToNode
+    #@+node:ekr.20040716143229:writeNodeToNode
     def writeNodeToNode (self,c,input,output,sentinels=True):
         
         """Do an atFile.write the input tree to the body text of the output node."""
+        
+        s = self.writeNodeToString(c,input,sentinels)
+    
+        output.scriptSetBodyString (s)
+    #@nonl
+    #@-node:ekr.20040716143229:writeNodeToNode
+    #@+node:ekr.20040717070500:writeNodeToString
+    def writeNodeToString (self,c,input,sentinels):
+        
+        """Return an atFile.write of the input tree to a string."""
+        
         df = c.atFileCommands.new_df
         nodeIndices = g.app.nodeIndices
         
@@ -321,11 +344,11 @@ class testUtils:
         # Write the file to a string.
         df.write(input,thinFile=True,nosentinels= not sentinels,toString=True)
         s = df.stringOutput
-        
-        # Put the string in the body text of the output node.
-        output.scriptSetBodyString (s)
+    
+        return s
     #@nonl
-    #@-node:ekr.20040716073021:testUtils.writeNodeToNode
+    #@-node:ekr.20040717070500:writeNodeToString
+    #@-node:ekr.20040716073021:testUtils.writeNode/sToNode
     #@+node:ekr.20040716092802:testUtils.compareIgnoringNodeNames
     def compareIgnoringNodeNames (self,s1,s2,marker,verbose=False):
         
@@ -1113,6 +1136,96 @@ class importExportTestCase(unittest.TestCase):
 #@nonl
 #@-node:ekr.20040707140849.28:class importExportTestCase
 #@-node:ekr.20040708173707:Import/Export test code (leoTest.py)
+#@+node:ekr.20040716140617:Perfect Import test code (leoTest.py)
+#@+node:ekr.20040717074817:About the Perfect Import tests
+#@@killcolor
+#@+at
+# 
+# This code assumes that the test code contains child nodes with the following 
+# headlines:
+# 
+# -input          Contains the "before" tree, without sentinels
+# -input-after    Contains the "after" tree, without sentinels.
+# 
+# These two nodes define what the test means.
+# 
+# The following nodes must also exist.  The test code sets their contents as 
+# follows:
+# 
+# -output-sent        The result of writing the -input tree, with sentinels.
+# -ouput-after-sent   The result of writing the -input-after tree, with 
+# sentinels.
+# -i_lines            The i_lines list created by mu.create_mapping
+# -j_lines            The j_lines list created by stripping sentinels from 
+# -input-after's tree.
+# -result             The result of running mu.propagateDiffsToSentinelsLines, 
+# containing sentinels.
+# 
+# A test passes if and only if the body of -result matches the body of 
+# ouput-after-sent, ignoring the details of @+node and @-node sentinels.
+#@-at
+#@nonl
+#@-node:ekr.20040717074817:About the Perfect Import tests
+#@+node:ekr.20040716140617.1:runPerfectImportTest
+def runPerfectImportTest(c,p,
+    testing=False,verbose=False,
+    ignoreSentinelsInCompare=False):
+    
+    # The contents of the "-input" and "-input-after" nodes define the changes.
+
+    c = g.top() ; p = c.currentPosition()
+    u = testUtils()
+    
+    input           = u.findNodeInTree(p,"-input")              # i file: before the change.
+    input_ins       = u.findNodeInTree(p,"-input-after")        # j file: after the change.
+    output_sent     = u.findNodeInTree(p,"-output-sent")        # fat file -> i file.
+    out_after_sent  = u.findNodeInTree(p,"-output-after-sent")  # Should match result.
+    result          = u.findNodeInTree(p,"-result")
+    ilines          = u.findNodeInTree(p,"-i_lines")
+    jlines          = u.findNodeInTree(p,"-j_lines")
+
+    # Create the output nodes containing sentinels from the original input.
+    u.writeNodesToNode(c,input,output_sent,sentinels=True)
+    u.writeNodesToNode(c,input_ins,out_after_sent,sentinels=True)
+    
+    mu = g.mulderUpdateAlgorithm(testing=testing,verbose=verbose)
+    marker = mu.marker_from_extension("foo.py")
+    
+    fat_lines = g.splitLines(output_sent.bodyString())
+    i_lines,mapping = mu.create_mapping(fat_lines,marker)
+    if input_ins.hasChildren():
+        # Get the lines by stripping sentinels from -output-after-sent node.
+        lines = g.splitLines(out_after_sent.bodyString()) 
+        j_lines = mu.removeSentinelsFromLines(lines,marker)
+    else:
+        j_lines = g.splitLines(input_ins.bodyString()) 
+    
+    # For viewing...
+    ilines.scriptSetBodyString(''.join(i_lines))
+    jlines.scriptSetBodyString(''.join(j_lines))
+    if ilines.bodyString() != input.bodyString():
+        if not ignoreSentinelsInCompare:
+            print "i_lines != input !"
+    
+    # Put the resulting lines (with sentinels) into the -result node.
+    lines = mu.propagateDiffsToSentinelsLines(i_lines,j_lines,fat_lines,mapping)
+    result.scriptSetBodyString(''.join(lines))
+    
+    if ignoreSentinelsInCompare:
+        sList = []
+        for s in (result.bodyString(),out_after_sent.bodyString()):
+            lines = g.splitLines(s)
+            lines = mu.removeSentinelsFromLines(lines,marker)
+            sList.append(''.join(lines))
+        return sList[0] == sList[1]
+    else:
+        return u.compareIgnoringNodeNames(
+            result.bodyString(),
+            out_after_sent.bodyString(),
+            marker,verbose=True)
+#@nonl
+#@-node:ekr.20040716140617.1:runPerfectImportTest
+#@-node:ekr.20040716140617:Perfect Import test code (leoTest.py)
 #@-node:ekr.20040708145036:Specific to particular unit tests...
 #@+node:ekr.20040710184602:Test of doctest
 #@+node:ekr.20040710183515:factorial

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="5875" clone_windows="0"/>
-<globals body_outline_ratio="0.465380249716">
-	<global_window_position top="21" left="405" height="881" width="771"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="5902" clone_windows="0"/>
+<globals body_outline_ratio="0.572077185017">
+	<global_window_position top="27" left="322" height="864" width="913"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences>
@@ -29,7 +29,7 @@
 <v t="EKR.20040627150213"><vh>Complex functions</vh></v>
 </v>
 <v t="ekr.20040714055306"><vh>elispToPy</vh>
-<v t="ekr.20040715133744" a="M"><vh>To do</vh></v>
+<v t="ekr.20040715133744"><vh>To do</vh></v>
 <v t="ekr.20040713123617.1"><vh>e2pyScript</vh>
 <v t="ekr.20040713200238"><vh>Ref</vh>
 <v t="ekr.20040713131315" a="M"><vh>To do</vh>
@@ -227,7 +227,7 @@
 <v t="ekr.20040713132127.69"><vh>unnamed data</vh></v>
 </v>
 </v>
-<v t="ekr.20040713130853.8" tnodeList="ekr.20040713130853.8,ekr.20040715093804,ekr.20040715073230,ekr.20040715082059,ekr.20040714095247,ekr.20040713150037,ekr.20040713150037.1,ekr.20040714170021,ekr.20040713150712,ekr.20040713173923,ekr.20040713174349,ekr.20040713180208,ekr.20040713164604,ekr.20040715080216,ekr.20040715080738,ekr.20040715081031,ekr.20040715080738.1,ekr.20040713144036,ekr.20040713144036.1,ekr.20040714061625,ekr.20040714061625.1,ekr.20040714061625.2,ekr.20040715090957,ekr.20040713152809,ekr.20040713193437,ekr.20040713161629.1,ekr.20040713152318,ekr.20040713151556.1,ekr.20040713160302,ekr.20040714060941,ekr.20040714053807.1,ekr.20040714054620.1,ekr.20040713150314.1,ekr.20040713144926,ekr.20040713154118,ekr.20040713211010,ekr.20040714082939,ekr.20040714155341,ekr.20040714154314,ekr.20040714091940.1,ekr.20040714222507,ekr.20040715081425,ekr.20040715075914,ekr.20040714072448,ekr.20040715090957.2,ekr.20040715071350,ekr.20040715125453,ekr.20040715120001,ekr.20040715120001.1,ekr.20040715120001.2,ekr.20040715093122,ekr.20040715120001.3,ekr.20040715121456,ekr.20040715091409,ekr.20040715120001.4,ekr.20040715120001.5,ekr.20040715084435,ekr.20040715120001.7,ekr.20040715120001.8,ekr.20040715090957.1,ekr.20040715075845,ekr.20040715120001.9"><vh>@file ../src/elisp2py.py</vh>
+<v t="ekr.20040713130853.8"><vh>elisp2py.py</vh>
 <v t="ekr.20040715093804"><vh>Utility functions</vh>
 <v t="ekr.20040715073230"><vh>isList &amp; isToken</vh></v>
 <v t="ekr.20040715082059"><vh>printHeading</vh></v>
@@ -331,6 +331,7 @@
 </v>
 <v t="EKR.20040613162717"><vh>Report newlines</vh></v>
 <v t="ekr.20040706071823"><vh>test of Python's parser module</vh></v>
+<v t="ekr.20040717121014"><vh>tellGnxScript</vh></v>
 </v>
 <v t="ekr.20040708205841"><vh>Other tests...</vh>
 <v t="ekr.20040414082806"><vh>Clone test</vh>
@@ -632,25 +633,60 @@
 </v>
 <v t="EKR.20040619133116"><vh>Unit testing...</vh>
 <v t="ekr.20040327114250" tnodeList="ekr.20040327114250"><vh>@file c:\prog\test\unittest\batchTest.py</vh></v>
-<v t="EKR.20040623200709"><vh>@thin ../src/leoTest.py</vh></v>
+<v t="EKR.20040623200709"
+marks="ekr.20040716140617.1,"><vh>@thin ../src/leoTest.py</vh></v>
 <v t="ekr.20040712101754"><vh>Unit Tests</vh>
-<v t="ekr.20040712101754.1"><vh>File Tests</vh>
-<v t="ekr.20040712101754.2"><vh>Test Leo files...</vh>
-<v t="ekr.20040712101754.3"><vh>@test test.leo</vh></v>
-<v t="ekr.20040712101754.4"><vh>@test LeoPy.leo</vh></v>
-<v t="ekr.20040712101754.5"><vh>@test leoPlugins.leo</vh></v>
-<v t="ekr.20040712101754.6"><vh>@test LeoDocs.leo</vh></v>
-</v>
 <v t="ekr.20040712101754.7"><vh>Import/Export tests</vh>
+<v t="ekr.20040716144017"><vh>Perfect Import tests</vh>
+<v t="ekr.20040716071029.6"><vh>@test inserting a line: no trailing newline</vh>
+<v t="ekr.20040716071856.1" a="M"><vh>-input</vh></v>
+<v t="ekr.20040716081019" a="M"><vh>-input-after</vh></v>
+<v t="ekr.20040716071856" a="M"><vh>-output-sent</vh></v>
+<v t="ekr.20040716091245" a="M"><vh>-output-after-sent</vh></v>
+<v t="ekr.20040716084934" a="M"><vh>-i_lines</vh></v>
+<v t="ekr.20040716084934.1" a="M"><vh>-j_lines</vh></v>
+<v t="ekr.20040716081943" a="M"><vh>-result</vh></v>
+</v>
+<v t="ekr.20040716140926"><vh>@test replace one line</vh>
+<v t="ekr.20040716140926.1" a="M"><vh>-input</vh></v>
+<v t="ekr.20040716140926.2" a="M"><vh>-input-after</vh></v>
+<v t="ekr.20040716140926.3" a="M"><vh>-output-sent</vh></v>
+<v t="ekr.20040716140926.4" a="M"><vh>-output-after-sent</vh></v>
+<v t="ekr.20040716140926.5" a="M"><vh>-i_lines</vh></v>
+<v t="ekr.20040716140926.6" a="M"><vh>-j_lines</vh></v>
+<v t="ekr.20040716140926.7" a="M"><vh>-result</vh></v>
+</v>
+<v t="ekr.20040716141621"><vh>@test replace multiple lines</vh>
+<v t="ekr.20040716141621.1" a="M"><vh>-input</vh></v>
+<v t="ekr.20040716141621.2" a="M"><vh>-input-after</vh></v>
+<v t="ekr.20040716141621.3" a="M"><vh>-output-sent</vh></v>
+<v t="ekr.20040716141621.4" a="M"><vh>-output-after-sent</vh></v>
+<v t="ekr.20040716141621.5" a="M"><vh>-i_lines</vh></v>
+<v t="ekr.20040716141621.6" a="M"><vh>-j_lines</vh></v>
+<v t="ekr.20040716141621.7" a="M"><vh>-result</vh></v>
+</v>
+<v t="ekr.20040716142121"><vh>@test replace across sentinel blocks: Succeeds ONLY when ignoring sentinels</vh>
+<v t="ekr.20040716142423" a="M"><vh>-input</vh>
+<v t="ekr.20040716142423.1" a="M"><vh>Node 1</vh></v>
+<v t="ekr.20040716142423.2" a="M"><vh>Node 2</vh></v>
+</v>
+<v t="ekr.20040716142121.2" a="M"><vh>-input-after</vh>
+<v t="ekr.20040717071133" a="M"><vh>Node 1</vh></v>
+<v t="ekr.20040717071133.1" a="M"><vh>Node 2</vh></v>
+</v>
+<v t="ekr.20040716142121.3" a="M"><vh>-output-sent</vh></v>
+<v t="ekr.20040716142121.5" a="M"><vh>-i_lines</vh></v>
+<v t="ekr.20040716142121.6" a="M"><vh>-j_lines</vh></v>
+<v t="ekr.20040716142121.4" a="M"><vh>-output-after-sent</vh></v>
+<v t="ekr.20040716142121.7" a="M"><vh>-result</vh></v>
+</v>
+</v>
 <v t="ekr.20040712101754.8"><vh>@suite Import tests</vh></v>
 <v t="ekr.20040712101754.9"><vh>@suite Export tests</vh></v>
 <v t="ekr.20040712101754.10"><vh>importTests</vh>
 <v t="ekr.20040712101754.11"><vh>tempNode</vh></v>
 <v t="ekr.20040712101754.12"><vh>importAtRoot</vh>
 <v t="ekr.20040712101754.13"><vh>dialog</vh></v>
-</v>
-<v t="ekr.20040712101754.14"><vh>importAtFile</vh>
-<v t="ekr.20040712101754.15"><vh>dialog</vh></v>
 </v>
 <v t="ekr.20040712101754.16"><vh>importNowebFiles</vh>
 <v t="ekr.20040712101754.17"><vh>dialog</vh></v>
@@ -663,6 +699,9 @@
 </v>
 <v t="ekr.20040712101754.22"><vh>removeSentinels</vh>
 <v t="ekr.20040712101754.23"><vh>dialog</vh></v>
+</v>
+<v t="ekr.20040712101754.14"><vh>importAtFile</vh>
+<v t="ekr.20040712101754.15"><vh>dialog</vh></v>
 </v>
 </v>
 <v t="ekr.20040712101754.24"><vh>exportTests</vh>
@@ -684,6 +723,11 @@
 </v>
 </v>
 </v>
+<v t="ekr.20040712101754.2"><vh>Test Leo files...</vh>
+<v t="ekr.20040712101754.3"><vh>@test test.leo</vh></v>
+<v t="ekr.20040712101754.4"><vh>@test LeoPy.leo</vh></v>
+<v t="ekr.20040712101754.5"><vh>@test leoPlugins.leo</vh></v>
+<v t="ekr.20040712101754.6"><vh>@test LeoDocs.leo</vh></v>
 </v>
 <v t="ekr.20040712101754.36"><vh>Non-file tests</vh>
 <v t="ekr.20040712101754.37"><vh>@suite Edit body tests</vh>
@@ -941,11 +985,10 @@
 </v>
 <v t="ekr.20040712101754.272"><vh>@test CheckOutline</vh></v>
 <v t="ekr.20040712101754.274"><vh>@suite run all doctests in leo*.py</vh></v>
-<v t="ekr.20040712101813"><vh>@test checkAllPythonCode</vh></v>
 <v t="EKR.20040612095237"><vh>@test checkPythonCode (bad syntax)</vh>
 <v t="EKR.20040610192622.1"><vh>Check Syntax data (bad)</vh></v>
 </v>
-<v t="ekr.20040715154319" a="M"><vh>@test checkPythonCode (bad tabnanny)</vh>
+<v t="ekr.20040715154319"><vh>@test checkPythonCode (bad tabnanny)</vh>
 <v t="EKR.20040610194209.1" a="M"><vh>TabNanny data (bad)</vh></v>
 </v>
 </v>
@@ -1030,70 +1073,30 @@
 </v>
 </v>
 </v>
+<v t="ekr.20040712101813"><vh>@test checkAllPythonCode</vh></v>
 </v>
-<v t="ekr.20040707071542.1"><vh>Do all @tests</vh></v>
 <v t="ekr.20040707081532.1"><vh>Do @test</vh></v>
 </v>
-<v t="EKR.20040608095146"><vh>Perfect import stuff...</vh>
+<v t="EKR.20040608095146" a="E"><vh>Perfect import stuff...</vh>
 <v t="EKR.20040504083716"><vh>Mulder Update script</vh>
 <v t="EKR.20040504083716.39"><vh>sync</vh>
 <v t="EKR.20040504153320"><vh>&lt;&lt; compute sourcetime and targettime &gt;&gt;</vh></v>
 <v t="EKR.20040504153320.1"><vh>&lt;&lt; compute operation &gt;&gt;</vh></v>
 </v>
 </v>
+<v t="ekr.20040717144213"><vh>In leoTest.leo...</vh>
+<v t="ekr.20040716073021"><vh>testUtils.writeNode/sToNode</vh>
+<v t="ekr.20040716144643"><vh>writeNodesToNode</vh></v>
+<v t="ekr.20040716143229"><vh>writeNodeToNode</vh></v>
+<v t="ekr.20040717070500"><vh>writeNodeToString</vh></v>
 </v>
-<v t="ekr.20040716062608"><vh>Perfect Import Script</vh></v>
-<v t="EKR.20040504083716.44" a="E"><vh>perfect import unit tests</vh>
-<v t="ekr.20040716073021"><vh>testUtils.writeNodeToNode</vh></v>
 <v t="ekr.20040716092802"><vh>testUtils.compareIgnoringNodeNames</vh></v>
-<v t="ekr.20040716071029"><vh>@suite perfect import tests</vh></v>
-<v t="ekr.20040716070904"><vh>Bernhard's original tests</vh>
-<v t="EKR.20040504083716.47"><vh>class sentinel_test</vh>
-<v t="EKR.20040504083716.48"><vh>setUp</vh></v>
-<v t="EKR.20040504083716.49"><vh>setup_inputfile</vh></v>
-<v t="EKR.20040504083716.50"><vh>setup_configfile</vh></v>
-</v>
-<v t="EKR.20040504083716.51"><vh>insert tests</vh>
-<v t="EKR.20040504083716.52"><vh>class insert_test (sentinel_test)</vh>
-<v t="EKR.20040504083716.53"><vh>setUp</vh></v>
-<v t="EKR.20040504083716.54"><vh>runTest</vh></v>
+<v t="ekr.20040716140617"><vh>Perfect Import test code (leoTest.py)</vh>
+<v t="ekr.20040717074817"><vh>About the Perfect Import tests</vh></v>
+<v t="ekr.20040716140617.1" a="M"><vh>runPerfectImportTest</vh></v>
 </v>
 </v>
-<v t="EKR.20040504083716.55"><vh>replacement tests</vh>
-<v t="EKR.20040504083716.56"><vh>class replace_test (sentinel_test)</vh>
-<v t="EKR.20040504083716.57"><vh>setUp</vh></v>
-<v t="EKR.20040504083716.58"><vh>runTest</vh></v>
-</v>
-<v t="EKR.20040504083716.59"><vh>class replace_test2 (sentinel_test)</vh>
-<v t="EKR.20040504083716.60"><vh>setUp</vh></v>
-<v t="EKR.20040504083716.61"><vh>runTest</vh></v>
-</v>
-<v t="EKR.20040504083716.62"><vh>class replace_test3 (sentinel_test)</vh>
-<v t="EKR.20040504083716.63"><vh>setUp</vh></v>
-<v t="EKR.20040504083716.64"><vh>runTest</vh></v>
-</v>
-<v t="EKR.20040504083716.65"><vh>class replace_test4 (sentinel_test)</vh>
-<v t="EKR.20040504083716.66"><vh>setUp</vh></v>
-<v t="EKR.20040504083716.67"><vh>runTest</vh></v>
-</v>
-</v>
-<v t="EKR.20040504083716.68"><vh>regression tests</vh>
-<v t="EKR.20040504083716.69"><vh>class regression_test_1 (sentinel_test)</vh>
-<v t="EKR.20040504083716.70"><vh>setUp</vh></v>
-<v t="EKR.20040504083716.71"><vh>runTest</vh></v>
-</v>
-</v>
-<v t="EKR.20040504083716.72"><vh>@suite perfect import tests</vh></v>
-</v>
-<v t="ekr.20040716071029.6" a="ETV"><vh>@test inserting a line: no trailing newline</vh>
-<v t="ekr.20040716071856.1"><vh>-input</vh></v>
-<v t="ekr.20040716081019"><vh>-input-inserted</vh></v>
-<v t="ekr.20040716071856"><vh>-output-sent</vh></v>
-<v t="ekr.20040716091245"><vh>-output-inserted-sent</vh></v>
-<v t="ekr.20040716084934"><vh>-i_lines</vh></v>
-<v t="ekr.20040716084934.1"><vh>-j_lines</vh></v>
-<v t="ekr.20040716081943"><vh>-result</vh></v>
-</v>
+<v t="ekr.20040716062608" a="TV"><vh>Perfect Import Script</vh></v>
 </v>
 </vnodes>
 <tnodes>
@@ -1271,7 +1274,9 @@ AssertionError
 @root a.txt 
 some text 
 @ </t>
-<t tx="EKR.20040504083716">@language python
+<t tx="EKR.20040504083716"># EKR: I don't remember the status of this.
+
+@language python
 
 import leoGlobals as g
 import shutil
@@ -1312,420 +1317,6 @@ sync(files) # push or pull, depending on date.
                 mu.copy_time(targetfilename,sourcefilename)
             else:
                 shutil.copy2(targetfilename,sourcefilename)</t>
-<t tx="EKR.20040504083716.44"># This is some basic testing.
-
-@ignore</t>
-<t tx="EKR.20040504083716.47">class sentinel_test(TestCase):
-
-    @others</t>
-<t tx="EKR.20040504083716.48">def setUp(self):
-    self.prefix = ["#@+leo-ver=4\n",
-"#@+node:@file sentinel.py\n",
-"#@@language python\n"]
-    self.postfix = ["#@-node:@file sentinel.py\n",
-"#@-leo\n"]
-</t>
-<t tx="EKR.20040504083716.49">def setup_inputfile(self, input):
-    
-    classname = self.__class__.__name__
-    self.input_filename = os.path.join('test/s_%s.txt' % classname)
-    self.output_filename = os.path.join('test/d_%s.txt' % classname)
-    outfile = file(self.input_filename, "w")
-    for line in input:
-        outfile.write(line)
-    outfile.close()
-    
-    
- 
-
-</t>
-<t tx="EKR.20040504083716.50">def setup_configfile(self):
-    self.configfilename = "test/sentinel.cfg"
-    outfile = file(self.configfilename, "w")
-    outfile.write("[sentinel]\n")
-    outfile.write("\ns1=%s\n" % self.input_filename)
-    outfile.write("\nd1=%s\n" % self.output_filename)
-    outfile.close()
-
-</t>
-<t tx="EKR.20040504083716.51"></t>
-<t tx="EKR.20040504083716.52">class insert_test(sentinel_test):
-    @others</t>
-<t tx="EKR.20040504083716.53">def setUp(self):
-    
-    sentinel_test.setUp(self)
-    
-    self.setup_inputfile(self.prefix + 
-["Proof of concept implementation of sentinel free Leo files.\n",
-"We try to insert a line after here\n",
-"This should be after the inserted line\n",
-"This should be the last line in the file\n"]
- + self.postfix)
-
-    # here are the same lines, without sentinels
-    self.lines = ["Proof of concept implementation of sentinel free Leo files.\n",
-     "We try to insert a line after here\n",
-     "This should be after the inserted line\n",
-     "This should be the last line in the file\n"]
-    self.setup_configfile()
-
-</t>
-<t tx="EKR.20040504083716.54">def runTest(self):
-    """
-    
-    Insert a line in a file without sentinels of a file derived of a file with sentinels, and make sure that this line is inserted in the proper place.
-    
-    """
-    
-    # First, produce the sentinel free output.
-    sentinel.main(self.configfilename, "push")
-    
-    # Verify this first step.
-    assert os.path.exists(self.output_filename)
-    assert file(self.output_filename).readlines() == self.lines
-    
-    # then insert one line in the sentinel free output.
-    lines = self.lines
-    lines[2:2] = ["This is an inserted line\n"]
-    outfile = file(self.output_filename, "w")
-    for line in lines:
-        outfile.write(line)
-    outfile.close()
-    
-    # get the sources back.
-    sentinel.main(self.configfilename, "pull")
-    
-    # re-generate the output.
-    sentinel.main(self.configfilename, "push")
-    
-    # and check for equality.
-    assert file(self.output_filename).readlines() == lines</t>
-<t tx="EKR.20040504083716.55"></t>
-<t tx="EKR.20040504083716.56">class replace_test(sentinel_test):
-    """
-    Replace a single line.
-    """
-    @others</t>
-<t tx="EKR.20040504083716.57">def setUp(self):
-    sentinel_test.setUp(self)
-    self.lines = [
-     "Proof of concept implementation of sentinel free Leo files.\n",
-     "This line should be replaced\n",
-     "This should be the last line in the file\n"]
-    self.setup_inputfile(self.prefix + self.lines + self.postfix)
-
-    # here are the same lines, without sentinels
-    self.setup_configfile()
-</t>
-<t tx="EKR.20040504083716.58">def runTest(self):
-    """
-    
-    Insert a line in a file without sentinels of a file derived of a file with sentinels, and make sure that this line is inserted in the proper place.
-    
-    """
-    
-    # First, produce the sentinel free output.
-    sentinel.main(self.configfilename, "push")
-    
-    # Verify this first step.
-    assert os.path.exists(self.output_filename)
-    assert file(self.output_filename).readlines() == self.lines
-    
-    # then insert one line in the sentinel free output.
-    lines = self.lines
-    lines[2:2] = ["This is a replaced line\n"]
-    outfile = file(self.output_filename, "w")
-    for line in lines:
-        outfile.write(line)
-    outfile.close()
-    
-    # get the sources back.
-    sentinel.main(self.configfilename, "pull")
-    
-    # re-generate the output.
-    sentinel.main(self.configfilename, "push")
-    
-    # and check for equality.
-    assert file(self.output_filename).readlines() == lines</t>
-<t tx="EKR.20040504083716.59">class replace_test2(sentinel_test):
-    """
-    Replace two lines.
-    """
-    @others</t>
-<t tx="EKR.20040504083716.60">def setUp(self):
-    sentinel_test.setUp(self)
-    self.lines = [
-    "Line 0\n",    #0
-"   Line 1\n",    #1
-"   Line 2.\n",   #2
-"   Line 3.\n",   #3
-"   Line 4\n",    #4
-"\n", #5
-" We have two subclasses:\n", #6
-"   single_clss represents a (condition, register) =&gt; (expression_number, linenumber) mapping.\n", #7
-"   set_class represents a set of (condition, register) =&gt; (expression_number, linenumber) mapping.\n", #8
-"\n", #9
-" Line 10\n", #10
-" Line 11\n" #11
-]
-    self.setup_inputfile(self.prefix + self.lines + self.postfix)
-
-    # here are the same lines, without sentinels
-    self.setup_configfile()
-</t>
-<t tx="EKR.20040504083716.61">def runTest(self):
-    """
-    
-    Insert a line in a file without sentinels of a file derived of a file with sentinels, and make sure that this line is inserted in the proper place.
-    
-    """
-    
-    # First, produce the sentinel free output.
-    sentinel.main(self.configfilename, "push")
-    
-    # Verify this first step.
-    assert os.path.exists(self.output_filename)
-    assert file(self.output_filename).readlines() == self.lines
-    
-    # then insert two lines in the sentinel free output.
-    lines = self.lines
-    lines[7:9] = ["   single_class represents a (condition, register) =&gt; (expression_number, linenumber) mapping.\n", #7
-                      "   set_class represents a set of (condition, register) =&gt; (expression_number, linenumber) mappings.\n", #8
-                     ]
-    outfile = file(self.output_filename, "w")
-    for line in lines:
-        outfile.write(line)
-    outfile.close()
-    
-    # get the sources back.
-    sentinel.main(self.configfilename, "pull")
-    
-    # re-generate the output.
-    sentinel.main(self.configfilename, "push")
-    
-    # and check for equality.
-    assert file(self.output_filename).readlines() == lines
-    
-    
-    
-    
-    
-    
-
-
-
-</t>
-<t tx="EKR.20040504083716.62">class replace_test3(sentinel_test):
-    """
-    Replace the lines of a whole node.
-    """
-    @others</t>
-<t tx="EKR.20040504083716.63">def setUp(self):
-    sentinel_test.setUp(self)
-    self.lines = [
-    "#@+node:main\n",
-    "node 1: line 1\n", # 1
-    "node 1: line 2\n", # 2
-    "#@-node:main\n",
-    "#@-others\n",
-    "node 2: line 3\n", # 3
-    "node 2: line 4\n", # 4
-    "#@-node:@file sentinel.py\n",
-    ]
-    self.setup_inputfile(self.prefix + self.lines + self.postfix)
-
-    # here are the same lines, without sentinels
-    self.setup_configfile()
-</t>
-<t tx="EKR.20040504083716.64">def runTest(self):
-    """
-    
-    Insert a line in a file without sentinels of a file derived of a file with sentinels, and make sure that this line is inserted in the proper place.
-    
-    """
-    
-    # First, produce the sentinel free output.
-    sentinel.main(self.configfilename, "push")
-    
-    # Verify this first step.
-    assert os.path.exists(self.output_filename)
-    filtered_lines = sentinel.push_filter_lines(self.lines)[0]
-    assert file(self.output_filename).readlines() == filtered_lines
-    
-    # then insert one line in the sentinel free output.
-    filtered_lines [2:4] = [   "These lines should be totally different\n",
-    "and be replaced across sentinel blocks,\n",
-
-                     ]
-    outfile = file(self.output_filename, "w")
-    for line in filtered_lines:
-        outfile.write(line)
-    outfile.close()
-    
-    # get the sources back.
-    sentinel.main(self.configfilename, "pull")
-    
-    # re-generate the output.
-    sentinel.main(self.configfilename, "push")
-    
-    # and check for equality.
-    assert file(self.output_filename).readlines() == filtered_lines</t>
-<t tx="EKR.20040504083716.65">class replace_test4(sentinel_test):
-    """
-    Replace the lines of a whole node.
-    """
-    @others</t>
-<t tx="EKR.20040504083716.66">def setUp(self):
-    
-    sentinel_test.setUp(self)
-
-    self.lines = [
-    "#@+node:main\n",
-    "node 1: line 1\n", # 1
-    "node 1: line 2\n", # 2
-    "#@-node:main\n",
-    "#@-others\n",
-    "node 2: line 3\n", # 3
-    "node 2: line 4\n", # 4
-    "#@-node:@file sentinel.py\n",
-    ]
-
-    self.setup_inputfile(self.prefix + self.lines + self.postfix)
-
-    # here are the same lines, without sentinels
-    self.setup_configfile()</t>
-<t tx="EKR.20040504083716.67">def runTest(self):
-    """
-    
-    Insert a line in a file without sentinels of a file derived of a file with sentinels, and make sure that this line is inserted in the proper place.
-    
-    """
-    
-    # First, produce the sentinel free output.
-    sentinel.main(self.configfilename, "push")
-    
-    # Verify this first step.
-    assert os.path.exists(self.output_filename)
-    filtered_lines = sentinel.push_filter_lines(self.lines)[0]
-    assert file(self.output_filename).readlines() == filtered_lines
-    
-    # then insert one line in the sentinel free output.
-    filtered_lines [1:3] = [   "These lines should be totally different\n",
-    "and be replaced across sentinel blocks,\n",
-
-                     ]
-    outfile = file(self.output_filename, "w")
-    for line in filtered_lines:
-        outfile.write(line)
-    outfile.close()
-    
-    # get the sources back.
-    sentinel.main(self.configfilename, "pull")
-    
-    # re-generate the output.
-    sentinel.main(self.configfilename, "push")
-    
-    # and check for equality.
-    assert file(self.output_filename).readlines() == filtered_lines</t>
-<t tx="EKR.20040504083716.68">@doc
-these are tests representing errors which I encountered during the development of the code.</t>
-<t tx="EKR.20040504083716.69">class regression_test_1(sentinel_test):
-    """
-    Replace a single line.
-    """
-    @others</t>
-<t tx="EKR.20040504083716.70">def setUp(self):
-    self.lines = [
-"#@+leo-ver=4\n",
-"#@+node:@file driver.py\n",
-"#@@language python\n",
-"#@+others\n",
-"#@+node:imports\n",
-"# Analyse an IA64 assembly file:\n",
-"#   1. Identify basic blocks.\n",
-"#   2. Track the contents of registers symbolically.\n",
-"import os, sys, cmp_globals\n",
-"\n",
-"#@-node:imports\n",
-"#@+node:process_file\n",
-"def process_file(infile, pyname_full, configfile, firststep, laststep):\n",
-"   \n",
-"      proc()\n",
-"#@nonl\n",
-"#@-node:process_file\n",
-"#@-others\n",
-"#@-node:@file driver.py\n",
-"#@-leo\n"
-]
-    self.setup_inputfile(self.lines)
-
-    # here are the same lines, without sentinels
-    self.setup_configfile()
-</t>
-<t tx="EKR.20040504083716.71">def runTest(self):
-    """
-    
-    Insert a line in a file without sentinels of a file derived of a file with sentinels, and make sure that this line is inserted in the proper place.
-    
-    """
-    
-    # First, produce the sentinel free output.
-    sentinel.main(self.configfilename, "push")
-    
-    # Verify this first step.
-    assert os.path.exists(self.output_filename)
-    assert file(self.output_filename).readlines() == sentinel.push_filter_lines(self.lines)[0]
-        
-    # get the sources back.
-    sentinel.main(self.configfilename, "pull")
-    
-    # Now check that the source has not been changed.
-    assert file(self.input_filename).readlines() == self.lines   
-    
-    
-    
-    
-    
-
-
-
-</t>
-<t tx="EKR.20040504083716.72"># Create unit tests in g.app.scriptDict["suite"]
-
-import leoGlobals as g
-import unittest
-import leoTest ; reload(leoTest)
-
-@others
-
-suite = leoTest.makePerfectImportSuite()
-
-g.app.scriptDict['suite'] = suite
-
-if 0:
-
-    test_to_run = 'all'
-    
-    if os.path.exists("test"):
-        shutil.rmtree("test")
-    os.mkdir("test")
-    
-    suite = TestSuite()
-    if test_to_run == 'all':
-        for testclass in (
-            insert_test,
-            replace_test,
-            replace_test2,
-            replace_test3,
-            regression_test_1,         
-        ):
-            suite.addTest(testclass())
-    else:
-        suite.addTest(globals()[test_to_run]())
-    testrunner = TextTestRunner()
-    testrunner.run(suite)
- 
-</t>
 <t tx="EKR.20040504153320">sourcetime = targettime = None
 
 if g.os_path_exists(sourcefilename):
@@ -2174,7 +1765,7 @@ import leoGlobals as g
 print g.app.config.redirect_execute_script_output_to_log_pane</t>
 <t tx="EKR.20040627103732">@ignore</t>
 <t tx="EKR.20040627103801"></t>
-<t tx="EKR.20040627103902" lineYOffset="4b032e" icons="5d7100287d710128550577686572657102550a6265666f726549636f6e710355047870616471044b025504747970657105550466696c6571066806582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286805680668084afdffffff6806582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6802550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e"></t>
+<t tx="EKR.20040627103902" lineYOffset="4b032e" icons="5d7100287d7101285504747970657102550466696c65710355047870616471044b02550577686572657105550a6265666f726549636f6e71066803582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286802680368084afdffffff6803582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6805550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e"></t>
 <t tx="EKR.20040627121836">import leoGlobals as g
 
 c = g.top() ; p = c.currentPosition()
@@ -2312,7 +1903,7 @@ print s ; g.es(s)</t>
 
 - Used iterators in test utils.
 - Used "import leoGlobals as g" style.</t>
-<t tx="ekr.20040317101155" lineYOffset="4b032e" icons="5d7100287d7101285504747970657102550466696c65710355047870616471044b02550577686572657105550a6265666f726549636f6e71066803582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286802680368084afdffffff6803582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6805550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">import leoGlobals as g
+<t tx="ekr.20040317101155" lineYOffset="4b032e" icons="5d7100287d710128550577686572657102550a6265666f726549636f6e710355047870616471044b025504747970657105550466696c6571066806582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286805680668084afdffffff6806582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6802550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">import leoGlobals as g
 
 c = g.top()
 
@@ -2787,11 +2378,9 @@ try:
 except:
     import traceback
     traceback.print_exc()</t>
-<t tx="ekr.20040707071542.1">import leoTest
-reload(leoTest)
+<t tx="ekr.20040707081532.1"># You can run all tests by selecting the Unit Test headline.
 
-leoTest.doTests(all=True)</t>
-<t tx="ekr.20040707081532.1">import leoTest
+import leoTest
 reload(leoTest)
 
 leoTest.doTests(all=False)</t>
@@ -3013,7 +2602,6 @@ print mod</t>
 
 All other approaches quickly get deeply involved with Leo's internals...</t>
 <t tx="ekr.20040712101754"></t>
-<t tx="ekr.20040712101754.1"></t>
 <t tx="ekr.20040712101754.2">@language python
 @tabwidth -4</t>
 <t tx="ekr.20040712101754.3">import leoGlobals as g
@@ -3073,10 +2661,10 @@ g.app.scriptDict['suite'] = suite</t>
 <t tx="ekr.20040712101754.11"></t>
 <t tx="ekr.20040712101754.12"></t>
 <t tx="ekr.20040712101754.13">openFileDialog
-c:\\prog\\test\\unittest\\input\\leoAtFile.py</t>
+c:\\prog\\test\\perfectImport\\formatter.py</t>
 <t tx="ekr.20040712101754.14"></t>
 <t tx="ekr.20040712101754.15">openFileDialog
-c:\\prog\\test\\unittest\\input\\leoAtFile.py</t>
+c:\\prog\\test\\perfectImport\\formatter.py</t>
 <t tx="ekr.20040712101754.16"></t>
 <t tx="ekr.20040712101754.17">openFileDialog
 c:\\prog\\test\\unittest\\input\\noweave.nw.txt</t>
@@ -9073,7 +8661,10 @@ c.checkPythonCode(unittest=True)
 result = g.app.unitTestDict.get("checkPythonCode")
 
 assert result=="error", "checkPythonCode returns: %s" % result</t>
-<t tx="ekr.20040716062608">import leoGlobals as g
+<t tx="ekr.20040716062608"># Run this script to import a file.
+# This is undoable because the Import @file command is undoable.
+
+import leoGlobals as g
 
 c = g.top()
 
@@ -9086,94 +8677,26 @@ names = [name1]
 
 c.importCommands.importFilesCommand (names,"@file",
     perfectImport=True,testing=False,verbose=False)</t>
-<t tx="ekr.20040716070904"></t>
-<t tx="ekr.20040716071029"># Create unit tests in g.app.scriptDict["suite"]
+<t tx="ekr.20040716071029.6"># See the node called "About the Perfect Import tests" in leoTests.py for details.
+
+@ignore # Suppress Check Python Code warnings.
+
+@language python
+@tabwidth -4
 
 import leoGlobals as g
-import unittest
-import leoTest ; reload(leoTest)
-
-@others
-
-suite = leoTest.makePerfectImportSuite()
-
-g.app.scriptDict['suite'] = suite
-
-if 0:
-
-    test_to_run = 'all'
-    
-    if os.path.exists("test"):
-        shutil.rmtree("test")
-    os.mkdir("test")
-    
-    suite = TestSuite()
-    if test_to_run == 'all':
-        for testclass in (
-            insert_test,
-            replace_test,
-            replace_test2,
-            replace_test3,
-            regression_test_1,         
-        ):
-            suite.addTest(testclass())
-    else:
-        suite.addTest(globals()[test_to_run]())
-    testrunner = TextTestRunner()
-    testrunner.run(suite)
- 
-</t>
-<t tx="ekr.20040716071029.6">import leoGlobals as g
 import leoTest ; reload(leoTest)
 c = g.top() ; p = c.currentPosition()
-u = leoTest.testUtils()
 
-testing,verbose = False,False
-
-# Find the nodes.
-input           = u.findNodeInTree(p,"-input")
-input_ins       = u.findNodeInTree(p,"-input-inserted")       # j file.
-output_sent     = u.findNodeInTree(p,"-output-sent")          # fat file -&gt; i file.
-output_ins_sent = u.findNodeInTree(p,"-output-inserted-sent") # Should match result.
-result          = u.findNodeInTree(p,"-result")
-ilines          = u.findNodeInTree(p,"-i_lines")
-jlines          = u.findNodeInTree(p,"-j_lines")
-
-# Copy the input node with an inserted node to the -input-inserted node.
-s = input.bodyString()
-lines = g.splitLines(s)
-lines.insert(2,"This is an inserted line\n")
-input_ins.scriptSetBodyString (''.join(lines))
-
-# Create the output nodes containing sentinels from the original input.
-u.writeNodeToNode(c,input,output_sent,sentinels=True)
-u.writeNodeToNode(c,input_ins,output_ins_sent,sentinels=True)
-
-mu = g.mulderUpdateAlgorithm(testing=testing,verbose=verbose)
-marker = mu.marker_from_extension("foo.py")
-
-fat_lines = g.splitLines(output_sent.bodyString())
-i_lines,mapping = mu.create_mapping(fat_lines,marker)
-j_lines = g.splitLines(input_ins.bodyString())
-
-# For viewing...
-ilines.scriptSetBodyString(''.join(i_lines))
-jlines.scriptSetBodyString(''.join(j_lines))
-assert ilines.bodyString() == input.bodyString()
-
-# Put the resulting lines (with sentinels) into the -result node.
-lines = mu.propagateDiffsToSentinelsLines(i_lines,j_lines,fat_lines,mapping)
-result.scriptSetBodyString(''.join(lines))
-
-assert u.compareIgnoringNodeNames( \
-    result.bodyString(),output_ins_sent.bodyString(),
-    marker,verbose=True)</t>
+assert leoTest.runPerfectImportTest(c,p,testing=False,verbose=False)
+</t>
 <t tx="ekr.20040716071856">#@+leo-ver=4-thin
 #@+node:ekr.20040716071856.1:-input
 Proof of concept implementation of sentinel free Leo files.
 We try to insert a line after here.
 This should be after the inserted line.
 This should be the last line (no newline following!)
+#@nonl
 #@-node:ekr.20040716071856.1:-input
 #@-leo
 </t>
@@ -9181,32 +8704,12 @@ This should be the last line (no newline following!)
 We try to insert a line after here.
 This should be after the inserted line.
 This should be the last line (no newline following!)</t>
-<t tx="ekr.20040716073021">def writeNodeToNode (self,c,input,output,sentinels=True):
-    
-    """Do an atFile.write the input tree to the body text of the output node."""
-    df = c.atFileCommands.new_df
-    nodeIndices = g.app.nodeIndices
-    
-    # Assign input.v.t.fileIndex
-    nodeIndices.setTimestamp()
-    for p in input.self_and_subtree_iter():
-        try:
-            id,time,n = p.v.t.fileIndex
-        except TypeError:
-            p.v.t.fileIndex = nodeIndices.getNewIndex()
-    
-    # Write the file to a string.
-    df.write(input,thinFile=True,nosentinels= not sentinels,toString=True)
-    s = df.stringOutput
-    
-    # Put the string in the body text of the output node.
-    output.scriptSetBodyString (s)</t>
+<t tx="ekr.20040716073021"></t>
 <t tx="ekr.20040716081019">Proof of concept implementation of sentinel free Leo files.
 We try to insert a line after here.
 This is an inserted line
 This should be after the inserted line.
-This should be the last line (no newline following!)
-</t>
+This should be the last line (no newline following!)</t>
 <t tx="ekr.20040716081943">#@+leo-ver=4-thin
 #@+node:ekr.20040716071856.1:-input
 Proof of concept implementation of sentinel free Leo files.
@@ -9214,28 +8717,28 @@ We try to insert a line after here.
 This is an inserted line
 This should be after the inserted line.
 This should be the last line (no newline following!)
+#@nonl
 #@-node:ekr.20040716071856.1:-input
 #@-leo
 </t>
 <t tx="ekr.20040716084934">Proof of concept implementation of sentinel free Leo files.
 We try to insert a line after here.
 This should be after the inserted line.
-This should be the last line (no newline following!)
-</t>
+This should be the last line (no newline following!)</t>
 <t tx="ekr.20040716084934.1">Proof of concept implementation of sentinel free Leo files.
 We try to insert a line after here.
 This is an inserted line
 This should be after the inserted line.
-This should be the last line (no newline following!)
-</t>
+This should be the last line (no newline following!)</t>
 <t tx="ekr.20040716091245">#@+leo-ver=4-thin
-#@+node:ekr.20040716081019:-input-inserted
+#@+node:ekr.20040716081019:-input-after
 Proof of concept implementation of sentinel free Leo files.
 We try to insert a line after here.
 This is an inserted line
 This should be after the inserted line.
 This should be the last line (no newline following!)
-#@-node:ekr.20040716081019:-input-inserted
+#@nonl
+#@-node:ekr.20040716081019:-input-after
 #@-leo
 </t>
 <t tx="ekr.20040716092802">def compareIgnoringNodeNames (self,s1,s2,marker,verbose=False):
@@ -9277,5 +8780,408 @@ This should be the last line (no newline following!)
                     g.trace("line2:",repr(line2))
                 return False
     return True</t>
+<t tx="ekr.20040716140617"></t>
+<t tx="ekr.20040716140617.1">def runPerfectImportTest(c,p,
+    testing=False,verbose=False,
+    ignoreSentinelsInCompare=False):
+    
+    # The contents of the "-input" and "-input-after" nodes define the changes.
+
+    c = g.top() ; p = c.currentPosition()
+    u = testUtils()
+    
+    input           = u.findNodeInTree(p,"-input")              # i file: before the change.
+    input_ins       = u.findNodeInTree(p,"-input-after")        # j file: after the change.
+    output_sent     = u.findNodeInTree(p,"-output-sent")        # fat file -&gt; i file.
+    out_after_sent  = u.findNodeInTree(p,"-output-after-sent")  # Should match result.
+    result          = u.findNodeInTree(p,"-result")
+    ilines          = u.findNodeInTree(p,"-i_lines")
+    jlines          = u.findNodeInTree(p,"-j_lines")
+
+    # Create the output nodes containing sentinels from the original input.
+    u.writeNodesToNode(c,input,output_sent,sentinels=True)
+    u.writeNodesToNode(c,input_ins,out_after_sent,sentinels=True)
+    
+    mu = g.mulderUpdateAlgorithm(testing=testing,verbose=verbose)
+    marker = mu.marker_from_extension("foo.py")
+    
+    fat_lines = g.splitLines(output_sent.bodyString())
+    i_lines,mapping = mu.create_mapping(fat_lines,marker)
+    if input_ins.hasChildren():
+        # Get the lines by stripping sentinels from -output-after-sent node.
+        lines = g.splitLines(out_after_sent.bodyString()) 
+        j_lines = mu.removeSentinelsFromLines(lines,marker)
+    else:
+        j_lines = g.splitLines(input_ins.bodyString()) 
+    
+    # For viewing...
+    ilines.scriptSetBodyString(''.join(i_lines))
+    jlines.scriptSetBodyString(''.join(j_lines))
+    if ilines.bodyString() != input.bodyString():
+        if not ignoreSentinelsInCompare:
+            print "i_lines != input !"
+    
+    # Put the resulting lines (with sentinels) into the -result node.
+    lines = mu.propagateDiffsToSentinelsLines(i_lines,j_lines,fat_lines,mapping)
+    result.scriptSetBodyString(''.join(lines))
+    
+    if ignoreSentinelsInCompare:
+        sList = []
+        for s in (result.bodyString(),out_after_sent.bodyString()):
+            lines = g.splitLines(s)
+            lines = mu.removeSentinelsFromLines(lines,marker)
+            sList.append(''.join(lines))
+        return sList[0] == sList[1]
+    else:
+        return u.compareIgnoringNodeNames(
+            result.bodyString(),
+            out_after_sent.bodyString(),
+            marker,verbose=True)</t>
+<t tx="ekr.20040716140926"># See the node called "About the Perfect Import tests" in leoTests.py for details.
+
+@ignore # Suppress Check Python Code warnings.
+
+@language python
+@tabwidth -4
+
+import leoGlobals as g
+import leoTest ; reload(leoTest)
+c = g.top() ; p = c.currentPosition()
+
+assert leoTest.runPerfectImportTest(c,p,testing=False,verbose=False)
+</t>
+<t tx="ekr.20040716140926.1">Proof of concept implementation of sentinel free Leo files.
+This line will be replaced.
+This should be after the inserted line.
+This should be the last line (no newline following!)</t>
+<t tx="ekr.20040716140926.2">Proof of concept implementation of sentinel free Leo files.
+This line is the replacement line
+This should be after the replaced line.
+This should be the last line (no newline following!)</t>
+<t tx="ekr.20040716140926.3">#@+leo-ver=4-thin
+#@+node:ekr.20040716140926.1:-input
+Proof of concept implementation of sentinel free Leo files.
+This line will be replaced.
+This should be after the inserted line.
+This should be the last line (no newline following!)
+#@nonl
+#@-node:ekr.20040716140926.1:-input
+#@-leo
+</t>
+<t tx="ekr.20040716140926.4">#@+leo-ver=4-thin
+#@+node:ekr.20040716140926.2:-input-after
+Proof of concept implementation of sentinel free Leo files.
+This line is the replacement line
+This should be after the replaced line.
+This should be the last line (no newline following!)
+#@nonl
+#@-node:ekr.20040716140926.2:-input-after
+#@-leo
+</t>
+<t tx="ekr.20040716140926.5">Proof of concept implementation of sentinel free Leo files.
+This line will be replaced.
+This should be after the inserted line.
+This should be the last line (no newline following!)</t>
+<t tx="ekr.20040716140926.6">Proof of concept implementation of sentinel free Leo files.
+This line is the replacement line
+This should be after the replaced line.
+This should be the last line (no newline following!)</t>
+<t tx="ekr.20040716140926.7">#@+leo-ver=4-thin
+#@+node:ekr.20040716140926.1:-input
+Proof of concept implementation of sentinel free Leo files.
+This line is the replacement line
+This should be after the replaced line.
+This should be the last line (no newline following!)
+#@nonl
+#@-node:ekr.20040716140926.1:-input
+#@-leo
+</t>
+<t tx="ekr.20040716141621"># See the node called "About the Perfect Import tests" in leoTests.py for details.
+
+@ignore # Suppress Check Python Code warnings.
+
+@language python
+@tabwidth -4
+
+import leoGlobals as g
+import leoTest ; reload(leoTest)
+c = g.top() ; p = c.currentPosition()
+u = leoTest.testUtils()
+
+assert leoTest.runPerfectImportTest(c,p,testing=False,verbose=False)
+</t>
+<t tx="ekr.20040716141621.1">Line 0
+   Line 1
+   Line 2
+   Line 3
+   Line 4
+
+ We have two subclasses:
+   single_clss represents a (condition, register) =&gt; (expression_number, linenumber) mapping.
+   set_class represents a set of (condition, register) =&gt; (expression_number, linenumber) mapping.
+
+ Line 10
+ Line 11</t>
+<t tx="ekr.20040716141621.2">Line 0
+   Line 1
+   Line 2
+   Line 3
+   Line 4
+
+ We have two subclasses:
+   single_class represents a (condition, register) =&gt; (expression_number, linenumber) mapping.
+   set_class represents a set of (condition, register) =&gt; (expression_number, linenumber) mappings.
+
+ Line 10
+ Line 11</t>
+<t tx="ekr.20040716141621.3">#@+leo-ver=4-thin
+#@+node:ekr.20040716141621.1:-input
+Line 0
+   Line 1
+   Line 2
+   Line 3
+   Line 4
+
+ We have two subclasses:
+   single_clss represents a (condition, register) =&gt; (expression_number, linenumber) mapping.
+   set_class represents a set of (condition, register) =&gt; (expression_number, linenumber) mapping.
+
+ Line 10
+ Line 11
+#@nonl
+#@-node:ekr.20040716141621.1:-input
+#@-leo
+</t>
+<t tx="ekr.20040716141621.4">#@+leo-ver=4-thin
+#@+node:ekr.20040716141621.2:-input-after
+Line 0
+   Line 1
+   Line 2
+   Line 3
+   Line 4
+
+ We have two subclasses:
+   single_class represents a (condition, register) =&gt; (expression_number, linenumber) mapping.
+   set_class represents a set of (condition, register) =&gt; (expression_number, linenumber) mappings.
+
+ Line 10
+ Line 11
+#@nonl
+#@-node:ekr.20040716141621.2:-input-after
+#@-leo
+</t>
+<t tx="ekr.20040716141621.5">Line 0
+   Line 1
+   Line 2
+   Line 3
+   Line 4
+
+ We have two subclasses:
+   single_clss represents a (condition, register) =&gt; (expression_number, linenumber) mapping.
+   set_class represents a set of (condition, register) =&gt; (expression_number, linenumber) mapping.
+
+ Line 10
+ Line 11</t>
+<t tx="ekr.20040716141621.6">Line 0
+   Line 1
+   Line 2
+   Line 3
+   Line 4
+
+ We have two subclasses:
+   single_class represents a (condition, register) =&gt; (expression_number, linenumber) mapping.
+   set_class represents a set of (condition, register) =&gt; (expression_number, linenumber) mappings.
+
+ Line 10
+ Line 11</t>
+<t tx="ekr.20040716141621.7">#@+leo-ver=4-thin
+#@+node:ekr.20040716141621.1:-input
+Line 0
+   Line 1
+   Line 2
+   Line 3
+   Line 4
+
+ We have two subclasses:
+   single_class represents a (condition, register) =&gt; (expression_number, linenumber) mapping.
+   set_class represents a set of (condition, register) =&gt; (expression_number, linenumber) mappings.
+
+ Line 10
+ Line 11
+#@nonl
+#@-node:ekr.20040716141621.1:-input
+#@-leo
+</t>
+<t tx="ekr.20040716142121"># See the node called "About the Perfect Import tests" in leoTests.py for details.
+
+@ignore # Suppress Check Python Code warnings.
+
+@language python
+@tabwidth -4
+
+import leoGlobals as g
+import leoTest ; reload(leoTest)
+c = g.top() ; p = c.currentPosition()
+u = leoTest.testUtils()
+
+ignoreSentinelsInCompare = True # Fails when False
+
+assert leoTest.runPerfectImportTest(c,p,
+    testing=False,verbose=False,
+    ignoreSentinelsInCompare=ignoreSentinelsInCompare)</t>
+<t tx="ekr.20040716142121.2">root line 1
+root line 2</t>
+<t tx="ekr.20040716142121.3">#@+leo-ver=4-thin
+#@+node:ekr.20040716142423:-input
+root line 1
+root line 2
+#@nonl
+#@-node:ekr.20040716142423:-input
+#@-leo
+#@+leo-ver=4-thin
+#@+node:ekr.20040716142423.1:Node 1
+node 1: line 1
+node 1: line 2
+#@-node:ekr.20040716142423.1:Node 1
+#@-leo
+#@+leo-ver=4-thin
+#@+node:ekr.20040716142423.2:Node 2
+node 2: line 1
+node 2: line 2
+#@-node:ekr.20040716142423.2:Node 2
+#@-leo
+</t>
+<t tx="ekr.20040716142121.4">#@+leo-ver=4-thin
+#@+node:ekr.20040716142121.2:-input-after
+root line 1
+root line 2
+#@nonl
+#@-node:ekr.20040716142121.2:-input-after
+#@-leo
+#@+leo-ver=4-thin
+#@+node:ekr.20040717071133:Node 1
+node 1: line 1
+These lines should be totally different
+#@-node:ekr.20040717071133:Node 1
+#@-leo
+#@+leo-ver=4-thin
+#@+node:ekr.20040717071133.1:Node 2
+and should span node boundaries
+node 2: line 2
+#@-node:ekr.20040717071133.1:Node 2
+#@-leo
+</t>
+<t tx="ekr.20040716142121.5">root line 1
+root line 2
+node 1: line 1
+node 1: line 2
+node 2: line 1
+node 2: line 2
+</t>
+<t tx="ekr.20040716142121.6">root line 1
+root line 2
+node 1: line 1
+These lines should be totally different
+and should span node boundaries
+node 2: line 2
+</t>
+<t tx="ekr.20040716142121.7">#@+leo-ver=4-thin
+#@+node:ekr.20040716142423:-input
+root line 1
+root line 2
+#@nonl
+#@-node:ekr.20040716142423:-input
+#@-leo
+#@+leo-ver=4-thin
+#@+node:ekr.20040716142423.1:Node 1
+node 1: line 1
+These lines should be totally different
+and should span node boundaries
+#@-node:ekr.20040716142423.1:Node 1
+#@-leo
+#@+leo-ver=4-thin
+#@+node:ekr.20040716142423.2:Node 2
+node 2: line 2
+#@-node:ekr.20040716142423.2:Node 2
+#@-leo
+</t>
+<t tx="ekr.20040716142423">root line 1
+root line 2</t>
+<t tx="ekr.20040716142423.1">node 1: line 1
+node 1: line 2
+</t>
+<t tx="ekr.20040716142423.2">node 2: line 1
+node 2: line 2
+</t>
+<t tx="ekr.20040716143229">def writeNodeToNode (self,c,input,output,sentinels=True):
+    
+    """Do an atFile.write the input tree to the body text of the output node."""
+    
+    s = self.writeNodeToString(c,input,sentinels)
+
+    output.scriptSetBodyString (s)</t>
+<t tx="ekr.20040716144017"># See the node called "About the Perfect Import tests" in leoTests.py for how to set up these tests.
+</t>
+<t tx="ekr.20040716144643">def writeNodesToNode (self,c,input,output,sentinels=True):
+    
+    result = []
+    for p in input.self_and_subtree_iter():
+        s = self.writeNodeToString(c,p,sentinels)
+        result.append(s)
+    result = ''.join(result)
+    output.scriptSetBodyString (result)</t>
+<t tx="ekr.20040717070500">def writeNodeToString (self,c,input,sentinels):
+    
+    """Return an atFile.write of the input tree to a string."""
+    
+    df = c.atFileCommands.new_df
+    nodeIndices = g.app.nodeIndices
+    
+    # Assign input.v.t.fileIndex
+    nodeIndices.setTimestamp()
+    for p in input.self_and_subtree_iter():
+        try:
+            id,time,n = p.v.t.fileIndex
+        except TypeError:
+            p.v.t.fileIndex = nodeIndices.getNewIndex()
+    
+    # Write the file to a string.
+    df.write(input,thinFile=True,nosentinels= not sentinels,toString=True)
+    s = df.stringOutput
+
+    return s</t>
+<t tx="ekr.20040717071133">node 1: line 1
+These lines should be totally different
+</t>
+<t tx="ekr.20040717071133.1">and should span node boundaries
+node 2: line 2
+</t>
+<t tx="ekr.20040717074817">@killcolor
+@
+
+This code assumes that the test code contains child nodes with the following headlines:
+
+-input          Contains the "before" tree, without sentinels
+-input-after    Contains the "after" tree, without sentinels.
+
+These two nodes define what the test means.
+
+The following nodes must also exist.  The test code sets their contents as follows:
+
+-output-sent        The result of writing the -input tree, with sentinels.
+-ouput-after-sent   The result of writing the -input-after tree, with sentinels.
+-i_lines            The i_lines list created by mu.create_mapping
+-j_lines            The j_lines list created by stripping sentinels from -input-after's tree.
+-result             The result of running mu.propagateDiffsToSentinelsLines, containing sentinels.
+
+A test passes if and only if the body of -result matches the body of ouput-after-sent, ignoring the details of @+node and @-node sentinels.</t>
+<t tx="ekr.20040717121014">import leoGlobals as g
+
+c = g.top()
+
+p = c.currentPosition()
+
+print "gnx", p.v.t.fileIndex, p.headString()</t>
+<t tx="ekr.20040717144213"></t>
 </tnodes>
 </leo_file>
