@@ -1753,6 +1753,17 @@ def idleTimeHookHandler(*args,**keys):
         g.app.afterHandler = None
 #@-node:EKR.20040602125018.2:idleTimeHookHandler
 #@-node:ekr.20031218072017.1315:idle time functions (leoGlobals)
+#@+node:ekr.20040917061619:g.cantImport
+def cantImport (s):
+    
+    """Print a "Can't Import" message and return None."""
+
+    message = "Can not import " + s
+    print message
+    g.es(message,color="blue")
+    return None
+#@nonl
+#@-node:ekr.20040917061619:g.cantImport
 #@+node:ekr.20031218072017.1596:g.doHook
 #@+at 
 #@nonl
