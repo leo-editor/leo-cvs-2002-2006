@@ -83,7 +83,7 @@
 <v t="edream.110203163054.62" a=""><vh>Quick start</vh></v>
 </v>
 <v t="edream.110203163054.63" a="E"><vh>Latest version</vh>
-<v t="edream.110603185805" a="V"><vh>4.1 beta 4</vh>
+<v t="edream.110603185805" a="E"><vh>4.1 beta 4</vh>
 <v t="edream.110603190234.1"><vh>Code-level features</vh>
 <v t="edream.110603190125.3"><vh>Regression tests started</vh></v>
 <v t="edream.110603190125.4"><vh>Code reorganized to support other guis</vh></v>
@@ -102,7 +102,7 @@
 <v t="edream.110603190125.1"><vh>.leo files are now cvs-friendly</vh></v>
 </v>
 <v t="edream.110603192009.1" a="E"><vh>New &amp; improved commands</vh>
-<v t="edream.110203163054.833" a=""><vh>Executing Python scripts in body text</vh></v>
+<v t="edream.110203163054.833" a="V"><vh>Executing Python scripts in body text</vh></v>
 <v t="edream.110603190322.14"><vh>Added Check Outline command</vh></v>
 <v t="edream.110603190322.15"><vh>Added Hoist/De-Hoist commands</vh></v>
 <v t="edream.111803060152"><vh>Added script-based find/change commands</vh>
@@ -9733,7 +9733,7 @@ Scripts are executed in a "pristine" environment, that is, with __builtins__ as 
 
 New in version 4.1:  Body text may now contain @directives and section references. This is a major step forward: you can now use all of Leo's features to organize scripts that you execute interactively.
 
-Section definitions must appear in the node containing the script or in descendent nodes.  Leo "preprocesses" all scripts by simulating the writing of a derived file to a string.  The resulting string will contain many comments corresponding to sentinel lines.
+Section definitions must appear in the node containing the script or in descendent nodes.  Leo "preprocesses" all scripts by simulating the writing of a derived file to a string.
 
 The Execute Script command sets app.scriptDict["script1"] to the value of the script before preprocessing, and sets app.scriptDict["script2"] to the value of the script after preprocessing.  Scripts may examine and change app.scriptDict as they please.</t>
 <t tx="edream.110203163054.834">The Edit menu contains four commands for searching and replacing text.  The Find and Find Again commands search through the outline for text and the Change and Change, Then Find commands change selected text.

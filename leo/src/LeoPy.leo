@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="3888" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="3978" clone_windows="0"/>
 <globals body_outline_ratio="0.5">
-	<global_window_position top="48" left="146" height="872" width="907"/>
+	<global_window_position top="24" left="381" height="872" width="774"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences>
@@ -14,6 +14,9 @@
 <vnodes>
 <v t="edream.110203160744"><vh> Diary</vh>
 <v t="edream.110203160744.1"><vh>November 2003</vh>
+<v t="edream.112103102235"><vh>11/20</vh>
+<v t="edream.112103102235.1"><vh>created null frame,log,body,tree,menu,gui classes</vh></v>
+</v>
 <v t="edream.111903062701"><vh>11/19</vh>
 <v t="edream.112003092359"><vh>Initialize write routines properly in Execute Script command</vh></v>
 <v t="edream.112003084515"><vh>Leo now generates reference properly when more than one on the same line</vh></v>
@@ -361,7 +364,7 @@
 <v t="edream.110203160744.206"><vh>ANN: Leo 3.12 outlining editor</vh></v>
 <v t="edream.110203160744.207"><vh>ANN: Leo 3.12 outlining editor (c.l.py)</vh></v>
 </v>
-<v t="edream.110703091849"><vh>ANN: Leo 4.1 beta 3 An outlining editor</vh></v>
+<v t="edream.110703091849"><vh>ANN: Leo 4.1 beta 4: An outlining editor</vh></v>
 <v t="edream.110203160744.209"><vh>4.0.x announcements</vh>
 <v t="edream.110203160744.208"><vh>ANN: Leo 4.0.4: An outlining editor</vh></v>
 <v t="edream.110203160744.214"><vh>ANN: Leo 4.0 final: An outlining editor</vh></v>
@@ -1037,6 +1040,7 @@
 <v t="edream.111303073523.5"><vh>Reorg stuff</vh></v>
 </v>
 </v>
+<v t="edream.112103080619" a="M"><vh>Crasher pasting a node</vh></v>
 <v t="edream.110203160744.601"><vh>(Project Views)</vh>
 <v t="edream.110203160744.602"><vh>  Reports</vh>
 <v t="edream.110203160744.603"><vh>(Translation problems)</vh>
@@ -3205,10 +3209,91 @@
 <v t="edream.111903080048.1"><vh>toUnicodeFileEncoding</vh></v>
 </v>
 </v>
+<v t="edream.111803110943"><vh>(Fixed bug re: two refs on same line)</vh>
+<v t="edream.112003084515.1"><vh>Report</vh></v>
+<v t="edream.112003074603" a=""><vh>putRefLine (new) &amp; allies</vh>
+<v t="edream.112003074603.2"><vh>PutRefAt</vh></v>
+<v t="edream.112003082656"><vh>putAfterLastRef</vh></v>
+<v t="edream.112003074603.1"><vh>putAfterMiddleef</vh></v>
+</v>
+</v>
+<v t="edream.111903142522.1"><vh>(Support directives &amp; sections in Execute Script Command)</vh>
+<v t="edream.110203160744.1151" a=""><vh>executeScript</vh>
+<v t="edream.111903142522"><vh>&lt;&lt; define class fileLikeObject &gt;&gt;</vh></v>
+<v t="edream.110203160744.1152"><vh>&lt;&lt; get script into s &gt;&gt;</vh></v>
+<v t="edream.110203160744.1153"><vh>&lt;&lt; redirect output if redirect_execute_script_output_to_log_pane &gt;&gt;</vh></v>
+</v>
+<v t="edream.110203160744.2844" a=""><vh>new_df.write</vh>
+<v t="edream.110203160744.2845"><vh>&lt;&lt; initialize &gt;&gt;</vh></v>
+<v t="edream.110203160744.2846"><vh>&lt;&lt; open the file; return on error &gt;&gt;</vh></v>
+<v t="edream.110203160744.2847"><vh>&lt;&lt; write then entire @file tree &gt;&gt; (4.x)</vh>
+<v t="edream.110203160744.2848"><vh>&lt;&lt; put all @first lines in root &gt;&gt;</vh></v>
+<v t="edream.110203160744.2849"><vh>&lt;&lt; put all @last lines in root &gt;&gt; (4.x)</vh></v>
+</v>
+<v t="edream.110203160744.2850"><vh>&lt;&lt; Warn about @ignored and orphans  &gt;&gt;</vh></v>
+<v t="edream.110203160744.2851"><vh>&lt;&lt; finish writing &gt;&gt;</vh></v>
+</v>
+</v>
+<v t="edream.112003151606"><vh>(Remove _all_ extra newlines in @file-nosent modes)</vh>
+<v t="edream.110203160744.2841" a=""><vh>Writing (4.x)</vh>
+<v t="edream.110203160744.2842"><vh>Top level</vh>
+<v t="edream.110203160744.2843"><vh>new_df.closeWriteFile</vh></v>
+<v t="edream.110203160744.2844" a=""><vh>new_df.write</vh>
+<v t="edream.110203160744.2845"><vh>&lt;&lt; initialize &gt;&gt;</vh></v>
+<v t="edream.110203160744.2846"><vh>&lt;&lt; open the file; return on error &gt;&gt;</vh></v>
+<v t="edream.110203160744.2847"><vh>&lt;&lt; write then entire @file tree &gt;&gt; (4.x)</vh>
+<v t="edream.110203160744.2848"><vh>&lt;&lt; put all @first lines in root &gt;&gt;</vh></v>
+<v t="edream.110203160744.2849"><vh>&lt;&lt; put all @last lines in root &gt;&gt; (4.x)</vh></v>
+</v>
+<v t="edream.110203160744.2850"><vh>&lt;&lt; Warn about @ignored and orphans  &gt;&gt;</vh></v>
+<v t="edream.110203160744.2851"><vh>&lt;&lt; finish writing &gt;&gt;</vh></v>
+</v>
+<v t="edream.110203160744.1949"><vh>new_df.rawWrite</vh>
+<v t="edream.110203160744.1950"><vh>&lt;&lt; write root's tree &gt;&gt;</vh>
+<v t="edream.110203160744.1951"><vh>&lt;&lt; put all @first lines in root &gt;&gt;</vh></v>
+<v t="edream.110203160744.1952"><vh>&lt;&lt; put optional @comment sentinel lines &gt;&gt;</vh></v>
+<v t="edream.110203160744.1953"><vh>&lt;&lt; Write v's node &gt;&gt;</vh></v>
+<v t="edream.110203160744.1954"><vh>&lt;&lt; put all @last lines in root &gt;&gt;</vh></v>
 </v>
 </v>
 </v>
-<v t="edream.110203160744.2458" a="V"><vh>Code</vh>
+<v t="edream.110203160744.2852"><vh>putBody (4.x)</vh>
+<v t="edream.110203160744.2853"><vh>&lt;&lt; handle line at s[i]  &gt;&gt;</vh></v>
+</v>
+<v t="edream.110203160744.2854"><vh>code lines... (4.x)</vh>
+<v t="edream.110203160744.2855"><vh>inAtOthers</vh></v>
+<v t="edream.110203160744.2856"><vh>putAtOthersChild</vh></v>
+<v t="edream.110203160744.2857"><vh>putAtOthersLine</vh></v>
+<v t="edream.110203160744.2858"><vh>putCodeLine</vh></v>
+<v t="edream.112003074603" a=""><vh>putRefLine (new) &amp; allies</vh>
+<v t="edream.112003074603.2"><vh>PutRefAt</vh></v>
+<v t="edream.112003082656"><vh>putAfterLastRef</vh></v>
+<v t="edream.112003074603.1"><vh>putAfterMiddleef</vh></v>
+</v>
+</v>
+<v t="edream.110203160744.1892" a=""><vh>doc lines... (write)</vh>
+<v t="edream.110203160744.1893"><vh>putBlankDocLine</vh></v>
+<v t="edream.110203160744.1894" a=""><vh>putStartDocLine</vh></v>
+<v t="edream.110203160744.1895"><vh>putDocLine</vh>
+<v t="edream.110203160744.1896"><vh>&lt;&lt; append words to pending line, splitting the line if needed &gt;&gt;</vh></v>
+</v>
+<v t="edream.110203160744.1897"><vh>putEndDocLine</vh></v>
+<v t="edream.110203160744.1898"><vh>putPending</vh></v>
+</v>
+<v t="edream.110203160744.2860"><vh>Writing Utils...</vh>
+<v t="edream.110203160744.2861"><vh>directiveKind</vh></v>
+<v t="edream.110203160744.2862"><vh>hasSectionName</vh></v>
+<v t="edream.110203160744.2863"><vh>os, onl, etc.</vh></v>
+<v t="edream.110203160744.2143" a=""><vh>putDirective  (handles @delims) 4,x</vh>
+<v t="edream.110203160744.2144"><vh>&lt;&lt; handle @delims &gt;&gt;</vh></v>
+</v>
+</v>
+</v>
+</v>
+</v>
+</v>
+</v>
+<v t="edream.110203160744.2458" a="E"><vh>Code</vh>
 <v t="edream.110203160744.2459"><vh>  Overview of code</vh>
 <v t="edream.110203160744.2460" a=""><vh>&lt;&lt; About clones &gt;&gt;</vh></v>
 <v t="edream.110203160744.2461" a=""><vh>&lt;&lt; About drawing &gt;&gt;</vh></v>
@@ -3220,7 +3305,13 @@
 </v>
 <v t="edream.110203160744.2509"><vh>  Scripts</vh>
 <v t="edream.111203151648"><vh>Editing scripts</vh>
-<v t="edream.111803170916"><vh>Find scripts to convert @doc comments to doc strings</vh>
+<v t="edream.110503223808" a=""><vh>doChange...Script</vh></v>
+<v t="edream.110603105919.1" a=""><vh>initScriptFind</vh></v>
+<v t="edream.112003212118" tnodeList="edream.112003212118"><vh>Find script to clean whitespace</vh>
+<v t="edream.112003212118.1"><vh>Find script</vh></v>
+<v t="edream.112003212118.2"><vh>Change script</vh></v>
+</v>
+<v t="edream.111803170916" tnodeList="edream.111803170916"><vh>Find scripts to convert @doc comments to doc strings</vh>
 <v t="edream.111803170916.1"><vh>Find script</vh></v>
 <v t="edream.111803170916.2"><vh>Change script</vh></v>
 <v t="edream.111803170916.3"><vh>re tests</vh></v>
@@ -3761,7 +3852,7 @@
 <v t="edream.110203160744.2839"><vh>skipSentinelStart</vh></v>
 <v t="edream.110203160744.2840"><vh>sentinelKind</vh></v>
 </v>
-<v t="edream.110203160744.2841"><vh>Writing (4.x)</vh>
+<v t="edream.110203160744.2841" a=""><vh>Writing (4.x)</vh>
 <v t="edream.110203160744.2842"><vh>Top level</vh>
 <v t="edream.110203160744.2843"><vh>new_df.closeWriteFile</vh></v>
 <v t="edream.110203160744.2844" a=""><vh>new_df.write</vh>
@@ -3783,7 +3874,7 @@
 </v>
 </v>
 </v>
-<v t="edream.110203160744.2852"><vh>putBody (4.x)</vh>
+<v t="edream.110203160744.2852" a="M"><vh>putBody (4.x)</vh>
 <v t="edream.110203160744.2853"><vh>&lt;&lt; handle line at s[i]  &gt;&gt;</vh></v>
 </v>
 <v t="edream.110203160744.2854"><vh>code lines... (4.x)</vh>
@@ -3814,115 +3905,6 @@
 <v t="edream.110203160744.2144"><vh>&lt;&lt; handle @delims &gt;&gt;</vh></v>
 </v>
 </v>
-</v>
-</v>
-</v>
-<v t="edream.110203160744.2864" tnodeList="edream.110203160744.2864,edream.110203160744.1601,edream.110203160744.2865,edream.110203160744.2062,edream.110203160744.223,edream.110203160744.224,edream.110203160744.225,edream.110203160744.226,edream.110203160744.227,edream.110203160744.228,edream.110203160744.229,edream.110203160744.230,edream.110203160744.231,edream.110203160744.233,edream.110203160744.235,edream.110203160744.232,edream.110203160744.234,edream.110203160744.1611,edream.110203160744.1612,edream.110203160744.1613,edream.110203160744.1614,edream.110203160744.2064,edream.110203160744.2065,edream.110203160744.2066,edream.110203160744.2067,edream.110203160744.2068,edream.110203160744.1608,edream.110203160744.1609,edream.110203160744.222,edream.110203160744.2069,edream.110203160744.1714,edream.110203160744.1715,edream.110203160744.1716,edream.110203160744.1717,edream.110203160744.1718,edream.110203160744.2070,edream.110203160744.2073,edream.110203160744.2074,edream.110203160744.2071,edream.110203160744.2072,edream.110203160744.2075,edream.110203160744.1624,edream.110203160744.2076,edream.110203160744.1620,edream.110203160744.1621,edream.110203160744.1622,edream.110203160744.2077,edream.110203160744.1619,edream.110203160744.1626,edream.110203160744.2078,edream.110203160744.2042,edream.110203160744.2044,edream.110203160744.2045,edream.110203160744.2046,edream.110203160744.2047,edream.110203160744.2048,edream.110203160744.2050,edream.110203160744.2049,edream.110203160744.1623,edream.110203160744.1625,edream.110203160744.2051,edream.110203160744.2053,edream.110203160744.1618,edream.110203160744.2055,edream.110203160744.2056,edream.110203160744.2057,edream.110203160744.2058,edream.110203160744.2059,edream.110203160744.2079,edream.110203160744.2080,edream.110203160744.1610,edream.110203160744.1359,edream.110203160744.1360,edream.110203160744.1361,edream.110203160744.2081,edream.110203160744.2082,edream.110203160744.2083,edream.110203160744.2084,edream.110203160744.2085,edream.110203160744.2086,edream.110203160744.1615,edream.110203160744.2087,edream.110203160744.2088,edream.110203160744.1616,edream.110203160744.2089"><vh>@file leoColor.py</vh>
-<v t="edream.110203160744.1601" a=""><vh>&lt;&lt; define leo keywords &gt;&gt;</vh></v>
-<v t="edream.110203160744.2865"><vh>&lt;&lt; define colorizer constants &gt;&gt;</vh></v>
-<v t="edream.110203160744.2062"><vh>class colorizer</vh>
-<v t="edream.110203160744.223" a=""><vh>&lt;&lt; define colorizer keywords &gt;&gt; colorizer</vh>
-<v t="edream.110203160744.224"><vh>&lt;&lt; actionscript keywords &gt;&gt;</vh></v>
-<v t="edream.110203160744.225"><vh>&lt;&lt; c keywords &gt;&gt;</vh></v>
-<v t="edream.110203160744.226"><vh>&lt;&lt; elisp keywords&gt;&gt;</vh></v>
-<v t="edream.110203160744.227"><vh>&lt;&lt; html keywords &gt;&gt;</vh></v>
-<v t="edream.110203160744.228"><vh>&lt;&lt; java keywords &gt;&gt;</vh></v>
-<v t="edream.110203160744.229"><vh>&lt;&lt; latex keywords &gt;&gt;</vh></v>
-<v t="edream.110203160744.230"><vh>&lt;&lt; pascal keywords &gt;&gt;</vh></v>
-<v t="edream.110203160744.231"><vh>&lt;&lt; perl keywords &gt;&gt;</vh></v>
-<v t="edream.110203160744.232"><vh>&lt;&lt; php keywords &gt;&gt;</vh></v>
-<v t="edream.110203160744.233"><vh>&lt;&lt; python keywords &gt;&gt;</vh></v>
-<v t="edream.110203160744.234"><vh>&lt;&lt; rebol keywords &gt;&gt;</vh></v>
-<v t="edream.110203160744.235"><vh>&lt;&lt; tcl/tk keywords &gt;&gt;</vh></v>
-</v>
-<v t="edream.110203160744.1611" a=""><vh>color.__init__</vh>
-<v t="edream.110203160744.1612"><vh>&lt;&lt; ivars for communication between colorAllDirectives and its allies &gt;&gt;</vh></v>
-<v t="edream.110203160744.1613"><vh>&lt;&lt; define dispatch dicts &gt;&gt;</vh></v>
-<v t="edream.110203160744.1614" a=""><vh>&lt;&lt; define fonts and data for wiki tags &gt;&gt;</vh></v>
-</v>
-<v t="edream.110203160744.2063"><vh>color.callbacks...</vh>
-<v t="edream.110203160744.2064"><vh>OnHyperLinkControlClick</vh></v>
-<v t="edream.110203160744.2065"><vh>OnHyperLinkEnter</vh></v>
-<v t="edream.110203160744.2066"><vh>OnHyperLinkLeave</vh></v>
-</v>
-<v t="edream.110203160744.2067"><vh>colorize &amp; recolor_range</vh></v>
-<v t="edream.110203160744.2068" a=""><vh>colorizeAnyLanguage &amp; allies</vh>
-<v t="edream.110203160744.1608" a=""><vh>&lt;&lt; initialize ivars &amp; tags &gt;&gt; colorizeAnyLanguage</vh>
-<v t="edream.110203160744.1609"><vh>&lt;&lt; configure tags &gt;&gt;</vh></v>
-<v t="edream.110203160744.222" a=""><vh>&lt;&lt; configure language-specific settings &gt;&gt; colorizer</vh></v>
-</v>
-<v t="edream.110203160744.2069"><vh>&lt;&lt; all state ivars match &gt;&gt;</vh></v>
-<v t="edream.110203160744.1714"><vh>&lt;&lt; incrementally color the text &gt;&gt;</vh>
-<v t="edream.110203160744.1715"><vh>&lt;&lt; compute leading, middle &amp; trailing  lines &gt;&gt;</vh></v>
-<v t="edream.110203160744.1716"><vh>&lt;&lt; clear leading_lines if middle lines involve @color or @recolor  &gt;&gt;</vh></v>
-<v t="edream.110203160744.1717"><vh>&lt;&lt; initialize new states &gt;&gt;</vh></v>
-<v t="edream.110203160744.1718"><vh>&lt;&lt; colorize until the states match &gt;&gt;</vh></v>
-</v>
-<v t="edream.110203160744.2070"><vh>&lt;&lt; non-incrementally color the text &gt;&gt;</vh></v>
-<v t="edream.110203160744.2071"><vh>&lt;&lt; update state ivars &gt;&gt;</vh></v>
-<v t="edream.110203160744.2072"><vh>&lt;&lt; set state ivars to "unknown" &gt;&gt;</vh></v>
-<v t="edream.110203160744.2073"><vh>&lt;&lt; completely recolor in two passes &gt;&gt;</vh>
-<v t="edream.110203160744.2074"><vh>&lt;&lt; kludge: insert a blank in s for every image in the line &gt;&gt;</vh></v>
-</v>
-</v>
-<v t="edream.110203160744.2075" a=""><vh>colorizeLine &amp; allies</vh>
-<v t="edream.110203160744.1624" a=""><vh>continueBlockComment</vh></v>
-<v t="edream.110203160744.2076"><vh>continueSingle/DoubleString</vh></v>
-<v t="edream.110203160744.1620" a=""><vh>continueDocPart</vh>
-<v t="edream.110203160744.1621"><vh>&lt;&lt; handle cweb doc part &gt;&gt;</vh></v>
-<v t="edream.110203160744.1622" a=""><vh>&lt;&lt; handle noweb doc part &gt;&gt;</vh></v>
-</v>
-<v t="edream.110203160744.2077"><vh>continueNocolor</vh></v>
-<v t="edream.110203160744.1619" a=""><vh>continueSingle/DoublePythonString</vh></v>
-<v t="edream.110203160744.1626" a=""><vh>doAtKeyword: NOT for cweb keywords</vh></v>
-<v t="edream.110203160744.2078"><vh>doLatexLine</vh></v>
-<v t="edream.110203160744.2042"><vh>doNormalState</vh>
-<v t="edream.110203160744.2043"><vh>Valid regardless of latex mode</vh>
-<v t="edream.110203160744.2044"><vh>&lt;&lt; handle possible  keyword &gt;&gt;</vh>
-<v t="edream.110203160744.2045"><vh>&lt;&lt; handle possible latex keyword &gt;&gt;</vh></v>
-<v t="edream.110203160744.2046"><vh>&lt;&lt; handle possible html keyword &gt;&gt;</vh></v>
-<v t="edream.110203160744.2047"><vh>&lt;&lt; handle general keyword &gt;&gt;</vh></v>
-</v>
-<v t="edream.110203160744.2048"><vh>&lt;&lt; handle at keyword &gt;&gt;</vh>
-<v t="edream.110203160744.2049"><vh>&lt;&lt; Handle cweb control word &gt;&gt;</vh></v>
-<v t="edream.110203160744.2050"><vh>&lt;&lt; handle cweb ref or def &gt;&gt;</vh></v>
-</v>
-<v t="edream.110203160744.1623" a=""><vh>&lt;&lt; handle single-line comment &gt;&gt;</vh></v>
-<v t="edream.110203160744.1625" a=""><vh>&lt;&lt; start block comment &gt;&gt;</vh></v>
-<v t="edream.110203160744.2051"><vh>&lt;&lt; handle latex line &gt;&gt;</vh></v>
-</v>
-<v t="edream.110203160744.2052"><vh>Vaid only in latex mode</vh>
-<v t="edream.110203160744.2053"><vh>&lt;&lt; handle latex normal character &gt;&gt;</vh></v>
-</v>
-<v t="edream.110203160744.2054"><vh>Valid when not in latex_mode</vh>
-<v t="edream.110203160744.1618" a=""><vh>&lt;&lt; handle string &gt;&gt;</vh></v>
-<v t="edream.110203160744.2055"><vh>&lt;&lt; handle C preprocessor line &gt;&gt;</vh></v>
-<v t="edream.110203160744.2056"><vh>&lt;&lt; handle special php keywords &gt;&gt;</vh></v>
-<v t="edream.110203160744.2057"><vh>&lt;&lt; handle blank &gt;&gt;</vh></v>
-<v t="edream.110203160744.2058"><vh>&lt;&lt; handle tab &gt;&gt;</vh></v>
-<v t="edream.110203160744.2059"><vh>&lt;&lt; handle normal character &gt;&gt;</vh></v>
-</v>
-</v>
-<v t="edream.110203160744.2079" a=""><vh>doNowebSecRef</vh>
-<v t="edream.110203160744.2080"><vh>&lt;&lt; set the hyperlink &gt;&gt;</vh></v>
-</v>
-<v t="edream.110203160744.1610" a=""><vh>removeAllTags &amp; removeTagsFromLines</vh></v>
-</v>
-<v t="edream.110203160744.1359" a=""><vh>scanColorDirectives</vh>
-<v t="edream.110203160744.1360"><vh>&lt;&lt; Test for @comment or @language &gt;&gt;</vh></v>
-<v t="edream.110203160744.1361"><vh>&lt;&lt; Test for @root, @root-doc or @root-code &gt;&gt;</vh></v>
-</v>
-<v t="edream.110203160744.2081"><vh>color.schedule &amp; idle_colorize</vh></v>
-<v t="edream.110203160744.2082"><vh>getCwebWord</vh></v>
-<v t="edream.110203160744.2083" a=""><vh>removeAllImages</vh></v>
-<v t="edream.110203160744.2084"><vh>updateSyntaxColorer</vh></v>
-<v t="edream.110203160744.2085"><vh>useSyntaxColoring</vh></v>
-<v t="edream.110203160744.2086"><vh>Utils</vh>
-<v t="edream.110203160744.1615" a=""><vh>index &amp; tag</vh></v>
-<v t="edream.110203160744.2087"><vh>setFirstLineState</vh></v>
-<v t="edream.110203160744.2088"><vh>skip_id</vh></v>
-<v t="edream.110203160744.1616" a=""><vh>skip_python_string</vh></v>
-<v t="edream.110203160744.2089"><vh>skip_string</vh></v>
 </v>
 </v>
 </v>
@@ -4609,7 +4591,7 @@
 <v t="edream.110203160744.2149"><vh>splitLines &amp; joinLines</vh></v>
 </v>
 <v t="edream.110603105919"><vh>Script utils...</vh>
-<v t="edream.110603105919.1"><vh>initScriptFind</vh></v>
+<v t="edream.110603105919.1" a=""><vh>initScriptFind</vh></v>
 </v>
 <v t="edream.110203160744.1479" a=""><vh>Unicode utils...</vh>
 <v t="edream.110203160744.1480"><vh>isUnicode</vh></v>
@@ -5301,6 +5283,120 @@
 <v t="edream.110203160744.3523"><vh>undoSortTopLevel</vh></v>
 </v>
 </v>
+<v t="edream.110203160744.2864" tnodeList="edream.110203160744.2864,edream.110203160744.1601,edream.110203160744.2865,edream.110203160744.2062,edream.110203160744.223,edream.110203160744.224,edream.110203160744.225,edream.110203160744.226,edream.110203160744.227,edream.110203160744.228,edream.110203160744.229,edream.110203160744.230,edream.110203160744.231,edream.110203160744.233,edream.110203160744.235,edream.110203160744.232,edream.110203160744.234,edream.110203160744.1611,edream.110203160744.1612,edream.110203160744.1613,edream.110203160744.1614,edream.110203160744.2064,edream.110203160744.2065,edream.110203160744.2066,edream.110203160744.2067,edream.110203160744.2068,edream.110203160744.1608,edream.110203160744.1609,edream.110203160744.222,edream.110203160744.2069,edream.110203160744.1714,edream.110203160744.1715,edream.110203160744.1716,edream.110203160744.1717,edream.110203160744.1718,edream.110203160744.2070,edream.110203160744.2073,edream.110203160744.2074,edream.110203160744.2071,edream.110203160744.2072,edream.110203160744.2075,edream.110203160744.1624,edream.110203160744.2076,edream.110203160744.1620,edream.110203160744.1621,edream.110203160744.1622,edream.110203160744.2077,edream.110203160744.1619,edream.110203160744.1626,edream.110203160744.2078,edream.110203160744.2042,edream.110203160744.2044,edream.110203160744.2045,edream.110203160744.2046,edream.110203160744.2047,edream.110203160744.2048,edream.110203160744.2050,edream.110203160744.2049,edream.110203160744.1623,edream.110203160744.1625,edream.110203160744.2051,edream.110203160744.2053,edream.110203160744.1618,edream.110203160744.2055,edream.110203160744.2056,edream.110203160744.2057,edream.110203160744.2058,edream.110203160744.2059,edream.110203160744.2079,edream.110203160744.2080,edream.110203160744.1610,edream.110203160744.1359,edream.110203160744.1360,edream.110203160744.1361,edream.110203160744.2081,edream.110203160744.2082,edream.110203160744.2083,edream.110203160744.2084,edream.110203160744.2085,edream.110203160744.2086,edream.110203160744.1615,edream.110203160744.2087,edream.110203160744.2088,edream.110203160744.1616,edream.110203160744.2089,edream.112103141343,edream.112103141921,edream.112103141921.1,edream.112103141351"><vh>@file leoColor.py</vh>
+<v t="edream.110203160744.1601" a=""><vh>&lt;&lt; define leo keywords &gt;&gt;</vh></v>
+<v t="edream.110203160744.2865"><vh>&lt;&lt; define colorizer constants &gt;&gt;</vh></v>
+<v t="edream.110203160744.2062"><vh>class colorizer</vh>
+<v t="edream.110203160744.223" a=""><vh>&lt;&lt; define colorizer keywords &gt;&gt; colorizer</vh>
+<v t="edream.110203160744.224"><vh>&lt;&lt; actionscript keywords &gt;&gt;</vh></v>
+<v t="edream.110203160744.225"><vh>&lt;&lt; c keywords &gt;&gt;</vh></v>
+<v t="edream.110203160744.226"><vh>&lt;&lt; elisp keywords&gt;&gt;</vh></v>
+<v t="edream.110203160744.227"><vh>&lt;&lt; html keywords &gt;&gt;</vh></v>
+<v t="edream.110203160744.228"><vh>&lt;&lt; java keywords &gt;&gt;</vh></v>
+<v t="edream.110203160744.229"><vh>&lt;&lt; latex keywords &gt;&gt;</vh></v>
+<v t="edream.110203160744.230"><vh>&lt;&lt; pascal keywords &gt;&gt;</vh></v>
+<v t="edream.110203160744.231"><vh>&lt;&lt; perl keywords &gt;&gt;</vh></v>
+<v t="edream.110203160744.232"><vh>&lt;&lt; php keywords &gt;&gt;</vh></v>
+<v t="edream.110203160744.233"><vh>&lt;&lt; python keywords &gt;&gt;</vh></v>
+<v t="edream.110203160744.234"><vh>&lt;&lt; rebol keywords &gt;&gt;</vh></v>
+<v t="edream.110203160744.235"><vh>&lt;&lt; tcl/tk keywords &gt;&gt;</vh></v>
+</v>
+<v t="edream.110203160744.1611" a=""><vh>color.__init__</vh>
+<v t="edream.110203160744.1612"><vh>&lt;&lt; ivars for communication between colorAllDirectives and its allies &gt;&gt;</vh></v>
+<v t="edream.110203160744.1613"><vh>&lt;&lt; define dispatch dicts &gt;&gt;</vh></v>
+<v t="edream.110203160744.1614" a=""><vh>&lt;&lt; define fonts and data for wiki tags &gt;&gt;</vh></v>
+</v>
+<v t="edream.110203160744.2063"><vh>color.callbacks...</vh>
+<v t="edream.110203160744.2064"><vh>OnHyperLinkControlClick</vh></v>
+<v t="edream.110203160744.2065"><vh>OnHyperLinkEnter</vh></v>
+<v t="edream.110203160744.2066"><vh>OnHyperLinkLeave</vh></v>
+</v>
+<v t="edream.110203160744.2067"><vh>colorize &amp; recolor_range</vh></v>
+<v t="edream.110203160744.2068" a=""><vh>colorizeAnyLanguage &amp; allies</vh>
+<v t="edream.110203160744.1608" a=""><vh>&lt;&lt; initialize ivars &amp; tags &gt;&gt; colorizeAnyLanguage</vh>
+<v t="edream.110203160744.1609"><vh>&lt;&lt; configure tags &gt;&gt;</vh></v>
+<v t="edream.110203160744.222" a=""><vh>&lt;&lt; configure language-specific settings &gt;&gt; colorizer</vh></v>
+</v>
+<v t="edream.110203160744.2069"><vh>&lt;&lt; all state ivars match &gt;&gt;</vh></v>
+<v t="edream.110203160744.1714"><vh>&lt;&lt; incrementally color the text &gt;&gt;</vh>
+<v t="edream.110203160744.1715"><vh>&lt;&lt; compute leading, middle &amp; trailing  lines &gt;&gt;</vh></v>
+<v t="edream.110203160744.1716"><vh>&lt;&lt; clear leading_lines if middle lines involve @color or @recolor  &gt;&gt;</vh></v>
+<v t="edream.110203160744.1717"><vh>&lt;&lt; initialize new states &gt;&gt;</vh></v>
+<v t="edream.110203160744.1718"><vh>&lt;&lt; colorize until the states match &gt;&gt;</vh></v>
+</v>
+<v t="edream.110203160744.2070"><vh>&lt;&lt; non-incrementally color the text &gt;&gt;</vh></v>
+<v t="edream.110203160744.2071"><vh>&lt;&lt; update state ivars &gt;&gt;</vh></v>
+<v t="edream.110203160744.2072"><vh>&lt;&lt; set state ivars to "unknown" &gt;&gt;</vh></v>
+<v t="edream.110203160744.2073"><vh>&lt;&lt; completely recolor in two passes &gt;&gt;</vh>
+<v t="edream.110203160744.2074"><vh>&lt;&lt; kludge: insert a blank in s for every image in the line &gt;&gt;</vh></v>
+</v>
+</v>
+<v t="edream.110203160744.2075" a=""><vh>colorizeLine &amp; allies</vh>
+<v t="edream.110203160744.1624" a=""><vh>continueBlockComment</vh></v>
+<v t="edream.110203160744.2076"><vh>continueSingle/DoubleString</vh></v>
+<v t="edream.110203160744.1620" a=""><vh>continueDocPart</vh>
+<v t="edream.110203160744.1621"><vh>&lt;&lt; handle cweb doc part &gt;&gt;</vh></v>
+<v t="edream.110203160744.1622" a=""><vh>&lt;&lt; handle noweb doc part &gt;&gt;</vh></v>
+</v>
+<v t="edream.110203160744.2077"><vh>continueNocolor</vh></v>
+<v t="edream.110203160744.1619" a=""><vh>continueSingle/DoublePythonString</vh></v>
+<v t="edream.110203160744.1626" a=""><vh>doAtKeyword: NOT for cweb keywords</vh></v>
+<v t="edream.110203160744.2078"><vh>doLatexLine</vh></v>
+<v t="edream.110203160744.2042"><vh>doNormalState</vh>
+<v t="edream.110203160744.2043"><vh>Valid regardless of latex mode</vh>
+<v t="edream.110203160744.2044"><vh>&lt;&lt; handle possible  keyword &gt;&gt;</vh>
+<v t="edream.110203160744.2045"><vh>&lt;&lt; handle possible latex keyword &gt;&gt;</vh></v>
+<v t="edream.110203160744.2046"><vh>&lt;&lt; handle possible html keyword &gt;&gt;</vh></v>
+<v t="edream.110203160744.2047"><vh>&lt;&lt; handle general keyword &gt;&gt;</vh></v>
+</v>
+<v t="edream.110203160744.2048"><vh>&lt;&lt; handle at keyword &gt;&gt;</vh>
+<v t="edream.110203160744.2049"><vh>&lt;&lt; Handle cweb control word &gt;&gt;</vh></v>
+<v t="edream.110203160744.2050"><vh>&lt;&lt; handle cweb ref or def &gt;&gt;</vh></v>
+</v>
+<v t="edream.110203160744.1623" a=""><vh>&lt;&lt; handle single-line comment &gt;&gt;</vh></v>
+<v t="edream.110203160744.1625" a=""><vh>&lt;&lt; start block comment &gt;&gt;</vh></v>
+<v t="edream.110203160744.2051"><vh>&lt;&lt; handle latex line &gt;&gt;</vh></v>
+</v>
+<v t="edream.110203160744.2052"><vh>Vaid only in latex mode</vh>
+<v t="edream.110203160744.2053"><vh>&lt;&lt; handle latex normal character &gt;&gt;</vh></v>
+</v>
+<v t="edream.110203160744.2054"><vh>Valid when not in latex_mode</vh>
+<v t="edream.110203160744.1618" a=""><vh>&lt;&lt; handle string &gt;&gt;</vh></v>
+<v t="edream.110203160744.2055"><vh>&lt;&lt; handle C preprocessor line &gt;&gt;</vh></v>
+<v t="edream.110203160744.2056"><vh>&lt;&lt; handle special php keywords &gt;&gt;</vh></v>
+<v t="edream.110203160744.2057"><vh>&lt;&lt; handle blank &gt;&gt;</vh></v>
+<v t="edream.110203160744.2058"><vh>&lt;&lt; handle tab &gt;&gt;</vh></v>
+<v t="edream.110203160744.2059"><vh>&lt;&lt; handle normal character &gt;&gt;</vh></v>
+</v>
+</v>
+<v t="edream.110203160744.2079" a=""><vh>doNowebSecRef</vh>
+<v t="edream.110203160744.2080"><vh>&lt;&lt; set the hyperlink &gt;&gt;</vh></v>
+</v>
+<v t="edream.110203160744.1610" a=""><vh>removeAllTags &amp; removeTagsFromLines</vh></v>
+</v>
+<v t="edream.110203160744.1359" a=""><vh>scanColorDirectives</vh>
+<v t="edream.110203160744.1360"><vh>&lt;&lt; Test for @comment or @language &gt;&gt;</vh></v>
+<v t="edream.110203160744.1361"><vh>&lt;&lt; Test for @root, @root-doc or @root-code &gt;&gt;</vh></v>
+</v>
+<v t="edream.110203160744.2081"><vh>color.schedule &amp; idle_colorize</vh></v>
+<v t="edream.110203160744.2082"><vh>getCwebWord</vh></v>
+<v t="edream.110203160744.2083" a=""><vh>removeAllImages</vh></v>
+<v t="edream.110203160744.2084"><vh>updateSyntaxColorer</vh></v>
+<v t="edream.110203160744.2085"><vh>useSyntaxColoring</vh></v>
+<v t="edream.110203160744.2086"><vh>Utils</vh>
+<v t="edream.110203160744.1615" a=""><vh>index &amp; tag</vh></v>
+<v t="edream.110203160744.2087"><vh>setFirstLineState</vh></v>
+<v t="edream.110203160744.2088"><vh>skip_id</vh></v>
+<v t="edream.110203160744.1616" a=""><vh>skip_python_string</vh></v>
+<v t="edream.110203160744.2089"><vh>skip_string</vh></v>
+</v>
+</v>
+<v t="edream.112103141343" a=""><vh>class nullColorizer</vh>
+<v t="edream.112103141921"><vh>__init__</vh></v>
+<v t="edream.112103141921.1"><vh>entry points</vh></v>
+<v t="edream.112103141351"><vh>hyperlink callbacks...</vh></v>
+</v>
+</v>
 </v>
 <v t="edream.110203160744.3525"><vh>Gui Base classes</vh>
 <v t="edream.111203102443" tnodeList="edream.111203102443,edream.111203102443.1,edream.111203102443.2,edream.111203102643"><vh>@file leoColorPanel.py</vh>
@@ -5362,7 +5458,7 @@
 <v t="edream.110203160744.2101"><vh>changeAll</vh></v>
 <v t="edream.110203160744.3667"><vh>changeSelection</vh></v>
 <v t="edream.110203160744.3668"><vh>changeThenFind</vh></v>
-<v t="edream.110503223808"><vh>doChange...Script</vh></v>
+<v t="edream.110503223808" a=""><vh>doChange...Script</vh></v>
 <v t="edream.110503160510"><vh>doFind...Script</vh></v>
 <v t="edream.110203160744.2102"><vh>findAll</vh></v>
 <v t="edream.110203160744.3669"><vh>findNext</vh></v>
@@ -5392,16 +5488,46 @@
 <v t="edream.110203160744.2192"><vh>fontPanel.__init__</vh></v>
 <v t="edream.111203092853"><vh>Must be overridden in subclasses</vh></v>
 </v>
-<v t="edream.110203160744.3540" tnodeList="edream.110203160744.3540,edream.111803052025.1,edream.110203160744.2278,edream.110203160744.2280,edream.111003091448,edream.111603115116,edream.110203160744.3541,edream.110903190535,edream.111603110756.2,edream.110203160744.2268,edream.111603110756,edream.110203160744.1592,edream.110203160744.1593,edream.110203160744.1357,edream.110203160744.1358,edream.110203160744.2323,edream.110203160744.2324,edream.110203160744.2325,edream.110203160744.2326,edream.110203160744.2327,edream.110203160744.2328,edream.110203160744.2329,edream.110203160744.2330,edream.110203160744.2331,edream.110203160744.3546,edream.111603161937,edream.111603161937.2,edream.111603161937.3,edream.111603121021,edream.111603120940.1,edream.111603115116.5,edream.111603115820.1,edream.111603120940,edream.110203160744.3705,edream.110203160744.3706,edream.111603115820,edream.111603173312,edream.111603161937.4"><vh>@file leoFrame.py</vh>
+<v t="edream.110203160744.3540" tnodeList="edream.110203160744.3540,edream.111803052025.1,edream.110203160744.2278,edream.110203160744.2280,edream.112103092157,edream.111003091448,edream.112103092005.1,edream.112103092005.2,edream.112103092005.3,edream.112103092005.4,edream.112103092005.5,edream.112103092005.6,edream.112103092005.7,edream.112103092005.14,edream.112103092005.19,edream.112103092005.20,edream.112103093105,edream.112103092005.29,edream.112103092005.36,edream.112103092005.40,edream.112103092005.41,edream.111603115116,edream.110203160744.3541,edream.110903190535,edream.111603110756.2,edream.112103094829,edream.112103095020.1,edream.112103094326.1,edream.112103094744,edream.112103162800,edream.112103094636,edream.110203160744.2275,edream.110203160744.2268,edream.111603110756,edream.110203160744.1592,edream.110203160744.1593,edream.110203160744.1357,edream.110203160744.1358,edream.110203160744.2323,edream.110203160744.2324,edream.110203160744.2325,edream.110203160744.2326,edream.110203160744.2327,edream.110203160744.2328,edream.110203160744.2329,edream.110203160744.2330,edream.110203160744.2331,edream.110203160744.3546,edream.111603161937,edream.111603161937.2,edream.111603161937.3,edream.111603121021,edream.111603120940.1,edream.111603115116.5,edream.111603115820.1,edream.111603120940,edream.110203160744.3705,edream.110203160744.3706,edream.111603115820,edream.111603173312,edream.111603161937.4,edream.112103083853,edream.112103141343.1,edream.112103144659,edream.112103153646.1,edream.112103153646.2,edream.112103142020,edream.112103142020.1,edream.112103142020.2,edream.112103142020.3,edream.112103142020.4,edream.112103142020.5,edream.112103142020.6,edream.112103142020.7,edream.112103142020.8,edream.112103142020.9,edream.112103142020.10,edream.112103142020.12,edream.112103142020.13,edream.112103151727,edream.112103151733,edream.112103153646.3,edream.112103142020.14,edream.112103142020.15,edream.112103142020.16,edream.112103141343.2,edream.112103083614,edream.112103100651,edream.112103100651.1,edream.112103160822.1,edream.112103160822,edream.112103160840.1,edream.112103160840.2,edream.112103160840.5,edream.112103160840.7,edream.112103160840.3,edream.112103160840.6"><vh>@file leoFrame.py</vh>
 <v t="edream.111803052025.1" a=""><vh>&lt;&lt; About handling events &gt;&gt;</vh></v>
 <v t="edream.110203160744.2278"><vh>class leoBody</vh>
 <v t="edream.110203160744.2280"><vh>leoBody.__init__</vh></v>
-<v t="edream.111003091448"><vh>Must be overriden in subclasses</vh></v>
+<v t="edream.112103092157"><vh>oops</vh></v>
+<v t="edream.111003091448"><vh>Must be overriden in subclasses</vh>
+<v t="edream.112103092005.1"><vh>Bounding box (Tk spelling)</vh></v>
+<v t="edream.112103092005.2"><vh>Color tags (Tk spelling)</vh></v>
+<v t="edream.112103092005.3"><vh>Configuration (Tk spelling)</vh></v>
+<v t="edream.112103092005.4"><vh>Focus</vh></v>
+<v t="edream.112103092005.5"><vh>Height &amp; width</vh></v>
+<v t="edream.112103092005.6"><vh>Idle time...</vh></v>
+<v t="edream.112103092005.7"><vh>Indices</vh></v>
+<v t="edream.112103092005.14"><vh>Insert point</vh></v>
+<v t="edream.112103092005.19"><vh>Menus</vh></v>
+<v t="edream.112103092005.20"><vh>Selection</vh></v>
+<v t="edream.112103092005.27"><vh>Text</vh>
+<v t="edream.112103093105"><vh>delete...</vh></v>
+<v t="edream.112103092005.29"><vh>get...</vh></v>
+<v t="edream.112103092005.36"><vh>Insert...</vh></v>
+<v t="edream.112103092005.40"><vh>setSelectionAreas</vh></v>
+</v>
+<v t="edream.112103092005.41"><vh>Visibility &amp; scrolling</vh></v>
+</v>
 <v t="edream.111603115116"><vh>Coloring </vh></v>
 </v>
 <v t="edream.110203160744.3541"><vh>class leoFrame</vh>
-<v t="edream.110903190535"><vh> leoFrame.__init__</vh></v>
-<v t="edream.111603110756.2"><vh>gui-dependent commands (must be defined  in subclasses)</vh></v>
+<v t="edream.110903190535"><vh>  leoFrame.__init__</vh></v>
+<v t="edream.112103094326"><vh> Must be defined in subclasses</vh>
+<v t="edream.111603110756.2"><vh> gui-dependent commands</vh></v>
+<v t="edream.112103094829"><vh>deiconify, lift &amp; update</vh></v>
+<v t="edream.112103095020"><vh>config stuff...</vh>
+<v t="edream.112103095020.1"><vh>resizePanesToRatio</vh></v>
+<v t="edream.112103094326.1"><vh>setInitialWindowGeometry</vh></v>
+<v t="edream.112103094744"><vh>setTopGeometry</vh></v>
+</v>
+</v>
+<v t="edream.112103162800"><vh>setTabWidth</vh></v>
+<v t="edream.112103094636"><vh>getTitle &amp; setTitle</vh></v>
+<v t="edream.110203160744.2275"><vh>initialRatios</vh></v>
 <v t="edream.110203160744.2268"><vh>longFileName &amp; shortFileName</vh></v>
 <v t="edream.111603110756"><vh>oops</vh></v>
 <v t="edream.110203160744.1592"><vh>promptForSave</vh>
@@ -5438,9 +5564,57 @@
 <v t="edream.111603173312"><vh>Setters</vh></v>
 <v t="edream.111603161937.4"><vh>oops</vh></v>
 </v>
+<v t="edream.112103083853" a=""><vh>class nullBody</vh>
+<v t="edream.112103141343.1"><vh> nullBody.__init__</vh></v>
+<v t="edream.112103153646"><vh>Utils (internal use)</vh>
+<v t="edream.112103144659"><vh>findStartOfLine</vh></v>
+<v t="edream.112103153646.1"><vh>scanToStartOfLine</vh></v>
+<v t="edream.112103153646.2"><vh>scanToEndOfLine</vh></v>
 </v>
-<v t="edream.110203160744.3526" tnodeList="edream.110203160744.3526,edream.110203160744.1846,edream.110203160744.1847,edream.111303090743,edream.110203160744.3532,edream.111303090743.1,edream.111303090743.2,edream.111303090743.3,edream.110203160744.3539,edream.111303060636,edream.111303090124,edream.110203160744.2392,edream.110203160744.3534,edream.110203160744.3536,edream.110203160744.3538,edream.110203160744.2401,edream.111303082442,edream.110203160744.2398,edream.110203160744.3529,edream.110203160744.3528,edream.110203160744.3530"><vh>@file leoGui.py</vh>
+<v t="edream.112103142020"><vh>Must be overriden in subclasses</vh>
+<v t="edream.112103142020.1"><vh>Bounding box</vh></v>
+<v t="edream.112103142020.2"><vh>Color tags</vh></v>
+<v t="edream.112103142020.3"><vh>Configuration</vh></v>
+<v t="edream.112103142020.4"><vh>Focus</vh></v>
+<v t="edream.112103142020.5"><vh>Height &amp; width (use dummy values...)</vh></v>
+<v t="edream.112103142020.6"><vh>Idle time...</vh></v>
+<v t="edream.112103142020.7"><vh>Indices</vh></v>
+<v t="edream.112103142020.8"><vh>Insert point</vh></v>
+<v t="edream.112103142020.9"><vh>Menus</vh></v>
+<v t="edream.112103142020.10"><vh>Selection</vh></v>
+<v t="edream.112103142020.11"><vh>Text</vh>
+<v t="edream.112103142020.12"><vh>delete...</vh></v>
+<v t="edream.112103142020.13"><vh>get...</vh>
+<v t="edream.112103151727"><vh>getInsertLines</vh></v>
+<v t="edream.112103151733"><vh>getSelectionAreas</vh></v>
+<v t="edream.112103153646.3"><vh>getSelectionLines</vh></v>
+</v>
+<v t="edream.112103142020.14"><vh>Insert...</vh></v>
+<v t="edream.112103142020.15"><vh>setSelectionAreas</vh></v>
+</v>
+<v t="edream.112103142020.16"><vh>Visibility &amp; scrolling</vh></v>
+</v>
+<v t="edream.112103141343.2"><vh>oops</vh></v>
+</v>
+<v t="edream.112103083614" a=""><vh>class nullFrame</vh></v>
+<v t="edream.112103100651" a=""><vh>class nullLog</vh></v>
+<v t="edream.112103100651.1" a=""><vh>class nullTree</vh>
+<v t="edream.112103160822.1"><vh> nullTree.__init__</vh></v>
+<v t="edream.112103160822"><vh>oops</vh></v>
+<v t="edream.112103161526"><vh>Dummy operations...</vh>
+<v t="edream.112103160840.1"><vh>Drawing</vh></v>
+<v t="edream.112103160840.2"><vh>Edit label</vh></v>
+<v t="edream.112103160840.5"><vh>Scrolling</vh></v>
+<v t="edream.112103160840.7"><vh>Tree operations</vh></v>
+</v>
+<v t="edream.112103160840.3"><vh>getFont &amp; setFont</vh></v>
+<v t="edream.112103160840.6"><vh>select</vh></v>
+</v>
+</v>
+<v t="edream.110203160744.3526" tnodeList="edream.110203160744.3526,edream.112103084652,edream.110203160744.3528,edream.110203160744.1846,edream.110203160744.1847,edream.111303090743,edream.110203160744.3532,edream.111303090743.1,edream.111303090743.2,edream.111303090743.3,edream.110203160744.3539,edream.111303060636,edream.111303090124,edream.110203160744.2392,edream.110203160744.3534,edream.110203160744.3536,edream.110203160744.3538,edream.112103091508,edream.110203160744.2401,edream.111303082442,edream.110203160744.2398,edream.110203160744.3529,edream.110203160744.3530,edream.112103084652.1,edream.112103154736,edream.112103085124,edream.112103163330.1,edream.112103163330.2,edream.112103154736.1,edream.112103084652.2,edream.112103154310"><vh>@file leoGui.py</vh>
+<v t="edream.112103084652"><vh>class leoGui</vh>
 <v t="edream.110203160744.3535"><vh>app.gui Birth &amp; death</vh>
+<v t="edream.110203160744.3528"><vh> leoGui.__init__</vh></v>
 <v t="edream.110203160744.1846"><vh>newLeoCommanderAndFrame (gui-independent)</vh>
 <v t="edream.110203160744.1847"><vh>&lt;&lt; compute the window title &gt;&gt;</vh></v>
 </v>
@@ -5459,16 +5633,29 @@
 <v t="edream.110203160744.3534"><vh>app.gui utils</vh>
 <v t="edream.110203160744.3536"><vh>Clipboard</vh></v>
 <v t="edream.110203160744.3538"><vh>Dialog utils</vh></v>
+<v t="edream.112103091508"><vh>Font</vh></v>
 <v t="edream.110203160744.2401"><vh>Focus</vh></v>
 <v t="edream.111303082442"><vh>Index</vh></v>
 <v t="edream.110203160744.2398"><vh>Idle time</vh></v>
 </v>
 <v t="edream.110203160744.3529"><vh>guiName</vh></v>
-<v t="edream.110203160744.3528"><vh>leoGui.__init__</vh></v>
 <v t="edream.110203160744.3530"><vh>oops</vh></v>
 </v>
+<v t="edream.112103084652.1" a=""><vh>class nullGui</vh>
+<v t="edream.112103163330"><vh>Birth &amp; death</vh>
+<v t="edream.112103154736"><vh> nullGui.__init__</vh></v>
+<v t="edream.112103085124"><vh>createLeoFrame</vh></v>
+<v t="edream.112103163330.1"><vh>createRootWindow</vh></v>
+<v t="edream.112103163330.2"><vh>finishCreate</vh></v>
+<v t="edream.112103154736.1"><vh>runMainLoop</vh></v>
+</v>
+<v t="edream.112103084652.2"><vh>oops</vh></v>
+<v t="edream.112103154310"><vh>setScript</vh></v>
+</v>
+</v>
 <v t="edream.110703175037.1" tnodeList="edream.110703175037.1"><vh>@file leoKeys.py</vh></v>
-<v t="edream.110703175037" tnodeList="edream.110703175037,edream.110903191647,edream.110903192602,edream.110903192602.1,edream.110903195011,edream.110903195011.1,edream.110903195011.2,edream.110903195011.3,edream.110903195011.4,edream.110903193858,edream.110903195011.5,edream.110903195011.6,edream.110903195011.7,edream.110903195303,edream.110903195303.1,edream.110903195303.2,edream.110903195303.3,edream.110903201536,edream.110903200010,edream.110903201212,edream.110903201212.1,edream.110903201212.2,edream.110903201212.3,edream.110903201212.4,edream.110903201212.5,edream.110903201212.6,edream.111603110101,edream.110203160744.1290,edream.110203160744.1292,edream.110203160744.1293,edream.110203160744.1294,edream.110203160744.1291,edream.110203160744.2640,edream.110203160744.3041,edream.110203160744.1052,edream.110203160744.1056,edream.110203160744.1053,edream.110203160744.1054,edream.110203160744.1055,edream.110203160744.1057,edream.110203160744.1276,edream.110203160744.1277,edream.110203160744.1278,edream.110203160744.1279,edream.110203160744.1280,edream.110203160744.1281,edream.110203160744.1282,edream.110203160744.1283,edream.110903214830,edream.110203160744.1065,edream.110203160744.1067,edream.110203160744.1068,edream.110203160744.1069,edream.110203160744.1070,edream.110203160744.1071,edream.110203160744.1072,edream.110203160744.1059,edream.110903194258,edream.110903194258.1,edream.110903194258.2,edream.110203160744.1073,edream.110203160744.1075,edream.110203160744.1076,edream.110203160744.1077,edream.110203160744.1078,edream.110203160744.1079,edream.110203160744.1080,edream.110203160744.1284,edream.110203160744.1111,edream.110203160744.1286,edream.110203160744.1287,edream.110203160744.1082,edream.111603110101.1,edream.111603110101.2"><vh>@file leoMenu.py</vh>
+<v t="edream.110703175037" tnodeList="edream.110703175037,edream.112103090457,edream.110903191647,edream.110903192602,edream.110903192602.1,edream.110903195011,edream.110903195011.1,edream.110903195011.2,edream.110903195011.3,edream.110903195011.4,edream.110903193858,edream.110903195011.5,edream.110903195011.6,edream.110903195011.7,edream.110903195303,edream.110903195303.1,edream.110903195303.2,edream.110903195303.3,edream.110903201536,edream.110903200010,edream.110903201212,edream.110903201212.1,edream.110903201212.2,edream.110903201212.3,edream.110903201212.4,edream.110903201212.5,edream.110903201212.6,edream.111603110101,edream.110203160744.1290,edream.110203160744.1292,edream.110203160744.1293,edream.110203160744.1294,edream.110203160744.1291,edream.110203160744.2640,edream.110203160744.3041,edream.110203160744.1052,edream.110203160744.1056,edream.110203160744.1053,edream.110203160744.1054,edream.110203160744.1055,edream.110203160744.1057,edream.110203160744.1276,edream.110203160744.1277,edream.110203160744.1278,edream.110203160744.1279,edream.110203160744.1280,edream.110203160744.1281,edream.110203160744.1282,edream.110203160744.1283,edream.110903214830,edream.110203160744.1065,edream.110203160744.1067,edream.110203160744.1068,edream.110203160744.1069,edream.110203160744.1070,edream.110203160744.1071,edream.110203160744.1072,edream.110203160744.1059,edream.110903194258,edream.110903194258.1,edream.110903194258.2,edream.110203160744.1073,edream.110203160744.1075,edream.110203160744.1076,edream.110203160744.1077,edream.110203160744.1078,edream.110203160744.1079,edream.110203160744.1080,edream.110203160744.1284,edream.110203160744.1111,edream.110203160744.1286,edream.110203160744.1287,edream.110203160744.1082,edream.111603110101.1,edream.111603110101.2,edream.112103090457.1"><vh>@file leoMenu.py</vh>
+<v t="edream.112103090457"><vh>class leoMenu</vh>
 <v t="edream.110903191647"><vh> leoMenu.__init__</vh></v>
 <v t="edream.110903192602"><vh>defineMenuTables</vh>
 <v t="edream.110903192602.1"><vh>&lt;&lt; define edit menu tables &gt;&gt;</vh>
@@ -5559,6 +5746,8 @@
 <v t="edream.111603110101.1"><vh>9 Routines with Tk spellings</vh></v>
 <v t="edream.111603110101.2"><vh>7 Routines with new spellings</vh></v>
 </v>
+</v>
+<v t="edream.112103090457.1"><vh>class nullMenu</vh></v>
 </v>
 <v t="edream.110203160744.3590" tnodeList="edream.110203160744.3590,edream.111203082810,edream.110203160744.2221,edream.110203160744.1823,edream.110203160744.1824,edream.111203090040,edream.111203075252,edream.111203090040.1"><vh>@file leoPrefs.py</vh>
 <v t="edream.111203082810"><vh>&lt;&lt; define leoPrefs constants &gt;&gt;</vh></v>
@@ -5740,8 +5929,8 @@
 </v>
 </v>
 </v>
-<v t="edream.110203160744.3681" tnodeList="edream.110203160744.3681,edream.110203160744.2260,edream.110203160744.1693,edream.110203160744.1694,edream.110203160744.1875,edream.110203160744.1876,edream.110203160744.1880,edream.110203160744.1881,edream.110203160744.1882,edream.110203160744.1883,edream.110203160744.1884,edream.110203160744.2270,edream.110203160744.2271,edream.110203160744.2272,edream.110203160744.1523,edream.110203160744.2273,edream.110203160744.2274,edream.110203160744.2275,edream.110203160744.2276,edream.110203160744.2277,edream.110203160744.1525,edream.110203160744.1526,edream.110203160744.1527,edream.110203160744.1528,edream.110203160744.1529,edream.110203160744.1530,edream.110203160744.1531,edream.110203160744.1532,edream.110203160744.1533,edream.110203160744.1534,edream.110203160744.1535,edream.110203160744.1877,edream.110203160744.1878,edream.110203160744.1591,edream.110203160744.1879,edream.110203160744.2262,edream.110203160744.2263,edream.110203160744.2264,edream.110203160744.1629,edream.110203160744.2265,edream.110203160744.1520,edream.110203160744.2267,edream.110203160744.1683,edream.110203160744.1684,edream.110203160744.1685,edream.110203160744.1686,edream.110203160744.1687,edream.110203160744.1688,edream.110203160744.1689,edream.110203160744.1690,edream.110203160744.1691,edream.110203160744.1147,edream.110203160744.1148,edream.110203160744.1149,edream.111103193348.1,edream.111303101154,edream.110203160744.1697,edream.111303101634,edream.110203160744.1256,edream.110203160744.1253,edream.110203160744.1258,edream.110203160744.1257,edream.110203160744.1255,edream.110203160744.1270,edream.110203160744.1271,edream.110203160744.1272,edream.110203160744.736,edream.110203160744.1850,edream.110203160744.2284,edream.110203160744.2286,edream.110203160744.2287,edream.110203160744.2288,edream.110203160744.2289,edream.110203160744.1301,edream.110203160744.1302,edream.110203160744.1303,edream.110203160744.1304,edream.110203160744.1305,edream.110203160744.1306,edream.110203160744.1307,edream.110203160744.1308,edream.110203160744.1309,edream.110203160744.1310,edream.110203160744.1311,edream.110203160744.1312,edream.110203160744.3710,edream.111003083003,edream.111003083003.1,edream.111003075626,edream.111003102135,edream.110203160744.2297,edream.110203160744.2305,edream.110203160744.2306,edream.111103092404,edream.111103053839,edream.110203160744.2308,edream.110203160744.2309,edream.110203160744.2310,edream.110203160744.2312,edream.110203160744.333,edream.111103063445,edream.110203160744.2317,edream.111103082046,edream.111003102120,edream.111103084151.1,edream.110203160744.2314,edream.110203160744.2315,edream.110203160744.2316,edream.110203160744.2319,edream.110203160744.2320,edream.110203160744.2299,edream.110203160744.2300,edream.111103093034,edream.110203160744.2148,edream.110203160744.2301,edream.110203160744.2302,edream.110203160744.2303,edream.111103085737.2,edream.111103065437,edream.111103070349,edream.110203160744.2304,edream.110203160744.2321,edream.110203160744.2332,edream.110203160744.2333,edream.110203160744.2334,edream.110203160744.2335,edream.110203160744.2336,edream.110203160744.2337,edream.110203160744.2338,edream.110203160744.1455,edream.110203160744.2339"><vh>@file leoTkinterFrame.py</vh>
-<v t="edream.110203160744.2260"><vh>class leoTkinterFrame</vh>
+<v t="edream.110203160744.3681" tnodeList="edream.110203160744.3681,edream.110203160744.2260,edream.110203160744.1693,edream.110203160744.1694,edream.110203160744.1875,edream.110203160744.1876,edream.110203160744.1880,edream.110203160744.1881,edream.110203160744.1882,edream.110203160744.1883,edream.110203160744.1884,edream.110203160744.2270,edream.110203160744.2271,edream.110203160744.2272,edream.110203160744.1523,edream.110203160744.2273,edream.110203160744.2274,edream.110203160744.2276,edream.110203160744.2277,edream.110203160744.1525,edream.110203160744.1526,edream.110203160744.1527,edream.110203160744.1528,edream.110203160744.1529,edream.110203160744.1530,edream.110203160744.1531,edream.110203160744.1532,edream.110203160744.1533,edream.110203160744.1534,edream.110203160744.1535,edream.110203160744.1877,edream.110203160744.1878,edream.110203160744.1591,edream.110203160744.1879,edream.110203160744.2262,edream.110203160744.2263,edream.110203160744.2264,edream.110203160744.1629,edream.110203160744.2265,edream.110203160744.1520,edream.110203160744.2267,edream.110203160744.1683,edream.110203160744.1684,edream.110203160744.1685,edream.110203160744.1686,edream.110203160744.1687,edream.110203160744.1688,edream.110203160744.1689,edream.110203160744.1690,edream.110203160744.1691,edream.110203160744.1147,edream.110203160744.1148,edream.110203160744.1149,edream.111103193348.1,edream.111303101154,edream.110203160744.1697,edream.111303101634,edream.110203160744.1256,edream.110203160744.1253,edream.110203160744.1258,edream.110203160744.1257,edream.110203160744.1255,edream.110203160744.1270,edream.110203160744.1271,edream.110203160744.1272,edream.110203160744.736,edream.110203160744.1850,edream.110203160744.2284,edream.110203160744.2286,edream.110203160744.2287,edream.110203160744.2288,edream.110203160744.2289,edream.110203160744.1301,edream.110203160744.1302,edream.110203160744.1303,edream.110203160744.1304,edream.110203160744.1305,edream.110203160744.1306,edream.110203160744.1307,edream.110203160744.1308,edream.110203160744.1309,edream.110203160744.1310,edream.110203160744.1311,edream.110203160744.1312,edream.110203160744.3710,edream.111003083003,edream.111003083003.1,edream.111003075626,edream.111003102135,edream.110203160744.2297,edream.110203160744.2305,edream.110203160744.2306,edream.111103092404,edream.111103053839,edream.110203160744.2308,edream.110203160744.2309,edream.110203160744.2310,edream.110203160744.2312,edream.110203160744.333,edream.111103063445,edream.110203160744.2317,edream.111103082046,edream.111003102120,edream.111103084151.1,edream.110203160744.2314,edream.110203160744.2315,edream.110203160744.2316,edream.110203160744.2319,edream.110203160744.2320,edream.110203160744.2299,edream.110203160744.2300,edream.111103093034,edream.110203160744.2148,edream.110203160744.2301,edream.110203160744.2302,edream.110203160744.2303,edream.111103085737.2,edream.111103065437,edream.111103070349,edream.110203160744.2304,edream.110203160744.2321,edream.110203160744.2332,edream.110203160744.2333,edream.110203160744.2334,edream.110203160744.2335,edream.110203160744.2336,edream.110203160744.2337,edream.110203160744.2338,edream.110203160744.1455,edream.110203160744.2339"><vh>@file leoTkinterFrame.py</vh>
+<v t="edream.110203160744.2260" a="E"><vh>class leoTkinterFrame</vh>
 <v t="edream.110203160744.1874"><vh> frame.Birth &amp; Death</vh>
 <v t="edream.110203160744.1693" a=""><vh>f.__init__</vh>
 <v t="edream.110203160744.1694"><vh>&lt;&lt; set the leoTkinterFrame ivars &gt;&gt;</vh></v>
@@ -5762,7 +5951,6 @@
 <v t="edream.110203160744.1523"><vh>createLeoSplitter</vh></v>
 <v t="edream.110203160744.2273"><vh>divideAnySplitter</vh></v>
 <v t="edream.110203160744.2274"><vh>divideLeoSplitter</vh></v>
-<v t="edream.110203160744.2275"><vh>initialRatios</vh></v>
 <v t="edream.110203160744.2276"><vh>onDrag...</vh></v>
 <v t="edream.110203160744.2277"><vh>placeSplitter</vh></v>
 </v>
@@ -5790,7 +5978,7 @@
 <v t="edream.110203160744.1879" a=""><vh>destroySelf</vh></v>
 </v>
 </v>
-<v t="edream.110203160744.2261"><vh>Configuration</vh>
+<v t="edream.110203160744.2261" a="E"><vh>Configuration</vh>
 <v t="edream.110203160744.2262"><vh>configureBar</vh></v>
 <v t="edream.110203160744.2263"><vh>configureBarsFromConfig</vh></v>
 <v t="edream.110203160744.2264"><vh>reconfigureFromConfig</vh></v>
@@ -5840,7 +6028,7 @@
 <v t="edream.110203160744.736" a=""><vh>Scrolling callbacks (frame)</vh></v>
 <v t="edream.110203160744.1850"><vh>Tk bindings...</vh></v>
 </v>
-<v t="edream.110203160744.2284"><vh>class leoTkinterBody</vh>
+<v t="edream.110203160744.2284" a=""><vh>class leoTkinterBody</vh>
 <v t="edream.110203160744.2285"><vh> Birth &amp; death</vh>
 <v t="edream.110203160744.2286"><vh>tkBody.__init__</vh></v>
 <v t="edream.110203160744.2287"><vh>tkBody.createBindings</vh></v>
@@ -6185,6 +6373,78 @@
 </v>
 <v t="edream.110203160744.879" a=""><vh>tree.moveUpDown</vh></v>
 </v>
+<v t="edream.110203160744.2284" a=""><vh>class leoTkinterBody</vh>
+<v t="edream.110203160744.2285"><vh> Birth &amp; death</vh>
+<v t="edream.110203160744.2286"><vh>tkBody.__init__</vh></v>
+<v t="edream.110203160744.2287"><vh>tkBody.createBindings</vh></v>
+<v t="edream.110203160744.2288"><vh>tkBody.createControl</vh></v>
+</v>
+<v t="edream.110203160744.2289"><vh>tkBody.setBodyFontFromConfig</vh></v>
+<v t="edream.110203160744.1301" a=""><vh>body key handlers</vh>
+<v t="edream.110203160744.1302" a=""><vh>idle_body_key</vh>
+<v t="edream.110203160744.1303"><vh>&lt;&lt; return if nothing has changed &gt;&gt;</vh></v>
+<v t="edream.110203160744.1304"><vh>&lt;&lt; set removeTrailing &gt;&gt;</vh></v>
+<v t="edream.110203160744.1305"><vh>&lt;&lt; Do auto indent &gt;&gt; (David McNab)</vh></v>
+<v t="edream.110203160744.1306"><vh>&lt;&lt; convert tab to blanks &gt;&gt;</vh></v>
+<v t="edream.110203160744.1307"><vh>&lt;&lt; set s to widget text, removing trailing newlines if necessary &gt;&gt;</vh></v>
+<v t="edream.110203160744.1308"><vh>&lt;&lt; recolor the body &gt;&gt;</vh></v>
+<v t="edream.110203160744.1309"><vh>&lt;&lt; redraw the screen if necessary &gt;&gt;</vh></v>
+</v>
+<v t="edream.110203160744.1310"><vh>onBodyChanged (called from core)</vh></v>
+<v t="edream.110203160744.1311"><vh>onBodyKey</vh></v>
+<v t="edream.110203160744.1312" a=""><vh>onBodyWillChange</vh></v>
+</v>
+<v t="edream.110203160744.3710"><vh>forceRecolor</vh></v>
+<v t="edream.111003083003"><vh>Tk bindings (leoTkinterBody)</vh>
+<v t="edream.111003083003.1"><vh>Bounding box (Tk spelling)</vh></v>
+<v t="edream.111003075626"><vh>Color tags (Tk spelling)</vh></v>
+<v t="edream.111003102135"><vh>Configuration (Tk spelling)</vh></v>
+<v t="edream.110203160744.2297"><vh>Focus</vh></v>
+<v t="edream.110203160744.2305"><vh>Height &amp; width</vh></v>
+<v t="edream.110203160744.2306"><vh>Idle time...</vh></v>
+<v t="edream.110203160744.2307"><vh>Indices</vh>
+<v t="edream.111103092404"><vh>adjustIndex</vh></v>
+<v t="edream.111103053839"><vh>compareIndices</vh></v>
+<v t="edream.110203160744.2308"><vh>convertRowColumnToIndex</vh></v>
+<v t="edream.110203160744.2309"><vh>convertIndexToRowColumn</vh></v>
+<v t="edream.110203160744.2310"><vh>getImageIndex</vh></v>
+<v t="edream.110203160744.2312"><vh>tkIndex (internal use only)</vh></v>
+</v>
+<v t="edream.111103084151"><vh>Insert point</vh>
+<v t="edream.110203160744.333" a=""><vh>getInsertionPoint &amp; getBeforeInsertionPoint</vh></v>
+<v t="edream.111103063445"><vh>getCharAtInsertPoint &amp; getCharBeforeInsertPoint</vh></v>
+<v t="edream.110203160744.2317"><vh>makeInsertPointVisible</vh></v>
+<v t="edream.111103082046"><vh>setInsertionPointTo...</vh></v>
+</v>
+<v t="edream.111003102120"><vh>Menus</vh></v>
+<v t="edream.110203160744.2313"><vh>Selection</vh>
+<v t="edream.111103084151.1"><vh>deleteTextSelection</vh></v>
+<v t="edream.110203160744.2314"><vh>getSelectedText</vh></v>
+<v t="edream.110203160744.2315"><vh>getTextSelection</vh></v>
+<v t="edream.110203160744.2316"><vh>hasTextSelection</vh></v>
+<v t="edream.110203160744.2319"><vh>selectAllText</vh></v>
+<v t="edream.110203160744.2320"><vh>setTextSelection</vh></v>
+</v>
+<v t="edream.110203160744.2298"><vh>Text</vh>
+<v t="edream.110203160744.2299"><vh>delete...</vh></v>
+<v t="edream.111103085737"><vh>get...</vh>
+<v t="edream.110203160744.2300"><vh>getAllText</vh></v>
+<v t="edream.111103093034"><vh>getCharAtIndex</vh></v>
+<v t="edream.110203160744.2148"><vh>getInsertLines</vh></v>
+<v t="edream.110203160744.2301"><vh>getSelectionAreas</vh></v>
+<v t="edream.110203160744.2302"><vh>getSelectionLines</vh></v>
+<v t="edream.110203160744.2303"><vh>getTextRange</vh></v>
+</v>
+<v t="edream.111103085737.1"><vh>Insert...</vh>
+<v t="edream.111103085737.2"><vh>insertAtInsertPoint</vh></v>
+<v t="edream.111103065437"><vh>insertAtEnd</vh></v>
+<v t="edream.111103070349"><vh>insertAtStartOfLine</vh></v>
+</v>
+<v t="edream.110203160744.2304"><vh>setSelectionAreas</vh></v>
+</v>
+<v t="edream.110203160744.2321"><vh>Visibility &amp; scrolling</vh></v>
+</v>
+</v>
 </v>
 <v t="edream.110203160744.3717"><vh>Unit Testing &amp; leoTest.py</vh>
 <v t="edream.110203160744.3718"><vh>Notes</vh>
@@ -6282,29 +6542,68 @@
 </v>
 </v>
 </v>
-<v t="edream.111803110943"><vh>(Fixed bug re: two refs on same line)</vh>
-<v t="edream.112003084515.1"><vh>Report</vh></v>
-<v t="edream.112003074603" a=""><vh>putRefLine (new) &amp; allies</vh>
-<v t="edream.112003074603.2"><vh>PutRefAt</vh></v>
-<v t="edream.112003082656"><vh>putAfterLastRef</vh></v>
-<v t="edream.112003074603.1"><vh>putAfterMiddleef</vh></v>
+<v t="edream.112103084204" a="E"><vh>(Created null classes)</vh>
+<v t="edream.112103083853" a=""><vh>class nullBody</vh>
+<v t="edream.112103141343.1"><vh> nullBody.__init__</vh></v>
+<v t="edream.112103153646"><vh>Utils (internal use)</vh>
+<v t="edream.112103144659"><vh>findStartOfLine</vh></v>
+<v t="edream.112103153646.1"><vh>scanToStartOfLine</vh></v>
+<v t="edream.112103153646.2"><vh>scanToEndOfLine</vh></v>
 </v>
+<v t="edream.112103142020"><vh>Must be overriden in subclasses</vh>
+<v t="edream.112103142020.1"><vh>Bounding box</vh></v>
+<v t="edream.112103142020.2"><vh>Color tags</vh></v>
+<v t="edream.112103142020.3"><vh>Configuration</vh></v>
+<v t="edream.112103142020.4"><vh>Focus</vh></v>
+<v t="edream.112103142020.5"><vh>Height &amp; width (use dummy values...)</vh></v>
+<v t="edream.112103142020.6" a="M"><vh>Idle time...</vh></v>
+<v t="edream.112103142020.7"><vh>Indices</vh></v>
+<v t="edream.112103142020.8"><vh>Insert point</vh></v>
+<v t="edream.112103142020.9"><vh>Menus</vh></v>
+<v t="edream.112103142020.10"><vh>Selection</vh></v>
+<v t="edream.112103142020.11"><vh>Text</vh>
+<v t="edream.112103142020.12"><vh>delete...</vh></v>
+<v t="edream.112103142020.13"><vh>get...</vh>
+<v t="edream.112103151727"><vh>getInsertLines</vh></v>
+<v t="edream.112103151733"><vh>getSelectionAreas</vh></v>
+<v t="edream.112103153646.3"><vh>getSelectionLines</vh></v>
 </v>
-<v t="edream.111903142522.1"><vh>(Support directives &amp; sections in Execute Script Command)</vh>
-<v t="edream.110203160744.1151" a=""><vh>executeScript</vh>
-<v t="edream.111903142522"><vh>&lt;&lt; define class fileLikeObject &gt;&gt;</vh></v>
-<v t="edream.110203160744.1152"><vh>&lt;&lt; get script into s &gt;&gt;</vh></v>
-<v t="edream.110203160744.1153"><vh>&lt;&lt; redirect output if redirect_execute_script_output_to_log_pane &gt;&gt;</vh></v>
+<v t="edream.112103142020.14"><vh>Insert...</vh></v>
+<v t="edream.112103142020.15"><vh>setSelectionAreas</vh></v>
 </v>
-<v t="edream.110203160744.2844" a=""><vh>new_df.write</vh>
-<v t="edream.110203160744.2845"><vh>&lt;&lt; initialize &gt;&gt;</vh></v>
-<v t="edream.110203160744.2846"><vh>&lt;&lt; open the file; return on error &gt;&gt;</vh></v>
-<v t="edream.110203160744.2847"><vh>&lt;&lt; write then entire @file tree &gt;&gt; (4.x)</vh>
-<v t="edream.110203160744.2848"><vh>&lt;&lt; put all @first lines in root &gt;&gt;</vh></v>
-<v t="edream.110203160744.2849"><vh>&lt;&lt; put all @last lines in root &gt;&gt; (4.x)</vh></v>
+<v t="edream.112103142020.16"><vh>Visibility &amp; scrolling</vh></v>
 </v>
-<v t="edream.110203160744.2850"><vh>&lt;&lt; Warn about @ignored and orphans  &gt;&gt;</vh></v>
-<v t="edream.110203160744.2851"><vh>&lt;&lt; finish writing &gt;&gt;</vh></v>
+<v t="edream.112103141343.2"><vh>oops</vh></v>
+</v>
+<v t="edream.112103141343" a=""><vh>class nullColorizer</vh>
+<v t="edream.112103141921"><vh>__init__</vh></v>
+<v t="edream.112103141921.1"><vh>entry points</vh></v>
+<v t="edream.112103141351"><vh>hyperlink callbacks...</vh></v>
+</v>
+<v t="edream.112103083614" a=""><vh>class nullFrame</vh></v>
+<v t="edream.112103084652.1" a="V"><vh>class nullGui</vh>
+<v t="edream.112103163330" a="E"><vh>Birth &amp; death</vh>
+<v t="edream.112103154736"><vh> nullGui.__init__</vh></v>
+<v t="edream.112103085124"><vh>createLeoFrame</vh></v>
+<v t="edream.112103163330.1"><vh>createRootWindow</vh></v>
+<v t="edream.112103163330.2"><vh>finishCreate</vh></v>
+<v t="edream.112103154736.1"><vh>runMainLoop</vh></v>
+</v>
+<v t="edream.112103084652.2"><vh>oops</vh></v>
+<v t="edream.112103154310"><vh>setScript</vh></v>
+</v>
+<v t="edream.112103100651" a=""><vh>class nullLog</vh></v>
+<v t="edream.112103100651.1" a="E"><vh>class nullTree</vh>
+<v t="edream.112103160822.1"><vh> nullTree.__init__</vh></v>
+<v t="edream.112103160822"><vh>oops</vh></v>
+<v t="edream.112103161526"><vh>Dummy operations...</vh>
+<v t="edream.112103160840.1"><vh>Drawing</vh></v>
+<v t="edream.112103160840.2"><vh>Edit label</vh></v>
+<v t="edream.112103160840.5"><vh>Scrolling</vh></v>
+<v t="edream.112103160840.7"><vh>Tree operations</vh></v>
+</v>
+<v t="edream.112103160840.3"><vh>getFont &amp; setFont</vh></v>
+<v t="edream.112103160840.6"><vh>select</vh></v>
 </v>
 </v>
 </vnodes>
@@ -21029,7 +21328,7 @@ def OnPasteFromMenu (self):
 		oldSel = c.frame.body.getTextSelection()
 		c.frame.body.deleteTextSelection()
 		c.frame.body.onBodyChanged(v,"Delete",oldSel=oldSel)</t>
-<t tx="edream.110203160744.1151">def executeScript(self,v=None):
+<t tx="edream.110203160744.1151">def executeScript(self,v=None,script=None):
 
 	"""This executes body text as a Python script.
 	
@@ -21037,11 +21336,12 @@ def OnPasteFromMenu (self):
 	
 	error = false
 	c = self ; s = None
-	if v == None:
-		v = c.currentVnode()
 
-	&lt;&lt; define class fileLikeObject &gt;&gt;
-	&lt;&lt; get script into s &gt;&gt;
+	if script:
+		s = script
+	else:
+		&lt;&lt; define class fileLikeObject &gt;&gt;
+		&lt;&lt; get script into s &gt;&gt;
 	&lt;&lt; redirect output if redirect_execute_script_output_to_log_pane &gt;&gt;
 	s = s.strip()
 	if s:
@@ -21054,6 +21354,8 @@ def OnPasteFromMenu (self):
 	elif not error:
 		es("no script selected",color="blue")</t>
 <t tx="edream.110203160744.1152">try:
+	if v is None:
+		v = c.currentVnode()
 	old_body = v.bodyString()
 	
 	if c.frame.body.hasTextSelection():
@@ -21072,13 +21374,14 @@ def OnPasteFromMenu (self):
 		df.endSentinelComment = None
 		# Write the "derived file" into fo.
 		fo = fileLikeObject()
-		df.write(v,nosentinels=false,scriptFile=fo)
+		df.write(v,nosentinels=true,scriptFile=fo)
 		s = fo.get()
 		app.scriptDict["script2"]=s
 		error = len(s) == 0
 
 finally:
-	v.t.setTnodeText(old_body)</t>
+	v.t.setTnodeText(old_body)
+</t>
 <t tx="edream.110203160744.1153">if app.config.redirect_execute_script_output_to_log_pane:
 
 	from leoGlobals import redirectStdout,redirectStderr
@@ -30448,7 +30751,7 @@ else:
 		return f
 	else:
 		return self.bodyCtrl
-
+		
 def getTitle (self):
 	return self.top.title()
 	
@@ -32146,7 +32449,7 @@ if s and len(s) &gt; 0:
 	
 # Put an @nonl sentinel if s does not end in a newline.
 if s and s[-1] != '\n':
-	at.onl() ; at.putSentinel("@nonl")
+	at.onl_sent() ; at.putSentinel("@nonl")
 
 at.putCloseNodeSentinel(v)
 </t>
@@ -32188,7 +32491,7 @@ for line in lines[j+1:k+1]:
 		# Only whitespace before the @others or ref.
 		at.leadingWs = s[i:j] # Remember the leading whitespace, including its spelling.
 	else:
-		at.os(s[i:j]) ; at.onl() # 10/21/03
+		at.os(s[i:j]) ; at.onl_sent() # 10/21/03
 		at.indent += delta # Align the @nonl with the following line.
 		at.putSentinel("@nonl")
 		at.indent -= delta # Let the caller set at.indent permanently.</t>
@@ -35515,6 +35818,7 @@ def divideLeoSplitter2 (self, frac, verticalFlag):
 <t tx="edream.110203160744.2275">def initialRatios (self):
 
 	config = app.config
+
 	s = config.getWindowPref("initial_splitter_orientation")
 	verticalFlag = s == None or (s != "h" and s != "horizontal")
 
@@ -35589,13 +35893,13 @@ def onDragSplitterBar (self, event, verticalFlag):
 	self.frame = frame
 	self.c = c = frame.c
 	self.forceFullRecolorFlag = false
-	
-	self.bodyCtrl = self.createControl(frame,parentFrame)
 	frame.body = self
-
-	self.setBodyFontFromConfig()
 	
-	self.colorizer = leoColor.colorizer(c)</t>
+	# May be overridden in subclasses...
+	self.bodyCtrl = self
+	
+	# Must be overridden in subclasses...
+	self.colorizer = None</t>
 <t tx="edream.110203160744.2284">class leoTkinterBody (leoFrame.leoBody):
 	
 	"""A class that represents the body pane of a Tkinter window."""
@@ -35607,7 +35911,11 @@ def onDragSplitterBar (self, event, verticalFlag):
 	# trace("leoTkinterBody")
 	
 	# Call the base class constructor.
-	leoFrame.leoBody.__init__(self,frame,parentFrame)</t>
+	leoFrame.leoBody.__init__(self,frame,parentFrame)
+	
+	self.bodyCtrl = self.createControl(frame,parentFrame)
+	self.setBodyFontFromConfig()
+	self.colorizer = leoColor.colorizer(self.c)</t>
 <t tx="edream.110203160744.2287">def createBindings (self,frame):
 	
 	t = self.bodyCtrl
@@ -44003,18 +44311,18 @@ else:
 	""" Generate the body enclosed in sentinel lines."""
 
 	at = self ; s = v.bodyString()
-
+	
 	v.setVisited() # Mark the node for the orphans check.
 	if not s: return
 
 	inCode = true
 	
-	# Make _sure_ all lines end in a newline.
+	# Make _sure_ all lines end in a newline (11/20/03: except in nosentinel mode).
 	# If we add a trailing newline, we'll generate an @nonl sentinel below.
 	trailingNewlineFlag = s and s[-1] == '\n'
-	if not trailingNewlineFlag:
+	if at.sentinels and not trailingNewlineFlag:
 		s = s + '\n'
-	
+
 	at.putOpenNodeSentinel(v)
 	i = 0
 	while i &lt; len(s):
@@ -44025,7 +44333,7 @@ else:
 		i = next_i
 	if not inCode:
 		at.putEndDocLine()
-	if not trailingNewlineFlag:
+	if at.sentinels and not trailingNewlineFlag:
 		at.putSentinel("@nonl")
 	at.putCloseNodeSentinel(v)</t>
 <t tx="edream.110203160744.2853">if kind == noDirective:
@@ -44136,7 +44444,6 @@ else:
 	if not at.raw:
 		at.putIndent(at.indent)
 	line = s[i:j]
-	# trace(`line`)
 	at.os(line)</t>
 <t tx="edream.110203160744.2860"></t>
 <t tx="edream.110203160744.2861"># Returns the kind of at-directive or noDirective.
@@ -44203,6 +44510,10 @@ def oblanks(self,n):
 
 def onl(self):
 	self.os(self.output_newline)
+	
+def onl_sent(self):
+	if self.sentinels:
+		self.onl()
 	
 def os (self,s):
 	if s and self.outputFile:
@@ -52766,13 +53077,9 @@ Plugins may define their own gui classes by setting app.gui."""
 
 from leoGlobals import *
 
-class leoGui:
-	
-	"""The base class of all gui classes.
-	
-	Subclasses are expected to override all do-nothing methods of this class."""
-	
-	@others</t>
+import leoFrame # for null gui.
+
+@others</t>
 <t tx="edream.110203160744.3528">def __init__ (self,guiName):
 	
 	# trace("leoGui",guiName)
@@ -52861,7 +53168,7 @@ def get_window_info (self,window):
 These classes should be overridden to create frames for a particular gui."""
 
 from leoGlobals import *
-import leoColor
+import leoColor,leoMenu
 import os,string,sys,time
 
 &lt;&lt; About handling events &gt;&gt;
@@ -54863,7 +55170,7 @@ def restore (self,data):
 @language python
 
 from leoGlobals import *
-import leoFrame,leoNodes
+import leoColor,leoFrame,leoNodes
 import leoTkinterMenu,leoTkinterTree
 import Tkinter,tkFont
 import os,string,sys,time
@@ -55400,6 +55707,7 @@ def findSubnodesOf (self,headline):
 def findNodeInTree(self,v,headline):
 
 	"""Search for a node in v's tree matching the given headline."""
+	if not headline: return None # This is valid.
 	after = v.nodeAfterTree()
 	while v and v != after:
 		if v.headString().strip() == headline.strip():
@@ -55409,6 +55717,7 @@ def findNodeInTree(self,v,headline):
 
 def findNodeAnywhere(self,c,headline):
 	
+	if not headline: return None # This is valid.
 	v = c.rootVnode()
 	while v:
 		if v.headString().strip() == headline.strip():
@@ -55868,6 +56177,10 @@ elif undoType == "De-Hoist":
 - The selection is not set properly afterwards.</t>
 <t tx="edream.110403112538">@nocolor
 
+** Extract section crash (lost data!)
+
+- Create a utility to preprocess script (for use with find/change scripts)
+
 - Print the wxWindows version number in the wxLeo log pane on signon.
 
 ** Run pychecker on all plugin .py files.
@@ -55979,22 +56292,20 @@ def runFindScript (self):
 	self.runChangeScript()
 	
 def doChangeAllScript (self):
-	
-	app.searchDict["type"] = "changeAll"
-	self.runChangeScript()
+
+	d = app.searchDict ; d["type"] = "changeAll"
+	while 1:
+		self.runChangeScript()
+		if not d.get("continue"): break
 	
 def runChangeScript (self):
 	
-	c = self.c ; d = app.searchDict
+	c = self.c ; 
 	try:
-		while 1:
-			if c.script_change_flag:
-				exec c.change_text in {} # Use {} to get a pristine environment!
-				flag = d.get("continue")
-				if not flag: break
-			else:
-				self.changeSelection()
-				break
+		if c.script_change_flag:
+			exec c.change_text in {} # Use {} to get a pristine environment!
+		else:
+			self.changeSelection()
 	except:
 		es("exception executing change script")
 		es_exception(full=false)</t>
@@ -56051,7 +56362,8 @@ c.frame.OnFindPanel()
 Leo will execute a "default change script" when the Script Change checkbox is checked.  Simple and effective.</t>
 <t tx="edream.110603063616">This involved fixing a bug in idle_body_key so that the oldText param is honored if present.</t>
 <t tx="edream.110603105919"></t>
-<t tx="edream.110603105919.1">def initScriptFind(findHeadline,changeHeadline,firstNode=None):
+<t tx="edream.110603105919.1">def initScriptFind(findHeadline,changeHeadline,firstNode=None,
+	script_search=true,script_change=true):
 	
 	import leoTest
 	# from leoGlobals import *
@@ -56059,15 +56371,30 @@ Leo will execute a "default change script" when the Script Change checkbox is ch
 	# Find the scripts.
 	c = top() ; v = c.currentVnode()
 	u = leoTest.testUtils()
-	find_v   = u.findNodeInTree(v,"Find script")
-	change_v = u.findNodeInTree(v,"Change script")
+	find_v = u.findNodeInTree(v,findHeadline)
+	if find_v:
+		find_text = find_v.bodyString()
+	else:
+		es("no Find script node",color="red")
+		return
+	change_v = u.findNodeInTree(v,changeHeadline)
+	if change_v:
+		change_text = change_v.bodyString()
+	else:
+		change_text = ""
 	# print `find_v`,`change_v`
 	
 	# Initialize the find panel.
-	c.script_search_flag = true
-	c.script_change_flag = true
-	c.find_text   = find_v.bodyString().strip() + "\n"
-	c.change_text = change_v.bodyString().strip() + "\n"
+	c.script_search_flag = script_search
+	c.script_change_flag = script_change
+	if script_search:
+		c.find_text = find_text.strip() + "\n"
+	else:
+		c.find_text = find_text
+	if script_change:
+		c.change_text = change_text.strip() + "\n"
+	else:
+		c.change_text = change_text
 	app.findFrame.init(c)
 	c.findPanel()</t>
 <t tx="edream.110603185434">A useful little utility to set up script-find/change.</t>
@@ -56076,13 +56403,22 @@ Leo will execute a "default change script" when the Script Change checkbox is ch
 <t tx="edream.110703040104"></t>
 <t tx="edream.110703040104.1"></t>
 <t tx="edream.110703041224.1"></t>
-<t tx="edream.110703091849">Leo 4.1 beta 3 is now available at: http://sourceforge.net/projects/leo/
+<t tx="edream.110703091849">Leo 4.1 beta 4 is now available at: http://sourceforge.net/projects/leo/
 
-This is the third official release of the reorganized 4.1 code base.  The code appears solid, and has not been widely tested.  Please use caution when using this code.
+This is the fourth official release of the reorganized 4.1 code base.
 
-N.B. By default Leo 4.1 creates .leo files that can not be read by older versions of Leo.
+Warning: By default Leo 4.1 creates .leo files that can not be read by older versions of Leo.
 
-Beta 3 completes the reorg, making _many_ changes to the code.  Also fixes a LaTeX coloring bug.
+Beta 4:
+  - Fixes several "reorg" bugs, some of which affected plugins.
+  - Allows @directives and section references when executing scripts!
+  - More than one section reference may now appear on the same line.
+  - Uses "utf-8" encoding for filenames under MacOS (Darwin)
+  - Allows command or cmnd prefix for menu shortcuts under Darwin.
+  - Wraps all os.path calls to that file and directory names can be converted to Unicode.
+    This is necessary (but not sufficient?) to support Chinese file and directory names.
+
+Beta 3 completes the reorg: many changes to the code.  Also fixes a LaTeX coloring bug.
 
 Beta 2 fixes a startup problem on Linux: the "mbcs" text encoding is not valid on Linux.
 
@@ -56140,7 +56476,7 @@ CVS:      http://sourceforge.net/cvs/?group_id=3458
 Wiki:     http://leo.hd1.org/
 
 Edward K. Ream
-November 18, 2003</t>
+November 20, 2003</t>
 <t tx="edream.110703095626"></t>
 <t tx="edream.110703095827.1"></t>
 <t tx="edream.110703151909"></t>
@@ -56164,11 +56500,7 @@ The fix was:
 
 from leoGlobals import *
 
-class leoMenu:
-	
-	"""The base class for all Leo menus."""
-
-	@others</t>
+@others</t>
 <t tx="edream.110703175037.1">"""Gui-independent keystroke handling for Leo."""
 
 from leoGlobals import *</t>
@@ -56345,7 +56677,7 @@ The fix was:
 	self.openDirectory = ""
 	self.outlineToNowebDefaultFileName = "noweb.nw" # For Outline To Noweb dialog.
 	self.saved=false # True if ever saved
-	self.splitVerticalFlag,self.ratio,self.secondary_ratio = self.initialRatios()
+	self.splitVerticalFlag,self.ratio, self.secondary_ratio = self.initialRatios()
 	self.startupWindow=false # True if initially opened window
 	self.stylesheet = None # The contents of &lt;?xml-stylesheet...?&gt; line.
 
@@ -56755,8 +57087,7 @@ def onBodyChanged (self,v,undoType,oldSel=None,oldYview=None,newSel=None,oldText
 def setBodyFontFromConfig (self):
 	self.oops()
 	
-def oops (self):
-	print "leoBody oops:", callerName(2), "should be overridden in subclass"</t>
+</t>
 <t tx="edream.111003092718"></t>
 <t tx="edream.111003101742">def bind (self,*args,**keys):
 	
@@ -57932,7 +58263,7 @@ def setMenuLabel (self,menu,name,label,underline=-1):
 	
 	print "leoFrame oops:", callerName(2), "should be overridden in subclass"
 </t>
-<t tx="edream.111603110756.2"># Gui-dependent commands in the Edit menu...
+<t tx="edream.111603110756.2"># In the Edit menu...
 def OnCopy  (self,event=None): self.oops()
 def OnCut   (self,event=None): self.oops()
 def OnPaste (self,event=None): self.oops()
@@ -57941,14 +58272,20 @@ def OnCutFromMenu  (self):     self.oops()
 def OnCopyFromMenu (self):     self.oops()
 def OnPasteFromMenu (self):    self.oops()
 
-def insertHeadlineTime (self): self.oops()
+def abortEditLabelCommand (self): self.oops()
+def endEditLabelCommand (self):   self.oops()
+def insertHeadlineTime (self):    self.oops()
 
-# Gui-dependent commands in the Window menu...
+# In the Window menu...
 def cascade(self):              self.oops()
 def equalSizedPanes(self):      self.oops()
 def hideLogWindow (self):       self.oops()
 def minimizeAll(self):          self.oops()
-def toggleSplitDirection(self): self.oops()</t>
+def toggleActivePane(self):     self.oops()
+def toggleSplitDirection(self): self.oops()
+
+# In help menu...
+def leoHelp (self): self.oops()</t>
 <t tx="edream.111603113349">These were hardly used anyway, and getting rid of them greatly clarifies the code.
 
 These may create small problems in plugins...</t>
@@ -58620,7 +58957,7 @@ app.script["script2"] contains the preprocessed script.  This will contain Leo s
 	self.putAfterLastRef(s,i,delta)</t>
 <t tx="edream.112003074603.1">def putAfterMiddleRef (self,s,start,end,delta):
 	
-	"""Handle whatever follows the ref."""
+	"""Handle whatever follows a ref that is not the last ref of a line."""
 	
 	at = self
 	
@@ -58628,7 +58965,7 @@ app.script["script2"] contains the preprocessed script.  This will contain Leo s
 		after = s[start:end]
 		at.indent += delta
 		at.putSentinel("@afterref")
-		at.os(after) ; at.onl()
+		at.os(after) ; at.onl_sent() # Not a real newline.
 		at.putSentinel("@nonl")
 		at.indent -= delta</t>
 <t tx="edream.112003074603.2">def putRefAt (self,s,i,n1,n2,v,delta):
@@ -58660,19 +58997,21 @@ app.script["script2"] contains the preprocessed script.  This will contain Leo s
 	return delta</t>
 <t tx="edream.112003082656">def putAfterLastRef (self,s,start,delta):
 	
-	"""Handle whatever follows the ref."""
+	"""Handle whatever follows the last ref of a line."""
 	
 	at = self
 	
 	j = skip_ws(s,start)
 	
 	if j &lt; len(s) and s[j] != '\n':
-		end = skip_to_end_of_line(s,start)
-		after = s[start:end]
+		end = skip_line(s,start)
+		after = s[start:end] # Ends with a newline only if the line did.
 		# Temporarily readjust delta to make @afterref look better.
 		at.indent += delta
 		at.putSentinel("@afterref")
-		at.os(after) ; at.onl()
+		at.os(after)
+		if at.sentinels and after and after[-1] != '\n':
+			at.onl() # Add a newline if the line didn't end with one.
 		at.indent -= delta
 	else:
 		# Temporarily readjust delta to make @nl look better.
@@ -58703,5 +59042,843 @@ This use of &lt;&lt; &gt;&gt; nodes worked prior to 4.0.
 
 Steve</t>
 <t tx="edream.112003092359">Must call </t>
+<t tx="edream.112003151606">@nocolor
+
+The code in putAfterLastRef is a bit tricky.
+
+- In nosent mode it puts a trailing newline only if the line ends in a newline.
+- In sentinel mode ia always puts a trailing newline.  The afterref read code will remove this.
+
+@color</t>
+<t tx="edream.112003212118"># Initialize Leo's find panel using the named children of this node.
+from leoGlobals import *
+
+app.searchDict = {} # Clear dict.get("v") logic.
+initScriptFind("Find script","Change script")
+
+c = top()
+c.selectVnode(c.rootVnode())
+c.redraw()</t>
+<t tx="edream.112003212118.1">from leoGlobals import *
+
+c = top() ; v = c.currentVnode() ; d = app.searchDict
+findAll = d.get("type") == "findAll"
+
+if findAll and c.suboutline_only_flag:
+	after = v.nodeAfterTree()
+else:
+	after = None
+
+found = false ; count = 0
+while v and v != after and not found:
+	s = v.bodyString()
+	lines = s.split('\n')
+	for line in lines:
+		if line and not line.strip():
+			if findAll:
+				es(v.headString()) ; count += 1
+			else:
+				c.frame.tree.expandAllAncestors(v)
+				c.selectVnode(v)
+				c.redraw() # Necessary to make the new node visible.
+				found = true 
+			break
+	v = v.threadNext()
+
+if not found:
+	if findAll:
+		es("found %d nodes" % (count), color="blue")
+	else:
+		es("not found")</t>
+<t tx="edream.112003212118.2">from leoGlobals import *
+
+c = top() ; d = app.searchDict
+changeAll = d.get("type") == "changeAll"
+count = d.get("count",0)
+if changeAll:
+	v = d.get("v")
+	if v:
+		v = v.threadNext()
+		after = d.get("after")
+		if v == after: v = None
+	else:
+		v = c.currentVnode()
+		d["count"] = 0
+		after = choose(c.suboutline_only_flag,v.nodeAfterTree(),None)
+		d["after"] = after
+	d["v"] = v ; d["continue"] = v != None
+else:
+	v = c.currentVnode()
+
+if v:
+	s = oldText = v.bodyString()
+	lines = s.split('\n')
+	lines = [line.rstrip() for line in lines]
+	s = '\n'.join(lines)
+	if s != oldText:
+		v.setBodyStringOrPane(s,encoding=app.tkEncoding)
+		if changeAll:
+			es(v.headString()) ; d["count"] = count + 1
+		else:
+			c.frame.body.onBodyChanged(v,"Change",oldText=oldText) # Handles undo.
+			c.frame.body.setInsertPointToStartOfLine(0)
+else:
+	if changeAll:
+		es("found %d nodes" % (count), color="blue")
+	else:
+		es("done")</t>
+<t tx="edream.112103080619">exception executing command
+Traceback (most recent call last):
+  File "C:\prog\leoCVS\leo\src\leoCommands.py", line 127, in doCommand
+    command()
+  File "C:\prog\leoCVS\leo\src\leoCommands.py", line 2222, in pasteOutline
+    v = c.fileCommands.getLeoOutline(s)
+  File "C:\prog\leoCVS\leo\src\leoFileCommands.py", line 552, in getLeoOutline
+    self.getVnodes()
+  File "C:\prog\leoCVS\leo\src\leoFileCommands.py", line 854, in getVnodes
+    back = self.getVnode(parent,back)
+  File "C:\prog\leoCVS\leo\src\leoFileCommands.py", line 785, in getVnode
+    v = self.createVnode(parent,back,tref,headline,attrDict)
+  File "C:\prog\leoCVS\leo\src\leoFileCommands.py", line 93, in createVnode
+    t = self.newTnode(tref)
+  File "C:\prog\leoCVS\leo\src\leoFileCommands.py", line 931, in newTnode
+    assert(type(index) == type("s"))
+AssertionError
+</t>
+<t tx="edream.112103083614">class nullFrame (leoFrame):
+	
+	"""A null frame class for tests and batch execution."""
+	
+	def __init__ (self,title):
+
+		leoFrame.__init__(self) # Init the base class.
+		assert(self.c is None)
+		self.title = title
+
+	def finishCreate(self,c):
+
+		self.c = c
+		# Create do-nothing component objects.
+		self.tree = nullTree(frame=self)
+		self.body = nullBody(frame=self,parentFrame=None)
+		self.log  = nullLog (frame=self,parentFrame=None)
+		self.menu = leoMenu.nullMenu(frame=self)
+		
+	def oops(self):
+		# trace("nullFrame:", callerName(2))
+		pass # This is NOT an error.</t>
+<t tx="edream.112103083853">class nullBody (leoBody):
+
+	@others</t>
+<t tx="edream.112103084204"></t>
+<t tx="edream.112103084652">class leoGui:
+	
+	"""The base class of all gui classes.
+	
+	Subclasses are expected to override all do-nothing methods of this class."""
+	
+	@others</t>
+<t tx="edream.112103084652.1">class nullGui(leoGui):
+	
+	"""Null gui class."""
+	
+	@others</t>
+<t tx="edream.112103084652.2">def oops(self):
+		
+	"""Default do-nothing method for nullGui class.
+	
+	It is NOT an error to use this method."""
+	
+	trace("nullGui",callerName(2))
+	pass</t>
+<t tx="edream.112103085124">def createLeoFrame(self,title):
+	
+	"""Create a null Leo Frame."""
+
+	return leoFrame.nullFrame(title)</t>
+<t tx="edream.112103090457">class leoMenu:
+	
+	"""The base class for all Leo menus."""
+
+	@others</t>
+<t tx="edream.112103090457.1">class nullMenu(leoMenu):
+	
+	"""A null menu class for testing and batch execution."""
+
+	def oops (self):
+
+		trace("leoMenu", callerName(2))
+		pass</t>
+<t tx="edream.112103091508">def getFontFromParams(self,family,size,slant,weight):
+	
+	self.oops()</t>
+<t tx="edream.112103092005.1">def bbox(self,index):
+
+	self.oops()</t>
+<t tx="edream.112103092005.2">def tag_add (self,tagName,index1,index2):
+
+	self.oops()
+
+def tag_bind (self,tagName,event,callback):
+
+	self.oops()
+
+def tag_configure (self,colorName,**keys):
+
+	self.oops()
+
+def tag_delete(self,tagName):
+
+	self.oops()
+
+def tag_remove (self,tagName,index1,index2):
+	self.oops()</t>
+<t tx="edream.112103092005.3">def cget(self,*args,**keys):
+	
+	self.oops()
+	
+def configure (self,*args,**keys):
+	
+	self.oops()</t>
+<t tx="edream.112103092005.4">def hasFocus (self):
+	
+	self.oops()
+	
+def setFocus (self):
+	
+	self.oops()</t>
+<t tx="edream.112103092005.5">def getBodyPaneHeight (self):
+	
+	self.oops()
+
+def getBodyPaneWidth (self):
+	
+	self.oops()</t>
+<t tx="edream.112103092005.6">def scheduleIdleTimeRoutine (self,function,*args,**keys):
+
+	self.oops()</t>
+<t tx="edream.112103092005.7">def adjustIndex (self,index,offset):
+	
+	self.oops()
+	
+def compareIndices(self,i,rel,j):
+
+	self.oops()
+	
+def convertRowColumnToIndex (self,row,column):
+	
+	self.oops()
+	
+def convertIndexToRowColumn (self,index):
+	
+	self.oops()
+	
+def getImageIndex (self,image):
+	
+	self.oops()</t>
+<t tx="edream.112103092005.14">def getBeforeInsertionPoint (self):
+	self.oops()
+
+def getInsertionPoint (self):
+	self.oops()
+	
+def getCharAtInsertPoint (self):
+	self.oops()
+
+def getCharBeforeInsertPoint (self):
+	self.oops()
+	
+def makeInsertPointVisible (self):
+	self.oops()
+	
+def setInsertionPoint (self,index):
+	self.oops()
+
+def setInsertionPointToEnd (self):
+	self.oops()
+	
+def setInsertPointToStartOfLine (self,lineNumber): # zero-based line number
+	self.oops()</t>
+<t tx="edream.112103092005.19">def bind (self,*args,**keys):
+	
+	self.oops()
+</t>
+<t tx="edream.112103092005.20">def deleteTextSelection (self):
+	self.oops()
+	
+def getSelectedText (self):
+	self.oops()
+	
+def getTextSelection (self):
+	self.oops()
+	
+def hasTextSelection (self):
+	self.oops()
+	
+def selectAllText (self):
+	self.oops()
+	
+def setTextSelection (self,i,j=None):
+	self.oops()</t>
+<t tx="edream.112103092005.27"></t>
+<t tx="edream.112103092005.29">def getAllText (self):
+	self.oops()
+	
+def getCharAtIndex (self,index):
+	self.oops()
+	
+def getInsertLines (self):
+	self.oops()
+	return None,None,None
+	
+def getSelectionAreas (self):
+	self.oops()
+	return None,None,None
+	
+def getSelectionLines (self):
+	self.oops()
+	return None,None,None
+	
+def getTextRange (self,index1,index2):
+	self.oops()</t>
+<t tx="edream.112103092005.36">def insertAtInsertPoint (self,s):
+	
+	self.oops()
+	
+def insertAtEnd (self,s):
+	
+	self.oops()
+	
+def insertAtStartOfLine (self,lineNumber,s):
+	
+	self.oops()</t>
+<t tx="edream.112103092005.40">def setSelectionAreas (self,before,sel,after):
+	self.oops()</t>
+<t tx="edream.112103092005.41">def makeIndexVisible (self,index):
+	self.oops()
+	
+def setFirstVisibleIndex (self,index):
+	self.oops()
+	
+def getYScrollPosition (self):
+	self.oops()
+	
+def setYScrollPosition (self,scrollPosition):
+	self.oops()
+	
+def scrollUp (self):
+	self.oops()
+	
+def scrollDown (self):
+	self.oops()</t>
+<t tx="edream.112103092157">def oops (self):
+	
+	trace("leoBody oops:", callerName(2), "should be overridden in subclass")</t>
+<t tx="edream.112103093105">def deleteAllText(self):
+	self.oops()
+
+def deleteCharacter (self,index):
+	self.oops()
+	
+def deleteLastChar (self):
+	self.oops()
+	
+def deleteLine (self,lineNumber): # zero based line number.
+	self.oops()
+	
+def deleteLines (self,line1,numberOfLines): # zero based line numbers.
+	self.oops()
+	
+def deleteRange (self,index1,index2):
+	self.oops()</t>
+<t tx="edream.112103094326"></t>
+<t tx="edream.112103094326.1">def setInitialWindowGeometry (self):
+	
+	self.oops()</t>
+<t tx="edream.112103094636">def getTitle (self):
+	return self.title
+	
+def setTitle (self,title):
+	self.title = title</t>
+<t tx="edream.112103094744">def setTopGeometry (self,geom):
+	
+	self.oops()</t>
+<t tx="edream.112103094829">def deiconify (self):
+	
+	self.oops()
+	
+def lift (self):
+	
+	self.oops()
+	
+def update (self):
+	
+	self.oops()</t>
+<t tx="edream.112103095020"></t>
+<t tx="edream.112103095020.1">def resizePanesToRatio (self,ratio,secondary_ratio):
+	
+	pass</t>
+<t tx="edream.112103100651">class nullLog (leoLog):
+
+	def oops(self):
+		# trace("nullLog:", callerName(2))
+		pass
+		
+	def put (self,s,color=None):
+		print s
+
+	def putnl (self):
+		pass</t>
+<t tx="edream.112103100651.1">class nullTree (leoTree):
+
+	@others</t>
+<t tx="edream.112103102235"></t>
+<t tx="edream.112103102235.1">These exposed some further problems with the reorg.
+</t>
+<t tx="edream.112103141343">class nullColorizer (colorizer):
+	
+	"""A do-nothing colorer class"""
+	
+	@others</t>
+<t tx="edream.112103141343.1">def __init__ (self,frame,parentFrame):
+	
+	leoBody.__init__ (self,frame,parentFrame) # Init the base class.
+
+	self.insertPoint = 0
+	self.selection = 0,0
+	self.s = "" # The body text
+	
+	self.colorizer = leoColor.nullColorizer(self.c)</t>
+<t tx="edream.112103141343.2">def oops(self):
+
+	trace("nullBody:", callerName(2))
+	pass</t>
+<t tx="edream.112103141351">def OnHyperLinkControlClick (self,v):
+
+	pass
+	
+def OnHyperLinkEnter (self,v):
+
+	pass
+	
+def OnHyperLinkLeave (self,v):
+
+	pass</t>
+<t tx="edream.112103141921">def __init__ (self,c):
+	
+	self.c = c</t>
+<t tx="edream.112103141921.1">def colorize(self,v,incremental=false):
+	pass
+	
+def idle_colorize(self,v):
+	pass
+		
+def recolor_range(self,v,leading,trailing):
+	pass
+
+def scanColorDirectives(self,v):
+	pass
+	
+def schedule(self,v,incremental=0):
+	pass
+
+def updateSyntaxColorer (self,v):
+	pass</t>
+<t tx="edream.112103142020">def createBindings (self,frame):
+	self.oops()
+
+def createControl (self,frame,parentFrame):
+	self.oops()
+	
+def initialRatios (self):
+	self.oops()
+	
+def onBodyChanged (self,v,undoType,oldSel=None,oldYview=None,newSel=None,oldText=None):
+	self.oops()
+	
+def setBodyFontFromConfig (self):
+	self.oops()</t>
+<t tx="edream.112103142020.1">def bbox(self,index):
+	return (0,0)</t>
+<t tx="edream.112103142020.2">def tag_add (self,tagName,index1,index2):
+	pass
+
+def tag_bind (self,tagName,event,callback):
+	pass
+
+def tag_configure (self,colorName,**keys):
+	pass
+
+def tag_delete(self,tagName):
+	pass
+
+def tag_remove (self,tagName,index1,index2):
+	pass</t>
+<t tx="edream.112103142020.3">def cget(self,*args,**keys):
+	pass
+	
+def configure (self,*args,**keys):
+	pass</t>
+<t tx="edream.112103142020.4">def hasFocus (self):
+	return true
+	
+def setFocus (self):
+	pass</t>
+<t tx="edream.112103142020.5">def getBodyPaneHeight (self):
+	
+	return 500
+
+def getBodyPaneWidth (self):
+
+	return 600</t>
+<t tx="edream.112103142020.6">def scheduleIdleTimeRoutine (self,function,*args,**keys):
+
+	trace()</t>
+<t tx="edream.112103142020.7">def adjustIndex (self,index,offset):
+	return index + offset
+	
+def compareIndices(self,i,rel,j):
+
+	return eval("%d %s %d" % (i,rel,j))
+	
+def convertRowColumnToIndex (self,row,column):
+	
+	# Probably not used.
+	n = self.findStartOfLine(row)
+	trace(n + column)
+	return n + column
+	
+def convertIndexToRowColumn (self,index):
+	
+	# Probably not used.
+	trace(index)
+	return index
+	
+def getImageIndex (self,image):
+	self.oops()
+</t>
+<t tx="edream.112103142020.8">def getBeforeInsertionPoint (self):
+	return self.insertPoint - 1
+
+def getInsertionPoint (self):
+	return self.insertPoint
+	
+def getCharAtInsertPoint (self):
+	try: return self.s[self.insertPoint]
+	except: return None
+
+def getCharBeforeInsertPoint (self):
+	try: return self.s[self.insertPoint - 1]
+	except: return None
+	
+def makeInsertPointVisible (self):
+	pass
+	
+def setInsertionPoint (self,index):
+	self.insertPoint = index
+
+def setInsertionPointToEnd (self):
+	self.insertPoint = len(self.s)
+	
+def setInsertPointToStartOfLine (self,lineNumber): # zero-based line number
+	self.insertPoint = self.findStartOfLine(lineNumber)</t>
+<t tx="edream.112103142020.9">def bind (self,*args,**keys):
+	pass
+</t>
+<t tx="edream.112103142020.10">def deleteTextSelection (self):
+	i,j = self.selection
+	self.s = self.s[:i] + self.s[j:]
+	
+def getSelectedText (self):
+	i,j = self.selection
+	trace(self.s[i:j])
+	return self.s[i:j]
+	
+def getTextSelection (self):
+	trace(self.selection)
+	return self.selection
+	
+def hasTextSelection (self):
+	i,j = self.selection
+	return i != j
+	
+def selectAllText (self):
+	self.selection = 0,len(self.s)
+	
+def setTextSelection (self,i,j=None):
+	trace(i,j)
+	if i is None:
+		self.selection = 0,0
+	elif j is None:
+		self.selection = i # a tuple
+	else:
+		self.selection = i,j</t>
+<t tx="edream.112103142020.11"></t>
+<t tx="edream.112103142020.12">def deleteAllText(self):
+	self.insertPoint = 0
+	self.selection = 0,0
+	self.s = "" # The body text
+
+def deleteCharacter (self,index):
+	self.s = self.s[:index] + self.s[index+1:]
+	
+def deleteLastChar (self):
+	if self.s:
+		del self.s[-1]
+	
+def deleteLine (self,lineNumber): # zero based line number.
+	self.deleteLines(lineNumber,1)
+	
+def deleteLines (self,line1,numberOfLines): # zero based line numbers.
+	n1 = self.findStartOfLine(lineNumber)
+	n2 = self.findStartOfLine(lineNumber+numberOfLines+1)
+	if n2:
+		self.s = self.s[:n1] + self.s[n2:]
+	else:
+		self.s = self.s[:n1]
+	
+def deleteRange (self,index1,index2):
+	del self.s[index1:index2]</t>
+<t tx="edream.112103142020.13">def getAllText (self):
+	return toUnicode(self.s,app.tkEncoding)
+	
+def getCharAtIndex (self,index):
+	
+	try:
+		s = self.s[index]
+		return toUnicode(s,app.tkEncoding)
+	except: return None
+	
+def getTextRange (self,index1,index2):
+
+	s = self.s[index1:index2]
+	return toUnicode(s,app.tkEncoding)</t>
+<t tx="edream.112103142020.14">def insertAtInsertPoint (self,s):
+	
+	i = self.insertPoint
+	self.s = self.s[:i] + s + self.s[i:]
+	
+def insertAtEnd (self,s):
+	
+	self.s = self.s + s
+	
+def insertAtStartOfLine (self,lineNumber,s):
+	
+	i = self.findStartOfLine(lineNumber)
+	self.s = self.s[:i] + s + self.s[i:]</t>
+<t tx="edream.112103142020.15">def setSelectionAreas (self,before,sel,after):
+	
+	if before is None: before = ""
+	if sel    is None: sel = ""
+	if after  is None: after = ""
+	
+	self.s = before + sel + after
+	
+	self.selection = len(before), len(before) + len(sel)</t>
+<t tx="edream.112103142020.16">def makeIndexVisible (self,index):
+	pass
+	
+def setFirstVisibleIndex (self,index):
+	pass
+	
+def getYScrollPosition (self):
+	return 0
+	
+def setYScrollPosition (self,scrollPosition):
+	pass
+	
+def scrollUp (self):
+	pass
+	
+def scrollDown (self):
+	pass</t>
+<t tx="edream.112103144659">def findStartOfLine (self,lineNumber):
+	
+	lines = splitLines(self.s)
+	i = 0 ; index = 0
+	for line in lines:
+		if i == lineNumber: break
+		i += 1
+		index += len(line)
+	return index</t>
+<t tx="edream.112103151727">def getInsertLines (self):
+	
+	"""Return before,after where:
+		
+	before is all the lines before the line containing the insert point.
+	sel is the line containing the insert point.
+	after is all the lines after the line containing the insert point.
+	
+	All lines end in a newline, except possibly the last line."""
+
+	n1 = self.scanToStartOfLine(self.insertPoint)
+	n2 = self.scanToEndOfLine(self.insertPoint)
+	
+	before = self.s[:n1]
+	sel    = self.s[n1:n2+1]
+	after  = self.s[n2+1:]
+
+	before = toUnicode(before,app.tkEncoding)
+	ins    = toUnicode(ins,   app.tkEncoding)
+	after  = toUnicode(after ,app.tkEncoding)
+
+	return before,ins,after
+</t>
+<t tx="edream.112103151733">def getSelectionAreas (self):
+	
+	"""Return before,sel,after where:
+		
+	before is the text before the selected text
+	(or the text before the insert point if no selection)
+	sel is the selected text (or "" if no selection)
+	after is the text after the selected text
+	(or the text after the insert point if no selection)"""
+	
+	if not self.hasTextSelection():
+		n1,n2 = self.insertPoint,self.insertPoint
+	else:
+		n2,n2 = self.selection
+
+	before = self.s[:n1]
+	sel    = self.s[n1:n2+1]
+	after  = self.s[n2+1:]
+	
+	before = toUnicode(before,app.tkEncoding)
+	sel    = toUnicode(sel,   app.tkEncoding)
+	after  = toUnicode(after ,app.tkEncoding)
+	return before,sel,after</t>
+<t tx="edream.112103153646"></t>
+<t tx="edream.112103153646.1">def scanToStartOfLine (self,index):
+	
+	if index &lt;= 0:
+		return 0
+		
+	assert(self.s[i] != '\n')
+	
+	while i &gt;= 0:
+		if s[i] == '\n':
+			return i + 1
+	
+	return 0</t>
+<t tx="edream.112103153646.2">def scanToEndOfLine (self,i):
+	
+	if index &gt;= len(self.s):
+		return len(self.s)
+		
+	assert(self.s[i] != '\n')
+	
+	while i &lt; len(s):
+		if s[i] == '\n':
+			return i - 1
+	
+	return i</t>
+<t tx="edream.112103153646.3">def getSelectionLines (self):
+	
+	"""Return before,sel,after where:
+		
+	before is the all lines before the selected text
+	(or the text before the insert point if no selection)
+	sel is the selected text (or "" if no selection)
+	after is all lines after the selected text
+	(or the text after the insert point if no selection)"""
+	
+	# At present, called only by c.getBodyLines.
+	if not self.hasTextSelection():
+		start,end = self.insertPoint,self.insertPOint
+	else:
+		start,end = self.selection
+
+	n1 = self.scanToStartOfLine(start)
+	n2 = self.scanToEndOfLine(end)
+
+	before = self.s[:n1]
+	sel    = self.s[n1:n2+1]
+	after  = self.s[n2+1:]
+	
+	before = toUnicode(before,app.tkEncoding)
+	sel    = toUnicode(sel,   app.tkEncoding)
+	after  = toUnicode(after ,app.tkEncoding)
+	return before,sel,after</t>
+<t tx="edream.112103154310">def setScript (self,script=None,scriptFileName=None):
+
+	self.script = script
+	self.scriptFileName = scriptFileName</t>
+<t tx="edream.112103154736">def __init__ (self,guiName):
+	
+	leoGui.__init__ (self,guiName) # init the base class.
+	
+	self.script = None</t>
+<t tx="edream.112103154736.1">def runMainLoop(self):
+
+	"""Run the gui's main loop."""
+	
+	script = self.script
+	
+	if script:
+		trace("nullGui executing script...\n\n")
+		from leoGlobals import top
+		top().executeScript(script=script)
+	else:
+		trace("nullGui: main loop: no script")</t>
+<t tx="edream.112103160822">def oops(self):
+		
+	# It is not an error to call this routine...
+	trace("nullTree:", callerName(2))
+	pass</t>
+<t tx="edream.112103160822.1">def __init__ (self,frame):
+	
+	leoTree.__init__(self,frame) # Init the base class.
+	
+	assert(self.frame)
+	self.font = None
+	self.fontName = None
+	</t>
+<t tx="edream.112103160840.1">def drawIcon(self,v,x=None,y=None):
+	pass
+
+def redraw(self,event=None):
+	pass
+
+def redraw_now(self):
+	pass</t>
+<t tx="edream.112103160840.2">def editLabel(self,v):
+	pass
+
+def endEditLabel(self):
+	pass
+
+def setNormalLabelState(self,v):
+	pass</t>
+<t tx="edream.112103160840.3">def getFont(self):
+
+	return self.font
+	
+def setFont(self,font=None,fontName=None):
+
+	self.font = font
+	self.fontName = fontName</t>
+<t tx="edream.112103160840.5">def scrollTo(self,v):
+	pass
+
+def idle_scrollTo(self,v):
+	pass
+</t>
+<t tx="edream.112103160840.6">def select(self,v,updateBeadList=true):
+	
+	self.setCurrentVnode(v)
+	self.frame.scanForTabWidth(v)</t>
+<t tx="edream.112103160840.7">def expandAllAncestors(self,v):
+
+	pass</t>
+<t tx="edream.112103161526"></t>
+<t tx="edream.112103162800">def setTabWidth (self,w):
+	
+	# Subclasses may override this to affect drawing.
+	self.tab_width = w</t>
+<t tx="edream.112103163330"></t>
+<t tx="edream.112103163330.1">def createRootWindow(self):
+	pass</t>
+<t tx="edream.112103163330.2">def finishCreate (self):
+	pass</t>
 </tnodes>
 </leo_file>

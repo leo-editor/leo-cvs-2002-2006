@@ -93,6 +93,7 @@ class testUtils:
 	def findNodeInTree(self,v,headline):
 	
 		"""Search for a node in v's tree matching the given headline."""
+		if not headline: return None # This is valid.
 		after = v.nodeAfterTree()
 		while v and v != after:
 			if v.headString().strip() == headline.strip():
@@ -102,6 +103,7 @@ class testUtils:
 	
 	def findNodeAnywhere(self,c,headline):
 		
+		if not headline: return None # This is valid.
 		v = c.rootVnode()
 		while v:
 			if v.headString().strip() == headline.strip():
