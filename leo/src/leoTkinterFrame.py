@@ -8,7 +8,7 @@
 #@@language python
 
 from leoGlobals import *
-import leoFrame,leoNodes
+import leoColor,leoFrame,leoNodes
 import leoTkinterMenu,leoTkinterTree
 import Tkinter,tkFont
 import os,string,sys,time
@@ -300,28 +300,6 @@ class leoTkinterFrame (leoFrame.leoFrame):
 			self.bar2, self.split2Pane1, self.split2Pane2)
 	#@nonl
 	#@-node:divideLeoSplitter
-	#@+node:initialRatios
-	def initialRatios (self):
-	
-		config = app.config
-		s = config.getWindowPref("initial_splitter_orientation")
-		verticalFlag = s == None or (s != "h" and s != "horizontal")
-	
-		if verticalFlag:
-			r = config.getFloatWindowPref("initial_vertical_ratio")
-			if r == None or r < 0.0 or r > 1.0: r = 0.5
-			r2 = config.getFloatWindowPref("initial_vertical_secondary_ratio")
-			if r2 == None or r2 < 0.0 or r2 > 1.0: r2 = 0.8
-		else:
-			r = config.getFloatWindowPref("initial_horizontal_ratio")
-			if r == None or r < 0.0 or r > 1.0: r = 0.3
-			r2 = config.getFloatWindowPref("initial_horizontal_secondary_ratio")
-			if r2 == None or r2 < 0.0 or r2 > 1.0: r2 = 0.8
-	
-		# print (`r`,`r2`)
-		return verticalFlag,r,r2
-	#@nonl
-	#@-node:initialRatios
 	#@+node:onDrag...
 	def onDragMainSplitBar (self, event):
 		self.onDragSplitterBar(event,self.splitVerticalFlag)
@@ -1211,7 +1189,7 @@ class leoTkinterFrame (leoFrame.leoFrame):
 			return f
 		else:
 			return self.bodyCtrl
-	
+			
 	def getTitle (self):
 		return self.top.title()
 		
@@ -1253,6 +1231,10 @@ class leoTkinterBody (leoFrame.leoBody):
 		
 		# Call the base class constructor.
 		leoFrame.leoBody.__init__(self,frame,parentFrame)
+		
+		self.bodyCtrl = self.createControl(frame,parentFrame)
+		self.setBodyFontFromConfig()
+		self.colorizer = leoColor.colorizer(self.c)
 	#@nonl
 	#@-node:tkBody.__init__
 	#@+node:tkBody.createBindings
