@@ -23,7 +23,7 @@
 <v t="ekr.20040804052804"><vh>Set tracing</vh></v>
 <v t="ekr.20040901065642"><vh>test of new timit script</vh></v>
 </v>
-<v t="ekr.20040708205841" a="TV"><vh>Other tests...</vh>
+<v t="ekr.20040708205841"><vh>Other tests...</vh>
 <v t="ekr.20040414082806"><vh>Clone test</vh>
 <v t="ekr.20040409140301"><vh>clone test</vh>
 <v t="ekr.20040409140301.1"><vh>b</vh>
@@ -368,7 +368,7 @@
 </v>
 </v>
 <v t="ekr.20040915045847"><vh>Test of spelling contraction</vh></v>
-<v t="ekr.20040915111739" a="E"><vh>FileActions</vh>
+<v t="ekr.20040915111739"><vh>FileActions</vh>
 <v t="ekr.20040915111853"><vh>leo*.py</vh></v>
 </v>
 </v>
@@ -702,10 +702,10 @@
 <v t="ekr.20040805102453"><vh>@url http://docs.python.org/lib/debugger-commands.html</vh></v>
 </v>
 <v t="ekr.20040918093738"><vh>Prototypes for Python-to-Tk indices</vh>
-<v t="ekr.20040918093738.1" a="E"><vh>py2tkIndex</vh>
+<v t="ekr.20040918093738.1"><vh>py2tkIndex</vh>
 <v t="ekr.20040918093738.2"><vh>test</vh></v>
 </v>
-<v t="ekr.20040918093738.3" a="E"><vh>pyRowColToTkIndex</vh>
+<v t="ekr.20040918093738.3"><vh>pyRowColToTkIndex</vh>
 <v t="ekr.20040918093738.4"><vh>test</vh></v>
 </v>
 </v>
@@ -715,9 +715,9 @@
 <v t="ekr.20040723064143.3"><vh>Test error recovery when reading descendentTnodeUa's</vh></v>
 <v t="ekr.20040903102217"><vh>Test multi-line @doc parts with @language html</vh></v>
 </v>
-<v t="EKR.20040619133116"><vh>Unit testing...</vh>
+<v t="EKR.20040619133116" a="E"><vh>Unit testing...</vh>
 <v t="ekr.20040327114250" tnodeList="ekr.20040327114250"><vh>@file c:\prog\test\unittest\batchTest.py</vh></v>
-<v t="ekr.20040712101754" a="E"><vh>Unit Tests</vh>
+<v t="ekr.20040712101754" a="TV"><vh>Unit Tests</vh>
 <v t="ekr.20040716144017"><vh>Perfect Import tests</vh>
 <v t="ekr.20040716071029.6"><vh>@test inserting a line: no trailing newline</vh>
 <v t="ekr.20040716071856.1"><vh>-input</vh></v>
@@ -9583,7 +9583,7 @@ c = g.top()
 print "filename", filename</t>
 <t tx="ekr.20040917062206">import leoGlobals as g
 assert(g.cantImport("xyzzy") is None)</t>
-<t tx="ekr.20040918093738"></t>
+<t tx="ekr.20040918093738">@ignore # To suppress syntax checking.</t>
 <t tx="ekr.20040918093738.1">import leoGlobals as g
 
 def py2tkIndex (s,n):

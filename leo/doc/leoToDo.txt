@@ -4,6 +4,85 @@
 
 #@+all
 #@+node:EKR.20040609091327:To do: 4.3: configuration, plugins & translation
+#@+node:ekr.20040917080403:Fix bugs reported late in 4.2 cycle
+#@+node:ekr.20040917080403.1:Clean up code in runOpenFileDialog
+@
+
+Replace the try/except code with
+
+    if multiple and g.CheckVersion(sys.version,"2.3") and g.CheckVersion(self.root.getvar("tk_patchLevel"),"8.4"):
+#@nonl
+#@+node:ekr.20031218072017.4057:app.gui.Tkinter file dialogs
+def runOpenFileDialog(self,title,filetypes,defaultextension,multiple=False):
+
+    """Create and run an Tkinter open file dialog ."""
+    
+    # askopenfilenames only exists in Python 2.3 or later.
+    # Not only that, askopenfilenames apparently doesn't work with Tk versions earlier than 8.4.
+    
+    # if multiple and g.CheckVersion(sys.version,"2.3") and g.CheckVersion(self.root.getvar("tk_patchLevel"),"8.4"):
+    if multiple and g.CheckVersion(sys.version,"2.3"):
+        try:
+            files = tkFileDialog.askopenfilenames(
+                title=title, filetypes=filetypes)
+            return list(files)
+        except:
+            # Work around an apparent Linux bug in askopenfilenames.
+            file = tkFileDialog.askopenfilename(
+                title=title, filetypes=filetypes)
+            return [file]
+    else:
+        file = tkFileDialog.askopenfilename(
+            title=title, filetypes=filetypes)
+        if multiple: return [file]
+        else:        return file
+    
+        # DTHEIN 2004.01.31: remove default extension on open,
+        # so that we can open files without extensions
+
+def runSaveFileDialog(self,initialfile,title,filetypes,defaultextension):
+
+    """Create and run an Tkinter save file dialog ."""
+
+    return tkFileDialog.asksaveasfilename(
+        initialfile=initialfile,
+        title=title,
+        filetypes=filetypes)
+    # EKR: 2004.01.31: remove default extensions on save too.
+    # defaultextension=defaultextension)
+#@nonl
+#@-node:ekr.20031218072017.4057:app.gui.Tkinter file dialogs
+#@-node:ekr.20040917080403.1:Clean up code in runOpenFileDialog
+#@+node:ekr.20040917063309:Fix bug re non-existent filename on command line
+@killcolor
+When I start leo from the command line (linux) with e.g.
+
+[davides@icarus utilities]$ leodev test.leo
+
+(leodev is an alias to the latest cvs version)
+
+and "test.leo" does not exist, the Log pane says
+
+File not found: /localstore/computer/davides/SW/test/utilities/test.leo
+
+but then I would expect that the current file name were set to "test.leo", so that when I do a save, "test.leo" gets saved. It is set to "untitled" instead, so that in essence in this case Leo ignores my command line argument. I would also change the log message to say something like "New file" or similar. Cf. what happens when you do e.g. "vi newfile.txt" (or "emacs", or even "edit" in ms-dos).
+
+Davide 
+#@nonl
+#@-node:ekr.20040917063309:Fix bug re non-existent filename on command line
+#@+node:ekr.20040918093558:Fix Font dialog problems on the Mac
+@killcolor
+
+There seems to be a bug when setting font preferences on the Mac.  If I 
+check more than one box and then apply a font change, the change is set 
+correctly when I restart Leo but doesn't always preview correctly 
+before that.  I set headline and body text to the same font and the 
+headlines did not change to show the new font until I started up again. 
+  Not a big deal.
+
+-- Dan Windler
+#@-node:ekr.20040918093558:Fix Font dialog problems on the Mac
+#@-node:ekr.20040917080403:Fix bugs reported late in 4.2 cycle
 #@+node:ekr.20040730191332:Must do...
 #@+node:ekr.20040916122326:Check Import command
 #@-node:ekr.20040916122326:Check Import command
@@ -2261,6 +2340,31 @@ $HOME/.leo/plugins/<myplugins>.py
 
 look for .leoConfig.txt, then leoConfig.txt
 #@nonl
+#@+node:ekr.20040919075839:Stephen Schaefer
+By: Stephen Schaefer - thyrsus
+RE: 4.2 rc1 released  
+2004-09-18 05:32
+It took me two hours to track it down, but I did manage to get leoConfit.txt and .leoID.txt to be taken from $HOME/.leoconfig
+
+Mostly it took so long because the documenation assumed a knowledge of Python operation I didn't posess.
+
+First, the current leo requires Python 2.3, and I'm running on a Red Hat 7.3 system where the "native" python is 1.5.2, and "python2" is 2.2.2. It's far cheaper to add another python than to make sure a different python doesn't break things, so my python 2.3 is rooted at /apps/python/python-2.3.2. There is a file that python looks for but is not present when it is installed from source:
+
+/apps/python/python-2.3.2/lib/python2.3/sitecusomize.py
+
+I created that file with the following contents (. for leading space):
+
+import sys
+import os
+try:
+....sys.leo_config_directory = os.environ['HOME'] + '/.leoconfig'
+except KeyError:
+....sys.leo_config_directory = None
+
+If I were more sophisticated, I would check that $HOME/.leoconfig was a directory, and if not also set sys.leo_config_directory to None.
+
+It doesn't seem appropriate to insist that anyone using python 2.3.2 for any reason whatsoever would be forced to have a .leoconfig in their home directory (think of a limited account that doesn't have a writable home directory), but it would be appropriate for leo to create $HOME/.leoconfig if it weren't present and set sys.leo_config_directory at that point -- indeed the entire logic could be handled outside of sitecustomize.py. I'll post code for the above if someone else doesn't beat me to it :-).
+#@-node:ekr.20040919075839:Stephen Schaefer
 #@-node:ekr.20040105080119:Search for settings in various places: Rodrigo
 #@+node:ekr.20040208112836:Specify shortcuts, ampersand bindings & translations in the same place
 @nocolor
@@ -3961,6 +4065,30 @@ Here are some features I'd like to see:
 #@-node:ekr.20040217153407:User customizeable tangling and untangling
 #@-node:ekr.20040916121944:Major code changes:  first
 #@+node:ekr.20040916122326.2:Others
+#@+node:ekr.20040918165519:Mark Task & Clone To Task commands
+@nocolor
+
+http://sourceforge.net/forum/message.php?msg_id=2415033
+By: nobody
+
+Ive been scanning Speed Reams Slash post and the Faq and saw an interesting
+usage pattern: Creating a node called a Task and adding cloned nodes to it that
+represent that task(I hope that explains it).  I can see myself using this idiom
+in the future.  Now my question is does the Task/clone idiom warrant special
+commands in Leo?  My basis:
+
+1. Do enough Leo users work with this idiom that making it easier to utilize
+would be desirable?  I guess a good rule of thumb might be, if the sequence
+of actions occur more frequently than the primitive commands like opening a
+file it should be considered.
+
+Maybe a way of doing it:
+
+1. A special mark node as Task command.
+2. A Add to lask marked task command, that clones a node and moves that node
+into the Task node.
+#@nonl
+#@-node:ekr.20040918165519:Mark Task & Clone To Task commands
 #@+node:EKR.20040424151321:(Status line experiments) TO DO: create status line class
 #@+node:ekr.20031218072017.3941: frame.Birth & Death
 #@+node:ekr.20031218072017.1801:f.__init__
@@ -4955,103 +5083,6 @@ Martin Clifford
 Senior Software Engineer
 Snell & Wilcox
 #@-node:ekr.20040831092540:Allow uA's to be stored as plain strings
-#@+node:ekr.20040329182535:plugins
-#@+node:ekr.20040130185920.1:** Add incremental search to search plugin (make find panel smaller)
-#@-node:ekr.20040130185920.1:** Add incremental search to search plugin (make find panel smaller)
-#@+node:ekr.20040217154256:Autocompletion
-#@+node:ekr.20031218072017.798:@dictionary
-@nocolor
-
-Developers
-By: jasonic ( Jason Cunliffe ) 
- @dictionary   
-2003-08-21 07:51
-
-Auto-completion dictionary files would be excellent.
-Ideally each Leo language extension could just point to a separate .dict file. 
-
-Hopefully we can build some Leo plugin utilities to generate these .dict files by parsing any file you'd like to use a 'source' for Leo dictionary. They might need manual cleanup, but vcould be big timesaver, especially for XML formats and the like. Great to be able to sahre these easily. 
-
-Interesting uses for Leo dictionaries beyond just autocompletion. 
-I am thinking they might open the door to some powerful macro/template behavior. 
-
-For example, you load a special dictionary to help certain kinds of repetitive formatted content. CSS and XSLT could be good candidates, but also any kind of mild databases or lists. Documentation.
-
-So first we need basic dicts for Leo supported languages: Python, Perl, Javascript etc..
-
-Then we need to consider that any Leo Node could have its own dictionary defined inline..
-
-@dictionary filepath-to-custom-leo-dict
-
-With collaborative LeoN this would be very useful because connected Leo sessions could invoke each other's dictionaries!!
-
-- Jason  
-#@-node:ekr.20031218072017.798:@dictionary
-#@-node:ekr.20040217154256:Autocompletion
-#@+node:ekr.20040125114744:Leo to docbook xml plugin: Leo2AsciiDoc
-http://sourceforge.net/forum/message.php?msg_id=2388444
-By: mdawson
-
-I use DocBook XML for my computer documentation, and lately for
-publishing just about any text document.  Naturally, I wanted an
-easy way to use DocBook to publish Leo outlines.
-
-I've written a small Leo module, called Leo2AsciiDoc, that enables
-automatic publication of a plain text Leo outline to HTML or PDF, or
-as a web site or man page.  Stuart Rackham's AsciiDoc program (in
-Python) is what makes this possible.
-    Leo2AsciiDoc exports a Leo outline to a text file, from whence
-it can be converted to DocBook XML by AsciiDoc, and then
-automatically published via DocBook to HTML or PDF.
-
-One Leo outline can contain any number of documents, or web sites
-(via DocBook Website).
-
-I'm also learning Literate Programming, and am happy to be able to
-automatically publish (via make) a program's source and
-documentation from Leo.
-
-An example of the product is the paged HTML documentation for the
-module at:
-    http://devguide.leo.marshallresearch.ca
-
-The web page for Leo2AsciiDoc is
-at:
-    http://leo.marshallresearch.ca
-
-That web site is produced from a Leo outline.
-
-    ----------------------------------------
-    Michael Dawson
-#@nonl
-#@-node:ekr.20040125114744:Leo to docbook xml plugin: Leo2AsciiDoc
-#@+node:ekr.20031218072017.830:Finish wx plugin & improve how Leo uses indices
-#@-node:ekr.20031218072017.830:Finish wx plugin & improve how Leo uses indices
-#@+node:ekr.20040208095208:Mark Task & Clone To Task commands
-@nocolor
-
-http://sourceforge.net/forum/message.php?msg_id=2415033
-By: nobody
-
-Ive been scanning Speed Reams Slash post and the Faq and saw an interesting
-usage pattern: Creating a node called a Task and adding cloned nodes to it that
-represent that task(I hope that explains it).  I can see myself using this idiom
-in the future.  Now my question is does the Task/clone idiom warrant special
-commands in Leo?  My basis:
-
-1. Do enough Leo users work with this idiom that making it easier to utilize
-would be desirable?  I guess a good rule of thumb might be, if the sequence
-of actions occur more frequently than the primitive commands like opening a
-file it should be considered.
-
-Maybe a way of doing it:
-
-1. A special mark node as Task command.
-2. A Add to lask marked task command, that clones a node and moves that node
-into the Task node.
-#@nonl
-#@-node:ekr.20040208095208:Mark Task & Clone To Task commands
-#@-node:ekr.20040329182535:plugins
 #@-node:ekr.20040916122326.2:Others
 #@-node:EKR.20040609091327:To do: 4.3: configuration, plugins & translation
 #@+node:ekr.20040329182535.7:1-2 hour projects
