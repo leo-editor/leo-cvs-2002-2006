@@ -1771,15 +1771,15 @@ class baseFileCommands:
         self.put("<tnodes>") ; self.put_nl()
         #@    << write only those tnodes that were referenced >>
         #@+node:ekr.20031218072017.1576:<< write only those tnodes that were referenced >>
+        if self.usingClipboard: # write the current tree.
+            iter = c.currentPosition().self_and_subtree_iter()
+        else: # write everything
+            iter = c.allNodes_iter()
+        
         # Populate tnodes
         tnodes = {}
         
-        if self.usingClipboard: # write the current tree.
-            root = c.currentPosition()
-        else: # write everything
-            root = c.rootPosition()
-        
-        for p in c.allNodes_iter():
+        for p in iter:
             index = p.v.t.fileIndex
             assert(index)
             tnodes[index] = p.v.t
