@@ -524,16 +524,31 @@ class Commands:
 		
 		c = self
 		i, j = getTextSelection(c.body)
+		# 12-SEP-2002 DTHEIN
+		# i is index to first character in the selection
+		# j is index to first character following the selection
+		# if selection was made from back to front, then i and j are reversed
+		#
 		if i and j: # Convert all lines containing any part of the selection.
 			if c.body.compare(i,">",j): i,j = j,i
 			i = c.body.index(i + "linestart")
-			j = c.body.index(j + "lineend")
+			# 12-SEP-2002 DTHEIN: don't include following line in selection
+			endSel = j # position of last character of selection
+			trailingNewline = ""
+			line,col = j.split(".")
+			if col == "0":  # DTHEIN: selection ends at start of next line
+				endSel = c.body.index(j + "- 1 chars")
+				trailingNewline = '\n'
+			else: # DTHEIN: selection ends in the midst of a line
+				endSel = c.body.index(j + "lineend")
+				j = endSel
 			head = c.body.get("1.0",i)
 			tail = c.body.get(j,"end")
 		else: # Convert the entire text.
 			i = "1.0" ; j = "end" ; head = tail = ""
-		lines = c.body.get(i,j)
+		lines = c.body.get(i,endSel)
 		lines = string.split(lines, '\n')
+		lines[-1] += trailingNewline # DTHEIN: add newline if needed
 		return head, lines, tail
 	#@-body
 	#@-node:10::getBodyLines
