@@ -14,13 +14,17 @@ import exceptions,os,re,string,sys,time,types,Tkinter
 body_newline = '\n'
 body_ignored_newline = '\r'
 
-try:
-	true = True
-	false = False
-except:
-	# print "True and False not defined"
+if 1: # Work around problems in 2.3 a1
 	true = 1
 	false = 0 # Better than None
+else:
+	try:
+		true = True
+		false = False
+	except:
+		# print "True and False not defined"
+		true = 1
+		false = 0 # Better than None
 
 assert(false!=None)
 #@-body
