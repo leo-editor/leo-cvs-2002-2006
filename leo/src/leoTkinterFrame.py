@@ -3260,7 +3260,7 @@ class leoTkinterLog (leoFrame.leoLog):
             g.es_event_exception("activate log")
     #@nonl
     #@-node:ekr.20031218072017.4045:tkLog.onActivateLog
-    #@+node:ekr.20031218072017.1473:tkLog.put & putnl & forceLogUpdate
+    #@+node:ekr.20031218072017.1473:tkLog.put & putnl & helpers
     # All output to the log stream eventually comes here.
     def put (self,s,color=None):
         
@@ -3330,17 +3330,23 @@ class leoTkinterLog (leoFrame.leoLog):
             #@nonl
             #@-node:EKR.20040423082910.3:<< put newline to logWaiting and print newline >>
             #@nl
-            
+    #@nonl
+    #@+node:ekr.20050208133438:forceLogUpdate
     def forceLogUpdate (self,s):
+    
         if sys.platform == "darwin": # Does not work on MacOS X.
-            
-            print s, # Don't add a newline.
+            try:
+                print s, # Don't add a newline.
+            except UnicodeError:
+                # g.app may not be inited during scripts!
+                print g.toEncodedString(s,'utf-8')
         else:
             self.frame.tree.disableRedraw = True
             self.logCtrl.update_idletasks()
             self.frame.tree.disableRedraw = False
     #@nonl
-    #@-node:ekr.20031218072017.1473:tkLog.put & putnl & forceLogUpdate
+    #@-node:ekr.20050208133438:forceLogUpdate
+    #@-node:ekr.20031218072017.1473:tkLog.put & putnl & helpers
     #@+node:ekr.20041222043017:tkLog.restoreAllState
     def restoreAllState (self,d):
         
