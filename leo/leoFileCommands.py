@@ -26,6 +26,7 @@ xml_language_names = (
 class BadLeoFile(Exception):
 	def __init__(self, message):
 		self.message = message
+		Exception.__init__(self,message) # 4/26/03: initialize the base class.
 	def __str__(self):
 		return "Bad Leo File:" + self.message
 
