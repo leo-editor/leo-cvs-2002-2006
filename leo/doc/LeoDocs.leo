@@ -2,7 +2,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="3782" clone_windows="0"/>
 <globals body_outline_ratio="0.494019138756">
-	<global_window_position top="112" left="345" height="836" width="831"/>
+	<global_window_position top="19" left="275" height="836" width="831"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences>
@@ -1033,7 +1033,7 @@
 </v>
 </v>
 </v>
-<v t="edream.110203163054.735" a="E"><vh>Users Guide</vh>
+<v t="edream.110203163054.735" a="TV"><vh>Users Guide</vh>
 <v t="edream.110203163054.736"><vh>An overview of Leo</vh></v>
 <v t="edream.110203163054.737"><vh>Front material</vh>
 <v t="edream.110203163054.738"><vh>Title Page &amp; Summary</vh></v>
@@ -1344,8 +1344,8 @@
 </v>
 <v t="edream.110203163054.889"><vh>How Leo Changes the Notion of Literate Programming</vh></v>
 </v>
-<v t="edream.110203163054.890" a="E"><vh>Chapter 7: Scripting Leo with Python</vh>
-<v t="edream.110203163054.891" a="TV"><vh>Overview</vh></v>
+<v t="edream.110203163054.890"><vh>Chapter 7: Scripting Leo with Python</vh>
+<v t="edream.110203163054.891"><vh>Overview</vh></v>
 <v t="edream.110203163054.892"><vh>Basic scripts</vh>
 <v t="ekr.20040403051340"><vh>Writing to log window</vh></v>
 <v t="edream.110203163054.893"><vh>Getting commanders and frames</vh></v>
@@ -1353,6 +1353,16 @@
 <v t="edream.110203163054.895"><vh>Getting the headline and body text of the presently selected node</vh></v>
 <v t="edream.110203163054.896"><vh>Setting the headline and body text of the presently selected node</vh></v>
 <v t="edream.110203163054.897"><vh>Traversing all nodes of an outline</vh></v>
+<v t="ekr.20040403103655"><vh>Iterators</vh>
+<v t="ekr.20040403121641.1"><vh>allNodes_iter</vh>
+<v t="ekr.20040403123631.1"><vh>Example 1</vh></v>
+<v t="ekr.20040403123631.2"><vh>Example 2</vh></v>
+</v>
+<v t="ekr.20040403121641.7"><vh>children_iter</vh></v>
+<v t="ekr.20040403121641.10"><vh>parents_iter</vh></v>
+<v t="ekr.20040403121641.13"><vh>siblings_iter</vh></v>
+<v t="ekr.20040403121641.4"><vh>subtree_iter</vh></v>
+</v>
 <v t="edream.110203163054.898"><vh>Updating the screen</vh></v>
 <v t="edream.110203163054.899"><vh>Invoking commands from scripts</vh></v>
 <v t="edream.110203163054.900"><vh>Getting preferences</vh></v>
@@ -1370,10 +1380,10 @@
 <v t="ekr.20040403123631.1"><vh>Example 1</vh></v>
 <v t="ekr.20040403123631.2"><vh>Example 2</vh></v>
 </v>
-<v t="ekr.20040403121641.7" a="E"><vh>children_iter</vh></v>
-<v t="ekr.20040403121641.10" a="E"><vh>parents_iter</vh></v>
-<v t="ekr.20040403121641.13" a="E"><vh>siblings_iter</vh></v>
-<v t="ekr.20040403121641.4" a="E"><vh>subtree_iter</vh></v>
+<v t="ekr.20040403121641.7"><vh>children_iter</vh></v>
+<v t="ekr.20040403121641.10"><vh>parents_iter</vh></v>
+<v t="ekr.20040403121641.13"><vh>siblings_iter</vh></v>
+<v t="ekr.20040403121641.4"><vh>subtree_iter</vh></v>
 </v>
 <v t="edream.110203163054.906"><vh>Getters</vh></v>
 <v t="edream.110203163054.907"><vh>Setters</vh></v>
@@ -8088,18 +8098,23 @@ for w in windows:
 	g.es(w.c) # A commander.
 	g.es(w.c.rootPosition()) # A position.
 	assert(w.c.rootPosition()==w.c.rootVnode())</t>
-<t tx="edream.110203163054.892">The following nodes show how to do the most common tasks while scripting Leo.
+<t tx="edream.110203163054.892">@color
+@ The following nodes show how to do the most common tasks while scripting Leo.
 
-You may execute the code in each node by executing the Execute Script command.</t>
+You may execute the code in each node by executing the Execute Script command.
+@c
+@language python</t>
 <t tx="edream.110203163054.893">@color
+
 # The g.top() function returns the Commands object of the top Leo window.
 import leoGlobals as g
 c = g.top()
 g.es(c)
 g.es(c.rootPosition())
 
-@
-The windowlist attribute of the application instance contains the list of the frames of all open windows.  The commands ivar of the frame gives the commander for that frame.  Execute this code now with the Execute Script command.
+@ The windowlist attribute of the application instance contains the list of the
+frames of all open windows. The commands ivar of the frame gives the commander
+for that frame. Execute this code now with the Execute Script command.
 @c
 
 import leoGlobals as g
@@ -8121,11 +8136,12 @@ for f in windows:
 - g.stdErrIsRedirected() # Returns true if the stderr stream is redirected to the log pane.
 - g.stdOutIsRedirected() # Returns true if the stdout stream is redirected to the log pane.
 
-Calls need _not_ be paired.  Redundant calls are ignored and the last call made controls where output for each stream goes.
-@c
+Calls need _not_ be paired. Redundant calls are ignored and the last call made
+controls where output for each stream goes.
 
-# NOTE: you will need to execute Leo in a console window
-# in order to see non-redirected output from the print statement.
+NOTE: you must execute Leo in a console window
+to see non-redirected output from the print statement.
+@c
 
 import leoGlobals as g
 print "stdout isRedirected:", g.stdOutIsRedirected()
@@ -8152,7 +8168,7 @@ print "stderr isRedirected:", g.stdErrIsRedirected()</t>
 import leoGlobals as g
 c = g.top()
 
-p=c.currentPosition() # get the current position.
+p = c.currentPosition() # get the current position.
 g.es(p)
 g.es("head:",p.headString())
 g.es("body:",p.bodyString())</t>
@@ -8172,6 +8188,8 @@ p.setHeadStringOrHeadline(head) # set headline text of p to head.</t>
 @ New in Leo 4.2.  The preferred way to traverse an outline is with an iterator.
 
 c.allNode_iter is an iterator that returns all the positions of an outline in outline order.
+
+See the node called "Iterators" below for a full discussion of all iterators.
 @c
 
 # Count the number of separate positions and distinct vnodes of this outline.
@@ -8244,8 +8262,7 @@ Among these details is this: commanders create subcommanders to handle complex c
 - The undoer class (leoUndo.py) handles the Undo command.
 - All other command are handled by the commander itself (leoCommands.py)</t>
 <t tx="edream.110203163054.900">@color
-@
-Each commander maintains its own preferences.  Your scripts can get the following ivars:
+@ Each commander maintains its own preferences.  Your scripts can get the following ivars:
 	c.output_doc_flag
 	c.page_width
 	c.tab_width
@@ -8290,10 +8307,8 @@ if c.frame.prefsPanel:
 
 # If your script sets c.tab_width your script may call f.setTabWidth to redraw the screen.
 c.frame.setTabWidth(c.tab_width)</t>
-<t tx="edream.110203163054.902">@nocolor
-The file leoFindScript.py contains functions for finding and changing text from within scripts. The children of this node show two examples of using the functions.  See the @file leoFindScript.py tree in LeoPy.leo for full details.
-@color
-</t>
+<t tx="edream.110203163054.902">@color
+@ The file leoFindScript.py contains functions for finding and changing text from within scripts. The children of this node show two examples of using the functions.  See the @file leoFindScript.py tree in LeoPy.leo for full details.</t>
 <t tx="edream.110203163054.903">@color
 @
 The findall function returns a list of tuples (v,pos) describing matches in c's entire tree.
@@ -8330,16 +8345,16 @@ for v,mo,pos in result:
 	body = v.bodyString()
 	g.es('\n%-4d %s' % (pos,v.headString()))
 	g.es(g.get_line_after(body,pos))</t>
-<t tx="edream.110203163054.905">@nocolor
-@
-Most scripts will use methods of the position class to access information in an outline.
+<t tx="edream.110203163054.905">@color
+@ Most scripts will use methods of the position class to access information in an outline.
 
 The following section summarizes the most useful methods that your scripts can use.  For a complete list, see the @file leoNodes.py tree of LeoPy.leo.
 
 N.B. Both the position and vnode classes support similar methods.  However, iterators exist only in the position class.
 
 You may execute the code in each node by executing the Execute Script command.
-@color</t>
+@c
+@language python</t>
 <t tx="edream.110203163054.906">@color
 @ This section lists the most useful ivars and methods for getting information from vnodes or positions.
 @c
@@ -11055,9 +11070,7 @@ into the outline so that you can see the effects of changes as the scripts
 operate. Again, this can all happen interactively if you like.</t>
 <t tx="edream.111803060643"></t>
 <t tx="edream.111803062437"></t>
-<t tx="edream.112303173638">@language python
-@color
-
+<t tx="edream.112303173638">@color
 @  New in version 4.1: On startup, Leo looks for two arguments of the form --script scriptFile.  If found, Leo enters batch mode.
 
 In batch mode Leo does not show any windows.  Leo assumes the scriptFile contains a Python script and executes the contents of that file using Leo's Execute Script command.  By default, Leo sends all output to Leo's log pane to the console window.  Scripts in the scriptFile may disable or enable this output by calling app.log.disable() or app.log.enable()
@@ -11705,13 +11718,10 @@ Many thanks to Gaspard Bucher for these instructions.</t>
 import leoGlobals as g
 g.es("Hello world")
 
-# You can pass multiple arguments to es.
-# es prints those arguments separated by commas.
-import leoGlobals as g
+# g.es prints multiple arguments separated by commas.
 g.es("Hello","world")
 
-# es converts non-string arguments using repr.
-import leoGlobals as g
+# g.es converts non-string arguments using repr.
 g.es(g.top())</t>
 <t tx="ekr.20040403103655">@color
 @ Iterators are defined only by the position class;  vnodes can not have iterators because vnodes may appear in multiple places in an outline.
