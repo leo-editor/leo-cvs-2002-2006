@@ -1518,6 +1518,8 @@ class position (object):
         assert(v is None or v.t)
         self.stack = stack[:] # Creating a copy here is safest and best.
         
+        g.app.positions += 1
+        
         # Note: __getattr__ implements p.t.
     #@nonl
     #@-node:ekr.20031218072017.892:p.__init__
