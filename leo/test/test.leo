@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="2297" clone_windows="0"/>
-<globals body_outline_ratio="0.46811224489795916">
-	<global_window_position top="87" left="368" height="809" width="730"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="2330" clone_windows="0"/>
+<globals body_outline_ratio="0.32115869017632243">
+	<global_window_position top="10" left="10" height="1102" width="1585"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences>
@@ -2788,8 +2788,62 @@
 <v t="edream.121303091808" a="E"><vh>Batch test</vh>
 <v t="edream.112203144347" a="V" tnodeList="edream.112203144347"><vh>@file ..\test\batchScript.py</vh></v>
 </v>
-<v t="edream.110203161858.2119"><vh>Unit Tests</vh>
-<v t="edream.110203161858.2124"><vh>tempNode</vh></v>
+<v t="edream.110203161858.2119" a="E"><vh>Unit Tests</vh>
+<v t="edream.110203161858.2124" a="E"><vh>tempNode</vh></v>
+<v t="dthein.20040108213304" a="V"><vh>reformatParagraphsTests</vh>
+<v t="dthein.20040108213304.1"><vh>testNoTrailingNewline</vh>
+<v t="dthein.20040108213304.2"><vh>before</vh></v>
+<v t="dthein.20040108213304.3"><vh>after</vh></v>
+</v>
+<v t="dthein.20040110062855"><vh>testTrailingNewline</vh>
+<v t="dthein.20040110062855.1"><vh>before</vh></v>
+<v t="dthein.20040110062855.2"><vh>after</vh></v>
+</v>
+<v t="dthein.20040108213542"><vh>testMixedLineLengths</vh>
+<v t="dthein.20040108213542.1"><vh>before</vh></v>
+<v t="dthein.20040108213542.2"><vh>after</vh></v>
+</v>
+<v t="dthein.20040108213859"><vh>testMixedLinesWithLeadingWS</vh>
+<v t="dthein.20040108213859.1"><vh>before</vh></v>
+<v t="dthein.20040108213859.2"><vh>after</vh></v>
+</v>
+<v t="dthein.20040108213859.3"><vh>testNoChangeRequired</vh>
+<v t="dthein.20040108213859.4"><vh>before</vh></v>
+<v t="dthein.20040108213859.5"><vh>after</vh></v>
+</v>
+<v t="dthein.20040108214839"><vh>testHonorLeadingWS</vh>
+<v t="dthein.20040108214839.1"><vh>before</vh></v>
+<v t="dthein.20040108214839.2"><vh>after</vh></v>
+</v>
+<v t="dthein.20040108215342"><vh>testHonorLeadingWSVar1</vh>
+<v t="dthein.20040108215342.1"><vh>before</vh></v>
+<v t="dthein.20040108215342.2"><vh>after</vh></v>
+</v>
+<v t="dthein.20040108214529"><vh>testSimpleHangingIndent</vh>
+<v t="dthein.20040108214529.1"><vh>before</vh></v>
+<v t="dthein.20040108214529.2"><vh>after</vh></v>
+</v>
+<v t="dthein.20040108215732"><vh>testSimpleHangingIndentVar1</vh>
+<v t="dthein.20040108215732.1"><vh>before</vh></v>
+<v t="dthein.20040108215732.2"><vh>after</vh></v>
+</v>
+<v t="dthein.20040108215421"><vh>testSimpleHangingIndentVar2</vh>
+<v t="dthein.20040108215421.1"><vh>before</vh></v>
+<v t="dthein.20040108215421.2"><vh>after</vh></v>
+</v>
+<v t="dthein.20040108213304.4"><vh>testMultiParagraph</vh>
+<v t="dthein.20040108213304.5"><vh>before</vh></v>
+<v t="dthein.20040108213304.6"><vh>after</vh></v>
+</v>
+<v t="dthein.20040108220819"><vh>testMultiParagraphWithList</vh>
+<v t="dthein.20040108220819.1"><vh>before</vh></v>
+<v t="dthein.20040108220819.2"><vh>after</vh></v>
+</v>
+<v t="dthein.20040110062310"><vh>testDirectiveBreaksParagraph</vh>
+<v t="dthein.20040110062310.1"><vh>before</vh></v>
+<v t="dthein.20040110062310.2"><vh>after</vh></v>
+</v>
+</v>
 <v t="edream.110203161858.2125"><vh>colorizerTests</vh>
 <v t="edream.110203161858.2126"><vh>Actionscript</vh></v>
 <v t="edream.110203161858.2127"><vh>C</vh></v>
@@ -2902,6 +2956,294 @@
 </v>
 </vnodes>
 <tnodes>
+<t tx="dthein.20040108213304">@ 
+# DTHEIN 2004.01.11: Added script
+
+Each child node will in turn have two or more children:
+	
+- a "before" node
+- an "after" node
+
+The parent to before and after nodes will contain pagewidth
+and language formatting directives
+@c
+
+import unittest
+import leoTest
+reload(leoTest) # Allows us to rerun this script when leoTest.py changes.
+
+suite = leoTest.makeReformatParagraphSuite()
+result = unittest.TestResult()
+runner = unittest.TextTestRunner()
+runner.run(suite)
+		
+</t>
+<t tx="dthein.20040108213304.1">@language plain
+@pagewidth 40
+@tabwidth 8
+
+# DTHEIN 2004.01.11: Added test case data
+
+Wrap a long line, no trailing newline.
+</t>
+<t tx="dthein.20040108213304.2">This line is over forty characters long, at least it seems to be.</t>
+<t tx="dthein.20040108213304.3">This line is over forty characters long,
+at least it seems to be.</t>
+<t tx="dthein.20040108213304.4">@language plain
+@pagewidth 40
+@tabwidth 8
+
+# DTHEIN 2004.01.11: Added test case data
+
+Mutliple long lined paragraphs.  Cursor should move to next paragraph after formatting a paragraph.</t>
+<t tx="dthein.20040108213304.5">Americans live in the most severe weather-prone country on Earth. Each year, Americans cope with an average of 10,000 thunderstorms, 2,500 floods, 1,000 tornadoes, as well as an average of 6 deadly hurricanes. Potentially deadly weather impacts every American. Communities can now rely on the National Weather Service’s StormReady program to help them guard against the ravages of Mother Nature.
+
+Some 90% of all presidentially declared disasters are weather related, leading to around 500 deaths per year and nearly $14 billion in damage. StormReady, a program started in 1999 in Tulsa, OK, helps arm America's communities with the communication and safety skills needed to save lives and property– before and during the event. StormReady helps community leaders and emergency managers strengthen local safety programs.
+
+StormReady communities are better prepared to save lives from the onslaught of severe weather through better planning, education, and awareness. No community is storm proof, but StormReady can help communities save lives. Does StormReady make a difference?</t>
+<t tx="dthein.20040108213304.6">Americans live in the most severe
+weather-prone country on Earth. Each
+year, Americans cope with an average of
+10,000 thunderstorms, 2,500 floods,
+1,000 tornadoes, as well as an average
+of 6 deadly hurricanes. Potentially
+deadly weather impacts every American.
+Communities can now rely on the National
+Weather Service’s StormReady program to
+help them guard against the ravages of
+Mother Nature.
+
+Some 90% of all presidentially declared
+disasters are weather related, leading
+to around 500 deaths per year and nearly
+$14 billion in damage. StormReady, a
+program started in 1999 in Tulsa, OK,
+helps arm America's communities with the
+communication and safety skills needed
+to save lives and property– before and
+during the event. StormReady helps
+community leaders and emergency managers
+strengthen local safety programs.
+
+StormReady communities are better
+prepared to save lives from the
+onslaught of severe weather through
+better planning, education, and
+awareness. No community is storm proof,
+but StormReady can help communities save
+lives. Does StormReady make a
+difference?</t>
+<t tx="dthein.20040108213542">@language plain
+@pagewidth 40
+@tabwidth 8
+
+# DTHEIN 2004.01.11: Added test case data
+
+Wrap a long line and some short ones.</t>
+<t tx="dthein.20040108213542.1">This line is over forty characters long, at least it seems to be.
+This is shorter, 
+but should be part of the same
+paragraph.</t>
+<t tx="dthein.20040108213542.2">This line is over forty characters long,
+at least it seems to be. This is
+shorter, but should be part of the same
+paragraph.</t>
+<t tx="dthein.20040108213859">@language plain
+@pagewidth 40
+@tabwidth 8
+
+# DTHEIN 2004.01.11: Added test case data
+
+Wrap a paragraph with interior lines that have leading white space.</t>
+<t tx="dthein.20040108213859.1">This line is over forty characters long, at least it seems to be.
+  This indented line should be merged into the same
+paragraph.</t>
+<t tx="dthein.20040108213859.2">This line is over forty characters long,
+  at least it seems to be. This indented
+  line should be merged into the same
+  paragraph.</t>
+<t tx="dthein.20040108213859.3">@language plain
+@pagewidth 40
+@tabwidth 8
+
+# DTHEIN 2004.01.11: Added test case data
+
+No wrapping required, so don't change a thing.</t>
+<t tx="dthein.20040108213859.4">This line is under 40 chars.</t>
+<t tx="dthein.20040108213859.5">This line is under 40 chars.</t>
+<t tx="dthein.20040108214529">@language plain
+@pagewidth 40
+@tabwidth 8
+
+# DTHEIN 2004.01.11: Added test case data
+
+Single paragraph, hanging indentation.</t>
+<t tx="dthein.20040108214529.1">Honor this line that has a hanging indentation, please.  Hanging
+  indentation is valuable for lists of all kinds.  But it is tricky to get right.</t>
+<t tx="dthein.20040108214529.2">Honor this line that has a hanging
+  indentation, please. Hanging
+  indentation is valuable for lists of
+  all kinds. But it is tricky to get
+  right.</t>
+<t tx="dthein.20040108214839">@language plain
+@pagewidth 40
+@tabwidth 8
+
+# DTHEIN 2004.01.11: Added test case data
+
+Honor the first line's leading whitespace.</t>
+<t tx="dthein.20040108214839.1">   This line is over forty characters long, at least it seems to be.
+   This is shorter, 
+but should be part of the same
+paragraph.  And this is indented 3 characters.</t>
+<t tx="dthein.20040108214839.2">   This line is over forty characters
+   long, at least it seems to be. This
+   is shorter, but should be part of the
+   same paragraph. And this is indented
+   3 characters.</t>
+<t tx="dthein.20040108215342">@language plain
+@pagewidth 40
+@tabwidth 8
+
+# DTHEIN 2004.01.11: Added test case data
+
+Honor the first and second line's leading whitespace.</t>
+<t tx="dthein.20040108215342.1">   This line is over forty characters long, at least it seems to be.
+   This is shorter, 
+     but should be part of the same
+     paragraph.  And this is indented 3 characters.</t>
+<t tx="dthein.20040108215342.2">   This line is over forty characters
+   long, at least it seems to be. This
+   is shorter, but should be part of the
+   same paragraph. And this is indented
+   3 characters.</t>
+<t tx="dthein.20040108215421">@language plain
+@pagewidth 40
+@tabwidth 8
+
+# DTHEIN 2004.01.11: Added test case data
+
+Single paragraph, hanging indentation, short lines, extraneous indentation, and last line uses a tab for whitespace.</t>
+<t tx="dthein.20040108215421.1">Honor this line that 
+  has a hanging indentation, 
+  please.  Hanging
+   indentation is valuable
+    for lists of all kinds.  But 
+	it is tricky to get right.</t>
+<t tx="dthein.20040108215421.2">Honor this line that has a hanging
+  indentation, please. Hanging
+  indentation is valuable for lists of
+  all kinds. But it is tricky to get
+  right.</t>
+<t tx="dthein.20040108215732">@language plain
+@pagewidth 40
+@tabwidth 8
+
+# DTHEIN 2004.01.11: Added test case data
+
+Single paragraph, hanging indentation with other indentation beyond line 2.</t>
+<t tx="dthein.20040108215732.1">Honor this line that has
+  a hanging indentation, please.  Hanging
+    indentation is valuable for lists of all kinds.  But it is tricky to get right.</t>
+<t tx="dthein.20040108215732.2">Honor this line that has a hanging
+  indentation, please. Hanging
+  indentation is valuable for lists of
+  all kinds. But it is tricky to get
+  right.</t>
+<t tx="dthein.20040108220819">@language plain
+@pagewidth 40
+@tabwidth 8
+
+# DTHEIN 2004.01.11: Added test case data
+
+A regular paragraph, plus a numbered list of several items, plus a final regular paragraph.  Cursor should move to next paragraph after formatting a paragraph.
+</t>
+<t tx="dthein.20040108220819.1">This paragraph leads of this test.  It is the "lead"
+paragraph.
+
+  1. This is item 
+     number 1.  It is the first item in the list.
+
+  2. This is item 
+     number 2.  It is the second item in the list.
+
+  3. This is item 
+     number 3.  It is the third item in the list.
+
+This paragraph ends the test.  It is the "final"
+paragraph.</t>
+<t tx="dthein.20040108220819.2">This paragraph leads of this test. It is
+the "lead" paragraph.
+
+  1. This is item number 1. It is the
+     first item in the list.
+
+  2. This is item number 2. It is the
+     second item in the list.
+
+  3. This is item number 3. It is the
+     third item in the list.
+
+This paragraph ends the test. It is the
+"final" paragraph.</t>
+<t tx="dthein.20040110062310">@language plain
+@pagewidth 40
+@tabwidth 8
+
+# DTHEIN 2004.01.11: Added test case data
+
+Test to make sure that reformatting treats directives as a new paragraph and doesn't wrap directive lines.
+</t>
+<t tx="dthein.20040110062310.1">Americans live in the most severe weather-prone country on Earth. Each year, Americans cope with an average of 10,000 thunderstorms, 2,500 floods, 1,000 tornadoes, as well as an average of 6 deadly hurricanes. Potentially deadly weather impacts every American. Communities can now rely on the National Weather Service’s StormReady program to help them guard against the ravages of Mother Nature.
+@unknownDirective
+Some 90% of all presidentially declared disasters are weather related, leading to around 500 deaths per year and nearly $14 billion in damage. StormReady, a program started in 1999 in Tulsa, OK, helps arm America's communities with the communication and safety skills needed to save lives and property– before and during the event. StormReady helps community leaders and emergency managers strengthen local safety programs.
+@unknownDirective
+StormReady communities are better prepared to save lives from the onslaught of severe weather through better planning, education, and awareness. No community is storm proof, but StormReady can help communities save lives. Does StormReady make a difference?</t>
+<t tx="dthein.20040110062310.2">Americans live in the most severe
+weather-prone country on Earth. Each
+year, Americans cope with an average of
+10,000 thunderstorms, 2,500 floods,
+1,000 tornadoes, as well as an average
+of 6 deadly hurricanes. Potentially
+deadly weather impacts every American.
+Communities can now rely on the National
+Weather Service’s StormReady program to
+help them guard against the ravages of
+Mother Nature.
+@unknownDirective
+Some 90% of all presidentially declared
+disasters are weather related, leading
+to around 500 deaths per year and nearly
+$14 billion in damage. StormReady, a
+program started in 1999 in Tulsa, OK,
+helps arm America's communities with the
+communication and safety skills needed
+to save lives and property– before and
+during the event. StormReady helps
+community leaders and emergency managers
+strengthen local safety programs.
+@unknownDirective
+StormReady communities are better
+prepared to save lives from the
+onslaught of severe weather through
+better planning, education, and
+awareness. No community is storm proof,
+but StormReady can help communities save
+lives. Does StormReady make a
+difference?</t>
+<t tx="dthein.20040110062855">@language plain
+@pagewidth 40
+@tabwidth 8
+
+# DTHEIN 2004.01.11: Added test case data
+
+Wrap a long line, with trailing newline.
+</t>
+<t tx="dthein.20040110062855.1">This line is over forty characters long, at least it seems to be.
+</t>
+<t tx="dthein.20040110062855.2">This line is over forty characters long,
+at least it seems to be.
+</t>
 <t tx="edream.110203161858">@color
 
 # **** Run this from test.leo ****
