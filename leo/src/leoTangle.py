@@ -488,7 +488,7 @@ class baseTangleCommands:
 		# Default tangle language
 		self.language = c.target_language
 		delim1,delim2,delim3 = set_delims_from_language(self.language)
-		# print `delim1`,`delim2`,`delim3`
+		# trace(delim1,delim2,delim3)
 		
 		# 8/1/02: this now works as expected.
 		self.single_comment_string = delim1
@@ -2746,6 +2746,9 @@ class baseTangleCommands:
 			self.comment2 = "(*" ; self.comment2_end = "*)"
 		if self.language == "latex": # 3/10/03: Joo-won Jung
 			self.string1 = self.string2 = None # This is debatable.
+		if self.language == "html":
+			self.string1 = '"' ; self.string2 = None # 12/3/03
+		#@nonl
 		#@-node:<< set the private global matching vars >>
 		#@nl
 		line_indent = 0  # The indentation to use if we see a section reference.
@@ -3577,10 +3580,10 @@ class baseTangleCommands:
 				self.start_comment_string = delim2
 				self.end_comment_string = delim3
 				if 0:
-					trace(`self.single_comment_string` + "," +
-						`self.start_comment_string` + "," +
-						`self.end_comment_string`)
-					
+					trace(self.single_comment_string,
+						self.start_comment_string,
+						self.end_comment_string)
+			
 				# 10/30/02: These ivars must be updated here!
 				# trace(`self.language`)
 				self.use_noweb_flag = true
