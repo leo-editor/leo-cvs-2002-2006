@@ -67,6 +67,9 @@ def run(fileName=None,*args,**keywords):
 	printGc("after creating app")
 	if not app: return
 	
+	# Set this ivar so LeoN may override it.
+	app.runMainLoop = runMainLoop
+	
 	doHook("start1")
 	printGc("after loading plugins")
 	
@@ -78,11 +81,13 @@ def run(fileName=None,*args,**keywords):
 	# Write queued output and redraw the screen.
 	app.writeWaitingLog()
 
-	doHook("start2")
+	c = frame.commands ; v = c.currentVnode()
+	doHook("start2",c=c,v=v,fileName=fileName)
+
 	frame.commands.redraw()
 	set_focus(frame.commands,frame.body)
 
-	runMainLoop(root)
+	app.runMainLoop(root)
 #@-body
 #@+node:1::createTkRoot
 #@+body
