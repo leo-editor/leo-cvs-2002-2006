@@ -14,12 +14,12 @@
 </find_panel_settings>
 <vnodes>
 <v t="T1" a="E"><vh>leoConfig.leo</vh>
-<v t="T2" a="E"><vh>@root leoConfig.txt</vh>
+<v t="T2" a="EV"><vh>@root leoConfig.txt</vh>
 <v t="T3"><vh>&lt;&lt; general comments and warnings &gt;&gt;</vh></v>
 <v t="T4"><vh>&lt;&lt; General configuration options, especially read-only mode &gt;&gt;</vh></v>
 <v t="T5"><vh>&lt;&lt; The "Recent Files" menu &gt;&gt;</vh></v>
 <v t="T6"><vh>&lt;&lt; Compare Panel settings &gt;&gt;</vh></v>
-<v t="T7" a="V"><vh>&lt;&lt; Find/Change Panel settings &gt;&gt;</vh></v>
+<v t="T7"><vh>&lt;&lt; Find/Change Panel settings &gt;&gt;</vh></v>
 <v t="T8"><vh>&lt;&lt; Keyboard shortcuts settings &gt;&gt;</vh>
 <v t="T9"><vh>&lt;&lt; About keyboard shortcuts &gt;&gt;</vh></v>
 <v t="T10"><vh>&lt;&lt; Alt and Shift-Alt&gt;&gt;</vh></v>
@@ -55,10 +55,10 @@ Note: using @rawfile here would not be so useful, because we would have to remem
 @color</t>
 <t tx="T2">@comment #
 @ We use an @root node here to suppress automatic untangling, so we don't lose all these nice comments in read-write mode.
-@root leoConfig.txt
+@root-code leoConfig.txt
 
 # leoConfig.txt: configuration file for Leo.
-# 8/14/2002 by Edward K. Ream
+# 12/03/2002 by Edward K. Ream
 
 &lt;&lt; general comments and warnings &gt;&gt;
 
@@ -87,19 +87,21 @@ with all of ConfigParser's features (and bugs!).
 Comments start with a pound character in the leftmost column.
 You may specify booleans as 0/1, no/yes, false/true, off/on (case insensitive).
 These get converted to 0/1 if the file is not read_only.</t>
-<t tx="T4">@c
+<t tx="T4">[config options]
 
-[config options]
+at_root_bodies_start_in_doc_mode = 1
 
-read_only = 0
-#	0: Leo writes this file, clearing all comments in the process.
-#	1: Leo writes nothing to this file.
-#	Syntax errors in this file set this file to read-only.
+#	1: Body text in @root trees start in doc mode.
+#	   (This is the way @root trees always worked prior to version 3.10.)
+#	0: Body text in @root trees start in code mode.
+#      (This way makes @root trees more compatible with @file trees.)
 
-xml_version_string = UTF-8
-#	The version used at the start of .leo files.
-#	Default is UTF-8.  Better may be iso-8859-1 or iso-8859-15.
-#	Important:  Use UTF-8 (case is significant) to write leo.py 2.x files.
+create_nonexistent_directories = 0
+#	1: Leo attempts to create directories if they do not exist.
+#	0: Leo never attempts to create directories
+#	This option applies to directories specified in filenames in
+#	@file, @rawfile, @root and @silentfile trees, and to filenames
+#	speicied in the @path directory.
 
 output_initial_comment =
 #	Example:
@@ -122,12 +124,10 @@ output_newline = nl
 #
 #	Please specify nl when uploading files to Leo's CVS site.
 
-create_nonexistent_directories = 0
-#	1: Leo attempts to create directories if they do not exist.
-#	0: Leo never attempts to create directories
-#	This option applies to directories specified in filenames in
-#	@file, @rawfile, @root and @silentfile trees, and to filenames
-#	speicied in the @path directory.
+read_only = 0
+#	0: Leo writes this file, clearing all comments in the process.
+#	1: Leo writes nothing to this file.
+#	Syntax errors in this file set this file to read-only.
 
 relative_path_base_directory = .
 #	The directory to be used as a prefix for &lt;filename&gt; in
@@ -171,7 +171,7 @@ stylesheet =
 #	Note 2: Please set this field empty when uploading to CVS.
 #	Note 3: This field must be empty for compatibility with older versions of Leo.
 
-use_customizeLeo_dot_py = 0
+use_customizeLeo_dot_py = 1
 
 #	1: Leo calls code "hooks" in configureLeo.py.
 #      Naive or hostile hooks may execute HOSTILE CODE contained in .leo files.
@@ -199,10 +199,14 @@ use_relative_node_indices = 0
 write_clone_indices = 0
 #	1: Files derived from @file nodes contain clone indices.
 #	0: Files derived from @file nodes contain no clone indices.
-#	Please specify 0 if you are going to submit files to Leo's CVS site.</t>
-<t tx="T5">@c
+#	Please specify 0 if you are going to submit files to Leo's CVS site.
 
-# The list of files in the "Recent Files" menu at startup.
+xml_version_string = UTF-8
+#	The version used at the start of .leo files.
+#	Default is UTF-8.  Better may be iso-8859-1 or iso-8859-15.
+#	Important:  Use UTF-8 (case is significant) to write leo.py 2.x files.
+</t>
+<t tx="T5"># The list of files in the "Recent Files" menu at startup.
 
 [recent files]
 
@@ -212,9 +216,7 @@ write_clone_indices = 0
 
 #	Paths to recent files.
 #	Valid option names: file0 through file9.</t>
-<t tx="T6">@c
-
-# 	These correspond to the keyword parameters of the leoCompare constructor.
+<t tx="T6"># 	These correspond to the keyword parameters of the leoCompare constructor.
 # 	Exception: there are no keywords for compare file names in the constructor.
 
 [compare options]
@@ -295,9 +297,7 @@ print_mismatching_lines = 1
 
 print_trailing_lines = 1
 #	1: Print lines all lines in one file after an end-of-file is seen on the other file.</t>
-<t tx="T7">@c
-
-# The initial settings of the Find/Change panel.
+<t tx="T7"># The initial settings of the Find/Change panel.
 
 [find/change options]
 
@@ -361,9 +361,7 @@ See the section called "About keyboard shortcuts" for a full discussion of what 
 &lt;&lt; Shift-Control &gt;&gt;
 &lt;&lt; None &gt;&gt;
 </t>
-<t tx="T9">@ 
-
-The following special single characters may be used in the tails of shortcuts.  They are listed along with their associated Tk binding value.  Leo contains special code to handle these characters.  No other single characters may be specified.
+<t tx="T9">@ The following special single characters may be used in the tails of shortcuts.  They are listed along with their associated Tk binding value.  Leo contains special code to handle these characters.  No other single characters may be specified.
 
 For example, you could specify Ctrl+! as a shortcut, and Leo will create a binding for &lt;Control+exclam&gt;.  Some of these values may be invalid on some machines.
 
@@ -427,9 +425,7 @@ KP_Add, KP_Decimal, KP_Divide, KP_Enter, KP_Equal,
 KP_Multiply, KP_Separator, KP_Space, KP_Subtract, KP_Tab,
 KP_F1, KP_F2, KP_F3, KP_F4,
 KP_0, KP_1, KP_2, KP_3, KP_4, KP_5, KP_6, KP_7, KP_8, KP_9</t>
-<t tx="T10">@c
-
-ExpandNextLevel   = Alt+=
+<t tx="T10">ExpandNextLevel   = Alt+=
 ContractParent    = Alt+0
 ContractAll       = Alt+1
 ExpandToLevel2    = Alt+2
@@ -466,9 +462,7 @@ GoNextVisible    = Alt+DnArrow
 GoPrevVisible    = Alt+UpArrow
 GoBack           = Alt+Shift+UpArrow
 GoNext           = Alt+Shift+DnArrow</t>
-<t tx="T11">@c
-
-CloneNode        = Ctrl+`
+<t tx="T11">CloneNode        = Ctrl+`
 Replace          = Ctrl+=
 ReplaceThenFind  = Ctrl+-
 Indent           = Ctrl+]
@@ -503,9 +497,7 @@ Close            = Ctrl+W
 Cut              = Ctrl+X
 Preferences      = Ctrl+Y
 CantUndo         = Ctrl+Z</t>
-<t tx="T12">@c
-
-DeleteNode      = Shift+Ctrl+BkSp
+<t tx="T12">DeleteNode      = Shift+Ctrl+BkSp
 
 TangleAll       = Shift+Ctrl+A
 ConvertBlanks   = Shift+Ctrl+B
@@ -532,15 +524,14 @@ PasteNode       = Shift+Ctrl+V
 WritefileNodes  = Shift+Ctrl+W
 CutNode         = Shift+Ctrl+X
 CantRedo        = Shift+Ctrl+Z</t>
-<t tx="T13">@c
-
-FindNext     = F3
+<t tx="T13">FindNext     = F3
 FindPrevious = F4
 
 AbortEditHeadline = Shift+Esc
 EndEditHeadline = Esc
 </t>
 <t tx="T14">@ These are all comments...
+
 AboutLeo                = None
 ApplySettings           = None
 Cascade                 = None
@@ -575,9 +566,7 @@ UntangleAll             = None
 UntangleMarked          = None
 Weave                   = None
 WriteOutlineOnly        = None</t>
-<t tx="T15">@c
-
-# The initial settings of the Preferences panel.
+<t tx="T15"># The initial settings of the Preferences panel.
 
 [prefs panel options]
 
@@ -610,9 +599,7 @@ run_tangle_done.py = 0
 
 run_untangle_done.py = 0
 # 	1/0: Run tangle_done.py after explicit Untangle commands.</t>
-<t tx="T16">@c
-
-[syntax coloring options]
+<t tx="T16">[syntax coloring options]
 
 color_cweb_doc_parts_with_latex = 1
 #	1: @space, @* and @** sections in cweb mode are colored black with LaTeX keywords highlighted.
@@ -687,9 +674,7 @@ Warning: the number of pixels per inch varies...
 &lt;&lt; Options for new windows &gt;&gt;
 &lt;&lt; Options for newly opened windows &gt;&gt;
 &lt;&lt; Options for the bar that separates panes in the Leo window &gt;&gt;</t>
-<t tx="T18">@c
-
-body_pane_wraps = 1
+<t tx="T18">body_pane_wraps = 1
 #	0/1: Wrap body text if 1.
 
 additional_body_text_border = 0
@@ -721,9 +706,7 @@ body_text_font_weight = normal
 smart_auto_indent = 0
 #	1: auto-indent aligns with open ({[ brackets
 #	0: auto-indent increases indentation by one tab for Python only.</t>
-<t tx="T19">@c
-
-outline_pane_scrolls_horizontally = 0
+<t tx="T19">outline_pane_scrolls_horizontally = 0
 #	0/1: 1: Use horizontal scrollbar in outline pane.
 
 headline_text_unselected_foreground_color = black
@@ -763,9 +746,7 @@ headline_text_font_slant = roman
 
 headline_text_font_weight = normal
 #	The Tk -weight setting: normal or bold.  Default is normal.</t>
-<t tx="T20">@c
-
-log_pane_wraps = 0
+<t tx="T20">log_pane_wraps = 0
 #	0/1: Wrap body text if 1.
 
 log_text_foreground_color =
@@ -786,8 +767,7 @@ log_text_font_slant = roman
 
 log_text_font_weight = normal
 #	The Tk -weight setting: normal or bold.  Default is normal.</t>
-<t tx="T21">@ Leo now properly opens windows for existing files where they were last positioned.
-@c
+<t tx="T21"># Leo now properly opens windows for existing files where they were last positioned.
 
 initial_window_height = 20
 #	Height of window, Tk grid units (must be an integer).
@@ -802,9 +782,7 @@ initial_window_left = 10
 
 initial_window_top = 10
 #	Distance from top of screen of window, in pixels (must be an integer).</t>
-<t tx="T22">@c
-
-initial_splitter_orientation = v
+<t tx="T22">initial_splitter_orientation = v
 #	Defines the primary splitter orientation.
 #	The primary panes are the body pane and the secondary pane.
 #	The secondary pane contains the outline and log panes.
@@ -844,8 +822,7 @@ initial_vertical_secondary_ratio = 0.7
 
 #	Applies to all newly opened windows.
 #	Valid values: 0.0 to 1.0.</t>
-<t tx="T23">@ Leo should save these to .leo files, and it doesn't.
-@c
+<t tx="T23"># Leo should save these to .leo files, and it doesn't.
 
 split_bar_color = LightSteelBlue2
 #	gray90 also looks good.

@@ -1770,18 +1770,20 @@ class atFile:
 					#@<< Check the filename in the sentinel >>
 					#@+node:4::<< Check the filename in the sentinel >>
 					#@+body
-					fileName = string.strip(headline)
+					h = string.strip(headline)
 					
-					if fileName[:5] == "@file":
-						fileName = string.strip(fileName[5:])
+					if h[:5] == "@file":
+						i,junk = scanAtFileOptions(h)
+						fileName = string.strip(h[i:])
 						if fileName != self.targetFileName:
 							self.readError("File name in @node sentinel does not match file's name")
-					elif fileName[:8] == "@rawfile":
-						fileName = string.strip(fileName[8:])
+					elif h[:8] == "@rawfile":
+						fileName = string.strip(h[8:])
 						if fileName != self.targetFileName:
 							self.readError("File name in @node sentinel does not match file's name")
 					else:
 						self.readError("Missing @file in root @node sentinel")
+					
 					#@-body
 					#@-node:4::<< Check the filename in the sentinel >>
 

@@ -270,8 +270,11 @@ class LeoApp:
 	
 	def realMenuName (self, menuName):
 		
-		name = self.realMenuNameDict.get(menuName)
-		return choose(name==None,menuName,name)
+		if 1: # Better
+			return self.realMenuNameDict.get(menuName,menuName)
+		else:
+			name = self.realMenuNameDict.get(menuName)
+			return choose(name==None,menuName,name)
 	#@-body
 	#@-node:6::app.realMenuName
 	#@+node:7::app.testDialogs

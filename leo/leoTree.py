@@ -117,6 +117,7 @@ class leoTree:
 	
 		# Can't trace while destroying.
 		# print "tree.__del__"
+		self.deleteBindings()
 		pass
 	#@-body
 	#@-node:1::tree.__del__
@@ -124,18 +125,26 @@ class leoTree:
 	#@+body
 	def __init__(self,commands,canvas):
 	
-		self.canvas = canvas
+		# Objects associated with this tree.
+		self.colorizer = leoColor.colorizer(commands)
 		self.commands = commands
+		self.canvas = canvas
 		self.rootVnode = None
 		self.topVnode = None
+		
+		# Miscellaneous info.
 		self.iconimages = {} # Image cache set by getIconImage().
-		self.colorizer = leoColor.colorizer(commands)
 		self.vnode_alloc_list = [] # List of all vnodes ever allocated in this tree.
 		self.active = false # true if tree is active
 		self.revertHeadline = None # Previous headline text for abortEditLabel.
 		
 		# Set self.font and self.fontName.
 		self.setFontFromConfig()
+		
+		# Recycling bindings.
+		self.recycleBindings = false # true: remember bindings and unbind them explicitly.
+		self.bindings = [] # List of bindings to be unbound when redrawing.
+		self.tagBindings = [] # List of tag bindings to be unbound when redrawing.
 	
 		# Controlling redraws
 		self.updateCount = 0 # self.redraw does nothing unless this is zero.
@@ -159,7 +168,29 @@ class leoTree:
 		self.popupMenu = None
 	#@-body
 	#@-node:2::tree.__init__
-	#@+node:3::tree.destroy
+	#@+node:3::tree.deleteBindings
+	#@+body
+	def deleteBindings (self):
+		
+		if self.recycleBindings:
+			count = 0
+			# Unbind all the tag bindings.
+			for id,binding in self.tagBindings:
+				self.canvas.tag_unbind(id,binding)
+				count += 1
+			self.tagBindings = []
+			# Unbind all the text bindings.
+			for t,binding in self.bindings:
+				t.bind(binding,"")
+				count += 1
+			self.bindings = []
+			es("bindings freed:"+`count`)
+		else:
+			self.tagBindings = []
+			self.bindings = []
+	#@-body
+	#@-node:3::tree.deleteBindings
+	#@+node:4::tree.destroy
 	#@+body
 	def destroy (self):
 	
@@ -187,7 +218,7 @@ class leoTree:
 		self.rootVnode = None
 		self.topVnode = None
 	#@-body
-	#@-node:3::tree.destroy
+	#@-node:4::tree.destroy
 	#@-node:3::Birth & death
 	#@+node:4::Drawing
 	#@+node:1::About drawing and updating
@@ -228,7 +259,7 @@ class leoTree:
 		self.updateCount += 1
 	#@-body
 	#@-node:2::beginUpdate
-	#@+node:3::drawBox
+	#@+node:3::drawBox (tag_bind)
 	#@+body
 	def drawBox (self,v,x,y):
 	
@@ -245,8 +276,12 @@ class leoTree:
 			v.box_id = id
 		self.canvas.tag_bind(id, "<1>", v.OnBoxClick)
 		self.canvas.tag_bind(id, "<Double-1>", lambda x: None)
+		
+		if self.recycleBindings:
+			self.tagBindings.append((id,"<1>"),)
+			self.tagBindings.append((id,"<Double-1>"),)
 	#@-body
-	#@-node:3::drawBox
+	#@-node:3::drawBox (tag_bind)
 	#@+node:4::drawNode
 	#@+body
 	def drawNode(self,v,x,y):
@@ -259,7 +294,7 @@ class leoTree:
 		return max(icon_height, text_height)
 	#@-body
 	#@-node:4::drawNode
-	#@+node:5::drawText
+	#@+node:5::drawText (bind)
 	#@+body
 	# draws text for v at x,y
 	
@@ -289,6 +324,12 @@ class leoTree:
 			t.bind("<Double-1>", v.OnBoxClick)
 		t.bind("<Key>", v.OnHeadlineKey)
 		t.bind("<Control-t>",self.OnControlT) # 10/16/02: Stamp out the erroneous control-t binding.
+		# Remember the bindings so we can delete them by hand on redraws.
+		if self.recycleBindings:
+			self.bindings.append((t,"<1>"),)
+			self.bindings.append((t,"<3>"),)
+			self.bindings.append((t,"<Key>"),)
+			self.bindings.append((t,"<Control-t>"),)
 		id = self.canvas.create_window(x,y,anchor="nw",window=t)
 		if 0: # don't create this reference!
 			v.edit_text_id = id
@@ -296,7 +337,7 @@ class leoTree:
 	
 		return self.line_height
 	#@-body
-	#@-node:5::drawText
+	#@-node:5::drawText (bind)
 	#@+node:6::drawTree
 	#@+body
 	def drawTree(self,v,x,y,h,level):
@@ -418,7 +459,7 @@ class leoTree:
 			es_exception()
 	#@-body
 	#@-node:13::setLineHeight
-	#@+node:14::tree.drawIcon
+	#@+node:14::tree.drawIcon (tag_bind))
 	#@+body
 	# Draws icon for v at x,y
 	
@@ -444,10 +485,14 @@ class leoTree:
 			v.icon_id = id
 		self.canvas.tag_bind(id, "<1>", v.OnIconClick)
 		self.canvas.tag_bind(id, "<Double-1>", v.OnIconDoubleClick)
+		if self.recycleBindings:
+			self.tagBindings.append((id,"<1>"),)
+			self.tagBindings.append((id,"<Double-1>"),)
 	
 		return 0 # dummy icon height
+	
 	#@-body
-	#@-node:14::tree.drawIcon
+	#@-node:14::tree.drawIcon (tag_bind))
 	#@+node:15::tree.getFont,setFont,setFontFromConfig
 	#@+body
 	def getFont (self):
@@ -610,6 +655,7 @@ class leoTree:
 			# Erase and redraw the entire tree.
 			oldcursor = self.canvas['cursor']
 			self.canvas['cursor'] = "watch"
+			self.deleteBindings()
 			self.canvas.delete("all")
 			self.drawTree(self.rootVnode,root_left,root_top,0,0)
 			self.canvas['cursor'] = oldcursor
@@ -618,6 +664,8 @@ class leoTree:
 			self.canvas.configure(scrollregion=(0, 0, x1, y1))
 			# Schedule a scrolling operation after the scrollbar is redrawn
 			self.canvas.after_idle(self.idle_scrollTo)
+			if self.recycleBindings:
+				collectGarbage()
 	#@-body
 	#@-node:20::tree.redraw , force_redraw, redraw_now
 	#@+node:21::tree.yoffset

@@ -638,7 +638,34 @@ class vnode:
 	#@-node:9::v.OnIconClick
 	#@-node:7::v.Callbacks
 	#@+node:8::Comparisons (vnode)
-	#@+node:1::at/../NodeName
+	#@+node:1::afterHeadlineMatch
+	#@+body
+	# 12/03/02: We now handle @file options here.
+	
+	def afterHeadlineMatch(self,s):
+		
+		h = self.mHeadString
+		
+		if 1: # New code
+			if s != "@file" and match_word(h,0,s):
+				# No options are valid.
+				return string.strip(h[len(s):])
+			elif match(h,0,"@file"):
+				i,atFileType = scanAtFileOptions(h)
+				if s == atFileType:
+					# print "s,h:",s,h
+					return string.strip(h[i:])
+				else: return ""
+			else: return ""
+		else:
+			if match(h,0,s):
+				return string.strip(h[len(s):])
+			else:
+				return ""
+	
+	#@-body
+	#@-node:1::afterHeadlineMatch
+	#@+node:2::at/../NodeName
 	#@+body
 	#@+at
 	#  Returns the filename following @file or @rawfile, in the receivers's 
@@ -659,16 +686,9 @@ class vnode:
 	def atSilentFileNodeName (self):
 		return self.afterHeadlineMatch("@silentfile")
 	
-	def afterHeadlineMatch(self,s):
-	
-		h = self.mHeadString
-		if match(h,0,s):
-			return string.strip(h[len(s):])
-		else:
-			return ""
 	#@-body
-	#@-node:1::at/../NodeName
-	#@+node:2::isAt/../Node
+	#@-node:2::at/../NodeName
+	#@+node:3::isAt/../Node
 	#@+body
 	# Returns true if the receiver's headline starts with @file.
 	def isAtFileNode (self):
@@ -691,8 +711,8 @@ class vnode:
 		return len(s) > 0
 	
 	#@-body
-	#@-node:2::isAt/../Node
-	#@+node:3::isAtIgnoreNode
+	#@-node:3::isAt/../Node
+	#@+node:4::isAtIgnoreNode
 	#@+body
 	#@+at
 	#  Returns true if the receiver contains @ignore in its body at the start 
@@ -706,8 +726,8 @@ class vnode:
 		flag, i = is_special(self.t.bodyString, 0, "@ignore")
 		return flag
 	#@-body
-	#@-node:3::isAtIgnoreNode
-	#@+node:4::isAtOthersNode
+	#@-node:4::isAtIgnoreNode
+	#@+node:5::isAtOthersNode
 	#@+body
 	#@+at
 	#  Returns true if the receiver contains @others in its body at the start 
@@ -721,8 +741,8 @@ class vnode:
 		flag, i = is_special(self.t.bodyString,0,"@others")
 		return flag
 	#@-body
-	#@-node:4::isAtOthersNode
-	#@+node:5::matchHeadline
+	#@-node:5::isAtOthersNode
+	#@+node:6::matchHeadline
 	#@+body
 	#@+at
 	#  Returns true if the headline matches the pattern ignoring whitespace 
@@ -745,7 +765,7 @@ class vnode:
 		# ignore characters in the headline following the match
 		return p == h[0:len(p)]
 	#@-body
-	#@-node:5::matchHeadline
+	#@-node:6::matchHeadline
 	#@-node:8::Comparisons (vnode)
 	#@+node:9::File Conversion (vnode)
 	#@+node:1::convertTreeToString

@@ -423,6 +423,7 @@ class tangleCommands:
 		self.file_name = c.frame.mFileName # The file name (was a bridge function)
 		self.v = None # vnode being processed.
 		self.output_file = None # The file descriptor of the output file.
+		self.start_mode = "doc" # "code" or "doc".  Use "doc" for compatibility.
 		self.tangle_default_directory = None # Default directory set by scanAllDirectives.
 		
 
@@ -1079,7 +1080,8 @@ class tangleCommands:
 			# We expect to see only @doc,@c or @root directives
 			# while scanning a code section.
 			i = skip_to_end_of_line(s,i)
-			self.error("directive not valid here: " + s[j:i])
+			if 0: # 12/03/02: no longer needed
+				self.error("directive not valid here: " + s[j:i])
 		elif kind == bad_section_name:
 			if self.use_cweb_flag:
 				i = skip_to_end_of_line(s,i)
@@ -1098,35 +1100,67 @@ class tangleCommands:
 	
 		# trace(`v`)
 		s = v.bodyString()
-		code_seen = false ; code = None ; anyChanged = false
-		i, doc = self.skip_doc(s,0) # Start in doc section by default.
-		if i >= len(s) and doc:
-			
-			#@<< Define a section containing only an @doc part >>
-			#@+node:1::The interface between tangle and untangle
-			#@+node:1::<< Define a section containing only an @doc part >>
-			#@+body
-			#@+at
-			#  It's valid for an @doc directive to appear under a headline 
-			# that does not contain a section name.  In that case, no section 
-			# is defined.
-
-			#@-at
-			#@@c
-
-			if self.header_name:
-			
-				# Tangle code.
-				flag = choose(code_seen,allow_multiple_parts,disallow_multiple_parts)
-				part = self.st_enter_section_name(self.header_name,code,doc,flag)
-			
-				# Untangle no longer updates doc parts.
+		code_seen = false ; code = doc = None ; i = 0
+		anyChanged = false
+		
+		if self.start_mode == "code":
+			j = skip_blank_lines(s,i)
+			i,code = self.skip_code(s,j)
+			if code:
 				
-			doc = None
-			#@-body
-			#@-node:1::<< Define a section containing only an @doc part >>
-			#@-node:1::The interface between tangle and untangle
+				#@<< Define a section for a leading code part >>
+				#@+node:1::The interface between tangle and untangle
+				#@+node:2::<< Define a section for a leading code part >>
+				#@+body
+				if self.header_name:
+					# Tangle code.
+					flag = choose(code_seen,allow_multiple_parts,disallow_multiple_parts)
+					part = self.st_enter_section_name(self.header_name,code,doc,flag)
+					# Untangle code.
+					if not self.tangling: 
+						head = s[:j] ; tail = s[i:]
+						s,i,changed = self.update_def(self.header,part,head,code,tail,not_root_name)
+						if changed: anyChanged = true
+					code_seen = true
+					code = doc = None
+				#@-body
+				#@-node:2::<< Define a section for a leading code part >>
+				#@-node:1::The interface between tangle and untangle
 
+	
+		if not code:
+			i,doc = self.skip_doc(s,i) # Start in doc section by default.
+			if i >= len(s) and doc:
+				
+				#@<< Define a section containing only an @doc part >>
+				#@+node:1::The interface between tangle and untangle
+				#@+node:1::<< Define a section containing only an @doc part >>
+				#@+body
+				#@+at
+				#  It's valid for an @doc directive to appear under a headline 
+				# that does not contain a section name.  In that case, no 
+				# section is defined.
+
+				#@-at
+				#@@c
+
+				if self.header_name:
+					# Tangle code.
+					flag = choose(code_seen,allow_multiple_parts,disallow_multiple_parts)
+					part = self.st_enter_section_name(self.header_name,code,doc,flag)
+					# Untangle code.
+					if not self.tangling: 
+						# Untangle no longer updates doc parts.
+						# 12/03/02: Mark the part as having been updated to suppress warning.
+						junk,junk = self.ust_lookup(self.header_name,
+							part,not_root_name,true) # set update flag
+				
+				doc = None
+				#@-body
+				#@-node:1::<< Define a section containing only an @doc part >>
+				#@-node:1::The interface between tangle and untangle
+
+	
 		while i < len(s):
 			progress = i # progress indicator
 			# line = get_line(s,i) ; trace(`line`)
@@ -1137,7 +1171,7 @@ class tangleCommands:
 				
 				#@<< Scan and define a section definition >>
 				#@+node:1::The interface between tangle and untangle
-				#@+node:2::<< Scan and define a section definition >>
+				#@+node:3::<< Scan and define a section definition >>
 				#@+body
 				# We enter the code part and any preceding doc part into the symbol table.
 				
@@ -1161,7 +1195,7 @@ class tangleCommands:
 					
 				code = doc = None
 				#@-body
-				#@-node:2::<< Scan and define a section definition >>
+				#@-node:3::<< Scan and define a section definition >>
 				#@-node:1::The interface between tangle and untangle
 
 			elif kind == at_code:
@@ -1172,7 +1206,7 @@ class tangleCommands:
 				
 				#@<< Scan and define an @code defininition >>
 				#@+node:1::The interface between tangle and untangle
-				#@+node:3::<< Scan and define an @code defininition >>
+				#@+node:4::<< Scan and define an @code defininition >>
 				#@+body
 				# All @c or @code directives denote < < headline_name > > =
 				if self.header_name:
@@ -1192,7 +1226,7 @@ class tangleCommands:
 				code_seen = true
 				code = doc = None
 				#@-body
-				#@-node:3::<< Scan and define an @code defininition >>
+				#@-node:4::<< Scan and define an @code defininition >>
 				#@-node:1::The interface between tangle and untangle
 
 			elif kind == at_root:
@@ -1200,7 +1234,7 @@ class tangleCommands:
 				
 				#@<< Scan and define a root section >>
 				#@+node:1::The interface between tangle and untangle
-				#@+node:4::<< Scan and define a root section >>
+				#@+node:5::<< Scan and define a root section >>
 				#@+body
 				# We save the file name in case another @root ends the code section.
 				old_root_name = self.root_name
@@ -1223,7 +1257,7 @@ class tangleCommands:
 					
 				code = doc = None
 				#@-body
-				#@-node:4::<< Scan and define a root section >>
+				#@-node:5::<< Scan and define a root section >>
 				#@-node:1::The interface between tangle and untangle
 
 			elif kind == at_doc:
@@ -3618,10 +3652,12 @@ class tangleCommands:
 		s = v.headString()
 	
 		if s[0:5] == "@root":
-			i = skip_ws(s,5)
+			i,self.start_mode = scanAtRootOptions(s,0)
+			i = skip_ws(s,i)
+	
 			if i < len(s): # Non-empty file name.
 				# self.root_name must be set later by token_type().
-				self.root = s
+				self.root = s[i:]
 	#@-body
 	#@-node:11::setRootFromHeadline
 	#@+node:12::setRootFromText
@@ -3640,7 +3676,9 @@ class tangleCommands:
 		
 		# trace(`s`)
 		self.root_name = None
-		i = skip_ws(s,0)
+		i,self.start_mode = scanAtRootOptions(s,0)
+		i = skip_ws(s,i)
+		
 		if i >= len(s): return i
 		# Allow <> or "" as delimiters, or a bare file name.
 		if s[i] == '"':
@@ -4014,7 +4052,7 @@ class tangleCommands:
 			if self.root_name == None and dict.has_key("root"):
 			
 				i = dict["root"]
-				i += len("@root")
+				# i += len("@root")
 				self.setRootFromText(s[i:],issue_error_flag)
 			#@-body
 			#@-node:6::<< Test for @root >>
@@ -4207,7 +4245,7 @@ class tangleCommands:
 				kind = plain_line
 			
 			if kind == at_root:
-				i = self.setRootFromText(s[i+5:],err_flag)
+				i = self.setRootFromText(s[i:],err_flag)
 			#@-body
 			#@-node:3::<< set kind for directive >>
 

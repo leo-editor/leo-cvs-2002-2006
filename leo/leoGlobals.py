@@ -29,110 +29,20 @@ assert(false!=None)
 
 
 #@+others
-#@+node:2::Most common functions
+#@+node:2::collectGarbage
 #@+body
-# These are guaranteed always to exist for scripts.
-#@-body
-#@+node:1::app, setApp
-#@+body
-# *** Note *** the global statement makes sense only within functions!
+def collectGarbage():
 
-gApp = None # Not needed, and keeps Pychecker happy.
-
-def app():
-	global gApp
-	return gApp
-
-def setApp(app):
-	global gApp
-	gApp = app
-#@-body
-#@-node:1::app, setApp
-#@+node:2::choose
-#@+body
-def choose(cond, a, b): # warning: evaluates all arguments
-
-	if cond: return a
-	else: return b
-#@-body
-#@-node:2::choose
-#@+node:3::es, enl, ecnl
-#@+body
-def ecnl():
-	ecnls(1)
-
-def ecnls(n):
-	log = app().log
-	if log:
-		while log.es_newlines < n:
-			enl()
-
-def enl():
-	log = app().log
-	if log:
-		log.es_newlines += 1
-		log.putnl()
-
-def es(s):
-	if s == None or len(s) == 0: return
-	log = app().log
-	if log:
-		log.put(s) # No change needed for Unicode!
-		# 6/2/02: This logic will fail if log is None.
-		for ch in s:
-			if ch == '\n': log.es_newlines += 1
-			else: log.es_newlines = 0
-		ecnl() # only valid here
-	else:
-		# print "Null log:",
-		print s
-#@-body
-#@-node:3::es, enl, ecnl
-#@+node:4::top
-#@+body
-#@+at
-#  11/6/02: app().log is now set correctly when there are multiple windows.
-# 
-# Before 11/6/02, app().log depended on activate events, and was not 
-# reliable.  The following routines now set app().log:
-# 
-# - frame.doCommand
-# - frame.OnMenuClick
-# 
-# Thus, top() will be reliable after any command is executed.  Creating a new 
-# window and opening a .leo file also set app().log correctly, so it appears 
-# that all holes have now been plugged.
-# 
-# Note 1: handleLeoHook calls top(), so the wrong hook function might be 
-# dispatched if this routine does not return the proper value.
-# 
-# Note 2: The value of top() may change during a new or open command, which 
-# may change the routine used to execute the "command1" and "command2" hooks.  
-# This is not a bug, and hook routines must be aware of this fact.
-
-#@-at
-#@@c
-
-def top():
-
-	# 11/6/02: app().log is now set correctly when there are multiple windows.
-	frame = app().log # the current frame
-	if frame:
-		return frame.commands
-	else:
-		return None
+	try:
+		import gc
+		gc.collect()
+		es("len(garbage):"+`len(gc.garbage)`)
+	except:
+		# es_exception()
+		pass
 
 #@-body
-#@-node:4::top
-#@+node:5::trace is defined below
-#@-node:5::trace is defined below
-#@+node:6::windows
-#@+body
-def windows():
-	return app().windowList
-#@-body
-#@-node:6::windows
-#@-node:2::Most common functions
+#@-node:2::collectGarbage
 #@+node:3::Commands, Dialogs, Directives, & Menus...
 #@+node:1::Dialog utils...
 #@+node:1::attachLeoIcon & allies
@@ -775,98 +685,7 @@ def wrap_lines (lines,pageWidth,firstLineWidth=None):
 #@-body
 #@-node:5::wrap_lines
 #@-node:3::Commands, Dialogs, Directives, & Menus...
-#@+node:4::Hooks
-#@+node:1::enableIdleTimeHook, disableIdleTimeHook, idleTimeHookHandler
-#@+body
-#@+at
-#  Enables the "idle" hook.
-# After enableIdleTimeHook is called, Leo will call the "idle" hook
-# approximately every idleTimeDelay milliseconds.
-
-#@-at
-#@@c
-def enableIdleTimeHook(idleTimeDelay=100):
-	app().idleTimeHook = true
-	app().idleTimeDelay = idleTimeDelay # Delay in msec.
-	app().root.after_idle(idleTimeHookHandler)
-	
-# Disables the "idle" hook.
-def disableIdleTimeHook():
-	app().idleTimeHook = false
-	
-# An internal routine used to dispatch the "idle" hook.
-def idleTimeHookHandler(*args):
-	a = app()
-	handleLeoHook("idle")
-	# Requeue this routine after 100 msec.
-	# Faster requeues overload the system.
-	if a.idleTimeHook:
-		a.root.after(a.idleTimeDelay,idleTimeHookHandler)
-#@-body
-#@-node:1::enableIdleTimeHook, disableIdleTimeHook, idleTimeHookHandler
-#@+node:2::handleLeoHook
-#@+body
-#@+at
-#  This global function calls a hook routine.  Hooks are identified by the tag param.
-# Returns the value returned by the hook routine, or None if the there is an exception.
-# 
-# We look for a hook routine in three places:
-# 1. top().hookFunction
-# 2. app().hookFunction
-# 3. customizeLeo.customizeLeo()
-# We set app().hookError on all exceptions.  Scripts that reset 
-# app().hookError to try again.
-
-#@-at
-#@@c
-
-def handleLeoHook(tag,**keywords):
-
-	a = app() ; c = top() # c may be None during startup.
-	
-	if not app().config.use_customizeLeo_dot_py:
-		return None # not enabled.
-
-	if a.hookError:
-		return None
-	elif c and c.hookFunction:
-		try:
-			title = c.frame.top.title()
-			return c.hookFunction(tag)
-		except:
-			es("exception in hook function for " + title)
-	elif a.hookFunction:
-		try:
-			return a.hookFunction(tag,keywords)
-		except:
-			es("exception in app().hookFunction")
-	else:
-		try:
-			from customizeLeo import customizeLeo
-			try:
-				a.hookFunction = customizeLeo
-				return customizeLeo(tag,keywords)
-			except:
-				a.hookFunction = None
-				es("exception in customizeLeo")
-		except exceptions.ImportError:
-			# print "import customizeLeo failed"
-			# Import failed.  This is not an error.
-			a.hookError = true # Supress this function.
-			a.idleTimeHook = false # Supress idle-time hook
-			return None
-		except:
-			es("error error in customizeLeo")
-
-	# Handle all exceptions except import failure.
-	es_exception()
-	a.hookError = true # Supress this function.
-	a.idleTimeHook = false # Supress idle-time hook
-	return None # No return value
-#@-body
-#@-node:2::handleLeoHook
-#@-node:4::Hooks
-#@+node:5::Dumping, Timing, Tracing & Sherlock
+#@+node:4::Dumping, Timing, Tracing & Sherlock
 #@+node:1::alert
 #@+body
 def alert(message):
@@ -1140,8 +959,8 @@ def esDiffTime(message, start):
 	return time.clock()
 #@-body
 #@-node:10::Timing
-#@-node:5::Dumping, Timing, Tracing & Sherlock
-#@+node:6::Files & Directories...
+#@-node:4::Dumping, Timing, Tracing & Sherlock
+#@+node:5::Files & Directories...
 #@+node:1::create_temp_name
 #@+body
 # Returns a temporary file name.
@@ -1291,10 +1110,7 @@ def sanitize_filename(s):
 #@+body
 def shortFileName (fileName):
 	
-	if 0: # I don't like the conversion to lower case
-		fileName = os.path.normpath(fileName)
-	head,tail = os.path.split(fileName)
-	return tail
+	return os.path.basename(fileName)
 #@-body
 #@-node:8::shortFileName
 #@+node:9::update_file_if_changed
@@ -1367,7 +1183,98 @@ def utils_rename(src,dst):
 		move_file(src,dst)
 #@-body
 #@-node:10::utils_rename
-#@-node:6::Files & Directories...
+#@-node:5::Files & Directories...
+#@+node:6::Hooks
+#@+node:1::enableIdleTimeHook, disableIdleTimeHook, idleTimeHookHandler
+#@+body
+#@+at
+#  Enables the "idle" hook.
+# After enableIdleTimeHook is called, Leo will call the "idle" hook
+# approximately every idleTimeDelay milliseconds.
+
+#@-at
+#@@c
+def enableIdleTimeHook(idleTimeDelay=100):
+	app().idleTimeHook = true
+	app().idleTimeDelay = idleTimeDelay # Delay in msec.
+	app().root.after_idle(idleTimeHookHandler)
+	
+# Disables the "idle" hook.
+def disableIdleTimeHook():
+	app().idleTimeHook = false
+	
+# An internal routine used to dispatch the "idle" hook.
+def idleTimeHookHandler(*args):
+	a = app()
+	handleLeoHook("idle")
+	# Requeue this routine after 100 msec.
+	# Faster requeues overload the system.
+	if a.idleTimeHook:
+		a.root.after(a.idleTimeDelay,idleTimeHookHandler)
+#@-body
+#@-node:1::enableIdleTimeHook, disableIdleTimeHook, idleTimeHookHandler
+#@+node:2::handleLeoHook
+#@+body
+#@+at
+#  This global function calls a hook routine.  Hooks are identified by the tag param.
+# Returns the value returned by the hook routine, or None if the there is an exception.
+# 
+# We look for a hook routine in three places:
+# 1. top().hookFunction
+# 2. app().hookFunction
+# 3. customizeLeo.customizeLeo()
+# We set app().hookError on all exceptions.  Scripts that reset 
+# app().hookError to try again.
+
+#@-at
+#@@c
+
+def handleLeoHook(tag,**keywords):
+
+	a = app() ; c = top() # c may be None during startup.
+	
+	if not app().config.use_customizeLeo_dot_py:
+		return None # not enabled.
+
+	if a.hookError:
+		return None
+	elif c and c.hookFunction:
+		try:
+			title = c.frame.top.title()
+			return c.hookFunction(tag)
+		except:
+			es("exception in hook function for " + title)
+	elif a.hookFunction:
+		try:
+			return a.hookFunction(tag,keywords)
+		except:
+			es("exception in app().hookFunction")
+	else:
+		try:
+			from customizeLeo import customizeLeo
+			try:
+				a.hookFunction = customizeLeo
+				return customizeLeo(tag,keywords)
+			except:
+				a.hookFunction = None
+				es("exception in customizeLeo")
+		except exceptions.ImportError:
+			# print "import customizeLeo failed"
+			# Import failed.  This is not an error.
+			a.hookError = true # Supress this function.
+			a.idleTimeHook = false # Supress idle-time hook
+			return None
+		except:
+			es("error error in customizeLeo")
+
+	# Handle all exceptions except import failure.
+	es_exception()
+	a.hookError = true # Supress this function.
+	a.idleTimeHook = false # Supress idle-time hook
+	return None # No return value
+#@-body
+#@-node:2::handleLeoHook
+#@-node:6::Hooks
 #@+node:7::Lists...
 #@+node:1::appendToList
 #@+body
@@ -1402,8 +1309,200 @@ def listToString(theList):
 #@-body
 #@-node:3::listToString
 #@-node:7::Lists...
-#@+node:8::Scanning, selection & whitespace...
-#@+node:1::scanError
+#@+node:8::Most common functions
+#@+body
+# These are guaranteed always to exist for scripts.
+#@-body
+#@+node:1::app, setApp
+#@+body
+# *** Note *** the global statement makes sense only within functions!
+
+gApp = None # Not needed, and keeps Pychecker happy.
+
+def app():
+	global gApp
+	return gApp
+
+def setApp(app):
+	global gApp
+	gApp = app
+#@-body
+#@-node:1::app, setApp
+#@+node:2::choose
+#@+body
+def choose(cond, a, b): # warning: evaluates all arguments
+
+	if cond: return a
+	else: return b
+#@-body
+#@-node:2::choose
+#@+node:3::es, enl, ecnl
+#@+body
+def ecnl():
+	ecnls(1)
+
+def ecnls(n):
+	log = app().log
+	if log:
+		while log.es_newlines < n:
+			enl()
+
+def enl():
+	log = app().log
+	if log:
+		log.es_newlines += 1
+		log.putnl()
+
+def es(s):
+	if s == None or len(s) == 0: return
+	log = app().log
+	if log:
+		log.put(s) # No change needed for Unicode!
+		# 6/2/02: This logic will fail if log is None.
+		for ch in s:
+			if ch == '\n': log.es_newlines += 1
+			else: log.es_newlines = 0
+		ecnl() # only valid here
+	else:
+		# print "Null log:",
+		print s
+#@-body
+#@-node:3::es, enl, ecnl
+#@+node:4::top
+#@+body
+#@+at
+#  11/6/02: app().log is now set correctly when there are multiple windows.
+# 
+# Before 11/6/02, app().log depended on activate events, and was not 
+# reliable.  The following routines now set app().log:
+# 
+# - frame.doCommand
+# - frame.OnMenuClick
+# 
+# Thus, top() will be reliable after any command is executed.  Creating a new 
+# window and opening a .leo file also set app().log correctly, so it appears 
+# that all holes have now been plugged.
+# 
+# Note 1: handleLeoHook calls top(), so the wrong hook function might be 
+# dispatched if this routine does not return the proper value.
+# 
+# Note 2: The value of top() may change during a new or open command, which 
+# may change the routine used to execute the "command1" and "command2" hooks.  
+# This is not a bug, and hook routines must be aware of this fact.
+
+#@-at
+#@@c
+
+def top():
+
+	# 11/6/02: app().log is now set correctly when there are multiple windows.
+	frame = app().log # the current frame
+	if frame:
+		return frame.commands
+	else:
+		return None
+
+#@-body
+#@-node:4::top
+#@+node:5::trace is defined below
+#@-node:5::trace is defined below
+#@+node:6::windows
+#@+body
+def windows():
+	return app().windowList
+#@-body
+#@-node:6::windows
+#@-node:8::Most common functions
+#@+node:9::Scanning, selection & whitespace...
+#@+node:1::scanAtFileOptions
+#@+body
+def scanAtFileOptions (h,err_flag=false):
+	
+	assert(match(h,0,"@file"))
+	i = len("@file")
+	atFileType = "@file"
+	
+	while match(h,i,'-'):
+		
+		#@<< scan another @file option >>
+		#@+node:1::<< scan another @file option >>
+		#@+body
+		i += 1 ; err = -1
+		
+		if match(h,i,"noref"): # Just match the prefix.
+			if atFileType == "@file":
+				atFileType = "@rawfile"
+			elif atFileType == "@nosentinelsfile":
+				atFileType = "@silentfile"
+			elif err_flag:
+				es("ignoring redundant -noref in:" + h)
+		elif match(h,i,"nosent"): # Just match the prefix.
+			if atFileType == "@file":
+				atFileType = "@nosentinelsfile"
+			elif atFileType == "@rawfile":
+				atFileType = "@silentfile"
+			elif err_flag:
+				es("ignoring redundant -nosent in:" + h)
+		elif match_word(h,i,"asis"):
+			if atFileType == "@file":
+				atFileType = "@silentfile"
+			elif err_flag:
+				es("using -asis option in:" + h)
+		else:
+			err = i-1
+		# Scan to the next minus sign.
+		while i < len(h) and h[i] not in (' ','\t','-'):
+			i += 1
+		if err > -1:
+			es("unknown option:" + h[err:i] + " in " + h)
+		
+		#@-body
+		#@-node:1::<< scan another @file option >>
+
+
+	return i,atFileType
+#@-body
+#@-node:1::scanAtFileOptions
+#@+node:2::scanAtRootOptions
+#@+body
+def scanAtRootOptions (s,i,err_flag=false):
+	
+	assert(match(s,i,"@root"))
+	i += len("@root")
+	mode = None 
+	while match(s,i,'-'):
+		
+		#@<< scan another @root option >>
+		#@+node:1::<< scan another @root option >>
+		#@+body
+		i += 1 ; err = -1
+		
+		if match_word(s,i,"code"): # Just match the prefix.
+			if not mode: mode = "code"
+			elif err_flag: es("modes conflict in:" + get_line(s,i))
+		elif match(s,i,"doc"): # Just match the prefix.
+			if not mode: mode = "doc"
+			elif err_flag: es("modes conflict in:" + get_line(s,i))
+		else:
+			err = i-1
+			
+		# Scan to the next minus sign.
+		while i < len(s) and s[i] not in (' ','\t','-'):
+			i += 1
+		
+		if err > -1 and err_flag:
+			es("unknown option:" + s[err:i] + " in " + get_line(s,i))
+		#@-body
+		#@-node:1::<< scan another @root option >>
+
+
+	if mode == None:
+		doc = app().config.at_root_bodies_start_in_doc_mode
+		mode = choose(doc,"doc","code")
+	return i,mode
+#@-body
+#@-node:2::scanAtRootOptions
+#@+node:3::scanError
 #@+body
 #@+at
 #  It seems dubious to bump the Tangle error count here.  OTOH, it really 
@@ -1419,8 +1518,8 @@ def scanError(s):
 
 	es(s)
 #@-body
-#@-node:1::scanError
-#@+node:2::Scanners: calling scanError
+#@-node:3::scanError
+#@+node:4::Scanners: calling scanError
 #@+body
 #@+at
 #  These scanners all call scanError() directly or indirectly, so they will 
@@ -1807,8 +1906,8 @@ def skip_typedef(s,i):
 	return i
 #@-body
 #@-node:15::skip_typedef
-#@-node:2::Scanners: calling scanError
-#@+node:3::Scanners: no error messages
+#@-node:4::Scanners: calling scanError
+#@+node:5::Scanners: no error messages
 #@+node:1::escaped
 #@+body
 # Returns true if s[i] is preceded by an odd number of backslashes.
@@ -2082,8 +2181,117 @@ def skip_ws_and_nl(s,i):
 	return i
 #@-body
 #@-node:20::skip_ws, skip_ws_and_nl
-#@-node:3::Scanners: no error messages
-#@+node:4::Whitespace...
+#@-node:5::Scanners: no error messages
+#@+node:6::Tk.Text selection (utils)
+#@+node:1::bound_paragraph
+#@+body
+def bound_paragraph(t=None):
+	"""Find the bounds of the text paragraph that contains the current cursor position.
+	
+t: a Tk.Text widget
+
+Returns:
+	None if the cursor is on a whitespace line or a delimeter line.
+	Otherwise: (start,end,endsWithNL,wsFirst,wsSecond)
+
+start: the paragraph starting position,
+end: the paragraph ending position,
+endsWithNL: true if the paragraph ends with a newline"""
+
+	if not t: return None
+	x=t.index("insert")
+	
+	# Return if the selected line is all whitespace or a Leo directive.
+	s = t.get(x+"linestart",x+"lineend")
+	if len(s)==0 or s.isspace() or s[0] == '@':
+		return None	
+
+	# Point start and end at the start and end of the selected line.
+	start = t.index(x+"linestart")
+	tmpLine = int(float(start))
+	end = str(tmpLine + 1) + ".0"
+	
+	# EKR: This is needlessly complex.
+	# It would be much easier to use a list of lines,
+	# rather than asking TK to do so much work.
+
+	# Set start to the start of the paragraph.
+	while (tmpLine > 1):
+		tmpLine -= 1
+		tmp = str(tmpLine) + ".0"
+		s = t.get(tmp,tmp+"lineend")
+		if len(s)==0 or s.isspace() or s[0] == '@':
+			break
+		start = tmp
+
+	# Set end to the end of the paragraph.
+	tmpLine = int(float(end))
+	bodyEnd = t.index("end")
+
+	while end != bodyEnd:
+		end = str(tmpLine) + ".0"
+		s = t.get(end,end+"lineend")
+		if len(s)==0 or s.isspace() or s[0] == '@':
+			break
+		tmpLine += 1
+
+	# do we insert a trailing NL?
+	endsWithNL = len(t.get(end))
+
+	return start, end, endsWithNL
+#@-body
+#@-node:1::bound_paragraph
+#@+node:2::getTextSelection
+#@+body
+# t is a Tk.Text widget.  Returns the selected range of t.
+
+def getTextSelection (t):
+
+	# To get the current selection
+	sel = t.tag_ranges("sel")
+	if len(sel) == 2:
+		start, end = sel # unpack tuple.
+		return start, end
+	else: return None, None
+#@-body
+#@-node:2::getTextSelection
+#@+node:3::getSelectedText
+#@+body
+# t is a Tk.Text widget.  Returns the text of the selected range of t.
+
+def getSelectedText (t):
+
+	start, end = getTextSelection(t)
+	if start and end:
+		return t.get(start,end)
+	else:
+		return None
+#@-body
+#@-node:3::getSelectedText
+#@+node:4::setTextSelection
+#@+body
+#@+at
+#  t is a Tk.Text widget.  start and end are positions.  Selects from start to end.
+
+#@-at
+#@@c
+
+def setTextSelection (t,start,end): 
+
+	if not start or not end:
+		return
+	if t.compare(start, ">", end):
+		start,end = end,start
+		
+	t.tag_remove("sel","1.0",start)
+	t.tag_add("sel",start,end)
+	t.tag_remove("sel",end,"end")
+	t.mark_set("insert",end)
+
+#@-body
+#@-node:4::setTextSelection
+#@-node:6::Tk.Text selection (utils)
+#@+node:7::Whitespace...
 #@+node:1::computeLeadingWhitespace
 #@+body
 # Returns optimized whitespace corresponding to width with the indicated tab_width.
@@ -2218,118 +2426,9 @@ def skip_leading_ws_with_indent(s,i,tab_width):
 	return i, count
 #@-body
 #@-node:8::skip_leading_ws_with_indent
-#@-node:4::Whitespace...
-#@+node:5::Tk.Text selection (utils)
-#@+node:1::bound_paragraph
-#@+body
-def bound_paragraph(t=None):
-	"""Find the bounds of the text paragraph that contains the current cursor position.
-	
-t: a Tk.Text widget
-
-Returns:
-	None if the cursor is on a whitespace line or a delimeter line.
-	Otherwise: (start,end,endsWithNL,wsFirst,wsSecond)
-
-start: the paragraph starting position,
-end: the paragraph ending position,
-endsWithNL: true if the paragraph ends with a newline"""
-
-	if not t: return None
-	x=t.index("insert")
-	
-	# Return if the selected line is all whitespace or a Leo directive.
-	s = t.get(x+"linestart",x+"lineend")
-	if len(s)==0 or s.isspace() or s[0] == '@':
-		return None	
-
-	# Point start and end at the start and end of the selected line.
-	start = t.index(x+"linestart")
-	tmpLine = int(float(start))
-	end = str(tmpLine + 1) + ".0"
-	
-	# EKR: This is needlessly complex.
-	# It would be much easier to use a list of lines,
-	# rather than asking TK to do so much work.
-
-	# Set start to the start of the paragraph.
-	while (tmpLine > 1):
-		tmpLine -= 1
-		tmp = str(tmpLine) + ".0"
-		s = t.get(tmp,tmp+"lineend")
-		if len(s)==0 or s.isspace() or s[0] == '@':
-			break
-		start = tmp
-
-	# Set end to the end of the paragraph.
-	tmpLine = int(float(end))
-	bodyEnd = t.index("end")
-
-	while end != bodyEnd:
-		end = str(tmpLine) + ".0"
-		s = t.get(end,end+"lineend")
-		if len(s)==0 or s.isspace() or s[0] == '@':
-			break
-		tmpLine += 1
-
-	# do we insert a trailing NL?
-	endsWithNL = len(t.get(end))
-
-	return start, end, endsWithNL
-#@-body
-#@-node:1::bound_paragraph
-#@+node:2::getTextSelection
-#@+body
-# t is a Tk.Text widget.  Returns the selected range of t.
-
-def getTextSelection (t):
-
-	# To get the current selection
-	sel = t.tag_ranges("sel")
-	if len(sel) == 2:
-		start, end = sel # unpack tuple.
-		return start, end
-	else: return None, None
-#@-body
-#@-node:2::getTextSelection
-#@+node:3::getSelectedText
-#@+body
-# t is a Tk.Text widget.  Returns the text of the selected range of t.
-
-def getSelectedText (t):
-
-	start, end = getTextSelection(t)
-	if start and end:
-		return t.get(start,end)
-	else:
-		return None
-#@-body
-#@-node:3::getSelectedText
-#@+node:4::setTextSelection
-#@+body
-#@+at
-#  t is a Tk.Text widget.  start and end are positions.  Selects from start to end.
-
-#@-at
-#@@c
-
-def setTextSelection (t,start,end): 
-
-	if not start or not end:
-		return
-	if t.compare(start, ">", end):
-		start,end = end,start
-		
-	t.tag_remove("sel","1.0",start)
-	t.tag_add("sel",start,end)
-	t.tag_remove("sel",end,"end")
-	t.mark_set("insert",end)
-
-#@-body
-#@-node:4::setTextSelection
-#@-node:5::Tk.Text selection (utils)
-#@-node:8::Scanning, selection & whitespace...
-#@+node:9::Startup & initialization...
+#@-node:7::Whitespace...
+#@-node:9::Scanning, selection & whitespace...
+#@+node:10::Startup & initialization...
 #@+node:1::CheckVersion (Dave Hein)
 #@+body
 #@+at
@@ -2480,8 +2579,8 @@ def unloadAll():
 
 #@-body
 #@-node:2::unloadAll
-#@-node:9::Startup & initialization...
-#@+node:10::Unicode... (utils)
+#@-node:10::Startup & initialization...
+#@+node:11::Unicode... (utils)
 #@+node:1::convertChar/String/ToXMLCharRef
 #@+body
 def convertCharToXMLCharRef(c,xml_encoding):
@@ -2612,7 +2711,7 @@ def replaceNonEncodingChars(s,c2,xml_encoding):
 	return s2
 #@-body
 #@-node:5::replaceNonEncodingChar/s
-#@-node:10::Unicode... (utils)
+#@-node:11::Unicode... (utils)
 #@-others
 #@-body
 #@-node:0::@file leoGlobals.py

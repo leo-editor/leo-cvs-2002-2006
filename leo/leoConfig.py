@@ -146,14 +146,12 @@ class config:
 		#@+body
 		# 10/11/02: Defaults are specified only here.
 		
-		self.config = None
-			# The current instance of ConfigParser
-		self.output_initial_comment = ""
-			# Must be "" or None for compatibility with older versions of Leo.
+		self.config = None # The current instance of ConfigParser
+		self.at_root_bodies_start_in_doc_mode = false # For compatibility with previous versions.
+		self.output_initial_comment = "" # "" or None for compatibility with previous versions.
 		self.output_newline = "nl"
 		self.create_nonexistent_directories = false
-		self.read_only = true
-			# Make _sure_ we don't alter an illegal leoConfig.txt file!
+		self.read_only = true # Make sure we don't alter an illegal leoConfig.txt file!
 		self.relative_path_base_directory = "!"
 		self.remove_sentinels_extension = ".txt"
 		self.save_clears_undo_buffer = false
@@ -161,8 +159,8 @@ class config:
 		self.use_relative_node_indices = 1 # Not used.  Will disappear.
 		self.use_customizeLeo_dot_py = 0 # Should _never_ be 1 (!!)
 		self.write_clone_indices = 0 # Should be 0 for writes to CVS. Will disappear in 4.0.
-		self.xml_version_string = "UTF-8"
-			# Must be upper case for compatibility with older versions of Leo.
+		self.xml_version_string = "UTF-8" # Upper case for compatibility with previous versions.
+		
 		#@-body
 		#@-node:3::<< initialize ivars that may be set by config options >>
 
@@ -553,6 +551,10 @@ class config:
 			#@-at
 			#@@c
 
+			self.at_root_bodies_start_in_doc_mode = self.initBooleanConfigParam(
+				"at_root_bodies_start_in_doc_mode",
+				self.at_root_bodies_start_in_doc_mode)
+			
 			self.output_initial_comment = self.initConfigParam(
 				"output_initial_comment",
 				self.output_initial_comment)

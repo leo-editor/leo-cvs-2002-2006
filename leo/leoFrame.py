@@ -1265,6 +1265,8 @@ class LeoFrame:
 				es_exception()
 		
 			handleLeoHook("command2",label=label)
+			# collectGarbage()
+				
 		return "break" # Inhibit all other handlers.
 	#@-body
 	#@-node:4::frame.doCommand
