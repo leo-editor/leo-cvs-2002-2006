@@ -1309,23 +1309,32 @@ class nullFrame (leoFrame):
     """A null frame class for tests and batch execution."""
     
     #@    @+others
-    #@+node:ekr.20040327105706:__init__
+    #@+node:ekr.20040327105706: ctor
     def __init__ (self,title,gui,useNullUndoer=False):
     
         leoFrame.__init__(self,gui) # Init the base class.
         assert(self.c is None)
         self.title = title
         self.useNullUndoer = useNullUndoer
+        
+        # Default window position.
+        self.w = 600
+        self.h = 500
+        self.x = 40
+        self.y = 40
     #@nonl
-    #@-node:ekr.20040327105706:__init__
-    #@+node:ekr.20040327105706.1:__getattr__ NOT USED
-    if 0: # This causes no end of problems.
-    
-        def __getattr__(self,attr):
-            g.trace("nullFrame",attr)
-            return nullObject()
+    #@-node:ekr.20040327105706: ctor
+    #@+node:ekr.20041130065921:deiconfy, lift, update
+    def deiconify (self,*args,**keys):
+        pass
+        
+    def lift (self,*args,**keys):
+        pass
+        
+    def update (self,*args,**keys):
+        pass
     #@nonl
-    #@-node:ekr.20040327105706.1:__getattr__ NOT USED
+    #@-node:ekr.20041130065921:deiconfy, lift, update
     #@+node:ekr.20041120073824:destroySelf
     def destroySelf (self):
         
@@ -1348,14 +1357,39 @@ class nullFrame (leoFrame):
             c.undoer = leoUndo.nullUndoer(c)
     #@nonl
     #@-node:ekr.20040327105706.2:finishCreate
+    #@+node:ekr.20041130065718:get_window_info
+    def get_window_info (self):
+    
+        """Return the window information."""
+        
+        # g.trace(self.w,self.h,self.x,self.y)
+    
+        return self.w,self.h,self.x,self.y
+    #@nonl
+    #@-node:ekr.20041130065718:get_window_info
+    #@+node:ekr.20041130065921.1:lift
+    #@-node:ekr.20041130065921.1:lift
     #@+node:ekr.20040327105706.3:oops
     def oops(self):
         
-        # g.trace("nullFrame:", g.callerName(2))
-    
-        pass # This is NOT an error.
+        g.trace("nullFrame:", g.callerName(2))
     #@nonl
     #@-node:ekr.20040327105706.3:oops
+    #@+node:ekr.20041130090749:setInitialWindowGeometry
+    def setInitialWindowGeometry (self,*args,**keys):
+        pass
+    #@nonl
+    #@-node:ekr.20041130090749:setInitialWindowGeometry
+    #@+node:ekr.20041130065718.1:setTopGeometry
+    def setTopGeometry(self,w,h,x,y):
+        
+        self.w = w
+        self.h = h
+        self.x = x
+        self.y = y
+        
+        
+    #@-node:ekr.20041130065718.1:setTopGeometry
     #@-others
 #@nonl
 #@-node:ekr.20031218072017.2222:class nullFrame
