@@ -1872,7 +1872,8 @@ class position (object):
                     return True
     
         # Avoid calling p.copy() or copying the stack.
-        v2 = p2.v ; n = len(p.stack)-1
+        v2 = p2.v ; n = len(p2.stack)-1
+            # Major bug fix 7/22/04: changed len(p.stack) to len(p2.stack.)
         v2,n = p2.vParentWithStack(v2,p2.stack,n)
         while v2:
             if v2 == p.v:
@@ -3116,6 +3117,7 @@ class position (object):
     # while p:
     #     p = p.moveToParent()
     #     if p: list1.append(p.v)
+    # 
     # # The second way uses p.vParentWithStack to avoid all odious 
     # intermediate data.
     # 
