@@ -113,7 +113,7 @@ class baseCommands:
         # These are defined here, and updated by the tree.select()
         self.beadList = [] # list of vnodes for the Back and Forward commands.
         self.beadPointer = -1 # present item in the list.
-        self.visitedList = [] # list of vnodes for the Nodes dialog.
+        self.visitedList = [] # list of positions for the Nodes dialog.
         
         # For hoist/dehoist commands.
         self.hoistStack = []
@@ -349,11 +349,13 @@ class baseCommands:
         openWith("os.spawnv", ["c:/prog.exe","--parm1","frog","--switch2"], None)
         """
         
-        c = self ; v = c.currentVnode()
-        if not data or len(data) != 3: return # 6/22/03
+        c = self ; p = c.currentPosition()
+        if not data or len(data) != 3:
+            g.trace('bad data')
+            return
         try:
             openType,arg,ext=data
-            if not g.doHook("openwith1",c=c,p=v,v=v,openType=openType,arg=arg,ext=ext):
+            if not g.doHook("openwith1",c=c,p=p,v=p.v,openType=openType,arg=arg,ext=ext):
                 #@            << set ext based on the present language >>
                 #@+node:ekr.20031218072017.2824:<< set ext based on the present language >>
                 if not ext:
@@ -374,25 +376,25 @@ class baseCommands:
                 #@            << create or reopen temp file, testing for conflicting changes >>
                 #@+node:ekr.20031218072017.2825:<< create or reopen temp file, testing for conflicting changes >>
                 theDict = None ; path = None
-                #@<< set dict and path if a temp file already refers to v.t >>
-                #@+node:ekr.20031218072017.2826:<<set dict and path if a temp file already refers to v.t >>
-                searchPath = c.openWithTempFilePath(v,ext)
+                #@<< set dict and path if a temp file already refers to p.v.t >>
+                #@+node:ekr.20031218072017.2826:<<set dict and path if a temp file already refers to p.v.t >>
+                searchPath = c.openWithTempFilePath(p,ext)
                 
                 if g.os_path_exists(searchPath):
                     for theDict in g.app.openWithFiles:
-                        if v == theDict.get("v") and searchPath == theDict.get("path"):
+                        if p.v == theDict.get('v') and searchPath == theDict.get("path"):
                             path = searchPath
                             break
-                #@-node:ekr.20031218072017.2826:<<set dict and path if a temp file already refers to v.t >>
+                #@-node:ekr.20031218072017.2826:<<set dict and path if a temp file already refers to p.v.t >>
                 #@nl
                 if path:
                     #@    << create or recreate temp file as needed >>
                     #@+node:ekr.20031218072017.2827:<< create or recreate temp file as needed >>
                     #@+at 
                     #@nonl
-                    # We test for changes in both v and the temp file:
+                    # We test for changes in both p and the temp file:
                     # 
-                    # - If only v's body text has changed, we recreate the 
+                    # - If only p's body text has changed, we recreate the 
                     # temp file.
                     # - If only the temp file has changed, do nothing here.
                     # - If both have changed we must prompt the user to see 
@@ -402,7 +404,7 @@ class baseCommands:
                     
                     encoding = theDict.get("encoding")
                     old_body = theDict.get("body")
-                    new_body = v.bodyString()
+                    new_body = p.bodyString()
                     new_body = g.toEncodedString(new_body,encoding,reportErrors=True)
                     
                     old_time = theDict.get("time")
@@ -435,14 +437,14 @@ class baseCommands:
                         rewrite = body_changed
                             
                     if rewrite:
-                        path = c.createOpenWithTempFile(v,ext)
+                        path = c.createOpenWithTempFile(p,ext)
                     else:
                         g.es("reopening: " + g.shortFileName(path),color="blue")
                     #@nonl
                     #@-node:ekr.20031218072017.2827:<< create or recreate temp file as needed >>
                     #@nl
                 else:
-                    path = c.createOpenWithTempFile(v,ext)
+                    path = c.createOpenWithTempFile(p,ext)
                 
                 if not path:
                     return # An error has occured.
@@ -455,8 +457,14 @@ class baseCommands:
                     if arg == None: arg = ""
                     shortPath = path # g.shortFileName(path)
                     if openType == "os.system":
-                        command = "os.system(%s)" % (arg+shortPath)
-                        os.system(arg+path)
+                        if 1:
+                            # This works, _provided_ that arg does not contain blanks.  Sheesh.
+                            command = 'os.system(%s)' % (arg+shortPath)
+                            os.system(arg+shortPath)
+                        else:
+                            # XP does not like this format!
+                            command = 'os.system("%s" "%s")' % (arg,shortPath)
+                            os.system('"%s" "%s"' % (arg,shortPath))
                     elif openType == "os.startfile":
                         command = "os.startfile(%s)" % (arg+shortPath)
                         os.startfile(arg+path)
@@ -465,7 +473,7 @@ class baseCommands:
                         exec arg+path in {} # 12/11/02
                     elif openType == "os.spawnl":
                         filename = g.os_path_basename(arg)
-                        command = "os.spawnl(%s,%s,%s)" % (arg,filename,shortPath)
+                        command = "os.spawnl(%s,%s,%s)" % (arg,filename,path)
                         apply(os.spawnl,(os.P_NOWAIT,arg,filename,path))
                     elif openType == "os.spawnv":
                         if 1: # New code allows args to spawnv.
@@ -480,34 +488,33 @@ class baseCommands:
                             apply(os.spawnv,(os.P_NOWAIT,arg,(filename,path)))
                     else:
                         command="bad command:"+str(openType)
-                    # This seems a bit redundant.
-                    # g.es(command)
-                except:
+                    g.trace(command)
+                except Exception:
                     g.es("exception executing: "+command)
                     g.es_exception()
                 #@nonl
                 #@-node:ekr.20031218072017.2829:<< execute a command to open path in external editor >>
                 #@nl
-            g.doHook("openwith2",c=c,p=v,v=v,openType=openType,arg=arg,ext=ext)
-        except:
-            g.es("exception in openWith")
+            g.doHook("openwith2",c=c,p=p,v=p.v,openType=openType,arg=arg,ext=ext)
+        except Exception:
+            g.es("unexpected exception in c.openWith")
             g.es_exception()
     
         return "break"
     #@+node:ekr.20031218072017.2830:createOpenWithTempFile
-    def createOpenWithTempFile (self, v, ext):
+    def createOpenWithTempFile (self,p,ext):
         
         c = self
-        path = c.openWithTempFilePath(v,ext)
+        path = c.openWithTempFilePath(p,ext)
         try:
             if g.os_path_exists(path):
                 g.es("recreating:  " + g.shortFileName(path),color="red")
             else:
                 g.es("creating:  " + g.shortFileName(path),color="blue")
             theFile = open(path,"w")
-            # 3/7/03: convert s to whatever encoding is in effect.
-            s = v.bodyString()
-            theDict = g.scanDirectives(c,p=v)
+            # Convert s to whatever encoding is in effect.
+            s = p.bodyString()
+            theDict = g.scanDirectives(c,p=p)
             encoding = theDict.get("encoding",None)
             if encoding == None:
                 encoding = c.config.default_derived_file_encoding
@@ -518,22 +525,26 @@ class baseCommands:
             try:    time = g.os_path_getmtime(path)
             except: time = None
             # g.es("time: " + str(time))
-            # 4/22/03: add body and encoding entries to dict for later comparisons.
-            theDict = {"body":s, "c":c, "encoding":encoding, "f":theFile, "path":path, "time":time, "v":v}
+            # New in 4.3: theDict now contains both 'p' and 'v' entries, of the expected type.
+            theDict = {
+                "body":s, "c":c, "encoding":encoding,
+                "f":theFile, "path":path, "time":time,
+                "p":p, "v":p.v }
             #@        << remove previous entry from app.openWithFiles if it exists >>
             #@+node:ekr.20031218072017.2831:<< remove previous entry from app.openWithFiles if it exists >>
-            for d in g.app.openWithFiles[:]: # 6/30/03
-                v2 = d.get("v")
-                if v.t == v2.t:
-                    print "removing previous entry in g.app.openWithFiles for",v
+            for d in g.app.openWithFiles[:]:
+                p2 = d.get("p")
+                if p.v.t == p2.v.t:
+                    print "removing previous entry in g.app.openWithFiles for",p.headString()
                     g.app.openWithFiles.remove(d)
             #@nonl
             #@-node:ekr.20031218072017.2831:<< remove previous entry from app.openWithFiles if it exists >>
-            #@afterref
- # 4/22/03
+            #@nl
             g.app.openWithFiles.append(theDict)
             return path
         except:
+            if theFile:
+                theFile.close()
             theFile = None
             g.es("exception creating temp file",color="red")
             g.es_exception()
@@ -541,17 +552,26 @@ class baseCommands:
     #@nonl
     #@-node:ekr.20031218072017.2830:createOpenWithTempFile
     #@+node:ekr.20031218072017.2832:openWithTempFilePath
-    def openWithTempFilePath (self,v,ext):
+    def openWithTempFilePath (self,p,ext):
         
-        """Return the path to the temp file corresponding to v and ext."""
+        """Return the path to the temp file corresponding to p and ext."""
     
-        name = "LeoTemp_" + str(id(v.t)) + '_' + g.sanitize_filename(v.headString()) + ext
-        name = g.toUnicode(name,g.app.tkEncoding) # 10/20/03
+        name = "LeoTemp_%s_%s%s" % (
+            str(id(p.v.t)),
+            g.sanitize_filename(p.headString()),
+            ext)
     
-        td = g.os_path_abspath(tempfile.gettempdir())
+        name = g.toUnicode(name,g.app.tkEncoding)
+    
+        if 1:
+            td = g.os_path_abspath(tempfile.gettempdir())
+        else:
+            td = g.os_path_abspath(g.os_path_join(g.app.loadDir,'..','temp'))
+    
         path = g.os_path_join(td,name)
         
-        # print "openWithTempFilePath",path
+        g.trace(path)
+    
         return path
     #@nonl
     #@-node:ekr.20031218072017.2832:openWithTempFilePath
@@ -4080,15 +4100,15 @@ class baseCommands:
     #@+node:ekr.20031218072017.2928:markHeadline
     def markHeadline (self):
     
-        c = self ; v = c.currentVnode()
-        if not v: return
+        c = self ; p = c.currentPosition()
+        if not p: return
     
         c.beginUpdate()
-        if v.isMarked():
-            v.clearMarked()
+        if p.isMarked():
+            p.clearMarked()
         else:
-            v.setMarked()
-            v.setDirty()
+            p.setMarked()
+            p.setDirty()
             if 0: # 4/3/04: Marking a headline is a minor operation.
                 c.setChanged(True)
         c.endUpdate()
@@ -4111,20 +4131,38 @@ class baseCommands:
         c.endUpdate()
     #@nonl
     #@-node:ekr.20031218072017.2929:markSubheads
-    #@+node:ekr.20031218072017.2930:unmarkAll
+    #@+node:ekr.20031218072017.2930:unmarkAll & test
     def unmarkAll(self):
     
-        c = self ; v = c.rootVnode()
+        c = self
         c.beginUpdate()
-        while v:
-            if v.isMarked():
-                v.clearMarked()
-                v.setDirty()
+        for p in c.allNodes_iter():
+            if p.isMarked():
+                p.clearMarked()
+                p.setDirty()
                 c.setChanged(True)
-            v = v.threadNext()
         c.endUpdate()
     #@nonl
-    #@-node:ekr.20031218072017.2930:unmarkAll
+    #@+node:ekr.20050219170523:test_c_unmark_all
+    def test_c_unmark_all(self):
+        
+        marked = [p.copy() for p in c.allNodes_iter() if p.isMarked()]
+        
+        c.unmarkAll()
+    
+        for p in c.allNodes_iter():
+            assert not p.isMarked(), 'marked after Unmark All %s' % p
+            
+        # Restore marks.
+        c.beginUpdate()
+        for p in c.allNodes_iter():
+            for p2 in marked:
+                if p.isEqual(p2):
+                    p.setMarked()
+        c.endUpdate()
+    #@nonl
+    #@-node:ekr.20050219170523:test_c_unmark_all
+    #@-node:ekr.20031218072017.2930:unmarkAll & test
     #@-node:ekr.20031218072017.2922:Mark...
     #@+node:ekr.20031218072017.1766:Move... (Commands)
     #@+node:ekr.20031218072017.1767:demote
