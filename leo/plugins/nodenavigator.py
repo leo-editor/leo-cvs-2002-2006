@@ -120,7 +120,10 @@ class Navigator:
         
         try:
             menu = self.marks["menu"]
-        except: return
+        except:
+            menu = None
+            
+        if not menu: return
     
         def callback(event=None,self=self,c=c,p=p.copy()):
             self.select(c,p)
