@@ -1038,19 +1038,15 @@ class baseUndoer:
 			
 		# The previous code should already have created this data.
 		old_v, old_headlines, old_bodies, old_attributes = old_data
-		assert(text is not None)
+		assert(new_bodies != None)
+		assert(old_bodies != None)
 	
 		u = self ; c = u.commands
 		joinList = new_v.t.joinList[:]
-		if 0:
-			trace("joinList")
-			for j in joinList:
-				print '\t',j
-		assert(new_v in joinList)
 		result = None
 		for v in joinList:
-			if v == new_v: result = copy = old_v
-			else: copy = old_v.copyTree()
+			copy = old_v.copyTree()
+			if not result: result = copy
 			# Remember how to link the new node.
 			parent = v.parent()
 			prev = v.back()
@@ -1066,10 +1062,11 @@ class baseUndoer:
 			copy.addTreeToJoinLists()
 			assert(copy in copy.t.joinList)
 	
+		if not result:
+			result = old_v
+	
 		# Restore all headlines and bodies from the saved lists.
-		assert(new_bodies != None)
-		assert(old_bodies != None)
-		v = copy; after = copy.nodeAfterTree()
+		v = result; after = result.nodeAfterTree()
 		encoding = app.tkEncoding
 		i = 0
 		while v and v != after:
@@ -1079,9 +1076,7 @@ class baseUndoer:
 			v = v.threadNext()
 			i += 1
 	
-		assert(result == old_v)
-		result.t.setTnodeText(text)
-		result.setBodyStringOrPane(text)
+		result.setBodyStringOrPane(result.bodyString())
 		c.initAllCloneBits()
 		return result
 	#@nonl
