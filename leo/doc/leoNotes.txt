@@ -2667,6 +2667,92 @@ def createGlobalWindows (self):
 #@-node:ekr.20031218072017.4050:tkGui.createGlobalWindows
 #@-node:ekr.20041121111018:Unused (find initing)
 #@-node:ekr.20041228094801:Config...
+#@+node:ekr.20050104131343.1:From replaceTargetFileIfDifferent
+#@+node:ekr.20041005105605.213:<< delete the output file >>
+try: # Just delete the temp file.
+    os.remove(self.outputFileName)
+except:
+    g.es("exception deleting:" + self.outputFileName)
+    g.es_exception()
+#@nonl
+#@-node:ekr.20041005105605.213:<< delete the output file >>
+#@+node:ekr.20041005105605.214:<< replace the target file with the output file >>
+try:
+    # 10/6/02: retain the access mode of the previous file,
+    # removing any setuid, setgid, and sticky bits.
+    mode = (os.stat(self.targetFileName))[0] & 0777
+except:
+    mode = None
+
+try: # Replace target file with temp file.
+    os.remove(self.targetFileName)
+    try:
+        g.utils_rename(self.outputFileName,self.targetFileName)
+        if mode != None: # 10/3/02: retain the access mode of the previous file.
+            try:
+                os.chmod(self.targetFileName,mode)
+            except:
+                g.es("exception in os.chmod(%s)" % (self.targetFileName))
+        g.es("writing: " + self.shortFileName)
+        self.fileChangedFlag = True
+    except:
+        # 6/28/03
+        self.writeError("exception renaming: %s to: %s" % (self.outputFileName,self.targetFileName))
+        g.es_exception()
+except:
+    self.writeError("exception removing:" + self.targetFileName)
+    g.es_exception()
+    try: # Delete the temp file when the deleting the target file fails.
+        os.remove(self.outputFileName)
+    except:
+        g.es("exception deleting:" + self.outputFileName)
+        g.es_exception()
+#@nonl
+#@-node:ekr.20041005105605.214:<< replace the target file with the output file >>
+#@+node:ekr.20041005105605.215:<< rename the output file to be the target file >>
+try:
+    g.utils_rename(self.outputFileName,self.targetFileName)
+    g.es("creating: " + self.targetFileName)
+    self.fileChangedFlag = True
+except:
+    self.writeError("exception renaming:" + self.outputFileName +
+        " to " + self.targetFileName)
+    g.es_exception()
+#@nonl
+#@-node:ekr.20041005105605.215:<< rename the output file to be the target file >>
+#@+node:ekr.20050104131343.2:<< files differ only in line endings >>
+self.explicitLineEnding and
+self.compareFiles(
+    self.outputFileName,
+    self.targetFileName,
+    ignoreLineEndings=True)
+#@nonl
+#@-node:ekr.20050104131343.2:<< files differ only in line endings >>
+#@+node:ekr.20050104131929.3:<< old code >>
+if 1: # Use rename in all cases.
+    os.rename(src,dst)
+else:
+    # This isn't a great solution: distutils.file_util may not exist.
+    if sys.platform=="win32":
+        os.rename(src,dst)
+    else:
+        from distutils.file_util import move_file
+        move_file(src,dst)
+#@nonl
+#@-node:ekr.20050104131929.3:<< old code >>
+#@-node:ekr.20050104131343.1:From replaceTargetFileIfDifferent
+#@+node:ekr.20031218072017.3974:frame.OnVisibility (Not used)
+# Handle the "visibility" event and attempt to attach the Leo icon.
+# This code must be executed whenever the window is redrawn.
+
+def OnVisibility (self,event):
+
+    if self.icon and event.widget is self.top:
+
+        # print "OnVisibility"
+        self.icon.attach(self.top)
+#@nonl
+#@-node:ekr.20031218072017.3974:frame.OnVisibility (Not used)
 #@-node:ekr.20031218072017.434:Unused code
 #@-all
 #@nonl

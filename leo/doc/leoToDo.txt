@@ -5,236 +5,6 @@
 #@+all
 #@+node:ekr.20050102180943.1:4.3 a1
 #@+node:ekr.20041228093733:First (Top Roti)
-#@+node:ekr.20050102180943.2:Docs...
-#@+node:ekr.20040226094105:Put the scrollWheel workaround in the FAQ (or in the code??)
-@nocolor
-#@nonl
-#@+node:ekr.20040226094105.1:halw
-
-https://sourceforge.net/forum/message.php?msg_id=2437859
-By: halw
-
-David,
-
-I agree that your solution is best -- the problem is it doesn't work. 
-
-If you look at the original post you'll note that the mouse wheel works fine
-in all other Leo panes (which are native text panes, not a custom canvas).
-
-In fact, a stock RH9 system does set up X as those pages indicate. The problem
-is elsewhere, perhaps Tk or Tkinter.
-
-If Edward doesn't want to ship a workaround, that's fine. It should, IMO, make
-it into the FAQ, though.
-
---Hal
-
-#@-node:ekr.20040226094105.1:halw
-#@+node:ekr.20040226094105.2:djsg
-https://sourceforge.net/forum/message.php?msg_id=2435622
-By: djsg
-
-Tk is complying with the behavior of XFree86, and not hiding that behavior. 
-
-Documentation for XFree86 4.2.0 -- documentation for a 4.4 development version
-matches it, so 4.3.0 ought to match it also:
-
-http://www.xfree86.org/4.2.0/mouse7.html
-
-An example of configuration for XFree86 3.3.2.
-
-First, the URL: 
-
-http://www.genius-europe.com/service/faq/tuxmouse.htm
-
-o save their bandwidth, the example follows: 
-
-
-All mices with scroll wheel or stick
-
-XFree86 >= 3.3.2 (or other XServer with wheel to mouse button support)
-The mouse must be setup in XF86Config to send the mouse buttons 4 and 5 for
-wheel actions.
-Edit /etc/XF86Config with your favorite editor
-Add the following line to the "Pointer" section.
-
-ZAxisMapping 4 5
-
-Make sure your Protocol is set to either "IMPS/2" for a PS/2 mouse
-or for serial mice set it to "IntelliMouse" or "Auto".
-Example for PS/2 wheel mouse:
-
-Section "Pointer"
-Protocol "IMPS/2"
-Device "/dev/psaux"
-SampleRate 60
-BaudRate 1200
-ZAxisMapping 4 5
-Buttons 3
-EndSection
-
-After XWindows is started run :
-imwheel -k
-
-
-#@-node:ekr.20040226094105.2:djsg
-#@+node:ekr.20040226094105.3:The actual workaround
-
-https://sourceforge.net/forum/message.php?msg_id=2433628
-By: halw
-
-Okay, I have a workaround that works for me with my existing Tk version. My
-Tkinter skills are weak, but I don't think this will hurt anything else :)
-
-Turns out this Tk version (or X or Tkinter or 	) doesn't generate MouseWheel
-events, but maps to buttons 4 (up) & 5 (down).
-
-Add to if clause 
-# Handle mouse wheel in the outline pane.
-if sys.platform == "linux2": # This crashes tcl83.dll
-..canvas.bind("<MouseWheel>", frame.OnMouseWheel)
-..def mapWheel(e):
-    if e.num == 4:
-    ..e.delta = 120
-    ..return frame.OnMouseWheel(e)
-    elif e.num == 5:
-    ..e.delta = -120
-    ..return frame.OnMouseWheel(e)
-..canvas.bind("<ButtonPress>", mapWheel, add=1)
-#@nonl
-#@-node:ekr.20040226094105.3:The actual workaround
-#@-node:ekr.20040226094105:Put the scrollWheel workaround in the FAQ (or in the code??)
-#@+node:ekr.20041117163258:Document design of new config manager
-@nocolor
-#@nonl
-#@+node:ekr.20041116091233.2:Key principle & corollaries
-The fundamental design principle underlying the new configuration manager is this:
-
-** Settings must be infinitely flexible **
-
-There is no way that I can predict what people and plugins are going to want to do.  Rather than trying to "figure it all out" Leo must let people and plugins do whatever they want.  This turns out to be the easiest way.  You could say it is the only way.
-
-There are several direct corollaries of this principle:
-
-- Only outlines can structure settings.  Tabbed notebooks are not general enough.
-
-- We must be able to add any kind of new setting without changing the format of .leo files.  The xml structure of .leo files must not depend on settings.  In particular, the <preferences> element must become vestigial.
-
-- Leo can not use flat configuration files.  There is no way flat configuration files can do what is required.  Say bye bye to ConfigParser and all it's spawn.
-
-I understand some people like flat config files.  Plugins can still use them.  However, using flat config files is simply not feasible if Leo is to have an extensible structure.
-
-- Leo's configuration manager must be entirely rewritten and substantial changes to Leo's core may be coming.  This can't be helped; much of the structure of leoConfig.txt is hard-wired into leoConfig.py.
-
-- The new configuration manager must allow plugins to create and reorganize settings.  As we shall see in a later posting, this will be surprisingly easy to do.
-
-- Leo must use Leo outlines in a new way to organize settings.
-
-It would be extremely foolish not to take advantage of Leo's organizational capabilities.  However, using leoConfig.leo to create leoConfig.txt created endless problems.  Something _much_ better is needed.  As we shall see in the next posting, there is, in fact, a much better way.
-
-Edward
-#@nonl
-#@-node:ekr.20041116091233.2:Key principle & corollaries
-#@+node:ekr.20041116091233.10:The shape of the new design
-The shape of the 4.3 design
-
-Given the fundamental design principle for the new configuration manager, viz., settings must be infinitely flexible, the shape of a powerful and flexible design starts to emerge from the shadows:
-
-- Leo will support at least the local, user and per-Leo-file settings.
-
-Plugins may create other kinds of settings.  The new configuration manager will support this.
-
-- Settings must be contained _in Leo outlines_.
-
-It would be extremely wasteful and foolish not to use Leo's superb data organizing features.  Flat configuration files can not begin to do what must be done.  I shall have no further use for ConfigParser.  Plugins can, of course, use ConfigParser if they like.
-
-Global and user settings will be contained in files called leoSettings.leo.  The big difference between leoSettings.leo and leoConfig.leo is that the leoSettings.leo files never get tangled.  Instead, Leo will _parse_ these files on startup to create settings.  As we shall see, this parsing is trivial to do.
-
-Per-file settings will be contained _in the outline to which the settings apply_.  These settings will be contained in an @settings tree.
-
-N.B. This @settings tree is just part of the outline. In particular:
-
-a) all nodes of this tree will be easily accessible to scripts and plugins.  For example, c.settingsRoot() will return the root of this tree.
-
-b) no part of Leo's xml file format needs to change in order to create additional settings.
-
-- The @settings tree will normally be hidden.
-
-The Show @settings command will hide the "regular" outline and show only the @settings outline.  This command will work pretty much like the hoist command.  The corresponding Hide @settings command will work like the De-Hoist command.  leoSettings.leo files will contain nothing but the @settings tree, so this tree will be visible by default.
-
-- Users will usually view and change settings using a _settings dialog_.
-
-The supremely valuable Configurator.py script is the inspiration for this idea.
-
-The Edit Global Prefs, Edit User Prefs, and Edit Local Prefs commands will bring up these dialogs.  These settings dialog will (and must) be organized as in jEdit.  There will be an extensible outline to organize settings and a separate page area to examine and change settings.   Selecting an item in the outline will select a page.
-
-BTW, Leo will change settings files _only_ as the result of such commands.  In particular, Leo will no longer change settings when saving a .leo file. 
-
-- User _will_ be able to view and change the @settings tree.
-
-So there are two views of the @settings tree.  The normal view is the gui view.  The "expert" view is the @settings outline itself.  The expert view allows users to create new settings, to reorganize settings, and to do other things that can't be done in the gui view.
-
-The outline part of the settings dialog will be a Tix or Pmw megawidget.  There will be no need to use the leoTkinterTree class.  However, the @settings tree _is_ part of a regular Leo outline, so the @settings tree itself can use clones.  The megawidget outline won't allow changes, but that does not make the scheme any less flexible; changes can be made in the @settings "view".  Do you see how clever this is?
-
-- Leo will create settings dialogs _using information contained in the @settings trees_. 
-
-Again, this idea comes from the Configurator.py script.  Parsing @settings trees is trivial because the parser has full access to @settings tree, just as any script does.  Furthermore, the structure of settings is mirrored in the structure of this tree, so discovering hierarchical relationships in the settings is also trivial.
-
-I'll discuss the actual format of @settings tree in a later posting.  Suffice it to say here that
-
-a) The format is simple, yet powerful and flexible;
-b) plugins could easily extend this format.
-
-- The Open Global Settings and Open User Settings commands will open the appropriate leoSettings.leo files and automatically show the @settings trees. (There is nothing else to show).
-
-- Leo will update settings only in response to saving leoSettings.leo files or .leo files containing @settings trees.  There will be no _derived_ settings files to update.  This will eliminate all the confusion arising from leoConfig.txt getting out of synch with leoConfig.leo.
-
-Conclusion
-
-I am pleased with this design.  It is simple, powerful, flexible.  
-
-Just as one example of what can be done, this design makes translating Leo into foreign languages about as easy as can be imagined.  I haven't discussed all the details of this, but clearly translating @settings dialog entries can be done without fuss.  The "infinitely extensible" principle guarantees that plugins can create whatever translation data is needed in an @setting tree somewhere.  Because this tree is an regular part of the Leo outline, a plugin could create this tree from other data.
-
-Acknowledgments
-
-Besides the Configurator.py script, another crucial influence on my thinking was the plugin_manager plugin.  This showed that it is indeed possible to have a "dual" view of data, both as text (or outline) and as a dialog.  RodrigoB's suggestion concerning @config-file nodes is the direct precursor of @settings trees.  However, I probably would not have been able to understand Rodrigo's suggestion without Configurator.py script and plugin_manager.py.  Also, Tom Fetherston's long postings convinced me that configuration must be infinitely extensible.  This was another key aha.  So thanks to you all; this would not have happened without you.
-
-Edward
-#@nonl
-#@-node:ekr.20041116091233.10:The shape of the new design
-#@+node:ekr.20041116091233.11:Format of the @settings tree
-Some nodes in the @setting tree will organize the settings.  All other nodes nodes will represent individual settings in a very simple way as follows:
-
-- The headline contains the name of the setting, optionally followed by its translation for other languages.
-
-- The body text contains the expected type of the settings, its present value, and comments.  Leo will use these fields to create an area in the gui dialog in which the user can examine and change the setting.
-
-The first line of the body text contains type:value.  The type determines the type of the option and thus the kind of widget used to show the setting in the dialog.  Typical types will be bool, int, string, color, font, directory etc.
-
-All other lines of the body text contains comments that will appear in the dialog.
-
-Leo can easily use this information to create dialog entries.  Bool settings create radio buttons, string entries, create Text boxes, color entries create color pickers, etc.
-
-There will be other details forthcoming, but this is enough to show that a simple scheme can be extremely powerful in an outline context.
-#@nonl
-#@-node:ekr.20041116091233.11:Format of the @settings tree
-#@+node:ekr.20041116125049:Improvements
-- @page creates a single dialog page.
-
-- Use @int:name=val in headline.
-
-The advantage is that the body text will contain only comment text.
-The disadvantage is that parsing the headline is a little harder.
-
-Similarly for @string, @color, etc.
-
-- Allow @trans translation in child nodes
-
-- Non-@ headlines just create nodes in outline mega-widget.
-#@nonl
-#@-node:ekr.20041116125049:Improvements
-#@-node:ekr.20041117163258:Document design of new config manager
-#@-node:ekr.20050102180943.2:Docs...
 #@+node:ekr.20041231110704:Release new installer for Leo 4.2, test with Python 2.4
 #@+node:ekr.20041214131745:Python 2.4 installer problem
 #@+node:ekr.20041214131745.1:Notes
@@ -325,6 +95,40 @@ Lundh's Web page is dated February, 2003, so it may be out of date.
 #@-node:ekr.20041219162724.1:Notes 2
 #@-node:ekr.20041214131745:Python 2.4 installer problem
 #@-node:ekr.20041231110704:Release new installer for Leo 4.2, test with Python 2.4
+#@+node:ekr.20050105065157:Tip
+@killcolor
+http://sourceforge.net/forum/message.php?msg_id=2923560
+By: nobody
+
+> What is fastest way to display graphic media from Leo? For example jpeg photos,
+digital video movies, Flash swf files... Shoudl I just wrap all those in html
+and link from there?
+
+One way is to link directly to the media file from a Leo node (with @url) and
+write a scriptbutton to wrap all URL-nodes under the current node in a single
+HTML page (using the HTML browser trick at
+http://sourceforge.net/forum/forum.php?thread_id=1201579&forum_id=10226 ).
+
+Then, you can view your media in two ways: individually or in a group.
+
+Individually, you can directly click on the @url link to display the media in
+the browser (assuming you have your MIME/filetype associations set up correctly
+for your browser).
+
+In a group, you can click on a scriptbutton (you have to code this yourself,
+very simple) which should collect all @url nodes under the current node and
+dynamically generate a HTML page displaying either links to or embedded versions
+of the media (using the HTML trick described above to invoke the browser). This
+way, you can create collections of @url nodes under a single node (like a bookmark
+folder), and press a single button to view the @url-collection as a single entity
+in the browser (with all browser capabilities like displaying the media).
+
+You could probably generalize this idea of "collect all @url-nodes under current
+node and display as HTML in browser" into a general-purpose plugin. However,
+the plugin would have to be somewhat smart in mapping a link to its corresponding
+HTML code (e.g. an image link gets mapped to an <img> HTML tag, a link to a
+Flash file gets mapped to an <embed> tag, etc).
+#@-node:ekr.20050105065157:Tip
 #@-node:ekr.20041228093733:First (Top Roti)
 #@+node:ekr.20041228053704:Finish Config...
 #@+node:EKR.20040606193130:(Fix problems with negative tab width in prefs)

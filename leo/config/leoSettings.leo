@@ -1013,7 +1013,7 @@ Therefore, @if-platform and @ifPlatformare equivalent to @ifplatform.</t>
 # 
 # Default size is 12 for Linux, 8 otherwise.
 
-log_text_font_family = None
+log_text_font_family = Courier New
 log_text_font_size = None
 log_text_font_slant = roman
 log_text_font_weight = normal

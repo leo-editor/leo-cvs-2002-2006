@@ -115,7 +115,7 @@ rst2.py
     # newButtons.py
 
 # Creates "Recent" and "Marks" popups in the icon area.
-    # nodenavigator.py
+#nodenavigator.py
     
 # Creates row-column indicators in the status area.
 #rowcol.py
