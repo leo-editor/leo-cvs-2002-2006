@@ -27,6 +27,15 @@ class tkinterGui(leoGui.leoGui):
 	
 		self.bitmap_name = None
 		self.bitmap = None
+		self.win32clipboard = None
+		
+		if 0: # This seems both dangerous and non-functional.
+			if sys.platform == "win32":
+				try:
+					import win32clipboard
+					self.win32clipboard = win32clipboard
+				except:
+					es_exception()
 	#@nonl
 	#@-node: tkinterGui.__init__
 	#@+node:createRootWindow & allies
@@ -219,20 +228,48 @@ class tkinterGui(leoGui.leoGui):
 	#@-node:app.gui.Tkinter panels
 	#@+node:replaceClipboardWith
 	def replaceClipboardWith (self,s):
+		
+		wcb = app.gui.win32clipboard
 	
-		self.root.clipboard_clear()
-		self.root.clipboard_append(s)
-		
-	#@-node:replaceClipboardWith
-	#@+node:getTextFromClibboard
-	def getTextFromClibboard (self):
-		
-		try:
-			return self.root.selection_get(selection="CLIPBOARD")
-		except:
-			return None
+		if wcb:
+			try:
+				wcb.OpenClipboard(0)
+				wcb.EmptyClipboard()
+				wcb.SetClipboardText(s)
+				wcb.CloseClipboard()
+				return s
+			except:
+				es_exception()
+				return None
+		else:
+			self.root.clipboard_clear()
+			self.root.clipboard_append(s)
 	#@nonl
-	#@-node:getTextFromClibboard
+	#@-node:replaceClipboardWith
+	#@+node:getTextFromClipboard
+	def getTextFromClipboard (self):
+		
+		wcb = app.gui.win32clipboard
+		
+		if wcb:
+			try:
+				wcb.OpenClipboard(0)
+				data = wcb.GetClipboardData()
+				wcb.CloseClipboard()
+				# trace(data)
+				return data
+			except TypeError:
+				# trace(None)
+				return None
+			except:
+				es_exception()
+				return None
+		else:
+			try:
+				return self.root.selection_get(selection="CLIPBOARD")
+			except:
+				return None
+	#@-node:getTextFromClipboard
 	#@+node:get_window_info
 	# WARNING: Call this routine _after_ creating a dialog.
 	# (This routine inhibits the grid and pack geometry managers.)
