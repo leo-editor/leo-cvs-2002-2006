@@ -212,40 +212,6 @@ class leoTree:
 		self.widgets = []
 	#@-body
 	#@-node:3::tree.deleteWidgets
-	#@+node:4::tree.destroy
-	#@+body
-	def destroy (self):
-		
-		"""Clear all links from a tree to other objects."""
-	
-		# print "tree.destroy" # Don't use trace.
-	
-		# Delete all references to Tk widgets.
-		self.deleteBindings()
-		self.canvas.delete("all")
-		self.deleteWidgets()
-	
-		# Clear all ivars.
-		self.bindings = None
-		self.colorizer = None
-		self.commands = None
-		self.canvas = None
-		self.currentVnode = None
-		self.drag_id = None
-		self.editVnode = None
-		self.edit_text_dict = None
-		self.font = None
-		self.fontName = None
-		self.iconimages = None
-		self.icon_id_dict = None
-		self.popupMenu = None
-		self.rootVnode = None
-		self.tagBindings = None
-		self.topVnode = None
-		self.widgets = None
-	
-	#@-body
-	#@-node:4::tree.destroy
 	#@-node:3::Birth & death
 	#@+node:4::Drawing
 	#@+node:1::About drawing and updating

@@ -190,15 +190,15 @@ class LeoApp:
 	# Objects must not be "destroyed" more than once; only this method calls destroy routines.
 	
 	def destroyAllWindowObjects (self,frame):
-		
+	
 		"""Clear all links to objects in a Leo window."""
 		
 		# print "app.destroyAllNodes", frame
 		
 		# Do this first.
 		
-		#@<< destroy all vnodes and tnodes in the tree >>
-		#@+node:1::<< destroy all vnodes and tnodes in the tree>>
+		#@<< clear all vnodes and tnodes in the tree >>
+		#@+node:1::<< clear all vnodes and tnodes in the tree>>
 		#@+body
 		# Using a dict here is essential for adequate speed.
 		vList = [] ; tDict = {}
@@ -213,37 +213,34 @@ class LeoApp:
 			v = v.threadNext()
 			
 		for key in tDict.keys():
-			tDict[key].destroy()
+			clearAllIvars(tDict[key])
 		
 		for v in vList:
-			v.destroy()
+			clearAllIvars(v)
 		
 		vList = [] ; tList = [] # Remove these references immediately.
 		#@-body
-		#@-node:1::<< destroy all vnodes and tnodes in the tree>>
+		#@-node:1::<< clear all vnodes and tnodes in the tree>>
 
 		
 		# Destroy all subcommanders.
-		frame.commands.atFileCommands.destroy()
-		frame.commands.fileCommands.destroy()
-		frame.commands.importCommands.destroy()
-		frame.commands.tangleCommands.destroy()
-		frame.commands.undoer.destroy()
+		clearAllIvars(frame.commands.atFileCommands)
+		clearAllIvars(frame.commands.fileCommands)
+		clearAllIvars(frame.commands.importCommands)
+		clearAllIvars(frame.commands.tangleCommands)
+		clearAllIvars(frame.commands.undoer)
 		
 		# Destroy the commander.
-		frame.commands.destroy()
+		clearAllIvars(frame.commands)
 	
-		frame.tree.colorizer.destroy()
-		frame.tree.destroy()
+		clearAllIvars(frame.tree.colorizer)
+		clearAllIvars(frame.tree)
 		
 		# Finally, destroy the frame itself.
 		frame.destroyAllPanels()
-		frame.destroy()
+		clearAllIvars(frame)
 		
 		# Note: pointers to frame still exist in the caller!
-	
-	
-	
 	#@-body
 	#@-node:5::app.destroyAllWindowObjects
 	#@+node:6::app.destroyOpenWithFilesForFrame

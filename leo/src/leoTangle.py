@@ -561,33 +561,7 @@ class tangleCommands:
 		#@-node:3::<< init directive ivars >> (tangle)
 	#@-body
 	#@-node:2::tangle.init_ivars & init_directive_ivars
-	#@+node:3::tangle.destroy
-	#@+body
-	def destroy (self):
-		
-		"""Clear all links from a tangle object to other objects."""
-		
-		# print "tangle.destroy" # Don't use trace.
-		
-		self.code = None
-		self.doc = None
-		self.def_stack = None
-		self.file_name = None
-		self.header = None
-		self.header_name = None
-		self.head_root = None
-		self.output_file = None
-		self.root = None
-		self.root_list = None
-		self.section_name = None
-		self.section_stack = None
-		self.tst = None
-		self.ust = None
-		self.v = None
-	
-	#@-body
-	#@-node:3::tangle.destroy
-	#@+node:4::top level
+	#@+node:3::top level
 	#@+body
 	#@+at
 	#  Only top-level drivers initialize ivars.
@@ -1072,8 +1046,8 @@ class tangleCommands:
 		return any_root_flag
 	#@-body
 	#@-node:14::untangleTree
-	#@-node:4::top level
-	#@+node:5::tangle
+	#@-node:3::top level
+	#@+node:4::tangle
 	#@+node:1::Pass 1
 	#@+node:1::handle_newline
 	#@+body
@@ -2200,8 +2174,8 @@ class tangleCommands:
 	#@-body
 	#@-node:9::section_check
 	#@-node:2::Pass 2
-	#@-node:5::tangle
-	#@+node:6::tst
+	#@-node:4::tangle
+	#@+node:5::tst
 	#@+node:1::st_check
 	#@+body
 	#@+at
@@ -2383,8 +2357,8 @@ class tangleCommands:
 			return section
 	#@-body
 	#@-node:7::st_lookup
-	#@-node:6::tst
-	#@+node:7::ust
+	#@-node:5::tst
+	#@+node:6::ust
 	#@+node:1::ust_dump
 	#@+body
 	def ust_dump (self):
@@ -2491,8 +2465,8 @@ class tangleCommands:
 					break # One warning per section is enough.
 	#@-body
 	#@-node:4::ust_warn_about_orphans
-	#@-node:7::ust
-	#@+node:8::untangle
+	#@-node:6::ust
+	#@+node:7::untangle
 	#@+node:1::compare_comments
 	#@+body
 	#@+at
@@ -3373,8 +3347,8 @@ class tangleCommands:
 		c.endUpdate()
 	#@-body
 	#@-node:7::update_current_vnode
-	#@-node:8::untangle
-	#@+node:9::utility methods
+	#@-node:7::untangle
+	#@+node:8::utility methods
 	#@+body
 	#@+at
 	#  These utilities deal with tangle ivars, so they should be methods.
@@ -4306,7 +4280,7 @@ class tangleCommands:
 		return kind, end
 	#@-body
 	#@-node:18::token_type
-	#@-node:9::utility methods
+	#@-node:8::utility methods
 	#@-others
 #@-body
 #@-node:4::class tangleCommands methods

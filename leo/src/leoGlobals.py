@@ -1986,7 +1986,17 @@ except:
 
 
 #@+others
-#@+node:1::collectGarbage
+#@+node:1::clearAllIvars
+#@+body
+def clearAllIvars (o):
+	
+	"""Clear all ivars of o, a member of some class."""
+	
+	o.__dict__.clear()
+
+#@-body
+#@-node:1::clearAllIvars
+#@+node:2::collectGarbage
 #@+body
 def collectGarbage(message=None):
 	
@@ -2023,8 +2033,8 @@ def collectGarbage(message=None):
 		print "%25s: %d new, %d total objects" % (message,len(newObjects),len(objects))
 
 #@-body
-#@-node:1::collectGarbage
-#@+node:2::printGc
+#@-node:2::collectGarbage
+#@+node:3::printGc
 #@+body
 def printGc(message=None,onlyPrintChanges=false):
 	
@@ -2051,8 +2061,8 @@ def printGc(message=None,onlyPrintChanges=false):
 		traceback.print_exc()
 		return None
 #@-body
-#@-node:2::printGc
-#@+node:3::printGcRefs
+#@-node:3::printGc
+#@+node:4::printGcRefs
 #@+body
 def printGcRefs (verbose=true):
 
@@ -2078,7 +2088,7 @@ def printGcRefs (verbose=true):
 	else:
 		print "%d referers" % len(refs)
 #@-body
-#@-node:3::printGcRefs
+#@-node:4::printGcRefs
 #@-others
 
 

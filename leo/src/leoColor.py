@@ -1024,21 +1024,7 @@ class colorizer:
 		#@-node:3::<< define fonts and data for wiki tags >>
 	#@-body
 	#@-node:1::color.__init__
-	#@+node:2::color.destroy
-	#@+body
-	def destroy (self):
-		
-		"""Clear all links from a color object to other objects."""
-		
-		# print "color.destroy" # Don't use trace.
-	
-		self.v = None
-		self.body = None
-		config = None
-		self.state_dict = None
-	#@-body
-	#@-node:2::color.destroy
-	#@+node:3::color.callbacks...
+	#@+node:2::color.callbacks...
 	#@+node:1::OnHyperLinkControlClick
 	#@+body
 	def OnHyperLinkControlClick (self,v):
@@ -1060,8 +1046,8 @@ class colorizer:
 		pass # trace(`v`)
 	#@-body
 	#@-node:3::OnHyperLinkLeave
-	#@-node:3::color.callbacks...
-	#@+node:4::colorize & recolor_range
+	#@-node:2::color.callbacks...
+	#@+node:3::colorize & recolor_range
 	#@+body
 	# The main colorizer entry point.
 	
@@ -1085,8 +1071,8 @@ class colorizer:
 			self.colorizeAnyLanguage(v,body,leading=leading,trailing=trailing)
 	
 	#@-body
-	#@-node:4::colorize & recolor_range
-	#@+node:5::colorizeAnyLanguage & allies
+	#@-node:3::colorize & recolor_range
+	#@+node:4::colorizeAnyLanguage & allies
 	#@+body
 	def colorizeAnyLanguage (self,v,body,leading=None,trailing=None):
 		
@@ -1574,8 +1560,8 @@ class colorizer:
 
 			es_exception()
 	#@-body
-	#@-node:5::colorizeAnyLanguage & allies
-	#@+node:6::colorizeLine & allies
+	#@-node:4::colorizeAnyLanguage & allies
+	#@+node:5::colorizeLine & allies
 	#@+body
 	def colorizeLine (self,s,state):
 	
@@ -2247,8 +2233,8 @@ class colorizer:
 			self.body.tag_remove(tag,self.index(0),self.index("end"))
 	#@-body
 	#@-node:10::removeAllTags & removeTagsFromLines
-	#@-node:6::colorizeLine & allies
-	#@+node:7::scanColorDirectives
+	#@-node:5::colorizeLine & allies
+	#@+node:6::scanColorDirectives
 	#@+body
 	def scanColorDirectives(self,v):
 		
@@ -2306,8 +2292,8 @@ class colorizer:
 		return self.language # For use by external routines.
 	
 	#@-body
-	#@-node:7::scanColorDirectives
-	#@+node:8::color.schedule
+	#@-node:6::scanColorDirectives
+	#@+node:7::color.schedule
 	#@+body
 	def schedule(self,v,body,incremental=0):
 	
@@ -2321,8 +2307,8 @@ class colorizer:
 		if v and body and self.enabled:
 			self.colorize(v,body,self.incremental)
 	#@-body
-	#@-node:8::color.schedule
-	#@+node:9::getCwebWord
+	#@-node:7::color.schedule
+	#@+node:8::getCwebWord
 	#@+body
 	def getCwebWord (self,s,i):
 		
@@ -2350,8 +2336,8 @@ class colorizer:
 			
 		return word
 	#@-body
-	#@-node:9::getCwebWord
-	#@+node:10::removeAllImages
+	#@-node:8::getCwebWord
+	#@+node:9::removeAllImages
 	#@+body
 	def removeAllImages (self):
 		
@@ -2365,8 +2351,8 @@ class colorizer:
 		
 		self.image_references = []
 	#@-body
-	#@-node:10::removeAllImages
-	#@+node:11::updateSyntaxColorer
+	#@-node:9::removeAllImages
+	#@+node:10::updateSyntaxColorer
 	#@+body
 	# self.flag is true unless an unambiguous @nocolor is seen.
 	
@@ -2376,8 +2362,8 @@ class colorizer:
 		self.scanColorDirectives(v)
 	
 	#@-body
-	#@-node:11::updateSyntaxColorer
-	#@+node:12::useSyntaxColoring
+	#@-node:10::updateSyntaxColorer
+	#@+node:11::useSyntaxColoring
 	#@+body
 	# Return true if v unless v is unambiguously under the control of @nocolor.
 	
@@ -2403,8 +2389,8 @@ class colorizer:
 		# trace("useSyntaxColoring",`val`)
 		return val
 	#@-body
-	#@-node:12::useSyntaxColoring
-	#@+node:13::Utils
+	#@-node:11::useSyntaxColoring
+	#@+node:12::Utils
 	#@+body
 	#@+at
 	#  These methods are like the corresponding functions in leoGlobals.py 
@@ -2494,7 +2480,7 @@ class colorizer:
 	
 	#@-body
 	#@-node:5::skip_string
-	#@-node:13::Utils
+	#@-node:12::Utils
 	#@-others
 #@-body
 #@-node:6::class colorizer

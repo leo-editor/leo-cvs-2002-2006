@@ -264,19 +264,7 @@ class tnode:
 	
 	#@-body
 	#@-node:2::t.__init__
-	#@+node:3::t.destroy
-	#@+body
-	def destroy (self):
-		
-		"""Clear all links from a tnode to other objects."""
-		
-		# print "t.destroy"
-	
-		self.joinList = None
-	
-	#@-body
-	#@-node:3::t.destroy
-	#@+node:4::Getters
+	#@+node:3::Getters
 	#@+node:1::hasBody
 	#@+body
 	def hasBody (self):
@@ -319,8 +307,8 @@ class tnode:
 	#@-body
 	#@-node:3::isVisited
 	#@-node:3::Status bits
-	#@-node:4::Getters
-	#@+node:5::Setters
+	#@-node:3::Getters
+	#@+node:4::Setters
 	#@+node:1::Setting body text
 	#@+node:1::saveBodyPaneToTnode
 	#@+body
@@ -415,7 +403,7 @@ class tnode:
 		self.fileIndex = index
 	#@-body
 	#@-node:4::setFileIndex
-	#@-node:5::Setters
+	#@-node:4::Setters
 	#@-others
 #@-body
 #@-node:3::class tnode
@@ -497,20 +485,6 @@ class vnode:
 	
 	#@-body
 	#@-node:3::v.__repr__ & v.__str__
-	#@+node:4::v.destroy
-	#@+body
-	def destroy (self):
-		
-		"""Clear all links from a vnode to other objects."""
-	
-		# print "v.destroy" # Don't use trace.
-	
-		self.commands = None
-		self.t = None
-		self.mParent = self.mFirstChild = self.mNext = self.mBack = None
-	
-	#@-body
-	#@-node:4::v.destroy
 	#@-node:2::Birth & death
 	#@+node:3::v.Callbacks (handles event hooks)
 	#@+body

@@ -102,24 +102,7 @@ class undoer:
 	#@-body
 	#@-node:1::clearIvars
 	#@-node:3::undo.__init__ & clearIvars
-	#@+node:4::undo.destroy
-	#@+body
-	def destroy (self):
-		
-		"""Clear all links from an undo object to other objects."""
-		
-		# print "undo.destroy" # Don't use trace.
-		
-		self.beads = None
-		self.commands = None
-		self.v = None
-		
-		for ivar in optionalIvars:
-			exec('self.%s = None' % ivar)
-	
-	#@-body
-	#@-node:4::undo.destroy
-	#@+node:5::State routines...
+	#@+node:4::State routines...
 	#@+node:1::clearUndoState
 	#@+body
 	#@+at
@@ -517,8 +500,8 @@ class undoer:
 	
 	#@-body
 	#@-node:9::setUndoTypes
-	#@-node:5::State routines...
-	#@+node:6::u.redo
+	#@-node:4::State routines...
+	#@+node:5::u.redo
 	#@+body
 	def redo (self):
 		
@@ -735,8 +718,8 @@ class undoer:
 		u.setUndoTypes()
 		# print_stats()
 	#@-body
-	#@-node:6::u.redo
-	#@+node:7::u.undo
+	#@-node:5::u.redo
+	#@+node:6::u.undo
 	#@+body
 	#@+at
 	#  This function and its allies undo the operation described by the undo parmaters.
@@ -988,8 +971,8 @@ class undoer:
 		u.setUndoTypes()
 		# print_stats()
 	#@-body
-	#@-node:7::u.undo
-	#@+node:8::Undo helpers
+	#@-node:6::u.undo
+	#@+node:7::Undo helpers
 	#@+node:1::findSharedVnode
 	#@+body
 	def findSharedVnode (self,target):
@@ -1278,7 +1261,7 @@ class undoer:
 	
 	#@-body
 	#@-node:8::undoSortTopLevel
-	#@-node:8::Undo helpers
+	#@-node:7::Undo helpers
 	#@-others
 #@-body
 #@-node:0::@file leoUndo.py

@@ -7,7 +7,7 @@ from leoGlobals import *
 
 
 #@<< scripts >>
-#@+node:3::<< scripts >>
+#@+node:2::<< scripts >>
 #@+body
 #@+others
 #@+node:1::importFiles
@@ -49,7 +49,7 @@ def importFiles (dir, type = None, kind = "@file"):
 #@-node:1::importFiles
 #@-others
 #@-body
-#@-node:3::<< scripts >>
+#@-node:2::<< scripts >>
 
 
 class leoImportCommands:
@@ -81,17 +81,7 @@ class leoImportCommands:
 	
 	#@-body
 	#@-node:1::import.__init__
-	#@+node:2::import.destroy
-	#@+body
-	def destroy (self):
-		
-		# print "import.destroy" # Don't use trace.
-		
-		self.commands = None
-		self.web_st = None
-	#@-body
-	#@-node:2::import.destroy
-	#@+node:4::Import
+	#@+node:3::Import
 	#@+node:1::createOutline
 	#@+body
 	def createOutline (self,fileName,parent):
@@ -2063,8 +2053,8 @@ class leoImportCommands:
 	#@-body
 	#@-node:5::scanPascalText
 	#@-node:5::Scanners for createOutline
-	#@-node:4::Import
-	#@+node:5::Export
+	#@-node:3::Import
+	#@+node:4::Export
 	#@+node:1::convertCodePartToWeb
 	#@+body
 	#@+at
@@ -2680,8 +2670,8 @@ class leoImportCommands:
 		f.close()
 	#@-body
 	#@-node:10::weave
-	#@-node:5::Export
-	#@+node:6::Utilities
+	#@-node:4::Export
+	#@+node:5::Utilities
 	#@+node:1::createHeadline
 	#@+body
 	def createHeadline (self,parent,body,headline):
@@ -3026,7 +3016,7 @@ class leoImportCommands:
 		return result
 	#@-body
 	#@-node:10::undentBody
-	#@-node:6::Utilities
+	#@-node:5::Utilities
 	#@-others
 #@-body
 #@-node:0::@file leoImport.py

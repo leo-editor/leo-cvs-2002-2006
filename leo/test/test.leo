@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="59" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="60" clone_windows="0"/>
 <globals body_outline_ratio="0.5">
-	<global_window_position top="36" left="542" height="75" width="97"/>
+	<global_window_position top="60" left="486" height="75" width="97"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences allow_rich_text="0">
@@ -88,7 +88,6 @@
 </v>
 </v>
 <v t="T46"><vh>alloc tests</vh></v>
-</v>
 <v t="T47"><vh>Dialog tests</vh>
 <v t="T48"><vh>Test askOk</vh></v>
 <v t="T49"><vh>Test aboutLeo</vh></v>
@@ -103,7 +102,9 @@
 <v t="T57"><vh>node two no misspellings</vh></v>
 </v>
 <v t="T58"><vh>v.__repr__ and v.__str___</vh></v>
-<v t="T59" a="V"><vh>Overriding core classes</vh></v>
+<v t="T59"><vh>Overriding core classes</vh></v>
+</v>
+<v t="T60" a="V"><vh>Deleting ivars</vh></v>
 </vnodes>
 <tnodes>
 <t tx="T1"></t>
@@ -530,5 +531,29 @@ print v
 print `v`</t>
 <t tx="T59">import leoFrame
 print "%d leoFrame instances" % leoFrame.LeoFrame.instances</t>
+<t tx="T60">def clearAllIvars (o):
+	
+	if 0:
+		o.__dict__ = {}
+	else:
+		names = o.__dict__.keys()
+		print names
+		for name in names:
+			exec("o.%s = None" % name) # del may not actually remove the ivar.
+			# exec("del o.%s" % name)
+		
+class test:
+	def __init__(self):
+		self.a = 1
+		self.b = 2
+		self.c = []
+		self.d = {}
+		
+t = test()
+print t
+print t.__dict__
+clearAllIvars(t)
+print t
+print t.__dict__</t>
 </tnodes>
 </leo_file>

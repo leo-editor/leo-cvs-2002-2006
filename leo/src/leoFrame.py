@@ -322,50 +322,7 @@ class leoCoreFrame:
 	
 	#@-body
 	#@-node:4::f.createLeoFrame
-	#@+node:5::frame.destroy
-	#@+body
-	def destroy (self):
-		
-		"""Clear all links from a frame to other objects."""
-	
-		# print "frame.destroy" # Don't use trace.
-		
-		# Clear links to panels.
-		self.colorPanel = None
-		self.comparePanel = None
-		self.fontPanel = None 
-		self.prefsPanel = None
-		
-		# Clear other ivars.
-		self.activeFrame = None
-		self.body = None
-		self.bodyBar = None
-		self.canvas = None
-		self.commands = None
-		self.draggedItem = None
-		self.f1 = self.f2 = None
-		self.hwnd = None
-		self.icon = None
-		self.iconFrame = None
-		self.log = None
-		self.logBar = None
-		self.logColorTags = None
-		self.menus = None
-		self.menuShortcuts = None
-		self.mFileName = None
-		self.outerFrame = None
-		self.recentFiles = None
-		self.splitter1 = self.splitter2 = None
-		self.statusFrame  = None
-		self.statusLabel = None
-		self.statusText = None
-		self.title = None
-		self.top = None
-		self.tree = None
-		self.treeBar = None
-	#@-body
-	#@-node:5::frame.destroy
-	#@+node:6::frame.destroyAllPanels
+	#@+node:5::frame.destroyAllPanels
 	#@+body
 	def destroyAllPanels (self):
 		
@@ -382,8 +339,8 @@ class leoCoreFrame:
 		self.fontPanel = None
 		self.prefsPanel = None
 	#@-body
-	#@-node:6::frame.destroyAllPanels
-	#@+node:7::frame.promptForSave
+	#@-node:5::frame.destroyAllPanels
+	#@+node:6::frame.promptForSave
 	#@+body
 	def promptForSave (self):
 		
@@ -429,7 +386,7 @@ class leoCoreFrame:
 			else:
 				return true # Veto.
 	#@-body
-	#@-node:7::frame.promptForSave
+	#@-node:6::frame.promptForSave
 	#@-node:1::Birth & Death
 	#@+node:2::Configuration
 	#@+node:1::f.configureBar

@@ -68,25 +68,7 @@ class fileCommands:
 	
 	#@-body
 	#@-node:1::leoFileCommands._init_
-	#@+node:2::leoFileCommands.destroy
-	#@+body
-	def destroy (self):
-		
-		"""Clear all links from a fileCommands object to other objects."""
-		
-		# print "fileCommands.destroy" # Don't use trace.
-		
-		self.a = None
-		self.commands = None
-		self.copiedTree = None
-		self.fileBuffer = None
-		self.frame = None
-		self.outputFile = None
-		self.tnodesDict = None
-		self.topVnode = None
-	#@-body
-	#@-node:2::leoFileCommands.destroy
-	#@+node:3::Reading
+	#@+node:2::Reading
 	#@+node:1::createVnode
 	#@+body
 	def createVnode(self,parent,back,tref,headline):
@@ -1056,8 +1038,8 @@ class fileCommands:
 		return s
 	#@-body
 	#@-node:9::xmlUnescape
-	#@-node:3::Reading
-	#@+node:4::Writing
+	#@-node:2::Reading
+	#@+node:3::Writing
 	#@+node:1::assignFileIndices (no change from 3.11.1)
 	#@+body
 	def assignFileIndices (self,root=None):
@@ -1873,7 +1855,7 @@ class fileCommands:
 			return false
 	#@-body
 	#@-node:12::write_LEO_file
-	#@-node:4::Writing
+	#@-node:3::Writing
 	#@-others
 #@-body
 #@-node:0::@file leoFileCommands.py

@@ -81,34 +81,7 @@ class Commands:
 		#@-node:1::<< initialize ivars >>
 	#@-body
 	#@-node:1::c.__init__ & initIvars
-	#@+node:2::c.destroy
-	#@+body
-	def destroy (self):
-		
-		"""Clear all links from a commander to other objects."""
-	
-		# print "c.destroy" # Don't use trace.
-		
-		# Clear links to subcommanders.
-		self.atFileCommands = None
-		self.fileCommands = None
-		self.importCommands = None
-		self.tangleCommands = None
-		self.undoer = None
-	
-		# Clear others ivars.
-		self.beadList = None
-		self.body = None
-		self.canvas = None
-		self.frame = None
-		self.hookFunction = None
-		self.log = None
-		self.tree = None
-		self.visitedList = None
-	
-	#@-body
-	#@-node:2::c.destroy
-	#@+node:3::c.__repr__ & __str__
+	#@+node:2::c.__repr__ & __str__
 	#@+body
 	def __repr__ (self):
 		
@@ -120,7 +93,7 @@ class Commands:
 	__str__ = __repr__
 	
 	#@-body
-	#@-node:3::c.__repr__ & __str__
+	#@-node:2::c.__repr__ & __str__
 	#@-node:1::Birth & death
 	#@+node:2::c.setIvarsFromFind
 	#@+body
