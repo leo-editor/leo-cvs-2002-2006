@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="2088" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="2089" clone_windows="0"/>
 <globals body_outline_ratio="0.5">
 	<global_window_position top="35" left="118" height="37" width="105"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
@@ -3119,13 +3119,13 @@
 <v t="T1523"><vh>onKillLeoEvent</vh></v>
 <v t="T1524"><vh>profile</vh></v>
 </v>
-<v t="T1525"><vh>@file leoApp.py</vh>
+<v t="T1525" a="E"><vh>@file leoApp.py</vh>
 <v t="T1163" a="C"><vh>app.__init__</vh></v>
-<v t="T1156" a="C"><vh>app.finishCreate</vh>
+<v t="T1156" a="CE"><vh>app.finishCreate</vh>
 <v t="T1157"><vh>&lt;&lt; return false if not v2.2 or above &gt;&gt;</vh></v>
 <v t="T1158" a="C"><vh>&lt;&lt; set loadDir &gt;&gt;</vh></v>
-<v t="T1159"><vh>&lt;&lt; set the default Leo icon &gt;&gt;</vh>
-<v t="T1160"><vh>&lt;&lt; set v834 if version is 8.3.4 or greater &gt;&gt;</vh></v>
+<v t="T1159" a="E"><vh>&lt;&lt; set the default Leo icon &gt;&gt;</vh>
+<v t="T1160" a="V"><vh>&lt;&lt; set v834 if version is 8.3.4 or greater &gt;&gt;</vh></v>
 </v>
 </v>
 <v t="T1526"><vh>destroyAllGlobalWindows</vh></v>
@@ -3265,9 +3265,9 @@
 </v>
 </v>
 </v>
-<v t="T1582" a="E"><vh>@file leoColor.py</vh>
+<v t="T1582"><vh>@file leoColor.py</vh>
 <v t="T1583"><vh>&lt;&lt; define colorizer constants &gt;&gt;</vh></v>
-<v t="T392" a="CV"><vh>&lt;&lt; define colorizer keywords &gt;&gt;</vh></v>
+<v t="T392" a="C"><vh>&lt;&lt; define colorizer keywords &gt;&gt;</vh></v>
 <v t="T1584"><vh>&lt;&lt; define colorizer functions &gt;&gt;</vh></v>
 <v t="T1585"><vh>&lt;&lt; define color panel data &gt;&gt;</vh></v>
 <v t="T1586"><vh>class colorizer</vh>
@@ -4829,6 +4829,7 @@
 </v>
 <v t="T637" a="C"><vh>update_file_if_changed</vh></v>
 <v t="T1390" a="CE"><vh>utils_rename</vh></v>
+<v t="T2089"><vh>version checking</vh></v>
 </v>
 </v>
 </vnodes>
@@ -12038,7 +12039,7 @@ if backupName:
 	except:
 		try:
 			executable_dir = os.path.dirname(sys.executable)
-			idle_dir=os.path.join(executable_dir, "tools/idle")
+			idle_dir=os.path.join(executable_dir,"tools","idle")
 			sys.path.append(idle_dir)
 			# Try again
 			import idle
@@ -19975,26 +19976,22 @@ def finishCreate(self):
 	self.findFrame.top.withdraw()
 	return true # all went well.</t>
 <t tx="T1157">try:
-	version = sys.version
-	vlist = string.split(version,".")
-	v0 = int(vlist[0])
-	v1 = int(vlist[1])
-	v22 = v0 &gt; 2 or (v0 == 2 and v1 &gt; 1)
-except:
-	print "exception getting version"
-	traceback.print_exc()
-	v22 = true # Just hope
-	
-if not v22:
-	d = leoDialog.leoDialog()
-	d.askOk("Python version error",
+	# 04-SEP-2002 DHEIN: simplify version check
+	if not CheckVersion(sys.version, "2.2"):
+		d = leoDialog.leoDialog()
+		d.askOk("Python version error",
 """
 leo.py requires Python 2.2 or higher.
 
 You may download Python 2.2 from http://python.org/download/
 """,
-		text="Exit")
-	return false</t>
+			text="Exit")
+		return false
+except:
+	print "exception getting version"
+	traceback.print_exc()
+	v22 = true # Just hope
+</t>
 <t tx="T1158"># loadDir should be the directory that contains leo.py
 
 try:
@@ -20035,25 +20032,10 @@ if v834:
 		if 0: # Let's ignore this for now until I understand the issues better.
 			es("exception setting bitmap")
 			traceback.print_exc()</t>
-<t tx="T1160"># A compare version utility would be good.
-
-# Tk version is of the form 9.9.9, or 9.9b9,
-# or 9.9.9b9.  The "9b9" form is used for beta
-# releases.  This string splitting logic handles
-# both normal and beta releases.
-vlist = string.split(version,".")
-v0 = int(vlist[0])
-vlistb = string.split(vlist[1], "b")
-v1 = int(vlistb[0])
-if len(vlist) &gt; 2: 
-	vlistb = string.split(vlist[2], "b")
-	v2 = int(vlistb[0])
-else:
-	v2 = 0
-
-v834 = v0 &gt; 8 or (
-	(v0 == 8 and v1 &gt; 3) or (
-	(v0 == 8 and v1 == 3 and v2 &gt;= 4 )))</t>
+<t tx="T1160"># 04-SEP-2002 DHEIN: simplify version check
+# 04-SEP-2002 Stephen P. Schaefer: make sure v834 is set
+v834 = CheckVersion(version, "8.3.4")
+</t>
 <t tx="T1161">@ignore
 
 Better traces on @read failure.</t>
@@ -31826,5 +31808,114 @@ def getTime():
 def esDiffTime(message, start):
 	es(message + ("%6.3f" % (time.clock()-start)))
 	return time.clock()</t>
+<t tx="T2089">@
+CheckVersion() is a generic version checker.  Assumes a
+version string of up to four parts, or tokens, with
+leftmost token being most significant and each token
+becoming less signficant in sequence to the right.
+
+RETURN VALUE
+
+1 if comparison is true
+0 if comparison is false
+
+PARAMETERS
+
+version: the version string to be tested
+againstVersion: the reference version string to be
+                compared against
+condition: can be any of "==", "!=", "&gt;=", "&lt;=", "&gt;", or "&lt;"
+stringCompare: whether to test a token using only the
+               leading integer of the token, or using the
+			   entire token string.  For example, a value
+			   of "0.0.1.0" means that we use the integer
+			   value of the first, second, and fourth
+			   tokens, but we use a string compare for the
+			   third version token.
+delimiter: the character that separates the tokens in the
+           version strings.
+
+The comparison uses the precision of the version string
+with the least number of tokens.  For example a test of
+"8.4" against "8.3.3" would just compare the first two
+tokens.
+
+The version strings are limited to a maximum of 4 tokens.
+@c
+
+def CheckVersion( version, againstVersion, condition="&gt;=", stringCompare="0.0.0.0", delimiter='.' ):
+	import sre  # Unicode-aware regular expressions
+	#
+	# tokenize the stringCompare flags
+	compareFlag = string.split( stringCompare, '.' )
+	#
+	# tokenize the version strings
+	testVersion = string.split( version, delimiter )
+	testAgainst = string.split( againstVersion, delimiter )
+	#
+	# find the 'precision' of the comparison
+	tokenCount = 4
+	if tokenCount &gt; len(testAgainst):
+		tokenCount = len(testAgainst)
+	if tokenCount &gt; len(testVersion):
+		tokenCount = len(testVersion)
+	#
+	# Apply the stringCompare flags
+	justInteger = sre.compile("^[0-9]+")
+	for i in range(tokenCount):
+		if "0" == compareFlag[i]:
+			m = justInteger.match( testVersion[i] )
+			testVersion[i] = m.group()
+			m = justInteger.match( testAgainst[i] )
+			testAgainst[i] = m.group()
+		elif "1" != compareFlag[i]:
+			errMsg = "stringCompare argument must be of " +\
+				 "the form \"x.x.x.x\" where each " +\
+				 "'x' is either '0' or '1'."
+			raise errMsg
+	#
+	# Compare the versions
+	if condition == "&gt;=":
+		for i in range(tokenCount):
+			if testVersion[i] &lt; testAgainst[i]:
+				return 0
+			if testVersion[i] &gt; testAgainst[i]:
+				return 1 # it was greater than
+		return 1 # it was equal
+	if condition == "&gt;":
+		for i in range(tokenCount):
+			if testVersion[i] &lt; testAgainst[i]:
+				return 0
+			if testVersion[i] &gt; testAgainst[i]:
+				return 1 # it was greater than
+		return 0 # it was equal
+	if condition == "==":
+		for i in range(tokenCount):
+			if testVersion[i] != testAgainst[i]:
+				return 0 # any token was not equal
+		return 1 # every token was equal
+	if condition == "!=":
+		for i in range(tokenCount):
+			if testVersion[i] != testAgainst[i]:
+				return 1 # any token was not equal
+		return 0 # every token was equal
+	if condition == "&lt;":
+		for i in range(tokenCount):
+			if testVersion[i] &gt;= testAgainst[i]:
+				return 0
+			if testVersion[i] &lt; testAgainst[i]:
+				return 1 # it was less than
+		return 0 # it was equal
+	if condition == "&lt;=":
+		for i in range(tokenCount):
+			if testVersion[i] &gt; testAgainst[i]:
+				return 0
+			if testVersion[i] &lt; testAgainst[i]:
+				return 1 # it was less than
+		return 1 # it was equal
+	#
+	# didn't find a condition that we expected.
+	raise "condition must be one of '&gt;=', '&gt;', '==', '!=', '&lt;', or '&lt;='."
+</t>
 </tnodes>
 </leo_file>

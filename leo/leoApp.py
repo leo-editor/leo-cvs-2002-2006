@@ -108,8 +108,8 @@ class LeoApp:
 			#@+node:1::<< set v834 if version is 8.3.4 or greater >>
 			#@+body
 			# 04-SEP-2002 DHEIN: simplify version check
-			if CheckVersion(version, "8.3.4"):
-				v834 = true
+			# 04-SEP-2002 Stephen P. Schaefer: make sure v834 is set
+			v834 = CheckVersion(version, "8.3.4")
 
 			#@-body
 			#@-node:1::<< set v834 if version is 8.3.4 or greater >>
