@@ -4049,9 +4049,12 @@ class baseNewDerivedFile(oldDerivedFile):
                 old = at.t.getBody()
             else:
                 old = None
-            if old and not g.app.unitTesting:
+            # 9/4/04: Suppress this warning for the root: @first complicates matters.
+            if old and not g.app.unitTesting and at.t != at.root.t:
+                #@            << indicate that the node has been changed >>
+                #@+node:ekr.20040904081433:<< indicate that the node has been changed >>
                 if at.perfectImportRoot:
-                    #@                << bump at.correctedLines and tell about the correction >>
+                    #@    << bump at.correctedLines and tell about the correction >>
                     #@+node:ekr.20040717133944:<< bump at.correctedLines and tell about the correction >>
                     # Report the number of corrected nodes.
                     at.correctedLines += 1
@@ -4082,22 +4085,27 @@ class baseNewDerivedFile(oldDerivedFile):
                     #@nonl
                     #@-node:ekr.20040717133944:<< bump at.correctedLines and tell about the correction >>
                     #@nl
-                    p.setMarked()
+                    # p.setMarked()
                     at.t.bodyString = s # Just etting at.t.tempBodyString won't work here.
                     at.t.setDirty() # Mark the node dirty.  Ancestors will be marked dirty later.
                     at.c.setChanged(True)
                 else:
                     if not at.updateWarningGiven:
                         at.updateWarningGiven = True
-                        g.es("Warning: updating changed text",color="blue")
-                    #g.es("old...\n%s\n" % old)
-                    #g.es("new...\n%s\n" % s)
+                        print "***",at.t,at.root.t
+                        g.es("Warning: updating changed text in %s" %
+                            (at.root.headString()),color="blue")
+                    # g.es("old...\n%s\n" % old)
+                    # g.es("new...\n%s\n" % s)
                     # Just set the dirty bit. Ancestors will be marked dirty later.
                     at.t.setDirty()
                     if 1: # We must avoid the full setChanged logic here!
                         c.changed = True
                     else: # Far too slow for mass changes.
                         at.c.setChanged(True)
+                #@nonl
+                #@-node:ekr.20040904081433:<< indicate that the node has been changed >>
+                #@nl
             at.t.tempBodyString = s
     
         # Indicate that the tnode has been set in the derived file.
