@@ -3448,6 +3448,7 @@ class baseCommands:
             
             self.array.append(self.val)
         
+            # This code is executed for versions of Python earlier than 2.4
             if self.val == '@':
                 # Preserve whitespace after @.
                 i = g.skip_ws(self.s,self.scol+1)
@@ -3503,8 +3504,15 @@ class baseCommands:
         def doOp (self):
             
             val = self.val
-        
-            if val == '(':
+            
+            # New in Python 2.4: '@' is an operator, not an error token.
+            if self.val == '@':
+                self.array.append(self.val)
+                # Preserve whitespace after @.
+                i = g.skip_ws(self.s,self.scol+1)
+                ws = self.s[self.scol+1:i]
+                if ws: self.array.append(ws)
+            elif val == '(':
                 self.parenLevel += 1
                 self.put(val)
             elif val == ')':
