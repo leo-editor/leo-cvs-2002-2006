@@ -5,8 +5,6 @@
 #@@language python
 #@@tabwidth -4
 
-import leoGlobals as g
-
 path = g.os_path_join(g.app.loadDir,"..","test","unittest","createdFile.txt")
 
 if 0:

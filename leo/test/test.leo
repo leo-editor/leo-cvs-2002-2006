@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet ekr_stylesheet?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="6672" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="6676" clone_windows="0"/>
 <globals body_outline_ratio="0.521970705726">
-	<global_window_position top="100" left="224" height="676" width="879"/>
+	<global_window_position top="137" left="172" height="663" width="911"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -614,8 +614,8 @@
 <v t="ekr.20040319111213.5"><vh>addMenu</vh></v>
 </v>
 <v t="ekr.20040715105834"><vh>Fun...</vh>
-<v t="EKR.20040626212434" a="E"><vh>Drawing experiments</vh>
-<v t="EKR.20040626212434.1" a="E"><vh>Rectangles &amp; ovals</vh></v>
+<v t="EKR.20040626212434"><vh>Drawing experiments</vh>
+<v t="EKR.20040626212434.1"><vh>Rectangles &amp; ovals</vh></v>
 <v t="EKR.20040626212434.2"><vh>Lines &amp; arcs</vh></v>
 <v t="EKR.20040626213007"><vh>Paul Klee</vh></v>
 <v t="EKR.20040627150213"><vh>Complex functions</vh></v>
@@ -1022,7 +1022,7 @@
 <v t="ekr.20041230143535"><vh>@ button help</vh></v>
 <v t="ekr.20050210180937"><vh>@button jython</vh></v>
 </v>
-<v t="EKR.20040619133116" a="TV" annotate="7d71002e"><vh>Unit testing...</vh>
+<v t="EKR.20040619133116" annotate="7d71002e"><vh>Unit testing...</vh>
 <v t="bwmulder.20050108100437.1"><vh>How to run unit tests</vh></v>
 <v t="ekr.20040723064143.1"><vh>To do...</vh>
 <v t="ekr.20040723064143.3"><vh>Test error recovery when reading descendentTnodeUa's</vh></v>
@@ -1610,7 +1610,7 @@
 </v>
 <v t="ekr.20040707081532.1"><vh>Do @test</vh></v>
 </v>
-<v t="ekr.20050120095423" annotate="7d71002e"><vh>Unit testing for plugins</vh>
+<v t="ekr.20050120095423" a="TV" annotate="7d71002e"><vh>Unit testing for plugins</vh>
 <v t="ekr.20050218015346"><vh>@suite run all plugin test routines</vh>
 <v t="ekr.20050218015346.11"><vh>&lt;&lt; class testRoutineTestCase &gt;&gt;</vh>
 <v t="ekr.20050218015346.12"><vh>__init__</vh></v>
@@ -1654,39 +1654,6 @@
 </v>
 <v t="ekr.20050120095423.21"><vh>print all loaded plugins</vh></v>
 </v>
-<v t="ekr.20050106080304" annotate="7d71002e"><vh>@suite run all test routines</vh>
-<v t="ekr.20050106123646"><vh>unused</vh>
-<v t="ekr.20050106094854"><vh>class commanderTestCase</vh>
-<v t="ekr.20050106094854.1"><vh>__init__</vh></v>
-<v t="ekr.20050106094854.2"><vh> fail</vh></v>
-<v t="ekr.20050106094854.3"><vh>setUp</vh></v>
-<v t="ekr.20050106094854.4"><vh>tearDown</vh></v>
-<v t="ekr.20050106094854.5"><vh>runTest</vh></v>
-<v t="ekr.20050106094854.6"><vh>shortDescription</vh></v>
-</v>
-<v t="ekr.20050106094747"><vh>addTestRoutinesInCommanderToSuite</vh>
-<v t="ekr.20050106095223"><vh>findTestsInCommander</vh></v>
-</v>
-</v>
-<v t="ekr.20050106080318.1"><vh>&lt;&lt; class testRoutineTestCase &gt;&gt;</vh>
-<v t="ekr.20050106080318.2"><vh>__init__</vh></v>
-<v t="ekr.20050106080318.3"><vh> fail</vh></v>
-<v t="ekr.20050106080318.4"><vh>setUp</vh></v>
-<v t="ekr.20050106080318.5"><vh>tearDown</vh></v>
-<v t="ekr.20050106080318.6"><vh>runTest</vh></v>
-<v t="ekr.20050106080318.7"><vh>shortDescription</vh></v>
-</v>
-<v t="ekr.20050106080318"><vh>addTestRoutinesInModuleToSuite</vh></v>
-<v t="ekr.20050106081120.2"><vh>findTestsInModule</vh>
-<v t="ekr.20050106124235"><vh>&lt;&lt; print classes, methods &amp; functions &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20050106124624"><vh>getAllLeoModules</vh></v>
-<v t="ekr.20050106133147"><vh>removeLeadingWs</vh></v>
-</v>
-<v t="ekr.20050225110104" annotate="7d71002e"><vh>How to do this test</vh>
-<v t="ekr.20050225080606" annotate="55ae37643731303032383535303837303732363936663732363937343739373130313238363336333663363536663061353436623530363936333662366336353536363137323061373130323666373130333464306632373632353530343665366636343635373130353238363830323666373130363535303037313037363235353039363137323633363836353734373937303635373130383238363830323666373130393638303736323735326571002e"><vh>@thin deletedNodeTest.py</vh></v>
-<v t="ekr.20050225110307" annotate="7d71002e"><vh>b</vh></v>
-</v>
 <v t="ekr.20050225161940" annotate="7d71002e"><vh>Move executeFile into core</vh>
 <v t="ekr.20050225161940.1" annotate="7d71002e"><vh>@test __name__</vh></v>
 <v t="ekr.20050225162123" annotate="55ea37643731303032383535303837303732363936663732363937343739373130313238363336333663363536663061353436623530363936333662366336353536363137323061373130323666373130333464306632373632353530343665366636343635373130353238363830323666373130363535303037313037363235353032363236373731303832383638303236663731303936383037363235353039363137323633363836353734373937303635373130613238363830323666373130623638303736323535303236363637373130633238363830323666373130643638303736323735326571002e"><vh>@thin executeFileTest.py</vh></v>
@@ -1700,8 +1667,6 @@
 <v t="ekr.20050225161940.6" annotate="7d71002e"><vh>doatest</vh></v>
 </v>
 </v>
-<v t="ekr.20050301084943" labels="553a3238363437303330306135333237343534623532366336313632363536633237306137303331306135333237323730613730333230613733326571002e"><vh>Asciidoc stuff</vh></v>
-<v t="ekr.20050307194435"><vh>@nowrap</vh></v>
 </vnodes>
 <tnodes>
 <t tx="EKR.20040424065452">p1 = r"c:\prog\leoMenu(1).py"
@@ -2273,7 +2238,7 @@ print '
 print g.app.config.redirect_execute_script_output_to_log_pane</t>
 <t tx="EKR.20040627103732">@ignore</t>
 <t tx="EKR.20040627103801"></t>
-<t tx="EKR.20040627103902" lineYOffset="4b032e" icons="5d7100287d7101285504747970657102550466696c65710355047870616471044b02550577686572657105550a6265666f726549636f6e71066803582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286802680368084afdffffff6803582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6805550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e"></t>
+<t tx="EKR.20040627103902" lineYOffset="4b032e" icons="5d7100287d710128550577686572657102550a6265666f726549636f6e710355047870616471044b025504747970657105550466696c6571066806582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286805680668084afdffffff6806582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6802550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e"></t>
 <t tx="EKR.20040627121836">next = p.next()
 t = next.v.t
 v = next.v
@@ -2409,7 +2374,7 @@ for p in c.rootPosition().allNodes_iter():
 s = "%d nodes" % count
 print s ; g.es(s)</t>
 <t tx="ekr.20040312101720"></t>
-<t tx="ekr.20040317101155" lineYOffset="4b032e" icons="5d7100287d710128550577686572657102550a6265666f726549636f6e710355047870616471044b025504747970657105550466696c65710668065834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286805680668084afdffffff68065834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6802550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">p.v.t.unknownAttributes = {}
+<t tx="ekr.20040317101155" lineYOffset="4b032e" icons="5d7100287d7101285504747970657102550466696c65710355047870616471044b02550577686572657105550a6265666f726549636f6e710668035834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286802680368084afdffffff68035834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6805550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">p.v.t.unknownAttributes = {}
 a = p.v.t.unknownAttributes
 
 &lt;&lt; define event callbacks &gt;&gt;
@@ -13712,17 +13677,6 @@ except AssertionError:
     self.dump(result)
     return result
 </t>
-<t tx="ekr.20050225110104">@nocolor
-
-Create a tree with two nodes.
-Save test.leo file, creating the derived file.
-Delete node b.
-Write the derived file, but do _not_ write test.leo
-Quit
-Restart test.leo
-
-@color</t>
-<t tx="ekr.20050225110307">b text</t>
 <t tx="ekr.20050225161940"></t>
 <t tx="ekr.20050225161940.1">assert __name__ == '__builtin__', '__name__ is %s' % __name__</t>
 <t tx="ekr.20050225161940.2">&lt;&lt; docstring &gt;&gt;
@@ -13859,11 +13813,6 @@ import os
 import StringIO
 import sys
 import unittest</t>
-<t tx="ekr.20050301084943">a = g.importExtension('asciidoc')
-print a</t>
-<t tx="ekr.20050307194435">@wrap
-
-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx yyyyyyyyyyyyyyyyyyyyyyyy zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz</t>
 <t tx="ekr.20050310082013">@ http://sourceforge.net/forum/message.php?msg_id=3039793
 
 heres a short script to open a leo, then a New leo from that one, pause then exit.

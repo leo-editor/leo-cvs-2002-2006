@@ -3,50 +3,9 @@
 #@@nocolor
 
 #@+all
-#@+node:ekr.20050126101301:4.3a4 Plugins
-#@+node:ekr.20050207063254:Plugins...
-#@+node:ekr.20050302074854.1:Fix problem in templates.py
-@nocolor
-https://sourceforge.net/forum/message.php?msg_id=3024624
-By: e
-
-at one time something like this was prefered.
-
-templates doesn't work well on new leo.
-open a leo from shortcut
-then a recent, then close it
-then new leo, get problem
-AttributeError: 'vnode' object has no attribute 'c'
-not surprizing it registers only 'start2' & 'open2'
-for scanning. why it shows up like this not sure.
-#@nonl
-#@-node:ekr.20050302074854.1:Fix problem in templates.py
-#@+node:ekr.20050306075846:Make sure @clip, @view, @strip work
-@killcolor
-
-http://sourceforge.net/forum/message.php?msg_id=2957679
-Dany
-
-- @clip, @view, @strip don't work (2.3.4 or 2.4) but maybe I don't know how
-to use them
-#@nonl
-#@-node:ekr.20050306075846:Make sure @clip, @view, @strip work
-#@+node:ekr.20050306075846.1:Make sure open_shell, word_export
-@killcolor
-
-http://sourceforge.net/forum/message.php?msg_id=2957679
-Dany
-
-- open_shell didn't work but it was easy to fix
-   (system path from c:\windows to c:\winnt)
-
-- word_export : doesn't work (I have a non-English version of Word so that might
-explain it)
-#@nonl
-#@-node:ekr.20050306075846.1:Make sure open_shell, word_export
-#@+node:ekr.20050306072307.1:multifile plugin can crash
-#@-node:ekr.20050306072307.1:multifile plugin can crash
-#@-node:ekr.20050207063254:Plugins...
+#@+node:ekr.20050310110938:investigate htmlize script in test.leo
+#@-node:ekr.20050310110938:investigate htmlize script in test.leo
+#@+node:ekr.20050303103230:4.3b1 code complete
 #@+node:ekr.20050104083128:(Drawing and uA's: needed for plugins)
 #@+node:ekr.20041228074125:Drawing...
 #@+node:ekr.20041228092223:Play with wiki markup
@@ -1270,64 +1229,6 @@ Now the plugin can set and get fields in d.  Similar code would be used for the 
 #@-node:ekr.20050306090634:From docs...
 #@-node:ekr.20041231102453:Design new uA scheme
 #@-node:ekr.20050104083128:(Drawing and uA's: needed for plugins)
-#@+node:ekr.20050228021254:Posting (after all plugins on cvs) last call for missing plugins
-#@-node:ekr.20050228021254:Posting (after all plugins on cvs) last call for missing plugins
-#@+node:ekr.20050226063714:Improve Mac distribution
-#@+node:ekr.20050301165204:Post 1
-@killcolor
-http://sourceforge.net/forum/message.php?msg_id=3016680
-By: wordtech
-
-I'd suggest a some revisions to your approach. 
-
-1. Unless you're putting files over several directories, there's no reason to
-use PackageMaker. As far as I can tell, you're doing a large folder called "leo"
-and installing it in /. PackageMaker is for complex installations, i.e. a GUI
-front end in /Applications, the supporting files in /usr/local, and man pages
-in /usr/share/man, or something like that.
-
-In fact, people are advised not to move stuff installed by PackageMaker, but
-if they leave the default installation alone (in /), your launcher tool won't
-work. I thought this was a bug, because the launcher tool looks for ~/leo, until
-I saw your docs here.
-
-2. It isn't necessary to stuff everything into the app bundle with py2app. I
-used to maintain a nice Mac-native bundle of Leo that only wrapped your files,
-but left other stuff like Tcl/Tk out. (I removed it from my site because no
-one downloaded it.) I did a quick wrap of the new version and it seems to work
-fine. Although I don't have any interest in putting this on my site anymore,
-I'd be willing to provide a package for you to include at your Sourceforge site.
-
-(See http://www.wordtech-software.com/python-applet-tutorial.html for a description
-of my packaging method: it's a front-end to the older bundlebuilder method.
-Please contact me at my Sourceforge address if you have questions.)
-
-At a minimum, consider wrapping the /leo directory in a tar or zip file and
-advise people to move it to their home directory after they download it. That
-would make installation much smoother.
-#@nonl
-#@-node:ekr.20050301165204:Post 1
-#@+node:ekr.20050301165204.1:Post 2
-@killcolor
-http://sourceforge.net/forum/message.php?msg_id=3024408
-By: bowerymarc
-
-I saw a message in the bug tracker saying to post bugs here instead, so here
-it is:
-
-Tried to install Leo-4-3-a3.pkg.  Instructions for MacLeo say, you have to install
-Leo in your *home* directory (which by the way is rediculous - normally you
-install in the Applications directory on OSX.  In any case the facility exists
-to discover where an app is installed....)
-
-So I tried that.  Trouble is, it won't let me.  Why?  Perhaps because I have
-FileVault turned on, which turns your home directory into a crypto-fs type mount.
-Apparently its method of dealing with your home directory can't deal with that.
-#@nonl
-#@-node:ekr.20050301165204.1:Post 2
-#@-node:ekr.20050226063714:Improve Mac distribution
-#@-node:ekr.20050126101301:4.3a4 Plugins
-#@+node:ekr.20050303103230:4.3b1 code complete
 #@+node:ekr.20050225160112:First
 #@+node:ekr.20050212040628:Always use a file-like object for writing?
 #@-node:ekr.20050212040628:Always use a file-like object for writing?

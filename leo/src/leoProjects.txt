@@ -11894,7 +11894,7 @@ def createFrame (fileName):
     frame.setInitialWindowGeometry()
     frame.startupWindow = True
     # 3/2/05: Call the 'new' hook for compatibility with plugins.
-    g.doHook("new",old_c=None,new_c=c)
+    g.doHook("new",old_c=None,c=c,new_c=c)
 
     # Report the failure to open the file.
     if fileName:
@@ -14475,7 +14475,7 @@ def openWithFileName(fileName,old_c,enableLog=True,readAtFileNodesFlag=True):
         c,frame = app.gui.newLeoCommanderAndFrame(fileName)
         frame.log.enable(enableLog)
         g.app.writeWaitingLog() # New in 4.3: write queued log first.
-        if not g.doHook("open1",old_c=old_c,new_c=c,fileName=fileName):
+        if not g.doHook("open1",old_c=old_c,c=c,new_c=c,fileName=fileName):
             app.setLog(frame.log,"openWithFileName")
             app.lockLog()
             frame.c.fileCommands.open(
@@ -14486,7 +14486,7 @@ def openWithFileName(fileName,old_c,enableLog=True,readAtFileNodesFlag=True):
                 # The recent files list has been updated by menu.updateRecentFiles.
                 frame.c.config.setRecentFiles(g.app.config.recentFiles)
         frame.openDirectory = g.os_path_dirname(fileName)
-        g.doHook("open2",old_c=old_c,new_c=frame.c,fileName=fileName)
+        g.doHook("open2",old_c=old_c,c=c,new_c=frame.c,fileName=fileName)
         return True, frame
     except IOError:
         # Do not use string + here: it will fail for non-ascii strings!
@@ -14861,7 +14861,7 @@ def openWithFileName(fileName,old_c,enableLog=True,readAtFileNodesFlag=True):
         c,frame = app.gui.newLeoCommanderAndFrame(fileName)
         frame.log.enable(enableLog)
         g.app.writeWaitingLog() # New in 4.3: write queued log first.
-        if not g.doHook("open1",old_c=old_c,new_c=c,fileName=fileName):
+        if not g.doHook("open1",old_c=old_c,c=c,new_c=c,fileName=fileName):
             app.setLog(frame.log,"openWithFileName")
             app.lockLog()
             frame.c.fileCommands.open(
@@ -14872,7 +14872,7 @@ def openWithFileName(fileName,old_c,enableLog=True,readAtFileNodesFlag=True):
                 # The recent files list has been updated by menu.updateRecentFiles.
                 frame.c.config.setRecentFiles(g.app.config.recentFiles)
         frame.openDirectory = g.os_path_dirname(fileName)
-        g.doHook("open2",old_c=old_c,new_c=frame.c,fileName=fileName)
+        g.doHook("open2",old_c=old_c,c=c,new_c=frame.c,fileName=fileName)
         return True, frame
     except IOError:
         # Do not use string + here: it will fail for non-ascii strings!
@@ -15166,7 +15166,7 @@ def createFrame (fileName):
     frame.setInitialWindowGeometry()
     frame.startupWindow = True
     # 3/2/05: Call the 'new' hook for compatibility with plugins.
-    g.doHook("new",old_c=None,new_c=c)
+    g.doHook("new",old_c=None,c=c,new_c=c)
 
     # Report the failure to open the file.
     if fileName:
@@ -16945,7 +16945,7 @@ def openWithFileName(fileName,old_c,enableLog=True,readAtFileNodesFlag=True):
         c,frame = app.gui.newLeoCommanderAndFrame(fileName)
         frame.log.enable(enableLog)
         g.app.writeWaitingLog() # New in 4.3: write queued log first.
-        if not g.doHook("open1",old_c=old_c,new_c=c,fileName=fileName):
+        if not g.doHook("open1",old_c=old_c,c=c,new_c=c,fileName=fileName):
             app.setLog(frame.log,"openWithFileName")
             app.lockLog()
             frame.c.fileCommands.open(
@@ -16956,7 +16956,7 @@ def openWithFileName(fileName,old_c,enableLog=True,readAtFileNodesFlag=True):
                 # The recent files list has been updated by menu.updateRecentFiles.
                 frame.c.config.setRecentFiles(g.app.config.recentFiles)
         frame.openDirectory = g.os_path_dirname(fileName)
-        g.doHook("open2",old_c=old_c,new_c=frame.c,fileName=fileName)
+        g.doHook("open2",old_c=old_c,c=c,new_c=frame.c,fileName=fileName)
         return True, frame
     except IOError:
         # Do not use string + here: it will fail for non-ascii strings!
@@ -19130,9 +19130,6 @@ def unpack (self):
 #@-node:ekr.20041223095751:class componentClass (componentBaseClass)
 #@+node:ekr.20041222060024:tkFrame.unpack/repack...
 #@+node:ekr.20041223160653:pane packers
-if 0: # placeSplitter and divideAnySplitter.
-    << reference code >>
-
 def placePane1(self,verticalFlag,pane1,frac):
     if verticalFlag:
         pane1.place(relx=0.5,rely=0,anchor="n",relwidth=1.0,relheight=frac)
@@ -19157,38 +19154,6 @@ def packTree (self):
     # Pane 1 of secondary splitter.
     self.placePane1(not self.splitVerticalFlag,self.split2Pane1,self.secondary_ratio)
 #@nonl
-#@+node:ekr.20041223165701:<< reference code >>
-@ Reference code.  The placer code is a combination of these...
-Most args come from placeSplitter.
-The relheight/width args come from divideAnySplitter.
-@c
-
-def divideAnySplitter (self, frac, verticalFlag, bar, pane1, pane2):
-    if verticalFlag:
-        # Panes arranged vertically; horizontal splitter bar
-        bar.place(rely=frac)
-        pane1.place(relheight=frac)
-        pane2.place(relheight=1-frac)
-    else:
-        # Panes arranged horizontally; vertical splitter bar
-        bar.place(relx=frac)
-        pane1.place(relwidth=frac)
-        pane2.place(relwidth=1-frac)
-
-def placeSplitter (self,bar,pane1,pane2,verticalFlag):
-    if verticalFlag:
-        # Panes arranged vertically; horizontal splitter bar
-        pane1.place(relx=0.5, rely =   0, anchor="n", relwidth=1.0, relheight=0.5)
-        pane2.place(relx=0.5, rely = 1.0, anchor="s", relwidth=1.0, relheight=0.5)
-        bar.place  (relx=0.5, rely = 0.5, anchor="c", relwidth=1.0)
-    else:
-        # Panes arranged horizontally; vertical splitter bar
-        # adj gives tree pane more room when tiling vertically.
-        adj = g.choose(verticalFlag != self.splitVerticalFlag,0.65,0.5)
-        pane1.place(rely=0.5, relx =   0, anchor="w", relheight=1.0, relwidth=adj)
-        pane2.place(rely=0.5, relx = 1.0, anchor="e", relheight=1.0, relwidth=1.0-adj)
-        bar.place  (rely=0.5, relx = adj, anchor="c", relheight=1.0)
-#@-node:ekr.20041223165701:<< reference code >>
 #@-node:ekr.20041223160653:pane packers
 #@+node:ekr.20041224102942:pane replacers
 #@+node:ekr.20041224105456.1:replaceBodyPaneWithComponent
@@ -19281,26 +19246,6 @@ def showComponent (self,name):
         g.es("showComponent: no component named %s" % name,color='blue')
 #@nonl
 #@-node:ekr.20041224072631:show/hideComponent
-#@+node:ekr.20041222061331:pack/unpack/FrameWidgets
-if 0: # This obscure the generality of components.
-
-    def packFrameWidgets (self):
-        for name in ('splitter1','statusLine'):
-            component = self.component(name)
-            if component:
-                component.pack()
-                
-    def unpackFrameWidgets (self):
-        for name in ('splitter1','statusLine'):
-            component = self.component(name)
-            if component:
-                component.unpack()
-#@nonl
-#@-node:ekr.20041222061331:pack/unpack/FrameWidgets
-#@+node:ekr.20041222061331.1:unpackFrameWidgets
-
-
-#@-node:ekr.20041222061331.1:unpackFrameWidgets
 #@-node:ekr.20041222060024:tkFrame.unpack/repack...
 #@+node:ekr.20041223104933:class statusLineClass
 class statusLineClass:
@@ -20746,8 +20691,8 @@ This is important, the settings node found by findSettingsPosition may be a clon
 #@nonl
 #@-node:ekr.20050122104754.1:What I did
 #@+node:ekr.20041122162610:@recent_files
-c:\prog\leoCVS\leo\doc\LeoDocs.leo
 C:\prog\leoCVS\leo\src\LeoPy.leo
+c:\prog\leoCVS\leo\doc\LeoDocs.leo
 #@nonl
 #@-node:ekr.20041122162610:@recent_files
 #@+node:ekr.20040305223522:p.setBodyStringOrPane & p.setBodyTextOrPane
@@ -24363,7 +24308,7 @@ def createFrame (fileName):
     frame.setInitialWindowGeometry()
     frame.startupWindow = True
     # 3/2/05: Call the 'new' hook for compatibility with plugins.
-    g.doHook("new",old_c=None,new_c=c)
+    g.doHook("new",old_c=None,c=c,new_c=c)
 
     # Report the failure to open the file.
     if fileName:
@@ -25245,7 +25190,7 @@ def openWithFileName(fileName,old_c,enableLog=True,readAtFileNodesFlag=True):
         c,frame = app.gui.newLeoCommanderAndFrame(fileName)
         frame.log.enable(enableLog)
         g.app.writeWaitingLog() # New in 4.3: write queued log first.
-        if not g.doHook("open1",old_c=old_c,new_c=c,fileName=fileName):
+        if not g.doHook("open1",old_c=old_c,c=c,new_c=c,fileName=fileName):
             app.setLog(frame.log,"openWithFileName")
             app.lockLog()
             frame.c.fileCommands.open(
@@ -25256,7 +25201,7 @@ def openWithFileName(fileName,old_c,enableLog=True,readAtFileNodesFlag=True):
                 # The recent files list has been updated by menu.updateRecentFiles.
                 frame.c.config.setRecentFiles(g.app.config.recentFiles)
         frame.openDirectory = g.os_path_dirname(fileName)
-        g.doHook("open2",old_c=old_c,new_c=frame.c,fileName=fileName)
+        g.doHook("open2",old_c=old_c,c=c,new_c=frame.c,fileName=fileName)
         return True, frame
     except IOError:
         # Do not use string + here: it will fail for non-ascii strings!
@@ -27329,7 +27274,7 @@ def openWithFileName(fileName,old_c,enableLog=True,readAtFileNodesFlag=True):
         c,frame = app.gui.newLeoCommanderAndFrame(fileName)
         frame.log.enable(enableLog)
         g.app.writeWaitingLog() # New in 4.3: write queued log first.
-        if not g.doHook("open1",old_c=old_c,new_c=c,fileName=fileName):
+        if not g.doHook("open1",old_c=old_c,c=c,new_c=c,fileName=fileName):
             app.setLog(frame.log,"openWithFileName")
             app.lockLog()
             frame.c.fileCommands.open(
@@ -27340,7 +27285,7 @@ def openWithFileName(fileName,old_c,enableLog=True,readAtFileNodesFlag=True):
                 # The recent files list has been updated by menu.updateRecentFiles.
                 frame.c.config.setRecentFiles(g.app.config.recentFiles)
         frame.openDirectory = g.os_path_dirname(fileName)
-        g.doHook("open2",old_c=old_c,new_c=frame.c,fileName=fileName)
+        g.doHook("open2",old_c=old_c,c=c,new_c=frame.c,fileName=fileName)
         return True, frame
     except IOError:
         # Do not use string + here: it will fail for non-ascii strings!
@@ -27565,7 +27510,7 @@ def openWithFileName(fileName,old_c,enableLog=True,readAtFileNodesFlag=True):
         c,frame = app.gui.newLeoCommanderAndFrame(fileName)
         frame.log.enable(enableLog)
         g.app.writeWaitingLog() # New in 4.3: write queued log first.
-        if not g.doHook("open1",old_c=old_c,new_c=c,fileName=fileName):
+        if not g.doHook("open1",old_c=old_c,c=c,new_c=c,fileName=fileName):
             app.setLog(frame.log,"openWithFileName")
             app.lockLog()
             frame.c.fileCommands.open(
@@ -27576,7 +27521,7 @@ def openWithFileName(fileName,old_c,enableLog=True,readAtFileNodesFlag=True):
                 # The recent files list has been updated by menu.updateRecentFiles.
                 frame.c.config.setRecentFiles(g.app.config.recentFiles)
         frame.openDirectory = g.os_path_dirname(fileName)
-        g.doHook("open2",old_c=old_c,new_c=frame.c,fileName=fileName)
+        g.doHook("open2",old_c=old_c,c=c,new_c=frame.c,fileName=fileName)
         return True, frame
     except IOError:
         # Do not use string + here: it will fail for non-ascii strings!
@@ -30076,7 +30021,7 @@ def openWithFileName(fileName,old_c,enableLog=True,readAtFileNodesFlag=True):
         c,frame = app.gui.newLeoCommanderAndFrame(fileName)
         frame.log.enable(enableLog)
         g.app.writeWaitingLog() # New in 4.3: write queued log first.
-        if not g.doHook("open1",old_c=old_c,new_c=c,fileName=fileName):
+        if not g.doHook("open1",old_c=old_c,c=c,new_c=c,fileName=fileName):
             app.setLog(frame.log,"openWithFileName")
             app.lockLog()
             frame.c.fileCommands.open(
@@ -30087,7 +30032,7 @@ def openWithFileName(fileName,old_c,enableLog=True,readAtFileNodesFlag=True):
                 # The recent files list has been updated by menu.updateRecentFiles.
                 frame.c.config.setRecentFiles(g.app.config.recentFiles)
         frame.openDirectory = g.os_path_dirname(fileName)
-        g.doHook("open2",old_c=old_c,new_c=frame.c,fileName=fileName)
+        g.doHook("open2",old_c=old_c,c=c,new_c=frame.c,fileName=fileName)
         return True, frame
     except IOError:
         # Do not use string + here: it will fail for non-ascii strings!
@@ -33135,31 +33080,30 @@ By: ktenney
 #@+node:ekr.20031218072017.2923:markChangedHeadlines
 def markChangedHeadlines (self): 
 
-    c = self ; v = c.rootVnode()
+    c = self
     c.beginUpdate()
-    while v:
-        if v.isDirty()and not v.isMarked():
-            v.setMarked()
+    for p in c.allNodes_iter():
+        if p.isDirty()and not p.isMarked():
+            p.setMarked()
             c.setChanged(True)
-        v = v.threadNext()
-    c.endUpdate()
     g.es("done",color="blue")
+    c.endUpdate()
+#@nonl
 #@-node:ekr.20031218072017.2923:markChangedHeadlines
 #@+node:ekr.20031218072017.2924:markChangedRoots
 def markChangedRoots (self):
 
-    c = self ; v = c.rootVnode()
+    c = self
     c.beginUpdate()
-    while v:
-        if v.isDirty()and not v.isMarked():
-            s = v.bodyString()
+    for p in c.allNodes_iter():
+        if p.isDirty()and not p.isMarked():
+            s = p.bodyString()
             flag, i = g.is_special(s,0,"@root")
             if flag:
-                v.setMarked()
+                p.setMarked()
                 c.setChanged(True)
-        v = v.threadNext()
-    c.endUpdate()
     g.es("done",color="blue")
+    c.endUpdate()
 #@nonl
 #@-node:ekr.20031218072017.2924:markChangedRoots
 #@+node:ekr.20031218072017.2925:markAllAtFileNodesDirty
@@ -35491,8 +35435,301 @@ else:
 #@-node:ekr.20031218072017.1616:<< handle noweb doc part >>
 #@-node:ekr.20031218072017.1614:continueDocPart
 #@-node:ekr.20050308100508:(Fix colorizer bug for initial @nocolor in @root nodes)
+#@+node:ekr.20050307194326:(Fixed @wrap bug)
+#@+node:ekr.20050307194326.1:Report
+@killcolor
+
+http://sourceforge.net/forum/message.php?msg_id=3035471
+By: brianvanden
+
+Leo 4.3 alpha 3, build  1.224 , February 24, 2005
+Python 2.4.0, Tk 8.4.7, win32
+Windows Me.
+
+Open a leo file with an @wrap directive somewhere within it. Visit a node in
+an @wrap subtree (it need not be the node which contains the @wrap directive;
+a descendant of such a node will do). The horizontal scrollbar disappears.
+
+Now, visit a node without an @wrap, nor within the scope of an @wrap. The horizontal
+scrollbar does not come back, even if the text extends past the edge of the
+window.
+
+The only way I have found to get it back is to quit leo and relaunch. Then,
+the horizontal scrollbar is in place again, but only until an @wrap node is
+visited.
+
+The only forum post I found on point was
+<http://sourceforge.net/forum/message.php?msg_id=2171987>, which males me wonder
+if the behaviour I observe is a bug that has been introduced in the meantime.
+
+Brian vdB
+#@nonl
+#@-node:ekr.20050307194326.1:Report
+#@+node:ekr.20031218072017.1540:f.setWrap
+def setWrap (self,p):
+    
+    c = self.c
+    theDict = g.scanDirectives(c,p)
+    if not theDict: return
+    
+    wrap = theDict.get("wrap")
+    if self.body.wrapState == wrap: return
+
+    self.body.wrapState = wrap
+    # g.trace(wrap)
+    if wrap:
+        self.bodyCtrl.configure(wrap="word")
+        self.bodyXBar.pack_forget()
+    else:
+        self.bodyCtrl.configure(wrap="none")
+        # Bug fix: 3/10/05: We must unpack the text area to make the scrollbar visible.
+        self.bodyCtrl.pack_forget()
+        self.bodyXBar.pack(side="bottom", fill="x")
+        self.bodyCtrl.pack(expand=1,fill="both")
+#@nonl
+#@-node:ekr.20031218072017.1540:f.setWrap
+#@-node:ekr.20050307194326:(Fixed @wrap bug)
+#@+node:ekr.20050311100936:(Fixed change-all bug)
+#@+node:ekr.20050312095900:What I did
+@killcolor
+
+The problem was a race condition: writing to the log disabled the next redraw!
+
+The solution is to put calls to c.endUpdate() after all calls to g.es().
+
+This is a global constraint on all calls to c.endUpdate.  I've made a note of it.
+
+Fixed similar problem with the Mark Changed Headlines and Mark Changed Roots
+commands. While I was at it, I converted the code to use c.allNodes_iter().
+#@nonl
+#@-node:ekr.20050312095900:What I did
+#@+node:ekr.20050311100936.1:Report
+@killcolor
+
+https://sourceforge.net/forum/message.php?msg_id=3042593
+By: brianvanden
+
+Leo 4.3 alpha 3, build  1.224 , February 24, 2005
+Python 2.4.0, Tk 8.4.7, win32
+
+I used the find panel to change all occurrences of some string, say "foobar",
+within a Leo file to another, say "spamham". The find panel was configured to
+process headline titles, and a visible node had a headline containing "foobar";
+it did not appear to have been changed. However, if you collapse a parent node
+of the "foobar" containing headline and then re-expand it, the headline now
+contains "spamham" as desired.
+
+The principle of least surprise suggest that Leo ought not require the
+collapse/expand epicycle to reflect the change. Have I overlooked a good reason
+for this behaviour? Assuming not:
+
+My naive (I am almost totally ignorant of Tkinter, not an accomplished Python
+programmer, and have read little of Leo's code) armchair analysis makes me think
+Leo ought keep track of whether any headline text was changed by a change command,
+and if so, automatically repaint the tree.
+
+If a fix for this is more than a few minutes (and thus not trivial enough to
+leap to near the top of the `todo' list), I would be interested in seeing what
+sense I could make of the situation. In that event, given the naivety mentioned
+above, any nudging towards the right direction would be most welcome.
+#@nonl
+#@-node:ekr.20050311100936.1:Report
+#@+node:ekr.20040803072955.58:redraw_now
+# Redraws immediately: used by Find so a redraw doesn't mess up selections in headlines.
+
+def redraw_now (self,scroll=True):
+    
+    # Bug fix: Cancel any pending redraw "by hand".
+    # Make _sure_ that no other redraws take place after this.
+    self.disableRedraw = True
+    self.canvas.update_idletasks()
+    self.disableRedraw = False
+        
+    # Now do the actual redraw.
+    self.idle_redraw(scroll=scroll)
+#@nonl
+#@-node:ekr.20040803072955.58:redraw_now
+#@+node:ekr.20050208133438:forceLogUpdate
+def forceLogUpdate (self,s):
+
+    if sys.platform == "darwin": # Does not work on MacOS X.
+        try:
+            print s, # Don't add a newline.
+        except UnicodeError:
+            # g.app may not be inited during scripts!
+            print g.toEncodedString(s,'utf-8')
+    else:
+        self.frame.tree.disableRedraw = True
+        self.logCtrl.update_idletasks()
+        self.frame.tree.disableRedraw = False
+#@nonl
+#@-node:ekr.20050208133438:forceLogUpdate
+#@+node:ekr.20031218072017.2952:c.endUpdate
+def endUpdate(self, flag=True):
+    
+    '''End a beginUpdate/endUpdate region.
+    
+    Redraw the tree if this is the outermost endUpdate.
+    
+    Note that calls to g.es() will disable redraws, so calls to endUpdate
+    should follow all such writes to the log pane.'''
+    
+    
+    self.frame.tree.endUpdate(flag)
+    
+EndUpdate = endUpdate # Compatibility with old scripts
+#@nonl
+#@-node:ekr.20031218072017.2952:c.endUpdate
+#@+node:ekr.20031218072017.3715:tree.endUpdate
+def endUpdate (self,flag=True):
+    
+    '''Redraw the tree if this is the outermost endUpdate.
+    
+    Calls to g.es() will disable redraws, so calls to c.endUpdate
+    should follow all such writes to the log pane.'''
+
+    assert(self.updateCount > 0)
+    self.updateCount -= 1
+    # g.trace(self.updateCount, 'disableRedraw',self.disableRedraw)
+
+    if flag and self.updateCount == 0:
+        # Bug fix: 3/11/05. Force a redraw here.
+        # Writing to the log sets self.disableRedraw.
+        self.disableRedraw = False
+        self.redraw()
+#@nonl
+#@-node:ekr.20031218072017.3715:tree.endUpdate
+#@+node:ekr.20040803072955.55:tree.redraw
+# Calling redraw inside c.beginUpdate()/c.endUpdate() does nothing.
+# This _is_ useful when a flag is passed to c.endUpdate.
+
+def redraw (self,event=None):
+    
+    # g.trace(self.updateCount,self.redrawScheduled)
+    
+    if self.updateCount == 0 and not self.redrawScheduled:
+        self.redrawScheduled = True
+        self.canvas.after_idle(self.idle_redraw)
+#@nonl
+#@-node:ekr.20040803072955.55:tree.redraw
+#@+node:ekr.20040803072955.59:idle_redraw
+def idle_redraw (self,scroll=True):
+    
+    c = self.c ; frame = c.frame
+
+    self.redrawScheduled = False # Always do this here.
+
+    << return if disabled, or quitting or dragging >>
+
+    # g.print_bindings("canvas",self.canvas)
+
+    self.expandAllAncestors(c.currentPosition())
+
+    oldcursor = self.canvas['cursor']
+    self.canvas['cursor'] = "watch"
+
+    if not g.doHook("redraw-entire-outline",c=c):
+        c.setTopVnode(None)
+        self.setVisibleAreaToFullCanvas()
+        self.drawTopTree()
+        # Set up the scroll region after the tree has been redrawn.
+        x0, y0, x1, y1 = self.canvas.bbox("all")
+        self.canvas.configure(scrollregion=(0, 0, x1, y1))
+        # Do a scrolling operation after the scrollbar is redrawn
+        if scroll:
+            self.canvas.after_idle(self.idle_scrollTo)
+        if 0:
+            self.redrawCount += 1
+            print "idle_redraw allocated:",self.redrawCount
+    g.doHook("after-redraw-outline",c=c)
+
+    self.canvas['cursor'] = oldcursor
+#@nonl
+#@+node:ekr.20040803072955.60:<< return if disabled, or quitting or dragging >>
+# g.trace('disableRedraw',self.disableRedraw)
+
+if self.disableRedraw:
+    # We have been called as the result of an update_idletasks in the log pane.
+    # Don't do anything now.
+    return
+
+if frame not in g.app.windowList or g.app.quitting:
+    # g.trace("no frame")
+    return
+
+if self.drag_p:
+    # g.trace("dragging",self.drag_p)
+    return
+#@nonl
+#@-node:ekr.20040803072955.60:<< return if disabled, or quitting or dragging >>
+#@-node:ekr.20040803072955.59:idle_redraw
+#@+node:ekr.20031218072017.3069:changeAll
+def changeAll(self):
+
+    c = self.c ; st = self.s_ctrl ; gui = g.app.gui
+    if not self.checkArgs():
+        return
+    self.initInHeadline()
+    data = self.save()
+    self.initBatchCommands()
+    count = 0
+    c.beginUpdate()
+    while 1:
+        pos1, pos2 = self.findNextMatch()
+        if pos1:
+            count += 1
+            self.batchChange(pos1,pos2,count)
+            line = gui.getLineContainingIndex(st,pos1)
+            self.printLine(line,allFlag=True)
+        else: break
+    # Make sure the headline and body text are updated.
+    v = c.currentVnode()
+    c.frame.tree.onHeadChanged(v)
+    c.frame.body.onBodyChanged(v,"Can't Undo")
+    if count > 0:
+        # A change was made.  Tag the end of the Change All command.
+        c.undoer.setUndoParams("Change All",v)
+    g.es("changed: %d instances" % (count))
+    self.restore(data)
+    c.endUpdate() # Bug fix.  Redraw after all console output.
+#@nonl
+#@-node:ekr.20031218072017.3069:changeAll
+#@+node:ekr.20031218072017.2923:markChangedHeadlines
+def markChangedHeadlines (self): 
+
+    c = self
+    c.beginUpdate()
+    for p in c.allNodes_iter():
+        if p.isDirty()and not p.isMarked():
+            p.setMarked()
+            c.setChanged(True)
+    g.es("done",color="blue")
+    c.endUpdate()
+#@nonl
+#@-node:ekr.20031218072017.2923:markChangedHeadlines
+#@+node:ekr.20031218072017.2924:markChangedRoots
+def markChangedRoots (self):
+
+    c = self
+    c.beginUpdate()
+    for p in c.allNodes_iter():
+        if p.isDirty()and not p.isMarked():
+            s = p.bodyString()
+            flag, i = g.is_special(s,0,"@root")
+            if flag:
+                p.setMarked()
+                c.setChanged(True)
+    g.es("done",color="blue")
+    c.endUpdate()
+#@nonl
+#@-node:ekr.20031218072017.2924:markChangedRoots
+#@-node:ekr.20050311100936:(Fixed change-all bug)
 #@-node:ekr.20050225104239.1:Bugs
 #@+node:ekr.20050225104239.2:Features
+#@+node:ekr.20050309082255:removed all reloads from test.leo
+#@-node:ekr.20050309082255:removed all reloads from test.leo
+#@+node:ekr.20050311083919:deprecated new_c key in hooks, added c key
+#@-node:ekr.20050311083919:deprecated new_c key in hooks, added c key
 #@-node:ekr.20050225104239.2:Features
 #@+node:ekr.20050227125015:Plugins & hooks
 #@+node:ekr.20050301111302:(Added support for mod_labels plugin)
@@ -35773,7 +36010,7 @@ def new (self):
     c,frame = g.app.gui.newLeoCommanderAndFrame(fileName=None)
     
     # 5/16/03: Needed for plugins.
-    g.doHook("new",old_c=self,new_c=c)
+    g.doHook("new",old_c=self,c=c,new_c=c)
 
     # Use the config params to set the size and location of the window.
     frame.setInitialWindowGeometry()
@@ -35824,7 +36061,7 @@ def openWithFileName(fileName,old_c,enableLog=True,readAtFileNodesFlag=True):
         c,frame = app.gui.newLeoCommanderAndFrame(fileName)
         frame.log.enable(enableLog)
         g.app.writeWaitingLog() # New in 4.3: write queued log first.
-        if not g.doHook("open1",old_c=old_c,new_c=c,fileName=fileName):
+        if not g.doHook("open1",old_c=old_c,c=c,new_c=c,fileName=fileName):
             app.setLog(frame.log,"openWithFileName")
             app.lockLog()
             frame.c.fileCommands.open(
@@ -35835,7 +36072,7 @@ def openWithFileName(fileName,old_c,enableLog=True,readAtFileNodesFlag=True):
                 # The recent files list has been updated by menu.updateRecentFiles.
                 frame.c.config.setRecentFiles(g.app.config.recentFiles)
         frame.openDirectory = g.os_path_dirname(fileName)
-        g.doHook("open2",old_c=old_c,new_c=frame.c,fileName=fileName)
+        g.doHook("open2",old_c=old_c,c=c,new_c=frame.c,fileName=fileName)
         return True, frame
     except IOError:
         # Do not use string + here: it will fail for non-ascii strings!
@@ -35915,7 +36152,7 @@ def createFrame (fileName):
     frame.setInitialWindowGeometry()
     frame.startupWindow = True
     # 3/2/05: Call the 'new' hook for compatibility with plugins.
-    g.doHook("new",old_c=None,new_c=c)
+    g.doHook("new",old_c=None,c=c,new_c=c)
 
     # Report the failure to open the file.
     if fileName:
@@ -36321,6 +36558,83 @@ e
 #@nonl
 #@-node:ekr.20050308101529:Report: buttons installed twice
 #@-node:ekr.20050308020541:(Fixed 2 problems in mod_scripting plugin)
+#@+node:ekr.20050302074854.1:Fixed problem in templates.py
+@nocolor
+http://sourceforge.net/forum/message.php?msg_id=3024624
+By: e
+
+- Changed 'new_c' logic to 'c' logic.
+- Replaced 'start2' hook with 'new' hook.
+#@nonl
+#@-node:ekr.20050302074854.1:Fixed problem in templates.py
+#@+node:ekr.20050311093518:Removed new_c from all plugins
+Changed these plugins:
+
+ConceptualSort.py
+macros.py
+scheduler.py
+templates.py
+dyna_menu.py
+arrows.py
+autocompleter.py
+nodenavigator.py
+nodebar.py
+UASearch.py
+URLloader.py
+open_with.py
+read_only_nodes.py
+mod_scripting.py
+base64Packager.py
+multifile.py
+cleo.py
+mod_read_dir_outline.py
+#@nonl
+#@-node:ekr.20050311093518:Removed new_c from all plugins
+#@+node:ekr.20050311101812:Removed 'start2' hook
+import_cisco_config.py
+scheduler.py
+table.py
+autocompleter.py
+color_markup.py
+nodebar.py
+UASearch.py
+URLloader.py
+open_with.py
+at_produce.py
+read_only_nodes.py
+usetemacs.py
+xsltWithNodes.py
+fastGotoNode.py
+groupOperations.py
+multifile.py
+#@nonl
+#@-node:ekr.20050311101812:Removed 'start2' hook
+#@+node:ekr.20050311111530:Fixed crash in autocompleter(leoNodes) during unit test
+What I did:
+    - Disabled initial scan during unit test.
+      The outline was being destroyed before the scan finished.
+
+.Exception in thread Thread-21:
+Traceback (most recent call last):
+  File "c:\python24\lib\threading.py", line 442, in __bootstrap
+    self.run()
+  File "c:\python24\lib\threading.py", line 422, in run
+    self.__target(*self.__args, **self.__kwargs)
+  File "C:\prog\leoCVS\leo\plugins\autocompleter.py", line 440, in scan
+    readOutline( c )
+  File "C:\prog\leoCVS\leo\plugins\autocompleter.py", line 557, in readOutline
+    setLanguage( z )
+  File "C:\prog\leoCVS\leo\plugins\autocompleter.py", line 787, in setLanguage
+    pos = pos.parent()
+  File "c:\prog\leoCVS\leo\src\leoNodes.py", line 1812, in getParent
+    def getParent        (self): return self.copy().moveToParent()
+  File "c:\prog\leoCVS\leo\src\leoNodes.py", line 1603, in copy
+    return position(self.v,self.stack,trace=False)
+  File "c:\prog\leoCVS\leo\src\leoNodes.py", line 1547, in __init__
+    if v: self.c = v.c
+AttributeError: 'vnode' object has no attribute 'c'
+#@nonl
+#@-node:ekr.20050311111530:Fixed crash in autocompleter(leoNodes) during unit test
 #@-node:ekr.20050227125015:Plugins & hooks
 #@+node:ekr.20050225155947:Docs
 #@+node:ekr.20050202052911.2:Documentation of tnodeLists & potential problems

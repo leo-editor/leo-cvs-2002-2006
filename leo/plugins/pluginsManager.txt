@@ -19,8 +19,9 @@
 
 # Plugin_manager.py needs plugins_menu.py
 plugins_menu.py
-word_export.py
+#word_export.py
 #open_shell.py
+#at_view.py
 plugin_manager.py
 
 # Several plugins depend on TabbedLog.
@@ -37,7 +38,7 @@ rst2.py
 #xemacs.py
 open_with.py
 #nav_buttons.py
-base64Packager.py
+#base64Packager.py
 #EditAttributes.py
 #groupOperations.py
 #multifile.py
