@@ -6,7 +6,7 @@
 	<global_window_position top="107" left="247" height="758" width="773"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
-<preferences allow_rich_text="0">
+<preferences>
 </preferences>
 <find_panel_settings>
 	<find_string></find_string>
@@ -16,17 +16,17 @@
 <v t="edream.110203150636" a="E"><vh>leoConfig.leo</vh>
 <v t="edream.110203150636.1" a="E"><vh>@root leoConfig.txt</vh>
 <v t="edream.110203150636.2"><vh>&lt;&lt; general comments and warnings &gt;&gt;</vh></v>
-<v t="edream.110203150636.3" a="V"><vh>&lt;&lt; General configuration options, especially read-only mode &gt;&gt;</vh></v>
+<v t="edream.110203150636.3"><vh>&lt;&lt; General configuration options, especially read-only mode &gt;&gt;</vh></v>
 <v t="edream.110203150636.4"><vh>&lt;&lt; The "Recent Files" menu &gt;&gt;</vh></v>
 <v t="edream.110203150636.5"><vh>&lt;&lt; Compare Panel settings &gt;&gt;</vh></v>
 <v t="edream.110203150636.6"><vh>&lt;&lt; Find/Change Panel settings &gt;&gt;</vh></v>
-<v t="edream.110203150636.7"><vh>&lt;&lt; Keyboard shortcuts settings &gt;&gt;</vh>
+<v t="edream.110203150636.7" a="E"><vh>&lt;&lt; Keyboard shortcuts settings &gt;&gt;</vh>
 <v t="edream.110203150636.8"><vh>&lt;&lt; About keyboard shortcuts &gt;&gt;</vh></v>
 <v t="edream.110203150636.9"><vh>&lt;&lt; Alt and Shift-Alt&gt;&gt;</vh></v>
 <v t="edream.110203150636.10"><vh>&lt;&lt; Control &gt;&gt;</vh></v>
 <v t="edream.110203150636.11"><vh>&lt;&lt; Shift-Control &gt;&gt;</vh></v>
 <v t="edream.110203150636.12"><vh>&lt;&lt; F-keys and others &gt;&gt;</vh></v>
-<v t="edream.110203150636.13"><vh>&lt;&lt; None &gt;&gt;</vh></v>
+<v t="edream.110203150636.13" a="V"><vh>&lt;&lt; None &gt;&gt;</vh></v>
 </v>
 <v t="edream.110203150636.14"><vh>&lt;&lt; Preferences Panel settings &gt;&gt;</vh></v>
 <v t="edream.110203150636.15"><vh>&lt;&lt; Syntax coloring options and colors &gt;&gt;</vh></v>
@@ -497,7 +497,7 @@ CheckSpelling    = Alt+Shift+A
 # Word           = Alt+Shift+W
 # WordPad        = Alt+Shift+T
 SetColors        = Alt+Shift+C
-ExecuteScript    = Alt+Shift+E
+#                = Alt+Shift+E
 SetFont          = Alt+Shift+F
 
 GoToFirstNode    = Alt+Shift+G
@@ -522,7 +522,7 @@ SelectAll        = Ctrl+A
 ToggleAngleBrackets = Ctrl+B
 Copy             = Ctrl+C
 MoveDown         = Ctrl+D
-EqualSizedPanes  = Ctrl+E
+ExecuteScript    = Ctrl+E
 FindPanel        = Ctrl+F
 # It is no longer possible to specify two shortcuts for the same command.
 # Unused         = Ctrl+G
@@ -583,6 +583,7 @@ EndEditHeadline = Esc
 <t tx="edream.110203150636.13"># These entries explicitly overrides whatever default exists.
 
 AboutLeo                = None
+EqualSizedPanes         = None
 
 @ These are all comments.  They don't override any defaults...
 

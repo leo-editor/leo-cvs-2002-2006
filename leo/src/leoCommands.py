@@ -101,6 +101,30 @@ class baseCommands:
 		pass
 	#@nonl
 	#@-node:c.setIvarsFromPrefs
+	#@+node:c.checkOutline
+	def checkOutline (self):
+		
+		"""Report any possible clone errors in the outline.
+		
+		Remove any unused tnodeLists."""
+		
+		c = self ; v = c.rootVnode()
+		
+		checkTopologyOfAllClones(c,verbose=false)
+		
+		nodes = 0
+		while v:
+			nodes += 1
+			if hasattr(v,"tnodeList") and not v.isAnyAtFileNode():
+				s = "deleting tnodeList for " + `v`
+				print s ; es(s,color="blue")
+				delattr(v,"tnodeList")
+	
+			v = v.threadNext()
+	
+		es("%d nodes checked" % nodes)
+	#@nonl
+	#@-node:c.checkOutline
 	#@+node:cutOutline
 	def cutOutline(self):
 	
@@ -306,17 +330,10 @@ class baseCommands:
 		# DTHEIN 3-NOV-2002: use the relative @tabwidth, not the global one
 		dict = scanDirectives(c)
 		tabWidth  = dict.get("tabwidth")
-	
-		if 0: # DTHEIN 3-NOV-2002: don't use the global @tabwidth
-			for line in lines:
-				s = optimizeLeadingWhitespace(line,c.tab_width)
-				if s != line: changed = true
-				result.append(s)
-		else: # DTHEIN 3-NOV-2002: use relative @tabwidth (tabWidth)
-			for line in lines:
-				s = optimizeLeadingWhitespace(line,tabWidth)
-				if s != line: changed = true
-				result.append(s)
+		for line in lines:
+			s = optimizeLeadingWhitespace(line,tabWidth)
+			if s != line: changed = true
+			result.append(s)
 	
 		if changed:
 			result = string.join(result,'\n')
@@ -325,6 +342,7 @@ class baseCommands:
 			c.body.selectAllText()
 	
 		return changed
+	#@nonl
 	#@-node:convertBlanks
 	#@+node:convertTabs
 	def convertTabs (self,setUndoParams=true):
@@ -336,19 +354,11 @@ class baseCommands:
 		# DTHEIN 3-NOV-2002: use the relative @tabwidth, not the global one
 		dict = scanDirectives(c)
 		tabWidth  = dict.get("tabwidth")
-	
-		if 0: # DTHEIN 3-NOV-2002: don't use the global @tabwidth
-			for line in lines:
-				i,w = skip_leading_ws_with_indent(line,0,c.tab_width)
-				s = computeLeadingWhitespace(w,-abs(c.tab_width)) + line[i:] # use negative width.
-				if s != line: changed = true
-				result.append(s)
-		else: # DTHEIN 3-NOV-2002: use the relative @tabwidth (tabWidth)
-			for line in lines:
-				i,w = skip_leading_ws_with_indent(line,0,tabWidth)
-				s = computeLeadingWhitespace(w,-abs(tabWidth)) + line[i:] # use negative width.
-				if s != line: changed = true
-				result.append(s)
+		for line in lines:
+			i,w = skip_leading_ws_with_indent(line,0,tabWidth)
+			s = computeLeadingWhitespace(w,-abs(tabWidth)) + line[i:] # use negative width.
+			if s != line: changed = true
+			result.append(s)
 	
 		if changed:
 			result = string.join(result,'\n')
@@ -426,7 +436,7 @@ class baseCommands:
 		if 1: # update range...
 			c.createLastChildNode(v,headline,body)
 			undoType =  "Can't Undo" # 12/8/02: None enables further undoes, but there are bugs now.
-			c.updateBodyPane(head,None,tail,undoType,oldSel,oldYview)
+			c.updateBodyPane(head,None,tail,undoType,oldSel,oldYview,setSel=false)
 			newText = c.body.getAllText()
 			newSel = c.body.getTextSelection() # 7/11/03
 			c.undoer.setUndoParams("Extract",
@@ -478,7 +488,7 @@ class baseCommands:
 		if 1: # update range...
 			c.createLastChildNode(v,headline,body)
 			undoType = None # Set undo params later.
-			c.updateBodyPane(head,line1,tail,undoType,oldSel,oldYview)
+			c.updateBodyPane(head+line1,None,tail,undoType,oldSel,oldYview,setSel=false)
 			newText = c.body.getAllText()
 			newSel = c.body.getTextSelection()
 			c.undoer.setUndoParams("Extract Section",v,
@@ -603,7 +613,7 @@ class baseCommands:
 		if not lines:
 			lines = c.body.getAllText()
 	
-		lines = string.split(lines,'\n')
+		lines = string.split(lines,'\n')  ## Why don't we use splitLines ???
 	
 		return head,lines,tail,oldSel,oldVview
 	#@nonl
@@ -700,29 +710,31 @@ class baseCommands:
 			#@nl
 			#@		<< update the body, selection & undo state >>
 			#@+node:<< update the body, selection & undo state >>
-			changed = original != head + result + tail
-			undoType = choose(changed,"Reformat Paragraph",None)
-			
 			sel_start, sel_end = self.body.setSelectionAreas(head,result,tail)
 			
+			changed = original != head + result + tail
+			undoType = choose(changed,"Reformat Paragraph",None)
 			c.frame.onBodyChanged(v,undoType,oldSel=oldSel,oldYview=oldYview)
 			
 			# Advance the selection to the next paragraph.
 			newSel = sel_end, sel_end
 			c.body.setTextSelection(newSel)
+			
+			c.recolor()
 			#@nonl
 			#@-node:<< update the body, selection & undo state >>
 			#@nl
 	#@nonl
 	#@-node:reformatParagraph
 	#@+node:updateBodyPane (handles undo)
-	def updateBodyPane (self,head,middle,tail,undoType,oldSel,oldYview):
+	def updateBodyPane (self,head,middle,tail,undoType,oldSel,oldYview,setSel=true):
 		
 		c = self ; v = c.currentVnode()
 	
 		# Update the text and notify the event handler.
 		self.body.setSelectionAreas(head,middle,tail)
-		self.body.setTextSelection(oldSel)
+		if setSel:
+			self.body.setTextSelection(oldSel)
 		c.frame.onBodyChanged(v,undoType,oldSel=oldSel,oldYview=oldYview)
 	
 		# Update the changed mark and icon.
@@ -950,18 +962,15 @@ class baseCommands:
 	def canMoveOutlineLeft (self):
 	
 		c = self ; v = c.currentVnode()
-		if 0: # Old code: assumes multiple leftmost nodes.
-			return v and v.parent()
-		else: # Can't move a child of the root left.
-			if c.hoistStack:
-				h = c.hoistStack[-1]
-				if v and v.parent() and v.parent().parent():
-					p = v.parent()
-					return p != h and h.isAncestorOf(p)
-				else:
-					return false
+		if c.hoistStack:
+			h = c.hoistStack[-1]
+			if v and v.parent():
+				p = v.parent()
+				return p != h and h.isAncestorOf(p)
 			else:
-				return v and v.parent() and v.parent().parent()
+				return false
+		else:
+			return v and v.parent()
 	#@nonl
 	#@-node:canMoveOutlineLeft (changed for hoist)
 	#@+node:canMoveOutlineRight (changed for hoist)
