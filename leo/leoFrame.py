@@ -1521,7 +1521,6 @@ class LeoFrame:
 		
 		a = app() ; c = self.commands ; v = c.currentVnode()
 		if not data: return
-		
 		try:
 			openType,arg,ext=data
 			if handleLeoHook("openwith1",c=c,v=v,openType=openType,arg=arg,ext=ext) == None:
@@ -1533,6 +1532,7 @@ class LeoFrame:
 					dict = scanDirectives(c)
 					language = dict.get("language")
 					ext = a.language_extension_dict.get(language)
+					# print language,ext
 					if ext == None:
 						ext = "txt"
 					
@@ -1583,7 +1583,14 @@ class LeoFrame:
 					else:
 						try:
 							file = open(path,"w")
-							file.write(v.bodyString())
+							# 3/7/03: convert s to whatever encoding is in effect.
+							s = v.bodyString()
+							dict = scanDirectives(self.commands,v=v)
+							encoding = dict.get("encoding",None)
+							if encoding == None:
+								encoding = app().config.default_derived_file_encoding
+							s = toEncodedString(s,encoding,reportErrors=true) 
+							file.write(s)
 							file.flush()
 							file.close()
 							try:    time=os.path.getmtime(path)

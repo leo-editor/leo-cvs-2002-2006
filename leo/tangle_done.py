@@ -65,6 +65,13 @@ def convertRSTfilesToHTML(root_list):
 			pub.set_writer('html') 
 			output = pub.publish()
 			
+			# EKR: 3/7/03: convert output using the present encoding.
+			dict = scanDirectives(self.commands,v=root)
+			encoding = dict.get("encoding",None)
+			if encoding == None:
+				encoding = app().config.default_derived_file_encoding
+			output = toEncodedString(output,encoding,reportErrors=true) 
+			
 			# Write the corresponding html file.
 			f = open(file,"w")
 			f.write(output)
