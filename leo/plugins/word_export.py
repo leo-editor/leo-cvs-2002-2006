@@ -1,10 +1,8 @@
 #@+leo-ver=4-thin
 #@+node:EKR.20040517075715.14:@thin word_export.py
-"""Formats and exports the selected outline to a Word document.
+"""Formats and exports the selected outline to a Word document, starting Word if necessary.
 
-Make sure word is running with an open (empty) document.
-
-Use the Export menu item to do the actual export.
+Do the actual export using the the Plugins:Word Export:Export menu item.
 """
 
 # Note: the Export menu is a submenu of the Scripts:Word Export menu.
@@ -13,16 +11,21 @@ Use the Export menu item to do the actual export.
 #@@tabwidth -4
 
 __name__ = "Word Export"
-__version__ = "0.3"
+__version__ = "0.4"
 
 #@<< version history >>
 #@+node:ekr.20040909110753:<< version history >>
 #@+at
+#@@killcolor
 # 
 # 0.3 EKR:
-#     - Changed os.path.x to g.os_path_x for better handling of unicode 
-# filenames.
-#     - Better error messages.
+# 
+# - Changed os.path.x to g.os_path_x for better handling of unicode filenames.
+# - Better error messages.
+# 0.4 EKR:
+# 
+# - Added autostart code per 
+# http://sourceforge.net/forum/message.php?msg_id=2842589
 #@-at
 #@nonl
 #@-node:ekr.20040909110753:<< version history >>
@@ -53,7 +56,7 @@ def getConfiguration():
     config.read(fileName)
     return config
 #@-node:EKR.20040517075715.15:getConfiguration
-#@+node:EKR.20040517075715.16:getWordConnection
+#@+node:ekr.20041109085615:getWordConnection
 def getWordConnection():
     
     """Get a connection to Word"""
@@ -61,15 +64,16 @@ def getWordConnection():
     g.es("Trying to connect to Word")
     
     try:
-        word = win32com.client.Dispatch("Word.Application")
+        word = win32com.client.gencache.EnsureDispatch("Word.Application")
+        word.Visible = 1
+        word.Documents.Add()
         return word
     except Exception, err:
-        raise
         g.es("Failed to connect to Word",color="blue")
-        g.es("Please make sure word is running with an open (empty) document.")
+        raise
         return None
 #@nonl
-#@-node:EKR.20040517075715.16:getWordConnection
+#@-node:ekr.20041109085615:getWordConnection
 #@+node:EKR.20040517075715.17:doPara
 def doPara(word, text, style=None):
     
