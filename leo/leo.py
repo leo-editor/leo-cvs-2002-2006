@@ -16,8 +16,8 @@
 # in leoFrame.py and leoNodes.py: warnings about the event param not being 
 # used. pychecker doesn't understand that these routines are Tkinter callbacks.
 # 
-# in leoApp.py and leoUtils.py: pychecker doesn't seem to handle globals very 
-# well.  There are spurious warnings about globals.
+# in leoApp.py and leoGlobals.py: pychecker doesn't seem to handle globals 
+# very well.  There are spurious warnings about globals.
 # 
 # several files: pychecker complains about several routines being "too big", 
 # i.e., pychecker doesn't understand about literate programming.
@@ -33,31 +33,12 @@ if 0: # Set to 1 for lint-like testing.  This can also be done in idle.
 #@-body
 #@-node:1::<< Import pychecker >>
 
-import leoGlobals # Can't import * here: app() is not defined yet!
-import leoApp, leoFrame, leoUtils, Tkinter
-import os, string, sys
-
-app = leoGlobals.app
+from leoGlobals import *
+import leoApp,leoFrame,Tkinter
+import os,string,sys
 
 #@+others
-#@+node:2::Functions for scripts
-#@+body
-def windows():
-	return app().windowList
-	
-def getCommands():
-	c = []
-	for w in windows():
-		c.append(w.commands)
-		
-def topCommands():
-	import leoGlobals
-	return leoGlobals.top()
-	
-topCommand = topCommands
-#@-body
-#@-node:2::Functions for scripts
-#@+node:3::go
+#@+node:2::go
 #@+body
 # This is useful for reloading after a file has been changed.
 
@@ -68,16 +49,16 @@ def go(*args):
 
 	run(args)
 #@-body
-#@-node:3::go
-#@+node:4::init_sherlock
+#@-node:2::go
+#@+node:3::init_sherlock
 #@+body
 def init_sherlock (args):
 	
-	leoUtils.init_trace(args)
-	# leoUtils.trace("argv", "sys.argv: " + `sys.argv`)
+	init_trace(args)
+	# trace("argv", "sys.argv: " + `sys.argv`)
 #@-body
-#@-node:4::init_sherlock
-#@+node:5::leo.leoOpen
+#@-node:3::init_sherlock
+#@+node:4::leo.leoOpen
 #@+body
 def leoOpen(fileName=None,*args):
 	
@@ -107,11 +88,11 @@ def leoOpen(fileName=None,*args):
 	root.withdraw()
 	# Initialize application globals
 	app = leoApp.LeoApp(root)
-	leoGlobals.setApp(app)
+	setApp(app)
 	if not app.finishCreate(): # do this after gApp exists.
 		root.destroy()
 		return
-	leoGlobals.handleLeoHook("start1")
+	handleLeoHook("start1")
 	# Create the first Leo window
 	frame1 = leoFrame.LeoFrame()
 	frame1.top.withdraw()
@@ -129,18 +110,18 @@ def leoOpen(fileName=None,*args):
 	else:
 		frame1.top.deiconify()
 		app.log = frame1
-		leoGlobals.es("File not found: " + fileName)
+		es("File not found: " + fileName)
 		# 10/6/02: Set the file's name if it doesn't exist.
-		fileName = leoUtils.ensure_extension(fileName, ".leo")
+		fileName = ensure_extension(fileName, ".leo")
 		frame1.mFileName = fileName
 		frame1.title = fileName
 		frame1.top.title(fileName)
 	init_sherlock(args)
-	leoGlobals.handleLeoHook("start2")
+	handleLeoHook("start2")
 	root.mainloop()
 #@-body
-#@-node:5::leo.leoOpen
-#@+node:6::leo.run
+#@-node:4::leo.leoOpen
+#@+node:5::leo.run
 #@+body
 def run(*args):
 
@@ -163,47 +144,25 @@ def run(*args):
 	#@-node:1::<< set the icon image >>
 
 	root.title("Leo Main Window")
-	if 1:
-		root.withdraw()
-	else: # Works badly in Idle, not at all from the console window.
-		root.deiconify()
-		root.protocol("WM_DELETE_WINDOW", onKillLeoEvent)
+	root.withdraw()
 	# Initialize application globals
 	app = leoApp.LeoApp(root)
-	leoGlobals.setApp(app)
+	setApp(app)
 	if not app.finishCreate(): # do this after gApp exists.
 		root.destroy()
 		return
-	leoGlobals.handleLeoHook("start1")
+	handleLeoHook("start1")
 	# Create the first Leo window
 	frame = leoFrame.LeoFrame()
 	frame.top.deiconify() # 7/19/02
 	frame.commands.redraw() # 9/1/02
-	frame.startupWindow = leoGlobals.true
+	frame.startupWindow = true
 	init_sherlock(args)
-	leoGlobals.handleLeoHook("start2")
+	handleLeoHook("start2")
 	root.mainloop()
 #@-body
-#@-node:6::leo.run
-#@+node:7::onKillLeoEvent
-#@+body
-# Apparently the value returned from this routine is ignored.
-
-def onKillLeoEvent (event=None):
-	
-	print "onKillLeoEvent"
-	import leoDialog
-	d = leoDialog.leoDialog()
-	answer = d.askYesNo("Save Before Shutdown?", "Save files before shutting down")
-	if answer == "yes":
-		print "0"
-		return 0
-	else:
-		print "1"
-		return 1
-#@-body
-#@-node:7::onKillLeoEvent
-#@+node:8::profile
+#@-node:5::leo.run
+#@+node:6::profile
 #@+body
 def profile ():
 
@@ -217,7 +176,7 @@ def profile ():
 	p.sort_stats('cum','file','name')
 	p.print_stats()
 #@-body
-#@-node:8::profile
+#@-node:6::profile
 #@-others
 
 

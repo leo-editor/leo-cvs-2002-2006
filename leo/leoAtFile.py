@@ -23,7 +23,6 @@
 #@@c
 
 from leoGlobals import *
-from leoUtils import *
 import leoColor,leoNodes
 import filecmp, os, os.path, time, traceback
 
@@ -410,8 +409,8 @@ class atFile:
 	# 
 	# Once a directive is seen, no other related directives in nodes further 
 	# up the tree have any effect.  For example, if an @color directive is 
-	# seen in node x, no @color or @nocolor directives are examined in any 
-	# ancestor of x.
+	# seen in node v, no @color or @nocolor directives are examined in any 
+	# ancestor of v.
 	# 
 	# This code is similar to Commands::scanAllDirectives, but it has been 
 	# modified for use by the atFile class.

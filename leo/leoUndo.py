@@ -45,7 +45,6 @@ optionalIvars = [
 	"oldText","newText","oldSel","newSel"]
 
 from leoGlobals import *
-from leoUtils import *
 
 class undoer:
 

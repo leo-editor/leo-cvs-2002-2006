@@ -12,7 +12,6 @@
 #@@c
 
 from leoGlobals import *
-from leoUtils import *
 
 # Import the subcommanders.
 import leoAtFile,leoFileCommands,leoImport,leoNodes,leoTangle,leoUndo
@@ -1470,7 +1469,6 @@ class Commands:
 		s = c.frame.top.title()
 		if len(s) > 2 and not c.loading: # don't update while loading.
 			if changedFlag:
-				# print_stack()
 				if s [0] != '*': c.frame.top.title("* " + s)
 			else:
 				if s[0:2]=="* ": c.frame.top.title(s[2:])

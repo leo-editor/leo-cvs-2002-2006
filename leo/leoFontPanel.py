@@ -4,7 +4,6 @@
 #@@language python
 
 from leoGlobals import *
-from leoUtils import *
 import exceptions,sys,string,Tkinter,tkFont,traceback
 
 class leoFontPanel:

@@ -227,7 +227,6 @@
 
 
 from leoGlobals import *
-from leoUtils import *
 import types
 
 

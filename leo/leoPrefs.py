@@ -4,7 +4,6 @@
 #@@language python
 
 from leoGlobals import *
-from leoUtils import *
 import string, Tkinter
 
 # Public constants used for defaults when leoConfig.txt can not be read.

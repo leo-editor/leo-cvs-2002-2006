@@ -18,7 +18,6 @@
 #@@c
 
 from leoGlobals import *
-from leoUtils import *
 import leoColor
 import os, string, Tkinter, tkFont, traceback, types
 
@@ -796,7 +795,7 @@ class leoTree:
 		
 		try:
 			if type(s) == types.UnicodeType:
-				# This can fail, e.g, if character > 256 used in Latin-1 encoding.
+				# This can fail, e.g., if character > 256 used in Latin-1 encoding.
 				s2 = s.encode(xml_encoding) # result is a string.
 				s = s2 # don't destroy s until we know that all is well.
 		except:
@@ -1074,7 +1073,7 @@ class leoTree:
 		xml_encoding = app().config.xml_version_string
 		
 		if type(s) == types.UnicodeType:
-			try: # This can fail, e.g, if character > 256 used in Latin-1 encoding.
+			try: # This can fail, e.g., if character > 256 used in Latin-1 encoding.
 				s2 = s.encode(xml_encoding) # result is a string.
 				s = s2 # don't destroy s until we know that all is well.
 			except:

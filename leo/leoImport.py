@@ -4,7 +4,6 @@
 #@@language python
 
 from leoGlobals import *
-from leoUtils import *
 import traceback
 
 # Synonyms

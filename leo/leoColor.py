@@ -6,7 +6,6 @@
 # Syntax coloring routines for Leo.py
 
 from leoGlobals import *
-from leoUtils import *
 import string, Tkinter, tkColorChooser, traceback
 
 
@@ -1413,7 +1412,7 @@ class colorizer:
 	#@+node:10::Utils
 	#@+body
 	#@+at
-	#  These methods are like the corresponding functions in leoUtils.py 
+	#  These methods are like the corresponding functions in leoGlobals.py 
 	# except they issue no error messages.
 
 	#@-at

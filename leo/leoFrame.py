@@ -7,7 +7,6 @@
 #@@language python 
 
 from leoGlobals import *
-from leoUtils import *
 import leoColor, leoCompare, leoDialog, leoFontPanel, leoNodes, leoPrefs
 import os,string,sys,traceback,Tkinter,tkFileDialog,tkFont
 
@@ -1255,8 +1254,8 @@ class LeoFrame:
 		if h == None or h < 5: h = 5
 		if w == None or w < 5: w = 10
 		y = max(y,0) ; x = max(x,0)
-		g = "%dx%d%+d%+d" % (w,h,x,y)
-		top.geometry(g)
+		geom = "%dx%d%+d%+d" % (w,h,x,y)
+		top.geometry(geom)
 		top.deiconify()
 		top.lift()
 		frame.resizePanesToRatio(frame.ratio,frame.secondary_ratio) # Resize the _new_ frame.
@@ -2352,7 +2351,6 @@ class LeoFrame:
 					c.body.window_create(index,window=w,align="baseline")
 				else:
 					c.body.image_create(index,image=image,align="baseline")
-				#traceback.print_stack()
 				# c.body.dump(index) # The image isn't drawn unless we take an exception!
 	
 	#@-body
@@ -2841,8 +2839,8 @@ class LeoFrame:
 			top = frame.top
 			# Compute w,h
 			top.update_idletasks() # Required to get proper info.
-			g = top.geometry() # g = "WidthxHeight+XOffset+YOffset"
-			dim,junkx,junky = string.split(g,'+')
+			geom = top.geometry() # geom = "WidthxHeight+XOffset+YOffset"
+			dim,junkx,junky = string.split(geom,'+')
 			w,h = string.split(dim,'x')
 			w,h = int(w),int(h)
 			# Set new x,y and old w,h

@@ -57,7 +57,6 @@
 
 
 from leoGlobals import *
-from leoUtils import *
 import Tkinter, types
 
 # Abbreviations

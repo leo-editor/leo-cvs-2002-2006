@@ -4,7 +4,6 @@
 #@@language python
 
 from leoGlobals import *
-from leoUtils import *
 import leo,leoConfig,leoDialog,leoFind
 import os, sys, Tkinter, traceback
 

@@ -6,7 +6,6 @@
 # Tangle and Untangle.
 
 from leoGlobals import *
-from leoUtils import *
 import os,string,traceback
 
 

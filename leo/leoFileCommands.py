@@ -4,7 +4,6 @@
 #@@language python
 
 from leoGlobals import *
-from leoUtils import *
 import leoDialog,leoNodes
 import os,os.path,time,traceback
 
@@ -383,8 +382,8 @@ class fileCommands:
 		
 		# Bug fix: 7/15/02: use max, not min!!!
 		y = max(y,0) ; x = max(x,0)
-		g = "%dx%d%+d%+d" % (w,h,x,y)
-		self.frame.top.geometry(g)
+		geom = "%dx%d%+d%+d" % (w,h,x,y)
+		self.frame.top.geometry(geom)
 		# 7/15/02: Redraw the window before writing into it.
 		self.frame.top.deiconify()
 		self.frame.top.lift()
