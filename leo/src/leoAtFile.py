@@ -4043,7 +4043,7 @@ class baseNewDerivedFile(oldDerivedFile):
         
         """Handle end-of-node processing for @-others and @-ref sentinels."""
     
-        at = self
+        at = self ; c = self.c
         
         # End raw mode.
         at.raw = False
