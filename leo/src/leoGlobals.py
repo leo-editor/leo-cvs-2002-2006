@@ -1738,8 +1738,10 @@ def idleTimeHookHandler(*args,**keys):
     if g.app.killed: return
     
     for w in g.app.windowList:
-        c = w.c ; v = c.currentVnode()
-        g.doHook("idle",c=c,v=v)
+        c = w.c
+        # New in 4.2 Beta 3. Do NOT compute c.currentPosition.
+        # This would be a MAJOR leak of positions.
+        g.doHook("idle",c=c)
 
     # Requeue this routine after 100 msec.  Faster requeues overload the system.
     if g.app.idleTimeHook:
