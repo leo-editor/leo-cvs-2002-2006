@@ -1,0 +1,99 @@
+System requirements for leo.py
+------------------------------
+
+leo.py 3.11 requires Python 2.1 and tcl/tk 8.3 or above.
+
+	Download Python from http://python.org/ 
+	Download tcl/Tk from http://tcl.activestate.com/software/tcltk/
+
+Warning: When building Tcl on Linux, do not specify "--enable-threads" .
+Only use Tcl with the default "threads not enabled" case.
+
+Installing the leo.py on Linux
+------------------------------
+
+You can install Leo using the install script provided.
+
+Leo is distributed as a single compressed (.zip) folder.  Simply uncompress this folder, put the folder in a convenient place and run leo.py.  You can run leo.py by double-clicking leo.py.  You can also run leo.py from a Python interpreter as follows:
+
+	import leo
+	leo.run() # runs leo.py, opening a new outline.
+	leo.go() # runs leo.py after reloading all modules.
+	leo.leoOpen(fileName) # runs leo.py, reloads all modules, and opens fileName.
+
+You may specify options using the configuration file called leoConfig.txt.  You should generate this file using leoConfig.leo.
+
+Installing the leo.py on Windows
+--------------------------------
+
+Important: You can install leo.py on Windows using the single-click installer called leosetup.exe.
+
+Leo is distributed as a single compressed (.zip) folder.  Uncompress this folder, put the folder in a convenient place and run leo.py.  You can run leo.py by double-clicking leo.py.  You can also run leo.py from a Python interpreter as follows:
+
+	import leo
+	leo.run() # runs leo.py, opening a new outline.
+	leo.go() # runs leo.py after reloading all modules.
+	leo.leoOpen(fileName) # runs leo.py, reloads all modules, and opens fileName.
+
+You may specify options using the configuration file called leoConfig.txt.  You should generate this file using leoConfig.leo.
+
+Installing leo.py on MacOs
+--------------------------
+
+Bruce M. Bolden, bruceb@cs.uidaho.edu, is using Leo on MaxOS X.  Here is his description of how to get Leo working there:
+
+I installed: 
+- Latest OS X Developer tools
+- latest (as of about two weeks ago) tk/tcl
+		 MacOSXTk8.4a4-2.tar.gz
+- the machopython distribution
+http://prdownloads.sourceforge.net/wxpython/MachoPython-2.2.1.dmg
+
+For OS X 10.1, I followed the directions at:
+	http://tony.lownds.com/macosx/tkinter.html
+
+That worked fine for 10.1, but didn't work for 10.2.  It
+took awhile to find a Python distribution that worked
+correctly with tk/tcl.
+
+I was just getting into Leo about a week before 10.2 was released and thought about---what if it breaks....10.2 broke it, but I was able to find a solution as described above.
+
+More re MacOS from Bruce Bolden
+-------------------------------
+
+I just finished building tk successfully!  The magic step was the execution of the command
+
+cp ../generic/prolog.ps to ../library/prolog.ps
+
+AFTER 
+
+cd ../../tk/macosx
+
+in the instructions on "Steps to build Tcl/Tk 8.4.0 on MacOS X":
+
+http://mini.net/tcl/4052
+
+I found this solution while looking at the tcl-mac mailing list archive.  The earlier (current?) tar ball on SourceForge did not have the file prolog.ps in the library directory:
+
+http://sourceforge.net/mailarchive/forum.php?thread_id=1060496&forum_id=3853
+
+Copy and Paste seem to work just fine now in Leo!  This was my original question for you.
+
+I also noticed that someone else built everything on OS X 10.2 (Jaguar), but they did it under X.  Since, the new version of Tk appears to support the OS X interface quite well, I'm not going to bother installing X (for now).
+
+So, Leo works two different ways on OS X 10.2.
+
+Using shell scripts and batch files to make using Leo easier
+------------------------------------------------------------
+
+On Linux, the following shell script will allow you to open foo.leo files by typing leo foo
+
+#!/bin/sh 
+python <leopath>/leo.py $1
+
+where <leopath> is replaced with the path to the leo directory. 
+
+On Windows, the equivalent batch file would be:
+
+c:\python22\python <leopath>leo.py %1
+
