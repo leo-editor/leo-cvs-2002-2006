@@ -62,7 +62,7 @@
 <v t="edream.110203163054.44"><vh>Dan Winkler 1</vh></v>
 <v t="edream.110203163054.45"><vh>Dan Winkler 2</vh></v>
 </v>
-<v t="edream.110203163054.46" a="EV"><vh>Release Notes</vh>
+<v t="edream.110203163054.46"><vh>Release Notes</vh>
 <v t="edream.110203163054.47"><vh>Warnings</vh></v>
 <v t="edream.110203163054.48"><vh>Installation notes</vh>
 <v t="edream.110203163054.49" a=""><vh>System requirements</vh></v>
@@ -82,7 +82,7 @@
 <v t="edream.110203163054.61" a=""><vh>Putting the Leo icon in Leo windows</vh></v>
 <v t="edream.110203163054.62" a=""><vh>Quick start</vh></v>
 </v>
-<v t="edream.110203163054.63" a="E"><vh>Latest version</vh>
+<v t="edream.110203163054.63"><vh>Latest version</vh>
 <v t="edream.110203163054.64" a=""><vh>4.1 alpha 1</vh>
 <v t="edream.110303182719" a="E"><vh>New config settings</vh></v>
 <v t="edream.110303182253.39"><vh>Made app.forceShutdown work in "idle" hook</vh></v>
@@ -912,7 +912,7 @@
 </v>
 </v>
 </v>
-<v t="edream.110203163054.735"><vh>Users Guide</vh>
+<v t="edream.110203163054.735" a="E"><vh>Users Guide</vh>
 <v t="edream.110203163054.736"><vh>An overview of Leo</vh></v>
 <v t="edream.110203163054.737"><vh>Front material</vh>
 <v t="edream.110203163054.738"><vh>Title Page &amp; Summary</vh></v>
@@ -1072,7 +1072,7 @@
 <v t="edream.110203163054.384" a=""><vh>@verbose, @terse, @quiet and @silent directives control comments in @root trees</vh></v>
 </v>
 </v>
-<v t="edream.110203163054.818"><vh>Chapter 5: Using Leo's Commands</vh>
+<v t="edream.110203163054.818" a="E"><vh>Chapter 5: Using Leo's Commands</vh>
 <v t="edream.110203163054.819"><vh> The File Menu</vh>
 <v t="edream.110203163054.820" a="M"><vh>Loading, Saving and Reverting Files</vh></v>
 <v t="edream.110203163054.821"><vh>Communicating with external editors</vh>
@@ -1120,11 +1120,11 @@
 <v t="edream.110203163054.852"><vh>LaTex keywords</vh></v>
 </v>
 </v>
-<v t="edream.110203163054.853"><vh> The Outline Menu</vh>
+<v t="edream.110203163054.853" a="E"><vh> The Outline Menu</vh>
 <v t="edream.110203163054.854"><vh> Creating and deleting headlines</vh></v>
 <v t="edream.110203163054.855"><vh> Cutting, pasting and deleting headlines</vh></v>
 <v t="edream.110203163054.856"><vh> Expanding and contracting headlines</vh></v>
-<v t="edream.110203163054.857"><vh> Moving, sorting and reorganizing headlines</vh></v>
+<v t="edream.110203163054.857" a="V"><vh> Moving, sorting and reorganizing headlines</vh></v>
 <v t="edream.110203163054.858"><vh> Marking headlines</vh></v>
 <v t="edream.110203163054.755" a=""><vh>Cloning headlines</vh>
 <v t="edream.110203163054.756"><vh>read me</vh></v>
@@ -9906,9 +9906,9 @@ The Contract Parent contracts the parent node of the present node, making the pa
 
 The Sort Children command sorts all children of the present node in alphabetical order, based on the headlines of the children.
 
-New in version 1.0 of leo.py and version 2.6 of Borland Leo.
+The Sort Siblings command sorts all siblings of the present node in alphabetical order.
 
-The Sort Siblings command sorts all siblings of the present node in alphabetical order.</t>
+New in version 4.1:  The Hoist command redraws the outline making the present node the root node.  The outline itself is unaffected by the Hoist command.  The De-Hoist command removes one level of hoisting.</t>
 <t tx="edream.110203163054.858">The Mark Headline command marks a headline with a red marker  near the leader characters, while the Unmark Headline command removes such a mark.  Only one of these commands appear in the Outline menu at any time: the Mark Headline command appears if the currently selected headline is unmarked.  Otherwise, the Unmark Headline command appears.  The Mark Subheads command marks all offspring of the currently selected node.  The Unmark All command removes the marks from the entire tree.
 
 The Mark Changed Items command marks all headlines whose headline or body text has been changed since the file was last saved.  The Mark Changed Roots command marks all changed headlines whose body text contains the @root directive.  This command is especially useful with the Tangle Marked command.</t>

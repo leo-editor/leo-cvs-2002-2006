@@ -74,11 +74,11 @@ headline_text_font_size = 9
 
 [prefs panel options]
 output_doc_chunks = 1
-run_untangle_done.py = 0
+run_untangle_done.py = False
 page_width = 80
 tangle_outputs_header = 1
-default_target_language = Python
-run_tangle_done.py = 0
+default_target_language = python
+run_tangle_done.py = False
 default_tangle_directory = 
 tab_width = 4
 
@@ -117,7 +117,7 @@ stylesheet =
 at_root_bodies_start_in_doc_mode = 1
 write_old_format_derived_files = 0
 create_nonexistent_directories = 0
-use_plugins = 0
+use_plugins = 1
 save_clears_undo_buffer = 0
 use_gnx = 1
 
@@ -165,7 +165,7 @@ paste = Ctrl+V
 expandall = Alt+9
 unindent = Ctrl+[
 indent = Ctrl+]
-executescript = Alt+Shift+E
+executescript = Ctrl+E
 clonenode = Ctrl+`
 extractsection = Shift+Ctrl+E
 editheadline = Ctrl+H
@@ -184,7 +184,7 @@ gotonextcloned = Alt+N
 copy = Ctrl+C
 convertblanks = Shift+Ctrl+B
 movedown = Ctrl+D
-equalsizedpanes = Ctrl+E
+equalsizedpanes = None
 moveright = Ctrl+R
 replacethenfind = Ctrl+-
 pastenode = Shift+Ctrl+V
@@ -219,20 +219,24 @@ expandtolevel1 = Alt+1
 expandtolevel8 = Alt+8
 
 [recent files]
-file2 = C:\prog\leoCVS\leo\doc\LeoDocs.leo
+file3 = C:\prog\leoCVS\leo\config\leoConfig.leo
+file2 = C:\prog\leoCVS\leo\test\test.leo
 file1 = C:\prog\leoCVS\leo\src\LeoPy.leo
-file0 = C:\prog\leoCVS\leo\test\test.leo
+file0 = C:\Documents and Settings\default\My Documents\ekr.leo
+file4 = C:\prog\leoCVS\leo\plugins\leoPlugins.leo
 
 [find/change options]
 mark_changes = 0
 ignore_case = 0
 change_string = 
-whole_word = 1
-search_headline = 0
+whole_word = 0
+script_search = 0
 node_only = 0
 batch = 0
+search_headline = 0
+script_change = 0
 search_body = 1
-find_string = def isVisible
+find_string = onBodyChanged
 pattern_match = 0
 wrap = 0
 mark_finds = 0
