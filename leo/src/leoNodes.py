@@ -2797,7 +2797,7 @@ class position (object):
         p = self # Do NOT copy the position!
     
         p.unlink()
-        n = p.numberOfChildren()
+        n = parent.numberOfChildren()
         p.linkAsNthChild(parent,n)
     
         # Moving a node can create a new root node.
