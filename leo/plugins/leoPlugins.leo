@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="1439" clone_windows="0"/>
-<globals body_outline_ratio="0.45200000000000001">
-	<global_window_position top="73" left="343" height="750" width="859"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="1448" clone_windows="0"/>
+<globals body_outline_ratio="0.43466666666666665">
+	<global_window_position top="10" left="143" height="921" width="957"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences>
@@ -963,7 +963,7 @@
 </v>
 </v>
 </v>
-<v t="edream.120203141341"><vh>(Scripts to debug font problem)</vh>
+<v t="edream.120203141341" a="M"><vh>(Scripts to debug font problem)</vh>
 <v t="edream.120203141341.1"><vh>Show font</vh></v>
 <v t="edream.120203140328.1"><vh>Show settings</vh>
 <v t="edream.120203140328.2"><vh>getFontSettings</vh></v>
@@ -1226,7 +1226,7 @@
 </v>
 </v>
 </v>
-<v t="edream.110203113231.790"><vh>External editors &amp; Open With</vh>
+<v t="edream.110203113231.790" a="E"><vh>External editors &amp; Open With</vh>
 <v t="edream.120303095057.1" tnodeList="edream.120303095057.1,edream.120303095910,edream.120303095910.1"><vh>@file mod_tempfname.py</vh>
 <v t="edream.120303095910"><vh>onStart</vh></v>
 <v t="edream.120303095910.1"><vh>openWithTempFilePath</vh></v>
@@ -1513,7 +1513,22 @@
 </v>
 </v>
 <v t="ekr.20040107092135" a="E"><vh>New plugins:  very cool</vh>
-<v t="ekr.20040109080300" a="V"><vh>Changes made by EKR</vh></v>
+<v t="ekr.20040111053758" a="V"><vh>Description of rst2 by Steve Zatz</vh></v>
+<v t="ekr.20040109221855" a="E" tnodeList="ekr.20040109221855,ekr.20040109221855.1,ekr.20040109221855.2,ekr.20040109221855.3,ekr.20040109221855.4,ekr.20040109221855.5,ekr.20040109221855.6,ekr.20040109221855.7,ekr.20040109225409,ekr.20040109221855.8"><vh>@file rst2.py</vh>
+<v t="ekr.20040109221855.1"><vh>&lt;&lt;about this plugin &gt;&gt;</vh></v>
+<v t="ekr.20040109221855.2"><vh>&lt;&lt; change log &gt;&gt;</vh></v>
+<v t="ekr.20040109221855.3" a="E"><vh>onIconDoubleClick</vh>
+<v t="ekr.20040109221855.4" a="E"><vh>&lt;&lt; write rST as HTML/LaTeX &gt;&gt;</vh>
+<v t="ekr.20040109221855.5"><vh>&lt;&lt; convert rST to HTML/LaTeX &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20040109221855.6"><vh>&lt;&lt; write rST file &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20040109221855.7" a="E"><vh>writeTreeAsRst</vh>
+<v t="ekr.20040109225409"><vh>&lt;&lt; write rst node &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20040109221855.8"><vh>underline</vh></v>
+</v>
+<v t="ekr.20040109080300"><vh>Changes made by EKR</vh></v>
 <v t="ekr.20040107092135.2" tnodeList="ekr.20040107092135.2,ekr.20040108060748,ekr.20040108054555.14,ekr.20040107092135.3,ekr.20040108054555.4,ekr.20040108054555.3,ekr.20040107092135.5,ekr.20040107111307,ekr.20040108054555.5,ekr.20040108054555.8,ekr.20040108054555.7,ekr.20040107092135.6,ekr.20040107092135.7,ekr.20040107092135.8,ekr.20040107103252,ekr.20040107103339"><vh>@file searchbox.py</vh>
 <v t="ekr.20040108054555.14"><vh>&lt;&lt; vars &gt;&gt;</vh></v>
 <v t="ekr.20040107092135.3"><vh>class SearchBox</vh>
@@ -1542,7 +1557,7 @@
 <v t="ekr.20040108062655.6"><vh>updateMarks</vh></v>
 </v>
 </v>
-<v t="ekr.20040108095351" a="E" tnodeList="ekr.20040108095351,ekr.20040108095351.1,ekr.20040108100040,ekr.20040108095351.2,ekr.20040108095351.4"><vh>@file rowcol.py</vh>
+<v t="ekr.20040108095351" tnodeList="ekr.20040108095351,ekr.20040108095351.1,ekr.20040108100040,ekr.20040108095351.2,ekr.20040108095351.4"><vh>@file rowcol.py</vh>
 <v t="ekr.20040108095351.1" a="E"><vh>class rowColClass</vh>
 <v t="ekr.20040108100040"><vh>__init__</vh></v>
 <v t="ekr.20040108095351.2"><vh>addWidgets</vh></v>
@@ -15581,7 +15596,8 @@ rowcol.py
 # New from Paul Paterson.
 nodenavigator.py
 searchbox.py
-# word_export.py</t>
+# word_export.py
+xemacs.py</t>
 <t tx="edream.120603100522">leoPlugins.py now enables plugins using pluginsManager.txt.</t>
 <t tx="edream.120703082844">@language python
 
@@ -16081,5 +16097,312 @@ if Tkinter:
 
 - Call updatedRowColWidget immediately from addWidgets.
   This seems to be necessary to reserve the proper place in the icon area.</t>
+<t tx="ekr.20040109221855">"""If a headline starts with @rst &lt;filename&gt;, double-clicking on it will 
+write a file in outline order, with the headlines converted to reStructuredText 
+section headings.
+
+If the name of the &lt;filename&gt; has the extension .html, .htm or .tex, and if you have
+docutils installed, it will generate HTML or LaTeX, respectively."""
+
+# By Josef Dalcolmo: contributed under the same licensed as Leo.py itself.
+
+# EKR: The code now lets other plugins handle @folder and @url nodes.
+
+# Some hacks by S Zatz to create the ability to combine program code and documentation
+# using @rst nodes that results combined code/documentation HTML output.
+# See the 'about this plugin' section for more information
+
+from leoPlugins import *
+from leoGlobals import *
+
+import os
+
+&lt;&lt; about this plugin &gt;&gt;
+&lt;&lt; change log &gt;&gt;
+
+@others
+
+if 1: # Register the handlers...
+    registerHandler("icondclick1",onIconDoubleClick)
+    
+    __version__ = "1.5" # Set version for the plugin handler.
+    plugin_signon(__name__)</t>
+<t tx="ekr.20040109221855.1">@ This plugin writes out @rst nodes as a reStructuredText file.
+
+If the filename ends in .html, .htm or .tex and if you have docutils_ (a Python
+module) installed, then it will be written as HTML or LaTeX, respectively. The HTML converter is far
+from bug-free, but remember, docutils is alpha software. (Perhaps a future
+version will allow automatic translation to other formats, like OpenOffice.org
+as well).
+
+Headlines are translated into reStructuredText headlines, e.g. underlined
+depending on the level and empty line separated from body text otherwise, text
+is written as it is. The "#" character is not used for underlining, so it may
+be used for a title as in::
+
+    #####
+    Title
+    #####
+
+Otherwise, section underlining is discouraged, since it is automatically generated.
+
+.. _docutils: http://docutils.sourceforge.net
+
+--------------------------------------------------------
+
+S Zatz modifications
+
+Assumes Leo outlines are in the form
+
+@rst somefilename.[txt/html/tex]
+..@file-nosent somefilename.py
+....code node
+......@rst
+......another code node
+........@rst
+......more code
+........@rst
+
+and so on
+
+Double-clicking on a @rst somefilename.ext node generates a reST-structured [txt/html/tex] file that combines
+program code nodes with reST documentation from @rst nodes that have no associated filename.
+
+Double-clicking on a plain (no file name) @rst node opens two text editor windows -- one with program code and the other with the associated reST documentation from the @rst node</t>
+<t tx="ekr.20040109221855.2">@ Change log:
+
+- New tree types: @rst has been added.
+
+- EKR: The code now lets other plugins handle @folder and @url nodes.
+
+- HTML generation: @rst nodes can now generate HTML, if Python docutils_ are
+  installed. Simply give the filename an extension .htm or .html. You can try
+  this out by renaming the filename in this @rst tree.
+
+- underlines: I changed the order of the underline characters again. The "&gt;" is
+  doesn't really look good as an underline in my opinion, so I moved it to a very
+  low level.
+
+- JD 2003-03-10 (rev 1.3): some more corrections to the unicode-&gt; encoding translation.
+  No only check for missing docutils (doesn't mask other errors any more).
+
+- JD 2003-03-11 (rev 1.4): separated out the file launching code to a different pluging.
+
+- 2003-11-02 Added generation of LaTeX files, just make the extension of the filename '.tex'. --Timo Honkasalo
+
+- 2003-12-24 S Zatz modifications to introduce concept of plain @rst nodes to improve program documentation</t>
+<t tx="ekr.20040109221855.3"># by Josef Dalcolmo 2003-01-13
+#
+# this does not check for proper filename syntax.
+# path is the current dir, or the place @folder points to
+# this should probably be changed to @path or so.
+
+def onIconDoubleClick(tag,keywords):
+
+    v = keywords.get("v")
+    c = keywords.get("c")
+    h = v.headString().strip()
+    if match_word(h,0,"@rst"):
+        if len(h) &gt; 5:
+            fname = h[5:]
+            ext = os.path.splitext(fname)[1].lower()
+            if ext in ('.htm','.html','.tex'):
+                &lt;&lt; write rST as HTML/LaTeX &gt;&gt;
+            else:
+                &lt;&lt; write rST file &gt;&gt;
+        else:
+            # Opens @rst node and parent code node
+            # For convenience should probably add @ignore, @nocolor and @wrap directives if @rst node doesn't have them
+            c.openWith(("os.startfile", None, ".txt"))
+            c.selectVnode(v.parent())
+            c.openWith(("os.startfile", None, ".tp"))
+</t>
+<t tx="ekr.20040109221855.4">try:
+    import docutils
+except:
+    docutils = None
+    es('HTML/LaTeX generation requires docutils')
+
+if docutils:
+    import StringIO
+    rstFile = StringIO.StringIO()
+    writeTreeAsRst(rstFile, fname, v, c)
+    rstText = rstFile.getvalue()
+    # Set the writer and encoding for the converted file
+    if ext in ('.html','.htm'):
+        writer='html'
+        enc="utf-8"
+    else:
+        writer='latex'
+        enc="iso-8859-1"
+    &lt;&lt; convert rST to HTML/LaTeX &gt;&gt;
+    convertedFile = file(fname,'w')
+    convertedFile.write(output)
+    convertedFile.close()
+    rstFile.close()
+    es('written: '+str(fname))</t>
+<t tx="ekr.20040109221855.5"># this code snipped has been taken from code contributed by Paul Paterson 2002-12-05
+from docutils.core import Publisher
+from docutils.io import StringOutput, StringInput
+
+pub = Publisher()
+# Initialize the publisher
+pub.source = StringInput(source=rstText)
+pub.destination = StringOutput(pub.settings, encoding=enc)
+pub.set_reader('standalone', None, 'restructuredtext')
+pub.set_writer(writer)
+output = pub.publish()</t>
+<t tx="ekr.20040109221855.6">rstFile = file(fname,'w')
+writeTreeAsRst(rstFile, fname, v, c)
+rstFile.close()
+es('written: '+str(fname))</t>
+<t tx="ekr.20040109221855.7">def writeTreeAsRst(rstFile, fname, vnode, c):
+    'Writes the tree under vnode to the file rstFile (fname is the filename)'
+    # we don't write a title, so the titlepage can be customized
+    # use '#' for title under/overline
+    # 3/7/03
+    dict = scanDirectives(c,v=vnode)
+    encoding = dict.get("encoding",None)
+    if encoding == None:
+        encoding = app().config.default_derived_file_encoding
+    # 3/7/03
+    s = toEncodedString(fname,encoding,reportErrors=true)
+    rstFile.write('.. filename: '+s+'\n')
+    rstFile.write('\n')
+    # 3/7/03
+    s = vnode.bodyString()
+    s = toEncodedString(s,encoding,reportErrors=true)
+    rstFile.write(s+'\n')		# write body of titlepage
+    rstFile.write('\n')
+    
+    toplevel = vnode.level()+1 #Dec 20
+    h = vnode.headString()
+    stopHere = vnode.nodeAfterTree()
+    v = vnode.threadNext()
+    # repeat for all nodes in this tree
+    while v != stopHere:
+        # 3/7/03
+        h = v.headString().strip()
+        # we get the parent of the @rst node, which is assumed to hold program code
+        if match_word(h,0,"@rst"):
+			&lt;&lt; write rst node &gt;&gt;
+        v = v.threadNext()</t>
+<t tx="ekr.20040109221855.8"># note the first character is intentionally unused, to serve as the underline
+# character in a title (in the body of the @rst node)
+
+def underline(h,level):
+    str = """#=+*^~"'`-:&gt;&lt;_"""[level]
+    return str*max(len(h),4)+'\n'</t>
+<t tx="ekr.20040109225409">v_p = v.parent()
+h_p = v_p.headString()
+h_p = toEncodedString(h_p,encoding,reportErrors=true)
+s_p = v_p.bodyString()
+s_p = toEncodedString(s_p,encoding,reportErrors=true)
+rstFile.write(h_p+'\n')
+rstFile.write(underline(h_p,v.level()-toplevel))
+rstFile.write('\n')
+if s_p.strip():
+    #using a class directive to give program code blocks a different look than other literal blocks
+    rstFile.write('**code**:\n\n.. class:: code\n..\n\n::\n\n')
+    s_p = s_p.split('\n')
+    for linenum,linetext in enumerate(s_p[:-1]):
+        if "@others" in linetext: #deleting lines with @other directive from output
+            continue
+        # hack to word wrap long code lines
+        if len(linetext) &gt; 100:
+            x = linetext[100:]
+            y = x.split(' ',1)
+            if len(y) == 1:
+                linetext = linetext[:100]+y[0]
+            else:
+                linetext = linetext[:100]+y[0]+'\n\t    '+y[1]
+        rstFile.write('\t%2d  %s\n'%(linenum+1,linetext))
+rstFile.write('\n')
+# 3/7/03
+s = v.bodyString()
+s = toEncodedString(s,encoding,reportErrors=true)
+# next line is an total hack to take care of @ignore, @nocolor, @wrap in the @rst nodes
+s = s.split('\n',3)[3]
+rstFile.write('**comments**:\n%s\n'%s)
+rstFile.write('\n')</t>
+<t tx="ekr.20040111053758">@nocolor
+
+I now have a version of the plugin that produces HTML output that has syntax
+highlighted code using the SilverCity(http://silvercity.sourceforge.net) lexing
+package. However, since that requires someone to install not only docutils but
+SilverCity, I think it's fine to post the original rest2 plugin that I sent
+you. If there is any interest, I can always write a version that looks for the
+SilverCity package and uses it if it is present.
+
+---------------------
+Sorry for the longish note but I believe that the application of Leo that I 
+describe below is important, and I wanted to make you aware of it.
+
+The end-result of this work is to use Leo+docutils to mix program code and 
+reST documentation in a way that I believe is very useful.  It builds upon 
+the work of the existing rst plugin.
+
+The basic approach is that any Leo node that contains program code that 
+needs documentation (in an ideal world it would be every node) has an 
+associated child node whose headline is simply '@rst', which, not 
+surprisingly, contains reST-style documentation.  While this means that a 
+typical program may have dozens (if not hundreds) of these @rst nodes, it 
+produces documentation that I think is as close as I have ever seen to 
+useful, easy-to-read documentation that is easy to create at the same time 
+as an application is being coded.
+
+There are several interelated aspects to this work.
+
+- The reST plugin (renamed rst2) was hacked to manage Leo outlines that 
+were a combination of normal code nodes and reSt nodes.
+
+- The plugin now recognizes a @rst directive (that has no associated file 
+name) in the headline of a node.
+
+- When it encounters such a @rst Headline node, it writes the contents of 
+the body of the @rst node's *parent* (which generally contains program code) 
+to the reST output file (HTML) and then adds the reST content that is 
+contained in the body of the @rst documentation node to the output HTML 
+file,
+
+- These @rst nodes are used in @file-nosent trees and the @rst nodes have an 
+@ignore directive (plus @nocolor directive and @wrap directives) so that 
+when the @file is updated the application code does not contain the 
+reST-style documentation contained in the body of the @rst nodes.  (This was 
+the reason I had asked you in the Leo Forum to allow @file-nosent trees to 
+work appropriately with @ignore nodes - Thank you for doing this right 
+away.)  There is no reason that the reST content couldn't be written to the 
+@file as documentation other than I personally believe in a volume of 
+documentation (including musings, failed ideas, questions, etc.) that is 
+probably best kept separate from the actual *.py files.
+
+- For pure convenience the plugin was also modified so that when you 
+double-click on a plain rst node (no associated filename) Leo opens both the 
+@rst documentation node and the parent node containing code in an external 
+editor *simultaneously*.  I happen to use Textpad and so the code is opened 
+with python syntax coloring in one Textpad window and right next to it is 
+the reST documentation.  This is really just a convenience but it makes it 
+much much easier to code and do documentation at the same time. (Note that 
+the plugin assumes that the python extension is '.tp' since that is what I 
+use with TextPad.)
+
+---------------------------------------------------------------------
+So why is this a big deal? For the first time in my experience the 
+documentation process...
+
+1) is completely in sync with the process of code development
+2) allows the programmer to write as much documentation as he/she wants 
+without the programming code becoming unreadable because of what would be 
+considered excessive or intrusive documentation. (This applies whether 
+documentation is intended for external consumption or just so a solo 
+programmer can remember what he/she was thinking...)
+
+My conclusion is that Leo + reST/docutils provides the perfect platform for 
+optimal documentation.  I have never completely understood what is meant by 
+Literate Programming but in my mind this is practical Literate Programming.
+
+Frankly, I think this is all a minor miracle but maybe I've lost perspective.
+
+Steve Zatz</t>
 </tnodes>
 </leo_file>
