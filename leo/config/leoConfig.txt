@@ -203,13 +203,15 @@ headline_text_editing_background_color = white
 headline_text_editing_selection_foreground_color = white
 
 [recent files]
-file3 = C:\Documents and Settings\default\My Documents\ekr.leo
+file3 = C:\Documents and Settings\default\Desktop\Rebol\src\LeoPy.leo
 file2 = C:\prog\leoCVS\leo\plugins\leoPlugins.leo
-file1 = C:\prog\leoCVS\leo\src\LeoPy.leo
-file0 = C:\prog\leoCVS\leo\test\test.leo
-file6 = C:\Documents and Settings\default\Desktop\Leo Stuff\Error (line splits)\error.leo
-file5 = C:\prog\test\Error (line splits)\error.leo
-file4 = c:\prog\leoCVS\leo\config\leoConfig.leo
+file1 = C:\prog\leoCVS\leo\test\test.leo
+file0 = C:\prog\leoCVS\leo\src\LeoPy.leo
+file7 = C:\prog\test\Error (line splits)\error.leo
+file6 = c:\prog\leoCVS\leo\config\leoConfig.leo
+file5 = C:\Documents and Settings\default\My Documents\ekr.leo
+file4 = C:\Documents and Settings\default\Desktop\open_shell.leo
+file8 = C:\Documents and Settings\default\Desktop\Leo Stuff\Error (line splits)\error.leo
 
 [find/change options]
 mark_changes = 0
@@ -220,7 +222,7 @@ search_headline = 0
 batch = 0
 node_only = 0
 search_body = 1
-find_string = redrawScheduled
+find_string = rebol
 pattern_match = 0
 wrap = 0
 mark_finds = 0
