@@ -3982,7 +3982,7 @@ class fileLikeObject:
 #@nonl
 #@-node:ekr.20040331083824.1:g.fileLikeObject
 #@+node:EKR.20040614071102.1:g.getScript
-def getScript (c,p,oneNodeOnly=False,useSelectedText=True):
+def getScript (c,p,useSelectedText=True):
 
     if not p: p = c.currentPosition()
     old_body = p.bodyString()
@@ -4007,7 +4007,7 @@ def getScript (c,p,oneNodeOnly=False,useSelectedText=True):
             # Force Python comment delims.
             df.startSentinelComment = "#"
             df.endSentinelComment = None
-            df.write(p.copy(),nosentinels=False,toString=True,oneNodeOnly=oneNodeOnly)
+            df.write(p.copy(),nosentinels=False,toString=True)
             script = df.stringOutput
             assert(p)
             g.app.scriptDict["script2"]=script
