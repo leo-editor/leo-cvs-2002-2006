@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="2950" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="2949" clone_windows="0"/>
 <globals body_outline_ratio="0.5">
-	<global_window_position top="0" left="117" height="28" width="81"/>
+	<global_window_position top="7" left="123" height="28" width="79"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences allow_rich_text="0">
@@ -4191,7 +4191,7 @@
 </v>
 </v>
 </v>
-<v t="T2176" a="V"><vh>Code</vh>
+<v t="T2176"><vh>Code</vh>
 <v t="T2177"><vh>  Overview of code</vh>
 <v t="T2178" a="C"><vh>&lt;&lt; About clones &gt;&gt;</vh></v>
 <v t="T2179" a="C"><vh> &lt;&lt; About drawing and events &gt;&gt;</vh></v>
@@ -6540,10 +6540,10 @@
 </v>
 </v>
 </v>
-<v t="T2947"><vh>(up-down arrows ) (finish scrolling)</vh>
-<v t="T2948"><vh> Original proc moveUpDown</vh></v>
-<v t="T2949"><vh> Request</vh></v>
-<v t="T2950"><vh> Test</vh></v>
+<v a="V"><vh>(up-down arrows ) (finish scrolling)</vh>
+<v t="T2947"><vh> Original proc moveUpDown</vh></v>
+<v t="T2948"><vh> Request</vh></v>
+<v t="T2949"><vh> Test</vh></v>
 <v t="T1088" a="C"><vh>frame.__init__</vh>
 <v t="T1089" a="C"><vh>&lt;&lt; set the LeoFrame ivars &gt;&gt;</vh></v>
 <v t="T1090"><vh>&lt;&lt; create the first tree node &gt;&gt;</vh></v>
@@ -19056,9 +19056,14 @@ def OnCutFromMenu (self,event=None):
 	self.log.bind("&lt;Button-1&gt;", self.OnActivateLog)
 	self.body.bind("&lt;Key&gt;", self.tree.OnBodyKey)
 	
-	if 0: # No joy.  Previous bindings also are fired!
-		self.body.bind("&lt;Up&gt;",   self.tree.OnUpKey)
-		self.body.bind("&lt;Down&gt;", self.tree.OnDownKey)
+	# Add "hard" bindings for up and down arrow keys to move by visual lines, not hard lines.
+	old_binding = self.body.bind("&lt;Up&gt;")
+	if len(old_binding) == 0:
+		self.body.bind("&lt;Up&gt;",self.tree.OnUpKey)
+
+	old_binding = self.body.bind("&lt;Down&gt;")
+	if len(old_binding) == 0:
+		self.body.bind("&lt;Down&gt;",self.tree.OnDownKey)
 
 	self.body.bind(virtual_event_name("Cut"), self.OnCut)
 	self.body.bind(virtual_event_name("Copy"), self.OnCopy)
@@ -28963,7 +28968,7 @@ if 0: # These links are harmful: they prevent old tree items from being recycled
 
 For example, Ctrl+Shift+a is the same as Shift+Control+A.  Either may appear in leoConfig.txt.  Each generates Shift+Ctrl-A in the menu and Control+A as the argument to bind.
 
-Returns (bind_shortcut, menu_shortcut,amp_index)
+Returns (bind_shortcut, menu_shortcut)
 @c
 
 def canonicalizeShortcut (self,shortcut):
@@ -46130,60 +46135,39 @@ class leoTree:
 	# print "tree.__del__"
 	self.deleteBindings()
 	pass</t>
-<t tx="T2941">def OnUpKey   (self,event=None): self.moveUpDown("up")
-def OnDownKey (self,event=None): self.moveUpDown("down")
+<t tx="T2941">def OnUpKey   (self,event=None): return self.moveUpDown("up")
+def OnDownKey (self,event=None): return self.moveUpDown("down")
 
 def moveUpDown (self,upOrDown):
-
 	c = self.commands ; body = c.frame.body
-	# Make the insertion cursor visible so bbox doesn't return empty list.
+	# Make the insertion cursor visible so bbox won't return an empty list.
 	body.see("insert")
-
 	# Find the coordinates of the cursor and set the new height.
-	# There will be errors rounding off, since
-    # coordinates don't match character positions exactly.
+	# There may be roundoff errors because character postions may not match exactly.
 	ins =  body.index("insert")
 	lines,char = scanf(ins,"%d.%d")
-	trace("entry:  %s.%s" % (lines,char))
 	x,y,junk,textH = body.bbox("insert")
 	bodyW,bodyH = body.winfo_width(),body.winfo_height()
 	junk,maxy,junk,junk = body.bbox("@%d,%d" % (bodyW,bodyH))
-	#trace("@%d.%d = bbox(maxy):%d" % (bodyW,bodyH,maxy))
-
-	# When updating position, make sure y is within text boundaries
+	# Make sure y is within text boundaries.
 	if upOrDown == "up":
 		if y &lt;= textH:
-			# $textWidget yview scroll -1 units
-			trace("scroll -1 unit")
-			pass ### body.yview(..._)
-		else:
-			y = max(y-textH,0)
+			body.yview("scroll",-1,"units")
+		else: y = max(y-textH,0)
 	else:
 		if y &gt;= maxy:
-			# $textWidget yview scroll 1 units
-			trace("scroll -1 unit")
-			pass ### body.yview(...)
-		else:
-			y = min(y+textH,maxy)
-
-	newx,newy,width,junk = body.bbox("@%d,%d" % (x,y))
-	# trace("@%d.%d = bbox(newx,newy,height):%d %d %d" % (x,y,newx,newy,height))
-
+			body.yview("scroll",1,"units")
+		else: y = min(y+textH,maxy)
 	# Position the cursor on the proper side of the characters.
+	newx,newy,width,junk = body.bbox("@%d,%d" % (x,y))
 	if x &gt; newx + width/2:
 		x = newx + width + 1
-
 	result = body.index("@%d,%d" % (x,y))
-	
 	body.mark_set("insert",result)
-	if 0: # Colors the expected character, so we are getting the coorect result.
-		body.tag_config("tag", background="yellow")
-		body.tag_add("tag",result)
-	trace("result:",result)
-	trace("insert:",body.index("insert"))
-
-	return "break" # Does not seem to inhibit previous bindings!
-</t>
+	# trace("entry:  %s.%s" % (lines,char))
+	# trace("result:",result)
+	# trace("insert:",body.index("insert"))
+	return "break" # Inhibit further bindings.</t>
 <t tx="T2942">@language python
 
 # Undo manager for leo.py.
@@ -46246,41 +46230,10 @@ class undoer:
 		parent.setDirty()
 		c.setChanged(true)
 	c.endUpdate()</t>
-<t tx="T2947">@ tree.moveUpDown appears to calculate the proper values (it doesn't scroll yet), but the previous binding for the up and down keys remain in effect, which spoils the effect of all the work.
-
-The body key handler is not firing on the arrow key, so it is not the culprit.</t>
-<t tx="T2948">Christian Heide Damm responded in comp.lang.tcl [1] on how to move the cursor up and down visible lines instead of real text widget lines:
-
-...namely binding up/down to something like this:
-
-     # Find the coordinates of the cursor and set the new height
-     # manually. Note: errors rounding off, since
-     # coordinates don't match character positions exactly.
-     lset {lines char} [split [$textWidget index insert] .]
-     lset {x y textWidth textHeight} [$textWidget bbox [$textWidget
-     index insert]]
-     lset {_ maxy _ _} [$textWidget bbox "end - 1 char"]
-     # When updating position, make sure y is within text boundaries
-     switch -- $upOrDown {
-       "up" {
-          set y [max [expr $y-$textHeight] 0]
-       }
-       "down" {
-          set y [min [expr $y+$textHeight] $maxy]
-       }
-     }
-     lset {newx newy width _} [$textWidget bbox [$textWidget index
-     @$x,$y]]
-     # Test on which side of the character
-     # we should position the cursor
-     if {$x&gt;[expr $newx+$width/2]} {
-       set x [expr $newx+$width+1]
-     }
-     set newIndex [$textWidget index @$x,$y]
-
---------------------------------------------------------------------------------
-
+<t tx="T2947">@nocolor
 Here is the above code in a function, with definitions for missing functions min/max and with missing function lset replaced with calls to scan. The code has also been modified to correctly handle more than a screenful of text. This code still lacks the feature found in the default tkTextUpDownLine where the original column is maintained across repeated operations even though some lines passed through don't have enough columns -- Brian Theado:
+@color
+@language tcltk
 
  proc min args {lindex [lsort -real $args] 0}
  proc max args {lindex [lsort -real $args] end}
@@ -46328,10 +46281,9 @@ Here is the above code in a function, with definitions for missing functions min
  }
  bind Text &lt;Down&gt; {
     tkTextSetCursor %W [moveUpDown %W down]
- }
+ }</t>
+<t tx="T2948">@nocolor
 
-</t>
-<t tx="T2949">Read and respond to this message at: 
 https://sourceforge.net/forum/message.php?msg_id=1796317
 By: nobody
 
@@ -46364,8 +46316,24 @@ keys for movement across screen lines...).
 
 Ulrich
 </t>
-<t tx="T2950">1 aaaaaaaaaaaaaaaa bbbbbbbbbbbbbbbbbb cccccccccccccccccc dddddddddddddddd
+<t tx="T2949">1 aaaaaaaaaaaaaaaa bbbbbbbbbbbbbbbbbb cccccccccccccccccc dddddddddddddddd
 2 eeeeeeeeeeeeeeeeeeeeeee ffffffffffffffffffff ggggggggggggggggggg hhhhhhhhhhhhh
-3 iiiiiiiiiiiiiiiiiiii jjjjjjjjjjjjjjjjjjjjj kkkkkkkkkkkkkkk</t>
+3 iiiiiiiiiiiiiiiiiiii jjjjjjjjjjjjjjjjjjjjj kkkkkkkkkkkkkkk
+
+
+
+
+
+
+
+
+
+
+
+
+
+4 aaaaaaaaaaaaaaaa bbbbbbbbbbbbbbbbbb cccccccccccccccccc dddddddddddddddd
+5 eeeeeeeeeeeeeeeeeeeeeee ffffffffffffffffffff ggggggggggggggggggg hhhhhhhhhhhhh
+6 iiiiiiiiiiiiiiiiiiii jjjjjjjjjjjjjjjjjjjjj kkkkkkkkkkkkkkk</t>
 </tnodes>
 </leo_file>
