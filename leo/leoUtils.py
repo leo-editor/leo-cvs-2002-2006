@@ -1446,7 +1446,8 @@ def update_file_if_changed(file_name,temp_name):
 		else:
 			try: # Replace file with temp file.
 				os.remove(file_name)
-				os.rename(temp_name, file_name)
+				# os.rename(temp_name, file_name)
+				utils_rename(temp_name, file_name)
 				es("***updating: " + file_name)
 			except:
 				es("Rename failed: no file created!")
@@ -1454,7 +1455,8 @@ def update_file_if_changed(file_name,temp_name):
 				traceback.print_exc()
 	else:
 		try:
-			os.rename(temp_name, file_name)
+			# os.rename(temp_name, file_name)
+			utils_rename(temp_name, file_name)
 			es("Creating: " + file_name)
 		except:
 			es("Rename failed: no file created!")
@@ -1462,6 +1464,26 @@ def update_file_if_changed(file_name,temp_name):
 			traceback.print_exc()
 #@-body
 #@-node:19:C=19:update_file_if_changed
+#@+node:20:C=20:utils_rename
+#@+body
+#@+at
+#  Platform-independent rename.
+# 
+# os.rename may fail on some Unix flavors if src and dst are on different filesystems.
+
+#@-at
+#@@c
+
+def utils_rename(src,dst):
+	
+	if sys.platform=="win32":
+		os.rename(src,dst)
+	else:
+		from distutils.file_util import move_file
+		move_file(src,dst)
+
+#@-body
+#@-node:20:C=20:utils_rename
 #@-others
 #@-body
 #@-node:0::@file leoUtils.py

@@ -983,7 +983,7 @@ class colorizer:
 						j = self.skip_id(s,i+1)
 					else:
 						j = self.skip_id(s,i)
-
+					
 					word = s[i:j]
 					if word in keywords:
 						body.tag_add("keyword", index(n,i), index(n,j))

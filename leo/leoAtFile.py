@@ -2195,7 +2195,7 @@ class atFile:
 				root.clearDirty()
 				
 				#@<< Replace the target with the temp file if different >>
-				#@+node:4::<< Replace the target with the temp file if different >>
+				#@+node:4:C=18:<< Replace the target with the temp file if different >>
 				#@+body
 				assert(self.outputFile == None)
 				
@@ -2210,7 +2210,8 @@ class atFile:
 					else:
 						try: # Replace target file with temp file.
 							os.remove(self.targetFileName)
-							os.rename(self.outputFileName, self.targetFileName)
+							# os.rename(self.outputFileName, self.targetFileName)
+							utils_rename(self.outputFileName, self.targetFileName)
 							es("writing: " + self.shortFileName)
 						except:
 							self.writeError("exception removing and renaming:" + self.outputFileName +
@@ -2218,14 +2219,15 @@ class atFile:
 							traceback.print_exc()
 				else:
 					try:
-						os.rename(self.outputFileName, self.targetFileName)
+						# os.rename(self.outputFileName, self.targetFileName)
+						utils_rename(self.outputFileName, self.targetFileName)
 						es("creating: " + self.targetFileName)
 					except:
 						self.writeError("exception renaming:" + self.outputFileName +
 							" to " + self.targetFileName)
 						traceback.print_exc()
 				#@-body
-				#@-node:4::<< Replace the target with the temp file if different >>
+				#@-node:4:C=18:<< Replace the target with the temp file if different >>
 
 		except:
 			

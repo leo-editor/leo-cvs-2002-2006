@@ -1,6 +1,6 @@
 #@+leo
 
-#@+node:0::@file leo.py
+#@+node:0::@file leo.py 
 #@+body
 #@@language python
 
@@ -248,5 +248,5 @@ if __name__ == "__main__":
 	else:
 		run()
 #@-body
-#@-node:0::@file leo.py
+#@-node:0::@file leo.py 
 #@-leo

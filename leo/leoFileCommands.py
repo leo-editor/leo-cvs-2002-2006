@@ -1558,7 +1558,7 @@ class fileCommands:
 		try:
 			
 			#@<< create backup file >>
-			#@+node:1::<< create backup file >>
+			#@+node:1:C=19:<< create backup file >>
 			#@+body
 			# rename fileName to fileName.bak if fileName exists.
 			if os.path.exists(fileName):
@@ -1567,7 +1567,8 @@ class fileCommands:
 					backupName = fileName + ".bak"
 					if os.path.exists(backupName):
 						os.unlink(backupName)
-					os.rename(fileName,backupName)
+					# os.rename(fileName,backupName)
+					utils_rename(fileName,backupName)
 				except:
 					es("exception creating " + backupName)
 					traceback.print_exc()
@@ -1575,7 +1576,7 @@ class fileCommands:
 			else:
 				backupName = None
 			#@-body
-			#@-node:1::<< create backup file >>
+			#@-node:1:C=19:<< create backup file >>
 
 			self.mFileName = fileName
 			self.outputFile = open(fileName, 'w')
@@ -1625,7 +1626,7 @@ class fileCommands:
 					traceback.print_exc()
 			
 			#@<< erase filename and rename backupName to fileName >>
-			#@+node:3::<< erase filename and rename backupName to fileName >>
+			#@+node:3:C=20:<< erase filename and rename backupName to fileName >>
 			#@+body
 			es("error writing " + fileName)
 			
@@ -1639,13 +1640,14 @@ class fileCommands:
 			if backupName:
 				es("restoring " + fileName + " from " + backupName)
 				try:
-					os.rename(backupName, fileName)
+					# os.rename(backupName, fileName)
+					utils_rename(backupName, fileName)
 				except:
 					es("exception renaming " + backupName + " to " + fileName)
 					traceback.print_exc()
 
 			#@-body
-			#@-node:3::<< erase filename and rename backupName to fileName >>
+			#@-node:3:C=20:<< erase filename and rename backupName to fileName >>
 
 			return false
 	
@@ -1674,7 +1676,7 @@ class fileCommands:
 		else: # This probably will never happen because errors should raise exceptions.
 			
 			#@<< erase filename and rename backupName to fileName >>
-			#@+node:3::<< erase filename and rename backupName to fileName >>
+			#@+node:3:C=20:<< erase filename and rename backupName to fileName >>
 			#@+body
 			es("error writing " + fileName)
 			
@@ -1688,13 +1690,14 @@ class fileCommands:
 			if backupName:
 				es("restoring " + fileName + " from " + backupName)
 				try:
-					os.rename(backupName, fileName)
+					# os.rename(backupName, fileName)
+					utils_rename(backupName, fileName)
 				except:
 					es("exception renaming " + backupName + " to " + fileName)
 					traceback.print_exc()
 
 			#@-body
-			#@-node:3::<< erase filename and rename backupName to fileName >>
+			#@-node:3:C=20:<< erase filename and rename backupName to fileName >>
 
 			return false
 	#@-body
