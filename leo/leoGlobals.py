@@ -1,5 +1,4 @@
 #@+leo
-
 #@+node:0::@file leoGlobals.py
 #@+body
 #@@language python

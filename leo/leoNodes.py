@@ -1,5 +1,4 @@
 #@+leo
-
 #@+node:0::@file leoNodes.py
 #@+body
 #@@language python
@@ -531,7 +530,7 @@ class vnode:
 
 	#@-at
 	#@@c
-	
+
 	def destroy (self):
 	
 		# Can't trace while destroying.
@@ -568,7 +567,7 @@ class vnode:
 	def OnDrag(self,event=None):
 		
 		self.commands.tree.OnDrag(self,event)
-
+	
 	#@-body
 	#@-node:2::OnDrag
 	#@+node:3::OnEndDrag
@@ -576,7 +575,7 @@ class vnode:
 	def OnEndDrag(self,event=None):
 		
 		self.commands.tree.OnEndDrag(self,event)
-
+	
 	#@-body
 	#@-node:3::OnEndDrag
 	#@+node:4::OnHeadlineClick & OnHeadlinePopup
@@ -589,7 +588,7 @@ class vnode:
 	
 		self.commands.tree.OnActivate(self)
 		self.commands.tree.OnPopup(self,event)
-
+	
 	#@-body
 	#@-node:4::OnHeadlineClick & OnHeadlinePopup
 	#@+node:5::OnHeadlineKey
@@ -633,7 +632,7 @@ class vnode:
 	def OnIconClick(self,event=None):
 		
 		self.commands.tree.OnIconClick(self,event)
-
+	
 	#@-body
 	#@-node:9::v.OnIconClick
 	#@-node:7::v.Callbacks
@@ -646,7 +645,7 @@ class vnode:
 
 	#@-at
 	#@@c
-	
+
 	def atFileNodeName (self):
 	
 		h = self.mHeadString
@@ -675,7 +674,7 @@ class vnode:
 
 	#@-at
 	#@@c
-	
+
 	def isAtIgnoreNode (self):
 	
 		flag, i = is_special(self.t.bodyString, 0, "@ignore")
@@ -690,7 +689,7 @@ class vnode:
 
 	#@-at
 	#@@c
-	
+
 	def isAtOthersNode (self):
 	
 		flag, i = is_special(self.t.bodyString, 0, "@others")
@@ -706,7 +705,7 @@ class vnode:
 
 	#@-at
 	#@@c
-	
+
 	def matchHeadline (self,pattern):
 	
 		h = string.lower(self.mHeadString)
@@ -774,7 +773,7 @@ class vnode:
 
 	#@-at
 	#@@c
-	
+
 	def moreBody (self):
 	
 		v = self ; list = []
@@ -899,7 +898,7 @@ class vnode:
 	def findRoot (self):
 	
 		return self.commands.tree.rootVnode
-
+	
 	#@-body
 	#@-node:4::findRoot
 	#@+node:5::getJoinList
@@ -917,7 +916,7 @@ class vnode:
 	
 		return self.mHeadString
 	
-
+	
 	#@-body
 	#@-node:6::headString
 	#@+node:7::isAncestorOf
@@ -1055,7 +1054,7 @@ class vnode:
 
 	#@-at
 	#@@c
-	
+
 	def level (self):
 	
 		level = 0 ; parent = self.parent()
@@ -1242,7 +1241,7 @@ class vnode:
 	def clearAllVisited (self):
 		
 		self.commands.clearAllVisited()
-
+	
 	#@-body
 	#@-node:1::clearAllVisited
 	#@+node:2::clearAllVisitedInTree
@@ -1258,7 +1257,7 @@ class vnode:
 			v.t.clearVisited()
 			v = v.threadNext()
 		c.endUpdate()
-
+	
 	#@-body
 	#@-node:2::clearAllVisitedInTree
 	#@+node:3::clearClonedBit
@@ -1435,7 +1434,7 @@ class vnode:
 
 	#@-at
 	#@@c
-	
+
 	def setDirty (self):
 	
 		v = self ; c = v.commands
@@ -1577,7 +1576,7 @@ class vnode:
 
 	#@-at
 	#@@c
-	
+
 	def trimTrailingLines (self):
 	
 		v = self
@@ -1629,7 +1628,7 @@ class vnode:
 
 	#@-at
 	#@@c
-	
+
 	def doDelete (self, newVnode):
 	
 		"""Unlinks the receiver, but does not destroy it. May be undone"""
@@ -1806,7 +1805,7 @@ class vnode:
 
 	#@-at
 	#@@c
-	
+
 	def copyTree (self, oldTree, newTree):
 	
 		old_v = oldTree.firstChild()
@@ -1841,7 +1840,7 @@ class vnode:
 
 	#@-at
 	#@@c
-	
+
 	def joinTreeTo (self, tree2):
 	
 		tree1 = self
@@ -1874,7 +1873,7 @@ class vnode:
 
 	#@-at
 	#@@c
-	
+
 	def shouldBeClone (self,verbose=0):
 	
 		p = self.parent()
@@ -2063,7 +2062,7 @@ class vnode:
 
 	#@-at
 	#@@c
-	
+
 	def destroyTree (self):
 	
 		pass
@@ -2122,7 +2121,7 @@ class vnode:
 
 	#@-at
 	#@@c
-	
+
 	def joinNodeTo (self, v2):
 	
 		v1 = self
@@ -2209,7 +2208,7 @@ class vnode:
 		if oldRoot: oldRoot.mBack = v
 		v.mNext = oldRoot
 		tree.rootVnode = v
-
+	
 	#@-body
 	#@-node:13::linkAsRoot
 	#@+node:14::unlink
@@ -2246,7 +2245,7 @@ class vnode:
 
 	#@-at
 	#@@c
-	
+
 	def unjoinNode (self):
 	
 		next = self.joinList
@@ -2268,7 +2267,7 @@ class vnode:
 
 			#@-at
 			#@@c
-			
+
 			self.commands.clearAllVisited()
 			
 			prev = next

@@ -1,5 +1,4 @@
 #@+leo
-
 #@+node:0::@file leoConfig.py
 #@+body
 #@@language python
@@ -148,7 +147,7 @@ class config:
 
 	#@-at
 	#@@c
-	
+
 	if 0: # Not used in code.
 		boolConfigNames = (
 			"path_directive_creates_directories",
@@ -480,7 +479,7 @@ class config:
 	def setRecentFiles (self,files):
 		
 		self.recentFiles = files
-
+	
 	#@-body
 	#@-node:9::get/setRecentFiles
 	#@+node:10::get/setWindowPrefs
@@ -535,7 +534,7 @@ class config:
 		font = tkFont.Font(family=family,size=size,slant=slant,weight=weight)
 		return font
 	
-
+	
 	#@-body
 	#@-node:11::getFontFromParams
 	#@+node:12::getShortcut
@@ -552,7 +551,7 @@ class config:
 				return val
 		else:
 			return None
-
+	
 	#@-body
 	#@-node:12::getShortcut
 	#@+node:13::open
@@ -595,7 +594,7 @@ class config:
 			try: self.write_clone_indices = config.getboolean(
 				self.configSection,"write_clone_indices")
 			except: self.write_clone_indices = 0
-
+			
 			#@-body
 			#@-node:1::<< get config options >>
 
@@ -626,7 +625,7 @@ class config:
 				bools=self.boolCompareNames,
 				ints=self.intCompareNames,
 				strings=self.stringCompareNames)
-
+			
 			#@-body
 			#@-node:3::<< get compare prefs >>
 
@@ -642,7 +641,7 @@ class config:
 
 			#@-at
 			#@@c
-			
+
 			section = self.keysSection
 			dict = self.keysDict
 			config = self.config
@@ -654,7 +653,7 @@ class config:
 						dict[name] = config.get(section,name)
 					except: pass
 			except: pass
-
+			
 			#@-body
 			#@-node:6::<< get keyboard shortcut prefs >>
 
@@ -669,7 +668,7 @@ class config:
 				bools=self.boolPrefsNames,
 				ints=self.intPrefsNames,
 				strings=self.stringPrefsNames)
-
+			
 			#@-body
 			#@-node:4::<< get prefs >>
 
@@ -683,7 +682,7 @@ class config:
 			self.setAllDicts(dict,section,
 				bools=self.boolFindNames,
 				strings=self.stringFindNames)
-
+			
 			#@-body
 			#@-node:5::<< get find prefs >>
 
@@ -895,7 +894,7 @@ class config:
 		
 		self.setFindPref("change_string",c.change_text)
 		self.setFindPref("find_string",c.find_text)
-
+	
 	#@-body
 	#@-node:17::setConfigFindIvars
 	#@+node:18::setConfigIvars
@@ -932,7 +931,7 @@ class config:
 		
 		self.setFindPref("change_string",c.change_text)
 		self.setFindPref("find_string",c.find_text)
-
+	
 	#@-body
 	#@-node:18::setConfigIvars
 	#@+node:19::update (config)
@@ -971,7 +970,7 @@ class config:
 				config.set(section,"read_only",self.read_only)
 				config.set(section,"save_clears_undo_buffer",self.save_clears_undo_buffer)
 				config.set(section,"xml_version_string",self.xml_version_string)
-
+				
 				#@-body
 				#@-node:1::<< write config section >>
 

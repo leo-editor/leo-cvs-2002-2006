@@ -1,5 +1,4 @@
 #@+leo
-
 #@+node:0::@file leoTree.py
 #@+body
 #@@language python
@@ -474,7 +473,7 @@ class leoTree:
 
 	#@-at
 	#@@c
-	
+
 	def headWidth(self,v):
 	
 		return max(10,5 + len(v.headString()))
@@ -608,7 +607,7 @@ class leoTree:
 
 	#@-at
 	#@@c
-	
+
 	def idle_scrollTo(self,v=None):
 	
 		if v == None:
@@ -640,7 +639,7 @@ class leoTree:
 
 	#@-at
 	#@@c
-	
+
 	def yoffset(self, v1):
 	
 		# if not v1.isVisible(): print "yoffset not visible:", `v1`
@@ -754,7 +753,7 @@ class leoTree:
 
 	#@-at
 	#@@c
-	
+
 	# Called by command handlers that have already changed the text.
 	def onBodyChanged (self,v,undoType):
 	
@@ -829,7 +828,7 @@ class leoTree:
 				ws = computeLeadingWhitespace (width,c.tab_width)
 				if ws and len(ws) > 0:
 					c.body.insert("insert", ws)
-
+			
 			#@-body
 			#@-node:1::<< Do Auto indent >>
 
@@ -1023,7 +1022,7 @@ class leoTree:
 
 	#@-at
 	#@@c
-	
+
 	def onHeadChanged (self,v):
 		self.commands.body.after_idle(self.idle_head_key,v)
 	
@@ -1330,7 +1329,7 @@ class leoTree:
 
 	#@-at
 	#@@c
-	
+
 	def select (self, v):
 		
 		c = self.commands ; frame = c.frame ; body = frame.body

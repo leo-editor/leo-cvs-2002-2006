@@ -1,5 +1,4 @@
 #@+leo
-
 #@+node:0::@file leoTangle.py
 #@+body
 #@@language python
@@ -196,8 +195,6 @@ class tst_node:
 	#@-body
 	#@-node:2::tst_node.__repr__
 	#@-others
-
-
 #@-body
 #@-node:1::class tst_node
 #@+node:2::class part_node
@@ -242,7 +239,7 @@ class ust_node:
 
 	#@-at
 	#@@c
-	
+
 	def __init__ (self,name,code,part,of,nl_flag,update_flag):
 	
 		# trace("ust_node.__init__", `name` +":"+ `part`)
@@ -280,7 +277,7 @@ class def_node:
 
 	#@-at
 	#@@c
-	
+
 	def __init__ (self,name,indent,part,of,nl_flag,code):
 	
 		if 0:
@@ -303,8 +300,6 @@ class def_node:
 	#@-body
 	#@-node:2::def_node.__repr__
 	#@-others
-
-
 #@-body
 #@-node:4::class def_node
 #@+node:5::class root_attributes (Stephen P. Schaefer)
@@ -327,7 +322,7 @@ class root_attributes:
 
 	#@-at
 	#@@c
-	
+
 	def __init__ (self, tangle_state):
 	
 		if 0:
@@ -383,7 +378,7 @@ class root_attributes:
 			", tab_width: " + tangle_state.tab_width +
 			# Stephen P. Schaefer 9/13/2002
 			", first_lines: " + self.first_lines)
-
+	
 	#@-body
 	#@-node:2::root_attributes.__repr__
 	#@+node:3::root_attributes.represent_print_bits
@@ -392,12 +387,10 @@ class root_attributes:
 		return choose(print_bits == verbose_bits, "verbose_bits",
 	        choose(print_bits == terse_bits, "terse_bits",
 	            choose(print_bits == silent_bits, "silent_bits", "?INVALID?")))
-
+	
 	#@-body
 	#@-node:3::root_attributes.represent_print_bits
 	#@-others
-
-
 #@-body
 #@-node:5::class root_attributes (Stephen P. Schaefer)
 #@-node:3::node classes
@@ -492,7 +485,7 @@ class tangleCommands:
 		#@-at
 		#@@c
 		self.code_seen = false # true if @code seen in body text.
-
+		
 		#@-body
 		#@-node:1::<< init tangle ivars >>
 
@@ -704,7 +697,7 @@ class tangleCommands:
 
 	#@-at
 	#@@c
-	
+
 	def tanglePass1(self,v):
 	
 		next = v.nodeAfterTree()
@@ -760,7 +753,7 @@ class tangleCommands:
 
 	#@-at
 	#@@c
-	
+
 	def tangleTree(self,v,report_flag):
 	
 		assert(v)
@@ -869,7 +862,7 @@ class tangleCommands:
 
 	#@-at
 	#@@c
-	
+
 	def untangleRoot(self,root,begin,end):
 	
 		# trace("root,begin,end:" + `root` + `begin` + `end`)
@@ -944,7 +937,7 @@ class tangleCommands:
 
 			#@-at
 			#@@c
-			
+
 			v = begin
 			while v and v != end:
 				self.tanglePass1(v)
@@ -1006,14 +999,14 @@ class tangleCommands:
 
 						#@-at
 						#@@c
-						
+
 						end = v.threadNext()
 						while end and end != afterUnit:
 							flag, i = is_special(end.bodyString(),0,"@root")
 							if flag and not v.isAncestorOf(end):
 								break
 							end = end.threadNext()
-
+						
 						#@-body
 						#@-node:1::<< set end to the next root in the unit >>
 
@@ -1055,7 +1048,7 @@ class tangleCommands:
 
 	#@-at
 	#@@c
-	
+
 	def handle_newline(self,s,i):
 	
 		j = i ; done = false
@@ -1111,7 +1104,7 @@ class tangleCommands:
 
 			#@-at
 			#@@c
-			
+
 			if self.header_name:
 			
 				# Tangle code.
@@ -1269,7 +1262,7 @@ class tangleCommands:
 
 	#@-at
 	#@@c
-	
+
 	def skip_code(self,s,i):
 	
 		# trace(`get_line(s,i)`)
@@ -1287,7 +1280,7 @@ class tangleCommands:
 
 			#@-at
 			#@@c
-			
+
 			i, done = self.handle_newline(s,i)
 			while not done and i < len(s):
 				ch = s[i]
@@ -1403,7 +1396,7 @@ class tangleCommands:
 
 	#@-at
 	#@@c
-	
+
 	def skip_headline(self,v):
 	
 		# trace(`v`)
@@ -1460,7 +1453,7 @@ class tangleCommands:
 
 	#@-at
 	#@@c
-	
+
 	def put_all_roots(self):
 	
 		c = self.commands ; outline_name = c.frame.mFileName
@@ -1525,7 +1518,7 @@ class tangleCommands:
 					self.os(outline_name)
 					self.oblank() ; self.os(self.end_comment_string)
 					self.onl() ; self.onl()
-
+				
 				#@-body
 				#@-node:3::<<Write a banner at the start of the output file>>
 
@@ -1544,11 +1537,11 @@ class tangleCommands:
 				#@<< Erase the temporary file >>
 				#@+node:4::<< Erase the temporary file >>
 				#@+body
-				
+
 				try: # Just delete the temp file.
 					os.remove(temp_name)
 				except: pass
-
+				
 				#@-body
 				#@-node:4::<< Erase the temporary file >>
 	#@-body
@@ -1566,7 +1559,7 @@ class tangleCommands:
 
 	#@-at
 	#@@c
-	
+
 	def put_code(self,s,no_first_lws_flag):
 	
 		# trace(`get_line(s,0)`)
@@ -1636,7 +1629,7 @@ class tangleCommands:
 
 					#@-at
 					#@@c
-					
+
 					if match(s,i,"@<<"):
 						self.os("/*@*/<<") ; i += 3
 					
@@ -1696,7 +1689,7 @@ class tangleCommands:
 
 				#@-at
 				#@@c
-				
+
 				if use_single_comment:
 					# New code: 5/31/00
 					self.os(self.single_comment_string) ; self.otab()
@@ -1720,7 +1713,7 @@ class tangleCommands:
 
 					#@-at
 					#@@c
-					
+
 					while is_ws_or_nl(s,i):
 						ch = s[i]
 						if ch == '\t':
@@ -1747,7 +1740,7 @@ class tangleCommands:
 							self.put_leading_ws(self.tangle_indent)
 					 		# tangle_indent is in spaces.
 							line_width += max(0,self.tangle_indent)
-
+					
 					#@-body
 					#@-node:1::<<output or skip whitespace or newlines>>
 
@@ -1791,7 +1784,7 @@ class tangleCommands:
 						self.put_leading_ws(self.tangle_indent)
 				 		# tangle_indent is in spaces.
 						line_width += max(0,self.tangle_indent)
-
+				
 				#@-body
 				#@-node:1::<<put the doc part>>
 
@@ -1818,7 +1811,7 @@ class tangleCommands:
 			self.oblanks(r) 
 		else:
 			self.oblanks(n)
-
+	
 	#@-body
 	#@-node:5::put_leading_ws
 	#@+node:6::put_newline
@@ -1831,7 +1824,7 @@ class tangleCommands:
 
 	#@-at
 	#@@c
-	
+
 	def put_newline(self,s,i,no_first_lws_flag):
 	
 		kind, end = self.token_type(s,i,dont_report_errors)
@@ -1892,7 +1885,7 @@ class tangleCommands:
 
 	#@-at
 	#@@c
-	
+
 	def put_section(self,s,i,name,name_end):
 	
 		j = skip_line(s,i)
@@ -1960,7 +1953,7 @@ class tangleCommands:
 
 				#@-at
 				#@@c
-				
+
 				# Output each part of the section.
 				sections = len(section.parts)
 				count = 0
@@ -2030,7 +2023,7 @@ class tangleCommands:
 
 						#@-at
 						#@@c
-						
+
 						self.onl() ; self.put_leading_ws(self.tangle_indent)
 						#  Don't print trailing whitespace
 						while name_end > 0 and is_ws(s[name_end-1]):
@@ -2056,7 +2049,7 @@ class tangleCommands:
 
 						#@-at
 						#@@c
-						
+
 						if not newline_flag:
 							self.os(" (!newline)") # LeoCB puts the leading blank, so we must do so too.
 							# Put the whitespace following the reference.
@@ -2112,7 +2105,7 @@ class tangleCommands:
 
 	#@-at
 	#@@c
-	
+
 	def section_check (self,name):
 	
 		if name in self.section_stack:
@@ -2135,7 +2128,7 @@ class tangleCommands:
 
 	#@-at
 	#@@c
-	
+
 	def st_check(self):
 	
 		keys = self.tst.keys()
@@ -2201,7 +2194,7 @@ class tangleCommands:
 
 	#@-at
 	#@@c
-	
+
 	def st_enter(self,name,code,doc,multiple_parts_flag,is_root_flag,
 		# Stephen Schaefer, 9/2/02
 		language=None,
@@ -2255,8 +2248,8 @@ class tangleCommands:
 			section.root_attributes = root_attributes(self)
 			#@-body
 			#@-node:2::<<remember root node attributes>>
-# Stephen Schaefer, 9/2/02
-		return len(section.parts) # part number
+# Stephen Schaefer, 9/2/02	return len(section.parts) # part number
+	
 	#@-body
 	#@-node:4::st_enter
 	#@+node:5::st_enter_root_name
@@ -2278,7 +2271,7 @@ class tangleCommands:
 
 	#@-at
 	#@@c
-	
+
 	def st_enter_section_name(self,name,code,doc,multiple_parts_flag):
 		
 		return self.st_enter(name,code,doc,multiple_parts_flag,not_root_name)
@@ -2292,7 +2285,7 @@ class tangleCommands:
 
 	#@-at
 	#@@c
-	
+
 	def st_lookup(self,name,is_root_flag):
 	
 		if is_root_flag:
@@ -2346,7 +2339,7 @@ class tangleCommands:
 
 	#@-at
 	#@@c
-	
+
 	def ust_enter (self,name,part,of,code,nl_flag,is_root_flag):
 	
 		if not is_root_flag:
@@ -2359,7 +2352,7 @@ class tangleCommands:
 		if i > 0:
 			code = code[i:]
 			code = string.rstrip(code)
-
+		
 		#@-body
 		#@-node:1::<< remove blank lines from the start and end of the text >>
 
@@ -2403,7 +2396,7 @@ class tangleCommands:
 
 	#@-at
 	#@@c
-	
+
 	def ust_warn_about_orphans (self):
 	
 		for section in self.ust.values():
@@ -2431,7 +2424,7 @@ class tangleCommands:
 
 	#@-at
 	#@@c
-	
+
 	def compare_comments (self,s1,s2):
 	
 		tot_len = 0
@@ -2463,7 +2456,7 @@ class tangleCommands:
 
 				#@-at
 				#@@c
-				
+
 				if p1 < len(s1) and s1[p1] == '@':
 					if match(s2,p2,self.comment + '@' + self.comment_end):
 						p1 += 1
@@ -2484,7 +2477,7 @@ class tangleCommands:
 						p2 += 2
 						p1 += tot_len + 2
 						continue
-
+				
 				#@-body
 				#@-node:1::<< Check both parts for @ comment conventions >>
 
@@ -2496,7 +2489,7 @@ class tangleCommands:
 		p1 = skip_ws_and_nl(s1,p1)
 		p2 = skip_ws_and_nl(s2,p2)
 		return p1 == len(s1) and p2 == len(s2)
-
+	
 	#@-body
 	#@-node:1::compare_comments
 	#@+node:2::massage_block_comment (no longer used)
@@ -2519,7 +2512,7 @@ class tangleCommands:
 
 	#@-at
 	#@@c
-	
+
 	def massage_block_comment (self,s):
 	
 		c = self.commands
@@ -2550,7 +2543,7 @@ class tangleCommands:
 				j = i ; i = skip_to_end_of_line(s,i)
 				result += s[j:i]
 		return result
-
+	
 	#@-body
 	#@-node:2::massage_block_comment (no longer used)
 	#@+node:3::forgiving_compare
@@ -2563,7 +2556,7 @@ class tangleCommands:
 
 	#@-at
 	#@@c
-	
+
 	def forgiving_compare (self,name,part,s1,s2):
 	
 		# trace(`name` +":"+ `part` +"\n1:"+ `get_line(s1,0)` +"\n2:"+ `get_line(s2,0)`)
@@ -2607,7 +2600,7 @@ class tangleCommands:
 
 				#@-at
 				#@@c
-				
+
 				if p1 < len(s1) and s1[p1] == '@':
 					if match(s2,p2,self.comment + '@' + self.comment_end):
 						p1 += 1
@@ -2628,7 +2621,7 @@ class tangleCommands:
 						p2 += 2
 						p1 += tot_len + 2
 						continue
-
+				
 				#@-body
 				#@-node:2::<< Check both parts for @ comment conventions >>
 
@@ -2640,7 +2633,7 @@ class tangleCommands:
 				#@+body
 				p1 = skip_ws_and_nl(s1,p1)
 				p2 = skip_ws_and_nl(s2,p2)
-
+				
 				#@-body
 				#@-node:3::<< Compare non-critical newlines >>
 
@@ -2675,12 +2668,12 @@ class tangleCommands:
 
 						#@-at
 						#@@c
-						
+
 						first1 = p1 ; first2 = p2
 						p1 = skip_pascal_string(s1,p1)
 						p2 = skip_pascal_string(s2,p2)
 						result = s1[first1,p1] == s2[first2,p2]
-
+						
 						#@-body
 						#@-node:3::<< Compare Pascal strings >>
 
@@ -2704,7 +2697,7 @@ class tangleCommands:
 							else:
 								result = s1[p1] == s2[p2]
 								p1 += 1 ; p2 += 1
-
+						
 						#@-body
 						#@-node:2::<< Compare C strings >>
 
@@ -2765,7 +2758,7 @@ class tangleCommands:
 					#@-body
 					#@-node:1::<< Compare single characters >>
 
-
+				
 				#@-body
 				#@-node:5::<< Compare possible preprocessor directives >>
 
@@ -2932,7 +2925,7 @@ class tangleCommands:
 
 	#@-at
 	#@@c
-	
+
 	def scan_derived_file (self,s):
 	
 		c = self.commands
@@ -3025,7 +3018,7 @@ class tangleCommands:
 
 				#@-at
 				#@@c
-				
+
 				# trace(`get_line(s,i)`)
 				result,junk,kind,name,part,of,end,nl_flag = self.is_sentinel_line_with_data(s,i)
 				assert(result==true)
@@ -3041,7 +3034,7 @@ class tangleCommands:
 
 				#@-at
 				#@@c
-				
+
 				if len(self.def_stack) > 0:
 					dn = self.def_stack[-1]
 					if self.compare_section_names(name,dn.name):
@@ -3103,7 +3096,7 @@ class tangleCommands:
 				#@+body
 				j = i ; i = skip_to_end_of_line(s,i)
 				self.copy(s[j:i])
-
+				
 				#@-body
 				#@-node:5::<< copy the entire line >>
 
@@ -3197,7 +3190,7 @@ class tangleCommands:
 
 	#@-at
 	#@@c
-	
+
 	# Major change: 2/23/01: Untangle never updates doc parts.
 	
 	def update_def (self,name,part_number,head,code,tail,is_root_flag): # Doc parts are never updated!
@@ -3223,7 +3216,7 @@ class tangleCommands:
 
 		#@-at
 		#@@c
-		
+
 		i = skip_blank_lines(ucode,0)
 		j = skip_ws(ucode,i)
 		# trace("comment,end,single:"+`self.comment`+":"+`self.comment_end`+":"+`self.line_comment`)
@@ -3268,7 +3261,7 @@ class tangleCommands:
 			trace("ucode:" + `ucode`)
 			trace("tail:" + `tail`)
 		return body, len(head) + len(ucode),true
-
+	
 	#@-body
 	#@-node:6::update_def (pass 2)
 	#@+node:7::update_current_vnode
@@ -3279,7 +3272,7 @@ class tangleCommands:
 
 	#@-at
 	#@@c
-	
+
 	def update_current_vnode (self,s):
 	
 		c = self.commands ; v = self.v
@@ -3350,7 +3343,7 @@ class tangleCommands:
 		
 	def warning (self,s):
 		es(s)
-
+	
 	#@-body
 	#@-node:3::error, pathError, warning
 	#@+node:4::is_end_of_directive
@@ -3380,7 +3373,7 @@ class tangleCommands:
 			back_slashes += 1
 			i -= 1
 		return (back_slashes & 1) == 1
-
+	
 	#@-body
 	#@-node:6::is_escaped
 	#@+node:7::is_section_name
@@ -3447,7 +3440,7 @@ class tangleCommands:
 		kind = non_sentinel_line
 		nl_flag = true
 		false_data = (false,i,kind,name,part,of,end,nl_flag)
-
+		
 		#@-body
 		#@-node:1::<< Initialize the return values  >>
 
@@ -3545,7 +3538,7 @@ class tangleCommands:
 		if match(s,i,line):
 			i += len(line)
 			nl_flag = false
-
+		
 		#@-body
 		#@-node:6::<< Set nl_flag to false if !newline exists >>
 
@@ -3670,7 +3663,7 @@ class tangleCommands:
 
 	#@-at
 	#@@c
-	
+
 	def skip_cweb_section_name(self,s,i):
 		
 		j = i # Used for error message.
@@ -3768,7 +3761,7 @@ class tangleCommands:
 
 	#@-at
 	#@@c
-	
+
 	def standardize_name (self,name):
 	
 		# Convert to lowercase.
@@ -3802,7 +3795,7 @@ class tangleCommands:
 
 	#@-at
 	#@@c
-	
+
 	def scanAllDirectives(self,v,require_path_flag,issue_error_flag):
 	
 		c = self.commands ; config = app().config
@@ -3834,7 +3827,7 @@ class tangleCommands:
 				else:
 					break
 			
-
+			
 			#@-body
 			#@-node:1::<< Collect @first attributes >>
 
@@ -3889,7 +3882,7 @@ class tangleCommands:
 
 			#@-at
 			#@@c
-			
+
 			if btest(old_bits,verbose_bits)or btest(old_bits,terse_bits)or btest(old_bits,silent_bits):
 				pass # Do nothing more.
 			elif btest(bits,verbose_bits):
@@ -3898,7 +3891,7 @@ class tangleCommands:
 				self.print_bits = terse_bits
 			elif btest(bits,silent_bits):
 				self.print_bits = silent_bits
-
+			
 			#@-body
 			#@-node:3::<< Test for @verbose, @terse or @silent >>
 
@@ -3964,7 +3957,7 @@ class tangleCommands:
 				elif issue_error_flag and not self.path_warning_given:
 					self.path_warning_given = true # supress future warnings
 					self.error("ignoring empty @path")
-
+			
 			#@-body
 			#@-node:4::<< Test for @path >>
 
@@ -3991,7 +3984,7 @@ class tangleCommands:
 					if issue_error_flag:
 						j = skip_to_end_of_line(s,i)
 						es("ignoring " + s[i:j])
-
+			
 			#@-body
 			#@-node:5::<< Test for @pagewidth and @tabwidth >>
 
@@ -4008,7 +4001,7 @@ class tangleCommands:
 				self.use_header_flag = true
 			elif btest(bits,noheader_bits):
 				self.use_header_flag = false
-
+			
 			#@-body
 			#@-node:6::<< Test for @header or @noheader >>
 
@@ -4029,7 +4022,7 @@ class tangleCommands:
 
 		#@-at
 		#@@c
-		
+
 		if c.frame and require_path_flag and not self.tangle_directory:
 		
 			if self.root_name and len(self.root_name) > 0:
@@ -4084,7 +4077,7 @@ class tangleCommands:
 
 	#@-at
 	#@@c
-	
+
 	def token_type(self,s,i,err_flag):
 	
 		kind = plain_line ; end = -1
@@ -4156,9 +4149,6 @@ class tangleCommands:
 #@-body
 #@-node:4::class tangleCommands methods
 #@-others
-
-
-
 #@-body
 #@-node:0::@file leoTangle.py
 #@-leo

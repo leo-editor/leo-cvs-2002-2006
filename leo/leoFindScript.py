@@ -1,5 +1,4 @@
 #@+leo
-
 #@+node:0::@file leoFindScript.py
 #@+body
 #@@language python

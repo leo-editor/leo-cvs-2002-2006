@@ -1,5 +1,4 @@
 #@+leo
-
 #@+node:0::@file leoApp.py
 #@+body
 #@@language python
@@ -67,7 +66,7 @@ class LeoApp:
 			print "exception getting version"
 			traceback.print_exc()
 			v22 = true # Just hope
-
+		
 		#@-body
 		#@-node:1::<< return false if not v2.1 or above >>
 
@@ -113,7 +112,7 @@ class LeoApp:
 			# 04-SEP-2002 DHEIN: simplify version check
 			# 04-SEP-2002 Stephen P. Schaefer: make sure v834 is set
 			v834 = CheckVersion(version, "8.3.4")
-
+			
 			#@-body
 			#@-node:1::<< set v834 if version is 8.3.4 or greater >>
 

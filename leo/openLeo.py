@@ -1,5 +1,4 @@
 #@+leo
-
 #@+node:0::@file openLeo.py
 #@+body
 #@@language python

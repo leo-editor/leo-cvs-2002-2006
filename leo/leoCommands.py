@@ -1,5 +1,4 @@
 #@+leo
-
 #@+node:0::@file leoCommands.py
 #@+body
 #@@language python
@@ -88,7 +87,7 @@ class Commands:
 	def __repr__ (self):
 	
 		return "Commander: " + self.frame.title
-
+	
 	#@-body
 	#@-node:3::c.__repr__
 	#@+node:4::c.destroy
@@ -116,7 +115,7 @@ class Commands:
 
 	#@-at
 	#@@c
-	
+
 	def setIvarsFromPrefs (self):
 	
 		pass
@@ -132,7 +131,7 @@ class Commands:
 		c = self ; find = app().findFrame
 		if find:
 			find.set_ivars(c)
-
+	
 	#@-body
 	#@-node:6::c.setIvarsFromFind
 	#@+node:7::Cut & Paste Outlines
@@ -159,7 +158,7 @@ class Commands:
 		app().root.clipboard_clear()
 		app().root.clipboard_append(s)
 		# Copying an outline has no undo consequences.
-
+	
 	#@-body
 	#@-node:2::copyOutline
 	#@+node:3::pasteOutline
@@ -170,7 +169,7 @@ class Commands:
 
 	#@-at
 	#@@c
-	
+
 	def pasteOutline(self):
 	
 		c = self ; current = c.currentVnode()
@@ -557,7 +556,7 @@ class Commands:
 			lines[-1] += trailingNewline # DTHEIN: add newline if needed
 		return head, lines, tail
 	
-
+	
 	#@-body
 	#@-node:10::getBodyLines (Dave Hein)
 	#@+node:11::getBodySelection
@@ -1268,7 +1267,7 @@ class Commands:
 	def currentVnode (self):
 	
 		return self.tree.currentVnode
-
+	
 	#@-body
 	#@-node:1::c.currentVnode
 	#@+node:2::clearAllMarked
@@ -1303,7 +1302,7 @@ class Commands:
 	def fileName (self):
 	
 		return self.frame.mFileName
-
+	
 	#@-body
 	#@-node:4::fileName
 	#@+node:5::isChanged
@@ -1320,7 +1319,7 @@ class Commands:
 	def rootVnode (self):
 	
 		return self.tree.rootVnode
-
+	
 	#@-body
 	#@-node:6::rootVnode
 	#@+node:7::setChanged
@@ -1475,7 +1474,7 @@ class Commands:
 
 	#@-at
 	#@@c
-	
+
 	def initAllCloneBits (self):
 	
 		c=self
@@ -1860,7 +1859,7 @@ class Commands:
 
 	#@-at
 	#@@c
-	
+
 	def moveOutlineDown(self):
 	
 		c = self
@@ -2057,7 +2056,7 @@ class Commands:
 	def endEditing(self):
 	
 		self.tree.endEditLabel()
-
+	
 	#@-body
 	#@-node:2::endEditing (calls tree.endEditLabel)
 	#@+node:3::selectThreadBack
@@ -2072,7 +2071,7 @@ class Commands:
 			c.beginUpdate()
 			c.selectVnode(v)
 			c.endUpdate()
-
+	
 	#@-body
 	#@-node:3::selectThreadBack
 	#@+node:4::selectThreadNext
@@ -2117,7 +2116,7 @@ class Commands:
 			c.beginUpdate()
 			c.selectVnode(v)
 			c.endUpdate()
-
+	
 	#@-body
 	#@-node:6::selectVisNext
 	#@+node:7::c.selectVnode (calls tree.select)
@@ -2145,7 +2144,7 @@ class Commands:
 			c.editVnode(v)
 		else:
 			c.selectVnode(v)
-
+	
 	#@-body
 	#@-node:8::selectVnodeWithEditing
 	#@-node:16::Selecting & Updating (commands)
@@ -2161,7 +2160,7 @@ class Commands:
 	def updateSyntaxColorer(self,v):
 	
 		self.tree.colorizer.updateSyntaxColorer(v)
-
+	
 	#@-body
 	#@-node:1::updateSyntaxColorer
 	#@-node:17::Syntax coloring interface

@@ -1,5 +1,4 @@
 #@+leo
-
 #@+node:0::@file leoFontPanel.py
 #@+body
 #@@language python
@@ -152,7 +151,7 @@ class leoFontPanel:
 		# All other vars do change when reverted.
 		self.revertIvars()
 		self.update()
-
+	
 	#@-body
 	#@-node:3::finishCreate
 	#@+node:4::getActiveFont
@@ -169,7 +168,7 @@ class leoFontPanel:
 
 	#@-at
 	#@@c
-	
+
 	def getActiveFont (self):
 	
 		box = self.family_list_box
@@ -426,7 +425,7 @@ class leoFontPanel:
 		if 0: # It need not be modal: it will go away if the owning window closes!
 			top.grab_set()
 			top.focus_force() # Get all keystrokes.
-
+	
 	#@-body
 	#@-node:11::run
 	#@+node:12::selectFont

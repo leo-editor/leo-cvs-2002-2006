@@ -1,5 +1,4 @@
 #@+leo
-
 #@+node:0::@file leoDialog.py
 #@+body
 #@@language python

@@ -1,5 +1,4 @@
 #@+leo
-
 #@+node:0::@file leoUtils.py
 #@+body
 #@@language python
@@ -1239,7 +1238,7 @@ def is_special_bits(s,root=None):
 
 			#@-at
 			#@@c
-			
+
 			i = skip_ws(s,i+2)
 			if i < n and s[i] == '*' :
 				i = skip_ws(s,i+1) # Skip the '*'

@@ -1,5 +1,4 @@
 #@+leo
-
 #@+node:0::@file leoImport.py
 #@+body
 #@@language python
@@ -79,7 +78,7 @@ class leoImportCommands:
 		
 		# Used by Importers.
 		self.web_st = []
-
+	
 	#@-body
 	#@-node:1::import.__init__
 	#@+node:3::Import
@@ -159,7 +158,7 @@ class leoImportCommands:
 
 				#@-at
 				#@@c
-				
+
 				name0 = files[0]
 				name1 = files[1]
 				prefix0, junk = os.path.splitext(name0)
@@ -450,7 +449,7 @@ class leoImportCommands:
 
 	#@-at
 	#@@c
-	
+
 	def scanBodyForHeadline (self,s):
 		
 		if self.webType == "cweb":
@@ -645,7 +644,7 @@ class leoImportCommands:
 
 	#@-at
 	#@@c
-	
+
 	def cstCanonicalize (self,s,lower=true):
 		
 		if lower:
@@ -725,7 +724,7 @@ class leoImportCommands:
 
 	#@-at
 	#@@c
-	
+
 	def scanPythonClass (self,s,i,start,parent):
 	
 		# line = get_line(s,i) ; trace(`line`)
@@ -762,7 +761,7 @@ class leoImportCommands:
 		body = s[start:i]
 		body = self.undentBody(body)
 		class_vnode = self.createHeadline(parent,prefix + body,headline)
-
+		
 		#@-body
 		#@-node:2::<< create class_vnode  >>
 
@@ -838,7 +837,7 @@ class leoImportCommands:
 
 	#@-at
 	#@@c
-	
+
 	def scanPythonDef (self,s,i,start,parent):
 	
 		# line = get_line(s,i) ; trace(`line`)
@@ -970,7 +969,7 @@ class leoImportCommands:
 
 	#@-at
 	#@@c
-	
+
 	def scanPythonText (self,s,parent):
 	
 		decls_seen = false ; start = i = 0
@@ -1057,7 +1056,7 @@ class leoImportCommands:
 			es("File seems to be mixed HTML and PHP; importing as plain text file.")
 			parent.setBodyStringOrPane("@ignore\n\n" + s)
 			return
-
+		
 		#@-body
 		#@-node:1::<< Append file if not pure PHP >>
 
@@ -1080,7 +1079,7 @@ class leoImportCommands:
 		# 14-SEP-2002 DTHEIN: added these 2 variables to allow use of @first/last
 		startOfCode = s.find("\n") + 1 # this should be the line containing the initial <?php
 		endOfCode = s.rfind("?>") # this should be the line containing the last ?>
-
+		
 		#@-body
 		#@-node:2::<< define scanPHPText vars >>
 
@@ -1117,7 +1116,7 @@ class leoImportCommands:
 					i = skip_heredoc_string(s,i)
 				else:
 					i += 1
-
+				
 				#@-body
 				#@-node:3::<< handle possible heredoc string >>
 
@@ -1236,7 +1235,7 @@ class leoImportCommands:
 				class_end = 0
 				class_start = 0 #done with this class
 				class_body=""
-
+				
 				#@-body
 				#@-node:6::<< handle end of class >>
 
@@ -1246,7 +1245,7 @@ class leoImportCommands:
 		#@+node:7::<< Append any unused text to the parent's body text >>
 		#@+body
 		parent.appendStringToBody(s[scan_start:endOfCode])
-
+		
 		#@-body
 		#@-node:7::<< Append any unused text to the parent's body text >>
 
@@ -1311,7 +1310,7 @@ class leoImportCommands:
 
 				#@-at
 				#@@c
-				
+
 				i += 1 # skip the '='
 				function_start = None # We can't be in a function.
 				lparen = None   # We have not seen an argument list yet.
@@ -1355,7 +1354,7 @@ class leoImportCommands:
 
 				#@-at
 				#@@c
-				
+
 				i += 1 # skip the semicolon.
 				if lparen == None:
 					function_start = i + 1 # The semicolon ends the declaration.
@@ -1524,7 +1523,7 @@ class leoImportCommands:
 
 					#@-at
 					#@@c
-					
+
 					# skip the "namespace" keyword.
 					i += len("namespace")
 					i = skip_ws_and_nl(s,i)
@@ -1656,7 +1655,7 @@ class leoImportCommands:
 
 				#@-at
 				#@@c
-				
+
 				i += 1 # skip the '='
 				function_start = None # We can't be in a function.
 				lparen = None   # We have not seen an argument list yet.
@@ -1700,7 +1699,7 @@ class leoImportCommands:
 
 				#@-at
 				#@@c
-				
+
 				i += 1 # skip the semicolon.
 				if lparen == None:
 					function_start = i + 1 # The semicolon ends the declaration.
@@ -2037,7 +2036,7 @@ class leoImportCommands:
 
 	#@-at
 	#@@c
-	
+
 	def convertCodePartToWeb (self,s,i,v,result):
 	
 		# line = get_line(s,i) ; trace(`line`)
@@ -2055,7 +2054,7 @@ class leoImportCommands:
 
 		#@-at
 		#@@c
-		
+
 		head_ref = None
 		j = 0
 		if match(h,j,"<<"):
@@ -2103,7 +2102,7 @@ class leoImportCommands:
 
 		else:
 			file_name = line = None
-
+		
 		#@-body
 		#@-node:2::<< put name following @root or @file in file_name >>
 
@@ -2122,7 +2121,7 @@ class leoImportCommands:
 				if not file_name:
 					file_name = "*"
 				result += lb + file_name + rb + "=\n"
-
+			
 			#@-body
 			#@-node:3::<< append ref to file_name >>
 
@@ -2165,7 +2164,7 @@ class leoImportCommands:
 				if not file_name:
 					file_name = "*"
 				result += lb + file_name + rb + "=\n"
-
+			
 			#@-body
 			#@-node:3::<< append ref to file_name >>
 
@@ -2241,7 +2240,7 @@ class leoImportCommands:
 
 	#@-at
 	#@@c
-	
+
 	def convertVnodeToWeb (self,v):
 	
 		if not v: return ""
@@ -2417,7 +2416,7 @@ class leoImportCommands:
 
 		#@-at
 		#@@c
-		
+
 		tag = "@+leo"
 		# Skip any non @+leo lines.
 		i = 0
@@ -2480,7 +2479,7 @@ class leoImportCommands:
 
 	#@-at
 	#@@c
-	
+
 	def removeSentinelLines(self,s,line_delim,start_delim,end_delim):
 	
 		i = 0 ; result = "" ; first = true
@@ -2567,7 +2566,7 @@ class leoImportCommands:
 					indent += '\t'
 					f.write(line)
 					f.write('\n')
-
+				
 				#@-body
 				#@-node:2::<< write the context of v to f >>
 
@@ -2607,7 +2606,7 @@ class leoImportCommands:
 
 	#@-at
 	#@@c
-	
+
 	def getLeadingIndent (self,s,i):
 	
 		c = self.commands
@@ -2650,7 +2649,7 @@ class leoImportCommands:
 			return self.webType == "cweb" and (
 				match(s,i,"@c") or match(s,i,"@p") or
 				match(s,i,"@d") or match(s,i,"@f"))
-
+	
 	#@-body
 	#@-node:4::isDocStart and isModuleStart
 	#@+node:5::massageBody
@@ -2699,7 +2698,7 @@ class leoImportCommands:
 
 	#@-at
 	#@@c
-	
+
 	def massageComment (self,s):
 	
 		# line = get_line(s,0) ; trace(`line`)
@@ -2790,7 +2789,7 @@ class leoImportCommands:
 
 	#@-at
 	#@@c
-	
+
 	def skipLeadingComments (self,s):
 	
 		# trace(`get_line(s,0)`)
@@ -2884,7 +2883,7 @@ class leoImportCommands:
 
 	#@-at
 	#@@c
-	
+
 	def undentBody (self,s):
 	
 		# trace(`s`)

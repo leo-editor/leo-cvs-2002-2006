@@ -1,5 +1,4 @@
 #@+leo
-
 #@+node:0::@file leoColor.py
 #@+body
 #@@language python
@@ -1025,7 +1024,7 @@ class colorizer:
 									body.tag_add("cwebName", index(n,i), index(n,j))
 									body.tag_add("nameBrackets", index(n,j), index(n,j+2))
 									i = j + 2
-
+						
 						#@-body
 						#@-node:1::<< Handle all cweb control codes >>
 
@@ -1095,7 +1094,7 @@ class colorizer:
 						i += 2
 					else:
 						i += 1
-
+					
 					#@-body
 					#@-node:11::<< handle special php keywords >>
 
@@ -1128,7 +1127,7 @@ class colorizer:
 					#@+body
 					# body.tag_add("normal", index(n,i))
 					i += 1
-
+					
 					#@-body
 					#@-node:14::<< handle normal character >>
 
@@ -1145,7 +1144,7 @@ class colorizer:
 
 	#@-at
 	#@@c
-	
+
 	def scanColorDirectives(self,v):
 	
 		c = self.commands
@@ -1167,7 +1166,7 @@ class colorizer:
 
 			#@-at
 			#@@c
-			
+
 			if btest(comment_bits,bits):
 				
 				# @comment effectively disables syntax coloring.
@@ -1246,7 +1245,7 @@ class colorizer:
 		flag = self.useSyntaxColoring(v)
 		language = self.scanColorDirectives(v)
 		return flag,language
-
+	
 	#@-body
 	#@-node:8::updateSyntaxColorer
 	#@+node:9::useSyntaxColoring
@@ -1295,7 +1294,7 @@ class colorizer:
 				i += 1
 			else: break
 		return i
-
+	
 	#@-body
 	#@-node:1::skip_id
 	#@+node:2::skip_python_string
@@ -1333,7 +1332,7 @@ class colorizer:
 		elif s[i] == delim:
 			i += 1
 		return i,normalState
-
+	
 	#@-body
 	#@-node:3::skip_string
 	#@-node:10::Utils
@@ -1677,8 +1676,6 @@ class leoColorNamePanel:
 	#@-body
 	#@-node:5::select
 	#@-others
-
-
 #@-body
 #@-node:7::class leoColorNamePanel
 #@-others

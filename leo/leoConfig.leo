@@ -128,7 +128,7 @@ write_clone_indices = 0
 #	0: Files derived from @file nodes contain no clone indices.
 #	Please specify 0 if you are going to submit files to Leo's CVS site.
 
-use_relative_node_indices = 1
+use_relative_node_indices = 0
 #	1: Files derived from @file nodes use relative node indices.
 #	0: Files derived from @file nodes use absolute node indices.
 #	Please specify 1 if you are going to submit files to Leo's CVS site.

@@ -1,5 +1,4 @@
 #@+leo
-
 #@+node:0::@file leoFrame.py
 #@+body
 # To do: Use config params for window height, width and bar color, relief and width.
@@ -158,7 +157,7 @@ class LeoFrame:
 	def __repr__ (self):
 	
 		return "leoFrame: " + self.title
-
+	
 	#@-body
 	#@-node:3::frame.__repr__
 	#@+node:4::frame.destroy
@@ -189,7 +188,7 @@ class LeoFrame:
 		except:
 			# print traceback.print_exc()
 			pass
-
+	
 	#@-body
 	#@-node:5::frame.setTabWidth
 	#@+node:6::canonicalizeShortcut
@@ -207,7 +206,7 @@ class LeoFrame:
 
 	#@-at
 	#@@c
-	
+
 	def canonicalizeShortcut (self, shortcut):
 		
 		if shortcut == None or len(shortcut) == 0:
@@ -409,7 +408,7 @@ class LeoFrame:
 
 		#@-at
 		#@@c
-		
+
 		table = (
 			("New","Ctrl+N",self.OnNew),
 			("Open...","Ctrl+O",self.OnOpen),
@@ -439,7 +438,7 @@ class LeoFrame:
 			# 9/15/02: Added self=self to remove Python 2.1 warning.
 			callback = lambda n=i,self=self: self.OnOpenRecentFile(n)
 			recentFilesMenu.add_command(label=name,command=callback)
-
+		
 		#@-body
 		#@-node:2::<< create the recent files submenu >>
 
@@ -458,7 +457,7 @@ class LeoFrame:
 			("Write @file Nodes","Shift+Ctrl+W",self.OnWriteAtFileNodes))
 		
 		self.createMenuEntries(readWriteMenu,table)
-
+		
 		#@-body
 		#@-node:3::<< create the read/write submenu >>
 
@@ -475,7 +474,7 @@ class LeoFrame:
 			("Tangle","Shift+Ctrl+T",self.OnTangle))
 		
 		self.createMenuEntries(tangleMenu,table)
-
+		
 		#@-body
 		#@-node:4::<< create the tangle submenu >>
 
@@ -492,7 +491,7 @@ class LeoFrame:
 			("Untangle","Shift+Ctrl+U",self.OnUntangle))
 			
 		self.createMenuEntries(untangleMenu,table)
-
+		
 		#@-body
 		#@-node:5::<< create the untangle submenu >>
 
@@ -517,7 +516,7 @@ class LeoFrame:
 			("Weave",None,self.OnWeave))
 		
 		self.createMenuEntries(importMenu,table)
-
+		
 		#@-body
 		#@-node:6::<< create the import submenu >>
 
@@ -525,7 +524,7 @@ class LeoFrame:
 		# Create the last entries.
 		exitTable = (("Exit","Ctrl-Q",self.OnQuit),)
 		self.createMenuEntries(fileMenu,exitTable)
-
+		
 		#@-body
 		#@-node:2::<< create the file menu >>
 
@@ -552,7 +551,7 @@ class LeoFrame:
 			("-",None,None))
 		
 		self.createMenuEntries(editMenu,table)
-
+		
 		#@-body
 		#@-node:1::<< create the first top-level edit entries >>
 
@@ -580,7 +579,7 @@ class LeoFrame:
 			#("Insert Graphic File...",None,self.OnInsertGraphicFile))
 			
 		self.createMenuEntries(editBodyMenu,table)
-
+		
 		#@-body
 		#@-node:2::<< create the edit body submenu >>
 
@@ -597,7 +596,7 @@ class LeoFrame:
 			("Abort Edit Headline","Shift-Escape",self.OnAbortEditHeadline))
 			
 		self.createMenuEntries(editHeadlineMenu,table)
-
+		
 		#@-body
 		#@-node:3::<< create the edit headline submenu >>
 
@@ -620,7 +619,7 @@ class LeoFrame:
 			("Replace, Then Find","Ctrl+-",self.OnReplaceThenFind))
 		
 		self.createMenuEntries(findMenu,table)
-
+		
 		#@-body
 		#@-node:4::<< create the find submenu >>
 
@@ -638,7 +637,7 @@ class LeoFrame:
 			("Preferences","Ctrl+Y",self.OnPreferences))
 		
 		self.createMenuEntries(editMenu,table)
-
+		
 		#@-body
 		#@-node:5::<< create the last top-level edit entries >>
 		#@-body
@@ -725,7 +724,7 @@ class LeoFrame:
 			("Go Next","Alt-Shift-DnArrow",self.OnGoNext))
 			
 		self.createMenuEntries(moveSelectMenu,table)
-
+		
 		#@-body
 		#@-node:3::<< create move/select submenu >>
 
@@ -747,7 +746,7 @@ class LeoFrame:
 			("Go To Next Changed","Alt+D",self.OnGoToNextChanged))
 			
 		self.createMenuEntries(markGotoMenu,table)
-
+		
 		#@-body
 		#@-node:4::<< create mark/goto submenu >>
 		#@-body
@@ -772,7 +771,7 @@ class LeoFrame:
 			("Open Python Window","Alt+P",self.OnOpenPythonWindow))
 		
 		self.createMenuEntries(windowMenu,table)
-
+		
 		#@-body
 		#@-node:4::<< create the window menu >>
 
@@ -816,7 +815,7 @@ class LeoFrame:
 
 	#@-at
 	#@@c
-	
+
 	def createMenuEntries (self,menu,table):
 		
 		for label,accel,command in table:
@@ -885,7 +884,7 @@ class LeoFrame:
 
 	#@-at
 	#@@c
-	
+
 	def createAccelerators (self,top):
 		
 		return ## no longer used!
@@ -1041,7 +1040,7 @@ class LeoFrame:
 
 			#@-at
 			#@@c
-			
+
 			# We would love to use arrow keys, and we can't.
 			("D", self.OnGoNextVisible),
 			("U", self.OnGoPrevVisible),
@@ -1104,7 +1103,7 @@ class LeoFrame:
 	def notYet(self,name):
 	
 		es(name + " not ready yet")
-
+	
 	#@-body
 	#@-node:12::notYet
 	#@+node:13::frame.put, putnl
@@ -1139,7 +1138,7 @@ class LeoFrame:
 		self.divideLeoSplitter(self.splitVerticalFlag, ratio)
 		self.divideLeoSplitter(not self.splitVerticalFlag, secondary_ratio)
 		# trace(`ratio`)
-
+	
 	#@-body
 	#@-node:14::resizePanesToRatio
 	#@+node:15::Event handlers
@@ -1183,7 +1182,7 @@ class LeoFrame:
 						
 					if not self.mFileName:
 						veto = true
-
+					
 					#@-body
 					#@-node:1::<< Put up a file save dialog; set veto if the user cancels >>
 
@@ -1248,7 +1247,7 @@ class LeoFrame:
 	
 		c = self.commands
 		app().log = self
-
+	
 	#@-body
 	#@-node:3::OnActivateLeoEvent
 	#@+node:4::OnActivateLog
@@ -1318,7 +1317,7 @@ class LeoFrame:
 		menu = self.fileMenu
 		enableMenu(menu,"Revert To Saved", c.canRevert())
 		enableMenu(menu,"Open @file With...", v.isAtFileNode())
-
+	
 	#@-body
 	#@-node:3::updateFileMenu
 	#@+node:4::updateEditMenu
@@ -1447,7 +1446,7 @@ class LeoFrame:
 			self.startupWindow==true and # The window was open on startup
 			c.changed==false and self.saved==false and # The window has never been changed
 			app().numberOfWindows == 1) # Only one untitled window has ever been opened
-
+		
 		#@-body
 		#@-node:1::<< Set closeFlag if the only open window is empty >>
 
@@ -1479,7 +1478,7 @@ class LeoFrame:
 
 	#@-at
 	#@@c
-	
+
 	def OnOpenWith(self,event=None):
 		
 		c = self.commands ; v = c.currentVnode()
@@ -2178,7 +2177,7 @@ class LeoFrame:
 			cp.run()
 	
 		return "break" # inhibit further command processing
-
+	
 	#@-body
 	#@-node:9::OnColorPanel
 	#@+node:10::OnViewAllCharacters
@@ -2438,7 +2437,7 @@ class LeoFrame:
 		find.find_text.focus_set()
 		find.commands = self
 		return "break" # inhibit further command processing
-
+	
 	#@-body
 	#@-node:1::OnFindPanel
 	#@+node:2::OnFindNext
@@ -2897,7 +2896,7 @@ class LeoFrame:
 				delta += 10
 		
 		return "break" # inhibit further command processing
-
+	
 	#@-body
 	#@-node:4::OnCascade
 	#@+node:5::OnMinimizeAll
@@ -2969,7 +2968,7 @@ class LeoFrame:
 					import traceback
 					traceback.print_exc() # This can fail!!
 				except: pass
-
+			
 			#@-body
 			#@-node:1::<< open idle in Linux >>
 
@@ -3018,7 +3017,7 @@ class LeoFrame:
 
 	#@-at
 	#@@c
-	
+
 	def leoPyShellMain(self):
 		
 		import PyShell

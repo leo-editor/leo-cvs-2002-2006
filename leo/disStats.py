@@ -1,5 +1,4 @@
 #@+leo
-
 #@+node:0::@file disStats.py
 #@+body
 # routines to gather static statistics about opcodes based on dis module.
@@ -141,8 +140,6 @@ def print_stats (stats):
 #@-body
 #@-node:6::print_stats
 #@-others
-
-
 #@-body
 #@-node:0::@file disStats.py
 #@-leo

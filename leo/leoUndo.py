@@ -1,5 +1,4 @@
 #@+leo
-
 #@+node:0::@file leoUndo.py
 #@+body
 #@@language python
@@ -71,7 +70,7 @@ class undoer:
 
 	#@-at
 	#@@c
-	
+
 	def clearUndoState (self):
 		
 		self.setRedoType("Can't Redo")
@@ -230,7 +229,7 @@ class undoer:
 
 	#@-at
 	#@@c
-	
+
 	def setUndoParams (self,undo_type,v,**keywords):
 	
 		# trace(`undo_type`)
@@ -268,7 +267,7 @@ class undoer:
 
 	#@-at
 	#@@c
-	
+
 	def setUndoTypingParams (self,v,undo_type,oldText,newText,oldSel,newSel):
 	
 		u = self
@@ -534,7 +533,7 @@ class undoer:
 
 	#@-at
 	#@@c
-	
+
 	def undo (self):
 	
 		u = self ; c = u.commands
@@ -573,7 +572,7 @@ class undoer:
 
 			#@-at
 			#@@c
-			
+
 			elif type == "Delete Outline" or type == "Cut Node":
 				
 				if u.back:
@@ -639,7 +638,7 @@ class undoer:
 
 			#@-at
 			#@@c
-			
+
 			elif type == "Demote":
 			
 				u.undoDemote()
@@ -682,7 +681,7 @@ class undoer:
 
 			#@-at
 			#@@c
-			
+
 			elif type == "Sort Children":
 				
 				u.undoSortChildren()
@@ -830,7 +829,7 @@ class undoer:
 
 	#@-at
 	#@@c
-	
+
 	def undoReplace (self,v,oldv):
 	
 		assert(v)

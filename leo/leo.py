@@ -1,5 +1,4 @@
 #@+leo
-
 #@+node:0::@file leo.py 
 #@+body
 #@@language python
@@ -39,7 +38,7 @@ import leoApp, leoFrame, leoUtils, Tkinter
 import os, string, sys
 
 app = leoGlobals.app
-	
+
 
 #@+others
 #@+node:2::Functions for scripts

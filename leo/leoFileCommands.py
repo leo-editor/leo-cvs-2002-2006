@@ -1,5 +1,4 @@
 #@+leo
-
 #@+node:0::@file leoFileCommands.py
 #@+body
 #@@language python
@@ -133,7 +132,7 @@ class fileCommands:
 
 			#@-at
 			#@@c
-			
+
 			v = c.currentVnode()
 			while v and v != after:
 				v.initClonedBit(v.shouldBeClone())
@@ -294,7 +293,7 @@ class fileCommands:
 		
 		for var in leoFind.ivars:
 			exec("c.%s_flag = false" % var)
-
+		
 		#@-body
 		#@-node:1::<< Set defaults of all flags >>
 
@@ -758,7 +757,7 @@ class fileCommands:
 
 	#@-at
 	#@@c
-	
+
 	def getXmlVersionTag (self):
 		
 		config = app().config
@@ -768,7 +767,7 @@ class fileCommands:
 		if not config.xml_version_string:
 			config.xml_version_string = version
 		self.getTag(prolog_postfix_string)
-
+	
 	#@-body
 	#@-node:18::getXmlVersionTag
 	#@+node:19::skipWs
@@ -844,7 +843,7 @@ class fileCommands:
 
 		#@-at
 		#@@c
-		
+
 		dir = os.path.dirname(fileName) 
 		if len(dir) > 0:
 			c.openDirectory = dir
@@ -889,7 +888,7 @@ class fileCommands:
 
 		#@-at
 		#@@c
-		
+
 		dir = os.path.dirname(fileName) 
 		if len(dir) > 0:
 			c.openDirectory = dir
@@ -973,7 +972,7 @@ class fileCommands:
 
 	#@-at
 	#@@c
-	
+
 	def shouldCompactOnSave (self):
 	
 		c=self.commands
@@ -1078,7 +1077,7 @@ class fileCommands:
 
 	#@-at
 	#@@c
-	
+
 	def putEscapedString (self,s):
 	
 		if s and len(s) > 0:
@@ -1297,7 +1296,7 @@ class fileCommands:
 			self.put(version) ; self.put_dquote()
 			self.put(prolog_postfix_string) ; self.put_nl()
 			self.put("<leo_file>") ; self.put_nl()
-
+	
 	#@-body
 	#@-node:9::putProlog
 	#@+node:10::putPostlog
@@ -1389,7 +1388,7 @@ class fileCommands:
 
 	#@-at
 	#@@c
-	
+
 	def putVnode (self,v,topVnode):
 	
 		c = self.commands
@@ -1603,7 +1602,7 @@ class fileCommands:
 					except:
 						es("exception deleting " + backupName)
 						traceback.print_exc()
-
+				
 				#@-body
 				#@-node:2::<< delete backup file >>
 
@@ -1656,7 +1655,7 @@ class fileCommands:
 				except:
 					es("exception renaming " + backupName + " to " + fileName)
 					traceback.print_exc()
-
+			
 			#@-body
 			#@-node:3::<< erase filename and rename backupName to fileName >>
 
@@ -1679,7 +1678,7 @@ class fileCommands:
 				except:
 					es("exception deleting " + backupName)
 					traceback.print_exc()
-
+			
 			#@-body
 			#@-node:2::<< delete backup file >>
 
@@ -1706,7 +1705,7 @@ class fileCommands:
 				except:
 					es("exception renaming " + backupName + " to " + fileName)
 					traceback.print_exc()
-
+			
 			#@-body
 			#@-node:3::<< erase filename and rename backupName to fileName >>
 

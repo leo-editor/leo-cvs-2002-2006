@@ -1,5 +1,4 @@
 #@+leo
-
 #@+node:0::@file __init__.py
 #@+body
 #@@language python

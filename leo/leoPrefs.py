@@ -1,5 +1,4 @@
 #@+leo
-
 #@+node:0::@file leoPrefs.py
 #@+body
 #@@language python

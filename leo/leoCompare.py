@@ -1,5 +1,4 @@
 #@+leo
-
 #@+node:0::@file leoCompare.py
 #@+body
 #@@language python
@@ -329,7 +328,7 @@ class leoCompare:
 			
 				if self.ignoreSentinelLines and sentinelComment2 and self.isSentinel(s2,sentinelComment2):
 					s2 = None ; continue
-
+			
 			#@-body
 			#@-node:2::<< ignore blank lines and/or sentinels >>
 
@@ -475,7 +474,7 @@ class leoCompare:
 
 	#@-at
 	#@@c
-	
+
 	def isLeoHeader (self,s):
 		
 		from leoUtils import skip_ws

@@ -1,5 +1,4 @@
 #@+leo
-
 #@+node:0::@file leoFind.py
 #@+body
 #@@language python
@@ -264,7 +263,7 @@ class LeoFind:
 		if type(s) == types.UnicodeType:
 			s = s.encode('utf-8')
 		c.change_text = s
-
+	
 	#@-body
 	#@-node:4::find.set_ivars
 	#@+node:5::resetWrap
@@ -285,7 +284,7 @@ class LeoFind:
 	#@+node:7::Top Level Commands
 	#@+node:1::changeButton
 	#@+body
-	
+
 	# The user has pushed the "Change" button from the find panel.
 	
 	def changeButton(self):
@@ -422,7 +421,7 @@ class LeoFind:
 
 	#@-at
 	#@@c
-	
+
 	def batchChange (self,pos1,pos2,count):
 	
 		c = self.commands ; v = self.v ; st = self.s_text
@@ -721,7 +720,7 @@ class LeoFind:
 
 	#@-at
 	#@@c
-	
+
 	def search (self):
 	
 		c = self.commands ; v = self.v ; t = self.s_text
@@ -826,7 +825,7 @@ class LeoFind:
 
 	#@-at
 	#@@c
-	
+
 	def initBatchText(self):
 		c = self.commands ; v = self.v ; st = self.s_text	
 		s = choose(self.in_headline,v.headString(), v.bodyString())
@@ -956,7 +955,7 @@ class LeoFind:
 
 	#@-at
 	#@@c
-	
+
 	def showSuccess(self,pos,newpos):
 	
 		c = self.commands ; v = self.v
