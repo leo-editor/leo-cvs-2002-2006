@@ -307,7 +307,6 @@ class leoTkinterTree (leoFrame.leoTree):
         canvas.tag_bind('iconBox','<Button-1>', self.onIconBoxClick)
         canvas.tag_bind('iconBox','<Double-1>', self.onIconBoxDoubleClick)
         canvas.tag_bind('iconBox','<Button-3>', self.onIconBoxRightClick)
-        
         canvas.tag_bind('iconBox','<B1-Motion>',            self.onDrag)
         canvas.tag_bind('iconBox','<Any-ButtonRelease-1>',  self.onEndDrag)
         
@@ -428,7 +427,7 @@ class leoTkinterTree (leoFrame.leoTree):
     
         assert(not self.ids.get(id))
         assert(p)
-        self.ids[id] = p # p.copy()
+        self.ids[id] = p
     
         return id
     #@nonl
@@ -454,7 +453,7 @@ class leoTkinterTree (leoFrame.leoTree):
         
         assert(p)
         assert(not self.ids.get(id))
-        self.ids[id] = p # p.copy()
+        self.ids[id] = p
         
         return id
     #@nonl
@@ -479,7 +478,6 @@ class leoTkinterTree (leoFrame.leoTree):
         self.visibleIcons.append(id)
         
         assert(p)
-        ## p = p.copy()
         assert(not self.iconIds.get(id))
         assert(not self.ids.get(id))
         data = p,self.generation
@@ -552,14 +550,13 @@ class leoTkinterTree (leoFrame.leoTree):
         # Common configuration.
         # Bug fix 7/31/04:  We must call setText even if p matches: p's text may have changed!
         self.setText(t,p.headString(),tag="newText")
-        ## p = p.copy()
         t.configure(width=self.headWidth(p))
-        t.leo_position = p # p.copy() # Never changes.
+        t.leo_position = p # Never changes.
         t.leo_generation = self.generation
     
         assert(id == t.leo_window_id)
         assert(not self.ids.get(id))
-        self.ids[id] = p # p.copy()
+        self.ids[id] = p
         
         # New in 4.2 b3: entries are pairs (p,t,id) indexed by v.
         key = p.v ; assert key
@@ -1584,7 +1581,8 @@ class leoTkinterTree (leoFrame.leoTree):
             else:
                 g.trace("%3d %3d %3d" % (theId,x,y),None)
             
-        if p: return p # p.copy() # Make _sure_ nobody changes this table!
+        # defensive programming: this copy is not needed.
+        if p: return p.copy() # Make _sure_ nobody changes this table!
         else: return None
     #@nonl
     #@-node:ekr.20040803072955.74:eventToPosition
@@ -1696,6 +1694,28 @@ class leoTkinterTree (leoFrame.leoTree):
         return "break" # disable expanded box handling.
     #@nonl
     #@-node:ekr.20040803072955.81:onIconBoxClick
+    #@+node:ekr.20040803072955.89:onIconBoxRightClick
+    def onIconBoxRightClick (self,event):
+        
+        """Handle a right click in any outline widget."""
+    
+        c = self.c ; w = event.widget
+        
+        p = self.eventToPosition(event)
+        if not p: return
+    
+        try:
+            if not g.doHook("headrclick1",c=c,p=p,event=event):
+                self.OnActivate(p)
+                self.endEditLabel()
+                self.OnPopup(p,event)
+            g.doHook("headrclick2",c=c,p=p,event=event)
+        except:
+            g.es_event_exception("headrclick")
+            
+        return "continue"
+    #@nonl
+    #@-node:ekr.20040803072955.89:onIconBoxRightClick
     #@+node:ekr.20040803072955.82:onIconBoxDoubleClick
     def onIconBoxDoubleClick (self,event):
         
@@ -1704,6 +1724,8 @@ class leoTkinterTree (leoFrame.leoTree):
         p = self.eventToPosition(event)
         if not p: return
         
+        if self.trace and self.verbose: g.trace()
+        
         try:
             if not g.doHook("icondclick1",c=c,p=p,event=event):
                 self.OnIconDoubleClick(p) # Call the method in the base class.
@@ -1711,18 +1733,6 @@ class leoTkinterTree (leoFrame.leoTree):
         except:
             g.es_event_exception("icondclick")
     #@-node:ekr.20040803072955.82:onIconBoxDoubleClick
-    #@+node:ekr.20040803072955.83:onIconBoxRightClick
-    def onIconBoxRightClick (self,event):
-    
-        p = self.eventToPosition(event)
-        
-        if p:
-            self.select(p)
-            g.app.findFrame.handleUserClick(p)
-    
-        return "break" # disable expanded box handling.
-    #@nonl
-    #@-node:ekr.20040803072955.83:onIconBoxRightClick
     #@-node:ekr.20040803072955.80:Icon Box...
     #@+node:ekr.20040803072955.84:Text Box...
     #@+node:ekr.20040803072955.85:configureTextState
@@ -1791,11 +1801,14 @@ class leoTkinterTree (leoFrame.leoTree):
         # return "continue"
     #@nonl
     #@-node:ekr.20040803072955.88:onHeadlineKey
-    #@+node:ekr.20040803072955.89:onHeadlineRightClick
+    #@+node:ekr.20040803072955.83:onHeadlineRightClick
     def onHeadlineRightClick (self,event):
+    
+        """Handle a right click in any outline widget."""
     
         c = self.c ; w = event.widget
         
+    
         try:
             p = w.leo_position
         except AttributeError:
@@ -1804,6 +1817,7 @@ class leoTkinterTree (leoFrame.leoTree):
         try:
             if not g.doHook("headrclick1",c=c,p=p,event=event):
                 self.OnActivate(p)
+                self.endEditLabel()
                 self.OnPopup(p,event)
             g.doHook("headrclick2",c=c,p=p,event=event)
         except:
@@ -1811,7 +1825,7 @@ class leoTkinterTree (leoFrame.leoTree):
             
         return "continue"
     #@nonl
-    #@-node:ekr.20040803072955.89:onHeadlineRightClick
+    #@-node:ekr.20040803072955.83:onHeadlineRightClick
     #@+node:ekr.20040803072955.90:virtual event handlers: called from core
     #@+node:ekr.20040803072955.91:idle_head_key
     def idle_head_key (self,p,ch=None):
@@ -2012,7 +2026,7 @@ class leoTkinterTree (leoFrame.leoTree):
             except: pass
             p = self.ids.get(id)
             if not p: return
-            self.drag_p = p # p.copy()
+            self.drag_p = p.copy() # defensive programming: not needed.
             self.dragging = True
             if self.trace and self.verbose:
                 g.trace("*** start drag ***",id,self.drag_p.headString())
