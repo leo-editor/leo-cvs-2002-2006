@@ -3214,16 +3214,42 @@ class baseCommands:
         #@+node:ekr.20040711135244.6:__init__
         def __init__ (self,c):
             
-            self.changed = False
-            self.line = 0
-            self.lines = []
-            self.col = 0
-            self.array = []
-            self.parenLevel = 0
+            self.array = [] # List of strings comprising the line being accumulated.
             self.bracketLevel = 0
             self.c = c
+            self.changed = False
+            self.dumping = False
+            self.erow = self.ecol = 0 # The ending row/col of the token.
+            self.line = 0 # Same as self.srow
+            self.lines = [] # List of lines.
+            self.name = None
             self.p = c.currentPosition()
+            self.parenLevel = 0
             self.prevName = None
+            self.s = None # The string containing the line.
+            self.srow = self.scol = 0 # The starting row/col of the token.
+            self.startline = True # True: the token starts a line.
+            self.tracing = False
+        
+            #@    << define dispatch dict >>
+            #@+node:ekr.20041021100850:<< define dispatch dict >>
+            self.dispatchDict = {
+                
+                "comment":    self.doMultiLine,
+                "dedent":     self.doDedent,
+                "endmarker":  self.doEndMarker,
+                "errortoken": self.doErrorToken,
+                "indent":     self.doIndent,
+                "name":       self.doName,
+                "newline":    self.doNewline,
+                "nl" :        self.doNewline,
+                "number":     self.doNumber,
+                "op":         self.doOp,
+                "string":     self.doMultiLine,
+            }
+            #@nonl
+            #@-node:ekr.20041021100850:<< define dispatch dict >>
+            #@nl
         #@nonl
         #@-node:ekr.20040711135244.6:__init__
         #@+node:ekr.20040713093048:clear
@@ -3238,12 +3264,13 @@ class baseCommands:
             
             print ; print '-'*10, p.headString()
             
-            if 1:
+            if 0:
                 for line in lines:
                     line2 = g.toEncodedString(line,encoding,reportErrors=True)
                     print line2, # Don't add a trailing newline!
             else:
                 for i in xrange(len(lines)):
+                    line = lines[i]
                     line = g.toEncodedString(line,encoding,reportErrors=True)
                     print "%3d" % i, repr(lines[i])
         #@nonl
@@ -3265,6 +3292,17 @@ class baseCommands:
             print "%10s (%2d,%2d) %-8s" % (name,scol,ecol,repr(val))
         #@nonl
         #@-node:ekr.20040711135244.7:dumpToken
+        #@+node:ekr.20040713091855:endUndo
+        def endUndo (self):
+            
+            c = self.c
+            
+            if self.changed:
+        
+                # Tag the end of the command.
+                c.undoer.setUndoParams("Pretty Print",self.p)
+        #@nonl
+        #@-node:ekr.20040713091855:endUndo
         #@+node:ekr.20040711135244.8:get
         def get (self):
             
@@ -3274,7 +3312,7 @@ class baseCommands:
         #@+node:ekr.20040711135244.4:prettyPrintNode
         def prettyPrintNode(self,p,dump):
         
-            pp = self ; c = self.c
+            c = self.c
             h = p.headString()
             s = p.bodyString()
             if not s: return
@@ -3282,19 +3320,19 @@ class baseCommands:
             readlines = g.readLinesGenerator(s).next
         
             try:
-                pp.clear()
+                self.clear()
                 for token5tuple in tokenize.generate_tokens(readlines):
-                    pp.putToken(token5tuple)
-                lines = pp.get()
+                    self.putToken(token5tuple)
+                lines = self.get()
         
             except tokenize.TokenError:
                 g.es("Error pretty-printing %s.  Not changed." % h, color="blue")
                 return
         
             if dump:
-                pp.dumpLines(p,lines)
+                self.dumpLines(p,lines)
             else:
-                pp.replaceBody(p,lines)
+                self.replaceBody(p,lines)
         #@nonl
         #@-node:ekr.20040711135244.4:prettyPrintNode
         #@+node:ekr.20040711135244.9:put
@@ -3315,62 +3353,101 @@ class baseCommands:
             self.array.append(s)
         #@nonl
         #@-node:ekr.20040711135244.9:put
-        #@+node:ekr.20040711135244.10:putNormalToken
+        #@+node:ekr.20041021104237:putArray
+        def putArray (self):
+            
+            """Add the next line by joining all the strings is self.array"""
+            
+            self.lines.append(''.join(self.array))
+            self.array = []
+        #@nonl
+        #@-node:ekr.20041021104237:putArray
+        #@+node:ekr.20040711135244.10:putNormalToken & allies
         def putNormalToken (self,token5tuple):
         
             t1,t2,t3,t4,t5 = token5tuple
-            srow,scol = t3 ; erow,ecol = t4
-            line = t5
-            name = token.tok_name[t1].lower()
-            val = t2
-            startLine = self.line != srow
-            self.line = srow
+            self.name = token.tok_name[t1].lower() # The token type
+            self.val = t2  # the token string
+            self.srow,self.scol = t3 # row & col where the token begins in the source.
+            self.erow,self.ecol = t4 # row & col where the token ends in the source.
+            self.s = t5 # The line containing the token.
+            self.startLine = self.line != self.srow
+            self.line = self.srow
         
-            if startLine:
-                ws = line[0:scol]
-                if ws: self.array.append(ws)
+            if self.startLine:
+                self.doStartLine()
         
-            # g.trace(name,repr(str(val)))
-            if name in ("nl","newline","endmarker"):
-                if name in ("nl","newline"):
-                    self.array.append('\n')
-                self.lines.append(''.join(self.array))
-                self.array = []
-            elif name == "op":
-                self.putOperator(val)
-            elif name == "name":
-                self.array.append("%s " % val)
-                if self.prevName == "def": # A personal idiosyncracy.
-                    self.array.append(' ') # Retain the blank before '('.
-                self.prevName = val
-            elif name == "number":
-                self.array.append(val)
-            elif name in ("comment","string"):
-                # These may span lines, so duplicate the end-of-line logic.
-                lines = g.splitLines(val)
-                for line in lines:
-                    self.array.append(line)
-                    if line and line[-1] == '\n':
-                        self.lines.append(''.join(self.array))
-                        self.array = []
-            elif name == "errortoken":
-                self.array.append(val)
-                if val == '@':
-                    # Preserve whitespace after @.
-                    i = g.skip_ws(line,scol+1)
-                    ws = line[scol+1:i]
-                    if ws: self.array.append(ws)
-            elif name == "indent":
-                self.array.append(val)
-            elif name == "dedent":
-                pass
-            else:
-                print "unknown: %s" % (name)
+            f = self.dispatchDict.get(self.name,self.oops)
+            self.trace()
+            f()
         #@nonl
-        #@-node:ekr.20040711135244.10:putNormalToken
-        #@+node:ekr.20040711135244.11:putOperator
-        def putOperator (self,val):
+        #@+node:ekr.20041021102938:doEndMarker
+        def doEndMarker (self):
             
+            self.putArray()
+        #@nonl
+        #@-node:ekr.20041021102938:doEndMarker
+        #@+node:ekr.20041021102340.1:doErrorToken
+        def doErrorToken (self):
+            
+            self.array.append(self.val)
+        
+            if self.val == '@':
+                # Preserve whitespace after @.
+                i = g.skip_ws(self.s,self.scol+1)
+                ws = self.s[self.scol+1:i]
+                if ws:
+                    self.array.append(ws)
+        #@nonl
+        #@-node:ekr.20041021102340.1:doErrorToken
+        #@+node:ekr.20041021102340.2:doIndent & doDedent
+        def doDedent (self):
+            
+            pass
+            
+        def doIndent (self):
+            
+            self.array.append(self.val)
+        #@-node:ekr.20041021102340.2:doIndent & doDedent
+        #@+node:ekr.20041021102340:doMultiLine
+        def doMultiLine (self):
+            
+            # These may span lines, so duplicate the end-of-line logic.
+            lines = g.splitLines(self.val)
+            for line in lines:
+                self.array.append(line)
+                if line and line[-1] == '\n':
+                    self.putArray()
+                    
+            # Suppress start-of-line logic.
+            self.line = self.erow
+        #@nonl
+        #@-node:ekr.20041021102340:doMultiLine
+        #@+node:ekr.20041021101911.5:doName
+        def doName(self):
+        
+            self.array.append("%s " % self.val)
+            if self.prevName == "def": # A personal idiosyncracy.
+                self.array.append(' ') # Retain the blank before '('.
+            self.prevName = self.val
+        #@-node:ekr.20041021101911.5:doName
+        #@+node:ekr.20041021101911.3:doNewline
+        def doNewline (self):
+            
+            self.array.append('\n')
+            self.putArray()
+        #@nonl
+        #@-node:ekr.20041021101911.3:doNewline
+        #@+node:ekr.20041021101911.6:doNumber
+        def doNumber (self):
+        
+            self.array.append(self.val)
+        #@-node:ekr.20041021101911.6:doNumber
+        #@+node:ekr.20040711135244.11:doOp
+        def doOp (self):
+            
+            val = self.val
+        
             if val == '(':
                 self.parenLevel += 1
                 self.put(val)
@@ -3388,14 +3465,43 @@ class baseCommands:
             else:
                 self.put(val)
         #@nonl
-        #@-node:ekr.20040711135244.11:putOperator
+        #@-node:ekr.20040711135244.11:doOp
+        #@+node:ekr.20041021112219:doStartLine
+        def doStartLine (self):
+            
+            before = self.s[0:self.scol]
+            i = g.skip_ws(before,0)
+            self.ws = self.s[0:i]
+             
+            if self.ws:
+                self.array.append(self.ws)
+        #@nonl
+        #@-node:ekr.20041021112219:doStartLine
+        #@+node:ekr.20041021101911.1:oops
+        def oops(self):
+            
+            print "unknown PrettyPrinting code: %s" % (self.name)
+        #@nonl
+        #@-node:ekr.20041021101911.1:oops
+        #@+node:ekr.20041021101911.2:trace
+        def trace(self):
+            
+            if self.tracing:
+        
+                g.trace("%10s: %s" % (
+                    self.name,
+                    repr(g.toEncodedString(self.val,"utf-8"))
+                ))
+        #@nonl
+        #@-node:ekr.20041021101911.2:trace
+        #@-node:ekr.20040711135244.10:putNormalToken & allies
         #@+node:ekr.20040711135244.12:putToken
         def putToken (self,token5tuple):
             
-            if 1:
-                self.putNormalToken(token5tuple)
-            else:
+            if self.dumping:
                 self.dumpToken(token5tuple)
+            else:
+                self.putNormalToken(token5tuple)
         #@nonl
         #@-node:ekr.20040711135244.12:putToken
         #@+node:ekr.20040713070356:replaceBody
@@ -3419,17 +3525,6 @@ class baseCommands:
                 oldText=oldBody,newText=body,oldSel=sel, newSel=sel)
         #@nonl
         #@-node:ekr.20040713070356:replaceBody
-        #@+node:ekr.20040713091855:endUndo
-        def endUndo (self):
-            
-            c = self.c
-            
-            if self.changed:
-        
-                # Tag the end of the command.
-                c.undoer.setUndoParams("Pretty Print",self.p)
-        #@nonl
-        #@-node:ekr.20040713091855:endUndo
         #@-others
     #@nonl
     #@-node:ekr.20040711135244.5:class prettyPrinter
