@@ -400,9 +400,10 @@ class LeoFrame:
 		editBodyMenu.add_command(label="Unindent",
 			accelerator="Ctrl+[",command=self.OnDedent)
 			
-		editBodyMenu.add_separator()
-		editBodyMenu.add_command(label="Insert Graphic File...",
-			command=self.OnInsertGraphicFile)
+		if 0: # Not ready yet.
+			editBodyMenu.add_separator()
+			editBodyMenu.add_command(label="Insert Graphic File...",
+				command=self.OnInsertGraphicFile)
 		#@-body
 		#@-node:1::<< create the edit body submenu >>
 
@@ -623,8 +624,8 @@ class LeoFrame:
 		helpMenu.add_separator()
 		helpMenu.add_command(label="Online Tutorial (Start Here)...", command=self.OnLeoTutorial)
 		if sys.platform=="win32": # Windows
-			helpMenu.add_command(label="Tutorial...", command=self.OnLeoHelp)
-		helpMenu.add_command(label="Reference...", command=self.OnLeoDocumentation)
+			helpMenu.add_command(label="Tutorial (sbooks.chm)...", command=self.OnLeoHelp)
+		helpMenu.add_command(label="Reference (LeoDocs.leo)...", command=self.OnLeoDocumentation)
 
 		#@-body
 		#@-node:5::<< create the help menu >>
@@ -727,7 +728,7 @@ class LeoFrame:
 		# unless all event handlers returns "break".
 		for accel, command in controlBindings:
 			body.bind("<Control-" + accel + ">", command) # Necessary to override defaults in body.
-			top.bind("<Control-" + accel + ">", command)
+			top.bind ("<Control-" + accel + ">", command)
 	
 		altBindings = [
 			
@@ -804,7 +805,7 @@ class LeoFrame:
 		# unless all event handlers returns "break".
 		for accel, command in altBindings:
 			body.bind("<Alt-" + accel + ">", command) # Necessary to override defaults in body.
-			top.bind("<Alt-" + accel + ">", command)
+			top.bind ("<Alt-" + accel + ">", command)
 			
 		if 0: # A useful trace
 			print_bindings("top",self.top)
@@ -2591,39 +2592,72 @@ class LeoFrame:
 			d = leoDialog.leoDialog()
 			answer = d.askYesNo(
 				"Download Tutorial?",
-				"Download tutorial (sbooks.chm) from SourceForge?\n\n" +
-				"Please download this file to the directory containing leo.py")
+				"Download tutorial (sbooks.chm) from SourceForge?")
 			if answer == "yes":
-				url = "http://prdownloads.sourceforge.net/leo/sbooks.chm?download"
 				try:
-					import webbrowser
-					os.chdir(app().loadDir)
-					webbrowser.open(url)
+					if 0: # Download directly.  (showProgressBar needs a lot of work)
+						url = "http://umn.dl.sourceforge.net/sourceforge/leo/sbooks.chm"
+						import urllib
+						self.scale = None
+						urllib.urlretrieve(url,f,self.showProgressBar)
+						if self.scale:
+							self.scale.destroy()
+							self.scale = None
+					else:
+						url = "http://prdownloads.sourceforge.net/leo/sbooks.chm?download"
+						import webbrowser
+						os.chdir(app().loadDir)
+						webbrowser.open(url)
 				except:
 					es("exception dowloading sbooks.chm")
 					traceback.print_exc()
 	
 		return "break" # inhibit further command processing
 	#@-body
+	#@+node:1::showProgressBar
+	#@+body
+	def showProgressBar (self,count,size,total):
+	
+		# trace("count,size,total:" + `count` + "," + `size` + "," + `total`)
+		if self.scale == None:
+			
+			#@<< create the scale widget >>
+			#@+node:1::<< create the scale widget >>
+			#@+body
+			Tk = Tkinter
+			top = Tk.Toplevel()
+			top.title("Download progress")
+			self.scale = scale = Tk.Scale(top,state="normal",orient="horizontal",from_=0,to=total)
+			scale.pack()
+			top.lift()
+			#@-body
+			#@-node:1::<< create the scale widget >>
+
+		self.scale.set(count*size)
+		self.scale.update_idletasks()
+	#@-body
+	#@-node:1::showProgressBar
 	#@-node:4::OnLeoHelp
-	#@+node:5::OnLeoTutorial
+	#@+node:5:C=45:OnLeoTutorial (version number)
 	#@+body
 	def OnLeoTutorial (self,event=None):
 		
 		import webbrowser
 		
+		version = "?vernum=3.5"
 		url = "http://www.evisa.com/e/sbooks/leo/sbframetoc_ie.htm"
+	
 		try:
-			webbrowser.open(url)
+			webbrowser.open(url + version)
 		except:
 			es("not found: " + url)
 		
 		return "break" # inhibit further command processing
 	#@-body
-	#@-node:5::OnLeoTutorial
+	#@-node:5:C=45:OnLeoTutorial (version number)
 	#@-node:5::Help Menu
 	#@-node:14:C=16:Menu Command Handlers
-	#@+node:15:C=45:Splitter stuff
+	#@+node:15:C=46:Splitter stuff
 	#@+body
 	#@+at
 	#  The key invariants used throughout this code:
@@ -2646,7 +2680,7 @@ class LeoFrame:
 			bar.bind("<B1-Motion>", self.onDragSecondarySplitBar)
 	#@-body
 	#@-node:1::bindBar
-	#@+node:2:C=46:configureBar
+	#@+node:2:C=47:configureBar
 	#@+body
 	def configureBar (self, bar, verticalFlag):
 		
@@ -2677,8 +2711,8 @@ class LeoFrame:
 				# Panes arranged horizontally; vertical splitter bar
 				bar.configure(width=7,cursor="sb_h_double_arrow")
 	#@-body
-	#@-node:2:C=46:configureBar
-	#@+node:3:C=47:createBothLeoSplitters (use config.body_font,etc)
+	#@-node:2:C=47:configureBar
+	#@+node:3:C=48:createBothLeoSplitters (use config.body_font,etc)
 	#@+body
 	def createBothLeoSplitters (self,top):
 	
@@ -2796,7 +2830,7 @@ class LeoFrame:
 		# Give the log and body panes the proper borders.
 		self.reconfigurePanes()
 	#@-body
-	#@-node:3:C=47:createBothLeoSplitters (use config.body_font,etc)
+	#@-node:3:C=48:createBothLeoSplitters (use config.body_font,etc)
 	#@+node:4::createLeoSplitter (use config params)
 	#@+body
 	# Create a splitter window and panes into which the caller packs widgets.
@@ -2934,7 +2968,7 @@ class LeoFrame:
 		self.log.configure(bd=border)
 	#@-body
 	#@-node:9::reconfigurePanes (use config bar_width)
-	#@-node:15:C=45:Splitter stuff
+	#@-node:15:C=46:Splitter stuff
 	#@-others
 #@-body
 #@-node:0::@file leoFrame.py

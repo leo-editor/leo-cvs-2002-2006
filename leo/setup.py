@@ -36,6 +36,10 @@ for f in files:
 modules.sort()
 # print "modules:", `modules`
 
+#@<< setup info for setup.py >>
+#@+node:1:C=1:<< setup info for setup.py >> (version number)
+#@+body
+
 setup( name="leo",
 	version="3.5",
 	author="Edward K. Ream",
@@ -47,13 +51,15 @@ setup( name="leo",
 	platforms=["Windows, Linux, Macintosh"],
 	long_description =
 """Leo is an outline-oriented editor written in 100% pure Python.
-Leo works on any platform that supports Python 2.x and the Tk toolkit.
+Leo works on any platform that supports Python 2.2 and the Tk toolkit.
 This version of Leo was developed with Python 2.2 and Tk 8.3.2.
 You may download Python from http://python.org/ and
 tcl/Tk from http://tcl.activestate.com/software/tcltk/
 Leo features a multi-window outlining editor, Python colorizing,
 powerful outline commands and many other things, including
 Unlimited Undo/Redo and an integrated Python shell(IDLE) window.""")
+#@-body
+#@-node:1:C=1:<< setup info for setup.py >> (version number)
 #@-body
 #@-node:0::@file setup.py
 #@-leo

@@ -854,10 +854,9 @@ class leoTree:
 	# The idle_handler sees if any change has, in fact, been made to the body text, and sets the changed and dirty bits only if 
 	# so.  This is the clean and safe way.
 	# 
-	# 2/19/02: We must distinguish between commands like "Find, Then Change", which must call onBodyChanged, and commands like 
-	# "Cut" and "Paste" that must call onBodyWillChange.  The former commands have already changed the body text, and that change 
-	# must be captured immediately.  The latter commands have not changed the body text, and that change may only be captured at 
-	# idle time.
+	# 2/19/02: We must distinguish between commands like "Find, Then Change", that call onBodyChanged, and commands like "Cut" and 
+	# "Paste" that call onBodyWillChange.  The former commands have already changed the body text, and that change must be 
+	# captured immediately.  The latter commands have not changed the body text, and that change may only be captured at idle time.
 
 	#@-at
 	#@@c
