@@ -2297,7 +2297,7 @@ class atFile:
 			if valid:
 				try:
 					self.outputFileName = self.targetFileName + ".tmp"
-					self.outputFile = open(self.outputFileName, 'w')
+					self.outputFile = open(self.outputFileName, 'wb') # 9/18/02: Output '\n' as '\n' always.
 					valid = self.outputFile != None
 					if not valid:
 						self.writeError("can not open " + self.outputFileName)
@@ -2576,10 +2576,10 @@ class atFile:
 
 
 
-#@@last # test1
-#@@last # test2
+#@@last
+#@@last
 #@-body
 #@-node:0::@file leoAtFile.py
 #@-leo
-# test1
-# test2
+
+

@@ -1582,7 +1582,7 @@ class fileCommands:
 			#@-node:1:C=19:<< create backup file >>
 
 			self.mFileName = fileName
-			self.outputFile = open(fileName, 'w')
+			self.outputFile = open(fileName, 'wb') # 9/18/02
 			if not self.outputFile:
 				es("can not open " + fileName)
 				
