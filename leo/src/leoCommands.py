@@ -1237,7 +1237,6 @@ class baseCommands:
                     if fileName: break
                 
             if fileName:
-                # g.trace(fileName,p)
                 root = p.copy()
             else:
                 g.es("Go to line number: ancestor must be @file node", color="blue")
@@ -1261,7 +1260,7 @@ class baseCommands:
             except:
                 g.es("not found: " + fileName)
                 return
-                
+            #@nonl
             #@-node:ekr.20031218072017.2866:<< read the file into lines >>
             #@nl
         if n is None:
@@ -1283,6 +1282,7 @@ class baseCommands:
             #@+node:ekr.20031218072017.2868:<< count outline lines, setting p,n2,found >> (@file-nosent only)
             p = lastv = root
             prev = 0 ; found = False
+            
             for p in p.self_and_subtree_iter():
                 lastv = p.copy()
                 s = p.bodyString()

@@ -36947,7 +36947,6 @@ if not fileName:
         if fileName: break
     
 if fileName:
-    # g.trace(fileName,p)
     root = p.copy()
 else:
     g.es("Go to line number: ancestor must be @file node", color="blue")
@@ -36968,7 +36967,7 @@ try:
 except:
     g.es("not found: " + fileName)
     return
-    
+#@nonl
 #@-node:ekr.20031218072017.2866:<< read the file into lines >>
 #@+node:ekr.20031218072017.2867:<< get n, the line number, from a dialog >>
 n = g.app.gui.runAskOkCancelNumberDialog("Enter Line Number","Line number:")
@@ -36979,6 +36978,7 @@ if n == -1:
 #@+node:ekr.20031218072017.2868:<< count outline lines, setting p,n2,found >> (@file-nosent only)
 p = lastv = root
 prev = 0 ; found = False
+
 for p in p.self_and_subtree_iter():
     lastv = p.copy()
     s = p.bodyString()
@@ -39351,26 +39351,17 @@ if g.app.config.redirect_execute_script_output_to_log_pane:
 def es_exception (full=True,c=None,color="red"):
     
     typ,val,tb = sys.exc_info()
-   
-    n = None ; lines = []
 
     if full:
         lines = traceback.format_exception(typ,val,tb)
     else:
-        # Kludgy, but it seems to work.
-        errList = traceback.format_exception(typ,val,tb)
-        # Strip cruft lines.
-        s1 = "Traceback (most recent call last):"
-        s2 = "exec script in {}"
-        lines = []
-        for line in errList[-4:]:
-            if n is None:
-                tag = 'File "<string>", line'
-                i = line.find(tag)
-                if i > -1:
-                    << compute n from the line >>
-            if not g.match(line,0,s1) and line.find(s2) == -1:
-                lines.append(line)
+        lines = traceback.format_exception_only(typ,val)
+        
+    if 1:
+        n = g.getLastTracebackLineNumber()
+    else:
+        # old, kludgy code...
+        << look for lines containing a specific message >>
 
     for line in lines:
         g.es_error(line,color=color)
@@ -39378,6 +39369,25 @@ def es_exception (full=True,c=None,color="red"):
             print line
 
     return n
+#@nonl
+#@+node:ekr.20040731211839:<< look for lines containing a specific message >>
+errList = traceback.format_exception(typ,val,tb)
+
+print ; print "es_exception (format_exception)"
+for item in errList:
+    print item
+# Strip cruft lines.
+s1 = "Traceback (most recent call last):"
+s2 = "exec script in {}"
+lines = []
+for line in errList[-4:]:
+    if n is None:
+        tag = 'File "<string>", line'
+        i = line.find(tag)
+        if i > -1:
+            << compute n from the line >>
+    if not g.match(line,0,s1) and line.find(s2) == -1:
+        lines.append(line)
 #@nonl
 #@+node:EKR.20040612223431:<< compute n from the line >>
 i += len(tag)
@@ -39389,6 +39399,31 @@ try: n = int(n)
 except (TypeError,ValueError): n = None
 #@nonl
 #@-node:EKR.20040612223431:<< compute n from the line >>
+#@-node:ekr.20040731211839:<< look for lines containing a specific message >>
+#@+node:ekr.20040731204831:getLastTracebackLineNumber
+def getLastTracebackLineNumber():
+    
+    typ,val,tb = sys.exc_info()
+    
+    if typ is exceptions.SyntaxError:
+        # Syntax errors are a special case.
+        # extract_tb does _not_ return the proper line number!
+        # This code similar to the code in format_exception_only(!!)
+        try:
+            msg,(filename, lineno, offset, line) = val
+            return lineno
+        except:
+            g.trace("bad line number")
+            return 0
+
+    else:
+        # The proper line number is the second element in the last tuple.
+        data = traceback.extract_tb(tb)
+        item = data[-1]
+        n = item[1]
+        return n
+#@nonl
+#@-node:ekr.20040731204831:getLastTracebackLineNumber
 #@-node:ekr.20031218072017.3112:es_exception
 #@+node:ekr.20031218072017.2864:goToLineNumber & allies
 def goToLineNumber (self,root=None,lines=None,n=None):
@@ -39435,7 +39470,6 @@ if not fileName:
         if fileName: break
     
 if fileName:
-    # g.trace(fileName,p)
     root = p.copy()
 else:
     g.es("Go to line number: ancestor must be @file node", color="blue")
@@ -39456,7 +39490,7 @@ try:
 except:
     g.es("not found: " + fileName)
     return
-    
+#@nonl
 #@-node:ekr.20031218072017.2866:<< read the file into lines >>
 #@+node:ekr.20031218072017.2867:<< get n, the line number, from a dialog >>
 n = g.app.gui.runAskOkCancelNumberDialog("Enter Line Number","Line number:")
@@ -39467,6 +39501,7 @@ if n == -1:
 #@+node:ekr.20031218072017.2868:<< count outline lines, setting p,n2,found >> (@file-nosent only)
 p = lastv = root
 prev = 0 ; found = False
+
 for p in p.self_and_subtree_iter():
     lastv = p.copy()
     s = p.bodyString()
@@ -49272,9 +49307,15 @@ def closeLeoWindow (self,frame):
     Return False if the user veto's the close."""
     
     c = frame.c
+    
+    if c.promptingForClose:
+        # There is already a dialog open asking what to do.
+        return False
 
     if c.changed:
+        c.promptingForClose = True
         veto = frame.promptForSave()
+        c.promptingForClose = False
         if veto: return False
 
     g.app.setLog(None) # no log until we reactive a window.
@@ -52130,26 +52171,17 @@ def scanForAtIgnore(c,p):
 def es_exception (full=True,c=None,color="red"):
     
     typ,val,tb = sys.exc_info()
-   
-    n = None ; lines = []
 
     if full:
         lines = traceback.format_exception(typ,val,tb)
     else:
-        # Kludgy, but it seems to work.
-        errList = traceback.format_exception(typ,val,tb)
-        # Strip cruft lines.
-        s1 = "Traceback (most recent call last):"
-        s2 = "exec script in {}"
-        lines = []
-        for line in errList[-4:]:
-            if n is None:
-                tag = 'File "<string>", line'
-                i = line.find(tag)
-                if i > -1:
-                    << compute n from the line >>
-            if not g.match(line,0,s1) and line.find(s2) == -1:
-                lines.append(line)
+        lines = traceback.format_exception_only(typ,val)
+        
+    if 1:
+        n = g.getLastTracebackLineNumber()
+    else:
+        # old, kludgy code...
+        << look for lines containing a specific message >>
 
     for line in lines:
         g.es_error(line,color=color)
@@ -52157,6 +52189,25 @@ def es_exception (full=True,c=None,color="red"):
             print line
 
     return n
+#@nonl
+#@+node:ekr.20040731211839:<< look for lines containing a specific message >>
+errList = traceback.format_exception(typ,val,tb)
+
+print ; print "es_exception (format_exception)"
+for item in errList:
+    print item
+# Strip cruft lines.
+s1 = "Traceback (most recent call last):"
+s2 = "exec script in {}"
+lines = []
+for line in errList[-4:]:
+    if n is None:
+        tag = 'File "<string>", line'
+        i = line.find(tag)
+        if i > -1:
+            << compute n from the line >>
+    if not g.match(line,0,s1) and line.find(s2) == -1:
+        lines.append(line)
 #@nonl
 #@+node:EKR.20040612223431:<< compute n from the line >>
 i += len(tag)
@@ -52168,6 +52219,31 @@ try: n = int(n)
 except (TypeError,ValueError): n = None
 #@nonl
 #@-node:EKR.20040612223431:<< compute n from the line >>
+#@-node:ekr.20040731211839:<< look for lines containing a specific message >>
+#@+node:ekr.20040731204831:getLastTracebackLineNumber
+def getLastTracebackLineNumber():
+    
+    typ,val,tb = sys.exc_info()
+    
+    if typ is exceptions.SyntaxError:
+        # Syntax errors are a special case.
+        # extract_tb does _not_ return the proper line number!
+        # This code similar to the code in format_exception_only(!!)
+        try:
+            msg,(filename, lineno, offset, line) = val
+            return lineno
+        except:
+            g.trace("bad line number")
+            return 0
+
+    else:
+        # The proper line number is the second element in the last tuple.
+        data = traceback.extract_tb(tb)
+        item = data[-1]
+        n = item[1]
+        return n
+#@nonl
+#@-node:ekr.20040731204831:getLastTracebackLineNumber
 #@-node:ekr.20031218072017.3112:es_exception
 #@-node:ekr.20040712144354:in leoGlobals...
 #@+node:ekr.20040712100041:Write stuff...
@@ -58154,12 +58230,17 @@ def getFindPanelSettings (self):
             elif self.matchTag("wrap="): c.wrap_flag = self.getDqBool()
             elif self.matchTag(">"): break
             else: self.getUnknownTag() # New in 4.1: ignore all other tags.
-        #
-        if not self.getOpenTag("<find_string"): # 7/30/04: Allow <find_string/>
+
+        # # 7/31/04: Allow only <find_string> or <find_string/>
+        if self.getOpenTag("<find_string>"): 
+            c.find_text = ""
+        else:
             c.find_text = self.getEscapedString()
             self.getTag("</find_string>")
-        #
-        if not self.getOpenTag("<change_string"): # 7/30/04: Allow <change_string/>
+        # 7/31/04: Allow only <change_string> or <change_string/>
+        if self.getOpenTag("<change_string>"): 
+            c.change_text = ""
+        else:
             c.change_text = self.getEscapedString()
             self.getTag("</change_string>")
         #
@@ -58473,6 +58554,425 @@ g.es(s,color="red")
 #@-node:ekr.20040314044652:<< give test failed message >>
 #@-node:ekr.20031218072017.2072:c.checkOutline
 #@-node:ekr.20040731053740.1:Check outline now checks that p.edit_text.get matches p.headString()
+#@+node:ekr.20040731055419:(Fixed problems with confirm save box)
+#@+node:ekr.20040731070513:What I did
+@nocolor
+
+- Added a call to self.top.lift() in base run() method.
+
+- Disable additional prompting dialogs if one is already open.
+#@nonl
+#@-node:ekr.20040731070513:What I did
+#@+node:ekr.20040731070513.1:Report
+@killcolor
+
+http://sourceforge.net/forum/message.php?msg_id=2683931
+By: billp9619
+
+Using Win XP:
+
+On closing an unsaved file with changes , a Confirm" message box pops up. The
+Leo main outline is locked but this Confirm box could be underneath the
+Outline...acting like an independent window(if outline receives focus again
+by clicking on it, etc.) Normally applications force these type of prompts to
+stay on top of the related appl. window.
+
+The above can can be confusing.  But it can be worse.
+
+If I right click on the Leo icon on the task bar and select "Close" (say I am
+confused now), what happens is it pops up another Confirm box.
+
+After closing ...the extra Confirm boxes are left behind with no associated
+Leo outline.
+
+Leo Log Window...
+Leo 4.2 beta 2, build  1.128 , July 5, 2004
+Python 2.3.4, Tk 8.4.3, win32
+#@nonl
+#@-node:ekr.20040731070513.1:Report
+#@+node:ekr.20031218072017.3859: class leoTkinterDialog
+class leoTkinterDialog:
+    """The base class for all Leo Tkinter dialogs"""
+    @others
+#@nonl
+#@+node:ekr.20031218072017.3860:__init__ (leoDialog)
+def __init__(self,title="",resizeable=True,canClose=True):
+    
+    """Constructor for the leoTkinterDialog class."""
+    
+    self.answer = None # Value returned from run()
+    self.resizeable = resizeable
+    self.title = title
+    self.modal = None
+    
+    self.buttonsFrame = None # Frame to hold typical dialog buttons.
+    self.defaultButtonCommand = None  # Command to call when user closes the window by clicking the close box.
+    self.frame = None # The outermost frame.
+    self.root = None # g.app.root
+    self.top = None # The toplevel Tk widget.
+    self.focus_widget = None # The widget to get the first focus.
+    self.canClose = canClose
+#@nonl
+#@-node:ekr.20031218072017.3860:__init__ (leoDialog)
+#@+node:ekr.20031218072017.3861:cancelButton, noButton, okButton, yesButton
+def cancelButton(self):
+    
+    """Do default click action in cancel button."""
+    
+    self.answer="cancel"
+    self.top.destroy()
+    
+def noButton(self):
+    
+    """Do default click action in no button."""
+    
+    self.answer="no"
+    self.top.destroy()
+    
+def okButton(self):
+    
+    """Do default click action in ok button."""
+    
+    self.answer="ok"
+    self.top.destroy()
+
+def yesButton(self):
+    
+    """Do default click action in yes button."""
+
+    self.answer="yes"
+    self.top.destroy()
+#@nonl
+#@-node:ekr.20031218072017.3861:cancelButton, noButton, okButton, yesButton
+#@+node:ekr.20031218072017.3862:center
+def center(self):
+    
+    """Center any leoTkinterDialog."""
+    
+    g.app.gui.center_dialog(self.top)
+#@-node:ekr.20031218072017.3862:center
+#@+node:ekr.20031218072017.3863:createButtons
+def createButtons (self,buttons):
+    
+    """Create a row of buttons.
+    
+    buttons is a list of dictionaries containing the properties of each button."""
+    
+    assert(self.frame)
+    self.buttonsFrame = f = Tk.Frame(self.top)
+    f.pack(side="top",padx=30)
+
+    # Buttons is a list of dictionaries, with an empty dictionary at the end if there is only one entry.
+    buttonList = []
+    for d in buttons:
+        text = d.get("text","<missing button name>")
+        isDefault = d.get("default",False)
+        underline = d.get("underline",0)
+        command = d.get("command",None)
+        bd = g.choose(isDefault,4,2)
+
+        b = Tk.Button(f,width=6,text=text,bd=bd,underline=underline,command=command)
+        b.pack(side="left",padx=5,pady=10)
+        buttonList.append(b)
+        
+        if isDefault and command:
+            self.defaultButtonCommand = command
+        
+    return buttonList
+#@nonl
+#@-node:ekr.20031218072017.3863:createButtons
+#@+node:ekr.20031218072017.3864:createMessageFrame
+def createMessageFrame (self,message):
+    
+    """Create a frame containing a Tk.Label widget."""
+
+    label = Tk.Label(self.frame,text=message)
+    label.pack(pady=10)
+#@-node:ekr.20031218072017.3864:createMessageFrame
+#@+node:ekr.20031218072017.3865:createTopFrame
+def createTopFrame(self):
+    
+    """Create the Tk.Toplevel widget for a leoTkinterDialog."""
+    
+    self.root = g.app.root
+
+    self.top = Tk.Toplevel(self.root)
+    self.top.title(self.title)
+
+    if not self.resizeable:
+        self.top.resizable(0,0) # neither height or width is resizable.
+
+    self.frame = Tk.Frame(self.top)
+    self.frame.pack(side="top",expand=1,fill="both")
+    
+    if not self.canClose:
+        self.top.protocol("WM_DELETE_WINDOW", self.onClose)
+    
+    # Do this at idle time.
+    def callback(top=self.top):
+        g.app.gui.attachLeoIcon(top)
+    
+    self.top.after_idle(callback)
+#@nonl
+#@-node:ekr.20031218072017.3865:createTopFrame
+#@+node:ekr.20040731065422:onClose
+def onClose (self):
+    
+    """Disable all attempts to close this frame with the close box."""
+    
+    pass
+#@nonl
+#@-node:ekr.20040731065422:onClose
+#@+node:ekr.20031218072017.3866:run
+def run (self,modal):
+    
+    """Run a leoTkinterDialog."""
+
+    self.modal = modal
+    
+    self.center() # Do this after all packing complete.
+    self.top.lift() # 7/31/04
+
+    if self.modal:
+        self.top.grab_set() # Make the dialog a modal dialog.
+        if self.focus_widget == None:
+            self.focus_widget = self.top
+        self.focus_widget.focus_set() # Get all keystrokes.	
+        self.root.wait_window(self.top)
+        return self.answer
+    else:
+        self.root.wait_window(self.top)
+        return None
+#@nonl
+#@-node:ekr.20031218072017.3866:run
+#@-node:ekr.20031218072017.3859: class leoTkinterDialog
+#@+node:ekr.20031218072017.2609:app.closeLeoWindow
+def closeLeoWindow (self,frame):
+    
+    """Attempt to close a Leo window.
+    
+    Return False if the user veto's the close."""
+    
+    c = frame.c
+    
+    if c.promptingForClose:
+        # There is already a dialog open asking what to do.
+        return False
+
+    if c.changed:
+        c.promptingForClose = True
+        veto = frame.promptForSave()
+        c.promptingForClose = False
+        if veto: return False
+
+    g.app.setLog(None) # no log until we reactive a window.
+    
+    g.doHook("close-frame",c=c) # This may remove frame from the window list.
+    
+    if frame in g.app.windowList:
+        g.app.destroyWindow(frame)
+    
+    if g.app.windowList:
+        # Pick a window to activate so we can set the log.
+        w = g.app.windowList[0]
+        w.deiconify()
+        w.lift()
+        g.app.setLog(w.log)
+    else:
+        g.app.finishQuit()
+
+    return True # The window has been closed.
+#@nonl
+#@-node:ekr.20031218072017.2609:app.closeLeoWindow
+#@-node:ekr.20040731055419:(Fixed problems with confirm save box)
+#@+node:ekr.20040731084117:(Fixed a recent change bug: empty change text was converted to <)
+#@+node:EKR.20040526204706.7:getOpenTag
+def getOpenTag (self,tag):
+    
+    """
+    Look ahead for collapsed tag: tag may or may not end in ">"
+    Skips tag and /> if found, otherwise does not alter index.
+    Returns True if the closing part was found.
+    Throws BadLeoFile if the tag does not exist.
+    """
+
+    if tag[-1] == ">":
+        # Only the tag itself or a collapsed tag are valid.
+        if self.matchTag(tag):
+            return False # Not a collapsed tag.
+        elif self.matchTag(tag[:-1]):
+            # It must be a collapsed tag.
+            self.skipWs()
+            if self.matchTag("/>"):
+                return True
+        print "getOpenTag(", tag, ") failed:"
+        raise BadLeoFile("expecting" + tag)
+    else:
+        # The tag need not be followed by "/>"
+        if self.matchTag(tag):
+            old_index = self.fileIndex
+            self.skipWs()
+            if self.matchTag("/>"):
+                return True
+            else:
+                self.fileIndex = old_index
+                return False
+        else:
+            print "getOpenTag(", tag, ") failed:"
+            raise BadLeoFile("expecting" + tag)
+#@nonl
+#@-node:EKR.20040526204706.7:getOpenTag
+#@+node:ekr.20031218072017.2064:getFindPanelSettings
+def getFindPanelSettings (self):
+
+    c = self.c ; config = g.app.config ; findFrame = g.app.findFrame
+    << Set defaults of all flags >>
+    if not self.getOpenTag("<find_panel_settings"):
+        while 1:
+            if   self.matchTag("batch="): c.batch_flag = self.getDqBool()
+            elif self.matchTag("ignore_case="): c.ignore_case_flag = self.getDqBool()
+            elif self.matchTag("mark_changes="): c.mark_changes_flag = self.getDqBool()
+            elif self.matchTag("mark_finds="): c.mark_finds_flag = self.getDqBool()
+            elif self.matchTag("node_only="): c.node_only_flag = self.getDqBool()
+            elif self.matchTag("pattern_match="): c.pattern_match_flag = self.getDqBool()
+            elif self.matchTag("reverse="): c.reverse_flag = self.getDqBool()
+            elif self.matchTag("script_change="): c.script_change_flag = self.getDqBool() # 11/05/03
+            elif self.matchTag("script_search="): c.script_search_flag = self.getDqBool() # 11/05/03
+            elif self.matchTag("search_headline="): c.search_headline_flag = self.getDqBool()
+            elif self.matchTag("search_body="): c.search_body_flag = self.getDqBool()
+            elif self.matchTag("selection_only="): c.selection_only_flag = self.getDqBool() # 11/9/03
+            elif self.matchTag("suboutline_only="): c.suboutline_only_flag = self.getDqBool()
+            elif self.matchTag("whole_word="): c.whole_word_flag = self.getDqBool()
+            elif self.matchTag("wrap="): c.wrap_flag = self.getDqBool()
+            elif self.matchTag(">"): break
+            else: self.getUnknownTag() # New in 4.1: ignore all other tags.
+
+        # # 7/31/04: Allow only <find_string> or <find_string/>
+        if self.getOpenTag("<find_string>"): 
+            c.find_text = ""
+        else:
+            c.find_text = self.getEscapedString()
+            self.getTag("</find_string>")
+        # 7/31/04: Allow only <change_string> or <change_string/>
+        if self.getOpenTag("<change_string>"): 
+            c.change_text = ""
+        else:
+            c.change_text = self.getEscapedString()
+            self.getTag("</change_string>")
+        #
+        self.getTag("</find_panel_settings>")
+    
+    # Override .leo file's preferences if settings are in leoConfig.txt.
+    config.setCommandsFindIvars(c)
+    # Update the settings immediately.
+    if g.app.gui.guiName() == "tkinter":
+        g.app.findFrame.init(c)
+#@nonl
+#@+node:ekr.20031218072017.2065:<< Set defaults of all flags >>
+if g.app.gui.guiName() == "tkinter":
+
+    for var in findFrame.intKeys:
+        attr = "%s_flag" % (var)
+        setattr(c,attr,False)
+        # g.trace(attr)
+#@-node:ekr.20031218072017.2065:<< Set defaults of all flags >>
+#@-node:ekr.20031218072017.2064:getFindPanelSettings
+#@-node:ekr.20040731084117:(Fixed a recent change bug: empty change text was converted to <)
+#@+node:ekr.20040630214448.1:(Improved how es_exception gets line number of errors)
+#@+node:ekr.20040731082738:Notes
+@killcolor
+
+This was tricky to get correct. The aha is that we must compute line numbers for
+SyntaxErrors differently from other errors.
+
+The traceback methods are very strange in this regard. For SyntaxError's,
+format_exception_only computes the line number. For all other errors, extract_tb
+gives the proper line number. It took a _long_ time to figure this out...
+
+In the end, the calculations in getLastTracebackLineNumber are fairly
+straightforward. In particular, it unpacks the line number for SyntaxErrors
+using code lifted directly from format_exception_only.
+#@nonl
+#@-node:ekr.20040731082738:Notes
+#@+node:ekr.20031218072017.3112:es_exception
+def es_exception (full=True,c=None,color="red"):
+    
+    typ,val,tb = sys.exc_info()
+
+    if full:
+        lines = traceback.format_exception(typ,val,tb)
+    else:
+        lines = traceback.format_exception_only(typ,val)
+        
+    if 1:
+        n = g.getLastTracebackLineNumber()
+    else:
+        # old, kludgy code...
+        << look for lines containing a specific message >>
+
+    for line in lines:
+        g.es_error(line,color=color)
+        if not g.stdErrIsRedirected():
+            print line
+
+    return n
+#@nonl
+#@+node:ekr.20040731211839:<< look for lines containing a specific message >>
+errList = traceback.format_exception(typ,val,tb)
+
+print ; print "es_exception (format_exception)"
+for item in errList:
+    print item
+# Strip cruft lines.
+s1 = "Traceback (most recent call last):"
+s2 = "exec script in {}"
+lines = []
+for line in errList[-4:]:
+    if n is None:
+        tag = 'File "<string>", line'
+        i = line.find(tag)
+        if i > -1:
+            << compute n from the line >>
+    if not g.match(line,0,s1) and line.find(s2) == -1:
+        lines.append(line)
+#@nonl
+#@+node:EKR.20040612223431:<< compute n from the line >>
+i += len(tag)
+j = line.find(',',i)
+if j > i: n = line[i:j]
+else:     n = line[i:].strip()
+# g.trace(n)
+try: n = int(n)
+except (TypeError,ValueError): n = None
+#@nonl
+#@-node:EKR.20040612223431:<< compute n from the line >>
+#@-node:ekr.20040731211839:<< look for lines containing a specific message >>
+#@+node:ekr.20040731204831:getLastTracebackLineNumber
+def getLastTracebackLineNumber():
+    
+    typ,val,tb = sys.exc_info()
+    
+    if typ is exceptions.SyntaxError:
+        # Syntax errors are a special case.
+        # extract_tb does _not_ return the proper line number!
+        # This code similar to the code in format_exception_only(!!)
+        try:
+            msg,(filename, lineno, offset, line) = val
+            return lineno
+        except:
+            g.trace("bad line number")
+            return 0
+
+    else:
+        # The proper line number is the second element in the last tuple.
+        data = traceback.extract_tb(tb)
+        item = data[-1]
+        n = item[1]
+        return n
+#@nonl
+#@-node:ekr.20040731204831:getLastTracebackLineNumber
+#@-node:ekr.20031218072017.3112:es_exception
+#@-node:ekr.20040630214448.1:(Improved how es_exception gets line number of errors)
 #@-node:ekr.20040706080316:Projects: 4.2 b3
 #@-node:ekr.20040107064101.1:4.2 Projects
 #@-all

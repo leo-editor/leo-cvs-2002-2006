@@ -4,9 +4,15 @@
 
 #@+all
 #@+node:EKR.20040430163619:To do: 4.2
-#@+node:ekr.20040716055314:Bugs 3
-#@+node:ekr.20040630214448.1:(Use inspect module to improve Go To Line Number)
-#@+node:ekr.20040706115641:Report 2
+#@+node:ekr.20040801054717:(Improve Go To Line Number command
+#@+node:ekr.20040731212831:To do
+@killcolor
+
+- Ignore all @all nodes.
+
+- Better error messages when command fails.
+#@nonl
+#@+node:ekr.20040706115641:Request for better error reporting
 @killcolor
 
 http://sourceforge.net/forum/message.php?msg_id=2643870
@@ -16,43 +22,15 @@ bad @+leo sentinel
 invalid derived file: C:/HTML/www/new.htm
 
 can the error msg be something like:
+
 currently, goto line number only works in an @file @thin or @language python
 script node.
 
 or better,  grey it out in the menu.
 or even, that line number does not compute.
 #@nonl
-#@-node:ekr.20040706115641:Report 2
-#@+node:EKR.20040618092132:Report 1
-@nocolor
-http://sourceforge.net/forum/message.php?msg_id=2618391
-
-heres a few more ways to get error traceback.
-
-@color
-import sys, traceback
-print traceback.format_exception(*sys.exc_info())
-@nocolor
-the list returned is all over the place for where the line number is.
-might be last list entry, might be next to last.
-
-@color
-import inspect
-print inspect.trace()
-
-import sys, cgitb
-print '\n\ncgitb\n',cgitb.text(sys.exc_info(),1)
-
-@nocolor
-sf python bugtracker [ 954364 ] 2.3 
-inspect.getframeinfo wrong tb line numbers
-
-python aspn cookbook 52215 Get_more_information_from_tracebacks
-http://aspn.activestate.com/ASPN/Cookbook/Python/Recipe/52215
-#@nonl
-#@-node:EKR.20040618092132:Report 1
-#@+node:ekr.20040706115641.1:@url http://aspn.activestate.com/ASPN/Cookbook/Python/Recipe/52215
-#@-node:ekr.20040706115641.1:@url http://aspn.activestate.com/ASPN/Cookbook/Python/Recipe/52215
+#@-node:ekr.20040706115641:Request for better error reporting
+#@-node:ekr.20040731212831:To do
 #@+node:ekr.20031218072017.2864:goToLineNumber & allies
 def goToLineNumber (self,root=None,lines=None,n=None):
 
@@ -98,7 +76,6 @@ if not fileName:
         if fileName: break
     
 if fileName:
-    # g.trace(fileName,p)
     root = p.copy()
 else:
     g.es("Go to line number: ancestor must be @file node", color="blue")
@@ -119,7 +96,7 @@ try:
 except:
     g.es("not found: " + fileName)
     return
-    
+#@nonl
 #@-node:ekr.20031218072017.2866:<< read the file into lines >>
 #@+node:ekr.20031218072017.2867:<< get n, the line number, from a dialog >>
 n = g.app.gui.runAskOkCancelNumberDialog("Enter Line Number","Line number:")
@@ -130,6 +107,7 @@ if n == -1:
 #@+node:ekr.20031218072017.2868:<< count outline lines, setting p,n2,found >> (@file-nosent only)
 p = lastv = root
 prev = 0 ; found = False
+
 for p in p.self_and_subtree_iter():
     lastv = p.copy()
     s = p.bodyString()
@@ -424,162 +402,11 @@ def skipToMatchingNodeSentinel (self,lines,n,delim):
 #@nonl
 #@-node:ekr.20031218072017.2882:skipToMatchingNodeSentinel
 #@-node:ekr.20031218072017.2864:goToLineNumber & allies
-#@+node:EKR.20040612232221:goToScriptLineNumber
-def goToScriptLineNumber (self,root,script,n):
-
-    c = self
-    
-    lines = g.splitLines(script)
-    c.goToLineNumber(root=root,lines=lines,n=n)
-#@nonl
-#@-node:EKR.20040612232221:goToScriptLineNumber
-#@+node:ekr.20031218072017.2140:c.executeScript
-def executeScript(self,p=None,script=None):
-
-    """This executes body text as a Python script.
-    
-    We execute the selected text, or the entire body text if no text is selected."""
-    
-    c = self ; error = False ; s = None ; script1 = script
-
-    if not script:
-        script = g.getScript(c,p)
-    << redirect output >>
-    if script:
-        script = script.strip()
-    if script:
-        script += '\n' # Make sure we end the script properly.
-        try:
-            exec script in {} # Use {} to get a pristine environment!
-            << unredirect output >>
-            if not script1:
-                g.es("end of script",color="purple")
-        except:
-            << unredirect output >>
-            g.es("exception executing script")
-            n = g.es_exception(full=False,c=c)
-            if n is not None:
-                << dump the lines of script near the error >>
-                if p and not script1:
-                    c.goToScriptLineNumber(p,script,n)
-            c.frame.tree.redrawAfterException()
-    elif not error:
-        << unredirect output >>
-        g.es("no script selected",color="blue")
-        
-    # Force a redraw _after_ all messages have been output.
-    c.redraw() 
-#@nonl
-#@+node:ekr.20031218072017.2143:<< redirect output >>
-if g.app.config.redirect_execute_script_output_to_log_pane:
-
-    g.redirectStdout() # Redirect stdout
-    g.redirectStderr() # Redirect stderr
-#@nonl
-#@-node:ekr.20031218072017.2143:<< redirect output >>
-#@+node:EKR.20040612215018:<< dump the lines of script near the error >>
-lines = g.splitLines(script)
-
-s = '-' * 20
-print s; g.es(s)
-
-if 1:
-    # Just print the error line.
-    s = "line %d: %s" % (n,lines[n-1])
-    print s, ; g.es(s,newline=False)
-else:
-    i = max(0,n-2)
-    j = min(n+2,len(lines))
-    # g.trace(n,i,j)
-    while i < j:
-        ch = g.choose(i==n-1,'*',' ')
-        s = "%s line %d: %s" % (ch,i+1,lines[i])
-        print s, ; g.es(s,newline=False)
-        i += 1
-#@nonl
-#@-node:EKR.20040612215018:<< dump the lines of script near the error >>
-#@+node:EKR.20040627100424:<< unredirect output >>
-if g.app.config.redirect_execute_script_output_to_log_pane:
-
-    g.restoreStderr()
-    g.restoreStdout()
-#@nonl
-#@-node:EKR.20040627100424:<< unredirect output >>
-#@-node:ekr.20031218072017.2140:c.executeScript
-#@+node:EKR.20040614071102.1:g.getScript
-def getScript (c,p,oneNodeOnly=False):
-
-    if not p: p = c.currentPosition()
-    old_body = p.bodyString()
-    
-    try:
-        script = None
-        # 7/7/04: Allow p not to be the present position.
-        if p == c.currentPosition():
-            if c.frame.body.hasTextSelection():
-                # Temporarily replace v's body text with just the selected text.
-                s = c.frame.body.getSelectedText()
-                p.v.setTnodeText(s)
-            else:
-                s = c.frame.body.getAllText()
-        else:
-            s = p.bodyString()
-    
-        if s.strip():
-            g.app.scriptDict["script1"]=s
-            df = c.atFileCommands.new_df
-            df.scanAllDirectives(p,scripting=True)
-            # Force Python comment delims.
-            df.startSentinelComment = "#"
-            df.endSentinelComment = None
-            df.write(p.copy(),nosentinels=False,toString=True,oneNodeOnly=oneNodeOnly)
-            script = df.stringOutput
-            assert(p)
-            g.app.scriptDict["script2"]=script
-            error = len(script) == 0
-    except:
-        s = "unexpected exception"
-        print s ; g.es(s)
-        g.es_exception()
-        script = None
-
-    p.v.setTnodeText(old_body)
-    return script
-#@nonl
-#@-node:EKR.20040614071102.1:g.getScript
-#@-node:ekr.20040630214448.1:(Use inspect module to improve Go To Line Number)
-#@+node:ekr.20040713062342:Fully investigate tnodeList
+#@-node:ekr.20040801054717:(Improve Go To Line Number command
+#@+node:ekr.20040713062342:(Make sure tnodeList is updated properly in all situations)
 #@+node:ekr.20040723050756:Make sure executing scripts don't interfere with tnodeList
 #@-node:ekr.20040723050756:Make sure executing scripts don't interfere with tnodeList
-#@-node:ekr.20040713062342:Fully investigate tnodeList
-#@+node:ekr.20040731055419:Fix problems with confirm save box
-@killcolor
-
-https://sourceforge.net/forum/message.php?msg_id=2683931
-By: billp9619
-
-Using Win XP:
-
-On closing an unsaved file with changes , a Confirm" message box pops up. The
-Leo main outline is locked but this Confirm box could be underneath the
-Outline...acting like an independent window(if outline receives focus again
-by clicking on it, etc.) Normally applications force these type of prompts to
-stay on top of the related appl. window.
-
-The above can can be confusing.  But it can be worse.
-
-If I right click on the Leo icon on the task bar and select "Close" (say I am
-confused now), what happens is it pops up another Confirm box.
-
-After closing ...the extra Confirm boxes are left behind with no associated
-Leo outline.
-
-Leo Log Window...
-Leo 4.2 beta 2, build  1.128 , July 5, 2004
-Python 2.3.4, Tk 8.4.3, win32
-#@nonl
-#@-node:ekr.20040731055419:Fix problems with confirm save box
-#@-node:ekr.20040716055314:Bugs 3
+#@-node:ekr.20040713062342:(Make sure tnodeList is updated properly in all situations)
 #@+node:EKR.20040422132037:Linux bugs 4
 @nocolor
 #@nonl
@@ -2815,7 +2642,7 @@ except:
 #@-node:ekr.20031218072017.4165:<< set unselected headline colors >>
 #@-node:ekr.20031218072017.4162:tree.set...LabelState
 #@-node:ekr.20031218072017.4157:Selecting & editing (tree)
-#@+node:ekr.20031218072017.2812:c.__init__, initIvars
+#@+node:ekr.20031218072017.2812:c.__init__ &  initIvars
 def __init__(self,frame,fileName):
 
     self.frame = frame
@@ -2835,7 +2662,8 @@ def __init__(self,frame,fileName):
         self.undoer = leoUndo.nullUndoer(self)
     else:
         self.undoer = leoUndo.undoer(self)
-
+#@nonl
+#@+node:ekr.20040731071037:initIvars
 def initIvars(self):
 
     << initialize ivars >>
@@ -2855,6 +2683,7 @@ self.expansionNode = None # The last node we expanded or contracted.
 self.changed = False # True if any data has been changed since the last save.
 self.loading = False # True if we are loading a file: disables c.setChanged()
 self.outlineToNowebDefaultFileName = "noweb.nw" # For Outline To Noweb dialog.
+self.promptingForClose = False # To lock out additional closing dialogs.
 
 # For tangle/untangle
 self.tangle_errrors = 0
@@ -2882,7 +2711,8 @@ self.hoistStack = [] # Stack of nodes to be root of drawn tree.  Affects only dr
 self.recentFiles = [] # 4.1: moved to commands class.  List of recent files
 #@nonl
 #@-node:ekr.20031218072017.2813:<< initialize ivars >>
-#@-node:ekr.20031218072017.2812:c.__init__, initIvars
+#@-node:ekr.20040731071037:initIvars
+#@-node:ekr.20031218072017.2812:c.__init__ &  initIvars
 #@+node:ekr.20040703145401:To do: traceUndo
 #@-node:ekr.20040703145401:To do: traceUndo
 #@+node:ekr.20040704102031:Turn off gc while reading .leo files?
