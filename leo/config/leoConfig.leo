@@ -16,15 +16,15 @@
 <v t="T1" a="E"><vh>leoConfig.leo</vh>
 <v t="T2" a="E"><vh>@root leoConfig.txt</vh>
 <v t="T3"><vh>&lt;&lt; general comments and warnings &gt;&gt;</vh></v>
-<v t="T4" a="V"><vh>&lt;&lt; General configuration options, especially read-only mode &gt;&gt;</vh></v>
+<v t="T4"><vh>&lt;&lt; General configuration options, especially read-only mode &gt;&gt;</vh></v>
 <v t="T5"><vh>&lt;&lt; The "Recent Files" menu &gt;&gt;</vh></v>
 <v t="T6"><vh>&lt;&lt; Compare Panel settings &gt;&gt;</vh></v>
 <v t="T7"><vh>&lt;&lt; Find/Change Panel settings &gt;&gt;</vh></v>
-<v t="T8"><vh>&lt;&lt; Keyboard shortcuts settings &gt;&gt;</vh>
+<v t="T8" a="E"><vh>&lt;&lt; Keyboard shortcuts settings &gt;&gt;</vh>
 <v t="T9"><vh>&lt;&lt; About keyboard shortcuts &gt;&gt;</vh></v>
 <v t="T10"><vh>&lt;&lt; Alt and Shift-Alt&gt;&gt;</vh></v>
 <v t="T11"><vh>&lt;&lt; Control &gt;&gt;</vh></v>
-<v t="T12"><vh>&lt;&lt; Shift-Control &gt;&gt;</vh></v>
+<v t="T12" a="V"><vh>&lt;&lt; Shift-Control &gt;&gt;</vh></v>
 <v t="T13"><vh>&lt;&lt; F-keys and others &gt;&gt;</vh></v>
 <v t="T14"><vh>&lt;&lt; None &gt;&gt;</vh></v>
 </v>
@@ -537,7 +537,7 @@ ConvertTabs     = Shift+Ctrl+J
 # Unused        = Shift+Ctrl+L
 TangleMarked    = Shift+Ctrl+M
 ExtractNames    = Shift+Ctrl+N
-# OpenWith        = Shift+Ctrl+O
+# Unused        = Shift+Ctrl+O
 ReformatParagraph = Shift+Ctrl+P
 WriteDirtyAtFileNodes = Shift+Ctrl+Q
 ReadOutlineOnly = Shift+Ctrl+R

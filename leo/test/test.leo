@@ -110,8 +110,8 @@
 <v t="T64"><vh>@file ../test/missing_test.txt</vh></v>
 </v>
 </v>
-<v t="T65" a="V"><vh>Spell test </vh>
-<v t="T66"><vh>node two</vh></v>
+<v t="T65" a="E"><vh>Spell test </vh>
+<v t="T66" a="V"><vh>node two</vh></v>
 <v t="T67"><vh>node two no misspellings</vh></v>
 </v>
 </vnodes>
@@ -557,7 +557,8 @@ this should NOT wrap aaaaaaaaaaaaaaaaaaa bbbbbbbbbbbbbbbbbbbbb ccccccccccccccccc
 <t tx="T63">@ignore</t>
 <t tx="T64"></t>
 <t tx="T65">a b leoDialogs leoFind leoAtFile leoFileCommands leoGlobals modal end
-line tooo changed 9</t>
+line tooo changed 9
+</t>
 <t tx="T66">this is another test.
 
 hello there jkk this is werg

@@ -1198,27 +1198,28 @@ class baseLeoFrame:
 		#@+node:1::<< create the top-level file entries >>
 		#@+body
 		#@+at
-		#  It is doubtful that leo.py will ever support a Print command 
-		# directly.  Rather, users can use export commands to create text 
-		# files that may then be formatted and printed as desired.
+		#  leo.py will probably never have a Print command.  Instead, export 
+		# text files that may be formatted and printed as desired.
 
 		#@-at
 		#@@c
 
 		table = (
 			("&New","Ctrl+N",self.OnNew),
-			("&Open...","Ctrl+O",self.OnOpen),
-			("Open &With...","Shift+Ctrl+O",self.OnOpenWith),
+			("&Open...","Ctrl+O",self.OnOpen))
+		self.createMenuEntries(fileMenu,table)
+		
+		# 7/1/03: Create a new menu rather than call OnOpenWith.
+		self.createNewMenu("Open &With...","File")
+		
+		table = (
 			("-",None,None),
 			("&Close","Ctrl+W",self.OnClose),
 			("&Save","Ctrl+S",self.OnSave),
 			("Save &As","Shift+Ctrl+S",self.OnSaveAs),
 			("Save To",None,self.OnSaveTo), # &Tangle
 			("Re&vert To Saved",None,self.OnRevert)) # &Read/Write
-				
 		self.createMenuEntries(fileMenu,table)
-		
-		
 		#@-body
 		#@-node:1::<< create the top-level file entries >>
 
@@ -1934,7 +1935,7 @@ class baseLeoFrame:
 	#@-at
 	#@@c
 
-	def OnOpenWith(self,data=None,event=None):
+	def OnOpenWith(self,data=None):
 		
 		a = app() ; c = self.commands ; v = c.currentVnode()
 		if not data or len(data) != 3: return # 6/22/03
@@ -4517,9 +4518,10 @@ class baseLeoFrame:
 		try:
 			menu = self.getMenu("File")
 			enableMenu(menu,"Revert To Saved", c.canRevert())
-				
+	
 			openWithMenu = self.getMenu("Open With...")
-			enableMenu(menu,"Open With...", openWithMenu != None)
+			enableMenu(menu,"Open With...", app().hasOpenWithMenu)
+			
 		except:
 			es("exception updating File menu")
 			es_exception()

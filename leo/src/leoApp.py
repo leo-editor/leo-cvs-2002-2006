@@ -23,6 +23,7 @@ class LeoApp:
 		self.commandName = None # The name of the command being executed.
 		self.config = None # The leoConfig instance.
 		self.globalWindows = []
+		self.hasOpenWithMenu = false # True: open with plugin has been loaded.
 		self.hookError = false # true: suppress further calls to hooks.
 		self.hookFunction = None # Application wide hook function.
 		self.idle_imported = false # true: we have done an import idle
