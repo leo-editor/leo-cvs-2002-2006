@@ -11,6 +11,10 @@
 from __future__ import generators # To make the code work in Python 2.2.
 
 import leoGlobals as g # So code can use g below.
+
+if 0: # Don't import this here: it messes up Leo's startup code.
+    import leoTest
+
 import os
 import string
 import sys
@@ -3171,16 +3175,6 @@ class mulderUpdateAlgorithm:
     diffs in files without sentinels."""
     
     #@    @+others
-    #@+node:EKR.20040505103527:TO DO
-    #@+at
-    # 
-    # - is_sentinel is not strictly correct.  There must be an atFile method 
-    # that does the job absolutely correctly.
-    # 
-    # - Similarly, marker_from_extension can probably be replaced by a call to 
-    # some method in leoGlobals.py.
-    #@-at
-    #@-node:EKR.20040505103527:TO DO
     #@+node:EKR.20040504150046.3:__init__
     def __init__ (self,testing=False,verbose=False):
         
@@ -3276,7 +3270,7 @@ class mulderUpdateAlgorithm:
         return stripped_lines, mapping
     #@nonl
     #@-node:EKR.20040504150046.6:create_mapping
-    #@+node:EKR.20040504154039:is_sentinel NOT CORRECT
+    #@+node:EKR.20040504154039:is_sentinel
     def is_sentinel (self,line,marker):
         
         """
@@ -3284,7 +3278,7 @@ class mulderUpdateAlgorithm:
         """
         
         return line.lstrip().startswith(marker)
-    #@-node:EKR.20040504154039:is_sentinel NOT CORRECT
+    #@-node:EKR.20040504154039:is_sentinel
     #@+node:EKR.20040504150046.4:marker_from_extension
     def marker_from_extension(self,filename):
         """
@@ -3649,6 +3643,17 @@ class mulderUpdateAlgorithm:
                 print line,
     #@nonl
     #@-node:EKR.20040504150046.5:report_mismatch
+    #@+node:ekr.20040718101315:stripWhitespaceFromBlankLines(before_lines)
+    def stripWhitespaceFromBlankLines (self,lines):
+        
+        for i in xrange(len(lines)):
+            stripped_line = lines[i].lstrip(" \t")
+            if stripped_line in ('\n',''):
+                lines[i] = stripped_line
+                
+        return lines
+    #@nonl
+    #@-node:ekr.20040718101315:stripWhitespaceFromBlankLines(before_lines)
     #@+node:EKR.20040504160820:write_if_changed
     def write_if_changed(self,lines,sourcefilename,targetfilename):
         """
