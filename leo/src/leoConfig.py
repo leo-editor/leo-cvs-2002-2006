@@ -689,17 +689,21 @@ class baseConfig:
         self.config = None
     #@-node:ekr.20031218072017.1929:open
     #@+node:ekr.20031218072017.1145:update (config)
-    # Rewrites the entire config file from ivars.
-    # This is called when a .leo file is written and when the preferences panel changes.
+    # Before 4.3: called when writing .leo file.  This had various unpleasant consequences.
+    # After  4.3: called immediately when a setting changes, and never when writing .leo files.
     
-    def update (self):
+    def update (self,verbose=False):
         
+        g.trace()
+        """Write the entire config file from ivars."""
         # Do nothing if the file does not exist, or if read_only.
         if self.read_only:
-            # print "Read only config file"
+            if verbose:
+                g.es("Read only config file",color="blue")
             return
         if not g.os_path_exists(self.configFileName):
-            # print "No config file"
+            if verbose:
+                g.es("No config file",color="blue")
             return
         
         config = ConfigParser.ConfigParser()
