@@ -16158,7 +16158,7 @@ except:
 if g.os_path_exists(fileName):
     try:
         if not os.access(fileName,os.W_OK):
-            g.es("can not create: read only: " + fileName)
+            g.es("can not create: read only: " + fileName,color="red")
             return False
     except:
         pass # os.access() may not exist on all platforms.
@@ -23037,7 +23037,7 @@ except:
 if g.os_path_exists(fileName):
     try:
         if not os.access(fileName,os.W_OK):
-            g.es("can not create: read only: " + fileName)
+            g.es("can not create: read only: " + fileName,color="red")
             return False
     except:
         pass # os.access() may not exist on all platforms.
@@ -26537,7 +26537,7 @@ except:
 if g.os_path_exists(fileName):
     try:
         if not os.access(fileName,os.W_OK):
-            g.es("can not create: read only: " + fileName)
+            g.es("can not create: read only: " + fileName,color="red")
             return False
     except:
         pass # os.access() may not exist on all platforms.
@@ -42112,7 +42112,7 @@ except:
 if g.os_path_exists(fileName):
     try:
         if not os.access(fileName,os.W_OK):
-            g.es("can not create: read only: " + fileName)
+            g.es("can not create: read only: " + fileName,color="red")
             return False
     except:
         pass # os.access() may not exist on all platforms.
@@ -48154,6 +48154,670 @@ def getExistingVnode (self,tref,headline):
 #@-node:ekr.20040326063413:getExistingVnode
 #@-node:ekr.20040704102411:(Fixed bug when reading  4.1 files with topology errors)
 #@-node:ekr.20040701065235:in 4.2 b2
+#@+node:ekr.20040706080316:in 4.2 b3
+#@+node:ekr.20040705194708:(Cleaned up recognition of @file nodes)
+#@+node:ekr.20031218072017.3152:g.scanAtFileOptions (used in 3.x read code)
+def scanAtFileOptions (h,err_flag=False):
+    
+    assert(g.match(h,0,"@file"))
+    i = len("@file")
+    atFileType = "@file"
+    optionsList = []
+
+    while g.match(h,i,'-'):
+        << scan another @file option >>
+        
+    # Convert atFileType to a list of options.
+    for fileType,option in (
+        ("@silentfile","asis"),
+        ("@nosentinelsfile","nosent"),
+        ("@rawfile","noref"),
+        ("@thinfile","thin")
+    ):
+        if atFileType == fileType and option not in optionsList:
+            optionsList.append(option)
+            
+    # g.trace(atFileType,optionsList)
+
+    return i,atFileType,optionsList
+#@nonl
+#@+node:ekr.20031218072017.3153:<< scan another @file option >>
+i += 1 ; err = -1
+
+if g.match_word(h,i,"asis"):
+    if atFileType == "@file":
+        atFileType = "@silentfile"
+    elif err_flag:
+        g.es("using -asis option in:" + h)
+elif g.match(h,i,"noref"): # Just match the prefix.
+    if atFileType == "@file":
+        atFileType = "@rawfile"
+    elif atFileType == "@nosentinelsfile":
+        atFileType = "@silentfile"
+    elif err_flag:
+        g.es("ignoring redundant -noref in:" + h)
+elif g.match(h,i,"nosent"): # Just match the prefix.
+    if atFileType == "@file":
+        atFileType = "@nosentinelsfile"
+    elif atFileType == "@rawfile":
+        atFileType = "@silentfile"
+    elif err_flag:
+        g.es("ignoring redundant -nosent in:" + h)
+elif g.match_word(h,i,"thin"):
+    if atFileType == "@file":
+        atFileType = "@thinfile"
+    elif err_flag:
+        g.es("using -thin option in:" + h)
+else:
+    if 0: # doesn't work
+        for option in ("fat","new","now","old","thin","wait"):
+            if g.match_word(h,i,option):
+                optionsList.append(option)
+        if len(option) == 0:
+            err = i-1
+# Scan to the next minus sign.
+while i < len(h) and h[i] not in (' ','\t','-'):
+    i += 1
+if err > -1:
+    g.es("unknown option:" + h[err:i] + " in " + h)
+#@nonl
+#@-node:ekr.20031218072017.3153:<< scan another @file option >>
+#@-node:ekr.20031218072017.3152:g.scanAtFileOptions (used in 3.x read code)
+#@+node:ekr.20040705195048:skip_id
+def skip_id(s,i,chars=None):
+
+    n = len(s)
+    while i < n:
+        ch = s[i]
+        if ch in string.ascii_letters or ch in string.digits or ch == '_':
+            i += 1
+        elif chars and ch in chars:
+            i += 1
+        else: break
+    return i
+#@-node:ekr.20040705195048:skip_id
+#@+node:ekr.20040306211032:p.Comparisons
+def anyAtFileNodeName         (self): return self.v.anyAtFileNodeName()
+def atFileNodeName            (self): return self.v.atFileNodeName()
+def atNoSentinelsFileNodeName (self): return self.v.atNoSentinelsFileNodeName()
+def atRawFileNodeName         (self): return self.v.atRawFileNodeName()
+def atSilentFileNodeName      (self): return self.v.atSilentFileNodeName()
+def atThinFileNodeName        (self): return self.v.atThinFileNodeName()
+
+# New names, less confusing
+atNoSentFileNodeName  = atNoSentinelsFileNodeName
+atNorefFileNodeName   = atRawFileNodeName
+atAsisFileNodeName    = atSilentFileNodeName
+
+def isAnyAtFileNode         (self): return self.v.isAnyAtFileNode()
+def isAtAllNode             (self): return self.v.isAtAllNode()
+def isAtFileNode            (self): return self.v.isAtFileNode()
+def isAtIgnoreNode          (self): return self.v.isAtIgnoreNode()
+def isAtNoSentinelsFileNode (self): return self.v.isAtNoSentinelsFileNode()
+def isAtOthersNode          (self): return self.v.isAtOthersNode()
+def isAtRawFileNode         (self): return self.v.isAtRawFileNode()
+def isAtSilentFileNode      (self): return self.v.isAtSilentFileNode()
+def isAtThinFileNode        (self): return self.v.isAtThinFileNode()
+
+# New names, less confusing:
+isAtNoSentFileNode = isAtNoSentinelsFileNode
+isAtNorefFileNode  = isAtRawFileNode
+isAtAsisFileNode   = isAtSilentFileNode
+
+# Utilities.
+def matchHeadline (self,pattern): return self.v.matchHeadline(pattern)
+## def afterHeadlineMatch (self,s): return self.v.afterHeadlineMatch(s)
+#@nonl
+#@-node:ekr.20040306211032:p.Comparisons
+#@+node:ekr.20040706072845:No longer used (from v.comparisons)
+#@+node:ekr.20040328055931:afterHeadlineFileTypeName NO LONGER USED
+def afterHeadlineFileTypeName(self,s):
+    
+    h = self.headString()
+
+    if s != "@file" and g.match_word(h,0,s):
+        # No options are valid.
+        return s,string.strip(h[len(s):])
+
+    elif g.match(h,0,"@file"):
+        i,atFileType,junk = g.scanAtFileOptions(h)
+        return atFileType,h[i:].strip()
+
+    else:
+        return None,None
+#@nonl
+#@-node:ekr.20040328055931:afterHeadlineFileTypeName NO LONGER USED
+#@+node:ekr.20031218072017.3347:afterHeadlineMatch NO LONGER USED
+def afterHeadlineMatch(self,s):
+    
+    atFileType,fileName = self.afterHeadlineFileTypeName(s)
+    if s == atFileType:
+        return fileName
+    else:
+        return ""
+#@nonl
+#@-node:ekr.20031218072017.3347:afterHeadlineMatch NO LONGER USED
+#@+node:ekr.20040706073044:anyAtFileNodeName OLD
+def anyAtFileNodeName (self):
+    
+    """Return the file name following an @file node or an empty string."""
+    
+    if g.match(h,0,"@file"):
+        type,name = self.afterHeadlineFileTypeName("@file")
+        if type and name: return name
+        else:             return ""
+    else:
+        # New, shorter names are now preferred.
+        names = [
+            "@thin", "@asis", "@noref", "@nosent",
+            "@thinfile", "@silentfile", "@rawfile", "@nosentinelsfile" ]
+        for name in names:
+            if g.match(h,0,name):
+                name = self.afterHeadlineMatch(name)
+                if name: return name
+        return ""
+#@nonl
+#@-node:ekr.20040706073044:anyAtFileNodeName OLD
+#@+node:ekr.20040706073337:at...FileNodeName  OLD
+@ Returns the filename following @file or @rawfile, in the receivers's headline, or the empty string if the receiver is not an @file node.
+@c
+
+def atFileNodeName (self):
+    if 1: # new code
+        names = ("@file"),
+        return self.findAtFileName(names)
+    else:
+        return self.afterHeadlineMatch("@file")
+
+def atNoSentinelsFileNodeName (self):
+    if 1: # new code
+        names = ("@nosent", "@file-nosent", "@nosentinelsfile")
+        return self.findAtFileName(names)
+    else:
+        return self.afterHeadlineMatch("@nosentinelsfile")
+
+def atRawFileNodeName (self):
+    if 1: # new code
+        names = ("@noref", "@file-noref", "@rawfile")
+        return self.findAtFileName(names)
+    else:
+        return self.afterHeadlineMatch("@rawfile")
+    
+def atSilentFileNodeName (self):
+    if 1: # new code
+        names = ("@asis", "@file-asis", "@silentfile")
+        return self.findAtFileName(names)
+    else:
+        return self.afterHeadlineMatch("@silentfile")
+    
+def atThinFileNodeName (self):
+    if 1: # new code
+        names = ("@thin", "@file-thin", "@thinfile")
+        return self.findAtFileName(names)
+    else:
+        return self.afterHeadlineMatch("@thinfile") or self.afterHeadlineMatch("@thin")
+    
+# New names, less confusing
+atNoSentFileNodeName  = atNoSentinelsFileNodeName
+atNorefFileNodeName   = atRawFileNodeName
+atAsisFileNodeName     = atSilentFileNodeName
+#@nonl
+#@-node:ekr.20040706073337:at...FileNodeName  OLD
+#@-node:ekr.20040706072845:No longer used (from v.comparisons)
+#@+node:ekr.20031218072017.3346:v.Comparisons
+#@+node:ekr.20040705201018:findAtFileName (new in 4.2 b3)
+def findAtFileName (self,names):
+    
+    """Return the name following one of the names in nameList.
+    Return an empty string."""
+
+    h = self.headString()
+    
+    if not g.match(h,0,'@'):
+        return ""
+    
+    i = g.skip_id(h,1,'-')
+    word = h[:i]
+    if word in names and g.match_word(h,0,word):
+        name = h[i:].strip()
+        # g.trace(word,name)
+        return name
+    else:
+        return ""
+#@nonl
+#@-node:ekr.20040705201018:findAtFileName (new in 4.2 b3)
+#@+node:ekr.20031218072017.3350:anyAtFileNodeName
+def anyAtFileNodeName (self):
+    
+    """Return the file name following an @file node or an empty string."""
+
+    names = (
+        "@file",
+        "@thin",   "@file-thin",   "@thinfile",
+        "@asis",   "@file-asis",   "@silentfile",
+        "@noref",  "@file-noref",  "@rawfile",
+        "@nosent", "@file-nosent", "@nosentinelsfile")
+
+    return self.findAtFileName(names)
+#@nonl
+#@-node:ekr.20031218072017.3350:anyAtFileNodeName
+#@+node:ekr.20031218072017.3348:at...FileNodeName
+# These return the filename following @xxx, in v.headString.
+# Return the the empty string if v is not an @xxx node.
+
+def atFileNodeName (self):
+    names = ("@file"),
+    return self.findAtFileName(names)
+
+def atNoSentinelsFileNodeName (self):
+    names = ("@nosent", "@file-nosent", "@nosentinelsfile")
+    return self.findAtFileName(names)
+
+def atRawFileNodeName (self):
+    names = ("@noref", "@file-noref", "@rawfile")
+    return self.findAtFileName(names)
+    
+def atSilentFileNodeName (self):
+    names = ("@asis", "@file-asis", "@silentfile")
+    return self.findAtFileName(names)
+    
+def atThinFileNodeName (self):
+    names = ("@thin", "@file-thin", "@thinfile")
+    return self.findAtFileName(names)
+    
+# New names, less confusing
+atNoSentFileNodeName  = atNoSentinelsFileNodeName
+atNorefFileNodeName   = atRawFileNodeName
+atAsisFileNodeName     = atSilentFileNodeName
+#@nonl
+#@-node:ekr.20031218072017.3348:at...FileNodeName
+#@+node:EKR.20040430152000:isAtAllNode
+def isAtAllNode (self):
+
+    """Returns True if the receiver contains @others in its body at the start of a line."""
+
+    flag, i = g.is_special(self.t.bodyString,0,"@all")
+    return flag
+#@nonl
+#@-node:EKR.20040430152000:isAtAllNode
+#@+node:ekr.20040326031436:isAnyAtFileNode good
+def isAnyAtFileNode (self):
+    
+    """Return True if v is any kind of @file or related node."""
+    
+    # This routine should be as fast as possible.
+    # It is called once for every vnode when writing a file.
+
+    h = self.headString()
+    return h and h[0] == '@' and self.anyAtFileNodeName()
+#@nonl
+#@-node:ekr.20040326031436:isAnyAtFileNode good
+#@+node:ekr.20040325073709:isAt...FileNode
+def isAtFileNode (self):
+    return g.choose(self.atFileNodeName(),True,False)
+    
+def isAtNoSentinelsFileNode (self):
+    return g.choose(self.atNoSentinelsFileNodeName(),True,False)
+
+def isAtRawFileNode (self): # @file-noref
+    return g.choose(self.atRawFileNodeName(),True,False)
+
+def isAtSilentFileNode (self): # @file-asis
+    return g.choose(self.atSilentFileNodeName(),True,False)
+
+def isAtThinFileNode (self):
+    return g.choose(self.atThinFileNodeName(),True,False)
+    
+# New names, less confusing:
+isAtNoSentFileNode = isAtNoSentinelsFileNode
+isAtNorefFileNode  = isAtRawFileNode
+isAtAsisFileNode   = isAtSilentFileNode
+#@nonl
+#@-node:ekr.20040325073709:isAt...FileNode
+#@+node:ekr.20031218072017.3351:isAtIgnoreNode
+def isAtIgnoreNode (self):
+
+    """Returns True if the receiver contains @ignore in its body at the start of a line."""
+
+    flag, i = g.is_special(self.t.bodyString, 0, "@ignore")
+    return flag
+#@nonl
+#@-node:ekr.20031218072017.3351:isAtIgnoreNode
+#@+node:ekr.20031218072017.3352:isAtOthersNode
+def isAtOthersNode (self):
+
+    """Returns True if the receiver contains @others in its body at the start of a line."""
+
+    flag, i = g.is_special(self.t.bodyString,0,"@others")
+    return flag
+#@nonl
+#@-node:ekr.20031218072017.3352:isAtOthersNode
+#@+node:ekr.20031218072017.3353:matchHeadline
+def matchHeadline (self,pattern):
+
+    """Returns True if the headline matches the pattern ignoring whitespace and case.
+    
+    The headline may contain characters following the successfully matched pattern."""
+
+    h = string.lower(self.headString())
+    h = string.replace(h,' ','')
+    h = string.replace(h,'\t','')
+
+    s = string.lower(pattern)
+    s = string.replace(s,' ','')
+    s = string.replace(s,'\t','')
+
+    # ignore characters in the headline following the match
+    return s == h[0:len(s)]
+#@nonl
+#@-node:ekr.20031218072017.3353:matchHeadline
+#@-node:ekr.20031218072017.3346:v.Comparisons
+#@-node:ekr.20040705194708:(Cleaned up recognition of @file nodes)
+#@+node:ekr.20040705071418:(Made sure the user is given a chance to save read-only files)
+#@+node:ekr.20040706111156:Notes
+@killcolor
+
+- Leo now vetos the shutdown logic if saving a dirty file fails.
+
+- Leo prints in red the warning about not being able save the read-only file.
+
+- The user can use the Save To command to save the file. The Save To command
+does not clear the file's dirty bit, so Leo will prompt again to save the file.
+The user will have to ignore this prompt in order to exit. This is basically
+correct: the _original_ file has not been saved.
+#@nonl
+#@-node:ekr.20040706111156:Notes
+#@+node:ekr.20031218072017.2609:app.closeLeoWindow
+def closeLeoWindow (self,frame):
+    
+    """Attempt to close a Leo window.
+    
+    Return False if the user veto's the close."""
+    
+    c = frame.c
+
+    if c.changed:
+        veto = frame.promptForSave()
+        if veto: return False
+
+    g.app.setLog(None) # no log until we reactive a window.
+    
+    g.doHook("close-frame",c=c) # This may remove frame from the window list.
+    
+    if frame in g.app.windowList:
+        g.app.destroyWindow(frame)
+    
+    if g.app.windowList:
+        # Pick a window to activate so we can set the log.
+        w = g.app.windowList[0]
+        w.deiconify()
+        w.lift()
+        g.app.setLog(w.log)
+    else:
+        g.app.finishQuit()
+
+    return True # The window has been closed.
+#@nonl
+#@-node:ekr.20031218072017.2609:app.closeLeoWindow
+#@+node:ekr.20031218072017.3692:promptForSave
+def promptForSave (self):
+    
+    """Prompt the user to save changes.
+    
+    Return True if the user vetos the quit or save operation."""
+    
+    c = self.c
+    name = g.choose(c.mFileName,c.mFileName,self.title)
+    type = g.choose(g.app.quitting, "quitting?", "closing?")
+
+    answer = g.app.gui.runAskYesNoCancelDialog(
+        "Confirm",
+        'Save changes to %s before %s' % (name,type))
+        
+    # print answer	
+    if answer == "cancel":
+        return True # Veto.
+    elif answer == "no":
+        return False # Don't save and don't veto.
+    else:
+        if not c.mFileName:
+            << Put up a file save dialog to set mFileName >>
+        if c.mFileName:
+            ok = c.fileCommands.save(c.mFileName)
+            return not ok # New in 4.2: Veto if the save did not succeed.
+        else:
+            return True # Veto.
+#@nonl
+#@+node:ekr.20031218072017.3693:<< Put up a file save dialog to set mFileName >>
+# Make sure we never pass None to the ctor.
+if not c.mFileName:
+    c.mFileName = ""
+
+c.mFileName = g.app.gui.runSaveFileDialog(
+    initialfile = c.mFileName,
+    title="Save",
+    filetypes=[("Leo files", "*.leo")],
+    defaultextension=".leo")
+#@nonl
+#@-node:ekr.20031218072017.3693:<< Put up a file save dialog to set mFileName >>
+#@-node:ekr.20031218072017.3692:promptForSave
+#@+node:ekr.20031218072017.1720:save
+def save(self,fileName):
+
+    c = self.c ; v = c.currentVnode()
+
+    # New in 4.2.  Return ok flag so shutdown logic knows if all went well.
+    ok = g.doHook("save1",c=c,v=v,fileName=fileName)
+    if ok is None:
+        c.beginUpdate()
+        c.endEditing()# Set the current headline text.
+        self.setDefaultDirectoryForNewFiles(fileName)
+        ok = self.write_Leo_file(fileName,False) # outlineOnlyFlag
+        if ok:
+            c.setChanged(False) # Clears all dirty bits.
+            g.es("saved: " + g.shortFileName(fileName))
+            if g.app.config.save_clears_undo_buffer:
+                g.es("clearing undo")
+                c.undoer.clearUndoState()
+        c.endUpdate()
+    g.doHook("save2",c=c,v=v,fileName=fileName)
+    return ok
+#@nonl
+#@-node:ekr.20031218072017.1720:save
+#@+node:ekr.20031218072017.3046:write_Leo_file
+def write_Leo_file(self,fileName,outlineOnlyFlag):
+
+    c = self.c ; config = g.app.config
+
+    self.assignFileIndices()
+    if not outlineOnlyFlag:
+        << write all @file nodes >>
+    << return if the .leo file is read-only >>
+    try:
+        << create backup file >>
+        self.mFileName = fileName
+        << create the output file >>
+        << update leoConfig.txt >>
+        << put the .leo file >>
+    except:
+        << report the exception >>
+        << erase filename and rename backupName to fileName >>
+        return False
+    if self.outputFile:
+        << close the output file >>
+        << delete backup file >>
+        return True
+    else: # This probably will never happen because errors should raise exceptions.
+        << erase filename and rename backupName to fileName >>
+        return False
+        
+write_LEO_file = write_Leo_file # For compatibility with old plugins.
+#@nonl
+#@+node:ekr.20040324080359:<< write all @file nodes >>
+try:
+    # Write all @file nodes and set orphan bits.
+    c.atFileCommands.writeAll()
+except:
+    g.es_error("exception writing derived files")
+    g.es_exception()
+    return False
+#@nonl
+#@-node:ekr.20040324080359:<< write all @file nodes >>
+#@+node:ekr.20040324080359.1:<< return if the .leo file is read-only >>
+# self.read_only is not valid for Save As and Save To commands.
+
+if g.os_path_exists(fileName):
+    try:
+        if not os.access(fileName,os.W_OK):
+            g.es("can not create: read only: " + fileName,color="red")
+            return False
+    except:
+        pass # os.access() may not exist on all platforms.
+#@nonl
+#@-node:ekr.20040324080359.1:<< return if the .leo file is read-only >>
+#@+node:ekr.20031218072017.3047:<< create backup file >>
+# rename fileName to fileName.bak if fileName exists.
+if g.os_path_exists(fileName):
+    try:
+        backupName = g.os_path_join(g.app.loadDir,fileName)
+        backupName = fileName + ".bak"
+        if g.os_path_exists(backupName):
+            os.unlink(backupName)
+        # os.rename(fileName,backupName)
+        g.utils_rename(fileName,backupName)
+    except OSError:
+        if self.read_only:
+            g.es("read only",color="red")
+        else:
+            g.es("exception creating backup file: " + backupName)
+            g.es_exception()
+        return False
+    except:
+        g.es("exception creating backup file: " + backupName)
+        g.es_exception()
+        backupName = None
+        return False
+else:
+    backupName = None
+#@nonl
+#@-node:ekr.20031218072017.3047:<< create backup file >>
+#@+node:ekr.20040324080359.2:<< create the output file >>
+self.outputFile = open(fileName, 'wb') # 9/18/02
+if not self.outputFile:
+    g.es("can not open " + fileName)
+    << delete backup file >>
+    return False
+#@nonl
+#@+node:ekr.20031218072017.3048:<< delete backup file >>
+if backupName and g.os_path_exists(backupName):
+    try:
+        os.unlink(backupName)
+    except OSError:
+        if self.read_only:
+            g.es("read only",color="red")
+        else:
+            g.es("exception deleting backup file:" + backupName)
+            g.es_exception()
+        return False
+    except:
+        g.es("exception deleting backup file:" + backupName)
+        g.es_exception()
+        return False
+#@-node:ekr.20031218072017.3048:<< delete backup file >>
+#@-node:ekr.20040324080359.2:<< create the output file >>
+#@+node:ekr.20040324080819:<< update leoConfig.txt >>
+c.setIvarsFromFind()
+config.setConfigFindIvars(c)
+c.setIvarsFromPrefs()
+config.setCommandsIvars(c)
+config.update()
+#@nonl
+#@-node:ekr.20040324080819:<< update leoConfig.txt >>
+#@+node:ekr.20040324080819.1:<< put the .leo file >>
+self.putProlog()
+self.putHeader()
+self.putGlobals()
+self.putPrefs()
+self.putFindSettings()
+#start = g.getTime()
+self.putVnodes()
+#start = g.printDiffTime("vnodes ",start)
+self.putTnodes()
+#start = g.printDiffTime("tnodes ",start)
+self.putPostlog()
+#@nonl
+#@-node:ekr.20040324080819.1:<< put the .leo file >>
+#@+node:ekr.20040324080819.2:<< report the exception >>
+g.es("exception writing: " + fileName)
+g.es_exception() 
+if self.outputFile:
+    try:
+        self.outputFile.close()
+        self.outputFile = None
+    except:
+        g.es("exception closing: " + fileName)
+        g.es_exception()
+#@nonl
+#@-node:ekr.20040324080819.2:<< report the exception >>
+#@+node:ekr.20040324080819.3:<< close the output file >>
+try:
+    self.outputFile.close()
+    self.outputFile = None
+except:
+    g.es("exception closing: " + fileName)
+    g.es_exception()
+#@nonl
+#@-node:ekr.20040324080819.3:<< close the output file >>
+#@+node:ekr.20031218072017.3049:<< erase filename and rename backupName to fileName >>
+g.es("error writing " + fileName)
+
+if fileName and g.os_path_exists(fileName):
+    try:
+        os.unlink(fileName)
+    except OSError:
+        if self.read_only:
+            g.es("read only",color="red")
+        else:
+            g.es("exception deleting: " + fileName)
+            g.es_exception()
+    except:
+        g.es("exception deleting: " + fileName)
+        g.es_exception()
+        
+if backupName:
+    g.es("restoring " + fileName + " from " + backupName)
+    try:
+        g.utils_rename(backupName, fileName)
+    except OSError:
+        if self.read_only:
+            g.es("read only",color="red")
+        else:
+            g.es("exception renaming " + backupName + " to " + fileName)
+            g.es_exception()
+    except:
+        g.es("exception renaming " + backupName + " to " + fileName)
+        g.es_exception()
+#@nonl
+#@-node:ekr.20031218072017.3049:<< erase filename and rename backupName to fileName >>
+#@+node:ekr.20031218072017.3048:<< delete backup file >>
+if backupName and g.os_path_exists(backupName):
+    try:
+        os.unlink(backupName)
+    except OSError:
+        if self.read_only:
+            g.es("read only",color="red")
+        else:
+            g.es("exception deleting backup file:" + backupName)
+            g.es_exception()
+        return False
+    except:
+        g.es("exception deleting backup file:" + backupName)
+        g.es_exception()
+        return False
+#@-node:ekr.20031218072017.3048:<< delete backup file >>
+#@-node:ekr.20031218072017.3046:write_Leo_file
+#@-node:ekr.20040705071418:(Made sure the user is given a chance to save read-only files)
+#@-node:ekr.20040706080316:in 4.2 b3
 #@-node:ekr.20040107064101.1:4.2 Projects
 #@-all
 #@nonl

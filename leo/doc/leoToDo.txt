@@ -3,37 +3,7 @@
 #@@nocolor
 
 #@+all
-#@+node:ekr.20040630214448:To do next
-#@+node:ekr.20040701182420:There may be a small problem with updating cloned text in ignore'd files
-#@-node:ekr.20040701182420:There may be a small problem with updating cloned text in ignore'd files
-#@+node:EKR.20040629084516:Use multiple sandboxes to test how Leo handles cvs conflicts
-#@-node:EKR.20040629084516:Use multiple sandboxes to test how Leo handles cvs conflicts
-#@+node:ekr.20040630214448.1:Use inspect module to improve Go To Line Number
-@killcolor
-
-http://sourceforge.net/forum/message.php?msg_id=2643870
-By: nobody
-
-bad @+leo sentinel
-invalid derived file: C:/HTML/www/new.htm
-
-can the error msg be something like:
-currently, goto line number only works in an @file @thin or @language python
-script node.
-
-or better,  grey it out in the menu.
-or even,
-that line number does not compute. RTFM
-
-e
-#@nonl
-#@-node:ekr.20040630214448.1:Use inspect module to improve Go To Line Number
-#@-node:ekr.20040630214448:To do next
 #@+node:EKR.20040430163619:To do: 4.2
-#@+node:EKR.20040617105034:To do before 4.2 beta 3: feature complete
-#@+node:EKR.20040628085616.1:Test error recovery when reading descendentTnodeUa's
-#@-node:EKR.20040628085616.1:Test error recovery when reading descendentTnodeUa's
-#@+node:EKR.20040628085831:Features ~10
 #@+node:EKR.20040506075328.3:(Perfect Import)
 #@+node:EKR.20040506091116: Notes
 @nocolor
@@ -713,6 +683,175 @@ if 0: # Not ready yet.
 #@-node:EKR.20040506115229:<< replace root's tree using write_lines >>
 #@-node:EKR.20040506075328.2:perfectImport
 #@-node:EKR.20040506075328.3:(Perfect Import)
+#@+node:EKR.20040503160843:@directory-import (Generalization of @import)
+#@-node:EKR.20040503160843:@directory-import (Generalization of @import)
+#@+node:EKR.20040422132037:Linux bugs 4
+@nocolor
+#@nonl
+#@+node:EKR.20040422132037.4:config problem on Linux
+@nocolor
+
+http://sourceforge.net/forum/message.php?msg_id=2373816
+By: sbeards
+
+A related issue is that leoConfig.txt gets auto-tangled and overwritten on startup.
+This will be a problem if Leo is run by a non-root user or the file is not readable.
+For example, I get the following traceback after starting Leo (when leoConfig.txt
+is read-only):
+
+Traceback (most recent call last):
+  File "/usr/local/share/leo-4.1-rc3/src/leoConfig.py", line 672, in update
+    cf = open(self.configFileName,mode)
+IOError: [Errno 13] Permission denied:
+'/usr/local/share/leo-4.1-rc3/src/../config/leoConfig.txt'
+
+Is there a reason leoConfig.txt gets auto-tangled on startup? Is there anyway
+to disable this? Is this by design?
+#@-node:EKR.20040422132037.4:config problem on Linux
+#@+node:EKR.20040422132037.5:Backspace problems on Linux
+Shift+Ctrl+BkSp doesn't delete node   
+#@nonl
+#@+node:EKR.20040422132037.6:Dave Hein: fix
+By: dthein ( Dave Hein ) 
+ RE: BUG: Shift+Ctrl+BkSp doesn't delete node   
+2004-01-15 03:30  
+
+ OK, the cause of the keymapping problem is a issue with the X11 keyboard mapping, not with Tk.
+
+If you have this problem on your system, issue the command:
+
+xmodmap -pke 
+
+and look in the results for the line for keycode 22. I'll bet it shows something like:
+
+keycode 22 = BackSpace Terminate_Server
+
+That second token ("Terminate_Server") is what is supposed to be mapped to Shift-Backspace. You want this second token to be either not present or to be BackSpace.
+
+To fix this, create a file (e.g. .Xmodmap) and give it the content:
+
+keycode 22 = BackSpace
+
+then run the command:
+
+xmodmap .Xmodmap
+
+And you'll have fixed the problem.
+
+Now, on my system this also disables the ability to terminate the X server using Ctrl-Alt-BackSpace ... this is because of some conflict with xdb (xdb is the newer keyboard mapping facility in XFree86 ... xmodmap is the old original X11 keyboard mapping facility). I'm still working on that.
+
+I'm also not able to get xmodmap to make this change during X11 startup (again because of conflicts with xdb). But I'm working on that as well.
+#@nonl
+#@-node:EKR.20040422132037.6:Dave Hein: fix
+#@-node:EKR.20040422132037.5:Backspace problems on Linux
+#@+node:EKR.20040422132037.7:Bug: vpython and mac
+Jon Schull <jschull@softlock.com>  
+Date:  2003/12/30 Tue PM 05:50:51 EST 
+To:  edreamleo@charter.net 
+Subject:  Leo, Mac OS X 10.3, and VPython 
+             
+I've been evaluating leo or vpython programming on  Mac OS X 10.3, and 
+have some observations and a suggestion.
+
+Observations.
+		Leo runs under X11 as well as under OS X.
+		My X11 python configuration was created using the recipe at XXX 
+(which enables vpython).
+		The OS X configuration is vanilla MacPython from MacPython.org, along 
+with AquaTclTk batteries included XXX.
+		In both environments I can run leo under python leo.py and under idle.
+		Under OS X we get font smoothing, but we can't run visual python 
+programs (python crashes;  this is a known incompatibility with 
+MacPython.)
+	
+		Under X11 we can run visual python programs like this one
+			#box.py
+			from visual import *
+			box()
+			
+    And we can even run them under leo (under X11). HOWEVER, when the 
+visual python program is terminated, leo vanishes (leo and the vp 
+program apparently run in the same space)
+	
+	Under x11, we can keep leo alive by putting the vp program in its own 
+space:
+	
+		os.popen3('/sw/bin/python /Users/jis/box.py')
+	
+	However,  this doesn't let us see the output of stderr and stdout.  
+Those text streams are available...
+		
+		def do(cmd='ls'):
+			from os import popen3
+			pIn,pOut,pErr=0,1,2
+			popenResults=popen3(cmd)
+			print popenResults[pOut].read()
+			print popenResults[pErr].read()
+		
+		import os	
+		do('/sw/bin/python /Users/jis/box.py')
+		
+	...but only when the vpython program terminates.
+	
+	Here's the good news:  if we execute our vp program with 
+/sw/bin/idle.py rather than with python, we get to see the program 
+output in real time (under idle, under X11).
+	
+		import os	
+		os.chdir('/sw/lib/python2.3/idlelib')
+		os.popen3('/sw/bin/python idle.py -r /Users/jis/box.py')
+		
+		#this runs as an executed script in leo, and produces a live idle 
+with real time ongoing output.
+	
+	Now, while idle is running, leo sits in suspended animation.  But when 
+the vpython program terminates, we are left in idle, and when idle is 
+terminated, leo becomes active again.
+	
+	It would be even better if leo were not suspended (using os.spawn, 
+perhaps) but the real point is that I would really really like leo's 
+"Execute script" command to execute code this way and spare me having 
+to  hard-write the path to box.py.  It ought to be possible to 
+eliminate os.chdir as well.
+
+------------------
+Jon Schull, Ph.D.
+Associate Professor
+Information Technology
+Rochester Institute of Technology
+schull@digitalgoods.com 585-738-6696
+#@-node:EKR.20040422132037.7:Bug: vpython and mac
+#@+node:EKR.20040422132037.8:Mouse / Paste Anomalies
+@nocolor
+
+By: Bill Drissel - drissel
+2004-04-13 19:43  
+
+Xserver (XFree86 under Cygwin) on PC (W2000); controlling Linux Red Hat;
+buncha windows up including one Leo window and many xterms and Xemacs.
+
+A: means action, R: means result
+
+A: hilite text in Xemacs window; move mouse symbol to Leo body pane; middle click
+R: text shows in body pane; headline is not marked with blue square; text is not colorized; text is not saved to file
+
+A: hilite text in Xemacs window; move mouse symbol to Leo body pane; middle click; locate mouse symbol in text
+R: text shows in body pane; headline is not marked with blue square; text is not colorized; text is not saved to file
+
+A: hilite text in Xemacs window; move mouse symbol to Leo body pane; middle click; up arrow to locate Ibeam in text
+R: Joy! colorizes, marks headline and saves!
+
+A: hilite headline text; type on KB
+R: keystrokes replace hilited text
+
+A: hilite text in Xemacs window; hilite headline; middle click
+R: hilited text appended to headline rather than replacing
+
+This last anomaly seems to persist regardless of how the headline is hilited and regardless of pasting method (middle click or Control-V)
+#@nonl
+#@-node:EKR.20040422132037.8:Mouse / Paste Anomalies
+#@-node:EKR.20040422132037:Linux bugs 4
+#@+node:EKR.20040628085831:Features: 4
 #@+node:ekr.20040323084434:(Add granularity setting for undo)
 #@+node:ekr.20040328111626:Notes
 @nocolor
@@ -1350,8 +1489,6 @@ print "actual  :",textResult
 #@-node:ekr.20031218072017.1497:<< print mismatch trace >>
 #@-node:ekr.20031218072017.1493:undoRedoText
 #@-node:ekr.20040323084434:(Add granularity setting for undo)
-#@+node:EKR.20040503160843:@directory-import (Generalization of @import)
-#@-node:EKR.20040503160843:@directory-import (Generalization of @import)
 #@+node:ekr.20031218072017.791:(Finish Check Tabs, Check Python Syntax and PrettyPrint Python commands)
 @
 
@@ -1732,545 +1869,88 @@ def saveListOfNodes (self,listOfVnodes):
 #@nonl
 #@-node:EKR.20040606195417.3:u.saveListOfNodes
 #@-node:EKR.20040601133022.1:(Finish the new undo)
-#@+node:EKR.20040620100116:? Replace string.join(x,'\n') by string.join(x,newline) ??
-#@-node:EKR.20040620100116:? Replace string.join(x,'\n') by string.join(x,newline) ??
-#@+node:EKR.20040618071921:(Improve how Execute Script gets line number info from tracebacks)
-#@+node:EKR.20040618092132:Posting
-@nocolor
-http://sourceforge.net/forum/message.php?msg_id=2618391
+#@-node:EKR.20040628085831:Features: 4
+#@+node:EKR.20040609155110:Docs
+#@+node:EKR.20040503091612:Dangers of @file-thin: converting to @file-thin
+Using @ignore with @file-thin is asking for trouble.
+If you remove the @ignore and then save, you will lose data.
 
-heres a few more ways to get error traceback.
-
-@color
-import sys, traceback
-print traceback.format_exception(*sys.exc_info())
-@nocolor
-the list returned is all over the place for where the line number is.
-might be last list entry, might be next to last.
-
-@color
-import inspect
-print inspect.trace()
-
-import sys, cgitb
-print '\n\ncgitb\n',cgitb.text(sys.exc_info(),1)
-
-@nocolor
-sf python bugtracker [ 954364 ] 2.3 
-inspect.getframeinfo wrong tb line numbers
-
-python aspn cookbook 52215 Get_more_information_from_tracebacks
-http://aspn.activestate.com/ASPN/Cookbook/Python/Recipe/52215
+How to recover the data:
+	- Read Outline.
+	- Remove @ignore
+	- Import derived file... 
 #@nonl
-#@-node:EKR.20040618092132:Posting
-#@+node:ekr.20031218072017.2864:goToLineNumber & allies
-def goToLineNumber (self,root=None,lines=None,n=None):
+#@-node:EKR.20040503091612:Dangers of @file-thin: converting to @file-thin
+#@+node:ekr.20031218072017.756:Document how to use pdb plugin
+#@-node:ekr.20031218072017.756:Document how to use pdb plugin
+#@+node:EKR.20040608091618:Document @thin and @all on Leo's web site
+#@-node:EKR.20040608091618:Document @thin and @all on Leo's web site
+#@+node:EKR.20040610130112:Document @killcolor on Leo's web site
+#@-node:EKR.20040610130112:Document @killcolor on Leo's web site
+#@+node:EKR.20040610143355:Document Paste Retaining Clones
+#@-node:EKR.20040610143355:Document Paste Retaining Clones
+#@+node:EKR.20040609101343:Contribute to Python success stories
+#@+node:EKR.20040609101343.1:@url http://python.oreilly.com/news/python_success_stories.pdf
+#@-node:EKR.20040609101343.1:@url http://python.oreilly.com/news/python_success_stories.pdf
+#@-node:EKR.20040609101343:Contribute to Python success stories
+#@+node:EKR.20040607073134:Download and study wingide
+#@+node:EKR.20040607073134.1:@url http://wingide.com/
+#@-node:EKR.20040607073134.1:@url http://wingide.com/
+#@-node:EKR.20040607073134:Download and study wingide
+#@+node:EKR.20040611081747.1:Look at windows scripting
+------cut openleo.pys
+@path c:\bIn\pys\
+@lineending crnl
+@
+w04609p09:57:19 a pys to open leo and do something.
+you need the win32 extensions and you have to enable 
+the script engine. details how on google or on the win32 page.
 
-    c = self ; p = c.currentPosition() ; root1 = root
-    if root is None:
-        << set root to the nearest ancestor @file node >>
-    if lines is None:
-        << read the file into lines >>
-    if n is None:
-        << get n, the line number, from a dialog >>
-    if n==1:
-        p = root ; n2 = 1 ; found = True
-    elif n >= len(lines):
-        p = root ; found = False
-        n2 = p.bodyString().count('\n')
-    elif root.isAtAsisFileNode():
-        << count outline lines, setting p,n2,found >>
-    else:
-        vnodeName,childIndex,gnx,n2,delim = self.convertLineToVnodeNameIndexLine(lines,n,root)
-        found = True
-        if not vnodeName:
-            g.es("error handling: " + root.headString())
-            return
-        << set p to the node given by vnodeName and gnx or childIndex or n >>
-    << select p and make it visible >>
-    << put the cursor on line n2 of the body text >>
-#@nonl
-#@+node:ekr.20031218072017.2865:<< set root to the nearest ancestor @file node >>
-fileName = None
-for p in p.self_and_parents_iter():
-    fileName = p.anyAtFileNodeName()
-    if fileName: break
+the sendkeys method can insert any test or control codes
+msdn or microsoft.com/scripting
 
-# New in 4.2: Search the entire tree for joined nodes.
-if not fileName:
-    p1 = c.currentPosition()
-    for p in c.all_positions_iter():
-        if p.v.t == p1.v.t and p != p1:
-            # Found a joined position.
-            for p in p.self_and_parents_iter():
-                fileName = p.anyAtFileNodeName()
-                if fileName: break
-        if fileName: break
-    
-if fileName:
-    # g.trace(fileName,p)
-    root = p.copy()
-else:
-    g.es("Go to line number: ancestor must be @file node", color="blue")
-    return
-#@nonl
-#@-node:ekr.20031218072017.2865:<< set root to the nearest ancestor @file node >>
-#@+node:ekr.20031218072017.2866:<< read the file into lines >>
-# 1/26/03: calculate the full path.
-d = g.scanDirectives(c)
-path = d.get("path")
-
-fileName = g.os_path_join(path,fileName)
-
-try:
-    file=open(fileName)
-    lines = file.readlines()
-    file.close()
-except:
-    g.es("not found: " + fileName)
-    return
-    
-#@-node:ekr.20031218072017.2866:<< read the file into lines >>
-#@+node:ekr.20031218072017.2867:<< get n, the line number, from a dialog >>
-n = g.app.gui.runAskOkCancelNumberDialog("Enter Line Number","Line number:")
-if n == -1:
-    return
-#@nonl
-#@-node:ekr.20031218072017.2867:<< get n, the line number, from a dialog >>
-#@+node:ekr.20031218072017.2868:<< count outline lines, setting p,n2,found >> (@file-nosent only)
-p = lastv = root
-prev = 0 ; found = False
-for p in p.self_and_subtree_iter():
-    lastv = p.copy()
-    s = p.bodyString()
-    lines = s.count('\n')
-    if len(s) > 0 and s[-1] != '\n':
-        lines += 1
-    # print lines,prev,p
-    if prev + lines >= n:
-        found = True ; break
-    prev += lines
-
-p = lastv
-n2 = max(1,n-prev)
-#@nonl
-#@-node:ekr.20031218072017.2868:<< count outline lines, setting p,n2,found >> (@file-nosent only)
-#@+node:ekr.20031218072017.2869:<< set p to the node given by vnodeName and gnx or childIndex or n >>
-if gnx:
-    << 4.2: get node from gnx >>
-elif childIndex == -1:
-    << 4.x: scan for the node using tnodeList and n >>
-else:
-    << 3.x: scan for the node with the given childIndex >>
-#@nonl
-#@+node:EKR.20040609110138:<< 4.2: get node from gnx >>
-found = False
-gnx = g.app.nodeIndices.scanGnx(gnx,0)
-
-# g.trace(vnodeName)
-# g.trace(gnx)
-
-for p in root.self_and_subtree_iter():
-    if p.matchHeadline(vnodeName):
-        # g.trace(p.v.t.fileIndex)
-        if p.v.t.fileIndex == gnx:
-            found = True ; break
-
-if not found:
-    g.es("not found: " + vnodeName, color="red")
-    return
-#@nonl
-#@-node:EKR.20040609110138:<< 4.2: get node from gnx >>
-#@+node:ekr.20031218072017.2870:<< 4.x: scan for the node using tnodeList and n >>
-# This is about the best that can be done without replicating the entire atFile write logic.
-
-ok = True
-
-if not hasattr(root.v.t,"tnodeList"):
-    s = "no child index for " + root.headString()
-    print s ; g.es(s, color="red")
-    ok = False
-
-if ok:
-    tnodeList = root.v.t.tnodeList
-    << set tnodeIndex to the number of +node sentinels before line n >>
-    tnodeIndex = max(0,tnodeIndex)
-    << set p to the first vnode whose tnode is tnodeList[tnodeIndex] or set ok = False >>
-            
-if not ok:
-    # Fall back to the old logic.
-    << set p to the first node whose headline matches vnodeName >>
-#@nonl
-#@+node:ekr.20031218072017.2871:<< set tnodeIndex to the number of +node sentinels before line n >>
-tnodeIndex = -1 # Don't count the @file node.
-scanned = 0 # count of lines scanned.
-
-for s in lines:
-    if scanned >= n:
-        break
-    i = g.skip_ws(s,0)
-    if g.match(s,i,delim):
-        i += len(delim)
-        if g.match(s,i,"+node"):
-            # g.trace(tnodeIndex,s.rstrip())
-            tnodeIndex += 1
-    scanned += 1
-#@nonl
-#@-node:ekr.20031218072017.2871:<< set tnodeIndex to the number of +node sentinels before line n >>
-#@+node:ekr.20031218072017.2872:<< set p to the first vnode whose tnode is tnodeList[tnodeIndex] or set ok = false >>
-@ We use the tnodeList to find a _tnode_ corresponding to the proper node, so the user will for sure be editing the proper text, even if several nodes happen to have the same headline.  This is really all that we need.
-
-However, this code has no good way of distinguishing between different cloned vnodes in the file: they all have the same tnode.  So this code just picks p = t.vnodeList[0] and leaves it at that.
-
-The only way to do better is to scan the outline, replicating the write logic to determine which vnode created the given line.  That's way too difficult, and it would create an unwanted dependency in this code.
 @c
+pypath = r'C:\c\py\Python233'
+py =  pypath + r'\python.exe -itOO '
+leosrc = r'c:\c\leo\leo4CVS233\src'
+name = "blank.leo"
 
-# g.trace("tnodeIndex",tnodeIndex)
-if tnodeIndex < len(tnodeList):
-    t = tnodeList[tnodeIndex]
-    # Find the first vnode whose tnode is t.
-    found = False
-    for p in root.self_and_subtree_iter():
-        if p.v.t == t:
-            found = True ; break
-    if not found:
-        s = "tnode not found for " + vnodeName
-        print s ; g.es(s, color="red") ; ok = False
-    elif p.headString().strip() != vnodeName:
-        if 0: # Apparently this error doesn't prevent a later scan for working properly.
-            s = "Mismatched vnodeName\nExpecting: %s\n got: %s" % (p.headString(),vnodeName)
-            print s ; g.es(s, color="red")
-        ok = False
-else:
-    if root1 is None: # Kludge: disable this message when called by goToScriptLineNumber.
-        s = "Invalid computed tnodeIndex: %d" % tnodeIndex
-        print s ; g.es(s, color = "red")
-    ok = False
+WshShell = WScript.CreateObject("WScript.Shell")
+
+#look like it comes up untitled 
+# if it cant find an existing leo of that name?
+
+WshShell.Run(py + leosrc + r'\Leo.py ../' + name)
+WScript.Sleep(4900) 
+
+wname = "untitled"
+
+WshShell.AppActivate(wname);  WScript.Sleep(2100)
+WshShell.SendKeys("%Fe");   WScript.Sleep(1300);  #^Q
+
+---end openleo.pys
 #@nonl
-#@-node:ekr.20031218072017.2872:<< set p to the first vnode whose tnode is tnodeList[tnodeIndex] or set ok = false >>
-#@+node:ekr.20031218072017.2873:<< set p to the first node whose headline matches vnodeName >>
-found = False
-for p in root.self_and_subtree_iter():
-    if p.matchHeadline(vnodeName):
-        found = True ; break
+#@-node:EKR.20040611081747.1:Look at windows scripting
+#@+node:EKR.20040616112407:Create a FAQ entry about using @thin in a cooperative environment
+@nocolor
 
-if not found:
-    s = "not found: " + vnodeName
-    print s ; g.es(s, color="red")
-    return
+The general idea is that developers should use @thin in a cvs environment, and only commit thin derived files.
+
+Consider .leo files to be private in a cooperative environment.  Only "reference" .leo files get committed to cvs: each developer uses a private copy.
+
+Edward
 #@nonl
-#@-node:ekr.20031218072017.2873:<< set p to the first node whose headline matches vnodeName >>
-#@-node:ekr.20031218072017.2870:<< 4.x: scan for the node using tnodeList and n >>
-#@+node:ekr.20031218072017.2874:<< 3.x: scan for the node with the given childIndex >>
-found = False
-for p in root.self_and_subtree_iter():
-    if p.matchHeadline(vnodeName):
-        if childIndex <= 0 or p.childIndex() + 1 == childIndex:
-            found = True ; break
-
-if not found:
-    g.es("not found: " + vnodeName, color="red")
-    return
-#@nonl
-#@-node:ekr.20031218072017.2874:<< 3.x: scan for the node with the given childIndex >>
-#@-node:ekr.20031218072017.2869:<< set p to the node given by vnodeName and gnx or childIndex or n >>
-#@+node:ekr.20031218072017.2875:<< select p and make it visible >>
-c.beginUpdate()
-c.frame.tree.expandAllAncestors(p)
-c.selectVnode(p)
-c.endUpdate()
-#@nonl
-#@-node:ekr.20031218072017.2875:<< select p and make it visible >>
-#@+node:ekr.20031218072017.2876:<< put the cursor on line n2 of the body text >>
-if found:
-    c.frame.body.setInsertPointToStartOfLine(n2-1)
-else:
-    c.frame.body.setInsertionPointToEnd()
-    g.es("%d lines" % len(lines), color="blue")
-
-c.frame.body.makeInsertPointVisible()
-#@nonl
-#@-node:ekr.20031218072017.2876:<< put the cursor on line n2 of the body text >>
-#@+node:ekr.20031218072017.2877:convertLineToVnodeNameIndexLine
-@ We count "real" lines in the derived files, ignoring all sentinels that do not arise from source lines.  When the indicated line is found, we scan backwards for an @+body line, get the vnode's name from that line and set p to the indicated vnode.  This will fail if vnode names have been changed, and that can't be helped.
-
-Returns (vnodeName,offset)
-
-vnodeName: the name found in the previous @+body sentinel.
-offset: the offset within p of the desired line.
-@c
-
-def convertLineToVnodeNameIndexLine (self,lines,n,root):
-    
-    """Convert a line number n to a vnode name, (child index or gnx) and line number."""
-    
-    c = self ; at = c.atFileCommands
-    childIndex = 0 ; gnx = None ; newDerivedFile = False
-    thinFile = root.isAtThinFileNode()
-    << set delim, leoLine from the @+leo line >>
-    if not delim:
-        g.es("bad @+leo sentinel")
-        return None,None,None,None,None
-    << scan back to @+node, setting offset,nodeSentinelLine >>
-    if nodeSentinelLine == -1:
-        # The line precedes the first @+node sentinel
-        # g.trace("before first line")
-        return root.headString(),0,gnx,1,delim # 10/13/03
-    s = lines[nodeSentinelLine]
-    # g.trace(s)
-    << set vnodeName and (childIndex or gnx) from s >>
-    # g.trace("childIndex,offset",childIndex,offset,vnodeName)
-    return vnodeName,childIndex,gnx,offset,delim
-#@+node:ekr.20031218072017.2878:<< set delim, leoLine from the @+leo line >>
-# Find the @+leo line.
-tag = "@+leo"
-i = 0 
-while i < len(lines) and lines[i].find(tag)==-1:
-    i += 1
-leoLine = i # Index of the line containing the leo sentinel
-
-if leoLine < len(lines):
-    s = lines[leoLine]
-    valid,newDerivedFile,start,end = at.parseLeoSentinel(s)
-    if valid: delim = start + '@'
-    else:     delim = None
-else:
-    delim = None
-#@-node:ekr.20031218072017.2878:<< set delim, leoLine from the @+leo line >>
-#@+node:ekr.20031218072017.2879:<< scan back to  @+node, setting offset,nodeSentinelLine >>
-offset = 0 # This is essentially the Tk line number.
-nodeSentinelLine = -1
-line = n - 1
-while line >= 0:
-    s = lines[line]
-    # g.trace(s)
-    i = g.skip_ws(s,0)
-    if g.match(s,i,delim):
-        << handle delim while scanning backward >>
-    else:
-        offset += 1 # Assume the line is real.  A dubious assumption.
-    line -= 1
-#@nonl
-#@+node:ekr.20031218072017.2880:<< handle delim while scanning backward >>
-if line == n:
-    g.es("line "+str(n)+" is a sentinel line")
-i += len(delim)
-
-if g.match(s,i,"-node"):
-    # The end of a nested section.
-    line = self.skipToMatchingNodeSentinel(lines,line,delim)
-elif g.match(s,i,"+node"):
-    nodeSentinelLine = line
-    break
-elif g.match(s,i,"<<") or g.match(s,i,"@first"):
-    offset += 1 # Count these as a "real" lines.
-#@nonl
-#@-node:ekr.20031218072017.2880:<< handle delim while scanning backward >>
-#@-node:ekr.20031218072017.2879:<< scan back to  @+node, setting offset,nodeSentinelLine >>
-#@+node:ekr.20031218072017.2881:<< set vnodeName and (childIndex or gnx) from s >>
-if newDerivedFile:
-    i = 0
-    if thinFile:
-        # gnx is lies between the first and second ':':
-        i = s.find(':',i)
-        if i > 0:
-            i += 1
-            j = s.find(':',i)
-            if j > 0:
-                gnx = s[i:j]
-            else: i = len(s)
-        else: i = len(s)
-    # vnode name is everything following the first or second':'
-    # childIndex is -1 as a flag for later code.
-    i = s.find(':',i)
-    if i > -1: vnodeName = s[i+1:].strip()
-    else: vnodeName = None
-    childIndex = -1
-else:
-    # vnode name is everything following the third ':'
-    i = 0 ; colons = 0
-    while i < len(s) and colons < 3:
-        if s[i] == ':':
-            colons += 1
-            if colons == 1 and i+1 < len(s) and s[i+1] in string.digits:
-                junk,childIndex = g.skip_long(s,i+1)
-        i += 1
-    vnodeName = s[i:].strip()
-    
-# g.trace("gnx",gnx,"vnodeName:",vnodeName)
-if not vnodeName:
-    vnodeName = None
-    g.es("bad @+node sentinel")
-#@nonl
-#@-node:ekr.20031218072017.2881:<< set vnodeName and (childIndex or gnx) from s >>
-#@-node:ekr.20031218072017.2877:convertLineToVnodeNameIndexLine
-#@+node:ekr.20031218072017.2882:skipToMatchingNodeSentinel
-def skipToMatchingNodeSentinel (self,lines,n,delim):
-    
-    s = lines[n]
-    i = g.skip_ws(s,0)
-    assert(g.match(s,i,delim))
-    i += len(delim)
-    if g.match(s,i,"+node"):
-        start="+node" ; end="-node" ; delta=1
-    else:
-        assert(g.match(s,i,"-node"))
-        start="-node" ; end="+node" ; delta=-1
-    # Scan to matching @+-node delim.
-    n += delta ; level = 0
-    while 0 <= n < len(lines):
-        s = lines[n] ; i = g.skip_ws(s,0)
-        if g.match(s,i,delim):
-            i += len(delim)
-            if g.match(s,i,start):
-                level += 1
-            elif g.match(s,i,end):
-                if level == 0: break
-                else: level -= 1
-        n += delta
-        
-    # g.trace(n)
-    return n
-#@nonl
-#@-node:ekr.20031218072017.2882:skipToMatchingNodeSentinel
-#@-node:ekr.20031218072017.2864:goToLineNumber & allies
-#@+node:EKR.20040612232221:goToScriptLineNumber
-def goToScriptLineNumber (self,root,script,n):
-
-    c = self
-    
-    lines = g.splitLines(script)
-    c.goToLineNumber(root=root,lines=lines,n=n)
-#@nonl
-#@-node:EKR.20040612232221:goToScriptLineNumber
-#@+node:ekr.20031218072017.2140:c.executeScript
-def executeScript(self,p=None,script=None):
-
-    """This executes body text as a Python script.
-    
-    We execute the selected text, or the entire body text if no text is selected."""
-    
-    c = self ; error = False ; s = None ; script1 = script
-
-    if not script:
-        script = g.getScript(c,p)
-    << redirect output >>
-    if script:
-        script = script.strip()
-    if script:
-        script += '\n' # Make sure we end the script properly.
-        try:
-            exec script in {} # Use {} to get a pristine environment!
-            << unredirect output >>
-            if not script1:
-                g.es("end of script",color="purple")
-        except:
-            << unredirect output >>
-            g.es("exception executing script")
-            n = g.es_exception(full=False,c=c)
-            if n is not None:
-                << dump the lines of script near the error >>
-                if p and not script1:
-                    c.goToScriptLineNumber(p,script,n)
-            c.frame.tree.redrawAfterException()
-    elif not error:
-        << unredirect output >>
-        g.es("no script selected",color="blue")
-        
-    # Force a redraw _after_ all messages have been output.
-    c.redraw() 
-#@nonl
-#@+node:ekr.20031218072017.2143:<< redirect output >>
-if g.app.config.redirect_execute_script_output_to_log_pane:
-
-    g.redirectStdout() # Redirect stdout
-    g.redirectStderr() # Redirect stderr
-#@nonl
-#@-node:ekr.20031218072017.2143:<< redirect output >>
-#@+node:EKR.20040612215018:<< dump the lines of script near the error >>
-lines = g.splitLines(script)
-
-s = '-' * 20
-print s; g.es(s)
-
-if 1:
-    # Just print the error line.
-    s = "line %d: %s" % (n,lines[n-1])
-    print s, ; g.es(s,newline=False)
-else:
-    i = max(0,n-2)
-    j = min(n+2,len(lines))
-    # g.trace(n,i,j)
-    while i < j:
-        ch = g.choose(i==n-1,'*',' ')
-        s = "%s line %d: %s" % (ch,i+1,lines[i])
-        print s, ; g.es(s,newline=False)
-        i += 1
-#@nonl
-#@-node:EKR.20040612215018:<< dump the lines of script near the error >>
-#@+node:EKR.20040627100424:<< unredirect output >>
-if g.app.config.redirect_execute_script_output_to_log_pane:
-
-    g.restoreStderr()
-    g.restoreStdout()
-#@nonl
-#@-node:EKR.20040627100424:<< unredirect output >>
-#@-node:ekr.20031218072017.2140:c.executeScript
-#@+node:EKR.20040614071102.1:g.getScript
-def getScript (c,p):
-
-    if not p: p = c.currentPosition()
-    old_body = p.bodyString()
-    
-    try:
-        script = None
-        if c.frame.body.hasTextSelection():
-            # Temporarily replace v's body text with just the selected text.
-            s = c.frame.body.getSelectedText()
-            p.v.setTnodeText(s) 
-        else:
-            s = c.frame.body.getAllText()
-    
-        if s.strip():
-            g.app.scriptDict["script1"]=s
-            df = c.atFileCommands.new_df
-            df.scanAllDirectives(p,scripting=True)
-            # Force Python comment delims.
-            df.startSentinelComment = "#"
-            df.endSentinelComment = None
-            if 1: # new code: using generalized string-write logic.
-                df.write(p.copy(),nosentinels=False,toString=True)
-                script = df.stringOutput
-            else: # old code: works
-                # Write the "derived file" into fo.
-                fo = g.fileLikeObject()
-                # nosentinels=False makes it much easier to find the proper line.
-                df.write(p.copy(),nosentinels=False,scriptFile=fo) 
-                script = fo.get()
-            assert(p)
-            g.app.scriptDict["script2"]=script
-            error = len(script) == 0
-    except:
-        s = "unexpected exception"
-        print s ; g.es(s)
-        g.es_exception()
-        script = None
-
-    p.v.setTnodeText(old_body)
-    return script
-#@nonl
-#@-node:EKR.20040614071102.1:g.getScript
-#@-node:EKR.20040618071921:(Improve how Execute Script gets line number info from tracebacks)
-#@-node:EKR.20040628085831:Features ~10
-#@+node:EKR.20040628070218:plugins...
-#@+node:ekr.20040629121906:Fix Script plugin bugs
-- Don't specify font in buttons on the Mac
-#@nonl
-#@-node:ekr.20040629121906:Fix Script plugin bugs
+#@-node:EKR.20040616112407:Create a FAQ entry about using @thin in a cooperative environment
+#@-node:EKR.20040609155110:Docs
+#@+node:ekr.20040706080747:Plugins
+#@+node:ekr.20040629121906:Don't specify font in buttons on the Mac
+#@-node:ekr.20040629121906:Don't specify font in buttons on the Mac
 #@+node:ekr.20040629121906.1:Fix Node Navagator bugs
 - Names don't show up in the Marks button until a node has been marked.
 
 - Parent nodes don't always get expanded.
+
+- Leaks memory slightly.
 #@nonl
 #@-node:ekr.20040629121906.1:Fix Node Navagator bugs
 #@+node:EKR.20040622060649:Fix plugin bugs
@@ -2341,321 +2021,8 @@ e
 #@+node:EKR.20040618070854:@url http://rclick.netfirms.com/rCpython.htm
 #@-node:EKR.20040618070854:@url http://rclick.netfirms.com/rCpython.htm
 #@-node:EKR.20040618070817:Install latest version of dynabutton
-#@-node:EKR.20040628070218:plugins...
-#@+node:ekr.20040702064435:Fix problem with xml parsing
-@nocolor
-@language html
-https://sourceforge.net/forum/message.php?msg_id=2645776
-By: billp9619
-
-Yes this works now. However, the opposite should also be true ...that instead
-of <find_string></find_string> an outside process or editor is free to change
-it to <find_string/>. This currently causes Leo to fail to load the file reprting
-it was looking for </find_string>.
-
-This is original Leo xml:
-@color
-<preferences>
-</preferences>
-<find_panel_settings>
-<find_string></find_string>
-<change_string></change_string>
-</find_panel_settings>
-@nocolor
-
-My xml editor automatically changed it to this:
-
-@color
-<preferences/>
-<find_panel_settings>
-<find_string/>
-<change_string/>
-</find_panel_settings>
-@nocolor
-
-Leo will not load the edited "/>" type empty tags. 
-
-Both forms of empty tags should always be accepted because it is officially
-identical in meaning for xml.
-#@nonl
-#@-node:ekr.20040702064435:Fix problem with xml parsing
-#@+node:ekr.20040705071418:Warn when trying to save read-only file
-#@-node:ekr.20040705071418:Warn when trying to save read-only file
-#@-node:EKR.20040617105034:To do before 4.2 beta 3: feature complete
-#@+node:EKR.20040422132037:Linux: 4
-@nocolor
-#@nonl
-#@+node:EKR.20040422132037.4:config problem on Linux
-@nocolor
-
-http://sourceforge.net/forum/message.php?msg_id=2373816
-By: sbeards
-
-A related issue is that leoConfig.txt gets auto-tangled and overwritten on startup.
-This will be a problem if Leo is run by a non-root user or the file is not readable.
-For example, I get the following traceback after starting Leo (when leoConfig.txt
-is read-only):
-
-Traceback (most recent call last):
-  File "/usr/local/share/leo-4.1-rc3/src/leoConfig.py", line 672, in update
-    cf = open(self.configFileName,mode)
-IOError: [Errno 13] Permission denied:
-'/usr/local/share/leo-4.1-rc3/src/../config/leoConfig.txt'
-
-Is there a reason leoConfig.txt gets auto-tangled on startup? Is there anyway
-to disable this? Is this by design?
-#@-node:EKR.20040422132037.4:config problem on Linux
-#@+node:EKR.20040422132037.5:Backspace problems on Linux
-Shift+Ctrl+BkSp doesn't delete node   
-#@nonl
-#@+node:EKR.20040422132037.6:Dave Hein: fix
-By: dthein ( Dave Hein ) 
- RE: BUG: Shift+Ctrl+BkSp doesn't delete node   
-2004-01-15 03:30  
-
- OK, the cause of the keymapping problem is a issue with the X11 keyboard mapping, not with Tk.
-
-If you have this problem on your system, issue the command:
-
-xmodmap -pke 
-
-and look in the results for the line for keycode 22. I'll bet it shows something like:
-
-keycode 22 = BackSpace Terminate_Server
-
-That second token ("Terminate_Server") is what is supposed to be mapped to Shift-Backspace. You want this second token to be either not present or to be BackSpace.
-
-To fix this, create a file (e.g. .Xmodmap) and give it the content:
-
-keycode 22 = BackSpace
-
-then run the command:
-
-xmodmap .Xmodmap
-
-And you'll have fixed the problem.
-
-Now, on my system this also disables the ability to terminate the X server using Ctrl-Alt-BackSpace ... this is because of some conflict with xdb (xdb is the newer keyboard mapping facility in XFree86 ... xmodmap is the old original X11 keyboard mapping facility). I'm still working on that.
-
-I'm also not able to get xmodmap to make this change during X11 startup (again because of conflicts with xdb). But I'm working on that as well.
-#@nonl
-#@-node:EKR.20040422132037.6:Dave Hein: fix
-#@-node:EKR.20040422132037.5:Backspace problems on Linux
-#@+node:EKR.20040422132037.7:Bug: vpython and mac
-Jon Schull <jschull@softlock.com>  
-Date:  2003/12/30 Tue PM 05:50:51 EST 
-To:  edreamleo@charter.net 
-Subject:  Leo, Mac OS X 10.3, and VPython 
-             
-I've been evaluating leo or vpython programming on  Mac OS X 10.3, and 
-have some observations and a suggestion.
-
-Observations.
-		Leo runs under X11 as well as under OS X.
-		My X11 python configuration was created using the recipe at XXX 
-(which enables vpython).
-		The OS X configuration is vanilla MacPython from MacPython.org, along 
-with AquaTclTk batteries included XXX.
-		In both environments I can run leo under python leo.py and under idle.
-		Under OS X we get font smoothing, but we can't run visual python 
-programs (python crashes;  this is a known incompatibility with 
-MacPython.)
-	
-		Under X11 we can run visual python programs like this one
-			#box.py
-			from visual import *
-			box()
-			
-    And we can even run them under leo (under X11). HOWEVER, when the 
-visual python program is terminated, leo vanishes (leo and the vp 
-program apparently run in the same space)
-	
-	Under x11, we can keep leo alive by putting the vp program in its own 
-space:
-	
-		os.popen3('/sw/bin/python /Users/jis/box.py')
-	
-	However,  this doesn't let us see the output of stderr and stdout.  
-Those text streams are available...
-		
-		def do(cmd='ls'):
-			from os import popen3
-			pIn,pOut,pErr=0,1,2
-			popenResults=popen3(cmd)
-			print popenResults[pOut].read()
-			print popenResults[pErr].read()
-		
-		import os	
-		do('/sw/bin/python /Users/jis/box.py')
-		
-	...but only when the vpython program terminates.
-	
-	Here's the good news:  if we execute our vp program with 
-/sw/bin/idle.py rather than with python, we get to see the program 
-output in real time (under idle, under X11).
-	
-		import os	
-		os.chdir('/sw/lib/python2.3/idlelib')
-		os.popen3('/sw/bin/python idle.py -r /Users/jis/box.py')
-		
-		#this runs as an executed script in leo, and produces a live idle 
-with real time ongoing output.
-	
-	Now, while idle is running, leo sits in suspended animation.  But when 
-the vpython program terminates, we are left in idle, and when idle is 
-terminated, leo becomes active again.
-	
-	It would be even better if leo were not suspended (using os.spawn, 
-perhaps) but the real point is that I would really really like leo's 
-"Execute script" command to execute code this way and spare me having 
-to  hard-write the path to box.py.  It ought to be possible to 
-eliminate os.chdir as well.
-
-------------------
-Jon Schull, Ph.D.
-Associate Professor
-Information Technology
-Rochester Institute of Technology
-schull@digitalgoods.com 585-738-6696
-#@-node:EKR.20040422132037.7:Bug: vpython and mac
-#@+node:EKR.20040422132037.8:Mouse / Paste Anomalies
-@nocolor
-
-By: Bill Drissel - drissel
-2004-04-13 19:43  
-
-Xserver (XFree86 under Cygwin) on PC (W2000); controlling Linux Red Hat;
-buncha windows up including one Leo window and many xterms and Xemacs.
-
-A: means action, R: means result
-
-A: hilite text in Xemacs window; move mouse symbol to Leo body pane; middle click
-R: text shows in body pane; headline is not marked with blue square; text is not colorized; text is not saved to file
-
-A: hilite text in Xemacs window; move mouse symbol to Leo body pane; middle click; locate mouse symbol in text
-R: text shows in body pane; headline is not marked with blue square; text is not colorized; text is not saved to file
-
-A: hilite text in Xemacs window; move mouse symbol to Leo body pane; middle click; up arrow to locate Ibeam in text
-R: Joy! colorizes, marks headline and saves!
-
-A: hilite headline text; type on KB
-R: keystrokes replace hilited text
-
-A: hilite text in Xemacs window; hilite headline; middle click
-R: hilited text appended to headline rather than replacing
-
-This last anomaly seems to persist regardless of how the headline is hilited and regardless of pasting method (middle click or Control-V)
-#@nonl
-#@-node:EKR.20040422132037.8:Mouse / Paste Anomalies
-#@-node:EKR.20040422132037:Linux: 4
-#@+node:EKR.20040609155110:Docs, etc
-#@+node:ekr.20040323195916:Documentation
-@nocolor
-
-Update acknowledgements.
-
-Link to new scripting chapter.
-
-Convert FAQ to rST
-
-Convert all docs to rST?
-#@nonl
-#@+node:EKR.20040503091612:Dangers of @file-thin: converting to @file-thin
-Using @ignore with @file-thin is asking for trouble.
-If you remove the @ignore and then save, you will lose data.
-
-How to recover the data:
-	- Read Outline.
-	- Remove @ignore
-	- Import derived file... 
-#@nonl
-#@-node:EKR.20040503091612:Dangers of @file-thin: converting to @file-thin
-#@+node:ekr.20031218072017.756:Document how to use pdb plugin
-#@-node:ekr.20031218072017.756:Document how to use pdb plugin
-#@-node:ekr.20040323195916:Documentation
-#@+node:EKR.20040608091618:Document @thin and @all on Leo's web site
-#@-node:EKR.20040608091618:Document @thin and @all on Leo's web site
-#@+node:EKR.20040610130112:Document @killcolor on Leo's web site
-#@-node:EKR.20040610130112:Document @killcolor on Leo's web site
-#@+node:EKR.20040610143355:Document Paste Retaining Clones
-#@-node:EKR.20040610143355:Document Paste Retaining Clones
-#@+node:EKR.20040609101343:Contribute to Python success stories
-#@+node:EKR.20040609101343.1:@url http://python.oreilly.com/news/python_success_stories.pdf
-#@-node:EKR.20040609101343.1:@url http://python.oreilly.com/news/python_success_stories.pdf
-#@-node:EKR.20040609101343:Contribute to Python success stories
-#@+node:EKR.20040607073134:Download and study wingide
-#@+node:EKR.20040607073134.1:@url http://wingide.com/
-#@-node:EKR.20040607073134.1:@url http://wingide.com/
-#@-node:EKR.20040607073134:Download and study wingide
-#@+node:EKR.20040611081747.1:Look at windows scripting
-------cut openleo.pys
-@path c:\bIn\pys\
-@lineending crnl
-@
-w04609p09:57:19 a pys to open leo and do something.
-you need the win32 extensions and you have to enable 
-the script engine. details how on google or on the win32 page.
-
-the sendkeys method can insert any test or control codes
-msdn or microsoft.com/scripting
-
-@c
-pypath = r'C:\c\py\Python233'
-py =  pypath + r'\python.exe -itOO '
-leosrc = r'c:\c\leo\leo4CVS233\src'
-name = "blank.leo"
-
-WshShell = WScript.CreateObject("WScript.Shell")
-
-#look like it comes up untitled 
-# if it cant find an existing leo of that name?
-
-WshShell.Run(py + leosrc + r'\Leo.py ../' + name)
-WScript.Sleep(4900) 
-
-wname = "untitled"
-
-WshShell.AppActivate(wname);  WScript.Sleep(2100)
-WshShell.SendKeys("%Fe");   WScript.Sleep(1300);  #^Q
-
----end openleo.pys
-#@nonl
-#@-node:EKR.20040611081747.1:Look at windows scripting
-#@+node:EKR.20040616112407:Create a FAQ entry about using @thin in a cooperative environment
-@nocolor
-
-The general idea is that developers should use @thin in a cvs environment, and only commit thin derived files.
-
-Consider .leo files to be private in a cooperative environment.  Only "reference" .leo files get committed to cvs: each developer uses a private copy.
-
-Edward
-#@nonl
-#@-node:EKR.20040616112407:Create a FAQ entry about using @thin in a cooperative environment
-#@-node:EKR.20040609155110:Docs, etc
-#@+node:ekr.20040323195916.1:Tests
-@nocolor
-
-*** Figure out how to simplify unit tests.
-    - It is presently _way_ too hard to create tests.
-
-- Unit tests for node iterators.
-
-- Unit tests for undo/redo.
-
-** Test for memory leaks.
-
-- Test tangle/untangle commands.
-- Create unit tests for Find commands.
-
-- Test all changed code:
-	- Make a list of the code that has changed.
-
-- Run profiler on code.
-#@nonl
-#@+node:EKR.20040621184626:Finish unit tests for @asis
-@ - Support toString in asis methods
-#@-node:EKR.20040621184626:Finish unit tests for @asis
-#@-node:ekr.20040323195916.1:Tests
+#@+node:ekr.20040706080747.1:Make sure all plugins work with 4.2 code base
+#@-node:ekr.20040706080747.1:Make sure all plugins work with 4.2 code base
 #@+node:ekr.20040310092400.1:Use calltips in outline pane Isn't this a plugin??
 #@+node:ekr.20040324075752:Request
 @nocolor
@@ -3071,197 +2438,6 @@ def main():
 #@-node:ekr.20040324072124.10:main
 #@-node:ekr.20040324072124:CallTipWindow.py
 #@-node:ekr.20040310092400.1:Use calltips in outline pane Isn't this a plugin??
-#@+node:ekr.20040701120647:Pychecker stuff...
-#@+node:ekr.20040701152235:Fix shawdow warnings
-@killcolor
-
-cmp,dict,dir,file,id,type are all global functions.
-#@+node:ekr.20040701152235.2:leoApp
-c:\prog\leoCVS\leo\src\leoApp.py:209: (dict) shadows builtin
-c:\prog\leoCVS\leo\src\leoApp.py:224: (dict) shadows builtin
-c:\prog\leoCVS\leo\src\leoApp.py:368: (dir) shadows builtin
-c:\prog\leoCVS\leo\src\leoApp.py:401: (dir) shadows builtin
-#@nonl
-#@-node:ekr.20040701152235.2:leoApp
-#@+node:ekr.20040701152235.3:leoPlugins
-C:\prog\leoCVS\leo\src\leoPlugins.py:40: (file) shadows builtin
-C:\prog\leoCVS\leo\src\leoPlugins.py:53: (file) shadows builtin
-C:\prog\leoCVS\leo\src\leoPlugins.py:67: (file) shadows builtin
-C:\prog\leoCVS\leo\src\leoPlugins.py:72: (file) shadows builtin
-C:\prog\leoCVS\leo\src\leoPlugins.py:74: (file) shadows builtin
-#@nonl
-#@-node:ekr.20040701152235.3:leoPlugins
-#@+node:ekr.20040701152235.4:leoColor
-C:\prog\leoCVS\leo\src\leoColor.py:1948: (dict) shadows builtin
-C:\prog\leoCVS\leo\src\leoColor.py:2059: (dict) shadows builtin
-#@nonl
-#@-node:ekr.20040701152235.4:leoColor
-#@+node:ekr.20040701152235.5:leoNodes
-C:\prog\leoCVS\leo\src\leoNodes.py:578: (type) shadows builtin
-C:\prog\leoCVS\leo\src\leoNodes.py:1372: (id) shadows builtin
-C:\prog\leoCVS\leo\src\leoNodes.py:1394: (id) shadows builtin
-C:\prog\leoCVS\leo\src\leoNodes.py:1411: (id) shadows builtin
-C:\prog\leoCVS\leo\src\leoNodes.py:1412: (id) shadows builtin
-C:\prog\leoCVS\leo\src\leoNodes.py:1419: (id) shadows builtin
-C:\prog\leoCVS\leo\src\leoNodes.py:1443: (id) shadows builtin
-C:\prog\leoCVS\leo\src\leoNodes.py:1446: (id) shadows builtin
-#@nonl
-#@-node:ekr.20040701152235.5:leoNodes
-#@+node:ekr.20040701152235.6:leoCompare
-C:\prog\leoCVS\leo\src\leoCompare.py:44: (cmp) shadows builtin
-C:\prog\leoCVS\leo\src\leoCompare.py:397: (cmp) shadows builtin
-C:\prog\leoCVS\leo\src\leoCompare.py:468: (dir) shadows builtin
-#@nonl
-#@-node:ekr.20040701152235.6:leoCompare
-#@+node:ekr.20040701152235.8:leoFind
-c:\prog\leoCVS\leo\src\leoFind.py:864: (type) shadows builtin
-#@nonl
-#@-node:ekr.20040701152235.8:leoFind
-#@+node:ekr.20040701152235.9:leoMenu
-c:\prog\leoCVS\leo\src\leoMenu.py:656: (dict) shadows builtin
-c:\prog\leoCVS\leo\src\leoMenu.py:700: (dict) shadows builtin
-#@nonl
-#@-node:ekr.20040701152235.9:leoMenu
-#@+node:ekr.20040701152235.10:leoTkinterTree
-C:\prog\leoCVS\leo\src\leoTkinterTree.py:162: (id) shadows builtin
-C:\prog\leoCVS\leo\src\leoTkinterTree.py:167: (id) shadows builtin
-C:\prog\leoCVS\leo\src\leoTkinterTree.py:586: (id) shadows builtin
-C:\prog\leoCVS\leo\src\leoTkinterTree.py:639: (id) shadows builtin
-C:\prog\leoCVS\leo\src\leoTkinterTree.py:783: (id) shadows builtin
-C:\prog\leoCVS\leo\src\leoTkinterTree.py:844: (id) shadows builtin
-C:\prog\leoCVS\leo\src\leoTkinterTree.py:883: (type) shadows builtin
-C:\prog\leoCVS\leo\src\leoTkinterTree.py:893: (file) shadows builtin
-C:\prog\leoCVS\leo\src\leoTkinterTree.py:911: (id) shadows builtin
-C:\prog\leoCVS\leo\src\leoTkinterTree.py:949: (dict) shadows builtin
-C:\prog\leoCVS\leo\src\leoTkinterTree.py:1390: (id) shadows builtin
-C:\prog\leoCVS\leo\src\leoTkinterTree.py:1588: (id) shadows builtin
-C:\prog\leoCVS\leo\src\leoTkinterTree.py:1590: (id) shadows builtin
-#@nonl
-#@-node:ekr.20040701152235.10:leoTkinterTree
-#@+node:ekr.20040701152235.11:leoTkinterFrame
-C:\prog\leoCVS\leo\src\leoTkinterFrame.py:807: (dict) shadows builtin
-C:\prog\leoCVS\leo\src\leoTkinterFrame.py:1233: (file) shadows builtin
-
-c:\prog\leoCVS\leo\src\leoFrame.py:522: (type) shadows builtin
-c:\prog\leoCVS\leo\src\leoFrame.py:566: (dict) shadows builtin
-#@nonl
-#@-node:ekr.20040701152235.11:leoTkinterFrame
-#@+node:ekr.20040701152235.12:leoTkinterPrefs
-c:\prog\leoCVS\leo\src\leoTkinterPrefs.py:295: (dir) shadows builtin
-#@nonl
-#@-node:ekr.20040701152235.12:leoTkinterPrefs
-#@+node:ekr.20040701152235.13:leoTkinterGui
-c:\prog\leoCVS\leo\src\leoTkinterGui.py:78: (file) shadows builtin
-#@nonl
-#@-node:ekr.20040701152235.13:leoTkinterGui
-#@+node:ekr.20040701152235.14:leoAtFile
-C:\prog\leoCVS\leo\src\leoAtFile.py:336: (file) shadows builtin
-C:\prog\leoCVS\leo\src\leoAtFile.py:473: (dir) shadows builtin
-C:\prog\leoCVS\leo\src\leoAtFile.py:490: (dict) shadows builtin
-C:\prog\leoCVS\leo\src\leoAtFile.py:549: (dir) shadows builtin
-C:\prog\leoCVS\leo\src\leoAtFile.py:551: (dir) shadows builtin
-C:\prog\leoCVS\leo\src\leoAtFile.py:2142: (dir) shadows builtin
-C:\prog\leoCVS\leo\src\leoAtFile.py:2157: (dict) shadows builtin
-C:\prog\leoCVS\leo\src\leoAtFile.py:2278: (dir) shadows builtin
-C:\prog\leoCVS\leo\src\leoAtFile.py:2280: (dir) shadows builtin
-#@-node:ekr.20040701152235.14:leoAtFile
-#@+node:ekr.20040701152235.15:leoFileCommands
-C:\prog\leoCVS\leo\src\leoFileCommands.py:90: (id) shadows builtin
-C:\prog\leoCVS\leo\src\leoFileCommands.py:866: (id) shadows builtin
-C:\prog\leoCVS\leo\src\leoFileCommands.py:990: (dict) shadows builtin
-C:\prog\leoCVS\leo\src\leoFileCommands.py:1191: (id) shadows builtin
-C:\prog\leoCVS\leo\src\leoFileCommands.py:1228: (dir) shadows builtin
-C:\prog\leoCVS\leo\src\leoFileCommands.py:1269: (dir) shadows builtin
-C:\prog\leoCVS\leo\src\leoFileCommands.py:1318: (id) shadows builtin
-C:\prog\leoCVS\leo\src\leoFileCommands.py:1756: (id) shadows builtin
-C:\prog\leoCVS\leo\src\leoFileCommands.py:2018: (dir) shadows builtin
-#@nonl
-#@-node:ekr.20040701152235.15:leoFileCommands
-#@+node:ekr.20040701152235.16:leoImport
-C:\prog\leoCVS\leo\src\leoImport.py:52: (file) shadows builtin
-C:\prog\leoCVS\leo\src\leoImport.py:273: (file) shadows builtin
-C:\prog\leoCVS\leo\src\leoImport.py:473: (type) shadows builtin
-C:\prog\leoCVS\leo\src\leoImport.py:1626: (id) shadows builtin
-C:\prog\leoCVS\leo\src\leoImport.py:1648: (id) shadows builtin
-C:\prog\leoCVS\leo\src\leoImport.py:1650: (id) shadows builtin
-C:\prog\leoCVS\leo\src\leoImport.py:2303: (type) shadows builtin
-C:\prog\leoCVS\leo\src\leoImport.py:2348: (file) shadows builtin
-C:\prog\leoCVS\leo\src\leoImport.py:2371: (file) shadows builtin
-C:\prog\leoCVS\leo\src\leoImport.py:2398: (file) shadows builtin
-C:\prog\leoCVS\leo\src\leoImport.py:2426: (file) shadows builtin
-C:\prog\leoCVS\leo\src\leoImport.py:2476: (file) shadows builtin
-C:\prog\leoCVS\leo\src\leoImport.py:2727: (type) shadows builtin
-C:\prog\leoCVS\leo\src\leoImport.py:2792: (dict) shadows builtin
-#@nonl
-#@-node:ekr.20040701152235.16:leoImport
-#@+node:ekr.20040701152235.17:leoTangle
-c:\prog\leoCVS\leo\src\leoTangle.py:540: (dir) shadows builtin
-c:\prog\leoCVS\leo\src\leoTangle.py:541: (dir) shadows builtin
-c:\prog\leoCVS\leo\src\leoTangle.py:666: (dict) shadows builtin
-c:\prog\leoCVS\leo\src\leoTangle.py:718: (dict) shadows builtin
-c:\prog\leoCVS\leo\src\leoTangle.py:911: (dict) shadows builtin
-c:\prog\leoCVS\leo\src\leoTangle.py:924: (dict) shadows builtin
-c:\prog\leoCVS\leo\src\leoTangle.py:2038: (type) shadows builtin
-c:\prog\leoCVS\leo\src\leoTangle.py:3563: (dict) shadows builtin
-c:\prog\leoCVS\leo\src\leoTangle.py:3656: (dir) shadows builtin
-c:\prog\leoCVS\leo\src\leoTangle.py:3667: (dir) shadows builtin
-c:\prog\leoCVS\leo\src\leoTangle.py:3780: (dir) shadows builtin
-c:\prog\leoCVS\leo\src\leoTangle.py:3865: (type) shadows builtin
-#@nonl
-#@-node:ekr.20040701152235.17:leoTangle
-#@+node:ekr.20040701152235.18:leoCommands
-C:\prog\leoCVS\leo\src\leoCommands.py:324: (dict) shadows builtin
-C:\prog\leoCVS\leo\src\leoCommands.py:340: (dict) shadows builtin
-C:\prog\leoCVS\leo\src\leoCommands.py:346: (dict) shadows builtin
-C:\prog\leoCVS\leo\src\leoCommands.py:465: (file) shadows builtin
-C:\prog\leoCVS\leo\src\leoCommands.py:468: (dict) shadows builtin
-C:\prog\leoCVS\leo\src\leoCommands.py:480: (dict) shadows builtin
-C:\prog\leoCVS\leo\src\leoCommands.py:495: (file) shadows builtin
-C:\prog\leoCVS\leo\src\leoCommands.py:734: (file) shadows builtin
-C:\prog\leoCVS\leo\src\leoCommands.py:1238: (file) shadows builtin
-C:\prog\leoCVS\leo\src\leoCommands.py:1677: (dict) shadows builtin
-C:\prog\leoCVS\leo\src\leoCommands.py:1721: (dict) shadows builtin
-C:\prog\leoCVS\leo\src\leoCommands.py:1770: (dict) shadows builtin
-C:\prog\leoCVS\leo\src\leoCommands.py:1800: (dict) shadows builtin
-C:\prog\leoCVS\leo\src\leoCommands.py:2280: (dict) shadows builtin
-#@nonl
-#@-node:ekr.20040701152235.18:leoCommands
-#@-node:ekr.20040701152235:Fix shawdow warnings
-#@+node:ekr.20040701123332:To do: redirect output
-- Redirect output to a file-like-object, then check the contents of that object.
-#@nonl
-#@-node:ekr.20040701123332:To do: redirect output
-#@+node:ekr.20031218072017.2606:<< Import pychecker >>
-@color
-
-# See pycheckrc file in leoDist.leo for a list of erroneous warnings to be suppressed.
-
-if 0: # Set to 1 for lint-like testing.
-    try:
-        import pychecker.checker
-        # This works.  We may want to set options here...
-        # from pychecker import Config 
-        print ; print "Warning: pychecker.checker running..." ; print
-    except:
-        pass
-#@nonl
-#@-node:ekr.20031218072017.2606:<< Import pychecker >>
-#@-node:ekr.20040701120647:Pychecker stuff...
-#@+node:ekr.20031218072017.2606:<< Import pychecker >>
-@color
-
-# See pycheckrc file in leoDist.leo for a list of erroneous warnings to be suppressed.
-
-if 0: # Set to 1 for lint-like testing.
-    try:
-        import pychecker.checker
-        # This works.  We may want to set options here...
-        # from pychecker import Config 
-        print ; print "Warning: pychecker.checker running..." ; print
-    except:
-        pass
-#@nonl
-#@-node:ekr.20031218072017.2606:<< Import pychecker >>
 #@+node:ekr.20040701041539:(Check plugins for memory leaks & other performance problems)
 #@+node:ekr.20040705074955:Notes
 @killcolor
@@ -4690,6 +3866,209 @@ self.recentFiles = [] # 4.1: moved to commands class.  List of recent files
 #@+node:ekr.20040704102031:Turn off gc while reading .leo files?
 #@-node:ekr.20040704102031:Turn off gc while reading .leo files?
 #@-node:ekr.20040701041539:(Check plugins for memory leaks & other performance problems)
+#@-node:ekr.20040706080747:Plugins
+#@+node:ekr.20040323195916.1:Tests & pychecker
+@nocolor
+
+- Unit tests for node iterators.
+
+- Unit tests for undo/redo.
+
+** Test for memory leaks.
+
+- Test tangle/untangle commands.
+
+- Create unit tests for Find commands.
+
+- Create unit tests for all dialogs.
+
+- Test all changed code:
+	- Make a list of the code that has changed.
+
+- Run profiler on code.
+#@nonl
+#@+node:EKR.20040628085616.1:Test error recovery when reading descendentTnodeUa's
+#@-node:EKR.20040628085616.1:Test error recovery when reading descendentTnodeUa's
+#@+node:EKR.20040621184626:Finish unit tests for @asis
+@ - Support toString in asis methods
+#@-node:EKR.20040621184626:Finish unit tests for @asis
+#@+node:ekr.20040701120647:Pychecker stuff...
+#@+node:ekr.20040701152235:Fix shawdow warnings ?
+@killcolor
+
+cmp,dict,dir,file,id,type are all global functions.
+#@+node:ekr.20040701152235.2:leoApp
+c:\prog\leoCVS\leo\src\leoApp.py:209: (dict) shadows builtin
+c:\prog\leoCVS\leo\src\leoApp.py:224: (dict) shadows builtin
+c:\prog\leoCVS\leo\src\leoApp.py:368: (dir) shadows builtin
+c:\prog\leoCVS\leo\src\leoApp.py:401: (dir) shadows builtin
+#@nonl
+#@-node:ekr.20040701152235.2:leoApp
+#@+node:ekr.20040701152235.3:leoPlugins
+C:\prog\leoCVS\leo\src\leoPlugins.py:40: (file) shadows builtin
+C:\prog\leoCVS\leo\src\leoPlugins.py:53: (file) shadows builtin
+C:\prog\leoCVS\leo\src\leoPlugins.py:67: (file) shadows builtin
+C:\prog\leoCVS\leo\src\leoPlugins.py:72: (file) shadows builtin
+C:\prog\leoCVS\leo\src\leoPlugins.py:74: (file) shadows builtin
+#@nonl
+#@-node:ekr.20040701152235.3:leoPlugins
+#@+node:ekr.20040701152235.4:leoColor
+C:\prog\leoCVS\leo\src\leoColor.py:1948: (dict) shadows builtin
+C:\prog\leoCVS\leo\src\leoColor.py:2059: (dict) shadows builtin
+#@nonl
+#@-node:ekr.20040701152235.4:leoColor
+#@+node:ekr.20040701152235.5:leoNodes
+C:\prog\leoCVS\leo\src\leoNodes.py:578: (type) shadows builtin
+C:\prog\leoCVS\leo\src\leoNodes.py:1372: (id) shadows builtin
+C:\prog\leoCVS\leo\src\leoNodes.py:1394: (id) shadows builtin
+C:\prog\leoCVS\leo\src\leoNodes.py:1411: (id) shadows builtin
+C:\prog\leoCVS\leo\src\leoNodes.py:1412: (id) shadows builtin
+C:\prog\leoCVS\leo\src\leoNodes.py:1419: (id) shadows builtin
+C:\prog\leoCVS\leo\src\leoNodes.py:1443: (id) shadows builtin
+C:\prog\leoCVS\leo\src\leoNodes.py:1446: (id) shadows builtin
+#@nonl
+#@-node:ekr.20040701152235.5:leoNodes
+#@+node:ekr.20040701152235.6:leoCompare
+C:\prog\leoCVS\leo\src\leoCompare.py:44: (cmp) shadows builtin
+C:\prog\leoCVS\leo\src\leoCompare.py:397: (cmp) shadows builtin
+C:\prog\leoCVS\leo\src\leoCompare.py:468: (dir) shadows builtin
+#@nonl
+#@-node:ekr.20040701152235.6:leoCompare
+#@+node:ekr.20040701152235.8:leoFind
+c:\prog\leoCVS\leo\src\leoFind.py:864: (type) shadows builtin
+#@nonl
+#@-node:ekr.20040701152235.8:leoFind
+#@+node:ekr.20040701152235.9:leoMenu
+c:\prog\leoCVS\leo\src\leoMenu.py:656: (dict) shadows builtin
+c:\prog\leoCVS\leo\src\leoMenu.py:700: (dict) shadows builtin
+#@nonl
+#@-node:ekr.20040701152235.9:leoMenu
+#@+node:ekr.20040701152235.10:leoTkinterTree
+C:\prog\leoCVS\leo\src\leoTkinterTree.py:162: (id) shadows builtin
+C:\prog\leoCVS\leo\src\leoTkinterTree.py:167: (id) shadows builtin
+C:\prog\leoCVS\leo\src\leoTkinterTree.py:586: (id) shadows builtin
+C:\prog\leoCVS\leo\src\leoTkinterTree.py:639: (id) shadows builtin
+C:\prog\leoCVS\leo\src\leoTkinterTree.py:783: (id) shadows builtin
+C:\prog\leoCVS\leo\src\leoTkinterTree.py:844: (id) shadows builtin
+C:\prog\leoCVS\leo\src\leoTkinterTree.py:883: (type) shadows builtin
+C:\prog\leoCVS\leo\src\leoTkinterTree.py:893: (file) shadows builtin
+C:\prog\leoCVS\leo\src\leoTkinterTree.py:911: (id) shadows builtin
+C:\prog\leoCVS\leo\src\leoTkinterTree.py:949: (dict) shadows builtin
+C:\prog\leoCVS\leo\src\leoTkinterTree.py:1390: (id) shadows builtin
+C:\prog\leoCVS\leo\src\leoTkinterTree.py:1588: (id) shadows builtin
+C:\prog\leoCVS\leo\src\leoTkinterTree.py:1590: (id) shadows builtin
+#@nonl
+#@-node:ekr.20040701152235.10:leoTkinterTree
+#@+node:ekr.20040701152235.11:leoTkinterFrame
+C:\prog\leoCVS\leo\src\leoTkinterFrame.py:807: (dict) shadows builtin
+C:\prog\leoCVS\leo\src\leoTkinterFrame.py:1233: (file) shadows builtin
+
+c:\prog\leoCVS\leo\src\leoFrame.py:522: (type) shadows builtin
+c:\prog\leoCVS\leo\src\leoFrame.py:566: (dict) shadows builtin
+#@nonl
+#@-node:ekr.20040701152235.11:leoTkinterFrame
+#@+node:ekr.20040701152235.12:leoTkinterPrefs
+c:\prog\leoCVS\leo\src\leoTkinterPrefs.py:295: (dir) shadows builtin
+#@nonl
+#@-node:ekr.20040701152235.12:leoTkinterPrefs
+#@+node:ekr.20040701152235.13:leoTkinterGui
+c:\prog\leoCVS\leo\src\leoTkinterGui.py:78: (file) shadows builtin
+#@nonl
+#@-node:ekr.20040701152235.13:leoTkinterGui
+#@+node:ekr.20040701152235.14:leoAtFile
+C:\prog\leoCVS\leo\src\leoAtFile.py:336: (file) shadows builtin
+C:\prog\leoCVS\leo\src\leoAtFile.py:473: (dir) shadows builtin
+C:\prog\leoCVS\leo\src\leoAtFile.py:490: (dict) shadows builtin
+C:\prog\leoCVS\leo\src\leoAtFile.py:549: (dir) shadows builtin
+C:\prog\leoCVS\leo\src\leoAtFile.py:551: (dir) shadows builtin
+C:\prog\leoCVS\leo\src\leoAtFile.py:2142: (dir) shadows builtin
+C:\prog\leoCVS\leo\src\leoAtFile.py:2157: (dict) shadows builtin
+C:\prog\leoCVS\leo\src\leoAtFile.py:2278: (dir) shadows builtin
+C:\prog\leoCVS\leo\src\leoAtFile.py:2280: (dir) shadows builtin
+#@-node:ekr.20040701152235.14:leoAtFile
+#@+node:ekr.20040701152235.15:leoFileCommands
+C:\prog\leoCVS\leo\src\leoFileCommands.py:90: (id) shadows builtin
+C:\prog\leoCVS\leo\src\leoFileCommands.py:866: (id) shadows builtin
+C:\prog\leoCVS\leo\src\leoFileCommands.py:990: (dict) shadows builtin
+C:\prog\leoCVS\leo\src\leoFileCommands.py:1191: (id) shadows builtin
+C:\prog\leoCVS\leo\src\leoFileCommands.py:1228: (dir) shadows builtin
+C:\prog\leoCVS\leo\src\leoFileCommands.py:1269: (dir) shadows builtin
+C:\prog\leoCVS\leo\src\leoFileCommands.py:1318: (id) shadows builtin
+C:\prog\leoCVS\leo\src\leoFileCommands.py:1756: (id) shadows builtin
+C:\prog\leoCVS\leo\src\leoFileCommands.py:2018: (dir) shadows builtin
+#@nonl
+#@-node:ekr.20040701152235.15:leoFileCommands
+#@+node:ekr.20040701152235.16:leoImport
+C:\prog\leoCVS\leo\src\leoImport.py:52: (file) shadows builtin
+C:\prog\leoCVS\leo\src\leoImport.py:273: (file) shadows builtin
+C:\prog\leoCVS\leo\src\leoImport.py:473: (type) shadows builtin
+C:\prog\leoCVS\leo\src\leoImport.py:1626: (id) shadows builtin
+C:\prog\leoCVS\leo\src\leoImport.py:1648: (id) shadows builtin
+C:\prog\leoCVS\leo\src\leoImport.py:1650: (id) shadows builtin
+C:\prog\leoCVS\leo\src\leoImport.py:2303: (type) shadows builtin
+C:\prog\leoCVS\leo\src\leoImport.py:2348: (file) shadows builtin
+C:\prog\leoCVS\leo\src\leoImport.py:2371: (file) shadows builtin
+C:\prog\leoCVS\leo\src\leoImport.py:2398: (file) shadows builtin
+C:\prog\leoCVS\leo\src\leoImport.py:2426: (file) shadows builtin
+C:\prog\leoCVS\leo\src\leoImport.py:2476: (file) shadows builtin
+C:\prog\leoCVS\leo\src\leoImport.py:2727: (type) shadows builtin
+C:\prog\leoCVS\leo\src\leoImport.py:2792: (dict) shadows builtin
+#@nonl
+#@-node:ekr.20040701152235.16:leoImport
+#@+node:ekr.20040701152235.17:leoTangle
+c:\prog\leoCVS\leo\src\leoTangle.py:540: (dir) shadows builtin
+c:\prog\leoCVS\leo\src\leoTangle.py:541: (dir) shadows builtin
+c:\prog\leoCVS\leo\src\leoTangle.py:666: (dict) shadows builtin
+c:\prog\leoCVS\leo\src\leoTangle.py:718: (dict) shadows builtin
+c:\prog\leoCVS\leo\src\leoTangle.py:911: (dict) shadows builtin
+c:\prog\leoCVS\leo\src\leoTangle.py:924: (dict) shadows builtin
+c:\prog\leoCVS\leo\src\leoTangle.py:2038: (type) shadows builtin
+c:\prog\leoCVS\leo\src\leoTangle.py:3563: (dict) shadows builtin
+c:\prog\leoCVS\leo\src\leoTangle.py:3656: (dir) shadows builtin
+c:\prog\leoCVS\leo\src\leoTangle.py:3667: (dir) shadows builtin
+c:\prog\leoCVS\leo\src\leoTangle.py:3780: (dir) shadows builtin
+c:\prog\leoCVS\leo\src\leoTangle.py:3865: (type) shadows builtin
+#@nonl
+#@-node:ekr.20040701152235.17:leoTangle
+#@+node:ekr.20040701152235.18:leoCommands
+C:\prog\leoCVS\leo\src\leoCommands.py:324: (dict) shadows builtin
+C:\prog\leoCVS\leo\src\leoCommands.py:340: (dict) shadows builtin
+C:\prog\leoCVS\leo\src\leoCommands.py:346: (dict) shadows builtin
+C:\prog\leoCVS\leo\src\leoCommands.py:465: (file) shadows builtin
+C:\prog\leoCVS\leo\src\leoCommands.py:468: (dict) shadows builtin
+C:\prog\leoCVS\leo\src\leoCommands.py:480: (dict) shadows builtin
+C:\prog\leoCVS\leo\src\leoCommands.py:495: (file) shadows builtin
+C:\prog\leoCVS\leo\src\leoCommands.py:734: (file) shadows builtin
+C:\prog\leoCVS\leo\src\leoCommands.py:1238: (file) shadows builtin
+C:\prog\leoCVS\leo\src\leoCommands.py:1677: (dict) shadows builtin
+C:\prog\leoCVS\leo\src\leoCommands.py:1721: (dict) shadows builtin
+C:\prog\leoCVS\leo\src\leoCommands.py:1770: (dict) shadows builtin
+C:\prog\leoCVS\leo\src\leoCommands.py:1800: (dict) shadows builtin
+C:\prog\leoCVS\leo\src\leoCommands.py:2280: (dict) shadows builtin
+#@nonl
+#@-node:ekr.20040701152235.18:leoCommands
+#@-node:ekr.20040701152235:Fix shawdow warnings ?
+#@+node:ekr.20040701123332:To do: redirect output (for unit tests)
+- Redirect output to a file-like-object, then check the contents of that object.
+#@nonl
+#@-node:ekr.20040701123332:To do: redirect output (for unit tests)
+#@+node:ekr.20031218072017.2606:<< Import pychecker >>
+@color
+
+# See pycheckrc file in leoDist.leo for a list of erroneous warnings to be suppressed.
+
+if 0: # Set to 1 for lint-like testing.
+    try:
+        import pychecker.checker
+        # This works.  We may want to set options here...
+        # from pychecker import Config 
+        print ; print "Warning: pychecker.checker running..." ; print
+    except:
+        pass
+#@nonl
+#@-node:ekr.20031218072017.2606:<< Import pychecker >>
+#@-node:ekr.20040701120647:Pychecker stuff...
+#@-node:ekr.20040323195916.1:Tests & pychecker
 #@-node:EKR.20040430163619:To do: 4.2
 #@+node:ekr.20040629110559:Cool Mac stuff
 #@+node:ekr.20040629111136:Native Max OS X Leo app
