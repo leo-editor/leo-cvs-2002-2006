@@ -1018,8 +1018,6 @@ class colorizer:
 		if self.enabled:
 			# print "colorize:incremental",incremental
 			self.incremental=incremental
-			#flag,language = self.updateSyntaxColorer(v)
-			#self.colorizeAnyLanguage(v,body,language,flag)
 			self.updateSyntaxColorer(v)
 			self.colorizeAnyLanguage(v,body)
 			
@@ -1031,9 +1029,6 @@ class colorizer:
 		if self.enabled:
 			# print "recolor_range:leading,trailing",leading,trailing
 			self.incremental=true
-			#flag,language = self.updateSyntaxColorer(v)
-			#self.colorizeAnyLanguage(
-			#	v,body,language,flag,leading=leading,trailing=trailing)
 			self.updateSyntaxColorer(v)
 			sself.colorizeAnyLanguage(v,body,leading=leading,trailing=trailing)
 	
