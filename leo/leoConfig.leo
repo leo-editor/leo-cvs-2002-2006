@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="16" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="23" clone_windows="0"/>
 <globals body_outline_ratio="0.5">
-	<global_window_position top="0" left="148" height="26" width="77"/>
+	<global_window_position top="1" left="62" height="26" width="84"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
-<preferences allow_rich_text="0" tab_width="4" page_width="132" tangle_bat="0" untangle_bat="0" output_doc_chunks="1" use_header_flag="1" defaultTargetLanguage="Python">
+<preferences allow_rich_text="0">
 </preferences>
-<find_panel_settings search_body="1" whole_word="1">
+<find_panel_settings>
 	<find_string></find_string>
 	<change_string></change_string>
 </find_panel_settings>
@@ -19,15 +19,23 @@
 <v t="T5"><vh>&lt;&lt; The "Recent Files" menu &gt;&gt;</vh></v>
 <v t="T6"><vh>&lt;&lt; Compare Panel settings &gt;&gt;</vh></v>
 <v t="T7"><vh>&lt;&lt; Find/Change Panel settings &gt;&gt;</vh></v>
-<v t="T8"><vh>&lt;&lt; Preferences Panel settings &gt;&gt;</vh></v>
-<v t="T9"><vh>&lt;&lt; Syntax coloring options and colors &gt;&gt;</vh></v>
-<v t="T10" a="E"><vh>&lt;&lt; Window options &gt;&gt;</vh>
-<v t="T11" a="V"><vh>&lt;&lt; body pane options &gt;&gt;</vh></v>
-<v t="T12"><vh>&lt;&lt; outline pane options&gt;&gt;</vh></v>
-<v t="T13"><vh>&lt;&lt; log pane options &gt;&gt;</vh></v>
-<v t="T14"><vh>&lt;&lt; Options for new windows &gt;&gt;</vh></v>
-<v t="T15" a="M"><vh>&lt;&lt; Options for newly opened windows &gt;&gt;</vh></v>
-<v t="T16"><vh>&lt;&lt; Options for the bar that separates panes in the Leo window &gt;&gt;</vh></v>
+<v t="T8" a="E"><vh>&lt;&lt; Keyboard shortcuts settings &gt;&gt;</vh>
+<v t="T9" a="V"><vh>&lt;&lt; About keyboard shortcuts &gt;&gt;</vh></v>
+<v t="T10"><vh>&lt;&lt; Alt and Shift-Alt&gt;&gt;</vh></v>
+<v t="T11"><vh>&lt;&lt; Control &gt;&gt;</vh></v>
+<v t="T12"><vh>&lt;&lt; Shift-Control &gt;&gt;</vh></v>
+<v t="T13"><vh>&lt;&lt; F-keys &gt;&gt;</vh></v>
+<v t="T14"><vh>&lt;&lt; None &gt;&gt;</vh></v>
+</v>
+<v t="T15"><vh>&lt;&lt; Preferences Panel settings &gt;&gt;</vh></v>
+<v t="T16"><vh>&lt;&lt; Syntax coloring options and colors &gt;&gt;</vh></v>
+<v t="T17"><vh>&lt;&lt; Window options &gt;&gt;</vh>
+<v t="T18"><vh>&lt;&lt; body pane options &gt;&gt;</vh></v>
+<v t="T19"><vh>&lt;&lt; outline pane options&gt;&gt;</vh></v>
+<v t="T20"><vh>&lt;&lt; log pane options &gt;&gt;</vh></v>
+<v t="T21"><vh>&lt;&lt; Options for new windows &gt;&gt;</vh></v>
+<v t="T22" a="M"><vh>&lt;&lt; Options for newly opened windows &gt;&gt;</vh></v>
+<v t="T23"><vh>&lt;&lt; Options for the bar that separates panes in the Leo window &gt;&gt;</vh></v>
 </v>
 </v>
 </v>
@@ -57,6 +65,7 @@ This is the file that creates leoConfig.txt.  We use this file for two reasons:
 &lt;&lt; The "Recent Files" menu &gt;&gt;
 &lt;&lt; Compare Panel settings &gt;&gt;
 &lt;&lt; Find/Change Panel settings &gt;&gt;
+&lt;&lt; Keyboard shortcuts settings &gt;&gt;
 &lt;&lt; Preferences Panel settings &gt;&gt;
 &lt;&lt; Syntax coloring options and colors &gt;&gt;
 &lt;&lt; Window options &gt;&gt;
@@ -215,7 +224,247 @@ search_headline = 0
 suboutline_only = 0
 whole_word = 1
 wrap = 0</t>
-<t tx="T8">@c
+<t tx="T8">@ Keyboard shortcuts for menu commands.
+
+A shortcut specification has the form:
+	
+commandName = shortcutSpecifier
+
+where commandName is the name of the command in the menu with all non-alphanumeric characters removed.  The shortcut specifier consists of a head followed by a tail.  The head may be empty, or may be a concatenation of the following: Shift+, Alt+, Control+ or Ctrl+.
+
+Case is ignored in commandName, and in the head of the shortcutSpecifier. Case is significant in multi-character tails.  Also, - may be used instead of + in heads.  The following are all equivalent:
+	
+	Ctrl+A
+	Ctrl-a
+	Control+A
+
+The following are not equivalent:
+	
+	Ctrl+-
+	Ctrl-+
+
+and the following are not equivalent:
+
+	Ctrl+Tab (may be valid)
+	Ctrl+tab (will never be valid)
+	
+See the section called "About keyboard shortcuts" for a full discussion of what may appear in the tail of a shortcut.
+@c
+
+# 
+# Values are command names with all whitespace deleted.
+# Case is ignored.
+
+[keyboard shortcuts]
+
+&lt;&lt; About keyboard shortcuts &gt;&gt;
+&lt;&lt; Alt and Shift-Alt &gt;&gt;
+&lt;&lt; Control &gt;&gt;
+&lt;&lt; F-keys &gt;&gt;
+&lt;&lt; Shift-Control &gt;&gt;
+&lt;&lt; None &gt;&gt;
+</t>
+<t tx="T9">@ 
+
+The following special single characters may be used in the tails of shortcuts.  They are listed along with their associated Tk binding value.  Leo contains special code to handle these characters.  No other single characters may be specified.
+
+For example, you could specify Ctrl+! as a shortcut, and Leo will create a binding for &lt;Control+exclam&gt;.  Some of these values may be invalid on some machines.
+
+! exclam
+" quotedbl
+# numbersign
+$ dollar
+% percent
+&amp; ampersand
+' quoteright
+( parenleft
+) parenright
+* asterisk
++ plus
+, comma
+- minus
+. period
+/ slash
+: colon
+; semicolon
+&lt; less
+= equal
+&gt; greater
+? question
+@ at
+[ bracketleft
+\ backslash
+] bracketright
+^ asciicircum
+_ underscore
+` quoteleft
+{ braceleft
+| bar
+} braceright
+~ asciitilde
+
+Leo recognizes the following mult-character names, and translates the indicated strings in the menu items:
+	
+"bksp"     : "BkSp"
+"dnarrow"  : "DnArrow"
+"ltarrow" 	: "LtArrow"
+"rtarrow" 	: "RtArrow"
+"uparrow"  : "UpArrow"
+"pageup"   : "PgUp"),
+"pagedn"   : "PgDn")
+
+For example, "Ctrl-uparrow"  will appear as "Ctrl+UpArrow" in the menu.
+
+Leo passes all other mult-character names verbatim to Tk, so on some platforms you may be able to use any of the following.  Most appear on the numeric keypad. For example, the following may work on some systems:
+	
+"Ctrl+BackSpace"
+
+Don't use these if you want to be sure that the binding work on all platforms. The complete list of names may be found at: http://tcl.activestate.com/man/tcl8.4/TkCmd/keysyms.htm.
+	
+F1, F2, F3, F4, F5, F6, F7, F8, F9, F10,
+BackSpace, Break, Clear, Delete, Escape, Linefeed, Return, Tab, 
+Down, Left, Right, Up,
+Begin, End, Home, Next, Prior,
+Num_Lock, Pause, Scroll_Lock, Sys_Req,
+KP_Add, KP_Decimal, KP_Divide, KP_Enter, KP_Equal,
+KP_Multiply, KP_Separator, KP_Space, KP_Subtract, KP_Tab,
+KP_F1, KP_F2, KP_F3, KP_F4,
+KP_0, KP_1, KP_2, KP_3, KP_4, KP_5, KP_6, KP_7, KP_8, KP_9</t>
+<t tx="T10">@c
+
+ExpandNextLevel   = Alt+=
+ContractParent    = Alt+0
+ContractAll       = Alt+1
+ExpandToLevel2    = Alt+2
+ExpandToLevel3    = Alt+3
+ExpandToLevel4    = Alt+4
+ExpandToLevel5    = Alt+5
+ExpandToLevel6    = Alt+6
+ExpandToLevel7    = Alt+7
+ExpandToLevel8    = Alt+8
+ExpandAll         = Alt+9
+
+SortSiblings     = Alt-A
+MarkChangedItems = Alt+C
+GoToNextChanged  = Alt+D
+GoToNextMarked   = Alt+M
+OpenPythonWindow = Alt+P
+MarkChangedRoots = Alt+R
+MarkSubheads     = Alt+S
+UnmarkAll        = Alt+U
+ShowInvisibles   = Alt+V
+
+SetColors        = Alt+Shift+S
+SetFont          = Alt+Shift+T
+
+GoNextVisible    = Alt+DnArrow
+GoPrevVisible    = Alt+UpArrow
+GoBack           = Alt+Shift+UpArrow
+GoNext           = Alt+Shift+DnArrow</t>
+<t tx="T11">@c
+
+CloneNode        = Ctrl+`
+Replace          = Ctrl+=
+ReplaceThenFind  = Ctrl+-
+Indent           = Ctrl+]
+Unindent         = Ctrl+[
+Promote          = Ctrl+{
+Demote           = Ctrl+}
+
+SelectAll        = Ctrl+A
+# Unused         = Ctrl+B
+Copy             = Ctrl+C
+MoveDown         = Ctrl+D
+EqualSizedPanes  = Ctrl+E
+FindPanel        = Ctrl+F
+# It is no longer possible to specify two shortcuts for the same command.
+# Unused         = Ctrl+G
+EditHeadline     = Ctrl+H
+InsertNode       = Ctrl+I
+# Unused         = Ctrl+J
+MatchBrackets    = Ctrl+K
+MoveLeft         = Ctrl+L
+Mark             = Ctrl+M
+New              = Ctrl+N
+Open             = Ctrl+O
+# Unused         = Ctrl+P
+Exit             = Ctrl-Q
+MoveRight        = Ctrl+R
+Save             = Ctrl+S
+ToggleActivePane = Ctrl+T
+MoveUp           = Ctrl+U
+Paste            = Ctrl+V
+Close            = Ctrl+W
+Cut              = Ctrl+X
+Preferences      = Ctrl+Y
+CantUndo         = Ctrl+Z</t>
+<t tx="T12">@c
+
+DeleteNode      = Shift+Ctrl+BkSp
+
+TangleAll       = Shift+Ctrl+A
+ConvertBlanks   = Shift+Ctrl+B
+CopyNode        = Shift+Ctrl+C
+Extract         = Shift+Ctrl+D
+ExtractSection  = Shift+Ctrl+E
+ImportTofile    = Shift+Ctrl+F
+# Unused        = Shift+Ctrl+G
+# Unused        = Shift+Ctrl+H
+# Unused        = Shift+Ctrl+I
+ConvertTabs     = Shift+Ctrl+J
+# Unused        = Shift+Ctrl+K
+# Unused        = Shift+Ctrl+L
+TangleMarked    = Shift+Ctrl+M
+ExtractNames    = Shift+Ctrl+N
+# Unused        = Shift+Ctrl+O
+# Unused        = Shift+Ctrl+P
+# Unused        = Shift+Ctrl+Q
+ReadOutlineOnly = Shift+Ctrl+R
+SaveAs          = Shift+Ctrl+S
+Tangle          = Shift+Ctrl+T
+Untangle        = Shift+Ctrl+U
+PasteNode       = Shift+Ctrl+V
+WritefileNodes  = Shift+Ctrl+W
+CutNode         = Shift+Ctrl+X
+CantRedo        = Shift+Ctrl+Z</t>
+<t tx="T13">@c
+
+FindNext     = F3
+FindPrevious = F4
+</t>
+<t tx="T14">@ These are all comments...
+AboutLeo                = None
+Cascade                 = None
+ContractAllChildren     = None
+ContractChildren        = None
+ExpandAllChildren       = None
+ExpandChildren          = None
+ExpandToLevel1          = None
+FlattenOutline          = None
+ImportCWEBFiles         = None
+ImportFlattenedOutline  = None
+ImportNowebFiles        = None
+ImportToroot            = None
+MinimizeAll             = None
+OnlineHomePage          = None
+OnlineTutorialStartHere = None
+OpenCompareWindow       = None
+OpenfileWith            = None
+OutlineToCWEB           = None
+OutlineToNoweb          = None
+ReadfileNodes           = None
+ReferenceLeoDocsleo     = None
+RemoveSentinels         = None
+RevertToSaved           = None
+SaveTo                  = None
+SortChildren            = None
+ToggleSplitDirection    = None
+Tutorialsbookschm       = None
+UntangleAll             = None
+UntangleMarked          = None
+Weave                   = None
+WriteOutlineOnly        = None</t>
+<t tx="T15">@c
 
 # The initial settings of the Preferences panel.
 
@@ -235,7 +484,7 @@ tab_width = 4
 # 	Valid values: A nonzero positive or negative integer.
 # 	Negative tab widths cause Leo to convert tabs to blanks when typing.
 
-page_width = 132
+page_width = 80
 # 	The page width for wrapping doc parts in derived files.
 # 	Valid values: any nonzero positive integer.
 
@@ -250,7 +499,7 @@ run_tangle_done.py = 0
 
 run_untangle_done.py = 0
 # 	1/0: Run tangle_done.py after explicit Untangle commands.</t>
-<t tx="T9">@c
+<t tx="T16">@c
 
 [syntax coloring options]
 
@@ -303,7 +552,7 @@ string_color = #00aa00
 
 undefined_section_name_color = red
 #	The color of name in &lt; &lt; name &gt; &gt; when name is undefined.</t>
-<t tx="T10">@ Options that affect the appearance of windows.
+<t tx="T17">@ Options that affect the appearance of windows.
 
 Options that require pixel values can be any Python expression that yields an int.
 Warning: the number of pixels per inch varies...
@@ -317,7 +566,7 @@ Warning: the number of pixels per inch varies...
 &lt;&lt; Options for new windows &gt;&gt;
 &lt;&lt; Options for newly opened windows &gt;&gt;
 &lt;&lt; Options for the bar that separates panes in the Leo window &gt;&gt;</t>
-<t tx="T11">@c
+<t tx="T18">@c
 
 body_pane_wraps = 1
 #	0/1: Wrap body text if 1.
@@ -347,7 +596,7 @@ body_text_font_slant = roman
 
 body_text_font_weight = normal
 #	The Tk -weight setting: normal or bold.  Default is normal.</t>
-<t tx="T12">@c
+<t tx="T19">@c
 
 outline_pane_scrolls_horizontally = 0
 #	0/1: 1: Use horizontal scrollbar in outline pane.
@@ -380,7 +629,7 @@ headline_text_font_slant = roman
 
 headline_text_font_weight = normal
 #	The Tk -weight setting: normal or bold.  Default is normal.</t>
-<t tx="T13">@c
+<t tx="T20">@c
 
 log_pane_wraps = 0
 #	0/1: Wrap body text if 1.
@@ -403,7 +652,7 @@ log_text_font_slant = roman
 
 log_text_font_weight = normal
 #	The Tk -weight setting: normal or bold.  Default is normal.</t>
-<t tx="T14">@ Leo now properly opens windows for existing files where they were last positioned.
+<t tx="T21">@ Leo now properly opens windows for existing files where they were last positioned.
 @c
 
 initial_window_height = 20
@@ -419,7 +668,7 @@ initial_window_left = 10
 
 initial_window_top = 10
 #	Distance from top of screen of window, in pixels (must be an integer).</t>
-<t tx="T15">@c
+<t tx="T22">@c
 
 initial_splitter_orientation = v
 #	Defines the primary splitter orientation.
@@ -461,7 +710,7 @@ initial_vertical_secondary_ratio = 0.7
 
 #	Applies to all newly opened windows.
 #	Valid values: 0.0 to 1.0.</t>
-<t tx="T16">@ Leo should save these to .leo files, and it doesn't.
+<t tx="T23">@ Leo should save these to .leo files, and it doesn't.
 @c
 
 split_bar_color = LightSteelBlue2

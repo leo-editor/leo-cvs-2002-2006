@@ -115,7 +115,6 @@ class LeoFrame:
 		#@-node:2::<< create the first tree node >>
 
 		self.createMenuBar(top)
-		self.createAccelerators(top)
 		app().log = self # the LeoFrame containing the log
 		app().windowList.append(self)
 		es("Leo Log Window...") ; enl()
@@ -196,10 +195,13 @@ class LeoFrame:
 	#@+node:6:C=6:canonicalizeShortcut
 	#@+body
 	#@+at
-	#  This code "canonicalizes" both the shortcuts that appear in menus and the arguments to bind, ignoring case and the order in 
-	# which special keys are specified in leoConfig.txt.  The control key appers as "Ctrl+" in menus and as "Control-" in the bind 
-	# command.  For example, Ctrl+Shift+a is the same as Shift+Control+A.  Either may appear in leoConfig.txt.  Each generates 
-	# Shift+Ctrl-A in the menu and Control+A as the argument to bind.
+	#  This code "canonicalizes" both the shortcuts that appear in menus and 
+	# the arguments to bind, mostly ignoring case and the order in which 
+	# special keys are specified in leoConfig.txt.
+	# 
+	# For example, Ctrl+Shift+a is the same as Shift+Control+A.  Either may 
+	# appear in leoConfig.txt.  Each generates Shift+Ctrl-A in the menu and 
+	# Control+A as the argument to bind.
 	# 
 	# Returns (bind_shortcut, menu_shortcut)
 
@@ -210,32 +212,43 @@ class LeoFrame:
 		
 		if shortcut == None or len(shortcut) == 0:
 			return None,None
-	
 		s = string.strip(shortcut)
 		s = string.lower(s)
 		has_alt = string.find(s,"alt") >= 0
 		has_ctrl = string.find(s,"control") >= 0 or string.find(s,"ctrl") >= 0
 		has_shift = string.find(s,"shift") >= 0 or string.find(s,"shft") >= 0
 		
-		# Get the last field, preserving case.
+		#@<< set the last field, preserving case >>
+		#@+node:2::<< set the last field, preserving case >>
+		#@+body
 		s2 = shortcut
 		s2 = string.strip(s2)
-		# special case a trailing minus:
+		
+		# Replace all minus signs by plus signs, except a trailing minus:
 		if len(s2) > 0 and s2[-1] == "-":
 			s2 = string.replace(s2,"-","+")
 			s2 = s2[:-1] + "-"
 		else:
 			s2 = string.replace(s2,"-","+")
+		
 		fields = string.split(s2,"+")
 		if fields == None or len(fields) == 0:
-			print "bad shortcut specifier:", s
+			if not app().menuWarningsGiven:
+				print "bad shortcut specifier:", s
 			return None,None
+		
 		last = fields[-1]
 		if last == None or len(last) == 0:
-			print "bad shortcut specifier:", s
+			if not app().menuWarningsGiven:
+				print "bad shortcut specifier:", s
 			return None,None
-	
-		# Canonicalize the last field.
+		#@-body
+		#@-node:2::<< set the last field, preserving case >>
+
+		
+		#@<< canonicalize the last field >>
+		#@+node:1::<< canonicalize the last field >>
+		#@+body
 		bind_last = menu_last = last
 		if len(last) == 1:
 			ch = last[0]
@@ -296,83 +309,38 @@ class LeoFrame:
 			#@<< define dict of special names >>
 			#@+node:2::<< define dict of special names >>
 			#@+body
-			# The keys are simply made-up names.  The values are known to Tk.
+			# These keys are simply made-up names.  The menu_bind values are known to Tk.
+			# Case is not significant in the keys.
 			
 			dict = {
-				"bksp" : "BackSpace",
+				"bksp"    : ("BackSpace","BkSp"),
 				# Arrow keys...
-				"down arrow" : "Down",
-				"left arrow" : "Left",
-				"right arrow" : "Right",
-				"up arrow" : "Up"
+				"dnarrow" : ("Down", "DnArrow"),
+				"ltarrow" : ("Left", "LtArrow"),
+				"rtarrow" : ("Right","RtArrow"),
+				"uparrow" : ("Up",   "UpArrow"),
+				# Page up/down keys...
+				"pageup"  : ("Prior","PgUp"),
+				"pagedn"  : ("Next", "PgDn")
 			}
 			
 
 			#@+at
-			#   The following are not translated, so what appears in the menu is the same as what is passed to Tk.  In particular, 
-			# case is significant.
+			#   The following are not translated, so what appears in the menu 
+			# is the same as what is passed to Tk.  Case is significant.
 			# 
-			# Note: the Tk documentation states that not all of these may be available on all platforms.
+			# Note: the Tk documentation states that not all of these may be 
+			# available on all platforms.
 			# 
-			# BackSpace
-			# Tab
-			# Linefeed
-			# Clear
-			# Return
-			# 
-			# The following are found on the keypad.
-			# Exactly how these work may be system dependent.
-			# 
-			# Pause
-			# Scroll_Lock
-			# Sys_Req
-			# Escape
-			# Home
-			# Left
-			# Up
-			# Right
-			# Down
-			# Prior
-			# Next
-			# End
-			# Begin
-			# Break
-			# Num_Lock
-			# KP_Space
-			# KP_Tab
-			# KP_Enter
-			# KP_F1
-			# KP_F2
-			# KP_F3
-			# KP_F4
-			# KP_Multiply
-			# KP_Add
-			# KP_Separator
-			# KP_Subtract
-			# KP_Decimal
-			# KP_Divide
-			# KP_0
-			# KP_1
-			# KP_2
-			# KP_3
-			# KP_4
-			# KP_5
-			# KP_6
-			# KP_7
-			# KP_8
-			# KP_9
-			# KP_Equal
-			# F1
-			# F2
-			# F3
-			# F4
-			# F5
-			# F6
-			# F7
-			# F8
-			# F9
-			# F10
-			# Delete
+			# F1,F2,F3,F4,F5,F6,F7,F8,F9,F10,
+			# BackSpace, Break, Clear, Delete, Escape, Linefeed, Return, Tab,
+			# Down, Left, Right, Up,
+			# Begin, End, Home, Next, Prior,
+			# Num_Lock, Pause, Scroll_Lock, Sys_Req,
+			# KP_Add, KP_Decimal, KP_Divide, KP_Enter, KP_Equal,
+			# KP_Multiply, KP_Separator,KP_Space, KP_Subtract, KP_Tab,
+			# KP_F1,KP_F2,KP_F3,KP_F4,
+			# KP_0,KP_1,KP_2,KP_3,KP_4,KP_5,KP_6,KP_7,KP_8,KP_9
 
 			#@-at
 			#@-body
@@ -380,23 +348,35 @@ class LeoFrame:
 
 			last2 = string.lower(last)
 			if last2 in dict.keys():
-				bind_last = dict[last2]
-	
-		# Synthesize the shortcuts from the information.
+				bind_last,menu_last = dict[last2]
+		#@-body
+		#@-node:1::<< canonicalize the last field >>
+
+		
+		#@<< synthesize the shortcuts from the information >>
+		#@+node:3::<< synthesize the shortcuts from the information >>
+		#@+body
 		bind_head = menu_head = ""
+		
 		if has_shift:
 			menu_head = "Shift+"
+			if len(last) > 1 or (len(last)==1 and last[0] not in string.ascii_letters):
+				bind_head = "Shift-"
+		
 		if has_alt:
 			bind_head = bind_head + "Alt-"
 			menu_head = menu_head + "Alt+"
+		
 		if has_ctrl:
 			bind_head = bind_head + "Control-"
 			menu_head = menu_head + "Ctrl+"
 			
 		bind_shortcut = "<" + bind_head + bind_last + ">"
 		menu_shortcut = menu_head + menu_last
-		
-		#print shortcut,`bind_shortcut`,`menu_shortcut`
+		#@-body
+		#@-node:3::<< synthesize the shortcuts from the information >>
+
+		# print shortcut,`bind_shortcut`,`menu_shortcut`
 		return bind_shortcut,menu_shortcut
 	#@-body
 	#@-node:6:C=6:canonicalizeShortcut
@@ -422,14 +402,15 @@ class LeoFrame:
 		#@+node:1::<< create the top-level file entries >>
 		#@+body
 		#@+at
-		#  It is doubtful that leo.py will ever support a Print command directly.  Rather, users can use export commands to create 
-		# text files that may then be formatted and printed as desired.
+		#  It is doubtful that leo.py will ever support a Print command 
+		# directly.  Rather, users can use export commands to create text 
+		# files that may then be formatted and printed as desired.
 
 		#@-at
 		#@@c
 		
 		table = (
-			("New",None,self.OnNew),
+			("New","Ctrl+N",self.OnNew),
 			("Open...","Ctrl+O",self.OnOpen),
 			("Open @file With...",None,self.OnOpenWith),
 			("-",None,None),
@@ -566,7 +547,7 @@ class LeoFrame:
 			("Copy","Ctrl+C",self.OnCopyFromMenu),
 			("Paste","Ctrl+V",self.OnPasteFromMenu),
 			("Delete",None,self.OnDelete),
-			("Select All",None,self.OnSelectAll),
+			("Select All","Ctrl+A",self.OnSelectAll),
 			("-",None,None),
 			("Edit Headline","Ctrl+H",self.OnEditHeadline))
 		
@@ -610,12 +591,14 @@ class LeoFrame:
 		findMenu = Tk.Menu(editMenu,tearoff=0)
 		editMenu.add_cascade(label="Find...", menu=findMenu)
 		
+		#It is no longer possible to specify two shortcuts for exactly the same command name.
+		#("Find Next","Ctrl+G",self.OnFindNext),
+		
 		table = (
 			("Find Panel","Ctrl+F",self.OnFindPanel),
 			("-",None,None),
 			("Find Next","F3",self.OnFindNext),
-			("Find Next","Ctrl+G",self.OnFindNext),
-			("Find Previous","Shift+Ctrl+G",self.OnFindPrevious),
+			("Find Previous","F4",self.OnFindPrevious),
 			("Replace","Ctrl+=",self.OnReplace),
 			("Replace, Then Find","Ctrl+-",self.OnReplaceThenFind))
 		
@@ -715,16 +698,14 @@ class LeoFrame:
 			("Move Right","Ctrl+R",self.OnMoveRight),
 			("Move Up",   "Ctrl+U",self.OnMoveUp),
 			("-",None,None),
-			#("Promote","Shift+Ctrl+[",self.OnPromote),
-			#("Demote", "Shift+Ctrl+]",self.OnDemote),
 			("Promote","Ctrl+{",self.OnPromote),
 			("Demote", "Ctrl+}",self.OnDemote),
 			("-",None,None),
-			("Go Prev Visible","Alt-Shift-U",self.OnGoPrevVisible),
-			("Go Next Visible","Alt-Shift-D",self.OnGoNextVisible),
+			("Go Prev Visible","Alt-UpArrow",self.OnGoPrevVisible),
+			("Go Next Visible","Alt-DnArrow",self.OnGoNextVisible),
 			("-",None,None),
-			("Go Back","Alt-Shift+V",self.OnGoBack),
-			("Go Next","Alt-Shift-W",self.OnGoNext))
+			("Go Back","Alt-Shift+UpArrow",self.OnGoBack),
+			("Go Next","Alt-Shift-DnArrow",self.OnGoNext))
 			
 		self.createMenuEntries(moveSelectMenu,table)
 
@@ -802,16 +783,19 @@ class LeoFrame:
 		#@-node:5::<< create the help menu >>
 
 		top.config(menu=menu) # Display the menu.
+		app().menuWarningsGiven = true
 	#@-body
 	#@-node:7:C=7:createMenuBar
 	#@+node:8:C=9:createMenuEntries
 	#@+body
 	#@+at
-	#  The old, non-user-configurable code bound shortcuts in createMenuBar.  The new user-configurable code binds shortcuts here.
+	#  The old, non-user-configurable code bound shortcuts in createMenuBar.  
+	# The new user-configurable code binds shortcuts here.
 	# 
-	# Centralized tables of shortscuts no longer exist as they did in createAccelerators.  To check for duplicates, (possibly 
-	# arising from leoConfig.txt) we add entries to a central dictionary here, and report duplicates if an entry for a 
-	# cononicalized shortcut already exists.
+	# Centralized tables of shortscuts no longer exist as they did in 
+	# createAccelerators.  To check for duplicates, (possibly arising from 
+	# leoConfig.txt) we add entries to a central dictionary here, and report 
+	# duplicates if an entry for a cononicalized shortcut already exists.
 
 	#@-at
 	#@@c
@@ -823,10 +807,25 @@ class LeoFrame:
 				menu.add_separator()
 			else:
 				
-				#@<< get user accelerator >>
-				#@+node:1::<< get user accelerator >>
+				#@<< get menu and bind shortcuts >>
+				#@+node:1::<< get menu and bind shortcuts >>
 				#@+body
 				# To do:  see if the leoConfig.txt specifies a shortcut.
+				
+				name = string.strip(label)
+				name = string.lower(name)
+				# Remove special characters from command names.
+				name2 = ""
+				for ch in name:
+					if ch in string.ascii_letters or string.digits:
+						name2 = name2 + ch
+				name = name2
+				
+				config = app().config
+				accel2 = config.getShortcut(name)
+				if accel2 and len(accel2) > 0:
+					accel = accel2
+					# print `name`,`accel`
 				
 				bind_shortcut,menu_shortcut = self.canonicalizeShortcut(accel)
 				
@@ -835,39 +834,41 @@ class LeoFrame:
 				if bind_shortcut in ("<Control-c>","<Control-v>","<Control-x>"):
 					bind_shortcut = None
 				#@-body
-				#@-node:1::<< get user accelerator >>
+				#@-node:1::<< get menu and bind shortcuts >>
 
-				if accel:
-					menu.add_command(label=label,accelerator=accel,command=command)
+				if menu_shortcut:
+					menu.add_command(label=label,accelerator=menu_shortcut,command=command)
 				else:
 					menu.add_command(label=label,command=command)
 					
 				if bind_shortcut:
 					if bind_shortcut in self.menuShortcuts:
-						print "duplicate shortcut:", accel
+						if not app().menuWarningsGiven:
+							print "duplicate shortcut:", accel, `bind_shortcut`, label
 					else:
 						self.menuShortcuts.append(bind_shortcut)
 						try:
 							self.body.bind(bind_shortcut,command) # Necessary to override defaults in body.
 							self.top.bind (bind_shortcut,command)
 						except: # could be a user error
-							print "exception binding menu shortcut..."
-							print `bind_shortcut`
-							traceback.print_exc()
+							if not app().menuWarningsGiven:
+								print "exception binding menu shortcut..."
+								print `bind_shortcut`
+								# traceback.print_exc()
 	#@-body
 	#@-node:8:C=9:createMenuEntries
 	#@+node:9:C=10:createAccelerators (no longer used)
 	#@+body
 	#@+at
-	#  The accelerator entry specified when creating a menu item just creates text.  The actual correspondance between keys and 
-	# routines is defined here.
+	#  The accelerator entry specified when creating a menu item just creates 
+	# text.  The actual correspondance between keys and routines is defined here.
 
 	#@-at
 	#@@c
 	
 	def createAccelerators (self,top):
 		
-		return ## no longer used
+		return ## no longer used!
 	
 		body = self.body ; canvas = self.canvas
 	
@@ -1007,13 +1008,16 @@ class LeoFrame:
 			
 
 			#@+at
-			#  7/29/02: It's too confusing to have arrow keys mean different things in different panes.
+			#  7/29/02: It's too confusing to have arrow keys mean different 
+			# things in different panes.
 			# 
-			# For one thing, we want to leave the focus in the body pane after the first click in the outline pane, but that means 
-			# that the arrow keys must still be functional in the _body_ pane!
+			# For one thing, we want to leave the focus in the body pane after 
+			# the first click in the outline pane, but that means that the 
+			# arrow keys must still be functional in the _body_ pane!
 			# 
-			# Alas, all the various combinations of key bindings of arrow keys appear to do something; there are none left to use 
-			# for moving around in the outline pane.  So we are stuck with poor shortcuts.
+			# Alas, all the various combinations of key bindings of arrow keys 
+			# appear to do something; there are none left to use for moving 
+			# around in the outline pane.  So we are stuck with poor shortcuts.
 
 			#@-at
 			#@@c
@@ -1412,8 +1416,9 @@ class LeoFrame:
 		#@+node:1::<< Set closeFlag if the only open window is empty >>
 		#@+body
 		#@+at
-		#  If this is the only open window was opened when the app started, and the window has never been written to or saved, 
-		# then we will automatically close that window if this open command completes successfully.
+		#  If this is the only open window was opened when the app started, 
+		# and the window has never been written to or saved, then we will 
+		# automatically close that window if this open command completes successfully.
 
 		#@-at
 		#@@c
@@ -2962,9 +2967,11 @@ class LeoFrame:
 	#@+node:3::leoPyShellMain
 	#@+body
 	#@+at
-	#  The key parts of Pyshell.main(), but using Leo's root window instead of a new Tk root window.
+	#  The key parts of Pyshell.main(), but using Leo's root window instead of 
+	# a new Tk root window.
 	# 
-	# This does _not_ work.  Using Leo's root window means that Idle will shut down Leo without warning when the Idle window is closed!
+	# This does _not_ work.  Using Leo's root window means that Idle will shut 
+	# down Leo without warning when the Idle window is closed!
 
 	#@-at
 	#@@c
@@ -3125,8 +3132,10 @@ class LeoFrame:
 	# 1. self.splitVerticalFlag tells the alignment of the main splitter and
 	# 2. not self.splitVerticalFlag tells the alignment of the secondary splitter.
 	# 
-	# Only the general-purpose divideAnySplitter routine doesn't know about these invariants.  So most of this code is specialized 
-	# for Leo's window.  OTOH, creating a single splitter window would be much easier than this code.
+	# Only the general-purpose divideAnySplitter routine doesn't know about 
+	# these invariants.  So most of this code is specialized for Leo's 
+	# window.  OTOH, creating a single splitter window would be much easier 
+	# than this code.
 
 	#@-at
 	#@-body

@@ -26,6 +26,7 @@ class LeoApp:
 		self.configDir = None # The directory containing configuration info.
 		self.config = None # The leoConfig instance.
 		self.idle_imported = false # true: we have done an import idle
+		self.menuWarningsGiven = false # true: supress warnings in menu code.
 		
 		# Global options...
 		self.trace_list = [] # "Sherlock" argument list for tracing().
