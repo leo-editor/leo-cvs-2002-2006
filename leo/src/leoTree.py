@@ -835,18 +835,26 @@ class baseLeoTree:
 		self.redraw()
 	#@-body
 	#@-node:2::OnBoxClick
-	#@+node:3::OnDeactivate
+	#@+node:3::tree.OnDeactivate (caused double-click problem)
 	#@+body
 	def OnDeactivate (self,event=None):
+		
+		"""Deactivate the tree pane, dimming any headline being edited."""
 	
-		try:
-			self.endEditLabel()
-			self.dimEditLabel()
-			self.active = false
-		except:
-			es_event_exception("deactivate tree")
+		c = self.commands
+		focus = get_focus(c.frame.top)
+	
+		# Bug fix: 7/13/03: Only do this as needed.
+		# Doing this on every click would interfere with the double-clicking.
+		if focus not in (c.frame.body, c.frame.log):
+			try:
+				# trace(focus)
+				self.endEditLabel()
+				self.dimEditLabel()
+			except:
+				es_event_exception("deactivate tree")
 	#@-body
-	#@-node:3::OnDeactivate
+	#@-node:3::tree.OnDeactivate (caused double-click problem)
 	#@+node:4::tree.findVnodeWithIconId
 	#@+body
 	def findVnodeWithIconId (self,id):
@@ -2168,7 +2176,7 @@ class baseLeoTree:
 			
 			if not fg or not bg:
 				fg,bg = "black","white"
-			
+				
 			try:
 				if selfg and selbg:
 					v.edit_text().configure(
