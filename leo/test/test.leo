@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="5914" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="5916" clone_windows="0"/>
 <globals body_outline_ratio="0.572077185017">
-	<global_window_position top="51" left="301" height="864" width="913"/>
+	<global_window_position top="63" left="168" height="864" width="913"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences>
@@ -551,7 +551,12 @@
 <v t="EKR.20040610092248"><vh>Test of pasting into big node</vh></v>
 <v t="EKR.20040604170105"><vh>Test of Remove sentinels</vh></v>
 <v t="ekr.20040711044029.1"><vh>Test new docutils stull</vh></v>
+</v>
+<v t="ekr.20040722051235"><vh>Mini tests of script buttons</vh>
 <v t="ekr.20040712101754.273"><vh>Redundant: @suite run all doctests in @file nodes</vh></v>
+<v t="ekr.20040721094335"><vh>runProfile button mini-test </vh></v>
+<v t="ekr.20040721115141"><vh>runTimeit mini-test </vh></v>
+<v t="ekr.20040721173532"><vh>profile redraws</vh></v>
 </v>
 <v t="ekr.20040707104245"><vh>Printing tests...</vh>
 <v t="ekr.20040323085933"><vh>Print findAllPotentiallyDirtyNodes</vh></v>
@@ -631,8 +636,7 @@
 </v>
 </v>
 </v>
-<v t="EKR.20040623200709"
-expanded="ekr.20040721144439.5,"><vh>@thin ../src/leoTest.py</vh></v>
+<v t="EKR.20040623200709"><vh>@thin ../src/leoTest.py</vh></v>
 <v t="EKR.20040619133116"><vh>Unit testing...</vh>
 <v t="ekr.20040327114250" tnodeList="ekr.20040327114250"><vh>@file c:\prog\test\unittest\batchTest.py</vh></v>
 <v t="ekr.20040712101754"><vh>Unit Tests</vh>
@@ -683,7 +687,7 @@ expanded="ekr.20040721144439.5,"><vh>@thin ../src/leoTest.py</vh></v>
 <v t="ekr.20040712101754.7"><vh>Import/Export tests</vh>
 <v t="ekr.20040712101754.8"><vh>@suite Import tests</vh></v>
 <v t="ekr.20040712101754.9"><vh>@suite Export tests</vh></v>
-<v t="ekr.20040712101754.10" a="E"><vh>importTests</vh>
+<v t="ekr.20040712101754.10"><vh>importTests</vh>
 <v t="ekr.20040712101754.11"><vh>tempNode</vh></v>
 <v t="ekr.20040712101754.12"><vh>importAtRoot</vh>
 <v t="ekr.20040712101754.13"><vh>dialog</vh></v>
@@ -700,7 +704,7 @@ expanded="ekr.20040721144439.5,"><vh>@thin ../src/leoTest.py</vh></v>
 <v t="ekr.20040712101754.22"><vh>removeSentinels</vh>
 <v t="ekr.20040712101754.23"><vh>dialog</vh></v>
 </v>
-<v t="ekr.20040712101754.14" a="E"><vh>importAtFile</vh>
+<v t="ekr.20040712101754.14"><vh>importAtFile</vh>
 <v t="ekr.20040712101754.15"><vh>dialog</vh></v>
 </v>
 </v>
@@ -977,11 +981,12 @@ expanded="ekr.20040721144439.5,"><vh>@thin ../src/leoTest.py</vh></v>
 <v t="ekr.20040712101754.210"><vh>@test hasParentChild</vh></v>
 <v t="ekr.20040712101754.211"><vh>@test hasThreadNextBack</vh></v>
 <v t="ekr.20040712101754.212"><vh>@test vnode list</vh></v>
+<v t="ekr.20040722055040"><vh>@test isAncestorOf</vh></v>
 </v>
 <v t="ekr.20040713070526"><vh>@test Pretty Print command</vh>
 <v t="ekr.20040713123617"><vh>tempNode</vh></v>
 <v t="ekr.20040713071919"><vh>before</vh></v>
-<v t="ekr.20040713123828.1" a="E"><vh>after</vh></v>
+<v t="ekr.20040713123828.1"><vh>after</vh></v>
 </v>
 <v t="ekr.20040712101754.272"><vh>@test CheckOutline</vh></v>
 <v t="EKR.20040612095237"><vh>@test checkPythonCode (bad syntax)</vh>
@@ -1076,12 +1081,11 @@ expanded="ekr.20040721144439.5,"><vh>@thin ../src/leoTest.py</vh></v>
 <v t="ekr.20040712101813"><vh>@test checkAllPythonCode</vh></v>
 </v>
 </v>
-<v t="ekr.20040721153143" a="E"><vh>Main testing scripts</vh>
-<v t="ekr.20040707081532.1" a="EM"><vh>Do @test</vh></v>
-<v t="ekr.20040721113934" a="E"><vh>runProfile</vh></v>
-<v t="ekr.20040721114839.1" a="TV"><vh>runTimeit</vh></v>
+<v t="ekr.20040721153143"><vh>Main testing scripts</vh>
+<v t="ekr.20040707081532.1" a="M"><vh>Do @test</vh></v>
+<v t="ekr.20040721113934"><vh>runProfile</vh></v>
+<v t="ekr.20040721114839.1"><vh>runTimeit</vh></v>
 <v t="ekr.20040721145258.1"><vh>Run gc</vh></v>
-<v t="ekr.20040721160556"><vh>Test of profile</vh></v>
 </v>
 <v t="EKR.20040608095146"><vh>Perfect import stuff...</vh>
 <v t="EKR.20040504083716"><vh>Mulder Update script</vh>
@@ -1097,17 +1101,14 @@ expanded="ekr.20040721144439.5,"><vh>@thin ../src/leoTest.py</vh></v>
 <v t="ekr.20040717070500"><vh>writeNodeToString</vh></v>
 </v>
 <v t="ekr.20040716092802"><vh>testUtils.compareIgnoringNodeNames</vh></v>
-<v t="ekr.20040716140617" a="E"><vh>Perfect Import test code (leoTest.py)</vh>
+<v t="ekr.20040716140617"><vh>Perfect Import test code (leoTest.py)</vh>
 <v t="ekr.20040717074817"><vh>About the Perfect Import tests</vh></v>
 <v t="ekr.20040716140617.1"><vh>runPerfectImportTest</vh></v>
 </v>
 </v>
-<v t="ekr.20040716062608" a="E"><vh>Perfect Import Script</vh></v>
+<v t="ekr.20040716062608"><vh>Perfect Import Script</vh></v>
 </v>
-<v t="ekr.20040719155722"><vh>Script for doctest</vh></v>
-<v t="ekr.20040721094335"><vh>profile mini-test </vh></v>
-<v t="ekr.20040721115141"><vh>timeit mini-test </vh></v>
-<v t="ekr.20040721144323"><vh>To do: bind keystrokes to "button" scripts</vh></v>
+<v t="ekr.20040721144323" a="TV"><vh>To do: bind keystrokes to "button" scripts</vh></v>
 </vnodes>
 <tnodes>
 <t tx="EKR.20040424065452">import leoGlobals as g
@@ -9222,12 +9223,6 @@ p = c.currentPosition()
 
 print "gnx", p.v.t.fileIndex, p.headString()</t>
 <t tx="ekr.20040717144213"></t>
-<t tx="ekr.20040719155722">import leoGlobals as g
-
-mu = g.mulderUpdateAlgorithm()
-
-delims = ('#',None,None)
-g.es(mu.is_sentinel("#@+node",delims))</t>
 <t tx="ekr.20040721094335">for i in xrange(10000):
     if i % 1000 == 0:
         print i</t>
@@ -9281,6 +9276,26 @@ reload(leoTest)
 
 leoTest.runGc(disable=True)</t>
 <t tx="ekr.20040721153143"></t>
-<t tx="ekr.20040721160556">import leoGlobals as g; c=g.top(); p=c.currentPosition()</t>
+<t tx="ekr.20040721173532">import leoGlobals as g
+c = g.top()
+
+# c.redraw just schedules the actual drawing.
+# We want to profile the actual idle-time drawing.
+
+c.frame.tree.idle_redraw()</t>
+<t tx="ekr.20040722051235"></t>
+<t tx="ekr.20040722055040">import leoGlobals as g
+c = g.top()
+
+for p in c.allNodes_iter():
+    
+    child = p.firstChild()
+    while child:
+        for parent in p.self_and_parents_iter():
+            assert parent.isAncestorOf(child)
+        child.moveToNext()
+
+    next = p.next()
+    assert not p.isAncestorOf(next)</t>
 </tnodes>
 </leo_file>
