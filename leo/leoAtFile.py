@@ -2608,7 +2608,26 @@ class atFile:
 			self.oblanks(n)
 	#@-body
 	#@-node:8::putIndent
-	#@+node:9::atFile.closeWriteFile
+	#@+node:9::atFile.checkForLeoCustomize
+	#@+body
+	def checkForLeoCustomize (self):
+		
+		fn = os.path.basename(self.targetFileName)
+		if fn == "leoCustomize.py":
+			import leoDialog
+			d = leoDialog.leoDialog()
+			result = d.askYesNo(
+				"Create leoCustomize.py?",
+				"You are about to create or change leoCustomize.py.\n" +
+				"Are you sure you trust the code in this file?")
+			if result!="yes":
+				es("not written: leoCustomize.py")
+				return false
+		return true
+	
+	#@-body
+	#@-node:9::atFile.checkForLeoCustomize
+	#@+node:10::atFile.closeWriteFile
 	#@+body
 	def closeWriteFile (self):
 		
@@ -2621,8 +2640,8 @@ class atFile:
 			self.outputFile = None
 	
 	#@-body
-	#@-node:9::atFile.closeWriteFile
-	#@+node:10::atFile.handleWriteException
+	#@-node:10::atFile.closeWriteFile
+	#@+node:11::atFile.handleWriteException
 	#@+body
 	def handleWriteException (self,root=None):
 		
@@ -2646,8 +2665,8 @@ class atFile:
 			root.setOrphan()
 			root.setDirty()
 	#@-body
-	#@-node:10::atFile.handleWriteException
-	#@+node:11::atFile.openWriteFile
+	#@-node:11::atFile.handleWriteException
+	#@+node:12::atFile.openWriteFile
 	#@+body
 	# Open files.  Set root.orphan and root.dirty flags and return on errors.
 	
@@ -2708,8 +2727,8 @@ class atFile:
 		
 		return valid
 	#@-body
-	#@-node:11::atFile.openWriteFile
-	#@+node:12::atFile.replaceTargetFileIfDifferent
+	#@-node:12::atFile.openWriteFile
+	#@+node:13::atFile.replaceTargetFileIfDifferent
 	#@+body
 	def replaceTargetFileIfDifferent (self):
 		
@@ -2732,6 +2751,8 @@ class atFile:
 				#@-node:1::<< delete the output file >>
 
 			else:
+				if self.checkForLeoCustomize() == false:
+					return
 				
 				#@<< replace the target file with the output file >>
 				#@+node:2::<< replace the target file with the output file >>
@@ -2756,6 +2777,9 @@ class atFile:
 				#@-body
 				#@-node:2::<< replace the target file with the output file >>
 
+				
+		elif self.checkForLeoCustomize() == false:
+			return
 		else:
 			
 			#@<< rename the output file to be the target file >>
@@ -2775,8 +2799,8 @@ class atFile:
 
 	
 	#@-body
-	#@-node:12::atFile.replaceTargetFileIfDifferent
-	#@+node:13::atFile.write
+	#@-node:13::atFile.replaceTargetFileIfDifferent
+	#@+node:14::atFile.write
 	#@+body
 	# This is the entry point to the write code.  root should be an @file vnode.
 	
@@ -2937,8 +2961,8 @@ class atFile:
 			self.handleWriteException()
 	
 	#@-body
-	#@-node:13::atFile.write
-	#@+node:14::atFile.rawWrite
+	#@-node:14::atFile.write
+	#@+node:15::atFile.rawWrite
 	#@+body
 	def rawWrite(self,root):
 	
@@ -3065,8 +3089,8 @@ class atFile:
 		except:
 			self.handleWriteException(root)
 	#@-body
-	#@-node:14::atFile.rawWrite
-	#@+node:15::atFile.silentWrite
+	#@-node:15::atFile.rawWrite
+	#@+node:16::atFile.silentWrite
 	#@+body
 	def silentWrite(self,root):
 	
@@ -3111,8 +3135,8 @@ class atFile:
 		except:
 			self.handleWriteException(root)
 	#@-body
-	#@-node:15::atFile.silentWrite
-	#@+node:16::atFile.writeAll
+	#@-node:16::atFile.silentWrite
+	#@+node:17::atFile.writeAll
 	#@+body
 	#@+at
 	#  This method scans all vnodes, calling write for every @file node 
@@ -3173,7 +3197,7 @@ class atFile:
 			else:
 				es("no @file, @rawfile or @silentfile nodes in the selected tree")
 	#@-body
-	#@-node:16::atFile.writeAll
+	#@-node:17::atFile.writeAll
 	#@-node:6::Writing
 	#@+node:7::Testing
 	#@+node:1::scanAll

@@ -38,6 +38,8 @@ assert(false!=None)
 #@+body
 # *** Note *** the global statement makes sense only within functions!
 
+gApp = None # Not needed, and keeps Pychecker happy.
+
 def app():
 	global gApp
 	return gApp
@@ -2290,7 +2292,7 @@ def handleLeoHook(tag):
 
 	a = app() ; c = top() # c may be None during startup.
 
-	if a.hookError == true:
+	if a.hookError:
 		return None
 	elif c and c.hookFunction:
 		try:
@@ -2345,7 +2347,7 @@ def unloadAll():
 
 	try:
 		import sys
-		a = leoGlobals.app()
+		a = app()
 		modules = []
 		for name in sys.modules.keys():
 			if name and name[0:3]=="leo":

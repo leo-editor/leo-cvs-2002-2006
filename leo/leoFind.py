@@ -4,8 +4,8 @@
 #@@language python
 
 
-#@<< Theory of operation >>
-#@+node:1::<< Theory of operation >>
+#@<< Theory of operation of find/change >>
+#@+node:1::<< Theory of operation of find/change >>
 #@+body
 #@+at
 #  The find and change commands are tricky; there are many details that must 
@@ -53,7 +53,7 @@
 
 #@-at
 #@-body
-#@-node:1::<< Theory of operation >>
+#@-node:1::<< Theory of operation of find/change >>
 
 
 from leoGlobals import *

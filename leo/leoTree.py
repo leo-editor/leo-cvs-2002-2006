@@ -23,7 +23,7 @@ import os,string,Tkinter,tkFont,types
 
 
 #@<< about drawing and events >>
-#@+node:1::<< about drawing and events >>
+#@+node:1::<< About drawing and events >>
 #@+body
 #@+at
 #  Leo must redraw the outline pane when commands are executed and as the 
@@ -87,7 +87,7 @@ import os,string,Tkinter,tkFont,types
 
 #@-at
 #@-body
-#@-node:1::<< about drawing and events >>
+#@-node:1::<< About drawing and events >>
 
 
 #@<< drawing constants >>

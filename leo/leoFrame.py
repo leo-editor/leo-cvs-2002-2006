@@ -4,14 +4,13 @@
 # To do: Use config params for window height, width and bar color, relief and width.
 
 
-#@@language python 
+#@@language python
+
+__pychecker__ = 'argumentsused=0' # Pychecker param.
 
 from leoGlobals import *
 import leoColor,leoCommands,leoCompare,leoDialog,leoFontPanel,leoNodes,leoPrefs,leoTree
 import os,string,sys,Tkinter,tkFileDialog,tkFont
-
-# Needed for menu commands
-
 
 class LeoFrame:
 

@@ -10,7 +10,7 @@ import os,string
 
 
 #@<< about Tangle and Untangle >>
-#@+node:1::<< about Tangle and Untangle >>
+#@+node:1::<< About Tangle and Untangle >>
 #@+body
 #@+at
 #  The Tangle command translates the selected @root tree into one or more 
@@ -103,7 +103,7 @@ import os,string
 
 #@-at
 #@-body
-#@-node:1::<< about Tangle and Untangle >>
+#@-node:1::<< About Tangle and Untangle >>
 
 
 #@<< constants & synonyms >>
