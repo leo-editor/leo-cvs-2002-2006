@@ -2480,7 +2480,7 @@ class atFile:
     def readLine (self,theFile):
         
         """Reads one line from file using the present encoding"""
-        
+    
         s = g.readlineForceUnixNewline(theFile) # calls theFile.readline
         u = g.toUnicode(s,self.encoding)
         return u
@@ -2516,6 +2516,9 @@ class atFile:
         # "verbatim", so nothing more needs to be done!
         #@-at
         #@@c
+        
+        # Bug fix: 1/3/05: Use default encoding until parseLeoSentinel changes it.
+        at.encoding = at.c.config.default_derived_file_encoding
         
         s = at.readLine(theFile)
         while len(s) > 0:
