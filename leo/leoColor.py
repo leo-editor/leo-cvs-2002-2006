@@ -37,11 +37,11 @@ default_colors_dict = {
 #@+node:1::<< leo keywords >>
 #@+body
 leoKeywords = (
-	"@","@c","@code","@color","@comment","@cweb",
+	"@","@c","@code","@color","@comment",
 	"@delims","@doc","@end_raw",
 	"@first","@header","@ignore",
 	"@language","@last",
-	"@nocolor","@noheader","@noweb","@others",
+	"@nocolor","@noheader","@others",
 	"@pagewidth","@path","@quiet","@raw","@root",
 	"@silent","@tabwidth","@terse",
 	"@unit","@verbose")
