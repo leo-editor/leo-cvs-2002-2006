@@ -1437,8 +1437,10 @@
 <v t="ekr.20040707081532.1"><vh>Do @test</vh></v>
 </v>
 <v t="ekr.20041213074603"><vh>Settings dialog To do</vh>
-<v t="ekr.20041130085943.1"><vh>Put settings into effect immediately</vh></v>
-<v t="ekr.20041217032543"><vh>Replace user types by @strings and @ints</vh></v>
+<v t="ekr.20041217104513"><vh>Remove all user-type machinery</vh></v>
+<v t="ekr.20041217111551"><vh>Make sure not to re-read settings files</vh></v>
+<v t="ekr.20041217032543"><vh>Add support for @strings and @ints</vh></v>
+<v t="ekr.20041130085943.1"><vh>Put ALL settings into effect immediately</vh></v>
 <v t="ekr.20041211053412"><vh>Fix recent files problems</vh></v>
 <v t="ekr.20041211053412.1"><vh>Fix bug: findSettingsRoot doesn't work if no summary node</vh></v>
 <v t="ekr.20041211053412.2"><vh>Support new buttons</vh></v>
@@ -1448,7 +1450,7 @@
 </v>
 <v t="ekr.20041125145818.1" a="MTV"><vh>Settings dialog</vh>
 <v t="ekr.20041213090929"><vh>&lt;&lt; imports &gt;&gt;</vh></v>
-<v t="ekr.20041126110057"><vh>class settingsController</vh>
+<v t="ekr.20041126110057" a="E"><vh>class settingsController</vh>
 <v t="ekr.20041216085206"><vh>class logClass</vh>
 <v t="ekr.20041216085206.1"><vh>&lt;&lt; put s to w &gt;&gt;</vh></v>
 </v>
@@ -1477,7 +1479,7 @@
 </v>
 <v t="ekr.20041127134208.3"><vh>createDirectory</vh></v>
 <v t="ekr.20041127134208.6"><vh>createFloat</vh></v>
-<v t="ekr.20041127134208.4" a="E"><vh>createFont </vh>
+<v t="ekr.20041127134208.4"><vh>createFont </vh>
 <v t="ekr.20041213090401.4"><vh>&lt;&lt; create the family option menu &gt;&gt;</vh></v>
 <v t="ekr.20041213163519"><vh>&lt;&lt; create the size entry &gt;&gt;</vh></v>
 <v t="ekr.20041213090401.5"><vh>&lt;&lt; create the weight option menu &gt;&gt;</vh></v>
@@ -1490,7 +1492,7 @@
 <v t="ekr.20041127134208.8"><vh>createRatio</vh></v>
 <v t="ekr.20041127134208.9"><vh>createRecentFiles (finish)</vh></v>
 <v t="ekr.20041127134208.10"><vh>createShortcut </vh></v>
-<v t="ekr.20041127134613"><vh>createShortcuts (finish)</vh></v>
+<v t="ekr.20041127134613"><vh>createShortcuts</vh></v>
 <v t="ekr.20041128061452"><vh>createSpacerFrame</vh></v>
 <v t="ekr.20041127134613.1"><vh>createString</vh></v>
 <v t="ekr.20041127134613.2"><vh>createType   ??</vh></v>
@@ -1580,17 +1582,6 @@
 <v t="ekr.20041127113719"><vh>doShortcuts</vh></v>
 <v t="ekr.20041127103503.18"><vh>doType</vh></v>
 </v>
-</v>
-</v>
-<v t="ekr.20041216082815" a="E"><vh>(Made @font widgets fully functional)</vh>
-<v t="ekr.20041130062919"><vh>updateConfig</vh></v>
-<v t="ekr.20041127134208.4"><vh>createFont </vh>
-<v t="ekr.20041213090401.4"><vh>&lt;&lt; create the family option menu &gt;&gt;</vh></v>
-<v t="ekr.20041213163519"><vh>&lt;&lt; create the size entry &gt;&gt;</vh></v>
-<v t="ekr.20041213090401.5"><vh>&lt;&lt; create the weight option menu &gt;&gt;</vh></v>
-<v t="ekr.20041213163519.1"><vh>&lt;&lt; create the slant option menu &gt;&gt;</vh></v>
-<v t="ekr.20041216110712"><vh>&lt;&lt; define fontCallback &gt;&gt;</vh></v>
-<v t="ekr.20041217072951"><vh>&lt;&lt; create the sample area &gt;&gt;</vh></v>
 </v>
 </v>
 </vnodes>
@@ -2213,7 +2204,7 @@ import leoGlobals as g
 print g.app.config.redirect_execute_script_output_to_log_pane</t>
 <t tx="EKR.20040627103732">@ignore</t>
 <t tx="EKR.20040627103801"></t>
-<t tx="EKR.20040627103902" lineYOffset="4b032e" icons="5d7100287d710128550577686572657102550a6265666f726549636f6e710355047870616471044b025504747970657105550466696c6571066806582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286805680668084afdffffff6806582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6802550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e"></t>
+<t tx="EKR.20040627103902" lineYOffset="4b032e" icons="5d7100287d7101285504747970657102550466696c65710355047870616471044b02550577686572657105550a6265666f726549636f6e71066803582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286802680368084afdffffff6803582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6805550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e"></t>
 <t tx="EKR.20040627121836">import leoGlobals as g
 
 c = g.top() ; p = c.currentPosition()
@@ -2344,7 +2335,7 @@ for p in c.rootPosition().allNodes_iter():
 s = "%d nodes" % count
 print s ; g.es(s)</t>
 <t tx="ekr.20040312101720"></t>
-<t tx="ekr.20040317101155" lineYOffset="4b032e" icons="5d7100287d7101285504747970657102550466696c65710355047870616471044b02550577686572657105550a6265666f726549636f6e710668035834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286802680368084afdffffff68035834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6805550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">import leoGlobals as g
+<t tx="ekr.20040317101155" lineYOffset="4b032e" icons="5d7100287d710128550577686572657102550a6265666f726549636f6e710355047870616471044b025504747970657105550466696c65710668065834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286805680668084afdffffff68065834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6802550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">import leoGlobals as g
 
 c = g.top()
 
@@ -11228,16 +11219,16 @@ Bigger projects:
     top.focus_force() # Get all keystrokes.
     root.wait_window(top)</t>
 <t tx="ekr.20041121151002">@nocolor</t>
-<t tx="ekr.20041121151002.1">C:\prog\leoCVS\leo\src\LeoPy.leo
-C:\prog\leoCVS\leo\test\unittest\minimalLeoFile3.leo
-C:\prog\leoCVS\leo\dist\leoDist.leo
-C:\prog\leoCVS\leo\doc\LeoDocs.leo
-C:\prog\leoCVS\leo\plugins\leoplugins.leo
-C:\prog\leoCVS\leo\doc\leodocs.leo
-C:\prog\leoCVS\leo\plugins\leoPlugins.leo
-C:\prog\leoCVS\leo\test\test.leo
+<t tx="ekr.20041121151002.1">C:\prog\leoCVS\leo\plugins\leoplugins.leo
 C:\prog\leoCVS\leo\test\unittest\minimalLeoFile.leo
-C:\prog\leoCVS\leo\test\unittest\minimalLeoFile2.leo</t>
+C:\prog\leoCVS\leo\plugins\leoPlugins.leo
+C:\prog\leoCVS\leo\test\unittest\minimalLeoFile3.leo
+C:\prog\leoCVS\leo\test\unittest\minimalLeoFile2.leo
+C:\prog\leoCVS\leo\src\LeoPy.leo
+C:\prog\leoCVS\leo\doc\leodocs.leo
+C:\prog\leoCVS\leo\test\test.leo
+C:\prog\leoCVS\leo\dist\leoDist.leo
+C:\prog\leoCVS\leo\doc\LeoDocs.leo</t>
 <t tx="ekr.20041124063401"></t>
 <t tx="ekr.20041124102349">class tixDialog (leoTkinterDialog.leoTkinterDialog):
     
@@ -13256,10 +13247,10 @@ self.setterLabel = sc.component('label')
     s = p.bodyString()
     lines = g.splitLines(s)
     
-    i = 0
+    i = 1
     for line in lines:
         if not g.match(line.strip(),0,'#'):
-            name = "file %d" % (i)
+            name = "file %d" % (i) ; i += 1
             self.createString(parent,p,kind,name,line)
                 
     self.suppressComments = p.copy()
@@ -13280,7 +13271,7 @@ self.setterLabel = sc.component('label')
             name,val = self.parser.parseShortcutLine(line)
             if name:
                 self.createString(parent,p,kind,name,val)
-                
+
     self.suppressComments = p.copy()</t>
 <t tx="ekr.20041127134613.1">def createString (self,parent,p,kind,name,val):
 
@@ -13664,15 +13655,11 @@ print ; print</t>
             c.setRecentFiles(val)
         else:
             g.app.config.set(c,name,kind,val)</t>
-<t tx="ekr.20041130085943.1">Leo updates settings files, including the open file if that is appropriate, when the user presses the OK, Apply or Revert buttons.
+<t tx="ekr.20041130085943.1">- Color changes are written properly, but do not take effect until next reload.
+    Specify tree colors when using recycled tree widgets.
 
-g.app.config.set does not do anything yet, so settings don't go into effect. This will probably be very easy to fix.
-
-Completing g.app.config.set  will put all drawing settings into effect immediately.  Some settings are more difficult to put into effect.
-
-A general way to put settings into effect would be good, but may not be easy.
-
-- Color changes are written properly, but do not take effect until next reload.</t>
+- Must use unit tests to verify that all is handled properly.
+    There are too many cases to test by hand.</t>
 <t tx="ekr.20041130092210"></t>
 <t tx="ekr.20041130191836">def copyExpansionState(self,p1,p2):
  
@@ -13718,11 +13705,7 @@ if name in ("OK","Cancel"):</t>
 
 </t>
 <t tx="ekr.20041213074603">@ignore
-@killcolor
-
-First:
-
-- Update all font settings immediately.</t>
+@killcolor</t>
 <t tx="ekr.20041213075902"># The font for the log pane. Default is default font for Tk.Text widgets.
 # Tk translates invalid font names to another font in a system-dependent way.
 # 
@@ -13831,7 +13814,6 @@ slantVar.set(values[initialitem])
 
 slantButton = slantMenu.component('menubutton')
 slantButton.configure(width=7,textvariable=slantVar)</t>
-<t tx="ekr.20041216082815"># There was a bug in the leoTkinterTree logic: recycled widgets didn't have their font updated.</t>
 <t tx="ekr.20041216085206">class logClass:
     
     def __init__ (self,textWidget):
@@ -13941,5 +13923,7 @@ body_text_font_weight = None
     g.trace(fontName,font,params)
     
     sample.configure(font=font)</t>
+<t tx="ekr.20041217104513"></t>
+<t tx="ekr.20041217111551"></t>
 </tnodes>
 </leo_file>

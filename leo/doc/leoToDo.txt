@@ -3,7 +3,7 @@
 #@@nocolor
 
 #@+all
-#@+node:ekr.20041130125500:To do first
+#@+node:ekr.20041130125500:To do misc
 #@+node:ekr.20041130103128:(killcolor also kills autoindenting )
 By: Roger Erens - rogererens
 @
@@ -118,7 +118,7 @@ It is possible to do pretty much anything you want but you will have to provide 
 - Change createDynamicButton in the script plugin to honor the binding.
 #@nonl
 #@-node:ekr.20041211022140:Specify key binding  in @button
-#@-node:ekr.20041130125500:To do first
+#@-node:ekr.20041130125500:To do misc
 #@+node:ekr.20041128172446:add a 3rd party extension mechanism for Leo
 http://sourceforge.net/forum/message.php?msg_id=2871977
 
