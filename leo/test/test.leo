@@ -2,7 +2,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="2331" clone_windows="0"/>
 <globals body_outline_ratio="0.32115869017632243">
-	<global_window_position top="10" left="126" height="990" width="1072"/>
+	<global_window_position top="10" left="182" height="990" width="1072"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences>
@@ -2956,12 +2956,13 @@
 <v t="ekr.20040126105605" a="E"><vh>Clone test</vh>
 <v t="ekr.20040126105605.1"><vh>moving last b up destroys the outline!!</vh></v>
 <v t="ekr.20040126105605.2" a="E"><vh>a</vh>
-<v t="ekr.20040126105605.3" a="V"><vh>b</vh></v>
+<v t="ekr.20040126105605.3"><vh>b</vh></v>
 </v>
 <v t="ekr.20040126105605.2" a="E"><vh>a</vh>
 <v t="ekr.20040126105605.3"><vh>b</vh></v>
 </v>
 </v>
+<v t="ekr.20040126121831" a="V"><vh>Test of exception-handling inside commands</vh></v>
 </vnodes>
 <tnodes>
 <t tx="dthein.20040108213304">@ 
@@ -36184,5 +36185,21 @@ runner.run(suite)</t>
 <t tx="ekr.20040126105605.1"></t>
 <t tx="ekr.20040126105605.2"></t>
 <t tx="ekr.20040126105605.3"></t>
+<t tx="ekr.20040126121831">from leoGlobals import *
+
+def throwException():
+	c = top()
+	c.beginUpdate()
+	print "my command"
+	a = 0/0 # should throw exception.
+	c.endUpdate()
+	
+c = top()
+
+# This would be a test of an exception in the execute script command.
+# print "abc
+
+# Note: the error recovery scheme will not work if the call to doCommand itself appears in a begin/endUpdate pair.
+c.doCommand(throwException,"Throw Exception")</t>
 </tnodes>
 </leo_file>

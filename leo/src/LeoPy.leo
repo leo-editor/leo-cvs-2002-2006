@@ -14,8 +14,10 @@
 <vnodes>
 <v t="ekr.20031218072017"><vh> Diary</vh>
 <v t="ekr.20040105070023"><vh>2004</vh>
-<v t="ekr.20040105070023.1" a="E"><vh>January 2004</vh>
+<v t="ekr.20040105070023.1"><vh>January 2004</vh>
 <v t="ekr.20040126115428"><vh>1/26</vh>
+<v t="ekr.20040126131801"><vh>Properly handle exceptions in commands</vh></v>
+<v t="ekr.20040126121604"><vh>Eliminated control-v bug on various platforms</vh></v>
 <v t="ekr.20040126115428.1"><vh>Added Dave Hein's Reformat Paragraph code.</vh></v>
 <v t="ekr.20040126115428.2"><vh>Fixed Move Up bug involving clones</vh></v>
 </v>
@@ -1334,7 +1336,7 @@
 <v t="ekr.20031218072017.1010" a=""><vh>inVisibleArea &amp; inExpandedVisibleArea</vh></v>
 <v t="ekr.20031218072017.1011" a=""><vh>Updating routines (tree)...</vh>
 <v t="ekr.20031218072017.1012"><vh>redraw</vh></v>
-<v t="ekr.20040106095546" a=""><vh>tkTree.enableDrawingAfterException</vh></v>
+<v t="ekr.20040106095546" a=""><vh>tkTree.redrawAfterException</vh></v>
 <v t="ekr.20031218072017.1013"><vh>force_redraw</vh></v>
 <v t="ekr.20031218072017.1014"><vh>redraw_now</vh></v>
 <v t="ekr.20031218072017.1015" a=""><vh>idle_redraw</vh></v>
@@ -2540,7 +2542,7 @@
 <v t="ekr.20031218072017.1723" a=""><vh>createMenuEntries</vh>
 <v t="ekr.20031218072017.1724"><vh>&lt;&lt; set name to the label for doCommand &gt;&gt;</vh></v>
 <v t="ekr.20031218072017.1725"><vh>&lt;&lt; set accel to the shortcut for name &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.1726"><vh>&lt;&lt; set bind_shortcut and menu_shortcut using accel &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.1726" a=""><vh>&lt;&lt; set bind_shortcut and menu_shortcut using accel &gt;&gt;</vh></v>
 <v t="ekr.20031218072017.1727"><vh>&lt;&lt; define callback function &gt;&gt;</vh></v>
 <v t="ekr.20031218072017.1728"><vh>&lt;&lt; set realLabel, amp_index and menu_shortcut &gt;&gt;</vh></v>
 <v t="ekr.20031218072017.1729"><vh>&lt;&lt; handle bind_shorcut &gt;&gt;</vh></v>
@@ -3542,7 +3544,7 @@
 <v t="ekr.20031218072017.1723" a=""><vh>createMenuEntries</vh>
 <v t="ekr.20031218072017.1724"><vh>&lt;&lt; set name to the label for doCommand &gt;&gt;</vh></v>
 <v t="ekr.20031218072017.1725"><vh>&lt;&lt; set accel to the shortcut for name &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.1726"><vh>&lt;&lt; set bind_shortcut and menu_shortcut using accel &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.1726" a=""><vh>&lt;&lt; set bind_shortcut and menu_shortcut using accel &gt;&gt;</vh></v>
 <v t="ekr.20031218072017.1727"><vh>&lt;&lt; define callback function &gt;&gt;</vh></v>
 <v t="ekr.20031218072017.1728"><vh>&lt;&lt; set realLabel, amp_index and menu_shortcut &gt;&gt;</vh></v>
 <v t="ekr.20031218072017.1729"><vh>&lt;&lt; handle bind_shorcut &gt;&gt;</vh></v>
@@ -4083,7 +4085,7 @@
 <v t="ekr.20031218072017.1723" a=""><vh>createMenuEntries</vh>
 <v t="ekr.20031218072017.1724"><vh>&lt;&lt; set name to the label for doCommand &gt;&gt;</vh></v>
 <v t="ekr.20031218072017.1725"><vh>&lt;&lt; set accel to the shortcut for name &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.1726"><vh>&lt;&lt; set bind_shortcut and menu_shortcut using accel &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.1726" a=""><vh>&lt;&lt; set bind_shortcut and menu_shortcut using accel &gt;&gt;</vh></v>
 <v t="ekr.20031218072017.1727"><vh>&lt;&lt; define callback function &gt;&gt;</vh></v>
 <v t="ekr.20031218072017.1728"><vh>&lt;&lt; set realLabel, amp_index and menu_shortcut &gt;&gt;</vh></v>
 <v t="ekr.20031218072017.1729"><vh>&lt;&lt; handle bind_shorcut &gt;&gt;</vh></v>
@@ -4151,29 +4153,38 @@
 <v t="ekr.20031218072017.1773"><vh>&lt;&lt; Move v up &gt;&gt;</vh></v>
 </v>
 <v t="ekr.20040126115428.4"><vh>Test</vh>
-<v t="ekr.20040126104851.1" a="E"><vh>a</vh>
+<v t="ekr.20040126104851.1" a=""><vh>a</vh>
 <v t="ekr.20040126104851.2"><vh>b </vh></v>
 </v>
-<v t="ekr.20040126104851.1" a="E"><vh>a</vh>
+<v t="ekr.20040126104851.1" a=""><vh>a</vh>
 <v t="ekr.20040126104851.2"><vh>b </vh></v>
 </v>
 </v>
 </v>
-</v>
-<v t="ekr.20031219082559" a="V"><vh>To do: 4.1 rc4</vh>
-<v t="ekr.20031218072017.860"><vh>Remove scripts menu plugin</vh></v>
-<v t="ekr.20040125121521.1" a="M"><vh>Install Leo on Mac</vh></v>
-<v t="ekr.20040105070616.2"><vh>Mac bugs</vh></v>
-<v t="ekr.20040118101339.1"><vh>Plugins</vh>
-<v t="ekr.20040115162445" a="M"><vh>Create plugin to insert status bar</vh></v>
-<v t="ekr.20040117112213.1" a="M"><vh>mod_autosave doesn't work (?)</vh></v>
-<v t="ekr.20040116023408"><vh>xemacs plugin activates on drags!</vh></v>
-<v t="ekr.20040125114744"><vh>Michael Dawson: Leo to docbook xml plugin</vh></v>
-</v>
-<v t="ekr.20040105064959"><vh>Fix Bugs</vh>
-<v t="ekr.20040125105904.1"><vh>(Eliminating control-v bug on various platforms)</vh>
+<v t="ekr.20040125105904.1"><vh>(Eliminated control-v bug on various platforms)</vh>
 <v t="ekr.20040125105904.2"><vh>Reports</vh></v>
+<v t="ekr.20031218072017.1726" a=""><vh>&lt;&lt; set bind_shortcut and menu_shortcut using accel &gt;&gt;</vh></v>
 </v>
+<v t="ekr.20040106095546.2"><vh>(Properly recover from drawing after exceptions) </vh>
+<v t="ekr.20040126131359"><vh>Notes</vh></v>
+<v t="ekr.20031218072017.2817" a=""><vh> doCommand</vh></v>
+<v t="ekr.20031218072017.2140" a=""><vh>executeScript</vh>
+<v t="ekr.20031218072017.2141"><vh>&lt;&lt; define class fileLikeObject &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.2142"><vh>&lt;&lt; get script into s &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.2143"><vh>&lt;&lt; redirect output if redirect_execute_script_output_to_log_pane &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20040106095546" a=""><vh>tkTree.redrawAfterException</vh></v>
+<v t="ekr.20031218072017.1011" a=""><vh>Updating routines (tree)...</vh>
+<v t="ekr.20031218072017.1012"><vh>redraw</vh></v>
+<v t="ekr.20040106095546" a="M"><vh>tkTree.redrawAfterException</vh></v>
+<v t="ekr.20031218072017.1013"><vh>force_redraw</vh></v>
+<v t="ekr.20031218072017.1014"><vh>redraw_now</vh></v>
+<v t="ekr.20031218072017.1015" a="M"><vh>idle_redraw</vh></v>
+<v t="ekr.20031218072017.1016" a=""><vh>idle_second_redraw</vh></v>
+</v>
+</v>
+</v>
+<v t="ekr.20031219082559"><vh>To do: 4.1 rc4</vh>
 <v t="ekr.20040104162835" a="M"><vh>marked nodes: dan winkler</vh>
 <v t="ekr.20040104162835.1"><vh>Reports</vh>
 <v t="ekr.20040104162835.2"><vh>Report</vh></v>
@@ -4182,16 +4193,7 @@
 <v t="ekr.20040104162835.5"><vh>Another clue</vh></v>
 </v>
 </v>
-<v t="ekr.20040106095546.2" a="M"><vh>(Enabled drawing after exceptions)  MAKES THINGS WORSE</vh>
-<v t="ekr.20031218072017.2817" a=""><vh> doCommand</vh></v>
-<v t="ekr.20040106095546" a=""><vh>tkTree.enableDrawingAfterException</vh></v>
-<v t="ekr.20031218072017.2140" a=""><vh>executeScript</vh>
-<v t="ekr.20031218072017.2141"><vh>&lt;&lt; define class fileLikeObject &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.2142"><vh>&lt;&lt; get script into s &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.2143"><vh>&lt;&lt; redirect output if redirect_execute_script_output_to_log_pane &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20031218072017.3112" a=""><vh>es_exception</vh></v>
-</v>
+<v t="ekr.20040105064959"><vh>Fix Bugs</vh>
 <v t="ekr.20040118101339.2" a="M"><vh>Major:  File problems</vh>
 <v t="ekr.20040109072646" a="M"><vh>(Batch-mode problems)</vh>
 <v t="ekr.20040109072646.1"><vh>Report</vh></v>
@@ -4237,13 +4239,21 @@
 </v>
 <v t="ekr.20040125114453"><vh>Bug: control-alt-f of python code misalloctes code</vh></v>
 </v>
+<v t="ekr.20040125121521.1" a="M"><vh>Install Leo on Mac</vh></v>
+<v t="ekr.20040105070616.2"><vh>Mac bugs</vh></v>
+<v t="ekr.20040118101339.1"><vh>Plugins</vh>
+<v t="ekr.20040115162445" a="M"><vh>Create plugin to insert status bar</vh></v>
+<v t="ekr.20040117112213.1" a="M"><vh>mod_autosave doesn't work (?)</vh></v>
+<v t="ekr.20040116023408"><vh>xemacs plugin activates on drags!</vh></v>
+<v t="ekr.20040125114744"><vh>Michael Dawson: Leo to docbook xml plugin</vh></v>
+</v>
 <v t="ekr.20040126103304"><vh>Make Import Derived File command work properly</vh></v>
 <v t="ekr.20040126115447"><vh>Docs</vh>
 <v t="ekr.20040105080119.2"><vh>Document new stuff</vh></v>
 <v t="ekr.20031218072017.854"><vh>Put tips in LeoDocs.leo</vh></v>
 </v>
 </v>
-<v t="ekr.20031218072017.2406"><vh>Code</vh>
+<v t="ekr.20031218072017.2406" a="V"><vh>Code</vh>
 <v t="ekr.20031218072017.2407"><vh>  Overview of code</vh>
 <v t="ekr.20031218072017.2408" a=""><vh>&lt;&lt; About clones &gt;&gt;</vh></v>
 <v t="ekr.20031218072017.2409" a=""><vh>&lt;&lt; About drawing &gt;&gt;</vh></v>
@@ -5255,7 +5265,7 @@
 <v t="ekr.20031218072017.2947"><vh>c.dragToNthChildOf</vh></v>
 <v t="ekr.20031218072017.2948"><vh>c.dragCloneAfter</vh></v>
 </v>
-<v t="ekr.20031218072017.2949"><vh>Drawing Utilities</vh>
+<v t="ekr.20031218072017.2949"><vh>Drawing Utilities (commands)</vh>
 <v t="ekr.20031218072017.2950"><vh>beginUpdate</vh></v>
 <v t="ekr.20031218072017.2951"><vh>bringToFront</vh></v>
 <v t="ekr.20031218072017.2952"><vh>endUpdate</vh></v>
@@ -5586,7 +5596,7 @@
 <v t="ekr.20031218072017.3109"><vh>dump</vh></v>
 <v t="ekr.20031218072017.3110"><vh>es_error</vh></v>
 <v t="ekr.20031218072017.3111"><vh>es_event_exception</vh></v>
-<v t="ekr.20031218072017.3112" a=""><vh>es_exception</vh></v>
+<v t="ekr.20031218072017.3112"><vh>es_exception</vh></v>
 <v t="ekr.20031218072017.3113"><vh>printBindings</vh></v>
 <v t="ekr.20031218072017.3114"><vh>printGlobals</vh></v>
 <v t="ekr.20031218072017.3115"><vh>printLeoModules</vh></v>
@@ -6734,7 +6744,7 @@
 <v t="ekr.20031218072017.1723" a=""><vh>createMenuEntries</vh>
 <v t="ekr.20031218072017.1724"><vh>&lt;&lt; set name to the label for doCommand &gt;&gt;</vh></v>
 <v t="ekr.20031218072017.1725"><vh>&lt;&lt; set accel to the shortcut for name &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.1726"><vh>&lt;&lt; set bind_shortcut and menu_shortcut using accel &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.1726" a=""><vh>&lt;&lt; set bind_shortcut and menu_shortcut using accel &gt;&gt;</vh></v>
 <v t="ekr.20031218072017.1727"><vh>&lt;&lt; define callback function &gt;&gt;</vh></v>
 <v t="ekr.20031218072017.1728"><vh>&lt;&lt; set realLabel, amp_index and menu_shortcut &gt;&gt;</vh></v>
 <v t="ekr.20031218072017.1729"><vh>&lt;&lt; handle bind_shorcut &gt;&gt;</vh></v>
@@ -7295,7 +7305,7 @@
 </v>
 <v t="ekr.20031218072017.1011" a=""><vh>Updating routines (tree)...</vh>
 <v t="ekr.20031218072017.1012"><vh>redraw</vh></v>
-<v t="ekr.20040106095546" a=""><vh>tkTree.enableDrawingAfterException</vh></v>
+<v t="ekr.20040106095546" a=""><vh>tkTree.redrawAfterException</vh></v>
 <v t="ekr.20031218072017.1013"><vh>force_redraw</vh></v>
 <v t="ekr.20031218072017.1014"><vh>redraw_now</vh></v>
 <v t="ekr.20031218072017.1015" a=""><vh>idle_redraw</vh></v>
@@ -16501,7 +16511,6 @@ It's better to let plugin customize the menu.  </t>
 <t tx="ekr.20031218072017.857">http://spe.pycs.net/</t>
 <t tx="ekr.20031218072017.858"></t>
 <t tx="ekr.20031218072017.859"></t>
-<t tx="ekr.20031218072017.860"></t>
 <t tx="ekr.20031218072017.862">- nullFrame class must have option to add nullUndoer (don't do this by default).
 	
 Script-find/change:
@@ -17843,8 +17852,6 @@ def redraw (self,event=None):
 <t tx="ekr.20031218072017.1013"># Schedules a redraw even if inside beginUpdate/endUpdate
 def force_redraw (self):
 
-	# trace()
-
 	if not self.redrawScheduled:
 		self.redrawScheduled = true
 		self.canvas.after_idle(self.idle_redraw)</t>
@@ -17857,6 +17864,9 @@ def redraw_now (self):
 <t tx="ekr.20031218072017.1015">def idle_redraw (self):
 	
 	self.redrawScheduled = false # 7/10/03: Always do this here.
+	
+	if 0: # This can be called as the result of update_idletasks, so the count need not be 0.
+		trace(self.updateCount)
 
 	frame = self.c.frame
 	if frame not in app.windowList or app.quitting:
@@ -28244,7 +28254,7 @@ else:
 # This has already been bound in leoTkinterFrame.__init__
 # 2/13/03: A _possible_ fix for the Linux control-v bug.
 
-if sys.platform not in ("linux1","linux2"):
+if sys.platform not in ("darwin","freebsd4","freebsd5","linux1","linux2"):
 	if bind_shortcut in ("&lt;Control-c&gt;","&lt;Control-v&gt;","&lt;Control-x&gt;"):
 		bind_shortcut = None</t>
 <t tx="ekr.20031218072017.1727">if openWith:
@@ -34093,6 +34103,7 @@ def otabs(self,n):
 		except:
 			es("exception executing script")
 			es_exception(full=false,c=c)
+			c.frame.tree.redrawAfterException() # 1/26/04
 	elif not error:
 		es("no script selected",color="blue")</t>
 <t tx="ekr.20031218072017.2141">class fileLikeObject:
@@ -44127,7 +44138,7 @@ def setIvarsFromPrefs (self):
 			es("exception executing command")
 			print "exception executing command"
 			es_exception(c=c)
-			c.redraw() # 11/23/03
+			c.frame.tree.redrawAfterException() # 1/26/04
 	
 	doHook("command2",c=c,v=v,label=label)
 			
@@ -47847,11 +47858,7 @@ def oldDump(s):
 	for i in errList:
 		es_error(i)
 	
-	traceback.print_exc()
-	
-	if c is None:
-		c = top()
-	c.frame.tree.enableDrawingAfterException()</t>
+	traceback.print_exc()</t>
 <t tx="ekr.20031218072017.3113">def print_bindings (name,window):
 
 	bindings = window.bind()
@@ -55757,7 +55764,11 @@ def redraw(self,event=None): # May be bound to an event.
 	self.oops()
 
 def redraw_now(self):
-	self.oops()</t>
+	self.oops()
+	
+def redrawAfterException (self):
+	self.oops()
+</t>
 <t tx="ekr.20031218072017.3708">def editLabel(self,v):
 	self.oops()
 
@@ -61736,13 +61747,17 @@ printable = choose(ch == keysym and state &lt; 4,"printable","")
 
 print "%4d %s %d %s %x %s" % (
 	self.keyCount,repr(ch),keycode,keysym,state,printable)</t>
-<t tx="ekr.20040106095546">def enableDrawingAfterException (self):
+<t tx="ekr.20040106095546">@ This is called only from doCommand.  The implicit assumption is that doCommand itself is not contained in a beginUpdate/endUpdate pair.
+@c
+
+def redrawAfterException (self):
 	
 	"""Make sure drawing is enabled following an exception."""
-	
-	if 0: # This makes things worse.
-		self.redrawScheduled = false
-		self.updateCount = 0</t>
+		
+	if not self.redrawScheduled:
+		self.redrawScheduled = true
+		self.canvas.after_idle(self.idle_redraw)
+		self.updateCount = 0 # would not work if we are in a beginUpdate/endUpdate pair.</t>
 <t tx="ekr.20040106095546.1">def enableDrawingAfterException (self):
 	pass</t>
 <t tx="ekr.20040106095546.2"></t>
@@ -63941,47 +63956,13 @@ for a collaborative/networked version of Leo.
 <t tx="ekr.20040125105904.1"></t>
 <t tx="ekr.20040125105904.2">@nocolor
 
-Read and respond to this message at: 
-https://sourceforge.net/forum/message.php?msg_id=2384480
-By: nobody
+Changed:
 
-Please change this piece of code:
-
-in LeoPy.leo
-
-Code -&gt; Gui Base classes -&gt; @file leoMenu.py -&gt; class leoMenu -&gt; Gui-independent
-menu routines -&gt; createMenuEntries -&gt; &lt;&lt; set bind_shortcut and menu_shortcut
-using accel &gt;&gt;
-
-line:
 if sys.platform not in ("linux1","linux2"):
 
-to this one:
-if sys.platform not in ("linux1","linux2","freebsd5"):
+to:
 
-
-It solves Control-V bug in FreeBSD :) At least version FreeBSD 5.x. I think
-for FreeBSD 4.x "freebsd4" must be added but I don't have place where to test
-that.
-
-Dalius
-
-----
-
-https://sourceforge.net/forum/message.php?msg_id=2384684
-By: nobody
-
-Add "darwin" to that list, to fix it for Mac OS X, X11 (non-Aqua) version.
-
---eric k
-
-----
-
-https://sourceforge.net/forum/message.php?msg_id=2389668
-By: ejoy
-
-using the term "freebsd4", I get C-V work under my FreeBSD 4.8. Thanks.
-</t>
+if sys.platform not in ("darwin",freebsd4","freebsd5","linux1","linux2"):</t>
 <t tx="ekr.20040125114453">@nocolor
 https://sourceforge.net/forum/message.php?msg_id=2391076
 By: thyrsus
@@ -65345,5 +65326,20 @@ I wonder what this code would look like in the shared-tnode world?
 <t tx="ekr.20040126115428.3">The fix was to insert weird special case in the move up code.</t>
 <t tx="ekr.20040126115428.4"></t>
 <t tx="ekr.20040126115447"></t>
+<t tx="ekr.20040126121604">Changed:
+
+if sys.platform not in ("linux1","linux2"):
+
+to:
+
+if sys.platform not in ("darwin",freebsd4","freebsd5","linux1","linux2"):
+
+in:
+
+&lt;&lt; set bind_shortcut and menu_shortcut using accel &gt;&gt;</t>
+<t tx="ekr.20040126131359">@nocolor
+
+c.doCommand calls tree.redrawAfterException on exceptions.  This works because doCommand is itself _not_ contained in any begin/endUpdate pair, so setting elf.updateCount = 0 in tree.redrawAfterException will work.</t>
+<t tx="ekr.20040126131801">c.doCommand calls tree.redrawAfterException on exceptions.  This works because doCommand is itself _not_ contained in any begin/endUpdate pair, so setting elf.updateCount = 0 in tree.redrawAfterException will work.</t>
 </tnodes>
 </leo_file>

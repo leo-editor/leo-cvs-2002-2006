@@ -43,6 +43,7 @@
 <v t="edream.110203113231.7"><vh>Hooks should never blindly Python scripts</vh></v>
 <v t="edream.110203113231.8"><vh>NEVER use this kind of code in a hook!!</vh></v>
 </v>
+<v t="ekr.20040126115840" a="V"><vh>Other</vh>
 <v t="edream.110203113231.9"><vh>Unfinished projects</vh>
 <v t="edream.110203113231.10"><vh>(Settings menu)</vh>
 <v t="edream.110203113231.11"><vh>To do</vh></v>
@@ -968,17 +969,18 @@
 </v>
 </v>
 </v>
-<v t="edream.120203141341" a="M"><vh>(Scripts to debug font problem)</vh>
+<v t="edream.120203141341"><vh>(Scripts to debug font problem)</vh>
 <v t="edream.120203141341.1"><vh>Show font</vh></v>
 <v t="edream.120203140328.1"><vh>Show settings</vh>
 <v t="edream.120203140328.2"><vh>getFontSettings</vh></v>
 </v>
 <v t="edream.120203141927"><vh>Print default font</vh></v>
 </v>
+</v>
 <v t="edream.120103084310"><vh>(Load plugins only from plugins menu)</vh>
 <v t="edream.120103084310.1"><vh>Report</vh></v>
 </v>
-<v t="edream.120603093808" a="MV" tnodeList="edream.120603093808"><vh>@file pluginsManager.txt</vh></v>
+<v t="edream.120603093808" a="M" tnodeList="edream.120603093808"><vh>@file pluginsManager.txt</vh></v>
 <v t="edream.110203113231.618"><vh>Plugins &amp; scripts</vh>
 <v t="edream.031217101015"><vh>Contributed scripts</vh>
 <v t="edream.110203113231.619"><vh>From Bernhard Mulder</vh>
@@ -1231,7 +1233,7 @@
 </v>
 </v>
 </v>
-<v t="edream.110203113231.790" a="E"><vh>External editors &amp; Open With</vh>
+<v t="edream.110203113231.790"><vh>External editors &amp; Open With</vh>
 <v t="edream.120303095057.1" tnodeList="edream.120303095057.1,edream.120303095910,edream.120303095910.1"><vh>@file mod_tempfname.py</vh>
 <v t="edream.120303095910"><vh>onStart</vh></v>
 <v t="edream.120303095910.1"><vh>openWithTempFilePath</vh></v>
@@ -1517,7 +1519,7 @@
 </v>
 </v>
 </v>
-<v t="ekr.20040107092135" a="E"><vh>New plugins:  very cool</vh>
+<v t="ekr.20040107092135"><vh>New plugins:  very cool</vh>
 <v t="ekr.20040109080300"><vh> Changes made by EKR</vh></v>
 <v t="ekr.20040111053758"><vh> Description of rst2 by Steve Zatz</vh></v>
 <v t="ekr.20040118081748" tnodeList="ekr.20040118081748,ekr.20040118081748.1,ekr.20040118081748.2,ekr.20040118081748.3,ekr.20040118081748.4,ekr.20040118081748.5,ekr.20040118081748.6,ekr.20040118081748.7,ekr.20040118081748.8"><vh>@file rst2.py</vh>
@@ -17176,5 +17178,6 @@ Use this plugin is as follows:
 You will see a a "top" level page containing one link for every open .leo file.  Start clicking :-)
 
 You can use the browser's refresh button to update the top-level view in the browser after you have opened or closed files.</t>
+<t tx="ekr.20040126115840"></t>
 </tnodes>
 </leo_file>
