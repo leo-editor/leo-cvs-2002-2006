@@ -938,6 +938,7 @@ class LeoFrame:
 			("Convert All T&abs",None,self.OnConvertAllTabs),
 			("Convert &Blanks","Shift+Ctrl+B",self.OnConvertBlanks),
 			("Convert &Tabs","Shift+Ctrl+J",self.OnConvertTabs),
+			("Insert Time/&Date","Shift+Ctrl+G",self.OnInsertTime),
 			("&Reformat Paragraph","Shift+Ctrl+P",self.OnReformatParagraph),
 			("-",None,None),
 			("&Indent","Ctrl+]",self.OnIndent),
@@ -961,7 +962,8 @@ class LeoFrame:
 		table = (
 			("Edit &Headline","Ctrl+H",self.OnEditHeadline),
 			("&End Edit Headline","Escape",self.OnEndEditHeadline),
-			("&Abort Edit Headline","Shift-Escape",self.OnAbortEditHeadline))
+			("&Abort Edit Headline","Shift-Escape",self.OnAbortEditHeadline),
+			("Append Time/&Date","Shift+Ctrl+H",self.OnAppendTime))
 			
 		self.createMenuEntries(editHeadlineMenu,table)
 		
@@ -2864,6 +2866,56 @@ class LeoFrame:
 	
 	#@-body
 	#@-node:9::OnInsertGraphicFile
+	#@+node:10::OnInsertTime & OnInsertTimeInHeadline & allies
+	#@+body
+	def OnInsertTime (self,event=None):
+		
+		c = self.commands ; v = c.currentVnode()
+		c.body.insert("insert",self.getTime(body=true))
+		c.tree.onBodyChanged(v,"Typing")
+		
+	def OnAppendTime (self,event=None):
+	
+		c = self.commands ; v = c.currentVnode()
+		s = v.headString() # Remember the old value.
+	
+		if v.edit_text:
+			v.edit_text.insert("insert",self.getTime(body=false))
+			c.tree.idle_head_key(v)
+			
+		# A kludge to get around not knowing whether we are editing or not.
+		if s.strip() == v.headString().strip():
+			es("Edit headline to append date/time")
+	
+	#@-body
+	#@+node:1::getTime
+	#@+body
+	def getTime (self,body=true):
+		
+		import time
+		
+		config = app().config
+		default_format =  "%m/%d/%Y %H:%M:%S" # E.g., 1/30/2003 8:31:55
+		
+		# Try to get the format string from leoConfig.txt.
+		if body:
+			format = config.getWindowPref("body_time_format_string")
+		else:
+			format = config.getWindowPref("headline_time_format_string")
+	
+		if format == None:
+			format = default_format
+	
+		try:
+			s = time.strftime(format,time.gmtime())
+		except:
+			es_exception() # Probably a bad format string in leoConfig.txt.
+			s = time.strftime(default_format,time.gmtime())
+		return s
+	
+	#@-body
+	#@-node:1::getTime
+	#@-node:10::OnInsertTime & OnInsertTimeInHeadline & allies
 	#@-node:2::Edit Body submenu
 	#@+node:3::Edit Headline submenu
 	#@+node:1::OnEditHeadline

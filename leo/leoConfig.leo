@@ -3,7 +3,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="23" clone_windows="0"/>
 <globals body_outline_ratio="0.5">
-	<global_window_position top="9" left="92" height="25" width="96"/>
+	<global_window_position top="11" left="143" height="25" width="96"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences allow_rich_text="0">
@@ -29,10 +29,10 @@
 <v t="T14"><vh>&lt;&lt; None &gt;&gt;</vh></v>
 </v>
 <v t="T15"><vh>&lt;&lt; Preferences Panel settings &gt;&gt;</vh></v>
-<v t="T16" a="V"><vh>&lt;&lt; Syntax coloring options and colors &gt;&gt;</vh></v>
+<v t="T16"><vh>&lt;&lt; Syntax coloring options and colors &gt;&gt;</vh></v>
 <v t="T17" a="E"><vh>&lt;&lt; Window options &gt;&gt;</vh>
 <v t="T18"><vh>&lt;&lt; body pane options &gt;&gt;</vh></v>
-<v t="T19"><vh>&lt;&lt; outline pane options&gt;&gt;</vh></v>
+<v t="T19" a="V"><vh>&lt;&lt; outline pane options&gt;&gt;</vh></v>
 <v t="T20"><vh>&lt;&lt; log pane options &gt;&gt;</vh></v>
 <v t="T21"><vh>&lt;&lt; Options for new windows &gt;&gt;</vh></v>
 <v t="T22"><vh>&lt;&lt; Options for newly opened windows &gt;&gt;</vh></v>
@@ -522,8 +522,8 @@ CopyNode        = Shift+Ctrl+C
 Extract         = Shift+Ctrl+D
 ExtractSection  = Shift+Ctrl+E
 ImportTofile    = Shift+Ctrl+F
-# Unused        = Shift+Ctrl+G
-# Unused        = Shift+Ctrl+H
+InsertTimeDate  = Shift+Ctrl+G
+AppendTimeDate  = Shift+Ctrl+H
 # Unused        = Shift+Ctrl+I
 ConvertTabs     = Shift+Ctrl+J
 # Unused        = Shift+Ctrl+K
@@ -729,6 +729,15 @@ body_text_font_slant = roman
 body_text_font_weight = normal
 #	The Tk -weight setting: normal or bold.  Default is normal.
 
+body_time_format_string = %m/%d/%Y %H:%M:%S
+#	The format string used when creating the Time/Date string for the Insert Time/Date command.
+#	See the Python documentation for time.strftime for full details.
+#	Examples:
+#	1/30/2003 8:31:55
+#		%m/%d/%y %H:%M:%S
+#	Thu, 30 Jan 2003 16:57:12
+#		%a, %d %b %Y %H:%M:%S
+
 smart_auto_indent = 0
 #	1: auto-indent aligns with open ({[ brackets
 #	0: auto-indent increases indentation by one tab for Python only.</t>
@@ -751,6 +760,17 @@ headline_text_editing_selection_foreground_color = white
 headline_text_editing_selection_background_color = DarkBlue
 #	Foreground and background colors of selected text headline text in a headline that is being edited.
 #	Both must be specified for either to take effect.
+
+headline_time_format_string = %m/%d/%y
+#	The format string used when creating the Time/Date string for the Insert Time/Date command.
+#	See the Python documentation for time.strftime for full details.
+#	Examples:
+#	1/30/03
+#		%m/%d/%y
+#	1/30/03 8:31:02
+#		%m/%d/%y %H:%M:%S
+#	Thu, 30 Jan 2003 16:57:12
+#		%a, %d %b %Y %H:%M:%S
 
 outline_pane_background_color =
 #	Background color of outline pane itself.
