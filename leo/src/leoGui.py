@@ -31,23 +31,7 @@ class leoGui:
 		self.mGuiName = guiName
 		self.mainLoop = None
 		self.root = None
-	#@nonl
 	#@-node:leoGui.__init__
-	#@+node:__getattr__ & ignoreUnknownAttr
-	if 0: # This makes debugging difficult.
-		def __getattr__(self,name):
-		
-			"""tkinterGui.__getattr to handle unknown calls without crashing."""
-			
-			print "leoGui.__getattr__: not found:",name
-			return self.ignoreUnknownAttr
-		
-	def  ignoreUnknownAttr(self,*args,**keys):
-		
-		"""A universal do-nothing routine that can be returned by __getattr__."""
-		pass
-	#@nonl
-	#@-node:__getattr__ & ignoreUnknownAttr
 	#@+node:guiName
 	def guiName(self):
 		
@@ -57,6 +41,12 @@ class leoGui:
 			return "invalid gui name"
 	#@nonl
 	#@-node:guiName
+	#@+node:oops
+	def oops (self):
+		
+		print callerName(), "should be overridden in subclass"
+	#@nonl
+	#@-node:oops
 	#@+node:interface to Leo's core
 	#@+at 
 	#@nonl
@@ -123,116 +113,115 @@ class leoGui:
 		"""Create the hidden root window for the gui.
 		
 		Nothing needs to be done if the root window need not exist."""
-		pass # Overridden in subclasses
+		self.oops()
 		
 	def finishCreate (self):
 		"""Do any remaining chores after the root window has been created."""
-		pass # Overridden in subclasses
+		self.oops()
 	
 	def killGui(self,exitFlag=true):
 		"""Destroy the gui.
 		
 		The entire Leo application should terminate if exitFlag is true."""
-		pass # Overridden in subclasses
+		self.oops()
 	
 	def recreateRootWindow(self):
 		"""Create the hidden root window of the gui
 	    after a previous gui has terminated with killGui(false)."""
-		pass # Overridden in subclasses
+		self.oops()
 	#@-node:Birth, death & rebirth
 	#@+node:runMainLoop
 	def runMainLoop(self):
 	
 		"""Run the gui's main loop."""
-		
-		pass # Overridden in subclasses
+		self.oops()
 	#@nonl
 	#@-node:runMainLoop
 	#@+node:Creating frames
 	def newColorFrame(self,commander):
 		"""Create a colorFrame."""
-		pass # Overridden in subclasses
+		self.oops()
 	
 	def newColorNameFrame(self,commander):
 		"""Create a colorNameFrame."""
-		pass # Overridden in subclasses
+		self.oops()
 	
 	def newCompareFrame(self,commander):
 		"""Create a compareFrame."""
-		pass # Overridden in subclasses
+		self.oops()
 	
 	def newFindFrame(self,commander):
 		"""Create a findFrame."""
-		pass # Overridden in subclasses
+		self.oops()
 	
 	def newFontFrame(self,commander):
 		"""Create a fontFrame."""
-		pass # Overridden in subclasses
+		self.oops()
 	
 	def newLeoFrame(self,commander):
 		"""Create a view frame for the Leo main window."""
-		pass # Overridden in subclasses
+		self.oops()
 	
 	def newPrefsFrame(self,commander):
 		"""Create a prefsFrame."""
-		pass # Overridden in subclasses
+		self.oops()
 	#@nonl
 	#@-node:Creating frames
 	#@+node:Creating and running dialogs
 	def newAboutLeoDialog(self,commander):
 		"""Create an About Leo dialog."""
-		pass # Overridden in subclasses
+		self.oops()
 	
 	def newAskOkDialog(self,commander):
 		"""Create an askOK dialog ."""
-		pass # Overridden in subclasses
+		self.oops()
 	
 	def newAskOkCancelDialog(self,commander):
 		"""Create an askOkCancel dialog."""
-		pass # Overridden in subclasses
+		self.oops()
 	
 	def newAskOkCancelNumberDialog(self,commander):
 		"""Create an askOkCancelNumber dialog ."""
-		pass # Overridden in subclasses
+		self.oops()
 	
 	def newAskYesNoDialog(self,commander):
 		"""Create an askYesNo dialog."""
-		pass # Overridden in subclasses
+		self.oops()
 	
 	def newAskYesNoCancelDialg(self,commander):
 		"""Create an askYesNoCancel dialog ."""
-		pass # Overridden in subclasses
+		self.oops()
 	#@nonl
 	#@-node:Creating and running dialogs
 	#@+node:Dialog utils
 	def attachLeoIcon (self,window):
 		"""Attach the Leo icon to a window."""
-		pass # Overridden in subclasses
+		self.oops()
 		
 	def center_dialog(self,dialog):
 		"""Center a dialog."""
-		pass # Overridden in subclasses
+		self.oops()
 		
 	def create_labeled_frame (self,parent,caption=None,relief="groove",bd=2,padx=0,pady=0):
 		"""Create a labeled frame."""
-		pass # Overridden in subclasses
+		self.oops()
 		
 	def get_window_info (self,window):
 		"""Return the window information."""
-		pass # Overridden in subclasses
+		self.oops()
 	#@-node:Dialog utils
 	#@+node:Focus utils
 	def get_focus(self,top):
 		"""Return the widget that has focus, or the body widget if None."""
-		pass # Overridden in subclasses
+		self.oops()
 		
 	def set_focus(self,commander,widget):
 		"""Set the focus of the widget in the given commander if it needs to be changed."""
-		pass # Overridden in subclasses
+		self.oops()
 		
 	def force_focus(self,commander,widget):
 		"""Set the focus of the widget in the given commander if it needs to be changed."""
-		pass # Overridden in subclasses
+		self.oops()
 	#@nonl
 	#@-node:Focus utils
 	#@-others
@@ -378,6 +367,15 @@ class tkinterGui(leoGui):
 		pass
 	
 	#@-node:recreateRootWindow (not used)
+	#@+node:runMainLoop
+	def runMainLoop(self):
+	
+		"""Run tkinter's main loop."""
+	
+		# trace("tkinterGui")
+		self.root.mainloop()
+	#@nonl
+	#@-node:runMainLoop
 	#@+node:getFontFromParams
 	def getFontFromParams(self,family,size,slant,weight):
 		
@@ -648,14 +646,6 @@ class tkinterGui(leoGui):
 		return w,f
 	#@nonl
 	#@-node:create_labeled_frame
-	#@+node:runMainLoop
-	def runMainLoop(self):
-	
-		"""Run tkinter's main loop."""
-	
-		self.root.mainloop()
-	#@nonl
-	#@-node:runMainLoop
 	#@-others
 #@nonl
 #@-node:class tkinterGui(leoGui)

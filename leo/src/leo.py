@@ -34,8 +34,7 @@ if 0: # Set to 1 for lint-like testing.  This can also be done in idle.
 #@-node:<< Import pychecker >>
 #@nl
 
-from leoGlobals import app,es,true,false
-from leoGlobals import clear_stats,CheckVersion,doHook,init_sherlock,openWithFileName
+from leoGlobals import *
 import leoApp,leoConfig,leoDialog,leoFrame
 import os,string,sys,traceback
 
@@ -46,10 +45,9 @@ def run(fileName=None,*args,**keywords):
 	"""Initialize and run Leo"""
 	
 	if not isValidPython(): return
-	
 	# Create the application object.
 	import leoGlobals
-	leoGlobals.gApp = app = leoApp.LeoApp()
+	leoGlobals.gApp = leoApp.LeoApp()
 	app.loadDir = computeLoadDir()
 	# Initialize the configuration class.
 	app.config = leoConfig.config()

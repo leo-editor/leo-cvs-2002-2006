@@ -1999,11 +1999,12 @@ class leoProxy:
 	After gApp is created, both app.x and app().x refer to gApp.x."""
 
 	def __getattr__(self,attr):
-
 		return getattr(gApp,attr)
 		
+	def __setattr__(self,attr,val):
+		setattr(gApp,attr,val)
+
 	def __call__(self):
-		
 		return gApp
 		
 # The code can use app.x and app().x to refer to ivars of the leoApp class.

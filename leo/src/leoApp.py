@@ -149,11 +149,15 @@ class LeoApp:
 		return true # The window has been closed.
 	#@-node:app.closeLeoWindow
 	#@+node:app.createTkGui
-	def createTkGui (self):
+	def createTkGui (self,fileName = None):
 		
 		"""A convenience routines for plugins to create the default Tk gui class."""
 		
 		app = self
+		if 0:
+			if fileName:
+				s = "creating default tkinterGui from " + shortFileName(fileName)
+			trace(s) ; es(s, color = "red")
 		app.gui = leoGui.tkinterGui()
 		app.root = app.gui.createRootWindow()
 		app.gui.finishCreate()
