@@ -12,7 +12,7 @@ import filecmp,os,os.path,time
 
 
 #@<< global atFile constants >>
-#@+node:1::<< global atFile constants >>
+#@+node:2::<< global atFile constants >>
 #@+body
 # These constants must be global to this module because they are shared by several classes.
 
@@ -78,14 +78,32 @@ sentinelDict = {
 	"@+node":   startNode,   "@-node":   endNode,
 	"@+others": startOthers, "@-others": endOthers }
 #@-body
-#@-node:1::<< global atFile constants >>
+#@-node:2::<< global atFile constants >>
+
+
+#@<< global functions >>
+#@+node:1::<< global functions >>
+#@+body
+def importDerivedFileNode(root,c,headline):
+	
+	moveRight = c.currentVnode() == root
+	c.insertHeadline() # op_name="Insert Outline"
+	if moveRight:
+		c.moveOutlineRight()
+	v = c.currentVnode()
+	v.initHeadString(headline)
+	v.t.setVisited() # Suppress warning about unvisited node.
+	return v
+
+#@-body
+#@-node:1::<< global functions >>
 
 
 class baseAtFile:
 	"""The base class for the top-level atFile subcommander."""
 	
 	#@<< class baseAtFile methods >>
-	#@+node:2::<< class baseAtFile methods >>
+	#@+node:3::<< class baseAtFile methods >>
 	#@+body
 	#@+others
 	#@+node:1::atFile.__init__ & initIvars
@@ -118,7 +136,16 @@ class baseAtFile:
 		at.startSentinelComment = None
 	#@-body
 	#@-node:1::atFile.__init__ & initIvars
-	#@+node:2::Reading
+	#@+node:2::top_df.error
+	#@+body
+	def error(self,message):
+	
+		es(message,color="red")
+		print message
+		self.errors += 1
+	#@-body
+	#@-node:2::top_df.error
+	#@+node:3::Reading
 	#@+node:1:: top_df.readAll
 	#@+body
 	def readAll(self,root,partialFlag=false):
@@ -161,16 +188,7 @@ class baseAtFile:
 			es("no @file nodes in the selected tree")
 	#@-body
 	#@-node:1:: top_df.readAll
-	#@+node:2::top_df.error
-	#@+body
-	def error(self,message):
-	
-		es(message,color="red")
-		print message
-		self.errors += 1
-	#@-body
-	#@-node:2::top_df.error
-	#@+node:3::top_df.read
+	#@+node:2::top_df.read
 	#@+body
 	# The caller has enclosed this code in beginUpdate/endUpdate.
 	
@@ -263,7 +281,11 @@ class baseAtFile:
 		#@-node:3::<< copy ivars to df >>
 
 		root.clearVisitedInTree()
-		df.readOpenFile(root,file,fileName,firstLines)
+		try:
+			df.readOpenFile(root,file,fileName,firstLines)
+		except:
+			at.error("Unexpected exception while reading derived file")
+			es_exception()
 		file.close()
 		after = root.nodeAfterTree()
 		
@@ -318,8 +340,8 @@ class baseAtFile:
 		root.clearDirty()
 		return df.errors == 0
 	#@-body
-	#@-node:3::top_df.read
-	#@+node:4::top_df.scanDefaultDirectory
+	#@-node:2::top_df.read
+	#@+node:3::top_df.scanDefaultDirectory
 	#@+body
 	def scanDefaultDirectory(self,v):
 		
@@ -443,8 +465,8 @@ class baseAtFile:
 			at.error("No absolute directory specified anywhere.")
 			at.default_directory = ""
 	#@-body
-	#@-node:4::top_df.scanDefaultDirectory
-	#@+node:5::top_df.scanHeader
+	#@-node:3::top_df.scanDefaultDirectory
+	#@+node:4::top_df.scanHeader
 	#@+body
 	def scanHeader(self,file,fileName):
 		
@@ -588,8 +610,8 @@ class baseAtFile:
 			at.error("Bad @+leo sentinel in " + fileName)
 		return firstLines, new_df
 	#@-body
-	#@-node:5::top_df.scanHeader
-	#@+node:6::top_df.readLine
+	#@-node:4::top_df.scanHeader
+	#@+node:5::top_df.readLine
 	#@+body
 	def readLine (self,file):
 	
@@ -599,9 +621,9 @@ class baseAtFile:
 		u = toUnicode(s,self.encoding)
 		return u
 	#@-body
-	#@-node:6::top_df.readLine
-	#@-node:2::Reading
-	#@+node:3::Writing
+	#@-node:5::top_df.readLine
+	#@-node:3::Reading
+	#@+node:4::Writing
 	#@+node:1::top_df.writeAll
 	#@+body
 	def writeAll(self,writeAtFileNodesFlag=false,writeDirtyAtFileNodesFlag=false):
@@ -686,6 +708,9 @@ class baseAtFile:
 				es("no dirty @file nodes")
 		#@-body
 		#@-node:3::<< say the command is finished >>
+
+		
+		return len(writtenFiles) # 9/23/03: so caller knows whether to do an auto-save.
 	#@-body
 	#@-node:1::top_df.writeAll
 	#@+node:2::top_df.write, rawWrite, silentWrite
@@ -695,20 +720,25 @@ class baseAtFile:
 		at = self
 		write_new = not app().config.write_old_format_derived_files
 		df = choose(write_new,at.new_df,at.old_df)
-		df.rawWrite(v)
+		try: df.rawWrite(v)
+		except: at.writeException(v)
 		
 	def silentWrite (self,v):
 	
-		self.old_df.silentWrite(v) # No new_df.silentWrite method.
+		try: self.old_df.silentWrite(v) # No new_df.silentWrite method.
+		except: at.writeException(v)
 		
 	def write (self,v,nosentinels=false):
 		
 		at = self
 		write_new = not app().config.write_old_format_derived_files
 		df = choose(write_new,at.new_df,at.old_df)
-		df.write(v,nosentinels)
-		
-	
+		try: df.write(v,nosentinels)
+		except: at.writeException(v)
+			
+	def writeException(self,v):
+		self.error("Unexpected exception while writing " + v.headString())
+		es_exception()
 	#@-body
 	#@-node:2::top_df.write, rawWrite, silentWrite
 	#@+node:3::top_df.writeOld/NewDerivedFiles
@@ -829,13 +859,15 @@ class baseAtFile:
 			es("finished")
 		else:
 			es("no missing @file node in the selected tree")
+			
+		return writtenFiles # 9/23/03: so caller knows whether to do an auto-save.
 	#@-body
 	#@-node:4::top_df.writeMissing
-	#@-node:3::Writing
+	#@-node:4::Writing
 	#@-others
 	
 	#@-body
-	#@-node:2::<< class baseAtFile methods >>
+	#@-node:3::<< class baseAtFile methods >>
 
 	
 class atFile (baseAtFile):
@@ -845,7 +877,7 @@ class baseOldDerivedFile:
 	"""The base class to read and write 3.x derived files."""
 	
 	#@<< class baseOldDerivedFile methods >>
-	#@+node:3::<< class baseOldDerivedFile methods >>
+	#@+node:4::<< class baseOldDerivedFile methods >>
 	#@+body
 	#@+others
 	#@+node:1:: old_df.__init__& initIvars
@@ -954,7 +986,6 @@ class baseOldDerivedFile:
 		at.completeFirstDirectives(lines,firstLines)
 		at.completeLastDirectives(lines,lastLines)
 		s = '\n'.join(lines).replace('\r', '')
-		## root.t.setTnodeText(s)
 		root.t.tempBodyString = s
 	#@-body
 	#@-node:1::old_df.readOpenFile
@@ -1048,7 +1079,11 @@ class baseOldDerivedFile:
 	#@@c
 	def createNthChild(self,n,parent,headline):
 	
+		at = self
 		assert(n > 0)
+		
+		if at.importing:
+			return importDerivedFileNode(at.root,at.commands,headline)
 	
 		# Create any needed dummy children.
 		dummies = n - parent.numberOfChildren() - 1
@@ -1495,8 +1530,11 @@ class baseOldDerivedFile:
 				# This must be done here, not in the @+node logic.
 				body = string.join(child_out, "")
 				body = body.replace('\r', '')
-				## child.t.setTnodeText(body)
-				child.t.tempBodyString = body
+				if self.importing:
+					child.t.bodyString = body
+				else:
+					child.t.tempBodyString = body
+				
 				self.indent = oldIndent
 				#@-body
 				#@-node:4::<< scan @+body >>
@@ -3757,7 +3795,7 @@ class baseOldDerivedFile:
 	#@-others
 	
 	#@-body
-	#@-node:3::<< class baseOldDerivedFile methods >>
+	#@-node:4::<< class baseOldDerivedFile methods >>
 
 	
 class oldDerivedFile(baseOldDerivedFile):
@@ -3767,7 +3805,7 @@ class baseNewDerivedFile(oldDerivedFile):
 	"""The base class to read and write 4.x derived files."""
 	
 	#@<< class baseNewDerivedFile methods >>
-	#@+node:4::<< class baseNewDerivedFile methods >>
+	#@+node:5::<< class baseNewDerivedFile methods >>
 	#@+body
 	#@+others
 	#@+node:1::newDerivedFile.__init__
@@ -3860,7 +3898,6 @@ class baseNewDerivedFile(oldDerivedFile):
 		at.completeFirstDirectives(lines,firstLines)
 		at.completeLastDirectives(lines,lastLines)
 		s = '\n'.join(lines).replace('\r', '')
-		## root.t.setTnodeText(s)
 		root.t.tempBodyString = s
 	#@-body
 	#@-node:1::new_df.readOpenFile
@@ -3870,20 +3907,15 @@ class baseNewDerivedFile(oldDerivedFile):
 		
 		"""Return the next tnode in the at.tnodeList."""
 	
-		at = self ; c = at.commands ; fc = c.fileCommands
+		at = self
 	
 		if at.importing:
-			moveRight = c.currentVnode() == at.importRoot
-			c.insertHeadline() # op_name="Insert Outline"
-			if moveRight:
-				c.moveOutlineRight()
-			v = c.currentVnode()
-			v.initHeadString(headline)
-			t.setVisited() # Supress warning about unvisited node.
+			v = importDerivedFileNode(at.root,at.commands,headline)
 			return v.t
 	
 		if not hasattr(at.root,"tnodeList"):
 			at.readError("no tnodeList for " + `at.root`)
+			es("Write the @file node or use the Import Derived File command")
 			trace("no tnodeList for ",at.root)
 			return None
 			
@@ -5179,7 +5211,8 @@ class baseNewDerivedFile(oldDerivedFile):
 			self.putSentinel("@verbatim")
 	
 		j = skip_line(s,i)
-		at.putIndent(at.indent)
+		if not at.raw:
+			at.putIndent(at.indent)
 		line = s[i:j]
 		# trace(`line`)
 		at.os(line)
@@ -5509,7 +5542,7 @@ class baseNewDerivedFile(oldDerivedFile):
 	#@-others
 	
 	#@-body
-	#@-node:4::<< class baseNewDerivedFile methods >>
+	#@-node:5::<< class baseNewDerivedFile methods >>
 
 	
 class newDerivedFile(baseNewDerivedFile):

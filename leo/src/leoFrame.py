@@ -1313,14 +1313,14 @@ class baseLeoFrame:
 		importMenu = self.createNewMenu("&Import...","File")
 		
 		table = (
+			("Import Derived File",None,self.OnImportDerivedFile),
 			("Import To @&file","Shift+Ctrl+F",self.OnImportAtFile),
 			("Import To @&root",None,self.OnImportAtRoot),
 			("Import &CWEB Files",None,self.OnImportCWEBFiles),
+			
 			("Import &noweb Files",None,self.OnImportNowebFiles),
-			("Import Flattened &Outline",None,self.OnImportFlattenedOutline),
-			("-",None,None),
-			("Import 4.0 Derived File",None,self.OnImportDerivedFile))
-		
+			("Import Flattened &Outline",None,self.OnImportFlattenedOutline))
+			
 		self.createMenuEntries(importMenu,table)
 		
 		
@@ -2338,23 +2338,18 @@ class baseLeoFrame:
 		frame = self ; c = frame.commands ; v = c.currentVnode()
 		at = c.atFileCommands
 		
-		if not v.isAtFileNode():
+		if v.isAtFileNode():
+			name = v.atFileNodeName()
+		else:
 			es("not an @file node",color="blue")
 			return
-		else:
-			name = v.atFileNodeName()
-	
-		trace(name)
 		
 		c.beginUpdate()
-		
 		c.insertHeadline() # op_name="Import Derived File" (was "Insert Outline")
 		c.moveOutlineLeft()
 		v = c.currentVnode()
 		v.initHeadString("Imported @file " + name)
-	
 		at.read(v,importFileName=name)
-	
 		c.endUpdate()
 	#@-body
 	#@-node:1::OnImportDerivedFile

@@ -493,12 +493,12 @@ class baseFileCommands:
 			#@-node:3::<< raise an alert >>
 
 			ok = false
+		self.setAllJoinLinks() # 9/23/03: Must do this before reading @file nodes.
+		c.initAllCloneBits() # 9/23/03
 		if ok and atFileNodesFlag:
 			c.atFileCommands.readAll(c.rootVnode(),partialFlag=false)
 		if not c.tree.currentVnode:
 			c.tree.currentVnode = c.tree.rootVnode
-		self.setAllJoinLinks() # 5/3/03
-		c.initAllCloneBits() # 5/3/03
 		c.selectVnode(c.tree.currentVnode) # load body pane
 		c.tree.initing = false # Enable changes in endEditLabel
 		self.tnodesDict = {}
@@ -1872,11 +1872,11 @@ class baseFileCommands:
 		
 		c = self.commands
 	
-		c.atFileCommands.writeAll(writeAtFileNodesFlag=true)
-		
-		if not app().config.write_old_format_derived_files:
+		writtenFiles = c.atFileCommands.writeAll(writeAtFileNodesFlag=true)
+		assert(writtenFiles != None)
+		if writtenFiles:
 			es("auto-saving outline",color="blue")
-			c.frame.OnSave() # Must be done to preserve tnodeList.
+			c.frame.OnSave() # Must be done to set or clear tnodeList.
 	#@-body
 	#@-node:9::writeAtFileNodes
 	#@+node:10::writeDirtyAtFileNodes
@@ -1884,8 +1884,15 @@ class baseFileCommands:
 	def writeDirtyAtFileNodes (self): # fileCommands
 	
 		"""The Write Dirty @file Nodes command"""
+		
+		c = self.commands
 	
-		self.commands.atFileCommands.writeAll(writeDirtyAtFileNodesFlag=true)
+		writtenFiles = c.atFileCommands.writeAll(writeDirtyAtFileNodesFlag=true)
+		
+		assert(writtenFiles != None)
+		if writtenFiles:
+			es("auto-saving outline",color="blue")
+			c.frame.OnSave() # Must be done to set or clear tnodeList.
 	#@-body
 	#@-node:10::writeDirtyAtFileNodes
 	#@+node:11::writeMissingAtFileNodes
@@ -1893,9 +1900,14 @@ class baseFileCommands:
 	def writeMissingAtFileNodes (self):
 	
 		c = self.commands ; v = c.currentVnode()
+	
 		if v:
 			at = c.atFileCommands
-			at.writeMissing(v)
+			writtenFiles = at.writeMissing(v)
+			assert(writtenFiles != None)
+			if writtenFiles:
+				es("auto-saving outline",color="blue")
+				c.frame.OnSave() # Must be done to set or clear tnodeList.
 	#@-body
 	#@-node:11::writeMissingAtFileNodes
 	#@+node:12::writeOutlineOnly
