@@ -2039,17 +2039,16 @@ class nodeIndices:
 		return id,t,n
 	#@nonl
 	#@-node:scanGnx
-	#@+node:setTimeString
+	#@+node:setTimeStamp
 	def setTimestamp (self):
 	
 		"""Set the timestamp string to be used by getNewIndex until further notice"""
 	
 		self.timeString = time.strftime(
-			# "%m%d%y%H%M%S",
-			"%y%m%d%H%M%S", # Best for time comparisons.
-			time.localtime()) # compact timestamp is best
+			"%Y%m%d%H%M%S", # Help comparisons; avoid y2k problems.
+			time.localtime())
 	#@nonl
-	#@-node:setTimeString
+	#@-node:setTimeStamp
 	#@+node:toString
 	def toString (self,index,removeDefaultId=false):
 		

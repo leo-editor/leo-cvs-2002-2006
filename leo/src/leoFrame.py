@@ -1159,7 +1159,7 @@ class nullBody (leoBody):
 	#@+node:getInsertLines
 	def getInsertLines (self):
 		
-		"""Return before,after where:
+		"""Return before,ins,after where:
 			
 		before is all the lines before the line containing the insert point.
 		sel is the line containing the insert point.
@@ -1171,7 +1171,7 @@ class nullBody (leoBody):
 		n2 = self.scanToEndOfLine(self.insertPoint)
 		
 		before = self.s[:n1]
-		sel    = self.s[n1:n2+1]
+		ins    = self.s[n1:n2+1] # 12/18/03: was sel(!)
 		after  = self.s[n2+1:]
 	
 		before = toUnicode(before,app.tkEncoding)
@@ -1179,6 +1179,7 @@ class nullBody (leoBody):
 		after  = toUnicode(after ,app.tkEncoding)
 	
 		return before,ins,after
+	
 	#@-node:getInsertLines
 	#@+node:getSelectionAreas
 	def getSelectionAreas (self):

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="2291" clone_windows="0"/>
-<globals body_outline_ratio="0.5">
-	<global_window_position top="103" left="338" height="784" width="842"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="2294" clone_windows="0"/>
+<globals body_outline_ratio="0.22959183673469388">
+	<global_window_position top="89" left="349" height="784" width="842"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences>
@@ -2788,7 +2788,7 @@
 <v t="edream.110803170022"><vh>Count pages</vh></v>
 <v t="edream.120203185502"><vh>PyUno script</vh></v>
 </v>
-<v t="edream.110203161858.2119" a="E"><vh>Unit Tests</vh>
+<v t="edream.110203161858.2119"><vh>Unit Tests</vh>
 <v t="edream.110203161858.2124" a="E"><vh>tempNode</vh></v>
 <v t="edream.110203161858.2125"><vh>colorizerTests</vh>
 <v t="edream.110203161858.2126"><vh>Actionscript</vh></v>
@@ -2852,7 +2852,7 @@
 <v t="edream.121103175314"><vh>dialog</vh></v>
 </v>
 </v>
-<v t="edream.121103175121" a="V"><vh>importTests</vh>
+<v t="edream.121103175121"><vh>importTests</vh>
 <v t="edream.121103114537.1"><vh>importAtRoot</vh>
 <v t="edream.121103114537.2"><vh>dialog</vh></v>
 </v>
@@ -2900,8 +2900,25 @@
 </v>
 <v t="edream.110203161858.2153" a="E"><vh>Run all tests</vh></v>
 </v>
+<v t="edream.031218070146" a="EV"><vh>Distribution checklist 4.1 rc2</vh>
+<v t="edream.031218070146.3"><vh>@url http://www.python.org/pypi?:action=submit_form</vh></v>
+</v>
 </vnodes>
 <tnodes>
+<t tx="edream.031218070146">Create Release on SourceForge
+
+Uploads
+    - Upload leodocs.zip
+	- Upload leosetup.exe
+	- Upload leo-x-y.zip
+	- Upload sbook.chm if it has been changed.
+Announcements
+	- Announce to SourceForge itself. USE ANNOUNCEMENT FORMAT, not readme format.
+	- Announce to Leo's SourceForce site.
+	- Announce to comp.lang.python
+	- Announce to comp.programming.literate
+	- Register Leo at http://www.python.org/pypi?:action=submit_form</t>
+<t tx="edream.031218070146.3"></t>
 <t tx="edream.110203161858">@color
 
 # **** Run this from test.leo ****
