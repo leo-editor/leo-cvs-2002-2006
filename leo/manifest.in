@@ -14,5 +14,4 @@ include Icons/*.*
 include leo.rc
 include leo.res
 include sdist.bat
-include sbooks.chm
 include manifest.in
