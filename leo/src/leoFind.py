@@ -414,7 +414,7 @@ class leoFind:
 			c.frame.tree.drawIcon(v) # redraw only the icon.
 		# update node, undo status, dirty flag, changed mark & recolor
 		if self.in_headline:
-			c.frame.idle_head_key(v)
+			c.frame.tree.idle_head_key(v) # 1/7/04
 		else:
 			c.frame.body.onBodyChanged(v,"Change",oldSel=oldSel,newSel=newSel)
 		c.endUpdate(false) # No redraws here: they would destroy the headline selection.
@@ -506,7 +506,7 @@ class leoFind:
 	#@nonl
 	#@-node:findAll
 	#@+node:findNext
-	def findNext(self,initFlag = true):
+	def findNext(self,initFlag=true):
 	
 		c = self.c
 		if not self.checkArgs():
