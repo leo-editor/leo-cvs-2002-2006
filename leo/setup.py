@@ -40,7 +40,6 @@ modules.sort()
 #@<< setup info for setup.py >>
 #@+node:1:C=1:<< setup info for setup.py >> (version number)
 #@+body
-
 setup( name="leo",
 	version="3.6",
 	author="Edward K. Ream",

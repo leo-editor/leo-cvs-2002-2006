@@ -222,6 +222,7 @@ class LeoFrame:
 		#@+body
 		fileMenu.add_command(label="New",accelerator="Ctrl+N", command=self.OnNew)
 		fileMenu.add_command(label="Open...",accelerator="Ctrl+O", command=self.OnOpen)
+		fileMenu.add_command(label="Open @file With...", command=self.OnOpenWith)
 		fileMenu.add_separator()
 		
 		fileMenu.add_command(label="Close",accelerator="Ctrl+W", command=self.OnClose)
@@ -602,6 +603,8 @@ class LeoFrame:
 			accelerator="Ctrl-T",command=self.OnToggleActivePane)
 		windowMenu.add_command(label="Toggle Split Direction",
 			command=self.OnToggleSplitDirection)
+		windowMenu.add_command(label="Hide Log Window",
+			command=self.OnHideLogWindow)
 		windowMenu.add_separator()
 		
 		windowMenu.add_command(label="Cascade",
@@ -1050,9 +1053,14 @@ class LeoFrame:
 	#@+body
 	def updateFileMenu (self):
 	
-		c = self.commands ; menu = self.fileMenu
+		c = self.commands
 		if not c: return
+		v = c.currentVnode()
+		
+		menu = self.fileMenu
 		enableMenu(menu,"Revert To Saved", c.canRevert())
+		enableMenu(menu,"Open @file With...", v.isAtFileNode())
+
 	#@-body
 	#@-node:3::updateFileMenu
 	#@+node:4::updateEditMenu
@@ -1201,7 +1209,40 @@ class LeoFrame:
 		return "break" # inhibit further command processing
 	#@-body
 	#@-node:2:C=19:frame.OnOpen
-	#@+node:3:C=20:frame.OpenWithFileName
+	#@+node:3:C=20:frame.OnOpenWith
+	#@+body
+	#@+at
+	#  To do:
+	# 
+	# 1. handle @path and default tangle directory similar to scanAllDirectives.
+	# 2. Use leoConfig.txt to determine which editor to open for various file types.
+	# 	Figure out how config module can create list of association.
+
+	#@-at
+	#@@c
+	
+	def OnOpenWith(self,event=None):
+		
+		c = self.commands ; v = c.currentVnode()
+	
+		isAtFile = v.isAtFileNode()
+		if not isAtFile: return
+		
+		name = v.atFileNodeName()
+		if name == None or len(name) == 0: return
+		
+		## To do: 
+		name = string.strip(name)
+		f = os.path.join(app().loadDir,name)
+		print f
+	
+		# This doesn't work for .py files or .bat files.
+		# Probably not to swift for other files either.
+		if 0:
+			os.startfile(f)
+	#@-body
+	#@-node:3:C=20:frame.OnOpenWith
+	#@+node:4:C=21:frame.OpenWithFileName
 	#@+body
 	def OpenWithFileName(self, fileName):
 	
@@ -1236,7 +1277,7 @@ class LeoFrame:
 				frame.openDirectory=os.path.dirname(fileName)
 				
 				#@<< make fileName the most recent file of frame >>
-				#@+node:1:C=21:<< make fileName the most recent file of frame >>
+				#@+node:1:C=22:<< make fileName the most recent file of frame >>
 				#@+body
 				# Update the recent files list in all windows.
 				normFileName = os.path.normcase(fileName)
@@ -1265,7 +1306,7 @@ class LeoFrame:
 				app().config.setRecentFiles(frame.recentFiles)
 				app().config.update()
 				#@-body
-				#@-node:1:C=21:<< make fileName the most recent file of frame >>
+				#@-node:1:C=22:<< make fileName the most recent file of frame >>
 
 				return true, frame
 			else:
@@ -1276,8 +1317,8 @@ class LeoFrame:
 			traceback.print_exc()
 			return false, None
 	#@-body
-	#@-node:3:C=20:frame.OpenWithFileName
-	#@+node:4::OnClose
+	#@-node:4:C=21:frame.OpenWithFileName
+	#@+node:5::OnClose
 	#@+body
 	# Called when File-Close command is chosen.
 	
@@ -1286,8 +1327,8 @@ class LeoFrame:
 		self.OnCloseLeoEvent() # Destroy the frame unless the user cancels.
 		return "break" # inhibit further command processing
 	#@-body
-	#@-node:4::OnClose
-	#@+node:5:C=22:OnSave
+	#@-node:5::OnClose
+	#@+node:6:C=23:OnSave
 	#@+body
 	def OnSave(self,event=None):
 	
@@ -1318,8 +1359,8 @@ class LeoFrame:
 	
 		return "break" # inhibit further command processing
 	#@-body
-	#@-node:5:C=22:OnSave
-	#@+node:6:C=23:OnSaveAs
+	#@-node:6:C=23:OnSave
+	#@+node:7:C=24:OnSaveAs
 	#@+body
 	def OnSaveAs(self,event=None):
 	
@@ -1342,8 +1383,8 @@ class LeoFrame:
 	
 		return "break" # inhibit further command processing
 	#@-body
-	#@-node:6:C=23:OnSaveAs
-	#@+node:7:C=24:OnSaveTo
+	#@-node:7:C=24:OnSaveAs
+	#@+node:8:C=25:OnSaveTo
 	#@+body
 	def OnSaveTo(self,event=None):
 	
@@ -1363,8 +1404,8 @@ class LeoFrame:
 			self.commands.fileCommands.saveTo(fileName)
 		return "break" # inhibit further command processing
 	#@-body
-	#@-node:7:C=24:OnSaveTo
-	#@+node:8:C=25:OnRevert
+	#@-node:8:C=25:OnSaveTo
+	#@+node:9:C=26:OnRevert
 	#@+body
 	def OnRevert(self,event=None):
 	
@@ -1394,8 +1435,8 @@ class LeoFrame:
 			self.mFileName = fileName
 		return "break" # inhibit further command processing
 	#@-body
-	#@-node:8:C=25:OnRevert
-	#@+node:9:C=26:frame.OnQuit
+	#@-node:9:C=26:OnRevert
+	#@+node:10:C=27:frame.OnQuit
 	#@+body
 	def OnQuit(self,event=None):
 	
@@ -1409,9 +1450,9 @@ class LeoFrame:
 		app().quitting -= 1 # If we get here the quit has been disabled.
 		return "break" # inhibit further command processing
 	#@-body
-	#@-node:9:C=26:frame.OnQuit
+	#@-node:10:C=27:frame.OnQuit
 	#@-node:1::top level
-	#@+node:2:C=27:Recent Files submenu
+	#@+node:2:C=28:Recent Files submenu
 	#@+node:1::OnOpenFileN
 	#@+body
 	def OnOpenRecentFile(self,n):
@@ -1423,9 +1464,9 @@ class LeoFrame:
 		return "break" # inhibit further command processing
 	#@-body
 	#@-node:1::OnOpenFileN
-	#@-node:2:C=27:Recent Files submenu
+	#@-node:2:C=28:Recent Files submenu
 	#@+node:3::Read/Write submenu
-	#@+node:1:C=28:fileCommands.OnReadOutlineOnly
+	#@+node:1:C=29:fileCommands.OnReadOutlineOnly
 	#@+body
 	def OnReadOutlineOnly (self,event=None):
 	
@@ -1448,7 +1489,7 @@ class LeoFrame:
 			es("can not open:" + fileName)
 		return "break" # inhibit further command processing
 	#@-body
-	#@-node:1:C=28:fileCommands.OnReadOutlineOnly
+	#@-node:1:C=29:fileCommands.OnReadOutlineOnly
 	#@+node:2::OnReadAtFileNodes
 	#@+body
 	def OnReadAtFileNodes (self,event=None):
@@ -1752,7 +1793,7 @@ class LeoFrame:
 		return "break" # inhibit further command processing
 	#@-body
 	#@-node:2::OnRedo
-	#@+node:3:C=29:frame.OnCut, OnCutFrom Menu
+	#@+node:3:C=30:frame.OnCut, OnCutFrom Menu
 	#@+body
 	def OnCut (self,event=None):
 	
@@ -1771,8 +1812,8 @@ class LeoFrame:
 		w = self.getFocus()
 		w.event_generate(virtual_event_name("Cut"))
 	#@-body
-	#@-node:3:C=29:frame.OnCut, OnCutFrom Menu
-	#@+node:4:C=30:frame.OnCopy, OnCopyFromMenu
+	#@-node:3:C=30:frame.OnCut, OnCutFrom Menu
+	#@+node:4:C=31:frame.OnCopy, OnCopyFromMenu
 	#@+body
 	def OnCopy (self,event=None):
 	
@@ -1790,8 +1831,8 @@ class LeoFrame:
 		w = self.getFocus()
 		w.event_generate(virtual_event_name("Copy"))
 	#@-body
-	#@-node:4:C=30:frame.OnCopy, OnCopyFromMenu
-	#@+node:5:C=31:frame.OnPaste, OnPasteNode, OnPasteFromMenu
+	#@-node:4:C=31:frame.OnCopy, OnCopyFromMenu
+	#@+node:5:C=32:frame.OnPaste, OnPasteNode, OnPasteFromMenu
 	#@+body
 	def OnPaste (self,event=None):
 	
@@ -1811,8 +1852,8 @@ class LeoFrame:
 		w = self.getFocus()
 		w.event_generate(virtual_event_name("Paste"))
 	#@-body
-	#@-node:5:C=31:frame.OnPaste, OnPasteNode, OnPasteFromMenu
-	#@+node:6:C=32:OnDelete
+	#@-node:5:C=32:frame.OnPaste, OnPasteNode, OnPasteFromMenu
+	#@+node:6:C=33:OnDelete
 	#@+body
 	def OnDelete(self,event=None):
 	
@@ -1823,15 +1864,15 @@ class LeoFrame:
 			c.tree.onBodyChanged(v,"Delete")
 		return "break" # inhibit further command processing
 	#@-body
-	#@-node:6:C=32:OnDelete
-	#@+node:7:C=33:OnSelectAll
+	#@-node:6:C=33:OnDelete
+	#@+node:7:C=34:OnSelectAll
 	#@+body
 	def OnSelectAll(self,event=None):
 	
 		setTextSelection(self.body,"1.0","end")
 		return "break" # inhibit further command processing
 	#@-body
-	#@-node:7:C=33:OnSelectAll
+	#@-node:7:C=34:OnSelectAll
 	#@+node:8::OnEditHeadline
 	#@+body
 	def OnEditHeadline(self,event=None):
@@ -1841,7 +1882,7 @@ class LeoFrame:
 		return "break" # inhibit further command processing
 	#@-body
 	#@-node:8::OnEditHeadline
-	#@+node:9:C=34:OnFontPanel
+	#@+node:9:C=35:OnFontPanel
 	#@+body
 	def OnFontPanel(self,event=None):
 	
@@ -1854,8 +1895,8 @@ class LeoFrame:
 	
 		return "break" # inhibit further command processing
 	#@-body
-	#@-node:9:C=34:OnFontPanel
-	#@+node:10:C=35:OnColorPanel
+	#@-node:9:C=35:OnFontPanel
+	#@+node:10:C=36:OnColorPanel
 	#@+body
 	def OnColorPanel(self,event=None):
 		
@@ -1869,8 +1910,8 @@ class LeoFrame:
 		return "break" # inhibit further command processing
 
 	#@-body
-	#@-node:10:C=35:OnColorPanel
-	#@+node:11:C=36:OnViewAllCharacters
+	#@-node:10:C=36:OnColorPanel
+	#@+node:11:C=37:OnViewAllCharacters
 	#@+body
 	def OnViewAllCharacters (self, event=None):
 	
@@ -1886,8 +1927,8 @@ class LeoFrame:
 		c.tree.recolor_now(v)
 		return "break" # inhibit further command processing
 	#@-body
-	#@-node:11:C=36:OnViewAllCharacters
-	#@+node:12:C=37:OnPreferences
+	#@-node:11:C=37:OnViewAllCharacters
+	#@+node:12:C=38:OnPreferences
 	#@+body
 	def OnPreferences(self,event=None):
 		
@@ -1907,7 +1948,7 @@ class LeoFrame:
 	
 		return "break" # inhibit further command processing
 	#@-body
-	#@-node:12:C=37:OnPreferences
+	#@-node:12:C=38:OnPreferences
 	#@-node:1::Edit top level
 	#@+node:2::Edit Body submenu
 	#@+node:1::OnConvertBlanks & OnConvertAllBlanks
@@ -1968,7 +2009,7 @@ class LeoFrame:
 		return "break" # inhibit further command processing
 	#@-body
 	#@-node:6::OnExtractSection
-	#@+node:7:C=38:OnFindMatchingBracket
+	#@+node:7:C=39:OnFindMatchingBracket
 	#@+body
 	def OnFindMatchingBracket (self,event=None):
 		
@@ -2032,7 +2073,7 @@ class LeoFrame:
 	# Test  ((x)(unmatched
 	#@-body
 	#@-node:1::findMatchingBracket
-	#@-node:7:C=38:OnFindMatchingBracket
+	#@-node:7:C=39:OnFindMatchingBracket
 	#@+node:8::OnIndent
 	#@+body
 	def OnIndent(self,event=None):
@@ -2041,7 +2082,7 @@ class LeoFrame:
 		return "break" # inhibit further command processing
 	#@-body
 	#@-node:8::OnIndent
-	#@+node:9:C=39:OnInsertGraphicFile
+	#@+node:9:C=40:OnInsertGraphicFile
 	#@+body
 	def OnInsertGraphicFile(self,event=None):
 		
@@ -2080,7 +2121,7 @@ class LeoFrame:
 				
 		return "break" # inhibit further command processing
 	#@-body
-	#@-node:9:C=39:OnInsertGraphicFile
+	#@-node:9:C=40:OnInsertGraphicFile
 	#@-node:2::Edit Body submenu
 	#@+node:3::Find submenu (frame methods)
 	#@+node:1::OnFindPanel
@@ -2335,14 +2376,14 @@ class LeoFrame:
 	#@-node:17::OnExpandToLevel9
 	#@-node:2::Expand/Contract
 	#@+node:3::Move/Select
-	#@+node:1:C=40:OnMoveDownwn
+	#@+node:1:C=41:OnMoveDownwn
 	#@+body
 	def OnMoveDown(self,event=None):
 	
 		self.commands.moveOutlineDown()
 		return "break" # inhibit further command processing
 	#@-body
-	#@-node:1:C=40:OnMoveDownwn
+	#@-node:1:C=41:OnMoveDownwn
 	#@+node:2::OnMoveLeft
 	#@+body
 	def OnMoveLeft(self,event=None):
@@ -2484,7 +2525,7 @@ class LeoFrame:
 		return "break" # inhibit further command processing
 	#@-body
 	#@-node:1::OnEqualSizedPanes
-	#@+node:2:C=41:OnToggleActivePane
+	#@+node:2:C=42:OnToggleActivePane
 	#@+body
 	def OnToggleActivePane (self,event=None):
 	
@@ -2495,8 +2536,8 @@ class LeoFrame:
 			self.body.focus_force()
 		return "break" # inhibit further command processing
 	#@-body
-	#@-node:2:C=41:OnToggleActivePane
-	#@+node:3:C=42:OnToggleSplitDirection
+	#@-node:2:C=42:OnToggleActivePane
+	#@+node:3:C=43:OnToggleSplitDirection
 	#@+body
 	# The key invariant: self.splitVerticalFlag tells the alignment of the main splitter.
 	
@@ -2525,8 +2566,8 @@ class LeoFrame:
 		self.resizePanesToRatio(ratio)
 		return "break" # inhibit further command processing
 	#@-body
-	#@-node:3:C=42:OnToggleSplitDirection
-	#@+node:4:C=43:OnCascade
+	#@-node:3:C=43:OnToggleSplitDirection
+	#@+node:4:C=44:OnCascade
 	#@+body
 	def OnCascade(self,event=None):
 		
@@ -2550,7 +2591,7 @@ class LeoFrame:
 		return "break" # inhibit further command processing
 
 	#@-body
-	#@-node:4:C=43:OnCascade
+	#@-node:4:C=44:OnCascade
 	#@+node:5::OnMinimizeAll
 	#@+body
 	def OnMinimizeAll(self,event=None):
@@ -2567,7 +2608,16 @@ class LeoFrame:
 			frame.top.iconify()
 	#@-body
 	#@-node:5::OnMinimizeAll
-	#@+node:6:C=44:OnOpenCompareWindow
+	#@+node:6:C=45:OnHideLogWindow
+	#@+body
+	def OnHideLogWindow (self):
+		
+		c = self.commands ; frame = c.frame
+	
+		frame.divideLeoSplitter2(0.99, not frame.splitVerticalFlag)
+	#@-body
+	#@-node:6:C=45:OnHideLogWindow
+	#@+node:7:C=46:OnOpenCompareWindow
 	#@+body
 	def OnOpenCompareWindow (self):
 		
@@ -2583,8 +2633,8 @@ class LeoFrame:
 	
 		return "break" # inhibit further command processing
 	#@-body
-	#@-node:6:C=44:OnOpenCompareWindow
-	#@+node:7:C=45:OnOpenPythonWindow (Dave Hein)
+	#@-node:7:C=46:OnOpenCompareWindow
+	#@+node:8:C=47:OnOpenPythonWindow (Dave Hein)
 	#@+body
 	def OnOpenPythonWindow(self,event=None):
 	
@@ -2671,10 +2721,10 @@ class LeoFrame:
 		shell.begin()
 	#@-body
 	#@-node:3::leoPyShellMain
-	#@-node:7:C=45:OnOpenPythonWindow (Dave Hein)
+	#@-node:8:C=47:OnOpenPythonWindow (Dave Hein)
 	#@-node:4::Window Menu
 	#@+node:5::Help Menu
-	#@+node:1:C=46:OnAbout (version number)
+	#@+node:1:C=48:OnAbout (version number)
 	#@+body
 	def OnAbout(self,event=None):
 		
@@ -2701,7 +2751,7 @@ class LeoFrame:
 	
 		return "break" # inhibit further command processing
 	#@-body
-	#@-node:1:C=46:OnAbout (version number)
+	#@-node:1:C=48:OnAbout (version number)
 	#@+node:2::OnLeoDocumentation
 	#@+body
 	def OnLeoDocumentation (self,event=None):
@@ -2788,7 +2838,7 @@ class LeoFrame:
 	#@-body
 	#@-node:1::showProgressBar
 	#@-node:4::OnLeoHelp
-	#@+node:5:C=47:OnLeoTutorial (version number)
+	#@+node:5:C=49:OnLeoTutorial (version number)
 	#@+body
 	def OnLeoTutorial (self,event=None):
 		
@@ -2804,10 +2854,10 @@ class LeoFrame:
 		
 		return "break" # inhibit further command processing
 	#@-body
-	#@-node:5:C=47:OnLeoTutorial (version number)
+	#@-node:5:C=49:OnLeoTutorial (version number)
 	#@-node:5::Help Menu
 	#@-node:14:C=17:Menu Command Handlers
-	#@+node:15:C=48:Splitter stuff
+	#@+node:15:C=50:Splitter stuff
 	#@+body
 	#@+at
 	#  The key invariants used throughout this code:
@@ -2830,7 +2880,7 @@ class LeoFrame:
 			bar.bind("<B1-Motion>", self.onDragSecondarySplitBar)
 	#@-body
 	#@-node:1::bindBar
-	#@+node:2:C=49:configureBar
+	#@+node:2:C=51:configureBar
 	#@+body
 	def configureBar (self, bar, verticalFlag):
 		
@@ -2861,8 +2911,8 @@ class LeoFrame:
 				# Panes arranged horizontally; vertical splitter bar
 				bar.configure(width=7,cursor="sb_h_double_arrow")
 	#@-body
-	#@-node:2:C=49:configureBar
-	#@+node:3:C=50:createBothLeoSplitters (use config.body_font,etc)
+	#@-node:2:C=51:configureBar
+	#@+node:3:C=52:createBothLeoSplitters (use config.body_font,etc)
 	#@+body
 	def createBothLeoSplitters (self,top):
 	
@@ -2878,7 +2928,7 @@ class LeoFrame:
 		self.split2Pane1,self.split2Pane2 = split2Pane1,split2Pane2
 		
 		#@<< create the body pane >>
-		#@+node:1:C=51:<< create the body pane >>
+		#@+node:1:C=53:<< create the body pane >>
 		#@+body
 		# A light selectbackground value is needed to make syntax coloring look good.
 		wrap = config.getBoolWindowPref('body_pane_wraps')
@@ -2911,7 +2961,7 @@ class LeoFrame:
 			
 		body.pack(expand=1, fill="both")
 		#@-body
-		#@-node:1:C=51:<< create the body pane >>
+		#@-node:1:C=53:<< create the body pane >>
 
 		
 		#@<< create the tree pane >>
@@ -2984,7 +3034,7 @@ class LeoFrame:
 		# Give the log and body panes the proper borders.
 		self.reconfigurePanes()
 	#@-body
-	#@-node:3:C=50:createBothLeoSplitters (use config.body_font,etc)
+	#@-node:3:C=52:createBothLeoSplitters (use config.body_font,etc)
 	#@+node:4::createLeoSplitter (use config params)
 	#@+body
 	# Create a splitter window and panes into which the caller packs widgets.
@@ -3119,7 +3169,7 @@ class LeoFrame:
 		self.log.configure(bd=border)
 	#@-body
 	#@-node:9::reconfigurePanes (use config bar_width)
-	#@-node:15:C=48:Splitter stuff
+	#@-node:15:C=50:Splitter stuff
 	#@-others
 #@-body
 #@-node:0::@file leoFrame.py

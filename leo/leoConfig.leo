@@ -2,7 +2,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="16" clone_windows="0"/>
 <globals body_outline_ratio="0.5">
-	<global_window_position top="116" left="87" height="20" width="77"/>
+	<global_window_position top="-2" left="148" height="20" width="77"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences allow_rich_text="0" tab_width="4" page_width="132" tangle_bat="0" untangle_bat="0" output_doc_chunks="1" use_header_flag="1" defaultTargetLanguage="Python">
@@ -13,15 +13,15 @@
 </find_panel_settings>
 <vnodes>
 <v t="T1" a="E"><vh>leoConfig.leo</vh>
-<v t="T2" a="EV"><vh>@root leoConfig.txt</vh>
+<v t="T2" a="E"><vh>@root leoConfig.txt</vh>
 <v t="T3"><vh>&lt;&lt; general comments and warnings &gt;&gt;</vh></v>
-<v t="T4"><vh>&lt;&lt; General configuration options, especially read-only mode &gt;&gt;</vh></v>
+<v t="T4" a="V"><vh>&lt;&lt; General configuration options, especially read-only mode &gt;&gt;</vh></v>
 <v t="T5"><vh>&lt;&lt; The "Recent Files" menu &gt;&gt;</vh></v>
 <v t="T6"><vh>&lt;&lt; Compare Panel settings &gt;&gt;</vh></v>
 <v t="T7"><vh>&lt;&lt; Find/Change Panel settings &gt;&gt;</vh></v>
 <v t="T8"><vh>&lt;&lt; Preferences Panel settings &gt;&gt;</vh></v>
 <v t="T9"><vh>&lt;&lt; Syntax coloring options and colors &gt;&gt;</vh></v>
-<v t="T10" a="E"><vh>&lt;&lt; Window options &gt;&gt;</vh>
+<v t="T10"><vh>&lt;&lt; Window options &gt;&gt;</vh>
 <v t="T11"><vh>&lt;&lt; body pane options &gt;&gt;</vh></v>
 <v t="T12"><vh>&lt;&lt; outline pane options&gt;&gt;</vh></v>
 <v t="T13"><vh>&lt;&lt; log pane options &gt;&gt;</vh></v>
@@ -87,6 +87,9 @@ read_only = 0
 xml_version_string = UTF-8
 #	The version used at the start of .leo files.
 #	Default is UTF-8.  Better is ISO-8859-1.
+#	Even better may be ISO-8859-15, the same as ISO-8859-1,
+#	except that it includes the newly defined Euro symbol. 
+
 #	Use UTF-8 to write leo.py 2.x files.
 
 save_clears_undo_buffer = 0

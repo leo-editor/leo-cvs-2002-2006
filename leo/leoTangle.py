@@ -1599,7 +1599,7 @@ class tangleCommands:
 					self.os(self.start_comment_string)
 				
 				#@<< put the doc part >>
-				#@+node:1::<<put the doc part>>
+				#@+node:1:C=15:<<put the doc part>>
 				#@+body
 				#@+at
 				#  This code fills and outputs each line of a doc part. It keeps track of whether the next word will fit on a 
@@ -1702,7 +1702,7 @@ class tangleCommands:
 						line_width += max(0,self.tangle_indent)
 
 				#@-body
-				#@-node:1::<<put the doc part>>
+				#@-node:1:C=15:<<put the doc part>>
 
 				self.onl()
 				self.put_leading_ws(self.tangle_indent)
@@ -1712,7 +1712,7 @@ class tangleCommands:
 			else: self.onl()
 	#@-body
 	#@-node:4:C=14:put_doc
-	#@+node:5:C=15:put_leading_ws
+	#@+node:5:C=16:put_leading_ws
 	#@+body
 	# Puts tabs and spaces corresponding to n spaces, assuming that we are at the start of a line.
 	
@@ -1729,7 +1729,7 @@ class tangleCommands:
 			self.oblanks(n)
 
 	#@-body
-	#@-node:5:C=15:put_leading_ws
+	#@-node:5:C=16:put_leading_ws
 	#@+node:6::put_newline
 	#@+body
 	#@+at
@@ -2088,7 +2088,7 @@ class tangleCommands:
 		return s
 	#@-body
 	#@-node:3::st_dump_node
-	#@+node:4:C=16:st_enter
+	#@+node:4:C=17:st_enter
 	#@+body
 	#@+at
 	#  Enters names and their associated code and doc parts into the given symbol table.
@@ -2153,8 +2153,8 @@ class tangleCommands:
  # Stephen Schaefer, 9/2/02
 		return len(section.parts) # part number
 	#@-body
-	#@-node:4:C=16:st_enter
-	#@+node:5:C=17:st_enter_root_name
+	#@-node:4:C=17:st_enter
+	#@+node:5:C=18:st_enter_root_name
 	#@+body
 	# Enters a root name into the given symbol table.
 	
@@ -2164,7 +2164,7 @@ class tangleCommands:
 		if name: # User errors can result in an empty @root name.
 			self.st_enter(name,code,doc,disallow_multiple_parts,is_root_name)
 	#@-body
-	#@-node:5:C=17:st_enter_root_name
+	#@-node:5:C=18:st_enter_root_name
 	#@+node:6::st_enter_section_name
 	#@+body
 	#@+at
@@ -2206,7 +2206,7 @@ class tangleCommands:
 	#@-body
 	#@-node:7::st_lookup
 	#@-node:5::tst
-	#@+node:6:C=18:ust
+	#@+node:6:C=19:ust
 	#@+node:1::ust_dump
 	#@+body
 	def ust_dump (self):
@@ -2311,8 +2311,8 @@ class tangleCommands:
 					break # One warning per section is enough.
 	#@-body
 	#@-node:4::ust_warn_about_orphans
-	#@-node:6:C=18:ust
-	#@+node:7:C=19:untangle
+	#@-node:6:C=19:ust
+	#@+node:7:C=20:untangle
 	#@+node:1::compare_comments
 	#@+body
 	#@+at
@@ -2336,7 +2336,7 @@ class tangleCommands:
 			if self.comment and self.comment_end:
 				
 				#@<< Check both parts for @ comment conventions >>
-				#@+node:1:C=20:<< Check both parts for @ comment conventions >>
+				#@+node:1:C=21:<< Check both parts for @ comment conventions >>
 				#@+body
 				#@+at
 				#  This code is used in forgiving_compare()and in compare_comments().
@@ -2373,7 +2373,7 @@ class tangleCommands:
 						continue
 
 				#@-body
-				#@-node:1:C=20:<< Check both parts for @ comment conventions >>
+				#@-node:1:C=21:<< Check both parts for @ comment conventions >>
 
 			if p1 >= len(s1) or p2 >= len(s2):
 				break
@@ -2470,7 +2470,7 @@ class tangleCommands:
 			if self.comment and self.comment_end:
 				
 				#@<< Check both parts for @ comment conventions >>
-				#@+node:2:C=20:<< Check both parts for @ comment conventions >>
+				#@+node:2:C=21:<< Check both parts for @ comment conventions >>
 				#@+body
 				#@+at
 				#  This code is used in forgiving_compare()and in compare_comments().
@@ -2507,7 +2507,7 @@ class tangleCommands:
 						continue
 
 				#@-body
-				#@-node:2:C=20:<< Check both parts for @ comment conventions >>
+				#@-node:2:C=21:<< Check both parts for @ comment conventions >>
 
 			ch1 = s1[p1]
 			if ch1 == '\r' or ch1 == '\n':
@@ -2589,14 +2589,14 @@ class tangleCommands:
 				else:
 					
 					#@<< Compare single characters >>
-					#@+node:1:C=21:<< Compare single characters >>
+					#@+node:1:C=22:<< Compare single characters >>
 					#@+body
 					assert(p1 < len(s1) and p2 < len(s2))
 					result = s1[p1] == s2[p2]
 					p1 += 1 ; p2 += 1
 					if not result: self.mismatch("Mismatched single characters")
 					#@-body
-					#@-node:1:C=21:<< Compare single characters >>
+					#@-node:1:C=22:<< Compare single characters >>
 				#@-body
 				#@-node:6::<< Compare possible strings >>
 
@@ -2632,14 +2632,14 @@ class tangleCommands:
 				else:
 					
 					#@<< compare single characters >>
-					#@+node:1:C=21:<< Compare single characters >>
+					#@+node:1:C=22:<< Compare single characters >>
 					#@+body
 					assert(p1 < len(s1) and p2 < len(s2))
 					result = s1[p1] == s2[p2]
 					p1 += 1 ; p2 += 1
 					if not result: self.mismatch("Mismatched single characters")
 					#@-body
-					#@-node:1:C=21:<< Compare single characters >>
+					#@-node:1:C=22:<< Compare single characters >>
 
 
 				#@-body
@@ -2737,14 +2737,14 @@ class tangleCommands:
 				else:
 					
 					#@<< Compare single characters >>
-					#@+node:1:C=21:<< Compare single characters >>
+					#@+node:1:C=22:<< Compare single characters >>
 					#@+body
 					assert(p1 < len(s1) and p2 < len(s2))
 					result = s1[p1] == s2[p2]
 					p1 += 1 ; p2 += 1
 					if not result: self.mismatch("Mismatched single characters")
 					#@-body
-					#@-node:1:C=21:<< Compare single characters >>
+					#@-node:1:C=22:<< Compare single characters >>
 				#@-body
 				#@-node:8::<< Compare comments or single characters >>
 
@@ -3155,8 +3155,8 @@ class tangleCommands:
 		c.endUpdate()
 	#@-body
 	#@-node:7::update_current_vnode
-	#@-node:7:C=19:untangle
-	#@+node:8:C=22:utility methods
+	#@-node:7:C=20:untangle
+	#@+node:8:C=23:utility methods
 	#@+body
 	#@+at
 	#  These utilities deal with tangle ivars, so they should be methods.
@@ -3199,7 +3199,7 @@ class tangleCommands:
 		dn.code += s
 	#@-body
 	#@-node:2::copy
-	#@+node:3:C=23:error, pathError, warning
+	#@+node:3:C=24:error, pathError, warning
 	#@+body
 	def error (self,s):
 		self.errors += 1
@@ -3214,7 +3214,7 @@ class tangleCommands:
 		es(s)
 
 	#@-body
-	#@-node:3:C=23:error, pathError, warning
+	#@-node:3:C=24:error, pathError, warning
 	#@+node:4::is_end_of_directive
 	#@+body
 	# This function returns true if we are at the end of preprocessor directive.
@@ -3644,7 +3644,7 @@ class tangleCommands:
 		return name
 	#@-body
 	#@-node:16::standardize_name
-	#@+node:17:C=24:tangle.scanAllDirectives
+	#@+node:17:C=25:tangle.scanAllDirectives
 	#@+body
 	#@+at
 	#  This code scans the node v and all its ancestors looking for directives.  If found,the corresponding globals are set for 
@@ -3834,8 +3834,8 @@ class tangleCommands:
 		#@-body
 		#@-node:5::<< Set self.tangle_directory >>
 	#@-body
-	#@-node:17:C=24:tangle.scanAllDirectives
-	#@+node:18:C=25:token_type
+	#@-node:17:C=25:tangle.scanAllDirectives
+	#@+node:18:C=26:token_type
 	#@+body
 	#@+at
 	#  This method returns a code indicating the apparent kind of token at the position i. The caller must determine whether 
@@ -3911,8 +3911,8 @@ class tangleCommands:
 		# trace(`kind` + ":" + `get_line(s,i)`)
 		return kind, end
 	#@-body
-	#@-node:18:C=25:token_type
-	#@-node:8:C=22:utility methods
+	#@-node:18:C=26:token_type
+	#@-node:8:C=23:utility methods
 	#@-others
 #@-body
 #@-node:4::class tangleCommands methods

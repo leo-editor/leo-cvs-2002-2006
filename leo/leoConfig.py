@@ -391,16 +391,20 @@ class config:
 	def getFontFromParams(self,family,size,slant,weight):
 		
 		family = self.getWindowPref(family)
+		# print `family`
 		if not family:
 			return None
 		
 		size = self.getIntWindowPref(size)
+		# print `size`
 		if size == None: size = 12
 		
 		slant = self.getWindowPref(slant)
+		# print `slant`
 		if not slant: slant = "roman"
 		
 		weight = self.getWindowPref(weight)
+		# print `weight`
 		if not weight: weight = "normal"
 		
 		font = tkFont.Font(family=family,size=size,slant=slant,weight=weight)
