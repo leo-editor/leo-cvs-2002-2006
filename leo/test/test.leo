@@ -622,9 +622,10 @@
 </v>
 <v t="EKR.20040602101648"><vh>Test of "end1" hook</vh></v>
 <v t="ekr.20040317173327"><vh>Delete user icons</vh></v>
-<v t="ekr.20040317101155" a="ETV"><vh>Test of user icons</vh>
+<v t="ekr.20040317101155" a="E"><vh>Test of user icons</vh>
 <v t="ekr.20040317185041"><vh>&lt;&lt; define event callbacks &gt;&gt;</vh></v>
 </v>
+<v t="EKR.20040603064545" a="TV"><vh>Print timestamps of all nodes</vh></v>
 </vnodes>
 <tnodes>
 <t tx="EKR.20040424065452">import leoGlobals as g
@@ -2070,6 +2071,12 @@ print "onEnd registered as end1 hook"
 
 leoPlugins.registerHandler("idle", onIdle)
 print "onIdle registered as idle hook"</t>
+<t tx="EKR.20040603064545">import leoGlobals as g
+
+c = g.top()
+
+for p in c.all_positions_iter():
+	print p.v.t.fileIndex</t>
 <t tx="ekr.20040126105605"></t>
 <t tx="ekr.20040126105605.2"></t>
 <t tx="ekr.20040126105605.3"></t>
@@ -3285,7 +3292,7 @@ runner.run(suite)
 
 - Used iterators in test utils.
 - Used "import leoGlobals as g" style.</t>
-<t tx="ekr.20040317101155" lineYOffset="4b032e" icons="5d7100287d7101285504747970657102550466696c65710355047870616471044b02550577686572657105550a6265666f726549636f6e71066803582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286802680368084afdffffff6803582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6805550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">import leoGlobals as g
+<t tx="ekr.20040317101155" lineYOffset="4b032e" icons="5d7100287d710128550577686572657102550a6265666f726549636f6e710355047870616471044b025504747970657105550466696c6571066806582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286805680668084afdffffff6806582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6802550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">import leoGlobals as g
 from leoGlobals import true,false
 c = g.top()
 
@@ -3308,7 +3315,7 @@ d1 = {
 	"xpad": 2
 }
 
-# These can not be pickled...
+# Classes and functions can only be pickled if they are at the top level of a module.
 	#"onClick" : onClick,
 	#"onRightClick" : onRightClick,
 	#"onDoubleClick" : onDoubleClick }

@@ -5923,6 +5923,10 @@ This last anomaly seems to persist regardless of how the headline is hilited and
 #@-node:EKR.20040422132037.8:Mouse / Paste Anomalies
 #@-node:EKR.20040422132037:Mac/Linux bugs
 #@+node:ekr.20040409164648.1:Features
+#@+node:EKR.20040603074929:Copy (preserving clones) command
+How about "Copy as Copy" and "Copy as Clone" commands ?
+#@nonl
+#@-node:EKR.20040603074929:Copy (preserving clones) command
 #@+node:ekr.20040408042209:Perfect Import
 #@-node:ekr.20040408042209:Perfect Import
 #@+node:EKR.20040503160843:@directory-import

@@ -23378,6 +23378,7 @@ but with the name of your new language instead of "Python".
 - Create an @root node and verify that you can Tangle it.
 
 @color
+#@nonl
 #@+node:ekr.20031218072017.368:<< define global data structures >> app
 # Internally, lower case is used for all language names.
 self.language_delims_dict = {
@@ -27187,8 +27188,9 @@ checkLists[1] = [
 radioLists[2] = [
 	(self.dict["radio-search-scope"],"Entire Outline","entire-outine"),
 	(self.dict["radio-search-scope"],"Suboutline Only","suboutline-only"),  
-	(self.dict["radio-search-scope"],"Node Only","node-only"),    
-	(self.dict["radio-search-scope"],"Selection Only","selection-only")] # 11/9/03
+	(self.dict["radio-search-scope"],"Node Only","node-only"),
+	# I don't know what selection-only is supposed to do.
+	(self.dict["radio-search-scope"],"Selection Only",None)] #,"selection-only")]
 checkLists[2] = []
 checkLists[3] = [
 	("Search Headline Text", self.dict["search_headline"]),
@@ -27206,7 +27208,8 @@ for i in xrange(numberOfColumns):
 		box = Tk.Checkbutton(columns[i],anchor="w",text=name,variable=var)
 		box.pack(fill="x")
 		box.bind("<1>", self.resetWrap)
-		if var == None: box.configure(state="disabled")
+		if var is None: box.configure(state="disabled")
+#@nonl
 #@-node:ekr.20031218072017.3903:<< Create four columns of radio and checkboxes >>
 #@+node:ekr.20031218072017.3905:<< Create two rows of buttons >>
 # Create the button panes
@@ -34867,22 +34870,19 @@ def putUnknownAttributes (self,torv):
 	attrs = []
 	for key in attrDict.keys():
 		val = attrDict[key]
-		if 1:
-			try:
-				g.es(key,val)
-				s = pickle.dumps(val,bin=true)
-			except pickle.PicklingError:
-				g.es("ignoring non-pickleable unknownAttributes for",torv,color="blue")
-				# import traceback ; traceback.print_exc()
-				return
-			attr = ' %s="%s"' % (key,binascii.hexlify(s))
-		else: # This is not general enough
+		try:
+			s = pickle.dumps(val,bin=true)
+		except pickle.PicklingError:
+			g.es("ignoring non-pickleable unknownAttributes for",torv,color="blue")
+			g.es(key,val)
+			return
+		attr = ' %s="%s"' % (key,binascii.hexlify(s))
+		if 0: # This is not general enough
 			attr = ' %s="%s"' % (key,self.xmlEscape(val))
 		attrs.append(attr)
 
 	for attr in attrs:
 		self.put(attr)
-		# g.trace(torv,attr)
 #@nonl
 #@-node:EKR.20040526202501:putUnknownAttributes
 #@-node:EKR.20040507093503:(Fixed problems saving unknownAttribute field)
@@ -35915,6 +35915,1086 @@ def swapLinks (self,v2): # not used.
 #@-node:EKR.20040528111420.1:v.swapIntoTree, v.swapLinks
 #@-node:EKR.20040528070309.2:(Fixed undoReplaceNodes)
 #@-node:EKR.20040601083927:In 4.2 a3
+#@+node:ekr.20040330092305.1:(Made "end1" and "ilde"events work again)
+@nocolor
+
+The 'end1' event is not working. I believe the problem is a logic problem.
+
+in leoApp.py:
+
+@color
+
+def finishQuit(self):
+
+self.killed = true # Disable after events.
+
+a little latter in the method:
+
+doHook("end1")
+#@nonl
+#@+node:EKR.20040602113145:What I did
+@nocolor
+
+- Leo calls g.enableIdleTimeHook at end of startup code.
+	- This means that g.idleTimeHookHandler gets called periodically, even if no hooks have been defined.
+	- g.enableIdleTime hook now calls g.app.gui.setIdleTimeHook at most once.
+
+- app.forceShutdown now calls "end1" hook before calling app.finishQuit.
+	- This ensures that the "end1" hook always gets called once.
+	- app.finishQuit calls doHook("end1",...) only if it hasn't been called before.
+		- This isn't necessary, but it makes traces in doHook less confusing.
+
+- idleTimeHookHandler now calls the idle-time hook for all open windows.
+	- So having multiple windows open should not affect idle-time hooks.
+
+** Warning: new convention required to workaround apparent Tk problems.
+	- "idle" hooks should return if g.app.killed is true.
+#@nonl
+#@-node:EKR.20040602113145:What I did
+#@+node:ekr.20031218072017.1934:run & allies
+def run(fileName=None,*args,**keywords):
+	
+	"""Initialize and run Leo"""
+	
+	if not isValidPython(): return
+	# Import leoGlobals, but do NOT set g.
+	import leoGlobals
+	from leoGlobals import true,false
+	# Create the application object.
+	import leoApp ; leoGlobals.app = leoApp.LeoApp()
+	g = leoGlobals ; assert(g.app) # NOW we can set g.
+	g.app.loadDir = computeLoadDir() # Depends on g.app.tkEncoding: uses utf-8 for now.
+	import leoConfig
+	g.app.config = leoConfig.config()
+	g.app.setEncoding() # 10/20/03: do this earlier
+	script = getBatchScript()
+	if script:
+		createNullGuiWithScript(script)
+		fileName = None
+	else:
+		<< print encoding info >>
+	# Load plugins. Plugins may create g.app.gui.
+	g.doHook("start1")
+	if g.app.killed: return # Support for g.app.forceShutdown.
+	# Create the default gui if needed.
+	if g.app.gui == None:
+		g.app.createTkGui()
+	if g.app.use_gnx:
+		if not g.app.leoID: g.app.setLeoID() # Forces the user to set g.app.leoID.
+		import leoNodes
+		g.app.nodeIndices = leoNodes.nodeIndices()
+	# Initialize tracing and statistics.
+	g.init_sherlock(args)
+	g.clear_stats()
+	<< start psycho >>
+	# Create the main frame.  Show it and all queued messages.
+	c,frame = createFrame(fileName)
+	if not frame: return
+	if g.app.disableSave:
+		g.es("disabling save commands",color="red")
+	g.app.writeWaitingLog()
+	v = c.currentVnode()
+	g.doHook("start2",c=c,v=v,fileName=fileName)
+	g.enableIdleTimeHook()
+	frame.tree.redraw()
+	frame.body.setFocus()
+	g.app.initing = false # "idle" hooks may now call g.app.forceShutdown.
+	g.app.gui.runMainLoop()
+#@+node:ekr.20040411081633:<< start psycho >>
+if g.app.config.use_psyco:
+	try:
+		import psyco
+		if 0:
+			file = r"c:\prog\test\psycoLog.txt"
+			g.es("psyco now logging to",file,color="blue")
+			psyco.log(file)
+			psyco.profile()
+		psyco.full()
+		g.es("psyco now running",color="blue")
+	except ImportError:
+		pass
+	except:
+		print "unexpected exception importing psyco"
+		g.es_exception()
+#@nonl
+#@-node:ekr.20040411081633:<< start psycho >>
+#@+node:ekr.20031218072017.1935:<< print encoding info >>
+g.es("leoConfig.txt encoding: " + g.app.config.config_encoding, color="blue")
+
+if 0: # This is just confusing for users.
+	g.es("Text encoding: " + g.app.tkEncoding, color="blue")
+#@nonl
+#@-node:ekr.20031218072017.1935:<< print encoding info >>
+#@+node:ekr.20031218072017.1936:isValidPython
+def isValidPython():
+	
+	import leoGlobals as g
+	from leoGlobals import true,false
+	
+	message = """\
+Leo requires Python 2.2 or higher.
+You may download Python 2.2 and Python 2.3 from http://python.org/download/
+"""
+	try:
+		if not g.CheckVersion(sys.version, "2.2"):
+			g.app.gui.runAskOkDialog("Python version error",message=message,text="Exit")
+			return false
+		else:
+			return true
+	except:
+		print "exception getting Python version"
+		import traceback ; traceback.print_exc()
+		return false
+#@nonl
+#@-node:ekr.20031218072017.1936:isValidPython
+#@+node:ekr.20031218072017.1937:computeLoadDir
+def computeLoadDir():
+	
+	"""Returns the directory containing leo.py."""
+	
+	import leoGlobals as g
+	from leoGlobals import true,false
+	
+	# g.trace(g.app.tkEncoding)
+	
+	try:
+		import leo
+		path = g.os_path_abspath(leo.__file__)
+
+		if sys.platform=="win32": # "mbcs" exists only on Windows.
+			path = g.toUnicode(path,"mbcs")
+		elif sys.platform=="dawwin":
+			path = g.toUnicode(path,"utf-8")
+		else:
+			path = g.toUnicode(path,g.app.tkEncoding)
+
+		if path:
+			loadDir = g.os_path_dirname(path)
+		else:
+			loadDir = None
+		if not loadDir:
+			loadDir = g.os_path_abspath(os.getcwd())
+			print "Using emergency loadDir:",repr(loadDir)
+
+		encoding = g.choose(sys.platform=="dawwin","utf-8",g.app.tkEncoding) # 11/18/03
+		loadDir = g.toUnicode(loadDir,encoding) # 10/20/03
+		return loadDir
+	except:
+		print "Exception getting load directory"
+		import traceback ; traceback.print_exc()
+		return None
+#@nonl
+#@-node:ekr.20031218072017.1937:computeLoadDir
+#@+node:ekr.20031218072017.1624:createFrame (leo.py)
+def createFrame (fileName):
+	
+	"""Create a LeoFrame during Leo's startup process."""
+	
+	import leoGlobals as g
+	from leoGlobals import true,false
+	
+	# g.trace(g.app.tkEncoding,fileName)
+	
+	# Try to create a frame for the file.
+	if fileName:
+		fileName = g.os_path_join(os.getcwd(),fileName)
+		fileName = g.os_path_normpath(fileName)
+		if g.os_path_exists(fileName):
+			ok, frame = g.openWithFileName(fileName,None)
+			if ok:
+				return frame.c,frame
+	
+	# Create a new frame & indicate it is the startup window.
+	c,frame = g.app.gui.newLeoCommanderAndFrame(fileName=None)
+	frame.setInitialWindowGeometry()
+	frame.startupWindow = true
+	
+	# Report the failure to open the file.
+	if fileName:
+		g.es("File not found: " + fileName)
+
+	return c,frame
+#@-node:ekr.20031218072017.1624:createFrame (leo.py)
+#@+node:ekr.20031218072017.1938:createNullGuiWithScript (leo.py)
+def createNullGuiWithScript (script):
+	
+	import leoGlobals as g
+	from leoGlobals import true,false
+	import leoGui
+	
+	g.app.batchMode = true
+	g.app.gui = leoGui.nullGui("nullGui")
+	g.app.root = g.app.gui.createRootWindow()
+	g.app.gui.finishCreate()
+	g.app.gui.setScript(script)
+#@-node:ekr.20031218072017.1938:createNullGuiWithScript (leo.py)
+#@+node:ekr.20031218072017.1939:getBatchScript
+def getBatchScript ():
+	
+	import leoGlobals as g
+	from leoGlobals import true,false
+	
+	name = None ; i = 1 # Skip the dummy first arg.
+	while i + 1 < len(sys.argv):
+		arg = sys.argv[i].strip().lower()
+		if arg in ("--script","-script"):
+			name = sys.argv[i+1].strip() ; break
+		i += 1
+
+	if not name: return None	
+	name = g.os_path_join(g.app.loadDir,name)
+	try:
+		f = None
+		try:
+			f = open(name,'r')
+			script = f.read()
+			# g.trace("script",script)
+		except IOError:
+			g.es("can not open script file: " + name, color="red")
+			script = None
+	finally:
+		if f: f.close()
+		return script
+#@nonl
+#@-node:ekr.20031218072017.1939:getBatchScript
+#@-node:ekr.20031218072017.1934:run & allies
+#@+node:ekr.20031218072017.1732:app.finishQuit
+def finishQuit(self):
+	
+	# forceShutdown may already have fired the "end1" hook.
+	if not g.app.killed:
+		g.doHook("end1")
+
+	self.destroyAllGlobalWindows()
+	self.destroyAllOpenWithFiles()
+	
+	if g.app.gui:
+		g.app.gui.destroySelf()
+		
+	g.app.killed = true
+		# Disable all further hooks and events.
+		# Alas, "idle" events can still be called even after the following code.
+
+	if 0: # Do not use g.trace here!
+		print "finishQuit",g.app.killed
+		
+	if g.app.afterHandler:
+		# TK bug: This appears to have no effect, at least on Windows.
+		# print "finishQuit: cancelling",g.app.afterHandler
+		if g.app.gui and g.app.gui.guiName() == "tkinter":
+			self.root.after_cancel(g.app.afterHandler)
+		g.app.afterHandler = None
+#@nonl
+#@-node:ekr.20031218072017.1732:app.finishQuit
+#@+node:ekr.20031218072017.1596:g.doHook
+@ This global function calls a hook routine.  Hooks are identified by the tag param.
+Returns the value returned by the hook routine, or None if the there is an exception.
+
+We look for a hook routine in three places:
+1. g.top().hookFunction
+2. app.hookFunction
+3. leoPlugins.doPlugins()
+We set app.hookError on all exceptions.  Scripts may reset app.hookError to try again.
+@c
+
+def doHook(tag,*args,**keywords):
+	
+	if g.app.killed or g.app.hookError:
+		return None
+	
+	# New in 4.2.  We call the idle-time handlers for all open windows.
+	c = keywords.get("c")
+	
+	if 0: # Don't use trace here!
+		if tag != "idle":
+			print "doHook",tag,c
+
+	if not g.app.config.use_plugins:
+		if tag == "start1":
+			g.es("Plugins disabled: use_plugins is 0",color="blue")
+		return None
+	elif c and c.hookFunction:
+		try:
+			return c.hookFunction(tag,keywords)
+		except:
+			g.es("exception in c.hookFunction for " + c.frame.getTitle())
+	elif g.app.hookFunction:
+		try:
+			return g.app.hookFunction(tag,keywords)
+		except:
+			g.es("exception in app.hookFunction")
+	else:
+		import leoPlugins
+		try:
+			g.app.hookFunction = leoPlugins.doPlugins
+			return app.hookFunction(tag,keywords)
+		except:
+			g.app.hookFunction = None
+			g.es("exception in plugin")
+
+	# Handle all exceptions.
+	g.es_exception()
+	g.app.hookError = true # Supress this function.
+	g.app.idleTimeHook = false # Supress idle-time hook
+	return None # No return value
+#@nonl
+#@-node:ekr.20031218072017.1596:g.doHook
+#@+node:ekr.20031218072017.1315:idle time functions (leoGlobals)
+#@+node:EKR.20040602125018:enableIdleTimeHook
+@ Enables the "idle" hook.
+After enableIdleTimeHook is called, Leo will call the "idle" hook
+approximately every g.idleTimeDelay milliseconds.
+@c
+
+def enableIdleTimeHook(idleTimeDelay=100):
+
+	if not g.app.idleTimeHook:
+		s = "idle-time hooks enabled"
+		# print s ; g.es(s)
+		g.app.idleTimeHook = true
+		g.app.idleTimeDelay = idleTimeDelay # Delay in msec.
+		
+		# Start idle-time processing only after the first idle-time event.
+		g.app.gui.setIdleTimeHook(g.idleTimeHookHandler)
+		g.app.afterHandler = g.idleTimeHookHandler
+#@nonl
+#@-node:EKR.20040602125018:enableIdleTimeHook
+#@+node:EKR.20040602125018.1:disableIdleTimeHook
+# Disables the "idle" hook.
+def disableIdleTimeHook():
+	
+	g.app.idleTimeHook = false
+#@nonl
+#@-node:EKR.20040602125018.1:disableIdleTimeHook
+#@+node:EKR.20040602125018.2:idleTimeHookHandler
+# An internal routine used to dispatch the "idle" hook.
+trace_count = 0
+
+def idleTimeHookHandler(*args,**keys):
+	
+	if 0: # Do not use g.trace here!
+		global trace_count ; trace_count += 1
+		if trace_count % 10 == 0:
+			for w in g.app.windowList:
+				c = w.c
+				print "idleTimeHookHandler",trace_count,c
+
+	# New for Python 2.3: may be called during shutdown.
+	if g.app.killed: return
+	
+	for w in g.app.windowList:
+		c = w.c ; v = c.currentVnode()
+		g.doHook("idle",c=c,v=v)
+
+	# Requeue this routine after 100 msec.  Faster requeues overload the system.
+	if g.app.idleTimeHook:
+		g.app.gui.setIdleTimeHookAfterDelay(g.app.idleTimeDelay,g.idleTimeHookHandler)
+		# g.app.gui.setIdleTimeHook(g.idleTimeHookHandler)
+		g.app.afterHandler = g.idleTimeHookHandler
+	else:
+		g.app.afterHandler = None
+#@-node:EKR.20040602125018.2:idleTimeHookHandler
+#@-node:ekr.20031218072017.1315:idle time functions (leoGlobals)
+#@+node:ekr.20031218072017.2611:app.destroyAllGlobalWindows
+def destroyAllGlobalWindows (self):
+	
+	for w in self.globalWindows:
+		w.destroySelf()
+		
+	self.globalWindows = []
+	
+	self.findFrame = None
+	self.pythonFrame = None
+#@-node:ekr.20031218072017.2611:app.destroyAllGlobalWindows
+#@+node:ekr.20031218072017.2616:app.forceShutdown
+def forceShutdown (self):
+	
+	"""Forces an immediate shutdown of Leo at any time.
+	
+	In particular, may be called from plugins during startup."""
+	
+	# Wait until everything is quiet before really quitting.
+	g.doHook("end1")
+	
+	self.log = None # Disable writeWaitingLog
+	self.killed = true # Disable all further hooks.
+	
+	for w in self.windowList[:]:
+		self.destroyWindow(w)
+
+	self.finishQuit()
+#@nonl
+#@-node:ekr.20031218072017.2616:app.forceShutdown
+#@+node:ekr.20031218072017.3442:doHandlersForTag
+def doHandlersForTag (tag,keywords):
+	
+	"""Execute all handlers for a given tag, in alphabetical order"""
+
+	global handlers
+	
+	# g.trace(g.app.killed)
+	
+	if g.app.killed:
+		return None
+
+	if handlers.has_key(tag):
+		handle_fns = handlers[tag]
+		handle_fns.sort()
+		for handle_fn in handle_fns:
+			ret = handle_fn(tag,keywords)
+			if ret is not None:
+				return ret
+
+	if handlers.has_key("all"):
+		handle_fns = handlers["all"]
+		handle_fns.sort()
+		for handle_fn in handle_fns:
+			ret = handle_fn(tag,keywords)
+			if ret is not None:
+				return ret
+	return None
+#@-node:ekr.20031218072017.3442:doHandlersForTag
+#@+node:ekr.20031218072017.3443:registerHandler
+def registerHandler(tags,fn):
+	
+	""" Register one or more handlers"""
+	
+	import types
+
+	if type(tags) in (types.TupleType,types.ListType):
+		for tag in tags:
+			registerOneHandler(tag,fn)
+	else:
+		registerOneHandler(tags,fn)
+
+def registerOneHandler(tag,fn):
+	
+	"""Register one handler"""
+
+	global handlers
+
+	existing = handlers.setdefault(tag,[])
+	existing.append(fn)
+#@nonl
+#@-node:ekr.20031218072017.3443:registerHandler
+#@-node:ekr.20040330092305.1:(Made "end1" and "ilde"events work again)
+#@+node:ekr.20040105080119.4:(Put drawing hooks back in)
+#@+node:EKR.20040602144908:What I did
+@color
+
+Added the following hooks:
+
+tag argument                                               keys in keywords
+(hook name)           overrides    when called           dictionary argument
+---------             ---------    -----------           -------------------
+
+"draw-outline-box"       yes   start of drawBox          tree,p,v,x,y (note 6)
+"draw-outline-icon"      yes   start of tree.drawIcon    tree,p,v,x,y (note 6)
+"draw-outline-node"      yes   start of tree.drawNode    tree,p,v,x,y (note 6)
+"draw-outline-text-box"  yes   start of tree.drawText    tree,p,v,x,y (note 6)
+"draw-sub-outline"       yes   start of tree.drawTree    tree,p,v,x,y,h,level,hoistFlag (note 6)
+#@nonl
+#@-node:EKR.20040602144908:What I did
+#@+node:ekr.20031218072017.4144:Drawing (tkTree)
+#@+node:ekr.20031218072017.4145:About drawing and updating
+@ About drawing and updating strategy.
+
+This version of Leo draws the outline "by hand" using the Tk canvas widget.  Surprisingly, this is not only easy, but simplifies the vnode and Commands classes.
+
+1.  Updating and redraw.  The tree.redraw() method is called automatically from the "outermost" call to tree.endUpdate.  Moreover, calling .tree.redraw() inside a tree.beginUpdate/tree.endUpdate pair does nothing.  c.redraw(), c.beginUpdate() and c.endUpdate() just call the corresponding tree methods.  Finally, beginUpdate()/endUpdate(false) can be used to suppress redrawing entirely.
+
+Therefore, the Commands class never needs to worry about extra calls to tree.redraw() provided all code that draws to the tree is enclosed in a tree.beginUpdate/tree.endUpdate pair.  The tree.idle_body_key event handler manages redrawing "by hand" by maintaining a redraw_flag and then calling endUpdate(redraw_flag).
+
+2.  The tree.redraw() method deletes all old canvas items and recomputes all data, including v.iconVal.  This means that v.doDelete need not actually delete vnodes for them to disappear from the screen.  Indeed, vnode are never actually deleted, only unlinked.  It would be valid for "dependent" vnodes to be deleted, but there really is no need to do so.
+#@-node:ekr.20031218072017.4145:About drawing and updating
+#@+node:ekr.20031218072017.1000:drawBox (tag_bind)
+def drawBox (self,p,x,y):
+	
+	tree = self
+	y += 7 # draw the box at x, y+7
+	h = self.line_height
+	
+	if not g.doHook("draw-outline-box",tree=tree,p=p,v=p,x=x,y=y):
+
+		iconname = g.choose(p.isExpanded(),"minusnode.gif", "plusnode.gif")
+		image = self.getIconImage(iconname)
+		id = self.canvas.create_image(x,y+self.lineyoffset,image=image)
+		
+		if 1: # New in 4.2.  Create a frame to catch all clicks.
+			id4 = self.canvas.create_rectangle(0,y-7,1000,y-7+h-3)
+			color = ""
+			self.canvas.itemconfig(id4,fill=color,outline=color)
+			self.canvas.lower(id4)
+			id3 = self.canvas.tag_bind(id4, "<1>", p.OnBoxClick)
+			self.tagBindings.append((id,id3,"<1>"),)
+	
+		id1 = self.canvas.tag_bind(id, "<1>", p.OnBoxClick)
+		id2 = self.canvas.tag_bind(id, "<Double-1>", lambda x: None)
+		
+		# Remember the bindings so deleteBindings can delete them.
+		self.tagBindings.append((id,id1,"<1>"),)
+		self.tagBindings.append((id,id2,"<Double-1>"),)
+#@nonl
+#@-node:ekr.20031218072017.1000:drawBox (tag_bind)
+#@+node:ekr.20031218072017.1002:drawIcon (tag_bind)
+def drawIcon(self,p,x=None,y=None):
+	
+	"""Draws icon for position p at x,y, or at p.v.iconx,p.v.icony if x,y = None,None"""
+
+	tree = self ; v = p.v # Make sure the bindings refer to the _present_ position.
+
+	<< compute x,y and iconVal >>
+
+	if not g.doHook("draw-outline-icon",tree=tree,p=p,v=v,x=x,y=y):
+
+		# Get the image.
+		imagename = "box%02d.GIF" % val
+		image = self.getIconImage(imagename)
+		id = self.canvas.create_image(x,y+self.lineyoffset,anchor="nw",image=image)
+		self.icon_id_dict[id] = p # Remember which vnode belongs to the icon.
+	
+		id1 = self.canvas.tag_bind(id,"<1>",p.OnIconClick)
+		id2 = self.canvas.tag_bind(id,"<Double-1>",p.OnIconDoubleClick)
+		id3 = self.canvas.tag_bind(id,"<3>",p.OnIconRightClick)
+		
+		# Remember the bindings so deleteBindings can delete them.
+		self.tagBindings.append((id,id1,"<1>"),)
+		self.tagBindings.append((id,id2,"<Double-1>"),)
+		self.tagBindings.append((id,id3,"<3>"),)
+	
+	return 0,icon_width # dummy icon height,width
+#@nonl
+#@+node:EKR.20040602150338:<< compute x,y and iconVal >>
+
+if x is None and y is None:
+	try:
+		x,y = v.iconx, v.icony
+	except:
+		# Inject the ivars.
+		x,y = v.iconx, v.icony = 0,0
+else:
+	# Inject the ivars.
+	v.iconx, v.icony = x,y
+
+y += 2 # draw icon at y + 2
+
+# Always recompute v.iconVal.
+# This is an important drawing optimization.
+val = v.iconVal = v.computeIcon()
+assert(0 <= val <= 15)
+#@nonl
+#@-node:EKR.20040602150338:<< compute x,y and iconVal >>
+#@-node:ekr.20031218072017.1002:drawIcon (tag_bind)
+#@+node:ekr.20031218072017.1004:drawNode & force_draw_node (good trace)
+def drawNode(self,p,x,y):
+
+	"""Draw horizontal line from vertical line to icon"""
+	
+	tree = self ; v = p.v
+	
+	data = g.doHook("draw-outline-node",tree=tree,p=p,v=v,x=x,y=y)
+	if data is not None: return data
+	
+	# g.trace(p)
+	if 1:
+		self.lineyoffset = 0
+	else:
+		if hasattr(p.v.t,"unknownAttributes"):
+			self.lineyoffset = p.v.t.unknownAttributes.get("lineYOffset",0)
+		else:
+			self.lineyoffset = 0
+		
+	self.canvas.create_line(x,y+7+self.lineyoffset,
+		x+box_width,y+7+self.lineyoffset,
+		tag="lines",fill="gray50") # stipple="gray25")
+
+	if self.inVisibleArea(y):
+		return self.force_draw_node(p,x,y)
+	else:
+		return self.line_height,0
+#@nonl
+#@+node:ekr.20040317171729:force_draw_node (new)
+def force_draw_node(self,p,x,y):
+
+	self.allocatedNodes += 1
+	h,w = self.drawUserIcons(p,"beforeBox",x,y)
+	xw = w # The extra indentation before the icon box.
+	if p.hasChildren():
+		self.drawBox(p,x+w,y)
+	w += box_width # even if box isn't drawn.
+
+	h2,w2 = self.drawUserIcons(p,"beforeIcon",x+w,y)
+	h = max(h,h2) ; w += w2 ; xw += w2
+
+	h2,w2 = self.drawIcon(p,x+w,y)
+	h = max(h,h2) ; w += w2
+
+	h2,w2 = self.drawUserIcons(p,"beforeHeadline",x+w,y)
+	h = max(h,h2) ; w += w2
+
+	h2 = self.drawText(p,x+w,y)
+	h = max(h,h2)
+	w += self.widthInPixels(p.headString())
+
+	h2,w2 = self.drawUserIcons(p,"afterHeadline",x+w,y)
+	h = max(h,h2)
+
+	return h,xw
+#@nonl
+#@-node:ekr.20040317171729:force_draw_node (new)
+#@+node:ekr.20040318090335:force_draw_node (old)
+def force_draw_nodeOLD(self,p,x,y):
+
+	self.allocatedNodes += 1
+
+	if p.hasChildren():
+		self.drawBox(p,x,y)
+	w = box_width # Even if the box isn't drawn.
+
+	h2,w2 = self.drawIcon(p,x+w,y)
+	w += w2
+
+	h = self.drawText(p,x+w,y)
+	
+	return h,0
+#@-node:ekr.20040318090335:force_draw_node (old)
+#@-node:ekr.20031218072017.1004:drawNode & force_draw_node (good trace)
+#@+node:ekr.20031218072017.1005:drawText (bind)
+def drawText(self,p,x,y):
+	
+	"""draw text for v at nominal coordinates x,y."""
+
+	tree = self ; c = self.c ; v = p.v
+	x += text_indent
+	
+	data = g.doHook("draw-outline-text-box",tree=tree,p=p,v=v,x=x,y=y)
+	if data is not None: return data
+
+	t = Tkinter.Text(self.canvas,
+		font=self.font,bd=0,relief="flat",width=self.headWidth(v),height=1)
+
+	# New in 4.2: entries a pairs (p,t) indexed by v.
+	# Remember which text widget belongs to v.
+	d = self.edit_text_dict
+	val = d.get(v,[])
+	val.append((p,t),)
+	d[v] = val
+	# g.trace("entry",d[p.v])
+
+	# Remember the widget so deleteBindings can delete it.
+	self.widgets.append(t) # Fixes a _huge_ memory leak.
+
+	t.insert("end", v.headString())
+	<< configure the text depending on state >>
+
+	# Use vnode or postion callbacks.
+	id1 = t.bind("<1>",p.OnHeadlineClick)
+	id2 = t.bind("<3>",p.OnHeadlineRightClick)
+	
+	if 0: # 6/15/02: Bill Drissel objects to this binding.
+		t.bind("<Double-1>", p.OnBoxClick)
+	id3 = t.bind("<Key>", p.OnHeadlineKey)
+	id4 = t.bind("<Control-t>",self.OnControlT)
+		# 10/16/02: Stamp out the erroneous control-t binding.
+		
+	# Remember the bindings so deleteBindings can delete them.
+	self.bindings.append((t,id1,"<1>"),)
+	self.bindings.append((t,id2,"<3>"),)
+	self.bindings.append((t,id3,"<Key>"),)
+	self.bindings.append((t,id4,"<Control-t>"),)
+
+	id = self.canvas.create_window(x,y+self.lineyoffset,anchor="nw",window=t)
+	self.canvas.tag_lower(id)
+	
+	# This doesn't work: must call update_idletasks first, and that's hard here.
+	# g.trace(t,t.winfo_height(),t.winfo_width())
+	
+	return self.line_height
+#@nonl
+#@+node:ekr.20031218072017.1006:<< configure the text depending on state >>
+if p and p == c.currentPosition():
+	if p == self.editPosition():
+		self.setNormalLabelState(p)
+	else:
+		self.setDisabledLabelState(p) # selected, disabled
+else:
+	self.setUnselectedLabelState(p) # unselected
+#@nonl
+#@-node:ekr.20031218072017.1006:<< configure the text depending on state >>
+#@-node:ekr.20031218072017.1005:drawText (bind)
+#@+node:ekr.20031218072017.2029:drawTopTree
+def drawTopTree (self):
+	
+	"""Draws the top-level tree, taking into account the hoist state."""
+	
+	c = self.c
+	
+	if c.hoistStack:
+		p,junk = c.hoistStack[-1]
+		self.drawTree(p.copy(),root_left,root_top,0,0,hoistFlag=true)
+	else:
+		self.drawTree(c.rootPosition(),root_left,root_top,0,0)
+		
+	# g.trace(g.app.copies) ; g.app.copies = 0
+	# g.trace()
+	# import traceback ; traceback.print_stack()
+#@-node:ekr.20031218072017.2029:drawTopTree
+#@+node:ekr.20031218072017.1008:drawTree
+def drawTree(self,p,x,y,h,level,hoistFlag=false):
+
+	tree = self ; v = p.v
+	yfirst = ylast = y
+	if level==0: yfirst += 10
+	w = 0
+	
+	# We must make copies for drawText and drawBox and drawIcon,
+	# So making copies here actually reduces the total number of copies.
+	### This will change for incremental redraw.
+	p = p.copy()
+	
+	data = g.doHook("draw-sub-outline",tree=tree,p=p,v=v,x=x,y=y,h=h,level=level,hoistFlag=hoistFlag)
+	if data is not None: return data
+	
+	while p: # Do not use iterator.
+		h,w = self.drawNode(p,x,y)
+		y += h ; ylast = y
+		if p.isExpanded() and p.hasFirstChild():
+			# Must make an additional copy here by calling firstChild.
+			y,w2 = self.drawTree(p.firstChild(),x+child_indent+w,y,h,level+1)
+			x += w2 ; w += w2
+		if hoistFlag: break
+		else:         p = p.next()
+	<< draw vertical line >>
+	return y,w
+#@nonl
+#@+node:ekr.20031218072017.1009:<< draw vertical line >>
+id = self.canvas.create_line(
+	x, yfirst-hline_y,
+	x, ylast+hline_y-h,
+	fill="gray50", # stipple="gray50"
+	tag="lines")
+
+self.canvas.tag_lower(id)
+#@nonl
+#@-node:ekr.20031218072017.1009:<< draw vertical line >>
+#@-node:ekr.20031218072017.1008:drawTree
+#@+node:ekr.20040317095510:drawUserIcon
+def drawUserIcon (self,where,x,y,dict):
+	
+	h,w = 0,0
+
+	if where != dict.get("where","beforeHeadline"):
+		return h,w
+		
+	# g.trace(where,x,y,dict)
+	
+	<< set offsets and pads >>
+	type = dict.get("type")
+	if type == "icon":
+		s = dict.get("icon")
+		<< draw the icon in string s >>
+	elif type == "file":
+		file = dict.get("file")
+		<< draw the icon at file >>
+	elif type == "url":
+		url = dict.get("url")
+		<< draw the icon at url >>
+		
+	# Allow user to specify height, width explicitly.
+	h = dict.get("height",h)
+	w = dict.get("width",w)
+
+	return h,w
+#@nonl
+#@+node:ekr.20040317173849:<< set offsets and pads >>
+xoffset = dict.get("xoffset")
+try:    xoffset = int(xoffset)
+except: xoffset = 0
+
+yoffset = dict.get("yoffset")
+try:    yoffset = int(yoffset)
+except: yoffset = 0
+
+xpad = dict.get("xpad")
+try:    xpad = int(xpad)
+except: xpad = 0
+
+ypad = dict.get("ypad")
+try:    ypad = int(ypad)
+except: ypad = 0
+#@nonl
+#@-node:ekr.20040317173849:<< set offsets and pads >>
+#@+node:ekr.20040317095153:<< draw the icon in string s >>
+pass
+#@nonl
+#@-node:ekr.20040317095153:<< draw the icon in string s >>
+#@+node:ekr.20040317095153.1:<< draw the icon at url >>
+pass
+#@nonl
+#@-node:ekr.20040317095153.1:<< draw the icon at url >>
+#@+node:ekr.20040317100702:<< draw the icon at file >>
+try:
+	image = self.iconimages[file]
+	# Get the image from the cache if possible.
+except KeyError:
+	try:
+		fullname = g.os_path_join(g.app.loadDir,"..","Icons",file)
+		fullname = g.os_path_normpath(fullname)
+		image = Tkinter.PhotoImage(master=self.canvas,file=fullname)
+		self.iconimages[fullname] = image
+	except:
+		#g.es("Exception loading: " + fullname)
+		#g.es_exception()
+		image = None
+		
+if image:
+	id = self.canvas.create_image(x+xoffset,y+yoffset,anchor="nw",image=image)
+	self.canvas.lift(id)
+	h = image.height() + yoffset + ypad
+	w = image.width()  + xoffset + xpad
+#@nonl
+#@-node:ekr.20040317100702:<< draw the icon at file >>
+#@-node:ekr.20040317095510:drawUserIcon
+#@+node:ekr.20040317094609:drawUserIcons
+def drawUserIcons(self,p,where,x,y):
+	
+	"""Draw any icons specified by p.v.t.unknownAttributes["icons"]."""
+	
+	h,w = 0,0 ; t = p.v.t
+	
+	if not hasattr(t,"unknownAttributes"):
+		return h,w
+	
+	iconsList = t.unknownAttributes.get("icons")
+	# g.trace(iconsList)
+	
+	try:
+		for dict in iconsList:
+			h2,w2 = self.drawUserIcon(where,x+w,y,dict)
+			h = max(h,h2) ; w += w2
+	except:
+		g.es_exception()
+
+	return h,w
+#@nonl
+#@-node:ekr.20040317094609:drawUserIcons
+#@+node:ekr.20031218072017.1010:inVisibleArea & inExpandedVisibleArea
+def inVisibleArea (self,y1):
+	
+	if self.allocateOnlyVisibleNodes:
+		if self.visibleArea:
+			vis1,vis2 = self.visibleArea
+			y2 = y1 + self.line_height
+			return y2 >= vis1 and y1 <= vis2
+		else: return false
+	else:
+		return true # This forces all nodes to be allocated on all redraws.
+		
+def inExpandedVisibleArea (self,y1):
+	
+	if self.expandedVisibleArea:
+		vis1,vis2 = self.expandedVisibleArea
+		y2 = y1 + self.line_height
+		return y2 >= vis1 and y1 <= vis2
+	else:
+		return false
+#@nonl
+#@-node:ekr.20031218072017.1010:inVisibleArea & inExpandedVisibleArea
+#@+node:ekr.20031218072017.4147:tree.getIconImage
+def getIconImage (self, name):
+
+	# Return the image from the cache if possible.
+	if self.iconimages.has_key(name):
+		return self.iconimages[name]
+		
+	try:
+		fullname = g.os_path_join(g.app.loadDir,"..","Icons",name)
+		fullname = g.os_path_normpath(fullname)
+		image = Tkinter.PhotoImage(master=self.canvas, file=fullname)
+		self.iconimages[name] = image
+		return image
+	except:
+		g.es("Exception loading: " + fullname)
+		g.es_exception()
+		return None
+#@nonl
+#@-node:ekr.20031218072017.4147:tree.getIconImage
+#@+node:ekr.20040322122232:tree.scrollTo
+def scrollTo (self,p):
+	
+	def scrollToCallback(event=None,self=self,p=p):
+		g.trace(event,self,p)
+		self.idle_scrollTo(p)
+	
+	self.canvas.after_idle(scrollToCallback)
+#@nonl
+#@-node:ekr.20040322122232:tree.scrollTo
+#@+node:ekr.20031218072017.1018:tree.idle_scrollTo
+def idle_scrollTo(self,p=None):
+
+	"""Scrolls the canvas so that v is in view.
+	
+	This is done at idle time after a redraw so that treeBar.get() will return proper values."""
+
+	c = self.c ; frame = c.frame
+	if not p: p = self.c.currentPosition()
+	if not p: p = self.c.rootPosition() # 4/8/04.
+	try:
+		last = p.lastVisible()
+		nextToLast = last.visBack()
+		h1 = self.yoffset(p)
+		h2 = self.yoffset(last)
+		<< compute approximate line height >>
+		<< Compute the fractions to scroll down/up >>
+		if frac <= lo:
+			if self.prevMoveToFrac != frac:
+				self.prevMoveToFrac = frac
+				self.canvas.yview("moveto",frac)
+		elif frac2 + (hi - lo) >= hi:
+			if self.prevMoveToFrac != frac2:
+				self.prevMoveToFrac = frac2
+				self.canvas.yview("moveto",frac2)
+
+		if self.allocateOnlyVisibleNodes:
+			self.canvas.after_idle(self.idle_second_redraw)
+			
+		c.setTopVnode(p) # 1/30/04: remember a pseudo "top" node.
+		# print "%3d %3d %1.3f %1.3f %1.3f %1.3f" % (h1,h2,frac,frac2,lo,hi)
+	except:
+		g.es_exception()
+#@nonl
+#@+node:ekr.20040314092716:<< compute approximate line height >>
+if nextToLast: # 2/2/03: compute approximate line height.
+	lineHeight = h2 - self.yoffset(nextToLast)
+else:
+	lineHeight = 20 # A reasonable default.
+#@nonl
+#@-node:ekr.20040314092716:<< compute approximate line height >>
+#@+node:ekr.20040314092716.1:<< Compute the fractions to scroll down/up >>
+data = frame.treeBar.get()
+try: lo, hi = data
+except: lo,hi = 0.0,1.0
+if h2 > 0.1:
+	frac = float(h1)/float(h2) # For scrolling down.
+	frac2 = float(h1+lineHeight/2)/float(h2) # For scrolling up.
+	frac2 = frac2 - (hi - lo)
+else:
+	frac = frac2 = 0.0 # probably any value would work here.
+	
+frac =  max(min(frac,1.0),0.0)
+frac2 = max(min(frac2,1.0),0.0)
+#@nonl
+#@-node:ekr.20040314092716.1:<< Compute the fractions to scroll down/up >>
+#@-node:ekr.20031218072017.1018:tree.idle_scrollTo
+#@+node:ekr.20031218072017.4148:tree.numberOfVisibleNodes
+def numberOfVisibleNodes(self):
+	
+	n = 0 ; p = self.c.rootPosition()
+	while p:
+		n += 1
+		p.moveToVisNext()
+	return n
+#@nonl
+#@-node:ekr.20031218072017.4148:tree.numberOfVisibleNodes
+#@+node:ekr.20031218072017.4149:tree.yoffset
+@ We can't just return icony because the tree hasn't been redrawn yet.  For the same reason we can't rely on any TK canvas methods here.
+@c
+
+def yoffset(self, v1):
+
+	# if not v1.isVisible(): print "yoffset not visible:",v1
+	root = self.c.rootPosition()
+	h, flag = self.yoffsetTree(root,v1)
+	# flag can be false during initialization.
+	# if not flag: print "yoffset fails:",h,v1
+	return h
+
+# Returns the visible height of the tree and all sibling trees, stopping at p1
+
+def yoffsetTree(self,p,p1):
+
+	h = 0
+	for p in p.siblings_iter():
+		# print "yoffsetTree:", p
+		if p == p1:
+			return h, true
+		h += self.line_height
+		if p.isExpanded() and p.hasChildren():
+			child = p.firstChild()
+			h2, flag = self.yoffsetTree(child,p1)
+			h += h2
+			if flag: return h, true
+	
+	return h, false
+#@nonl
+#@-node:ekr.20031218072017.4149:tree.yoffset
+#@-node:ekr.20031218072017.4144:Drawing (tkTree)
+#@-node:ekr.20040105080119.4:(Put drawing hooks back in)
+#@+node:ekr.20040310092400:(Allowed </leo_header> tag)
+#@+node:EKR.20040603092958:Report
+@nocolor
+
+By: billp9619 ( bill palmer ) 
+ leo_header optional closetag sb valid?   
+2004-03-07 01:21  
+
+ 1. <leo_header ... />
+vs.
+2. <leo_header ... ></leo_header>
+
+Leo saves using style 1 and treats style 2 as invalid.
+
+Both are equivalent and so I think leo should accept both. Some applications for comparing xml insist on style 2.
+#@nonl
+#@-node:EKR.20040603092958:Report
+#@+node:ekr.20031218072017.3022:getClipboardHeader
+def getClipboardHeader (self):
+
+	if self.getOpenTag("<leo_header"):
+		return # 11/24/02
+
+	while 1:
+		if self.matchTag("file_format="):
+			self.getDquote() ; self.fileFormatNumber = self.getLong() ; self.getDquote()
+		elif self.matchTag("tnodes="):
+			self.getDquote() ; self.getLong() ; self.getDquote() # no longer used
+		elif self.matchTag("max_tnode_index="):
+			self.getDquote() ; self.getLong() ; self.getDquote() # no longer used
+		elif self.matchTag("></leo_header>"): # new in 4.2: allow this form.
+			break
+		else:
+			self.getTag("/>")
+			break
+#@nonl
+#@-node:ekr.20031218072017.3022:getClipboardHeader
+#@+node:ekr.20031218072017.1970:getLeoHeader
+def getLeoHeader (self):
+
+	# Set defaults.
+	self.maxTnodeIndex = 0
+	self.numberOfTnodes = 0
+	if self.getOpenTag("<leo_header"):
+		return
+
+	# New in version 1.7: attributes may appear in any order.
+	while 1:
+		if self.matchTag("file_format="):
+			self.getDquote() ; self.fileFormatNumber = self.getLong() ; self.getDquote()
+		elif self.matchTag("tnodes="):
+			self.getDquote() ; self.numberOfTnodes = self.getLong() ; self.getDquote()
+		elif self.matchTag("max_tnode_index="):
+			self.getDquote() ; self.maxTnodeIndex = self.getLong() ; self.getDquote()
+			# g.trace("max_tnode_index:",self.maxTnodeIndex)
+		elif self.matchTag("clone_windows="):
+			self.getDquote() ; self.getLong() ; self.getDquote() # no longer used.
+		elif self.matchTag("></leo_header>"): # new in 4.2: allow this form.
+			break
+		else:
+			self.getTag("/>")
+			break
+#@nonl
+#@-node:ekr.20031218072017.1970:getLeoHeader
+#@-node:ekr.20040310092400:(Allowed </leo_header> tag)
 #@-node:EKR.20040517090500:May 2004
 #@-node:ekr.20040107064101.1:4.2 Projects
 #@-all

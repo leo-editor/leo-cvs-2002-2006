@@ -313,6 +313,7 @@ but with the name of your new language instead of "Python".
 - Create an @root node and verify that you can Tangle it.
 
 @color
+#@nonl
 #@+node:ekr.20031218072017.368:<< define global data structures >> app
 # Internally, lower case is used for all language names.
 self.language_delims_dict = {

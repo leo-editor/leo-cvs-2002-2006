@@ -6,6 +6,12 @@ Older diary entries are in LeoDocs.leo.
 
 #@+others
 #@+node:ekr.20040105070023:2004
+#@+node:EKR.20040603075154:June 2004
+#@+node:EKR.20040603075154.1:6/3
+#@+node:EKR.20040603073847:Dimmed selection-only radio button in Find Panel
+#@-node:EKR.20040603073847:Dimmed selection-only radio button in Find Panel
+#@-node:EKR.20040603075154.1:6/3
+#@-node:EKR.20040603075154:June 2004
 #@+node:EKR.20040503064147:May 2004
 #@+node:EKR.20040519071848:5/19
 #@+node:EKR.20040519090151.1:Fixed @file read bug
