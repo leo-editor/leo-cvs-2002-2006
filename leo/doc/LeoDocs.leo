@@ -68,7 +68,7 @@
 <v t="edream.110203163054.44"><vh>Dan Winkler 1</vh></v>
 <v t="edream.110203163054.45"><vh>Dan Winkler 2</vh></v>
 </v>
-<v t="edream.110203163054.46" a="E"><vh>Release Notes</vh>
+<v t="edream.110203163054.46" a="ETV"><vh>Release Notes</vh>
 <v t="edream.110203163054.47"><vh>Warnings</vh></v>
 <v t="edream.110203163054.48"><vh>Installation notes</vh>
 <v t="edream.110203163054.49"><vh>System requirements</vh></v>
@@ -80,14 +80,15 @@
 <v t="edream.110203163054.61"><vh>Putting the Leo icon in Leo windows</vh></v>
 <v t="edream.110203163054.62"><vh>Quick start</vh></v>
 </v>
-<v t="edream.110203163054.63" a="E"><vh>Latest versions</vh>
-<v t="EKR.20040628095213" a="TV"><vh>4.2 beta 1 &amp; beta 2</vh>
+<v t="edream.110203163054.63"><vh>Latest versions</vh>
+<v t="ekr.20040713110718"><vh>4.2 beta 3 notes</vh></v>
+<v t="EKR.20040628095213"><vh>4.2 beta 1 &amp; beta 2</vh>
 <v t="EKR.20040628095213.311"><vh>New coding conventions</vh></v>
 <v t="EKR.20040524104904.242"><vh>Extending the format of .leo files</vh></v>
 <v t="ekr.20040705111716"><vh>in 4.2 b2</vh>
-<v t="ekr.20040705111716.1" a="E"><vh>Savedmarks and expantion state in &lt;v&gt; elements for @thin nodes</vh></v>
-<v t="ekr.20040705111716.45" a="E"><vh>Marked all related @thin nodes dirty when a node changesd</vh></v>
-<v t="ekr.20040705111716.126" a="E"><vh>Fixed bug when reading  4.1 files with topology errors</vh></v>
+<v t="ekr.20040705111716.1"><vh>Savedmarks and expantion state in &lt;v&gt; elements for @thin nodes</vh></v>
+<v t="ekr.20040705111716.45"><vh>Marked all related @thin nodes dirty when a node changesd</vh></v>
+<v t="ekr.20040705111716.126"><vh>Fixed bug when reading  4.1 files with topology errors</vh></v>
 <v t="ekr.20040705150130"><vh>Leo passes all important pychecker tests</vh></v>
 </v>
 <v t="ekr.20040705112148"><vh>in 4.2 b1</vh>
@@ -152,9 +153,9 @@
 <v t="EKR.20040628095213.311"><vh>New coding conventions</vh></v>
 <v t="EKR.20040524104904.242"><vh>Extending the format of .leo files</vh></v>
 <v t="ekr.20040705111716"><vh>in 4.2 b2</vh>
-<v t="ekr.20040705111716.1" a="E"><vh>Savedmarks and expantion state in &lt;v&gt; elements for @thin nodes</vh></v>
-<v t="ekr.20040705111716.45" a="E"><vh>Marked all related @thin nodes dirty when a node changesd</vh></v>
-<v t="ekr.20040705111716.126" a="E"><vh>Fixed bug when reading  4.1 files with topology errors</vh></v>
+<v t="ekr.20040705111716.1"><vh>Savedmarks and expantion state in &lt;v&gt; elements for @thin nodes</vh></v>
+<v t="ekr.20040705111716.45"><vh>Marked all related @thin nodes dirty when a node changesd</vh></v>
+<v t="ekr.20040705111716.126"><vh>Fixed bug when reading  4.1 files with topology errors</vh></v>
 <v t="ekr.20040705150130"><vh>Leo passes all important pychecker tests</vh></v>
 </v>
 <v t="ekr.20040705112148"><vh>in 4.2 b1</vh>
@@ -15105,5 +15106,52 @@ The effect of this is to make all vnodes identical, as far as using unknownAttri
 <t tx="ekr.20040705111716.126"></t>
 <t tx="ekr.20040705112148"></t>
 <t tx="ekr.20040705150130">Leo now generates no warnings with all significant tests enabled.  Some tests have been disabled in bases classes, and in a few cases pychecker gives erroneous warnings that have been suppressed directly in the source code using the __pychecker__ = arg syntax.</t>
+<t tx="ekr.20040713110718">Progress report: 7/13/04
+
+Notes on recent changes:
+
+- Leo now allows you to select multiple files in the dialogs for all Import commands.  This fixes a major annoyance.  However, you must be running Python 2.3 or above to get this feature.
+
+- I have just uploaded to CVS code that supports a new Check submenu of the Outline menu.  This contains the Check Outline and Dump Outline commands, as well as four new commands:  Check All Python Code, Check Python Code, Pretty Print All Python Code and Pretty Print Python Code.
+
+The Check Python Code and Pretty Print Python Code work on only the selected Node and its descendents.  These commands ignore any nodes for which a) @ignore is in effect or b) @language python is in not effect.
+
+The Check Python Code commands report any syntax errors or tabnanny errors.  Erroneous nodes are marked.
+
+The Pretty Print commands replace nodes with their pretty-printed alternative.  No doubt everyone will have their own favorite style.  You could implement alternate pretty printers in a plugin merely by overriding the following methods of class prettyPrinter in leoCommands.py:
+    
+---- putOperator:      puts whitespace around operators.
+---- putNormalToken:   puts whitespace around everything else.
+
+Note that you can use putToken to dump lines for debugging.  I'm not going to get into a discussion of which are the "best" settings for the 8323 possible formatting options.  Nor am I going to spend lots of time adding pretty printing options to leoConfig.txt.
+
+Warning: the code in putOperator and putNormalToken is quite simple, and it passes tests, but there is NO guarantee that it is free from bugs.  I would suggest making full backups before running the pretty printing commands on your precious code.
+
+- I have spent considerable time recently reorganizing test.leo to use @test and @suite nodes effectively.  I can now migrate mini test to unit tests effortlessly.  
+
+Still, huge numbers of tests could still be written.  For example, the unit tests for the Pretty Print commands are puny.  I have Pretty Printed all of test.leo, then rerun the other unit tests.  That's a somewhat better test, but it really isn't good enough.  And it isn't automatic.
+
+- The more I think of it, the more Bernhard's coding suggestions make sense.   I have followed his suggestion to use very small methods when writing the Pretty Print commands and I like the result.  Also, it is becoming unbearable to use the present messy undo scheme.  Implementing undo for the Pretty Print commands was a real chore, in spite of the fact that I barrowed most of the logic from the batch Change All commands.
+
+Bugs
+
+- Yesterday I uploaded a fix for a major bug in the write logic.  Under certain hard-to-describe circumstances, running a script would improperly add a tnodeList to an @thin tree.  The remarkably weird effect was to clear all the headlines in the @thin node the next time Leo loaded the .leo file!  The fix was simple, just clear the tnodeList when writing the file to a string.  However, I plan to look at all the tnodeList logic in detail very soon.
+
+- I have chosen to remove underlining from headlines.  The more I used this, the more I detested it.  I didn't like headlines being obscured, and I really didn't like the frantic appearance of the screen.  It would be possible to do underline only when the cursor is to the right of a headline, but I doubt this is worth it.  Besides, it interferes with scrolling by clicking in the outline pane.
+
+- Similarly, I reverted the supposed fix to the double-click-drag bug.  The problem was that returning "break" from OnBodyDoubleClick really messes up how words are recognized.  I use a style that eliminates a lot of spaces, and returning "break" ends up selecting far too much on double-clicks.  So the search for a better solution goes on...However, this is such a minor problem that I am not looking too hard :-)
+
+Plans &amp; Schedule
+
+- For the last several week Leo 4.2 has been in "continuing to finish" mode.  The transition to "ending finishing" mode for at least a few more weeks.
+
+- I would like to finish Perfect Import in the next week or so.  That will complete all the major work on 4.2.  I'd like to release 4.2 release candidate 1 by August 1 at the latest.  I'll be leaving on vacation the latter part of August, so 4.2 final will probably come out about September 1.
+
+- A new undo scheme will have to wait until 4.2.1 at the earliest.  4.2.1 might be dedicated to cleaning up code.  Besides undo, two other major projects are a)  replacing Tk indices with Python indices and b) Reorganizing the atFile code to make it easier for plugins to modify.
+
+The reorganization of the atFile code will have several major features.  First, all reads and writes will be oriented to reading strings or lists.  The file logic will then be a wrapper around these more fundamental building blocks.  Second, the atFile code will use many more small helper methods.  Third, I may unify all the atFile classes.  In this case, subclassing creates a lot of confusion with very little benefit.  This release might well take a month or more.  
+
+After 4.2.1 the 4.3 release will focus on user options, translated menus, emacs-style commands, etc.  This release will no doubt take months.
+</t>
 </tnodes>
 </leo_file>

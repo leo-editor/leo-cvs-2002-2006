@@ -1,5 +1,8 @@
 #@+leo-ver=4
 #@+node:@file ../src/elisp2py.py
+#@@language python
+#@@tabwidth -4
+
 import leoGlobals as g
 import string
 

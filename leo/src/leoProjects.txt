@@ -2373,6 +2373,25 @@ def scanAtTabwidthDirective(s,dict,issue_error_flag=False):
         return None
 
 #@-node:ekr.20031218072017.1390:scanAtTabwidthDirective
+#@+node:ekr.20040715155607:scanForAtIgnore
+def scanForAtIgnore(c,p):
+    
+    """Scan position p and its ancestors looking for @ignore directives."""
+    
+    language = c.target_language
+
+    if c is None or g.top() is None:
+        return False # For unit tests.
+
+    for p in p.self_and_parents_iter():
+        s = p.bodyString()
+        d = g.get_directives_dict(s)
+        if d.has_key("ignore"):
+            return True
+
+    return False
+#@nonl
+#@-node:ekr.20040715155607:scanForAtIgnore
 #@+node:ekr.20040712084911.1:scanForAtLanguage
 def scanForAtLanguage(c,p):
     
@@ -2380,23 +2399,17 @@ def scanForAtLanguage(c,p):
 
     Returns the language found, or c.target_language."""
     
-    language = c.target_language
 
-    if c is None or g.top() is None:
-        return language # For unit tests.
+    if c and p:
+        for p in p.self_and_parents_iter():
+            s = p.bodyString()
+            d = g.get_directives_dict(s)
+            if d.has_key("language"):
+                k = d["language"]
+                language,delim1,delim2,delim3 = g.set_language(s,k)
+                return language # Continue looking for @ignore
 
-    found = False
-    for p in p.self_and_parents_iter():
-        s = p.bodyString()
-        d = g.get_directives_dict(s)
-        if d.has_key("ignore"):
-            return None
-        elif not found and d.has_key("language"):
-            k = d["language"]
-            language,delim1,delim2,delim3 = g.set_language(s,k)
-            found = True # Continue looking for @ignore
-
-    return language
+    return c.target_language
 #@nonl
 #@-node:ekr.20040712084911.1:scanForAtLanguage
 #@+node:ekr.20031218072017.1391:scanDirectives (utils)
@@ -44227,6 +44240,25 @@ def scanAtTabwidthDirective(s,dict,issue_error_flag=False):
         return None
 
 #@-node:ekr.20031218072017.1390:scanAtTabwidthDirective
+#@+node:ekr.20040715155607:scanForAtIgnore
+def scanForAtIgnore(c,p):
+    
+    """Scan position p and its ancestors looking for @ignore directives."""
+    
+    language = c.target_language
+
+    if c is None or g.top() is None:
+        return False # For unit tests.
+
+    for p in p.self_and_parents_iter():
+        s = p.bodyString()
+        d = g.get_directives_dict(s)
+        if d.has_key("ignore"):
+            return True
+
+    return False
+#@nonl
+#@-node:ekr.20040715155607:scanForAtIgnore
 #@+node:ekr.20040712084911.1:scanForAtLanguage
 def scanForAtLanguage(c,p):
     
@@ -44234,23 +44266,17 @@ def scanForAtLanguage(c,p):
 
     Returns the language found, or c.target_language."""
     
-    language = c.target_language
 
-    if c is None or g.top() is None:
-        return language # For unit tests.
+    if c and p:
+        for p in p.self_and_parents_iter():
+            s = p.bodyString()
+            d = g.get_directives_dict(s)
+            if d.has_key("language"):
+                k = d["language"]
+                language,delim1,delim2,delim3 = g.set_language(s,k)
+                return language # Continue looking for @ignore
 
-    found = False
-    for p in p.self_and_parents_iter():
-        s = p.bodyString()
-        d = g.get_directives_dict(s)
-        if d.has_key("ignore"):
-            return None
-        elif not found and d.has_key("language"):
-            k = d["language"]
-            language,delim1,delim2,delim3 = g.set_language(s,k)
-            found = True # Continue looking for @ignore
-
-    return language
+    return c.target_language
 #@nonl
 #@-node:ekr.20040712084911.1:scanForAtLanguage
 #@+node:ekr.20031218072017.1391:scanDirectives (utils)
@@ -45695,6 +45721,25 @@ def scanAtTabwidthDirective(s,dict,issue_error_flag=False):
         return None
 
 #@-node:ekr.20031218072017.1390:scanAtTabwidthDirective
+#@+node:ekr.20040715155607:scanForAtIgnore
+def scanForAtIgnore(c,p):
+    
+    """Scan position p and its ancestors looking for @ignore directives."""
+    
+    language = c.target_language
+
+    if c is None or g.top() is None:
+        return False # For unit tests.
+
+    for p in p.self_and_parents_iter():
+        s = p.bodyString()
+        d = g.get_directives_dict(s)
+        if d.has_key("ignore"):
+            return True
+
+    return False
+#@nonl
+#@-node:ekr.20040715155607:scanForAtIgnore
 #@+node:ekr.20040712084911.1:scanForAtLanguage
 def scanForAtLanguage(c,p):
     
@@ -45702,23 +45747,17 @@ def scanForAtLanguage(c,p):
 
     Returns the language found, or c.target_language."""
     
-    language = c.target_language
 
-    if c is None or g.top() is None:
-        return language # For unit tests.
+    if c and p:
+        for p in p.self_and_parents_iter():
+            s = p.bodyString()
+            d = g.get_directives_dict(s)
+            if d.has_key("language"):
+                k = d["language"]
+                language,delim1,delim2,delim3 = g.set_language(s,k)
+                return language # Continue looking for @ignore
 
-    found = False
-    for p in p.self_and_parents_iter():
-        s = p.bodyString()
-        d = g.get_directives_dict(s)
-        if d.has_key("ignore"):
-            return None
-        elif not found and d.has_key("language"):
-            k = d["language"]
-            language,delim1,delim2,delim3 = g.set_language(s,k)
-            found = True # Continue looking for @ignore
-
-    return language
+    return c.target_language
 #@nonl
 #@-node:ekr.20040712084911.1:scanForAtLanguage
 #@+node:ekr.20031218072017.1391:scanDirectives (utils)
@@ -49281,7 +49320,7 @@ File c:\prog\leoCVS\leo\doc\silver_city.css
 - Uploaded leo-stylesheets.zip to plugins package at SourceForge.
 #@nonl
 #@-node:ekr.20040709065122:(Added 3 .css files to cvs and distribution)
-#@+node:ekr.20040709075150:(Fixed double-click-drag)
+#@+node:ekr.20040709075150:(Fixed double-click-drag) Now reverted
 #@+node:ekr.20040709075150.1:Patch
 @nocolor
 
@@ -49399,7 +49438,7 @@ def OnActivateBody (self,event=None):
         g.es_event_exception("activate body")
 #@nonl
 #@-node:ekr.20031218072017.3975:OnActivateBody
-#@-node:ekr.20040709075150:(Fixed double-click-drag)
+#@-node:ekr.20040709075150:(Fixed double-click-drag) Now reverted
 #@+node:ekr.20040709080432:(Scroll the tree pane on Shift left/right click)
 http://sourceforge.net/forum/message.php?msg_id=2649750
 #@nonl
@@ -50189,12 +50228,15 @@ def runOpenFileDialog(self,title,filetypes,defaultextension,multiple=False):
     
     # askopenfilenames only exists in Python 2.3 or later
     if multiple and g.CheckVersion(sys.version,"2.3"):
-        f = tkFileDialog.askopenfilenames
+        files = tkFileDialog.askopenfilenames(
+            title=title, filetypes=filetypes)
+        return list(files)
     else:
-        f = tkFileDialog.askopenfilename
-
-    files = f(title=title, filetypes=filetypes)
-    return list(files)
+        file = tkFileDialog.askopenfilename(
+            title=title, filetypes=filetypes)
+        if multiple: return [file]
+        else:        return file
+    
         # DTHEIN 2004.01.31: remove default extension on open,
         # so that we can open files without extensions
 
@@ -50801,6 +50843,84 @@ else:
 #@-node:ekr.20031218072017.2121:<< set dirty and orphan bits on error >>
 #@-node:ekr.20031218072017.2114:new_df.write
 #@-node:ekr.20040712135130:(Fixed major bug in write logic)
+#@+node:ekr.20040715094645:(Fix open bug)
+#@+node:ekr.20040715100724:Report
+@killcolor
+
+https://sourceforge.net/forum/message.php?msg_id=2665410
+By: bwmulder
+
+I just updated from CVS. The attempt to open LeoPyRef.leo fails because
+of runOpenFileDialog.
+
+If "multiple" is false, it calls tkFileDialog.askopenfilename, and then makes
+a list out of the result of this function, which is a list of characters.
+
+Maybe this function should be really split into two versions: one for exactly
+one file, and another one for a list of files? Probably the latter should *always*
+return a list, even if the corresponding function really only returns one
+filename.
+
+[I am running on Windows XP].
+#@-node:ekr.20040715100724:Report
+#@+node:ekr.20031218072017.4057:app.gui.Tkinter file dialogs
+def runOpenFileDialog(self,title,filetypes,defaultextension,multiple=False):
+
+    """Create and run an Tkinter open file dialog ."""
+    
+    # askopenfilenames only exists in Python 2.3 or later
+    if multiple and g.CheckVersion(sys.version,"2.3"):
+        files = tkFileDialog.askopenfilenames(
+            title=title, filetypes=filetypes)
+        return list(files)
+    else:
+        file = tkFileDialog.askopenfilename(
+            title=title, filetypes=filetypes)
+        if multiple: return [file]
+        else:        return file
+    
+        # DTHEIN 2004.01.31: remove default extension on open,
+        # so that we can open files without extensions
+
+def runSaveFileDialog(self,initialfile,title,filetypes,defaultextension):
+
+    """Create and run an Tkinter save file dialog ."""
+
+    return tkFileDialog.asksaveasfilename(
+        initialfile=initialfile,
+        title=title,
+        filetypes=filetypes)
+    # EKR: 2004.01.31: remove default extensions on save too.
+    # defaultextension=defaultextension)
+#@nonl
+#@-node:ekr.20031218072017.4057:app.gui.Tkinter file dialogs
+#@+node:ekr.20031218072017.2821:open
+def open(self):
+
+    c = self
+    << Set closeFlag if the only open window is empty >>
+
+    fileName = g.app.gui.runOpenFileDialog(
+        title="Open",
+        filetypes=[("Leo files", "*.leo"), ("All files", "*")],
+        defaultextension=".leo")
+
+    if fileName and len(fileName) > 0:
+        ok, frame = g.openWithFileName(fileName,c)
+        if ok and closeFlag:
+            g.app.destroyWindow(c.frame)
+#@nonl
+#@+node:ekr.20031218072017.2822:<< Set closeFlag if the only open window is empty >>
+@ If this is the only open window was opened when the app started, and the window has never been written to or saved, then we will automatically close that window if this open command completes successfully.
+@c
+    
+closeFlag = (
+    c.frame.startupWindow==True and # The window was open on startup
+    c.changed==False and c.frame.saved==False and # The window has never been changed
+    g.app.numberOfWindows == 1) # Only one untitled window has ever been opened
+#@-node:ekr.20031218072017.2822:<< Set closeFlag if the only open window is empty >>
+#@-node:ekr.20031218072017.2821:open
+#@-node:ekr.20040715094645:(Fix open bug)
 #@+node:ekr.20040711135244.2:(Finished all commands in the Outline Check submenu)
 @ignore
 @language python
@@ -51292,25 +51412,38 @@ def scanForAtLanguage(c,p):
 
     Returns the language found, or c.target_language."""
     
+
+    if c and p:
+        for p in p.self_and_parents_iter():
+            s = p.bodyString()
+            d = g.get_directives_dict(s)
+            if d.has_key("language"):
+                k = d["language"]
+                language,delim1,delim2,delim3 = g.set_language(s,k)
+                return language # Continue looking for @ignore
+
+    return c.target_language
+#@nonl
+#@-node:ekr.20040712084911.1:scanForAtLanguage
+#@+node:ekr.20040715155607:scanForAtIgnore
+def scanForAtIgnore(c,p):
+    
+    """Scan position p and its ancestors looking for @ignore directives."""
+    
     language = c.target_language
 
     if c is None or g.top() is None:
-        return language # For unit tests.
+        return False # For unit tests.
 
-    found = False
     for p in p.self_and_parents_iter():
         s = p.bodyString()
         d = g.get_directives_dict(s)
         if d.has_key("ignore"):
-            return None
-        elif not found and d.has_key("language"):
-            k = d["language"]
-            language,delim1,delim2,delim3 = g.set_language(s,k)
-            found = True # Continue looking for @ignore
+            return True
 
-    return language
+    return False
 #@nonl
-#@-node:ekr.20040712084911.1:scanForAtLanguage
+#@-node:ekr.20040715155607:scanForAtIgnore
 #@+node:ekr.20031218072017.3112:es_exception
 def es_exception (full=True,c=None,color="red"):
     
@@ -53168,13 +53301,14 @@ def checkAllPythonCode(self,unittest=False):
         count += 1
         if not unittest:
             << print dots >>
-        
-        # Unlike scanDirectives, scanForAtLanguage ignores @comment.
-        if g.scanForAtLanguage(c,p) == "python":
 
-            c.checkPythonNode(p)
+        if g.scanForAtLanguage(c,p) == "python":
+            # Ignore @ignore for unit tests.
+            if unittest or not g.scanForAtIgnore(c,p):
+                c.checkPythonNode(p)
             
-    g.es("Check complete",color="blue")
+    if not unittest:
+        g.es("Check complete",color="blue")
 #@nonl
 #@+node:ekr.20040712150530:<< print dots >>
 if count % 100 == 0:
@@ -53190,17 +53324,27 @@ def checkPythonCode (self,unittest=False):
     
     c = self ; count = 0
     
+    if unittest:
+        g.app.unitTestDict["checkPythonCode"] = "ok"
+    
     for p in c.currentPosition().self_and_subtree_iter():
         
         count += 1
         if not unittest:
             << print dots >>
 
-        # Unlike scanDirectives, scanForAtLanguage ignores @comment.
         if g.scanForAtLanguage(c,p) == "python":
-            c.checkPythonNode(p)
-            
-    g.es("Check complete",color="blue")
+            # Ignore @ignore for unit tests.
+            if unittest or not g.scanForAtIgnore(c,p):
+                try:
+                    c.checkPythonNode(p,unittest)
+                except (SyntaxError,tokenize.TokenError,tabnanny.NannyNag):
+                    g.app.unitTestDict["checkPythonCode"] = "error"
+                except:
+                    g.app.unitTestDict["checkPythonCode"] = "surprise"
+
+    if not unittest:
+        g.es("Check complete",color="blue")
 #@nonl
 #@+node:ekr.20040712150822:<< print dots >>
 if count % 100 == 0:
@@ -53212,7 +53356,7 @@ if count % 2000 == 0:
 #@-node:ekr.20040712150822:<< print dots >>
 #@-node:ekr.20040712045933.1:checkPythonCode
 #@+node:ekr.20040712045933.3:checkPythonNode
-def checkPythonNode (self,p):
+def checkPythonNode (self,p,unittest=False):
 
     c = self
     
@@ -53223,19 +53367,22 @@ def checkPythonNode (self,p):
     try:
         compiler.parse(body + '\n')
     except SyntaxError:
-        g.es("Syntax error in: %s" % h,color="blue")
-        g.es_exception(full=False,color="black")
-        p.setMarked()
-        
-    c.tabNannyNode(p,h,body)
+        if unittest:
+            raise
+        else:
+            g.es("Syntax error in: %s" % h,color="blue")
+            g.es_exception(full=False,color="black")
+            p.setMarked()
+
+    c.tabNannyNode(p,h,body,unittest)
 #@nonl
 #@-node:ekr.20040712045933.3:checkPythonNode
 #@+node:ekr.20040711135244.18:tabNannyNode
-def tabNannyNode (self,p,headline,body):
+# This code is based on tabnanny.check.
 
-    """Check indentation using tabnanny.process_tokens."""
+def tabNannyNode (self,p,headline,body,unittest=False):
 
-    # This code is based on tabnanny.check.
+    """Check indentation using tabnanny."""
 
     try:
         # readline = g.readLinesGenerator(body).next
@@ -53243,29 +53390,29 @@ def tabNannyNode (self,p,headline,body):
         tabnanny.process_tokens(tokenize.generate_tokens(readline))
 
     except tokenize.TokenError, msg:
-        g.es("Token error in %s" % headline,color="blue")
-        g.es(str(msg))
-        p.setMarked()
-        return
+        if unittest:
+            raise
+        else:
+            g.es("Token error in %s" % headline,color="blue")
+            g.es(str(msg))
+            p.setMarked()
 
     except tabnanny.NannyNag, nag:
-        badline = nag.get_lineno()
-        line    = nag.get_line()
-        message = nag.get_msg()
-
-        g.es("Indentation error in %s, line %d" % (headline, badline),color="blue")
-        g.es(message)
-        g.es("offending line:\n%s" % repr(str(line))[1:-1])
-        p.setMarked()
-        return
+        if unittest:
+            raise
+        else:
+            badline = nag.get_lineno()
+            line    = nag.get_line()
+            message = nag.get_msg()
+            g.es("Indentation error in %s, line %d" % (headline, badline),color="blue")
+            g.es(message)
+            g.es("offending line:\n%s" % repr(str(line))[1:-1])
+            p.setMarked()
         
     except:
         g.trace("unexpected exception")
         g.es_exception()
-        return
-        
-    # g.es("Indentation OK: %s" % headline,color="blue")
-#@nonl
+        if unittest: raise
 #@-node:ekr.20040711135244.18:tabNannyNode
 #@-node:ekr.20040712144216:Check Outline commands & allies
 #@+node:ekr.20040711135959.1:Pretty Print commands
@@ -53285,11 +53432,16 @@ def prettyPrintAllPythonCode (self,dump=False):
 #@nonl
 #@-node:ekr.20040712053025:prettyPrintAllPythonCode
 #@+node:ekr.20040712053025.1:prettyPrintPythonCode
-def prettyPrintPythonCode (self,dump=False):
+def prettyPrintPythonCode (self,p=None,dump=False):
 
-    c = self ; pp = c.prettyPrinter(c)
+    c = self
     
-    for p in c.currentPosition().self_and_subtree_iter():
+    if p: root = p.copy()
+    else: root = c.currentPosition();
+    
+    pp = c.prettyPrinter(c)
+    
+    for p in root.self_and_subtree_iter():
         
         # Unlike scanDirectives, scanForAtLanguage ignores @comment.
         if g.scanForAtLanguage(c,p) == "python":
@@ -53316,6 +53468,7 @@ def __init__ (self,c):
     self.bracketLevel = 0
     self.c = c
     self.p = c.currentPosition()
+    self.prevName = None
 #@nonl
 #@-node:ekr.20040711135244.6:__init__
 #@+node:ekr.20040713093048:clear
@@ -53430,6 +53583,9 @@ def putNormalToken (self,token5tuple):
         self.putOperator(val)
     elif name == "name":
         a.append("%s " % val)
+        if self.prevName == "def": # A personal idiosyncracy.
+            a.append(' ') # Retain the blank before '('.
+        self.prevName = val
     elif name in ("comment","string","number"):
         a.append(val)
     elif name == "errortoken":
