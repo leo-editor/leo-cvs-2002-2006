@@ -1066,6 +1066,9 @@ class tangleCommands:
 			# Enter the reference.
 			ref = s[i:end]
 			self.st_enter_section_name(ref,None,None,unused_parts_flag)
+		# DTHEIN 13-OCT-2002: @first directives are OK in code sections
+		elif (kind == at_other) and s.startswith("@first",j):
+			pass
 		elif kind == at_other or kind == at_chapter or kind == at_section:
 			# We expect to see only @doc,@c or @root directives
 			# while scanning a code section.
@@ -3816,19 +3819,21 @@ class tangleCommands:
 
 			#@-at
 			#@@c
-
 			tag = "@first"
+			sizeString = len(s) # DTHEIN 13-OCT-2002: use to detect end-of-string
 			i = 0
 			while 1:
-				j = string.find(s,tag,i)
-				if j >= 0:
-					i = j + len(tag)
+				# DTHEIN 13-OCT-2002: directives must start at beginning of a line
+				if not s.startswith(tag,i):
+					i = skip_line(s,i)
+				else:
+					i = i + len(tag)
 					j = i = skip_ws(s,i)
 					i = skip_to_end_of_line(s,i)
 					if i>j:
 						self.first_lines += s[j:i] + '\n'
 					i = skip_nl(s,i)
-				else:
+				if i >= sizeString:  # DTHEIN 13-OCT-2002: get out when end of string reached
 					break
 			
 			
