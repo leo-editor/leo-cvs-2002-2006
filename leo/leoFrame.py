@@ -1182,7 +1182,7 @@ class LeoFrame:
 			enableMenu(menu,"Copy",c.canCut()) # delete
 			enableMenu(menu,"Paste",c.canPaste())
 		if 0: # Always on for now.
-			menu = self.findMenu
+			menu = self.menus.get("Find...")
 			enableMenu(menu,"Find Next",c.canFind())
 			flag = c.canReplace()
 			enableMenu(menu,"Replace",flag)
