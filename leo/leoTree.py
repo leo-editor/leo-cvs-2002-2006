@@ -747,7 +747,7 @@ class leoTree:
 			#@-body
 			#@-node:1::<< activate this window >>
 
-			handleLeoHook("event2",kind="activate",v=v)
+		handleLeoHook("event2",kind="activate",v=v)
 	
 	#@-body
 	#@-node:1::OnActivate
@@ -776,7 +776,7 @@ class leoTree:
 			self.endEditLabel()
 			self.dimEditLabel()
 			self.active = false
-			handleLeoHook("event2",kind="deactivate")
+		handleLeoHook("event2",kind="deactivate")
 	
 	#@-body
 	#@-node:3::OnDeactivate
@@ -847,8 +847,7 @@ class leoTree:
 		if not c or not v or v != c.currentVnode():
 			return "break"
 		# Call the pre-key hook.
-		flag = handleLeoHook("bodykey1",c=c,v=v,ch=ch,oldSel=oldSel,undoType=undoType)
-		if flag != None:  # Anything other than None overrides.
+		if handleLeoHook("bodykey1",c=c,v=v,ch=ch,oldSel=oldSel,undoType=undoType)!=None:
 			return "break" # The hook claims to have handled the event.
 		body = v.bodyString()
 		s = c.body.get("1.0", "end")
@@ -1199,8 +1198,7 @@ class leoTree:
 		c = self.commands
 		if not v or not v.edit_text or v != c.currentVnode():
 			return "break"
-		flag = handleLeoHook("headkey1",c=c,v=v,ch=ch)
-		if flag != None:  # Anything other than None overrides.
+		if handleLeoHook("headkey1",c=c,v=v,ch=ch) != None:
 			return "break" # The hook claims to have handled the event.
 		s = v.edit_text.get("1.0","end")
 		
@@ -1395,7 +1393,7 @@ class leoTree:
 				#@-body
 				#@-node:3::<< pass the url to the web browser >>
 
-				handleLeoHook("@url2",c=c,v=v)
+			handleLeoHook("@url2",c=c,v=v)
 	#@-body
 	#@-node:12::tree.OnIconDoubleClick (@url)
 	#@+node:13::tree.OnPopup

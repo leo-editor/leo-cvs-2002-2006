@@ -560,7 +560,7 @@ class vnode:
 	
 		if handleLeoHook("event1",kind="boxClick",v=self) == None:
 			self.commands.tree.OnBoxClick(self)
-			handleLeoHook("event2",kind="boxClick",v=self)
+		handleLeoHook("event2",kind="boxClick",v=self)
 		
 	# Called when the icon is double-clicked.
 		
@@ -568,7 +568,7 @@ class vnode:
 	
 		if handleLeoHook("event1",kind="iconDoubleClick",v=self) == None:
 			self.commands.tree.OnIconDoubleClick(self)
-			handleLeoHook("event2",kind="iconDoubleClick",v=self)
+		handleLeoHook("event2",kind="iconDoubleClick",v=self)
 	
 	#@-body
 	#@-node:1::OnBoxClick, OnIconDoubleClick
@@ -578,7 +578,7 @@ class vnode:
 		
 		if handleLeoHook("event1",kind="drag",v=self) == None:
 			self.commands.tree.OnDrag(self,event)
-			handleLeoHook("event2",kind="drag",v=self)
+		handleLeoHook("event2",kind="drag",v=self)
 	
 	
 	#@-body
@@ -589,7 +589,7 @@ class vnode:
 		
 		if handleLeoHook("event1",kind="endDrag",v=self) == None:
 			self.commands.tree.OnEndDrag(self,event)
-			handleLeoHook("event2",kind="endDrag",v=self)
+		handleLeoHook("event2",kind="endDrag",v=self)
 	
 	
 	#@-body
@@ -600,14 +600,14 @@ class vnode:
 	
 		if handleLeoHook("event1",kind="headClick",v=self) == None:
 			self.commands.tree.OnActivate(self)
-			handleLeoHook("event2",kind="headClick",v=self)
+		handleLeoHook("event2",kind="headClick",v=self)
 		
 	def OnHeadlinePopup(self,event=None):
 	
 		if handleLeoHook("event1",kind="headPopup",v=self) == None:
 			self.commands.tree.OnActivate(self)
 			self.commands.tree.OnPopup(self,event)
-			handleLeoHook("event2",kind="headPopup",v=self)
+		handleLeoHook("event2",kind="headPopup",v=self)
 	
 	
 	#@-body
@@ -618,7 +618,7 @@ class vnode:
 	
 		if handleLeoHook("event1",kind="headKey",v=self) == None:
 			self.commands.tree.OnHeadlineKey(self,event)
-			handleLeoHook("event2",kind="headKey",v=self)
+		handleLeoHook("event2",kind="headKey",v=self)
 	
 	#@-body
 	#@-node:5::OnHeadlineKey
@@ -633,7 +633,7 @@ class vnode:
 			c.selectVnode(v)
 			c.endUpdate()
 			c.body.mark_set("insert","1.0")
-			handleLeoHook("event2",kind="hyperLinkControlClick",v=self)
+		handleLeoHook("event2",kind="hyperLinkControlClick",v=self)
 	
 	
 	#@-body
@@ -646,7 +646,7 @@ class vnode:
 			if handleLeoHook("event1",kind="hyperLinkEnter",v=self) == None:
 				c = self.commands ; v = self
 				c.body.tag_config(v.tagName,background="green")
-				handleLeoHook("event2",kind="hyperLinkEnter",v=self)
+			handleLeoHook("event2",kind="hyperLinkEnter",v=self)
 	
 	#@-body
 	#@-node:7::OnHyperLinkEnter
@@ -658,7 +658,7 @@ class vnode:
 			if handleLeoHook("event1",kind="hyperLinkLeave",v=self) == None:
 				c = self.commands ; v = self
 				c.body.tag_config(v.tagName,background="white")
-				handleLeoHook("event2",kind="hyperLinkLeave",v=self)
+			handleLeoHook("event2",kind="hyperLinkLeave",v=self)
 	
 	#@-body
 	#@-node:8::OnHyperLinkLeave
@@ -668,7 +668,7 @@ class vnode:
 		
 		if handleLeoHook("event1",kind="iconClick",v=self) == None:
 			self.commands.tree.OnIconClick(self,event)
-			handleLeoHook("event2",kind="iconClick",v=self)
+		handleLeoHook("event2",kind="iconClick",v=self)
 	
 	#@-body
 	#@-node:9::OnIconClick
