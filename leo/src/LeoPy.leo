@@ -6233,13 +6233,13 @@
 </v>
 <v t="T3763"><vh>@file leoFileCommands.py</vh>
 <v t="T3764"><vh>leoFileCommands._init_</vh></v>
-<v t="T3765"><vh>Reading</vh>
+<v t="T3765" a="E"><vh>Reading</vh>
 <v t="T3766"><vh>createVnode</vh></v>
 <v t="T3094" a="C"><vh>finishPaste</vh>
 <v t="T3095"><vh>&lt;&lt; Create join lists of all pasted vnodes &gt;&gt;</vh></v>
 <v t="T3096"><vh>&lt;&lt; Recompute clone bits for pasted vnodes &gt;&gt;</vh></v>
 </v>
-<v t="T3767"><vh>get routines</vh>
+<v t="T3767" a="E"><vh>get routines</vh>
 <v t="T2609" a="C"><vh>get &amp; match (basic)(leoFileCommands)</vh>
 <v t="T2610"><vh>get routines</vh></v>
 <v t="T2611"><vh>match routines</vh></v>
@@ -7210,7 +7210,7 @@
 <v t="T4044"><vh>isVisited</vh></v>
 </v>
 </v>
-<v t="T4045"><vh>Setters</vh>
+<v t="T4045" a="E"><vh>Setters</vh>
 <v t="T3017" a="C"><vh>Setting body text</vh>
 <v t="T3018"><vh>saveBodyPaneToTnode</vh></v>
 <v t="T2028" a="C"><vh>setTnodeText</vh></v>
@@ -49070,10 +49070,10 @@ def getCloneWindows (self):
 		return tnodeList
 
 	while 1:
-		tref = fc.getIndex()
-		tnodeList.append(tref)
+		index = fc.getIndex()
+		tnodeList.append(index)
 		if fc.matchChar('"'):
-			trace(`tnodeList`)
+			# trace(`tnodeList`)
 			return tnodeList
 		else:
 			fc.getTag(',')</t>

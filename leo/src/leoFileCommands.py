@@ -810,10 +810,10 @@ class baseFileCommands:
 			return tnodeList
 	
 		while 1:
-			tref = fc.getIndex()
-			tnodeList.append(tref)
+			index = fc.getIndex()
+			tnodeList.append(index)
 			if fc.matchChar('"'):
-				trace(`tnodeList`)
+				# trace(`tnodeList`)
 				return tnodeList
 			else:
 				fc.getTag(',')

@@ -260,13 +260,13 @@
 </v>
 </v>
 <v t="T125"><vh>@file c:\prog\test\docTest.txt</vh></v>
-<v t="T126" a="E"><vh>Test file</vh>
+<v t="T126" a="E" tnodeList="126"><vh>Test file</vh>
 <v t="T127" a="C"><vh>&lt;&lt; ref &gt;&gt; (this should remained cloned)</vh></v>
 <v t="T128" a="EV" tnodeList="128,127,129,131,133,127"><vh>@file c:\prog\test\gnxText.txt</vh>
 <v t="T127" a="C"><vh>&lt;&lt; ref &gt;&gt; (this should remained cloned)</vh></v>
 <v t="T129"><vh>&lt;&lt; ref2 &gt;&gt;</vh></v>
 <v t="T130" a="E"><vh>Organizer node</vh>
-<v t="T131"><vh>node 1</vh></v>
+<v t="T131" tnodeList="131"><vh>node 1</vh></v>
 <v t="T132"><vh>empty node</vh></v>
 </v>
 <v t="T133"><vh>Node 2</vh></v>
@@ -1718,7 +1718,8 @@ this should NOT wrap aaaaaaaaaaaaaaaaaaa bbbbbbbbbbbbbbbbbbbbb ccccccccccccccccc
 
 doc test</t>
 <t tx="T126">@ignore
-@encoding iso-8859-1</t>
+@encoding iso-8859-1
+# @comment /* */</t>
 <t tx="T127">ref line 1
 ref line 2</t>
 <t tx="T128">@first first line1
@@ -1746,7 +1747,8 @@ after at-others
 doc part line 2
 @c
 	indented node 1 line 1
-node 2 line 2</t>
+node 2 line 2
+#@ should be a verbatim line.</t>
 <t tx="T132"></t>
 <t tx="T133">node 2 line 1
 node 2 line 2
