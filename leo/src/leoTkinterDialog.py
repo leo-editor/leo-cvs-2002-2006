@@ -13,12 +13,13 @@ import Tkinter as Tk
 class leoTkinterDialog:
     """The base class for all Leo Tkinter dialogs"""
     #@    @+others
-    #@+node:ekr.20031218072017.3860:__init__ (leoDialog)
-    def __init__(self,title="",resizeable=True,canClose=True):
+    #@+node:ekr.20031218072017.3860:__init__ (tkDialog)
+    def __init__(self,c,title="",resizeable=True,canClose=True):
         
         """Constructor for the leoTkinterDialog class."""
         
         self.answer = None # Value returned from run()
+        self.c = c # For use by delayed focus methods in c.frame.
         self.resizeable = resizeable
         self.title = title
         self.modal = None
@@ -31,7 +32,7 @@ class leoTkinterDialog:
         self.focus_widget = None # The widget to get the first focus.
         self.canClose = canClose
     #@nonl
-    #@-node:ekr.20031218072017.3860:__init__ (leoDialog)
+    #@-node:ekr.20031218072017.3860:__init__ (tkDialog)
     #@+node:ekr.20031218072017.3861:cancelButton, noButton, okButton, yesButton
     def cancelButton(self):
         
@@ -114,6 +115,8 @@ class leoTkinterDialog:
         
         # g.trace("leoTkinterDialog")
         
+        if g.app.unitTesting: return
+        
         self.root = g.app.root
     
         self.top = Tk.Toplevel(self.root)
@@ -143,11 +146,14 @@ class leoTkinterDialog:
         pass
     #@nonl
     #@-node:ekr.20040731065422:onClose
-    #@+node:ekr.20031218072017.3866:run
+    #@+node:ekr.20031218072017.3866:run (tkDialog)
     def run (self,modal):
         
         """Run a leoTkinterDialog."""
+        
+        if g.app.unitTesting: return None
     
+        c = self.c
         self.modal = modal
         
         self.center() # Do this after all packing complete.
@@ -157,14 +163,18 @@ class leoTkinterDialog:
             self.top.grab_set() # Make the dialog a modal dialog.
             if self.focus_widget == None:
                 self.focus_widget = self.top
-            self.focus_widget.focus_set() # Get all keystrokes.	
+                
+            self.focus_widget.focus_set() # Get all keystrokes.
+            if c:
+                 g.app.gui.widget_wants_focus(c,self.focus_widget)
+               
             self.root.wait_window(self.top)
             return self.answer
         else:
             self.root.wait_window(self.top)
             return None
     #@nonl
-    #@-node:ekr.20031218072017.3866:run
+    #@-node:ekr.20031218072017.3866:run (tkDialog)
     #@-others
 #@nonl
 #@-node:ekr.20031218072017.3859: class leoTkinterDialog
@@ -175,11 +185,13 @@ class tkinterAboutLeo (leoTkinterDialog):
 
     #@    @+others
     #@+node:ekr.20031218072017.3868:tkinterAboutLeo.__init__
-    def __init__ (self,version,theCopyright,url,email):
+    def __init__ (self,c,version,theCopyright,url,email):
         
         """Create a Tkinter About Leo dialog."""
     
-        leoTkinterDialog.__init__(self,"About Leo",resizeable=True) # Initialize the base class.
+        leoTkinterDialog.__init__(self,c,"About Leo",resizeable=True) # Initialize the base class.
+        
+        if g.app.unitTesting: return
         
         self.copyright = theCopyright
         self.email = email
@@ -193,6 +205,8 @@ class tkinterAboutLeo (leoTkinterDialog):
     def createFrame (self):
         
         """Create the frame for an About Leo dialog."""
+        
+        if g.app.unitTesting: return
         
         frame = self.frame
         theCopyright = self.copyright ; email = self.email
@@ -290,12 +304,14 @@ class tkinterAskLeoID (leoTkinterDialog):
 
     #@    @+others
     #@+node:ekr.20031218072017.1984:tkinterAskLeoID.__init__
-    def __init__(self):
+    def __init__(self,c=None):
         
         """Create the Leo Id dialog."""
         
         # Initialize the base class: prevent clicks in the close box from closing.
-        leoTkinterDialog.__init__(self,"Enter unique id",resizeable=False,canClose=False)
+        leoTkinterDialog.__init__(self,c,"Enter unique id",resizeable=False,canClose=False)
+        
+        if g.app.unitTesting: return
             
         self.id_entry = None
         self.answer = None
@@ -322,6 +338,8 @@ class tkinterAskLeoID (leoTkinterDialog):
     def createFrame(self,message):
         
         """Create the frame for the Leo Id dialog."""
+        
+        if g.app.unitTesting: return
         
         f = self.frame
     
@@ -396,11 +414,14 @@ class tkinterAskOk(leoTkinterDialog):
 
     #@    @+others
     #@+node:ekr.20031218072017.3874:class tkinterAskOk.__init__
-    def __init__ (self,title,message=None,text="Ok",resizeable=False):
+    def __init__ (self,c,title,message=None,text="Ok",resizeable=False):
     
         """Create a dialog with one button"""
     
-        leoTkinterDialog.__init__(self,title,resizeable) # Initialize the base class.
+        leoTkinterDialog.__init__(self,c,title,resizeable) # Initialize the base class.
+        
+        if g.app.unitTesting: return
+    
         self.text = text
         self.createTopFrame()
         self.top.bind("<Key>", self.onKey)
@@ -434,11 +455,14 @@ class  tkinterAskOkCancelNumber (leoTkinterDialog):
     
     #@    @+others
     #@+node:ekr.20031218072017.3877:tkinterAskOKCancelNumber.__init__
-    def __init__ (self,title,message):
+    def __init__ (self,c,title,message):
         
         """Create a number dialog"""
     
-        leoTkinterDialog.__init__(self,title,resizeable=False) # Initialize the base class.
+        leoTkinterDialog.__init__(self,c,title,resizeable=False) # Initialize the base class.
+        
+        if g.app.unitTesting: return
+    
         self.answer = -1
         self.number_entry = None
     
@@ -459,6 +483,8 @@ class  tkinterAskOkCancelNumber (leoTkinterDialog):
     def createFrame (self,message):
         
         """Create the frame for a number dialog."""
+        
+        if g.app.unitTesting: return
         
         f = self.frame
         
@@ -530,11 +556,14 @@ class tkinterAskYesNo (leoTkinterDialog):
 
     #@    @+others
     #@+node:ekr.20031218072017.3883:tkinterAskYesNo.__init__
-    def __init__ (self,title,message=None,resizeable=False):
+    def __init__ (self,c,title,message=None,resizeable=False):
         
         """Create a dialog having yes and no buttons."""
     
-        leoTkinterDialog.__init__(self,title,resizeable) # Initialize the base class.
+        leoTkinterDialog.__init__(self,c,title,resizeable) # Initialize the base class.
+        
+        if g.app.unitTesting: return
+    
         self.createTopFrame()
         self.top.bind("<Key>",self.onKey)
     
@@ -573,7 +602,7 @@ class tkinterAskYesNoCancel(leoTkinterDialog):
     
     #@    @+others
     #@+node:ekr.20031218072017.3886:askYesNoCancel.__init__
-    def __init__ (self,title,
+    def __init__ (self,c,title,
         message=None,
         yesMessage="Yes",
         noMessage="No",
@@ -582,7 +611,10 @@ class tkinterAskYesNoCancel(leoTkinterDialog):
             
         """Create a dialog having three buttons."""
     
-        leoTkinterDialog.__init__(self,title,resizeable,canClose=False) # Initialize the base class.
+        leoTkinterDialog.__init__(self,c,title,resizeable,canClose=False) # Initialize the base class.
+        
+        if g.app.unitTesting: return
+    
         self.yesMessage,self.noMessage = yesMessage,noMessage
         self.defaultButton = defaultButton
     
@@ -597,7 +629,7 @@ class tkinterAskYesNoCancel(leoTkinterDialog):
             {"text":noMessage, "command":self.noButton,    "default":noMessage==defaultButton},
             {"text":"Cancel",  "command":self.cancelButton,"default":"Cancel"==defaultButton} )
         self.createButtons(buttons)
-    
+    #@nonl
     #@-node:ekr.20031218072017.3886:askYesNoCancel.__init__
     #@+node:ekr.20031218072017.3887:askYesNoCancel.onKey
     def onKey(self,event):
@@ -647,12 +679,14 @@ class tkinterListBoxDialog (leoTkinterDialog):
         
         """Constructor for the base listboxDialog class."""
         
-        leoTkinterDialog.__init__(self,title,resizeable=True) # Initialize the base class.
+        leoTkinterDialog.__init__(self,c,title,resizeable=True) # Initialize the base class.
+        
+        if g.app.unitTesting: return
+    
         self.createTopFrame()
         self.top.protocol("WM_DELETE_WINDOW", self.destroy)
     
         # Initialize common ivars.
-        self.c = c
         self.label = label
         self.vnodeList = []
         self.vnodeList = []
@@ -685,6 +719,8 @@ class tkinterListBoxDialog (leoTkinterDialog):
         """Create the essentials of a listBoxDialog frame
         
         Subclasses will add buttons to self.buttonFrame"""
+        
+        if g.app.unitTesting: return
         
         self.outerFrame = f = Tk.Frame(self.frame)
         f.pack(expand=1,fill="both")
