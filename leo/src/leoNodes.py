@@ -1530,14 +1530,13 @@ class position (object):
     
             if attr=="t":
                 return self.v.t
-            elif attr=="__del__":
-                # This works around a Python 2.2 wierdness.
-                return AttributeError # Silently ignore this.
             else:
-                # Only called when normal lookup fails.
-                print "unknown position attribute:",attr
-                # import traceback ; traceback.print_stack()
-                raise AttributeError, 'no position attribute: "%s"' % attr
+                # New in 4.3: _silently_ raise the attribute error.
+                # This allows plugin code to use hasattr(p,attr) !
+                if 0:
+                    print "unknown position attribute:",attr
+                    import traceback ; traceback.print_stack()
+                raise AttributeError,attr
     #@nonl
     #@-node:ekr.20040117170612:p.__getattr__  ON:  must be ON if use_plugins
     #@+node:ekr.20031218072017.892:p.__init__
