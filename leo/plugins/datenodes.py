@@ -13,8 +13,10 @@ The format of nodes can be controlled through the ini file or Properties dialog.
 #@+node:gfunch.20041207100416.1:<< about this plugin >>
 #@+at
 # 
-# This plugin adds 'date nodes' (nodes with dates as their headlines) to the current outline.
-# Date nodes may be added one at a time, a month's-worth at a time, or a year's-worth at a time.
+# This plugin adds 'date nodes' (nodes with dates as their headlines) to the 
+# current outline.
+# Date nodes may be added one at a time, a month's-worth at a time, or a 
+# year's-worth at a time.
 # The format of the labels (headlines) is configurable in the ini file.
 #@-at
 #@nonl

@@ -10860,6 +10860,344 @@ def clearAccel(self,menu,name):
 #@nonl
 #@-node:ekr.20041228063406:clearAccel
 #@-node:ekr.20050102092149:(Fixed problems with Control-E)
+#@+node:ekr.20050101093544:(Always use os.rename in utils_rename)
+#@+node:ekr.20050104110100:Notes
+@killcolor
+
+Apparently distutils.file_util is not present in all Python distributions!  I think using os.rename may be the best choice.  We shall see.
+#@nonl
+#@-node:ekr.20050104110100:Notes
+#@+node:ekr.20041005105605.212:replaceTargetFileIfDifferent
+def replaceTargetFileIfDifferent (self):
+    
+    assert(self.outputFile is None)
+    
+    if self.toString:
+        return False
+    
+    self.fileChangedFlag = False
+    if g.os_path_exists(self.targetFileName):
+        if self.compareFiles(
+            self.outputFileName,self.targetFileName,not self.explicitLineEnding):
+            << delete the output file >>
+        else:
+            << report if the files differ only in line endings >>
+            << replace the target file with the output file >>
+            return True # bwm
+    else:
+        << rename the output file to be the target file >>
+        return False
+#@nonl
+#@+node:ekr.20041005105605.213:<< delete the output file >>
+try: # Just delete the temp file.
+    os.remove(self.outputFileName)
+except:
+    g.es("exception deleting:" + self.outputFileName)
+    g.es_exception()
+
+g.es("unchanged: " + self.shortFileName)
+#@nonl
+#@-node:ekr.20041005105605.213:<< delete the output file >>
+#@+node:ekr.20041005105605.214:<< replace the target file with the output file >>
+try:
+    # 10/6/02: retain the access mode of the previous file,
+    # removing any setuid, setgid, and sticky bits.
+    mode = (os.stat(self.targetFileName))[0] & 0777
+except:
+    mode = None
+
+try: # Replace target file with temp file.
+    os.remove(self.targetFileName)
+    try:
+        g.utils_rename(self.outputFileName,self.targetFileName)
+        if mode != None: # 10/3/02: retain the access mode of the previous file.
+            try:
+                os.chmod(self.targetFileName,mode)
+            except:
+                g.es("exception in os.chmod(%s)" % (self.targetFileName))
+        g.es("writing: " + self.shortFileName)
+        self.fileChangedFlag = True
+    except:
+        # 6/28/03
+        self.writeError("exception renaming: %s to: %s" % (self.outputFileName,self.targetFileName))
+        g.es_exception()
+except:
+    self.writeError("exception removing:" + self.targetFileName)
+    g.es_exception()
+    try: # Delete the temp file when the deleting the target file fails.
+        os.remove(self.outputFileName)
+    except:
+        g.es("exception deleting:" + self.outputFileName)
+        g.es_exception()
+#@nonl
+#@-node:ekr.20041005105605.214:<< replace the target file with the output file >>
+#@+node:ekr.20041019090322:<< report if the files differ only in line endings >>
+if (
+    self.explicitLineEnding and
+    self.compareFiles(
+        self.outputFileName,
+        self.targetFileName,
+        ignoreLineEndings=True)):
+
+    g.es("correcting line endings in: " + self.targetFileName,color="blue")
+#@nonl
+#@-node:ekr.20041019090322:<< report if the files differ only in line endings >>
+#@+node:ekr.20041005105605.215:<< rename the output file to be the target file >>
+try:
+    g.utils_rename(self.outputFileName,self.targetFileName)
+    g.es("creating: " + self.targetFileName)
+    self.fileChangedFlag = True
+except:
+    self.writeError("exception renaming:" + self.outputFileName +
+        " to " + self.targetFileName)
+    g.es_exception()
+#@nonl
+#@-node:ekr.20041005105605.215:<< rename the output file to be the target file >>
+#@-node:ekr.20041005105605.212:replaceTargetFileIfDifferent
+#@+node:ekr.20031218072017.3046:write_Leo_file
+def write_Leo_file(self,fileName,outlineOnlyFlag):
+
+    c = self.c
+
+    self.assignFileIndices()
+    if not outlineOnlyFlag:
+        << write all @file nodes >>
+    << return if the .leo file is read-only >>
+    try:
+        << create backup file >>
+        self.mFileName = fileName
+        << create the output file >>
+        << put the .leo file >>
+    except:
+        << report the exception >>
+        << erase filename and rename backupName to fileName >>
+        return False
+    if self.outputFile:
+        << close the output file >>
+        << delete backup file >>
+        return True
+    else: # This probably will never happen because errors should raise exceptions.
+        << erase filename and rename backupName to fileName >>
+        return False
+        
+write_LEO_file = write_Leo_file # For compatibility with old plugins.
+#@nonl
+#@+node:ekr.20040324080359:<< write all @file nodes >>
+try:
+    # Write all @file nodes and set orphan bits.
+    c.atFileCommands.writeAll()
+except:
+    g.es_error("exception writing derived files")
+    g.es_exception()
+    return False
+#@nonl
+#@-node:ekr.20040324080359:<< write all @file nodes >>
+#@+node:ekr.20040324080359.1:<< return if the .leo file is read-only >>
+# self.read_only is not valid for Save As and Save To commands.
+
+if g.os_path_exists(fileName):
+    try:
+        if not os.access(fileName,os.W_OK):
+            g.es("can not create: read only: " + fileName,color="red")
+            return False
+    except:
+        pass # os.access() may not exist on all platforms.
+#@nonl
+#@-node:ekr.20040324080359.1:<< return if the .leo file is read-only >>
+#@+node:ekr.20031218072017.3047:<< create backup file >>
+# rename fileName to fileName.bak if fileName exists.
+if g.os_path_exists(fileName):
+    try:
+        backupName = g.os_path_join(g.app.loadDir,fileName)
+        backupName = fileName + ".bak"
+        if g.os_path_exists(backupName):
+            os.remove(backupName)
+        g.utils_rename(fileName,backupName)
+    except OSError:
+        if self.read_only:
+            g.es("read only",color="red")
+        else:
+            g.es("exception creating backup file: " + backupName)
+            g.es_exception()
+        return False
+    except:
+        g.es("exception creating backup file: " + backupName)
+        g.es_exception()
+        backupName = None
+        return False
+else:
+    backupName = None
+#@nonl
+#@-node:ekr.20031218072017.3047:<< create backup file >>
+#@+node:ekr.20040324080359.2:<< create the output file >>
+self.outputFile = open(fileName, 'wb') # 9/18/02
+if not self.outputFile:
+    g.es("can not open " + fileName)
+    << delete backup file >>
+    return False
+#@nonl
+#@+node:ekr.20031218072017.3048:<< delete backup file >>
+if backupName and g.os_path_exists(backupName):
+    try:
+        os.remove(backupName)
+    except OSError:
+        if self.read_only:
+            g.es("read only",color="red")
+        else:
+            g.es("exception deleting backup file:" + backupName)
+            g.es_exception()
+        return False
+    except:
+        g.es("exception deleting backup file:" + backupName)
+        g.es_exception()
+        return False
+#@-node:ekr.20031218072017.3048:<< delete backup file >>
+#@-node:ekr.20040324080359.2:<< create the output file >>
+#@+node:ekr.20040324080819.1:<< put the .leo file >>
+self.putProlog()
+self.putHeader()
+self.putGlobals()
+self.putPrefs()
+self.putFindSettings()
+#start = g.getTime()
+self.putVnodes()
+#start = g.printDiffTime("vnodes ",start)
+self.putTnodes()
+#start = g.printDiffTime("tnodes ",start)
+self.putPostlog()
+#@nonl
+#@-node:ekr.20040324080819.1:<< put the .leo file >>
+#@+node:ekr.20040324080819.2:<< report the exception >>
+g.es("exception writing: " + fileName)
+g.es_exception() 
+if self.outputFile:
+    try:
+        self.outputFile.close()
+        self.outputFile = None
+    except:
+        g.es("exception closing: " + fileName)
+        g.es_exception()
+#@nonl
+#@-node:ekr.20040324080819.2:<< report the exception >>
+#@+node:ekr.20031218072017.3049:<< erase filename and rename backupName to fileName >>
+g.es("error writing " + fileName)
+
+if fileName and g.os_path_exists(fileName):
+    try:
+        os.remove(fileName)
+    except OSError:
+        if self.read_only:
+            g.es("read only",color="red")
+        else:
+            g.es("exception deleting: " + fileName)
+            g.es_exception()
+    except:
+        g.es("exception deleting: " + fileName)
+        g.es_exception()
+        
+if backupName:
+    g.es("restoring " + fileName + " from " + backupName)
+    try:
+        g.utils_rename(backupName, fileName)
+    except OSError:
+        if self.read_only:
+            g.es("read only",color="red")
+        else:
+            g.es("exception renaming " + backupName + " to " + fileName)
+            g.es_exception()
+    except:
+        g.es("exception renaming " + backupName + " to " + fileName)
+        g.es_exception()
+#@nonl
+#@-node:ekr.20031218072017.3049:<< erase filename and rename backupName to fileName >>
+#@+node:ekr.20040324080819.3:<< close the output file >>
+try:
+    self.outputFile.close()
+    self.outputFile = None
+except:
+    g.es("exception closing: " + fileName)
+    g.es_exception()
+#@nonl
+#@-node:ekr.20040324080819.3:<< close the output file >>
+#@-node:ekr.20031218072017.3046:write_Leo_file
+#@+node:ekr.20031218072017.1241:update_file_if_changed
+def update_file_if_changed(file_name,temp_name):
+
+    """Compares two files.
+    
+    If they are different, we replace file_name with temp_name.
+    Otherwise, we just delete temp_name.
+    Both files should be closed."""
+
+    if g.os_path_exists(file_name):
+        import filecmp
+        if filecmp.cmp(temp_name, file_name):
+            try: # Just delete the temp file.
+                os.remove(temp_name)
+            except: pass
+            g.es("unchanged: " + file_name)
+        else:
+            try:
+                # 10/6/02: retain the access mode of the previous file,
+                # removing any setuid, setgid, and sticky bits.
+                mode = (os.stat(file_name))[0] & 0777
+            except:
+                mode = None
+            try: # Replace file with temp file.
+                os.remove(file_name)
+                g.utils_rename(temp_name, file_name)
+                if mode: # 10/3/02: retain the access mode of the previous file.
+                    os.chmod(file_name,mode)
+                g.es("***updating: " + file_name)
+            except:
+                g.es("Rename failed: no file created!",color="red")
+                g.es(file_name," may be read-only or in use")
+                g.es_exception()
+    else:
+        try:
+            # os.rename(temp_name, file_name)
+            g.utils_rename(temp_name, file_name)
+            g.es("creating: " + file_name)
+        except:
+            g.es("rename failed: no file created!",color="red")
+            g.es(file_name," may be read-only or in use")
+            g.es_exception()
+#@-node:ekr.20031218072017.1241:update_file_if_changed
+#@+node:ekr.20031218072017.1263:utils_rename
+@ Here is the Python 2.4 documentation for rename (same as Python 2.3)
+
+Rename the file or directory src to dst.  If dst is a directory, OSError will be raised.
+
+On Unix, if dst exists and is a file, it will be removed silently if the user
+has permission. The operation may fail on some Unix flavors if src and dst are
+on different filesystems. If successful, the renaming will be an atomic
+operation (this is a POSIX requirement).
+
+On Windows, if dst already exists, OSError will be raised even if it is a file;
+there may be no way to implement an atomic rename when dst names an existing
+file.
+@c
+
+def utils_rename(src,dst):
+
+    """Platform-independent rename."""
+    
+    head,tail=g.os_path_split(dst)
+    if head and len(head) > 0:
+        g.makeAllNonExistentDirectories(head)
+        
+    if 1: # Use rename in all cases.
+        os.rename(src,dst)
+    else:
+        # This isn't a great solution: distutils.file_util may not exist.
+        if sys.platform=="win32":
+            os.rename(src,dst)
+        else:
+            from distutils.file_util import move_file
+            move_file(src,dst)
+#@nonl
+#@-node:ekr.20031218072017.1263:utils_rename
+#@-node:ekr.20050101093544:(Always use os.rename in utils_rename)
 #@-node:ekr.20041228052527:Bug fixes...
 #@+node:ekr.20041228052527.1:Cleanup...
 #@+node:ekr.20040917080403.1:(Cleaned up code in runOpenFileDialog)

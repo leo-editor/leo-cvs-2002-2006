@@ -5,28 +5,6 @@
 #@+all
 #@+node:ekr.20050102180943.1:4.3 a1
 #@+node:ekr.20041228093733:First (Top Roti)
-#@+node:ekr.20050101093544:Is it still necessary to use distutils in utils_rename?
-# apparently distutils.file_util is not present in all Python distributions!
-#@nonl
-#@+node:ekr.20031218072017.1263:utils_rename
-# os.rename may fail on some Unix flavors if src and dst are on different filesystems.
-
-def utils_rename(src,dst):
-
-    """Platform-independent rename."""
-    
-    head,tail=g.os_path_split(dst)
-    if head and len(head) > 0:
-        g.makeAllNonExistentDirectories(head)
-    
-    if sys.platform=="win32":
-        os.rename(src,dst)
-    else:
-        from distutils.file_util import move_file
-        move_file(src,dst)
-#@nonl
-#@-node:ekr.20031218072017.1263:utils_rename
-#@-node:ekr.20050101093544:Is it still necessary to use distutils in utils_rename?
 #@+node:ekr.20050102180943.2:Docs...
 #@+node:ekr.20040226094105:Put the scrollWheel workaround in the FAQ (or in the code??)
 @nocolor
