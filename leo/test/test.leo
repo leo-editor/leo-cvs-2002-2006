@@ -2,7 +2,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="5946" clone_windows="0"/>
 <globals body_outline_ratio="0.481481481481">
-	<global_window_position top="29" left="348" height="864" width="913"/>
+	<global_window_position top="15" left="462" height="864" width="913"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences>
@@ -13,10 +13,11 @@
 </find_panel_settings>
 <vnodes>
 <v t="EKR.20040623200709"><vh>@thin ../src/leoTest.py</vh></v>
-<v t="ekr.20040721153143"><vh>Gc/Profile/Timeit scripts</vh>
+<v t="ekr.20040721153143" a="TV"><vh>Gc/Profile/Timeit/Tracing scripts</vh>
 <v t="ekr.20040721113934"><vh>runProfile</vh></v>
 <v t="ekr.20040721114839.1"><vh>runTimeit</vh></v>
 <v t="ekr.20040721145258.1"><vh>Run gc</vh></v>
+<v t="ekr.20040804052804"><vh>Set tracing</vh></v>
 </v>
 <v t="ekr.20040708205841"><vh>Other tests...</vh>
 <v t="ekr.20040414082806"><vh>Clone test</vh>
@@ -648,11 +649,11 @@
 <v t="ekr.20040717121014"><vh>tellGnxScript</vh></v>
 <v t="ekr.20040706071823"><vh>test of Python's parser module</vh></v>
 </v>
-<v t="ekr.20040723064143.1"><vh>To do (when file tests are easier)</vh>
+<v t="ekr.20040723064143.1" a="E"><vh>To do (when file tests are easier)</vh>
 <v t="ekr.20040723064143.2"><vh>Finish unit tests for @asis</vh></v>
 <v t="ekr.20040723064143.3"><vh>Test error recovery when reading descendentTnodeUa's</vh></v>
 </v>
-<v t="EKR.20040619133116" a="ETV"><vh>Unit testing...</vh>
+<v t="EKR.20040619133116"><vh>Unit testing...</vh>
 <v t="ekr.20040327114250" tnodeList="ekr.20040327114250"><vh>@file c:\prog\test\unittest\batchTest.py</vh></v>
 <v t="ekr.20040712101754"><vh>Unit Tests</vh>
 <v t="ekr.20040716144017"><vh>Perfect Import tests</vh>
@@ -1423,7 +1424,6 @@ if 0:
 font = g.app.config.defaultFont
 
 print font.cget("family"), font.cget("weight")</t>
-<t tx="EKR.20040520104329"></t>
 <t tx="EKR.20040523112430"></t>
 <t tx="EKR.20040523112430.1"></t>
 <t tx="EKR.20040523112430.2"></t>
@@ -1439,7 +1439,6 @@ print font.cget("family"), font.cget("weight")</t>
 last line</t>
 <t tx="EKR.20040524050419.1">Organizer line</t>
 <t tx="EKR.20040524050419.2">grandChild line</t>
-<t tx="EKR.20040524050438"></t>
 <t tx="EKR.20040525083635">@others</t>
 <t tx="EKR.20040525083635.1"></t>
 <t tx="EKR.20040526094831">import leoGlobals as g
@@ -1550,7 +1549,6 @@ def test(a,b): pass
 
 v.copyTree(self,root)</t>
 <t tx="EKR.20040606204316">@ignore</t>
-<t tx="EKR.20040606204316.1"></t>
 <t tx="EKR.20040608095146">@language python
 @tabwidth -4</t>
 <t tx="EKR.20040608095146.1">@ignore
@@ -1688,7 +1686,6 @@ except IOError:
 <t tx="EKR.20040622074004.1"></t>
 <t tx="EKR.20040622074004.2">node b, line 1 (changed 12)</t>
 <t tx="EKR.20040622074004.3"></t>
-<t tx="EKR.20040622102618"></t>
 <t tx="EKR.20040625110032">@ignore
 
 @others</t>
@@ -1776,8 +1773,7 @@ print '
 import leoGlobals as g
 print g.app.config.redirect_execute_script_output_to_log_pane</t>
 <t tx="EKR.20040627103732">@ignore</t>
-<t tx="EKR.20040627103801"></t>
-<t tx="EKR.20040627103902" lineYOffset="4b032e" icons="5d7100287d710128550577686572657102550a6265666f726549636f6e710355047870616471044b025504747970657105550466696c6571066806582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286805680668084afdffffff6806582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6802550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e"></t>
+<t tx="EKR.20040627103902" lineYOffset="4b032e" icons="5d7100287d7101285504747970657102550466696c65710355047870616471044b02550577686572657105550a6265666f726549636f6e71066803582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286802680368084afdffffff6803582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6805550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e"></t>
 <t tx="EKR.20040627121836">import leoGlobals as g
 
 c = g.top() ; p = c.currentPosition()
@@ -1906,7 +1902,7 @@ for p in c.rootPosition().allNodes_iter():
 s = "%d nodes" % count
 print s ; g.es(s)</t>
 <t tx="ekr.20040312101720"></t>
-<t tx="ekr.20040317101155" lineYOffset="4b032e" icons="5d7100287d7101285504747970657102550466696c65710355047870616471044b02550577686572657105550a6265666f726549636f6e71066803582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286802680368084afdffffff6803582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6805550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">import leoGlobals as g
+<t tx="ekr.20040317101155" lineYOffset="4b032e" icons="5d7100287d710128550577686572657102550a6265666f726549636f6e710355047870616471044b025504747970657105550466696c6571066806582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286805680668084afdffffff6806582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6802550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">import leoGlobals as g
 
 c = g.top()
 
@@ -2330,8 +2326,6 @@ oblk[2] = b64[((iblk[1] &amp; 0x0F) &lt;&lt; 2) |
 <t tx="ekr.20040704104554.1">@language html
 @language python
 </t>
-<t tx="ekr.20040704104554.2">@language python
-@language html</t>
 <t tx="ekr.20040705191805">@ignore
 
 import leoGlobals as g
@@ -2359,9 +2353,7 @@ for child in p.children_iter():
 <t tx="ekr.20040705192522.3"></t>
 <t tx="ekr.20040705192522.4"></t>
 <t tx="ekr.20040705192522.5"></t>
-<t tx="ekr.20040705192522.6"></t>
 <t tx="ekr.20040705192610"></t>
-<t tx="ekr.20040705192610.1"></t>
 <t tx="ekr.20040705212227"></t>
 <t tx="ekr.20040706071823"># This works, and doesn't seem convenient for Leo's importers.
 
@@ -9304,5 +9296,19 @@ if 0: # This actually saves this file, so it is a bit dangerous.
     ok = g.app.unitTestDict.get("warning")
     assert ok, "putVnode failed to give warning"
     g.app.unitTesting = False</t>
+<t tx="ekr.20040804052804">import leoGlobals as g
+
+c = g.top()
+
+if 0: # This trace catches leaks of positions.
+    g.app.tracePositions = True
+else:
+    g.app.tracePositions = False
+    
+if 0: # This trace shows overall position statistics.
+    c.frame.tree.trace = True
+    c.frame.tree.verbose = False
+else:
+    c.frame.tree.trace = False</t>
 </tnodes>
 </leo_file>
