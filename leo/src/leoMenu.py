@@ -626,7 +626,8 @@ class leoMenu:
         if sys.platform == "darwin":
             if has_ctrl and not has_cmd:
                 has_cmd = True ; has_ctrl = False
-    
+            if has_alt and not has_ctrl: # 9/14/04
+                has_ctrl = True ; has_alt = False
         #@    << set the last field, preserving case >>
         #@+node:ekr.20031218072017.2102:<< set the last field, preserving case >>
         s2 = shortcut
