@@ -177,12 +177,12 @@ class myLeoTkinterTree(leoFrame.leoTree):
         self.createPermanentBindings()
         self.setEditPosition(None) # Set positions returned by leoTree.editPosition()
         
-        self.editWidgets = []
-            # List of Tk.Text widgets containing t.leo_position attributes.
+        # Keys are id's, values are unchanging positions...
         self.ids = {}
-            # Keys are id's, values are unchanging positions.
         self.iconIds = {}
-            # Keys are icon id's, values are unchanging positions.
+    
+        # Keys are p.headString(), values are unchanging Tk.Text widgets...
+        self.freeText = {}
         
         # Lists of visible (in-use) widgets...
         self.visibleBoxes = []
@@ -190,20 +190,12 @@ class myLeoTkinterTree(leoFrame.leoTree):
         self.visibleIcons = []
         self.visibleLines = []
         self.visibleText  = []
-        
-        # Lists of newly freed, not-yet-hidden widgets...
-        self.newlyFreedBoxes = []
-        self.newlyFreedClickBoxes = []
-        self.newlyFreedIcons = []
-        self.newlyFreedLines = []
-        self.newlyFreedText = []
     
         # Lists of free, hidden widgets...
         self.freeBoxes = []
         self.freeClickBoxes = []
         self.freeIcons = []
         self.freeLines = []
-        self.freeText = []
     #@nonl
     #@-node:__init__
     #@+node:createPermanentBindings
@@ -237,14 +229,14 @@ class myLeoTkinterTree(leoFrame.leoTree):
             print t.bindtags()
     #@nonl
     #@-node:createPermanentBindings
-    #@+node:textRepr
+    #@+node:textAddr
     def textAddr(self,t):
         
         """Return the address part of repr(Tk.Text)."""
         
         return repr(t)[-9:-1].lower()
     #@nonl
-    #@-node:textRepr
+    #@-node:textAddr
     #@+node:injectCallbacks
     def injectCallbacks(self):
         
@@ -407,7 +399,6 @@ class myLeoTkinterTree(leoFrame.leoTree):
             canvas.itemconfigure(id,image=image)
             canvas.coords(id,x,y+self.lineyoffset)
     
-            assert(not self.ids.get(id))
             self.ids[id] = p.copy()
             
             return id
@@ -605,6 +596,7 @@ class myLeoTkinterTree(leoFrame.leoTree):
         """draw text for position p at nominal coordinates x,y."""
         
         assert(p)
+        p = p.copy()
     
         c = self.c ; canvas = self.canvas
         h = self.line_height
@@ -613,35 +605,50 @@ class myLeoTkinterTree(leoFrame.leoTree):
         data = g.doHook("draw-outline-text-box",tree=self,p=p,v=p.v,x=x,y=y)
         if data is not None: return data
         
-        id,t = self.newText()
-        
-        # g.trace("%3d" % id,self.textAddr(t),p.headString())
-    
-        # This does not seem to be working reliably!
-        t.delete("1.0","end")
-        t.insert("end",p.headString())
+        t = self.newText(p)
+        id = t.leo_window_id
         s = t.get("1.0","end")
         
-        if s.strip() != p.headString().strip():
-            g.trace("***** get new widget ***")
-            # g.trace("%3d" % id,self.textAddr(t),s.strip(),p.headString().strip())
-            
-            # Hide the item, and move it from the visible list to the free list.  Jeeze.
-            canvas.coords(id,-100,-100)
-            data = id,t
-            self.visibleText.remove(data)
-            self.freeText.append(data)
+        if s.rstrip() != p.headString().rstrip():
+            g.trace("h",p.headString())
+            g.trace("t",s)
         
-            # Try again with a brand new widget.
-            id,t = self.newText(forceAllocate=True)
+        # g.trace("%3d" % id,self.textAddr(t),p.headString())
+        
+        if 0:
+            #@        << old code >>
+            #@+node:<< old code >>
             
-            t.delete("1.0","end")
-            t.insert("end",p.headString())
+            # This does not seem to be working reliably!
+            self.setText(t,p.headString(),tag="drawText")
             s = t.get("1.0","end")
+            
             if s.strip() != p.headString().strip():
-                g.trace("***** second assignment failed ****")
+                g.trace("***** get new widget ***")
+                # g.trace("%3d" % id,self.textAddr(t),s.strip(),p.headString().strip())
+                
+                # Hide the item.
+                canvas.coords(id,-100,-100)
+                # Move the item from the visible list to the free list.
+                self.visibleText.remove(t)
+                key = p.headString()
+                pList = self.freeText.get(key,[])
+                pList.append(t)
+                self.freeText[key] = pList
+            
+                # Try again with a brand new widget.
+                t = self.newText(p,forceAllocate=True)
+                id = t.leo_window_id
+                
+                self.setText(t,p.headString(),tag="drawText2")
+                s = t.get("1.0","end")
+                if s.strip() != p.headString().strip():
+                    g.trace("***** second assignment failed ****")
+            #@nonl
+            #@-node:<< old code >>
+            #@nl
     
-        self.ids[id] = p.copy()
+        self.ids[id] = p
         t.configure(width=self.headWidth(p))
         canvas.coords(id,x,y+self.lineyoffset)
     
@@ -687,9 +694,6 @@ class myLeoTkinterTree(leoFrame.leoTree):
             #@nonl
             #@-node:<< highlight text widget on enter events >>
             #@nl
-    
-        t.leo_position = p.copy()
-        self.editWidgets.append(t)
        
         if 0: # Something very bizarre is going on.
             self.configureTextState(p)
@@ -714,11 +718,8 @@ class myLeoTkinterTree(leoFrame.leoTree):
     
         self.checkWidgetList("drawTopTree: before")
         
-        # Recycle widgets and clear all state arrays.
+        # Recycle widgets.  KEEP all state arrays: we don't free anything!
         self.recycleWidgets()
-        self.editWidgets = []
-        self.ids = {}
-        self.iconIds = {}
         
         g.trace("begin %s" % self.getTextStats())
         
@@ -727,8 +728,6 @@ class myLeoTkinterTree(leoFrame.leoTree):
             self.drawTree(p.copy(),root_left,root_top,0,0,hoistFlag=True)
         else:
             self.drawTree(c.rootPosition(),root_left,root_top,0,0)
-    
-        self.hideNewlyFreedWidgets()
         
         canvas.lower("textBox") # This is not the Tk.Text widget, so it should be low.
         canvas.lower("plusBox") 
@@ -736,7 +735,7 @@ class myLeoTkinterTree(leoFrame.leoTree):
         canvas.lift("clickBox")
         canvas.lift("iconBox") # Higest.
         
-        canvas.update_idletasks() # So recent changes will take.
+        # canvas.update_idletasks() # So recent changes will take.
         
         self.checkWidgetList("drawTopTree: after")
         g.trace("end   %s" % self.getTextStats())
@@ -1037,7 +1036,9 @@ class myLeoTkinterTree(leoFrame.leoTree):
     #@+node:checkWidgetList
     def checkWidgetList (self,tag):
         
-        for t in self.editWidgets:
+        return True # This will fail when the headline actually changes!
+        
+        for t in self.visibleText:
             
             p = t.leo_position
             if p:
@@ -1060,7 +1061,7 @@ class myLeoTkinterTree(leoFrame.leoTree):
         print
         print "checkWidgetList: %s" % tag
         
-        for t in self.editWidgets:
+        for t in self.visibleText:
             
             p = t.leo_position
             if p:
@@ -1120,13 +1121,10 @@ class myLeoTkinterTree(leoFrame.leoTree):
         ok = self.checkWidgetList("findEditWidget")
         if not ok: return None
     
-        for t in self.editWidgets:
+        for t in self.visibleText:
             assert(t.leo_position)
                 
             if t.leo_position == p:
-                s = t.get("1.0","end")
-                # checkWidgetList should have caught this.
-                assert(p.headString().strip() == s.strip()) 
                 return t
     
         return None
@@ -1359,8 +1357,7 @@ class myLeoTkinterTree(leoFrame.leoTree):
         if done:
             #@        << set the widget text to head >>
             #@+node:<< set the widget text to head >>
-            edit_text.delete("1.0","end")
-            edit_text.insert("end",head)
+            self.setText(edit_text,head,tag="idle_head_key")
             edit_text.mark_set("insert",index)
             #@nonl
             #@-node:<< set the widget text to head >>
@@ -1411,8 +1408,7 @@ class myLeoTkinterTree(leoFrame.leoTree):
                     p.setDirty()
                 # Update v.
                 v.initHeadString(s)
-                edit_text.delete("1.0","end")
-                edit_text.insert("end",s)
+                self.setText(edit_text,s,tag="idle_head_key2")
                 edit_text.mark_set("insert",index)
             c.endUpdate(False) # do not redraw now.
             #@nonl
@@ -1613,14 +1609,14 @@ class myLeoTkinterTree(leoFrame.leoTree):
             current = c.currentPosition()
             
             if p == current:
-                g.trace("is current")
+                # g.trace("is current")
                 if self.active:
                     self.editLabel(p)
                 else:
                     self.undimEditLabel()
                     gui.set_focus(c,self.canvas) # Essential for proper editing.
             else:
-                g.trace("not current")
+                # g.trace("not current")
                 self.select(p)
                 g.app.findFrame.handleUserClick(p) # 4/3/04
                 if p.v.t.insertSpot != None: # 9/1/02
@@ -1861,6 +1857,21 @@ class myLeoTkinterTree(leoFrame.leoTree):
     #@nonl
     #@-node:tree.OnIconClick & OnIconRightClick
     #@-node:Unchanged Event handers
+    #@+node:setText FOR TRACES
+    def setText (self,t,s,tag="",isHeadline=True):
+        
+        """All changes to text widgets should come here."""
+        
+        if 0: # A good trace to have...
+            if isHeadline:
+                g.trace(self.textAddr(t),tag,s)
+            else:
+                g.trace(self.textAddr(t),tag,len(s))
+        
+        t.delete("1.0","end")
+        t.insert("end",s)
+    #@nonl
+    #@-node:setText FOR TRACES
     #@-node:Event handlers
     #@+node:Incremental drawing
     #@+node:allocateNodes
@@ -2073,8 +2084,8 @@ class myLeoTkinterTree(leoFrame.leoTree):
             
             # 6/14/04: Always do this.  Otherwise there can be problems with trailing hewlines.
             s = g.toUnicode(p.v.t.bodyString,"utf-8")
-            body.delete("1.0","end")
-            body.insert("1.0",s)
+            
+            self.setText(body,s,tag="select:set body",isHeadline=False)
             
             # We must do a full recoloring: we may be changing context!
             self.frame.body.recolor_now(p)
@@ -2414,6 +2425,7 @@ class myLeoTkinterTree(leoFrame.leoTree):
         if 0:
             self.deleteBindings()
             self.canvas.delete("all")
+    
         self.drawTopTree()
         
         if self.trace:
@@ -2425,12 +2437,8 @@ class myLeoTkinterTree(leoFrame.leoTree):
     #@+node:newBox
     def newBox (self):
         
-        if self.newlyFreedBoxes:
-            id = self.newlyFreedBoxes.pop()
-    
-        elif self.freeBoxes:
+        if self.freeBoxes:
             id = self.freeBoxes.pop()
-    
         else:
             id = self.canvas.create_image(0,0,tag="plusBox")
             assert(not self.ids.get(id))
@@ -2443,12 +2451,8 @@ class myLeoTkinterTree(leoFrame.leoTree):
     #@+node:newClickBox
     def newClickBox (self):
     
-        if self.newlyFreedClickBoxes:
-            id = self.newlyFreedClickBoxes.pop()
-    
-        elif self.freeClickBoxes:
+        if self.freeClickBoxes:
             id = self.freeClickBoxes.pop()
-    
         else:
             id = self.canvas.create_rectangle(0,0,0,0,tag="clickBox")
             assert(not self.ids.get(id))
@@ -2460,10 +2464,7 @@ class myLeoTkinterTree(leoFrame.leoTree):
     #@+node:newIcon
     def newIcon (self):
     
-        if self.newlyFreedIcons:
-            id = self.newlyFreedIcons.pop()
-    
-        elif self.freeIcons:
+        if self.freeIcons:
             id = self.freeIcons.pop()
     
         else:
@@ -2479,12 +2480,8 @@ class myLeoTkinterTree(leoFrame.leoTree):
     #@+node:newLine
     def newLine (self):
         
-        if self.newlyFreedLines:
-            id = self.newlyFreedLines.pop()
-    
-        elif self.freeLines:
+        if self.freeLines:
             id = self.freeLines.pop()
-        
         else:
             id = self.canvas.create_line(0,0,0,0,tag="lines",fill="gray50") # stipple="gray25")
             assert(not self.ids.get(id))
@@ -2494,132 +2491,79 @@ class myLeoTkinterTree(leoFrame.leoTree):
     #@nonl
     #@-node:newLine
     #@+node:newText
-    def newText (self,forceAllocate=False):
+    def newText (self,p,forceAllocate=False):
         
-        # Never allocate newly-free widgets...
-        if not forceAllocate and self.newlyFreedText:
-                    data = self.newlyFreedText.pop()
-                    id,t = data
-                    # t.configure(bg="blue")
-        elif not forceAllocate and self.freeText:
-            data = self.freeText.pop()
-            id,t = data
-            # t.configure(bg="red")
-        else:
-            # Tags are not valid in Tk.Text widgets, so we use class bindings instead.
-            t = Tk.Text(self.canvas,state="normal",font=self.font,bd=0,relief="flat",height=1)
-            # t.configure(bg="yellow")
-            if self.useBindtags:
-                t.bindtags(self.textBindings)
-            else:
-                t.bind("<Button-1>", self.onHeadlineClick)
-                t.bind("<Button-3>", self.onHeadlineRightClick)
-                t.bind("<Key>",      self.onHeadlineKey)
-                t.bind("<Control-t>",self.onControlT)
-            
-            id = self.canvas.create_window(0,0,anchor="nw",window=t,tag="textBox")
-            assert(not self.ids.get(id))
+        t = None
+        
+        if not forceAllocate:
+            key = p.headString()
+            pList = self.freeText.get(key,[])
+            if pList:
+                t = pList.pop()
+                self.freeText[key] = pList
+                t.leo_position = p.copy()
+                assert(t.leo_window_id)
+                self.visibleText.append(t)
+                # t.configure(bg="red")
+                return t
+                
+        # Tags are not valid in Tk.Text widgets, so we use class bindings instead.
+        t = Tk.Text(self.canvas,state="normal",font=self.font,bd=0,relief="flat",height=1)
+        # t.configure(bg="yellow")
     
-        data = id,t
-        self.visibleText.append(data)
-        return id,t
+        if self.useBindtags:
+            t.bindtags(self.textBindings)
+        else:
+            t.bind("<Button-1>", self.onHeadlineClick)
+            t.bind("<Button-3>", self.onHeadlineRightClick)
+            t.bind("<Key>",      self.onHeadlineKey)
+            t.bind("<Control-t>",self.onControlT)
+        
+        id = self.canvas.create_window(0,0,anchor="nw",window=t,tag="textBox")
+        self.setText(t,p.headString(),tag="newText")
+    
+        t.leo_window_id = id
+        t.leo_position = p.copy()
+        self.visibleText.append(t)
+        return t
     #@nonl
     #@-node:newText
     #@+node:recycleWidgets
     def recycleWidgets (self):
         
+        canvas = self.canvas
+        
         for id in self.visibleBoxes:
-            self.newlyFreedBoxes.append(id)
+            self.freeBoxes.append(id)
+            canvas.coords(id,-100,-100)
         self.visibleBoxes = []
     
         for id in self.visibleClickBoxes:
-            self.newlyFreedClickBoxes.append(id)
+            self.freeClickBoxes.append(id)
+            canvas.coords(id,-100,-100,-100,-100)
         self.visibleClickBoxes = []
         
         for id in self.visibleIcons:
-            self.newlyFreedIcons.append(id)
+            self.freeIcons.append(id)
+            canvas.coords(id,-100,-100)
         self.visibleIcons = []
             
         for id in self.visibleLines:
-            self.newlyFreedLines.append(id)
+            self.freeLines.append(id)
+            canvas.coords(id,-100,-100,-100,-100)
         self.visibleLines = []
         
-        for data in self.visibleText:
-            id,t = data
-            t.leo_position = None
-            self.newlyFreedText.append(data)
+        for t in self.visibleText:
+            p  = t.leo_position
+            id = t.leo_window_id
+            canvas.coords(id,-100,-100)
+            key = p.headString()
+            pList = self.freeText.get(key,[])
+            pList.append(t)
+            self.freeText[key] = pList
         self.visibleText  = []
-        
-        if 0:
-            g.trace("boxes",len(self.newlyFreedBoxes))
-            g.trace("boxes",len(self.newlyFreedClickBoxes))
-            g.trace("icons",len(self.newlyFreedIcons))
-            g.trace("lines",len(self.newlyFreedLines))
-            g.trace("text",len(self.newlyFreedText))
     #@nonl
     #@-node:recycleWidgets
-    #@+node:hideNewlyFreedWidgets
-    def hideNewlyFreedWidgets (self):
-        
-        """Hide all newly-freed widgets and move them to the free lists."""
-        
-        canvas = self.canvas
-        
-        #@    << hide all the newly-freed widgets >>
-        #@+node:<< hide all the newly-freed widgets >>
-        for id in self.newlyFreedBoxes:
-            canvas.coords(id,-100,-100)
-            
-        for id in self.newlyFreedClickBoxes:
-            canvas.coords(id,-100,-100,-100,-100)
-        
-        for id in self.newlyFreedIcons:
-            canvas.coords(id,-100,-100)
-        
-        for id in self.newlyFreedLines:
-            canvas.coords(id,-100,-100,-100,-100)
-            
-        for data in self.newlyFreedText:
-            id,t = data
-            canvas.coords(id,-100,-100)
-            t.leo_position = None # Remove the reference immediately.
-        #@nonl
-        #@-node:<< hide all the newly-freed widgets >>
-        #@nl
-        #@    << move all newly-freed widgets to the free lists >>
-        #@+node:<< move all newly-freed widgets to the free lists >>
-        for id in self.newlyFreedBoxes:
-            self.freeBoxes.append(id)
-        self.newlyFreedBoxes = []
-            
-        for id in self.newlyFreedClickBoxes:
-            self.freeClickBoxes.append(id)
-        self.newlyFreedClickBoxes = []
-            
-        for id in self.newlyFreedIcons:
-            self.freeIcons.append(id)
-        self.newlyFreedIcons = []
-            
-        for id in self.newlyFreedLines:
-            self.freeLines.append(id)
-        self.newlyFreedLines = []
-        
-        for data in self.newlyFreedText:
-            self.freeText.append(data)
-        self.newlyFreedText = []
-        #@nonl
-        #@-node:<< move all newly-freed widgets to the free lists >>
-        #@nl
-        
-        # g.trace(len(self.freeBoxes)+len(self.freeIcons)+len(self.freeLines)+len(self.freeText))
-        
-        if 0:
-            g.trace("boxes",len(self.freeBoxes))
-            g.trace("icons",len(self.freeIcons))
-            g.trace("lines",len(self.freeLines))
-            g.trace("text",len(self.freeText))
-    #@nonl
-    #@-node:hideNewlyFreedWidgets
     #@+node:totalTextWidgets
     def totalTextWidgets (self):
         
@@ -2630,15 +2574,14 @@ class myLeoTkinterTree(leoFrame.leoTree):
     #@+node:getTextStats
     def getTextStats (self):
         
-        return "%3d %3d %3d tot: %4d" % (
-            len(self.visibleText),
-            len(self.newlyFreedText),
-            len(self.freeText),
-    
-            len(self.visibleText) +
-            len(self.newlyFreedText) +
-            len(self.freeText)
-        )
+        # Count the number of individual items in each list in freeText.
+        free = 0
+        for val in self.freeText.values():
+            free += len(val)
+            
+        visible = len(self.visibleText)
+        
+        return "%3d %3d tot: %4d" % (visible,free,visible+free)
     #@nonl
     #@-node:getTextStats
     #@+node:traceIds

@@ -82,7 +82,7 @@
 #@-node:ekr.20040722122459.2:Enhance the icon or status areas
 #@+node:ekr.20040722121404:Experimental plugins
 # A plugin to test optimizations in Leo's outline redraw code.
-    #__outlineExperiments.py
+     # __outlineExperiments.py
 
 # PRE_ALPHA QUALITY: MAY BE DANGEROUS
 
