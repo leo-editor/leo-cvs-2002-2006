@@ -48,7 +48,7 @@ class leoDialog:
 		text.pack(pady=10)
 		
 		try:
-			bitmap_name = os.path.join(app().loadDir,"Icons","LeoApp.GIF")
+			bitmap_name = os.path.join(app().loadDir,"Icons","Leoapp.GIF")
 			image = Tkinter.PhotoImage(file=bitmap_name)
 			text.image_create("1.0",image=image,padx=10)
 		except:
