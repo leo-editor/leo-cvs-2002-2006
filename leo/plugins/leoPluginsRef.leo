@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet ekr_stylesheet?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="3621" clone_windows="0"/>
-<globals body_outline_ratio="0.608695652174">
-	<global_window_position top="39" left="310" height="897" width="873"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="4099" clone_windows="0"/>
+<globals body_outline_ratio="0.494983277592">
+	<global_window_position top="48" left="202" height="897" width="1014"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -14,6 +14,11 @@ marks="pap.20041008200028,pap.20041006194759,pap.20041008224625,pap.200410061930
 <v t="ekr.20041211035618"><vh>Scripts, buttons &amp; settings</vh>
 <v t="ekr.20050217093214"><vh>@settings</vh>
 <v t="ekr.20050217093214.1"><vh>@recentfiles </vh></v>
+<v t="ekr.20050328101812"><vh>@page http plugin</vh>
+<v t="ekr.20050328101812.1"><vh>@bool http_active = True</vh></v>
+<v t="ekr.20050328101812.2"><vh>@int  port = 8080</vh></v>
+<v t="ekr.20050328101812.3"><vh>@string rst_http_attributename = rst_http_attribute</vh></v>
+</v>
 </v>
 <v t="ekr.20041103052443"><vh>Script to find and replace all functions in leoGlobals.py</vh>
 <v t="ekr.20041103052443.1"><vh>findFunctionsInTree</vh></v>
@@ -26,7 +31,7 @@ marks="pap.20041008200028,pap.20041006194759,pap.20041008224625,pap.200410061930
 </v>
 <v t="ekr.20041113110210"><vh>@button Spelling...</vh></v>
 </v>
-<v t="edream.110203113231.618" a="TV"><vh>Plugins</vh>
+<v t="edream.110203113231.618"><vh>Plugins</vh>
 <v t="EKR.20040517090508"><vh>  Enable plugins by changing pluginsManager.txt or using plugin_manager plugin</vh>
 <v t="edream.120603093808"><vh>@thin pluginsManager.txt</vh></v>
 </v>
@@ -126,10 +131,11 @@ marks="pap.20041008200028,pap.20041006194759,pap.20041008224625,pap.200410061930
 <v t="gfunch.20041207100416"><vh>@thin datenodes.py</vh></v>
 <v t="gfunch.20041209063345.1"><vh>@thin datenodes.ini</vh></v>
 </v>
-<v t="ekr.20050310084940.1"><vh>library plugin</vh>
-<v t="ekr.20050310084940.2"><vh>db</vh></v>
-<v t="ekr.20050310084940.3" tnodeList="ekr.20050310084940.3"><vh>@nosent Library.ini</vh></v>
-<v t="ekr.20050310084940.4"><vh>@thin Library.py</vh></v>
+<v t="ekr.20050328092641"><vh>Library</vh>
+<v t="ekr.20050328092641.1"><vh>db</vh></v>
+<v t="ekr.20050328092641.2" tnodeList="ekr.20050328092641.2"><vh>@nosent Library.ini</vh></v>
+<v t="ekr.20050328092641.3"><vh>@string Library_lib1 = default/libraryS.dbm</vh></v>
+<v t="ekr.20050328092641.4"><vh>@thin Library.py</vh></v>
 </v>
 <v t="edream.110203113231.722"><vh>mod_autosave</vh>
 <v t="edream.110203113231.723" tnodeList="edream.110203113231.723"><vh>@file-nosent mod_autosave.ini</vh></v>
@@ -163,16 +169,160 @@ marks="pap.20041008200028,pap.20041006194759,pap.20041008224625,pap.200410061930
 </v>
 </v>
 <v t="ekr.20041030092101"><vh>Dyna plugins by e</vh>
-<v t="ekr.20041030092835"><vh>v138 highlights</vh></v>
-<v t="ekr.20041030091736.1"><vh> dyna plugins 138</vh>
-<v t="ekr.20041030091736.2"><vh>&lt;&lt; insertAplug &gt;&gt;</vh></v>
-<v t="ekr.20041030091736.3"><vh>@thin dyna_menu.py</vh></v>
-<v t="ekr.20041030091736.75"><vh>@thin exSButton.py</vh></v>
-<v t="ekr.20041030091736.79"><vh>@thin dynacommon.py</vh></v>
-<v t="ekr.20041030091736.105"><vh>@thin dyna.txt</vh></v>
+<v t="ekr.20050328091952"><vh> dyna plugin 139</vh>
+<v t="ekr.20050328091952.1"><vh>&lt;&lt; insertAplug &gt;&gt;</vh></v>
+<v t="ekr.20050328091952.2"><vh>@thin dyna_menu.py</vh></v>
+<v t="ekr.20050328091952.93"><vh>@thin dynacommon.py</vh></v>
+<v t="ekr.20050328091952.121" tnodeList="ekr.20050328091952.121"><vh>@nosent dyna_menu.ini</vh></v>
+<v t="ekr.20050328091952.122"><vh>@thin dyna.txt</vh></v>
 </v>
 </v>
 <v t="edream.110203113231.872"><vh>Enhanced nodes...</vh>
+<v t="ekr.20050329082101"><vh>AutoTrees</vh>
+<v t="ekr.20050329082101.1"><vh>AutoTrees plugin</vh>
+<v t="ekr.20050329082101.2"><vh>Introduction</vh></v>
+<v t="ekr.20050329082101.3"><vh>Why use this?</vh></v>
+<v t="ekr.20050329082101.4"><vh>Details</vh></v>
+<v t="ekr.20050329082101.5"><vh>How do I create my own handlers?</vh></v>
+</v>
+<v t="ekr.20050329082101.6" annotate="7d71002e"><vh>Example handlers</vh>
+<v t="ekr.20050329082101.7"><vh>Testing</vh>
+<v t="ekr.20050329082101.8" annotate="7d71002e"><vh>@auto-test something</vh>
+<v t="ekr.20050329082101.9"><vh>one</vh></v>
+<v t="ekr.20050329082101.10"><vh>two</vh></v>
+<v t="ekr.20050329082101.11"><vh>three</vh>
+<v t="ekr.20050329082101.12"><vh>three-one</vh></v>
+<v t="ekr.20050329082101.13"><vh>three-two</vh></v>
+<v t="ekr.20050329082101.14"><vh>three-three</vh></v>
+</v>
+</v>
+</v>
+<v t="ekr.20050329082101.15"><vh>RSS</vh>
+<v t="ekr.20050329082101.16" a="E"><vh>@auto-rss http://news.bbc.co.uk/rss/newsonline_uk_edition/world/rss091.xml</vh>
+<v t="ekr.20050329092553"><vh>Hundreds die in Indonesia quake</vh></v>
+<v t="ekr.20050329092553.1"><vh>Ousted Kyrgyz president defiant</vh></v>
+<v t="ekr.20050329092553.2"><vh>Hair 'good source of stem cells'</vh></v>
+<v t="ekr.20050329092553.3"><vh>Ashdown sacks top Bosnian Croat</vh></v>
+<v t="ekr.20050329092553.4"><vh>Splits paralyse Iraqi parliament</vh></v>
+<v t="ekr.20050329092553.5"><vh>Mongolians protest for new poll</vh></v>
+<v t="ekr.20050329092553.6"><vh>Libya's Bulgarian medics appeal</vh></v>
+<v t="ekr.20050329092553.7"><vh>Schiavo rivals 'agree to autopsy'</vh></v>
+<v t="ekr.20050329092553.8"><vh>Would-be sex tourist, 87, jailed</vh></v>
+<v t="ekr.20050329092553.9"><vh>Golf: Funk claims Players title</vh></v>
+<v t="ekr.20050329092553.10"><vh>Cricket: Series win for Aussies</vh></v>
+<v t="ekr.20050329092553.11"><vh>Angola says virus 'under control'</vh></v>
+<v t="ekr.20050329092553.12"><vh>Mugabe criticises MDC 'traitors'</vh></v>
+<v t="ekr.20050329092553.13"><vh>Ex-US diplomats round on Bolton</vh></v>
+<v t="ekr.20050329092553.14"><vh>Brazil quits loan accord with IMF</vh></v>
+<v t="ekr.20050329092553.15"><vh>Japanese economy hit by weak data</vh></v>
+<v t="ekr.20050329092553.16"><vh>Donors pledge $40m for KR trials</vh></v>
+<v t="ekr.20050329092553.17"><vh>Three Romanians missing in Iraq</vh></v>
+<v t="ekr.20050329092553.18"><vh>Wolfowitz 'to meet EU officials'</vh></v>
+<v t="ekr.20050329092553.19"><vh>Knesset rejects Gaza referendum</vh></v>
+<v t="ekr.20050329092553.20"><vh>Militants to attend PLO meeting</vh></v>
+<v t="ekr.20050329092553.21"><vh>South Asia cancels tsunami alerts</vh></v>
+<v t="ekr.20050329092553.22"><vh>Devastation as Afghan dam bursts</vh></v>
+<v t="ekr.20050329092553.23"><vh>Kyrgyzstan's friendly revolution</vh></v>
+</v>
+<v t="ekr.20050329082101.40" annotate="7d71002e"><vh>@auto-rss http://slashdot.org/index.rss</vh>
+<v t="ekr.20050329092553.24"><vh>Followup on MS and Brazil in NY Times</vh></v>
+<v t="ekr.20050329092553.25" a="E"><vh>A9.com with Syndicated Search</vh></v>
+<v t="ekr.20050329092553.26"><vh>What's Next At Apple</vh></v>
+<v t="ekr.20050329092553.27"><vh>Berkeley Grads' Identity Data Stolen</vh></v>
+<v t="ekr.20050329092553.28"><vh>South Korean Gov't. Advocates Linux</vh></v>
+<v t="ekr.20050329092553.29"><vh>MS, EU Agree on Name for Windows Sans Media Player</vh></v>
+<v t="ekr.20050329092553.30"><vh>Blackbox (Finally) Updated</vh></v>
+<v t="ekr.20050329092553.31"><vh>Your Face On the Big Screen</vh></v>
+<v t="ekr.20050329092553.32"><vh>Ars Technica Builds Make Magazine's Steadicam</vh></v>
+<v t="ekr.20050329092553.33"><vh>New Photovoltaics Made with Titanium Foil</vh></v>
+</v>
+<v t="ekr.20050329082101.51"><vh>@auto-rss http://www.python.org/channews.rdf</vh>
+<v t="ekr.20050329082101.52"><vh>Python 2.4.1 (release candidate 1)</vh></v>
+<v t="ekr.20050329082101.53"><vh>Greg Stein, of Google and Apache Software Foundation, to deliver keynote at PyCon</vh></v>
+<v t="ekr.20050329082101.54"><vh>New RSS feed for python-dev summaries</vh></v>
+<v t="ekr.20050329082101.55"><vh>Guido van Rossum speaking in Palo Alto</vh></v>
+<v t="ekr.20050329082101.56"><vh>Python 2.3.5 (final)</vh></v>
+<v t="ekr.20050329082101.57"><vh>Security advisory for SimpleXMLRPCServer.py.</vh></v>
+<v t="ekr.20050329082101.58"><vh>Deadline for OSCON proposals</vh></v>
+<v t="ekr.20050329082101.59"><vh>PyCon abstracts now available</vh></v>
+<v t="ekr.20050329082101.60"><vh>PyCon preliminary schedule now available</vh></v>
+<v t="ekr.20050329082101.61"><vh>PSF has awarded three grants</vh></v>
+<v t="ekr.20050329082101.62"><vh>Python for Nokia Series 60 now available</vh></v>
+<v t="ekr.20050329082101.63"><vh>Python 2.4 (final)</vh></v>
+<v t="ekr.20050329082101.64"><vh>PyZine issue 7</vh></v>
+<v t="ekr.20050329082101.65"><vh>PyCon 2005 Call for Proposals</vh></v>
+<v t="ekr.20050329082101.66"><vh>Cameron Laird receives the Frank Willison Award</vh></v>
+</v>
+</v>
+<v t="ekr.20050329082101.67" a="E"><vh>Remote</vh>
+<v t="ekr.20050329082101.68"><vh>@auto-remote http://www.bbc.co.uk/news.html</vh></v>
+</v>
+<v t="ekr.20050329082101.69" a="E"><vh>Documentation</vh>
+<v t="ekr.20050329082101.70"><vh>@auto-doc docutils.core</vh>
+<v t="ekr.20050329082101.71" a="E"><vh>Component</vh>
+<v t="ekr.20050329082101.72"><vh>component_type</vh></v>
+<v t="ekr.20050329082101.73"><vh>default_transforms</vh></v>
+<v t="ekr.20050329082101.74"><vh>supports</vh></v>
+</v>
+<v t="ekr.20050329082101.75"><vh>ConfigParser</vh>
+<v t="ekr.20050329082101.76"><vh>OPTCRE</vh></v>
+<v t="ekr.20050329082101.77"><vh>SECTCRE</vh></v>
+<v t="ekr.20050329082101.78"><vh>add_section</vh></v>
+<v t="ekr.20050329082101.79"><vh>standard_config_files</vh></v>
+<v t="ekr.20050329082101.80"><vh>validation</vh></v>
+</v>
+<v t="ekr.20050329082101.81"><vh>OptionParser</vh>
+<v t="ekr.20050329082101.82"><vh>default_error_encoding_error_handler</vh></v>
+<v t="ekr.20050329082101.83"><vh>relative_path_settings</vh></v>
+<v t="ekr.20050329082101.84"><vh>settings_defaults</vh></v>
+<v t="ekr.20050329082101.85"><vh>settings_spec</vh></v>
+<v t="ekr.20050329082101.86"><vh>standard_option_list</vh></v>
+<v t="ekr.20050329082101.87"><vh>threshold_choices</vh></v>
+<v t="ekr.20050329082101.88"><vh>thresholds</vh></v>
+<v t="ekr.20050329082101.89"><vh>version_template</vh></v>
+</v>
+<v t="ekr.20050329082101.90"><vh>Publisher</vh></v>
+<v t="ekr.20050329082101.91"><vh>default_description</vh></v>
+<v t="ekr.20050329082101.92"><vh>default_usage</vh></v>
+<v t="ekr.20050329082101.93"><vh>frontend</vh></v>
+<v t="ekr.20050329082101.94"><vh>io</vh></v>
+<v t="ekr.20050329082101.95"><vh>parsers</vh></v>
+<v t="ekr.20050329082101.96"><vh>publish_cmdline</vh></v>
+<v t="ekr.20050329082101.97"><vh>publish_file</vh></v>
+<v t="ekr.20050329082101.98"><vh>publish_string</vh></v>
+<v t="ekr.20050329082101.99"><vh>readers</vh></v>
+<v t="ekr.20050329082101.100"><vh>sys</vh></v>
+<v t="ekr.20050329082101.101"><vh>writers</vh></v>
+</v>
+</v>
+<v t="ekr.20050329082101.102" a="E"><vh>News Reader</vh>
+<v t="ekr.20050329082101.103"><vh>@auto-news news-server.houston.rr.com/comp.lang.python</vh>
+<v t="ekr.20050329082101.104"><vh>@auto-newsitem 356970 - Easy way to check modules for python version compatibility?</vh></v>
+<v t="ekr.20050329082101.105"><vh>@auto-newsitem 356972 - Q: Module Shared Data</vh></v>
+<v t="ekr.20050329082101.106"><vh>@auto-newsitem 356978 - Re: __contains__ inconsistencies between Python 2.2 and 2.3</vh></v>
+<v t="ekr.20050329082101.107"><vh>@auto-newsitem 356979 - Re: [Numeric] column vector faster than row vector in mat multiply?</vh></v>
+<v t="ekr.20050329082101.108"><vh>@auto-newsitem 356986 - Python 2.4 removes None data type?</vh></v>
+<v t="ekr.20050329082101.109"><vh>@auto-newsitem 356987 - Re: Integer From A Float List?!?</vh></v>
+<v t="ekr.20050329082101.110"><vh>@auto-newsitem 356988 - Suspicious header</vh></v>
+<v t="ekr.20050329082101.111"><vh>@auto-newsitem 356991 - Re: Suspicious header</vh></v>
+<v t="ekr.20050329082101.112"><vh>@auto-newsitem 356992 - survey</vh></v>
+<v t="ekr.20050329082101.113"><vh>@auto-newsitem 356993 - Re: Python 2.4 removes None data type?</vh></v>
+</v>
+</v>
+</v>
+<v t="ekr.20050329082101.114" a="E"><vh>AutoTrees Code</vh>
+<v t="ekr.20050329082101.115"
+expanded="ekr.20050329082101.134,"><vh>@thin autotrees.py</vh></v>
+<v t="ekr.20050329082101.145"><vh>@--thin trees\pluginsManager.txt</vh></v>
+<v t="ekr.20050329082101.146"><vh>Example tree handlers</vh>
+<v t="ekr.20050329082101.147"><vh>@thin trees\test.py</vh></v>
+<v t="ekr.20050329082101.150" a="E"><vh>@thin trees\rss.py</vh></v>
+<v t="ekr.20050329082101.153"><vh>@thin trees\news.py</vh></v>
+<v t="ekr.20050329082101.162"><vh>@thin trees\remote.py</vh></v>
+<v t="ekr.20050329082101.165"><vh>@thin trees\doc.py</vh></v>
+</v>
+</v>
+</v>
 <v t="edream.110203113231.873"><vh>@thin at_folder.py</vh></v>
 <v t="ekr.20040915085351"><vh>@thin at_produce.py</vh></v>
 <v t="ktenney.20041211072654.1"><vh>@thin at_view.py</vh></v>
@@ -210,7 +360,7 @@ marks="ekr.20041017043622.4,ekr.20041017043622.10,ekr.20041017043622.13,"><vh>@t
 </v>
 <v t="ekr.20040722135402"><vh>Enhancing the icon and status areas</vh>
 <v t="edream.110203113231.758"><vh>@thin nav_buttons.py</vh></v>
-<v t="EKR.20040517075915" tnodeList="EKR.20040517075915,EKR.20040517075915.1,EKR.20040517075915.2,EKR.20040517075915.3,EKR.20040517075915.4,EKR.20040517075915.5,ekr.20050313123322,ekr.20050313123600,ekr.20050313124016,ekr.20050313123322.1,ekr.20050313123322.2,ekr.20050313124016.1,ekr.20050313123322.3,ekr.20050313124619,ekr.20050313124954,ekr.20050313125536,ekr.20050313123322.4,EKR.20040517075915.6,EKR.20040517075915.7,EKR.20040517075915.8,EKR.20040517075915.9,EKR.20040517075915.10,EKR.20040517075915.11,EKR.20040517075915.12,ekr.20050313123322.5,ekr.20050313120714,ekr.20050313120345,ekr.20050313124212,ekr.20050313115107,ekr.20050313121102,ekr.20050313120113"><vh>@file-noref newButtons.py</vh>
+<v t="EKR.20040517075915" tnodeList="EKR.20040517075915,EKR.20040517075915.1,EKR.20040517075915.2,EKR.20040517075915.3,EKR.20040517075915.4,EKR.20040517075915.5,ekr.20050313123322,ekr.20050313123600,ekr.20050313124016,ekr.20050313123322.1,ekr.20050329033007,ekr.20050313123322.2,ekr.20050313124016.1,ekr.20050313123322.3,ekr.20050313124619,ekr.20050313124954,ekr.20050313125536,ekr.20050313123322.4,EKR.20040517075915.6,EKR.20040517075915.7,EKR.20040517075915.11,EKR.20040517075915.12,ekr.20050313123322.5,ekr.20050329033007.1,ekr.20050313120714,ekr.20050313120345,ekr.20050313115107,ekr.20050313121102,EKR.20040517075915.9,EKR.20040517075915.10,EKR.20040517075915.8,ekr.20050313124212,ekr.20050313120113"><vh>@file-noref newButtons.py</vh>
 <v t="EKR.20040517075915.1"><vh>Helper classes</vh>
 <v t="EKR.20040517075915.2"><vh>class FlatOptionMenu</vh></v>
 <v t="EKR.20040517075915.3"><vh>class Node</vh></v>
@@ -221,6 +371,7 @@ marks="ekr.20041017043622.4,ekr.20041017043622.10,ekr.20041017043622.13,"><vh>@t
 <v t="ekr.20050313123600"><vh>DOCSTRING_BODY</vh></v>
 <v t="ekr.20050313124016"><vh>GENERIC_IMPORTS_BODY</vh></v>
 <v t="ekr.20050313123322.1"><vh>GENERIC_INIT_FUNCTION_BODY</vh></v>
+<v t="ekr.20050329033007"><vh>IMPORT_LEO_GLOBALS_BODY</vh></v>
 <v t="ekr.20050313123322.2"><vh>PLUGIN_ROOT_BODY</vh></v>
 <v t="ekr.20050313124016.1"><vh>TK_IMPORTS_BODY</vh></v>
 <v t="ekr.20050313123322.3"><vh>TK_INIT_FUNCTION_BODY</vh></v>
@@ -231,17 +382,18 @@ marks="ekr.20041017043622.4,ekr.20041017043622.10,ekr.20041017043622.13,"><vh>@t
 </v>
 <v t="EKR.20040517075915.6"><vh> Casses to add buttons</vh>
 <v t="EKR.20040517075915.7"><vh>body text used by AddTestModule &amp; AddTestClass</vh></v>
-<v t="EKR.20040517075915.8"><vh>class AddTestModule</vh></v>
-<v t="EKR.20040517075915.9"><vh>class AddTestClass</vh></v>
-<v t="EKR.20040517075915.10"><vh>class AddTestMethod</vh></v>
 <v t="EKR.20040517075915.11"><vh>class AddClass</vh></v>
 <v t="EKR.20040517075915.12"><vh>class AddClassMethod</vh></v>
 <v t="ekr.20050313123322.5"><vh>class AddGenericPlugin</vh></v>
+<v t="ekr.20050329033007.1" a="M"><vh>class AddImportLeoGlobalsFunction</vh></v>
 <v t="ekr.20050313120714"><vh>class AddPluginImportsSection</vh></v>
 <v t="ekr.20050313120345"><vh>class AddPluginInitFunction</vh></v>
-<v t="ekr.20050313124212"><vh>class AddTkPlugin</vh></v>
 <v t="ekr.20050313115107"><vh>class AddPluginTkInitFunction</vh></v>
 <v t="ekr.20050313121102"><vh>class AddPluginVersionHistorySection</vh></v>
+<v t="EKR.20040517075915.9"><vh>class AddTestClass</vh></v>
+<v t="EKR.20040517075915.10"><vh>class AddTestMethod</vh></v>
+<v t="EKR.20040517075915.8"><vh>class AddTestModule</vh></v>
+<v t="ekr.20050313124212"><vh>class AddTkPlugin</vh></v>
 </v>
 <v t="ekr.20050313120113"><vh>init</vh></v>
 </v>
@@ -296,7 +448,9 @@ marks="ekr.20041017043622.4,ekr.20041017043622.10,ekr.20041017043622.13,"><vh>@t
 <v t="ekr.20050303080042.1" tnodeList="ekr.20050303080042.1"><vh>@nosent footprints.ini</vh></v>
 <v t="pap.20041020001240"><vh>@thin footprints.py</vh></v>
 </v>
-<v t="mork.20040926105355.1"><vh>@thin chapters.py</vh></v>
+<v t="mork.20040926105355.1"
+marks="mork.20040930091035,mork.20040930091624,"
+expanded="mork.20040930091035.1,"><vh>@thin chapters.py</vh></v>
 <v t="mork.20041018162155.1"><vh>@thin EditAttributes.py</vh></v>
 <v t="ekr.20040915073259.1"><vh>@thin maximizeNewWindows.py</vh></v>
 <v t="mork.20041022155742.1"><vh>@thin nodebar.py</vh></v>
@@ -571,7 +725,7 @@ marks="ekr.20041017043622.4,ekr.20041017043622.10,ekr.20041017043622.13,"><vh>@t
 <v t="EKR.20040517075715.1"><vh>@thin mod_tempfname.py</vh></v>
 <v t="EKR.20040517080049.4"><vh>@thin open_shell.py</vh></v>
 <v t="EKR.20040517075715.4"><vh>@thin open_with.py</vh></v>
-<v t="EKR.20040517075715.10" a="E"><vh>@thin vim.py</vh></v>
+<v t="EKR.20040517075715.10"><vh>@thin vim.py</vh></v>
 <v t="EKR.20040517075715.12"><vh>@thin xemacs.py</vh></v>
 <v t="EKR.20040517075715.13"><vh>Word export</vh>
 <v t="EKR.20040517075715.14"><vh>@thin word_export.py</vh></v>
@@ -601,10 +755,9 @@ marks="ekr.20041017043622.4,ekr.20041017043622.10,ekr.20041017043622.13,"><vh>@t
 <v t="ekr.20040828122150"><vh>@thin pie_menus.py</vh></v>
 </v>
 <v t="ekr.20041009112303"><vh>Plugins manager &amp; menu</vh>
-<v t="EKR.20040517080555.1" a="E"><vh> Plugins menu</vh>
-<v t="EKR.20040517080555.2" a="E"
-marks="EKR.20040517080555.4,"
-expanded="EKR.20040517080555.3,EKR.20040517080555.23,"><vh>@thin plugins_menu.py</vh></v>
+<v t="EKR.20040517080555.1"><vh> Plugins menu</vh>
+<v t="EKR.20040517080555.2"
+marks="EKR.20040517080555.4,"><vh>@thin plugins_menu.py</vh></v>
 <v t="EKR.20040517080555.25"><vh>@thin pluginsTest.py</vh></v>
 <v t="EKR.20040517080555.32"><vh>Notes re plugins menu</vh>
 <v t="EKR.20040517080555.33"><vh> Changes made by E.K.Ream</vh></v>
@@ -614,7 +767,7 @@ expanded="EKR.20040517080555.3,EKR.20040517080555.23,"><vh>@thin plugins_menu.py
 </v>
 <v t="pap.20041006184225"
 marks="pap.20041008224625,pap.20041006193013,pap.20041006194759,pap.20041008200028,"
-expanded="pap.20041006215108.1,pap.20041006192557,pap.20041006190817,pap.20041006201849,pap.20041006232717,"><vh>@thin plugin_manager.py</vh></v>
+expanded="pap.20050317185409,pap.20041009140132,pap.20041006224216,pap.20041006232717,"><vh>@thin plugin_manager.py</vh></v>
 </v>
 <v t="ekr.20041001210557"><vh>Scripting</vh>
 <v t="EKR.20040613213623"><vh>@thin mod_scripting.py</vh></v>
@@ -757,6 +910,196 @@ expanded="pap.20041006215108.1,pap.20041006192557,pap.20041006190817,pap.2004100
 <v t="mork.20041018204908.1"><vh>@thin multifile.py</vh></v>
 <v t="mork.20041010095009"><vh>@thin xsltWithNodes.py</vh></v>
 </v>
+<v t="ekr.20040331071319"><vh>@thin rst2.py</vh></v>
+<v t="EKR.20040517080250.1"><vh>@thin mod_http.py</vh></v>
+<v t="pap.20041006184225"
+marks="pap.20041008224625,pap.20041006193013,pap.20041006194759,pap.20041008200028,"
+expanded="pap.20050317185409,pap.20041009140132,pap.20041006224216,pap.20041006232717,"><vh>@thin plugin_manager.py</vh></v>
+<v t="EKR.20040517075915" tnodeList="EKR.20040517075915,EKR.20040517075915.1,EKR.20040517075915.2,EKR.20040517075915.3,EKR.20040517075915.4,EKR.20040517075915.5,ekr.20050313123322,ekr.20050313123600,ekr.20050313124016,ekr.20050313123322.1,ekr.20050329033007,ekr.20050313123322.2,ekr.20050313124016.1,ekr.20050313123322.3,ekr.20050313124619,ekr.20050313124954,ekr.20050313125536,ekr.20050313123322.4,EKR.20040517075915.6,EKR.20040517075915.7,EKR.20040517075915.11,EKR.20040517075915.12,ekr.20050313123322.5,ekr.20050329033007.1,ekr.20050313120714,ekr.20050313120345,ekr.20050313115107,ekr.20050313121102,EKR.20040517075915.9,EKR.20040517075915.10,EKR.20040517075915.8,ekr.20050313124212,ekr.20050313120113"><vh>@file-noref newButtons.py</vh>
+<v t="EKR.20040517075915.1"><vh>Helper classes</vh>
+<v t="EKR.20040517075915.2"><vh>class FlatOptionMenu</vh></v>
+<v t="EKR.20040517075915.3"><vh>class Node</vh></v>
+<v t="EKR.20040517075915.4"><vh>class NodeAdder</vh></v>
+<v t="EKR.20040517075915.5"><vh>class Helper</vh></v>
+</v>
+<v t="ekr.20050313123322"><vh>text definitions used in plugins templates</vh>
+<v t="ekr.20050313123600"><vh>DOCSTRING_BODY</vh></v>
+<v t="ekr.20050313124016"><vh>GENERIC_IMPORTS_BODY</vh></v>
+<v t="ekr.20050313123322.1"><vh>GENERIC_INIT_FUNCTION_BODY</vh></v>
+<v t="ekr.20050329033007"><vh>IMPORT_LEO_GLOBALS_BODY</vh></v>
+<v t="ekr.20050313123322.2"><vh>PLUGIN_ROOT_BODY</vh></v>
+<v t="ekr.20050313124016.1"><vh>TK_IMPORTS_BODY</vh></v>
+<v t="ekr.20050313123322.3"><vh>TK_INIT_FUNCTION_BODY</vh></v>
+<v t="ekr.20050313124619"><vh>TK_ON_CREATE_FUNCTION</vh></v>
+<v t="ekr.20050313124954"><vh>TK_PLUGIN_CONTROLLER</vh></v>
+<v t="ekr.20050313125536"><vh>TK_PLUGIN_CONTROLLER_INIT</vh></v>
+<v t="ekr.20050313123322.4"><vh>VERSION_HISTORY_BODY</vh></v>
+</v>
+<v t="EKR.20040517075915.6"><vh> Casses to add buttons</vh>
+<v t="EKR.20040517075915.7"><vh>body text used by AddTestModule &amp; AddTestClass</vh></v>
+<v t="EKR.20040517075915.11"><vh>class AddClass</vh></v>
+<v t="EKR.20040517075915.12"><vh>class AddClassMethod</vh></v>
+<v t="ekr.20050313123322.5"><vh>class AddGenericPlugin</vh></v>
+<v t="ekr.20050329033007.1" a="M"><vh>class AddImportLeoGlobalsFunction</vh></v>
+<v t="ekr.20050313120714"><vh>class AddPluginImportsSection</vh></v>
+<v t="ekr.20050313120345"><vh>class AddPluginInitFunction</vh></v>
+<v t="ekr.20050313115107"><vh>class AddPluginTkInitFunction</vh></v>
+<v t="ekr.20050313121102"><vh>class AddPluginVersionHistorySection</vh></v>
+<v t="EKR.20040517075915.9"><vh>class AddTestClass</vh></v>
+<v t="EKR.20040517075915.10"><vh>class AddTestMethod</vh></v>
+<v t="EKR.20040517075915.8"><vh>class AddTestModule</vh></v>
+<v t="ekr.20050313124212"><vh>class AddTkPlugin</vh></v>
+</v>
+<v t="ekr.20050313120113"><vh>init</vh></v>
+</v>
+<v t="mork.20040926105355.1"
+marks="mork.20040930091035,mork.20040930091624,"
+expanded="mork.20040930091035.1,"><vh>@thin chapters.py</vh></v>
+<v t="ekr.20050329082101" a="TV"><vh>AutoTrees</vh>
+<v t="ekr.20050329082101.1"><vh>AutoTrees plugin</vh>
+<v t="ekr.20050329082101.2"><vh>Introduction</vh></v>
+<v t="ekr.20050329082101.3"><vh>Why use this?</vh></v>
+<v t="ekr.20050329082101.4"><vh>Details</vh></v>
+<v t="ekr.20050329082101.5"><vh>How do I create my own handlers?</vh></v>
+</v>
+<v t="ekr.20050329082101.6" annotate="7d71002e"><vh>Example handlers</vh>
+<v t="ekr.20050329082101.7"><vh>Testing</vh>
+<v t="ekr.20050329082101.8" annotate="7d71002e"><vh>@auto-test something</vh>
+<v t="ekr.20050329082101.9"><vh>one</vh></v>
+<v t="ekr.20050329082101.10"><vh>two</vh></v>
+<v t="ekr.20050329082101.11"><vh>three</vh>
+<v t="ekr.20050329082101.12"><vh>three-one</vh></v>
+<v t="ekr.20050329082101.13"><vh>three-two</vh></v>
+<v t="ekr.20050329082101.14"><vh>three-three</vh></v>
+</v>
+</v>
+</v>
+<v t="ekr.20050329082101.15"><vh>RSS</vh>
+<v t="ekr.20050329082101.16" a="E"><vh>@auto-rss http://news.bbc.co.uk/rss/newsonline_uk_edition/world/rss091.xml</vh>
+<v t="ekr.20050329092553"><vh>Hundreds die in Indonesia quake</vh></v>
+<v t="ekr.20050329092553.1"><vh>Ousted Kyrgyz president defiant</vh></v>
+<v t="ekr.20050329092553.2"><vh>Hair 'good source of stem cells'</vh></v>
+<v t="ekr.20050329092553.3"><vh>Ashdown sacks top Bosnian Croat</vh></v>
+<v t="ekr.20050329092553.4"><vh>Splits paralyse Iraqi parliament</vh></v>
+<v t="ekr.20050329092553.5"><vh>Mongolians protest for new poll</vh></v>
+<v t="ekr.20050329092553.6"><vh>Libya's Bulgarian medics appeal</vh></v>
+<v t="ekr.20050329092553.7"><vh>Schiavo rivals 'agree to autopsy'</vh></v>
+<v t="ekr.20050329092553.8"><vh>Would-be sex tourist, 87, jailed</vh></v>
+<v t="ekr.20050329092553.9"><vh>Golf: Funk claims Players title</vh></v>
+<v t="ekr.20050329092553.10"><vh>Cricket: Series win for Aussies</vh></v>
+<v t="ekr.20050329092553.11"><vh>Angola says virus 'under control'</vh></v>
+<v t="ekr.20050329092553.12"><vh>Mugabe criticises MDC 'traitors'</vh></v>
+<v t="ekr.20050329092553.13"><vh>Ex-US diplomats round on Bolton</vh></v>
+<v t="ekr.20050329092553.14"><vh>Brazil quits loan accord with IMF</vh></v>
+<v t="ekr.20050329092553.15"><vh>Japanese economy hit by weak data</vh></v>
+<v t="ekr.20050329092553.16"><vh>Donors pledge $40m for KR trials</vh></v>
+<v t="ekr.20050329092553.17"><vh>Three Romanians missing in Iraq</vh></v>
+<v t="ekr.20050329092553.18"><vh>Wolfowitz 'to meet EU officials'</vh></v>
+<v t="ekr.20050329092553.19"><vh>Knesset rejects Gaza referendum</vh></v>
+<v t="ekr.20050329092553.20"><vh>Militants to attend PLO meeting</vh></v>
+<v t="ekr.20050329092553.21"><vh>South Asia cancels tsunami alerts</vh></v>
+<v t="ekr.20050329092553.22"><vh>Devastation as Afghan dam bursts</vh></v>
+<v t="ekr.20050329092553.23"><vh>Kyrgyzstan's friendly revolution</vh></v>
+</v>
+<v t="ekr.20050329082101.40" annotate="7d71002e"><vh>@auto-rss http://slashdot.org/index.rss</vh>
+<v t="ekr.20050329092553.24"><vh>Followup on MS and Brazil in NY Times</vh></v>
+<v t="ekr.20050329092553.25" a="E"><vh>A9.com with Syndicated Search</vh></v>
+<v t="ekr.20050329092553.26"><vh>What's Next At Apple</vh></v>
+<v t="ekr.20050329092553.27"><vh>Berkeley Grads' Identity Data Stolen</vh></v>
+<v t="ekr.20050329092553.28"><vh>South Korean Gov't. Advocates Linux</vh></v>
+<v t="ekr.20050329092553.29"><vh>MS, EU Agree on Name for Windows Sans Media Player</vh></v>
+<v t="ekr.20050329092553.30"><vh>Blackbox (Finally) Updated</vh></v>
+<v t="ekr.20050329092553.31"><vh>Your Face On the Big Screen</vh></v>
+<v t="ekr.20050329092553.32"><vh>Ars Technica Builds Make Magazine's Steadicam</vh></v>
+<v t="ekr.20050329092553.33"><vh>New Photovoltaics Made with Titanium Foil</vh></v>
+</v>
+<v t="ekr.20050329082101.51"><vh>@auto-rss http://www.python.org/channews.rdf</vh>
+<v t="ekr.20050329082101.52"><vh>Python 2.4.1 (release candidate 1)</vh></v>
+<v t="ekr.20050329082101.53"><vh>Greg Stein, of Google and Apache Software Foundation, to deliver keynote at PyCon</vh></v>
+<v t="ekr.20050329082101.54"><vh>New RSS feed for python-dev summaries</vh></v>
+<v t="ekr.20050329082101.55"><vh>Guido van Rossum speaking in Palo Alto</vh></v>
+<v t="ekr.20050329082101.56"><vh>Python 2.3.5 (final)</vh></v>
+<v t="ekr.20050329082101.57"><vh>Security advisory for SimpleXMLRPCServer.py.</vh></v>
+<v t="ekr.20050329082101.58"><vh>Deadline for OSCON proposals</vh></v>
+<v t="ekr.20050329082101.59"><vh>PyCon abstracts now available</vh></v>
+<v t="ekr.20050329082101.60"><vh>PyCon preliminary schedule now available</vh></v>
+<v t="ekr.20050329082101.61"><vh>PSF has awarded three grants</vh></v>
+<v t="ekr.20050329082101.62"><vh>Python for Nokia Series 60 now available</vh></v>
+<v t="ekr.20050329082101.63"><vh>Python 2.4 (final)</vh></v>
+<v t="ekr.20050329082101.64"><vh>PyZine issue 7</vh></v>
+<v t="ekr.20050329082101.65"><vh>PyCon 2005 Call for Proposals</vh></v>
+<v t="ekr.20050329082101.66"><vh>Cameron Laird receives the Frank Willison Award</vh></v>
+</v>
+</v>
+<v t="ekr.20050329082101.67" a="E"><vh>Remote</vh>
+<v t="ekr.20050329082101.68"><vh>@auto-remote http://www.bbc.co.uk/news.html</vh></v>
+</v>
+<v t="ekr.20050329082101.69" a="E"><vh>Documentation</vh>
+<v t="ekr.20050329082101.70"><vh>@auto-doc docutils.core</vh>
+<v t="ekr.20050329082101.71" a="E"><vh>Component</vh>
+<v t="ekr.20050329082101.72"><vh>component_type</vh></v>
+<v t="ekr.20050329082101.73"><vh>default_transforms</vh></v>
+<v t="ekr.20050329082101.74"><vh>supports</vh></v>
+</v>
+<v t="ekr.20050329082101.75"><vh>ConfigParser</vh>
+<v t="ekr.20050329082101.76"><vh>OPTCRE</vh></v>
+<v t="ekr.20050329082101.77"><vh>SECTCRE</vh></v>
+<v t="ekr.20050329082101.78"><vh>add_section</vh></v>
+<v t="ekr.20050329082101.79"><vh>standard_config_files</vh></v>
+<v t="ekr.20050329082101.80"><vh>validation</vh></v>
+</v>
+<v t="ekr.20050329082101.81"><vh>OptionParser</vh>
+<v t="ekr.20050329082101.82"><vh>default_error_encoding_error_handler</vh></v>
+<v t="ekr.20050329082101.83"><vh>relative_path_settings</vh></v>
+<v t="ekr.20050329082101.84"><vh>settings_defaults</vh></v>
+<v t="ekr.20050329082101.85"><vh>settings_spec</vh></v>
+<v t="ekr.20050329082101.86"><vh>standard_option_list</vh></v>
+<v t="ekr.20050329082101.87"><vh>threshold_choices</vh></v>
+<v t="ekr.20050329082101.88"><vh>thresholds</vh></v>
+<v t="ekr.20050329082101.89"><vh>version_template</vh></v>
+</v>
+<v t="ekr.20050329082101.90"><vh>Publisher</vh></v>
+<v t="ekr.20050329082101.91"><vh>default_description</vh></v>
+<v t="ekr.20050329082101.92"><vh>default_usage</vh></v>
+<v t="ekr.20050329082101.93"><vh>frontend</vh></v>
+<v t="ekr.20050329082101.94"><vh>io</vh></v>
+<v t="ekr.20050329082101.95"><vh>parsers</vh></v>
+<v t="ekr.20050329082101.96"><vh>publish_cmdline</vh></v>
+<v t="ekr.20050329082101.97"><vh>publish_file</vh></v>
+<v t="ekr.20050329082101.98"><vh>publish_string</vh></v>
+<v t="ekr.20050329082101.99"><vh>readers</vh></v>
+<v t="ekr.20050329082101.100"><vh>sys</vh></v>
+<v t="ekr.20050329082101.101"><vh>writers</vh></v>
+</v>
+</v>
+<v t="ekr.20050329082101.102" a="E"><vh>News Reader</vh>
+<v t="ekr.20050329082101.103"><vh>@auto-news news-server.houston.rr.com/comp.lang.python</vh>
+<v t="ekr.20050329082101.104"><vh>@auto-newsitem 356970 - Easy way to check modules for python version compatibility?</vh></v>
+<v t="ekr.20050329082101.105"><vh>@auto-newsitem 356972 - Q: Module Shared Data</vh></v>
+<v t="ekr.20050329082101.106"><vh>@auto-newsitem 356978 - Re: __contains__ inconsistencies between Python 2.2 and 2.3</vh></v>
+<v t="ekr.20050329082101.107"><vh>@auto-newsitem 356979 - Re: [Numeric] column vector faster than row vector in mat multiply?</vh></v>
+<v t="ekr.20050329082101.108"><vh>@auto-newsitem 356986 - Python 2.4 removes None data type?</vh></v>
+<v t="ekr.20050329082101.109"><vh>@auto-newsitem 356987 - Re: Integer From A Float List?!?</vh></v>
+<v t="ekr.20050329082101.110"><vh>@auto-newsitem 356988 - Suspicious header</vh></v>
+<v t="ekr.20050329082101.111"><vh>@auto-newsitem 356991 - Re: Suspicious header</vh></v>
+<v t="ekr.20050329082101.112"><vh>@auto-newsitem 356992 - survey</vh></v>
+<v t="ekr.20050329082101.113"><vh>@auto-newsitem 356993 - Re: Python 2.4 removes None data type?</vh></v>
+</v>
+</v>
+</v>
+<v t="ekr.20050329082101.114" a="E"><vh>AutoTrees Code</vh>
+<v t="ekr.20050329082101.115"
+expanded="ekr.20050329082101.134,"><vh>@thin autotrees.py</vh></v>
+<v t="ekr.20050329082101.145"><vh>@--thin trees\pluginsManager.txt</vh></v>
+<v t="ekr.20050329082101.146"><vh>Example tree handlers</vh>
+<v t="ekr.20050329082101.147"><vh>@thin trees\test.py</vh></v>
+<v t="ekr.20050329082101.150" a="E"><vh>@thin trees\rss.py</vh></v>
+<v t="ekr.20050329082101.153"><vh>@thin trees\news.py</vh></v>
+<v t="ekr.20050329082101.162"><vh>@thin trees\remote.py</vh></v>
+<v t="ekr.20050329082101.165"><vh>@thin trees\doc.py</vh></v>
+</v>
+</v>
+</v>
 </vnodes>
 <tnodes>
 <t tx="EKR.20040517075715"></t>
@@ -782,6 +1125,7 @@ __name__ = "New Buttons"
 __version__ = "0.3"
 # 0.2 EKR: Converted to @file-noref
 # 0.3 EKR: Added 6 new plugin templates.  Added init function.
+# 0.4 EKR: Added importLeoGlobals function.
  
 import leoGlobals as g
 import leoPlugins
@@ -7476,81 +7820,11 @@ That web site is produced from a Leo outline.
 <t tx="ekr.20041002162608"># Note: this work has been superceded by the temacs plugin.</t>
 <t tx="ekr.20041009112303"></t>
 <t tx="ekr.20041019072632"></t>
-<t tx="ekr.20041030091736.1"># change/comment this to match your path if your leo isn't in the plugins dir
-
-## @path C:\c\leo\V42leos\leo\plugins\
-
-@
-several plugins of the dyna variety and support files
-newer than the version included in Leo4.2 final and 10/04 cvs
-
-executeScript on this node to insert your plugin path
-if it looks ok remove the #comment
-@c
-
-&lt;&lt; insertAplug &gt;&gt;
-insertAplug()
-
-@language python
-@color
-</t>
-<t tx="ekr.20041030091736.2">def insertAplug(wch= 'i'): #i/r
-    """use to insertAt 1.0 #@path plugindir
-   
-    """
-    import leoGlobals as g
-    import os, sys
-
-
-    k = g.os_path_split(g.app.loadDir)[0]
-    #this should fix the slashes and lower cases' it on win9x
-    path = g.os_path_normpath(g.os_path_abspath(g.os_path_join(k, "plugins")))
-
-
-    if not g.os_path_isdir(path):
-        print 'give up', path; raise NameError
-
-    if 'i' in wch:
-        c = g.top()
-        p = c.currentPosition()
-        Tx = c.frame.body
-        Tx.setInsertionPoint(1.0)
-        Tx.insertAtInsertPoint('#@path %s\n'%(path,))
-        Tx.onBodyWillChange(p, "Typing")  
-
-    #if 'r' in wch:  i forget why dtef shouldent do this in every case...
-    #return home
-</t>
 <t tx="ekr.20041030092101">@ Notes by EKR:  The enclose is a remarkable body of work by 'e'.  Have fun with it.
 
 I am enclosing this code as-is; use with reasonable caution.
 
 You may download the latest version at: http://rclick.netfirms.com/dyna_menu.py.html</t>
-<t tx="ekr.20041030092835">@killcolor
-
-http://sourceforge.net/forum/message.php?msg_id=2823715
-
-v0.138 highlights,
-new macro for basic file info on selected filename,
-filename in copybuffer, current @file or current leo. 
-
-resurected the EKR Graphvizoutline as a macro, will 
-eventually use to graph class mro or import dependancies borrowing from some
-cookbook entries.
- 
-new toy to insert @path to your home dir into 
-the first line of current node, used in the rc node.
-some sample rc files for pychecker and pylint and urls.
-please advise how if it fails to find the correct 
-directory for home on your system. (if you know)
-
-cleaned up redirected output to log from unittest in du_test,
-should now work with pyw and not clutter the console
-when running @test or @suite nodes. needed reload unittest.
-
-htmlize now calls the python webbrowser module for output.
-
-e</t>
 <t tx="ekr.20041103052443"># Execute this in a script button.
 
 import leoGlobals as g
@@ -8311,39 +8585,6 @@ If a plugin catches exceptions during startup it should do one of the following:
 - raise the exception again.
 - provide an init function at the top level that reports the failure.</t>
 <t tx="ekr.20050306081349"></t>
-<t tx="ekr.20050310084940.1">from Library.py for Leo4.3
-see forum &lt;http://sourceforge.net/forum/forum.php?thread_id=1244564&amp;forum_id=10226&gt;
-a better configparser would be nice.
-ability to add comments and not have them rearanced
- and to display them in the properties dialog.
-
-using @settings would be an improvement too, 
-not going there at this time.
-
-also potential problems while testing 
-if you have this enabled from more than one python/Leo instance?
-seems to handle it ok, but might get deadlocked on multiple inserts.
-
-adding some room to catch exceptions
-seems to be using dbhash on win py2.4 might be nice to know.
-changes to ini thru properties doesn't take effect until you hit apply.
-just ok isn't enough to do it?
-
-thanks to origional author and EKR for working out the important details.
-adding config and startup &amp; shutdown trivial by comparason
-and of course Paul for plugins, menu and manager.
-e
-
-@language python
-@tabwidth -4
-@killcolor </t>
-<t tx="ekr.20050310084940.2">['__cmp__', '__contains__', '__del__', '__delitem__', '__doc__', '__getitem__', '__init__', '__iter__', '__len__', '__module__', '__repr__', '__setitem__', '_checkCursor', '_checkOpen', '_closeCursors', '_cursor_refs', '_gen_cref_cleaner', '_make_iter_cursor', 'clear', 'close', 'db', 'dbc', 'first', 'get', 'has_key', 'isOpen', 'items', 'iteritems', 'iterkeys', 'itervalues', 'keys', 'last', 'next', 'pop', 'popitem', 'previous', 'saved_dbc_key', 'set_location', 'setdefault', 'sync', 'update', 'values']
-</t>
-<t tx="ekr.20050310084940.3">[Main]
-libpath = default
-backend = default
-libname = library2
-libextension = dbm</t>
 <t tx="ekr.20050313115107">class AddPluginTkInitFunction(NodeAdder):
 
     '''Add plugin init(tk).'''
@@ -8372,6 +8613,8 @@ libextension = dbm</t>
         AddPluginTkInitFunction(),
         AddPluginImportsSection(),
         AddPluginVersionHistorySection(),
+        # EKR, v0.4...
+        AddImportLeoGlobalsFunction(),
     )
 
     ok = Tk is not None
@@ -8578,5 +8821,1081 @@ def __init__ (self,c):
     
     self.c = c
 '''</t>
+<t tx="ekr.20050328091952"># change/comment this to match your path if your leo isn't in the plugins dir
+
+## @path C:\c\leo\V43leos\leo\plugins\
+
+@
+several plugins of the dyna variety and support files
+newer than the version included in Leo4.3 alpha 4, March 15, 2005
+exS all but retired, newer dynaclick not ready for distribution.
+look in version history for a few minor changes to bring
+dyna_menu up to Leo4.3 code. and some cosmetic changes
+for htmlize and du_test and their config and a few option flippers.
+
+executeScript on this node to insert your plugin path
+if it looks ok remove the #comment
+@c
+
+&lt;&lt; insertAplug &gt;&gt;
+insertAplug()
+
+@language python
+@color
+@tabwidth -4
+</t>
+<t tx="ekr.20050328091952.1">def insertAplug(wch= 'i'): #i/r
+    """use to insertAt 1.0 #@path plugindir
+   
+    """
+    import leoGlobals as g
+    import os, sys
+
+
+    k = g.os_path_split(g.app.loadDir)[0]
+    #this should fix the slashes and lower cases' it on win9x
+    path = g.os_path_normpath(g.os_path_abspath(g.os_path_join(k, "plugins")))
+
+
+    if not g.os_path_isdir(path):
+        print 'give up', path; raise NameError
+
+    if 'i' in wch:
+        c = g.top()
+        p = c.currentPosition()
+        Tx = c.frame.body
+        Tx.setInsertionPoint(1.0)
+        Tx.insertAtInsertPoint('#@path %s\n'%(path,))
+        Tx.onBodyWillChange(p, "Typing")  
+
+    #if 'r' in wch:  i forget why dtef shouldent do this in every case...
+    #return home
+</t>
+<t tx="ekr.20050328091952.121">@language elisp
+;ini may be shortlived in favor of @settings when thats feasible
+;leave nosent so it isn't updated on leo open and all comments lost
+; but if you change something here, it will overwrite any previous ini on disk.
+;
+;current properties ini editor will not have enough room for all these.
+;pick only about a dozzen of your favorites more if you have more screen size
+; True==1 False==0 just like the old days works too, case insensitive
+;case sensitive on section names, insensitive on item names
+;untested with spaces or Unicode in filenames please report any problem. 
+
+
+[main]
+verbosity=0
+;verbosity for du_test and @test
+;tempfile used in makatemp and tim1crunch, not active yet, edit dynacommon
+;tmpfile = site-packages
+
+;no source print after checks
+justPyChecker=1
+
+[htmlize]
+;which external colorizer for @language other than python
+;leave blank for none or comment out
+;hiliter=silvercity
+;hiliter=source-highlight
+hiliter=
+
+;codefold = False
+stripcomments = False
+stripsentinals = True
+stripnodesents = False
+stripdirectives = False
+noNUMBER = False
+noOP = False
+noNAME = True
+
+;filename = c:\temp\htmlize.html
+timestring = default
+
+;use leodefault if Leo has one or default for whats hardwired in dyna_menu
+;non existant or commented out values use the default in dyna_menu
+
+;have to invent a new node, a clone with languageformatconversion
+;hate duplicating here the defaults hardwired in htmlize, but anyways
+;colors
+;token_NUMBER  =  #483D8B  ;black/darkslateblue
+;token_OP      =  #000080  ;black/navy
+;token_STRING  =  #00AA00  ;green 00cc66
+;token_COMMENT =  #DD0000  ;red cc0033
+;token_NAME     = #4B0082  ;black/indigo
+;token_ERRORTOKEN= #FF8080  ;redred bare null does it
+;token_KEYWORD    =  #0066ff  ;blue
+;token_TEXT       =  #000000  ;black /is text fg color too
+;token_LeoDir     =  #228B22  ;directive, forest comment
+token_LeoSen     =  #BC8F8F  ;sentinal, tan fade comment
+token_bg         =  #FFFAFA  ;snow
+
+; comments can be after values but not spaces or commas?
+;comments can be between values?
+;configparser needs a complete testsuite to answer these questions
+;maybe there is one already?</t>
+<t tx="ekr.20050328092641">from Library.py for Leo4.3
+see forum &lt;http://sourceforge.net/forum/forum.php?thread_id=1244564&amp;forum_id=10226&gt;
+a better configparser would be nice.
+ability to add comments and not have them rearranged
+ and to display them in the properties dialog.
+
+using @settings too, 
+
+also potential problems while testing 
+if you have this enabled from more than one python/Leo instance?
+seems to handle it ok, but might get deadlocked on multiple inserts.
+
+adding some room to catch exceptions
+seems to be using dbhash on win py2.4 might be nice to know.
+changes to ini thru properties doesn't take effect until you hit apply.
+just ok isn't enough to do it?
+
+working out details for multiple leos open, making the dialog follow.
+if you click Library again after switching leos, all is well.
+more to be done. spellchecker solves this by creating a global window
+but it is hooked on each node selection and updated when the body is changed.
+that seems a little heavy handed for this application.
+
+
+adding support for multiple libraries
+and or retaining open library handles.
+
+
+PMW windows don't have the Leo icon, maybe that can be fixed?
+
+thanks to origional author and EKR for working out the important details.
+adding config and startup &amp; shutdown trivial by comparason
+and of course Paul for plugins, menu and manager.
+e
+
+@language python
+@tabwidth -4
+@killcolor </t>
+<t tx="ekr.20050328092641.1">['__cmp__', '__contains__', '__del__', '__delitem__', '__doc__', '__getitem__', '__init__', '__iter__', '__len__', '__module__', '__repr__', '__setitem__', '_checkCursor', '_checkOpen', '_closeCursors', '_cursor_refs', '_gen_cref_cleaner', '_make_iter_cursor', 'clear', 'close', 'db', 'dbc', 'first', 'get', 'has_key', 'isOpen', 'items', 'iteritems', 'iterkeys', 'itervalues', 'keys', 'last', 'next', 'pop', 'popitem', 'previous', 'saved_dbc_key', 'set_location', 'setdefault', 'sync', 'update', 'values']
+
+</t>
+<t tx="ekr.20050328092641.2">;default/ is leo/plugins  ~/ is your $HOME env var as seen by leo
+; if there is an @setting Library_lib* somewhere it will override the ini
+;there are no provisions yet to change the @setting but hitting Preferences apply
+; from the plugin_menu will reread the ini and the @setting
+; you could even change the setting by script then hit apply for now.
+; delete or comment out the ones you won't be using.
+
+; verbosity can be true, True, 1 on, False 0 , turns on extra internal feedback
+
+[Main]
+verbosity=0
+;lib* = eventually, don't use lib=  it is to be the current lib
+; only impliemented lib0..5 for now. lib0 is the opening lib
+
+;lib0 = default/library.dbm
+lib1 = default/library1.dbm
+;lib2 = default/library22.dbm
+;lib3 = default/library23.dbm
+;lib4 = default/library24.dbm
+
+;lib5 = ~/libraryMy.dbm
+;libLa = C:\c\leo\libraryL.dbm
+;libLb = C:/c/leo/libraryL.dbm</t>
+<t tx="ekr.20050328092641.3">    """@string Library_lib1 = default/libraryS.dbm
+    overrides the plugin and ini defaults
+    default/ replaced with leo/plugins dir
+    ~/ replaced with g.app.homeDir as Leo sees it.
+
+    put this in an @settings node in a leo or in leoSettings.leo
+    in config or your $HOME dir
+    
+    Note: for now, you still have to pullup the plugin_menu Properties
+    and hit apply if you change this after the first leo is on screen.
+    and you also before that have to enter settins and hit apply to reread settings.
+    later version will have more tools from Leo to handle this better.
+    the first library that will be opened is the default 
+    unless one or more of lib0 thru lib5 is defined somehow.
+    """
+#can we just have the list here? like recentfiles and get a list of them back?
+lib1</t>
+<t tx="ekr.20050328101812"> 
+        
+        
+        </t>
+<t tx="ekr.20050328101812.1"></t>
+<t tx="ekr.20050328101812.2"></t>
+<t tx="ekr.20050328101812.3"></t>
+<t tx="ekr.20050329033007">IMPORT_LEO_GLOBALS_BODY = """def importLeoGlobals():
+    
+    '''
+    Try to import leoGlobals from the leo/src directory, assuming that
+    the script using this function is in a subdirectory of the leo directory.
+    '''
+    
+    plugins_path = os.path.abspath(
+        os.path.join(os.path.dirname(__file__),'..','src'))
+    
+    if plugins_path in sys.path:
+        return None
+    else:
+        sys.path.append(plugins_path)
+        try:
+            import leoGlobals as g
+            return g
+        except ImportError:
+            print 'can not import leoGlobals from %s' % (plugins_path)
+            return None
+"""
+</t>
+<t tx="ekr.20050329033007.1">class AddImportLeoGlobalsFunction(NodeAdder):
+
+    '''Add importLeoGlobals function.'''
+
+    button_name = "&lt;&lt;importLeoGlobals&gt;&gt;"
+
+    nodes = [
+        Node(
+            name="&lt;&lt; define importLeoGlobals &gt;&gt;",
+            body=IMPORT_LEO_GLOBALS_BODY,
+            inherit=0
+    )]</t>
+<t tx="ekr.20050329082101"></t>
+<t tx="ekr.20050329082101.1">@nocolor</t>
+<t tx="ekr.20050329082101.2">The AutoTrees plugin is a helper plugin designed to make it very easy to write "hanlder" plugins to manage dynamic content in Leo outlines. 
+
+AutoTrees provides 
+
+- convenient handler base classes which can be specialized for particular uses
+- a manager to turn handlers on and off
+- a set of example handlers to show the kinds of things that are possible
+
+AutoTrees doesn't do anything that you cannot do in other ways, but it does provide a consistent way of adding dynamic content. This means that individual plugin writers don't have to rewrite all the same kinds of code each time and also makes it easier to maintain Leo, since it standardizes the way that certain classes of plugin interact with the Leo core.
+
+</t>
+<t tx="ekr.20050329082101.3">I'm a plugin writer and I want to write a plugin to display dynamic content - ie content not directly contained in the .leo or derived files, eg
+
+- email messages 
+- news feeds
+- news groups
+- documentation
+- remote files
+- statistics
+- file system data
+- data base records
+
+You can do this as a standard plugin, but as an AutoTrees handler you,
+
+- don't need to write code that interacts with the tree (this is done for you)
+- get centralized management
+- can still do everything else you could as a normal plugin
+
+</t>
+<t tx="ekr.20050329082101.4">AutoTrees is itself a plugin. When it starts it,
+
+1. Scans the leo\plugins\trees folder to find handlers
+2. Activates specific handlers (this is managed via a plugin manager type window)
+3. Waits for clicks and double-clicks on special nodes
+
+To create an AutoTree node, you add a node with @auto-my_handler. The @auto tells the plugin to go and look for the "my_handler" handler, if it is enabled. The handler is then called and this is then used to populate the node body and child nodes below this node.
+
+eg, for an @auto-rss node, the node headline is "@auto-rss http://myurl/news.xml". The handler goes to the URL mentioned and downloads the news stories. It then creates child nodes for each story and populates the bodies. 
+
+The handler doesn't have to worry about interacting with the Leo tree view, it just returns a tree object. 
+
+</t>
+<t tx="ekr.20050329082101.5">The best way is to use the existing examples as templates. Look at the "test" handler first as this is the "Hello world" of trees.
+
+</t>
+<t tx="ekr.20050329082101.6">@nocolor</t>
+<t tx="ekr.20050329082101.7">Just some simple testing nodes</t>
+<t tx="ekr.20050329082101.8"></t>
+<t tx="ekr.20050329082101.9">this is one</t>
+<t tx="ekr.20050329082101.10">this is two !!!</t>
+<t tx="ekr.20050329082101.11">this is three</t>
+<t tx="ekr.20050329082101.12"></t>
+<t tx="ekr.20050329082101.13"></t>
+<t tx="ekr.20050329082101.14"></t>
+<t tx="ekr.20050329082101.15">Reads a remote news service.
+
+@auto-rss &lt;url to news service&gt;
+
+Requires feedparser installed:
+    http://sourceforge.net/projects/feedparser/</t>
+<t tx="ekr.20050329082101.16">title
+
+summary_detail</t>
+<t tx="ekr.20050329082101.40">title (slash_section, category)
+
+summary_detail
+
+link</t>
+<t tx="ekr.20050329082101.51">title (modified)
+
+link</t>
+<t tx="ekr.20050329082101.52">Python 2.4.1 (release candhttp://www.python.org/2.4.1/index.htmlate 1) (2005-03-10)
+
+http://www.python.org/2.4.1/index.html</t>
+<t tx="ekr.20050329082101.53">Greg Stein, of Google and Apache Software Foundation, to deliver keynote at PyCon (2005-03-06)
+
+http://www.python.org/pycon/2005/keynotes.html</t>
+<t tx="ekr.20050329082101.54">New RSS feed for python-dev summaries (2005-02-24)
+
+http://www.python.org/dev/summary/channews.rdf</t>
+<t tx="ekr.20050329082101.55">Guhttp://www.sdforum.org/SDForum/Templates/CalendarEvent.aspx?CID=1547&amp;mo=2&amp;yr=2005o van Rossum speaking in Palo Alto (2005-02-17)
+
+http://www.sdforum.org/SDForum/Templates/CalendarEvent.aspx?CID=1547&amp;mo=2&amp;yr=2005</t>
+<t tx="ekr.20050329082101.56">Python 2.3.5 (final) (2005-02-08)
+
+http://www.python.org/2.3.5/index.html</t>
+<t tx="ekr.20050329082101.57">Security advisory for SimpleXMLRPCServer.py. (2005-02-03)
+
+http://python.org/security/PSF-2005-001/</t>
+<t tx="ekr.20050329082101.58">Deadline for OSCON proposals (2005-02-01)
+
+http://mail.python.org/pipermail/python-announce-list/2005-January/003683.html</t>
+<t tx="ekr.20050329082101.59">PyCon abstracts now available (2005-01-23)
+
+http://www.python.org/moin/PyConDC2005/Presentations</t>
+<t tx="ekr.20050329082101.60">PyCon preliminary schedule now available (2005-01-20)
+
+http://www.python.org/pycon/2005/schedule.html</t>
+<t tx="ekr.20050329082101.61">PSF has awarded three grants (2004-12-30)
+
+http://www.python.org/psf/grants/index.html</t>
+<t tx="ekr.20050329082101.62">Python for Nokia Series 60 now available (2004-12-23)
+
+http://www.forum.nokia.com/main/0,,034-821,00.html</t>
+<t tx="ekr.20050329082101.63">Python 2.4 (final) (2004-11-30)
+
+http://www.python.org/2.4/index.html</t>
+<t tx="ekr.20050329082101.64">PyZine issue 7 (2004-11-23)
+
+http://www.pyzine.com/Issue007/</t>
+<t tx="ekr.20050329082101.65">PyCon 2005 Call for Proposals (2004-10-23)
+
+http://www.python.org/pycon/2005/cfp.html</t>
+<t tx="ekr.20050329082101.66">Cameron Laird receives the Frank Willison Award (2004-10-18)
+
+http://press.oreilly.com/pub/pr/1237</t>
+<t tx="ekr.20050329082101.67">Reads a remote file
+
+@auto-remote &lt;url to file&gt;
+
+Requires pyCurl:
+    http://pycurl.sourceforge.net/</t>
+<t tx="ekr.20050329082101.68">&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"&gt;
+&lt;html&gt;
+&lt;head&gt;
+&lt;title&gt;BBC - Error 404: Page not found&lt;/title&gt;
+&lt;meta name="description" content="Error 404 - page not found" /&gt;
+&lt;meta name="keywords" content="" /&gt;
+&lt;meta name="created" content="20040506" /&gt;
+&lt;meta name="updated" content="20040506" /&gt;
+&lt;base href="http://www.bbc.co.uk" /&gt;
+&lt;style&gt;
+body {margin:0; padding:0;}
+em {color:#900;}
+p, ul {font-size:80%}
+h4,h3,h2,h1,p, ul {font-family: verdana,arial,helvetica,sans-serif;}
+h4,h3 {font-size:100%}
+h4,h1 {margin:0}
+div.main {padding:8px;margin:0px;width:770;}
+form {margin:0;padding:0;}
+&lt;/style&gt;
+&lt;/head&gt;
+&lt;body bgcolor="#ffffff" link="#333366" text="#000000" vlink="#333366" alink="#000000" marginheight="0" marginwidth="0"&gt;
+
+&lt;!-- toolbar 1.4 toolbar.page 770 666666 --&gt;&lt;table width="100%" cellpadding="0" cellspacing="0" border="0"&gt;&lt;tr&gt;&lt;td colspan="2" style="background-color:#828282;" &gt;&lt;a name="top"&gt;&lt;img src="/f/t.gif" width="590" height="2" alt="" /&gt;&lt;/a&gt;&lt;/td&gt;&lt;td style="background-color:#828282;"&gt;&lt;img src="/f/t.gif" width="1" height="2" alt="" /&gt;&lt;/td&gt;&lt;/tr&gt;&lt;form action="http://www.bbc.co.uk/cgi-bin/search/results.pl"&gt;&lt;tr&gt;&lt;td style="border-left:2px solid #828282;background-color:#999999;" width="54"&gt;&lt;a href="http://www.bbc.co.uk/go/toolbar/-/"&gt;&lt;img src="/images/logo04.gif" width="50" height="20" alt="BBC" border="0" hspace="2" vspace="5" /&gt;&lt;/a&gt;&lt;/td&gt;&lt;td style="background:#999999;" align="right"&gt;&lt;table cellpadding="0" cellspacing="0" border="0" style="float:right;"&gt;&lt;tr&gt;&lt;td style="background:#999999;"&gt;&lt;font size="1"&gt;&lt;b&gt;&lt;a href="http://www.bbc.co.uk/go/toolbar/text/-/" style="color:#ffffff;text-decoration:none;font-family:verdana,arial,helvetica,sans-serif;padding:1px 4px;"&gt;Home&lt;/a&gt;&lt;/b&gt;&lt;/font&gt;&lt;/td&gt;&lt;td style="background:#999999 url(/images/v.gif) repeat-y;" width="6"&gt;&lt;br /&gt;&lt;/td&gt;&lt;td&gt;&lt;font size="1"&gt;&lt;b&gt;&lt;a href="/go/toolbar/-/tv/" style="color:#ffffff;text-decoration:none;font-family:verdana,arial,helvetica,sans-serif;padding:1px 4px;"&gt;TV&lt;/a&gt;&lt;/b&gt;&lt;/font&gt;&lt;/td&gt;&lt;td style="background:#999999 url(/images/v.gif) repeat-y;" width="6"&gt;&lt;br /&gt;&lt;/td&gt;&lt;td&gt;&lt;font size="1"&gt;&lt;b&gt;&lt;a href="/go/toolbar/-/radio/" style="color:#ffffff;text-decoration:none;font-family:verdana,arial,helvetica,sans-serif;padding:1px 4px;"&gt;Radio&lt;/a&gt;&lt;/b&gt;&lt;/font&gt;&lt;/td&gt;&lt;td style="background:#999999 url(/images/v.gif) repeat-y;" width="6"&gt;&lt;br /&gt;&lt;/td&gt;&lt;td&gt;&lt;font size="1"&gt;&lt;b&gt;&lt;a href="/go/toolbar/-/talk/" style="color:#ffffff;text-decoration:none;font-family:verdana,arial,helvetica,sans-serif;padding:1px 4px;"&gt;Talk&lt;/a&gt;&lt;/b&gt;&lt;/font&gt;&lt;/td&gt;&lt;td style="background:#999999 url(/images/v.gif) repeat-y;" width="6"&gt;&lt;br /&gt;&lt;/td&gt;&lt;td&gt;&lt;font size="1"&gt;&lt;b&gt;&lt;a href="/go/toolbar/-/whereilive/" style="color:#ffffff;text-decoration:none;font-family:verdana,arial,helvetica,sans-serif;padding:1px 4px;"&gt;Where&amp;nbsp;I&amp;nbsp;Live&lt;/a&gt;&lt;/b&gt;&lt;/font&gt;&lt;/td&gt;&lt;td style="background:#999999 url(/images/v.gif) repeat-y;" width="6"&gt;&lt;br /&gt;&lt;/td&gt;&lt;td&gt;&lt;nobr&gt;&lt;font size="1"&gt;&lt;b&gt;&lt;a href="/go/toolbar/-/a-z/" style="color:#ffffff;text-decoration:none;font-family:verdana,arial,helvetica,sans-serif;padding:1px 4px;"&gt;A-Z&amp;nbsp;Index&lt;/a&gt;&lt;/b&gt;&lt;/font&gt;&lt;/nobr&gt;&lt;/td&gt;&lt;td style="background:#666666 url(/images/sl3.gif) no-repeat;" width="8"&gt;&lt;br /&gt;&lt;/td&gt;&lt;td style="background:#666666 url(/images/st.gif) repeat-x 0 0;"&gt;&lt;input type="text" id="bbcpageSearchbox" name="q" size="6" style="margin:3px 0 0;font-family:arial,helvetica,sans-serif;width:100px;" title="BBC Search" /&gt;&lt;/td&gt;&lt;td style="background:#666666 url(/images/st.gif) repeat-x;"&gt;&lt;input type="image" src="/images/srchb.gif" name="go" value="go" alt="Search" width="64" height="25" border="0" /&gt;&lt;/td&gt;&lt;td style="background:#999999 url(/images/sra.gif) no-repeat;" width="1"&gt;&lt;img src="/f/t.gif" width="1" height="30" alt="" /&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/td&gt;&lt;td style="background:#999999 url(/images/srb.gif) no-repeat;"&gt;&lt;img src="/f/t.gif" width="1" height="1" alt="" /&gt;&lt;input type="hidden" name="uri" value="/news.html" /&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/form&gt;&lt;tr&gt;&lt;td colspan="2" style="background-color:#000000;"&gt;&lt;img src="/f/t.gif" width="770" height="1" alt="" /&gt;&lt;/td&gt;&lt;td width="100%" style="background-color:#000000;"&gt;&lt;img src="/f/t.gif" width="1" height="1" alt="" /&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;!-- end toolbar 1.4 --&gt;
+
+&lt;table cellspacing="0" cellpadding="8" border="0" width="770" bgcolor="#cccccc"&gt;&lt;tr&gt;&lt;td width="335"&gt;&lt;font size="-2" face="arial,helvetica"&gt;TUESDAY&lt;br /&gt;29th March 2005&lt;br /&gt;&lt;a href="/cgi-bin/education/betsie/parser.pl"&gt;Text only&lt;/a&gt; &lt;/font&gt;&lt;/td&gt;&lt;td width="435"&gt;&lt;h1&gt;404&lt;/h1&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;div class="main"&gt;
+&lt;div align="center"&gt;
+&lt;h2&gt;Page not found&lt;/h2&gt;
+&lt;p&gt;Unfortunately the following page was not available:&lt;br /&gt;
+&lt;em&gt;http://www.bbc.co.uk/news.html&lt;/em&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;h3&gt;This might be because:&lt;/h3&gt;
+&lt;ul&gt;&lt;li&gt;You may have typed the web address incorrectly. Please check the address and spelling ensuring that it does &lt;b&gt;not&lt;/b&gt; contain capital letters or spaces&lt;/li&gt;
+&lt;li&gt;It is possible that the page you were looking for may have been moved, updated or deleted.&lt;/li&gt;&lt;/ul&gt;
+
+&lt;h3&gt;Please try the following options instead:&lt;/h3&gt;
+
+&lt;form action="/cgi-bin/search/results.pl"&gt;
+&lt;table cellpadding="4" cellspacing="2" border="0" align="center" bgcolor="#000000"&gt;
+&lt;tr&gt;&lt;td bgcolor="#99ccff"&gt;&lt;h4&gt;Search bbc.co.uk&lt;/h4&gt;&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td bgcolor="#ffffcc"&gt;&lt;input type="text" name="q" size="45" /&gt;&amp;nbsp;&lt;input type="submit" value="Go" /&gt;&lt;/td&gt;&lt;/tr&gt;
+&lt;/table&gt;
+&lt;/form&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Return to the &lt;a href="/"&gt;bbc.co.uk Home Page&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Use our &lt;a href="/a-z/"&gt;site index&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;If you still encounter problems then please try the &lt;a href="/help/"&gt;help&lt;/a&gt; section.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;/div&gt;
+&lt;!-- inc.footer.page --&gt;&lt;br clear="all" /&gt;&lt;table width="770" cellpadding="0" cellspacing="0" border="0"&gt;&lt;tr&gt;&lt;td width="110"&gt;&lt;img src="/furniture/tiny.gif" alt="" width="110" height="1"&gt;&lt;/td&gt;&lt;td width="10"&gt;&lt;img src="/furniture/tiny.gif" alt="" width="10" height="1"&gt;&lt;/td&gt;&lt;td align="center" width="100%"&gt;&lt;font face="arial, helvetica, sans-serif" size="1"&gt;&lt;a href="/terms/"&gt;Terms of Use&lt;/a&gt; | &lt;a href="/privacy/"&gt;Privacy&lt;/a&gt;&lt;/font&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;!-- end inc.footer.page --&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;
+</t>
+<t tx="ekr.20050329082101.69">Produces documentation for a module
+
+@auto-doc &lt;module name&gt;</t>
+<t tx="ekr.20050329082101.70"></t>
+<t tx="ekr.20050329082101.71">Base class for Docutils components.</t>
+<t tx="ekr.20050329082101.72"></t>
+<t tx="ekr.20050329082101.73">tuple() -&gt; an empty tuple
+tuple(sequence) -&gt; tuple initialized from sequence's items
+
+If the argument is a tuple, the return value is the same object.</t>
+<t tx="ekr.20050329082101.74">
+        Is `format` supported by this component?
+
+        To be used by transforms to ask the dependent component if it supports
+        a certain input context or output format.
+        </t>
+<t tx="ekr.20050329082101.75"></t>
+<t tx="ekr.20050329082101.76">No documentation for OPTCRE</t>
+<t tx="ekr.20050329082101.77">No documentation for SECTCRE</t>
+<t tx="ekr.20050329082101.78">Create a new section in the configuration.
+
+        Raise DuplicateSectionError if a section by the specified name
+        already exists.
+        </t>
+<t tx="ekr.20050329082101.79">tuple() -&gt; an empty tuple
+tuple(sequence) -&gt; tuple initialized from sequence's items
+
+If the argument is a tuple, the return value is the same object.</t>
+<t tx="ekr.20050329082101.80">dict() -&gt; new empty dictionary.
+dict(mapping) -&gt; new dictionary initialized from a mapping object's
+    (key, value) pairs.
+dict(seq) -&gt; new dictionary initialized as if via:
+    d = {}
+    for k, v in seq:
+        d[k] = v
+dict(**kwargs) -&gt; new dictionary initialized with the name=value pairs
+    in the keyword argument list.  For example:  dict(one=1, two=2)</t>
+<t tx="ekr.20050329082101.81">
+    Parser for command-line and library use.  The `settings_spec`
+    specification here and in other Docutils components are merged to build
+    the set of command-line options and runtime settings for this process.
+
+    Common settings (defined below) and component-specific settings must not
+    conflict.  Short options are reserved for common settings, and components
+    are restrict to using long options.
+    </t>
+<t tx="ekr.20050329082101.82">str(object) -&gt; string
+
+Return a nice string representation of the object.
+If the argument is a string, the return value is the same object.</t>
+<t tx="ekr.20050329082101.83">tuple() -&gt; an empty tuple
+tuple(sequence) -&gt; tuple initialized from sequence's items
+
+If the argument is a tuple, the return value is the same object.</t>
+<t tx="ekr.20050329082101.84">dict() -&gt; new empty dictionary.
+dict(mapping) -&gt; new dictionary initialized from a mapping object's
+    (key, value) pairs.
+dict(seq) -&gt; new dictionary initialized as if via:
+    d = {}
+    for k, v in seq:
+        d[k] = v
+dict(**kwargs) -&gt; new dictionary initialized with the name=value pairs
+    in the keyword argument list.  For example:  dict(one=1, two=2)</t>
+<t tx="ekr.20050329082101.85">tuple() -&gt; an empty tuple
+tuple(sequence) -&gt; tuple initialized from sequence's items
+
+If the argument is a tuple, the return value is the same object.</t>
+<t tx="ekr.20050329082101.86">list() -&gt; new list
+list(sequence) -&gt; new list initialized from sequence's items</t>
+<t tx="ekr.20050329082101.87">list() -&gt; new list
+list(sequence) -&gt; new list initialized from sequence's items</t>
+<t tx="ekr.20050329082101.88">dict() -&gt; new empty dictionary.
+dict(mapping) -&gt; new dictionary initialized from a mapping object's
+    (key, value) pairs.
+dict(seq) -&gt; new dictionary initialized as if via:
+    d = {}
+    for k, v in seq:
+        d[k] = v
+dict(**kwargs) -&gt; new dictionary initialized with the name=value pairs
+    in the keyword argument list.  For example:  dict(one=1, two=2)</t>
+<t tx="ekr.20050329082101.89">str(object) -&gt; string
+
+Return a nice string representation of the object.
+If the argument is a string, the return value is the same object.</t>
+<t tx="ekr.20050329082101.90">
+    A facade encapsulating the high-level logic of a Docutils system.
+    </t>
+<t tx="ekr.20050329082101.91">str(object) -&gt; string
+
+Return a nice string representation of the object.
+If the argument is a string, the return value is the same object.</t>
+<t tx="ekr.20050329082101.92">str(object) -&gt; string
+
+Return a nice string representation of the object.
+If the argument is a string, the return value is the same object.</t>
+<t tx="ekr.20050329082101.93">
+Command-line and common processing for Docutils front-end tools.
+
+Exports the following classes:
+
+- `OptionParser`: Standard Docutils command-line processing.
+- `Values`: Runtime settings; objects are simple structs
+  (``object.attribute``).
+- `ConfigParser`: Standard Docutils config file processing.
+</t>
+<t tx="ekr.20050329082101.94">
+I/O classes provide a uniform API for low-level input and output.  Subclasses
+will exist for a variety of input/output mechanisms.
+</t>
+<t tx="ekr.20050329082101.95">
+This package contains Docutils parser modules.
+</t>
+<t tx="ekr.20050329082101.96">
+    Set up &amp; run a `Publisher`.  For command-line front ends.
+
+    Parameters:
+
+    - `reader`: A `docutils.readers.Reader` object.
+    - `reader_name`: Name or alias of the Reader class to be instantiated if
+      no `reader` supplied.
+    - `parser`: A `docutils.parsers.Parser` object.
+    - `parser_name`: Name or alias of the Parser class to be instantiated if
+      no `parser` supplied.
+    - `writer`: A `docutils.writers.Writer` object.
+    - `writer_name`: Name or alias of the Writer class to be instantiated if
+      no `writer` supplied.
+    - `settings`: Runtime settings object.
+    - `settings_spec`: Extra settings specification; a `docutils.SettingsSpec`
+      subclass.  Used only if no `settings` specified.
+    - `settings_overrides`: A dictionary containing program-specific overrides
+      of component settings.
+    - `enable_exit`: Boolean; enable exit status at end of processing?
+    - `argv`: Command-line argument list to use instead of ``sys.argv[1:]``.
+    - `usage`: Usage string, output if there's a problem parsing the command
+      line.
+    - `description`: Program description, output for the "--help" option
+      (along with command-line option descriptions).
+    </t>
+<t tx="ekr.20050329082101.97">
+    Set up &amp; run a `Publisher`.  For programmatic use with file-like I/O.
+
+    Parameters:
+
+    - `source`: A file-like object (must have "read" and "close" methods).
+    - `source_path`: Path to the input file.  Opened if no `source` supplied.
+      If neither `source` nor `source_path` are supplied, `sys.stdin` is used.
+    - `destination`: A file-like object (must have "write" and "close"
+      methods).
+    - `destination_path`: Path to the input file.  Opened if no `destination`
+      supplied.  If neither `destination` nor `destination_path` are supplied,
+      `sys.stdout` is used.
+    - `reader`: A `docutils.readers.Reader` object.
+    - `reader_name`: Name or alias of the Reader class to be instantiated if
+      no `reader` supplied.
+    - `parser`: A `docutils.parsers.Parser` object.
+    - `parser_name`: Name or alias of the Parser class to be instantiated if
+      no `parser` supplied.
+    - `writer`: A `docutils.writers.Writer` object.
+    - `writer_name`: Name or alias of the Writer class to be instantiated if
+      no `writer` supplied.
+    - `settings`: Runtime settings object.
+    - `settings_spec`: Extra settings specification; a `docutils.SettingsSpec`
+      subclass.  Used only if no `settings` specified.
+    - `settings_overrides`: A dictionary containing program-specific overrides
+      of component settings.
+    - `enable_exit`: Boolean; enable exit status at end of processing?
+    </t>
+<t tx="ekr.20050329082101.98">
+    Set up &amp; run a `Publisher`, and return the string output.
+    For programmatic use with string I/O.
+
+    For encoded string output, be sure to set the "output_encoding" setting to
+    the desired encoding.  Set it to "unicode" for unencoded Unicode string
+    output.  Here's how::
+
+        publish_string(..., settings_overrides={'output_encoding': 'unicode'})
+
+    Similarly for Unicode string input (`source`)::
+
+        publish_string(..., settings_overrides={'input_encoding': 'unicode'})
+
+    Parameters:
+
+    - `source`: An input string; required.  This can be an encoded 8-bit
+      string (set the "input_encoding" setting to the correct encoding) or a
+      Unicode string (set the "input_encoding" setting to "unicode").
+    - `source_path`: Path to the file or object that produced `source`;
+      optional.  Only used for diagnostic output.
+    - `destination_path`: Path to the file or object which will receive the
+      output; optional.  Used for determining relative paths (stylesheets,
+      source links, etc.).
+    - `reader`: A `docutils.readers.Reader` object.
+    - `reader_name`: Name or alias of the Reader class to be instantiated if
+      no `reader` supplied.
+    - `parser`: A `docutils.parsers.Parser` object.
+    - `parser_name`: Name or alias of the Parser class to be instantiated if
+      no `parser` supplied.
+    - `writer`: A `docutils.writers.Writer` object.
+    - `writer_name`: Name or alias of the Writer class to be instantiated if
+      no `writer` supplied.
+    - `settings`: Runtime settings object.
+    - `settings_spec`: Extra settings specification; a `docutils.SettingsSpec`
+      subclass.  Used only if no `settings` specified.
+    - `settings_overrides`: A dictionary containing program-specific overrides
+      of component settings.
+    - `enable_exit`: Boolean; enable exit status at end of processing?
+    </t>
+<t tx="ekr.20050329082101.99">
+This package contains Docutils Reader modules.
+</t>
+<t tx="ekr.20050329082101.100">This module provides access to some objects used or maintained by the
+interpreter and to functions that interact strongly with the interpreter.
+
+Dynamic objects:
+
+argv -- command line arguments; argv[0] is the script pathname if known
+path -- module search path; path[0] is the script directory, else ''
+modules -- dictionary of loaded modules
+
+displayhook -- called to show results in an interactive session
+excepthook -- called to handle any uncaught exception other than SystemExit
+  To customize printing in an interactive session or to install a custom
+  top-level exception handler, assign other functions to replace these.
+
+exitfunc -- if sys.exitfunc exists, this routine is called when Python exits
+  Assigning to sys.exitfunc is deprecated; use the atexit module instead.
+
+stdin -- standard input file object; used by raw_input() and input()
+stdout -- standard output file object; used by the print statement
+stderr -- standard error object; used for error messages
+  By assigning other file objects (or objects that behave like files)
+  to these, it is possible to redirect all of the interpreter's I/O.
+
+last_type -- type of last uncaught exception
+last_value -- value of last uncaught exception
+last_traceback -- traceback of last uncaught exception
+  These three are only available in an interactive session after a
+  traceback has been printed.
+
+exc_type -- type of exception currently being handled
+exc_value -- value of exception currently being handled
+exc_traceback -- traceback of exception currently being handled
+  The function exc_info() should be used instead of these three,
+  because it is thread-safe.
+
+Static objects:
+
+maxint -- the largest supported integer (the smallest is -maxint-1)
+maxunicode -- the largest supported character
+builtin_module_names -- tuple of module names built into this interpreter
+version -- the version of this interpreter as a string
+version_info -- version information as a tuple
+hexversion -- version information encoded as a single integer
+copyright -- copyright notice pertaining to this interpreter
+platform -- platform identifier
+executable -- pathname of this Python interpreter
+prefix -- prefix used to find the Python library
+exec_prefix -- prefix used to find the machine-specific Python library
+dllhandle -- [Windows only] integer handle of the Python DLL
+winver -- [Windows only] version number of the Python DLL
+__stdin__ -- the original stdin; don't touch!
+__stdout__ -- the original stdout; don't touch!
+__stderr__ -- the original stderr; don't touch!
+__displayhook__ -- the original displayhook; don't touch!
+__excepthook__ -- the original excepthook; don't touch!
+
+Functions:
+
+displayhook() -- print an object to the screen, and save it in __builtin__._
+excepthook() -- print an exception and its traceback to sys.stderr
+exc_info() -- return thread-safe information about the current exception
+exc_clear() -- clear the exception state for the current thread
+exit() -- exit the interpreter by raising SystemExit
+getdlopenflags() -- returns flags to be used for dlopen() calls
+getrefcount() -- return the reference count for an object (plus one :-)
+getrecursionlimit() -- return the max recursion depth for the interpreter
+setcheckinterval() -- control how often the interpreter checks for events
+setdlopenflags() -- set the flags to be used for dlopen() calls
+setprofile() -- set the global profiling function
+setrecursionlimit() -- set the max recursion depth for the interpreter
+settrace() -- set the global debug tracing function
+</t>
+<t tx="ekr.20050329082101.101">
+This package contains Docutils Writer modules.
+</t>
+<t tx="ekr.20050329082101.102"></t>
+<t tx="ekr.20050329082101.103">Reads messages from a news server. Only does the last 10 as this is very slow ... it is only meant as an example. 
+
+@auto-news &lt;news server name&gt;/&lt;news group name&gt;
+
+</t>
+<t tx="ekr.20050329082101.104">
+
+Given some Python source, is there any tool which can tell the mimimum 
+level of Python required to run that source? If I distribute some code, 
+I need to be able to say which level of Python users require to run it.
+
+-- 
+Steve Toledo-Brown
+Speaking for myself only.
+Humans please use domain uk.ibm.com</t>
+<t tx="ekr.20050329082101.105">
+
+Disclaimer #1: I am a Python newbie, and I appreciate the vast
+documentation at python.org -- some of which I expect has the answer to
+my question if I can find it.
+
+I am working on a custom computational fluid dynamics code.  I will
+create one or more compiled Python modules in C/C++ to provide new
+types and functions for manipulating those types.  I have a *lot* of
+data.  Efficiency requires that the new data structures be shared
+freely within the scope of the module, without directly exposing the
+data to the standard Python runtime environment.
+
+Stated another way, I need the data to persist in virtual memory across
+seprate invocations of functions in the module(s) and to be accessible
+only through methods explicitly provided by the module(s).
+
+How can I do this?  What are some good examples to study?
+
+Disclaimer #2: I am a aware that strong opinions exist about closing
+off data from users.  But it's a requirement for this application.  I
+don't like it, but I need the job!
+
+Thanks for your time
+CatManDo
+</t>
+<t tx="ekr.20050329082101.106">
+
+Anand S Bisen wrote:
+&gt; Hello
+&gt; 
+&gt; I have been developing a code that works pretty well on my python 2.3 
+&gt; and now when i am running it on my server where it is programmed to run 
+&gt; it's giving me errors. I have been using __contains__ method and it 
+&gt; fails on python 2.2
+&gt; 
+&gt; For example
+&gt; 
+&gt; (Python 2.3)
+&gt;  &gt;&gt; x="Hello World"
+&gt;  &gt;&gt; print x.__contains__("Hello")
+&gt; True
+&gt; 
+&gt; (Python 2.2)
+&gt; 
+&gt;  &gt;&gt;&gt; x="Hello world"
+&gt;  &gt;&gt;&gt; print x.__contains__("Hello")
+&gt; 
+&gt; Traceback (most recent call last):
+&gt;  File "&lt;stdin&gt;", line 1, in ?
+&gt; TypeError: 'in &lt;string&gt;' requires character as left operand
+&gt; 
+&gt; 
+&gt; Is there any woraround for this or what am i doing wrong in 2.2 ?
+&gt; 
+&gt; Thanks
+&gt; 
+Any use of double-underscores is an indication that magic is at work. In 
+this case the __contains__ method is intended to be called by the 
+interpreter when you write
+
+     x in s
+
+The __contains__ method was extended for strings in 2.3 so that 
+construct could be used as a test to see whether s contained x as a 
+substring. Before that, as the error message explains, it will only test 
+to see whether a single character is contained in the string (by analogy 
+with
+
+     1 in [3, 4, 5, 2]
+
+in case you are interested).
+
+So you'll need to use the .find() string method and say
+
+     if x.find("Hello") != -1:
+         ... you found "Hello"
+
+because your ISP appears to be using an older version of Python than you.
+
+regards
+  Steve
+-- 
+Meet the Python developers and your c.l.py favorites March 23-25
+Come to PyCon DC 2005                      http://www.pycon.org/
+Steve Holden                           http://www.holdenweb.com/</t>
+<t tx="ekr.20050329082101.107">
+
+
+"Zhang Le" &lt;sigu4wa02@sneakemail.com&gt; wrote in message 
+news:1109952846.225378.136210@o13g2000cwo.googlegroups.com...
+&gt; Hi,
+&gt;  I did a small benchmark of matrix-vector multiply operation using
+&gt; Numeric module. I'm a bit suprised to find matrix*col-vector is much
+&gt; faster than row-vector*matrix. I wonder whether other people have
+&gt; observed this fact too,
+
+Yes, common knowledge in numerical analysis community.  Using the faster 
+direction for a particular system as much as possible is part of tuning 
+linear algebra software.
+
+&gt; and why?
+
+I presume that Numeric, like Python, stores matrices by row.  So M*v 
+multiplies contiguous rows by a contiguous vector.  Multiplying a vector by 
+non-contiguous columns requires requires skipping thru the matrix, which 
+may require more computation and generate more cache misses and page 
+faults.
+
+Terry  J. Reedy
+
+
+</t>
+<t tx="ekr.20050329082101.108">
+
+I just read in the 'What's New in Python 2.4' document that the None
+data type was converted to a constant:
+http://python.org/doc/2.4/whatsnew/node15.html
+
+"""
+# None is now a constant; code that binds a new value to the name
+"None" is now a syntax error.
+"""
+
+So, what's the implications of this?  I find the lack of explanation a
+little puzzling, since I've written code that compares a variable's
+type with the 'None' type.  For example, a variable would be
+initialized to 'None' and if it went through a loop unchanged, I could
+determine this at the end by using a conditional type(var) ==
+type(None).  What will type(None) return now?
+</t>
+<t tx="ekr.20050329082101.109">
+
+On Fri, 4 Mar 2005 22:35:48 +0100, andrea_gavana@tin.it
+&lt;andrea_gavana@tin.it&gt; wrote:
+&gt; Hello NG,
+&gt; 
+&gt;     I was wondering if there is a way to obtain, from a list of floats,
+&gt; a list of integers without loops. Probably is a basic question, but I can't
+&gt; find an answer... I have had my eyes blinded by Matlab for years, but now
+&gt; that I discovered Python+wxPython there seems to be no limit on what one
+&gt; can do with these 2 tools. Anyway, following the Matlab style, I would like
+&gt; to do something like this:
+&gt; 
+&gt; matrix = [1.5, 4.3, 5.5]
+&gt; integer_matrix = int(matrix)       (float for Matlab)
+
+You're going to have to use loops. I don't know how Matlab can do it
+without them, unless it maintains the matrix as a list of floats and
+simply *views* it as a list of ints. More likely, it simply hides the
+loop away from you. Anyway, here's some ways to do it:
+
+preferable: int_matrix = [int(x) for x in matrix]
+old way: int_matrix = map(int, matrix)
+explicit:
+int_matrix = []
+for x in matrix:
+    int_matrix.append(int(x))
+
+Any of these methods should be neither really slow nor really fast,
+but the list comprehension should be the fastest (I think). Anyway, if
+you're going to be doing lots of large matrices, and want some of your
+old matlab stuff, check out numpy and numarray at
+http://numeric.scipy.org/ .
+
+Also, somebody was recently posting on here about a python &lt;-&gt; matlab
+bridge that they developed; you should search the archives for that
+(it was in february, I think).
+
+And, finally, when doing scientific stuff, I found IPython
+(http://ipython.scipy.org/) to be an invaluable tool. It's a much
+improved Python interpreter.
+
+Peace
+Bill Mill
+bill.mill at gmail.com
+
+&gt; 
+&gt; (In Matlab, "integer_matrix" is always a double anyway, here I would like
+&gt; only to show the vector-matrix operation).
+&gt; 
+&gt; Obviously, Python complains about:
+&gt; 
+&gt; Traceback (most recent call last):
+&gt;   File "&lt;interactive input&gt;", line 1, in ?
+&gt; TypeError: int() argument must be a string or a number
+&gt; 
+&gt; I would like to avoid loops because, having been blinded by Matlab vector-matrix
+&gt; abilities (and corresponding SLOW for-while loops operations), I tend to
+&gt; think that also Python will be slow if I use loops.
+&gt; 
+&gt; Does anyone have a suggestion (or maybe could anyone show me that I'm wrong
+&gt; about loops?)
+&gt; 
+&gt; Thanks you a lot.
+&gt; 
+&gt; Andrea.
+&gt; 
+&gt; --
+&gt; http://mail.python.org/mailman/listinfo/python-list
+&gt;</t>
+<t tx="ekr.20050329082101.110">news-server.houston.rr.com/comp.lang.python</t>
+<t tx="ekr.20050329082101.111">
+
+This was happening to me for a while but stopped. I think it has to do with 
+your mail server. Perhaps you could find another. If you are at a company, 
+you might want to talk to your sysadmin and see if he can change the mail 
+program. How did you get this latest message through? You know, with the 
+proper email client you can have identities and such that have "from" and 
+"return addresses" that are completely unrelated to the mail server you are 
+using, if you would rather the mail list did not know about your most favored 
+address.
+
+James
+
+On Friday 04 March 2005 01:56 pm, phil wrote:
+&gt; everything I post to this list bounces awaiting moderator
+&gt; approval, due to suspicious header.
+&gt; COuld someone tell me what's wrong.  I'm on lots of list
+&gt; with no problem.
+
+-- 
+James Stroud, Ph.D.
+UCLA-DOE Institute for Genomics and Proteomics
+Box 951570
+Los Angeles, CA 90095</t>
+<t tx="ekr.20050329082101.112">news-server.houston.rr.com/comp.lang.python</t>
+<t tx="ekr.20050329082101.113">news-server.houston.rr.com/comp.lang.python</t>
+<t tx="ekr.20050329082101.114"></t>
+<t tx="ekr.20050329082101.145"># This file allows you to turn handlers on and off
+doc.py
+remote.py
+rss.py
+test.py
+news.py
+
+plugin_manager.py</t>
+<t tx="ekr.20050329082101.146"></t>
+<t tx="ekr.20050329092553">Hundreds die in Indonesia quake
+
+Hundreds are believed to have died in Indonesia after a strong earthquake which sparked fears of a tsunami.</t>
+<t tx="ekr.20050329092553.1">Ousted Kyrgyz preshttp://news.bbc.co.uk/1/hi/world/asia-pacific/4391139.stment defiant
+
+Ousted Kyrgyz leader Askar Akayev says he remains the "sole legitimate preshttp://news.bbc.co.uk/1/hi/world/asia-pacific/4391139.stment" of his country.</t>
+<t tx="ekr.20050329092553.2">Hair 'good source of stem cells'
+
+Scientists have found hair follicles are a plentiful source of stem cells, which can become body tissue.</t>
+<t tx="ekr.20050329092553.3">Ashdown sacks top Bosnian Croat
+
+The top administrator in Bosnia, Lord Ashdown, sacks the Croat member of Bosnia's joint preshttp://news.bbc.co.uk/1/hi/world/europe/4390635.stmency.</t>
+<t tx="ekr.20050329092553.4">Splits paralyse Iraqi parliament
+
+Iraq's parliament reconvenes, but remains deadlocked over the formation of a new government.</t>
+<t tx="ekr.20050329092553.5">Mongolians protest for new poll
+
+Activists in Mongolia call for fresh elections, 
+in an action apparently inspired by the situation in Kyrgyzstan.</t>
+<t tx="ekr.20050329092553.6">Libya's Bulgarian medics appeal
+
+Six medics appeal against the death sentence imposed in Libya for deliberately infecting children with HIV.</t>
+<t tx="ekr.20050329092553.7">Schiavo rivals 'agree to autopsy'
+
+Terri Schiavo's husband and parents seek to discover the extent of her brain-damage after her death.</t>
+<t tx="ekr.20050329092553.8">Would-be sex tourist, 87, jailed
+
+An octogenarian US man is jailed for 20 years for trying to travel to the Philippines for sex with young girls.</t>
+<t tx="ekr.20050329092553.9">Golf: Funk claims Players title
+
+Fred Funk's final-round 70 gives him victory in the lucrative Players Championship at Sawgrass.</t>
+<t tx="ekr.20050329092553.10">Cricket: Series win for Aussies
+
+Australia beat New Zealand by nine wickets in the third Test to wrap up a 2-0 series win.</t>
+<t tx="ekr.20050329092553.11">Angola says virus 'under control'
+
+Angola says an outbreak of the deadly Marburg virus is under control as DR Congo takes precautions.</t>
+<t tx="ekr.20050329092553.12">Mugabe criticises MDC 'traitors'
+
+Preshttp://news.bbc.co.uk/1/hi/world/africa/4391087.stment Mugabe condemns opposition supporters as traitors, as parliamentary elections draw near.</t>
+<t tx="ekr.20050329092553.13">Ex-US diplomats round on Bolton
+
+Dozens of former US diplomats urge Congress to block the appointment of John Bolton as UN ambassador.</t>
+<t tx="ekr.20050329092553.14">Brazil quits loan accord with IMF
+
+Brazil announces it will not renew a $41.75bn loan accord with the International Monetary Fund.</t>
+<t tx="ekr.20050329092553.15">Japanese economy hit by weak data
+
+An unexpected rise in Japan's jobless rate and falls in household spending and retail sales hit Japanese stocks.</t>
+<t tx="ekr.20050329092553.16">Donors pledge $40m for KR trials
+
+A UN-supported Khmer Rouge tribunal, due to try Cambodia's rulers from the 1970s, could open soon.</t>
+<t tx="ekr.20050329092553.17">Three Romanians missing in Iraq
+
+Three Romanian journalists are missing, feared khttp://news.bbc.co.uk/1/hi/world/middle_east/4389391.stmnapped, in Iraq after one called on a mobile.</t>
+<t tx="ekr.20050329092553.18">Wolfowitz 'to meet EU officials'
+
+Paul Wolfowitz, the US's controversial nomination to head the World Bank, is expected to meet with EU officials on Wednesday, reports say.</t>
+<t tx="ekr.20050329092553.19">Knesset rejects Gaza referendum
+
+Israel's parliament rejects an attempt by opponents of the planned Gaza pullout to force a referendum.</t>
+<t tx="ekr.20050329092553.20">Militants to attend PLO meeting
+
+Islamic Jihad is to sit in on a meeting of the top Palestinian decision-making body for the first time.</t>
+<t tx="ekr.20050329092553.21">South Asia cancels tsunami alerts
+
+India and Sri Lanka withdraw the tsunami alerts issued after an earthquake hit the coast of Indonesia.</t>
+<t tx="ekr.20050329092553.22">Devastation as Afghan dam bursts
+
+A dam has burst in south-eastern Afghanistan killing at least six people and causing whttp://news.bbc.co.uk/1/hi/world/south_asia/4391251.stmespread devastation, officials say.</t>
+<t tx="ekr.20050329092553.23">Kyrgyzstan's friendly revolution
+
+The BBC's Ian MacWilliam reports from Kyrgyzstan on an unusual people's revolution.</t>
+<t tx="ekr.20050329092553.24">Followup on MS and Brazil in NY Times (mainpage, microsoft)
+
+putko was one of dozens to submit a story running on the NY Times about Open Source and Brazil. The choice quote is "We're not going to spend taxpayers' money on a program so that Microsoft can further consolhttp://slashdot.org/article.pl?sid=05/03/29/1359253&amp;from=rssate its monopoly..."
+
+http://slashdot.org/article.pl?shttp://slashdot.org/article.pl?sid=05/03/29/1359253&amp;from=rss=05/03/29/1359253&amp;from=rss</t>
+<t tx="ekr.20050329092553.25">A9.com with Syndicated Search (mainpage, internet)
+
+joeykiller writes "Search Engine Watch reports that Amazon now lets you add your own search to their A9 search engine. Users can opt-in to use additional search engines in addition to A9.com's own when searching. Amazon has chosen to use an extension of RSS 2.0 for this, and hopes that this format will enable search syndication in the same way RSS dhttp://slashdot.org/article.pl?sid=05/03/29/1337250&amp;from=rss for content. Several add-on searches are available already, among them New York Times, Wikipedia and NASA."
+
+http://slashdot.org/article.pl?shttp://slashdot.org/article.pl?sid=05/03/29/1337250&amp;from=rss=05/03/29/1337250&amp;from=rss</t>
+<t tx="ekr.20050329092553.26">What's Next At Apple (apple, apple)
+
+pinqkandi writes "Business 2.0 is running a fascinating article on what might be coming up in Apple's future. Beshttp://apple.slashdot.org/article.pl?sid=05/03/29/132202&amp;from=rsses speculation, some interesting statistics are included, such as how the iPod should create equal revenue to the Mac for Apple in 2006, if not surpassing it. A good read for the Apple lover or loather."
+
+http://apple.slashdot.org/article.pl?shttp://apple.slashdot.org/article.pl?sid=05/03/29/132202&amp;from=rss=05/03/29/132202&amp;from=rss</t>
+<t tx="ekr.20050329092553.27">Berkeley Grads' Identity Data Stolen (yro, privacy)
+
+yali writes "Dhttp://yro.slashdot.org/article.pl?sid=05/03/29/036237&amp;from=rss you get a graduate degree from Berkeley? Or maybe you just applied but dhttp://yro.slashdot.org/article.pl?sid=05/03/29/036237&amp;from=rssn't go there? If so, your http://yro.slashdot.org/article.pl?sid=05/03/29/036237&amp;from=rssentity may have been stolen. A laptop was stolen containing names, social security numbers, birthdates, and addresses of grad students, alumni, and applicants. University police suspect that the thief just wanted the laptop, but the irony of California's mandatory notification law is that the thief may now know they have something even more valuable. Berkeley has set up a website with information on the breach."
+
+http://yro.slashdot.org/article.pl?shttp://yro.slashdot.org/article.pl?sid=05/03/29/036237&amp;from=rss=05/03/29/036237&amp;from=rss</t>
+<t tx="ekr.20050329092553.28">South Korean Gov't. Advocates Linux (linux, linuxbiz)
+
+Anonymous Coward writes "Korea has now taken the plunge on the Linux operating system, and is now starting to advocate Linux for use in government and public sector applications. South Korea's Ministry of Information and Communications announced the move today, which will result in decreased Microsoft market share in the region." According to the article, Korea's Ministry of Information and Communication "will provhttp://linux.slashdot.org/article.pl?sid=05/03/29/0322248&amp;from=rsse a total of 3 billion won (US$2.95 million) for government agencies which want to use the Linux and other open-source computer programs this year."
+
+http://linux.slashdot.org/article.pl?shttp://linux.slashdot.org/article.pl?sid=05/03/29/0322248&amp;from=rss=05/03/29/0322248&amp;from=rss</t>
+<t tx="ekr.20050329092553.29">MS, EU Agree on Name for Windows Sans Media Player (mainpage, windows)
+
+An anonymous reader writes "Microsoft has agreed with European Union antitrust regulators on a new name for Windows software sold in Europe. Officials at the U.S. software giant sahttp://slashdot.org/article.pl?sid=05/03/28/1951251&amp;from=rss they had accepted the European Union's offer to call the European version of Windows sold without Media Player "Windows XP Home Edition N" - with "N" standing for "not with media player." Microsoft's "XP Professional Edition" will also include the "N" for versions sold without the media player. The prior nme for the OS was Windows XP Reduced Media Edition." News.com also mentions the choice.
+
+http://slashdot.org/article.pl?shttp://slashdot.org/article.pl?sid=05/03/28/1951251&amp;from=rss=05/03/28/1951251&amp;from=rss</t>
+<t tx="ekr.20050329092553.30">Blackbox (Finally) Updated (mainpage, gui)
+
+mpeg4codec writes "OSNews reported earlier this month that the lightweight Blackbox window manager has been updated to 0.70. Among the new features are EWMH compliance, anti-aliased fonts, unicode support, and backwards compatibility with previous versions' styles. Of course, it brings you all these new features (well, some are optional) while retaining its small binary size, small memory footprint, and short list of dependencies. I for one think it's about time."
+
+http://slashdot.org/article.pl?shttp://slashdot.org/article.pl?sid=05/03/29/0253245&amp;from=rss=05/03/29/0253245&amp;from=rss</t>
+<t tx="ekr.20050329092553.31">Your Face On the Big Screen (mainpage, ent)
+
+blamanj writes "In another case of SciFi becoming reality, you can now star in an animated film as your FutureCast (tm) face-scan is edited into the picture in real-time. John Brunner, in his Hugo-winning novel, Stand on Zanzibar predicted a similar development in television, lampooning people sitting at home while watching travologues of themselves 'on vacation.' Brunner, in addition to being an excellent writer, had some spot-on predictions of a virus-laden Internet in Shockwave Rhttp://slashdot.org/article.pl?sid=05/03/29/0123247&amp;from=rsser. Fortunately, the predictions of his eco-dystopia The Sheep Look Up have not come to pass. Yet."
+
+http://slashdot.org/article.pl?shttp://slashdot.org/article.pl?sid=05/03/29/0123247&amp;from=rss=05/03/29/0123247&amp;from=rss</t>
+<t tx="ekr.20050329092553.32">Ars Technica Builds Make Magazine's Steadicam (hardware, hardhack)
+
+An anonymous reader writes "Make magazine has been out for a little over a month now and was given high marks in a Slashdot review. Ars Technica has taken their review one step further by building the $14 steadicam project and testing it out. (be sure to check out the QuickTime vhttp://hardware.slashdot.org/article.pl?sid=05/03/29/0056206&amp;from=rsseo at the end to see their results...)"
+
+http://hardware.slashdot.org/article.pl?shttp://hardware.slashdot.org/article.pl?sid=05/03/29/0056206&amp;from=rss=05/03/29/0056206&amp;from=rss</t>
+<t tx="ekr.20050329092553.33">New Photovoltaics Made with Titanium Foil (science, tech)
+
+Memorize writes "A company called Daystartech has released a new type of photovoltaic cell which, unlike almost all the cells currently in use, does not silicon. This is based on a thin titanium film. Given the current shortage of solar-grade silicon, and all-time high oil prices, maybe titanium solar panels are here at the right time. The questions are, will they release it as a consumer solar product, and what will be the price per kilowatt hour?"
+
+http://science.slashdot.org/article.pl?shttp://science.slashdot.org/article.pl?sid=05/03/28/2320211&amp;from=rss=05/03/28/2320211&amp;from=rss</t>
 </tnodes>
 </leo_file>
