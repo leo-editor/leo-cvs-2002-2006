@@ -119,6 +119,26 @@ Anyway, I'm not sure about this, but it is kind of frustrating to have leo lock
 up totally, so hopefully this small data tidbit will help flush out this bug.
 #@nonl
 #@-node:ekr.20041201072431:(Can hoist cause a hang?)
+#@+node:ekr.20041201084142:It is possible to change individual headlines directly
+@killcolor
+
+http://sourceforge.net/forum/message.php?msg_id=2877106
+
+By: Paul Paterson - paulpaterson
+RE: Can I color the headline text ?  
+2004-12-01 08:01
+
+The cleo plugin makes a permanent change to the headline appearance (using node attributes) while the footprints plugin makes a temporary change in the current session. Footprints was derived from cleo, although you might not be able to tell from looking at it! 
+ 
+Cleo: http://sourceforge.net/forum/message.php?msg_id=2617221 
+ 
+Footprints: http://sourceforge.net/forum/message.php?msg_id=2813450 
+ 
+Between the two of them there should be enough information to help you achieve what you want. 
+ 
+It is possible to do pretty much anything you want but you will have to provide the infrastructure yourself because Leo doesn't natively support it.  
+#@nonl
+#@-node:ekr.20041201084142:It is possible to change individual headlines directly
 #@-node:ekr.20041130125500:First
 #@+node:ekr.20041128172446:add a 3rd party extension mechanism for Leo
 http://sourceforge.net/forum/message.php?msg_id=2871977
