@@ -123,13 +123,13 @@ class Navigator:
     #@nonl
     #@-node:ekr.20040108062655.6:addMark
     #@+node:ekr.20040108062655.3:addWidgets
-    def addWidgets(self): ##, tag, keywords):
+    def addWidgets(self):
     
         """Add the widgets to the navigation bar"""
     
         c = self.c
         # Create the main container.
-        self.frame = Tk.Frame(self.c.frame.iconFrame) 
+        self.frame = Tk.Frame(c.frame.iconFrame)
         self.frame.pack(side="left")
         # Create the two menus.
         menus = []
