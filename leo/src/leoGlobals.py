@@ -8,6 +8,8 @@
 #@@language python
 #@@tabwidth -4
 
+from __future__ import generators # To make the code work in Python 2.2.
+
 import leoGlobals as g # So code can use g below.
 import os
 import string
@@ -3093,6 +3095,7 @@ def CheckVersion( version, againstVersion, condition=">=", stringCompare="0.0.0.
     #
     # didn't find a condition that we expected.
     raise EnvironmentError,"condition must be one of '>=', '>', '==', '!=', '<', or '<='."
+#@nonl
 #@-node:ekr.20031218072017.3097:CheckVersion (Dave Hein)
 #@+node:ekr.20031218072017.3098:class Bunch
 # From The Python Cookbook.
