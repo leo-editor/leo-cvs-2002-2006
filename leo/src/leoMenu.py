@@ -379,17 +379,21 @@ class leoMenu:
 	#@+node:updateEditMenu
 	def updateEditMenu (self):
 	
-		c = self.c ; frame = c.frame
+		c = self.c ; frame = c.frame ; gui = app.gui
 		if not c: return
 		try:
 			# Top level Edit menu...
 			enable = frame.menu.enableMenu
 			menu = frame.menu.getMenu("Edit")
 			c.undoer.enableMenuItems()
-			if 0: # Always on for now.
-				enable(menu,"Cut",c.canCut())
-				enable(menu,"Copy",c.canCut())
-				enable(menu,"Paste",c.canPaste())
+			# Enable cut/paste.
+			data = frame.body.getSelectedText()
+			canCut = data and len(data) > 0
+			enable(menu,"Cut",canCut)
+			enable(menu,"Copy",canCut)
+			data = gui.getTextFromClipboard()
+			canPaste = data and len(data) > 0
+			enable(menu,"Paste",canPaste)
 			if 0: # Always on for now.
 				menu = frame.menu.getMenu("Find...")
 				enable(menu,"Find Next",c.canFind())
