@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="961" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="914" clone_windows="0"/>
 <globals body_outline_ratio="0.5">
-	<global_window_position top="30" left="356" height="828" width="877"/>
+	<global_window_position top="30" left="356" height="828" width="876"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences allow_rich_text="0">
@@ -730,536 +730,474 @@
 </v>
 </v>
 <v t="T563" a="E"><vh>wxPython plugin (not ready yet)</vh>
-<v t="T564"><vh>Diary</vh></v>
-<v t="T565"><vh>(other wxStuff)</vh>
-<v t="T566"><vh>wxDemos</vh>
-<v t="T567"><vh>@file c:\prog\test\wxTest.py</vh></v>
+<v t="T564"><vh> Diary</vh></v>
+<v t="T565" a="V"><vh> To do</vh>
+<v t="T566"><vh>Design changes</vh></v>
 </v>
+<v t="T567"><vh> Unused code</vh>
 <v t="T568"><vh>invoke c2py</vh></v>
+<v t="T569"><vh>LeoFrame.__init__</vh>
+<v t="T570"><vh>&lt;&lt; Initialize the private vars &gt;&gt;</vh></v>
+<v t="T571"><vh>&lt;&lt; Initialize the argument settings &gt;&gt;</vh></v>
+<v t="T572"><vh>&lt;&lt; Create the splitter windows &gt;&gt;</vh>
+<v t="T573"><vh>&lt;&lt; Set the image list &gt;&gt;</vh></v>
+</v>
+<v t="T574"><vh>&lt;&lt; Create the accelerator table &gt;&gt;</vh></v>
+<v t="T575"><vh>&lt;&lt; Create the status bar &gt;&gt;</vh></v>
+<v t="T576"><vh>&lt;&lt; Set the window Icon &gt;&gt;</vh></v>
+<v t="T577"><vh>&lt;&lt; Set the caret blink rate &gt;&gt;</vh></v>
+<v t="T578"><vh>&lt;&lt; Add root node to the tree view &gt;&gt;</vh></v>
+</v>
+<v t="T579"><vh>OpenWithFileName</vh>
+<v t="T580"><vh>&lt;&lt; Set closeEmptyFrameFlag if the only open window is empty &gt;&gt;</vh></v>
+</v>
+<v t="T581"><vh>&lt;&lt; LeoPrefs private constants &gt;&gt;</vh></v>
+<v t="T582"><vh>updateJoinedHeadlines</vh></v>
+</v>
+<v t="T583"><vh>(Events)</vh>
+<v t="T584" a="C"><vh>&lt;&lt; constants for wx plugin &gt;&gt;</vh></v>
+<v t="T585" a="C"><vh>finishCreate</vh></v>
+<v t="T586" a="C"><vh>__init__</vh>
+<v t="T587"><vh>&lt;&lt; create the splitters &gt;&gt;</vh></v>
+<v t="T588"><vh>&lt;&lt; create the tree &gt;&gt;</vh></v>
+<v t="T589"><vh>&lt;&lt; create the body pane &gt;&gt;</vh></v>
+<v t="T590"><vh>&lt;&lt; create the log pane &gt;&gt;</vh></v>
+<v t="T591"><vh>&lt;&lt; declare event handlers for frame &gt;&gt;</vh></v>
+<v t="T592"><vh>&lt;&lt; declare event handlers for body &amp; tree &gt;&gt;</vh></v>
+</v>
+<v t="T593" a="C"><vh>event handlers</vh>
+<v t="T594"><vh>Frame events</vh>
+<v t="T595"><vh>onActivate &amp; OnSetFocus</vh></v>
+<v t="T596"><vh>onCloseLeoFrame</vh>
+<v t="T597"><vh>&lt;&lt; Prompt for change.  Set veto if the user cancels &gt;&gt;</vh></v>
+<v t="T598"><vh>&lt;&lt; Close the permanent frames &gt;&gt;</vh></v>
+</v>
+<v t="T599"><vh>onResize</vh></v>
+</v>
+<v t="T600"><vh>Body events</vh>
+<v t="T601"><vh>onBodyTextUpdated</vh>
+<v t="T602"><vh>&lt;&lt; Set the dirty bit and/or the file-changed mark if the text has changed &gt;&gt;</vh></v>
+<v t="T603"><vh>&lt;&lt; Update icons &gt;&gt;</vh></v>
+</v>
+</v>
+<v t="T604"><vh>Tree events</vh>
+<v t="T605"><vh>Expand/contract</vh>
+<v t="T606"><vh>onTreeCollapsed &amp; onTreeExpanded</vh></v>
+<v t="T607"><vh>onTreeCollapsing &amp; onTreeExpanding</vh></v>
+</v>
+<v t="T608"><vh>Selecting</vh>
+<v t="T609"><vh>onTreeChanged</vh></v>
+<v t="T610"><vh>onTreeChanging</vh></v>
+</v>
+<v t="T611"><vh>Editing labels</vh>
+<v t="T612"><vh>onTreeBeginLabelEdit</vh></v>
+<v t="T613"><vh>onTreeEndLabelEdit</vh></v>
+<v t="T614"><vh>onTreeKeyDown</vh></v>
+</v>
+<v t="T615"><vh>onTreeBeginDrag</vh></v>
+<v t="T616"><vh>onTreeEndDrag</vh>
+<v t="T617"><vh>&lt;&lt; Define onTreeEndDrag vars &gt;&gt;</vh></v>
+<v t="T618"><vh>&lt;&lt; Insert src as the first child of dst &gt;&gt;</vh></v>
+<v t="T619"><vh>&lt;&lt; Insert src after dst &gt;&gt;</vh></v>
+</v>
+</v>
+</v>
+<v t="T620" a="C"><vh>Interface with the tree class</vh>
+<v t="T621"><vh>beginUpdate</vh></v>
+<v t="T622"><vh>endUpdate</vh></v>
+<v t="T623"><vh>Getters</vh></v>
+<v t="T624"><vh>redraw &amp; redraw_now</vh></v>
+<v t="T625"><vh>redraw_node</vh></v>
+<v t="T626"><vh>redraw_subtree</vh></v>
+<v t="T627"><vh>Setters</vh></v>
+</v>
+</v>
+<v t="T628" tnodeList="628,629,584,631,633,634,635,636,637,638,639,640,641,642,643,645,646,648,649,650,651,653,654,655,657,658,659,660,661,662,663,664,665,666,586,587,588,589,590,591,592,668,585,669,670,671,672,673,674,675,676,677,678,679,680,681,682,683,684,685,686,687,688,689,690,691,692,595,596,597,598,599,601,602,603,606,607,609,610,612,613,614,615,616,617,618,619,693,694,696,697,698,699,700,620,621,622,623,624,625,626,627,702,704,706,707,708,709,710,711,712,713,714,715,716,717,718,720,721,722,723,724,725,726,727,728,729,730,731,732,733,734,735,736,737,738,739,740,741,742,743,744,745,748,749,750,751,752,753,754,755,756,757,758,759,760,761,762,763,764,765,766,767,768,769,770,771,772,773,774,775,776,778,779,780,781,782,783,784,785,786,787,788,789,790,791,792,793,794,795,796,797,800,801,802,804,805,806,807,808,809,810,811,812,813,814,815,816,817,818,819,821,822,823,825,826,827,828,829,830,831,832,833,834,835,836,837,839,840,841,842,843,844,846,848,849,850,851,852,853,854,856,858,859,860,861,863,864,865,866,867,868,869,870,871,872,873,874,875,876,877,878,879,880,881,882,883,884,885,886,887,888,889,890,891,892,893,894,895,896,897,898,899,900,902,903,904,905,906,907,908,909,910,911,912,913,914,630"><vh>@file __wx_gui.py</vh>
+<v t="T629"><vh>&lt;&lt; imports for wx plugin &gt;&gt;</vh></v>
+<v t="T584" a="C"><vh>&lt;&lt; constants for wx plugin &gt;&gt;</vh></v>
+<v t="T630"><vh>&lt;&lt; set app.gui &gt;&gt;</vh></v>
+<v t="T631"><vh>wxGui class</vh>
+<v t="T632"><vh>Birth &amp; death</vh>
+<v t="T633"><vh>wxGui.__init__</vh></v>
+<v t="T634" a="M"><vh>createRootWindow &amp; allies</vh>
+<v t="T635"><vh>setDefaultIcon</vh></v>
+<v t="T636"><vh>setEncoding</vh></v>
+<v t="T637"><vh>getDefaultConfigFont</vh></v>
+<v t="T638"><vh>createGlobalWindows</vh></v>
+</v>
+<v t="T639"><vh>destroy</vh></v>
+<v t="T640"><vh>finishCreate</vh></v>
+<v t="T641"><vh>killGui (not used)</vh></v>
+<v t="T642"><vh>recreateRootWindow (not used)</vh></v>
+<v t="T643"><vh>runMainLoop</vh></v>
+</v>
+<v t="T644"><vh>Called by leoConfig</vh>
+<v t="T645"><vh>getFontFromParams</vh></v>
+</v>
+<v t="T646"><vh>Dialogs</vh></v>
+<v t="T647"><vh>Frames</vh>
+<v t="T648"><vh>newLeoFrame</vh></v>
+<v t="T649"><vh>other frames...</vh></v>
+<v t="T650"><vh>destroyLeoFrame</vh></v>
+<v t="T651"><vh>destroy</vh></v>
+</v>
+<v t="T652" a="M"><vh>Focus</vh>
+<v t="T653"><vh>get_focus</vh></v>
+<v t="T654"><vh>set_focus</vh></v>
+<v t="T655"><vh>force_focus</vh></v>
+</v>
+<v t="T656" a="M"><vh>Dialog &amp; Icon utils</vh>
+<v t="T657"><vh>attachLeoIcon &amp; createLeoIcon</vh>
+<v t="T658"><vh>&lt;&lt; try to use the PIL and tkIcon packages to draw the icon &gt;&gt;</vh></v>
+<v t="T659"><vh>createLeoIcon</vh></v>
+</v>
+<v t="T660"><vh>get_window_info</vh></v>
+<v t="T661"><vh>center_dialog</vh></v>
+<v t="T662"><vh>create_labeled_frame</vh></v>
+</v>
+</v>
+<v t="T663"><vh>wxLeoApp class</vh>
+<v t="T664"><vh>OnInit</vh></v>
+<v t="T665"><vh>OnExit</vh></v>
+</v>
+<v t="T666"><vh>wxLeoFrame class</vh>
+<v t="T667"><vh>Birth &amp; death</vh>
+<v t="T586" a="C"><vh>__init__</vh>
+<v t="T587"><vh>&lt;&lt; create the splitters &gt;&gt;</vh></v>
+<v t="T588"><vh>&lt;&lt; create the tree &gt;&gt;</vh></v>
+<v t="T589"><vh>&lt;&lt; create the body pane &gt;&gt;</vh></v>
+<v t="T590"><vh>&lt;&lt; create the log pane &gt;&gt;</vh></v>
+<v t="T591"><vh>&lt;&lt; declare event handlers for frame &gt;&gt;</vh></v>
+<v t="T592"><vh>&lt;&lt; declare event handlers for body &amp; tree &gt;&gt;</vh></v>
+</v>
+<v t="T668"><vh>__repr__</vh></v>
+<v t="T585" a="C"><vh>finishCreate</vh></v>
+<v t="T669"><vh>createMenuBar</vh>
+<v t="T670"><vh>&lt;&lt; create the file menu &gt;&gt;</vh>
+<v t="T671"><vh>&lt;&lt; create the top-level file entries &gt;&gt;</vh></v>
+<v t="T672"><vh>&lt;&lt; create the recent files submenu &gt;&gt;</vh></v>
+<v t="T673"><vh>&lt;&lt; create the read/write submenu &gt;&gt;</vh></v>
+<v t="T674"><vh>&lt;&lt; create the tangle submenu &gt;&gt;</vh></v>
+<v t="T675"><vh>&lt;&lt; create the untangle submenu &gt;&gt;</vh></v>
+<v t="T676"><vh>&lt;&lt; create the import submenu &gt;&gt;</vh></v>
+<v t="T677"><vh>&lt;&lt; create the export submenu &gt;&gt;</vh></v>
+</v>
+<v t="T678"><vh>&lt;&lt; create the edit menu &gt;&gt;</vh>
+<v t="T679"><vh>&lt;&lt; create the first top-level edit entries &gt;&gt;</vh></v>
+<v t="T680"><vh>&lt;&lt; create the edit body submenu &gt;&gt;</vh></v>
+<v t="T681"><vh>&lt;&lt; create the edit headline submenu &gt;&gt;</vh></v>
+<v t="T682"><vh>&lt;&lt; create the find submenu &gt;&gt;</vh></v>
+<v t="T683"><vh>&lt;&lt; create the last top-level edit entries &gt;&gt;</vh></v>
+</v>
+<v t="T684"><vh>&lt;&lt; create the outline menu &gt;&gt;</vh>
+<v t="T685"><vh>&lt;&lt; create top-level outline menu &gt;&gt;</vh></v>
+<v t="T686"><vh>&lt;&lt; create expand/contract submenu &gt;&gt;</vh></v>
+<v t="T687"><vh>&lt;&lt; create move submenu &gt;&gt;</vh></v>
+<v t="T688"><vh>&lt;&lt; create mark submenu &gt;&gt;</vh></v>
+<v t="T689"><vh>&lt;&lt; create goto submenu &gt;&gt;</vh></v>
+</v>
+<v t="T690"><vh>&lt;&lt; create the window menu &gt;&gt;</vh></v>
+<v t="T691"><vh>&lt;&lt; create the help menu &gt;&gt;</vh></v>
+</v>
+<v t="T692"><vh>createMenuEntries</vh></v>
+</v>
+<v t="T593" a="C"><vh>event handlers</vh>
+<v t="T594"><vh>Frame events</vh>
+<v t="T595"><vh>onActivate &amp; OnSetFocus</vh></v>
+<v t="T596"><vh>onCloseLeoFrame</vh>
+<v t="T597"><vh>&lt;&lt; Prompt for change.  Set veto if the user cancels &gt;&gt;</vh></v>
+<v t="T598"><vh>&lt;&lt; Close the permanent frames &gt;&gt;</vh></v>
+</v>
+<v t="T599"><vh>onResize</vh></v>
+</v>
+<v t="T600"><vh>Body events</vh>
+<v t="T601"><vh>onBodyTextUpdated</vh>
+<v t="T602"><vh>&lt;&lt; Set the dirty bit and/or the file-changed mark if the text has changed &gt;&gt;</vh></v>
+<v t="T603"><vh>&lt;&lt; Update icons &gt;&gt;</vh></v>
+</v>
+</v>
+<v t="T604"><vh>Tree events</vh>
+<v t="T605"><vh>Expand/contract</vh>
+<v t="T606"><vh>onTreeCollapsed &amp; onTreeExpanded</vh></v>
+<v t="T607"><vh>onTreeCollapsing &amp; onTreeExpanding</vh></v>
+</v>
+<v t="T608"><vh>Selecting</vh>
+<v t="T609"><vh>onTreeChanged</vh></v>
+<v t="T610"><vh>onTreeChanging</vh></v>
+</v>
+<v t="T611"><vh>Editing labels</vh>
+<v t="T612"><vh>onTreeBeginLabelEdit</vh></v>
+<v t="T613"><vh>onTreeEndLabelEdit</vh></v>
+<v t="T614"><vh>onTreeKeyDown</vh></v>
+</v>
+<v t="T615"><vh>onTreeBeginDrag</vh></v>
+<v t="T616"><vh>onTreeEndDrag</vh>
+<v t="T617"><vh>&lt;&lt; Define onTreeEndDrag vars &gt;&gt;</vh></v>
+<v t="T618"><vh>&lt;&lt; Insert src as the first child of dst &gt;&gt;</vh></v>
+<v t="T619"><vh>&lt;&lt; Insert src after dst &gt;&gt;</vh></v>
+</v>
+</v>
+</v>
+<v t="T693"><vh>Notifications: probably will never be called</vh></v>
+<v t="T694"><vh>Vnode callbacks: probably will never be called</vh></v>
+<v t="T695"><vh>Externally visible routines...</vh>
+<v t="T696"><vh> dummy routines: not ready yet</vh></v>
+<v t="T697"><vh>deiconify</vh></v>
+<v t="T698"><vh>getTitle</vh></v>
+<v t="T699"><vh>put &amp; putnl</vh></v>
+<v t="T700"><vh>select</vh></v>
+</v>
+<v t="T620" a="CM"><vh>Interface with the tree class</vh>
+<v t="T621"><vh>beginUpdate</vh></v>
+<v t="T622"><vh>endUpdate</vh></v>
+<v t="T623"><vh>Getters</vh></v>
+<v t="T624"><vh>redraw &amp; redraw_now</vh></v>
+<v t="T625"><vh>redraw_node</vh></v>
+<v t="T626"><vh>redraw_subtree</vh></v>
+<v t="T627"><vh>Setters</vh></v>
+</v>
+<v t="T701"><vh>Menu updaters</vh>
+<v t="T702"><vh>updateAllMenus</vh></v>
+<v t="T703"><vh>File menu...</vh>
+<v t="T704"><vh>OnUpdateRevert</vh></v>
+</v>
+<v t="T705"><vh>Edit menu...</vh>
+<v t="T706"><vh>OnUpdateCopy</vh></v>
+<v t="T707"><vh>OnUpdateCut</vh></v>
+<v t="T708"><vh>OnUpdateDelete</vh></v>
+<v t="T709"><vh>OnUpdateExtract</vh></v>
+<v t="T710"><vh>OnUpdateExtractNames</vh></v>
+<v t="T711"><vh>OnUpdateExtractSection</vh></v>
+<v t="T712"><vh>OnUpdateFind</vh></v>
+<v t="T713"><vh>OnUpdatePaste</vh></v>
+<v t="T714"><vh>OnUpdateRedo</vh></v>
+<v t="T715"><vh>OnUpdateReplace</vh></v>
+<v t="T716"><vh>OnUpdateSelectAll</vh></v>
+<v t="T717"><vh>OnUpdateUndo</vh></v>
+<v t="T718"><vh>hasSelection</vh></v>
+</v>
+<v t="T719"><vh>Outline menu...</vh>
+<v t="T720"><vh>OnUpdateContractAll</vh></v>
+<v t="T721"><vh>OnUpdateContractAllChildren</vh></v>
+<v t="T722"><vh>OnUpdateContractChildren</vh></v>
+<v t="T723"><vh>OnUpdateCutNode</vh></v>
+<v t="T724"><vh>OnUpdateDeleteNode</vh></v>
+<v t="T725"><vh>OnUpdateDemote</vh></v>
+<v t="T726"><vh>OnUpdateExpandAll</vh></v>
+<v t="T727"><vh>OnUpdateExpandAllChildren</vh></v>
+<v t="T728"><vh>OnUpdateExpandChildren</vh></v>
+<v t="T729"><vh>OnUpdateGoBack</vh></v>
+<v t="T730"><vh>OnUpdateGoNext</vh></v>
+<v t="T731"><vh>OnUpdateGoNextVisible</vh></v>
+<v t="T732"><vh>OnUpdateGoPrevVisible</vh></v>
+<v t="T733"><vh>OnUpdateGoToNextChanged</vh></v>
+<v t="T734"><vh>OnUpdateGoToNextMarked</vh></v>
+<v t="T735"><vh>OnUpdateMark</vh></v>
+<v t="T736"><vh>OnUpdateMarkChangedItems</vh></v>
+<v t="T737"><vh>OnUpdateMarkChangedRoots</vh></v>
+<v t="T738"><vh>OnUpdateMarkSubheads</vh></v>
+<v t="T739"><vh>OnUpdateMoveDown</vh></v>
+<v t="T740"><vh>OnUpdateMoveLeft</vh></v>
+<v t="T741"><vh>OnUpdateMoveRight</vh></v>
+<v t="T742"><vh>OnUpdateMoveUp</vh></v>
+<v t="T743"><vh>OnUpdatePasteNode</vh></v>
+<v t="T744"><vh>OnUpdatePromote</vh></v>
+<v t="T745"><vh>OnUpdateSortNode</vh></v>
+</v>
+</v>
+<v t="T746"><vh>Menu command handlers...</vh>
+<v t="T747"><vh>File Menu...</vh>
+<v t="T748"><vh>OnNew</vh></v>
+<v t="T749"><vh>OnOpen</vh></v>
+<v t="T750"><vh>OnClose</vh></v>
+<v t="T751"><vh>OnSave</vh></v>
+<v t="T752"><vh>OnSaveAs</vh></v>
+<v t="T753"><vh>OnSaveTo</vh></v>
+<v t="T754"><vh>OnRevert</vh></v>
+<v t="T755"><vh>OnPageSetup</vh></v>
+<v t="T756"><vh>OnPrint</vh></v>
+<v t="T757"><vh>OnTangleSubmenu</vh></v>
+<v t="T758"><vh>OnUntangleSubmenu</vh></v>
+<v t="T759"><vh>OnImportExportSubmenu</vh></v>
+<v t="T760"><vh>OnQuit</vh></v>
+<v t="T761"><vh>OnReadOutlineOnly</vh></v>
+<v t="T762"><vh>readOutlineOnly</vh></v>
+<v t="T763"><vh>OnReadAtFileNodes</vh></v>
+<v t="T764"><vh>OnWriteOutlineOnly</vh></v>
+<v t="T765"><vh>OnWriteAtFileNodes</vh></v>
+<v t="T766"><vh>OnTangleAll</vh></v>
+<v t="T767"><vh>OnTangleMarked</vh></v>
+<v t="T768"><vh>OnTangle</vh></v>
+<v t="T769"><vh>OnUntangleAll</vh></v>
+<v t="T770"><vh>OnUntangleMarked</vh></v>
+<v t="T771"><vh>OnUntangle</vh></v>
+<v t="T772"><vh>OnImportFiles</vh></v>
+<v t="T773"><vh>OnImportCWEBFiles</vh></v>
+<v t="T774"><vh>OnImportNowebFiles</vh></v>
+<v t="T775"><vh>OnImportMoreText</vh></v>
+<v t="T776"><vh>OnFlattenOutline</vh></v>
+</v>
+<v t="T777"><vh>Edit menu...</vh>
+<v t="T778"><vh>OnUndo</vh></v>
+<v t="T779"><vh>OnRedo</vh></v>
+<v t="T780"><vh>OnCut</vh></v>
+<v t="T781"><vh>OnCopy</vh></v>
+<v t="T782"><vh>OnPaste</vh></v>
+<v t="T783"><vh>OnDelete</vh></v>
+<v t="T784"><vh>OnSelectAll</vh></v>
+<v t="T785"><vh>OnEditHeadline</vh></v>
+<v t="T786"><vh>OnFontPanel</vh></v>
+<v t="T787"><vh>OnSyntaxColoring</vh></v>
+<v t="T788"><vh>OnPreferences</vh></v>
+<v t="T789"><vh>OnConvertBlanks</vh></v>
+<v t="T790"><vh>OnExtractSection</vh></v>
+<v t="T791"><vh>OnExtractNames</vh></v>
+<v t="T792"><vh>OnExtract</vh></v>
+<v t="T793"><vh>OnFindPanel</vh></v>
+<v t="T794"><vh>OnFindNext</vh></v>
+<v t="T795"><vh>OnFindPrevious</vh></v>
+<v t="T796"><vh>OnReplace</vh></v>
+<v t="T797"><vh>OnReplaceThenFind</vh></v>
+</v>
+<v t="T798"><vh>Outline menu...</vh>
+<v t="T799"><vh>Cut/Paste/Copy/Delete</vh>
+<v t="T800"><vh>OnCutNode</vh></v>
+<v t="T801"><vh>OnCopyNode</vh></v>
+<v t="T802"><vh>OnPasteNode</vh></v>
+</v>
+<v t="T803"><vh>Expand/Contract</vh>
+<v t="T804"><vh>OnExpandAll</vh></v>
+<v t="T805"><vh>OnExpandAllChildren</vh></v>
+<v t="T806"><vh>OnExpandChildren</vh></v>
+<v t="T807"><vh>OnContractAll</vh></v>
+<v t="T808"><vh>OnContractAllChildren</vh></v>
+<v t="T809"><vh>OnContractChildren</vh></v>
+<v t="T810"><vh>OnExpandNextLevel</vh></v>
+<v t="T811"><vh>OnExpandToLevel1</vh></v>
+<v t="T812"><vh>OnExpandToLevel2</vh></v>
+<v t="T813"><vh>OnExpandToLevel3</vh></v>
+<v t="T814"><vh>OnExpandToLevel4</vh></v>
+<v t="T815"><vh>OnExpandToLevel5</vh></v>
+<v t="T816"><vh>OnExpandToLevel6</vh></v>
+<v t="T817"><vh>OnExpandToLevel7</vh></v>
+<v t="T818"><vh>OnExpandToLevel8</vh></v>
+<v t="T819"><vh>OnExpandToLevel9</vh></v>
+</v>
+<v t="T820"><vh>Insert/Delete/Clone</vh>
+<v t="T821"><vh>OnDeleteNode</vh></v>
+<v t="T822"><vh>OnInsertNode</vh></v>
+<v t="T823"><vh>OnCloneNode</vh></v>
+</v>
+<v t="T824"><vh>Mark/Goto</vh>
+<v t="T825"><vh>OnGoPrevVisible</vh></v>
+<v t="T826"><vh>OnGoNextVisible</vh></v>
+<v t="T827"><vh>OnGoBack</vh></v>
+<v t="T828"><vh>OnGoNext</vh></v>
+<v t="T829"><vh>OnMark</vh></v>
+<v t="T830"><vh>OnMarkSubheads</vh></v>
+<v t="T831"><vh>OnMarkChangedItems</vh></v>
+<v t="T832"><vh>OnMarkChangedRoots</vh></v>
+<v t="T833"><vh>OnMarkAllAtFileNodesDirty</vh></v>
+<v t="T834"><vh>OnMarkAtFileNodesDirty</vh></v>
+<v t="T835"><vh>OnUnmarkAll</vh></v>
+<v t="T836"><vh>OnGoToNextMarked</vh></v>
+<v t="T837"><vh>OnGoToNextChanged</vh></v>
+</v>
+<v t="T838"><vh>Move/Promote/Demote</vh>
+<v t="T839"><vh>OnMoveDown</vh></v>
+<v t="T840"><vh>OnMoveLeft</vh></v>
+<v t="T841"><vh>OnMoveRight</vh></v>
+<v t="T842"><vh>OnMoveUp</vh></v>
+<v t="T843"><vh>OnPromote</vh></v>
+<v t="T844"><vh>OnDemote</vh></v>
+</v>
+<v t="T845"><vh>Sort</vh>
+<v t="T846"><vh>OnSortNode</vh></v>
+</v>
+</v>
+<v t="T847"><vh>Window menu...</vh>
+<v t="T848"><vh>OnEqualSizedPanes</vh></v>
+<v t="T849"><vh>OnToggleActivePane</vh></v>
+<v t="T850"><vh>OnChangeDirection</vh></v>
+<v t="T851"><vh>OnCascade</vh></v>
+<v t="T852"><vh>OnMinimizeAll</vh></v>
+<v t="T853"><vh>OnOpenPythonWindow</vh></v>
+<v t="T854"><vh>OnRecentWindows</vh></v>
+</v>
+<v t="T855"><vh>Help menu...</vh>
+<v t="T856"><vh>OnAbout</vh></v>
+</v>
+</v>
+</v>
+<v t="T857"><vh>Find...</vh>
+<v t="T858"><vh>wxFindFrame class</vh>
+<v t="T859"><vh>&lt;&lt; FindPanel public globals &gt;&gt; (to be moved to Leo's core)</vh></v>
+<v t="T860"><vh>FindFrame.__init__</vh>
+<v t="T861"><vh>&lt;&lt; declare event handlers &gt;&gt;</vh></v>
+</v>
+<v t="T862"><vh>Event handlers</vh>
+<v t="T863"><vh>OnActivateFindFrame &amp; OnSetFocus</vh></v>
+<v t="T864"><vh>OnCloseFindFrame</vh></v>
+<v t="T865"><vh>OnChangeButton</vh></v>
+<v t="T866"><vh>OnChangeAllButton</vh></v>
+<v t="T867"><vh>OnChangeThenFindButton</vh></v>
+<v t="T868"><vh>OnFindButton</vh></v>
+<v t="T869"><vh>OnFindAllButton</vh></v>
+<v t="T870"><vh>OnBatchCheckBox</vh></v>
+<v t="T871"><vh>OnIgnoreCaseCheckBox</vh></v>
+<v t="T872"><vh>OnMarkChangesCheckBox</vh></v>
+<v t="T873"><vh>OnMarkFindsCheckBox</vh></v>
+<v t="T874"><vh>OnPatternMatchCheckBox</vh></v>
+<v t="T875"><vh>OnReverseCheckBox</vh></v>
+<v t="T876"><vh>OnSearchBodyTextCheckBox</vh></v>
+<v t="T877"><vh>OnSearchHeadlineCheckBox</vh></v>
+<v t="T878"><vh>OnSuboutlineOnlyCheckBox</vh></v>
+<v t="T879"><vh>OnWrapAroundCheckBox</vh></v>
+<v t="T880"><vh>OnWholeWordCheckBox</vh></v>
+<v t="T881"><vh>OnChangeText</vh></v>
+<v t="T882"><vh>OnFindText</vh></v>
+</v>
+<v t="T883"><vh>Interface with commander</vh></v>
+<v t="T884"><vh>set_check_boxes</vh></v>
+</v>
+<v t="T885"><vh>wxFindPanel class</vh>
+<v t="T886"><vh>FindPanel.__init__</vh>
+<v t="T887"><vh>&lt;&lt; Create the find text box &gt;&gt;</vh></v>
+<v t="T888"><vh>&lt;&lt; Create the change text box &gt;&gt;</vh></v>
+<v t="T889"><vh>&lt;&lt; Create all the find check boxes &gt;&gt;</vh>
+<v t="T890"><vh>&lt;&lt; Create the first column of check boxes &gt;&gt;</vh></v>
+<v t="T891"><vh>&lt;&lt; Create the second column of check boxes &gt;&gt;</vh></v>
+</v>
+<v t="T892"><vh>&lt;&lt; Create all the find buttons &gt;&gt;</vh>
+<v t="T893"><vh>&lt;&lt; Create the first row of buttons &gt;&gt;</vh></v>
+<v t="T894"><vh>&lt;&lt; Create the second row of buttons &gt;&gt;</vh></v>
+</v>
+</v>
+</v>
+</v>
+<v t="T895"><vh>wxLeoPrefs class</vh>
+<v t="T896"><vh>wxLeoPrefs.__init__</vh>
+<v t="T897"><vh>&lt;&lt; define event handlers for wxLeoPrefsFrame &gt;&gt;</vh></v>
+</v>
+<v t="T898"><vh>initialize</vh></v>
+<v t="T899"><vh>targetToLanguage (should be in Leo's core)</vh></v>
+<v t="T900"><vh>languageToTarget (should be in Leo's core)</vh></v>
+<v t="T901"><vh>Event handlers</vh>
+<v t="T902"><vh>OnActivatePrefsFrame</vh></v>
+<v t="T903"><vh>OnClosePrefsFrame</vh></v>
+<v t="T904"><vh>OnPageWidthText</vh></v>
+<v t="T905"><vh>OnDoneBatCheckBox</vh></v>
+<v t="T906"><vh>OnUnBatCheckBox</vh></v>
+<v t="T907"><vh>OnTangleDirectoryText</vh></v>
+<v t="T908"><vh>OnHeaderCheckBox</vh></v>
+<v t="T909"><vh>OnDocChunksCheckBox</vh></v>
+<v t="T910"><vh>OnTargetLanguageRadioBox</vh></v>
+</v>
+<v t="T911"><vh>PrefsPanel.__init__</vh>
+<v t="T912"><vh>&lt;&lt; Create the Global Options static box &gt;&gt;</vh></v>
+<v t="T913"><vh>&lt;&lt; Create the Default Tangle Options static box &gt;&gt;</vh></v>
+<v t="T914"><vh>&lt;&lt; Create the Default Target Language radio buttons &gt;&gt;</vh></v>
 </v>
-<v t="T569"><vh>Unused code</vh>
-<v t="T570"><vh>LeoFrame.cpp</vh>
-<v t="T571"><vh>LeoFrame.__init__</vh>
-<v t="T572"><vh>&lt;&lt; Initialize the private vars &gt;&gt;</vh></v>
-<v t="T573"><vh>&lt;&lt; Initialize the argument settings &gt;&gt;</vh></v>
-<v t="T574"><vh>&lt;&lt; Create the splitter windows &gt;&gt;</vh>
-<v t="T575"><vh>&lt;&lt; Set the image list &gt;&gt;</vh></v>
-</v>
-<v t="T576"><vh>&lt;&lt; Create the accelerator table &gt;&gt;</vh></v>
-<v t="T577"><vh>&lt;&lt; Create the status bar &gt;&gt;</vh></v>
-<v t="T578"><vh>&lt;&lt; Set the window Icon &gt;&gt;</vh></v>
-<v t="T579"><vh>&lt;&lt; Set the caret blink rate &gt;&gt;</vh></v>
-<v t="T580"><vh>&lt;&lt; Add root node to the tree view &gt;&gt;</vh></v>
-</v>
-<v t="T581"><vh>createMenus</vh>
-<v t="T582"><vh>&lt;&lt; Create the File menu &gt;&gt;</vh>
-<v t="T583"><vh>&lt;&lt; Create the initial items of the file menu &gt;&gt;</vh></v>
-<v t="T584"><vh>&lt;&lt; Create the Read/Write submenu &gt;&gt;</vh></v>
-<v t="T585"><vh>&lt;&lt; Create the Tangle submenu &gt;&gt;</vh></v>
-<v t="T586"><vh>&lt;&lt; Create the Untangle submenu &gt;&gt;</vh></v>
-<v t="T587"><vh>&lt;&lt; Create the Import Files submenu &gt;&gt;</vh></v>
-</v>
-<v t="T588"><vh>&lt;&lt; Create the Edit menu &gt;&gt;</vh>
-<v t="T589"><vh>&lt;&lt; Create the initial items of the Edit menu &gt;&gt;</vh></v>
-<v t="T590"><vh>&lt;&lt; Create the Edit Body submenu &gt;&gt;</vh></v>
-<v t="T591"><vh>&lt;&lt; Create the Find submenu &gt;&gt;</vh></v>
-<v t="T592"><vh>&lt;&lt; Create the final items of the Edit menu &gt;&gt;</vh></v>
-</v>
-<v t="T593"><vh>&lt;&lt; Create the Outline menu &gt;&gt;</vh>
-<v t="T594"><vh>&lt;&lt; Create the initial items of the Outline menu &gt;&gt;</vh></v>
-<v t="T595"><vh>&lt;&lt; Create the Expand/Contract submenu &gt;&gt;</vh></v>
-<v t="T596"><vh>&lt;&lt; Create the Move/Select submenu &gt;&gt;</vh></v>
-<v t="T597"><vh>&lt;&lt; Create the Mark/Go To submenu &gt;&gt;</vh></v>
-</v>
-<v t="T598"><vh>&lt;&lt; Create the Window menu &gt;&gt;</vh></v>
-<v t="T599"><vh>&lt;&lt; Create the Help menu &gt;&gt;</vh></v>
-</v>
-<v t="T600"><vh>To be deleted...</vh>
-<v t="T601"><vh>SetUntitledNumber</vh></v>
-<v t="T602"><vh>putToLog</vh></v>
-<v t="T603"><vh>getLogText</vh></v>
-</v>
-</v>
-<v t="T604"><vh>alert.cpp (replace by Leo's dialog classes)</vh>
-<v t="T605"><vh>alert</vh></v>
-<v t="T606"><vh>assertFailedDialog</vh></v>
-</v>
-<v t="T607"><vh>from leoApp.cpp</vh>
-<v t="T608"><vh>&lt;&lt; Create a frame and link it into the global frame list &gt;&gt;</vh></v>
-</v>
-<v t="T609"><vh>OpenWithFileName</vh>
-<v t="T610"><vh>&lt;&lt; Set closeEmptyFrameFlag if the only open window is empty &gt;&gt;</vh></v>
-</v>
-<v t="T611"><vh>&lt;&lt; LeoPrefs private constants &gt;&gt;</vh></v>
-<v t="T612"><vh>createMenus (old code: explicit id's)</vh>
-<v t="T613"><vh>&lt;&lt; Create the File menu &gt;&gt;</vh>
-<v t="T614"><vh>&lt;&lt; Create the initial items of the file menu &gt;&gt;</vh></v>
-<v t="T615"><vh>&lt;&lt; Create the Read/Write submenu &gt;&gt;</vh></v>
-<v t="T616"><vh>&lt;&lt; Create the Tangle submenu &gt;&gt;</vh></v>
-<v t="T617"><vh>&lt;&lt; Create the Untangle submenu &gt;&gt;</vh></v>
-<v t="T618"><vh>&lt;&lt; Create the Import Files submenu &gt;&gt;</vh></v>
-</v>
-<v t="T619"><vh>&lt;&lt; Create the Edit menu &gt;&gt;</vh>
-<v t="T620"><vh>&lt;&lt; Create the initial items of the Edit menu &gt;&gt;</vh></v>
-<v t="T621"><vh>&lt;&lt; Create the Find submenu &gt;&gt;</vh></v>
-<v t="T622"><vh>&lt;&lt; Create the final items of the Edit menu &gt;&gt;</vh></v>
-<v t="T623"><vh>&lt;&lt; Create the Edit Body submenu &gt;&gt;</vh></v>
-</v>
-<v t="T624"><vh>&lt;&lt; Create the Outline menu &gt;&gt;</vh>
-<v t="T625"><vh>&lt;&lt; Create the initial items of the Outline menu &gt;&gt;</vh></v>
-<v t="T626"><vh>&lt;&lt; Create the Expand/Contract submenu &gt;&gt;</vh></v>
-<v t="T627"><vh>&lt;&lt; Create the Move/Select submenu &gt;&gt;</vh></v>
-<v t="T628"><vh>&lt;&lt; Create the Mark/Go To submenu &gt;&gt;</vh></v>
-</v>
-<v t="T629"><vh>&lt;&lt; Create the Window menu &gt;&gt;</vh></v>
-<v t="T630"><vh>&lt;&lt; Create the Help menu &gt;&gt;</vh></v>
-</v>
-<v t="T631"><vh>&lt;&lt; Declare menu events &gt;&gt;</vh></v>
-<v t="T632"><vh>&lt;&lt; Declare UI events &gt;&gt;</vh></v>
-<v t="T633"><vh>updateJoinedHeadlines</vh></v>
-</v>
-<v t="T634" a="V" tnodeList="634,635,636,638,640,641,642,643,644,645,646,647,648,649,650,652,653,655,656,657,658,660,661,662,664,665,666,667,668,669,670,671,672,673,675,676,677,678,679,680,681,682,683,684,685,686,687,688,689,690,691,692,693,694,695,696,697,698,699,700,701,702,703,704,705,706,707,709,711,712,713,714,715,717,718,719,722,723,725,726,728,729,730,731,732,733,734,735,736,737,738,739,740,741,742,743,744,745,746,747,750,752,753,754,755,756,757,758,759,760,761,762,763,764,766,767,768,769,770,771,772,773,774,775,776,777,778,779,780,781,782,783,784,785,786,787,788,789,790,791,794,795,796,797,798,799,800,801,802,803,804,805,806,807,808,809,810,811,812,813,814,815,816,817,818,819,820,821,822,824,825,826,827,828,829,830,831,832,833,834,835,836,837,838,839,840,841,842,843,846,847,848,850,851,852,853,854,855,856,857,858,859,860,861,862,863,864,865,867,868,869,871,872,873,874,875,876,877,878,879,880,881,882,883,885,886,887,888,889,890,892,894,895,896,897,898,899,900,902,904,905,906,907,909,910,911,912,913,914,915,916,917,918,919,920,921,922,923,924,925,926,927,928,929,930,931,932,933,934,935,936,937,938,939,940,941,942,943,944,945,946,948,949,950,951,952,953,954,955,956,957,958,959,960,637"><vh>@file __wx_gui.py</vh>
-<v t="T635"><vh>&lt;&lt; imports for wx plugin &gt;&gt;</vh></v>
-<v t="T636" a="C"><vh>&lt;&lt; constants for wx plugin &gt;&gt;</vh></v>
-<v t="T637"><vh>&lt;&lt; set app.gui &gt;&gt;</vh></v>
-<v t="T638"><vh>wxGui class</vh>
-<v t="T639"><vh>Birth &amp; death</vh>
-<v t="T640"><vh>wxGui.__init__</vh></v>
-<v t="T641" a="M"><vh>createRootWindow &amp; allies</vh>
-<v t="T642"><vh>setDefaultIcon</vh></v>
-<v t="T643"><vh>setEncoding</vh></v>
-<v t="T644"><vh>getDefaultConfigFont</vh></v>
-<v t="T645"><vh>createGlobalWindows</vh></v>
-</v>
-<v t="T646"><vh>destroy</vh></v>
-<v t="T647"><vh>finishCreate</vh></v>
-<v t="T648"><vh>killGui (not used)</vh></v>
-<v t="T649"><vh>recreateRootWindow (not used)</vh></v>
-<v t="T650"><vh>runMainLoop</vh></v>
-</v>
-<v t="T651"><vh>Called by leoConfig</vh>
-<v t="T652"><vh>getFontFromParams</vh></v>
-</v>
-<v t="T653"><vh>Dialogs</vh></v>
-<v t="T654"><vh>Frames</vh>
-<v t="T655"><vh>newLeoFrame</vh></v>
-<v t="T656"><vh>other frames...</vh></v>
-<v t="T657"><vh>destroyLeoFrame</vh></v>
-<v t="T658"><vh>destroy</vh></v>
-</v>
-<v t="T659" a="M"><vh>Focus</vh>
-<v t="T660"><vh>get_focus</vh></v>
-<v t="T661"><vh>set_focus</vh></v>
-<v t="T662"><vh>force_focus</vh></v>
-</v>
-<v t="T663" a="M"><vh>Dialog &amp; Icon utils</vh>
-<v t="T664"><vh>attachLeoIcon &amp; createLeoIcon</vh>
-<v t="T665"><vh>&lt;&lt; try to use the PIL and tkIcon packages to draw the icon &gt;&gt;</vh></v>
-<v t="T666"><vh>createLeoIcon</vh></v>
-</v>
-<v t="T667"><vh>get_window_info</vh></v>
-<v t="T668"><vh>center_dialog</vh></v>
-<v t="T669"><vh>create_labeled_frame</vh></v>
-</v>
-</v>
-<v t="T670"><vh>wxLeoApp class</vh>
-<v t="T671"><vh>OnInit</vh></v>
-<v t="T672"><vh>OnExit</vh></v>
-</v>
-<v t="T673"><vh>wxLeoFrame class</vh>
-<v t="T674"><vh>Birth &amp; death</vh>
-<v t="T675" a="C"><vh>__init__</vh>
-<v t="T676"><vh>&lt;&lt; create the splitters &gt;&gt;</vh></v>
-<v t="T677"><vh>&lt;&lt; create the tree &gt;&gt;</vh></v>
-<v t="T678"><vh>&lt;&lt; create the body pane &gt;&gt;</vh></v>
-<v t="T679"><vh>&lt;&lt; create the log pane &gt;&gt;</vh></v>
-<v t="T680"><vh>&lt;&lt; declare event handlers for frame &gt;&gt;</vh></v>
-<v t="T681"><vh>&lt;&lt; declare event handlers for body &amp; tree &gt;&gt;</vh></v>
-</v>
-<v t="T682"><vh>__repr__</vh></v>
-<v t="T683" a="C"><vh>finishCreate</vh></v>
-<v t="T684"><vh>createMenuBar</vh>
-<v t="T685"><vh>&lt;&lt; create the file menu &gt;&gt;</vh>
-<v t="T686"><vh>&lt;&lt; create the top-level file entries &gt;&gt;</vh></v>
-<v t="T687"><vh>&lt;&lt; create the recent files submenu &gt;&gt;</vh></v>
-<v t="T688"><vh>&lt;&lt; create the read/write submenu &gt;&gt;</vh></v>
-<v t="T689"><vh>&lt;&lt; create the tangle submenu &gt;&gt;</vh></v>
-<v t="T690"><vh>&lt;&lt; create the untangle submenu &gt;&gt;</vh></v>
-<v t="T691"><vh>&lt;&lt; create the import submenu &gt;&gt;</vh></v>
-<v t="T692"><vh>&lt;&lt; create the export submenu &gt;&gt;</vh></v>
-</v>
-<v t="T693"><vh>&lt;&lt; create the edit menu &gt;&gt;</vh>
-<v t="T694"><vh>&lt;&lt; create the first top-level edit entries &gt;&gt;</vh></v>
-<v t="T695"><vh>&lt;&lt; create the edit body submenu &gt;&gt;</vh></v>
-<v t="T696"><vh>&lt;&lt; create the edit headline submenu &gt;&gt;</vh></v>
-<v t="T697"><vh>&lt;&lt; create the find submenu &gt;&gt;</vh></v>
-<v t="T698"><vh>&lt;&lt; create the last top-level edit entries &gt;&gt;</vh></v>
-</v>
-<v t="T699"><vh>&lt;&lt; create the outline menu &gt;&gt;</vh>
-<v t="T700"><vh>&lt;&lt; create top-level outline menu &gt;&gt;</vh></v>
-<v t="T701"><vh>&lt;&lt; create expand/contract submenu &gt;&gt;</vh></v>
-<v t="T702"><vh>&lt;&lt; create move submenu &gt;&gt;</vh></v>
-<v t="T703"><vh>&lt;&lt; create mark submenu &gt;&gt;</vh></v>
-<v t="T704"><vh>&lt;&lt; create goto submenu &gt;&gt;</vh></v>
-</v>
-<v t="T705"><vh>&lt;&lt; create the window menu &gt;&gt;</vh></v>
-<v t="T706"><vh>&lt;&lt; create the help menu &gt;&gt;</vh></v>
-</v>
-<v t="T707"><vh>createMenuEntries</vh></v>
-</v>
-<v t="T708" a="C"><vh>event handlers</vh>
-<v t="T709"><vh>enable</vh></v>
-<v t="T710"><vh>Frame events</vh>
-<v t="T711"><vh>onActivate &amp; OnSetFocus</vh></v>
-<v t="T712"><vh>onCloseLeoFrame</vh>
-<v t="T713"><vh>&lt;&lt; Prompt for change.  Set veto if the user cancels &gt;&gt;</vh></v>
-<v t="T714"><vh>&lt;&lt; Close the permanent frames &gt;&gt;</vh></v>
-</v>
-<v t="T715"><vh>onResize</vh></v>
-</v>
-<v t="T716"><vh>Body events</vh>
-<v t="T717"><vh>onBodyTextUpdated</vh>
-<v t="T718"><vh>&lt;&lt; Set the dirty bit and/or the file-changed mark if the text has changed &gt;&gt;</vh></v>
-<v t="T719"><vh>&lt;&lt; Update icons &gt;&gt;</vh></v>
-</v>
-</v>
-<v t="T720"><vh>Tree events</vh>
-<v t="T721"><vh>Expand/contract</vh>
-<v t="T722"><vh>onTreeCollapsed &amp; onTreeExpanded</vh></v>
-<v t="T723"><vh>onTreeCollapsing &amp; onTreeExpanding</vh></v>
-</v>
-<v t="T724"><vh>Selecting</vh>
-<v t="T725"><vh>onTreeChanged</vh></v>
-<v t="T726"><vh>onTreeChanging</vh></v>
-</v>
-<v t="T727"><vh>Editing labels</vh>
-<v t="T728"><vh>onTreeBeginLabelEdit</vh></v>
-<v t="T729"><vh>onTreeEndLabelEdit</vh></v>
-<v t="T730"><vh>onTreeKeyDown</vh></v>
-</v>
-<v t="T731"><vh>onTreeBeginDrag</vh></v>
-<v t="T732"><vh>onTreeEndDrag</vh>
-<v t="T733"><vh>&lt;&lt; Define onTreeEndDrag vars &gt;&gt;</vh></v>
-<v t="T734"><vh>&lt;&lt; Insert src as the first child of dst &gt;&gt;</vh></v>
-<v t="T735"><vh>&lt;&lt; Insert src after dst &gt;&gt;</vh></v>
-</v>
-</v>
-</v>
-<v><vh>Externally visible routines...</vh>
-<v t="T736"><vh> dummy routines: not ready yet</vh></v>
-<v t="T737"><vh>deiconify</vh></v>
-<v t="T738"><vh>getTitle</vh></v>
-<v t="T739"><vh>put &amp; putnl</vh></v>
-</v>
-<v t="T740" a="CM"><vh>Interface with the tree class</vh>
-<v t="T741"><vh>beginUpdate</vh></v>
-<v t="T742"><vh>endUpdate</vh></v>
-<v t="T743"><vh>Getters</vh></v>
-<v t="T744"><vh>redraw &amp; redraw_now</vh></v>
-<v t="T745"><vh>redraw_node</vh></v>
-<v t="T746"><vh>redraw_subtree</vh></v>
-<v t="T747"><vh>Setters</vh></v>
-</v>
-<v t="T748"><vh>Menu updaters</vh>
-<v t="T749"><vh>File menu...</vh>
-<v t="T750"><vh>OnUpdateRevert</vh></v>
-</v>
-<v t="T751"><vh>Edit menu...</vh>
-<v t="T752"><vh>OnUpdateCopy</vh></v>
-<v t="T753"><vh>OnUpdateCut</vh></v>
-<v t="T754"><vh>OnUpdateDelete</vh></v>
-<v t="T755"><vh>OnUpdateExtract</vh></v>
-<v t="T756"><vh>OnUpdateExtractNames</vh></v>
-<v t="T757"><vh>OnUpdateExtractSection</vh></v>
-<v t="T758"><vh>OnUpdateFind</vh></v>
-<v t="T759"><vh>OnUpdatePaste</vh></v>
-<v t="T760"><vh>OnUpdateRedo</vh></v>
-<v t="T761"><vh>OnUpdateReplace</vh></v>
-<v t="T762"><vh>OnUpdateSelectAll</vh></v>
-<v t="T763"><vh>OnUpdateUndo</vh></v>
-<v t="T764"><vh>hasSelection</vh></v>
-</v>
-<v t="T765"><vh>Outline menu...</vh>
-<v t="T766"><vh>OnUpdateContractAll</vh></v>
-<v t="T767"><vh>OnUpdateContractAllChildren</vh></v>
-<v t="T768"><vh>OnUpdateContractChildren</vh></v>
-<v t="T769"><vh>OnUpdateCutNode</vh></v>
-<v t="T770"><vh>OnUpdateDeleteNode</vh></v>
-<v t="T771"><vh>OnUpdateDemote</vh></v>
-<v t="T772"><vh>OnUpdateExpandAll</vh></v>
-<v t="T773"><vh>OnUpdateExpandAllChildren</vh></v>
-<v t="T774"><vh>OnUpdateExpandChildren</vh></v>
-<v t="T775"><vh>OnUpdateGoBack</vh></v>
-<v t="T776"><vh>OnUpdateGoNext</vh></v>
-<v t="T777"><vh>OnUpdateGoNextVisible</vh></v>
-<v t="T778"><vh>OnUpdateGoPrevVisible</vh></v>
-<v t="T779"><vh>OnUpdateGoToNextChanged</vh></v>
-<v t="T780"><vh>OnUpdateGoToNextMarked</vh></v>
-<v t="T781"><vh>OnUpdateMark</vh></v>
-<v t="T782"><vh>OnUpdateMarkChangedItems</vh></v>
-<v t="T783"><vh>OnUpdateMarkChangedRoots</vh></v>
-<v t="T784"><vh>OnUpdateMarkSubheads</vh></v>
-<v t="T785"><vh>OnUpdateMoveDown</vh></v>
-<v t="T786"><vh>OnUpdateMoveLeft</vh></v>
-<v t="T787"><vh>OnUpdateMoveRight</vh></v>
-<v t="T788"><vh>OnUpdateMoveUp</vh></v>
-<v t="T789"><vh>OnUpdatePasteNode</vh></v>
-<v t="T790"><vh>OnUpdatePromote</vh></v>
-<v t="T791"><vh>OnUpdateSortNode</vh></v>
-</v>
-</v>
-<v t="T792"><vh>Menu command handlers...</vh>
-<v t="T793"><vh>File Menu...</vh>
-<v t="T794"><vh>OnNew</vh></v>
-<v t="T795"><vh>OnOpen</vh></v>
-<v t="T796"><vh>OnClose</vh></v>
-<v t="T797"><vh>OnSave</vh></v>
-<v t="T798"><vh>OnSaveAs</vh></v>
-<v t="T799"><vh>OnSaveTo</vh></v>
-<v t="T800"><vh>OnRevert</vh></v>
-<v t="T801"><vh>OnPageSetup</vh></v>
-<v t="T802"><vh>OnPrint</vh></v>
-<v t="T803"><vh>OnTangleSubmenu</vh></v>
-<v t="T804"><vh>OnUntangleSubmenu</vh></v>
-<v t="T805"><vh>OnImportExportSubmenu</vh></v>
-<v t="T806"><vh>OnQuit</vh></v>
-<v t="T807"><vh>OnReadOutlineOnly</vh></v>
-<v t="T808"><vh>readOutlineOnly</vh></v>
-<v t="T809"><vh>OnReadAtFileNodes</vh></v>
-<v t="T810"><vh>OnWriteOutlineOnly</vh></v>
-<v t="T811"><vh>OnWriteAtFileNodes</vh></v>
-<v t="T812"><vh>OnTangleAll</vh></v>
-<v t="T813"><vh>OnTangleMarked</vh></v>
-<v t="T814"><vh>OnTangle</vh></v>
-<v t="T815"><vh>OnUntangleAll</vh></v>
-<v t="T816"><vh>OnUntangleMarked</vh></v>
-<v t="T817"><vh>OnUntangle</vh></v>
-<v t="T818"><vh>OnImportFiles</vh></v>
-<v t="T819"><vh>OnImportCWEBFiles</vh></v>
-<v t="T820"><vh>OnImportNowebFiles</vh></v>
-<v t="T821"><vh>OnImportMoreText</vh></v>
-<v t="T822"><vh>OnFlattenOutline</vh></v>
-</v>
-<v t="T823"><vh>Edit menu...</vh>
-<v t="T824"><vh>OnUndo</vh></v>
-<v t="T825"><vh>OnRedo</vh></v>
-<v t="T826"><vh>OnCut</vh></v>
-<v t="T827"><vh>OnCopy</vh></v>
-<v t="T828"><vh>OnPaste</vh></v>
-<v t="T829"><vh>OnDelete</vh></v>
-<v t="T830"><vh>OnSelectAll</vh></v>
-<v t="T831"><vh>OnEditHeadline</vh></v>
-<v t="T832"><vh>OnFontPanel</vh></v>
-<v t="T833"><vh>OnSyntaxColoring</vh></v>
-<v t="T834"><vh>OnPreferences</vh></v>
-<v t="T835"><vh>OnConvertBlanks</vh></v>
-<v t="T836"><vh>OnExtractSection</vh></v>
-<v t="T837"><vh>OnExtractNames</vh></v>
-<v t="T838"><vh>OnExtract</vh></v>
-<v t="T839"><vh>OnFindPanel</vh></v>
-<v t="T840"><vh>OnFindNext</vh></v>
-<v t="T841"><vh>OnFindPrevious</vh></v>
-<v t="T842"><vh>OnReplace</vh></v>
-<v t="T843"><vh>OnReplaceThenFind</vh></v>
-</v>
-<v t="T844"><vh>Outline menu...</vh>
-<v t="T845"><vh>Cut/Paste/Copy/Delete</vh>
-<v t="T846"><vh>OnCutNode</vh></v>
-<v t="T847"><vh>OnCopyNode</vh></v>
-<v t="T848"><vh>OnPasteNode</vh></v>
-</v>
-<v t="T849"><vh>Expand/Contract</vh>
-<v t="T850"><vh>OnExpandAll</vh></v>
-<v t="T851"><vh>OnExpandAllChildren</vh></v>
-<v t="T852"><vh>OnExpandChildren</vh></v>
-<v t="T853"><vh>OnContractAll</vh></v>
-<v t="T854"><vh>OnContractAllChildren</vh></v>
-<v t="T855"><vh>OnContractChildren</vh></v>
-<v t="T856"><vh>OnExpandNextLevel</vh></v>
-<v t="T857"><vh>OnExpandToLevel1</vh></v>
-<v t="T858"><vh>OnExpandToLevel2</vh></v>
-<v t="T859"><vh>OnExpandToLevel3</vh></v>
-<v t="T860"><vh>OnExpandToLevel4</vh></v>
-<v t="T861"><vh>OnExpandToLevel5</vh></v>
-<v t="T862"><vh>OnExpandToLevel6</vh></v>
-<v t="T863"><vh>OnExpandToLevel7</vh></v>
-<v t="T864"><vh>OnExpandToLevel8</vh></v>
-<v t="T865"><vh>OnExpandToLevel9</vh></v>
-</v>
-<v t="T866"><vh>Insert/Delete/Clone</vh>
-<v t="T867"><vh>OnDeleteNode</vh></v>
-<v t="T868"><vh>OnInsertNode</vh></v>
-<v t="T869"><vh>OnCloneNode</vh></v>
-</v>
-<v t="T870"><vh>Mark/Goto</vh>
-<v t="T871"><vh>OnGoPrevVisible</vh></v>
-<v t="T872"><vh>OnGoNextVisible</vh></v>
-<v t="T873"><vh>OnGoBack</vh></v>
-<v t="T874"><vh>OnGoNext</vh></v>
-<v t="T875"><vh>OnMark</vh></v>
-<v t="T876"><vh>OnMarkSubheads</vh></v>
-<v t="T877"><vh>OnMarkChangedItems</vh></v>
-<v t="T878"><vh>OnMarkChangedRoots</vh></v>
-<v t="T879"><vh>OnMarkAllAtFileNodesDirty</vh></v>
-<v t="T880"><vh>OnMarkAtFileNodesDirty</vh></v>
-<v t="T881"><vh>OnUnmarkAll</vh></v>
-<v t="T882"><vh>OnGoToNextMarked</vh></v>
-<v t="T883"><vh>OnGoToNextChanged</vh></v>
-</v>
-<v t="T884"><vh>Move/Promote/Demote</vh>
-<v t="T885"><vh>OnMoveDown</vh></v>
-<v t="T886"><vh>OnMoveLeft</vh></v>
-<v t="T887"><vh>OnMoveRight</vh></v>
-<v t="T888"><vh>OnMoveUp</vh></v>
-<v t="T889"><vh>OnPromote</vh></v>
-<v t="T890"><vh>OnDemote</vh></v>
-</v>
-<v t="T891"><vh>Sort</vh>
-<v t="T892"><vh>OnSortNode</vh></v>
-</v>
-</v>
-<v t="T893"><vh>Window menu...</vh>
-<v t="T894"><vh>OnEqualSizedPanes</vh></v>
-<v t="T895"><vh>OnToggleActivePane</vh></v>
-<v t="T896"><vh>OnChangeDirection</vh></v>
-<v t="T897"><vh>OnCascade</vh></v>
-<v t="T898"><vh>OnMinimizeAll</vh></v>
-<v t="T899"><vh>OnOpenPythonWindow</vh></v>
-<v t="T900"><vh>OnRecentWindows</vh></v>
-</v>
-<v t="T901"><vh>Help menu...</vh>
-<v t="T902"><vh>OnAbout</vh></v>
-</v>
-</v>
-</v>
-<v t="T903"><vh>Find...</vh>
-<v t="T904"><vh>wxFindFrame class</vh>
-<v t="T905"><vh>&lt;&lt; FindPanel public globals &gt;&gt; (to be moved to Leo's core)</vh></v>
-<v t="T906"><vh>FindFrame.__init__</vh>
-<v t="T907"><vh>&lt;&lt; declare event handlers &gt;&gt;</vh></v>
-</v>
-<v t="T908"><vh>Event handlers</vh>
-<v t="T909"><vh>OnActivateFindFrame &amp; OnSetFocus</vh></v>
-<v t="T910"><vh>OnCloseFindFrame</vh></v>
-<v t="T911"><vh>OnChangeButton</vh></v>
-<v t="T912"><vh>OnChangeAllButton</vh></v>
-<v t="T913"><vh>OnChangeThenFindButton</vh></v>
-<v t="T914"><vh>OnFindButton</vh></v>
-<v t="T915"><vh>OnFindAllButton</vh></v>
-<v t="T916"><vh>OnBatchCheckBox</vh></v>
-<v t="T917"><vh>OnIgnoreCaseCheckBox</vh></v>
-<v t="T918"><vh>OnMarkChangesCheckBox</vh></v>
-<v t="T919"><vh>OnMarkFindsCheckBox</vh></v>
-<v t="T920"><vh>OnPatternMatchCheckBox</vh></v>
-<v t="T921"><vh>OnReverseCheckBox</vh></v>
-<v t="T922"><vh>OnSearchBodyTextCheckBox</vh></v>
-<v t="T923"><vh>OnSearchHeadlineCheckBox</vh></v>
-<v t="T924"><vh>OnSuboutlineOnlyCheckBox</vh></v>
-<v t="T925"><vh>OnWrapAroundCheckBox</vh></v>
-<v t="T926"><vh>OnWholeWordCheckBox</vh></v>
-<v t="T927"><vh>OnChangeText</vh></v>
-<v t="T928"><vh>OnFindText</vh></v>
-</v>
-<v t="T929"><vh>Interface with commander</vh></v>
-<v t="T930"><vh>set_check_boxes</vh></v>
-</v>
-<v t="T931"><vh>wxFindPanel class</vh>
-<v t="T932"><vh>FindPanel.__init__</vh>
-<v t="T933"><vh>&lt;&lt; Create the find text box &gt;&gt;</vh></v>
-<v t="T934"><vh>&lt;&lt; Create the change text box &gt;&gt;</vh></v>
-<v t="T935"><vh>&lt;&lt; Create all the find check boxes &gt;&gt;</vh>
-<v t="T936"><vh>&lt;&lt; Create the first column of check boxes &gt;&gt;</vh></v>
-<v t="T937"><vh>&lt;&lt; Create the second column of check boxes &gt;&gt;</vh></v>
-</v>
-<v t="T938"><vh>&lt;&lt; Create all the find buttons &gt;&gt;</vh>
-<v t="T939"><vh>&lt;&lt; Create the first row of buttons &gt;&gt;</vh></v>
-<v t="T940"><vh>&lt;&lt; Create the second row of buttons &gt;&gt;</vh></v>
-</v>
-</v>
-</v>
-</v>
-<v t="T941"><vh>wxLeoPrefs class</vh>
-<v t="T942"><vh>wxLeoPrefs.__init__</vh>
-<v t="T943"><vh>&lt;&lt; define event handlers for wxLeoPrefsFrame &gt;&gt;</vh></v>
-</v>
-<v t="T944"><vh>initialize</vh></v>
-<v t="T945"><vh>targetToLanguage (should be in Leo's core)</vh></v>
-<v t="T946"><vh>languageToTarget (should be in Leo's core)</vh></v>
-<v t="T947"><vh>Event handlers</vh>
-<v t="T948"><vh>OnActivatePrefsFrame</vh></v>
-<v t="T949"><vh>OnClosePrefsFrame</vh></v>
-<v t="T950"><vh>OnPageWidthText</vh></v>
-<v t="T951"><vh>OnDoneBatCheckBox</vh></v>
-<v t="T952"><vh>OnUnBatCheckBox</vh></v>
-<v t="T953"><vh>OnTangleDirectoryText</vh></v>
-<v t="T954"><vh>OnHeaderCheckBox</vh></v>
-<v t="T955"><vh>OnDocChunksCheckBox</vh></v>
-<v t="T956"><vh>OnTargetLanguageRadioBox</vh></v>
-</v>
-<v t="T957"><vh>PrefsPanel.__init__</vh>
-<v t="T958"><vh>&lt;&lt; Create the Global Options static box &gt;&gt;</vh></v>
-<v t="T959"><vh>&lt;&lt; Create the Default Tangle Options static box &gt;&gt;</vh></v>
-<v t="T960"><vh>&lt;&lt; Create the Default Target Language radio buttons &gt;&gt;</vh></v>
-</v>
-</v>
-</v>
-<v t="T961"><vh>(Events)</vh>
-<v t="T636" a="C"><vh>&lt;&lt; constants for wx plugin &gt;&gt;</vh></v>
-<v t="T683" a="C"><vh>finishCreate</vh></v>
-<v t="T675" a="C"><vh>__init__</vh>
-<v t="T676"><vh>&lt;&lt; create the splitters &gt;&gt;</vh></v>
-<v t="T677"><vh>&lt;&lt; create the tree &gt;&gt;</vh></v>
-<v t="T678"><vh>&lt;&lt; create the body pane &gt;&gt;</vh></v>
-<v t="T679"><vh>&lt;&lt; create the log pane &gt;&gt;</vh></v>
-<v t="T680"><vh>&lt;&lt; declare event handlers for frame &gt;&gt;</vh></v>
-<v t="T681"><vh>&lt;&lt; declare event handlers for body &amp; tree &gt;&gt;</vh></v>
-</v>
-<v t="T708" a="CE"><vh>event handlers</vh>
-<v t="T709"><vh>enable</vh></v>
-<v t="T710"><vh>Frame events</vh>
-<v t="T711"><vh>onActivate &amp; OnSetFocus</vh></v>
-<v t="T712"><vh>onCloseLeoFrame</vh>
-<v t="T713"><vh>&lt;&lt; Prompt for change.  Set veto if the user cancels &gt;&gt;</vh></v>
-<v t="T714"><vh>&lt;&lt; Close the permanent frames &gt;&gt;</vh></v>
-</v>
-<v t="T715"><vh>onResize</vh></v>
-</v>
-<v t="T716"><vh>Body events</vh>
-<v t="T717"><vh>onBodyTextUpdated</vh>
-<v t="T718"><vh>&lt;&lt; Set the dirty bit and/or the file-changed mark if the text has changed &gt;&gt;</vh></v>
-<v t="T719"><vh>&lt;&lt; Update icons &gt;&gt;</vh></v>
-</v>
-</v>
-<v t="T720" a="E"><vh>Tree events</vh>
-<v t="T721"><vh>Expand/contract</vh>
-<v t="T722"><vh>onTreeCollapsed &amp; onTreeExpanded</vh></v>
-<v t="T723"><vh>onTreeCollapsing &amp; onTreeExpanding</vh></v>
-</v>
-<v t="T724" a="E"><vh>Selecting</vh>
-<v t="T725"><vh>onTreeChanged</vh></v>
-<v t="T726"><vh>onTreeChanging</vh></v>
-</v>
-<v t="T727"><vh>Editing labels</vh>
-<v t="T728"><vh>onTreeBeginLabelEdit</vh></v>
-<v t="T729"><vh>onTreeEndLabelEdit</vh></v>
-<v t="T730"><vh>onTreeKeyDown</vh></v>
-</v>
-<v t="T731"><vh>onTreeBeginDrag</vh></v>
-<v t="T732"><vh>onTreeEndDrag</vh>
-<v t="T733"><vh>&lt;&lt; Define onTreeEndDrag vars &gt;&gt;</vh></v>
-<v t="T734"><vh>&lt;&lt; Insert src as the first child of dst &gt;&gt;</vh></v>
-<v t="T735"><vh>&lt;&lt; Insert src after dst &gt;&gt;</vh></v>
-</v>
-</v>
-</v>
-<v t="T740" a="C"><vh>Interface with the tree class</vh>
-<v t="T741"><vh>beginUpdate</vh></v>
-<v t="T742"><vh>endUpdate</vh></v>
-<v t="T743"><vh>Getters</vh></v>
-<v t="T744"><vh>redraw &amp; redraw_now</vh></v>
-<v t="T745"><vh>redraw_node</vh></v>
-<v t="T746"><vh>redraw_subtree</vh></v>
-<v t="T747"><vh>Setters</vh></v>
 </v>
 </v>
 </v>
@@ -9253,159 +9191,39 @@ def getPluginNames(self):
 <t tx="T563"></t>
 <t tx="T564">@nocolor
 
-To do:
-	
-- Disable expand/contract/changes of dummy root vnode.  (Change its name??)
-- Change headlines when node headline changes.
-- Enable events in body pane: change body text when body changes.
+10/12/03:
+	- Houston, we have ignition.  Almost all events connected properly.
+	- Code draws the screen (after the file has been read in!)
+	- Removed idle-time pollution: created onUpdateAllMenus.
+
+10/11/03: converted code using c2py, then hand converted code.</t>
+<t tx="T565">@nocolor
+
 - Add icons.
+- Replace most updater routines with corresponding commander routines.
+** Debug all commands.
+- Replace most menu routines with direct calls to commander routines?
+	- What about args?
 - Not all startup messages make it to the log pane...
 
-What I did:
+After 4.0 final:
 
-10/11/03: converted code using c2py, then hand converted code.
-10/12/03: Houston, we have ignition.  Tree events connected.
+- Complete bodyChanged/headlineChanged handlers.
+- Remove references to c.top from c.setChanged.
+- Remove reference to Tk routines from Leo's core.
+- Rewrite bodyChanged handler using Tk handler as a guide.</t>
+<t tx="T566">1. Most commands should be commander routines, not frame routines.  The window commands are exceptions: they are almost completely gui-related.
 
-@color</t>
-<t tx="T565">@ignore</t>
-<t tx="T566"># Executing the following script executes some example wxWindows code.
-# Just do the Execute Script command from here.
-# For this to work the path to wxTest.py must be in sys.path.
+Example: The only part of the Save commands that are gui/view related are the dialogs, and the dialog code can easily be separated out.
 
-# The first time you do this the window is created twice: once for the import and once for the reload.
-# Thereafter only the reload takes effect, so only one window gets created.
-# The purpose of reload is so you can change the code without restarting Leo.
-
-if 1:
-	import wxTest
-	reload(wxTest)
-else:
-	try:
-		reload(wxTest)
-	except:
-		import wxTest</t>
-<t tx="T567">from wxPython.wx import *
-
-class Form1(wxPanel):
-    def __init__(self, parent, id):
-        wxPanel.__init__(self, parent, -1)
-        self.quote = wxStaticText(self, -1, "Your quote :",wxPoint(20, 30))
-
-        # A multiline TextCtrl
-        self.logger = wxTextCtrl(self,5, "",wxPoint(300,20), wxSize(200,300),wxTE_MULTILINE | wxTE_READONLY)
-
-        # A button
-        self.button =wxButton(self, 10, "Save", wxPoint(200, 300))
-        EVT_BUTTON(self, 10, self.OnClick)
-
-        # the edit control - one line version.
-        self.lblname = wxStaticText(self, -1, "Your name :",wxPoint(20,60))
-        self.editname = wxTextCtrl(self, 20, "Enter here your name", wxPoint(150, 60), wxSize(150, -1))
-        EVT_TEXT(self, 20, self.EvtText)
-        EVT_CHAR(self.editname, self.EvtChar)
-
-        # the combobox Control
-        self.sampleList = ['friends', 'advetising', 'Websearch', 'yellowpages']
-        self.lblhear = wxStaticText(self,-1,"How did you hear from us ?",wxPoint(20, 90))
-        self.edithear=wxComboBox(self, 30, "", wxPoint(150, 90), wxSize(95, -1),
-                   self.sampleList, wxCB_DROPDOWN)
-        ## EVT_COMBOBOX(self, 30, self.EvtComboBox)
-        ##EVT_TEXT(self, 30, self.EvtText)
-
-        # Checkbox
-        self.insure = wxCheckBox(self, 40, "Do you want Insured Shipment ?",wxPoint(20,180))
-        EVT_CHECKBOX(self, 40,   self.EvtCheckBox)
-        # Radio Boxes
-        self.radioList = ['blue', 'red', 'yellow', 'orange', 'green', 'purple',
-                      'navy blue', 'black', 'gray']
-
-        rb = wxRadioBox(self, 50, "What color would you like ?", wxPoint(20, 210), wxDefaultSize,
-                        self.radioList, 3, wxRA_SPECIFY_COLS)
-        EVT_RADIOBOX(self, 50, self.EvtRadioBox)
-    def EvtRadioBox(self, event):
-        self.logger.AppendText('EvtRadioBox: %d\n' % event.GetInt())
-    def EvtComboBox(self, event):
-        self.logger.AppendText('EvtComboBox: %s\n' % event.GetString())
-    def OnClick(self,event):
-        self.logger.AppendText(" Click on object with Id %d\n" %event.GetId())
-    def EvtText(self, event):
-        self.logger.AppendText('EvtText: %s\n' % event.GetString())
-    def EvtChar(self, event):
-        self.logger.AppendText('EvtChar: %d\n' % event.GetKeyCode())
-        event.Skip()
-    def EvtCheckBox(self, event):
-        self.logger.AppendText('EvtCheckBox: %d\n' % event.Checked())
-
-class Form2(wxPanel):
-    def __init__(self, parent, id):
-        wxPanel.__init__(self, parent, -1)
-        self.sampleList = ['friends', 'advetising', 'Websearch', 'yellowpages']
-        self.radioList = ['blue', 'red', 'yellow', 'orange', 'green', 'purple',
-                      'navy blue', 'black', 'gray']
-        gs = wxFlexGridSizer(5,2,5,5)
-        gs.Add(wxStaticText(self, -1, "Your name :"),0,wxEXPAND)
-        self.editname=wxTextCtrl(self, 20, "Enter here your name")
-        gs.Add(self.editname,0,wxEXPAND)
-        EVT_TEXT(self, 20, self.EvtText)
-        EVT_CHAR(self.editname, self.EvtChar)
-        gs.Add(wxStaticText(self,-1,"How did you hear from us ?"),0,wxEXPAND)
-        gs.Add(wxComboBox(self, 30, "", wxPoint(-1,-1),wxSize(-1,-1), self.sampleList, wxCB_DROPDOWN),0,wxEXPAND)
-        EVT_COMBOBOX(self, 30, self.EvtComboBox)
-        EVT_TEXT(self, 30, self.EvtText)
-        gs.Add(60, 20, 0, wxEXPAND)
-        gs.Add(wxCheckBox(self, 40, "Do you want Insured Shipment ?"),0,wxEXPAND)
-        EVT_CHECKBOX(self, 40,   self.EvtCheckBox)
-        gs.Add(60, 20, 0, wxEXPAND)
-        gs.Add(wxRadioBox(self, 50, "What color would you like ?", wxPoint(-1,-1),wxDefaultSize,
-                        self.radioList, 3, wxRA_SPECIFY_COLS),0,wxEXPAND)
-        EVT_RADIOBOX(self, 50, self.EvtRadioBox)
-        gs.Add(60, 20, 0, wxEXPAND)
-        gs.Add(wxButton(self, 10, "Save"),0,wxALIGN_CENTER)
-        EVT_BUTTON(self, 10, self.OnClick)
-        # gs.AddGrowableRow(0)
-        boxh = wxBoxSizer(wxHORIZONTAL)
-        boxh.Add(gs,0,wxEXPAND)
-
-        self.logger=wxTextCtrl(self,5, "",wxPoint(-1,-1),wxSize(-1,-1),wxTE_MULTILINE | wxTE_READONLY)
-        boxh.Add( self.logger
-                  ,1,wxEXPAND)
-
-        self.sizer = boxh
-        self.sizer.Fit(self)
-        self.SetAutoLayout(true)
-        self.SetSizer(self.sizer)
-    def EvtRadioBox(self, event):
-        self.logger.AppendText('EvtRadioBox: %d\n' % event.GetInt())
-    def EvtComboBox(self, event):
-        self.logger.AppendText('EvtComboBox: %s\n' % event.GetString())
-    def OnClick(self,event):
-        self.logger.AppendText(" Click on object with Id %d\n" %event.GetId())
-    def EvtText(self, event):
-        self.logger.AppendText('EvtText: %s\n' % event.GetString())
-    def EvtChar(self, event):
-        self.logger.AppendText('EvtChar: %d\n' % event.GetKeyCode())
-        event.Skip()
-    def EvtCheckBox(self, event):
-        self.logger.AppendText('EvtCheckBox: %d\n' % event.Checked())
-
-
-app = wxPySimpleApp()
-frame = wxFrame(None,-1," Demo with Notebook")
-nb = wxNotebook(frame,-1)
-form1=Form1(nb, -1)
-form2=Form2(nb,-1)
-nb.AddPage(form1, "Absolute Positionning")
-nb.AddPage(form2, "Sizers")
-frame.Show(True)
-app.MainLoop()</t>
+</t>
+<t tx="T567"></t>
 <t tx="T568"># Used 10/11/03 to convert old wxLeo code 
 
 if 0: # This script calls c2py on the current node and all nodes of its subtree.
 	import c2py
 	c2py.convertCurrentTree()</t>
-<t tx="T569"></t>
-<t tx="T570">@others</t>
-<t tx="T571">def __init__ (self):
+<t tx="T569">def __init__ (self):
 	wxFrame.__init__(None,-1,"Leo",wxDefaultPosition,wxSize(550,600)),
 	mFileName(""),
 	mDefaultDirectory(""),
@@ -9431,11 +9249,12 @@ if 0: # This script calls c2py on the current node and all nodes of its subtree.
 	mIniting = false # allow resize events.
 	es("Leo Log Window...\n\n")
 </t>
-<t tx="T572">mTextChanging = 0
+<t tx="T570">self.textChanging = 0
+
 mCopying = 0
 mDraggedItem = 0L
 mReverting = false</t>
-<t tx="T573">mOutputDocFlag = true
+<t tx="T571">mOutputDocFlag = true
 mTangleBatchFlag = false
 mUntangleBatchFlag = false
 mUseHeaderFlag = true
@@ -9443,7 +9262,7 @@ mPageWidth = 132
 mTabWidth = 4
 mPresentLanguage = c_language
 mTargetLanguage = c_language</t>
-<t tx="T574">mSplitter1 = wxSplitterWindow(self,cSplitterWindow,
+<t tx="T572">mSplitter1 = wxSplitterWindow(self,cSplitterWindow,
 	wxDefaultPosition,wxDefaultSize,
 	wxSP_BORDER | wxSP_3D,
 	"splitterWindow")
@@ -9491,7 +9310,7 @@ mBodyCtrl.SetFont(font)
 # Attach the controls to the splitter.
 mSplitter1.SplitHorizontally(mSplitter2,mBodyCtrl,0)
 mSplitter2.SplitVertically(mTreeCtrl,mLogCtrl,width/2)</t>
-<t tx="T575"># Warning: the width and height must match the underlying .bmp files.
+<t tx="T573"># Warning: the width and height must match the underlying .bmp files.
 
 # width: 20,height: 11,mask:TRUE,count:16
 
@@ -9514,7 +9333,7 @@ if defined(__WXMSW__)or defined(__WXGTK__)
 			box.LoadFile(s,wxBITMAP_TYPE_BMP)
 		im.Add(box)
 	mTreeCtrl.SetImageList(im)</t>
-<t tx="T576">if wx.wxPlatform == "__WXGTK__": # Windows version handles shortcuts properly
+<t tx="T574">if wx.wxPlatform == "__WXGTK__": # Windows version handles shortcuts properly
 	enum
 		# &lt;&lt; accelerator constants &gt;&gt;
 		alt = wxACCEL_ALT,
@@ -9620,18 +9439,18 @@ mBodyCtrl.SetAcceleratorTable(accel)
 mTreeCtrl.SetAcceleratorTable(accel)
 mSplitter1.SetAcceleratorTable(accel)
 </t>
-<t tx="T577">CreateStatusBar(2)
+<t tx="T575">CreateStatusBar(2)
 SetStatusText("")</t>
-<t tx="T578">if wx.wxPlatform == "__WXMSW__":
+<t tx="T576">if wx.wxPlatform == "__WXMSW__":
   self .SetIcon(wxIcon("LeoIcon"))
 </t>
-<t tx="T579"># Blinking happens on Windows without a problem.  Furthermore,setting the rate here affects _all_ windows.
+<t tx="T577"># Blinking happens on Windows without a problem.  Furthermore,setting the rate here affects _all_ windows.
 
 if wx.wxPlatform == "__WXGTK__": # Doesn't seem to work.
 	caret = mBodyCtrl.GetCaret()
 	caret.SetBlinkTime(500)
 </t>
-<t tx="T580">root = mTreeCtrl.AddRoot("untitled")
+<t tx="T578">root = mTreeCtrl.AddRoot("untitled")
 t = tnode()
 v = vnode(mCommands,t)
 v.setTreeID(root)
@@ -9651,344 +9470,7 @@ if defined(__WXMSW__)
 	mTreeCtrl.SetItemImage(root,0,wxTreeItemIcon_Expanded)
 	mTreeCtrl.SetItemImage(root,0,wxTreeItemIcon_SelectedExpanded)
 </t>
-<t tx="T581">def createMenus(self,void):
-	
-	menuBar = wxMenuBar()
-	&lt;&lt; Create the File menu &gt;&gt;
-	&lt;&lt; Create the Edit menu &gt;&gt;
-	&lt;&lt; Create the Outline menu &gt;&gt;
-	&lt;&lt; Create the Window menu &gt;&gt;
-	&lt;&lt; Create the Help menu &gt;&gt;
-
-	menuBar.Append(fileMenu,"&amp;File")
-	menuBar.Append(editMenu,"&amp;Edit")
-	menuBar.Append(outlineMenu,"&amp;Outline")
-	menuBar.Append(windowMenu,"&amp;Window")
-	menuBar.Append(helpMenu,"&amp;Help")
-
-	SetMenuBar(menuBar)# attach the menu bar to the frame
-</t>
-<t tx="T582">fileMenu = wxMenu()
-&lt;&lt; Create the initial items of the file menu &gt;&gt;
-&lt;&lt; Create the Read/Write submenu &gt;&gt;
-&lt;&lt; Create the Tangle submenu &gt;&gt;
-&lt;&lt; Create the Untangle submenu &gt;&gt;
-&lt;&lt; Create the Import Files submenu &gt;&gt;
-fileMenu.AppendSeparator()
-fileMenu.Append(cQuitMenuItem,"E&amp;xit\tCtrl-Q","Quit Leo")</t>
-<t tx="T583">fileMenu.Append(cNewMenuItem,"&amp;New\tCtrl-N",
-	"Open new Leo window")
-fileMenu.Append(cOpenMenuItem,
-	"&amp;Open\tCtrl-O","Open Leo file")
-fileMenu.AppendSeparator()
-fileMenu.Append(cCloseMenuItem,
-	"&amp;Close\tCtrl-W","Close window")
-fileMenu.Append(cSaveMenuItem,
-	"&amp;Save\tCtrl-S","Save window")
-fileMenu.Append(cSaveAsMenuItem,
-	"Save &amp;As\tShift-Ctrl-S","Save window as")
-fileMenu.Append(cSaveToMenuItem,
-	"Save &amp;To","Save window to")
-fileMenu.Append(cRevertMenuItem,
-	"&amp;Revert","Revert window to saved")
-fileMenu.AppendSeparator()
-fileMenu.Append(cPageSetupMenuItem,
-	"Page S&amp;etup\tShift-Ctrl-P","Specify printer settings")
-fileMenu.Append(cPrintMenuItem,
-	"&amp;Print\tCtrl-P","Print(Weave)window")
-# Disabled unused items
-fileMenu.Enable(cPrintMenuItem,false)
-fileMenu.Enable(cPageSetupMenuItem,false)
-fileMenu.AppendSeparator()</t>
-<t tx="T584">readWriteMenu = wxMenu()
-readWriteMenu.Append(cReadOutlineOnlyMenuItem,
-	"Read Outline Only","Read outline only")
-readWriteMenu.Append(cReadAtFileNodesMenuItem,
-	"Read @file Nodes","Read @file nodes")
-readWriteMenu.Append(cWriteOutlineOnlyMenuItem,
-	"Write Outline Only","Write outline only")
-readWriteMenu.Append(cWriteAtFileNodesMenuItem,
-	"Write @file Nodes","Write @file nodes")
-fileMenu.Append(cReadWriteSubmenuItem,"Read/Write...",readWriteMenu,"")</t>
-<t tx="T585">tangleMenu = wxMenu()
-tangleMenu.Append(cTangleAllMenuItem,
-	"Tangle &amp;All\tShift-Ctrl-A","Tangle all roots")
-tangleMenu.Append(cTangleMarkedMenuItem,
-	"Tangle &amp;Marked\tShift-Ctrl-M","Tangle all marked roots")
-tangleMenu.Append(cTangleMenuItem,
-	"&amp;Tangle\tShift-Ctrl-T","Tangle selected headline")
-fileMenu.Append(cTangleSubmenuItem,"&amp;Tangle...",tangleMenu,"")
-# Doesn't work either.
-fileMenu.SetHelpString(cTangleSubmenuItem,"Tangle commands...")</t>
-<t tx="T586">untangleMenu = wxMenu()
-untangleMenu.Append(cUntangleAllMenuItem,
-	"Untangle &amp;All","Tangle all roots")
-untangleMenu.Append(cUntangleMarkedMenuItem,
-	"Untangle &amp;Marked","Tangle all marked roots")
-untangleMenu.Append(cUntangleMenuItem,
-	"&amp;Untangle\tShift-Ctrl-U","Tangle selected headline")
-fileMenu.Append(cUntangleSubmenuItem,"&amp;Untangle...",untangleMenu,"")</t>
-<t tx="T587">importMenu = wxMenu()
-importMenu.Append(cImportFilesMenuItem,
-	"Import Files\tShift-Ctrl-F","Convert source files to outline")
-importMenu.Append(cImportCWEBFilesMenuItem,
-	"Import CWEB Files","Convert CWEB file to outline")
-importMenu.Append(cImportNowebFilesMenuItem,
-	"Import noweb Files","Convert noweb file to outline")
-importMenu.Enable(cImportNowebFilesMenuItem,false)
-importMenu.Append(cImportMORETextMenuItem,
-	"Import MORE Text","Convert MORE file to outline")
-importMenu.Append(cFlattenOutlineMenuItem,
-	"Flatten Outline","Write Leo outline to text file")
-fileMenu.Append(cImportExportSubmenuItem,
-	"&amp;Import Files...",importMenu,"Import commands")</t>
-<t tx="T588">editMenu = wxMenu()
-&lt;&lt; Create the initial items of the Edit menu &gt;&gt;
-&lt;&lt; Create the Edit Body submenu &gt;&gt;
-&lt;&lt; Create the Find submenu &gt;&gt;
-&lt;&lt; Create the final items of the Edit menu &gt;&gt;</t>
-<t tx="T589">editMenu.Append(cUndoMenuItem,"&amp;Undo\tCtrl-Z","Undo last operation")
-ifndef __WXGTK__ # For now,neither tree nor text controls support Redo.
-	editMenu.Append(cRedoMenuItem,
-		"&amp;Redo\tShift-Ctrl-Z","Redo previous operation")
-editMenu.AppendSeparator()
-editMenu.Append(cCutMenuItem,
-	"Cu&amp;t\tCtrl-X","Cut text")
-editMenu.Append(cCopyMenuItem,
-	"&amp;Copy\tCtrl-C","Copy text")
-editMenu.Append(cPasteMenuItem,
-	"&amp;Paste\tCtrl-V","Paste text")
-editMenu.Append(cDeleteMenuItem,
-	"&amp;Delete","Delete text")
-editMenu.Append(cSelectAllMenuItem,
-	"Select A&amp;ll\tCtrl-A","Select all")
-editMenu.AppendSeparator()
-editMenu.Append(cEditHeadlineMenuItem,
-	"Edit &amp;Headline\tShift-Ctrl-H","Edit headline text")</t>
-<t tx="T590">editBodyMenu = wxMenu()
-editBodyMenu.Append(cExtractSectionMenuItem,
-	"&amp;Extract Section\tShift-Ctrl-E",
-	"Extract section to child")
-editBodyMenu.Append(cExtractNamesMenuItem,
-	"Extract Section &amp;Names\tShift-Ctrl-N",
-	"Extract section names to children")
-editBodyMenu.Append(cExtractMenuItem,
-	"Extract\tShift-Ctrl-D",
-	"Extract section text to child")
-editBodyMenu.Append(cConvertBlanksMenuItem,
-	"&amp;Convert Blanks\tShift-Ctrl-B","Convert blanks")
-editMenu.Append(cEditBodySubmenuItem,"&amp;Edit Body...",editBodyMenu,"")</t>
-<t tx="T591">findMenu = wxMenu()
-findMenu.Append(cFindPanelMenuItem,
-	"&amp;Find Panel\tCtrl-F","Open Find panel")
-findMenu.AppendSeparator()
-if wx.wxPlatform == "__WXGTK__": # bugs: can't recognize shift-F keys
-	findMenu.Append(cFindNextMenuItem,
-		"Find &amp;Next\tF3","Find next")
-	findMenu.Append(cFindPreviousMenuItem,
-		"Find &amp;Prev\tF4","Find previous")
-	findMenu.Append(cReplaceMenuItem,
-		"&amp;Replace\tF5","Replace")
-	findMenu.Append(cReplaceThenFindMenuItem,
-		"Replace &amp;Then Find\tF6","Replace,then find again")
-else:
-	findMenu.Append(cFindNextMenuItem,
-		"Find &amp;Next\tF3","Find next")
-	findMenu.Append(cFindPreviousMenuItem,
-		"Find &amp;Prev\tShift-F3","Find previous")
-	findMenu.Append(cReplaceMenuItem,
-		"&amp;Replace\tF4","Replace")
-	findMenu.Append(cReplaceThenFindMenuItem,
-		"Replace &amp;Then Find\tShift-F4","Replace,then find again")
-editMenu.Append(cFindSubmenuItem,
-	"&amp;Find...",findMenu,"")</t>
-<t tx="T592">editMenu.Append(cFontPanelMenuItem,
-	"&amp;Font Panel\tAlt-Shift-T","Open Font panel")
-editMenu.Append(cSyntaxColoringMenuItem,
-	"&amp;Syntax Coloring...\tAlt-Shift-S","Set syntax coloring options")
-editMenu.Enable(cSyntaxColoringMenuItem,false)
-editMenu.AppendSeparator()
-editMenu.Append(cPreferencesMenuItem,
-	"Preferences\tCtrl-Y","Open Preferences panel")</t>
-<t tx="T593">outlineMenu = wxMenu()
-&lt;&lt; Create the initial items of the Outline menu &gt;&gt;
-&lt;&lt; Create the Expand/Contract submenu &gt;&gt;
-&lt;&lt; Create the Move/Select submenu &gt;&gt;
-&lt;&lt; Create the Mark/Go To submenu &gt;&gt;</t>
-<t tx="T594">outlineMenu.Append(cCutNodeMenuItem,
-	"Cu&amp;t Node\tShift-Ctrl-X","Cut node")
-outlineMenu.Append(cCopyNodeMenuItem,
-	"&amp;Copy Node\tShift-Ctrl-C","Copy node")
-outlineMenu.Append(cPasteNodeMenuItem,
-	"&amp;Paste Node\tShift-Ctrl-V","Paste node")
-outlineMenu.Append(cDeleteNodeMenuItem,
-	# Shift-Ctrl-BkSp not validcPreferencesMenuItem
-	"&amp;Delete Node","Delete node")
-outlineMenu.AppendSeparator()
-outlineMenu.Append(cInsertNodeMenuItem,
-	"&amp;Insert Node\tCtrl-I","Insert new node")
-outlineMenu.Append(cCloneNodeMenuItem,
-	"&amp;Clone Node\tShift-Ctrl-I","Clone node")
-outlineMenu.Append(cSortNodeMenuItem,
-	"&amp;Sort Node","Sort node's childdren")
-outlineMenu.AppendSeparator()</t>
-<t tx="T595">expandContractMenu = wxMenu()
-expandContractMenu.Append(cExpandAllChildrenMenuItem,
-	"Expand All Children","Expand node fully")
-expandContractMenu.Append(cExpandChilrenMenuItem,
-	"Expand Children","Expand node")
-expandContractMenu.AppendSeparator()
-expandContractMenu.Append(cContractAllChildrenMenuItem,
-	"Contract All Children","Contract node fully")
-expandContractMenu.Append(cContractChilrenMenuItem,
-	"Contract Children","Contract node")
-expandContractMenu.AppendSeparator()
-expandContractMenu.Append(cExpandNextLevelMenuItem,
-	"Expand &amp;Next Level\tAlt-N","Expand outline another level")
-expandContractMenu.Append(cExpandToLevel1MenuItem,# better than contract all
-	"Contract All\tAlt-1","Contract all")
-expandContractMenu.Append(cExpandToLevel2MenuItem,
-	"Expand To Level 2\tAlt-2","Expand to level 2")
-expandContractMenu.Append(cExpandToLevel3MenuItem,
-	"Expand To Level 3\tAlt-3","Expand to level 3")
-expandContractMenu.Append(cExpandToLevel4MenuItem,
-	"Expand To Level 4\tAlt-4","Expand to level 4")
-expandContractMenu.Append(cExpandToLevel5MenuItem,
-	"Expand To Level 5\tAlt-5","Expand to level 5")
-expandContractMenu.Append(cExpandToLevel6MenuItem,
-	"Expand To Level 6\tAlt-6","Expand to level 6")
-expandContractMenu.Append(cExpandToLevel7MenuItem,
-	"Expand To Level 7\tAlt-7","Expand to level 7")
-expandContractMenu.Append(cExpandToLevel8MenuItem,
-	"Expand To Level 8\tAlt-8","Expand to level 8")
-expandContractMenu.Append(cExpandAllMenuItem,
-	"Expand All\tAlt-9","Expand all")
-outlineMenu.Append(cExpandContractSubmenuItem,
-	"Expand/Contract...",expandContractMenu,"")</t>
-<t tx="T596">moveSelectMenu = wxMenu()
-moveSelectMenu.Append(cMoveDownMenuItem,
-	"Move &amp;Down\tCtrl-D","Move node down")
-moveSelectMenu.Append(cMoveLeftMenuItem,
-	"Move &amp;Left\tCtrl-L","Move node left")
-moveSelectMenu.Append(cMoveRightMenuItem,
-	"Move &amp;Right\tCtrl-R","Move node right")
-moveSelectMenu.Append(cMoveUpMenuItem,
-	"Move &amp;Up\tCtrl-U","Move node up")
-moveSelectMenu.AppendSeparator()
-# Can't use control-] and control-[ anywhere.
-moveSelectMenu.Append(cPromoteMenuItem,
-	"&amp;Promote","Promote children")
-moveSelectMenu.Append(cDemoteMenuItem,
-	"&amp;Demote","Demote following siblings")
-moveSelectMenu.AppendSeparator()
-if wx.wxPlatform == "__WXMSW__": # Up and down keys handled by tree &amp; text control
-	moveSelectMenu.Append(cGoPrevVisibleMenuItem,
-		"Go Prev Visible\tUp","Select previous visible node")
-	moveSelectMenu.Append(cGoNextVisibleMenuItem,
-		"Go Next Visible\tDown","Select next visible node")
-else:
-	moveSelectMenu.Append(cGoPrevVisibleMenuItem,
-		"Go Prev Visible","Select previous visible node")
-	moveSelectMenu.Append(cGoNextVisibleMenuItem,
-		"Go Next Visible","Select next visible node")
-moveSelectMenu.AppendSeparator()
-moveSelectMenu.Append(cGoBackMenuItem,
-	"Go Prev","Select previous node")
-moveSelectMenu.Append(cGoNextMenuItem,
-	"Go Next","Select next node")
-outlineMenu.Append(cMoveSelectSubmenuItem,
-	"Move/&amp;Select...",moveSelectMenu,"")</t>
-<t tx="T597">markGoToMenu = xMenu()
-markGoToMenu.Append(cMarkMenuItem,
-	"&amp;Mark\tCtrl-M","Mark node")
-markGoToMenu.Append(cMarkSubheadsMenuItem,
-	"Mark &amp;Subheads\tAlt-S","Mark children of node")
-markGoToMenu.Append(cMarkChangedItemsMenuItem,
-	"Mark &amp;Changed Items\tAlt-C","Mark all changed nodes")
-markGoToMenu.Append(cMarkChangedRootsMenuItem,
-	"Mark Changed &amp;Roots\tAlt-R","Mark all changed root nodes")
-markGoToMenu.Append(cMarkAllAtFileNodesDirtyMenuItem,
-	"Mark All @file Nodes Dirty","Mark all @file nodes")
-markGoToMenu.Append(cMarkAtFileNodesDirtyMenuItem,
-	"Mark @file Nodes Dirty","Mark @file nodes")
-markGoToMenu.AppendSeparator()
-markGoToMenu.Append(cUnmarkAllMenuItem,
-	"&amp;Unmark All\tAlt-U","Unmark all nodes")
-markGoToMenu.Append(cGoToNextMarkedMenuItem,
-	"&amp;Go To Next Marked\tAlt-M","Select next marked node")
-markGoToMenu.Append(cGoToNextChangedMenuItem,
-	"Go To Next Changed\tAlt-D","Select next changed node")
-outlineMenu.Append(cMarkGotoSubmenuItem,
-	"&amp;Mark/Go To...",markGoToMenu,"")</t>
-<t tx="T598">windowMenu = 2xMenu()
-windowMenu.Append(cEqualSizedPanesMenuItem,
-	if wx.wxPlatform == "__WXGTK__": # Control-E conflicts with shift-control-E
-		"&amp;Equal Sized Panes","Make each pane the same size")
-	else:
-		"&amp;Equal Sized Panes\tCtrl-E","Make each pane the same size")
-windowMenu.Append(cToggleActivePaneMenuItem,
-	"&amp;Toggle Active Pane\tCtrl-T","Switch the active pane")
-if wx.wxPlatform == "__WXGTK__":
-	windowMenu.Enable(cToggleActivePaneMenuItem,false)
-windowMenu.Append(cSplitPaneDirectionMenuItem,
-	"&amp;Split Pane Vertically","Change orientation of pane")
-windowMenu.AppendSeparator()
-windowMenu.Append(cCascadeMenuItem,
-	"&amp;Cascade Windows","Cascade all open windows")
-windowMenu.Append(cMinimizeAllMenuItem,
-	"Minimize &amp;All Windows","Minimize all open windows")
-windowMenu.AppendSeparator()
-
-if 0 # Not ready yet: use wxFileHistory
-	windowMenu.AppendSeparator()
-	windowMenu.Append(cRecentWindowsMenuItem,
-		"Recent Windows","List of recent windows")</t>
-<t tx="T599">helpMenu = wxMenu()
-
-helpMenu.Append(cAboutLeoMenuItem,
-	"&amp;About Leo...",
-	"Show about dialog")</t>
-<t tx="T600"></t>
-<t tx="T601">if 0:
-	def SetUntitledNumber(self,n):
-		s = "untitled" = 
-		if n &gt; 0:
-			s +=::Format("%d",n)
-		self.SetTitle(s)</t>
-<t tx="T602">if 0:
-	def putToLog(self,s):
-		mLogCtrl.AppendText(s)</t>
-<t tx="T603">if 0:
-	def getLogText(self,void):
-		return mLogCtrl.GetValue()</t>
-<t tx="T604">@others</t>
-<t tx="T605">def alert(message):
-	
-	d =wxMessageDialog(None,
-		message,
-		"Alert",
-		wxOK |wxCENTRE,
-		wxDefaultPosition)
-
-	d.ShowModal()</t>
-<t tx="T606">def assertFailedDialog(message):
-	
-	pass # use Python asserts instead.</t>
-<t tx="T607"></t>
-<t tx="T608">frame = LeoFrame()
-++gNumberOfUntitledWindows
-frame.SetTitle("untitled")
-frame.Show(true)
-SetTopWindow(frame)
-gCommands = frame.mCommands
-gActiveFrame = frame # Allow writes to log pane.
-# Set the current node in the _new_ form!.
-vnode *v = frame.mCommands.rootVnode()
-assert(v)
-frame.mCommands.setCurrentVnode(v)
-frame.mCommands.editVnode(v)
-frame.mCommands.mFirstWindowAndNeverSaved = true</t>
-<t tx="T609">def OpenWithFileName(self,fileName):
+<t tx="T579">def OpenWithFileName(self,fileName):
 	# If the file is already open just bring its window to the front.
 	frame = gLeoFrameList
 	while frame:
@@ -10017,7 +9499,7 @@ frame.mCommands.mFirstWindowAndNeverSaved = true</t>
 	except:(...)
 		alert("Error opening: " + fileName)
 		return None</t>
-<t tx="T610">if 0: # not used at present.
+<t tx="T580">if 0: # not used at present.
 	closeFrame = gLeoFrameList
 	closeEmptyFrameFlag = (
 		# There is only one window open at present.
@@ -10027,7 +9509,7 @@ frame.mCommands.mFirstWindowAndNeverSaved = true</t>
 		closeFrame.self.mCommands.mFirstWindowAndNeverSaved and
 		# The window is empty.
 		not (closeFrame.self.mCommands. isChanged())</t>
-<t tx="T611"># 	These must match the order of items in the wxRadioBox.
+<t tx="T581"># 	These must match the order of items in the wxRadioBox.
 # 	These are _not_ the same as vars in args.h.
 
 enum
@@ -10042,542 +9524,7 @@ enum
 	python_target,
 	bad_last_target
 </t>
-<t tx="T612">def createMenus(self):
-
-	menuBar = wx.wxMenuBar()
-	if 0: # Constants not defined yet.
-		&lt;&lt; Create the File menu &gt;&gt;
-		&lt;&lt; Create the Edit menu &gt;&gt;
-		&lt;&lt; Create the Outline menu &gt;&gt;
-		&lt;&lt; Create the Window menu &gt;&gt;
-	&lt;&lt; Create the Help menu &gt;&gt;
-	if 0:
-		menuBar.Append(fileMenu, "&amp;File")
-		menuBar.Append(editMenu, "&amp;Edit")
-		menuBar.Append(outlineMenu, "&amp;Outline")
-		menuBar.Append(windowMenu, "&amp;Window")
-		
-	menuBar.Append(helpMenu, "&amp;Help")
-	self.SetMenuBar(menuBar)  # attach the menu bar to the frame</t>
-<t tx="T613">fileMenu = wx.wxMenu()
-&lt;&lt; Create the initial items of the file menu &gt;&gt;
-&lt;&lt; Create the Read/Write submenu &gt;&gt;
-&lt;&lt; Create the Tangle submenu &gt;&gt;
-&lt;&lt; Create the Untangle submenu &gt;&gt;
-&lt;&lt; Create the Import Files submenu &gt;&gt;
-
-fileMenu.AppendSeparator()
-
-fileMenu.Append(cQuitMenuItem, "E&amp;xit\tCtrl-Q", "Quit Leo")</t>
-<t tx="T614">fileMenu.Append ( cNewMenuItem, "&amp;New\tCtrl-N",
-	"Open new Leo window" )
-fileMenu.Append ( cOpenMenuItem,
-	"&amp;Open\tCtrl-O", "Open Leo file")
-
-fileMenu.AppendSeparator()
-
-fileMenu.Append ( cCloseMenuItem,
-	"&amp;Close\tCtrl-W", "Close window" )
-fileMenu.Append ( cSaveMenuItem,
-	"&amp;Save\tCtrl-S", "Save window" )
-fileMenu.Append ( cSaveAsMenuItem,
-	"Save &amp;As\tShift-Ctrl-S", "Save window as" )
-fileMenu.Append ( cSaveToMenuItem,
-	"Save &amp;To", "Save window to" )
-fileMenu.Append ( cRevertMenuItem,
-	"&amp;Revert", "Revert window to saved" )
-
-fileMenu.AppendSeparator()
-
-fileMenu.Append ( cPageSetupMenuItem,
-	"Page S&amp;etup\tShift-Ctrl-P", "Specify printer settings" )
-fileMenu.Append ( cPrintMenuItem,
-	"&amp;Print\tCtrl-P", "Print (Weave) window" )
-
-# Disabled unused items
-fileMenu.Enable(cPrintMenuItem, FALSE)
-fileMenu.Enable(cPageSetupMenuItem, FALSE)
-
-fileMenu.AppendSeparator()</t>
-<t tx="T615">readWriteMenu = wx.wxMenu()
-
-readWriteMenu.Append (cReadOutlineOnlyMenuItem,
-	"Read Outline Only", "Read outline only")
-readWriteMenu.Append (cReadAtFileNodesMenuItem,
-	"Read @file Nodes", "Read @file nodes")
-readWriteMenu.Append (cWriteOutlineOnlyMenuItem,
-	"Write Outline Only", "Write outline only")
-readWriteMenu.Append (cWriteAtFileNodesMenuItem,
-	"Write @file Nodes", "Write @file nodes")
-
-fileMenu.Append(cReadWriteSubmenuItem, "Read/Write...", readWriteMenu, "")</t>
-<t tx="T616">tangleMenu = wx.wxMenu()
-
-tangleMenu.Append (cTangleAllMenuItem,
-	"Tangle &amp;All\tShift-Ctrl-A", "Tangle all roots")
-tangleMenu.Append (cTangleMarkedMenuItem,
-	"Tangle &amp;Marked\tShift-Ctrl-M", "Tangle all marked roots")
-tangleMenu.Append (cTangleMenuItem,
-	"&amp;Tangle\tShift-Ctrl-T", "Tangle selected headline")
-
-fileMenu.Append(cTangleSubmenuItem, "&amp;Tangle...", tangleMenu, "")
-
-# Doesn't work either.
-fileMenu.SetHelpString(cTangleSubmenuItem, "Tangle commands...")</t>
-<t tx="T617">untangleMenu = wx.wxMenu()
-
-untangleMenu.Append (cUntangleAllMenuItem,
-	"Untangle &amp;All", "Tangle all roots")
-untangleMenu.Append (cUntangleMarkedMenuItem,
-	"Untangle &amp;Marked", "Tangle all marked roots")
-untangleMenu.Append (cUntangleMenuItem,
-	"&amp;Untangle\tShift-Ctrl-U", "Tangle selected headline")
-
-fileMenu.Append(cUntangleSubmenuItem, "&amp;Untangle...", untangleMenu, "")</t>
-<t tx="T618">importMenu = wx.wxMenu()
-
-importMenu.Append (cImportFilesMenuItem,
-	"Import Files\tShift-Ctrl-F", "Convert source files to outline" )
-importMenu.Append (cImportCWEBFilesMenuItem,
-	"Import CWEB Files", "Convert CWEB file to outline")
-importMenu.Append (cImportNowebFilesMenuItem,
-	"Import noweb Files", "Convert noweb file to outline")
-
-importMenu.Enable(cImportNowebFilesMenuItem, FALSE)
-
-importMenu.Append (cImportMORETextMenuItem,
-	"Import MORE Text", "Convert MORE file to outline")
-importMenu.Append (cFlattenOutlineMenuItem,
-	"Flatten Outline", "Write Leo outline to text file")
-
-fileMenu.Append(cImportExportSubmenuItem,
-	"&amp;Import Files...", importMenu, "Import commands")</t>
-<t tx="T619">editMenu = wx.wxMenu()
-&lt;&lt; Create the initial items of the Edit menu &gt;&gt;
-&lt;&lt; Create the Edit Body submenu &gt;&gt;
-&lt;&lt; Create the Find submenu &gt;&gt;
-&lt;&lt; Create the final items of the Edit menu &gt;&gt;</t>
-<t tx="T620">editMenu.Append ( cUndoMenuItem, "&amp;Undo\tCtrl-Z", "Undo last operation" )
-
-if wx.wxPlatform != "__WXGTK__": # For now, neither tree nor text controls support Redo.
-	editMenu.Append ( cRedoMenuItem,
-		"&amp;Redo\tShift-Ctrl-Z", "Redo previous operation" )
-
-editMenu.AppendSeparator()
-
-editMenu.Append ( cCutMenuItem,
-	"Cu&amp;t\tCtrl-X", "Cut text" )
-editMenu.Append ( cCopyMenuItem,
-	"&amp;Copy\tCtrl-C", "Copy text" )
-editMenu.Append ( cPasteMenuItem,
-	"&amp;Paste\tCtrl-V", "Paste text" )
-editMenu.Append ( cDeleteMenuItem,
-	"&amp;Delete", "Delete text" )
-editMenu.Append ( cSelectAllMenuItem,
-	"Select A&amp;ll\tCtrl-A", "Select all" )
-
-editMenu.AppendSeparator()
-
-editMenu.Append ( cEditHeadlineMenuItem,
-	"Edit &amp;Headline\tShift-Ctrl-H", "Edit headline text" )</t>
-<t tx="T621">findMenu = wx.wxMenu()
-
-findMenu.Append ( cFindPanelMenuItem,
-	"&amp;Find Panel\tCtrl-F", "Open Find panel" )
-
-findMenu.AppendSeparator()
-
-if wx.wxPlatform == "__WXGTK__":  # bugs: can't recognize shift-F keys
-	findMenu.Append ( cFindNextMenuItem,
-		"Find &amp;Next\tF3", "Find next" )
-	findMenu.Append ( cFindPreviousMenuItem,
-		"Find &amp;Prev\tF4", "Find previous" )
-	findMenu.Append ( cReplaceMenuItem,
-		"&amp;Replace\tF5", "Replace" )
-	findMenu.Append ( cReplaceThenFindMenuItem,
-		"Replace &amp;Then Find\tF6", "Replace, then find again" )
-else:
-	findMenu.Append ( cFindNextMenuItem,
-		"Find &amp;Next\tF3", "Find next" )
-	findMenu.Append ( cFindPreviousMenuItem,
-		"Find &amp;Prev\tShift-F3", "Find previous" )
-	findMenu.Append ( cReplaceMenuItem,
-		"&amp;Replace\tF4", "Replace" )
-	findMenu.Append ( cReplaceThenFindMenuItem,
-		"Replace &amp;Then Find\tShift-F4", "Replace, then find again" )
-
-editMenu.Append( cFindSubmenuItem,
-	"&amp;Find...", findMenu, "")</t>
-<t tx="T622">editMenu.Append ( cFontPanelMenuItem,
-	"&amp;Font Panel\tAlt-Shift-T", "Open Font panel" )
-
-editMenu.Append ( cSyntaxColoringMenuItem,
-	"&amp;Syntax Coloring...\tAlt-Shift-S", "Set syntax coloring options" )
-
-editMenu.Enable(cSyntaxColoringMenuItem, FALSE)
-
-editMenu.AppendSeparator()
-
-editMenu.Append ( cPreferencesMenuItem,
-	"Preferences\tCtrl-Y", "Open Preferences panel" )</t>
-<t tx="T623">editBodyMenu = wx.wxMenu()
-
-editBodyMenu.Append ( cExtractSectionMenuItem,
-	"&amp;Extract Section\tShift-Ctrl-E",
-	"Extract section to child" )
-editBodyMenu.Append ( cExtractNamesMenuItem,
-	"Extract Section &amp;Names\tShift-Ctrl-N",
-	"Extract section names to children" )
-editBodyMenu.Append ( cExtractMenuItem,
-	"Extract\tShift-Ctrl-D",
-	"Extract section text to child" )
-editBodyMenu.Append ( cConvertBlanksMenuItem,
-	"&amp;Convert Blanks\tShift-Ctrl-B", "Convert blanks" )
-
-editMenu.Append(cEditBodySubmenuItem, "&amp;Edit Body...", editBodyMenu, "")</t>
-<t tx="T624">outlineMenu = wx.wxMenu()
-&lt;&lt; Create the initial items of the Outline menu &gt;&gt;
-&lt;&lt; Create the Expand/Contract submenu &gt;&gt;
-&lt;&lt; Create the Move/Select submenu &gt;&gt;
-&lt;&lt; Create the Mark/Go To submenu &gt;&gt;
-</t>
-<t tx="T625">outlineMenu.Append ( cCutNodeMenuItem,
-	"Cu&amp;t Node\tShift-Ctrl-X", "Cut node")
-outlineMenu.Append ( cCopyNodeMenuItem,
-	"&amp;Copy Node\tShift-Ctrl-C", "Copy node" )
-outlineMenu.Append ( cPasteNodeMenuItem,
-	"&amp;Paste Node\tShift-Ctrl-V", "Paste node" )
-outlineMenu.Append ( cDeleteNodeMenuItem,
-	# Shift-Ctrl-BkSp not validcPreferencesMenuItem
-	"&amp;Delete Node", "Delete node" )
-
-outlineMenu.AppendSeparator()
-
-outlineMenu.Append ( cInsertNodeMenuItem,
-	"&amp;Insert Node\tCtrl-I", "Insert new node" )
-
-outlineMenu.Append ( cCloneNodeMenuItem,
-	"&amp;Clone Node\tShift-Ctrl-I", "Clone node" )
-
-outlineMenu.Append ( cSortNodeMenuItem,
-	"&amp;Sort Node", "Sort node's childdren" )
-
-outlineMenu.AppendSeparator()</t>
-<t tx="T626">expandContractMenu = wx.wxMenu()
-
-expandContractMenu.Append ( cExpandAllChildrenMenuItem,
-	"Expand All Children", "Expand node fully" )
-expandContractMenu.Append ( cExpandChilrenMenuItem,
-	"Expand Children", "Expand node" )
-
-expandContractMenu.AppendSeparator()
-
-expandContractMenu.Append ( cContractAllChildrenMenuItem,
-	"Contract All Children", "Contract node fully" )
-expandContractMenu.Append ( cContractChilrenMenuItem,
-	"Contract Children", "Contract node" )
-
-expandContractMenu.AppendSeparator()
-
-expandContractMenu.Append ( cExpandNextLevelMenuItem,
-	"Expand &amp;Next Level\tAlt-N", "Expand outline another level" )
-expandContractMenu.Append ( cExpandToLevel1MenuItem,  # better than contract all
-	"Contract All\tAlt-1", "Contract all" )
-expandContractMenu.Append ( cExpandToLevel2MenuItem,
-	"Expand To Level 2\tAlt-2", "Expand to level 2" )
-expandContractMenu.Append ( cExpandToLevel3MenuItem,
-	"Expand To Level 3\tAlt-3", "Expand to level 3" )
-expandContractMenu.Append ( cExpandToLevel4MenuItem,
-	"Expand To Level 4\tAlt-4", "Expand to level 4" )
-expandContractMenu.Append ( cExpandToLevel5MenuItem,
-	"Expand To Level 5\tAlt-5", "Expand to level 5" )
-expandContractMenu.Append ( cExpandToLevel6MenuItem,
-	"Expand To Level 6\tAlt-6", "Expand to level 6" )
-expandContractMenu.Append ( cExpandToLevel7MenuItem,
-	"Expand To Level 7\tAlt-7", "Expand to level 7" )
-expandContractMenu.Append ( cExpandToLevel8MenuItem,
-	"Expand To Level 8\tAlt-8", "Expand to level 8" )
-expandContractMenu.Append ( cExpandAllMenuItem,
-	"Expand All\tAlt-9", "Expand all" )
-
-outlineMenu.Append(cExpandContractSubmenuItem,
-	"Expand/Contract...", expandContractMenu, "")</t>
-<t tx="T627">moveSelectMenu = wx.wxMenu()
-
-moveSelectMenu.Append ( cMoveDownMenuItem,
-	"Move &amp;Down\tCtrl-D", "Move node down" )
-moveSelectMenu.Append ( cMoveLeftMenuItem,
-	"Move &amp;Left\tCtrl-L", "Move node left" )
-moveSelectMenu.Append ( cMoveRightMenuItem,
-	"Move &amp;Right\tCtrl-R", "Move node right" )
-moveSelectMenu.Append ( cMoveUpMenuItem,
-	"Move &amp;Up\tCtrl-U", "Move node up" )
-
-moveSelectMenu.AppendSeparator()
-
-# Can't use control-] and control-[ anywhere.
-moveSelectMenu.Append ( cPromoteMenuItem,
-	"&amp;Promote", "Promote children" )
-
-moveSelectMenu.Append ( cDemoteMenuItem,
-	"&amp;Demote", "Demote following siblings" )
-
-moveSelectMenu.AppendSeparator()
-
-if wx.wxPlatform == "__WXMSW__":  # Up and down keys handled by tree &amp; text control
-	moveSelectMenu.Append ( cGoPrevVisibleMenuItem,
-		"Go Prev Visible\tUp", "Select previous visible node" )
-	moveSelectMenu.Append ( cGoNextVisibleMenuItem,
-		"Go Next Visible\tDown", "Select next visible node" )
-else:
- 	moveSelectMenu.Append ( cGoPrevVisibleMenuItem,
-		"Go Prev Visible", "Select previous visible node" )
-	moveSelectMenu.Append ( cGoNextVisibleMenuItem,
-		"Go Next Visible", "Select next visible node" )
-
-moveSelectMenu.AppendSeparator()
-
-moveSelectMenu.Append ( cGoBackMenuItem,
-	"Go Prev", "Select previous node" )
-moveSelectMenu.Append ( cGoNextMenuItem,
-	"Go Next", "Select next node" )
-
-outlineMenu.Append(cMoveSelectSubmenuItem,
-	"Move/&amp;Select...", moveSelectMenu, "")</t>
-<t tx="T628">markGoToMenu = wx.wxMenu()
-
-markGoToMenu.Append ( cMarkMenuItem,
-	"&amp;Mark\tCtrl-M", "Mark node" )
-markGoToMenu.Append ( cMarkSubheadsMenuItem,
-	"Mark &amp;Subheads\tAlt-S", "Mark children of node" )
-markGoToMenu.Append ( cMarkChangedItemsMenuItem,
-	"Mark &amp;Changed Items\tAlt-C", "Mark all changed nodes" )
-markGoToMenu.Append ( cMarkChangedRootsMenuItem,
-	"Mark Changed &amp;Roots\tAlt-R", "Mark all changed root nodes" )
-markGoToMenu.Append ( cMarkAllAtFileNodesDirtyMenuItem,
-	"Mark All @file Nodes Dirty", "Mark all @file nodes" )
-markGoToMenu.Append ( cMarkAtFileNodesDirtyMenuItem,
-	"Mark @file Nodes Dirty", "Mark @file nodes" )
-
-markGoToMenu.AppendSeparator()
-
-markGoToMenu.Append ( cUnmarkAllMenuItem,
-	"&amp;Unmark All\tAlt-U", "Unmark all nodes" )
-markGoToMenu.Append ( cGoToNextMarkedMenuItem,
-	"&amp;Go To Next Marked\tAlt-M", "Select next marked node" )
-markGoToMenu.Append ( cGoToNextChangedMenuItem,
-	"Go To Next Changed\tAlt-D", "Select next changed node" )
-
-outlineMenu.Append(cMarkGotoSubmenuItem,
-	"&amp;Mark/Go To...", markGoToMenu, "")</t>
-<t tx="T629">windowMenu = wx.wxMenu()
-
-if wx.wxPlatform == "__WXGTK__":  # Control-E conflicts with shift-control-E
-
-	windowMenu.Append ( cEqualSizedPanesMenuItem,
-		"&amp;Equal Sized Panes", "Make each pane the same size")
-else:
-	windowMenu.Append ( cEqualSizedPanesMenuItem,
-		"&amp;Equal Sized Panes\tCtrl-E", "Make each pane the same size")
-
-windowMenu.Append ( cToggleActivePaneMenuItem,
-	"&amp;Toggle Active Pane\tCtrl-T", "Switch the active pane")
-
-if wx.wxPlatform == "__WXGTK__":
-	windowMenu.Enable(cToggleActivePaneMenuItem, FALSE)
-
-windowMenu.Append ( cSplitPaneDirectionMenuItem,
-	"&amp;Split Pane Vertically", "Change orientation of pane")
-
-windowMenu.AppendSeparator()
-
-windowMenu.Append ( cCascadeMenuItem,
-	"&amp;Cascade Windows", "Cascade all open windows")
-
-windowMenu.Append ( cMinimizeAllMenuItem,
-	"Minimize &amp;All Windows", "Minimize all open windows")
-
-windowMenu.AppendSeparator()
-
-if wx.wxPlatform == "__WXMSW__":
-	windowMenu.Append ( cOpenPythonWindowMenuItem,
-		"Open &amp;Python Window\tAlt-P", "Open the Python window")
-
-if 0: # Not ready yet: use wxFileHistory
-	windowMenu.AppendSeparator()
-
-	windowMenu.Append ( cRecentWindowsMenuItem,
-		"Recent Windows", "List of recent windows")</t>
-<t tx="T630">helpMenu = wx.wxMenu()
-
-helpMenu.Append(cAboutLeoMenuItem,
-	"&amp;About Leo...",
-	"Show about dialog")</t>
-<t tx="T631">if 0:
-	# Command handlers...
-	wx.EVT_MENU(self,cNewMenuItem,self.OnNew)
-	wx.EVT_MENU(self,cOpenMenuItem,self.OnOpen)
-	wx.EVT_MENU(self,cCloseMenuItem,self.OnClose)
-	wx.EVT_MENU(self,cSaveMenuItem,self.OnSave)
-	wx.EVT_MENU(self,cSaveAsMenuItem,self.OnSaveAs)
-	wx.EVT_MENU(self,cSaveToMenuItem,self.OnSaveTo)
-	wx.EVT_MENU(self,cRevertMenuItem,self.OnRevert)
-	wx.EVT_MENU(self,cPageSetupMenuItem,self.OnPageSetup)
-	wx.EVT_MENU(self,cPrintMenuItem,self.OnPrint)
-	# Read/Write submenu
-	wx.EVT_MENU(self,cReadOutlineOnlyMenuItem,self.OnReadOutlineOnly)
-	wx.EVT_MENU(self,cReadAtFileNodesMenuItem,self.OnReadAtFileNodes)
-	wx.EVT_MENU(self,cWriteOutlineOnlyMenuItem,self.OnWriteOutlineOnly)
-	wx.EVT_MENU(self,cWriteAtFileNodesMenuItem,self.OnWriteAtFileNodes)
-	# wx.EVT_MENU(self,cTangleSubmenuItem,self.OnTangleSubmenu)
-	wx.EVT_MENU(self,cTangleAllMenuItem,self.OnTangleAll)
-	wx.EVT_MENU(self,cTangleMarkedMenuItem,self.OnTangleMarked)
-	wx.EVT_MENU(self,cTangleMenuItem,self.OnTangle)
-	# wx.EVT_MENU(self,cUntangleSubmenuItem, self.OnUntangleSubmenu)
-	wx.EVT_MENU(self,cUntangleAllMenuItem,		self.OnUntangleAll)
-	wx.EVT_MENU(self,cUntangleMarkedMenuItem,self.OnUntangleMarked)
-	wx.EVT_MENU(self,cUntangleMenuItem,self.OnUntangle)
-	# wx.EVT_MENU(self,cImportExportSubmenuItem, self.OnImportExportSubmenu)
-	wx.EVT_MENU(self,cImportFilesMenuItem,		self.OnImportFiles)
-	wx.EVT_MENU(self,cImportCWEBFilesMenuItem,self.OnImportCWEBFiles)
-	wx.EVT_MENU(self,cImportNowebFilesMenuItem,self.OnImportNowebFiles)
-	wx.EVT_MENU(self,cImportMORETextMenuItem,self.OnImportMoreText)
-	wx.EVT_MENU(self,cFlattenOutlineMenuItem,self.OnFlattenOutline)
-	wx.EVT_MENU(self,cQuitMenuItem,self.OnQuit)
-
-	# Command handlers...
-	# Top level
-	wx.EVT_MENU(self,cUndoMenuItem,self.OnUndo)
-	wx.EVT_MENU(self,cRedoMenuItem,self.OnRedo)
-	wx.EVT_MENU(self,cCutMenuItem,self.OnCut)
-	wx.EVT_MENU(self,cCopyMenuItem,self.OnCopy)
-	wx.EVT_MENU(self,cPasteMenuItem,self.OnPaste)
-	wx.EVT_MENU(self,cDeleteMenuItem,self.OnDelete)
-	wx.EVT_MENU(self,cSelectAllMenuItem,self.OnSelectAll)
-	wx.EVT_MENU(self,cEditHeadlineMenuItem,self.OnEditHeadline)
-	wx.EVT_MENU(self,cFontPanelMenuItem,self.OnFontPanel)
-	wx.EVT_MENU(self,cSyntaxColoringMenuItem,self.OnSyntaxColoring)
-	wx.EVT_MENU(self,cPreferencesMenuItem,self.OnPreferences)
-	# Edit Body submenu
-	wx.EVT_MENU(self,cExtractSectionMenuItem,self.OnExtractSection)
-	wx.EVT_MENU(self,cExtractNamesMenuItem,self.OnExtractNames)
-	wx.EVT_MENU(self,cExtractMenuItem,self.OnExtract)
-	wx.EVT_MENU(self,cConvertBlanksMenuItem,self.OnConvertBlanks)
-	# Find submenu
-	wx.EVT_MENU(self,cFindPanelMenuItem,self.OnFindPanel)
-	wx.EVT_MENU(self,cFindNextMenuItem,self.OnFindNext)
-	wx.EVT_MENU(self,cFindNextMenuItem2,self.OnFindNext)
-	wx.EVT_MENU(self,cFindPreviousMenuItem,self.OnFindPrevious)
-	wx.EVT_MENU(self,cReplaceMenuItem,self.OnReplace)
-	wx.EVT_MENU(self,cReplaceThenFindMenuItem,self.OnReplaceThenFind)
-
-	# Command handlers...
-	wx.EVT_MENU(self,cCutNodeMenuItem,self.OnCutNode)
-	wx.EVT_MENU(self,cCopyNodeMenuItem,self.OnCopyNode)
-	wx.EVT_MENU(self,cPasteNodeMenuItem,self.OnPasteNode)
-	wx.EVT_MENU(self,cDeleteNodeMenuItem,self.OnDeleteNode)
-	wx.EVT_MENU(self,cInsertNodeMenuItem,self.OnInsertNode)
-	wx.EVT_MENU(self,cCloneNodeMenuItem,self.OnCloneNode)
-	wx.EVT_MENU(self,cSortNodeMenuItem,self.OnSortNode)
-	# Expand/Contract submenu
-	wx.EVT_MENU(self,cExpandAllMenuItem,self.OnExpandAll)
-	wx.EVT_MENU(self,cExpandAllChildrenMenuItem,self.OnExpandAllChildren)
-	wx.EVT_MENU(self,cExpandChilrenMenuItem,self.OnExpandChildren)
-	wx.EVT_MENU(self,cContractAllMenuItem,self.OnContractAll)
-	wx.EVT_MENU(self,cContractAllChildrenMenuItem,self.OnContractAllChildren)
-	wx.EVT_MENU(self,cContractChilrenMenuItem,self.OnContractChildren)
-	wx.EVT_MENU(self,cExpandNextLevelMenuItem,self.OnExpandNextLevel)
-	wx.EVT_MENU(self,cExpandToLevel1MenuItem,self.OnExpandToLevel1)
-	wx.EVT_MENU(self,cExpandToLevel2MenuItem,self.OnExpandToLevel2)
-	wx.EVT_MENU(self,cExpandToLevel3MenuItem,self.OnExpandToLevel3)
-	wx.EVT_MENU(self,cExpandToLevel4MenuItem,self.OnExpandToLevel4)
-	wx.EVT_MENU(self,cExpandToLevel5MenuItem,self.OnExpandToLevel5)
-	wx.EVT_MENU(self,cExpandToLevel6MenuItem,self.OnExpandToLevel6)
-	wx.EVT_MENU(self,cExpandToLevel7MenuItem,self.OnExpandToLevel7)
-	wx.EVT_MENU(self,cExpandToLevel8MenuItem,self.OnExpandToLevel8)
-	wx.EVT_MENU(self,cExpandToLevel9MenuItem,self.OnExpandToLevel9)
-	# Move/Select submenu
-	wx.EVT_MENU(self,cMoveDownMenuItem,self.OnMoveDown)
-	wx.EVT_MENU(self,cMoveLeftMenuItem,self.OnMoveLeft)
-	wx.EVT_MENU(self,cMoveRightMenuItem,self.OnMoveRight)
-	wx.EVT_MENU(self,cMoveUpMenuItem,self.OnMoveUp)
-	wx.EVT_MENU(self,cPromoteMenuItem,self.OnPromote)
-	wx.EVT_MENU(self,cDemoteMenuItem,self.OnDemote)
-	wx.EVT_MENU(self,cGoPrevVisibleMenuItem,self.OnGoPrevVisible)
-	wx.EVT_MENU(self,cGoNextVisibleMenuItem,self.OnGoNextVisible)
-	wx.EVT_MENU(self,cGoBackMenuItem,self.OnGoBack)
-	wx.EVT_MENU(self,cGoNextMenuItem,self.OnGoNext)
-	# Mark/Go To submenu
-	wx.EVT_MENU(self,cMarkMenuItem,self.OnMark)
-	wx.EVT_MENU(self,cMarkSubheadsMenuItem,self.OnMarkSubheads)
-	wx.EVT_MENU(self,cMarkChangedItemsMenuItem,self.OnMarkChangedItems)
-	wx.EVT_MENU(self,cMarkChangedRootsMenuItem,self.OnMarkChangedRoots)
-	wx.EVT_MENU(self,cMarkAllAtFileNodesDirtyMenuItem,self.OnMarkAllAtFileNodesDirty)
-	wx.EVT_MENU(self,cMarkAtFileNodesDirtyMenuItem,self.OnMarkAtFileNodesDirty)
-	wx.EVT_MENU(self,cUnmarkAllMenuItem,self.OnUnmarkAll)
-	wx.EVT_MENU(self,cGoToNextMarkedMenuItem,self.OnGoToNextMarked)
-	wx.EVT_MENU(self,cGoToNextChangedMenuItem,self.OnGoToNextChanged)
-	# Command handlers...
-	wx.EVT_MENU(self,cEqualSizedPanesMenuItem,self.OnEqualSizedPanes)
-	wx.EVT_MENU(self,cToggleActivePaneMenuItem,self.OnToggleActivePane)
-	wx.EVT_MENU(self,cSplitPaneDirectionMenuItem,self.OnChangeDirection)
-	wx.EVT_MENU(self,cCascadeMenuItem,self.OnCascade)
-	wx.EVT_MENU(self,cMinimizeAllMenuItem,self.OnMinimizeAll)
-	wx.EVT_MENU(self,cRecentWindowsMenuItem,self.OnRecentWindows)
-	wx.EVT_MENU(self,cAboutLeoMenuItem,self.OnAbout)</t>
-<t tx="T632"># Menu enablers...
-
-if 0: # Now specified in tables...
-	# File menu.
-	wx.EVT_UPDATE_UI(self,cRevertMenuItem,self.OnUpdateRevert)
-	wx.EVT_UPDATE_UI(cUndoMenuItem,	self.OnUpdateUndo)
-	# Edit menu
-	if wx.wxPlatform != "__WXGTK__": # For now,neither tree nor text controls support Redo.
-		wx.EVT_UPDATE_UI(cRedoMenuItem,	self.OnUpdateRedo)
-	wx.EVT_UPDATE_UI(cCutMenuItem,self.OnUpdateCut)
-	wx.EVT_UPDATE_UI(cCopyMenuItem,self.OnUpdateCopy)
-	wx.EVT_UPDATE_UI(cPasteMenuItem,self.OnUpdatePaste)
-	wx.EVT_UPDATE_UI(cDeleteMenuItem,self.OnUpdateDelete)
-	wx.EVT_UPDATE_UI(cDeleteMenuItem,self.OnUpdateSelectAll)
-	wx.EVT_UPDATE_UI(cExtractMenuItem,self.OnUpdateExtract)
-	wx.EVT_UPDATE_UI(cExtractSectionMenuItem,self.OnUpdateExtractSection)
-	wx.EVT_UPDATE_UI(cExtractNamesMenuItem,self.OnUpdateExtractNames)
-	wx.EVT_UPDATE_UI(cFindNextMenuItem,self.OnUpdateFind)
-	wx.EVT_UPDATE_UI(cFindNextMenuItem2,self.OnUpdateFind)
-	wx.EVT_UPDATE_UI(cFindPreviousMenuItem,self.OnUpdateFind)
-	wx.EVT_UPDATE_UI(cReplaceMenuItem,self.OnUpdateReplace)
-	wx.EVT_UPDATE_UI(cReplaceThenFindMenuItem,self.OnUpdateReplace)
-	# Outline menu.
-	wx.EVT_UPDATE_UI(cCutNodeMenuItem,self.OnUpdateCutNode)
-	wx.EVT_UPDATE_UI(cDeleteNodeMenuItem,self.OnUpdateDeleteNode)
-	wx.EVT_UPDATE_UI(cPasteNodeMenuItem,self.OnUpdatePasteNode)
-	wx.EVT_UPDATE_UI(cSortNodeMenuItem,self.OnUpdateSortNode)
-	# Expand/Contract
-	wx.EVT_UPDATE_UI(cExpandAllMenuItem,self.OnUpdateExpandAll)
-	wx.EVT_UPDATE_UI(cExpandAllChildrenMenuItem,self.OnUpdateExpandAllChildren)
-	wx.EVT_UPDATE_UI(cExpandChilrenMenuItem,self.OnUpdateExpandChildren)
-	wx.EVT_UPDATE_UI(cContractAllMenuItem,self.OnUpdateContractAll)
-	wx.EVT_UPDATE_UI(cContractAllChildrenMenuItem,self.OnUpdateContractAllChildren)
-	wx.EVT_UPDATE_UI(cContractChilrenMenuItem,self.OnUpdateContractChildren)
-	# Move/Select
-	wx.EVT_UPDATE_UI(cMoveDownMenuItem,self.OnUpdateMoveDown)
-	wx.EVT_UPDATE_UI(cMoveLeftMenuItem,self.OnUpdateMoveLeft)
-	wx.EVT_UPDATE_UI(cMoveRightMenuItem,self.OnUpdateMoveRight)
-	wx.EVT_UPDATE_UI(cMoveUpMenuItem,self.OnUpdateMoveUp)
-	wx.EVT_UPDATE_UI(cPromoteMenuItem,self.OnUpdatePromote)
-	wx.EVT_UPDATE_UI(cDemoteMenuItem,self.OnUpdateDemote)
-	wx.EVT_UPDATE_UI(cGoPrevVisibleMenuItem,self.OnUpdateGoPrevVisible)
-	wx.EVT_UPDATE_UI(cGoNextVisibleMenuItem,self.OnUpdateGoNextVisible)
-	wx.EVT_UPDATE_UI(cGoBackMenuItem,self.OnUpdateGoBack)
-	wx.EVT_UPDATE_UI(cGoNextMenuItem,self.OnUpdateGoNext)
-	# Mark/Go To
-	wx.EVT_UPDATE_UI(cMarkMenuItem,self.OnUpdateMark)
-	wx.EVT_UPDATE_UI(cMarkSubheadsMenuItem,self.OnUpdateMarkSubheads)
-	wx.EVT_UPDATE_UI(cMarkChangedItemsMenuItem,self.OnUpdateMarkChangedItems)
-	wx.EVT_UPDATE_UI(cMarkChangedRootsMenuItem,self.OnUpdateMarkChangedRoots)
-	wx.EVT_UPDATE_UI(cGoToNextMarkedMenuItem,self.OnUpdateGoToNextMarked)
-	wx.EVT_UPDATE_UI(cGoToNextChangedMenuItem,self.OnUpdateGoToNextChanged)</t>
-<t tx="T633"># This updates the text of joined _headlines_, not body text.
+<t tx="T582"># This updates the text of joined _headlines_, not body text.
 
 if 0: # no longer used
 
@@ -10592,33 +9539,8 @@ if 0: # no longer used
 			self.tree.SetItemText(id,text)
 			v2 = v2.joinList()
 		guard -= 1</t>
-<t tx="T634">@first # -*- coding: utf-8 -*-
-
-"""A plugin to use wxPython as Leo's gui."""
-
-from leoPlugins import *
-from leoGlobals import *
-
-&lt;&lt; imports for wx plugin &gt;&gt;
-&lt;&lt; constants for wx plugin &gt;&gt;
-
-@others
-
-if 0: # Enable the plugin...
-
-	if app.gui is None:
-		print "Installing wxPython gui"
-		&lt;&lt; Set app.gui &gt;&gt;
-		__version__ = "0.1" # Set version for the plugin handler.
-		plugin_signon(__name__)
-	else:
-		s = "Can't install wxPython gui: previous gui installed"
-		print s ; es(s,color="red")</t>
-<t tx="T635">import leoCommands,leoFind,leoFrame,leoGui,leoTree
-import os,sys,traceback
-
-from wxPython import wx</t>
-<t tx="T636">cSplitterWidth = 600
+<t tx="T583"></t>
+<t tx="T584">cSplitterWidth = 600
 
 const_dict = {}
 const_lastVal = 100 # Starting wx id.
@@ -10638,393 +9560,19 @@ def const(name):
 		const_dict[name] = const_lastVal
 		# trace(name,const_lastVal)
 		return const_lastVal</t>
-<t tx="T637">app.gui = wxGui()
-app.root = app.gui.createRootWindow()
-app.gui.finishCreate()
-</t>
-<t tx="T638">class wxGui(leoGui.leoGui):
+<t tx="T585">def finishCreate (self,commander):
 	
-	@others</t>
-<t tx="T639"></t>
-<t tx="T640">def __init__ (self):
+	self.c = self.commands = commander
+	trace(commander)
 	
-	trace("wxGui")
+	# Kludge.
+	self.c.body = self.body
+	self.c.frame = self
 	
-	# Initialize the base class.
-	if 1: # in plugin
-		leoGui.leoGui.__init__(self,"wxPython")
-	else:
-		leoGui.__init__(self,"wxPython")
-		
-	self.bitmap_name = None
-	self.bitmap = None</t>
-<t tx="T641">def createRootWindow(self):
-
-	trace("wxGui")
-	self.wxApp = wxLeoApp(None) # This redirects stdout &amp; stderr to stupid console.
-	self.wxFrame = None
-	
-	if 0: # Not ready yet.
-		self.setDefaultIcon()
-		self.getDefaultConfigFont(app.config)
-		self.setEncoding()
-		self.createGlobalWindows()
-
-	return self.wxFrame</t>
-<t tx="T642">def setDefaultIcon(self):
-	
-	"""Set the icon to be used in all Leo windows.
-	
-	This code does nothing for Tk versions before 8.4.3."""
-	
-	gui = self
-
-	try:
-		version = gui.root.getvar("tk_patchLevel")
-		if CheckVersion(version,"8.4.3"):
-			# tk 8.4.3 or greater: load a 16 by 16 icon.
-			path = os.path.join(app.loadDir,"..","Icons")
-			if os.path.exists(path):
-				file = os.path.join(path,"LeoApp16.ico")
-				if os.path.exists(path):
-					self.bitmap = Tkinter.BitmapImage(file)
-				else:
-					es("LeoApp16.ico not in Icons directory", color="red")
-			else:
-				es("Icons directory not found: "+path, color="red")
-	except:
-		print "exception setting bitmap"
-		traceback.print_exc()</t>
-<t tx="T643">@ According to Martin v. Löwis, getdefaultlocale() is broken, and cannot be fixed. The workaround is to copy the getpreferredencoding() function from locale.py in Python 2.3a2.  This function is now in leoGlobals.py.
-@c
-
-def setEncoding (self):
-
-	for (encoding,src) in (
-		(app.config.tkEncoding,"config"),
-		#(locale.getdefaultlocale()[1],"locale"),
-		(getpreferredencoding(),"locale"),
-		(sys.getdefaultencoding(),"sys"),
-		("utf-8","default")):
-	
-		if isValidEncoding (encoding): # 3/22/03
-			app.tkEncoding = encoding
-			# trace(app.tkEncoding,src)
-			break
-		elif encoding and len(encoding) &gt; 0:
-			trace("ignoring invalid " + src + " encoding: " + `encoding`)
-			
-	# trace(app.tkEncoding)</t>
-<t tx="T644">def getDefaultConfigFont(self,config):
-	
-	"""Get the default font from a new text widget."""
-
-	t = Tkinter.Text()
-	fn = t.cget("font")
-	font = tkFont.Font(font=fn)
-	config.defaultFont = font
-	config.defaultFontFamily = font.cget("family")</t>
-<t tx="T645">def createGlobalWindows (self):
-	
-	"""Create the global windows for the application."""
-	
-	app.findFrame = leoFind.leoFind()
-	app.findFrame.top.withdraw()
-	app.globalWindows.append(app.findFrame)</t>
-<t tx="T646">def destroy(self,widget):
-	
-	pass # wx code not ready yet.</t>
-<t tx="T647">def finishCreate (self):
-
-	pass
-	
-</t>
-<t tx="T648">def killGui(self,exitFlag=true):
-	
-	"""Destroy a gui and terminate Leo if exitFlag is true."""
-
-	pass # Not ready yet.
-
-</t>
-<t tx="T649">def recreateRootWindow(self):
-	"""A do-nothing base class to create the hidden root window of a gui
-
-	after a previous gui has terminated with killGui(false)."""
-	pass
-
-</t>
-<t tx="T650">def runMainLoop(self):
-
-	"""Run tkinter's main loop."""
-	
-	trace("wxGui")
-	self.wxApp.MainLoop()
-	trace("done")</t>
-<t tx="T651"></t>
-<t tx="T652">def getFontFromParams(self,family,size,slant,weight):
-	
-	trace(app.config.defaultFont)
-	
-	return app.config.defaultFont ##
-	
-	family_name = family
-	
-	try:
-		font = tkFont.Font(family=family,size=size,slant=slant,weight=weight)
-		#print family_name,family,size,slant,weight
-		#print "actual_name:",font.cget("family")
-		return font
-	except:
-		es("exception setting font from " + `family_name`)
-		es("family,size,slant,weight:"+
-			`family`+':'+`size`+':'+`slant`+':'+`weight`)
-		es_exception()
-		return app.config.defaultFont</t>
-<t tx="T653">def newAboutLeoDialog(self,commander):
-	"""A do-nothing base class to create an About Leo dialog."""
-	pass
-
-def newAskOkDialog(self,commander):
-	"""A do-nothing base class to create an askOK dialog ."""
-	pass
-
-def newAskOkCancelDialog(self,commander):
-	"""A do-nothing base class to create an askOkCancel dialog."""
-	pass
-
-def newAskOkCancelNumberDialog(self,commander):
-	"""A do-nothing base class to create an askOkCancelNumber dialog ."""
-	pass
-
-def newAskYesNoDialog(self,commander):
-	"""A do-nothing base class to create an askYesNo dialog."""
-	pass
-
-def newAskYesNoCancelDialg(self,commander):
-	"""A do-nothing base class to create an askYesNoCancel dialog ."""
-	pass</t>
-<t tx="T654"></t>
-<t tx="T655">def newLeoFrame(self,title):
-	
-	"""Create a view frame for the Leo main window."""
-	
-	trace()
-	self.wxFrame = wxLeoFrame(title)
-	self.wxApp.SetTopWindow(self.wxFrame)
-	self.wxFrame.Show(true)
-	if not app.root:
-		app.root = self.wxFrame
-	return self.wxFrame</t>
-<t tx="T656">def newColorFrame(self,commander):
-	"""Create a colorFrame."""
-	pass # To do
-
-def newColorNameFrame(self,commander):
-	"""Create a colorNameFrame."""
-	pass # To do
-
-def newCompareFrame(self,commander):
-	"""Create a compareFrame."""
-	pass # To do
-
-def newFindFrame(self,commander):
-	"""Create a findFrame."""
-	pass # To do
-
-def newFontFrame(self,commander):
-	"""Create a fontFrame."""
-	pass # To do
-
-def newPrefsFrame(self,commander):
-	"""Create a prefsFrame."""
-	pass # To do</t>
-<t tx="T657">def destroyLeoFrame (self,frame):
-
-	trace(frame.title)
-	frame.Close()</t>
-<t tx="T658">def destroy (self,widget):
-	
-	trace()</t>
-<t tx="T659"></t>
-<t tx="T660">def get_focus(self,top):
-	
-	"""Returns the widget that has focus, or body if None."""
-
-	pass # wx code not ready yet.</t>
-<t tx="T661">def set_focus(self,commands,widget):
-	
-	"""Set the focus of the widget in the given commander if it needs to be changed."""
-	
-	pass # wx code not ready yet.</t>
-<t tx="T662">def force_focus(self,commands,widget):
-	
-	"""Set the focus of the widget in the given commander if it needs to be changed."""
-	
-	pass # wx code not ready yet.</t>
-<t tx="T663"></t>
-<t tx="T664">def attachLeoIcon (self,w):
-	
-	"""Try to attach a Leo icon to the Leo Window.
-	
-	Use tk's wm_iconbitmap function if available (tk 8.3.4 or greater).
-	Otherwise, try to use the Python Imaging Library and the tkIcon package."""
-
-	if self.bitmap != None:
-		# We don't need PIL or tkicon: this is tk 8.3.4 or greater.
-		try:
-			w.wm_iconbitmap(self.bitmap)
-		except:
-			self.bitmap = None
-	
-	if self.bitmap == None:
-		try:
-			&lt;&lt; try to use the PIL and tkIcon packages to draw the icon &gt;&gt;
-		except:
-			# traceback.print_exc()
-			self.leoIcon = None</t>
-<t tx="T665">@ This code requires Fredrik Lundh's PIL and tkIcon packages:
-
-Download PIL    from http://www.pythonware.com/downloads/index.htm#pil
-Download tkIcon from http://www.effbot.org/downloads/#tkIcon
-
-Many thanks to Jonathan M. Gilligan for suggesting this code.
-@c
-
-import Image,tkIcon,_tkicon
-
-# Wait until the window has been drawn once before attaching the icon in OnVisiblity.
-def visibilityCallback(event,self=self,w=w):
-	try: self.leoIcon.attach(w.winfo_id())
-	except: pass
-w.bind("&lt;Visibility&gt;",visibilityCallback)
-if not self.leoIcon:
-	# Load a 16 by 16 gif.  Using .gif rather than an .ico allows us to specify transparency.
-	icon_file_name = os.path.join(app.loadDir,'..','Icons','LeoWin.gif')
-	icon_file_name = os.path.normpath(icon_file_name)
-	icon_image = Image.open(icon_file_name)
-	if 1: # Doesn't resize.
-		self.leoIcon = self.createLeoIcon(icon_image)
-	else: # Assumes 64x64
-		self.leoIcon = tkIcon.Icon(icon_image)</t>
-<t tx="T666"># This code is adapted from tkIcon.__init__
-# Unlike the tkIcon code, this code does _not_ resize the icon file.
-
-def createLeoIcon (self,icon):
-	
-	try:
-		import Image,tkIcon,_tkicon
-		
-		i = icon ; m = None
-		# create transparency mask
-		if i.mode == "P":
-			try:
-				t = i.info["transparency"]
-				m = i.point(lambda i, t=t: i==t, "1")
-			except KeyError: pass
-		elif i.mode == "RGBA":
-			# get transparency layer
-			m = i.split()[3].point(lambda i: i == 0, "1")
-		if not m:
-			m = Image.new("1", i.size, 0) # opaque
-		# clear unused parts of the original image
-		i = i.convert("RGB")
-		i.paste((0, 0, 0), (0, 0), m)
-		# create icon
-		m = m.tostring("raw", ("1", 0, 1))
-		c = i.tostring("raw", ("BGRX", 0, -1))
-		return _tkicon.new(i.size, c, m)
-	except:
-		return None</t>
-<t tx="T667"># WARNING: Call this routine _after_ creating a dialog.
-# (This routine inhibits the grid and pack geometry managers.)
-
-def get_window_info (self,top):
-	
-	top.update_idletasks() # Required to get proper info.
-
-	# Get the information about top and the screen.
-	geom = top.geometry() # geom = "WidthxHeight+XOffset+YOffset"
-	dim,x,y = string.split(geom,'+')
-	w,h = string.split(dim,'x')
-	w,h,x,y = int(w),int(h),int(x),int(y)
-	
-	return w,h,x,y</t>
-<t tx="T668"># Center the dialog on the screen.
-# WARNING: Call this routine _after_ creating a dialog.
-# (This routine inhibits the grid and pack geometry managers.)
-
-def center_dialog(self,top):
-
-	sw = top.winfo_screenwidth()
-	sh = top.winfo_screenheight()
-	w,h,x,y = get_window_info(top)
-	
-	# Set the new window coordinates, leaving w and h unchanged.
-	x = (sw - w)/2
-	y = (sh - h)/2
-	top.geometry("%dx%d%+d%+d" % (w,h,x,y))
-	
-	return w,h,x,y</t>
-<t tx="T669"># Returns frames w and f.
-# Typically the caller would pack w into other frames, and pack content into f.
-
-def create_labeled_frame (self,parent,
-	caption=None,relief="groove",bd=2,padx=0,pady=0):
-	
-	Tk = Tkinter
-	# Create w, the master frame.
-	w = Tk.Frame(parent)
-	w.grid(sticky="news")
-	
-	# Configure w as a grid with 5 rows and columns.
-	# The middle of this grid will contain f, the expandable content area.
-	w.columnconfigure(1,minsize=bd)
-	w.columnconfigure(2,minsize=padx)
-	w.columnconfigure(3,weight=1)
-	w.columnconfigure(4,minsize=padx)
-	w.columnconfigure(5,minsize=bd)
-	
-	w.rowconfigure(1,minsize=bd)
-	w.rowconfigure(2,minsize=pady)
-	w.rowconfigure(3,weight=1)
-	w.rowconfigure(4,minsize=pady)
-	w.rowconfigure(5,minsize=bd)
-
-	# Create the border spanning all rows and columns.
-	border = Tk.Frame(w,bd=bd,relief=relief) # padx=padx,pady=pady)
-	border.grid(row=1,column=1,rowspan=5,columnspan=5,sticky="news")
-	
-	# Create the content frame, f, in the center of the grid.
-	f = Tk.Frame(w,bd=bd)
-	f.grid(row=3,column=3,sticky="news")
-	
-	# Add the caption.
-	if caption and len(caption) &gt; 0:
-		caption = Tk.Label(parent,text=caption,highlightthickness=0,bd=0)
-		caption.tkraise(w)
-		caption.grid(in_=w,row=0,column=2,rowspan=2,columnspan=3,padx=4,sticky="w")
-
-	return w,f</t>
-<t tx="T670">class wxLeoApp (wx.wxApp):
-	
-	@others
-</t>
-<t tx="T671">def OnInit(self):
-	
-	self.SetAppName("Leo")
-	trace("wx.wxPlatform",wx.wxPlatform)
-	app.findFrame = wxFindFrame()
-	app.globalWindows.append(app.findFrame)
-	return true</t>
-<t tx="T672">def OnExit(self):
-	
-	trace()
-	return true
-</t>
-<t tx="T673">class wxLeoFrame(wx.wxFrame):
-	@others</t>
-<t tx="T674"></t>
-<t tx="T675">def __init__ (self,title):
+	# Add the frame to the global window list.
+	app.windowList.append(self)
+	self.redraw()</t>
+<t tx="T586">def __init__ (self,title):
 	
 	# trace("wxLeoFrame",title)
 	self.title = title
@@ -11036,6 +9584,9 @@ def create_labeled_frame (self,parent,
 	self.updateCount = 0
 	self.treeIniting = false
 	self.drawing = false # Lockout recursive draws.
+	self.root_id = None
+	self.menuIdDict = {}
+	self.menuBar = None
 	
 	# These vars have corresponding getters/setters.
 	self.mDragging = false
@@ -11062,7 +9613,7 @@ def create_labeled_frame (self,parent,
 	self.splitter1.SplitHorizontally(self.splitter2, self.body, 0)
 	self.splitter2.SplitVertically(self.tree, self.log, cSplitterWidth/2)
 	</t>
-<t tx="T676">self.splitter1 = wx.wxSplitterWindow(self,
+<t tx="T587">self.splitter1 = wx.wxSplitterWindow(self,
 	const("cSplitterWindow"),
 	wx.wxDefaultPosition, wx.wxDefaultSize,
 	wx.wxSP_NOBORDER)
@@ -11079,33 +9630,35 @@ self.splitter2 = wx.wxSplitterWindow(self.splitter1, -1,
 
 self.splitter1.SetMinimumPaneSize(4)
 self.splitter2.SetMinimumPaneSize(4)</t>
-<t tx="T677">self.tree = wx.wxTreeCtrl(self.splitter2,
+<t tx="T588">self.tree = wx.wxTreeCtrl(self.splitter2,
 	const("cTreeCtrl"),
 	wx.wxDefaultPosition, wx.wxDefaultSize,
 	wx.wxTR_HAS_BUTTONS | wx.wxTR_EDIT_LABELS, wx.wxDefaultValidator,
 	"treeCtrl")
 	
 trace(const("cTreeCtrl"))</t>
-<t tx="T678">self.body = wx.wxTextCtrl(self.splitter1,
+<t tx="T589">self.body = wx.wxTextCtrl(self.splitter1,
 	const("cBodyCtrl"), "",
 	wx.wxDefaultPosition, wx.wxDefaultSize,
 	wx.wxTE_MULTILINE)
 </t>
-<t tx="T679">self.log = wx.wxTextCtrl(self.splitter2,
+<t tx="T590">self.log = wx.wxTextCtrl(self.splitter2,
 	const("cLogCtrl"), "",
 	wx.wxDefaultPosition, wx.wxDefaultSize,
 	wx.wxTE_MULTILINE )
 </t>
-<t tx="T680">if wx.wxPlatform == "__WXMSW__": # Activate events exist only on Windows.
+<t tx="T591">if wx.wxPlatform == "__WXMSW__": # Activate events exist only on Windows.
 	wx.EVT_ACTIVATE(self,self.onActivate)
 else:
 	wx.EVT_SET_FOCUS(self,self.OnSetFocus)
 
 wx.EVT_CLOSE(self,self.onCloseLeoFrame)
 
+wx.EVT_MENU_OPEN(self,self.updateAllMenus) 
+
 if 0: # Causes problems at present.  The screen isn't drawn properly.
 	wx.EVT_SIZE(self,self.onResize)</t>
-<t tx="T681"># in self.body
+<t tx="T592"># in self.body
 wx.EVT_TEXT(self,const("cBodyCtrl"),self.onBodyTextUpdated) # Fires whenever text changes.
 
 # in self.tree
@@ -11126,418 +9679,9 @@ wx.EVT_TREE_ITEM_EXPANDED   (self,id,self.onTreeExpanded)
 
 wx.EVT_TREE_ITEM_COLLAPSING (self,id,self.onTreeCollapsing)
 wx.EVT_TREE_ITEM_EXPANDING  (self,id,self.onTreeExpanding)</t>
-<t tx="T682">def __repr__ (self):
-	
-	return "wxLeoFrame: " + self.title</t>
-<t tx="T683">def finishCreate (self,commander):
-	
-	self.c = self.commands = commander
-	trace(commander)
-	
-	# Kludge.
-	self.c.body = self.body
-	self.c.frame = self
-	
-	# Add the frame to the global window list.
-	app.windowList.append(self)
-	
-	trace("tree",self.tree)
-	
-	self.redraw()</t>
-<t tx="T684">def createMenuBar(self):
-	
-	menuBar = wx.wxMenuBar()
-	self.menuShortcuts = []
-	
-	&lt;&lt; create the file menu &gt;&gt;
-	&lt;&lt; create the edit menu &gt;&gt;
-	&lt;&lt; create the outline menu &gt;&gt;
-	if 0: # c not created yet.
-		doHook("create-optional-menus",c=c)
-	&lt;&lt; create the window menu &gt;&gt;
-	&lt;&lt; create the help menu &gt;&gt;
-
-	menuBar.Append(fileMenu, "&amp;File")
-	menuBar.Append(editMenu, "&amp;Edit")
-	menuBar.Append(outlineMenu, "&amp;Outline")
-	menuBar.Append(windowMenu, "&amp;Window")
-	menuBar.Append(helpMenu, "&amp;Help")
-	self.SetMenuBar(menuBar)  # attach the menu bar to the frame
-	
-	# app().menuWarningsGiven = true</t>
-<t tx="T685">fileMenu = wx.wxMenu()
-
-&lt;&lt; create the top-level file entries &gt;&gt;
-&lt;&lt; create the recent files submenu &gt;&gt;
-fileMenu.AppendSeparator()
-&lt;&lt; create the read/write submenu &gt;&gt;
-&lt;&lt; create the tangle submenu &gt;&gt;
-&lt;&lt; create the untangle submenu &gt;&gt;
-&lt;&lt; create the import submenu &gt;&gt;
-&lt;&lt; create the export submenu &gt;&gt;
-fileMenu.AppendSeparator()
-
-# Create the last entries.
-exitTable = (("E&amp;xit","Ctrl-Q",self.OnQuit),)
-self.createMenuEntries(fileMenu,exitTable)</t>
-<t tx="T686">@ leo.py will probably never have a Print command.  Instead, export text files that may be formatted and printed as desired.
-@c
-
-table = (
-	("&amp;New","Ctrl+N",self.OnNew),
-	("&amp;Open...","Ctrl+O",self.OnOpen))
-self.createMenuEntries(fileMenu,table)
-
-# Create a new menu rather than call OnOpenWith.
-openWithMenu = wx.wxMenu()
-
-table = (
-	("-",None,None),
-	("&amp;Close","Ctrl+W",self.OnClose),
-	("&amp;Save","Ctrl+S",self.OnSave),
-	("Save &amp;As","Shift+Ctrl+S",self.OnSaveAs),
-	("Save To",None,self.OnSaveTo),
-	("Re&amp;vert To Saved",None,self.OnRevert,self.OnUpdateRevert))
-
-self.createMenuEntries(fileMenu,table)</t>
-<t tx="T687">recentFilesMenu = wx.wxMenu()
-
-self.recentFiles = app().config.getRecentFiles()
-
-if 0: # Not ready yet.
-	self.createRecentFilesMenuItems()
-	
-lab = "Recent &amp;Files..."
-fileMenu.AppendMenu(const(lab),lab,recentFilesMenu)</t>
-<t tx="T688">readWriteMenu = wx.wxMenu()
-
-table = [
-		("&amp;Read Outline Only","Shift+Ctrl+R",self.OnReadOutlineOnly),
-		("Read @file &amp;Nodes",None,self.OnReadAtFileNodes),
-		("-",None,None),
-		#("Write &amp;Dirty @file Nodes","Shift+Ctrl+Q",self.OnWriteDirtyAtFileNodes),
-		#("Write &amp;Missing @file Nodes",None,self.OnWriteMissingAtFileNodes),
-		("Write &amp;Outline Only",None,self.OnWriteOutlineOnly),
-		("&amp;Write @file Nodes","Shift+Ctrl+W",self.OnWriteAtFileNodes)]
-
-self.createMenuEntries(readWriteMenu,table)
-
-lab = "&amp;Read/Write..."
-fileMenu.AppendMenu(const(lab),lab,readWriteMenu)</t>
-<t tx="T689">tangleMenu = wx.wxMenu()
-
-table = (
-	("Tangle &amp;All","Shift+Ctrl+A",self.OnTangleAll),
-	("Tangle &amp;Marked","Shift+Ctrl+M",self.OnTangleMarked),
-	("&amp;Tangle","Shift+Ctrl+T",self.OnTangle))
-
-self.createMenuEntries(tangleMenu,table)
-
-lab = "&amp;Tangle..."
-fileMenu.AppendMenu(const(lab),lab,tangleMenu)</t>
-<t tx="T690">untangleMenu = wx.wxMenu()
-
-table = (
-	("Untangle &amp;All",None,self.OnUntangleAll),
-	("Untangle &amp;Marked",None,self.OnUntangleMarked),
-	("&amp;Untangle","Shift+Ctrl+U",self.OnUntangle))
-	
-self.createMenuEntries(untangleMenu,table)
-
-lab = "&amp;Untangle..."
-fileMenu.AppendMenu(const(lab),lab,untangleMenu)</t>
-<t tx="T691">importMenu = wx.wxMenu()
-
-table = (
-	#("Import To @&amp;file","Shift+Ctrl+F",self.OnImportAtFile),
-	#("Import To @&amp;root",None,self.OnImportAtRoot),
-	("Import &amp;CWEB Files",None,self.OnImportCWEBFiles),
-	("Import &amp;noweb Files",None,self.OnImportNowebFiles))
-	#("Import Flattened &amp;Outline",None,self.OnImportFlattenedOutline))
-
-self.createMenuEntries(importMenu,table)
-
-lab = "&amp;Import..."
-fileMenu.AppendMenu(const(lab),lab,importMenu)</t>
-<t tx="T692">exportMenu = wx.wxMenu()
-
-table = (
-	#("Export &amp;Headlines",None,self.OnExportHeadlines),
-	#("Outline To &amp;CWEB",None,self.OnOutlineToCWEB),
-	#("Outline To &amp;Noweb",None,self.OnOutlineToNoweb),
-	("&amp;Flatten Outline",None,self.OnFlattenOutline),)
-	#("&amp;Remove Sentinels",None,self.OnRemoveSentinels),
-	#("&amp;Weave",None,self.OnWeave)]
-
-self.createMenuEntries(exportMenu,table)
-
-lab = "&amp;Export..."
-fileMenu.AppendMenu(const(lab),lab,exportMenu)</t>
-<t tx="T693">editMenu = wx.wxMenu()
-
-&lt;&lt; create the first top-level edit entries &gt;&gt;
-&lt;&lt; create the edit body submenu &gt;&gt;
-&lt;&lt; create the edit headline submenu &gt;&gt;
-&lt;&lt; create the find submenu &gt;&gt;
-&lt;&lt; create the last top-level edit entries &gt;&gt;</t>
-<t tx="T694">table = (
-	("Can't Undo","Ctrl+Z",self.OnUndo,self.OnUpdateUndo), # &amp;U reserved for Undo
-	("Can't Redo","Shift+Ctrl+Z",self.OnRedo,self.OnUpdateRedo), # &amp;R reserved for Redo
-	("-",None,None),
-	#("Cu&amp;t","Ctrl+X",self.OnCutFromMenu,self.OnUpdateCut), 
-	#("Cop&amp;y","Ctrl+C",self.OnCopyFromMenu,self.OnUpdateCopy),
-	#("&amp;Paste","Ctrl+V",self.OnPasteFromMenu,self.OnUpdatePaste),
-	#("&amp;Delete",None,self.OnDelete,self.OnUpdateDelete),
-	("Select &amp;All","Ctrl+A",self.OnSelectAll,self.OnUpdateSelectAll),
-	("-",None,None))
-
-self.createMenuEntries(editMenu,table)</t>
-<t tx="T695">editBodyMenu = wx.wxMenu()
-
-table = (
-	("Extract &amp;Section","Shift+Ctrl+E",self.OnExtractSection,self.OnUpdateExtractSection),
-	("Extract &amp;Names","Shift+Ctrl+N",self.OnExtractNames,self.OnUpdateExtractNames),
-	("&amp;Extract","Shift+Ctrl+D",self.OnExtract,self.OnUpdateExtract))
-
-	#("-",None,None),
-	#("Convert All B&amp;lanks",None,self.OnConvertAllBlanks),
-	#("Convert All T&amp;abs",None,self.OnConvertAllTabs),
-	#("Convert &amp;Blanks","Shift+Ctrl+B",self.OnConvertBlanks),
-	#("Convert &amp;Tabs","Shift+Ctrl+J",self.OnConvertTabs),
-	#("Insert Body Time/&amp;Date","Shift+Ctrl+G",self.OnInsertBodyTime),
-	#("&amp;Reformat Paragraph","Shift+Ctrl+P",self.OnReformatParagraph),
-	#("-",None,None),
-	#("&amp;Indent","Ctrl+]",self.OnIndent),
-	#("&amp;Unindent","Ctrl+[",self.OnDedent),
-	#("&amp;Match Brackets","Ctrl+K",self.OnFindMatchingBracket))
-	
-self.createMenuEntries(editBodyMenu,table)
-
-lab = "Edit &amp;Body..."
-editMenu.AppendMenu(const(lab),lab,editBodyMenu)</t>
-<t tx="T696">editHeadlineMenu = wx.wxMenu()
-
-table = (
-	("Edit &amp;Headline","Ctrl+H",self.OnEditHeadline),)
-
-	#("&amp;End Edit Headline","Escape",self.OnEndEditHeadline),
-	#("&amp;Abort Edit Headline","Shift-Escape",self.OnAbortEditHeadline),
-	#("Insert Headline Time/&amp;Date","Shift+Ctrl+H",self.OnInsertHeadlineTime))
-	
-	# 5/16/03 EKR: I dislike this command.
-	#("Toggle Angle Brackets","Ctrl+B",self.OnToggleAngleBrackets)
-	
-self.createMenuEntries(editHeadlineMenu,table)
-
-lab = "Edit &amp;Headline..."
-editMenu.AppendMenu(const(lab),lab,editHeadlineMenu)
-
-
-</t>
-<t tx="T697">findMenu = wx.wxMenu()
-
-table = (
-	("&amp;Find Panel","Ctrl+F",self.OnFindPanel),
-	("-",None,None),
-	("Find &amp;Next","F3",self.OnFindNext,self.OnUpdateFind),
-	("Find &amp;Previous","F4",self.OnFindPrevious,self.OnUpdateFind),
-	("&amp;Replace","Ctrl+=",self.OnReplace,self.OnUpdateReplace),
-	("Replace, &amp;Then Find","Ctrl+-",self.OnReplaceThenFind,self.OnUpdateReplace))
-
-self.createMenuEntries(findMenu,table)
-
-lab = "&amp;Find..."
-editMenu.AppendMenu(const(lab),lab,findMenu)</t>
-<t tx="T698">if 1:
-	label = "Toggle Invisibles"
-else:
-	label = choose(c.tree.colorizer.showInvisibles,"Hide In&amp;visibles","Show In&amp;visibles")
-
-table = (
-	#("&amp;Go To Line Number","Alt+G",self.OnGoToLineNumber),
-	#("&amp;Execute Script","Alt+Shift+E",self.OnExecuteScript),
-	("Set Fon&amp;t...","Shift+Alt+T",self.OnFontPanel),
-	#("Set &amp;Colors...","Shift+Alt+C",self.OnColorPanel),
-	#(label,"Alt+V",self.OnViewAllCharacters),
-	#("-",None,None),
-	("Prefere&amp;nces","Ctrl+Y",self.OnPreferences))
-
-self.createMenuEntries(editMenu,table)</t>
-<t tx="T699">outlineMenu = wx.wxMenu()
-
-&lt;&lt; create top-level outline menu &gt;&gt;
-&lt;&lt; create expand/contract submenu &gt;&gt;
-&lt;&lt; create move submenu &gt;&gt;
-&lt;&lt; create mark submenu &gt;&gt;
-&lt;&lt; create goto submenu &gt;&gt;</t>
-<t tx="T700">table = (
-	("C&amp;ut Node","Shift+Ctrl+X",self.OnCutNode,self.OnUpdateCutNode),
-	("C&amp;opy Node","Shift+Ctrl+C",self.OnCopyNode),
-	("&amp;Paste Node","Shift+Ctrl+V",self.OnPasteNode,self.OnUpdatePasteNode),
-	("&amp;Delete Node","Shift+Ctrl+BkSp",self.OnDeleteNode,self.OnUpdateDeleteNode),
-	("-",None,None),
-	("&amp;Insert Node","Ctrl+I",self.OnInsertNode),
-	("&amp;Clone Node","Ctrl+`",self.OnCloneNode))
-
-	# ("Sort Node",None,self.OnSortChildren,self.OnUpdateSortNode)
-	# ("Sort C&amp;hildren",None,self.OnSortChildren),
-	#("&amp;Sort Siblings","Alt-A",self.OnSortSiblings),
-	#("-",None,None))
-
-self.createMenuEntries(outlineMenu,table)</t>
-<t tx="T701">expandMenu = wx.wxMenu()
-
-table = (
-	("&amp;Contract All","Alt+-",self.OnContractAll,self.OnUpdateContractAll),
-	# ("Contract &amp;Node","Alt+[",self.OnContractNode),
-	# ("Contract &amp;Parent","Alt+0",self.OnContractParent),
-	("-",None,None),
-	# ("Expand P&amp;rev Level","Alt+.",self.OnExpandPrevLevel),
-	# ("Expand N&amp;ext Level","Alt+=",self.OnExpandNextLevel),
-	# ("-",None,None),
-	("Expand To Level &amp;1","Alt+1",self.OnExpandToLevel1),
-	("Expand To Level &amp;2","Alt+2",self.OnExpandToLevel2),
-	("Expand To Level &amp;3","Alt+3",self.OnExpandToLevel3),
-	("Expand To Level &amp;4","Alt+4",self.OnExpandToLevel4),
-	("Expand To Level &amp;5","Alt+5",self.OnExpandToLevel5),
-	("Expand To Level &amp;6","Alt+6",self.OnExpandToLevel6),
-	("Expand To Level &amp;7","Alt+7",self.OnExpandToLevel7),
-	("Expand To Level &amp;8","Alt+8",self.OnExpandToLevel8),
-	# ("Expand To Level &amp;9","Alt+9",self.OnExpandToLevel9),
-	("-",None,None),
-	("Expand &amp;All","Alt+9",self.OnExpandAll,self.OnUpdateExpandAll))
-	#("Expand N&amp;ode","Alt+]",self.OnExpandNode))
-
-self.createMenuEntries(expandMenu,table)
-
-lab = "&amp;Expand/Contract..."
-outlineMenu.AppendMenu(const(lab),lab,expandMenu)
-
-if 0: # not used yet.  Maybe never.
-	wx.EVT_UPDATE_UI(cExpandAllChildrenMenuItem,self.OnUpdateExpandAllChildren)
-	wx.EVT_UPDATE_UI(cExpandChilrenMenuItem,self.OnUpdateExpandChildren)
-	wx.EVT_UPDATE_UI(cContractAllChildrenMenuItem,self.OnUpdateContractAllChildren)
-	wx.EVT_UPDATE_UI(cContractChilrenMenuItem,self.OnUpdateContractChildren)</t>
-<t tx="T702">moveSelectMenu = wx.wxMenu()
-
-table = (
-	("Move &amp;Down", "Ctrl+D",self.OnMoveDown,self.OnUpdateMoveDown),
-	("Move &amp;Left", "Ctrl+L",self.OnMoveLeft,self.OnUpdateMoveLeft),
-	("Move &amp;Right","Ctrl+R",self.OnMoveRight,self.OnUpdateMoveRight),
-	("Move &amp;Up",   "Ctrl+U",self.OnMoveUp,self.OnUpdateMoveUp),
-	("-",None,None),
-	("&amp;Promote","Ctrl+{",self.OnPromote,self.OnUpdatePromote),
-	("&amp;Demote", "Ctrl+}",self.OnDemote,self.OnUpdateDemote))
-	
-self.createMenuEntries(moveSelectMenu,table)
-
-lab = "&amp;Move..."
-outlineMenu.AppendMenu(const(lab),lab,moveSelectMenu)</t>
-<t tx="T703">markMenu = wx.wxMenu()
-
-table = (
-	("&amp;Mark","Ctrl-M",self.OnMark,self.OnUpdateMark),
-	("Mark &amp;Subheads","Alt+S",self.OnMarkSubheads,self.OnUpdateMarkSubheads),
-	("Mark Changed &amp;Items","Alt+C",self.OnMarkChangedItems,self.OnUpdateMarkChangedItems),
-	("Mark Changed &amp;Roots","Alt+R",self.OnMarkChangedRoots,self.OnUpdateMarkChangedRoots),
-	# ("Mark &amp;Clones","Alt+K",self.OnMarkClones),
-	("&amp;Unmark All","Alt+U",self.OnUnmarkAll))
-	
-self.createMenuEntries(markMenu,table)
-
-lab = "M&amp;ark/Unmark..."
-outlineMenu.AppendMenu(const(lab),lab,markMenu)</t>
-<t tx="T704">gotoMenu = wx.wxMenu()
-
-table = (
-	#("Go Back",None,self.OnGoPrevVisitedNode), # Usually use buttons for this.
-	#("Go Forward",None,self.OnGoNextVisitedNode),
-	#("-",None,None),
-	("Go To Next &amp;Marked","Alt+M",self.OnGoToNextMarked,self.OnUpdateGoToNextMarked),
-	("Go To Next C&amp;hanged","Alt+D",self.OnGoToNextChanged,self.OnUpdateGoToNextChanged),
-	# ("Go To Next &amp;Clone","Alt+N",self.OnGoToNextClone),
-	("-",None,None),
-	#("Go To &amp;First Node","Alt+Shift+G",self.OnGoToFirstNode),
-	#("Go To &amp;Last Node","Alt+Shift+H",self.OnGoToLastNode),
-	#("Go To &amp;Parent","Alt+Shift+P",self.OnGoToParent),
-	#("Go To P&amp;rev Sibling","Alt+Shift+R",self.OnGoToPrevSibling),
-	#("Go To Next &amp;Sibling","Alt+Shift+S",self.OnGoToNextSibling),
-	#("-",None,None),
-	("Go To Prev V&amp;isible","Alt-UpArrow",self.OnGoPrevVisible,self.OnUpdateGoPrevVisible),
-	("Go To Next &amp;Visible","Alt-DnArrow",self.OnGoNextVisible,self.OnUpdateGoNextVisible),
-	("Go To Prev Node","Alt-Shift+UpArrow",self.OnGoBack,self.OnUpdateGoBack),
-	("Go To Next Node","Alt-Shift-DnArrow",self.OnGoNext,self.OnUpdateGoNext))
-	
-self.createMenuEntries(gotoMenu,table)
-
-lab = "&amp;Go To..."
-outlineMenu.AppendMenu(const(lab),lab,gotoMenu)</t>
-<t tx="T705">windowMenu = wx.wxMenu()
-
-table = (
-	("&amp;Equal Sized Panes","Ctrl-E",self.OnEqualSizedPanes),
-	("Toggle &amp;Active Pane","Ctrl-T",self.OnToggleActivePane),
-	# ("Toggle &amp;Split Direction",None,self.OnToggleSplitDirection),
-	("-",None,None),
-	("Casca&amp;de",None,self.OnCascade),
-	("&amp;Minimize All",None,self.OnMinimizeAll))
-	
-	#("-",None,None),
-	#("Open &amp;Compare Window",None,self.OnOpenCompareWindow))
-
-self.createMenuEntries(windowMenu,table)</t>
-<t tx="T706">helpMenu = wx.wxMenu()
-
-table = (
-	("&amp;About Leo...",None,self.OnAbout),)
-	#("Online &amp;Home Page",None,self.OnLeoHome),
-	#("-",None,None),
-	#("Open Online &amp;Tutorial",None,self.OnLeoTutorial))
-
-self.createMenuEntries(helpMenu,table)
-
-if 0: # not ready yet.
-
-	if wx.wxPlatform == '__WXMSW__':
-		table = (("Open &amp;Offline Tutorial",None,self.OnLeoHelp),)
-		self.createMenuEntries(helpMenu,table)
-	
-	table = (
-		("Open Leo&amp;Docs.leo",None,self.OnLeoDocumentation),
-		("-",None,None),
-		("Open Leo&amp;Config.leo",None,self.OnLeoConfig),
-		("Apply &amp;Settings",None,self.OnApplyConfig))
-
-	self.createMenuEntries(helpMenu,table)</t>
-<t tx="T707">@ The old, non-user-configurable code bound shortcuts in createMenuBar.  The new user-configurable code binds shortcuts here.
-
-Centralized tables of shortscuts no longer exist as they did in createAccelerators.  To check for duplicates, (possibly arising from leoConfig.txt) we add entries to a central dictionary here, and report duplicates if an entry for a canonicalized shortcut already exists.
-@c
-
-def createMenuEntries (self,menu,table,openWith=0):
-	
-	for data in table:
-		if len(data) == 3:
-			label,accel,command = data ; update_command = None
-		else:
-			label,accel,command,update_command = data
-
-		if label == '-':
-			menu.AppendSeparator()
-		else:
-			id = const(label)
-			menu.Append(id,label,label)
-			wx.EVT_MENU(self,id,command)
-			if update_command:
-				wx.EVT_UPDATE_UI(self,id,update_command)</t>
-<t tx="T708"></t>
-<t tx="T709">def enable (self,event,val):
-
-	# A workaround an apparent bug:  convert bool to 1/0
-	val = choose(val,1,0)
-	event.Enable(val)</t>
-<t tx="T710"></t>
-<t tx="T711">if wx.wxPlatform == '__WXMSW__':
+<t tx="T593"></t>
+<t tx="T594"></t>
+<t tx="T595">if wx.wxPlatform == '__WXMSW__':
 	
 	def onActivate(self,event):
 		if event.GetActive():
@@ -11551,7 +9695,7 @@ else:
 		if self.c:
 			self.c.checkAllFileDates()
 </t>
-<t tx="T712">def destroyAllPanels (self):
+<t tx="T596">def destroyAllPanels (self):
 	trace() # Not used yet.  Later, this might be called from the app class.
 	self.Destroy()
 
@@ -11607,7 +9751,7 @@ def onCloseLeoFrame(self,event):
 			tree.SetItemData(id,None)
 			v = next
 	self.Destroy()</t>
-<t tx="T713"># Use the window title:  mFileName may not exist.
+<t tx="T597"># Use the window title:  mFileName may not exist.
 title = self.GetTitle()
 if title and title[0] == '*':
 	title = title.Mid(1)
@@ -11643,7 +9787,7 @@ elif answer == wx.wxID_CANCEL:
 	pass # The user want's to cancel the close.
 else:
 	veto = true</t>
-<t tx="T714">if  gPrefsFrame:
+<t tx="T598">if  gPrefsFrame:
 	gPrefsFrame.Destroy()
 	gPrefsFrame = None
 
@@ -11653,7 +9797,7 @@ if app.findFrame:
 	
 if wx.wxPlatform == "__WXMSW__":
 	wxPythonFrame.destroy()</t>
-<t tx="T715">def onResize(self,event):
+<t tx="T599">def onResize(self,event):
 
 	if mIniting:
 		return # Can be called during initialization.
@@ -11675,34 +9819,32 @@ if wx.wxPlatform == "__WXMSW__":
 	else:
 		self.splitter2.SetSashPosition((3*h)/5,true)
 </t>
-<t tx="T716"></t>
-<t tx="T717">sDisableTextUpdates = 0
+<t tx="T600"></t>
+<t tx="T601">def onBodyTextUpdated(self,event):
 
-def onBodyTextUpdated(self,event):
-
-	# Changing text should never cause a recursive entry.
-	assert(mTextChanging == 0)
-	assert(mCopying == 0)
-	if sDisableTextUpdates &gt; 0: return
-	if  self.c == None:  return
+	if self.c == None:  return
 	v = self.c.currentVnode()
 	if v == None: return
-	trace()
-	++ mTextChanging
+	
+	s = self.body.GetValue()
+	trace(s)
+
+	return ## Not yet: sevaral calls below use tkinter or frame.top.
+	
+	# not yet: c.setChanged uses frame.top
 	&lt;&lt; Set the dirty bit and/or the file-changed mark if the text has changed &gt;&gt;
-	# Update the tnode so nodes are always synched.
-	v.t().saveBodyPaneToTnode(self.body)
+	# not yet: ses tkinter...
+	v.setBodyStringOrPane(self,s)
 	v.setAncestorAtFileNodeDirty()
 	# Update the syntax colorer if needed.
 	self.c.updateSyntaxColorer(v)
-	&lt;&lt; Update icons &gt;&gt;
-	-- mTextChanging</t>
-<t tx="T718">if not v.isDirty() and self.body.GetValue()!= v.bodyString():
+	&lt;&lt; Update icons &gt;&gt;</t>
+<t tx="T602">if not v.isDirty() and s != v.bodyString():
 
 	v.initDirtyBit()# Avoid calling setIcon.
 	if not self.c.isChanged():
 		self.c.setChanged(true)</t>
-<t tx="T719"># It is very important to eliminate flicker here.
+<t tx="T603"># It is very important to eliminate flicker here.
 val = v.computeIcon()
 repaint = false
 
@@ -11721,9 +9863,9 @@ if val &gt;= 0 and val != v.iconVal():
 
 if repaint:
 	self.tree.Refresh()</t>
-<t tx="T720"></t>
-<t tx="T721"></t>
-<t tx="T722">def onTreeCollapsed(self,event):
+<t tx="T604"></t>
+<t tx="T605"></t>
+<t tx="T606">def onTreeCollapsed(self,event):
 	
 	"""Prepare to collapse the tree."""
 	
@@ -11737,7 +9879,7 @@ def onTreeExpanded (self,event):
 	if not self.drawing:
 		# trace()
 		self.redraw()</t>
-<t tx="T723">def onTreeCollapsing(self,event):
+<t tx="T607">def onTreeCollapsing(self,event):
 	
 	"""Call v.contract for a later redraw."""
 
@@ -11760,8 +9902,8 @@ def onTreeExpanding (self,event):
 		if v:
 			#trace(v)
 			v.expand()</t>
-<t tx="T724"></t>
-<t tx="T725">def onTreeChanged(self,event):
+<t tx="T608"></t>
+<t tx="T609">def onTreeChanged(self,event):
 
 	c = self.c ; tree = self.tree
  	new_id = event.GetItem()
@@ -11806,31 +9948,32 @@ def onTreeExpanding (self,event):
 	self.c.updateSyntaxColorer(new_v)
 
 </t>
-<t tx="T726">def onTreeChanging(self,event):
+<t tx="T610">def onTreeChanging(self,event):
 	
 	"""Event handler gets called whenever a new node gets selected"""
 
 	# trace()
 	pass</t>
-<t tx="T727"></t>
-<t tx="T728"># Editing will not be allowed if this routine does not exist.
+<t tx="T611"></t>
+<t tx="T612"># Editing is allowed only if this routine exists.
 
 def onTreeBeginLabelEdit(self,event):
 
-	trace() ; return
-
-	pass # Doing nothing is is enough to enable the edit.
-</t>
-<t tx="T729"># Editing will not be allowed if this routine does not exist.
+	# Disallow editing of the dummy root node.
+	id = event.GetItem()
+	if id == self.root_id:
+		event.Veto()</t>
+<t tx="T613"># Editing will be allowed only if this routine exists.
 
 def onTreeEndLabelEdit(self,event):
 
-	# Doing nothing here is enough to enable the edit.
+	tree = self.tree
 	s = event.GetLabel()
 	id = event.GetItem()
-	v = self.tree.GetItemData(id).GetData()
+	v = tree.GetItemData(id).GetData()
 	trace(id,s)
-	return
+
+	return # Not yet: c.setChanged uses frame.top.
 
 	# Set the dirty bit and the file-changed mark if the headline has changed.
 	if not v.isDirty()and s != v.headString():
@@ -11843,11 +9986,11 @@ def onTreeEndLabelEdit(self,event):
 	while j != v:
 		j.setHeadString(s)
 		j = j.joinList()</t>
-<t tx="T730">def onTreeKeyDown(self,event):
+<t tx="T614">def onTreeKeyDown(self,event):
 	
 	trace()
 	pass # Probably we don't need to do anything until the end-edit event.</t>
-<t tx="T731">def onTreeBeginDrag(self,event):
+<t tx="T615">def onTreeBeginDrag(self,event):
 
 	trace() ; return
 
@@ -11855,7 +9998,7 @@ def onTreeEndLabelEdit(self,event):
 		mDraggedItem = event.GetItem()
 		event.Allow()
 </t>
-<t tx="T732">def onTreeEndDrag(self,event):
+<t tx="T616">def onTreeEndDrag(self,event):
 	
 	trace() ; return
 
@@ -11877,7 +10020,7 @@ def onTreeEndLabelEdit(self,event):
 	self.c.selectVnode(src_v)
 	self.c.setChanged(true)
 </t>
-<t tx="T733">assert(self.tree)
+<t tx="T617">assert(self.tree)
 assert(self.c)
 
 dst = event.GetItem()
@@ -11897,14 +10040,14 @@ if dst_v == None:
 
 parent = self.tree.GetParent(dst)
 parent_v = None</t>
-<t tx="T734"># Make sure the drag will be valid.
+<t tx="T618"># Make sure the drag will be valid.
 parent_v = self.tree.GetItemData(dst)
 
 if not self.c.checkMoveWithParentWithWarning(src_v,parent_v,true):
 	return
 
 src_v.moveToNthChildOf(dst_v,0)</t>
-<t tx="T735"># Do nothing if dst is a child of src.
+<t tx="T619"># Do nothing if dst is a child of src.
 p = parent
 while p.IsOk():
 	if p == src:
@@ -11921,7 +10064,957 @@ if not self.c.checkMoveWithParentWithWarning(src_v,parent_v,true):
 	return
 
 src_v.moveAfter(dst_v)</t>
-<t tx="T736">def after_idle(*args): trace()
+<t tx="T620">if 1: # Most important...
+
+	def drawIcon(self,v,x,y): trace(v) #  return self.tree.drawIcon(v,x,y)
+	
+	def setTreeIniting(self,flag):
+		self.treeIniting = flag
+
+	# Scrolling... 
+	def scrollTo(self,v):  trace() #  return self.tree.scrollTo(v)
+	def idle_scrollTo(self,v):  trace(v) #  return self.tree.idle_scrollTo(v)
+
+# Coloring...
+def getColorizer(self):           trace() # return self.tree.colorizer
+def recolor_now(self,v):          trace() # return self.tree.recolor_now(v)
+def recolor_range(self,v,leading,trailing):  trace() #  return self.tree.recolor_range(v,leading,trailing)
+def recolor(self,v):              trace() #  return self.tree.recolor(v)
+def updateSyntaxColorer(self,v):  trace() #  return self.tree.colorizer.updateSyntaxColorer(v)
+
+# Focus...
+def focus_get(self): trace() #  return self.tree.canvas.focus_get()
+
+# Fonts...
+def getFont(self):      return self.tree.getFont()
+def setFont(self,font): return self.tree.setFont(font)
+
+# OnHeadlineClick
+# OnHeadlineRightClick
+def OnActivateHeadline(self,v): trace() #  return self.tree.OnActivate(v)
+
+# Others...
+def expandAllAncestors(self,v): trace() #  return self.tree.expandAllAncestors(v)
+def getEditTextDict(self,v):    trace() #  return self.tree.edit_text_dict.get(v)</t>
+<t tx="T621">def beginUpdate (self):
+
+	self.updateCount += 1</t>
+<t tx="T622">def endUpdate (self,flag=true):
+
+	assert(self.updateCount &gt; 0)
+
+	self.updateCount -= 1
+	if flag and self.updateCount == 0:
+		self.redraw()</t>
+<t tx="T623">def currentVnode(self):
+	return self.mCurrentVnode
+
+def dragging(self):
+	return self.mDragging
+	
+def rootVnode(self):
+	return self.mRootVnode
+
+def topVnode(self):
+	return self.mTopVnode</t>
+<t tx="T624">def redraw (self):
+
+	# trace(self.drawing)
+	self.drawing = true # Tell event handlers not to call us.
+
+	c = self.c ; tree = self.tree
+	if c is None: return
+	v = c.rootVnode()
+	if v is None: return
+
+	tree.DeleteAllItems()
+	self.root_id = root_id = tree.AddRoot("Leo Outline Pane")
+	while v:
+		self.redraw_subtree(root_id,v)
+		v = v.next()
+	tree.Expand(root_id)
+	
+	self.drawing = false
+		
+def redraw_now(self):
+	trace()
+	self.redraw()</t>
+<t tx="T625">def redraw_node(self,parent_id,v):
+	
+	# trace(v)
+	tree = self.tree
+	data = wx.wxTreeItemData(v)
+	id = tree.AppendItem(parent_id,v.headString(),data=data)
+	v.wxTreeId = id # Inject the ivar into the vnode.
+	assert (v == tree.GetItemData(id).GetData())
+	return id
+	</t>
+<t tx="T626">def redraw_subtree(self,parent_id,v):
+	
+	# trace(v)
+	tree = self.tree
+	id = self.redraw_node(parent_id,v)
+	child = v.firstChild()
+	
+	if v.isExpanded():
+		while child:
+			self.redraw_subtree(id,child)
+			child = child.next()
+		tree.Expand(id)
+	else:
+		if 1: # tree.SetItemHasChildren changes the event handler logic.  So this is good enough.
+			while child:
+				self.redraw_node(id,child)
+				child = child.next()
+		else:
+			if child:
+				tree.SetItemHasChildren(id)
+		tree.Collapse(id)</t>
+<t tx="T627">def setRootVnode(self,v):
+	
+	# trace(v)
+	if v:
+		self.mRootVnode = v
+	
+def setCurrentVnode(self,v):
+	
+	# trace(v)
+	if v:
+		self.mCurrentVnode = v</t>
+<t tx="T628">@first # -*- coding: utf-8 -*-
+
+"""A plugin to use wxPython as Leo's gui."""
+
+from leoPlugins import *
+from leoGlobals import *
+
+&lt;&lt; imports for wx plugin &gt;&gt;
+&lt;&lt; constants for wx plugin &gt;&gt;
+
+@others
+
+if 0: # Enable the plugin...
+
+	if app.gui is None:
+		print "Installing wxPython gui"
+		&lt;&lt; Set app.gui &gt;&gt;
+		__version__ = "0.1" # Set version for the plugin handler.
+		plugin_signon(__name__)
+	else:
+		s = "Can't install wxPython gui: previous gui installed"
+		print s ; es(s,color="red")</t>
+<t tx="T629">import leoCommands,leoFind,leoFrame,leoGui,leoNodes,leoTree
+import os,sys,traceback
+
+from wxPython import wx</t>
+<t tx="T630">app.gui = wxGui()
+app.root = app.gui.createRootWindow()
+app.gui.finishCreate()
+</t>
+<t tx="T631">class wxGui(leoGui.leoGui):
+	
+	@others</t>
+<t tx="T632"></t>
+<t tx="T633">def __init__ (self):
+	
+	trace("wxGui")
+	
+	# Initialize the base class.
+	if 1: # in plugin
+		leoGui.leoGui.__init__(self,"wxPython")
+	else:
+		leoGui.__init__(self,"wxPython")
+		
+	self.bitmap_name = None
+	self.bitmap = None</t>
+<t tx="T634">def createRootWindow(self):
+
+	trace("wxGui")
+	self.wxApp = wxLeoApp(None) # This redirects stdout &amp; stderr to stupid console.
+	self.wxFrame = None
+	
+	if 0: # Not ready yet.
+		self.setDefaultIcon()
+		self.getDefaultConfigFont(app.config)
+		self.setEncoding()
+		self.createGlobalWindows()
+
+	return self.wxFrame</t>
+<t tx="T635">def setDefaultIcon(self):
+	
+	"""Set the icon to be used in all Leo windows.
+	
+	This code does nothing for Tk versions before 8.4.3."""
+	
+	gui = self
+
+	try:
+		version = gui.root.getvar("tk_patchLevel")
+		if CheckVersion(version,"8.4.3"):
+			# tk 8.4.3 or greater: load a 16 by 16 icon.
+			path = os.path.join(app.loadDir,"..","Icons")
+			if os.path.exists(path):
+				file = os.path.join(path,"LeoApp16.ico")
+				if os.path.exists(path):
+					self.bitmap = Tkinter.BitmapImage(file)
+				else:
+					es("LeoApp16.ico not in Icons directory", color="red")
+			else:
+				es("Icons directory not found: "+path, color="red")
+	except:
+		print "exception setting bitmap"
+		traceback.print_exc()</t>
+<t tx="T636">@ According to Martin v. Löwis, getdefaultlocale() is broken, and cannot be fixed. The workaround is to copy the getpreferredencoding() function from locale.py in Python 2.3a2.  This function is now in leoGlobals.py.
+@c
+
+def setEncoding (self):
+
+	for (encoding,src) in (
+		(app.config.tkEncoding,"config"),
+		#(locale.getdefaultlocale()[1],"locale"),
+		(getpreferredencoding(),"locale"),
+		(sys.getdefaultencoding(),"sys"),
+		("utf-8","default")):
+	
+		if isValidEncoding (encoding): # 3/22/03
+			app.tkEncoding = encoding
+			# trace(app.tkEncoding,src)
+			break
+		elif encoding and len(encoding) &gt; 0:
+			trace("ignoring invalid " + src + " encoding: " + `encoding`)
+			
+	# trace(app.tkEncoding)</t>
+<t tx="T637">def getDefaultConfigFont(self,config):
+	
+	"""Get the default font from a new text widget."""
+
+	t = Tkinter.Text()
+	fn = t.cget("font")
+	font = tkFont.Font(font=fn)
+	config.defaultFont = font
+	config.defaultFontFamily = font.cget("family")</t>
+<t tx="T638">def createGlobalWindows (self):
+	
+	"""Create the global windows for the application."""
+	
+	app.findFrame = leoFind.leoFind()
+	app.findFrame.top.withdraw()
+	app.globalWindows.append(app.findFrame)</t>
+<t tx="T639">def destroy(self,widget):
+	
+	pass # wx code not ready yet.</t>
+<t tx="T640">def finishCreate (self):
+
+	pass
+	
+</t>
+<t tx="T641">def killGui(self,exitFlag=true):
+	
+	"""Destroy a gui and terminate Leo if exitFlag is true."""
+
+	pass # Not ready yet.
+
+</t>
+<t tx="T642">def recreateRootWindow(self):
+	"""A do-nothing base class to create the hidden root window of a gui
+
+	after a previous gui has terminated with killGui(false)."""
+	pass
+
+</t>
+<t tx="T643">def runMainLoop(self):
+
+	"""Run tkinter's main loop."""
+	
+	trace("wxGui")
+	self.wxApp.MainLoop()
+	trace("done")</t>
+<t tx="T644"></t>
+<t tx="T645">def getFontFromParams(self,family,size,slant,weight):
+	
+	trace(app.config.defaultFont)
+	
+	return app.config.defaultFont ##
+	
+	family_name = family
+	
+	try:
+		font = tkFont.Font(family=family,size=size,slant=slant,weight=weight)
+		#print family_name,family,size,slant,weight
+		#print "actual_name:",font.cget("family")
+		return font
+	except:
+		es("exception setting font from " + `family_name`)
+		es("family,size,slant,weight:"+
+			`family`+':'+`size`+':'+`slant`+':'+`weight`)
+		es_exception()
+		return app.config.defaultFont</t>
+<t tx="T646">def newAboutLeoDialog(self,commander):
+	"""A do-nothing base class to create an About Leo dialog."""
+	pass
+
+def newAskOkDialog(self,commander):
+	"""A do-nothing base class to create an askOK dialog ."""
+	pass
+
+def newAskOkCancelDialog(self,commander):
+	"""A do-nothing base class to create an askOkCancel dialog."""
+	pass
+
+def newAskOkCancelNumberDialog(self,commander):
+	"""A do-nothing base class to create an askOkCancelNumber dialog ."""
+	pass
+
+def newAskYesNoDialog(self,commander):
+	"""A do-nothing base class to create an askYesNo dialog."""
+	pass
+
+def newAskYesNoCancelDialg(self,commander):
+	"""A do-nothing base class to create an askYesNoCancel dialog ."""
+	pass</t>
+<t tx="T647"></t>
+<t tx="T648">def newLeoFrame(self,title):
+	
+	"""Create a view frame for the Leo main window."""
+	
+	trace()
+	self.wxFrame = wxLeoFrame(title)
+	self.wxApp.SetTopWindow(self.wxFrame)
+	self.wxFrame.Show(true)
+	if not app.root:
+		app.root = self.wxFrame
+	return self.wxFrame</t>
+<t tx="T649">def newColorFrame(self,commander):
+	"""Create a colorFrame."""
+	pass # To do
+
+def newColorNameFrame(self,commander):
+	"""Create a colorNameFrame."""
+	pass # To do
+
+def newCompareFrame(self,commander):
+	"""Create a compareFrame."""
+	pass # To do
+
+def newFindFrame(self,commander):
+	"""Create a findFrame."""
+	pass # To do
+
+def newFontFrame(self,commander):
+	"""Create a fontFrame."""
+	pass # To do
+
+def newPrefsFrame(self,commander):
+	"""Create a prefsFrame."""
+	pass # To do</t>
+<t tx="T650">def destroyLeoFrame (self,frame):
+
+	trace(frame.title)
+	frame.Close()</t>
+<t tx="T651">def destroy (self,widget):
+	
+	trace()</t>
+<t tx="T652"></t>
+<t tx="T653">def get_focus(self,top):
+	
+	"""Returns the widget that has focus, or body if None."""
+
+	pass # wx code not ready yet.</t>
+<t tx="T654">def set_focus(self,commands,widget):
+	
+	"""Set the focus of the widget in the given commander if it needs to be changed."""
+	
+	pass # wx code not ready yet.</t>
+<t tx="T655">def force_focus(self,commands,widget):
+	
+	"""Set the focus of the widget in the given commander if it needs to be changed."""
+	
+	pass # wx code not ready yet.</t>
+<t tx="T656"></t>
+<t tx="T657">def attachLeoIcon (self,w):
+	
+	"""Try to attach a Leo icon to the Leo Window.
+	
+	Use tk's wm_iconbitmap function if available (tk 8.3.4 or greater).
+	Otherwise, try to use the Python Imaging Library and the tkIcon package."""
+
+	if self.bitmap != None:
+		# We don't need PIL or tkicon: this is tk 8.3.4 or greater.
+		try:
+			w.wm_iconbitmap(self.bitmap)
+		except:
+			self.bitmap = None
+	
+	if self.bitmap == None:
+		try:
+			&lt;&lt; try to use the PIL and tkIcon packages to draw the icon &gt;&gt;
+		except:
+			# traceback.print_exc()
+			self.leoIcon = None</t>
+<t tx="T658">@ This code requires Fredrik Lundh's PIL and tkIcon packages:
+
+Download PIL    from http://www.pythonware.com/downloads/index.htm#pil
+Download tkIcon from http://www.effbot.org/downloads/#tkIcon
+
+Many thanks to Jonathan M. Gilligan for suggesting this code.
+@c
+
+import Image,tkIcon,_tkicon
+
+# Wait until the window has been drawn once before attaching the icon in OnVisiblity.
+def visibilityCallback(event,self=self,w=w):
+	try: self.leoIcon.attach(w.winfo_id())
+	except: pass
+w.bind("&lt;Visibility&gt;",visibilityCallback)
+if not self.leoIcon:
+	# Load a 16 by 16 gif.  Using .gif rather than an .ico allows us to specify transparency.
+	icon_file_name = os.path.join(app.loadDir,'..','Icons','LeoWin.gif')
+	icon_file_name = os.path.normpath(icon_file_name)
+	icon_image = Image.open(icon_file_name)
+	if 1: # Doesn't resize.
+		self.leoIcon = self.createLeoIcon(icon_image)
+	else: # Assumes 64x64
+		self.leoIcon = tkIcon.Icon(icon_image)</t>
+<t tx="T659"># This code is adapted from tkIcon.__init__
+# Unlike the tkIcon code, this code does _not_ resize the icon file.
+
+def createLeoIcon (self,icon):
+	
+	try:
+		import Image,tkIcon,_tkicon
+		
+		i = icon ; m = None
+		# create transparency mask
+		if i.mode == "P":
+			try:
+				t = i.info["transparency"]
+				m = i.point(lambda i, t=t: i==t, "1")
+			except KeyError: pass
+		elif i.mode == "RGBA":
+			# get transparency layer
+			m = i.split()[3].point(lambda i: i == 0, "1")
+		if not m:
+			m = Image.new("1", i.size, 0) # opaque
+		# clear unused parts of the original image
+		i = i.convert("RGB")
+		i.paste((0, 0, 0), (0, 0), m)
+		# create icon
+		m = m.tostring("raw", ("1", 0, 1))
+		c = i.tostring("raw", ("BGRX", 0, -1))
+		return _tkicon.new(i.size, c, m)
+	except:
+		return None</t>
+<t tx="T660"># WARNING: Call this routine _after_ creating a dialog.
+# (This routine inhibits the grid and pack geometry managers.)
+
+def get_window_info (self,top):
+	
+	top.update_idletasks() # Required to get proper info.
+
+	# Get the information about top and the screen.
+	geom = top.geometry() # geom = "WidthxHeight+XOffset+YOffset"
+	dim,x,y = string.split(geom,'+')
+	w,h = string.split(dim,'x')
+	w,h,x,y = int(w),int(h),int(x),int(y)
+	
+	return w,h,x,y</t>
+<t tx="T661"># Center the dialog on the screen.
+# WARNING: Call this routine _after_ creating a dialog.
+# (This routine inhibits the grid and pack geometry managers.)
+
+def center_dialog(self,top):
+
+	sw = top.winfo_screenwidth()
+	sh = top.winfo_screenheight()
+	w,h,x,y = get_window_info(top)
+	
+	# Set the new window coordinates, leaving w and h unchanged.
+	x = (sw - w)/2
+	y = (sh - h)/2
+	top.geometry("%dx%d%+d%+d" % (w,h,x,y))
+	
+	return w,h,x,y</t>
+<t tx="T662"># Returns frames w and f.
+# Typically the caller would pack w into other frames, and pack content into f.
+
+def create_labeled_frame (self,parent,
+	caption=None,relief="groove",bd=2,padx=0,pady=0):
+	
+	Tk = Tkinter
+	# Create w, the master frame.
+	w = Tk.Frame(parent)
+	w.grid(sticky="news")
+	
+	# Configure w as a grid with 5 rows and columns.
+	# The middle of this grid will contain f, the expandable content area.
+	w.columnconfigure(1,minsize=bd)
+	w.columnconfigure(2,minsize=padx)
+	w.columnconfigure(3,weight=1)
+	w.columnconfigure(4,minsize=padx)
+	w.columnconfigure(5,minsize=bd)
+	
+	w.rowconfigure(1,minsize=bd)
+	w.rowconfigure(2,minsize=pady)
+	w.rowconfigure(3,weight=1)
+	w.rowconfigure(4,minsize=pady)
+	w.rowconfigure(5,minsize=bd)
+
+	# Create the border spanning all rows and columns.
+	border = Tk.Frame(w,bd=bd,relief=relief) # padx=padx,pady=pady)
+	border.grid(row=1,column=1,rowspan=5,columnspan=5,sticky="news")
+	
+	# Create the content frame, f, in the center of the grid.
+	f = Tk.Frame(w,bd=bd)
+	f.grid(row=3,column=3,sticky="news")
+	
+	# Add the caption.
+	if caption and len(caption) &gt; 0:
+		caption = Tk.Label(parent,text=caption,highlightthickness=0,bd=0)
+		caption.tkraise(w)
+		caption.grid(in_=w,row=0,column=2,rowspan=2,columnspan=3,padx=4,sticky="w")
+
+	return w,f</t>
+<t tx="T663">class wxLeoApp (wx.wxApp):
+	
+	@others
+</t>
+<t tx="T664">def OnInit(self):
+	
+	self.SetAppName("Leo")
+	trace("wx.wxPlatform",wx.wxPlatform)
+	app.findFrame = wxFindFrame()
+	app.globalWindows.append(app.findFrame)
+	return true</t>
+<t tx="T665">def OnExit(self):
+	
+	trace()
+	return true
+</t>
+<t tx="T666">class wxLeoFrame(wx.wxFrame):
+	@others</t>
+<t tx="T667"></t>
+<t tx="T668">def __repr__ (self):
+	
+	return "wxLeoFrame: " + self.title</t>
+<t tx="T669">def createMenuBar(self):
+	
+	self.menuBar = menuBar = wx.wxMenuBar()
+	self.menuShortcuts = []
+	
+	&lt;&lt; create the file menu &gt;&gt;
+	&lt;&lt; create the edit menu &gt;&gt;
+	&lt;&lt; create the outline menu &gt;&gt;
+	if 0: # c not created yet.
+		doHook("create-optional-menus",c=c)
+	&lt;&lt; create the window menu &gt;&gt;
+	&lt;&lt; create the help menu &gt;&gt;
+	
+	for menu,name in (
+		(fileMenu, "&amp;File"),
+		(editMenu, "&amp;Edit"),
+		(outlineMenu, "&amp;Outline"),
+		(windowMenu, "&amp;Window"),
+		(helpMenu, "&amp;Help")):
+	
+		menuBar.Append(menu,name)
+		
+	self.SetMenuBar(menuBar)  # attach the menu bar to the frame
+	
+	# app().menuWarningsGiven = true</t>
+<t tx="T670">fileMenu = wx.wxMenu()
+
+&lt;&lt; create the top-level file entries &gt;&gt;
+&lt;&lt; create the recent files submenu &gt;&gt;
+fileMenu.AppendSeparator()
+&lt;&lt; create the read/write submenu &gt;&gt;
+&lt;&lt; create the tangle submenu &gt;&gt;
+&lt;&lt; create the untangle submenu &gt;&gt;
+&lt;&lt; create the import submenu &gt;&gt;
+&lt;&lt; create the export submenu &gt;&gt;
+fileMenu.AppendSeparator()
+
+# Create the last entries.
+exitTable = (("E&amp;xit","Ctrl-Q",self.OnQuit),)
+self.createMenuEntries(fileMenu,exitTable)</t>
+<t tx="T671">@ leo.py will probably never have a Print command.  Instead, export text files that may be formatted and printed as desired.
+@c
+
+table = (
+	("&amp;New","Ctrl+N",self.OnNew),
+	("&amp;Open...","Ctrl+O",self.OnOpen))
+self.createMenuEntries(fileMenu,table)
+
+# Create a new menu rather than call OnOpenWith.
+openWithMenu = wx.wxMenu()
+
+table = (
+	("-",None,None),
+	("&amp;Close","Ctrl+W",self.OnClose),
+	("&amp;Save","Ctrl+S",self.OnSave),
+	("Save &amp;As","Shift+Ctrl+S",self.OnSaveAs),
+	("Save To",None,self.OnSaveTo),
+	("Re&amp;vert To Saved",None,self.OnRevert,self.OnUpdateRevert))
+
+self.createMenuEntries(fileMenu,table)</t>
+<t tx="T672">recentFilesMenu = wx.wxMenu()
+
+self.recentFiles = app().config.getRecentFiles()
+
+if 0: # Not ready yet.
+	self.createRecentFilesMenuItems()
+	
+lab = "Recent &amp;Files..."
+fileMenu.AppendMenu(const(lab),lab,recentFilesMenu)</t>
+<t tx="T673">readWriteMenu = wx.wxMenu()
+
+table = [
+		("&amp;Read Outline Only","Shift+Ctrl+R",self.OnReadOutlineOnly),
+		("Read @file &amp;Nodes",None,self.OnReadAtFileNodes),
+		("-",None,None),
+		#("Write &amp;Dirty @file Nodes","Shift+Ctrl+Q",self.OnWriteDirtyAtFileNodes),
+		#("Write &amp;Missing @file Nodes",None,self.OnWriteMissingAtFileNodes),
+		("Write &amp;Outline Only",None,self.OnWriteOutlineOnly),
+		("&amp;Write @file Nodes","Shift+Ctrl+W",self.OnWriteAtFileNodes)]
+
+self.createMenuEntries(readWriteMenu,table)
+
+lab = "&amp;Read/Write..."
+fileMenu.AppendMenu(const(lab),lab,readWriteMenu)</t>
+<t tx="T674">tangleMenu = wx.wxMenu()
+
+table = (
+	("Tangle &amp;All","Shift+Ctrl+A",self.OnTangleAll),
+	("Tangle &amp;Marked","Shift+Ctrl+M",self.OnTangleMarked),
+	("&amp;Tangle","Shift+Ctrl+T",self.OnTangle))
+
+self.createMenuEntries(tangleMenu,table)
+
+lab = "&amp;Tangle..."
+fileMenu.AppendMenu(const(lab),lab,tangleMenu)</t>
+<t tx="T675">untangleMenu = wx.wxMenu()
+
+table = (
+	("Untangle &amp;All",None,self.OnUntangleAll),
+	("Untangle &amp;Marked",None,self.OnUntangleMarked),
+	("&amp;Untangle","Shift+Ctrl+U",self.OnUntangle))
+	
+self.createMenuEntries(untangleMenu,table)
+
+lab = "&amp;Untangle..."
+fileMenu.AppendMenu(const(lab),lab,untangleMenu)</t>
+<t tx="T676">importMenu = wx.wxMenu()
+
+table = (
+	#("Import To @&amp;file","Shift+Ctrl+F",self.OnImportAtFile),
+	#("Import To @&amp;root",None,self.OnImportAtRoot),
+	("Import &amp;CWEB Files",None,self.OnImportCWEBFiles),
+	("Import &amp;noweb Files",None,self.OnImportNowebFiles))
+	#("Import Flattened &amp;Outline",None,self.OnImportFlattenedOutline))
+
+self.createMenuEntries(importMenu,table)
+
+lab = "&amp;Import..."
+fileMenu.AppendMenu(const(lab),lab,importMenu)</t>
+<t tx="T677">exportMenu = wx.wxMenu()
+
+table = (
+	#("Export &amp;Headlines",None,self.OnExportHeadlines),
+	#("Outline To &amp;CWEB",None,self.OnOutlineToCWEB),
+	#("Outline To &amp;Noweb",None,self.OnOutlineToNoweb),
+	("&amp;Flatten Outline",None,self.OnFlattenOutline),)
+	#("&amp;Remove Sentinels",None,self.OnRemoveSentinels),
+	#("&amp;Weave",None,self.OnWeave)]
+
+self.createMenuEntries(exportMenu,table)
+
+lab = "&amp;Export..."
+fileMenu.AppendMenu(const(lab),lab,exportMenu)</t>
+<t tx="T678">editMenu = wx.wxMenu()
+
+&lt;&lt; create the first top-level edit entries &gt;&gt;
+&lt;&lt; create the edit body submenu &gt;&gt;
+&lt;&lt; create the edit headline submenu &gt;&gt;
+&lt;&lt; create the find submenu &gt;&gt;
+&lt;&lt; create the last top-level edit entries &gt;&gt;</t>
+<t tx="T679">table = (
+	("Can't Undo","Ctrl+Z",self.OnUndo,self.OnUpdateUndo), # &amp;U reserved for Undo
+	("Can't Redo","Shift+Ctrl+Z",self.OnRedo,self.OnUpdateRedo), # &amp;R reserved for Redo
+	("-",None,None),
+	#("Cu&amp;t","Ctrl+X",self.OnCutFromMenu,self.OnUpdateCut), 
+	#("Cop&amp;y","Ctrl+C",self.OnCopyFromMenu,self.OnUpdateCopy),
+	#("&amp;Paste","Ctrl+V",self.OnPasteFromMenu,self.OnUpdatePaste),
+	#("&amp;Delete",None,self.OnDelete,self.OnUpdateDelete),
+	("Select &amp;All","Ctrl+A",self.OnSelectAll,self.OnUpdateSelectAll),
+	("-",None,None))
+
+self.createMenuEntries(editMenu,table)</t>
+<t tx="T680">editBodyMenu = wx.wxMenu()
+
+table = (
+	("Extract &amp;Section","Shift+Ctrl+E",self.OnExtractSection,self.OnUpdateExtractSection),
+	("Extract &amp;Names","Shift+Ctrl+N",self.OnExtractNames,self.OnUpdateExtractNames),
+	("&amp;Extract","Shift+Ctrl+D",self.OnExtract,self.OnUpdateExtract))
+
+	#("-",None,None),
+	#("Convert All B&amp;lanks",None,self.OnConvertAllBlanks),
+	#("Convert All T&amp;abs",None,self.OnConvertAllTabs),
+	#("Convert &amp;Blanks","Shift+Ctrl+B",self.OnConvertBlanks),
+	#("Convert &amp;Tabs","Shift+Ctrl+J",self.OnConvertTabs),
+	#("Insert Body Time/&amp;Date","Shift+Ctrl+G",self.OnInsertBodyTime),
+	#("&amp;Reformat Paragraph","Shift+Ctrl+P",self.OnReformatParagraph),
+	#("-",None,None),
+	#("&amp;Indent","Ctrl+]",self.OnIndent),
+	#("&amp;Unindent","Ctrl+[",self.OnDedent),
+	#("&amp;Match Brackets","Ctrl+K",self.OnFindMatchingBracket))
+	
+self.createMenuEntries(editBodyMenu,table)
+
+lab = "Edit &amp;Body..."
+editMenu.AppendMenu(const(lab),lab,editBodyMenu)</t>
+<t tx="T681">editHeadlineMenu = wx.wxMenu()
+
+table = (
+	("Edit &amp;Headline","Ctrl+H",self.OnEditHeadline),)
+
+	#("&amp;End Edit Headline","Escape",self.OnEndEditHeadline),
+	#("&amp;Abort Edit Headline","Shift-Escape",self.OnAbortEditHeadline),
+	#("Insert Headline Time/&amp;Date","Shift+Ctrl+H",self.OnInsertHeadlineTime))
+	
+	# 5/16/03 EKR: I dislike this command.
+	#("Toggle Angle Brackets","Ctrl+B",self.OnToggleAngleBrackets)
+	
+self.createMenuEntries(editHeadlineMenu,table)
+
+lab = "Edit &amp;Headline..."
+editMenu.AppendMenu(const(lab),lab,editHeadlineMenu)
+
+
+</t>
+<t tx="T682">findMenu = wx.wxMenu()
+
+table = (
+	("&amp;Find Panel","Ctrl+F",self.OnFindPanel),
+	("-",None,None),
+	("Find &amp;Next","F3",self.OnFindNext,self.OnUpdateFind),
+	("Find &amp;Previous","F4",self.OnFindPrevious,self.OnUpdateFind),
+	("&amp;Replace","Ctrl+=",self.OnReplace,self.OnUpdateReplace),
+	("Replace, &amp;Then Find","Ctrl+-",self.OnReplaceThenFind,self.OnUpdateReplace))
+
+self.createMenuEntries(findMenu,table)
+
+lab = "&amp;Find..."
+editMenu.AppendMenu(const(lab),lab,findMenu)</t>
+<t tx="T683">if 1:
+	label = "Toggle Invisibles"
+else:
+	label = choose(c.tree.colorizer.showInvisibles,"Hide In&amp;visibles","Show In&amp;visibles")
+
+table = (
+	#("&amp;Go To Line Number","Alt+G",self.OnGoToLineNumber),
+	#("&amp;Execute Script","Alt+Shift+E",self.OnExecuteScript),
+	("Set Fon&amp;t...","Shift+Alt+T",self.OnFontPanel),
+	#("Set &amp;Colors...","Shift+Alt+C",self.OnColorPanel),
+	#(label,"Alt+V",self.OnViewAllCharacters),
+	#("-",None,None),
+	("Prefere&amp;nces","Ctrl+Y",self.OnPreferences))
+
+self.createMenuEntries(editMenu,table)</t>
+<t tx="T684">outlineMenu = wx.wxMenu()
+
+&lt;&lt; create top-level outline menu &gt;&gt;
+&lt;&lt; create expand/contract submenu &gt;&gt;
+&lt;&lt; create move submenu &gt;&gt;
+&lt;&lt; create mark submenu &gt;&gt;
+&lt;&lt; create goto submenu &gt;&gt;</t>
+<t tx="T685">table = (
+	("C&amp;ut Node","Shift+Ctrl+X",self.OnCutNode,self.OnUpdateCutNode),
+	("C&amp;opy Node","Shift+Ctrl+C",self.OnCopyNode),
+	("&amp;Paste Node","Shift+Ctrl+V",self.OnPasteNode,self.OnUpdatePasteNode),
+	("&amp;Delete Node","Shift+Ctrl+BkSp",self.OnDeleteNode,self.OnUpdateDeleteNode),
+	("-",None,None),
+	("&amp;Insert Node","Ctrl+I",self.OnInsertNode),
+	("&amp;Clone Node","Ctrl+`",self.OnCloneNode))
+
+	# ("Sort Node",None,self.OnSortChildren,self.OnUpdateSortNode)
+	# ("Sort C&amp;hildren",None,self.OnSortChildren),
+	#("&amp;Sort Siblings","Alt-A",self.OnSortSiblings),
+	#("-",None,None))
+
+self.createMenuEntries(outlineMenu,table)</t>
+<t tx="T686">expandMenu = wx.wxMenu()
+
+table = (
+	("&amp;Contract All","Alt+-",self.OnContractAll,self.OnUpdateContractAll),
+	# ("Contract &amp;Node","Alt+[",self.OnContractNode),
+	# ("Contract &amp;Parent","Alt+0",self.OnContractParent),
+	("-",None,None),
+	# ("Expand P&amp;rev Level","Alt+.",self.OnExpandPrevLevel),
+	# ("Expand N&amp;ext Level","Alt+=",self.OnExpandNextLevel),
+	# ("-",None,None),
+	("Expand To Level &amp;1","Alt+1",self.OnExpandToLevel1),
+	("Expand To Level &amp;2","Alt+2",self.OnExpandToLevel2),
+	("Expand To Level &amp;3","Alt+3",self.OnExpandToLevel3),
+	("Expand To Level &amp;4","Alt+4",self.OnExpandToLevel4),
+	("Expand To Level &amp;5","Alt+5",self.OnExpandToLevel5),
+	("Expand To Level &amp;6","Alt+6",self.OnExpandToLevel6),
+	("Expand To Level &amp;7","Alt+7",self.OnExpandToLevel7),
+	("Expand To Level &amp;8","Alt+8",self.OnExpandToLevel8),
+	# ("Expand To Level &amp;9","Alt+9",self.OnExpandToLevel9),
+	("-",None,None),
+	("Expand &amp;All","Alt+9",self.OnExpandAll,self.OnUpdateExpandAll))
+	#("Expand N&amp;ode","Alt+]",self.OnExpandNode))
+
+self.createMenuEntries(expandMenu,table)
+
+lab = "&amp;Expand/Contract..."
+outlineMenu.AppendMenu(const(lab),lab,expandMenu)
+
+if 0: # not used yet.  Maybe never.
+	wx.EVT_UPDATE_UI(cExpandAllChildrenMenuItem,self.OnUpdateExpandAllChildren)
+	wx.EVT_UPDATE_UI(cExpandChilrenMenuItem,self.OnUpdateExpandChildren)
+	wx.EVT_UPDATE_UI(cContractAllChildrenMenuItem,self.OnUpdateContractAllChildren)
+	wx.EVT_UPDATE_UI(cContractChilrenMenuItem,self.OnUpdateContractChildren)</t>
+<t tx="T687">moveSelectMenu = wx.wxMenu()
+
+table = (
+	("Move &amp;Down", "Ctrl+D",self.OnMoveDown,self.OnUpdateMoveDown),
+	("Move &amp;Left", "Ctrl+L",self.OnMoveLeft,self.OnUpdateMoveLeft),
+	("Move &amp;Right","Ctrl+R",self.OnMoveRight,self.OnUpdateMoveRight),
+	("Move &amp;Up",   "Ctrl+U",self.OnMoveUp,self.OnUpdateMoveUp),
+	("-",None,None),
+	("&amp;Promote","Ctrl+{",self.OnPromote,self.OnUpdatePromote),
+	("&amp;Demote", "Ctrl+}",self.OnDemote,self.OnUpdateDemote))
+	
+self.createMenuEntries(moveSelectMenu,table)
+
+lab = "&amp;Move..."
+outlineMenu.AppendMenu(const(lab),lab,moveSelectMenu)</t>
+<t tx="T688">markMenu = wx.wxMenu()
+
+table = (
+	("&amp;Mark","Ctrl-M",self.OnMark,self.OnUpdateMark),
+	("Mark &amp;Subheads","Alt+S",self.OnMarkSubheads,self.OnUpdateMarkSubheads),
+	("Mark Changed &amp;Items","Alt+C",self.OnMarkChangedItems,self.OnUpdateMarkChangedItems),
+	("Mark Changed &amp;Roots","Alt+R",self.OnMarkChangedRoots,self.OnUpdateMarkChangedRoots),
+	# ("Mark &amp;Clones","Alt+K",self.OnMarkClones),
+	("&amp;Unmark All","Alt+U",self.OnUnmarkAll))
+	
+self.createMenuEntries(markMenu,table)
+
+lab = "M&amp;ark/Unmark..."
+outlineMenu.AppendMenu(const(lab),lab,markMenu)</t>
+<t tx="T689">gotoMenu = wx.wxMenu()
+
+table = (
+	#("Go Back",None,self.OnGoPrevVisitedNode), # Usually use buttons for this.
+	#("Go Forward",None,self.OnGoNextVisitedNode),
+	#("-",None,None),
+	("Go To Next &amp;Marked","Alt+M",self.OnGoToNextMarked,self.OnUpdateGoToNextMarked),
+	("Go To Next C&amp;hanged","Alt+D",self.OnGoToNextChanged,self.OnUpdateGoToNextChanged),
+	# ("Go To Next &amp;Clone","Alt+N",self.OnGoToNextClone),
+	("-",None,None),
+	#("Go To &amp;First Node","Alt+Shift+G",self.OnGoToFirstNode),
+	#("Go To &amp;Last Node","Alt+Shift+H",self.OnGoToLastNode),
+	#("Go To &amp;Parent","Alt+Shift+P",self.OnGoToParent),
+	#("Go To P&amp;rev Sibling","Alt+Shift+R",self.OnGoToPrevSibling),
+	#("Go To Next &amp;Sibling","Alt+Shift+S",self.OnGoToNextSibling),
+	#("-",None,None),
+	("Go To Prev V&amp;isible","Alt-UpArrow",self.OnGoPrevVisible,self.OnUpdateGoPrevVisible),
+	("Go To Next &amp;Visible","Alt-DnArrow",self.OnGoNextVisible,self.OnUpdateGoNextVisible),
+	("Go To Prev Node","Alt-Shift+UpArrow",self.OnGoBack,self.OnUpdateGoBack),
+	("Go To Next Node","Alt-Shift-DnArrow",self.OnGoNext,self.OnUpdateGoNext))
+	
+self.createMenuEntries(gotoMenu,table)
+
+lab = "&amp;Go To..."
+outlineMenu.AppendMenu(const(lab),lab,gotoMenu)</t>
+<t tx="T690">windowMenu = wx.wxMenu()
+
+table = (
+	("&amp;Equal Sized Panes","Ctrl-E",self.OnEqualSizedPanes),
+	("Toggle &amp;Active Pane","Ctrl-T",self.OnToggleActivePane),
+	# ("Toggle &amp;Split Direction",None,self.OnToggleSplitDirection),
+	("-",None,None),
+	("Casca&amp;de",None,self.OnCascade),
+	("&amp;Minimize All",None,self.OnMinimizeAll))
+	
+	#("-",None,None),
+	#("Open &amp;Compare Window",None,self.OnOpenCompareWindow))
+
+self.createMenuEntries(windowMenu,table)</t>
+<t tx="T691">helpMenu = wx.wxMenu()
+
+table = (
+	("&amp;About Leo...",None,self.OnAbout),)
+	#("Online &amp;Home Page",None,self.OnLeoHome),
+	#("-",None,None),
+	#("Open Online &amp;Tutorial",None,self.OnLeoTutorial))
+
+self.createMenuEntries(helpMenu,table)
+
+if 0: # not ready yet.
+
+	if wx.wxPlatform == '__WXMSW__':
+		table = (("Open &amp;Offline Tutorial",None,self.OnLeoHelp),)
+		self.createMenuEntries(helpMenu,table)
+	
+	table = (
+		("Open Leo&amp;Docs.leo",None,self.OnLeoDocumentation),
+		("-",None,None),
+		("Open Leo&amp;Config.leo",None,self.OnLeoConfig),
+		("Apply &amp;Settings",None,self.OnApplyConfig))
+
+	self.createMenuEntries(helpMenu,table)</t>
+<t tx="T692">@ The old, non-user-configurable code bound shortcuts in createMenuBar.  The new user-configurable code binds shortcuts here.
+
+Centralized tables of shortscuts no longer exist as they did in createAccelerators.  To check for duplicates, (possibly arising from leoConfig.txt) we add entries to a central dictionary here, and report duplicates if an entry for a canonicalized shortcut already exists.
+@c
+
+def createMenuEntries (self,menu,table,openWith=0):
+	
+	for data in table:
+		if len(data) == 3:
+			label,accel,command = data ; update_command = None
+		else:
+			label,accel,command,update_command = data
+
+		if label == '-':
+			menu.AppendSeparator()
+		else:
+			def callback(event,command=command):
+				try: command(event)
+				except: print traceback.print_exc()
+	
+			id = const(label)
+			menu.Append(id,label,label)
+			wx.EVT_MENU(self,id,callback)
+			if update_command:
+				self.menuIdDict[label] = id,label,update_command
+				# We no longer pollute idle-time with this garbage
+				# wx.EVT_UPDATE_UI(self,id,update_command)</t>
+<t tx="T693">if 0:# Notifications... We probably will never see these.
+	def onBodyChanged(self,*args,**keys): trace() #  return self.tree.onBodyChanged(*args,**keys)
+	def onHeadChanged(self,*args,**keys): trace() #  return self.tree.onHeadChanged(*args,**keys)
+	def OnHeadlineKey(self,v,event):      trace(v) #  return self.tree.OnHeadlineKey(v,event)
+	def idle_head_key(self,v):            trace(v) #  return self.tree.idle_head_key(v)
+	
+# Editing... These can remain do-nothings.
+def editLabel(self,v):           pass
+def editVnode(self):             pass
+def endEditLabel(self):          pass
+def setEditVnode(self,v):        trace() #  self.tree.editVnode = v
+def setNormalLabelState(self,v): pass</t>
+<t tx="T694"># vnode callbacks: to be removed.
+if 0: # These will never be called, because the events are never generated.
+	def OnBoxClick(self,v):              trace() #  return self.tree.OnBoxClick(v)
+	def OnIconClick(self,v,event):       trace() #  return self.tree.OnIconClick(v,event)
+	def OnIconDoubleClick(self,v,event): trace() #  return self.tree.OnIconDoubleClick(v,event)
+	def OnIconRightClick(self,v,event):  trace() #  return self.tree.OnIconRightClick(v,event)
+	def OnDrag(self,v,event):            trace() #  return self.tree.OnDrag(v,event)
+	def OnEndDrag(self,v,event):         trace() #  return self.tree.OnEndDrag(v,event)
+	def OnPopup(self,v,event):           trace() #  return self.tree.OnPopup(v,event)</t>
+<t tx="T695"></t>
+<t tx="T696">def after_idle(*args): trace()
 
 def createOpenWithMenuFromTable (self,table): trace()
 def getMenu (self,name): trace(name)
@@ -11936,13 +11029,13 @@ def lift (self):   trace()
 def update (self): trace()
 
 def FindFocus(self): return self.body # Kludge.</t>
-<t tx="T737">def deiconify (self):
+<t tx="T697">def deiconify (self):
 	self.Iconize(false)</t>
-<t tx="T738">def getTitle (self):
+<t tx="T698">def getTitle (self):
 	
 	return self.title
 </t>
-<t tx="T739">def put (self,s,color=None):
+<t tx="T699">def put (self,s,color=None):
 	if self.log:
 		self.log.AppendText(s)
 	print s
@@ -11951,243 +11044,117 @@ def putnl (self):
 	print
 	if self.log:
 		self.log.AppendText('\n')</t>
-<t tx="T740">if 1: # Most important...
-
+<t tx="T700">def select(self,v,updateBeadList=true):
 	
-
-	# Drawing...
-
-	# Must we regenerate the entire wx tree on each redraw?
-	def drawIcon(self,v,x,y):      trace(v) #  return self.tree.drawIcon(v,x,y)
-	
-	def setTreeIniting(self,flag):
-		self.treeIniting = flag
-	
-	# Notifications... Can we just use the wx event handlers?
-	def onBodyChanged(self,*args,**keys): trace() #  return self.tree.onBodyChanged(*args,**keys)
-	def onHeadChanged(self,*args,**keys): trace() #  return self.tree.onHeadChanged(*args,**keys)
-	def OnHeadlineKey(self,v,event):      trace(v) #  return self.tree.OnHeadlineKey(v,event)
-	def idle_head_key(self,v):            trace(v) #  return self.tree.idle_head_key(v)
-	
-	# Scrolling... 
-	def scrollTo(self,v):  trace() #  return self.tree.scrollTo(v)
-	def idle_scrollTo(self,v):  trace(v) #  return self.tree.idle_scrollTo(v)
-	
-	# Selecting...
-	def select(self,v,updateBeadList=true):
+	if v:
 		self.mCurrentVnode = v
 		#### What to do about updateBeadList ????
-		trace("wx_gui",v) #  return self.tree.select(v,updateBeadList)
-
-# Coloring...
-def getColorizer(self):           trace() # return self.tree.colorizer
-def recolor_now(self,v):          trace() # return self.tree.recolor_now(v)
-def recolor_range(self,v,leading,trailing):  trace() #  return self.tree.recolor_range(v,leading,trailing)
-def recolor(self,v):              trace() #  return self.tree.recolor(v)
-def updateSyntaxColorer(self,v):  trace() #  return self.tree.colorizer.updateSyntaxColorer(v)
-
-# Editing... These can remain do-nothings.
-def editLabel(self,v):           pass
-def editVnode(self):             pass
-def endEditLabel(self):          pass
-def setEditVnode(self,v):        trace() #  self.tree.editVnode = v
-def setNormalLabelState(self,v): pass
-
-# Focus...
-def focus_get(self): trace() #  return self.tree.canvas.focus_get()
-
-# Fonts...
-def getFont(self): return self.tree.getFont()
-def setFont(self,font): return self.tree.setFont(font)
-
-# vnode callbacks: to be removed.
-if 0: # These will never be called, because the events are never generated.
-	def OnBoxClick(self,v):              trace() #  return self.tree.OnBoxClick(v)
-	def OnIconClick(self,v,event):       trace() #  return self.tree.OnIconClick(v,event)
-	def OnIconDoubleClick(self,v,event): trace() #  return self.tree.OnIconDoubleClick(v,event)
-	def OnIconRightClick(self,v,event):  trace() #  return self.tree.OnIconRightClick(v,event)
-	def OnDrag(self,v,event):            trace() #  return self.tree.OnDrag(v,event)
-	def OnEndDrag(self,v,event):         trace() #  return self.tree.OnEndDrag(v,event)
-	def OnPopup(self,v,event):           trace() #  return self.tree.OnPopup(v,event)
-# OnHeadlineClick
-# OnHeadlineRightClick
-def OnActivateHeadline(self,v): trace() #  return self.tree.OnActivate(v)
-
-# Others...
-def expandAllAncestors(self,v): trace() #  return self.tree.expandAllAncestors(v)
-def getEditTextDict(self,v):    trace() #  return self.tree.edit_text_dict.get(v)</t>
-<t tx="T741">def beginUpdate (self):
-
-	self.updateCount += 1</t>
-<t tx="T742">def endUpdate (self,flag=true):
-
-	assert(self.updateCount &gt; 0)
-
-	self.updateCount -= 1
-	if flag and self.updateCount == 0:
-		self.redraw()</t>
-<t tx="T743">def currentVnode(self):
-	return self.mCurrentVnode
-
-def dragging(self):
-	return self.mDragging
-	
-def rootVnode(self):
-	return self.mRootVnode
-
-def topVnode(self):
-	return self.mTopVnode</t>
-<t tx="T744">def redraw (self):
-
-	# trace(self.drawing)
-	self.drawing = true # Tell event handlers not to call us.
-
-	c = self.c ; tree = self.tree
-	if c is None: return
-	v = c.rootVnode()
-	if v is None: return
-
-	tree.DeleteAllItems()
-	root_id = tree.AddRoot("root")
-	while v:
-		self.redraw_subtree(root_id,v)
-		v = v.next()
-	tree.Expand(root_id)
-	
-	self.drawing = false
-		
-def redraw_now(self):
-	trace()
-	self.redraw()</t>
-<t tx="T745">def redraw_node(self,parent_id,v):
-	
-	# trace(v)
-	tree = self.tree
-	data = wx.wxTreeItemData(v)
-	id = tree.AppendItem(parent_id,v.headString(),data=data)
-	v.wxTreeId = id # Inject the ivar into the vnode.
-	assert (v == tree.GetItemData(id).GetData())
-	return id
-	</t>
-<t tx="T746">def redraw_subtree(self,parent_id,v):
-	
-	# trace(v)
-	tree = self.tree
-	id = self.redraw_node(parent_id,v)
-	child = v.firstChild()
-	
-	if v.isExpanded():
-		while child:
-			self.redraw_subtree(id,child)
-			child = child.next()
-		tree.Expand(id)
-	else:
-		# We could try to use tree.SetItemHasChildren, but that inhibits event handlers!
-		while child:
-			self.redraw_node(id,child)
-			child = child.next()
-		tree.Collapse(id)</t>
-<t tx="T747">def setRootVnode(self,v):
-	
-	# trace(v)
-	self.mRootVnode = v
-	
-def setCurrentVnode(self,v):
-	
-	# trace(v)
-	self.mCurrentVnode = v</t>
-<t tx="T748"></t>
-<t tx="T749"></t>
-<t tx="T750">def OnUpdateRevert(self,event):
-	
-	self.enable(event,self.c.canRevert())
+		trace("wxLeoFrame",v) #  return self.tree.select(v,updateBeadList)
 </t>
-<t tx="T751"></t>
-<t tx="T752">def OnUpdateCopy(self,event):
+<t tx="T701"></t>
+<t tx="T702">def updateAllMenus(self,event):
+	
+	"""Called whenever any menu is pulled down."""
+	
+	for id,label,update_command in self.menuIdDict.values():
+
+		item = self.menuBar.FindItemById(id)
+		try:
+			self.updateMenuItem = item # optional param
+			val = update_command()
+			val = choose(val,1,0)
+			item.Enable(val)
+			# trace(id,bool(val),item.GetLabel())
+		except:
+			traceback.print_exc()
+			val = true</t>
+<t tx="T703"></t>
+<t tx="T704">def OnUpdateRevert(self):
+	
+	return self.c.canRevert()
+</t>
+<t tx="T705"></t>
+<t tx="T706">def OnUpdateCopy(self):
 
 	w = self.FindFocus()
 	if w and w == self.body:
-		self.enable(event,self.body.CanCopy())
-	elif w and w == mLogCtrl:
-		self.enable(event,mLogCtrl.CanCopy())
+		return self.body.CanCopy()
+	elif w and w == self.log:
+		return self.log.CanCopy()
 	else:
-		self.enable(event,false)
-</t>
-<t tx="T753">def OnUpdateCut(self,event):
+		return false</t>
+<t tx="T707">def OnUpdateCut(self):
+
 	w = self.FindFocus()
 	if w and w == self.body:
-		self.enable(event,self.body. CanCut())
+		return self.body.CanCut()
 	elif w and w == mLogCtrl:
-		self.enable(event,mLogCtrl. CanCut())
+		return self.log.CanCut()
 	else:
-		self.enable(event,false)
+		return false
 </t>
-<t tx="T754">def OnUpdateDelete(self,event):
-	self.enable(event,self.body and self.body.CanCut())
-</t>
-<t tx="T755">def OnUpdateExtract(self,event):
+<t tx="T708">def OnUpdateDelete(self):
 	
-	self.enable(event,true)
+	return self.body.CanCut()</t>
+<t tx="T709">def OnUpdateExtract(self):
+	
+	return true
 	
 	# c.canExtract calls tk routines.
-	# event.Enable(self.c.canExtract())
+	# return self.c.canExtract()
 </t>
-<t tx="T756">def OnUpdateExtractNames(self,event):
+<t tx="T710">def OnUpdateExtractNames(self):
 	
-	self.enable(event,true)
+	return true
 	
 	# c.canExtractSectionNames calls tk routines.
-	# event.Enable(self.c.canExtractSectionNames())
-</t>
-<t tx="T757">def OnUpdateExtractSection(self,event):
+	# return self.c.canExtractSectionNames()</t>
+<t tx="T711">def OnUpdateExtractSection(self):
 	
-	self.enable(event,true)
+	return true
 	
 	# c.canExtractSection calls tk routines.
-	# event.Enable(self.c.canExtractSection())
+	# return self.c.canExtractSection()
 
 </t>
-<t tx="T758">def OnUpdateFind(self,event):
+<t tx="T712">def OnUpdateFind(self):
 
-	self.enable(event,true)
-	# event.Enable(find_text.Length()&gt; 0)
+	return true
+
+	# return find_text.Length()&gt; 0
 </t>
-<t tx="T759">def OnUpdatePaste(self,event):
+<t tx="T713">def OnUpdatePaste(self):
 
 	if wx.wxPlatform == "__WXMSW__": # apparent bug.
-		self.enable(event,true)
+		return true
 	else:
 		w = self.FindFocus()
 		if w and w == self.body:
-			self.enable(event,self.body.CanPaste())
+			return self.body.CanPaste()
 		elif w and w == mLogCtrl:
-			self.enable(event,mLogCtrl.CanPaste())
+			return self.log.CanPaste()
 		else:
-			event.Enable(false)
-</t>
-<t tx="T760">def OnUpdateRedo(self,event):
+			return false</t>
+<t tx="T714">def OnUpdateRedo(self):
 
-	enabled = false
 	# The Tree view does not support redo.
 	if wx.wxPlatform == "__WXGTK__": # text control does not support undo/redo on wxGTK
-		enabled = false
+		return false
 	else:
-		enabled =(self.body and self.body.CanRedo())
-	self.enable(event,enabled)
-</t>
-<t tx="T761">def OnUpdateReplace(self,event):
+		return self.body.CanRedo()
 	
-	self.enable(event,true)
-	# event.Enable(self.c.changeIsEnabled())
 </t>
-<t tx="T762">def OnUpdateSelectAll(self,event):
+<t tx="T715">def OnUpdateReplace(self):
 	
-	self.enable(event,true)
+	return true
+
+	# event.Enable(self.c.changeIsEnabled()</t>
+<t tx="T716">def OnUpdateSelectAll(self):
 	
 	w = self.FindFocus()
-	self.enable(event, w and (w == self.body or w == mLogCtrl))
+	return w and (w == self.body or w == self.log)
 </t>
-<t tx="T763">def OnUpdateUndo(self,event):
+<t tx="T717">def OnUpdateUndo(self):
 	
 	w = self.FindFocus()
 	enabled = true
@@ -12203,225 +11170,278 @@ def setCurrentVnode(self,v):
 			if wx.wxPlatform == "__WXGTK__": # text control does not support undo/redo on wxGTK
 				enabled = false
 			else:
-				enabled =(self.body and self.body.CanUndo())
+				enabled = self.body.CanUndo()
 
-	self.enable(event,enabled)</t>
-<t tx="T764">def hasSelection(self,void):
+	return enabled</t>
+<t tx="T718">def hasSelection(self,void):
 
 	if self.body:
 		start,end = self.body.GetSelection()
 		return start != end
 	else:
 		return false</t>
-<t tx="T765"></t>
-<t tx="T766">def OnUpdateContractAll(self,event):
+<t tx="T719"></t>
+<t tx="T720">def OnUpdateContractAll(self):
 
-	self.enable(event,self.c.canContractAllHeadlines())
+	return self.c.canContractAllHeadlines()
 </t>
-<t tx="T767">def OnUpdateContractAllChildren(self,event):
+<t tx="T721">def OnUpdateContractAllChildren(self):
 	
-	self.enable(event,self.c.canContractAllSubheads())
+	return self.c.canContractAllSubheads()
 
 </t>
-<t tx="T768">def OnUpdateContractChildren(self,event):
-	self.enable(event,self.c.canContractSubheads())
+<t tx="T722">def OnUpdateContractChildren(self):
+	
+	return self.c.canContractSubheads()
 </t>
-<t tx="T769">def OnUpdateCutNode(self,event):
-	self.enable(event,self.c.canCutOutline())
+<t tx="T723">def OnUpdateCutNode(self):
+	
+	return self.c.canCutOutline()
 </t>
-<t tx="T770">def OnUpdateDeleteNode(self,event):
-	self.enable(event,self.c.canDeleteHeadline())
+<t tx="T724">def OnUpdateDeleteNode(self):
+	
+	return self.c.canDeleteHeadline()
 </t>
-<t tx="T771">def OnUpdateDemote(self,event):
-	self.enable(event,self.c.canDemote())
+<t tx="T725">def OnUpdateDemote(self):
+	
+	return self.c.canDemote()
 </t>
-<t tx="T772">def OnUpdateExpandAll(self,event):
-	self.enable(event,self.c.canExpandAllHeadlines())
-</t>
-<t tx="T773">def OnUpdateExpandAllChildren(self,event):
-	self.enable(event,self.c.canExpandAllSubheads())
-</t>
-<t tx="T774">def OnUpdateExpandChildren(self,event):
-	self.enable(event,self.c.canExpandAllSubheads())
-</t>
-<t tx="T775">def OnUpdateGoBack(self,event):
+<t tx="T726">def OnUpdateExpandAll(self):
+	
+	return self.c.canExpandAllHeadlines()
 
-	self.enable(event,self.c.canSelectThreadBack())
 </t>
-<t tx="T776">def OnUpdateGoNext(self,event):
+<t tx="T727">def OnUpdateExpandAllChildren(self):
 
-	self.enable(event,self.c.canSelectThreadNext())
+	return self.c.canExpandAllSubheads()
 </t>
-<t tx="T777">def OnUpdateGoNextVisible(self,event):
+<t tx="T728">def OnUpdateExpandChildren(self):
 
-	self.enable(event,self.c.canSelectVisNext())
+	return self.c.canExpandAllSubheads()
 </t>
-<t tx="T778">def OnUpdateGoPrevVisible(self,event):
+<t tx="T729">def OnUpdateGoBack(self):
 
-	self.enable(event,self.c.canSelectVisBack())
+	return self.c.canSelectThreadBack()
 </t>
-<t tx="T779">def OnUpdateGoToNextChanged(self,event):
-	self.enable(event,self.c.canGoToNextDirtyHeadline())
+<t tx="T730">def OnUpdateGoNext(self):
+
+	return self.c.canSelectThreadNext()
 </t>
-<t tx="T780">def OnUpdateGoToNextMarked(self,event):
-	self.enable(event,self.c.canGoToNextMarkedHeadline())
+<t tx="T731">def OnUpdateGoNextVisible(self):
+
+	return self.c.canSelectVisNext()
 </t>
-<t tx="T781">def OnUpdateMark(self,event):
+<t tx="T732">def OnUpdateGoPrevVisible(self):
+
+	return self.c.canSelectVisBack()
+</t>
+<t tx="T733">def OnUpdateGoToNextChanged(self):
+
+	return self.c.canGoToNextDirtyHeadline()
+</t>
+<t tx="T734">def OnUpdateGoToNextMarked(self):
+
+	return self.c.canGoToNextMarkedHeadline()
+</t>
+<t tx="T735">def OnUpdateMark(self):
 	
 	v = self.c.currentVnode()
 	s = choose(v and v.isMarked(),"Unmark","Mark")
-	event.SetText(s)
+	self.updateMenuItem.SetText(s)</t>
+<t tx="T736">def OnUpdateMarkChangedItems(self):
+
+	return self.c.canMarkChangedHeadlines()
 </t>
-<t tx="T782">def OnUpdateMarkChangedItems(self,event):
-	self.enable(event,self.c.canMarkChangedHeadlines())
+<t tx="T737">def OnUpdateMarkChangedRoots(self):
+
+	return self.c.canMarkChangedRoots()
 </t>
-<t tx="T783">def OnUpdateMarkChangedRoots(self,event):
-	self.enable(event,self.c.canMarkChangedRoots())
-</t>
-<t tx="T784">def OnUpdateMarkSubheads(self,event):
+<t tx="T738">def OnUpdateMarkSubheads(self):
+
 	v = self.c.currentVnode()
-	self.enable(event,v and v.hasChildren())
+	return v and v.hasChildren()
 </t>
-<t tx="T785">def OnUpdateMoveDown(self,event):
-	self.enable(event,self.c.canMoveOutlineDown())
+<t tx="T739">def OnUpdateMoveDown(self):
+
+	return self.c.canMoveOutlineDown()
 </t>
-<t tx="T786">def OnUpdateMoveLeft(self,event):
-	self.enable(event,self.c.canMoveOutlineLeft())
+<t tx="T740">def OnUpdateMoveLeft(self):
+
+	return self.c.canMoveOutlineLeft()
 </t>
-<t tx="T787">def OnUpdateMoveRight(self,event):
-	self.enable(event,self.c.canMoveOutlineRight())
+<t tx="T741">def OnUpdateMoveRight(self):
+
+	return self.c.canMoveOutlineRight()
 </t>
-<t tx="T788">def OnUpdateMoveUp(self,event):
-	self.enable(event,self.c.canMoveOutlineUp())
+<t tx="T742">def OnUpdateMoveUp(self):
+
+	return self.c.canMoveOutlineUp()
 </t>
-<t tx="T789">def OnUpdatePasteNode(self,event):
-	self.enable(event,self.c.canPasteOutline())
+<t tx="T743">def OnUpdatePasteNode(self):
+
+	return self.c.canPasteOutline()
 </t>
-<t tx="T790">def OnUpdatePromote(self,event):
-	self.enable(event,self.c.canPromote())
+<t tx="T744">def OnUpdatePromote(self):
+
+	return self.c.canPromote()
 </t>
-<t tx="T791">def OnUpdateSortNode(self,event):
-	self.enable(event,self.c.canSort())
+<t tx="T745">def OnUpdateSortNode(self):
+
+	return self.c.canSort()
 </t>
-<t tx="T792"></t>
-<t tx="T793"></t>
-<t tx="T794">def OnNew(self,event):
-	# Create a frame and link it into the global frame list.
-	frame = LeoFrame()
-	s = "untitled"
-	if ++gNumberOfUntitledWindows &gt; 1:
-		s += "%d" % gNumberOfUntitledWindows
-	frame.SetTitle(s)
-	frame.mFileName =("")  # No real file associated with this window.
-	frame.Show(true)
-	# Set the current node in the _new_ form!.
-	v = frame.self.c.rootVnode()
-	assert(v)
-	frame.self.c.setCurrentVnode(v)
-	frame.self.c.editVnode(v)
-</t>
-<t tx="T795">def OnOpen(self,event):
+<t tx="T746"></t>
+<t tx="T747"></t>
+<t tx="T748">def OnNew(self,event):
+	
+	c,frame = app.gui.newLeoCommanderAndFrame(fileName=None)
+	doHook("new",old_c=self,new_c=c)
+
+	frame.setInitialWindowGeometry()
+	frame.deiconify()
+	frame.lift()
+	frame.resizePanesToRatio(frame.ratio,frame.secondary_ratio)
+	
+	c.beginUpdate()
+	t = leoNodes.tnode()
+	v = leoNodes.vnode(c,t)
+	v.initHeadString("NewHeadline")
+	v.moveToRoot()
+	c.editVnode(v)
+	c.endUpdate()
+	
+	set_focus(c,frame.body)</t>
+<t tx="T749">def OnOpen(self,event):
 
 	# Create the Open dialog.
-	d = wxFileDialog(
+	d = wx.wxFileDialog(
 		None,"Choose a Leo file",
 		"",# default directory
 		"",# default file
 		"*.leo",# wildcard
-		wxOPEN | wxMULTIPLE, # style of dialog.
-		wxDefaultPosition)
+		wx.wxOPEN | wx.wxMULTIPLE, # style of dialog.
+		wx.wxDefaultPosition)
 
-	if d.ShowModal()== wxID_OK:
-		paths = d.GetPaths()
-		count = paths.Count()
-		for i in xrange(count):
-			openWithFileName(paths.Item(i))
-</t>
-<t tx="T796">def OnClose(self,event):
+	if d.ShowModal()== wx.wxID_OK:
+		for path in d.GetPaths():
+			openWithFileName(path)</t>
+<t tx="T750">def OnClose(self,event):
+
 	# Close the frame,giving the close handler a chance to veto.
 	self.Close()
 </t>
-<t tx="T797">def OnSave(self,event):
+<t tx="T751"># Most of this code is common code.  Only the dialog stuff is unique to wx.
 
-	if not mFileName:
+def OnSave(self,event):
+	
+	c = self.commands
 
-		d = wxFileDialog(
-			None,"Save",
-			(""),# default directory
-			mFileName,# default file
-			("*.leo"),# wildcard
-			wxSAVE | wxOVERWRITE_PROMPT, # style of dialog.
-			wxDefaultPosition)
-
-		if d.ShowModal()== wxID_OK:
-			path = d.GetPath()
-			mFileName = path
-			self.SetLabel(path)
-			self.c.save(path)
+	if c.mFileName:
+		c.fileCommands.save(c.mFileName)
+		c.setChanged(false)
+		return
 	else:
-		self.c.save(mFileName)</t>
-<t tx="T798">def OnSaveAs(self,event):
+		c.mFileName = ""
 
-	d = wxFileDialog(
-		None,"Save As",
-		(""),# default directory
-		mFileName,# default file
-		("*.leo"),# wildcard
-		wxSAVE | wxOVERWRITE_PROMPT, # style of dialog.
-		wxDefaultPosition)
-
-	if d.ShowModal()== wxID_OK:
-		path = d.GetPath()
-		mFileName = path
-		self.SetLabel(path)
-		self.c.saveAs(path)</t>
-<t tx="T799">def OnSaveTo(self,event):
-
-	d = wxFileDialog(
-		None,"Save To",
-		(""),# default directory
-		mFileName,# default file
-		("*.leo"),# wildcard
-		wxSAVE | wxOVERWRITE_PROMPT, # style of dialog.
-		wxDefaultPosition)
+	d = wx.wxFileDialog(None,"Save",
+		(""),        # default directory
+		c.mFileName, # default file
+		("*.leo"),   # wildcard
+		wx.wxSAVE | wx.wxOVERWRITE_PROMPT,
+		wx.wxDefaultPosition)
+		
+	# Tk allows the following params...
+		# filetypes=[("Leo files", "*.leo")],
+		# defaultextension=".leo")
 
 	if d.ShowModal()== wxID_OK:
 		fileName = d.GetPath()
-		self.c.saveACopyAs(fileName)
-</t>
-<t tx="T800">def OnRevert(self,event):
+		if fileName &gt; 0:
+			c.mFileName = ensure_extension(fileName, ".leo")
+			self.title = c.mFileName
+			self.SetLabel(computeWindowTitle(c.mFileName))
+			c.fileCommands.save(c.mFileName)
+			self.updateRecentFiles(c.mFileName)</t>
+<t tx="T752">def OnSaveAs(self,event):
+		
+	c = self.commands
 
-   # Make sure the user wants to Revert.
-	prompt("Revert to previous version of ")
-	prompt += mFileName + "?"
-	answer = wxMessageBox(prompt,"Revert to saved?",wxYES_NO)
-	if answer == wxNO: return
+	# Make sure we never pass None to the ctor.
+	if not c.mFileName:
+		c.mFileName = ""
+		
+	d = wx.wxFileDialog(None,"Save As",
+		(""),      # default directory
+		c.mFileName, # default file
+		("*.leo"), # wildcard
+		wx.wxSAVE | wx.wxOVERWRITE_PROMPT,
+		wx.wxDefaultPosition)
+
+	if d.ShowModal()== wx.wxID_OK:
+		fileName = d.GetPath()
+		if fileName:
+			c.mFileName = ensure_extension(fileName, ".leo")
+			self.title = c.mFileName
+			self.SetLabel(computeWindowTitle(c.mFileName))
+			self.commands.fileCommands.saveAs(c.mFileName)
+			self.updateRecentFiles(c.mFileName)</t>
+<t tx="T753">def OnSaveTo(self,event):
+
+	c = self.commands
+
+	# Make sure we never pass None to the ctor.
+	if not c.mFileName:
+		c.mFileName = ""
+		
+	d = wx.wxFileDialog(None,"Save To",
+		(""),        # default directory
+		c.mFileName, # default file
+		("*.leo"),   # wildcard
+		wx.wxSAVE | wx.wxOVERWRITE_PROMPT,
+		wx.wxDefaultPosition)
+
+	if d.ShowModal()== wx.wxID_OK:
+		fileName = d.GetPath()
+		if fileName:
+			fileName = ensure_extension(fileName, ".leo")
+			self.commands.fileCommands.saveTo(fileName)
+			self.updateRecentFiles(c.mFileName)</t>
+<t tx="T754">def OnRevert(self,event):
+	
+	c = self.c ; fileName = c.mFileName
+
+	# Make sure the user wants to Revert.
+	prompt = "Revert to previous version of %s?" % fileName
+	answer = wx.wxMessageBox(prompt,"Revert to saved?", wx.wxYES_NO)
+	if answer == wx.wxNO: return
+	
 	# Kludge: rename this frame so OpenWithFileName won't think it is open.
-	fileName = mFileName
-	mFileName =("")
+	c.mFileName = ""
+
 	# Create a new frame before deleting this frame.
 	frame = openWithFileName(fileName)
+
 	# Delete the form.
-	mReverting = true  # Indicate that no prompt is needed.
+	self.reverting = true  # Indicate that no prompt is needed.
 	self.Close()
-	mReverting = false
+	self.reverting = false
+
 	# Bring the already-opened frame to the front.
 	frame.Show(false)
 	frame.Show(true)
 </t>
-<t tx="T801">def OnPageSetup(self,event):
+<t tx="T755">def OnPageSetup(self,event):
 	pass
 </t>
-<t tx="T802">def OnPrint(self,event):
+<t tx="T756">def OnPrint(self,event):
 	pass
 </t>
-<t tx="T803">def OnTangleSubmenu(self,event):
+<t tx="T757">def OnTangleSubmenu(self,event):
 	pass</t>
-<t tx="T804">def OnUntangleSubmenu(self,event):
+<t tx="T758">def OnUntangleSubmenu(self,event):
 	pass</t>
-<t tx="T805">def OnImportExportSubmenu(self,event):
+<t tx="T759">def OnImportExportSubmenu(self,event):
 	pass</t>
-<t tx="T806">def OnQuit(self,event):
+<t tx="T760">def OnQuit(self,event):
 
 	self.quitting = true
 
@@ -12432,7 +11452,7 @@ def setCurrentVnode(self,v):
 			break # User cancelled a close.
 
 	self.quitting = false</t>
-<t tx="T807">def OnReadOutlineOnly(self,event):
+<t tx="T761">def OnReadOutlineOnly(self,event):
 
 	d = wxFileDialog(
 		None,"Choose a Leo file",
@@ -12448,7 +11468,7 @@ def setCurrentVnode(self,v):
 		for i in xrange(count):
 			self.readOutlineOnly(paths.Item(i))
 </t>
-<t tx="T808">def readOutlineOnly(self,fileName):
+<t tx="T762">def readOutlineOnly(self,fileName):
 
 	# Don't take an exception if the file doesn't exist.
 	if not os.path.exists(fileName):
@@ -12463,34 +11483,34 @@ def setCurrentVnode(self,v):
 	except:
 		es("Error opening: " + fileName)
 </t>
-<t tx="T809">def OnReadAtFileNodes(self,event):
+<t tx="T763">def OnReadAtFileNodes(self,event):
 	self.c.readAtFileNodes()
 </t>
-<t tx="T810">def OnWriteOutlineOnly(self,event):
+<t tx="T764">def OnWriteOutlineOnly(self,event):
 	self.c.writeOutlineOnly()
 </t>
-<t tx="T811">def OnWriteAtFileNodes(self,event):
+<t tx="T765">def OnWriteAtFileNodes(self,event):
 	self.c.writeAtFileNodes()
 </t>
-<t tx="T812">def OnTangleAll(self,event):
+<t tx="T766">def OnTangleAll(self,event):
 	self.c.tangleAll()
 </t>
-<t tx="T813">def OnTangleMarked(self,event):
+<t tx="T767">def OnTangleMarked(self,event):
 	self.c.tangleMarked()
 </t>
-<t tx="T814">def OnTangle(self,event):
+<t tx="T768">def OnTangle(self,event):
 	self.c.tangle()
 </t>
-<t tx="T815">def OnUntangleAll(self,event):
+<t tx="T769">def OnUntangleAll(self,event):
 	self.c.untangleAll()
 </t>
-<t tx="T816">def OnUntangleMarked(self,event):
+<t tx="T770">def OnUntangleMarked(self,event):
 	self.c.untangleMarked()
 </t>
-<t tx="T817">def OnUntangle(self,event):
+<t tx="T771">def OnUntangle(self,event):
 	self.c.untangle()
 </t>
-<t tx="T818">def OnImportFiles(self,event):
+<t tx="T772">def OnImportFiles(self,event):
 
 	d = wxFileDialog(
 		None,"Import Files",
@@ -12504,7 +11524,7 @@ def setCurrentVnode(self,v):
 		paths = d.GetPaths(paths)
 		self.c.ImportFilesCommand(paths)
 </t>
-<t tx="T819">def OnImportCWEBFiles(self,event):
+<t tx="T773">def OnImportCWEBFiles(self,event):
 	
 	d = wxFileDialog(
 		None,"Import CWEB Files",
@@ -12518,10 +11538,10 @@ def setCurrentVnode(self,v):
 		paths = d.GetPaths(paths)
 		self.c.CWEBToOutlineCommand(paths)
 </t>
-<t tx="T820">def OnImportNowebFiles(self,event):
+<t tx="T774">def OnImportNowebFiles(self,event):
 	pass
 </t>
-<t tx="T821">def OnImportMoreText(self,event):
+<t tx="T775">def OnImportMoreText(self,event):
 
 	d = wxFileDialog(
 		None,"Import MORE Text",
@@ -12535,7 +11555,7 @@ def setCurrentVnode(self,v):
 		paths = d.GetPaths(paths)
 		self.c.importMoreText(paths)
 </t>
-<t tx="T822">def OnFlattenOutline(self,event):
+<t tx="T776">def OnFlattenOutline(self,event):
 
 	d = wxFileDialog(
 		None,"Flatten Outline",
@@ -12549,8 +11569,8 @@ def setCurrentVnode(self,v):
 		paths = d.GetPaths(paths)
 		self.c.flattenOutline(paths)
 </t>
-<t tx="T823"></t>
-<t tx="T824">def OnUndo(self,event):
+<t tx="T777"></t>
+<t tx="T778">def OnUndo(self,event):
 	
 	w = self.FindFocus()
 	# FindFocus seems to be a bit flakey,so use it only when absolutely needed.
@@ -12560,34 +11580,34 @@ def setCurrentVnode(self,v):
 		if self.body and self.body.CanUndo():
 			self.body.Undo()
 </t>
-<t tx="T825">def OnRedo(self,event):
+<t tx="T779">def OnRedo(self,event):
 	
 	# The tree control does not support redo.
 	if wx.wxPlatform != "__WXGTK__": # text control does not support undo/redo on wxGTK
 		if  self.body and self.body.CanRedo():
 			self.body.Redo()</t>
-<t tx="T826">def OnCut(self,event):
+<t tx="T780">def OnCut(self,event):
 	w = self.FindFocus()
 	if w and w == self.body:
 		self.body. Cut()
 	elif w and w == mLogCtrl:
 		mLogCtrl. Cut()
 </t>
-<t tx="T827">def OnCopy(self,event):
+<t tx="T781">def OnCopy(self,event):
 	w = self.FindFocus()
 	if w and w == self.body:
 		self.body. Copy()
 	elif w and w == mLogCtrl:
 		mLogCtrl. Copy()
 </t>
-<t tx="T828">def OnPaste(self,event):
+<t tx="T782">def OnPaste(self,event):
 	w = self.FindFocus()
 	if w and w == self.body:
 		self.body. Paste()
 	elif w and w == mLogCtrl:
 		mLogCtrl. Paste()
 </t>
-<t tx="T829">def OnDelete(self,event):
+<t tx="T783">def OnDelete(self,event):
 
 	if self.body:
 		start,end = self.body.GetSelection()
@@ -12596,7 +11616,7 @@ def setCurrentVnode(self,v):
 		else:
 			self.body.Remove(end,start)
 </t>
-<t tx="T830">def OnSelectAll(self,event):
+<t tx="T784">def OnSelectAll(self,event):
 	w = self.FindFocus()
 	if w == self.body:
 		to = self.body.GetLastPosition()
@@ -12605,13 +11625,13 @@ def setCurrentVnode(self,v):
 		to = mLogCtrl.GetLastPosition()
 		mLogCtrl.SetSelection(0,to)
 </t>
-<t tx="T831">def OnEditHeadline(self,event):
+<t tx="T785">def OnEditHeadline(self,event):
 
 	if wx.wxPlatform != "__WXMSW__": # EditLabel is buggy.  Hitting a control key or tab will crash.
 		item = self.tree.GetSelection()
 		if item:
 			self.tree.EditLabel(item)</t>
-<t tx="T832">def OnFontPanel(self,event):
+<t tx="T786">def OnFontPanel(self,event):
 
 	data = None
 	data.SetInitialFont(self.body.GetFont())
@@ -12636,10 +11656,10 @@ def setCurrentVnode(self,v):
 	trace("font_info:face: %s, family: %s\nsize: %d, style: %s, weight: %s" %
 		(font.GetFaceName(), font.GetFamilyString(),
 		font.GetPointSize(), font.GetStyleString(), font.GetWeightString()))</t>
-<t tx="T833">def OnSyntaxColoring(self,event):
+<t tx="T787">def OnSyntaxColoring(self,event):
 	pass
 </t>
-<t tx="T834">def OnPreferences(self,event):
+<t tx="T788">def OnPreferences(self,event):
 
 	if gPrefsFrame == None:
 		gPrefsFrame = PrefsFrame()
@@ -12648,181 +11668,181 @@ def setCurrentVnode(self,v):
 	gPrefsFrame.Show(true)
 	gPrefsFrame.Raise()
 </t>
-<t tx="T835">def OnConvertBlanks(self,event):
+<t tx="T789">def OnConvertBlanks(self,event):
 	self.c.convertBlanks()
 </t>
-<t tx="T836">def OnExtractSection(self,event):
+<t tx="T790">def OnExtractSection(self,event):
 	self.c.extractSection()
 </t>
-<t tx="T837">def OnExtractNames(self,event):
+<t tx="T791">def OnExtractNames(self,event):
 	self.c.extractSectionNames()
 </t>
-<t tx="T838">def OnExtract(self,event):
+<t tx="T792">def OnExtract(self,event):
 	self.c.extract()
 </t>
-<t tx="T839">def OnFindPanel(self,event):
+<t tx="T793">def OnFindPanel(self,event):
 
 	# On windows,this activates the frame.
 	app.findFrame.Show()
 	app.findFrame.Raise()
 </t>
-<t tx="T840">def OnFindNext(self,event):
+<t tx="T794">def OnFindNext(self,event):
 	self.c.doFindNextCommand()
 </t>
-<t tx="T841">def OnFindPrevious(self,event):
+<t tx="T795">def OnFindPrevious(self,event):
 	self.c.doFindPreviousCommand()
 </t>
-<t tx="T842">def OnReplace(self,event):
+<t tx="T796">def OnReplace(self,event):
 	self.c.doChangeCommand()
 </t>
-<t tx="T843">def OnReplaceThenFind(self,event):
+<t tx="T797">def OnReplaceThenFind(self,event):
 	self.c.doChangeThenFindCommand()
 </t>
-<t tx="T844"></t>
-<t tx="T845"></t>
-<t tx="T846">def OnCutNode(self,event):
+<t tx="T798"></t>
+<t tx="T799"></t>
+<t tx="T800">def OnCutNode(self,event):
 	self.c.cutOutline()
 </t>
-<t tx="T847">def OnCopyNode(self,event):
+<t tx="T801">def OnCopyNode(self,event):
 	self.c.copyOutline()
 </t>
-<t tx="T848">def OnPasteNode(self,event):
+<t tx="T802">def OnPasteNode(self,event):
 	self.c.pasteOutline()
 </t>
-<t tx="T849"></t>
-<t tx="T850">def OnExpandAll(self,event):
+<t tx="T803"></t>
+<t tx="T804">def OnExpandAll(self,event):
 	self.c.expandAllHeadlines()
 </t>
-<t tx="T851">def OnExpandAllChildren(self,event):
+<t tx="T805">def OnExpandAllChildren(self,event):
 	self.c.expandAllSubheads()
 </t>
-<t tx="T852">def OnExpandChildren(self,event):
+<t tx="T806">def OnExpandChildren(self,event):
 	self.c.expandSubheads()
 </t>
-<t tx="T853">def OnContractAll(self,event):
+<t tx="T807">def OnContractAll(self,event):
 	self.c.contractAllHeadlines()
 </t>
-<t tx="T854">def OnContractAllChildren(self,event):
+<t tx="T808">def OnContractAllChildren(self,event):
 	self.c.contractAllSubheads()
 </t>
-<t tx="T855">def OnContractChildren(self,event):
+<t tx="T809">def OnContractChildren(self,event):
 	self.c.contractSubheads()
 </t>
-<t tx="T856">def OnExpandNextLevel(self,event):
+<t tx="T810">def OnExpandNextLevel(self,event):
 	self.c.expandNextLevel()
 </t>
-<t tx="T857">def OnExpandToLevel1(self,event):
+<t tx="T811">def OnExpandToLevel1(self,event):
 	self.c.expandLevel1()
 </t>
-<t tx="T858">def OnExpandToLevel2(self,event):
+<t tx="T812">def OnExpandToLevel2(self,event):
 	self.c.expandLevel2()
 </t>
-<t tx="T859">def OnExpandToLevel3(self,event):
+<t tx="T813">def OnExpandToLevel3(self,event):
 	self.c.expandLevel3()
 </t>
-<t tx="T860">def OnExpandToLevel4(self,event):
+<t tx="T814">def OnExpandToLevel4(self,event):
 	self.c.expandLevel4()
 </t>
-<t tx="T861">def OnExpandToLevel5(self,event):
+<t tx="T815">def OnExpandToLevel5(self,event):
 	self.c.expandLevel5()
 </t>
-<t tx="T862">def OnExpandToLevel6(self,event):
+<t tx="T816">def OnExpandToLevel6(self,event):
 	self.c.expandLevel6()
 </t>
-<t tx="T863">def OnExpandToLevel7(self,event):
+<t tx="T817">def OnExpandToLevel7(self,event):
 	self.c.expandLevel7()
 </t>
-<t tx="T864">def OnExpandToLevel8(self,event):
+<t tx="T818">def OnExpandToLevel8(self,event):
 	self.c.expandLevel8()
 </t>
-<t tx="T865">def OnExpandToLevel9(self,event):
+<t tx="T819">def OnExpandToLevel9(self,event):
 	self.c.expandLevel9()
 </t>
-<t tx="T866"></t>
-<t tx="T867">def OnDeleteNode(self,event):
+<t tx="T820"></t>
+<t tx="T821">def OnDeleteNode(self,event):
 	self.c.deleteHeadline()
 </t>
-<t tx="T868">def OnInsertNode(self,event):
+<t tx="T822">def OnInsertNode(self,event):
 	self.c.insertHeadline()
 </t>
-<t tx="T869">def OnCloneNode(self,event):
+<t tx="T823">def OnCloneNode(self,event):
 	self.c.clone()
 </t>
-<t tx="T870"></t>
-<t tx="T871">def OnGoPrevVisible(self,event):
+<t tx="T824"></t>
+<t tx="T825">def OnGoPrevVisible(self,event):
 	self.c.moveOutlineUp()
 </t>
-<t tx="T872">def OnGoNextVisible(self,event):
+<t tx="T826">def OnGoNextVisible(self,event):
 	self.c.selectVisNext()
 </t>
-<t tx="T873">def OnGoBack(self,event):
+<t tx="T827">def OnGoBack(self,event):
 	self.c.selectThreadBack()
 </t>
-<t tx="T874">def OnGoNext(self,event):
+<t tx="T828">def OnGoNext(self,event):
 	self.c.selectThreadNext()
 </t>
-<t tx="T875">def OnMark(self,event):
+<t tx="T829">def OnMark(self,event):
 	self.c.markHeadline()
 </t>
-<t tx="T876">def OnMarkSubheads(self,event):
+<t tx="T830">def OnMarkSubheads(self,event):
 	self.c.markSubheads()
 </t>
-<t tx="T877">def OnMarkChangedItems(self,event):
+<t tx="T831">def OnMarkChangedItems(self,event):
 	self.c.markChangedHeadlines()
 </t>
-<t tx="T878">def OnMarkChangedRoots(self,event):
+<t tx="T832">def OnMarkChangedRoots(self,event):
 	self.c.markChangedRoots()
 </t>
-<t tx="T879">def OnMarkAllAtFileNodesDirty(self,event):
+<t tx="T833">def OnMarkAllAtFileNodesDirty(self,event):
 	self.c.markAllAtFileNodesDirty()
 </t>
-<t tx="T880">def OnMarkAtFileNodesDirty(self,event):
+<t tx="T834">def OnMarkAtFileNodesDirty(self,event):
 	self.c.markAtFileNodesDirty()
 </t>
-<t tx="T881">def OnUnmarkAll(self,event):
+<t tx="T835">def OnUnmarkAll(self,event):
 	self.c.unmarkAll()
 </t>
-<t tx="T882">def OnGoToNextMarked(self,event):
+<t tx="T836">def OnGoToNextMarked(self,event):
 	self.c.goToNextMarkedHeadline()
 </t>
-<t tx="T883">def OnGoToNextChanged(self,event):
+<t tx="T837">def OnGoToNextChanged(self,event):
 	self.c.goToNextDirtyHeadline()
 </t>
-<t tx="T884"></t>
-<t tx="T885">def OnMoveDown(self,event):
+<t tx="T838"></t>
+<t tx="T839">def OnMoveDown(self,event):
 	self.c.moveOutlineDown()
 </t>
-<t tx="T886">def OnMoveLeft(self,event):
+<t tx="T840">def OnMoveLeft(self,event):
 	self.c.moveOutlineLeft()
 </t>
-<t tx="T887">def OnMoveRight(self,event):
+<t tx="T841">def OnMoveRight(self,event):
 	self.c.moveOutlineRight()
 </t>
-<t tx="T888">def OnMoveUp(self,event):
+<t tx="T842">def OnMoveUp(self,event):
 	self.c.moveOutlineUp()
 </t>
-<t tx="T889">def OnPromote(self,event):
+<t tx="T843">def OnPromote(self,event):
 	self.c.promote()
 </t>
-<t tx="T890">def OnDemote(self,event):
+<t tx="T844">def OnDemote(self,event):
 	self.c.demote()
 </t>
-<t tx="T891"></t>
-<t tx="T892">def OnSortNode(self,event):
+<t tx="T845"></t>
+<t tx="T846">def OnSortNode(self,event):
 	self.c.sort()
 </t>
-<t tx="T893"></t>
-<t tx="T894">def OnEqualSizedPanes(self,event):
+<t tx="T847"></t>
+<t tx="T848">def OnEqualSizedPanes(self,event):
 	self.c.equalSizedPanes()
 </t>
-<t tx="T895">def OnToggleActivePane(self,event):
+<t tx="T849">def OnToggleActivePane(self,event):
 	w = self.FindFocus()
 	if w == None or w == self.tree:
 		self.body.SetFocus()
 	else:
 		self.tree.SetFocus()
 </t>
-<t tx="T896">def OnChangeDirection(self,event):
+<t tx="T850">def OnChangeDirection(self,event):
 
 	mode = self.splitter1.GetSplitMode()
 	self.splitter1.Unsplit()# Hides the text control.
@@ -12833,7 +11853,7 @@ def setCurrentVnode(self,v):
 	self.body.Show()
 	self.body.SetFocus()
 </t>
-<t tx="T897">def OnCascade(self,event):
+<t tx="T851">def OnCascade(self,event):
 	
 	p = wx.wxPoint(10,10)
 	for f in app.windowList:
@@ -12843,7 +11863,7 @@ def setCurrentVnode(self,v):
 		if p.x &gt; 200:
 			p.x = 10
 			p.y = 40</t>
-<t tx="T898">def OnMinimizeAll(self,event):
+<t tx="T852">def OnMinimizeAll(self,event):
 
 	# trace(app.windowList)
 	for w in app.windowList:
@@ -12859,18 +11879,18 @@ def setCurrentVnode(self,v):
 			app.findFrame.Iconize()
 		if gPythonFrame:
 			gPythonFrame.Iconize()</t>
-<t tx="T899">if wx.wxPlatform == "__WXMSW__":
+<t tx="T853">if wx.wxPlatform == "__WXMSW__":
 	
 	pass
 
 	#void LeoFrame::OnOpenPythonWindow(wxCommandEvent&amp; WXUNUSED(event))
 	#gPythonFrame = wxPythonFrame::create((char *)"leoc",(char *)"leo",(void(*)())initleoc)
 	#gPythonFrame.Show(true)</t>
-<t tx="T900">def OnRecentWindows(self,event):
+<t tx="T854">def OnRecentWindows(self,event):
 	pass
 </t>
-<t tx="T901"></t>
-<t tx="T902">def OnAbout(self,event=None):
+<t tx="T855"></t>
+<t tx="T856">def OnAbout(self,event=None):
 	
 	message = u"\n\
 Leo Version 4.0, October 11, 2003\n\
@@ -12880,13 +11900,13 @@ All Rights Reserved \n\
 Leo is distributed under the Python License"
 
 	wx.wxMessageBox(message,"About Leo",wx.wxCenter,self)</t>
-<t tx="T903"></t>
-<t tx="T904">class wxFindFrame (wx.wxFrame):
+<t tx="T857"></t>
+<t tx="T858">class wxFindFrame (wx.wxFrame):
 
 	&lt;&lt; FindPanel public globals &gt;&gt;
 
 	@others</t>
-<t tx="T905">reset_search_flag = None
+<t tx="T859">reset_search_flag = None
 batch_flag = None
 wrap_flag = None
 whole_word_flag = None
@@ -12901,7 +11921,7 @@ reverse_flag = None
 find_text = ""
 change_text = ""
 </t>
-<t tx="T906">def __init__ (self):
+<t tx="T860">def __init__ (self):
 
 	# Init the base class
 	wx.wxFrame.__init__(self,None,-1,"Leo Find/Change",
@@ -12927,7 +11947,7 @@ change_text = ""
 		
 	&lt;&lt; declare event handlers &gt;&gt;
 </t>
-<t tx="T907">if wx.wxPlatform == "__WXMSW__": # Activate events exist only on windows.
+<t tx="T861">if wx.wxPlatform == "__WXMSW__": # Activate events exist only on windows.
 	pass ## wx.EVT_ACTIVATE(self.OnActivateFindFrame)
 else:
 	wx.EVT_SET_FOCUS(self.OnSetFocus)
@@ -12984,8 +12004,8 @@ if 0:
 	wx.EVT_CHECKBOX(cWholeWordCheckBox,self.OnWholeWordCheckBox)
 	wx.EVT_TEXT(cFindTextCtrl,self.OnFindText)
 	wx.EVT_TEXT(cChangeTextCtrl,self.OnChangeText)</t>
-<t tx="T908"></t>
-<t tx="T909">if wx.wxPlatform == "__WXMSW__": # This event exists only on Windows.
+<t tx="T862"></t>
+<t tx="T863">if wx.wxPlatform == "__WXMSW__": # This event exists only on Windows.
 
 	def OnActivateFindFrame(self,event):
 		if event.GetActive():
@@ -13001,7 +12021,7 @@ else:
 		s = c.GetValue()
 		c.SetFocus()
 		c.SetSelection(0,s.Length())</t>
-<t tx="T910">@ This is an event handler function called when the user has tried to close a frame or dialog box.
+<t tx="T864">@ This is an event handler function called when the user has tried to close a frame or dialog box.
 
 It is called via the wxWindow::Close function,so that the application can also invoke the handler programmatically.
 You should check whether the application is forcing the deletion of the window using CanVeto.
@@ -13021,75 +12041,75 @@ def OnCloseFindFrame(self,event):
 		self.Destroy()
 		app.findFrame = None
 </t>
-<t tx="T911">def OnChangeButton(self,event):
+<t tx="T865">def OnChangeButton(self,event):
 
 	if self.activeFrame:
 		self.activeFrame.c.doChangeButton()
 </t>
-<t tx="T912">def OnChangeAllButton(self,event):
+<t tx="T866">def OnChangeAllButton(self,event):
 	if self.activeFrame:
 		self.activeFrame.c.doChangeAllButton()
 </t>
-<t tx="T913">def OnChangeThenFindButton(self,event):
+<t tx="T867">def OnChangeThenFindButton(self,event):
 	if self.activeFrame:
 		self.activeFrame.c.doChangeThenFindButton()
 </t>
-<t tx="T914">def OnFindButton(self,event):
+<t tx="T868">def OnFindButton(self,event):
 	# This is the default button,so make sure there is find text.
 	if  self.activeFrame and find_text.Length()&gt; 0:
 		self.activeFrame.c.doFindButton()
 </t>
-<t tx="T915">def OnFindAllButton(self,event):
+<t tx="T869">def OnFindAllButton(self,event):
 	if self.activeFrame:
 		self.activeFrame.c.doFindAllButton()
 </t>
-<t tx="T916">def OnBatchCheckBox(self,event):
+<t tx="T870">def OnBatchCheckBox(self,event):
 	box = event.GetEventObject()
 	batch_flag = box.GetValue()
 </t>
-<t tx="T917">def OnIgnoreCaseCheckBox(self,event):
+<t tx="T871">def OnIgnoreCaseCheckBox(self,event):
 	box = event.GetEventObject()
 	ignore_case_flag = box.GetValue()
 	if self.activeFrame:
 		self.activeFrame.c.setup(true)# reset the search.
 </t>
-<t tx="T918">def OnMarkChangesCheckBox(self,event):
+<t tx="T872">def OnMarkChangesCheckBox(self,event):
 	box = event.GetEventObject()
 	mark_changes_flag = box.GetValue()
 </t>
-<t tx="T919">def OnMarkFindsCheckBox(self,event):
+<t tx="T873">def OnMarkFindsCheckBox(self,event):
 	box = event.GetEventObject()
 	mark_finds_flag = box.GetValue()
 </t>
-<t tx="T920">def OnPatternMatchCheckBox(self,event):
+<t tx="T874">def OnPatternMatchCheckBox(self,event):
 	box = event.GetEventObject()
 	pattern_match_flag = box.GetValue()
 	if self.activeFrame:
 		self.activeFrame.c.setup(true)# reset the search.
 </t>
-<t tx="T921">def OnReverseCheckBox(self,event):
+<t tx="T875">def OnReverseCheckBox(self,event):
 	box = event.GetEventObject()
 	reverse_flag = box.GetValue()
 </t>
-<t tx="T922">def OnSearchBodyTextCheckBox(self,event):
+<t tx="T876">def OnSearchBodyTextCheckBox(self,event):
 	box = event.GetEventObject()
 	search_body_flag = box.GetValue()
 	if self.activeFrame:
 		self.activeFrame.c.setup(true)# reset the search.
 </t>
-<t tx="T923">def OnSearchHeadlineCheckBox(self,event):
+<t tx="T877">def OnSearchHeadlineCheckBox(self,event):
 	box = event.GetEventObject()
 	search_headline_flag = box.GetValue()
 </t>
-<t tx="T924">def OnSuboutlineOnlyCheckBox(self,event):
+<t tx="T878">def OnSuboutlineOnlyCheckBox(self,event):
 	box = event.GetEventObject()
 	suboutline_only_flag = box.GetValue()
 </t>
-<t tx="T925">def OnWrapAroundCheckBox(self,event):
+<t tx="T879">def OnWrapAroundCheckBox(self,event):
 	box = event.GetEventObject()
 	wrap_flag = box.GetValue()
 </t>
-<t tx="T926">def OnWholeWordCheckBox(self,event):
+<t tx="T880">def OnWholeWordCheckBox(self,event):
 	
 	box = event.GetEventObject()
 	whole_word_flag = box.GetValue()
@@ -13097,22 +12117,22 @@ def OnCloseFindFrame(self,event):
 		self.activeFrame.c.setup(true)# reset the search.
 
 </t>
-<t tx="T927">def OnChangeText(self,event):
+<t tx="T881">def OnChangeText(self,event):
 	text = event.GetEventObject()
 	change_text = text.GetValue()
 	if self.activeFrame:
 		self.activeFrame.c.setup(true)# reset the search.
 </t>
-<t tx="T928">def OnFindText(self,event):
+<t tx="T882">def OnFindText(self,event):
 	text = event.GetEventObject()
 	find_text = text.GetValue()
 	if self.activeFrame:
 		self.activeFrame.c.setup(true)# reset the search.
 </t>
-<t tx="T929">def set_ivars (self, *args, **keys):
+<t tx="T883">def set_ivars (self, *args, **keys):
 	
 	trace(*args,**keys)</t>
-<t tx="T930">def set_check_boxes(self,void):
+<t tx="T884">def set_check_boxes(self,void):
 
 	self.findPanel.mBatchCheckBox.SetValue(batch_flag)
 	self.findPanel.mWrapAroundCheckBox.SetValue(wrap_flag)
@@ -13127,10 +12147,10 @@ def OnCloseFindFrame(self,event):
 	self.findPanel.mReverseCheckBox.SetValue(reverse_flag)
 	self.findPanel.findText.SetValue(find_text)
 	self.findPanel.changeText.SetValue(change_text)</t>
-<t tx="T931">class wxFindPanel (wx.wxPanel):
+<t tx="T885">class wxFindPanel (wx.wxPanel):
 
 	@others</t>
-<t tx="T932">def __init__(self,frame):
+<t tx="T886">def __init__(self,frame):
 	 
 	# Init the base class.
 	wx.wxPanel.__init__(self,frame,-1)
@@ -13147,7 +12167,7 @@ def OnCloseFindFrame(self,event):
 	self.SetSizer(topSizer) # actually set the sizer
 	topSizer.Fit(self)# set size to minimum size as calculated by the sizer
 	topSizer.SetSizeHints(self)# set size hints to honour mininum size</t>
-<t tx="T933">findSizer = wx.wxBoxSizer(wx.wxHORIZONTAL)
+<t tx="T887">findSizer = wx.wxBoxSizer(wx.wxHORIZONTAL)
 findSizer.Add(5,5)# Extra space.
 
 # Label.
@@ -13169,7 +12189,7 @@ findSizer.Add(self.findText)
 findSizer.Add(5,0)# Width.
 topSizer.Add(findSizer)
 topSizer.Add(0,10)</t>
-<t tx="T934">changeSizer = wx.wxBoxSizer(wx.wxHORIZONTAL)
+<t tx="T888">changeSizer = wx.wxBoxSizer(wx.wxHORIZONTAL)
 changeSizer.Add(5,5)# Extra space.
 
 # Label.
@@ -13191,7 +12211,7 @@ changeSizer.Add(self.changeText)
 changeSizer.Add(5,0)# Width.
 topSizer.Add(changeSizer)
 topSizer.Add(0,10)</t>
-<t tx="T935">col1Sizer = wx.wxBoxSizer(wx.wxVERTICAL)
+<t tx="T889">col1Sizer = wx.wxBoxSizer(wx.wxVERTICAL)
 &lt;&lt; Create the first column of check boxes &gt;&gt;
 
 col2Sizer = wx.wxBoxSizer(wx.wxVERTICAL)
@@ -13203,7 +12223,7 @@ checkBoxSizer.Add(col1Sizer)
 checkBoxSizer.Add(col2Sizer)
 topSizer.Add(checkBoxSizer)
 topSizer.Add(0,10)</t>
-<t tx="T936">for ivar,cname,label in (
+<t tx="T890">for ivar,cname,label in (
 	("batchCheckBox","cBatchCheckBox","Batch"),
 	("wrapAroundCheckBox","cWrapAroundCheckBox","Wrap Around"),
 	("wholeWordCheckBox","cWholeWordCheckBox","Whole Word"),
@@ -13218,7 +12238,7 @@ topSizer.Add(0,10)</t>
 		
 	setattr(self,ivar,box)
 	col1Sizer.Add(box,0,wx.wxBORDER | wx.wxLEFT,50)</t>
-<t tx="T937">for ivar,cname,label in (
+<t tx="T891">for ivar,cname,label in (
 	("searchHeadlineCheckBox","cSearchHeadlineCheckBox","Search Headline Text"),
 	("searchBodyTextCheckBox","cSearchBodyTextCheckBox","Search Body Text"),
 	("suboutlineOnlyCheckBox","cSuboutlineOnlyCheckBox","Suboutline Only"),
@@ -13233,7 +12253,7 @@ topSizer.Add(0,10)</t>
 
 	setattr(self,ivar,box)
 	col2Sizer.Add(box)</t>
-<t tx="T938"># The row sizers are a bit dim:  they should distribute the buttons automatically.
+<t tx="T892"># The row sizers are a bit dim:  they should distribute the buttons automatically.
 
 row1Sizer = wx.wxBoxSizer(wx.wxHORIZONTAL)
 &lt;&lt; Create the first row of buttons &gt;&gt;
@@ -13248,7 +12268,7 @@ buttonSizer.Add(0,10)
 buttonSizer.Add(row2Sizer)
 topSizer.Add(buttonSizer)
 topSizer.Add(0,10)</t>
-<t tx="T939">row1Sizer.Add(20,0)
+<t tx="T893">row1Sizer.Add(20,0)
 
 for ivar,cname,label,size,adj in (
 	("findButton","cFindButton","Find",(80,25),None),
@@ -13264,7 +12284,7 @@ for ivar,cname,label,size,adj in (
 	row1Sizer.Add(button)
 	if adj:
 		row1Sizer.Add(adj)</t>
-<t tx="T940">row2Sizer.Add(20,0)
+<t tx="T894">row2Sizer.Add(20,0)
 
 for ivar,cname,label,size,adj in (
 	("changeButton","cChangeButton","Change",(80,25),(24,0)),
@@ -13280,10 +12300,10 @@ for ivar,cname,label,size,adj in (
 	row2Sizer.Add(button)
 	if adj:
 		row2Sizer.Add(adj)</t>
-<t tx="T941">class wxLeoPrefs (wx.wxFrame):
+<t tx="T895">class wxLeoPrefs (wx.wxFrame):
 	@others
 </t>
-<t tx="T942">def __init__():
+<t tx="T896">def __init__():
 	
 	# Init the base frame.
 	wxFrame.__init__(None,-1,"Leo Preferences",
@@ -13305,7 +12325,7 @@ for ivar,cname,label,size,adj in (
 		self.SetIcon(wxIcon("LeoIcon"))
 		
 	&lt;&lt; define event handlers for wxLeoPrefsFrame &gt;&gt;</t>
-<t tx="T943">wx.EVT_ACTIVATE(self,self.OnActivatePrefsFrame)
+<t tx="T897">wx.EVT_ACTIVATE(self,self.OnActivatePrefsFrame)
 wx.EVT_CLOSE(self,self.OnClosePrefsFrame)
 
 # Global options panel...
@@ -13320,7 +12340,7 @@ wx.EVT_CHECKBOX(self,cPrefsDocChunksCheckBox,self.OnDocChunksCheckBox)
 
 # Target language panel...
 wx.EVT_RADIOBOX(self,cPrefsTargetLanguageRadioBox,self.OnTargetLanguageRadioBox)</t>
-<t tx="T944">def initialize (self,void):
+<t tx="T898">def initialize (self,void):
 	
 	# This may be called during construction.
 	if not gPrefsFrame:  return
@@ -13343,7 +12363,7 @@ wx.EVT_RADIOBOX(self,cPrefsTargetLanguageRadioBox,self.OnTargetLanguageRadioBox)
 		mPrefsPanel.mPrefsHeaderCheckBox.SetValue(arg_use_header_flag)
 		mPrefsPanel.mPrefsDocChunksCheckBox.SetValue(arg_output_doc_flag)
 		mPrefsPanel.mTargetLanguageRadioBox.SetSelection(languageToTarget(arg_target_language))</t>
-<t tx="T945">if 0:
+<t tx="T899">if 0:
 	def targetToLanguage(self,target):
 		
 		pass
@@ -13360,7 +12380,7 @@ wx.EVT_RADIOBOX(self,cPrefsTargetLanguageRadioBox,self.OnTargetLanguageRadioBox)
 		# case python_target: return python_language
 		# default: return plain_text_language
 </t>
-<t tx="T946">def languageToTarget(self,language):
+<t tx="T900">def languageToTarget(self,language):
 	
 	pass
 
@@ -13375,13 +12395,13 @@ wx.EVT_RADIOBOX(self,cPrefsTargetLanguageRadioBox,self.OnTargetLanguageRadioBox)
 	# case plain_text_language: return plain_text_target
 	# case python_language: return python_target
 	# default: return plain_text_target</t>
-<t tx="T947"></t>
-<t tx="T948">def OnActivatePrefsFrame(self,event):
+<t tx="T901"></t>
+<t tx="T902">def OnActivatePrefsFrame(self,event):
 
 	if gPrefsFrame and event.GetActive():
 		gPrefsFrame.initialize()
 </t>
-<t tx="T949">@ This is an event handler function called when the user has tried to close a frame or dialog box.
+<t tx="T903">@ This is an event handler function called when the user has tried to close a frame or dialog box.
 
 It is called via the  wxWindow::Close function, so that the application can also invoke the handler programmatically.  You should check whether the application is forcing the deletion of the window using CanVeto. If CanVeto returns FALSE, it is  not possible to skip window deletion; destroy the window using wxWindow::Destroy. If not, it is up to you whether you respond  by destroying the window.  If you don't destroy the window, you should call wxCloseEvent::Veto to let the calling code know that you did not destroy the  window. This allows the wxWindow::Close function to return TRUE or FALSE depending on whether the close instruction was  honoured or not.
 @c
@@ -13395,7 +12415,7 @@ def OnClosePrefsFrame(self,event):
 		self.Destroy()
 		gPrefsFrame = None
 </t>
-<t tx="T950">def OnPageWidthText(self,event):
+<t tx="T904">def OnPageWidthText(self,event):
 	
 	text = event.GetEventObject()
 	s = text.GetValue()
@@ -13408,7 +12428,7 @@ def OnClosePrefsFrame(self,event):
 	except: pass
 
 </t>
-<t tx="T951">def OnDoneBatCheckBox(self,event):
+<t tx="T905">def OnDoneBatCheckBox(self,event):
 	
 	box =event.GetEventObject()
 	arg_tangle_batch = default_tangle_batch = box.GetValue()
@@ -13416,7 +12436,7 @@ def OnClosePrefsFrame(self,event):
 		self.activeFrame.mTangleBatchFlag = arg_tangle_batch
 
 </t>
-<t tx="T952">def OnUnBatCheckBox(self,event):
+<t tx="T906">def OnUnBatCheckBox(self,event):
 	
 	box = event.GetEventObject()
 	arg_untangle_batch = default_untangle_batch = box.GetValue()
@@ -13424,7 +12444,7 @@ def OnClosePrefsFrame(self,event):
 		self.activeFrame.mUntangleBatchFlag = arg_untangle_batch
 
 </t>
-<t tx="T953">def OnTangleDirectoryText(self,event):
+<t tx="T907">def OnTangleDirectoryText(self,event):
 
 	text = event.GetEventObject()
 	s = text.GetValue()
@@ -13434,7 +12454,7 @@ def OnClosePrefsFrame(self,event):
 			wxSetWorkingDirectory(self.activeFrame.mDefaultDirectory)
 		elif self.activeFrame.mOpenDirectory.Length()&gt; 0:
 			wxSetWorkingDirectory(self.activeFrame.mOpenDirectory)</t>
-<t tx="T954">def OnHeaderCheckBox(self,event):
+<t tx="T908">def OnHeaderCheckBox(self,event):
 	
 	box = event.GetEventObject()
 	arg_use_header_flag = default_use_header_flag = box.GetValue()
@@ -13442,7 +12462,7 @@ def OnClosePrefsFrame(self,event):
 		self.activeFrame.mUseHeaderFlag = arg_use_header_flag
 
 </t>
-<t tx="T955">def OnDocChunksCheckBox(self,event):
+<t tx="T909">def OnDocChunksCheckBox(self,event):
 	
 	box = event.GetEventObject()
 	arg_output_doc_flag = default_output_doc_flag = box.GetValue()
@@ -13450,7 +12470,7 @@ def OnClosePrefsFrame(self,event):
 		self.activeFrame.mOutputDocFlag = arg_output_doc_flag
 
 </t>
-<t tx="T956">def OnTargetLanguageRadioBox(self,event):
+<t tx="T910">def OnTargetLanguageRadioBox(self,event):
 	
 	box = event.GetEventObject()
 	targetIndex = box.GetSelection()
@@ -13462,7 +12482,7 @@ def OnClosePrefsFrame(self,event):
 		c = self.activeFrame.c
 		v = c.currentVnode()
 		self.activeFrame.c.scanAllDirectives(v,cDontRequirePath,cDontIssueErrors)</t>
-<t tx="T957">def __init__(frame):
+<t tx="T911">def __init__(frame):
 	
 	# Init the base class.
 	wxPanel.__init__(frame,-1)
@@ -13480,7 +12500,7 @@ def OnClosePrefsFrame(self,event):
 	SetSizer(topSizer) # actually set the sizer
 	topSizer.Fit(self)# set size to minimum size as calculated by the sizer
 	topSizer.SetSizeHints(self)# set size hints to honour mininum size</t>
-<t tx="T958">globalOptionsBox = wxStaticBox(self,-1,
+<t tx="T912">globalOptionsBox = wxStaticBox(self,-1,
 	"Global Options",(10,10),(250,110),0,"")
 sizer = wxStaticBoxSizer(globalOptionsBox,wxVERTICAL)
 lineSizer = wxBoxSizer(wxHORIZONTAL)
@@ -13512,7 +12532,7 @@ mPrefsUnBatCheckBox = wxCheckBox(self,
 	"Execute Leo_un.bat after Untangle",
 	wxDefaultPosition,(235,25),0,wxDefaultValidator,"")
 sizer.Add(mPrefsUnBatCheckBox)</t>
-<t tx="T959">optionsBox = wxStaticBox(self,-1,
+<t tx="T913">optionsBox = wxStaticBox(self,-1,
 	"Default Tangle Options",
 	wxDefaultPosition,wx.wxSize(250,210),
 	0,"zzzz")
@@ -13545,7 +12565,7 @@ mPrefsDocChunksCheckBox = wxCheckBox(self,
 	wxDefaultPosition,wx.wxSize(235,25),0,
 	wxDefaultValidator,"")
 sizer2.Add(mPrefsDocChunksCheckBox)</t>
-<t tx="T960">targetLanguageChoices= [
+<t tx="T914">targetLanguageChoices= [
 	"C/C++","CWEB","HTML","Java",
 	"Pascal","Perl","Perl + POD","Plain text","Python"]
 	
@@ -13557,6 +12577,5 @@ mTargetLanguageRadioBox = wxRadioBox(self,
 	WXSIZEOF(targetLanguageChoices),
 	targetLanguageChoices,
 	5,wxRA_SPECIFY_ROWS)</t>
-<t tx="T961"></t>
 </tnodes>
 </leo_file>
