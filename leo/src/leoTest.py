@@ -159,6 +159,8 @@ class generalTestCase(unittest.TestCase):
 def makeTestSuite (c,p):
 
     """Create a suite of test cases by executing the script in an @suite node."""
+    
+    p = p.copy()
 
     h = p.headString()
     script = g.getScript(c,p).strip()
@@ -179,6 +181,8 @@ def makeTestSuite (c,p):
 #@-node:ekr.20040707213238:makeTestSuite
 #@+node:ekr.20040707072447:makeTestCase
 def makeTestCase (c,p):
+    
+    p = p.copy()
 
     if p.bodyString().strip():
         return generalTestCase(c,p)
@@ -1332,6 +1336,9 @@ class importExportTestCase(unittest.TestCase):
         lines = s.split('\n')
         name = lines[0]
         fileName = lines[1]
+        
+        # Replace '\\' by os.path.sep in fileName
+        fileName = fileName.replace('\\',os.path.sep)
     
         self.fileName = fileName = g.os_path_join(g.app.loadDir,"..",fileName)
     
