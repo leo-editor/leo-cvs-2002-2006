@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="2833" clone_windows="0"/>
-<globals body_outline_ratio="0.549668874172">
-	<global_window_position top="62" left="275" height="755" width="891"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="2854" clone_windows="0"/>
+<globals body_outline_ratio="0.463110102157">
+	<global_window_position top="50" left="260" height="881" width="866"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences>
@@ -20,7 +20,7 @@
 <v t="ekr.20040303080938.1"><vh>3/3: created position tests</vh></v>
 </v>
 </v>
-<v t="ekr.20040303062846.2" tnodeList="ekr.20040303062846.2,ekr.20040303062846.1,ekr.20040303062846.3,ekr.20040303062846.4,ekr.20040303062846.5,ekr.20040303062846.6,ekr.20040303062846.7,ekr.20040303062846.8,ekr.20040303062846.10,ekr.20040303062846.12,ekr.20040303062846.13,ekr.20040303062846.14,ekr.20040303062846.15,ekr.20040303062846.16,ekr.20040303062846.17,ekr.20040303062846.18,ekr.20040303062846.20,ekr.20040303062846.21,ekr.20040303062846.22,ekr.20040303062846.23,ekr.20040303062846.24,ekr.20040303062846.25,ekr.20040303062846.26,ekr.20040315202250,ekr.20040315202314,ekr.20040315202314.1,ekr.20040315202347,ekr.20040315202718,ekr.20040315202718.1,ekr.20040303062846.28,ekr.20040303062846.29,ekr.20040303062846.30,ekr.20040303062846.31,ekr.20040303062846.32,ekr.20040303062846.33,ekr.20040303062846.34,ekr.20040303062846.35,ekr.20040303062846.37,ekr.20040303062846.38,ekr.20040303062846.39,ekr.20040303062846.40,ekr.20040303062846.41,ekr.20040303062846.42,ekr.20040303062846.64,ekr.20040303062846.65,ekr.20040303062846.66,ekr.20040303062846.67,ekr.20040303062846.68,ekr.20040303062846.69,ekr.20040303062846.70,ekr.20040303062846.71,ekr.20040303062846.73,ekr.20040303062846.74,ekr.20040303062846.75,ekr.20040303062846.76,ekr.20040303062846.77,ekr.20040303062846.78,ekr.20040303062846.79,ekr.20040303064013,ekr.20040303063118,ekr.20040303063118.4,ekr.20040309105731,ekr.20040323163413,ekr.20040309101454.15,ekr.20040309101454.17,ekr.20040309101454.13,ekr.20040303064020.5,ekr.20040309101454.16,ekr.20040309101454.14,ekr.20040303064020.7,ekr.20040323163643,ekr.20040303091606,ekr.20040303092153,ekr.20040303092153.1,ekr.20040303064020.6,ekr.20040303062846.80,ekr.20040303062846.81,ekr.20040303062846.82,ekr.20040303062846.83,ekr.20040303062846.84,ekr.20040303062846.85,ekr.20040303062846.86,ekr.20040303062846.87,ekr.20040303062846.88,ekr.20040303062846.89,ekr.20040303062846.90,ekr.20040303062846.91,ekr.20040303062846.92,ekr.20040303062846.93,ekr.20040303062846.94,ekr.20040303062846.95,ekr.20040303062846.96,ekr.20040303062846.97,ekr.20040303062846.98,ekr.20040303062846.99,ekr.20040303062846.100,ekr.20040303062846.101,ekr.20040303062846.102,ekr.20040303062846.103,ekr.20040303062846.104"><vh>@file ..\src\leoTest.py</vh>
+<v t="ekr.20040303062846.2" tnodeList="ekr.20040303062846.2,ekr.20040303062846.1,ekr.20040303062846.3,ekr.20040303062846.4,ekr.20040303062846.5,ekr.20040303062846.6,ekr.20040303062846.7,ekr.20040303062846.8,ekr.20040303062846.10,ekr.20040327115832.1,ekr.20040327115832.2,ekr.20040327120228,ekr.20040303062846.12,ekr.20040303062846.13,ekr.20040303062846.14,ekr.20040303062846.15,ekr.20040303062846.16,ekr.20040303062846.17,ekr.20040303062846.18,ekr.20040303062846.20,ekr.20040303062846.21,ekr.20040303062846.22,ekr.20040303062846.23,ekr.20040303062846.24,ekr.20040303062846.25,ekr.20040303062846.26,ekr.20040315202250,ekr.20040315202314,ekr.20040315202314.1,ekr.20040315202347,ekr.20040315202718,ekr.20040315202718.1,ekr.20040303062846.28,ekr.20040303062846.29,ekr.20040303062846.30,ekr.20040303062846.31,ekr.20040303062846.32,ekr.20040303062846.33,ekr.20040303062846.34,ekr.20040303062846.35,ekr.20040303062846.37,ekr.20040303062846.38,ekr.20040303062846.39,ekr.20040303062846.40,ekr.20040303062846.41,ekr.20040303062846.42,ekr.20040303062846.64,ekr.20040303062846.65,ekr.20040303062846.66,ekr.20040303062846.67,ekr.20040303062846.68,ekr.20040303062846.69,ekr.20040303062846.70,ekr.20040303062846.71,ekr.20040303062846.73,ekr.20040303062846.74,ekr.20040303062846.75,ekr.20040303062846.76,ekr.20040303062846.77,ekr.20040303062846.78,ekr.20040303062846.79,ekr.20040303064013,ekr.20040303063118,ekr.20040303063118.4,ekr.20040309105731,ekr.20040323163413,ekr.20040309101454.15,ekr.20040309101454.17,ekr.20040309101454.13,ekr.20040303064020.5,ekr.20040309101454.16,ekr.20040309101454.14,ekr.20040303064020.7,ekr.20040323163643,ekr.20040303091606,ekr.20040303092153,ekr.20040303092153.1,ekr.20040303064020.6,ekr.20040303062846.80,ekr.20040303062846.81,ekr.20040303062846.82,ekr.20040303062846.83,ekr.20040303062846.84,ekr.20040303062846.85,ekr.20040303062846.86,ekr.20040303062846.87,ekr.20040303062846.88,ekr.20040303062846.89,ekr.20040303062846.90,ekr.20040303062846.91,ekr.20040303062846.92,ekr.20040303062846.93,ekr.20040303062846.94,ekr.20040303062846.95,ekr.20040303062846.96,ekr.20040303062846.97,ekr.20040303062846.98,ekr.20040303062846.99,ekr.20040303062846.100,ekr.20040303062846.101,ekr.20040303062846.102,ekr.20040303062846.103,ekr.20040303062846.104"><vh>@file ..\src\leoTest.py</vh>
 <v t="ekr.20040303062846.1"><vh>&lt;&lt; to do &gt;&gt;</vh></v>
 <v t="ekr.20040303062846.3"><vh> class testUtils</vh>
 <v t="ekr.20040303062846.4"><vh>compareOutlines</vh></v>
@@ -30,6 +30,12 @@
 <v t="ekr.20040303062846.8"><vh>replaceOutline</vh></v>
 </v>
 <v t="ekr.20040303062846.10"><vh> fail</vh></v>
+<v t="ekr.20040327115825"><vh>Batch mode tests</vh>
+<v t="ekr.20040327115832.1"><vh> makeBatchModeSuite</vh></v>
+<v t="ekr.20040327115832.2"><vh>class batchModeTestCase</vh>
+<v t="ekr.20040327120228"><vh>test_1</vh></v>
+</v>
+</v>
 <v t="ekr.20040303062846.11"><vh>Colorizer tests</vh>
 <v t="ekr.20040303062846.12"><vh> makeColorSuite</vh></v>
 <v t="ekr.20040303062846.13"><vh>class colorTestCase</vh>
@@ -46,7 +52,7 @@
 <v t="ekr.20040303062846.22"><vh>__init__</vh></v>
 <v t="ekr.20040303062846.23"><vh>editBody</vh></v>
 <v t="ekr.20040303062846.24"><vh>tearDown</vh></v>
-<v t="ekr.20040303062846.25" a="M"><vh>setUp</vh></v>
+<v t="ekr.20040303062846.25"><vh>setUp</vh></v>
 <v t="ekr.20040303062846.26"><vh>runTest</vh></v>
 </v>
 </v>
@@ -87,10 +93,10 @@
 <v t="ekr.20040303062846.68"><vh>runTest</vh></v>
 <v t="ekr.20040303062846.69"><vh>setUp</vh></v>
 <v t="ekr.20040303062846.70"><vh>tearDown</vh></v>
-<v t="ekr.20040303062846.71"><vh> makePluginsSuite</vh></v>
 </v>
 </v>
 <v t="ekr.20040303062846.72"><vh>Plugin tests</vh>
+<v t="ekr.20040303062846.71"><vh> makePluginsSuite</vh></v>
 <v t="ekr.20040303062846.73"><vh>class pluginTestCase</vh>
 <v t="ekr.20040303062846.74"><vh>__init__</vh></v>
 <v t="ekr.20040303062846.75"><vh>pluginTest</vh></v>
@@ -114,7 +120,7 @@
 <v t="ekr.20040309101454.16"><vh>testConsistencyOfParentAndParentsIter</vh></v>
 <v t="ekr.20040309101454.14"><vh>testConsistencyOfParentChild</vh></v>
 <v t="ekr.20040303064020.7"><vh>testConsistencyOfThreadBackNext</vh></v>
-<v t="ekr.20040323163643" a="M"><vh>testConsistencyOfVnodeListAndParents</vh></v>
+<v t="ekr.20040323163643"><vh>testConsistencyOfVnodeListAndParents</vh></v>
 <v t="ekr.20040303091606"><vh>testHasNextBack</vh></v>
 <v t="ekr.20040303092153"><vh>testHasParentChild</vh></v>
 <v t="ekr.20040303092153.1"><vh>testHasThreadNextBack</vh></v>
@@ -152,6 +158,7 @@
 </v>
 <v t="ekr.20040303063549"><vh>Unit Tests (Tests must be run from inside this tree!)</vh>
 <v t="ekr.20040309101454"><vh> To do</vh></v>
+<v t="ekr.20040327114250" tnodeList="ekr.20040327114250"><vh>@file c:\prog\test\unittest\batchTest.py</vh></v>
 <v t="ekr.20040126105605"><vh>cloneTestData (not used yet)</vh>
 <v t="ekr.20040302092753"><vh>aa</vh></v>
 <v t="ekr.20040126105605.2"><vh>a</vh>
@@ -195,11 +202,13 @@
 <v t="ekr.20040301191933.2"><vh>e</vh></v>
 <v t="ekr.20040302092753.4"><vh>z</vh></v>
 </v>
-<v t="ekr.20040303063549.1" a="E"><vh>tempNode</vh></v>
+<v t="ekr.20040303063549.1"><vh>tempNode</vh></v>
+<v t="ekr.20040327115825.1"><vh>batchModeTests</vh></v>
 <v t="ekr.20040303063549.45"><vh>colorizerTests</vh>
 <v t="ekr.20040303063549.46"><vh>Actionscript</vh></v>
 <v t="ekr.20040303063549.47"><vh>C</vh></v>
 <v t="ekr.20040303063549.48"><vh>C#</vh></v>
+<v t="ekr.20040401104620"><vh>css</vh></v>
 <v t="ekr.20040303063549.49"><vh>CWEB</vh>
 <v t="ekr.20040303063549.50"><vh>&lt;&lt; section ref &gt;&gt;</vh></v>
 </v>
@@ -211,7 +220,9 @@
 <v t="ekr.20040303063549.56"><vh>PHP</vh></v>
 <v t="ekr.20040303063549.57"><vh>Python1</vh></v>
 <v t="ekr.20040303063549.58"><vh>Python2</vh></v>
+<v t="ekr.20040401113911"><vh>rapidq</vh></v>
 <v t="ekr.20040303063549.59"><vh>Rebol</vh></v>
+<v t="ekr.20040401111417"><vh>shell</vh></v>
 <v t="ekr.20040303063549.60"><vh>wikiTest1</vh></v>
 <v t="ekr.20040303063549.61"><vh>wikiTest2</vh></v>
 <v t="ekr.20040303063549.62"><vh>wikiTest3</vh></v>
@@ -255,13 +266,13 @@
 <v t="ekr.20040303063549.89"><vh>dialog</vh></v>
 </v>
 </v>
-<v t="ekr.20040303063549.120" a="M"><vh>fileTests</vh>
+<v t="ekr.20040303063549.120"><vh>fileTests</vh>
 <v t="ekr.20040303063549.121"><vh>c:\prog\leoCvs\leo\test\test.leo</vh></v>
 <v t="ekr.20040303063549.122"><vh>c:\prog\leoCvs\leo\src\LeoPy.leo</vh></v>
 <v t="ekr.20040303063549.123"><vh>c:\prog\leoCvs\leo\plugins\leoPlugins.leo</vh></v>
 <v t="ekr.20040303063549.124"><vh>c:\prog\leoCvs\leo\doc\LeoDocs.leo</vh></v>
 </v>
-<v t="ekr.20040315202718.2" a="M"><vh>findTests</vh></v>
+<v t="ekr.20040315202718.2"><vh>findTests</vh></v>
 <v t="ekr.20040303063549.90"><vh>importTests</vh>
 <v t="ekr.20040303063549.91"><vh>importAtRoot</vh>
 <v t="ekr.20040303063549.92"><vh>dialog</vh></v>
@@ -301,8 +312,8 @@
 <v t="ekr.20040303063549.116"><vh>moveOutlineRight</vh></v>
 <v t="ekr.20040303063549.117"><vh>moveOutlineUp</vh></v>
 </v>
-<v t="ekr.20040303063549.118"><vh>pluginsTests</vh></v>
-<v t="ekr.20040303063549.119" a="M"><vh>positionTests</vh></v>
+<v t="ekr.20040303063549.118" a="M"><vh>pluginsTests</vh></v>
+<v t="ekr.20040303063549.119"><vh>positionTests</vh></v>
 <v t="ekr.20040303063549.2"><vh>reformatParagraphsTests</vh>
 <v t="ekr.20040303063549.3"><vh>testNoTrailingNewline</vh>
 <v t="ekr.20040303063549.4"><vh>before</vh></v>
@@ -362,9 +373,9 @@
 </v>
 </v>
 <v t="ekr.20040303063549.125"><vh>Run all tests</vh></v>
-<v t="ekr.20040303080010" a="M"><vh>Run all tests except files tests</vh></v>
+<v t="ekr.20040303080010"><vh>Run all tests except files tests</vh></v>
 </v>
-<v t="ekr.20040311111734" a="M" tnodeList="ekr.20040311111734,ekr.20040311111734.1,ekr.20040311111734.2,ekr.20040311111734.3"><vh>@file c:\prog\test\leo42test.txt</vh>
+<v t="ekr.20040311111734" tnodeList="ekr.20040311111734,ekr.20040311111734.1,ekr.20040311111734.2,ekr.20040311111734.3"><vh>@file c:\prog\test\leo42test.txt</vh>
 <v t="ekr.20040311111734.1"><vh>&lt;&lt; node one &gt;&gt;</vh></v>
 <v t="ekr.20040311111734.2"><vh>node a</vh></v>
 <v t="ekr.20040311111734.3"><vh>node b</vh></v>
@@ -379,16 +390,19 @@
 <v t="ekr.20040323113659.3"><vh>child-of-clone2</vh></v>
 </v>
 </v>
-<v t="ekr.20040303071432" a="E"><vh>Mini tests, scripts &amp; experiments</vh>
-<v t="ekr.20040312101720" a="E"><vh>Experiments</vh>
+<v t="ekr.20040303071432"><vh>Mini tests, scripts &amp; experiments</vh>
+<v t="ekr.20040312101720"><vh>Experiments</vh>
 <v t="ekr.20040302091705"><vh>Test of moving positions</vh></v>
 <v t="ekr.20040323075614"><vh>Test of using an iterator inside a list comprehension</vh></v>
-<v t="ekr.20040323080317" a="V"><vh>Test of using c.allNodes_iter to create a list of all positions</vh></v>
+<v t="ekr.20040323080317"><vh>Test of using c.allNodes_iter to create a list of all positions</vh></v>
 <v t="ekr.20040323082119"><vh>Creating a list of distinct vnodes</vh></v>
 <v t="ekr.20040325082811"><vh>Test that back quotes are not needed in es</vh></v>
+<v t="ekr.20040325130503" a="M"><vh>test of list comparisons</vh></v>
+<v t="ekr.20040325140133"><vh>test that childIndex doesn't mess with p</vh></v>
+<v t="ekr.20040325155043"><vh>Test of __cmp__ vrs equal</vh></v>
 </v>
 <v t="ekr.20040312101720.1"><vh>Mini tests</vh>
-<v t="ekr.20040309111054" a="M"><vh>Print iterations: do not delete</vh>
+<v t="ekr.20040309111054"><vh>Print iterations: do not delete</vh>
 <v t="ekr.20040309111102"><vh>Clone test data</vh>
 <v t="ekr.20040309111102.1"><vh>aa</vh></v>
 <v t="ekr.20040309111102.2"><vh>a</vh>
@@ -479,8 +493,25 @@
 </v>
 <v t="ekr.20040322120331"><vh>script to print tnodeList's</vh></v>
 </v>
+<v t="ekr.20040321091021"><vh>@file-thin c:\prog\test\at-file-thin-test.txt</vh></v>
 </v>
-<v t="ekr.20040321091021" a="E"><vh>@file-thin c:\prog\test\at-file-thin-test.txt</vh></v>
+<v t="ekr.20040327105955"><vh>test of batch mode</vh></v>
+<v t="ekr.20040330095252"><vh>script to clear log frame</vh></v>
+<v t="ekr.20040330103006" a="E" tnodeList="ekr.20040330103006"><vh>@file c:\prog\test\testSectionDelims.txt</vh></v>
+<v t="ekr.20040402064048" a="E"><vh>putTokenByState (not used)</vh></v>
+<v t="ekr.20040402043516" a="TV"><vh>A pretty printer for Leo</vh>
+<v t="ekr.20040402043516.1" a="E"><vh>leoReadlines</vh></v>
+<v t="ekr.20040402084155"><vh>prettyPrintNode</vh></v>
+<v t="ekr.20040402064301" a="E"><vh>class prettyPrinter</vh>
+<v t="ekr.20040402064301.1"><vh>__init__</vh></v>
+<v t="ekr.20040402093822"><vh>get</vh></v>
+<v t="ekr.20040402072335"><vh>put</vh></v>
+<v t="ekr.20040402081135"><vh>putOperator</vh></v>
+<v t="ekr.20040402080311"><vh>putToken</vh></v>
+<v t="ekr.20040402074431" a="E"><vh>putNormalToken</vh></v>
+<v t="ekr.20040402074431.1"><vh>dumpToken</vh></v>
+</v>
+</v>
 </vnodes>
 <tnodes>
 <t tx="ekr.20040126105605"></t>
@@ -1130,16 +1161,16 @@ def setUp(self,*args,**keys):
 	path = g.os_path_join(g.app.loadDir,"..","plugins")
 	
 	if self.verbose:
-		g.trace(str(shortFileName(fileName)))
+		g.trace(str(g.shortFileName(fileName)))
 
-	module = importFromPath(fileName,path)
+	module = g.importFromPath(fileName,path)
 	assert(module)
 	
 	# Run any unit tests in the module itself.
 	if hasattr(module,"unitTest"):
 		
 		if self.verbose:
-			g.trace("Executing unitTest in %s..." % str(shortFileName(fileName)))
+			g.trace("Executing unitTest in %s..." % str(g.shortFileName(fileName)))
 
 		module.unitTest()</t>
 <t tx="ekr.20040303062846.76">def runTest(self):
@@ -1157,7 +1188,7 @@ def setUp(self,*args,**keys):
 	g.app.gui = self.oldGui</t>
 <t tx="ekr.20040303062846.80"># DTHEIN 2004.01.11: Added unit tests for reformatParagraph</t>
 <t tx="ekr.20040303062846.81"># DTHEIN 2004.01.11: Added method
-def makeReformatParagraphSuite():
+def makeReformatParagraphSuite(*args,**keys):
 	
 	"""makeReformatParagraphSuite() -&gt; suite
 	
@@ -2170,7 +2201,8 @@ array
 array()
 this is a test.
 __CLASS__
-&lt;?php and or array() ?&gt;"""</t>
+&lt;?php and or array() ?&gt;
+&lt;?PHP and or array() ?&gt;</t>
 <t tx="ekr.20040303063549.57">@language python
 
 """python
@@ -2470,7 +2502,9 @@ runner.run(suite)</t>
 import leoTest
 reload(leoTest) # Allows us to rerun this script when leoTest.py changes.
 
-suite = leoTest.makePluginsSuite(verbose=True)
+# NOTE: this enables all widgets: there may be problems with doing this that are not real errors.
+
+suite = leoTest.makePluginsSuite(verbose=0)
 runner = unittest.TextTestRunner()
 runner.run(suite)</t>
 <t tx="ekr.20040303063549.119">import unittest
@@ -2498,10 +2532,8 @@ reload(leoTest) # Allows us to rerun this script when leoTest.py changes.
 
 mainSuite = unittest.makeSuite(unittest.TestCase)
 
-suite = leoTest.makeReformatParagraphSuite()
-mainSuite.addTest(suite)
-
 for f,arg in (
+	(leoTest.makeBatchModeSuite,None),
 	(leoTest.makeColorSuite,"colorizerTests"),
 	(leoTest.makeEditBodySuite,"editBodyTests"),
 	(leoTest.makeImportExportSuite,"exportTests"),
@@ -2509,6 +2541,7 @@ for f,arg in (
 	(leoTest.makeOutlineSuite,"outlineTests"),
 	(leoTest.makeTestLeoFilesSuite,"fileTests"),
 	(leoTest.makePositionSuite,None),
+	(leoTest.makeReformatParagraphSuite,None)
 	# 
 	# These tests presently have problem with the gui when run with other tests...
 	# (leoTest.makePluginsSuite,false) # verbose
@@ -2585,16 +2618,15 @@ reload(leoTest) # Allows us to rerun this script when leoTest.py changes.
 
 mainSuite = unittest.makeSuite(unittest.TestCase)
 
-suite = leoTest.makeReformatParagraphSuite()
-mainSuite.addTest(suite)
-
 for f,arg in (
+	(leoTest.makeBatchModeSuite,"dummy"),
 	(leoTest.makeColorSuite,"colorizerTests"),
 	(leoTest.makeEditBodySuite,"editBodyTests"),
 	(leoTest.makePositionSuite,None),
-	# (leoTest.makeOutlineSuite,"outlineTests")
+	(leoTest.makeReformatParagraphSuite,None),
+	(leoTest.makeOutlineSuite,"outlineTests")
 	# These tests presently have problem with the gui when run with other tests...
-	# (leoTest.makePluginsSuite,false) # verbose
+	# (leoTest.makePluginsSuite,false)
 ):
 	suite = f(arg,"tempNode")
 	mainSuite.addTest(suite)
@@ -2648,12 +2680,7 @@ runner.run(mainSuite)</t>
 <t tx="ekr.20040309095121"></t>
 <t tx="ekr.20040309101454">@
 	
-- Tests for c.rootPosition, c.currentPosition, c.setCurrentPosition.
-- Menu enablers
-- Test new p and v routines.
 - Test undo/redo for all commands.
-- (done by hand) batch mode.
-	Have script create a file, fail if the file does not exist.
 	
 - Test read logic: test created tree against already existing tree.</t>
 <t tx="ekr.20040309101454.13">def testConsistencyOfLevel (self):
@@ -3448,5 +3475,423 @@ print "noSent name",repr(p.atNoSentinelsFileNodeName())</t>
 
 g.es("v",g.top().currentPosition())
 g.es(1,2)</t>
+<t tx="ekr.20040325130503">stack1 = ["a","b","c"]
+stack2 = ["a","b","c"]
+stack3 = ["a","b","d"]
+stack4 = ["a","b"]
+print stack1 == stack2
+print stack1 == stack3
+print stack1 == stack4</t>
+<t tx="ekr.20040325140133">import leoGlobals as g
+c = g.top() ; p = c.currentPosition()
+
+print p.v.headString()
+print p.childIndex()
+print p.v.headString()</t>
+<t tx="ekr.20040325155043">import timeit
+
+s1 = '''\
+class test(object):
+	def __cmp__(self,p2):   return 0
+	def equal(self,p2):     return 0
+p1 = test() ; p2 = test()'''
+
+s2 = '''\
+class test:
+	def __cmp__(self,p2):   return 0
+	def equal(self,p2):     return 0
+p1 = test() ; p2 = test()'''
+
+s3 = '''\
+import leoNodes
+p1 = leoNodes.position(None,[])
+p2 = leoNodes.position(None,[])'''
+
+for s in (s1,s2,s3):
+	t1 = timeit.Timer(stmt='p1==p2',setup=s).timeit()
+	t2 = timeit.Timer(stmt='p1.equal(p2)',setup=s).timeit()
+	print "%2.2f,%2.2f,%0.2f" % (t1,t2,t1/t2)
+</t>
+<t tx="ekr.20040327105955">import os
+
+path = r"c:\prog\test\unittest\createdFile.txt"
+
+s = r"c:\python23\python c:\prog\LeoCVS\leo\src\leo.py -script c:\prog\test\unittest\batchTest.py"
+
+print '-'*10
+if os.path.exists(path):
+	print "deleting",path
+	os.remove(path)
+
+os.system(s)
+
+assert(os.path.exists(path))
+print "done"</t>
+<t tx="ekr.20040327114250"># A file to be executed in batch mode as part of unit testing.
+
+path = r"c:\prog\test\unittest\createdFile.txt"
+f = None
+try:
+	f = open(path,"w")
+	f.write("This is a test")
+finally:
+	if f: f.close()</t>
+<t tx="ekr.20040327115825"></t>
+<t tx="ekr.20040327115825.1">@color
+
+import unittest
+import leoTest
+reload(leoTest) # Allows us to rerun this script when leoTest.py changes.
+
+suite = leoTest.makeBatchModeSuite()
+runner = unittest.TextTestRunner()
+runner.run(suite)</t>
+<t tx="ekr.20040327115832.1">def makeBatchModeSuite (*args,**keys):
+	
+	"""Create a colorizer test for every descendant of testParentHeadline.."""
+	
+	return unittest.makeSuite(batchModeTestCase,'test')</t>
+<t tx="ekr.20040327115832.2">class batchModeTestCase(unittest.TestCase):
+	
+	"""unit tests for batch mode (--script)."""
+	
+	@others</t>
+<t tx="ekr.20040327120228">def test_1 (self):
+
+	path = r"c:\prog\test\unittest\createdFile.txt"
+	
+	s = r"c:\python23\python c:\prog\LeoCVS\leo\src\leo.py -script c:\prog\test\unittest\batchTest.py"
+	
+	if os.path.exists(path):
+		os.remove(path)
+	
+	os.system(s)
+	
+	assert(os.path.exists(path))</t>
+<t tx="ekr.20040330095252">import leoGlobals as g
+c = g.top()
+t = c.frame.log.logCtrl
+print t
+t.delete("1.0","end")</t>
+<t tx="ekr.20040330103006">@langauge c
+
+oblk[1] = b64[((iblk[0] &amp; 0x03) &lt;&lt; 4) |
+((iblk[1] &amp; 0xF0) &gt;&gt; 4)];
+oblk[2] = b64[((iblk[1] &amp; 0x0F) &lt;&lt; 2) |
+((iblk[2] &amp; 0xC0) &gt;&gt; 6)];
+</t>
+<t tx="ekr.20040401104620">@language css
+/* New in 4.2. */
+
+/*html tags*/
+address, applet, area, a, base, basefont,
+big, blockquote, body, br, b, caption, center,
+cite, code, dd, dfn, dir, div, dl, dt, em, font,
+form, h1, h2, h3, h4, h5, h6, head, hr, html, img,
+input, isindex, i, kbd, link, li, link, map, menu,
+meta, ol, option, param, pre, p, samp,
+select, small, span, strike, strong, style, sub, sup,
+table, td, textarea, th, title, tr, tt, ul, u, var,
+/*units*/
+mm, cm, in, pt, pc, em, ex, px,
+/*colors*/
+aqua, black, blue, fuchsia, gray, green, lime, maroon, navy, olive, purple, red, silver, teal, yellow, white,
+/*important directive*/
+!important,
+/*font rules*/
+font, font-family, font-style, font-variant, font-weight, font-size,
+/*font values*/
+cursive, fantasy, monospace, normal, italic, oblique, small-caps,
+bold, bolder, lighter, medium, larger, smaller,
+serif, sans-serif,
+/*background rules*/
+background, background-color, background-image, background-repeat, background-attachment, background-position,
+/*background values*/
+contained, none, top, center, bottom, left, right, scroll, fixed,
+repeat, repeat-x, repeat-y, no-repeat,
+/*text rules*/
+word-spacing, letter-spacing, text-decoration, vertical-align, text-transform, text-align, text-indent, text-transform, text-shadow, unicode-bidi, line-height,
+/*text values*/
+normal, none, underline, overline, blink, sub, super, middle, top, text-top, text-bottom,
+capitalize, uppercase, lowercase, none, left, right, center, justify,
+line-through,
+/*box rules*/
+margin, margin-top, margin-bottom, margin-left, margin-right,
+margin, padding-top, padding-bottom, padding-left, padding-right,
+border, border-width, border-style, border-top, border-top-width, border-top-style, border-bottom, border-bottom-width, border-bottom-style, border-left, border-left-width, border-left-style, border-right, border-right-width, border-right-style, border-color,
+/*box values*/
+width, height, float, clear,
+auto, thin, medium, thick, left, right, none, both,
+none, dotted, dashed, solid, double, groove, ridge, inset, outset,
+/*display rules*/
+display, white-space, 
+min-width, max-width, min-height, max-height,
+outline-color, outline-style, outline-width,
+/*display values*/
+run-in, inline-block, list-item, block, inline, none, normal, pre, nowrap, table-cell, table-row, table-row-group, table-header-group, inline-table, table-column, table-column-group, table-cell, table-caption
+/*list rules*/
+list-style, list-style-type, list-style-image, list-style-position,
+/*list values*/
+disc, circle, square, decimal, decimal-leading-zero, none,
+lower-roman, upper-roman, lower-alpha, upper-alpha, lower-latin, upper-latin,
+/*table rules*/
+border-collapse, caption-side,
+/*table-values*/
+empty-cells, table-layout,
+/*misc values/rules*/
+counter-increment, counter-reset,
+marker-offset, z-index,
+cursor, direction, marks, quotes,
+clip, content, orphans, overflow, visibility,
+/*aural rules*/
+pitch, range, pitch-during, cue-after, pause-after, cue-before, pause-before, speak-header, speak-numeral, speak-punctuation, speed-rate, play-during, voice-family,
+/*aural values*/
+stress, azimuth, elevation, pitch, richness, volume,
+page-break, page-after, page-inside</t>
+<t tx="ekr.20040401111417"># New in 4.2.
+
+@language shell
+
+# comment
+$# not a comment
+break
+case,continue,
+do,done
+elif,else,esac
+fi,for
+if,in
+return,
+then
+until
+while,
+
+cd,chdir,eval,exec,
+exit,kill,newgrp,pwd,read,readonly,
+shift,test,trap,ulimit,
+umask,wait</t>
+<t tx="ekr.20040401113911">' New in 4.2.
+@language rapidq
+' a comment.
+
+$APPTYPE,$DEFINE,$ELSE,$ENDIF,$ESCAPECHARS,$IFDEF,$IFNDEF,
+$INCLUDE,$MACRO,$OPTIMIZE,$OPTION,$RESOURCE,$TYPECHECK,$UNDEF,
+ABS,ACOS,ALIAS,AND,AS,ASC,ASIN,ATAN,ATN,BIN$,BIND,BYTE,
+CALL,CALLBACK,CALLFUNC,CASE,CEIL,CHDIR,CHDRIVE,CHR$,CINT,
+CLNG,CLS,CODEPTR,COMMAND$,COMMANDCOUNT,CONSOLE,CONST,CONSTRUCTOR,
+CONVBASE$,COS,CREATE,CSRLIN,CURDIR$,DATA,DATE$,DEC,DECLARE,
+DEFBYTE,DEFDBL,DEFDWORD,DEFINT,DEFLNG,DEFSHORT,DEFSNG,DEFSTR,
+DEFWORD,DELETE$,DIM,DIR$,DIREXISTS,DO,DOEVENTS,DOUBLE,DWORD,
+ELSE,ELSEIF,END,ENVIRON,ENVIRON$,EVENT,EXIT,EXP,EXTENDS,
+EXTRACTRESOURCE,FIELD$,FILEEXISTS,FIX,FLOOR,FOR,FORMAT$,FRAC,
+FUNCTION,FUNCTIONI,GET$,GOSUB,GOTO,HEX$,IF,INC,INITARRAY,
+INKEY$,INP,INPUT,INPUT$,INPUTHANDLE,INSERT$,INSTR,INT,INTEGER,
+INV,IS,ISCONSOLE,KILL,KILLMESSAGE,LBOUND,LCASE$,LEFT$,LEN,
+LFLUSH,LIB,LIBRARYINST,LOCATE,LOG,LONG,LOOP,LPRINT,LTRIM$,
+MEMCMP,MESSAGEBOX,MESSAGEDLG,MID$,MKDIR,MOD,MOUSEX,MOUSEY,
+NEXT,NOT,OFF,ON,OR,OUT,OUTPUTHANDLE,PARAMSTR$,PARAMSTRCOUNT,
+PARAMVAL,PARAMVALCOUNT,PCOPY,PEEK,PLAYWAV,POKE,POS,POSTMESSAGE,
+PRINT,PROPERTY,QUICKSORT,RANDOMIZE,REDIM,RENAME,REPLACE$,
+REPLACESUBSTR$,RESOURCE,RESOURCECOUNT,RESTORE,RESULT,RETURN,
+REVERSE$,RGB,RIGHT$,RINSTR,RMDIR,RND,ROUND,RTRIM$,RUN,
+SCREEN,SELECT,SENDER,SENDMESSAGE,SETCONSOLETITLE,SGN,SHELL,
+SHL,SHORT,SHOWMESSAGE,SHR,SIN,SINGLE,SIZEOF,SLEEP,SOUND,
+SPACE$,SQR,STACK,STATIC,STEP,STR$,STRF$,STRING,STRING$,
+SUB,SUBI,SWAP,TALLY,TAN,THEN,TIME$,TIMER,TO,TYPE,UBOUND,
+UCASE$,UNLOADLIBRARY,UNTIL,VAL,VARIANT,VARPTR,VARPTR$,VARTYPE,
+WEND,WHILE,WITH,WORD,XOR</t>
+<t tx="ekr.20040402043516">@ a doc
+part.
+@c
+
+"""A script to reformat non-leading whitespace."""
+
+import leoGlobals as g
+from leoGlobals import true,false
+import tokenize,token
+
+@others
+
+c = g.top()
+print '-'*90
+
+if 1:
+	# Just print the present position.
+	prettyPrintNode(c.currentPosition())
+else:
+	# Print all top-level nodes.
+	for p in c.rootPosition().self_and_siblings_iter():
+		prettyPrintNode(p)</t>
+<t tx="ekr.20040402043516.1">class readLinesClass:
+
+	def __init__ (self,s):
+		self.lines = g.splitLines(s)
+		self.i = 0
+
+	def next(self):
+		if self.i &lt; len(self.lines):
+			line = self.lines[self.i]
+			self.i += 1
+		else:
+			line = ''
+		# g.trace(self.i,line)
+		return line</t>
+<t tx="ekr.20040402064048">def putTokenByState (self,token5tuple):
+	
+	a = self.array
+	t1,t2,t3,t4,t5 = token5tuple
+	srow,scol = t3 ; erow,ecol = t4 ; line = str(t5)
+	name = token.tok_name[t1].lower()
+	val = str(t2)
+	startLine = self.line != srow
+	self.line = srow
+	
+	if self.state == "normal":
+		self.putNormalToken(token5tuple)
+	elif self.state == "at":
+		if name == "name" and val == "c":
+			a.append('c') ; self.state = "normal"
+		elif name == "name" and val == "doc":
+			a.append('doc')
+			self.state = "doc"
+		elif name in ("newline","nl"):
+			print ''.join(a) ; self.array = []
+			self.state = "doc"
+		else:
+			self.putNormalToken(token5tuple)
+	else:
+		assert(self.state == "doc")
+		if name == "errortoken" and val == '@':
+			a.append('@') ; self.state = "at"
+		else:
+			self.putNormalToken(token5tuple)</t>
+<t tx="ekr.20040402064301">class prettyPrinter:
+	
+	@others</t>
+<t tx="ekr.20040402064301.1">def __init__ (self,p):
+	
+	self.line = 0
+	self.lines = []
+	self.col = 0
+	self.array = []
+	self.parenLevel = 0
+	self.bracketLevel = 0
+	self.p = p</t>
+<t tx="ekr.20040402072335">def put (self,s,strip=true):
+	
+	if self.array and strip:
+		prev = self.array[-1]
+		if len(self.array) == 1:
+			if prev.rstrip():
+				# We aren't stripping all leading whitespace.
+				self.array[-1] = prev.rstrip()
+		else:
+			# The previous entry isn't leading whitespace.
+			self.array[-1] = prev.rstrip()
+
+	self.array.append(s)</t>
+<t tx="ekr.20040402074431">def putNormalToken (self,token5tuple):
+
+	a = self.array
+	t1,t2,t3,t4,t5 = token5tuple
+	srow,scol = t3 ; erow,ecol = t4 ; line = str(t5)
+	name = token.tok_name[t1].lower()
+	val = str(t2)
+	startLine = self.line != srow
+	self.line = srow
+
+	if startLine:
+		ws = line[0:scol]
+		if ws: a.append(ws)
+
+	if name in ("nl","newline","endmarker"):
+		if name in ("nl","newline"):
+			a.append('\n')
+		# else: a.append("&lt;END NODE&gt;")
+		self.lines.append(''.join(self.array))
+		self.array = []
+	elif name == "op":
+		self.putOperator(val)
+	elif name == "name":
+		a.append("%s " % val)
+	elif name in ("comment","string","number"):
+		a.append(val)
+	elif name == "errortoken":
+		if val == '@' and startLine:
+			# Preserve whitespace after leading @.
+			i = g.skip_ws(line,1)
+			a.append(line[0:i])
+		else:
+			a.append(val)
+	elif name == "indent":
+		a.append(val)
+	elif name == "dedent":
+		pass
+	else:
+		print "unknown: %s" % (name)
+
+</t>
+<t tx="ekr.20040402074431.1">def dumpToken (self,token5tuple):
+
+	t1,t2,t3,t4,t5 = token5tuple
+	srow,scol = t3 ; erow,ecol = t4 ; line = str(t5)
+	name = token.tok_name[t1].lower()
+	val = str(t2)
+
+	startLine = self.line != srow
+	if startLine:
+		print "----- line",srow,repr(line)
+	self.line = srow
+
+	print "%10s (%2d,%2d) %-8s" % (name,scol,ecol,repr(val))</t>
+<t tx="ekr.20040402080311">def putToken (self,token5tuple):
+	
+	if 1:
+		self.putNormalToken(token5tuple)
+	else:
+		self.dumpToken(token5tuple)</t>
+<t tx="ekr.20040402081135">def putOperator (self,val):
+	
+	if val == '(':
+		self.parenLevel += 1
+		self.put(val)
+	elif val == ')':
+		self.parenLevel -= 1
+		self.put(val)
+	elif val == '=':
+		if self.parenLevel &gt; 0: self.put('=')
+		else:                   self.put(' = ')
+	elif val == ',':
+		if self.parenLevel &gt; 0: self.put(',')
+		else:                   self.put(', ')
+	elif val == ';':
+		self.put(" ; ")
+	else:
+		self.put(val)</t>
+<t tx="ekr.20040402084155">def prettyPrintNode(p):
+
+	s = p.bodyString()
+	if not s: return
+	
+	print '-'*10, p.headString()
+
+	pp = prettyPrinter(p)
+	leoReadlines = readLinesClass(s).next
+	
+	for token5tuple in tokenize.generate_tokens(leoReadlines):
+		pp.putToken(token5tuple)
+		
+	lines = pp.get()
+	
+	# Note: we could replace p's body text here.
+
+	if 1:
+		print ''.join(lines), # Don't add a trailing newline!
+	else:
+		for i in xrange(len(lines)):
+			print "%3d" % i, repr(lines[i])
+</t>
+<t tx="ekr.20040402093822">def get (self):
+	
+	return self.lines</t>
 </tnodes>
 </leo_file>
