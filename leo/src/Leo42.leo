@@ -2,7 +2,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="4207" clone_windows="0"/>
 <globals body_outline_ratio="0.51312910284463897">
-	<global_window_position top="10" left="309" height="914" width="919"/>
+	<global_window_position top="22" left="339" height="750" width="919"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences>
@@ -4720,6 +4720,13 @@
 </v>
 <v t="ekr.20031218072017.2177"><vh>&lt;&lt; create the toplevel frame &gt;&gt;</vh></v>
 </v>
+<v t="ekr.20040302094109"><vh>(p.level bug)</vh>
+<v t="ekr.20040301201418"><vh>c.convertTreeToSharedNodes (for conversion)</vh></v>
+<v t="ekr.20040227214711"><vh>p.level</vh></v>
+<v t="ekr.20040228060340"><vh>p.vParentWithStack</vh>
+<v t="ekr.20040228060340.1"><vh>&lt;&lt; about the vParentWithStack utility method &gt;&gt;</vh></v>
+</v>
+</v>
 </v>
 <v t="ekr.20031218072017.2164"><vh>(Adding batch-script logic to startup code)</vh>
 <v t="ekr.20031218072017.1934"><vh>run &amp; allies</vh>
@@ -4732,9 +4739,9 @@
 </v>
 </v>
 </v>
-<v t="ekr.20040228154544" a="E"><vh>(Shared tnodes)</vh>
+<v t="ekr.20040228154544"><vh>(Shared tnodes)</vh>
 <v t="ekr.20040117181936" a="M"><vh>To do</vh>
-<v t="ekr.20040302084553" a="E"><vh>During the big transition</vh>
+<v t="ekr.20040302084553"><vh>During the big transition</vh>
 <v t="ekr.20040301085732"><vh>convert to position class</vh>
 <v t="ekr.20031218072017.3382"><vh>v,isRoot (rewrite for 4.2)(to position class)</vh></v>
 <v t="ekr.20031218072017.3383"><vh>v.exists (rewrite for 4.2)(to position class)</vh></v>
@@ -4748,12 +4755,13 @@
 <v t="ekr.20040302084553.2"><vh>Clean up setDirty logic</vh></v>
 </v>
 </v>
-<v t="ekr.20040301192211" a="TV"><vh>What I did</vh>
+<v t="ekr.20040301192211"><vh>What I did</vh>
 <v t="ekr.20040302083805"><vh>Added app.sharedNodes and app.disableSave</vh></v>
 <v t="ekr.20040302083805.1"><vh>Changed ivars</vh></v>
 <v t="ekr.20040302083805.2"><vh>Changed these routines</vh></v>
 <v t="ekr.20040302083805.3"><vh>Created dummy vnode routines</vh></v>
 <v t="ekr.20040302083805.4"><vh>Replaced p by pv in leoNodes.leo:</vh></v>
+<v t="ekr.20040302112717"><vh>Created p.getX routines</vh></v>
 </v>
 <v t="ekr.20040229061858"><vh>Changed code</vh>
 <v t="ekr.20031218072017.1416"><vh>app.__init__</vh>
@@ -4915,59 +4923,6 @@
 </v>
 </v>
 </v>
-<v t="ekr.20031218072017.889"><vh>class position</vh>
-<v t="ekr.20031218072017.890"><vh>&lt;&lt; about the position class &gt;&gt;</vh></v>
-<v t="ekr.20040228094013"><vh> ctor &amp; other special methods...</vh>
-<v t="ekr.20031218072017.892"><vh>p.__init__</vh></v>
-<v t="ekr.20031218072017.893"><vh>p.__cmp__</vh></v>
-<v t="ekr.20040117170612"><vh>p.__getattr__ (not used)</vh></v>
-<v t="ekr.20040117173448"><vh>p.__nonzero__</vh></v>
-<v t="ekr.20040301205720"><vh>p.__str__ and p.__repr__</vh></v>
-</v>
-<v t="ekr.20040228094013.1"><vh>p.utils...</vh>
-<v t="ekr.20040117171654"><vh>p.copy</vh></v>
-<v t="ekr.20040117162509.16"><vh>p.isVisible</vh></v>
-<v t="ekr.20040227214711"><vh>p.level</vh></v>
-<v t="ekr.20040228060340"><vh>p.vParentWithStack</vh>
-<v t="ekr.20040228060340.1"><vh>&lt;&lt; about the vParentWithStack utility method &gt;&gt;</vh></v>
-</v>
-</v>
-<v t="ekr.20031218072017.915"><vh>p.traversal routines </vh></v>
-<v t="ekr.20040227214711.1" a="M"><vh>p.vnode getters: return vnode reference</vh>
-<v t="ekr.20040228094013.2"><vh>Easy: correspond to vnode and tnode ivars.</vh></v>
-<v t="ekr.20040228094013.3"><vh>Complex (not used)</vh>
-<v t="ekr.20040227221500"><vh>p.vThreadBack (slightly expensive, very complex)</vh></v>
-<v t="ekr.20040227221500.1"><vh>p.vThreadNext</vh></v>
-<v t="ekr.20040227221500.2"><vh>p.vVisBack (to do)</vh></v>
-<v t="ekr.20040227221500.3"><vh>p.vVisNext (to do)</vh></v>
-</v>
-</v>
-<v t="ekr.20040227212621"><vh>p.lookahead routines  (cheap)</vh>
-<v t="ekr.20040227224946"><vh>hasThreadNext (the only complex lookahead routine)</vh></v>
-</v>
-<v t="ekr.20031218072017.928"><vh>p.move routines: change position in place</vh>
-<v t="ekr.20031218072017.930"><vh>p.moveToBack</vh></v>
-<v t="ekr.20031218072017.931"><vh>p.moveToFirstChild (pushes stack for cloned nodes)</vh></v>
-<v t="ekr.20031218072017.932"><vh>p.moveToLastChild (pushes stack for cloned nodes)</vh></v>
-<v t="ekr.20031218072017.933"><vh>p.moveToLastNode (new cheap code)</vh>
-<v t="ekr.20040301211133"><vh>&lt;&lt; simulate repeated "lookahead" calls to p.moveToThreadNext() &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20031218072017.934"><vh>p.moveToNext</vh></v>
-<v t="ekr.20031218072017.935"><vh>p.moveToNodeAfterTree</vh></v>
-<v t="ekr.20031218072017.936"><vh>p.moveToNthChild (pushes stack for cloned nodes)</vh></v>
-<v t="ekr.20031218072017.937"><vh>p.moveToParent (pops stack when multiple parents)</vh></v>
-<v t="ekr.20031218072017.938"><vh>p.moveToThreadBack (new cheap code)</vh>
-<v t="ekr.20040301211500"><vh>&lt;&lt; simulate p.threadNext &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20031218072017.939"><vh>p.moveToThreadNext</vh></v>
-<v t="ekr.20031218072017.940"><vh>p.moveToVisBack</vh></v>
-<v t="ekr.20031218072017.941"><vh>p.moveToVisNext</vh></v>
-</v>
-</v>
-<v t="ekr.20040229171355.2"><vh>Instant tests</vh>
-<v t="ekr.20040229171355.3"><vh>Test v._next,v.back</vh></v>
-<v t="ekr.20040229171355.4"><vh>Test v._parent</vh></v>
-<v t="ekr.20040229171355.5"><vh>Test v.t._firstChild</vh></v>
 </v>
 <v t="ekr.20040126095835.10"><vh>Node tests...</vh>
 <v t="ekr.20040126095835.11"><vh>class cloneTests</vh>
@@ -4992,6 +4947,52 @@
 <v t="ekr.20040126095835.28"><vh>class statusBitsChecks</vh>
 <v t="ekr.20040126095835.29"><vh>testDirtyBits</vh></v>
 </v>
+</v>
+<v t="ekr.20031218072017.889" a="TV"><vh>class position</vh>
+<v t="ekr.20031218072017.890"><vh>&lt;&lt; about the position class &gt;&gt;</vh></v>
+<v t="ekr.20040228094013"><vh> ctor &amp; other special methods...</vh>
+<v t="ekr.20031218072017.892"><vh>p.__init__</vh></v>
+<v t="ekr.20031218072017.893"><vh>p.__cmp__</vh></v>
+<v t="ekr.20040117170612"><vh>p.__getattr__ (not used)</vh></v>
+<v t="ekr.20040117173448"><vh>p.__nonzero__</vh></v>
+<v t="ekr.20040301205720"><vh>p.__str__ and p.__repr__</vh></v>
+</v>
+<v t="ekr.20040228094013.1"><vh>p.utils...</vh>
+<v t="ekr.20040117171654"><vh>p.copy</vh></v>
+<v t="ekr.20040117162509.16"><vh>p.isVisible</vh></v>
+<v t="ekr.20040227214711"><vh>p.level</vh></v>
+<v t="ekr.20040228060340"><vh>p.vParentWithStack</vh>
+<v t="ekr.20040228060340.1"><vh>&lt;&lt; about the vParentWithStack utility method &gt;&gt;</vh></v>
+</v>
+</v>
+<v t="ekr.20031218072017.915"><vh>p.copy routines</vh></v>
+<v t="ekr.20040227214711.1" a="M"><vh>p.vnode getters (not used)</vh>
+<v t="ekr.20040228094013.2"><vh>Easy: correspond to vnode and tnode ivars.</vh></v>
+<v t="ekr.20040228094013.3"><vh>Complex</vh>
+<v t="ekr.20040227221500"><vh>p.vThreadBack (slightly expensive, very complex)</vh></v>
+<v t="ekr.20040227221500.1"><vh>p.vThreadNext</vh></v>
+</v>
+</v>
+<v t="ekr.20040227212621"><vh>p.lookahead routines  (cheap)</vh>
+<v t="ekr.20040227224946"><vh>hasThreadNext (the only complex lookahead routine)</vh></v>
+</v>
+<v t="ekr.20031218072017.928"><vh>p.move routines: change position in place</vh>
+<v t="ekr.20031218072017.930"><vh>p.moveToBack</vh></v>
+<v t="ekr.20031218072017.931"><vh>p.moveToFirstChild (pushes stack for cloned nodes)</vh></v>
+<v t="ekr.20031218072017.932"><vh>p.moveToLastChild (pushes stack for cloned nodes)</vh></v>
+<v t="ekr.20031218072017.933"><vh>p.moveToLastNode (new cheap code)</vh>
+<v t="ekr.20040301211133"><vh>&lt;&lt; simulate repeated "lookahead" calls to p.moveToThreadNext() &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20031218072017.934"><vh>p.moveToNext</vh></v>
+<v t="ekr.20031218072017.935"><vh>p.moveToNodeAfterTree</vh></v>
+<v t="ekr.20031218072017.936"><vh>p.moveToNthChild (pushes stack for cloned nodes)</vh></v>
+<v t="ekr.20031218072017.937"><vh>p.moveToParent (pops stack when multiple parents)</vh></v>
+<v t="ekr.20031218072017.938"><vh>p.moveToThreadBack (new cheap code)</vh>
+<v t="ekr.20040301211500"><vh>p.checkNextThreadNextLevel</vh></v>
+</v>
+<v t="ekr.20031218072017.939"><vh>p.moveToThreadNext</vh></v>
+<v t="ekr.20031218072017.940"><vh>p.moveToVisBack</vh></v>
+<v t="ekr.20031218072017.941"><vh>p.moveToVisNext</vh></v>
 </v>
 </v>
 <v t="ekr.20031218072017.2406"><vh>Code</vh>
@@ -8080,7 +8081,7 @@
 <v t="ekr.20031218072017.3051"><vh>xmlEscape</vh></v>
 </v>
 </v>
-<v t="ekr.20031218072017.3320" tnodeList="ekr.20031218072017.3320,ekr.20031218072017.2412,ekr.20031218072017.2408,ekr.20031218072017.3321,ekr.20031218072017.3322,ekr.20031218072017.2006,ekr.20031218072017.3323,ekr.20031218072017.3324,ekr.20031218072017.3326,ekr.20031218072017.3328,ekr.20031218072017.3329,ekr.20031218072017.3330,ekr.20031218072017.1485,ekr.20031218072017.1486,ekr.20031218072017.3333,ekr.20031218072017.3334,ekr.20031218072017.3335,ekr.20031218072017.3336,ekr.20031218072017.3337,ekr.20031218072017.3338,ekr.20031218072017.3339,ekr.20031218072017.3340,ekr.20031218072017.3341,ekr.20031218072017.951,ekr.20031218072017.3343,ekr.20031218072017.3344,ekr.20031218072017.1968,ekr.20031218072017.3345,ekr.20031218072017.3347,ekr.20031218072017.3348,ekr.20031218072017.3349,ekr.20031218072017.3350,ekr.20031218072017.3351,ekr.20031218072017.3352,ekr.20031218072017.3353,ekr.20031218072017.3355,ekr.20031218072017.3356,ekr.20031218072017.3357,ekr.20031218072017.3358,ekr.20031218072017.3361,ekr.20031218072017.3362,ekr.20031218072017.3363,ekr.20031218072017.3364,ekr.20031218072017.3365,ekr.20031218072017.3366,ekr.20031218072017.3368,ekr.20031218072017.3369,ekr.20031218072017.3370,ekr.20031218072017.3371,ekr.20031218072017.3372,ekr.20031218072017.3373,ekr.20031218072017.3374,ekr.20031218072017.3375,ekr.20031218072017.3376,ekr.20031218072017.3377,ekr.20031218072017.3378,ekr.20031218072017.3379,ekr.20031218072017.3380,ekr.20031218072017.3381,ekr.20031218072017.1581,ekr.20031218072017.2048,ekr.20031218072017.3382,ekr.20031218072017.3383,ekr.20031218072017.1478,ekr.20031218072017.1479,ekr.20031218072017.1480,ekr.20031218072017.1481,ekr.20031218072017.1482,ekr.20031218072017.3385,ekr.20031218072017.3387,ekr.20031218072017.3388,ekr.20031218072017.3389,ekr.20031218072017.3390,ekr.20031218072017.3391,ekr.20031218072017.3392,ekr.20031218072017.3393,ekr.20031218072017.3394,ekr.20031218072017.3395,ekr.20031218072017.3396,ekr.20040129153428,ekr.20031218072017.1185,ekr.20031218072017.1186,ekr.20031218072017.3397,ekr.20031218072017.1187,ekr.20031218072017.3398,ekr.20031218072017.3399,ekr.20031218072017.3400,ekr.20031218072017.3401,ekr.20031218072017.3402,ekr.20031218072017.3403,ekr.20031218072017.3404,ekr.20031218072017.3405,ekr.20031218072017.3406,ekr.20031218072017.3407,ekr.20031218072017.3408,ekr.20031218072017.3409,ekr.20031218072017.3410,ekr.20031218072017.3411,ekr.20031218072017.3412,ekr.20031218072017.3413,ekr.20031218072017.3414,ekr.20031218072017.3415,ekr.20031218072017.3418,ekr.20031218072017.3419,ekr.20031218072017.3420,ekr.20031218072017.3421,ekr.20031218072017.3422,ekr.20031218072017.3423,ekr.20031218072017.3424,ekr.20031218072017.1574,ekr.20031218072017.2354,ekr.20031218072017.1192,ekr.20031218072017.1191,ekr.20031218072017.818,ekr.20031218072017.819,ekr.20031218072017.820,ekr.20031218072017.821,ekr.20031218072017.3435,ekr.20031218072017.2355,ekr.20031218072017.3425,ekr.20031218072017.3426,ekr.20031218072017.3438,ekr.20040301073512,ekr.20031218072017.3427,ekr.20031218072017.3428,ekr.20031218072017.3432,ekr.20031218072017.3433,ekr.20031218072017.3436,ekr.20031218072017.1648,ekr.20031218072017.3429,ekr.20031218072017.3430,ekr.20031218072017.3431,ekr.20031218072017.3434,ekr.20031218072017.1647,ekr.20031218072017.3437,ekr.20031218072017.1991,ekr.20031218072017.1992,ekr.20031218072017.1993,ekr.20031218072017.1994,ekr.20031218072017.1995,ekr.20031218072017.1996,ekr.20031218072017.1997,ekr.20031218072017.1998,ekr.20031218072017.1999,ekr.20031218072017.889,ekr.20031218072017.890,ekr.20031218072017.892,ekr.20031218072017.893,ekr.20040117170612,ekr.20040117173448,ekr.20040301205720,ekr.20040117171654,ekr.20040117162509.16,ekr.20040227214711,ekr.20040228060340,ekr.20040228060340.1,ekr.20031218072017.915,ekr.20040227214711.1,ekr.20040228094013.2,ekr.20040228094013.3,ekr.20040227221500,ekr.20040227221500.1,ekr.20040227221500.2,ekr.20040227221500.3,ekr.20040227212621,ekr.20040227224946,ekr.20031218072017.928,ekr.20031218072017.930,ekr.20031218072017.931,ekr.20031218072017.932,ekr.20031218072017.933,ekr.20040301211133,ekr.20031218072017.934,ekr.20031218072017.935,ekr.20031218072017.936,ekr.20031218072017.937,ekr.20031218072017.938,ekr.20040301211500,ekr.20031218072017.939,ekr.20031218072017.940,ekr.20031218072017.941"><vh>@file leoNodes.py</vh>
+<v t="ekr.20031218072017.3320" tnodeList="ekr.20031218072017.3320,ekr.20031218072017.2412,ekr.20031218072017.2408,ekr.20031218072017.3321,ekr.20031218072017.3322,ekr.20031218072017.2006,ekr.20031218072017.3323,ekr.20031218072017.3324,ekr.20031218072017.3326,ekr.20031218072017.3328,ekr.20031218072017.3329,ekr.20031218072017.3330,ekr.20031218072017.1485,ekr.20031218072017.1486,ekr.20031218072017.3333,ekr.20031218072017.3334,ekr.20031218072017.3335,ekr.20031218072017.3336,ekr.20031218072017.3337,ekr.20031218072017.3338,ekr.20031218072017.3339,ekr.20031218072017.3340,ekr.20031218072017.3341,ekr.20031218072017.951,ekr.20031218072017.3343,ekr.20031218072017.3344,ekr.20031218072017.1968,ekr.20031218072017.3345,ekr.20031218072017.3347,ekr.20031218072017.3348,ekr.20031218072017.3349,ekr.20031218072017.3350,ekr.20031218072017.3351,ekr.20031218072017.3352,ekr.20031218072017.3353,ekr.20031218072017.3355,ekr.20031218072017.3356,ekr.20031218072017.3357,ekr.20031218072017.3358,ekr.20031218072017.3361,ekr.20031218072017.3362,ekr.20031218072017.3363,ekr.20031218072017.3364,ekr.20031218072017.3365,ekr.20031218072017.3366,ekr.20031218072017.3368,ekr.20031218072017.3369,ekr.20031218072017.3370,ekr.20031218072017.3371,ekr.20031218072017.3372,ekr.20031218072017.3373,ekr.20031218072017.3374,ekr.20031218072017.3375,ekr.20031218072017.3376,ekr.20031218072017.3377,ekr.20031218072017.3378,ekr.20031218072017.3379,ekr.20031218072017.3380,ekr.20031218072017.3381,ekr.20031218072017.1581,ekr.20031218072017.2048,ekr.20031218072017.3382,ekr.20031218072017.3383,ekr.20031218072017.1478,ekr.20031218072017.1479,ekr.20031218072017.1480,ekr.20031218072017.1481,ekr.20031218072017.1482,ekr.20031218072017.3385,ekr.20031218072017.3387,ekr.20031218072017.3388,ekr.20031218072017.3389,ekr.20031218072017.3390,ekr.20031218072017.3391,ekr.20031218072017.3392,ekr.20031218072017.3393,ekr.20031218072017.3394,ekr.20031218072017.3395,ekr.20031218072017.3396,ekr.20040129153428,ekr.20031218072017.1185,ekr.20031218072017.1186,ekr.20031218072017.3397,ekr.20031218072017.1187,ekr.20031218072017.3398,ekr.20031218072017.3399,ekr.20031218072017.3400,ekr.20031218072017.3401,ekr.20031218072017.3402,ekr.20031218072017.3403,ekr.20031218072017.3404,ekr.20031218072017.3405,ekr.20031218072017.3406,ekr.20031218072017.3407,ekr.20031218072017.3408,ekr.20031218072017.3409,ekr.20031218072017.3410,ekr.20031218072017.3411,ekr.20031218072017.3412,ekr.20031218072017.3413,ekr.20031218072017.3414,ekr.20031218072017.3415,ekr.20031218072017.3418,ekr.20031218072017.3419,ekr.20031218072017.3420,ekr.20031218072017.3421,ekr.20031218072017.3422,ekr.20031218072017.3423,ekr.20031218072017.3424,ekr.20031218072017.1574,ekr.20031218072017.2354,ekr.20031218072017.1192,ekr.20031218072017.1191,ekr.20031218072017.818,ekr.20031218072017.819,ekr.20031218072017.820,ekr.20031218072017.821,ekr.20031218072017.3435,ekr.20031218072017.2355,ekr.20031218072017.3425,ekr.20031218072017.3426,ekr.20031218072017.3438,ekr.20040301073512,ekr.20031218072017.3427,ekr.20031218072017.3428,ekr.20031218072017.3432,ekr.20031218072017.3433,ekr.20031218072017.3436,ekr.20031218072017.1648,ekr.20031218072017.3429,ekr.20031218072017.3430,ekr.20031218072017.3431,ekr.20031218072017.3434,ekr.20031218072017.1647,ekr.20031218072017.3437,ekr.20031218072017.1991,ekr.20031218072017.1992,ekr.20031218072017.1993,ekr.20031218072017.1994,ekr.20031218072017.1995,ekr.20031218072017.1996,ekr.20031218072017.1997,ekr.20031218072017.1998,ekr.20031218072017.1999,ekr.20031218072017.889,ekr.20031218072017.890,ekr.20031218072017.892,ekr.20031218072017.893,ekr.20040117170612,ekr.20040117173448,ekr.20040301205720,ekr.20040117171654,ekr.20040117162509.16,ekr.20040227214711,ekr.20040228060340,ekr.20040228060340.1,ekr.20031218072017.915,ekr.20040227214711.1,ekr.20040228094013.2,ekr.20040228094013.3,ekr.20040227221500,ekr.20040227221500.1,ekr.20040227212621,ekr.20040227224946,ekr.20031218072017.928,ekr.20031218072017.930,ekr.20031218072017.931,ekr.20031218072017.932,ekr.20031218072017.933,ekr.20040301211133,ekr.20031218072017.934,ekr.20031218072017.935,ekr.20031218072017.936,ekr.20031218072017.937,ekr.20031218072017.938,ekr.20040301211500,ekr.20031218072017.939,ekr.20031218072017.940,ekr.20031218072017.941"><vh>@file leoNodes.py</vh>
 <v t="ekr.20031218072017.2408"><vh>&lt;&lt; About clones &gt;&gt;</vh></v>
 <v t="ekr.20031218072017.2412"><vh>&lt;&lt; About the vnode and tnode classes &gt;&gt;</vh></v>
 <v t="ekr.20031218072017.3321"><vh>class tnode</vh>
@@ -8122,7 +8123,7 @@
 </v>
 <v t="ekr.20031218072017.3345"><vh>v.__repr__ &amp; v.__str__</vh></v>
 </v>
-<v t="ekr.20031218072017.3346" a="E"><vh>Comparisons (vnode)</vh>
+<v t="ekr.20031218072017.3346"><vh>Comparisons (vnode)</vh>
 <v t="ekr.20031218072017.3347"><vh>afterHeadlineMatch</vh></v>
 <v t="ekr.20031218072017.3348"><vh>at/../NodeName</vh></v>
 <v t="ekr.20031218072017.3349"><vh>isAt/../Node</vh></v>
@@ -8232,7 +8233,7 @@
 <v t="ekr.20031218072017.821"><vh>&lt;&lt; validate x ivar &gt;&gt;</vh></v>
 </v>
 </v>
-<v t="ekr.20040301071824" a="E"><vh>Helper functions: retained</vh>
+<v t="ekr.20040301071824"><vh>Helper functions: retained</vh>
 <v t="ekr.20031218072017.3435"><vh>v.invalidOutline</vh></v>
 <v t="ekr.20031218072017.2355"><vh>v.linkAfter</vh></v>
 <v t="ekr.20031218072017.3425"><vh>v.linkAsNthChild</vh></v>
@@ -8240,8 +8241,8 @@
 <v t="ekr.20031218072017.3438"><vh>v.unlink</vh></v>
 </v>
 <v t="ekr.20040301073512"><vh>vnode dummy functions in 4.2</vh></v>
-<v t="ekr.20031218072017.3427" a="E"><vh>Helper functions (vnode) TO BE DELETED</vh>
-<v t="ekr.20040301081957" a="E"><vh>Replaced by dummy routines in 4.2</vh>
+<v t="ekr.20031218072017.3427"><vh>Helper functions (vnode) TO BE DELETED</vh>
+<v t="ekr.20040301081957"><vh>Replaced by dummy routines in 4.2</vh>
 <v t="ekr.20031218072017.3428"><vh>v.addTreeToJoinLists</vh></v>
 <v t="ekr.20031218072017.3432"><vh>v.createDependents</vh></v>
 <v t="ekr.20031218072017.3433"><vh>v.destroyDependents</vh></v>
@@ -8286,14 +8287,12 @@
 <v t="ekr.20040228060340.1" a="M"><vh>&lt;&lt; about the vParentWithStack utility method &gt;&gt;</vh></v>
 </v>
 </v>
-<v t="ekr.20031218072017.915"><vh>p.traversal routines </vh></v>
-<v t="ekr.20040227214711.1"><vh>p.vnode getters: return vnode reference</vh>
+<v t="ekr.20031218072017.915"><vh>p.copy routines</vh></v>
+<v t="ekr.20040227214711.1"><vh>p.vnode getters (not used)</vh>
 <v t="ekr.20040228094013.2"><vh>Easy: correspond to vnode and tnode ivars.</vh></v>
-<v t="ekr.20040228094013.3"><vh>Complex (not used)</vh>
+<v t="ekr.20040228094013.3"><vh>Complex</vh>
 <v t="ekr.20040227221500"><vh>p.vThreadBack (slightly expensive, very complex)</vh></v>
 <v t="ekr.20040227221500.1"><vh>p.vThreadNext</vh></v>
-<v t="ekr.20040227221500.2"><vh>p.vVisBack (to do)</vh></v>
-<v t="ekr.20040227221500.3"><vh>p.vVisNext (to do)</vh></v>
 </v>
 </v>
 <v t="ekr.20040227212621"><vh>p.lookahead routines  (cheap)</vh>
@@ -8311,7 +8310,7 @@
 <v t="ekr.20031218072017.936"><vh>p.moveToNthChild (pushes stack for cloned nodes)</vh></v>
 <v t="ekr.20031218072017.937"><vh>p.moveToParent (pops stack when multiple parents)</vh></v>
 <v t="ekr.20031218072017.938"><vh>p.moveToThreadBack (new cheap code)</vh>
-<v t="ekr.20040301211500"><vh>&lt;&lt; simulate p.threadNext &gt;&gt;</vh></v>
+<v t="ekr.20040301211500"><vh>p.checkNextThreadNextLevel</vh></v>
 </v>
 <v t="ekr.20031218072017.939"><vh>p.moveToThreadNext</vh></v>
 <v t="ekr.20031218072017.940"><vh>p.moveToVisBack</vh></v>
@@ -17353,26 +17352,40 @@ An important complication is the need to avoid creating temporary positions whil
 			return 1 # Not equal
 			
 	return 0 # Equal</t>
-<t tx="ekr.20031218072017.915">@
-These routines return new positions, using the moveTo routines to minimize the
-number of temp positions created while doing so. Alas, traversals can still
-generate huge numbers of temporary positions.
+<t tx="ekr.20031218072017.915"># These routines are useful abbreviations.
+# Warning: they make copies of positions, so they should be used _sparingly_
+
+def getBack          (self): return self.copy().moveToBack()
+def getFirstChild    (self): return self.copy().moveToFirstChild()
+def getLastChild     (self): return self.copy().moveToLastChild()
+def getLastNode      (self): return self.copy().moveToLastNode()
+def getNext          (self): return self.copy().moveToNext()
+def getNodeAfterTree (self): return self.copy().moveToNodeAfterTree()
+def getNthChild    (self,n): return self.copy().moveToNthChild(n)
+def getParent        (self): return self.copy().moveToParent()
+def getThreadBack    (self): return self.copy().moveToThreadBack()
+def getThreadNext    (self): return self.copy().moveToThreadNext()
+def getVisBack       (self): return self.copy().moveToVisBack()
+def getVisNext       (self): return self.copy().moveToVisNext()
+
+@
+It might be feasible to use these routines during the transition to 4.2.
+However, using these routines is in general a bad idea.
 @c
 
-if 0: # These routines use too much memory! (useful for transition.)
-
-	def back          (self): return self and self.copy().moveToBack()
-	def firstChild    (self): return self and self.copy().moveToFirstChild()
-	def lastChild     (self): return self and self.copy().moveToLastChild()
-	def lastNode      (self): return self and self.copy().moveToLastNode()
-	def next          (self): return self and self.copy().moveToNext()
-	def nodeAfterTree (self): return self and self.copy().moveToNodeAfterTree()
-	def nthChild    (self,n): return self and self.copy().moveToNthChild(n)
-	def parent        (self): return self and self.copy().moveToParent()
-	def threadBack    (self): return self and self.copy().moveToThreadBack()
-	def threadNext    (self): return self and self.copy().moveToThreadNext()
-	def visBack       (self): return self and self.copy().moveToVisBack()
-	def visNext       (self): return self and self.copy().moveToVisNext()</t>
+if 0: # WARNING: using the "old" names here is dangerous!
+	back          = getBack
+	firstChild    = getFirstChild
+	lastChild     = getLastChild
+	lastNode      = getLastNode
+	next          = getNext
+	nodeAfterTree = getNodeAfterTree
+	nthChild      = getNthChild
+	parent        = getParent
+	threadBack    = getThreadBack
+	threadNext    = getThreadNext
+	visBack       = getVisBack
+	visNext       = getVisNext</t>
 <t tx="ekr.20031218072017.928">@
 These routines change self to a new position "in place".
 That is, these methods must _never_ call p.copy().
@@ -17494,15 +17507,19 @@ These routines all return self on exit so the following kind of code will work:
 	"""Move a position to it's threadBack position without calling p.copy()."""
 
 	p = self
-	
+
 	if p:
 		if p.v._back:
 			p.moveToBack()
 			if p.v.t._firstChild:
-				&lt;&lt; simulate p.threadNext &gt;&gt;
+				level1 = p.level()
+				p.moveToFirstChild()
+				assert(p.level() == level1 + 1)
+				while p.checkNextThreadNextLevel(level1):
+					p.moveToThreadNext()
 		else:
 			p.moveToParent()
-			
+
 	return p</t>
 <t tx="ekr.20031218072017.939">def moveToThreadNext (self):
 	
@@ -17520,8 +17537,9 @@ These routines all return self on exit so the following kind of code will work:
 			while p:
 				if p.v._next:
 					p.moveToNext()
-					break
+					break #found
 				p.moveToParent()
+			# not found found.
 				
 	return p</t>
 <t tx="ekr.20031218072017.940">def moveToVisBack (self):
@@ -67295,11 +67313,16 @@ hasVisBack = hasThreadBack</t>
 	while 1:
 		assert(p)
 		v,n = p.vParentWithStack(v,p.stack,n)
+		# trace(level,"len(stack): %2d" % n,v)
 		if v:
 			level += 1
 		else:
 			return level</t>
-<t tx="ekr.20040227214711.1">@ None of these routines should ever change p or call p.copy().</t>
+<t tx="ekr.20040227214711.1"># None of these routines should ever change p or call p.copy().
+
+if 0: # not used
+
+	@others</t>
 <t tx="ekr.20040227221500">def vThreadBack (self):
 	
 	"""Return the vnode at p.moveThreadBack() without calling p.copy()"""
@@ -67365,16 +67388,6 @@ hasVisBack = hasThreadBack</t>
 				break
 			v,n = p.vParentWithStack(v,p.stack,n)
 		return v</t>
-<t tx="ekr.20040227221500.2">def vVisBack (self):
-	
-	"""Return p.moveVisBack().v without changing p and without calling p.copy()"""
-
-	assert(0)</t>
-<t tx="ekr.20040227221500.3">def vVisNext (self):
-	
-	"""Return p.moveVisNext().v without changing p and without calling p.copy()"""
-
-	assert(0)</t>
 <t tx="ekr.20040227224946">def hasThreadNext(self):
 
 	p = self ; v = p.v
@@ -67404,8 +67417,7 @@ def vParentWithStack(self,v,stack,n):
 	v,stack[:n] correspond to p.v,p.stack for some intermediate position p.
 
 	Returns (v,n) such that v,stack[:n] correpond to the parent position of p."""
-	
-	# trace(v,n)
+
 	if not v:
 		return None,n
 	elif v._parent:
@@ -67448,16 +67460,7 @@ def vNext(self):
 	
 def vParent(self):
 	return self.v and (v._parent or (self.stack and self.stack[-1]))</t>
-<t tx="ekr.20040228094013.3">@
-These routines are tricky.
-
-The question is: are they useful?  I doubt it.
-
-@c
-
-if 0: # Too complex to be worth the trouble.
-
-	@others</t>
+<t tx="ekr.20040228094013.3"># These routines are tricky and not very useful.</t>
 <t tx="ekr.20040228154544"></t>
 <t tx="ekr.20040228154544.1">&lt;vnode 14920760:u'tree.destroy'&gt;
 	self.rootVnode = None
@@ -67856,10 +67859,6 @@ found: 262
 <t tx="ekr.20040228160453"></t>
 <t tx="ekr.20040229061858"></t>
 <t tx="ekr.20040229171355"></t>
-<t tx="ekr.20040229171355.2"></t>
-<t tx="ekr.20040229171355.3"></t>
-<t tx="ekr.20040229171355.4"></t>
-<t tx="ekr.20040229171355.5"></t>
 <t tx="ekr.20040301071824"></t>
 <t tx="ekr.20040301073512"># Calls to these will eventually go away.
 
@@ -67901,29 +67900,54 @@ if app.sharedNodes:
 	while v:
 		v.t.vnodeList = []
 		v = v.threadNext()
+		
+	# Create a list of cloned nodes:
+	v = c.rootVnode() ; cloneList = []
+	while v:
+		if v.isCloned():
+			# print "clone",v
+			cloneList.append(v)
+		v = v.threadNext()
 
-	# Set _firstChild and vnodeList in tnodes.
+	# Set _firstChild in tnodes.
 	v = c.rootVnode()
 	while v:
-		v.t._firstChild = v.firstChild()
-		try:    v.t.vnodeList.append(v)
-		except: v.t.vnodeList = [v]
+		child = v.firstChild()
+		# Careful: set the field only the first time we see a shared tree.
+		# This logic must match the logic below.
+		if child:
+			if not hasattr(v.t,"_firstChild"):
+				v.t._firstChild = child
+		else: v.t._firstChild = None
+		v = v.threadNext()
+		
+	v = c.rootVnode()
+	while v:
+		if child and not hasattr(v.t,"_firstChild"):
+			v.t._firstChild = child
+		v = v.threadNext()
+		
+	# Set v.t.vnodeList.
+	v = c.rootVnode()
+	while v:
+		# Careful: only set one value for non-cloned joined nodes.
+		if v in cloneList: # Cloned
+			try:    v.t.vnodeList.append(v)
+			except: v.t.vnodeList = [v]
+		elif not hasattr(v.t,"vnodeList"): # Maybe joined.
+			v.t.vnodeList = [v]
 		v = v.threadNext()
 		
 	# Clear _parent field of any node whose parent is a clone.
-	v = c.rootVnode()
-	clearList = []
-	while v:
-		next = v.threadNext()
-		if v.firstChild() and len(v.t.vnodeList) &gt; 1:
-			child = v.firstChild()
-			while child:
-				clearList.append(child)
-				child = child.next()
-		v = v.threadNext()
+	v = c.rootVnode() ; clearList = []
+	for v in cloneList:
+		child = v.firstChild()
+		while child:
+			clearList.append(child)
+			child = child.next()
+
 	for v in clearList:
-		v._parent = None
-</t>
+		v._parent = None</t>
 <t tx="ekr.20040301205720">def __str__ (self):
 	
 	p = self
@@ -67945,25 +67969,33 @@ __repr__ = __str__</t>
 		if p.level() == 1:
 			break
 		p.moveToParent()</t>
-<t tx="ekr.20040301211500"># We simulate p.threadNext until we are about to do
-# p.moveToParent and p.level() == level1 -1.
+<t tx="ekr.20040301211500">def checkNextThreadNextLevel(self,level1):
+	
+	"""Return true if p.getThreadNext().level() &gt; level1.
 
-level1 = p.level()
+	Do not alter p or call p.copy()."""
 
-# Simulate repeated "lookahead" calls to p.moveToThreadNext().
-while 1:
+	p = self ; level = p.level()
 	assert(p)
+	assert(level &gt; level1)
+
 	if p.v.t._firstChild:
-		p.moveToFirstChild()
+		return true # Level increasing.
 	elif p.v._next:
-		p.moveToNext()
+		return true # Level unchanged.
 	else:
-		# Look ahead. We are about to call p.moveToParent().
-		level2 = p.level()
-		assert(level2&lt;level1)
-		if level2 == level1-1:
-			break # We are about to come back to where we started.
-		p.moveToParent()</t>
+		n = len(p.stack)-1
+		v,n = p.vParentWithStack(p.v,p.stack,n)
+		assert(v)
+		level -= 1
+		if level == level1: return false 
+		while v:
+			assert(level &gt; level1)
+			if v._next: return true
+			v,n = p.vParentWithStack(v,p.stack,n)
+			assert(v)
+			level -= 1
+			if level == level1: return false</t>
 <t tx="ekr.20040301213056">def doNothing(self): pass
 
 def disableSaveCommands(self):
@@ -68005,5 +68037,7 @@ def disableSaveCommands(self):
 <t tx="ekr.20040302084553"></t>
 <t tx="ekr.20040302084553.1"></t>
 <t tx="ekr.20040302084553.2"></t>
+<t tx="ekr.20040302094109"></t>
+<t tx="ekr.20040302112717">These are handy abbreviations.  They must be used wisely.</t>
 </tnodes>
 </leo_file>
