@@ -630,7 +630,7 @@ class leoFind (leoFindBase):
 		# Update the selection for the next match.
 		setTextSelection(t,start,start + "+" + `len(c.change_text)` + "c")
 		newSel = getTextSelection(t)
-		set_focus(t)
+		set_focus(c,t)
 	
 		c.beginUpdate()
 		if c.mark_changes_flag:
@@ -986,7 +986,7 @@ class leoFind (leoFindBase):
 			pos = t.index("insert")
 	
 		st = self.initNextText()
-		set_focus(t)
+		set_focus(c,t)
 		st.mark_set("insert",pos)
 		self.wrapping = c.wrap_flag
 		if c.wrap_flag and self.wrapVnode == None:
@@ -1034,7 +1034,7 @@ class leoFind (leoFindBase):
 				t.tag_remove("sel","1.0","end")
 			t.mark_set("insert",insert)
 			t.see("insert")
-			set_focus(t)
+			set_focus(c,t)
 	#@-body
 	#@-node:7::restore
 	#@+node:8::save
@@ -1086,7 +1086,7 @@ class leoFind (leoFindBase):
 		setTextSelection(t,pos,newpos)
 		if not self.in_headline:
 			t.see(insert)
-		set_focus(t)
+		set_focus(c,t)
 		if c.wrap_flag and not self.wrapVnode:
 			self.wrapVnode = self.v
 	#@-body

@@ -573,7 +573,7 @@ class baseCommands:
 			oldSel=oldSel,newSel=newSel)
 		# Restore the selection.
 		setTextSelection(c.body,i,j)
-		set_focus(c.body)
+		set_focus(c,c.body)
 	#@-body
 	#@-node:9::extractSectionNames
 	#@+node:10::getBodyLines
@@ -783,7 +783,7 @@ class baseCommands:
 			c.body.yview("moveto",first)
 		else:
 			c.body.see("insert")
-		set_focus(c.body)
+		set_focus(c,c.body)
 		c.recolor() # 7/5/02
 	#@-body
 	#@-node:14::updateBodyPane (handles undo)
@@ -2314,7 +2314,7 @@ class baseCommands:
 		c.tree.endEditLabel()
 		c.tree.select(v,updateBeadList)
 		# trace(v)
-		set_focus(c.body)
+		set_focus(c,c.body)
 		self.editing = false
 	#@-body
 	#@-node:7::c.selectVnode (calls tree.select)

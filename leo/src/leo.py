@@ -40,7 +40,19 @@ import os,string,sys,Tkinter
 
 
 #@+others
-#@+node:2::run & allies
+#@+node:2::runMainLoop
+#@+body
+def runMainLoop(root):
+	
+	"""A function that runs root.mainloop()
+	
+	LeoN may replace this fuction entirely."""
+	
+	root.mainloop()
+
+#@-body
+#@-node:2::runMainLoop
+#@+node:3::run & allies
 #@+body
 def run(fileName=None,*args,**keywords):
 	
@@ -149,6 +161,7 @@ def createFrame (app,fileName):
 		if ok:
 			app.windowList.remove(frame1)
 			frame1.top.destroy() # force the window to go away now.
+			frame2.top.deiconify()
 			app.setLog(frame2,"createFrame") # Sets the log stream for es()
 			return frame2
 		else:
@@ -182,19 +195,7 @@ def initSherlock (app,args):
 	clear_stats()
 #@-body
 #@-node:4::initSherlock
-#@-node:2::run & allies
-#@+node:3::runMainLoop
-#@+body
-def runMainLoop(root):
-	
-	"""A function that runs root.mainloop()
-	
-	LeoN may replace this fuction entirely."""
-	
-	root.mainloop()
-
-#@-body
-#@-node:3::runMainLoop
+#@-node:3::run & allies
 #@+node:4::profile
 #@+body
 #@+at

@@ -1948,18 +1948,24 @@ def executeScript (name):
 #@+node:8::Focus
 #@+node:1::set_focus
 #@+body
-def set_focus(widget):
+def set_focus(commands,widget):
 	
-	# trace(`widget`)
-	widget.focus_set()
+	"""Set the focus of the widget in the given commander if it needs to be changed."""
+	
+	focus = commands.frame.top.focus_displayof()
+	if focus != widget:
+		# trace(`widget`)
+		widget.focus_set()
 #@-body
 #@-node:1::set_focus
 #@+node:2::force_focus
 #@+body
 def force_focus(widget):
 	
-	# trace(widget)
-	widget.focus_force()
+	focus = commands.frame.top.focus_displayof()
+	if focus != widget:
+		trace(widget)
+		widget.focus_force() # Apparently it is not a good idea to call focus_force.
 #@-body
 #@-node:2::force_focus
 #@-node:8::Focus

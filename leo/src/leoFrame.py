@@ -138,7 +138,7 @@ class baseLeoFrame:
 		# Sign on.
 		color = app().config.getWindowPref("log_error_color")
 		es("Leo Log Window...",color=color)
-		es("Leo 3.12 beta 1, ",newline=0)
+		es("Leo 3.12 beta 2, ",newline=0)
 		n1,n2,n3,junk,junk=sys.version_info
 		ver1 = "Python %d.%d.%d" % (n1,n2,n3)
 		ver2 = ", Tk " + self.top.getvar("tk_patchLevel")
@@ -738,9 +738,10 @@ class baseLeoFrame:
 	def OnActivateTree (self,event=None):
 	
 		try:
+			c = self.commands
 			app().setLog(self,"OnActivateTree")
 			self.tree.undimEditLabel()
-			set_focus(self.tree.canvas)
+			set_focus(c,c.frame.body) # 7/12/03
 		except:
 			es_event_exception("activate tree")
 	
@@ -976,7 +977,7 @@ class baseLeoFrame:
 			print
 	#@-body
 	#@-node:7::f.put, putnl
-	#@+node:8::getFocus
+	#@+node:8::f.getFocus
 	#@+body
 	# Returns the frame that has focus, or body if None.
 	
@@ -988,7 +989,7 @@ class baseLeoFrame:
 		else:
 			return self.body
 	#@-body
-	#@-node:8::getFocus
+	#@-node:8::f.getFocus
 	#@+node:9:: Menus
 	#@+node:1::canonicalizeShortcut
 	#@+body
@@ -1885,7 +1886,7 @@ class baseLeoFrame:
 			c.editVnode(v)
 		c.endUpdate()
 		
-		set_focus(frame.body)
+		set_focus(c,frame.body)
 	#@-body
 	#@-node:1::OnNew
 	#@+node:2::frame.OnOpen
@@ -3236,7 +3237,7 @@ class baseLeoFrame:
 	
 			if 0: # No need to make this modal
 				top.grab_set() # Make the dialog a modal dialog.
-				top.focus_force() # Get all keystrokes.
+				top.focus_set() # Get all keystrokes.
 				app().root.wait_window(top)
 	
 	#@-body
@@ -3493,6 +3494,8 @@ class baseLeoFrame:
 	#@+body
 	def OnFindPanel(self,event=None):
 	
+		c = self.commands
+	
 		find = app().findFrame
 		# 15-SEP-2002 DTHEIN: call withdraw() to force findFrame to top after 
 		#                     opening multiple Leo files.
@@ -3501,7 +3504,7 @@ class baseLeoFrame:
 		find.top.lift()
 		
 		t = find.find_text
-		set_focus(t)
+		set_focus(c,t)
 		setTextSelection (t,"1.0","end") # Thanks Rich.
 		find.commands = self
 	
@@ -3994,10 +3997,12 @@ class baseLeoFrame:
 	def OnToggleActivePane (self,event=None):
 	
 		# trace(`event`)
+		c = self.commands
+	
 		if self.getFocus() == self.body:
-			set_focus(self.canvas)
+			set_focus(c,self.canvas)
 		else:
-			set_focus(self.body)
+			set_focus(c,self.body)
 	#@-body
 	#@-node:2::OnToggleActivePane
 	#@+node:3::OnToggleSplitDirection
@@ -4187,7 +4192,7 @@ class baseLeoFrame:
 		# Doing so would add unwanted leading tabs.
 		ver = "$Revision$" # CVS will update this.
 		build = ver[10:-1] # Strip off "$Reversion" and "$"
-		version = "leo.py 3.12 beta 1, Build " + build + ", June 28, 2003\n\n"
+		version = "leo.py 3.12 beta 2, Build " + build + ", July 13, 2003\n\n"
 		copyright = (
 			"Copyright 1999-2003 by Edward K. Ream\n" +
 			"All Rights Reserved\n" +
@@ -4906,10 +4911,9 @@ class baseLeoFrame:
 			self.lastStatusRow = row
 			self.lastStatusCol = col
 			
-		# Reschedule this routine 10 ms. later.
+		# Reschedule this routine 100 ms. later.
 		# Don't use after_idle: it hangs Leo.
 		self.statusFrame.after(100,self.updateStatusRowCol)
-	
 	#@-body
 	#@-node:4::updateStatusRowCol()
 	#@-node:11::Status line: convenience routines

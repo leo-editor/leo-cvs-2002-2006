@@ -833,7 +833,7 @@ class baseUndoer:
 
 			
 			#@<< undo promote and demote cases >>
-			#@+node:5::<< undo promote and demote cases >>
+			#@+node:6::<< undo promote and demote cases >>
 			#@+body
 			#@+at
 			#  Promote and demote operations are the hard to undo, because 
@@ -851,11 +851,11 @@ class baseUndoer:
 				
 				u.undoPromote()
 			#@-body
-			#@-node:5::<< undo promote and demote cases >>
+			#@-node:6::<< undo promote and demote cases >>
 
 			
 			#@<< undo replace cases >>
-			#@+node:6::<< undo replace cases >>
+			#@+node:5::<< undo replace cases >>
 			#@+body
 			elif undoType in (
 				"Convert All Blanks","Convert All Tabs",
@@ -868,7 +868,7 @@ class baseUndoer:
 					setTextSelection(c.frame.body,start,end)
 				redrawFlag = true
 			#@-body
-			#@-node:6::<< undo replace cases >>
+			#@-node:5::<< undo replace cases >>
 
 			
 			#@<< undo sort cases >>

@@ -444,7 +444,7 @@ class baseLeoFontPanel:
 		# Bring up the dialog.
 		if 0: # It need not be modal: it will go away if the owning window closes!
 			top.grab_set()
-			top.focus_force() # Get all keystrokes.
+			top.focus_set() # Get all keystrokes.
 	#@-body
 	#@-node:6::run
 	#@+node:7::setRevertVars

@@ -699,7 +699,7 @@ class baseLeoColorPanel:
 		# There is no need to make this a modal dialog.
 		if 0:
 			top.grab_set() # Make the dialog a modal dialog.
-			top.focus_force() # Get all keystrokes.
+			top.focus_set() # Get all keystrokes.
 	#@-body
 	#@-node:2::run
 	#@+node:3::showColorPicker
@@ -905,7 +905,7 @@ class baseLeoColorNamePanel:
 		
 		# This must be a modal dialog.
 		top.grab_set()
-		top.focus_force() # Get all keystrokes.
+		top.focus_set() # Get all keystrokes.
 	#@-body
 	#@-node:3::run
 	#@+node:4::onOk, onCancel, onRevert, OnApply

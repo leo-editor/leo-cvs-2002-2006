@@ -4,6 +4,24 @@ leo.py is available at:  http://sourceforge.net/projects/leo/
 leo.py requires Python 2.1 or above and tcl/tk 8.3 or above.
 leo.py will work on Linux, Windows and MacOs X Jaguar.
 
+leo.py 3.12 beta 2                       July 13, 2003
+
+This version fixes many bugs and adds a few minor new features.  There are no known serious bugs in this version of Leo.  N.B. See the documentation 3.12 beta 1 for many more changes added since 3.11 final.
+
+The hightlights of 3.12 beta 2:
+
+- Window sizes are now in pixels rather than grid units.  As a result, existing outlines (.leo files) will need to be resized when opening them for the first time.  Don't panic!
+
+- Improvements:
+	- Undo now restores the insert point or the selection range after most commands.
+	- Added apply button to Font panel.
+	- Improved the reporting of characters that do not exist in the present encoding.
+
+- Fixed a major bug involving undo.  Undoing the following commands could corrupt outlines:
+	Convert All Blanks, Convert All Tabs, Extract, Extract Names, Extract Section.
+
+- Fixed more than a dozen minor bugs, some several months old.
+
 leo.py 3.12 beta 1                       June 28, 2003
 
 Highlights of this version:

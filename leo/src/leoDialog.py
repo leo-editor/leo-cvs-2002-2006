@@ -153,7 +153,7 @@ class baseLeoDialog:
 			self.top.grab_set() # Make the dialog a modal dialog.
 			if self.focus_widget == None:
 				self.focus_widget = self.top
-			self.focus_widget.focus_force() # Get all keystrokes.	
+			self.focus_widget.focus_set() # Get all keystrokes.	
 			self.root.wait_window(self.top)
 			return self.answer
 		else:

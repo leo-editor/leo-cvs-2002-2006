@@ -789,16 +789,15 @@ class baseLeoTree:
 			#@<< activate this window >>
 			#@+node:1::<< activate this window >>
 			#@+body
-			c=self.commands
+			c = self.commands
 			# trace(`v`)
 			
 			if v == self.currentVnode:
-				# w = self.commands.frame.getFocus()
 				if self.active:
 					self.editLabel(v)
 				else:
 					self.undimEditLabel()
-					set_focus(self.canvas)
+					set_focus(c,self.canvas) # Essential for proper editing.
 			else:
 				self.select(v)
 				if v.t.insertSpot != None: # 9/1/02
@@ -806,7 +805,7 @@ class baseLeoTree:
 					c.body.see(v.t.insertSpot)
 				else:
 					c.body.mark_set("insert","1.0")
-				set_focus(c.body)
+				set_focus(c,c.body)
 			
 			self.active = true
 			#@-body
@@ -823,6 +822,7 @@ class baseLeoTree:
 	def OnBoxClick (self,v):
 	
 		# Note: "boxclick" hooks handled by vnode callback routine.
+		c = self.commands
 	
 		if v.isExpanded():
 			v.contract()
@@ -831,7 +831,7 @@ class baseLeoTree:
 	
 		self.active = true
 		self.select(v)
-		set_focus(self.canvas) # This is safe.
+		set_focus(c,c.body) # 7/12/03
 		self.redraw()
 	#@-body
 	#@-node:2::OnBoxClick
@@ -1750,7 +1750,7 @@ class baseLeoTree:
 		
 		"""Show a popup menu."""
 		
-		menu = self.popupMenu
+		c = self.commands ; menu = self.popupMenu
 	
 		if sys.platform == "linux2": # 20-SEP-2002 DTHEIN: not needed for Windows
 			menu.bind("<FocusOut>",self.OnPopupFocusLost)
@@ -1759,7 +1759,7 @@ class baseLeoTree:
 	
 		# Make certain we have focus so we know when we lose it.
 		# I think this is OK for all OSes.
-		set_focus(menu)
+		set_focus(c,menu)
 	#@-body
 	#@-node:4::showPopupMenu
 	#@-node:13::tree.OnPopup & allies
@@ -1956,7 +1956,7 @@ class baseLeoTree:
 	
 	def endEditLabel (self):
 	
-		v = self.editVnode
+		c = self.commands ; v = self.editVnode
 		# trace(v)
 		if v and v.edit_text():
 			self.setUnselectedLabelState(v)
@@ -1964,18 +1964,18 @@ class baseLeoTree:
 		if v: # Bug fix 10/9/02: also redraw ancestor headlines.
 			# 3/26/03: changed redraw_now to force_redraw.
 			self.force_redraw() # force a redraw of joined and ancestor headlines.
-		set_focus(self.commands.body) # 10/14/02
+		set_focus(c,c.body) # 10/14/02
 			
 	def endEditLabelCommand (self):
 	
-		v = self.editVnode
+		c = self.commands ; v = self.editVnode
 		# trace(v)
 		if v and v.edit_text():
 			self.select(v)
 		if v: # Bug fix 10/9/02: also redraw ancestor headlines.
 			# 3/26/03: changed redraw_now to force_redraw.
 			self.force_redraw() # force a redraw of joined headlines.
-		set_focus(self.commands.body) # 10/14/02
+		set_focus(c,c.body) # 10/14/02
 	#@-body
 	#@-node:4::endEditLabel & endEditLabelCommand
 	#@+node:5::tree.expandAllAncestors
@@ -2141,7 +2141,7 @@ class baseLeoTree:
 		self.currentVnode = v
 		self.setSelectedLabelState(v)
 		self.scanForTabWidth(v) # 9/13/02 #GS I believe this should also get into the select1 hook
-		set_focus(self.commands.body)
+		set_focus(c,c.body)
 		
 		#@-body
 		#@-node:4::<< set the current node and redraw >>
@@ -2184,7 +2184,7 @@ class baseLeoTree:
 
 			v.edit_text().tag_remove("sel","1.0","end")
 			v.edit_text().tag_add("sel","1.0","end")
-			set_focus(v.edit_text())
+			set_focus(self.commands,v.edit_text())
 	
 	def setDisabledLabelState (self,v): # selected, disabled
 		if v and v.edit_text():
