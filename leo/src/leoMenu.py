@@ -901,7 +901,7 @@ class leoMenu:
                     
                     if bunch and not g.app.menuWarningsGiven:
                         if bunch.init:
-                            if 1: # Testing only.
+                            if 0: # Testing only.
                                 s = 'overriding default shortcut\nnew: %s %s\nold: %s %s' % (
                                     accel,label,bunch.accel,bunch.label)
                                 g.es(s,color="red")
