@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="2331" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="2334" clone_windows="0"/>
 <globals body_outline_ratio="0.44343434343434346">
-	<global_window_position top="10" left="182" height="990" width="1072"/>
+	<global_window_position top="10" left="95" height="990" width="1071"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences>
@@ -2816,7 +2816,7 @@
 <v t="ekr.20040126105605.3"><vh>b</vh></v>
 </v>
 </v>
-<v t="edream.110203161858.2119" a="E"><vh>Unit Tests</vh>
+<v t="edream.110203161858.2119" a="TV"><vh>Unit Tests</vh>
 <v t="edream.110203161858.2124"><vh>tempNode</vh></v>
 <v t="dthein.20040108213304"><vh>reformatParagraphsTests</vh>
 <v t="dthein.20040108213304.1"><vh>testNoTrailingNewline</vh>
@@ -2879,9 +2879,11 @@
 <v t="edream.110203161858.2125"><vh>colorizerTests</vh>
 <v t="edream.110203161858.2126"><vh>Actionscript</vh></v>
 <v t="edream.110203161858.2127"><vh>C</vh></v>
+<v t="ekr.20040206072159"><vh>C#</vh></v>
 <v t="edream.110203161858.2128"><vh>CWEB</vh>
 <v t="edream.110203161858.2129"><vh>&lt;&lt; section ref &gt;&gt;</vh></v>
 </v>
+<v t="ekr.20040206073022"><vh>elisp</vh></v>
 <v t="edream.110203161858.2130"><vh>HTML1</vh></v>
 <v t="edream.110203161858.2131"><vh>HTML2</vh></v>
 <v t="edream.110203161858.2132"><vh>LaTex</vh></v>
@@ -2979,7 +2981,7 @@
 <v t="edream.110903064653.3"><vh>c:\prog\leoCvs\leo\plugins\leoPlugins.leo</vh></v>
 <v t="edream.110903064653.4"><vh>c:\prog\leoCvs\leo\doc\LeoDocs.leo</vh></v>
 </v>
-<v t="edream.110203161858.2153" a="ETV"><vh>Run all tests</vh></v>
+<v t="edream.110203161858.2153" a="E"><vh>Run all tests</vh></v>
 </v>
 </vnodes>
 <tnodes>
@@ -34102,7 +34104,7 @@ if 1:
 (( Some code ))
 @ -------------------------------------------------------------&gt; Input
 @c</t>
-<t tx="edream.110203161858.2119"></t>
+<t tx="edream.110203161858.2119">w</t>
 <t tx="edream.110203161858.2124"></t>
 <t tx="edream.110203161858.2125">@color
 
@@ -36239,5 +36241,57 @@ if 1:
     line 2
   	line 3</t>
 <t tx="ekr.20040130151238.2">	line 1</t>
+<t tx="ekr.20040206072159">@language csharp
+@ comment
+@c
+
+/* block
+comment */
+
+// test
+
+id // not a keyword
+
+abstract as 
+base bool break byte 
+case catch char checked class const continue 
+decimal default delegate do double 
+else enum event explicit extern 
+false finally fixed float for foreach 
+get goto 
+if implicit in int interface internal is 
+lock long 
+namespace new null 
+object operator out override 
+params partial private protected public 
+readonly ref return 
+sbyte sealed set short sizeof stackalloc 
+static string struct switch 
+this throw true try typeof 
+uint ulong unchecked unsafe ushort using 
+value virtual void volatile 
+where while
+yield</t>
+<t tx="ekr.20040206073022">@language elisp
+
+; Maybe...
+error princ 
+
+; More typical of other lisps...
+and apply
+car cdr cons cond
+defconst defun defvar 
+eq equal eval
+gt ge
+if 
+let le lt
+mapcar 
+ne nil 
+or not 
+prog progn 
+set setq 
+t type-of 
+unless 
+when while</t>
 </tnodes>
 </leo_file>
