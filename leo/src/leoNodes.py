@@ -932,6 +932,10 @@ class baseVnode (object):
 		v._parent = None
 		v._back = None
 		v._next = oldRoot
+		
+		# Add v to it's tnode's vnodeList. Bug fix: 5/02/04.
+		if v not in v.t.vnodeList:
+			v.t.vnodeList.append(v)
 	
 		# Link in the rest of the tree only when oldRoot != None.
 		# Otherwise, we are calling this routine from init code and
@@ -2585,9 +2589,8 @@ class position (object):
 		# Moving a node can create a new root node.
 		if not parent.hasParent() and not parent.hasBack():
 			c.setRootPosition(parent)
-			
+	
 		return p
-	#@nonl
 	#@-node:ekr.20040303175026.11:p.moveToNthChildOf
 	#@+node:ekr.20040303175026.12:p.sortChildren
 	def sortChildren (self):
@@ -2804,6 +2807,8 @@ class position (object):
 		"""Move a position to its parent position."""
 		
 		p = self
+		
+		# if p.v._parent: g.trace(len(p.v._parent.t.vnodeList),p.v._parent)
 	
 		if p.v._parent and len(p.v._parent.t.vnodeList) == 1:
 			p.v = p.v._parent
@@ -3119,6 +3124,10 @@ class position (object):
 		v._parent = None
 		v._back = None
 		v._next = oldRootVnode # Bug fix: 3/12/04
+		
+		# Add v to it's tnode's vnodeList. Bug fix: 5/02/04.
+		if v not in v.t.vnodeList:
+			v.t.vnodeList.append(v)
 	
 		# Link in the rest of the tree only when oldRoot != None.
 		# Otherwise, we are calling this routine from init code and
