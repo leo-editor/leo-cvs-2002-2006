@@ -2041,7 +2041,7 @@ def wrap_lines (lines,pageWidth):
 		i = 0
 		while i < len(s):
 			assert(len(line) < pageWidth)
-			j = skip_ws(s,i)     ;   ws = s[i:j]
+			j = skip_ws(s,i)   # ;   ws = s[i:j]
 			k = skip_non_ws(s,j) ; word = s[j:k]
 			assert(k>i)
 			i = k

@@ -639,7 +639,8 @@ class LeoFrame:
 		label = choose(c.tree.colorizer.showInvisibles,"Hide Invisibles","Show Invisibles")
 			
 		table = (
-			("Set Font...",  "Shift+Alt+T",self.OnFontPanel),
+			("Execute Script","Alt+E",self.OnExecuteScript),
+			("Set Font...","Shift+Alt+T",self.OnFontPanel),
 			("Set Colors...","Shift+Alt+S",self.OnColorPanel),
 			(label,"Alt+V",self.OnViewAllCharacters),
 			("-",None,None),
@@ -1996,15 +1997,54 @@ class LeoFrame:
 		return "break" # inhibit further command processing
 	#@-body
 	#@-node:6::OnDelete
-	#@+node:7::OnSelectAll
+	#@+node:7::OnExecuteScript
+	#@+body
+	#@+at
+	#  This executes body text as a Python script.  We execute the selected 
+	# text, or the entire presently selected body text if no text is selected 
+	# and the node's headline starts with @pythonscript.
+
+	#@-at
+	#@@c
+
+	def OnExecuteScript(self,event=None):
+		
+		c = self.commands ; body = self.body
+		v = c.currentVnode() ; s = None
+		
+		# Assume any selected body text is a script.
+		if self.getFocus() == body:
+			start,end = getTextSelection(body)
+			if start and end:
+				s = body.get(start,end)
+				s = s.strip()
+				
+		# Otherwise, the script if v's body text if v is an @pythonscript node.
+		if s == None or len(s) == 0:
+			h = v.headString()
+			if match_word(h,0,"@pythonscript"):
+				s = v.bodyString()
+				
+		#trace(`s`)
+		if s and len(s) > 0:
+			try:
+				exec(s) # globals(), locals()
+			except: es_exception()
+		else:
+			es("no script selected")
+	
+		return "break" # inhibit further command processing
+	#@-body
+	#@-node:7::OnExecuteScript
+	#@+node:8::OnSelectAll
 	#@+body
 	def OnSelectAll(self,event=None):
 	
 		setTextSelection(self.body,"1.0","end")
 		return "break" # inhibit further command processing
 	#@-body
-	#@-node:7::OnSelectAll
-	#@+node:8::OnFontPanel
+	#@-node:8::OnSelectAll
+	#@+node:9::OnFontPanel
 	#@+body
 	def OnFontPanel(self,event=None):
 	
@@ -2017,8 +2057,8 @@ class LeoFrame:
 	
 		return "break" # inhibit further command processing
 	#@-body
-	#@-node:8::OnFontPanel
-	#@+node:9::OnColorPanel
+	#@-node:9::OnFontPanel
+	#@+node:10::OnColorPanel
 	#@+body
 	def OnColorPanel(self,event=None):
 		
@@ -2032,8 +2072,8 @@ class LeoFrame:
 		return "break" # inhibit further command processing
 	
 	#@-body
-	#@-node:9::OnColorPanel
-	#@+node:10::OnViewAllCharacters
+	#@-node:10::OnColorPanel
+	#@+node:11::OnViewAllCharacters
 	#@+body
 	def OnViewAllCharacters (self, event=None):
 	
@@ -2049,8 +2089,8 @@ class LeoFrame:
 		c.tree.recolor_now(v)
 		return "break" # inhibit further command processing
 	#@-body
-	#@-node:10::OnViewAllCharacters
-	#@+node:11::OnPreferences
+	#@-node:11::OnViewAllCharacters
+	#@+node:12::OnPreferences
 	#@+body
 	def OnPreferences(self,event=None):
 		
@@ -2070,7 +2110,7 @@ class LeoFrame:
 	
 		return "break" # inhibit further command processing
 	#@-body
-	#@-node:11::OnPreferences
+	#@-node:12::OnPreferences
 	#@-node:1::Edit top level
 	#@+node:2::Edit Body submenu
 	#@+node:1::OnConvertBlanks & OnConvertAllBlanks
