@@ -331,7 +331,7 @@ class baseCommands:
 				
 				if g.os_path_exists(searchPath):
 					for dict in g.app.openWithFiles:
-						if v.t == dict.get("v") and searchPath == dict.get("path"):
+						if v == dict.get("v") and searchPath == dict.get("path"):
 							path = searchPath
 							break
 				#@-node:ekr.20031218072017.2826:<<set dict and path if a temp file already refers to v.t >>
@@ -1179,7 +1179,7 @@ class baseCommands:
 				if fileName: break
 			
 		if fileName:
-			g.trace(fileName,p)
+			# g.trace(fileName,p)
 			root = p.copy()
 		else:
 			g.es("Go to line number: ancestor must be @file node", color="blue")
@@ -1213,7 +1213,6 @@ class baseCommands:
 		#@nonl
 		#@-node:ekr.20031218072017.2867:<< get n, the line number, from a dialog >>
 		#@nl
-		# g.trace(n)
 		if n==1:
 			p = root ; n2 = 1 ; found = true
 		elif n >= len(lines):
@@ -1241,16 +1240,35 @@ class baseCommands:
 			#@-node:ekr.20031218072017.2868:<< count outline lines, setting p,n2,found >> (@file-nosent only)
 			#@nl
 		else:
-			vnodeName,childIndex,n2,delim = self.convertLineToVnodeNameIndexLine(lines,n,root)
+			vnodeName,childIndex,gnx,n2,delim = self.convertLineToVnodeNameIndexLine(lines,n,root)
 			found = true
 			if not vnodeName:
 				g.es("invalid derived file: " + fileName)
 				return
-			#@		<< set p to the node given by vnodeName and childIndex or n >>
-			#@+node:ekr.20031218072017.2869:<< set p to the node given by vnodeName and childIndex or n >>
-			after = root.nodeAfterTree()
-			
-			if childIndex == -1:
+			#@		<< set p to the node given by vnodeName and gnx or childIndex or n >>
+			#@+node:ekr.20031218072017.2869:<< set p to the node given by vnodeName and gnx or childIndex or n >>
+			if gnx:
+				#@	<< 4.2: get node from gnx >>
+				#@+node:EKR.20040609110138:<< 4.2: get node from gnx >>
+				found = false
+				gnx = g.app.nodeIndices.scanGnx(gnx,0)
+				
+				# g.trace(vnodeName)
+				# g.trace(gnx)
+				
+				for p in root.self_and_subtree_iter():
+					if p.matchHeadline(vnodeName):
+						# g.trace(p.v.t.fileIndex)
+						if p.v.t.fileIndex == gnx:
+							found = true ; break
+				
+				if not found:
+					g.es("not found: " + vnodeName, color="red")
+					return
+				#@nonl
+				#@-node:EKR.20040609110138:<< 4.2: get node from gnx >>
+				#@nl
+			elif childIndex == -1:
 				#@	<< 4.x: scan for the node using tnodeList and n >>
 				#@+node:ekr.20031218072017.2870:<< 4.x: scan for the node using tnodeList and n >>
 				# This is about the best that can be done without replicating the entire atFile write logic.
@@ -1362,7 +1380,7 @@ class baseCommands:
 				#@-node:ekr.20031218072017.2874:<< 3.x: scan for the node with the given childIndex >>
 				#@nl
 			#@nonl
-			#@-node:ekr.20031218072017.2869:<< set p to the node given by vnodeName and childIndex or n >>
+			#@-node:ekr.20031218072017.2869:<< set p to the node given by vnodeName and gnx or childIndex or n >>
 			#@nl
 		#@	<< select p and make it visible >>
 		#@+node:ekr.20031218072017.2875:<< select p and make it visible >>
@@ -1404,9 +1422,11 @@ class baseCommands:
 	
 	def convertLineToVnodeNameIndexLine (self,lines,n,root):
 		
-		"""Convert a line number n to a vnode name, child index and line number."""
+		"""Convert a line number n to a vnode name, (child index or gnx) and line number."""
 		
-		childIndex = 0 ; newDerivedFile = false
+		c = self ; at = c.atFileCommands
+		childIndex = 0 ; gnx = None ; newDerivedFile = false
+		thinFile = root.isAtThinFileNode()
 		#@	<< set delim, leoLine from the @+leo line >>
 		#@+node:ekr.20031218072017.2878:<< set delim, leoLine from the @+leo line >>
 		# Find the @+leo line.
@@ -1415,26 +1435,19 @@ class baseCommands:
 		while i < len(lines) and lines[i].find(tag)==-1:
 			i += 1
 		leoLine = i # Index of the line containing the leo sentinel
-		# g.trace("leoLine:",leoLine)
 		
-		delim = None # All sentinels start with this.
 		if leoLine < len(lines):
-			# The opening comment delim is the initial non-whitespace.
 			s = lines[leoLine]
-			i = g.skip_ws(s,0)
-			j = s.find(tag)
-			newDerivedFile = g.match(s,j,"@+leo-ver=4")
-			delim = s[i:j]
-			if len(delim)==0:
-				delim=None
-			else:
-				delim += '@'
-		#@nonl
+			valid,newDerivedFile,start,end = at.parseLeoSentinel(s)
+			if valid: delim = start + '@'
+			else:     delim = None
+		else:
+			delim = None
 		#@-node:ekr.20031218072017.2878:<< set delim, leoLine from the @+leo line >>
 		#@nl
 		if not delim:
 			g.es("bad @+leo sentinel")
-			return None,None,None,None
+			return None,None,None,None,None
 		#@	<< scan back to @+node, setting offset,nodeSentinelLine >>
 		#@+node:ekr.20031218072017.2879:<< scan back to  @+node, setting offset,nodeSentinelLine >>
 		offset = 0 # This is essentially the Tk line number.
@@ -1474,12 +1487,23 @@ class baseCommands:
 			return root.headString(),0,1,delim # 10/13/03
 		s = lines[nodeSentinelLine]
 		# g.trace(s)
-		#@	<< set vnodeName and childIndex from s >>
-		#@+node:ekr.20031218072017.2881:<< set vnodeName and childIndex from s >>
+		#@	<< set vnodeName and (childIndex or gnx) from s >>
+		#@+node:ekr.20031218072017.2881:<< set vnodeName and (childIndex or gnx) from s >>
 		if newDerivedFile:
-			# vnode name is everything following the first ':'
+			i = 0
+			if thinFile:
+				# gnx is lies between the first and second ':':
+				i = s.find(':',i)
+				if i > 0:
+					i += 1
+					j = s.find(':',i)
+					if j > 0:
+						gnx = s[i:j]
+					else: i = len(s)
+				else: i = len(s)
+			# vnode name is everything following the first or second':'
 			# childIndex is -1 as a flag for later code.
-			i = s.find(':')
+			i = s.find(':',i)
 			if i > -1: vnodeName = s[i+1:].strip()
 			else: vnodeName = None
 			childIndex = -1
@@ -1494,15 +1518,15 @@ class baseCommands:
 				i += 1
 			vnodeName = s[i:].strip()
 			
-		# g.trace("vnodeName:",vnodeName)
+		# g.trace("gnx",gnx,"vnodeName:",vnodeName)
 		if not vnodeName:
 			vnodeName = None
 			g.es("bad @+node sentinel")
-		#@-node:ekr.20031218072017.2881:<< set vnodeName and childIndex from s >>
+		#@nonl
+		#@-node:ekr.20031218072017.2881:<< set vnodeName and (childIndex or gnx) from s >>
 		#@nl
 		# g.trace("childIndex,offset",childIndex,offset,vnodeName)
-		return vnodeName,childIndex,offset,delim
-	#@nonl
+		return vnodeName,childIndex,gnx,offset,delim
 	#@-node:ekr.20031218072017.2877:convertLineToVnodeNameIndexLine
 	#@+node:ekr.20031218072017.2882:skipToMatchingNodeSentinel
 	def skipToMatchingNodeSentinel (self,lines,n,delim):
