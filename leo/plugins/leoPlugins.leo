@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="986" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="967" clone_windows="0"/>
 <globals body_outline_ratio="0.5">
 	<global_window_position top="71" left="379" height="828" width="869"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
@@ -1096,192 +1096,170 @@
 </v>
 </v>
 <v t="T838"><vh>New kinds of nodes</vh>
-<v t="T839"><vh>at_folder_recursive</vh>
-<v t="T840" tnodeList="840,841,842,843,844,845,846,847,848,849,850,851,852,853,854,855,856"><vh>@file at_folder_recursive.py</vh>
-<v t="T841"><vh>applyConfiguration</vh></v>
-<v t="T842"><vh>class syncNodeToFolderRecursive</vh>
-<v t="T843"><vh>__init__</vh></v>
-<v t="T844"><vh>doSynchronization</vh></v>
-<v t="T845"><vh>computeTreeMapping</vh></v>
-<v t="T846"><vh>computeDirectoryMapping</vh></v>
-<v t="T847"><vh>compareTreeWithDirectory</vh></v>
-<v t="T848"><vh>createChild</vh></v>
-<v t="T849"><vh>clearMarkBits</vh></v>
-<v t="T850"><vh>markTreeDeleted</vh></v>
-<v t="T851"><vh>createSubtreeFromMapping</vh></v>
-<v t="T852"><vh>sortTree</vh></v>
-<v t="T853"><vh>treeIterator</vh></v>
+<v t="T839" tnodeList="839,840,841"><vh>@file at_folder.py</vh>
+<v t="T840"><vh>&lt;&lt; about this plugin &gt;&gt;</vh></v>
+<v t="T841"><vh>sync_node_to_folder</vh></v>
 </v>
-<v t="T854"><vh>cmd_sync</vh></v>
-<v t="T855"><vh>checkHeadstring</vh></v>
-<v t="T856"><vh>onSelect</vh></v>
+<v t="T842" tnodeList="842,843,844,845,846,848,849,851,853,854,855,856,857,858,859,860,861,862,863,864,865,866"><vh>@file read_only_nodes.py</vh>
+<v t="T843"><vh>documentation for @read-only nodes</vh>
+<v t="T844"><vh>ftp/http access</vh></v>
 </v>
-<v t="T857" tnodeList="857"><vh>@file at_folder_recursive.ini</vh></v>
+<v t="T845"><vh>class FTPurl</vh>
+<v t="T846"><vh>__init__</vh></v>
+<v t="T847"><vh>Getters</vh>
+<v t="T848"><vh>read</vh></v>
+<v t="T849"><vh>readline</vh></v>
 </v>
-<v t="T858" tnodeList="858,859,860"><vh>@file at_folder.py</vh>
-<v t="T859"><vh>&lt;&lt; about this plugin &gt;&gt;</vh></v>
-<v t="T860"><vh>sync_node_to_folder</vh></v>
+<v t="T850"><vh>Setters</vh>
+<v t="T851"><vh>write</vh></v>
 </v>
-<v t="T861" tnodeList="861,862,863,864,865,867,868,870,872,873,874,875,876,877,878,879,880,881,882,883,884,885"><vh>@file read_only_nodes.py</vh>
-<v t="T862"><vh>documentation for @read-only nodes</vh>
-<v t="T863"><vh>ftp/http access</vh></v>
+<v t="T852"><vh>Utilities</vh>
+<v t="T853"><vh>seek</vh></v>
+<v t="T854"><vh>flush</vh></v>
+<v t="T855"><vh>dir</vh></v>
+<v t="T856"><vh>exists</vh></v>
+<v t="T857"><vh>checkParams</vh></v>
 </v>
-<v t="T864"><vh>class FTPurl</vh>
-<v t="T865"><vh>__init__</vh></v>
-<v t="T866"><vh>Getters</vh>
-<v t="T867"><vh>read</vh></v>
-<v t="T868"><vh>readline</vh></v>
+<v t="T858"><vh>close</vh></v>
 </v>
-<v t="T869"><vh>Setters</vh>
-<v t="T870"><vh>write</vh></v>
+<v t="T859"><vh>enable/disable_body</vh></v>
+<v t="T860"><vh>insert_read_only_node (FTP version)</vh>
+<v t="T861"><vh>&lt;&lt; convert HTML to text &gt;&gt;</vh></v>
 </v>
-<v t="T871"><vh>Utilities</vh>
-<v t="T872"><vh>seek</vh></v>
-<v t="T873"><vh>flush</vh></v>
-<v t="T874"><vh>dir</vh></v>
-<v t="T875"><vh>exists</vh></v>
-<v t="T876"><vh>checkParams</vh></v>
+<v t="T862"><vh>on_open2</vh></v>
+<v t="T863"><vh>on_bodykey1</vh></v>
+<v t="T864"><vh>on_headkey2</vh></v>
+<v t="T865"><vh>on_select1</vh></v>
+<v t="T866"><vh>on_select2</vh></v>
 </v>
-<v t="T877"><vh>close</vh></v>
+<v t="T867" tnodeList="867,868,869,870,871,872,873,874,875"><vh>@file rst.py</vh>
+<v t="T868"><vh>&lt;&lt;about this plugin &gt;&gt;</vh></v>
+<v t="T869"><vh>&lt;&lt; change log &gt;&gt;</vh></v>
+<v t="T870" a="E"><vh>onIconDoubleClick</vh>
+<v t="T871" a="E"><vh>&lt;&lt; write rST as HTML &gt;&gt;</vh>
+<v t="T872"><vh>&lt;&lt; convert rST to HTML &gt;&gt;</vh></v>
 </v>
-<v t="T878"><vh>enable/disable_body</vh></v>
-<v t="T879"><vh>insert_read_only_node (FTP version)</vh>
-<v t="T880"><vh>&lt;&lt; convert HTML to text &gt;&gt;</vh></v>
+<v t="T873"><vh>&lt;&lt; write rST file &gt;&gt;</vh></v>
 </v>
-<v t="T881"><vh>on_open2</vh></v>
-<v t="T882"><vh>on_bodykey1</vh></v>
-<v t="T883"><vh>on_headkey2</vh></v>
-<v t="T884"><vh>on_select1</vh></v>
-<v t="T885"><vh>on_select2</vh></v>
+<v t="T874"><vh>writeTreeAsRst</vh></v>
+<v t="T875"><vh>underline</vh></v>
 </v>
-<v t="T886" tnodeList="886,887,888,889,890,891,892,893,894"><vh>@file rst.py</vh>
-<v t="T887"><vh>&lt;&lt;about this plugin &gt;&gt;</vh></v>
-<v t="T888"><vh>&lt;&lt; change log &gt;&gt;</vh></v>
-<v t="T889" a="E"><vh>onIconDoubleClick</vh>
-<v t="T890" a="E"><vh>&lt;&lt; write rST as HTML &gt;&gt;</vh>
-<v t="T891"><vh>&lt;&lt; convert rST to HTML &gt;&gt;</vh></v>
-</v>
-<v t="T892"><vh>&lt;&lt; write rST file &gt;&gt;</vh></v>
-</v>
-<v t="T893"><vh>writeTreeAsRst</vh></v>
-<v t="T894"><vh>underline</vh></v>
-</v>
-<v t="T895" tnodeList="895,896,897,898,899"><vh>@file startfile.py</vh>
-<v t="T896"><vh>&lt;&lt;about this plugin &gt;&gt;</vh></v>
-<v t="T897"><vh>&lt;&lt; change log &gt;&gt;</vh></v>
-<v t="T898"><vh>onIconDoubleClick</vh>
-<v t="T899"><vh>&lt;&lt; find path and start file &gt;&gt;</vh></v>
+<v t="T876" tnodeList="876,877,878,879,880"><vh>@file startfile.py</vh>
+<v t="T877"><vh>&lt;&lt;about this plugin &gt;&gt;</vh></v>
+<v t="T878"><vh>&lt;&lt; change log &gt;&gt;</vh></v>
+<v t="T879"><vh>onIconDoubleClick</vh>
+<v t="T880"><vh>&lt;&lt; find path and start file &gt;&gt;</vh></v>
 </v>
 </v>
 </v>
-<v t="T900"><vh>Overriding functions, methods &amp; classes</vh>
-<v t="T901" tnodeList="901,902,903"><vh>@file __overrideClasses.py</vh>
-<v t="T902"><vh>&lt;&lt; override the LeoFrame class &gt;&gt;</vh></v>
-<v t="T903"><vh>&lt;&lt; override methods of the LeoApp class &gt;&gt;</vh></v>
+<v t="T881"><vh>Overriding functions, methods &amp; classes</vh>
+<v t="T882" tnodeList="882,883,884"><vh>@file __overrideClasses.py</vh>
+<v t="T883"><vh>&lt;&lt; override the LeoFrame class &gt;&gt;</vh></v>
+<v t="T884"><vh>&lt;&lt; override methods of the LeoApp class &gt;&gt;</vh></v>
 </v>
-<v t="T904" tnodeList="904,905"><vh>@file override_commands.py</vh>
-<v t="T905"><vh>onCommand</vh></v>
+<v t="T885" tnodeList="885,886"><vh>@file override_commands.py</vh>
+<v t="T886"><vh>onCommand</vh></v>
 </v>
-<v t="T906" tnodeList="906,907,908"><vh>@file redefine_put.py</vh>
-<v t="T907"><vh>onStart</vh></v>
-<v t="T908"><vh>newPut and newPutNl</vh></v>
+<v t="T887" tnodeList="887,888,889"><vh>@file redefine_put.py</vh>
+<v t="T888"><vh>onStart</vh></v>
+<v t="T889"><vh>newPut and newPutNl</vh></v>
 </v>
-<v t="T909" tnodeList="909"><vh>@file redirect_to_log.py</vh></v>
-<v t="T910" tnodeList="910,911,912,913,914"><vh>@file script_io_to_body.py</vh>
-<v t="T911"><vh>onStart</vh></v>
-<v t="T912"><vh>newExecuteScript</vh></v>
-<v t="T913"><vh>newPut and newPutNl</vh></v>
-<v t="T914"><vh>newEs, etc.</vh></v>
+<v t="T890" tnodeList="890"><vh>@file redirect_to_log.py</vh></v>
+<v t="T891" tnodeList="891,892,893,894,895"><vh>@file script_io_to_body.py</vh>
+<v t="T892"><vh>onStart</vh></v>
+<v t="T893"><vh>newExecuteScript</vh></v>
+<v t="T894"><vh>newPut and newPutNl</vh></v>
+<v t="T895"><vh>newEs, etc.</vh></v>
 </v>
 </v>
-<v t="T915"><vh>Spell Checking</vh>
-<v t="T916"><vh>@silentfile mod_spelling.txt</vh></v>
-<v t="T917" tnodeList="917"><vh>@file mod_spelling.ini</vh></v>
-<v t="T918" tnodeList="918,920,921,922,923,925,926,927,928,929,930,931,932,933,935,936,937,938,939,940,941,942,944,945,946,947,948,949,951,952,953,954,955,957,958,959,960,961,962,963,964,965,966"><vh>@file mod_spelling.py</vh>
-<v t="T919"><vh>Functions</vh>
-<v t="T920"><vh>createSpellMenu</vh></v>
-<v t="T921"><vh>onSelect</vh></v>
-<v t="T922"><vh>onCommand</vh></v>
+<v t="T896"><vh>Spell Checking</vh>
+<v t="T897"><vh>@silentfile mod_spelling.txt</vh></v>
+<v t="T898" tnodeList="898"><vh>@file mod_spelling.ini</vh></v>
+<v t="T899" tnodeList="899,901,902,903,904,906,907,908,909,910,911,912,913,914,916,917,918,919,920,921,922,923,925,926,927,928,929,930,932,933,934,935,936,938,939,940,941,942,943,944,945,946,947"><vh>@file mod_spelling.py</vh>
+<v t="T900"><vh>Functions</vh>
+<v t="T901"><vh>createSpellMenu</vh></v>
+<v t="T902"><vh>onSelect</vh></v>
+<v t="T903"><vh>onCommand</vh></v>
 </v>
-<v t="T923"><vh>class Aspell</vh>
-<v t="T924"><vh>Birth &amp; death</vh>
-<v t="T925"><vh>__init__</vh></v>
-<v t="T926"><vh>getAspellDirectory</vh></v>
+<v t="T904"><vh>class Aspell</vh>
+<v t="T905"><vh>Birth &amp; death</vh>
+<v t="T906"><vh>__init__</vh></v>
+<v t="T907"><vh>getAspellDirectory</vh></v>
 </v>
-<v t="T927"><vh>openPipes</vh>
-<v t="T928"><vh>&lt;&lt; Ensure local dictionary is present &gt;&gt;</vh></v>
+<v t="T908"><vh>openPipes</vh>
+<v t="T909"><vh>&lt;&lt; Ensure local dictionary is present &gt;&gt;</vh></v>
 </v>
-<v t="T929"><vh>closePipes</vh></v>
-<v t="T930"><vh>listAlternates</vh></v>
-<v t="T931"><vh>processWord</vh></v>
-<v t="T932"><vh>updateDictionary</vh></v>
+<v t="T910"><vh>closePipes</vh></v>
+<v t="T911"><vh>listAlternates</vh></v>
+<v t="T912"><vh>processWord</vh></v>
+<v t="T913"><vh>updateDictionary</vh></v>
 </v>
-<v t="T933"><vh>class spellDialog</vh>
-<v t="T934"><vh>Birth &amp; death</vh>
-<v t="T935"><vh>spell.__init__</vh>
-<v t="T936"><vh>&lt;&lt; set self.dictionary &gt;&gt;</vh></v>
+<v t="T914"><vh>class spellDialog</vh>
+<v t="T915"><vh>Birth &amp; death</vh>
+<v t="T916"><vh>spell.__init__</vh>
+<v t="T917"><vh>&lt;&lt; set self.dictionary &gt;&gt;</vh></v>
 </v>
-<v t="T937"><vh>getLocalDictionary</vh></v>
-<v t="T938"><vh>getLocalLanguageCode</vh></v>
-<v t="T939"><vh>readLocalDictionary</vh></v>
+<v t="T918"><vh>getLocalDictionary</vh></v>
+<v t="T919"><vh>getLocalLanguageCode</vh></v>
+<v t="T920"><vh>readLocalDictionary</vh></v>
 </v>
-<v t="T940"><vh>createFrame</vh>
-<v t="T941"><vh>&lt;&lt; Create the text and suggestion panes &gt;&gt;</vh></v>
-<v t="T942"><vh>&lt;&lt; Create the spelling buttons &gt;&gt;</vh></v>
+<v t="T921"><vh>createFrame</vh>
+<v t="T922"><vh>&lt;&lt; Create the text and suggestion panes &gt;&gt;</vh></v>
+<v t="T923"><vh>&lt;&lt; Create the spelling buttons &gt;&gt;</vh></v>
 </v>
-<v t="T943"><vh>Buttons</vh>
-<v t="T944"><vh>onAddButton</vh></v>
-<v t="T945"><vh>onIgnoreButton</vh></v>
-<v t="T946"><vh>onChangeButton &amp; onChangeThenFindButton</vh></v>
-<v t="T947"><vh>onFindButton</vh></v>
-<v t="T948"><vh>onHideButton</vh></v>
-<v t="T949"><vh>onRedoButton &amp; onUndoButton</vh></v>
+<v t="T924"><vh>Buttons</vh>
+<v t="T925"><vh>onAddButton</vh></v>
+<v t="T926"><vh>onIgnoreButton</vh></v>
+<v t="T927"><vh>onChangeButton &amp; onChangeThenFindButton</vh></v>
+<v t="T928"><vh>onFindButton</vh></v>
+<v t="T929"><vh>onHideButton</vh></v>
+<v t="T930"><vh>onRedoButton &amp; onUndoButton</vh></v>
 </v>
-<v t="T950"><vh>Commands</vh>
-<v t="T951"><vh>add</vh></v>
-<v t="T952"><vh>change</vh></v>
-<v t="T953"><vh>checkSpelling</vh></v>
-<v t="T954"><vh>find</vh></v>
-<v t="T955"><vh>ignore</vh></v>
+<v t="T931"><vh>Commands</vh>
+<v t="T932"><vh>add</vh></v>
+<v t="T933"><vh>change</vh></v>
+<v t="T934"><vh>checkSpelling</vh></v>
+<v t="T935"><vh>find</vh></v>
+<v t="T936"><vh>ignore</vh></v>
 </v>
-<v t="T956"><vh>Helpers</vh>
-<v t="T957"><vh>closePipes</vh></v>
-<v t="T958"><vh>fillbox</vh></v>
-<v t="T959"><vh>findNextMisspelledWord</vh>
-<v t="T960"><vh>&lt;&lt; Skip word if ignored or in local dictionary &gt;&gt;</vh></v>
+<v t="T937"><vh>Helpers</vh>
+<v t="T938"><vh>closePipes</vh></v>
+<v t="T939"><vh>fillbox</vh></v>
+<v t="T940"><vh>findNextMisspelledWord</vh>
+<v t="T941"><vh>&lt;&lt; Skip word if ignored or in local dictionary &gt;&gt;</vh></v>
 </v>
-<v t="T961"><vh>findNextWord</vh></v>
-<v t="T962"><vh>getSuggestion</vh></v>
-<v t="T963"><vh>onMap</vh></v>
-<v t="T964"><vh>onSelectListBox</vh></v>
-<v t="T965"><vh>update</vh></v>
-<v t="T966"><vh>updateButtons</vh></v>
+<v t="T942"><vh>findNextWord</vh></v>
+<v t="T943"><vh>getSuggestion</vh></v>
+<v t="T944"><vh>onMap</vh></v>
+<v t="T945"><vh>onSelectListBox</vh></v>
+<v t="T946"><vh>update</vh></v>
+<v t="T947"><vh>updateButtons</vh></v>
 </v>
 </v>
 </v>
 </v>
-<v t="T967"><vh>Plugin manager (demo)</vh>
-<v t="T968"><vh>Notes by Paul Paterson</vh></v>
-<v t="T969" tnodeList="969,970,971,972,973,974,975,976,977,978"><vh>@file leopm_client.py</vh>
-<v t="T970"><vh>class LeoPMClient</vh>
-<v t="T971"><vh>__init__</vh></v>
-<v t="T972"><vh>poll</vh></v>
-<v t="T973"><vh>_getSelectedPluginName</vh></v>
-<v t="T974"><vh>updateDetail</vh></v>
-<v t="T975"><vh>downloadPlugin</vh></v>
-<v t="T976"><vh>getPluginList</vh></v>
-<v t="T977"><vh>initListbox</vh></v>
-<v t="T978"><vh>getVersionOfFile</vh></v>
+<v t="T948"><vh>Plugin manager (demo)</vh>
+<v t="T949"><vh>Notes by Paul Paterson</vh></v>
+<v t="T950" tnodeList="950,951,952,953,954,955,956,957,958,959"><vh>@file leopm_client.py</vh>
+<v t="T951"><vh>class LeoPMClient</vh>
+<v t="T952"><vh>__init__</vh></v>
+<v t="T953"><vh>poll</vh></v>
+<v t="T954"><vh>_getSelectedPluginName</vh></v>
+<v t="T955"><vh>updateDetail</vh></v>
+<v t="T956"><vh>downloadPlugin</vh></v>
+<v t="T957"><vh>getPluginList</vh></v>
+<v t="T958"><vh>initListbox</vh></v>
+<v t="T959"><vh>getVersionOfFile</vh></v>
 </v>
 </v>
-<v t="T979" tnodeList="979,980,980,981,982,983,984,985,986"><vh>@file leopm_server.py</vh>
-<v t="T980"><vh>class LeoPM</vh>
-<v t="T981"><vh>__init__</vh></v>
-<v t="T982"><vh>getPluginNames</vh></v>
-<v t="T983"><vh>getPluginDescription</vh></v>
-<v t="T984"><vh>getPlugin</vh></v>
-<v t="T985"><vh>getPluginVersion</vh></v>
-<v t="T986"><vh>getPluginFilenames</vh></v>
+<v t="T960" tnodeList="960,961,961,962,963,964,965,966,967"><vh>@file leopm_server.py</vh>
+<v t="T961"><vh>class LeoPM</vh>
+<v t="T962"><vh>__init__</vh></v>
+<v t="T963"><vh>getPluginNames</vh></v>
+<v t="T964"><vh>getPluginDescription</vh></v>
+<v t="T965"><vh>getPlugin</vh></v>
+<v t="T966"><vh>getPluginVersion</vh></v>
+<v t="T967"><vh>getPluginFilenames</vh></v>
 </v>
 </v>
 </v>
@@ -11311,262 +11289,7 @@ for file in files:
 
 c.frame.createMenuEntries(menu, table)</t>
 <t tx="T838"></t>
-<t tx="T839"></t>
-<t tx="T840">"""
-If a node is named '@folder path_to_folder', then this plugin can be used to create one node per file. This is done recursively for subfolders.
-
-Use the 'Plugins' menu to set the options for this plugin.
-
-This plugin does not deal with casing on Windows.
-
-Only tested on Windows.
-"""
-
-@language python
-
-@others
-
-if 0: # Register the handlers...
-   syncNodeToFolderRecursiveInstance = syncNodeToFolderRecursive()
-   if __file__:
-      import os
-      inifile = os.path.splitext(__file__)[0] + '.ini'
-      if os.path.exists(inifile):
-         from ConfigParser import ConfigParser
-         cfp = ConfigParser()
-         cfp.read(inifile)
-         applyConfiguration(cfp)
-   registerHandler("select1", onSelect)
-
-   __version__ = "0.9" # Set version for the plugin handler.
-   plugin_signon(__name__)
-
-</t>
-<t tx="T841">def applyConfiguration(config):
-	
-   """Apply changes in configuration
-   
-   The config object has sections. Each section has options. See the
-   ConfigParser module for more information on this object.
-   
-   """
-
-   for section in config.sections():
-      for option in config.options(section):
-         setattr(syncNodeToFolderRecursiveInstance,  option, config.get(section, option))
-</t>
-<t tx="T842">class syncNodeToFolderRecursive:
-	@others
-</t>
-<t tx="T843">def __init__(self):
-   self.clear_out_mark_bits_before_running = 0
-   self.execute_on_selection = 0
-</t>
-<t tx="T844">def doSynchronization(self, parent, directory):
-   """
-   Check if the nodes at parent and below correspond to the directory 'directory'.
-   """
-   
-   self.createdNodes = self.deletedNodes = 0
-   
-   es("\nChecking the state of the file system for %s" % directory)
-   parentMapping = self.computeTreeMapping(parent)
-   directoryMapping = self.computeDirectoryMapping(directory)
-
-   change = False
-   if self.clear_out_mark_bits_before_running:
-      change = self.clearMarkBits(parent)
-
-   change = self.compareTreeWithDirectory(parent, parentMapping, directoryMapping) or change
-   
-   if change:
-      self.sortTree(parent)
-      c = top()
-      # Force a screen redraw
-      c.redraw()
-  
-   if self.deletedNodes != 0 or self.createdNodes != 0:
-      es("Nodes created: %s, nodes marked deleted: %s" % (self.createdNodes, self.deletedNodes))
-      es("To find the deleted nodes search for the string DELETED:")
-   es("Done checking the file system of the directory %s\n" % directory)
-</t>
-<t tx="T845">def computeTreeMapping(self, parent):
-   """
-   Computes a mapping parent =&gt; {} or
-                      parent =&gt; {child: ...*}
-   """
-
-   result = {}
-
-   child = parent.firstChild()
-
-   while child:
-      hs = child.headString()
-      result[hs] = (child, self.computeTreeMapping(child))
-      child = child.next()
-
-   return result
-</t>
-<t tx="T846">def computeDirectoryMapping(self, directory):
-   """
-   Computes a mapping filename =&gt; {} or
-                      directoryname =&gt; {filename: ...*}
-   """
-
-   result = {}
-
-   olddir = os.getcwd()
-   try:
-      os.chdir(directory)
-      for name in os.listdir(directory):
-         try:
-            fullname = os.path.join(directory, name)
-         except:
-            print "Could not join %s to %s" % (`directory`, `name`)
-            continue
-         if os.path.isdir(fullname):
-            result[name] = self.computeDirectoryMapping(fullname)
-         else:
-            result[name] = {}
-   except:
-      os.chdir(olddir)
-      raise
-
-   return result
-</t>
-<t tx="T847">def compareTreeWithDirectory(self, parent, parentMapping, directoryMapping):
-   """
-   Not sure if this routine can not be made a little bit simpler...
-   """
-
-   change = False
-
-   # check if all nodes correspond to files.
-   for name in parentMapping.keys():
-      child, childMapping = parentMapping[name]
-      
-      if not directoryMapping.has_key(name):
-         # possibility 1: The file has been deleted.
-         self.markTreeDeleted(child)
-         change = True
-
-      else:
-         files = directoryMapping[name]
-         if childMapping == {} and files == {}:
-            # we are done. Everything matches.
-            pass
-         elif childMapping == {} and files != {}:
-            self.createSubtreeFromMapping(child, files)
-            change = True
-            
-         elif childMapping != {} and files == {}:
-            for key, (grandchild, grandchild_mapping) in childMapping.items():
-               self.markTreeDeleted(grandchild)
-         else:
-            # The child corresponds to a directory which still exists.
-            # Now check the grandchildren.
-            for childname, (grandchildnode, grandchildmapping) in childMapping.items():                        
-               if files.has_key(childname):
-                  change = self.compareTreeWithDirectory(grandchildnode, grandchildmapping, files[childname]) or change
-               else:
-                  self.markTreeDeleted(grandchildnode)
-                  change = True
-
-            # Now check if we have any additional files in that directory.
-            for subfilename in files.keys():
-               if not childMapping.has_key(subfilename):
-                  # new nodes appeared in the subdirectory. Update the tree.
-                  grandchild = self.createChild(child, subfilename)
-                  self.createSubtreeFromMapping(grandchild, files[subfilename])
-                  change = True
-
-   # check for new files and directories
-   for name in directoryMapping.keys():
-      if not parentMapping.has_key(name):
-         child = self.createChild(parent, name)
-         self.createSubtreeFromMapping(child, directoryMapping[name])
-         change = True
-
-   return change
-</t>
-<t tx="T848">def createChild(self, parent, name):
-   self.createdNodes += 1
-   child = parent.insertAsNthChild(0)
-   child.setHeadStringOrHeadline(name)
-   child.setMarked()
-   return child
-</t>
-<t tx="T849">def clearMarkBits(self, parent):
-   change = False
-   for child in self.treeIterator(parent):
-      change = change or child.isMarked()
-      child.clearMarked()
-   return change
-</t>
-<t tx="T850">def markTreeDeleted(self, parent):
-   for node in self.treeIterator(parent):
-      node.setMarked()
-      body = node.bodyString()
-      if body.startswith("DELETED:"):
-         pass
-      else:
-         body = "DELETED:" + body
-         node.setBodyStringOrPane(body)
-      self.deletedNodes += 1
-</t>
-<t tx="T851">def createSubtreeFromMapping(self, parent, files):
-   """
-   Create a new child of parent, named with name 'name'.
-   if files is not empty, then create further children.
-   """
-
-   for name, subfiles in files.items():
-      child = self.createChild(parent, name)
-      self.createSubtreeFromMapping(child, subfiles)
-</t>
-<t tx="T852">def sortTree(self, parent):
-   for node in self.treeIterator(parent):
-      node.sortChildren()
-</t>
-<t tx="T853">def treeIterator(self, parent):
-   """
-   Generator. Yields parent and all children.
-   """
-   yield parent
-   
-   child = parent.firstChild()
-   
-   while child:
-      yield child
-      for grandchild in  self.treeIterator(child):
-         yield grandchild
-      child = child.next()
-</t>
-<t tx="T854">def cmd_sync(x):
-   c = top()
-   if c is None:
-      return
-   v = c.currentVnode()
-   checkHeadstring(v)
-</t>
-<t tx="T855">def checkHeadstring(v):
-   if v is None:
-      return
-   h = v.headString()
-   ps = string.split(h)
-   if len(ps) &gt; 0 and ps[0] == "@folder":
-      syncNodeToFolderRecursiveInstance.doSynchronization(v,h[string.find(h, '@folder')+8:])
-</t>
-<t tx="T856">def onSelect (tag,keywords):
-   if int(syncNodeToFolderRecursiveInstance.execute_on_selection):
-      v = keywords.get("new_v")
-      checkHeadstring(v)
-</t>
-<t tx="T857">[general]
-
-execute_on_selection = 0
-clear_out_mark_bits_before_running = 1</t>
-<t tx="T858">"""Synchronize @folder nodes with folders"""
+<t tx="T839">"""Synchronize @folder nodes with folders"""
 
 from leoPlugins import *
 from leoGlobals import *
@@ -11585,7 +11308,7 @@ if 0: # Register the handlers...
 
 	__version__ = "1.2" # Set version for the plugin handler.
 	plugin_signon(__name__)</t>
-<t tx="T859">@ If a node is named '@folder path_to_folder', the content (filenames) of the
+<t tx="T840">@ If a node is named '@folder path_to_folder', the content (filenames) of the
 folder and the children of that node will be sync. Whenever a new file is put
 there, a new node will appear on top of the children list (with mark). So that
 I can put my description (ie. annotation) as the content of that node. In this
@@ -11596,7 +11319,7 @@ children of another group. This will help when there are many files in that
 folder. You can logically group it in leo (or even clone it to many groups),
 while keep every files in a flat/single directory on your computer.
 </t>
-<t tx="T860">def sync_node_to_folder(parent,d):
+<t tx="T841">def sync_node_to_folder(parent,d):
 
 	oldlist = {}
 	newlist = []
@@ -11624,7 +11347,7 @@ while keep every files in a flat/single directory on your computer.
 	if len(oldlist)&gt;0:
 		es('missing: '+','.join(oldlist.keys()))
 </t>
-<t tx="T861">"""Inhibit changes to @read-only nodes"""
+<t tx="T842">"""Inhibit changes to @read-only nodes"""
 
 # Contributed by Davide Salomoni &lt;dsalomoni@yahoo.com&gt;
 
@@ -11653,7 +11376,7 @@ if 0: # Register the handlers...
 		__version__ = "1.5" # Set version for the plugin handler.
 		plugin_signon(__name__)
 </t>
-<t tx="T862">@ Dear Leo users,
+<t tx="T843">@ Dear Leo users,
 
 Here's my first attempt at customizing leo. I wanted to have the ability to
 import files in "read-only" mode, that is, in a mode where files could only
@@ -11687,7 +11410,7 @@ a "change" message is sent to the log window.
 
 Davide Salomoni
 </t>
-<t tx="T863">@ The syntax to access files in @read-only via ftp/http is the following:
+<t tx="T844">@ The syntax to access files in @read-only via ftp/http is the following:
 
 @read-only http://www.ietf.org/rfc/rfc0791.txt
 @read-only ftp://ftp.someserver.org/filepath
@@ -11698,7 +11421,7 @@ If FTP authentication (username/password) is required, it can be specified as fo
 
 For more details, see the doc string for the class FTPurl.
 </t>
-<t tx="T864">class FTPurl:
+<t tx="T845">class FTPurl:
 	"""An FTP wrapper class to store/retrieve files using an FTP URL.
 
     To create a connection, call the class with the constructor:
@@ -11719,7 +11442,7 @@ For more details, see the doc string for the class FTPurl.
 	
 	@others
 </t>
-<t tx="T865">def __init__(self, ftpURL, mode=''):
+<t tx="T846">def __init__(self, ftpURL, mode=''):
 	parse = urlparse.urlparse(ftpURL)
 	if parse[0] != 'ftp':
 		raise IOError, "error reading %s: malformed ftp URL" % ftpURL
@@ -11750,8 +11473,8 @@ For more details, see the doc string for the class FTPurl.
 	self.isConnectionOpen = 1
 	self.currentLine = 0
 </t>
-<t tx="T866"></t>
-<t tx="T867">def read(self):
+<t tx="T847"></t>
+<t tx="T848">def read(self):
 	"""Read the filename specified in the constructor and return it as a string.
     If the constructor specifies no filename, or if the URL ends with '/',
     return the list of files in the URL directory.
@@ -11776,7 +11499,7 @@ For more details, see the doc string for the class FTPurl.
 		raise IOError, msg
 
 </t>
-<t tx="T868">def readline(self):
+<t tx="T849">def readline(self):
 	"""Read one entire line from the remote file."""
 	try:
 		self.lst
@@ -11790,8 +11513,8 @@ For more details, see the doc string for the class FTPurl.
 	else:
 		return ''
 </t>
-<t tx="T869"></t>
-<t tx="T870">def write(self, s):
+<t tx="T850"></t>
+<t tx="T851">def write(self, s):
 	"""write(s) stores the string s to the filename specified in the
     constructor."""
 	self.checkParams()
@@ -11809,13 +11532,13 @@ For more details, see the doc string for the class FTPurl.
 		exception, msg, tb = sys.exc_info()
 		raise IOError, msg
 </t>
-<t tx="T871"></t>
-<t tx="T872">def seek(offset=0):
+<t tx="T852"></t>
+<t tx="T853">def seek(offset=0):
 	self.currentLine = 0  # we don't support fancy seeking via FTP
 </t>
-<t tx="T873">def flush():
+<t tx="T854">def flush():
 	pass # no fancy stuff here.</t>
-<t tx="T874">def dir(self, path=None):
+<t tx="T855">def dir(self, path=None):
 	"""Issue a LIST command passing the specified argument and return output as a string."""
 	s = []
 
@@ -11829,7 +11552,7 @@ For more details, see the doc string for the class FTPurl.
 		exception, msg, tb = sys.exc_info()
 		raise IOError, msg
 </t>
-<t tx="T875">def exists(self, path=None):
+<t tx="T856">def exists(self, path=None):
 	"""Return 1 if the specified path exists. If path is omitted, the current file name is tried."""
 	if path == None:
 		path = self.filename
@@ -11840,13 +11563,13 @@ For more details, see the doc string for the class FTPurl.
 	else:
 		return 0
 </t>
-<t tx="T876">def checkParams(self):
+<t tx="T857">def checkParams(self):
 	if self.mode not in ('','b'):
 		raise IOError, 'invalid mode: %s' % self.mode
 	if not self.isConnectionOpen:
 		raise IOError, 'ftp connection closed'
 </t>
-<t tx="T877">def close(self):
+<t tx="T858">def close(self):
 	"""Close an existing FTPurl connection."""
 	try:
 		self.ftp.quit()
@@ -11854,7 +11577,7 @@ For more details, see the doc string for the class FTPurl.
 		self.ftp.close()
 	del self.ftp
 	self.isConnectionOpen = 0</t>
-<t tx="T878"># Alas, these do not seem to work on XP:
+<t tx="T859"># Alas, these do not seem to work on XP:
 # disabling the body text _permanently_ stops the cursor from blinking.
 
 def enable_body(body):
@@ -11878,7 +11601,7 @@ def disable_body(body):
 			body.configure(state="disabled")
 		except: es_exception()
 </t>
-<t tx="T879"># Sets v's body text from the file with the given name.
+<t tx="T860"># Sets v's body text from the file with the given name.
 # Returns true if the body text changed.
 def insert_read_only_node (c,v,name):
 	if name=="":
@@ -11915,7 +11638,7 @@ def insert_read_only_node (c,v,name):
 		if changed and previous != "":
 			es("changed: %s" % name) # A real change.
 		return changed</t>
-<t tx="T880">fh = cStringIO.StringIO()
+<t tx="T861">fh = cStringIO.StringIO()
 fmt = AbstractFormatter(DumbWriter(fh))
 # the parser stores parsed data into fh (file-like handle)
 parser = HTMLParser(fmt)
@@ -11936,7 +11659,7 @@ if numlinks &gt; 0:
 	for i in xrange(numlinks):
 		hyperlist.append("\n[%d]: %s" % (i+1,hyperlinks[i])) # 3/26/03: was i.
 	new = new + ''.join(hyperlist)</t>
-<t tx="T881">#  scan the outline and process @read-only nodes.
+<t tx="T862">#  scan the outline and process @read-only nodes.
 def on_open2 (tag,keywords):
 	
 	
@@ -11960,7 +11683,7 @@ def on_open2 (tag,keywords):
 		v = v.threadNext()
 	c.endUpdate()
 </t>
-<t tx="T882"># override the body key handler if we are in an @read-only node.
+<t tx="T863"># override the body key handler if we are in an @read-only node.
 
 def on_bodykey1 (tag,keywords):
 
@@ -11977,7 +11700,7 @@ def on_bodykey1 (tag,keywords):
 			body.delete("1.0","end")
 			body.insert("1.0",v.bodyString())
 		return 1 # Override the body key event handler.</t>
-<t tx="T883"># update the body text when we press enter
+<t tx="T864"># update the body text when we press enter
 
 def on_headkey2 (tag,keywords):
 
@@ -11989,14 +11712,14 @@ def on_headkey2 (tag,keywords):
 		# on-the-fly update of @read-only directives
 		changed = insert_read_only_node(c,v,h[11:])
 		c.setChanged(changed)</t>
-<t tx="T884">def on_select1 (tag,keywords):
+<t tx="T865">def on_select1 (tag,keywords):
 
 	# Doesn't work: the cursor doesn't start blinking.
 	# Enable the body text so select will work properly.
 	c = keywords.get("c")
 	enable_body(c.frame.body)
 </t>
-<t tx="T885">def on_select2 (tag,keywords):
+<t tx="T866">def on_select2 (tag,keywords):
 
 	c = keywords.get("c")
 	v = c.currentVnode()
@@ -12006,7 +11729,7 @@ def on_headkey2 (tag,keywords):
 	else:
 		enable_body(c.frame.body)
 </t>
-<t tx="T886">"""If a headline starts with @rst &lt;filename&gt;, double-clicking on it will 
+<t tx="T867">"""If a headline starts with @rst &lt;filename&gt;, double-clicking on it will 
 write a file in outline order, with the headlines converted to reStructuredText 
 section headings.
 If the name of the &lt;filename&gt; has the extension .html or .htm, and if you have
@@ -12030,7 +11753,7 @@ if 1: # Register the handlers...
 	__version__ = "1.5" # Set version for the plugin handler.
 	plugin_signon(__name__)
 </t>
-<t tx="T887">@ This plugin writes out @rst nodes as a reStructuredText file.
+<t tx="T868">@ This plugin writes out @rst nodes as a reStructuredText file.
 
 If the filename ends in .html or .htm and if you have docutils_ (a Python
 module) installed, then it will be written as HTML. The HTML converter is far
@@ -12051,7 +11774,7 @@ Otherwise, section underlining is discouraged, since it is automatically generat
 
 .. _docutils: http://docutils.sourceforge.net
 </t>
-<t tx="T888">@ Change log:
+<t tx="T869">@ Change log:
 
 - New tree types: @rst has been added.
 
@@ -12073,7 +11796,7 @@ Otherwise, section underlining is discouraged, since it is automatically generat
 
 
 </t>
-<t tx="T889"># by Josef Dalcolmo 2003-01-13
+<t tx="T870"># by Josef Dalcolmo 2003-01-13
 #
 # this does not check for proper filename syntax.
 # path is the current dir, or the place @folder points to
@@ -12093,7 +11816,7 @@ def onIconDoubleClick(tag,keywords):
 		else:
 			&lt;&lt; write rST file &gt;&gt;
 </t>
-<t tx="T890">try:
+<t tx="T871">try:
 	import docutils
 except:
 	docutils = None
@@ -12109,7 +11832,7 @@ if docutils:
 	htmlFile.close()
 	rstFile.close()
 	es('written: '+`fname`)</t>
-<t tx="T891"># this code snipped has been taken from code contributed by Paul Paterson 2002-12-05
+<t tx="T872"># this code snipped has been taken from code contributed by Paul Paterson 2002-12-05
 from docutils.core import Publisher
 from docutils.io import StringOutput, StringInput
 
@@ -12120,11 +11843,11 @@ pub.destination = StringOutput(pub.settings, encoding="utf-8")
 pub.set_reader('standalone', None, 'restructuredtext')
 pub.set_writer('html')
 output = pub.publish()</t>
-<t tx="T892">rstFile = file(fname,'w')
+<t tx="T873">rstFile = file(fname,'w')
 writeTreeAsRst(rstFile, fname, v, commands)
 rstFile.close()
 es('written: '+`fname`)</t>
-<t tx="T893">def writeTreeAsRst(rstFile, fname, vnode, commands):
+<t tx="T874">def writeTreeAsRst(rstFile, fname, vnode, commands):
 	'Writes the tree under vnode to the file rstFile (fname is the filename)'
 	# we don't write a title, so the titlepage can be customized
 	# use '#' for title under/overline
@@ -12160,12 +11883,12 @@ es('written: '+`fname`)</t>
 		rstFile.write(s+'\n')
 		rstFile.write('\n')
 		v = v.threadNext()</t>
-<t tx="T894"># note the first character is intentionally unused, to serve as the underline
+<t tx="T875"># note the first character is intentionally unused, to serve as the underline
 # character in a title (in the body of the @rst node)
 def underline(h,level):
 	str = """#=+*^~"'`-:&gt;&lt;_"""[level]
 	return str*max(len(h),4)+'\n'</t>
-<t tx="T895">"""Lauches (starts) a file with the name of the headline on double-clicking it.
+<t tx="T876">"""Lauches (starts) a file with the name of the headline on double-clicking it.
 Uses the @folder path if the headline is under an @folder headline.
 Otherwise the path is relative to the Leo file.
 Headlines starting with an '@' are ignored.
@@ -12186,18 +11909,18 @@ if 0: # Register the handlers...
 	
 	__version__ = "1.1" # Set version for the plugin handler.
 	plugin_signon(__name__)</t>
-<t tx="T896">@ This plugin starts a file with the name of a headline.
+<t tx="T877">@ This plugin starts a file with the name of a headline.
 
 
 </t>
-<t tx="T897">@ Change log
+<t tx="T878">@ Change log
 
 - JD: 2003-03-11 separated out from rst plugin
 
 
 
 </t>
-<t tx="T898"># @folder behavior after an idea and sample code by:
+<t tx="T879"># @folder behavior after an idea and sample code by:
 # korakot ( Korakot Chaovavanich ) @folder for files annotation 2002-11-27 02:39
 # 
 # open file (double-click = startfile) behavior added 
@@ -12220,7 +11943,7 @@ def onIconDoubleClick(tag,keywords):
 	else:
 		# open file with associated application
 		&lt;&lt; find path and start file &gt;&gt;</t>
-<t tx="T899"># Set the base directory by searching for @folder directives in ancestors.
+<t tx="T880"># Set the base directory by searching for @folder directives in ancestors.
 try:
 	basedir = os.curdir	# use current dir as default.
 	parv = v.parent()	# start with parent
@@ -12237,8 +11960,8 @@ except:
 	es(os.path.join(os.getcwd(),fname)+' - file or application not found')
 	es_exception()
 </t>
-<t tx="T900"></t>
-<t tx="T901">from leoPlugins import *
+<t tx="T881"></t>
+<t tx="T882">from leoPlugins import *
 from leoGlobals import *
 
 @others
@@ -12253,7 +11976,7 @@ if 0: # Override classes &amp; methods...
 
 	__version__ = "1.2"
 	plugin_signon(__name__)</t>
-<t tx="T902"># print "overriding LeoFrame class"
+<t tx="T883"># print "overriding LeoFrame class"
 
 import leoFrame
 
@@ -12269,7 +11992,7 @@ class myLeoFrame(leoFrame.leoCoreFrame):
 			leoFrame.leoCoreFrame.__init__(self,title)
 
 leoFrame.LeoFrame = myLeoFrame</t>
-<t tx="T903">import leoApp
+<t tx="T884">import leoApp
 
 # print "overriding app.closeLeoWindow"
 
@@ -12283,7 +12006,7 @@ def myAppCloseLeoWindow(self,frame):
 	print "after closeLeoWindow"
 
 funcToMethod(myAppCloseLeoWindow,leoApp.LeoApp,"closeLeoWindow")</t>
-<t tx="T904">"""Override the Equal Sized Pane command"""
+<t tx="T885">"""Override the Equal Sized Pane command"""
 
 from leoPlugins import *
 from leoGlobals import *
@@ -12295,12 +12018,12 @@ if 0: # Register the handlers...
 	
 	__version__ = "1.2"
 	plugin_signon(__name__)</t>
-<t tx="T905">def onCommand (tag,keywords):
+<t tx="T886">def onCommand (tag,keywords):
 
 	if keywords.get("label")=="equalsizedpanes":
 		es("over-riding Equal Sized Panes")
 		return "override" # Anything other than None overrides.</t>
-<t tx="T906">"""Redefine the "put" and "put_nl" methods"""
+<t tx="T887">"""Redefine the "put" and "put_nl" methods"""
 
 from leoPlugins import *
 from leoGlobals import *
@@ -12312,7 +12035,7 @@ if 0: # Register the handlers...
 	
 	__version__ = "1.2"
 	plugin_signon(__name__)</t>
-<t tx="T907">@ This code illustrates how to redefine _any_ method of Leo.
+<t tx="T888">@ This code illustrates how to redefine _any_ method of Leo.
 Python makes this is almost too easy :-)
 @c
 
@@ -12326,7 +12049,7 @@ def onStart (tag,keywords):
 	# Replace frame.putnl with newPutNl.
 	funcToMethod(newPutNl,leoFrame.LeoFrame,"putnl")
 </t>
-<t tx="T908"># Contrived examples of how to redefine frame.put and frame.putnl
+<t tx="T889"># Contrived examples of how to redefine frame.put and frame.putnl
 
 # Same as frame.put except converts everything to upper case.
 def newPut (self,s,color="black"):
@@ -12348,7 +12071,7 @@ def newPutNl (self):
 		self.log.see("end")
 		self.log.update_idletasks()
 	else: print</t>
-<t tx="T909">"""Send all output to the log pane"""
+<t tx="T890">"""Send all output to the log pane"""
 
 from leoPlugins import *
 from leoGlobals import *
@@ -12365,7 +12088,7 @@ if 0: # Register the handlers...
 	plugin_signon(__name__)
 
 </t>
-<t tx="T910">"""Send output from the Execute Script command to the end of the body pane"""
+<t tx="T891">"""Send output from the Execute Script command to the end of the body pane"""
 
 from leoPlugins import *
 from leoGlobals import *
@@ -12378,14 +12101,14 @@ if 0: # Register the handlers...
 	__version__ = "1.2" # Set version for the plugin handler.
 	plugin_signon(__name__)
 </t>
-<t tx="T911">def onStart (tag,keywords):
+<t tx="T892">def onStart (tag,keywords):
 	
 	import leoFrame
 	
 	# Replace frame.put with newPut.
 	funcToMethod(newExecuteScript,leoFrame.LeoFrame,"OnExecuteScript")
 </t>
-<t tx="T912"># Execute the _selected_ body text as a Python script and sends the output to the end of the body pane.
+<t tx="T893"># Execute the _selected_ body text as a Python script and sends the output to the end of the body pane.
 
 def newExecuteScript(self,event=None,v=None):
 	
@@ -12435,7 +12158,7 @@ def newExecuteScript(self,event=None,v=None):
 	else:
 		es("no script selected")
 </t>
-<t tx="T913"># Same as frame.put except sends output to the end of the body text.
+<t tx="T894"># Same as frame.put except sends output to the end of the body text.
 def newPut (self,s):
 	if self.body:
 			self.body.insert("end",s)
@@ -12447,7 +12170,7 @@ def newPut (self,s):
 # Same as frame.putnl exceptsends output to the end of the body text.
 def newPutNl (self):
 	newPut (self,'\n')</t>
-<t tx="T914">def newEnl():
+<t tx="T895">def newEnl():
 	print
 	
 def newEcnl():
@@ -12471,12 +12194,12 @@ def newEs(s,*args,**keys):
 	else:
 		print s,
 </t>
-<t tx="T915"></t>
-<t tx="T916">colour
+<t tx="T896"></t>
+<t tx="T897">colour
 colourful
 coloured
 </t>
-<t tx="T917"># Configuration file for mod_spelling plugin.
+<t tx="T898"># Configuration file for mod_spelling plugin.
 
 [main]
 
@@ -12485,7 +12208,7 @@ aspell_dir=c:\aspell\bin\aspell.exe
 local_leo_dictionary=c:\prog\leoCVS\leo\plugins\mod_spelling.txt
 
 local_language_code=en</t>
-<t tx="T918">"""Spell Checker Plugin
+<t tx="T899">"""Spell Checker Plugin
 
 - Perfoms spell checking on nodes within a Leo document.
 - Uses aspell.exe to do the checking and suggest alternatives."""
@@ -12517,8 +12240,8 @@ if 0: # Register the handlers...
 		
 		__version__ = "0.2.0"
 		plugin_signon(__name__)</t>
-<t tx="T919"></t>
-<t tx="T920">def createSpellMenu(tag,keywords):
+<t tx="T900"></t>
+<t tx="T901">def createSpellMenu(tag,keywords):
 	
 	"""Create the Check Spelling menu item in the Edit menu."""
 	
@@ -12529,7 +12252,7 @@ if 0: # Register the handlers...
 		("Check Spelling","Alt+Shift+A",spellFrame.checkSpelling))
 
 	c.frame.createMenuItemsFromTable("Edit",table)</t>
-<t tx="T921">def onSelect (tag,keywords):
+<t tx="T902">def onSelect (tag,keywords):
 	
 	"""A new vnode has just been selected.  Update the Spell Check window."""
 
@@ -12543,7 +12266,7 @@ if 0: # Register the handlers...
 			spellFrame.update(show=false,fill=true)
 		else:
 			spellFrame.updateButtons()</t>
-<t tx="T922">def onCommand (tag,keywords):
+<t tx="T903">def onCommand (tag,keywords):
 	
 	"""Update the Spell Check window after any command that might change text."""
 
@@ -12553,14 +12276,14 @@ if 0: # Register the handlers...
 		
 		# print "onCommand",tag
 		spellFrame.update(show=false,fill=false)</t>
-<t tx="T923">class Aspell:
+<t tx="T904">class Aspell:
 	
 	"""A wrapper class for Aspell spell checker"""
 	
 	@others
 </t>
-<t tx="T924"></t>
-<t tx="T925">def __init__(self,local_dictionary_file,local_language_code):
+<t tx="T905"></t>
+<t tx="T906">def __init__(self,local_dictionary_file,local_language_code):
 	
 	"""Ctor for the Aspell class."""
 	
@@ -12579,7 +12302,7 @@ if 0: # Register the handlers...
 		print "failed to set aspell.local_dictionary"
 		self.local.dictionary_file = None
 		self.local_dictionary = None</t>
-<t tx="T926">def getAspellDirectory(self):
+<t tx="T907">def getAspellDirectory(self):
 	
 	"""Get the directory containing aspell.exe from mod_spelling.ini"""
 
@@ -12593,7 +12316,7 @@ if 0: # Register the handlers...
 	except:
 		es_exception()
 		return None</t>
-<t tx="T927">def openPipes (self):
+<t tx="T908">def openPipes (self):
 	
 	"""Open the pipes to aspell.exe"""
 	
@@ -12625,7 +12348,7 @@ if 0: # Register the handlers...
 		else:
 			print "can not open aspell"
 			es("can not open aspell",color="red")</t>
-<t tx="T928">add_dicts = ""
+<t tx="T909">add_dicts = ""
 
 if self.local_dictionary:
 	if self.updateDictionary():
@@ -12633,7 +12356,7 @@ if self.local_dictionary:
 
 
 </t>
-<t tx="T929">def closePipes (self):
+<t tx="T910">def closePipes (self):
 	
 	"""Close the pipes to aspell.exe"""
 	
@@ -12646,7 +12369,7 @@ if self.local_dictionary:
 	if self.output:
 		self.output.close()
 		self.output = None</t>
-<t tx="T930">def listAlternates(self, aspell_return):
+<t tx="T911">def listAlternates(self, aspell_return):
 	
 	"""Return a list of alternates from aspell."""
 	
@@ -12656,7 +12379,7 @@ if self.local_dictionary:
 		return [item.strip() for item in match.groups()[3].split(",")]
 	else:
 		return []</t>
-<t tx="T931">def processWord(self, word):
+<t tx="T912">def processWord(self, word):
 
 	"""Pass a word to aspell and return the list of alternatives."""
 	
@@ -12673,7 +12396,7 @@ if self.local_dictionary:
 		return None
 	else:
 		return self.listAlternates(ret)</t>
-<t tx="T932">def updateDictionary(self):
+<t tx="T913">def updateDictionary(self):
 	
 	"""Update the aspell dictionary from a list of words.
 	
@@ -12693,13 +12416,13 @@ if self.local_dictionary:
 		print err
 		add_dicts = ""
 		return false</t>
-<t tx="T933">class spellDialog (leoFind.leoFindBase):
+<t tx="T914">class spellDialog (leoFind.leoFindBase):
 	
 	"""A class to create and manage Leo's Spell Check dialog."""
 	
 	@others</t>
-<t tx="T934"></t>
-<t tx="T935">def __init__ (self):
+<t tx="T915"></t>
+<t tx="T916">def __init__ (self):
 	
 	"""Ctor for the Leo Spelling dialog."""
 	
@@ -12725,7 +12448,7 @@ if self.local_dictionary:
 	self.listBox.bind("&lt;Double-Button-1&gt;",self.onChangeThenFindButton)
 	self.listBox.bind("&lt;Button-1&gt;",self.onSelectListBox)
 	self.listBox.bind("&lt;Map&gt;",self.onMap)</t>
-<t tx="T936">if self.local_dictionary_file:
+<t tx="T917">if self.local_dictionary_file:
 
 	self.dictionary = self.readLocalDictionary(self.local_dictionary_file)
 	if self.dictionary:
@@ -12740,7 +12463,7 @@ if self.local_dictionary:
 		self.local_dictionary_file = None
 else:
 	self.dictionary = {}</t>
-<t tx="T937">def getLocalDictionary(self):
+<t tx="T918">def getLocalDictionary(self):
 	
 	"""Get the dictionaries containing words not in the standard dictionary from mod_spelling.ini"""
 
@@ -12754,7 +12477,7 @@ else:
 	except:
 		es_exception()
 		return None</t>
-<t tx="T938">def getLocalLanguageCode(self,defaultLanguageCode):
+<t tx="T919">def getLocalLanguageCode(self,defaultLanguageCode):
 	
 	"""Get the dictionaries containing words not in the standard dictionary from mod_spelling.ini"""
 
@@ -12768,7 +12491,7 @@ else:
 	except:
 		es_exception()
 		return defaultLanguageCode</t>
-<t tx="T939">def readLocalDictionary (self,local_dictionary):
+<t tx="T920">def readLocalDictionary (self,local_dictionary):
 	
 	"""Read the dictionary of words which we use as a local dictionary
 	
@@ -12792,7 +12515,7 @@ else:
 		f.close()
 
 	return dct</t>
-<t tx="T940">def createFrame (self):
+<t tx="T921">def createFrame (self):
 	
 	"""Create the Spelling dialog."""
 	
@@ -12803,7 +12526,7 @@ else:
 	&lt;&lt; Create the text and suggestion panes &gt;&gt;
 	&lt;&lt; Create the spelling buttons &gt;&gt;
 </t>
-<t tx="T941">f = outer
+<t tx="T922">f = outer
 
 f2 = Tk.Frame(f)
 f2.pack(expand=1,fill="x")
@@ -12823,7 +12546,7 @@ for bar,txt in ((listBoxBar,self.listBox),):
 	bar['command'] = txt.yview
 	bar.pack(side="right", fill="y")
 </t>
-<t tx="T942"># Create the button panes
+<t tx="T923"># Create the button panes
 buttons1  = Tk.Frame(outer,bd=1)
 buttons1.pack (anchor="n",expand=1,fill="x")
 
@@ -12856,8 +12579,8 @@ for text,command in (
  self.changeFindButton, self.addButton, 
  self.undoButton, self.redoButton,
  self.ignoreButton, self.hideButton) = buttonList</t>
-<t tx="T943"></t>
-<t tx="T944">def onAddButton (self):
+<t tx="T924"></t>
+<t tx="T925">def onAddButton (self):
 	
 	"""Handle a click in the Add button in the Check Spelling dialog."""
 
@@ -12865,13 +12588,13 @@ for text,command in (
 	self.closePipes()
 
 </t>
-<t tx="T945">def onIgnoreButton (self):
+<t tx="T926">def onIgnoreButton (self):
 
 	"""Handle a click in the Ignore button in the Check Spelling dialog."""
 
 	self.ignore()
 	self.closePipes()</t>
-<t tx="T946">def onChangeButton (self):
+<t tx="T927">def onChangeButton (self):
 	
 	"""Handle a click in the Change button in the Check Spelling dialog."""
 
@@ -12888,21 +12611,21 @@ def onChangeThenFindButton (self,event=None):
 		self.find()
 	self.closePipes()
 	self.updateButtons()</t>
-<t tx="T947">def onFindButton (self):
+<t tx="T928">def onFindButton (self):
 	
 	"""Handle a click in the Find button in the Check Spelling dialog."""
 
 	self.find()
 	self.updateButtons()
 	self.closePipes()</t>
-<t tx="T948">def onHideButton (self):
+<t tx="T929">def onHideButton (self):
 	
 	"""Handle a click in the Hide button in the Check Spelling dialog."""
 
 	self.closePipes()
 	self.top.withdraw()
 </t>
-<t tx="T949">def onRedoButton (self):
+<t tx="T930">def onRedoButton (self):
 	
 	"""Handle a click in the Redo button in the Check Spelling dialog."""
 
@@ -12917,8 +12640,8 @@ def onUndoButton (self):
 	self.c.undoer.undo() # Not a command, so command hook doesn't fire.
 	self.update(show=false,fill=false)
 	self.c.frame.body.focus_force()</t>
-<t tx="T950"></t>
-<t tx="T951">def add (self):
+<t tx="T931"></t>
+<t tx="T932">def add (self):
 
 	"""Add the selected suggestion to the dictionary."""
 	
@@ -12953,7 +12676,7 @@ def onUndoButton (self):
 	self.aspell.openPipes()
 	
 	self.onFindButton()</t>
-<t tx="T952">def change(self):
+<t tx="T933">def change(self):
 	
 	"""Make the selected change to the text"""
 
@@ -12980,14 +12703,14 @@ def onUndoButton (self):
 	# The focus must never leave the body pane.
 	t.focus_set()
 	return false</t>
-<t tx="T953">def checkSpelling (self,event=None):
+<t tx="T934">def checkSpelling (self,event=None):
 	
 	"""Open the Check Spelling dialog."""
 
 	self.top.deiconify()
 	self.top.lift()
 	self.update(show=true,fill=false)</t>
-<t tx="T954">def find(self):
+<t tx="T935">def find(self):
 	
 	"""Find the next unknown word."""
 	
@@ -13013,18 +12736,18 @@ def onUndoButton (self):
 	else:
 		es("no more misspellings")
 		self.fillbox([])</t>
-<t tx="T955">def ignore (self):
+<t tx="T936">def ignore (self):
 	
 	"""Ignore the incorrect word for the duration of this spell check session."""
 	
 	es("Ignoring ",color="blue",newline=false) ; es('%s' % self.currentWord)
 	self.dictionary[self.currentWord.lower()] = 0
 	self.onFindButton()</t>
-<t tx="T956"></t>
-<t tx="T957">def closePipes(self):
+<t tx="T937"></t>
+<t tx="T938">def closePipes(self):
 	
 	self.aspell.closePipes()</t>
-<t tx="T958">def fillbox(self,alts,word=None):
+<t tx="T939">def fillbox(self,alts,word=None):
 
 	"""Update the suggestions listbox in the Check Spelling dialog."""
 	
@@ -13041,7 +12764,7 @@ def onUndoButton (self):
 	
 	if len(self.suggestions):
 		self.listBox.select_set(1) # This doesn't show up because we don't have focus.</t>
-<t tx="T959">def findNextMisspelledWord(self):
+<t tx="T940">def findNextMisspelledWord(self):
 	
 	"""Find the next unknown word."""
 	
@@ -13069,7 +12792,7 @@ def onUndoButton (self):
 	finally:
 		aspell.closePipes()
 		return alts, word</t>
-<t tx="T960">@ We don't bother to call apell if the word is in our dictionary. The dictionary contains both locally 'allowed' words and 'ignored' words. We put the test before aspell rather than after aspell because the cost of checking aspell is higher than the cost of checking our local dictionary. For small local dictionaries this is probably not true and this code could easily be located after the aspell call
+<t tx="T941">@ We don't bother to call apell if the word is in our dictionary. The dictionary contains both locally 'allowed' words and 'ignored' words. We put the test before aspell rather than after aspell because the cost of checking aspell is higher than the cost of checking our local dictionary. For small local dictionaries this is probably not true and this code could easily be located after the aspell call
 @c
 
 if self.dictionary.has_key(word.lower()):
@@ -13078,7 +12801,7 @@ if self.dictionary.has_key(word.lower()):
 	continue
 	
 # print "Didn't ignore '%s'" % word</t>
-<t tx="T961">def findNextWord (self,v):
+<t tx="T942">def findNextWord (self,v):
 	
 	"""Scan for the next word, leaving the result in the work widget"""
 
@@ -13104,7 +12827,7 @@ if self.dictionary.has_key(word.lower()):
 				return v,word
 			elif ch:
 				t.mark_set("insert","insert + 1c")</t>
-<t tx="T962">def getSuggestion (self):
+<t tx="T943">def getSuggestion (self):
 	
 	"""Return the selected suggestion from the listBox."""
 	
@@ -13120,19 +12843,19 @@ if self.dictionary.has_key(word.lower()):
 		return suggestion
 	else:
 		return None</t>
-<t tx="T963">def onMap (self,event=None):
+<t tx="T944">def onMap (self,event=None):
 	
 	"""Respond to a Tk &lt;Map&gt; event."""
 	
 	self.update(show=false,fill=false)</t>
-<t tx="T964">def onSelectListBox (self,event=None):
+<t tx="T945">def onSelectListBox (self,event=None):
 	
 	"""Respond to a click in the selection listBox."""
 	
 	self.updateButtons()
 	self.body.focus_set()
 </t>
-<t tx="T965">def update (self,show=true,fill=false):
+<t tx="T946">def update (self,show=true,fill=false):
 	
 	"""Update the Spell Check dialog."""
 	
@@ -13154,7 +12877,7 @@ if self.dictionary.has_key(word.lower()):
 	if not self.aspell.signonGiven:
 		self.aspell.openPipes()
 		self.aspell.closePipes()</t>
-<t tx="T966">def updateButtons (self):
+<t tx="T947">def updateButtons (self):
 	
 	"""Enable or disable buttons in the Check Spelling dialog."""
 	
@@ -13174,8 +12897,8 @@ if self.dictionary.has_key(word.lower()):
 	self.addButton.configure(state=state)
 
 	self.ignoreButton.configure(state="normal")</t>
-<t tx="T967">@ignore</t>
-<t tx="T968">@nocolor
+<t tx="T948">@ignore</t>
+<t tx="T949">@nocolor
 
 Attached is some proof-of-concept code for a Leo Plugin manager.
 
@@ -13217,7 +12940,7 @@ Advantages of this (XMLRPC) approach,
 Some kind of 'submit plugin' option would be interesting, but suddenly security issues start to loom!
 
 Do you think this is worth pursuing?</t>
-<t tx="T969">@first #!/usr/bin/env python
+<t tx="T950">@first #!/usr/bin/env python
 
 """A client implementing a plug-in manager for Leo
 
@@ -13243,13 +12966,13 @@ if __name__ == "__main__":
     client = LeoPMClient(root, server, ROOTDIR)
     root.mainloop()
 </t>
-<t tx="T970">class LeoPMClient:
+<t tx="T951">class LeoPMClient:
 	
 	"""The client to talk to the LeoPM server"""
 
 	@others
 </t>
-<t tx="T971">def __init__(self, master, server, rootdir):
+<t tx="T952">def __init__(self, master, server, rootdir):
     """Initialize the client"""
     self.server = server
     self.master = master
@@ -13281,7 +13004,7 @@ if __name__ == "__main__":
     # Start polling for changes in selection
     self.lastselection = None
     self.poll() </t>
-<t tx="T972">def poll(self):
+<t tx="T953">def poll(self):
     """Poll and update the detail view if appropriate"""
     now = self._getSelectedPluginName()
     if now is not None and now != self.lastselection:
@@ -13289,7 +13012,7 @@ if __name__ == "__main__":
         self.lastselection = now
     self.master.after(250, self.poll)
 </t>
-<t tx="T973">def _getSelectedPluginName(self):
+<t tx="T954">def _getSelectedPluginName(self):
     """Return the currently selected plugin name"""
     sel = self.listbox.curselection()
     if sel:
@@ -13297,12 +13020,12 @@ if __name__ == "__main__":
     else:
         return None
 </t>
-<t tx="T974">def updateDetail(self, name):
+<t tx="T955">def updateDetail(self, name):
     """Update the detail view of a plugin"""
     self.text.delete(1.0, END)
     self.text.insert(END, self.server.getPluginDescription(name))
 </t>
-<t tx="T975">def downloadPlugin(self):
+<t tx="T956">def downloadPlugin(self):
     """Download the selected plugin"""
     self.text.insert(END, "\n\nInstalling\n")
     data = self.server.getPlugin(self._getSelectedPluginName())
@@ -13316,7 +13039,7 @@ if __name__ == "__main__":
     self.text.insert(END, "\n\nPlugin installed\n")
     self.initListbox()
 </t>
-<t tx="T976">def getPluginList(self):
+<t tx="T957">def getPluginList(self):
     """Return a list of plugins on the server
     
     We markup the list to show which plugins are installed etc
@@ -13349,14 +13072,14 @@ if __name__ == "__main__":
     #
     return ret
 </t>
-<t tx="T977">def initListbox(self):
+<t tx="T958">def initListbox(self):
     """Initialize the listbox"""
     plugin_list = self.getPluginList()
     self.listbox.delete(0, END)
     for item in plugin_list:
         self.listbox.insert(END, item)
 </t>
-<t tx="T978">def getVersionOfFile(self, filename):
+<t tx="T959">def getVersionOfFile(self, filename):
     """Check the version of a plugin file"""
     ver = re.compile('.*__version__\s*=\s"(.*?)".*', re.DOTALL+re.MULTILINE)
     f = file(filename, "r")
@@ -13368,7 +13091,7 @@ if __name__ == "__main__":
     else:
         return None
 </t>
-<t tx="T979">@first #!/usr/bin/env python
+<t tx="T960">@first #!/usr/bin/env python
 
 """A server implementing a plug-in manager for Leo
 
@@ -13393,26 +13116,26 @@ if __name__ == "__main__":
     # Go into the main listener loop
     print "LeoPM (v%s) Started\nListening on port %s" % (__version__, PORT)
     server.serve_forever()</t>
-<t tx="T980">class LeoPM:
+<t tx="T961">class LeoPM:
 	"""The Leo Plugin manager XMLRPC server"""
 	@others
 </t>
-<t tx="T981">def __init__(self, plugin_dir="."):
+<t tx="T962">def __init__(self, plugin_dir="."):
     """Start the server with plugins located in the specified directory"""
 </t>
-<t tx="T982">    #self._locatePlugins()
+<t tx="T963">    #self._locatePlugins()
     
 def getPluginNames(self):
     """Return a list of the plug-ins by name"""
     return ["one", "two", "three"]
 </t>
-<t tx="T983">def getPluginDescription(self, name):
+<t tx="T964">def getPluginDescription(self, name):
 	
     """Return the description of the plugin"""
 
     return "%s - v%s\n\n%s" % (name, len(name), "Some important details about it")
 </t>
-<t tx="T984">def getPlugin(self, name):
+<t tx="T965">def getPlugin(self, name):
 
     """Get the source files for a plugin
     
@@ -13421,13 +13144,13 @@ def getPluginNames(self):
     return [("%s1.py" % name, 'this is #1\n__version__ = "%d"' % len(name)),
             ("%s2.py" % name, 'this is #2\n__version__ = "%d"' % len(name))]
 </t>
-<t tx="T985">def getPluginVersion(self, name):
+<t tx="T966">def getPluginVersion(self, name):
 	
     """Return the plugin version"""
 
     return len(name)
 </t>
-<t tx="T986">def getPluginFilenames(self, name):
+<t tx="T967">def getPluginFilenames(self, name):
 	
     """Return a list of the files needed by a plugin"""
     return ("%s1.py" % name, "%s2.py" % name)</t>

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="2121" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="2123" clone_windows="0"/>
 <globals body_outline_ratio="0.5">
-	<global_window_position top="55" left="258" height="835" width="843"/>
+	<global_window_position top="32" left="114" height="835" width="843"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences allow_rich_text="0">
@@ -2634,7 +2634,10 @@
 <v t="T2119"><vh>Script to find which modules define names</vh></v>
 <v t="T2120"><vh>Script to compare 3.x and 4.x derived files</vh></v>
 </v>
-<v t="T2121" a="V"><vh>Test of app.forceShutdown</vh></v>
+<v t="T2121"><vh>Test of app.forceShutdown</vh></v>
+<v t="T2122" a="EV"><vh>Distribution checklist for 4.0</vh>
+<v t="T2123"><vh>@url http://www.python.org/pypi?:action=submit_form</vh></v>
+</v>
 </vnodes>
 <tnodes>
 <t tx="T1">@color
@@ -2849,7 +2852,7 @@ maxReferences = 500
 ignoreStandardLibrary = 1 # EKR
 
 # list of strings: ignore unused locals/arguments if name is one of
-unusedNames = [ '_', 'empty', 'unused', 'dummy', 'event', 's', 'i', 'commander']
+unusedNames = [ '_', 'empty', 'unused', 'dummy', 'event', 's', 'i', 'commander', 'tag']
 
 
 # list of strings: ignore warnings generated from these modules
@@ -33707,5 +33710,19 @@ print ; print "end of compare"</t>
 
 from leoGlobals import app
 app.forceShutdown()</t>
+<t tx="T2122">Create Release on SourceForge
+
+Uploads
+    - Upload leodocs.zip
+	- Upload leosetup.exe
+	- Upload leo-x-y.zip
+	- Upload sbook.chm if it has been changed.
+Announcements
+	- Announce to SourceForge itself. USE ANNOUNCEMENT FORMAT, not readme format.
+	- Announce to Leo's SourceForce site.
+	- Announce to comp.lang.python
+	- Announce to comp.programming.literate
+	- Register Leo at http://www.python.org/pypi?:action=submit_form</t>
+<t tx="T2123"></t>
 </tnodes>
 </leo_file>
