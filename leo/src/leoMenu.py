@@ -71,7 +71,12 @@ class leoMenu:
             ("-",None,None),
             ("&Indent","Ctrl+]",c.indentBody),
             ("&Unindent","Ctrl+[",c.dedentBody),
-            ("&Match Brackets","Ctrl+K",c.findMatchingBracket))
+            ("&Match Brackets","Ctrl+K",c.findMatchingBracket),
+            ("Add Comments",None,c.addComments),
+            ("Delete Comments",None,c.deleteComments),
+        )
+        
+        # Shortcuts a,b,d,e,i,l,m,n,r,s,t,u
         #@nonl
         #@-node:ekr.20031218072017.3754:<< define editMenuEditBodyTable >>
         #@nl

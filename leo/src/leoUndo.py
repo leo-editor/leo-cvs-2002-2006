@@ -98,6 +98,7 @@ class baseUndoer:
         #@    << define redoDispatchDict >>
         #@+node:EKR.20040526072519:<< define redoDispatchDict >>
         u.redoDispatchDict = {
+            "Add Comments":       u.redoTyping,
             "Change":             u.redoTyping,
             "Change All":         u.redoChangeAll,
             "Change Headline":    u.redoChangeHeadline,
@@ -111,6 +112,7 @@ class baseUndoer:
             "Cut Node":           u.redoDeleteNode,
             "De-Hoist":           u.redoDehoist,
             "Delete":             u.redoTyping,
+            "Delete Comments":    u.redoTyping,
             "Delete Node":        u.redoDeleteNode,
             "Demote":             u.redoDemote,
             "Drag":               u.redoMoveNode,
@@ -143,6 +145,7 @@ class baseUndoer:
         #@    << define undoDispatchDict >>
         #@+node:EKR.20040526075238:<< define undoDispatchDict >>
         u.undoDispatchDict = {
+            "Add Comments":       u.undoTyping,
             "Change":             u.undoTyping,
             "Change All":         u.undoChangeAll,
             "Change Headline":    u.undoChangeHeadline,
@@ -156,6 +159,7 @@ class baseUndoer:
             "Cut Node":           u.undoDeleteNode,
             "De-Hoist":           u.undoDehoist,
             "Delete":             u.undoTyping,
+            "Delete Comments":    u.undoTyping,
             "Delete Node":        u.undoDeleteNode,
             "Demote":             u.undoDemote,
             "Drag":               u.undoMoveNode,

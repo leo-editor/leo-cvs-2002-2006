@@ -2389,6 +2389,97 @@ class baseCommands:
         return s
     #@-node:ekr.20031218072017.1832:getTime
     #@-node:ekr.20031218072017.1831:insertBodyTime & allies
+    #@+node:ekr.20050312114529:insert/removeComments
+    #@+node:ekr.20050312114529.1:addComments
+    def addComments (self):
+    
+        c = self ; p = c.currentPosition()
+        
+        d = g.scanDirectives(c,p)
+        # d1 is the line delim.
+        d1,d2,d3 = d.get('delims')
+    
+        head,lines,tail,oldSel,oldYview = self.getBodyLines()
+        result = []
+        if not lines:
+            g.es('No text selected',color='blue')
+            return
+        
+        if d1:
+            # Append the single-line comment delim in front of each line
+            for line in lines:
+                i = g.skip_ws(line,0)
+                result.append('%s%s %s' % (line[0:i],d1,line[i:]))
+        else:
+            n = len(lines)
+            for i in xrange(n):
+                line = lines[i]
+                if i not in (0,n-1):
+                    result.append(line)
+                if i == 0:
+                    j = g.skip_ws(line,0)
+                    result.append('%s%s %s' % (line[0:j],d2,line[j:]))
+                if i == n-1:
+                    j = len(line.rstrip())
+                    result.append('%s %s' % (line[0:j],d3))
+    
+        result = string.join(result,'\n')
+        c.updateBodyPane(head,result,tail,"Add Comments",oldSel,oldYview)
+    #@nonl
+    #@-node:ekr.20050312114529.1:addComments
+    #@+node:ekr.20050312114529.2:deleteComments
+    def deleteComments (self):
+    
+        c = self ; p = c.currentPosition()
+        
+        d = g.scanDirectives(c,p)
+        # d1 is the line delim.
+        d1,d2,d3 = d.get('delims')
+    
+        head,lines,tail,oldSel,oldYview = self.getBodyLines()
+        result = []
+        if not lines:
+            g.es('No text selected',color='blue')
+            return
+        
+        if d1:
+            # Append the single-line comment delim in front of each line
+            for line in lines:
+                i = g.skip_ws(line,0)
+                if g.match(line,i,d1):
+                    j = g.skip_ws(line,i + len(d1))
+                    result.append(line[0:i] + line[j:])
+                else:
+                    result.append(line)
+        else:
+            n = len(lines)
+            for i in xrange(n):
+                line = lines[i]
+                if i not in (0,n-1):
+                    result.append(line)
+                if i == 0:
+                    j = g.skip_ws(line,0)
+                    if g.match(line,j,d2):
+                        k = g.skip_ws(line,j + len(d2))
+                        result.append(line[0:j] + line[k:])
+                    else:
+                        g.es("'%s' not found" % (d2),color='blue')
+                        return
+                if i == n-1:
+                    if i == 0:
+                        line = result[0] ; result = []
+                    s = line.rstrip()
+                    if s.endswith(d3):
+                        result.append(s[:-len(d3)].rstrip())
+                    else:
+                        g.es("'%s' not found" % (d3),color='blue')
+                        return
+    
+        result = string.join(result,'\n')
+        c.updateBodyPane(head,result,tail,"Delete Comments",oldSel,oldYview)
+    #@nonl
+    #@-node:ekr.20050312114529.2:deleteComments
+    #@-node:ekr.20050312114529:insert/removeComments
     #@+node:ekr.20031218072017.1833:reformatParagraph
     def reformatParagraph(self):
     

@@ -4275,7 +4275,12 @@ self.editMenuEditBodyTable = (
     ("-",None,None),
     ("&Indent","Ctrl+]",c.indentBody),
     ("&Unindent","Ctrl+[",c.dedentBody),
-    ("&Match Brackets","Ctrl+K",c.findMatchingBracket))
+    ("&Match Brackets","Ctrl+K",c.findMatchingBracket),
+    ("Add Comments",None,c.addComments),
+    ("Delete Comments",None,c.deleteComments),
+)
+
+# Shortcuts a,b,d,e,i,l,m,n,r,s,t,u
 #@nonl
 #@-node:ekr.20031218072017.3754:<< define editMenuEditBodyTable >>
 #@+node:ekr.20031218072017.3755:<< define editMenuEditHeadlineTable >>
@@ -20691,8 +20696,8 @@ This is important, the settings node found by findSettingsPosition may be a clon
 #@nonl
 #@-node:ekr.20050122104754.1:What I did
 #@+node:ekr.20041122162610:@recent_files
-C:\prog\leoCVS\leo\src\LeoPy.leo
 c:\prog\leoCVS\leo\doc\LeoDocs.leo
+C:\prog\leoCVS\leo\src\LeoPy.leo
 #@nonl
 #@-node:ekr.20041122162610:@recent_files
 #@+node:ekr.20040305223522:p.setBodyStringOrPane & p.setBodyTextOrPane
@@ -31263,6 +31268,7 @@ u.optionalIvars = [
 #@-node:ekr.20031218072017.3604:<< Define optional ivars >>
 #@+node:EKR.20040526072519:<< define redoDispatchDict >>
 u.redoDispatchDict = {
+    "Add Comments":       u.redoTyping,
     "Change":             u.redoTyping,
     "Change All":         u.redoChangeAll,
     "Change Headline":    u.redoChangeHeadline,
@@ -31276,6 +31282,7 @@ u.redoDispatchDict = {
     "Cut Node":           u.redoDeleteNode,
     "De-Hoist":           u.redoDehoist,
     "Delete":             u.redoTyping,
+    "Delete Comments":    u.redoTyping,
     "Delete Node":        u.redoDeleteNode,
     "Demote":             u.redoDemote,
     "Drag":               u.redoMoveNode,
@@ -31306,6 +31313,7 @@ u.redoDispatchDict = {
 #@-node:EKR.20040526072519:<< define redoDispatchDict >>
 #@+node:EKR.20040526075238:<< define undoDispatchDict >>
 u.undoDispatchDict = {
+    "Add Comments":       u.undoTyping,
     "Change":             u.undoTyping,
     "Change All":         u.undoChangeAll,
     "Change Headline":    u.undoChangeHeadline,
@@ -31319,6 +31327,7 @@ u.undoDispatchDict = {
     "Cut Node":           u.undoDeleteNode,
     "De-Hoist":           u.undoDehoist,
     "Delete":             u.undoTyping,
+    "Delete Comments":    u.undoTyping,
     "Delete Node":        u.undoDeleteNode,
     "Demote":             u.undoDemote,
     "Drag":               u.undoMoveNode,
@@ -35730,6 +35739,122 @@ def markChangedRoots (self):
 #@-node:ekr.20050309082255:removed all reloads from test.leo
 #@+node:ekr.20050311083919:deprecated new_c key in hooks, added c key
 #@-node:ekr.20050311083919:deprecated new_c key in hooks, added c key
+#@+node:ekr.20050312111805.1:(Added Add/Delete Comments commands)
+#@+node:ekr.20031218072017.3754:<< define editMenuEditBodyTable >>
+self.editMenuEditBodyTable = (
+    ("Extract &Section","Shift+Ctrl+E",c.extractSection),
+    ("Extract &Names","Shift+Ctrl+N",c.extractSectionNames),
+    ("&Extract","Shift+Ctrl+D",c.extract),
+    ("-",None,None),
+    ("Convert All B&lanks",None,c.convertAllBlanks),
+    ("Convert All T&abs",None,c.convertAllTabs),
+    ("Convert &Blanks","Shift+Ctrl+B",c.convertBlanks),
+    ("Convert &Tabs","Shift+Ctrl+J",c.convertTabs),
+    ("Insert Body Time/&Date","Shift+Ctrl+G",c.insertBodyTime),
+    ("&Reformat Paragraph","Shift+Ctrl+P",c.reformatParagraph),
+    ("-",None,None),
+    ("&Indent","Ctrl+]",c.indentBody),
+    ("&Unindent","Ctrl+[",c.dedentBody),
+    ("&Match Brackets","Ctrl+K",c.findMatchingBracket),
+    ("Add Comments",None,c.addComments),
+    ("Delete Comments",None,c.deleteComments),
+)
+
+# Shortcuts a,b,d,e,i,l,m,n,r,s,t,u
+#@nonl
+#@-node:ekr.20031218072017.3754:<< define editMenuEditBodyTable >>
+#@+node:ekr.20050312114529:insert/removeComments
+#@+node:ekr.20050312114529.1:addComments
+def addComments (self):
+
+    c = self ; p = c.currentPosition()
+    
+    d = g.scanDirectives(c,p)
+    # d1 is the line delim.
+    d1,d2,d3 = d.get('delims')
+
+    head,lines,tail,oldSel,oldYview = self.getBodyLines()
+    result = []
+    if not lines:
+        g.es('No text selected',color='blue')
+        return
+    
+    if d1:
+        # Append the single-line comment delim in front of each line
+        for line in lines:
+            i = g.skip_ws(line,0)
+            result.append('%s%s %s' % (line[0:i],d1,line[i:]))
+    else:
+        n = len(lines)
+        for i in xrange(n):
+            line = lines[i]
+            if i not in (0,n-1):
+                result.append(line)
+            if i == 0:
+                j = g.skip_ws(line,0)
+                result.append('%s%s %s' % (line[0:j],d2,line[j:]))
+            if i == n-1:
+                j = len(line.rstrip())
+                result.append('%s %s' % (line[0:j],d3))
+
+    result = string.join(result,'\n')
+    c.updateBodyPane(head,result,tail,"Add Comments",oldSel,oldYview)
+#@nonl
+#@-node:ekr.20050312114529.1:addComments
+#@+node:ekr.20050312114529.2:deleteComments
+def deleteComments (self):
+
+    c = self ; p = c.currentPosition()
+    
+    d = g.scanDirectives(c,p)
+    # d1 is the line delim.
+    d1,d2,d3 = d.get('delims')
+
+    head,lines,tail,oldSel,oldYview = self.getBodyLines()
+    result = []
+    if not lines:
+        g.es('No text selected',color='blue')
+        return
+    
+    if d1:
+        # Append the single-line comment delim in front of each line
+        for line in lines:
+            i = g.skip_ws(line,0)
+            if g.match(line,i,d1):
+                j = g.skip_ws(line,i + len(d1))
+                result.append(line[0:i] + line[j:])
+            else:
+                result.append(line)
+    else:
+        n = len(lines)
+        for i in xrange(n):
+            line = lines[i]
+            if i not in (0,n-1):
+                result.append(line)
+            if i == 0:
+                j = g.skip_ws(line,0)
+                if g.match(line,j,d2):
+                    k = g.skip_ws(line,j + len(d2))
+                    result.append(line[0:j] + line[k:])
+                else:
+                    g.es("'%s' not found" % (d2),color='blue')
+                    return
+            if i == n-1:
+                if i == 0:
+                    line = result[0] ; result = []
+                s = line.rstrip()
+                if s.endswith(d3):
+                    result.append(s[:-len(d3)].rstrip())
+                else:
+                    g.es("'%s' not found" % (d3),color='blue')
+                    return
+
+    result = string.join(result,'\n')
+    c.updateBodyPane(head,result,tail,"Delete Comments",oldSel,oldYview)
+#@nonl
+#@-node:ekr.20050312114529.2:deleteComments
+#@-node:ekr.20050312114529:insert/removeComments
+#@-node:ekr.20050312111805.1:(Added Add/Delete Comments commands)
 #@-node:ekr.20050225104239.2:Features
 #@+node:ekr.20050227125015:Plugins & hooks
 #@+node:ekr.20050301111302:(Added support for mod_labels plugin)

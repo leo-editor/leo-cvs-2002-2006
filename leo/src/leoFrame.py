@@ -1315,7 +1315,7 @@ class nullBody (leoBody):
         
         """Return before,sel,after where:
             
-        before is the all lines before the selected text
+        before is all the lines before the selected text
         (or the text before the insert point if no selection)
         sel is the selected text (or the line containing the insert point if no selection)
         after is all lines after the selected text

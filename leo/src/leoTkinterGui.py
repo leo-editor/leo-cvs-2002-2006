@@ -567,7 +567,7 @@ class tkinterGui(leoGui.leoGui):
     #@nonl
     #@-node:ekr.20031218072017.4073:setIdleTimeHookAfterDelay
     #@-node:ekr.20031218072017.4071:Idle Time
-    #@+node:ekr.20031218072017.4074:Indices
+    #@+node:ekr.20031218072017.4074:Indices (Tk)
     #@+node:ekr.20031218072017.4075:firstIndex
     def firstIndex (self):
     
@@ -612,7 +612,7 @@ class tkinterGui(leoGui.leoGui):
         return tuple(map(int,string.split(text.index(index), ".")))
     #@nonl
     #@-node:ekr.20031218072017.4080:getindex
-    #@-node:ekr.20031218072017.4074:Indices
+    #@-node:ekr.20031218072017.4074:Indices (Tk)
     #@+node:ekr.20031218072017.4081:Insert Point
     #@+node:ekr.20031218072017.4082:getInsertPoint
     def getInsertPoint(self,t):
