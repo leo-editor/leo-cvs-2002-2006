@@ -3662,7 +3662,7 @@ class baseTangleCommands:
                 #@-node:ekr.20031218072017.1367:<< compute dir and relative_path from s[k:] >>
                 #@nl
                 if len(theDir) > 0:
-                    base = g.getBaseDirectory() # May return "".
+                    base = g.getBaseDirectory(c=c) # May return "".
                     if theDir and len(theDir) > 0:
                         theDir = g.os_path_join(base,theDir)
                         if g.os_path_isabs(theDir):
@@ -3772,7 +3772,7 @@ class baseTangleCommands:
                 (c.tangle_directory,"default tangle"), # Probably should be eliminated.
                 (c.frame.openDirectory,"open"))
         
-            base = g.getBaseDirectory() # May return "".
+            base = g.getBaseDirectory(c=c) # May return ""
         
             for dir2, kind in table:
                 if dir2 and len(dir2) > 0:

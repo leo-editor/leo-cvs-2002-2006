@@ -4533,7 +4533,7 @@ class atFile:
                 #@-node:ekr.20041005105605.226:<< compute relative path from s[k:] >>
                 #@nl
                 if path and len(path) > 0:
-                    base = g.getBaseDirectory() # returns "" on error.
+                    base = g.getBaseDirectory(c=c) # returns "" on error.
                     path = g.os_path_join(base,path)
                     if g.os_path_isabs(path):
                         #@            << handle absolute path >>
@@ -4627,7 +4627,7 @@ class atFile:
         # This code is executed if no valid absolute path was specified in the @file node or in an @path directive.
         
         if c.frame and not self.default_directory:
-            base = g.getBaseDirectory() # returns "" on error.
+            base = g.getBaseDirectory(c=c) # returns "" on error.
             for theDir in (c.tangle_directory,c.frame.openDirectory,c.openDirectory):
                 if theDir and len(theDir) > 0:
                     theDir = g.os_path_join(base,theDir)
@@ -4732,7 +4732,7 @@ class atFile:
                 #@nl
                 
                 if path and len(path) > 0:
-                    base = g.getBaseDirectory() # returns "" on error.
+                    base = g.getBaseDirectory(c=c) # returns "" on error.
                     path = g.os_path_join(base,path)
                     
                     if g.os_path_isabs(path):
@@ -4765,7 +4765,7 @@ class atFile:
         assert(not at.default_directory)
         
         if c.frame :
-            base = g.getBaseDirectory() # returns "" on error.
+            base = g.getBaseDirectory(c=c) # returns "" on error.
             for theDir in (c.tangle_directory,c.frame.openDirectory,c.openDirectory):
                 if theDir and len(theDir) > 0:
                     theDir = g.os_path_join(base,theDir)
