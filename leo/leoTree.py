@@ -1652,16 +1652,13 @@ class leoTree:
 		# trace(`v`)
 		c = self.commands ; frame = c.frame ; body = frame.body
 		old_v = c.currentVnode()
-		doSelectHook = v != old_v
-		# Call the pre-select hook.
-		if doSelectHook:
-			handleLeoHook("select1",c=c,new_v=v)
+		if handleLeoHook("select1",c=c,new_v=v) != None:
+			return
 		# Remember the position of the scrollbar before making any changes.
 		yview=body.yview()
 		insertSpot = c.body.index("insert") # 9/21/02
 		# Remember the old body text
 		old_body = body.get("1.0","end")
-	
 		xml_encoding = app().config.xml_version_string
 		s = v.t.bodyString
 		if type(s) != types.UnicodeType:
@@ -1713,8 +1710,7 @@ class leoTree:
 		# Set focus.
 		self.commands.body.focus_set()
 		# Call the post-select hook.
-		if doSelectHook:
-			handleLeoHook("select2",c=c,old_v=old_v)
+		handleLeoHook("select2",c=c,old_v=old_v)
 	#@-body
 	#@-node:7::tree.select
 	#@+node:8::tree.set...LabelState
