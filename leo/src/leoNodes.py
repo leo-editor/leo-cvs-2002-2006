@@ -1176,6 +1176,7 @@ class nodeIndices (object):
 	
 		id1,time1,n1 = gnx1
 		id2,time2,n2 = gnx2
+		# g.trace(id1==id2 and time1==time2 and n1==n2,gnx1,gnx2)
 		return id1==id2 and time1==time2 and n1==n2
 	#@nonl
 	#@-node:areEqual
@@ -2448,7 +2449,7 @@ class position (object):
 		Returns the newly created position."""
 		
 		p = self ; c = p.c
-		
+	
 		p2 = back.copy()
 		p2.v = vnode(c,back.v.t)
 		p2.linkAfter(back)

@@ -1388,7 +1388,10 @@ def trace (*args,**keys):
 
 	s = ""
 	for arg in args:
-		if type(arg) != type(""):
+		if type(arg) == type(u""):
+			try:    arg = str(arg)
+			except: arg = repr(arg)
+		elif type(arg) != type(""):
 			arg = repr(arg)
 		if len(s) > 0:
 			s = s + " " + arg
@@ -1416,7 +1419,6 @@ def trace (*args,**keys):
 		if (not minus and '*' in t) or name.lower() in t:
 			s = name + ": " + message
 			print s # Traces _always_ get printed.
-#@nonl
 #@-node:trace
 #@+node:trace_tag
 # Convert all args to strings.

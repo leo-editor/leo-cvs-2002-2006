@@ -136,6 +136,10 @@ class baseAtFile:
 		while p and not p.equal(after): # Don't use iterator.
 			if p.isAtIgnoreNode():
 				p.moveToNodeAfterTree()
+			elif p.isAtThinFileNode():
+				anyRead = true
+				at.read(p,thinFile=true)
+				p.moveToNodeAfterTree()
 			elif p.isAtFileNode() or p.isAtNorefFileNode():
 				anyRead = true
 				if partialFlag:
@@ -162,7 +166,7 @@ class baseAtFile:
 	#@+node:top_df.read
 	# The caller has enclosed this code in beginUpdate/endUpdate.
 	
-	def read(self,root,importFileName=None):
+	def read(self,root,importFileName=None,thinFile=false):
 		
 		"""Common read logic for any derived file."""
 		
@@ -174,11 +178,11 @@ class baseAtFile:
 		#@+node:<< set fileName from root and importFileName >>
 		if importFileName:
 			fileName = importFileName
-		elif root.isAtFileNode():
-			fileName = root.atFileNodeName()
+		elif root.isAnyAtFileNode():
+			fileName = root.anyAtFileNodeName()
 		else:
-			fileName = root.atNorefFileNodeName()
-			
+			fileName = None
+		
 		if not fileName:
 			at.error("Missing file name.  Restoring @file tree from .leo file.")
 			return false
@@ -220,8 +224,10 @@ class baseAtFile:
 		# import traceback ; traceback.print_stack()
 		#@	<< copy ivars to df >>
 		#@+node:<< copy ivars to df >>
+		# Telling what kind of file we are reading.
 		df.importing = importFileName != None
-		df.importRootSeen = false
+		df.raw = false
+		df.thinFile = thinFile
 		
 		# Set by scanHeader.
 		df.encoding = at.encoding
@@ -231,11 +237,12 @@ class baseAtFile:
 		# Set other common ivars.
 		df.errors = 0
 		df.file = file
-		df.targetFileName = fileName
+		df.importRootSeen = false
 		df.indent = 0
-		df.raw = false
+		df.targetFileName = fileName
 		df.root = root
 		df.root_seen = false
+		#@nonl
 		#@-node:<< copy ivars to df >>
 		#@nl
 		root.clearVisitedInTree()
@@ -255,6 +262,7 @@ class baseAtFile:
 		#@+node:<< warn about non-empty unvisited nodes >>
 		for p in root.self_and_subtree_iter():
 		
+			# g.trace(p)
 			try: s = p.v.t.tempBodyString
 			except: s = ""
 			if s and not p.v.t.isVisited():
@@ -263,6 +271,7 @@ class baseAtFile:
 		#@nonl
 		#@-node:<< warn about non-empty unvisited nodes >>
 		#@nl
+		g.trace("after warn")
 		if df.errors == 0:
 			if not df.importing:
 				#@			<< copy all tempBodyStrings to tnodes >>
@@ -271,13 +280,17 @@ class baseAtFile:
 					try: s = p.v.t.tempBodyString
 					except: s = ""
 					if s != p.bodyString():
-						g.es("changed: " + p.headString(),color="blue")
 						if 0: # For debugging.
 							print ; print "changed: " + p.headString()
 							print ; print "new:",s
 							print ; print "old:",p.bodyString()
-						p.setBodyStringOrPane(s) # Sets v and v.c dirty.
-						p.setMarked()
+						if thinFile:
+							p.v.setTnodeText(s)
+						else:
+							g.es("changed: " + p.headString(),color="blue")
+							p.setMarked()
+							p.setBodyStringOrPane(s) # Sets v and v.c dirty.
+				#@nonl
 				#@-node:<< copy all tempBodyStrings to tnodes >>
 				#@nl
 		#@	<< delete all tempBodyStrings >>
@@ -289,7 +302,7 @@ class baseAtFile:
 		#@-node:<< delete all tempBodyStrings >>
 		#@nl
 		return df.errors == 0
-	#@nonl
+	
 	#@-node:top_df.read
 	#@+node:top_df.scanDefaultDirectory
 	def scanDefaultDirectory(self,p):
@@ -601,8 +614,7 @@ class baseAtFile:
 					elif p.isAtNoSentFileNode():
 						at.write(p,nosentinels=true)
 					elif p.isAtThinFileNode():
-						if write_new:
-							at.write(p,thinFile=true) ; written = true
+						at.write(p,thinFile=true) ; written = true
 					elif p.isAtFileNode():
 						at.write(p) ; written = true
 				
@@ -652,7 +664,7 @@ class baseAtFile:
 		
 	def write (self,p,nosentinels=false,thinFile=false):
 		at = self
-		write_new = not g.app.config.write_old_format_derived_files
+		write_new = thinFile or not g.app.config.write_old_format_derived_files
 		df = g.choose(write_new,at.new_df,at.old_df)
 		try:    df.write(p,nosentinels=nosentinels,thinFile=thinFile)
 		except: at.writeException(p)
@@ -1732,13 +1744,13 @@ class baseOldDerivedFile:
 		return str(index) + '::' + h
 	#@nonl
 	#@-node:nodeSentinelText 3.x
-	#@+node:putCloseNodeSentinel
+	#@+node:putCloseNodeSentinel 3.x
 	def putCloseNodeSentinel(self,p):
 	
 		s = self.nodeSentinelText(p)
 		self.putSentinel("@-node:" + s)
 	#@nonl
-	#@-node:putCloseNodeSentinel
+	#@-node:putCloseNodeSentinel 3.x
 	#@+node:putCloseSentinels
 	# root is an ancestor of p, or root == p.
 	
@@ -2416,13 +2428,14 @@ class baseOldDerivedFile:
 			delattr(root.v.t,"tnodeList")
 	
 		c = self.c
-		self.sentinels = not nosentinels
 		#@	<< initialize >>
 		#@+node:<< initialize >>
+		self.sentinels = not nosentinels
+		self.raw = false
+		
 		self.errors = 0 # 9/26/02
 		c.setIvarsFromPrefs()
 		self.root = root
-		self.raw = false
 		c.endEditing() # Capture the current headline.
 		#@nonl
 		#@-node:<< initialize >>
@@ -3394,19 +3407,26 @@ class baseNewDerivedFile(oldDerivedFile):
 		at.root_seen = false # true: root vnode has been handled in this file.
 		at.tnodeList = [] ; at.tnodeListIndex = 0
 		at.t = None ; at.tStack = []
+		
+		# For reading thin derived files.
+		at.lastThinNode = None ; at.thinNodeStack = []
+		at.anchorNode = None ; at.anchorNodeStack = []
 	
-		# The dispatch dictionary used by scanText4.
+		#@	<< Create the dispatch dictionary used by scanText4 >>
+		#@+node:<< Create the dispatch dictionary used by scanText4 >>
 		at.dispatch_dict = {
 			# Plain line.
 			noSentinel: at.readNormalLine,
 			# Starting sentinels...
 			startAt:     at.readStartAt,
+			# startBody:   at.readStartBody,
 			startDoc:    at.readStartDoc,
 			startLeo:    at.readStartLeo,
 			startNode:   at.readStartNode,
 			startOthers: at.readStartOthers,
 			# Ending sentinels...
 			endAt:     at.readEndAt,
+			# endBody:   at.readEndBody,
 			endDoc:    at.readEndDoc,
 			endLeo:    at.readEndLeo,
 			endNode:   at.readEndNode,
@@ -3424,17 +3444,62 @@ class baseNewDerivedFile(oldDerivedFile):
 			endBody:               at.ignoreOldSentinel,
 			startBody:             at.ignoreOldSentinel,
 			startVerbatimAfterRef: at.ignoreOldSentinel }
+		#@nonl
+		#@-node:<< Create the dispatch dictionary used by scanText4 >>
+		#@nl
 	#@nonl
 	#@-node:newDerivedFile.__init__
+	#@+node:createThinChild (4.2)
+	def createThinChild (self,gnxString,headline):
+	
+		"""Find or create a new vnode whose parent is at.lastThinNode."""
+	
+		at = self ; v = at.root.v ; c = at.c ; indices = g.app.nodeIndices
+		last = at.lastThinNode ; lastIndex = last.t.fileIndex
+		gnx = indices.scanGnx(gnxString,0)
+	
+		#g.trace("last",last,last.t.fileIndex)
+		#g.trace("args",indices.areEqual(gnx,last.t.fileIndex),gnxString,headline)
+	
+		if indices.areEqual(gnx,lastIndex):
+			return last
+	
+		child = at.lastThinNode.firstChild()
+		while child and not indices.areEqual(gnx,child.t.fileIndex):
+			child = child.next()
+	
+		if not child:
+			# Create the tnode only if it does not already exist.
+			tnodesDict = c.fileCommands.tnodesDict
+			t = tnodesDict.get(gnxString)
+			if t:
+				# g.trace("found",gnxString)
+				assert(indices.areEqual(t.fileIndex,gnx))
+			else:
+				t = leoNodes.tnode(bodyString=None,headString=headline)
+				t.fileIndex = gnx
+				tnodesDict[gnxString] = t
+			parent = at.lastThinNode
+			child = leoNodes.vnode(c,t)
+			t.vnodeList.append(child)
+			child.linkAsNthChild(parent,parent.numberOfChildren())
+			# g.trace("creating node",child,gnx)
+	
+		return child
+	
+	#@-node:createThinChild (4.2)
 	#@+node:new_df.readOpenFile
 	def readOpenFile(self,root,file,firstLines):
 		
-		"""Read an open 4.x derived file."""
+		"""Read an open 4.x thick or thin derived file."""
 		
 		at = self
+		
+		# g.trace("thinFile",at.thinFile)
 	
 		# Scan the 4.x file.
 		at.tnodeListIndex = 0
+		# 4/27/04: at.thinFile tells scanText4 whether this is a thin file or not.
 		lastLines = at.scanText4(file,root)
 		root.v.t.setVisited() # Disable warning about set nodes.
 		
@@ -3446,20 +3511,15 @@ class baseNewDerivedFile(oldDerivedFile):
 		at.completeLastDirectives(lines,lastLines)
 		s = '\n'.join(lines).replace('\r', '')
 		root.v.t.tempBodyString = s
-	#@nonl
+		
+		g.trace()
 	#@-node:new_df.readOpenFile
 	#@+node:findChild 4.x
 	def findChild (self,headline):
 		
 		"""Return the next tnode in at.root.t.tnodeList."""
 	
-		at = self
-	
-		if at.importing:
-			p = at.createImportedNode(at.root,at.c,headline)
-			return p.v.t
-			
-		v = at.root.v
+		at = self ; v = at.root.v
 	
 		if not hasattr(v.t,"tnodeList"):
 			at.readError("no tnodeList for " + repr(v))
@@ -3508,15 +3568,17 @@ class baseNewDerivedFile(oldDerivedFile):
 		# Unstacked ivars...
 		at.done = false
 		at.inCode = true
+		at.indent = 0 # Changed only for sentinels.
 		at.lastLines = [] # The lines after @-leo
 		at.leadingWs = ""
-		at.indent = 0 # Changed only for sentinels.
+		at.root = p
 		at.rootSeen = false
 		
 		# Stacked ivars...
 		at.endSentinelStack = [endLeo] # We have already handled the @+leo sentinel.
 		at.out = [] ; at.outStack = []
 		at.t = p.v.t ; at.tStack = []
+		at.lastThinNode = p.v ; at.thinNodeStack = [p.v]
 		
 		if 0: # Useful for debugging.
 			if hasattr(p.v.t,"tnodeList"):
@@ -3530,7 +3592,7 @@ class baseNewDerivedFile(oldDerivedFile):
 			s = at.readLine(file)
 			if len(s) == 0: break
 			kind = at.sentinelKind(s)
-			# g.trace(at.sentinelName(kind),s)
+			# g.trace(at.sentinelName(kind),s.strip())
 			if kind == noSentinel:
 				i = 0
 			else:
@@ -3551,7 +3613,6 @@ class baseNewDerivedFile(oldDerivedFile):
 			#@nl
 	
 		return at.lastLines
-	#@nonl
 	#@-node:scanText4 & allies
 	#@+node:readNormalLine
 	def readNormalLine (self,s,i):
@@ -3641,11 +3702,25 @@ class baseNewDerivedFile(oldDerivedFile):
 	#@+node:readStartNode
 	def readStartNode (self,s,i):
 		
-		"""Read an @node sentinel."""
+		"""Read an @+node sentinel."""
 		
 		at = self ; assert(g.match(s,i,"+node:"))
 		i += 6
 		
+		if at.thinFile:
+			#@		<< set gnx and bump i >>
+			#@+node:<< set gnx and bump i >>
+			# We have skipped past the opening colon of the gnx.
+			j = s.find(':',i)
+			if j == -1:
+				g.trace("no closing colon",g.get_line(s,i))
+				at.readError("Expecting gnx in @+node sentinel")
+			else:
+				gnx = s[i:j]
+				i = j + 1 # Skip the i
+			#@nonl
+			#@-node:<< set gnx and bump i >>
+			#@nl
 		#@	<< Set headline, undoing the CWEB hack >>
 		#@+node:<< Set headline, undoing the CWEB hack >>
 		# Set headline to the rest of the line.
@@ -3665,31 +3740,43 @@ class baseNewDerivedFile(oldDerivedFile):
 		#@nl
 		if not at.root_seen:
 			at.root_seen = true
-			if not at.importing:
-				#@			<< Check the filename in the sentinel >>
-				#@+node:<< Check the filename in the sentinel >>
-				h = headline.strip()
-				
-				if h[:5] == "@file":
-					i,junk,junk = g.scanAtFileOptions(h)
-					fileName = string.strip(h[i:])
-					if fileName != at.targetFileName:
-						at.readError("File name in @node sentinel does not match file's name")
-				elif h[:8] == "@rawfile":
-					fileName = string.strip(h[8:])
-					if fileName != at.targetFileName:
-						at.readError("File name in @node sentinel does not match file's name")
-				else:
-					at.readError("Missing @file in root @node sentinel")
-				#@nonl
-				#@-node:<< Check the filename in the sentinel >>
-				#@nl
+			#@		<< Check the filename in the sentinel >>
+			#@+node:<< Check the filename in the sentinel >>
+			if 0: # This doesn't work so well in cooperative environments.
+				if not at.importing:
+			
+					h = headline.strip()
+					
+					if h[:5] == "@file":
+						i,junk,junk = g.scanAtFileOptions(h)
+						fileName = string.strip(h[i:])
+						if fileName != at.targetFileName:
+							at.readError("File name in @node sentinel does not match file's name")
+					elif h[:8] == "@rawfile":
+						fileName = string.strip(h[8:])
+						if fileName != at.targetFileName:
+							at.readError("File name in @node sentinel does not match file's name")
+					else:
+						at.readError("Missing @file in root @node sentinel")
+			#@nonl
+			#@-node:<< Check the filename in the sentinel >>
+			#@nl
 	
 		i,newIndent = g.skip_leading_ws_with_indent(s,0,at.tab_width)
 		at.indentStack.append(at.indent) ; at.indent = newIndent
 		
 		at.outStack.append(at.out) ; at.out = []
-		at.tStack.append(at.t) ; at.t = at.findChild(headline)
+		at.tStack.append(at.t)
+	
+		if at.importing:
+			p = at.createImportedNode(at.root,at.c,headline)
+			at.t = p.v.t
+		elif at.thinFile:
+			at.thinNodeStack.append(at.lastThinNode)
+			at.lastThinNode = v = at.createThinChild(gnx,headline)
+			at.t = v.t
+		else:
+			at.t = at.findChild(headline)
 		
 		at.endSentinelStack.append(endNode)
 	#@nonl
@@ -3776,6 +3863,8 @@ class baseNewDerivedFile(oldDerivedFile):
 		at.indent = at.indentStack.pop()
 		at.out = at.outStack.pop()
 		at.t = at.tStack.pop()
+		if at.thinFile:
+			at.lastThinNode = at.thinNodeStack.pop()
 	
 		at.popSentinelStack(endNode)
 	#@nonl
@@ -4106,7 +4195,12 @@ class baseNewDerivedFile(oldDerivedFile):
 		#@nonl
 		#@-node:<< remove comment delims from h if necessary >>
 		#@nl
-		return h
+		
+		if at.thinFile:
+			gnx = g.app.nodeIndices.toString(p.v.t.fileIndex)
+			return "%s:%s" % (gnx,h)
+		else:
+			return h
 	#@nonl
 	#@-node:nodeSentinelText 4.x
 	#@+node:putLeadInSentinel
@@ -4138,6 +4232,19 @@ class baseNewDerivedFile(oldDerivedFile):
 			at.indent -= delta # Let the caller set at.indent permanently.
 	#@nonl
 	#@-node:putLeadInSentinel
+	#@+node:putCloseNodeSentinel 4.x
+	def putCloseNodeSentinel(self,p):
+		
+		at = self
+		
+		if at.thinFile:
+			# at.putSentinel("@-body")
+			pass
+		else:
+			s = self.nodeSentinelText(p)
+			at.putSentinel("@-node:" + s)
+	#@nonl
+	#@-node:putCloseNodeSentinel 4.x
 	#@+node:putOpenLeoSentinel 4.x
 	def putOpenLeoSentinel(self,s):
 		
@@ -4166,32 +4273,51 @@ class baseNewDerivedFile(oldDerivedFile):
 		if p.isAtFileNode() and p != at.root:
 			at.writeError("@file not valid in: " + p.headString())
 			return
-	
-		s = at.nodeSentinelText(p)
-		at.putSentinel("@+node:" + s)
-	
-		# Append the n'th tnode to the root's tnode list.
-		at.root.v.t.tnodeList.append(p.v.t)
+			
+		if at.thinFile:
+			# at.putSentinel("@+body")
+			pass
+		else:
+			s = at.nodeSentinelText(p)
+			at.putSentinel("@+node:" + s)
 		
-		# g.trace("len(tnodeList): %3d %s" % (len(at.root.v.t.))
+			# Append the n'th tnode to the root's tnode list.
+			at.root.v.t.tnodeList.append(p.v.t)
+			
+			# g.trace("len(tnodeList): %3d %s" % (len(at.root.v.t.))
 	#@nonl
 	#@-node:putOpenNodeSentinel (sets tnodeList) 4.x
-	#@+node:putOpenThinSentinels (4.2)
-	def putOpenThinSentinels (self,root,p):
+	#@+node:putOpen/CloseThinSentinels (4.2)
+	def putCloseThinSentinels (self,p):
+	
+		at = self ; root = at.root
+		for p in at.reverseParentsList(p):
+			s = at.nodeSentinelText(p)
+			at.putSentinel("@-node:" + s)
+	
+	def putOpenThinSentinels (self,p):
+	
+		at = self ; root = at.root
+		# g.trace(root.headString(),p.headString())
+		for p in at.reverseParentsList(p):
+			s = at.nodeSentinelText(p)
+			at.putSentinel("@+node:" + s)
+				
+	def reverseParentsList (self,p):
 		
-		g.trace(root,p)
-		
-		last = root
-		while last != p:
-			# Set node to p or the ancestor of p that is a child of last.
-			node = p.copy()
-			while node and node.parent() != last:
-				node.moveToParent()
-			assert(node)
-			self.putOpenNodeSentinel(node)
-			last = node
+		at = self
+		if p.v == at.anchorNode:
+			return [p.copy()]
+		else:
+			parentsList = []
+			for p in p.self_and_parents_iter():
+				if p.v == at.anchorNode: break # The root node is implied.
+				parentsList.append(p.copy())
+				
+			parentsList.reverse()
+			return parentsList
 	#@nonl
-	#@-node:putOpenThinSentinels (4.2)
+	#@-node:putOpen/CloseThinSentinels (4.2)
 	#@+node:putSentinel (applies cweb hack)
 	# This method outputs all sentinels.
 	
@@ -4315,19 +4441,23 @@ class baseNewDerivedFile(oldDerivedFile):
 		"""Write a 4.x derived file."""
 		
 		# g.trace("thinFile",thinFile)
-		
 		at = self ; c = at.c
 	
-		at.sentinels = not nosentinels
 		#@	<< initialize >>
 		#@+node:<< initialize >>
+		# Set flags telling what kind of writing we are doing.
+		at.sentinels = not nosentinels
+		at.thinFile = thinFile
+		at.scripting = scriptFile is not None
+		at.raw = false
+		
+		# Init other ivars.
 		at.errors = 0
 		c.setIvarsFromPrefs()
 		at.root = root
 		at.root.v.t.tnodeList = []
-		at.raw = false
-		at.thinFile = thinFile
-		at.scripting = scriptFile is not None # 1/30/04
+		at.anchorNode = root.v ; at.anchorNodeStack = []
+		
 		c.endEditing() # Capture the current headline.
 		#@nonl
 		#@-node:<< initialize >>
@@ -4461,8 +4591,8 @@ class baseNewDerivedFile(oldDerivedFile):
 				scriptFile.clear()
 				at.root.v.t.tnodeList = []
 			else:
-				at.handleWriteException()
-	
+				at.handleWriteException() # Sets dirty and orphan bits.
+	#@nonl
 	#@-node:new_df.write (inits root.tnodeList)
 	#@+node:new_df.norefWrite
 	def norefWrite(self,root):
@@ -4587,10 +4717,8 @@ class baseNewDerivedFile(oldDerivedFile):
 		
 		p.v.setVisited() # Mark the vnode.
 		p.v.t.setVisited() # Use the tnode for the orphans check.
-		if not s: return
+		if not at.thinFile and not s: return
 		
-		# g.trace(g.app.copies) ; g.app.copies = 0
-	
 		inCode = true
 		
 		# Make _sure_ all lines end in a newline
@@ -4600,6 +4728,9 @@ class baseNewDerivedFile(oldDerivedFile):
 		trailingNewlineFlag = s and s[-1] == '\n'
 		if (at.sentinels or at.scripting) and not trailingNewlineFlag:
 			s = s + '\n'
+	
+		if at.thinFile:
+			at.putOpenThinSentinels(p)
 	
 		at.putOpenNodeSentinel(p)
 		i = 0
@@ -4651,6 +4782,9 @@ class baseNewDerivedFile(oldDerivedFile):
 		if at.sentinels and not trailingNewlineFlag:
 			at.putSentinel("@nonl")
 		at.putCloseNodeSentinel(p)
+		
+		if at.thinFile:
+			at.putCloseThinSentinels(p)
 		
 		# g.trace(g.app.copies) ; g.app.copies = 0
 	#@nonl
@@ -4709,10 +4843,17 @@ class baseNewDerivedFile(oldDerivedFile):
 			at.putSentinel("@" + at.leadingWs + "@+others")
 		else:
 			at.putSentinel("@+others")
+			
+		if at.thinFile:
+			at.anchorNodeStack.append(at.anchorNode)
+			at.anchorNode = p.v
 		
 		for child in p.children_iter():
 			if at.inAtOthers(child):
 				at.putAtOthersChild(child)
+	
+		if at.thinFile:	
+			at.anchorNode = at.anchorNodeStack.pop()
 	
 		at.putSentinel("@-others")
 		at.indent -= delta
@@ -4783,19 +4924,25 @@ class baseNewDerivedFile(oldDerivedFile):
 		if not delta:
 			junk,delta = g.skip_leading_ws_with_indent(s,i,at.tab_width)
 	
-		if at.thinFile:
-			at.putOpenThinSentinels(p,ref)
 		at.putLeadInSentinel(s,i,n1,delta)
+	
 		at.indent += delta
 		if at.leadingWs:
 			at.putSentinel("@" + at.leadingWs + name)
 		else:
 			at.putSentinel("@" + name)
-		at.putBody(ref)
+			
+		if at.thinFile:
+			at.anchorNodeStack.append(at.anchorNode)
+			at.anchorNode = p.v
+			at.putBody(ref)
+			at.anchorNode = at.anchorNodeStack.pop()
+		else:
+			at.putBody(ref)
+		
 		at.indent -= delta
 		
 		return delta
-	#@nonl
 	#@-node:PutRefAt
 	#@+node:putAfterLastRef
 	def putAfterLastRef (self,s,start,delta):

@@ -71,7 +71,7 @@ class baseFileCommands:
 		self.currentPosition = None
 		# New in 3.12
 		self.copiedTree = None
-		self.tnodesDict = {}
+		self.tnodesDict = {}  # keys are gnx strings as returned by canonicalTnodeIndex.
 	#@nonl
 	#@-node:leoFileCommands._init_
 	#@+node:canonicalTnodeIndex
@@ -1562,6 +1562,7 @@ class baseFileCommands:
 		# Put all tnodes in index order.
 		keys = tnodes.keys() ; keys.sort()
 		for index in keys:
+			# g.trace(index)
 			t = tnodes.get(index)
 			assert(t)
 			# Write only those tnodes whose vnodes were written.
@@ -1654,15 +1655,19 @@ class baseFileCommands:
 		#@nl
 	
 		# New in 4.2: don't write child nodes of @file-thin trees.
-		if p.hasChildren() and not p.isAtThinFileNode():
-			fc.put_nl()
-			# This optimization eliminates all "recursive" copies.
-			p.moveToFirstChild()
-			while 1:
-				fc.putVnode(p)
-				if p.hasNext(): p.moveToNext()
-				else:           break
-			p.moveToParent()
+		if p.hasChildren():
+			if p.isAtThinFileNode() and not p.isOrphan():
+				# g.trace("skipping child vnodes for", p.headString())
+				pass
+			else:
+				fc.put_nl()
+				# This optimization eliminates all "recursive" copies.
+				p.moveToFirstChild()
+				while 1:
+					fc.putVnode(p)
+					if p.hasNext(): p.moveToNext()
+					else:           break
+				p.moveToParent()
 	
 		fc.put("</v>") ; fc.put_nl()
 	#@nonl
@@ -1682,7 +1687,7 @@ class baseFileCommands:
 		self.topPosition     = c.topPosition()
 	
 		if self.usingClipboard:
-			self.putVnode(c.currentPosition()) # Write only current tree.
+			self.putVnode(self.currentPosition) # Write only current tree.
 		else:
 			for p in c.rootPosition().self_and_siblings_iter():
 				self.putVnode(p) # Write the next top-level node.
@@ -1764,9 +1769,8 @@ class baseFileCommands:
 			#@		<< write all @file nodes >>
 			#@+node:<< write all @file nodes >>
 			try:
-				# Leo2: write all @file nodes and set orphan bits.
-				at = c.atFileCommands
-				at.writeAll()
+				# Write all @file nodes and set orphan bits.
+				c.atFileCommands.writeAll()
 			except:
 				g.es_error("exception writing derived files")
 				g.es_exception()
