@@ -1659,11 +1659,11 @@ class leoCoreFrame:
 				menu.add_separator()
 			else:
 				
-				#@<< get menu and bind shortcuts >>
-				#@+node:1::<< get menu and bind shortcuts >>
+				#@<< set name to the label for doCommand >>
+				#@+node:1::<< set name to the label for doCommand >>
 				#@+body
-				name = string.strip(label)
-				name = string.lower(name)
+				name = label.strip().lower()
+				
 				# Remove special characters from command names.
 				name2 = ""
 				for ch in name:
@@ -1671,6 +1671,13 @@ class leoCoreFrame:
 						name2 = name2 + ch
 				name = name2
 				
+				#@-body
+				#@-node:1::<< set name to the label for doCommand >>
+
+				
+				#@<< set accel to the shortcut for name >>
+				#@+node:2::<< set accel to the shortcut for name >>
+				#@+body
 				config = app().config
 				accel2 = config.getShortcut(name)
 				if accel2 and len(accel2) > 0:
@@ -1679,46 +1686,81 @@ class leoCoreFrame:
 				else:
 					pass
 					# print "no default:",name
+				#@-body
+				#@-node:2::<< set accel to the shortcut for name >>
+
 				
+				#@<< set bind_shortcut and menu_shortcut using accel >>
+				#@+node:3::<< set bind_shortcut and menu_shortcut using accel >>
+				#@+body
 				bind_shortcut,menu_shortcut = self.canonicalizeShortcut(accel)
 				
 				# Kludge: disable the shortcuts for cut, copy, paste.
 				# This has already been bound in leoFrame.__init__
 				# 2/13/03: A _possible_ fix for the Linux control-v bug.
+				
 				if sys.platform not in ("linux1","linux2"):
 					if bind_shortcut in ("<Control-c>","<Control-v>","<Control-x>"):
 						bind_shortcut = None
 				#@-body
-				#@-node:1::<< get menu and bind shortcuts >>
+				#@-node:3::<< set bind_shortcut and menu_shortcut using accel >>
+
+				
+				#@<< define callback function >>
+				#@+node:4::<< define callback function >>
+				#@+body
+				#@+at
+				#  Tkinter will call the callback function with:
+				# 
+				# 	- one event argument if the user uses a menu shortcut.
+				# 	- no arguments otherwise.
+				# 
+				# Therefore, the first parameter must be event, and it must 
+				# default to None.
+
+				#@-at
+				#@@c
 
 				if openWith:
-					# print "createMenuEntries callback = OnOpenWith(%s)" % (`command`)
-					callback=lambda self=self,command=command:self.OnOpenWith(data=command)
+					def callback(event=None,self=self,data=command):
+						# print "event",`event` ; print "self",`self` ; print "data",`data`
+						return self.OnOpenWith(data=data)
+						
 				else:
-					callback=lambda self=self,cmd=command,label=name:self.doCommand(cmd,label)
-	
+					def callback(event=None,self=self,command=command,label=name):
+						# print "event",`event` ; print "self",`self` ; print "command",`command`
+						return self.doCommand(command,label,event)
+				#@-body
+				#@-node:4::<< define callback function >>
+
+				
+				#@<< set realLabel, amp_index and menu_shortcut >>
+				#@+node:5::<< set realLabel, amp_index and menu_shortcut >>
+				#@+body
 				realLabel = app().getRealMenuName(label)
 				amp_index = realLabel.find("&")
 				realLabel = realLabel.replace("&","")
-				if not menu_shortcut: menu_shortcut = ""
+				if not menu_shortcut:
+					menu_shortcut = ""
+				#@-body
+				#@-node:5::<< set realLabel, amp_index and menu_shortcut >>
+
+	
 				menu.add_command(label=realLabel,accelerator=menu_shortcut,
 					command=callback,underline=amp_index)
-					
+	
 				if bind_shortcut:
+					
+					#@<< handle bind_shorcut >>
+					#@+node:6::<< handle bind_shorcut >>
+					#@+body
 					if bind_shortcut in self.menuShortcuts:
 						if not app().menuWarningsGiven:
 							print "duplicate shortcut:", accel, bind_shortcut, label
 					else:
 						self.menuShortcuts.append(bind_shortcut)
 						try:
-							# The self and event params must be unbound.
-							if openWith:
-								# print "createMenuEntries callback = OnOpenWith(%s)" % (`command`)
-								callback=lambda event,command=command:self.OnOpenWith(data=command)
-							else:
-								callback=lambda event,cmd=command,label=name:self.doCommand(cmd,label,event)
-	
-							self.body.bind(bind_shortcut,callback) # To override defaults in body.
+							self.body.bind(bind_shortcut,callback)
 							self.top.bind (bind_shortcut,callback)
 						except: # could be a user error
 							if not app().menuWarningsGiven:
@@ -1726,6 +1768,8 @@ class leoCoreFrame:
 								print bind_shortcut
 								es_exception()
 								app().menuWarningsGive = true
+					#@-body
+					#@-node:6::<< handle bind_shorcut >>
 	#@-body
 	#@-node:3::createMenuEntries
 	#@+node:4::createRecentFilesMenuItems
@@ -1900,8 +1944,7 @@ class leoCoreFrame:
 	def OnOpenWith(self,data=None,event=None):
 		
 		a = app() ; c = self.commands ; v = c.currentVnode()
-		if not data: return
-		if len(data) != 3: return # 6/22/03
+		if not data or len(data) != 3: return # 6/22/03
 		try:
 			# print "OnOpenWith:",`data`
 			openType,arg,ext=data

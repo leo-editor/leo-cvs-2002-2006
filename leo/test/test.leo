@@ -17,12 +17,12 @@
 <v t="T3"><vh>Singleton sequences</vh></v>
 <v t="T4"><vh>How to get screenshots</vh></v>
 </v>
-<v t="T5" a="V"><vh>Previous tests</vh>
+<v t="T5" a="E"><vh>Previous tests</vh>
 <v t="T6"><vh>@file c:\prog\test\tab_test.txt</vh></v>
 <v t="T7"><vh>@image Icons/Leoapp.GIF</vh></v>
 <v t="T8"><vh>alloc tests</vh></v>
 <v t="T9"><vh>Assignment tests</vh></v>
-<v t="T10"><vh>Coloring Test</vh>
+<v t="T10" a="V"><vh>Coloring Test</vh>
 <v t="T11"><vh>Colorizing Test</vh></v>
 <v t="T12"><vh>Color test without images</vh></v>
 <v t="T13"><vh>Color names test</vh></v>
