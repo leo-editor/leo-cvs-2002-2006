@@ -655,19 +655,19 @@ def runAtFileTest(c,p):
     # Compute the type from child1's headline.
     j = g.skip_c_id(h1,2)
     theType = h1[1:j]
-    assert theType in ("@file","@thin","@nosent","@noref","@asis"),\
-        "bad type: %s" % type
+    assert theType in ("@file","@thin","@nosent","@noref","@asis"), "bad type: %s" % type
 
     thinFile = theType == "@thin"
     nosentinels = theType in ("@asis","@nosent")
 
     if theType == "@asis":
-        assert 0, "@asis test not ready yet"
-        # at.asisWrite(child1,toString=toString)
+        at.asisWrite(child1,toString=True)
+    elif theType == "noref":
+        at.norefWrite(child1,toString=True)
     else:
         at.write(child1,thinFile=thinFile,nosentinels=nosentinels,toString=True)
-        result = g.toUnicode(at.stringOutput,"ascii")
     try:
+        result = g.toUnicode(at.stringOutput,"ascii")
         assert(result == expected)
     except AssertionError:
         #@        << dump result and expected >>

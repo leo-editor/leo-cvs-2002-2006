@@ -8230,6 +8230,7 @@ def runOpenFileDialog(self,title,filetypes,defaultextension,multiple=False):
             g.CheckVersion(self.root.getvar("tk_patchLevel"),"8.4")
         ):
             files = tkFileDialog.askopenfilenames(title=title,filetypes=filetypes)
+            # g.trace(files)
             return list(files)
         else:
             # Get one file and return it as a list.
@@ -11037,6 +11038,284 @@ except:
 #@-node:ekr.20041005105605.215:<< rename the output file to be the target file >>
 #@-node:ekr.20041005105605.212:replaceTargetFileIfDifferent
 #@-node:ekr.20041019085841:(Made sure files that differ only in line ending get written if @lineending is in effect)
+#@+node:ekr.20041019111455:(Fixed pretty printing bug: docstrings got messed up)
+#@+node:ekr.20041019125831:Notes
+@killcolor
+
+- (to do) doc parts are reformatted improperly.
+
+    - This is going to be even trickier when Python allows '@' characters.
+    - The present code make no attempt to discover @doc parts;
+      it simply preserves whitespace after @ signs!
+
+- (fixed) doc strings were messed up.
+
+    - The bug was improperly use a as a synonym for self.array.
+#@nonl
+#@-node:ekr.20041019125831:Notes
+#@+node:ekr.20040711135959.1:Pretty Print commands
+#@+node:ekr.20040712053025:prettyPrintAllPythonCode
+def prettyPrintAllPythonCode (self,dump=False):
+
+    c = self ; pp = c.prettyPrinter(c)
+
+    for p in c.all_positions_iter():
+        
+        # Unlike scanDirectives, scanForAtLanguage ignores @comment.
+        if g.scanForAtLanguage(c,p) == "python":
+
+            pp.prettyPrintNode(p,dump=dump)
+            
+    pp.endUndo()
+#@nonl
+#@-node:ekr.20040712053025:prettyPrintAllPythonCode
+#@+node:ekr.20040712053025.1:prettyPrintPythonCode
+def prettyPrintPythonCode (self,p=None,dump=False):
+
+    c = self
+    
+    if p: root = p.copy()
+    else: root = c.currentPosition();
+    
+    pp = c.prettyPrinter(c)
+    
+    for p in root.self_and_subtree_iter():
+        
+        # Unlike scanDirectives, scanForAtLanguage ignores @comment.
+        if g.scanForAtLanguage(c,p) == "python":
+    
+            pp.prettyPrintNode(p,dump=dump)
+          
+    pp.endUndo()
+#@nonl
+#@-node:ekr.20040712053025.1:prettyPrintPythonCode
+#@+node:ekr.20040711135244.5:class prettyPrinter
+class prettyPrinter:
+    
+    @others
+#@nonl
+#@+node:ekr.20040711135244.6:__init__
+def __init__ (self,c):
+    
+    self.changed = False
+    self.line = 0
+    self.lines = []
+    self.col = 0
+    self.array = []
+    self.parenLevel = 0
+    self.bracketLevel = 0
+    self.c = c
+    self.p = c.currentPosition()
+    self.prevName = None
+#@nonl
+#@-node:ekr.20040711135244.6:__init__
+#@+node:ekr.20040713093048:clear
+def clear (self):
+    self.lines = []
+#@nonl
+#@-node:ekr.20040713093048:clear
+#@+node:ekr.20040713064323:dumpLines
+def dumpLines (self,p,lines):
+
+    encoding = g.app.tkEncoding
+    
+    print ; print '-'*10, p.headString()
+    
+    if 1:
+        for line in lines:
+            line2 = g.toEncodedString(line,encoding,reportErrors=True)
+            print line2, # Don't add a trailing newline!
+    else:
+        for i in xrange(len(lines)):
+            line = g.toEncodedString(line,encoding,reportErrors=True)
+            print "%3d" % i, repr(lines[i])
+#@nonl
+#@-node:ekr.20040713064323:dumpLines
+#@+node:ekr.20040711135244.7:dumpToken
+def dumpToken (self,token5tuple):
+
+    t1,t2,t3,t4,t5 = token5tuple
+    srow,scol = t3 ; erow,ecol = t4
+    line = str(t5) # can fail
+    name = token.tok_name[t1].lower()
+    val = str(t2) # can fail
+
+    startLine = self.line != srow
+    if startLine:
+        print "----- line",srow,repr(line)
+    self.line = srow
+
+    print "%10s (%2d,%2d) %-8s" % (name,scol,ecol,repr(val))
+#@nonl
+#@-node:ekr.20040711135244.7:dumpToken
+#@+node:ekr.20040711135244.8:get
+def get (self):
+    
+    return self.lines
+#@nonl
+#@-node:ekr.20040711135244.8:get
+#@+node:ekr.20040711135244.4:prettyPrintNode
+def prettyPrintNode(self,p,dump):
+
+    pp = self ; c = self.c
+    h = p.headString()
+    s = p.bodyString()
+    if not s: return
+    
+    readlines = g.readLinesGenerator(s).next
+
+    try:
+        pp.clear()
+        for token5tuple in tokenize.generate_tokens(readlines):
+            pp.putToken(token5tuple)
+        lines = pp.get()
+
+    except tokenize.TokenError:
+        g.es("Error pretty-printing %s.  Not changed." % h, color="blue")
+        return
+
+    if dump:
+        pp.dumpLines(p,lines)
+    else:
+        pp.replaceBody(p,lines)
+#@nonl
+#@-node:ekr.20040711135244.4:prettyPrintNode
+#@+node:ekr.20040711135244.9:put
+def put (self,s,strip=True):
+    
+    """Put s to self.array, and strip trailing whitespace if strip is True."""
+    
+    if self.array and strip:
+        prev = self.array[-1]
+        if len(self.array) == 1:
+            if prev.rstrip():
+                # Stripping trailing whitespace doesn't strip leading whitespace.
+                self.array[-1] = prev.rstrip()
+        else:
+            # The previous entry isn't leading whitespace, so we can strip whitespace.
+            self.array[-1] = prev.rstrip()
+
+    self.array.append(s)
+#@nonl
+#@-node:ekr.20040711135244.9:put
+#@+node:ekr.20040711135244.10:putNormalToken
+def putNormalToken (self,token5tuple):
+
+    t1,t2,t3,t4,t5 = token5tuple
+    srow,scol = t3 ; erow,ecol = t4
+    line = t5
+    name = token.tok_name[t1].lower()
+    val = t2
+    startLine = self.line != srow
+    self.line = srow
+
+    if startLine:
+        ws = line[0:scol]
+        if ws: self.array.append(ws)
+
+    # g.trace(name,repr(str(val)))
+    if name in ("nl","newline","endmarker"):
+        if name in ("nl","newline"):
+            self.array.append('\n')
+        self.lines.append(''.join(self.array))
+        self.array = []
+    elif name == "op":
+        self.putOperator(val)
+    elif name == "name":
+        self.array.append("%s " % val)
+        if self.prevName == "def": # A personal idiosyncracy.
+            self.array.append(' ') # Retain the blank before '('.
+        self.prevName = val
+    elif name == "number":
+        self.array.append(val)
+    elif name in ("comment","string"):
+        # These may span lines, so duplicate the end-of-line logic.
+        lines = g.splitLines(val)
+        for line in lines:
+            self.array.append(line)
+            if line and line[-1] == '\n':
+                self.lines.append(''.join(self.array))
+                self.array = []
+    elif name == "errortoken":
+        self.array.append(val)
+        if val == '@':
+            # Preserve whitespace after @.
+            i = g.skip_ws(line,scol+1)
+            ws = line[scol+1:i]
+            if ws: self.array.append(ws)
+    elif name == "indent":
+        self.array.append(val)
+    elif name == "dedent":
+        pass
+    else:
+        print "unknown: %s" % (name)
+#@nonl
+#@-node:ekr.20040711135244.10:putNormalToken
+#@+node:ekr.20040711135244.11:putOperator
+def putOperator (self,val):
+    
+    if val == '(':
+        self.parenLevel += 1
+        self.put(val)
+    elif val == ')':
+        self.parenLevel -= 1
+        self.put(val)
+    elif val == '=':
+        if self.parenLevel > 0: self.put('=')
+        else:                   self.put(' = ')
+    elif val == ',':
+        if self.parenLevel > 0: self.put(',')
+        else:                   self.put(', ')
+    elif val == ';':
+        self.put(" ; ")
+    else:
+        self.put(val)
+#@nonl
+#@-node:ekr.20040711135244.11:putOperator
+#@+node:ekr.20040711135244.12:putToken
+def putToken (self,token5tuple):
+    
+    if 1:
+        self.putNormalToken(token5tuple)
+    else:
+        self.dumpToken(token5tuple)
+#@nonl
+#@-node:ekr.20040711135244.12:putToken
+#@+node:ekr.20040713070356:replaceBody
+def replaceBody (self,p,lines):
+    
+    c = self.c
+    
+    sel = c.frame.body.getInsertionPoint()
+    oldBody = p.bodyString()
+    body = string.join(lines,'')
+    
+    p.setBodyStringOrPane(body)
+    
+    if not self.changed:
+
+        # Tag the start of the command.
+        c.undoer.setUndoParams("Pretty Print",self.p) 
+        self.changed = True
+    
+    self.c.undoer.setUndoParams("Change",p,
+        oldText=oldBody,newText=body,oldSel=sel, newSel=sel)
+#@nonl
+#@-node:ekr.20040713070356:replaceBody
+#@+node:ekr.20040713091855:endUndo
+def endUndo (self):
+    
+    c = self.c
+    
+    if self.changed:
+
+        # Tag the end of the command.
+        c.undoer.setUndoParams("Pretty Print",self.p)
+#@nonl
+#@-node:ekr.20040713091855:endUndo
+#@-node:ekr.20040711135244.5:class prettyPrinter
+#@-node:ekr.20040711135959.1:Pretty Print commands
+#@-node:ekr.20041019111455:(Fixed pretty printing bug: docstrings got messed up)
 #@-node:ekr.20040929081120:4.3 a1 projects
 #@-all
 #@nonl
