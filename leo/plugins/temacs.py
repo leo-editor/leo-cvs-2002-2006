@@ -9,14 +9,16 @@ to emulate all Emacs keystrokes, but only a select few.
 #@@language python
 #@@tabwidth -4
 
-__version__ = '.4'
+__version__ = '.5'
 #@<< version history >>
 #@+node:ekr.20041028081942:<< version history >>
 #@+at
 # 
 # 0.3 Leo User: Original code.
 # 
-# 0.4 EKR:  Minor style mods.
+# 0.4 EKR: Minor style mods.
+# 
+# 0.5 EKR: cbDict must be defined at end of file.
 #@-at
 #@nonl
 #@-node:ekr.20041028081942:<< version history >>
@@ -62,87 +64,6 @@ tailEnds = {}
 undoers = {}
 #@nonl
 #@-node:ekr.20041028084110:<< globals >>
-#@nl
-#@<< define cbDict >>
-#@+node:ekr.20041028083211:<< define cbDict >>
-cbDict = {
-'Alt-less' : lambda event, spot = '1.0' :moveTo( event, spot ),
-'Alt-greater': lambda event, spot = 'end' :moveTo( event, spot ),
-'Control-Right': lambda event, way = 1: moveword( event, way ),
-'Control-Left': lambda event, way = -1: moveword( event, way ),
-'Control-a': lambda event, spot = 'insert linestart': moveTo( event, spot ),
-'Control-e': lambda event, spot = 'insert lineend': moveTo( event, spot ),
-'Alt-Up': lambda event, spot = 'insert linestart': moveTo( event, spot ),
-'Alt-Down': lambda event, spot = 'insert lineend': moveTo( event, spot ),
-'Alt-f': lambda event, way = 1: moveword( event, way ),
-'Alt-b' : lambda event, way = -1: moveword( event, way ),
-'Control-o': insertNewLine,
-'Control-k': lambda event, frm = 'insert', to = 'insert lineend': kill( event, frm, to) ,
-'Alt-d': lambda event, frm = 'insert wordstart', to = 'insert wordend': kill( event,frm, to ),
-'Alt-Delete': lambda event: deletelastWord( event ),
-"Control-y": lambda event, frm = 'insert', which = 'c': walkKB( event, frm, which),
-"Alt-y": lambda event , frm = "insert", which = 'a': walkKB( event, frm, which ),
-"Alt-k": lambda event : killsentence( event ),
- 'Control-s' : None,
- 'Control-r' : None,
- 'Alt-c': lambda event, which = 'cap' : capitalize( event, which ),
- 'Alt-u': lambda event, which = 'up' : capitalize( event, which ),
- 'Alt-l': lambda event, which = 'low' : capitalize( event, which ),
- 'Alt-t': lambda event, sw = []: swapWords( event, sw ),
- 'Alt-x': alt_X,
-'Control-x': startControlX,
-'Control-g': stopControlX,
-'Control-Shift-at': setRegion,
-'Control-w': lambda event, which = 'd' :killRegion( event, which ),
-'Alt-w': lambda event, which = 'c' : killRegion( event, which ),
-'Control-t': swapCharacters,
-'Control-u': None,
-'Control-l': None,
-'Alt-z': None,
-'Control-i': None,
-'Alt-Control-backslash': indentRegion,
-'Alt-m' : backToIndentation,
-'Alt-asciicircum' : deleteIndentation,
-'Control-d': deleteNextChar,
-'Alt-backslash': deleteSpaces, 
-'Alt-g': None,
-'Control-v' : lambda event, way = 'south': screenscroll( event, way ),
-'Alt-v' : lambda event, way = 'north' : screenscroll( event, way ),
-'Alt-equal': countRegion,
-'Alt-parenleft': insertParentheses,
-'Alt-parenright': movePastClose,
-'Alt-percent' : None,
-'Delete': lambda event, which = 'BackSpace': manufactureKeyPress( event, which ),
-'Control-p': lambda event, which = 'Up': manufactureKeyPress( event, which ),
-'Control-n': lambda event, which = 'Down': manufactureKeyPress( event, which ),
-'Control-f': lambda event, which = 'Right': manufactureKeyPress( event, which ),
-'Control-b': lambda event, which = 'Left': manufactureKeyPress( event, which ),
-'Control-Alt-w': None,
-'Alt-a': lambda event, which = 'bak': prevNexSentence( event, which ),
-'Alt-e': lambda event, which = 'for': prevNexSentence( event, which ),
-'Control-Alt-o': insertNewLineIndent,
-'Alt-minus': negativeArgument,
-'Alt-slash': dynamicExpansion,
-'Control-Alt-slash': dynamicExpansion2,
-'Control-u': lambda event, keystroke = '<Control-u>': universalDispatch( event, keystroke ),
-'Alt-braceright': lambda event, which = 1: movingParagraphs( event, which ),
-'Alt-braceleft': lambda event , which = 0: movingParagraphs( event, which ),
-'Alt-q': fillParagraph,
-'Alt-h': selectParagraph,
-'Alt-semicolon': indentToCommentColumn,
-'Alt-0': lambda event, stroke = '<Alt-0>', number = 0: numberCommand( event, stroke, number ) ,
-'Alt-1': lambda event, stroke = '<Alt-1>', number = 1: numberCommand( event, stroke, number ) ,
-'Alt-2': lambda event, stroke = '<Alt-2>', number = 2: numberCommand( event, stroke, number ) ,
-'Alt-3': lambda event, stroke = '<Alt-3>', number = 3: numberCommand( event, stroke, number ) ,
-'Alt-4': lambda event, stroke = '<Alt-4>', number = 4: numberCommand( event, stroke, number ) ,
-'Alt-5': lambda event, stroke = '<Alt-5>', number = 5: numberCommand( event, stroke, number ) ,
-'Alt-6': lambda event, stroke = '<Alt-6>', number = 6: numberCommand( event, stroke, number ) ,
-'Alt-7': lambda event, stroke = '<Alt-7>', number = 7: numberCommand( event, stroke, number ) ,
-'Alt-8': lambda event, stroke = '<Alt-8>', number = 8: numberCommand( event, stroke, number ) ,
-'Alt-9': lambda event, stroke = '<Alt-9>', number = 9: numberCommand( event, stroke, number ) ,
-'Control-underscore': doUndo,
-}
-#@-node:ekr.20041028083211:<< define cbDict >>
 #@nl
 
 isearch = False
@@ -2859,5 +2780,88 @@ def Goto( event ):
 #@-node:ekr.20041028083211.9:Search...
 #@-node:ekr.20041028083211.3:Emacs commands...
 #@-others
+
+#@<< define cbDict >>
+#@+node:ekr.20041028083211:<< define cbDict >>
+cbDict = {
+'Alt-less' : lambda event, spot = '1.0' :moveTo( event, spot ),
+'Alt-greater': lambda event, spot = 'end' :moveTo( event, spot ),
+'Control-Right': lambda event, way = 1: moveword( event, way ),
+'Control-Left': lambda event, way = -1: moveword( event, way ),
+'Control-a': lambda event, spot = 'insert linestart': moveTo( event, spot ),
+'Control-e': lambda event, spot = 'insert lineend': moveTo( event, spot ),
+'Alt-Up': lambda event, spot = 'insert linestart': moveTo( event, spot ),
+'Alt-Down': lambda event, spot = 'insert lineend': moveTo( event, spot ),
+'Alt-f': lambda event, way = 1: moveword( event, way ),
+'Alt-b' : lambda event, way = -1: moveword( event, way ),
+'Control-o': insertNewLine,
+'Control-k': lambda event, frm = 'insert', to = 'insert lineend': kill( event, frm, to) ,
+'Alt-d': lambda event, frm = 'insert wordstart', to = 'insert wordend': kill( event,frm, to ),
+'Alt-Delete': lambda event: deletelastWord( event ),
+"Control-y": lambda event, frm = 'insert', which = 'c': walkKB( event, frm, which),
+"Alt-y": lambda event , frm = "insert", which = 'a': walkKB( event, frm, which ),
+"Alt-k": lambda event : killsentence( event ),
+ 'Control-s' : None,
+ 'Control-r' : None,
+ 'Alt-c': lambda event, which = 'cap' : capitalize( event, which ),
+ 'Alt-u': lambda event, which = 'up' : capitalize( event, which ),
+ 'Alt-l': lambda event, which = 'low' : capitalize( event, which ),
+ 'Alt-t': lambda event, sw = []: swapWords( event, sw ),
+ 'Alt-x': alt_X,
+'Control-x': startControlX,
+'Control-g': stopControlX,
+'Control-Shift-at': setRegion,
+'Control-w': lambda event, which = 'd' :killRegion( event, which ),
+'Alt-w': lambda event, which = 'c' : killRegion( event, which ),
+'Control-t': swapCharacters,
+'Control-u': None,
+'Control-l': None,
+'Alt-z': None,
+'Control-i': None,
+'Alt-Control-backslash': indentRegion,
+'Alt-m' : backToIndentation,
+'Alt-asciicircum' : deleteIndentation,
+'Control-d': deleteNextChar,
+'Alt-backslash': deleteSpaces, 
+'Alt-g': None,
+'Control-v' : lambda event, way = 'south': screenscroll( event, way ),
+'Alt-v' : lambda event, way = 'north' : screenscroll( event, way ),
+'Alt-equal': countRegion,
+'Alt-parenleft': insertParentheses,
+'Alt-parenright': movePastClose,
+'Alt-percent' : None,
+'Delete': lambda event, which = 'BackSpace': manufactureKeyPress( event, which ),
+'Control-p': lambda event, which = 'Up': manufactureKeyPress( event, which ),
+'Control-n': lambda event, which = 'Down': manufactureKeyPress( event, which ),
+'Control-f': lambda event, which = 'Right': manufactureKeyPress( event, which ),
+'Control-b': lambda event, which = 'Left': manufactureKeyPress( event, which ),
+'Control-Alt-w': None,
+'Alt-a': lambda event, which = 'bak': prevNexSentence( event, which ),
+'Alt-e': lambda event, which = 'for': prevNexSentence( event, which ),
+'Control-Alt-o': insertNewLineIndent,
+'Alt-minus': negativeArgument,
+'Alt-slash': dynamicExpansion,
+'Control-Alt-slash': dynamicExpansion2,
+'Control-u': lambda event, keystroke = '<Control-u>': universalDispatch( event, keystroke ),
+'Alt-braceright': lambda event, which = 1: movingParagraphs( event, which ),
+'Alt-braceleft': lambda event , which = 0: movingParagraphs( event, which ),
+'Alt-q': fillParagraph,
+'Alt-h': selectParagraph,
+'Alt-semicolon': indentToCommentColumn,
+'Alt-0': lambda event, stroke = '<Alt-0>', number = 0: numberCommand( event, stroke, number ) ,
+'Alt-1': lambda event, stroke = '<Alt-1>', number = 1: numberCommand( event, stroke, number ) ,
+'Alt-2': lambda event, stroke = '<Alt-2>', number = 2: numberCommand( event, stroke, number ) ,
+'Alt-3': lambda event, stroke = '<Alt-3>', number = 3: numberCommand( event, stroke, number ) ,
+'Alt-4': lambda event, stroke = '<Alt-4>', number = 4: numberCommand( event, stroke, number ) ,
+'Alt-5': lambda event, stroke = '<Alt-5>', number = 5: numberCommand( event, stroke, number ) ,
+'Alt-6': lambda event, stroke = '<Alt-6>', number = 6: numberCommand( event, stroke, number ) ,
+'Alt-7': lambda event, stroke = '<Alt-7>', number = 7: numberCommand( event, stroke, number ) ,
+'Alt-8': lambda event, stroke = '<Alt-8>', number = 8: numberCommand( event, stroke, number ) ,
+'Alt-9': lambda event, stroke = '<Alt-9>', number = 9: numberCommand( event, stroke, number ) ,
+'Control-underscore': doUndo,
+}
+#@-node:ekr.20041028083211:<< define cbDict >>
+#@nl
+#@nonl
 #@-node:mork.20041014112843.1:@thin temacs.py
 #@-leo
