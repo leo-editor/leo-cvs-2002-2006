@@ -14,44 +14,76 @@ import leoUndo
 #@+node:ekr.20031218072017.2410:<< About handling events >>
 #@+at 
 #@nonl
-# Leo must handle events or commands that change the text in the outline or 
-# body panes.  It is surprisingly difficult to ensure that headline and body 
-# text corresponds to the vnode and tnode corresponding to presently selected 
-# outline, and vice versa. For example, when the user selects a new headline 
-# in the outline pane, we must ensure that 1) the vnode and tnode of the 
-# previously selected node have up-to-date information and 2) the body pane is 
-# loaded from the correct data in the corresponding tnode.
+# Leo must handle events or commands that change the text in the outline or body panes.  It is surprisingly difficult to ensure 
+# that headline and body text corresponds to the vnode and tnode corresponding to presently selected outline, and vice versa. For 
+# example, when the user selects a new headline in the outline pane, we must ensure that 1) the vnode and tnode of the previously 
+# selected node have up-to-date information and 2) the body pane is loaded from the correct data in the corresponding tnode.
 # 
-# Early versions of Leo attempted to satisfy these conditions when the user 
-# switched outline nodes.  Such attempts never worked well; there were too 
-# many special cases.  Later versions of Leo, including leo.py, use a much 
-# more direct approach.  The event handlers make sure that the vnode and tnode 
-# corresponding to the presently selected node are always kept up-to-date.  In 
-# particular, every keystroke in the body pane causes the presently selected 
-# tnode to be updated immediately.  There is no longer any need for the 
-# c.synchVnode method.  (That method still exists for compatibility with old 
-# scripts.)
+# Early versions of Leo attempted to satisfy these conditions when the user switched outline nodes.  Such attempts never worked 
+# well; there were too many special cases.  Later versions of Leo, including leo.py, use a much more direct approach.  The event 
+# handlers make sure that the vnode and tnode corresponding to the presently selected node are always kept up-to-date.  In 
+# particular, every keystroke in the body pane causes the presently selected tnode to be updated immediately.  There is no longer 
+# any need for the c.synchVnode method.  (That method still exists for compatibility with old scripts.)
 # 
-# The leoTree class contains all the event handlers for the tree pane, and the 
-# leoBody class contains the event handlers for the body pane.  The actual 
-# work is done in the idle_head_key and idle_body_key methods.  These routines 
-# are surprisingly complex; they must handle all the tasks mentioned above, as 
-# well as others. The idle_head_key and idle_body_key methods should not be 
-# called outside their respective classes.  However, sometimes code in the 
-# Commands must simulate an event.  That is, the code needs to indicate that 
-# headline or body text has changed so that the screen may be redrawn 
-# properly.   The leoBody class defines the following simplified event 
-# handlers: onBodyChanged, onBodyWillChange and onBodyKey. Similarly, the 
-# leoTree class defines onHeadChanged and onHeadlineKey.  Commanders and 
-# subcommanders call these event handlers to indicate that a command has 
-# changed, or will change, the headline or body text.  Calling event handlers 
-# rather than c.beginUpdate and c.endUpdate ensures that the outline pane is 
-# redrawn only when needed.
+# The leoTree class contains all the event handlers for the tree pane, and the leoBody class contains the event handlers for the 
+# body pane.  The actual work is done in the idle_head_key and idle_body_key methods.  These routines are surprisingly complex; 
+# they must handle all the tasks mentioned above, as well as others. The idle_head_key and idle_body_key methods should not be 
+# called outside their respective classes.  However, sometimes code in the Commands must simulate an event.  That is, the code 
+# needs to indicate that headline or body text has changed so that the screen may be redrawn properly.   The leoBody class defines 
+# the following simplified event handlers: onBodyChanged, onBodyWillChange and onBodyKey. Similarly, the leoTree class defines 
+# onHeadChanged and onHeadlineKey.  Commanders and subcommanders call these event handlers to indicate that a command has changed, 
+# or will change, the headline or body text.  Calling event handlers rather than c.beginUpdate and c.endUpdate ensures that the 
+# outline pane is redrawn only when needed.
 #@-at
 #@-node:ekr.20031218072017.2410:<< About handling events >>
 #@nl
 
 #@+others
+#@+node:ekr.20041223130609:class componentBaseClass
+class componentBaseClass:
+
+    #@    @+others
+    #@+node:ekr.20041223154028: ctor
+    def __init__ (self,c,name,frame,obj=None,packer=None,unpacker=None):
+        
+        self.c = c
+        self.frame = frame  # The Tk.Frame containing the component.
+        self.name = name    # The component's name: the key for c.frame.componentsDict.
+        self.obj = obj      # Optional object (typically not a Tk.Frame.)
+        self.packer = packer
+        self.unpacker = unpacker
+    
+        c.frame.componentsDict[name] = self
+    #@nonl
+    #@-node:ekr.20041223154028: ctor
+    #@+node:ekr.20041223124910:__repr__
+    def __repr__ (self):
+        
+        return '<component %s>' % self.name
+    #@nonl
+    #@-node:ekr.20041223124910:__repr__
+    #@+node:ekr.20041223154028.1:oops
+    def oops (self):
+        
+        print ("componentBaseClass oops:",
+            g.callerName(2),
+            "must be overridden in subclass")
+    #@-node:ekr.20041223154028.1:oops
+    #@+node:ekr.20041223154028.2:getters
+    # Getters...
+    def getFrame    (self): return self.frame
+    def getObject   (self): return self.obj
+    def getPacker   (self): return self.packer
+    def getUnpacker (self): return self.unpacker
+    #@-node:ekr.20041223154028.2:getters
+    #@+node:ekr.20041223154028.3:must be defined in subclasses
+    def destroy (self):
+        self.oops()
+    #@nonl
+    #@-node:ekr.20041223154028.3:must be defined in subclasses
+    #@-others
+#@nonl
+#@-node:ekr.20041223130609:class componentBaseClass
 #@+node:ekr.20031218072017.3656:class leoBody
 class leoBody:
     
@@ -376,20 +408,14 @@ class leoFrame:
         self.comparePanel = None
     
         # Gui-independent data
+        self.componentsDict = {} # Keys are names, values are componentClass instances.
         self.es_newlines = 0 # newline count for this log stream
         self.openDirectory = ""
         self.saved=False # True if ever saved
         self.splitVerticalFlag,self.ratio, self.secondary_ratio = True,0.5,0.5 # Set by initialRatios later.
         self.startupWindow=False # True if initially opened window
         self.stylesheet = None # The contents of <?xml-stylesheet...?> line.
-    
-        # Colors of status pane.
-        self.statusColorTags = [] # list of color names used as tags in status window.
-    
-        # Previous row and column shown in the status area.
-        self.lastStatusRow = self.lastStatusCol = 0
         self.tab_width = 0 # The tab width in effect in this pane.
-        self.statusIsEnabled = False
     #@nonl
     #@-node:ekr.20031218072017.3679:  leoFrame.__init__
     #@+node:ekr.20031218072017.3680: Must be defined in subclasses
@@ -457,6 +483,24 @@ class leoFrame:
     #@nonl
     #@-node:ekr.20031218072017.3686:setTopGeometry
     #@-node:ekr.20031218072017.3683:config stuff...
+    #@+node:ekr.20041222055747:leoFrame.unpack/repack...
+    def repackBodyPane (self):
+        
+        self.oops()
+    
+    def repackFrameWidgets (self):
+        
+        self.oops()
+        
+    def unpackFrameWidgets (self):
+        
+        self.oops()
+        
+    def unpackBodyPane (self):
+        
+        self.oops()
+    #@nonl
+    #@-node:ekr.20041222055747:leoFrame.unpack/repack...
     #@-node:ekr.20031218072017.3680: Must be defined in subclasses
     #@+node:ekr.20031218072017.3687:setTabWidth
     def setTabWidth (self,w):
@@ -843,8 +887,7 @@ class leoTree:
                 # one ':', followed by,
                 # one or more of: (excludes !"#;<>[\]^`|)
                 #   $%&'()*+,-./0-9:=?@A-Z_a-z{}~
-                # followed by one of: (same as above, except no minus sign or 
-                # comma).
+                # followed by one of: (same as above, except no minus sign or comma).
                 #   $%&'()*+/0-9:=?@A-Z_a-z}~
                 #@-at
                 #@@c
