@@ -2,7 +2,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="2297" clone_windows="0"/>
 <globals body_outline_ratio="0.46811224489795916">
-	<global_window_position top="59" left="288" height="784" width="842"/>
+	<global_window_position top="123" left="222" height="653" width="730"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences>
@@ -29,7 +29,7 @@
 <v t="edream.120803091715"><vh>using pdb</vh></v>
 </v>
 </v>
-<v t="edream.110203161858.6"><vh>Tests...</vh>
+<v t="edream.110203161858.6" a="V"><vh>Tests...</vh>
 <v t="edream.110203161858.7"><vh>4.0 tests</vh>
 <v t="edream.110203161858.8"><vh>unicode test for find all</vh>
 <v t="edream.110203161858.9"><vh>a</vh></v>
@@ -90,7 +90,7 @@
 <v t="edream.111903143504.1"><vh>more</vh></v>
 </v>
 <v t="edream.111803110909"><vh>Two refs on the same line</vh>
-<v t="edream.111803110909.1" a="M" tnodeList="edream.111803110909.1,edream.111803110909.2,edream.111803110909.3,edream.111803110909.2,edream.111803110909.3"><vh>@file c:\prog\test\ref.txt</vh>
+<v t="edream.111803110909.1" tnodeList="edream.111803110909.1,edream.111803110909.2,edream.111803110909.3,edream.111803110909.2,edream.111803110909.3"><vh>@file c:\prog\test\ref.txt</vh>
 <v t="edream.111803110909.2"><vh>&lt;&lt; rhs &gt;&gt;</vh></v>
 <v t="edream.111803110909.3"><vh>&lt;&lt; rhe &gt;&gt;</vh></v>
 </v>
@@ -98,7 +98,7 @@
 <v t="edream.112003090130"><vh>Script crash</vh>
 <v t="edream.112003090753"><vh>test</vh></v>
 </v>
-<v t="edream.112003094004" a="M"><vh>Another test script</vh>
+<v t="edream.112003094004"><vh>Another test script</vh>
 <v t="edream.112003094004.1"><vh>&lt;&lt; 2 &gt;&gt;</vh></v>
 </v>
 <v t="edream.110203161858.2090" tnodeList="edream.110203161858.2090,edream.110203161858.2091,edream.110203161858.2092"><vh>@nosentinelsfile c:\prog\test\nosentinelstest.txt</vh>
@@ -144,9 +144,9 @@
 <v t="edream.120603125159.9"><vh>&lt;&lt; policy_category &gt;&gt;</vh></v>
 <v t="edream.120603125159.10"><vh>&lt;&lt; policy &gt;&gt;</vh></v>
 </v>
-<v t="edream.120603125159.11" a="M"><vh>&lt;&lt; table_container &gt;&gt;</vh>
+<v t="edream.120603125159.11"><vh>&lt;&lt; table_container &gt;&gt;</vh>
 <v t="edream.120603125159.12"><vh>&lt;&lt; dynamic_zone &gt;&gt;</vh>
-<v t="edream.120603125159.13" a="M"><vh>&lt;&lt; date &gt;&gt;</vh>
+<v t="edream.120603125159.13"><vh>&lt;&lt; date &gt;&gt;</vh>
 <v t="edream.120603125159.14"><vh>&lt;&lt; date_error &gt;&gt;</vh></v>
 <v t="edream.120603125159.15"><vh>&lt;&lt; from_date &gt;&gt;</vh></v>
 <v t="edream.120603125159.16"><vh>&lt;&lt; to_date &gt;&gt;</vh></v>
@@ -2785,10 +2785,10 @@
 <v t="edream.110803170022"><vh>Count pages</vh></v>
 <v t="edream.120203185502"><vh>PyUno script</vh></v>
 </v>
-<v t="edream.121303091808" a="E"><vh>Batch test</vh>
-<v t="edream.112203144347" a="V" tnodeList="edream.112203144347"><vh>@file ..\test\batchScript.py</vh></v>
+<v t="edream.121303091808"><vh>Batch test</vh>
+<v t="edream.112203144347" tnodeList="edream.112203144347"><vh>@file ..\test\batchScript.py</vh></v>
 </v>
-<v t="edream.110203161858.2119" a="E"><vh>Unit Tests</vh>
+<v t="edream.110203161858.2119"><vh>Unit Tests</vh>
 <v t="edream.110203161858.2124"><vh>tempNode</vh></v>
 <v t="edream.110203161858.2125"><vh>colorizerTests</vh>
 <v t="edream.110203161858.2126"><vh>Actionscript</vh></v>

@@ -2,7 +2,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="4024" clone_windows="0"/>
 <globals body_outline_ratio="0.40610859728506787">
-	<global_window_position top="12" left="287" height="884" width="883"/>
+	<global_window_position top="39" left="240" height="779" width="804"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences>
@@ -1110,13 +1110,13 @@
 </v>
 <v t="ekr.20031218072017.862"><vh>Cleanup</vh></v>
 </v>
-<v t="ekr.20031219082559" a="M"><vh>To do: 4.1</vh>
+<v t="ekr.20031219082559"><vh>To do: 4.1</vh>
 <v t="ekr.20040105064959"><vh>Fix Bugs</vh>
 <v t="ekr.20040107162214"><vh>Exception in batch mode</vh></v>
 <v t="ekr.20040107161709"><vh>Write missing @file nodes</vh></v>
 <v t="ekr.20040107095421"><vh>Batch mode report (works, with changes)</vh></v>
-<v t="ekr.20040107081050" a="M"><vh>Can't open Idle</vh></v>
-<v t="ekr.20040105070134" a="M"><vh>Bug: reformat paragraph</vh></v>
+<v t="ekr.20040107081050"><vh>Can't open Idle</vh></v>
+<v t="ekr.20040105070134"><vh>Bug: reformat paragraph</vh></v>
 <v t="ekr.20040105120208"><vh>Fix crasher in colorizer</vh></v>
 <v t="ekr.20040105070616"><vh>Fix performance bug in cut/copy node</vh></v>
 <v t="ekr.20040104162835"><vh>Bug: marked nodes</vh>
@@ -1164,7 +1164,7 @@
 </v>
 <v t="ekr.20040107092757"><vh>Finish zope.leo (or zodb.leo ?)</vh></v>
 </v>
-<v t="ekr.20031218072017.863" a="E"><vh>(Project Views)</vh>
+<v t="ekr.20031218072017.863" a="M"><vh>(Project Views)</vh>
 <v t="ekr.20031218072017.864"><vh>  Reports</vh>
 <v t="ekr.20031218072017.865"><vh>(Translation problems)</vh>
 <v t="ekr.20031218072017.866"><vh> Report</vh></v>
@@ -1964,14 +1964,14 @@
 </v>
 </v>
 </v>
-<v t="ekr.20031218072017.1408" a="E"><vh>(Unicode)</vh>
+<v t="ekr.20031218072017.1408"><vh>(Unicode)</vh>
 <v t="ekr.20031218072017.1409"><vh> Bug Reports</vh>
 <v t="ekr.20031218072017.1410"><vh> Report</vh></v>
 <v t="ekr.20031218072017.1411"><vh> Report 1 (not a problem)</vh></v>
 <v t="ekr.20031218072017.1412"><vh> Report 2 (a problem)</vh></v>
 <v t="ekr.20031218072017.1413"><vh>Report: not real?</vh></v>
 </v>
-<v t="ekr.20031218072017.1414" a="E"><vh> Code...</vh>
+<v t="ekr.20031218072017.1414"><vh> Code...</vh>
 <v t="ekr.20031218072017.1415"><vh> App</vh>
 <v t="ekr.20031218072017.1416" a=""><vh>app.__init__</vh>
 <v t="ekr.20031218072017.1417"><vh>&lt;&lt; define global constants &gt;&gt;</vh></v>
@@ -2211,10 +2211,10 @@
 <v t="ekr.20031218072017.1497"><vh>&lt;&lt; print mismatch trace &gt;&gt;</vh></v>
 </v>
 </v>
-<v t="ekr.20031218072017.1498" a="E"><vh>Unicode utils...</vh>
+<v t="ekr.20031218072017.1498" a=""><vh>Unicode utils...</vh>
 <v t="ekr.20031218072017.1499"><vh>isUnicode</vh></v>
 <v t="ekr.20031218072017.1500"><vh>isValidEncoding</vh></v>
-<v t="ekr.20031218072017.1501" a="V"><vh>reportBadChars</vh></v>
+<v t="ekr.20031218072017.1501"><vh>reportBadChars</vh></v>
 <v t="ekr.20031218072017.1502"><vh>toUnicode &amp; toEncodedString</vh></v>
 <v t="ekr.20031218072017.1503"><vh>getpreferredencoding from 2.3a2</vh>
 <v t="ekr.20031218072017.1504"><vh>&lt;&lt; define getpreferredencoding using _locale &gt;&gt;</vh></v>
@@ -2867,7 +2867,7 @@
 </v>
 </v>
 </v>
-<v t="ekr.20031218072017.1923"><vh>4.1 Projects</vh>
+<v t="ekr.20031218072017.1923" a="E"><vh>4.1 Projects</vh>
 <v t="ekr.20031218072017.1924"><vh>Waiting for help from Linux people</vh>
 <v t="ekr.20031218072017.1925"><vh>Paste bug (Linux only)</vh>
 <v t="ekr.20031218072017.1331" a=""><vh>onBodyWillChange</vh></v>
@@ -3426,12 +3426,12 @@
 </v>
 </v>
 </v>
-<v t="ekr.20031218072017.2161"><vh>beta 5 projects</vh>
+<v t="ekr.20031218072017.2161" a="E"><vh>beta 5 projects</vh>
 <v t="ekr.20031218072017.2162"><vh>(Added defensive code to prevent crash in colorizer)</vh>
 <v t="ekr.20031218072017.2163"><vh>Report</vh></v>
 <v t="ekr.20031218072017.1885" a=""><vh>&lt;&lt; initialize new states &gt;&gt;</vh></v>
 </v>
-<v t="ekr.20031218072017.2165" a="M"><vh>(Bold body pane bug)</vh>
+<v t="ekr.20031218072017.2165" a="E"><vh>(Bold body pane bug)</vh>
 <v t="ekr.20031218072017.2166"><vh>Scripts</vh>
 <v t="ekr.20031218072017.2167"><vh>Show settings</vh>
 <v t="ekr.20031218072017.2168"><vh>getFontSettings</vh></v>
@@ -3440,7 +3440,7 @@
 <v t="ekr.20031218072017.2170"><vh>Print font</vh></v>
 <v t="ekr.20031218072017.2171"><vh>Print default font</vh></v>
 </v>
-<v t="ekr.20031218072017.2172"><vh>Code</vh>
+<v t="ekr.20031218072017.2172" a="E"><vh>Code</vh>
 <v t="ekr.20031218072017.1416" a=""><vh>app.__init__</vh>
 <v t="ekr.20031218072017.1417"><vh>&lt;&lt; define global constants &gt;&gt;</vh></v>
 <v t="ekr.20031218072017.368" a=""><vh>&lt;&lt; define global data structures &gt;&gt; app</vh></v>
@@ -3448,10 +3448,10 @@
 <v t="ekr.20031218072017.2173"><vh>config</vh>
 <v t="ekr.20031218072017.2174" a=""><vh>config.getFontFromParams</vh></v>
 </v>
-<v t="ekr.20031218072017.2175"><vh>frame</vh>
-<v t="ekr.20031218072017.2176" a=""><vh>f.finishCreate</vh>
+<v t="ekr.20031218072017.2175" a="E"><vh>frame</vh>
+<v t="ekr.20031218072017.2176" a="E"><vh>f.finishCreate</vh>
 <v t="ekr.20031218072017.2177" a=""><vh>&lt;&lt; create the toplevel frame &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.2178"><vh>&lt;&lt; create all the subframes &gt;&gt;</vh>
+<v t="ekr.20031218072017.2178" a=""><vh>&lt;&lt; create all the subframes &gt;&gt;</vh>
 <v t="ekr.20031218072017.2179"><vh>&lt;&lt; create both splitters &gt;&gt;</vh></v>
 </v>
 <v t="ekr.20031218072017.2180"><vh>&lt;&lt; create the first tree node &gt;&gt;</vh></v>
@@ -3459,7 +3459,7 @@
 </v>
 <v t="ekr.20031218072017.2181"><vh>body</vh>
 <v t="ekr.20031218072017.2182" a=""><vh>tkBody. __init__</vh></v>
-<v t="ekr.20031218072017.2183" a="M"><vh>tkBody.setFontFromConfig</vh></v>
+<v t="ekr.20031218072017.2183" a=""><vh>tkBody.setFontFromConfig</vh></v>
 <v t="ekr.20031218072017.2184" a=""><vh>Configuration (Tk spelling)</vh></v>
 </v>
 <v t="ekr.20031218072017.2185"><vh>gui</vh>
@@ -3486,7 +3486,7 @@
 <v t="ekr.20031218072017.2200"><vh>Configuration</vh></v>
 <v t="ekr.20031218072017.2201"><vh>Focus</vh></v>
 <v t="ekr.20031218072017.2202"><vh>Height &amp; width (use dummy values...)</vh></v>
-<v t="ekr.20031218072017.2203" a="M"><vh>Idle time...</vh></v>
+<v t="ekr.20031218072017.2203"><vh>Idle time...</vh></v>
 <v t="ekr.20031218072017.2204"><vh>Indices</vh></v>
 <v t="ekr.20031218072017.2205"><vh>Insert point</vh></v>
 <v t="ekr.20031218072017.2206"><vh>Menus</vh></v>
@@ -3561,7 +3561,7 @@
 <v t="ekr.20031218072017.1726"><vh>&lt;&lt; set bind_shortcut and menu_shortcut using accel &gt;&gt;</vh></v>
 <v t="ekr.20031218072017.1727"><vh>&lt;&lt; define callback function &gt;&gt;</vh></v>
 <v t="ekr.20031218072017.1728"><vh>&lt;&lt; set realLabel, amp_index and menu_shortcut &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.1729" a="M"><vh>&lt;&lt; handle bind_shorcut &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.1729"><vh>&lt;&lt; handle bind_shorcut &gt;&gt;</vh></v>
 </v>
 </v>
 <v t="ekr.20031218072017.2251"><vh>(Fixed Find panel bug on the Mac)</vh>
@@ -3574,17 +3574,17 @@
 <v t="ekr.20031218072017.2257"><vh>scanPythonClass</vh>
 <v t="ekr.20031218072017.2258"><vh>&lt;&lt; set classname and headline, or return i &gt;&gt;</vh></v>
 <v t="ekr.20031218072017.2259"><vh>&lt;&lt; create class_vnode  &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.2260" a="M"><vh>&lt;&lt; create nodes for all defs of the class &gt;&gt;</vh>
+<v t="ekr.20031218072017.2260"><vh>&lt;&lt; create nodes for all defs of the class &gt;&gt;</vh>
 <v t="ekr.20031218072017.2261"><vh>&lt;&lt; create parent_vnode &gt;&gt;</vh></v>
 </v>
 <v t="ekr.20031218072017.2262"><vh>&lt;&lt; append any other class material &gt;&gt;</vh></v>
 </v>
 <v t="ekr.20031218072017.2263"><vh>scanPythonDef</vh>
 <v t="ekr.20031218072017.2264"><vh>&lt;&lt; set headline or return i &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.2265" a="M"><vh>&lt;&lt; skip the Python def &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.2265"><vh>&lt;&lt; skip the Python def &gt;&gt;</vh></v>
 <v t="ekr.20031218072017.2266"><vh>&lt;&lt; Create def node &gt;&gt;</vh></v>
 </v>
-<v t="ekr.20031218072017.2267" a="M"><vh>scanPythonDecls</vh>
+<v t="ekr.20031218072017.2267"><vh>scanPythonDecls</vh>
 <v t="ekr.20031218072017.2268"><vh>&lt;&lt; break on def or class &gt;&gt;</vh></v>
 <v t="ekr.20031218072017.2269"><vh>&lt;&lt; Create a child node for declarations &gt;&gt;</vh></v>
 </v>
@@ -3730,7 +3730,7 @@
 </v>
 <v t="ekr.20031218072017.2319"><vh>rc1 projects</vh>
 <v t="ekr.20031218072017.2320"><vh>(Added dialog to Import Derived File)</vh>
-<v t="ekr.20031218072017.1809" a="M"><vh>importDerivedFile</vh></v>
+<v t="ekr.20031218072017.1809" a=""><vh>importDerivedFile</vh></v>
 </v>
 <v t="ekr.20031218072017.2321"><vh>(Allow @ignore and orphans in @file-nosent)</vh>
 <v t="ekr.20031218072017.2322" a=""><vh>old_df.write</vh>
@@ -3944,7 +3944,7 @@
 <v t="ekr.20031218072017.1828"><vh>findMatchingBracket</vh></v>
 </v>
 <v t="ekr.20031218072017.1829"><vh>getBodyLines</vh></v>
-<v t="ekr.20031218072017.1830" a="M"><vh>indentBody</vh></v>
+<v t="ekr.20031218072017.1830"><vh>indentBody</vh></v>
 <v t="ekr.20031218072017.1831"><vh>insertBodyTime &amp; allies</vh>
 <v t="ekr.20031218072017.1832"><vh>getTime</vh></v>
 </v>
@@ -3985,7 +3985,7 @@
 <v t="ekr.20031218072017.2256" a=""><vh>Python scanners</vh>
 <v t="ekr.20031218072017.2257"><vh>scanPythonClass</vh>
 <v t="ekr.20031218072017.2258"><vh>&lt;&lt; set classname and headline, or return i &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.2259" a="M"><vh>&lt;&lt; create class_vnode  &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.2259"><vh>&lt;&lt; create class_vnode  &gt;&gt;</vh></v>
 <v t="ekr.20031218072017.2260"><vh>&lt;&lt; create nodes for all defs of the class &gt;&gt;</vh>
 <v t="ekr.20031218072017.2261"><vh>&lt;&lt; create parent_vnode &gt;&gt;</vh></v>
 </v>
@@ -4128,7 +4128,7 @@
 </v>
 <v t="ekr.20040107080609"><vh>(Fixed calls to idle_head_key)</vh></v>
 <v t="ekr.20040106183213"><vh>(Fixed problem reading prefs of old files)</vh>
-<v t="ekr.20040106101045" a="M"><vh>Report</vh></v>
+<v t="ekr.20040106101045"><vh>Report</vh></v>
 <v t="ekr.20040107064101.3"><vh>Notes</vh></v>
 <v t="ekr.20031218072017.2062" a=""><vh>getPrefs</vh>
 <v t="ekr.20031218072017.2063"><vh>getTargetLanguage</vh></v>
@@ -4400,7 +4400,7 @@
 <v t="ekr.20031218072017.2604"><vh>Core classes...</vh>
 <v t="ekr.20031218072017.2605" tnodeList="ekr.20031218072017.2605,ekr.20031218072017.2606,ekr.20031218072017.1934,ekr.20031218072017.1935,ekr.20031218072017.1936,ekr.20031218072017.1937,ekr.20031218072017.1624,ekr.20031218072017.1938,ekr.20031218072017.1939,ekr.20031218072017.2607"><vh>@file leo.py </vh>
 <v t="ekr.20031218072017.2606"><vh>&lt;&lt; Import pychecker &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.1934" a="M"><vh>run &amp; allies</vh>
+<v t="ekr.20031218072017.1934" a=""><vh>run &amp; allies</vh>
 <v t="ekr.20031218072017.1935"><vh>&lt;&lt; print encoding info &gt;&gt;</vh></v>
 <v t="ekr.20031218072017.1936"><vh>isValidPython</vh></v>
 <v t="ekr.20031218072017.1937" a=""><vh>computeLoadDir</vh></v>
@@ -4721,7 +4721,7 @@
 <v t="ekr.20031218072017.2111" a=""><vh>Writing (4.x)</vh>
 <v t="ekr.20031218072017.2112"><vh>Top level</vh>
 <v t="ekr.20031218072017.2113"><vh>new_df.closeWriteFile</vh></v>
-<v t="ekr.20031218072017.2114" a="M"><vh>new_df.write (inits root.tnodeList)</vh>
+<v t="ekr.20031218072017.2114" a=""><vh>new_df.write (inits root.tnodeList)</vh>
 <v t="ekr.20031218072017.2115"><vh>&lt;&lt; initialize &gt;&gt;</vh></v>
 <v t="ekr.20031218072017.2116"><vh>&lt;&lt; open the file; return on error &gt;&gt;</vh></v>
 <v t="ekr.20031218072017.2117"><vh>&lt;&lt; write then entire @file tree &gt;&gt; (4.x)</vh>
@@ -4740,7 +4740,7 @@
 </v>
 </v>
 </v>
-<v t="ekr.20031218072017.2128" a="M"><vh>putBody (4.x)</vh>
+<v t="ekr.20031218072017.2128"><vh>putBody (4.x)</vh>
 <v t="ekr.20031218072017.2129" a=""><vh>&lt;&lt; handle line at s[i]  &gt;&gt; (4.x)</vh></v>
 </v>
 <v t="ekr.20031218072017.2130"><vh>code lines... (4.x)</vh>
@@ -4898,7 +4898,7 @@
 <v t="ekr.20031218072017.2816"><vh>c.setIvarsFromPrefs</vh></v>
 </v>
 <v t="ekr.20031218072017.2817" a=""><vh> doCommand</vh></v>
-<v t="ekr.20031218072017.2582" a="M"><vh> version &amp; signon stuff</vh></v>
+<v t="ekr.20031218072017.2582" a=""><vh> version &amp; signon stuff</vh></v>
 <v t="ekr.20031218072017.2818"><vh>Command handlers...</vh>
 <v t="ekr.20031218072017.2819"><vh>File Menu</vh>
 <v t="ekr.20031218072017.2820"><vh>top level</vh>
@@ -6826,7 +6826,7 @@
 <v t="ekr.20031218072017.3944"><vh>f.createCanvas</vh></v>
 <v t="ekr.20031218072017.2176" a=""><vh>f.finishCreate</vh>
 <v t="ekr.20031218072017.2177" a=""><vh>&lt;&lt; create the toplevel frame &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.2178"><vh>&lt;&lt; create all the subframes &gt;&gt;</vh>
+<v t="ekr.20031218072017.2178" a=""><vh>&lt;&lt; create all the subframes &gt;&gt;</vh>
 <v t="ekr.20031218072017.2179"><vh>&lt;&lt; create both splitters &gt;&gt;</vh></v>
 </v>
 <v t="ekr.20031218072017.2180"><vh>&lt;&lt; create the first tree node &gt;&gt;</vh></v>
@@ -7317,7 +7317,7 @@
 <v t="ekr.20031218072017.4210"><vh>__init__</vh></v>
 <v t="ekr.20031218072017.4211"><vh>editBody</vh></v>
 <v t="ekr.20031218072017.4212"><vh>tearDown</vh></v>
-<v t="ekr.20031218072017.4213" a="M"><vh>setUp</vh></v>
+<v t="ekr.20031218072017.4213"><vh>setUp</vh></v>
 <v t="ekr.20031218072017.4214"><vh>runTest</vh></v>
 </v>
 </v>
@@ -7363,6 +7363,17 @@
 </v>
 </v>
 </v>
+</v>
+</v>
+<v t="ekr.20040108095341" a="V"><vh>(Move the status area to the icon area)</vh>
+<v t="ekr.20031218072017.2178" a=""><vh>&lt;&lt; create all the subframes &gt;&gt;</vh>
+<v t="ekr.20031218072017.2179"><vh>&lt;&lt; create both splitters &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20031218072017.3960" a=""><vh>Creating the status area</vh>
+<v t="ekr.20031218072017.3961"><vh>createStatusLine</vh></v>
+<v t="ekr.20031218072017.3962"><vh>clearStatusLine</vh></v>
+<v t="ekr.20031218072017.3963"><vh>putStatusLine</vh></v>
+<v t="ekr.20031218072017.1733" a=""><vh>updateStatusRowCol</vh></v>
 </v>
 </v>
 </vnodes>
@@ -34801,9 +34812,11 @@ frame.tree.setTreeColorsFromConfig()
 self.reconfigurePanes()
 self.body.setFontFromConfig()
 
-# Create the status line.
-self.createStatusLine()
-self.putStatusLine("Welcome to Leo")</t>
+if 0: # No longer done automatically.
+
+	# Create the status line.
+	self.createStatusLine()
+	self.putStatusLine("Welcome to Leo")</t>
 <t tx="ekr.20031218072017.2179"># Splitter 1 is the main splitter containing splitter2 and the body pane.
 f1,bar1,split1Pane1,split1Pane2 = self.createLeoSplitter(outerFrame, self.splitVerticalFlag)
 self.f1,self.bar1 = f1,bar1
@@ -63337,5 +63350,6 @@ Maybe I missed some patch that's already in CVS?
 
 Best regards,
 Roger</t>
+<t tx="ekr.20040108095341"></t>
 </tnodes>
 </leo_file>
