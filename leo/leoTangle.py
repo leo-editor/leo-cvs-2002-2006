@@ -268,6 +268,94 @@ class def_node:
 
 #@-body
 #@-node:4::class def_node
+#@+node:5::class root_attributes
+#@+body
+#@+doc
+#  Stephen P. Schaefer, 9/2/2002
+# Collect the root node specific attributes in an
+# easy-to-use container.
+
+#@-doc
+#@@code
+class root_attributes:
+
+	#@+others
+	#@+node:1::root_attributes.__init__
+	#@+body
+	#@+at
+	#  Stephen P. Schaefer, 9/2/2002
+	# Keep track of the attributes of a root node
+
+	#@-at
+	#@@c
+	
+	def __init__ (self, tangle_state):
+	
+		if 0:
+			
+			try:
+				if tangle_state.path: pass
+			except AttributeError:
+				tangle_state.path = None
+				
+			trace("def_root_attribute.__init__",
+				"language:" + tangle_state.language +
+				", single_comment_string: " + tangle_state.single_comment_string +
+				", start_comment_string: " + tangle_state.start_comment_string +
+				", end_comment_string: " + tangle_state.end_comment_string +
+				", use_header_flag: " + choose(tangle_state.use_header_flag, "true", "false") +
+				", print_bits: " + represent_print_bits(tangle_state.print_bits) +
+				", path: " + choose(tangle_state.path, tangle_state.path, "") +
+				", page_width: " + tangle_state.page_width +
+				", tab_width: " + tangle_state.tab_width)
+		self.language = tangle_state.language
+		self.single_comment_string = tangle_state.single_comment_string
+		self.start_comment_string = tangle_state.start_comment_string
+		self.end_comment_string = tangle_state.end_comment_string
+		self.use_header_flag = tangle_state.use_header_flag
+		self.print_bits = tangle_state.print_bits
+		
+		# of all the state variables, this one isn't set in tangleCommands.__init__
+		# peculiar
+		try:
+			self.path = tangle_state.path
+		except AttributeError:
+			self.path = None
+		
+		self.page_width = tangle_state.page_width
+		self.tab_width = tangle_state.tab_width
+	#@-body
+	#@-node:1::root_attributes.__init__
+	#@+node:2::root_attributes.__repr__
+	#@+body
+	def __repr__ (self):
+	
+		return ("root_attributes: language: " + self.language +
+	        ", single_comment_string: " + self.single_comment_string +
+			", start_comment_string: " +	self.start_comment_string +
+			", end_comment_string: " +	self.end_comment_string +
+			", use_header_flag: " + choose(tangle_state.use_header_flag, "true", "false") +
+			", print_bits: " + represent_print_bits(tangle_state.print_bits) +
+			", path: " + tangle_state.path +
+			", page_width: " + tangle_state.page_width +
+			", tab_width: " + tangle_state.tab_width)
+
+	#@-body
+	#@-node:2::root_attributes.__repr__
+	#@+node:3::root_attributes.represent_print_bits
+	#@+body
+	def represent_print_bits(print_bits):
+		return choose(print_bits == verbose_bits, "verbose_bits",
+	        choose(print_bits == terse_bits, "terse_bits",
+	            choose(print_bits == silent_bits, "silent_bits", "?INVALID?")))
+
+	#@-body
+	#@-node:3::root_attributes.represent_print_bits
+	#@-others
+
+
+#@-body
+#@-node:5::class root_attributes
 #@-node:3::node classes
 #@+node:4::class tangleCommands methods
 #@+body
@@ -1057,12 +1145,11 @@ class tangleCommands:
 				j = skip_blank_lines(s,i)
 				k, code = self.skip_code(s,j)
 				
-				# Stephen Schaefer, 9/2/02
-				# we can rely on language and *_comment_string only if scanAllDirectives has
-				# processed the node prior to this invocation
-				self.st_enter_root_name(old_root_name,code,doc,
-				    self.language,self.single_comment_string,
-				    self.start_comment_string,self.end_comment_string)
+				# Stephen Schaefer, 9/2/02, later
+				# st_enter_root_name relies on scanAllDirectives to have set
+				# the root attributes, such as language, *_comment_string,
+				# use_header_flag, etc.
+				self.st_enter_root_name(old_root_name,code,doc)
 				
 				if not self.tangling: # Untangle code.
 					part = 1 # Use 1 for root part.
@@ -1325,12 +1412,16 @@ class tangleCommands:
 			#@+node:1:C=12:<<Get root specific attributes>>
 			#@+body
 			# Stephen Schaefer, 9/2/02
-			# do we need to retrieve verbose/terse? path? pagewidth? tabwidth? header/noheader?
-			self.language = section.language
-			self.single_comment_string = section.single_comment_string
-			self.start_comment_string = section.start_comment_string
-			self.end_comment_string = section.end_comment_string
-
+			# Retrieve the full complement of state for the root node
+			self.language = section.root_attributes.language
+			self.single_comment_string = section.root_attributes.single_comment_string
+			self.start_comment_string = section.root_attributes.start_comment_string
+			self.end_comment_string = section.root_attributes.end_comment_string
+			self.use_header_flag = section.root_attributes.use_header_flag
+			self.print_bits = section.root_attributes.print_bits
+			self.path = section.root_attributes.path
+			self.page_width = section.root_attributes.page_width
+			self.tab_width = section.root_attributes.tab_width
 			#@-body
 			#@-node:1:C=12:<<Get root specific attributes>>
 
@@ -2051,10 +2142,7 @@ class tangleCommands:
 			#@+body
 			# Stephen Schaefer, 9/2/02
 			# remember the language and comment characteristics
-			section.language = language
-			section.single_comment_string = single_comment_string
-			section.start_comment_string = start_comment_string
-			section.end_comment_string = end_comment_string
+			section.root_attributes = root_attributes(self)
 			#@-body
 			#@-node:2::<<remember root node attributes>>
  # Stephen Schaefer, 9/2/02
@@ -2065,16 +2153,11 @@ class tangleCommands:
 	#@+body
 	# Enters a root name into the given symbol table.
 	
-	def st_enter_root_name(self,name,code,doc,language,
-	
-		# Stephen Schaefer, 9/2/02
-		single_comment_string,start_comment_string,end_comment_string):
+	def st_enter_root_name(self,name,code,doc):
 		
 		# assert(code)
 		if name: # User errors can result in an empty @root name.
-			self.st_enter(name,code,doc,disallow_multiple_parts,is_root_name,
-			language,single_comment_string,start_comment_string,end_comment_string)
-
+			self.st_enter(name,code,doc,disallow_multiple_parts,is_root_name)
 	#@-body
 	#@-node:5:C=16:st_enter_root_name
 	#@+node:6::st_enter_section_name

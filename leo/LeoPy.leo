@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="2073" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="2077" clone_windows="0"/>
 <globals body_outline_ratio="0.5">
-	<global_window_position top="15" left="188" height="27" width="71"/>
+	<global_window_position top="15" left="188" height="27" width="82"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences allow_rich_text="0" tab_width="4" page_width="132" tangle_bat="0" untangle_bat="0" output_doc_chunks="1" use_header_flag="1" defaultTargetLanguage="Python">
 </preferences>
 <find_panel_settings search_body="1" whole_word="1">
-	<find_string></find_string>
+	<find_string>pagewidth</find_string>
 	<change_string></change_string>
 </find_panel_settings>
 <vnodes>
@@ -3241,9 +3241,9 @@
 </v>
 </v>
 </v>
-<v t="T1571" a="E"><vh>@file leoColor.py</vh>
+<v t="T1571"><vh>@file leoColor.py</vh>
 <v t="T1572"><vh>&lt;&lt; define colorizer constants &gt;&gt;</vh></v>
-<v t="T389" a="CV"><vh>&lt;&lt; define colorizer keywords &gt;&gt;</vh></v>
+<v t="T389" a="C"><vh>&lt;&lt; define colorizer keywords &gt;&gt;</vh></v>
 <v t="T1573"><vh>&lt;&lt; define colorizer functions &gt;&gt;</vh></v>
 <v t="T1574"><vh>&lt;&lt; define color panel data &gt;&gt;</vh></v>
 <v t="T1575"><vh>class colorizer</vh>
@@ -4582,7 +4582,7 @@
 <v t="T2020" a="E"><vh>@file leoTangle.py</vh>
 <v t="T2021"><vh>&lt;&lt; about Tangle and Untangle &gt;&gt;</vh></v>
 <v t="T2022"><vh>&lt;&lt; constants &amp; synonyms &gt;&gt;</vh></v>
-<v><vh>node classes</vh>
+<v a="E"><vh>node classes</vh>
 <v t="T2023"><vh>class tst_node</vh>
 <v t="T2024"><vh>tst_node.__init__</vh></v>
 <v t="T2025"><vh>tst_node.__repr__</vh></v>
@@ -4599,42 +4599,47 @@
 <v t="T2033"><vh>def_node.__init__</vh></v>
 <v t="T2034"><vh>def_node.__repr__</vh></v>
 </v>
+<v t="T2035" a="E"><vh>class root_attributes</vh>
+<v t="T2036" a="EV"><vh>root_attributes.__init__</vh></v>
+<v t="T2037" a="E"><vh>root_attributes.__repr__</vh></v>
+<v t="T2038"><vh>root_attributes.represent_print_bits</vh></v>
 </v>
-<v t="T2035"><vh>class tangleCommands methods</vh>
-<v t="T2036"><vh>tangle.__init__</vh></v>
-<v t="T672" a="C"><vh>tangle.init_ivars &amp; init_directive_ivars</vh>
+</v>
+<v t="T2039" a="E"><vh>class tangleCommands methods</vh>
+<v t="T2040"><vh>tangle.__init__</vh></v>
+<v t="T672" a="CE"><vh>tangle.init_ivars &amp; init_directive_ivars</vh>
 <v t="T673"><vh>&lt;&lt; init tangle ivars &gt;&gt;</vh></v>
 <v t="T674"><vh>&lt;&lt; init untangle ivars &gt;&gt;</vh></v>
 <v t="T675" a="C"><vh>&lt;&lt; init directive ivars &gt;&gt; (tangle)</vh></v>
 </v>
-<v t="T2037"><vh>top level</vh>
+<v t="T2041"><vh>top level</vh>
 <v t="T730" a="C"><vh>cleanup</vh></v>
-<v t="T2038"><vh>initTangleCommand</vh></v>
-<v t="T2039"><vh>initUntangleCommand</vh></v>
-<v t="T2040"><vh>tangle</vh></v>
+<v t="T2042"><vh>initTangleCommand</vh></v>
+<v t="T2043"><vh>initUntangleCommand</vh></v>
+<v t="T2044"><vh>tangle</vh></v>
 <v t="T727" a="C"><vh>tangleAll</vh></v>
 <v t="T728" a="C"><vh>tangleMarked</vh></v>
-<v t="T2041"><vh>tanglePass1</vh></v>
-<v t="T2042"><vh>tanglePass2</vh></v>
+<v t="T2045"><vh>tanglePass1</vh></v>
+<v t="T2046"><vh>tanglePass2</vh></v>
 <v t="T729" a="C"><vh>tangleTree (calls cleanup)</vh></v>
-<v t="T2043"><vh>untangle</vh></v>
-<v t="T2044"><vh>untangleAll</vh></v>
-<v t="T2045"><vh>untangleMarked</vh></v>
-<v t="T2046"><vh>untangleRoot (calls cleanup)</vh>
-<v t="T2047"><vh>&lt;&lt; return if @silent or unknown language &gt;&gt;</vh></v>
-<v t="T2048"><vh>&lt;&lt; Set path &amp; root_name to the file specified in the @root directive &gt;&gt;</vh></v>
-<v t="T2049"><vh>&lt;&lt; Read the file into file_buf  &gt;&gt;</vh></v>
-<v t="T2050"><vh>&lt;&lt; Pass 2:  Untangle the outline using the UST and a newly-created TST &gt;&gt;</vh></v>
+<v t="T2047"><vh>untangle</vh></v>
+<v t="T2048"><vh>untangleAll</vh></v>
+<v t="T2049"><vh>untangleMarked</vh></v>
+<v t="T2050"><vh>untangleRoot (calls cleanup)</vh>
+<v t="T2051"><vh>&lt;&lt; return if @silent or unknown language &gt;&gt;</vh></v>
+<v t="T2052"><vh>&lt;&lt; Set path &amp; root_name to the file specified in the @root directive &gt;&gt;</vh></v>
+<v t="T2053"><vh>&lt;&lt; Read the file into file_buf  &gt;&gt;</vh></v>
+<v t="T2054"><vh>&lt;&lt; Pass 2:  Untangle the outline using the UST and a newly-created TST &gt;&gt;</vh></v>
 </v>
-<v t="T2051"><vh>untangleTree</vh>
-<v t="T2052"><vh>&lt;&lt; set end to the next root in the unit &gt;&gt;</vh></v>
+<v t="T2055"><vh>untangleTree</vh>
+<v t="T2056"><vh>&lt;&lt; set end to the next root in the unit &gt;&gt;</vh></v>
 </v>
 </v>
-<v><vh>tangle</vh>
-<v t="T739" a="C"><vh>Pass 1</vh>
+<v a="E"><vh>tangle</vh>
+<v t="T739" a="CE"><vh>Pass 1</vh>
 <v t="T740"><vh>handle_newline</vh></v>
-<v t="T741"><vh>skip_body</vh>
-<v t="T742"><vh>The interface between tangle and untangle</vh>
+<v t="T741" a="E"><vh>skip_body</vh>
+<v t="T742" a="E"><vh>The interface between tangle and untangle</vh>
 <v t="T743"><vh>&lt;&lt; Define a section containing only an @doc part &gt;&gt;</vh></v>
 <v t="T744"><vh>&lt;&lt; Scan and define a section definition &gt;&gt;</vh></v>
 <v t="T745"><vh>&lt;&lt; Scan and define an @code defininition &gt;&gt;</vh></v>
@@ -4652,17 +4657,17 @@
 <v t="T722" a="C"><vh>skip_doc</vh></v>
 <v t="T752"><vh>skip_headline</vh></v>
 </v>
-<v><vh>Pass 2</vh>
+<v a="E"><vh>Pass 2</vh>
 <v t="T1042" a="C"><vh>oblank, oblanks, os, otab, otabs (Tangle)</vh></v>
-<v t="T640" a="C"><vh>tangle.put_all_roots</vh>
+<v t="T640" a="CE"><vh>tangle.put_all_roots</vh>
 <v t="T641" a="C"><vh>&lt;&lt;Get root specific attributes&gt;&gt;</vh></v>
 <v t="T642"><vh>&lt;&lt;Write a banner at the start of the output file&gt;&gt;</vh></v>
 <v t="T643"><vh>&lt;&lt; Erase the temporary file &gt;&gt;</vh></v>
 </v>
-<v t="T2053"><vh>put_code</vh>
-<v t="T2054"><vh>&lt;&lt;put possible section reference &gt;&gt;</vh></v>
-<v t="T2055"><vh>&lt;&lt; handle 2-character CWEB control codes &gt;&gt;</vh></v>
-<v t="T2056"><vh>&lt;&lt; handle noweb @ &lt; &lt; convention &gt;&gt;</vh></v>
+<v t="T2057"><vh>put_code</vh>
+<v t="T2058"><vh>&lt;&lt;put possible section reference &gt;&gt;</vh></v>
+<v t="T2059"><vh>&lt;&lt; handle 2-character CWEB control codes &gt;&gt;</vh></v>
+<v t="T2060"><vh>&lt;&lt; handle noweb @ &lt; &lt; convention &gt;&gt;</vh></v>
 </v>
 <v t="T680" a="C"><vh>put_doc</vh>
 <v t="T681"><vh>&lt;&lt;put the doc part&gt;&gt;</vh>
@@ -4672,35 +4677,35 @@
 </v>
 </v>
 <v t="T1041" a="C"><vh>put_leading_ws</vh></v>
-<v t="T2057"><vh>put_newline</vh>
-<v t="T2058"><vh>&lt;&lt; Output leading white space except for blank lines &gt;&gt;</vh></v>
+<v t="T2061"><vh>put_newline</vh>
+<v t="T2062"><vh>&lt;&lt; Output leading white space except for blank lines &gt;&gt;</vh></v>
 </v>
-<v t="T2059"><vh>put_part_node</vh></v>
-<v t="T2060"><vh>put_section</vh>
-<v t="T2061"><vh>&lt;&lt; Calculate the new value of tangle_indent &gt;&gt;</vh></v>
-<v t="T2062"><vh>&lt;&lt; Set 'newline_flag' if the line ends with the reference &gt;&gt;</vh></v>
-<v t="T2063"><vh>&lt;&lt;put all parts of the section definition&gt;&gt;</vh>
-<v t="T2064"><vh>&lt;&lt; Put the section name in a comment &gt;&gt;</vh>
-<v t="T2065"><vh>&lt;&lt; put ( n of m ) &gt;&gt;</vh></v>
+<v t="T2063"><vh>put_part_node</vh></v>
+<v t="T2064"><vh>put_section</vh>
+<v t="T2065"><vh>&lt;&lt; Calculate the new value of tangle_indent &gt;&gt;</vh></v>
+<v t="T2066"><vh>&lt;&lt; Set 'newline_flag' if the line ends with the reference &gt;&gt;</vh></v>
+<v t="T2067"><vh>&lt;&lt;put all parts of the section definition&gt;&gt;</vh>
+<v t="T2068"><vh>&lt;&lt; Put the section name in a comment &gt;&gt;</vh>
+<v t="T2069"><vh>&lt;&lt; put ( n of m ) &gt;&gt;</vh></v>
 </v>
-<v t="T2066"><vh>&lt;&lt; Put the ending comment &gt;&gt;</vh></v>
+<v t="T2070"><vh>&lt;&lt; Put the ending comment &gt;&gt;</vh></v>
 </v>
-<v t="T2067"><vh>&lt;&lt;Put a comment about the undefined section&gt;&gt;</vh></v>
+<v t="T2071"><vh>&lt;&lt;Put a comment about the undefined section&gt;&gt;</vh></v>
 </v>
-<v t="T2068"><vh>section_check</vh></v>
+<v t="T2072"><vh>section_check</vh></v>
 </v>
 </v>
-<v><vh>tst</vh>
-<v t="T2069"><vh>st_check</vh></v>
-<v t="T2070"><vh>st_dump</vh></v>
-<v t="T2071"><vh>st_dump_node</vh></v>
-<v t="T1400" a="C"><vh>st_enter</vh>
+<v a="E"><vh>tst</vh>
+<v t="T2073"><vh>st_check</vh></v>
+<v t="T2074"><vh>st_dump</vh></v>
+<v t="T2075"><vh>st_dump_node</vh></v>
+<v t="T1400" a="CE"><vh>st_enter</vh>
 <v t="T1401"><vh>&lt;&lt;check for duplicate code definitions &gt;&gt;</vh></v>
 <v t="T1402"><vh>&lt;&lt;remember root node attributes&gt;&gt;</vh></v>
 </v>
 <v t="T1403" a="C"><vh>st_enter_root_name</vh></v>
-<v t="T2072"><vh>st_enter_section_name</vh></v>
-<v t="T2073"><vh>st_lookup</vh></v>
+<v t="T2076"><vh>st_enter_section_name</vh></v>
+<v t="T2077"><vh>st_lookup</vh></v>
 </v>
 <v t="T786" a="C"><vh>ust</vh>
 <v t="T787"><vh>ust_dump</vh></v>
@@ -4783,7 +4788,7 @@
 <v t="T633" a="CE"><vh>tangle.scanAllDirectives</vh>
 <v t="T634"><vh>&lt;&lt; Test for @comment or @language &gt;&gt;</vh></v>
 <v t="T635"><vh>&lt;&lt; Test for @verbose, @terse or @silent &gt;&gt;</vh></v>
-<v t="T636"><vh>&lt;&lt; Test for @path, @pagewidth and @tabwidth &gt;&gt;</vh>
+<v t="T636" a="E"><vh>&lt;&lt; Test for @path, @pagewidth and @tabwidth &gt;&gt;</vh>
 <v t="T637"><vh>&lt;&lt; Remove leading and trailing delims if they exist &gt;&gt;</vh></v>
 </v>
 <v t="T638"><vh>&lt;&lt; Test for @header or @noheader &gt;&gt;</vh></v>
@@ -11441,12 +11446,16 @@ def put_all_roots(self):
 			es("unchanged:  " + file_name)
 			&lt;&lt; Erase the temporary file &gt;&gt;</t>
 <t tx="T641"># Stephen Schaefer, 9/2/02
-# do we need to retrieve verbose/terse? path? pagewidth? tabwidth? header/noheader?
-self.language = section.language
-self.single_comment_string = section.single_comment_string
-self.start_comment_string = section.start_comment_string
-self.end_comment_string = section.end_comment_string
-</t>
+# Retrieve the full complement of state for the root node
+self.language = section.root_attributes.language
+self.single_comment_string = section.root_attributes.single_comment_string
+self.start_comment_string = section.root_attributes.start_comment_string
+self.end_comment_string = section.root_attributes.end_comment_string
+self.use_header_flag = section.root_attributes.use_header_flag
+self.print_bits = section.root_attributes.print_bits
+self.path = section.root_attributes.path
+self.page_width = section.root_attributes.page_width
+self.tab_width = section.root_attributes.tab_width</t>
 <t tx="T642">if self.single_comment_string:
 	self.os(self.single_comment_string)
 	self.os(" Created by Leo from: ")
@@ -13501,12 +13510,11 @@ old_root_name = self.root_name
 j = skip_blank_lines(s,i)
 k, code = self.skip_code(s,j)
 
-# Stephen Schaefer, 9/2/02
-# we can rely on language and *_comment_string only if scanAllDirectives has
-# processed the node prior to this invocation
-self.st_enter_root_name(old_root_name,code,doc,
-    self.language,self.single_comment_string,
-    self.start_comment_string,self.end_comment_string)
+# Stephen Schaefer, 9/2/02, later
+# st_enter_root_name relies on scanAllDirectives to have set
+# the root attributes, such as language, *_comment_string,
+# use_header_flag, etc.
+self.st_enter_root_name(old_root_name,code,doc)
 
 if not self.tangling: # Untangle code.
 	part = 1 # Use 1 for root part.
@@ -22662,22 +22670,14 @@ def st_enter(self,name,code,doc,multiple_parts_flag,is_root_flag,
 			section.name + "&gt;&gt;")</t>
 <t tx="T1402"># Stephen Schaefer, 9/2/02
 # remember the language and comment characteristics
-section.language = language
-section.single_comment_string = single_comment_string
-section.start_comment_string = start_comment_string
-section.end_comment_string = end_comment_string</t>
+section.root_attributes = root_attributes(self)</t>
 <t tx="T1403"># Enters a root name into the given symbol table.
 
-def st_enter_root_name(self,name,code,doc,language,
-
-	# Stephen Schaefer, 9/2/02
-	single_comment_string,start_comment_string,end_comment_string):
+def st_enter_root_name(self,name,code,doc):
 	
 	# assert(code)
 	if name: # User errors can result in an empty @root name.
-		self.st_enter(name,code,doc,disallow_multiple_parts,is_root_name,
-		language,single_comment_string,start_comment_string,end_comment_string)
-</t>
+		self.st_enter(name,code,doc,disallow_multiple_parts,is_root_name)</t>
 <t tx="T1404">@nocolor
 
 tangle uses self.tab_width.
@@ -30972,15 +30972,78 @@ def __init__ (self,name,indent,part,of,nl_flag,code):
 <t tx="T2034">def __repr__ (self):
 
 	return "def_node:" + self.name</t>
-<t tx="T2035">class tangleCommands:
+<t tx="T2035">@doc Stephen P. Schaefer, 9/2/2002
+Collect the root node specific attributes in an
+easy-to-use container.
+@code
+class root_attributes:
+	@others
+</t>
+<t tx="T2036">@ Stephen P. Schaefer, 9/2/2002
+Keep track of the attributes of a root node
+@c
+
+def __init__ (self, tangle_state):
+
+	if 0:
+		
+		try:
+			if tangle_state.path: pass
+		except AttributeError:
+			tangle_state.path = None
+			
+		trace("def_root_attribute.__init__",
+			"language:" + tangle_state.language +
+			", single_comment_string: " + tangle_state.single_comment_string +
+			", start_comment_string: " + tangle_state.start_comment_string +
+			", end_comment_string: " + tangle_state.end_comment_string +
+			", use_header_flag: " + choose(tangle_state.use_header_flag, "true", "false") +
+			", print_bits: " + represent_print_bits(tangle_state.print_bits) +
+			", path: " + choose(tangle_state.path, tangle_state.path, "") +
+			", page_width: " + tangle_state.page_width +
+			", tab_width: " + tangle_state.tab_width)
+	self.language = tangle_state.language
+	self.single_comment_string = tangle_state.single_comment_string
+	self.start_comment_string = tangle_state.start_comment_string
+	self.end_comment_string = tangle_state.end_comment_string
+	self.use_header_flag = tangle_state.use_header_flag
+	self.print_bits = tangle_state.print_bits
+	
+	# of all the state variables, this one isn't set in tangleCommands.__init__
+	# peculiar
+	try:
+		self.path = tangle_state.path
+	except AttributeError:
+		self.path = None
+	
+	self.page_width = tangle_state.page_width
+	self.tab_width = tangle_state.tab_width</t>
+<t tx="T2037">def __repr__ (self):
+
+	return ("root_attributes: language: " + self.language +
+        ", single_comment_string: " + self.single_comment_string +
+		", start_comment_string: " +	self.start_comment_string +
+		", end_comment_string: " +	self.end_comment_string +
+		", use_header_flag: " + choose(tangle_state.use_header_flag, "true", "false") +
+		", print_bits: " + represent_print_bits(tangle_state.print_bits) +
+		", path: " + tangle_state.path +
+		", page_width: " + tangle_state.page_width +
+		", tab_width: " + tangle_state.tab_width)
+</t>
+<t tx="T2038">def represent_print_bits(print_bits):
+	return choose(print_bits == verbose_bits, "verbose_bits",
+        choose(print_bits == terse_bits, "terse_bits",
+            choose(print_bits == silent_bits, "silent_bits", "?INVALID?")))
+</t>
+<t tx="T2039">class tangleCommands:
 	@others</t>
-<t tx="T2036">def __init__ (self,commands):
+<t tx="T2040">def __init__ (self,commands):
 
 	self.commands = commands
 	self.init_ivars()</t>
-<t tx="T2037">@ Only top-level drivers initialize ivars.
+<t tx="T2041">@ Only top-level drivers initialize ivars.
 </t>
-<t tx="T2038">def initTangleCommand (self):
+<t tx="T2042">def initTangleCommand (self):
 
 	c = self.commands
 	c.endEditing()
@@ -30989,7 +31052,7 @@ def __init__ (self,name,indent,part,of,nl_flag,code):
 	c.setIvarsFromPrefs()
 	self.init_ivars()
 	self.tangling = true</t>
-<t tx="T2039">def initUntangleCommand (self):
+<t tx="T2043">def initUntangleCommand (self):
 
 	c = self.commands
 	c.endEditing()
@@ -30998,13 +31061,13 @@ def __init__ (self,name,indent,part,of,nl_flag,code):
 	c.setIvarsFromPrefs()
 	self.init_ivars()
 	self.tangling = false</t>
-<t tx="T2040">def tangle(self):
+<t tx="T2044">def tangle(self):
 
 	c = self.commands ; v = c.currentVnode()
 	self.initTangleCommand()
 	self.tangleTree(v,report_errors)
 	es("Tangle complete")</t>
-<t tx="T2041">@ This is the main routine of pass 1. It traverses the tree whose root is given, handling each headline and associated body text.
+<t tx="T2045">@ This is the main routine of pass 1. It traverses the tree whose root is given, handling each headline and associated body text.
 @c
 
 def tanglePass1(self,v):
@@ -31033,7 +31096,7 @@ def tanglePass1(self,v):
 	if self.tangling:
 		self.st_check()
 		# trace(self.st_dump(verbose))</t>
-<t tx="T2042"># At this point v is the root of the tree that has been tangled.
+<t tx="T2046"># At this point v is the root of the tree that has been tangled.
 
 def tanglePass2(self):
 
@@ -31045,7 +31108,7 @@ def tanglePass2(self):
 		es("----- The outline contains no roots")
 	else:
 		self.put_all_roots() # pass 2 top level function.</t>
-<t tx="T2043">def untangle(self):
+<t tx="T2047">def untangle(self):
 
 	c = self.commands ; v = c.currentVnode()
 	self.initUntangleCommand()
@@ -31054,7 +31117,7 @@ def tanglePass2(self):
 	self.untangleTree(v,report_errors)
 	c.endUpdate()
 	es("Untangle complete")</t>
-<t tx="T2044">def untangleAll(self):
+<t tx="T2048">def untangleAll(self):
 
 	c = self.commands ; v = c.rootVnode()
 	self.initUntangleCommand()
@@ -31073,7 +31136,7 @@ def tanglePass2(self):
 		es("----- Untangle command halted because of errors")
 	else:
 		es("Untangle complete")</t>
-<t tx="T2045">def untangleMarked(self):
+<t tx="T2049">def untangleMarked(self):
 
 	c = self.commands ; v = c.rootVnode()
 	self.initUntangleCommand()
@@ -31095,7 +31158,7 @@ def tanglePass2(self):
 		es("----- Untangle command halted because of errors")
 	else:
 		es("Untangle complete")</t>
-<t tx="T2046">@ This method untangles the derived files in a vnode known to contain at least one @root directive. The work is done in two passes. The first pass creates the UST by scanning the derived file. The second pass updates the outline using the UST and a TST that is created during the pass.
+<t tx="T2050">@ This method untangles the derived files in a vnode known to contain at least one @root directive. The work is done in two passes. The first pass creates the UST by scanning the derived file. The second pass updates the outline using the UST and a TST that is created during the pass.
 
 We assume that all sections from root to end are contained in the derived file, and we attempt to update all such sections. The begin/end params indicate the range of nodes to be scanned when building the TST.
 @c
@@ -31113,14 +31176,14 @@ def untangleRoot(self,root,begin,end):
 	if self.errors == 0:
 		&lt;&lt; Pass 2: Untangle the outline using the UST and a newly-created TST &gt;&gt;
 	self.cleanup()</t>
-<t tx="T2047">if self.language == unknown_language:
+<t tx="T2051">if self.language == unknown_language:
 	es("**Unknown language for " + path)
 	return
 
 if self.print_bits == silent_bits:
 	es("@silent inhibits untangle for " + path)
 	return</t>
-<t tx="T2048">s = root.bodyString()
+<t tx="T2052">s = root.bodyString()
 i = 0
 while i &lt; len(s):
 	code, junk = self.token_type(s,i,report_errors)
@@ -31134,7 +31197,7 @@ if not self.root_name:
 	# A bad @root command.  token_type has already given an error.
 	self.cleanup()
 	return</t>
-<t tx="T2049">f = None
+<t tx="T2053">f = None
 try:
 	path = os.path.join(self.tangle_directory,path)
 	f = open(path)
@@ -31147,7 +31210,7 @@ except:
 	traceback.print_exc()
 	self.cleanup()
 	return</t>
-<t tx="T2050">@ This code untangles the root and all its siblings. We don't call tangleTree here because we must handle all siblings.  tanglePass1 handles an entire tree.  It also handles @ignore.
+<t tx="T2054">@ This code untangles the root and all its siblings. We don't call tangleTree here because we must handle all siblings.  tanglePass1 handles an entire tree.  It also handles @ignore.
 @c
 
 v = begin
@@ -31158,7 +31221,7 @@ while v and v != end:
 	v = v.nodeAfterTree()
 
 self.ust_warn_about_orphans()</t>
-<t tx="T2051"># This funtion is called when the user selects any "Untangle" command.
+<t tx="T2055"># This funtion is called when the user selects any "Untangle" command.
 
 def untangleTree(self,v,report_flag):
 
@@ -31212,7 +31275,7 @@ def untangleTree(self,v,report_flag):
 		elif self.errors &gt; 0:
 			es("----- Untangle command halted because of errors")
 	return any_root_flag</t>
-<t tx="T2052">@ The untangle_root function will untangle an entire tree by calling untangleTree, so the following code ensures that the next @root node will not be an offspring of v.
+<t tx="T2056">@ The untangle_root function will untangle an entire tree by calling untangleTree, so the following code ensures that the next @root node will not be an offspring of v.
 @c
 
 end = v.threadNext()
@@ -31222,7 +31285,7 @@ while end and end != afterUnit:
 		break
 	end = end.threadNext()
 </t>
-<t tx="T2053">@ This method outputs a code section, expanding section references by their definition. We should see no @directives or section definitions that would end the code section.
+<t tx="T2057">@ This method outputs a code section, expanding section references by their definition. We should see no @directives or section definitions that would end the code section.
 
 Most of the differences bewteen noweb mode and CWEB mode are handled by token_type(called from put_newline). Here, the only difference is that noweb handles double-@ signs only at the start of a line.
 @c
@@ -31256,7 +31319,7 @@ def put_code(self,s,no_first_lws_flag):
 				self.os('@') ; i += 2
 		else: self.os(s[i]) ; i += 1
 		assert(progress &lt; i)</t>
-<t tx="T2054">j, kind, name_end = self.is_section_name(s,i)
+<t tx="T2058">j, kind, name_end = self.is_section_name(s,i)
 if kind == section_def:
 	# We are in the middle of a code section
 	self.error(
@@ -31271,7 +31334,7 @@ else:
 	name = s[i:name_end]
 	self.put_section(s,i,name,name_end)
 	i = j</t>
-<t tx="T2055">if match(s,i,"@@"):
+<t tx="T2059">if match(s,i,"@@"):
 	# Handle double @ sign.
 	self.os('@') ; i += 2
 else:
@@ -31282,7 +31345,7 @@ else:
 		self.os("/*@" + s[i] + "*/") ; i += 1
 	else:
 		self.os("@") # The at sign is not part of a control code.</t>
-<t tx="T2056">@ The user must ensure that neither @ &lt; &lt; nor @ &gt; &gt; occurs in comments or strings. However, it is valid for @ &lt; &lt; or @ &gt; &gt; to appear in the doc chunk or in a single-line comment.
+<t tx="T2060">@ The user must ensure that neither @ &lt; &lt; nor @ &gt; &gt; occurs in comments or strings. However, it is valid for @ &lt; &lt; or @ &gt; &gt; to appear in the doc chunk or in a single-line comment.
 @c
 
 if match(s,i,"@&lt;&lt;"):
@@ -31292,7 +31355,7 @@ elif match(s,i,"@&gt;&gt;"):
 	self.os("/*@*/&gt;&gt;") ; i += 3
 	
 else: self.os("@") ; i += 1</t>
-<t tx="T2057">@ This method handles scanning when putting the start of a new line. Unlike the corresponding method in pass one, this method doesn't need to set a done flag in the caller because the caller already knows where the code section ends.
+<t tx="T2061">@ This method handles scanning when putting the start of a new line. Unlike the corresponding method in pass one, this method doesn't need to set a done flag in the caller because the caller already knows where the code section ends.
 @c
 
 def put_newline(self,s,i,no_first_lws_flag):
@@ -31310,7 +31373,7 @@ def put_newline(self,s,i,no_first_lws_flag):
 		# These should have set limit in pass 1.
 		assert(kind != section_def and kind != at_chapter and kind != at_section)
 	return i</t>
-<t tx="T2058">j = i ; i = skip_ws(s,i)
+<t tx="T2062">j = i ; i = skip_ws(s,i)
 if i &lt; len(s) and not is_nl(s,i):
 	# Conditionally output the leading previous leading whitespace.
 	if not no_first_lws_flag:
@@ -31318,7 +31381,7 @@ if i &lt; len(s) and not is_nl(s,i):
 	# Always output the leading whitespace of _this_ line.
 	k, width = skip_leading_ws_with_indent(s,j,self.tab_width)
 	self.put_leading_ws(width)</t>
-<t tx="T2059"># This method outputs one part of a section definition.
+<t tx="T2063"># This method outputs one part of a section definition.
 
 def put_part_node(self,part,no_first_lws_flag):
 
@@ -31332,7 +31395,7 @@ def put_part_node(self,part,no_first_lws_flag):
 
 	if part.code:
 		self.put_code(part.code,no_first_lws_flag)</t>
-<t tx="T2060">@ This method outputs the definition of a section and all sections referenced from the section. name is the section's name. This code checks for recursive definitions by calling section_check(). We can not allow section x to expand to code containing another call to section x, either directly or indirectly.
+<t tx="T2064">@ This method outputs the definition of a section and all sections referenced from the section. name is the section's name. This code checks for recursive definitions by calling section_check(). We can not allow section x to expand to code containing another call to section x, either directly or indirectly.
 @c
 
 def put_section(self,s,i,name,name_end):
@@ -31359,7 +31422,7 @@ def put_section(self,s,i,name,name_end):
 		self.put_leading_ws(trailing_ws_indent)
 	self.tangle_indent = outer_old_indent
 	return i, name_end</t>
-<t tx="T2061"># Find the start of the line containing the reference.
+<t tx="T2065"># Find the start of the line containing the reference.
 j = i
 while j &gt; 0 and not is_nl(s,j):
 	j -= 1
@@ -31383,11 +31446,11 @@ if (j &lt; len(s) and self.print_bits != silent_bits and
 	((self.use_noweb_flag and s[j] != '&lt;') or
 	(self.use_cweb_flag and s[j] != '@'))):
 	self.tangle_indent += abs(self.tab_width)</t>
-<t tx="T2062">if self.print_bits != silent_bits:
+<t tx="T2066">if self.print_bits != silent_bits:
 	i = name_end
 	i = skip_ws(s,i)
 	newline_flag = (i &gt;= len(s) or is_nl(s,i))</t>
-<t tx="T2063">@ This section outputs each part of a section definition. We first count how many parts there are so that the code can output a comment saying 'part x of y'.
+<t tx="T2067">@ This section outputs each part of a section definition. We first count how many parts there are so that the code can output a comment saying 'part x of y'.
 @c
 
 # Output each part of the section.
@@ -31409,7 +31472,7 @@ for part in section.parts:
 		&lt;&lt; Put the ending comment &gt;&gt;
 	# Restore the old indent.
 	self.tangle_indent = inner_old_indent</t>
-<t tx="T2064">if count &gt; 1:
+<t tx="T2068">if count &gt; 1:
 	self.onl()
 	self.put_leading_ws(self.tangle_indent)
 	
@@ -31427,10 +31490,10 @@ else:
 	self.oblank() ; self.os(self.end_comment_string)
 
 self.onl() # Always output a newline.</t>
-<t tx="T2065">if sections &gt; 1:
+<t tx="T2069">if sections &gt; 1:
 	self.oblank()
 	self.os("(" + `count` + " of " + `sections` + ")")</t>
-<t tx="T2066">@ We do not produce an ending comment unless we are ending the last part of the section,and the comment is clearer if we don't say(n of m).
+<t tx="T2070">@ We do not produce an ending comment unless we are ending the last part of the section,and the comment is clearer if we don't say(n of m).
 @c
 
 self.onl() ; self.put_leading_ws(self.tangle_indent)
@@ -31458,7 +31521,7 @@ if not newline_flag:
 		self.os(s[name_end])
 		name_end += 1
 	self.onl() # We must supply the newline!</t>
-<t tx="T2067">self.onl() ; self.put_leading_ws(self.tangle_indent)
+<t tx="T2071">self.onl() ; self.put_leading_ws(self.tangle_indent)
 
 if self.print_bits != silent_bits:
 	if self.single_comment_string:
@@ -31470,7 +31533,7 @@ if self.print_bits != silent_bits:
 		self.oblank() ; self.os(self.end_comment_string) ; self.onl()
 
 self.error("Undefined section: " + name)</t>
-<t tx="T2068">@ We can not allow a section to be defined in terms of itself, either directly or indirectly.
+<t tx="T2072">@ We can not allow a section to be defined in terms of itself, either directly or indirectly.
 
 We push an entry on the section stack whenever beginning to expand a section and pop the section stack at the end of each section.  This method checks whether the given name appears in the stack. If so, the section is defined in terms of itself.
 @c
@@ -31484,7 +31547,7 @@ def section_check (self,name):
 		self.error(s)
 		return false
 	return true</t>
-<t tx="T2069">@ This function checks the given symbol table for defined but never referenced sections.
+<t tx="T2073">@ This function checks the given symbol table for defined but never referenced sections.
 @c
 
 def st_check(self):
@@ -31500,7 +31563,7 @@ def st_check(self):
 				section.name +
 				choose(self.use_noweb_flag," &gt;&gt;"," @&gt;") +
 				" has been defined but not used.")</t>
-<t tx="T2070"># Dumps the given symbol table in a readable format.
+<t tx="T2074"># Dumps the given symbol table in a readable format.
 
 def st_dump(self,verbose_flag):
 	
@@ -31515,7 +31578,7 @@ def st_dump(self,verbose_flag):
 			type = choose(len(section.parts)&gt;0,"  ","un")
 			s += ("\n" + type + "defined:[" + section.name + "]")
 	return s</t>
-<t tx="T2071"># Dumps each part of a section's definition.
+<t tx="T2075"># Dumps each part of a section's definition.
 
 def st_dump_node(self,section):
 
@@ -31533,14 +31596,14 @@ def st_dump_node(self,section):
 			s += "\ncode: [" + `part.code` + "]"
 		s += "\n----- end of partList\n"
 	return s</t>
-<t tx="T2072">@ This function enters a section name into the given symbol table.
+<t tx="T2076">@ This function enters a section name into the given symbol table.
 The code and doc pointers are None for references.
 @c
 
 def st_enter_section_name(self,name,code,doc,multiple_parts_flag):
 	
 	return self.st_enter(name,code,doc,multiple_parts_flag,not_root_name)</t>
-<t tx="T2073">@ This function looks up name in the symbol table and creates a tst_node for it if it does not exist.
+<t tx="T2077">@ This function looks up name in the symbol table and creates a tst_node for it if it does not exist.
 @c
 
 def st_lookup(self,name,is_root_flag):
