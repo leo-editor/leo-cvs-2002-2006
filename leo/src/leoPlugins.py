@@ -21,6 +21,8 @@ handlers = {}
 count = 0 ; examined = 0
 
 def doPlugins(tag,keywords):
+	if app.killed:
+		return
 	if tag == "start1":
 		loadHandlers()
 	return doHandlersForTag(tag,keywords)
@@ -34,10 +36,12 @@ def loadHandlers():
 	global count
 	
 	path = os.path.join(app.loadDir,"..","plugins")
+	path = toUnicode(path,app.tkEncoding) # 10/20/03
 	files = glob.glob(os.path.join(path,"*.py"))
 	files.sort()
 	if files:
 		for file in files:
+			file = toUnicode(file,app.tkEncoding) # 10/20/03
 			importFromPath(file,path)
 		es("%d plugins loaded, %d examined" % (count,len(files)), color="blue")
 #@nonl
