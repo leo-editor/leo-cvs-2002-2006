@@ -9,7 +9,7 @@
 <preferences/>
 <find_panel_settings/>
 <vnodes>
-<v t="ekr.20041121151002" a="TV"><vh>@settings</vh>
+<v t="ekr.20041121151002"><vh>@settings</vh>
 <v t="ekr.20041121151002.1"><vh>@recent-files</vh></v>
 <v t="ekr.20041124063401"><vh>@bool use_plugins = True</vh></v>
 </v>
@@ -1433,7 +1433,7 @@
 </v>
 <v t="ekr.20040707081532.1"><vh>Do @test</vh></v>
 </v>
-<v t="ekr.20041125145818.1"><vh>Pmw dialog</vh>
+<v t="ekr.20041125145818.1" a="TV"><vh>Pmw dialog</vh>
 <v t="ekr.20041130085400"><vh>Status: read me</vh>
 <v t="ekr.20041130095005"><vh>bugs, etc</vh></v>
 <v t="ekr.20041130085943"><vh>buttons</vh></v>
@@ -1443,7 +1443,7 @@
 </v>
 <v t="ekr.20041127231319"><vh>To do</vh></v>
 <v t="ekr.20041128225703"><vh>Notes</vh></v>
-<v t="ekr.20041126110057" a="E"><vh>class settingsController</vh>
+<v t="ekr.20041126110057"><vh>class settingsController</vh>
 <v t="ekr.20041126110158"><vh> ctor</vh>
 <v t="ekr.20041126113848"><vh>&lt;&lt; create the dialog d &gt;&gt;</vh></v>
 <v t="ekr.20041126113848.1"><vh>&lt;&lt; create paneFrame, a paned widget &gt;&gt;</vh></v>
@@ -11201,8 +11201,8 @@ Bigger projects:
     root.wait_window(top)</t>
 <t tx="ekr.20041121151002"></t>
 <t tx="ekr.20041121151002.1">C:\prog\leoCVS\leo\doc\leodocs.leo
-C:\prog\leoCVS\leo\plugins\leoplugins.leo
-C:\prog\leoCVS\leo\test\test.leo</t>
+C:\prog\leoCVS\leo\test\test.leo
+C:\prog\leoCVS\leo\plugins\leoplugins.leo</t>
 <t tx="ekr.20041124063401"></t>
 <t tx="ekr.20041124102349">class tixDialog (leoTkinterDialog.leoTkinterDialog):
     
@@ -13272,6 +13272,10 @@ self.setterLabel = sc.component('label')
 <t tx="ekr.20041127231319">@
 @killcolor
 
+- Crashes when selecting colors.
+
+- Color changes are written properly, but do not take effect until next reload.
+
 (done) Expand dialog tree to match underlying @settings tree.
 
 - Finish font stuff.
@@ -13551,7 +13555,7 @@ print ; print</t>
     """Update the node in c corresponding to p = data[0]."""
     
     p,name,kind,oldVal,val = data
-    munge = g.app.munge
+    munge = g.app.config.munge
     name = name.strip() ; kind = munge(kind.strip())
 
     # Root 1 is the root of the dialog's outline.
