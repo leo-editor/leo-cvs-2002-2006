@@ -1085,7 +1085,7 @@
 </v>
 <v t="EKR.20040504083716.72"><vh>@suite perfect import tests</vh></v>
 </v>
-<v t="ekr.20040716071029.6" a="ETV"><vh>@test inserting a line</vh>
+<v t="ekr.20040716071029.6" a="ETV"><vh>@test inserting a line: no trailing newline</vh>
 <v t="ekr.20040716071856.1"><vh>-input</vh></v>
 <v t="ekr.20040716081019"><vh>-input-inserted</vh></v>
 <v t="ekr.20040716071856"><vh>-output-sent</vh></v>
@@ -2174,7 +2174,7 @@ import leoGlobals as g
 print g.app.config.redirect_execute_script_output_to_log_pane</t>
 <t tx="EKR.20040627103732">@ignore</t>
 <t tx="EKR.20040627103801"></t>
-<t tx="EKR.20040627103902" lineYOffset="4b032e" icons="5d7100287d7101285504747970657102550466696c65710355047870616471044b02550577686572657105550a6265666f726549636f6e71066803582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286802680368084afdffffff6803582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6805550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e"></t>
+<t tx="EKR.20040627103902" lineYOffset="4b032e" icons="5d7100287d710128550577686572657102550a6265666f726549636f6e710355047870616471044b025504747970657105550466696c6571066806582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286805680668084afdffffff6806582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6802550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e"></t>
 <t tx="EKR.20040627121836">import leoGlobals as g
 
 c = g.top() ; p = c.currentPosition()
@@ -2312,7 +2312,7 @@ print s ; g.es(s)</t>
 
 - Used iterators in test utils.
 - Used "import leoGlobals as g" style.</t>
-<t tx="ekr.20040317101155" lineYOffset="4b032e" icons="5d7100287d710128550577686572657102550a6265666f726549636f6e710355047870616471044b025504747970657105550466696c6571066806582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286805680668084afdffffff6806582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6802550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">import leoGlobals as g
+<t tx="ekr.20040317101155" lineYOffset="4b032e" icons="5d7100287d7101285504747970657102550466696c65710355047870616471044b02550577686572657105550a6265666f726549636f6e71066803582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286802680368084afdffffff6803582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6805550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">import leoGlobals as g
 
 c = g.top()
 
@@ -9128,7 +9128,7 @@ import leoTest ; reload(leoTest)
 c = g.top() ; p = c.currentPosition()
 u = leoTest.testUtils()
 
-testing,verbose = True,False
+testing,verbose = False,False
 
 # Find the nodes.
 input           = u.findNodeInTree(p,"-input")
@@ -9159,25 +9159,21 @@ j_lines = g.splitLines(input_ins.bodyString())
 # For viewing...
 ilines.scriptSetBodyString(''.join(i_lines))
 jlines.scriptSetBodyString(''.join(j_lines))
-
-if ilines.bodyString() != input.bodyString():
-    print "i_file != input file !"
+assert ilines.bodyString() == input.bodyString()
 
 # Put the resulting lines (with sentinels) into the -result node.
-print '=' * 60
 lines = mu.propagateDiffsToSentinelsLines(i_lines,j_lines,fat_lines,mapping)
 result.scriptSetBodyString(''.join(lines))
 
-if not u.compareIgnoringNodeNames(
-    result.bodyString(),output_ins_sent.bodyString(),marker,verbose=True):
-    print "Test Failed!" # would be an assert in a real unit test.</t>
+assert u.compareIgnoringNodeNames( \
+    result.bodyString(),output_ins_sent.bodyString(),
+    marker,verbose=True)</t>
 <t tx="ekr.20040716071856">#@+leo-ver=4-thin
 #@+node:ekr.20040716071856.1:-input
 Proof of concept implementation of sentinel free Leo files.
 We try to insert a line after here.
 This should be after the inserted line.
 This should be the last line (no newline following!)
-#@nonl
 #@-node:ekr.20040716071856.1:-input
 #@-leo
 </t>
@@ -9209,14 +9205,15 @@ This should be the last line (no newline following!)</t>
 We try to insert a line after here.
 This is an inserted line
 This should be after the inserted line.
-This should be the last line (no newline following!)</t>
+This should be the last line (no newline following!)
+</t>
 <t tx="ekr.20040716081943">#@+leo-ver=4-thin
 #@+node:ekr.20040716071856.1:-input
 Proof of concept implementation of sentinel free Leo files.
 We try to insert a line after here.
 This is an inserted line
 This should be after the inserted line.
-This should be the last line (no newline following!)#@nonl
+This should be the last line (no newline following!)
 #@-node:ekr.20040716071856.1:-input
 #@-leo
 </t>
@@ -9229,7 +9226,8 @@ This should be the last line (no newline following!)
 We try to insert a line after here.
 This is an inserted line
 This should be after the inserted line.
-This should be the last line (no newline following!)</t>
+This should be the last line (no newline following!)
+</t>
 <t tx="ekr.20040716091245">#@+leo-ver=4-thin
 #@+node:ekr.20040716081019:-input-inserted
 Proof of concept implementation of sentinel free Leo files.
@@ -9237,7 +9235,6 @@ We try to insert a line after here.
 This is an inserted line
 This should be after the inserted line.
 This should be the last line (no newline following!)
-#@nonl
 #@-node:ekr.20040716081019:-input-inserted
 #@-leo
 </t>
