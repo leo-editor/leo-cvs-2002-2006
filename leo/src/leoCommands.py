@@ -2386,20 +2386,32 @@ class baseCommands:
 		c = self ; count = 1 ; errors = 0 ; full = true
 		if full and not unittest:
 			g.es("all tests enabled: this may take awhile",color="blue")
+			
+		if not unittest:
+			if 0: # Dump all nodes in the outline.
+				p = c.rootPosition()
+				for p in p.allNodes_iter():
+					p.dump()
 	
 		try:
 			p = c.rootPosition()
 			#@		<< assert equivalence of lastVisible methods >>
 			#@+node:<< assert equivalence of lastVisible methods >>
-			p1 = p.oldLastVisible()
-			p2 = p.lastVisible()
+			if 0:
+				g.app.debug = true
 			
-			if p1 != p2:
-				print "oldLastVisible",p1
-				print "   lastVisible",p2
-			
-			assert p1 and p2 and p1 == p2, "oldLastVisible==lastVisible"
-			assert p1.isVisible() and p2.isVisible(), "p1.isVisible() and p2.isVisible()"
+				p1 = p.oldLastVisible()
+				p2 = p.lastVisible()
+				
+				if p1 != p2:
+					print "oldLastVisible",p1
+					print "   lastVisible",p2
+				
+				assert p1 and p2 and p1 == p2, "oldLastVisible==lastVisible"
+				assert p1.isVisible() and p2.isVisible(), "p1.isVisible() and p2.isVisible()"
+				
+				g.app.debug = false
+			#@nonl
 			#@-node:<< assert equivalence of lastVisible methods >>
 			#@nl
 			for p in c.allNodes_iter():
