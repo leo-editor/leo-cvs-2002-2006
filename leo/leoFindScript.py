@@ -153,7 +153,7 @@ def findNext ( v, pos, pattern, bodyFlag = 1 ):
 			s = v.bodyString()
 		else:
 			s = v.headString()
-		pos = string.find (s,pattern,pos )
+		pos = s.find(pattern,pos )
 		if pos != -1:
 			return v, pos
 		v = v.threadNext()
@@ -183,7 +183,7 @@ def findPrev ( v, pos, pattern, bodyFlag = 1 ):
 			s = v.bodyString()
 		else:
 			s = v.headString()
-		pos = string.rfind ( s, pattern, 0, pos )
+		pos = s.rfind(pattern,0,pos)
 		if pos != -1:
 			return v, pos
 		v  = v.threadBack()
@@ -408,7 +408,7 @@ def lineAtPos ( s, pos ):
 			pos = pos - 1
 	# return the line containing the match
 	s = s[pos:]
-	list = string.split(s,"\n")
+	list = s.split("\n")
 	return list[0]
 #@-body
 #@-node:13::lineAtPos

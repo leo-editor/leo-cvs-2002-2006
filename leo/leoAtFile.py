@@ -304,7 +304,7 @@ class atFile:
 		start = self.startSentinelComment
 		if start and len(start) > 0 and start[-1] == '@':
 			assert(s and len(s)>0 and s[0]=='@')
-			s = string.replace(s,'@','@@')[1:]
+			s = s.replace('@','@@')[1:]
 	
 		self.os(s)
 		self.os(self.endSentinelComment)
@@ -505,7 +505,7 @@ class atFile:
 					(path[0]=='<' and path[-1] == '>') or
 					(path[0]=='"' and path[-1] == '"') ):
 					path = path[1:-1]
-				path = string.strip(path)
+				path = path.strip()
 				
 				if 0: # 11/14/02: we want a _relative_ path, not an absolute path.
 					path = os.path.join(loadDir,path)
@@ -832,11 +832,7 @@ class atFile:
 		if n <= parent.numberOfChildren():
 			result = parent.nthChild(n-1)
 			resulthead = result.headString()
-			if string.strip(headline) != string.strip(resulthead):
-				if 0: # CVS produces to many errors for this to be useful.
-					es("headline mismatch:")
-					es("head1:" + `string.strip(headline)`)
-					es("head2:" + `string.strip(resulthead)`)
+			if headline.strip() != resulthead.strip():
 				self.structureErrors += 1
 		else:
 			# This is using a dummy; we should already have bumped structureErrors.
@@ -1279,7 +1275,7 @@ class atFile:
 			
 			line = s[i:-1] # remove newline for rstrip.
 			
-			if line == string.rstrip(line):
+			if line == line.rstrip():
 				# no trailing whitespace: the newline is real.
 				out.append(line + '\n')
 			else:
@@ -1307,7 +1303,7 @@ class atFile:
 			
 			# Remove delim and possible a leading newline.
 			s = string.join(out,"")
-			s = string.rstrip(s)
+			s = s.rstrip()
 			if s[-n:] == delim:
 				s = s[:-n]
 			if s[-1] == '\n':
@@ -1349,7 +1345,7 @@ class atFile:
 		# Skip any non @+leo lines.
 		s = readlineForceUnixNewline(file)
 		while len(s) > 0:
-			j = string.find(s,tag)
+			j = s.find(tag)
 			if j != -1: break
 			firstLines.append(s) # DTHEIN: queue the line
 			s = readlineForceUnixNewline(file)
@@ -1585,7 +1581,7 @@ class atFile:
 				# Set the body, removing cursed newlines.
 				# Note:  This code must be done here, not in the @+node logic.
 				body = string.join(child_out, "")
-				body = string.replace(body, '\r', '')
+				body = body.replace('\r', '')
 				child.t.setTnodeText(body)
 				self.indent = oldIndent
 				#@-body
@@ -1622,13 +1618,13 @@ class atFile:
 					if end == self.endSentinelComment and (i2 >= len(s) or is_nl(s,i2)):
 						self.endSentinelComment = "" # Not really two params.
 						line = s[i0:j]
-						line = string.rstrip(line)
+						line = line.rstrip()
 						out.append(line+'\n')
 					else:
 						self.endSentinelComment = end
 						# print "delim2:",end
 						line = s[i0:i]
-						line = string.rstrip(line)
+						line = line.rstrip()
 						out.append(line+'\n')
 				else:
 					self.readError("Bad @delims")
@@ -1655,13 +1651,13 @@ class atFile:
 				e = self.endSentinelComment
 				s2 = s[i:]
 				if len(e) > 0:
-					k = string.rfind(s,e,i)
+					k = s.rfind(e,i)
 					if k != -1:
 						s2 = s[i:k] + '\n'
 					
 				start = self.startSentinelComment
 				if start and len(start) > 0 and start[-1] == '@':
-					s2 = string.replace(s2,'@@','@')
+					s2 = s2.replace('@@','@')
 				out.append(s2)
 				# trace(`s2`)
 				#@-body
@@ -1754,19 +1750,19 @@ class atFile:
 					headline = string.strip(s[i:-1])
 				else:
 					# 10/24/02: search from the right, not the left.
-					k = string.rfind(s,self.endSentinelComment,i)
+					k = s.rfind(self.endSentinelComment,i)
 					headline = string.strip(s[i:k]) # works if k == -1
 					
 				# 10/23/02: The cweb hack: undouble @ signs if the opening comment delim ends in '@'.
 				if self.startSentinelComment[-1:] == '@':
-					headline = string.replace(headline,'@@','@')
+					headline = headline.replace('@@','@')
 				
 				# Set reference if it exists.
 				i = skip_ws(s,i)
 				
 				if 0: # no longer used
 					if match(s,i,"<<"):
-						k = string.find(s,">>",i)
+						k = s.find(">>",i)
 						if k != -1: ref = s[i:k+2]
 				#@-body
 				#@-node:3::<< Set headline and ref >>
@@ -1779,7 +1775,7 @@ class atFile:
 					#@<< Check the filename in the sentinel >>
 					#@+node:4::<< Check the filename in the sentinel >>
 					#@+body
-					h = string.strip(headline)
+					h = headline.strip()
 					
 					if h[:5] == "@file":
 						i,junk = scanAtFileOptions(h)
@@ -1879,13 +1875,13 @@ class atFile:
 				if len(self.endSentinelComment) == 0:
 					line = s[i:-1] # No trailing newline
 				else:
-					k = string.find(s,self.endSentinelComment,i)
+					k = s.find(self.endSentinelComment,i)
 					line = s[i:k] # No trailing newline, whatever k is.
 						
 				# 10/30/02: undo cweb hack here
 				start = self.startSentinelComment
 				if start and len(start) > 0 and start[-1] == '@':
-					line = string.replace(line,'@@','@')
+					line = line.replace('@@','@')
 				
 				out.append(line)
 				#@-body
@@ -2910,7 +2906,7 @@ class atFile:
 			if s2:
 				lines = string.split(s2,"\\n")
 				for line in lines:
-					line = string.replace(line,"@date",time.asctime())
+					line = line.replace("@date",time.asctime())
 					if len(line)> 0:
 						self.putSentinel("@comment " + line)
 			#@-body
@@ -3058,7 +3054,7 @@ class atFile:
 			if s2:
 				lines = string.split(s2,"\\n")
 				for line in lines:
-					line = string.replace(line,"@date",time.asctime())
+					line = line.replace("@date",time.asctime())
 					if len(line)> 0:
 						self.putSentinel("@comment " + line)
 			

@@ -1099,7 +1099,7 @@ class colorizer:
 	#@+body
 	def continueBlockComment (self,s,i,n):
 		
-		j = string.find(s,self.block_comment_end,i)
+		j = s.find(self.block_comment_end,i)
 	
 		if j == -1:
 			# The entire line is part of the block comment.
@@ -1169,7 +1169,7 @@ class colorizer:
 					self.body.tag_add("keyword", index(n,i), index(n,j))
 					i = j
 					if word in ("@^","@.","@:","@="): # Ended by "@>"
-						j = string.find(s,"@>",i)
+						j = s.find("@>",i)
 						if j > -1:
 							self.body.tag_add("cwebName", index(n,i), index(n,j))
 							self.body.tag_add("nameBrackets", index(n,j), index(n,j+2))
@@ -1181,13 +1181,13 @@ class colorizer:
 				i = j
 			elif self.latex_cweb_docs:
 				# Everything up to the next "@" is latex colored.
-				j = string.find(s,"@",i+1)
+				j = s.find("@",i+1)
 				if j == -1: j = len(s)
 				self.doLatexLine(s,i,j,n)
 				i = j
 			else:
 				# Everthing up to the next "@" is in the doc part.
-				j = string.find(s,"@",i+1)
+				j = s.find("@",i+1)
 				if j == -1: j = len(s)
 				self.body.tag_add("docPart", index(n,i), index(n,j))
 				i = j
@@ -1206,7 +1206,7 @@ class colorizer:
 			if i == 0 and s[i] == '@':
 				j = self.skip_id(s,i+1,chars='-')
 				word = s[i:j]
-				word = string.lower(word)
+				word = word.lower()
 			else:
 				word = ""
 			
@@ -1233,7 +1233,7 @@ class colorizer:
 		if i == 0 and s[i] == '@':
 			j = self.skip_id(s,i+1)
 			word = s[i:j]
-			word = string.lower(word)
+			word = word.lower()
 		else:
 			word = ""
 		
@@ -1256,11 +1256,11 @@ class colorizer:
 	#@+node:5::continueSingle/DoublePythonString
 	#@+body
 	def continueDoublePythonString (self,s,i,n):
-		j = string.find(s,'"""',i)
+		j = s.find('"""',i)
 		return self.continuePythonString(s,i,j,n,"string3d")
 	
 	def continueSinglePythonString (self,s,i,n):
-		j = string.find(s,"'''",i)
+		j = s.find("'''",i)
 		return self.continuePythonString(s,i,j,n,"string3s")
 	
 	def continuePythonString (self,s,i,j,n,continueState):
@@ -1283,7 +1283,7 @@ class colorizer:
 	
 		j = self.skip_id(s,i+1,chars="-") # to handle @root-code, @root-doc
 		word = s[i:j]
-		word = string.lower(word)
+		word = word.lower()
 		if i != 0 and word != "@others":
 			word = "" # can't be a Leo keyword, even if it looks like it.
 		
@@ -1379,10 +1379,10 @@ class colorizer:
 					self.body.tag_add("nameBrackets", index(n,i), index(n,i+2))
 					
 					# See if the line contains the right name bracket.
-					j = string.find(s,"@>=",i+2)
+					j = s.find("@>=",i+2)
 					k = choose(j==-1,2,3)
 					if j == -1:
-						j = string.find(s,"@>",i+2)
+						j = s.find("@>",i+2)
 					
 					if j == -1:
 						i += 2
@@ -1413,7 +1413,7 @@ class colorizer:
 						elif word in ("@<","@(","@c","@d","@f","@p"):
 							state = "normal"
 						elif word in ("@^","@.","@:","@="): # Ended by "@>"
-							j = string.find(s,"@>",i)
+							j = s.find("@>",i)
 							if j > -1:
 								self.body.tag_add("cwebName", index(n,i), index(n,j))
 								self.body.tag_add("nameBrackets", index(n,j), index(n,j+2))
@@ -1604,10 +1604,10 @@ class colorizer:
 		self.body.tag_add("nameBrackets", index(n,i), index(n,i+2))
 		
 		# See if the line contains the right name bracket.
-		j = string.find(s,self.rb+"=",i+2)
+		j = s.find(self.rb+"=",i+2)
 		k = choose(j==-1,2,3)
 		if j == -1:
-			j = string.find(s,self.rb,i+2)
+			j = s.find(self.rb,i+2)
 		if j == -1:
 			return i + 2
 		else:
@@ -1850,7 +1850,7 @@ class colorizer:
 	
 		delim = s[i:i+3]
 		if delim == "'''" or delim == '"""':
-			k = string.find(s,delim,i+3)
+			k = s.find(delim,i+3)
 			if k == -1:
 				return len(s),choose(delim=="'''","string3s","string3d")
 			else:

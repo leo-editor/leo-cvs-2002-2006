@@ -295,7 +295,7 @@ def speedTest(passes):
 			if s[i] == '\n':
 				lines += 1 ; i += 1
 			else:
-				i = string.find(s,'\n',i) # _much_ faster than list-based-find.
+				i = s.find('\n',i) # _much_ faster than list-based-find.
 			continue
 			# match is about 9 times slower than simple test.
 			if s[i]=='\n': # match(s,i,'\n'): # 
