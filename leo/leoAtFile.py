@@ -2311,7 +2311,9 @@ class atFile:
 				if self.trace: trace("leading nl")
 				self.onl() # 10/15/02: simpler to do it here.
 			
+			#leading_ws1 = i # 1/27/03
 			j,delta = skip_leading_ws_with_indent(s,i,self.tab_width)
+			#leading_ws2 = j # 1/27/03
 			kind1 = self.directiveKind(s,i)
 			kind2 = self.directiveKind(s,j)
 			if self.raw:
@@ -2411,8 +2413,19 @@ class atFile:
 					isSection, j = self.isSectionName(s, i)
 					
 					if isSection:
-						# Output the buffered characters and clear the buffer.
-						self.os(s[buf:i]) ; buf = i
+						if 0: # 1/27/03:  This is complex and doesn't always work.
+							if self.sentinels:
+								# Output the buffered characters and clear the buffer.
+								self.os(s[buf:i]) ; buf = i
+							else:
+								# Remove any leading whitespace before the section ref.
+								old_i = i ; i -= 1
+								while i >= 0 and s[i] in (' ','\t'):
+									i -= 1
+								self.os(s[buf:i]) ; buf = i = old_i
+						else: # The old way...
+							# Output the buffered characters and clear the buffer.
+							self.os(s[buf:i]) ; buf = i
 						# Output the expansion.
 						name = s[i:j]
 						j,newlineSeen = self.putRef(name,v,s,j,delta)
@@ -2548,6 +2561,7 @@ class atFile:
 		ref.setVisited()
 		self.putCloseSentinels(v,ref)
 		self.indent -= delta
+		
 		#@-body
 		#@-node:1::<< Generate the expansion of the reference >>
 
