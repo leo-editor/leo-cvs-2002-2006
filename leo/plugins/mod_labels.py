@@ -101,7 +101,7 @@ def init ():
     
     if ok:
         Pmw.initialise()
-        leoPlugins.registerHandler('onCreate',onCreate)
+        leoPlugins.registerHandler('before-create-leo-frame',onCreate)
         g.plugin_signon(__name__)
 
     return ok
@@ -112,8 +112,8 @@ def onCreate (tag,keywords):
     
     if g.app.unitTesting: return
     
-    c = keywords.get('c') or keywords.get('new_c')
-    
+    c = keywords.get('c')
+
     controller = labelsController(c)
     
     # EKR: Add an ivar to the commander for use by atFile.
