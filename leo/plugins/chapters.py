@@ -30,7 +30,7 @@ Warnings:
 #@@language python
 #@@tabwidth -4
 
-__version__ = "0.65"
+__version__ = "0.66"
 #@<< version history >>
 #@+node:ekr.20041103051117:<< version history >>
 #@@killcolor
@@ -78,6 +78,9 @@ __version__ = "0.65"
 # .65 EKR: added new keyword args to newGetLeoFile and newOpen.
 #     - This is needed because of changes to the corresponding method's in 
 # Leo's core.
+# 
+# .66 EKR: use notebooks.get(c) throughout.
+#     - c may not exist during unit testing.  Not a complete fix, not tested!
 #@-at
 #@nonl
 #@-node:ekr.20041103051117:<< version history >>
@@ -201,7 +204,8 @@ class Chapter:
 cControl = leoTkinterFrame.leoTkinterBody.createControl
 def newCreateControl( self, frame, parentFrame  ):
     c = self.c
-    notebook = notebooks[ c ]
+    notebook = notebooks.get(c)
+    if not notebook: return # For unit testing
     if c not in pbodies:
         parentFrame = createPanedWidget( parentFrame, c )
     pbody = pbodies[ c ]
@@ -251,7 +255,8 @@ def newCreateCanvas( self, parentFrame, createCanvas = leoTkinterFrame.leoTkinte
         frames[ c ] = self
         notebook = createNoteBook( c, parentFrame )
     else:
-        notebook = notebooks[ c ]
+        notebook = notebooks.get(c)
+        if not notebook: return # For unit testing
         
     pname = notebook.nameMaker.next()
     page = notebook.add( pname )
@@ -343,7 +348,8 @@ def constructTree( frame , notebook, name ):
 def addPage( c , name = None ):
 
     frame = frames[ c ]
-    notebook = notebooks[ c ]
+    notebook = notebooks.get(c)
+    if not notebook: return # For unit testing
     if name == None : name = str( len( notebook.pagenames() ) + 1 )
     o_chapter = c.cChapter
     otree, page  = constructTree( frame, notebook, name )
@@ -354,6 +360,8 @@ def addPage( c , name = None ):
 #@+node:mork.20040926105355.35:newEditor
 def newEditor( c ):
     
+    notebook = notebooks.get(c)
+    if not notebook: return # For unit testing
     frame = frames[ c ]
     pbody = pbodies[ c ]
     zpane = newEditorPane( c )
@@ -362,7 +370,7 @@ def newEditor( c ):
     af.setFontFromConfig()
     af.createBindings( frame )
     af.bodyCtrl.focus_set()
-    cname = notebooks[ c ].getcurselection()
+    cname = notebook.getcurselection()
     af.l.configure( textvariable = getSV(cname , c ) )
     af.r.configure( text = c.currentVnode().headString() )
 
@@ -409,7 +417,7 @@ def makeTabMenu( widget, notebook, c ):
     opmenu.add_command( label = "Add Trash Barrel", command =
     lambda c = c : mkTrash( c ))
     opmenu.add_command( label = 'Empty Trash Barrel', command =
-    lambda notebook = notebooks[ c ], c = c: emptyTrash( notebook, c ) )
+    lambda notebook = notebooks.get(c), c = c: emptyTrash( notebook, c ) )
     setupMenu = getSetupMenu( c, notebook )
     cmenu.configure(
         postcommand = lambda menu = cmenu, command = cloneToChapter : setupMenu( menu, command ) )
@@ -454,7 +462,8 @@ def makeTabMenu( widget, notebook, c ):
 def getAddChapter( c , notebook ):
     #a function that makes a function to add chapters  
     def ac( c = c ):
-        notebook = notebooks[ c ]
+        notebook = notebooks.get(c)
+        if not notebook: return # For unit testing
         cname = notebook.getcurselection()
         addPage( c )        
         renumber( notebook)
@@ -533,8 +542,9 @@ def getRename( notebook ):
 def getMakeTrash( notebook ):
     #a function that makes a function to add a trash chapters
     def mkTrash( c ):
+        notebook = notebooks.get(c)
+        if not notebook: return # For unit testing
         addPage( c, 'Trash' )
-        notebook = notebooks[ c ]
         pnames = notebook.pagenames()
         sv = getSV( pnames[ - 1 ], c )
         sv.set( 'Trash' )
@@ -689,6 +699,8 @@ def viewIndex( c , nodes = None, tle = '' ):
 #@+node:mork.20040929121409:buildIndex
 def buildIndex( nodes , c , can, tl, bal, tags):
 
+    notebook = notebooks.get(c)
+    if not notebook: return # For unit testing
     import tkFont
     f = tkFont.Font()
     f.configure( size = -20 )
@@ -702,7 +714,7 @@ def buildIndex( nodes , c , can, tl, bal, tags):
         sv = getSV( z[ 2 ] )
         if sv.get(): sv = ' - ' + sv.get()
         else: sv = ''
-        notebook = notebooks[ c ]
+        
         tab = notebook.tab( z[ 2 ] )
         tv = tab.cget( 'text' )
         isClone = z[ 1 ].isCloned()
@@ -716,7 +728,8 @@ def buildIndex( nodes , c , can, tl, bal, tags):
         if bs.strip() != '':
             bal.tagbind( can, tg, bs)
         def goto( event, z = z , c = c, tl = tl):
-            notebook = notebooks[ c ]
+            notebook = notebooks.get(c)
+            if not notebook: return # For unit testing
             notebook.selectpage( z[ 2 ] )
             c.selectVnode( z[ 1 ] )
             c.frame.outerFrame.update_idletasks()
@@ -774,7 +787,8 @@ def renumber( notebook ):
 def getGoodPage( event , body ):
     global focusing
     c = body.c 
-    notebook = notebooks[ c ]
+    notebook = notebooks.get(c)
+    if not notebook: return # For unit testing
     body.frame.body = body
     body.frame.bodyCtrl = body.bodyCtrl
     if not hasattr( body, 'lastChapter' ):
@@ -789,7 +803,8 @@ def getGoodPage( event , body ):
 #@-node:mork.20040926105355.6:getGoodPage
 #@+node:mork.20040926105355.7:checkChapterValidity
 def checkChapterValidity( name , c):
-    notebook = notebooks[ c ]
+    notebook = notebooks.get(c)
+    if not notebook: return # For unit testing
     try:
         notebook.index( name )
     except:
@@ -800,7 +815,8 @@ def checkChapterValidity( name , c):
 def getSV( name, c = None ):
     #returns a Tk StrinVar that is a primary identifier
     if not c : c = g.top()
-    notebook = notebooks[ c ]
+    notebook = notebooks.get(c)
+    if not notebook: return # For unit testing
     index = notebook.index( name )
     page = notebook.page( index )
     return page.sv
@@ -837,7 +853,9 @@ def lowerPage( name, notebook):
 def walkChapters( c = None, ignorelist = [], chapname = False):
     # a generator that allows one to walk the chapters as one big tree
     if c == None : c = g.top()
-    pagenames = notebooks[ c ].pagenames()
+    notebook = notebooks.get(c)
+    if not notebook: return # For unit testing
+    pagenames = notebook.pagenames()
     for z in pagenames:
         sv = getSV( z , c)
         chapter = chapters[ sv ]
@@ -920,7 +938,8 @@ def openChaptersFile( fileName ):
 #@-node:mork.20040926105355.9:openChaptersFile
 #@+node:mork.20040926105355.8:insertChapters
 def insertChapters( chapters, frame, c ):
-     notebook = notebooks[ c ]
+     notebook = notebooks.get(c)
+     if not notebook: return # For unit testing
      pagenames = notebook.pagenames()
      for num, tup  in enumerate( chapters ):
             x, y = tup
@@ -939,6 +958,7 @@ def insertChapters( chapters, frame, c ):
                 flipto = cselection
      setTree( flipto, notebook, c )
      c.frame.canvas.update_idletasks()
+#@nonl
 #@-node:mork.20040926105355.8:insertChapters
 #@-others
 #@nonl
@@ -948,8 +968,10 @@ def insertChapters( chapters, frame, c ):
 #@+node:mork.20040926105355.30:newWrite_LEO_file
 def newWrite_LEO_file( self,fileName,outlineOnlyFlag, singleChapter = False):
     
-    c = self.c 
-    pagenames = notebooks[ c ].pagenames()
+    c = self.c
+    notebook = notebooks.get(c)
+    if not notebook: return # For unit testing
+    pagenames = notebook.pagenames()
     at = c.atFileCommands
     if len( pagenames ) > 1 and not singleChapter:        
         chapList = []
@@ -1049,12 +1071,14 @@ def newendEditLabel( self ):
 def newselect (self, v , updateBeadList = True):
     
     self.frame.body.lastNode = v
-    self.frame.body.lastChapter = notebooks[ v.c ].getcurselection()
+    notebook = notebooks.get(v.c)
+    if not notebook: return # For unit testing
+    self.frame.body.lastChapter = notebook.getcurselection()
     rv = ol_select( self , v, updateBeadList )
     if hasattr( v.c.frame.body, 'r' ):
         v.c.frame.body.r.configure( text = v.headString() )
     return rv
-
+#@nonl
 #@-node:mork.20040926105355.52:newselect
 #@+node:mork.20040926105355.49:newTrashDelete
 if hasattr( leoNodes.vnode, 'doDelete' ):
@@ -1063,7 +1087,8 @@ else:
     olDelete = leoNodes.position.doDelete
 def newTrashDelete(  self, newVnode):
     c = self.c
-    notebook = notebooks[ c ] 
+    notebook = notebooks.get(c)
+    if not notebook: return # For unit testing
     pagenames = notebook.pagenames()
     pagenames = [ getSV( x, c ).get().upper() for x in pagenames ]
     nbnam = notebook.getcurselection()
@@ -1095,8 +1120,8 @@ else:
     
 
 def cloneToChapter( c , name ):
-    
-    notebook = notebooks[ c ]
+    notebook = notebooks.get(c)
+    if not notebook: return # For unit testing
     page = notebook.page( notebook.index( name ) )
     c.beginUpdate()
     vnd = c.currentPosition()
@@ -1110,7 +1135,8 @@ def cloneToChapter( c , name ):
 #@+node:mork.20040926105355.32:moveToChapter
 def moveToChapter( c, name ):
     
-    notebook = notebooks[ c ]
+    notebook = notebooks.get(c)
+    if not notebook: return # For unit testing
     page = notebook.page( notebook.index( name ) )
     mvChapter = chapters[ page.sv ]
     c.beginUpdate()
@@ -1128,7 +1154,8 @@ def moveToChapter( c, name ):
 #@+node:mork.20040926105355.33:copyToChapter
 def copyToChapter( c, name ):
     
-    notebook = notebooks[ c ]
+    notebook = notebooks.get(c)
+    if not notebook: return # For unit testing
     page = notebook.page( notebook.index( name ) )
     cpChapter = chapters[ page.sv ]
     c.beginUpdate()
@@ -1163,7 +1190,9 @@ def makeNodeIntoChapter( c, vnd = None ):
     oChapter.makeCurrent()
     c.endUpdate()
     if not renum:
-        renumber( notebooks[ c ] )
+        notebook = notebooks.get(c)
+        if notebook: # For unit testing
+            renumber(notebook)
     c.selectPosition( oChapter.rp )
 #@-node:mork.20040926105355.39:makeNodeIntoChapter
 #@-others
@@ -1173,7 +1202,8 @@ def makeNodeIntoChapter( c, vnd = None ):
 #@+others
 #@+node:mork.20040926105355.37:conversionToSimple
 def conversionToSimple( c ):
-    notebook = notebooks[ c ]
+    notebook = notebooks.get(c)
+    if not notebook: return # For unit testing
     vnd = c.rootPosition()
     while 1:
         n = vnd.next()
@@ -1203,7 +1233,8 @@ def conversionToSimple( c ):
 #@-node:mork.20040926105355.37:conversionToSimple
 #@+node:mork.20040926105355.38:conversionToChapters
 def conversionToChapters( c ):
-    notebook = notebooks[ c ]
+    notebook = notebooks.get(c)
+    if not notebook: return # For unit testing
     vnd = c.rootPosition()
     while 1:
         nxt = vnd.next()
@@ -1229,7 +1260,8 @@ def importLeoFile( c ):
     name = tkFileDialog.askopenfilename()
     if name:
         page = addPage( c , name )
-        notebook = notebooks[ c ]        
+        notebook = notebooks.get(c)
+        if not notebook: return # For unit testing       
         notebook.selectpage( notebook.pagenames()[ - 1 ] )
         c.fileCommands.open( file( name, 'r' ), name )
         c.cChapter.makeCurrent()
@@ -1256,7 +1288,8 @@ def exportLeoFile( c ):
 #@+node:mork.20040926105355.46:swapChapters
 def swapChapters( c, name ):
 
-    notebook = notebooks[ c ]
+    notebook = notebooks.get(c)
+    if not notebook: return # For unit testing
     cselection = notebook.getcurselection()
     tab1 = notebook.tab( cselection )
     tab2 = notebook.tab( name )
@@ -1309,6 +1342,8 @@ def emptyTrash( notebook  , c):
 #@+node:mork.20040926105355.51:regexClone
 def regexClone( c , name ):
     if c == None: c = g.top()
+    notebook = notebooks.get(c)
+    if not notebook: return # For unit testing
     sv = getSV( name, c )
     chapter = chapters[ sv ]
     
@@ -1336,7 +1371,6 @@ def regexClone( c , name ):
                 ignorelist.append( clone )
                 
         c.cChapter.setVariables()
-        notebook = notebooks[ c ]
         notebook.selectpage( name )
         c.selectVnode( snode )
         snode.expand()
@@ -1362,6 +1396,8 @@ def regexClone( c , name ):
 #@+others
 #@+node:mork.20040926105355.42:doPDFConversion
 def doPDFConversion( c ):
+    notebook = notebooks.get(c)
+    if not notebook: return # For unit testing
     import cStringIO
     from reportlab.platypus import SimpleDocTemplate,  Paragraph , Spacer 
     from reportlab.lib.styles import getSampleStyleSheet 
@@ -1376,7 +1412,7 @@ def doPDFConversion( c ):
     cs = cStringIO.StringIO()
     doc = SimpleDocTemplate( cs , showBoundary = 1)
     Story = [Spacer(1,2*inch)] 
-    pagenames = notebooks[ c ].pagenames()   
+    pagenames = notebook.pagenames()   
     cChapter = c.cChapter
     for n,z in enumerate( pagenames ):
         
