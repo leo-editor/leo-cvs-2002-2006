@@ -1006,7 +1006,7 @@ class baseColorizer:
             # The list of languages for which keywords exist.
             # Eventually we might just use language_delims_dict.keys()
             languages = [
-                "actionscript","ada", "c","csharp","css","cweb","elisp","html","java","latex",
+                "actionscript","ada","c","csharp","css","cweb","elisp","html","java","latex",
                 "pascal","perl","perlpod","php","python","rapidq","rebol","shell","tcltk"]
             
             self.keywords = []
