@@ -6788,7 +6788,7 @@ try:
     df.file = fo # Strange, that this is needed.  Should be cleaned up.
     for line in write_lines:
         fo.write(line)
-    firstLines,junk = c.atFileCommands.scanHeader(fo,df.targetFileName)
+    firstLines,junk,junk = c.atFileCommands.scanHeader(fo,df.targetFileName)
     # To do: pass params to readEndNode.
     df.readOpenFile(root,fo,firstLines,perfectImportRoot=root)
     n = df.correctedLines
@@ -7935,6 +7935,7 @@ def executeScript(self,p=None,script=None):
     if not script:
         script = g.getScript(c,p)
     << redirect output >>
+    # g.trace(script)
     if script:
         script = script.strip()
     if script:
@@ -8332,6 +8333,108 @@ def writeOldDerivedFiles (self):
 #@nonl
 #@-node:ekr.20031218072017.2014:writeNew/OldDerivedFiles (no longer used)
 #@-node:ekr.20040929102351:Removed write_old_format_derived_files
+#@+node:ekr.20040930064232.2:(Added new expand/contract or go commands)
+#@+node:ekr.20031218072017.3769:<< define outlineMenuExpandContractMenuTable >>
+self.outlineMenuExpandContractMenuTable = (
+    ("&Contract All","Alt+-",c.contractAllHeadlines),
+    ("Contract &Node","Alt+[",c.contractNode),
+    ("Contract &Parent","Alt+0",c.contractParent),
+    ("Contract Or Go Left","Alt+LtArrow",c.contractNodeOrGoToParent),
+    ("-",None,None),
+    ("Expand P&rev Level","Alt+.",c.expandPrevLevel),
+    ("Expand N&ext Level","Alt+=",c.expandNextLevel),
+    ("Expand Or Go Right","Alt+RtArrow",c.expandNodeOrGoToFirstChild),
+    ("-",None,None),
+    ("Expand To Level &1","Alt+1",c.expandLevel1),
+    ("Expand To Level &2","Alt+2",c.expandLevel2),
+    ("Expand To Level &3","Alt+3",c.expandLevel3),
+    ("Expand To Level &4","Alt+4",c.expandLevel4),
+    ("Expand To Level &5","Alt+5",c.expandLevel5),
+    ("Expand To Level &6","Alt+6",c.expandLevel6),
+    ("Expand To Level &7","Alt+7",c.expandLevel7),
+    ("Expand To Level &8","Alt+8",c.expandLevel8),
+    # ("Expand To Level &9","Alt+9",c.expandLevel9),
+    ("-",None,None),
+    ("Expand &All","Alt+9",c.expandAllHeadlines),
+    ("Expand N&ode","Alt+]",c.expandNode))
+#@nonl
+#@-node:ekr.20031218072017.3769:<< define outlineMenuExpandContractMenuTable >>
+#@+node:ekr.20040131171020.1:<< enable expand/Contract submenu >>
+menu = frame.menu.getMenu("Expand/Contract...")
+enable(menu,"Contract Parent",c.canContractParent())
+enable(menu,"Contract Node",hasChildren and isExpanded)
+enable(menu,"Contract Or Go Left",(hasChildren and isExpanded) or hasParent)
+enable(menu,"Expand Node",hasChildren and not isExpanded)
+enable(menu,"Expand Prev Level",hasChildren and isExpanded)
+enable(menu,"Expand Next Level",hasChildren)
+enable(menu,"Expand To Level 1",hasChildren and isExpanded)
+enable(menu,"Expand Or Go Right",hasChildren)
+for i in xrange(2,9):
+    frame.menu.enableMenu(menu,"Expand To Level " + str(i), hasChildren)
+#@nonl
+#@-node:ekr.20040131171020.1:<< enable expand/Contract submenu >>
+#@+node:ekr.20040930064232:contractNodeOrGoToParent
+def contractNodeOrGoToParent(self):
+    
+    """Simulate the left Arrow Key in folder of Windows Explorer."""
+
+    c = self ; v = c.currentVnode()
+ 
+    if v.hasChildren() and v.isExpanded():
+        c.contractNode()
+    elif v.hasParent():
+        c.goToParent()
+#@nonl
+#@-node:ekr.20040930064232:contractNodeOrGoToParent
+#@+node:ekr.20040930064232.1:expandNodeOrGoToFirstChild
+def expandNodeOrGoToFirstChild(self):
+    
+    """Simulate the Right Arrow Key in folder of Windows Explorer."""
+
+    c = self ; v = c.currentVnode()
+    if not v.hasChildren(): return
+
+    if v.isExpanded():
+        c.beginUpdate()
+        c.selectVnode(v.firstChild())
+        c.endUpdate()
+    else:
+        c.expandNode()
+#@nonl
+#@-node:ekr.20040930064232.1:expandNodeOrGoToFirstChild
+#@-node:ekr.20040930064232.2:(Added new expand/contract or go commands)
+#@+node:ekr.20040930175654:(Fixed crash after cutting an imported node
+#@+node:ekr.20041001075258:Traceback
+exception executing command
+Traceback (most recent call last):
+
+File "C:\prog\leoCVS\leo\src\leoNodes.py", line 3044, in moveToParent
+if p.v._parent and len(p.v._parent.t.vnodeList) == 1:
+
+AttributeError: 'NoneType' object has no attribute '_parent'
+#@nonl
+#@-node:ekr.20041001075258:Traceback
+#@+node:ekr.20031218072017.937:p.moveToParent (pops stack when multiple parents)
+def moveToParent (self):
+    
+    """Move a position to its parent position."""
+    
+    p = self
+    
+    if not p: return p # 10/30/04
+
+    if p.v._parent and len(p.v._parent.t.vnodeList) == 1:
+        p.v = p.v._parent
+    elif p.stack:
+        p.v = p.stack.pop()
+        # g.trace("pop",p.v,p)
+    else:
+        p.v = None
+
+    return p
+#@nonl
+#@-node:ekr.20031218072017.937:p.moveToParent (pops stack when multiple parents)
+#@-node:ekr.20040930175654:(Fixed crash after cutting an imported node
 #@-node:ekr.20040929081120:4.3 a1 projects
 #@-all
 #@nonl

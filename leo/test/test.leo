@@ -711,13 +711,14 @@
 <v t="ekr.20040918093738.4"><vh>test</vh></v>
 </v>
 </v>
+<v t="ekr.20040930124233"><vh>headfind</vh></v>
 </v>
 <v t="ekr.20040723064143.1"><vh>To do (when file tests are easier)</vh>
 <v t="ekr.20040723064143.2"><vh>Finish unit tests for @asis</vh></v>
 <v t="ekr.20040723064143.3"><vh>Test error recovery when reading descendentTnodeUa's</vh></v>
 <v t="ekr.20040903102217"><vh>Test multi-line @doc parts with @language html</vh></v>
 </v>
-<v t="EKR.20040619133116"><vh>Unit testing...</vh>
+<v t="EKR.20040619133116" a="E"><vh>Unit testing...</vh>
 <v t="ekr.20040327114250" tnodeList="ekr.20040327114250"><vh>@file c:\prog\test\unittest\batchTest.py</vh></v>
 <v t="ekr.20040712101754"><vh>Unit Tests</vh>
 <v t="ekr.20040716144017"><vh>Perfect Import tests</vh>
@@ -1181,9 +1182,8 @@
 </v>
 </v>
 </v>
-<v t="ekr.20040707081532.1"><vh>Do @test</vh></v>
+<v t="ekr.20040707081532.1" a="TV"><vh>Do @test</vh></v>
 </v>
-<v t="ekr.20040930124233" a="TV"><vh>headfind</vh></v>
 </vnodes>
 <tnodes>
 <t tx="EKR.20040424065452">import leoGlobals as g
@@ -9692,7 +9692,11 @@ def headfind():
         s = s.lower()
         for p in c.allNodes_iter():
             if p.headString().lower().startswith(s):
-                return c.selectVnode(p)
+                c.beginUpdate()
+                c.frame.tree.expandAllAncestors(p)
+                c.selectVnode(p)
+                c.endUpdate()
+                return
         g.es("no headline matches '%s'" % (s),color="blue")
     else:
         g.es("no selected text &amp; clipboard empty",color="blue")
