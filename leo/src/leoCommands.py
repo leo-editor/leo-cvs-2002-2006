@@ -5577,14 +5577,14 @@ class configSettings:
         c.setChanged(changed)
     #@nonl
     #@-node:ekr.20041118195812.3:setRecentFiles (configSettings)
-    #@+node:ekr.20041118195812.2:setString
-    def setString (self,setting,val):
-        
-        g.trace()
+    #@+node:ekr.20041118195812.2:set & setString
+    def set (self,p,setting,val):
         
         return g.app.config.setString(self.c,setting,val)
+        
+    setString = set
     #@nonl
-    #@-node:ekr.20041118195812.2:setString
+    #@-node:ekr.20041118195812.2:set & setString
     #@-node:ekr.20041118195812:Setters...
     #@-others
 #@nonl
