@@ -611,7 +611,7 @@ def openWithFileName(fileName,old_c,enableLog=True,readAtFileNodesFlag=True):
                 app.unlockLog()
                 for frame in g.app.windowList:
                     # The recent files list has been updated by menu.updateRecentFiles.
-                    frame.c.config.setRecentFiles(frame.c.recentFiles)
+                    frame.c.config.setRecentFiles(g.app.config.recentFiles)
             frame.openDirectory = g.os_path_dirname(fileName)
             g.doHook("open2",old_c=old_c,new_c=frame.c,fileName=fileName)
             return True, frame
