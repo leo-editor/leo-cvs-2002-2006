@@ -147,7 +147,7 @@ class config:
 		# 10/11/02: Defaults are specified only here.
 		
 		self.config = None # The current instance of ConfigParser
-		self.at_root_bodies_start_in_doc_mode = false # For compatibility with previous versions.
+		self.at_root_bodies_start_in_doc_mode = true # For compatibility with previous versions.
 		self.output_initial_comment = "" # "" or None for compatibility with previous versions.
 		self.output_newline = "nl"
 		self.create_nonexistent_directories = false

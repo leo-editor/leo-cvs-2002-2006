@@ -42,7 +42,7 @@ leoKeywords = (
 	"@first","@header","@ignore",
 	"@language","@last",
 	"@nocolor","@noheader","@others",
-	"@pagewidth","@path","@quiet","@raw","@root",
+	"@pagewidth","@path","@quiet","@raw","@root","@root-code","@root-doc",
 	"@silent","@tabwidth","@terse",
 	"@unit","@verbose")
 #@-body
@@ -584,6 +584,7 @@ class colorizer:
 		self.keywords = None
 		self.lb = None
 		self.rb = None
+		self.rootMode = None # None, "code" or "doc"
 		
 		config = app().config
 		self.latex_cweb_docs     = config.getBoolColorsPref("color_cweb_doc_parts_with_latex")
@@ -847,7 +848,8 @@ class colorizer:
 					exec("if self.language==name: self.keywords=%s_keywords" % name)
 			
 			# Color plain text unless we are under the control of @nocolor.
-			state = choose(self.flag,"normal","nocolor")
+			# state = choose(self.flag,"normal","nocolor")
+			state = self.setFirstLineState()
 			
 			if 1: # 10/25/02: we color both kinds of references in cweb mode.
 				self.lb = "<<"
@@ -1044,7 +1046,8 @@ class colorizer:
 				
 				if i == 0:
 					# Color plain text unless we are under the control of @nocolor.
-					state = choose(self.flag,"normal","nocolor")
+					# state = choose(self.flag,"normal","nocolor")
+					state = self.setFirstLineState()
 					new_states[0] = state
 				
 				# The new_states[] will be "unknown" unless the lines match,
@@ -1201,13 +1204,13 @@ class colorizer:
 				return i,"normal" # rescan the line.
 			
 			if i == 0 and s[i] == '@':
-				j = self.skip_id(s,i+1)
+				j = self.skip_id(s,i+1,chars='-')
 				word = s[i:j]
 				word = string.lower(word)
 			else:
 				word = ""
 			
-			if word in ["@c","@code","@unit","@root","@color","@nocolor"]:
+			if word in ["@c","@code","@unit","@root","@root-code","@root-doc","@color","@nocolor"]:
 				# End of the doc part.
 				self.body.tag_remove("docPart", index(n,i), index(n,j))
 				self.body.tag_add("leoKeyword", index(n,i), index(n,j))
@@ -1278,7 +1281,7 @@ class colorizer:
 	
 	def doAtKeyword (self,s,i,n):
 	
-		j = self.skip_id(s,i+1)
+		j = self.skip_id(s,i+1,chars="-") # to handle @root-code, @root-doc
 		word = s[i:j]
 		word = string.lower(word)
 		if i != 0 and word != "@others":
@@ -1671,6 +1674,7 @@ class colorizer:
 		c = self.commands
 		language = c.target_language
 		self.comment_string = None
+		self.rootMode = None # None, "code" or "doc"
 		while v:
 			s = v.t.bodyString
 			dict = get_directives_dict(s)
@@ -1692,6 +1696,24 @@ class colorizer:
 				break
 			#@-body
 			#@-node:1::<< Test for @comment or @language >>
+
+			
+			#@<< Test for @root, @root-doc or @root-code >>
+			#@+node:2::<< Test for @root, @root-doc or @root-code >>
+			#@+body
+			if dict.has_key("root") and not self.rootMode:
+			
+				k = dict["root"]
+				if match_word(s,k,"@root-code"):
+					self.rootMode = "code"
+				elif match_word(s,k,"@root-doc"):
+					self.rootMode = "doc"
+				else:
+					doc = app().config.at_root_bodies_start_in_doc_mode
+					self.rootMode = choose(doc,"doc","code")
+			
+			#@-body
+			#@-node:2::<< Test for @root, @root-doc or @root-code >>
 
 			v = v.parent()
 		# trace(`language`)
@@ -1791,21 +1813,38 @@ class colorizer:
 
 	#@-at
 	#@-body
-	#@+node:1::skip_id
+	#@+node:1::setFirstLineState
 	#@+body
-	def skip_id(self,s,i):
+	def setFirstLineState (self):
+		
+		if self.flag:
+			if self.rootMode:
+				state = choose(self.rootMode=="code","normal","doc")
+			else:
+				state = "normal"
+		else:
+			state = "nocolor"
+	
+		return state
+	#@-body
+	#@-node:1::setFirstLineState
+	#@+node:2::skip_id
+	#@+body
+	def skip_id(self,s,i,chars=None):
 	
 		n = len(s)
 		while i < n:
 			ch = s[i]
 			if ch in string.letters or ch in string.digits or ch == '_':
 				i += 1
+			elif chars and ch in chars:
+				i += 1
 			else: break
 		return i
 	
 	#@-body
-	#@-node:1::skip_id
-	#@+node:2::skip_python_string
+	#@-node:2::skip_id
+	#@+node:3::skip_python_string
 	#@+body
 	def skip_python_string(self,s,i):
 	
@@ -1819,8 +1858,8 @@ class colorizer:
 		else:
 			return self.skip_string(s,i)
 	#@-body
-	#@-node:2::skip_python_string
-	#@+node:3::skip_string
+	#@-node:3::skip_python_string
+	#@+node:4::skip_string
 	#@+body
 	def skip_string(self,s,i):
 	
@@ -1841,7 +1880,7 @@ class colorizer:
 		return i,"normal"
 	
 	#@-body
-	#@-node:3::skip_string
+	#@-node:4::skip_string
 	#@-node:10::Utils
 	#@-others
 #@-body

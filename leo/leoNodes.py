@@ -645,23 +645,17 @@ class vnode:
 	def afterHeadlineMatch(self,s):
 		
 		h = self.mHeadString
-		
-		if 1: # New code
-			if s != "@file" and match_word(h,0,s):
-				# No options are valid.
-				return string.strip(h[len(s):])
-			elif match(h,0,"@file"):
-				i,atFileType = scanAtFileOptions(h)
-				if s == atFileType:
-					# print "s,h:",s,h
-					return string.strip(h[i:])
-				else: return ""
+	
+		if s != "@file" and match_word(h,0,s):
+			# No options are valid.
+			return string.strip(h[len(s):])
+		elif match(h,0,"@file"):
+			i,atFileType = scanAtFileOptions(h)
+			if s == atFileType:
+				# print "s,h:",s,h
+				return string.strip(h[i:])
 			else: return ""
-		else:
-			if match(h,0,s):
-				return string.strip(h[len(s):])
-			else:
-				return ""
+		else: return ""
 	
 	#@-body
 	#@-node:1::afterHeadlineMatch
