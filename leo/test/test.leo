@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="5986" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="5987" clone_windows="0"/>
 <globals body_outline_ratio="0.365740740741">
-	<global_window_position top="30" left="232" height="864" width="907"/>
+	<global_window_position top="21" left="277" height="864" width="907"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences>
@@ -12,8 +12,7 @@
 	<change_string></change_string>
 </find_panel_settings>
 <vnodes>
-<v t="EKR.20040623200709"
-expanded="ekr.20040716073021,ekr.20040708145036,"><vh>@thin ../src/leoTest.py</vh></v>
+<v t="EKR.20040623200709"><vh>@thin ../src/leoTest.py</vh></v>
 <v t="ekr.20040721153143"><vh>Gc/Profile/Timeit/Tracing scripts</vh>
 <v t="ekr.20040721113934"><vh>runProfile</vh></v>
 <v t="ekr.20040901065642.2"><vh>runTimeit</vh>
@@ -720,9 +719,9 @@ expanded="ekr.20040716073021,ekr.20040708145036,"><vh>@thin ../src/leoTest.py</v
 <v t="ekr.20041001203411"><vh>@ plugin ___proto_atFile.py</vh></v>
 <v t="ekr.20041001203411.1"><vh>@ script hi</vh></v>
 </v>
-<v t="EKR.20040619133116" a="E"><vh>Unit testing...</vh>
-<v t="ekr.20040327114250" a="E" tnodeList="ekr.20040327114250"><vh>@file c:\prog\test\unittest\batchTest.py</vh></v>
-<v t="ekr.20040712101754" a="ETV"><vh>Unit Tests</vh>
+<v t="EKR.20040619133116" a="TV"><vh>Unit testing...</vh>
+<v t="ekr.20040327114250"><vh>@thin ../test/unittest/batchTest.py</vh></v>
+<v t="ekr.20040712101754"><vh>Unit Tests</vh>
 <v t="ekr.20040716144017"><vh>Perfect Import tests</vh>
 <v t="ekr.20040716071029.6"><vh>@test inserting a line: no trailing newline</vh>
 <v t="ekr.20040716071856.1"><vh>-input</vh></v>
@@ -1190,7 +1189,7 @@ expanded="ekr.20040716073021,ekr.20040708145036,"><vh>@thin ../src/leoTest.py</v
 <v t="ekr.20040723064143.1"><vh>To do (when file tests are easier)</vh>
 <v t="ekr.20041004093917"><vh>@test read from string</vh>
 <v t="ekr.20041004093917.1"><vh>From @thin at-file-thin-test2.txt</vh></v>
-<v t="ekr.20041004100940" a="E"><vh>root</vh></v>
+<v t="ekr.20041004100940"><vh>root</vh></v>
 </v>
 <v t="ekr.20040723064143.2"><vh>Finish unit tests for @asis</vh></v>
 <v t="ekr.20040723064143.3"><vh>Test error recovery when reading descendentTnodeUa's</vh></v>
@@ -1727,7 +1726,7 @@ c = b
 </t>
 <t tx="EKR.20040613162717">import leoGlobals as g
 
-path = r"c:\prog\leoCVS\leo\install-test"
+path = g.os_path_join(g.app.loadDir,"leo.py")
 
 try:
     f = open(path,"rb")
@@ -1849,7 +1848,7 @@ print '
 import leoGlobals as g
 print g.app.config.redirect_execute_script_output_to_log_pane</t>
 <t tx="EKR.20040627103732">@ignore</t>
-<t tx="EKR.20040627103902" lineYOffset="4b032e" icons="5d7100287d710128550577686572657102550a6265666f726549636f6e710355047870616471044b025504747970657105550466696c6571066806582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286805680668084afdffffff6806582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6802550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e"></t>
+<t tx="EKR.20040627103902" lineYOffset="4b032e" icons="5d7100287d7101285504747970657102550466696c65710355047870616471044b02550577686572657105550a6265666f726549636f6e71066803582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286802680368084afdffffff6803582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6805550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e"></t>
 <t tx="EKR.20040627121836">import leoGlobals as g
 
 c = g.top() ; p = c.currentPosition()
@@ -1980,7 +1979,7 @@ for p in c.rootPosition().allNodes_iter():
 s = "%d nodes" % count
 print s ; g.es(s)</t>
 <t tx="ekr.20040312101720"></t>
-<t tx="ekr.20040317101155" lineYOffset="4b032e" icons="5d7100287d7101285504747970657102550466696c65710355047870616471044b02550577686572657105550a6265666f726549636f6e71066803582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286802680368084afdffffff6803582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6805550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">import leoGlobals as g
+<t tx="ekr.20040317101155" lineYOffset="4b032e" icons="5d7100287d710128550577686572657102550a6265666f726549636f6e710355047870616471044b025504747970657105550466696c65710668065834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286805680668084afdffffff68065834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6802550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">import leoGlobals as g
 
 c = g.top()
 
@@ -1990,7 +1989,7 @@ a = p.v.t.unknownAttributes
 
 &lt;&lt; define event callbacks &gt;&gt;
 
-path = r"c:\prog\leoCVS\leo\Icons"
+path = g.os_path_join(g.app.loadDir,"..","Icons")
 icon1 = g.os_path_join(path,"lt_arrow_enabled.gif")
 icon2 = g.os_path_join(path,"rt_arrow_enabled.gif")
 
@@ -2349,20 +2348,6 @@ for s in (s1,s2,s3):
     t2 = timeit.Timer(stmt='p1.equal(p2)',setup=s).timeit()
     print "%2.2f,%2.2f,%0.2f" % (t1,t2,t1/t2)
 </t>
-<t tx="ekr.20040327114250">@ignore
-
-# A file to be executed in batch mode as part of unit testing.
-
-@language python
-@tabwidth -4
-
-path = r"c:\prog\test\unittest\createdFile.txt"
-f = None
-try:
-    f = open(path,"w")
-    f.write("This is a test")
-finally:
-    if f: f.close()</t>
 <t tx="ekr.20040330095252">import leoGlobals as g
 c = g.top()
 t = c.frame.log.logCtrl
@@ -2734,39 +2719,39 @@ g.app.scriptDict['suite'] = suite</t>
 <t tx="ekr.20040712101754.11"></t>
 <t tx="ekr.20040712101754.12"></t>
 <t tx="ekr.20040712101754.13">openFileDialog
-c:\\prog\\test\\perfectImport\\formatter.py</t>
+test\\unittest\\perfectImport\\formatter.py</t>
 <t tx="ekr.20040712101754.14"></t>
 <t tx="ekr.20040712101754.15">openFileDialog
-c:\\prog\\test\\perfectImport\\formatter.py</t>
+test\\unittest\\perfectImport\\formatter.py</t>
 <t tx="ekr.20040712101754.16"></t>
 <t tx="ekr.20040712101754.17">openFileDialog
-c:\\prog\\test\\unittest\\input\\noweave.nw.txt</t>
+test\\unittest\\input\\noweave.nw.txt</t>
 <t tx="ekr.20040712101754.18"></t>
 <t tx="ekr.20040712101754.19">openFileDialog
-c:\\prog\\test\\unittest\\input\\flat.txt</t>
+test\\unittest\\input\\flat.txt</t>
 <t tx="ekr.20040712101754.20"></t>
 <t tx="ekr.20040712101754.21">openFileDialog
-c:\\prog\\test\\unittest\\input\\cweave.w</t>
+test\\unittest\\input\\cweave.w</t>
 <t tx="ekr.20040712101754.22"></t>
 <t tx="ekr.20040712101754.23">openFileDialog
-c:\\prog\\test\\unittest\\input\\leoAtFile.py</t>
+test\\unittest\\input\\leoAtFile.py</t>
 <t tx="ekr.20040712101754.24">@language plain</t>
 <t tx="ekr.20040712101754.25"></t>
 <t tx="ekr.20040712101754.26"></t>
 <t tx="ekr.20040712101754.27">saveFileDialog
-c:\\prog\\test\\unittest\\output\\exportHeadlines.txt</t>
+test\\unittest\\output\\exportHeadlines.txt</t>
 <t tx="ekr.20040712101754.28"></t>
 <t tx="ekr.20040712101754.29">saveFileDialog
-c:\\prog\\test\\unittest\\output\\flattenOutline.txt</t>
+test\\unittest\\output\\flattenOutline.txt</t>
 <t tx="ekr.20040712101754.30"></t>
 <t tx="ekr.20040712101754.31">saveFileDialog
-c:\\prog\\test\\unittest\\output\\weave.txt</t>
+test\\unittest\\output\\weave.txt</t>
 <t tx="ekr.20040712101754.32"></t>
 <t tx="ekr.20040712101754.33">saveFileDialog
-c:\\prog\\test\\unittest\\output\\outlineToNoweb.txt</t>
+test\\unittest\\output\\outlineToNoweb.txt</t>
 <t tx="ekr.20040712101754.34"></t>
 <t tx="ekr.20040712101754.35">saveFileDialog
-c:\\prog\\test\\unittest\\output\\outlineToCweb.txt</t>
+test\\unittest\\output\\outlineToCweb.txt</t>
 <t tx="ekr.20040712101754.36"></t>
 <t tx="ekr.20040712101754.37"># Create unit tests in g.app.scriptDict["suite"]
 
@@ -3198,7 +3183,8 @@ for t in c.all_unique_tnodes_iter():
     nodes.append(t)
     
 # print "duplicate tests pass"</t>
-<t tx="ekr.20040712101754.102">@language plain</t>
+<t tx="ekr.20040712101754.102">@language plain
+@color</t>
 <t tx="ekr.20040712101754.103">import leoGlobals as g
 import leoTest
 reload(leoTest)
@@ -4642,19 +4628,33 @@ for p in c.allNodes_iter():
         for v in p.v.t.vnodeList:
             assert(v.t._firstChild == childv)
             assert(id(v.t._firstChild) == id(childv))</t>
-<t tx="ekr.20040712101754.186">import os
+<t tx="ekr.20040712101754.186">import leoGlobals as g
+import os
+import sys
 
-path = r"c:\prog\test\unittest\createdFile.txt"
+verbose = False
 
-s = r"c:\python23\python c:\prog\LeoCVS\leo\src\leo.py -script c:\prog\test\unittest\batchTest.py"
+python_interp = sys.executable
+test_path = g.os_path_join(g.app.loadDir,"..","test","unittest")
+src_path  = g.os_path_join(g.app.loadDir,"..","src")
 
-if os.path.exists(path):
-    print ; print "@test batch mode: deleting",path
-    os.remove(path)
+leo_file   = g.os_path_join(src_path,"leo.py")
+batch_file = g.os_path_join(test_path,"batchTest.py")
+test_file  = g.os_path_join(test_path,"createdFile.txt")
 
-os.system(s)
-assert(os.path.exists(path))
-</t>
+# Execute this command: python leo.py -script test\unittest\batchTest.py
+
+command = r"%s %s -script %s" % (python_interp,leo_file,batch_file)
+
+if os.path.exists(test_file):
+    if verbose: print "@test batch mode: deleting",test_file
+    os.remove(test_file)
+else:
+    if verbose: print "@test batch mode: not found:",test_file
+
+os.system(command)
+
+assert(os.path.exists(test_file))</t>
 <t tx="ekr.20040712101754.187"></t>
 <t tx="ekr.20040712101754.188">import leoNodes
 import leoGlobals as g
@@ -9152,14 +9152,14 @@ if 0:
 import leoTest
 reload(leoTest)
 
-path = g.os_path_join(g.app.loadDir,"..","test","minimalLeoFile.leo")
+path = g.os_path_join(g.app.loadDir,"..","test","unittest","minimalLeoFile.leo")
 leoTest.runLeoTest(path,verbose=False,full=True)
 </t>
 <t tx="ekr.20040730181610">import leoGlobals as g
 import leoTest
 reload(leoTest)
 
-path = g.os_path_join(g.app.loadDir,"..","test","minimalLeoFile2.leo")
+path = g.os_path_join(g.app.loadDir,"..","test","unittest","minimalLeoFile2.leo")
 leoTest.runLeoTest(path,verbose=False,full=True)
 </t>
 <t tx="ekr.20040730185319"></t>
@@ -9410,7 +9410,7 @@ print "after"</t>
 <t tx="ekr.20040805102453"></t>
 <t tx="ekr.20040831095833"></t>
 <t tx="ekr.20040831095833.1">openFileDialog
-c:\\prog\\leoCvs\\leo\\src\\leo.py</t>
+src\\leo.py</t>
 <t tx="ekr.20040831101747"># Apparently these file are fine when they are written.
 # The problem comes later in the distribution process.
 
@@ -9424,18 +9424,14 @@ def checkLinuxLineEndings(filename):
         if ch == '\r': cr += 1
         if ch == '\n': nl += 1
     assert cr == 0, "cr: %d, nl: %d" % (cr,nl)
-    
-path = r"c:\prog\leoCvs\leo" # The source file.
-# path = r"c:\prog\test" # As distributed.
 
 for file in ("install","uninstall"):
-    checkLinuxLineEndings(g.os_path_join(path,file))
-</t>
+    checkLinuxLineEndings(g.os_path_join(g.app.loadDir,"..",file))</t>
 <t tx="ekr.20040831104758">import leoGlobals as g
 import leoTest
 reload(leoTest)
 
-path = g.os_path_join(g.app.loadDir,"..","test","minimalLeoFile3.leo")
+path = g.os_path_join(g.app.loadDir,"..","test","unittest","minimalLeoFile3.leo")
 leoTest.runLeoTest(path,verbose=False,full=True)
 </t>
 <t tx="ekr.20040901065642">import string
