@@ -307,6 +307,13 @@ class nullGui(leoGui):
 		self.lastFrame = None
 	#@nonl
 	#@-node: nullGui.__init__
+	#@+node: nullGui.__getattr__
+	def __getattr__(self,attr):
+	
+		trace("nullGui",attr)
+		return nullObject()
+	#@nonl
+	#@-node: nullGui.__getattr__
 	#@+node:createLeoFrame
 	def createLeoFrame(self,title):
 		
