@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="5959" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="5960" clone_windows="0"/>
 <globals body_outline_ratio="0.635416666667">
-	<global_window_position top="43" left="310" height="864" width="907"/>
+	<global_window_position top="64" left="210" height="864" width="907"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences>
@@ -12,7 +12,7 @@
 	<change_string></change_string>
 </find_panel_settings>
 <vnodes>
-<v t="EKR.20040623200709" a="TV"><vh>@thin ../src/leoTest.py</vh></v>
+<v t="EKR.20040623200709"><vh>@thin ../src/leoTest.py</vh></v>
 <v t="ekr.20040721153143"><vh>Gc/Profile/Timeit/Tracing scripts</vh>
 <v t="ekr.20040721113934"><vh>runProfile</vh></v>
 <v t="ekr.20040901065642.2"><vh>runTimeit</vh>
@@ -360,6 +360,7 @@
 </v>
 <v t="ekr.20040312021734"><vh>Scripts</vh>
 <v t="ekr.20040318091620"><vh>Clear all unknown attributes</vh></v>
+<v t="ekr.20040915080419"><vh>Print all unknown attributes</vh></v>
 <v t="EKR.20040424065452"><vh>Compare script</vh></v>
 <v t="EKR.20040424091411"><vh>Compare script using text mode to ignore newlines</vh></v>
 <v t="EKR.20040517074600.8"><vh>Count pages</vh></v>
@@ -692,9 +693,9 @@
 <v t="ekr.20040723064143.3"><vh>Test error recovery when reading descendentTnodeUa's</vh></v>
 <v t="ekr.20040903102217"><vh>Test multi-line @doc parts with @language html</vh></v>
 </v>
-<v t="EKR.20040619133116"><vh>Unit testing...</vh>
+<v t="EKR.20040619133116" a="TV"><vh>Unit testing...</vh>
 <v t="ekr.20040327114250" tnodeList="ekr.20040327114250"><vh>@file c:\prog\test\unittest\batchTest.py</vh></v>
-<v t="ekr.20040712101754"><vh>Unit Tests</vh>
+<v t="ekr.20040712101754" a="E"><vh>Unit Tests</vh>
 <v t="ekr.20040716144017"><vh>Perfect Import tests</vh>
 <v t="ekr.20040716071029.6"><vh>@test inserting a line: no trailing newline</vh>
 <v t="ekr.20040716071856.1"><vh>-input</vh></v>
@@ -898,6 +899,7 @@
 <v t="ekr.20040713123828.1"><vh>after</vh></v>
 </v>
 <v t="ekr.20040803091512"><vh>@test bogus tnodeList doesn't corrupt @thin nodes</vh></v>
+<v t="ekr.20040917062206"><vh>@test g.cantImport returns None</vh></v>
 <v t="ekr.20040712101754.102"><vh>atFileTests...</vh>
 <v t="ekr.20040712101754.103"><vh>@test @file no newline</vh>
 <v t="ekr.20040712101754.104"><vh>@@file</vh></v>
@@ -1166,6 +1168,10 @@
 <v t="ekr.20040910094546.1"><vh>leo.py</vh></v>
 <v t="ekr.20040910094546.2"><vh>@arg c:\prog\leoCVS\leo\doc\LeoDocs.leo</vh></v>
 </v>
+</v>
+<v t="ekr.20040915045847"><vh>Test of spelling contraction</vh></v>
+<v t="ekr.20040915111739" a="E"><vh>FileActions</vh>
+<v t="ekr.20040915111853"><vh>leo*.py</vh></v>
 </v>
 </vnodes>
 <tnodes>
@@ -9536,5 +9542,38 @@ atRootTest1.txt</t>
 <t tx="ekr.20040914072438.2">@root atRootTest2.txt
 
 atRootTest2.txt</t>
+<t tx="ekr.20040915045847">@nocolor
+@ignore
+
+this is a test of I've aren't arn't can't won't
+aren`t arn`t can`t won`t</t>
+<t tx="ekr.20040915080419">import leoGlobals as g
+
+c = g.top()
+
+for p in c.allNodes_iter():
+    if hasattr(p.v.t,"unknownAttributes"):
+        print p.v.t.unknownAttributes</t>
+<t tx="ekr.20040915111739">@nocolor
+@ignore
+
+The children of this node are expected to contain a file pattern in the headline
+and the script to be executed in the body. The file name is matched against the
+patterns (which are Unix-style shell patterns), and the first matching node is
+selected. If the filename is a path, only the last item is matched.
+
+@color</t>
+<t tx="ekr.20040915111853"># This script is written when any diryt leo*.py node is written.
+
+# The following globals are defined: filename, shellScriptInWindow
+
+import leoGlobals as g
+
+c = g.top()
+
+# print c,c.currentPosition()
+print "filename", filename</t>
+<t tx="ekr.20040917062206">import leoGlobals as g
+assert(g.cantImport("xyzzy") is None)</t>
 </tnodes>
 </leo_file>
