@@ -17,23 +17,7 @@ class LeoFrame:
 
 	#@+others
 	#@+node:1::Birth & Death
-	#@+node:1::frame.__del__
-	#@+body
-	# Warning:  calling del self will not necessarily call this routine.
-	
-	if 0: # Interferes with the garbage collector!!
-		def __del__ (self):
-			
-			# Can't trace while destroying.
-			# print "frame.__del__"
-			
-			self.log = self.body = self.tree = None
-			self.treeBar = self.canvas = self.splitter1 = self.splitter2 = None
-			# Menu bars.
-			del self.menus ; self.menus = None
-	#@-body
-	#@-node:1::frame.__del__
-	#@+node:2::frame.__init__
+	#@+node:1::frame.__init__
 	#@+body
 	def __init__(self, title = None):
 	
@@ -170,16 +154,16 @@ class LeoFrame:
 		if sys.platform == "linux2": # This crashes tcl83.dll
 			self.tree.canvas.bind("<MouseWheel>", self.OnMouseWheel)
 	#@-body
-	#@-node:2::frame.__init__
-	#@+node:3::frame.__repr__
+	#@-node:1::frame.__init__
+	#@+node:2::frame.__repr__
 	#@+body
 	def __repr__ (self):
 	
 		return "leoFrame: " + self.title
 	
 	#@-body
-	#@-node:3::frame.__repr__
-	#@+node:4::frame.destroy
+	#@-node:2::frame.__repr__
+	#@+node:3::frame.destroy
 	#@+body
 	def destroy (self):
 	
@@ -192,8 +176,8 @@ class LeoFrame:
 		self.top.destroy() # Actually close the window.
 		self.top = None
 	#@-body
-	#@-node:4::frame.destroy
-	#@+node:5::frame.setWindowTitle
+	#@-node:3::frame.destroy
+	#@+node:4::frame.setWindowTitle
 	#@+body
 	def setWindowTitle (self,fileName):
 		
@@ -204,7 +188,7 @@ class LeoFrame:
 			title = fn
 		return title
 	#@-body
-	#@-node:5::frame.setWindowTitle
+	#@-node:4::frame.setWindowTitle
 	#@-node:1::Birth & Death
 	#@+node:2::Configuration
 	#@+node:1::f.configureBar

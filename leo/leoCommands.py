@@ -19,16 +19,7 @@ import leoAtFile,leoFileCommands,leoImport,leoNodes,leoTangle,leoUndo
 class Commands:
 
 	#@+others
-	#@+node:1::c.__del__
-	#@+body
-	if 0: # Interferes with the garbage collector!!
-		def __del__ (self):
-			# Can't trace while destroying.
-			# print "c.__del__"
-			pass
-	#@-body
-	#@-node:1::c.__del__
-	#@+node:2::c.__init__ & initIvars
+	#@+node:1::c.__init__ & initIvars
 	#@+body
 	def __init__(self,frame):
 	
@@ -82,8 +73,8 @@ class Commands:
 		#@-body
 		#@-node:1::<< initialize ivars >>
 	#@-body
-	#@-node:2::c.__init__ & initIvars
-	#@+node:3::c.__repr__
+	#@-node:1::c.__init__ & initIvars
+	#@+node:2::c.__repr__
 	#@+body
 	def __repr__ (self):
 		
@@ -93,8 +84,8 @@ class Commands:
 			return "Commander: bad mFileName"
 	
 	#@-body
-	#@-node:3::c.__repr__
-	#@+node:4::c.destroy
+	#@-node:2::c.__repr__
+	#@+node:3::c.destroy
 	#@+body
 	def destroy (self):
 	
@@ -108,8 +99,8 @@ class Commands:
 		self.importCommands = None
 		self.tangleCommands = None
 	#@-body
-	#@-node:4::c.destroy
-	#@+node:5::c.setIvarsFromFind
+	#@-node:3::c.destroy
+	#@+node:4::c.setIvarsFromFind
 	#@+body
 	# This should be called whenever we need to use find values:
 	# i.e., before reading or writing
@@ -121,8 +112,8 @@ class Commands:
 			find.set_ivars(c)
 	
 	#@-body
-	#@-node:5::c.setIvarsFromFind
-	#@+node:6::c.setIvarsFromPrefs
+	#@-node:4::c.setIvarsFromFind
+	#@+node:5::c.setIvarsFromPrefs
 	#@+body
 	#@+at
 	#  This should be called whenever we need to use preference:
@@ -137,8 +128,8 @@ class Commands:
 	
 		pass
 	#@-body
-	#@-node:6::c.setIvarsFromPrefs
-	#@+node:7::Cut & Paste Outlines
+	#@-node:5::c.setIvarsFromPrefs
+	#@+node:6::Cut & Paste Outlines
 	#@+node:1::cutOutline
 	#@+body
 	def cutOutline(self):
@@ -213,8 +204,8 @@ class Commands:
 			es("The clipboard is not a valid " + choose(isLeo,"Leo","MORE") + " file")
 	#@-body
 	#@-node:3::pasteOutline
-	#@-node:7::Cut & Paste Outlines
-	#@+node:8::Drawing Utilities
+	#@-node:6::Cut & Paste Outlines
+	#@+node:7::Drawing Utilities
 	#@+node:1::beginUpdate
 	#@+body
 	def beginUpdate(self):
@@ -262,8 +253,8 @@ class Commands:
 	Repaint = redraw
 	#@-body
 	#@-node:5::redraw & repaint
-	#@-node:8::Drawing Utilities
-	#@+node:9::Edit Body Text
+	#@-node:7::Drawing Utilities
+	#@+node:8::Edit Body Text
 	#@+node:1::convertAllBlanks
 	#@+body
 	def convertAllBlanks (self):
@@ -771,8 +762,8 @@ class Commands:
 		c.recolor() # 7/5/02
 	#@-body
 	#@-node:14::updateBodyPane (handles undo)
-	#@-node:9::Edit Body Text
-	#@+node:10::Enabling Menu Items (Commands)
+	#@-node:8::Edit Body Text
+	#@+node:9::Enabling Menu Items (Commands)
 	#@+node:1::canContractAllHeadlines
 	#@+body
 	def canContractAllHeadlines (self):
@@ -1138,8 +1129,8 @@ class Commands:
 		return false
 	#@-body
 	#@-node:27::canUnmarkAll
-	#@-node:10::Enabling Menu Items (Commands)
-	#@+node:11::Expand & Contract
+	#@-node:9::Enabling Menu Items (Commands)
+	#@+node:10::Expand & Contract
 	#@+node:1::Commands
 	#@+node:1::contractAllHeadlines
 	#@+body
@@ -1326,8 +1317,8 @@ class Commands:
 	#@-body
 	#@-node:3::expandToLevel
 	#@-node:2::Utilities
-	#@-node:11::Expand & Contract
-	#@+node:12::Getters & Setters
+	#@-node:10::Expand & Contract
+	#@+node:11::Getters & Setters
 	#@+node:1::c.currentVnode
 	#@+body
 	# Compatibility with scripts
@@ -1419,8 +1410,8 @@ class Commands:
 	
 	#@-body
 	#@-node:7::setChanged
-	#@-node:12::Getters & Setters
-	#@+node:13::Insert, Delete & Clone (Commands)
+	#@-node:11::Getters & Setters
+	#@+node:12::Insert, Delete & Clone (Commands)
 	#@+node:1::c.checkMoveWithParentWithWarning
 	#@+body
 	# Returns false if any node of tree is a clone of parent or any of parents ancestors.
@@ -1640,8 +1631,8 @@ class Commands:
 			return true
 	#@-body
 	#@-node:8::validateOutline
-	#@-node:13::Insert, Delete & Clone (Commands)
-	#@+node:14::Mark & Unmark & goto
+	#@-node:12::Insert, Delete & Clone (Commands)
+	#@+node:13::Mark & Unmark & goto
 	#@+node:1::goToNextDirtyHeadline
 	#@+body
 	def goToNextDirtyHeadline (self):
@@ -1831,8 +1822,8 @@ class Commands:
 		c.endUpdate()
 	#@-body
 	#@-node:11::unmarkAll
-	#@-node:14::Mark & Unmark & goto
-	#@+node:15::Moving, Dragging, Promote, Demote, Sort (commands)
+	#@-node:13::Mark & Unmark & goto
+	#@+node:14::Moving, Dragging, Promote, Demote, Sort (commands)
 	#@+node:1::c.dragAfter
 	#@+body
 	def dragAfter(self,v,after):
@@ -2253,8 +2244,8 @@ class Commands:
 		c.updateSyntaxColorer(clone) # Dragging can change syntax coloring.
 	#@-body
 	#@-node:12::c.dragCloneAfter
-	#@-node:15::Moving, Dragging, Promote, Demote, Sort (commands)
-	#@+node:16::Selecting & Updating (commands)
+	#@-node:14::Moving, Dragging, Promote, Demote, Sort (commands)
+	#@+node:15::Selecting & Updating (commands)
 	#@+node:1::editVnode (calls tree.editLabel)
 	#@+body
 	# Selects v: sets the focus to v and edits v.
@@ -2365,8 +2356,8 @@ class Commands:
 	
 	#@-body
 	#@-node:8::selectVnodeWithEditing
-	#@-node:16::Selecting & Updating (commands)
-	#@+node:17::Syntax coloring interface
+	#@-node:15::Selecting & Updating (commands)
+	#@+node:16::Syntax coloring interface
 	#@+body
 	#@+at
 	#  These routines provide a convenient interface to the syntax colorer.
@@ -2381,7 +2372,7 @@ class Commands:
 	
 	#@-body
 	#@-node:1::updateSyntaxColorer
-	#@-node:17::Syntax coloring interface
+	#@-node:16::Syntax coloring interface
 	#@-others
 #@-body
 #@-node:0::@file leoCommands.py

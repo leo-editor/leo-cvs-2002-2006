@@ -266,24 +266,14 @@ class tnode:
 			self.gnx = gnx
 	#@-body
 	#@-node:2::t.__init__
-	#@+node:3::t.__del__
-	#@+body
-	if 0: # Interferes with the garbage collector!!
-		def __del__ (self):
-		
-			# Can't trace while destroying.
-			# print "t.__del__"
-			pass
-	#@-body
-	#@-node:3::t.__del__
-	#@+node:4::t.destroy
+	#@+node:3::t.destroy
 	#@+body
 	def destroy (self):
 	
 		self.joinHead = None
 	#@-body
-	#@-node:4::t.destroy
-	#@+node:5::Getters
+	#@-node:3::t.destroy
+	#@+node:4::Getters
 	#@+node:1::t.getGnx
 	#@+body
 	def getGnx(self):
@@ -342,8 +332,8 @@ class tnode:
 	#@-body
 	#@-node:3::isVisited
 	#@-node:4::Status bits
-	#@-node:5::Getters
-	#@+node:6::Setters
+	#@-node:4::Getters
+	#@+node:5::Setters
 	#@+node:1::Setting body text
 	#@+node:1::saveBodyPaneToTnode
 	#@+body
@@ -445,7 +435,7 @@ class tnode:
 		self.joinHead = v
 	#@-body
 	#@-node:5::setJoinHead
-	#@-node:6::Setters
+	#@-node:5::Setters
 	#@-others
 #@-body
 #@-node:3::class tnode
@@ -513,19 +503,7 @@ class vnode:
 			self.commands.tree.vnode_alloc_list.append(self)
 	#@-body
 	#@-node:2::v.__init__
-	#@+node:3::v.__del__
-	#@+body
-	if 0: # Interferes with the garbage collector!!
-		def __del__ (self):
-		
-			# Can't trace while destroying.
-			# print "v.__del__" + self
-			try:
-				self.icon_id = None
-			except: pass
-	#@-body
-	#@-node:3::v.__del__
-	#@+node:4::v.__repr__ & v.__str__
+	#@+node:3::v.__repr__ & v.__str__
 	#@+body
 	def __repr__ (self):
 	
@@ -535,8 +513,8 @@ class vnode:
 	
 		return "<v %d:%s>" % (id(self),`self.mHeadString`)
 	#@-body
-	#@-node:4::v.__repr__ & v.__str__
-	#@+node:5::v.__cmp__ (not used)
+	#@-node:3::v.__repr__ & v.__str__
+	#@+node:4::v.__cmp__ (not used)
 	#@+body
 	if 0: # not used
 		def __cmp__(self,other):
@@ -544,8 +522,8 @@ class vnode:
 			trace(`self` + "," + `other`)
 			return not (self is other) # Must return 0, 1 or -1
 	#@-body
-	#@-node:5::v.__cmp__ (not used)
-	#@+node:6::v.destroy
+	#@-node:4::v.__cmp__ (not used)
+	#@+node:5::v.destroy
 	#@+body
 	#@+at
 	#  This routine immediately removes all links from this node to other 
@@ -568,8 +546,8 @@ class vnode:
 		if 0: # These no longer exist
 			self.box_id = self.icon_id = self.edit_text_id = None
 	#@-body
-	#@-node:6::v.destroy
-	#@+node:7::v.Callbacks (handles event hooks)
+	#@-node:5::v.destroy
+	#@+node:6::v.Callbacks (handles event hooks)
 	#@+body
 	#@+at
 	#  These callbacks are vnode methods so we can pass the vnode back to the 
@@ -739,8 +717,8 @@ class vnode:
 	
 	#@-body
 	#@-node:10::OnIconDoubleClick
-	#@-node:7::v.Callbacks (handles event hooks)
-	#@+node:8::Comparisons (vnode)
+	#@-node:6::v.Callbacks (handles event hooks)
+	#@+node:7::Comparisons (vnode)
 	#@+node:1::afterHeadlineMatch
 	#@+body
 	# 12/03/02: We now handle @file options here.
@@ -888,8 +866,8 @@ class vnode:
 		return p == h[0:len(p)]
 	#@-body
 	#@-node:7::matchHeadline
-	#@-node:8::Comparisons (vnode)
-	#@+node:9::File Conversion (vnode)
+	#@-node:7::Comparisons (vnode)
+	#@+node:8::File Conversion (vnode)
 	#@+node:1::convertTreeToString
 	#@+body
 	# Converts the outline to a string in "MORE" format
@@ -966,8 +944,8 @@ class vnode:
 			return string.join(list,'')
 	#@-body
 	#@-node:3::v.moreBody
-	#@-node:9::File Conversion (vnode)
-	#@+node:10::Getters
+	#@-node:8::File Conversion (vnode)
+	#@+node:9::Getters
 	#@+node:1::bodyString
 	#@+body
 	# Compatibility routine for scripts
@@ -1349,8 +1327,8 @@ class vnode:
 	#@-body
 	#@-node:10::visNext
 	#@-node:11::Structure Links
-	#@-node:10::Getters
-	#@+node:11::Setters
+	#@-node:9::Getters
+	#@+node:10::Setters
 	#@+node:1::Head and body text
 	#@+node:1::appendStringToBody
 	#@+body
@@ -1789,8 +1767,8 @@ class vnode:
 			# Don't set the dirty bit: it would just be annoying.
 	#@-body
 	#@-node:7::trimTrailingLines
-	#@-node:11::Setters
-	#@+node:12::Moving, Inserting, Deleting, Cloning, Sorting (vnode)
+	#@-node:10::Setters
+	#@+node:11::Moving, Inserting, Deleting, Cloning, Sorting (vnode)
 	#@+node:1::Entry Points (vnode)
 	#@+node:1::doDelete
 	#@+body
@@ -2533,7 +2511,7 @@ class vnode:
 	#@-body
 	#@-node:16::unjoinTree
 	#@-node:3::Private helper functions
-	#@-node:12::Moving, Inserting, Deleting, Cloning, Sorting (vnode)
+	#@-node:11::Moving, Inserting, Deleting, Cloning, Sorting (vnode)
 	#@-others
 #@-body
 #@-node:4::class vnode

@@ -111,18 +111,7 @@ class leoTree:
 
 	#@+others
 	#@+node:3::Birth & death
-	#@+node:1::tree.__del__
-	#@+body
-	if 0: # Interferes with the garbage collector!!
-		def __del__ (self):
-		
-			# Can't trace while destroying.
-			print "tree.__del__"
-			self.deleteBindings()
-			pass
-	#@-body
-	#@-node:1::tree.__del__
-	#@+node:2::tree.__init__
+	#@+node:1::tree.__init__
 	#@+body
 	def __init__(self,commands,canvas):
 	
@@ -168,8 +157,8 @@ class leoTree:
 		# Context menu
 		self.popupMenu = None
 	#@-body
-	#@-node:2::tree.__init__
-	#@+node:3::tree.deleteBindings
+	#@-node:1::tree.__init__
+	#@+node:2::tree.deleteBindings
 	#@+body
 	# This code is when redrawing the screen to delete the old bindings.
 	# 4/20/03: I now realize that calling this from __del__ was useless: __del__ would never be called!
@@ -194,8 +183,8 @@ class leoTree:
 			self.bindings = []
 	
 	#@-body
-	#@-node:3::tree.deleteBindings
-	#@+node:4::tree.destroy
+	#@-node:2::tree.deleteBindings
+	#@+node:3::tree.destroy
 	#@+body
 	def destroy (self):
 	
@@ -223,7 +212,7 @@ class leoTree:
 		self.rootVnode = None
 		self.topVnode = None
 	#@-body
-	#@-node:4::tree.destroy
+	#@-node:3::tree.destroy
 	#@-node:3::Birth & death
 	#@+node:4::Drawing
 	#@+node:1::About drawing and updating
