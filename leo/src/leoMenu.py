@@ -220,12 +220,13 @@ class leoMenu:
 			("Sort Childre&n",None,c.sortChildren), # Conflicted with Hoist.
 			("&Sort Siblings","Alt-A",c.sortSiblings),
 			("Chec&k Outline",None,c.checkOutline),
+			("Du&mp Outline",None,c.dumpOutline),
 			("-",None,None),
 			("&Hoist",None,c.hoist),
 			("D&e-Hoist",None,f.c.dehoist),
 			("-",None,None))
 			
-		# Ampersand bindings:  c,d,e,h,i,k,n,o,p,s,u
+		# Ampersand bindings:  c,d,e,h,i,k,m,n,o,p,s,u
 		#@nonl
 		#@-node:<< define outlineMenuTopMenuTable >>
 		#@nl

@@ -2391,12 +2391,6 @@ class baseCommands:
 		c = self ; count = 1 ; errors = 0 ; full = true
 		if full and not unittest:
 			g.es("all tests enabled: this may take awhile",color="blue")
-			
-		if not unittest:
-			if 0: # Dump all nodes in the outline.
-				p = c.rootPosition()
-				for p in p.allNodes_iter():
-					p.dump()
 	
 		try:
 			p = c.rootPosition()
@@ -2557,6 +2551,17 @@ class baseCommands:
 		return errors
 	#@nonl
 	#@-node:c.checkOutline
+	#@+node:c.dumpOutline
+	def dumpOutline (self):
+		
+		""" Dump all nodes in the outline."""
+		
+		c = self
+	
+		for p in c.allNodes_iter():
+			p.dump()
+	#@nonl
+	#@-node:c.dumpOutline
 	#@+node:Hoist & dehoist & enablers
 	def dehoist(self):
 	
