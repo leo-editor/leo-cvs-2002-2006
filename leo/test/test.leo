@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="2185" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="2186" clone_windows="0"/>
 <globals body_outline_ratio="0.5">
 	<global_window_position top="75" left="303" height="835" width="843"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
@@ -2746,7 +2746,8 @@
 </v>
 <v t="T2183" tnodeList="2183"><vh>@file-nosent c:\prog\leoCVS\.pycheckrc</vh></v>
 <v t="T2184"><vh>Bracket matching</vh></v>
-<v t="T2185" a="V"><vh>encoding script</vh></v>
+<v t="T2185"><vh>encoding script</vh></v>
+<v t="T2186" a="V"><vh>elisp colorizing</vh></v>
 </vnodes>
 <tnodes>
 <t tx="T1">@color
@@ -34092,5 +34093,10 @@ If NOERROR is not nil, do not raise error when the module is not found."
 <t tx="T2185">from leoGlobals import *
 es(app.tkEncoding)
 es(app.config.new_leo_file_encoding)</t>
+<t tx="T2186">@language elisp
+@color
+
+(defun defconst defvar abc 'a "abc
+should be multiline" cons cdr car t nil)</t>
 </tnodes>
 </leo_file>
