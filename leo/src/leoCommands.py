@@ -3302,7 +3302,7 @@ class baseCommands:
 		back = v.visBack()
 		if not back: return
 		back2 = back.visBack()
-		if v in back2.t.joinList:
+		if back2 and v in back2.t.joinList:
 			# 1/26/04: A weird special case: just select back2.
 			c.selectVnode(back2)
 			return

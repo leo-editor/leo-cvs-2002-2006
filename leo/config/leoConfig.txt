@@ -220,8 +220,12 @@ expandtolevel1 = Alt+1
 expandtolevel8 = Alt+8
 
 [recent files]
-file1 = C:\prog\leoCVS\leo\src\LeoPy.leo
-file0 = C:\prog\leoCVS\leo\plugins\leoPlugins.leo
+file3 = C:\prog\leoCVS\leo\test\test.leo
+file2 = c:\prog\leoCvs\leo\src\LeoPy.leo
+file1 = c:\prog\leoCvs\leo\plugins\leoPlugins.leo
+file0 = c:\prog\leoCvs\leo\doc\LeoDocs.leo
+file5 = C:\Documents and Settings\default\My Documents\ekr.leo
+file4 = C:/Documents and Settings/default/Desktop/newButtons.leo
 
 [find/change options]
 mark_changes = 0
@@ -235,7 +239,7 @@ batch = 0
 search_headline = 0
 script_change = 0
 search_body = 1
-find_string = c.frame.tree.updateCount == 0
+find_string = readOpenFile
 pattern_match = 0
 wrap = 0
 mark_finds = 0
