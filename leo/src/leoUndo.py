@@ -53,7 +53,7 @@ class baseUndoer:
         u.debug_print = False # True: enable print statements in debug code.
     
         u.granularity = c.config.getString('undo_granularity')
-        if u.granularity: u.granularity.lower()
+        if u.granularity: u.granularity = u.granularity.lower()
         if u.granularity not in ('node','line','word','char'):
             u.granularity = 'line'
         # g.trace('undoer',u.granularity)
