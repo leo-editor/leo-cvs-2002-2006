@@ -181,7 +181,7 @@ class LeoApp:
 		
 		a = self
 	
-		for dict in self.openWithFiles:
+		for dict in self.openWithFiles[:]: # 7/10/03.
 			a.destroyOpenWithFileWithDict(dict)
 			
 		# Delete the list so the gc can recycle Leo windows!
