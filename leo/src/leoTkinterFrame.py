@@ -849,10 +849,10 @@ class leoTkinterFrame (leoFrame.leoFrame):
     def setWrap (self,p):
         
         c = self.c
-        dict = g.scanDirectives(c,p)
-        if dict != None:
+        theDict = g.scanDirectives(c,p)
+        if theDict != None:
             # 8/30/03: Add scroll bars if we aren't wrapping.
-            wrap = dict.get("wrap")
+            wrap = theDict.get("wrap")
             if wrap:
                 self.bodyCtrl.configure(wrap="word")
                 self.bodyXBar.pack_forget()

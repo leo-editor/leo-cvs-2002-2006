@@ -671,7 +671,7 @@ class leoMenu:
                 #@        << define dict of Tk bind names >>
                 #@+node:ekr.20031218072017.2100:<< define dict of Tk bind names >>
                 # These are defined at http://tcl.activestate.com/man/tcl8.4/TkCmd/keysyms.htm.
-                dict = {
+                theDict = {
                     "!" : "exclam",
                     '"' : "quotedbl",
                     "#" : "numbersign",
@@ -707,15 +707,15 @@ class leoMenu:
                 #@nonl
                 #@-node:ekr.20031218072017.2100:<< define dict of Tk bind names >>
                 #@nl
-                if ch in dict.keys():
-                    bind_last = dict[ch]
+                if ch in theDict.keys():
+                    bind_last = theDict[ch]
         elif len(last) > 0:
             #@    << define dict of special names >>
             #@+node:ekr.20031218072017.2101:<< define dict of special names >>
             # These keys are simply made-up names.  The menu_bind values are known to Tk.
             # Case is not significant in the keys.
             
-            dict = {
+            theDict = {
                 "bksp"    : ("BackSpace","BkSp"),
                 "esc"     : ("Escape","Esc"),
                 # Arrow keys...
@@ -749,8 +749,8 @@ class leoMenu:
             #@-node:ekr.20031218072017.2101:<< define dict of special names >>
             #@nl
             last2 = string.lower(last)
-            if last2 in dict.keys():
-                bind_last,menu_last = dict[last2]
+            if last2 in theDict.keys():
+                bind_last,menu_last = theDict[last2]
         #@nonl
         #@-node:ekr.20031218072017.2099:<< canonicalize the last field >>
         #@nl

@@ -345,8 +345,8 @@ class baseCommands:
                 #@            << set ext based on the present language >>
                 #@+node:ekr.20031218072017.2824:<< set ext based on the present language >>
                 if not ext:
-                    dict = g.scanDirectives(c)
-                    language = dict.get("language")
+                    theDict = g.scanDirectives(c)
+                    language = theDict.get("language")
                     ext = g.app.language_extension_dict.get(language)
                     # print language,ext
                     if ext == None:
@@ -361,14 +361,14 @@ class baseCommands:
                 #@nl
                 #@            << create or reopen temp file, testing for conflicting changes >>
                 #@+node:ekr.20031218072017.2825:<< create or reopen temp file, testing for conflicting changes >>
-                dict = None ; path = None
+                theDict = None ; path = None
                 #@<< set dict and path if a temp file already refers to v.t >>
                 #@+node:ekr.20031218072017.2826:<<set dict and path if a temp file already refers to v.t >>
                 searchPath = c.openWithTempFilePath(v,ext)
                 
                 if g.os_path_exists(searchPath):
-                    for dict in g.app.openWithFiles:
-                        if v == dict.get("v") and searchPath == dict.get("path"):
+                    for theDict in g.app.openWithFiles:
+                        if v == theDict.get("v") and searchPath == theDict.get("path"):
                             path = searchPath
                             break
                 #@-node:ekr.20031218072017.2826:<<set dict and path if a temp file already refers to v.t >>
@@ -388,12 +388,12 @@ class baseCommands:
                     #@-at
                     #@@c
                     
-                    encoding = dict.get("encoding")
-                    old_body = dict.get("body")
+                    encoding = theDict.get("encoding")
+                    old_body = theDict.get("body")
                     new_body = v.bodyString()
                     new_body = g.toEncodedString(new_body,encoding,reportErrors=True)
                     
-                    old_time = dict.get("time")
+                    old_time = theDict.get("time")
                     try:
                         new_time = g.os_path_getmtime(path)
                     except:
@@ -489,8 +489,8 @@ class baseCommands:
             theFile = open(path,"w")
             # 3/7/03: convert s to whatever encoding is in effect.
             s = v.bodyString()
-            dict = g.scanDirectives(c,p=v)
-            encoding = dict.get("encoding",None)
+            theDict = g.scanDirectives(c,p=v)
+            encoding = theDict.get("encoding",None)
             if encoding == None:
                 encoding = g.app.config.default_derived_file_encoding
             s = g.toEncodedString(s,encoding,reportErrors=True) 
@@ -501,7 +501,7 @@ class baseCommands:
             except: time = None
             # g.es("time: " + str(time))
             # 4/22/03: add body and encoding entries to dict for later comparisons.
-            dict = {"body":s, "c":c, "encoding":encoding, "f":theFile, "path":path, "time":time, "v":v}
+            theDict = {"body":s, "c":c, "encoding":encoding, "f":theFile, "path":path, "time":time, "v":v}
             #@        << remove previous entry from app.openWithFiles if it exists >>
             #@+node:ekr.20031218072017.2831:<< remove previous entry from app.openWithFiles if it exists >>
             for d in g.app.openWithFiles[:]: # 6/30/03
@@ -513,7 +513,7 @@ class baseCommands:
             #@-node:ekr.20031218072017.2831:<< remove previous entry from app.openWithFiles if it exists >>
             #@afterref
  # 4/22/03
-            g.app.openWithFiles.append(dict)
+            g.app.openWithFiles.append(theDict)
             return path
         except:
             theFile = None
@@ -1700,8 +1700,8 @@ class baseCommands:
             c.notValidInBatchMode("Convert All Blanks")
             return
         next = v.nodeAfterTree()
-        dict = g.scanDirectives(c)
-        tabWidth  = dict.get("tabwidth")
+        theDict = g.scanDirectives(c)
+        tabWidth  = theDict.get("tabwidth")
         # Create copy for undo.
         v_copy = c.undoer.saveTree(v)
         oldText = body.getAllText()
@@ -1744,8 +1744,8 @@ class baseCommands:
             c.notValidInBatchMode("Convert All Tabs")
             return
         next = v.nodeAfterTree()
-        dict = g.scanDirectives(c)
-        tabWidth  = dict.get("tabwidth")
+        theDict = g.scanDirectives(c)
+        tabWidth  = theDict.get("tabwidth")
         # Create copy for undo.
         v_copy = c.undoer.saveTree(v)
         oldText = body.getAllText()
@@ -1793,8 +1793,8 @@ class baseCommands:
         result = [] ; changed = False
     
         # Use the relative @tabwidth, not the global one.
-        dict = g.scanDirectives(c)
-        tabWidth  = dict.get("tabwidth")
+        theDict = g.scanDirectives(c)
+        tabWidth  = theDict.get("tabwidth")
         if not tabWidth: return False
     
         for line in lines:
@@ -1823,8 +1823,8 @@ class baseCommands:
         result = [] ; changed = False
         
         # Use the relative @tabwidth, not the global one.
-        dict = g.scanDirectives(c)
-        tabWidth  = dict.get("tabwidth")
+        theDict = g.scanDirectives(c)
+        tabWidth  = theDict.get("tabwidth")
         if not tabWidth: return False
     
         for line in lines:
@@ -2303,9 +2303,9 @@ class baseCommands:
     
         #@    << compute vars for reformatParagraph >>
         #@+node:ekr.20031218072017.1834:<< compute vars for reformatParagraph >>
-        dict = g.scanDirectives(c)
-        pageWidth = dict.get("pagewidth")
-        tabWidth  = dict.get("tabwidth")
+        theDict = g.scanDirectives(c)
+        pageWidth = theDict.get("pagewidth")
+        tabWidth  = theDict.get("tabwidth")
         
         original = body.getAllText()
         oldSel   = body.getTextSelection()

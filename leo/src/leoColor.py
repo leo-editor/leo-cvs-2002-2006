@@ -1945,30 +1945,30 @@ class baseColorizer:
         for p in p.self_and_parents_iter():
             # g.trace(p)
             s = p.v.t.bodyString
-            dict = g.get_directives_dict(s)
+            theDict = g.get_directives_dict(s)
             #@        << Test for @comment or @language >>
             #@+node:ekr.20031218072017.1378:<< Test for @comment or @language >>
             # 10/17/02: @comment and @language may coexist in the same node.
             
-            if dict.has_key("comment"):
-                k = dict["comment"]
+            if theDict.has_key("comment"):
+                k = theDict["comment"]
                 self.comment_string = s[k:]
             
-            if dict.has_key("language"):
-                i = dict["language"]
+            if theDict.has_key("language"):
+                i = theDict["language"]
                 language,junk,junk,junk = g.set_language(s,i)
                 self.language = language # 2/2/03
             
-            if dict.has_key("comment") or dict.has_key("language"):
+            if theDict.has_key("comment") or theDict.has_key("language"):
                 break
             #@nonl
             #@-node:ekr.20031218072017.1378:<< Test for @comment or @language >>
             #@nl
             #@        << Test for @root, @root-doc or @root-code >>
             #@+node:ekr.20031218072017.1379:<< Test for @root, @root-doc or @root-code >>
-            if dict.has_key("root") and not self.rootMode:
+            if theDict.has_key("root") and not self.rootMode:
             
-                k = dict["root"]
+                k = theDict["root"]
                 if g.match_word(s,k,"@root-code"):
                     self.rootMode = "code"
                 elif g.match_word(s,k,"@root-doc"):
@@ -2056,10 +2056,10 @@ class baseColorizer:
         for p in p.self_and_parents_iter():
             # g.trace(p)
             s = p.v.t.bodyString
-            dict = g.get_directives_dict(s)
-            no_color = dict.has_key("nocolor")
-            color = dict.has_key("color")
-            kill_color = dict.has_key("killcolor")
+            theDict = g.get_directives_dict(s)
+            no_color = theDict.has_key("nocolor")
+            color = theDict.has_key("color")
+            kill_color = theDict.has_key("killcolor")
             # A killcolor anywhere disables coloring.
             if kill_color:
                 val = False ; self.killFlag = True ; break

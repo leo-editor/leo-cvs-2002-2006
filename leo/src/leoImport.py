@@ -2950,8 +2950,8 @@ class baseLeoImportCommands:
     def setEncoding (self):
         
         # scanDirectives checks the encoding: may return None.
-        dict = g.scanDirectives(self.c)
-        encoding = dict.get("encoding")
+        theDict = g.scanDirectives(self.c)
+        encoding = theDict.get("encoding")
         if encoding and g.isValidEncoding(encoding):
             self.encoding = encoding
         else:

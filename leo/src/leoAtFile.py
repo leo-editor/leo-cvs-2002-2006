@@ -488,13 +488,13 @@ class baseAtFile:
             
         for p in p.self_and_parents_iter():
             s = p.v.t.bodyString
-            dict = g.get_directives_dict(s)
-            if dict.has_key("path"):
+            theDict = g.get_directives_dict(s)
+            if theDict.has_key("path"):
                 #@            << handle @path >>
                 #@+node:ekr.20031218072017.2629:<< handle @path >> in df.scanDeafaultDirectory in leoAtFile.py
                 # We set the current director to a path so future writes will go to that directory.
                 
-                k = dict["path"]
+                k = theDict["path"]
                 #@<< compute relative path from s[k:] >>
                 #@+node:ekr.20031218072017.2630:<< compute relative path from s[k:] >>
                 j = i = k + len("@path")
@@ -2154,14 +2154,14 @@ class baseOldDerivedFile:
         old = {}
         for p in p.self_and_parents_iter():
             s = p.v.t.bodyString
-            dict = g.get_directives_dict(s)
+            theDict = g.get_directives_dict(s)
             #@        << Test for @path >>
             #@+node:ekr.20031218072017.2394:<< Test for @path >>
             # We set the current director to a path so future writes will go to that directory.
             
-            if not self.default_directory and not old.has_key("path") and dict.has_key("path"):
+            if not self.default_directory and not old.has_key("path") and theDict.has_key("path"):
             
-                k = dict["path"]
+                k = theDict["path"]
                 #@    << compute relative path from s[k:] >>
                 #@+node:ekr.20031218072017.2395:<< compute relative path from s[k:] >>
                 j = i = k + len("@path")
@@ -2205,9 +2205,9 @@ class baseOldDerivedFile:
             #@nl
             #@        << Test for @encoding >>
             #@+node:ekr.20031218072017.2391:<< Test for @encoding >>
-            if not old.has_key("encoding") and dict.has_key("encoding"):
+            if not old.has_key("encoding") and theDict.has_key("encoding"):
                 
-                e = g.scanAtEncodingDirective(s,dict)
+                e = g.scanAtEncodingDirective(s,theDict)
                 if e:
                     self.encoding = e
             #@nonl
@@ -2218,14 +2218,14 @@ class baseOldDerivedFile:
             # 10/17/02: @language and @comment may coexist in @file trees.
             # For this to be effective the @comment directive should follow the @language directive.
             
-            if not old.has_key("comment") and dict.has_key("comment"):
-                k = dict["comment"]
+            if not old.has_key("comment") and theDict.has_key("comment"):
+                k = theDict["comment"]
                 # 11/14/02: Similar to fix below.
                 delim1, delim2, delim3 = g.set_delims_from_string(s[k:])
             
             # Reversion fix: 12/06/02: We must use elif here, not if.
-            elif not old.has_key("language") and dict.has_key("language"):
-                k = dict["language"]
+            elif not old.has_key("language") and theDict.has_key("language"):
+                k = theDict["language"]
                 # 11/14/02: Fix bug reported by J.M.Gilligan.
                 self.language,delim1,delim2,delim3 = g.set_language(s,k)
             #@nonl
@@ -2234,25 +2234,25 @@ class baseOldDerivedFile:
             #@        << Test for @header and @noheader >>
             #@+node:ekr.20031218072017.2392:<< Test for @header and @noheader >>
             # EKR: 10/10/02: perform the sames checks done by tangle.scanAllDirectives.
-            if dict.has_key("header") and dict.has_key("noheader"):
+            if theDict.has_key("header") and theDict.has_key("noheader"):
                 g.es("conflicting @header and @noheader directives")
             #@nonl
             #@-node:ekr.20031218072017.2392:<< Test for @header and @noheader >>
             #@nl
             #@        << Test for @lineending >>
             #@+node:ekr.20031218072017.2393:<< Test for @lineending >>
-            if not old.has_key("lineending") and dict.has_key("lineending"):
+            if not old.has_key("lineending") and theDict.has_key("lineending"):
                 
-                lineending = g.scanAtLineendingDirective(s,dict)
+                lineending = g.scanAtLineendingDirective(s,theDict)
                 if lineending:
                     self.output_newline = lineending
             #@-node:ekr.20031218072017.2393:<< Test for @lineending >>
             #@nl
             #@        << Test for @pagewidth >>
             #@+node:ekr.20031218072017.2397:<< Test for @pagewidth >>
-            if dict.has_key("pagewidth") and not old.has_key("pagewidth"):
+            if theDict.has_key("pagewidth") and not old.has_key("pagewidth"):
                 
-                w = g.scanAtPagewidthDirective(s,dict,issue_error_flag=True)
+                w = g.scanAtPagewidthDirective(s,theDict,issue_error_flag=True)
                 if w and w > 0:
                     self.page_width = w
             #@nonl
@@ -2260,15 +2260,15 @@ class baseOldDerivedFile:
             #@nl
             #@        << Test for @tabwidth >>
             #@+node:ekr.20031218072017.2398:<< Test for @tabwidth >>
-            if dict.has_key("tabwidth") and not old.has_key("tabwidth"):
+            if theDict.has_key("tabwidth") and not old.has_key("tabwidth"):
                 
-                w = g.scanAtTabwidthDirective(s,dict,issue_error_flag=True)
+                w = g.scanAtTabwidthDirective(s,theDict,issue_error_flag=True)
                 if w and w != 0:
                     self.tab_width = w
             
             #@-node:ekr.20031218072017.2398:<< Test for @tabwidth >>
             #@nl
-            old.update(dict)
+            old.update(theDict)
         #@    << Set current directory >>
         #@+node:ekr.20031218072017.2399:<< Set current directory >>
         # This code is executed if no valid absolute path was specified in the @file node or in an @path directive.

@@ -235,8 +235,8 @@ class LeoApp:
         
         # We can't use g.es here because the log stream no longer exists.
     
-        for dict in self.openWithFiles[:]: # 7/10/03.
-            g.app.destroyOpenWithFileWithDict(dict)
+        for theDict in self.openWithFiles[:]: # 7/10/03.
+            g.app.destroyOpenWithFileWithDict(theDict)
             
         # Delete the list so the gc can recycle Leo windows!
         g.app.openWithFiles = []
@@ -250,15 +250,15 @@ class LeoApp:
         # Make a copy of the list: it may change in the loop.
         openWithFiles = g.app.openWithFiles
     
-        for dict in openWithFiles[:]: # 6/30/03
-            c = dict.get("c")
+        for theDict in openWithFiles[:]: # 6/30/03
+            c = theDict.get("c")
             if c.frame == frame:
-                g.app.destroyOpenWithFileWithDict(dict)
+                g.app.destroyOpenWithFileWithDict(theDict)
     #@-node:ekr.20031218072017.2613:app.destroyOpenWithFilesForFrame
     #@+node:ekr.20031218072017.2614:app.destroyOpenWithFileWithDict
-    def destroyOpenWithFileWithDict (self,dict):
+    def destroyOpenWithFileWithDict (self,theDict):
         
-        path = dict.get("path")
+        path = theDict.get("path")
         if path and g.os_path_exists(path):
             try:
                 os.remove(path)
@@ -266,8 +266,8 @@ class LeoApp:
             except:
                 print "can not delete temp file:", path
                 
-        # Remove dict from the list so the gc can recycle the Leo window!
-        g.app.openWithFiles.remove(dict)
+        # Remove theDict from the list so the gc can recycle the Leo window!
+        g.app.openWithFiles.remove(theDict)
     #@nonl
     #@-node:ekr.20031218072017.2614:app.destroyOpenWithFileWithDict
     #@+node:ekr.20031218072017.2615:app.destroyWindow

@@ -1003,9 +1003,9 @@ class baseFileCommands:
             elif self.matchTag("descendentTnodeUnknownAttributes="):
                 # New for 4.2
                 s = self.getDqString()
-                dict = self.getDescendentUnknownAttributes(s)
-                if dict:
-                    self.descendentUnknownAttributesDictList.append(dict)
+                theDict = self.getDescendentUnknownAttributes(s)
+                if theDict:
+                    self.descendentUnknownAttributesDictList.append(theDict)
             elif self.matchTag("expanded="): # New in 4.2
                 s = self.getDqString()
                 self.descendentExpandedList.extend(self.getDescendentAttributes(s,tag="expanded"))

@@ -747,10 +747,10 @@ class leoTkinterTree (leoFrame.leoTree):
         
         tree = self
         
-        for dict,tag,flag in ((tree.ids,"ids",True),(tree.iconIds,"icon ids",False)):
+        for theDict,tag,flag in ((tree.ids,"ids",True),(tree.iconIds,"icon ids",False)):
             print '=' * 60
             print ; print "%s..." % tag
-            keys = dict.keys()
+            keys = theDict.keys()
             keys.sort()
             for key in keys:
                 p = tree.ids.get(key)
@@ -760,13 +760,13 @@ class leoTkinterTree (leoFrame.leoTree):
                     print "%3d" % key,p.headString()
             if flag and full:
                 print '-' * 40
-                values = dict.values()
+                values = theDict.values()
                 values.sort()
                 seenValues = []
                 for value in values:
                     if value not in seenValues:
                         seenValues.append(value)
-                        for item in dict.items():
+                        for item in theDict.items():
                             key,val = item
                             if val and val == value:
                                 print "%3d" % key,val.headString()  
@@ -1032,8 +1032,8 @@ class leoTkinterTree (leoFrame.leoTree):
             return h,w
         
         try:
-            for dict in iconsList:
-                h2,w2 = self.drawUserIcon(p,where,x,y,w,dict)
+            for theDict in iconsList:
+                h2,w2 = self.drawUserIcon(p,where,x,y,w,theDict)
                 h = max(h,h2) ; w += w2
         except:
             g.es_exception()
@@ -1044,38 +1044,38 @@ class leoTkinterTree (leoFrame.leoTree):
     #@nonl
     #@-node:ekr.20040803072955.46:drawUserIcons
     #@+node:ekr.20040803072955.47:drawUserIcon
-    def drawUserIcon (self,p,where,x,y,w2,dict):
+    def drawUserIcon (self,p,where,x,y,w2,theDict):
         
         h,w = 0,0
     
-        if where != dict.get("where","beforeHeadline"):
+        if where != theDict.get("where","beforeHeadline"):
             return h,w
             
-        # g.trace(where,x,y,dict)
+        # g.trace(where,x,y,theDict)
         
         #@    << set offsets and pads >>
         #@+node:ekr.20040803072955.48:<< set offsets and pads >>
-        xoffset = dict.get("xoffset")
+        xoffset = theDict.get("xoffset")
         try:    xoffset = int(xoffset)
         except: xoffset = 0
         
-        yoffset = dict.get("yoffset")
+        yoffset = theDict.get("yoffset")
         try:    yoffset = int(yoffset)
         except: yoffset = 0
         
-        xpad = dict.get("xpad")
+        xpad = theDict.get("xpad")
         try:    xpad = int(xpad)
         except: xpad = 0
         
-        ypad = dict.get("ypad")
+        ypad = theDict.get("ypad")
         try:    ypad = int(ypad)
         except: ypad = 0
         #@nonl
         #@-node:ekr.20040803072955.48:<< set offsets and pads >>
         #@nl
-        theType = dict.get("type")
+        theType = theDict.get("type")
         if theType == "icon":
-            s = dict.get("icon")
+            s = theDict.get("icon")
             #@        << draw the icon in string s >>
             #@+node:ekr.20040803072955.49:<< draw the icon in string s >>
             pass
@@ -1083,7 +1083,7 @@ class leoTkinterTree (leoFrame.leoTree):
             #@-node:ekr.20040803072955.49:<< draw the icon in string s >>
             #@nl
         elif theType == "file":
-            theFile = dict.get("file")
+            theFile = theDict.get("file")
             #@        << draw the icon at file >>
             #@+node:ekr.20040803072955.50:<< draw the icon at file >>
             try:
@@ -1112,7 +1112,7 @@ class leoTkinterTree (leoFrame.leoTree):
             #@-node:ekr.20040803072955.50:<< draw the icon at file >>
             #@nl
         elif theType == "url":
-            url = dict.get("url")
+            url = theDict.get("url")
             #@        << draw the icon at url >>
             #@+node:ekr.20040803072955.51:<< draw the icon at url >>
             pass
@@ -1121,8 +1121,8 @@ class leoTkinterTree (leoFrame.leoTree):
             #@nl
             
         # Allow user to specify height, width explicitly.
-        h = dict.get("height",h)
-        w = dict.get("width",w)
+        h = theDict.get("height",h)
+        w = theDict.get("width",w)
     
         return h,w
     #@nonl

@@ -561,12 +561,12 @@ class leoFrame:
     
         for p in p.self_and_parents_iter():
             s = p.v.t.bodyString
-            dict = g.get_directives_dict(s)
+            theDict = g.get_directives_dict(s)
             #@        << set w and break on @tabwidth >>
             #@+node:ekr.20031218072017.1376:<< set w and break on @tabwidth >>
-            if dict.has_key("tabwidth"):
+            if theDict.has_key("tabwidth"):
                 
-                val = g.scanAtTabwidthDirective(s,dict,issue_error_flag=False)
+                val = g.scanAtTabwidthDirective(s,theDict,issue_error_flag=False)
                 if val and val != 0:
                     w = val
                     break

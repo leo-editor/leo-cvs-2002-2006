@@ -491,7 +491,7 @@ def scanAllDirectives(self,p,scripting=False,importing=False,reading=False):
     old = {}
     for p in p.self_and_parents_iter():
         s = p.v.t.bodyString
-        dict = g.get_directives_dict(s)
+        theDict = g.get_directives_dict(s)
         << Test for @path >>
         << Test for @encoding >>
         << Test for @comment and @language >>
@@ -499,7 +499,7 @@ def scanAllDirectives(self,p,scripting=False,importing=False,reading=False):
         << Test for @lineending >>
         << Test for @pagewidth >>
         << Test for @tabwidth >>
-        old.update(dict)
+        old.update(theDict)
     << Set current directory >>
     if not importing and not reading:
         # 5/19/04: don't override comment delims when reading!
@@ -539,45 +539,45 @@ if dir and len(dir) > 0 and g.os_path_isabs(dir):
 # 10/17/02: @language and @comment may coexist in @file trees.
 # For this to be effective the @comment directive should follow the @language directive.
 
-if not old.has_key("comment") and dict.has_key("comment"):
-    k = dict["comment"]
+if not old.has_key("comment") and theDict.has_key("comment"):
+    k = theDict["comment"]
     # 11/14/02: Similar to fix below.
     delim1, delim2, delim3 = g.set_delims_from_string(s[k:])
 
 # Reversion fix: 12/06/02: We must use elif here, not if.
-elif not old.has_key("language") and dict.has_key("language"):
-    k = dict["language"]
+elif not old.has_key("language") and theDict.has_key("language"):
+    k = theDict["language"]
     # 11/14/02: Fix bug reported by J.M.Gilligan.
     self.language,delim1,delim2,delim3 = g.set_language(s,k)
 #@nonl
 #@-node:ekr.20031218072017.2390:<< Test for @comment and @language >>
 #@+node:ekr.20031218072017.2391:<< Test for @encoding >>
-if not old.has_key("encoding") and dict.has_key("encoding"):
+if not old.has_key("encoding") and theDict.has_key("encoding"):
     
-    e = g.scanAtEncodingDirective(s,dict)
+    e = g.scanAtEncodingDirective(s,theDict)
     if e:
         self.encoding = e
 #@nonl
 #@-node:ekr.20031218072017.2391:<< Test for @encoding >>
 #@+node:ekr.20031218072017.2392:<< Test for @header and @noheader >>
 # EKR: 10/10/02: perform the sames checks done by tangle.scanAllDirectives.
-if dict.has_key("header") and dict.has_key("noheader"):
+if theDict.has_key("header") and theDict.has_key("noheader"):
     g.es("conflicting @header and @noheader directives")
 #@nonl
 #@-node:ekr.20031218072017.2392:<< Test for @header and @noheader >>
 #@+node:ekr.20031218072017.2393:<< Test for @lineending >>
-if not old.has_key("lineending") and dict.has_key("lineending"):
+if not old.has_key("lineending") and theDict.has_key("lineending"):
     
-    lineending = g.scanAtLineendingDirective(s,dict)
+    lineending = g.scanAtLineendingDirective(s,theDict)
     if lineending:
         self.output_newline = lineending
 #@-node:ekr.20031218072017.2393:<< Test for @lineending >>
 #@+node:ekr.20031218072017.2394:<< Test for @path >>
 # We set the current director to a path so future writes will go to that directory.
 
-if not self.default_directory and not old.has_key("path") and dict.has_key("path"):
+if not self.default_directory and not old.has_key("path") and theDict.has_key("path"):
 
-    k = dict["path"]
+    k = theDict["path"]
     << compute relative path from s[k:] >>
     if path and len(path) > 0:
         base = g.getBaseDirectory() # returns "" on error.
@@ -617,17 +617,17 @@ else: # 9/25/02
 #@-node:ekr.20031218072017.2396:<< handle absolute path >>
 #@-node:ekr.20031218072017.2394:<< Test for @path >>
 #@+node:ekr.20031218072017.2397:<< Test for @pagewidth >>
-if dict.has_key("pagewidth") and not old.has_key("pagewidth"):
+if theDict.has_key("pagewidth") and not old.has_key("pagewidth"):
     
-    w = g.scanAtPagewidthDirective(s,dict,issue_error_flag=True)
+    w = g.scanAtPagewidthDirective(s,theDict,issue_error_flag=True)
     if w and w > 0:
         self.page_width = w
 #@nonl
 #@-node:ekr.20031218072017.2397:<< Test for @pagewidth >>
 #@+node:ekr.20031218072017.2398:<< Test for @tabwidth >>
-if dict.has_key("tabwidth") and not old.has_key("tabwidth"):
+if theDict.has_key("tabwidth") and not old.has_key("tabwidth"):
     
-    w = g.scanAtTabwidthDirective(s,dict,issue_error_flag=True)
+    w = g.scanAtTabwidthDirective(s,theDict,issue_error_flag=True)
     if w and w != 0:
         self.tab_width = w
 
@@ -832,8 +832,8 @@ def scanAllDirectives(self,p,require_path_flag,issue_error_flag):
         << Collect @first attributes >>
     for p in p.self_and_parents_iter():
         s = p.bodyString()
-        dict = g.get_directives_dict(s)
-        # g.trace("dict:",dict,p)
+        theDict = g.get_directives_dict(s)
+        # g.trace("theDict:",theDict,p)
         << Test for @comment and @language >>
         << Test for @encoding >>
         << Test for @lineending >>
@@ -843,7 +843,7 @@ def scanAllDirectives(self,p,require_path_flag,issue_error_flag):
         << Test for @root >>
         << Test for @tabwidth >>
         << Test for @header and @noheader >>
-        old.update(dict)
+        old.update(theDict)
     << Set self.tangle_directory >>
 #@nonl
 #@+node:ekr.20031218072017.1361:<< Collect @first attributes >>
@@ -872,9 +872,9 @@ while 1:
 if old.has_key("comment") or old.has_key("language"):
      pass # Do nothing more.
 
-elif dict.has_key("comment"):
+elif theDict.has_key("comment"):
 
-    i = dict["comment"]
+    i = theDict["comment"]
     delim1,delim2,delim3 = g.set_delims_from_string(s[i:])
     if delim1 or delim2:
         self.single_comment_string = delim1
@@ -886,9 +886,9 @@ elif dict.has_key("comment"):
         if issue_error_flag:
             g.es("ignoring: " + s[i:])
 
-elif dict.has_key("language"):
+elif theDict.has_key("language"):
 
-    i = dict["language"]
+    i = theDict["language"]
     language,delim1,delim2,delim3 = g.set_language(s,i)
     self.language = language
     self.single_comment_string = delim1
@@ -906,16 +906,16 @@ elif dict.has_key("language"):
     self.raw_cweb_flag = self.language == "cweb" # A new ivar.
 #@-node:ekr.20031218072017.1362:<< Test for @comment and @language >>
 #@+node:ekr.20031218072017.1363:<< Test for @encoding >>
-if not old.has_key("encoding") and dict.has_key("encoding"):
+if not old.has_key("encoding") and theDict.has_key("encoding"):
     
-    e = g.scanAtEncodingDirective(s,dict)
+    e = g.scanAtEncodingDirective(s,theDict)
     if e:
         self.encoding = e
 #@-node:ekr.20031218072017.1363:<< Test for @encoding >>
 #@+node:ekr.20031218072017.1364:<< Test for @lineending >>
-if not old.has_key("lineending") and dict.has_key("lineending"):
+if not old.has_key("lineending") and theDict.has_key("lineending"):
     
-    lineending = g.scanAtLineendingDirective(s,dict)
+    lineending = g.scanAtLineendingDirective(s,theDict)
     if lineending:
         self.output_newline = lineending
 #@-node:ekr.20031218072017.1364:<< Test for @lineending >>
@@ -925,15 +925,15 @@ if not old.has_key("lineending") and dict.has_key("lineending"):
 
 if not print_mode_changed:
     for name in ("verbose","terse","quiet","silent"):
-        if dict.has_key(name):
+        if theDict.has_key(name):
             self.print_mode = name
             print_mode_changed = True
             break
 #@-node:ekr.20031218072017.1365:<< Test for print modes directives >>
 #@+node:ekr.20031218072017.1366:<< Test for @path >> in tangleScanAllDirectives
-if require_path_flag and not old.has_key("path") and dict.has_key("path"):
+if require_path_flag and not old.has_key("path") and theDict.has_key("path"):
 
-    k = dict["path"]
+    k = theDict["path"]
     << compute dir and relative_path from s[k:] >>
     if len(dir) > 0:
         base = g.getBaseDirectory() # May return "".
@@ -982,9 +982,9 @@ else: # 11/19/02
 #@-node:ekr.20031218072017.1368:<< handle absolute @path >>
 #@-node:ekr.20031218072017.1366:<< Test for @path >> in tangleScanAllDirectives
 #@+node:ekr.20031218072017.1369:<< Test for @pagewidth >>
-if not old.has_key("pagewidth") and dict.has_key("pagewidth"):
+if not old.has_key("pagewidth") and theDict.has_key("pagewidth"):
     
-    w = g.scanAtPagewidthDirective(s,dict,issue_error_flag)
+    w = g.scanAtPagewidthDirective(s,theDict,issue_error_flag)
     if w and w > 0:
         self.page_width = w
 #@nonl
@@ -993,17 +993,17 @@ if not old.has_key("pagewidth") and dict.has_key("pagewidth"):
 @ 10/27/02: new code:  self.root may not be defined here, so any relative directory specified in the @root node will have no effect unless we have this code.
 
 @c
-if self.root_name == None and dict.has_key("root"):
+if self.root_name == None and theDict.has_key("root"):
 
-    i = dict["root"]
+    i = theDict["root"]
     # i += len("@root")
     self.setRootFromText(s[i:],issue_error_flag)
 #@nonl
 #@-node:ekr.20031218072017.1370:<< Test for @root >>
 #@+node:ekr.20031218072017.1371:<< Test for @tabwidth >>
-if not old.has_key("tabwidth") and dict.has_key("tabwidth"):
+if not old.has_key("tabwidth") and theDict.has_key("tabwidth"):
     
-    w = g.scanAtTabwidthDirective(s,dict,issue_error_flag)
+    w = g.scanAtTabwidthDirective(s,theDict,issue_error_flag)
     if w and w != 0:
         self.tab_width = w
 #@-node:ekr.20031218072017.1371:<< Test for @tabwidth >>
@@ -1011,14 +1011,14 @@ if not old.has_key("tabwidth") and dict.has_key("tabwidth"):
 if old.has_key("header") or old.has_key("noheader"):
     pass # Do nothing more.
     
-elif dict.has_key("header") and dict.has_key("noheader"):
+elif theDict.has_key("header") and theDict.has_key("noheader"):
     if issue_error_flag:
         g.es("conflicting @header and @noheader directives")
 
-elif dict.has_key("header"):
+elif theDict.has_key("header"):
     self.use_header_flag = True
 
-elif dict.has_key("noheader"):
+elif theDict.has_key("noheader"):
     self.use_header_flag = False
 #@-node:ekr.20031218072017.1372:<< Test for @header and @noheader >>
 #@+node:ekr.20031218072017.1373:<< Set self.tangle_directory >>
@@ -1080,15 +1080,15 @@ def scanForTabWidth (self,p):
 
     for p in p.self_and_parents_iter():
         s = p.v.t.bodyString
-        dict = g.get_directives_dict(s)
+        theDict = g.get_directives_dict(s)
         << set w and break on @tabwidth >>
 
     c.frame.setTabWidth(w)
 #@nonl
 #@+node:ekr.20031218072017.1376:<< set w and break on @tabwidth >>
-if dict.has_key("tabwidth"):
+if theDict.has_key("tabwidth"):
     
-    val = g.scanAtTabwidthDirective(s,dict,issue_error_flag=False)
+    val = g.scanAtTabwidthDirective(s,theDict,issue_error_flag=False)
     if val and val != 0:
         w = val
         break
@@ -1113,7 +1113,7 @@ def scanColorDirectives(self,p):
     for p in p.self_and_parents_iter():
         # g.trace(p)
         s = p.v.t.bodyString
-        dict = g.get_directives_dict(s)
+        theDict = g.get_directives_dict(s)
         << Test for @comment or @language >>
         << Test for @root, @root-doc or @root-code >>
 
@@ -1122,23 +1122,23 @@ def scanColorDirectives(self,p):
 #@+node:ekr.20031218072017.1378:<< Test for @comment or @language >>
 # 10/17/02: @comment and @language may coexist in the same node.
 
-if dict.has_key("comment"):
-    k = dict["comment"]
+if theDict.has_key("comment"):
+    k = theDict["comment"]
     self.comment_string = s[k:]
 
-if dict.has_key("language"):
-    i = dict["language"]
+if theDict.has_key("language"):
+    i = theDict["language"]
     language,junk,junk,junk = g.set_language(s,i)
     self.language = language # 2/2/03
 
-if dict.has_key("comment") or dict.has_key("language"):
+if theDict.has_key("comment") or theDict.has_key("language"):
     break
 #@nonl
 #@-node:ekr.20031218072017.1378:<< Test for @comment or @language >>
 #@+node:ekr.20031218072017.1379:<< Test for @root, @root-doc or @root-code >>
-if dict.has_key("root") and not self.rootMode:
+if theDict.has_key("root") and not self.rootMode:
 
-    k = dict["root"]
+    k = theDict["root"]
     if g.match_word(s,k,"@root-code"):
         self.rootMode = "code"
     elif g.match_word(s,k,"@root-doc"):
@@ -7820,17 +7820,17 @@ if len(last) == 1:
         bind_last = "Key-" + ch # 1-5 refer to mouse buttons, not keys.
     else:
         << define dict of Tk bind names >>
-        if ch in dict.keys():
-            bind_last = dict[ch]
+        if ch in theDict.keys():
+            bind_last = theDict[ch]
 elif len(last) > 0:
     << define dict of special names >>
     last2 = string.lower(last)
-    if last2 in dict.keys():
-        bind_last,menu_last = dict[last2]
+    if last2 in theDict.keys():
+        bind_last,menu_last = theDict[last2]
 #@nonl
 #@+node:ekr.20031218072017.2100:<< define dict of Tk bind names >>
 # These are defined at http://tcl.activestate.com/man/tcl8.4/TkCmd/keysyms.htm.
-dict = {
+theDict = {
     "!" : "exclam",
     '"' : "quotedbl",
     "#" : "numbersign",
@@ -7869,7 +7869,7 @@ dict = {
 # These keys are simply made-up names.  The menu_bind values are known to Tk.
 # Case is not significant in the keys.
 
-dict = {
+theDict = {
     "bksp"    : ("BackSpace","BkSp"),
     "esc"     : ("Escape","Esc"),
     # Arrow keys...

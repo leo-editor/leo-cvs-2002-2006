@@ -1334,9 +1334,9 @@ class importExportTestCase(unittest.TestCase):
         if self.doImport and type(val) != type([]):
             val = [val]
         self.fileName = val
-        dict = {name: val}
+        theDict = {name: val}
         g.app.unitTesting = True
-        self.gui = leoGui.unitTestGui(dict,trace=False)
+        self.gui = leoGui.unitTestGui(theDict,trace=False)
     
     #@-node:ekr.20040707140849.32:setUp
     #@+node:ekr.20040707140849.33:shortDescription
