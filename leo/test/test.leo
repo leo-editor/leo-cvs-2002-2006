@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="5921" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="5922" clone_windows="0"/>
 <globals body_outline_ratio="0.481481481481">
 	<global_window_position top="63" left="107" height="864" width="913"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
@@ -643,7 +643,7 @@
 <v t="ekr.20040723064143.3"><vh>Test error recovery when reading descendentTnodeUa's</vh></v>
 </v>
 <v t="ekr.20040327114250" tnodeList="ekr.20040327114250"><vh>@file c:\prog\test\unittest\batchTest.py</vh></v>
-<v t="ekr.20040712101754"><vh>Unit Tests</vh>
+<v t="ekr.20040712101754" a="E"><vh>Unit Tests</vh>
 <v t="ekr.20040716144017"><vh>Perfect Import tests</vh>
 <v t="ekr.20040716071029.6"><vh>@test inserting a line: no trailing newline</vh>
 <v t="ekr.20040716071856.1"><vh>-input</vh></v>
@@ -732,6 +732,8 @@
 </v>
 </v>
 <v t="ekr.20040712101754.2" a="E"><vh>Test Leo files...</vh>
+<v t="ekr.20040730181601"><vh>@test minimalLeoFile.leo</vh></v>
+<v t="ekr.20040730181610" a="TV"><vh>@test minimalLeoFile2.leo</vh></v>
 <v t="ekr.20040712101754.3"><vh>@test test.leo</vh></v>
 <v t="ekr.20040712101754.4"><vh>@test LeoPy.leo</vh></v>
 <v t="ekr.20040712101754.5"><vh>@test leoPlugins.leo</vh></v>
@@ -1086,7 +1088,7 @@
 </v>
 </v>
 </v>
-<v t="ekr.20040707081532.1" a="TV"><vh>Do @test</vh></v>
+<v t="ekr.20040707081532.1"><vh>Do @test</vh></v>
 </v>
 <v t="ekr.20040721153143"><vh>Main testing scripts</vh>
 <v t="ekr.20040721113934"><vh>runProfile</vh></v>
@@ -9406,5 +9408,19 @@ if 0:
     btags = body.bindtags()
     btags =(ctags[0],btags[0],btags[1],btags[2],btags[3])
     body.bindtags(btags)</t>
+<t tx="ekr.20040730181601">import leoGlobals as g
+import leoTest
+reload(leoTest)
+
+path = g.os_path_join(g.app.loadDir,"..","test","minimalLeoFile.leo")
+leoTest.runLeoTest(path,verbose=False,full=True)
+</t>
+<t tx="ekr.20040730181610">import leoGlobals as g
+import leoTest
+reload(leoTest)
+
+path = g.os_path_join(g.app.loadDir,"..","test","minimalLeoFile2.leo")
+leoTest.runLeoTest(path,verbose=False,full=True)
+</t>
 </tnodes>
 </leo_file>
