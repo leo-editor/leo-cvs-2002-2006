@@ -131,8 +131,8 @@ class LeoFrame:
 		self.body.bind(virtual_event_name("Paste"), self.OnPaste)
 		
 		# Handle mouse wheel in the outline pane.
-		if 0: # This crashes tcl83.dll
-			self.tree.canvas.bind("<MouseWheel>", self.OnRoll)
+		if sys.platform == "linux2": # This crashes tcl83.dll
+			self.tree.canvas.bind("<MouseWheel>", self.OnMouseWheel)
 	#@-body
 	#@-node:1:C=1:frame.__init__
 	#@+node:2:C=3:frame.__del__
@@ -1032,13 +1032,6 @@ class LeoFrame:
 			self.canvas.yview(Tkinter.SCROLL, -1, Tkinter.UNITS)
 	#@-body
 	#@-node:6:C=16:OnMouseWheel (Tomaz Ficko)
-	#@+node:7::OnRoll
-	#@+body
-	def OnRoll (self,event):
-		
-		print "OnRoll"
-	#@-body
-	#@-node:7::OnRoll
 	#@-node:13:C=12:Event handlers
 	#@+node:14:C=17:Menu enablers (Frame)
 	#@+node:1::OnMenuClick (enables and disables all menu items)
