@@ -83,7 +83,7 @@ class baseLeoFrame:
 		return self.ver[10:-1] # Strip off "$Reversion" and the trailing "$"
 	
 	def getSignOnLine (self):
-		return "Leo 4.0.3, build %s, October 25, 2003" % self.getBuildNumber()
+		return "Leo 4.0.4, build %s, October 29, 2003" % self.getBuildNumber()
 		
 	def initVersion (self):
 		self.ver = "$Revision$" # CVS will update this.
@@ -3161,8 +3161,8 @@ class baseLeoFrame:
 	#@+node:OnEndEditHeadline
 	def OnEndEditHeadline(self,event=None):
 		
-		tree = self.commands.tree
-		tree.endEditLabelCommand()
+		self.tree.endEditLabelCommand() # 10/28/03
+	#@nonl
 	#@-node:OnEndEditHeadline
 	#@+node:OnAbortEditHeadline
 	def OnAbortEditHeadline(self,event=None):
