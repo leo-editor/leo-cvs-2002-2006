@@ -1557,18 +1557,26 @@ class baseLeoImportCommands:
 	def createElispFunction (self,v,s):
 		
 		body = s
-		# trace(body)
-	
-		i = 1 # Skip the "(defun" or "(defconst" or "(defvar"
+		i = 1 # Skip the '('
 		i = skip_ws(s,i)
+	
+		# Set the prefix in the headline.
 		assert(match(s,i,"defun") or match_word(s,i,"defconst") or match_word(s,i,"defvar"))
+		if match_word(s,i,"defconst"):
+			prefix = "const "
+		elif match_word(s,i,"defvar"):
+			prefix = "var "
+		else:
+			prefix = ""
+	
+		# Skip the "defun" or "defconst" or "defvar"
 		i = self.skipElispId(s,i)
 		
 		# Get the following id.
 		i = skip_ws(s,i)
 		j = self.skipElispId(s,i)
-		id = s[i:j]
-		
+		id = prefix + s[i:j]
+	
 		self.createHeadline(v,body,id)
 	#@-node:createElispFunction
 	#@+node:createElispDataNode
