@@ -443,23 +443,31 @@ class baseVnode (object):
 		print "t._child",v.dumpLink(v.t._firstChild)
 	#@nonl
 	#@-node:v.dump
-	#@+node:afterHeadlineMatch
-	# 12/03/02: We now handle @file options here.
-	
-	def afterHeadlineMatch(self,s):
+	#@+node:afterHeadlineFileTypeName
+	def afterHeadlineFileTypeName(self,s):
 		
 		h = self.headString()
 	
 		if s != "@file" and g.match_word(h,0,s):
 			# No options are valid.
-			return string.strip(h[len(s):])
+			return s,string.strip(h[len(s):])
+	
 		elif g.match(h,0,"@file"):
 			i,atFileType,junk = g.scanAtFileOptions(h)
-			# g.trace(atFileType,i,h,h[i:])
-			if s == atFileType:
-				return h[i:].strip()
-			else: return ""
-		else: return ""
+			return atFileType,h[i:].strip()
+	
+		else:
+			return None,None
+	#@nonl
+	#@-node:afterHeadlineFileTypeName
+	#@+node:afterHeadlineMatch
+	def afterHeadlineMatch(self,s):
+		
+		atFileType,fileName = self.afterHeadlineFileTypeName(s)
+		if s == atFileType:
+			return fileName
+		else:
+			return ""
 	#@nonl
 	#@-node:afterHeadlineMatch
 	#@+node:anyAtFileNodeName
@@ -471,7 +479,9 @@ class baseVnode (object):
 		h = self.headString()
 	
 		if g.match(h,0,"@file"):
-			return self.afterHeadlineMatch("@file")
+			type,name = self.afterHeadlineFileTypeName("@file")
+			if type and name: return name
+			else:             return ""
 		elif g.match(h,0,"@nosentinelsfile"):
 			return self.afterHeadlineMatch("@nosentinelsfile")
 		elif g.match(h,0,"@rawfile"):
@@ -482,7 +492,7 @@ class baseVnode (object):
 			return self.afterHeadlineMatch("@thinfile")
 		else:
 			return ""
-			
+	#@nonl
 	#@-node:anyAtFileNodeName
 	#@+node:at...FileNodeName
 	#@+at 
@@ -492,25 +502,25 @@ class baseVnode (object):
 	#@-at
 	#@@c
 	
-	def nodeName (self,tag):
-		if g.match(self.headString(),0,tag):
-			return self.afterHeadlineMatch(tag)
-		else: return ""
-	
 	def atFileNodeName (self):
-		return self.nodeName("@file")
+		return self.afterHeadlineMatch("@file")
 	
 	def atNoSentinelsFileNodeName (self):
-		return self.nodeName("@nosentinelsfile")
+		return self.afterHeadlineMatch("@nosentinelsfile")
 	
 	def atRawFileNodeName (self):
-		return self.nodeName("@rawfile")
+		return self.afterHeadlineMatch("@rawfile")
 		
 	def atSilentFileNodeName (self):
-		return self.nodeName("@silentfile")
+		return self.afterHeadlineMatch("@silentfile")
 		
 	def atThinFileNodeName (self):
-		return self.nodeName("@thinfile")
+		return self.afterHeadlineMatch("@thinfile")
+		
+	# New names, less confusing
+	atNoSentFileNodeName  = atNoSentinelsFileNodeName
+	atNorefFileNodeName   = atRawFileNodeName
+	atAsisFileNodeName     = atSilentFileNodeName
 	#@nonl
 	#@-node:at...FileNodeName
 	#@+node:isAnyAtFileNode
@@ -532,14 +542,19 @@ class baseVnode (object):
 	def isAtNoSentinelsFileNode (self):
 		return g.choose(self.atNoSentinelsFileNodeName(),true,false)
 	
-	def isAtRawFileNode (self):
+	def isAtRawFileNode (self): # @file-noref
 		return g.choose(self.atRawFileNodeName(),true,false)
 	
-	def isAtSilentFileNode (self):
+	def isAtSilentFileNode (self): # @file-asis
 		return g.choose(self.atSilentFileNodeName(),true,false)
 	
 	def isAtThinFileNode (self):
 		return g.choose(self.atThinFileNodeName(),true,false)
+		
+	# New names, less confusing:
+	isAtNoSentFileNode = isAtNoSentinelsFileNode
+	isAtNorefFileNode  = isAtRawFileNode
+	isAtAsisFileNode   = isAtSilentFileNode
 	#@nonl
 	#@-node:isAt...FileNode
 	#@+node:isAtIgnoreNode
@@ -1463,6 +1478,11 @@ class position (object):
 	def atSilentFileNodeName      (self): return self.v.atSilentFileNodeName()
 	def atThinFileNodeName        (self): return self.v.atThinFileNodeName()
 	
+	# New names, less confusing
+	atNoSentFileNodeName  = atNoSentinelsFileNodeName
+	atNorefFileNodeName   = atRawFileNodeName
+	atAsisFileNodeName    = atSilentFileNodeName
+	
 	def isAnyAtFileNode         (self): return self.v.isAnyAtFileNode()
 	def isAtFileNode            (self): return self.v.isAtFileNode()
 	def isAtIgnoreNode          (self): return self.v.isAtIgnoreNode()
@@ -1471,6 +1491,11 @@ class position (object):
 	def isAtRawFileNode         (self): return self.v.isAtRawFileNode()
 	def isAtSilentFileNode      (self): return self.v.isAtSilentFileNode()
 	def isAtThinFileNode        (self): return self.v.isAtThinFileNode()
+	
+	# New names, less confusing:
+	isAtNoSentFileNode = isAtNoSentinelsFileNode
+	isAtNorefFileNode  = isAtRawFileNode
+	isAtAsisFileNode   = isAtSilentFileNode
 	
 	# Utilities.
 	def matchHeadline (self,pattern): return self.v.matchHeadline(pattern)

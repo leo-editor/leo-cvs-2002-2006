@@ -131,7 +131,7 @@ class baseAtFile:
 		while p and not p.equal(after): # Don't use iterator.
 			if p.isAtIgnoreNode():
 				p.moveToNodeAfterTree()
-			elif p.isAtFileNode() or p.isAtRawFileNode():
+			elif p.isAtFileNode() or p.isAtNorefFileNode():
 				anyRead = true
 				if partialFlag:
 					# We are forcing the read.
@@ -172,7 +172,7 @@ class baseAtFile:
 		elif root.isAtFileNode():
 			fileName = root.atFileNodeName()
 		else:
-			fileName = root.atRawFileNodeName()
+			fileName = root.atNorefFileNodeName()
 			
 		if not fileName:
 			at.error("Missing file name.  Restoring @file tree from .leo file.")
@@ -298,16 +298,8 @@ class baseAtFile:
 		# An absolute path in an @file node over-rides everything else.
 		# A relative path gets appended to the relative path by the open logic.
 		
-		# Bug fix: 10/16/02
-		if p.isAtFileNode():
-			name = p.atFileNodeName()
-		elif p.isAtRawFileNode():
-			name = p.atRawFileNodeName()
-		elif p.isAtNoSentinelsFileNode():
-			name = p.atNoSentinelsFileNodeName()
-		else:
-			name = ""
-		
+		name = p.anyAtFileNodeName() # 4/28/04
+			
 		dir = g.choose(name,g.os_path_dirname(name),None)
 		
 		if dir and g.os_path_isabs(dir):
@@ -595,13 +587,13 @@ class baseAtFile:
 					written = false
 					
 					# Tricky: @ignore not recognised in @silentfile nodes.
-					if p.isAtSilentFileNode():
-						at.silentWrite(p) ; written = true
+					if p.isAtAsisFileNode():
+						at.asisWrite(p) ; written = true
 					elif p.isAtIgnoreNode():
 						pass
-					elif p.isAtRawFileNode():
-						at.rawWrite(p) ; written = true
-					elif p.isAtNoSentinelsFileNode():
+					elif p.isAtNorefFileNode():
+						at.norefWrite(p) ; written = true
+					elif p.isAtNoSentFileNode():
 						at.write(p,nosentinels=true)
 					elif p.isAtThinFileNode():
 						if write_new:
@@ -636,18 +628,22 @@ class baseAtFile:
 		return len(changedFiles) > 0 # So caller knows whether to do an auto-save.
 	
 	#@-node:top_df.writeAll
-	#@+node:top_df.write, rawWrite, silentWrite
-	def rawWrite (self,p):
+	#@+node:top_df.write, norefWrite, asisWrite
+	def norefWrite (self,p):
 		at = self
 		write_new = not g.app.config.write_old_format_derived_files
 		df = g.choose(write_new,at.new_df,at.old_df)
-		try:    df.rawWrite(p)
+		try:    df.norefWrite(p)
 		except: at.writeException(p)
 		
-	def silentWrite (self,p):
+	rawWrite = norefWrite # Compatibility with old scripts.
+		
+	def asisWrite (self,p):
 		at = self
-		try: at.old_df.silentWrite(p) # No new_df.silentWrite method.
+		try: at.old_df.asisWrite(p) # No new_df.asisWrite method.
 		except: at.writeException(p)
+		
+	selentWrite = asisWrite # Compatibility with old scripts.
 		
 	def write (self,p,nosentinels=false,thinFile=false):
 		at = self
@@ -655,12 +651,12 @@ class baseAtFile:
 		df = g.choose(write_new,at.new_df,at.old_df)
 		try:    df.write(p,nosentinels=nosentinels,thinFile=thinFile)
 		except: at.writeException(p)
-			
+	
 	def writeException(self,p):
 		self.error("Unexpected exception while writing " + p.headString())
 		g.es_exception()
 	#@nonl
-	#@-node:top_df.write, rawWrite, silentWrite
+	#@-node:top_df.write, norefWrite, asisWrite
 	#@+node:top_df.writeOld/NewDerivedFiles
 	def writeOldDerivedFiles (self):
 		
@@ -692,7 +688,7 @@ class baseAtFile:
 		p = p.copy()
 		after = p.nodeAfterTree()
 		while p and p != after: # Don't use iterator.
-			if p.isAtSilentFileNode() or (p.isAnyAtFileNode() and not p.isAtIgnoreNode()):
+			if p.isAtAsisFileNode() or (p.isAnyAtFileNode() and not p.isAtIgnoreNode()):
 				missing = false ; valid = true
 				df.targetFileName = p.anyAtFileNodeName()
 				#@			<< set missing if the file does not exist >>
@@ -747,11 +743,11 @@ class baseAtFile:
 					if at.outputFile:
 						#@					<< write the @file node >>
 						#@+node:<< write the @file node >>
-						if p.isAtSilentFileNode():
-							at.silentWrite(p)
-						elif p.isAtRawFileNode():
-							at.rawWrite(p)
-						elif p.isAtNoSentinelsFileNode():
+						if p.isAtAsisFileNode():
+							at.asisWrite(p)
+						elif p.isAtNorefFileNode():
+							at.norefWrite(p)
+						elif p.isAtNoSentFileNode():
 							at.write(p,nosentinels=true)
 						elif p.isAtFileNode():
 							at.write(p)
@@ -2045,14 +2041,7 @@ class baseOldDerivedFile:
 		# An absolute path in an @file node over-rides everything else.
 		# A relative path gets appended to the relative path by the open logic.
 		
-		if p.isAtFileNode():
-			name = p.atFileNodeName()
-		elif p.isAtRawFileNode():
-			name = p.atRawFileNodeName()
-		elif p.isAtNoSentinelsFileNode():
-			name = p.atNoSentinelsFileNodeName()
-		else:
-			name = ""
+		name = p.anyAtFileNodeName() # 4/28/04
 		
 		dir = g.choose(name,g.os_path_dirname(name),None)
 		
@@ -2063,7 +2052,7 @@ class baseOldDerivedFile:
 				self.default_directory = g.makeAllNonExistentDirectories(dir)
 				if not self.default_directory:
 					self.error("Directory \"" + dir + "\" does not exist")
-					
+		#@nonl
 		#@-node:<< Set path from @file node >> in scanDirectory in leoGlobals.py
 		#@nl
 		old = {}
@@ -2254,15 +2243,57 @@ class baseOldDerivedFile:
 		self.root.setDirty()
 	#@nonl
 	#@-node:writeError
-	#@+node:old_df.rawWrite
-	def rawWrite(self,root):
+	#@+node:old_df.asisWrite
+	def asisWrite(self,root):
+	
+		c = self.c ; self.root = root
+		self.errors = 0
+		c.endEditing() # Capture the current headline.
+		try:
+			self.targetFileName = root.atAsisFileNodeName()
+			ok = self.openWriteFile(root)
+			if not ok: return
+			for p in root.self_and_subtree_iter():
+				#@			<< Write p's headline if it starts with @@ >>
+				#@+node:<< Write p's headline if it starts with @@ >>
+				s = p.headString()
+				
+				if g.match(s,0,"@@"):
+					s = s[2:]
+					if s and len(s) > 0:
+						s = g.toEncodedString(s,self.encoding,reportErrors=true) # 3/7/03
+						self.outputFile.write(s)
+				#@nonl
+				#@-node:<< Write p's headline if it starts with @@ >>
+				#@nl
+				#@			<< Write p's body >>
+				#@+node:<< Write p's body >>
+				s = p.bodyString()
+				
+				if s:
+					s = g.toEncodedString(s,self.encoding,reportErrors=true) # 3/7/03
+					self.outputStringWithLineEndings(s)
+				#@nonl
+				#@-node:<< Write p's body >>
+				#@nl
+			self.closeWriteFile()
+			self.replaceTargetFileIfDifferent()
+			root.clearOrphan() ; root.clearDirty()
+		except:
+			self.handleWriteException(root)
+			
+	silentWrite = asisWrite # Compatibility with old scripts.
+	#@nonl
+	#@-node:old_df.asisWrite
+	#@+node:old_df.norefWrite
+	def norefWrite(self,root):
 	
 		c = self.c ; self.root = root
 		self.errors = 0
 		self.sentinels = true # 10/1/03
 		c.endEditing() # Capture the current headline.
 		try:
-			self.targetFileName = root.atRawFileNodeName()
+			self.targetFileName = root.atNorefFileNodeName()
 			ok = self.openWriteFile(root)
 			if not ok: return
 			#@		<< write root's tree >>
@@ -2361,47 +2392,10 @@ class baseOldDerivedFile:
 			root.clearOrphan() ; root.clearDirty()
 		except:
 			self.handleWriteException(root)
-	#@-node:old_df.rawWrite
-	#@+node:old_df.silentWrite
-	def silentWrite(self,root):
-	
-		c = self.c ; self.root = root
-		self.errors = 0
-		c.endEditing() # Capture the current headline.
-		try:
-			self.targetFileName = root.atSilentFileNodeName()
-			ok = self.openWriteFile(root)
-			if not ok: return
-			for p in root.self_and_subtree_iter():
-				#@			<< Write p's headline if it starts with @@ >>
-				#@+node:<< Write p's headline if it starts with @@ >>
-				s = p.headString()
-				
-				if g.match(s,0,"@@"):
-					s = s[2:]
-					if s and len(s) > 0:
-						s = g.toEncodedString(s,self.encoding,reportErrors=true) # 3/7/03
-						self.outputFile.write(s)
-				#@nonl
-				#@-node:<< Write p's headline if it starts with @@ >>
-				#@nl
-				#@			<< Write p's body >>
-				#@+node:<< Write p's body >>
-				s = p.bodyString()
-				
-				if s:
-					s = g.toEncodedString(s,self.encoding,reportErrors=true) # 3/7/03
-					self.outputStringWithLineEndings(s)
-				#@nonl
-				#@-node:<< Write p's body >>
-				#@nl
-			self.closeWriteFile()
-			self.replaceTargetFileIfDifferent()
-			root.clearOrphan() ; root.clearDirty()
-		except:
-			self.handleWriteException(root)
+			
+	rawWrite = norefWrite
 	#@nonl
-	#@-node:old_df.silentWrite
+	#@-node:old_df.norefWrite
 	#@+node:old_df.write
 	# This is the entry point to the write code.  root should be an @file vnode.
 	
@@ -2432,7 +2426,7 @@ class baseOldDerivedFile:
 			#@		<< open the file; return on error >>
 			#@+node:<< open the file; return on error >>
 			if nosentinels:
-				self.targetFileName = root.atNoSentinelsFileNodeName()
+				self.targetFileName = root.atNoSentFileNodeName()
 			else:
 				self.targetFileName = root.atFileNodeName()
 			
@@ -4153,11 +4147,9 @@ class baseNewDerivedFile(oldDerivedFile):
 		at.putSentinel("@+node:" + s)
 	
 		# Append the n'th tnode to the root's tnode list.
-		if 0:
-			if hasattr(p.v.t,"tnodeList"):
-				g.trace("len(tnodeList): %3d %s" % (len(p.v.t.tnodeList),p.v))
-	
 		at.root.v.t.tnodeList.append(p.v.t)
+		
+		# g.trace("len(tnodeList): %3d %s" % (len(at.root.v.t.))
 	#@nonl
 	#@-node:putOpenNodeSentinel (sets tnodeList) 4.x
 	#@+node:putOpenThinSentinels (4.2)
@@ -4322,7 +4314,7 @@ class baseNewDerivedFile(oldDerivedFile):
 			if scriptFile:
 				at.targetFileName = "<script>"
 			elif nosentinels:
-				at.targetFileName = root.atNoSentinelsFileNodeName()
+				at.targetFileName = root.atNoSentFileNodeName()
 			elif thinFile:
 				at.targetFileName = root.atThinFileNodeName()
 			else:
@@ -4448,8 +4440,8 @@ class baseNewDerivedFile(oldDerivedFile):
 				at.handleWriteException()
 	
 	#@-node:new_df.write (inits root.tnodeList)
-	#@+node:new_df.rawWrite
-	def rawWrite(self,root):
+	#@+node:new_df.norefWrite
+	def norefWrite(self,root):
 	
 		at = self
 	
@@ -4460,7 +4452,7 @@ class baseNewDerivedFile(oldDerivedFile):
 		at.scripting = false # 1/30/04
 		c.endEditing() # Capture the current headline.
 		try:
-			at.targetFileName = root.atRawFileNodeName()
+			at.targetFileName = root.atNorefFileNodeName()
 			ok = at.openWriteFile(root)
 			if not ok: return
 			#@		<< write root's tree >>
@@ -4558,8 +4550,10 @@ class baseNewDerivedFile(oldDerivedFile):
 			root.clearOrphan() ; root.clearDirty()
 		except:
 			at.handleWriteException(root)
+			
+	rawWrite = norefWrite
 	#@nonl
-	#@-node:new_df.rawWrite
+	#@-node:new_df.norefWrite
 	#@+node:putBody (4.x)
 	def putBody(self,p):
 		
