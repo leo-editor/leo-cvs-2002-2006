@@ -351,10 +351,12 @@ class LeoPrefs:
 		c.untangle_batch_flag = self.revert_untangle_batch_flag
 		c.page_width = self.revert_page_width
 		c.tab_width = self.revert_tab_width
+		
 		# Default Tangle Options
 		c.tangle_directory = self.revert_tangle_directory
 		c.output_doc_flag = self.revert_output_doc_flag
 		c.use_header_flag = self.revert_use_header_flag
+		
 		# Default Target Language
 		c.target_language = self.revert_target_language
 		#@-body
@@ -379,10 +381,12 @@ class LeoPrefs:
 		c.untangle_batch_flag = self.revert_untangle_batch_flag
 		c.page_width = self.revert_page_width
 		c.tab_width = self.revert_tab_width
+		
 		# Default Tangle Options
 		c.tangle_directory = self.revert_tangle_directory
 		c.output_doc_flag = self.revert_output_doc_flag
 		c.use_header_flag = self.revert_use_header_flag
+		
 		# Default Target Language
 		c.target_language = self.revert_target_language
 		#@-body

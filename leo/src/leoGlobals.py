@@ -147,17 +147,17 @@ def checkClones2Links (c=None,verbose=false):
 # 
 # version: the version string to be tested
 # againstVersion: the reference version string to be
-# 				compared against
+#               compared against
 # condition: can be any of "==", "!=", ">=", "<=", ">", or "<"
 # stringCompare: whether to test a token using only the
-# 			   leading integer of the token, or using the
-# 			   entire token string.  For example, a value
-# 			   of "0.0.1.0" means that we use the integer
-# 			   value of the first, second, and fourth
-# 			   tokens, but we use a string compare for the
-# 			   third version token.
+#              leading integer of the token, or using the
+#              entire token string.  For example, a value
+#              of "0.0.1.0" means that we use the integer
+#              value of the first, second, and fourth
+#              tokens, but we use a string compare for the
+#              third version token.
 # delimiter: the character that separates the tokens in the
-# 		   version strings.
+#          version strings.
 # 
 # The comparison uses the precision of the version string
 # with the least number of tokens.  For example a test of
@@ -1489,20 +1489,20 @@ def utils_rename(src,dst):
 # the following statment prints from s[i] to the end of the line if tracing 
 # for f has been enabled.
 # 
-# 	j = skip_line(s,i) ; trace(s[i:j])
+#   j = skip_line(s,i) ; trace(s[i:j])
 # 
 # trace(function) exectutes the function if tracing for f has been enabled.  
 # For example,
 # 
-# 	trace(self.f2)
+#   trace(self.f2)
 # 
 # You enable and disable tracing by calling init_trace(args).  Examples:
 # 
-# 	init_trace("+*")         # enable all traces
-# 	init_trace("+a","+b")    # enable traces for a and b
-# 	init_trace(("+a","+b"))  # enable traces for a and b
-# 	init_trace("-a")         # disable tracing for a
-# 	traces = init_trace("?") # return the list of enabled traces
+#   init_trace("+*")         # enable all traces
+#   init_trace("+a","+b")    # enable traces for a and b
+#   init_trace(("+a","+b"))  # enable traces for a and b
+#   init_trace("-a")         # disable tracing for a
+#   traces = init_trace("?") # return the list of enabled traces
 # 
 # If two arguments are supplied to trace, the first argument is the 
 # "tracepoint name" and the second argument is the "tracepoint action" as 
@@ -1513,7 +1513,7 @@ def utils_rename(src,dst):
 # "*" will not match an explicit tracepoint name that starts with a minus 
 # sign.  For example,
 # 
-# 	trace_tag("-nocolor", self.disable_color)
+#   trace_tag("-nocolor", self.disable_color)
 
 #@-at
 #@-body
@@ -2712,12 +2712,12 @@ def skip_pascal_block_comment(s,i):
 		scanError("Run on comment" + s[j:i])
 		return len(s)
 
-#	n = len(s)
-#	while i < n:
-#		if match(s,i,"*)"): return i + 2
-#		i += 1
-#	scanError("Run on comment" + s[j:i])
-#	return i
+#   n = len(s)
+#   while i < n:
+#       if match(s,i,"*)"): return i + 2
+#       i += 1
+#   scanError("Run on comment" + s[j:i])
+#   return i
 #@-body
 #@-node:6::skip_pascal_block_comment
 #@+node:7::skip_pascal_string : called by tangle
@@ -2742,11 +2742,11 @@ def skip_pascal_string(s,i):
 #  08-SEP-2002 DTHEIN:  added function skip_heredoc_string
 # A heredoc string in PHP looks like:
 # 
-# 	<<<EOS
-# 	This is my string.
-# 	It is mine. I own it.
-# 	No one else has it.
-# 	EOS
+#   <<<EOS
+#   This is my string.
+#   It is mine. I own it.
+#   No one else has it.
+#   EOS
 # 
 # It begins with <<< plus a token (naming same as PHP variable names).
 # It ends with the token on a line by itself (must start in first position.
@@ -3241,7 +3241,7 @@ endsWithNL: true if the paragraph ends with a newline"""
 	# Return if the selected line is all whitespace or a Leo directive.
 	s = t.get(x+"linestart",x+"lineend")
 	if len(s)==0 or s.isspace() or s[0] == '@':
-		return None	
+		return None 
 
 	# Point start and end at the start and end of the selected line.
 	start = t.index(x+"linestart")
@@ -3567,7 +3567,7 @@ except:
 		#@+body
 		# On Unix, if CODESET is available, use that.
 		try:
-		    local.CODESET
+			local.CODESET
 		except NameError:
 			# Fall back to parsing environment variables :-(
 			def getpreferredencoding(do_setlocale = true):

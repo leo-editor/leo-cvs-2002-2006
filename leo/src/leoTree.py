@@ -833,7 +833,7 @@ class leoTree:
 	
 	#@-body
 	#@-node:4::tree.findVnodeWithIconId
-	#@+node:5::tree.onBodyChanged, onBodyWillChange, OnBodyKey, idle_body_key
+	#@+node:5::body key handlers (tree)
 	#@+body
 	#@+at
 	#  The <Key> event generates the event before the body text is changed(!), 
@@ -854,60 +854,58 @@ class leoTree:
 	#@-at
 	#@@c
 
-	# Called by command handlers that have already changed the text.
-	def onBodyChanged (self,v,undoType,oldSel=None,oldYview=None):
-		c = self.commands
-		if not v: v = c.currentVnode()
-		if not oldSel:
-			first,last = getTextSelection(c.body)
-			oldSel = (first,last) # trace(`oldSel`)
-		self.idle_body_key(v,oldSel,undoType,oldYview=oldYview)
-		
-	# Called by command handlers that change the text just before idle time.
-	def onBodyWillChange (self,v,undoType,oldSel=None,oldYview=None):
-		c = self.commands
-		if not v: v = c.currentVnode()
-		if not oldSel:
-			oldSel = getTextSelection(c.body)
-		self.commands.body.after_idle(self.idle_body_key,v,oldSel,undoType,oldYview)
-	
-	# Bound to any key press..
-	def OnBodyKey (self,event):
-		c = self.commands ; v = c.currentVnode() ; ch = event.char
-		oldSel = getTextSelection(c.body)
-		if 0:
-			self.keyCount += 1
-			if ch and len(ch)>0: print "%4d %s" % (self.keyCount,repr(ch))
-		# Warning: we must execute this even if len(ch) > 0 to delete spurious trailing newlines.
-		self.commands.body.after_idle(self.idle_body_key,v,oldSel,"Typing",ch)
-	
-	# Does the real work of updating the body pane.
+
+	#@+others
+	#@+node:1::idle_body_key
+	#@+body
 	def idle_body_key (self,v,oldSel,undoType,ch=None,oldYview=None):
+		
+		"""Update the body pane at idle time."""
 	
 		c = self.commands
 		if not c or not v or v != c.currentVnode():
 			return "break"
-		# Call the pre-key hook.
 		if doHook("bodykey1",c=c,v=v,ch=ch,oldSel=oldSel,undoType=undoType):
 			return "break" # The hook claims to have handled the event.
 		body = v.bodyString()
+		newSel = getTextSelection(c.body)
+		
+		#@<< set s to the widget text >>
+		#@+node:1::<< set s to the widget text >>
+		#@+body
 		s = c.body.get("1.0", "end")
-		first,last = getTextSelection(c.body)
-		newSel = (first,last)
-		if s == None: s = u""
+		
+		if s == None:
+			s = u""
+		
 		if type(s) == type(""):
 			s = toUnicode(s,app().tkEncoding) # 2/25/03
 			# if len(ch) > 0: print `s`
-		# Do nothing if nothing has changed.
+		#@-body
+		#@-node:1::<< set s to the widget text >>
+
+		
+		#@<< return if nothing has changed >>
+		#@+node:2::<< return if nothing has changed >>
+		#@+body
 		# 6/22/03: Make sure we handle delete key properly.
+		
 		if ch not in ('\n','\r',chr(8)):
-			if s == body: return "break"
+		
+			if s == body:
+				return "break"
+			
 			# Do nothing for control characters.
-			if (ch == None or len(ch) == 0) and body == s[:-1]: return "break"
+			if (ch == None or len(ch) == 0) and body == s[:-1]:
+				return "break"
+			
 		# print `ch`,len(body),len(s)
+		#@-body
+		#@-node:2::<< return if nothing has changed >>
+
 		
 		#@<< set removeTrailing >>
-		#@+node:1::<< set removeTrailing >>
+		#@+node:3::<< set removeTrailing >>
 		#@+body
 		#@+at
 		#  Tk will add a newline only if:
@@ -947,13 +945,12 @@ class leoTree:
 		
 		
 		#@-body
-		#@-node:1::<< set removeTrailing >>
+		#@-node:3::<< set removeTrailing >>
 
-		# trace(`ch`) ; print type(s)
 		if ch in ('\n','\r'):
 			
 			#@<< Do auto indent >>
-			#@+node:2::<< Do auto indent >> (David McNab)
+			#@+node:4::<< Do auto indent >> (David McNab)
 			#@+body
 			# Do nothing if we are in @nocolor mode or if we are executing a Change command.
 			if self.colorizer.useSyntaxColoring(v) and undoType != "Change":
@@ -984,60 +981,156 @@ class leoTree:
 					c.body.insert("insert", ws)
 					removeTrailing = false # bug fix: 11/18
 			#@-body
-			#@-node:2::<< Do auto indent >> (David McNab)
+			#@-node:4::<< Do auto indent >> (David McNab)
 
 		elif ch == '\t' and c.tab_width < 0:
 			
-			#@<< convert leading tab to blanks >>
-			#@+node:3::<< convert leading tab to blanks >>
+			#@<< convert tab to blanks >>
+			#@+node:5::<< convert tab to blanks >>
 			#@+body
-			# Do nothing if we are in @nocolor mode or if we are executing a Change command.
-			if self.colorizer.useSyntaxColoring(v) and undoType != "Change":
+			# Do nothing if we are executing a Change command.
+			if undoType != "Change":
+				
 				# Get the characters preceeding the tab.
 				prev=c.body.get("insert linestart","insert -1c")
-				# Do nothing if there are non-whitespace in prev:
-				all_ws = true
-				for ch in prev:
-					if ch != ' ' and ch != '\t':
-						all_ws = false
-				if all_ws:
+				
+				if 1: # 6/26/03: Convert tab no matter where it is.
+			
 					w = computeWidth(prev,c.tab_width)
 					w2 = (abs(c.tab_width) - (w % abs(c.tab_width)))
 					# print "prev w:" + `w` + ", prev chars:" + `prev`
 					c.body.delete("insert -1c")
 					c.body.insert("insert",' ' * w2)
+				
+				else: # Convert only leading tabs.
+				
+					# Get the characters preceeding the tab.
+					prev=c.body.get("insert linestart","insert -1c")
+			
+					# Do nothing if there are non-whitespace in prev:
+					all_ws = true
+					for ch in prev:
+						if ch != ' ' and ch != '\t':
+							all_ws = false
+					if all_ws:
+						w = computeWidth(prev,c.tab_width)
+						w2 = (abs(c.tab_width) - (w % abs(c.tab_width)))
+						# print "prev w:" + `w` + ", prev chars:" + `prev`
+						c.body.delete("insert -1c")
+						c.body.insert("insert",' ' * w2)
 			#@-body
-			#@-node:3::<< convert leading tab to blanks >>
+			#@-node:5::<< convert tab to blanks >>
 
+		
+		#@<< set s to widget text, removing trailing newlines if necessary >>
+		#@+node:6::<< set s to widget text, removing trailing newlines if necessary >>
+		#@+body
 		s = c.body.get("1.0", "end")
 		s = toUnicode(s,app().tkEncoding) #2/25/03
 		if len(s) > 0 and s[-1] == '\n' and removeTrailing:
 			s = s[:-1]
+		#@-body
+		#@-node:6::<< set s to widget text, removing trailing newlines if necessary >>
+
 		c.undoer.setUndoTypingParams(v,undoType,body,s,oldSel,newSel,oldYview=oldYview)
-		v.t.setTnodeText(s) # 1/20/03
-		v.t.insertSpot = c.body.index("insert") # 9/1/02
-		# Recolor the body.
-		self.scanForTabWidth(v) # 9/13/02
-		incremental = undoType not in ("Cut","Paste") # 3/9/03
+		v.t.setTnodeText(s)
+		v.t.insertSpot = c.body.index("insert")
+		
+		#@<< recolor the body >>
+		#@+node:7::<< recolor the body >>
+		#@+body
+		self.scanForTabWidth(v)
+		incremental = undoType not in ("Cut","Paste")
 		self.recolor_now(v,incremental=incremental)
-		# Update dirty bits and changed bit.
+		#@-body
+		#@-node:7::<< recolor the body >>
+
 		if not c.changed:
-			c.setChanged(true) 
+			c.setChanged(true)
+		
+		#@<< redraw the screen if necessary >>
+		#@+node:8::<< redraw the screen if necessary >>
+		#@+body
 		redraw_flag = false
+		
 		c.beginUpdate()
+		
+		# Update dirty bits.
 		if not v.isDirty() and v.setDirty(): # Sets all cloned and @file dirty bits
 			redraw_flag = true
-		# update icons.
+			
+		# Update icons.
 		val = v.computeIcon()
 		if val != v.iconVal:
 			v.iconVal = val
 			redraw_flag = true
+		
 		c.endUpdate(redraw_flag) # redraw only if necessary
-		# Call the post-key hook.
+		#@-body
+		#@-node:8::<< redraw the screen if necessary >>
+
 		doHook("bodykey2",c=c,v=v,ch=ch,oldSel=oldSel,undoType=undoType)
 		return "break"
 	#@-body
-	#@-node:5::tree.onBodyChanged, onBodyWillChange, OnBodyKey, idle_body_key
+	#@-node:1::idle_body_key
+	#@+node:2::onBodyChanged
+	#@+body
+	# Called by command handlers that have already changed the text.
+	
+	def onBodyChanged (self,v,undoType,oldSel=None,oldYview=None):
+		
+		"""Handle a change to the body pane."""
+		
+		c = self.commands
+		if not v:
+			v = c.currentVnode()
+	
+		if not oldSel:
+			oldSel = getTextSelection(c.body)
+	
+		self.idle_body_key(v,oldSel,undoType,oldYview=oldYview)
+	
+	#@-body
+	#@-node:2::onBodyChanged
+	#@+node:3::OnBodyKey
+	#@+body
+	def OnBodyKey (self,event):
+		
+		"""Handle any key press event in the body pane."""
+	
+		c = self.commands ; v = c.currentVnode() ; ch = event.char
+		oldSel = getTextSelection(c.body)
+		
+		if 0:
+			self.keyCount += 1
+			if ch and len(ch)>0: print "%4d %s" % (self.keyCount,repr(ch))
+			
+		# We must execute this even if len(ch) > 0 to delete spurious trailing newlines.
+		self.commands.body.after_idle(self.idle_body_key,v,oldSel,"Typing",ch)
+	#@-body
+	#@-node:3::OnBodyKey
+	#@+node:4::onBodyWillChange
+	#@+body
+	# Called by command handlers that change the text just before idle time.
+	
+	def onBodyWillChange (self,v,undoType,oldSel=None,oldYview=None):
+		
+		"""Queue the body changed idle handler."""
+		
+		c = self.commands
+		if not v: v = c.currentVnode()
+		if not oldSel:
+			oldSel = getTextSelection(c.body)
+		  
+		self.commands.body.after_idle(self.idle_body_key,v,oldSel,undoType,oldYview)
+	
+	
+	#@-body
+	#@-node:4::onBodyWillChange
+	#@-others
+	
+	#@-body
+	#@-node:5::body key handlers (tree)
 	#@+node:6::tree.OnContinueDrag
 	#@+body
 	def OnContinueDrag(self,v,event):
@@ -1196,7 +1289,7 @@ class leoTree:
 	
 	#@-body
 	#@-node:9::tree.OnEndDrag
-	#@+node:10::tree.OnHeadlineKey, onHeadChanged, idle_head_key
+	#@+node:10::headline key handlers (tree)
 	#@+body
 	#@+at
 	#  The <Key> event generates the event before the headline text is 
@@ -1205,32 +1298,71 @@ class leoTree:
 	#@-at
 	#@@c
 
+
+	#@+others
+	#@+node:1::onHeadChanged
+	#@+body
 	def onHeadChanged (self,v):
+		
+		"""Handle a change to headline text."""
+	
 		self.commands.body.after_idle(self.idle_head_key,v)
 	
-	def OnHeadlineKey (self,v,event):
 	
-		# v = self.currentVnode ;
+	
+	#@-body
+	#@-node:1::onHeadChanged
+	#@+node:2::OnHeadlineKey
+	#@+body
+	def OnHeadlineKey (self,v,event):
+		
+		"""."""
+	
 		ch = event.char
 		self.commands.body.after_idle(self.idle_head_key,v,ch)
 	
+	
+	#@-body
+	#@-node:2::OnHeadlineKey
+	#@+node:3::idle_head_key
+	#@+body
 	def idle_head_key (self,v,ch=None):
+		
+		"""Update headline text at idle time."""
 	
 		c = self.commands
 		if not v or not v.edit_text() or v != c.currentVnode():
 			return "break"
 		if doHook("headkey1",c=c,v=v,ch=ch):
 			return "break" # The hook claims to have handled the event.
+	
+		
+		#@<< set s to the widget text >>
+		#@+node:1::<< set s to the widget text >>
+		#@+body
 		s = v.edit_text().get("1.0","end")
 		s = toUnicode(s,app().tkEncoding) # 2/25/03
-	
-		# remove all newlines and update the vnode
-		if not s: s = u""
+		if not s:
+			s = u""
 		s = s.replace('\n','')
 		s = s.replace('\r','')
+		# trace(`s`)
+		
+		#@-body
+		#@-node:1::<< set s to the widget text >>
+
+		
+		#@<< set head to vnode text >>
+		#@+node:2::<< set head to vnode text >>
+		#@+body
 		head = v.headString()
-		if head == None: head = u""
+		if head == None:
+			head = u""
 		head = toUnicode(head,"utf-8")
+		
+		#@-body
+		#@-node:2::<< set head to vnode text >>
+
 		changed = s != head
 		done = ch and (ch == '\r' or ch == '\n')
 		if not changed and not done:
@@ -1238,19 +1370,26 @@ class leoTree:
 		if changed:
 			c.undoer.setUndoParams("Change Headline",v,newText=s,oldText=head)
 		index = v.edit_text().index("insert")
-		# trace(`s`)
 		if changed:
+			
+			#@<< update v and all nodes joined to v >>
+			#@+node:3::<< update v and all nodes joined to v >>
+			#@+body
 			c.beginUpdate()
+			
 			# Update changed bit.
 			if not c.changed:
 				c.setChanged(true)
+			
 			# Update all dirty bits.
-			v.setDirty() 
+			v.setDirty()
+			
 			# Update v.
 			v.initHeadString(s)
 			v.edit_text().delete("1.0","end")
 			v.edit_text().insert("end",s)
 			v.edit_text().mark_set("insert",index)
+			
 			# Update all joined nodes.
 			for v2 in v.t.joinList:
 				if v2 != v:
@@ -1258,33 +1397,54 @@ class leoTree:
 					if v2.edit_text(): # v2 may not be visible
 						v2.edit_text().delete("1.0","end")
 						v2.edit_text().insert("end",s)
+			
 			c.endUpdate(false) # do not redraw now.
-	
+			#@-body
+			#@-node:3::<< update v and all nodes joined to v >>
+
+		
+		#@<< reconfigure v and all nodes joined to v >>
+		#@+node:4::<< reconfigure v and all nodes joined to v >>
+		#@+body
 		# Reconfigure v's headline.
 		if done:
 			self.setDisabledLabelState(v)
+		
 		v.edit_text().configure(width=self.headWidth(v))
-	
+		
 		# Reconfigure all joined headlines.
 		for v2 in v.t.joinList:
 			if v2 != v:
 				if v2.edit_text(): # v2 may not be visible
 					v2.edit_text().configure(width=self.headWidth(v2))
-			
-		# Update the screen.
+		#@-body
+		#@-node:4::<< reconfigure v and all nodes joined to v >>
+
+		
+		#@<< update the screen >>
+		#@+node:5::<< update the screen >>
+		#@+body
 		if done:
 			c.beginUpdate()
 			self.endEditLabel()
 			c.endUpdate()
+		
 		elif changed:
 			# update v immediately.  Joined nodes are redrawn later by endEditLabel.
 			# Redrawing the whole screen now messes up the cursor in the headline.
 			self.drawIcon(v,v.iconx,v.icony) # just redraw the icon.
+		#@-body
+		#@-node:5::<< update the screen >>
+
 	
 		doHook("headkey2",c=c,v=v,ch=ch)
 		return "break"
 	#@-body
-	#@-node:10::tree.OnHeadlineKey, onHeadChanged, idle_head_key
+	#@-node:3::idle_head_key
+	#@-others
+	
+	#@-body
+	#@-node:10::headline key handlers (tree)
 	#@+node:11::tree.OnIconClick & OnIconRightClick
 	#@+body
 	def OnIconClick (self,v,event):
@@ -1352,9 +1512,9 @@ class leoTree:
 				# 3 or more lowercase alphas, followed by,
 				# one ':', followed by,
 				# one or more of: (excludes !"#;<>[\]^`|)
-				# 	$%&'()*+,-./0-9:=?@A-Z_a-z{}~
+				#   $%&'()*+,-./0-9:=?@A-Z_a-z{}~
 				# followed by one of: (same as above, except no minus sign or comma).
-				# 	$%&'()*+/0-9:=?@A-Z_a-z}~
+				#   $%&'()*+/0-9:=?@A-Z_a-z}~
 
 				#@-at
 				#@@c
@@ -1377,9 +1537,9 @@ class leoTree:
 				#@+body
 				#@+at
 				#  Most browsers should handle the following urls:
-				# 	ftp://ftp.uu.net/public/whatever.
-				# 	http://localhost/MySiteUnderDevelopment/index.html
-				# 	file:///home/me/todolist.html
+				#   ftp://ftp.uu.net/public/whatever.
+				#   http://localhost/MySiteUnderDevelopment/index.html
+				#   file:///home/me/todolist.html
 
 				#@-at
 				#@@c
