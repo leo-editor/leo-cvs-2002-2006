@@ -2068,6 +2068,501 @@ class nodeIndices:
 	#@-others
 #@nonl
 #@-node:class nodeIndices
+#@+node:class position (WARNING: implies big changes to vnodes/tnodes)
+# Warning: this code implies substantial changes to the vnode move/clone methods.
+
+class position:
+
+	"""A class representing a position in a traversal of a tree containing shared tnodes."""
+	
+	#@	<< to do >>
+	#@+node:<< to do >>
+	#@+at
+	# 
+	# - Move mFirstChild ivar from vnode class to tnode class.
+	# 
+	# - Replace t.joinList by t.vnodes
+	# 
+	# - Eliminate the following vnode methods:
+	# 	- v.lastNode, v.nodeAfterTree
+	# 	- v.threadNext, v.threadBack
+	# 	- v.visNext, v.visBack
+	# 
+	# - Rewrite all vnode methods as needed:
+	# 	- Rewrite the vnode Moving, Inserting, Deleting, Cloning, Sorting 
+	# methods
+	# 		- Eliminate dependent trees.
+	# 
+	# - Write unit tests for all vnode, position & c.move and related 
+	# routines.
+	#@-at
+	#@-node:<< to do >>
+	#@nl
+	#@	<< about the position class >>
+	#@+node:<< about the position class >>
+	#@+at 
+	#@nonl
+	# This class provides tree traversal methods that operate on positions, 
+	# not vnodes.  Positions encapsulate the notion of present position within 
+	# a traversal.
+	# 
+	# Positions consist of a vnode and a stack of parent nodes used to 
+	# determine the next parent when a vnode has mutliple parents.
+	# 
+	# The only changes to vnodes and tnodes needed to implement shared tnodes 
+	# are:
+	# 1. The firstChild field becomes part of tnodes.
+	# 2. t.vnodes contains a list of all vnodes sharing the tnode.
+	# 
+	# The advantages of using shared tnodes:
+	# 
+	# 1. Leo no longer needs to create or destroy "dependent" trees when 
+	# changing descendents of cloned trees.
+	# 2. There is no need for join links and no such things as joined nodes.
+	# 
+	# These advantages are extremely important: Leo is now scalable to very 
+	# large outlines.
+	# 
+	# 
+	#@-at
+	#@-node:<< about the position class >>
+	#@nl
+	#@	<< about memory allocation >>
+	#@+node:<< about memory allocation >>
+	#@+at 
+	#@nonl
+	# All proxy methods for vnode traversal methods (next, threadNext, etc.) 
+	# must return _new_ positions, leaving the 'self' argument unchanged.  
+	# This can create a _lot_ of temporary positions when traversing 
+	# outlines.  Creating these temporary postions will stress the memory 
+	# allocator.
+	# 
+	# The routines whose name starts with moveTo (moveToNext,moveToThreadNext, 
+	# etc.) modify the position "in place" instead of creating new postions.  
+	# These moveX routines should be used in key parts of Leo's code to 
+	# improve performance.
+	#@-at
+	#@nonl
+	#@-node:<< about memory allocation >>
+	#@nl
+	
+	#@	@+others
+	#@+node:p.__init__
+	def __init__ (self,v,stack):
+	
+		"""Create a new position."""
+		
+		self.v = v
+		self.stack = stack[:] # Creating a copy here is safest and best.
+	#@nonl
+	#@-node:p.__init__
+	#@+node:p.__cmp__
+	def __cmp__(self,other):
+		
+		"""Return true if two postions are equivalent."""
+	
+		p1 = self ; p2 = other
+		
+		if p1.v != p2.v or len(p1.stack) != len(p2.stack):
+			return 1 # Not equal
+			
+		for i in xrange(len(p1.stack)):
+			if p1.stack[i] != p2.stack[i]:
+				return 1 # Not equal
+				
+		return 0 # Equal
+	#@nonl
+	#@-node:p.__cmp__
+	#@+node:p.__getattr__ (creates proxies for most vnode methods)
+	# Most position methods are simply proxies for the corresponding vnode method.
+	
+	# This is safe and saves a _lot_ of code.
+	
+	def __getattr__ (self,attr):
+		return getattr(self.v,attr)
+	#@nonl
+	#@-node:p.__getattr__ (creates proxies for most vnode methods)
+	#@+node:p.__nonzero__
+	# This method supports the tests such as if p:
+	
+	def __nonzero__ ( self):
+		
+		"""Return True if a position is a "non-null" position."""
+	
+		return self.v and self.stack is not None
+	#@nonl
+	#@-node:p.__nonzero__
+	#@+node:p._copy
+	def _copy (self):
+		
+		""""Return an independent copy of a position."""
+	
+		return position(self.v, self.stack)
+	#@nonl
+	#@-node:p._copy
+	#@+node:p.isVisible
+	def isVisible (self):
+		
+		"""Return true if all of a position's parents are expanded."""
+		
+		p = self
+		if not p:
+			return false
+	
+		p.moveToParent()
+		while p:
+			if not p.v.isExpanded():
+				return false
+			p.moveToParent()
+	
+		return true
+	#@nonl
+	#@-node:p.isVisible
+	#@+node:p.traversal routines: return new position
+	#@+at 
+	#@nonl
+	# These routines return a new position, using the moveTo routines to
+	# minimize the number of temp positions created while doing so.
+	# 
+	# These routines are all defined using the corresponding move routines,
+	# a major simplification.
+	#@-at
+	#@nonl
+	#@-node:p.traversal routines: return new position
+	#@+node:p.back
+	def back (self):
+		
+		p = self
+	
+		if p:
+			p = p._copy().moveToBack()
+		if not p:
+			return None
+	#@nonl
+	#@-node:p.back
+	#@+node:p.firstChild
+	def firstChild (self):
+		
+		p = self
+		
+		if p:
+			p = p._copy().moveToFirstChild()
+		if not p:
+			return None
+	#@nonl
+	#@-node:p.firstChild
+	#@+node:p.lastChild
+	def lastChild (self):
+		
+		p = self
+		
+		if p:
+			p = p._copy().moveToLastChild()
+		if not p:
+			return None
+	#@nonl
+	#@-node:p.lastChild
+	#@+node:p.lastNode
+	def lastNode (self):
+		
+		p = self
+		
+		if p:
+			p = p._copy().moveToLastNode()
+		if not p:
+			return None
+	#@nonl
+	#@-node:p.lastNode
+	#@+node:p.next
+	def next (self):
+		
+		p = self
+		
+		if p:
+			p = p._copy().moveToNext()
+		if not p:
+			return None
+	#@nonl
+	#@-node:p.next
+	#@+node:p.nodeAfterTree
+	def nodeAfterTree (self):
+		
+		p = self
+		
+		if p:
+			p = p._copy().moveToNodeAfterTree()
+		if not p:
+			return None
+	#@nonl
+	#@-node:p.nodeAfterTree
+	#@+node:p.nthChild
+	def nthChild (self, n):
+		
+		p = self
+		
+		if p:
+			p = p._copy().moveToNthChild(n)
+		if not p:
+			return None
+	#@nonl
+	#@-node:p.nthChild
+	#@+node:p.parent
+	def parent (self):
+		
+		p = self
+		
+		if p:
+			p = p._copy().moveToParent()
+		if not p:
+			return None
+	#@nonl
+	#@-node:p.parent
+	#@+node:p.threadBack
+	def threadBack (self):
+		
+		p = self
+		
+		if p:
+			p = p._copy().moveToThreadBack()
+		if not p:
+			return None
+	#@nonl
+	#@-node:p.threadBack
+	#@+node:p.threadNext
+	def threadNext (self):
+		
+		p = self
+		
+		if p:
+			p = p._copy().moveToThreadNext()
+		if not p:
+			return None
+	#@nonl
+	#@-node:p.threadNext
+	#@+node:p.visBack
+	def visBack (self):
+		
+		p = self
+		
+		if p:
+			p = p._copy().moveToVisBack()
+		if not p:
+			return None
+	#@nonl
+	#@-node:p.visBack
+	#@+node:p.visNext
+	def visNext (self):
+		
+		p = self
+		
+		if p:
+			p = p._copy().moveToVisNext()
+		if not p:
+			return None
+	#@nonl
+	#@-node:p.visNext
+	#@+node:p.move routines: change position in place
+	# These routines change self to a new position "in place".
+	# These routines do not return a value: code can test that p is a valid position
+	# using if p: # calls p.__cmp__
+	#@-node:p.move routines: change position in place
+	#@+node:p.moveToBack
+	def moveToBack (self):
+		
+		"""Move self to its previous sibling."""
+		
+		p = self
+		if not p: return
+	
+		back = p.v.back()
+		if back:
+			p.v = back
+		else:
+			p.v = p.stack = None
+	#@nonl
+	#@-node:p.moveToBack
+	#@+node:p.moveToFirstChild (pushes stack)
+	def moveToFirstChild (self):
+	
+		"""Move a position to it's first child's position."""
+		
+		p = self
+		if not p: return
+		
+		child = p.v.firstChild()
+		if child:
+			p.stack.append(p.v)
+			p.v = child
+		else:
+			p.v = p.stack = None
+	#@-node:p.moveToFirstChild (pushes stack)
+	#@+node:p.moveToLastChild (pushes stack)
+	def moveToLastChild (self):
+		
+		"""Move a position to it's last child's position."""
+		
+		p = self
+		if not p: return
+		
+		child = p.v.lastChild() # Well defined.
+		if child:
+			p.stack.append(p.v)
+			p.v = child
+		else:
+			p.v = p.stack = None
+	#@nonl
+	#@-node:p.moveToLastChild (pushes stack)
+	#@+node:p.moveToLastNode (expensive)
+	def moveToLastNode (self):
+		
+		"""Move a position to last node of its tree."""
+		
+		p = self
+		if not p: return
+		
+		level = p.level()
+		last = position(None,[])
+		while 1:
+			last.v = p.v
+			last.stack = p.stack[:]
+			p.moveToThreadNext()
+			if not p or p.level() <= level:
+				break
+		
+		p.v = last.v
+		p.stack = last.stack
+	#@nonl
+	#@-node:p.moveToLastNode (expensive)
+	#@+node:p.moveToNext
+	def moveToNext (self):
+		
+		"""Move a position to its next sibling."""
+		
+		p = self
+		if not p: return
+	
+		next = p.v.next()
+		if next:
+			p.v = next
+		else:
+			p.v = p.stack = None
+	#@nonl
+	#@-node:p.moveToNext
+	#@+node:p.moveToNodeAfterTree
+	def moveToNodeAfterTree (self):
+		
+		"""Move a position to the node after the position's tree."""
+		
+		p = self
+		if not p: return
+	
+		while p:
+			if p.v.next():
+				p.moveToNext()
+				break
+			p.moveToParent()
+	#@nonl
+	#@-node:p.moveToNodeAfterTree
+	#@+node:p.moveToNthChild (pushes stack)
+	def moveToNthChild (self, n):
+		
+		p = self
+		if not p: return
+		
+		child = p.v.nthChild(n)
+		if child:
+			p.stack.append(p.v)
+			p.v = child
+		else:
+			p.v = p.stack = None
+	#@nonl
+	#@-node:p.moveToNthChild (pushes stack)
+	#@+node:p.moveToParent (pops stack)
+	def moveToParent (self):
+		
+		"""Move a position to its parent position."""
+		
+		p = self
+		if not p: return
+		
+		if self.stack:
+			p.v = p.stack.pop()
+		else:
+			p.v = p.stack = None
+	#@nonl
+	#@-node:p.moveToParent (pops stack)
+	#@+node:p.moveToThreadBack
+	def moveToThreadBack (self):
+		
+		"""Move a position to the preceeding a position in threading order."""
+	
+		p = self
+		if not p: return
+	
+		if p.v.back():
+			p.moveToBack()
+			if p.v.hasChildren():
+				p.moveToLastChild()
+				p.moveToLastNode()
+			assert(p and p.v.exists())
+		else:
+			p.moveToParent()
+	#@nonl
+	#@-node:p.moveToThreadBack
+	#@+node:p.moveToThreadNext
+	def moveToThreadNext (self):
+		
+		"""Move a position to the next a position in threading order."""
+		
+		p = self
+		if not p: return
+	
+		if p.v.hasChildren():
+			p.moveToFirstChild()
+		elif p.hasNext():
+			p.moveToNext()
+		else:
+			p.moveToParent()
+			while p:
+				if p.v.next():
+					p.moveToNext()
+					break
+				p.moveToParent()
+	#@nonl
+	#@-node:p.moveToThreadNext
+	#@+node:p.moveToVisBack
+	def moveToVisBack (self):
+		
+		"""Move a position to the position of the previous visible node."""
+	
+		p = self
+		if not p: return
+	
+		p.moveToThreadBack()
+		while p and not p.isVisible():
+			p.moveToThreadBack()
+	#@nonl
+	#@-node:p.moveToVisBack
+	#@+node:p.moveToVisNext
+	def moveToVisNext (self):
+		
+		"""Move a position to the position of the next visible node."""
+	
+		p = self
+		if not p: return
+	
+		p.moveToThreadNext()
+		while p and not p.isVisible():
+			p.moveToThreadNext()
+	#@nonl
+	#@-node:p.moveToVisNext
+	#@+node:p.insert/delete/clone/promote/demote routines
+	# These routines must take care to preserve or recreate a valid position when the tree changes.
+	#@nonl
+	#@-node:p.insert/delete/clone/promote/demote routines
+	#@-others
+#@nonl
+#@-node:class position (WARNING: implies big changes to vnodes/tnodes)
 #@-others
 #@nonl
 #@-node:@file leoNodes.py
