@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="3164" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="3378" clone_windows="0"/>
 <globals body_outline_ratio="0.5">
-	<global_window_position top="10" left="297" height="836" width="837"/>
+	<global_window_position top="32" left="356" height="836" width="837"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences>
@@ -85,66 +85,16 @@
 <v t="edream.110203163054.62" a=""><vh>Quick start</vh></v>
 </v>
 <v t="edream.110203163054.63" a="E"><vh>Latest versions</vh>
-<v t="edream.110603185805" a="V"><vh>4.1 beta 5</vh>
-<v t="edream.120403174147"><vh>Changes made in 4.1 beta 5</vh>
-<v t="edream.120403180443"><vh>New and improved features</vh>
-<v t="edream.120403174147.105"><vh>Honor outline/body pane ratio when opening files</vh></v>
-<v t="edream.120403174147.112"><vh>Leo now adjusts newly opened windows so they fit on the screen</vh></v>
-<v t="edream.120403174147.119"><vh>Tested support for Unicode file &amp; directory names</vh></v>
-<v t="edream.120403174147.128"><vh>Added code so @url nodes may open .leo files</vh></v>
-<v t="edream.120403174147.56"><vh>Fixed problems with @lineending platform</vh></v>
+<v t="edream.121403160546" a="V"><vh>4.1 final</vh>
+<v t="edream.121403165221" a="E"><vh>Bugs fixed in this release</vh></v>
+<v t="edream.121403161017"><vh>Bug fixed in previous 4.1 releases</vh></v>
+<v t="edream.121403161017.1"><vh>New code-level features</vh></v>
+<v t="edream.121403161017.2"><vh>New configuration settings</vh></v>
+<v t="edream.121403161340"><vh>New features</vh></v>
 </v>
-<v t="edream.120403174241"><vh>Bugs fixed</vh>
-<v t="edream.120403174147.30"><vh>Fixed crasher in Apply Settings command</vh></v>
-<v t="edream.120403174147.102"><vh>Fixed crasher in Toggle Angle Brackets command</vh></v>
-<v t="edream.120403174147.109"><vh>Fixed crasher when setting Icon in Linux)</vh></v>
-<v t="edream.120403174147.33"><vh>Fixed Find panel bug on the Mac</vh></v>
-<v t="edream.120403174147.36"><vh>Fixed Import backslash-newline bug</vh></v>
-<v t="edream.120403174147.61"><vh>Fixed Linux import problem</vh></v>
-<v t="edream.120403174147.63"><vh>Fixed Recent files crasher</vh></v>
-<v t="edream.120403174147.65"><vh>Fixed Replace Blanks command</vh></v>
-<v t="edream.110603190322.8"><vh>Fixed Serious Undo Change All bugs</vh></v>
-<v t="edream.120403174147.94"><vh>Fixed several long-standing bugs related to Extract commands</vh></v>
-</v>
-</v>
-<v t="edream.120403180443.1"><vh>Changes made in earlier 4.1 betas</vh>
-<v t="edream.110603190234.1"><vh>Code-level features</vh>
-<v t="edream.110603190125.3"><vh>Regression tests started</vh></v>
-<v t="edream.110603190125.4"><vh>Code reorganized to support other guis</vh></v>
-<v t="edream.110303182253.39"><vh>Made app.forceShutdown work in "idle" hook</vh></v>
-</v>
-<v t="edream.110603190404"><vh>Fixed bugs</vh>
-<v t="edream.110603190322.13"><vh>Fixed bug involving 0x1a characters in body text.</vh></v>
-<v t="edream.110603190322.11"><vh>Fixed first node-only find bug</vh></v>
-<v t="edream.110603190322.3"><vh>Fixed bug in idle_body_key</vh></v>
-<v t="edream.111803060643"><vh>Fixed LaTeX syntax coloring bug</vh></v>
-</v>
-<v t="edream.110603192009"><vh>Improved format of .leo files</vh>
-<v t="edream.110603190322.9"><vh>Leo now ignores unknown prefs and find prefs</vh></v>
-<v t="edream.110603190322.10"><vh>Leo now writes node_only find prefs</vh></v>
-<v t="edream.110603190125.1"><vh>.leo files are now cvs-friendly</vh></v>
-</v>
-<v t="edream.110603192009.1"><vh>New &amp; improved commands</vh>
-<v t="edream.112303173638" a=""><vh>Running Leo in batch mode</vh></v>
-<v t="edream.110203163054.833" a=""><vh>Executing Python scripts in body text</vh></v>
-<v t="edream.110603190322.14"><vh>Added Check Outline command</vh></v>
-<v t="edream.110603190322.15"><vh>Added Hoist/De-Hoist commands</vh></v>
-<v t="edream.111803060152"><vh>Added script-based find/change commands</vh>
-<v t="edream.110603190322.6" a=""><vh> Script Find and Script Change</vh>
-<v t="edream.111803060152.1"><vh>How it works</vh></v>
-<v t="edream.111803060152.2"><vh>Ideas for using scripts</vh></v>
-</v>
-</v>
-<v t="edream.110303182253.3"><vh>Leo now does an auto-save only if files have actually been changed.</vh></v>
-<v t="edream.111803062437"><vh>Shift commands now shift single line if no selection</vh></v>
-</v>
-<v t="edream.110303182719"><vh>New config settings</vh></v>
-</v>
-</v>
-<v t="edream.110203163054.66" a=""><vh>4.0.x</vh></v>
 </v>
 <v t="edream.110203163054.117"><vh>leo.py versions</vh>
-<v t="edream.110603185805" a=""><vh>4.1 beta 5</vh>
+<v t="edream.110603185805"><vh>4.1 beta 5</vh>
 <v t="edream.120403174147"><vh>Changes made in 4.1 beta 5</vh>
 <v t="edream.120403180443"><vh>New and improved features</vh>
 <v t="edream.120403174147.105"><vh>Honor outline/body pane ratio when opening files</vh></v>
@@ -201,7 +151,7 @@
 </v>
 </v>
 <v t="edream.110203163054.64"><vh>4.1 alpha 1</vh></v>
-<v t="edream.110203163054.66" a=""><vh>4.0.x</vh></v>
+<v t="edream.110203163054.66"><vh>4.0.x</vh></v>
 <v t="edream.110203163054.67"><vh>4.0 final</vh>
 <v t="edream.110203163054.68"><vh>4.0 beta 4</vh></v>
 <v t="edream.110203163054.69"><vh>4.0 beta 3</vh>
@@ -537,6 +487,7 @@
 </v>
 </v>
 <v t="edream.110203163054.347"><vh>Translating menus into other languages</vh></v>
+<v t="edream.121403162622"><vh>Support for unit testing</vh></v>
 </v>
 <v t="edream.110203163054.61" a=""><vh>Putting the Leo icon in Leo windows</vh></v>
 <v t="edream.110203163054.348"><vh>Extending the format of .leo files</vh></v>
@@ -1413,6 +1364,7 @@
 </v>
 </v>
 <v t="edream.110203163054.347"><vh>Translating menus into other languages</vh></v>
+<v t="edream.121403162622"><vh>Support for unit testing</vh></v>
 </v>
 <v t="edream.110203163054.61" a=""><vh>Putting the Leo icon in Leo windows</vh></v>
 <v t="edream.110203163054.348"><vh>Extending the format of .leo files</vh></v>
@@ -1647,6 +1599,7 @@
 </v>
 </v>
 <v t="edream.110203163054.347"><vh>Translating menus into other languages</vh></v>
+<v t="edream.121403162622"><vh>Support for unit testing</vh></v>
 </v>
 <v t="edream.110203163054.61" a=""><vh>Putting the Leo icon in Leo windows</vh></v>
 <v t="edream.110203163054.348"><vh>Extending the format of .leo files</vh></v>
@@ -6181,6 +6134,12 @@ import all such files while starting up. This is done at "start1" time, that
 is, in the call to doHook("start1") in the run function in leo.py. Plugins
 exist to define "hook code".
 
+New in 3.11: Leo looks in the plugins folder for .py files. Leo tries to
+import all such files at startup ("start2") time.
+
+New in 4.1: Leo enables only plugins whose name appears in pluginsManager.txt.
+Leo loads no plugins if pluginsManager.txt does not exist in the plugins directory.
+
 What is hook code?
 
 Leo automatically calls hook code at various times during Leo's execution.
@@ -6205,10 +6164,9 @@ which should appear as the outer level of the .py file:
 
 """A description of this plugin"""
 
-if 1: # 1 to enable the plugin, 0 to disable the plugin:
-	registerHandler("xxx", onXXX)
-	__version__ = "1.2"
-	plugin_signon(__name__)
+registerHandler("xxx", onXXX)
+__version__ = "1.2"
+plugin_signon(__name__)
 	
 @nocolor
 
@@ -6219,12 +6177,7 @@ Line by line:
 This is a Python doc string describing the plugin. This string becomes the
 value of the __name__ attribute for the module (.py file).
 
-2) if 1: # 1 to enable the plugin, 0 to disable the plugin:
-
-This line enables or disables the code that registers the plugin. Plugins do
-nothing unless they are actually registered when Leo first imports them.
-
-3) registerHandler("xxx", onXXX)
+2) registerHandler("xxx", onXXX)
 
 This line registers a handler called onXXX for the hook called "xxx". See the
 documentation for hooks for a complete list of hook names that you can use
@@ -6240,12 +6193,12 @@ example:
 
 registerHandler(("bodykey1","bodykey2","headkey1","headkey2"), onKey)
 
-4) __version__ = "1.2"
+3) __version__ = "1.2"
 
 This assigns a version attribute to module. At present this attribute is used
 by the plugin code that creates Leo's Plugins menu.
 
-5) plugin_signon(__name__)
+4) plugin_signon(__name__)
 
 This line increases the count of loaded modules. The present code for
 plugin_signon does not actually print separate signons--it seems to verbose.
@@ -6282,19 +6235,23 @@ study is LeoPy.leo. In particular, study very carefully the section called
 suited to this style of programming.</t>
 <t tx="edream.110203163054.323">@nocolor
 
-New in 3.11. Leo now looks in the plugins folder for .py files. Leo tries to
+New in 3.11: Leo looks in the plugins folder for .py files. Leo tries to
 import all such files at startup ("start2") time.
+
+New in 4.1: Leo enables only plugins whose name appears in pluginsManager.txt.
+Leo loads no plugins if pluginsManager.txt does not exist in the plugins directory.
 
 The child of this node gives an example of the code that creates the Open With
 menu. The following code, appearing at the end of mod_open_with.py, registers
 two different hook functions. The on_idle function is the "idle" hook. The
 create_open_with_menu is the "start2","open2" and "command2" hooks.
+
 @color
 
-if 1: # Register the handlers... 
-	registerHandler("idle", on_idle) 
-	registerHandler(("start2","open2","command2"), create_open_with_menu) 
-	es("...open with")
+# Register the handlers... 
+registerHandler("idle", on_idle) 
+registerHandler(("start2","open2","command2"), create_open_with_menu) 
+es("...open with")
 	
 @nocolor
 Plugins may call registerHandler with a hook name like "idle" or a list of hook
@@ -6307,25 +6264,10 @@ mod_open_with.py also contains the on_idle and create_open_with functions that
 actually handle the hook. Such functions have two arguments: tag and keywords.
 You will find many examples of this in LeoPy.leo.
 
-About distribution:
-
-1. LeoPy.leo now contains all the plugins in @ignore'd @file nodes. This way
-Leo won't complain when you open LeoPy.leo.
-
-2. Most plugins actually are disabled: the code that registers the hooks is
-contained in #if 0: blocks. So to create a pluging you have to remove the
-@ignore and you have to change #if 0: to #if 1.
-
-3. Most mod_*.py will never be part of Leo distributions, and the single-click
-installer will create an plugins folder containing just mod_open_with.py.
-
-4. There is no longer a need for a customizeLeo.py file.
-
 About error checking:
 
 At present Leo will disable all hooks if any hook throws an exception. In
-practice this isn't a big deal, but obviously something better could be done. I
-won't do anything until after 3.11b1 goes out.
+practice this isn't a big deal, but something better could be done.
 
 How to send me your plugins:
 
@@ -24491,5 +24433,82 @@ leoImport.importFiles(aDirectory, ".py")
 @nocolor
 
 This will import all .py files from aDirectory, which should be a full path to a particular directory.  You could use ".c" to import all .c files, etc.</t>
+<t tx="edream.121403160546">Leo 4.1 Release Candidate 1              December 15, 2003
+
+There are no known bugs in this version of Leo.
+
+The highlights of this release:
+
+- Leo runs in batch mode when invoked with --script aScriptFile.py
+- Leo supports Unicode characters (e.g. Chinese) in path and file names.
+- @directives and section references are now valid when executing scripts.
+- @ignored and orphan nodes now valid in @file-nosent trees.
+- Script-based find/change commands.
+- Check Outline command.
+- Hoist &amp; DeHoist commands.
+- A new gui-agnostic architecture: useful for batch mode and unit tests.
+- Several new configuration settings.
+- Many new unit tests.
+- A host of bug fixes.</t>
+<t tx="edream.121403161017">See previous release notes for more details:
+
+- Fixed several minor problems with the Extract Section and Import commands.
+- Fixed problem that prevent the Find panel from working on the Mac.
+- Improved @url handling so that @url file:\\path\x.leo works properly.
+- Improved support for @lineending platform.
+- Leo honors outline/body pane ratio when opening .leo files.
+- Leo now ensures that newly-opened windows fit entirely on the screen.
+- Fixed a crasher when Undoing a Change All command when searching headlines.
+- Fixed other bugs resulting from the 4.1 reorg:
+- Fixed problem loading plugins on Linux.
+- Fixed crashers in the Extract Section and Extract commands.
+- Fixed a crasher when writing a file containing an undefined section.
+- Removed duplicate bindings in popup menus.
+- Made sure to show Leo's windows in wx gui plugin.
+- More than one section reference may now appear on the same line.
+- Use "utf-8" encoding for filenames under MacOS (Darwin)
+- Allow command or cmnd prefix for menu shortcuts under Darwin.
+- Fixed a LaTeX coloring bug
+</t>
+<t tx="edream.121403161017.1">- The 4.1 code base has been reorganized to support gui plugins.
+- Created a flexible framework for creating &amp; running regression tests.
+- app.forceShutdown now works when called from plugins.
+- Created app.unitTestDict for communication between tests and between tests and code.
+
+- An example wx_gui plugin is partly functional.
+
+	Warning: Use the __wx_gui.py plugin with _extreme_ caution until further notice:
+	bugs in this plugin could cause body text to be cleared improperly when changing nodes.
+</t>
+<t tx="edream.121403161017.2">- use_gnx specifies whether .leo files use integers as indices:
+  
+	use_gnx = 0 makes .leo files compatible with previous versions of Leo.
+	use_gnx = 1 makes .leo files cvs-friendly
+
+- config_encoding specifies the encoding of leoConfig.txt.</t>
+<t tx="edream.121403161340">- Import Derived File command now uses a file dialog.
+
+	This is much more natural than using @file nodes.
+
+- Leo now loads all plugins listed in pluginsManager.text.
+
+	It is no longer necessary to edit plugin files to enable or disable plugins.</t>
+<t tx="edream.121403162622">New in 4.1: The plugins test suite creates a new convention: if a plugin has a
+function at the outer (module) level called unitTest, Leo will call that
+function when doing unit testing for plugins. So it would be good if writers of
+plugins would create such a unitTest funcion. The unitTest function should run
+some tests. All unitTest needs to do to indicate failure is throw an exception
+or cause an assert to fail. Leo's plugins test suite takes care of the rest.</t>
+<t tx="edream.121403165221">- Corrected counts when replacing tabs/blanks.
+- Don't write tnodeList when executing scripts.
+- Fixed long-standing clone-drag bug.
+- Fixed inconsistency between how 4.x and 3.x handle @others.
+  The code now works as it did in all 3.x versions, namely
+  @others does not terminate doc parts.
+- Leo now properly sets clone marks when when cutting and pasting nodes.
+- Only double-quotes delimit strings in html files.
+  This bug prevented Leo from untangling some valid html/xml files.
+- Leo now puts class docstrings in class nodes when importing .py files.
+- Fixed several reorg bugs.</t>
 </tnodes>
 </leo_file>
