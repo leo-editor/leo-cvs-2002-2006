@@ -1,5 +1,5 @@
 #@+leo-ver=4-thin
-#@+node:ekr.20041030091736.79:@thin dynacommon.py
+#@+node:ekr.20050328091022.78:@thin dynacommon.py
 """not needed in pluginManager.txt
 generate this file to exist in the Leo plugins directory.
 you have to edit in your correct paths. < set filenames > section 
@@ -21,10 +21,10 @@ have to lazy eval the filename creation till after leoID is defined til Leo4.3
 #__all__ = 'tmpfile py ptpath leosrc reindent pycheck2 pycheck '.split()
 #this needs its own dictionary dopylint doreindent
 
+
 import sys, os
 import leoGlobals as g
-
-Tk = g.importExtension('Tkinter',pluginName=__name__,verbose=True)
+import Tkinter as Tk
 
 try:
     True and False
@@ -44,9 +44,9 @@ except ImportError:
 
 __version__ = '0.0138'  #t04A26p02:57
 #@+others
-#@+node:ekr.20041030091736.80:others
+#@+node:ekr.20050328091022.79:others
 
-#@+node:ekr.20041030091736.81:_caller_symbols
+#@+node:ekr.20050328091022.80:_caller_symbols
 def _caller_symbols():
     """aspncookbook/52278
     Print an expression and its value, 
@@ -60,8 +60,8 @@ def _caller_symbols():
     except StandardError:
         t = sys.exc_info()[2].tb_frame
         return (t.f_back.f_back.f_globals, t.f_back.f_back.f_locals)
-#@-node:ekr.20041030091736.81:_caller_symbols
-#@+node:ekr.20041030091736.82:DDList
+#@-node:ekr.20050328091022.80:_caller_symbols
+#@+node:ekr.20050328091022.81:DDList
 """Tkinter Drag'n'drop list John Fouhy
 Last update: 2004/07/06, Version: 1.0, Category: User 
 A Tkinter listbox which supports drag'n'drop reordering of the list.
@@ -122,8 +122,8 @@ if __name__ == '__main__':
     #
 
 #
-#@-node:ekr.20041030091736.82:DDList
-#@+node:ekr.20041030091736.83:ScrolledMenu
+#@-node:ekr.20050328091022.81:DDList
+#@+node:ekr.20050328091022.82:ScrolledMenu
 
 class ScrolledMenu(Tk.Toplevel):
     def __init__(self, command=None):
@@ -188,12 +188,12 @@ class _Test(Tk.Tk):
 #    mw = _Test()
 #    mw.mainloop()
 #@nonl
-#@-node:ekr.20041030091736.83:ScrolledMenu
-#@-node:ekr.20041030091736.80:others
-#@+node:ekr.20041030091736.84:functs w/doctest
+#@-node:ekr.20050328091022.82:ScrolledMenu
+#@-node:ekr.20050328091022.79:others
+#@+node:ekr.20050328091022.83:functs w/doctest
 
 #@+others
-#@+node:ekr.20041030091736.85:deangle
+#@+node:ekr.20050328091022.84:deangle
 def deangle(s, repl=  '+'):
     """
     use repl so output can be pasted w/o appearing as named nodes to leo
@@ -210,8 +210,8 @@ def deangle(s, repl=  '+'):
         return '<%s%s'%(repl, s[1:])
     return s
 #@nonl
-#@-node:ekr.20041030091736.85:deangle
-#@+node:ekr.20041030091736.86:commafy
+#@-node:ekr.20050328091022.84:deangle
+#@+node:ekr.20050328091022.85:commafy
 def commafy(val, sep= ','):
     """Bengt , added sep
     mod to use leading seperator if . maybe
@@ -229,8 +229,8 @@ def commafy(val, sep= ','):
     while val: val, rest = val[:-3], '%s%s%s'%(val[-3:], sep, rest)
     return '%s%s%s' %(sign, rest[:-1], dec)
 #@nonl
-#@-node:ekr.20041030091736.86:commafy
-#@+node:ekr.20041030091736.87:sentstrip
+#@-node:ekr.20050328091022.85:commafy
+#@+node:ekr.20050328091022.86:sentstrip
 
 def sentstrip(s):
     """strip sentinals from the script script passed
@@ -241,8 +241,8 @@ def sentstrip(s):
         if x.lstrip().startswith('#@'): continue
         l.append(x)
     return '\n'.join(l)
-#@-node:ekr.20041030091736.87:sentstrip
-#@+node:ekr.20041030091736.88:sanitize_
+#@-node:ekr.20050328091022.86:sentstrip
+#@+node:ekr.20050328091022.87:sanitize_
 
 def sanitize_(s):
     """ Leo's sanitize_filename is too aggressive and too lax
@@ -251,7 +251,7 @@ def sanitize_(s):
     strips most characters, space and replaces with underscore, len<128
     the doctest is in a subnode to allow syntax highlighting
     #@    << chk sanitize >>
-    #@+node:ekr.20041030091736.89:<< chk sanitize >>
+    #@+node:ekr.20050328091022.88:<< chk sanitize >>
     the best of both worlds, doctest with syntax highlighting!
     >>> sanitize_("|\\ /!@=#$%,^&?:;.\\"'<>`~*+")
     '_____________'
@@ -260,7 +260,7 @@ def sanitize_(s):
     >>> #one comment line required when use subnode this way 
     >>> #to avoid doctest seeing node sentinals. don't ask...
     #@nonl
-    #@-node:ekr.20041030091736.89:<< chk sanitize >>
+    #@-node:ekr.20050328091022.88:<< chk sanitize >>
     #@nl
     """
     if not s: return
@@ -274,8 +274,8 @@ def sanitize_(s):
     #should test for unicode before str()
     return res.sub('_', str(s.strip())).replace('__','_')[:128]
 #@nonl
-#@-node:ekr.20041030091736.88:sanitize_
-#@+node:ekr.20041030091736.90:leotmp
+#@-node:ekr.20050328091022.87:sanitize_
+#@+node:ekr.20050328091022.89:leotmp
 def leotmp(name = None, tmp= None):
     """ attempt to divine the user tmp dir add to input name
     later prepend leoID unless no leoID flag or something
@@ -297,7 +297,7 @@ def leotmp(name = None, tmp= None):
         return tmp
     return g.os_path_join(tmp, name)
 
-#@-node:ekr.20041030091736.90:leotmp
+#@-node:ekr.20050328091022.89:leotmp
 #@-others
 #@+at
 # others not required except to enable du_test for all these subnodes
@@ -309,8 +309,8 @@ def leotmp(name = None, tmp= None):
 # '7 tests in 5 items.'
 # '7 passed and 0 failed.'
 #@-at
-#@-node:ekr.20041030091736.84:functs w/doctest
-#@+node:ekr.20041030091736.91:dynastuff
+#@-node:ekr.20050328091022.83:functs w/doctest
+#@+node:ekr.20050328091022.90:dynastuff
 
 
 #@+at
@@ -324,7 +324,7 @@ def leotmp(name = None, tmp= None):
 # 
 # 
 #@-at
-#@+node:ekr.20041030091736.92:fixbody
+#@+node:ekr.20050328091022.91:fixbody
 
 def scriptbody(c, p):
     """AttributeError: vnode instance has no attribute 'copy'
@@ -507,8 +507,8 @@ def fixbody(data, c= g.top()):
 
     return data
 #@nonl
-#@-node:ekr.20041030091736.92:fixbody
-#@+node:ekr.20041030091736.93:AskYesNo
+#@-node:ekr.20050328091022.91:fixbody
+#@+node:ekr.20050328091022.92:AskYesNo
 
 #file leoTkinterGui.py
 #import tkFont,Tkinter,tkFileDialog leoTkinterDialog
@@ -528,8 +528,8 @@ def runAskYesNoCancelDialog(title,
 
     return d.run(modal=true)
 #@nonl
-#@-node:ekr.20041030091736.93:AskYesNo
-#@+node:ekr.20041030091736.94:dynaBunch
+#@-node:ekr.20050328091022.92:AskYesNo
+#@+node:ekr.20050328091022.93:dynaBunch
 import operator
 
 def init_dyna(c, *a, **k):
@@ -613,8 +613,8 @@ class dynaBunch(object):
 
     def save(self, outfile):"""
 #@nonl
-#@-node:ekr.20041030091736.94:dynaBunch
-#@+node:ekr.20041030091736.95:names and colors
+#@-node:ekr.20050328091022.93:dynaBunch
+#@+node:ekr.20050328091022.94:names and colors
 #Leo log Tk names & HTML names and colors
 dycolors = dynaBunch( 
     gAqua = 'aquamarine3',
@@ -653,8 +653,8 @@ dycolors = dynaBunch(
     hYellow = '#FFFF00',
     )
 #print dycolors.gYellow
-#@-node:ekr.20041030091736.95:names and colors
-#@+node:ekr.20041030091736.96:dynaerrout
+#@-node:ekr.20050328091022.94:names and colors
+#@+node:ekr.20050328091022.95:dynaerrout
 
 #quiet warnings from pychecker and tim1 about regex
 
@@ -711,8 +711,8 @@ def dynaerrout(err, msg):
         #g.app.goToLineNumber(int(newSel))
         g.es(line, color= dycolors.gError)
 #@nonl
-#@-node:ekr.20041030091736.96:dynaerrout
-#@+node:ekr.20041030091736.97:getsubnodes
+#@-node:ekr.20050328091022.95:dynaerrout
+#@+node:ekr.20050328091022.96:getsubnodes
 
 #code to operate dynamenu, no user code
 
@@ -754,8 +754,8 @@ def dyna_getsubnodes(c, globs= {}):
     #es('dynamenu macros %s'%(lst,) )
     return lst
 #@nonl
-#@-node:ekr.20041030091736.97:getsubnodes
-#@+node:ekr.20041030091736.98:captureStd
+#@-node:ekr.20050328091022.96:getsubnodes
+#@+node:ekr.20050328091022.97:captureStd
 class captureStd(object):
     """the typical redirect stdout
     add stderr and stdin later
@@ -781,8 +781,8 @@ class captureStd(object):
         sys.stdout = sys.__stdout__
         return captured
 #@nonl
-#@-node:ekr.20041030091736.98:captureStd
-#@+node:ekr.20041030091736.99:runcmd
+#@-node:ekr.20050328091022.97:captureStd
+#@+node:ekr.20050328091022.98:runcmd
 
 #runcmd(cmds) & forklike(*cmds)
 def fixupCmdStr(cmd, args):#_ignoredindoctests
@@ -870,8 +870,8 @@ WindowsError: [Errno 2] The system cannot find the file specified: 'C:\\c\\py\\P
     
     return output
 #@nonl
-#@-node:ekr.20041030091736.99:runcmd
-#@+node:ekr.20041030091736.100:dynadoc
+#@-node:ekr.20050328091022.98:runcmd
+#@+node:ekr.20050328091022.99:dynadoc
 
 def dynadoc(c, sub= 'all' , globs= {}):
     """read dynadeflst and createdoc for them
@@ -982,9 +982,9 @@ def dynadoc(c, sub= 'all' , globs= {}):
     #g.es(text.docroutine(f, x))
     
 #@nonl
-#@-node:ekr.20041030091736.100:dynadoc
-#@-node:ekr.20041030091736.91:dynastuff
-#@+node:ekr.20041030091736.101:dynaput
+#@-node:ekr.20050328091022.99:dynadoc
+#@-node:ekr.20050328091022.90:dynastuff
+#@+node:ekr.20050328091022.100:dynaput
 
 def dynaput(c, slst):
     """return the text selection or put it if slst is not None
@@ -1073,8 +1073,8 @@ def dynaput(c, slst):
                          cg.dynapasteFlag.get() )
 
     else: g.es("no text selected", color= 'orangered' )
-#@-node:ekr.20041030091736.101:dynaput
-#@+node:ekr.20041030091736.102:dynaplay
+#@-node:ekr.20050328091022.100:dynaput
+#@+node:ekr.20050328091022.101:dynaplay
 
 def dynaplay(c, splst):
     """playback commands from a list into the selected or body text
@@ -1156,8 +1156,8 @@ def dynaplay(c, splst):
 
     dynaput(c, sx[1:])
     c.frame.body.setInsertionPoint(ip)
-#@-node:ekr.20041030091736.102:dynaplay
-#@+node:ekr.20041030091736.103:python -O
+#@-node:ekr.20050328091022.101:dynaplay
+#@+node:ekr.20050328091022.102:python -O
 #make part of a larger basic python sanity check
 import leoGlobals as g
 
@@ -1201,12 +1201,12 @@ except AssertionError:
     pass
 del x
 #@nonl
-#@-node:ekr.20041030091736.103:python -O
+#@-node:ekr.20050328091022.102:python -O
 #@-others
 
 #depandance on sanitize_ and leoID
 #@<< set filenames >>
-#@+node:ekr.20041030091736.104:<< set filenames >>
+#@+node:ekr.20050328091022.103:<< set filenames >>
 #note, these changes are at the time the button or menu is created
 #to effect these changes you have to 
 #write the plugin and start a new python and leo. maybe reload
@@ -1304,9 +1304,9 @@ if sys.platform[:3] == 'win':
 #should check is valid and have access and create if doesn't exist...
 #may have to defer the creat w/properties so is created on first use
 #leoID doesnt exist when dyna imports common and shouldent import * either
-#@-node:ekr.20041030091736.104:<< set filenames >>
+#@-node:ekr.20050328091022.103:<< set filenames >>
 #@nl
 #
 #@nonl
-#@-node:ekr.20041030091736.79:@thin dynacommon.py
+#@-node:ekr.20050328091022.78:@thin dynacommon.py
 #@-leo

@@ -1,5 +1,5 @@
 #@+leo-ver=4-thin
-#@+node:ekr.20041030091736.75:@thin exSButton.py
+#@+node:ekr.20050328091022.74:@thin exSButton.py
 #unfinshed, works, but, selectable options do nothing.
 """
 you can execute script from every leo buttonbar.
@@ -39,13 +39,14 @@ on my comment page from:
 or sourceforge forum
 """
 #@<< initilize >>
-#@+node:ekr.20041030091736.76:<< initilize >>
+#@+node:ekr.20050328091022.75:<< initilize >>
 
 import leoPlugins as lp
 import leoGlobals as g
 import sys
 
-Tk = g.importExtension('Tkinter',pluginName=__name__,verbose=True)
+try: import Tkinter as Tk
+except ImportError: Tk = None
 
 #@+at
 # 
@@ -138,14 +139,14 @@ Tk = g.importExtension('Tkinter',pluginName=__name__,verbose=True)
 # or a toolbar between the log and headlines
 # smaller text and fonts by default in all buttons.
 #@-at
-#@-node:ekr.20041030091736.76:<< initilize >>
+#@-node:ekr.20050328091022.75:<< initilize >>
 #@nl
 
 def add_exSb(a, msg, *arg, **kwd):
     """your basic execute script enabler
     """
     #@    << callbacks >>
-    #@+node:ekr.20041030091736.77:<< callbacks >>
+    #@+node:ekr.20050328091022.76:<< callbacks >>
     #at this point code from plugins isnt importable
     if g.os_path_join(g.app.loadDir, "..", "plugins") not in sys.path:
         sys.path.append(g.os_path_join(g.app.loadDir, "..", "plugins"))
@@ -181,11 +182,11 @@ def add_exSb(a, msg, *arg, **kwd):
             cf.putStatusLine(msg)
         return doit
     #@nonl
-    #@-node:ekr.20041030091736.77:<< callbacks >>
+    #@-node:ekr.20050328091022.76:<< callbacks >>
     #@nl
 
     #@    @+others
-    #@+node:ekr.20041030091736.78:result
+    #@+node:ekr.20050328091022.77:result
     def result(van):
         #should be able to get which, currently first letter
         #can we deduce the rest of the items text? last 2 chars?
@@ -197,7 +198,7 @@ def add_exSb(a, msg, *arg, **kwd):
         #should be able to update list first?
         eb.sm.popup(eb)
     #@nonl
-    #@-node:ekr.20041030091736.78:result
+    #@-node:ekr.20050328091022.77:result
     #@-others
     
     if not a: 
@@ -245,7 +246,7 @@ def add_exSb(a, msg, *arg, **kwd):
 #print '__name__ =', __name__  # __builtin__ when execscript
 if __name__ != 'exSButton': add_exSb('dynaExS1', 'exS') #one extra
 
-elif Tk:  # Ok for unit testing.
+elif Tk:  #must be running as plugin
     if g.app.gui is None:
         g.app.createTkGui(__file__)
 
@@ -263,5 +264,5 @@ elif Tk:  # Ok for unit testing.
 #@@language python
 #@@color
 #@nonl
-#@-node:ekr.20041030091736.75:@thin exSButton.py
+#@-node:ekr.20050328091022.74:@thin exSButton.py
 #@-leo
