@@ -16,6 +16,13 @@ import leoGlobals as g
 import leoPlugins
 
 import os
+import ConfigParser
+from HTMLParser import HTMLParser
+from pprint import pprint
+try:
+    import mod_http
+except:
+    mod_http = None
 
 #@<< change log >>
 #@+node:ekr.20040331071319.2:<< change log >>
@@ -45,12 +52,66 @@ import os
 #     - Added div.code-block style to silver_city.css (see documentation)
 #     - Rewrote documentation.
 # 2.2 EKR 2005-03-07 changed publish() to publish(argv=[''])
+# 
+# 2.3 bwmulder
+#     - add rst2.ini with various options
+#     - add support for mod_http plugin.
 #@-at
 #@nonl
 #@-node:ekr.20040331071319.2:<< change log >>
 #@nl
 
 #@+others
+#@+node:bwmulder.20050319123911:http plugin interface
+#@+doc
+# if enabled, this plugin stores information for the http plugin.
+# 
+# Each node can have one additional attribute, with the name 
+# config.rst_http_attributename, which is a list.
+# 
+# The first three elements are stack of tags, the rest is html code.
+# 
+# [<tag n start>, <tag n end>, <other stack elements>, <html line 1>, <html 
+# line 2>, ...]
+# 
+# <other stack elements has the same structure:
+#     [<tag n-1 start>, <tag n-1 end>, <other stack elements>]
+#@-doc
+#@nonl
+#@-node:bwmulder.20050319123911:http plugin interface
+#@+node:bwmulder.20050314132625:config
+class config:
+    # 
+    bodyfilter = False
+    rst2file = ''
+    pure_document = False
+    http_server_support = True
+    underline_change = False
+    number_headlines = False
+    warnofdrags = False
+    clear_attributes = False
+    run_on_window_open = False
+    
+    # debug flags: ignore in normal use
+    debug_handle_starttag = False
+    debug_handle_endtag = False
+    debug_store_lines = False
+    debug_show_unknownattributes = False
+    debug_node_html_1 = False
+    debug_anchors = False
+    debug_before_and_after_replacement = False
+    
+    # These are really configuration options.
+    node_begin_marker = 'http-node-marker-'
+    rst_http_attributename = 'rst_http_attribute'
+    
+    # Some data is also stored in the config class
+    http_map = None
+    tag = None
+    current_file = None
+    
+#@nonl
+#@-node:bwmulder.20050314132625:config
 #@+node:ekr.20040331071319.3:onIconDoubleClick
 # by Josef Dalcolmo 2003-01-13
 #
@@ -67,6 +128,9 @@ def onIconDoubleClick(tag,keywords):
     if not c or not p:
         return
     
+    applyConfiguration()
+    config.tag = tag
+
     h = p.headString().strip()
 
     if g.match_word(h,0,"@rst"):
@@ -84,7 +148,7 @@ def onIconDoubleClick(tag,keywords):
                 else:
                     import docutils.parsers.rst
                     from docutils.core import Publisher
-                    from docutils.io import StringOutput, StringInput
+                    from docutils.io import StringOutput, StringInput, FileOutput,FileInput
                     import StringIO
                     
                 # Set the writer and encoding for the converted file
@@ -136,23 +200,39 @@ def onIconDoubleClick(tag,keywords):
                     except ImportError:
                         g.es('SilverCity not present so no syntax highlighting')
                 
-                rstFile = StringIO.StringIO()
+                if config.rst2file:
+                    rstFile = file(config.rst2file, "w")
+                else:
+                    rstFile = StringIO.StringIO()
+                config.current_file = fname
                 writeTreeAsRst(rstFile,fname,p,c,syntax=syntax)
-                rstText = rstFile.getvalue()
+                if config.rst2file:
+                    rstFile.close()
+                else:
+                    rstText = rstFile.getvalue()
                 
                 # This code snipped has been taken from code contributed by Paul Paterson 2002-12-05.
                 pub = Publisher()
-                pub.source = StringInput(source=rstText)
-                pub.destination = StringOutput(pub.settings, encoding=enc)
+                if config.rst2file:
+                    pub.source = FileInput(source_path=config.rst2file)
+                    pub.destination = FileOutput(destination_path=fname, encoding='unicode')
+                else:
+                    pub.source = StringInput(source=rstText)
+                    pub.destination = StringOutput(pub.settings, encoding=enc)
                 pub.set_reader('standalone', None, 'restructuredtext')
                 pub.set_writer(writer)
                 output = pub.publish(argv=[''])
                 
-                convertedFile = file(fname,'w')
-                convertedFile.write(output)
-                convertedFile.close()
+                if config.rst2file:
+                    pass
+                else:
+                    convertedFile = file(fname,'w')
+                    convertedFile.write(output)
+                    convertedFile.close()
                 rstFile.close()
                 writeFullFileName(fname)
+                return http_support_main(tag, fname)
+                
                 #@-node:ekr.20040331071319.4:<< write rST as HTML/LaTeX >>
                 #@nl
             else:
@@ -219,7 +299,10 @@ def writeTreeAsRst(rstFile,fname,p,c,syntax=False):
     rstFile.write('.. filename: '+s+'\n')
     rstFile.write('\n')
 
-    s = p.bodyString()
+    if config.bodyfilter:
+        s = bodyfilter(p)
+    else:
+        s = p.bodyString()
     s = g.toEncodedString(s,encoding,reportErrors=True)
     rstFile.write(s+'\n')		# write body of titlepage.
     rstFile.write('\n')
@@ -227,9 +310,16 @@ def writeTreeAsRst(rstFile,fname,p,c,syntax=False):
     toplevel = p.level()+1 # Dec 20
     h = p.headString()
     
+    if config.http_server_support:
+        nodecounter = 0
+        if config.tag == 'open2':
+            http_map = config.http_map
+        else:
+            http_map = {}
+        # maps v nodes to markers.
     for p in p.subtree_iter():
         h = p.headString().strip()
-        if g.match_word(h,0,"@rst"):
+        if config.pure_document or g.match_word(h,0,"@rst"):
             #@            << handle an rst node >>
             #@+node:ekr.20040403202850.1:<< handle an rst node >>
             s = p.bodyString()
@@ -244,6 +334,19 @@ def writeTreeAsRst(rstFile,fname,p,c,syntax=False):
                 i = g.skip_line(s,0)
                 s = s[i:]
                 
+            if config.http_server_support:
+                nodecounter += 1
+                marker = rst_htmlparser.generate_node_marker(nodecounter)
+                http_map[marker] = p.copy()
+                # the p.copy is necessary, since otherwise the
+                # position is modified and unusable later.
+                rstFile.write(".. _%s:\n\n" % marker)
+            
+            if config.underline_change:
+                rstFile.write(h+'\n')
+                rstFile.write(underline(h,p.level()-toplevel))
+                rstFile.write('\n')
+            
             rstFile.write('%s\n\n'%s.strip())
             #@-node:ekr.20040403202850.1:<< handle an rst node >>
             #@nl
@@ -253,13 +356,18 @@ def writeTreeAsRst(rstFile,fname,p,c,syntax=False):
             if g.match_word(h,0,"@file-nosent"):
                 h = h[13:]
             h = g.toEncodedString(h,encoding,reportErrors=True)
-            
-            s = p.bodyString()
+            if config.bodyfilter:
+                s = bodyfilter(p)
+            else:
+                s = p.bodyString()
             s = g.toEncodedString(s,encoding,reportErrors=True)
             
-            rstFile.write(h+'\n')
-            rstFile.write(underline(h,p.level()-toplevel))
-            rstFile.write('\n')
+            if config.underlinechange:
+                pass
+            else:
+                rstFile.write(h+'\n')
+                rstFile.write(underline(h,p.level()-toplevel))
+                rstFile.write('\n')
             
             if s.strip():
                 rstFile.write(code_dir)
@@ -273,8 +381,95 @@ def writeTreeAsRst(rstFile,fname,p,c,syntax=False):
             #@nonl
             #@-node:ekr.20040403202850.2:<< handle a plain node >>
             #@nl
-#@nonl
+        #@        << clear attributes >>
+        #@+node:bwmulder.20050315150045:<< clear attributes >>
+        if config.clear_attributes:
+            if hasattr(p.v, 'unknownAttributes'):
+                if p.v.unknownAttributes.has_key(config.rst_http_attributename):
+                    del p.v.unknownAttributes[config.rst_http_attributename]
+                    if p.v.unknownAttributes == {}:
+                        del p.v.unknownAttributes
+        #@nonl
+        #@-node:bwmulder.20050315150045:<< clear attributes >>
+        #@nl
+    if config.http_server_support:
+        config.http_map = http_map
 #@-node:ekr.20040331071319.7:writeTreeAsRst
+#@+node:bwmulder.20050320000243:onFileOpen
+def onFileOpen(tag, keywords):
+    # c,old_c,new_c,fileName):
+    applyConfiguration()
+    c = keywords["new_c"]
+    ignoreset = {}
+    if config.run_on_window_open:
+        config.http_map = {}
+        found_rst_trees = False
+        root = c.currentVnode()
+        
+        for p in c.allNodes_iter(root):
+            if p.v not in ignoreset:
+                s = p.v.headString()
+                if s.startswith("@rst ") and len(s.split()) >= 2:
+                    found_rst_trees = True
+                    for p1 in p.subtree_iter():
+                        ignoreset[p1.v] = True
+                    onIconDoubleClick("open2", {"c": c, "p": p})
+        if found_rst_trees:
+            relocate_references() 
+          
+            config.http_map = None
+            g.es('html updated for html plugin', color="blue")
+            if config.clear_attributes:
+                g.es("http attributes cleared")
+    
+#@-node:bwmulder.20050320000243:onFileOpen
+#@+node:bwmulder.20050314131619:applyConfiguration
+def applyConfiguration (configfile=None):
+
+    """Called when the user presses the "Apply" button on the Properties form.
+ 
+    Default: behave like the previous plugin.
+    """
+
+    def getboolean(name):
+        setattr(config, name, configparser.getboolean("Main", name))
+    configparser = None
+    if configfile is None:
+        fileName = os.path.join(g.app.loadDir,"..","plugins","rst2.ini")
+        if os.path.exists(fileName):
+            configparser = ConfigParser.ConfigParser()
+            configparser.read(fileName)
+    
+    if configparser:
+        config.rst2file = configparser.get("Main", "rst2file")
+        
+        getboolean("bodyfilter")
+        getboolean("clear_attributes")
+        getboolean("http_server_support")
+        getboolean("pure_document")
+        getboolean("underline_change")
+        getboolean("warnofdrags")
+        getboolean("run_on_window_open")
+        
+        getboolean("debug_handle_endtag")
+        getboolean("debug_store_lines")
+        getboolean("debug_handle_starttag")
+        getboolean("debug_show_unknownattributes")
+        getboolean("debug_node_html_1")
+        getboolean("debug_anchors")
+        getboolean("debug_before_and_after_replacement")
+
+#@-node:bwmulder.20050314131619:applyConfiguration
+#@+node:bwmulder.20041011145032:bodyfilter
+def bodyfilter(p):
+    s = p.bodyString()
+    while (s.startswith("@ignore") or
+           s.startswith("@nocolor") or
+           s.startswith("@wrap")):
+       i = g.skip_line(s,0)
+       s = s[i:]
+    return s
+#@-node:bwmulder.20041011145032:bodyfilter
 #@+node:ekr.20040331071319.8:underline
 # note the first character is intentionally unused, to serve as the underline
 # character in a title (in the body of the @rst node)
@@ -286,13 +481,382 @@ def underline(h,level):
     str = """#=+*^~"'`-:><_"""[level]
 
     return str*max(len(h),4)+'\n'
-#@nonl
 #@-node:ekr.20040331071319.8:underline
+#@+node:bwmulder.20050319191929:http related stuff
+#@+node:bwmulder.20050320092000:http_support_main
+def http_support_main(tag, fname):
+    if config.http_server_support:
+        set_initial_http_attributes(fname)
+        if tag == 'open2':
+            return True
+        # We relocate references here if we are only running
+        # for one file, otherwise we must postpone the
+        # relocation until we have processed all files.
+        relocate_references() 
+      
+        config.http_map = None
+        g.es('html updated for html plugin', color="blue")
+        if config.clear_attributes:
+            g.es("http attributes cleared")
+        
+#@nonl
+#@-node:bwmulder.20050320092000:http_support_main
+#@+node:bwmulder.20050319191929.1:general routines
+#@+node:bwmulder.20050319181934:link_anchor_parser
+class link_anchor_parser(HTMLParser):
+    #@    @+others
+    #@+node:bwmulder.20050319181934.1:docstring
+    """
+    This subclass of HTMLParser contains functions to recognise anchors and links.
+    """
+    #@nonl
+    #@-node:bwmulder.20050319181934.1:docstring
+    #@+node:bwmulder.20050319181934.2:is_anchor
+    def is_anchor(self, tag, attrs):
+        if tag != 'a':
+            return False
+        for name, value in attrs:
+            if name == 'name':
+                return True
+        return False
+      
+    #@-node:bwmulder.20050319181934.2:is_anchor
+    #@-others
+#@nonl
+#@-node:bwmulder.20050319181934:link_anchor_parser
+#@+node:bwmulder.20050319152217:get_http_attribute
+def get_http_attribute(p):
+    vnode = p.v
+    if hasattr(vnode, 'unknownAttributes'):
+        return vnode.unknownAttributes.get(config.rst_http_attributename, None)
+    return None
+
+#@-node:bwmulder.20050319152217:get_http_attribute
+#@+node:bwmulder.20050319152319:set_http_attribute
+def set_http_attribute(p, value):
+    vnode = p.v
+    if hasattr(vnode, 'unknownAttributes'):
+        vnode.unknownAttributes[config.rst_http_attributename] = value
+    else:
+        vnode.unknownAttributes = {config.rst_http_attributename: value}
+
+#@-node:bwmulder.20050319152319:set_http_attribute
+#@+node:bwmulder.20050319152820.1:http_attribute_iter
+def http_attribute_iter():
+    for p in config.http_map.values():
+        attr = get_http_attribute(p)
+        if attr:
+            yield (p, attr)
+#@-node:bwmulder.20050319152820.1:http_attribute_iter
+#@-node:bwmulder.20050319191929.1:general routines
+#@+node:bwmulder.20050314184440:rst_htmlparser
+class rst_htmlparser(link_anchor_parser):
+    #@    @+others
+    #@+node:bwmulder.20050319111254:docstring
+    """
+    The responsibility of the html parser is:
+        1. to find out which html belongs to which node.
+        2. to keep a stack of html markings which proceed each node.
+        
+    Later, we have to relocate inter-file links: if a reference to another location
+    is in a file, we must change the link.
+    
+    """
+    #@nonl
+    #@-node:bwmulder.20050319111254:docstring
+    #@+node:bwmulder.20050315115739:__init__
+    def __init__(self, http_map):
+        HTMLParser.__init__(self)
+        self.stack = None
+        # The stack contains lists of the form:
+            # [text1, text2, previous].
+            # text1 is the opening tag
+            # text2 is the closing tag
+            # previous points to the previous stack element
+        
+        self.http_map = http_map
+        # The http_map maps anchors to positions.
+        # [actually we want to work with vnodes, but
+        #  navigation seems to require postitions]
+        # Each vnode has a separate anchor.
+        
+        self.node_marker_stack = []
+        # self.node_marker_stack.pop() returns True for a closing
+        # tag if the opening tag identified an anchor belonging to a vnode.
+        
+        self.node_code = []
+        # Accumulated html code. Once the hmtl code is assigned a vnode,
+        # it is deleted here.
+        
+        self.deleted_lines = 0
+        # Number of lines deleted in self.node_code
+        
+        self.endpos_pending = False
+        # self.node_code[0:self.endpos_pending] should not be included in
+        # the html code stored in a vnode.
+        
+        self.last_position = None
+        # Last vnode; we must attach html code to this node.
+            
+    #@-node:bwmulder.20050315115739:__init__
+    #@+node:bwmulder.20050315115739.1:handle_starttag
+    def handle_starttag(self, tag, attrs):
+        """
+        1. Find out if the current tag is an achor.
+        2. If it is an anchor, we check if this anchor marks the beginning of a new 
+           node
+        3. If a new node begins, then we might have to store html code in the
+           previous code.
+        4. In any case, put the new tag on the stack.
+        """
+        is_node_marker = False
+        if self.is_anchor(tag, attrs):
+            for name, value in attrs:
+                if name == 'name' and value.startswith(config.node_begin_marker):
+                    is_node_marker = True
+                    break
+            if is_node_marker:
+                is_node_marker = value
+                line, column = self.getpos()
+                if self.last_position:
+                    lines = self.node_code[:]
+                    lines[0] = lines[0][self.startpos:]
+                    del lines[line - self.deleted_lines - 1:]
+                    if config.debug_store_lines:
+                        print "rst2: Storing in", self.last_position, ":"
+                        print lines
+                    get_http_attribute(self.last_position).extend(lines)
+    
+                    if config.debug_show_unknownattributes:
+                        print "rst2: unknownAttributes[config.rst_http_attributename]"
+                        print "For:", self.last_position
+                        pprint(get_http_attr(self.last_position))
+                                
+                if self.deleted_lines < line - 1:
+                    del self.node_code[:line - 1 - self.deleted_lines]
+                    self.deleted_lines = line - 1
+                    self.endpos_pending = True
+        if config.debug_handle_starttag:
+            from pprint import pprint
+            print "rst2: handle_starttag:", tag, attrs, is_node_marker
+        starttag = self.get_starttag_text( ) 
+        self.stack = [starttag, None, self.stack]
+        self.node_marker_stack.append(is_node_marker)
+                
+    #@nonl
+    #@-node:bwmulder.20050315115739.1:handle_starttag
+    #@+node:bwmulder.20050315115739.2:handle_endtag
+    def handle_endtag(self, tag):
+        """
+        1. Set the second element of the current top of stack.
+        2. If this is the end tag for an anchor for a node,
+           store the current stack for that node.
+        """
+        self.stack[1] = "</" + tag + ">"
+        if config.debug_handle_endtag:
+            from pprint import pprint
+            print "rst2: handle_endtag:", tag
+            pprint(self.stack)
+        if self.endpos_pending:
+            line, column = self.getpos()
+            self.startpos = self.node_code[0].find(">", column) + 1
+            self.endpos_pending = False
+        is_node_marker = self.node_marker_stack.pop()
+        if is_node_marker and not config.clear_attributes:
+            self.last_position = self.http_map[is_node_marker]
+            set_http_attribute(self.http_map[is_node_marker], self.stack)
+        self.stack = self.stack[2]
+        
+    #@nonl
+    #@-node:bwmulder.20050315115739.2:handle_endtag
+    #@+node:bwmulder.20050315115739.3:generate_node_marker
+    def generate_node_marker(cls, number):
+        """
+        Generate a node marker for 
+        """
+        return config.node_begin_marker + ("%s" % number)
+        
+    generate_node_marker = classmethod(generate_node_marker)
+        
+    #@-node:bwmulder.20050315115739.3:generate_node_marker
+    #@+node:bwmulder.20050315134705:feed
+    def feed(self, line):
+        self.node_code.append(line)
+        HTMLParser.feed(self, line)
+    #@-node:bwmulder.20050315134705:feed
+    #@-others
+#@nonl
+#@-node:bwmulder.20050314184440:rst_htmlparser
+#@+node:bwmulder.20050319180047:anchor_htmlparser
+class anchor_htmlparser(link_anchor_parser):
+    #@    @+others
+    #@+node:bwmulder.20050319180047.1:docstring
+    """
+    This htmlparser does the first step of relocating: finding all the anchors within the html node.
+    
+    Each anchor is mapped to a tuple:
+        (current_file, vnode).
+    """
+    #@nonl
+    #@-node:bwmulder.20050319180047.1:docstring
+    #@+node:bwmulder.20050319235437:__init__
+    def __init__(self, vnode, anchors):
+        HTMLParser.__init__(self)
+        self.vnode = vnode
+        self.anchors = anchors
+    #@-node:bwmulder.20050319235437:__init__
+    #@+node:bwmulder.20050319181934.3:handle_starttag
+    def handle_starttag(self, tag, attrs):
+        """
+        1. Find out if the current tag is an achor.
+        2. If the current tag is an anchor, update the mapping;
+             anchor -> vnode
+        """
+        if not self.is_anchor(tag, attrs):
+            return
+        for name, value in attrs:
+            if name == 'name':
+                if not value.startswith(config.node_begin_marker):
+                    self.anchors[value] = (config.current_file, self.vnode)
+                  
+    #@nonl
+    #@-node:bwmulder.20050319181934.3:handle_starttag
+    #@-others
+#@-node:bwmulder.20050319180047:anchor_htmlparser
+#@+node:bwmulder.20050320102006:link_htmlparser
+class link_htmlparser(link_anchor_parser):
+    #@    @+others
+    #@+node:bwmulder.20050320102006.1:docstring
+    """
+    This html parser does the second step of relocating links:
+        1. It scans the html code for links.
+        2. If there is a link which links to a previously processed file, then
+           this link is changed so that it now refers to the node.
+    """
+    #@nonl
+    #@-node:bwmulder.20050320102006.1:docstring
+    #@+node:bwmulder.20050320102006.2:__init__
+    def __init__(self, vnode, anchormap):
+        HTMLParser.__init__(self)
+        self.vnode = vnode
+        self.anchormap = anchormap
+        self.replacements = []
+    #@-node:bwmulder.20050320102006.2:__init__
+    #@+node:bwmulder.20050320102006.3:handle_starttag
+    def handle_starttag(self, tag, attrs):
+        """
+        1. Find out if the current tag is an achor.
+        2. If the current tag is an anchor, update the mapping;
+             anchor -> vnode
+        """
+        if not self.is_anchor(tag, attrs):
+            return
+        for name, value in attrs:
+            if name == 'href':
+                href = value
+                href_parts = href.split("#")
+                if len(href_parts) == 1:
+                    href_a = href_parts[0]
+                else:
+                    href_a = href_parts[1]
+                if not href_a.startswith(config.node_begin_marker):
+                    if href_a in self.anchormap:
+                        href_file, href_node = self.anchormap[href_a]
+                        http_node_ref = mod_http.node_reference(href_node)
+                        line, column = self.getpos()
+                        self.replacements.append((line, column, href, href_file, http_node_ref))
+                                
+    #@nonl
+    #@-node:bwmulder.20050320102006.3:handle_starttag
+    #@+node:bwmulder.20050320155022:get_replacements
+    def get_replacements(self):
+        return self.replacements
+    #@nonl
+    #@-node:bwmulder.20050320155022:get_replacements
+    #@-others
+#@-node:bwmulder.20050320102006:link_htmlparser
+#@+node:bwmulder.20050319131813:set_initial_http_attributes
+def set_initial_http_attributes(filename):
+    http_map = config.http_map
+    f = file(filename)
+    parser = rst_htmlparser(config.http_map)
+    line = f.readline()
+    while line:
+        parser.feed(line)
+        line = f.readline()
+
+#@-node:bwmulder.20050319131813:set_initial_http_attributes
+#@+node:bwmulder.20050319200049:reconstruct_html_from_attrs
+def reconstruct_html_from_attrs(attrs):
+    """
+    Given an attribute, reconstruct the html for this node.
+    """
+    result = []
+    stack = attrs
+    while stack:
+        result.append(stack[0])
+        stack = stack[2]
+    result.reverse()
+    result.extend(attrs[3:])
+    stack = attrs
+    while stack:
+        result.append(stack[1])
+        stack = stack[2]
+    return result
+#@nonl
+#@-node:bwmulder.20050319200049:reconstruct_html_from_attrs
+#@+node:bwmulder.20050319131813.1:relocate_references
+def relocate_references():
+    anchor_map = find_anchors()
+    relocate_references_using_anchormap(anchor_map)
+#@-node:bwmulder.20050319131813.1:relocate_references
+#@+node:bwmulder.20050319152820:find_anchors
+def find_anchors():
+    anchors = {}
+    for vnode, attrs in http_attribute_iter():
+        html = reconstruct_html_from_attrs(attrs)
+        if config.debug_node_html_1:
+            pprint(html)
+        parser = anchor_htmlparser(vnode, anchors)
+        for line in html:
+            parser.feed(line)
+    if config.debug_anchors:
+        pprint(anchors)
+    return anchors
+#@-node:bwmulder.20050319152820:find_anchors
+#@+node:bwmulder.20050319153321:relocate_references_using_anchormap
+def relocate_references_using_anchormap(anchormap):
+    for vnode, attr in http_attribute_iter():
+        if config.debug_before_and_after_replacement:
+            print "Before replacement:", vnode
+            pprint (attr)
+        http_lines = attr[3:]
+        parser = link_htmlparser(vnode, anchormap)
+        for line in attr[3:]:
+            parser.feed(line)
+        replacements = parser.get_replacements()
+        replacements.reverse()
+        for line, column, href, href_file, http_node_ref in replacements:
+            if config.debug_before_and_after_replacement:
+                print "replacement_paramters:", line, column, href, href_file, http_node_ref
+            replacement = "%s%s" % (http_node_ref, href)
+            # more work is probably necessary here.
+            attr[line+2] = attr[line+2].replace('href="%s"' % href, 'href="%s"' % replacement)
+        if config.debug_before_and_after_replacement:
+            print "After replacement"
+            pprint (attr)
+            for i in range(3): print
+            
+
+#@-node:bwmulder.20050319153321:relocate_references_using_anchormap
+#@-node:bwmulder.20050319191929:http related stuff
 #@-others
 
 if 1: # Ok for unit testing.
     leoPlugins.registerHandler("icondclick1",onIconDoubleClick)
-    __version__ = "2.2"
+    leoPlugins.registerHandler("open2", onFileOpen)
+    __version__ = "2.3"
+
     g.plugin_signon(__name__)
 #@nonl
 #@-node:ekr.20040331071319:@thin rst2.py

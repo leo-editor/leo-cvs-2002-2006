@@ -156,87 +156,9 @@ class escaped_StringIO(StringIO):
     #@-others
 #@nonl
 #@-node:EKR.20040517080250.11:class escaped_StringIO
-#@+node:EKR.20040517080250.13:class RequestHandler
-class RequestHandler(
-    asynchat.async_chat,
-    SimpleHTTPServer.SimpleHTTPRequestHandler):
+#@+node:EKR.20040517080250.20:class leo_interface
+class leo_interface(object):
     #@    @+others
-    #@+node:EKR.20040517080250.14:__init__
-    def __init__(self,conn,addr,server):
-        asynchat.async_chat.__init__(self,conn)
-        self.client_address=addr
-        self.connection=conn
-        self.server=server
-        self.wfile = delayedSocketStream(self.socket)
-        # sets the terminator : when it is received, this means that the
-        # http request is complete ; control will be passed to
-        # self.found_terminator
-        self.set_terminator ('\r\n\r\n')
-        self.buffer=cStringIO.StringIO()
-        self.found_terminator=self.handle_request_line
-    #@-node:EKR.20040517080250.14:__init__
-    #@+node:EKR.20040517080250.15:copyfile
-    def copyfile(self, source, outputfile):
-        """Copy all data between two file objects.
-    
-        The SOURCE argument is a file object open for reading
-        (or anything with a read() method) and the DESTINATION
-        argument is a file object open for writing (or
-        anything with a write() method).
-    
-        The only reason for overriding this would be to change
-        the block size or perhaps to replace newlines by CRLF
-        -- note however that this the default server uses this
-        to copy binary data as well.
-         """
-        shutil.copyfileobj(source, outputfile, length=255)
-    #@-node:EKR.20040517080250.15:copyfile
-    #@+node:EKR.20040517080250.16:log_message
-    def log_message(self, format, *args):
-        """Log an arbitrary message.
-    
-         This is used by all other logging functions.  Override
-         it if you have specific logging wishes.
-    
-         The first argument, FORMAT, is a format string for the
-         message to be logged.  If the format string contains
-         any % escapes requiring parameters, they should be
-         specified as subsequent arguments (it's just like
-         printf!).
-    
-         The client host and current date/time are prefixed to
-         every message.
-    
-         """
-        message = "%s - - [%s] %s\n" % (
-            self.address_string(),
-            self.log_date_time_string(),
-            format%args)
-        g.es(message)
-    #@-node:EKR.20040517080250.16:log_message
-    #@+node:EKR.20040517080250.17:collect_incoming_data
-    def collect_incoming_data(self,data):
-        """Collects the data arriving on the connexion"""
-        self.buffer.write(data)
-    #@-node:EKR.20040517080250.17:collect_incoming_data
-    #@+node:EKR.20040517080250.18:prepare_POST
-    def prepare_POST(self):
-        """Prepare to read the request body"""
-        bytesToRead = int(self.headers.getheader('content-length'))
-        # set terminator to length (will read bytesToRead bytes)
-        self.set_terminator(bytesToRead)
-        self.buffer=cStringIO.StringIO()
-        # control will be passed to a new found_terminator
-        self.found_terminator=self.handle_post_data
-    #@-node:EKR.20040517080250.18:prepare_POST
-    #@+node:EKR.20040517080250.19:handle_post_data
-    def handle_post_data(self):
-        """Called when a POST request body has been read"""
-        self.rfile=cStringIO.StringIO(self.buffer.getvalue())
-        self.do_POST()
-        self.finish()
-    #@-node:EKR.20040517080250.19:handle_post_data
-    #@+node:EKR.20040517080250.20:Leo specific code
     #@+node:EKR.20040517080250.21:add_leo_links
     def add_leo_links(self, window, node, f):
         """
@@ -302,13 +224,18 @@ class RequestHandler(
         f.write("</a>\n")
     
     #@-node:EKR.20040517080250.22:create_href
+    #@+node:bwmulder.20050319134815:create_leo_h_reference
+    def create_leo_h_reference(self, window, node):
+        parts = [window.shortFileName()] + self.get_leo_nameparts(node)
+        href = '_'.join(parts)
+        return href
+    #@-node:bwmulder.20050319134815:create_leo_h_reference
     #@+node:EKR.20040517080250.23:create_leo_reference
     def create_leo_reference(self, window, node, text, f):
         """
         Create a reference to 'node' in 'window', displaying 'text'
         """
-        parts = [window.shortFileName()] + self.get_leo_nameparts(node)
-        href = '_'.join(parts)
+        href = self.create_leo_reference(window, node)
         self.create_href(href, text, f)
     #@-node:EKR.20040517080250.23:create_leo_reference
     #@+node:EKR.20040517080250.24:format_leo_node
@@ -426,25 +353,26 @@ class RequestHandler(
         write("<hr>\n")
         return f
     #@-node:EKR.20040517080250.27:get_leo_windowlist
-    #@+node:EKR.20040517080250.28:write_path
-    def write_path(self, node, f):
-        result = []
-        while node:
-            result.append(node.headString())
-            node = node.parent()
-        result.reverse()
-        if result:
-            result2 = result[:-1]
-            if result2:
-                result2 = ' / '.join(result2)
-                f.write("<br>\n")
-                f.write_escaped(result2)
-                f.write("<br>\n")
-            f.write("<h2>")
-            f.write_escaped(result[-1])
-            f.write("</h2>\n")
-    #@nonl
-    #@-node:EKR.20040517080250.28:write_path
+    #@+node:bwmulder.20050319135316:node_reference
+    def node_reference(self, vnode):
+        """
+        Given a position p, return the name of the node.
+        """
+        # 1. Find the root
+        root = vnode
+        parent = root.parent()
+        while parent:
+            root = parent
+            parent = root.parent()
+        
+        while root.v._back:
+            root.moveToBack()
+        
+        # 2. Return the window
+        window = [w for w in g.app.windowList if w.c.rootVnode().v == root.v][0]
+        
+        return self.create_leo_h_reference(window, vnode)
+    #@-node:bwmulder.20050319135316:node_reference
     #@+node:EKR.20040517080250.29:send_head
     def send_head(self):
         """Common code for GET and HEAD commands.
@@ -498,7 +426,109 @@ class RequestHandler(
         return path.split('_')
     #@nonl
     #@-node:EKR.20040517080250.30:split_leo_path
-    #@-node:EKR.20040517080250.20:Leo specific code
+    #@+node:EKR.20040517080250.28:write_path
+    def write_path(self, node, f):
+        result = []
+        while node:
+            result.append(node.headString())
+            node = node.parent()
+        result.reverse()
+        if result:
+            result2 = result[:-1]
+            if result2:
+                result2 = ' / '.join(result2)
+                f.write("<br>\n")
+                f.write_escaped(result2)
+                f.write("<br>\n")
+            f.write("<h2>")
+            f.write_escaped(result[-1])
+            f.write("</h2>\n")
+    #@nonl
+    #@-node:EKR.20040517080250.28:write_path
+    #@-others
+#@nonl
+#@-node:EKR.20040517080250.20:class leo_interface
+#@+node:EKR.20040517080250.13:class RequestHandler
+class RequestHandler(
+    asynchat.async_chat,
+    SimpleHTTPServer.SimpleHTTPRequestHandler,
+    leo_interface):
+    #@    @+others
+    #@+node:EKR.20040517080250.14:__init__
+    def __init__(self,conn,addr,server):
+        asynchat.async_chat.__init__(self,conn)
+        self.client_address=addr
+        self.connection=conn
+        self.server=server
+        self.wfile = delayedSocketStream(self.socket)
+        # sets the terminator : when it is received, this means that the
+        # http request is complete ; control will be passed to
+        # self.found_terminator
+        self.set_terminator ('\r\n\r\n')
+        self.buffer=cStringIO.StringIO()
+        self.found_terminator=self.handle_request_line
+    #@-node:EKR.20040517080250.14:__init__
+    #@+node:EKR.20040517080250.15:copyfile
+    def copyfile(self, source, outputfile):
+        """Copy all data between two file objects.
+    
+        The SOURCE argument is a file object open for reading
+        (or anything with a read() method) and the DESTINATION
+        argument is a file object open for writing (or
+        anything with a write() method).
+    
+        The only reason for overriding this would be to change
+        the block size or perhaps to replace newlines by CRLF
+        -- note however that this the default server uses this
+        to copy binary data as well.
+         """
+        shutil.copyfileobj(source, outputfile, length=255)
+    #@-node:EKR.20040517080250.15:copyfile
+    #@+node:EKR.20040517080250.16:log_message
+    def log_message(self, format, *args):
+        """Log an arbitrary message.
+    
+         This is used by all other logging functions.  Override
+         it if you have specific logging wishes.
+    
+         The first argument, FORMAT, is a format string for the
+         message to be logged.  If the format string contains
+         any % escapes requiring parameters, they should be
+         specified as subsequent arguments (it's just like
+         printf!).
+    
+         The client host and current date/time are prefixed to
+         every message.
+    
+         """
+        message = "%s - - [%s] %s\n" % (
+            self.address_string(),
+            self.log_date_time_string(),
+            format%args)
+        g.es(message)
+    #@-node:EKR.20040517080250.16:log_message
+    #@+node:EKR.20040517080250.17:collect_incoming_data
+    def collect_incoming_data(self,data):
+        """Collects the data arriving on the connexion"""
+        self.buffer.write(data)
+    #@-node:EKR.20040517080250.17:collect_incoming_data
+    #@+node:EKR.20040517080250.18:prepare_POST
+    def prepare_POST(self):
+        """Prepare to read the request body"""
+        bytesToRead = int(self.headers.getheader('content-length'))
+        # set terminator to length (will read bytesToRead bytes)
+        self.set_terminator(bytesToRead)
+        self.buffer=cStringIO.StringIO()
+        # control will be passed to a new found_terminator
+        self.found_terminator=self.handle_post_data
+    #@-node:EKR.20040517080250.18:prepare_POST
+    #@+node:EKR.20040517080250.19:handle_post_data
+    def handle_post_data(self):
+        """Called when a POST request body has been read"""
+        self.rfile=cStringIO.StringIO(self.buffer.getvalue())
+        self.do_POST()
+        self.finish()
+    #@-node:EKR.20040517080250.19:handle_post_data
     #@+node:EKR.20040517080250.31:do_GET
     def do_GET(self):
         """Begins serving a GET request"""
@@ -726,6 +756,14 @@ def applyConfiguration(config=None):
     active = config.getboolean("Main", "active")
 #@nonl
 #@-node:EKR.20040517080250.48:applyConfiguration
+#@+node:bwmulder.20050319134314:node_reference
+def node_reference(vnode):
+    """
+    Use by the rst2 plugin.
+    """
+    return leo_interface().node_reference(vnode)
+#@nonl
+#@-node:bwmulder.20050319134314:node_reference
 #@-others
 
 applyConfiguration()
