@@ -1205,7 +1205,9 @@ class atFile:
 			if j >= len(firstLines): break
 			# make the new @first directive
 			#18-SEP-2002 DTHEIN: remove trailing newlines because they are inserted later
-			out[k] = tag + " " + firstLines[j].rstrip() ; j += 1
+			# 21-SEP-2002 DTHEIN: no trailing whitespace on empty @first directive
+			leadingLine = " " + firstLines[j]
+			out[k] = tag + leadingLine.rstrip() ; j += 1
 
 	#@-body
 	#@-node:7::completeFirstDirectives (Dave Hein)
@@ -1234,7 +1236,9 @@ class atFile:
 			if j < -len(lastLines): break
 			# make the new @last directive
 			#18-SEP-2002 DTHEIN: remove trailing newlines because they are inserted later
-			out[k] = tag + " " + lastLines[j].rstrip() ; j -= 1
+			# 21-SEP-2002 DTHEIN: no trailing whitespace on empty @last directive
+			trailingLine = " " + lastLines[j]
+			out[k] = tag + trailingLine.rstrip() ; j -= 1
 
 	#@-body
 	#@-node:8::completeLastDirectives (Dave Hein)
@@ -1658,8 +1662,8 @@ class atFile:
 						while 1:
 							s = readlineForceUnixNewline(file)
 							if len(s) == 0: break
-							if not s.isspace():
-								lastLines.append(s) # 14-SEP-2002 DTHEIN: capture the trailing lines
+							# 21-SEP-2002 DTHEIN: capture _all_ the trailing lines, even if empty
+							lastLines.append(s) # 14-SEP-2002 DTHEIN: capture the trailing lines
 					# nextLine != None only if we have a non-sentinel line.
 					# Therefore, nextLine == None whenever scanText returns.
 					assert(nextLine==None)
@@ -2132,13 +2136,15 @@ class atFile:
 		assert(i < len(s) and s[i] == '@')
 		
 		endOfLine = s.find('\n',i)
+		# 21-SEP-2002 DTHEIN: if no '\n' then just use line length
+		if endOfLine == -1:
+			endOfLine = len(s)
 		token = s[i:endOfLine].split()
 		directive = token[0]
 		self.putSentinel("@" + directive)
 	
 		i = skip_line(s,i)
 		return i
-
 	#@-body
 	#@-node:6::putEmptyDirective (Dave Hein)
 	#@+node:7::putDoc
@@ -2350,9 +2356,9 @@ class atFile:
 				i = skip_ws(s,i)
 				j = i
 				i = skip_to_end_of_line(s,i)
-				if i > j:
-					line = s[j:i]
-					self.os(line) ; self.onl()
+				# 21-SEP-2002 DTHEIN: write @first line, whether empty or not
+				line = s[j:i]
+				self.os(line) ; self.onl()
 				i = skip_nl(s,i)
 			#@-body
 			#@-node:2:C=19:<< put all @first lines in root >>
