@@ -3396,15 +3396,23 @@ class Bunch:
 #@+body
 def collectGarbage():
 	
-	if 0: # not needed.
-		try:
-			import gc
-			gc.collect()
-			es("len(garbage):"+`len(gc.garbage)`)
-		except:
-			# es_exception()
-			pass
-
+	return ###
+	
+	try:
+		import gc
+		gc.collect()
+		n = len(gc.garbage)
+		n2 = len(gc.get_objects())
+		if 1: # more verbose.
+			if n > 0:
+				es("garbage: %d, objects: %d" % (n,n2),color="red")
+			else:
+				es("objects: %d" % (n2))
+		else: # less verbose
+			if n > 0:
+				es("garbage: "+`n`)
+	except:
+		es_exception()
 #@-body
 #@-node:12::collectGarbage
 #@+node:13::executeScript

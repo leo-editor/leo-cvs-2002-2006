@@ -175,7 +175,7 @@ class leoTree:
 	#@+node:2::tree.deleteBindings
 	#@+body
 	# This code is called when redrawing the screen to delete the old bindings.
-	# 4/20/03: Calling this from __del__ was useless: __del__ would never be called!
+	# Calling this from __del__ was useless: __del__ would never be called!
 	
 	def deleteBindings (self):
 		
@@ -630,6 +630,8 @@ class leoTree:
 			if self.trace:
 				self.redrawCount += 1
 				print "idle_redraw allocated:",self.redrawCount, self.allocatedNodes
+			if self.recycleBindings:
+				collectGarbage()
 	
 		self.canvas['cursor'] = oldcursor
 	

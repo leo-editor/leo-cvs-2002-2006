@@ -447,10 +447,8 @@ class fileCommands:
 			self.read_only = not os.access(fileName,os.W_OK)
 			if self.read_only:
 				es("read only: " + fileName,color="red")
-				d = leoDialog.leoDialog()
-				d.askOk(
-					"Read-only ouline",
-					"Warning: the outline: " + fileName + " is read-only.")
+				leoDialog.askOk("Read-only ouline",
+					"Warning: the outline: " + fileName + " is read-only.").run(modal=true)
 		except:
 			if 0: # testing only: access may not exist on all platforms.
 				es("exception getting file access")

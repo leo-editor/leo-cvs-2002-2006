@@ -142,21 +142,19 @@ class LeoApp:
 		
 		try:
 			# 04-SEP-2002 DHEIN: simplify version check
-			if not CheckVersion(sys.version, "2.1"):
-				d = leoDialog.leoDialog()
-				d.askOk("Python version error",
-		"""
+			message = """
 		leo.py requires Python 2.1 or higher.
 		
 		You may download Python 2.1 and Python 2.2 from http://python.org/download/
-		""",
-					text="Exit")
+		"""
+		
+			if not CheckVersion(sys.version, "2.1"):
+				leoDialog.askOk("Python version error",message=message,text="Exit").run(modal=true)
 				return false
 		except:
 			print "exception getting version"
 			import traceback
 			traceback.print_exc()
-		
 		#@-body
 		#@-node:1::<< return false if not v2.1 or above >>
 
@@ -346,18 +344,9 @@ class LeoApp:
 		#@<< put up a dialog requiring a valid id >>
 		#@+node:3::<< put up a dialog requiring a valid id >>
 		#@+body
-		message = (
-			"leoID.txt not found\n\n" +
-			"Please enter an id that identifies you uniquely.\n" +
-			"Your cvs login name is a good choice.\n" +
-			"Your id must contain only letters and numbers\n" +
-			"and must be at least 4 characters in length.")
-		
-		d = leoDialog.leoDialog()
-		self.leoID = d.askLeoID("Enter unique id", message)
+		self.leoID = leoDialog.askLeoID().run(modal=true)
 		
 		es("leoID = " + `self.leoID`, color="blue")
-		
 		#@-body
 		#@-node:3::<< put up a dialog requiring a valid id >>
 

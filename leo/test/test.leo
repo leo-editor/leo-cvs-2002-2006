@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="45" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="51" clone_windows="0"/>
 <globals body_outline_ratio="0.5">
-	<global_window_position top="43" left="329" height="75" width="127"/>
+	<global_window_position top="79" left="314" height="75" width="127"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences allow_rich_text="0">
@@ -61,32 +61,38 @@
 <v t="T33"><vh>Check clones links</vh></v>
 </v>
 </v>
-<v t="T34"><vh>New import</vh></v>
-<v t="T35"><vh>timeit (in 2.3b1)</vh></v>
-<v t="T36"><vh>Use xml.sax</vh></v>
-<v t="T37"><vh>Screenshots</vh></v>
-<v t="T38"><vh>Assignment tests</vh></v>
-<v t="T39"><vh>Copy/Clones test</vh>
-<v t="T40" a="C"><vh>a Å</vh>
-<v t="T41" a="C"><vh>b</vh>
-<v t="T42"><vh>c</vh></v>
+<v t="T34"><vh>Quote from Alex Martelli</vh></v>
+<v t="T35"><vh>New import</vh></v>
+<v t="T36"><vh>timeit (in 2.3b1)</vh></v>
+<v t="T37"><vh>Use xml.sax</vh></v>
+<v t="T38"><vh>Screenshots</vh></v>
+<v t="T39"><vh>Assignment tests</vh></v>
+<v t="T40"><vh>Copy/Clones test</vh>
+<v t="T41" a="C"><vh>a Å</vh>
+<v t="T42" a="C"><vh>b</vh>
+<v t="T43"><vh>c</vh></v>
 </v>
-<v t="T41" a="C"><vh>b</vh>
-<v t="T42"><vh>c</vh></v>
-</v>
-</v>
-<v t="T40" a="C"><vh>a Å</vh>
-<v t="T41" a="C"><vh>b</vh>
-<v t="T42"><vh>c</vh></v>
-</v>
-<v t="T41" a="C"><vh>b</vh>
-<v t="T42"><vh>c</vh></v>
+<v t="T42" a="C"><vh>b</vh>
+<v t="T43"><vh>c</vh></v>
 </v>
 </v>
+<v t="T41" a="C"><vh>a Å</vh>
+<v t="T42" a="C"><vh>b</vh>
+<v t="T43"><vh>c</vh></v>
 </v>
-<v t="T43" a="E"><vh>Spell checking</vh>
-<v t="T44"><vh>To see it in action</vh></v>
-<v t="T45" a="V"><vh>Spell test node</vh></v>
+<v t="T42" a="C"><vh>b</vh>
+<v t="T43"><vh>c</vh></v>
+</v>
+</v>
+</v>
+<v t="T44" a="E"><vh>Dialog tests</vh>
+<v t="T45"><vh>Test askOk</vh></v>
+<v t="T46"><vh>Test aboutLeo</vh></v>
+<v t="T47"><vh>Test askLeoID</vh></v>
+<v t="T48"><vh>Test askOkCancelNumber</vh></v>
+<v t="T49"><vh>Test askOkCancel</vh></v>
+<v t="T50"><vh>Test askYesNo</vh></v>
+<v t="T51" a="V"><vh>Test askYesNoCancel</vh></v>
 </v>
 </vnodes>
 <tnodes>
@@ -254,7 +260,16 @@ a
 <t tx="T33">from leoGlobals import *
 
 checkClones2Links(verbose=true)</t>
-<t tx="T34"># This shows that Python programs _could_ use .xpy files (xml files containing Leo/Python code).
+<t tx="T34">@nocolor
+
+Personally, I nominate timeit.py as THE outstanding enhancement of Python 2.3
+-- I love many of the others (the performance improvement in particular), but
+timeit.py is the one I find myself using all of the time -- seems to provide an
+innocuous way for programmers' typical obsession with performance and
+micro-optimization to discharge itself harmlessly, cleansing their souls to
+choose idioms on the basis of clarity, maintainability and readability, as of
+course SHOULD be done :-)</t>
+<t tx="T35"># This shows that Python programs _could_ use .xpy files (xml files containing Leo/Python code).
 
 from leoGlobals import *
 import imp
@@ -277,8 +292,8 @@ def leo_import(name,old_import,globals=None, locals=None, fromlist=None):
 		
 m = leo_import("leoTest",__import__)
 es(m,color="red")</t>
-<t tx="T35">import timeit</t>
-<t tx="T36">from leoGlobals import *
+<t tx="T36">import timeit</t>
+<t tx="T37">from leoGlobals import *
 import gc,os,time,leoNodes
 from xml.sax import saxutils, make_parser
 from xml.sax.xmlreader import InputSource
@@ -338,13 +353,13 @@ try:
 	except: es_exception()
 finally:
 	if f: f.close()</t>
-<t tx="T37">import ImageGrab,os # requires PIL 1.1.3 or later
+<t tx="T38">import ImageGrab,os # requires PIL 1.1.3 or later
 
 path = os.path.join(app().loadDir,"../","test","screenshot.gif")
 
 ImageGrab.grab().save(path)
 </t>
-<t tx="T38"># The output of this is 5 5 6
+<t tx="T39"># The output of this is 5 5 6
 # This shows that o2 is merely an alias for o.
 
 class obj:
@@ -354,36 +369,83 @@ class obj:
 o = obj(5) ; print o.n,
 o2  = o    ; print o2.n,
 o.n = 6    ; print o2.n</t>
-<t tx="T39"></t>
 <t tx="T40"></t>
 <t tx="T41"></t>
 <t tx="T42"></t>
 <t tx="T43"></t>
-<t tx="T44">@nocolor
+<t tx="T44"></t>
+<t tx="T45">from leoGlobals import *
+import leoDialog
 
-0. Enable the plug-in
+if 1: # passed
+	print leoDialog.askOk(
+		"My Test Dialog",
+		"Please hit return to test this dialog.",
+		text="whoopee",
+		resizeable=false).run(modal=true)
+	
+if 1: # passed
+	message = "leo.py requires Python 2.1 or higher"
+	print leoDialog.askOk("Python version error",message=message,text="Exit").run(modal=true)
+	
+if 1: # passed
+	fileName = "xyzzy"
+	print leoDialog.askOk("Read-only ouline",
+		"Warning: the outline: " + fileName + " is read-only.").run(modal=true)</t>
+<t tx="T46">from leoGlobals import *
+import leoDialog
 
-1. Click on the "Test node" node
+ver = "version 3.14159 "
+build = "-3.8" 
+version = "leo.py 4.0 alpha 2, Build " + build + ", June 13, 2003\n\n"
+copyright = (
+	"Copyright 1999-2003 by Edward K. Ream\n" +
+	"All Rights Reserved\n" +
+	"Leo is distributed under the Python License")
+url = "http://webpages.charter.net/edreamleo/front.html"
+email = "edreamleo@charter.net"
 
-2. CTRL+F
+leoDialog.aboutLeo(version,copyright,url,email).run(modal=false)</t>
+<t tx="T47">import leoDialog
 
-3. Make sure there is text in the "Find" box
+print leoDialog.askLeoID().run(modal=1)</t>
+<t tx="T48">import leoDialog
 
-4. Make sure the "Search body text" is enabled
-
-5. Click find
-
-6. A dialog opens to let you choose the correct answer
-
-7. Keep pressing Find (for some reason you have to press twice after a correction)
-
-8. When you close Leo you will find lots of garbage around. My Tk code is broken!
+print leoDialog.askOkCancelNumber("Enter Line Number","Line number:").run(modal=1)
 </t>
-<t tx="T45">@nocolor
+<t tx="T49">import leoDialog
 
-Here is some teext that kointains many speeeling mistooks. You shud be
-able to go thuu them alll and see the mistooks.
+print leoDialog.askOkCancel("Proceed?",
+	"Read @file Nodes is not undoable.\nProceed?").run(modal=1)</t>
+<t tx="T50">import leoDialog
 
-Spelling mistooks are kool. </t>
+if 1: # passed
+	message = "Replace changed outline with external changes?"
+	print leoDialog.askYesNo("Conflict!",message).run(modal=1)
+	
+if 1: # passed
+	print leoDialog.askYesNo("Revert",
+		"Revert to previous version of xyzzy?").run(modal=1)
+		
+if 1: # passed
+	print leoDialog.askYesNo(
+		"Download Tutorial?",
+		"Download tutorial (sbooks.chm) from SourceForge?").run(modal=1)</t>
+<t tx="T51">import leoDialog
+
+if 1: # passed
+	print leoDialog.askYesNoCancel("Confirm",
+		'Save changes to xyzzy before crashing?').run(modal=1)
+		
+if 1: # passed
+	message = (
+		"Conflicting changes in outline and temp file\n\n" +
+		"Do you want to use the code in the outline or the temp file?\n\n")
+	
+	print leoDialog.askYesNoCancel(
+		"Conflict!", message,
+		yesMessage = "Outline",
+		noMessage = "File",
+		defaultButton = "Cancel").run(modal=1)</t>
 </tnodes>
 </leo_file>

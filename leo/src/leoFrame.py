@@ -590,9 +590,8 @@ class LeoFrame:
 				name = choose(self.mFileName, self.mFileName, self.title)
 				type = choose(app().quitting, "quitting?", "closing?")
 				
-				d = leoDialog.leoDialog()
-				answer = d.askYesNoCancel("Confirm",
-					'Save changes to "' + name + '" before ' + type)
+				answer = leoDialog.askYesNoCancel("Confirm",
+					'Save changes to "' + name + '" before ' + type).run(modal=true)
 				
 				if answer=="yes":
 					if not self.mFileName or self.mFileName == "":
@@ -1983,12 +1982,11 @@ class LeoFrame:
 							"Conflicting changes in outline and temp file\n\n" +
 							"Do you want to use the code in the outline or the temp file?\n\n")
 						
-						d = leoDialog.leoDialog()
-						result = d.askYesNoCancel(
+						result = leoDialog.askYesNoCancel(
 							"Conflict!", message,
 							yesMessage = "Outline",
 							noMessage = "File",
-							defaultButton = "Cancel")
+							defaultButton = "Cancel").run(modal=1)
 						
 						
 						#@-body
@@ -2256,10 +2254,9 @@ class LeoFrame:
 			self.mFileName = ""
 		if len(self.mFileName)==0:
 			return
-		
-		d = leoDialog.leoDialog()
-		reply = d.askYesNo("Revert",
-			"Revert to previous version of " + self.mFileName + "?")
+	
+		reply = leoDialog.askYesNo("Revert",
+			"Revert to previous version of " + self.mFileName + "?").run(modal=true)
 	
 		if reply=="no":
 			return
@@ -2390,11 +2387,10 @@ class LeoFrame:
 	def OnReadAtFileNodes (self,event=None):
 	
 		c = self.commands
-		
-		d = leoDialog.leoDialog()
-		answer = d.askOkCancel("Proceed?",
+	
+		answer = leoDialog.askOkCancel("Proceed?",
 			"Read @file Nodes is not undoable." +
-			"\nProceed?")
+			"\nProceed?").run(modal=true)
 	
 		if answer=="ok":
 			c.fileCommands.readAtFileNodes()
@@ -2957,8 +2953,8 @@ class LeoFrame:
 		#@+body
 		import leoDialog
 		
-		d = leoDialog.leoDialog()
-		n = d.askOkCancelNumber("Enter Line Number","Line number:")
+		d = leoDialog.askOkCancelNumber("Enter Line Number","Line number:")
+		n = d.run(modal=true)
 		if n == -1:
 			return
 		#@-body
@@ -4214,8 +4210,7 @@ class LeoFrame:
 	
 		if 1: # Much better looking and includes icon.
 			import leoDialog
-			d = leoDialog.leoDialog()
-			d.aboutLeo(version,copyright,url,email)
+			leoDialog.aboutLeo(version,copyright,url,email).run(modal=false)
 		else:
 			import tkMessageBox
 			tkMessageBox.showinfo("About Leo",
@@ -4255,10 +4250,10 @@ class LeoFrame:
 		if os.path.exists(file):
 			os.startfile(file)
 		else:
-			d = leoDialog.leoDialog()
-			answer = d.askYesNo(
+			answer = leoDialog.askYesNo(
 				"Download Tutorial?",
-				"Download tutorial (sbooks.chm) from SourceForge?")
+				"Download tutorial (sbooks.chm) from SourceForge?").run(modal=true)
+	
 			if answer == "yes":
 				try:
 					if 0: # Download directly.  (showProgressBar needs a lot of work)
