@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet ekr_stylesheet?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="3182" clone_windows="0"/>
-<globals body_outline_ratio="0.506329113924">
-	<global_window_position top="38" left="285" height="861" width="722"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="3257" clone_windows="0"/>
+<globals body_outline_ratio="0.42474916388">
+	<global_window_position top="10" left="379" height="897" width="870"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -12,12 +12,27 @@
 <v t="edream.110203113231"
 marks="pap.20041006194759,pap.20041006193013,"><vh>@thin pluginsNotes.txt</vh></v>
 <v t="ekr.20050111093726"><vh>Unit testing notes</vh></v>
-<v t="edream.110203113231.618" a="TV"><vh>Plugins</vh>
+<v t="ekr.20041211035618"><vh>Scripts, buttons &amp; settings</vh>
+<v t="ekr.20050217093214"><vh>@settings</vh>
+<v t="ekr.20050217093214.1"><vh>@recentfiles </vh></v>
+</v>
+<v t="ekr.20041103052443"><vh>Script to find and replace all functions in leoGlobals.py</vh>
+<v t="ekr.20041103052443.1"><vh>findFunctionsInTree</vh></v>
+<v t="ekr.20041103052443.2"><vh>findDefs</vh></v>
+<v t="ekr.20041103052443.3"><vh>prependNamesInTree</vh>
+<v t="ekr.20041103052443.4"><vh>&lt;&lt; look for name followed by '(' &gt;&gt;</vh></v>
+<v t="ekr.20041103052443.5"><vh>&lt;&lt; print before and after &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20041103052443.6"><vh>&lt;&lt; set nameList to the list of functions in leoGlobals.py &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20041113110210"><vh>@button Spelling...</vh></v>
+</v>
+<v t="edream.110203113231.618"><vh>Plugins</vh>
 <v t="EKR.20040517090508"><vh>  Enable plugins by changing pluginsManager.txt or using plugin_manager plugin</vh>
 <v t="edream.120603093808"><vh>@thin pluginsManager.txt</vh></v>
 </v>
-<v t="ekr.20040919094459"><vh> PLEASE follow this style guide</vh>
-<v t="ekr.20041114102139"><vh>Notes</vh>
+<v t="ekr.20040919094459" a="E"><vh> PLEASE follow this style guide</vh>
+<v t="ekr.20041114102139" a="E"><vh>Notes</vh>
 <v t="ekr.20041114103913"><vh>About comments in the style guide</vh></v>
 <v t="ekr.20041114102139.1"><vh>About the root node</vh></v>
 <v t="ekr.20041114103913.1"><vh>About defining functions in separate nodes</vh></v>
@@ -84,8 +99,8 @@ marks="pap.20041006194759,pap.20041006193013,"><vh>@thin pluginsNotes.txt</vh></
 <v t="ekr.20050217091823"><vh>@thin bibtex.py</vh></v>
 <v t="ekr.20040916073636"><vh>@thin ConceptualSort.py</vh></v>
 <v t="ekr.20040915105758.13"><vh>@thin FileActions.py</vh></v>
-<v t="ekr.20041003172238"><vh>@thin Library.py</vh></v>
-<v t="ekr.20040916084945"><vh>@thin macros.py</vh></v>
+<v t="ekr.20041003172238" a="E"><vh>@thin Library.py</vh></v>
+<v t="ekr.20040916084945" a="E"><vh>@thin macros.py</vh></v>
 <v t="edream.110203113231.727"><vh>@thin mod_timestamp.py</vh></v>
 <v t="edream.110203113231.720"><vh>@thin outline_export.py</vh></v>
 <v t="ekr.20041021120118"><vh>@thin pretty_print.py</vh></v>
@@ -185,7 +200,7 @@ marks="ekr.20041017043622.4,ekr.20041017043622.10,ekr.20041017043622.13,"><vh>@t
 <v t="ekr.20040331072607"><vh>@thin hoist.py</vh></v>
 <v t="ekr.20040108062655"><vh>@thin nodenavigator.py</vh></v>
 <v t="ekr.20040108095351"><vh>@thin rowcol.py</vh></v>
-<v t="ekr.20040107092135.2"><vh>@thin searchbox.py</vh></v>
+<v t="ekr.20040107092135.2" a="E"><vh>@thin searchbox.py</vh></v>
 <v t="rogererens.20041013082304"><vh>@thin UNL.py</vh></v>
 </v>
 <v t="ekr.20040915073259"><vh>Enhancing windows</vh>
@@ -667,20 +682,47 @@ marks="pap.20041006193013,pap.20041006194759,"><vh>@thin plugin_manager.py</vh><
 <v t="mork.20041018204908.1"><vh>@thin multifile.py</vh></v>
 <v t="mork.20041010095009"><vh>@thin xsltWithNodes.py</vh></v>
 </v>
-<v t="ekr.20041211035618"><vh>Scripts, buttons &amp; settings</vh>
-<v t="ekr.20050217093214" a="E"><vh>@settings</vh>
-<v t="ekr.20050217093214.1"><vh>@recentfiles </vh></v>
+<v t="ekr.20050226183339" a="E"><vh>New in 4.3a4</vh>
+<v t="ekr.20050227071948" a="E" annotate="5404010000376437313030323835353038373037323639366637323639373437393731303132383633363136653665366637343631373436353061353436623530363936333662366336353536363137323061373130323666373130333464306632373632353530343665366636343635373130353238363830323666373130363535303734363635363137343735373236353731303736323535303236323637373130383238363830323666373130393535303037313061363235353039363137323633363836353734373937303635373130623238363830323666373130633638306136323535303236363637373130643238363830323666373130653638306136323735326571002e"><vh>cleo</vh>
+<v t="ekr.20050227072121"><vh>Notes</vh>
+<v t="ekr.20050227071948.1" annotate="7d71002e"><vh>TODO</vh>
+<v t="ekr.20050227071948.2" annotate="7d71002e"><vh>pixmap icons</vh></v>
+<v t="ekr.20050227071948.3" annotate="7d71002e"><vh>colour selector</vh></v>
+<v t="ekr.20050227071948.4" annotate="55f037643731303032383535303837303732363936663732363937343739373130313238363336313665366536663734363137343635306135343662353036393633366236633635353636313732306137313032366637313033346236343632353530343665366636343635373130353238363830323666373130363535303037313037363235353032363236373731303832383638303236663731303936383037363235353039363137323633363836353734373937303635373130613238363830323666373130623638303736323535303236363637373130633238363830323666373130643638303736323735326571002e"><vh>popup location</vh></v>
+<v t="ekr.20050227071948.5" a="E" annotate="5592376437313030323835353038373037323639366637323639373437393731303132383633363136653665366637343631373436353061353436623530363936333662366336353536363137323061373130323666373130333462303136323535303936313732363336383635373437393730363537313035323836383032366637313036353530303731303736323735326571002e"><vh>EKR's intentions on @thin nodes</vh>
+<v t="ekr.20050227071948.6" annotate="5592376437313030323835353038373037323639366637323639373437393731303132383633363136653665366637343631373436353061353436623530363936333662366336353536363137323061373130323666373130333462303136323535303936313732363336383635373437393730363537313035323836383032366637313036353530303731303736323735326571002e"><vh>No attributes for @thin nodes</vh></v>
 </v>
-<v t="ekr.20041103052443"><vh>Script to find and replace all functions in leoGlobals.py</vh>
-<v t="ekr.20041103052443.1"><vh>findFunctionsInTree</vh></v>
-<v t="ekr.20041103052443.2"><vh>findDefs</vh></v>
-<v t="ekr.20041103052443.3"><vh>prependNamesInTree</vh>
-<v t="ekr.20041103052443.4"><vh>&lt;&lt; look for name followed by '(' &gt;&gt;</vh></v>
-<v t="ekr.20041103052443.5"><vh>&lt;&lt; print before and after &gt;&gt;</vh></v>
+<v t="ekr.20050227071948.7" annotate="7d71002e"><vh>group annotations</vh></v>
+<v t="ekr.20050227071948.8" annotate="7d71002e"><vh>archetype based search,navigation</vh></v>
+<v t="ekr.20050227071948.9" annotate="7d71002e"><vh>sort by type</vh></v>
+<v t="ekr.20050227071948.10" annotate="7d71002e"><vh>fonts</vh></v>
+<v t="ekr.20050227071948.11" annotate="55f037643731303032383535303837303732363936663732363937343739373130313238363336313665366536663734363137343635306135343662353036393633366236633635353636313732306137313032366637313033346230323632353530343665366636343635373130353238363830323666373130363535303037313037363235353032363236373731303832383638303236663731303936383037363235353039363137323633363836353734373937303635373130613238363830323666373130623638303736323535303236363637373130633238363830323666373130643638303736323735326571002e"><vh>question marks</vh></v>
 </v>
-<v t="ekr.20041103052443.6"><vh>&lt;&lt; set nameList to the list of functions in leoGlobals.py &gt;&gt;</vh></v>
+<v t="ekr.20050227071948.12" annotate="54000100003764373130303238353530383730373236393666373236393734373937313031323836333631366536653666373436313734363530613534366235303639363336623663363535363631373230613731303236663731303334623634363235353034366536663634363537313035323836383032366637313036353530303731303736323535303236323637373130383238363830323666373130393535303635303735373237303663363537313061363235353039363137323633363836353734373937303635373130623238363830323666373130633638303736323535303236363637373130643238363830323666373130653638303736323735326571002e"><vh>Done</vh>
+<v t="ekr.20050227071948.13" annotate="7d71005509617474656e74696f6e71014930300a732e"><vh>Clear All markings</vh></v>
+<v t="ekr.20050227071948.14" annotate="54120100003764373130303238353530343665366636343635373130313238363336313665366536663734363137343635306135343662353036393633366236633635353636313732306137313032366637313033353530303731303536323535303236323637373130363238363830323666373130373638303536323535303936313734373436353665373436393666366537313038343933303331306135353038373037323639366637323639373437393731303932383638303236663731306134623634363235353032363636373731306232383638303236663731306336383035363235353039363137323633363836353734373937303635373130643238363830323666373130653638303536323735326571002e"><vh>autoleo node colouring</vh></v>
+<v t="ekr.20050227071948.15" annotate="5592376437313030323835353038373037323639366637323639373437393731303132383633363136653665366637343631373436353061353436623530363936333662366336353536363137323061373130323666373130333462363436323535303936313732363336383635373437393730363537313035323836383032366637313036353530303731303736323735326571002e"><vh>arbitary colouring</vh></v>
+<v t="ekr.20050227071948.16" annotate="55f037643731303032383535303837303732363936663732363937343739373130313238363336313665366536663734363137343635306135343662353036393633366236633635353636313732306137313032366637313033346236343632353530343665366636343635373130353238363830323666373130363535303037313037363235353032363236373731303832383638303236663731303936383037363235353039363137323633363836353734373937303635373130613238363830323666373130623638303736323535303236363637373130633238363830323666373130643638303736323735326571002e"><vh>rename to cleo</vh></v>
+<v t="ekr.20050227071948.17" annotate="7d71002e"><vh>headline colours</vh></v>
+<v t="ekr.20050227071948.18" annotate="7d71005509617474656e74696f6e71014930300a732e"><vh>priority colouring</vh></v>
+<v t="ekr.20050227071948.19" annotate="7d71005509617474656e74696f6e71014930300a732e"><vh>archtetype colouring</vh></v>
 </v>
-<v t="ekr.20041113110210"><vh>@button Spelling...</vh></v>
+<v t="ekr.20050227071948.20" annotate="7d71002e"><vh>Problems</vh>
+<v t="ekr.20050227071948.6" annotate="5592376437313030323835353038373037323639366637323639373437393731303132383633363136653665366637343631373436353061353436623530363936333662366336353536363137323061373130323666373130333462303136323535303936313732363336383635373437393730363537313035323836383032366637313036353530303731303736323735326571002e"><vh>No attributes for @thin nodes</vh></v>
+<v t="ekr.20050227071948.21" annotate="5592376437313030323835353038373037323639366637323639373437393731303132383633363136653665366637343631373436353061353436623530363936333662366336353536363137323061373130323666373130333462303236323535303936313732363336383635373437393730363537313035323836383032366637313036353530303731303736323735326571002e"><vh>features are not orthogonal</vh></v>
+<v t="ekr.20050227071948.22" annotate="7d71002e"><vh>Too many colours !!</vh></v>
+</v>
+<v t="ekr.20050227071948.23" annotate="5404010000376437313030323835353038373037323639366637323639373437393731303132383633363136653665366637343631373436353061353436623530363936333662366336353536363137323061373130323666373130333464306632373632353530343665366636343635373130353238363830323666373130363535303734363635363137343735373236353731303736323535303236323637373130383238363830323666373130393535303037313061363235353039363137323633363836353734373937303635373130623238363830323666373130633638306136323535303236363637373130643238363830323666373130653638306136323735326571002e"><vh>BUGS</vh>
+<v t="ekr.20050227071948.24" annotate="55f037643731303032383535303837303732363936663732363937343739373130313238363336313665366536663734363137343635306135343662353036393633366236633635353636313732306137313032366637313033346236343632353530343665366636343635373130353238363830323666373130363535303037313037363235353032363236373731303832383638303236663731303936383037363235353039363137323633363836353734373937303635373130613238363830323666373130623638303736323535303236363637373130633238363830323666373130643638303736323735326571002e"><vh>popup location</vh></v>
+</v>
+<v t="ekr.20050227071948.27" a="E" annotate="7d71002e"><vh>colour table</vh></v>
+<v t="ekr.20050227071948.28" a="E" annotate="54060100003764373130303238353530383730373236393666373236393734373937313031323836333631366536653666373436313734363530613534366235303639363336623663363535363631373230613731303236663731303334643066323736323535303436653666363436353731303532383638303236663731303635353038343336663664366436353665373437333731303736323535303236323637373130383238363830323666373130393535303037313061363235353039363137323633363836353734373937303635373130623238363830323666373130633638306136323535303236363637373130643238363830323666373130653638306136323735326571002e"><vh>Notes</vh>
+<v t="ekr.20050227071948.29" annotate="7d71002e"><vh>drawing hooks</vh></v>
+</v>
+</v>
+<v t="ekr.20050227071948.33" a="TV" annotate="540c0100003764373130303238353530383730373236393666373236393734373937313031323836333631366536653666373436313734363530613534366235303639363336623663363535363631373230613731303236663731303334643066323736323535303436653666363436353731303532383638303236663731303635353034363636393663363537313037363235353032363236373731303832383638303236663731303935353030373130613632353530393631373236333638363537343739373036353731306232383638303236663731306335353035346637343638363537323731306436323535303236363637373130653238363830323666373130663638306136323735326571002e"
+expanded="ekr.20050227100857,ekr.20050227100643,"><vh>@thin cleo.py</vh></v>
+</v>
 </v>
 </vnodes>
 <tnodes>
@@ -8050,6 +8092,205 @@ used. Maybe this information can be centralized.
 <t tx="ekr.20050217093214">@nocolor</t>
 <t tx="ekr.20050217093214.1">C:\prog\leoCVS\leo\test\test.leo
 C:\prog\leoCVS\leo\plugins\leoPlugins.leo</t>
-<t tx="ekr.20050226090248"></t>
+<t tx="ekr.20050226090248"> </t>
+<t tx="ekr.20050226183339"></t>
+<t tx="ekr.20050227071948"></t>
+<t tx="ekr.20050227071948.1">
+- move the clone marker to the same place as the blue square
+  content indicator. They can overlap.  Make room for annotations.
+  
+
+
+
+</t>
+<t tx="ekr.20050227071948.2">
+copy icons from freemind.
+
+expandable box of icons at the head of a headline.
+but manipulation vnode's iconx and icony positions.
+vnode.computeIcon &amp; setIcon
+
+icons in popup menus too ?
+
+</t>
+<t tx="ekr.20050227071948.3">
+There seems to be a colour selector in leo.
+</t>
+<t tx="ekr.20050227071948.4"></t>
+<t tx="ekr.20050227071948.5">
+He haven't thought about it.
+</t>
+<t tx="ekr.20050227071948.6"></t>
+<t tx="ekr.20050227071948.7"></t>
+<t tx="ekr.20050227071948.8"></t>
+<t tx="ekr.20050227071948.9"></t>
+<t tx="ekr.20050227071948.10">
+font
+size
+style
+</t>
+<t tx="ekr.20050227071948.11"></t>
+<t tx="ekr.20050227071948.12"></t>
+<t tx="ekr.20050227071948.13"></t>
+<t tx="ekr.20050227071948.14">White or black on some Background
+@file
+@ignore
+features
+main branches
+
+
+Automatically hilight @ nodes
+
+</t>
+<t tx="ekr.20050227071948.15"></t>
+<t tx="ekr.20050227071948.16"></t>
+<t tx="ekr.20050227071948.17">
+Store semantics instead of colours.  Semantics then map to colours.
+
+v.edit_text():  ?? instead of pulling it of tree ?
+
+yes.
+
+4.2 it is p.edit_text()
+
+
+headline colours are reseted by the tree select and unselect methods.
+maybe need to override them via the after (re)draw hook.
+
+
+Offending Methods are all in leoTkinterTree.py
+setNormalLabelState (self,v): # selected, editing
+setDisabledLabelState (self,v): # selected, disabled
+setUnselectedLabelState (self,v): # not selected.
+
+
+</t>
+<t tx="ekr.20050227071948.18">
+Different coloured arrows for different priorities.
+
+VeryHigh Red
+High Orange
+* Medium Green
+Low Blue  (whatever)
+Done  (tick)
+</t>
+<t tx="ekr.20050227071948.19">
+archtetype based vnode attributes, not colour.
+</t>
+<t tx="ekr.20050227071948.20"></t>
+<t tx="ekr.20050227071948.21">
+The colouring conflicts.
+</t>
+<t tx="ekr.20050227071948.22"></t>
+<t tx="ekr.20050227071948.23"></t>
+<t tx="ekr.20050227071948.24">Not always predictable.
+
+src/leoTkinterTree.py: menu.post(event.x_root, event.y_root)
+
+</t>
+<t tx="ekr.20050227071948.27">
+# XXX merge: my model, coad &amp; de luca and holy trinity
+
+# change colours: only foreground !
+colour_table = {
+    'interface': ["black", "OliveDrab2"],
+    'logic':  ("black", "LightSkyBlue2"),
+    'data':  ("black", "SandyBrown"),
+    }
+
+# Leo nodes.  Background hilite ?
+Dead @ignore nodes + Documentat nodes  =&gt; Grey out
+@File nodes, sub tree root
+
+# Archetype Colouring
+
+# Holy Trinity
+Interface
+Logic/Transform Centers/Functions
+Data  =&gt; Description
+
+# Coad and De Luca  --- Contrast against their meta-model
+# It is a hiearchy going up from Description.
+Description/Attributes/Data Catalog:  Purple
+Party/Place/Thing:  Green
+Role/Participation:  Yellow (Khaki or straw)
+Moment/Interval/Event: Pink
+Interface: White
+
+# Me
+Entity =&gt; Place or thing
+  Core  =&gt;  Thing
+  Interface =&gt;
+  
+Relationship (Loading and wiring code) =&gt; Moment(Init)
+     =&gt; Special moment
+     
+* Interaction  =&gt; Moment/Interval + more !
+
+# Unified : 5 Categories Max!!
+Attributes, Data, Description, Lookup Tables.   =&gt; Brown
+Entity Core, Place, Thing, Party    =&gt; Green
+Logic, Pure Functions               =&gt; Blue
+Role/Interface/Participation/Trait  =&gt; Straw/Khaki
+Dynamic Stuff, Moment/Interaction   =&gt; Pinkish
+
+</t>
+<t tx="ekr.20050227071948.28">3. Various drawing hooks. I've restored the drawing hooks that used to exists. These are so-called "stub" hooks. The entries of these hooks in leoDocs.leo and leoPlugins.leo are as follows:
+ 
+ tag argument keys in keywords
+ (hook name) overrides when called dictionary argument
+ --------- --------- ----------- -------------------
+ ...
+ "draw-outline-box" yes start of drawBox tree,p,v,x,y (note 6)
+ "draw-outline-icon" yes start of tree.drawIcon tree,p,v,x,y (note 6)
+ "draw-outline-node" yes start of tree.drawNode tree,p,v,x,y (note 6)
+ "draw-outline-text-box" yes start of tree.drawText tree,p,v,x,y (note 6)
+ "draw-sub-outline" yes start of tree.drawTree tree,p,v,x,y,h,level (note 6)
+ ...
+ 
+ These probably work exactly as the old hooks did, though I didn't use the old (4.0?) code as a base. The only change is the new p keyword argument. In all cases v = p.v. I probably should a p keyword argument to most other hooks, and I'm lazy...
+ 
+ Warning: all these hooks "override" the existing code, which doesn't get executed if the hook returns anything except None. This means that the hook had better return what the "host" code returns, and this has changed recently to support user icons, and may change in the future as needed.
+ 
+ For example, here is the code in drawNode
+ 
+ data = g.doHook("draw-outline-node",tree=tree,p=p,v=v,x=x,y=y)
+ if data is not None: return data
+ 
+ At present, drawNode typically returns what return force_draw_node returns, which is a tuple (h,xw). This is needed to support icons of various sizes.
+ 
+ In short, I'm not real sure how useful these hooks are going to be, or how stable.
+ 
+
+</t>
+<t tx="ekr.20050227071948.29">
+add the colour menu to rclickhead1
+
+
+ "draw-outline-box" yes start of drawBox tree,p,v,x,y (note 6)
+    It works, but not sure when it is called.
+
+ "draw-outline-icon" yes start of tree.drawIcon tree,p,v,x,y (note 6)
+    The box obscures it.  If True is return, rlick wont work anymore.
+
+ "draw-outline-node" yes start of tree.drawNode tree,p,v,x,y (note 6)
+    This calls -icon and -box ?
+ "draw-outline-text-box" yes start of tree.drawText tree,p,v,x,y (note 6)
+    Does not obscure the box area !!
+
+ "draw-sub-outline" yes start of tree.drawTree tree,p,v,x,y,h,level (note 6)
+     Use this for head highlighting ? Probally called after the node is draw
+     but before drawing the children.
+yay ! they work with the CVS version.
+
+@c
+
+#registerHandler("draw-outline-box", draw0)
+#registerHandler("draw-outline-node", draw0)
+#registerHandler("draw-outline-text-box", draw0)
+
+#registerHandler("iconrclick1",show_colour_menu)
+</t>
+<t tx="ekr.20050227072121"></t>
 </tnodes>
 </leo_file>
