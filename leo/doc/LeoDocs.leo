@@ -1661,7 +1661,7 @@
 <v t="edream.110203163054.1053"><vh>Where are the simple examples?</vh></v>
 <v t="edream.110203163054.1054"><vh>Why should I use clones?</vh></v>
 <v t="edream.110203163054.1055"><vh>Which should I use: @root trees or @file trees?</vh></v>
-<v t="ekr.20040411074926"><vh>How can I use Leo to develop Leo (or plugins) ?</vh></v>
+<v t="ekr.20040411074926"><vh>How can I use Leo to develop Leo itself?</vh></v>
 </v>
 <v t="edream.110203163054.1056"><vh>Unicode and special characters</vh>
 <v t="edream.110203163054.1057"><vh>Some characters in derived files look funny. What can I do?</vh></v>
@@ -1792,7 +1792,7 @@
 </v>
 </v>
 <v t="edream.110203163054.1108"><vh>How can I create a template .leo file?</vh></v>
-<v t="ekr.20040411074926" a="TV"><vh>How can I use Leo to develop Leo (or plugins) ?</vh></v>
+<v t="ekr.20040411074926" a="TV"><vh>How can I use Leo to develop Leo itself?</vh></v>
 </v>
 </v>
 <v t="edream.110203163054.1158"><vh>Sample Code</vh>
@@ -12549,7 +12549,7 @@ Many commands use this bits for tree traversal, so these bits do not persist.
 |leo|</t>
 <t tx="ekr.20040411074926">There is a trick that makes it very easy to develop Leo using Leo itself.  The trick is to create a workflow that separates editing from testing.
 
-Putting test code in LeoPy.leo would waste a lot of time.  To run tests I would have to exit Leo and reload LeoPy. A much quicker way is to put all test code in a test.leo file.  So to  change and test code, I do the following:
+Putting test code in LeoPy.leo would waste a lot of time.  To run tests you would have to exit Leo and reload LeoPy. A much quicker way is to put all test code in a test.leo file.  So to change and test code, do the following:
 
 1. Save LeoPy.leo but do NOT exit Leo. 
 
@@ -12561,16 +12561,16 @@ That's all. Python will recompile any changed .py files in the new copy of Leo.
 
 BTW, I create a batch file called t.bat that runs test.leo, so to the "edit-reload-test" cycle is just:
 
-1. Control-S (to save the .leo file)
-2. t (to run load test.leo)
-3. Control-E (to run the test script)
+1. Control-S (in LeoPy.leo: saves the .leo file)
+2. t         (in a console window: runs test.leo, compiling all changed .py files as a side effect)
+3. Control-E (in test.leo: runs the test script)
 
 The benefits of the new workflow:
 
-1.  test.leo loads  _much_ more quickly than LeoPy.leo does.  This new approach can increase the speed of the edit-reload-test cycle by more than a factor of 10.  Hitting Control-S, t, Control-E takes about 5 seconds.
+- test.leo loads  _much_ more quickly than LeoPy.leo does.  This new approach can increase the speed of the edit-reload-test cycle by more than a factor of 10.  Hitting Control-S, t, Control-E takes about 5 seconds.
 
-2. LeoPy.leo runs with the _old_ code, so it is much easier to fix syntax errors or exceptions in the _new_ code: just fix the problem and save LeoPy.leo _without_ closing LeoPy.leo., then restart test.leo. Tests are run on new code; editing is done on old, stable code.
+- LeoPy.leo runs with the _old_ code, so it is much easier to fix syntax errors or exceptions in the _new_ code: just fix the problem and save LeoPy.leo _without_ closing LeoPy.leo., then restart test.leo. Tests are run on new code; editing is done on old, stable code.
 
-3. test.leo is the perfect place to develop test.  I can create and organize those tests and when I am done, test.leo is a log of my work.</t>
+- test.leo is the perfect place to develop test.  I can create and organize those tests and when I am done, test.leo is a log of my work.</t>
 </tnodes>
 </leo_file>
