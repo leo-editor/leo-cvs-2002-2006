@@ -532,7 +532,7 @@ if theDir and len(theDir) > 0 and g.os_path_isabs(theDir):
     else: # 9/25/02
         self.default_directory = g.makeAllNonExistentDirectories(theDir)
         if not self.default_directory:
-            self.error("Directory \"" + theDir + "\" does not exist")
+            self.error("Directory \"%s\" does not exist" % theDir)
 #@nonl
 #@-node:ekr.20041005105605.224:<< Set path from @file node >> in scanDirectory in leoGlobals.py
 #@+node:ekr.20041005105605.225:<< Test for @path >>
@@ -548,7 +548,7 @@ if not self.default_directory and not old.has_key("path") and theDict.has_key("p
         if g.os_path_isabs(path):
             << handle absolute path >>
         else:
-            self.error("ignoring bad @path: " + path)
+            self.error("ignoring bad @path: %s" % path)
     else:
         self.error("ignoring empty @path")
 #@nonl
@@ -576,7 +576,7 @@ if g.os_path_exists(path):
 else: # 9/25/02
     self.default_directory = g.makeAllNonExistentDirectories(path)
     if not self.default_directory:
-        self.error("invalid @path: " + path)
+        self.error("invalid @path: %s" % path)
 #@-node:ekr.20041005105605.227:<< handle absolute path >>
 #@-node:ekr.20041005105605.225:<< Test for @path >>
 #@+node:ekr.20041005105605.228:<< Test for @encoding >>
@@ -2432,7 +2432,18 @@ def pasteOutlineRetainingClones (self):
     
     c = self
     
-    return c.pasteOutline(reassignIndices=False)
+    # Paste retaining clones can't be fully undone.  Warn first.
+    message = (
+        'Are you sure you want to Paste As Clone?\n\n'
+        'This operation can not be undone; it will clear the Undo stack.')
+    
+    response = g.app.gui.runAskYesNoDialog('Paste As Clone?',message=message)
+
+    if response == 'yes':
+        val = c.pasteOutline(reassignIndices=False)
+        c.undoer.clearUndoState()
+        g.es('Undo stack cleared',color='red')
+        return val
 #@nonl
 #@-node:EKR.20040610130943:pasteOutlineRetainingClones
 #@+node:ekr.20031218072017.1551:pasteOutline
@@ -3174,7 +3185,7 @@ def scanHeader(self,theFile,fileName):
         at.startSentinelComment = start
         at.endSentinelComment = end
     else:
-        at.error("Bad @+leo sentinel in " + fileName)
+        at.error("Bad @+leo sentinel in: %s" % fileName)
     # g.trace("start,end",repr(at.startSentinelComment),repr(at.endSentinelComment))
     return firstLines,new_df,isThinDerivedFile
 #@nonl
@@ -3470,7 +3481,7 @@ if theDir and len(theDir) > 0 and g.os_path_isabs(theDir):
     else: # 9/25/02
         self.default_directory = g.makeAllNonExistentDirectories(theDir)
         if not self.default_directory:
-            self.error("Directory \"" + theDir + "\" does not exist")
+            self.error("Directory \"%s\" does not exist" % theDir)
 #@nonl
 #@-node:ekr.20041005105605.224:<< Set path from @file node >> in scanDirectory in leoGlobals.py
 #@+node:ekr.20041005105605.225:<< Test for @path >>
@@ -3486,7 +3497,7 @@ if not self.default_directory and not old.has_key("path") and theDict.has_key("p
         if g.os_path_isabs(path):
             << handle absolute path >>
         else:
-            self.error("ignoring bad @path: " + path)
+            self.error("ignoring bad @path: %s" % path)
     else:
         self.error("ignoring empty @path")
 #@nonl
@@ -3514,7 +3525,7 @@ if g.os_path_exists(path):
 else: # 9/25/02
     self.default_directory = g.makeAllNonExistentDirectories(path)
     if not self.default_directory:
-        self.error("invalid @path: " + path)
+        self.error("invalid @path: %s" % path)
 #@-node:ekr.20041005105605.227:<< handle absolute path >>
 #@-node:ekr.20041005105605.225:<< Test for @path >>
 #@+node:ekr.20041005105605.228:<< Test for @encoding >>
@@ -5505,7 +5516,7 @@ if theDir and len(theDir) > 0 and g.os_path_isabs(theDir):
     else: # 9/25/02
         self.default_directory = g.makeAllNonExistentDirectories(theDir)
         if not self.default_directory:
-            self.error("Directory \"" + theDir + "\" does not exist")
+            self.error("Directory \"%s\" does not exist" % theDir)
 #@nonl
 #@-node:ekr.20041005105605.224:<< Set path from @file node >> in scanDirectory in leoGlobals.py
 #@+node:ekr.20041005105605.225:<< Test for @path >>
@@ -5521,7 +5532,7 @@ if not self.default_directory and not old.has_key("path") and theDict.has_key("p
         if g.os_path_isabs(path):
             << handle absolute path >>
         else:
-            self.error("ignoring bad @path: " + path)
+            self.error("ignoring bad @path: %s" % path)
     else:
         self.error("ignoring empty @path")
 #@nonl
@@ -5549,7 +5560,7 @@ if g.os_path_exists(path):
 else: # 9/25/02
     self.default_directory = g.makeAllNonExistentDirectories(path)
     if not self.default_directory:
-        self.error("invalid @path: " + path)
+        self.error("invalid @path: %s" % path)
 #@-node:ekr.20041005105605.227:<< handle absolute path >>
 #@-node:ekr.20041005105605.225:<< Test for @path >>
 #@+node:ekr.20041005105605.228:<< Test for @encoding >>
@@ -6192,7 +6203,7 @@ for p in root.self_and_subtree_iter():
     try: s = p.v.t.tempBodyString
     except: s = ""
     if s and not p.v.t.isVisited():
-        at.error("Not in derived file:" + p.headString())
+        at.error("Not in derived file: %s" % p.headString())
         p.v.t.setVisited() # One message is enough.
 #@nonl
 #@-node:ekr.20041005105605.23:<< warn about non-empty unvisited nodes >>
@@ -8151,13 +8162,9 @@ def readError(self,message):
 
     # This is useful now that we don't print the actual messages.
     if self.errors == 0:
-        g.es_error("----- error reading @file " + self.targetFileName)
-        self.error(message) # 9/10/02: we must increment self.errors!
-    else:
-        print message
-
-    if 0: # CVS conflicts create too many messages.
-        self.error(message)
+        self.printError("----- error reading @file: %s" % self.targetFileName)
+    
+    self.error(message)
     
     self.root.setOrphan()
     self.root.setDirty()
@@ -8196,7 +8203,7 @@ def scanHeader(self,theFile,fileName):
         at.startSentinelComment = start
         at.endSentinelComment = end
     else:
-        at.error("Bad @+leo sentinel in " + fileName)
+        at.error("Bad @+leo sentinel in: %s" % fileName)
     # g.trace("start,end",repr(at.startSentinelComment),repr(at.endSentinelComment))
     return firstLines,new_df,isThinDerivedFile
 #@nonl
@@ -9965,7 +9972,7 @@ def remove (self,fileName,verbose=True):
         return True
     except:
         if verbose:
-            self.error("exception removing:" + fileName)
+            self.error("exception removing: %s" % fileName)
             g.es_exception()
         return False
 #@nonl
@@ -10008,16 +10015,28 @@ def stat (self,fileName):
 #@nonl
 #@-node:ekr.20050104132026:stat
 #@-node:ekr.20050104131929:file operations...
-#@+node:ekr.20041005105605.220:error
+#@+node:ekr.20041005105605.220:atFile.error
 def error(self,message):
 
     if message:
-        g.es_error(message)
-        print message
+        self.printError(message)
 
     self.errors += 1
+#@-node:ekr.20041005105605.220:atFile.error
+#@+node:ekr.20050206085258:atFile.printError
+def printError (self,message):
+
+    '''Print an error message that may contain non-ascii characters.'''
+
+    if self.errors == 0:
+        g.es_error(message)
+    else:
+        try:
+            print message
+        except UnicodeError:
+            print g.toEncodedString(message)
 #@nonl
-#@-node:ekr.20041005105605.220:error
+#@-node:ekr.20050206085258:atFile.printError
 #@+node:ekr.20041005105605.221:exception
 def exception (self,message):
     
@@ -10084,7 +10103,7 @@ if theDir and len(theDir) > 0 and g.os_path_isabs(theDir):
     else: # 9/25/02
         self.default_directory = g.makeAllNonExistentDirectories(theDir)
         if not self.default_directory:
-            self.error("Directory \"" + theDir + "\" does not exist")
+            self.error("Directory \"%s\" does not exist" % theDir)
 #@nonl
 #@-node:ekr.20041005105605.224:<< Set path from @file node >> in scanDirectory in leoGlobals.py
 #@+node:ekr.20041005105605.225:<< Test for @path >>
@@ -10100,7 +10119,7 @@ if not self.default_directory and not old.has_key("path") and theDict.has_key("p
         if g.os_path_isabs(path):
             << handle absolute path >>
         else:
-            self.error("ignoring bad @path: " + path)
+            self.error("ignoring bad @path: %s" % path)
     else:
         self.error("ignoring empty @path")
 #@nonl
@@ -10128,7 +10147,7 @@ if g.os_path_exists(path):
 else: # 9/25/02
     self.default_directory = g.makeAllNonExistentDirectories(path)
     if not self.default_directory:
-        self.error("invalid @path: " + path)
+        self.error("invalid @path: %s" % path)
 #@-node:ekr.20041005105605.227:<< handle absolute path >>
 #@-node:ekr.20041005105605.225:<< Test for @path >>
 #@+node:ekr.20041005105605.228:<< Test for @encoding >>
@@ -10274,7 +10293,7 @@ if theDir and g.os_path_isabs(theDir):
     else:
         at.default_directory = g.makeAllNonExistentDirectories(theDir)
         if not at.default_directory:
-            at.error("Directory \"" + theDir + "\" does not exist")
+            at.error("Directory \"%s\" does not exist" % theDir)
 #@nonl
 #@-node:ekr.20041005105605.237:<< Set path from @file node >>  in df.scanDeafaultDirectory in leoAtFile.py
 #@+node:ekr.20041005105605.238:<< handle @path >> in df.scanDeafaultDirectory in leoAtFile.py
@@ -10290,7 +10309,7 @@ if path and len(path) > 0:
     if g.os_path_isabs(path):
         << handle absolute path >>
     else:
-        at.error("ignoring bad @path: " + path)
+        at.error("ignoring bad @path: %s" % path)
 else:
     at.error("ignoring empty @path")
 
@@ -10316,7 +10335,7 @@ if g.os_path_exists(path):
 else:
     at.default_directory = g.makeAllNonExistentDirectories(path)
     if not at.default_directory:
-        at.error("invalid @path: " + path)
+        at.error("invalid @path: %s" % path)
 #@nonl
 #@-node:ekr.20041005105605.240:<< handle absolute path >>
 #@-node:ekr.20041005105605.238:<< handle @path >> in df.scanDeafaultDirectory in leoAtFile.py
@@ -13181,16 +13200,14 @@ def writeError(self,message=None):
     self.root.setDirty()
 #@nonl
 #@-node:ekr.20041005105605.217:writeError
-#@+node:ekr.20041005105605.220:error
+#@+node:ekr.20041005105605.220:atFile.error
 def error(self,message):
 
     if message:
-        g.es_error(message)
-        print message
+        self.printError(message)
 
     self.errors += 1
-#@nonl
-#@-node:ekr.20041005105605.220:error
+#@-node:ekr.20041005105605.220:atFile.error
 #@+node:ekr.20041005105605.219:Uilites... (atFile)
 #@+node:ekr.20050104131929:file operations...
 @ The difference, if any, between these methods and the corresponding g.utils_x
@@ -13293,7 +13310,7 @@ def remove (self,fileName,verbose=True):
         return True
     except:
         if verbose:
-            self.error("exception removing:" + fileName)
+            self.error("exception removing: %s" % fileName)
             g.es_exception()
         return False
 #@nonl
@@ -13336,16 +13353,28 @@ def stat (self,fileName):
 #@nonl
 #@-node:ekr.20050104132026:stat
 #@-node:ekr.20050104131929:file operations...
-#@+node:ekr.20041005105605.220:error
+#@+node:ekr.20041005105605.220:atFile.error
 def error(self,message):
 
     if message:
-        g.es_error(message)
-        print message
+        self.printError(message)
 
     self.errors += 1
+#@-node:ekr.20041005105605.220:atFile.error
+#@+node:ekr.20050206085258:atFile.printError
+def printError (self,message):
+
+    '''Print an error message that may contain non-ascii characters.'''
+
+    if self.errors == 0:
+        g.es_error(message)
+    else:
+        try:
+            print message
+        except UnicodeError:
+            print g.toEncodedString(message)
 #@nonl
-#@-node:ekr.20041005105605.220:error
+#@-node:ekr.20050206085258:atFile.printError
 #@+node:ekr.20041005105605.221:exception
 def exception (self,message):
     
@@ -13412,7 +13441,7 @@ if theDir and len(theDir) > 0 and g.os_path_isabs(theDir):
     else: # 9/25/02
         self.default_directory = g.makeAllNonExistentDirectories(theDir)
         if not self.default_directory:
-            self.error("Directory \"" + theDir + "\" does not exist")
+            self.error("Directory \"%s\" does not exist" % theDir)
 #@nonl
 #@-node:ekr.20041005105605.224:<< Set path from @file node >> in scanDirectory in leoGlobals.py
 #@+node:ekr.20041005105605.225:<< Test for @path >>
@@ -13428,7 +13457,7 @@ if not self.default_directory and not old.has_key("path") and theDict.has_key("p
         if g.os_path_isabs(path):
             << handle absolute path >>
         else:
-            self.error("ignoring bad @path: " + path)
+            self.error("ignoring bad @path: %s" % path)
     else:
         self.error("ignoring empty @path")
 #@nonl
@@ -13456,7 +13485,7 @@ if g.os_path_exists(path):
 else: # 9/25/02
     self.default_directory = g.makeAllNonExistentDirectories(path)
     if not self.default_directory:
-        self.error("invalid @path: " + path)
+        self.error("invalid @path: %s" % path)
 #@-node:ekr.20041005105605.227:<< handle absolute path >>
 #@-node:ekr.20041005105605.225:<< Test for @path >>
 #@+node:ekr.20041005105605.228:<< Test for @encoding >>
@@ -13602,7 +13631,7 @@ if theDir and g.os_path_isabs(theDir):
     else:
         at.default_directory = g.makeAllNonExistentDirectories(theDir)
         if not at.default_directory:
-            at.error("Directory \"" + theDir + "\" does not exist")
+            at.error("Directory \"%s\" does not exist" % theDir)
 #@nonl
 #@-node:ekr.20041005105605.237:<< Set path from @file node >>  in df.scanDeafaultDirectory in leoAtFile.py
 #@+node:ekr.20041005105605.238:<< handle @path >> in df.scanDeafaultDirectory in leoAtFile.py
@@ -13618,7 +13647,7 @@ if path and len(path) > 0:
     if g.os_path_isabs(path):
         << handle absolute path >>
     else:
-        at.error("ignoring bad @path: " + path)
+        at.error("ignoring bad @path: %s" % path)
 else:
     at.error("ignoring empty @path")
 
@@ -13644,7 +13673,7 @@ if g.os_path_exists(path):
 else:
     at.default_directory = g.makeAllNonExistentDirectories(path)
     if not at.default_directory:
-        at.error("invalid @path: " + path)
+        at.error("invalid @path: %s" % path)
 #@nonl
 #@-node:ekr.20041005105605.240:<< handle absolute path >>
 #@-node:ekr.20041005105605.238:<< handle @path >> in df.scanDeafaultDirectory in leoAtFile.py
@@ -14045,32 +14074,48 @@ def set_focus(self,widget,later=False,tag=''):
 
     c = self.c
     
-    # Crucial: disable the callback if we later change our minds.
-    self.wantedWidget = widget
-    g.app.wantedCommander = c
     # g.trace(c.shortFileName())
 
     if widget and not g.app.unitTesting:
         # Messing with focus may be dangerous in unit tests.
         if later:
             # Queue up the call (just once) for later.
-            def setFocusCallback(c=c,widget=widget):
+            def setFocusCallback(c=c):
                 self.wantedCallbackScheduled = False
-                if (
-                    widget == c.frame.wantedWidget
-                    and c == g.app.wantedCommander
-                    and not g.app.unitTesting
-                ):
+                if c == g.app.wantedCommander and c.frame.wantedWidget:
+                    # g.trace(c.frame.wantedWidget)
+                    g.app.gui.set_focus(
+                        g.app.wantedCommander,
+                        c.frame.wantedWidget,
+                        tag='frame.setFocus')
+                self.wantedWidget = None
+                g.app.wantedCommander = None
+                
+                #if (
+                #    widget == c.frame.wantedWidget
+                #    and c == g.app.wantedCommander
+                #    and not g.app.unitTesting
+                #):
                     # g.trace(repr(c.shortFileName()))
-                    g.app.gui.set_focus(c,widget,tag='frame.setFocus')
+                    # g.app.gui.set_focus(c,widget,tag='frame.setFocus')
+               
+                
+            # Crucial: This may change what the callback does.
+            self.wantedWidget = widget
+            g.app.wantedCommander = c
             if not self.wantedCallbackScheduled:
+                # g.trace(tag,c.shortFileName())
                 self.wantedCallbackScheduled = True
                 # We don't have to wait so long now that we don't call this so often.
-                # The difference between 500 msec. and 200 msec. is significant.
-                self.outerFrame.after(200,setFocusCallback)
+                # The difference between 500 msec. and 100 msec. is significant.
+                self.outerFrame.after(100,setFocusCallback)
         else:
             # g.trace(tag,c.shortFileName())
             g.app.gui.set_focus(c,widget,tag='frame.setFocus')
+            # Crucial: cancel any previous callback.
+            # It may be re-enabled later, but that doesn't matter.
+            self.wantedWidget = None
+            g.app.wantedCommander = None
 #@nonl
 #@-node:ekr.20050120092028.1:set_focus (tkFrame)
 #@-node:ekr.20050120083053:Delayed Focus (tkFrame)
@@ -14728,35 +14773,39 @@ def openWithFileName(fileName,old_c,enableLog=True,readAtFileNodesFlag=True):
     try:
         # Open the file in binary mode to allow 0x1a in bodies & headlines.
         theFile = open(fileName,'rb')
-        if theFile:
-            c,frame = app.gui.newLeoCommanderAndFrame(fileName)
-            frame.log.enable(enableLog)
-            g.app.writeWaitingLog() # New in 4.3: write queued log first.
-            if not g.doHook("open1",old_c=old_c,new_c=c,fileName=fileName):
-                app.setLog(frame.log,"openWithFileName")
-                app.lockLog()
-                frame.c.fileCommands.open(theFile,fileName,readAtFileNodesFlag=readAtFileNodesFlag) # closes file.
-                app.unlockLog()
-                for frame in g.app.windowList:
-                    # The recent files list has been updated by menu.updateRecentFiles.
-                    frame.c.config.setRecentFiles(g.app.config.recentFiles)
-            frame.openDirectory = g.os_path_dirname(fileName)
-            g.doHook("open2",old_c=old_c,new_c=frame.c,fileName=fileName)
-            return True, frame
-        else:
-            g.es("can not open: " + fileName,color="red")
-            return False, None
+        c,frame = app.gui.newLeoCommanderAndFrame(fileName)
+        frame.log.enable(enableLog)
+        g.app.writeWaitingLog() # New in 4.3: write queued log first.
+        if not g.doHook("open1",old_c=old_c,new_c=c,fileName=fileName):
+            app.setLog(frame.log,"openWithFileName")
+            app.lockLog()
+            frame.c.fileCommands.open(
+                theFile,fileName,
+                readAtFileNodesFlag=readAtFileNodesFlag) # closes file.
+            app.unlockLog()
+            for frame in g.app.windowList:
+                # The recent files list has been updated by menu.updateRecentFiles.
+                frame.c.config.setRecentFiles(g.app.config.recentFiles)
+        frame.openDirectory = g.os_path_dirname(fileName)
+        g.doHook("open2",old_c=old_c,new_c=frame.c,fileName=fileName)
+        return True, frame
     except IOError:
-        g.es("can not open: " + fileName, color="blue")
-        return False, None
+        try:
+            # Do not use string + here: it will fail for non-ascii strings!
+            g.es("can not open: %s" % (fileName), color="blue")
+            return False, None
+        except UnicodeError:
+            g.es("can not open: %s" % (g.toEncodedString(fileName)), color="blue")
+            return False, None
     except:
-        if 1:
-            print "exceptions opening:", fileName
+        if 0:
+            print "exceptions opening: %s" % g.toEncodedString(fileName)
             traceback.print_exc()
         else:
-            g.es("exceptions opening: " + fileName,color="red")
+            g.es("exceptions opening: %s" % g.toEncodedString(fileName),color="red")
             g.es_exception()
         return False, None
+#@nonl
 #@-node:ekr.20031218072017.2052:g.openWithFileName
 #@+node:ekr.20031218072017.2188:newLeoCommanderAndFrame (gui-independent)
 def newLeoCommanderAndFrame(self,fileName,updateRecentFiles=True):
@@ -15112,35 +15161,39 @@ def openWithFileName(fileName,old_c,enableLog=True,readAtFileNodesFlag=True):
     try:
         # Open the file in binary mode to allow 0x1a in bodies & headlines.
         theFile = open(fileName,'rb')
-        if theFile:
-            c,frame = app.gui.newLeoCommanderAndFrame(fileName)
-            frame.log.enable(enableLog)
-            g.app.writeWaitingLog() # New in 4.3: write queued log first.
-            if not g.doHook("open1",old_c=old_c,new_c=c,fileName=fileName):
-                app.setLog(frame.log,"openWithFileName")
-                app.lockLog()
-                frame.c.fileCommands.open(theFile,fileName,readAtFileNodesFlag=readAtFileNodesFlag) # closes file.
-                app.unlockLog()
-                for frame in g.app.windowList:
-                    # The recent files list has been updated by menu.updateRecentFiles.
-                    frame.c.config.setRecentFiles(g.app.config.recentFiles)
-            frame.openDirectory = g.os_path_dirname(fileName)
-            g.doHook("open2",old_c=old_c,new_c=frame.c,fileName=fileName)
-            return True, frame
-        else:
-            g.es("can not open: " + fileName,color="red")
-            return False, None
+        c,frame = app.gui.newLeoCommanderAndFrame(fileName)
+        frame.log.enable(enableLog)
+        g.app.writeWaitingLog() # New in 4.3: write queued log first.
+        if not g.doHook("open1",old_c=old_c,new_c=c,fileName=fileName):
+            app.setLog(frame.log,"openWithFileName")
+            app.lockLog()
+            frame.c.fileCommands.open(
+                theFile,fileName,
+                readAtFileNodesFlag=readAtFileNodesFlag) # closes file.
+            app.unlockLog()
+            for frame in g.app.windowList:
+                # The recent files list has been updated by menu.updateRecentFiles.
+                frame.c.config.setRecentFiles(g.app.config.recentFiles)
+        frame.openDirectory = g.os_path_dirname(fileName)
+        g.doHook("open2",old_c=old_c,new_c=frame.c,fileName=fileName)
+        return True, frame
     except IOError:
-        g.es("can not open: " + fileName, color="blue")
-        return False, None
+        try:
+            # Do not use string + here: it will fail for non-ascii strings!
+            g.es("can not open: %s" % (fileName), color="blue")
+            return False, None
+        except UnicodeError:
+            g.es("can not open: %s" % (g.toEncodedString(fileName)), color="blue")
+            return False, None
     except:
-        if 1:
-            print "exceptions opening:", fileName
+        if 0:
+            print "exceptions opening: %s" % g.toEncodedString(fileName)
             traceback.print_exc()
         else:
-            g.es("exceptions opening: " + fileName,color="red")
+            g.es("exceptions opening: %s" % g.toEncodedString(fileName),color="red")
             g.es_exception()
         return False, None
+#@nonl
 #@-node:ekr.20031218072017.2052:g.openWithFileName
 #@+node:ekr.20031218072017.1934:run & allies
 def run(fileName=None,*args,**keywords):
@@ -17198,35 +17251,39 @@ def openWithFileName(fileName,old_c,enableLog=True,readAtFileNodesFlag=True):
     try:
         # Open the file in binary mode to allow 0x1a in bodies & headlines.
         theFile = open(fileName,'rb')
-        if theFile:
-            c,frame = app.gui.newLeoCommanderAndFrame(fileName)
-            frame.log.enable(enableLog)
-            g.app.writeWaitingLog() # New in 4.3: write queued log first.
-            if not g.doHook("open1",old_c=old_c,new_c=c,fileName=fileName):
-                app.setLog(frame.log,"openWithFileName")
-                app.lockLog()
-                frame.c.fileCommands.open(theFile,fileName,readAtFileNodesFlag=readAtFileNodesFlag) # closes file.
-                app.unlockLog()
-                for frame in g.app.windowList:
-                    # The recent files list has been updated by menu.updateRecentFiles.
-                    frame.c.config.setRecentFiles(g.app.config.recentFiles)
-            frame.openDirectory = g.os_path_dirname(fileName)
-            g.doHook("open2",old_c=old_c,new_c=frame.c,fileName=fileName)
-            return True, frame
-        else:
-            g.es("can not open: " + fileName,color="red")
-            return False, None
+        c,frame = app.gui.newLeoCommanderAndFrame(fileName)
+        frame.log.enable(enableLog)
+        g.app.writeWaitingLog() # New in 4.3: write queued log first.
+        if not g.doHook("open1",old_c=old_c,new_c=c,fileName=fileName):
+            app.setLog(frame.log,"openWithFileName")
+            app.lockLog()
+            frame.c.fileCommands.open(
+                theFile,fileName,
+                readAtFileNodesFlag=readAtFileNodesFlag) # closes file.
+            app.unlockLog()
+            for frame in g.app.windowList:
+                # The recent files list has been updated by menu.updateRecentFiles.
+                frame.c.config.setRecentFiles(g.app.config.recentFiles)
+        frame.openDirectory = g.os_path_dirname(fileName)
+        g.doHook("open2",old_c=old_c,new_c=frame.c,fileName=fileName)
+        return True, frame
     except IOError:
-        g.es("can not open: " + fileName, color="blue")
-        return False, None
+        try:
+            # Do not use string + here: it will fail for non-ascii strings!
+            g.es("can not open: %s" % (fileName), color="blue")
+            return False, None
+        except UnicodeError:
+            g.es("can not open: %s" % (g.toEncodedString(fileName)), color="blue")
+            return False, None
     except:
-        if 1:
-            print "exceptions opening:", fileName
+        if 0:
+            print "exceptions opening: %s" % g.toEncodedString(fileName)
             traceback.print_exc()
         else:
-            g.es("exceptions opening: " + fileName,color="red")
+            g.es("exceptions opening: %s" % g.toEncodedString(fileName),color="red")
             g.es_exception()
         return False, None
+#@nonl
 #@-node:ekr.20031218072017.2052:g.openWithFileName
 #@+node:ekr.20041123092357:config.findSettingsPosition
 def findSettingsPosition (self,c,setting):
@@ -22076,12 +22133,9 @@ This is important, the settings node found by findSettingsPosition may be a clon
 #@nonl
 #@-node:ekr.20050122104754.1:What I did
 #@+node:ekr.20041122162610:@recent_files
-C:\prog\leoCVS\leo\config\leoSettings.leo
-c:\prog\leoCVS\leo\doc\LeoDocs.leo
-C:\prog\Leo Stuff\oldLeoFiles.leo
-c:\prog\leoCVS\leo\plugins\leoPlugins.leo
-C:\prog\leoCVS\leo\src\LeoPy.leo
-C:\prog\leoCVS\leo\test\test.leo
+/Users/edream/leoCVS/leo/src/LeoPy.leo
+/Users/edream/leoCVS/leo/plugins/leoPlugins.leo
+/Users/edream/leoCVS/leo/config/leoSettings.leo
 #@nonl
 #@-node:ekr.20041122162610:@recent_files
 #@+node:ekr.20040305223522:p.setBodyStringOrPane & p.setBodyTextOrPane
@@ -23229,6 +23283,9 @@ def callback (self, event):
     # g.trace(self.text)
 
     self.button.invoke ()
+    
+    # See if this helps.
+    return 'break'
 #@-node:ekr.20041025152717:callback
 #@-node:ekr.20041025152343:class underlinedTkButton
 #@+node:ekr.20031218072017.3898:Birth & death
@@ -23284,7 +23341,7 @@ def createFrame (self):
         #widget.bind(g.virtual_event_name("SelectAll"),self.selectAll)
     
     for widget in (outer, self.find_ctrl, self.change_ctrl):
-        widget.bind("<Key-Return>", self.findButton)
+        widget.bind("<Key-Return>", findButtonCallback)
         widget.bind("<Key-Escape>", self.onCloseWindow)
     
     self.top.protocol("WM_DELETE_WINDOW", self.onCloseWindow)
@@ -23415,9 +23472,13 @@ buttons2.pack(anchor="n",expand=1,fill="x")
 # HotKeys used for check/radio buttons:  a,b,c,e,h,i,l,m,n,o,p,r,s,t,w
 # HotKeys used for plain buttons (enter),d,g,t
 
+def findButtonCallback(event=None):
+    self.findButton()
+    return 'break'
+
 # Create the first row of buttons
 findButton=Tk.Button(buttons,
-    width=9,text="Find",bd=4,command=self.findButton) # The default.
+    width=9,text="Find",bd=4,command=findButtonCallback) # The default.
 findButton.pack(pady="1p",padx="25p",side="left")
 
 contextBox = underlinedTkButton("check",buttons,
@@ -25414,6 +25475,7 @@ def update_ivars (self):
     # Among other things, this allows Leo to search for a single trailing space.
     s = self.find_ctrl.get("1.0","end")
     s = g.toUnicode(s,g.app.tkEncoding)
+    # g.trace(repr(s))
     if s and s[-1] in ('\r','\n'):
         s = s[:-1]
     self.find_text = s
@@ -26731,35 +26793,39 @@ def openWithFileName(fileName,old_c,enableLog=True,readAtFileNodesFlag=True):
     try:
         # Open the file in binary mode to allow 0x1a in bodies & headlines.
         theFile = open(fileName,'rb')
-        if theFile:
-            c,frame = app.gui.newLeoCommanderAndFrame(fileName)
-            frame.log.enable(enableLog)
-            g.app.writeWaitingLog() # New in 4.3: write queued log first.
-            if not g.doHook("open1",old_c=old_c,new_c=c,fileName=fileName):
-                app.setLog(frame.log,"openWithFileName")
-                app.lockLog()
-                frame.c.fileCommands.open(theFile,fileName,readAtFileNodesFlag=readAtFileNodesFlag) # closes file.
-                app.unlockLog()
-                for frame in g.app.windowList:
-                    # The recent files list has been updated by menu.updateRecentFiles.
-                    frame.c.config.setRecentFiles(g.app.config.recentFiles)
-            frame.openDirectory = g.os_path_dirname(fileName)
-            g.doHook("open2",old_c=old_c,new_c=frame.c,fileName=fileName)
-            return True, frame
-        else:
-            g.es("can not open: " + fileName,color="red")
-            return False, None
+        c,frame = app.gui.newLeoCommanderAndFrame(fileName)
+        frame.log.enable(enableLog)
+        g.app.writeWaitingLog() # New in 4.3: write queued log first.
+        if not g.doHook("open1",old_c=old_c,new_c=c,fileName=fileName):
+            app.setLog(frame.log,"openWithFileName")
+            app.lockLog()
+            frame.c.fileCommands.open(
+                theFile,fileName,
+                readAtFileNodesFlag=readAtFileNodesFlag) # closes file.
+            app.unlockLog()
+            for frame in g.app.windowList:
+                # The recent files list has been updated by menu.updateRecentFiles.
+                frame.c.config.setRecentFiles(g.app.config.recentFiles)
+        frame.openDirectory = g.os_path_dirname(fileName)
+        g.doHook("open2",old_c=old_c,new_c=frame.c,fileName=fileName)
+        return True, frame
     except IOError:
-        g.es("can not open: " + fileName, color="blue")
-        return False, None
+        try:
+            # Do not use string + here: it will fail for non-ascii strings!
+            g.es("can not open: %s" % (fileName), color="blue")
+            return False, None
+        except UnicodeError:
+            g.es("can not open: %s" % (g.toEncodedString(fileName)), color="blue")
+            return False, None
     except:
-        if 1:
-            print "exceptions opening:", fileName
+        if 0:
+            print "exceptions opening: %s" % g.toEncodedString(fileName)
             traceback.print_exc()
         else:
-            g.es("exceptions opening: " + fileName,color="red")
+            g.es("exceptions opening: %s" % g.toEncodedString(fileName),color="red")
             g.es_exception()
         return False, None
+#@nonl
 #@-node:ekr.20031218072017.2052:g.openWithFileName
 #@-node:ekr.20050119211822.2:(Added support for Leo-relative files)
 #@+node:ekr.20050122105757:(Implemented 'Undo Clear Recent Files')
@@ -28196,10 +28262,23 @@ def undoInsertNodes (self):
     
     u = self ; c = u.c
     
+    if 0: # Paste retaining clones can't be undone!
+        # Remember the previous headline.
+        old = c.currentPosition().headString()
+    
     c.selectVnode(u.p)
     c.deleteOutline()
+
     if u.select:
         c.selectVnode(u.select)
+        
+    # New in 4.3: Support for Paste As Clone.
+    if 0: # Paste retaining clones can't be undone!
+        if u.headString:
+            new = u.headString
+            g.trace('old',old,'new',new)
+            u.p.setHeadStringOrHeadline(new)
+            u.headString=old
 #@nonl
 #@-node:EKR.20040526084140:undoInsertNodes
 #@-node:ekr.20050125202008:(Fixed very old bug in Undo Insert Node )
@@ -28276,35 +28355,39 @@ def openWithFileName(fileName,old_c,enableLog=True,readAtFileNodesFlag=True):
     try:
         # Open the file in binary mode to allow 0x1a in bodies & headlines.
         theFile = open(fileName,'rb')
-        if theFile:
-            c,frame = app.gui.newLeoCommanderAndFrame(fileName)
-            frame.log.enable(enableLog)
-            g.app.writeWaitingLog() # New in 4.3: write queued log first.
-            if not g.doHook("open1",old_c=old_c,new_c=c,fileName=fileName):
-                app.setLog(frame.log,"openWithFileName")
-                app.lockLog()
-                frame.c.fileCommands.open(theFile,fileName,readAtFileNodesFlag=readAtFileNodesFlag) # closes file.
-                app.unlockLog()
-                for frame in g.app.windowList:
-                    # The recent files list has been updated by menu.updateRecentFiles.
-                    frame.c.config.setRecentFiles(g.app.config.recentFiles)
-            frame.openDirectory = g.os_path_dirname(fileName)
-            g.doHook("open2",old_c=old_c,new_c=frame.c,fileName=fileName)
-            return True, frame
-        else:
-            g.es("can not open: " + fileName,color="red")
-            return False, None
+        c,frame = app.gui.newLeoCommanderAndFrame(fileName)
+        frame.log.enable(enableLog)
+        g.app.writeWaitingLog() # New in 4.3: write queued log first.
+        if not g.doHook("open1",old_c=old_c,new_c=c,fileName=fileName):
+            app.setLog(frame.log,"openWithFileName")
+            app.lockLog()
+            frame.c.fileCommands.open(
+                theFile,fileName,
+                readAtFileNodesFlag=readAtFileNodesFlag) # closes file.
+            app.unlockLog()
+            for frame in g.app.windowList:
+                # The recent files list has been updated by menu.updateRecentFiles.
+                frame.c.config.setRecentFiles(g.app.config.recentFiles)
+        frame.openDirectory = g.os_path_dirname(fileName)
+        g.doHook("open2",old_c=old_c,new_c=frame.c,fileName=fileName)
+        return True, frame
     except IOError:
-        g.es("can not open: " + fileName, color="blue")
-        return False, None
+        try:
+            # Do not use string + here: it will fail for non-ascii strings!
+            g.es("can not open: %s" % (fileName), color="blue")
+            return False, None
+        except UnicodeError:
+            g.es("can not open: %s" % (g.toEncodedString(fileName)), color="blue")
+            return False, None
     except:
-        if 1:
-            print "exceptions opening:", fileName
+        if 0:
+            print "exceptions opening: %s" % g.toEncodedString(fileName)
             traceback.print_exc()
         else:
-            g.es("exceptions opening: " + fileName,color="red")
+            g.es("exceptions opening: %s" % g.toEncodedString(fileName),color="red")
             g.es_exception()
         return False, None
+#@nonl
 #@-node:ekr.20031218072017.2052:g.openWithFileName
 #@-node:ekr.20050127090959:(Made sure to remove duplicates from recent files)
 #@+node:ekr.20050127090442:Fixed indentation problems in leoTkinterFind.py
@@ -28543,35 +28626,39 @@ def openWithFileName(fileName,old_c,enableLog=True,readAtFileNodesFlag=True):
     try:
         # Open the file in binary mode to allow 0x1a in bodies & headlines.
         theFile = open(fileName,'rb')
-        if theFile:
-            c,frame = app.gui.newLeoCommanderAndFrame(fileName)
-            frame.log.enable(enableLog)
-            g.app.writeWaitingLog() # New in 4.3: write queued log first.
-            if not g.doHook("open1",old_c=old_c,new_c=c,fileName=fileName):
-                app.setLog(frame.log,"openWithFileName")
-                app.lockLog()
-                frame.c.fileCommands.open(theFile,fileName,readAtFileNodesFlag=readAtFileNodesFlag) # closes file.
-                app.unlockLog()
-                for frame in g.app.windowList:
-                    # The recent files list has been updated by menu.updateRecentFiles.
-                    frame.c.config.setRecentFiles(g.app.config.recentFiles)
-            frame.openDirectory = g.os_path_dirname(fileName)
-            g.doHook("open2",old_c=old_c,new_c=frame.c,fileName=fileName)
-            return True, frame
-        else:
-            g.es("can not open: " + fileName,color="red")
-            return False, None
+        c,frame = app.gui.newLeoCommanderAndFrame(fileName)
+        frame.log.enable(enableLog)
+        g.app.writeWaitingLog() # New in 4.3: write queued log first.
+        if not g.doHook("open1",old_c=old_c,new_c=c,fileName=fileName):
+            app.setLog(frame.log,"openWithFileName")
+            app.lockLog()
+            frame.c.fileCommands.open(
+                theFile,fileName,
+                readAtFileNodesFlag=readAtFileNodesFlag) # closes file.
+            app.unlockLog()
+            for frame in g.app.windowList:
+                # The recent files list has been updated by menu.updateRecentFiles.
+                frame.c.config.setRecentFiles(g.app.config.recentFiles)
+        frame.openDirectory = g.os_path_dirname(fileName)
+        g.doHook("open2",old_c=old_c,new_c=frame.c,fileName=fileName)
+        return True, frame
     except IOError:
-        g.es("can not open: " + fileName, color="blue")
-        return False, None
+        try:
+            # Do not use string + here: it will fail for non-ascii strings!
+            g.es("can not open: %s" % (fileName), color="blue")
+            return False, None
+        except UnicodeError:
+            g.es("can not open: %s" % (g.toEncodedString(fileName)), color="blue")
+            return False, None
     except:
-        if 1:
-            print "exceptions opening:", fileName
+        if 0:
+            print "exceptions opening: %s" % g.toEncodedString(fileName)
             traceback.print_exc()
         else:
-            g.es("exceptions opening: " + fileName,color="red")
+            g.es("exceptions opening: %s" % g.toEncodedString(fileName),color="red")
             g.es_exception()
         return False, None
+#@nonl
 #@-node:ekr.20031218072017.2052:g.openWithFileName
 #@+node:ekr.20031218072017.1473:tkLog.put & putnl & forceLogUpdate
 # All output to the log stream eventually comes here.
@@ -28592,12 +28679,12 @@ def putnl (self):
     else:
         << put newline to logWaiting and print newline >>
         
-def forceLogUpdate (self):
-    if sys.platform != "darwin": # Does not work on darwin.
+def forceLogUpdate (self,s):
+    if sys.platform == "darwin": # Does not work on MacOS X.
+        print s, # Don't add a newline.
+    else:
         self.frame.tree.disableRedraw = True
         self.logCtrl.update_idletasks()
-        #self.frame.outerFrame.update_idletasks() # 4/23/04
-        #self.frame.top.update_idletasks()
         self.frame.tree.disableRedraw = False
 #@nonl
 #@+node:EKR.20040423082910:<< put s to log control >>
@@ -28619,7 +28706,7 @@ else:
 
 self.logCtrl.see("end")
     
-self.forceLogUpdate()
+self.forceLogUpdate(s)
 #@nonl
 #@-node:EKR.20040423082910:<< put s to log control >>
 #@+node:EKR.20040423082910.1:<< put s to logWaiting and print s >>
@@ -28634,12 +28721,7 @@ print s
 #@+node:EKR.20040423082910.2:<< put newline to log control >>
 self.logCtrl.insert("end",'\n')
 self.logCtrl.see("end")
-
-self.frame.tree.disableRedraw = True
-self.logCtrl.update_idletasks()
-#self.frame.outerFrame.update_idletasks() # 4/23/04
-#self.frame.top.update_idletasks()
-self.frame.tree.disableRedraw = False
+self.forceLogUpdate('\n')
 #@nonl
 #@-node:EKR.20040423082910.2:<< put newline to log control >>
 #@+node:EKR.20040423082910.3:<< put newline to logWaiting and print newline >>
@@ -28857,6 +28939,8 @@ if marks or expanded:
 #@-node:ekr.20050130133731:Added silent keyword to severl methods
 #@-node:ekr.20050126102846.2:(Improved queuing of log messages)
 #@+node:ekr.20050127090442.1:(Investigated redirection from scripts.  All appears well.)
+redirect script IO to log pane setting isn't working, 
+#@nonl
 #@+node:ekr.20050130162739.1:redirect stdout
 #@-node:ekr.20050130162739.1:redirect stdout
 #@+node:ekr.20050130162739:undirect stdout
@@ -29239,12 +29323,12 @@ def putnl (self):
     else:
         << put newline to logWaiting and print newline >>
         
-def forceLogUpdate (self):
-    if sys.platform != "darwin": # Does not work on darwin.
+def forceLogUpdate (self,s):
+    if sys.platform == "darwin": # Does not work on MacOS X.
+        print s, # Don't add a newline.
+    else:
         self.frame.tree.disableRedraw = True
         self.logCtrl.update_idletasks()
-        #self.frame.outerFrame.update_idletasks() # 4/23/04
-        #self.frame.top.update_idletasks()
         self.frame.tree.disableRedraw = False
 #@nonl
 #@+node:EKR.20040423082910:<< put s to log control >>
@@ -29266,7 +29350,7 @@ else:
 
 self.logCtrl.see("end")
     
-self.forceLogUpdate()
+self.forceLogUpdate(s)
 #@nonl
 #@-node:EKR.20040423082910:<< put s to log control >>
 #@+node:EKR.20040423082910.1:<< put s to logWaiting and print s >>
@@ -29281,12 +29365,7 @@ print s
 #@+node:EKR.20040423082910.2:<< put newline to log control >>
 self.logCtrl.insert("end",'\n')
 self.logCtrl.see("end")
-
-self.frame.tree.disableRedraw = True
-self.logCtrl.update_idletasks()
-#self.frame.outerFrame.update_idletasks() # 4/23/04
-#self.frame.top.update_idletasks()
-self.frame.tree.disableRedraw = False
+self.forceLogUpdate('\n')
 #@nonl
 #@-node:EKR.20040423082910.2:<< put newline to log control >>
 #@+node:EKR.20040423082910.3:<< put newline to logWaiting and print newline >>
@@ -29867,6 +29946,796 @@ setString = set
 #@-node:ekr.20041118195812:Setters...
 #@-node:ekr.20041118104831.1:class configSettings
 #@-node:ekr.20050202063852.1:(Made local config settings work again)
+#@+node:ekr.20050127083933:(Fixed bug: Find All appeared to hang)
+#@+node:ekr.20050206045723:Notes: it just ran slowly & silently
+@killcolor
+
+What I did:
+
+- Added s arg to forceLogUpdate.
+- Call forceLogUpdate in putnl.
+- forceLogUpdate prints s in darwin.
+#@nonl
+#@-node:ekr.20050206045723:Notes: it just ran slowly & silently
+#@+node:ekr.20050206043626:Original Report
+@killcolor
+
+http://sourceforge.net/forum/message.php?msg_id=2962084
+By: nobody
+
+Two problems:
+
+1. A @url node with spaces in it doesn't seem to work on Linux when I double-click
+the node to open the link target. In my case, the link target is a file on the
+local filesystem with spaces in the filename.
+
+So, I have to change all spaces in the @url headline to %20. This works, but
+I wanted to do this change operation all at once using Leo's find/replace dialog.
+This leads to the next problem:
+
+2. Search/Replace on headline text seems broken. I've selected "plain search",
+"wrap around", "node only", and "search headline text", and in the "find" field
+I enter an empty space " " and in the "Change" field I enter "%20". Just clicking
+"Change all" doesn't work. Clicking the headline text and making it editable,
+then marking the whole headline text and selecting "Change, Then Find" seems
+to sometimes kind of work, but unreliably. Also, if I "undo" a change operation
+on the headline text, the length of the headline text field is not correctly
+reverted to its previous state.
+
+Basically it seems that headline text is not properly handled by undo nor by
+find/change.
+#@-node:ekr.20050206043626:Original Report
+#@+node:ekr.20031218072017.3060:findAllButton
+# The user has pushed the "Find All" button from the find panel.
+
+def findAllButton(self):
+
+    c = self.setup_button()
+    c.clearAllVisited() # Clear visited for context reporting.
+
+    if self.script_search:
+        self.doFindAllScript()
+    elif self.selection_only:
+        self.findNext()
+    else:
+        self.findAll()
+#@nonl
+#@-node:ekr.20031218072017.3060:findAllButton
+#@+node:ekr.20031218072017.3073:findAll
+def findAll(self):
+
+    c = self.c ; t = self.s_ctrl ; gui = g.app.gui
+    if not self.checkArgs():
+        return
+    self.initInHeadline()
+    data = self.save()
+    self.initBatchCommands()
+    count = 0
+    c.beginUpdate()
+    while 1:
+        pos, newpos = self.findNextMatch()
+        if pos:
+            # g.trace(pos,newpos,self.v.headString())
+            count += 1
+            line = gui.getLineContainingIndex(t,pos)
+            self.printLine(line,allFlag=True)
+        else: break
+    c.endUpdate()
+    g.es("found: %d matches" % (count))
+    self.restore(data)
+#@nonl
+#@-node:ekr.20031218072017.3073:findAll
+#@+node:ekr.20031218072017.3075:findNextMatch
+# Resumes the search where it left off.
+# The caller must call set_first_incremental_search or set_first_batch_search.
+
+def findNextMatch(self):
+
+    c = self.c
+
+    if not self.search_headline and not self.search_body:
+        return None, None
+
+    if len(self.find_text) == 0:
+        return None, None
+
+    v = self.v
+    while v:
+        pos, newpos = self.search()
+        if pos:
+            if self.mark_finds:
+                v.setMarked()
+                c.frame.tree.drawIcon(v) # redraw only the icon.
+            return pos, newpos
+        elif self.errors:
+            return None,None # Abort the search.
+        elif self.node_only:
+            return None,None # We are only searching one node.
+        else:
+            v = self.v = self.selectNextVnode()
+    return None, None
+#@nonl
+#@-node:ekr.20031218072017.3075:findNextMatch
+#@+node:ekr.20031218072017.3081:selectNextVnode
+# Selects the next node to be searched.
+
+def selectNextVnode(self):
+
+    c = self.c ; v = self.v
+
+    if self.selection_only:
+        return None
+
+    # Start suboutline only searches.
+    if self.suboutline_only and not self.onlyVnode:
+        # v.copy not needed because the find code never calls p.moveToX.
+        # Furthermore, v might be None, so v.copy() would be wrong!
+        self.onlyVnode = v 
+
+    # Start wrapped searches.
+    if self.wrapping and not self.wrapVnode:
+        assert(self.wrapPos != None)
+        # v.copy not needed because the find code never calls p.moveToX.
+        # Furthermore, v might be None, so v.copy() would be wrong!
+        self.wrapVnode = v 
+
+    if self.in_headline and self.search_body:
+        # just switch to body pane.
+        self.in_headline = False
+        self.initNextText()
+        # g.trace(v)
+        return v
+
+    if self.reverse: v = v.threadBack()
+    else:            v = v.threadNext()
+    
+    # New in 4.3: restrict searches to hoisted area.
+    # End searches outside hoisted area.
+    if c.hoistStack:
+        if not v:
+            if self.wrapping:
+                g.es('Wrap disabled in hoisted outlines',color='blue')
+            return
+        bunch = c.hoistStack[-1]
+        if not bunch.p.isAncestorOf(v):
+            g.es('Found match outside of hoisted outline',color='blue')
+            return None
+
+    # Wrap if needed.
+    if not v and self.wrapping and not self.suboutline_only:
+        v = c.rootVnode()
+        if self.reverse:
+            # Set search_v to the last node of the tree.
+            while v and v.next():
+                v = v.next()
+            if v: v = v.lastNode()
+
+    # End wrapped searches.
+    if self.wrapping and v and v == self.wrapVnode:
+        # g.trace("ending wrapped search")
+        v = None ; self.resetWrap()
+
+    # End suboutline only searches.
+    if (self.suboutline_only and self.onlyVnode and v and
+        (v == self.onlyVnode or not self.onlyVnode.isAncestorOf(v))):
+        # g.trace("end outline-only")
+        v = None ; self.onlyVnode = None
+
+    # v.copy not needed because the find code never calls p.moveToX.
+    # Furthermore, v might be None, so v.copy() would be wrong!
+    self.v = v # used in initNextText().
+    if v: # select v and set the search point within v.
+        self.in_headline = self.search_headline
+        self.initNextText()
+    return v
+#@nonl
+#@-node:ekr.20031218072017.3081:selectNextVnode
+#@+node:ekr.20031218072017.1473:tkLog.put & putnl & forceLogUpdate
+# All output to the log stream eventually comes here.
+def put (self,s,color=None):
+    
+    # print 'tkLog.put',self.c.shortFileName(),s,
+
+    if g.app.quitting: return
+    elif self.logCtrl:
+        << put s to log control >>
+    else:
+        << put s to logWaiting and print s >>
+
+def putnl (self):
+    if g.app.quitting: return
+    elif self.logCtrl:
+        << put newline to log control >>
+    else:
+        << put newline to logWaiting and print newline >>
+        
+def forceLogUpdate (self,s):
+    if sys.platform == "darwin": # Does not work on MacOS X.
+        print s, # Don't add a newline.
+    else:
+        self.frame.tree.disableRedraw = True
+        self.logCtrl.update_idletasks()
+        self.frame.tree.disableRedraw = False
+#@nonl
+#@+node:EKR.20040423082910:<< put s to log control >>
+if type(s) == type(u""): # 3/18/03
+    s = g.toEncodedString(s,g.app.tkEncoding)
+
+if color:
+    if color not in self.colorTags:
+        self.colorTags.append(color)
+        self.logCtrl.tag_config(color,foreground=color)
+    self.logCtrl.insert("end",s)
+    self.logCtrl.tag_add(color,"end-%dc" % (len(s)+1),"end-1c")
+    if "black" not in self.colorTags:
+        self.colorTags.append("black")
+        self.logCtrl.tag_config("black",foreground="black")
+    self.logCtrl.tag_add("black","end")
+else:
+    self.logCtrl.insert("end",s)
+
+self.logCtrl.see("end")
+    
+self.forceLogUpdate(s)
+#@nonl
+#@-node:EKR.20040423082910:<< put s to log control >>
+#@+node:EKR.20040423082910.1:<< put s to logWaiting and print s >>
+g.app.logWaiting.append((s,color),)
+
+print "Null tkinter log"
+if type(s) == type(u""): # 3/18/03
+    s = g.toEncodedString(s,"ascii")
+print s
+#@nonl
+#@-node:EKR.20040423082910.1:<< put s to logWaiting and print s >>
+#@+node:EKR.20040423082910.2:<< put newline to log control >>
+self.logCtrl.insert("end",'\n')
+self.logCtrl.see("end")
+self.forceLogUpdate('\n')
+#@nonl
+#@-node:EKR.20040423082910.2:<< put newline to log control >>
+#@+node:EKR.20040423082910.3:<< put newline to logWaiting and print newline >>
+g.app.logWaiting.append(('\n',"black"),)
+print "Null tkinter log"
+print
+#@nonl
+#@-node:EKR.20040423082910.3:<< put newline to logWaiting and print newline >>
+#@-node:ekr.20031218072017.1473:tkLog.put & putnl & forceLogUpdate
+#@-node:ekr.20050127083933:(Fixed bug: Find All appeared to hang)
+#@+node:ekr.20050126102846:(Fixed (maybe) Unicode problems)
+#@+node:ekr.20050206092203:What I did
+@killcolor
+
+- Replaced string + with string %.
+- Created atFile.printError to handle printing safely.
+- Simplified code in openWithFileName and made sure it does not call print!
+#@nonl
+#@-node:ekr.20050206092203:What I did
+#@+node:ekr.20050126102846.1:Report
+@killcolor
+
+http://sourceforge.net/forum/message.php?msg_id=2959696
+By: tyndal
+
+Windows XP japanese. Leo 4.3a1, Leo4.2.1, Python2.3.4
+
+I was just trying to open an example file whose filename is in japanese. It
+worked mostly fine in Leo 4.2, (the only problem is that filename displayed
+in the log window has garbage characters in it, though it might be because the
+default font doesnt display japanese, since the window title shows fine) the
+but in 4.3a1 it fails.. there are 4 different cases i tried opening the same
+file, just renamed or moved as appropriate.
+
+1. standard case -- file with ascii name in ascii
+directory.&#12288;(c:/temp/file.leo)
+
+2. subfolder case  -- put in subfolder with japanese name
+(c:/temp/&#12486;&#12473;&#12488;/file.leo)
+
+3. filename case -- renamed file to japanese name, original folder
+(c:/temp/&#12486;&#12473;&#12488;.leo)
+
+4. filefolder case -- put in subfolder with japanese name
+(c:/temp/&#12486;&#12473;&#12488;/&#12486;&#12473;&#12488;.leo)
+
+If i try double clicking on the leo file, only case 1 will open the file correctly,
+the other cases, the hourglass shows briefly, then disappears, seeming to the
+user as if nothing happend (no leo opens, etc)
+
+If i try opening the files from file->open, they all result in the same error.
+The title of the window shows the filename correctly, however, the leo window
+is reduced to only showing the file menu, the bar with the dehoist and hoist
+buttons, and the status bar a the bottom (the log, headlines, and text area
+arent visible). If i drag the corner of the window, i can see the 3 areas, but
+there is nothing in the headline or text area.. in the log area the output is
+the following:
+
+------- 
+Leo Log Window...
+Leo 4.3 alpha 1, build  1.208 , January 24, 2005
+Python 2.3.4, Tk 8.4.3, win32
+
+exception executing command
+Traceback (most recent call last):
+  File "F:\Programs\Leo\src\leoCommands.py", line 170, in doCommand
+    command()
+  File "F:\Programs\Leo\src\leoCommands.py", line 328, in open
+    ok, frame = g.openWithFileName(fileName,c)
+  File "F:\Programs\Leo\src\leoGlobals.py", line 638, in openWithFileName
+    print "exceptions opening:", fileName
+UnicodeEncodeError: 'ascii' codec can't encode characters in position 8-10:
+ordinal not in range(128)
+
+------- 
+
+Also, upon a new instance of leo (no other instances open, blank leo window),
+if i try to open case 2, 3, or 4, and then open a regular leo file (ex test.leo
+in the test directory of leo, aka the file that shows up at the open dialog)
+the log window is blank. dont know if it is the same bug, or a separate bug.
+	
+Note: the filenames are in japanese, i dont know what encoding they will show
+up in the forum post, so check UTF8 and the other 3 japanese encodings if necessary
+(shift jis, euc, and iso-2002-jp)
+
+Thanks,
+-Tyndal
+#@-node:ekr.20050126102846.1:Report
+#@+node:ekr.20031218072017.2052:g.openWithFileName
+def openWithFileName(fileName,old_c,enableLog=True,readAtFileNodesFlag=True):
+    
+    """Create a Leo Frame for the indicated fileName if the file exists."""
+
+    if not fileName or len(fileName) == 0:
+        return False, None
+        
+    def munge(name):
+        name = name or ''
+        return g.os_path_normpath(name).lower()
+
+    # Create a full normalized path name, preserving case.
+    fileName = g.os_path_normpath(g.os_path_abspath(fileName))
+
+    # If the file is already open just bring its window to the front.
+    list = app.windowList
+    for frame in list:
+        if munge(fileName) == munge(frame.c.mFileName):
+            frame.bringToFront()
+            app.setLog(frame.log,"openWithFileName")
+            # g.es("This window already open")
+            return True, frame
+    try:
+        # Open the file in binary mode to allow 0x1a in bodies & headlines.
+        theFile = open(fileName,'rb')
+        c,frame = app.gui.newLeoCommanderAndFrame(fileName)
+        frame.log.enable(enableLog)
+        g.app.writeWaitingLog() # New in 4.3: write queued log first.
+        if not g.doHook("open1",old_c=old_c,new_c=c,fileName=fileName):
+            app.setLog(frame.log,"openWithFileName")
+            app.lockLog()
+            frame.c.fileCommands.open(
+                theFile,fileName,
+                readAtFileNodesFlag=readAtFileNodesFlag) # closes file.
+            app.unlockLog()
+            for frame in g.app.windowList:
+                # The recent files list has been updated by menu.updateRecentFiles.
+                frame.c.config.setRecentFiles(g.app.config.recentFiles)
+        frame.openDirectory = g.os_path_dirname(fileName)
+        g.doHook("open2",old_c=old_c,new_c=frame.c,fileName=fileName)
+        return True, frame
+    except IOError:
+        try:
+            # Do not use string + here: it will fail for non-ascii strings!
+            g.es("can not open: %s" % (fileName), color="blue")
+            return False, None
+        except UnicodeError:
+            g.es("can not open: %s" % (g.toEncodedString(fileName)), color="blue")
+            return False, None
+    except:
+        if 0:
+            print "exceptions opening: %s" % g.toEncodedString(fileName)
+            traceback.print_exc()
+        else:
+            g.es("exceptions opening: %s" % g.toEncodedString(fileName),color="red")
+            g.es_exception()
+        return False, None
+#@nonl
+#@-node:ekr.20031218072017.2052:g.openWithFileName
+#@+node:ekr.20031218072017.1502:toUnicode & toEncodedString
+def toUnicode (s,encoding,reportErrors=False):
+    
+    if s is None:
+        s = u""
+    if type(s) == type(""):
+        try:
+            s = unicode(s,encoding,"strict")
+        except:
+            if reportErrors:
+                g.reportBadChars(s,encoding)
+            s = unicode(s,encoding,"replace")
+    return s
+    
+def toEncodedString (s,encoding,reportErrors=False):
+
+    if type(s) == type(u""):
+        try:
+            s = s.encode(encoding,"strict")
+        except:
+            if reportErrors:
+                g.reportBadChars(s,encoding)
+            s = s.encode(encoding,"replace")
+    return s
+#@nonl
+#@-node:ekr.20031218072017.1502:toUnicode & toEncodedString
+#@+node:ekr.20041005105605.220:atFile.error
+def error(self,message):
+
+    if message:
+        self.printError(message)
+
+    self.errors += 1
+#@-node:ekr.20041005105605.220:atFile.error
+#@+node:ekr.20050206085258:atFile.printError
+def printError (self,message):
+
+    '''Print an error message that may contain non-ascii characters.'''
+
+    if self.errors == 0:
+        g.es_error(message)
+    else:
+        try:
+            print message
+        except UnicodeError:
+            print g.toEncodedString(message)
+#@nonl
+#@-node:ekr.20050206085258:atFile.printError
+#@-node:ekr.20050126102846:(Fixed (maybe) Unicode problems)
+#@+node:ekr.20050128081550:(Paste As Clone is undoable!)
+#@+node:ekr.20050206095417.1:Report
+@killcolor
+
+http://sourceforge.net/forum/message.php?msg_id=2963304
+By: grahamh (Graham)
+
+Leo 4.3 alpha 1, build  1.208 , January 24, 2005
+Python 2.3.4, Tk 8.4.7-1, Debian GNU/Linux 3.0
+
+
+Create a new headline "Head1", insert some body text.
+Click Outline/Copy Node.
+Type some more body text in "Head1" and change its name to "Head1a".
+Create another headline "Head2".
+Click Outline/Paste Retaining Clones.
+Your changes to "Head1" are destroyed (bug 1).  Not a bug.
+Undo does NOT undo the destruction (bug 2)      VERY hard to fix.
+
+Paste As Clone can change arbitrarily many nodes throughout the outline.  It's not at all clear how to undo this...
+#@nonl
+#@-node:ekr.20050206095417.1:Report
+#@+node:ekr.20050206114130:Response
+@killcolor
+
+It is not possible to completely undo the effects of Paste As Clone, aka Paste
+Retaining Clones. Indeed, arbitrarily many changes may have happened between the
+copy and the paste. Furthermore, the copy may have been made in another copy of
+Leo! The only possible way of undoing Paste As Node would be to place the entire
+contents of the .leo file on the undo stack!
+
+This I shall not do. Instead, Leo will put up a dialog warning about not being
+able to undo the operation. If the user goes ahead anyway, Leo will clear the
+undo stack!
+
+This problem highlights the dangerous nature of Paste As Clone. My previous
+intuition about Paste As Clone was correct--it is something that should be used
+sparingly if at all.
+
+The so-called 'bug #1' is not a bug: it is what must happen if Paste As Clone is
+to mean anything. 
+#@nonl
+#@-node:ekr.20050206114130:Response
+#@+node:EKR.20040610130943:pasteOutlineRetainingClones
+def pasteOutlineRetainingClones (self):
+    
+    c = self
+    
+    # Paste retaining clones can't be fully undone.  Warn first.
+    message = (
+        'Are you sure you want to Paste As Clone?\n\n'
+        'This operation can not be undone; it will clear the Undo stack.')
+    
+    response = g.app.gui.runAskYesNoDialog('Paste As Clone?',message=message)
+
+    if response == 'yes':
+        val = c.pasteOutline(reassignIndices=False)
+        c.undoer.clearUndoState()
+        g.es('Undo stack cleared',color='red')
+        return val
+#@nonl
+#@-node:EKR.20040610130943:pasteOutlineRetainingClones
+#@+node:ekr.20050206101036:From undo class
+#@+node:EKR.20040526084140:undoInsertNodes
+def undoInsertNodes (self):
+    
+    u = self ; c = u.c
+    
+    if 0: # Paste retaining clones can't be undone!
+        # Remember the previous headline.
+        old = c.currentPosition().headString()
+    
+    c.selectVnode(u.p)
+    c.deleteOutline()
+
+    if u.select:
+        c.selectVnode(u.select)
+        
+    # New in 4.3: Support for Paste As Clone.
+    if 0: # Paste retaining clones can't be undone!
+        if u.headString:
+            new = u.headString
+            g.trace('old',old,'new',new)
+            u.p.setHeadStringOrHeadline(new)
+            u.headString=old
+#@nonl
+#@-node:EKR.20040526084140:undoInsertNodes
+#@+node:EKR.20040526072519.4:redoInsertNodes
+def redoInsertNodes (self):
+    
+    u = self ; c = u.c
+    
+    if 0: # Paste retaining clones can't be undone!
+        # Remember the previous headline.
+        old = c.currentPosition().headString()
+
+    if u.back:
+        u.p.linkAfter(u.back)
+    elif u.parent:
+        u.p.linkAsNthChild(u.parent,0)
+    else:
+        oldRoot = c.rootPosition()
+        u.p.linkAsRoot(oldRoot)
+        
+    # Restore all vnodeLists (and thus all clone marks).
+    u.p.restoreLinksInTree()
+
+    c.selectVnode(u.p)
+    
+    if 0: # Paste retaining clones can't be undone!
+        if u.headString:
+            new = u.headString
+            g.trace('old',old,'new',new)
+            u.p.setHeadStringOrHeadline(new)
+            u.headString=old
+#@nonl
+#@-node:EKR.20040526072519.4:redoInsertNodes
+#@-node:ekr.20050206101036:From undo class
+#@-node:ekr.20050128081550:(Paste As Clone is undoable!)
+#@+node:ekr.20050128081226:(mod_scripting plugin now disables buttons when config dialog is open)
+@killcolor
+
+http://sourceforge.net/forum/message.php?msg_id=2963722
+By: paulpaterson
+
+When in settings all commands are disabled but toolbar buttons (eg hoist, script
+button) do seem to function to some extent.
+
+What I did:
+
+    These are now disabled when c.disableCommandsMessage contains a message.
+
+#@-node:ekr.20050128081226:(mod_scripting plugin now disables buttons when config dialog is open)
+#@+node:ekr.20050206120754.1:(Fixed bug: Focus shifted from body to headline
+#@+node:ekr.20050206140101:Report
+@killcolor
+
+http://sourceforge.net/forum/message.php?msg_id=2958470
+By: nobody
+
+From: Rich
+
+Leo 4.3 alpha 1, build  1.208 , January 24, 2005
+Python 2.3.4, Tk 8.4.3, win32
+
+I opened a new .leo file, and the cursor was flashing in the text box. I started
+typing "@language", and found that the first character is in the text box, and
+the rest is in the headline!
+
+What I did:
+
+This was the result of a race condition in the new scheme for setting focus. I
+rewrote set_focus so the delayed callback always sets the last requested focus.
+The new code also takes care to clear the last request after fulfilling it.
+#@nonl
+#@-node:ekr.20050206140101:Report
+#@+node:ekr.20050120092028.1:set_focus (tkFrame)
+@
+Very tricky code:
+Many Tk calls can mess with the focus, so we must always set the focus,
+regardless of what we did previously.
+
+Alas, because of bugs in Tk and/or window managers, we can not call method at
+idle time: that would interfere with switching between windows. Instead, the
+xWnatFocus routines call this with later=True, to queue up a ONE-SHOT later call
+to g.app.g.app.gui.set_focus.
+@c
+
+def set_focus(self,widget,later=False,tag=''):
+    
+    '''Set the focus to the widget specified in the xWantsFocus methods.'''
+
+    c = self.c
+    
+    # g.trace(c.shortFileName())
+
+    if widget and not g.app.unitTesting:
+        # Messing with focus may be dangerous in unit tests.
+        if later:
+            # Queue up the call (just once) for later.
+            def setFocusCallback(c=c):
+                self.wantedCallbackScheduled = False
+                if c == g.app.wantedCommander and c.frame.wantedWidget:
+                    # g.trace(c.frame.wantedWidget)
+                    g.app.gui.set_focus(
+                        g.app.wantedCommander,
+                        c.frame.wantedWidget,
+                        tag='frame.setFocus')
+                self.wantedWidget = None
+                g.app.wantedCommander = None
+                
+                #if (
+                #    widget == c.frame.wantedWidget
+                #    and c == g.app.wantedCommander
+                #    and not g.app.unitTesting
+                #):
+                    # g.trace(repr(c.shortFileName()))
+                    # g.app.gui.set_focus(c,widget,tag='frame.setFocus')
+               
+                
+            # Crucial: This may change what the callback does.
+            self.wantedWidget = widget
+            g.app.wantedCommander = c
+            if not self.wantedCallbackScheduled:
+                # g.trace(tag,c.shortFileName())
+                self.wantedCallbackScheduled = True
+                # We don't have to wait so long now that we don't call this so often.
+                # The difference between 500 msec. and 100 msec. is significant.
+                self.outerFrame.after(100,setFocusCallback)
+        else:
+            # g.trace(tag,c.shortFileName())
+            g.app.gui.set_focus(c,widget,tag='frame.setFocus')
+            # Crucial: cancel any previous callback.
+            # It may be re-enabled later, but that doesn't matter.
+            self.wantedWidget = None
+            g.app.wantedCommander = None
+#@nonl
+#@-node:ekr.20050120092028.1:set_focus (tkFrame)
+#@-node:ekr.20050206120754.1:(Fixed bug: Focus shifted from body to headline
+#@+node:ekr.20050206120954:(Made sure Leo asks for leoID at most once)
+#@+node:ekr.20050206150004:Report
+@killcolor
+
+http://sourceforge.net/forum/message.php?msg_id=2958470
+By: nobody
+
+From: Rich
+
+Leo 4.3 alpha 1, build  1.208 , January 24, 2005
+Python 2.3.4, Tk 8.4.3, win32
+
+Opened a new .leo file. It asked for an ID, and said it saved it. Closed the
+new leo file & tried opening "Leo\config\leoSettings.leo". _It_ is asking for
+a leoID!
+#@nonl
+#@-node:ekr.20050206150004:Report
+#@+node:ekr.20050206152211:What I did
+@killcolor
+
+All changes were to g.app.leoID():
+
+- Fixed bug:  set g.app.leoID in << put up a dialog requiring a valid id >>.
+- Improved signon message.
+- Better error handling and reporting. 
+#@nonl
+#@-node:ekr.20050206152211:What I did
+#@+node:ekr.20031218072017.1978:app.setLeoID
+def setLeoID (self,verbose=True):
+
+    tag = ".leoID.txt"
+    homeDir = g.app.homeDir
+    globalConfigDir = g.app.globalConfigDir
+    loadDir = g.app.loadDir
+
+    << return if we can set self.leoID from sys.leoID >>
+    << return if we can set self.leoID from "leoID.txt" >>
+
+    << put up a dialog requiring a valid id >>
+    << attempt to create leoID.txt >>
+#@nonl
+#@+node:ekr.20031218072017.1979:<< return if we can set self.leoID from sys.leoID>>
+# This would be set by in Python's sitecustomize.py file.
+
+# 7/2/04: Use hasattr & getattr to suppress pychecker warning.
+# We also have to use a "non-constant" attribute to suppress another warning!
+
+nonConstantAttr = "leoID"
+
+if hasattr(sys,nonConstantAttr):
+    g.app.leoID = getattr(sys,nonConstantAttr)
+    if verbose:
+        g.es("leoID = " + g.app.leoID, color="orange")
+    return
+else:
+    g.app.leoID = None
+#@nonl
+#@-node:ekr.20031218072017.1979:<< return if we can set self.leoID from sys.leoID>>
+#@+node:ekr.20031218072017.1980:<< return if we can set self.leoID from "leoID.txt" >>
+for theDir in (homeDir,globalConfigDir,loadDir):
+    try:
+        fn = g.os_path_join(theDir,tag)
+        f = open(fn,'r')
+        s = f.readline()
+        f.close()
+        if s and len(s) > 0:
+            g.app.leoID = s
+            if verbose:
+                g.es("leoID = %s (in %s)" % (g.app.leoID,theDir), color="red")
+            return
+        elif verbose:
+            g.es("empty %s (in %s)" % (tag,theDir), color = "red")
+    except IOError:
+        g.app.leoID = None
+    except Exception:
+        g.app.leoID = None
+        g.es('Unexpected exception in app.setLeoID',color='red')
+        g.es_esception()
+        
+dirs = []
+
+for theDir in (globalConfigDir,homeDir):
+    if theDir not in dirs:
+        dirs.append(theDir)
+
+g.es("%s not found in %s" % (tag,repr(dirs)),color="red")
+#@nonl
+#@-node:ekr.20031218072017.1980:<< return if we can set self.leoID from "leoID.txt" >>
+#@+node:ekr.20031218072017.1981:<< put up a dialog requiring a valid id >>
+# New in 4.1: get an id for gnx's.  Plugins may set g.app.leoID.
+
+# Create an emergency gui and a Tk root window.
+g.app.createTkGui("startup")
+
+# Bug fix: 2/6/05: put result in g.app.leoID.
+g.app.leoID = g.app.gui.runAskLeoIDDialog()
+g.app.gui = None
+
+g.trace(g.app.leoID)
+g.es("leoID=",repr(g.app.leoID),color="blue")
+#@nonl
+#@-node:ekr.20031218072017.1981:<< put up a dialog requiring a valid id >>
+#@+node:ekr.20031218072017.1982:<< attempt to create leoID.txt >>
+dirs = []
+
+for theDir in (homeDir,globalConfigDir,loadDir):
+    cant = "can not create leoID.txt in %s" % theDir
+    try:
+        # Look in globalConfigDir first.
+        fn = g.os_path_join(theDir, tag)
+        f = open(fn,'w')
+        if f:
+            f.write(g.app.leoID)
+            f.close()
+            if g.os_path_exists(fn):
+                g.es("created leoID.txt in %s" % (theDir), color="red")
+                return
+            else:
+                g.es(cant,color='red')
+    except IOError:
+        g.es(cant,color='red')
+
+    if theDir not in dirs:
+        dirs.append(theDir)
+#@nonl
+#@-node:ekr.20031218072017.1982:<< attempt to create leoID.txt >>
+#@-node:ekr.20031218072017.1978:app.setLeoID
+#@-node:ekr.20050206120954:(Made sure Leo asks for leoID at most once)
 #@-node:ekr.20050125203059.1:Bugs
 #@+node:ekr.20050125203059.2:New features...
 #@+node:ekr.20050125170349:(Added new undo granularities & undo_granularity setting)
@@ -29963,7 +30832,8 @@ u.optionalIvars = [
     # For incremental undo typing...
     "leading","trailing",
     "oldMiddleLines","newMiddleLines",
-    "oldNewlines","newNewlines" ]
+    "oldNewlines","newNewlines",
+]
 #@nonl
 #@-node:ekr.20031218072017.3604:<< Define optional ivars >>
 #@+node:EKR.20040526072519:<< define redoDispatchDict >>
