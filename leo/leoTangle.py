@@ -1048,7 +1048,7 @@ class tangleCommands:
 				
 				#@<< Scan and define a root section >>
 				#@+node:1::The interface between tangle and untangle
-				#@+node:4::<< Scan and define a root section >>
+				#@+node:4:C=8:<< Scan and define a root section >>
 				#@+body
 				# We save the file name in case another @root ends the code section.
 				old_root_name = self.root_name
@@ -1056,6 +1056,8 @@ class tangleCommands:
 				# Tangle code.
 				j = skip_blank_lines(s,i)
 				k, code = self.skip_code(s,j)
+				
+				# Stephen Schaefer, 9/2/02
 				# we can rely on language and *_comment_string only if scanAllDirectives has
 				# processed the node prior to this invocation
 				self.st_enter_root_name(old_root_name,code,doc,
@@ -1070,7 +1072,7 @@ class tangleCommands:
 					
 				code = doc = None
 				#@-body
-				#@-node:4::<< Scan and define a root section >>
+				#@-node:4:C=8:<< Scan and define a root section >>
 				#@-node:1::The interface between tangle and untangle
 
 			elif kind == at_doc:
@@ -1203,7 +1205,7 @@ class tangleCommands:
 		return i,code
 	#@-body
 	#@-node:3::skip_code
-	#@+node:4:C=8:skip_doc
+	#@+node:4:C=9:skip_doc
 	#@+body
 	def skip_doc(self,s,i):
 	
@@ -1233,7 +1235,7 @@ class tangleCommands:
 		# trace(doc)
 		return i, doc
 	#@-body
-	#@-node:4:C=8:skip_doc
+	#@-node:4:C=9:skip_doc
 	#@+node:5::skip_headline
 	#@+body
 	#@+at
@@ -1261,7 +1263,7 @@ class tangleCommands:
 	#@-node:5::skip_headline
 	#@-node:1:C=7:Pass 1
 	#@+node:2::Pass 2
-	#@+node:1:C=9:oblank, oblanks, os, otab, otabs (Tangle)
+	#@+node:1:C=10:oblank, oblanks, os, otab, otabs (Tangle)
 	#@+body
 	def oblank (self):
 		self.oblanks(1)
@@ -1289,8 +1291,8 @@ class tangleCommands:
 		if abs(n) > 0:
 			self.output_file.write('\t' * abs(n))
 	#@-body
-	#@-node:1:C=9:oblank, oblanks, os, otab, otabs (Tangle)
-	#@+node:2:C=10:tangle.put_all_roots
+	#@-node:1:C=10:oblank, oblanks, os, otab, otabs (Tangle)
+	#@+node:2:C=11:tangle.put_all_roots
 	#@+body
 	#@+at
 	#  This is the top level method of the second pass. It creates a separate C file for each @root directive in the outline. As 
@@ -1320,8 +1322,9 @@ class tangleCommands:
 				break
 			
 			#@<<Get root specific attributes>>
-			#@+node:1::<<Get root specific attributes>>
+			#@+node:1:C=12:<<Get root specific attributes>>
 			#@+body
+			# Stephen Schaefer, 9/2/02
 			# do we need to retrieve verbose/terse? path? pagewidth? tabwidth? header/noheader?
 			self.language = section.language
 			self.single_comment_string = section.single_comment_string
@@ -1329,7 +1332,7 @@ class tangleCommands:
 			self.end_comment_string = section.end_comment_string
 
 			#@-body
-			#@-node:1::<<Get root specific attributes>>
+			#@-node:1:C=12:<<Get root specific attributes>>
 
 			if self.use_header_flag and self.print_bits == verbose_bits:
 				
@@ -1374,7 +1377,7 @@ class tangleCommands:
 				#@-body
 				#@-node:3::<< Erase the temporary file >>
 	#@-body
-	#@-node:2:C=10:tangle.put_all_roots
+	#@-node:2:C=11:tangle.put_all_roots
 	#@+node:3::put_code
 	#@+body
 	#@+at
@@ -1476,7 +1479,7 @@ class tangleCommands:
 			assert(progress < i)
 	#@-body
 	#@-node:3::put_code
-	#@+node:4:C=11:put_doc
+	#@+node:4:C=13:put_doc
 	#@+body
 	# This method outputs a doc section within a block comment.
 	
@@ -1612,8 +1615,8 @@ class tangleCommands:
 				self.onl()
 			else: self.onl()
 	#@-body
-	#@-node:4:C=11:put_doc
-	#@+node:5:C=12:put_leading_ws
+	#@-node:4:C=13:put_doc
+	#@+node:5:C=14:put_leading_ws
 	#@+body
 	# Puts tabs and spaces corresponding to n spaces, assuming that we are at the start of a line.
 	
@@ -1630,7 +1633,7 @@ class tangleCommands:
 			self.oblanks(n)
 
 	#@-body
-	#@-node:5:C=12:put_leading_ws
+	#@-node:5:C=14:put_leading_ws
 	#@+node:6::put_newline
 	#@+body
 	#@+at
@@ -1989,7 +1992,7 @@ class tangleCommands:
 		return s
 	#@-body
 	#@-node:3::st_dump_node
-	#@+node:4::st_enter
+	#@+node:4:C=15:st_enter
 	#@+body
 	#@+at
 	#  Enters names and their associated code and doc parts into the given symbol table.
@@ -1999,8 +2002,11 @@ class tangleCommands:
 	#@@c
 	
 	def st_enter(self,name,code,doc,multiple_parts_flag,is_root_flag,
-	             language=None,single_comment_string=None,start_comment_string=None,
-	             end_comment_string=None):
+		# Stephen Schaefer, 9/2/02
+		language=None,
+		single_comment_string=None,
+		start_comment_string=None,
+		end_comment_string=None):
 		
 		# trace(`name`)
 		section = self.st_lookup(name,is_root_flag)
@@ -2043,19 +2049,35 @@ class tangleCommands:
 			#@<<remember root node attributes>>
 			#@+node:2::<<remember root node attributes>>
 			#@+body
+			# Stephen Schaefer, 9/2/02
 			# remember the language and comment characteristics
 			section.language = language
 			section.single_comment_string = single_comment_string
 			section.start_comment_string = start_comment_string
 			section.end_comment_string = end_comment_string
-
 			#@-body
 			#@-node:2::<<remember root node attributes>>
-
+ # Stephen Schaefer, 9/2/02
 		return len(section.parts) # part number
 	#@-body
-	#@-node:4::st_enter
-	#@+node:5::st_enter_section_name
+	#@-node:4:C=15:st_enter
+	#@+node:5:C=16:st_enter_root_name
+	#@+body
+	# Enters a root name into the given symbol table.
+	
+	def st_enter_root_name(self,name,code,doc,language,
+	
+		# Stephen Schaefer, 9/2/02
+		single_comment_string,start_comment_string,end_comment_string):
+		
+		# assert(code)
+		if name: # User errors can result in an empty @root name.
+			self.st_enter(name,code,doc,disallow_multiple_parts,is_root_name,
+			language,single_comment_string,start_comment_string,end_comment_string)
+
+	#@-body
+	#@-node:5:C=16:st_enter_root_name
+	#@+node:6::st_enter_section_name
 	#@+body
 	#@+at
 	#  This function enters a section name into the given symbol table.
@@ -2068,21 +2090,7 @@ class tangleCommands:
 		
 		return self.st_enter(name,code,doc,multiple_parts_flag,not_root_name)
 	#@-body
-	#@-node:5::st_enter_section_name
-	#@+node:6::st_enter_root_name
-	#@+body
-	# Enters a root name into the given symbol table.
-	
-	def st_enter_root_name(self,name,code,doc,language,single_comment_string,
-	                       start_comment_string,end_comment_string):
-		
-		# assert(code)
-		if name: # User errors can result in an empty @root name.
-			self.st_enter(name,code,doc,disallow_multiple_parts,is_root_name,
-	                      language,single_comment_string,start_comment_string,
-						  end_comment_string)
-	#@-body
-	#@-node:6::st_enter_root_name
+	#@-node:6::st_enter_section_name
 	#@+node:7::st_lookup
 	#@+body
 	#@+at
@@ -2110,7 +2118,7 @@ class tangleCommands:
 	#@-body
 	#@-node:7::st_lookup
 	#@-node:5::tst
-	#@+node:6:C=13:ust
+	#@+node:6:C=17:ust
 	#@+node:1::ust_dump
 	#@+body
 	def ust_dump (self):
@@ -2215,8 +2223,8 @@ class tangleCommands:
 					break # One warning per section is enough.
 	#@-body
 	#@-node:4::ust_warn_about_orphans
-	#@-node:6:C=13:ust
-	#@+node:7:C=14:untangle
+	#@-node:6:C=17:ust
+	#@+node:7:C=18:untangle
 	#@+node:1::compare_comments
 	#@+body
 	#@+at
@@ -2240,7 +2248,7 @@ class tangleCommands:
 			if self.comment and self.comment_end:
 				
 				#@<< Check both parts for @ comment conventions >>
-				#@+node:1:C=15:<< Check both parts for @ comment conventions >>
+				#@+node:1:C=19:<< Check both parts for @ comment conventions >>
 				#@+body
 				#@+at
 				#  This code is used in forgiving_compare()and in compare_comments().
@@ -2277,7 +2285,7 @@ class tangleCommands:
 						continue
 
 				#@-body
-				#@-node:1:C=15:<< Check both parts for @ comment conventions >>
+				#@-node:1:C=19:<< Check both parts for @ comment conventions >>
 
 			if p1 >= len(s1) or p2 >= len(s2):
 				break
@@ -2374,7 +2382,7 @@ class tangleCommands:
 			if self.comment and self.comment_end:
 				
 				#@<< Check both parts for @ comment conventions >>
-				#@+node:2:C=15:<< Check both parts for @ comment conventions >>
+				#@+node:2:C=19:<< Check both parts for @ comment conventions >>
 				#@+body
 				#@+at
 				#  This code is used in forgiving_compare()and in compare_comments().
@@ -2411,7 +2419,7 @@ class tangleCommands:
 						continue
 
 				#@-body
-				#@-node:2:C=15:<< Check both parts for @ comment conventions >>
+				#@-node:2:C=19:<< Check both parts for @ comment conventions >>
 
 			ch1 = s1[p1]
 			if ch1 == '\r' or ch1 == '\n':
@@ -2493,14 +2501,14 @@ class tangleCommands:
 				else:
 					
 					#@<< Compare single characters >>
-					#@+node:1:C=16:<< Compare single characters >>
+					#@+node:1:C=20:<< Compare single characters >>
 					#@+body
 					assert(p1 < len(s1) and p2 < len(s2))
 					result = s1[p1] == s2[p2]
 					p1 += 1 ; p2 += 1
 					if not result: self.mismatch("Mismatched single characters")
 					#@-body
-					#@-node:1:C=16:<< Compare single characters >>
+					#@-node:1:C=20:<< Compare single characters >>
 				#@-body
 				#@-node:6::<< Compare possible strings >>
 
@@ -2536,14 +2544,14 @@ class tangleCommands:
 				else:
 					
 					#@<< compare single characters >>
-					#@+node:1:C=16:<< Compare single characters >>
+					#@+node:1:C=20:<< Compare single characters >>
 					#@+body
 					assert(p1 < len(s1) and p2 < len(s2))
 					result = s1[p1] == s2[p2]
 					p1 += 1 ; p2 += 1
 					if not result: self.mismatch("Mismatched single characters")
 					#@-body
-					#@-node:1:C=16:<< Compare single characters >>
+					#@-node:1:C=20:<< Compare single characters >>
 
 
 				#@-body
@@ -2641,14 +2649,14 @@ class tangleCommands:
 				else:
 					
 					#@<< Compare single characters >>
-					#@+node:1:C=16:<< Compare single characters >>
+					#@+node:1:C=20:<< Compare single characters >>
 					#@+body
 					assert(p1 < len(s1) and p2 < len(s2))
 					result = s1[p1] == s2[p2]
 					p1 += 1 ; p2 += 1
 					if not result: self.mismatch("Mismatched single characters")
 					#@-body
-					#@-node:1:C=16:<< Compare single characters >>
+					#@-node:1:C=20:<< Compare single characters >>
 				#@-body
 				#@-node:8::<< Compare comments or single characters >>
 
@@ -3058,8 +3066,8 @@ class tangleCommands:
 		c.endUpdate()
 	#@-body
 	#@-node:7::update_current_vnode
-	#@-node:7:C=14:untangle
-	#@+node:8:C=17:utility methods
+	#@-node:7:C=18:untangle
+	#@+node:8:C=21:utility methods
 	#@+body
 	#@+at
 	#  These utilities deal with tangle ivars, so they should be methods.
@@ -3102,7 +3110,7 @@ class tangleCommands:
 		dn.code += s
 	#@-body
 	#@-node:2::copy
-	#@+node:3:C=18:error, pathError, warning
+	#@+node:3:C=22:error, pathError, warning
 	#@+body
 	def error (self,s):
 		self.errors += 1
@@ -3117,7 +3125,7 @@ class tangleCommands:
 		es(s)
 
 	#@-body
-	#@-node:3:C=18:error, pathError, warning
+	#@-node:3:C=22:error, pathError, warning
 	#@+node:4::is_end_of_directive
 	#@+body
 	# This function returns true if we are at the end of preprocessor directive.
@@ -3547,7 +3555,7 @@ class tangleCommands:
 		return name
 	#@-body
 	#@-node:16::standardize_name
-	#@+node:17:C=19:tangle.scanAllDirectives
+	#@+node:17:C=23:tangle.scanAllDirectives
 	#@+body
 	#@+at
 	#  This code scans the node v and all its ancestors looking for directives.  If found,the corresponding globals are set for 
@@ -3738,8 +3746,8 @@ class tangleCommands:
 		#@-body
 		#@-node:5::<< Set self.tangle_directory >>
 	#@-body
-	#@-node:17:C=19:tangle.scanAllDirectives
-	#@+node:18:C=20:token_type
+	#@-node:17:C=23:tangle.scanAllDirectives
+	#@+node:18:C=24:token_type
 	#@+body
 	#@+at
 	#  This method returns a code indicating the apparent kind of token at the position i. The caller must determine whether 
@@ -3815,8 +3823,8 @@ class tangleCommands:
 		# trace(`kind` + ":" + `get_line(s,i)`)
 		return kind, end
 	#@-body
-	#@-node:18:C=20:token_type
-	#@-node:8:C=17:utility methods
+	#@-node:18:C=24:token_type
+	#@-node:8:C=21:utility methods
 	#@-others
 #@-body
 #@-node:4::class tangleCommands methods
