@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet ekr_stylesheet?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="3639" clone_windows="0"/>
-<globals body_outline_ratio="0.461538461538">
-	<global_window_position top="6" left="385" height="897" width="873"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="3640" clone_windows="0"/>
+<globals body_outline_ratio="0.314381270903">
+	<global_window_position top="101" left="270" height="897" width="873"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
 <find_panel_settings/>
 <vnodes>
-<v t="bwmulder.20050327101545"><vh>@settings</vh>
-<v t="bwmulder.20050327101545.1"><vh>@page rst2</vh>
+<v t="bwmulder.20050327101545" a="E"><vh>@settings</vh>
+<v t="bwmulder.20050327101545.1" a="E"><vh>@page rst2</vh>
 <v t="bwmulder.20050327101545.2"><vh>@bool rst2_bodyfilter = False</vh></v>
 <v t="bwmulder.20050327101545.3"><vh>@bool rst2file = False</vh></v>
 <v t="bwmulder.20050327101545.4"><vh>@bool rst2_format_headlines = False</vh></v>
@@ -19,6 +19,7 @@
 <v t="bwmulder.20050327101545.7"><vh>@bool rst2_http_server_support = False</vh></v>
 <v t="bwmulder.20050327101545.8"><vh>@bool rst2_replace_code_blocks = False</vh></v>
 <v t="bwmulder.20050327101545.9"><vh>@string rst2_node_begin_marker=http-node-marker-</vh></v>
+<v t="bwmulder.20050327211312"><vh>@bool rst2_install_menu_item_in_edit_menu = True</vh></v>
 </v>
 <v t="bwmulder.20050327101545.10"><vh>@page debug settings for rst2</vh>
 <v t="bwmulder.20050327101545.11"><vh>@bool rst2_debug_handle_starttag = False</vh></v>
@@ -37,7 +38,7 @@
 </v>
 </v>
 <v t="edream.110203113231"
-marks="pap.20041008200028,pap.20041006194759,pap.20041008224625,pap.20041006193013,"><vh>@thin pluginsNotes.txt</vh></v>
+expanded="edream.110203113231.3,edream.110203113231.9,edream.110203113231.10,"><vh>@thin pluginsNotes.txt</vh></v>
 <v t="ekr.20041211035618"><vh>Scripts, buttons &amp; settings</vh>
 <v t="ekr.20050217093214"><vh>@settings</vh>
 <v t="ekr.20050217093214.1"><vh>@recentfiles </vh></v>
@@ -51,10 +52,10 @@ marks="pap.20041008200028,pap.20041006194759,pap.20041008224625,pap.200410061930
 </v>
 <v t="ekr.20041103052443.6"><vh>&lt;&lt; set nameList to the list of functions in leoGlobals.py &gt;&gt;</vh></v>
 </v>
-<v t="ekr.20041113110210"><vh>@button Spelling...</vh></v>
+<v t="ekr.20041113110210" a="E"><vh>@button Spelling...</vh></v>
 </v>
-<v t="edream.110203113231.618" a="TV"><vh>Plugins</vh>
-<v t="EKR.20040517090508"><vh>  Enable plugins by changing pluginsManager.txt or using plugin_manager plugin</vh>
+<v t="edream.110203113231.618" a="E"><vh>Plugins</vh>
+<v t="EKR.20040517090508" a="E"><vh>  Enable plugins by changing pluginsManager.txt or using plugin_manager plugin</vh>
 <v t="edream.120603093808"><vh>@thin pluginsManager.txt</vh></v>
 </v>
 <v t="ekr.20050303051035"><vh> Templates: these show recommended ways of defining plugins.</vh>
@@ -85,8 +86,8 @@ marks="pap.20041008200028,pap.20041006194759,pap.20041008224625,pap.200410061930
 </v>
 </v>
 <v t="edream.110203113231.667"><vh>Commands &amp; directives</vh>
-<v t="edream.110203113231.668"><vh> Importing Cisco configuration files</vh>
-<v t="edream.110203113231.669"><vh>@thin import_cisco_config.py</vh></v>
+<v t="edream.110203113231.668" a="E"><vh> Importing Cisco configuration files</vh>
+<v t="edream.110203113231.669" a="E"><vh>@thin import_cisco_config.py</vh></v>
 <v t="edream.110203113231.677"><vh> Example of an imported config</vh>
 <v t="edream.110203113231.678"><vh>plain configuration</vh></v>
 <v t="edream.110203113231.679"><vh>cisco config: C:/Davide/Leo/CVS Version/example_conf.txt</vh>
@@ -140,7 +141,7 @@ marks="pap.20041008200028,pap.20041006194759,pap.20041008224625,pap.200410061930
 </v>
 <v t="ekr.20050310084940.1"><vh>library plugin</vh>
 <v t="ekr.20050310084940.2"><vh>db</vh></v>
-<v t="ekr.20050310084940.3" tnodeList="ekr.20050310084940.3"><vh>@nosent Library.ini</vh></v>
+<v t="ekr.20050310084940.3"><vh>@nosent Library.ini</vh></v>
 <v t="ekr.20050310084940.4"><vh>@thin Library.py</vh></v>
 </v>
 <v t="edream.110203113231.741"><vh>@thin add_directives.py</vh></v>
@@ -158,7 +159,7 @@ marks="pap.20041008200028,pap.20041006194759,pap.20041008224625,pap.200410061930
 <v t="gfunch.20041209063345.1"><vh>@thin datenodes.ini</vh></v>
 </v>
 <v t="edream.110203113231.722"><vh>mod_autosave</vh>
-<v t="edream.110203113231.723" tnodeList="edream.110203113231.723"><vh>@file-nosent mod_autosave.ini</vh></v>
+<v t="edream.110203113231.723"><vh>@file-nosent mod_autosave.ini</vh></v>
 <v t="edream.110203113231.724"><vh>@thin mod_autosave.py</vh></v>
 </v>
 <v t="ekr.20041110104350"><vh>table plugin: requires tktable</vh>
@@ -207,8 +208,7 @@ marks="pap.20041008200028,pap.20041006194759,pap.20041008224625,pap.200410061930
 <v t="EKR.20040608070256"><vh>autocompleter.ini</vh></v>
 <v t="EKR.20040608070256.1"><vh>.ato files in the autocompleter folder</vh></v>
 </v>
-<v t="ekr.20041017043622"
-marks="ekr.20041017043622.4,ekr.20041017043622.10,ekr.20041017043622.13,"><vh>@thin autocompleter.py</vh></v>
+<v t="ekr.20041017043622"><vh>@thin autocompleter.py</vh></v>
 </v>
 <v t="edream.110403140857"><vh>color_markup.py (requires add-directives plugin)</vh>
 <v t="edream.110403140857.1"><vh>Plugin documentation</vh>
@@ -530,7 +530,7 @@ marks="ekr.20041017043622.4,ekr.20041017043622.10,ekr.20041017043622.13,"><vh>@t
 <v t="EKR.20040517075715.12"><vh>@thin xemacs.py</vh></v>
 <v t="EKR.20040517075715.13"><vh>Word export</vh>
 <v t="EKR.20040517075715.14"><vh>@thin word_export.py</vh></v>
-<v t="EKR.20040517075715.20" tnodeList="EKR.20040517075715.20"><vh>@file-nosent word_export.ini</vh></v>
+<v t="EKR.20040517075715.20"><vh>@file-nosent word_export.ini</vh></v>
 </v>
 </v>
 <v t="EKR.20040517080049"><vh>Files</vh>
@@ -540,7 +540,7 @@ marks="ekr.20041017043622.4,ekr.20041017043622.10,ekr.20041017043622.13,"><vh>@t
 </v>
 <v t="EKR.20040517080555"><vh>Menus &amp; translations</vh>
 <v t="ekr.20041019072632"><vh>Chinese:  Must use @file due to problems with cvs</vh>
-<v t="ekr.20040828105233" tnodeList="ekr.20040828105233,ekr.20040828105233.1,ekr.20040828105233.2,ekr.20040828105233.3,ekr.20040828105233.4,ekr.20040828105233.5,ekr.20040828105233.6,ekr.20040828105233.7"><vh>@file chinese_menu.py</vh>
+<v t="ekr.20040828105233" a="E" tnodeList="ekr.20040828105233,ekr.20040828105233.1,ekr.20040828105233.2,ekr.20040828105233.3,ekr.20040828105233.4,ekr.20040828105233.5,ekr.20040828105233.6,ekr.20040828105233.7"><vh>@file chinese_menu.py</vh>
 <v t="ekr.20040828105233.1"><vh>onMenu</vh>
 <v t="ekr.20040828105233.2"><vh>file menu</vh></v>
 <v t="ekr.20040828105233.3"><vh>edit menu</vh></v>
@@ -565,8 +565,7 @@ marks="ekr.20041017043622.4,ekr.20041017043622.10,ekr.20041017043622.13,"><vh>@t
 </v>
 <v t="ekr.20041009112303"><vh>Plugins manager &amp; menu</vh>
 <v t="EKR.20040517080555.1"><vh> Plugins menu</vh>
-<v t="EKR.20040517080555.2"
-marks="EKR.20040517080555.4,"><vh>@thin plugins_menu.py</vh></v>
+<v t="EKR.20040517080555.2"><vh>@thin plugins_menu.py</vh></v>
 <v t="EKR.20040517080555.25"><vh>@thin pluginsTest.py</vh></v>
 <v t="EKR.20040517080555.32"><vh>Notes re plugins menu</vh>
 <v t="EKR.20040517080555.33"><vh> Changes made by E.K.Ream</vh></v>
@@ -574,14 +573,13 @@ marks="EKR.20040517080555.4,"><vh>@thin plugins_menu.py</vh></v>
 <v t="EKR.20040517080555.35"><vh> Initial suggestion from Paul Paterson</vh></v>
 </v>
 </v>
-<v t="pap.20041006184225"
-marks="pap.20041008224625,pap.20041006193013,pap.20041006194759,pap.20041008200028,"><vh>@thin plugin_manager.py</vh></v>
+<v t="pap.20041006184225"><vh>@thin plugin_manager.py</vh></v>
 </v>
 <v t="ekr.20041001210557"><vh>Scripting</vh>
 <v t="EKR.20040613213623"><vh>@thin mod_scripting.py</vh></v>
 </v>
 <v t="ekr.20050111122605"><vh>Servers</vh>
-<v t="EKR.20040517080250"><vh>http plugin</vh>
+<v t="EKR.20040517080250" a="E"><vh>http plugin</vh>
 <v t="EKR.20040517080250.1"><vh>@thin mod_http.py</vh></v>
 </v>
 </v>
@@ -614,7 +612,7 @@ marks="pap.20041008224625,pap.20041006193013,pap.20041006194759,pap.200410082000
 <v t="mork.20041013092542.1"><vh>@thin usetemacs.py</vh></v>
 <v t="mork.20041030164547"><vh>@thin temacs.py</vh></v>
 </v>
-<v t="ekr.20050306081349"><vh>Text formatting</vh>
+<v t="ekr.20050306081349" a="E"><vh>Text formatting</vh>
 <v t="edream.111803100242"><vh>@thin rst.py</vh></v>
 <v t="mork.20041010095009"><vh>@thin xsltWithNodes.py</vh></v>
 <v t="ekr.20040331071919"><vh>Leo to AsciiDoc</vh>
@@ -688,7 +686,7 @@ marks="pap.20041008224625,pap.20041006193013,pap.20041006194759,pap.200410082000
 </v>
 </v>
 </v>
-<v t="ekr.20040408161258"><vh>rst2 plugin</vh>
+<v t="ekr.20040408161258" a="E"><vh>rst2 plugin</vh>
 <v t="ekr.20040408192158"><vh>Documentation for the rST plugin using rst</vh>
 <v t="ekr.20040408192158.1"><vh>@rst ../doc/rstplugin.html</vh>
 <v t="ekr.20040408192158.2"><vh>Overview</vh>
@@ -708,7 +706,7 @@ marks="pap.20041008224625,pap.20041006193013,pap.20041006194759,pap.200410082000
 </v>
 </v>
 </v>
-<v t="ekr.20040331071319"><vh>@thin rst2.py</vh></v>
+<v t="ekr.20040331071319" a="E"><vh>@thin rst2.py</vh></v>
 </v>
 </v>
 </v>
@@ -762,10 +760,11 @@ marks="pap.20041008224625,pap.20041006193013,pap.20041006194759,pap.200410082000
 </v>
 <v t="ekr.20050303080042"><vh>footprints</vh>
 <v t="ekr.20050303080236"><vh>To do</vh></v>
-<v t="ekr.20050303080042.1" tnodeList="ekr.20050303080042.1"><vh>@nosent footprints.ini</vh></v>
+<v t="ekr.20050303080042.1"><vh>@nosent footprints.ini</vh></v>
 <v t="pap.20041020001240"><vh>@thin footprints.py</vh></v>
 </v>
-<v t="ekr.20050301083306"><vh>@thin mod_read_dir_outline.py</vh></v>
+<v t="ekr.20050301083306"
+expanded="ekr.20050301083306.6,"><vh>@thin mod_read_dir_outline.py</vh></v>
 <v t="ekr.20050301095332"><vh>@thin mod_labels.py</vh></v>
 </v>
 </vnodes>
@@ -2333,6 +2332,9 @@ Normally, there is no need to change this setting.;
 <t tx="bwmulder.20050327101545.22">Attribute used in vnodes to store the http code for a node.
  
 Normally you would have little reason to change this settings.</t>
+<t tx="bwmulder.20050327211312">Install a menu item in the edit menu to process all rst2 nodes in the subtree.
+
+Recommended way of processing large trees, since otherwise you might inadvertantly drag items.</t>
 <t tx="edream.110203113231.233">@ To do:
     
      WARNING: problems with locking out event handlers could cause Leo to drop Text!

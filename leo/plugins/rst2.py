@@ -107,11 +107,14 @@ class config:
     rst2_debug_node_html_1 = False
     rst2_debug_anchors = False
     rst2_debug_before_and_after_replacement = False
+    rst2_install_menu_item_in_edit_menu = False
     
     # These are really configuration options.
     rst2_node_begin_marker = 'http-node-marker-'
     rst2_http_attributename = 'rst_http_attribute'
     
+    firstCall = True
+    # set to False after the optional menu is installed.
     
     # Some data is also stored in the config class
     http_map = None
@@ -132,11 +135,34 @@ class config:
     
     do_replace_code_blocks = False
 #@-node:bwmulder.20050314132625:config
+#@+node:bwmulder.20050327204614:transform_rst2_text_in_subtree
+def transform_rst2_text_in_subtree(c):
+    
+    class callOnFileOpen(object):
+        """
+        Call onFileOpen passing the commander c.
+        """
+        def __init__(self):
+            self.c = c
+        def __call__(self):
+            onFileOpen("menuItem", {"new_c": self.c})
+            
+    editMenu = c.frame.menu.getMenu('Edit')
+        
+    newEntries = (
+            ("-", None, None),
+            ("Transform rst2 text in subtree", "", callOnFileOpen()))
+        
+    c.frame.menu.createMenuEntries(editMenu, newEntries)
+#@-node:bwmulder.20050327204614:transform_rst2_text_in_subtree
 #@+node:bwmulder.20050320000243:onFileOpen
 def onFileOpen(tag, keywords):
     # c,old_c,new_c,fileName):
     c = keywords["new_c"]
     applyConfiguration(c)
+    if config.firstCall and config.rst2_install_menu_item_in_edit_menu:
+        config.firstCall = False
+        transform_rst2_text_in_subtree(c)
     ignoreset = {}
     if c.config.getBool("rst2_run_on_open_window"):
     # if config.rst2_run_on_window_open:
@@ -146,7 +172,11 @@ def onFileOpen(tag, keywords):
         found_rst_trees = False
         root = c.currentVnode()
         
-        for p in c.allNodes_iter(root):
+        if tag == 'open2':
+            iterator = c.allNodes_iter(root)
+        else:
+            iterator = root.self_and_subtree_iter()
+        for p in iterator:
             if p.v not in ignoreset:
                 s = p.v.headString()
                 if s.startswith("@rst ") and len(s.split()) >= 2:
@@ -525,6 +555,7 @@ def applyConfiguration (c):
     getboolean("rst2_debug_node_html_1")
     getboolean("rst2_debug_anchors")
     getboolean("rst2_debug_before_and_after_replacement")
+    getboolean("rst2_install_menu_item_in_edit_menu")
 
 #@-node:bwmulder.20050314131619:applyConfiguration
 #@+node:bwmulder.20041011145032:bodyfilter
