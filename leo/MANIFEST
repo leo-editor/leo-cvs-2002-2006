@@ -33,7 +33,6 @@ leoPlugins.py
 leoPrefs.py
 leoTangle.py
 leoTree.py
-leoTreeMod.py
 leoUndo.py
 manifest.in
 openLeo.py
