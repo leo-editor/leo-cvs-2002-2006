@@ -2,7 +2,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="3980" clone_windows="0"/>
 <globals body_outline_ratio="0.5">
-	<global_window_position top="21" left="376" height="870" width="774"/>
+	<global_window_position top="6" left="322" height="870" width="816"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences>
@@ -12,9 +12,9 @@
 	<change_string></change_string>
 </find_panel_settings>
 <vnodes>
-<v t="edream.110203160744"><vh> Diary</vh>
-<v t="edream.110203160744.1"><vh>November 2003</vh>
-<v t="edream.112303052021"><vh>11/23</vh>
+<v t="edream.110203160744" a="E"><vh> Diary</vh>
+<v t="edream.110203160744.1" a="E"><vh>November 2003</vh>
+<v t="edream.112303052021" a="V"><vh>11/23 Released 4.1 beta 5 to cvs only</vh>
 <v t="edream.112303114341"><vh>Replaced app.batchLog with app.log</vh></v>
 <v t="edream.112303110845"><vh>Fixed Undo Change All (in headlines) problem</vh></v>
 <v t="edream.112303105347"><vh>Added defensive code to prevent crash in colorizer</vh></v>
@@ -33,7 +33,7 @@
 <v t="edream.112203134645.1"><vh>Added enable/disable methods to nullLog</vh></v>
 <v t="edream.112203132523.1"><vh>Created  v.scriptSetBodyString</vh></v>
 </v>
-<v t="edream.112103102235"><vh>11/20</vh>
+<v t="edream.112103102235"><vh>11/20 released 4.1 beta 4</vh>
 <v t="edream.112103102235.1"><vh>created null frame,log,body,tree,menu,gui classes</vh></v>
 </v>
 <v t="edream.111903062701"><vh>11/19</vh>
@@ -966,6 +966,10 @@
 </v>
 </v>
 <v t="edream.110403112538"><vh>To do: 4.1 beta</vh>
+<v t="edream.112303120320"><vh>(Bold font in body)</vh>
+<v t="edream.110203160744.2289" a=""><vh>tkBody.setBodyFontFromConfig</vh></v>
+<v t="edream.110203160744.2956" a=""><vh>config.getFontFromParams</vh></v>
+</v>
 <v t="edream.110203160744.2421"><vh>Fix bugs</vh>
 <v t="edream.111803100627" a="M"><vh>(Fix problems with @first/@last)</vh>
 <v t="edream.111803100627.1"><vh>Reports</vh></v>
@@ -2753,7 +2757,7 @@
 </v>
 </v>
 </v>
-<v t="edream.110203160744.2145"><vh>4.1 Projects (see also 4.0 projects)</vh>
+<v t="edream.110203160744.2145"><vh>4.1 Projects</vh>
 <v t="edream.110203160744.2404"><vh>Waiting for help from Linux people</vh>
 <v t="edream.110203160744.2405"><vh>Paste bug (Linux only)</vh>
 <v t="edream.110203160744.1312" a=""><vh>onBodyWillChange</vh></v>
@@ -3197,20 +3201,6 @@
 <v t="edream.111003092718"><vh>(Removed bodyCtrl from all core code)</vh></v>
 </v>
 <v t="edream.111803112700.1"><vh>beta 4 projects</vh>
-<v t="edream.112203144820.2"><vh>(Adding batch-script logic to startup code)</vh>
-<v t="edream.110203160744.1583" a=""><vh>run &amp; allies</vh>
-<v t="edream.110203160744.1584"><vh>isValidPython</vh></v>
-<v t="edream.110203160744.1585" a=""><vh>computeLoadDir</vh></v>
-<v t="edream.110203160744.1586" a=""><vh>createFrame (leo.py)</vh></v>
-<v t="edream.112203144820" a=""><vh>createNullGuiWithScript (leo.py)</vh></v>
-<v t="edream.112203144820.1"><vh>getBatchScript</vh></v>
-</v>
-</v>
-<v t="edream.112203132842"><vh>(Bold body pane bug)</vh>
-<v t="edream.110203160744.2289" a=""><vh>tkBody.setBodyFontFromConfig</vh></v>
-<v t="edream.110203160744.2956" a=""><vh>config.getFontFromParams</vh></v>
-<v t="edream.110203160744.3695" a=""><vh>tkGui.getFontFromParams</vh></v>
-</v>
 <v t="edream.111803102929"><vh>(Changes for MacOs/Darwin Marc-Antoine Parent)</vh>
 <v t="edream.111803101946"><vh>Report</vh></v>
 <v t="edream.110203160744.1585" a=""><vh>computeLoadDir</vh></v>
@@ -3223,71 +3213,6 @@
 <v t="edream.110203160744.1057"><vh>&lt;&lt; synthesize the shortcuts from the information &gt;&gt;</vh></v>
 </v>
 </v>
-<v t="edream.112103084204"><vh>(Created null classes)</vh>
-<v t="edream.112103083853" a=""><vh>class nullBody</vh>
-<v t="edream.112103141343.1"><vh> nullBody.__init__</vh></v>
-<v t="edream.112103153646"><vh>Utils (internal use)</vh>
-<v t="edream.112103144659"><vh>findStartOfLine</vh></v>
-<v t="edream.112103153646.1"><vh>scanToStartOfLine</vh></v>
-<v t="edream.112103153646.2"><vh>scanToEndOfLine</vh></v>
-</v>
-<v t="edream.112103142020"><vh>Must be overriden in subclasses</vh>
-<v t="edream.112103142020.1"><vh>Bounding box</vh></v>
-<v t="edream.112103142020.2"><vh>Color tags</vh></v>
-<v t="edream.112103142020.3"><vh>Configuration</vh></v>
-<v t="edream.112103142020.4"><vh>Focus</vh></v>
-<v t="edream.112103142020.5"><vh>Height &amp; width (use dummy values...)</vh></v>
-<v t="edream.112103142020.6" a="M"><vh>Idle time...</vh></v>
-<v t="edream.112103142020.7"><vh>Indices</vh></v>
-<v t="edream.112103142020.8"><vh>Insert point</vh></v>
-<v t="edream.112103142020.9"><vh>Menus</vh></v>
-<v t="edream.112103142020.10"><vh>Selection</vh></v>
-<v t="edream.112103142020.11"><vh>Text</vh>
-<v t="edream.112103142020.12"><vh>delete...</vh></v>
-<v t="edream.112103142020.13"><vh>get...</vh>
-<v t="edream.112103151727"><vh>getInsertLines</vh></v>
-<v t="edream.112103151733"><vh>getSelectionAreas</vh></v>
-<v t="edream.112103153646.3"><vh>getSelectionLines</vh></v>
-</v>
-<v t="edream.112103142020.14"><vh>Insert...</vh></v>
-<v t="edream.112103142020.15"><vh>setSelectionAreas</vh></v>
-</v>
-<v t="edream.112103142020.16"><vh>Visibility &amp; scrolling</vh></v>
-</v>
-<v t="edream.112103141343.2"><vh>oops</vh></v>
-</v>
-<v t="edream.112103141343" a=""><vh>class nullColorizer</vh>
-<v t="edream.112103141921"><vh>__init__</vh></v>
-<v t="edream.112103141921.1"><vh>entry points</vh></v>
-<v t="edream.112103141351"><vh>hyperlink callbacks...</vh></v>
-</v>
-<v t="edream.112103083614" a=""><vh>class nullFrame</vh></v>
-<v t="edream.112103084652.1" a=""><vh>class nullGui (runs scripts)</vh>
-<v t="edream.112103163330"><vh>Birth &amp; death</vh>
-<v t="edream.112103154736"><vh> nullGui.__init__</vh></v>
-<v t="edream.112103085124" a=""><vh>createLeoFrame</vh></v>
-<v t="edream.112103163330.1"><vh>createRootWindow</vh></v>
-<v t="edream.112103163330.2"><vh>finishCreate</vh></v>
-<v t="edream.112103154736.1" a=""><vh>runMainLoop</vh></v>
-</v>
-<v t="edream.112103084652.2"><vh>oops</vh></v>
-<v t="edream.112103154310"><vh>setScript</vh></v>
-</v>
-<v t="edream.112103100651" a=""><vh>class nullLog</vh></v>
-<v t="edream.112103100651.1" a=""><vh>class nullTree</vh>
-<v t="edream.112103160822.1"><vh> nullTree.__init__</vh></v>
-<v t="edream.112103160822"><vh>oops</vh></v>
-<v t="edream.112103161526"><vh>Dummy operations...</vh>
-<v t="edream.112103160840.1"><vh>Drawing</vh></v>
-<v t="edream.112103160840.2"><vh>Edit label</vh></v>
-<v t="edream.112103160840.5"><vh>Scrolling</vh></v>
-<v t="edream.112103160840.7"><vh>Tree operations</vh></v>
-</v>
-<v t="edream.112103160840.3"><vh>getFont &amp; setFont</vh></v>
-<v t="edream.112103160840.6"><vh>select</vh></v>
-</v>
-<v t="edream.112203164505.1" a=""><vh>class nullUndoer</vh></v>
-</v>
 <v t="edream.111803110943"><vh>(Fixed bug re: two refs on same line)</vh>
 <v t="edream.112003084515.1"><vh>Report</vh></v>
 <v t="edream.112003074603" a=""><vh>putRefLine (new) &amp; allies</vh>
@@ -3295,11 +3220,6 @@
 <v t="edream.112003082656"><vh>putAfterLastRef</vh></v>
 <v t="edream.112003074603.1"><vh>putAfterMiddleef</vh></v>
 </v>
-</v>
-<v t="edream.112103080619"><vh>(Made newTnode and scanGnx more robust)</vh>
-<v t="edream.112303082755"><vh>traceback</vh></v>
-<v t="edream.110203160744.2976" a=""><vh>newTnode</vh></v>
-<v t="edream.110203160744.3329" a=""><vh>scanGnx</vh></v>
 </v>
 <v t="edream.112003151606"><vh>(Remove _all_ extra newlines in @file-nosent modes)</vh>
 <v t="edream.110203160744.2841" a=""><vh>Writing (4.x)</vh>
@@ -3374,15 +3294,6 @@
 <v t="edream.110203160744.2851"><vh>&lt;&lt; finish writing &gt;&gt;</vh></v>
 </v>
 </v>
-<v t="edream.112303042302"><vh>(Using a common log in batch mode)</vh>
-<v t="edream.112203144820" a=""><vh>createNullGuiWithScript (leo.py)</vh></v>
-<v t="edream.112103085124" a=""><vh>createLeoFrame</vh></v>
-<v t="edream.112103154736.1" a=""><vh>runMainLoop</vh></v>
-<v t="edream.112103100651" a=""><vh>class nullLog</vh></v>
-<v t="edream.110203160744.1456" a=""><vh>es, enl, ecnl</vh></v>
-<v t="edream.110203160744.1774" a=""><vh>trace</vh></v>
-<v t="edream.110203160744.3019" a=""><vh>trace_tag</vh></v>
-</v>
 <v t="edream.111903072321.3"><vh>(Wrappers for os.path routines)</vh>
 <v t="edream.110203160744.2361" a=""><vh>os.path wrappers (leoGlobals.py)</vh>
 <v t="edream.110203160744.2362"><vh>os_path_abspath</vh></v>
@@ -3401,6 +3312,96 @@
 <v t="edream.111903072321.2"><vh>os_path_splitext</vh></v>
 <v t="edream.111903080048.1"><vh>toUnicodeFileEncoding</vh></v>
 </v>
+</v>
+</v>
+<v t="edream.112303174924"><vh>beta 5 projects</vh>
+<v t="edream.112103080619"><vh>(Made newTnode and scanGnx more robust)</vh>
+<v t="edream.112303082755"><vh>traceback</vh></v>
+<v t="edream.110203160744.2976" a=""><vh>newTnode</vh></v>
+<v t="edream.110203160744.3329" a=""><vh>scanGnx</vh></v>
+</v>
+<v t="edream.112103084204"><vh>(Created null classes)</vh>
+<v t="edream.112103083853" a=""><vh>class nullBody</vh>
+<v t="edream.112103141343.1"><vh> nullBody.__init__</vh></v>
+<v t="edream.112103153646"><vh>Utils (internal use)</vh>
+<v t="edream.112103144659"><vh>findStartOfLine</vh></v>
+<v t="edream.112103153646.1"><vh>scanToStartOfLine</vh></v>
+<v t="edream.112103153646.2"><vh>scanToEndOfLine</vh></v>
+</v>
+<v t="edream.112103142020"><vh>Must be overriden in subclasses</vh>
+<v t="edream.112103142020.1"><vh>Bounding box</vh></v>
+<v t="edream.112103142020.2"><vh>Color tags</vh></v>
+<v t="edream.112103142020.3"><vh>Configuration</vh></v>
+<v t="edream.112103142020.4"><vh>Focus</vh></v>
+<v t="edream.112103142020.5"><vh>Height &amp; width (use dummy values...)</vh></v>
+<v t="edream.112103142020.6" a="M"><vh>Idle time...</vh></v>
+<v t="edream.112103142020.7"><vh>Indices</vh></v>
+<v t="edream.112103142020.8"><vh>Insert point</vh></v>
+<v t="edream.112103142020.9"><vh>Menus</vh></v>
+<v t="edream.112103142020.10"><vh>Selection</vh></v>
+<v t="edream.112103142020.11"><vh>Text</vh>
+<v t="edream.112103142020.12"><vh>delete...</vh></v>
+<v t="edream.112103142020.13"><vh>get...</vh>
+<v t="edream.112103151727"><vh>getInsertLines</vh></v>
+<v t="edream.112103151733"><vh>getSelectionAreas</vh></v>
+<v t="edream.112103153646.3"><vh>getSelectionLines</vh></v>
+</v>
+<v t="edream.112103142020.14"><vh>Insert...</vh></v>
+<v t="edream.112103142020.15"><vh>setSelectionAreas</vh></v>
+</v>
+<v t="edream.112103142020.16"><vh>Visibility &amp; scrolling</vh></v>
+</v>
+<v t="edream.112103141343.2"><vh>oops</vh></v>
+</v>
+<v t="edream.112103141343" a=""><vh>class nullColorizer</vh>
+<v t="edream.112103141921"><vh>__init__</vh></v>
+<v t="edream.112103141921.1"><vh>entry points</vh></v>
+<v t="edream.112103141351"><vh>hyperlink callbacks...</vh></v>
+</v>
+<v t="edream.112103083614" a=""><vh>class nullFrame</vh></v>
+<v t="edream.112103084652.1" a=""><vh>class nullGui (runs scripts)</vh>
+<v t="edream.112103163330"><vh>Birth &amp; death</vh>
+<v t="edream.112103154736"><vh> nullGui.__init__</vh></v>
+<v t="edream.112103085124" a=""><vh>createLeoFrame</vh></v>
+<v t="edream.112103163330.1"><vh>createRootWindow</vh></v>
+<v t="edream.112103163330.2"><vh>finishCreate</vh></v>
+<v t="edream.112103154736.1" a=""><vh>runMainLoop</vh></v>
+</v>
+<v t="edream.112103084652.2"><vh>oops</vh></v>
+<v t="edream.112103154310"><vh>setScript</vh></v>
+</v>
+<v t="edream.112103100651" a=""><vh>class nullLog</vh></v>
+<v t="edream.112103100651.1" a=""><vh>class nullTree</vh>
+<v t="edream.112103160822.1"><vh> nullTree.__init__</vh></v>
+<v t="edream.112103160822"><vh>oops</vh></v>
+<v t="edream.112103161526"><vh>Dummy operations...</vh>
+<v t="edream.112103160840.1"><vh>Drawing</vh></v>
+<v t="edream.112103160840.2"><vh>Edit label</vh></v>
+<v t="edream.112103160840.5"><vh>Scrolling</vh></v>
+<v t="edream.112103160840.7"><vh>Tree operations</vh></v>
+</v>
+<v t="edream.112103160840.3"><vh>getFont &amp; setFont</vh></v>
+<v t="edream.112103160840.6"><vh>select</vh></v>
+</v>
+<v t="edream.112203164505.1" a=""><vh>class nullUndoer</vh></v>
+</v>
+<v t="edream.112203144820.2"><vh>(Adding batch-script logic to startup code)</vh>
+<v t="edream.110203160744.1583" a=""><vh>run &amp; allies</vh>
+<v t="edream.110203160744.1584"><vh>isValidPython</vh></v>
+<v t="edream.110203160744.1585" a=""><vh>computeLoadDir</vh></v>
+<v t="edream.110203160744.1586" a=""><vh>createFrame (leo.py)</vh></v>
+<v t="edream.112203144820" a=""><vh>createNullGuiWithScript (leo.py)</vh></v>
+<v t="edream.112203144820.1"><vh>getBatchScript</vh></v>
+</v>
+</v>
+<v t="edream.112303042302"><vh>(Using a common log in batch mode)</vh>
+<v t="edream.112203144820" a=""><vh>createNullGuiWithScript (leo.py)</vh></v>
+<v t="edream.112103085124" a=""><vh>createLeoFrame</vh></v>
+<v t="edream.112103154736.1" a=""><vh>runMainLoop</vh></v>
+<v t="edream.112103100651" a=""><vh>class nullLog</vh></v>
+<v t="edream.110203160744.1456" a=""><vh>es, enl, ecnl</vh></v>
+<v t="edream.110203160744.1774" a=""><vh>trace</vh></v>
+<v t="edream.110203160744.3019" a=""><vh>trace_tag</vh></v>
 </v>
 <v t="edream.112103193136"><vh>(Fixed duplicate bindings with clear leoConfig.txt)</vh>
 <v t="edream.112303083451"><vh>Report</vh></v>
@@ -3438,10 +3439,16 @@
 <v t="edream.110203160744.1931" a=""><vh>&lt;&lt; redo typing cases &gt;&gt;</vh></v>
 </v>
 </v>
+<v t="edream.112303174924.1"><vh>beta 6 projects</vh></v>
 </v>
+</v>
+<v t="edream.112203132842"><vh>(Bold body pane bug)</vh>
+<v t="edream.110203160744.2289" a=""><vh>tkBody.setBodyFontFromConfig</vh></v>
+<v t="edream.110203160744.2956" a=""><vh>config.getFontFromParams</vh></v>
+<v t="edream.110203160744.3695" a=""><vh>tkGui.getFontFromParams</vh></v>
 </v>
 <v t="edream.112303032011"><vh>New unit test ideas</vh></v>
-<v t="edream.110203160744.2458" a="V"><vh>Code</vh>
+<v t="edream.110203160744.2458"><vh>Code</vh>
 <v t="edream.110203160744.2459"><vh>  Overview of code</vh>
 <v t="edream.110203160744.2460" a=""><vh>&lt;&lt; About clones &gt;&gt;</vh></v>
 <v t="edream.110203160744.2461" a=""><vh>&lt;&lt; About drawing &gt;&gt;</vh></v>
@@ -6696,10 +6703,6 @@
 </v>
 </v>
 </v>
-</v>
-<v t="edream.112303120320"><vh>(Bold font in body)</vh>
-<v t="edream.110203160744.2289" a=""><vh>tkBody.setBodyFontFromConfig</vh></v>
-<v t="edream.110203160744.2956" a=""><vh>config.getFontFromParams</vh></v>
 </v>
 </vnodes>
 <tnodes>
@@ -31443,7 +31446,7 @@ c.endUpdate(false)</t>
 
 def getSignOnLine (self):
 	c = self
-	return "Leo 4.1 beta 4, build %s, November 20, 2003" % c.getBuildNumber()
+	return "Leo 4.1 beta 5, build %s, November 23, 2003" % c.getBuildNumber()
 	
 def initVersion (self):
 	c = self
@@ -38602,7 +38605,7 @@ c:\python22\python &lt;leopath&gt;leo.py %1
 </t>
 <t tx="edream.110203160744.2491">Metadata-Version: 1.0
 Name: leo
-Version: 4.1-beta-4
+Version: 4.1-beta-5
 Summary: Leo: Literate Editor with Outlines
 Home-page: http://webpages.charter.net/edreamleo/front.html
 Author: Edward K. Ream
@@ -38628,24 +38631,32 @@ Leo is available at:  http://sourceforge.net/projects/leo/
 Leo requires Python 2.1 or above and tcl/tk 8.3 or above.
 Leo will work on Linux, Windows and MacOs X Jaguar.
 
-Leo 4.1 beta 4                   November 20, 2003
+Leo 4.1 beta 5                   November 23, 2003
 
-This is the fourth official release of the reorganized 4.1 code base.
+This is the fifth release of the reorganized 4.1 code base, but please use caution when using this code. Warning: By default Leo 4.1 creates .leo files that can not be read by older versions of Leo.
 
-Warning: By default Leo 4.1 creates .leo files that can not be read by older versions of Leo.
+Note: there have been problems reported with using plugins on Linux.  As far as I know those problems have _not_ been fixed.
+
+Beta 5:
+  - Leo will run in batch mode it the command line contains --script scriptFile.
+  - Fixed new crashers in the Extract Section and Extract commands.
+  - Fixed an old crasher when Undoing a Change All command when searching headlines.
+  - Fixed a new crasher when write a file containing an undefined section.
+  - Fixed a new problem involving warnings of duplicate bindings in popup menus.
+  - Made sure to show Leo's windows in wx gui plugin.
 
 Beta 4:
-  - Fixes several "reorg" bugs, some of which affected plugins.
-  - Allows @directives and section references when executing scripts!
+  - Fixed several "reorg" bugs, some of which affected plugins.
+  - Allow @directives and section references when executing scripts!
   - More than one section reference may now appear on the same line.
   - Uses "utf-8" encoding for filenames under MacOS (Darwin)
-  - Allows command or cmnd prefix for menu shortcuts under Darwin.
-  - Wraps all os.path calls to that file and directory names can be converted to Unicode.
+  - Allow command or cmnd prefix for menu shortcuts under Darwin.
+  - Wraped all os.path calls to that file and directory names can be converted to Unicode.
     This is necessary (but not sufficient?) to support Chinese file and directory names.
 
-Beta 3 completes the reorg: many changes to the code.  Also fixes a LaTeX coloring bug.
+Beta 3 completed the reorg: many changes to the code.  Also fixes a LaTeX coloring bug.
 
-Beta 2 fixes a startup problem on Linux: the "mbcs" text encoding is not valid on Linux.
+Beta 2 fixed a startup problem on Linux: the "mbcs" text encoding is not valid on Linux.
 
 Highlights of 4.1:
 -----------------
@@ -56366,9 +56377,9 @@ elif undoType == "De-Hoist":
 - The selection is not set properly afterwards.</t>
 <t tx="edream.110403112538">@nocolor
 
-Document batch mode.
-	app.log.enable/disable.
-	Invoking
+- Support enable/disable in base leoLog class.
+	
+Do we need a nullConfig class?
 
 Script-find/change:
 	- Create a utility to preprocess script (for use with find/change scripts)
@@ -60083,7 +60094,7 @@ The fix: to add a dontBind param to createMenuEntries and set that param when cr
 	self.t.bodyString = toUnicode(s,encoding)</t>
 <t tx="edream.112203132523"></t>
 <t tx="edream.112203132523.1">This is a convenience routine for scripts.  It does not update the body pane.</t>
-<t tx="edream.112203132842"></t>
+<t tx="edream.112203132842"># This is so annoying...</t>
 <t tx="edream.112203134645"></t>
 <t tx="edream.112203134645.1"></t>
 <t tx="edream.112203135107">def notValidInBatchMode(self, commandName):
@@ -60288,5 +60299,7 @@ Python 2.2.1, Tk 8.3.2
 </t>
 <t tx="edream.112303114341">app.batchLog was completely redundant.</t>
 <t tx="edream.112303120320"></t>
+<t tx="edream.112303174924"></t>
+<t tx="edream.112303174924.1"></t>
 </tnodes>
 </leo_file>

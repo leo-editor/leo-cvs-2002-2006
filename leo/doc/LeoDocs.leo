@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="2934" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="3031" clone_windows="0"/>
 <globals body_outline_ratio="0.5">
 	<global_window_position top="64" left="365" height="836" width="829"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
@@ -83,14 +83,14 @@
 <v t="edream.110203163054.62" a=""><vh>Quick start</vh></v>
 </v>
 <v t="edream.110203163054.63" a="E"><vh>Latest version</vh>
-<v t="edream.110603185805" a="E"><vh>4.1 beta 4</vh>
+<v t="edream.110603185805" a="V"><vh>4.1 beta 5</vh>
 <v t="edream.110603190234.1"><vh>Code-level features</vh>
 <v t="edream.110603190125.3"><vh>Regression tests started</vh></v>
 <v t="edream.110603190125.4"><vh>Code reorganized to support other guis</vh></v>
 <v t="edream.110303182253.39"><vh>Made app.forceShutdown work in "idle" hook</vh></v>
 </v>
 <v t="edream.110603190404"><vh>Fixed bugs</vh>
-<v t="edream.110603190322.8"><vh>Fixed Serious Undo Change All bug</vh></v>
+<v t="edream.110603190322.8"><vh>Fixed Serious Undo Change All bugs</vh></v>
 <v t="edream.110603190322.13"><vh>Fixed bug involving 0x1a characters in body text.</vh></v>
 <v t="edream.110603190322.11"><vh>Fixed first node-only find bug</vh></v>
 <v t="edream.110603190322.3"><vh>Fixed bug in idle_body_key</vh></v>
@@ -101,8 +101,9 @@
 <v t="edream.110603190322.10"><vh>Leo now writes node_only find prefs</vh></v>
 <v t="edream.110603190125.1"><vh>.leo files are now cvs-friendly</vh></v>
 </v>
-<v t="edream.110603192009.1" a="E"><vh>New &amp; improved commands</vh>
-<v t="edream.110203163054.833" a="V"><vh>Executing Python scripts in body text</vh></v>
+<v t="edream.110603192009.1"><vh>New &amp; improved commands</vh>
+<v t="edream.112303173638" a=""><vh>Running Leo in batch mode</vh></v>
+<v t="edream.110203163054.833" a=""><vh>Executing Python scripts in body text</vh></v>
 <v t="edream.110603190322.14"><vh>Added Check Outline command</vh></v>
 <v t="edream.110603190322.15"><vh>Added Hoist/De-Hoist commands</vh></v>
 <v t="edream.111803060152"><vh>Added script-based find/change commands</vh>
@@ -119,14 +120,14 @@
 <v t="edream.110203163054.66" a=""><vh>4.0.1, 4.0.2, 4.0.3 &amp; 4.0.4</vh></v>
 </v>
 <v t="edream.110203163054.117"><vh>leo.py versions</vh>
-<v t="edream.110603185805" a=""><vh>4.1 beta 4</vh>
+<v t="edream.110603185805" a=""><vh>4.1 beta 5</vh>
 <v t="edream.110603190234.1"><vh>Code-level features</vh>
 <v t="edream.110603190125.3"><vh>Regression tests started</vh></v>
 <v t="edream.110603190125.4"><vh>Code reorganized to support other guis</vh></v>
 <v t="edream.110303182253.39"><vh>Made app.forceShutdown work in "idle" hook</vh></v>
 </v>
 <v t="edream.110603190404"><vh>Fixed bugs</vh>
-<v t="edream.110603190322.8"><vh>Fixed Serious Undo Change All bug</vh></v>
+<v t="edream.110603190322.8"><vh>Fixed Serious Undo Change All bugs</vh></v>
 <v t="edream.110603190322.13"><vh>Fixed bug involving 0x1a characters in body text.</vh></v>
 <v t="edream.110603190322.11"><vh>Fixed first node-only find bug</vh></v>
 <v t="edream.110603190322.3"><vh>Fixed bug in idle_body_key</vh></v>
@@ -138,6 +139,7 @@
 <v t="edream.110603190125.1"><vh>.leo files are now cvs-friendly</vh></v>
 </v>
 <v t="edream.110603192009.1"><vh>New &amp; improved commands</vh>
+<v t="edream.112303173638" a=""><vh>Running Leo in batch mode</vh></v>
 <v t="edream.110203163054.833" a=""><vh>Executing Python scripts in body text</vh></v>
 <v t="edream.110603190322.14"><vh>Added Check Outline command</vh></v>
 <v t="edream.110603190322.15"><vh>Added Hoist/De-Hoist commands</vh></v>
@@ -1321,6 +1323,7 @@
 <v t="edream.110203163054.929"><vh>Setters</vh></v>
 </v>
 </v>
+<v t="edream.112303173638" a=""><vh>Running Leo in batch mode</vh></v>
 </v>
 <v t="edream.110203163054.319" a=""><vh>Chapter 8: Customizing Leo</vh>
 <v t="edream.110203163054.320" a=""><vh>Using leoConfig.leo and leoConfig.txt</vh></v>
@@ -24144,11 +24147,19 @@ Still to do:
 
 The use_gnx setting in leoConfig.txt determines whether uses gnx's (cvs friendly) or ints.  No version of Leo before 4.1 can read .leo files containing gnx.   Only gnx's are immutable.  Leo recomputes all non-gnx indices from scratch whenever writing a .leo file. It is possible to convert between 3.x and 4.1 file formats by changing the use_gnx setting.
 </t>
-<t tx="edream.110603185805">Leo 4.1 beta 4                   November 20, 2003
+<t tx="edream.110603185805">Leo 4.1 beta 5                   November 23, 2003
 
-This is the fourth official release of the reorganized 4.1 code base. The code appears solid, and has not been widely tested. Please use caution when using this code. Warning: By default Leo 4.1 creates .leo files that can not be read by older versions of Leo.
+This is the fifth release of the reorganized 4.1 code base. The code appears solid, but please use caution when using this code. Warning: By default Leo 4.1 creates .leo files that can not be read by older versions of Leo.
 
 Note: there have been problems reported with using plugins on Linux.  As far as I know those problems have _not_ been fixed.
+
+Beta 5:
+  - Leo will run in batch mode it the command line contains --script scriptFile.
+  - Fixed new crashers in the Extract Section and Extract commands.
+  - Fixed an old crasher when Undoing a Change All command when searching headlines.
+  - Fixed a new crasher when write a file containing an undefined section.
+  - Fixed a new problem involving warnings of duplicate bindings in popup menus.
+  - Made sure to show Leo's windows in wx gui plugin.
 
 Beta 4:
   - Fixes several "reorg" bugs, some of which affected plugins.
@@ -24212,7 +24223,7 @@ now has all the find/change capability of pattern matching languages like
 Snobol and Icon, just by using the capabilities of the plain Python language.
 Moreover, Leo can deliver these capabilities interactively or not depending
 which buttons you push in Leo's Find/Change panel.</t>
-<t tx="edream.110603190322.8">Undoing Change All cleared the body pane.
+<t tx="edream.110603190322.8">Undoing Change All cleared the body pane or the headline pane.
 
 The fix was simple: call setUndoParams instead of setUndoTypingParams in batchChange.</t>
 <t tx="edream.110603190322.9"></t>
@@ -24318,5 +24329,26 @@ script and the following happens:
 Presto!  Leo is ready for a script search.</t>
 <t tx="edream.111803060643"></t>
 <t tx="edream.111803062437"></t>
+<t tx="edream.112303173638">@nocolor
+
+New in version 4.1: On startup, Leo looks for two arguments of the form --script scriptFile.  If found, Leo enters batch mode.
+
+In batch mode Leo does not show any windows.  Leo assumes the scriptFile contains a Python script and executes the contents of that file using Leo's Execute Script command.  By default, Leo sends all output to Leo's log pane to the console window.  Scripts in the scriptFile may disable or enable this output by calling app.log.disable() or app.log.enable()
+
+Scripts in the scriptFile may execute any of Leo's commands except the Edit Body and Edit Headline commands.  Those commands require interaction with the user.
+
+For example, the following batch script reads a Leo file and prints all the headlines in that file.
+
+@color
+from leoGlobals import *
+c = app.log.c
+path = r"c:\prog\test\myLeoFile.leo"
+app.log.disable() # disable reading messages while opening the file
+flag,newFrame = openWithFileName(path)
+app.log.enable() # re-enable the log.
+c = newFrame.c ; root = c.rootVnode()
+while v:
+	print v.headString()
+	v = v.threadNext()</t>
 </tnodes>
 </leo_file>

@@ -34254,7 +34254,7 @@ app.searchDict["continue"] = "true" # Allow change all to continue.</t>
 
 from leoGlobals import *
 
-# print "batchScript.py batchMode:", app.batchMode
+print "batchScript.py log:", app.log
 
 disable = true
 
@@ -34267,6 +34267,7 @@ path = r"c:\prog\leoCVS\leo\plugins\leoPlugins.leo"
 es(path)
 # trace(path)
 flag,frame = openWithFileName(path)
+print "batchScript.py log:", app.log
 
 if disable:
 	if app.batchMode:
