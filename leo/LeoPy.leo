@@ -2,7 +2,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="2083" clone_windows="0"/>
 <globals body_outline_ratio="0.5">
-	<global_window_position top="0" left="204" height="27" width="71"/>
+	<global_window_position top="0" left="176" height="27" width="71"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences allow_rich_text="0">
@@ -13,7 +13,8 @@
 </find_panel_settings>
 <vnodes>
 <v t="T1"><vh>Diary</vh>
-<v><vh>Sept 2002</vh>
+<v a="E"><vh>Sept 2002</vh>
+<v><vh>9/3 Experimented with CVS $Revision$ keyword in About box.</vh></v>
 <v><vh>9/3 Added Find Matching Bracket command</vh></v>
 <v><vh>9/3 Added shortcuts for Read/Write @file Nodes commands</vh></v>
 <v><vh>9/2</vh>
@@ -4717,7 +4718,7 @@
 <v t="T2038"><vh>undoSortSiblings</vh></v>
 </v>
 </v>
-<v t="T2039"><vh>@file leoUtils.py</vh>
+<v t="T2039" a="E"><vh>@file leoUtils.py</vh>
 <v t="T680" a="C"><vh>@language and @comment directives</vh>
 <v t="T395" a="C"><vh>set_delims_from_language</vh></v>
 <v t="T681" a="C"><vh>set_delims_from_string</vh></v>
@@ -17772,7 +17773,9 @@ def finishCreate (self):
 	
 	# Don't use triple-quoted strings or continued strings here.
 	# Doing so would add unwanted leading tabs.
-	version = "leo.py 3.5, August 14, 2002\n\n"
+	ver = "$Revision$"
+	build = ver[10:-1] # Strip off "$Reversion" and "$"
+	version = "leo.py 3.5, Build " + build + ", September 3, 2002\n\n"
 	copyright = (
 		"Copyright 1999-2002 by Edward K. Ream\n" +
 		"All Rights Reserved\n" +
@@ -21518,7 +21521,7 @@ def OnConvertAllTabs(self,event=None):
 <t tx="T1283">def OnFindMatchingBracket (self,event=None):
 	
 	c = self ; body = c.body
-	brackets = "()[]{}"
+	brackets = "()[]{}&lt;&gt;"
 	ch1=body.get("insert -1c")
 	ch2=body.get("insert")
 
@@ -21534,17 +21537,21 @@ def OnConvertAllTabs(self,event=None):
 	if index2:
 		if body.compare(index,"&lt;=",index2):
 			setTextSelection(self.body,index,index2+"+1c")
+			body.mark_set("insert",index2+"+1c")
+			body.see(index2+"+1c")
 		else:
 			setTextSelection(self.body,index2,index+"+1c")
+			body.mark_set("insert",index2)
+			body.see(index2)
 	else:
 		es("unmatched " + `ch`)
 	
 	return "break"</t>
-<t tx="T1284"># Test  unmatched)
+<t tx="T1284"># Test  unmatched())
 def findMatchingBracket(self,ch,body,index):
 
-	open_brackets  = "([{"
-	close_brackets = ")]}"
+	open_brackets  = "([{&lt;"
+	close_brackets = ")]}&gt;"
 	brackets = open_brackets + close_brackets
 	matching_brackets = close_brackets + open_brackets
 	forward = ch in open_brackets
@@ -21569,7 +21576,7 @@ def findMatchingBracket(self,ch,body,index):
 		index = body.index(index)
 # Test  (
 # ([(x){y}]))
-# Test  (x)(unmatched</t>
+# Test  ((x)(unmatched</t>
 <t tx="T1285">def OnIndent(self,event=None):
 
 	self.commands.indentBody()

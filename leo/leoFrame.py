@@ -1959,7 +1959,7 @@ class LeoFrame:
 	def OnFindMatchingBracket (self,event=None):
 		
 		c = self ; body = c.body
-		brackets = "()[]{}"
+		brackets = "()[]{}<>"
 		ch1=body.get("insert -1c")
 		ch2=body.get("insert")
 	
@@ -1975,8 +1975,12 @@ class LeoFrame:
 		if index2:
 			if body.compare(index,"<=",index2):
 				setTextSelection(self.body,index,index2+"+1c")
+				body.mark_set("insert",index2+"+1c")
+				body.see(index2+"+1c")
 			else:
 				setTextSelection(self.body,index2,index+"+1c")
+				body.mark_set("insert",index2)
+				body.see(index2)
 		else:
 			es("unmatched " + `ch`)
 		
@@ -1987,8 +1991,8 @@ class LeoFrame:
 	# Test  unmatched())
 	def findMatchingBracket(self,ch,body,index):
 	
-		open_brackets  = "([{"
-		close_brackets = ")]}"
+		open_brackets  = "([{<"
+		close_brackets = ")]}>"
 		brackets = open_brackets + close_brackets
 		matching_brackets = close_brackets + open_brackets
 		forward = ch in open_brackets
