@@ -3527,6 +3527,7 @@ class baseNewDerivedFile(oldDerivedFile):
         at.root_seen = False # True: root vnode has been handled in this file.
         at.tnodeList = [] ; at.tnodeListIndex = 0
         at.t = None ; at.tStack = []
+        at.updateWarningGiven = False
         
         # For reading thin derived files.
         at.lastThinNode = None ; at.thinNodeStack = [] # Used by createThinChild.
@@ -3717,6 +3718,7 @@ class baseNewDerivedFile(oldDerivedFile):
         at.leadingWs = ""
         at.root = p
         at.rootSeen = False
+        at.updateWarningGiven = False
         
         # Stacked ivars...
         at.endSentinelStack = [endLeo] # We have already handled the @+leo sentinel.
@@ -4102,7 +4104,9 @@ class baseNewDerivedFile(oldDerivedFile):
                     at.t.setDirty() # Mark the node dirty.  Ancestors will be marked dirty later.
                     at.c.setChanged(True)
                 else:
-                    g.es("Warning: updating changed text",color="blue")
+                    if not at.updateWarningGiven:
+                        at.updateWarningGiven = True
+                        g.es("Warning: updating changed text",color="blue")
                     #g.es("old...\n%s\n" % old)
                     #g.es("new...\n%s\n" % s)
                     # Just set the dirty bit. Ancestors will be marked dirty later.
