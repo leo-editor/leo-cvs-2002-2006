@@ -695,6 +695,7 @@ class colorizer:
 	def colorize(self,v,body,incremental=false):
 	
 		if self.enabled:
+			# print "colorize:incremental",`incremental`
 			self.incremental=incremental
 			flag,language = self.updateSyntaxColorer(v)
 			self.colorizeAnyLanguage(v,body,language,flag)
@@ -705,6 +706,7 @@ class colorizer:
 	def recolor_range(self,v,body,leading,trailing):
 		
 		if self.enabled:
+			# print "recolor_range:leading,trailing",`leading`,`trailing`
 			self.incremental=true
 			flag,language = self.updateSyntaxColorer(v)
 			self.colorizeAnyLanguage(
@@ -900,7 +902,8 @@ class colorizer:
 					self.lines = []
 					return
 				
-				if leading and trailing:
+				# Bug fix: 11/21/02: must test against None.
+				if leading != None and trailing != None:
 					# print "leading,trailing:",`leading`,`trailing`
 					leading_lines = leading
 					trailing_lines = trailing
@@ -999,8 +1002,13 @@ class colorizer:
 				
 				# Copy the trailing states from the old to the new lines.
 				j = old_len - trailing_lines
-				while j < old_len:
+				while j < old_len and j < len(old_states):
 					new_states.append(old_states[j])
+					j += 1
+					i += 1 # for the assert below.\
+				
+				while j < len(old_states):
+					new_states.append("unknown")
 					j += 1
 					i += 1 # for the assert below.
 					
@@ -1011,7 +1019,9 @@ class colorizer:
 					# Step 3 writes trailing_lines lines.
 				
 				# print "i:", i
-				# print "new_states:", str(new_states)
+				if 0:
+					for i in xrange(len(new_lines)):
+						print new_states[i],new_lines[i]
 				#@-body
 				#@-node:3::<< initialize new states >>
 

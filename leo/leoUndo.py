@@ -639,16 +639,11 @@ class undoer:
 				# selectVnode causes recoloring, so avoid if possible.
 				if current != u.v:
 					c.selectVnode(u.v) ## Optimize this away??
-				if u.leading == None:
-					print "**** Non-incremental redo should never happen! *****"
-					u.v.setBodyStringOrPane(u.newText)
-					c.tree.recolor(u.v)
-				else:
-					self.undoRedoText(
-						u.v,u.leading,u.trailing,
-						u.newMiddleLines,u.oldMiddleLines,
-						u.newNewlines,u.oldNewlines,
-						tag="redo")
+				self.undoRedoText(
+					u.v,u.leading,u.trailing,
+					u.newMiddleLines,u.oldMiddleLines,
+					u.newNewlines,u.oldNewlines,
+					tag="redo")
 				if u.newSel:
 					start,end=u.newSel
 					setTextSelection (c.frame.body,start,end)
@@ -893,16 +888,11 @@ class undoer:
 				# selectVnode causes recoloring, so don't do this unless needed.
 				if current != u.v:
 					c.selectVnode(u.v) ## Optimize this away??
-				if u.leading == None:
-					print "**** Non-incremental undo should never happen! *****"
-					u.v.setBodyStringOrPane(u.oldText)
-					c.tree.recolor(u.v,incremental=false)
-				else:
-					self.undoRedoText(
-						u.v,u.leading,u.trailing,
-						u.oldMiddleLines,u.newMiddleLines,
-						u.oldNewlines,u.newNewlines,
-						tag="undo")
+				self.undoRedoText(
+					u.v,u.leading,u.trailing,
+					u.oldMiddleLines,u.newMiddleLines,
+					u.oldNewlines,u.newNewlines,
+					tag="undo")
 				if u.oldSel:
 					start,end=u.oldSel
 					setTextSelection (c.frame.body,start,end)
@@ -1158,6 +1148,7 @@ class undoer:
 		#@-node:3::<< Get textResult from the Tk.Text widget >>
 
 		if textResult == result:
+			# print "incremental undo:",`leading`,`trailing`
 			c.tree.recolor_range(v,leading,trailing)
 		else: # 11/19/02: # Rewrite the pane and do a full recolor.
 			if self.debug_print:
@@ -1172,6 +1163,7 @@ class undoer:
 				#@-body
 				#@-node:4::<< print mismatch trace >>
 
+			# print"non-incremental undo"
 			v.setBodyStringOrPane(result)
 	#@-body
 	#@-node:5::undoRedoText
