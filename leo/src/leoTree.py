@@ -358,7 +358,11 @@ class baseLeoTree:
 		#@+node:1::<< configure the text depending on state >>
 		#@+body
 		if v == self.currentVnode:
-			self.setDisabledLabelState(v) # selected, disabled
+			# trace("editVnode",self.editVnode)
+			if v == self.editVnode:
+				self.setNormalLabelState(v) # 7/7/03
+			else:
+				self.setDisabledLabelState(v) # selected, disabled
 		else:
 			self.setUnselectedLabelState(v) # unselected
 		#@-body
@@ -482,16 +486,24 @@ class baseLeoTree:
 		return last
 	#@-body
 	#@-node:11::lastVisible
-	#@+node:12::redraw , force_redraw, redraw_now, idle_redraw, idle_second_redraw
+	#@+node:12::Drawing routines (tree)...
+	#@+node:1::redraw
 	#@+body
 	# Calling redraw inside c.beginUpdate()/c.endUpdate() does nothing.
 	# This _is_ useful when a flag is passed to c.endUpdate.
+	
 	def redraw (self,event=None):
+		
 		if self.updateCount == 0 and not self.redrawScheduled:
 			# stat() # print "tree.redraw"
 			self.redrawScheduled = true
 			self.canvas.after_idle(self.idle_redraw)
 			
+	
+	#@-body
+	#@-node:1::redraw
+	#@+node:2::force_redraw
+	#@+body
 	# Schedules a redraw even if inside beginUpdate/endUpdate
 	def force_redraw (self):
 		# print "tree.force_redraw"
@@ -499,18 +511,28 @@ class baseLeoTree:
 			self.redrawScheduled = true
 			self.canvas.after_idle(self.idle_redraw)
 			
+	
+	#@-body
+	#@-node:2::force_redraw
+	#@+node:3::redraw_now
+	#@+body
 	# Redraws immediately: used by Find so a redraw doesn't mess up selections.
 	# It is up to the caller to ensure that no other redraws are pending.
 	def redraw_now (self):
 	
-		# print "tree.redraw_now: ", self.redrawScheduled
+		# trace(`self.redrawScheduled`)
 		self.idle_redraw()
-	
+	#@-body
+	#@-node:3::redraw_now
+	#@+node:4::idle_redraw
+	#@+body
 	def idle_redraw (self):
 	
 		frame = self.commands.frame
 		if frame not in app().windowList or app().quitting:
 			return
+			
+		# trace("*" * 40)
 	
 		self.expandAllAncestors(self.currentVnode)
 		oldcursor = self.canvas['cursor']
@@ -536,8 +558,13 @@ class baseLeoTree:
 	
 		self.canvas['cursor'] = oldcursor
 		self.redrawScheduled = false
-		
+	#@-body
+	#@-node:4::idle_redraw
+	#@+node:5::idle_second_redraw
+	#@+body
 	def idle_second_redraw (self):
+		
+		# trace()
 			
 		# Erase and redraw the entire tree the SECOND time.
 		# This ensures that all visible nodes are allocated.
@@ -551,7 +578,8 @@ class baseLeoTree:
 		if self.trace:
 			print "idle_second_redraw allocated:",self.redrawCount, self.allocatedNodes
 	#@-body
-	#@-node:12::redraw , force_redraw, redraw_now, idle_redraw, idle_second_redraw
+	#@-node:5::idle_second_redraw
+	#@-node:12::Drawing routines (tree)...
 	#@+node:13::setLineHeight
 	#@+body
 	def setLineHeight (self,font):
@@ -763,7 +791,7 @@ class baseLeoTree:
 					self.editLabel(v)
 				else:
 					self.undimEditLabel()
-					self.canvas.focus_set()
+					set_focus(self.canvas)
 			else:
 				self.select(v)
 				if v.t.insertSpot != None: # 9/1/02
@@ -771,7 +799,7 @@ class baseLeoTree:
 					c.body.see(v.t.insertSpot)
 				else:
 					c.body.mark_set("insert","1.0")
-				c.body.focus_force()
+				set_focus(c.body)
 			
 			self.active = true
 			#@-body
@@ -796,7 +824,7 @@ class baseLeoTree:
 	
 		self.active = true
 		self.select(v)
-		self.canvas.focus_set() # This is safe.
+		set_focus(self.canvas) # This is safe.
 		self.redraw()
 	#@-body
 	#@-node:2::OnBoxClick
@@ -1707,7 +1735,7 @@ class baseLeoTree:
 	
 		# Make certain we have focus so we know when we lose it.
 		# I think this is OK for all OSes.
-		menu.focus_set()
+		set_focus(menu)
 	#@-body
 	#@-node:4::showPopupMenu
 	#@-node:13::tree.OnPopup & allies
@@ -1849,7 +1877,7 @@ class baseLeoTree:
 	def abortEditLabelCommand (self):
 		
 		v = self.currentVnode
-		
+		# trace(v)
 		if self.revertHeadline and v.edit_text() and v == self.editVnode:
 			
 			# trace(`self.revertHeadline`)
@@ -1889,17 +1917,13 @@ class baseLeoTree:
 			self.endEditLabel()
 			self.revertHeadline = None
 			
+		self.editVnode = v # 7/7/03.
+	
 		# Start editing
 		if v and v.edit_text():
 			# trace(`v`)
 			self.setNormalLabelState(v)
-			v.edit_text().tag_remove("sel","1.0","end")
-			v.edit_text().tag_add("sel","1.0","end")
-			v.edit_text().focus_force()
-			self.editVnode = v
-			self.revertHeadline = v.headString() # 9/24/02
-		else:
-			self.editVnode = None
+			self.revertHeadline = v.headString()
 	#@-body
 	#@-node:3::editLabel
 	#@+node:4::endEditLabel & endEditLabelCommand
@@ -1909,23 +1933,25 @@ class baseLeoTree:
 	def endEditLabel (self):
 	
 		v = self.editVnode
+		# trace(v)
 		if v and v.edit_text():
 			self.setUnselectedLabelState(v)
 			self.editVnode = None
 		if v: # Bug fix 10/9/02: also redraw ancestor headlines.
 			# 3/26/03: changed redraw_now to force_redraw.
 			self.force_redraw() # force a redraw of joined and ancestor headlines.
-		self.commands.body.focus_force() # 10/14/02
+		set_focus(self.commands.body) # 10/14/02
 			
 	def endEditLabelCommand (self):
 	
 		v = self.editVnode
+		# trace(v)
 		if v and v.edit_text():
 			self.select(v)
 		if v: # Bug fix 10/9/02: also redraw ancestor headlines.
 			# 3/26/03: changed redraw_now to force_redraw.
 			self.force_redraw() # force a redraw of joined headlines.
-		self.commands.body.focus_force() # 10/14/02
+		set_focus(self.commands.body) # 10/14/02
 	#@-body
 	#@-node:4::endEditLabel & endEditLabelCommand
 	#@+node:5::tree.expandAllAncestors
@@ -1977,7 +2003,7 @@ class baseLeoTree:
 	
 	def select (self,v,updateBeadList=true):
 		
-		# if self.trace: print "tree.select",`v`
+		# trace(v)
 	
 		
 		#@<< define vars and stop editing >>
@@ -2091,7 +2117,8 @@ class baseLeoTree:
 		self.currentVnode = v
 		self.setSelectedLabelState(v)
 		self.scanForTabWidth(v) # 9/13/02 #GS I believe this should also get into the select1 hook
-		self.commands.body.focus_set()
+		set_focus(self.commands.body)
+		
 		#@-body
 		#@-node:4::<< set the current node and redraw >>
 
@@ -2104,6 +2131,7 @@ class baseLeoTree:
 	#@+body
 	def setNormalLabelState (self,v): # selected, editing
 		if v and v.edit_text():
+			# trace(v)
 			
 			#@<< set editing headline colors >>
 			#@+node:1::<< set editing headline colors >>
@@ -2113,34 +2141,30 @@ class baseLeoTree:
 			bg   = config.getWindowPref("headline_text_editing_background_color")
 			selfg = config.getWindowPref("headline_text_editing_selection_foreground_color")
 			selbg = config.getWindowPref("headline_text_editing_selection_background_color")
-			if fg and bg and selfg and selbg:
-				try:
-					v.edit_text().configure(state="normal",highlightthickness=1,
-						selectforeground=selfg,selectbackground=selbg,fg=fg, bg=bg)
-					return
-				except:
-					es_exception()
-			elif selfg and selbg:
-				try:
-					v.edit_text().configure(state="normal",highlightthickness=1,
-						selectforeground=selfg,selectbackground=selbg,fg="black",bg="white")
-					return
-				except:
-					es_exception()
-			elif fg and bg:
-				try:
-					v.edit_text().configure(state="normal",highlightthickness=1,fg=fg,bg=bg)
-					return
-				except:
-					es_exception()
-					
-			v.edit_text().configure(state="normal",highlightthickness=1,fg="black",bg="white")
+			
+			if not fg or not bg:
+				fg,bg = "black","white"
+			
+			try:
+				if selfg and selbg:
+					v.edit_text().configure(
+						selectforeground=selfg,selectbackground=selbg,
+						state="normal",highlightthickness=1,fg=fg,bg=bg)
+				else:
+					v.edit_text().configure(
+						state="normal",highlightthickness=1,fg=fg,bg=bg)
+			except:
+				es_exception()
 			#@-body
 			#@-node:1::<< set editing headline colors >>
 
+			v.edit_text().tag_remove("sel","1.0","end")
+			v.edit_text().tag_add("sel","1.0","end")
+			set_focus(v.edit_text())
 	
 	def setDisabledLabelState (self,v): # selected, disabled
 		if v and v.edit_text():
+			# trace(v)
 			
 			#@<< set selected, disabled headline colors >>
 			#@+node:2::<< set selected, disabled headline colors >>
@@ -2148,14 +2172,15 @@ class baseLeoTree:
 			config = app().config
 			fg = config.getWindowPref("headline_text_selected_foreground_color")
 			bg = config.getWindowPref("headline_text_selected_background_color")
-			if fg and bg:
-				try:
-					v.edit_text().configure(state="disabled",highlightthickness=0,fg=fg, bg=bg)
-					return
-				except:
-					es_exception()
 			
-			v.edit_text().configure(state="disabled",highlightthickness=0,fg="black",bg="gray80")
+			if not fg or not bg:
+				fg,bg = "black","gray80"
+			
+			try:
+				v.edit_text().configure(
+					state="disabled",highlightthickness=0,fg=fg,bg=bg)
+			except:
+				es_exception()
 			#@-body
 			#@-node:2::<< set selected, disabled headline colors >>
 
@@ -2165,6 +2190,7 @@ class baseLeoTree:
 	
 	def setUnselectedLabelState (self,v): # not selected.
 		if v and v.edit_text():
+			# trace(v)
 			
 			#@<< set unselected headline colors >>
 			#@+node:3::<< set unselected headline colors >>
@@ -2172,14 +2198,15 @@ class baseLeoTree:
 			config = app().config
 			fg = config.getWindowPref("headline_text_unselected_foreground_color")
 			bg = config.getWindowPref("headline_text_unselected_background_color")
-			if fg and bg:
-				try:
-					v.edit_text().configure(state="disabled",highlightthickness=0,fg=fg, bg=bg)
-					return
-				except:
-					es_exception()
-					
-			v.edit_text().configure(state="disabled",highlightthickness=0,fg="black", bg="white")
+			
+			if not fg or not bg:
+				fg,bg = "black","white"
+			
+			try:
+				v.edit_text().configure(
+					state="disabled",highlightthickness=0,fg=fg,bg=bg)
+			except:
+				es_exception()
 			#@-body
 			#@-node:3::<< set unselected headline colors >>
 	#@-body
