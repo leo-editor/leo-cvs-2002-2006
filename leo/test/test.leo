@@ -1009,22 +1009,34 @@ marks="ekr.20050106081120.1,"><vh>@thin ../src/leoTest.py</vh></v>
 <v t="ekr.20050105094311"><vh>@test atFile.replaceTargetFileIfDifferent (different)</vh></v>
 <v t="ekr.20050105095743"><vh>@test atFile.replaceTargetFileIfDifferent (identical)</vh></v>
 <v t="ekr.20050105100227"><vh>@test atFile.replaceTargetFileIfDifferent (no target file)</vh></v>
-<v t="ekr.20050105112238"><vh>@suite plugins tests</vh>
-<v t="ekr.20050105153808"><vh> To do</vh></v>
-<v t="ekr.20050105141608"><vh>Notes</vh>
-<v t="ekr.20050105142314.1"><vh>spellpyx</vh></v>
-<v t="ekr.20050105142314.4"><vh>table</vh></v>
-<v t="ekr.20050105142314.5"><vh>xsltWithNodes</vh></v>
+<v t="ekr.20050106080304"><vh>@suite run all test routines</vh>
+<v t="ekr.20050106123646"><vh>unused</vh>
+<v t="ekr.20050106094854"><vh>class commanderTestCase</vh>
+<v t="ekr.20050106094854.1"><vh>__init__</vh></v>
+<v t="ekr.20050106094854.2"><vh> fail</vh></v>
+<v t="ekr.20050106094854.3"><vh>setUp</vh></v>
+<v t="ekr.20050106094854.4"><vh>tearDown</vh></v>
+<v t="ekr.20050106094854.5"><vh>runTest</vh></v>
+<v t="ekr.20050106094854.6"><vh>shortDescription</vh></v>
 </v>
-<v t="ekr.20050105112249.1"><vh>makePluginsTestSuite</vh></v>
-<v t="ekr.20050105112249.2"><vh>class pluginTestCase</vh>
-<v t="ekr.20050105112249.3"><vh>__init__</vh></v>
-<v t="ekr.20050105112249.4"><vh>fail</vh></v>
-<v t="ekr.20050105112249.6"><vh>runTest</vh></v>
-<v t="ekr.20050105112249.7"><vh>setUp</vh></v>
-<v t="ekr.20050105112249.8"><vh>shortDescription</vh></v>
-<v t="ekr.20050105112249.9"><vh>tearDown</vh></v>
+<v t="ekr.20050106094747"><vh>addTestRoutinesInCommanderToSuite</vh>
+<v t="ekr.20050106095223"><vh>findTestsInCommander</vh></v>
 </v>
+</v>
+<v t="ekr.20050106080318.1" a="E"><vh>&lt;&lt; class testRoutineTestCase &gt;&gt;</vh>
+<v t="ekr.20050106080318.2"><vh>__init__</vh></v>
+<v t="ekr.20050106080318.3"><vh> fail</vh></v>
+<v t="ekr.20050106080318.4"><vh>setUp</vh></v>
+<v t="ekr.20050106080318.5"><vh>tearDown</vh></v>
+<v t="ekr.20050106080318.6"><vh>runTest</vh></v>
+<v t="ekr.20050106080318.7"><vh>shortDescription</vh></v>
+</v>
+<v t="ekr.20050106080318"><vh>addTestRoutinesInModuleToSuite</vh></v>
+<v t="ekr.20050106081120.2" a="E"><vh>findTestsInModule</vh>
+<v t="ekr.20050106124235"><vh>&lt;&lt; print classes, methods &amp; functions &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20050106124624"><vh>getAllLeoModules</vh></v>
+<v t="ekr.20050106133147"><vh>removeLeadingWs</vh></v>
 </v>
 </v>
 <v t="ekr.20040712101754"><vh>Unit Tests</vh>
@@ -1482,21 +1494,7 @@ marks="ekr.20050106081120.1,"><vh>@thin ../src/leoTest.py</vh></v>
 </v>
 <v t="ekr.20040707081532.1"><vh>Do @test</vh></v>
 </v>
-<v t="ekr.20041126055818.2"><vh>pyclbr module (parses python)</vh></v>
-<v t="ekr.20041225051328"><vh>Tests of at_view plugin</vh>
-<v t="ekr.20041225051328.1"><vh>@clip</vh></v>
-<v t="ekr.20041231105348"><vh>Test of @strip</vh>
-<v t="ekr.20041225051328.2"><vh>@file c:/prog/test/atStripTest.txt</vh>
-<v t="ekr.20041231105200"><vh>Node 1</vh></v>
-<v t="ekr.20041231105200.1"><vh>Node 2</vh></v>
-<v t="ekr.20041231105200.2"><vh>@strip</vh></v>
-</v>
-</v>
-<v t="ekr.20041225051445"><vh>@view c:\prog\leoCVS\leo\config\leoConfig.txt</vh></v>
-</v>
-<v t="ekr.20040909122141" tnodeList="ekr.20040909122141,ekr.20040909122141.1"><vh>@nosent c:\prog\test\niceNosentTest.txt</vh>
-<v t="ekr.20040909122141.1"><vh>spam</vh></v>
-</v>
+<v t="ekr.20050107093251" a="TV"><vh>Unit testing for plugins (do this separately!)</vh>
 <v t="ekr.20050105112238"><vh>@suite plugins tests</vh>
 <v t="ekr.20050105153808"><vh> To do</vh></v>
 <v t="ekr.20050105141608"><vh>Notes</vh>
@@ -1514,47 +1512,21 @@ marks="ekr.20050106081120.1,"><vh>@thin ../src/leoTest.py</vh></v>
 <v t="ekr.20050105112249.9"><vh>tearDown</vh></v>
 </v>
 </v>
-<v t="ekr.20040707210849"><vh>doTests...</vh>
-<v t="ekr.20040707073029"><vh>class generalTestCase</vh>
-<v t="ekr.20040707073029.1"><vh>__init__</vh></v>
-<v t="ekr.20040809073623"><vh> fail</vh></v>
-<v t="ekr.20040707073029.2"><vh>setUp</vh></v>
-<v t="ekr.20040707073029.3"><vh>tearDown</vh></v>
-<v t="ekr.20040707073029.4"><vh>runTest</vh></v>
-<v t="ekr.20040707093235"><vh>shortDescription</vh></v>
 </v>
-<v t="ekr.20040707213238"><vh>makeTestSuite</vh></v>
-<v t="ekr.20040707072447"><vh>makeTestCase</vh></v>
-</v>
-<v t="ekr.20050106081120.1" a="M"><vh>test_dummy &amp; dummyTestCase</vh></v>
-<v t="ekr.20050106080304" a="TV"><vh>@suite run all test routines</vh>
-<v t="ekr.20050106123646"><vh>unused</vh>
-<v t="ekr.20050106094854"><vh>class commanderTestCase</vh>
-<v t="ekr.20050106094854.1"><vh>__init__</vh></v>
-<v t="ekr.20050106094854.2"><vh> fail</vh></v>
-<v t="ekr.20050106094854.3"><vh>setUp</vh></v>
-<v t="ekr.20050106094854.4"><vh>tearDown</vh></v>
-<v t="ekr.20050106094854.5"><vh>runTest</vh></v>
-<v t="ekr.20050106094854.6"><vh>shortDescription</vh></v>
-</v>
-<v t="ekr.20050106094747"><vh>addTestRoutinesInCommanderToSuite</vh>
-<v t="ekr.20050106095223"><vh>findTestsInCommander</vh></v>
+<v t="ekr.20041126055818.2"><vh>pyclbr module (parses python)</vh></v>
+<v t="ekr.20041225051328"><vh>Tests of at_view plugin</vh>
+<v t="ekr.20041225051328.1"><vh>@clip</vh></v>
+<v t="ekr.20041231105348"><vh>Test of @strip</vh>
+<v t="ekr.20041225051328.2"><vh>@file c:/prog/test/atStripTest.txt</vh>
+<v t="ekr.20041231105200"><vh>Node 1</vh></v>
+<v t="ekr.20041231105200.1"><vh>Node 2</vh></v>
+<v t="ekr.20041231105200.2"><vh>@strip</vh></v>
 </v>
 </v>
-<v t="ekr.20050106080318.1" a="E"><vh>&lt;&lt; class testRoutineTestCase &gt;&gt;</vh>
-<v t="ekr.20050106080318.2"><vh>__init__</vh></v>
-<v t="ekr.20050106080318.3"><vh> fail</vh></v>
-<v t="ekr.20050106080318.4"><vh>setUp</vh></v>
-<v t="ekr.20050106080318.5"><vh>tearDown</vh></v>
-<v t="ekr.20050106080318.6"><vh>runTest</vh></v>
-<v t="ekr.20050106080318.7"><vh>shortDescription</vh></v>
+<v t="ekr.20041225051445"><vh>@view c:\prog\leoCVS\leo\config\leoConfig.txt</vh></v>
 </v>
-<v t="ekr.20050106080318"><vh>addTestRoutinesInModuleToSuite</vh></v>
-<v t="ekr.20050106081120.2" a="E"><vh>findTestsInModule</vh>
-<v t="ekr.20050106124235"><vh>&lt;&lt; print classes, methods &amp; functions &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20050106124624"><vh>getAllLeoModules</vh></v>
-<v t="ekr.20050106133147"><vh>removeLeadingWs</vh></v>
+<v t="ekr.20040909122141" tnodeList="ekr.20040909122141,ekr.20040909122141.1"><vh>@nosent c:\prog\test\niceNosentTest.txt</vh>
+<v t="ekr.20040909122141.1"><vh>spam</vh></v>
 </v>
 </vnodes>
 <tnodes>
@@ -2176,7 +2148,7 @@ import leoGlobals as g
 print g.app.config.redirect_execute_script_output_to_log_pane</t>
 <t tx="EKR.20040627103732">@ignore</t>
 <t tx="EKR.20040627103801"></t>
-<t tx="EKR.20040627103902" lineYOffset="4b032e" icons="5d7100287d7101285504747970657102550466696c65710355047870616471044b02550577686572657105550a6265666f726549636f6e71066803582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286802680368084afdffffff6803582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6805550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e"></t>
+<t tx="EKR.20040627103902" lineYOffset="4b032e" icons="5d7100287d710128550577686572657102550a6265666f726549636f6e710355047870616471044b025504747970657105550466696c6571066806582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286805680668084afdffffff6806582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6802550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e"></t>
 <t tx="EKR.20040627121836">import leoGlobals as g
 
 c = g.top() ; p = c.currentPosition()
@@ -2307,7 +2279,7 @@ for p in c.rootPosition().allNodes_iter():
 s = "%d nodes" % count
 print s ; g.es(s)</t>
 <t tx="ekr.20040312101720"></t>
-<t tx="ekr.20040317101155" lineYOffset="4b032e" icons="5d7100287d710128550577686572657102550a6265666f726549636f6e710355047870616471044b025504747970657105550466696c65710668065834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286805680668084afdffffff68065834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6802550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">import leoGlobals as g
+<t tx="ekr.20040317101155" lineYOffset="4b032e" icons="5d7100287d7101285504747970657102550466696c65710355047870616471044b02550577686572657105550a6265666f726549636f6e710668035834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286802680368084afdffffff68035834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6805550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">import leoGlobals as g
 
 c = g.top()
 
@@ -2769,53 +2741,12 @@ try:
 except:
     import traceback
     traceback.print_exc()</t>
-<t tx="ekr.20040707072447">def makeTestCase (c,p):
-
-    if p.bodyString().strip():
-        return generalTestCase(c,p)
-    else:
-        return None</t>
-<t tx="ekr.20040707073029">class generalTestCase(unittest.TestCase):
-
-    """Create a unit test from a snippet of code."""
-
-    @others</t>
-<t tx="ekr.20040707073029.1">def __init__ (self,c,p):
-
-     # Init the base class.
-    unittest.TestCase.__init__(self)
-
-    self.c = c
-    self.p = p.copy()
-</t>
-<t tx="ekr.20040707073029.2">def setUp (self):
-
-    c = self.c ; p = self.p
-
-    g.app.unitTesting = True
-    c.selectVnode(p)</t>
-<t tx="ekr.20040707073029.3">def tearDown (self):
-
-    g.app.unitTesting = False
-    # To do: restore the outline.</t>
-<t tx="ekr.20040707073029.4">def runTest (self):
-
-    c = self.c ; p = self.p
-    script = g.getScript(c,p).strip()
-    self.assert_(script)
-
-    # Now just execute the script.
-    # Let unit test handle any errors!
-    exec script + '\n' in {} # Use {} to get a pristine environment!</t>
 <t tx="ekr.20040707081532.1"># You can run all tests by selecting the Unit Test headline.
 
 import leoTest
 reload(leoTest)
 
 leoTest.doTests(all=False)</t>
-<t tx="ekr.20040707093235">def shortDescription (self):
-
-    return self.p.headString() + '\n'</t>
 <t tx="ekr.20040707104245"></t>
 <t tx="ekr.20040707110818">@ignore # Suppress @file reads/writes
 
@@ -2881,55 +2812,6 @@ Line 1
 #@-node:ekr.20040707141957.13:#@thin
 #@-leo
 last line 1: no newline</t>
-<t tx="ekr.20040707210849">def doTests(all):
-
-    c = g.top() ; p1 = p = c.currentPosition()
-
-    g.app.unitTestDict["fail"] = False
-
-    if all: theIter = c.all_positions_iter()
-    else:   theIter = p.self_and_subtree_iter()
-
-    changed = c.isChanged()
-    suite = unittest.makeSuite(unittest.TestCase)
-
-    for p in theIter:
-        if isTestNode(p):
-            test = makeTestCase(c,p)
-            if test: suite.addTest(test)
-        elif isSuiteNode(p):
-            test = makeTestSuite(c,p)
-            if test: suite.addTest(test)
-
-    # Verbosity: 1: print just dots.
-    unittest.TextTestRunner(verbosity=1).run(suite)
-
-    c.setChanged(changed) # Restore changed state.
-    c.selectVnode(p1) # N.B. Restore the selected node.</t>
-<t tx="ekr.20040707213238">@ This code executes the script in an @suite node.  This code assumes:
-- The script creates a one or more unit tests.
-- The script puts the result in g.app.scriptDict["suite"]
-@c
-
-def makeTestSuite (c,p):
-
-    """Create a suite of test cases by executing the script in an @suite node."""
-
-    h = p.headString()
-    script = g.getScript(c,p).strip()
-    if not script:
-        print "no script in %s" % h
-        return None
-
-    try:
-        exec script + '\n' in {}
-        suite = g.app.scriptDict.get("suite")
-        if not suite:
-            print "%s script did not set g.app.scriptDict" % h
-        return suite
-    except:
-        g.es_exception()
-        return None</t>
 <t tx="ekr.20040708135624">import leoGlobals as g
 import leoTest
 reload(leoTest)
@@ -9875,13 +9757,6 @@ import pdb ; pdb.set_trace()
 
 print "after"</t>
 <t tx="ekr.20040805102453"></t>
-<t tx="ekr.20040809073623">def fail (self):
-
-    """Mark a unit test as having failed."""
-
-    import leoGlobals as g
-
-    g.app.unitTestDict["fail"] = g.callerName(2)</t>
 <t tx="ekr.20040831095833"></t>
 <t tx="ekr.20040831095833.1">openFileDialog
 src\\leo.py</t>
@@ -11069,10 +10944,10 @@ if spellpyx:
         spellFrame.checkSpelling()</t>
 <t tx="ekr.20041121151002">@nocolor</t>
 <t tx="ekr.20041121151002.1">C:\prog\leoCVS\leo\plugins\leoPlugins.leo
-C:\prog\leoCVS\leo\doc\LeoDocs.leo
+C:\prog\leoCVS\leo\src\LeoPy.leo
 C:\prog\leoCVS\leo\test\test.leo
-C:\prog\leoCVS\leo\dist\leoDist.leo
-C:\prog\leoCVS\leo\src\LeoPy.leo</t>
+C:\prog\leoCVS\leo\doc\LeoDocs.leo
+C:\prog\leoCVS\leo\dist\leoDist.leo</t>
 <t tx="ekr.20041124063401"></t>
 <t tx="ekr.20041124144944">import os
 import sys
@@ -13005,18 +12880,24 @@ c = g.top() ; changed = c.isChanged() ; p1 = c.currentPosition()
 &lt;&lt; class testRoutineTestCase &gt;&gt;
 @others
 
-modules = getAllLeoModules()
-modules = ('leoTest',)
+if 1: # Scan all Leo modules _except_ leoTest.py.
+    modules = getAllLeoModules()
+else: # Scan just leoTest.py.
+    modules = ('leoTest',)
+
 g.app.unitTestDict["fail"] = False
 
 suite = unittest.makeSuite(unittest.TestCase)
 for module in modules:
     n = addTestRoutinesInModuleToSuite(module,suite)
-    print '%3d tests for %s' % (n,module)
+    if n:
+        plural = g.choose(n==1,'','s')
+        s = 'found %2d test routine%s for %s' % (n,plural,module)
+        print s ; g.es(s)
 
-if 0: # For @suite nodes.
+if 1: # For @suite nodes.  Better for unit testing.
     g.app.scriptDict['suite'] = suite
-else: # For script button nodes.
+else: # For script button nodes.  Good for testing.
     # Verbosity: 1: print just dots.
     unittest.TextTestRunner(verbosity=1).run(suite)
     c.setChanged(changed) # Restore changed state.
@@ -13066,26 +12947,10 @@ else: # For script button nodes.
     g.app.unitTesting = False</t>
 <t tx="ekr.20050106080318.6">def runTest (self):
     
-    f = self.f ; theClass = self.theClass
+    f = self.f ; name = f.__name__ ; theClass = self.theClass
 
-    if 1: # Use live objects.
-        if theClass:
-            # Create a subclass of f's original class.
-            class __dummyClass(theClass):
-                # Create a ctor with a known signature.
-                def __init__(self): pass
-            # Make f a method of the dummyClass with name 'f'.
-            # N.B. f is still a method of theClass, and must be called as such!
-            g.funcToMethod(f,__dummyClass,'f')
-            # Create an instance of __dummyClass and call it's f method.
-            obj = __dummyClass()
-            obj.f()
-        else:
-            f()
-        
-    else: # Use dead text.
-        # The present code assumes all leading whitespace is consistent.  Bad assumption!
-        name = f.__name__
+    if 1: # Use dead text to ensure a clean environment.
+        # The present code assumes all leading whitespace is consistent.
         code = removeLeadingWs(self.code)
         # The code is a def statement.  We concoct a call to the function or method.
         if theClass:
@@ -13096,19 +12961,32 @@ else: # For script button nodes.
         if self.verbose:
             g.trace('executing...\n\n%s' % s)
         
-        exec s in {} # Execute in pristine environment.</t>
+        exec s in {} # Execute s in pristine environment.
+        
+    else: # Use live objects.
+        if theClass:
+            # Create a subclass of f's original class.
+            class __dummyClass(theClass):
+                # Create a ctor with a known signature.
+                def __init__(self): pass
+            # Make f a method of the dummyClass with name 'f'.
+            # N.B. f is still a method of theClass, and must be called as such!
+            if 0: # Override the method with f's actual name.
+                g.funcToMethod(f,__dummyClass,name)
+                obj = __dummyClass()
+                f = getattr(obj,name)
+                f(obj)
+            else:
+                # Use the name 'f' for f's name.
+                g.funcToMethod(f,__dummyClass,'f')
+                # Create an instance of __dummyClass and call it's f method.
+                obj = __dummyClass()
+                obj.f()
+        else: # Execute a plain function.
+            f()</t>
 <t tx="ekr.20050106080318.7">def shortDescription (self):
 
     return 'test function',repr(self.f)</t>
-<t tx="ekr.20050106081120.1">def test_dummy():
-    import leoGlobals as g
-    g.trace()
-    # raise SyntaxError
-
-class dummyTestClass: # NOT a TestCase.
-    def test_one (self):
-        import leoGlobals as g
-        g.trace(self)</t>
 <t tx="ekr.20050106081120.2">def findTestsInModule (module,moduleName):
     
     toString = g.listToString
@@ -13241,5 +13119,6 @@ else:
 
     result = ''.join(result)
     return result</t>
+<t tx="ekr.20050107093251"></t>
 </tnodes>
 </leo_file>
