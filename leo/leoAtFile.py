@@ -483,8 +483,8 @@ class atFile:
 			
 				k = dict["path"]
 				
-				#@<< compute path from s[k:] >>
-				#@+node:1::<< compute path from s[k:] >>
+				#@<< compute relative path from s[k:] >>
+				#@+node:1::<< compute relative path from s[k:] >>
 				#@+body
 				j = i = k + len("@path")
 				i = skip_to_end_of_line(s,i)
@@ -496,9 +496,11 @@ class atFile:
 					(path[0]=='"' and path[-1] == '"') ):
 					path = path[1:-1]
 				path = string.strip(path)
-				path = os.path.join(loadDir,path)
+				
+				if 0: # 11/14/02: we want a _relative_ path, not an absolute path.
+					path = os.path.join(loadDir,path)
 				#@-body
-				#@-node:1::<< compute path from s[k:] >>
+				#@-node:1::<< compute relative path from s[k:] >>
 
 				if path and len(path) > 0:
 					base = getBaseDirectory() # returns "" on error.

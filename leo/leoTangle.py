@@ -3936,10 +3936,10 @@ class tangleCommands:
 					path = path[1:-1]
 				
 				dir = relative_path = string.strip(path)
-				dir = os.path.join(app().loadDir,dir) # EKR: 9/5/02
+				if 0: # 11/14/02: we want a _relative_ path, not an absolute path.
+					dir = os.path.join(app().loadDir,dir)
 				
 				# trace("dir: " + dir)
-				
 				#@-body
 				#@-node:1::<< compute dir and relative_path from s[k:] >>
 
