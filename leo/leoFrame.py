@@ -2082,8 +2082,9 @@ class LeoFrame:
 			if match_word(h,0,"@pythonscript"):
 				s = v.bodyString()
 				
-		#trace(`s`)
+		# trace(`s`)
 		if s and len(s) > 0:
+			s += '\n' # Make sure we end the script properly.
 			try:
 				exec(s,globals(),locals())
 			except:

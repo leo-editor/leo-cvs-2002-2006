@@ -155,6 +155,10 @@ def print_stack():
 # It would be very confusing to call this reloadAll.  In fact, this routine 
 # does no reloading at all.  You must understand that modules are reloaded 
 # _only_ as the result of a later call to import.
+# 
+# Actually, the more I think about it, the less useful this routine appears.  
+# It is easy enought to save LeoPy.leo and then reload it, and trying to do 
+# this kind of processing looks like asking for trouble...
 
 #@-at
 #@@c
