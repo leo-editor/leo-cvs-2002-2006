@@ -59,8 +59,10 @@ class baseFileCommands:
         self.fileDate = -1
         self.leo_file_encoding = g.app.config.new_leo_file_encoding
         # For reading
-        self.descendentUnknownAttributesDictList = []
+        self.descendentExpandedList = []
+        self.descendentMarksList = []
         self.fileFormatNumber = 0
+        self.descendentUnknownAttributesDictList = []
         self.ratio = 0.5
         self.fileBuffer = None ; self.fileIndex = 0
         self.currentVnodeStack = [] # A stack of vnodes giving the current position.
@@ -446,6 +448,15 @@ class baseFileCommands:
         self.getTag("</clone_windows>")
     #@nonl
     #@-node:ekr.20031218072017.3023:getCloneWindows
+    #@+node:ekr.20040701065235.1:getDescendentAttributes
+    def getDescendentAttributes (self,s,tag=""):
+        
+        nodeIndices = g.app.nodeIndices
+        gnxs = s.split(',')
+        result = [gnx for gnx in gnxs if len(gnx) > 0]
+        # g.trace(tag,result)
+        return result
+    #@-node:ekr.20040701065235.1:getDescendentAttributes
     #@+node:EKR.20040627114602:getDescendentUnknownAttributes
     def getDescendentUnknownAttributes (self,s):
         
@@ -571,6 +582,8 @@ class baseFileCommands:
         #@nl
         self.mFileName = c.mFileName
         self.tnodesDict = {}
+        self.descendentExpandedList = []
+        self.descendentMarksList = []
         self.descendentUnknownAttributesDictList = []
         ok = True
         c.loading = True # disable c.changed
@@ -620,20 +633,40 @@ class baseFileCommands:
         c.selectVnode(c.currentPosition()) # load body pane
         c.loading = False # reenable c.changed
         c.setChanged(c.changed) # Refresh the changed marker.
-        #@    << restore unknown attributes in descendent tnodes >>
-        #@+node:EKR.20040627120120:<< restore unknown attributes in descendent tnodes >>
+        #@    << restore attributes in descendent tnodes >>
+        #@+node:EKR.20040627120120:<< restore attributes in descendent tnodes >>
         for resultDict in self.descendentUnknownAttributesDictList:
             for gnx in resultDict.keys():
                 tref = self.canonicalTnodeIndex(gnx)
                 t = self.tnodesDict.get(tref)
-                if t:
-                    t.unknownAttributes = resultDict[gnx]
-                else:
-                    g.trace("can not find tnode: gnx = %s" % gnx,color="red")
+                if t: t.unknownAttributes = resultDict[gnx]
+                else: g.trace("can not find tnode: gnx = %s" % gnx,color="red")
+                    
+        marks = [] ; expanded = []
+        for gnx in self.descendentExpandedList:
+            t = self.tnodesDict.get(gnx)
+            if t: expanded.append(t)
+            else: g.trace("can not find tnode: gnx = %s" % gnx,color="red")
+            
+        for gnx in self.descendentMarksList:
+            t = self.tnodesDict.get(gnx)
+            if t: marks.append(t)
+            else: g.trace("can not find tnode: gnx = %s" % gnx,color="red")
+            
+        if marks or expanded:
+            for p in c.all_positions_iter():
+                if p.v.t in marks:
+                    p.setMarked()
+                    # g.trace("mark",str(p.headString()))
+                if p.v.t in expanded:
+                    p.expand()
+                    # g.trace("expand",str(p.headString()))
         #@nonl
-        #@-node:EKR.20040627120120:<< restore unknown attributes in descendent tnodes >>
+        #@-node:EKR.20040627120120:<< restore attributes in descendent tnodes >>
         #@nl
         self.descendentUnknownAttributesDictList = []
+        self.descendentExpandedList = []
+        self.descendentMarksList = []
         self.tnodesDict = {}
         return ok, self.ratio
     #@nonl
@@ -957,6 +990,12 @@ class baseFileCommands:
                 dict = self.getDescendentUnknownAttributes(s)
                 if dict:
                     self.descendentUnknownAttributesDictList.append(dict)
+            elif self.matchTag("expanded="): # New in 4.2
+                s = self.getDqString()
+                self.descendentExpandedList.extend(self.getDescendentAttributes(s,tag="expanded"))
+            elif self.matchTag("marks="): # New in 4.2
+                s = self.getDqString()
+                self.descendentMarksList.extend(self.getDescendentAttributes(s,tag="marks"))
             elif self.matchTag(">"):
                 break
             else: # New for 4.0: allow unknown attributes.
@@ -1415,6 +1454,31 @@ class baseFileCommands:
         self.put_in_dquotes(str(tnodes))
         self.put("/>") ; self.put_nl()
     #@-node:ekr.20031218072017.1971:putClipboardHeader
+    #@+node:ekr.20040701065235.2:putDescendentAttributes
+    def putDescendentAttributes (self,p):
+        
+        nodeIndices = g.app.nodeIndices
+    
+        # Create a list of all tnodes whose vnodes are marked or expanded
+        marks = [] ; expanded = []
+        for p in p.subtree_iter():
+            if p.isMarked() and not p in marks:
+                marks.append(p.copy())
+            if p.hasChildren() and p.isExpanded() and not p in expanded:
+                expanded.append(p.copy())
+                
+        for theList,tag in ((marks,"marks="),(expanded,"expanded=")):
+            if theList:
+                sList = []
+                for p in theList:
+                    gnx = p.v.t.fileIndex
+                    sList.append("%s," % nodeIndices.toString(gnx))
+                s = string.join(sList,'')
+                # g.trace(tag,[str(p.headString()) for p in theList])
+                self.put('\n' + tag)
+                self.put_in_dquotes(s)
+    #@nonl
+    #@-node:ekr.20040701065235.2:putDescendentAttributes
     #@+node:EKR.20040627113418:putDescendentUnknownAttributes
     def putDescendentUnknownAttributes (self,p):
     
@@ -1769,6 +1833,12 @@ class baseFileCommands:
     
         fc = self ; c = fc.c ; v = p.v
         isThin = p.isAtThinFileNode()
+        isIgnore = False
+        for p2 in p.self_and_parents_iter():
+            if p2.isAtIgnoreNode():
+                isIgnore = True ; break
+        isOrphan = p.isOrphan()
+        forceWrite = isIgnore or not isThin or (isThin and isOrphan)
     
         fc.put("<v")
         #@    << Put tnode index >>
@@ -1781,7 +1851,7 @@ class baseFileCommands:
                 fc.put(" t=") ; fc.put_in_dquotes("T" + str(v.t.fileIndex))
                 
             # g.trace(v.t)
-            if not isThin or p.isOrphan() or self.usingClipboard:
+            if forceWrite or self.usingClipboard:
                 v.t.setWriteBit() # 4.2: Indicate we wrote the body text.
         else:
             g.trace(v.t.fileIndex,v)
@@ -1824,9 +1894,10 @@ class baseFileCommands:
         if hasattr(v,"unknownAttributes"): # New in 4.0
             self.putUnknownAttributes(v)
             
-        if p.hasChildren() and isThin and not p.isOrphan() and not self.usingClipboard:
+        if p.hasChildren() and not forceWrite and not self.usingClipboard:
             # We put the entire tree when using the clipboard, so no need for this.
             self.putDescendentUnknownAttributes(p)
+            self.putDescendentAttributes(p)
         #@nonl
         #@-node:ekr.20040324082713:<< Put tnodeList and unKnownAttributes >>
         #@nl
@@ -1845,9 +1916,12 @@ class baseFileCommands:
     
         # New in 4.2: don't write child nodes of @file-thin trees (except when writing to clipboard)
         if p.hasChildren():
-            if isThin and p.isOrphan():
-                g.es("Writing entire tree for %s to outline" % p.headString(),color="blue")
-            if not isThin or p.isOrphan() or self.usingClipboard:
+            if isThin and forceWrite:
+                if isIgnore:
+                    g.es("Writing @ignore'd: %s" % p.headString(),color="blue")
+                else:
+                    g.es("Writing erroneous: %s" % p.headString(),color="blue")
+            if forceWrite or self.usingClipboard:
                 fc.put_nl()
                 # This optimization eliminates all "recursive" copies.
                 p.moveToFirstChild()
