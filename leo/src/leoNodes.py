@@ -436,7 +436,8 @@ class baseVnode (object):
 		
 		v = self
 	
-		print '-'*10,label,v
+		if label:
+			print '-'*10,label,v
 		print "_back   ",v.dumpLink(v._back)
 		print "_next   ",v.dumpLink(v._next)
 		print "_parent ",v.dumpLink(v._parent)
@@ -725,19 +726,6 @@ class baseVnode (object):
 		return ( self.statusBits & self.topBit ) != 0
 	#@nonl
 	#@-node:isTopBitSet
-	#@+node:isVisible
-	# Returns true if all parents are expanded.
-	
-	def isVisible (self):
-		
-		v = self.parent()
-		while v:
-			if not v.isExpanded():
-				return false
-			v = v.parent()
-		return true
-	#@nonl
-	#@-node:isVisible
 	#@+node:isVisited
 	def isVisited (self):
 	
@@ -813,7 +801,7 @@ class baseVnode (object):
 		return g.toEncodedString(s,"ascii") # Replaces non-ascii characters by '?'
 	#@nonl
 	#@-node:v.headString & v.cleanHeadString
-	#@+node:v.parents (new method in 4.2)
+	#@+node:v.directParents (new method in 4.2)
 	def directParents (self):
 		
 		"""(New in 4.2) Return a list of all direct parent vnodes of a vnode.
@@ -827,7 +815,7 @@ class baseVnode (object):
 		else:
 			return []
 	#@nonl
-	#@-node:v.parents (new method in 4.2)
+	#@-node:v.directParents (new method in 4.2)
 	#@+node:v.Link/Unlink/Insert methods (used by file read logic)
 	# These remain in 4.2: the file read logic calls these before creating positions.
 	#@nonl
@@ -986,7 +974,6 @@ class baseVnode (object):
 	
 		self.statusBits &= ~ self.markedBit
 		g.doHook("clear-mark",c=self.c,v=self)
-	#@nonl
 	#@-node:clearMarked
 	#@+node:clearOrphan
 	def clearOrphan (self):
@@ -1042,7 +1029,6 @@ class baseVnode (object):
 	def initMarkedBit (self):
 	
 		self.statusBits |= self.markedBit
-	#@nonl
 	#@-node:setMarked & initMarkedBit
 	#@+node:setOrphan
 	def setOrphan (self):
@@ -1361,9 +1347,8 @@ class position (object):
 		"""Return 0 if two postions are equivalent."""
 	
 		# Use p.equal if speed is crucial.
-		
 		p1 = self
-		
+	
 		if p2 is None: # Allow tests like "p == None"
 			if p1.v: return 1 # not equal
 			else:    return 0 # equal
@@ -1391,6 +1376,8 @@ class position (object):
 		N.B. Unlike __cmp__, p2 must not be None."""
 	
 		p1 = self
+		
+		# if g.app.trace: "equal",p1.v,p2.v
 	
 		# Check entire stack quickly.
 		# The stack contains vnodes, so this does not call p.__cmp__.
@@ -1428,6 +1415,8 @@ class position (object):
 	def __nonzero__ ( self):
 		
 		"""Return true if a position is valid."""
+		
+		# if g.app.trace: "__nonzero__",self.v
 	
 		return self.v is not None
 	#@nonl
@@ -1440,34 +1429,24 @@ class position (object):
 		if p.v:
 			return "<pos %d lvl: %d [%d] %s>" % (id(p),p.level(),len(p.stack),p.v.headString())
 		else:
-			return "<pos %d None>" % (id(p))
+			return "<pos %d        [%d] None>" % (id(p),len(p.stack))
 			
 	__repr__ = __str__
+	#@nonl
 	#@-node:p.__str__ and p.__repr__
 	#@+node:p.dump
 	def dumpLink (self,link):
+	
 		return g.choose(link,link,"<none>")
 	
 	def dump (self,label=""):
 		
 		p = self
 	
-		# assert(not p.v or isinstance(p.v,vnode))
-		
-		if 1:
-			p.v.dump(label=label)
-		else:
-			print '-'*10,label,p
-			print "back   ",p.dumpLink(p.back())
-			print "next   ",p.dumpLink(p.next())
-			print "parent ",p.dumpLink(p.parent())
-			print "_parent",p.dumpLink(p.v and p.v._parent)
-			print "child  ",p.dumpLink(p.firstChild())
-			print "vnodes..."
-			if p.v:
-				for v in p.v.t.vnodeList:
-					print v
-			print
+		print '-'*10,label,p
+	
+		if p.v:
+			p.v.dump() # Don't print a label
 	#@nonl
 	#@-node:p.dump
 	#@+node:p.Comparisons
@@ -1728,19 +1707,10 @@ class position (object):
 	def isVisible (self):
 		
 		"""Return true if all of a position's parents are expanded."""
-		
-		if 0: # Using an iterator here allocates one extracopy.
-			for p in self.parents_iter():
-				if not p.v.isExpanded():
-					return false
-			return true
-		
-		# Note: v.isVisible no longer exists.
-		
+	
+		# v.isVisible no longer exists.
 		p = self
-		if not p:
-			return false
-			
+	
 		# Avoid calling p.copy() or copying the stack.
 		v = p.v ; n = len(p.stack)-1
 	
@@ -1751,12 +1721,12 @@ class position (object):
 			v,n = p.vParentWithStack(v,p.stack,n)
 	
 		return true
+	#@nonl
 	#@-node:p.isVisible
-	#@+node:p.lastVisible
+	#@+node:p.lastVisible & oldLastVisible
 	# Returns the last visible node of the screen.
 	
 	def oldLastVisible(self):
-		
 		p = self
 		p = p.c.rootPosition()
 		assert(p.isVisible())
@@ -1767,9 +1737,7 @@ class position (object):
 			last = p.copy()
 			
 	def lastVisible(self):
-	
 		"""Move to the last visible node of the entire tree."""
-		
 		p = self
 		p = p.c.rootPosition()
 		# Move to the last top-level node.
@@ -1782,7 +1750,7 @@ class position (object):
 		assert(p.isVisible())
 		return p
 	#@nonl
-	#@-node:p.lastVisible
+	#@-node:p.lastVisible & oldLastVisible
 	#@+node:p.level & simpleLevel
 	def simpleLevel(self):
 		
@@ -1968,7 +1936,7 @@ class position (object):
 		return p.v and p.v.isDirty()
 	#@nonl
 	#@-node:p.isDirty
-	#@+node:findAllPotentiallyDirtyNodes
+	#@+node:p.findAllPotentiallyDirtyNodes
 	def findAllPotentiallyDirtyNodes(self):
 		
 		p = self
@@ -1994,7 +1962,7 @@ class position (object):
 		# g.trace(nodes)
 		return nodes
 	#@nonl
-	#@-node:findAllPotentiallyDirtyNodes
+	#@-node:p.findAllPotentiallyDirtyNodes
 	#@+node:p.setAllAncestorAtFileNodesDirty
 	def setAllAncestorAtFileNodesDirty (self):
 	
@@ -2288,8 +2256,8 @@ class position (object):
 			if self.p:
 				if self.copy: return self.p.copy()
 				else:         return self.p
-			else: raise StopIteration
-		#@nonl
+			else:
+				raise StopIteration
 		#@-node:next
 		#@-others
 	
@@ -2375,17 +2343,47 @@ class position (object):
 	def doDelete (self,newPosition):
 	
 		"""Unlinks p.v from the outline.  May be undone.
-		
+	
 		Returns newPosition."""
 	
 		p = self ; c = p.c
 	
+		assert(newPosition != p)
 		p.setDirty() # Mark @file nodes dirty!
 		p.unlink()
+		
+		
+		# 4/8/02: Alter all _parent links in children of this node.
+		# This needs to be done only when deleting a node.
+		vnodeList = p.v.t.vnodeList
+		if vnodeList:
+			#@		<< Alter all _parent links of children of this node >>
+			#@+node:<< Alter all _parent links of children of this node >>
+			assert(p.v not in vnodeList)
+			parent = vnodeList[0]
+			child = p.v.t._firstChild
+			while child:
+				if child._parent == p.v:
+					child._parent = parent
+				child = child._next
+			#@nonl
+			#@-node:<< Alter all _parent links of children of this node >>
+			#@nl
+		#@	<< remove all deleted nodes from their vnodeList's >>
+		#@+node:<< remove all deleted nodes from their vnodeList's >>
+		for p2 in p.self_and_subtree_iter():
+			vnodeList = p2.v.t.vnodeList
+			if p2.v in vnodeList:
+				g.trace("removing",p2.v)
+				vnodeList.remove(p2.v)
+				assert(p2.v not in vnodeList)
+		#@nonl
+		#@-node:<< remove all deleted nodes from their vnodeList's >>
+		#@nl
+	
 		c.selectVnode(newPosition)
 		
 		return newPosition
-	#@nonl
 	#@-node:p.doDelete
 	#@+node:p.insertAfter
 	def insertAfter (self,t=None):
@@ -2842,7 +2840,7 @@ class position (object):
 		p = self
 	
 		p.moveToThreadNext()
-		while p and not p.isVisible(): # v.isVisible no longer exists.
+		while p and not p.isVisible():
 			p.moveToThreadNext()
 				
 		return p
@@ -3038,8 +3036,14 @@ class position (object):
 		The p.v._fistChild link does NOT change."""
 	
 		p = self ; v = p.v ; parent = p.parent()
+		
+		# Note:  p.parent() is not necessarily the same as v._parent.
+		
+		if parent:
+			assert(p.v and p.v._parent in p.v.directParents())
+			assert(parent.v in p.v.directParents())
 	
-		# g.trace(v._parent," child:",v.t._firstChild," back:",v._back, " next:",v._next)
+		# g.trace("parent",parent," child:",v.t._firstChild," back:",v._back, " next:",v._next)
 		
 		# Special case the root.
 		if p == p.c.rootPosition():
@@ -3050,25 +3054,25 @@ class position (object):
 		vnodeList = v.t.vnodeList
 		if v in vnodeList:
 			vnodeList.remove(v)
+		assert(v not in vnodeList)
 		
+		# Reset the firstChild link in its direct father.
 		if parent and parent.v.t._firstChild == v:
 			parent.v.t._firstChild = v._next
-			
-		# Do NOT alter the links in any child nodes.
-		# Unlinking a node unlinks its entire subtree.
+	
+		# Do _not_ delete the links in any child nodes.
 	
 		# Clear the links in other nodes.
 		if v._back: v._back._next = v._next
 		if v._next: v._next._back = v._back
-		
-		# Clear the links in this node.
+	
+		# Unlink _this_ node.
 		v._parent = v._next = v._back = None
-		
+	
 		if 0:
 			g.trace('-'*20)
-			p.dump(p,label="p")
-			if parent: p.dump(parent,label="parent")
-	#@nonl
+			p.dump(label="p")
+			if parent: parent.dump(label="parent")
 	#@-node:p.unlink
 	#@-others
 #@-node:class position
