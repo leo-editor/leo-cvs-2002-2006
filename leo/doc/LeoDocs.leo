@@ -24,6 +24,7 @@
 <v t="edream.110203163054.7" a=""><vh>Acknowledgements</vh></v>
 <v t="edream.110203163054.8"><vh>What people are saying about Leo</vh>
 <v t="edream.110203163054.9" a="M"><vh>Quote of the Month</vh>
+<v t="edream.120503073304"><vh>From Michael Dawson</vh></v>
 <v t="edream.110203163054.10"><vh>From David Nichols</vh></v>
 <v t="edream.110203163054.11"><vh>From William A. Stapp</vh></v>
 <v t="edream.110203163054.12"><vh>From Dan Winkler</vh></v>
@@ -82,17 +83,17 @@
 <v t="edream.110203163054.61" a=""><vh>Putting the Leo icon in Leo windows</vh></v>
 <v t="edream.110203163054.62" a=""><vh>Quick start</vh></v>
 </v>
-<v t="edream.110203163054.63" a="E"><vh>Latest version</vh>
-<v t="edream.110603185805" a="V"><vh>4.1 beta 6</vh>
-<v t="edream.120403174147"><vh>Changes made in 4.1 beta 6</vh>
-<v t="edream.120403180443"><vh>New and improved features in 4.1 beta 6</vh>
+<v t="edream.110203163054.63" a="E"><vh>Latest versions</vh>
+<v t="edream.110603185805" a="V"><vh>4.1 beta 5</vh>
+<v t="edream.120403174147"><vh>Changes made in 4.1 beta 5</vh>
+<v t="edream.120403180443"><vh>New and improved features</vh>
 <v t="edream.120403174147.105"><vh>Honor outline/body pane ratio when opening files</vh></v>
 <v t="edream.120403174147.112"><vh>Leo now adjusts newly opened windows so they fit on the screen</vh></v>
 <v t="edream.120403174147.119"><vh>Tested support for Unicode file &amp; directory names</vh></v>
 <v t="edream.120403174147.128"><vh>Added code so @url nodes may open .leo files</vh></v>
 <v t="edream.120403174147.56"><vh>Fixed problems with @lineending platform</vh></v>
 </v>
-<v t="edream.120403174241"><vh>Bugs fixed in 4.1 beta 6</vh>
+<v t="edream.120403174241"><vh>Bugs fixed</vh>
 <v t="edream.120403174147.30"><vh>Fixed crasher in Apply Settings command</vh></v>
 <v t="edream.120403174147.102"><vh>Fixed crasher in Toggle Angle Brackets command</vh></v>
 <v t="edream.120403174147.109"><vh>Fixed crasher when setting Icon in Linux)</vh></v>
@@ -101,6 +102,7 @@
 <v t="edream.120403174147.61"><vh>Fixed Linux import problem</vh></v>
 <v t="edream.120403174147.63"><vh>Fixed Recent files crasher</vh></v>
 <v t="edream.120403174147.65"><vh>Fixed Replace Blanks command</vh></v>
+<v t="edream.110603190322.8"><vh>Fixed Serious Undo Change All bugs</vh></v>
 <v t="edream.120403174147.94"><vh>Fixed several long-standing bugs related to Extract commands</vh></v>
 </v>
 </v>
@@ -111,7 +113,6 @@
 <v t="edream.110303182253.39"><vh>Made app.forceShutdown work in "idle" hook</vh></v>
 </v>
 <v t="edream.110603190404"><vh>Fixed bugs</vh>
-<v t="edream.110603190322.8"><vh>Fixed Serious Undo Change All bugs</vh></v>
 <v t="edream.110603190322.13"><vh>Fixed bug involving 0x1a characters in body text.</vh></v>
 <v t="edream.110603190322.11"><vh>Fixed first node-only find bug</vh></v>
 <v t="edream.110603190322.3"><vh>Fixed bug in idle_body_key</vh></v>
@@ -139,19 +140,19 @@
 <v t="edream.110303182719"><vh>New config settings</vh></v>
 </v>
 </v>
-<v t="edream.110203163054.66" a=""><vh>4.0.1, 4.0.2, 4.0.3 &amp; 4.0.4</vh></v>
+<v t="edream.110203163054.66" a=""><vh>4.0.x</vh></v>
 </v>
 <v t="edream.110203163054.117"><vh>leo.py versions</vh>
-<v t="edream.110603185805" a=""><vh>4.1 beta 6</vh>
-<v t="edream.120403174147"><vh>Changes made in 4.1 beta 6</vh>
-<v t="edream.120403180443"><vh>New and improved features in 4.1 beta 6</vh>
+<v t="edream.110603185805" a=""><vh>4.1 beta 5</vh>
+<v t="edream.120403174147"><vh>Changes made in 4.1 beta 5</vh>
+<v t="edream.120403180443"><vh>New and improved features</vh>
 <v t="edream.120403174147.105"><vh>Honor outline/body pane ratio when opening files</vh></v>
 <v t="edream.120403174147.112"><vh>Leo now adjusts newly opened windows so they fit on the screen</vh></v>
 <v t="edream.120403174147.119"><vh>Tested support for Unicode file &amp; directory names</vh></v>
 <v t="edream.120403174147.128"><vh>Added code so @url nodes may open .leo files</vh></v>
 <v t="edream.120403174147.56"><vh>Fixed problems with @lineending platform</vh></v>
 </v>
-<v t="edream.120403174241"><vh>Bugs fixed in 4.1 beta 6</vh>
+<v t="edream.120403174241"><vh>Bugs fixed</vh>
 <v t="edream.120403174147.30"><vh>Fixed crasher in Apply Settings command</vh></v>
 <v t="edream.120403174147.102"><vh>Fixed crasher in Toggle Angle Brackets command</vh></v>
 <v t="edream.120403174147.109"><vh>Fixed crasher when setting Icon in Linux)</vh></v>
@@ -160,6 +161,7 @@
 <v t="edream.120403174147.61"><vh>Fixed Linux import problem</vh></v>
 <v t="edream.120403174147.63"><vh>Fixed Recent files crasher</vh></v>
 <v t="edream.120403174147.65"><vh>Fixed Replace Blanks command</vh></v>
+<v t="edream.110603190322.8"><vh>Fixed Serious Undo Change All bugs</vh></v>
 <v t="edream.120403174147.94"><vh>Fixed several long-standing bugs related to Extract commands</vh></v>
 </v>
 </v>
@@ -170,7 +172,6 @@
 <v t="edream.110303182253.39"><vh>Made app.forceShutdown work in "idle" hook</vh></v>
 </v>
 <v t="edream.110603190404"><vh>Fixed bugs</vh>
-<v t="edream.110603190322.8"><vh>Fixed Serious Undo Change All bugs</vh></v>
 <v t="edream.110603190322.13"><vh>Fixed bug involving 0x1a characters in body text.</vh></v>
 <v t="edream.110603190322.11"><vh>Fixed first node-only find bug</vh></v>
 <v t="edream.110603190322.3"><vh>Fixed bug in idle_body_key</vh></v>
@@ -199,7 +200,7 @@
 </v>
 </v>
 <v t="edream.110203163054.64"><vh>4.1 alpha 1</vh></v>
-<v t="edream.110203163054.66" a=""><vh>4.0.1, 4.0.2, 4.0.3 &amp; 4.0.4</vh></v>
+<v t="edream.110203163054.66" a=""><vh>4.0.x</vh></v>
 <v t="edream.110203163054.67"><vh>4.0 final</vh>
 <v t="edream.110203163054.68"><vh>4.0 beta 4</vh></v>
 <v t="edream.110203163054.69"><vh>4.0 beta 3</vh>
@@ -24154,65 +24155,64 @@ Still to do:
 
 The use_gnx setting in leoConfig.txt determines whether uses gnx's (cvs friendly) or ints.  No version of Leo before 4.1 can read .leo files containing gnx.   Only gnx's are immutable.  Leo recomputes all non-gnx indices from scratch whenever writing a .leo file. It is possible to convert between 3.x and 4.1 file formats by changing the use_gnx setting.
 </t>
-<t tx="edream.110603185805">Leo 4.1 beta 6                   December 5, 2003
+<t tx="edream.110603185805">Leo 4.1 beta 5                   December 5, 2003
 
-This is the sixth release of the reorganized 4.1 code base.
+This is the fifth release of the reorganized 4.1 code base.
+
+For the first time in months there are no serious bugs outstanding.
 
 Warning: By default Leo 4.1 creates .leo files that can not be read by older versions of Leo.
 
-Beta 6:
-  - Fixed problems loading plugins on Linux.
-  - Fixed problem that prevent the Find panel from working on the Mac.
-  - Fixed numerous other minor bugs resulting from the 4.1 reorg.
-  - Fixed long-standing problems with the Extract Section and Import commands.
-  - Leo now supports Unicode characters (like Chinese) in path and file names.
-  - Improved @url handling so that @url file:\\path\x.leo works properly.
-  - Improved support for @lineending platform.
-  - Leo honors outline/body pane ratio when opening .leo files.
-  - Leo now ensures that newly-opened windows fit entirely on the screen.
+Warning: Use the __wx_gui.py plugin with _extreme_ caution until further notice:
+bugs in this plugin could cause body text to be cleared improperly when changing nodes.
 
 Beta 5:
-  - Leo will run in batch mode it the command line contains --script scriptFile.
-  - Fixed new crashers in the Extract Section and Extract commands.
-  - Fixed an old crasher when Undoing a Change All command when searching headlines.
-  - Fixed a new crasher when write a file containing an undefined section.
-  - Fixed a new problem involving warnings of duplicate bindings in popup menus.
-  - Made sure to show Leo's windows in wx gui plugin.
+  * Leo runs in batch mode when invoked with --script aScriptFile.py
+    - Created "null gui" classes that do not use any gui code.
+  * Leo supports Unicode characters (e.g. Chinese) in path and file names.
+  * Fixed several long-standing bugs:
+    - Fixed several minor problems with the Extract Section and Import commands.
+    - Fixed problem that prevent the Find panel from working on the Mac.
+    - Improved @url handling so that @url file:\\path\x.leo works properly.
+    - Improved support for @lineending platform.
+    - Leo honors outline/body pane ratio when opening .leo files.
+    - Leo now ensures that newly-opened windows fit entirely on the screen.
+    - Fixed a crasher when Undoing a Change All command when searching headlines.
+  - Fixed other bugs resulting from the 4.1 reorg:
+    - Fixed problem loading plugins on Linux.
+    - Fixed crashers in the Extract Section and Extract commands.
+    - Fixed a crasher when writing a file containing an undefined section.
+    - Removed duplicate bindings in popup menus.
+    - Made sure to show Leo's windows in wx gui plugin.
 
 Beta 4:
-  - Fixes several "reorg" bugs, some of which affected plugins.
-  - Allows @directives and section references when executing scripts!
+  - Fixed several "reorg" bugs, some of which affected plugins.
+  - Allow @directives and section references when executing scripts!
   - More than one section reference may now appear on the same line.
-  - Uses "utf-8" encoding for filenames under MacOS (Darwin)
-  - Allows command or cmnd prefix for menu shortcuts under Darwin.
-  - Replaces all os.path routines by routines that convert path names to Unicode.
-    This is necessary (but not sufficient?) to support Chinese file and directory names.
+  - Use "utf-8" encoding for filenames under MacOS (Darwin)
+  - Allow command or cmnd prefix for menu shortcuts under Darwin.
 	  
-Beta 3 fixes a LaTeX coloring bug. Beta 3 also completes the reorg, making _many_ changes to the code.
+Beta 3:
+  - Completed the reorg, making _many_ changes to the code base.
+  - Fixed a LaTeX coloring bug
 
-The __wx_gui.py plugin is mostly functional except for gui-dependent commands like Toggle-Split Direction.
-WARNING: treat the this plugin with _extreme_ caution until further notice. The possibility exists that bugs in the code could cause body text to be cleared improperly when changing nodes.
+Beta 2:
+  - Fixed a startup problem on Linux: the "mbcs" text encoding is not valid on Linux.
 
-Beta 2 fixes a startup problem on Linux: the "mbcs" text encoding is not valid on Linux.
-
-Highlights of 4.1:
------------------
-* Leo 4.1 includes several new commands:
-  - Script-based find/change commands: a major new feature
+Beta 1:
+  * Script-based find/change commands.
   - Hoist &amp; DeHoist commands for viewing parts of an outline.
   - Check Outline command finds user clone mistakes.
-* New configuration settings:
-  - use_gnx specifies whether .leo files use integers as indices:
-    use_gnx = 0 makes .leo files compatible with previous versions of Leo.
-    use_gnx = 1 makes .leo files cvs-friendly
-  - config_encoding specifies the encoding of leoConfig.txt.
-* Several significant code-level changes:
-  - The 4.1 code base has been reorganized to support gui plugins.
-    An example wx_gui plugin is partly functional.
-  - Created a flexible framework for creating &amp; running regression tests.
-    This framework takes full advantage of outlines to organize tests.
-  - app.forceShutdown now works when called from plugins.
-- Fixed several long-standing bugs.  More fixes are coming.</t>
+  * New configuration settings:
+    - use_gnx specifies whether .leo files use integers as indices:
+      use_gnx = 0 makes .leo files compatible with previous versions of Leo.
+      use_gnx = 1 makes .leo files cvs-friendly
+    - config_encoding specifies the encoding of leoConfig.txt.
+  * Several significant code-level changes:
+    - The 4.1 code base has been reorganized to support gui plugins.
+    - An example wx_gui plugin is partly functional.
+    - Created a flexible framework for creating &amp; running regression tests.
+    - app.forceShutdown now works when called from plugins.</t>
 <t tx="edream.110603190125.1">Leo 4.1 uses immutable gnx's (id:timestamp:n) by default to associate tnodes with vnodes in .leo files.  This makes Leo as cvs friendly as possible.  From now on .leo files will be checked in to cvs with the -ko (text/keywords off) option.</t>
 <t tx="edream.110603190125.3">The file test.leo in the test directory contains real regression tests for syntax coloring.   Regression testing scripts create regression tests dynamically from data in Leo's outline.  Very cool, very easy, very general.  In particular, regression tests may use temporary nodes in test.leo rather than creating separate Tk windows for testing.</t>
 <t tx="edream.110603190125.4">The 4.1 code base has been reorganized to support gui's other than tkinter.  Leo's src directory contains several new source files.
@@ -24388,5 +24388,17 @@ while v:
 <t tx="edream.120403174241"></t>
 <t tx="edream.120403180443"></t>
 <t tx="edream.120403180443.1"></t>
+<t tx="edream.120503073304">This is a very useful piece of software that has enabled me to use
+Literate Programming in production for the first time.
+
+When I figured out I could do it in plain text and export to
+DocBook for automated typesetting, I was on my way. Because I only
+do business and utility software, I don't need the sophistication of
+LaTeX markup.
+
+Writing the documentation and the code in the same outline at
+the same time improves the whole product. Being able to
+automatically export both with just two key presses (tangle and
+export-to-DocBook) is a real luxury. -- Michael Dawson</t>
 </tnodes>
 </leo_file>

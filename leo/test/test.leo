@@ -2,7 +2,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="2190" clone_windows="0"/>
 <globals body_outline_ratio="0.50724637681159424">
-	<global_window_position top="1" left="82" height="936" width="770"/>
+	<global_window_position top="3" left="198" height="936" width="894"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences>
@@ -2724,7 +2724,7 @@
 <v t="edream.120403141200"><vh>&lt;&lt; ref &gt;&gt;</vh></v>
 </v>
 <v t="edream.120403143517" tnodeList="edream.120403143517"><vh>@file c:\prog\test\chinese脖folder\chinese脖test.txt</vh></v>
-<v t="edream.120503065917" a="V"><vh>Distribution checklist for 4.1 beta 6</vh>
+<v t="edream.120503065917" a="V" tnodeList="edream.120503065917"><vh>Distribution checklist for 4.1 beta 5</vh>
 <v t="edream.120503065917.1" tnodeList="edream.120503065917.1"><vh>@file-nosent c:\prog\leoCVS\.pycheckrc</vh></v>
 <v t="edream.120503065917.2"><vh>@url http://www.python.org/pypi?:action=submit_form</vh></v>
 </v>
