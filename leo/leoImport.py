@@ -2506,9 +2506,64 @@ class leoImportCommands:
 		return result
 	#@-body
 	#@-node:8::removeSentinelLines
+	#@+node:9:C=18:weave
+	#@+body
+	def weave (self,filename):
+		
+		c = self.commands ; v = c.currentVnode()
+		if not v: return
+		
+		#@<< open filename to f, or return >>
+		#@+node:1::<< open filename to f, or return >>
+		#@+body
+		try:
+			f = open(filename,'w')
+			if not f: return
+		except:
+			es("exception opening:" + filename)
+			traceback.print_exc()
+			return
+		#@-body
+		#@-node:1::<< open filename to f, or return >>
+
+		after = v.nodeAfterTree()
+		while v and v != after:
+			s = v.bodyString()
+			s2 = string.strip(s)
+			if s2 and len(s2) > 0:
+				f.write("-" * 60) ; f.write('\n')
+				
+				#@<< write the context of v to f >>
+				#@+node:2::<< write the context of v to f >>
+				#@+body
+				# write the headlines of v, v's parent and v's grandparent.
+				context = [] ; v2 = v
+				for i in xrange(3):
+					if not v2: break
+					context.append(v2.headString())
+					v2 = v2.parent()
+				
+				context.reverse()
+				indent = ""
+				for line in context:
+					f.write(indent)
+					indent += '\t'
+					f.write(line)
+					f.write('\n')
+
+				#@-body
+				#@-node:2::<< write the context of v to f >>
+
+				f.write("-" * 60) ; f.write('\n')
+				f.write(string.rstrip(s) + '\n')
+			v = v.threadNext()
+		f.flush()
+		f.close()
+	#@-body
+	#@-node:9:C=18:weave
 	#@-node:4::Export
 	#@+node:5::Utilities
-	#@+node:1:C=18:createHeadline
+	#@+node:1:C=19:createHeadline
 	#@+body
 	def createHeadline (self,parent,body,headline):
 	
@@ -2521,7 +2576,7 @@ class leoImportCommands:
 			v.setBodyStringOrPane(body)
 		return v
 	#@-body
-	#@-node:1:C=18:createHeadline
+	#@-node:1:C=19:createHeadline
 	#@+node:2::error
 	#@+body
 	def error (self,s): es(s)
@@ -2580,7 +2635,7 @@ class leoImportCommands:
 
 	#@-body
 	#@-node:4::isDocStart and isModuleStart
-	#@+node:5:C=19:massageBody
+	#@+node:5:C=20:massageBody
 	#@+body
 	def massageBody (self,s,methodKind):
 		
@@ -2617,7 +2672,7 @@ class leoImportCommands:
 				else:
 					return intro + newLine + newBody
 	#@-body
-	#@-node:5:C=19:massageBody
+	#@-node:5:C=20:massageBody
 	#@+node:6::massageComment
 	#@+body
 	#@+at
@@ -2707,7 +2762,7 @@ class leoImportCommands:
 		return s
 	#@-body
 	#@-node:7::massageWebBody
-	#@+node:8:C=20:skipLeadingComments
+	#@+node:8:C=21:skipLeadingComments
 	#@+body
 	#@+at
 	#  This skips all leading comments in s, returning the remaining body text and the massaged comment text.
@@ -2800,7 +2855,7 @@ class leoImportCommands:
 		else:
 			return s[i:], "@ " + comment + "\n"
 	#@-body
-	#@-node:8:C=20:skipLeadingComments
+	#@-node:8:C=21:skipLeadingComments
 	#@+node:9::undentBody
 	#@+body
 	#@+at
