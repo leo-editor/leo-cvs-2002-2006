@@ -195,8 +195,8 @@ class LeoFrame:
 			else:
 				font = tkFont.Font(family="Courier",size=12)
 				
-			# print "frame.setTabWidth:" + `w`
 			tabw = font.measure(" " * abs(w)) # 7/2/02
+			# print "frame.setTabWidth:" + `w` + "," + `tabw`
 			self.body.configure(tabs=tabw)
 		except: pass
 	#@-body

@@ -56,8 +56,8 @@ import os,string,traceback
 # same section. Untangle must check to see that all expansions of a section are "equivalent".  As an added complication, derived 
 # files do not contain all the information found in @root trees.  @root trees may contain headlines that generate no code at all.  
 # Also, an outline may define a section in several ways: with an @c or @code directive or with a section definition line.  To be 
-# useful, Untangle must handle all these complications flawlessly. The this part of the appendix discusses the various conventions 
-# used in the sentinels output by the Tangle command.  These conventions allow the Untangle command to recreate whitespace correctly.
+# useful, Untangle must handle all these complications flawlessly. The appendix discusses the various conventions used in the 
+# sentinels output by the Tangle command.  These conventions allow the Untangle command to recreate whitespace correctly.
 # 
 # Untangle operates in two passes. The first pass finds definitions in the derived file and enters them into the Untangle Symbol 
 # Table, or UST.   Definitions often include references to other sections, so definitions often include nested definitions of 
@@ -3730,8 +3730,12 @@ class tangleCommands:
 		#@@c
 		
 		if c.frame and require_path_flag and not self.tangle_directory:
+			if self.root_name and len(self.root_name) > 0:
+				root_dir = os.path.dirname(self.root_name)
+			else:
+				root_dir = None
 			for dir, kind in (
-				(self.root_name,"@root"),
+				(root_dir,"@root"),
 				(c.tangle_directory,"default tangle"),
 				(c.frame.openDirectory,"open")):
 		
