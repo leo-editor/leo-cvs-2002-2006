@@ -4046,8 +4046,8 @@ class baseLeoFrame:
 	def OnLeoHome (self,event=None):
 		
 		import webbrowser
-		
-		url = "http://personalpages.tds.net/~edream/front.html"
+	
+		url = "http://webpages.charter.net/edreamleo/front.html"
 		try:
 			webbrowser.open_new(url)
 		except:
