@@ -61,9 +61,10 @@ class baseFileCommands:
 		# New in 3.12
 		self.copiedTree = None
 		self.tnodesDict = {}
+	#@nonl
 	#@-node:leoFileCommands._init_
 	#@+node:createVnode
-	def createVnode(self,parent,back,tref,headline):
+	def createVnode(self,parent,back,tref,headline,attrDict):
 		
 		# trace(`headline` + ", parent:" + `parent` + ", back:" + `back`)
 		v = None ; c = self.commands
@@ -83,6 +84,20 @@ class baseFileCommands:
 			v.moveToRoot()
 			c.frame.setRootVnode(v)
 		v.initHeadString(headline,encoding=self.leo_file_encoding)
+		#@	<< handle unknown vnode attributes >>
+		#@+node:<< handle unknown vnode attributes >>
+		keys = attrDict.keys()
+		if keys:
+			v.unknownAttributes = attrDict
+			if 1: # For debugging.
+				s = "unknown attributes for " + v.headString()
+				print s ; es(s, color = "blue")
+				for key in keys:
+					s = "%s = %s" % (key,attrDict.get(key))
+					print s ; es(s)
+		#@nonl
+		#@-node:<< handle unknown vnode attributes >>
+		#@nl
 		return v
 	#@nonl
 	#@-node:createVnode
@@ -236,6 +251,20 @@ class baseFileCommands:
 		else:
 			print "getTag(", tag, ") failed:"
 			raise BadLeoFile("expecting" + tag)
+			
+	def getUnknownTag(self):
+		
+		self.skipWsAndNl() # guarantees at least one more character.
+		tag = self.getStringToTag('=')
+		if not tag:
+			print "getUnknownTag failed"
+			raise BadLeoFile("unknown tag not followed by '='")
+		self.fileIndex += 1
+		val = self.getDqString()
+		trace(tag,val)
+		return tag,val
+		
+	#@nonl
 	#@-node:get routines
 	#@+node:match routines
 	def matchChar (self,ch):
@@ -625,7 +654,7 @@ class baseFileCommands:
 	def getTnode (self):
 	
 		# we have already matched <t.
-		index = -1
+		index = -1 ; attrDict = {}
 		# New in version 1.7: attributes may appear in any order.
 		while 1:
 			if self.matchTag("tx=\"T"):
@@ -633,9 +662,27 @@ class baseFileCommands:
 				# if self.usingClipboard: trace(index)
 			elif self.matchTag("rtf=\"1\""): pass # ignored
 			elif self.matchTag("rtf=\"0\""): pass # ignored
-			else: break
-		self.getTag(">")
+			elif self.matchTag(">"):
+				break
+			else: # New for 4.0: allow unknown attributes.
+				attr,val = self.getUnknownTag()
+				attrDict[attr] = val
+	
 		t = self.tnodesDict.get(index)
+		#@	<< handle unknown attributes >>
+		#@+node:<< handle unknown attributes >>
+		keys = attrDict.keys()
+		if keys:
+			t.unknownAttributes = attrDict
+			if 1: # For debugging.
+				s = "unknown attributes for tnode"
+				print s ; es(s, color = "blue")
+				for key in keys:
+					s = "%s = %s" % (key,attrDict.get(key))
+					print s ; es(s)
+		#@nonl
+		#@-node:<< handle unknown attributes >>
+		#@nl
 		if t:
 			if self.usingClipboard:
 				#@			<< handle read from clipboard >>
@@ -677,7 +724,7 @@ class baseFileCommands:
 		# trace("parent:" + `parent` + ", back:" + `back`)
 		c = self.commands
 		setCurrent = setExpanded = setMarked = setOrphan = setTop = false
-		tref = -1 ; headline = "" ; tnodeList = None
+		tref = -1 ; headline = "" ; tnodeList = None ; attrDict = {}
 		# we have already matched <v.
 		while 1:
 			if self.matchTag("a=\""):
@@ -703,13 +750,16 @@ class baseFileCommands:
 				self.getIndex() ; self.getDquote() # ignored
 			elif self.matchTag("tnodeList=\""):
 				tnodeList = self.getTnodeList() # New for 4.0
-			else: break
-		self.getTag(">")
+			elif self.matchTag(">"):
+				break
+			else: # New for 4.0: allow unknown attributes.
+				attr,val = self.getUnknownTag()
+				attrDict[attr] = val
 		# Headlines are optional.
 		if self.matchTag("<vh>"):
 			headline = self.getEscapedString() ; self.getTag("</vh>")
 		# Link v into the outline using parent and back.
-		v = self.createVnode(parent,back,tref,headline)
+		v = self.createVnode(parent,back,tref,headline,attrDict)
 		if tnodeList:
 			v.tnodeList = tnodeList # New for 4.0
 			# trace("%4d" % len(tnodeList),v)
@@ -1348,6 +1398,22 @@ class baseFileCommands:
 	
 		self.put("<t")
 		self.put(" tx=") ; self.put_in_dquotes("T" + `t.fileIndex`)
+		if hasattr(t,"unknownAttributes"):
+			#@		<< put unknown tnode attributes >>
+			#@+node:<< put unknown tnode attributes >>
+			attrDict = t.unknownAttributes
+			keys = attrDict.keys()
+			for key in keys:
+				val = attrDict[key]
+				attr = ' %s="%s"' % (key,self.xmlEscape(val))
+				self.put(attr)
+				if 1: # For debugging.
+					s = "putting unknown tnode attribute"
+					print s ;  es(s, color="red")
+					print attr, es(attr)
+			#@nonl
+			#@-node:<< put unknown tnode attributes >>
+			#@nl
 		self.put(">")
 	
 		if t.bodyString:
@@ -1449,6 +1515,22 @@ class baseFileCommands:
 		#@nl
 		if hasattr(v,"tnodeList") and len(v.tnodeList) > 0:
 			fc.putTnodeList(v) # New in 4.0
+		if hasattr(v,"unknownAttributes"): # New in 4.0
+			#@		<< put unknown vnode attributes >>
+			#@+node:<< put unknown vnode attributes >>
+			attrDict = v.unknownAttributes
+			keys = attrDict.keys()
+			for key in keys:
+				val = attrDict[key]
+				attr = ' %s="%s"' % (key,self.xmlEscape(val))
+				self.put(attr)
+				if 1: # For debugging.
+					s = "putting unknown attribute for " + v.headString()
+					print s ;  es(s, color="red")
+					print attr, es(attr)
+			#@nonl
+			#@-node:<< put unknown vnode attributes >>
+			#@nl
 		fc.put(">")
 		#@	<< write the head text >>
 		#@+node:<< write the head text >>
