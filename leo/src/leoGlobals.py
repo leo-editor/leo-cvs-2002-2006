@@ -1264,15 +1264,18 @@ def trace (*args,**keys):
 	if callers:
 		import traceback
 		traceback.print_stack()
-
-	t = app().trace_list
-	# tracepoint names starting with '-' must match exactly.
-	minus = len(name) > 0 and name[0] == '-'
-	if minus: name = name[1:]
-	if (not minus and '*' in t) or name.lower() in t:
-		s = name + ": " + message
-		if 1: print s
-		else: es(s)
+		
+	if 1: # Print all traces.
+		print name + ": " + message
+	else: # Print only enabled traces.
+		t = app().trace_list
+		# tracepoint names starting with '-' must match exactly.
+		minus = len(name) > 0 and name[0] == '-'
+		if minus: name = name[1:]
+		if (not minus and '*' in t) or name.lower() in t:
+			s = name + ": " + message
+			if 1: print s
+			else: es(s)
 #@-node:trace
 #@+node:trace_tag
 # Convert all args to strings.
@@ -1981,7 +1984,7 @@ def makeDict(**keys):
 #@+node:Most common functions
 # These are guaranteed always to exist for scripts.
 #@-node:Most common functions
-#@+node:app, setApp
+#@+node:app
 # *** Note *** the global statement makes sense only within functions!
 
 gApp = None # Not needed, and keeps Pychecker happy.
@@ -1989,12 +1992,8 @@ gApp = None # Not needed, and keeps Pychecker happy.
 def app():
 	global gApp
 	return gApp
-
-def setApp(app):
-	global gApp
-	gApp = app
 #@nonl
-#@-node:app, setApp
+#@-node:app
 #@+node:choose
 def choose(cond, a, b): # warning: evaluates all arguments
 
@@ -2846,7 +2845,7 @@ def skip_ws_and_nl(s,i):
 	return i
 #@nonl
 #@-node:skip_ws, skip_ws_and_nl
-#@+node:bound_paragraph
+#@+node:bound_paragraph (TK stuff)
 def bound_paragraph(t=None):
 	"""Find the bounds of the text paragraph that contains the current cursor position.
 	
@@ -2865,7 +2864,8 @@ endsWithNL: true if the paragraph ends with a newline"""
 	
 	# Return if the selected line is all whitespace or a Leo directive.
 	s = t.get(x+"linestart",x+"lineend")
-	if len(s)==0 or s.isspace() or s[0] == '@':
+	s = toUnicode(s,app().tkEncoding) # 9/28/03
+	if not s or s.isspace() or s[0] == '@':
 		return None 
 
 	# Point start and end at the start and end of the selected line.
@@ -2893,7 +2893,8 @@ endsWithNL: true if the paragraph ends with a newline"""
 	while end != bodyEnd:
 		end = str(tmpLine) + ".0"
 		s = t.get(end,end+"lineend")
-		if len(s)==0 or s.isspace() or s[0] == '@':
+		s = toUnicode(s,app().tkEncoding) # 9/28/03
+		if not s or s.isspace() or s[0] == '@':
 			break
 		tmpLine += 1
 
@@ -2902,7 +2903,7 @@ endsWithNL: true if the paragraph ends with a newline"""
 
 	return start, end, endsWithNL
 #@nonl
-#@-node:bound_paragraph
+#@-node:bound_paragraph (TK stuff)
 #@+node:getindex
 def getindex(text, index):
 	
@@ -2911,18 +2912,28 @@ def getindex(text, index):
 	return tuple(map(int,string.split(text.index(index), ".")))
 #@nonl
 #@-node:getindex
-#@+node:getSelectedText
-# t is a Tk.Text widget.  Returns the text of the selected range of t.
+#@+node:getAllText & getSelectedText
+def getAllText (t):
+	
+	"""Return all the text of Tk.Text t converted to unicode."""
+	
+	s = t.get("1.0","end")
+	if s is None: s = u""
+	return toUnicode(s,app().tkEncoding)
 
 def getSelectedText (t):
+	
+	"""Return the selected text of Tk.Text t converted to unicode."""
 
 	start, end = getTextSelection(t)
-	if start and end and start != end: # 7/7/03
-		return t.get(start,end)
+	if start and end and start != end:
+		s = t.get(start,end)
+		if s is None: s = u""
+		return toUnicode(s,app().tkEncoding)
 	else:
 		return None
 #@nonl
-#@-node:getSelectedText
+#@-node:getAllText & getSelectedText
 #@+node:getTextSelection
 def getTextSelection (t):
 	
@@ -2960,6 +2971,7 @@ def setTextSelection (t,start,end):
 	t.tag_add("sel",start,end)
 	t.tag_remove("sel",end,"end")
 	t.mark_set("insert",end)
+#@nonl
 #@-node:setTextSelection
 #@+node:computeLeadingWhitespace
 # Returns optimized whitespace corresponding to width with the indicated tab_width.
@@ -3083,6 +3095,12 @@ def skip_leading_ws_with_indent(s,i,tab_width):
 	return i, count
 #@nonl
 #@-node:skip_leading_ws_with_indent
+#@+node:isUnicode
+def isUnicode(s):
+	
+	return s is None or type(s) == type(u' ')
+#@nonl
+#@-node:isUnicode
 #@+node:isValidEncoding
 def isValidEncoding (encoding):
 	
@@ -3119,6 +3137,8 @@ def reportBadChars (s,encoding):
 #@+node:toUnicode & toEncodedString
 def toUnicode (s,encoding,reportErrors=false):
 	
+	if s is None:
+		s = u""
 	if type(s) == type(""):
 		try:
 			s = unicode(s,encoding,"strict")

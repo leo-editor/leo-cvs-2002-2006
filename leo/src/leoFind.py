@@ -89,6 +89,7 @@ class leoFindBase (leoDialog.leoDialog):
 		# Remove the newly inserted newline from the search & change strings.
 		for text in (self.find_text,self.change_text):
 			ch = text.get("insert - 1c")
+			ch= toUnicode(ch,app().tkEncoding) # 9/28/03
 			if ch in ('\r','\n'):
 				text.delete("insert - 1c")
 	
@@ -469,12 +470,11 @@ class leoFind (leoFindBase):
 	
 		c = self.commands ; v = self.v ; st = self.s_text
 		# Replace the selection with c.change_text
-		# s = st.get("1.0","end") ; trace("entry:" + `s`)
 		if st.compare(pos1, ">", pos2):
 			pos1,pos2=pos2,pos1
 		st.delete(pos1,pos2)
 		st.insert(pos1,c.change_text)
-		s = st.get("1.0","end")
+		s = getAllText(st)
 		# Update the selection.
 		insert=choose(c.reverse_flag,pos1,pos1+'+'+`len(c.change_text)`+'c')
 		st.tag_remove("sel","1.0","end")
@@ -540,6 +540,7 @@ class leoFind (leoFindBase):
 				count += 1
 				self.batchChange(pos1,pos2,count)
 				line = st.get(pos1 + " linestart", pos1 + " lineend")
+				line = toUnicode(line,app().tkEncoding) # 9/28/03
 				self.printLine(line,allFlag=true)
 			else: break
 		c.endUpdate() # self.restore
@@ -625,6 +626,7 @@ class leoFind (leoFindBase):
 			if pos:
 				count += 1
 				line = st.get(pos + " linestart", pos + " lineend")
+				line = toUnicode(line,app().tkEncoding) # 9/28/03
 				self.printLine(line,allFlag=true)
 			else: break
 		c.endUpdate()
@@ -807,6 +809,12 @@ class leoFind (leoFindBase):
 				first  = t.get(pos)
 				last   = t.get(newpos)
 				after  = t.get(newpos, newpos + "+1c")
+				
+				before = toUnicode(before,app().tkEncoding) # 9/28/03
+				first  = toUnicode(first, app().tkEncoding) # 9/28/03
+				last   = toUnicode(last,  app().tkEncoding) # 9/28/03
+				after  = toUnicode(after, app().tkEncoding) # 9/28/03
+				
 				# print before, first, last, after
 				
 				if before and is_c_id(before) and first and is_c_id(first):

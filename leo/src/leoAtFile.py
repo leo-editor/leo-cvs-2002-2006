@@ -1377,6 +1377,8 @@ class baseOldDerivedFile:
 				# This must be done here, not in the @+node logic.
 				body = string.join(child_out, "")
 				body = body.replace('\r', '')
+				body = toUnicode(body,app().tkEncoding) # 9/28/03
+				
 				if self.importing:
 					child.t.bodyString = body
 				else:
@@ -3762,12 +3764,12 @@ class baseNewDerivedFile(oldDerivedFile):
 		
 		# Set the temporary body text.
 		s = ''.join(at.out)
-		if s:
-			# trace(`at.t`,`s`)
-			if at.importing:
-				at.t.bodyString = s
-			else:
-				at.t.tempBodyString = s
+		s = toUnicode(s,app().tkEncoding) # 9/28/03
+	
+		if at.importing:
+			at.t.bodyString = s
+		else:
+			at.t.tempBodyString = s
 				
 		# Indicate that the tnode has been set in the derived file.
 		at.t.setVisited()

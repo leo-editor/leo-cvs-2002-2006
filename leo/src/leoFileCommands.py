@@ -1351,7 +1351,7 @@ class baseFileCommands:
 		self.put(" tx=") ; self.put_in_dquotes("T" + `t.fileIndex`)
 		self.put(">")
 	
-		if t.bodyString and len(t.bodyString) > 0:
+		if t.bodyString:
 			self.putEscapedString(t.bodyString)
 	
 		self.put("</t>") ; self.put_nl()

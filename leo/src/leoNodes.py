@@ -238,7 +238,6 @@ class baseTnode:
 	def __init__ (self,index=0,bodyString=None,headString=None):
 	
 		a = app()
-		self.bodyString = choose(bodyString, bodyString, "")
 		self.statusBits = 0 # status bits
 		self.selectionStart = 0 # The start of the selected body text.
 		self.selectionLength = 0 # The length of the selected body text.
@@ -249,7 +248,9 @@ class baseTnode:
 		self.cloneIndex = 0 # Zero for @file nodes
 		# New in 3.12
 		self.joinList = [] # vnodes on the same joinlist are updated together.
-		self.headString = headString
+		
+		self.headString = toUnicode(headString,app().tkEncoding) # 9/28/03
+		self.bodyString = toUnicode(bodyString,app().tkEncoding) # 9/28/03
 	#@nonl
 	#@-node:t.__init__
 	#@+node:hasBody
@@ -287,18 +288,6 @@ class baseTnode:
 		return (self.statusBits & self.visitedBit) != 0
 	#@nonl
 	#@-node:isVisited
-	#@+node:saveBodyPaneToTnode
-	def saveBodyPaneToTnode (self,body): # No need for an encoding param.
-	
-		self.setTnodeText(body.GetValue()) # 1/20/03
-	
-		# Set the selection.
-		i,j = body.GetSelection()
-		if i > j:
-			i,j = j,i
-		self.selectionStart = i
-		self.selectionLength = j - i
-	#@-node:saveBodyPaneToTnode
 	#@+node:setTnodeText
 	# This sets the text in the tnode from the given string.
 	
@@ -308,7 +297,7 @@ class baseTnode:
 		self.bodyString = s
 	#@-node:setTnodeText
 	#@+node:setSelection
-	def setSelection (self, start, length):
+	def setSelection (self,start,length):
 	
 		self.selectionStart = start
 		self.selectionLength = length
@@ -373,7 +362,7 @@ class tnode (baseTnode):
 class baseVnode:
 	"""The base class of the vnode class."""
 	#@	<< vnode constants >>
-	#@+node:<< vnode constants >>  ### Warning: changes meaning of visitedBit
+	#@+node:<< vnode constants >>
 	# Define the meaning of status bits in new vnodes.
 	
 	# Archived...
@@ -389,7 +378,7 @@ class baseVnode:
 	dirtyBit    =	0x060
 	richTextBit =	0x080 # Determines whether we use <bt> or <btr> tags.
 	visitedBit	 = 0x100
-	#@-node:<< vnode constants >>  ### Warning: changes meaning of visitedBit
+	#@-node:<< vnode constants >>
 	#@nl
 	#@	@+others
 	#@+node:v.__cmp__ (not used)
@@ -939,7 +928,13 @@ class baseVnode:
 	
 	def bodyString (self):
 	
-		return self.t.bodyString
+		# This message should never be printed and we want to avoid crashing here!
+		if not isUnicode(self.t.bodyString):
+			s = "Leo internal error: not unicode:" + `self.t.bodyString`
+			print s ; es(s,color="red")
+	
+		# Make _sure_ we return a unicode string.
+		return toUnicode(self.t.bodyString,app().tkEncoding)
 	#@nonl
 	#@-node:bodyString
 	#@+node:currentVnode (vnode)
@@ -965,17 +960,21 @@ class baseVnode:
 	#@-node:findRoot
 	#@+node:headString & cleanHeadString
 	def headString (self):
-	
-		if self.t.headString:
-			return self.t.headString
-		else:
-			return ""
+		
+		"""Return the headline string."""
+		
+		# This message should never be printed and we want to avoid crashing here!
+		if not isUnicode(self.t.headString):
+			s = "Leo internal error: not unicode:" + `self.t.headString`
+			print s ; es(s,color="red")
 			
+		# Make _sure_ we return a unicode string.
+		return toUnicode(self.t.headString,app().tkEncoding)
+	
 	def cleanHeadString (self):
 		
 		s = self.headString()
-		s = toEncodedString(s,"ascii") # Replaces non-ascii characters by '?'
-		return s
+		return toEncodedString(s,"ascii") # Replaces non-ascii characters by '?'
 	#@nonl
 	#@-node:headString & cleanHeadString
 	#@+node:isAncestorOf
@@ -1021,7 +1020,12 @@ class baseVnode:
 	#@+node:appendStringToBody
 	def appendStringToBody (self,s,encoding="utf-8"):
 	
-		if len(s) == 0: return
+		if s is none or len(s) == 0: return
+		
+		# Make sure the following concatenation doesn't fail.
+		assert(isUnicode(self.t.bodyString)) # 9/28/03
+		s = toUnicode(s,encoding) # 9/28/03
+	
 		body = self.t.bodyString + s
 		self.setBodyStringOrPane(body,encoding)
 	#@-node:appendStringToBody

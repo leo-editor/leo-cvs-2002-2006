@@ -25,7 +25,7 @@ class leoGui:
 	#@+node:leoGui.__init__
 	def __init__ (self,guiName):
 		
-		# print "leoGui.__init__",guiName
+		# trace("leoGui",guiName)
 		
 		self.leoIcon = None
 		self.mGuiName = guiName
@@ -198,7 +198,7 @@ class tkinterGui(leoGui):
 	#@+node: tkinterGui.__init__
 	def __init__ (self):
 		
-		# print "tkinterGui.__init__"
+		# trace("tkinterGui")
 		
 		# Initialize the base class.
 		leoGui.__init__(self,"tkinter")
@@ -211,8 +211,6 @@ class tkinterGui(leoGui):
 	def createRootWindow(self):
 	
 		"""Create a hidden Tk root window."""
-		
-		# print "tkinterGui:createRootWindow"
 	
 		self.root = root = Tkinter.Tk()
 		root.title("Leo Main Window")
@@ -229,7 +227,9 @@ class tkinterGui(leoGui):
 	#@+node:setDefaultIcon
 	def setDefaultIcon(self):
 		
+		"""Set the icon to be used in all Leo windows.
 		
+		This code does nothing for Tk versions before 8.3.4."""
 		
 		gui = self
 	
@@ -266,20 +266,18 @@ class tkinterGui(leoGui):
 		
 			if isValidEncoding (encoding): # 3/22/03
 				a.tkEncoding = encoding
-				# print a.tkEncoding,src
+				# trace(a.tkEncoding,src)
 				break
 			elif encoding and len(encoding) > 0:
-				print "ignoring invalid " + src + " encoding: " + `encoding`
+				trace("ignoring invalid " + src + " encoding: " + `encoding`)
 				
-		# print "setEncoding",a.tkEncoding
+		# trace(a.tkEncoding)
 	#@nonl
 	#@-node:setEncoding
 	#@+node:getDefaultConfigFont
 	def getDefaultConfigFont(self,config):
 		
 		"""Get the default font from a new text widget."""
-		
-		# print "getDefaultConfigFont",`config`
 	
 		t = Tkinter.Text()
 		fn = t.cget("font")
@@ -323,8 +321,6 @@ class tkinterGui(leoGui):
 	#@-node:recreateRootWindow (not used)
 	#@+node:getFontFromParams
 	def getFontFromParams(self,family,size,slant,weight):
-		
-		# print "getFontFromParams"
 		
 		family_name = family
 		
@@ -390,7 +386,7 @@ class tkinterGui(leoGui):
 	
 	def newLeoFrame(self,commander):
 		"""A do-nothing base class to create a view frame for the Leo main window."""
-		print "tkinterGui:newLeoFrame"
+		trace()
 		return leoFrame.LeoFrame(commander)
 	
 	def newPrefsFrame(self,commander):
@@ -591,8 +587,6 @@ class tkinterGui(leoGui):
 	def runMainLoop(self):
 	
 		"""Run tkinter's main loop."""
-		
-		print "tkinterGui.runMainLoop"
 	
 		self.root.mainloop()
 	#@nonl

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="2170" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="2173" clone_windows="0"/>
 <globals body_outline_ratio="0.5">
 	<global_window_position top="18" left="213" height="835" width="981"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
@@ -259,7 +259,7 @@
 </v>
 <v t="T160"><vh>wx Leo</vh></v>
 </v>
-<v t="T161" a="V"><vh>4.0 Test files</vh>
+<v t="T161" a="EV"><vh>4.0 Test files</vh>
 <v t="T162"><vh>Script to compare 3.x and 4.x derived files</vh></v>
 <v t="T163" a="E"><vh>Test Files...</vh>
 <v t="T164" tnodeList="164,165,166"><vh>@nosentinelsfile c:\prog\test\nosentinelstest.txt</vh>
@@ -2726,6 +2726,10 @@
 </v>
 </v>
 </v>
+<v t="T2171" a="E"><vh>unicode test for find all</vh>
+<v t="T2172"><vh>a</vh></v>
+<v t="T2173"><vh>Ý</vh></v>
+</v>
 </vnodes>
 <tnodes>
 <t tx="T1">@color
@@ -4205,7 +4209,7 @@ this should NOT wrap aaaaaaaaaaaaaaaaaaa bbbbbbbbbbbbbbbbbbbbb ccccccccccccccccc
 <t tx="T159"></t>
 <t tx="T160">import wxLeo
 reload(wxLeo)</t>
-<t tx="T161">@ignore
+<t tx="T161"> @ignore
 
 ## @encoding iso-8859-1
 # @comment /* */</t>
@@ -33784,5 +33788,8 @@ print "actual  :",`textResult`
 	c.setChanged(true)
 	c.endUpdate()
 </t>
+<t tx="T2171"></t>
+<t tx="T2172">def a</t>
+<t tx="T2173">def Ý</t>
 </tnodes>
 </leo_file>

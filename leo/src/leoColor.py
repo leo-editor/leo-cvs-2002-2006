@@ -1118,7 +1118,9 @@ class baseColorizer:
 			# Copy the arguments.
 			self.v = v
 			self.body = body
-			s = body.get("1.0","end")
+			
+			# Get the body text, converted to unicode.
+			s = getAllText(body)
 			self.sel = sel = body.index("insert") # get the location of the insert point
 			start, end = string.split(sel,'.')
 			start = int(start)
@@ -1382,6 +1384,7 @@ class baseColorizer:
 				m1.extend(m2) # m1 now contains all old and new middle lines.
 				if m1:
 					for s in m1:
+						assert(isUnicode(s))
 						i = skip_ws(s,0)
 						if match_word(s,i,"@color") or match_word(s,i,"@nocolor"):
 							leading_lines = 0

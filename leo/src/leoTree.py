@@ -845,19 +845,7 @@ class baseLeoTree:
 		if oldText != None:
 			s = oldText
 		else:
-			#@		<< set s to the widget text >>
-			#@+node:<< set s to the widget text >>
-			s = c.body.get("1.0", "end")
-			
-			if s == None:
-				s = u""
-			
-			if type(s) == type(""):
-				s = toUnicode(s,app().tkEncoding) # 2/25/03
-				# if len(ch) > 0: print `s`
-			#@nonl
-			#@-node:<< set s to the widget text >>
-			#@nl
+			s = getAllText(c.body)
 		#@	<< return if nothing has changed >>
 		#@+node:<< return if nothing has changed >>
 		# 6/22/03: Make sure we handle delete key properly.
@@ -989,8 +977,7 @@ class baseLeoTree:
 			#@nl
 		#@	<< set s to widget text, removing trailing newlines if necessary >>
 		#@+node:<< set s to widget text, removing trailing newlines if necessary >>
-		s = c.body.get("1.0", "end")
-		s = toUnicode(s,app().tkEncoding) #2/25/03
+		s = getAllText(c.body) # 9/28/03
 		if len(s) > 0 and s[-1] == '\n' and removeTrailing:
 			s = s[:-1]
 		#@nonl
@@ -1057,7 +1044,7 @@ class baseLeoTree:
 	
 		c = self.commands ; v = c.currentVnode() ; ch = event.char
 		oldSel = getTextSelection(c.body)
-		
+	
 		if 0:
 			self.keyCount += 1
 			if ch and len(ch)>0: print "%4d %s" % (self.keyCount,repr(ch))

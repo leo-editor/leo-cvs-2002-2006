@@ -2423,12 +2423,12 @@ class baseLeoFrame:
 		# Assume any selected body text is a script.
 		start,end = getTextSelection(body)
 		if start and end and start != end:
-			s = body.get(start,end)
+			s = getSelectedText(body) # 9/28/03
 		else:
-			s = body.get("1.0","end")
+			s = getAllText(body)
 		if s == None:
 			s = ""
-			
+	
 		s = s.strip()
 		if s and len(s) > 0:
 			s += '\n' # Make sure we end the script properly.
@@ -2821,7 +2821,9 @@ class baseLeoFrame:
 		c = self ; body = c.body
 		brackets = "()[]{}<>"
 		ch1=body.get("insert -1c")
+		ch1= toUnicode(ch1,app().tkEncoding) # 9/28/03
 		ch2=body.get("insert")
+		ch2= toUnicode(ch2,app().tkEncoding) # 9/28/03
 	
 		# Prefer to match the character to the left of the cursor.
 		if ch1 in brackets:
@@ -2863,6 +2865,7 @@ class baseLeoFrame:
 			if (not forward and body.compare(index,"<=","1.0")):
 				return None
 			ch2 = body.get(index)
+			ch2= toUnicode(ch2,app().tkEncoding) # 9/28/03
 			if ch2 == ch: level += 1
 			if ch2 == match_ch:
 				level -= 1
@@ -4268,7 +4271,7 @@ class baseLeoFrame:
 		t.configure(state="disabled")
 	#@nonl
 	#@-node:putStatusLine
-	#@+node:updateStatusRowCol()
+	#@+node:updateStatusRowCol
 	def updateStatusRowCol (self):
 		
 		c = self.commands ; body = self.body ; lab = self.statusLabel
@@ -4281,6 +4284,7 @@ class baseLeoFrame:
 		row,col = getindex(body,index)
 		if col > 0:
 			s = body.get("%d.0" % (row),index)
+			s = toUnicode(s,app().tkEncoding) # 9/28/03
 			col = computeWidth (s,self.tab_width)
 	
 		if row != self.lastStatusRow or col != self.lastStatusCol:
@@ -4293,7 +4297,7 @@ class baseLeoFrame:
 		# Don't use after_idle: it hangs Leo.
 		self.statusFrame.after(100,self.updateStatusRowCol)
 	#@nonl
-	#@-node:updateStatusRowCol()
+	#@-node:updateStatusRowCol
 	#@-others
 
 class LeoFrame (baseLeoFrame):

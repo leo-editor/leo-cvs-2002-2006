@@ -46,7 +46,8 @@ def run(fileName=None,*args,**keywords):
 	# Create the application object.
 	app = leoApp.LeoApp()
 	if not app: return
-	setApp(app)
+	# Set the gApp global.
+	import leoGlobals ; leoGlobals.gApp = app
 	# Make sure we have Python 2.1 or above.
 	if not app.startCreate(): return
 	# Initialize the configuration class.

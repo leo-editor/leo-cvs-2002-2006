@@ -224,16 +224,17 @@ class baseCommands:
 		tabWidth  = dict.get("tabwidth")
 		# Create copy for undo.
 		v_copy = v.copyTree()
-		oldText = c.body.get("1.0","end") # 7/11/03
-		oldSel = getTextSelection(c.body) # 7/11/03
+		oldText = getAllText(c.body)
+		oldSel = getTextSelection(c.body)
 		anyChanged = false
 		while v and v != next:
 			if v == current:
 				if c.convertBlanks():
-					anyChanged = true # 7/11/03
+					anyChanged = true
 			else:
 				result = [] ; changed = false
 				text = v.t.bodyString
+				assert(isUnicode(text))
 				lines = string.split(text, '\n')
 				for line in lines:
 					s = optimizeLeadingWhitespace(line,tabWidth)
@@ -246,8 +247,8 @@ class baseCommands:
 			v.setDirty()
 			v = v.threadNext()
 		if anyChanged:
-			newText = c.body.get("1.0","end") # 7/11/03
-			newSel = getTextSelection(c.body) # 7/11/03
+			newText = getAllText(c.body)
+			newSel = getTextSelection(c.body)
 			c.undoer.setUndoParams("Convert All Blanks",
 				current,select=current,oldTree=v_copy,
 				oldText=oldText,newText=newText,
@@ -265,8 +266,8 @@ class baseCommands:
 		tabWidth  = dict.get("tabwidth")
 		# Create copy for undo.
 		v_copy = v.copyTree()
-		oldText = c.body.get("1.0","end") # 7/11/03
-		oldSel = getTextSelection(c.body) # 7/11/03
+		oldText = getAllText(c.body)
+		oldSel = getTextSelection(c.body)
 		anyChanged = false
 		while v and v != next:
 			if v == current:
@@ -275,6 +276,7 @@ class baseCommands:
 			else:
 				result = [] ; changed = false
 				text = v.t.bodyString
+				assert(isUnicode(text))
 				lines = string.split(text, '\n')
 				for line in lines:
 					i,w = skip_leading_ws_with_indent(line,0,tabWidth)
@@ -288,7 +290,7 @@ class baseCommands:
 			v.setDirty()
 			v = v.threadNext()
 		if anyChanged:
-			newText = c.body.get("1.0","end") # 7/11/03
+			newText = getAllText(c.body)
 			newSel = getTextSelection(c.body) # 7/11/03
 			c.undoer.setUndoParams("Convert All Tabs",
 				current,select=current,oldTree=v_copy,
@@ -401,8 +403,8 @@ class baseCommands:
 		junk, ws = skip_leading_ws_with_indent(headline,0,c.tab_width)
 		# Create copy for undo.
 		v_copy = v.copyTree()
-		oldText = c.body.get("1.0","end") # 7/11/03
-		oldSel = getTextSelection(c.body) # 7/11/03
+		oldText = getAllText(c.body)
+		oldSel = getTextSelection(c.body)
 		#@	<< Set headline for extract >>
 		#@+node:<< Set headline for extract >>
 		headline = string.strip(headline)
@@ -427,7 +429,7 @@ class baseCommands:
 			c.createLastChildNode(v,headline,body)
 			undoType =  "Can't Undo" # 12/8/02: None enables further undoes, but there are bugs now.
 			c.updateBodyPane(head,None,tail,undoType,oldSel,oldYview)
-			newText = c.body.get("1.0","end") # 7/11/03
+			newText = getAllText(c.body)
 			newSel = getTextSelection(c.body) # 7/11/03
 			c.undoer.setUndoParams("Extract",
 				v,select=current,oldTree=v_copy,
@@ -449,8 +451,8 @@ class baseCommands:
 		v_copy = v.copyTree()
 		# trace("v:     " + `v`)
 		# trace("v_copy:" + `v_copy`)
-		oldText = c.body.get("1.0","end") # 7/11/03
-		oldSel = getTextSelection(c.body) # 7/11/03
+		oldText = getAllText(c.body)
+		oldSel = getTextSelection(c.body)
 		#@	<< Set headline for extractSection >>
 		#@+node:<< Set headline for extractSection >>
 		while len(headline) > 0 and headline[0] == '/':
@@ -477,8 +479,8 @@ class baseCommands:
 			c.createLastChildNode(v,headline,body)
 			undoType = None # Set undo params later.
 			c.updateBodyPane(head,line1,tail,undoType,oldSel,oldYview)
-			newText = c.body.get("1.0","end") # 7/11/03
-			newSel = getTextSelection(c.body) # 7/11/03
+			newText = getAllText(c.body)
+			newSel = getTextSelection(c.body)
 			c.undoer.setUndoParams("Extract Section",v,
 				select=current,oldTree=v_copy,
 				oldText=oldText,newText=newText,
@@ -495,7 +497,7 @@ class baseCommands:
 		# Create copy for undo.
 		v_copy = v.copyTree()
 		# No change to body or selection of this node.
-		oldText = newText = c.body.get("1.0","end") # 7/11/03
+		oldText = newText = getAllText(c.body)
 		i, j = oldSel = newSel = self.getBodySelection()
 		c.beginUpdate()
 		if 1: # update range...
@@ -553,7 +555,9 @@ class baseCommands:
 				endSel = c.body.index(j + "lineend")
 				j = endSel
 			head = c.body.get("1.0",i)
+			head = toUnicode(head,app().tkEncoding) # 9/28/03
 			tail = c.body.get(j,"end")
+			tail = toUnicode(tail,app().tkEncoding) # 9/28/03
 		else: # Convert the entire text.
 			i = "1.0" ; j = "end" ; head = tail = ""
 			endSel = c.body.index(j + "- 1 chars") # 14-SEP-2002 DTHEIN
@@ -562,6 +566,7 @@ class baseCommands:
 			head = tail = None ; lines = []
 		else:
 			lines = c.body.get(i,endSel)
+			lines = toUnicode(lines,app().tkEncoding) # 9/28/03
 			lines = string.split(lines, '\n')
 			lines[-1] += trailingNewline # DTHEIN: add newline if needed
 		return head,lines,tail,oldSel,oldYview
@@ -679,6 +684,7 @@ class baseCommands:
 			insPos = str(lastLine) + ".0"
 			while lastLine < endLine:
 				s = body.get(insPos,insPos + "lineend")
+				s = toUnicode(s,app().tkEncoding) # 9/28/03
 				if s and (0 < len(s)) and not s.isspace():
 					break;
 				lastLine += 1
