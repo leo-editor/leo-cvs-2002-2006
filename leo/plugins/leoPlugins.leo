@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="1438" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="1439" clone_windows="0"/>
 <globals body_outline_ratio="0.45200000000000001">
 	<global_window_position top="73" left="343" height="750" width="859"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
@@ -973,6 +973,7 @@
 <v t="edream.120103084310"><vh>(Load plugins only from plugins menu)</vh>
 <v t="edream.120103084310.1"><vh>Report</vh></v>
 </v>
+<v t="edream.120603093808" a="M" tnodeList="edream.120603093808"><vh>@file pluginsManager.txt</vh></v>
 <v t="edream.110203113231.618"><vh>Plugins &amp; scripts</vh>
 <v t="edream.031217101015"><vh>Contributed scripts</vh>
 <v t="edream.110203113231.619"><vh>From Bernhard Mulder</vh>
@@ -1511,7 +1512,6 @@
 </v>
 </v>
 </v>
-<v t="edream.120603093808" a="M" tnodeList="edream.120603093808"><vh>@file pluginsManager.txt</vh></v>
 <v t="ekr.20040107092135" a="EV"><vh>New plugins:  very cool</vh>
 <v t="ekr.20040107092135.2" tnodeList="ekr.20040107092135.2,ekr.20040108060748,ekr.20040108054555.14,ekr.20040107092135.3,ekr.20040108054555.4,ekr.20040108054555.3,ekr.20040107092135.5,ekr.20040107111307,ekr.20040108054555.5,ekr.20040108054555.8,ekr.20040108054555.7,ekr.20040107092135.6,ekr.20040107092135.7,ekr.20040107092135.8,ekr.20040107103252,ekr.20040107103339"><vh>@file searchbox.py</vh>
 <v t="ekr.20040108054555.14"><vh>&lt;&lt; vars &gt;&gt;</vh></v>
@@ -1539,6 +1539,13 @@
 <v t="ekr.20040108062655.5"><vh>onSelect</vh></v>
 <v t="ekr.20040108062655.6"><vh>updateMarks</vh></v>
 <v t="ekr.20040108091136"><vh>updateRecent</vh></v>
+</v>
+</v>
+<v t="ekr.20040108095351" tnodeList="ekr.20040108095351,ekr.20040108095351.1,ekr.20040108100040,ekr.20040108095351.2,ekr.20040108095351.4"><vh>@file rowcol.py</vh>
+<v t="ekr.20040108095351.1"><vh>class rowColClass</vh>
+<v t="ekr.20040108100040"><vh>__init__</vh></v>
+<v t="ekr.20040108095351.2"><vh>addWidgets</vh></v>
+<v t="ekr.20040108095351.4"><vh>updateRowColWidget</vh></v>
 </v>
 </v>
 </v>
@@ -15569,6 +15576,7 @@ color_markup.py
 image.py
 # nav_buttons.py
 plugins_menu.py
+rowcol.py
 # New from Paul Paterson.
 nodenavigator.py
 searchbox.py
@@ -15677,7 +15685,7 @@ if Tkinter:
 		app.createTkGui(__file__)
 
 	if app.gui.guiName() == "tkinter":
-		es("Starting searchbox", color="orange")
+		# es("Starting searchbox", color="orange")
 		registerHandler("after-create-leo-frame", search.addWidgets)
 		plugin_signon(__name__)</t>
 <t tx="ekr.20040107092135.3">class SearchBox:
@@ -15693,7 +15701,7 @@ if Tkinter:
 	new_find = QuickFind(text,search_mode)
 	old_find, app.findFrame = app.findFrame, new_find
 	# Do the search.
-	self.commander.findNext()
+	self.c.findNext()
 	# Restore the find frame.
 	app.findFrame = old_find
 	# Remember this list 
@@ -15753,8 +15761,8 @@ if Tkinter:
 </t>
 <t tx="ekr.20040108054555.3">def addWidgets(self, tags, keywords):
 	"""Add the widgets to the navigation bar"""
-	self.commander = keywords['c'] 
-	toolbar = self.commander.frame.iconFrame
+	self.c = keywords['c'] 
+	toolbar = self.c.frame.iconFrame
 	# Button.
 	self.go = Tkinter.Button(self._getSizer(toolbar, 25, 32), text="GO", command=self.doSearch)
 	self.go.pack(side="right", fill="both", expand=1)
@@ -15862,7 +15870,7 @@ Still to do:
 - persist recent searches across Leo sessions
 - use INI file to set options for list size etc
 """</t>
-<t tx="ekr.20040108062655">"""Add a quick node navigator to the toolbar in Leo 
+<t tx="ekr.20040108062655">"""Add a quick node navigators to the toolbar in Leo 
 
 Adds a node navigator to the toolbar. The navigator allows quick
 access to marked nodes. You can either go to the marked node or hoist
@@ -15871,11 +15879,10 @@ the marked node.
 """ 
 
 __name__ = "Node Navigator"
-__version__ = "0.1" 
+__version__ = "0.2" 
 
 from leoPlugins import * 
 from leoGlobals import * 
-import leoFind 
 
 try:    import Tkinter 
 except: Tkinter = None 
@@ -15893,7 +15900,7 @@ if Tkinter:
 		app.createTkGui(__file__) 
 
 	if app.gui.guiName() == "tkinter": 
-		es("Activating NodeNavigator", color="orange") 
+		# es("Activating NodeNavigator", color="orange") 
 		registerHandler("after-create-leo-frame", nav.addWidgets) 
 		registerHandler(("set-mark","clear-mark"),nav.updateMarks)
 		registerHandler("select2",nav.updateRecent)
@@ -15903,10 +15910,10 @@ if Tkinter:
 	"""A node navigation aid for Leo"""
 	@others
 </t>
-<t tx="ekr.20040108062655.3">def addWidgets(self, tags, keywords): 
+<t tx="ekr.20040108062655.3">def addWidgets(self, tag, keywords): 
 	"""Add the widgets to the navigation bar""" 
-	self.commander = keywords['c'] 
-	toolbar = self.commander.frame.iconFrame 
+	self.c = keywords['c'] 
+	toolbar = self.c.frame.iconFrame 
 	# Main container 
 	self.frame = Tkinter.Frame(toolbar) 
 	self.frame.pack(side="left")
@@ -15942,21 +15949,8 @@ if Tkinter:
 		return parent </t>
 <t tx="ekr.20040108062655.5">def onSelect(self, vnode):
 	"""Do the navigation"""
-	# es("Selected %s" % vnode)
-	c = top()
-	c.selectVnode(vnode)
-	
-	if 0: # No longer used.
-		name = vnode.headString()
-		if len(name) &gt; 15:
-			name = "%s ..." % name[:15]
-		self.mark_value.set(name)
-	
-	if 0: # no longer used.
-		if self.option_value.get() == "Hoist":
-			trace()
-			c.dehoist()
-			c.hoist()</t>
+
+	self.c.selectVnode(vnode)</t>
 <t tx="ekr.20040108062655.6">def updateMarks(self, tag, keywords):
 	"""Update the marks list"""        
 	c = keywords.get("c")
@@ -16004,5 +15998,82 @@ if Tkinter:
 			tnodes.append(v.t)
 			vnodes.append(v)
 </t>
+<t tx="ekr.20040108095351">"""Add row/column indicators to the toolbar.""" 
+
+__name__ = "Row/Column indicators"
+__version__ = "0.1" 
+
+from leoPlugins import * 
+from leoGlobals import * 
+
+try:    import Tkinter 
+except: Tkinter = None 
+Tk = Tkinter
+
+@others
+
+if Tkinter: 
+
+	if app.gui is None: 
+		app.createTkGui(__file__)
+
+	if app.gui.guiName() == "tkinter":
+		rowCol = rowColClass() 
+		registerHandler("after-create-leo-frame",rowCol.addWidgets) 
+		plugin_signon("rowcol")</t>
+<t tx="ekr.20040108095351.1">class rowColClass:
+	
+	"""Class that puts row/column indicators in the status bar."""
+	
+	@others</t>
+<t tx="ekr.20040108095351.2">def addWidgets (self,tag,keywords):
+	
+	self.c = keywords['c']
+
+	toolbar = self.c.frame.iconFrame
+
+	# Main container 
+	self.rowColFrame = f = Tkinter.Frame(toolbar) 
+	f.pack(side="left")
+	
+	text = "line 0, col 0"
+	width = len(text) # Setting the width here prevents jitters.
+	self.rowColLabel = Tk.Label(f,text=text,width=width,anchor="w")
+	self.rowColLabel.pack(side="left")
+
+	# Register an idle-time handler to update the row and column indicators.
+	f.after_idle(self.updateRowColWidget)</t>
+<t tx="ekr.20040108095351.4">def updateRowColWidget (self):
+	
+	c = self.c ; body = c.frame.body.bodyCtrl ; gui = app.gui
+	tab_width = c.frame.tab_width
+	
+	# New for Python 2.3: may be called during shutdown.
+	if app.killed:
+		return
+
+	index = body.index("insert")
+	row,col = gui.getindex(body,index)
+	
+	if col &gt; 0:
+		if 0: # new code
+			s = c.frame.body.getRange(index1,index2)
+		else:
+			s = body.get("%d.0" % (row),index)
+		s = toUnicode(s,app.tkEncoding)
+		col = computeWidth(s,tab_width)
+
+	if row != self.lastStatusRow or col != self.lastStatusCol:
+		s = "line %d, col %d " % (row,col)
+		self.rowColLabel.configure(text=s)
+		self.lastStatusRow = row
+		self.lastStatusCol = col
+		
+	# Reschedule this routine 100 ms. later.
+	# Don't use after_idle: it hangs Leo.
+	self.rowColFrame.after(100,self.updateRowColWidget)</t>
+<t tx="ekr.20040108100040">def __init__ (self):
+	
+	self.lastStatusRow, self.lastStatusCol = -1,-1</t>
 </tnodes>
 </leo_file>
