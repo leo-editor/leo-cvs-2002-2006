@@ -196,7 +196,6 @@ class baseUndoer:
 		"""Public method to set undo & redo handlers for a new command."""
 		
 		u = self
-		
 		u.registerHandler(undoName,redoFunc,"Redo",u.redoDispatchDict,verbose)
 		u.registerHandler(undoName,undoFunc,"Undo",u.undoDispatchDict,verbose)
 		
@@ -217,8 +216,7 @@ class baseUndoer:
 		try:
 			dict[undoName] = getattr(u,func.__name__) # Get the method, not the function.
 			if verbose:
-				s = "%s registered as %s handler for %s" % (func.__name__,kind,undoName)
-				print s
+				print "%s registered as %s handler for %s" % (func.__name__,kind,undoName)
 		except KeyError:
 			s = "Bad key passed to register%sHandler %s %s" % (undoName,repr(func))
 			g.trace(s) ; g.es(s, color="red")
@@ -263,6 +261,7 @@ class baseUndoer:
 		frame.menu.enableMenu(menu,u.undoMenuLabel,u.canUndo())
 	#@-node:ekr.20031218072017.3611:enableMenuItems
 	#@+node:ekr.20031218072017.3612:getBead, peekBead, setBead
+	#@+node:EKR.20040526150818:getBeed
 	def getBead (self,n):
 		
 		u = self
@@ -288,7 +287,9 @@ class baseUndoer:
 				u.oldText = old_d["newText"]
 				# g.trace(u.oldText)
 		return d
-		
+	#@nonl
+	#@-node:EKR.20040526150818:getBeed
+	#@+node:EKR.20040526150818.1:peekBeed
 	def peekBead (self,n):
 		
 		u = self
@@ -297,7 +298,9 @@ class baseUndoer:
 		d = u.beads[n]
 		# g.trace(n,len(u.beads),d)
 		return d
-	
+	#@nonl
+	#@-node:EKR.20040526150818.1:peekBeed
+	#@+node:EKR.20040526150818.2:setBeed
 	def setBead (self,n,keywords=None):
 	
 		u = self ; d = {}
@@ -323,6 +326,8 @@ class baseUndoer:
 					# g.trace(u.oldText)
 		# g.trace(d)
 		return d
+	#@nonl
+	#@-node:EKR.20040526150818.2:setBeed
 	#@-node:ekr.20031218072017.3612:getBead, peekBead, setBead
 	#@+node:ekr.20031218072017.3613:redoMenuName, undoMenuName
 	def redoMenuName (self,name):
