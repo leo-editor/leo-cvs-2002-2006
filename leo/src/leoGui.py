@@ -317,6 +317,15 @@ class leoGui:
 	def lastIndex (self):
 	
 		self.oops()
+		
+	def moveIndexForward(self,index,n):
+	
+		self.oops()
+		
+	def moveIndexToNextLine(self,index):
+	
+		self.oop()
+	#@nonl
 	#@-node:Index
 	#@+node:Idle time
 	def setIdleTimeHook (self,idleTimeHookHandler,*args,**keys):

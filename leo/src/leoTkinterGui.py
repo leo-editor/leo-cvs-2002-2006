@@ -513,12 +513,18 @@ class tkinterGui(leoGui.leoGui):
 	
 		return "%s-%dc" % (index,n)
 	#@-node:moveIndexBackward
-	#@+node:moveIndexForward
+	#@+node:moveIndexForward & moveIndexToNextLine
 	def moveIndexForward(self,index,n):
 	
 		return "%s+%dc" % (index,n)
+		
+	def moveIndexToNextLine(self,t,index):
+	
+		newpos = t.index("%s linestart + 1lines" % (index))
+		
+		return choose(t.compare(newpos,"==","end"),None,newpos)
 	#@nonl
-	#@-node:moveIndexForward
+	#@-node:moveIndexForward & moveIndexToNextLine
 	#@+node:compareIndices
 	def compareIndices (self,t,n1,rel,n2):
 		return t.compare(n1,rel,n2)
