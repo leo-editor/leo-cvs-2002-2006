@@ -55,7 +55,7 @@ class LeoFrame:
 		
 		self.splitVerticalFlag,self.ratio,self.secondary_ratio = self.initialRatios()
 		
-		# Created below
+		# Created in createLeoFrame and its allies.
 		self.commands = None
 		self.tree = None
 		self.f1 = self.f2 = None
@@ -64,6 +64,8 @@ class LeoFrame:
 		self.canvas = None ; self.treeBar = None
 		self.splitter1 = self.splitter2 = None
 		self.icon = None
+		self.iconFrame = None # 5/20/02
+		self.statusText = None # 5/20/02
 		
 		self.menus = {} # Menu dictionary.
 		self.menuShortcuts = None # List of menu shortcuts for warnings.
@@ -200,9 +202,8 @@ class LeoFrame:
 		if new_frames:
 			outerFrame = Tk.Frame(top)
 			outerFrame.pack(expand=1,fill="both")
-	
-			iconFrame = Tk.Frame(outerFrame,height="5m",bd=2,relief="groove")
-			iconFrame.pack(fill="x",pady=2)
+			self.iconFrame = Tk.Frame(outerFrame,height="5m",bd=2,relief="groove")
+			self.iconFrame.pack(fill="x",pady=2)
 		else: outerFrame = top
 	
 		# Splitter 1 is the main splitter containing splitter2 and the body pane.
@@ -315,8 +316,8 @@ class LeoFrame:
 			statusFrame = Tk.Frame(outerFrame,bd=2)
 			lab = Tk.Label(statusFrame,text="status")
 			lab.pack(side="left")
-			statusText = Tk.Entry(statusFrame)
-			statusText.pack(side="left",expand=1,fill="x")
+			self.statusText = Tk.Entry(statusFrame)
+			self.statusText.pack(side="left",expand=1,fill="x")
 			statusFrame.pack(fill="x",pady=1)
 	
 	#@-body
@@ -3333,7 +3334,10 @@ class LeoFrame:
 		#                     opening multiple Leo files.
 		find.top.withdraw()
 		find.top.deiconify()
-		find.find_text.focus_set()
+		
+		t = find.find_text
+		t.focus_set()
+		setTextSelection (t,"1.0","end") # Thanks Rich.
 		find.commands = self
 	
 	#@-body
