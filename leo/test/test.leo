@@ -2,14 +2,14 @@
 <?xml-stylesheet ekr_stylesheet?>
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="6435" clone_windows="0"/>
-<globals body_outline_ratio="0.550925925926">
-	<global_window_position top="39" left="243" height="855" width="907"/>
+<globals body_outline_ratio="0.59649122807">
+	<global_window_position top="24" left="175" height="855" width="907"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
 <find_panel_settings/>
 <vnodes>
-<v t="ekr.20041121151002" a="E"><vh>@settings</vh>
+<v t="ekr.20041121151002"><vh>@settings</vh>
 <v t="ekr.20041121151002.1"><vh>@recent-files</vh></v>
 <v t="ekr.20041124063401"><vh>@bool use_plugins = True</vh></v>
 </v>
@@ -339,7 +339,7 @@
 </v>
 <v t="ekr.20040914072438"><vh>Tests of @root</vh>
 <v t="ekr.20040914072438.1"><vh>atRootTest1.txt</vh></v>
-<v t="ekr.20040914072438.2" a="M"><vh>atRootTest2.txt</vh></v>
+<v t="ekr.20040914072438.2"><vh>atRootTest2.txt</vh></v>
 </v>
 <v t="ekr.20040910094343"><vh>Tests of @run</vh>
 <v t="ekr.20040910094343.1"><vh>Note:  windows cd does not affect value of os.getcwd</vh></v>
@@ -856,7 +856,7 @@
 </v>
 </v>
 </v>
-<v t="EKR.20040613162717" a="M"><vh>Report newlines</vh></v>
+<v t="EKR.20040613162717"><vh>Report newlines</vh></v>
 <v t="ekr.20040312021734.1"><vh>Script to clean unused tnodeLists</vh></v>
 <v t="ekr.20040330095252"><vh>script to clear log frame</vh></v>
 <v t="ekr.20040322120331"><vh>script to print tnodeList's</vh></v>
@@ -977,9 +977,8 @@
 </v>
 </v>
 </v>
-<v t="ekr.20040327114250"><vh>@thin ../test/unittest/batchTest.py</vh></v>
+<v t="ekr.20040712101754" a="E"><vh>Unit Tests</vh>
 <v t="ekr.20041012101944"><vh>@thin ../test/unittest/errorTest.py</vh></v>
-<v t="ekr.20040712101754"><vh>Unit Tests</vh>
 <v t="ekr.20040712101754.102"><vh>atFileTests...</vh>
 <v t="ekr.20040707140849.5"><vh>at-File test code (leoTest.py)</vh>
 <v t="ekr.20040707141957"><vh>&lt;&lt; dump result and expected &gt;&gt;</vh></v>
@@ -1132,7 +1131,7 @@
 </v>
 </v>
 </v>
-<v t="ekr.20040712101754.2"><vh>Test Leo files...</vh>
+<v t="ekr.20040712101754.2" a="E"><vh>Test .leo files...</vh>
 <v t="ekr.20040730181601"><vh>@test minimalLeoFile.leo</vh></v>
 <v t="ekr.20040730181610"><vh>@test minimalLeoFile2.leo</vh></v>
 <v t="ekr.20040831104758"><vh>@test minimalLeoFile3.leo</vh></v>
@@ -1142,6 +1141,12 @@
 <v t="ekr.20040712101754.5"><vh>@test leoPlugins.leo</vh></v>
 <v t="ekr.20040712101754.6"><vh>@test LeoDocs.leo</vh></v>
 <v t="ekr.20040831101747"><vh>@test line endings of Linux scripts</vh></v>
+</v>
+<v t="ekr.20041130092210"><vh>Batch mode tests</vh>
+<v t="ekr.20040327114250"><vh>@thin ../test/unittest/batchTest.py</vh></v>
+<v t="ekr.20040712101754.186"><vh>@test batch mode</vh>
+<v t="ekr.20041012084201"><vh>removeFile</vh></v>
+</v>
 </v>
 <v t="ekr.20040712101754.36"><vh>Non-file tests</vh>
 <v t="ekr.20040712101754.37"><vh>@suite Edit body tests</vh>
@@ -1355,9 +1360,6 @@
 </v>
 <v t="ekr.20040712101754.184"><vh>@test consistency of p.v.t.vnodeList &amp; v.parents for cloned nodes</vh></v>
 <v t="ekr.20040712101754.185"><vh>@test that cloned nodes actually share subtrees</vh></v>
-<v t="ekr.20040712101754.186"><vh>@test batch mode</vh>
-<v t="ekr.20041012084201"><vh>removeFile</vh></v>
-</v>
 </v>
 <v t="ekr.20040712101754.187"><vh>Position tests...</vh>
 <v t="ekr.20040712101754.188"><vh>@test p.iters and v.iters</vh>
@@ -1431,10 +1433,17 @@
 <v t="ekr.20040707081532.1"><vh>Do @test</vh></v>
 <v t="ekr.20041001194357"><vh>@button unit test</vh></v>
 </v>
-<v t="ekr.20041125145818.1" a="EM"><vh>Pmw dialog</vh>
-<v t="ekr.20041127231319" a="ETV"><vh>To do</vh></v>
+<v t="ekr.20041125145818.1" a="TV"><vh>Pmw dialog</vh>
+<v t="ekr.20041130085400"><vh>Status: read me</vh>
+<v t="ekr.20041130095005"><vh>bugs, etc</vh></v>
+<v t="ekr.20041130085943"><vh>buttons</vh></v>
+<v t="ekr.20041130085943.1"><vh>putting settings into effect</vh></v>
+<v t="ekr.20041130085400.2" a="M"><vh>fonts</vh></v>
+<v t="ekr.20041130085400.3" a="M"><vh>types</vh></v>
+</v>
+<v t="ekr.20041127231319"><vh>To do</vh></v>
 <v t="ekr.20041128225703"><vh>Notes</vh></v>
-<v t="ekr.20041126110057" a="E"><vh>class settingsController</vh>
+<v t="ekr.20041126110057"><vh>class settingsController</vh>
 <v t="ekr.20041126110158"><vh> ctor</vh>
 <v t="ekr.20041126113848"><vh>&lt;&lt; create the dialog d &gt;&gt;</vh></v>
 <v t="ekr.20041126113848.1"><vh>&lt;&lt; create paneFrame, a paned widget &gt;&gt;</vh></v>
@@ -1443,13 +1452,13 @@
 <v t="ekr.20041127132947"><vh>&lt;&lt; put setterCanvas in paneFrame's setter pane&gt;&gt;</vh></v>
 <v t="ekr.20041126133120"><vh>&lt;&lt; put a Text widget in the comment pane &gt;&gt;</vh></v>
 </v>
-<v t="ekr.20041128225703.1" a="E"><vh>center</vh></v>
+<v t="ekr.20041128225703.1"><vh>center</vh></v>
 <v t="ekr.20041126153101.1"><vh>createSettingsTree</vh>
-<v t="ekr.20041127055009.1" a="E"><vh>&lt;&lt; create a node p for  kind &amp; root2 &gt;&gt;</vh>
+<v t="ekr.20041127055009.1"><vh>&lt;&lt; create a node p for  kind &amp; root2 &gt;&gt;</vh>
 <v t="ekr.20041127081146"><vh>&lt;&lt; add entry for p to filesInfoDict &gt;&gt;</vh></v>
 </v>
 </v>
-<v t="ekr.20041127112925"><vh>createWidgets &amp; allies</vh>
+<v t="ekr.20041127112925"><vh>createWidgets &amp; helpers</vh>
 <v t="ekr.20041127134208"><vh>&lt;&lt; define creatorDispatchDict &gt;&gt;</vh></v>
 <v t="ekr.20041127134208.1"><vh>createBool</vh></v>
 <v t="ekr.20041127134208.2"><vh>createColor</vh>
@@ -1458,7 +1467,7 @@
 <v t="ekr.20041128062902.1"><vh>&lt;&lt; create picker button and callback &gt;&gt;</vh></v>
 </v>
 <v t="ekr.20041127134208.3"><vh>createDirectory</vh></v>
-<v t="ekr.20041127134208.4" a="M"><vh>createFont  (finish)</vh></v>
+<v t="ekr.20041127134208.4"><vh>createFont  (finish)</vh></v>
 <v t="ekr.20041127134208.5"><vh>createInt</vh></v>
 <v t="ekr.20041127134208.6"><vh>createFloat</vh></v>
 <v t="ekr.20041127134208.7"><vh>createPath</vh></v>
@@ -1470,29 +1479,39 @@
 <v t="ekr.20041127134613.1"><vh>createString</vh></v>
 <v t="ekr.20041127134613.2"><vh>createType   ??</vh></v>
 </v>
-<v t="ekr.20041129182726"><vh>es</vh></v>
-<v t="ekr.20041128230425"><vh>get_window_info</vh></v>
-<v t="ekr.20041126124710"><vh>handleTreeClick</vh></v>
+<v t="ekr.20041130061955"><vh>callbacks...</vh>
+<v t="ekr.20041126104958"><vh>onAnyButton</vh></v>
+<v t="ekr.20041128082112"><vh>revert</vh></v>
 <v t="ekr.20041127144346"><vh>onPaneResize</vh></v>
-<v t="ekr.20041127112806"><vh>printWidgets</vh></v>
+<v t="ekr.20041126124710"><vh>handleTreeClick</vh></v>
+</v>
+<v t="ekr.20041130061955.1"><vh>getters...</vh>
+<v t="ekr.20041129175112"><vh>findCorrespondingNode</vh></v>
+<v t="ekr.20041129095748"><vh>findSettingsRoot</vh></v>
 <v t="ekr.20041127090307"><vh>rootNodeComments</vh></v>
 <v t="ekr.20041126142253.1"><vh>settingsPosition</vh></v>
-<v t="ekr.20041127092231"><vh>updateComments</vh></v>
+</v>
+<v t="ekr.20041130061955.2"><vh>redrawing...</vh>
 <v t="ekr.20041126153101"><vh>updateSetter</vh></v>
+<v t="ekr.20041127092231"><vh>updateComments</vh></v>
 <v t="ekr.20041127155541"><vh>updateSetterLabel</vh></v>
-<v t="ekr.20041128042051"><vh>value handlers &amp; callbacks...</vh>
-<v t="ekr.20041129175112"><vh>findCorrespondingNode</vh></v>
-<v t="ekr.20041129095748" a="E"><vh>findSettingsRoot</vh></v>
+</v>
+<v t="ekr.20041128042051"><vh>value handlers...</vh>
 <v t="ekr.20041128042051.1"><vh>initValue</vh></v>
-<v t="ekr.20041126104958"><vh>onAnyButton</vh></v>
-<v t="ekr.20041128081018"><vh>printChangedVars</vh></v>
-<v t="ekr.20041128082112"><vh>revert</vh></v>
-<v t="ekr.20041129113302" a="E"><vh>updateOneNode</vh></v>
+<v t="ekr.20041128081018.1"><vh>writeChangedVars &amp; helpers</vh>
+<v t="ekr.20041130062919"><vh>updateConfig</vh></v>
+<v t="ekr.20041129113302" a="M"><vh>updateOneNode</vh></v>
 <v t="ekr.20041129095748.1"><vh>writeChangedList</vh>
 <v t="ekr.20041129112522"><vh>&lt;&lt; dump all the dicts in filesInfoDict &gt;&gt;</vh></v>
 </v>
-<v t="ekr.20041128081018.1"><vh>writeChangedVars</vh></v>
 <v t="ekr.20041129113117"><vh>writeChangesToFile</vh></v>
+</v>
+</v>
+<v t="ekr.20041130061955.3"><vh>utilities...</vh>
+<v t="ekr.20041129182726"><vh>es</vh></v>
+<v t="ekr.20041128230425"><vh>get_window_info</vh></v>
+<v t="ekr.20041128081018"><vh>printChangedVars</vh></v>
+<v t="ekr.20041127112806"><vh>printWidgets</vh></v>
 </v>
 </v>
 <v t="ekr.20041125163105.21"><vh>class settingsTree (leoTkinterTree)</vh>
@@ -1544,20 +1563,6 @@
 <v t="ekr.20041127103503.18"><vh>doType</vh></v>
 </v>
 </v>
-</v>
-<v t="ekr.20041128042051" a="E"><vh>value handlers &amp; callbacks...</vh>
-<v t="ekr.20041129175112"><vh>findCorrespondingNode</vh></v>
-<v t="ekr.20041129095748" a="E"><vh>findSettingsRoot</vh></v>
-<v t="ekr.20041128042051.1"><vh>initValue</vh></v>
-<v t="ekr.20041126104958"><vh>onAnyButton</vh></v>
-<v t="ekr.20041128081018"><vh>printChangedVars</vh></v>
-<v t="ekr.20041128082112"><vh>revert</vh></v>
-<v t="ekr.20041129113302" a="E"><vh>updateOneNode</vh></v>
-<v t="ekr.20041129095748.1"><vh>writeChangedList</vh>
-<v t="ekr.20041129112522"><vh>&lt;&lt; dump all the dicts in filesInfoDict &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20041128081018.1"><vh>writeChangedVars</vh></v>
-<v t="ekr.20041129113117"><vh>writeChangesToFile</vh></v>
 </v>
 </vnodes>
 <tnodes>
@@ -2179,7 +2184,7 @@ import leoGlobals as g
 print g.app.config.redirect_execute_script_output_to_log_pane</t>
 <t tx="EKR.20040627103732">@ignore</t>
 <t tx="EKR.20040627103801"></t>
-<t tx="EKR.20040627103902" lineYOffset="4b032e" icons="5d7100287d710128550577686572657102550a6265666f726549636f6e710355047870616471044b025504747970657105550466696c6571066806582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286805680668084afdffffff6806582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6802550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e"></t>
+<t tx="EKR.20040627103902" lineYOffset="4b032e" icons="5d7100287d7101285504747970657102550466696c65710355047870616471044b02550577686572657105550a6265666f726549636f6e71066803582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286802680368084afdffffff6803582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6805550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e"></t>
 <t tx="EKR.20040627121836">import leoGlobals as g
 
 c = g.top() ; p = c.currentPosition()
@@ -2310,7 +2315,7 @@ for p in c.rootPosition().allNodes_iter():
 s = "%d nodes" % count
 print s ; g.es(s)</t>
 <t tx="ekr.20040312101720"></t>
-<t tx="ekr.20040317101155" lineYOffset="4b032e" icons="5d7100287d7101285504747970657102550466696c65710355047870616471044b02550577686572657105550a6265666f726549636f6e710668035834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286802680368084afdffffff68035834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6805550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">import leoGlobals as g
+<t tx="ekr.20040317101155" lineYOffset="4b032e" icons="5d7100287d710128550577686572657102550a6265666f726549636f6e710355047870616471044b025504747970657105550466696c65710668065834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286805680668084afdffffff68065834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6802550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">import leoGlobals as g
 
 c = g.top()
 
@@ -11194,7 +11199,14 @@ Bigger projects:
     top.focus_force() # Get all keystrokes.
     root.wait_window(top)</t>
 <t tx="ekr.20041121151002"></t>
-<t tx="ekr.20041121151002.1">C:\prog\leoCVS\leo\test\test.leo</t>
+<t tx="ekr.20041121151002.1">c:\prog\leocvs\leo\doc\LeoDocs.leo
+c:\prog\leocvs\leo\plugins\leoPlugins.leo
+c:\prog\leocvs\leo\src\LeoPy.leo
+c:\prog\leocvs\leo\dist\leoDist.leo
+c:\prog\leocvs\leo\test\unittest\minimalLeoFile3.leo
+c:\prog\leocvs\leo\test\unittest\minimalLeoFile2.leo
+c:\prog\leocvs\leo\test\unittest\minimalLeoFile.leo
+C:\prog\leoCVS\leo\test\test.leo</t>
 <t tx="ekr.20041124063401"></t>
 <t tx="ekr.20041124102349">class tixDialog (leoTkinterDialog.leoTkinterDialog):
     
@@ -13262,12 +13274,14 @@ self.setterLabel = sc.component('label')
 <t tx="ekr.20041127231319">@
 @killcolor
 
+** Complete g.app.config.set.
+
+** Expand dialog tree to match underlying @settings tree.
+
 * Figure out why findSettingsRoot doesn't work if no summary node.
     - May be a problem with copying positions.
 
 * Use p.v rather than p as keys in filesInfoDict.
-
-- Write about new pattern of putting script in test.leo
 
 - Finish font stuff.
 
@@ -13275,13 +13289,14 @@ self.setterLabel = sc.component('label')
     - Refresh recreates and redraws dialog's outline.
     - Check button checks for duplicate shortcuts, bad settings, etc.
 
-- (last) Move code into Leo's core.</t>
+- (last) Move code into Leo's core.
+    - move findCorrespondingNode into leoNodes class.</t>
 <t tx="ekr.20041128042051">@ These keep track of the original and changed values of all items in the present setter pane.</t>
 <t tx="ekr.20041128042051.1">def initValue (self,p,name,kind,val,getValueCallback):
     
     munge = g.app.config.munge
     
-    # g.trace(name,val)
+    # g.trace(name,kind,val)
     
     self.initValueDict [munge(name)] = (p,name,kind,val,getValueCallback)</t>
 <t tx="ekr.20041128061452">def createSpacerFrame (self,parent,size=10):
@@ -13339,6 +13354,10 @@ b.pack(side="left")</t>
         if val != newVal:
             print "%10s -&gt; %10s %s" % (str(val),str(newVal),name)</t>
 <t tx="ekr.20041128081018.1">def writeChangedVars (self):
+    
+    """Create per-file changes lists from diffs between what has been inited and written.
+    
+    Call writeChangedList to update each file from items in this list."""
 
     changedList = []
     fDict = self.fileValueDict
@@ -13489,7 +13508,7 @@ def get_window_info (self):
     # Accumulate the changes for each file in a 'changes' list for each root.
     for data in changedList:
         p,name,kind,oldVal,newVal = data
-        # print "%6s %10s -&gt; %10s %s" % (tag,str(oldVal),str(newVal),name)
+        # print "%6s %6s %10s -&gt; %10s %s" % (tag,kind,str(oldVal),str(newVal),name)
         root = self.findSettingsRoot(p)
         d = filesInfoDict.get(root)
         changes = d.get('changes')
@@ -13498,21 +13517,21 @@ def get_window_info (self):
 
     for root in filesInfoDict.keys():
         d = filesInfoDict.get(root)
+        # Keys are 'c','changes','path','islocal' (unused)
+        c = d.get('c')
         changes = d.get('changes')
+        path = d.get('path')
+        # isLocal = rootDict.get('isLocal')
         if changes:
-            self.writeChangesToFile(changes,d)
+            self.writeChangesToFile(c,changes,path)
+            self.updateConfig(c,changes)
         d['changes'] = []</t>
 <t tx="ekr.20041129112522">for key in filesInfoDict.keys():
     print ; print
     print "key",key
     g.printDict(filesInfoDict.get(key))
 print ; print</t>
-<t tx="ekr.20041129113117">def writeChangesToFile (self,changes,rootDict):
-    
-    # Keys in rootDict: 'changes','c','isLocal',p','path'
-    c = rootDict.get('c')
-    path = rootDict.get('path')
-    isLocal = rootDict.get('isLocal')
+<t tx="ekr.20041129113117">def writeChangesToFile (self,c,changes,path):
 
     # Write the individual changes.
     for data in changes:
@@ -13532,23 +13551,35 @@ print ; print</t>
     """Update the node in c corresponding to p = data[0]."""
     
     p,name,kind,oldVal,val = data
-    name = name.strip()
-    kind = kind.strip()
-    
+    name = name.strip() ; kind = kind.strip()
+
+    # Root 1 is the root of the dialog's outline.
     p1 = p
-    root1 = self.findSettingsRoot(p1)
-    root2 = g.app.config.settingsRoot(c)
+    root1 = self.findSettingsRoot(p1).copy()
+    c1 = root1.c
+    
+    # Root is the root of the settings outline in the file.
+    root2 = g.app.config.settingsRoot(c) # c is NOT self.c
+    # g.trace(root2.c.mFileName)
     p2 = self.findCorrespondingNode(root1,root2,p1)
-    # Update the outline in the dialog and in the target.
-    for p in (p1,p2):
-        if kind in ('shortcuts','recentfiles'):
-            # Put the values in the body.
-            p.initHeadString("@%s %s" % (kind,name))
-            body = '\n'.join(val)
-            p.setBodyStringOrPane(body)
-        else:
-            # Put everything in the headline.
-            p.initHeadString("@%s %s = %s" % (kind,name,val))</t>
+    if p2:
+        c2 = p2.c ; filename = c2.mFileName
+    else:
+        g.trace("can't happen: can't find node in",root2.c.mFileName)
+        c2 = None ; filename = None
+
+    # Update the outline in the dialog and the target file.
+    for p,c,where in ((p1,c1,"dialog"),(p2,c2,filename)):
+        if p:
+            # g.trace("updating %s in %s" % (name,where))
+            if kind in ('shortcuts','recentfiles'):
+                # Put the values in the body.
+                p.initHeadString("@%s %s" % (kind,name))
+                body = '\n'.join(val)
+                p.setBodyStringOrPane(body)
+            else:
+                # Put everything in the headline.
+                p.initHeadString("@%s %s = %s" % (kind,name,val))</t>
 <t tx="ekr.20041129175112">def findCorrespondingNode (self,root1,root2,p1):
     
     """Return the node corresponding to p1 (in root1) in the root2's tree."""
@@ -13558,14 +13589,20 @@ print ; print</t>
     # Go up tree 1, computing child indices.
     childIndices = []
     for p in p1.self_and_parents_iter():
+        #g.trace(p)
         if p == root1: break
         childIndices.append(p.childIndex())
+        
+    childIndices.reverse()
+    #g.trace(childIndices)
     
     # Go down tree 2, moving to the n'th child.
     p2 = root2.copy()
     for n in childIndices:
+        #g.trace(p2)
         p2.moveToNthChild(n)
 
+    # g.trace(p2)
     return p2</t>
 <t tx="ekr.20041129182726">def es(self,*args,**keys):
     
@@ -13573,5 +13610,72 @@ print ; print</t>
     g.app.log = self.c.frame.log
     g.es(*args,**keys)
     g.app.log = old_log</t>
+<t tx="ekr.20041130061955"></t>
+<t tx="ekr.20041130061955.1"></t>
+<t tx="ekr.20041130061955.2"></t>
+<t tx="ekr.20041130061955.3"></t>
+<t tx="ekr.20041130062919">def updateConfig(self,c,changes):
+    
+    """Update the core config settings from the changes list."""
+    
+    munge = g.app.config.munge
+    
+    for data in changes:
+        p,name,kind,oldval,val = data
+        if munge(name) == "recentfiles":
+            c.setRecentFiles(val)
+        else:
+            g.app.config.set(c,name,kind,val)</t>
+<t tx="ekr.20041130085400">@
+@killcolor
+
+Big picture: this prototype is complete and functional. See child nodes for details.</t>
+<t tx="ekr.20041130085400.2">@
+
+The dialog does not support a Font picker yet.  Creating the picker in the gui will not be difficult.
+
+Some way must be chosen to specify fonts in text.  This will probably be something in body text that looks like a dict:
+
+family: blah
+size: 18
+weight: normal
+slant: normal
+
+The parser will convert this to a true dict.</t>
+<t tx="ekr.20041130085400.3">@
+
+Leo needs one more standard type, say @strings.  This type will replace all user-defined types.  The body text will contain a list of valid strings.  The picker will show a combo box, as is done presently in the color name picker.
+
+I plan to remove all the machinery to support most user-types.  This was not a great idea.  Indeed, the dialog defines all the types that really matter, namely all the types for which the dialog can create a picker.  Anything beyond this is basically a delusion of no real utility.</t>
+<t tx="ekr.20041130085943">@
+
+All buttons are functional except the refresh and check buttons.
+
+- The refresh button would be easy to do, but it will be moot if the dialog gets injected into the main Leo window.
+
+- The check button is more complex, but conceptually straightforward.
+
+- For testing I like to have the window close button funtional.  In production code it should be disabled because it is not clear whether is should equivalent to OK or Cancel.
+
+To disable this button, in onAnyButton change:
+
+if name in (None,"OK","Cancel"):
+
+to:
+
+if name in ("OK","Cancel"):</t>
+<t tx="ekr.20041130085943.1">@
+
+Leo updates settings files, including the open file if that is appropriate, when the user presses the OK, Apply or Revert buttons.
+
+g.app.config.set does not do anything yet, so settings don't go into effect. This will probably be very easy to fix.
+
+Completing g.app.config.set  will put all drawing settings into effect immediately.  Some settings are more difficult to put into effect.
+
+A general way to put settings into effect would be good, but may not be easy.</t>
+<t tx="ekr.20041130092210"></t>
+<t tx="ekr.20041130095005">@
+
+A number of bugs remain, but that's not too important in a prototype.  See the To do list...</t>
 </tnodes>
 </leo_file>
