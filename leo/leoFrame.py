@@ -2151,7 +2151,7 @@ class LeoFrame:
 		c = self.commands ; v = c.currentVnode() ; colorizer = c.tree.colorizer
 		colorizer.showInvisibles = choose(colorizer.showInvisibles,0,1)
 		# It is much easier to change the menu name here than in the menu updater.
-		menu = c.frame.editMenu
+		menu = c.frame.menus.get("Edit")
 		if colorizer.showInvisibles:
 			setMenuLabel(menu,"Show Invisibles","Hide Invisibles")
 		else:
