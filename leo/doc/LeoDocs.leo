@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="11563" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="11565" clone_windows="0"/>
 <globals body_outline_ratio="0.452928870293">
-	<global_window_position top="30" left="149" height="860" width="988"/>
+	<global_window_position top="-9" left="364" height="860" width="988"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences>
@@ -69,7 +69,7 @@
 <v t="edream.110203163054.26"><vh>Travers A. Hough</vh></v>
 <v t="edream.110203163054.23"><vh>Zak Greant</vh></v>
 </v>
-<v t="edream.110203163054.46"><vh>Release Notes</vh>
+<v t="edream.110203163054.46" a="E"><vh>Release Notes</vh>
 <v t="edream.110203163054.47"><vh>Warnings</vh></v>
 <v t="edream.110203163054.48"><vh>Installation notes</vh>
 <v t="edream.110203163054.49"><vh>System requirements</vh></v>
@@ -82,7 +82,7 @@
 <v t="edream.110203163054.62"><vh>Quick start</vh></v>
 </v>
 <v t="edream.110203163054.63"><vh>Latest versions</vh>
-<v t="ekr.20040713110718"><vh>4.2 beta 3</vh>
+<v t="ekr.20040713110718" a="E"><vh>4.2 beta 3</vh>
 <v t="ekr.20040804165258.1"><vh>Bug fixes</vh>
 <v t="ekr.20040804164600.16"><vh>Leo gives the user a chance to save read-only files</vh></v>
 <v t="ekr.20040804164600.36"><vh>Fixed some unit-test bugs</vh></v>
@@ -1850,7 +1850,7 @@
 <v t="EKR.20040524104904.429"><vh>Weaving</vh></v>
 </v>
 </v>
-<v t="edream.110203163054.1050"><vh>FAQ</vh>
+<v t="edream.110203163054.1050" a="E"><vh>FAQ</vh>
 <v t="edream.110203163054.1051"><vh>Learning about Leo</vh>
 <v t="edream.110203163054.1052"><vh>What's the best way to learn to use Leo?</vh></v>
 <v t="edream.110203163054.1053"><vh>Where are the simple examples?</vh></v>
@@ -1940,7 +1940,7 @@
 <v t="edream.120903151103"><vh>Importing files</vh>
 <v t="edream.120903151103.1"><vh>How can I import many files at once?</vh></v>
 </v>
-<v t="edream.110203163054.1071"><vh>Other topics</vh>
+<v t="edream.110203163054.1071" a="TV"><vh>Other topics</vh>
 <v t="ekr.20040805102623"><vh>How can I use Python's pdb debugger with Leo?</vh></v>
 <v t="edream.110203163054.1073"><vh>How can I add support in Leo for a new language?</vh>
 <v t="edream.110203163054.1074"><vh>code</vh>
@@ -1990,6 +1990,7 @@
 </v>
 <v t="edream.110203163054.1108"><vh>How can I create a template .leo file?</vh></v>
 <v t="ekr.20040411074926"><vh>How can I use Leo to develop Leo itself?</vh></v>
+<v t="ekr.20040908100113" a="E"><vh>Control-Shift backspace doesn't work.  What should I do?</vh></v>
 </v>
 </v>
 <v t="edream.110203163054.1158"><vh>Sample Code</vh>
@@ -2017,7 +2018,7 @@
 </v>
 </v>
 </v>
-<v t="ekr.20040414161647" a="E"><vh>Leo's HTML Users Guide (Created using the rst2 plugin)</vh>
+<v t="ekr.20040414161647"><vh>Leo's HTML Users Guide (Created using the rst2 plugin)</vh>
 <v t="ekr.20040414162124"><vh>@rst leo_TOC.html</vh>
 <v t="ekr.20040414163815"><vh>Table of Contents</vh>
 <v t="ekr.20040414163815.1"><vh>@rst</vh></v>
@@ -2041,8 +2042,8 @@
 <v t="ekr.20040414174439.1"><vh>@rst</vh></v>
 </v>
 </v>
-<v t="ekr.20040403171740" a="E"><vh>@rst scripting.html</vh>
-<v t="ekr.20040403183229" a="E"><vh>Overview</vh>
+<v t="ekr.20040403171740"><vh>@rst scripting.html</vh>
+<v t="ekr.20040403183229"><vh>Overview</vh>
 <v t="ekr.20040403183229.1"><vh>@rst</vh></v>
 </v>
 <v t="ekr.20040403175011"><vh>g.top(): the commander of the top window</vh>
@@ -2104,24 +2105,24 @@
 <v t="ekr.20040403173920.25"><vh>Functions defined in leoGlobals.py</vh>
 <v t="ekr.20040403184306.3"><vh>@rst</vh></v>
 </v>
-<v t="ekr.20040403173920.5" a="E"><vh>Redirecting output from scripts</vh>
+<v t="ekr.20040403173920.5"><vh>Redirecting output from scripts</vh>
 <v t="ekr.20040403183718"><vh>@rst</vh></v>
 </v>
-<v t="ekr.20040403173920.26" a="E"><vh>Summary of the vnode and position classes</vh>
-<v t="ekr.20040403184306.4" a="E"><vh>@rst</vh>
+<v t="ekr.20040403173920.26"><vh>Summary of the vnode and position classes</vh>
+<v t="ekr.20040403184306.4"><vh>@rst</vh>
 <v t="ekr.20040411151245"><vh>Iterators</vh>
 <v t="ekr.20040411151245.1"><vh>@rst</vh></v>
 </v>
 <v t="ekr.20040403173920.27"><vh>Getters</vh>
 <v t="ekr.20040403192653"><vh>@rst</vh></v>
 </v>
-<v t="ekr.20040403173920.28" a="E"><vh>Setters</vh>
+<v t="ekr.20040403173920.28"><vh>Setters</vh>
 <v t="ekr.20040403192653.1"><vh>@rst</vh></v>
 </v>
 </v>
 </v>
-<v t="ekr.20040906100201" a="E"><vh>Unit testing with @test and @suite</vh>
-<v t="ekr.20040906100201.1" a="TV"><vh>@rst</vh></v>
+<v t="ekr.20040906100201"><vh>Unit testing with @test and @suite</vh>
+<v t="ekr.20040906100201.1"><vh>@rst</vh></v>
 </v>
 </v>
 </v>
@@ -15327,5 +15328,32 @@ Notes:
 
 |prev| |leo| |next|
 </t>
+<t tx="ekr.20040908100113">Many thanks to Dave Hein for this FAQ entry.
+
+The cause of the keymapping problem is a issue with the X11 keyboard mapping, not with Tk.
+
+If you have this problem on your system, issue the command:
+
+xmodmap -pke 
+
+and look in the results for the line for keycode 22. I'll bet it shows something like:
+
+keycode 22 = BackSpace Terminate_Server
+
+That second token ("Terminate_Server") is what is supposed to be mapped to Shift-Backspace. You want this second token to be either not present or to be BackSpace.
+
+To fix this, create a file (e.g. .Xmodmap) and give it the content:
+
+keycode 22 = BackSpace
+
+then run the command:
+
+xmodmap .Xmodmap
+
+And you'll have fixed the problem.
+
+Now, on my system this also disables the ability to terminate the X server using Ctrl-Alt-BackSpace ... this is because of some conflict with xdb (xdb is the newer keyboard mapping facility in XFree86 ... xmodmap is the old original X11 keyboard mapping facility). I'm still working on that.
+
+I'm also not able to get xmodmap to make this change during X11 startup (again because of conflicts with xdb). But I'm working on that as well.</t>
 </tnodes>
 </leo_file>
