@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet ekr_stylesheet?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="6613" clone_windows="0"/>
-<globals body_outline_ratio="0.440677966102">
-	<global_window_position top="99" left="216" height="787" width="944"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="6657" clone_windows="0"/>
+<globals body_outline_ratio="0.583222370173">
+	<global_window_position top="56" left="179" height="751" width="931"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -594,7 +594,7 @@
 </v>
 <v t="ekr.20041126055818.2"><vh>pyclbr module (parses python)</vh></v>
 </v>
-<v t="ekr.20040312021734"><vh>Scripts</vh>
+<v t="ekr.20040312021734" a="TV"><vh>Scripts</vh>
 <v t="ekr.20040318091620"><vh>Clear all uAs (unknown attributes)</vh></v>
 <v t="ekr.20040915080419"><vh>Print all uAs (unknown attributes)</vh></v>
 <v t="EKR.20040424065452"><vh>Compare files</vh></v>
@@ -963,6 +963,22 @@
 </v>
 <v t="ekr.20050124065111"><vh>Prototype for Pretty Print command</vh></v>
 <v t="ekr.20050210180034"><vh>jython script</vh></v>
+<v t="ekr.20050219054039"><vh>Scripts to convert ChoiceMail .ini file to .csv file</vh>
+<v t="ekr.20050218174326.1"><vh>Scipt to remove rejected entries</vh>
+<v t="ekr.20050218170806.1"><vh>@killcolor</vh>
+<v t="ekr.20050218170806.2"><vh>address</vh></v>
+</v>
+</v>
+<v t="ekr.20050218170806"><vh>Script to clean address</vh>
+<v t="ekr.20050219054351"><vh>@killcolor</vh>
+<v t="ekr.20050219054351.1"><vh>address</vh></v>
+</v>
+</v>
+<v t="ekr.20050218184044.10"><vh>Script to create comma delimited lists</vh>
+<v t="ekr.20050219054039.1"><vh>address</vh></v>
+<v t="ekr.20050218184044.11"><vh>result</vh></v>
+</v>
+</v>
 </v>
 <v t="ekr.20041001211817"><vh>Startup...</vh>
 <v t="ekr.20041001203411"><vh>@ plugin ___proto_atFile.py</vh></v>
@@ -1470,8 +1486,8 @@
 </v>
 </v>
 <v t="ekr.20050216062636"><vh>@test untangle command</vh>
-<v t="ekr.20050216062636.4" a="E"><vh>Tangle Root</vh>
-<v t="ekr.20050216062636.5" a="E"><vh>&lt;&lt; first child &gt;&gt;</vh></v>
+<v t="ekr.20050216062636.4"><vh>Tangle Root</vh>
+<v t="ekr.20050216062636.5"><vh>&lt;&lt; first child &gt;&gt;</vh></v>
 </v>
 </v>
 </v>
@@ -1590,46 +1606,21 @@
 </v>
 <v t="ekr.20050120095423.21"><vh>print all loaded plugins</vh></v>
 </v>
-<v t="ekr.20050106080304"><vh>@suite run all test routines</vh>
-<v t="ekr.20050106123646"><vh>unused</vh>
-<v t="ekr.20050106094854"><vh>class commanderTestCase</vh>
-<v t="ekr.20050106094854.1"><vh>__init__</vh></v>
-<v t="ekr.20050106094854.2"><vh> fail</vh></v>
-<v t="ekr.20050106094854.3"><vh>setUp</vh></v>
-<v t="ekr.20050106094854.4"><vh>tearDown</vh></v>
-<v t="ekr.20050106094854.5"><vh>runTest</vh></v>
-<v t="ekr.20050106094854.6"><vh>shortDescription</vh></v>
+<v t="ekr.20050218015346"><vh>@suite run all plugin test routines</vh>
+<v t="ekr.20050218015346.11"><vh>&lt;&lt; class testRoutineTestCase &gt;&gt;</vh>
+<v t="ekr.20050218015346.12"><vh>__init__</vh></v>
+<v t="ekr.20050218015346.13"><vh> fail</vh></v>
+<v t="ekr.20050218015346.14"><vh>setUp</vh></v>
+<v t="ekr.20050218015346.15"><vh>tearDown</vh></v>
+<v t="ekr.20050218015346.16"><vh>runTest</vh></v>
+<v t="ekr.20050218015346.17"><vh>shortDescription</vh></v>
 </v>
-<v t="ekr.20050106094747"><vh>addTestRoutinesInCommanderToSuite</vh>
-<v t="ekr.20050106095223"><vh>findTestsInCommander</vh></v>
+<v t="ekr.20050218015346.18"><vh>addTestRoutinesInPluginToSuite</vh></v>
+<v t="ekr.20050218015346.19"><vh>findTestsInModule</vh>
+<v t="ekr.20050218015346.20"><vh>&lt;&lt; print classes, methods &amp; functions &gt;&gt;</vh></v>
 </v>
-</v>
-<v t="ekr.20050106080318.1"><vh>&lt;&lt; class testRoutineTestCase &gt;&gt;</vh>
-<v t="ekr.20050106080318.2"><vh>__init__</vh></v>
-<v t="ekr.20050106080318.3"><vh> fail</vh></v>
-<v t="ekr.20050106080318.4"><vh>setUp</vh></v>
-<v t="ekr.20050106080318.5"><vh>tearDown</vh></v>
-<v t="ekr.20050106080318.6"><vh>runTest</vh></v>
-<v t="ekr.20050106080318.7"><vh>shortDescription</vh></v>
-</v>
-<v t="ekr.20050106080318"><vh>addTestRoutinesInModuleToSuite</vh></v>
-<v t="ekr.20050106081120.2"><vh>findTestsInModule</vh>
-<v t="ekr.20050106124235"><vh>&lt;&lt; print classes, methods &amp; functions &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20050106124624"><vh>getAllLeoModules</vh></v>
-<v t="ekr.20050106133147"><vh>removeLeadingWs</vh></v>
-</v>
-<v t="ekr.20050216060307" a="TV"><vh>Tangle/Untangle tests</vh>
-<v t="ekr.20050216060736"><vh>@test tangle command</vh>
-<v t="ekr.20050216060736.1"><vh>Tangle Root</vh>
-<v t="ekr.20050216060736.2"><vh>&lt;&lt; first child &gt;&gt;</vh></v>
-</v>
-</v>
-<v t="ekr.20050216062636"><vh>@test untangle command</vh>
-<v t="ekr.20050216062636.4" a="E"><vh>Tangle Root</vh>
-<v t="ekr.20050216062636.5" a="E"><vh>&lt;&lt; first child &gt;&gt;</vh></v>
-</v>
-</v>
+<v t="ekr.20050218015346.21"><vh>getAllPlugins</vh></v>
+<v t="ekr.20050218015346.22"><vh>removeLeadingWs</vh></v>
 </v>
 </vnodes>
 <tnodes>
@@ -10949,7 +10940,7 @@ if not spellpyx or not spellFrame:
     # Ask to be removed.
     g.app.scriptDict['removeMe'] = True</t>
 <t tx="ekr.20041121151002">@nocolor</t>
-<t tx="ekr.20041121151002.1">/Users/edream/leoCVS/leo/test/test.leo
+<t tx="ekr.20041121151002.1">C:\prog\leoCVS\leo\doc\LeoDocs.leo
 C:\prog\leoCVS\leo\test\test.leo</t>
 <t tx="ekr.20041124144944">import os
 import sys
@@ -12898,10 +12889,10 @@ else: # For script button nodes.  Good for testing.
     for theClass in classes:
         methods = inspect.getmembers(theClass,inspect.ismethod)
         # print '\nmethods of class %s...\n\n%s' % (theClass,toString(methods))
-        methods = [(theClass,f) for name,f in methods if name.startswith('test')]
+        methods = [(theClass,f) for name,f in methods if name.startswith('test_')]
         allMethods.extend(methods)
 
-    functions = [(None,f) for name,f in functions if name.startswith('test')]
+    functions = [(None,f) for name,f in functions if name.startswith('test_')]
 
     if 0:
         &lt;&lt; print classes, methods &amp; functions &gt;&gt;
@@ -13708,5 +13699,300 @@ assert not child.isMarked(), "unit test didn't restore mark"
 @c
 
 And this is text (changed)</t>
+<t tx="ekr.20050218015346">import leoGlobals as g
+import glob
+import inspect
+import unittest
+
+c = g.top() ; changed = c.isChanged() ; p1 = c.currentPosition()
+&lt;&lt; class testRoutineTestCase &gt;&gt;
+@others
+
+plugins = getAllPlugins()
+
+g.app.unitTestDict["fail"] = False
+
+suite = unittest.makeSuite(unittest.TestCase)
+for plugin in plugins:
+    n = addTestRoutinesInPluginToSuite(c,g,plugin,suite)
+    if n:
+        plural = g.choose(n==1,'','s')
+        s = 'found %2d test routine%s for %s' % (n,plural,plugin)
+        print s ; g.es(s)
+
+if 0: # For @suite nodes.  Better for unit testing.
+    g.app.scriptDict['suite'] = suite
+else: # For script button nodes.  Good for testing.
+    # Verbosity: 1: print just dots.
+    unittest.TextTestRunner(verbosity=1).run(suite)
+    c.setChanged(changed) # Restore changed state.
+    c.selectVnode(p1) # N.B. Restore the selected node.</t>
+<t tx="ekr.20050218015346.11">class testRoutineTestCase(unittest.TestCase):
+
+    """Create a unit test from a snippet of code."""
+
+    @others</t>
+<t tx="ekr.20050218015346.12">def __init__ (self,c,g,moduleName,theClass,f,code,verbose=False):
+
+     # Init the base class.
+    unittest.TestCase.__init__(self)
+
+    self.c = c
+    self.moduleName = moduleName
+    self.theClass = theClass
+    self.f = f
+    self.g = g
+    self.code = code
+    self.p = c.currentPosition().copy()
+    self.verbose = verbose
+</t>
+<t tx="ekr.20050218015346.13">def fail (self):
+
+    """Mark a unit test as having failed."""
+
+    import leoGlobals as g
+
+    g.app.unitTestDict["fail"] = g.callerName(2)</t>
+<t tx="ekr.20050218015346.14">def setUp (self):
+
+    g.app.unitTesting = True</t>
+<t tx="ekr.20050218015346.15">def tearDown (self):
+
+    g.app.unitTesting = False</t>
+<t tx="ekr.20050218015346.16">def runTest (self):
+    
+    f = self.f ; name = f.__name__ ; theClass = self.theClass
+    
+    d = {'c':self.c,'g':self.g,'p':self.p}
+
+    if 1: # Use dead text to ensure a clean environment.
+        # The present code assumes all leading whitespace is consistent.
+        code = removeLeadingWs(self.code)
+        # The code is a def statement.  We concoct a call to the function or method.
+        if theClass:
+            s = '%s\n%s(self=None)\n' % (code,name)
+        else:
+            s = '%s\n%s()\n' % (code,name)
+            
+        if self.verbose:
+            g.trace('executing...\n\n%s' % s)
+
+        exec s in d # Execute s in a environment containing c, g and p.
+        
+    else: # Use live objects.
+        if theClass:
+            # Create a subclass of f's original class.
+            class __dummyClass(theClass):
+                # Create a ctor with a known signature.
+                def __init__(self): pass
+            # Make f a method of the dummyClass with name 'f'.
+            # N.B. f is still a method of theClass, and must be called as such!
+            if 0: # Override the method with f's actual name.
+                g.funcToMethod(f,__dummyClass,name)
+                obj = __dummyClass()
+                f = getattr(obj,name)
+                f(obj)
+            else:
+                # Use the name 'f' for f's name.
+                g.funcToMethod(f,__dummyClass,'f')
+                # Create an instance of __dummyClass and call it's f method.
+                obj = __dummyClass()
+                obj.f()
+        else: # Execute a plain function.
+            f(**keys)</t>
+<t tx="ekr.20050218015346.17">def shortDescription (self):
+
+    return 'test function',repr(self.f)</t>
+<t tx="ekr.20050218015346.18">def addTestRoutinesInPluginToSuite (c,g,pluginName,suite):
+    
+    path = g.os_path_abspath(g.os_path_join(g.app.loadDir,"..","plugins"))
+    
+    g.app.unitTesting = True # Disable imports of dangerous modules.
+    plugin = g.importFromPath(pluginName,path,verbose=True)
+    if not plugin:
+        return len([])
+
+    tests = findTestsInModule(plugin,pluginName)
+    
+    for test in tests:
+        theClass,f = test
+        code = inspect.getsource(f)
+        testCase = testRoutineTestCase(c,g,pluginName,theClass,f,code,verbose=False)
+        suite.addTest(testCase)
+        
+    return len(tests)
+</t>
+<t tx="ekr.20050218015346.19">def findTestsInModule (module,moduleName):
+    
+    toString = g.listToString
+    functions = inspect.getmembers(module,inspect.isfunction)
+    classes   = inspect.getmembers(module,inspect.isclass)
+
+    # Ignore subclasses of TestCase.
+    classes = [theClass for className,theClass in classes
+        if not issubclass(theClass,unittest.TestCase)]
+    
+    allMethods = []
+    for theClass in classes:
+        methods = inspect.getmembers(theClass,inspect.ismethod)
+        # print '\nmethods of class %s...\n\n%s' % (theClass,toString(methods))
+        methods = [(theClass,f) for name,f in methods if name.startswith('test_')]
+        allMethods.extend(methods)
+
+    functions = [(None,f) for name,f in functions if name.startswith('test_')]
+
+    if 0:
+        &lt;&lt; print classes, methods &amp; functions &gt;&gt;
+    
+    result = functions
+    result.extend(allMethods)
+    return result</t>
+<t tx="ekr.20050218015346.20">print '=' * 40
+
+if classes:
+    print 'classes in %s...\n%s' % (moduleName,toString(classes))
+else:
+    print 'no classes in %s' % (moduleName)
+if allMethods:
+    print 'test methods in %s...\n%s'   % (moduleName,toString(allMethods))
+else:
+    print 'no test methods in %s' % (moduleName)
+if functions:
+    print 'test functions in %s...\n%s' % (moduleName,toString(functions))
+else:
+    print 'no test functions in %s' % (moduleName)</t>
+<t tx="ekr.20050218015346.21">def getAllPlugins ():
+
+    path = g.os_path_abspath(g.os_path_join(g.app.loadDir,"..","plugins"))
+    # g.trace(path)
+
+    files = glob.glob(g.os_path_join(path,"*.py"))
+    files = [g.os_path_abspath(f) for f in files]
+    files = [str(g.shortFileName(f)) for f in files]
+    files.sort()
+    plugins = [g.os_path_splitext(f)[0] for f in files]
+    
+    # g.trace(g.listToString(plugins))
+    return plugins</t>
+<t tx="ekr.20050218015346.22">def removeLeadingWs (code):
+
+    if not code.strip():
+        return ''
+
+    lines = g.splitLines(code)
+    line = lines[0]
+    i = g.skip_ws(line,0)
+    ws = line[0:i]
+    if not ws:
+        return code
+    result = [] ; n = len(ws)
+    for line in lines:
+        if line.startswith(ws):
+            result.append(line[n:])
+        else:
+            print 'underindented line:%s' % repr(line)
+            result.append(line)
+            
+    # g.trace(g.listToString(result))
+
+    result = ''.join(result)
+    return result
+</t>
+<t tx="ekr.20050218170806">p = p.firstChild().firstChild()
+s = p.bodyString()
+lines = g.splitLines(s)
+prefixes = (
+    'access=',
+    'bccsender=',
+    'filtered=',
+    'registered=',
+    'messagetocount=',
+    'messagecount=',
+    'lastmessagedate=',
+    'lastsource=',
+    'replyToAddresses=',
+    'creationdate=',
+    'reason=Approved before registration',
+    'reason=Address Book Contact',
+    'registrationDate=',
+    'registrationRequestSent=',
+    'reason=Pre-approved sender',
+    'preaccepted=1',
+)
+result = []
+for line in lines:
+    for prefix in prefixes:
+        if line.startswith(prefix):
+            # print 'removing',line
+            break
+    else:
+        if line.startswith('name='):
+            result.append(line[5:])
+        else:
+            result.append(line)
+
+result = ''.join(result)
+p.setBodyStringOrPane(result)
+print 'done!'</t>
+<t tx="ekr.20050218170806.1">@killcolor
+</t>
+<t tx="ekr.20050218170806.2"></t>
+<t tx="ekr.20050218174326.1">p = p.firstChild().firstChild()
+s = p.bodyString()
+lines = g.splitLines(s)
+reject = 'reason=Rejected before registration'
+result = []
+entries = []
+for line in lines:
+    if line.startswith('['):
+        # Add all previous entries
+        for entry in entries:
+            result.append(entry)
+        entries = []
+        entries.append(line)
+    elif line.startswith(reject):
+        # Kill all previous entries.
+        entries = []
+    else:
+        entries.append(line)
+
+result = ''.join(result)
+p.setBodyStringOrPane(result)
+print 'done!'</t>
+<t tx="ekr.20050218184044.10">address_p = p.firstChild()
+result_p = p.firstChild().next()
+
+result = []
+entries = []
+for child in address_p.children_iter():
+    s = child.bodyString()
+    lines = g.splitLines(s)
+    for line in lines:
+        if line.startswith('['):
+            # Add all previous entries
+            if entries:
+                if len(entries) &gt; 1:
+                    # entries2 = [entries[0],entries[1]]
+                    # entries2.extend(entries[2:])
+                    result.append(','.join(entries[:2]))
+                else:
+                    result.append(entries[0])
+            entries = [] ; entries2 = []
+            entries.append(line.rstrip()[1:-1])
+        elif line.strip():
+            entries.append(line.rstrip())
+
+result.sort()
+result = '\n'.join(result)
+result_p.setBodyStringOrPane(result)
+print 'done!'</t>
+<t tx="ekr.20050218184044.11"></t>
+<t tx="ekr.20050219054039">@ These scripts work on the child nodes as shown.
+
+The address children contained the actual data (removed for privacy)</t>
+<t tx="ekr.20050219054039.1"></t>
+<t tx="ekr.20050219054351">@killcolor
+</t>
+<t tx="ekr.20050219054351.1"></t>
 </tnodes>
 </leo_file>
