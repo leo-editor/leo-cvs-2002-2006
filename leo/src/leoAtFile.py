@@ -2710,6 +2710,7 @@ class baseOldDerivedFile:
     def openWriteFile (self,root,toString):
         
         self.toStringFlag = toString
+        self.errors = 0 # Bug fix: 6/25/04.
     
         try:
             self.scanAllDirectives(root)
@@ -4264,6 +4265,57 @@ class baseNewDerivedFile(oldDerivedFile):
         start = at.startSentinelComment
         if start and len(start) > 0 and start[-1] == '@':
             s2 = s2.replace('@@','@')
+            
+        if g.match_word(s,i,"@language"):
+            #@        << handle @language >>
+            #@+node:EKR.20040625104908:<< handle @language >>
+            # Skip the keyword and whitespace.
+            i += len("@language")
+            i = g.skip_ws(s,i)
+            j = g.skip_c_id(s,i)
+            language = s[i:j]
+            
+            delim1,delim2,delim3 = g.set_delims_from_language(language)
+            
+            #g.trace(g.get_line(s,i))
+            #g.trace(delim1,delim2,delim3)
+            
+            # Returns a tuple (single,start,end) of comment delims
+            if delim1:
+                at.startSentinelComment = delim1
+                at.endSentinelComment = ""
+            elif delim2 and delim3:
+                at.startSentinelComment = delim2
+                at.endSentinelComment = delim3
+            else:
+                line = g.get_line(s,i)
+                g.es("Ignoring bad @@language sentinel: %s" % line,color="red")
+            #@nonl
+            #@-node:EKR.20040625104908:<< handle @language >>
+            #@nl
+        elif g.match_word(s,i,"@comment"):
+            #@        << handle @comment >>
+            #@+node:EKR.20040625104908.1:<< handle @comment >>
+            j = g.skip_line(s,i)
+            line = s[i:j]
+            delim1,delim2,delim3 = g.set_delims_from_string(line)
+            
+            #g.trace(g.get_line(s,i))
+            #g.trace(delim1,delim2,delim3)
+            
+            # Returns a tuple (single,start,end) of comment delims
+            if delim1:
+                self.startSentinelComment = delim1
+                self.endSentinelComment = None
+            elif delim2 and delim3:
+                self.startSentinelComment = delim2
+                self.endSentinelComment = delim3
+            else:
+                line = g.get_line(s,i)
+                g.es("Ignoring bad @comment sentinel: %s" % line,color="red")
+            #@nonl
+            #@-node:EKR.20040625104908.1:<< handle @comment >>
+            #@nl
     
         at.out.append(s2)
     #@nonl
@@ -5130,6 +5182,10 @@ class baseNewDerivedFile(oldDerivedFile):
         
         at = self
     
+        clonedSibs,thisClonedSibIndex = at.scanForClonedSibs(p.v)
+        if clonedSibs > 1 and thisClonedSibIndex == 1:
+            at.writeError("Cloned siblings are not valid in @thin trees")
+    
         at.putOpenNodeSentinel(p,inAtOthers=True)
         at.putBody(p) 
         
@@ -5595,7 +5651,7 @@ class baseNewDerivedFile(oldDerivedFile):
     #@nonl
     #@-node:EKR.20040620094529.2:os
     #@-node:ekr.20031218072017.2138:os and allies
-    #@+node:ekr.20031218072017.1921:putDirective  (handles @delims) 4,x
+    #@+node:ekr.20031218072017.1921:putDirective  (handles @delims,@comment,@language) 4.x
     #@+at 
     #@nonl
     # It is important for PHP and other situations that @first and @last 
@@ -5638,6 +5694,56 @@ class baseNewDerivedFile(oldDerivedFile):
             #@nonl
             #@-node:ekr.20031218072017.1922:<< handle @delims >>
             #@nl
+        elif g.match_word(s,k,"@language"):
+            #@        << handle @language >>
+            #@+node:EKR.20040625103148:<< handle @language >>
+            self.putSentinel("@" + directive)
+            
+            # Skip the keyword and whitespace.
+            i = k + len("@language")
+            i = g.skip_ws(s,i)
+            j = g.skip_c_id(s,i)
+            language = s[i:j]
+            
+            delim1,delim2,delim3 = g.set_delims_from_language(language)
+            
+            # g.trace(delim1,delim2,delim3)
+            
+            # Returns a tuple (single,start,end) of comment delims
+            if delim1:
+                self.startSentinelComment = delim1
+                self.endSentinelComment = ""
+            elif delim2 and delim3:
+                self.startSentinelComment = delim2
+                self.endSentinelComment = delim3
+            else:
+                g.es("Ignoring bad @language directive: %s" % line,color="blue")
+            #@nonl
+            #@-node:EKR.20040625103148:<< handle @language >>
+            #@nl
+        elif g.match_word(s,k,"@comment"):
+            #@        << handle @comment >>
+            #@+node:EKR.20040625103148.1:<< handle @comment >>
+            self.putSentinel("@" + directive)
+            
+            j = g.skip_line(s,i)
+            line = s[i:j]
+            delim1,delim2,delim3 = g.set_delims_from_string(line)
+            
+            # g.trace(delim1,delim2,delim3)
+            
+            # Returns a tuple (single,start,end) of comment delims
+            if delim1:
+                self.startSentinelComment = delim1
+                self.endSentinelComment = None
+            elif delim2 and delim3:
+                self.startSentinelComment = delim2
+                self.endSentinelComment = delim3
+            else:
+                g.es("Ignoring bad @comment directive: %s" % line,color="blue")
+            #@nonl
+            #@-node:EKR.20040625103148.1:<< handle @comment >>
+            #@nl
         elif g.match_word(s,k,"@last"):
             self.putSentinel("@@last") # 10/27/03: Convert to an verbatim line _without_ anything else.
         elif g.match_word(s,k,"@first"):
@@ -5648,7 +5754,7 @@ class baseNewDerivedFile(oldDerivedFile):
         i = g.skip_line(s,k)
         return i
     #@nonl
-    #@-node:ekr.20031218072017.1921:putDirective  (handles @delims) 4,x
+    #@-node:ekr.20031218072017.1921:putDirective  (handles @delims,@comment,@language) 4.x
     #@-node:ekr.20031218072017.2135:Writing Utils...
     #@-node:ekr.20031218072017.2111:Writing (4.x)
     #@+node:EKR.20040523104815:scanForClonedSibs
@@ -5670,6 +5776,8 @@ class baseNewDerivedFile(oldDerivedFile):
                     if sib == v:
                         thisClonedSibIndex = clonedSibs
                 sib = sib.next()
+                
+        # g.trace(clonedSibs,thisClonedSibIndex)
     
         return clonedSibs,thisClonedSibIndex
     #@nonl
