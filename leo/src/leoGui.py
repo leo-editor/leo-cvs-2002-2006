@@ -502,6 +502,9 @@ class unitTestGui(leoGui):
     
     def set_focus(self,c,widget,tag=''):
         pass
+        
+    def getTextSelection (self,t):
+        return 0,0
     #@nonl
     #@-node:ekr.20031218072017.3745:dummy routines
     #@+node:ekr.20031218072017.3746:oops
