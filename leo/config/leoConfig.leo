@@ -3,7 +3,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="23" clone_windows="0"/>
 <globals body_outline_ratio="0.5">
-	<global_window_position top="29" left="141" height="25" width="93"/>
+	<global_window_position top="107" left="235" height="71" width="136"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences allow_rich_text="0">
@@ -29,10 +29,10 @@
 <v t="T14"><vh>&lt;&lt; None &gt;&gt;</vh></v>
 </v>
 <v t="T15"><vh>&lt;&lt; Preferences Panel settings &gt;&gt;</vh></v>
-<v t="T16"><vh>&lt;&lt; Syntax coloring options and colors &gt;&gt;</vh></v>
+<v t="T16" a="V"><vh>&lt;&lt; Syntax coloring options and colors &gt;&gt;</vh></v>
 <v t="T17" a="E"><vh>&lt;&lt; Window options &gt;&gt;</vh>
 <v t="T18"><vh>&lt;&lt; body pane options &gt;&gt;</vh></v>
-<v t="T19" a="V"><vh>&lt;&lt; outline pane options&gt;&gt;</vh></v>
+<v t="T19"><vh>&lt;&lt; outline pane options&gt;&gt;</vh></v>
 <v t="T20"><vh>&lt;&lt; log pane options &gt;&gt;</vh></v>
 <v t="T21"><vh>&lt;&lt; Options for new windows &gt;&gt;</vh></v>
 <v t="T22"><vh>&lt;&lt; Options for newly opened windows &gt;&gt;</vh></v>
@@ -488,8 +488,8 @@ GoToNextSibling  = Alt+Shift+S
 
 GoToNextVisible  = Alt+DnArrow
 GoToPrevVisible  = Alt+UpArrow
-GoBack           = Alt+Shift+UpArrow
-GoNext           = Alt+Shift+DnArrow</t>
+GoToPrevNode     = Alt+Shift+UpArrow
+GoToNextNode     = Alt+Shift+DnArrow</t>
 <t tx="T11">CloneNode        = Ctrl+`
 Replace          = Ctrl+=
 ReplaceThenFind  = Ctrl+-
@@ -541,9 +541,9 @@ ConvertTabs     = Shift+Ctrl+J
 # Unused        = Shift+Ctrl+L
 TangleMarked    = Shift+Ctrl+M
 ExtractNames    = Shift+Ctrl+N
-OpenWith        = Shift+Ctrl+O
+# OpenWith        = Shift+Ctrl+O
 ReformatParagraph = Shift+Ctrl+P
-# Unused        = Shift+Ctrl+Q
+WriteDirtyAtFileNodes = Shift+Ctrl+Q
 ReadOutlineOnly = Shift+Ctrl+R
 SaveAs          = Shift+Ctrl+S
 Tangle          = Shift+Ctrl+T
@@ -648,7 +648,7 @@ underline_undefined_section_names = 1
 # 	1/0: Underline undefined section names
 #	Only functional if use_hyperlinks = 0
 
-use_hyperlinks = 0
+use_hyperlinks = 1
 # 	1: use hyperlinks.       Underline "live" links.
 #		Cute, but disorienting and _not_ recommended.
 #		Control-clicking moves to indicated node.
@@ -843,12 +843,12 @@ log_text_font_weight = normal
 #	The Tk -weight setting: normal or bold.  Default is normal.</t>
 <t tx="T21"># Leo now properly opens windows for existing files where they were last positioned.
 
-initial_window_height = 20
-#	Height of window, Tk grid units (must be an integer).
+initial_window_height = 75
+#	Height of window, Tk grid units, that is, pixels. (must be an integer).
 #	Grid units must be specified because Leo windows are gridded.
 	
-initial_window_width = 60
-#	Width window, in Tk grid units (must be an integer).
+initial_window_width = 200
+#	Width window, in Tk grid units, that is, pixels. (must be an integer).
 #	Grid units must be specified because Leo windows are gridded.
 
 initial_window_left = 10

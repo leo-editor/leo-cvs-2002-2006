@@ -1131,7 +1131,7 @@ class colorizer:
 			self.use_hyperlinks = use_hyperlinks
 			
 			# underline=var doesn't seem to work.
-			if use_hyperlinks: 
+			if 0: # use_hyperlinks: # Use the same coloring, even when hyperlinks are in effect.
 				body.tag_config("link",underline=1) # defined
 				body.tag_config("name",underline=0) # undefined
 			else:
