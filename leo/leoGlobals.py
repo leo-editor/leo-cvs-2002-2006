@@ -33,7 +33,21 @@ assert(false!=None)
 
 
 #@+others
-#@+node:2::collectGarbage
+#@+node:2::callerName
+#@+body
+def callerName (n=1):
+
+	try: # get the function name from the call stack.
+		f1 = sys._getframe(n) # The stack frame, n levels up.
+		code1 = f1.f_code # The code object
+		return code1.co_name # The code name
+	except:
+		es_exception()
+		return "<no caller name>"
+
+#@-body
+#@-node:2::callerName
+#@+node:3::collectGarbage
 #@+body
 def collectGarbage():
 	
@@ -47,8 +61,8 @@ def collectGarbage():
 			pass
 
 #@-body
-#@-node:2::collectGarbage
-#@+node:3::Commands, Dialogs, Directives, & Menus...
+#@-node:3::collectGarbage
+#@+node:4::Commands, Dialogs, Directives, & Menus...
 #@+node:1::Dialog utils...
 #@+node:1::attachLeoIcon & allies
 #@+body
@@ -754,8 +768,8 @@ def wrap_lines (lines,pageWidth,firstLineWidth=None):
 	return result
 #@-body
 #@-node:5::wrap_lines
-#@-node:3::Commands, Dialogs, Directives, & Menus...
-#@+node:4::Dumping, Timing, Tracing & Sherlock
+#@-node:4::Commands, Dialogs, Directives, & Menus...
+#@+node:5::Dumping, Timing, Tracing & Sherlock
 #@+node:1::alert
 #@+body
 def alert(message):
@@ -1100,7 +1114,61 @@ def trace_tag (name, *args):
 #@-body
 #@-node:5::trace_tag
 #@-node:11::Sherlock...
-#@+node:12::Timing
+#@+node:12::Statistics
+#@+node:1::clear_stats
+#@+body
+def clear_stats():
+	
+	app().stats = {}
+
+#@-body
+#@-node:1::clear_stats
+#@+node:2::print_stats
+#@+body
+def print_stats (name=None):
+	
+	if name:
+		if type(name) != type(""):
+			name = repr(name)
+	else:
+		name = callerName(n=2) # Get caller name 2 levels back.
+	
+	try:
+		stats = app().stats
+	except:
+		print ; print "no statistics at", name ; print
+		return
+		
+	items = stats.items()
+	items.sort()
+	print ; print "statistics at",name ; print
+	for key,value in items:
+		print key,value
+		
+	clear_stats()
+
+#@-body
+#@-node:2::print_stats
+#@+node:3::tick
+#@+body
+def tick (name=None):
+	
+	if name:
+		if type(name) != type(""):
+			name = repr(name)
+	else:
+		name = callerName(n=2) # Get caller name 2 levels back.
+
+	try:
+		stats = app().stats
+	except:
+		app().stats = stats = {}
+	stats[name] = 1 + stats.get(name,0)
+
+#@-body
+#@-node:3::tick
+#@-node:12::Statistics
+#@+node:13::Timing
 #@+body
 #@+at
 #  pychecker bug: pychecker complains that there is no attribute time.clock
@@ -1115,9 +1183,9 @@ def esDiffTime(message, start):
 	es(message + ("%6.3f" % (time.clock()-start)))
 	return time.clock()
 #@-body
-#@-node:12::Timing
-#@-node:4::Dumping, Timing, Tracing & Sherlock
-#@+node:5::Files & Directories...
+#@-node:13::Timing
+#@-node:5::Dumping, Timing, Tracing & Sherlock
+#@+node:6::Files & Directories...
 #@+node:1::create_temp_name
 #@+body
 # Returns a temporary file name.
@@ -1460,8 +1528,8 @@ def utils_rename(src,dst):
 		move_file(src,dst)
 #@-body
 #@-node:11::utils_rename
-#@-node:5::Files & Directories...
-#@+node:6::Hooks
+#@-node:6::Files & Directories...
+#@+node:7::Hooks
 #@+node:1::enableIdleTimeHook, disableIdleTimeHook, idleTimeHookHandler
 #@+body
 #@+at
@@ -1561,8 +1629,8 @@ def issueHookWarning ():
 			es("use_plugins = 0")
 #@-body
 #@-node:3::issueHookWarning
-#@-node:6::Hooks
-#@+node:7::Lists...
+#@-node:7::Hooks
+#@+node:8::Lists...
 #@+node:1::appendToList
 #@+body
 def appendToList(out, s):
@@ -1595,8 +1663,8 @@ def listToString(theList):
 		return ""
 #@-body
 #@-node:3::listToString
-#@-node:7::Lists...
-#@+node:8::Most common functions
+#@-node:8::Lists...
+#@+node:9::Most common functions
 #@+body
 # These are guaranteed always to exist for scripts.
 
@@ -1710,8 +1778,8 @@ def windows():
 	return app().windowList
 #@-body
 #@-node:6::windows
-#@-node:8::Most common functions
-#@+node:9::Scanning, selection & whitespace...
+#@-node:9::Most common functions
+#@+node:10::Scanning, selection & whitespace...
 #@+node:1::scanAtFileOptions
 #@+body
 def scanAtFileOptions (h,err_flag=false):
@@ -2759,8 +2827,8 @@ def skip_leading_ws_with_indent(s,i,tab_width):
 #@-body
 #@-node:8::skip_leading_ws_with_indent
 #@-node:8::Whitespace...
-#@-node:9::Scanning, selection & whitespace...
-#@+node:10::Startup & initialization...
+#@-node:10::Scanning, selection & whitespace...
+#@+node:11::Startup & initialization...
 #@+node:1::CheckVersion (Dave Hein)
 #@+body
 #@+at
@@ -2911,8 +2979,8 @@ def unloadAll():
 
 #@-body
 #@-node:2::unloadAll
-#@-node:10::Startup & initialization...
-#@+node:11::Unicode utils...
+#@-node:11::Startup & initialization...
+#@+node:12::Unicode utils...
 #@+node:1::isValidEncoding
 #@+body
 def isValidEncoding (encoding):
@@ -2971,7 +3039,7 @@ def toEncodedString (s,encoding,reportErrors=false):
 	return s
 #@-body
 #@-node:3::toUnicode & toEncodedString
-#@-node:11::Unicode utils...
+#@-node:12::Unicode utils...
 #@-others
 #@-body
 #@-node:0::@file leoGlobals.py
