@@ -404,21 +404,23 @@ class LeoApp:
         #@+node:ekr.20031218072017.1980:<< return if we can set self.leoID from "leoID.txt" >>
         for theDir in (homeDir,globalConfigDir,loadDir):
             try:
-                fn = g.os_path_join(theDir, tag)
+                fn = g.os_path_join(theDir,tag)
                 f = open(fn,'r')
-                if f:
-                    s = f.readline()
-                    f.close()
-                    if s and len(s) > 0:
-                        g.app.leoID = s
-                        if verbose:
-                            g.es("leoID = " + g.app.leoID, color="red")
-                        return
-                    else:
-                        if verbose:
-                            g.es("empty " + tag + " in " + theDir, color = "red")
-            except:
+                s = f.readline()
+                f.close()
+                if s and len(s) > 0:
+                    g.app.leoID = s
+                    if verbose:
+                        g.es("leoID = %s (in %s)" % (g.app.leoID,theDir), color="red")
+                    return
+                elif verbose:
+                    g.es("empty %s (in %s)" % (tag,theDir), color = "red")
+            except IOError:
                 g.app.leoID = None
+            except Exception:
+                g.app.leoID = None
+                g.es('Unexpected exception in app.setLeoID',color='red')
+                g.es_esception()
                 
         dirs = []
         
@@ -437,7 +439,9 @@ class LeoApp:
         
         # Create an emergency gui and a Tk root window.
         g.app.createTkGui("startup")
-        g.app.gui.runAskLeoIDDialog()
+        
+        # Bug fix: 2/6/05: put result in g.app.leoID.
+        g.app.leoID = g.app.gui.runAskLeoIDDialog()
         g.app.gui = None
         
         g.trace(g.app.leoID)
@@ -447,7 +451,10 @@ class LeoApp:
         #@nl
         #@    << attempt to create leoID.txt >>
         #@+node:ekr.20031218072017.1982:<< attempt to create leoID.txt >>
+        dirs = []
+        
         for theDir in (homeDir,globalConfigDir,loadDir):
+            cant = "can not create leoID.txt in %s" % theDir
             try:
                 # Look in globalConfigDir first.
                 fn = g.os_path_join(theDir, tag)
@@ -455,23 +462,20 @@ class LeoApp:
                 if f:
                     f.write(g.app.leoID)
                     f.close()
-                    g.es("created leoID.txt in " + theDir, color="red")
-                    return
-            except IOError: pass
+                    if g.os_path_exists(fn):
+                        g.es("created leoID.txt in %s" % (theDir), color="red")
+                        return
+                    else:
+                        g.es(cant,color='red')
+            except IOError:
+                g.es(cant,color='red')
         
-        dirs = []
-        
-        for theDir in (globalConfigDir,homeDir,loadDir):
             if theDir not in dirs:
                 dirs.append(theDir)
-        
-        g.es("can not create leoID.txt in %s" % (repr(dirs)), color="red")
         #@nonl
         #@-node:ekr.20031218072017.1982:<< attempt to create leoID.txt >>
         #@nl
-        
-        # Destroy the emergency gui.
-        
+    #@nonl
     #@-node:ekr.20031218072017.1978:app.setLeoID
     #@+node:ekr.20031218072017.1847:app.setLog, lockLog, unlocklog
     def setLog (self,log,tag=""):
