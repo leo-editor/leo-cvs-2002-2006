@@ -16,7 +16,7 @@
 <v t="T1" a="E"><vh>leoConfig.leo</vh>
 <v t="T2" a="E"><vh>@root leoConfig.txt</vh>
 <v t="T3"><vh>&lt;&lt; general comments and warnings &gt;&gt;</vh></v>
-<v t="T4" a="V"><vh>&lt;&lt; General configuration options, especially read-only mode &gt;&gt;</vh></v>
+<v t="T4"><vh>&lt;&lt; General configuration options, especially read-only mode &gt;&gt;</vh></v>
 <v t="T5"><vh>&lt;&lt; The "Recent Files" menu &gt;&gt;</vh></v>
 <v t="T6"><vh>&lt;&lt; Compare Panel settings &gt;&gt;</vh></v>
 <v t="T7"><vh>&lt;&lt; Find/Change Panel settings &gt;&gt;</vh></v>
@@ -30,8 +30,8 @@
 </v>
 <v t="T15"><vh>&lt;&lt; Preferences Panel settings &gt;&gt;</vh></v>
 <v t="T16"><vh>&lt;&lt; Syntax coloring options and colors &gt;&gt;</vh></v>
-<v t="T17"><vh>&lt;&lt; Window options &gt;&gt;</vh>
-<v t="T18"><vh>&lt;&lt; body pane options &gt;&gt;</vh></v>
+<v t="T17" a="E"><vh>&lt;&lt; Window options &gt;&gt;</vh>
+<v t="T18" a="V"><vh>&lt;&lt; body pane options &gt;&gt;</vh></v>
 <v t="T19"><vh>&lt;&lt; outline pane options&gt;&gt;</vh></v>
 <v t="T20"><vh>&lt;&lt; log pane options &gt;&gt;</vh></v>
 <v t="T21"><vh>&lt;&lt; Options for new windows &gt;&gt;</vh></v>
@@ -706,6 +706,9 @@ body_text_background_color =
 body_cursor_foreground_color =
 body_cursor_background_color =
 # 	Foreground and background colors for the cursor in body text.
+
+body_insertion_cursor_color =
+# Color of insertion cursor
 
 body_text_font_family = Courier New
 #	Font family for body text.

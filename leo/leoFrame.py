@@ -289,6 +289,12 @@ class LeoFrame:
 			try: body.configure(fg=fg)
 			except: pass
 			
+		# 1/24/03: Gareth McCaughan
+		bg = config.getWindowPref("body_insertion_cursor_color")
+		if bg:
+			try: body.configure(insertbackground=bg)
+			except: pass
+			
 		if sys.platform != "win32": # Maybe a Windows bug.
 			fg = config.getWindowPref("body_cursor_foreground_color")
 			bg = config.getWindowPref("body_cursor_background_color")
