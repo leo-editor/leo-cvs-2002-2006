@@ -207,6 +207,34 @@ def fail ():
     g.app.unitTestDict["fail"] = g.callerName(2)
 #@nonl
 #@-node:EKR.20040623200709.15: fail
+#@+node:EKR.20040624113742:atFileTests
+#@+node:EKR.20040624113742.1:makeAtFileSuite
+def makeLeoFilesSuite(nodeName,*ignored):
+    
+    c = g.top()
+    u = testUtils()
+    p = u.findUnitTestNode(nodeName)
+    p.c.selectVnode(p)
+
+    # Create the suite and add all test cases.
+    suite = unittest.makeSuite(unittest.TestCase)
+
+    for child in p.children_iter():
+        
+        h = child.headString().strip()
+        if g.match(h,0,"test"):
+            output = u.findNodeInTree(child,"output")
+            for child2 in child.children_iter():
+                h2 = child2.headString().strip()
+                if g.match(h2,0,"@@"):
+                    test = atFileTests(
+                        c=c,
+                        root=child2.copy(),
+                        expected=output.bodyString())
+                    suite.addTest(test)
+                    
+    return suite
+#@-node:EKR.20040624113742.1:makeAtFileSuite
 #@+node:EKR.20040623200709.18:class atFileTests
 # TO DO: create script to create expected output
 
@@ -215,14 +243,34 @@ class atFileTests(unittest.TestCase):
     """Data-driven unit tests to test .leo files."""
     
     #@    @+others
+    #@+node:EKR.20040624105213:__init__
+    def __init__ (self,c=None,root=None,expected=None):
+        
+        # Init the base class.
+        unittest.TestCase.__init__(self)
+        
+        self.c = c
+        self.root = root
+        self.expected = expected
+    #@nonl
+    #@-node:EKR.20040624105213:__init__
     #@+node:EKR.20040623200709.21:runTest
-    def runTest(self,input,expected,type):
+    def runTest(self):
         
         """Run a test of @file, @thin, etc."""
         
-        c = g.top() ; at = c.atFileCommands
-        
-        assert (type in ("@file","@thin","@nosent","@noref","@asis"))
+        c = self.c ; at = c.atFileCommands
+        root = self.root
+        input = root.bodyString()
+        expected = self.expected
+    
+        # Compute the type from root's headline.
+        h = root.headString()
+        assert(g.match(h,0,"@@"))
+        j = g.skip_c_id(h,2)
+        type = h[1:j]
+        assert type in ("@file","@thin","@nosent","@noref","@asis"), "bad type: %s" % type
+    
         thinFile = type == "@thin"
         nosentinels = type in ("@asis","@nosent")
         
@@ -232,14 +280,10 @@ class atFileTests(unittest.TestCase):
             at.asisWrite(p,toString=toString)
             result = "asis tests not ready yet"
         else:
-            at.write(None,thinFile=thinFile,nosentinels=nosentinels,toString=True)
+            at.write(root,thinFile=thinFile,nosentinels=nosentinels,toString=True)
             result = g.toUnicode(at.new_df.stringOutput,"ascii")
         
-        if result == expected:
-            if 0:
-                print len(result),len(expected)
-                print "result file == expected file"
-        else:
+        if result != expected:
             print ; print '-' * 20
             print "result..."
             for line in g.splitLines(result):
@@ -249,111 +293,14 @@ class atFileTests(unittest.TestCase):
             for line in g.splitLines(expected):
                 print "%3d" % len(line),repr(line)
             print '-' * 20
-            
+    
         self.assertEqual(result,expected)
     #@nonl
     #@-node:EKR.20040623200709.21:runTest
-    #@+node:EKR.20040623202054:test cases
-    #@+node:EKR.20040623201322.1:testAtLast1
-    def testAtLast1 (self):
-        
-        input = '''Line 1\n\n@last'''
-    
-        expected = '''#@+leo-ver=4
-    #@verbatim
-    #@+node:@@file
-    Line 1
-    
-    #@verbatim
-    #@@last
-    #@verbatim
-    #@nonl
-    #@verbatim
-    #@-node:@@file
-    #@verbatim
-    #@-leo
-    last line 1: no newline'''
-    
-        result = self.runTest(input,expected,"@file")
-    #@nonl
-    #@-node:EKR.20040623201322.1:testAtLast1
-    #@+node:EKR.20040623201322.4:testAtLast2
-    def testAtLast2 (self):
-    
-        input = '''Line 1\n\n@last
-    '''
-    
-        expected = '''#@+leo-ver=4
-    #@verbatim
-    #@+node:@@file
-    Line 1
-    
-    #@verbatim
-    #@@last
-    #@verbatim
-    #@-node:@@file
-    #@verbatim
-    #@-leo
-    last line 1: newline
-    '''
-    
-        result = self.runTest(input,expected,"@file")
-    #@nonl
-    #@-node:EKR.20040623201322.4:testAtLast2
-    #@+node:EKR.20040623201322.7:testAtLast3
-    def testAtLast3 (self):
-    
-        input = '''Line 1\n\n@last
-    
-    
-    '''
-    
-        expected = '''#@+leo-ver=4
-    #@verbatim
-    #@+node:@@file
-    Line 1
-    
-    #@verbatim
-    #@@last
-    
-    #@verbatim
-    #@-node:@@file
-    #@verbatim
-    #@-leo
-    last line 1: two trailing newlines
-    
-    '''
-    
-        result = self.runTest(input,expected,"@file")
-    #@nonl
-    #@-node:EKR.20040623201322.7:testAtLast3
-    #@+node:EKR.20040623201322.10:testAtLast4
-    def testAtLast4 (self):
-    
-        input = '''Line 1\n\n@last'''
-    
-        expected = '''#@+leo-ver=4-thin
-    #@verbatim
-    #@+node:EKR.20040621180011.2:@@thin
-    Line 1
-    
-    #@verbatim
-    #@@last
-    #@verbatim
-    #@nonl
-    #@verbatim
-    #@-node:EKR.20040621180011.2:@@thin
-    #@verbatim
-    #@-leo
-    last line 1: no newline'''
-    
-        result = self.runTest(input,expected,"@thin")
-    #@nonl
-    #@-node:EKR.20040623201322.10:testAtLast4
-    #@-node:EKR.20040623202054:test cases
     #@-others
 #@nonl
 #@-node:EKR.20040623200709.18:class atFileTests
+#@-node:EKR.20040624113742:atFileTests
 #@+node:EKR.20040623200709.23:Batch mode tests
 #@+node:EKR.20040623200709.24: makeBatchModeSuite
 def makeBatchModeSuite (*args,**keys):

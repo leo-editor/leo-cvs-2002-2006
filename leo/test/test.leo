@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="4444" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="4449" clone_windows="0"/>
 <globals body_outline_ratio="0.414301929625">
-	<global_window_position top="42" left="238" height="881" width="1011"/>
+	<global_window_position top="10" left="263" height="881" width="1011"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences>
@@ -655,11 +655,10 @@
 </v>
 <v t="EKR.20040623200709.20"><vh>compareDerivedFiles (Not used)</vh></v>
 </v>
-<v t="EKR.20040619133116" a="E"><vh>Unit testing...</vh>
+<v t="EKR.20040619133116" a="TV"><vh>Unit testing...</vh>
 <v t="ekr.20040327114250" tnodeList="ekr.20040327114250"><vh>@file c:\prog\test\unittest\batchTest.py</vh></v>
 <v t="EKR.20040623200709"><vh>@thin ../src/leoTest.py</vh></v>
-</v>
-<v t="ekr.20040303063549"><vh>Unit test scripts:  Run these scripts from inside this tree!</vh>
+<v t="ekr.20040303063549"><vh>Unit test scripts (Must be located here)</vh>
 <v t="ekr.20040126105605"><vh>cloneTestData (not used yet)</vh>
 <v t="ekr.20040302092753"><vh>aa</vh></v>
 <v t="ekr.20040126105605.2"><vh>a</vh>
@@ -705,9 +704,27 @@
 </v>
 <v t="ekr.20040303063549.1"><vh>tempNode</vh></v>
 <v t="EKR.20040621100553"><vh>@  file c:\prog\test\tempOutput.txt</vh></v>
-<v t="EKR.20040619134504"><vh>atFileTests (revised)</vh></v>
+<v t="EKR.20040619134504" a="M"><vh>atFileTests</vh>
+<v t="EKR.20040624112329"><vh>Script to create expected output</vh></v>
+<v t="EKR.20040624103339.1"><vh>testAtLast1 no newline</vh>
+<v t="EKR.20040624103339.2"><vh>@@file</vh></v>
+<v t="EKR.20040624103339.3"><vh>Output</vh></v>
+</v>
+<v t="EKR.20040623201322.4"><vh>testAtLast2 one newline</vh>
+<v t="EKR.20040624111917"><vh>@@file</vh></v>
+<v t="EKR.20040624111917.1"><vh>Output</vh></v>
+</v>
+<v t="EKR.20040623201322.7"><vh>testAtLast3 two newlines</vh>
+<v t="EKR.20040624112329.1"><vh>@@file</vh></v>
+<v t="EKR.20040624112329.2"><vh>Output</vh></v>
+</v>
+<v t="EKR.20040623201322.10"><vh>testAtLast4 @thin</vh>
+<v t="EKR.20040624112329.3"><vh>@@thin</vh></v>
+<v t="EKR.20040624112329.4"><vh>Output</vh></v>
+</v>
+</v>
 <v t="ekr.20040327115825.1"><vh>batchModeTests</vh></v>
-<v t="ekr.20040303063549.45" a="M"><vh>colorizerTests</vh>
+<v t="ekr.20040303063549.45"><vh>colorizerTests</vh>
 <v t="ekr.20040303063549.46"><vh>Actionscript</vh></v>
 <v t="ekr.20040303063549.47"><vh>C</vh></v>
 <v t="ekr.20040303063549.48"><vh>C#</vh></v>
@@ -769,7 +786,7 @@
 <v t="ekr.20040303063549.89"><vh>dialog</vh></v>
 </v>
 </v>
-<v t="ekr.20040303063549.120" a="E"><vh>leoFileTests (revised)</vh></v>
+<v t="ekr.20040303063549.120"><vh>leoFileTests (revised)</vh></v>
 <v t="ekr.20040315202718.2"><vh>findCommandTests</vh></v>
 <v t="ekr.20040303063549.90"><vh>importTests</vh>
 <v t="ekr.20040303063549.91"><vh>importAtRoot</vh>
@@ -873,7 +890,8 @@
 <v t="ekr.20040303063549.125"><vh>Run all tests</vh></v>
 <v t="ekr.20040303080010"><vh>Run all non-file tests</vh></v>
 </v>
-<v t="EKR.20040624085716" a="TV" tnodeList="EKR.20040624085716"><vh>@file c:\prog\test\writeMissing.txt</vh></v>
+</v>
+<v t="EKR.20040624085716" tnodeList="EKR.20040624085716"><vh>@file c:\prog\test\writeMissing.txt</vh></v>
 </vnodes>
 <tnodes>
 <t tx="EKR.20040424065452">import leoGlobals as g
@@ -2965,9 +2983,11 @@ import sys
 import unittest</t>
 <t tx="EKR.20040619134504">import unittest
 import leoTest
+import leoGlobals as g
 reload(leoTest)
 
-suite = unittest.makeSuite(leoTest.atFileTests)
+# We need real nodes to pass to the tests.
+suite = leoTest.makeLeoFilesSuite("atFileTests")
 unittest.TextTestRunner().run(suite)</t>
 <t tx="EKR.20040621080031">class atFileTestCase(unittest.TestCase):
     
@@ -3185,6 +3205,9 @@ def makeAtFileSuite(testParentHeadline,unused=None):
 
     return True</t>
 <t tx="EKR.20040623201302"></t>
+<t tx="EKR.20040623201322.4"></t>
+<t tx="EKR.20040623201322.7"></t>
+<t tx="EKR.20040623201322.10"></t>
 <t tx="EKR.20040623201322.13"></t>
 <t tx="EKR.20040623201322.14">line 1
 line 2 no newline</t>
@@ -3199,6 +3222,58 @@ last line
 <t tx="EKR.20040623202054.1"></t>
 <t tx="EKR.20040623213443"></t>
 <t tx="EKR.20040624085716">test</t>
+<t tx="EKR.20040624103339.1"></t>
+<t tx="EKR.20040624103339.2">Line 1
+
+@last last line 1: no newline</t>
+<t tx="EKR.20040624103339.3">#@+leo-ver=4
+#@+node:@@file
+Line 1
+
+#@@last
+#@nonl
+#@-node:@@file
+#@-leo
+last line 1: no newline</t>
+<t tx="EKR.20040624111917">Line 1
+
+@last last line 1: newline
+</t>
+<t tx="EKR.20040624111917.1">#@+leo-ver=4
+#@+node:@@file
+Line 1
+
+#@@last
+#@-node:@@file
+#@-leo
+last line 1: newline
+</t>
+<t tx="EKR.20040624112329"></t>
+<t tx="EKR.20040624112329.1">Line 1
+
+@last last line 1: two trailing newlines
+</t>
+<t tx="EKR.20040624112329.2">#@+leo-ver=4
+#@+node:@@file
+Line 1
+
+#@@last
+#@-node:@@file
+#@-leo
+last line 1: two trailing newlines
+</t>
+<t tx="EKR.20040624112329.3">Line 1
+
+@last last line 1: no newline</t>
+<t tx="EKR.20040624112329.4">#@+leo-ver=4-thin
+#@+node:EKR.20040624112329.3:@@thin
+Line 1
+
+#@@last
+#@nonl
+#@-node:EKR.20040624112329.3:@@thin
+#@-leo
+last line 1: no newline</t>
 <t tx="ekr.20040126105605"></t>
 <t tx="ekr.20040126105605.2"></t>
 <t tx="ekr.20040126105605.3"></t>
