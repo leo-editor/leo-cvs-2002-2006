@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet ekr_stylesheet?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="6489" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="6518" clone_windows="0"/>
 <globals body_outline_ratio="0.5">
 	<global_window_position top="73" left="266" height="804" width="943"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
@@ -515,6 +515,43 @@
 <v t="ekr.20041220172118.2"><vh>Conflicts not involving sentinels</vh></v>
 <v t="ekr.20041220173231"><vh>Conflicts involving sentinels</vh></v>
 <v t="ekr.20041220173748"><vh>Design notes</vh></v>
+</v>
+<v t="ekr.20050103092214"><vh>Python parser (abandoned)</vh>
+<v t="ekr.20050103092214.5"><vh>class pythonParser</vh>
+<v t="ekr.20050103092214.6"><vh>To be deleted</vh>
+<v t="ekr.20050103092214.7"><vh>clear</vh></v>
+<v t="ekr.20050103092214.8"><vh>endUndo</vh></v>
+<v t="ekr.20050103092214.9"><vh>get</vh></v>
+<v t="ekr.20050103092214.10"><vh>put</vh></v>
+<v t="ekr.20050103092214.11"><vh>putArray</vh></v>
+<v t="ekr.20050103092214.12"><vh>replaceBody</vh></v>
+<v t="ekr.20050103092214.13"><vh>prettyPrintNode</vh></v>
+<v t="ekr.20050103092214.14"><vh>putToken</vh></v>
+<v t="ekr.20050103092214.18"><vh>dumpLines (not used)</vh></v>
+</v>
+<v t="ekr.20050103092214.15"><vh>__init__</vh>
+<v t="ekr.20050103092214.16"><vh>&lt;&lt; define dispatch dict &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20050103092214.17"><vh>parseNode(top level)</vh></v>
+<v t="ekr.20050103092214.19"><vh>dumpToken</vh></v>
+<v t="ekr.20050103092214.21"><vh>oops</vh></v>
+<v t="ekr.20050103092214.22"><vh>trace</vh></v>
+<v t="ekr.20050103092214.23"><vh>doToken &amp; allies</vh>
+<v t="ekr.20050103095602"><vh>handleAtPart</vh></v>
+<v t="ekr.20050103092214.24"><vh>doEndMarker</vh></v>
+<v t="ekr.20050103092214.25"><vh>doErrorToken</vh></v>
+<v t="ekr.20050103092214.26"><vh>doIndent &amp; doDedent</vh></v>
+<v t="ekr.20050103092214.27"><vh>doMultiLine</vh></v>
+<v t="ekr.20050103092214.28"><vh>doName</vh></v>
+<v t="ekr.20050103092214.29"><vh>doNewline</vh></v>
+<v t="ekr.20050103092214.30"><vh>doNumber</vh></v>
+<v t="ekr.20050103092214.31"><vh>doOp</vh></v>
+<v t="ekr.20050103092214.32"><vh>doStartLine</vh></v>
+</v>
+</v>
+<v t="ekr.20050103092214.3"><vh>class dumper (pythonParser)</vh>
+<v t="ekr.20050103092214.4"><vh>__init__</vh></v>
+</v>
 </v>
 </v>
 <v t="ekr.20040312021734"><vh>Scripts</vh>
@@ -2048,7 +2085,7 @@ import leoGlobals as g
 print g.app.config.redirect_execute_script_output_to_log_pane</t>
 <t tx="EKR.20040627103732">@ignore</t>
 <t tx="EKR.20040627103801"></t>
-<t tx="EKR.20040627103902" lineYOffset="4b032e" icons="5d7100287d7101285504747970657102550466696c65710355047870616471044b02550577686572657105550a6265666f726549636f6e71066803582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286802680368084afdffffff6803582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6805550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e"></t>
+<t tx="EKR.20040627103902" lineYOffset="4b032e" icons="5d7100287d710128550577686572657102550a6265666f726549636f6e710355047870616471044b025504747970657105550466696c6571066806582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286805680668084afdffffff6806582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6802550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e"></t>
 <t tx="EKR.20040627121836">import leoGlobals as g
 
 c = g.top() ; p = c.currentPosition()
@@ -2179,7 +2216,7 @@ for p in c.rootPosition().allNodes_iter():
 s = "%d nodes" % count
 print s ; g.es(s)</t>
 <t tx="ekr.20040312101720"></t>
-<t tx="ekr.20040317101155" lineYOffset="4b032e" icons="5d7100287d710128550577686572657102550a6265666f726549636f6e710355047870616471044b025504747970657105550466696c65710668065834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286805680668084afdffffff68065834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6802550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">import leoGlobals as g
+<t tx="ekr.20040317101155" lineYOffset="4b032e" icons="5d7100287d7101285504747970657102550466696c65710355047870616471044b02550577686572657105550a6265666f726549636f6e710668035834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286802680368084afdffffff68035834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6805550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">import leoGlobals as g
 
 c = g.top()
 
@@ -5475,7 +5512,7 @@ class eggs:
     """ A typical doc string """
     
     @others</t>
-<t tx="ekr.20040713123617">@This is a test of stuff.in doc parts.
+<t tx="ekr.20040713123617">@ This is a test of stuff.in doc parts.
 
          I wonder what will happen.
 @c 
@@ -10844,13 +10881,13 @@ if spellpyx:
         spellFrame.checkSpelling()</t>
 <t tx="ekr.20041121151002">@nocolor</t>
 <t tx="ekr.20041121151002.1">C:\prog\leoCVS\leo\test\unittest\minimalLeoFile3.leo
-C:\prog\leoCVS\leo\dist\leoDist.leo
-C:\prog\leoCVS\leo\test\unittest\minimalLeoFile.leo
-C:\prog\leoCVS\leo\test\unittest\minimalLeoFile2.leo
-C:\prog\leoCVS\leo\test\test.leo
 C:\prog\leoCVS\leo\src\LeoPy.leo
+C:\prog\leoCVS\leo\dist\leoDist.leo
+C:\prog\leoCVS\leo\doc\LeoDocs.leo
+C:\prog\leoCVS\leo\test\unittest\minimalLeoFile.leo
 C:\prog\leoCVS\leo\plugins\leoPlugins.leo
-C:\prog\leoCVS\leo\doc\LeoDocs.leo</t>
+C:\prog\leoCVS\leo\test\unittest\minimalLeoFile2.leo
+C:\prog\leoCVS\leo\test\test.leo</t>
 <t tx="ekr.20041124063401"></t>
 <t tx="ekr.20041124144944">import os
 import sys
@@ -10885,8 +10922,9 @@ path = r"c:\Python23\Lib\site-packages\Pmw\Pmw_1_1\demos\All.py"
 assert g.os_path_exists(path)
 
 c.importCommands.importFilesCommand([path],"@file")</t>
-<t tx="ekr.20041126055818.2"># This is probably a better way of parsing Python text.
-# It does not import the module, so it is safe for untrusted code.
+<t tx="ekr.20041126055818.2">@ This is probably a better way of parsing Python text.
+It does not import the module, so it is safe for untrusted code.
+@c
 import leoGlobals as g
 import pyclbr # Python Command Line Browser support.
 import sys
@@ -12024,5 +12062,339 @@ still more</t>
 <t tx="ekr.20041231105200.1">node 2, line 1</t>
 <t tx="ekr.20041231105200.2"></t>
 <t tx="ekr.20041231105348">@path c:\prog\test\atStripTest.txt</t>
+<t tx="ekr.20050103092214">import leoGlobals as g
+import token
+import tokenize
+
+c = g.top() ; p = c.currentPosition()
+
+@others
+
+print '*' * 40
+
+if 1:
+    parser = pythonParser(c,p)
+    parser.parseNode(p)
+else:
+    parser = dumper(c,p)
+    parser.parseNode(p)</t>
+<t tx="ekr.20050103092214.3">class dumper (pythonParser):
+    
+    @others</t>
+<t tx="ekr.20050103092214.4">def __init__ (self,c,p):
+
+    # Init the base class.
+    pythonParser.__init__ (self,c,p,dumping=True)</t>
+<t tx="ekr.20050103092214.5">class pythonParser:
+    
+    @others</t>
+<t tx="ekr.20050103092214.6">if 0:
+    @others</t>
+<t tx="ekr.20050103092214.7">def clear (self):
+    self.lines = []</t>
+<t tx="ekr.20050103092214.8">def endUndo (self):
+    
+    c = self.c
+    
+    if self.changed:
+
+        # Tag the end of the command.
+        c.undoer.setUndoParams("Pretty Print",self.p)</t>
+<t tx="ekr.20050103092214.9">def get (self):
+    
+    return self.lines</t>
+<t tx="ekr.20050103092214.10">def put (self,s,strip=True):
+    
+    """Put s to self.array, and strip trailing whitespace if strip is True."""
+    
+    if self.array and strip:
+        prev = self.array[-1]
+        if len(self.array) == 1:
+            if prev.rstrip():
+                # Stripping trailing whitespace doesn't strip leading whitespace.
+                self.array[-1] = prev.rstrip()
+        else:
+            # The previous entry isn't leading whitespace, so we can strip whitespace.
+            self.array[-1] = prev.rstrip()
+
+    self.array.append(s)</t>
+<t tx="ekr.20050103092214.11">def putArray (self):
+    
+    """Add the next line by joining all the strings is self.array"""
+    
+    self.lines.append(''.join(self.array))
+    self.array = []</t>
+<t tx="ekr.20050103092214.12">def replaceBody (self,p,lines):
+    
+    c = self.c
+    
+    sel = c.frame.body.getInsertionPoint()
+    oldBody = p.bodyString()
+    body = string.join(lines,'')
+    
+    p.setBodyStringOrPane(body)
+    
+    if not self.changed:
+
+        # Tag the start of the command.
+        c.undoer.setUndoParams("Pretty Print",self.p) 
+        self.changed = True
+    
+    self.c.undoer.setUndoParams("Change",p,
+        oldText=oldBody,newText=body,oldSel=sel, newSel=sel)</t>
+<t tx="ekr.20050103092214.13">def prettyPrintNode(self,p,dump):
+
+    c = self.c
+    h = p.headString()
+    s = p.bodyString()
+    if not s: return
+    
+    readlines = g.readLinesGenerator(s).next
+
+    try:
+        self.clear()
+        for token5tuple in tokenize.generate_tokens(readlines):
+            self.putToken(token5tuple)
+        lines = self.get()
+
+    except tokenize.TokenError:
+        g.es("Error pretty-printing %s.  Not changed." % h, color="blue")
+        return
+
+    if dump:
+        self.dumpLines(p,lines)
+    else:
+        self.replaceBody(p,lines)</t>
+<t tx="ekr.20050103092214.14">def putToken (self,token5tuple):
+    
+    if self.dumping:
+        self.dumpToken(token5tuple)
+    else:
+        self.putNormalToken(token5tuple)</t>
+<t tx="ekr.20050103092214.15">def __init__ (self,c,p,dumping=False):
+    
+    self.c = c
+    self.p = p
+    
+    # Debugging ivars...
+    self.dumping = dumping
+    self.tracing = False
+    
+    # State ivars...
+    self.bracketLevel = 0
+    self.erow = self.ecol = 0 # The ending row/col of the token.
+    self.inDocPart = False
+    self.line = 0 # Same as self.srow
+    self.name = None
+    self.parenLevel = 0
+    self.srow = self.scol = 0 # The starting row/col of the token.
+    self.startline = True # True: the token starts a line.
+    self.val = None
+    
+    if 0: # old ivars
+        self.array = [] # List of strings comprising the line being accumulated.
+        self.changed = False
+        self.lines = [] # List of lines.
+        self.prevName = None
+        self.s = None # The string containing the line.
+
+    &lt;&lt; define dispatch dict &gt;&gt;</t>
+<t tx="ekr.20050103092214.16">self.dispatchDict = {
+    
+    "comment":    self.doMultiLine,
+    "dedent":     self.doDedent,
+    "endmarker":  self.doEndMarker,
+    "errortoken": self.doErrorToken,
+    "indent":     self.doIndent,
+    "name":       self.doName,
+    "newline":    self.doNewline,
+    "nl" :        self.doNewline,
+    "number":     self.doNumber,
+    "op":         self.doOp,
+    "string":     self.doMultiLine,
+}</t>
+<t tx="ekr.20050103092214.17">def parseNode(self,p):
+
+    c = self.c
+    h = p.headString()
+    s = p.bodyString()
+    if not s: return
+    
+    readlines = g.readLinesGenerator(s).next
+
+    try:
+        if self.dumping:
+            for token5tuple in tokenize.generate_tokens(readlines):
+                self.dumpToken(token5tuple)
+        else:
+            for token5tuple in tokenize.generate_tokens(readlines):
+                self.doToken(token5tuple)
+
+    except tokenize.TokenError:
+        g.es("Error parseing %s" % h, color="blue")
+        return</t>
+<t tx="ekr.20050103092214.18">def dumpLines (self,p,lines):
+
+    encoding = g.app.tkEncoding
+    
+    print ; print '-'*10, p.headString()
+    
+    if 0:
+        for line in lines:
+            line2 = g.toEncodedString(line,encoding,reportErrors=True)
+            print line2, # Don't add a trailing newline!
+    else:
+        for i in xrange(len(lines)):
+            line = lines[i]
+            line = g.toEncodedString(line,encoding,reportErrors=True)
+            print "%3d" % i, repr(lines[i])</t>
+<t tx="ekr.20050103092214.19">def dumpToken (self,token5tuple):
+
+    t1,t2,t3,t4,t5 = token5tuple
+    name = token.tok_name[t1].lower()
+    val  = str(t2) # can fail
+    srow,scol = t3
+    erow,ecol = t4
+    line = str(t5) # can fail
+
+    startLine = self.line != srow
+    if startLine:
+        print "----- line",srow,repr(line)
+    self.line = srow
+
+    print "%10s (%2d,%2d) %-8s" % (name,scol,ecol,repr(val))</t>
+<t tx="ekr.20050103092214.21">def oops(self):
+    
+    print "unknown tokenize code: %s" % (self.name)</t>
+<t tx="ekr.20050103092214.22">def trace(self):
+    
+    if self.tracing:
+
+        g.trace("%10s: %s" % (
+            self.name,
+            repr(g.toEncodedString(self.val,"utf-8"))
+        ))</t>
+<t tx="ekr.20050103092214.23">def doToken (self,token5tuple):
+
+    t1,t2,t3,t4,t5 = token5tuple
+    self.name = token.tok_name[t1].lower() # The token type
+    self.val = t2  # the token string
+    self.srow,self.scol = t3 # row &amp; col where the token begins in the source.
+    self.erow,self.ecol = t4 # row &amp; col where the token ends in the source.
+    self.s = t5 # The line containing the token.
+    self.startLine = self.line != self.srow
+    self.line = self.srow
+    
+    try: t2 = str(t2)
+    except: pass
+    try: t5 = str(t5)
+    except: pass
+    
+    if 1: # Dump...
+        if self.startLine: print 'Line %s' % self.line
+        # print '%3d %20s %10s %10s %s' % (t1,repr(t2),t3,t4,repr(t5))
+        print '%20s %s' % (repr(str(self.s[self.scol:self.ecol])),repr(t5))
+        
+    
+    if self.startLine:
+        self.doStartLine()
+    
+    f = self.dispatchDict.get(self.name,self.oops)
+    f()</t>
+<t tx="ekr.20050103092214.24">def doEndMarker (self):
+    
+    # End of text marker.
+    pass</t>
+<t tx="ekr.20050103092214.25">def doErrorToken (self):
+    
+    if 0:
+        self.array.append(self.val)
+    
+        if self.val == '@':
+            # Preserve whitespace after @.
+            i = g.skip_ws(self.s,self.scol+1)
+            ws = self.s[self.scol+1:i]
+            if ws:
+                self.array.append(ws)</t>
+<t tx="ekr.20050103092214.26">def doDedent (self):
+    
+    pass
+    
+def doIndent (self):
+    
+    if 0:
+        self.array.append(self.val)
+</t>
+<t tx="ekr.20050103092214.27">def doMultiLine (self):
+    
+    '''Handle a multiline token: i.e., a string or comment.'''
+    
+    if 0:
+        # These may span lines, so duplicate the end-of-line logic.
+        lines = g.splitLines(self.val)
+        for line in lines:
+            self.array.append(line)
+            if line and line[-1] == '\n':
+                self.putArray()
+                
+        # Suppress start-of-line logic.
+        self.line = self.erow</t>
+<t tx="ekr.20050103092214.28">def doName(self):
+
+    if 0:
+        self.array.append("%s " % self.val)
+        if self.prevName == "def": # A personal idiosyncracy.
+            self.array.append(' ') # Retain the blank before '('.
+        self.prevName = self.val</t>
+<t tx="ekr.20050103092214.29">def doNewline (self):
+    
+    if 0:
+        self.array.append('\n')
+        self.putArray()</t>
+<t tx="ekr.20050103092214.30">def doNumber (self):
+
+    if 0:
+        self.array.append(self.val)
+</t>
+<t tx="ekr.20050103092214.31">def doOp (self):
+    
+    # New in Python 2.4: '@' is an op token.
+    val = self.val
+    
+    if 0:
+        if val == '(':
+            self.parenLevel += 1
+            self.put(val)
+        elif val == ')':
+            self.parenLevel -= 1
+            self.put(val)
+        elif val == '=':
+            if self.parenLevel &gt; 0: self.put('=')
+            else:                   self.put(' = ')
+        elif val == ',':
+            if self.parenLevel &gt; 0: self.put(',')
+            else:                   self.put(', ')
+        elif val == ';':
+            self.put(" ; ")
+        else:
+            self.put(val)</t>
+<t tx="ekr.20050103092214.32">def doStartLine (self):
+
+    before = self.s[0:self.scol]
+    i = g.skip_ws(before,0)
+    self.ws = self.s[0:i]
+    
+    # g.trace(repr(before),repr(self.ws))
+         
+    if 0:
+        if self.ws:
+            self.array.append(self.ws)</t>
+<t tx="ekr.20050103095602">def handleAtPart (self):
+    
+    s = self.s
+
+    #self.srow,self.scol = t3 # row &amp; col where the token begins in the source.
+    #self.erow,self.ecol = t4 # row &amp; col where the token ends in the source.
+</t>
 </tnodes>
 </leo_file>
