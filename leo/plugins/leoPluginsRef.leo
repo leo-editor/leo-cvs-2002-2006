@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="2290" clone_windows="0"/>
-<globals body_outline_ratio="0.57003257329">
-	<global_window_position top="17" left="397" height="921" width="869"/>
+<globals body_outline_ratio="0.505971769815">
+	<global_window_position top="10" left="380" height="921" width="869"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences>
@@ -547,7 +547,6 @@
 <v t="ekr.20040722122834"><vh>To do: reinstall spelling plugin</vh></v>
 <v t="ekr.20040722134333.1"><vh>To do: install latest xemacs</vh></v>
 </v>
-<v t="ekr.20040723100651"><vh>@thin __outlineExperiments.py</vh></v>
 </vnodes>
 <tnodes>
 <t tx="EKR.20040517075715"></t>
@@ -3167,7 +3166,7 @@ OKFLAG='OK '  # Space required.
 try: import Tkinter as Tk
 except ImportError: Tk = None
 
-if Tk: 
+if Tk and not g.app.unitTesting:
 
     if g.app.gui is None:
         g.app.createTkGui(__file__)
