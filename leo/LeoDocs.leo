@@ -2,10 +2,10 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="1053" clone_windows="0"/>
 <globals body_outline_ratio="0.5">
-	<global_window_position top="142" left="303" height="19" width="69"/>
+	<global_window_position top="109" left="211" height="19" width="69"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
-<preferences allow_rich_text="0" tab_width="4" page_width="132" tangle_bat="0" untangle_bat="0" output_doc_chunks="1" use_header_flag="1" defaultTargetLanguage="Python">
+<preferences allow_rich_text="0">
 </preferences>
 <find_panel_settings>
 	<find_string></find_string>
@@ -36,7 +36,8 @@
 </v>
 <v a="E"><vh>Latest version</vh>
 <v t="T17" a="E"><vh>leo.py 3.4 beta 2</vh>
-<v t="T18" a="V"><vh>Added comments to leoConfig.txt about split direction and ratio</vh></v>
+<v a="V"><vh>Toggle Split Direction now updates leoConfig.txt</vh></v>
+<v t="T18"><vh>Added comments to leoConfig.txt about split direction and ratio</vh></v>
 <v><vh>Leo writes prefs if leoConfig.txt is read-only</vh></v>
 <v t="T19"><vh>Leo honors pane ratio stored in .leo files</vh></v>
 <v a="E"><vh>Documentation code in leo.py that may be of wider interest</vh>
