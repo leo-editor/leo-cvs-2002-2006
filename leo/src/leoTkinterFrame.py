@@ -1800,21 +1800,23 @@ class leoTkinterBody (leoFrame.leoBody):
         
         """Handle any key press event in the body pane."""
     
-        c = self.c ; ch = event.char 
+        c = self.c ; ch = event.char
+        
+        # This translation is needed on MacOS.
+        if ch == '':
+            d = {'Return':'\r', 'Tab':'\t', 'BackSpace':chr(8)}
+            ch = d.get(event.keysym,'')
+    
         oldSel = c.frame.body.getTextSelection()
         
         p = c.currentPosition()
     
-        # g.trace(repr(ch))
-    
         if 0: # won't work when menu keys are bound.
             self.handleStatusLineKey(event)
             
-        # g.trace(p)
-            
         # We must execute this even if len(ch) > 0 to delete spurious trailing newlines.
         self.c.frame.bodyCtrl.after_idle(self.idle_body_key,p,oldSel,"Typing",ch)
-    
+    #@nonl
     #@+node:ekr.20040105223536:handleStatusLineKey
     def handleStatusLineKey (self,event):
         
