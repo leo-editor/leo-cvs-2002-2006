@@ -35,7 +35,7 @@ This plugin requires the simplified atFile write code that is new in 4.2.1.
 #@@language python 
 #@@tabwidth-4
 
-__version__ = ".2"
+__version__ = ".3"
 #@<<version history>>
 #@+node:ekr.20041109171952:<< version history >>
 #@@killcolor 
@@ -47,6 +47,10 @@ __version__ = ".2"
 # - Added some possibly redundant "global"statements.
 # - Bind dialog, efs and values using keyword params in action callback.
 #     This is not strictly necessary, and I think it is clearer.
+# 
+# 0.3 EKR:
+#     - Changed 'new_c' logic to 'c' logic.
+#     - Replaced 'start2' hook with 'new' hook.
 #@-at
 #@nonl
 #@-node:ekr.20041109171952:<< version history >>
@@ -347,7 +351,7 @@ def scanForTemplates (tag,keywords):
     global templates 
     global haveseen 
 
-    c = keywords.get("c")or keywords.get("new_c")
+    c = keywords.get("c")
     if haveseen.has_key(c):
         return 
 
@@ -367,7 +371,7 @@ def scanForTemplates (tag,keywords):
 if import_succeed: # OK for unit testing.
     leoPlugins.registerHandler("after-create-leo-frame",addButtons)
     leoPlugins.registerHandler("after-redraw-outline",drawImages)
-    leoPlugins.registerHandler(("start2","open2"),scanForTemplates)
+    leoPlugins.registerHandler(("new","open2"),scanForTemplates)
     g.plugin_signon(__name__)
 #@nonl
 #@-node:mork.20041022090036.1:@thin templates.py
