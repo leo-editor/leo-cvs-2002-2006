@@ -706,7 +706,31 @@ def computeWidth (s, tab_width):
 	return w
 #@-body
 #@-node:2::computeWidth
-#@+node:3::optimizeLeadingWhitespace
+#@+node:3::get_leading_ws
+#@+body
+def get_leading_ws(s):
+	
+	"""Returns a string containing the leading tabs and
+spaces from 's'.
+"""
+
+	if 0: # EKR
+		i = 0 ; n = len(s)
+		while i < n and s[i] in (' ','\t'):
+			i += 1
+		return s[0:i]
+	
+	else: # DTHEIN
+		s2 = s.lstrip()
+		diff = len(s) - len(s2)
+		if diff:
+			ws = s[0:diff]
+		else:
+			ws = ""
+		return ws
+#@-body
+#@-node:3::get_leading_ws
+#@+node:4::optimizeLeadingWhitespace
 #@+body
 # Optimize leading whitespace in s with the given tab_width.
 
@@ -716,8 +740,8 @@ def optimizeLeadingWhitespace (line,tab_width):
 	s = computeLeadingWhitespace(width,tab_width) + line[i:]
 	return s
 #@-body
-#@-node:3::optimizeLeadingWhitespace
-#@+node:4::removeLeadingWhitespace
+#@-node:4::optimizeLeadingWhitespace
+#@+node:5::removeLeadingWhitespace
 #@+body
 # Remove whitespace up to first_ws wide in s, given tab_width, the width of a tab.
 
@@ -736,8 +760,8 @@ def removeLeadingWhitespace (s,first_ws,tab_width):
 		s = s[j:]
 	return s
 #@-body
-#@-node:4::removeLeadingWhitespace
-#@+node:5::removeTrailingWs
+#@-node:5::removeLeadingWhitespace
+#@+node:6::removeTrailingWs
 #@+body
 # Warning: string.rstrip also removes newlines!
 
@@ -749,8 +773,8 @@ def removeTrailingWs(s):
 	return s[:j+1]
 
 #@-body
-#@-node:5::removeTrailingWs
-#@+node:6::skip_leading_ws
+#@-node:6::removeTrailingWs
+#@+node:7::skip_leading_ws
 #@+body
 # Skips leading up to width leading whitespace.
 
@@ -769,8 +793,8 @@ def skip_leading_ws(s,i,ws,tab_width):
 
 	return i
 #@-body
-#@-node:6::skip_leading_ws
-#@+node:7::skip_leading_ws_with_indent
+#@-node:7::skip_leading_ws
+#@+node:8::skip_leading_ws_with_indent
 #@+body
 #@+at
 #  Skips leading whitespace and returns (i, indent), where i points after the 
@@ -795,7 +819,7 @@ def skip_leading_ws_with_indent(s,i,tab_width):
 
 	return i, count
 #@-body
-#@-node:7::skip_leading_ws_with_indent
+#@-node:8::skip_leading_ws_with_indent
 #@-node:13::Leading & trailing whitespace...
 #@+node:14::List utilities...
 #@+node:1::appendToList
@@ -1608,53 +1632,8 @@ def esDiffTime(message, start):
 #@-body
 #@-node:22::Timing
 #@+node:23::Tk.Text selection (utils)
-#@+node:1::getTextSelection
+#@+node:1::bound_paragraph
 #@+body
-# t is a Tk.Text widget.  Returns the selected range of t.
-
-def getTextSelection (t):
-
-	# To get the current selection
-	sel = t.tag_ranges("sel")
-	if len(sel) == 2:
-		start, end = sel # unpack tuple.
-		return start, end
-	else: return None, None
-#@-body
-#@-node:1::getTextSelection
-#@+node:2::getSelectedText
-#@+body
-# t is a Tk.Text widget.  Returns the text of the selected range of t.
-
-def getSelectedText (t):
-
-	start, end = getTextSelection(t)
-	if start and end:
-		return t.get(start,end)
-	else:
-		return None
-#@-body
-#@-node:2::getSelectedText
-#@+node:3::setTextSelection
-#@+body
-#@+at
-#  t is a Tk.Text widget.  start and end are positions.  Selects from start to end.
-
-#@-at
-#@@c
-
-def setTextSelection (t,start,end): 
-
-	if not start or not end:
-		return
-	if t.compare(start, ">", end):
-		start,end = end,start
-		
-	t.tag_remove("sel","1.0",start)
-	t.tag_add("sel",start,end)
-	t.tag_remove("sel",end,"end")
-	t.mark_set("insert",end)
-	
 def bound_paragraph(t=None):
 	"""Find the bounds of the text paragraph that contains
 the current cursor position.
@@ -1670,8 +1649,7 @@ Parameters:
   t   a reference to a Tk.Text widget
 """
 	if not t:
-		# c=leo.topCommand()
-		# b=c.frame.body
+		trace("Null t")
 		return None
 		
 	# get the current position
@@ -1732,21 +1710,57 @@ Parameters:
 	# return the ending NL state
 	# return the first and second line leading WS
 	return start, end, endsWithNL, wsFirst, wsSecond
-
-
-def get_leading_ws(s):
-	"""Returns a string containing the leading tabs and
-spaces from 's'.
-"""
-	s2 = s.lstrip()
-	diff = len(s) - len(s2)
-	if diff:
-		ws = s[0:diff]
-	else:
-		ws = ""
-	return ws
 #@-body
-#@-node:3::setTextSelection
+#@-node:1::bound_paragraph
+#@+node:2::getTextSelection
+#@+body
+# t is a Tk.Text widget.  Returns the selected range of t.
+
+def getTextSelection (t):
+
+	# To get the current selection
+	sel = t.tag_ranges("sel")
+	if len(sel) == 2:
+		start, end = sel # unpack tuple.
+		return start, end
+	else: return None, None
+#@-body
+#@-node:2::getTextSelection
+#@+node:3::getSelectedText
+#@+body
+# t is a Tk.Text widget.  Returns the text of the selected range of t.
+
+def getSelectedText (t):
+
+	start, end = getTextSelection(t)
+	if start and end:
+		return t.get(start,end)
+	else:
+		return None
+#@-body
+#@-node:3::getSelectedText
+#@+node:4::setTextSelection
+#@+body
+#@+at
+#  t is a Tk.Text widget.  start and end are positions.  Selects from start to end.
+
+#@-at
+#@@c
+
+def setTextSelection (t,start,end): 
+
+	if not start or not end:
+		return
+	if t.compare(start, ">", end):
+		start,end = end,start
+		
+	t.tag_remove("sel","1.0",start)
+	t.tag_add("sel",start,end)
+	t.tag_remove("sel",end,"end")
+	t.mark_set("insert",end)
+
+#@-body
+#@-node:4::setTextSelection
 #@-node:23::Tk.Text selection (utils)
 #@+node:24::Unicode...
 #@+node:1::convertChar/String/ToXMLCharRef

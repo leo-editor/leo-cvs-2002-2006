@@ -361,152 +361,7 @@ class Commands:
 			result = string.join(result,'\n')
 			c.updateBodyPane(head,result,tail,"Convert Tabs") # Handles undo
 			setTextSelection(c.body,"1.0","1.0")
-			
-	# DTHEIN 27-OCT-2002:		
-	def reformatParagraph(self):
-		"""Reformat a text paragraph in a Tk.Text widget
 	
-	Wraps the concatenated text to pageWidth.  Leading
-	tabs are sized to tabWidth.  First and second line
-	of original text is used to determine leading
-	whitespace in reformatted text.  Hanging indentation
-	is honored.
-	
-	Paragraph is bound by start of body, end of body, 
-	blank lines, and lines starting with "@".  Paragraph
-	is selected by position of current insertion cursor.
-	
-	Returns None.
-	"""
-		c = self
-		t = c.frame.body
-		pageWidth = c.page_width
-		tabWidth = c.tab_width
-		x = t.index("current")
-		head, lines, tail = self.getBodyLines()
-		result = [] ; changed = false
-	
-		assert(t)
-		assert(pageWidth)
-		assert(type(1) == type(pageWidth))
-		assert(0 < pageWidth)
-		assert(0 < tabWidth)
-		assert(tabWidth < pageWidth)
-	
-		# find the paragraph range
-		start, end, endsWithNL, wsFirst, wsSecond = bound_paragraph(t)
-		if not start:
-			return
-		
-		# count indentation
-		indentLenFirst = 0
-		for i in range(len(wsFirst)):
-			if " " == wsFirst[i]:
-				indentLenFirst += 1
-			elif "\t" == wsFirst[i]:
-				indentLenFirst += tabWidth
-		indentLenSecond = 0
-		for i in range(len(wsSecond)):
-			if " " == wsSecond[i]:
-				indentLenSecond += 1
-			elif "\t" == wsSecond[i]:
-				indentLenSecond += tabWidth
-		if indentLenSecond < indentLenFirst:
-			indentLenSecond = indentLenFirst
-			wsSecond = wsFirst
-		ws = wsSecond
-		textLenFirst = pageWidth - indentLenFirst
-		textLen = pageWidth - indentLenSecond
-	
-		# make into one big string
-		firstLine = int(float(start)) - 1 # subtract 1 to get on zero basis
-		lastLine = int(float(end)) - 1
-		para = ""
-		for i in range(firstLine,lastLine):
-			s = lines[i]
-			para += s.strip() + " "
-		s = para
-		s.rstrip() #remove the trailing space
-	
-	    # put the leading unchanged lines
-		for i in range(0,firstLine):
-			result.append(lines[i])
-	
-		# create the wrapped lines
-		lineCount = 0
-		i = 0
-		while i < len(s):
-			#find the line break
-			if i > 0:
-				j = i + textLen
-			else:
-				j = i + textLenFirst
-			if j >= len(s):
-				j = len(s)
-			elif s[j].isspace():
-				while (j > i) and s[j].isspace():
-					j -= 1
-				j += 1
-			else:
-				while (j > i) and not s[j].isspace():
-					j -= 1
-				while (j > i) and s[j].isspace():
-					j -= 1
-				j += 1
-			# write the line
-			if i > 0:
-				result.append(ws + s[i:j])
-			else:
-				result.append(wsFirst + s[i:j])
-			lineCount += 1
-			# find the start of next line
-			i = j
-			while (i < len(s)) and s[i].isspace():
-				i += 1
-		
-		# put the trailing unchanged lines
-		for i in range(lastLine,len(lines)):
-			result.append(lines[i])
-	
-		# was there a change?
-		for i in range(firstLine,lineCount+firstLine):
-			if i >= lastLine:
-				changed = true
-				break
-			if lines[i] != result[i]:
-				changed = true
-				break
-	
-		# replace current text
-		if changed:
-			result = string.join(result,'\n')
-			# remove the trailing newline, if needed
-			if not endsWithNL:
-				k = len(result)
-				result = result[0:k-1]
-			c.updateBodyPane(head,result,tail,"Reformat Paragraph") # Handles undo
-	
-		# Set the new insert at the start of the next paragraph
-		lastLine = firstLine + lineCount
-		if not endsWithNL:
-			insPos = str(lastLine) + ".0lineend"
-		else:
-			endPos = t.index("end")
-			endLine = int(float(endPos))
-			lastLine += 1
-			insPos = str(lastLine) + ".0"
-			while lastLine < endLine:
-				s = t.get(insPos,insPos + "lineend")
-				if s and (0 < len(s)) and not s.isspace():
-					break;
-				lastLine += 1
-				insPos = str(lastLine) + ".0"
-		setTextSelection(t,insPos,insPos)
-	
-		# Make sure we can see the new insert cursor
-		t.see("insert")
-	
-		return
 	#@-body
 	#@-node:4::convertTabs
 	#@+node:5::createLastChildNode
@@ -735,7 +590,162 @@ class Commands:
 			c.updateBodyPane(head,result,tail,"Indent")
 	#@-body
 	#@-node:12::indentBody
-	#@+node:13::updateBodyPane (handles undo)
+	#@+node:13::reformatParagraph
+	#@+body
+	# DTHEIN 27-OCT-2002:
+	def reformatParagraph(self):
+		"""Reformat a text paragraph in a Tk.Text widget
+	
+	Wraps the concatenated text to pageWidth.  Leading
+	tabs are sized to tabWidth.  First and second line
+	of original text is used to determine leading
+	whitespace in reformatted text.  Hanging indentation
+	is honored.
+	
+	Paragraph is bound by start of body, end of body, 
+	blank lines, and lines starting with "@".  Paragraph
+	is selected by position of current insertion cursor.
+	
+	Returns None.
+	"""
+		c = self
+		t = c.frame.body
+		pageWidth = c.page_width
+		tabWidth = c.tab_width
+		x = t.index("current")
+		head, lines, tail = self.getBodyLines()
+		result = [] ; changed = false
+	
+		if 0: # This doesn't help much
+			assert(t)
+			assert(pageWidth)
+			assert(type(1) == type(pageWidth))
+			assert(0 < pageWidth)
+			assert(0 < tabWidth)
+			assert(tabWidth < pageWidth)
+	
+		# find the paragraph range
+		data = bound_paragraph(t)
+		print `data`
+		if not data: return
+		start, end, endsWithNL, wsFirst, wsSecond = data
+		
+		# count indentation
+		indentLenFirst = 0
+		for i in range(len(wsFirst)):
+			if " " == wsFirst[i]:
+				indentLenFirst += 1
+			elif "\t" == wsFirst[i]:
+				indentLenFirst += tabWidth
+		indentLenSecond = 0
+		for i in range(len(wsSecond)):
+			if " " == wsSecond[i]:
+				indentLenSecond += 1
+			elif "\t" == wsSecond[i]:
+				indentLenSecond += tabWidth
+		if indentLenSecond < indentLenFirst:
+			indentLenSecond = indentLenFirst
+			wsSecond = wsFirst
+		ws = wsSecond
+		textLenFirst = pageWidth - indentLenFirst
+		textLen = pageWidth - indentLenSecond
+	
+		# make into one big string
+		print `start`,`end`
+		print `lines`
+		
+		firstLine = int(float(start)) - 1 # subtract 1 to get on zero basis
+		lastLine = int(float(end)) - 1
+		para = ""
+		
+		for i in range(firstLine,lastLine):
+			s = lines[i]
+			para += s.strip() + " "
+		s = para
+		s.rstrip() #remove the trailing space
+	
+	    # put the leading unchanged lines
+		for i in range(0,firstLine):
+			result.append(lines[i])
+	
+		# create the wrapped lines
+		lineCount = 0
+		i = 0
+		while i < len(s):
+			#find the line break
+			if i > 0:
+				j = i + textLen
+			else:
+				j = i + textLenFirst
+			if j >= len(s):
+				j = len(s)
+			elif s[j].isspace():
+				while (j > i) and s[j].isspace():
+					j -= 1
+				j += 1
+			else:
+				while (j > i) and not s[j].isspace():
+					j -= 1
+				while (j > i) and s[j].isspace():
+					j -= 1
+				j += 1
+			# write the line
+			if i > 0:
+				result.append(ws + s[i:j])
+			else:
+				result.append(wsFirst + s[i:j])
+			lineCount += 1
+			# find the start of next line
+			i = j
+			while (i < len(s)) and s[i].isspace():
+				i += 1
+		
+		# put the trailing unchanged lines
+		for i in range(lastLine,len(lines)):
+			result.append(lines[i])
+	
+		# was there a change?
+		for i in range(firstLine,lineCount+firstLine):
+			if i >= lastLine:
+				changed = true
+				break
+			if lines[i] != result[i]:
+				changed = true
+				break
+	
+		# replace current text
+		if changed:
+			result = string.join(result,'\n')
+			# remove the trailing newline, if needed
+			if not endsWithNL:
+				k = len(result)
+				result = result[0:k-1]
+			c.updateBodyPane(head,result,tail,"Reformat Paragraph") # Handles undo
+	
+		# Set the new insert at the start of the next paragraph
+		lastLine = firstLine + lineCount
+		if not endsWithNL:
+			insPos = str(lastLine) + ".0lineend"
+		else:
+			endPos = t.index("end")
+			endLine = int(float(endPos))
+			lastLine += 1
+			insPos = str(lastLine) + ".0"
+			while lastLine < endLine:
+				s = t.get(insPos,insPos + "lineend")
+				if s and (0 < len(s)) and not s.isspace():
+					break;
+				lastLine += 1
+				insPos = str(lastLine) + ".0"
+		setTextSelection(t,insPos,insPos)
+	
+		# Make sure we can see the new insert cursor
+		t.see("insert")
+	
+		return
+	#@-body
+	#@-node:13::reformatParagraph
+	#@+node:14::updateBodyPane (handles undo)
 	#@+body
 	def updateBodyPane (self,head,middle,tail,undoType):
 		
@@ -775,7 +785,7 @@ class Commands:
 		c.body.focus_force()
 		c.recolor() # 7/5/02
 	#@-body
-	#@-node:13::updateBodyPane (handles undo)
+	#@-node:14::updateBodyPane (handles undo)
 	#@-node:9::Edit Body Text
 	#@+node:10::Enabling Menu Items (Commands)
 	#@+node:1::canContractAllHeadlines
