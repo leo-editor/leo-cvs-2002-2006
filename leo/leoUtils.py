@@ -23,6 +23,7 @@ def set_delims_from_language(language):
 		(fortran_language, "C"), (fortran90_language, "!"),
 		(html_language, "<!-- -->"), (pascal_language, "// { }"),
 		(perl_language, "#"), (perlpod_language, "# =pod =cut"),
+		(plain_text_language, "#"), # 7/8/02: we have to pick something.
 		(shell_language, "#"), (python_language, "#") ]:
 		if lang == language:
 			return set_delims_from_string(val)
@@ -97,7 +98,9 @@ def set_language(s,i,issue_errors_flag,default_language):
 			("html", html_language), ("java", java_language),
 			("lisp", lisp_language), ("objective-c", c_language),
 			("pascal", pascal_language), ("perl", perl_language),
-			("perlpod", perlpod_language), ("python", python_language),
+			("perlpod", perlpod_language),
+			("plain", plain_text_language), # 7/8/02
+			("python", python_language),
 			("shell", shell_language) ]:
 		
 			if arg == name:

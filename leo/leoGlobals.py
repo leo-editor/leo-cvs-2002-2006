@@ -15,7 +15,7 @@
 	
 
 #@<< define global constants >>
-#@+node:1::<< define global constants >>
+#@+node:1:C=1:<< define global constants >>
 #@+body
 # General constants...
 true = 1
@@ -63,7 +63,7 @@ terse_bits = 	  0x08000
 unit_bits = 	   0x10000
 verbose_bits =	 0x20000
 #@-body
-#@-node:1::<< define global constants >>
+#@-node:1:C=1:<< define global constants >>
 
 
 

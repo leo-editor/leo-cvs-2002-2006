@@ -433,7 +433,7 @@
 </v>
 <v t="T257"><vh>Tangling @root trees with the Tangle commands</vh></v>
 <v t="T258"><vh>Untangling @root trees with the Untangle commands</vh></v>
-<v t="T259" a="E"><vh>More about directives</vh>
+<v t="T259"><vh>More about directives</vh>
 <v t="T260"><vh>@CWEB and @noweb specify the source language</vh></v>
 <v t="T261"><vh>@color and @nocolor control syntax coloring</vh></v>
 <v t="T262"><vh>@comment sets comment delimiters in @root and @unit trees</vh></v>
@@ -3841,7 +3841,7 @@ The @language directive specifies the comment delimiters and string types used b
 @language x
 
 @nocolor
-where x is one of the following: c, c++, html, java, objective-c, Pascal, Perl, python and shell. Shell files have comments that start with #. Case is ignored in the language specifiers, but not in the @language itself. Thus, the following are equivalent:
+where x is one of the following: c, c++, html, java, objective-c, Pascal, Perl, plain, python and shell. Shell files have comments that start with #. Case is ignored in the language specifiers, but not in the @language itself. Thus, the following are equivalent:
 @color
 
 @language html

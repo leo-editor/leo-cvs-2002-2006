@@ -252,8 +252,8 @@ class colorizer:
 	def colorize(self,v,body):
 	
 		if self.enabled:
-			type = self.updateSyntaxColorer(v)
-			self.colorizeAnyLanguage(v,body,type)
+			flag,language = self.updateSyntaxColorer(v)
+			self.colorizeAnyLanguage(v,body,language,flag)
 	#@-body
 	#@-node:6:C=3:colorize
 	#@+node:7:C=4:colorizeAnyLanguage
@@ -262,7 +262,9 @@ class colorizer:
 		"blank", "comment", "cwebName", "docPart", "keyword", "leoKeyword",
 		"link", "name", "nameBrackets", "pp", "string", "tab")
 	
-	def colorizeAnyLanguage(self,v,body,language):
+	def colorizeAnyLanguage(self,v,body,language,flag):
+		
+		#trace(`language`)
 	
 		hyperCount = 0 # Number of hypertext tags
 		self.body = body # For callbacks
@@ -343,8 +345,11 @@ class colorizer:
 		else:
 			for name in languages:
 				exec("if language==%s_language: keywords=%s_keywords" % (name,name))
-			
-		state = choose(language==plain_text_language,nocolorState,normalState)
+		
+		if 1: # 7/8/02: Color plain text unless we are under the control of @nocolor.
+			state = choose(flag,normalState,nocolorState)
+		else: # Stupid: no coloring at all in plain text.
+			state = choose(language==plain_text_language,nocolorState,normalState)
 		
 		lb = choose(language==cweb_language,"@<","<<")
 		rb = choose(language==cweb_language,"@>",">>")
@@ -653,7 +658,8 @@ class colorizer:
 							word = "" # can't be a Leo keyword, even if it looks like it.
 						
 						# to do: the keyword should start the line.
-						if word == "@" or word == "@doc":
+						# 7/8/02: don't color doc parts in plain text.
+						if language != plain_text_language and (word == "@" or word == "@doc"):
 							# at-space starts doc part
 							## body.tag_remove("normal", index(n,i), index(n,j))
 							body.tag_add("leoKeyword", index(n,i), index(n,j))
@@ -738,7 +744,7 @@ class colorizer:
 	def scanColorDirectives(self,v):
 	
 		c = self.commands
-		val = c.target_language
+		language = c.target_language
 		while v:
 			s = v.t.bodyString
 			bits, dict = is_special_bits(s)
@@ -746,22 +752,31 @@ class colorizer:
 			#@<< Test for @comment or @language >>
 			#@+node:1::<< Test for @comment or @language >>
 			#@+body
+			#@+at
+			#  Disabling syntax coloring when @comment is seen is stupid and confusing.  If the user want's plain text, then an 
+			# @language plain should work.  Moreover, why not recognize directives even in plain text?  If the user _really_ want 
+			# no syntax coloring, an @nocolor in a parent node will work fine.
+
+			#@-at
+			#@@c
+			
 			if btest(comment_bits,bits):
 				# @comment effectively disables syntax coloring.
-				val = plain_text_language
+				if 0: # 7/8/02: This is stupid and confusing.
+					language = plain_text_language
 				break
 			
 			elif btest(language_bits,bits):
 				issue_error_flag = false
 				i = dict["language"]
-				val, delim1, delim2, delim3 = set_language(s,i,issue_error_flag,c.target_language)
+				language, delim1, delim2, delim3 = set_language(s,i,issue_error_flag,c.target_language)
 				break
 			#@-body
 			#@-node:1::<< Test for @comment or @language >>
 
 			v = v.parent()
-		# trace(`val`)
-		return val
+		# trace(`language`)
+		return language
 	#@-body
 	#@-node:8:C=5:scanColorDirectives
 	#@+node:9::color.schedule
@@ -807,21 +822,28 @@ class colorizer:
 		return word
 	#@-body
 	#@-node:10::getCwebWord
-	#@+node:11::updateSyntaxColorer
+	#@+node:11:C=6:updateSyntaxColorer
 	#@+body
-	# Returns the language to be used for syntax coloring of v.
+	# Returns (flag,language)
+	# flag is true unless an unambiguous @nocolor is seen.
 	
 	def updateSyntaxColorer (self,v):
-	
-		if self.useSyntaxColoring(v):
-			return self.scanColorDirectives(v)
-		else:
-			return plain_text_language
+		
+		# 7/8/02: return a tuple.
+		flag = self.useSyntaxColoring(v)
+		language = self.scanColorDirectives(v)
+		return flag,language
+		
+		if 0:
+			if self.useSyntaxColoring(v):
+				return self.scanColorDirectives(v)
+			else:
+				return plain_text_language
 	#@-body
-	#@-node:11::updateSyntaxColorer
+	#@-node:11:C=6:updateSyntaxColorer
 	#@+node:12::useSyntaxColoring
 	#@+body
-	# Return true if v is unambiguously under the control of @color or @nocolor.
+	# Return true if v unless v is unambiguously under the control of @nocolor.
 	
 	def useSyntaxColoring (self,v):
 	
@@ -835,14 +857,14 @@ class colorizer:
 			# A color anywhere in the target enables coloring.
 			if color and v == first:
 				val = true ; break
-			# Otherwise, the specification must be unambiguous.
+			# Otherwise, the @nocolor specification must be unambiguous.
 			elif no_color and not color:
 				val = false ; break
 			elif color and not no_color:
 				val = true ; break
 			else:
 				v = v.parent()
-		trace("-useSyntaxColoring",`val`)
+		# trace("useSyntaxColoring",`val`)
 		return val
 	#@-body
 	#@-node:12::useSyntaxColoring
