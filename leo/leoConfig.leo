@@ -3,7 +3,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="23" clone_windows="0"/>
 <globals body_outline_ratio="0.5">
-	<global_window_position top="11" left="143" height="25" width="96"/>
+	<global_window_position top="-4" left="95" height="25" width="96"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences allow_rich_text="0">
@@ -477,10 +477,18 @@ SetColors        = Alt+Shift+C
 ExecuteScript    = Alt+Shift+E
 SetFont          = Alt+Shift+F
 
+GoToFirstNode    = Alt+Shift+G
+GoToLastNode     = Alt+Shift+H
+GoToParent       = Alt+Shift+P
+GoToPrevSibling  = Alt+Shift+R
+GoToNextSibling  = Alt+Shift+S
+
 GoToNextVisible  = Alt+DnArrow
 GoToPrevVisible  = Alt+UpArrow
 GoBack           = Alt+Shift+UpArrow
-GoNext           = Alt+Shift+DnArrow</t>
+GoNext           = Alt+Shift+DnArrow
+
+</t>
 <t tx="T11">CloneNode        = Ctrl+`
 Replace          = Ctrl+=
 ReplaceThenFind  = Ctrl+-

@@ -553,7 +553,7 @@ class LeoFrame:
 	#@-body
 	#@-node:8::frame.OnVisibility
 	#@-node:3::Event handlers (Frame)
-	#@+node:4::Menus, Commands & Shortcuts
+	#@+node:4::Menus
 	#@+node:1::canonicalizeShortcut
 	#@+body
 	#@+at
@@ -1118,9 +1118,15 @@ class LeoFrame:
 		table = (
 			("Go To Next &Marked","Alt+M",self.OnGoToNextMarked),
 			("Go To Next C&hanged","Alt+D",self.OnGoToNextChanged),
-			("Go To &Next &Clone","Alt+N",self.OnGoToNextClone),
+			("Go To Next &Clone","Alt+N",self.OnGoToNextClone),
 			("-",None,None),
-			("Go To &Prev Visible","Alt-UpArrow",self.OnGoPrevVisible),
+			("Go To &First Node","Alt+Shift+G",self.OnGoToFirstNode),
+			("Go To &Last Node","Alt+Shift+H",self.OnGoToLastNode),
+			("Go To &Parent","Alt+Shift+P",self.OnGoToParent),
+			("Go To P&rev Sibling","Alt+Shift+R",self.OnGoToPrevSibling),
+			("Go To Next &Sibling","Alt+Shift+S",self.OnGoToNextSibling),
+			("-",None,None),
+			("Go To Prev V&isible","Alt-UpArrow",self.OnGoPrevVisible),
 			("Go To Next &Visible","Alt-DnArrow",self.OnGoNextVisible),
 			("Go &Back","Alt-Shift+UpArrow",self.OnGoBack),
 			("Go &Next","Alt-Shift-DnArrow",self.OnGoNext))
@@ -3267,78 +3273,150 @@ class LeoFrame:
 	#@-node:10::OnGoNext
 	#@-node:3::Move/Select
 	#@+node:4::Mark/Goto
-	#@+node:1::OnMark
+	#@+node:1::OnGoToFirstNode
 	#@+body
-	def OnMark(self,event=None):
-	
-		self.commands.markHeadline()
+	def OnGoToFirstNode(self,event=None):
+		
+		c = self.commands
+		v = c.rootVnode()
+		if v:
+			c.beginUpdate()
+			c.selectVnode(v)
+			c.endUpdate()
+	#@-body
+	#@-node:1::OnGoToFirstNode
+	#@+node:2::OnGoToLastNode
+	#@+body
+	def OnGoToLastNode(self,event=None):
+		
+		c = self.commands
+		v = c.rootVnode()
+		while v and v.threadNext():
+			v = v.threadNext()
+		if v:
+			c.beginUpdate()
+			c.tree.expandAllAncestors(v)
+			c.selectVnode(v)
+			c.endUpdate()
 	
 	#@-body
-	#@-node:1::OnMark
-	#@+node:2::OnMarkSubheads
-	#@+body
-	def OnMarkSubheads(self,event=None):
-	
-		self.commands.markSubheads()
-	
-	#@-body
-	#@-node:2::OnMarkSubheads
-	#@+node:3::OnMarkChangedItems
-	#@+body
-	def OnMarkChangedItems(self,event=None):
-	
-		self.commands.markChangedHeadlines()
-	
-	#@-body
-	#@-node:3::OnMarkChangedItems
-	#@+node:4::OnMarkChangedRoots
-	#@+body
-	def OnMarkChangedRoots(self,event=None):
-	
-		self.commands.markChangedRoots()
-	
-	#@-body
-	#@-node:4::OnMarkChangedRoots
-	#@+node:5::OnMarkClones
-	#@+body
-	def OnMarkClones(self,event=None):
-	
-		self.commands.markClones()
-	
-	#@-body
-	#@-node:5::OnMarkClones
-	#@+node:6::OnUnmarkAll
-	#@+body
-	def OnUnmarkAll(self,event=None):
-	
-		self.commands.unmarkAll()
-	
-	#@-body
-	#@-node:6::OnUnmarkAll
-	#@+node:7::OnGoToNextMarked
-	#@+body
-	def OnGoToNextMarked(self,event=None):
-	
-		self.commands.goToNextMarkedHeadline()
-	
-	#@-body
-	#@-node:7::OnGoToNextMarked
-	#@+node:8::OnGoToNextChanged
+	#@-node:2::OnGoToLastNode
+	#@+node:3::OnGoToNextChanged
 	#@+body
 	def OnGoToNextChanged(self,event=None):
 	
 		self.commands.goToNextDirtyHeadline()
 	
 	#@-body
-	#@-node:8::OnGoToNextChanged
-	#@+node:9::OnGoToNextClone
+	#@-node:3::OnGoToNextChanged
+	#@+node:4::OnGoToNextClone
 	#@+body
 	def OnGoToNextClone(self,event=None):
 	
 		self.commands.goToNextClone()
 	
 	#@-body
-	#@-node:9::OnGoToNextClone
+	#@-node:4::OnGoToNextClone
+	#@+node:5::OnGoToNextMarked
+	#@+body
+	def OnGoToNextMarked(self,event=None):
+	
+		self.commands.goToNextMarkedHeadline()
+	
+	#@-body
+	#@-node:5::OnGoToNextMarked
+	#@+node:6::OnGoToNextSibling
+	#@+body
+	def OnGoToNextSibling(self,event=None):
+		
+		c = self.commands
+		v = c.currentVnode()
+		if not v: return
+		next = v.next()
+		if next:
+			c.beginUpdate()
+			c.selectVnode(next)
+			c.endUpdate()
+	#@-body
+	#@-node:6::OnGoToNextSibling
+	#@+node:7::OnGoToParent
+	#@+body
+	def OnGoToParent(self,event=None):
+		
+		c = self.commands
+		v = c.currentVnode()
+		if not v: return
+		p = v.parent()
+		if p:
+			c.beginUpdate()
+			c.selectVnode(p)
+			c.endUpdate()
+	
+	#@-body
+	#@-node:7::OnGoToParent
+	#@+node:8::OnGoToPrevSibling
+	#@+body
+	def OnGoToPrevSibling(self,event=None):
+		
+		c = self.commands
+		v = c.currentVnode()
+		if not v: return
+		back = v.back()
+		if back:
+			c.beginUpdate()
+			c.selectVnode(back)
+			c.endUpdate()
+	
+	#@-body
+	#@-node:8::OnGoToPrevSibling
+	#@+node:9::OnMark
+	#@+body
+	def OnMark(self,event=None):
+	
+		self.commands.markHeadline()
+	
+	#@-body
+	#@-node:9::OnMark
+	#@+node:10::OnMarkChangedItems
+	#@+body
+	def OnMarkChangedItems(self,event=None):
+	
+		self.commands.markChangedHeadlines()
+	
+	#@-body
+	#@-node:10::OnMarkChangedItems
+	#@+node:11::OnMarkChangedRoots
+	#@+body
+	def OnMarkChangedRoots(self,event=None):
+	
+		self.commands.markChangedRoots()
+	
+	#@-body
+	#@-node:11::OnMarkChangedRoots
+	#@+node:12::OnMarkClones
+	#@+body
+	def OnMarkClones(self,event=None):
+	
+		self.commands.markClones()
+	
+	#@-body
+	#@-node:12::OnMarkClones
+	#@+node:13::OnMarkSubheads
+	#@+body
+	def OnMarkSubheads(self,event=None):
+	
+		self.commands.markSubheads()
+	
+	#@-body
+	#@-node:13::OnMarkSubheads
+	#@+node:14::OnUnmarkAll
+	#@+body
+	def OnUnmarkAll(self,event=None):
+	
+		self.commands.unmarkAll()
+	
+	#@-body
+	#@-node:14::OnUnmarkAll
 	#@-node:4::Mark/Goto
 	#@-node:3::Outline Menu
 	#@+node:4::Window Menu
@@ -3954,6 +4032,9 @@ class LeoFrame:
 		enableMenu(menu,"Go To Next Clone",v.isCloned())
 		enableMenu(menu,"Go Back",c.canSelectThreadBack())
 		enableMenu(menu,"Go Next",c.canSelectThreadNext())
+		enableMenu(menu,"Go To Parent",v.parent() != None)
+		enableMenu(menu,"Go To Prev Sibling",v.back() != None)
+		enableMenu(menu,"Go To Next Sibling",v.next() != None)
 		# Mark submenu
 		menu = self.getMenu("Mark/Unmark...")
 		label = choose(v and v.isMarked(),"Unmark","Mark")
@@ -3965,7 +4046,7 @@ class LeoFrame:
 	#@-body
 	#@-node:5::updateOutlineMenu
 	#@-node:9::Menu enablers (Frame)
-	#@-node:4::Menus, Commands & Shortcuts
+	#@-node:4::Menus
 	#@+node:5::Splitter stuff
 	#@+body
 	#@+at
