@@ -1283,7 +1283,7 @@ class baseCommands:
             vnodeName,childIndex,gnx,n2,delim = self.convertLineToVnodeNameIndexLine(lines,n,root)
             found = True
             if not vnodeName:
-                g.es("invalid derived file: " + fileName)
+                g.es("error handling: " + root.headString())
                 return
             #@        << set p to the node given by vnodeName and gnx or childIndex or n >>
             #@+node:ekr.20031218072017.2869:<< set p to the node given by vnodeName and gnx or childIndex or n >>
