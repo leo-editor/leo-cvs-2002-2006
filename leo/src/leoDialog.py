@@ -625,7 +625,6 @@ class recentSectionsDialog (listBoxDialog):
 	def __init__ (self,c,buttons,label):
 		
 		self.lt_nav_iconFrame_button, self.rt_nav_iconFrame_button = buttons
-		self.active = true
 		
 		listBoxDialog.__init__(self,c,label)
 	
@@ -724,7 +723,7 @@ class recentSectionsDialog (listBoxDialog):
 		
 		This is an escape from possible performace penalties"""
 			
-		self.active = false
+		# This is enough to disable fillbox.
 		self.top.withdraw()
 		
 	
@@ -737,8 +736,10 @@ class recentSectionsDialog (listBoxDialog):
 		"""Update the listbox and update vnodeList & tnodeList ivars"""
 		
 		
-		# Only fill the box if the dialog is visible and the dialog is active.
-		if self.top.state() == "normal" and self.active:
+		# Only fill the box if the dialog is visible.
+		# This is an important protection against bad performance.
+	
+		if self.top.state() == "normal":
 			
 			#@<< reconstruct the contents of self.box >>
 			#@+node:1::<< reconstruct the contents of self.box >>>

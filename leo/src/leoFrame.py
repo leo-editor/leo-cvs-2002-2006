@@ -3837,9 +3837,8 @@ class LeoFrame:
 		c = self.c ; d = self.recentSectionsDialog
 		
 		if d:
-			d.active = true
-			d.fillbox()
 			d.top.deiconify()
+			d.fillbox()
 		else:
 			# Create and run the dialog.
 			title = "Recent nodes: " + shortFileName(c.frame.mFileName)
