@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet ekr_stylesheet?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="6602" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="6604" clone_windows="0"/>
 <globals body_outline_ratio="0.440677966102">
 	<global_window_position top="48" left="264" height="708" width="914"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
@@ -33,8 +33,7 @@
 <v t="ekr.20050104095950"><vh>@shortcuts</vh></v>
 <v t="ekr.20050123143337"><vh>@bool redirect_execute_script_output_to_log_pane = None</vh></v>
 </v>
-<v t="EKR.20040623200709"
-expanded="ekr.20040707210849,"><vh>@thin ../src/leoTest.py</vh></v>
+<v t="EKR.20040623200709"><vh>@thin ../src/leoTest.py</vh></v>
 <v t="ekr.20040721153143"><vh>Gc/Profile/Timeit/Tracing scripts</vh>
 <v t="ekr.20040721113934"><vh>runProfile</vh></v>
 <v t="ekr.20040901065642.2"><vh>runTimeit</vh>
@@ -961,7 +960,7 @@ expanded="ekr.20040707210849,"><vh>@thin ../src/leoTest.py</vh></v>
 </v>
 <v t="ekr.20050124065111"><vh>Prototype for Pretty Print command</vh></v>
 </v>
-<v t="ekr.20041001211817" a="TV"><vh>Startup...</vh>
+<v t="ekr.20041001211817"><vh>Startup...</vh>
 <v t="ekr.20041001203411"><vh>@ plugin ___proto_atFile.py</vh></v>
 <v t="ekr.20041001203411.1"><vh>@ script hi</vh></v>
 <v t="ekr.20041113113555"><vh>@button check spelling...</vh></v>
@@ -1047,7 +1046,7 @@ expanded="ekr.20040707210849,"><vh>@thin ../src/leoTest.py</vh></v>
 </v>
 <v t="ekr.20040712101754"><vh>Unit Tests</vh>
 <v t="ekr.20040712101754.274"><vh>@suite run all doctests</vh></v>
-<v t="ekr.20050106080304"><vh>@suite run all test routines</vh>
+<v t="ekr.20050106080304" a="E"><vh>@suite run all test routines</vh>
 <v t="ekr.20050106123646"><vh>unused</vh>
 <v t="ekr.20050106094854"><vh>class commanderTestCase</vh>
 <v t="ekr.20050106094854.1"><vh>__init__</vh></v>
@@ -1066,7 +1065,7 @@ expanded="ekr.20040707210849,"><vh>@thin ../src/leoTest.py</vh></v>
 <v t="ekr.20050106080318.3"><vh> fail</vh></v>
 <v t="ekr.20050106080318.4"><vh>setUp</vh></v>
 <v t="ekr.20050106080318.5"><vh>tearDown</vh></v>
-<v t="ekr.20050106080318.6"><vh>runTest</vh></v>
+<v t="ekr.20050106080318.6" a="M"><vh>runTest</vh></v>
 <v t="ekr.20050106080318.7"><vh>shortDescription</vh></v>
 </v>
 <v t="ekr.20050106080318"><vh>addTestRoutinesInModuleToSuite</vh></v>
@@ -1575,7 +1574,11 @@ expanded="ekr.20040707210849,"><vh>@thin ../src/leoTest.py</vh></v>
 </v>
 <v t="ekr.20050120095423.21"><vh>print all loaded plugins</vh></v>
 </v>
-<v t="ekr.20050210180034" a="E"><vh>jython script</vh></v>
+<v t="ekr.20050210180034"><vh>jython script</vh></v>
+<v t="ekr.20050211121701" a="ETV"><vh>Develop &amp; test g.removeExtraLws</vh>
+<v t="ekr.20050211121701.1"><vh>g.removeExtraLws</vh></v>
+<v t="ekr.20050211121701.2" a="E"><vh>test_g_removeExtraLws</vh></v>
+</v>
 </vnodes>
 <tnodes>
 <t tx="EKR.20040424065452">import leoGlobals as g
@@ -10895,11 +10898,11 @@ if not spellpyx or not spellFrame:
     g.app.scriptDict['removeMe'] = True</t>
 <t tx="ekr.20041121151002">@nocolor</t>
 <t tx="ekr.20041121151002.1">/Users/edream/leoCVS/leo/plugins/leoPlugins.leo
-/Users/edream/leoCVS/leo/test/test.leo
-/Users/edream/leoCVS/leo/src/LeoPy.leo
+/Users/edream/leoCVS/leo/doc/LeoDocs.leo
 /Users/edream/leoCVS/leo/config/leoSettings.leo
+/Users/edream/leoCVS/leo/src/LeoPy.leo
 C:\prog\leoCVS\leo\test\test.leo
-/Users/edream/leoCVS/leo/doc/LeoDocs.leo</t>
+/Users/edream/leoCVS/leo/test/test.leo</t>
 <t tx="ekr.20041124063401"></t>
 <t tx="ekr.20041124144944">import os
 import sys
@@ -12731,7 +12734,7 @@ g.app.unitTestDict["fail"] = False
 
 suite = unittest.makeSuite(unittest.TestCase)
 for module in modules:
-    n = addTestRoutinesInModuleToSuite(module,suite)
+    n = addTestRoutinesInModuleToSuite(c,g,module,suite)
     if n:
         plural = g.choose(n==1,'','s')
         s = 'found %2d test routine%s for %s' % (n,plural,module)
@@ -12744,7 +12747,7 @@ else: # For script button nodes.  Good for testing.
     unittest.TextTestRunner(verbosity=1).run(suite)
     c.setChanged(changed) # Restore changed state.
     c.selectVnode(p1) # N.B. Restore the selected node.</t>
-<t tx="ekr.20050106080318">def addTestRoutinesInModuleToSuite (moduleName,suite):
+<t tx="ekr.20050106080318">def addTestRoutinesInModuleToSuite (c,g,moduleName,suite):
     
     module = g.importModule(moduleName)
     assert(module)
@@ -12754,7 +12757,7 @@ else: # For script button nodes.  Good for testing.
     for test in tests:
         theClass,f = test
         code = inspect.getsource(f)
-        testCase = testRoutineTestCase(moduleName,theClass,f,code,verbose=False)
+        testCase = testRoutineTestCase(c,g,moduleName,theClass,f,code,verbose=False)
         suite.addTest(testCase)
         
     return len(tests)</t>
@@ -12763,15 +12766,18 @@ else: # For script button nodes.  Good for testing.
     """Create a unit test from a snippet of code."""
 
     @others</t>
-<t tx="ekr.20050106080318.2">def __init__ (self,moduleName,theClass,f,code,verbose=False):
+<t tx="ekr.20050106080318.2">def __init__ (self,c,g,moduleName,theClass,f,code,verbose=False):
 
      # Init the base class.
     unittest.TestCase.__init__(self)
 
+    self.c = c
     self.moduleName = moduleName
     self.theClass = theClass
     self.f = f
+    self.g = g
     self.code = code
+    self.p = c.currentPosition().copy()
     self.verbose = verbose
 </t>
 <t tx="ekr.20050106080318.3">def fail (self):
@@ -12790,6 +12796,8 @@ else: # For script button nodes.  Good for testing.
 <t tx="ekr.20050106080318.6">def runTest (self):
     
     f = self.f ; name = f.__name__ ; theClass = self.theClass
+    
+    d = {'c':self.c,'g':self.g,'p':self.p}
 
     if 1: # Use dead text to ensure a clean environment.
         # The present code assumes all leading whitespace is consistent.
@@ -12802,8 +12810,8 @@ else: # For script button nodes.  Good for testing.
             
         if self.verbose:
             g.trace('executing...\n\n%s' % s)
-        
-        exec s in {} # Execute s in pristine environment.
+
+        exec s in d # Execute s in a environment containing c, g and p.
         
     else: # Use live objects.
         if theClass:
@@ -12825,7 +12833,7 @@ else: # For script button nodes.  Good for testing.
                 obj = __dummyClass()
                 obj.f()
         else: # Execute a plain function.
-            f()</t>
+            f(**keys)</t>
 <t tx="ekr.20050106080318.7">def shortDescription (self):
 
     return 'test function',repr(self.f)</t>
@@ -13578,5 +13586,37 @@ else:
     command = '%s "%s"' % (jython,tempFileName)
     print command
     import os ; os.system(command)</t>
+<t tx="ekr.20050211121701">@others
+
+test_g_removeExtraLws()</t>
+<t tx="ekr.20050211121701.1">def removeExtraLws (s,tab_width):
+    
+    '''Removed extra indentation from one or more lines.'''
+    
+    lines = g.splitLines(s)
+
+    # Find the first non-blank line:
+    for s in lines:
+       if s.strip():
+            lws = g.get_leading_ws(s)
+            w = g.computeWidth(lws,tab_width)
+            # g.trace('w',w)
+            break
+    else: return s
+    
+    result = [g.removeLeadingWhitespace(line,w,tab_width) for line in lines]
+
+    return ''.join(result)</t>
+<t tx="ekr.20050211121701.2">def test_g_removeExtraLws():
+    
+    for s,expected in (
+        (' a\n b\n c', 'a\nb\nc'),
+        (' \n  A\n    B\n  C\n', '\nA\n  B\nC\n'),
+    ):
+        result = g.removeExtraLws(s,c.tab_width)
+        assert result == expected, '\ns: %s\nexpected: %s\nresult:   %s' % (
+            repr(s),repr(expected),repr(result))
+            
+    print 'Success'</t>
 </tnodes>
 </leo_file>
