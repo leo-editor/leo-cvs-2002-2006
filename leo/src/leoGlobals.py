@@ -7,7 +7,7 @@
 
 #@@language python
 
-import os,string,sys,time,types
+import os,string,sys,time,traceback,types
 
 #@<< define general constants >>
 #@+node:<< define general constants >>
@@ -775,7 +775,7 @@ def openWithFileName(fileName,old_c,enableLog=true):
 	except:
 		if 1:
 			print "exceptions opening:", fileName
-			import traceback ; traceback.print_exc()
+			traceback.print_exc()
 		else:
 			es("exceptions opening: " + fileName,color="red")
 			es_exception()
@@ -936,9 +936,9 @@ def es_error (s):
 #@+node:es_event_exception
 def es_event_exception (eventName,full=false):
 
-	import traceback
 	es("exception handling ", eventName, " event")
 	typ,val,tb = sys.exc_info()
+
 	if full:
 		errList = traceback.format_exception(typ,val,tb)
 	else:
@@ -949,17 +949,22 @@ def es_event_exception (eventName,full=false):
 #@nonl
 #@-node:es_event_exception
 #@+node:es_exception
-def es_exception (full=true):
-
-	import traceback
+def es_exception (full=true,c=None):
+	
 	typ,val,tb = sys.exc_info()
+
 	if full:
 		errList = traceback.format_exception(typ,val,tb)
 	else:
 		errList = traceback.format_exception_only(typ,val)
 	for i in errList:
 		es_error(i)
+	
 	traceback.print_exc()
+	
+	if c is None:
+		c = top()
+	c.frame.tree.enableDrawingAfterException()
 #@nonl
 #@-node:es_exception
 #@+node:printBindings
@@ -1511,7 +1516,7 @@ def trace (*args,**keys):
 		name = "<unknown>"
 
 	if callers:
-		import traceback ; traceback.print_stack()
+		traceback.print_stack()
 		
 	if 1: # Print all traces.
 		print name + ": " + message
@@ -1649,7 +1654,7 @@ try:
 				gc.DEBUG_OBJECTS |
 				gc.DEBUG_SAVEALL)
 except:
-	import traceback ; traceback.print_exc()
+	traceback.print_exc()
 
 #@+others
 #@+node:clearAllIvars
@@ -1715,7 +1720,7 @@ def printGc(message=None,onlyPrintChanges=false):
 		lastObjectCount = n2
 		return delta
 	except:
-		import traceback ; traceback.print_exc()
+		traceback.print_exc()
 		return None
 #@nonl
 #@-node:printGc
@@ -1795,9 +1800,11 @@ def doHook(tag,*args,**keywords):
 
 	c = top() # c may be None during startup.
 	
-	if app.killed or not app.config.use_plugins:
+	if app.killed or app.hookError:
 		return None
-	elif app.hookError:
+	if not app.config.use_plugins:
+		if tag == "start1":
+			es("Plugins disabled: use_plugins is 0",color="blue")
 		return None
 	elif c and c.hookFunction:
 		try:
@@ -1823,7 +1830,7 @@ def doHook(tag,*args,**keywords):
 	app.hookError = true # Supress this function.
 	app.idleTimeHook = false # Supress idle-time hook
 	return None # No return value
-#@nonl
+
 #@-node:frame.doHook
 #@+node:plugin_signon
 def plugin_signon(module_name,verbose=false):
@@ -3030,7 +3037,7 @@ def reportBadChars (s,encoding):
 			try: ch.encode(encoding,"strict")
 			except: errors += 1
 		if errors:
-			# import traceback ; traceback.print_stack()
+			# traceback.print_stack()
 			es("%d errors converting %s to %s" % 
 				(errors, s.encode(encoding,"replace"),encoding))
 
