@@ -362,6 +362,84 @@ class nullGui(leoGui):
 	#@-others
 #@nonl
 #@-node:class nullGui (runs scripts)
+#@+node:class unitTestGui
+class unitTestGui(leoGui):
+	
+	"""gui class for use by unit tests."""
+	
+	#@	@+others
+	#@+node: test.gui.__init__& destroySelf
+	def __init__ (self,dict,trace=false):
+		
+		self.dict = dict
+		self.oldGui = app.gui
+		self.trace=trace
+		
+		# Init the base class
+		leoGui.__init__ (self,"unitTestGui")
+	
+		app.gui = self
+		
+	def destroySelf (self):
+		
+		app.gui = self.oldGui
+	#@nonl
+	#@-node: test.gui.__init__& destroySelf
+	#@+node:dialogs (unitTestGui)
+	def runAboutLeoDialog(self,version,copyright,url,email):
+		return self.simulateDialog("aboutLeoDialog")
+		
+	def runAskLeoIDDialog(self):
+		return self.simulateDialog("leoIDDialog")
+	
+	def runAskOkDialog(self,title,message=None,text="Ok"):
+		return self.simulateDialog("okDialog","Ok")
+	
+	def runAskOkCancelNumberDialog(self,title,message):
+		return self.simulateDialog("numberDialog",-1)
+		
+	def runOpenFileDialog(self,title,filetypes,defaultextension):
+		return self.simulateDialog("openFileDialog")
+	
+	def runSaveFileDialog(self,initialfile,title,filetypes,defaultextension):
+		return self.simulateDialog("saveFileDialog")
+	
+	def runAskYesNoDialog(self,title,message=None):
+		return self.simulateDialog("yesNoDialog","no")
+	
+	def runAskYesNoCancelDialog(self,title,
+		message=None,yesMessage="Yes",noMessage="No",defaultButton="Yes"):
+		return self.simulateDialog("yesNoCancelDialog","cancel")
+	#@nonl
+	#@-node:dialogs (unitTestGui)
+	#@+node:dummy routines
+	def set_focus(self,c,widget):
+		pass
+	#@nonl
+	#@-node:dummy routines
+	#@+node:oops
+	def oops(self):
+		
+		trace("unitTestGui",callerName(2))
+		
+		if 0: # Fail the unit test.
+			assert 0,"call to undefined method in unitTestMethod class"
+	#@nonl
+	#@-node:oops
+	#@+node:simulateDialog
+	def simulateDialog (self,key,defaultVal=None):
+		
+		val = self.dict.get(key,defaultVal)
+	
+		if self.trace:
+			print key, val
+	
+		return val
+	#@nonl
+	#@-node:simulateDialog
+	#@-others
+#@nonl
+#@-node:class unitTestGui
 #@-others
 #@nonl
 #@-node:@file leoGui.py
