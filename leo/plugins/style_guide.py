@@ -5,6 +5,11 @@ This is the plugin's docstring. Leo prints the __version__ variable (see
 below) and this docstring when the user selects the plugin in the Plugins menu.
 Therefore, this docstring should be a clear, concise description of what the
 plugin does and how to use it.
+
+N.B. Most plugins already follow this style guide to a greater or lesser extent.
+It is probably easier to undersand the purpose of this style guide by studying
+existing plugins. The reason is that this style guide is cluttered by many
+comments that would not appear in actual plugins.
 """
 
 # This node and its decendents form a style guide for plugins.

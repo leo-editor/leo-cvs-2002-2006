@@ -1,13 +1,13 @@
 #@+leo-ver=4-thin
 #@+node:ekr.20041017035937:@thin table.py
-"""A plugin that does the following:
-    
-1. Puts a command in Outline, called View Table 
-2. Upon activation, the current node is sniffed by the csv mods Sniffer. It tries to determine the format that is in the nodes data. If you had excel data in it, it should be able to determine its excel data. 
-3. It then creates a dialog with the data presented as in a table for the user to see it. 
+"""This plugin puts the View Table command in the Outline menu.
+
+This command checks the current node using the csv (comma separated values) mods
+Sniffer. It tries to determine the format that is in the nodes data. If you had
+excel data in it, it should be able to determine its excel data. It then creates
+a dialog with the data presented as in a table for the user to see it.
  
-You need Pmw and the tktable widget. The tktable is a sourceforge project located at: 
-http://sourceforge.net/projects/tktable
+Requires Pmw and the tktable widget at http://sourceforge.net/projects/tktable
 """
 
 #@<< imports >>

@@ -30,7 +30,7 @@ Warnings:
 #@@language python
 #@@tabwidth -4
 
-__version__ = "0.63"
+__version__ = "0.64"
 #@<< version history >>
 #@+node:ekr.20041103051117:<< version history >>
 #@@killcolor
@@ -72,6 +72,8 @@ __version__ = "0.63"
 # code.
 # 
 # .63 EKR: Added long docstring.
+# 
+# .64 fixed cloneWalk and PDF Convertor.
 #@-at
 #@nonl
 #@-node:ekr.20041103051117:<< version history >>
@@ -1313,9 +1315,9 @@ def regexClone( c , name ):
         regex = re.compile( txt )
         rt = chapter.cp
         chapter.setVariables()
-        stnode = tnode( '', txt )
-        snode = vnode( c, stnode)
-        snode = position( snode, [] )
+        stnode = leoNodes.tnode( '', txt )
+        snode = leoNodes.vnode( c, stnode)
+        snode = leoNodes.position( snode, [] )
         snode.moveAfter( rt )
         ignorelist = [ snode ]
         it = walkChapters( c , ignorelist = ignorelist)
@@ -1368,13 +1370,17 @@ def doPDFConversion( c ):
     cs = cStringIO.StringIO()
     doc = SimpleDocTemplate( cs , showBoundary = 1)
     Story = [Spacer(1,2*inch)] 
-    pagenames = notebooks[ c ].pagenames()
+    pagenames = notebooks[ c ].pagenames()   
+    cChapter = c.cChapter
     for n,z in enumerate( pagenames ):
+        
         n = n + 1
         sv = getSV( z , c)
         chapter = chapters[ sv ]
-        v = chapter.rp
-        _changeTreeToPDF( sv.get(), n, v , c, Story, styles, maxlen)
+        chapter.setVariables()
+        p = chapter.rp
+        if p:
+            _changeTreeToPDF( sv.get(), n, p , c, Story, styles, maxlen)
     #@    << define otherPages callback >>
     #@+node:ekr.20041109120739:<< define otherPages callback >>
     def otherPages( canvas, doc , pageinfo = pinfo):
@@ -1386,6 +1392,8 @@ def doPDFConversion( c ):
     #@nonl
     #@-node:ekr.20041109120739:<< define otherPages callback >>
     #@nl
+    cChapter.setVariables()# This sets the nodes back to the cChapter, if we didnt the makeCurrent would point to the wrong positions
+    cChapter.makeCurrent()
     doc.build(Story,  onLaterPages = otherPages)
     f = open( '%s.pdf' % pinfo1, 'w' )
     cs.seek( 0 )
@@ -1406,7 +1414,7 @@ def _changeTreeToPDF( name, num, p, c, Story, styles , maxlen):
     Story.append( Paragraph( 'Chapter %s: %s' % ( num, name), hstyle ) )
     style = styles[ 'Normal' ]
     g.trace(p)
-    for v in p.self_and_subtree_iter():
+    for v in p.allNodes_iter(): #self_and_subtree_iter doesn't seem to work here????  Switched to allNodes_iter
     # while v:
         head = v.moreHead( 0 )
         head = g.toEncodedString(head,enc,reportErrors=True) 

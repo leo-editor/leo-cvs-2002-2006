@@ -2,7 +2,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="6023" clone_windows="0"/>
 <globals body_outline_ratio="0.353009259259">
-	<global_window_position top="45" left="310" height="864" width="907"/>
+	<global_window_position top="48" left="175" height="864" width="907"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences>
@@ -398,6 +398,10 @@
 <v t="ekr.20041029111650"><vh>Test of g.app.debugSwitch</vh></v>
 <v t="ekr.20041017100700"><vh>Test of autocompleter</vh></v>
 <v t="ekr.20041105091229"><vh>test of g.pdb</vh></v>
+<v t="ekr.20041109164251"><vh>Test of template plugin</vh>
+<v t="ekr.20041109174338"><vh>The template</vh></v>
+<v t="ekr.20041109174338.1" a="E"><vh>A node that uses the template</vh></v>
+</v>
 </v>
 <v t="ekr.20040312021734"><vh>Scripts</vh>
 <v t="ekr.20040318091620"><vh>Clear all uAs (unknown attributes)</vh></v>
@@ -746,7 +750,7 @@
 <v t="ekr.20041001203411"><vh>@ plugin ___proto_atFile.py</vh></v>
 <v t="ekr.20041001203411.1"><vh>@ script hi</vh></v>
 </v>
-<v t="EKR.20040619133116" a="TV"><vh>Unit testing...</vh>
+<v t="EKR.20040619133116"><vh>Unit testing...</vh>
 <v t="ekr.20040723064143.1"><vh>To do...</vh>
 <v t="ekr.20040723064143.3"><vh>Test error recovery when reading descendentTnodeUa's</vh></v>
 <v t="ekr.20040903102217"><vh>Test multi-line @doc parts with @language html</vh></v>
@@ -820,7 +824,7 @@
 </v>
 <v t="ekr.20040327114250"><vh>@thin ../test/unittest/batchTest.py</vh></v>
 <v t="ekr.20041012101944"><vh>@thin ../test/unittest/errorTest.py</vh></v>
-<v t="ekr.20040712101754"><vh>Unit Tests</vh>
+<v t="ekr.20040712101754" a="E"><vh>Unit Tests</vh>
 <v t="ekr.20040712101754.102"><vh>atFileTests...</vh>
 <v t="ekr.20040707140849.5"><vh>at-File test code (leoTest.py)</vh>
 <v t="ekr.20040707141957"><vh>&lt;&lt; dump result and expected &gt;&gt;</vh></v>
@@ -1271,6 +1275,9 @@
 </v>
 <v t="ekr.20040707081532.1"><vh>Do @test</vh></v>
 <v t="ekr.20041001194357"><vh>@button unit test</vh></v>
+</v>
+<v t="ekr.20041111084431" a="ETV"><vh>test of using changes to Go To Line number to handle scripts</vh>
+<v t="ekr.20041111084431.1" a="E"><vh>node that throws exception</vh></v>
 </v>
 </vnodes>
 <tnodes>
@@ -1892,7 +1899,7 @@ import leoGlobals as g
 print g.app.config.redirect_execute_script_output_to_log_pane</t>
 <t tx="EKR.20040627103732">@ignore</t>
 <t tx="EKR.20040627103801"></t>
-<t tx="EKR.20040627103902" lineYOffset="4b032e" icons="5d7100287d710128550577686572657102550a6265666f726549636f6e710355047870616471044b025504747970657105550466696c6571066806582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286805680668084afdffffff6806582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6802550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e"></t>
+<t tx="EKR.20040627103902" lineYOffset="4b032e" icons="5d7100287d7101285504747970657102550466696c65710355047870616471044b02550577686572657105550a6265666f726549636f6e71066803582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286802680368084afdffffff6803582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6805550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e"></t>
 <t tx="EKR.20040627121836">import leoGlobals as g
 
 c = g.top() ; p = c.currentPosition()
@@ -2023,7 +2030,7 @@ for p in c.rootPosition().allNodes_iter():
 s = "%d nodes" % count
 print s ; g.es(s)</t>
 <t tx="ekr.20040312101720"></t>
-<t tx="ekr.20040317101155" lineYOffset="4b032e" icons="5d7100287d7101285504747970657102550466696c65710355047870616471044b02550577686572657105550a6265666f726549636f6e710668035834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286802680368084afdffffff68035834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6805550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">import leoGlobals as g
+<t tx="ekr.20040317101155" lineYOffset="4b032e" icons="5d7100287d710128550577686572657102550a6265666f726549636f6e710355047870616471044b025504747970657105550466696c65710668065834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286805680668084afdffffff68065834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6802550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">import leoGlobals as g
 
 c = g.top()
 
@@ -10420,5 +10427,27 @@ assert val=="ok", "colorizer test failed: %s" % p.headString()</t>
 : some-forth-word ( x1 x2 -- x3 )
    s" some string" type cr
 ;</t>
+<t tx="ekr.20041109164251"></t>
+<t tx="ekr.20041109174338" template="550874656d706c61746571002e">@ignore
+
+This is a template node.
+
+First substitution: %s
+
+Second sustitution: %s</t>
+<t tx="ekr.20041109174338.1"></t>
+<t tx="ekr.20041111084431"># Go To Line number now assumes that selected node is
+# the root of a script if there is no ancestor @file node.
+
+import leoGlobals as g
+
+@others
+
+# last line</t>
+<t tx="ekr.20041111084431.1"># We should also be able to use the goto line number command to get to the erroneous line.
+
+a = 1/0 # ZeroDivisionError
+
+b = 2</t>
 </tnodes>
 </leo_file>
