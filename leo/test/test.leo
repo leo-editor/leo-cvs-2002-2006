@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="5956" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="5959" clone_windows="0"/>
 <globals body_outline_ratio="0.635416666667">
-	<global_window_position top="45" left="210" height="864" width="907"/>
+	<global_window_position top="45" left="185" height="864" width="907"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences>
@@ -336,6 +336,23 @@
 </v>
 </v>
 <v t="ekr.20040730185319"><vh>Test drawing of root node w/o children</vh></v>
+<v t="ekr.20040909103024"><vh>Test of linenumbers plugin</vh>
+<v t="ekr.20040909103024.1"><vh>@file c:\prog\test\perlLineNumbers.txt</vh>
+<v t="ekr.20040909103024.2"><vh>TestNode</vh></v>
+</v>
+</v>
+<v t="ekr.20040909122141" tnodeList="ekr.20040909122141,ekr.20040909122141.1"><vh>@nosent c:\prog\test\niceNosentTest.txt</vh>
+<v t="ekr.20040909122141.1"><vh>spam</vh></v>
+</v>
+<v t="ekr.20040909123122"><vh>@rst c:\prog\test\rstTest.txt</vh>
+<v t="ekr.20040909123122.1"><vh>node 1</vh>
+<v t="ekr.20040909123122.2"><vh>node 1.1</vh></v>
+</v>
+<v t="ekr.20040909123122.3"><vh>node 2</vh>
+<v t="ekr.20040909123122.4"><vh>node 2.1</vh></v>
+<v t="ekr.20040909123122.5"><vh>node 2.2</vh></v>
+</v>
+</v>
 </v>
 <v t="ekr.20040312021734"><vh>Scripts</vh>
 <v t="ekr.20040318091620"><vh>Clear all unknown attributes</vh></v>
@@ -669,9 +686,9 @@
 <v t="ekr.20040723064143.1"><vh>To do (when file tests are easier)</vh>
 <v t="ekr.20040723064143.2"><vh>Finish unit tests for @asis</vh></v>
 <v t="ekr.20040723064143.3"><vh>Test error recovery when reading descendentTnodeUa's</vh></v>
-<v t="ekr.20040903102217" a="E"><vh>Test multi-line @doc parts with @language html</vh></v>
+<v t="ekr.20040903102217"><vh>Test multi-line @doc parts with @language html</vh></v>
 </v>
-<v t="EKR.20040619133116" a="E"><vh>Unit testing...</vh>
+<v t="EKR.20040619133116"><vh>Unit testing...</vh>
 <v t="ekr.20040327114250" tnodeList="ekr.20040327114250"><vh>@file c:\prog\test\unittest\batchTest.py</vh></v>
 <v t="ekr.20040712101754"><vh>Unit Tests</vh>
 <v t="ekr.20040716144017"><vh>Perfect Import tests</vh>
@@ -876,7 +893,7 @@
 <v t="ekr.20040713071919"><vh>before</vh></v>
 <v t="ekr.20040713123828.1"><vh>after</vh></v>
 </v>
-<v t="ekr.20040803091512" a="M"><vh>@test bogus tnodeList doesn't corrupt @thin nodes</vh></v>
+<v t="ekr.20040803091512"><vh>@test bogus tnodeList doesn't corrupt @thin nodes</vh></v>
 <v t="ekr.20040712101754.102"><vh>atFileTests...</vh>
 <v t="ekr.20040712101754.103"><vh>@test @file no newline</vh>
 <v t="ekr.20040712101754.104"><vh>@@file</vh></v>
@@ -1048,7 +1065,7 @@
 <v t="ekr.20040712101813"><vh>@test checkAllPythonCode</vh></v>
 </v>
 </v>
-<v t="ekr.20040712101754.274" a="M"><vh>@suite run all doctests in leo*.py</vh></v>
+<v t="ekr.20040712101754.274"><vh>@suite run all doctests in leo*.py</vh></v>
 <v t="ekr.20040712101754.261"><vh>Plugins tests</vh>
 <v t="ekr.20040801141212"><vh>@suite test syntax of all plugins correctly</vh>
 <v t="ekr.20040801141543"><vh>class parseFileTestCase</vh>
@@ -1134,7 +1151,17 @@
 </v>
 </v>
 </v>
-<v t="ekr.20040707081532.1" a="ETV"><vh>Do @test</vh></v>
+<v t="ekr.20040707081532.1"><vh>Do @test</vh></v>
+</v>
+<v t="ekr.20040910094343" a="TV"><vh>Tests of @run</vh>
+<v t="ekr.20040910094343.1"><vh>Note:  windows cd does not affect value of os.getcwd</vh></v>
+<v t="ekr.20040910092950"><vh>@run # open leoDocs.leo</vh>
+<v t="ekr.20040910092950.3"><vh>@run c:\python23\python c:\prog\leoCVS\leo\src\leo.py c:\prog\leoCVS\leo\doc\LeoDocs.leo</vh></v>
+</v>
+<v t="ekr.20040910094546"><vh>@run c:\python23\python #open leoDocs.leo using args</vh>
+<v t="ekr.20040910094546.1"><vh>leo.py</vh></v>
+<v t="ekr.20040910094546.2"><vh>@arg c:\prog\leoCVS\leo\doc\LeoDocs.leo</vh></v>
+</v>
 </v>
 </vnodes>
 <tnodes>
@@ -1796,7 +1823,7 @@ print '
 import leoGlobals as g
 print g.app.config.redirect_execute_script_output_to_log_pane</t>
 <t tx="EKR.20040627103732">@ignore</t>
-<t tx="EKR.20040627103902" lineYOffset="4b032e" icons="5d7100287d710128550577686572657102550a6265666f726549636f6e710355047870616471044b025504747970657105550466696c6571066806582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286805680668084afdffffff6806582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6802550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e"></t>
+<t tx="EKR.20040627103902" lineYOffset="4b032e" icons="5d7100287d7101285504747970657102550466696c65710355047870616471044b02550577686572657105550a6265666f726549636f6e71066803582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286802680368084afdffffff6803582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6805550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e"></t>
 <t tx="EKR.20040627121836">import leoGlobals as g
 
 c = g.top() ; p = c.currentPosition()
@@ -1925,7 +1952,7 @@ for p in c.rootPosition().allNodes_iter():
 s = "%d nodes" % count
 print s ; g.es(s)</t>
 <t tx="ekr.20040312101720"></t>
-<t tx="ekr.20040317101155" lineYOffset="4b032e" icons="5d7100287d7101285504747970657102550466696c65710355047870616471044b02550577686572657105550a6265666f726549636f6e71066803582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286802680368084afdffffff6803582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6805550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">import leoGlobals as g
+<t tx="ekr.20040317101155" lineYOffset="4b032e" icons="5d7100287d710128550577686572657102550a6265666f726549636f6e710355047870616471044b025504747970657105550466696c6571066806582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286805680668084afdffffff6806582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6802550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">import leoGlobals as g
 
 c = g.top()
 
@@ -9465,5 +9492,40 @@ comments
 
 @c
 &lt;p&gt;HTML code&lt;/p&gt;</t>
+<t tx="ekr.20040909103024">@ignore</t>
+<t tx="ekr.20040909103024.1">@language perl
+
+@others</t>
+<t tx="ekr.20040909103024.2">#line 1 "node:ekr.20040909103024.2:TestNode (c:\prog\test\perlLineNumbers.txt)"
+test</t>
+<t tx="ekr.20040909122141">@ignore
+
+@language python 
+
+@tabwidth -4
+
+@others
+</t>
+<t tx="ekr.20040909122141.1">def spam():
+	Line starts with a tab.
+	
+# Line doesn't end in newline.
+</t>
+<t tx="ekr.20040909123122">@language plain
+
+This is a test of the rst plugin.</t>
+<t tx="ekr.20040909123122.1">Node 1 text</t>
+<t tx="ekr.20040909123122.2">- bullet list 1
+- bullet list 2</t>
+<t tx="ekr.20040909123122.3"></t>
+<t tx="ekr.20040909123122.4"></t>
+<t tx="ekr.20040909123122.5"></t>
+<t tx="ekr.20040910092950"></t>
+<t tx="ekr.20040910092950.3"></t>
+<t tx="ekr.20040910094343">@ignore # To suppress syntax checks in @arg nodes</t>
+<t tx="ekr.20040910094343.1"></t>
+<t tx="ekr.20040910094546"></t>
+<t tx="ekr.20040910094546.1">c:\prog\leoCVS\leo\src\leo.py</t>
+<t tx="ekr.20040910094546.2"></t>
 </tnodes>
 </leo_file>
