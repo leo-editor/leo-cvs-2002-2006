@@ -61,6 +61,867 @@ available.
 #@-node:ekr.20041018195347.1:Report
 #@-node:ekr.20041018195347:Improve MacOs docs
 #@+node:EKR.20040609091327:To do: 4.3
+#@+node:ekr.20041018194900:(Support drawing hooks)
+if not g.doHook("xxx",c==c,p==p,v==v,event=event):
+                
+"boxclick1"    yes      before click in +- box            c,v,event
+"boxclick2"             after  click in +- box            c,v,event
+
+"drag1"        yes      before start of drag              c,v,event
+"drag2"                 after  start of drag              c,v,event
+"dragging1"    yes      before continuing to drag         c,v,event
+"dragging2"             after  continuing to drag         c,v,event
+
+"enddrag1"     yes      before end of drag                c,v,event
+"enddrag2"              after  end of drag                c,v,event
+
+"iconclick1"   yes      before single click in icon box   c,v,event
+"iconclick2"            after  single click in icon box   c,v,event
+"iconrclick1"  yes      before right click in icon box    c,v,event
+"iconrclick2"           after  right click in icon box    c,v,event
+"icondclick1"  yes      before double click in icon box   c,v,event
+"icondclick2"           after  double click in icon box   c,v,event
+#@nonl
+#@+node:ekr.20041018200949:From OLD code
+#@+node:ekr.20041018200728.8:tree.injectCallbacks (class method)
+def injectCallbacks(self):
+	
+	import leoNodes
+	
+	<< define tkinter callbacks to be injected in the vnode class >>
+
+	for f in (
+		OnBoxClick,OnDrag,OnEndDrag,
+		OnHeadlineClick,OnHeadlineRightClick,OnHeadlineKey,
+		OnHyperLinkControlClick,OnHyperLinkEnter,OnHyperLinkLeave,
+		OnIconClick,OnIconDoubleClick,OnIconRightClick):
+
+		# trace(f)
+		funcToMethod(f,leoNodes.vnode)
+#@nonl
+#@+node:ekr.20041018200728.9:<< define tkinter callbacks to be injected in the vnode class >>
+# N.B. These vnode methods are entitled to know about details of the leoTkinterTree class.
+
+@others
+#@nonl
+#@+node:ekr.20041018200728.10:OnBoxClick
+# Called when the box is clicked.
+
+def OnBoxClick(self,event=None):
+	
+	"""Callback injected into vnode class."""
+
+	# trace()
+	try:
+		v = self ; c = v.c
+		if not doHook("boxclick1",c=c,v=v,event=event):
+			c.frame.tree.OnBoxClick(v)
+		doHook("boxclick2",c=c,v=v,event=event)
+	except:
+		es_event_exception("boxclick")
+#@nonl
+#@-node:ekr.20041018200728.10:OnBoxClick
+#@+node:ekr.20041018200728.11:OnDrag
+def OnDrag(self,event=None):
+	
+	"""Callback injected into vnode class."""
+
+	# trace()
+	try:
+		v = self ; c = v.c
+		if c.frame.tree.dragging():
+			if not doHook("dragging1",c=c,v=v,event=event):
+				c.frame.tree.OnDrag(v,event)
+			doHook("dragging2",c=c,v=v,event=event)
+		else:
+			if not doHook("drag1",c=c,v=v,event=event):
+				c.frame.tree.OnDrag(v,event)
+			doHook("drag2",c=c,v=v,event=event)
+	except:
+		es_event_exception("drag")
+#@nonl
+#@-node:ekr.20041018200728.11:OnDrag
+#@+node:ekr.20041018200728.12:OnEndDrag
+def OnEndDrag(self,event=None):
+	
+	"""Callback injected into vnode class."""
+	
+	# trace()
+
+	try:
+		v = self ; c = v.c
+		# 7/10/03: Always call frame.OnEndDrag, regardless of state.
+		if not doHook("enddrag1",c=c,v=v,event=event):
+			c.frame.tree.OnEndDrag(v,event)
+		doHook("enddrag2",c=c,v=v,event=event)
+	except:
+		es_event_exception("enddrag")
+#@nonl
+#@-node:ekr.20041018200728.12:OnEndDrag
+#@+node:ekr.20041018200728.13:OnHeadlineClick & OnHeadlineRightClick
+def OnHeadlineClick(self,event=None):
+	"""Callback injected into vnode class."""
+	#trace()
+	try:
+		v = self ; c = v.c
+		if not doHook("headclick1",c=c,v=v,event=event):
+			c.frame.tree.OnActivate(v)
+		doHook("headclick2",c=c,v=v,event=event)
+	except:
+		es_event_exception("headclick")
+	
+def OnHeadlineRightClick(self,event=None):
+	"""Callback injected into vnode class."""
+	#trace()
+	try:
+		v = self ; c = v.c
+		if not doHook("headrclick1",c=c,v=v,event=event):
+			c.frame.tree.OnActivate(v)
+			c.frame.tree.OnPopup(self,event)
+		doHook("headrclick2",c=c,v=v,event=event)
+	except:
+		es_event_exception("headrclick")
+#@nonl
+#@-node:ekr.20041018200728.13:OnHeadlineClick & OnHeadlineRightClick
+#@+node:ekr.20041018200728.14:OnHyperLinkControlClick
+def OnHyperLinkControlClick (self,event):
+	
+	"""Callback injected into vnode class."""
+
+	# trace()
+	try:
+		v = self ; c = v.c
+		if not doHook("hypercclick1",c=c,v=v,event=event):
+			c.beginUpdate()
+			c.selectVnode(v)
+			c.endUpdate()
+			c.frame.bodyCtrl.mark_set("insert","1.0")
+		doHook("hypercclick2",c=c,v=v,event=event)
+	except:
+		es_event_exception("hypercclick")
+#@nonl
+#@-node:ekr.20041018200728.14:OnHyperLinkControlClick
+#@+node:ekr.20041018200728.15:OnHeadlineKey
+def OnHeadlineKey (self,event=None):
+
+	"""Callback injected into vnode class."""
+
+	try:
+		v = self ; c = v.c
+		if not doHook("headkey1",c=c,v=v,event=event):
+			c.frame.tree.OnHeadlineKey(v,event)
+		doHook("headkey2",c=c,v=v,event=event)
+	except:
+		es_event_exception("headkey")
+#@nonl
+#@-node:ekr.20041018200728.15:OnHeadlineKey
+#@+node:ekr.20041018200728.16:OnHyperLinkEnter
+def OnHyperLinkEnter (self,event=None):
+	
+	"""Callback injected into vnode class."""
+
+	try:
+		v = self ; c = v.c
+		if not doHook("hyperenter1",c=c,v=v,event=event):
+			if 0: # This works, and isn't very useful.
+				c.frame.bodyCtrl.tag_config(v.tagName,background="green")
+		doHook("hyperenter2",c=c,v=v,event=event)
+	except:
+		es_event_exception("hyperenter")
+#@nonl
+#@-node:ekr.20041018200728.16:OnHyperLinkEnter
+#@+node:ekr.20041018200728.17:OnHyperLinkLeave
+def OnHyperLinkLeave (self,event=None):
+	
+	"""Callback injected into vnode class."""
+
+	try:
+		v = self ; c = v.c
+		if not doHook("hyperleave1",c=c,v=v,event=event):
+			if 0: # This works, and isn't very useful.
+				c.frame.bodyCtrl.tag_config(v.tagName,background="white")
+		doHook("hyperleave2",c=c,v=v,event=event)
+	except:
+		es_event_exception("hyperleave")
+#@nonl
+#@-node:ekr.20041018200728.17:OnHyperLinkLeave
+#@+node:ekr.20041018200728.18:OnIconClick & OnIconRightClick
+def OnIconClick(self,event=None):
+	
+	"""Callback injected into vnode class."""
+
+	try:
+		v = self ; c = v.c
+		if not doHook("iconclick1",c=c,v=v,event=event):
+			c.frame.tree.OnIconClick(v,event)
+		doHook("iconclick2",c=c,v=v,event=event)
+	except:
+		es_event_exception("iconclick")
+	
+def OnIconRightClick(self,event=None):
+	
+	"""Callback injected into vnode class."""
+
+	try:
+		v = self ; c = v.c
+		if not doHook("iconrclick1",c=c,v=v,event=event):
+			c.frame.tree.OnIconRightClick(v,event)
+		doHook("iconrclick2",c=c,v=v,event=event)
+	except:
+		es_event_exception("iconrclick")
+#@-node:ekr.20041018200728.18:OnIconClick & OnIconRightClick
+#@+node:ekr.20041018200728.19:OnIconDoubleClick
+def OnIconDoubleClick(self,event=None):
+	
+	"""Callback injected into vnode class."""
+
+	try:
+		v = self ; c = v.c
+		if not doHook("icondclick1",c=c,v=v,event=event):
+			c.frame.tree.OnIconDoubleClick(self)
+		doHook("icondclick2",c=c,v=v,event=event)
+	except:
+		es_event_exception("icondclick")
+#@-node:ekr.20041018200728.19:OnIconDoubleClick
+#@-node:ekr.20041018200728.9:<< define tkinter callbacks to be injected in the vnode class >>
+#@-node:ekr.20041018200728.8:tree.injectCallbacks (class method)
+#@+node:ekr.20041018200728.25:idle_redraw
+def idle_redraw (self):
+	
+	self.redrawScheduled = false # 7/10/03: Always do this here.
+	
+	if 0: # This can be called as the result of update_idletasks, so the count need not be 0.
+		trace(self.updateCount)
+
+	frame = self.c.frame
+	if frame not in app.windowList or app.quitting:
+		# trace("no frame")
+		return
+		
+	if self.drag_v:
+		# trace("dragging",self.drag_v)
+		return
+
+	# trace(frame)
+	# print_bindings("canvas",self.canvas)
+
+	self.expandAllAncestors(self.currentVnode())
+	oldcursor = self.canvas['cursor']
+	self.canvas['cursor'] = "watch"
+	self.allocatedNodes = 0
+	if not doHook("redraw-entire-outline",c=self.c):
+		# Erase and redraw the entire tree.
+		self.setTopVnode(None)
+		self.deleteBindings()
+		self.canvas.delete("all")
+		self.deleteWidgets()
+		self.setVisibleAreaToFullCanvas()
+		self.drawTopTree()
+		# Set up the scroll region after the tree has been redrawn.
+		x0, y0, x1, y1 = self.canvas.bbox("all")
+		self.canvas.configure(scrollregion=(0, 0, x1, y1))
+		# Do a scrolling operation after the scrollbar is redrawn
+		# printGc()
+		self.canvas.after_idle(self.idle_scrollTo)
+		if self.trace:
+			self.redrawCount += 1
+			print "idle_redraw allocated:",self.redrawCount, self.allocatedNodes
+		doHook("after_redraw-outline",c=self.c)
+
+	self.canvas['cursor'] = oldcursor
+#@nonl
+#@-node:ekr.20041018200728.25:idle_redraw
+#@+node:ekr.20041018200728.29:drawBox (tag_bind)
+def drawBox (self,v,x,y):
+	
+	y += 7 # draw the box at x, y+7
+
+	tree = self
+	iconname = choose(v.isExpanded(),"minusnode.gif", "plusnode.gif")
+	image = self.getIconImage(iconname)
+	id = self.canvas.create_image(x,y,image=image)
+	
+	if 1: # use vnode callbacks
+		id1 = self.canvas.tag_bind(id, "<1>", v.OnBoxClick)
+	else:
+		<< define onBoxClickCallback >>
+		id1 = self.canvas.tag_bind(id, "<1>", onBoxClickCallback)
+	id2 = self.canvas.tag_bind(id, "<Double-1>", lambda x: None)
+	
+	# Remember the bindings so deleteBindings can delete them.
+	self.tagBindings.append((id,id1,"<1>"),)
+	self.tagBindings.append((id,id2,"<Double-1>"),)
+#@nonl
+#@+node:ekr.20041018200728.30:<< define onBoxClickCallback >>
+def onBoxClickCallback(event,tree=tree,v=v):
+	try:
+		c = v.c
+		if not doHook("boxclick1",c=c,v=v,event=event):
+			tree.OnBoxClick(v)
+		doHook("boxclick2",c=c,v=v,event=event)
+	except:
+		es_event_exception("boxclick")
+#@nonl
+#@-node:ekr.20041018200728.30:<< define onBoxClickCallback >>
+#@-node:ekr.20041018200728.29:drawBox (tag_bind)
+#@+node:ekr.20041018200728.31:drawIcon (tag_bind)
+def drawIcon(self,v,x=None,y=None):
+	
+	"""Draws icon for v at x,y, or at v.iconx,v.icony if x,y = None,None"""
+
+	tree = self
+	
+	if x is None and y is None:
+		try:
+			x,y = v.iconx, v.icony
+		except:
+			# Inject the ivars.
+			x,y = v.iconx, v.icony = 0,0
+	else:
+		# Inject the ivars.
+		v.iconx, v.icony = x,y
+
+	y += 2 # draw icon at y + 2
+
+	# Always recompute icon.
+	val = v.iconVal = v.computeIcon()
+	assert(0 <= val <= 15)
+	
+	# Compute the image name
+	imagename = "box"
+	if val < 10: imagename += "0"
+	imagename += `val`
+
+	# Get the image
+	image = self.getIconImage(imagename + ".GIF")
+	id = self.canvas.create_image(x,y,anchor="nw",image=image)
+	self.icon_id_dict[id] = v # Remember which vnode belongs to the icon.
+	
+	if 1: # use vnode callbacks.
+		id1 = self.canvas.tag_bind(id,"<1>",v.OnIconClick)
+		id2 = self.canvas.tag_bind(id,"<Double-1>",v.OnIconDoubleClick)
+		id3 = self.canvas.tag_bind(id,"<3>",v.OnIconRightClick)
+	else:
+		<< define icon click callbacks >>
+		id1 = self.canvas.tag_bind(id,"<1>",onIconClickCallback)
+		id2 = self.canvas.tag_bind(id,"<Double-1>",onIconDoubleClickCallback)
+		id3 = self.canvas.tag_bind(id,"<3>",onIconRightClickCallback)
+	
+	# Remember the bindings so deleteBindings can delete them.
+	self.tagBindings.append((id,id1,"<1>"),)
+	self.tagBindings.append((id,id2,"<Double-1>"),)
+	self.tagBindings.append((id,id3,"<3>"),)
+
+	return 0 # dummy icon height
+#@nonl
+#@+node:ekr.20041018200728.32:<< define icon click callbacks >>
+def onIconClickCallback(event,tree=tree,v=v):
+	try:
+		c = v.c
+		if not doHook("iconclick1",c=c,v=v,event=event):
+			tree.OnIconClick(v,event)
+		doHook("iconclick2",c=c,v=v,event=event)
+	except:
+		es_event_exception("iconclick")
+		
+def onIconDoubleClickCallback(event,tree=tree,v=v):
+	try:
+		c = v.c
+		if not doHook("icondclick1",c=c,v=v,event=event):
+			tree.OnIconDoubleClick(self)
+		doHook("icondclick2",c=c,v=v,event=event)
+	except:
+		es_event_exception("icondclick")
+	
+def onIconRightClickCallback(event,tree=tree,v=v):
+	try:
+		c = v.c
+		if not doHook("iconrclick1",c=c,v=v,event=event):
+			tree.OnIconRightClick(v,event)
+		doHook("iconrclick2",c=c,v=v,event=event)
+	except:
+		es_event_exception("iconrclick")
+#@-node:ekr.20041018200728.32:<< define icon click callbacks >>
+#@-node:ekr.20041018200728.31:drawIcon (tag_bind)
+#@+node:ekr.20041018200728.34:drawText (bind)
+# draws text for v at x,y
+
+def drawText(self,v,x,y):
+	
+	tree = self
+	x += text_indent
+
+	t = Tkinter.Text(self.canvas,
+		font=self.font,bd=0,relief="flat",width=self.headWidth(v),height=1)
+	self.edit_text_dict[v] = t # Remember which text widget belongs to v.
+	
+	# Remember the widget so deleteBindings can delete it.
+	self.widgets.append(t) # Fixes a _huge_ memory leak.
+
+	t.insert("end", v.headString())
+	<< configure the text depending on state >>
+
+	if 1: # Use vnode callbacks.
+		id1 = t.bind("<1>",v.OnHeadlineClick)
+		id2 = t.bind("<3>",v.OnHeadlineRightClick)
+	else:
+		<< define the headline click callbacks >>
+		id1 = t.bind("<1>",onHeadlineClickCallback)
+		id2 = t.bind("<3>",onHeadlineRightClickCallback)
+	if 0: # 6/15/02: Bill Drissel objects to this binding.
+		t.bind("<Double-1>", v.OnBoxClick)
+	id3 = t.bind("<Key>", v.OnHeadlineKey)
+	id4 = t.bind("<Control-t>",self.OnControlT)
+		# 10/16/02: Stamp out the erroneous control-t binding.
+		
+	# Remember the bindings so deleteBindings can delete them.
+	self.bindings.append((t,id1,"<1>"),)
+	self.bindings.append((t,id2,"<3>"),)
+	self.bindings.append((t,id3,"<Key>"),)
+	self.bindings.append((t,id4,"<Control-t>"),)
+
+	id = self.canvas.create_window(x,y,anchor="nw",window=t)
+	self.canvas.tag_lower(id)
+
+	return self.line_height
+#@nonl
+#@+node:ekr.20041018200728.35:<< configure the text depending on state >>
+if v == self.currentVnode():
+	if v == self.editVnode():
+		self.setNormalLabelState(v)
+	else:
+		self.setDisabledLabelState(v) # selected, disabled
+else:
+	self.setUnselectedLabelState(v) # unselected
+#@nonl
+#@-node:ekr.20041018200728.35:<< configure the text depending on state >>
+#@+node:ekr.20041018200728.36:<< define the headline click callbacks >>
+def onHeadlineClickCallback(event,tree=tree,v=v):
+	try:
+		c = v.c
+		if not doHook("headclick1",c=c,v=v,event=event):
+			tree.OnActivate(v)
+		doHook("headclick2",c=c,v=v,event=event)
+	except:
+		es_event_exception("headclick")
+	
+def onHeadlineRightClickCallback(event,tree=tree,v=v):
+	try:
+		c = v.c
+		if not doHook("headrclick1",c=c,v=v,event=event):
+			tree.OnActivate(v)
+			tree.OnPopup(v,event)
+		doHook("headrclick2",c=c,v=v,event=event)
+	except:
+		es_event_exception("headrclick")
+#@nonl
+#@-node:ekr.20041018200728.36:<< define the headline click callbacks >>
+#@-node:ekr.20041018200728.34:drawText (bind)
+#@+node:ekr.20041018200728.67:idle_head_key
+def idle_head_key (self,v,ch=None):
+	
+	"""Update headline text at idle time."""
+
+	c = self.c
+	if not v or not v.edit_text() or v != c.currentVnode():
+		return "break"
+	if doHook("headkey1",c=c,v=v,ch=ch):
+		return "break" # The hook claims to have handled the event.
+
+	<< set s to the widget text >>
+	<< set head to vnode text >>
+	changed = s != head
+	done = ch and (ch == '\r' or ch == '\n')
+	if not changed and not done:
+		return "break"
+	if changed:
+		c.undoer.setUndoParams("Change Headline",v,newText=s,oldText=head)
+	index = v.edit_text().index("insert")
+	if changed:
+		<< update v and all nodes joined to v >>
+	<< reconfigure v and all nodes joined to v >>
+	<< update the screen >>
+
+	doHook("headkey2",c=c,v=v,ch=ch)
+	return "break"
+#@nonl
+#@+node:ekr.20041018200728.68:<< set s to the widget text >>
+s = v.edit_text().get("1.0","end")
+s = toUnicode(s,app.tkEncoding) # 2/25/03
+
+if not s:
+	s = u""
+s = s.replace('\n','')
+s = s.replace('\r','')
+# trace(`s`)
+#@-node:ekr.20041018200728.68:<< set s to the widget text >>
+#@+node:ekr.20041018200728.69:<< set head to vnode text >>
+head = v.headString()
+if head == None:
+	head = u""
+head = toUnicode(head,"utf-8")
+#@-node:ekr.20041018200728.69:<< set head to vnode text >>
+#@+node:ekr.20041018200728.70:<< update v and all nodes joined to v >>
+c.beginUpdate()
+
+# Update changed bit.
+if not c.changed:
+	c.setChanged(true)
+
+# Update all dirty bits.
+v.setDirty()
+
+# Update v.
+v.initHeadString(s)
+v.edit_text().delete("1.0","end")
+v.edit_text().insert("end",s)
+v.edit_text().mark_set("insert",index)
+
+# Update all joined nodes.
+for v2 in v.t.joinList:
+	if v2 != v:
+		v2.initHeadString(s)
+		if v2.edit_text(): # v2 may not be visible
+			v2.edit_text().delete("1.0","end")
+			v2.edit_text().insert("end",s)
+
+c.endUpdate(false) # do not redraw now.
+#@nonl
+#@-node:ekr.20041018200728.70:<< update v and all nodes joined to v >>
+#@+node:ekr.20041018200728.71:<< reconfigure v and all nodes joined to v >>
+# Reconfigure v's headline.
+if done:
+	self.setDisabledLabelState(v)
+
+v.edit_text().configure(width=self.headWidth(v))
+
+# Reconfigure all joined headlines.
+for v2 in v.t.joinList:
+	if v2 != v:
+		if v2.edit_text(): # v2 may not be visible
+			v2.edit_text().configure(width=self.headWidth(v2))
+#@nonl
+#@-node:ekr.20041018200728.71:<< reconfigure v and all nodes joined to v >>
+#@+node:ekr.20041018200728.72:<< update the screen >>
+if done:
+	c.beginUpdate()
+	self.endEditLabel()
+	c.endUpdate()
+
+elif changed:
+	# update v immediately.  Joined nodes are redrawn later by endEditLabel.
+	# Redrawing the whole screen now messes up the cursor in the headline.
+	self.drawIcon(v) # just redraw the icon.
+#@nonl
+#@-node:ekr.20041018200728.72:<< update the screen >>
+#@-node:ekr.20041018200728.67:idle_head_key
+#@+node:ekr.20041018200728.73:tree.OnIconClick & OnIconRightClick
+def OnIconClick (self,v,event):
+
+	tree = self ; canvas = tree.canvas
+	if event:
+		canvas_x = canvas.canvasx(event.x)
+		canvas_y = canvas.canvasy(event.y)
+		id = canvas.find_closest(canvas_x,canvas_y)
+		if id != None:
+			try: id = id[0]
+			except: pass
+			self.drag_v = v
+			self.drag_id = id
+			if 1: # Use vnode callbacks.
+				id4 = canvas.tag_bind(id,"<B1-Motion>", v.OnDrag)
+				id5 = canvas.tag_bind(id,"<Any-ButtonRelease-1>", v.OnEndDrag)
+			else:
+				<< define drag callbacks >>
+				id4 = canvas.tag_bind(id,"<B1-Motion>", onDragCallback)
+				id5 = canvas.tag_bind(id,"<Any-ButtonRelease-1>", onEndDragCallback)
+			# Remember the bindings so deleteBindings can delete them.
+			self.tagBindings.append((id,id4,"<B1-Motion>"),)
+			self.tagBindings.append((id,id5,"<Any-ButtonRelease-1>"),)
+	tree.select(v)
+	
+def OnIconRightClick (self,v,event):
+
+	self.select(v)
+#@nonl
+#@+node:ekr.20041018200728.74:<< define drag callbacks >>
+def onDragCallback(event,tree=tree,v=v):
+	try:
+		c = v.c
+		if tree.dragging():
+			if not doHook("dragging1",c=c,v=v,event=event):
+				tree.OnDrag(v,event)
+			doHook("dragging2",c=c,v=v,event=event)
+		else:
+			if not doHook("drag1",c=c,v=v,event=event):
+				tree.OnDrag(v,event)
+			doHook("drag2",c=c,v=v,event=event)
+	except:
+		es_event_exception("drag")
+		
+def onEndDragCallback(event,tree=tree,v=v):
+	try:
+		c = v.c
+		if not doHook("enddrag1",c=c,v=v,event=event):
+			tree.OnEndDrag(v,event)
+		doHook("enddrag2",c=c,v=v,event=event)
+	except:
+		es_event_exception("enddrag")
+		
+		
+#@-node:ekr.20041018200728.74:<< define drag callbacks >>
+#@-node:ekr.20041018200728.73:tree.OnIconClick & OnIconRightClick
+#@+node:ekr.20041018200728.75:tree.OnPopup & allies
+def OnPopup (self,v,event):
+	
+	"""Handle right-clicks in the outline."""
+	
+	# Note: "headrclick" hooks handled by vnode callback routine.
+
+	if event != None:
+		c = self.c
+		if not doHook("create-popup-menu",c=c,v=v,event=event):
+			self.createPopupMenu(event)
+		if not doHook("enable-popup-menu-items",c=c,v=v,event=event):
+			self.enablePopupMenuItems(v,event)
+		if not doHook("show-popup-menu",c=c,v=v,event=event):
+			self.showPopupMenu(event)
+
+	return "break"
+#@nonl
+#@+node:ekr.20041018200728.76:OnPopupFocusLost
+@ On Linux we must do something special to make the popup menu "unpost" if the mouse is clicked elsewhere.  So we have to catch the <FocusOut> event and explicitly unpost.  In order to process the <FocusOut> event, we need to be able to find the reference to the popup window again, so this needs to be an attribute of the tree object; hence, "self.popupMenu".
+
+Aside: though Tk tries to be muli-platform, the interaction with different window managers does cause small differences that will need to be compensated by system specific application code. :-(
+@c
+
+# 20-SEP-2002 DTHEIN: This event handler is only needed for Linux.
+
+def OnPopupFocusLost(self,event=None):
+
+	self.popupMenu.unpost()
+	
+#@-node:ekr.20041018200728.76:OnPopupFocusLost
+#@+node:ekr.20041018200728.77:createPopupMenu
+def createPopupMenu (self,event):
+	
+	c = self.c ; frame = c.frame
+	
+	# If we are going to recreate it, we had better destroy it.
+	if self.popupMenu:
+		self.popupMenu.destroy()
+		self.popupMenu = None
+	
+	self.popupMenu = menu = Tkinter.Menu(app.root, tearoff=0)
+	
+	# Add the Open With entries if they exist.
+	if app.openWithTable:
+		frame.menu.createMenuEntries(menu,app.openWithTable,openWith=1)
+		table = (("-",None,None),)
+		frame.menu.createMenuEntries(menu,table)
+		
+	<< Create the menu table >>
+	
+	# 11/27/03: Don't actually set binding: it would conflict with previous.
+	frame.menu.createMenuEntries(menu,table,dontBind=true)
+#@nonl
+#@+node:ekr.20041018200728.78:<< Create the menu table >>
+table = (
+	("&Read @file Nodes",None,c.readAtFileNodes),
+	("&Write @file Nodes",None,c.fileCommands.writeAtFileNodes),
+	("-",None,None),
+	("&Tangle","Shift+Ctrl+T",c.tangle),
+	("&Untangle","Shift+Ctrl+U",c.untangle),
+	("-",None,None),
+	# 2/16/04: Remove shortcut for Toggle Angle Brackets command.
+	("Toggle Angle &Brackets",None,c.toggleAngleBrackets),
+	("-",None,None),
+	("Cut Node","Shift+Ctrl+X",c.cutOutline),
+	("Copy Node","Shift+Ctrl+C",c.copyOutline),
+	("&Paste Node","Shift+Ctrl+V",c.pasteOutline),
+	("&Delete Node","Shift+Ctrl+BkSp",c.deleteOutline),
+	("-",None,None),
+	("&Insert Node","Ctrl+I",c.insertHeadline),
+	("&Clone Node","Ctrl+`",c.clone),
+	("Sort C&hildren",None,c.sortChildren),
+	("&Sort Siblings","Alt-A",c.sortSiblings),
+	("-",None,None),
+	("Contract Parent","Alt+0",c.contractParent))
+#@nonl
+#@-node:ekr.20041018200728.78:<< Create the menu table >>
+#@-node:ekr.20041018200728.77:createPopupMenu
+#@+node:ekr.20041018200728.79:enablePopupMenuItems
+def enablePopupMenuItems (self,v,event):
+	
+	"""Enable and disable items in the popup menu."""
+	
+	c = self.c ; menu = self.popupMenu
+
+	<< set isAtRoot and isAtFile if v's tree contains @root or @file nodes >>
+	isAtFile = choose(isAtFile,1,0)
+	isAtRoot = choose(isAtRoot,1,0)
+	canContract = v.parent() != None
+	canContract = choose(canContract,1,0)
+	
+	enable = self.frame.menu.enableMenu
+	
+	for name in ("Read @file Nodes", "Write @file Nodes"):
+		enable(menu,name,isAtFile)
+	for name in ("Tangle", "Untangle"):
+		enable(menu,name,isAtRoot)
+
+	enable(menu,"Cut Node",c.canCutOutline())
+	enable(menu,"Delete Node",c.canDeleteHeadline())
+	enable(menu,"Paste Node",c.canPasteOutline())
+	enable(menu,"Sort Children",c.canSortChildren())
+	enable(menu,"Sort Siblings",c.canSortSiblings())
+	enable(menu,"Contract Parent",c.canContractParent())
+#@nonl
+#@+node:ekr.20041018200728.80:<< set isAtRoot and isAtFile if v's tree contains @root or @file nodes >>
+isAtFile = false ; isAtRoot = false
+v2 = v ; next = v.nodeAfterTree()
+
+while (not isAtFile or not isAtRoot) and v2 != None and v2 != next:
+	if (
+		v2.isAtFileNode() or
+		v.isAtRawFileNode() or
+		v.isAtSilentFileNode() or
+		v.isAtNoSentinelsFileNode()):
+		isAtFile = true
+
+	isRoot, junk = is_special(v2.bodyString(),0,"@root")
+	if isRoot:
+		isAtRoot = true
+	v2 = v2.threadNext()
+#@nonl
+#@-node:ekr.20041018200728.80:<< set isAtRoot and isAtFile if v's tree contains @root or @file nodes >>
+#@-node:ekr.20041018200728.79:enablePopupMenuItems
+#@+node:ekr.20041018200728.81:showPopupMenu
+def showPopupMenu (self,event):
+	
+	"""Show a popup menu."""
+	
+	c = self.c ; menu = self.popupMenu ; gui = app.gui
+
+	if sys.platform == "linux2": # 20-SEP-2002 DTHEIN: not needed for Windows
+		menu.bind("<FocusOut>",self.OnPopupFocusLost)
+	
+	menu.post(event.x_root, event.y_root)
+
+	# Make certain we have focus so we know when we lose it.
+	# I think this is OK for all OSes.
+	gui.set_focus(c,menu)
+#@nonl
+#@-node:ekr.20041018200728.81:showPopupMenu
+#@-node:ekr.20041018200728.75:tree.OnPopup & allies
+#@+node:ekr.20041018200728.94:tree.select
+# Warning: do not try to "optimize" this by returning if v==tree.currentVnode.
+
+def select (self,v,updateBeadList=true):
+
+	<< define vars and stop editing >>
+
+	if not doHook("unselect1",c=c,new_v=v,old_v=old_v):
+		<< unselect the old node >>
+	else: old_body = u""
+
+	doHook("unselect2",c=c,new_v=v,old_v=old_v)
+	
+	if not doHook("select1",c=c,new_v=v,old_v=old_v):
+		<< select the new node >>
+		if v and v != old_v: # 3/26/03: Suppress duplicate call.
+			try: # may fail during initialization
+				self.idle_scrollTo(v)
+			except: pass
+		<< update c.beadList or c.beadPointer >>
+		<< update c.visitedList >>
+
+	<< set the current node and redraw >>
+	doHook("select2",c=c,new_v=v,old_v=old_v)
+	doHook("select3",c=c,new_v=v,old_v=old_v)
+#@+node:ekr.20041018200728.95:<< define vars and stop editing >>
+c = self.c ; frame = c.frame ; body = frame.bodyCtrl
+old_v = c.currentVnode()
+
+# Unselect any previous selected but unedited label.
+self.endEditLabel()
+old = self.currentVnode()
+self.setUnselectedLabelState(old)
+#@nonl
+#@-node:ekr.20041018200728.95:<< define vars and stop editing >>
+#@+node:ekr.20041018200728.96:<< unselect the old node >>
+# Remember the position of the scrollbar before making any changes.
+yview=body.yview()
+insertSpot = c.frame.body.getInsertionPoint()
+
+# Remember the old body text
+old_body = body.get("1.0","end")
+
+if old and old != v and old.edit_text():
+	old.t.scrollBarSpot = yview
+	old.t.insertSpot = insertSpot
+#@-node:ekr.20041018200728.96:<< unselect the old node >>
+#@+node:ekr.20041018200728.97:<< select the new node >>
+frame.setWrap(v)
+
+# Delete only if necessary: this may reduce flicker slightly.
+s = v.t.bodyString
+s = toUnicode(s,"utf-8")
+old_body = toUnicode(old_body,"utf-8")
+if old_body != s:
+	body.delete("1.0","end")
+	body.insert("1.0",s)
+
+# We must do a full recoloring: we may be changing context!
+self.frame.body.recolor_now(v)
+
+if v and v.t.scrollBarSpot != None:
+	first,last = v.t.scrollBarSpot
+	body.yview("moveto",first)
+
+if v.t.insertSpot != None: # 9/21/02: moved from c.selectVnode
+	c.frame.bodyCtrl.mark_set("insert",v.t.insertSpot)
+	c.frame.bodyCtrl.see(v.t.insertSpot)
+else:
+	c.frame.bodyCtrl.mark_set("insert","1.0")
+#@nonl
+#@-node:ekr.20041018200728.97:<< select the new node >>
+#@+node:ekr.20041018200728.98:<< update c.beadList or c.beadPointer >>
+if updateBeadList:
+	
+	if c.beadPointer > -1:
+		present_v = c.beadList[c.beadPointer]
+	else:
+		present_v = None
+	
+	if v != present_v:
+		# Replace the tail of c.beadList by c and make c the present node.
+		# print "updating c.beadList"
+		c.beadPointer += 1
+		c.beadList[c.beadPointer:] = []
+		c.beadList.append(v)
+		
+	# trace(c.beadPointer,v,present_v)
+
+#@-node:ekr.20041018200728.98:<< update c.beadList or c.beadPointer >>
+#@+node:ekr.20041018200728.99:<< update c.visitedList >>
+# Make v the most recently visited node on the list.
+if v in c.visitedList:
+	c.visitedList.remove(v)
+	
+c.visitedList.insert(0,v)
+#@nonl
+#@-node:ekr.20041018200728.99:<< update c.visitedList >>
+#@+node:ekr.20041018200728.100:<< set the current node and redraw >>
+self.setCurrentVnode(v)
+self.setSelectedLabelState(v)
+self.frame.scanForTabWidth(v) # 9/13/02 #GS I believe this should also get into the select1 hook
+app.gui.set_focus(c,c.frame.bodyCtrl)
+#@nonl
+#@-node:ekr.20041018200728.100:<< set the current node and redraw >>
+#@-node:ekr.20041018200728.94:tree.select
+#@-node:ekr.20041018200949:From OLD code
+#@-node:ekr.20041018194900:(Support drawing hooks)
 #@+node:ekr.20041006110656:First 5
 #@+node:ekr.20041007052853:(Fix problems with paste on Linux)
 #@+node:ekr.20041007052853.1:@url http://www.freedesktop.org/standards/clipboards-spec/clipboards.txt

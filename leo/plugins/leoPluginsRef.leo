@@ -2,7 +2,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="2976" clone_windows="0"/>
 <globals body_outline_ratio="0.600862998921">
-	<global_window_position top="21" left="437" height="927" width="834"/>
+	<global_window_position top="10" left="402" height="927" width="834"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences>
@@ -201,7 +201,10 @@
 <v t="ekr.20040918165427.5"><vh>Leo to docbook xml plugin: Leo2AsciiDoc</vh></v>
 <v t="ekr.20040918165427.6"><vh>Finish wx plugin &amp; improve how Leo uses indices</vh></v>
 </v>
-<v t="edream.110203113231.618" a="TV"><vh>Plugins</vh>
+<v t="edream.110203113231.618"><vh>Plugins</vh>
+<v t="EKR.20040517090508"><vh>  Enable plugins by changing pluginsManager.txt or using plugin_manager plugin</vh>
+<v t="edream.120603093808" a="E"><vh>@thin pluginsManager.txt</vh></v>
+</v>
 <v t="ekr.20040919094459"><vh> PLEASE follow this style guide</vh>
 <v t="ekr.20040919081244"><vh>@thin style_guide.py</vh></v>
 </v>
@@ -342,11 +345,12 @@
 <v t="edream.110203113231.753"><vh>@thin image.py</vh></v>
 <v t="ekr.20040422072343"><vh>@thin rClick.py</vh></v>
 <v t="EKR.20040605181725"><vh>Autocompleter</vh>
-<v t="EKR.20040605181725.1"><vh>Docs for v125</vh>
+<v t="ekr.20041017103205"><vh>To do</vh></v>
+<v t="EKR.20040605181725.1" a="E"><vh>Configuration</vh>
 <v t="EKR.20040608070256"><vh>autocompleter.ini</vh></v>
-<v t="EKR.20040608070256.1"><vh>.ato files in the autocompleter folder</vh></v>
+<v t="EKR.20040608070256.1" a="E"><vh>.ato files in the autocompleter folder</vh></v>
 </v>
-<v t="ekr.20040722104914"><vh>@thin autocompleter.py</vh></v>
+<v t="ekr.20041017043622"><vh>@thin autocompleter.py</vh></v>
 </v>
 <v t="edream.110403140857"><vh>color_markup.py (requires add-directives plugin)</vh>
 <v t="edream.110403140857.1"><vh>Plugin documentation</vh>
@@ -621,7 +625,8 @@ expanded="EKR.20040517080555.28,EKR.20040517080555.30,"><vh>@thin pluginsTest.py
 expanded="pap.20041008224318,pap.20041006192557,"><vh>@thin plugin_manager.py</vh></v>
 </v>
 <v t="ekr.20041001210557"><vh>Scripting</vh>
-<v t="EKR.20040613213623" a="E"><vh>@thin mod_scripting.py</vh></v>
+<v t="EKR.20040613213623"
+expanded="ekr.20041001183818,EKR.20040618091543.2,ekr.20041001184024,"><vh>@thin mod_scripting.py</vh></v>
 </v>
 <v t="edream.110203113231.930"><vh>Spell Checking</vh>
 <v t="ekr.20040809165421"><vh>Read me or suffer</vh></v>
@@ -650,11 +655,19 @@ expanded="ekr.20040809151600.10,ekr.20040809151600.11,ekr.20040809151600.16,ekr.
 </v>
 </v>
 </v>
-<v t="EKR.20040517090508"><vh>Enable plugins by changing pluginsManager.txt</vh>
-<v t="edream.120603093808" a="E"><vh>@thin pluginsManager.txt</vh></v>
-</v>
 <v t="ekr.20040929104807" a="E"><vh>4.3 prototype plugins</vh>
+<v t="ekr.20041017043108"><vh>To do: improve g.cantImport</vh></v>
 <v t="ekr.20041003172238"><vh>@thin Library.py</vh></v>
+<v t="ekr.20041011102931"><vh>@thin xsltWithNodes.py</vh></v>
+<v t="ekr.20041017035937"><vh>@thin table.py</vh></v>
+<v t="EKR.20040605181725" a="TV"><vh>Autocompleter</vh>
+<v t="ekr.20041017103205"><vh>To do</vh></v>
+<v t="EKR.20040605181725.1" a="E"><vh>Configuration</vh>
+<v t="EKR.20040608070256"><vh>autocompleter.ini</vh></v>
+<v t="EKR.20040608070256.1" a="E"><vh>.ato files in the autocompleter folder</vh></v>
+</v>
+<v t="ekr.20041017043622"><vh>@thin autocompleter.py</vh></v>
+</v>
 </v>
 </vnodes>
 <tnodes>
@@ -1060,13 +1073,7 @@ Leo enables only those plugins whose filenames appear in PluginsManager.txt.
 
 @color</t>
 <t tx="EKR.20040605181725"></t>
-<t tx="EKR.20040605181725.1">@nocolor
-
-New in this version:
-
-- Alt-Up, Alt-Down scroll the Autobox.
-- Captialization and _ do not unsummon Autobox
-- Ctrl now unsummons calltip box.GetSelection.</t>
+<t tx="EKR.20040605181725.1">@nocolor</t>
 <t tx="EKR.20040608070256">The plugin looks in the plugins folder for a file called autocompleter.ini.
 
 This follows the windows .ini file format as used in ConfigParser, see: http://docs.python.org/lib/module-ConfigParser.html
@@ -8694,6 +8701,11 @@ top.title(title)
 
 self.frame = frame = Tk.Frame(top)
 frame.pack(side="top", fill='both', expand=1, padx=5, pady=5)</t>
+<t tx="ekr.20041017043108">@killcolor
+
+- Tell the name of the plugin that contains the failed import.
+- Give only one message per plugin.</t>
+<t tx="ekr.20041017103205">Bug:  Hitting escape followed by control key inserts text.</t>
 <t tx="pap.20041006194759">def getDetails(self, text):
     """Get the details of the plugin
     
