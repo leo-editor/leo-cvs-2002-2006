@@ -2303,12 +2303,11 @@ class LeoFrame:
 		# s,u = convertUnicodeToString(s)
 		# s,u = convertStringToUnicode(s)
 	
-		# trace(`s`)
 		if s and len(s) > 0:
 			s += '\n' # Make sure we end the script properly.
 			try:
-				# 11/18/02: don't pollute the exec environment with Leo globals.
-				exec(s,__builtins__,__builtins__)
+				# 12/11/02: Use {} to get a pristine environment!
+				exec s in {}
 			except:
 				es("exception executing script")
 				es_exception(full=false)
