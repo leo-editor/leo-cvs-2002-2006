@@ -1,9 +1,34 @@
 #@+leo-ver=4-thin
 #@+node:mork.20040926105355.1:@thin chapters.py
+#@<< docstring >>
+#@+node:ekr.20041109091913:<< docstring >>
+'''This plugin creates separate outlines called "chapters" within a single .leo file.  Clones work between Chapters.
+
+Requires Python Mega Widgets and Leo 4.2 or above.
+
+Numbered tabs at the top of the body pane represent each chapter.  Right clicking the tab will show a popup menu containing commands.  These commands allow you to:
+    
+- insert and delete chapters.
+- add names to chapters.
+- split the body pane to create multiple "editors".
+- create a "trash barrel that hold all deleted nodes.
+- import and export outlines and chapters.
+- create a pdf file from your chapters (requires reportlab toolkit at http://www.reportlab.org).
+- and more...
+ 
+Warnings:
+    
+- This plugin makes substantial changes to Leo's core.
+- Outlines containing multiple chapters are stored as a zipped file that can only be read when this plugin has been enabled.
+'''
+#@nonl
+#@-node:ekr.20041109091913:<< docstring >>
+#@nl
+
 #@@language python
 #@@tabwidth -4
 
-__version__ = "0.61"
+__version__ = "0.63"
 #@<< version history >>
 #@+node:ekr.20041103051117:<< version history >>
 #@@killcolor
@@ -43,6 +68,8 @@ __version__ = "0.61"
 # 
 # .62 EKR: Restored conditional call to g.app.createTkGui(__file__) in startup 
 # code.
+# 
+# .63 EKR: Added long docstring.
 #@-at
 #@nonl
 #@-node:ekr.20041103051117:<< version history >>
@@ -1419,14 +1446,18 @@ if Pmw:
         #@+node:ekr.20041103054545:<< override various methods >>
         leoTkinterFrame.leoTkinterFrame.createCanvas = newCreateCanvas
         leoTkinterFrame.leoTkinterBody.createControl = newCreateControl
+        
         leoTkinterTree.leoTkinterTree.select = newselect
         leoTkinterTree.leoTkinterTree.endEditLabel = newendEditLabel
         leoTkinterTree.leoTkinterTree.__init__ = newTreeinit
+        
         g.os_path_dirname = newos_path_dirname
+        
         leoFileCommands.fileCommands.write_LEO_file = newWrite_LEO_file
         leoFileCommands.fileCommands.write_Leo_file = newWrite_LEO_file
         leoFileCommands.fileCommands.getLeoFile = newGetLeoFile
         leoFileCommands.fileCommands.open = newOpen
+        
         if hasattr( leoNodes.vnode, 'doDelete' ):
             leoNodes.vnode.doDelete = newTrashDelete
         else:
