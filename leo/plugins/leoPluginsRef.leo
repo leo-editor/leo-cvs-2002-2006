@@ -3,7 +3,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="4402" clone_windows="0"/>
 <globals body_outline_ratio="0.494983277592">
-	<global_window_position top="48" left="202" height="897" width="1014"/>
+	<global_window_position top="26" left="498" height="897" width="816"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -35,7 +35,7 @@ marks="pap.20041008200028,pap.20041006194759,pap.20041008224625,pap.200410061930
 <v t="EKR.20040517090508"><vh>  Enable plugins by changing pluginsManager.txt or using plugin_manager plugin</vh>
 <v t="edream.120603093808"><vh>@thin pluginsManager.txt</vh></v>
 </v>
-<v t="ekr.20050303051035"><vh> Templates: these show recommended ways of defining plugins.</vh>
+<v t="ekr.20050303051035" a="E"><vh> Templates: these show recommended ways of defining plugins.</vh>
 <v t="ekr.20041114102139"><vh>Notes</vh>
 <v t="ekr.20041114103913"><vh>About comments in the style guide</vh></v>
 <v t="ekr.20041114102139.1"><vh>About the root node</vh></v>
@@ -51,7 +51,7 @@ marks="pap.20041008200028,pap.20041006194759,pap.20041008224625,pap.200410061930
 <v t="ekr.20050306071629.4"><vh>init</vh></v>
 <v t="ekr.20050306071540"><vh>onStart2</vh></v>
 </v>
-<v t="ekr.20050303051035.2"><vh>Template for Tk plugin with per-commander controller class</vh>
+<v t="ekr.20050303051035.2" a="E"><vh>Template for Tk plugin with per-commander controller class</vh>
 <v t="ekr.20050303051035.3"><vh>&lt;&lt; docstring &gt;&gt;</vh></v>
 <v t="ekr.20050303051035.4"><vh>&lt;&lt; version history &gt;&gt;</vh></v>
 <v t="ekr.20050303051035.5"><vh>&lt;&lt; imports &gt;&gt;</vh></v>
@@ -170,9 +170,8 @@ marks="pap.20041008200028,pap.20041006194759,pap.20041008224625,pap.200410061930
 </v>
 <v t="ekr.20041030092101"><vh>Dyna plugins by e</vh>
 <v t="ekr.20050329163946"><vh> dyna plugin 139</vh>
-<v t="ekr.20050329163946.1" a="E"><vh>&lt;&lt; insertAplug &gt;&gt;</vh></v>
-<v t="ekr.20050329163946.2"
-expanded="ekr.20050329163946.59,ekr.20050329163946.72,"><vh>@thin dyna_menu.py</vh></v>
+<v t="ekr.20050329163946.1"><vh>&lt;&lt; insertAplug &gt;&gt;</vh></v>
+<v t="ekr.20050329163946.2"><vh>@thin dyna_menu.py</vh></v>
 <v t="ekr.20050329163946.97"><vh>@thin dynacommon.py</vh></v>
 <v t="ekr.20050329163946.125" tnodeList="ekr.20050329163946.125"><vh>@nosent dyna_menu.ini</vh></v>
 <v t="ekr.20050329163946.126"><vh>@thin dyna.txt</vh></v>
@@ -897,17 +896,27 @@ marks="pap.20041008224625,pap.20041006193013,pap.20041006194759,pap.200410082000
 </v>
 </v>
 <v t="ekr.20040331071319"
-expanded="ekr.20040331071319.4,"><vh>@thin rst2.py</vh></v>
+expanded="ekr.20040331071319.4,bwmulder.20050319191929.1,"><vh>@thin rst2.py</vh></v>
+</v>
+<v t="ekr.20050331061925"><vh>golf</vh>
+<v t="ekr.20050331061925.2" a="E"
+expanded="ekr.20050331062614.1,ekr.20050331064504,"><vh>@thin golf.py</vh></v>
 </v>
 </v>
 </v>
-<v t="ekr.20050226090248" a="TV"><vh>New/updated from Leo User</vh>
+<v t="ekr.20050226090248"><vh>New/updated from Leo User</vh>
 <v t="mork.20041020082242.1"><vh>@thin base64Packager.py</vh></v>
 <v t="mork.20041018162155.1"><vh>@thin EditAttributes.py</vh></v>
 <v t="mork.20041018091414.1"><vh>@thin fastGotoNode.py</vh></v>
 <v t="mork.20041018131258.1"><vh>@thin groupOperations.py</vh></v>
 <v t="mork.20041018204908.1"><vh>@thin multifile.py</vh></v>
 <v t="mork.20041010095009"><vh>@thin xsltWithNodes.py</vh></v>
+</v>
+<v t="ekr.20040331071319"
+expanded="ekr.20040331071319.4,bwmulder.20050319191929.1,"><vh>@thin rst2.py</vh></v>
+<v t="ekr.20050331061925" a="TV"><vh>golf</vh>
+<v t="ekr.20050331061925.2" a="E"
+expanded="ekr.20050331062614.1,ekr.20050331064504,"><vh>@thin golf.py</vh></v>
 </v>
 </vnodes>
 <tnodes>
@@ -8072,8 +8081,8 @@ used. Maybe this information can be centralized.
 
 - Simplify the directory settings.</t>
 <t tx="ekr.20050217093214">@nocolor</t>
-<t tx="ekr.20050217093214.1">C:\prog\leoCVS\leo\plugins\leoPlugins.leo
-c:\prog\leoCVS\leo\doc\LeoDocs.leo
+<t tx="ekr.20050217093214.1">c:\prog\leoCVS\leo\doc\LeoDocs.leo
+C:\prog\leoCVS\leo\plugins\leoPlugins.leo
 C:\prog\leoCVS\leo\src\LeoPy.leo</t>
 <t tx="ekr.20050226090248"> </t>
 <t tx="ekr.20050227071948"></t>
@@ -9699,5 +9708,6 @@ token_bg         =  #FFFAFA  ;snow
 ;comments can be between values?
 ;configparser needs a complete testsuite to answer these questions
 ;maybe there is one already?</t>
+<t tx="ekr.20050331061925"></t>
 </tnodes>
 </leo_file>
