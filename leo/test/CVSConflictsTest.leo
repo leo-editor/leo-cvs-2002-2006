@@ -9,7 +9,7 @@
 <find_panel_settings/>
 <vnodes>
 <v t="ekr.20041220170140" a="E"><vh>An outline to test Resolve CVS Conflicts command</vh>
-<v t="ekr.20041220170413" a="ETV"><vh>@thin cvsConflict.py</vh></v>
+<v t="ekr.20041220170413" a="E"><vh>@thin cvsConflict.py</vh></v>
 </v>
 </vnodes>
 <tnodes>
