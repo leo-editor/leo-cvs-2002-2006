@@ -1176,7 +1176,6 @@ class baseLeoTkinterTree:
 		if not newSel:
 			newSel = c.body.getTextSelection()
 		if oldText != None:
-			trace("setting s = oldText")
 			s = oldText
 		else:
 			s = c.body.getAllText()
