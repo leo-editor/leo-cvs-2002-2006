@@ -1,0 +1,43 @@
+# The manifest template: specifies all files to be included in the distribution.
+
+# Note: these are glob patterns!  Be careful:  .. may not work.
+
+include __init__.py
+
+include config/leoConfig.leo
+include config/leoConfig.txt
+
+include dist/leo.nsi
+include dist/install
+include dist/uninstall
+include dist/manifest.in
+include dist/MANIFEST
+include dist/preSetup.py
+include dist/setup.py
+include dist/postSetup.py
+
+include doc/LeoDocs.leo
+include doc/leoDiary.txt
+include doc/leoNotes.txt
+include doc/leoToDo.txt
+include doc/README.TXT
+include doc/INSTALL.TXT
+include doc/PKG-INFO.TXT
+include doc/LICENSE.TXT
+
+include Icons/*.*
+
+include plugins/*.*
+exclude plugins/leoPluginsRef.leo
+exclude plugins/*.pyc
+
+include src/LeoPy.leo
+exclude src/leoPyRef.leo
+include src/leo*.py
+include src/leoProjects.txt
+
+include scripts/leoScripts.txt
+include scripts/tangle_done.py
+include scripts/untangle_done.py
+
+include test/test.leo

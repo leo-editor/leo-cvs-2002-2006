@@ -1,0 +1,61 @@
+#@+leo-ver=4-thin
+#@+node:ekr.20031218072017.2580:@file-thin ../dist/uninstall
+#!/bin/sh
+
+############################################
+# This is a small install script to install
+# leo on GNU/Linux. 
+# Leo is Open Software and is distributed under the terms 
+# of the Python License.  Please see:
+# docs/LICENSE.TXT for details.
+#
+# This install script created by Frank Merenda 
+# (fmerenda@yahoo.com)
+#
+# verison 1.0 - 06/30/2003
+# - initial creation 
+#
+# 
+# - minor changes to try and use a "prefix" directory
+# - step 5 copies the src and config directories as 
+# directories rather that file (this seems to prevent
+# the need to remove ".." from the python scripts on RH9
+# anyway.)
+# - IMPORTANT NOTE: I did not understand step 6 so its
+# commented out. Someone who knows leo better than I do
+# should look at this.
+# - Note: I'm a leo newbie so I don't know if this fixes plugin
+# problems since I don't think I use them.
+# David Holden (dh@iucr.org)
+#   
+#
+############################################
+
+
+################################
+# Variables for usage in this script.
+################################
+LEO_PREFIX="/usr/local"
+LEO_RUN_SCRIPT_SOURCE='./scripts/install/leo-script.txt'
+LEO_RUN_SCRIPT_OUTPUT="${LEO_PREFIX}/bin/leo"
+LEO_LIB_DIR="${LEO_PREFIX}/lib/leo"
+
+echo ""
+echo "Prefix directory set to \"$LEO_PREFIX\""
+
+################################
+# Step 1
+# show commands to remove leo
+################################
+echo ""
+echo "To uninstall leo check the following \"rm\" commands
+if they look ok execute them as root."
+
+echo "
+rm -fr $LEO_LIB_DIR
+rm -f  $LEO_RUN_SCRIPT_OUTPUT
+
+"
+#@nonl
+#@-node:ekr.20031218072017.2580:@file-thin ../dist/uninstall
+#@-leo
