@@ -2508,7 +2508,11 @@ class baseCommands:
 	
 		c.beginUpdate()
 		if 1: # inside update...
-			if current.hasChildren() and current.isExpanded():
+			if (
+				# 1/31/04: Make sure new node is visible when hoisting.
+				(current.hasChildren() and current.isExpanded()) or
+				(c.hoistStack and current == c.hoistStack[-1])
+			):
 				v = current.insertAsNthChild(0)
 			else:
 				v = current.insertAfter()
