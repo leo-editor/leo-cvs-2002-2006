@@ -1747,6 +1747,8 @@ class baseColorizer:
 			#@		<< handle string >>
 			#@+middle:ekr.20031218072017.1908:Valid when not in latex_mode
 			#@+node:ekr.20031218072017.1612:<< handle string >>
+			# g.trace(self.language)
+			
 			if self.language == "python":
 			
 				delim = s[i:i+3]
@@ -1837,8 +1839,7 @@ class baseColorizer:
 			g.trace(self.progress,i,state)
 			assert(self.progress < i)
 		return i,state
-	
-	
+	#@nonl
 	#@+node:ekr.20031218072017.1897:Valid regardless of latex mode
 	#@-node:ekr.20031218072017.1897:Valid regardless of latex mode
 	#@+node:ekr.20031218072017.1906:Vaid only in latex mode
@@ -2111,25 +2112,27 @@ class baseColorizer:
 	#@-node:ekr.20031218072017.1610:skip_python_string
 	#@+node:ekr.20031218072017.2809:skip_string
 	def skip_string(self,s,i):
-	
+		
+		"""Skip a string literal."""
+		
+		first = i # for tracing.
+		allow_newlines = self.language == "elisp"
 		delim = s[i] ; i += 1
+		continue_state = g.choose(delim=="'","singleString","doubleString")
 		assert(delim == '"' or delim == "'")
 		n = len(s)
-		while i < n and s[i] != delim:
-			if s[i:] == "\\":
-				return n,g.choose(delim=="'","singleString","doubleString")
-			elif s[i] == '\\' :
-				i += 2
+		while i < n and s[i] != delim and (allow_newlines or not s[i] == '\n'): # 6/3/04: newline ends most strings.
+			if s[i:] == "\\": # virtual trailing newline.
+				return n,continue_state
+			elif s[i] == '\\': i += 2
 			else: i += 1
 	
 		if i >= n:
-			if self.language in ("elisp","html"):
-				return n,"doubleString"
-			else:
-				return n, "normal"
-		elif s[i] == delim:
+			return n, g.choose(allow_newlines,continue_state,"normal")
+		if s[i] == delim:
 			i += 1
 		return i,"normal"
+	#@nonl
 	#@-node:ekr.20031218072017.2809:skip_string
 	#@-node:ekr.20031218072017.2806:Utils
 	#@-others
