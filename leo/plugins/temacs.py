@@ -16,7 +16,7 @@ __version__ = '.4'
 # 
 # 0.3 Leo User: Original code.
 # 
-# 0.4 EKR:  Minor style modes.
+# 0.4 EKR:  Minor style mods.
 #@-at
 #@nonl
 #@-node:ekr.20041028081942:<< version history >>
