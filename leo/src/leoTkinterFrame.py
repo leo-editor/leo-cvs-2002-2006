@@ -1652,16 +1652,18 @@ class leoTkinterBody (leoFrame.leoBody):
 				
 				if deletedChar in (u' ',' '):
 					n = len(prev) ; w = abs(tab_width)
-					n2 = n % w # Delete up to n2 spaces.
-					count = 0
-					while n2 > 0:
-						n2 -= 1
-						ch = prev[n-count-1]
-						# g.trace(count,repr(ch))
-						if ch in (u' ',' '): count += 1
-						else: break
-					if count > 0:
-						c.frame.bodyCtrl.delete("insert -%dc" % count,"insert")
+					n2 = n % w # Delete up to n2 - 1 spaces.
+					if n2 == w - 1: # Delete spaces only if they could have come from a tab.
+						count = 0
+						while n2 > 0:
+							n2 -= 1
+							ch = prev[n-count-1]
+							# g.trace(count,repr(ch))
+							if ch in (u' ',' '): count += 1
+							else: break
+						# g.trace(count,(n%w))
+						if count > 0:
+							c.frame.bodyCtrl.delete("insert -%dc" % count,"insert")
 				#@nonl
 				#@-node:EKR.20040604090913:<< handle backspace with negative tab_width >>
 				#@nl
