@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet ekr_stylesheet?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="12847" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="12848" clone_windows="0"/>
 <globals body_outline_ratio="0.398837209302">
 	<global_window_position top="16" left="539" height="860" width="686"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
@@ -39,7 +39,7 @@
 <v t="edream.110203163054.12"><vh>Dan Winkler 3</vh></v>
 </v>
 </v>
-<v t="edream.110203163054.46" a="TV"><vh>Release Notes</vh>
+<v t="edream.110203163054.46" a="E"><vh>Release Notes</vh>
 <v t="edream.110203163054.47"><vh>Warnings</vh></v>
 <v t="edream.110203163054.48"><vh>Installation notes</vh>
 <v t="edream.110203163054.49"><vh>System requirements</vh></v>
@@ -52,7 +52,7 @@
 <v t="edream.110203163054.62"><vh>Quick start</vh></v>
 </v>
 <v t="edream.110203163054.63" a="E"><vh>Latest versions</vh>
-<v t="ekr.20050126100405"><vh>4.3-a2</vh>
+<v t="ekr.20050126100405" a="TV"><vh>4.3-a2</vh>
 <v t="ekr.20050126100405.1"><vh>Added undo granularity</vh>
 <v t="EKR.20040524104904.48"><vh>Undoing operations</vh></v>
 </v>
@@ -1992,20 +1992,22 @@
 </v>
 <v t="EKR.20040524104904.357"><vh>XML file format</vh>
 <v t="EKR.20040524104904.358"><vh>Summary of the file format</vh></v>
-<v t="EKR.20040524104904.359"><vh>&lt;?xml ... ?&gt;</vh></v>
+<v t="EKR.20040524104904.359"><vh>&lt;?xml ... ?&gt; &amp; &lt;?xml-stylesheet ... ?&gt;</vh></v>
 <v t="EKR.20040524104904.360"><vh>&lt;leo_file&gt; ... &lt;/leo_file&gt;</vh>
 <v t="EKR.20040524104904.361"><vh>&lt;leo_header ... /&gt;</vh></v>
 <v t="EKR.20040524104904.362"><vh>&lt;globals ... &gt; ... &lt;/globals&gt;</vh></v>
+<v t="ekr.20050129080711"><vh>Vestigial elements</vh>
+<v t="EKR.20040524104904.369"><vh>&lt;clone_windows&gt; ... &lt;/clone_windows&gt;</vh>
+<v t="EKR.20040524104904.370"><vh>&lt;clone_window ...&gt; ... &lt;/clone_window&gt;</vh></v>
+</v>
 <v t="EKR.20040524104904.363"><vh>&lt;preferences ... &gt; ... &lt;/preferences&gt;</vh></v>
 <v t="EKR.20040524104904.364"><vh>&lt;find_panel_settings ... &gt; ... &lt;/find_panel_settings&gt;</vh></v>
+</v>
 <v t="EKR.20040524104904.365"><vh>&lt;vnodes&gt;...&lt;/vnodes&gt;</vh>
 <v t="EKR.20040524104904.366"><vh>&lt;v...&gt; ... &lt;/v&gt;</vh></v>
 </v>
 <v t="EKR.20040524104904.367"><vh>&lt;tnodes&gt; ... &lt;/tnodes&gt;</vh>
 <v t="EKR.20040524104904.368"><vh>&lt;t...&gt; ... &lt;/t&gt;</vh></v>
-</v>
-<v t="EKR.20040524104904.369"><vh>&lt;clone_windows&gt; ... &lt;/clone_windows&gt;</vh>
-<v t="EKR.20040524104904.370"><vh>&lt;clone_window ...&gt; ... &lt;/clone_window&gt;</vh></v>
 </v>
 </v>
 <v t="EKR.20040524104904.371"><vh>DTD for Leo's File Format</vh></v>
@@ -2224,6 +2226,7 @@
 <v t="ekr.20041013100216"><vh>Tips and techniques</vh>
 <v t="ekr.20040411074926"><vh>How can I use Leo to develop Leo itself?</vh></v>
 <v t="ekr.20041013100216.1"><vh>Using Chapters &amp; multiple editors</vh></v>
+<v t="ekr.20050129065451"><vh>How can I display graphics in Leo?</vh></v>
 </v>
 </v>
 <v t="edream.110203163054.1158"><vh>Sample Code</vh>
@@ -6401,7 +6404,10 @@ The following sections of Users Guide:Customizing Leo contain new conventions th
 <t tx="EKR.20040524104904.359">Leo files start out with the following line declaring the format to be formatted as a type of XML.
 
 &lt;?xml version="1.0" encoding="UTF-8"?&gt;
-</t>
+
+An xml-stylesheet line may optionally follow this line.  For example:
+
+&lt;?xml-stylesheet ekr_stylesheet?&gt;</t>
 <t tx="EKR.20040524104904.360">The &lt;leo_file&gt; tag opens an element that contains the entire file. The &lt;/leo_file&gt; tag at the end of the file ends this element.
 
 The following sections describe the elements that may appear between the &lt;leo_file&gt; tag and the &lt;/leo_file&gt; tag.  These elements must appear in the order given.  However, the clone_windows element is optional.
@@ -6483,10 +6489,11 @@ As shown above, a v element may contain nested v elements.  Each vnode correspon
 
 The nesting relationship between vnodes gives the outline structure.  v elements for child vnodes are nested within the v elements of parent vnodes.  Therefore, the outline level of a v element is the number of unclosed v elements containing it.
 
-Zero or more of the following three attributes may appear before the &gt; that terminates the &lt;v...&gt; tag.
+Zero or more of the following attributes may appear before the &gt; that terminates the &lt;v...&gt; tag.
 
-t="T23"
-vtag="V18"
+t="T23"  (Leo 3.x.  Not used in Leo 4.x)
+t=name.timestampe.n  (Leo 4.1 and later: name.timestamp.n is a so-called gnx)
+vtag="V18" (Leo 3.x.  Not used in Leo 4.x)
 a="xxxx"
 
 The t="Tnnn" attribute specifies the tnode associated with this vnode.  (See the section describing the &lt;t&gt; tag for more details.
@@ -6495,18 +6502,20 @@ The vtag="Vnnn" attributes specifies the vtag number for this node.  This tag is
 
 The a="xxxx" attribute specifies vnode attributes.  The xxxx denotes one or more upper-case letters whose meanings are as follows:
 
-C	The vnode is a clone.
+C	The vnode is a clone. (Not used in 4.x)
 E	The vnode is expanded so its children are visible.
 M	The vnode is marked.
 T	The vnode is the top visible node.
 V	The vnode is the current vnode.
 
-For example, a="CEM"  specifies that the vnode is a clone, is expanded and is marked.
-</t>
+For example, a="EM"  specifies that the vnode is expanded and is marked.
+
+New in Leo 4.0.  all other attributes of vnodes are so-called uA's (unknown or user attributes).  See Users Guide--&gt;Chapter 8: Customizing Leo--&gt;Attaching temporary attributes to vnodes and tnodes for details of how Leo reads and writes these attributes.</t>
 <t tx="EKR.20040524104904.367">The tnodes element specifies the list of tnodes of an outline.
 
 The tnodes element starts with &lt;tnodes...&gt; and ends with &lt;/tnodes&gt;.  In between these tags are zero or more t elements.  
-</t>
+
+New in Leo 4.0.  all other attributes of tnodes are so-called uA's (unknown or user attributes).  See Users Guide--&gt;Chapter 8: Customizing Leo--&gt;Attaching temporary attributes to vnodes and tnodes for details of how Leo reads and writes these attributes.</t>
 <t tx="EKR.20040524104904.368">The t element represents a single tnode.  Each tnode represents body text.  Because of cloning, a tnode may be shared among several vnodes.
 
 tnodes have the following form:
@@ -16260,5 +16269,46 @@ Leo's cvs site! Many thanks to Paul Patterson for this excellent work.
 will attempt to import such extensions from the extensions directory if normal
 imports fail.</t>
 <t tx="ekr.20050126100405.1"></t>
+<t tx="ekr.20050129065451">@killcolor
+http://sourceforge.net/forum/message.php?msg_id=2923560
+
+&gt; What is fastest way to display graphic media from Leo? For example jpeg
+photos, digital video movies, Flash swf files... Shoudl I just wrap all those in
+html and link from there?
+
+One way is to link directly to the media file from a Leo node (with @url) and
+write a scriptbutton to wrap all URL-nodes under the current node in a single
+HTML page (using the HTML browser trick at
+http://sourceforge.net/forum/forum.php?thread_id=1201579&amp;forum_id=10226).
+
+Then, you can view your media in two ways: individually or in a group.
+
+Individually, you can directly click on the @url link to display the media in
+the browser (assuming you have your MIME/filetype associations set up correctly
+for your browser).
+
+In a group, you can click on a script button (you have to code this yourself,
+very simple) which should collect all @url nodes under the current node and
+dynamically generate a HTML page displaying either links to or embedded versions
+of the media (using the HTML trick described above to invoke the browser). This
+way, you can create collections of @url nodes under a single node (like a bookmark
+folder), and press a single button to view the @url-collection as a single entity
+in the browser (with all browser capabilities like displaying the media).
+
+You could probably generalize this idea of "collect all @url-nodes under current
+node and display as HTML in browser" into a general-purpose plugin. However,
+the plugin would have to be somewhat smart in mapping a link to its corresponding
+HTML code (e.g. an image link gets mapped to an &lt;img&gt; HTML tag, a link to a
+Flash file gets mapped to an &lt;embed&gt; tag, etc).
+</t>
+<t tx="ekr.20050129080711">The following elements may appear in Leo files, but they are not functional in Leo 4.3.
+
+That is, Leo 4.3 will read the full file format specified in the children of this node, but Leo 4.3 writes these elements as follows:
+
+&lt;preferences/&gt;
+
+&lt;fine_panel_settings&gt;
+
+Leo 4.3 never writes &lt;clone_windows&gt; elements.</t>
 </tnodes>
 </leo_file>
