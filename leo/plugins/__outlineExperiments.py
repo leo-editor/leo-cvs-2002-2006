@@ -1,5 +1,5 @@
-#@+leo-ver=4
-#@+node:@file __outlineExperiments.py
+#@+leo-ver=4-thin
+#@+node:ekr.20040723100651:@thin __outlineExperiments.py
 """Override outline drawing code to test optimized drawing"""
 
 #@@language python
@@ -10,7 +10,7 @@ import leoGlobals as g
 print "overriding leoTkinterTree class"
 
 #@<< about the tree classes >>
-#@+node:<< about the tree classes >>
+#@+node:ekr.20040723173301:<< about the tree classes >>
 #@+at 
 #@nonl
 # This class implements a tree control similar to Windows explorer.  The draw 
@@ -23,7 +23,7 @@ print "overriding leoTkinterTree class"
 # bodyString ivar.  I haven't chosen to split the vnode class this way because 
 # nothing would be gained in Leo.
 #@-at
-#@-node:<< about the tree classes >>
+#@-node:ekr.20040723173301:<< about the tree classes >>
 #@nl
 
 import leoTkinterTree
@@ -34,7 +34,7 @@ import tkFont
 import sys
 
 #@<< about drawing >>
-#@+node:<< About drawing >>
+#@+node:ekr.20040723173301.1:<< About drawing >>
 #@+at 
 #@nonl
 # Leo must redraw the outline pane when commands are executed and as the 
@@ -65,10 +65,10 @@ import sys
 # compares these two values and sets redraw_flag if they don't match.
 #@-at
 #@nonl
-#@-node:<< About drawing >>
+#@-node:ekr.20040723173301.1:<< About drawing >>
 #@nl
 #@<< drawing constants >>
-#@+node:<< drawing constants >>
+#@+node:ekr.20040723101548:<< drawing constants >>
 # These should be ivars.  Sheesh.
 
 box_padding = 5 # extra padding between box and icon
@@ -83,14 +83,14 @@ root_top = 2
 hiding = True # True if we don't reallocate items
 line_height = 17 + 2 # To be replaced by Font height
 #@nonl
-#@-node:<< drawing constants >>
+#@-node:ekr.20040723101548:<< drawing constants >>
 #@nl
 
 if 0: # Doesn't seem to work.
     # override the position class
     class myPositionClass (leoNodes.position):
         #@        << override p.edit_text >>
-        #@+node:<< override p.edit_text >>
+        #@+node:ekr.20040724144958:<< override p.edit_text >>
         def edit_text (self):
             
             p = self
@@ -100,7 +100,7 @@ if 0: # Doesn't seem to work.
             else:
                 return None
         #@nonl
-        #@-node:<< override p.edit_text >>
+        #@-node:ekr.20040724144958:<< override p.edit_text >>
         #@nl
         
     leoNodes.position = myPositionClass
@@ -111,8 +111,8 @@ class myLeoTkinterTree(leoFrame.leoTree):
     callbacksInjected = False
     
     #@    @+others
-    #@+node:Birth & death
-    #@+node:__init__
+    #@+node:ekr.20040723173301.2:Birth & death
+    #@+node:ekr.20040723171712:__init__
     def __init__(self,c,frame,canvas):
         
         # Init the base class.
@@ -122,7 +122,7 @@ class myLeoTkinterTree(leoFrame.leoTree):
         self.canvas = canvas
         
         #@    << old ivars >>
-        #@+node:<< old ivars >>
+        #@+node:ekr.20040723171712.1:<< old ivars >>
         # Miscellaneous info.
         self.iconimages = {} # Image cache set by getIconImage().
         self.active = False # True if tree is active
@@ -159,17 +159,17 @@ class myLeoTkinterTree(leoFrame.leoTree):
         if self.allocateOnlyVisibleNodes:
             self.frame.bar1.bind("<B1-ButtonRelease>", self.redraw)
         #@nonl
-        #@-node:<< old ivars >>
+        #@-node:ekr.20040723171712.1:<< old ivars >>
         #@nl
         #@    << inject callbacks into the position class >>
-        #@+node:<< inject callbacks into the position class >>
+        #@+node:ekr.20040725051437:<< inject callbacks into the position class >>
         # The new code injects 3 callbacks for the colorizer.
         
         if not myLeoTkinterTree.callbacksInjected: # Class var.
             leoTkinterTree.callbacksInjected = True
             self.injectCallbacks()
         #@nonl
-        #@-node:<< inject callbacks into the position class >>
+        #@-node:ekr.20040725051437:<< inject callbacks into the position class >>
         #@nl
         
         self.useBindtags = False
@@ -197,8 +197,8 @@ class myLeoTkinterTree(leoFrame.leoTree):
         self.freeIcons = []
         self.freeLines = []
     #@nonl
-    #@-node:__init__
-    #@+node:createPermanentBindings
+    #@-node:ekr.20040723171712:__init__
+    #@+node:ekr.20040723102245.2:createPermanentBindings
     def createPermanentBindings (self):
         
         canvas = self.canvas
@@ -228,26 +228,26 @@ class myLeoTkinterTree(leoFrame.leoTree):
             self.textBindings = t.bindtags()
             print t.bindtags()
     #@nonl
-    #@-node:createPermanentBindings
-    #@+node:textAddr
+    #@-node:ekr.20040723102245.2:createPermanentBindings
+    #@+node:ekr.20040724161900:textAddr
     def textAddr(self,t):
         
         """Return the address part of repr(Tk.Text)."""
         
         return repr(t)[-9:-1].lower()
     #@nonl
-    #@-node:textAddr
-    #@+node:injectCallbacks
+    #@-node:ekr.20040724161900:textAddr
+    #@+node:ekr.20040725050101:injectCallbacks
     def injectCallbacks(self):
         
         import leoNodes
         
         #@    << define tkinter callbacks to be injected in the position class >>
-        #@+node:<< define tkinter callbacks to be injected in the position class >>
+        #@+node:ekr.20040725050101.1:<< define tkinter callbacks to be injected in the position class >>
         # N.B. These vnode methods are entitled to know about details of the leoTkinterTree class.
         
         #@+others
-        #@+node:onHyperLinkControlClick
+        #@+node:ekr.20040725050101.6:onHyperLinkControlClick
         def OnHyperLinkControlClick (self,event):
             
             """Callback injected into position class."""
@@ -266,8 +266,8 @@ class myLeoTkinterTree(leoFrame.leoTree):
                 
         onHyperLinkControlClick = OnHyperLinkControlClick
         #@nonl
-        #@-node:onHyperLinkControlClick
-        #@+node:onHyperLinkEnter
+        #@-node:ekr.20040725050101.6:onHyperLinkControlClick
+        #@+node:ekr.20040725050101.8:onHyperLinkEnter
         def OnHyperLinkEnter (self,event=None):
             
             """Callback injected into position class."""
@@ -284,8 +284,8 @@ class myLeoTkinterTree(leoFrame.leoTree):
                 
         onHyperLinkEnter = OnHyperLinkEnter
         #@nonl
-        #@-node:onHyperLinkEnter
-        #@+node:onHyperLinkLeave
+        #@-node:ekr.20040725050101.8:onHyperLinkEnter
+        #@+node:ekr.20040725050101.9:onHyperLinkLeave
         def OnHyperLinkLeave (self,event=None):
             
             """Callback injected into position class."""
@@ -302,20 +302,20 @@ class myLeoTkinterTree(leoFrame.leoTree):
                 
         onHyperLinkLeave = OnHyperLinkLeave
         #@nonl
-        #@-node:onHyperLinkLeave
+        #@-node:ekr.20040725050101.9:onHyperLinkLeave
         #@-others
         
-        #@-node:<< define tkinter callbacks to be injected in the position class >>
+        #@-node:ekr.20040725050101.1:<< define tkinter callbacks to be injected in the position class >>
         #@nl
     
         for f in (OnHyperLinkControlClick,OnHyperLinkEnter,OnHyperLinkLeave):
             
             g.funcToMethod(f,leoNodes.position)
     #@nonl
-    #@-node:injectCallbacks
-    #@-node:Birth & death
-    #@+node:Config & Measuring
-    #@+node:tree.getFont,setFont,setFontFromConfig
+    #@-node:ekr.20040725050101:injectCallbacks
+    #@-node:ekr.20040723173301.2:Birth & death
+    #@+node:ekr.20040723173919:Config & Measuring
+    #@+node:ekr.20040723173919.1:tree.getFont,setFont,setFontFromConfig
     def getFont (self):
     
         return self.font
@@ -342,8 +342,8 @@ class myLeoTkinterTree(leoFrame.leoTree):
     
         self.setFont(font)
     #@nonl
-    #@-node:tree.getFont,setFont,setFontFromConfig
-    #@+node:headWidth & widthInPixels
+    #@-node:ekr.20040723173919.1:tree.getFont,setFont,setFontFromConfig
+    #@+node:ekr.20040723173919.2:headWidth & widthInPixels
     def headWidth(self,v):
     
         """Returns the proper width of the entry widget for the headline."""
@@ -360,8 +360,8 @@ class myLeoTkinterTree(leoFrame.leoTree):
         
         return width
     #@nonl
-    #@-node:headWidth & widthInPixels
-    #@+node:setLineHeight
+    #@-node:ekr.20040723173919.2:headWidth & widthInPixels
+    #@+node:ekr.20040723173919.3:setLineHeight
     def setLineHeight (self,font):
         
         try:
@@ -374,18 +374,18 @@ class myLeoTkinterTree(leoFrame.leoTree):
             g.es("exception setting outline line height")
             g.es_exception()
     #@nonl
-    #@-node:setLineHeight
-    #@+node:setTreeColorsFromConfig
+    #@-node:ekr.20040723173919.3:setLineHeight
+    #@+node:ekr.20040723173919.4:setTreeColorsFromConfig
     def setTreeColorsFromConfig (self):
     
         bg = g.app.config.getWindowPref("outline_pane_background_color")
         if bg:
             try: self.canvas.configure(bg=bg)
             except: pass
-    #@-node:setTreeColorsFromConfig
-    #@-node:Config & Measuring
-    #@+node:Drawing
-    #@+node:drawBox
+    #@-node:ekr.20040723173919.4:setTreeColorsFromConfig
+    #@-node:ekr.20040723173919:Config & Measuring
+    #@+node:ekr.20040723101121.2:Drawing
+    #@+node:ekr.20040723101121.4:drawBox
     def drawBox (self,p,x,y):
         
         tree = self ; canvas = self.canvas
@@ -402,8 +402,8 @@ class myLeoTkinterTree(leoFrame.leoTree):
             self.ids[id] = p.copy()
             
             return id
-    #@-node:drawBox
-    #@+node:drawClickBox
+    #@-node:ekr.20040723101121.4:drawBox
+    #@+node:ekr.20040723101121.24:drawClickBox
     def drawClickBox (self,p,y):
         
         canvas = self.canvas
@@ -420,7 +420,7 @@ class myLeoTkinterTree(leoFrame.leoTree):
         
         if 0: # A major change to the user interface.
             #@        << change the appearance of headlines >>
-            #@+node:<< change the appearance of headlines >>
+            #@+node:ekr.20040724072523:<< change the appearance of headlines >>
             
             # Define a slighly smaller rect to colorize.
             color_rect = self.canvas.create_rectangle(0,y,1000,y+h-4,tag="colorBox")
@@ -453,11 +453,11 @@ class myLeoTkinterTree(leoFrame.leoTree):
             bind_id = self.canvas.tag_bind(click_rect, "<Enter>", enterRect) # , '+')
             self.tagBindings.append((click_rect,bind_id,"<Enter>"),)
             #@nonl
-            #@-node:<< change the appearance of headlines >>
+            #@-node:ekr.20040724072523:<< change the appearance of headlines >>
             #@nl
     #@nonl
-    #@-node:drawClickBox
-    #@+node:drawIcon
+    #@-node:ekr.20040723101121.24:drawClickBox
+    #@+node:ekr.20040723101121.5:drawIcon
     def drawIcon(self,p,x=None,y=None):
         
         """Draws icon for position p at x,y, or at p.v.iconx,p.v.icony if x,y = None,None"""
@@ -466,7 +466,7 @@ class myLeoTkinterTree(leoFrame.leoTree):
         v = p.v # Make sure the bindings refer to the _present_ position.
     
         #@    << compute x,y and iconVal >>
-        #@+node:<< compute x,y and iconVal >>
+        #@+node:ekr.20040723101121.6:<< compute x,y and iconVal >>
         
         if x is None and y is None:
             try:
@@ -485,7 +485,7 @@ class myLeoTkinterTree(leoFrame.leoTree):
         val = v.iconVal = v.computeIcon()
         assert(0 <= val <= 15)
         #@nonl
-        #@-node:<< compute x,y and iconVal >>
+        #@-node:ekr.20040723101121.6:<< compute x,y and iconVal >>
         #@nl
     
         if not g.doHook("draw-outline-icon",tree=tree,p=p,v=v,x=x,y=y):
@@ -503,8 +503,8 @@ class myLeoTkinterTree(leoFrame.leoTree):
     
         return 0,icon_width # dummy icon height,width
     #@nonl
-    #@-node:drawIcon
-    #@+node:drawLine
+    #@-node:ekr.20040723101121.5:drawIcon
+    #@+node:ekr.20040723190945:drawLine
     def drawLine (self,x1,y1,x2,y2):
         
         id = self.newLine()
@@ -512,8 +512,8 @@ class myLeoTkinterTree(leoFrame.leoTree):
         self.canvas.coords(id,x1,y1,x2,y2)
         
         return id
-    #@-node:drawLine
-    #@+node:drawNode & force_draw_node (good trace)
+    #@-node:ekr.20040723190945:drawLine
+    #@+node:ekr.20040723101121.7:drawNode & force_draw_node (good trace)
     def drawNode(self,p,x,y):
         
         tree = self ; canvas = self.canvas ; 
@@ -541,7 +541,7 @@ class myLeoTkinterTree(leoFrame.leoTree):
         else:
             return self.line_height,0
     #@nonl
-    #@+node:force_draw_node (new)
+    #@+node:ekr.20040723101121.8:force_draw_node (new)
     def force_draw_node(self,p,x,y):
     
         h,w = self.drawUserIcons(p,"beforeBox",x,y)
@@ -574,8 +574,8 @@ class myLeoTkinterTree(leoFrame.leoTree):
     
         return h,xw
     #@nonl
-    #@-node:force_draw_node (new)
-    #@+node:force_draw_node (old)
+    #@-node:ekr.20040723101121.8:force_draw_node (new)
+    #@+node:ekr.20040723101121.9:force_draw_node (old)
     def force_draw_nodeOLD(self,p,x,y):
     
         if p.hasChildren():
@@ -588,9 +588,9 @@ class myLeoTkinterTree(leoFrame.leoTree):
         h = self.drawText(p,x+w,y)
         
         return h,0
-    #@-node:force_draw_node (old)
-    #@-node:drawNode & force_draw_node (good trace)
-    #@+node:drawText
+    #@-node:ekr.20040723101121.9:force_draw_node (old)
+    #@-node:ekr.20040723101121.7:drawNode & force_draw_node (good trace)
+    #@+node:ekr.20040723101121.10:drawText
     def drawText(self,p,x,y,box_id=None):
         
         """draw text for position p at nominal coordinates x,y."""
@@ -617,7 +617,7 @@ class myLeoTkinterTree(leoFrame.leoTree):
         
         if 0:
             #@        << old code >>
-            #@+node:<< old code >>
+            #@+node:ekr.20040725122915:<< old code >>
             
             # This does not seem to be working reliably!
             self.setText(t,p.headString(),tag="drawText")
@@ -645,7 +645,7 @@ class myLeoTkinterTree(leoFrame.leoTree):
                 if s.strip() != p.headString().strip():
                     g.trace("***** second assignment failed ****")
             #@nonl
-            #@-node:<< old code >>
+            #@-node:ekr.20040725122915:<< old code >>
             #@nl
     
         self.ids[id] = p
@@ -654,7 +654,7 @@ class myLeoTkinterTree(leoFrame.leoTree):
     
         if 0:
             #@        << highlight text widget on enter events >>
-            #@+node:<< highlight text widget on enter events >>
+            #@+node:ekr.20040723101121.12:<< highlight text widget on enter events >>
             if 0: # Define a rect to colorize.
             
                 color_rect = self.canvas.create_rectangle(0,y,1000,y+h-4,tag="colorBox")
@@ -692,7 +692,7 @@ class myLeoTkinterTree(leoFrame.leoTree):
                 bind_enter = t.bind( '<Enter>', enterRect, '+' )
                 self.bindings.append((t,bind_enter,"<Enter>"),)
             #@nonl
-            #@-node:<< highlight text widget on enter events >>
+            #@-node:ekr.20040723101121.12:<< highlight text widget on enter events >>
             #@nl
        
         if 0: # Something very bizarre is going on.
@@ -700,8 +700,8 @@ class myLeoTkinterTree(leoFrame.leoTree):
         
         return self.line_height
     #@nonl
-    #@-node:drawText
-    #@+node:drawTopTree
+    #@-node:ekr.20040723101121.10:drawText
+    #@+node:ekr.20040723101121.13:drawTopTree
     def drawTopTree (self):
         
         """Draws the top-level tree, taking into account the hoist state."""
@@ -741,8 +741,8 @@ class myLeoTkinterTree(leoFrame.leoTree):
         g.trace("end   %s" % self.getTextStats())
         # self.traceIds()
     #@nonl
-    #@-node:drawTopTree
-    #@+node:drawTree
+    #@-node:ekr.20040723101121.13:drawTopTree
+    #@+node:ekr.20040723101121.15:drawTree
     def drawTree(self,p,x,y,h,level,hoistFlag=False):
     
         tree = self ; v = p.v
@@ -767,9 +767,9 @@ class myLeoTkinterTree(leoFrame.leoTree):
         self.drawLine(x, yfirst-hline_y,x, ylast+hline_y-h)
         return y,w
     #@nonl
-    #@-node:drawTree
-    #@+node:Unchanged
-    #@+node:drawUserIcon
+    #@-node:ekr.20040723101121.15:drawTree
+    #@+node:ekr.20040723102245:Unchanged
+    #@+node:ekr.20040723101121.17:drawUserIcon
     def drawUserIcon (self,where,x,y,dict):
         
         h,w = 0,0
@@ -780,7 +780,7 @@ class myLeoTkinterTree(leoFrame.leoTree):
         # g.trace(where,x,y,dict)
         
         #@    << set offsets and pads >>
-        #@+node:<< set offsets and pads >>
+        #@+node:ekr.20040723101121.18:<< set offsets and pads >>
         xoffset = dict.get("xoffset")
         try:    xoffset = int(xoffset)
         except: xoffset = 0
@@ -797,21 +797,21 @@ class myLeoTkinterTree(leoFrame.leoTree):
         try:    ypad = int(ypad)
         except: ypad = 0
         #@nonl
-        #@-node:<< set offsets and pads >>
+        #@-node:ekr.20040723101121.18:<< set offsets and pads >>
         #@nl
         type = dict.get("type")
         if type == "icon":
             s = dict.get("icon")
             #@        << draw the icon in string s >>
-            #@+node:<< draw the icon in string s >>
+            #@+node:ekr.20040723101121.19:<< draw the icon in string s >>
             pass
             #@nonl
-            #@-node:<< draw the icon in string s >>
+            #@-node:ekr.20040723101121.19:<< draw the icon in string s >>
             #@nl
         elif type == "file":
             file = dict.get("file")
             #@        << draw the icon at file >>
-            #@+node:<< draw the icon at file >>
+            #@+node:ekr.20040723101121.21:<< draw the icon at file >>
             try:
                 image = self.iconimages[file]
                 # Get the image from the cache if possible.
@@ -832,15 +832,15 @@ class myLeoTkinterTree(leoFrame.leoTree):
                 h = image.height() + yoffset + ypad
                 w = image.width()  + xoffset + xpad
             #@nonl
-            #@-node:<< draw the icon at file >>
+            #@-node:ekr.20040723101121.21:<< draw the icon at file >>
             #@nl
         elif type == "url":
             url = dict.get("url")
             #@        << draw the icon at url >>
-            #@+node:<< draw the icon at url >>
+            #@+node:ekr.20040723101121.20:<< draw the icon at url >>
             pass
             #@nonl
-            #@-node:<< draw the icon at url >>
+            #@-node:ekr.20040723101121.20:<< draw the icon at url >>
             #@nl
             
         # Allow user to specify height, width explicitly.
@@ -849,8 +849,8 @@ class myLeoTkinterTree(leoFrame.leoTree):
     
         return h,w
     #@nonl
-    #@-node:drawUserIcon
-    #@+node:drawUserIcons
+    #@-node:ekr.20040723101121.17:drawUserIcon
+    #@+node:ekr.20040723101121.22:drawUserIcons
     def drawUserIcons(self,p,where,x,y):
         
         """Draw any icons specified by p.v.t.unknownAttributes["icons"]."""
@@ -873,8 +873,8 @@ class myLeoTkinterTree(leoFrame.leoTree):
     
         return h,w
     #@nonl
-    #@-node:drawUserIcons
-    #@+node:inVisibleArea & inExpandedVisibleArea
+    #@-node:ekr.20040723101121.22:drawUserIcons
+    #@+node:ekr.20040723101121.23:inVisibleArea & inExpandedVisibleArea
     def inVisibleArea (self,y1):
         
         if self.allocateOnlyVisibleNodes:
@@ -895,8 +895,8 @@ class myLeoTkinterTree(leoFrame.leoTree):
         else:
             return False
     #@nonl
-    #@-node:inVisibleArea & inExpandedVisibleArea
-    #@+node:getIconImage
+    #@-node:ekr.20040723101121.23:inVisibleArea & inExpandedVisibleArea
+    #@+node:ekr.20040723101121.25:getIconImage
     def getIconImage (self, name):
     
         # Return the image from the cache if possible.
@@ -914,8 +914,8 @@ class myLeoTkinterTree(leoFrame.leoTree):
             g.es_exception()
             return None
     #@nonl
-    #@-node:getIconImage
-    #@+node:idle_scrollTo
+    #@-node:ekr.20040723101121.25:getIconImage
+    #@+node:ekr.20040723101121.26:idle_scrollTo
     def idle_scrollTo(self,p=None):
     
         """Scrolls the canvas so that v is in view.
@@ -931,16 +931,16 @@ class myLeoTkinterTree(leoFrame.leoTree):
             h1 = self.yoffset(p)
             h2 = self.yoffset(last)
             #@        << compute approximate line height >>
-            #@+node:<< compute approximate line height >>
+            #@+node:ekr.20040723101121.27:<< compute approximate line height >>
             if nextToLast: # 2/2/03: compute approximate line height.
                 lineHeight = h2 - self.yoffset(nextToLast)
             else:
                 lineHeight = 20 # A reasonable default.
             #@nonl
-            #@-node:<< compute approximate line height >>
+            #@-node:ekr.20040723101121.27:<< compute approximate line height >>
             #@nl
             #@        << Compute the fractions to scroll down/up >>
-            #@+node:<< Compute the fractions to scroll down/up >>
+            #@+node:ekr.20040723101121.28:<< Compute the fractions to scroll down/up >>
             data = frame.treeBar.get()
             try: lo, hi = data
             except: lo,hi = 0.0,1.0
@@ -954,7 +954,7 @@ class myLeoTkinterTree(leoFrame.leoTree):
             frac =  max(min(frac,1.0),0.0)
             frac2 = max(min(frac2,1.0),0.0)
             #@nonl
-            #@-node:<< Compute the fractions to scroll down/up >>
+            #@-node:ekr.20040723101121.28:<< Compute the fractions to scroll down/up >>
             #@nl
             if frac <= lo:
                 if self.prevMoveToFrac != frac:
@@ -973,8 +973,8 @@ class myLeoTkinterTree(leoFrame.leoTree):
         except:
             g.es_exception()
     #@nonl
-    #@-node:idle_scrollTo
-    #@+node:numberOfVisibleNodes
+    #@-node:ekr.20040723101121.26:idle_scrollTo
+    #@+node:ekr.20040723101121.29:numberOfVisibleNodes
     def numberOfVisibleNodes(self):
         
         n = 0 ; p = self.c.rootPosition()
@@ -983,8 +983,8 @@ class myLeoTkinterTree(leoFrame.leoTree):
             p.moveToVisNext()
         return n
     #@nonl
-    #@-node:numberOfVisibleNodes
-    #@+node:scrollTo
+    #@-node:ekr.20040723101121.29:numberOfVisibleNodes
+    #@+node:ekr.20040723101121.30:scrollTo
     def scrollTo (self,p):
         
         def scrollToCallback(event=None,self=self,p=p):
@@ -993,8 +993,8 @@ class myLeoTkinterTree(leoFrame.leoTree):
         
         self.canvas.after_idle(scrollToCallback)
     #@nonl
-    #@-node:scrollTo
-    #@+node:yoffset
+    #@-node:ekr.20040723101121.30:scrollTo
+    #@+node:ekr.20040723101121.31:yoffset
     #@+at 
     #@nonl
     # We can't just return icony because the tree hasn't been redrawn yet.  
@@ -1029,11 +1029,11 @@ class myLeoTkinterTree(leoFrame.leoTree):
         
         return h, False
     #@nonl
-    #@-node:yoffset
-    #@-node:Unchanged
-    #@-node:Drawing
-    #@+node:Event handlers
-    #@+node:checkWidgetList
+    #@-node:ekr.20040723101121.31:yoffset
+    #@-node:ekr.20040723102245:Unchanged
+    #@-node:ekr.20040723101121.2:Drawing
+    #@+node:ekr.20040723103515:Event handlers
+    #@+node:ekr.20040725060102:checkWidgetList
     def checkWidgetList (self,tag):
         
         return True # This will fail when the headline actually changes!
@@ -1054,8 +1054,8 @@ class myLeoTkinterTree(leoFrame.leoTree):
                 
         return True
     #@nonl
-    #@-node:checkWidgetList
-    #@+node:dumpWidgetList
+    #@-node:ekr.20040725060102:checkWidgetList
+    #@+node:ekr.20040725055657:dumpWidgetList
     def dumpWidgetList (self,tag):
         
         print
@@ -1075,8 +1075,8 @@ class myLeoTkinterTree(leoFrame.leoTree):
             else:
                 print "t.leo_position == None",t
     #@nonl
-    #@-node:dumpWidgetList
-    #@+node:eventToPosition
+    #@-node:ekr.20040725055657:dumpWidgetList
+    #@+node:ekr.20040723141142:eventToPosition
     def eventToPosition (self,event):
     
         canvas = self.canvas
@@ -1097,8 +1097,8 @@ class myLeoTkinterTree(leoFrame.leoTree):
     
         return p
     #@nonl
-    #@-node:eventToPosition
-    #@+node:edit_text
+    #@-node:ekr.20040723141142:eventToPosition
+    #@+node:ekr.20040724125005:edit_text
     def edit_text (self,p):
         
         # g.trace(p)
@@ -1108,8 +1108,8 @@ class myLeoTkinterTree(leoFrame.leoTree):
         else:
             return None
     #@nonl
-    #@-node:edit_text
-    #@+node:findEditWidget
+    #@-node:ekr.20040724125005:edit_text
+    #@+node:ekr.20040724102927:findEditWidget
     # Search the widget list for widget t with t.leo_position == p.
     
     def findEditWidget (self,p,tag=""):
@@ -1129,9 +1129,9 @@ class myLeoTkinterTree(leoFrame.leoTree):
     
         return None
     #@nonl
-    #@-node:findEditWidget
-    #@+node:Click Box...
-    #@+node:onClickBoxClick
+    #@-node:ekr.20040724102927:findEditWidget
+    #@+node:ekr.20040723142710.3:Click Box...
+    #@+node:ekr.20040723104637:onClickBoxClick
     def onClickBoxClick (self,event):
         
         c = self.c ; gui = g.app.gui
@@ -1150,8 +1150,8 @@ class myLeoTkinterTree(leoFrame.leoTree):
             gui.set_focus(c,c.frame.bodyCtrl)
             self.redraw()
     #@nonl
-    #@-node:onClickBoxClick
-    #@+node:OnBoxClick ORIGINAL
+    #@-node:ekr.20040723104637:onClickBoxClick
+    #@+node:ekr.20040725053607:OnBoxClick ORIGINAL
     # Called on click in box and double-click in headline.
     
     def ORIGINAL_OnBoxClick (self,p):
@@ -1170,10 +1170,10 @@ class myLeoTkinterTree(leoFrame.leoTree):
         gui.set_focus(c,c.frame.bodyCtrl) # 7/12/03
         self.redraw()
     #@nonl
-    #@-node:OnBoxClick ORIGINAL
-    #@-node:Click Box...
-    #@+node:Icon Box...
-    #@+node:onIconBoxClick
+    #@-node:ekr.20040725053607:OnBoxClick ORIGINAL
+    #@-node:ekr.20040723142710.3:Click Box...
+    #@+node:ekr.20040723142710:Icon Box...
+    #@+node:ekr.20040723104427.33:onIconBoxClick
     def onIconBoxClick (self,event):
         
         c = self.c ; gui = g.app.gui
@@ -1209,8 +1209,8 @@ class myLeoTkinterTree(leoFrame.leoTree):
         g.app.findFrame.handleUserClick(p) # 4/3/04
         return "break" # disable expanded box handling.
     #@nonl
-    #@-node:onIconBoxClick
-    #@+node:onIconBoxDoubleClick
+    #@-node:ekr.20040723104427.33:onIconBoxClick
+    #@+node:ekr.20040723142710.1:onIconBoxDoubleClick
     def onIconBoxDoubleClick (self,event):
         
         c = self.c
@@ -1226,8 +1226,8 @@ class myLeoTkinterTree(leoFrame.leoTree):
             g.doHook("icondclick2",c=c,p=p,event=event)
         except:
             g.es_event_exception("icondclick")
-    #@-node:onIconBoxDoubleClick
-    #@+node:onIconBoxRightClick
+    #@-node:ekr.20040723142710.1:onIconBoxDoubleClick
+    #@+node:ekr.20040723142710.2:onIconBoxRightClick
     def onIconBoxRightClick (self,event):
     
         p = self.eventToPosition(event)
@@ -1239,10 +1239,10 @@ class myLeoTkinterTree(leoFrame.leoTree):
     
         return "break" # disable expanded box handling.
     #@nonl
-    #@-node:onIconBoxRightClick
-    #@-node:Icon Box...
-    #@+node:Text Box...
-    #@+node:configureTextState
+    #@-node:ekr.20040723142710.2:onIconBoxRightClick
+    #@-node:ekr.20040723142710:Icon Box...
+    #@+node:ekr.20040723142845:Text Box...
+    #@+node:ekr.20040724083359:configureTextState
     def configureTextState (self,p):
         
         c = self.c
@@ -1257,8 +1257,8 @@ class myLeoTkinterTree(leoFrame.leoTree):
         else:
             self.setUnselectedLabelState(p) # unselected
     #@nonl
-    #@-node:configureTextState
-    #@+node:onCtontrolT
+    #@-node:ekr.20040724083359:configureTextState
+    #@+node:ekr.20040723104427.5:onCtontrolT
     # This works around an apparent Tk bug.
     
     def onControlT (self,event=None):
@@ -1266,8 +1266,8 @@ class myLeoTkinterTree(leoFrame.leoTree):
         # If we don't inhibit further processing the Tx.Text widget switches characters!
         return "break"
     #@nonl
-    #@-node:onCtontrolT
-    #@+node:onHeadlineClick
+    #@-node:ekr.20040723104427.5:onCtontrolT
+    #@+node:ekr.20040723142710.4:onHeadlineClick
     def onHeadlineClick (self,event):
         
         c = self.c ; w = event.widget
@@ -1286,8 +1286,8 @@ class myLeoTkinterTree(leoFrame.leoTree):
             
         return "continue"
     #@nonl
-    #@-node:onHeadlineClick
-    #@+node:onHeadlineKey
+    #@-node:ekr.20040723142710.4:onHeadlineClick
+    #@+node:ekr.20040723142710.6:onHeadlineKey
     def onHeadlineKey (self,event):
         
         """Handle a key event in a headline."""
@@ -1303,8 +1303,8 @@ class myLeoTkinterTree(leoFrame.leoTree):
         
         return "continue"
     #@nonl
-    #@-node:onHeadlineKey
-    #@+node:onHeadlineRightClick
+    #@-node:ekr.20040723142710.6:onHeadlineKey
+    #@+node:ekr.20040723142710.5:onHeadlineRightClick
     def onHeadlineRightClick (self,event):
     
         c = self.c ; w = event.widget
@@ -1324,9 +1324,9 @@ class myLeoTkinterTree(leoFrame.leoTree):
             
         return "continue"
     #@nonl
-    #@-node:onHeadlineRightClick
-    #@+node:virtual event handlers: called from core
-    #@+node:idle_head_key
+    #@-node:ekr.20040723142710.5:onHeadlineRightClick
+    #@+node:ekr.20040724100003:virtual event handlers: called from core
+    #@+node:ekr.20040723104427.18:idle_head_key
     def idle_head_key (self,p,ch=None):
         
         """Update headline text at idle time."""
@@ -1345,25 +1345,25 @@ class myLeoTkinterTree(leoFrame.leoTree):
             return "break" # The hook claims to have handled the event.
             
         #@    << set head to vnode text >>
-        #@+node:<< set head to vnode text >>
+        #@+node:ekr.20040723104427.19:<< set head to vnode text >>
         head = p.headString()
         if head == None:
             head = u""
         head = g.toUnicode(head,"utf-8")
         #@nonl
-        #@-node:<< set head to vnode text >>
+        #@-node:ekr.20040723104427.19:<< set head to vnode text >>
         #@nl
         done = ch in ('\r','\n')
         if done:
             #@        << set the widget text to head >>
-            #@+node:<< set the widget text to head >>
+            #@+node:ekr.20040723104427.20:<< set the widget text to head >>
             self.setText(edit_text,head,tag="idle_head_key")
             edit_text.mark_set("insert",index)
             #@nonl
-            #@-node:<< set the widget text to head >>
+            #@-node:ekr.20040723104427.20:<< set the widget text to head >>
             #@nl
         #@    << set s to the widget text >>
-        #@+node:<< set s to the widget text >>
+        #@+node:ekr.20040723104427.21:<< set s to the widget text >>
         s = edit_text.get("1.0","end")
         
         # Don't truncate if the user is hitting return.
@@ -1391,13 +1391,13 @@ class myLeoTkinterTree(leoFrame.leoTree):
             s = s.replace('\n','')
             s = s.replace('\r','')
         #@nonl
-        #@-node:<< set s to the widget text >>
+        #@-node:ekr.20040723104427.21:<< set s to the widget text >>
         #@nl
         changed = s != head
         if changed:
             c.undoer.setUndoParams("Change Headline",p,newText=s,oldText=head)
             #@        << update v and all nodes joined to v >>
-            #@+node:<< update v and all nodes joined to v >>
+            #@+node:ekr.20040723104427.22:<< update v and all nodes joined to v >>
             c.beginUpdate()
             if 1: # update...
                 # Update changed bit.
@@ -1412,21 +1412,21 @@ class myLeoTkinterTree(leoFrame.leoTree):
                 edit_text.mark_set("insert",index)
             c.endUpdate(False) # do not redraw now.
             #@nonl
-            #@-node:<< update v and all nodes joined to v >>
+            #@-node:ekr.20040723104427.22:<< update v and all nodes joined to v >>
             #@nl
         if done or changed:
             #@        << reconfigure v and all nodes joined to v >>
-            #@+node:<< reconfigure v and all nodes joined to v >>
+            #@+node:ekr.20040723104427.23:<< reconfigure v and all nodes joined to v >>
             # Reconfigure v's headline.
             if done:
                 self.setDisabledLabelState(p)
             
             edit_text.configure(width=self.headWidth(v))
             #@nonl
-            #@-node:<< reconfigure v and all nodes joined to v >>
+            #@-node:ekr.20040723104427.23:<< reconfigure v and all nodes joined to v >>
             #@nl
             #@        << update the screen >>
-            #@+node:<< update the screen >>
+            #@+node:ekr.20040723104427.24:<< update the screen >>
             if done:
                 c.beginUpdate()
                 self.endEditLabel()
@@ -1437,14 +1437,14 @@ class myLeoTkinterTree(leoFrame.leoTree):
                 # Redrawing the whole screen now messes up the cursor in the headline.
                 self.drawIcon(p) # just redraw the icon.
             #@nonl
-            #@-node:<< update the screen >>
+            #@-node:ekr.20040723104427.24:<< update the screen >>
             #@nl
     
         g.doHook("headkey2",c=c,p=p,ch=ch)
         return "break"
     #@nonl
-    #@-node:idle_head_key
-    #@+node:onHeadChanged
+    #@-node:ekr.20040723104427.18:idle_head_key
+    #@+node:ekr.20040723104427.16:onHeadChanged
     # The <Key> event generates the event before the headline text is changed!
     # We register an idle-event handler to do the work later.
     
@@ -1456,11 +1456,11 @@ class myLeoTkinterTree(leoFrame.leoTree):
         
         self.c.frame.bodyCtrl.after_idle(self.idle_head_key,p)
     #@nonl
-    #@-node:onHeadChanged
-    #@-node:virtual event handlers: called from core
-    #@-node:Text Box...
-    #@+node:Dragging
-    #@+node:tree.onContinueDrag
+    #@-node:ekr.20040723104427.16:onHeadChanged
+    #@-node:ekr.20040724100003:virtual event handlers: called from core
+    #@-node:ekr.20040723142845:Text Box...
+    #@+node:ekr.20040723104427.8:Dragging
+    #@+node:ekr.20040723104427.9:tree.onContinueDrag
     def onContinueDrag(self,event):
         
         canvas = self.canvas ; frame = self.c.frame
@@ -1479,7 +1479,7 @@ class myLeoTkinterTree(leoFrame.leoTree):
             # OnEndDrag() halts the scrolling by clearing self.drag_id when the mouse button goes up.
             if self.drag_id: # This gets cleared by onEndDrag()
                 #@            << scroll the canvas as needed >>
-                #@+node:<< scroll the canvas as needed >>
+                #@+node:ekr.20040723104427.11:<< scroll the canvas as needed >>
                 # Scroll the screen up or down one line if the cursor (y) is outside the canvas.
                 h = canvas.winfo_height()
                 if y < 0 or y > h:
@@ -1497,13 +1497,13 @@ class myLeoTkinterTree(leoFrame.leoTree):
                     if (y < 0 and lo > 0.1) or (y > h and hi < 0.9):
                         canvas.after_idle(self.OnContinueDrag,p,None) # Don't propagate the event.
                 #@nonl
-                #@-node:<< scroll the canvas as needed >>
+                #@-node:ekr.20040723104427.11:<< scroll the canvas as needed >>
                 #@nl
         except:
             g.es_event_exception("continue drag")
     #@nonl
-    #@-node:tree.onContinueDrag
-    #@+node:tree.onDrag
+    #@-node:ekr.20040723104427.9:tree.onContinueDrag
+    #@+node:ekr.20040723104427.12:tree.onDrag
     # This precomputes numberOfVisibleNodes(), a significant optimization.
     # We also indicate where findVnodeWithIconId() should start looking for tree id's.
     
@@ -1533,8 +1533,8 @@ class myLeoTkinterTree(leoFrame.leoTree):
     
         self.onContinueDrag(event)
     #@nonl
-    #@-node:tree.onDrag
-    #@+node:tree.onEndDrag
+    #@-node:ekr.20040723104427.12:tree.onDrag
+    #@+node:ekr.20040723104427.13:tree.onEndDrag
     def onEndDrag(self,event):
         
         """Tree end-of-drag handler called from vnode event handler."""
@@ -1546,7 +1546,7 @@ class myLeoTkinterTree(leoFrame.leoTree):
     
         if event:
             #@        << set vdrag, childFlag >>
-            #@+node:<< set vdrag, childFlag >>
+            #@+node:ekr.20040723104427.14:<< set vdrag, childFlag >>
             x,y = event.x,event.y
             canvas_x = canvas.canvasx(x)
             canvas_y = canvas.canvasy(y)
@@ -1557,7 +1557,7 @@ class myLeoTkinterTree(leoFrame.leoTree):
             vdrag = self.findVnodeWithIconId(id)
             childFlag = vdrag and vdrag.hasChildren() and vdrag.isExpanded()
             #@nonl
-            #@-node:<< set vdrag, childFlag >>
+            #@-node:ekr.20040723104427.14:<< set vdrag, childFlag >>
             #@nl
             if config.getBoolWindowPref("allow_clone_drags"):
                 if not config.getBoolWindowPref("look_for_control_drag_on_mouse_down"):
@@ -1591,21 +1591,21 @@ class myLeoTkinterTree(leoFrame.leoTree):
         self.setDragging(False)
         self.drag_p = None
     #@nonl
-    #@-node:tree.onEndDrag
-    #@-node:Dragging
-    #@+node:Unchanged Event handers
+    #@-node:ekr.20040723104427.13:tree.onEndDrag
+    #@-node:ekr.20040723104427.8:Dragging
+    #@+node:ekr.20040723104427.1:Unchanged Event handers
     #@+at 
     #@nonl
     # Important note: most hooks are created in the vnode callback routines, 
     # _not_ here.
     #@-at
-    #@+node:OnActivate
+    #@+node:ekr.20040723104427.2:OnActivate
     def OnActivate (self,p,event=None):
     
         try:
             c = self.c ; gui = g.app.gui
             #@        << activate this window >>
-            #@+node:<< activate this window >>
+            #@+node:ekr.20040723104427.3:<< activate this window >>
             current = c.currentPosition()
             
             if p == current:
@@ -1628,13 +1628,13 @@ class myLeoTkinterTree(leoFrame.leoTree):
             
             self.active = True
             #@nonl
-            #@-node:<< activate this window >>
+            #@-node:ekr.20040723104427.3:<< activate this window >>
             #@nl
         except:
             g.es_event_exception("activate tree")
     #@nonl
-    #@-node:OnActivate
-    #@+node:tree.OnDeactivate (caused double-click problem)
+    #@-node:ekr.20040723104427.2:OnActivate
+    #@+node:ekr.20040723104427.6:tree.OnDeactivate (caused double-click problem)
     def OnDeactivate (self,event=None):
         
         """Deactivate the tree pane, dimming any headline being edited."""
@@ -1652,8 +1652,8 @@ class myLeoTkinterTree(leoFrame.leoTree):
             except:
                 g.es_event_exception("deactivate tree")
     #@nonl
-    #@-node:tree.OnDeactivate (caused double-click problem)
-    #@+node:tree.findVnodeWithIconId
+    #@-node:ekr.20040723104427.6:tree.OnDeactivate (caused double-click problem)
+    #@+node:ekr.20040723104427.7:tree.findVnodeWithIconId
     def findVnodeWithIconId (self,id):
         
         # Due to an old bug, id may be a tuple.
@@ -1662,8 +1662,8 @@ class myLeoTkinterTree(leoFrame.leoTree):
         except:
             return self.iconIds.get(id)
     #@nonl
-    #@-node:tree.findVnodeWithIconId
-    #@+node:tree.OnPopup & allies
+    #@-node:ekr.20040723104427.7:tree.findVnodeWithIconId
+    #@+node:ekr.20040723104427.26:tree.OnPopup & allies
     def OnPopup (self,p,event):
         
         """Handle right-clicks in the outline."""
@@ -1681,7 +1681,7 @@ class myLeoTkinterTree(leoFrame.leoTree):
     
         return "break"
     #@nonl
-    #@+node:OnPopupFocusLost
+    #@+node:ekr.20040723104427.27:OnPopupFocusLost
     #@+at 
     #@nonl
     # On Linux we must do something special to make the popup menu "unpost" if 
@@ -1703,8 +1703,8 @@ class myLeoTkinterTree(leoFrame.leoTree):
     
         self.popupMenu.unpost()
         
-    #@-node:OnPopupFocusLost
-    #@+node:createPopupMenu
+    #@-node:ekr.20040723104427.27:OnPopupFocusLost
+    #@+node:ekr.20040723104427.28:createPopupMenu
     def createPopupMenu (self,event):
         
         c = self.c ; frame = c.frame
@@ -1723,7 +1723,7 @@ class myLeoTkinterTree(leoFrame.leoTree):
             frame.menu.createMenuEntries(menu,table)
             
         #@    << Create the menu table >>
-        #@+node:<< Create the menu table >>
+        #@+node:ekr.20040723104427.29:<< Create the menu table >>
         table = (
             ("&Read @file Nodes",None,c.readAtFileNodes),
             ("&Write @file Nodes",None,c.fileCommands.writeAtFileNodes),
@@ -1746,14 +1746,14 @@ class myLeoTkinterTree(leoFrame.leoTree):
             ("-",None,None),
             ("Contract Parent","Alt+0",c.contractParent))
         #@nonl
-        #@-node:<< Create the menu table >>
+        #@-node:ekr.20040723104427.29:<< Create the menu table >>
         #@nl
         
         # 11/27/03: Don't actually set binding: it would conflict with previous.
         frame.menu.createMenuEntries(menu,table,dontBind=True)
     #@nonl
-    #@-node:createPopupMenu
-    #@+node:enablePopupMenuItems
+    #@-node:ekr.20040723104427.28:createPopupMenu
+    #@+node:ekr.20040723104427.30:enablePopupMenuItems
     def enablePopupMenuItems (self,v,event):
         
         """Enable and disable items in the popup menu."""
@@ -1761,7 +1761,7 @@ class myLeoTkinterTree(leoFrame.leoTree):
         c = self.c ; menu = self.popupMenu
     
         #@    << set isAtRoot and isAtFile if v's tree contains @root or @file nodes >>
-        #@+node:<< set isAtRoot and isAtFile if v's tree contains @root or @file nodes >>
+        #@+node:ekr.20040723104427.31:<< set isAtRoot and isAtFile if v's tree contains @root or @file nodes >>
         isAtFile = False
         isAtRoot = False
         
@@ -1779,7 +1779,7 @@ class myLeoTkinterTree(leoFrame.leoTree):
             if isRoot:
                 isAtRoot = True
         #@nonl
-        #@-node:<< set isAtRoot and isAtFile if v's tree contains @root or @file nodes >>
+        #@-node:ekr.20040723104427.31:<< set isAtRoot and isAtFile if v's tree contains @root or @file nodes >>
         #@nl
         isAtFile = g.choose(isAtFile,1,0)
         isAtRoot = g.choose(isAtRoot,1,0)
@@ -1800,8 +1800,8 @@ class myLeoTkinterTree(leoFrame.leoTree):
         enable(menu,"Sort Siblings",c.canSortSiblings())
         enable(menu,"Contract Parent",c.canContractParent())
     #@nonl
-    #@-node:enablePopupMenuItems
-    #@+node:showPopupMenu
+    #@-node:ekr.20040723104427.30:enablePopupMenuItems
+    #@+node:ekr.20040723104427.32:showPopupMenu
     def showPopupMenu (self,event):
         
         """Show a popup menu."""
@@ -1817,9 +1817,9 @@ class myLeoTkinterTree(leoFrame.leoTree):
         # I think this is OK for all OSes.
         gui.set_focus(c,menu)
     #@nonl
-    #@-node:showPopupMenu
-    #@-node:tree.OnPopup & allies
-    #@+node:tree.OnIconClick & OnIconRightClick
+    #@-node:ekr.20040723104427.32:showPopupMenu
+    #@-node:ekr.20040723104427.26:tree.OnPopup & allies
+    #@+node:ekr.20040723104427.57:tree.OnIconClick & OnIconRightClick
     def OnIconClick (self,p,event):
         
         # g.trace(p)
@@ -1855,9 +1855,9 @@ class myLeoTkinterTree(leoFrame.leoTree):
         g.app.findFrame.handleUserClick(p) # 4/3/04
         return "break" # disable expanded box handling.
     #@nonl
-    #@-node:tree.OnIconClick & OnIconRightClick
-    #@-node:Unchanged Event handers
-    #@+node:setText FOR TRACES
+    #@-node:ekr.20040723104427.57:tree.OnIconClick & OnIconRightClick
+    #@-node:ekr.20040723104427.1:Unchanged Event handers
+    #@+node:ekr.20040725114147:setText FOR TRACES
     def setText (self,t,s,tag="",isHeadline=True):
         
         """All changes to text widgets should come here."""
@@ -1871,10 +1871,10 @@ class myLeoTkinterTree(leoFrame.leoTree):
         t.delete("1.0","end")
         t.insert("end",s)
     #@nonl
-    #@-node:setText FOR TRACES
-    #@-node:Event handlers
-    #@+node:Incremental drawing
-    #@+node:allocateNodes
+    #@-node:ekr.20040725114147:setText FOR TRACES
+    #@-node:ekr.20040723103515:Event handlers
+    #@+node:ekr.20040723174025:Incremental drawing
+    #@+node:ekr.20040723174025.1:allocateNodes
     def allocateNodes(self,where,lines):
         
         """Allocate Tk widgets in nodes that will become visible as the result of an upcoming scroll"""
@@ -1899,8 +1899,8 @@ class myLeoTkinterTree(leoFrame.leoTree):
         self.updatedNodeCount = 0
         self.updateTree(self.c.rootPosition(),root_left,root_top,0,0)
         # if self.updatedNodeCount: print "updatedNodeCount:", self.updatedNodeCount
-    #@-node:allocateNodes
-    #@+node:allocateNodesBeforeScrolling
+    #@-node:ekr.20040723174025.1:allocateNodes
+    #@+node:ekr.20040723174025.2:allocateNodesBeforeScrolling
     def allocateNodesBeforeScrolling (self, args):
         
         """Calculate the nodes that will become visible as the result of an upcoming scroll.
@@ -1929,8 +1929,8 @@ class myLeoTkinterTree(leoFrame.leoTree):
             lines = g.choose(args[2] == "pages",linesPerPage,lines)
             self.allocateNodes(where=where,lines=lines)
     #@nonl
-    #@-node:allocateNodesBeforeScrolling
-    #@+node:updateNode
+    #@-node:ekr.20040723174025.2:allocateNodesBeforeScrolling
+    #@+node:ekr.20040723174025.3:updateNode
     def updateNode (self,v,x,y):
         
         """Draw a node that may have become visible as a result of a scrolling operation"""
@@ -1944,8 +1944,8 @@ class myLeoTkinterTree(leoFrame.leoTree):
     
         return self.line_height
     #@nonl
-    #@-node:updateNode
-    #@+node:setVisibleAreaToFullCanvas
+    #@-node:ekr.20040723174025.3:updateNode
+    #@+node:ekr.20040723174025.4:setVisibleAreaToFullCanvas
     def setVisibleAreaToFullCanvas(self):
         
         if self.visibleArea:
@@ -1953,8 +1953,8 @@ class myLeoTkinterTree(leoFrame.leoTree):
             y2 = max(y2,y1 + self.canvas.winfo_height())
             self.visibleArea = y1,y2
     #@nonl
-    #@-node:setVisibleAreaToFullCanvas
-    #@+node:setVisibleArea
+    #@-node:ekr.20040723174025.4:setVisibleAreaToFullCanvas
+    #@+node:ekr.20040723174025.5:setVisibleArea
     def setVisibleArea (self,args):
     
         r1,r2 = args
@@ -1976,8 +1976,8 @@ class myLeoTkinterTree(leoFrame.leoTree):
         vy2 = y1 + (scroll_h*r2)
         self.visibleArea = vy1,vy2
         # print "setVisibleArea: %5.1f %5.1f" % (vy1,vy2)
-    #@-node:setVisibleArea
-    #@+node:tree.updateTree
+    #@-node:ekr.20040723174025.5:setVisibleArea
+    #@+node:ekr.20040723174025.6:tree.updateTree
     def updateTree (self,v,x,y,h,level):
     
         yfirst = ylast = y
@@ -1990,10 +1990,10 @@ class myLeoTkinterTree(leoFrame.leoTree):
                 y = self.updateTree(v.firstChild(),x+child_indent,y,h,level+1)
             v = v.next()
         return y
-    #@-node:tree.updateTree
-    #@-node:Incremental drawing
-    #@+node:Selecting & editing (tree)
-    #@+node:endEditLabel ORIGINAL
+    #@-node:ekr.20040723174025.6:tree.updateTree
+    #@-node:ekr.20040723174025:Incremental drawing
+    #@+node:ekr.20040723173301.3:Selecting & editing (tree)
+    #@+node:ekr.20040725053107.1:endEditLabel ORIGINAL
     def endEditLabel (self):
         
         """End editing for self.editText."""
@@ -2011,8 +2011,8 @@ class myLeoTkinterTree(leoFrame.leoTree):
     
         gui.set_focus(c,c.frame.bodyCtrl) # 10/14/02
     #@nonl
-    #@-node:endEditLabel ORIGINAL
-    #@+node:editLabel ORIGINAL
+    #@-node:ekr.20040725053107.1:endEditLabel ORIGINAL
+    #@+node:ekr.20040725052914:editLabel ORIGINAL
     def editLabel (self,p):
         
         """Start editing p.edit_text."""
@@ -2031,8 +2031,8 @@ class myLeoTkinterTree(leoFrame.leoTree):
             self.frame.revertHeadline = p.headString()
             self.setEditPosition(p)
     #@nonl
-    #@-node:editLabel ORIGINAL
-    #@+node:tree.select (ORIGINAL)
+    #@-node:ekr.20040725052914:editLabel ORIGINAL
+    #@+node:ekr.20040725052452:tree.select (ORIGINAL)
     # Warning: do not try to "optimize" this by returning if v==tree.currentVnode.
     
     def select (self,p,updateBeadList=True):
@@ -2040,7 +2040,7 @@ class myLeoTkinterTree(leoFrame.leoTree):
         if not p: return
         
         #@    << define vars and stop editing >>
-        #@+node:<< define vars and stop editing >>
+        #@+node:ekr.20040725052452.1:<< define vars and stop editing >>
         c = self.c
         frame = c.frame ; body = frame.bodyCtrl
         
@@ -2050,7 +2050,7 @@ class myLeoTkinterTree(leoFrame.leoTree):
         self.endEditLabel()
         self.setUnselectedLabelState(old_p)
         #@nonl
-        #@-node:<< define vars and stop editing >>
+        #@-node:ekr.20040725052452.1:<< define vars and stop editing >>
         #@nl
         
         # g.trace(p)
@@ -2058,7 +2058,7 @@ class myLeoTkinterTree(leoFrame.leoTree):
     
         if not g.doHook("unselect1",c=c,new_v=p,old_v=old_p):
             #@        << unselect the old node >>
-            #@+node:<< unselect the old node >> (changed in 4.2)
+            #@+node:ekr.20040725052452.2:<< unselect the old node >> (changed in 4.2)
             # Remember the position of the scrollbar before making any changes.
             yview=body.yview()
             insertSpot = c.frame.body.getInsertionPoint()
@@ -2072,14 +2072,14 @@ class myLeoTkinterTree(leoFrame.leoTree):
                 old_p.v.t.scrollBarSpot = yview
                 old_p.v.t.insertSpot = insertSpot
             #@nonl
-            #@-node:<< unselect the old node >> (changed in 4.2)
+            #@-node:ekr.20040725052452.2:<< unselect the old node >> (changed in 4.2)
             #@nl
     
         g.doHook("unselect2",c=c,new_v=p,old_v=old_p)
         
         if not g.doHook("select1",c=c,new_v=p,old_v=old_p):
             #@        << select the new node >>
-            #@+node:<< select the new node >>
+            #@+node:ekr.20040725052452.3:<< select the new node >>
             frame.setWrap(p)
             
             # 6/14/04: Always do this.  Otherwise there can be problems with trailing hewlines.
@@ -2100,14 +2100,14 @@ class myLeoTkinterTree(leoFrame.leoTree):
             else:
                 c.frame.bodyCtrl.mark_set("insert","1.0")
             #@nonl
-            #@-node:<< select the new node >>
+            #@-node:ekr.20040725052452.3:<< select the new node >>
             #@nl
             if p and p != old_p: # 3/26/03: Suppress duplicate call.
                 try: # may fail during initialization
                     self.idle_scrollTo(p)
                 except: pass
             #@        << update c.beadList or c.beadPointer >>
-            #@+node:<< update c.beadList or c.beadPointer >>
+            #@+node:ekr.20040725052452.4:<< update c.beadList or c.beadPointer >>
             if updateBeadList:
                 
                 if c.beadPointer > -1:
@@ -2124,27 +2124,27 @@ class myLeoTkinterTree(leoFrame.leoTree):
                     
                 # g.trace(c.beadPointer,p,present_p)
             #@nonl
-            #@-node:<< update c.beadList or c.beadPointer >>
+            #@-node:ekr.20040725052452.4:<< update c.beadList or c.beadPointer >>
             #@nl
             #@        << update c.visitedList >>
-            #@+node:<< update c.visitedList >>
+            #@+node:ekr.20040725052452.5:<< update c.visitedList >>
             # Make p the most recently visited position on the list.
             if p in c.visitedList:
                 c.visitedList.remove(p)
             
             c.visitedList.insert(0,p)
             #@nonl
-            #@-node:<< update c.visitedList >>
+            #@-node:ekr.20040725052452.5:<< update c.visitedList >>
             #@nl
     
         #@    << set the current node >>
-        #@+node:<< set the current node >>
+        #@+node:ekr.20040725052452.6:<< set the current node >>
         self.c.setCurrentPosition(p)
         self.setSelectedLabelState(p)
         self.frame.scanForTabWidth(p) #GS I believe this should also get into the select1 hook
         g.app.gui.set_focus(c,c.frame.bodyCtrl)
         #@nonl
-        #@-node:<< set the current node >>
+        #@-node:ekr.20040725052452.6:<< set the current node >>
         #@nl
         
         g.doHook("select2",c=c,new_v=p,old_v=old_p)
@@ -2152,14 +2152,14 @@ class myLeoTkinterTree(leoFrame.leoTree):
         
         # g.printGc()
     #@nonl
-    #@-node:tree.select (ORIGINAL)
-    #@+node:tree.set...LabelState (ORIGINAL)
+    #@-node:ekr.20040725052452:tree.select (ORIGINAL)
+    #@+node:ekr.20040725052606:tree.set...LabelState (ORIGINAL)
     def setNormalLabelState (self,p): # selected, editing
     
         # g.trace(p)
         if p and p.edit_text():
             #@        << set editing headline colors >>
-            #@+node:<< set editing headline colors >>
+            #@+node:ekr.20040725052606.1:<< set editing headline colors >>
             config = g.app.config
             fg   = config.getWindowPref("headline_text_editing_foreground_color")
             bg   = config.getWindowPref("headline_text_editing_background_color")
@@ -2180,7 +2180,7 @@ class myLeoTkinterTree(leoFrame.leoTree):
             except:
                 g.es_exception()
             #@nonl
-            #@-node:<< set editing headline colors >>
+            #@-node:ekr.20040725052606.1:<< set editing headline colors >>
             #@nl
             p.edit_text().tag_remove("sel","1.0","end")
             p.edit_text().tag_add("sel","1.0","end")
@@ -2191,7 +2191,7 @@ class myLeoTkinterTree(leoFrame.leoTree):
         # g.trace(p,g.callerName(2),g.callerName(3))
         if p and p.edit_text():
             #@        << set selected, disabled headline colors >>
-            #@+node:<< set selected, disabled headline colors >>
+            #@+node:ekr.20040725052606.2:<< set selected, disabled headline colors >>
             config = g.app.config
             fg = config.getWindowPref("headline_text_selected_foreground_color")
             bg = config.getWindowPref("headline_text_selected_background_color")
@@ -2205,7 +2205,7 @@ class myLeoTkinterTree(leoFrame.leoTree):
             except:
                 g.es_exception()
             #@nonl
-            #@-node:<< set selected, disabled headline colors >>
+            #@-node:ekr.20040725052606.2:<< set selected, disabled headline colors >>
             #@nl
     
     def setSelectedLabelState (self,p): # selected, not editing
@@ -2218,7 +2218,7 @@ class myLeoTkinterTree(leoFrame.leoTree):
         # g.trace(p)
         if p and p.edit_text():
             #@        << set unselected headline colors >>
-            #@+node:<< set unselected headline colors >>
+            #@+node:ekr.20040725052606.3:<< set unselected headline colors >>
             config = g.app.config
             fg = config.getWindowPref("headline_text_unselected_foreground_color")
             bg = config.getWindowPref("headline_text_unselected_background_color")
@@ -2232,10 +2232,10 @@ class myLeoTkinterTree(leoFrame.leoTree):
             except:
                 g.es_exception()
             #@nonl
-            #@-node:<< set unselected headline colors >>
+            #@-node:ekr.20040725052606.3:<< set unselected headline colors >>
             #@nl
-    #@-node:tree.set...LabelState (ORIGINAL)
-    #@+node:dimEditLabel, undimEditLabel
+    #@-node:ekr.20040725052606:tree.set...LabelState (ORIGINAL)
+    #@+node:ekr.20040723173301.4:dimEditLabel, undimEditLabel
     # Convenience methods so the caller doesn't have to know the present edit node.
     
     def dimEditLabel (self):
@@ -2248,8 +2248,8 @@ class myLeoTkinterTree(leoFrame.leoTree):
         p = self.c.currentPosition()
         self.setSelectedLabelState(p)
     #@nonl
-    #@-node:dimEditLabel, undimEditLabel
-    #@+node:tree.expandAllAncestors
+    #@-node:ekr.20040723173301.4:dimEditLabel, undimEditLabel
+    #@+node:ekr.20040723173301.7:tree.expandAllAncestors
     def expandAllAncestors (self,p):
         
         redraw_flag = False
@@ -2261,9 +2261,9 @@ class myLeoTkinterTree(leoFrame.leoTree):
     
         return redraw_flag
     
-    #@-node:tree.expandAllAncestors
-    #@-node:Selecting & editing (tree)
-    #@+node:tree.moveUpDown
+    #@-node:ekr.20040723173301.7:tree.expandAllAncestors
+    #@-node:ekr.20040723173301.3:Selecting & editing (tree)
+    #@+node:ekr.20040723173301.19:tree.moveUpDown
     def OnUpKey   (self,event=None): return self.moveUpDown("up")
     def OnDownKey (self,event=None): return self.moveUpDown("down")
     
@@ -2298,9 +2298,9 @@ class myLeoTkinterTree(leoFrame.leoTree):
         # g.trace("insert:",body.index("insert"))
         return "break" # Inhibit further bindings.
     #@nonl
-    #@-node:tree.moveUpDown
-    #@+node:Updating routines (tree)...
-    #@+node:tree.redraw
+    #@-node:ekr.20040723173301.19:tree.moveUpDown
+    #@+node:ekr.20040723141518:Updating routines (tree)...
+    #@+node:ekr.20040723141518.1:tree.redraw
     # Calling redraw inside c.beginUpdate()/c.endUpdate() does nothing.
     # This _is_ useful when a flag is passed to c.endUpdate.
     
@@ -2312,8 +2312,8 @@ class myLeoTkinterTree(leoFrame.leoTree):
             self.redrawScheduled = True
             self.canvas.after_idle(self.idle_redraw)
     #@nonl
-    #@-node:tree.redraw
-    #@+node:tkTree.redrawAfterException
+    #@-node:ekr.20040723141518.1:tree.redraw
+    #@+node:ekr.20040723141518.2:tkTree.redrawAfterException
     #@+at 
     #@nonl
     # This is called only from doCommand.  The implicit assumption is that 
@@ -2330,8 +2330,8 @@ class myLeoTkinterTree(leoFrame.leoTree):
             self.canvas.after_idle(self.idle_redraw)
             self.updateCount = 0 # would not work if we are in a beginUpdate/endUpdate pair.
     #@nonl
-    #@-node:tkTree.redrawAfterException
-    #@+node:force_redraw
+    #@-node:ekr.20040723141518.2:tkTree.redrawAfterException
+    #@+node:ekr.20040723141518.3:force_redraw
     # Schedules a redraw even if inside beginUpdate/endUpdate
     def force_redraw (self):
         
@@ -2342,8 +2342,8 @@ class myLeoTkinterTree(leoFrame.leoTree):
             self.redrawScheduled = True
             self.canvas.after_idle(self.idle_redraw)
     #@nonl
-    #@-node:force_redraw
-    #@+node:redraw_now
+    #@-node:ekr.20040723141518.3:force_redraw
+    #@+node:ekr.20040723141518.4:redraw_now
     # Redraws immediately: used by Find so a redraw doesn't mess up selections in headlines.
     
     def redraw_now (self,scroll=True):
@@ -2359,8 +2359,8 @@ class myLeoTkinterTree(leoFrame.leoTree):
         # Now do the actual redraw.
         self.idle_redraw(scroll=scroll)
     #@nonl
-    #@-node:redraw_now
-    #@+node:idle_redraw
+    #@-node:ekr.20040723141518.4:redraw_now
+    #@+node:ekr.20040723141518.5:idle_redraw
     def idle_redraw (self,scroll=True):
         
         c = self.c ; frame = c.frame
@@ -2368,7 +2368,7 @@ class myLeoTkinterTree(leoFrame.leoTree):
         self.redrawScheduled = False # Always do this here.
     
         #@    << return if disabled, or quitting or dragging >>
-        #@+node:<< return if disabled, or quitting or dragging >>
+        #@+node:ekr.20040723141518.6:<< return if disabled, or quitting or dragging >>
         if self.disableRedraw:
             # We have been called as the result of an update_idletasks in the log pane.
             # Don't do anything now.
@@ -2381,7 +2381,7 @@ class myLeoTkinterTree(leoFrame.leoTree):
         if self.drag_p:
             # g.trace("dragging",self.drag_p)
             return
-        #@-node:<< return if disabled, or quitting or dragging >>
+        #@-node:ekr.20040723141518.6:<< return if disabled, or quitting or dragging >>
         #@nl
     
         # g.print_bindings("canvas",self.canvas)
@@ -2408,8 +2408,8 @@ class myLeoTkinterTree(leoFrame.leoTree):
     
         self.canvas['cursor'] = oldcursor
     #@nonl
-    #@-node:idle_redraw
-    #@+node:idle_second_redraw
+    #@-node:ekr.20040723141518.5:idle_redraw
+    #@+node:ekr.20040723141518.8:idle_second_redraw
     def idle_second_redraw (self):
         
         c = self.c
@@ -2431,10 +2431,10 @@ class myLeoTkinterTree(leoFrame.leoTree):
         if self.trace:
             print "idle_second_redraw allocated:",self.redrawCount
     #@nonl
-    #@-node:idle_second_redraw
-    #@-node:Updating routines (tree)...
-    #@+node:Widget allocation...
-    #@+node:newBox
+    #@-node:ekr.20040723141518.8:idle_second_redraw
+    #@-node:ekr.20040723141518:Updating routines (tree)...
+    #@+node:ekr.20040723183449.1:Widget allocation...
+    #@+node:ekr.20040723184305:newBox
     def newBox (self):
         
         if self.freeBoxes:
@@ -2447,8 +2447,8 @@ class myLeoTkinterTree(leoFrame.leoTree):
         
         return id
     #@nonl
-    #@-node:newBox
-    #@+node:newClickBox
+    #@-node:ekr.20040723184305:newBox
+    #@+node:ekr.20040724072523.1:newClickBox
     def newClickBox (self):
     
         if self.freeClickBoxes:
@@ -2460,8 +2460,8 @@ class myLeoTkinterTree(leoFrame.leoTree):
         self.visibleClickBoxes.append(id)
         return id
     #@nonl
-    #@-node:newClickBox
-    #@+node:newIcon
+    #@-node:ekr.20040724072523.1:newClickBox
+    #@+node:ekr.20040723184305.1:newIcon
     def newIcon (self):
     
         if self.freeIcons:
@@ -2476,8 +2476,8 @@ class myLeoTkinterTree(leoFrame.leoTree):
             
         
     #@nonl
-    #@-node:newIcon
-    #@+node:newLine
+    #@-node:ekr.20040723184305.1:newIcon
+    #@+node:ekr.20040723184305.2:newLine
     def newLine (self):
         
         if self.freeLines:
@@ -2489,8 +2489,8 @@ class myLeoTkinterTree(leoFrame.leoTree):
         self.visibleLines.append(id)
         return id
     #@nonl
-    #@-node:newLine
-    #@+node:newText
+    #@-node:ekr.20040723184305.2:newLine
+    #@+node:ekr.20040723184305.4:newText
     def newText (self,p,forceAllocate=False):
         
         t = None
@@ -2527,8 +2527,8 @@ class myLeoTkinterTree(leoFrame.leoTree):
         self.visibleText.append(t)
         return t
     #@nonl
-    #@-node:newText
-    #@+node:recycleWidgets
+    #@-node:ekr.20040723184305.4:newText
+    #@+node:ekr.20040723194802:recycleWidgets
     def recycleWidgets (self):
         
         canvas = self.canvas
@@ -2563,15 +2563,15 @@ class myLeoTkinterTree(leoFrame.leoTree):
             self.freeText[key] = pList
         self.visibleText  = []
     #@nonl
-    #@-node:recycleWidgets
-    #@+node:totalTextWidgets
+    #@-node:ekr.20040723194802:recycleWidgets
+    #@+node:ekr.20040725071403:totalTextWidgets
     def totalTextWidgets (self):
         
         n = len(self.visibleText) + len(self.newlyFreedText) + len(self.freeText)
         return n # Each item is a 2-tuple.
     #@nonl
-    #@-node:totalTextWidgets
-    #@+node:getTextStats
+    #@-node:ekr.20040725071403:totalTextWidgets
+    #@+node:ekr.20040725072304:getTextStats
     def getTextStats (self):
         
         # Count the number of individual items in each list in freeText.
@@ -2583,8 +2583,8 @@ class myLeoTkinterTree(leoFrame.leoTree):
         
         return "%3d %3d tot: %4d" % (visible,free,visible+free)
     #@nonl
-    #@-node:getTextStats
-    #@+node:traceIds
+    #@-node:ekr.20040725072304:getTextStats
+    #@+node:ekr.20040725074321:traceIds
     def traceIds (self):
         
         keys = self.ids.keys()
@@ -2593,11 +2593,11 @@ class myLeoTkinterTree(leoFrame.leoTree):
             p = self.ids.get(key)
             print key,p.headString()
     #@nonl
-    #@-node:traceIds
-    #@-node:Widget allocation...
+    #@-node:ekr.20040725074321:traceIds
+    #@-node:ekr.20040723183449.1:Widget allocation...
     #@-others
 
 leoTkinterTree.leoTkinterTree = myLeoTkinterTree
 #@nonl
-#@-node:@file __outlineExperiments.py
+#@-node:ekr.20040723100651:@thin __outlineExperiments.py
 #@-leo
