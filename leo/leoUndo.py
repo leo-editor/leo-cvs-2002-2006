@@ -8,7 +8,7 @@
 
 
 #@<< How Leo implements unlimited undo >>
-#@+node:1::<< How Leo implements unlimited undo >>
+#@+node:+1::<< How Leo implements unlimited undo >>
 #@+body
 #@+at
 #  Only leo.py supports unlimited undo.  Unlimited undo is straightforward; it 
@@ -36,7 +36,7 @@
 
 #@-at
 #@-body
-#@-node:1::<< How Leo implements unlimited undo >>
+#@-node:+0::<< How Leo implements unlimited undo >>
 
 
 optionalIvars = [
@@ -51,7 +51,7 @@ from leoUtils import *
 class undoer:
 
 	#@+others
-	#@+node:2::undo.__init__
+	#@+node:+1::undo.__init__
 	#@+body
 	def __init__ (self,commands):
 		
@@ -63,7 +63,7 @@ class undoer:
 		self.redoing = false # True if executing a Redo command.
 		self.clearUndoState()
 	#@-body
-	#@+node:1::clearUndoState & clearIvars
+	#@+node:-1::clearUndoState & clearIvars
 	#@+body
 	#@+at
 	#  This method clears then entire Undo state.  All non-undoable commands 
@@ -96,10 +96,10 @@ class undoer:
 			self.select = None
 			self.newText = None
 	#@-body
-	#@-node:1::clearUndoState & clearIvars
-	#@-node:2::undo.__init__
-	#@+node:3:C=1:State routines...
-	#@+node:1::canRedo & canUndo
+	#@-node:+0::clearUndoState & clearIvars
+	#@-node:+1::undo.__init__
+	#@+node:+1::State routines...
+	#@+node:-2::canRedo & canUndo
 	#@+body
 	def canRedo (self):
 	
@@ -109,8 +109,8 @@ class undoer:
 	
 		return self.undoMenuLabel != "Can't Undo"
 	#@-body
-	#@-node:1::canRedo & canUndo
-	#@+node:2::enableMenuItems
+	#@-node:+0::canRedo & canUndo
+	#@+node:+1::enableMenuItems
 	#@+body
 	def enableMenuItems (self):
 	
@@ -118,8 +118,8 @@ class undoer:
 		enableMenu(menu,u.redoMenuLabel,u.canRedo())
 		enableMenu(menu,u.undoMenuLabel,u.canUndo())
 	#@-body
-	#@-node:2::enableMenuItems
-	#@+node:3::getBead, peekBead, setBead
+	#@-node:+0::enableMenuItems
+	#@+node:+1::getBead, peekBead, setBead
 	#@+body
 	def getBead (self,n):
 		
@@ -180,8 +180,8 @@ class undoer:
 		# trace(`d`)
 		return d
 	#@-body
-	#@-node:3::getBead, peekBead, setBead
-	#@+node:4::redoMenuName, undoMenuName
+	#@-node:+0::getBead, peekBead, setBead
+	#@+node:+1::redoMenuName, undoMenuName
 	#@+body
 	def redoMenuName (self,name):
 	
@@ -197,8 +197,8 @@ class undoer:
 		else:
 			return "Undo " + name
 	#@-body
-	#@-node:4::redoMenuName, undoMenuName
-	#@+node:5::setRedoType, setUndoType
+	#@-node:+0::redoMenuName, undoMenuName
+	#@+node:+1::setRedoType, setUndoType
 	#@+body
 	# These routines update both the ivar and the menu label.
 	def setRedoType (self,type):
@@ -220,8 +220,8 @@ class undoer:
 			u.undoType = type
 			u.undoMenuLabel = name
 	#@-body
-	#@-node:5::setRedoType, setUndoType
-	#@+node:6::setUndoParams
+	#@-node:+0::setRedoType, setUndoType
+	#@+node:+1::setUndoParams
 	#@+body
 	#@+at
 	#  This routine saves enough information so an operation can be undone and 
@@ -255,8 +255,8 @@ class undoer:
 		u.setUndoTypes()
 		return d
 	#@-body
-	#@-node:6::setUndoParams
-	#@+node:7::setUndoTypingParams
+	#@-node:+0::setUndoParams
+	#@+node:+1::setUndoTypingParams
 	#@+body
 	#@+at
 	#  This routine saves enough information so a typing operation can be 
@@ -293,8 +293,8 @@ class undoer:
 		u.setUndoTypes()
 		return d
 	#@-body
-	#@-node:7::setUndoTypingParams
-	#@+node:8::setUndoTypes
+	#@-node:+0::setUndoTypingParams
+	#@+node:+1::setUndoTypes
 	#@+body
 	def setUndoTypes (self):
 		
@@ -315,9 +315,9 @@ class undoer:
 		else:
 			u.setRedoType("Can't Redo")
 	#@-body
-	#@-node:8::setUndoTypes
-	#@-node:3:C=1:State routines...
-	#@+node:4:C=2:redo
+	#@-node:+0::setUndoTypes
+	#@-node:-5::State routines...
+	#@+node:+1::redo
 	#@+body
 	def redo (self):
 		
@@ -333,7 +333,7 @@ class undoer:
 		if 1: # range...
 			
 			#@<< redo clone cases >>
-			#@+node:1::<< redo clone cases >>
+			#@+node:-3::<< redo clone cases >>
 			#@+body
 			if type == "Clone":
 			
@@ -352,11 +352,11 @@ class undoer:
 				c.initAllCloneBits()
 				c.selectVnode(u.v)
 			#@-body
-			#@-node:1::<< redo clone cases >>
+			#@-node:+0::<< redo clone cases >>
 
 			
 			#@<< redo insert cases >>
-			#@+node:3::<< redo insert cases >>
+			#@+node:+2::<< redo insert cases >>
 			#@+body
 			elif type in ["Import", "Insert Outline", "Paste Node"]:
 			
@@ -375,22 +375,22 @@ class undoer:
 				c.initAllCloneBits()
 				c.selectVnode(u.v)
 			#@-body
-			#@-node:3::<< redo insert cases >>
+			#@-node:+0::<< redo insert cases >>
 
 			
 			#@<< redo delete cases >>
-			#@+node:2::<< redo delete cases >>
+			#@+node:-1::<< redo delete cases >>
 			#@+body
 			elif type == "Delete Outline" or type == "Cut Node":
 			
 				c.selectVnode(u.v)
 				c.deleteHeadline()
 			#@-body
-			#@-node:2::<< redo delete cases >>
+			#@-node:+0::<< redo delete cases >>
 
 			
 			#@<< redo move & drag cases >>
-			#@+node:4:C=3:<< redo move & drag cases >>
+			#@+node:+2::<< redo move & drag cases >>
 			#@+body
 			elif type in ["Drag","Move Down","Move Left","Move Right","Move Up"]:
 			
@@ -413,11 +413,11 @@ class undoer:
 				c.initJoinedCloneBits(u.v) # 7/6/02
 				c.selectVnode(u.v)
 			#@-body
-			#@-node:4:C=3:<< redo move & drag cases >>
+			#@-node:+0::<< redo move & drag cases >>
 
 			
 			#@<< redo promote and demote cases >>
-			#@+node:5::<< redo promote and demote cases >>
+			#@+node:+1::<< redo promote and demote cases >>
 			#@+body
 			elif type == "Demote":
 			
@@ -429,11 +429,11 @@ class undoer:
 				c.selectVnode(u.v)
 				c.promote()
 			#@-body
-			#@-node:5::<< redo promote and demote cases >>
+			#@-node:+0::<< redo promote and demote cases >>
 
 			
 			#@<< redo replace cases >>
-			#@+node:6::<< redo replace cases >>
+			#@+node:+1::<< redo replace cases >>
 			#@+body
 			elif type in [
 				"Convert All Blanks",
@@ -451,11 +451,11 @@ class undoer:
 				v.setBodyStringOrPane(v.bodyString())
 				c.tree.recolor(v)
 			#@-body
-			#@-node:6::<< redo replace cases >>
+			#@-node:+0::<< redo replace cases >>
 
 			
 			#@<< redo sort cases >>
-			#@+node:7::<< redo sort cases >>
+			#@+node:+1::<< redo sort cases >>
 			#@+body
 			elif type == "Sort Children":
 			
@@ -467,11 +467,11 @@ class undoer:
 				c.selectVnode(u.v)
 				c.sortSiblings()
 			#@-body
-			#@-node:7::<< redo sort cases >>
+			#@-node:+0::<< redo sort cases >>
 
 			
 			#@<< redo typing cases >>
-			#@+node:8::<< redo typing cases >>
+			#@+node:+1::<< redo typing cases >>
 			#@+body
 			elif type in [ "Typing",
 				"Change",
@@ -516,7 +516,7 @@ class undoer:
 					v2 = v2.joinList
 				c.selectVnode(u.v)
 			#@-body
-			#@-node:8::<< redo typing cases >>
+			#@-node:+0::<< redo typing cases >>
 
 			else: trace("Unknown case: " + `type`)
 			c.setChanged(true)
@@ -526,8 +526,8 @@ class undoer:
 		u.bead += 1
 		u.setUndoTypes()
 	#@-body
-	#@-node:4:C=2:redo
-	#@+node:5:C=4:undo
+	#@-node:-4::redo
+	#@+node:+1::undo
 	#@+body
 	#@+at
 	#  This function and its allies undo the operation described by the undo parmaters.
@@ -550,7 +550,7 @@ class undoer:
 		if 1: # range...
 			
 			#@<< undo clone cases >>
-			#@+node:1::<< undo clone cases >>
+			#@+node:-4::<< undo clone cases >>
 			#@+body
 			# We can immediately delete the clone because clone() can recreate it using only v.
 			
@@ -560,11 +560,11 @@ class undoer:
 				c.deleteHeadline()
 				c.selectVnode(u.back)
 			#@-body
-			#@-node:1::<< undo clone cases >>
+			#@-node:+0::<< undo clone cases >>
 
 			
 			#@<< undo delete cases >>
-			#@+node:2::<< undo delete cases >>
+			#@+node:+1::<< undo delete cases >>
 			#@+body
 			#@+at
 			#  Deleting a clone is _not_ the same as undoing a clone: the 
@@ -590,11 +590,11 @@ class undoer:
 				c.initAllCloneBits()
 				c.selectVnode(u.v)
 			#@-body
-			#@-node:2::<< undo delete cases >>
+			#@-node:+0::<< undo delete cases >>
 
 			
 			#@<< undo insert cases >>
-			#@+node:3::<< undo insert cases >>
+			#@+node:+1::<< undo insert cases >>
 			#@+body
 			elif type in ["Import", "Insert Outline", "Paste Node"]:
 				
@@ -604,11 +604,11 @@ class undoer:
 					# trace("Insert/Paste:" + `u.select`)
 					c.selectVnode(u.select)
 			#@-body
-			#@-node:3::<< undo insert cases >>
+			#@-node:+0::<< undo insert cases >>
 
 			
 			#@<< undo move & drag cases >>
-			#@+node:4:C=5:<< undo move  & drag cases >>
+			#@+node:+1::<< undo move  & drag cases >>
 			#@+body
 			elif type in ["Drag", "Move Down","Move Left","Move Right","Move Up"]:
 			
@@ -626,11 +626,11 @@ class undoer:
 				c.initJoinedCloneBits(u.v) # 7/6/02
 				c.selectVnode(u.v)
 			#@-body
-			#@-node:4:C=5:<< undo move  & drag cases >>
+			#@-node:+0::<< undo move  & drag cases >>
 
 			
 			#@<< undo promote and demote cases >>
-			#@+node:5::<< undo promote and demote cases >>
+			#@+node:+1::<< undo promote and demote cases >>
 			#@+body
 			#@+at
 			#  Promote and demote operations are the hard to undo, because 
@@ -648,11 +648,11 @@ class undoer:
 				
 				u.undoPromote()
 			#@-body
-			#@-node:5::<< undo promote and demote cases >>
+			#@-node:+0::<< undo promote and demote cases >>
 
 			
 			#@<< undo replace cases >>
-			#@+node:6::<< undo replace cases >>
+			#@+node:+1::<< undo replace cases >>
 			#@+body
 			elif type in [
 				"Convert All Blanks",
@@ -669,11 +669,11 @@ class undoer:
 				v.setBodyStringOrPane(v.bodyString())
 				c.tree.recolor(v)
 			#@-body
-			#@-node:6::<< undo replace cases >>
+			#@-node:+0::<< undo replace cases >>
 
 			
 			#@<< undo sort cases >>
-			#@+node:7::<< undo sort cases >>
+			#@+node:+1::<< undo sort cases >>
 			#@+body
 			#@+at
 			#  Sort operations are the hard to undo, because they involve 
@@ -691,11 +691,11 @@ class undoer:
 				
 				u.undoSortSiblings()
 			#@-body
-			#@-node:7::<< undo sort cases >>
+			#@-node:+0::<< undo sort cases >>
 
 			
 			#@<< undo typing cases >>
-			#@+node:8::<< undo typing cases >>
+			#@+node:+1::<< undo typing cases >>
 			#@+body
 			elif type in [ "Typing",
 				"Change",
@@ -740,7 +740,7 @@ class undoer:
 					v2 = v2.joinList
 				c.selectVnode(u.v)
 			#@-body
-			#@-node:8::<< undo typing cases >>
+			#@-node:+0::<< undo typing cases >>
 
 			else: trace("Unknown case: " + `u.undoType`)
 			c.setChanged(true)
@@ -750,9 +750,9 @@ class undoer:
 		u.bead -= 1
 		u.setUndoTypes()
 	#@-body
-	#@-node:5:C=4:undo
-	#@+node:6::Undo helpers
-	#@+node:1::findSharedVnode
+	#@-node:-3::undo
+	#@+node:+1::Undo helpers
+	#@+node:-5::findSharedVnode
 	#@+body
 	def findSharedVnode (self,target):
 	
@@ -763,8 +763,8 @@ class undoer:
 			v = v.threadNext()
 		return None
 	#@-body
-	#@-node:1::findSharedVnode
-	#@+node:2:C=6:undoDemote
+	#@-node:+0::findSharedVnode
+	#@+node:+1::undoDemote
 	#@+body
 	# undoes the previous demote operation.
 	def undoDemote (self):
@@ -786,8 +786,8 @@ class undoer:
 		c.selectVnode(u.v)
 		c.endUpdate()
 	#@-body
-	#@-node:2:C=6:undoDemote
-	#@+node:3:C=7:undoPromote
+	#@-node:+0::undoDemote
+	#@+node:+1::undoPromote
 	#@+body
 	# Undoes the previous promote operation.
 	def undoPromote (self):
@@ -810,8 +810,8 @@ class undoer:
 		c.selectVnode(v1)
 		c.endUpdate()
 	#@-body
-	#@-node:3:C=7:undoPromote
-	#@+node:4:C=8:undoReplace
+	#@-node:+0::undoPromote
+	#@+node:+1::undoReplace
 	#@+body
 	#@+at
 	#  This routine implements undo by properly replacing v's tree by the oldv 
@@ -860,8 +860,8 @@ class undoer:
 			v.setClonedBit()
 		c.initAllCloneBits()
 	#@-body
-	#@-node:4:C=8:undoReplace
-	#@+node:5::undoSortChildren
+	#@-node:+0::undoReplace
+	#@+node:+1::undoSortChildren
 	#@+body
 	def undoSortChildren (self):
 	
@@ -878,8 +878,8 @@ class undoer:
 			c.setChanged(true)
 		c.endUpdate()
 	#@-body
-	#@-node:5::undoSortChildren
-	#@+node:6::undoSortSiblings
+	#@-node:+0::undoSortChildren
+	#@+node:+1::undoSortSiblings
 	#@+body
 	def undoSortSiblings (self):
 		
@@ -897,8 +897,8 @@ class undoer:
 			c.setChanged(true)
 		c.endUpdate()
 	#@-body
-	#@-node:6::undoSortSiblings
-	#@-node:6::Undo helpers
+	#@-node:+0::undoSortSiblings
+	#@-node:+0::Undo helpers
 	#@-others
 #@-body
 #@-node:0::@file leoUndo.py

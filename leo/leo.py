@@ -8,7 +8,7 @@
 
 
 #@<< Import pychecker >>
-#@+node:1::<< Import pychecker >>
+#@+node:+1::<< Import pychecker >>
 #@+body
 #@+at
 #  pychecker is extremely useful, and it sometimes reports problems 
@@ -32,7 +32,7 @@ if 0: # Set to 1 for lint-like testing.  This can also be done in idle.
 		import pychecker.checker
 	except: pass
 #@-body
-#@-node:1::<< Import pychecker >>
+#@-node:+0::<< Import pychecker >>
 
 import leoGlobals # Can't import * here: app() is not defined yet!
 import leoApp, leoFrame, leoUtils, Tkinter
@@ -42,7 +42,7 @@ app = leoGlobals.app
 	
 
 #@+others
-#@+node:2::Functions for scripts
+#@+node:+1::Functions for scripts
 #@+body
 def windows():
 	return app().windowList
@@ -58,8 +58,8 @@ def topCommands():
 	
 topCommand = topCommands
 #@-body
-#@-node:2::Functions for scripts
-#@+node:3::go
+#@-node:+0::Functions for scripts
+#@+node:+1::go
 #@+body
 # This is useful for reloading after a file has been changed.
 
@@ -70,16 +70,16 @@ def go(*args):
 		args = args[0] # Strip the outer tuple.
 	run(args)
 #@-body
-#@-node:3::go
-#@+node:4::init_sherlock
+#@-node:+0::go
+#@+node:+1::init_sherlock
 #@+body
 def init_sherlock (args):
 	
 	leoUtils.init_trace(args)
 	# leoUtils.trace("argv", "sys.argv: " + `sys.argv`)
 #@-body
-#@-node:4::init_sherlock
-#@+node:5:C=1:leoOpen (leo.py)
+#@-node:+0::init_sherlock
+#@+node:+1::leoOpen (leo.py)
 #@+body
 def leoOpen(fileName=None,*args):
 	
@@ -94,7 +94,7 @@ def leoOpen(fileName=None,*args):
 	root = Tkinter.Tk()
 	
 	#@<< set the icon image >>
-	#@+node:1:C=2:<< set the icon image >>
+	#@+node:-4::<< set the icon image >>
 	#@+body
 	if 0: # not yet
 		fullname = r"c:\prog\LeoPy\Icons\box05.GIF"
@@ -106,7 +106,7 @@ def leoOpen(fileName=None,*args):
 		trace(`image`)
 		root.iconbitmap(image)
 	#@-body
-	#@-node:1:C=2:<< set the icon image >>
+	#@-node:+0::<< set the icon image >>
 
 	root.title("Leo Main Window")
 	root.withdraw()
@@ -137,8 +137,8 @@ def leoOpen(fileName=None,*args):
 	init_sherlock(args)
 	root.mainloop()
 #@-body
-#@-node:5:C=1:leoOpen (leo.py)
-#@+node:6:C=3:reload_all
+#@-node:+4::leoOpen (leo.py)
+#@+node:+1::reload_all
 #@+body
 def reload_all ():
 
@@ -166,8 +166,8 @@ def reload_all ():
 		from leoGlobals import *
 		from leoUtils import *
 #@-body
-#@-node:6:C=3:reload_all
-#@+node:7:C=4:run (leo.py)
+#@-node:+0::reload_all
+#@+node:+1::run (leo.py)
 #@+body
 def run(*args):
 
@@ -175,7 +175,7 @@ def run(*args):
 	root = Tkinter.Tk()
 	
 	#@<< set the icon image >>
-	#@+node:1:C=2:<< set the icon image >>
+	#@+node:-6::<< set the icon image >>
 	#@+body
 	if 0: # not yet
 		fullname = r"c:\prog\LeoPy\Icons\box05.GIF"
@@ -187,7 +187,7 @@ def run(*args):
 		trace(`image`)
 		root.iconbitmap(image)
 	#@-body
-	#@-node:1:C=2:<< set the icon image >>
+	#@-node:+0::<< set the icon image >>
 
 	root.title("Leo Main Window")
 	if 1:
@@ -209,8 +209,8 @@ def run(*args):
 	init_sherlock(args)
 	root.mainloop()
 #@-body
-#@-node:7:C=4:run (leo.py)
-#@+node:8::onKillLeoEvent
+#@-node:+6::run (leo.py)
+#@+node:+1::onKillLeoEvent
 #@+body
 # Apparently the value returned from this routine is ignored.
 
@@ -227,8 +227,8 @@ def onKillLeoEvent (event=None):
 		print "1"
 		return 1
 #@-body
-#@-node:8::onKillLeoEvent
-#@+node:9::profile
+#@-node:+0::onKillLeoEvent
+#@+node:+1::profile
 #@+body
 def profile ():
 
@@ -242,7 +242,7 @@ def profile ():
 	p.sort_stats('cum','file','name')
 	p.print_stats()
 #@-body
-#@-node:9::profile
+#@-node:+0::profile
 #@-others
 
 

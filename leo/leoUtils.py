@@ -11,8 +11,8 @@ import os, string, sys, time, types, Tkinter, traceback
 
 
 #@+others
-#@+node:1:C=1:@language and @comment directives
-#@+node:1:C=2:set_delims_from_language
+#@+node:+1::@language and @comment directives
+#@+node:+0::set_delims_from_language
 #@+body
 # Returns a tuple (single,start,end) of comment delims
 
@@ -48,8 +48,8 @@ def set_delims_from_language(language):
 
 	return None, None, None # Indicate that no change should be made
 #@-body
-#@-node:1:C=2:set_delims_from_language
-#@+node:2:C=3:set_delims_from_string
+#@-node:+0::set_delims_from_language
+#@+node:+1::set_delims_from_string
 #@+body
 #@+at
 #  Returns (delim1, delim2, delim2), the delims following the @comment directive.
@@ -92,8 +92,8 @@ def set_delims_from_string(s):
 
 	return delims[0], delims[1], delims[2]
 #@-body
-#@-node:2:C=3:set_delims_from_string
-#@+node:3:C=4:set_language
+#@-node:+0::set_delims_from_string
+#@+node:+1::set_language
 #@+body
 #@+at
 #   Scans the @language directive that appears at s[i].
@@ -147,9 +147,9 @@ def set_language(s,i,issue_errors_flag):
 
 	return None, None, None, None,
 #@-body
-#@-node:3:C=4:set_language
-#@-node:1:C=1:@language and @comment directives
-#@+node:2::angleBrackets & virtual_event_name
+#@-node:+0::set_language
+#@-node:-2::@language and @comment directives
+#@+node:+1::angleBrackets & virtual_event_name
 #@+body
 # Returns < < s > >
 
@@ -160,8 +160,8 @@ def angleBrackets(s):
 
 virtual_event_name = angleBrackets
 #@-body
-#@-node:2::angleBrackets & virtual_event_name
-#@+node:3::btest
+#@-node:+0::angleBrackets & virtual_event_name
+#@+node:+1::btest
 #@+body
 # bit testing.
 
@@ -169,8 +169,8 @@ def btest(b1, b2):
 
 	return (b1 & b2) != 0
 #@-body
-#@-node:3::btest
-#@+node:4::create_temp_name
+#@-node:+0::btest
+#@+node:+1::create_temp_name
 #@+body
 # Returns a temporary file name.
 
@@ -181,9 +181,9 @@ def create_temp_name ():
 	# trace(`temp`)
 	return temp
 #@-body
-#@-node:4::create_temp_name
-#@+node:5::Dialog utilites...
-#@+node:1::get_window_info
+#@-node:+0::create_temp_name
+#@+node:+1::Dialog utilites...
+#@+node:-4::get_window_info
 #@+body
 # WARNING: Call this routine _after_ creating a dialog.
 # (This routine inhibits the grid and pack geometry managers.)
@@ -200,8 +200,8 @@ def get_window_info (top):
 	
 	return w,h,x,y
 #@-body
-#@-node:1::get_window_info
-#@+node:2::center_dialog
+#@-node:+0::get_window_info
+#@+node:+1::center_dialog
 #@+body
 # Center the dialog on the screen.
 # WARNING: Call this routine _after_ creating a dialog.
@@ -220,8 +220,8 @@ def center_dialog(top):
 	
 	return w,h,x,y
 #@-body
-#@-node:2::center_dialog
-#@+node:3:C=5:create_labeled_frame
+#@-node:+0::center_dialog
+#@+node:+1::create_labeled_frame
 #@+body
 # Returns frames w and f.
 # Typically the caller would pack w into other frames, and pack content into f.
@@ -264,10 +264,10 @@ def create_labeled_frame (parent,
 
 	return w,f
 #@-body
-#@-node:3:C=5:create_labeled_frame
-#@-node:5::Dialog utilites...
-#@+node:6::Dumping, Tracing & Sherlock
-#@+node:1::dump
+#@-node:+0::create_labeled_frame
+#@-node:+2::Dialog utilites...
+#@+node:+1::Dumping, Tracing & Sherlock
+#@+node:-5::dump
 #@+body
 def dump(s):
 	
@@ -289,8 +289,8 @@ def oldDump(s):
 		else: out += i
 	return out
 #@-body
-#@-node:1::dump
-#@+node:2:C=6:get_line & get_line_after
+#@-node:+0::dump
+#@+node:+1::get_line & get_line_after
 #@+body
 # Very useful for tracing.
 
@@ -314,8 +314,8 @@ def get_line_after (s,i):
 	return nl + s[i:k]
 
 #@-body
-#@-node:2:C=6:get_line & get_line_after
-#@+node:3::printBindings
+#@-node:+0::get_line & get_line_after
+#@+node:+1::printBindings
 #@+body
 def print_bindings (name,window):
 
@@ -325,8 +325,8 @@ def print_bindings (name,window):
 	for b in bindings:
 		print `b`
 #@-body
-#@-node:3::printBindings
-#@+node:4:C=7:Sherlock...
+#@-node:+0::printBindings
+#@+node:+1::Sherlock...
 #@+body
 #@+at
 #  Starting with this release, you will see trace statements throughout the 
@@ -370,7 +370,7 @@ def print_bindings (name,window):
 
 #@-at
 #@-body
-#@+node:1::get_Sherlock_args
+#@+node:-3::get_Sherlock_args
 #@+body
 #@+at
 #  It no args are given we attempt to get them from the "SherlockArgs" file.  
@@ -396,8 +396,8 @@ def get_Sherlock_args (args):
 	# print "get_Sherlock_args:" + `args`
 	return args
 #@-body
-#@-node:1::get_Sherlock_args
-#@+node:2::init_trace
+#@-node:+0::get_Sherlock_args
+#@+node:+1::init_trace
 #@+body
 def init_trace(args):
 
@@ -419,8 +419,8 @@ def init_trace(args):
 		else:
 			print "ignoring:", prefix + arg
 #@-body
-#@-node:2::init_trace
-#@+node:3::trace
+#@-node:+0::init_trace
+#@+node:+1::trace
 #@+body
 def trace (s1=None,s2=None):
 
@@ -448,10 +448,10 @@ def trace (s1=None,s2=None):
 			# print `type(message)`
 			message()
 #@-body
-#@-node:3::trace
-#@-node:4:C=7:Sherlock...
-#@-node:6::Dumping, Tracing & Sherlock
-#@+node:7::ensure_extension
+#@-node:+0::trace
+#@-node:+1::Sherlock...
+#@-node:+2::Dumping, Tracing & Sherlock
+#@+node:+1::ensure_extension
 #@+body
 def ensure_extension (name, ext):
 
@@ -463,8 +463,8 @@ def ensure_extension (name, ext):
 	else:
 		return file + ext
 #@-body
-#@-node:7::ensure_extension
-#@+node:8:C=8:findReference
+#@-node:+0::ensure_extension
+#@+node:+1::findReference
 #@+body
 #@+at
 #  We search the descendents of v looking for the definition node matching name.
@@ -485,9 +485,9 @@ def findReference(name,root):
 	return None
 
 #@-body
-#@-node:8:C=8:findReference
-#@+node:9:C=9:Leading & trailing whitespace...
-#@+node:1::computeLeadingWhitespace
+#@-node:+0::findReference
+#@+node:+1::Leading & trailing whitespace...
+#@+node:-8::computeLeadingWhitespace
 #@+body
 # Returns optimized whitespace corresponding to width with the indicated tab_width.
 
@@ -502,8 +502,8 @@ def computeLeadingWhitespace (width, tab_width):
 	else: # 7/3/02: negative tab width always gets converted to blanks.
 		return (' ' * width)
 #@-body
-#@-node:1::computeLeadingWhitespace
-#@+node:2::computeWidth
+#@-node:+0::computeLeadingWhitespace
+#@+node:+1::computeWidth
 #@+body
 # Returns the width of s, assuming s starts a line, with indicated tab_width.
 
@@ -517,8 +517,8 @@ def computeWidth (s, tab_width):
 			w += 1
 	return w
 #@-body
-#@-node:2::computeWidth
-#@+node:3::optimizeLeadingWhitespace
+#@-node:+0::computeWidth
+#@+node:+1::optimizeLeadingWhitespace
 #@+body
 # Optimize leading whitespace in s with the given tab_width.
 
@@ -528,8 +528,8 @@ def optimizeLeadingWhitespace (line,tab_width):
 	s = computeLeadingWhitespace(width,tab_width) + line[i:]
 	return s
 #@-body
-#@-node:3::optimizeLeadingWhitespace
-#@+node:4::removeLeadingWhitespace
+#@-node:+0::optimizeLeadingWhitespace
+#@+node:+1::removeLeadingWhitespace
 #@+body
 # Remove whitespace up to first_ws wide in s, given tab_width, the width of a tab.
 
@@ -548,8 +548,8 @@ def removeLeadingWhitespace (s,first_ws,tab_width):
 		s = s[j:]
 	return s
 #@-body
-#@-node:4::removeLeadingWhitespace
-#@+node:5::removeTrailingWs
+#@-node:+0::removeLeadingWhitespace
+#@+node:+1::removeTrailingWs
 #@+body
 # Warning: string.rstrip also removes newlines!
 
@@ -561,8 +561,8 @@ def removeTrailingWs(s):
 	return s[:j+1]
 
 #@-body
-#@-node:5::removeTrailingWs
-#@+node:6::skip_leading_ws
+#@-node:+0::removeTrailingWs
+#@+node:+1::skip_leading_ws
 #@+body
 # Skips leading up to width leading whitespace.
 
@@ -581,8 +581,8 @@ def skip_leading_ws(s,i,ws,tab_width):
 
 	return i
 #@-body
-#@-node:6::skip_leading_ws
-#@+node:7::skip_leading_ws_with_indent
+#@-node:+0::skip_leading_ws
+#@+node:+1::skip_leading_ws_with_indent
 #@+body
 #@+at
 #  Skips leading whitespace and returns (i, indent), where i points after the 
@@ -607,18 +607,18 @@ def skip_leading_ws_with_indent(s,i,tab_width):
 
 	return i, count
 #@-body
-#@-node:7::skip_leading_ws_with_indent
-#@-node:9:C=9:Leading & trailing whitespace...
-#@+node:10::List utilities...
-#@+node:1::appendToList
+#@-node:+0::skip_leading_ws_with_indent
+#@-node:+2::Leading & trailing whitespace...
+#@+node:+1::List utilities...
+#@+node:-9::appendToList
 #@+body
 def appendToList(out, s):
 
 	for i in s:
 		out.append(i)
 #@-body
-#@-node:1::appendToList
-#@+node:2::flattenList
+#@-node:+0::appendToList
+#@+node:+1::flattenList
 #@+body
 def flattenList (theList):
 
@@ -630,8 +630,8 @@ def flattenList (theList):
 			result.append(item)
 	return result
 #@-body
-#@-node:2::flattenList
-#@+node:3::listToString
+#@-node:+0::flattenList
+#@+node:+1::listToString
 #@+body
 def listToString(theList):
 
@@ -641,10 +641,10 @@ def listToString(theList):
 	else:
 		return ""
 #@-body
-#@-node:3::listToString
-#@-node:10::List utilities...
-#@+node:11::Menu utlities...
-#@+node:1::enableMenu & disableMenu & setMenuLabel
+#@-node:+0::listToString
+#@-node:+7::List utilities...
+#@+node:+1::Menu utlities...
+#@+node:-10::enableMenu & disableMenu & setMenuLabel
 #@+body
 def enableMenu (menu,name,val):
 
@@ -659,9 +659,9 @@ def setMenuLabel (menu,name,label):
 
 	menu.entryconfig(name,label=label)
 #@-body
-#@-node:1::enableMenu & disableMenu & setMenuLabel
-#@-node:11::Menu utlities...
-#@+node:12:C=10:getBaseDirectory
+#@-node:+0::enableMenu & disableMenu & setMenuLabel
+#@-node:+10::Menu utlities...
+#@+node:+1::getBaseDirectory
 #@+body
 # Handles the conventions applying to the "relative_path_base_directory" configuration option.
 
@@ -680,8 +680,8 @@ def getBaseDirectory():
 	else:
 		return "" # An error.
 #@-body
-#@-node:12:C=10:getBaseDirectory
-#@+node:13::scanError
+#@-node:+0::getBaseDirectory
+#@+node:+1::scanError
 #@+body
 #@+at
 #  It seems dubious to bump the Tangle error count here.  OTOH, it really 
@@ -699,8 +699,8 @@ def scanError(s):
 
 	es(s)
 #@-body
-#@-node:13::scanError
-#@+node:14::Scanners: calling scanError
+#@-node:+0::scanError
+#@+node:+1::Scanners: calling scanError
 #@+body
 #@+at
 #  These scanners all call scanError() directly or indirectly, so they will 
@@ -712,7 +712,7 @@ def scanError(s):
 
 #@-at
 #@-body
-#@+node:1::skip_block_comment
+#@+node:-13::skip_block_comment
 #@+body
 # Scans past a block comment (an old_style C comment).
 
@@ -727,8 +727,8 @@ def skip_block_comment (s,i):
 		return n
 	else: return k + 2
 #@-body
-#@-node:1::skip_block_comment
-#@+node:2:C=11:skip_braces
+#@-node:+0::skip_block_comment
+#@+node:+1::skip_braces
 #@+body
 #@+at
 #  Skips from the opening to the matching . If no matching is found i is set 
@@ -763,8 +763,8 @@ def skip_braces(s,i):
 		else: i += 1
 	return i
 #@-body
-#@-node:2:C=11:skip_braces
-#@+node:3:C=12:skip_php_braces (Dave Hein)
+#@-node:+0::skip_braces
+#@+node:+1::skip_php_braces (Dave Hein)
 #@+body
 #@+at
 #  08-SEP-2002 DTHEIN: Added for PHP import support
@@ -796,8 +796,8 @@ def skip_php_braces(s,i):
 	return i
 
 #@-body
-#@-node:3:C=12:skip_php_braces (Dave Hein)
-#@+node:4::skip_parens
+#@-node:+0::skip_php_braces (Dave Hein)
+#@+node:+1::skip_parens
 #@+body
 #@+at
 #  Skips from the opening ( to the matching ) . If no matching is found i is 
@@ -823,8 +823,8 @@ def skip_parens(s,i):
 		else: i += 1
 	return i
 #@-body
-#@-node:4::skip_parens
-#@+node:5::skip_pascal_begin_end
+#@-node:+0::skip_parens
+#@+node:+1::skip_pascal_begin_end
 #@+body
 #@+at
 #  Skips from begin to matching end.
@@ -859,8 +859,8 @@ def skip_pascal_begin_end(s,i):
 	# trace(`s[i1:i]`)
 	return i
 #@-body
-#@-node:5::skip_pascal_begin_end
-#@+node:6::skip_pascal_block_comment
+#@-node:+0::skip_pascal_begin_end
+#@+node:+1::skip_pascal_block_comment
 #@+body
 # Scans past a pascal comment delimited by (* and *).
 
@@ -881,8 +881,8 @@ def skip_pascal_block_comment(s,i):
 #	scanError("Run on comment" + s[j:i])
 #	return i
 #@-body
-#@-node:6::skip_pascal_block_comment
-#@+node:7::skip_pascal_string : called by tangle
+#@-node:+0::skip_pascal_block_comment
+#@+node:+1::skip_pascal_string : called by tangle
 #@+body
 def skip_pascal_string(s,i):
 
@@ -897,8 +897,8 @@ def skip_pascal_string(s,i):
 	scanError("Run on string: " + s[j:i])
 	return i
 #@-body
-#@-node:7::skip_pascal_string : called by tangle
-#@+node:8:C=13:skip_heredoc_string : called by php import (Dave Hein)
+#@-node:+0::skip_pascal_string : called by tangle
+#@+node:+1::skip_heredoc_string : called by php import (Dave Hein)
 #@+body
 #@+at
 #  08-SEP-2002 DTHEIN:  added function skip_heredoc_string
@@ -942,8 +942,8 @@ def skip_heredoc_string(s,i):
 	return i
 
 #@-body
-#@-node:8:C=13:skip_heredoc_string : called by php import (Dave Hein)
-#@+node:9:C=14:skip_pp_directive
+#@-node:+0::skip_heredoc_string : called by php import (Dave Hein)
+#@+node:+1::skip_pp_directive
 #@+body
 # Now handles continuation lines and block comments.
 
@@ -958,8 +958,8 @@ def skip_pp_directive(s,i):
 		else: i += 1
 	return i
 #@-body
-#@-node:9:C=14:skip_pp_directive
-#@+node:10:C=15:skip_pp_if
+#@-node:+0::skip_pp_directive
+#@+node:+1::skip_pp_if
 #@+body
 # Skips an entire if or if def statement, including any nested statements.
 
@@ -992,8 +992,8 @@ def skip_pp_if(s,i):
 	return i,delta1
 
 #@-body
-#@-node:10:C=15:skip_pp_if
-#@+node:11:C=16:skip_pp_part
+#@-node:+0::skip_pp_if
+#@+node:+1::skip_pp_part
 #@+body
 # Skip to an #else or #endif.  The caller has eaten the #if, #ifdef, #ifndef or #else
 
@@ -1023,8 +1023,8 @@ def skip_pp_part(s,i):
 		else: i += 1
 	return i,delta
 #@-body
-#@-node:11:C=16:skip_pp_part
-#@+node:12::skip_python_string
+#@-node:+0::skip_pp_part
+#@+node:+1::skip_python_string
 #@+body
 def skip_python_string(s,i):
 
@@ -1037,8 +1037,8 @@ def skip_python_string(s,i):
 	else:
 		return skip_string(s,i)
 #@-body
-#@-node:12::skip_python_string
-#@+node:13::skip_string : called by tangle
+#@-node:+0::skip_python_string
+#@+node:+1::skip_string : called by tangle
 #@+body
 def skip_string(s,i):
 	
@@ -1055,8 +1055,8 @@ def skip_string(s,i):
 		i += 1
 	return i
 #@-body
-#@-node:13::skip_string : called by tangle
-#@+node:14::skip_to_semicolon
+#@-node:+0::skip_string : called by tangle
+#@+node:+1::skip_to_semicolon
 #@+body
 # Skips to the next semicolon that is not in a comment or a string.
 
@@ -1072,8 +1072,8 @@ def skip_to_semicolon(s,i):
 		else: i += 1
 	return i
 #@-body
-#@-node:14::skip_to_semicolon
-#@+node:15:C=17:skip_typedef
+#@-node:+0::skip_to_semicolon
+#@+node:+1::skip_typedef
 #@+body
 def skip_typedef(s,i):
 
@@ -1086,10 +1086,10 @@ def skip_typedef(s,i):
 		i = skip_to_semicolon(s,i)
 	return i
 #@-body
-#@-node:15:C=17:skip_typedef
-#@-node:14::Scanners: calling scanError
-#@+node:15::Scanners: no error messages
-#@+node:1::escaped
+#@-node:+0::skip_typedef
+#@-node:-1::Scanners: calling scanError
+#@+node:+1::Scanners: no error messages
+#@+node:-14::escaped
 #@+body
 # Returns true if s[i] is preceded by an odd number of backslashes.
 
@@ -1101,8 +1101,8 @@ def escaped(s,i):
 		i -= 1
 	return (count%2) == 1
 #@-body
-#@-node:1::escaped
-#@+node:2:C=18:find_line_start
+#@-node:+0::escaped
+#@+node:+1::find_line_start
 #@+body
 def find_line_start(s,i):
 
@@ -1110,8 +1110,8 @@ def find_line_start(s,i):
 	if i == -1: return 0
 	else: return i + 1
 #@-body
-#@-node:2:C=18:find_line_start
-#@+node:3::find_on_line
+#@-node:+0::find_line_start
+#@+node:+1::find_on_line
 #@+body
 def find_on_line(s,i,pattern):
 
@@ -1122,22 +1122,22 @@ def find_on_line(s,i,pattern):
 	if k > -1: return k
 	else: return None
 #@-body
-#@-node:3::find_on_line
-#@+node:4::is_c_id
+#@-node:+0::find_on_line
+#@+node:+1::is_c_id
 #@+body
 def is_c_id(ch):
 
 	return ch in string.letters or ch in string.digits or ch == '_'
 #@-body
-#@-node:4::is_c_id
-#@+node:5::is_nl
+#@-node:+0::is_c_id
+#@+node:+1::is_nl
 #@+body
 def is_nl(s,i):
 
 	return i < len(s) and (s[i] == '\n' or s[i] == '\r')
 #@-body
-#@-node:5::is_nl
-#@+node:6::is_special
+#@-node:+0::is_nl
+#@+node:+1::is_special
 #@+body
 #@+at
 #  Return true if the body text contains the @ directive.
@@ -1160,8 +1160,8 @@ def is_special(s,i,directive):
 			i = skip_line(s,i)
 	return false, -1
 #@-body
-#@-node:6::is_special
-#@+node:7:C=19:is_special_bits
+#@-node:+0::is_special
+#@+node:+1::is_special_bits
 #@+body
 #@+at
 #  Returns bits, dict where:
@@ -1183,7 +1183,7 @@ def is_special_bits(s,root=None):
 		if s[i] == '@' and i+1 < n:
 			
 			#@<< set bits for @ directives >>
-			#@+node:1::<< set bits for @ directives >>
+			#@+node:-6::<< set bits for @ directives >>
 			#@+body
 			ch = s[i+1]
 			if ch == 'c':
@@ -1220,12 +1220,12 @@ def is_special_bits(s,root=None):
 			elif ch == 'v':
 				if match_word(s,i,"@verbose"): bits |= verbose_bits
 			#@-body
-			#@-node:1::<< set bits for @ directives >>
+			#@-node:+0::<< set bits for @ directives >>
 
 		elif root and match(s,i,"<<"):
 			
 			#@<< set root bits for noweb * chunks >>
-			#@+node:2::<< set root bits for noweb * chunks >>
+			#@+node:+1::<< set root bits for noweb * chunks >>
 			#@+body
 			#@+at
 			#  The following looks for chunk definitions of the form < < * > > 
@@ -1247,13 +1247,13 @@ def is_special_bits(s,root=None):
 						es("<<" +
 							"*>>= requires @root in the headline")
 			#@-body
-			#@-node:2::<< set root bits for noweb * chunks >>
+			#@-node:+0::<< set root bits for noweb * chunks >>
 
 		i = skip_line(s,i)
 	return bits, dict
 #@-body
-#@-node:7:C=19:is_special_bits
-#@+node:8::is_ws & is_ws_or_nl
+#@-node:+5::is_special_bits
+#@+node:+1::is_ws & is_ws_or_nl
 #@+body
 def is_ws(c):
 
@@ -1263,8 +1263,8 @@ def is_ws_or_nl(s,i):
 
 	return is_nl(s,i) or (i < len(s) and is_ws(s[i]))
 #@-body
-#@-node:8::is_ws & is_ws_or_nl
-#@+node:9::match
+#@-node:+0::is_ws & is_ws_or_nl
+#@+node:+1::match
 #@+body
 # Warning: this code makes no assumptions about what follows pattern.
 
@@ -1272,23 +1272,23 @@ def match(s,i,pattern):
 
 	return s and pattern and string.find(s,pattern,i,i+len(pattern)) == i
 #@-body
-#@-node:9::match
-#@+node:10::match_c_word
+#@-node:+0::match
+#@+node:+1::match_c_word
 #@+body
 def match_c_word (s,i,name):
 
 	n = len(name)
 	return name == s[i:i+n] and (i+n == len(s) or not is_c_id(s[i+n]))
 #@-body
-#@-node:10::match_c_word
-#@+node:11::match_ignoring_case
+#@-node:+0::match_c_word
+#@+node:+1::match_ignoring_case
 #@+body
 def match_ignoring_case(s1,s2):
 
 	return string.lower(s1) == string.lower(s2)
 #@-body
-#@-node:11::match_ignoring_case
-#@+node:12::match_word
+#@-node:+0::match_ignoring_case
+#@+node:+1::match_word
 #@+body
 def match_word(s,i,pattern):
 
@@ -1300,8 +1300,8 @@ def match_word(s,i,pattern):
 	c = s[i+j]
 	return not (c in string.letters or c in string.digits or c == '_')
 #@-body
-#@-node:12::match_word
-#@+node:13::skip_blank_lines
+#@-node:+0::match_word
+#@+node:+1::skip_blank_lines
 #@+body
 def skip_blank_lines(s,i):
 
@@ -1316,8 +1316,8 @@ def skip_blank_lines(s,i):
 		else: break
 	return i
 #@-body
-#@-node:13::skip_blank_lines
-#@+node:14::skip_c_id
+#@-node:+0::skip_blank_lines
+#@+node:+1::skip_c_id
 #@+body
 def skip_c_id(s,i):
 
@@ -1329,8 +1329,8 @@ def skip_c_id(s,i):
 		else: break
 	return i
 #@-body
-#@-node:14::skip_c_id
-#@+node:15::skip_line, skip_to_end_of_line
+#@-node:+0::skip_c_id
+#@+node:+1::skip_line, skip_to_end_of_line
 #@+body
 #@+at
 #  These methods skip to the next newline, regardless of whether the newline 
@@ -1352,8 +1352,8 @@ def skip_to_end_of_line (s,i):
 	if i == -1: return len(s)
 	else: return i
 #@-body
-#@-node:15::skip_line, skip_to_end_of_line
-#@+node:16::skip_long
+#@-node:+0::skip_line, skip_to_end_of_line
+#@+node:+1::skip_long
 #@+body
 # returns (i, val) or (i, None) if s[i] does not point at a number.
 
@@ -1374,8 +1374,8 @@ def skip_long(s,i):
 	val = int(s[j:i])
 	return i, val
 #@-body
-#@-node:16::skip_long
-#@+node:17::skip_matching_delims
+#@-node:+0::skip_long
+#@+node:+1::skip_matching_delims
 #@+body
 def skip_matching_delims(s,i,delim1,delim2):
 	
@@ -1388,8 +1388,8 @@ def skip_matching_delims(s,i,delim1,delim2):
 	else:
 		return k + len(delim2)
 #@-body
-#@-node:17::skip_matching_delims
-#@+node:18::skip_nl
+#@-node:+0::skip_matching_delims
+#@+node:+1::skip_nl
 #@+body
 #@+at
 #  This function skips a single "logical" end-of-line character.  We need this 
@@ -1404,8 +1404,8 @@ def skip_nl (s,i):
 	elif match(s,i,'\n') or match(s,i,'\r'): return i + 1
 	else: return i
 #@-body
-#@-node:18::skip_nl
-#@+node:19::skip_pascal_braces
+#@-node:+0::skip_nl
+#@+node:+1::skip_pascal_braces
 #@+body
 # Skips from the opening { to the matching }.
 
@@ -1416,8 +1416,8 @@ def skip_pascal_braces(s,i):
 	if i == -1: return len(s)
 	else: return k
 #@-body
-#@-node:19::skip_pascal_braces
-#@+node:20::skip_ws, skip_ws_and_nl
+#@-node:+0::skip_pascal_braces
+#@+node:+1::skip_ws, skip_ws_and_nl
 #@+body
 def skip_ws(s,i):
 
@@ -1433,9 +1433,9 @@ def skip_ws_and_nl(s,i):
 		i += 1
 	return i
 #@-body
-#@-node:20::skip_ws, skip_ws_and_nl
-#@-node:15::Scanners: no error messages
-#@+node:16::shortFileName
+#@-node:+0::skip_ws, skip_ws_and_nl
+#@-node:-5::Scanners: no error messages
+#@+node:+1::shortFileName
 #@+body
 def shortFileName (fileName):
 	
@@ -1444,8 +1444,8 @@ def shortFileName (fileName):
 	head,tail = os.path.split(fileName)
 	return tail
 #@-body
-#@-node:16::shortFileName
-#@+node:17::sortSequence
+#@-node:+0::shortFileName
+#@+node:+1::sortSequence
 #@+body
 #@+at
 #  sequence is a sequence of items, each of which is a sequence containing at 
@@ -1484,8 +1484,8 @@ def sortSequence (sequence, n):
 #@-at
 #@@c
 #@-body
-#@-node:17::sortSequence
-#@+node:18::Timing
+#@-node:+0::sortSequence
+#@+node:+1::Timing
 #@+body
 #@+at
 #  pychecker bug: pychecker complains that there is no attribute time.clock
@@ -1500,9 +1500,9 @@ def esDiffTime(message, start):
 	es(message + ("%6.3f" % (time.clock()-start)))
 	return time.clock()
 #@-body
-#@-node:18::Timing
-#@+node:19:C=20:Tk.Text selection (utils)
-#@+node:1::getTextSelection
+#@-node:+0::Timing
+#@+node:+1::Tk.Text selection (utils)
+#@+node:-18::getTextSelection
 #@+body
 # t is a Tk.Text widget.  Returns the selected range of t.
 
@@ -1515,8 +1515,8 @@ def getTextSelection (t):
 		return start, end
 	else: return None, None
 #@-body
-#@-node:1::getTextSelection
-#@+node:2::getSelectedText
+#@-node:+0::getTextSelection
+#@+node:+1::getSelectedText
 #@+body
 # t is a Tk.Text widget.  Returns the text of the selected range of t.
 
@@ -1528,8 +1528,8 @@ def getSelectedText (t):
 	else:
 		return None
 #@-body
-#@-node:2::getSelectedText
-#@+node:3:C=21:setTextSelection
+#@-node:+0::getSelectedText
+#@+node:+1::setTextSelection
 #@+body
 #@+at
 #  t is a Tk.Text widget.  start and end are positions.  Selects from start to end.
@@ -1549,9 +1549,9 @@ def setTextSelection (t,start,end):
 	t.tag_remove("sel",end,"end")
 	t.mark_set("insert",end)
 #@-body
-#@-node:3:C=21:setTextSelection
-#@-node:19:C=20:Tk.Text selection (utils)
-#@+node:20:C=22:update_file_if_changed
+#@-node:+0::setTextSelection
+#@-node:+16::Tk.Text selection (utils)
+#@+node:+1::update_file_if_changed
 #@+body
 #@+at
 #  This function compares two files. If they are different, we replace 
@@ -1590,8 +1590,8 @@ def update_file_if_changed(file_name,temp_name):
 			es(`file_name` + " may be read-only")
 			traceback.print_exc()
 #@-body
-#@-node:20:C=22:update_file_if_changed
-#@+node:21:C=23:utils_rename
+#@-node:+0::update_file_if_changed
+#@+node:+1::utils_rename
 #@+body
 #@+at
 #  Platform-independent rename.
@@ -1610,8 +1610,8 @@ def utils_rename(src,dst):
 		move_file(src,dst)
 
 #@-body
-#@-node:21:C=23:utils_rename
-#@+node:22:C=24:version checking (Dave Hein)
+#@-node:+0::utils_rename
+#@+node:+1::version checking (Dave Hein)
 #@+body
 #@+at
 # 
@@ -1726,8 +1726,8 @@ def CheckVersion( version, againstVersion, condition=">=", stringCompare="0.0.0.
 	raise "condition must be one of '>=', '>', '==', '!=', '<', or '<='."
 
 #@-body
-#@-node:22:C=24:version checking (Dave Hein)
-#@+node:23:C=25:readlineForceUnixNewline (Steven P. Schaefer)
+#@-node:+0::version checking (Dave Hein)
+#@+node:+1::readlineForceUnixNewline (Steven P. Schaefer)
 #@+body
 #@+at
 #  Stephen P. Schaefer 9/7/2002
@@ -1747,7 +1747,7 @@ def readlineForceUnixNewline(f):
 	return s
 
 #@-body
-#@-node:23:C=25:readlineForceUnixNewline (Steven P. Schaefer)
+#@-node:+0::readlineForceUnixNewline (Steven P. Schaefer)
 #@-others
 #@-body
 #@-node:0::@file leoUtils.py

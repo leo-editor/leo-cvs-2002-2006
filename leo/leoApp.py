@@ -12,7 +12,7 @@ import os, sys, Tkinter, traceback
 class LeoApp:
 
 	#@+others
-	#@+node:1:C=1:app.__init__
+	#@+node:+1::app.__init__
 	#@+body
 	def __init__(self, root):
 	
@@ -38,8 +38,8 @@ class LeoApp:
 		self.findFrame = None
 		self.pythonFrame = None
 	#@-body
-	#@-node:1:C=1:app.__init__
-	#@+node:2:C=2:app.finishCreate
+	#@-node:+0::app.__init__
+	#@+node:+1::app.finishCreate
 	#@+body
 	# Called when the gApp global has been defined.
 	
@@ -47,7 +47,7 @@ class LeoApp:
 	
 		
 		#@<< return false if not v2.1 or above >>
-		#@+node:1::<< return false if not v2.1 or above >>
+		#@+node:-1::<< return false if not v2.1 or above >>
 		#@+body
 		# Python 2.1 support.
 		
@@ -69,11 +69,11 @@ class LeoApp:
 			v22 = true # Just hope
 
 		#@-body
-		#@-node:1::<< return false if not v2.1 or above >>
+		#@-node:+0::<< return false if not v2.1 or above >>
 
 		
 		#@<< set loadDir >>
-		#@+node:2:C=3:<< set loadDir >>
+		#@+node:+1::<< set loadDir >>
 		#@+body
 		# loadDir should be the directory that contains leo.py
 		
@@ -90,11 +90,11 @@ class LeoApp:
 		# Trace hasn't been enabled yet.
 		# print `self.loadDir`
 		#@-body
-		#@-node:2:C=3:<< set loadDir >>
+		#@-node:+0::<< set loadDir >>
 
 		
 		#@<< set the default Leo icon >>
-		#@+node:3::<< set the default Leo icon >>
+		#@+node:+1::<< set the default Leo icon >>
 		#@+body
 		try: # 6/2/02: Try to set the default bitmap.
 			bitmap_name = os.path.join(self.loadDir,"Icons","LeoApp.ico")
@@ -108,14 +108,14 @@ class LeoApp:
 			# print "tcl version:" + `version`
 			
 			#@<< set v834 if version is 8.3.4 or greater >>
-			#@+node:1::<< set v834 if version is 8.3.4 or greater >>
+			#@+node:-2::<< set v834 if version is 8.3.4 or greater >>
 			#@+body
 			# 04-SEP-2002 DHEIN: simplify version check
 			# 04-SEP-2002 Stephen P. Schaefer: make sure v834 is set
 			v834 = CheckVersion(version, "8.3.4")
 
 			#@-body
-			#@-node:1::<< set v834 if version is 8.3.4 or greater >>
+			#@-node:+0::<< set v834 if version is 8.3.4 or greater >>
 
 		except:
 			print "exception getting version"
@@ -133,7 +133,7 @@ class LeoApp:
 					es("exception setting bitmap")
 					traceback.print_exc()
 		#@-body
-		#@-node:3::<< set the default Leo icon >>
+		#@-node:+2::<< set the default Leo icon >>
 
 		self.config = leoConfig.config()
 		
@@ -142,16 +142,16 @@ class LeoApp:
 		self.findFrame.top.withdraw()
 		return true # all went well.
 	#@-body
-	#@-node:2:C=2:app.finishCreate
-	#@+node:3::destroyAllGlobalWindows
+	#@-node:-1::app.finishCreate
+	#@+node:+1::destroyAllGlobalWindows
 	#@+body
 	def destroyAllGlobalWindows (self):
 	
 		if self.findFrame:
 			self.findFrame.top.destroy()
 	#@-body
-	#@-node:3::destroyAllGlobalWindows
-	#@+node:4:C=4:app.quit
+	#@-node:+0::destroyAllGlobalWindows
+	#@+node:+1::app.quit
 	#@+body
 	def quit(self):
 	
@@ -162,8 +162,8 @@ class LeoApp:
 		else: # closes Python window.
 			self.root.quit()
 	#@-body
-	#@-node:4:C=4:app.quit
-	#@+node:5::app.testDialogs
+	#@-node:+0::app.quit
+	#@+node:+1::app.testDialogs
 	#@+body
 	def testDialogs (self):
 	
@@ -171,7 +171,7 @@ class LeoApp:
 		d = leoDialog.leoDialog()
 		d.testDialogs()
 	#@-body
-	#@-node:5::app.testDialogs
+	#@-node:+0::app.testDialogs
 	#@-others
 #@-body
 #@-node:0::@file leoApp.py

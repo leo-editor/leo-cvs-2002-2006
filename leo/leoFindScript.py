@@ -16,7 +16,7 @@ import leo, string, re
 
 
 #@+others
-#@+node:1::changeAll
+#@+node:+1::changeAll
 #@+body
 def changeAll ( commander, findPat, changePat, bodyFlag = 1 ):
 	"""
@@ -34,8 +34,8 @@ def changeAll ( commander, findPat, changePat, bodyFlag = 1 ):
 		v, pos = changeNext(v, pos, findPat, changePat, bodyFlag)
 		pos = pos + n
 #@-body
-#@-node:1::changeAll
-#@+node:2::changeNext
+#@-node:+0::changeAll
+#@+node:+1::changeNext
 #@+body
 def changeNext ( v, pos, findPat, changePat, bodyFlag = 1 ):
 	"""
@@ -71,8 +71,8 @@ def changeNext ( v, pos, findPat, changePat, bodyFlag = 1 ):
 		print "setting head string: ", result
 	return v, pos
 #@-body
-#@-node:2::changeNext
-#@+node:3::changePrev
+#@-node:+0::changeNext
+#@+node:+1::changePrev
 #@+body
 def changePrev ( v, pos, findPat, changePat, bodyFlag = 1 ):
 	"""
@@ -107,8 +107,8 @@ def changePrev ( v, pos, findPat, changePat, bodyFlag = 1 ):
 		v.setHeadStringOrHeadline(s)
 	return v, pos
 #@-body
-#@-node:3::changePrev
-#@+node:4::findAll
+#@-node:+0::changePrev
+#@+node:+1::findAll
 #@+body
 def findAll ( commander, pattern, bodyFlag = 1 ):
 	"""
@@ -132,8 +132,8 @@ def findAll ( commander, pattern, bodyFlag = 1 ):
 		pos = pos + n
 	return result
 #@-body
-#@-node:4::findAll
-#@+node:5::findNext
+#@-node:+0::findAll
+#@+node:+1::findNext
 #@+body
 def findNext ( v, pos, pattern, bodyFlag = 1 ):
 	"""
@@ -162,8 +162,8 @@ def findNext ( v, pos, pattern, bodyFlag = 1 ):
 		pos = 0
 	return None, 0
 #@-body
-#@-node:5::findNext
-#@+node:6::findPrev
+#@-node:+0::findNext
+#@+node:+1::findPrev
 #@+body
 def findPrev ( v, pos, pattern, bodyFlag = 1 ):
 	"""
@@ -192,8 +192,8 @@ def findPrev ( v, pos, pattern, bodyFlag = 1 ):
 		pos = -1
 	return None, 0
 #@-body
-#@-node:6::findPrev
-#@+node:7::reChangeAll
+#@-node:+0::findPrev
+#@+node:+1::reChangeAll
 #@+body
 def reChangeAll ( commander, findPat, changePat, bodyFlag, reFlags = None ):
 	"""
@@ -213,8 +213,8 @@ def reChangeAll ( commander, findPat, changePat, bodyFlag, reFlags = None ):
 			v, pos, findPat, changePat, bodyFlag, reFlags)
 		pos = pos + n
 #@-body
-#@-node:7::reChangeAll
-#@+node:8::reChangeNext
+#@-node:+0::reChangeAll
+#@+node:+1::reChangeNext
 #@+body
 def reChangeNext ( v, pos, findPat, changePat, bodyFlag, reFlags = None ):
 	"""
@@ -251,8 +251,8 @@ def reChangeNext ( v, pos, findPat, changePat, bodyFlag, reFlags = None ):
 		v.setHeadStringOrHeadline(s)
 	return v, mo, pos
 #@-body
-#@-node:8::reChangeNext
-#@+node:9::reChangePrev
+#@-node:+0::reChangeNext
+#@+node:+1::reChangePrev
 #@+body
 def reChangePrev ( v, pos, findPat, changePat, bodyFlag, reFlags = None ):
 	"""
@@ -288,8 +288,8 @@ def reChangePrev ( v, pos, findPat, changePat, bodyFlag, reFlags = None ):
 		v.setHeadStringOrHeadline(s)
 	return v, mo, pos
 #@-body
-#@-node:9::reChangePrev
-#@+node:10::reFindAll
+#@-node:+0::reChangePrev
+#@+node:+1::reFindAll
 #@+body
 def reFindAll ( commander, findPat, bodyFlag, reFlags = None ):
 	"""
@@ -314,8 +314,8 @@ def reFindAll ( commander, findPat, bodyFlag, reFlags = None ):
 		pos = pos + n
 	return result
 #@-body
-#@-node:10::reFindAll
-#@+node:11::reFindNext
+#@-node:+0::reFindAll
+#@+node:+1::reFindNext
 #@+body
 def reFindNext ( v, pos, pattern, bodyFlag, reFlags = None ):
 	"""
@@ -348,8 +348,8 @@ def reFindNext ( v, pos, pattern, bodyFlag, reFlags = None ):
 		pos = 0
 	return None, None, 0
 #@-body
-#@-node:11::reFindNext
-#@+node:12::reFindPrev
+#@-node:+0::reFindNext
+#@+node:+1::reFindPrev
 #@+body
 def reFindPrev ( v, pos, pattern, bodyFlag, reFlags = None ):
 	"""
@@ -387,8 +387,8 @@ def reFindPrev ( v, pos, pattern, bodyFlag, reFlags = None ):
 		pos = 0
 	return None, None, 0
 #@-body
-#@-node:12::reFindPrev
-#@+node:13::lineAtPos
+#@-node:+0::reFindPrev
+#@+node:+1::lineAtPos
 #@+body
 def lineAtPos ( s, pos ):
 	"""
@@ -413,8 +413,8 @@ def lineAtPos ( s, pos ):
 	list = string.split(s,"\n")
 	return list[0]
 #@-body
-#@-node:13::lineAtPos
-#@+node:14::printFindList
+#@-node:+0::lineAtPos
+#@+node:+1::printFindList
 #@+body
 def printFindList( findList, bodyFlag = 1 ):
 	"""
@@ -432,7 +432,7 @@ def printFindList( findList, bodyFlag = 1 ):
 				s = v.headString()
 			print lineAtPos(s, pos)
 #@-body
-#@-node:14::printFindList
+#@-node:+0::printFindList
 #@-others
 #@-body
 #@-node:0::@file leoFindScript.py
