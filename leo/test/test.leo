@@ -2,7 +2,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="5846" clone_windows="0"/>
 <globals body_outline_ratio="0.465380249716">
-	<global_window_position top="70" left="421" height="881" width="856"/>
+	<global_window_position top="39" left="646" height="881" width="611"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences>
@@ -854,7 +854,7 @@
 <v t="ekr.20040713130853.32"><vh>massageFunctionArgs</vh></v>
 <v t="ekr.20040713130853.33"><vh>massageFunctionHead (sets gClassName)</vh></v>
 <v t="ekr.20040713130853.34"><vh>massageFunctionBody</vh>
-<v t="ekr.20040713130853.35" a="E"><vh>massageIvars</vh></v>
+<v t="ekr.20040713130853.35"><vh>massageIvars</vh></v>
 <v t="ekr.20040713130853.36"><vh>removeCasts</vh></v>
 <v t="ekr.20040713130853.37"><vh>removeTypeNames</vh></v>
 </v>
@@ -923,7 +923,7 @@
 <v t="ekr.20040713150856.37"><vh>skip_c_id</vh></v>
 <v t="ekr.20040713150856.38"><vh>skip_id</vh></v>
 <v t="ekr.20040713150856.39"><vh>skip_line, skip_to_end_of_line</vh></v>
-<v t="ekr.20040713150856.40" a="E"><vh>skip_long</vh></v>
+<v t="ekr.20040713150856.40"><vh>skip_long</vh></v>
 <v t="ekr.20040713150856.41"><vh>skip_matching_delims</vh></v>
 <v t="ekr.20040713150856.42"><vh>skip_nl</vh></v>
 <v t="ekr.20040713150856.43"><vh>skip_non_ws</vh></v>
@@ -933,8 +933,18 @@
 </v>
 <v t="ekr.20040713150856.47"><vh>splitLines &amp; joinLines</vh></v>
 </v>
+<v t="ekr.20040714151314"><vh>Parser: no longer used</vh>
+<v t="ekr.20040714082939.2"><vh>parse_cond</vh></v>
+<v t="ekr.20040714084550"><vh>parse_def</vh></v>
+<v t="ekr.20040714082939.1"><vh>parse_if</vh></v>
+<v t="ekr.20040714082939.3"><vh>parse_let</vh></v>
+<v t="ekr.20040714085204.1"><vh>parse_loop</vh></v>
+<v t="ekr.20040714084550.1"><vh>parse_prog</vh></v>
+<v t="ekr.20040714085754"><vh>parse_set</vh></v>
+<v t="ekr.20040714085204"><vh>&lt;&lt; parse block into tree &gt;&gt; (no longer used)</vh></v>
 </v>
-<v t="ekr.20040713131350" a="E"><vh>-before-</vh>
+</v>
+<v t="ekr.20040713131350"><vh>-before-</vh>
 <v t="ekr.20040713132127.1"><vh>igrep.el</vh>
 <v t="ekr.20040713132127.2"><vh>provide</vh></v>
 <v t="ekr.20040713132127.3"><vh>const igrep-version</vh></v>
@@ -1008,16 +1018,16 @@
 </v>
 <v t="ekr.20040713131350.1"><vh>-after-</vh></v>
 </v>
-<v t="ekr.20040713130853.8" a="E" tnodeList="ekr.20040713130853.8,ekr.20040713150037,ekr.20040713150037.1,ekr.20040713150712,ekr.20040713173923,ekr.20040713174349,ekr.20040713180208,ekr.20040714091940,ekr.20040713164604,ekr.20040714095247,ekr.20040713144036,ekr.20040713144036.1,ekr.20040714061625,ekr.20040714061625.1,ekr.20040714061625.2,ekr.20040713152809,ekr.20040713193437,ekr.20040713161629.1,ekr.20040713194021,ekr.20040713152318,ekr.20040713151556.1,ekr.20040713160302,ekr.20040714060941,ekr.20040714053807.1,ekr.20040714054620.1,ekr.20040713150314.1,ekr.20040713144926,ekr.20040713154118,ekr.20040713200126,ekr.20040713211010,ekr.20040713161629.2,ekr.20040713205718,ekr.20040714074445,ekr.20040714074445,ekr.20040714072448,ekr.20040714082939,ekr.20040714085204,ekr.20040714082939.2,ekr.20040714084550,ekr.20040714082939.1,ekr.20040714082939.3,ekr.20040714085204.1,ekr.20040714084550.1,ekr.20040714085754,ekr.20040714091940.1"><vh>@file ../src/elisp2py.py</vh>
-<v t="ekr.20040713150037" a="E"><vh>class tok</vh>
+<v t="ekr.20040713130853.8" a="E" tnodeList="ekr.20040713130853.8,ekr.20040713150037,ekr.20040713150037.1,ekr.20040714170021,ekr.20040713150712,ekr.20040713173923,ekr.20040713174349,ekr.20040713180208,ekr.20040713164604,ekr.20040714095247,ekr.20040713144036,ekr.20040713144036.1,ekr.20040714061625,ekr.20040714061625.1,ekr.20040714061625.2,ekr.20040713152809,ekr.20040713193437,ekr.20040713161629.1,ekr.20040713194021,ekr.20040713152318,ekr.20040713151556.1,ekr.20040713160302,ekr.20040714060941,ekr.20040714053807.1,ekr.20040714054620.1,ekr.20040713150314.1,ekr.20040713144926,ekr.20040713154118,ekr.20040713200126,ekr.20040713211010,ekr.20040713161629.2,ekr.20040713205718,ekr.20040714074445,ekr.20040714074445,ekr.20040714072448,ekr.20040714082939,ekr.20040714155341,ekr.20040714154314,ekr.20040714091940.1"><vh>@file ../src/elisp2py.py</vh>
+<v t="ekr.20040713150037"><vh>class tok</vh>
 <v t="ekr.20040713150037.1" a="E"><vh>tok.__init__</vh></v>
+<v t="ekr.20040714170021"><vh>tok.isParseTok</vh></v>
 <v t="ekr.20040713150712"><vh>tok.copy</vh></v>
 <v t="ekr.20040713173923"><vh>tok.match</vh></v>
 <v t="ekr.20040713174349"><vh>tok.dump</vh></v>
 <v t="ekr.20040713180208" a="E"><vh>tok.toString &amp; allies</vh>
-<v t="ekr.20040714091940"><vh>tok.parseTokToString</vh></v>
 <v t="ekr.20040713164604"><vh>tok.wsToString</vh></v>
-<v t="ekr.20040714095247" a="TV"><vh>tok.tokValToString</vh></v>
+<v t="ekr.20040714095247"><vh>tok.parseTreeToString</vh></v>
 </v>
 </v>
 <v t="ekr.20040713144036" a="E"><vh>class elisp2pyClass</vh>
@@ -1038,31 +1048,29 @@
 <v t="ekr.20040714053807.1"><vh>isStatement</vh></v>
 <v t="ekr.20040714054620.1"><vh>matchTokens</vh></v>
 <v t="ekr.20040713150314.1"><vh>replaceAll (not used yet)</vh></v>
-<v t="ekr.20040713144926" a="E"><vh>tokenize &amp; allies</vh>
+<v t="ekr.20040713144926"><vh>tokenize &amp; allies</vh>
 <v t="ekr.20040713154118"><vh>skipString</vh></v>
 </v>
 </v>
 <v t="ekr.20040713200126"><vh>Converters</vh>
 <v t="ekr.20040713211010"><vh>convert (main line)</vh></v>
-<v t="ekr.20040713161629.2" a="EM"><vh>createPythonIndentation</vh></v>
+<v t="ekr.20040713161629.2" a="M"><vh>createPythonIndentation</vh></v>
 <v t="ekr.20040713205718"><vh>createIndentedBlock</vh>
 <v t="ekr.20040714074445"><vh>&lt;&lt; insert nl and ws tokens &gt;&gt;</vh></v>
 </v>
 <v t="ekr.20040714072448"><vh>removeBlankLines</vh></v>
 </v>
 <v t="ekr.20040714082939" a="E"><vh>Parser &amp; allies</vh>
-<v t="ekr.20040714085204"><vh>&lt;&lt; parse block into tree &gt;&gt;</vh></v>
-<v t="ekr.20040714082939.2"><vh>parse_cond</vh></v>
-<v t="ekr.20040714084550"><vh>parse_def</vh></v>
-<v t="ekr.20040714082939.1"><vh>parse_if</vh></v>
-<v t="ekr.20040714082939.3"><vh>parse_let</vh></v>
-<v t="ekr.20040714085204.1"><vh>parse_loop</vh></v>
-<v t="ekr.20040714084550.1"><vh>parse_prog</vh></v>
-<v t="ekr.20040714085754"><vh>parse_set</vh></v>
-<v t="ekr.20040714091940.1"><vh>block</vh></v>
+<v t="ekr.20040714155341" a="TV"><vh>parse</vh>
+<v t="ekr.20040714154314"><vh>&lt;&lt; give error message about mismatched parens &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20040714091940.1" a="E"><vh>block</vh></v>
 </v>
 </v>
 </v>
+</v>
+<v t="ekr.20040714161324" a="E"><vh>ref</vh>
+<v t="ekr.20040713132127.68"><vh>igrep-read-file-name</vh></v>
 </v>
 </vnodes>
 <tnodes>
@@ -2168,7 +2176,7 @@ import leoGlobals as g
 print g.app.config.redirect_execute_script_output_to_log_pane</t>
 <t tx="EKR.20040627103732">@ignore</t>
 <t tx="EKR.20040627103801"></t>
-<t tx="EKR.20040627103902" lineYOffset="4b032e" icons="5d7100287d710128550577686572657102550a6265666f726549636f6e710355047870616471044b025504747970657105550466696c6571066806582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286805680668084afdffffff6806582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6802550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e"></t>
+<t tx="EKR.20040627103902" lineYOffset="4b032e" icons="5d7100287d7101285504747970657102550466696c65710355047870616471044b02550577686572657105550a6265666f726549636f6e71066803582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286802680368084afdffffff6803582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6805550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e"></t>
 <t tx="EKR.20040627121836">import leoGlobals as g
 
 c = g.top() ; p = c.currentPosition()
@@ -2306,7 +2314,7 @@ print s ; g.es(s)</t>
 
 - Used iterators in test utils.
 - Used "import leoGlobals as g" style.</t>
-<t tx="ekr.20040317101155" lineYOffset="4b032e" icons="5d7100287d7101285504747970657102550466696c65710355047870616471044b02550577686572657105550a6265666f726549636f6e71066803582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286802680368084afdffffff6803582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6805550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">import leoGlobals as g
+<t tx="ekr.20040317101155" lineYOffset="4b032e" icons="5d7100287d710128550577686572657102550a6265666f726549636f6e710355047870616471044b025504747970657105550466696c6571066806582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286805680668084afdffffff6806582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6802550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">import leoGlobals as g
 
 c = g.top()
 
@@ -7894,7 +7902,10 @@ if (&lt; emacs-major-version 20) "\C-c\C-e")  -&gt; if &lt;cond&gt;: &lt;val&gt;
 
     &lt;&lt; define elisp constants &gt;&gt;
     &lt;&lt; define elisp statements &gt;&gt;
-    &lt;&lt; define elisp functions &gt;&gt;</t>
+    &lt;&lt; define elisp functions &gt;&gt;
+    
+    self.allStatements = list(self.statements)
+    self.allStatements.extend(self.functions)</t>
 <t tx="ekr.20040713144336"></t>
 <t tx="ekr.20040713144926">def tokenize (self,s):
     
@@ -7956,11 +7967,11 @@ if (&lt; emacs-major-version 20) "\C-c\C-e")  -&gt; if &lt;cond&gt;: &lt;val&gt;
     """ A class representing an elisp or python token"""
     
     @others</t>
-<t tx="ekr.20040713150037.1">def __init__ (self,kind,val=""):
+<t tx="ekr.20040713150037.1">def __init__ (self,kind,val="",parseTree=None):
     
     self.kind = kind
     self.val = val
-    self.isParseTok = type(val) == type([])</t>
+    self.parseTree = parseTree</t>
 <t tx="ekr.20040713150314.1">def replaceAll (self,tokens,findKind,changeTok):
     
     self = e
@@ -8509,16 +8520,22 @@ def warning (self,message):
     val = tok.val or ""
     val = g.toEncodedString(val,g.app.tkEncoding)
     
-    if verbose == 2:
-        if tok.isParseTok: return "%s:%s" % tok.parseTokToString()
-        elif len(tok.kind) == 1:    return tok.kind
+    if tok.isParseTok():
+        parseTree = tok.parseTreeToString(tok.parseTree)
+        if tok.val == "TREE":
+            return "%s"% (parseTree)
+        else:
+            return "%s: %s"% (tok.val,parseTree)
+    
+    elif verbose == 2:
+        if len(tok.kind) == 1:    return tok.kind
         elif tok.kind=="form-feed": return "\nform-feed\n"
-        elif tok.kind == "comment": return "\n%s" % val
+        elif tok.kind=="comment":   return "&lt;comment&gt;"
+        elif tok.kind=="string":    return "&lt;string&gt;"
         else:                       return val
     
     elif verbose == 3:
-        if tok.isParseTok: return "%9s: %s" % tok.parseTokToString()
-        elif tok.kind == '\n':      return "%9s:" % "newline"
+        if tok.kind == '\n':      return "%9s:" % "newline"
         elif tok.kind=="form-feed": return "%9s:" % "form-feed"
         elif len(tok.kind)==1:      return "%9s:" % tok.kind
         elif tok.kind == "ws":
@@ -8564,16 +8581,18 @@ print</t>
     e.tokens = e.tokenize(p.bodyString())
     e.tokens = e.deleteTokens(e.tokens,tok("ws"))
     e.tokens = e.deleteTokens(e.tokens,tok('\n'))
-    if 1:
-        e.tokens = e.parse(e.tokens)
-    else: # not yet
+    e.tokens = e.parse(e.tokens)
+
+    if 0: # Old code: superceded by parser.
         e.tokens = e.createPythonIndentation(e.tokens)
         e.tokens = e.removeBlankLines(e.tokens)</t>
 <t tx="ekr.20040714053807.1">def isStatement (self,tokens,i):
     
+    """Returns the statement or function f if (f is at tokens[i]."""
+    
     e = self
     
-    for s in e.statements:
+    for s in e.allStatements:
         toks = [tok('('),tok('id',s)]
         if e.matchTokens(tokens,i,toks):
             return s
@@ -8612,7 +8631,7 @@ print</t>
     "cond",
     "if",
     "let","let*",
-    "prog","progn",
+    "prog","prog1","progn",
     "set","setq",
     "unless","when","while",
 )
@@ -8648,37 +8667,21 @@ print</t>
 nl = tok('\n','\n')
 tokens.insert(i,nl)
 tokens.insert(i+1,ws)</t>
-<t tx="ekr.20040714082939">def parse (self,tokens):
-    
-    """A recursive-descent parser for elisp."""
-    
-    e = self
-    i = 0
-    while i &lt; len(tokens):
-        statement = e.isStatement(tokens,i)
-        if not statement:
-            i += 1 ; continue
-        j = e.findMatchingBracket(tokens,i)
-        if j is None:
-            e.error("No matching ')' for %s statement" % statement)
-            i += 1 ; continue
-        # Strip off the matching parens.
-        assert e.isMatchingBracket(tokens,i,j)
-        block = tokens[i+1:j]
-        &lt;&lt; parse block into tree &gt;&gt;
-        if tree:
-            # Replace the tokens with the parse tree.
-            g.trace(type(tree))
-            tokens[i:j] = [tree]
-            # No need to rescan: inner parsers call parse.
-            i = j
-        else:
-            i += 1
-            
-    return tokens</t>
+<t tx="ekr.20040714082939"></t>
 <t tx="ekr.20040714082939.1">def parse_if (self,tokens,statement):
     
     e = self
+    
+    i = 0 ; blocks = []
+    while 1:
+        i,block = e.block(tokens,i+1)
+        if i is None: break
+        else: blocks.append(block)
+        
+    tree = tok(statement,blocks)
+    return tree
+    
+    
     cond_block,then_block,else_block = None,None,None
     # e.dump(tokens,tag=statement)
     
@@ -8693,8 +8696,7 @@ tokens.insert(i+1,ws)</t>
     else:
         tree = None
         
-    return tree
-</t>
+    return tree</t>
 <t tx="ekr.20040714082939.2">def parse_cond (self,tokens,statement):
     
     e = self
@@ -8744,59 +8746,87 @@ else: tree = None</t>
     e = self
     
     e.dump(tokens,tag=statement)</t>
-<t tx="ekr.20040714091940">def parseTokToString (self):
+<t tx="ekr.20040714091940.1">def block (self,tokens):
     
-    tok = self
-
-    return self.kind, tok.tokValToString(tok.val,verbose=2)</t>
-<t tx="ekr.20040714091940.1">def block (self,tokens,i):
+    """Parse a block of tokens."""
     
     e = self
-    # g.trace(tokens[i])
-    if i &gt;= len(tokens):
-        return None,None
-    elif tokens[i].kind == '(':
-        j = e.findMatchingBracket(tokens,i)
-        if j is None:
-            # To do: print error message?
-            return None,None
+
+    i = 0 ; result = []
+    while i &lt; len(tokens):
+        if tokens[i].kind == '(':
+            j = e.findMatchingBracket(tokens,i)
+            if j is None:
+                # To do: print error message.
+                i += 1
+            else:
+                # Strip off the matching parens.
+                block = tokens[i+1:j]
+                # Recursively parse this block.
+                result.append(e.parse(block,topLevel=False))
+                i = j + 1
         else:
-            # Strip off the matching brackets
-            assert e.isMatchingBracket(tokens,i,j)
-            block = tokens[i+1:j]
-            ## To do: recursively parse this block.
-            if 0:
-                print
-                print "block..."
-                for t in block:
-                    print '  ',t.toString(verbose=3)
-            return j,block
-    elif tokens[i].kind in ("string","comment"):
-        # This is probably an error.  But shouldn't we strip comments??
-        return None,None
-    else:
-        # Assume anything else is valid.
-        block = tokens[i:i+1]
-        return i+1,block</t>
-<t tx="ekr.20040714095247">def tokValToString (self,val,verbose,level=0):
+            result.append(tokens[i])
+            i += 1
+
+    return result</t>
+<t tx="ekr.20040714095247">def parseTreeToString (self,parseTree,level=0):
 
     dummy_tok = tok("dummy_tok")
-    
-    result = []
-    if val is None:
+    result = [] ; levelSpaces = ' '*2*level
+
+    if parseTree is None:
         result.append("None")
-    if type(val) == type(dummy_tok):
-        result.append(val.toString(verbose)+' ')
-    elif type(val) == type([]):
-        if level &gt; 0:
-            result.append('\n%s' % '\t' *level)
-        result.append('[')
-        for inner_val in val:
-            result.append(self.tokValToString(inner_val,verbose,level+1))
+
+    if type(parseTree) == type(dummy_tok):
+        result.append(parseTree.toString(verbose=2)+' ')
+
+    elif type(parseTree) == type([]):
+        result.append('\n%s[' % levelSpaces)
+        for item in parseTree:
+            result.append(self.parseTreeToString(item,level+1))
         result.append(']')
+
     else:
-        result.append("unknown type in valToString")
+        result.append("unknown type in parseTreeToString")
         
     return ''.join(result)</t>
+<t tx="ekr.20040714151314"></t>
+<t tx="ekr.20040714154314">if fTok:
+    e.error("No (%s has no matching ')'" % fTok.kind)
+else:
+    e.error("Mismatched parens")</t>
+<t tx="ekr.20040714155341">def parse (self,tokens,topLevel=True):
+    
+    """A recursive-descent parser for elisp."""
+    
+    e = self
+    i = 0
+    while i &lt; len(tokens):
+        # g.trace(tokens[i].kind)
+        if tokens[i].kind != '(':
+            i += 1 ; continue
+        j = e.findMatchingBracket(tokens,i)
+        fTok = i+1 &lt; len(tokens) and tokens[i+1]
+        if j is None:
+            &lt;&lt; give error message about mismatched parens &gt;&gt;
+            i += 1 ; continue
+        # Strip off the matching parens.
+        block = tokens[i+1:j]
+        parseTree = e.block(block)
+        # A top-level token is helpful for dumping, etc.
+        if topLevel: token = tok('TREE','TREE',parseTree)
+        else:        token = parseTree
+        tokens[i:j+1] = [token]
+        # We are replacing everyting by a _single_ token.
+        i = i + 1 
+            
+    return tokens</t>
+<t tx="ekr.20040714161324">@language elisp</t>
+<t tx="ekr.20040714170021">def isParseTok (self):
+    
+    tok = self
+    
+    return type(tok.parseTree) == type([])</t>
 </tnodes>
 </leo_file>

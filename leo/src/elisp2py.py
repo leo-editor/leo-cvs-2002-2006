@@ -18,13 +18,21 @@ class tok:
     
     #@    @+others
     #@+node:tok.__init__
-    def __init__ (self,kind,val=""):
+    def __init__ (self,kind,val="",parseTree=None):
         
         self.kind = kind
         self.val = val
-        self.isParseTok = type(val) == type([])
+        self.parseTree = parseTree
     #@nonl
     #@-node:tok.__init__
+    #@+node:tok.isParseTok
+    def isParseTok (self):
+        
+        tok = self
+        
+        return type(tok.parseTree) == type([])
+    #@nonl
+    #@-node:tok.isParseTok
     #@+node:tok.copy
     def copy (self,token):
         
@@ -68,30 +76,28 @@ class tok:
         val = tok.val or ""
         val = g.toEncodedString(val,g.app.tkEncoding)
         
-        if verbose == 2:
-            if tok.isParseTok: return "%s:%s" % tok.parseTokToString()
-            elif len(tok.kind) == 1:    return tok.kind
+        if tok.isParseTok():
+            parseTree = tok.parseTreeToString(tok.parseTree)
+            if tok.val == "TREE":
+                return "%s"% (parseTree)
+            else:
+                return "%s: %s"% (tok.val,parseTree)
+        
+        elif verbose == 2:
+            if len(tok.kind) == 1:    return tok.kind
             elif tok.kind=="form-feed": return "\nform-feed\n"
-            elif tok.kind == "comment": return "\n%s" % val
+            elif tok.kind=="comment":   return "<comment>"
+            elif tok.kind=="string":    return "<string>"
             else:                       return val
         
         elif verbose == 3:
-            if tok.isParseTok: return "%9s: %s" % tok.parseTokToString()
-            elif tok.kind == '\n':      return "%9s:" % "newline"
+            if tok.kind == '\n':      return "%9s:" % "newline"
             elif tok.kind=="form-feed": return "%9s:" % "form-feed"
             elif len(tok.kind)==1:      return "%9s:" % tok.kind
             elif tok.kind == "ws":
                     return "%9s: %s" % (tok.kind,tok.wsToString(val))
             else:   return "%9s: <%s>" % (tok.kind,val)
     #@nonl
-    #@+node:tok.parseTokToString
-    def parseTokToString (self):
-        
-        tok = self
-    
-        return self.kind, tok.tokValToString(tok.val,verbose=2)
-    #@nonl
-    #@-node:tok.parseTokToString
     #@+node:tok.wsToString
     def wsToString (self,ws):
         
@@ -118,29 +124,30 @@ class tok:
             return ''.join(result)
     #@nonl
     #@-node:tok.wsToString
-    #@+node:tok.tokValToString
-    def tokValToString (self,val,verbose,level=0):
+    #@+node:tok.parseTreeToString
+    def parseTreeToString (self,parseTree,level=0):
     
         dummy_tok = tok("dummy_tok")
-        
-        result = []
-        if val is None:
+        result = [] ; levelSpaces = ' '*2*level
+    
+        if parseTree is None:
             result.append("None")
-        if type(val) == type(dummy_tok):
-            result.append(val.toString(verbose)+' ')
-        elif type(val) == type([]):
-            if level > 0:
-                result.append('\n%s' % '\t' *level)
-            result.append('[')
-            for inner_val in val:
-                result.append(self.tokValToString(inner_val,verbose,level+1))
+    
+        if type(parseTree) == type(dummy_tok):
+            result.append(parseTree.toString(verbose=2)+' ')
+    
+        elif type(parseTree) == type([]):
+            result.append('\n%s[' % levelSpaces)
+            for item in parseTree:
+                result.append(self.parseTreeToString(item,level+1))
             result.append(']')
+    
         else:
-            result.append("unknown type in valToString")
+            result.append("unknown type in parseTreeToString")
             
         return ''.join(result)
     #@nonl
-    #@-node:tok.tokValToString
+    #@-node:tok.parseTreeToString
     #@-node:tok.toString & allies
     #@-others
 #@nonl
@@ -171,7 +178,7 @@ class elisp2pyClass:
             "cond",
             "if",
             "let","let*",
-            "prog","progn",
+            "prog","prog1","progn",
             "set","setq",
             "unless","when","while",
         )
@@ -191,6 +198,9 @@ class elisp2pyClass:
         #@nonl
         #@-node:<< define elisp functions >>
         #@nl
+        
+        self.allStatements = list(self.statements)
+        self.allStatements.extend(self.functions)
     #@nonl
     #@-node:e.__init__
     #@+node:Utils
@@ -303,9 +313,11 @@ class elisp2pyClass:
     #@+node:isStatement
     def isStatement (self,tokens,i):
         
+        """Returns the statement or function f if (f is at tokens[i]."""
+        
         e = self
         
-        for s in e.statements:
+        for s in e.allStatements:
             toks = [tok('('),tok('id',s)]
             if e.matchTokens(tokens,i,toks):
                 return s
@@ -425,9 +437,9 @@ class elisp2pyClass:
         e.tokens = e.tokenize(p.bodyString())
         e.tokens = e.deleteTokens(e.tokens,tok("ws"))
         e.tokens = e.deleteTokens(e.tokens,tok('\n'))
-        if 1:
-            e.tokens = e.parse(e.tokens)
-        else: # not yet
+        e.tokens = e.parse(e.tokens)
+    
+        if 0: # Old code: superceded by parser.
             e.tokens = e.createPythonIndentation(e.tokens)
             e.tokens = e.removeBlankLines(e.tokens)
     #@nonl
@@ -519,156 +531,68 @@ class elisp2pyClass:
     #@-node:removeBlankLines
     #@-node:Converters
     #@+node:Parser & allies
-    def parse (self,tokens):
+    #@+node:parse
+    def parse (self,tokens,topLevel=True):
         
         """A recursive-descent parser for elisp."""
         
         e = self
         i = 0
         while i < len(tokens):
-            statement = e.isStatement(tokens,i)
-            if not statement:
+            # g.trace(tokens[i].kind)
+            if tokens[i].kind != '(':
                 i += 1 ; continue
             j = e.findMatchingBracket(tokens,i)
+            fTok = i+1 < len(tokens) and tokens[i+1]
             if j is None:
-                e.error("No matching ')' for %s statement" % statement)
+                #@            << give error message about mismatched parens >>
+                #@+node:<< give error message about mismatched parens >>
+                if fTok:
+                    e.error("No (%s has no matching ')'" % fTok.kind)
+                else:
+                    e.error("Mismatched parens")
+                #@nonl
+                #@-node:<< give error message about mismatched parens >>
+                #@nl
                 i += 1 ; continue
             # Strip off the matching parens.
-            assert e.isMatchingBracket(tokens,i,j)
             block = tokens[i+1:j]
-            #@        << parse block into tree >>
-            #@+node:<< parse block into tree >>
-            if statement == "cond":
-                tree = e.parse_cond(block,statement)
-            
-            elif statement in ("defconst","defun","defsubst","defvar"):
-                tree = e.parse_def(block,statement)
-            
-            elif statement == "if":
-                tree = e.parse_if(block,statement)
-            
-            elif statement in ("let","let*"):
-                tree = e.parse_let(block,statement)
-            
-            elif statement in ("set","setq"):
-                tree = e.parse_set(block,statement)
-            
-            elif statement in ("unless","when","while"):
-                tree = e.parse_loop(block,statement)
-            
-            else: tree = None
-            #@nonl
-            #@-node:<< parse block into tree >>
-            #@nl
-            if tree:
-                # Replace the tokens with the parse tree.
-                g.trace(type(tree))
-                tokens[i:j] = [tree]
-                # No need to rescan: inner parsers call parse.
-                i = j
-            else:
-                i += 1
+            parseTree = e.block(block)
+            # A top-level token is helpful for dumping, etc.
+            if topLevel: token = tok('TREE','TREE',parseTree)
+            else:        token = parseTree
+            tokens[i:j+1] = [token]
+            # We are replacing everyting by a _single_ token.
+            i = i + 1 
                 
         return tokens
     #@nonl
-    #@+node:parse_cond
-    def parse_cond (self,tokens,statement):
-        
-        e = self
-        
-        e.dump(tokens,tag=statement)
-    #@nonl
-    #@-node:parse_cond
-    #@+node:parse_def
-    def parse_def (self,tokens,statement):
-        
-        e = self
-        
-        e.dump(tokens,tag=statement)
-    #@nonl
-    #@-node:parse_def
-    #@+node:parse_if
-    def parse_if (self,tokens,statement):
-        
-        e = self
-        cond_block,then_block,else_block = None,None,None
-        # e.dump(tokens,tag=statement)
-        
-        i,cond_block = e.block(tokens,1)
-        if i is not None:
-            i,then_block = e.block(tokens,i+1)
-            if i is not None:
-                i,else_block = e.block(tokens,i+1)
-                
-        if cond_block and then_block:
-            tree = tok("if",[cond_block,then_block,else_block])
-        else:
-            tree = None
-            
-        return tree
-    #@-node:parse_if
-    #@+node:parse_let
-    def parse_let (self,tokens,statement):
-        
-        e = self
-        
-        e.dump(tokens,tag=statement)
-    #@nonl
-    #@-node:parse_let
-    #@+node:parse_loop
-    def parse_loop (self,tokens,statement):
-        
-        e = self
-        
-        e.dump(tokens,tag=statement)
-    #@nonl
-    #@-node:parse_loop
-    #@+node:parse_prog
-    def parse_prog (self,tokens,statement):
-        
-        e = self
-        
-        e.dump(tokens,tag=statement)
-    #@nonl
-    #@-node:parse_prog
-    #@+node:parse_set
-    def parse_set (self,tokens,statement):
-        
-        e = self
-        
-        e.dump(tokens,tag=statement)
-    #@nonl
-    #@-node:parse_set
+    #@-node:parse
     #@+node:block
-    def block (self,tokens,i):
+    def block (self,tokens):
+        
+        """Parse a block of tokens."""
         
         e = self
-        # g.trace(tokens[i])
-        if i >= len(tokens):
-            return None,None
-        elif tokens[i].kind == '(':
-            j = e.findMatchingBracket(tokens,i)
-            if j is None:
-                # To do: print error message?
-                return None,None
+    
+        i = 0 ; result = []
+        while i < len(tokens):
+            if tokens[i].kind == '(':
+                j = e.findMatchingBracket(tokens,i)
+                if j is None:
+                    # To do: print error message.
+                    i += 1
+                else:
+                    # Strip off the matching parens.
+                    block = tokens[i+1:j]
+                    # Recursively parse this block.
+                    result.append(e.parse(block,topLevel=False))
+                    i = j + 1
             else:
-                # Strip off the matching brackets
-                assert e.isMatchingBracket(tokens,i,j)
-                block = tokens[i+1:j]
-                ## To do: recursively parse this block.
-                if 0:
-                    print
-                    print "block..."
-                    for t in block:
-                        print '  ',t.toString(verbose=3)
-                return j,block
-        elif tokens[i].kind in ("string","comment"):
-            # This is probably an error.  But shouldn't we strip comments??
-            return None,None
-        else:
-            # Assume anything else is valid.
-            block = tokens[i:i+1]
-            return i+1,block
+                result.append(tokens[i])
+                i += 1
+    
+        return result
     #@nonl
     #@-node:block
     #@-node:Parser & allies
