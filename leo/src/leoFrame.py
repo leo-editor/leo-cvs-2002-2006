@@ -872,7 +872,10 @@ class leoTree:
                             frame.bringToFront()
                     else:
                         import webbrowser
-                        webbrowser.open(url)
+                        
+                        # Mozilla throws a weird exception, then opens the file!
+                        try: webbrowser.open(url)
+                        except: pass
                 except:
                     g.es("exception opening " + url)
                     g.es_exception()
