@@ -3,7 +3,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="4438" clone_windows="0"/>
 <globals body_outline_ratio="0.494983277592">
-	<global_window_position top="30" left="232" height="897" width="816"/>
+	<global_window_position top="30" left="232" height="897" width="983"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -31,7 +31,7 @@ marks="pap.20041008200028,pap.20041006194759,pap.20041008224625,pap.200410061930
 </v>
 <v t="ekr.20041113110210"><vh>@button Spelling...</vh></v>
 </v>
-<v t="edream.110203113231.618" a="TV"><vh>Plugins</vh>
+<v t="edream.110203113231.618"><vh>Plugins</vh>
 <v t="EKR.20040517090508"><vh>  Enable plugins by changing pluginsManager.txt or using plugin_manager plugin</vh>
 <v t="edream.120603093808"><vh>@thin pluginsManager.txt</vh></v>
 </v>
@@ -169,12 +169,16 @@ marks="pap.20041008200028,pap.20041006194759,pap.20041008224625,pap.200410061930
 </v>
 </v>
 <v t="ekr.20041030092101"><vh>Dyna plugins by e</vh>
-<v t="ekr.20050329163946"><vh> dyna plugin 139</vh>
+<v t="ekr.20050329163946" a="E"><vh> dyna plugin 139</vh>
 <v t="ekr.20050329163946.1"><vh>&lt;&lt; insertAplug &gt;&gt;</vh></v>
-<v t="ekr.20050329163946.2"><vh>@thin dyna_menu.py</vh></v>
-<v t="ekr.20050329163946.97"><vh>@thin dynacommon.py</vh></v>
+<v t="ekr.20050329163946.2"
+expanded="ekr.20050329163946.91,"><vh>@thin dyna_menu.py</vh></v>
+<v t="ekr.20050329163946.97"
+expanded="ekr.20050329163946.98,ekr.20050329163946.100,ekr.20050329163946.121,"><vh>@thin dynacommon.py</vh></v>
 <v t="ekr.20050329163946.125" tnodeList="ekr.20050329163946.125"><vh>@nosent dyna_menu.ini</vh></v>
-<v t="ekr.20050329163946.126"><vh>@thin dyna.txt</vh></v>
+<v t="ekr.20050329163946.126"
+expanded="ekr.20050329163946.129,"><vh>@thin dyna.txt</vh></v>
+<v t="ekr.20050328091022.74" a="E"><vh>@thin exSButton.py</vh></v>
 </v>
 </v>
 <v t="edream.110203113231.872"><vh>Enhanced nodes...</vh>
@@ -748,7 +752,7 @@ marks="mork.20040930091035,mork.20040930091624,"><vh>@thin chapters.py</vh></v>
 </v>
 <v t="ekr.20050402080206.8" a="E"
 marks="ekr.20050402080206.34,ekr.20050402080206.38,"
-expanded="ekr.20050402080206.30,"><vh>@thin LeoN.py</vh></v>
+expanded="ekr.20050402080206.22,ekr.20050402080206.30,"><vh>@thin LeoN.py</vh></v>
 </v>
 <v t="EKR.20040517080555"><vh>Menus &amp; translations</vh>
 <v t="ekr.20041019072632"><vh>Chinese:  Must use @file due to problems with cvs</vh>
@@ -921,7 +925,7 @@ expanded="ekr.20050331064504,"><vh>@thin golf.py</vh></v>
 </v>
 </v>
 </v>
-<v t="ekr.20050226090248"><vh>New/updated from Leo User</vh>
+<v t="ekr.20050226090248" a="TV"><vh>New/updated from Leo User</vh>
 <v t="mork.20041020082242.1"><vh>@thin base64Packager.py</vh></v>
 <v t="mork.20041018162155.1"><vh>@thin EditAttributes.py</vh></v>
 <v t="mork.20041018091414.1"><vh>@thin fastGotoNode.py</vh></v>
