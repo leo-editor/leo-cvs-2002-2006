@@ -4001,7 +4001,6 @@ class baseNewDerivedFile(oldDerivedFile):
 		at = self
 		j = skip_ws(s,i)
 		assert(match(s,j,"<<"))
-		# trace(i,s)
 		
 		if len(at.endSentinelComment) == 0:
 			line = s[i:-1] # No trailing newline
@@ -4104,6 +4103,8 @@ class baseNewDerivedFile(oldDerivedFile):
 			# Only whitespace before the @others or ref.
 			at.leadingWs = s[i:j] # Remember the leading whitespace, including its spelling.
 		else:
+			# trace("indent",self.indent)
+			self.putIndent(self.indent) # 1/29/04: fix bug reported by Dan Winkler.
 			at.os(s[i:j]) ; at.onl_sent() # 10/21/03
 			at.indent += delta # Align the @nonl with the following line.
 			at.putSentinel("@nonl")
@@ -4676,16 +4677,17 @@ class baseNewDerivedFile(oldDerivedFile):
 			self.putSentinel("@verbatim")
 	
 		j = skip_line(s,i)
-		if not at.raw:
-			at.putIndent(at.indent)
 		line = s[i:j]
-		# at.os(line)
+		
+		# 1/29/04: Don't put leading indent if the line is empty!
+		if line and not at.raw:
+			at.putIndent(at.indent)
+	
 		if line[-1:]=="\n": # 12/2/03: emakital
 			at.os(line[:-1])
 			at.onl()
 		else:
 			at.os(line)
-	#@nonl
 	#@-node:putCodeLine
 	#@+node:putRefLine (new) & allies
 	def putRefLine(self,s,i,n1,n2,v):
@@ -4727,8 +4729,8 @@ class baseNewDerivedFile(oldDerivedFile):
 		# Expand the ref.
 		if not delta:
 			junk,delta = skip_leading_ws_with_indent(s,i,at.tab_width)
-		at.putLeadInSentinel(s,i,n1,delta)
 	
+		at.putLeadInSentinel(s,i,n1,delta)
 		at.indent += delta
 		if at.leadingWs:
 			at.putSentinel("@" + at.leadingWs + name)
