@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet ekr_stylesheet?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="12806" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="12847" clone_windows="0"/>
 <globals body_outline_ratio="0.501162790698">
-	<global_window_position top="10" left="398" height="860" width="796"/>
+	<global_window_position top="11" left="297" height="860" width="796"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -118,6 +118,7 @@
 <v t="ekr.20050123092834.434"><vh>Fixed Python 2.4 deprecation warning when saving .leo files</vh></v>
 <v t="ekr.20050123092834.499"><vh>Fixed crasher in getOutputNewline</vh></v>
 <v t="ekr.20050123092834.544"><vh>Always use os.rename in utils_rename</vh></v>
+<v t="ekr.20050123151338"><vh>Fixed bugs handling @language &amp; @comment in atFile.scanAllDirectives &amp; g.scanDirectives)</vh></v>
 </v>
 <v t="ekr.20050123103303"><vh>Gui</vh>
 <v t="ekr.20050123092834.502"><vh>Put the scrollWheel workaround in createTkTreeCanvas</vh></v>
@@ -223,6 +224,7 @@
 <v t="ekr.20050123092834.434"><vh>Fixed Python 2.4 deprecation warning when saving .leo files</vh></v>
 <v t="ekr.20050123092834.499"><vh>Fixed crasher in getOutputNewline</vh></v>
 <v t="ekr.20050123092834.544"><vh>Always use os.rename in utils_rename</vh></v>
+<v t="ekr.20050123151338"><vh>Fixed bugs handling @language &amp; @comment in atFile.scanAllDirectives &amp; g.scanDirectives)</vh></v>
 </v>
 <v t="ekr.20050123103303"><vh>Gui</vh>
 <v t="ekr.20050123092834.502"><vh>Put the scrollWheel workaround in createTkTreeCanvas</vh></v>
@@ -3234,7 +3236,7 @@ The differences between @killcolor and @nocolor:
 
 Note: the @color, @nocolor and @killcolor directives do not affect the Tangle commands in any way. In particular, the Tangle commands will recognize section definitions as usual even after an @nocolor directive is seen.
 </t>
-<t tx="EKR.20040524104904.81">Note: the @comment directive is now officially deprecated: you should use the @language directive whenever possible.
+<t tx="EKR.20040524104904.81">Note: the @comment directive is now officially deprecated: you should use the @language directive whenever possible.  However, sometimes using both @language and @comment is useful.  For this to be effective the @comment directive should appear after the @language directive (in outline order).
 
 Untangle will not process an @root or @unit node if an @comment directive is in effect because Untangle can't be sure of properly parsing a derived file if the language of the derived file isn't known. It might be possible to assume some defaults in this case, but that is not done at present and is not a high priority.
 
@@ -16400,5 +16402,20 @@ Note.  The Plugins Manager plugin requires Pmw.  You can install Pmw in Leo's ex
 - created the 'extensions' directory and g.app.extensionsDir
 
 - created g.importModule and g.importExtension</t>
+<t tx="ekr.20050123151338">Changed scanDirectives and atFile.scanDirectives so they work like tangle.scanAllDirectives.  Also added a few clarifying words in LeoDocs.leo.
+
+This should have worked, but didn't:
+
++ Code 
+  @language python 
+  + @file sql_create.sql 
+    @comment -- 
+ 
+So I rearranged the outline (probably more logical anyway) to  
++Code 
+  + Python 
+  ... 
++ SQL 
+  ... </t>
 </tnodes>
 </leo_file>
