@@ -11,6 +11,11 @@
 
 from __future__ import generators # To make the code work in Python 2.2.
 
+__pychecker__ = '--no-reimport' # Reimports needed in test methods.
+
+#@<< imports >>
+#@+node:ekr.20050208101229:<< imports >>
+
 import leoGlobals as g # So code can use g below.
 
 if 0: # Don't import this here: it messes up Leo's startup code.
@@ -23,7 +28,9 @@ import sys
 import time
 import traceback
 import types
-
+#@nonl
+#@-node:ekr.20050208101229:<< imports >>
+#@nl
 #@<< define general constants >>
 #@+node:ekr.20031218072017.3094:<< define general constants >>
 body_newline = '\n'
@@ -589,7 +596,7 @@ def openWithFileName(fileName,old_c,enableLog=True,readAtFileNodesFlag=True):
         name = name or ''
         return g.os_path_normpath(name).lower()
 
-    # Create a full normalized path name, preserving case.
+    # Create a full, normalized, Unicode path name, preserving case.
     fileName = g.os_path_normpath(g.os_path_abspath(fileName))
 
     # If the file is already open just bring its window to the front.
@@ -620,22 +627,13 @@ def openWithFileName(fileName,old_c,enableLog=True,readAtFileNodesFlag=True):
         g.doHook("open2",old_c=old_c,new_c=frame.c,fileName=fileName)
         return True, frame
     except IOError:
-        try:
-            # Do not use string + here: it will fail for non-ascii strings!
-            if not g.app.unitTesting:
-                g.es("can not open: %s" % (fileName), color="blue")
-            return False, None
-        except UnicodeError:
-            if not g.app.unitTesting:
-                g.es("can not open: %s" % (g.toEncodedString(fileName)), color="blue")
-            return False, None
-    except:
-        if 0:
-            print "exceptions opening: %s" % g.toEncodedString(fileName)
-            traceback.print_exc()
-        else:
-            g.es("exceptions opening: %s" % g.toEncodedString(fileName),color="red")
-            g.es_exception()
+        # Do not use string + here: it will fail for non-ascii strings!
+        if not g.app.unitTesting:
+            g.es("can not open: %s" % (fileName), color="blue")
+        return False, None
+    except Exception:
+        g.es("exceptions opening: %s" % (fileName),color="red")
+        g.es_exception()
         return False, None
 #@nonl
 #@-node:ekr.20031218072017.2052:g.openWithFileName
@@ -2185,6 +2183,12 @@ def windows():
 #@-node:ekr.20031218072017.3150:windows
 #@-node:ekr.20031218072017.3145:Most common functions...
 #@+node:ekr.20031218072017.2145:os.path wrappers (leoGlobals.py)
+#@+at 
+#@nonl
+# Note: all these methods return Unicode strings. It is up to the user to
+# convert to an encoded string as needed, say when opening a file.
+#@-at
+#@nonl
 #@+node:ekr.20031218072017.2146:os_path_abspath
 def os_path_abspath(path,encoding=None):
     
@@ -2391,10 +2395,12 @@ def toUnicodeFileEncoding(path,encoding):
 
     if not encoding:
         if sys.platform == "win32":
-            encoding = "mbcs"
+            # encoding = "mbcs" # Leo 4.2 and previous.
+            encoding = 'utf-8' # New in Leo 4.3
         else:
             encoding = app.tkEncoding
 
+    # Yes, this is correct.  All os_path_x functions return Unicode strings.
     return g.toUnicode(path,encoding)
 #@nonl
 #@-node:ekr.20031218072017.2160:toUnicodeFileEncoding
@@ -3294,7 +3300,36 @@ def reportBadChars (s,encoding):
                 (errors, unicode(s,encoding,"replace"),encoding)) # 10/23/03
 #@nonl
 #@-node:ekr.20031218072017.1501:reportBadChars
-#@+node:ekr.20031218072017.1502:toUnicode & toEncodedString
+#@+node:ekr.20031218072017.1502:toUnicode & toEncodedString (and tests)
+#@+node:ekr.20050208093800:toEncodedString
+def toEncodedString (s,encoding,reportErrors=False):
+
+    if type(s) == type(u""):
+        try:
+            s = s.encode(encoding,"strict")
+        except UnicodeError:
+            if reportErrors:
+                g.reportBadChars(s,encoding)
+            s = s.encode(encoding,"replace")
+    return s
+#@nonl
+#@-node:ekr.20050208093800:toEncodedString
+#@+node:ekr.20050208093903:toEncodedStringWithErrorCode
+def toEncodedStringWithErrorCode (s,encoding):
+    
+    ok = True
+
+    if type(s) == type(u""):
+        try:
+            s = s.encode(encoding,"strict")
+        except UnicodeError:
+            s = s.encode(encoding,"replace")
+            ok = False
+
+    return s,ok
+#@nonl
+#@-node:ekr.20050208093903:toEncodedStringWithErrorCode
+#@+node:ekr.20050208093800.1:toUnicode
 def toUnicode (s,encoding,reportErrors=False):
     
     if s is None:
@@ -3302,24 +3337,72 @@ def toUnicode (s,encoding,reportErrors=False):
     if type(s) == type(""):
         try:
             s = unicode(s,encoding,"strict")
-        except:
+        except UnicodeError:
             if reportErrors:
                 g.reportBadChars(s,encoding)
             s = unicode(s,encoding,"replace")
     return s
     
-def toEncodedString (s,encoding,reportErrors=False):
-
-    if type(s) == type(u""):
+#@-node:ekr.20050208093800.1:toUnicode
+#@+node:ekr.20050208095723:toUnicodeWithErrorCode
+def toUnicodeWithErrorCode (s,encoding):
+    
+    ok = True
+    
+    if s is None:
+        s = u""
+    if type(s) == type(""):
         try:
-            s = s.encode(encoding,"strict")
-        except:
-            if reportErrors:
-                g.reportBadChars(s,encoding)
-            s = s.encode(encoding,"replace")
-    return s
+            s = unicode(s,encoding,"strict")
+        except UnicodeError:
+            s = unicode(s,encoding,"replace")
+            ok = False
+
+    return s,ok
 #@nonl
-#@-node:ekr.20031218072017.1502:toUnicode & toEncodedString
+#@-node:ekr.20050208095723:toUnicodeWithErrorCode
+#@+node:ekr.20050208104358:test_round_trip_toUnicode_toEncodedString
+def test_round_trip_toUnicode_toEncodedString ():
+
+    import leoGlobals as g
+    
+    for s,encoding in (
+        ('a',    'utf-8'),
+        ('a',    'ascii'),
+        ('äöü',  'utf-8'),
+        ('äöü',  'mbcs'),
+        ('炰',   'utf-8'),
+        ('炰',   'mbcs'),
+    ):
+        if g.isValidEncoding(encoding):
+            s2,ok = g.toUnicodeWithErrorCode(s,encoding)
+            assert ok, 'toUnicodeWithErrorCode fails for %s' %s
+            s3,ok = g.toEncodedStringWithErrorCode(s2,encoding)
+            assert ok, 'toEncodedStringWithErrorCode fails for %s' % s2
+            assert s3 == s, 'Round-trip one failed for %s' %s
+            
+            s2 = g.toUnicode(s,encoding)
+            s3 = g.toEncodedString(s2,encoding)
+            assert s3 == s, 'Round-trip two failed for %s' %s
+#@nonl
+#@-node:ekr.20050208104358:test_round_trip_toUnicode_toEncodedString
+#@+node:ekr.20050208112123:test_failure_with_ascii_encodings
+def test_failure_with_ascii_encodings():
+
+    import leoGlobals as g
+    
+    encoding = 'ascii'
+    
+    s = '炰'
+    s2,ok = g.toUnicodeWithErrorCode(s,encoding)
+    assert not ok, 'toUnicodeWithErrorCode returns True for %s with ascii encoding' % s
+    
+    s = u'炰'
+    s3,ok = g.toEncodedStringWithErrorCode(s,encoding)
+    assert not ok, 'toEncodedStringWithErrorCode returns True for %s with ascii encoding' % s
+#@nonl
+#@-node:ekr.20050208112123:test_failure_with_ascii_encodings
+#@-node:ekr.20031218072017.1502:toUnicode & toEncodedString (and tests)
 #@+node:ekr.20031218072017.1503:getpreferredencoding from 2.3a2
 try:
     # Use Python's version of getpreferredencoding if it exists.
@@ -4555,5 +4638,6 @@ def stripBlankLines(s):
 #@-node:ekr.20040723093558.1:stripBlankLines
 #@-node:ekr.20031218072017.3197:Whitespace...
 #@-others
+#@nonl
 #@-node:ekr.20031218072017.3093:@thin leoGlobals.py
 #@-leo
