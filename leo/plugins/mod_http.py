@@ -11,7 +11,7 @@ Use this plugin is as follows:
 
 1. Start Leo with the plugin enabled.  You will see a purple message that says something like:
 
-"http serving enabled on port 8080, version 0.9"
+"http serving enabled on port 8080, version 0.91"
 
 2. Start a web browser, and enter the following url: http://localhost:8080/
 
@@ -30,7 +30,7 @@ You can use the browser's refresh button to update the top-level view in the bro
 # See also, the related script from the Python Cookbook:
 # http://aspn.activestate.com/ASPN/Cookbook/Python/Recipe/259148
 
-__version__ = "0.9"
+__version__ = "0.91"
 
 #@<< how to use this plugin >>
 #@+node:EKR.20040517080250.2:<< how to use this plugin >>
@@ -72,6 +72,7 @@ class delayedSocketStream(asyncore.dispatcher_with_send):
     #@    @+others
     #@+node:EKR.20040517080250.5:__init__
     def __init__(self,sock):
+        self._map = asyncore.socket_map
         self.socket=sock
         self.socket.setblocking(0)
         self.closed=1   # compatibility with SocketServer
@@ -247,17 +248,7 @@ class RequestHandler(
         """
     
         # Collecting the navigational links.
-        if node is None:
-            # top level
-            child = window.c.rootVnode()
-            children = [child]
-            next = child.next()
-            while next:
-                child = next
-                children.append(child)
-                next = child.next()
-            nodename = window.shortFileName()
-        else:
+        if node:
             nodename = node.headString()
             threadNext = node.threadNext()
             sibling = node.next()
@@ -282,7 +273,16 @@ class RequestHandler(
             else:
                 self.create_leo_reference(window, parent, "Up", f)
             f.write("<br>")
-            
+        else:
+            # top level
+            child = window.c.rootVnode()
+            children = [child]
+            next = child.next()
+            while next:
+                child = next
+                children.append(child)
+                next = child.next()
+            nodename = window.shortFileName()
         if children:
             f.write("<h2>")
             f.write("Children of ")
@@ -346,25 +346,27 @@ class RequestHandler(
         Given a 'node', construct a list of sibling numbers to get to that node.
         """
         result = []
-        cnode = node
-        parent = cnode.parent()
-        while parent:
-            i = 0
-            child = parent.firstChild()
-            while child != cnode:
-                child = child.next()
-                i += 1
-            result.append(str(i))
-            cnode = parent
+        if node:
+            cnode = node
             parent = cnode.parent()
-        i = 0
-        previous = cnode.back()
-        while previous:
-            i += 1
-            previous = previous.back()
-        result.append(str(i))
-        result.reverse()
+            while parent:
+                i = 0
+                child = parent.firstChild()
+                while child != cnode:
+                    child = child.next()
+                    i += 1
+                result.append(str(i))
+                cnode = parent
+                parent = cnode.parent()
+            i = 0
+            previous = cnode.back()
+            while previous:
+                i += 1
+                previous = previous.back()
+            result.append(str(i))
+            result.reverse()
         return result
+    #@nonl
     #@-node:EKR.20040517080250.25:get_leo_nameparts
     #@+node:EKR.20040517080250.26:get_leo_node
     def get_leo_node(self, path):
