@@ -2005,6 +2005,55 @@ class colorizer (baseColorizer):
 	pass
 #@nonl
 #@-node:class colorizer
+#@+node:class nullColorizer
+class nullColorizer (colorizer):
+	
+	"""A do-nothing colorer class"""
+	
+	#@	@+others
+	#@+node:__init__
+	def __init__ (self,c):
+		
+		self.c = c
+	#@nonl
+	#@-node:__init__
+	#@+node:entry points
+	def colorize(self,v,incremental=false):
+		pass
+		
+	def idle_colorize(self,v):
+		pass
+			
+	def recolor_range(self,v,leading,trailing):
+		pass
+	
+	def scanColorDirectives(self,v):
+		pass
+		
+	def schedule(self,v,incremental=0):
+		pass
+	
+	def updateSyntaxColorer (self,v):
+		pass
+	#@nonl
+	#@-node:entry points
+	#@+node:hyperlink callbacks...
+	def OnHyperLinkControlClick (self,v):
+	
+		pass
+		
+	def OnHyperLinkEnter (self,v):
+	
+		pass
+		
+	def OnHyperLinkLeave (self,v):
+	
+		pass
+	#@nonl
+	#@-node:hyperlink callbacks...
+	#@-others
+#@nonl
+#@-node:class nullColorizer
 #@-others
 #@nonl
 #@-node:@file leoColor.py
