@@ -5,6 +5,7 @@
 from leoGlobals import *
 
 import leoAtFile,leoFileCommands,leoImport,leoNodes,leoTangle,leoUndo
+import sys
 import tempfile
 
 class baseCommands:
@@ -3411,34 +3412,7 @@ class baseCommands:
 			sys.argv = ["leo","-t","leo"]
 			
 			ok = false
-			#@<< Try to open idle in pre-Python 2.3 systems>>
-			#@+node:<< Try to open idle in pre-Python 2.3 systems>>
-			try:
-				executable_dir = os_path_dirname(sys.executable)
-				idle_dir = os_path_join(executable_dir,"Tools","idle")
-			
-				if idle_dir not in sys.path:
-					sys.path.append(idle_dir)
-			
-				import PyShell
-					
-				if app.idle_imported:
-					reload(idle)
-					app.idle_imported = true
-					
-				if 1: # Mostly works, but causes problems when opening other .leo files.
-					PyShell.main()
-				else: # Doesn't work: destroys all of Leo when Idle closes.
-					self.leoPyShellMain()
-				ok = true
-			except:
-				ok = false
-				# es_exception()
-			#@nonl
-			#@-node:<< Try to open idle in pre-Python 2.3 systems>>
-			#@nl
-			
-			if not ok:
+			if CheckVersion(sys.version,"2.3"):
 				#@	<< Try to open idle in Python 2.3 systems >>
 				#@+node:<< Try to open idle in Python 2.3 systems >>
 				try:
@@ -3458,6 +3432,40 @@ class baseCommands:
 					es_exception()
 				#@nonl
 				#@-node:<< Try to open idle in Python 2.3 systems >>
+				#@nl
+			else:
+				#@	<< Try to open idle in Python 2.2 systems >>
+				#@+node:<< Try to open idle in Python 2.2 systems>>
+				try:
+					executable_dir = os_path_dirname(sys.executable)
+					idle_dir = os_path_join(executable_dir,"Tools","idle")
+				
+					# 1/29/04: sys.path doesn't handle unicode in 2.2.
+					idle_dir = str(idle_dir) # May throw an exception.
+				
+					# 1/29/04: must add idle_dir to sys.path even when using importFromPath.
+					if idle_dir not in sys.path:
+						sys.path.insert(0,idle_dir)
+				
+					if 1:
+						import PyShell
+					else: # Works, but is not better than import.
+						PyShell = importFromPath("PyShell",idle_dir)
+				
+					if app.idle_imported:
+						reload(idle)
+						app.idle_imported = true
+						
+					if 1: # Mostly works, but causes problems when opening other .leo files.
+						PyShell.main()
+					else: # Doesn't work: destroys all of Leo when Idle closes.
+						self.leoPyShellMain()
+					ok = true
+				except ImportError:
+					ok = false
+					es_exception()
+				#@nonl
+				#@-node:<< Try to open idle in Python 2.2 systems>>
 				#@nl
 			
 			if not ok:
