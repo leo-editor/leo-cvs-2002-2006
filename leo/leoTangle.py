@@ -15,9 +15,6 @@ import os,string
 #@+node:1::<< constants & synonyms >>
 
 #@+body
-# Constants
-max_errors = 20
-
 # Synonyms for multiple_parts_flag.
 allow_multiple_parts = 1
 disallow_multiple_parts = 2
@@ -33,7 +30,41 @@ require_path = 1 ; done_require_path = 0
 # Synonyms for verbose_flag.
 verbose = true ; brief = 0
 
+# Constants...
+max_errors = 20
 
+
+#@+at
+#  All these must be defined together, because they form a single enumeration.  Some of these are used by utility functions.
+
+#@-at
+
+#@@c
+
+if 1: # A single enum...
+
+	# Used by token_type().
+	plain_line = 1 # all other lines
+	at_at	     = 2 # double-at sign.
+	at_chapter = 3 # @chapter
+	# at_c       = 4 # @c in noweb mode
+	at_code	   = 5 # @code, or @c or @p in CWEB mode.
+	at_doc	    = 6 # @doc
+	at_other   = 7 # all other @directives
+	at_root	   = 8 # @root or noweb * sections
+	at_section = 9 # @section
+	# at_space   = 10 # @space
+	at_web	    = 11 # any CWEB control code, except at_at.
+	
+	# Returned by self.skip_section_name() and allies and used by token_type.
+	bad_section_name = 12  # < < with no matching > >
+	section_ref	 = 13  # < < name > >
+	section_def	 = 14  # < < name > > =
+	
+	# Returned by is_sentinal_line.
+	non_sentinel_line   = 15
+	start_sentinel_line = 16
+	end_sentinel_line   = 17
 #@-body
 
 #@-node:1::<< constants & synonyms >>
@@ -523,7 +554,7 @@ class tangleCommands:
 	
 		if self.tangling:
 			self.st_check()
-			trace(self.st_dump(brief))
+			# trace(self.st_dump(verbose))
 	#@-body
 
 	#@-node:7::tanglePass1
@@ -826,7 +857,7 @@ class tangleCommands:
 		es("@root " + path)
 		# Pass 1: Scan the C file, creating the UST
 		scan_derived_file(file_buf)
-		trace(self.ust_dump())
+		# trace(self.ust_dump())
 		if self.errors == 0:
 			
 	#@<< Pass 2: Untangle the outline using the UST and a newly-created TST >>
@@ -851,7 +882,7 @@ class tangleCommands:
 				v = v.nodeAfterTree()
 			
 			self.ust_warn_about_orphans()
-			trace(st_dump(brief))
+			# trace(st_dump(brief))
 			#@-body
 
 			#@-node:4::<< Pass 2:  Untangle the outline using the UST and a newly-created TST >>
@@ -1028,7 +1059,7 @@ class tangleCommands:
 					if not self.tangling:
 						s = self.update_def(self.header,ip2,part,s,code,doc,not_root_name)
 				else:
-					self.error("@c expects the header: " + header + " to contain a section name")
+					self.error("@c expects the header: " + self.header + " to contain a section name")
 				code_seen = true
 				doc = None
 				#@-body
@@ -1314,7 +1345,7 @@ class tangleCommands:
 
 	#@-node:1::oblank, oblanks, os, otab, otabs
 
-	#@+node:2:C=6:tangle.put_all_roots (open)
+	#@+node:2:C=6:tangle.put_all_roots
 
 	#@+body
 
@@ -1333,11 +1364,13 @@ class tangleCommands:
 	
 		for section in self.root_list:
 		
-			trace(`section.name`)
+			# trace(`section.name`)
 			file_name = os.path.join(self.tangle_directory,section.name)
 			file_name = os.path.normpath(file_name)
 			temp_name = create_temp_name(section.name)
-			if not temp_name: break
+			if not temp_name:
+				es("Can not create temp file")
+				break
 			# Set the output_file global.
 			self.output_file = open(temp_name,"w")
 			if not self.output_file:
@@ -1394,7 +1427,7 @@ class tangleCommands:
 
 	#@-body
 
-	#@-node:2:C=6:tangle.put_all_roots (open)
+	#@-node:2:C=6:tangle.put_all_roots
 
 	#@+node:3::put_code
 
@@ -1691,7 +1724,7 @@ class tangleCommands:
 	#@+body
 
 	#@+at
-	#  This method handles scanning when putting the start of a new line. Unlike the corresponding method in pass one,self method 
+	#  This method handles scanning when putting the start of a new line. Unlike the corresponding method in pass one, this method 
 	# doesn't need to set a done flag in the caller because the caller already knows where the code section ends.
 
 	#@-at
@@ -1700,7 +1733,6 @@ class tangleCommands:
 	
 	def put_newline(self,s,i,no_first_lws_flag):
 	
-		# j = skip_line(s,i) ; trace(`s[i:j]`)
 		kind, end = self.token_type(s,i,dont_report_errors)
 		
 	#@<< Output leading white space except for blank lines >>
@@ -3793,7 +3825,7 @@ class tangleCommands:
 					dir = os.path.dirname(path)
 					if len(dir) > 0 and os.path.exists(dir):
 						self.tangle_directory = dir
-						trace("@path dir:" + `dir`)
+						# trace("@path dir:" + `dir`)
 					elif issue_error_flag and not self.path_warning_given:
 						self.path_warning_given = true # supress future warnings
 						self.error("Invalid directory: " + `s[i:j]`)
@@ -3872,7 +3904,7 @@ class tangleCommands:
 				dir = os.path.dirname(self.root_name)
 				if len(dir) > 0 and os.path.exists(dir):
 					self.tangle_directory = dir
-					trace("@root directory:" + `dir`)
+					# trace("@root directory:" + `dir`)
 				elif len(dir) > 0 and issue_error_flag and not self.path_warning_given:
 					self.path_warning_given = true
 					self.error("@root directory missing or invalid: " + dir)
@@ -3881,7 +3913,7 @@ class tangleCommands:
 				dir = c.tangle_directory
 				if len(dir) > 0 and os.path.exists(dir):
 					self.tangle_directory = dir
-					trace("Default tangle directory:" + `dir`)
+					# trace("Default tangle directory:" + `dir`)
 				elif len(dir) > 0 and issue_error_flag and not self.path_warning_given:
 					self.path_warning_given = true
 					self.error("Invalid Default Tangle Directory: " + dir)
@@ -3890,7 +3922,7 @@ class tangleCommands:
 				dir = c.frame.openDirectory # Try the directory used in the Open command
 				if len(dir) > 0 and os.path.exists(dir):
 					self.tangle_directory = dir
-					trace("Open directory:" + `dir`)
+					# trace("Open directory:" + `dir`)
 				elif len(dir) > 0 and issue_error_flag and not self.path_warning_given:
 					self.path_warning_given = true
 					self.error("Invalid Open directory: " + dir)
@@ -3902,7 +3934,7 @@ class tangleCommands:
 
 			#@-node:5::<< Set self.tangle_directory >>
 
-		trace(`self.tangle_directory`)
+		# trace(`self.tangle_directory`)
 	#@-body
 
 	#@-node:3:C=9:tangle.scanAllDirectives
@@ -4147,7 +4179,7 @@ class tangleCommands:
 	
 		# j = skip_line(s,i) ; trace(`s[i:j]`)
 		kind = plain_line ; end = -1
-		if self.use_noweb_flag :
+		if self.use_noweb_flag:
 			
 	#@<< set token_type in noweb mode >>
 

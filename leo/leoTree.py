@@ -46,9 +46,6 @@ root_left = 7 + box_width
 root_top = 2
 
 hiding = true # True if we don't reallocate items
-
-
-
 #@-body
 
 #@-node:1::<< drawing constants >>
@@ -195,10 +192,7 @@ class leoTree:
 	
 		y += 7 # draw the box at x, y+7
 	
-		minus_node = os.path.join("Icons", "minusnode.gif")
-		plus_node = os.path.join("Icons", "plusnode.gif")
-		iconname = choose(v.isExpanded(), minus_node, plus_node)
-		
+		iconname = choose(v.isExpanded(), "Icons\\minusnode.GIF", "Icons\\plusnode.GIF")
 		image = self.getIconImage(iconname)
 		id = self.canvas.create_image(x,y,image=image)
 		if 0: # don't create a reference to this!
@@ -459,7 +453,7 @@ class leoTree:
 
 	#@-node:14:C=10:lastVisible
 
-	#@+node:15:C=11:tree.recolor
+	#@+node:15:C=11:tree.recolor & recolor_now
 
 	#@+body
 	def recolor(self,v):
@@ -477,7 +471,7 @@ class leoTree:
 		self.colorizer.colorize(v,body)
 	#@-body
 
-	#@-node:15:C=11:tree.recolor
+	#@-node:15:C=11:tree.recolor & recolor_now
 
 	#@+node:16:C=12:tree.redraw , force_redraw, redraw_now
 
@@ -677,6 +671,7 @@ class leoTree:
 		v = self.currentVnode
 		self.commands.body.after_idle(self.idle_body_key,v)
 	
+	# Bound to any keystroke.
 	def OnBodyKey (self,event): 
 	
 		v = self.currentVnode ; ch = event.char
@@ -690,7 +685,9 @@ class leoTree:
 		s = c.body.get("1.0", "end")
 		s = string.rstrip(s)
 		changed = s != v.bodyString()
-		if not changed: return
+		# Needed so that control keys by themselves won't make a node dirty.
+		if not changed and ch != '\r' and ch != '\n' :return
+		# trace(c.body.index("insert")+":"+c.body.get("insert linestart","insert lineend"))
 		# print "idle_body_key", `ch`	# Update changed mark if necessary.
 		if ch == '\r' or ch == '\n':
 			
@@ -699,13 +696,19 @@ class leoTree:
 			#@+node:1::<< Do Auto indent >>
 
 			#@+body
-			# Put the previous line in s.
+			# Get the previous line.
 			s=c.body.get("insert linestart - 1 lines","insert linestart -1c")
 			
 			# Add the leading whitespace to the present line.
-			i = skip_ws(s,0)
-			if i > 0:
-				c.body.insert("insert", s[0:i])
+			junk,width = skip_leading_ws_with_indent(s,0,c.tab_width)
+			if s and len(s) > 0 and s[-1]==':':
+				# For Python: increase auto-indent after colons.
+				language = self.colorizer.scanColorDirectives(v)
+				if language == python_language:
+					width += c.tab_width
+			ws = computeLeadingWhitespace (width,c.tab_width)
+			if ws and len(ws) > 0:
+				c.body.insert("insert", ws)
 			#@-body
 
 			#@-node:1::<< Do Auto indent >>

@@ -620,14 +620,14 @@ class vnode:
 	
 	def childIndex (self):
 	
-		parent=self.mParent
+		parent=self.parent()
 		if not parent: return 0 # This index is never used.
 	
-		child = parent.mFirstChild
+		child = parent.firstChild()
 		n = 0
 		while child:
 			if child == self: return n
-			n += 1 ; child = child.mNext
+			n += 1 ; child = child.next()
 		assert(0)
 	#@-body
 
@@ -650,7 +650,7 @@ class vnode:
 	#@+body
 	def hasChildren (self):
 	
-		return self.mFirstChild != None
+		return self.firstChild() != None
 	#@-body
 
 	#@-node:3::hasChildren
@@ -662,9 +662,9 @@ class vnode:
 	
 	def lastChild (self):
 	
-		child = self.mFirstChild
-		while child and child.mNext:
-			child = child.mNext
+		child = self.firstChild()
+		while child and child.next():
+			child = child.next()
 		return child
 	#@-body
 
@@ -677,11 +677,11 @@ class vnode:
 	
 	def nthChild (self, n):
 	
-		child = self.mFirstChild
+		child = self.firstChild()
 		if not child: return None
 		while n > 0 and child:
 			n -= 1
-			child = child.mNext
+			child = child.next()
 		return child
 	#@-body
 
@@ -693,10 +693,10 @@ class vnode:
 	def numberOfChildren (self):
 	
 		n = 0
-		child = self.mFirstChild
+		child = self.firstChild()
 		while child:
 			n += 1
-			child = child.mNext
+			child = child.next()
 		return n
 	#@-body
 
@@ -775,7 +775,7 @@ class vnode:
 	#@+body
 	def isRoot (self):
 	
-		return not self.mParent and not self.mBack
+		return not self.parent() and not self.back()
 	#@-body
 
 	#@-node:8::isRoot
@@ -859,11 +859,11 @@ class vnode:
 	
 	def isVisible (self):
 	
-		v = self.mParent
+		v = self.parent()
 		while v:
 			if not v.isExpanded():
 				return false
-			v = v.mParent
+			v = v.parent()
 		return true
 	#@-body
 
@@ -939,10 +939,10 @@ class vnode:
 	
 	def level (self):
 	
-		level = 0 ; parent = self.mParent
+		level = 0 ; parent = self.parent()
 		while parent:
 			level += 1
-			parent = parent.mParent
+			parent = parent.parent()
 		return level
 	#@-body
 
@@ -967,12 +967,12 @@ class vnode:
 	
 	def nodeAfterTree (self):
 	
-		next = self.mNext
-		p = self.mParent
+		next = self.next()
+		p = self.parent()
 	
 		while not next and p:
-			next = p.mNext
-			p = p.mParent
+			next = p.next()
+			p = p.parent()
 	
 		return next
 	#@-body
@@ -998,7 +998,7 @@ class vnode:
 	
 	def threadBack (self):
 	
-		back = self.mBack
+		back = self.back()
 		if back:
 			lastChild = back.lastChild()
 			if lastChild:
@@ -1006,7 +1006,7 @@ class vnode:
 			else:
 				return back
 		else:
-			return self.mParent
+			return self.parent()
 	#@-body
 
 	#@-node:7::threadBack
@@ -1021,16 +1021,16 @@ class vnode:
 		
 		v = self
 		
-		if v.mFirstChild:
-			return v.mFirstChild
-		elif v.mNext:
-			return v.mNext
+		if v.firstChild():
+			return v.firstChild()
+		elif v.next():
+			return v.next()
 		else:
-			p = v.mParent
+			p = v.parent()
 			while p:
-				if p.mNext:
-					return p.mNext
-				p = p.mParent
+				if p.next():
+					return p.next()
+				p = p.parent()
 			return None
 	#@-body
 
@@ -1076,8 +1076,7 @@ class vnode:
 	def appendStringToBody (self, s):
 	
 		if len(s) == 0: return
-		body = self.t.bodyString
-		body += s
+		body = self.t.bodyString + s
 		self.setBodyStringOrPane(body)
 	#@-body
 
@@ -1739,25 +1738,25 @@ class vnode:
 	
 	def copyTree (self, oldTree, newTree):
 	
-		old_v = oldTree.mFirstChild
+		old_v = oldTree.firstChild()
 		if not old_v: return
 		# Copy the first child of oldTree to the first child of newTree.
 		new_v = newTree.insertAsNthChild (0, old_v.t)
 		self.copyNode(old_v, new_v)
 		# Copy all other children of oldTree after the first child of newTree.
-		old_v = old_v.mNext
+		old_v = old_v.next()
 		while old_v:
 			new_v = new_v.insertAfter(old_v.t)
 			self.copyNode(old_v, new_v)
-			old_v = old_v.mNext
+			old_v = old_v.next()
 		# Recursively copy all descendents of oldTree.
-		new_v = newTree.mFirstChild
-		old_v = oldTree.mFirstChild
+		new_v = newTree.firstChild()
+		old_v = oldTree.firstChild()
 		while old_v:
 			assert(new_v)
 			self.copyTree(old_v, new_v)
-			old_v = old_v.mNext
-			new_v = new_v.mNext
+			old_v = old_v.next()
+			new_v = new_v.next()
 		assert(new_v == None)
 	#@-body
 
@@ -1782,13 +1781,13 @@ class vnode:
 		# Join the roots.
 		tree1.joinNodeTo ( tree2 )
 		# Recursively join all subtrees.
-		child1 = tree1.mFirstChild
-		child2 = tree2.mFirstChild
+		child1 = tree1.firstChild()
+		child2 = tree2.firstChild()
 		while child1:
 			assert(child2)
 			child1.joinTreeTo(child2)
-			child1 = child1.mNext
-			child2 = child2.mNext
+			child1 = child1.next()
+			child2 = child2.next()
 		assert(child2 == None)
 	#@-body
 
@@ -1813,19 +1812,19 @@ class vnode:
 	
 	def shouldBeClone (self,verbose=0):
 	
-		p = self.mParent
+		p = self.parent()
 		n = self.childIndex()
 		if verbose:
 			v = self.joinList
-			es("shouldBeClone: self,self.mParent:"+`self`+","+`self.mParent`)
+			es("shouldBeClone: self,self.parent():"+`self`+","+`self.parent()`)
 			es("shouldBeClone: joinlist of self:")
 			while v and v != self:
-				es("v,v.mParent:"+`v`+","+`v.mParent`)
+				es("v,v.parent():"+`v`+","+`v.parent()`)
 				v=v.joinList
 	
 		v = self.joinList
 		while v and v != self:
-			vp = v.mParent
+			vp = v.parent()
 			if 0: # verbose:
 				es("shouldBeClone:" + `v`)
 				es("shouldBeClone: p,vp:" + `p` + "," + `vp`)
@@ -1855,7 +1854,7 @@ class vnode:
 	def validateOutlineWithParent (self, p):
 	
 		result = true # optimists get only unpleasant surprises.
-		parent = self.mParent
+		parent = self.parent()
 		childIndex = self.childIndex()
 		
 	#@<< validate parent ivar >>
@@ -1900,11 +1899,11 @@ class vnode:
 
 	
 		# Recursively validate all the children.
-		child = self.mFirstChild
+		child = self.firstChild()
 		while child:
 			r = child.validateOutlineWithParent ( self )
 			if not r: result = false
-			child = child.mNext
+			child = child.next()
 		return result
 	#@-body
 
@@ -1947,16 +1946,16 @@ class vnode:
 		else:
 			tree2.clearClonedBit()
 		# Recursively set the bits in all subtrees.
-		child1 = tree1.mFirstChild
-		child2 = tree2.mFirstChild
+		child1 = tree1.firstChild()
+		child2 = tree2.firstChild()
 		while child1:
 			assert(child2)
 			if child1.isCloned():
 				child2.setClonedBit()
 			else:
 				child2.clearClonedBit()
-			child1 = child1.mNext
-			child2 = child2.mNext
+			child1 = child1.next()
+			child2 = child2.next()
 		assert(child2 == None)
 	#@-body
 
@@ -1979,7 +1978,7 @@ class vnode:
 	# This method creates all nodes that depend on the receiver.
 	def createDependents (self):
 	
-		v = self ; t = v.t ; parent = v.mParent
+		v = self ; t = v.t ; parent = v.parent()
 		if not parent: return
 		# Copy v as the nth child of all nodes joined to parent.
 		n = v.childIndex()
@@ -2003,7 +2002,7 @@ class vnode:
 	
 	def destroyDependents (self):
 	
-		parent = self.mParent
+		parent = self.parent()
 		if not parent: return
 		# Destroy the nth child of all nodes joined to the receiver's parent.
 		n = self.childIndex()
@@ -2047,7 +2046,7 @@ class vnode:
 	def invalidOutline (self, message):
 	
 		s = "invalid outline: " + message + "\n"
-		parent = self.mParent
+		parent = self.parent()
 	
 		if parent:
 			s += `parent`
@@ -2212,14 +2211,14 @@ class vnode:
 	
 		v = self
 		dv = root = dvnode(level, v.mHeadString, v)
-		child = self.mFirstChild
+		child = self.firstChild()
 		while child:
 			# Recursively create a list of dvnodes for child's subtree.
 			dv.next = child.saveOutlineWithLevel(level + 1)
 			# Move dv to the end of the list of dvnodes.
 			while dv and dv.next:
 				dv = dv.next
-			child = child.mNext
+			child = child.next()
 		return root
 	#@-body
 

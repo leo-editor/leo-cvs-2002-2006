@@ -172,11 +172,107 @@ def findReference(name,root):
 			return v
 		v = v.threadNext()
 	return None
+
 #@-body
 
 #@-node:8:C=1:findReference
 
-#@+node:9::removeTrailingWs
+#@+node:9:C=2:Leading whitespace...
+
+#@+node:1::computeLeadingWhitespace
+
+#@+body
+# Returns optimized whitespace corresponding to width with the indicated tab_width.
+
+def computeLeadingWhitespace (width, tab_width):
+
+	if width <= 0:
+		return ""
+	if tab_width > 1:
+		tabs   = width / tab_width
+		blanks = width % tab_width
+		return ('\t' * tabs) + (' ' * blanks)
+	else:
+		return (' ' * width)
+#@-body
+
+#@-node:1::computeLeadingWhitespace
+
+#@+node:2::removeLeadingWhitespace
+
+#@+body
+# Remove whitespace up to ws wide in s, given tab_width, the width of a tab.
+
+def removeLeadingWhitespace (s, ws, tab_width):
+
+	j = 0 ; ws = 0
+	for ch in s:
+		if ws >= first_ws:
+			break
+		elif ch == ' ':
+			j += 1 ; ws += 1
+		elif ch == '\t':
+			j += 1 ; ws += (tab_width - (ws % tab_width))
+		else: break
+	if j > 0:
+		s = s[j:]
+
+
+#@-body
+
+#@-node:2::removeLeadingWhitespace
+
+#@+node:3::optimizeLeadingWhitespace
+
+#@+body
+# Optimize leading whitespace in s with the given tab_width.
+
+def optimizeLeadingWhitespace (line,tab_width):
+
+	i, width = skip_leading_ws_with_indent(line,0,tab_width)
+	s = computeLeadingWhitespace(width,tab_width) + line[i:]
+	return s
+#@-body
+
+#@-node:3::optimizeLeadingWhitespace
+
+#@+node:4::skip_leading_ws_with_indent
+
+#@+body
+
+#@+at
+#  Skips leading whitespace and returns (i, indent), where i points after the whitespace and indent is the width of the 
+# whitespace, assuming tab_width wide tabs.
+
+#@-at
+
+#@@c
+
+def skip_leading_ws_with_indent(s,i,tab_width):
+
+	count = 0 ; n = len(s)
+	while i < n:
+		ch = s[i]
+		if ch == ' ':
+			count += 1
+			i += 1
+		elif ch == '\t':
+			count += (tab_width - (count % tab_width))
+			i += 1
+		else: break
+
+	return i, count
+
+
+
+
+#@-body
+
+#@-node:4::skip_leading_ws_with_indent
+
+#@-node:9:C=2:Leading whitespace...
+
+#@+node:10::removeTrailingWs
 
 #@+body
 # Warning: string.rstrip also removes newlines!
@@ -190,9 +286,9 @@ def removeTrailingWs(s):
 
 #@-body
 
-#@-node:9::removeTrailingWs
+#@-node:10::removeTrailingWs
 
-#@+node:10::printBindings
+#@+node:11::printBindings
 
 #@+body
 def print_bindings (name,window):
@@ -204,9 +300,9 @@ def print_bindings (name,window):
 		print `b`
 #@-body
 
-#@-node:10::printBindings
+#@-node:11::printBindings
 
-#@+node:11::scanError
+#@+node:12::scanError
 
 #@+body
 
@@ -226,9 +322,9 @@ def scanError(s):
 	es(s)
 #@-body
 
-#@-node:11::scanError
+#@-node:12::scanError
 
-#@+node:12:C=2:Sherlock...
+#@+node:13:C=3:Sherlock...
 
 #@+body
 
@@ -353,9 +449,9 @@ def trace (s1=None,s2=None):
 
 #@-node:3::trace
 
-#@-node:12:C=2:Sherlock...
+#@-node:13:C=3:Sherlock...
 
-#@+node:13::Tk.Text selection
+#@+node:14:C=4:Tk.Text selection
 
 #@+node:1::getTextSelection
 
@@ -390,7 +486,7 @@ def getSelectedText (t):
 
 #@-node:2::getSelectedText
 
-#@+node:3:C=3:setTextSelection
+#@+node:3:C=5:setTextSelection
 
 #@+body
 
@@ -403,19 +499,22 @@ def getSelectedText (t):
 
 def setTextSelection (t,start,end): 
 
+	if not start or not end:
+		return
 	if t.compare(start, ">", end):
 		start,end = end,start
 		
 	t.tag_remove("sel","1.0",start)
 	t.tag_add("sel",start,end)
 	t.tag_remove("sel",end,"end")
+	t.mark_set("insert",end)
 #@-body
 
-#@-node:3:C=3:setTextSelection
+#@-node:3:C=5:setTextSelection
 
-#@-node:13::Tk.Text selection
+#@-node:14:C=4:Tk.Text selection
 
-#@+node:14::update_file_if_changed
+#@+node:15::update_file_if_changed
 
 #@+body
 
@@ -451,9 +550,9 @@ def update_file_if_changed(file_name,temp_name):
 			es("Rename failed: no file created! (file may be read-only)")
 #@-body
 
-#@-node:14::update_file_if_changed
+#@-node:15::update_file_if_changed
 
-#@+node:15::Scanners: no error messages
+#@+node:16::Scanners: no error messages
 
 #@+node:1::escaped
 
@@ -750,53 +849,34 @@ def skip_c_id(s,i):
 
 #@-node:14::skip_c_id
 
-#@+node:15:C=4:skip_leading_ws_with_indent
+#@+node:15::skip_line, skip_to_end_of_line
 
 #@+body
 
 #@+at
-#  Skips leading whitespace and returns (i, indent), where i points after the whitespace and indent is the width of the 
-# whitespace, assuming tab_width wide tabs.
+#  These methods skip to the next newline, regardless of whether the newline may be preceeded by a backslash. Consequently, this 
+# routine should be used only when we know that we are not in a preprocessor directive or string.
 
 #@-at
 
 #@@c
 
-def skip_leading_ws_with_indent(s,i,tab_width):
-
-	count = 0 ; n = len(s)
-	while i < n:
-		ch = s[i]
-		if ch == ' ':
-			count += 1
-			i += 1
-		elif ch == '\t':
-			count += (tab_width - (count % tab_width))
-			i += 1
-		else: break
-
-	return i, count
-#@-body
-
-#@-node:15:C=4:skip_leading_ws_with_indent
-
-#@+node:16::skip_line
-
-#@+body
 def skip_line(s,i):
 
-	# trace(`s[i:]`)
+	i = string.find(s,'\n',i)
+	if i == -1: return len(s)
+	else: return i + 1
+		
+def skip_to_end_of_line(s,i):
 
 	i = string.find(s,'\n',i)
-	if i == -1:
-		return len(s)
-	else:
-		return i + 1
+	if i == -1: return len(s)
+	else: return i
 #@-body
 
-#@-node:16::skip_line
+#@-node:15::skip_line, skip_to_end_of_line
 
-#@+node:17::skip_long
+#@+node:16::skip_long
 
 #@+body
 # returns (i, val) or (i, None) if s[i] does not point at a number.
@@ -815,9 +895,9 @@ def skip_long(s,i):
 	return i, val
 #@-body
 
-#@-node:17::skip_long
+#@-node:16::skip_long
 
-#@+node:18::skip_nl
+#@+node:17::skip_nl
 
 #@+body
 
@@ -836,9 +916,9 @@ def skip_nl(s,i):
 	else: return i
 #@-body
 
-#@-node:18::skip_nl
+#@-node:17::skip_nl
 
-#@+node:19::skip_pascal_braces
+#@+node:18::skip_pascal_braces
 
 #@+body
 # Skips from the opening { to the matching }.
@@ -851,30 +931,9 @@ def skip_pascal_braces(s,i):
 	else: return k
 #@-body
 
-#@-node:19::skip_pascal_braces
+#@-node:18::skip_pascal_braces
 
-#@+node:20::skip_to_end_of_line
-
-#@+body
-
-#@+at
-#  This method skips to the next newline, regardless of whether the newline may be preceeded by a backslash. Consequently, this 
-# routine should be used only when we know that we are not in a preprocessor directive or string.
-
-#@-at
-
-#@@c
-
-def skip_to_end_of_line(s,i):
-
-	j = string.find(s,'\n',i)
-	if j == -1: return len(s)
-	else: return j
-#@-body
-
-#@-node:20::skip_to_end_of_line
-
-#@+node:21::skip_ws
+#@+node:19::skip_ws, skip_ws_and_nl
 
 #@+body
 def skip_ws(s,i):
@@ -883,13 +942,7 @@ def skip_ws(s,i):
 	while i < n and is_ws(s[i]):
 		i += 1
 	return i
-#@-body
-
-#@-node:21::skip_ws
-
-#@+node:22::skip_ws_and_nl
-
-#@+body
+	
 def skip_ws_and_nl(s,i):
 
 	n = len(s)
@@ -898,11 +951,11 @@ def skip_ws_and_nl(s,i):
 	return i
 #@-body
 
-#@-node:22::skip_ws_and_nl
+#@-node:19::skip_ws, skip_ws_and_nl
 
-#@-node:15::Scanners: no error messages
+#@-node:16::Scanners: no error messages
 
-#@+node:16::Scanners: calling scanError
+#@+node:17::Scanners: calling scanError
 
 #@+body
 
@@ -1198,9 +1251,9 @@ def skip_typedef(s,i):
 
 #@-node:12::skip_typedef
 
-#@-node:16::Scanners: calling scanError
+#@-node:17::Scanners: calling scanError
 
-#@+node:17::@language and @comment directives
+#@+node:18::@language and @comment directives
 
 #@+node:1::set_delims_from_language
 
@@ -1308,7 +1361,7 @@ def set_language(s,i,issue_errors_flag,default_language):
 
 #@-node:3::set_language
 
-#@-node:17::@language and @comment directives
+#@-node:18::@language and @comment directives
 
 #@-others
 

@@ -1475,7 +1475,7 @@ class atFile:
 				assert(match(s,i,"@delims"));
 				
 				# Skip the keyword and whitespace.
-				i0 = ip
+				i0 = i
 				i = skip_ws(s,i+7)
 					
 				# Get the first delim.
@@ -1487,8 +1487,8 @@ class atFile:
 				
 					# Get the optional second delim.
 					i1 = i = skip_ws(s,i)
-					while i < len(s) and not is_ws(*ip) and not is_nl(*ip):
-						ip += 1
+					while i < len(s) and not is_ws(*i) and not is_nl(*i):
+						i += 1
 					end = choose(i > i1, s[i1:i], "")
 					i2 = skip_ws(s,i)
 					if end == mEndSentinelComment and (i2 >= len(s) or is_nl(s,i2)):
@@ -1505,6 +1505,7 @@ class atFile:
 					self.readError("Bad @delims")
 					# Append the bad @delims line to the body text.
 					out.append("@delims")
+				
 
 				#@-body
 
@@ -2423,12 +2424,9 @@ class atFile:
 
 		#@-node:1::<< Open files.  Set orphan and dirty flags and return on errors >>
 
+		# unvisited nodes will be orphans.
+		root.clearVisitedInTree()
 		next = root.nodeAfterTree()
-		#c.clearAllVisited() # Unvisited nodes will be orphans.
-		v = root
-		while v and v != next:
-			v.clearVisited()
-			v = v.threadNext()
 		self.updateCloneIndices(root, next)
 		
 	#@<< put all @first lines in root >>
@@ -2461,14 +2459,13 @@ class atFile:
 
 		#@-node:2::<< put all @first lines in root >>
 
-		#
-		self.putOpenLeoSentinel("@+leo")
-		self.putOpenNodeSentinel(root)
-		self.putBodyPart(root)
-		root.setVisited()
-		self.putCloseNodeSentinel(root)
-		self.putSentinel("@-leo")
-		#
+		if 1: # write the entire file
+			self.putOpenLeoSentinel("@+leo")
+			self.putOpenNodeSentinel(root)
+			self.putBodyPart(root)
+			root.setVisited()
+			self.putCloseNodeSentinel(root)
+			self.putSentinel("@-leo")
 		if self.outputFile:
 			self.outputFile.flush()
 			self.outputFile.close()
@@ -2493,7 +2490,7 @@ class atFile:
 
 		if self.errors > 0 or self.root.isOrphan():
 			root.setOrphan()
-			root.clearDirty() # Dirty bit will be set when file is read again
+			root.setDirty() # 2/9/02: make _sure_ we try to rewrite this file.
 			os.remove(self.outputFileName) # Delete the temp file.
 		else:
 			root.clearOrphan()

@@ -321,366 +321,293 @@ class Commands:
 
 	#@+node:10:C=3:Edit Body Text
 
-	#@+node:1::getConvertVars
+	#@+node:1::convertBlanks
 
 	#@+body
-	def getConvertVars(self):
+	def convertBlanks (self):
 	
-		c = self ; body = c.body ; v = c.currentVnode()
-		if v and body:
-			s = body.get("1.0","end")
-			# string.replace(s,'\r',"")
-			lst = string.split(s, '\n')
-			i, j = getTextSelection(body)
-			if i and j:
-				if body.compare(i,">",j):
-					i,j = j,i
-				return lst, i, j, s[i:j]
-	
-		return [], 0, 0, ""
-	#@-body
-
-	#@-node:1::getConvertVars
-
-	#@+node:2::convertBlanks
-
-	#@+body
-	def convertBlanks(self):
-	
-		c = self ; body = c.body ; v = c.currentVnode()
-		lst, i, j, sel = c.getConvertVars()
-		if not lst: return
-	
-		changed = false ; i = 0
-		while i < len(lst):
-			s = lst[i]
-			j, width = skip_leading_ws_with_indent(s,0,c.tab_width)
-			# Replace the leading whitespace
-			tabs   = width / c.tab_width
-			blanks = width % c.tab_width
-			s[0:j] = ('\t' * tabs) + (' ' * blanks)
-			if s != lst[i]:
-				lst[i] = s ; changed = true
+		c = self ; v = c.currentVnode()
+		head, lines, tail = self.getBodyLines()
+		result = [] ; changed = false
+		for line in lines:
+			s = optimizeLeadingWhitespace(line,c.tab_width)
+			if s != line: changed = true
+			result.append(s)
 		if changed:
-			
-	#@<< Update the body pane >>
-
-			#@+node:1::<< Update the body pane >>
-
-			#@+body
-			result = string.join(lst,'\n')
-			body.delete("1.0","end")
-			body.insert("1.0",result)
-			v.setDirty()
-			c.setChanged(true)
-			c.redraw()
-			#@-body
-
-			#@-node:1::<< Update the body pane >>
-
+			result = string.join(result,'\n')
+			self.updateBodyPane(head,result,tail)
 	#@-body
 
-	#@-node:2::convertBlanks
+	#@-node:1::convertBlanks
 
-	#@+node:3::extract
+	#@+node:2::createLastChildNode
+
+	#@+body
+	def createLastChildNode (self,parent,headline,body):
+		
+		c = self
+		if body and len(body) > 0:
+			body = string.rstrip(body)
+		if not body or len(body) == 0:
+			body = ""
+		v = parent.insertAsLastChild()
+		v.initHeadString(headline)
+		v.t.setTnodeText(body)
+		v.createDependents() # To handle effects of clones.
+		v.setDirty()
+		c.validateOutline()
+	#@-body
+
+	#@-node:2::createLastChildNode
+
+	#@+node:3::dedentBody
+
+	#@+body
+	def dedentBody (self):
+	
+		c = self ; v = c.currentVnode()
+		head, lines, tail = self.getBodyLines()
+		result = [] ; changed = false
+		for line in lines:
+			i, width = skip_leading_ws_with_indent(line,0,c.tab_width)
+			s = computeLeadingWhitespace(width-c.tab_width,c.tab_width) + line[i:]
+			if s != line: changed = true
+			result.append(s)
+		if changed:
+			result = string.join(result,'\n')
+			self.updateBodyPane(head,result,tail)
+	#@-body
+
+	#@-node:3::dedentBody
+
+	#@+node:4::extract
 
 	#@+body
 	def extract(self):
 	
-		c = self ; body = c.body ; v = c.currentVnode()
-		lst, seli, selj, sel = c.getConvertVars()
-		if not lst: return
-		i = 0
-		while i < len(lst):
-			
+		c = self ; v = c.currentVnode()
+		head, lines, tail = self.getBodyLines()
+		if not lines: return
+		headline = lines[0] ; del lines[0]
+		
 	#@<< Set headline for extract >>
 
-			#@+node:3::<< Set headline for extract >>
+		#@+node:1::<< Set headline for extract >>
 
-			#@+body
-			headline = string.strip(lst[i])
-			while len(headline) > 0 and headline[0] == '/':
-				headline = headline[1:]
-			headline = string.strip(headline)
-			#@-body
+		#@+body
+		headline = string.strip(headline)
+		while len(headline) > 0 and headline[0] == '/':
+			headline = headline[1:]
+		headline = string.strip(headline)
+		#@-body
 
-			#@-node:3::<< Set headline for extract >>
+		#@-node:1::<< Set headline for extract >>
 
-			
-	#@<< Remove leading whitespace from all body lines >>
-
-			#@+node:2:C=4:<< Remove leading whitespace from all body lines >>
-
-			#@+body
-			# This section is used by the extract and extractSection commands.
-			
-			
-			#@<< set first_ws to the whitespace in the first body line >>
-
-			#@+node:1::<< set first_ws to the whitespace in the first body line >>
-
-			#@+body
-			s = lst[0] ; first_ws = 0
-			for ch in s:
-				if ch == ' ':
-					first_ws += 1
-				elif ch == '\t':
-					first_ws += c.tab_width
-				else: break
-			#@-body
-
-			#@-node:1::<< set first_ws to the whitespace in the first body line >>
-
-			i = 0
-			while i < len(lst):
-				s = lst[i]
-				
-			#@<< remove leading whitespace from s >>
-
-				#@+node:2::<< remove leading whitespace from s >>
-
-				#@+body
-				j = 0 ; ws = 0
-				for ch in s:
-					if ws >= first_ws:
-						break
-					elif ch == ' ':
-						j += 1 ; ws += 1
-					elif ch == '\t':
-						j += 1 ; ws +=(c.tab_width -(ws % c.tab_width))
-					else: break
-				if j > 0:
-					s = s[j:]
-				#@-body
-
-				#@-node:2::<< remove leading whitespace from s >>
-
-				lst[i] = s ;
-				i += 1
-			#@-body
-
-			#@-node:2:C=4:<< Remove leading whitespace from all body lines >>
-
-			c.beginUpdate()
-			
-	#@<< Create the new node for extract >>
-
-			#@+node:1::<< Create the new node for extract >>
-
-			#@+body
-			# Delete the first line of the selected text.
-			del lst[0]
-			result = string.join(lst,'\n')
-			v = current.insertAsLastChild()
-			v.initHeadString(headline)
-			v.t.setTnodeText(result)
-			v.createDependents() # To handle effects of clones.
-			v.setDirty()
-			c.setChanged(true)
-			#@-body
-
-			#@-node:1::<< Create the new node for extract >>
-
-			c.validateOutline()
-			# As of v1.5,this automatically updates the tnode.
-			del body[seli,selj] # Remove all the selected text.
-			current.setDirty()
-			c.endUpdate()
+		# Remove leading whitespace from all body lines.
+		result = []
+		for line in lines:
+			i, width = skip_leading_ws_with_indent(line,0,c.tab_width)
+			result.append(line[i:])
+		# Create a new node from lines.
+		body = string.join(result,'\n')
+		if head and len(head) > 0:
+			head = string.rstrip(head)
+		c.beginUpdate()
+		self.createLastChildNode(v,headline,body)
+		self.updateBodyPane(head,None,tail)
+		c.endUpdate()
 	#@-body
 
-	#@-node:3::extract
+	#@-node:4::extract
 
-	#@+node:4::extractSection
+	#@+node:5::extractSection
 
 	#@+body
 	def extractSection(self):
 	
-		c = self ; body = c.body ; v = c.currentVnode()
-		lst, seli, selj, sel = c.getConvertVars()
-		if not lst: return
-		i = 0
-		while i < len(lst):
-			
+		c = self ; v = c.currentVnode()
+		head, lines, tail = self.getBodyLines()
+		if not lines: return
+		headline = lines[0] ; del lines[0]
+		
 	#@<< Set headline for extractSection >>
 
-			#@+node:1::<< Set headline for extractSection >>
+		#@+node:1::<< Set headline for extractSection >>
 
-			#@+body
-			headline = string.strip(lst[i])
-			while len(headline) > 0 and headline[0] == '/':
-				headline = headline[1:]
-			headline = string.strip(headline)
-			
-			# Make sure we have a @< or <<
-			if headline[0:2] != '<<' and headline[0:2] != '@<': return
-			#@-body
+		#@+body
+		while len(headline) > 0 and headline[0] == '/':
+			headline = headline[1:]
+		headline = string.strip(headline)
+		
+		# Make sure we have a @< or <<
+		if headline[0:2] != '<<' and headline[0:2] != '@<': return
+		#@-body
 
-			#@-node:1::<< Set headline for extractSection >>
+		#@-node:1::<< Set headline for extractSection >>
 
-			
-	#@<< Remove leading whitespace from all body lines >>
-
-			#@+node:2:C=4:<< Remove leading whitespace from all body lines >>
-
-			#@+body
-			# This section is used by the extract and extractSection commands.
-			
-			
-			#@<< set first_ws to the whitespace in the first body line >>
-
-			#@+node:1::<< set first_ws to the whitespace in the first body line >>
-
-			#@+body
-			s = lst[0] ; first_ws = 0
-			for ch in s:
-				if ch == ' ':
-					first_ws += 1
-				elif ch == '\t':
-					first_ws += c.tab_width
-				else: break
-			#@-body
-
-			#@-node:1::<< set first_ws to the whitespace in the first body line >>
-
-			i = 0
-			while i < len(lst):
-				s = lst[i]
-				
-			#@<< remove leading whitespace from s >>
-
-				#@+node:2::<< remove leading whitespace from s >>
-
-				#@+body
-				j = 0 ; ws = 0
-				for ch in s:
-					if ws >= first_ws:
-						break
-					elif ch == ' ':
-						j += 1 ; ws += 1
-					elif ch == '\t':
-						j += 1 ; ws +=(c.tab_width -(ws % c.tab_width))
-					else: break
-				if j > 0:
-					s = s[j:]
-				#@-body
-
-				#@-node:2::<< remove leading whitespace from s >>
-
-				lst[i] = s ;
-				i += 1
-			#@-body
-
-			#@-node:2:C=4:<< Remove leading whitespace from all body lines >>
-
-			c.beginUpdate()
-			
-	#@<< Create the new node for extractSection >>
-
-			#@+node:3::<< Create the new node for extractSection >>
-
-			#@+body
-			result = string.join(lst,'\n')
-			v2 = v.insertAsLastChild()
-			v2.initHeadString(headline)
-			v2.t.setTnodeText(result)
-			v2.createDependents() # To handle effects of clones.
-			v2.setDirty()
-			c.setChanged(true)
-			#@-body
-
-			#@-node:3::<< Create the new node for extractSection >>
-
-			c.validateOutline()
-			# As of v1.5,this automatically updates the tnode.
-			del body[seli,seli]
-			body.SetSelection(seli,seli)
-			body[seli:selj+1] = headline
-			current.setDirty()
-			c.endUpdate()
+		# Remove leading whitespace from all body lines.
+		result = []
+		for line in lines:
+			i, width = skip_leading_ws_with_indent(line,0,c.tab_width)
+			result.append(line[i:])
+		# Create a new node from lines.
+		body = string.join(result,'\n')
+		if head and len(head) > 0:
+			head = string.rstrip(head)
+		c.beginUpdate()
+		self.createLastChildNode(v,headline,body)
+		self.updateBodyPane(head,None,tail)
+		c.endUpdate()
 	#@-body
 
-	#@-node:4::extractSection
+	#@-node:5::extractSection
 
-	#@+node:5::extractSectionNames
+	#@+node:6::extractSectionNames
 
 	#@+body
 	def extractSectionNames(self):
 	
-		c = self ; body = c.body ; v = c.currentVnode()
-		lst, seli, selj, sel = c.getConvertVars()
-		if not lst: return
-		parent = v.parent()
+		c = self ; v = c.currentVnode()
+		head, lines, tail = self.getBodyLines()
+		if not lines: return
+		# Save the selection.
+		i, j = self.getBodySelection()
 		c.beginUpdate()
-		for s in lst:
+		for s in lines:
 			
-	#@<< Find the next section name or break >>
+	#@<< Find the next section name >>
 
-			#@+node:1::<< Find the next section name or break >>
+			#@+node:1::<< Find the next section name >>
 
 			#@+body
-			# Find the start of the section name.
-			head1 = -1 ; head2 = -1
-			while i < len(s):
-				if s[i:i+2] == "<<" or s[i:i+2] == "@<":
-					head1 = i ; i += 2 ; break
-				else: i += 1
-			else: break
-			
-			# Find the end of the section name.
-			while i < len(s):
-				if s[i:i+2] == ">>" or s[i:i+2] == "@>":
-					head2 = i ; break
-				else: i += 1
-			else: break
-			
-			headline = s[head1:head2]
+			head1 = string.find(s,"<<")
+			if head1 > -1:
+				head2 = string.find(s,">>",head1)
+			else:
+				head1 = string.find(s,"@<")
+				if head1 > -1:
+					head2 = string.find(s,"@>",head1)
+					
+			if head1 == -1 or head2 == -1 or head1 > head2:
+				name = None
+			else:
+				name = s[head1:head2+2]
 			#@-body
 
-			#@-node:1::<< Find the next section name or break >>
+			#@-node:1::<< Find the next section name >>
 
-			
-	#@<< Create an empty node >>
-
-			#@+node:2::<< Create an empty node >>
-
-			#@+body
-			v2 = parent.insertAsLastChild()
-			v2.initHeadString(headline)
-			v2.t.setTnodeText("")
-			v2.createDependents() # To handle effects of clones.
-			v2.setDirty()
-			c.setChanged(true)
-			#@-body
-
-			#@-node:2::<< Create an empty node >>
-
+			if name: self.createLastChildNode(v,name,None)
+		c.selectVnode(v)
 		c.validateOutline()
-		c.selectVnode(parent)
 		c.endUpdate()
+		# Restore the selection.
+		setTextSelection(c.body,i,j)
+		c.body.focus_force()
 	#@-body
 
-	#@-node:5::extractSectionNames
+	#@-node:6::extractSectionNames
 
-	#@+node:6::massageExtractedBody
+	#@+node:7::getBodyLines
 
 	#@+body
-	# This inserts @c after leading comments.
-	
-	def massageExtractedBody(self,s):
-	
-		newBody, comment = c.skipLeadingComments(s)
-		newLine = choose(len(newBody) > 0 and newBody[0] == '\n', "", '\n')
-		if len(comment) > 0:
-			return comment + "\n@c\n" + newLine + newBody
-		else:
-			return newBody
+	def getBodyLines (self):
+		
+		c = self
+		i, j = getTextSelection(c.body)
+		if i and j: # Convert all lines containing any part of the selection.
+			if c.body.compare(i,">",j): i,j = j,i
+			i = c.body.index(i + "linestart")
+			j = c.body.index(j + "lineend")
+			head = c.body.get("1.0",i)
+			tail = c.body.get(j,"end")
+		else: # Convert the entire text.
+			i = "1.0" ; j = "end" ; head = tail = ""
+		lines = c.body.get(i,j)
+		lines = string.split(lines, '\n')
+		return head, lines, tail
 	#@-body
 
-	#@-node:6::massageExtractedBody
+	#@-node:7::getBodyLines
+
+	#@+node:8::getBodySelection
+
+	#@+body
+	def getBodySelection (self):
+	
+		c = self
+		i, j = getTextSelection(c.body)
+		if i and j and c.body.compare(i,">",j):
+			i,j = j,i
+		return i, j
+	#@-body
+
+	#@-node:8::getBodySelection
+
+	#@+node:9::indentBody
+
+	#@+body
+	def indentBody (self):
+	
+		c = self ; v = c.currentVnode()
+		head, lines, tail = self.getBodyLines()
+		result = [] ; changed = false
+		for line in lines:
+			i, width = skip_leading_ws_with_indent(line,0,c.tab_width)
+			s = computeLeadingWhitespace(width+c.tab_width,c.tab_width) + line[i:]
+			if s != line: changed = true
+			result.append(s)
+		if changed:
+			result = string.join(result,'\n')
+			self.updateBodyPane(head,result,tail)
+	#@-body
+
+	#@-node:9::indentBody
+
+	#@+node:10::updateBodyPane
+
+	#@+body
+	def updateBodyPane (self,head,middle,tail):
+		
+		c = self ; v = c.currentVnode()
+		# Update the text and set start, end.
+		c.body.delete("1.0","end")
+		# The caller must do rstrip.head if appropriate.
+		if head and len(head) > 0:
+			c.body.insert("end",head)
+			start = c.body.index("end-1c")
+		else: start = "1.0"
+		if middle and len(middle) > 0:
+			middle = string.rstrip(middle)
+		if middle and len(middle) > 0:
+			c.body.insert("end",middle)
+			end = c.body.index("end-1c")
+		else: end = start
+		if tail and len(tail) > 0:
+			tail = string.rstrip(tail)
+		if tail and len(tail) > 0:
+			c.body.insert("end",tail)
+		# Activate the body key handler by hand.
+		c.tree.onBodyChanged()
+		# Update the changed mark.
+		if not c.isChanged():
+			c.setChanged(true)
+		# Update the icon.
+		c.beginUpdate()
+		if not v.isDirty():
+			v.setDirty()
+		c.endUpdate()
+		# Update the selection.
+		# trace(`start` + "," + `end`)
+		setTextSelection(c.body,start,end)
+		c.body.see("insert")
+		c.body.focus_force()
+	#@-body
+
+	#@-node:10::updateBodyPane
 
 	#@-node:10:C=3:Edit Body Text
 
-	#@+node:11:C=5:Enabling Menu Items (Commands)
+	#@+node:11:C=4:Enabling Menu Items (Commands)
 
 	#@+node:1::canContractAllHeadlines
 
@@ -718,7 +645,18 @@ class Commands:
 
 	#@-node:2::canContractAllSubheads
 
-	#@+node:3::canContractSubheads
+	#@+node:3::canContractParent
+
+	#@+body
+	def canContractParent (self):
+	
+		c = self ; v = c.currentVnode()
+		return v.parent() != None
+	#@-body
+
+	#@-node:3::canContractParent
+
+	#@+node:4::canContractSubheads
 
 	#@+body
 	def canContractSubheads(self):
@@ -733,9 +671,9 @@ class Commands:
 		return false
 	#@-body
 
-	#@-node:3::canContractSubheads
+	#@-node:4::canContractSubheads
 
-	#@+node:4::canCutOutline & canDeleteHeadline
+	#@+node:5::canCutOutline & canDeleteHeadline
 
 	#@+body
 	def canDeleteHeadline(self):
@@ -750,9 +688,9 @@ class Commands:
 	canCutOutline = canDeleteHeadline
 	#@-body
 
-	#@-node:4::canCutOutline & canDeleteHeadline
+	#@-node:5::canCutOutline & canDeleteHeadline
 
-	#@+node:5::canDemote
+	#@+node:6::canDemote
 
 	#@+body
 	def canDemote(self):
@@ -763,9 +701,9 @@ class Commands:
 		return v.next() != None
 	#@-body
 
-	#@-node:5::canDemote
+	#@-node:6::canDemote
 
-	#@+node:6::canExpandAllHeadlines
+	#@+node:7::canExpandAllHeadlines
 
 	#@+body
 	def canExpandAllHeadlines(self):
@@ -780,9 +718,9 @@ class Commands:
 		return false
 	#@-body
 
-	#@-node:6::canExpandAllHeadlines
+	#@-node:7::canExpandAllHeadlines
 
-	#@+node:7::canExpandAllSubheads
+	#@+node:8::canExpandAllSubheads
 
 	#@+body
 	def canExpandAllSubheads(self):
@@ -799,9 +737,9 @@ class Commands:
 		return false
 	#@-body
 
-	#@-node:7::canExpandAllSubheads
+	#@-node:8::canExpandAllSubheads
 
-	#@+node:8::canExpandSubheads
+	#@+node:9::canExpandSubheads
 
 	#@+body
 	def canExpandSubheads(self):
@@ -817,9 +755,9 @@ class Commands:
 		return false
 	#@-body
 
-	#@-node:8::canExpandSubheads
+	#@-node:9::canExpandSubheads
 
-	#@+node:9:C=6:canExtract, canExtractSection & canExtractSectionNames
+	#@+node:10:C=5:canExtract, canExtractSection & canExtractSectionNames
 
 	#@+body
 	def canExtract(self):
@@ -827,9 +765,7 @@ class Commands:
 		c = self
 		if c.body:
 			i, j = getTextSelection(c.body)
-			if i and j:
-				return c.body.compare(i, "!=", j)
-			else: return false
+			return i and j and c.body.compare(i, "!=", j)
 		else:
 			return false
 	
@@ -837,9 +773,9 @@ class Commands:
 	canExtractSectionNames = canExtract
 	#@-body
 
-	#@-node:9:C=6:canExtract, canExtractSection & canExtractSectionNames
+	#@-node:10:C=5:canExtract, canExtractSection & canExtractSectionNames
 
-	#@+node:10::canGoToNextDirtyHeadline
+	#@+node:11::canGoToNextDirtyHeadline
 
 	#@+body
 	def canGoToNextDirtyHeadline(self):
@@ -855,9 +791,9 @@ class Commands:
 		return false
 	#@-body
 
-	#@-node:10::canGoToNextDirtyHeadline
+	#@-node:11::canGoToNextDirtyHeadline
 
-	#@+node:11::canGoToNextMarkedHeadline
+	#@+node:12::canGoToNextMarkedHeadline
 
 	#@+body
 	def canGoToNextMarkedHeadline(self):
@@ -873,9 +809,9 @@ class Commands:
 		return false
 	#@-body
 
-	#@-node:11::canGoToNextMarkedHeadline
+	#@-node:12::canGoToNextMarkedHeadline
 
-	#@+node:12::canMarkChangedHeadline
+	#@+node:13::canMarkChangedHeadline
 
 	#@+body
 	def canMarkChangedHeadlines(self):
@@ -889,9 +825,9 @@ class Commands:
 		return false
 	#@-body
 
-	#@-node:12::canMarkChangedHeadline
+	#@-node:13::canMarkChangedHeadline
 
-	#@+node:13::canMarkChangedRoots
+	#@+node:14::canMarkChangedRoots
 
 	#@+body
 	def canMarkChangedRoots(self):
@@ -905,9 +841,9 @@ class Commands:
 		return false
 	#@-body
 
-	#@-node:13::canMarkChangedRoots
+	#@-node:14::canMarkChangedRoots
 
-	#@+node:14::canMoveOutlineDown
+	#@+node:15::canMoveOutlineDown
 
 	#@+body
 	def canMoveOutlineDown(self):
@@ -924,9 +860,9 @@ class Commands:
 			return c.tree.currentVnode.next() != None
 	#@-body
 
-	#@-node:14::canMoveOutlineDown
+	#@-node:15::canMoveOutlineDown
 
-	#@+node:15::canMoveOutlineLeft
+	#@+node:16::canMoveOutlineLeft
 
 	#@+body
 	def canMoveOutlineLeft(self):
@@ -939,9 +875,9 @@ class Commands:
 			return v and v.parent() and v.parent().parent()
 	#@-body
 
-	#@-node:15::canMoveOutlineLeft
+	#@-node:16::canMoveOutlineLeft
 
-	#@+node:16::canMoveOutlineRight
+	#@+node:17::canMoveOutlineRight
 
 	#@+body
 	def canMoveOutlineRight(self):
@@ -951,9 +887,9 @@ class Commands:
 		return v and v.back()
 	#@-body
 
-	#@-node:16::canMoveOutlineRight
+	#@-node:17::canMoveOutlineRight
 
-	#@+node:17::canMoveOutlineUp
+	#@+node:18::canMoveOutlineUp
 
 	#@+body
 	def canMoveOutlineUp(self):
@@ -966,9 +902,9 @@ class Commands:
 			return v and v.back()
 	#@-body
 
-	#@-node:17::canMoveOutlineUp
+	#@-node:18::canMoveOutlineUp
 
-	#@+node:18:C=7:canPasteOutline
+	#@+node:19:C=6:canPasteOutline
 
 	#@+body
 	def canPasteOutline(self, s=None):
@@ -984,9 +920,9 @@ class Commands:
 			return c.stringsAreValidMoreFile(s)
 	#@-body
 
-	#@-node:18:C=7:canPasteOutline
+	#@-node:19:C=6:canPasteOutline
 
-	#@+node:19::canPromote
+	#@+node:20::canPromote
 
 	#@+body
 	def canPromote(self):
@@ -996,9 +932,9 @@ class Commands:
 		return v and v.hasChildren()
 	#@-body
 
-	#@-node:19::canPromote
+	#@-node:20::canPromote
 
-	#@+node:20:C=8:canRevert
+	#@+node:21:C=7:canRevert
 
 	#@+body
 	def canRevert(self):
@@ -1009,9 +945,9 @@ class Commands:
 			len(c.frame.mFileName) > 0 and c.isChanged() )
 	#@-body
 
-	#@-node:20:C=8:canRevert
+	#@-node:21:C=7:canRevert
 
-	#@+node:21:C=9:canSelectThreadBack
+	#@+node:22:C=8:canSelectThreadBack
 
 	#@+body
 	def canSelectThreadBack(self):
@@ -1021,9 +957,9 @@ class Commands:
 		return w == c.canvas and v and v.threadBack()
 	#@-body
 
-	#@-node:21:C=9:canSelectThreadBack
+	#@-node:22:C=8:canSelectThreadBack
 
-	#@+node:22:C=10:canSelectThreadNext
+	#@+node:23:C=9:canSelectThreadNext
 
 	#@+body
 	def canSelectThreadNext(self):
@@ -1033,9 +969,9 @@ class Commands:
 		return w == c.canvas and v and v.threadNext()
 	#@-body
 
-	#@-node:22:C=10:canSelectThreadNext
+	#@-node:23:C=9:canSelectThreadNext
 
-	#@+node:23:C=11:canSelectVisBack
+	#@+node:24:C=10:canSelectVisBack
 
 	#@+body
 	def canSelectVisBack(self):
@@ -1045,9 +981,9 @@ class Commands:
 		return w == c.canvas and v and v.visBack()
 	#@-body
 
-	#@-node:23:C=11:canSelectVisBack
+	#@-node:24:C=10:canSelectVisBack
 
-	#@+node:24:C=12:canSelectVisNext
+	#@+node:25:C=11:canSelectVisNext
 
 	#@+body
 	def canSelectVisNext(self):
@@ -1057,9 +993,9 @@ class Commands:
 		return w == c.canvas and v and v.visNext()
 	#@-body
 
-	#@-node:24:C=12:canSelectVisNext
+	#@-node:25:C=11:canSelectVisNext
 
-	#@+node:25::canShiftBodyLeft
+	#@+node:26::canShiftBodyLeft
 
 	#@+body
 	def canShiftBodyLeft(self):
@@ -1072,9 +1008,9 @@ class Commands:
 			return false
 	#@-body
 
-	#@-node:25::canShiftBodyLeft
+	#@-node:26::canShiftBodyLeft
 
-	#@+node:26::canShiftBodyRight
+	#@+node:27::canShiftBodyRight
 
 	#@+body
 	def canShiftBodyRight(self):
@@ -1087,21 +1023,26 @@ class Commands:
 			return false
 	#@-body
 
-	#@-node:26::canShiftBodyRight
+	#@-node:27::canShiftBodyRight
 
-	#@+node:27::canSort
+	#@+node:28::canSortChildren, canSortSiblings
 
 	#@+body
-	def canSort(self):
+	def canSortChildren(self):
 	
-		c = self
-		v = c.tree.currentVnode
+		c = self ; v = c.currentVnode()
 		return v and v.hasChildren()
+		
+	def canSortSiblings(self):
+	
+		c = self ; v = c.currentVnode()
+		parent = v.parent()
+		return parent and parent.hasChildren()
 	#@-body
 
-	#@-node:27::canSort
+	#@-node:28::canSortChildren, canSortSiblings
 
-	#@+node:28::canUnmarkAll
+	#@+node:29::canUnmarkAll
 
 	#@+body
 	# Returns true if any node is marked.
@@ -1117,9 +1058,9 @@ class Commands:
 		return false
 	#@-body
 
-	#@-node:28::canUnmarkAll
+	#@-node:29::canUnmarkAll
 
-	#@-node:11:C=5:Enabling Menu Items (Commands)
+	#@-node:11:C=4:Enabling Menu Items (Commands)
 
 	#@+node:12::Expand & Contract
 
@@ -1167,7 +1108,24 @@ class Commands:
 
 	#@-node:2::contractAllSubheads
 
-	#@+node:3::contractSubheads
+	#@+node:3::contractParent
+
+	#@+body
+	def contractParent (self):
+		
+		c = self ; v = c.currentVnode()
+		parent = v.parent()
+		if not parent: return
+		
+		c.beginUpdate()
+		c.selectVnode(parent)
+		parent.contract()
+		c.endUpdate()
+	#@-body
+
+	#@-node:3::contractParent
+
+	#@+node:4::contractSubheads
 
 	#@+body
 	# Contracts the children of the current node.
@@ -1187,9 +1145,9 @@ class Commands:
 		c.expansionLevel = 0
 	#@-body
 
-	#@-node:3::contractSubheads
+	#@-node:4::contractSubheads
 
-	#@+node:4::expandLevel1
+	#@+node:5::expandLevel1
 
 	#@+body
 	def expandLevel1(self):
@@ -1197,9 +1155,9 @@ class Commands:
 		self.expandToLevel(1)
 	#@-body
 
-	#@-node:4::expandLevel1
+	#@-node:5::expandLevel1
 
-	#@+node:5::expandLevel2
+	#@+node:6::expandLevel2
 
 	#@+body
 	def expandLevel2(self):
@@ -1207,9 +1165,9 @@ class Commands:
 		self.expandToLevel(2)
 	#@-body
 
-	#@-node:5::expandLevel2
+	#@-node:6::expandLevel2
 
-	#@+node:6::expandLevel3
+	#@+node:7::expandLevel3
 
 	#@+body
 	def expandLevel3(self):
@@ -1217,9 +1175,9 @@ class Commands:
 		self.expandToLevel(3)
 	#@-body
 
-	#@-node:6::expandLevel3
+	#@-node:7::expandLevel3
 
-	#@+node:7::expandLevel4
+	#@+node:8::expandLevel4
 
 	#@+body
 	def expandLevel4(self):
@@ -1227,9 +1185,9 @@ class Commands:
 		self.expandToLevel(4)
 	#@-body
 
-	#@-node:7::expandLevel4
+	#@-node:8::expandLevel4
 
-	#@+node:8::expandLevel5
+	#@+node:9::expandLevel5
 
 	#@+body
 	def expandLevel5(self):
@@ -1237,9 +1195,9 @@ class Commands:
 		self.expandToLevel(5)
 	#@-body
 
-	#@-node:8::expandLevel5
+	#@-node:9::expandLevel5
 
-	#@+node:9::expandLevel6
+	#@+node:10::expandLevel6
 
 	#@+body
 	def expandLevel6(self):
@@ -1247,9 +1205,9 @@ class Commands:
 		self.expandToLevel(6)
 	#@-body
 
-	#@-node:9::expandLevel6
+	#@-node:10::expandLevel6
 
-	#@+node:10::expandLevel7
+	#@+node:11::expandLevel7
 
 	#@+body
 	def expandLevel7(self):
@@ -1257,9 +1215,9 @@ class Commands:
 		self.expandToLevel(7)
 	#@-body
 
-	#@-node:10::expandLevel7
+	#@-node:11::expandLevel7
 
-	#@+node:11::expandLevel8
+	#@+node:12::expandLevel8
 
 	#@+body
 	def expandLevel8(self):
@@ -1267,9 +1225,9 @@ class Commands:
 		self.expandToLevel(8)
 	#@-body
 
-	#@-node:11::expandLevel8
+	#@-node:12::expandLevel8
 
-	#@+node:12::expandLevel9
+	#@+node:13::expandLevel9
 
 	#@+body
 	def expandLevel9(self):
@@ -1277,9 +1235,9 @@ class Commands:
 		self.expandToLevel(9)
 	#@-body
 
-	#@-node:12::expandLevel9
+	#@-node:13::expandLevel9
 
-	#@+node:13::expandNextLevel
+	#@+node:14::expandNextLevel
 
 	#@+body
 	def expandNextLevel(self):
@@ -1288,9 +1246,9 @@ class Commands:
 		self.expandToLevel(c.expansionLevel + 1)
 	#@-body
 
-	#@-node:13::expandNextLevel
+	#@-node:14::expandNextLevel
 
-	#@+node:14::expandAllHeadlines
+	#@+node:15::expandAllHeadlines
 
 	#@+body
 	def expandAllHeadlines(self):
@@ -1306,9 +1264,9 @@ class Commands:
 		c.expansionLevel = 0 # Reset expansion level.
 	#@-body
 
-	#@-node:14::expandAllHeadlines
+	#@-node:15::expandAllHeadlines
 
-	#@+node:15::expandAllSubheads
+	#@+node:16::expandAllSubheads
 
 	#@+body
 	def expandAllSubheads(self):
@@ -1326,9 +1284,9 @@ class Commands:
 		c.endUpdate()
 	#@-body
 
-	#@-node:15::expandAllSubheads
+	#@-node:16::expandAllSubheads
 
-	#@+node:16::expandSubheads
+	#@+node:17::expandSubheads
 
 	#@+body
 	def expandSubheads(self):
@@ -1346,7 +1304,7 @@ class Commands:
 		c.endUpdate()
 	#@-body
 
-	#@-node:16::expandSubheads
+	#@-node:17::expandSubheads
 
 	#@-node:1::Commands
 
@@ -2116,12 +2074,12 @@ class Commands:
 
 	#@-node:6::promote
 
-	#@+node:7:C=13:c.sort
+	#@+node:7:C=12:sortChildren, sortSiblings
 
 	#@+body
-	def sort(self):
+	def sortChildren(self):
 	
-		c = self ; v = c.tree.currentVnode
+		c = self ; v = c.currentVnode()
 		if not v or not v.hasChildren(): return
 	
 		c.beginUpdate()
@@ -2132,9 +2090,25 @@ class Commands:
 			v.setDirty()
 			c.setChanged(true)
 		c.endUpdate()
+		
+	def sortSiblings (self):
+		
+		c = self ; v = c.currentVnode()
+		if not v: return
+		parent = v.parent()
+		if not parent: return # can't sort the top level this way.
+	
+		c.beginUpdate()
+		if 1: # inside update...
+			c.endEditing()
+			# For now, sorting can not be undone.
+			parent.sortChildren()
+			parent.setDirty()
+			c.setChanged(true)
+		c.endUpdate()
 	#@-body
 
-	#@-node:7:C=13:c.sort
+	#@-node:7:C=12:sortChildren, sortSiblings
 
 	#@-node:16::Moving, Promote, Demote, Sort
 
@@ -2168,7 +2142,7 @@ class Commands:
 
 	#@-node:2::endEditing (calls tree.endEditLabel)
 
-	#@+node:3:C=14:selectThreadBack
+	#@+node:3:C=13:selectThreadBack
 
 	#@+body
 	def selectThreadBack(self):
@@ -2184,9 +2158,9 @@ class Commands:
 			c.frame.canvas.focus_force()
 	#@-body
 
-	#@-node:3:C=14:selectThreadBack
+	#@-node:3:C=13:selectThreadBack
 
-	#@+node:4:C=15:selectThreadNext
+	#@+node:4:C=14:selectThreadNext
 
 	#@+body
 	def selectThreadNext(self):
@@ -2202,9 +2176,9 @@ class Commands:
 			c.frame.canvas.focus_force()
 	#@-body
 
-	#@-node:4:C=15:selectThreadNext
+	#@-node:4:C=14:selectThreadNext
 
-	#@+node:5:C=16:selectVisBack
+	#@+node:5:C=15:selectVisBack
 
 	#@+body
 	# This has an up arrow for a control key.
@@ -2222,9 +2196,9 @@ class Commands:
 			c.frame.canvas.focus_force()
 	#@-body
 
-	#@-node:5:C=16:selectVisBack
+	#@-node:5:C=15:selectVisBack
 
-	#@+node:6:C=17:selectVisNext
+	#@+node:6:C=16:selectVisNext
 
 	#@+body
 	def selectVisNext(self):
@@ -2240,7 +2214,7 @@ class Commands:
 			c.frame.canvas.focus_force()
 	#@-body
 
-	#@-node:6:C=17:selectVisNext
+	#@-node:6:C=16:selectVisNext
 
 	#@+node:7::c.selectVnode (calls tree.select)
 

@@ -151,7 +151,6 @@ class colorizer:
 		body.tag_delete(
 			"comment", "docPart", "keyword", "leoKeyword",
 			"name", "nameBrackets", "string")
-
 	#@-body
 
 	#@-node:7::colorizePlain
@@ -399,10 +398,9 @@ class colorizer:
 
 					#@+body
 					j = self.skip_id(s,i+1)
-					if i == 0:
-						word = s[i:j]
-						word = string.lower(word)
-					else:
+					word = s[i:j]
+					word = string.lower(word)
+					if i != 0 and word != "@others":
 						word = "" # can't be a Leo keyword, even if it looks like it.
 					
 					# to do: the keyword should start the line.
@@ -506,7 +504,7 @@ class colorizer:
 	def scanColorDirectives(self,v):
 	
 		c = self.commands
-		val = python_language #### should be c.language
+		val = c.target_language
 		while v:
 			s = v.t.bodyString
 			bits, dict = is_special_bits(s,dont_set_root_from_headline)
@@ -531,6 +529,7 @@ class colorizer:
 			#@-node:1::<< Test for @comment or @language >>
 
 			v = v.parent()
+		# trace(`val`)
 		return val
 	#@-body
 

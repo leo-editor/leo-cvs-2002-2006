@@ -344,6 +344,7 @@ class LeoFind:
 	def changeAllButton(self):
 	
 		c = self.setup_button()
+		c.clearAllVisited() # Clear visited for context reporting.
 		self.changeAll()
 	#@-body
 
@@ -383,6 +384,7 @@ class LeoFind:
 	def findAllButton(self):
 	
 		c = self.setup_button()
+		c.clearAllVisited() # Clear visited for context reporting.
 		self.findAll()
 	#@-body
 
@@ -591,7 +593,11 @@ class LeoFind:
 		start,end = sel
 		t.delete(start,end)
 		t.insert(start,c.change_text)
-		# trace(t.get(start,"end"))
+		# 2/7/02: Also update s_text in case we find another match on the same line.
+		self.s_text.delete(start,end)
+		self.s_text.insert(start,c.change_text)
+		# Update the selection for the next match.
+		setTextSelection(t,start,start + "+" + `len(c.change_text)` + "c")
 		t.focus_force()
 	
 		c.beginUpdate()
@@ -604,6 +610,7 @@ class LeoFind:
 		else:
 			c.tree.idle_body_key(v)
 		c.endUpdate(false) # No redraws here: they would destroy the headline selection.
+		# trace(c.body.index("insert")+":"+c.body.get("insert linestart","insert lineend"))
 		return true
 	#@-body
 
@@ -794,8 +801,7 @@ class LeoFind:
 		index = t.index("insert")
 		stopindex = choose(c.reverse_flag,"1.0","end")
 		while 1:
-			# trace("s_text" + `index` + ":" + `stopindex` + ":" +
-				# `v.headString()` + ":" + `t.get("1.0","end")`)
+			# trace(`index`+":"+`stopindex`+":"+t.get(index+" linestart",index+" lineend"))
 			pos = t.search(c.find_text,index,
 				stopindex=stopindex,backwards=c.reverse_flag,
 				regexp=c.pattern_match_flag,nocase=c.ignore_case_flag)
@@ -846,8 +852,8 @@ class LeoFind:
 				if not pos: continue
 			# trace("found:" + `pos` + ":" + `newpos` + ":" + `v`)
 			# set the insertion point.
-			t.mark_set("insert",choose(c.reverse_flag,pos,newpos))
 			setTextSelection(t,pos,newpos)
+			t.mark_set("insert",choose(c.reverse_flag,pos,newpos))
 			return pos, newpos
 	#@-body
 
@@ -884,12 +890,15 @@ class LeoFind:
 		self.in_headline = c.search_headline_flag # Search headlines first.
 	
 		# Select the first node.
-		v = c.rootVnode()
-		if c.reverse_flag:
-			while v and v.next():
-				v = v.next()
-			v = v.lastNode()
-		self.v = v
+		if c.suboutline_only_flag:
+			self.v = c.currentVnode()
+		else:
+			v = c.rootVnode()
+			if c.reverse_flag:
+				while v and v.next():
+					v = v.next()
+				v = v.lastNode()
+			self.v = v
 		
 		# Set the insert point.
 		self.initBatchText()
@@ -991,9 +1000,11 @@ class LeoFind:
 			es(`self.v`)
 			type = choose(self.in_headline,"head: ","body: ")
 			es(type + line)
-		elif allFlag and context:
+		elif allFlag and context and not self.v.isVisited():
+			# We only need to print the context once.
 			es(`self.v`)
 			es(line)
+			self.v.setVisited()
 		else:
 			es(line)
 	#@-body

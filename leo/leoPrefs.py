@@ -15,13 +15,13 @@ ivars = [
 	"tangle_batch_flag", "untangle_batch_flag",
 	"use_header_flag", "output_doc_flag",
 	"tangle_directory", "page_width", "tab_width",
-	"target_language"]
+	"target_language" ]
 
 class LeoPrefs:
 
 	#@+others
 
-	#@+node:1::prefs.__init__
+	#@+node:1:C=1:prefs.__init__
 
 	#@+body
 	def __init__ (self):
@@ -82,17 +82,22 @@ class LeoPrefs:
 		self.pageWidthText = txt = Tk.Text(f, height=1, width=4)
 		lab.pack(side="left")
 		txt.pack(side="left")
+		txt.bind("<Key>", self.idle_set_ivars)
 		
 		lab2 = Tk.Label(f, padx="1m", text="Tab width:")
 		self.tabWidthText = txt2 = Tk.Text(f, height=1, width=4)
 		lab2.pack(side="left")
 		txt2.pack(side="left")
+		txt2.bind("<Key>", self.idle_set_ivars)
 		
 		# Batch Checkbuttons...
+		# Can't easily use a list becasue we use different variables.
 		self.doneBox = doneBox = Tk.Checkbutton(glob,anchor="w",
-			text="Run tangle_done.py after Tangle", variable=self.tangle_batch_var)
+			text="Run tangle_done.py after Tangle",
+			variable=self.tangle_batch_var,command=self.idle_set_ivars)
 		self.unBox = unBox = Tk.Checkbutton(glob,anchor="w",
-			text="Run untangle_done.py after Untangle", variable=self.untangle_batch_var)
+			text="Run untangle_done.py after Untangle",
+			variable=self.untangle_batch_var,command=self.idle_set_ivars)
 		doneBox.pack(fill="x")
 		unBox.pack(fill="x")
 		#@-body
@@ -115,18 +120,19 @@ class LeoPrefs:
 		# Label and text
 		lab3 = Tk.Label(tangle, anchor="w", text="Default tangle directory")
 		self.tangleDirectoryText = txt3 = Tk.Text(tangle, height=1, width=30)
-		
+		txt3.bind("<Key>", self.idle_set_ivars) # Capture the change immediately
 		lab3.pack(            padx="1m", pady="1m", fill="x")
 		txt3.pack(anchor="w", padx="1m", pady="1m", fill="x")
 		
 		# Checkbuttons
 		self.headerBox = header = Tk.Checkbutton(tangle,anchor="w",
-			text="Tangle outputs header line", variable=self.use_header_var)
+			text="Tangle outputs header line",
+			variable=self.use_header_var,command=self.idle_set_ivars)
 		self.docBox = doc = Tk.Checkbutton(tangle,anchor="w",
-			text="Tangle outputs document chunks", variable=self.output_doc_var)
+			text="Tangle outputs document chunks",
+			variable=self.output_doc_var,command=self.idle_set_ivars)
 		header.pack(fill="x")
 		doc.pack(fill="x")
-
 		#@-body
 
 		#@-node:3::<< Create the Tangle Options frame >>
@@ -150,39 +156,25 @@ class LeoPrefs:
 		lt.pack(side="left")
 		rt.pack(side="right")
 		
-		# Left column of radio buttons
-		self.cButton = cButton = Tk.Radiobutton(lt,anchor="w",text="C/C++",
-			variable=self.lang_var, value = c_language)
-		self.cwebButton = cwebButton = Tk.Radiobutton(lt,anchor="w",text="CWEB",
-			variable=self.lang_var, value = cweb_language)
-		self.htmlButton = htmlButton = Tk.Radiobutton(lt,anchor="w",text="HTML",
-			variable=self.lang_var, value = html_language)
-		self.javaButton = javaButton = Tk.Radiobutton(lt,anchor="w",text="Java",
-			variable=self.lang_var, value = java_language)
-		self.pascalButton = pascalButton = Tk.Radiobutton(lt,anchor="w",text="Pascal",
-			variable=self.lang_var, value = pascal_language)
+		# Left column of radio buttons.
+		left_data = [
+			("C/C++",c_language), ("CWEB", cweb_language),
+			("HTML", html_language), ("Java", java_language),
+			("Pascal", pascal_language) ]
 		
-		cButton.pack     (fill="x")
-		cwebButton.pack  (fill="x")
-		htmlButton.pack  (fill="x")
-		javaButton.pack  (fill="x")
-		pascalButton.pack(fill="x")
-		
-		# Right column of radio buttons
-		self.perlButton = perlButton = Tk.Radiobutton(rt,anchor="w",text="Perl",
-			variable=self.lang_var, value = perl_language)
-		self.perlPodButton = perlPodButton = Tk.Radiobutton(rt,anchor="w",text="Perl + POD",
-			variable=self.lang_var, value = perlpod_language)
-		self.plainButton = plainButton = Tk.Radiobutton(rt,anchor="w",text="Plain Text",
-			variable=self.lang_var, value = plain_text_language)
-		self.pythonButton = pythonButton = Tk.Radiobutton(rt,anchor="w",text="Python",
-			variable=self.lang_var, value = python_language)
-		
-		perlButton.pack   (fill="x")
-		perlPodButton.pack(fill="x")
-		plainButton.pack  (fill="x")
-		pythonButton.pack (fill="x")
-
+		for text,value in left_data:
+			button = Tk.Radiobutton(lt,anchor="w",text=text,
+				variable=self.lang_var,value=value,command=self.set_lang)
+			button.pack(fill="x") 
+			
+		# Right column of radio buttons.
+		right_data = [ ("Perl", perl_language), ("Perl+POD", perlpod_language),
+			("Plain Text", plain_text_language), ("Python", python_language) ]
+			
+		for text,value in right_data:
+			button = Tk.Radiobutton(rt,anchor="w",text=text,
+				variable=self.lang_var,value=value,command=self.set_lang)
+			button.pack(fill="x")
 		#@-body
 
 		#@-node:4::<< Create the Target Language frame >>
@@ -191,13 +183,14 @@ class LeoPrefs:
 		# es("Prefs.__init__")
 	#@-body
 
-	#@-node:1::prefs.__init__
+	#@-node:1:C=1:prefs.__init__
 
-	#@+node:2::prefs.init
+	#@+node:2:C=2:prefs.init
 
 	#@+body
 	def init(self,c):
 	
+		# trace(`self.target_language`)
 		for var in ivars:
 			exec("self.%s = c.%s" % (var,var))
 			
@@ -225,15 +218,17 @@ class LeoPrefs:
 
 		#@-node:1::<< set widgets >>
 
+		# print "init" ; print self.print_ivars()
 	#@-body
 
-	#@-node:2::prefs.init
+	#@-node:2:C=2:prefs.init
 
-	#@+node:3::prefs.set_ivars
+	#@+node:3:C=3:prefs.set_ivars & idle_set_ivars & print_ivars
 
 	#@+body
-	def set_ivars (self, c):
+	def set_ivars (self,c=None):
 	
+		if c == None: c = top()
 		
 	#@<< update ivars >>
 
@@ -268,12 +263,38 @@ class LeoPrefs:
 
 		for var in ivars:
 			exec("c.%s = self.%s" % (var,var))
-
+		# print "set_ivars" ; print self.print_ivars()
+	
+	def idle_set_ivars (self, event=None):
+		
+		c = top() ; v = c.currentVnode()
+		self.top.after_idle(self.set_ivars,c)
+		c.tree.recolor(v)
+		# print "idle_set_ivars" ; print self.print_ivars()
+		
+	def print_ivars (self):
+		
+		for var in ivars:
+			exec("print self.%s, '%s'" % (var,var))
 	#@-body
 
-	#@-node:3::prefs.set_ivars
+	#@-node:3:C=3:prefs.set_ivars & idle_set_ivars & print_ivars
 
-	#@+node:4::OnClosePrefsFrame
+	#@+node:4:C=4:set_lang
+
+	#@+body
+	def set_lang (self):
+		
+		c = top() ; v = c.currentVnode()
+		language = self.lang_var.get()
+		c.target_language = self.target_language = language
+		c.tree.recolor(v)
+		# print "set_lang" ; print self.print_ivars()
+	#@-body
+
+	#@-node:4:C=4:set_lang
+
+	#@+node:5::OnClosePrefsFrame
 
 	#@+body
 	def OnClosePrefsFrame(self):
@@ -281,7 +302,7 @@ class LeoPrefs:
 		self.top.withdraw() # Just hide the window.
 	#@-body
 
-	#@-node:4::OnClosePrefsFrame
+	#@-node:5::OnClosePrefsFrame
 
 	#@-others
 

@@ -64,29 +64,6 @@ tab_width_bits =0x04000
 terse_bits = 	  0x08000
 unit_bits = 	   0x10000
 verbose_bits =	 0x20000
-
-# Constants used by leoUtils...
-
-# Used by token_type().
-plain_line = 1 # all other lines
-at_at	   = 2 # double-at sign.
-at_chapter = 3 # @chapter
-at_code	   = 4 # @code, or @c or @p in CWEB mode.
-at_doc	   = 5 # @doc or @space in CWEB mode.
-at_other   = 6 # all other @directives
-at_root	   = 7 # @root or noweb * sections
-at_section = 8 # @section
-at_web	   = 9 # any CWEB control code, except at_at.
-
-# Returned by skip_section_name() and allies and used by token_type.
-bad_section_name = 10  # < < with no matching > >
-section_ref	 = 11  # < < name > >
-section_def	 = 12  # < < name > > =
-
-# Returned by is_sentinal_line.
-non_sentinel_line   = 13
-start_sentinel_line = 14
-end_sentinel_line   = 15
 #@-body
 
 #@-node:1::<< define global constants >>
