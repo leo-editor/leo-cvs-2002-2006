@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="6020" clone_windows="0"/>
-<globals body_outline_ratio="0.559027777778">
-	<global_window_position top="10" left="283" height="864" width="907"/>
+<globals body_outline_ratio="0.353009259259">
+	<global_window_position top="45" left="310" height="864" width="907"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences>
@@ -810,10 +810,10 @@
 </v>
 </v>
 </v>
-<v t="EKR.20040619133116" a="E"><vh>Unit testing...</vh>
+<v t="EKR.20040619133116"><vh>Unit testing...</vh>
 <v t="ekr.20040327114250"><vh>@thin ../test/unittest/batchTest.py</vh></v>
 <v t="ekr.20041012101944"><vh>@thin ../test/unittest/errorTest.py</vh></v>
-<v t="ekr.20040712101754" a="E"><vh>Unit Tests</vh>
+<v t="ekr.20040712101754"><vh>Unit Tests</vh>
 <v t="ekr.20040712101754.102"><vh>atFileTests...</vh>
 <v t="ekr.20040707140849.5"><vh>at-File test code (leoTest.py)</vh>
 <v t="ekr.20040707141957"><vh>&lt;&lt; dump result and expected &gt;&gt;</vh></v>
@@ -1079,7 +1079,7 @@
 <v t="ekr.20040713123828.1"><vh>after</vh></v>
 </v>
 <v t="ekr.20040803091512"><vh>@test bogus tnodeList doesn't corrupt @thin nodes</vh></v>
-<v t="ekr.20040917062206" a="TV"><vh>@test g.cantImport returns None</vh></v>
+<v t="ekr.20040917062206"><vh>@test g.cantImport returns None</vh></v>
 <v t="ekr.20040712101754.115"><vh>Colorizer tests...</vh>
 <v t="ekr.20040712101754.116"><vh>@test @comment after @language plain</vh>
 <v t="ekr.20040712101754.117"><vh>Test</vh></v>
@@ -1261,6 +1261,14 @@
 </v>
 <v t="ekr.20040707081532.1"><vh>Do @test</vh></v>
 <v t="ekr.20041001194357"><vh>@button unit test</vh></v>
+</v>
+<v t="ekr.20041022195304"><vh>Tix</vh></v>
+<v t="ekr.20041022201417" a="TV"><vh>Pmw dialog</vh></v>
+<v t="ekr.20041022200902" a="E"><vh>Pmw example</vh></v>
+<v t="ekr.20041023105238" a="E"><vh>Test Paste Retaining clones</vh>
+<v t="ekr.20041023105238.1" a="E"><vh>a</vh>
+<v t="ekr.20041023105441"><vh>b</vh></v>
+</v>
 </v>
 </vnodes>
 <tnodes>
@@ -1882,7 +1890,7 @@ import leoGlobals as g
 print g.app.config.redirect_execute_script_output_to_log_pane</t>
 <t tx="EKR.20040627103732">@ignore</t>
 <t tx="EKR.20040627103801"></t>
-<t tx="EKR.20040627103902" lineYOffset="4b032e" icons="5d7100287d7101285504747970657102550466696c65710355047870616471044b02550577686572657105550a6265666f726549636f6e71066803582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286802680368084afdffffff6803582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6805550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e"></t>
+<t tx="EKR.20040627103902" lineYOffset="4b032e" icons="5d7100287d710128550577686572657102550a6265666f726549636f6e710355047870616471044b025504747970657105550466696c6571066806582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286805680668084afdffffff6806582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6802550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e"></t>
 <t tx="EKR.20040627121836">import leoGlobals as g
 
 c = g.top() ; p = c.currentPosition()
@@ -2013,7 +2021,7 @@ for p in c.rootPosition().allNodes_iter():
 s = "%d nodes" % count
 print s ; g.es(s)</t>
 <t tx="ekr.20040312101720"></t>
-<t tx="ekr.20040317101155" lineYOffset="4b032e" icons="5d7100287d710128550577686572657102550a6265666f726549636f6e710355047870616471044b025504747970657105550466696c65710668065834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286805680668084afdffffff68065834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6802550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">import leoGlobals as g
+<t tx="ekr.20040317101155" lineYOffset="4b032e" icons="5d7100287d7101285504747970657102550466696c65710355047870616471044b02550577686572657105550a6265666f726549636f6e710668035834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286802680368084afdffffff68035834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6805550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">import leoGlobals as g
 
 c = g.top()
 
@@ -10331,5 +10339,55 @@ last line</t>
 <t tx="ekr.20041021065903.1">section line 1</t>
 <t tx="ekr.20041021065903.2">unnamed node line 1</t>
 <t tx="ekr.20041021071036"></t>
+<t tx="ekr.20041022195304">import Tix
+from Tkconstants import *
+root = Tix.Tk()
+
+tree = Tix.Tree(root)
+print tree.hlist
+tree.pack()</t>
+<t tx="ekr.20041022200902">import Tkinter
+import Pmw
+
+def callback(tag):
+    # This is called whenever the user clicks on a
+    # button in the RadioSelect widget.
+    print tag, 'was pressed.'
+
+# Initialise Tkinter and Pmw.
+root = Pmw.initialise(fontScheme = 'pmw1')
+root.title('Pmw RadioSelect demonstration')
+
+# Create and pack a RadioSelect widget.
+radio = Pmw.RadioSelect(
+        command = callback,
+        labelpos = 'w',
+        label_text = 'Food group:')
+radio.pack(padx = 20, pady = 20)
+
+# Add some buttons to the RadioSelect.
+for text in ('Fruit', 'Vegetables', 'Cereals', 'Legumes'):
+    radio.add(text)
+radio.invoke('Vegetables')
+
+# Create an exit button.
+exit = Tkinter.Button(text = 'Exit', command = root.destroy)
+exit.pack(pady = 20)
+
+# Let's go.
+root.mainloop()
+</t>
+<t tx="ekr.20041022201417">import Pmw
+dialog = Pmw.Dialog(
+        title = 'Counter dialog',
+        buttons = ('OK', 'Cancel'))
+interior = dialog.interior()
+counter = Pmw.Counter(interior)
+counter.pack(padx = 20, pady = 20)
+
+</t>
+<t tx="ekr.20041023105238"></t>
+<t tx="ekr.20041023105238.1"></t>
+<t tx="ekr.20041023105441"></t>
 </tnodes>
 </leo_file>

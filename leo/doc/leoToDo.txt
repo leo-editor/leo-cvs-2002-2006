@@ -2333,6 +2333,7 @@ self.use_unicode = True # True: use new unicode logic.
 #@+node:ekr.20031218072017.368:<< define global data structures >> app
 # Internally, lower case is used for all language names.
 self.language_delims_dict = {
+    "ada" : "--",
     "actionscript" : "// /* */", #jason 2003-07-03
     "c" : "// /* */", # C, C++ or objective C.
     "csharp" : "// /* */",	# C#
@@ -2358,6 +2359,7 @@ self.language_delims_dict = {
     "unknown" : "#" } # Set when @comment is seen.
 
 self.language_extension_dict = {
+    "ada" : "ads",
     "actionscript" : "as", #jason 2003-07-03
     "c" : "c",
     "css" : "css", # 4/1/04
@@ -2384,6 +2386,8 @@ self.language_extension_dict = {
     "unknown" : "txt" } # Set when @comment is seen.
     
 self.extension_dict = {
+    "ads"   : "ada",
+    "adb"   : "ada",
     "as"    : "actionscript",
     "bas"   : "rapidq",
     "c"     : "c",
@@ -3249,6 +3253,27 @@ Edward
 #@-node:ekr.20041022070154:(To do: options for setting working directory during startup)
 #@+node:ekr.20041022083005.1:unregisterhook
 #@-node:ekr.20041022083005.1:unregisterhook
+#@+node:ekr.20041024085554:specify load oarder, compatibilty
+https://sourceforge.net/forum/message.php?msg_id=2818661
+
+One thing to think about is to have the plugin author be able to specify if the plugin needs to be loaded before or after a set of plugins. Something like: 
+ 
+plugin_signon( __name__, before = ( 'chapters', ), after = ( 'textdance', ) ) 
+ 
+This may assist in ensuring that some plugins with dependencies get loaded right. :)
+
+----------
+
+http://sourceforge.net/forum/message.php?msg_id=2818661
+
+maybe it would be good for some flag to indicate plugins the plugin is incompatible with.
+
+plugin_signon( __name__, before = ( 'chapters', ), after = ( 'textdance', ),
+clash = ( 'webpage_machine' ) )
+
+where clash indicates the incompatibility.  What should it do?  Maybe not load?
+#@nonl
+#@-node:ekr.20041024085554:specify load oarder, compatibilty
 #@-node:ekr.20041022083005:More flexible plugin manager
 #@-node:ekr.20041006110656:Urgent 7 + 0
 #@+node:ekr.20040919101448:Major (Must do) 5 + 0

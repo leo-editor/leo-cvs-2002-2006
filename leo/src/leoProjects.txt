@@ -4617,123 +4617,6 @@ if 0: # Set to 1 for lint-like testing.
 #@-node:ekr.20031218072017.2606:<< Import pychecker >>
 #@-node:ekr.20040803100035:Run Pychecker
 #@+node:ekr.20031218072017.984:Unfinished projects
-#@+node:ekr.20031218072017.985:(Button class)
-@ignore
-@color
-#@nonl
-#@+node:ekr.20031218072017.986:Notes to Edward
-@nocolor
-
-I have a base window class that I use for all my TK stuff which handles, especially, focus issues between windows.  I have not looked at ButtonQ to see to what extent it depends upon WindowQ, the base class.
-
-Anyway, this might be usefull as-is.  If not, let me know.
-#@nonl
-#@-node:ekr.20031218072017.986:Notes to Edward
-#@+node:ekr.20031218072017.987:@file ButtonQ.py
-@ Setup a button so it is handled with a keyboard shortcut like MSWindows tools.  See if there is an ampersand in the string.  If so, we want to underline that character and make that character a hot key for this button.
-@c
-
-from Tkinter import *
-from string import *
-
-def ButtonQ (master, **kw):
-	b = ButtonQ_ (master, kw)
-	return b.button
-
-class ButtonQ_ (Button):
-@others
-
-## test
-"""
-from tkMessageBox import *
-def buttonqcommand ():
-	showinfo ("Title", "Button was pushed")
-
-root = Tk ()
-frame = Frame (root)
-b = ButtonQ (frame, text = "&Push Me", command = buttonqcommand)
-b.grid ()
-frame.grid (pady = 15)
-"""
-#@+node:ekr.20031218072017.988:__init__
-def __init__(self, master, kw = {}):
-
-	<< get inputs to this method >>
-	<< see if there is an ampersand in the string. >>
-	<< make the button with the correct text >>
-	<< bind the button >>
-
-	# make the button available to the caller
-	self.button = b
-#@nonl
-#@+node:ekr.20031218072017.989:<< get inputs to this method >>
-_master = master
-_text = kw['text']
-_command = kw['command']
-#@-node:ekr.20031218072017.989:<< get inputs to this method >>
-#@+node:ekr.20031218072017.990:<< see if there is an ampersand in the string. >>
-length = len (_text)
-index = 0
-text3 = _text
-
-# Show there is no hot key yet
-IsHot = 0
-HotKey = None
-
-while index < length:
-	if _text [index] == '&':
-		<< handle an ampersand >>
-	index = += 1
-#@nonl
-#@+node:ekr.20031218072017.991:<< handle an ampersand >>
-# if the word ends in an ampersand, we ignore it, and there is no hot key
-if index == length - 1:
-	break
-
-# we have found a good hot key.  Remove the ampersand.
-text1 = _text [0 : index]
-text2 = _text [(index + 1) : 10000]
-text3 = text1 + text2
-IsHot = 1
-HotKey = _text [index + 1]
-break
-#@nonl
-#@-node:ekr.20031218072017.991:<< handle an ampersand >>
-#@-node:ekr.20031218072017.990:<< see if there is an ampersand in the string. >>
-#@+node:ekr.20031218072017.992:<< make the button with the correct text >>
-if IsHot:
-	kw['text'] = text3
-	kw['underline'] = index
-
-b = Button (master, kw)
-#@-node:ekr.20031218072017.992:<< make the button with the correct text >>
-#@+node:ekr.20031218072017.993:<< bind the button >>
-@ If there is a hot key, bind it to the window that owns the button.
-Use the alt of both the lower case and upper case of the letter.
-@c
-
-if IsHot:
-	HotKey = lower(HotKey)
-	self.HotKey = HotKey
-	s = angleBrackets("Alt-" + HotKey + s)
-	_master.master.bind (s, self.callback)
-
-	HotKey = upper(HotKey)
-	s = angleBrackets("Alt-" + HotKey + s)
-	_master.master.bind (s, self.callback)
-
-
-#@-node:ekr.20031218072017.993:<< bind the button >>
-#@-node:ekr.20031218072017.988:__init__
-#@+node:ekr.20031218072017.994:callback
-# The hot key has been hit.  Call the button's command.
-
-def callback (self, event):
-
-	self.button.invoke ()
-#@-node:ekr.20031218072017.994:callback
-#@-node:ekr.20031218072017.987:@file ButtonQ.py
-#@-node:ekr.20031218072017.985:(Button class)
 #@+node:ekr.20031218072017.995:(Incremental update of screen)
 @ignore
 @nocolor
@@ -6207,28 +6090,36 @@ def clearStatusLine (self):
 #@nonl
 #@-node:ekr.20031218072017.3962:clearStatusLine
 #@+node:EKR.20040424153344:enable/disableStatusLine & isEnabled
-def disableStatusLine (self):
+def disableStatusLine (self,background=None):
     
     t = self.statusText
     if t:
-        t.configure(state="disabled",background="gray")
+        if not background:
+            background = self.statusFrame.cget("background")
+        t.configure(state="disabled",background=background)
+    self.statusIsEnabled = False
     
-def enableStatusLine (self):
+def enableStatusLine (self,background="white"):
     
     t = self.statusText
     if t:
-        t.configure(state="normal",background="pink")
+        t.configure(state="normal",background=background)
         t.focus_set()
+    self.statusIsEnabled = True
         
 def statusLineIsEnabled(self):
-    t = self.statusText
-    if t:
-        state = t.cget("state")
-        return state == "normal"
-    else:
-        return False
+    return self.statusIsEnabled
 #@nonl
 #@-node:EKR.20040424153344:enable/disableStatusLine & isEnabled
+#@+node:ekr.20041026132435:getStatusLine
+def getStatusLine (self):
+    
+    t = self.statusText
+    if t:
+        return t.get("1.0","end")
+    else:
+        return ""
+#@-node:ekr.20041026132435:getStatusLine
 #@+node:ekr.20031218072017.3963:putStatusLine
 def putStatusLine (self,s,color=None):
     
@@ -6269,7 +6160,7 @@ def updateStatusRowCol (self):
     c = self.c ; body = self.bodyCtrl ; lab = self.statusLabel
     gui = g.app.gui
     if not lab: return
-    
+
     # New for Python 2.3: may be called during shutdown.
     if g.app.killed:
         return
@@ -6298,6 +6189,9 @@ def updateStatusRowCol (self):
 
     if 0: # The caller is now responsible for rescheduling.
         self.statusFrame.after(500,self.updateStatusRowCol)
+        
+    if c.frame.statusLineIsEnabled():
+        c.frame.setFocusStatusLine()
 #@nonl
 #@-node:ekr.20031218072017.1733:updateStatusRowCol
 #@-node:ekr.20031218072017.3960:Creating the status area
@@ -6416,28 +6310,36 @@ def clearStatusLine (self):
 #@nonl
 #@-node:ekr.20031218072017.3962:clearStatusLine
 #@+node:EKR.20040424153344:enable/disableStatusLine & isEnabled
-def disableStatusLine (self):
+def disableStatusLine (self,background=None):
     
     t = self.statusText
     if t:
-        t.configure(state="disabled",background="gray")
+        if not background:
+            background = self.statusFrame.cget("background")
+        t.configure(state="disabled",background=background)
+    self.statusIsEnabled = False
     
-def enableStatusLine (self):
+def enableStatusLine (self,background="white"):
     
     t = self.statusText
     if t:
-        t.configure(state="normal",background="pink")
+        t.configure(state="normal",background=background)
         t.focus_set()
+    self.statusIsEnabled = True
         
 def statusLineIsEnabled(self):
-    t = self.statusText
-    if t:
-        state = t.cget("state")
-        return state == "normal"
-    else:
-        return False
+    return self.statusIsEnabled
 #@nonl
 #@-node:EKR.20040424153344:enable/disableStatusLine & isEnabled
+#@+node:ekr.20041026132435:getStatusLine
+def getStatusLine (self):
+    
+    t = self.statusText
+    if t:
+        return t.get("1.0","end")
+    else:
+        return ""
+#@-node:ekr.20041026132435:getStatusLine
 #@+node:ekr.20031218072017.3963:putStatusLine
 def putStatusLine (self,s,color=None):
     
@@ -6478,7 +6380,7 @@ def updateStatusRowCol (self):
     c = self.c ; body = self.bodyCtrl ; lab = self.statusLabel
     gui = g.app.gui
     if not lab: return
-    
+
     # New for Python 2.3: may be called during shutdown.
     if g.app.killed:
         return
@@ -6507,6 +6409,9 @@ def updateStatusRowCol (self):
 
     if 0: # The caller is now responsible for rescheduling.
         self.statusFrame.after(500,self.updateStatusRowCol)
+        
+    if c.frame.statusLineIsEnabled():
+        c.frame.setFocusStatusLine()
 #@nonl
 #@-node:ekr.20031218072017.1733:updateStatusRowCol
 #@-node:ekr.20031218072017.3960:Creating the status area

@@ -299,6 +299,7 @@ but with the name of your new language instead of "Python".
 #@+node:ekr.20031218072017.368:<< define global data structures >> app
 # Internally, lower case is used for all language names.
 self.language_delims_dict = {
+    "ada" : "--",
     "actionscript" : "// /* */", #jason 2003-07-03
     "c" : "// /* */", # C, C++ or objective C.
     "csharp" : "// /* */",	# C#
@@ -324,6 +325,7 @@ self.language_delims_dict = {
     "unknown" : "#" } # Set when @comment is seen.
 
 self.language_extension_dict = {
+    "ada" : "ads",
     "actionscript" : "as", #jason 2003-07-03
     "c" : "c",
     "css" : "css", # 4/1/04
@@ -350,6 +352,8 @@ self.language_extension_dict = {
     "unknown" : "txt" } # Set when @comment is seen.
     
 self.extension_dict = {
+    "ads"   : "ada",
+    "adb"   : "ada",
     "as"    : "actionscript",
     "bas"   : "rapidq",
     "c"     : "c",
@@ -385,6 +389,7 @@ rt.pack(side="right")
 # Left column of radio buttons.
 left_data = [
     ("ActionScript", "actionscript"),
+    ("Ada", "ada"),
     ("C#",    "csharp"),
     ("C/C++", "c"),
     ("CSS",   "css"),
@@ -392,8 +397,8 @@ left_data = [
     ("elisp", "elisp"),
     ("HTML",  "html"),
     ("Java",  "java"),
-    ("LaTeX", "latex"),
-    ("Pascal","pascal")]
+    ("LaTeX", "latex")
+   ]
 
 for text,value in left_data:
     button = Tk.Radiobutton(lt,anchor="w",text=text,
@@ -402,6 +407,7 @@ for text,value in left_data:
 
 # Right column of radio buttons.
 right_data = [
+    ("Pascal","pascal"),
     ("Perl", "perl"),
     ("Perl+POD",   "perlpod"),
     ("PHP",        "php"),
@@ -449,7 +455,7 @@ self.has_pp_directives = self.language in ("c","csharp","cweb","latex")
 # The list of languages for which keywords exist.
 # Eventually we might just use language_delims_dict.keys()
 languages = [
-    "actionscript","c","csharp","css","cweb","elisp","html","java","latex",
+    "actionscript","ada","c","csharp","css","cweb","elisp","html","java","latex",
     "pascal","perl","perlpod","php","python","rapidq","rebol","shell","tcltk"]
 
 self.keywords = []
@@ -490,6 +496,33 @@ actionscript_keywords = [
 ]
 #@nonl
 #@-node:ekr.20031218072017.372:actionscript keywords
+#@+node:bwmulder.20041023131509:ada keywords
+ada_keywords = [
+    "abort",       "else",       "new",        "return",
+    "abs",         "elsif",      "not",        "reverse",
+    "abstract",    "end",        "null",
+    "accept",      "entry",      "select",
+    "access",      "exception",  "separate",
+    "aliased",     "exit",       "of",         "subtype",
+    "all",                       "or",
+    "and",         "for",        "others",     "tagged",
+    "array",       "function",   "out",        "task",
+    "at",                                      "terminate",
+                   "generic",    "package",    "then",
+    "begin",       "goto",       "pragma",     "type",
+    "body",                      "private",
+                   "if",         "procedure",
+    "case",        "in",         "protected",  "until",
+    "constant",    "is",                       "use",
+                                 "raise",
+    "declare",                   "range",      "when",
+    "delay",       "limited",    "record",     "while",
+    "delta",       "loop",       "rem",        "with",
+    "digits",                    "renames",
+    "do",          "mod",        "requeue",    "xor"
+   ]
+#@nonl
+#@-node:bwmulder.20041023131509:ada keywords
 #@+node:ekr.20040206072057:c# keywords
 csharp_keywords = [
     "abstract","as",

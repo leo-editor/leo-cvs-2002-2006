@@ -258,6 +258,7 @@ pretty_print.py
 #xsltWithNodes.py
 #table.py
 #templates.py
+#nodebar.py
 
 	plugin_manager.py
 #@nonl
