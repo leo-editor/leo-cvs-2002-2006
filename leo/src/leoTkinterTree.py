@@ -1238,6 +1238,15 @@ class leoTkinterTree (leoFrame.leoTree):
 		self.redraw()
 	#@nonl
 	#@-node:ekr.20031218072017.2339:OnBoxClick
+	#@+node:ekr.20031218072017.2345:tree.OnCtontrolT
+	# This works around an apparent Tk bug.
+	
+	def OnControlT (self,event=None):
+	
+		# If we don't inhibit further processing the Tx.Text widget switches characters!
+		return "break"
+	#@nonl
+	#@-node:ekr.20031218072017.2345:tree.OnCtontrolT
 	#@+node:ekr.20031218072017.2340:tree.OnDeactivate (caused double-click problem)
 	def OnDeactivate (self,event=None):
 		
@@ -1267,6 +1276,7 @@ class leoTkinterTree (leoFrame.leoTree):
 			return self.icon_id_dict.get(id)
 	#@nonl
 	#@-node:ekr.20031218072017.2341:tree.findVnodeWithIconId
+	#@+node:EKR.20040608110312:Dragging
 	#@+node:ekr.20031218072017.2342:tree.OnContinueDrag
 	def OnContinueDrag(self,p,event):
 	
@@ -1320,15 +1330,6 @@ class leoTkinterTree (leoFrame.leoTree):
 			g.es_event_exception("continue drag")
 	#@nonl
 	#@-node:ekr.20031218072017.2342:tree.OnContinueDrag
-	#@+node:ekr.20031218072017.2345:tree.OnCtontrolT
-	# This works around an apparent Tk bug.
-	
-	def OnControlT (self,event=None):
-	
-		# If we don't inhibit further processing the Tx.Text widget switches characters!
-		return "break"
-	#@nonl
-	#@-node:ekr.20031218072017.2345:tree.OnCtontrolT
 	#@+node:ekr.20031218072017.1776:tree.OnDrag
 	# This precomputes numberOfVisibleNodes(), a significant optimization.
 	# We also indicate where findVnodeWithIconId() should start looking for tree id's.
@@ -1422,6 +1423,7 @@ class leoTkinterTree (leoFrame.leoTree):
 		self.drag_p = None
 	#@nonl
 	#@-node:ekr.20031218072017.1777:tree.OnEndDrag
+	#@-node:EKR.20040608110312:Dragging
 	#@+node:ekr.20031218072017.1332:headline key handlers (tree)
 	#@+at 
 	#@nonl
