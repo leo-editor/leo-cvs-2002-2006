@@ -80,7 +80,6 @@ class baseLeoFrame:
 		
 		# Used by event handlers...
 		self.redrawCount = 0
-		self.activeFrame = None
 		self.draggedItem = None
 		self.recentFiles = [] # List of recent files
 		self.controlKeyIsDown = false # For control-drags
@@ -96,9 +95,9 @@ class baseLeoFrame:
 		#@-node:1::<< set the LeoFrame ivars >>
 
 		self.top = top = Tk.Toplevel()
-		top.withdraw() # 7/15/02
+		if 0: # No longer needed now that Leo never creates more than one Leo frame on startup.
+			top.withdraw()
 		attachLeoIcon(top)
-		# print top
 		
 		if sys.platform=="win32":
 			self.hwnd = top.frame()
@@ -164,6 +163,8 @@ class baseLeoFrame:
 		self.body.bind(virtual_event_name("Cut"), self.OnCut)
 		self.body.bind(virtual_event_name("Copy"), self.OnCopy)
 		self.body.bind(virtual_event_name("Paste"), self.OnPaste)
+		
+		# print_bindings("body",self.body)
 		
 		# Handle mouse wheel in the outline pane.
 		if sys.platform == "linux2": # This crashes tcl83.dll
@@ -698,6 +699,7 @@ class baseLeoFrame:
 			c = self.commands ; v = c.currentVnode()
 			app().setLog(self,"OnActivateBody")
 			self.tree.OnDeactivate()
+			set_focus(c,c.body)
 		except:
 			es_event_exception("activate body")
 	
@@ -979,9 +981,9 @@ class baseLeoFrame:
 	#@-node:7::f.put, putnl
 	#@+node:8::f.getFocus
 	#@+body
-	# Returns the frame that has focus, or body if None.
-	
 	def getFocus(self):
+		
+		"""Returns the widget that has focus, or body if None."""
 	
 		f = self.top.focus_displayof()
 		if f:
@@ -2160,53 +2162,9 @@ class baseLeoFrame:
 	#@-node:3::frame.OnOpenWith and allies
 	#@+node:4::frame.OpenWithFileName
 	#@+body
-	def OpenWithFileName(self, fileName):
-	
-		if not fileName or len(fileName) == 0:
-			return false, None
-	
-		# Create a full normalized path name.
-		# Display the file name with case intact.
-		fileName = os.path.join(os.getcwd(), fileName)
-		fileName = os.path.normpath(fileName)
-		oldFileName = fileName 
-		fileName = os.path.normcase(fileName)
-	
-		# If the file is already open just bring its window to the front.
-		list = app().windowList
-		for frame in list:
-			fn = os.path.normcase(frame.mFileName)
-			fn = os.path.normpath(fn)
-			if fileName == fn:
-				frame.top.deiconify()
-				app().setLog(frame,"OpenWithFileName")
-				# es("This window already open")
-				return true, frame
-				
-		fileName = oldFileName # Use the idiosyncratic file name.
-	
-		try:
-			file = open(fileName,'r')
-			if file:
-				frame = LeoFrame(fileName)
-				if not doHook("open1",
-					old_c=self,new_c=frame.commands,fileName=fileName):
-					app().setLog(frame,"OpenWithFileName") # 5/12/03
-					app().lockLog() # 6/30/03
-					frame.commands.fileCommands.open(file,fileName) # closes file.
-					app().unlockLog() # 6/30/03
-				frame.openDirectory=os.path.dirname(fileName)
-				frame.updateRecentFiles(fileName)
-				doHook("open2",
-					old_c=self,new_c=frame.commands,fileName=fileName)
-				return true, frame
-			else:
-				es("can not open" + fileName)
-				return false, None
-		except:
-			es("exceptions opening" + fileName)
-			es_exception()
-			return false, None
+	def OpenWithFileName(self,fileName):
+		
+		return openWithFileName(fileName,self.commands)
 	#@-body
 	#@-node:4::frame.OpenWithFileName
 	#@+node:5::frame.OnClose
