@@ -172,8 +172,13 @@ class atFile:
 			else:
 				# Use absolute node indices.
 				node_s = str(index)
+		
+		# 10/23/02: The cweb hack: double @ signs if the opening comment delim ends in '@'.
+		head = v.headString()
+		if self.startSentinelComment[-1:] == '@':
+			head = string.replace(head,'@','@@')
 	
-		return node_s + ':' + clone_s + ':' + v.headString()
+		return node_s + ':' + clone_s + ':' + head
 	#@-body
 	#@-node:1::nodeSentinelText
 	#@+node:2::putCloseNodeSentinel
@@ -1726,6 +1731,10 @@ class atFile:
 				else:
 					k = string.find(s,self.endSentinelComment,i)
 					headline = string.strip(s[i:k]) # works if k == -1
+					
+				# 10/23/02: The cweb hack: undouble @ signs if the opening comment delim ends in '@'.
+				if self.startSentinelComment[-1:] == '@':
+					headline = string.replace(headline,'@@','@')
 				
 				# Set reference if it exists.
 				i = skip_ws(s,i)
