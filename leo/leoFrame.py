@@ -1512,6 +1512,7 @@ class LeoFrame:
 		if u and u.new_undo and u.debug:
 			print "old undo mem:",`u.old_mem`
 			print "new undo mem:",`u.new_mem`
+			print "ratio new/old:",`float(u.new_mem)/float(u.old_mem)`
 		
 		self.OnCloseLeoEvent() # Destroy the frame unless the user cancels.
 	#@-body

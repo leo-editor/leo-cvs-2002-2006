@@ -406,7 +406,8 @@ class undoer:
 				u.oldText = oldText
 				u.newText = newText
 				# Compute statistics comparing old and new ways...
-				self.old_mem += len(oldText) + len(newText)
+				# The old doesn't often store the old text, so don't count it here.
+				self.old_mem += len(newText)
 				s1 = string.join(old_middle_lines,'\n')
 				s2 = string.join(new_middle_lines,'\n')
 				self.new_mem += len(s1) + len(s2)
