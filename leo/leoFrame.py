@@ -199,45 +199,44 @@ class LeoFrame:
 		c = self.commands
 		Tk = Tkinter
 		self.topMenu = menu = Tk.Menu(top,postcommand=self.OnMenuClick)
+	
 		# To do: use Meta rathter than Control for accelerators for Unix
 		
 		#@<< create the file menu >>
-		#@+node:1::<< create the file menu >>
+		#@+node:2::<< create the file menu >>
 		#@+body
 		self.fileMenu = fileMenu = Tk.Menu(menu,tearoff=0)
 		menu.add_cascade(label="File",menu=fileMenu)
 		
+		
 		#@<< create the top-level file entries >>
 		#@+node:1::<< create the top-level file entries >>
 		#@+body
-		fileMenu.add_command(label="New",accelerator="Ctrl+N", command=self.OnNew)
-		fileMenu.add_command(label="Open...",accelerator="Ctrl+O", command=self.OnOpen)
-		fileMenu.add_command(label="Open @file With...", command=self.OnOpenWith)
-		fileMenu.add_separator()
-		
-		fileMenu.add_command(label="Close",accelerator="Ctrl+W", command=self.OnClose)
-		fileMenu.add_command(label="Save",accelerator="Ctrl+S", command=self.OnSave)
-		fileMenu.add_command(label="Save As",accelerator="Shift+Ctrl+S", command=self.OnSaveAs)
-		fileMenu.add_command(label="Save To",command=self.OnSaveTo)
-		fileMenu.add_command(label="Revert To Saved",command=self.OnRevert)
-		
-
 		#@+at
 		#  It is doubtful that leo.py will ever support a Print command directly.  Rather, users can use export commands to create 
 		# text files that may then be formatted and printed as desired.
 
 		#@-at
 		#@@c
-		if 0:
-			fileMenu.add_command(label="Page Setup", accelerator="Shift+Ctrl+P",command=self.OnPageSetup)
-			fileMenu.add_command(label="Print", accelerator="Ctrl+P", command=self.OnPrint)
-			fileMenu.add_separator()
+		
+		table = (
+			("New",None,self.OnNew),
+			("Open...","Ctrl+O",self.OnOpen),
+			("Open @file With...",None,self.OnOpenWith),
+			("-",None,None),
+			("Close","Ctrl+W",self.OnClose),
+			("Save","Ctrl+S",self.OnSave),
+			("Save As","Shift+Ctrl+S",self.OnSaveAs),
+			("Save To",None,self.OnSaveTo),
+			("Revert To Saved",None,self.OnRevert))
+				
+		self.createMenuEntries(fileMenu,table)
 		#@-body
 		#@-node:1::<< create the top-level file entries >>
 
 		
 		#@<< create the recent files submenu >>
-		#@+node:2:C=7:<< create the recent files submenu >>
+		#@+node:2::<< create the recent files submenu >>
 		#@+body
 		recentFilesMenu = self.recentFilesMenu = Tk.Menu(fileMenu,tearoff=0)
 		fileMenu.add_cascade(label="Recent Files...", menu=recentFilesMenu)
@@ -251,7 +250,7 @@ class LeoFrame:
 			recentFilesMenu.add_command(label=name,command=callback)
 
 		#@-body
-		#@-node:2:C=7:<< create the recent files submenu >>
+		#@-node:2::<< create the recent files submenu >>
 
 		fileMenu.add_separator()
 		
@@ -261,12 +260,14 @@ class LeoFrame:
 		readWriteMenu = Tk.Menu(fileMenu,tearoff=0)
 		fileMenu.add_cascade(label="Read/Write...", menu=readWriteMenu)
 		
-		readWriteMenu.add_command(label="Read Outline Only",
-			accelerator="Shift+Control+R",command=self.OnReadOutlineOnly)
-		readWriteMenu.add_command(label="Read @file Nodes",command=self.OnReadAtFileNodes)
-		readWriteMenu.add_command(label="Write Outline Only",command=self.OnWriteOutlineOnly)
-		readWriteMenu.add_command(label="Write @file Nodes",
-			accelerator="Shift+Control+W",command=self.OnWriteAtFileNodes)
+		table = (
+			("Read Outline Only","Shift+Control+R",self.OnReadOutlineOnly),
+			("Read @file Nodes",None,self.OnReadAtFileNodes),
+			("Write Outline Only",None,self.OnWriteOutlineOnly),
+			("Write @file Nodes","Shift+Control+W",self.OnWriteAtFileNodes))
+		
+		self.createMenuEntries(readWriteMenu,table)
+
 		#@-body
 		#@-node:3::<< create the read/write submenu >>
 
@@ -277,15 +278,13 @@ class LeoFrame:
 		tangleMenu = Tk.Menu(fileMenu,tearoff=0)
 		fileMenu.add_cascade(label="Tangle...", menu=tangleMenu)
 		
-		tangleMenu.add_command(label="Tangle All",
-			accelerator="Shift+Ctrl+A",
-			command=self.OnTangleAll)
-		tangleMenu.add_command(label="Tangle Marked",
-			accelerator="Shift+Ctrl+M",
-			command=self.OnTangleMarked)
-		tangleMenu.add_command(label="Tangle",
-			accelerator="Shift+Ctrl+T",
-			command=self.OnTangle)
+		table = (
+			("Tangle All","Shift+Ctrl+A",self.OnTangleAll),
+			("Tangle Marked","Shift+Ctrl+M",self.OnTangleMarked),
+			("Tangle","Shift+Ctrl+T",self.OnTangle))
+		
+		self.createMenuEntries(tangleMenu,table)
+
 		#@-body
 		#@-node:4::<< create the tangle submenu >>
 
@@ -296,12 +295,13 @@ class LeoFrame:
 		untangleMenu = Tk.Menu(fileMenu,tearoff=0)
 		fileMenu.add_cascade(label="Untangle...", menu=untangleMenu)
 		
-		untangleMenu.add_command(label="Untangle All",
-			command=self.OnUntangleAll)
-		untangleMenu.add_command(label="Untangle Marked",
-			command=self.OnUntangleMarked)
-		untangleMenu.add_command(label="Untangle",
-			accelerator="Shift+Ctrl+U",command=self.OnUntangle)
+		table = (
+			("Untangle All",None,self.OnUntangleAll),
+			("Untangle Marked",None,self.OnUntangleMarked),
+			("Untangle","Shift+Ctrl+U",self.OnUntangle))
+			
+		self.createMenuEntries(untangleMenu,table)
+
 		#@-body
 		#@-node:5::<< create the untangle submenu >>
 
@@ -312,137 +312,128 @@ class LeoFrame:
 		importMenu = Tk.Menu(fileMenu,tearoff=0)
 		fileMenu.add_cascade(label="Import/Export...", menu=importMenu)
 		
-		importMenu.add_command(label="Import To @file",accelerator="Shift+Ctrl+F",
-			command=self.OnImportAtFile)
-		importMenu.add_command(label="Import To @root",
-			command=self.OnImportAtRoot)
-		importMenu.add_command(label="Import CWEB Files",
-			command=self.OnImportCWEBFiles)
-		importMenu.add_command(label="Import noweb Files",
-			command=self.OnImportNowebFiles)
-		importMenu.add_command(label="Import Flattened Outline",
-			command=self.OnImportFlattenedOutline)
-		importMenu.add_separator()
+		table = (
+			("Import To @file","Shift+Ctrl+F",self.OnImportAtFile),
+			("Import To @root",None,self.OnImportAtRoot),
+			("Import CWEB Files",None,self.OnImportCWEBFiles),
+			("Import noweb Files",None,self.OnImportNowebFiles),
+			("Import Flattened Outline",None,self.OnImportFlattenedOutline),
+			("-",None,None),
+			("Outline To CWEB",None,self.OnOutlineToCWEB),
+			("Outline To Noweb",None,self.OnOutlineToNoweb),
+			("Flatten Outline",None,self.OnFlattenOutline),
+			("Remove Sentinels",None,self.OnRemoveSentinels),
+			("Weave",None,self.OnWeave))
 		
-		importMenu.add_command(label="Outline To CWEB",
-			command=self.OnOutlineToCWEB)
-		importMenu.add_command(label="Outline To Noweb",
-			command=self.OnOutlineToNoweb)
-		importMenu.add_command(label="Flatten Outline",
-			command=self.OnFlattenOutline)
-		importMenu.add_command(label="Remove Sentinels",
-			command=self.OnRemoveSentinels)
-		importMenu.add_command(label="Weave",
-			command=self.OnWeave)
+		self.createMenuEntries(importMenu,table)
+
 		#@-body
 		#@-node:6::<< create the import submenu >>
 
 		fileMenu.add_separator()
-		fileMenu.add_command(label="Exit", command=self.OnQuit)
+		# Create the last entries.
+		exitTable = (("Exit","Ctrl-Q",self.OnQuit),)
+		self.createMenuEntries(fileMenu,exitTable)
+
 		#@-body
-		#@-node:1::<< create the file menu >>
+		#@-node:2::<< create the file menu >>
 
 		
 		#@<< create the edit menu >>
-		#@+node:2::<< create the edit menu >>
+		#@+node:1::<< create the edit menu >>
 		#@+body
 		self.editMenu = editMenu = Tk.Menu(menu,tearoff=0)
 		menu.add_cascade(label="Edit", menu=editMenu)
 		
-		editMenu.add_command(label="Can't Undo",
-			accelerator="Ctrl+Z",command=self.OnUndo)
-		editMenu.add_command(label="Can't Redo",
-			accelerator="Shift+Ctrl+Z",command=self.OnRedo)
-		editMenu.add_separator()
 		
-		editMenu.add_command(label="Cut", accelerator="Ctrl+X", command=self.OnCutFromMenu)
-		editMenu.add_command(label="Copy", accelerator="Ctrl+C", command=self.OnCopyFromMenu)
-		editMenu.add_command(label="Paste", accelerator="Ctrl+V", command=self.OnPasteFromMenu) 
+		#@<< create the first top-level edit entries >>
+		#@+node:1::<< create the first top-level edit entries >>
+		#@+body
+		table = (
+			("Can't Undo","Ctrl+Z",self.OnUndo),
+			("Can't Redo","Shift+Ctrl+Z",self.OnRedo),
+			("-",None,None),
+			("Cut","Ctrl+X",self.OnCutFromMenu),
+			("Copy","Ctrl+C",self.OnCopyFromMenu),
+			("Paste","Ctrl+V",self.OnPasteFromMenu),
+			("Delete",None,self.OnDelete),
+			("Select All",None,self.OnSelectAll),
+			("-",None,None),
+			("Edit Headline","Ctrl+H",self.OnEditHeadline))
 		
-		editMenu.add_command(label="Delete",
-			command=self.OnDelete)
-		editMenu.add_command(label="Select All",
-			command=self.OnSelectAll)
-		editMenu.add_separator()
-		
-		editMenu.add_command(label="Edit Headline",
-			accelerator="Ctrl+H",command=self.OnEditHeadline)
+		self.createMenuEntries(editMenu,table)
+
+		#@-body
+		#@-node:1::<< create the first top-level edit entries >>
+
 		
 		#@<< create the edit body submenu >>
-		#@+node:1::<< create the edit body submenu >>
+		#@+node:2::<< create the edit body submenu >>
 		#@+body
 		self.editBodyMenu = editBodyMenu = Tk.Menu(editMenu,tearoff=0)
 		editMenu.add_cascade(label="Edit Body...", menu=editBodyMenu)
 		
-		editBodyMenu.add_command(label="Extract Section",
-			accelerator="Shift+Ctrl+E",command=self.OnExtractSection)
-		editBodyMenu.add_command(label="Extract Names",
-			accelerator="Shift+Ctrl+N",command=self.OnExtractNames)
-		editBodyMenu.add_command(label="Extract",
-			accelerator="Shift+Ctrl+D",command=self.OnExtract)
-		editBodyMenu.add_separator()
+		table = (
+			("Extract Section","Shift+Ctrl+E",self.OnExtractSection),
+			("Extract Names","Shift+Ctrl+N",self.OnExtractNames),
+			("Extract","Shift+Ctrl+D",self.OnExtract),
+			("-",None,None),
+			("Convert All Blanks",None,self.OnConvertAllBlanks),
+			("Convert All Tabs",None,self.OnConvertAllTabs),
+			("Convert Blanks","Shift+Ctrl+B",self.OnConvertBlanks),
+			("Convert Tabs","Shift+Ctrl+J",self.OnConvertTabs),
+			("-",None,None),
+			("Indent","Ctrl+]",self.OnIndent),
+			("Unindent","Ctrl+[",self.OnDedent),
+			("Match Brackets","Ctrl+K",self.OnFindMatchingBracket))
+			#("-",None,None),
+			#("Insert Graphic File...",None,self.OnInsertGraphicFile))
 			
-		editBodyMenu.add_command(label="Convert All Blanks",
-			command=self.OnConvertAllBlanks)
-		editBodyMenu.add_command(label="Convert All Tabs",
-			command=self.OnConvertAllTabs)
-		editBodyMenu.add_command(label="Convert Blanks",
-			accelerator="Shift+Ctrl+B",command=self.OnConvertBlanks)
-		editBodyMenu.add_command(label="Convert Tabs",
-			accelerator="Shift+Ctrl+J",command=self.OnConvertTabs)
-		editBodyMenu.add_separator()
-		
-		editBodyMenu.add_command(label="Indent",
-			accelerator="Ctrl+]",command=self.OnIndent)
-		editBodyMenu.add_command(label="Unindent",
-			accelerator="Ctrl+[",command=self.OnDedent)
-		editBodyMenu.add_command(label="Match Brackets",
-			accelerator="Ctrl+K",command=self.OnFindMatchingBracket)
-			
-		if 0: # Not ready yet.
-			editBodyMenu.add_separator()
-			editBodyMenu.add_command(label="Insert Graphic File...",
-				command=self.OnInsertGraphicFile)
+		self.createMenuEntries(editBodyMenu,table)
+
 		#@-body
-		#@-node:1::<< create the edit body submenu >>
+		#@-node:2::<< create the edit body submenu >>
 
 		
 		#@<< create the find submenu >>
-		#@+node:2::<< create the find submenu >>
+		#@+node:3::<< create the find submenu >>
 		#@+body
 		findMenu = Tk.Menu(editMenu,tearoff=0)
 		editMenu.add_cascade(label="Find...", menu=findMenu)
 		
-		findMenu.add_command(label="Find Panel",accelerator="Ctrl+F",
-			command=self.OnFindPanel)
-		findMenu.add_separator()
+		table = (
+			("Find Panel","Ctrl+F",self.OnFindPanel),
+			("-",None,None),
+			("Find Next","F3",self.OnFindNext),
+			("Find Next","Ctrl+G",self.OnFindNext),
+			("Find Previous","Shift+Ctrl+G",self.OnFindPrevious),
+			("Replace","Ctrl+=",self.OnReplace),
+			("Replace, Then Find","Ctrl+-",self.OnReplaceThenFind))
 		
-		findMenu.add_command(label="Find Next",accelerator="F3",
-			command=self.OnFindNext)
-		findMenu.add_command(label="Find Next",accelerator="Ctrl+G",
-			command=self.OnFindNext)
-		findMenu.add_command(label="Find Previous",accelerator="Shift+Ctrl+G",
-			command=self.OnFindPrevious)
-		findMenu.add_command(label="Replace",accelerator="Ctrl+=",
-			command=self.OnReplace)
-		findMenu.add_command(label="Replace, Then Find",accelerator="Ctrl+-",
-			command=self.OnReplaceThenFind)
-		#@-body
-		#@-node:2::<< create the find submenu >>
+		self.createMenuEntries(findMenu,table)
 
-		editMenu.add_command(label="Set Font...",
-			accelerator="Shift+Alt+T",command=self.OnFontPanel)
-		editMenu.add_command(label="Set Colors...",
-			accelerator="Shift+Alt+S",command=self.OnColorPanel)
-		
-		label = choose(c.tree.colorizer.showInvisibles,"Hide Invisibles","Show Invisibles")
-		editMenu.add_command(label=label,command=self.OnViewAllCharacters,
-			accelerator="Alt+V")
-		editMenu.add_separator()
-		
-		editMenu.add_command(label="Preferences",accelerator="Ctrl+Y",command=self.OnPreferences)
 		#@-body
-		#@-node:2::<< create the edit menu >>
+		#@-node:3::<< create the find submenu >>
+
+		
+		#@<< create the last top-level edit entries >>
+		#@+node:4::<< create the last top-level edit entries >>
+		#@+body
+		label = choose(c.tree.colorizer.showInvisibles,"Hide Invisibles","Show Invisibles")
+			
+		table = (
+			("Set Font...",  "Shift+Alt+T",self.OnFontPanel),
+			("Set Colors...","Shift+Alt+S",self.OnColorPanel),
+			(label,"Alt+V",self.OnViewAllCharacters),
+			("-",None,None),
+			("Preferences","Ctrl+Y",self.OnPreferences))
+		
+		self.createMenuEntries(editMenu,table)
+
+		#@-body
+		#@-node:4::<< create the last top-level edit entries >>
+		#@-body
+		#@-node:1::<< create the edit menu >>
 
 		
 		#@<< create the outline menu >>
@@ -451,135 +442,106 @@ class LeoFrame:
 		self.outlineMenu = outlineMenu = Tk.Menu(menu,tearoff=0)
 		menu.add_cascade(label="Outline", menu=outlineMenu)
 		
-		outlineMenu.add_command(label="Cut Node",
-			accelerator="Shift+Ctrl+X",command=self.OnCutNode)
-		outlineMenu.add_command(label="Copy Node",
-			accelerator="Shift+Ctrl+C",command=self.OnCopyNode)
-		outlineMenu.add_command(label="Paste Node",
-			accelerator="Shift+Ctrl+V",command=self.OnPasteNode)
-		outlineMenu.add_command(label="Delete Node",
-			accelerator="Shift+Ctrl+BkSp",command=self.OnDeleteNode)
-		outlineMenu.add_separator()
 		
-		outlineMenu.add_command(label="Insert Node",
-			accelerator="Ctrl+I",command=self.OnInsertNode)
-		outlineMenu.add_command(label="Clone Node",
-			accelerator="Ctrl+`",command=self.OnCloneNode)
-		outlineMenu.add_command(label="Sort Children",
-			command=self.OnSortChildren)
-		outlineMenu.add_command(label="Sort Siblings",
-			accelerator="Alt-A",command=self.OnSortSiblings)
-		outlineMenu.add_separator()
-		
+		#@<< create top-level outline menu >>
+		#@+node:1::<< create top-level outline menu >>
+		#@+body
+		table = (
+			("Cut Node","Shift+Ctrl+X",self.OnCutNode),
+			("Copy Node","Shift+Ctrl+C",self.OnCopyNode),
+			("Paste Node","Shift+Ctrl+V",self.OnPasteNode),
+			("Delete Node","Shift+Ctrl+BkSp",self.OnDeleteNode),
+			("-",None,None),
+			("Insert Node","Ctrl+I",self.OnInsertNode),
+			("Clone Node","Ctrl+`",self.OnCloneNode),
+			("Sort Children",None,self.OnSortChildren),
+			("Sort Siblings","Alt-A",self.OnSortSiblings),
+			("-",None,None))
+			
+		self.createMenuEntries(outlineMenu,table)
+
+		#@-body
+		#@-node:1::<< create top-level outline menu >>
+
 		
 		#@<< create expand/contract submenu >>
-		#@+node:1::<< create expand/contract submenu >>
+		#@+node:2::<< create expand/contract submenu >>
 		#@+body
 		self.expandContractMenu = expandContractMenu = Tk.Menu(outlineMenu,tearoff=0)
 		outlineMenu.add_cascade(label="Expand/Contract...", menu=expandContractMenu)
 		
-		expandContractMenu.add_command(label="Expand All",
-			accelerator="Alt+9",command=self.OnExpandAll)
-		expandContractMenu.add_command(label="Expand All Children",
-			command=self.OnExpandAllChildren)
-		expandContractMenu.add_command(label="Expand Children",
-			command=self.OnExpandChildren)
-		expandContractMenu.add_separator()
+		table = (
+			("Expand All","Alt+9",self.OnExpandAll),
+			("Expand All Children",None,self.OnExpandAllChildren),
+			("Expand Children",None,self.OnExpandChildren),
+			("-",None,None),
+			("Contract Parent","Alt+0",self.OnContractParent),
+			("Contract All","Alt+1",self.OnContractAll),
+			("Contract All Children",None,self.OnContractAllChildren),
+			("Contract Children",None,self.OnContractChildren),
+			("-",None,None),
+			("Expand Next Level","Alt+=",self.OnExpandNextLevel),
+			("Expand To Level 1","Alt+1",self.OnExpandToLevel1),
+			("Expand To Level 2","Alt+2",self.OnExpandToLevel2),
+			("Expand To Level 3","Alt+3",self.OnExpandToLevel3),
+			("Expand To Level 4","Alt+4",self.OnExpandToLevel4),
+			("Expand To Level 5","Alt+5",self.OnExpandToLevel5),
+			("Expand To Level 6","Alt+6",self.OnExpandToLevel6),
+			("Expand To Level 7","Alt+7",self.OnExpandToLevel7),
+			("Expand To Level 8","Alt+8",self.OnExpandToLevel8))
 		
-		expandContractMenu.add_command(label="Contract Parent",
-			accelerator="Alt+0",command=self.OnContractParent)
-		expandContractMenu.add_command(label="Contract All",
-			accelerator="Alt+1",command=self.OnContractAll)
-		expandContractMenu.add_command(label="Contract All Children",
-			command=self.OnContractAllChildren)
-		expandContractMenu.add_command(label="Contract Children",
-			command=self.OnContractChildren)
-		expandContractMenu.add_separator()
-		
-		expandContractMenu.add_command(label="Expand Next Level",
-			accelerator="Alt+=",command=self.OnExpandNextLevel)
-		expandContractMenu.add_command(label="Expand To Level 1",
-			accelerator="Alt+1",command=self.OnExpandToLevel1)
-		expandContractMenu.add_command(label="Expand To Level 2",
-			accelerator="Alt+2",command=self.OnExpandToLevel2)
-		expandContractMenu.add_command(label="Expand To Level 3",
-			accelerator="Alt+3",command=self.OnExpandToLevel3)
-		expandContractMenu.add_command(label="Expand To Level 4",
-			accelerator="Alt+4",command=self.OnExpandToLevel4)
-		expandContractMenu.add_command(label="Expand To Level 5",
-			accelerator="Alt+5",command=self.OnExpandToLevel5)
-		expandContractMenu.add_command(label="Expand To Level 6",
-			accelerator="Alt+6",command=self.OnExpandToLevel6)
-		expandContractMenu.add_command(label="Expand To Level 7",
-			accelerator="Alt+7",command=self.OnExpandToLevel7)
-		expandContractMenu.add_command(label="Expand To Level 8",
-			accelerator="Alt+8",command=self.OnExpandToLevel8)
-		#expandContractMenu.add_command(label="Expand To Level 9",
-			#accelerator="Alt+9",command=self.OnExpandToLevel9)
+		self.createMenuEntries(expandContractMenu,table)
 		#@-body
-		#@-node:1::<< create expand/contract submenu >>
+		#@-node:2::<< create expand/contract submenu >>
 
 		
 		#@<< create move/select submenu >>
-		#@+node:2::<< create move/select submenu >>
+		#@+node:3::<< create move/select submenu >>
 		#@+body
 		self.moveSelectMenu = moveSelectMenu = Tk.Menu(outlineMenu,tearoff=0)
 		outlineMenu.add_cascade(label="Move/Select...", menu=moveSelectMenu)
 		
-		moveSelectMenu.add_command(label="Move Down",
-			accelerator="Ctrl+D",command=self.OnMoveDown)
-		moveSelectMenu.add_command(label="Move Left",
-			accelerator="Ctrl+L",command=self.OnMoveLeft)
-		moveSelectMenu.add_command(label="Move Right",
-			accelerator="Ctrl+R",command=self.OnMoveRight)
-		moveSelectMenu.add_command(label="Move Up",
-			accelerator="Ctrl+U", command=self.OnMoveUp)
-		moveSelectMenu.add_separator()
-		
-		moveSelectMenu.add_command(label="Promote",
-			accelerator="Shift+Ctrl+[", command=self.OnPromote)
-		moveSelectMenu.add_command(label="Demote",
-			accelerator="Shift+Ctrl+]", command=self.OnDemote)
-		moveSelectMenu.add_separator()
-		
-		moveSelectMenu.add_command(label="Go Prev Visible",
-			accelerator="Alt-Shift-U",command=self.OnGoPrevVisible)
-		moveSelectMenu.add_command(label="Go Next Visible",
-			accelerator="Alt-Shift-D",command=self.OnGoNextVisible)
-		moveSelectMenu.add_separator()
-		
-		moveSelectMenu.add_command(label="Go Back",
-			accelerator="Alt-Shift+V",command=self.OnGoBack)
-		moveSelectMenu.add_command(label="Go Next",
-			accelerator="Alt-Shift-W",command=self.OnGoNext)
+		table = (
+			("Move Down", "Ctrl+D",self.OnMoveDown),
+			("Move Left", "Ctrl+L",self.OnMoveLeft),
+			("Move Right","Ctrl+R",self.OnMoveRight),
+			("Move Up",   "Ctrl+U",self.OnMoveUp),
+			("-",None,None),
+			("Promote","Shift+Ctrl+[",self.OnPromote),
+			("Demote", "Shift+Ctrl+]",self.OnDemote),
+			("-",None,None),
+			("Go Prev Visible","Alt-Shift-U",self.OnGoPrevVisible),
+			("Go Next Visible","Alt-Shift-D",self.OnGoNextVisible),
+			("-",None,None),
+			("Go Back","Alt-Shift+V",self.OnGoBack),
+			("Go Next","Alt-Shift-W",self.OnGoNext))
+			
+		self.createMenuEntries(moveSelectMenu,table)
+
 		#@-body
-		#@-node:2::<< create move/select submenu >>
+		#@-node:3::<< create move/select submenu >>
 
 		
 		#@<< create mark/goto submenu >>
-		#@+node:3::<< create mark/goto submenu >>
+		#@+node:4::<< create mark/goto submenu >>
 		#@+body
 		self.markGotoMenu = markGotoMenu = Tk.Menu(outlineMenu,tearoff=0)
 		outlineMenu.add_cascade(label="Mark/Go To...", menu=markGotoMenu)
 		
-		markGotoMenu.add_command(label="Mark",
-			accelerator="Ctrl-M",command=self.OnMark)
-		markGotoMenu.add_command(label="Mark Subheads",
-			accelerator="Alt+S",command=self.OnMarkSubheads)
-		markGotoMenu.add_command(label="Mark Changed Items",
-			accelerator="Alt+C",command=self.OnMarkChangedItems)
-		markGotoMenu.add_command(label="Mark Changed Roots",
-			accelerator="Alt+R",command=self.OnMarkChangedRoots)
-		markGotoMenu.add_separator()
-		
-		markGotoMenu.add_command(label="Unmark All",
-			accelerator="Alt+U",command=self.OnUnmarkAll)
-		markGotoMenu.add_command(label="Go To Next Marked",
-			accelerator="Alt+M",command=self.OnGoToNextMarked)
-		markGotoMenu.add_command(label="Go To Next Changed",
-			accelerator="Alt+D",command=self.OnGoToNextChanged)
+		table = (
+			("Mark","Ctrl-M",self.OnMark),
+			("Mark Subheads","Alt+S",self.OnMarkSubheads),
+			("Mark Changed Items","Alt+C",self.OnMarkChangedItems),
+			("Mark Changed Roots","Alt+R",self.OnMarkChangedRoots),
+			("-",None,None),
+			("Unmark All","Alt+U",self.OnUnmarkAll),
+			("Go To Next Marked","Alt+M",self.OnGoToNextMarked),
+			("Go To Next Changed","Alt+D",self.OnGoToNextChanged))
+			
+		self.createMenuEntries(markGotoMenu,table)
+
 		#@-body
-		#@-node:3::<< create mark/goto submenu >>
+		#@-node:4::<< create mark/goto submenu >>
 		#@-body
 		#@-node:3::<< create the outline menu >>
 
@@ -590,27 +552,19 @@ class LeoFrame:
 		self.windowMenu = windowMenu = Tk.Menu(menu,tearoff=0)
 		menu.add_cascade(label="Window", menu=windowMenu)
 		
-		windowMenu.add_command(label="Equal Sized Panes",
-			accelerator="Ctrl-E",command=self.OnEqualSizedPanes)
-		windowMenu.add_command(label="Toggle Active Pane",
-			accelerator="Ctrl-T",command=self.OnToggleActivePane)
-		windowMenu.add_command(label="Toggle Split Direction",
-			command=self.OnToggleSplitDirection)
-		if 0: # I consider this to be a dubious command.
-			windowMenu.add_command(label="Hide Log Window",
-				command=self.OnHideLogWindow)
-		windowMenu.add_separator()
+		table = (
+			("Equal Sized Panes","Ctrl-E",self.OnEqualSizedPanes),
+			("Toggle Active Pane","Ctrl-T",self.OnToggleActivePane),
+			("Toggle Split Direction",None,self.OnToggleSplitDirection),
+			("-",None,None),
+			("Cascade",None,self.OnCascade),
+			("Minimize All",None,self.OnMinimizeAll),
+			("-",None,None),
+			("Open Compare Window",None,self.OnOpenCompareWindow),
+			("Open Python Window","Alt+P",self.OnOpenPythonWindow))
 		
-		windowMenu.add_command(label="Cascade",
-			command=self.OnCascade)
-		windowMenu.add_command(label="Minimize All",
-			command=self.OnMinimizeAll)
-		windowMenu.add_separator()
-		
-		windowMenu.add_command(label="Open Compare Window",
-			command=self.OnOpenCompareWindow)
-		windowMenu.add_command(label="Open Python Window",
-			accelerator="Alt+P",command=self.OnOpenPythonWindow)
+		self.createMenuEntries(windowMenu,table)
+
 		#@-body
 		#@-node:4::<< create the window menu >>
 
@@ -621,21 +575,48 @@ class LeoFrame:
 		self.helpMenu = helpMenu = Tk.Menu(menu,tearoff=0)
 		menu.add_cascade(label="Help", menu=helpMenu)
 		
-		helpMenu.add_command(label="About Leo...", command=self.OnAbout)
-		helpMenu.add_command(label="Online Home Page...", command=self.OnLeoHome)
-		helpMenu.add_separator()
-		helpMenu.add_command(label="Online Tutorial (Start Here)...", command=self.OnLeoTutorial)
-		if sys.platform=="win32": # Windows
-			helpMenu.add_command(label="Tutorial (sbooks.chm)...", command=self.OnLeoHelp)
-		helpMenu.add_command(label="Reference (LeoDocs.leo)...", command=self.OnLeoDocumentation)
-
+		table = (
+			("About Leo...",None,self.OnAbout),
+			("Online Home Page...",None,self.OnLeoHome),
+			("-",None,None),
+			("Online Tutorial (Start Here)...",None,self.OnLeoTutorial))
+		self.createMenuEntries(helpMenu,table)
+		
+		if sys.platform=="win32":
+			table = (("Tutorial (sbooks.chm)...",None,self.OnLeoHelp),)
+			self.createMenuEntries(helpMenu,table)
+		
+		table = (("Reference (LeoDocs.leo)...",None,self.OnLeoDocumentation),)
+		self.createMenuEntries(helpMenu,table)
 		#@-body
 		#@-node:5::<< create the help menu >>
 
 		top.config(menu=menu) # Display the menu.
 	#@-body
 	#@-node:6:C=6:createMenuBar
-	#@+node:7:C=8:createAccelerators
+	#@+node:7:C=7:createMenuEntries
+	#@+body
+	def createMenuEntries (self,menu,table):
+		
+		for label,accel,command in table:
+			if label == None or command == None or label == "-":
+				menu.add_separator()
+			else:
+				
+				#@<< get user accelerator >>
+				#@+node:1::<< get user accelerator >>
+				#@+body
+				pass # not ready yet
+				#@-body
+				#@-node:1::<< get user accelerator >>
+
+				if accel:
+					menu.add_command(label=label,accelerator=accel,command=command)
+				else:
+					menu.add_command(label=label,command=command)
+	#@-body
+	#@-node:7:C=7:createMenuEntries
+	#@+node:8:C=8:createAccelerators
 	#@+body
 	#@+at
 	#  The accelerator entry specified when creating a menu item just creates text.  The actual correspondance between keys and 
@@ -815,8 +796,8 @@ class LeoFrame:
 			print_bindings("body",self.body)
 			print_bindings("canvas",self.canvas)
 	#@-body
-	#@-node:7:C=8:createAccelerators
-	#@+node:8:C=9:initialRatios
+	#@-node:8:C=8:createAccelerators
+	#@+node:9:C=9:initialRatios
 	#@+body
 	def initialRatios (self):
 	
@@ -838,8 +819,8 @@ class LeoFrame:
 		# print (`r`,`r2`)
 		return verticalFlag,r,r2
 	#@-body
-	#@-node:8:C=9:initialRatios
-	#@+node:9::getFocus
+	#@-node:9:C=9:initialRatios
+	#@+node:10::getFocus
 	#@+body
 	# Returns the frame that has focus, or body if None.
 	
@@ -851,16 +832,16 @@ class LeoFrame:
 		else:
 			return self.body
 	#@-body
-	#@-node:9::getFocus
-	#@+node:10::notYet
+	#@-node:10::getFocus
+	#@+node:11::notYet
 	#@+body
 	def notYet(self,name):
 	
 		es(name + " not ready yet")
 
 	#@-body
-	#@-node:10::notYet
-	#@+node:11:C=10:frame.put, putnl
+	#@-node:11::notYet
+	#@+node:12:C=10:frame.put, putnl
 	#@+body
 	# All output to the log stream eventually comes here.
 	
@@ -884,8 +865,8 @@ class LeoFrame:
 			print "Null log"
 			print
 	#@-body
-	#@-node:11:C=10:frame.put, putnl
-	#@+node:12:C=11:resizePanesToRatio
+	#@-node:12:C=10:frame.put, putnl
+	#@+node:13:C=11:resizePanesToRatio
 	#@+body
 	def resizePanesToRatio(self,ratio,secondary_ratio):
 	
@@ -894,8 +875,8 @@ class LeoFrame:
 		# trace(`ratio`)
 
 	#@-body
-	#@-node:12:C=11:resizePanesToRatio
-	#@+node:13:C=12:Event handlers
+	#@-node:13:C=11:resizePanesToRatio
+	#@+node:14:C=12:Event handlers
 	#@+node:1:C=13:frame.OnCloseLeoEvent
 	#@+body
 	# Called from quit logic and when user closes the window.
@@ -1034,8 +1015,8 @@ class LeoFrame:
 			self.canvas.yview(Tkinter.SCROLL, -1, Tkinter.UNITS)
 	#@-body
 	#@-node:6:C=16:OnMouseWheel (Tomaz Ficko)
-	#@-node:13:C=12:Event handlers
-	#@+node:14:C=17:Menu enablers (Frame)
+	#@-node:14:C=12:Event handlers
+	#@+node:15:C=17:Menu enablers (Frame)
 	#@+node:1::OnMenuClick (enables and disables all menu items)
 	#@+body
 	# This is the Tk "postcommand" callback.  It should update all menu items.
@@ -1139,8 +1120,8 @@ class LeoFrame:
 		enableMenu(menu,"Go To Next Changed",c.canGoToNextDirtyHeadline())
 	#@-body
 	#@-node:5::updateOutlineMenu
-	#@-node:14:C=17:Menu enablers (Frame)
-	#@+node:15:C=18:Menu Command Handlers
+	#@-node:15:C=17:Menu enablers (Frame)
+	#@+node:16:C=18:Menu Command Handlers
 	#@+node:1::File Menu
 	#@+node:1::top level
 	#@+node:1:C=19:OnNew
@@ -2891,8 +2872,8 @@ class LeoFrame:
 	#@-body
 	#@-node:5:C=51:OnLeoTutorial (version number)
 	#@-node:5::Help Menu
-	#@-node:15:C=18:Menu Command Handlers
-	#@+node:16:C=52:Splitter stuff
+	#@-node:16:C=18:Menu Command Handlers
+	#@+node:17:C=52:Splitter stuff
 	#@+body
 	#@+at
 	#  The key invariants used throughout this code:
@@ -3236,7 +3217,7 @@ class LeoFrame:
 		self.log.configure(bd=border)
 	#@-body
 	#@-node:9::reconfigurePanes (use config bar_width)
-	#@-node:16:C=52:Splitter stuff
+	#@-node:17:C=52:Splitter stuff
 	#@-others
 #@-body
 #@-node:0::@file leoFrame.py
