@@ -995,7 +995,7 @@ class baseFileCommands:
 	#@+node:fileCommands.open
 	def open(self,file,fileName):
 	
-		c = self.c
+		c = self.c ; frame = c.frame
 		# Read the entire file into the buffer
 		self.fileBuffer = file.read() ; file.close()
 		self.fileIndex = 0
@@ -1019,6 +1019,7 @@ class baseFileCommands:
 		#@nl
 		c.beginUpdate()
 		ok, ratio = self.getLeoFile(fileName,atFileNodesFlag=true)
+		frame.resizePanesToRatio(ratio,frame.secondary_ratio) # 12/2/03
 		#@	<< Make the top node visible >>
 		#@+node:<< Make the top node visible >>
 		if 0: # This can't be done directly.
