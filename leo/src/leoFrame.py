@@ -1266,8 +1266,7 @@ class baseLeoFrame:
 				("&Write @file Nodes","Shift+Ctrl+W",self.OnWriteAtFileNodes),
 				("-",None,None),
 				("Write 4.x Derived Files",None,self.OnWriteNewDerivedFiles),
-				("Write 3.x Derived Files",None,self.OnWriteOldDerivedFiles),
-				("Write 3.x Outline",None,self.OnWriteOldOutline))
+				("Write 3.x Derived Files",None,self.OnWriteOldDerivedFiles))
 		
 		self.createMenuEntries(readWriteMenu,table)
 		#@-body
@@ -2374,33 +2373,10 @@ class baseLeoFrame:
 		c = self.commands ; v = c.currentVnode()
 	
 		c.atFileCommands.writeOldDerivedFiles(v)
+		es("auto-saving outline",color="blue")
+		self.OnSave() # Must be done to clear tnodeList.
 	#@-body
 	#@-node:2::OnWriteNew/OldDerivedFiles
-	#@+node:3::OnWriteOldOutline
-	#@+body
-	# Based on the Save As code.
-	
-	def OnWriteOldOutline (self,event=None):
-		
-		"""Saves a pre-4.0 outline"""
-	
-		# Make sure we never pass None to the ctor.
-		if not self.mFileName:
-			self.title = ""
-	
-		# set local fileName, _not_ self.mFileName
-		fileName = tkFileDialog.asksaveasfilename(
-			initialfile = self.mFileName,
-			title="Write Pre 4.0 Outline",
-			filetypes=[("Leo files", "*.leo")],
-			defaultextension=".leo")
-	
-		if len(fileName) > 0:
-			fileName = ensure_extension(fileName, ".leo")
-			self.commands.fileCommands.saveTo(fileName)
-			self.updateRecentFiles(self.mFileName)
-	#@-body
-	#@-node:3::OnWriteOldOutline
 	#@-node:7::4.0 Commands
 	#@-node:3::Read/Write submenu
 	#@+node:4::Tangle submenu

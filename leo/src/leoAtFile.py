@@ -1,15 +1,10 @@
-#line1
-#line2
 #@+leo
 #@+node:0::@file leoAtFile.py 
 #@+body
-#@@first
-#@@first
+"""Classes to read and write @file nodes."""
 
 
 #@@language python
-
-# Classes to read and write @file nodes.
 
 from leoGlobals import *
 import leoColor,leoNodes
@@ -3901,8 +3896,16 @@ class baseNewDerivedFile(oldDerivedFile):
 		assert(t)
 		at.tnodeListIndex += 1
 	
+		# Get any vnode joined to t.
+		# To do: cut/paste may cause problems here...
+		try:
+			v = t.joinList[0]
+		except:
+			at.readError("No joinList for tnode")
+			trace(at.tnodeListIndex,len(at.root.tnodeList))
+			return None
+	
 		# Check the headline.
-		v = t.joinList[0]
 		if headline.strip() == v.headString().strip():
 			# trace(t)
 			t.setVisited() # Supress warning about unvisited node.
@@ -4030,18 +4033,20 @@ class baseNewDerivedFile(oldDerivedFile):
 		"""Read an @+at sentinel."""
 		
 		at = self ; assert(match(s,i,"+at"))
-		at.endSentinelStack.append(endAt)
-		at.docOut = ["@ \n"] # This newline may be removed by a following @nonl
+		i += 3 ; j = skip_ws(s,i) ; ws = s[i:j]
+		at.docOut = ['@' + ws + '\n'] # This newline may be removed by a following @nonl
 		at.inCode = false
+		at.endSentinelStack.append(endAt)
 		
 	def readStartDoc (self,s,i):
 		
 		"""Read an @+doc sentinel."""
 	
 		at = self ; assert(match(s,i,"+doc"))
-		at.endSentinelStack.append(endDoc)
-		at.docOut = ["@doc \n"] # This newline may be removed by a following @nonl
+		i += 4 ; j = skip_ws(s,i) ; ws = s[i:j]
+		at.docOut = ["@doc" + ws + '\n'] # This newline may be removed by a following @nonl
 		at.inCode = false
+		at.endSentinelStack.append(endDoc)
 	#@-body
 	#@-node:1::readStartAt, readStartDoc & readStartDocLine
 	#@+node:2::readStartLeo
@@ -4144,7 +4149,7 @@ class baseNewDerivedFile(oldDerivedFile):
 		"""Read an @-at sentinel."""
 	
 		at = self
-		at.readLastDocLine("@ ")
+		at.readLastDocLine("@")
 		at.popSentinelStack(endAt)
 		at.inCode = true
 			
@@ -4153,7 +4158,7 @@ class baseNewDerivedFile(oldDerivedFile):
 		"""Read an @-doc sentinel."""
 	
 		at = self
-		at.readLastDocLine("@doc ")
+		at.readLastDocLine("@doc")
 		at.popSentinelStack(endDoc)
 		at.inCode = true
 	#@-body
@@ -4232,11 +4237,6 @@ class baseNewDerivedFile(oldDerivedFile):
 		else:
 			at.readError("Missing start of doc part")
 			return
-		
-		# Skip leading newline if it exists.
-		if 0: # This should only be done as a result of @nonl
-			if s and s[0] == '\n':
-				s = s[1:]
 	
 		if end:
 			# Remove opening block delim.
@@ -5052,7 +5052,7 @@ class baseNewDerivedFile(oldDerivedFile):
 			if kind == noDirective:
 				if inCode:
 					hasRef,n1,n2 = at.findSectionName(s,i)
-					if hasRef:
+					if hasRef and not at.raw:
 						at.putRefLine(s,i,n1,n2,v)
 					else:
 						at.putCodeLine(s,i)
@@ -5226,7 +5226,7 @@ class baseNewDerivedFile(oldDerivedFile):
 	#@-body
 	#@-node:5::putRefLine
 	#@-node:3::code lines...
-	#@+node:4::doc lines...
+	#@+node:4::doc lines... (write)
 	#@+node:1::putBlankDocLine
 	#@+body
 	def putBlankDocLine (self):
@@ -5250,28 +5250,52 @@ class baseNewDerivedFile(oldDerivedFile):
 		
 		at = self ; at.docKind = kind
 		
-		# put the opening doc sentinel
 		sentinel = choose(kind == docDirective,"@+doc","@+at")
-		at.putSentinel(sentinel)
+		directive = choose(kind == docDirective,"@doc","@")
 		
+		# Skip past the directive.
+		i += len(directive)
+		
+		# Get the trailing whitespace.
+		j = skip_ws(s,i)
+		ws = s[i:j]
+		
+		# Put the opening @+doc or @-doc sentinel, including trailing whitespace.
+		at.putSentinel(sentinel + ws)
+	
 		# Put the opening comment.
 		if at.endSentinelComment:
 			at.putIndent(at.indent)
 			at.os(at.startSentinelComment) ; at.onl()
 	
-		# Skip past the directive
-		directive = choose(kind == docDirective,"@doc","@")
-		i += len(directive)
-		
-		# 9/21/03: Looking ahead here helps preserve intended whitespace.
-		if match(s,i,' ') or match(s,i,'\t'):
-			i += 1
-		j = skip_ws(s,i)
-		
 		# Put an @nonl sentinel if there is significant text following @doc or @.
 		if not is_nl(s,j):
 			at.putSentinel("@nonl")
-			at.putDocLine(s,i)
+			at.putDocLine(s,j)
+	
+		if 0: # old code
+			# put the opening @+doc or @-doc sentinel, including trailing whitespace.
+			sentinel = choose(kind == docDirective,"@+doc","@+at")
+			at.putSentinel(sentinel)
+			
+			# Put the opening comment.
+			if at.endSentinelComment:
+				at.putIndent(at.indent)
+				at.os(at.startSentinelComment) ; at.onl()
+		
+			# Skip past the directive
+			directive = choose(kind == docDirective,"@doc","@")
+			i += len(directive)
+			
+			# 9/21/03: Looking ahead here helps preserve intended whitespace.
+			if match(s,i,' ') or match(s,i,'\t'):
+				i += 1
+			j = skip_ws(s,i)
+			
+			# Put an @nonl sentinel if there is significant text following @doc or @.
+			if not is_nl(s,j):
+				at.putSentinel("@nonl")
+				at.putDocLine(s,i)
 	#@-body
 	#@-node:2::putStartDocLine
 	#@+node:3::putDocLine
@@ -5390,7 +5414,7 @@ class baseNewDerivedFile(oldDerivedFile):
 		at.os(s) ; at.onl()
 	#@-body
 	#@-node:5::putPending
-	#@-node:4::doc lines...
+	#@-node:4::doc lines... (write)
 	#@+node:5::Writing Utils...
 	#@+node:1::hasSectionName
 	#@+body
@@ -5490,12 +5514,6 @@ class baseNewDerivedFile(oldDerivedFile):
 	
 class newDerivedFile(baseNewDerivedFile):
 	pass # May be overridden in plugins.
-
-
-#@@last
-#@@last
 #@-body
 #@-node:0::@file leoAtFile.py 
 #@-leo
-#last1
-#last2
