@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="1258" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="1399" clone_windows="0"/>
 <globals body_outline_ratio="0.5">
-	<global_window_position top="105" left="355" height="828" width="846"/>
+	<global_window_position top="89" left="216" height="828" width="901"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences>
@@ -13,6 +13,7 @@
 </find_panel_settings>
 <vnodes>
 <v t="edream.110203113231"><vh>Diary</vh>
+<v t="edream.111603130528"><vh>11/17</vh></v>
 <v t="edream.110703035301"><vh>11/7</vh></v>
 <v t="edream.110203113231.1"><vh>10/27/02</vh></v>
 <v t="edream.110203113231.2"><vh>10/26/03</vh></v>
@@ -292,515 +293,6 @@
 </v>
 </v>
 </v>
-<v t="edream.110203113231.233"><vh>wxPython plugin (not ready yet)</vh>
-<v t="edream.110203113231.234"><vh> Diary</vh>
-<v t="edream.110203113231.235"><vh>10/26 Code works with reorganized core</vh></v>
-<v t="edream.110203113231.236"><vh>10/13/03: Added icons (Windows only)</vh></v>
-<v t="edream.110203113231.237"><vh>10/12/03: Houston, we have ignition</vh></v>
-<v t="edream.110203113231.238"><vh>10/11/03: converted code using c2py, then hand converted code</vh></v>
-</v>
-<v t="edream.110203113231.239"><vh> To do</vh>
-<v t="edream.110203113231.240"><vh>Other stuff to do</vh></v>
-<v t="edream.110203113231.241"><vh>Design changes</vh></v>
-</v>
-<v t="edream.110203113231.242"><vh> Unused code</vh>
-<v t="edream.110203113231.243"><vh>invoke c2py</vh></v>
-<v t="edream.110203113231.244"><vh>LeoFrame.__init__</vh>
-<v t="edream.110203113231.245"><vh>&lt;&lt; Initialize the private vars &gt;&gt;</vh></v>
-<v t="edream.110203113231.246"><vh>&lt;&lt; Initialize the argument settings &gt;&gt;</vh></v>
-<v t="edream.110203113231.247"><vh>&lt;&lt; Create the splitter windows &gt;&gt;</vh>
-<v t="edream.110203113231.248"><vh>&lt;&lt; Set the image list &gt;&gt;</vh></v>
-</v>
-<v t="edream.110203113231.249"><vh>&lt;&lt; Create the accelerator table &gt;&gt;</vh></v>
-<v t="edream.110203113231.250"><vh>&lt;&lt; Create the status bar &gt;&gt;</vh></v>
-<v t="edream.110203113231.251"><vh>&lt;&lt; Set the window Icon &gt;&gt;</vh></v>
-<v t="edream.110203113231.252"><vh>&lt;&lt; Set the caret blink rate &gt;&gt;</vh></v>
-<v t="edream.110203113231.253"><vh>&lt;&lt; Add root node to the tree view &gt;&gt;</vh></v>
-</v>
-<v t="edream.110203113231.254"><vh>OpenWithFileName</vh>
-<v t="edream.110203113231.255"><vh>&lt;&lt; Set closeEmptyFrameFlag if the only open window is empty &gt;&gt;</vh></v>
-</v>
-<v t="edream.110203113231.256"><vh>&lt;&lt; LeoPrefs private constants &gt;&gt;</vh></v>
-<v t="edream.110203113231.257"><vh>updateJoinedHeadlines</vh></v>
-</v>
-<v t="edream.110203113231.258"><vh>(Events)</vh>
-<v t="edream.110203113231.259" a=""><vh>&lt;&lt; constants for wx plugin &gt;&gt;</vh></v>
-<v t="edream.110203113231.260" a=""><vh>finishCreate</vh>
-<v t="edream.110203113231.261"><vh>&lt;&lt; create the splitters &gt;&gt;</vh></v>
-<v t="edream.110203113231.262"><vh>&lt;&lt; create the tree &gt;&gt;</vh></v>
-<v t="edream.110203113231.263"><vh>&lt;&lt; declare event handlers for body &amp; tree &gt;&gt;</vh></v>
-<v t="edream.110203113231.264"><vh>&lt;&lt; declare event handlers for frame &gt;&gt;</vh></v>
-<v t="edream.110203113231.265"><vh>&lt;&lt; set the window icon &gt;&gt;</vh></v>
-</v>
-<v t="edream.110203113231.266" a=""><vh>__init__</vh></v>
-<v t="edream.110203113231.267" a=""><vh>event handlers</vh>
-<v t="edream.110203113231.268"><vh>Frame events</vh>
-<v t="edream.110203113231.269"><vh>onActivate &amp; OnSetFocus</vh></v>
-<v t="edream.110203113231.270"><vh>onCloseLeoFrame</vh>
-<v t="edream.110203113231.271"><vh>&lt;&lt; Prompt for change.  Set veto if the user cancels &gt;&gt;</vh></v>
-<v t="edream.110203113231.272"><vh>&lt;&lt; Close the permanent frames &gt;&gt;</vh></v>
-</v>
-<v t="edream.110203113231.273"><vh>onResize</vh></v>
-</v>
-<v t="edream.110203113231.274"><vh>Body events</vh>
-<v t="edream.110203113231.275"><vh>onBodyTextUpdated</vh>
-<v t="edream.110203113231.276"><vh>&lt;&lt; Set the dirty bit and/or the file-changed mark if the text has changed &gt;&gt;</vh></v>
-<v t="edream.110203113231.277"><vh>&lt;&lt; Update icons &gt;&gt;</vh></v>
-</v>
-</v>
-<v t="edream.110203113231.278"><vh>Tree events</vh>
-<v t="edream.110203113231.279"><vh>Expand/contract</vh>
-<v t="edream.110203113231.280"><vh>onTreeCollapsed &amp; onTreeExpanded</vh></v>
-<v t="edream.110203113231.281"><vh>onTreeCollapsing &amp; onTreeExpanding</vh></v>
-</v>
-<v t="edream.110203113231.282"><vh>Selecting</vh>
-<v t="edream.110203113231.283"><vh>onTreeChanged</vh></v>
-<v t="edream.110203113231.284"><vh>onTreeChanging</vh></v>
-</v>
-<v t="edream.110203113231.285"><vh>Editing labels</vh>
-<v t="edream.110203113231.286"><vh>onTreeBeginLabelEdit</vh></v>
-<v t="edream.110203113231.287"><vh>onTreeEndLabelEdit</vh></v>
-<v t="edream.110203113231.288"><vh>onTreeKeyDown</vh></v>
-</v>
-<v t="edream.110203113231.289"><vh>onTreeBeginDrag</vh></v>
-<v t="edream.110203113231.290"><vh>onTreeEndDrag</vh>
-<v t="edream.110203113231.291"><vh>&lt;&lt; Define onTreeEndDrag vars &gt;&gt;</vh></v>
-<v t="edream.110203113231.292"><vh>&lt;&lt; Insert src as the first child of dst &gt;&gt;</vh></v>
-<v t="edream.110203113231.293"><vh>&lt;&lt; Insert src after dst &gt;&gt;</vh></v>
-</v>
-</v>
-</v>
-<v t="edream.110203113231.294" a=""><vh>Interface with the tree class</vh>
-<v t="edream.110203113231.295"><vh>beginUpdate</vh></v>
-<v t="edream.110203113231.296"><vh>endUpdate</vh></v>
-<v t="edream.110203113231.297"><vh>Getters</vh></v>
-<v t="edream.110203113231.298"><vh>redraw &amp; redraw_now</vh></v>
-<v t="edream.110203113231.299"><vh>redraw_node</vh></v>
-<v t="edream.110203113231.300"><vh>redraw_subtree</vh></v>
-<v t="edream.110203113231.301"><vh>Setters</vh></v>
-</v>
-</v>
-<v t="edream.110203113231.302" tnodeList="edream.110203113231.302,edream.110203113231.303,edream.110203113231.259,edream.110203113231.305,edream.110203113231.307,edream.110203113231.308,edream.110203113231.309,edream.110203113231.310,edream.110203113231.311,edream.110203113231.312,edream.110203113231.313,edream.110203113231.314,edream.110203113231.315,edream.110203113231.316,edream.110203113231.317,edream.110203113231.319,edream.110203113231.320,edream.110203113231.322,edream.110203113231.323,edream.110203113231.324,edream.110203113231.325,edream.110203113231.326,edream.110203113231.327,edream.110203113231.328,edream.110203113231.329,edream.110203113231.331,edream.110203113231.332,edream.110203113231.333,edream.110203113231.334,edream.110203113231.336,edream.110203113231.337,edream.110203113231.338,edream.110203113231.340,edream.110203113231.341,edream.110203113231.342,edream.110203113231.343,edream.110203113231.344,edream.110203113231.345,edream.110203113231.346,edream.110203113231.347,edream.110203113231.348,edream.110203113231.349,edream.110203113231.266,edream.110203113231.351,edream.110203113231.260,edream.110203113231.261,edream.110203113231.262,edream.110203113231.265,edream.110203113231.264,edream.110203113231.263,edream.110203113231.352,edream.110203113231.353,edream.110203113231.354,edream.110203113231.355,edream.110203113231.356,edream.110203113231.357,edream.110203113231.358,edream.110203113231.359,edream.110203113231.360,edream.110203113231.361,edream.110203113231.362,edream.110203113231.363,edream.110203113231.364,edream.110203113231.365,edream.110203113231.366,edream.110203113231.367,edream.110203113231.368,edream.110203113231.369,edream.110203113231.370,edream.110203113231.371,edream.110203113231.372,edream.110203113231.373,edream.110203113231.374,edream.110203113231.375,edream.110203113231.269,edream.110203113231.270,edream.110203113231.271,edream.110203113231.272,edream.110203113231.273,edream.110203113231.275,edream.110203113231.276,edream.110203113231.277,edream.110203113231.280,edream.110203113231.281,edream.110203113231.283,edream.110203113231.284,edream.110203113231.286,edream.110203113231.287,edream.110203113231.288,edream.110203113231.289,edream.110203113231.290,edream.110203113231.291,edream.110203113231.292,edream.110203113231.293,edream.110203113231.376,edream.110203113231.377,edream.110203113231.379,edream.110203113231.380,edream.110203113231.381,edream.110203113231.382,edream.110203113231.294,edream.110203113231.295,edream.110203113231.296,edream.110203113231.297,edream.110203113231.298,edream.110203113231.299,edream.110203113231.300,edream.110203113231.301,edream.110203113231.384,edream.110203113231.386,edream.110203113231.388,edream.110203113231.389,edream.110203113231.390,edream.110203113231.391,edream.110203113231.392,edream.110203113231.393,edream.110203113231.394,edream.110203113231.395,edream.110203113231.396,edream.110203113231.397,edream.110203113231.398,edream.110203113231.399,edream.110203113231.400,edream.110203113231.402,edream.110203113231.403,edream.110203113231.404,edream.110203113231.405,edream.110203113231.406,edream.110203113231.407,edream.110203113231.408,edream.110203113231.409,edream.110203113231.410,edream.110203113231.411,edream.110203113231.412,edream.110203113231.413,edream.110203113231.414,edream.110203113231.415,edream.110203113231.416,edream.110203113231.417,edream.110203113231.418,edream.110203113231.419,edream.110203113231.420,edream.110203113231.421,edream.110203113231.422,edream.110203113231.423,edream.110203113231.424,edream.110203113231.425,edream.110203113231.426,edream.110203113231.427,edream.110203113231.430,edream.110203113231.431,edream.110203113231.432,edream.110203113231.433,edream.110203113231.434,edream.110203113231.435,edream.110203113231.436,edream.110203113231.437,edream.110203113231.438,edream.110203113231.439,edream.110203113231.440,edream.110203113231.441,edream.110203113231.442,edream.110203113231.443,edream.110203113231.444,edream.110203113231.445,edream.110203113231.446,edream.110203113231.447,edream.110203113231.448,edream.110203113231.449,edream.110203113231.450,edream.110203113231.451,edream.110203113231.452,edream.110203113231.453,edream.110203113231.454,edream.110203113231.455,edream.110203113231.456,edream.110203113231.457,edream.110203113231.458,edream.110203113231.460,edream.110203113231.461,edream.110203113231.462,edream.110203113231.463,edream.110203113231.464,edream.110203113231.465,edream.110203113231.466,edream.110203113231.467,edream.110203113231.468,edream.110203113231.469,edream.110203113231.470,edream.110203113231.471,edream.110203113231.472,edream.110203113231.473,edream.110203113231.474,edream.110203113231.475,edream.110203113231.476,edream.110203113231.477,edream.110203113231.478,edream.110203113231.479,edream.110203113231.482,edream.110203113231.483,edream.110203113231.484,edream.110203113231.486,edream.110203113231.487,edream.110203113231.488,edream.110203113231.489,edream.110203113231.490,edream.110203113231.491,edream.110203113231.492,edream.110203113231.493,edream.110203113231.494,edream.110203113231.495,edream.110203113231.496,edream.110203113231.497,edream.110203113231.498,edream.110203113231.499,edream.110203113231.500,edream.110203113231.501,edream.110203113231.503,edream.110203113231.504,edream.110203113231.505,edream.110203113231.507,edream.110203113231.508,edream.110203113231.509,edream.110203113231.510,edream.110203113231.511,edream.110203113231.512,edream.110203113231.513,edream.110203113231.514,edream.110203113231.515,edream.110203113231.516,edream.110203113231.517,edream.110203113231.518,edream.110203113231.519,edream.110203113231.521,edream.110203113231.522,edream.110203113231.523,edream.110203113231.524,edream.110203113231.525,edream.110203113231.526,edream.110203113231.528,edream.110203113231.530,edream.110203113231.531,edream.110203113231.532,edream.110203113231.533,edream.110203113231.534,edream.110203113231.535,edream.110203113231.536,edream.110203113231.538,edream.110203113231.539,edream.110203113231.541,edream.110203113231.542,edream.110203113231.543,edream.110203113231.544,edream.110203113231.545,edream.110203113231.546,edream.110203113231.547,edream.110203113231.548,edream.110203113231.549,edream.110203113231.550,edream.110203113231.552,edream.110203113231.553,edream.110203113231.554,edream.110203113231.555,edream.110203113231.556,edream.110203113231.557,edream.110203113231.558,edream.110203113231.559,edream.110203113231.561,edream.110203113231.562,edream.110203113231.563,edream.110203113231.564,edream.110203113231.566,edream.110203113231.567,edream.110203113231.568,edream.110203113231.569,edream.110203113231.570,edream.110203113231.571,edream.110203113231.572,edream.110203113231.573,edream.110203113231.574,edream.110203113231.575,edream.110203113231.576,edream.110203113231.577,edream.110203113231.578,edream.110203113231.579,edream.110203113231.580,edream.110203113231.581,edream.110203113231.582,edream.110203113231.583,edream.110203113231.584,edream.110203113231.585,edream.110203113231.586,edream.110203113231.587,edream.110203113231.588,edream.110203113231.589,edream.110203113231.590,edream.110203113231.591,edream.110203113231.592,edream.110203113231.593,edream.110203113231.594,edream.110203113231.595,edream.110203113231.596,edream.110203113231.597,edream.110203113231.598,edream.110203113231.599,edream.110203113231.600,edream.110203113231.601,edream.110203113231.602,edream.110203113231.603,edream.110203113231.605,edream.110203113231.606,edream.110203113231.607,edream.110203113231.608,edream.110203113231.609,edream.110203113231.610,edream.110203113231.611,edream.110203113231.612,edream.110203113231.613,edream.110203113231.614,edream.110203113231.615,edream.110203113231.616,edream.110203113231.617,edream.110203113231.304"><vh>@file __wx_gui.py</vh>
-<v t="edream.110203113231.303"><vh>&lt;&lt; imports for wx plugin &gt;&gt;</vh></v>
-<v t="edream.110203113231.259" a=""><vh>&lt;&lt; constants for wx plugin &gt;&gt;</vh></v>
-<v t="edream.110203113231.304"><vh>&lt;&lt; set app.gui &gt;&gt;</vh></v>
-<v t="edream.110203113231.305"><vh>wxGui class</vh>
-<v t="edream.110203113231.306"><vh>Birth &amp; death</vh>
-<v t="edream.110203113231.307"><vh>wxGui.__init__</vh></v>
-<v t="edream.110203113231.308"><vh>createRootWindow &amp; allies</vh>
-<v t="edream.110203113231.309"><vh>setDefaultIcon</vh></v>
-<v t="edream.110203113231.310"><vh>setEncoding</vh></v>
-<v t="edream.110203113231.311"><vh>getDefaultConfigFont</vh></v>
-<v t="edream.110203113231.312"><vh>createGlobalWindows</vh></v>
-</v>
-<v t="edream.110203113231.313"><vh>destroy</vh></v>
-<v t="edream.110203113231.314"><vh>finishCreate</vh></v>
-<v t="edream.110203113231.315"><vh>killGui (not used)</vh></v>
-<v t="edream.110203113231.316"><vh>recreateRootWindow (not used)</vh></v>
-<v t="edream.110203113231.317"><vh>runMainLoop</vh></v>
-</v>
-<v t="edream.110203113231.318"><vh>Called by leoConfig</vh>
-<v t="edream.110203113231.319"><vh>getFontFromParams</vh></v>
-</v>
-<v t="edream.110203113231.320"><vh>Clipboard</vh></v>
-<v t="edream.110203113231.321"><vh>Dialogs</vh>
-<v t="edream.110203113231.322"><vh>runAboutLeoDialog</vh></v>
-<v t="edream.110203113231.323"><vh>runAskOkDialog</vh></v>
-<v t="edream.110203113231.324"><vh>runAskOkCancelNumberDialog</vh></v>
-<v t="edream.110203113231.325"><vh>runAskYesNoDialog</vh></v>
-<v t="edream.110203113231.326"><vh>runAskYesNoCancelDialog</vh></v>
-<v t="edream.110203113231.327"><vh>runOpenFileDialog</vh></v>
-<v t="edream.110203113231.328"><vh>runSaveFileDialog</vh></v>
-</v>
-<v t="edream.110203113231.329"><vh>Idle time</vh></v>
-<v t="edream.110203113231.330"><vh>Frames</vh>
-<v t="edream.110203113231.331"><vh>newLeoFrame</vh></v>
-<v t="edream.110203113231.332"><vh>other frames...</vh></v>
-<v t="edream.110203113231.333"><vh>destroyLeoFrame</vh></v>
-<v t="edream.110203113231.334"><vh>destroy</vh></v>
-</v>
-<v t="edream.110203113231.335"><vh>Focus (to be deleted??)</vh>
-<v t="edream.110203113231.336"><vh>get_focus</vh></v>
-<v t="edream.110203113231.337"><vh>set_focus</vh></v>
-<v t="edream.110203113231.338"><vh>force_focus</vh></v>
-</v>
-<v t="edream.110203113231.339"><vh>Dialog &amp; Icon utils</vh>
-<v t="edream.110203113231.340"><vh>attachLeoIcon &amp; createLeoIcon</vh>
-<v t="edream.110203113231.341"><vh>&lt;&lt; try to use the PIL and tkIcon packages to draw the icon &gt;&gt;</vh></v>
-<v t="edream.110203113231.342"><vh>createLeoIcon</vh></v>
-</v>
-<v t="edream.110203113231.343"><vh>get_window_info</vh></v>
-<v t="edream.110203113231.344"><vh>center_dialog</vh></v>
-<v t="edream.110203113231.345"><vh>create_labeled_frame</vh></v>
-</v>
-</v>
-<v t="edream.110203113231.346"><vh>wxLeoApp class</vh>
-<v t="edream.110203113231.347"><vh>OnInit</vh></v>
-<v t="edream.110203113231.348"><vh>OnExit</vh></v>
-</v>
-<v t="edream.110203113231.349"><vh>wxLeoFrame class</vh>
-<v t="edream.110203113231.350"><vh>Birth &amp; death</vh>
-<v t="edream.110203113231.266" a=""><vh>__init__</vh></v>
-<v t="edream.110203113231.351"><vh>__repr__</vh></v>
-<v t="edream.110203113231.260" a=""><vh>finishCreate</vh>
-<v t="edream.110203113231.261"><vh>&lt;&lt; create the splitters &gt;&gt;</vh></v>
-<v t="edream.110203113231.262"><vh>&lt;&lt; create the tree &gt;&gt;</vh></v>
-<v t="edream.110203113231.263"><vh>&lt;&lt; declare event handlers for body &amp; tree &gt;&gt;</vh></v>
-<v t="edream.110203113231.264"><vh>&lt;&lt; declare event handlers for frame &gt;&gt;</vh></v>
-<v t="edream.110203113231.265"><vh>&lt;&lt; set the window icon &gt;&gt;</vh></v>
-</v>
-<v t="edream.110203113231.352"><vh>createMenuBar</vh>
-<v t="edream.110203113231.353"><vh>&lt;&lt; create the file menu &gt;&gt;</vh>
-<v t="edream.110203113231.354"><vh>&lt;&lt; create the top-level file entries &gt;&gt;</vh></v>
-<v t="edream.110203113231.355"><vh>&lt;&lt; create the recent files submenu &gt;&gt;</vh></v>
-<v t="edream.110203113231.356"><vh>&lt;&lt; create the read/write submenu &gt;&gt;</vh></v>
-<v t="edream.110203113231.357"><vh>&lt;&lt; create the tangle submenu &gt;&gt;</vh></v>
-<v t="edream.110203113231.358"><vh>&lt;&lt; create the untangle submenu &gt;&gt;</vh></v>
-<v t="edream.110203113231.359"><vh>&lt;&lt; create the import submenu &gt;&gt;</vh></v>
-<v t="edream.110203113231.360"><vh>&lt;&lt; create the export submenu &gt;&gt;</vh></v>
-</v>
-<v t="edream.110203113231.361"><vh>&lt;&lt; create the edit menu &gt;&gt;</vh>
-<v t="edream.110203113231.362"><vh>&lt;&lt; create the first top-level edit entries &gt;&gt;</vh></v>
-<v t="edream.110203113231.363"><vh>&lt;&lt; create the edit body submenu &gt;&gt;</vh></v>
-<v t="edream.110203113231.364"><vh>&lt;&lt; create the edit headline submenu &gt;&gt;</vh></v>
-<v t="edream.110203113231.365"><vh>&lt;&lt; create the find submenu &gt;&gt;</vh></v>
-<v t="edream.110203113231.366"><vh>&lt;&lt; create the last top-level edit entries &gt;&gt;</vh></v>
-</v>
-<v t="edream.110203113231.367"><vh>&lt;&lt; create the outline menu &gt;&gt;</vh>
-<v t="edream.110203113231.368"><vh>&lt;&lt; create top-level outline menu &gt;&gt;</vh></v>
-<v t="edream.110203113231.369"><vh>&lt;&lt; create expand/contract submenu &gt;&gt;</vh></v>
-<v t="edream.110203113231.370"><vh>&lt;&lt; create move submenu &gt;&gt;</vh></v>
-<v t="edream.110203113231.371"><vh>&lt;&lt; create mark submenu &gt;&gt;</vh></v>
-<v t="edream.110203113231.372"><vh>&lt;&lt; create goto submenu &gt;&gt;</vh></v>
-</v>
-<v t="edream.110203113231.373"><vh>&lt;&lt; create the window menu &gt;&gt;</vh></v>
-<v t="edream.110203113231.374"><vh>&lt;&lt; create the help menu &gt;&gt;</vh></v>
-</v>
-<v t="edream.110203113231.375"><vh>createMenuEntries</vh></v>
-</v>
-<v t="edream.110203113231.267" a=""><vh>event handlers</vh>
-<v t="edream.110203113231.268"><vh>Frame events</vh>
-<v t="edream.110203113231.269"><vh>onActivate &amp; OnSetFocus</vh></v>
-<v t="edream.110203113231.270"><vh>onCloseLeoFrame</vh>
-<v t="edream.110203113231.271"><vh>&lt;&lt; Prompt for change.  Set veto if the user cancels &gt;&gt;</vh></v>
-<v t="edream.110203113231.272"><vh>&lt;&lt; Close the permanent frames &gt;&gt;</vh></v>
-</v>
-<v t="edream.110203113231.273"><vh>onResize</vh></v>
-</v>
-<v t="edream.110203113231.274"><vh>Body events</vh>
-<v t="edream.110203113231.275"><vh>onBodyTextUpdated</vh>
-<v t="edream.110203113231.276"><vh>&lt;&lt; Set the dirty bit and/or the file-changed mark if the text has changed &gt;&gt;</vh></v>
-<v t="edream.110203113231.277"><vh>&lt;&lt; Update icons &gt;&gt;</vh></v>
-</v>
-</v>
-<v t="edream.110203113231.278"><vh>Tree events</vh>
-<v t="edream.110203113231.279"><vh>Expand/contract</vh>
-<v t="edream.110203113231.280"><vh>onTreeCollapsed &amp; onTreeExpanded</vh></v>
-<v t="edream.110203113231.281"><vh>onTreeCollapsing &amp; onTreeExpanding</vh></v>
-</v>
-<v t="edream.110203113231.282"><vh>Selecting</vh>
-<v t="edream.110203113231.283"><vh>onTreeChanged</vh></v>
-<v t="edream.110203113231.284"><vh>onTreeChanging</vh></v>
-</v>
-<v t="edream.110203113231.285"><vh>Editing labels</vh>
-<v t="edream.110203113231.286"><vh>onTreeBeginLabelEdit</vh></v>
-<v t="edream.110203113231.287"><vh>onTreeEndLabelEdit</vh></v>
-<v t="edream.110203113231.288"><vh>onTreeKeyDown</vh></v>
-</v>
-<v t="edream.110203113231.289"><vh>onTreeBeginDrag</vh></v>
-<v t="edream.110203113231.290"><vh>onTreeEndDrag</vh>
-<v t="edream.110203113231.291"><vh>&lt;&lt; Define onTreeEndDrag vars &gt;&gt;</vh></v>
-<v t="edream.110203113231.292"><vh>&lt;&lt; Insert src as the first child of dst &gt;&gt;</vh></v>
-<v t="edream.110203113231.293"><vh>&lt;&lt; Insert src after dst &gt;&gt;</vh></v>
-</v>
-</v>
-</v>
-<v t="edream.110203113231.376"><vh>Notifications: probably will never be called</vh></v>
-<v t="edream.110203113231.377"><vh>Vnode callbacks: probably will never be called</vh></v>
-<v t="edream.110203113231.378"><vh>Externally visible routines... (TO DO)</vh>
-<v t="edream.110203113231.379"><vh> dummy routines: not ready yet</vh></v>
-<v t="edream.110203113231.380"><vh>deiconify</vh></v>
-<v t="edream.110203113231.381"><vh>getTitle</vh></v>
-<v t="edream.110203113231.382"><vh>select</vh></v>
-</v>
-<v t="edream.110203113231.294" a=""><vh>Interface with the tree class</vh>
-<v t="edream.110203113231.295"><vh>beginUpdate</vh></v>
-<v t="edream.110203113231.296"><vh>endUpdate</vh></v>
-<v t="edream.110203113231.297"><vh>Getters</vh></v>
-<v t="edream.110203113231.298"><vh>redraw &amp; redraw_now</vh></v>
-<v t="edream.110203113231.299"><vh>redraw_node</vh></v>
-<v t="edream.110203113231.300"><vh>redraw_subtree</vh></v>
-<v t="edream.110203113231.301"><vh>Setters</vh></v>
-</v>
-<v t="edream.110203113231.383"><vh>Menu updaters</vh>
-<v t="edream.110203113231.384"><vh>updateAllMenus</vh></v>
-<v t="edream.110203113231.385"><vh>File menu...</vh>
-<v t="edream.110203113231.386"><vh>OnUpdateRevert</vh></v>
-</v>
-<v t="edream.110203113231.387"><vh>Edit menu...</vh>
-<v t="edream.110203113231.388"><vh>OnUpdateCopy</vh></v>
-<v t="edream.110203113231.389"><vh>OnUpdateCut</vh></v>
-<v t="edream.110203113231.390"><vh>OnUpdateDelete</vh></v>
-<v t="edream.110203113231.391"><vh>OnUpdateExtract</vh></v>
-<v t="edream.110203113231.392"><vh>OnUpdateExtractNames</vh></v>
-<v t="edream.110203113231.393"><vh>OnUpdateExtractSection</vh></v>
-<v t="edream.110203113231.394"><vh>OnUpdateFind</vh></v>
-<v t="edream.110203113231.395"><vh>OnUpdatePaste</vh></v>
-<v t="edream.110203113231.396"><vh>OnUpdateRedo</vh></v>
-<v t="edream.110203113231.397"><vh>OnUpdateReplace</vh></v>
-<v t="edream.110203113231.398"><vh>OnUpdateSelectAll</vh></v>
-<v t="edream.110203113231.399"><vh>OnUpdateUndo</vh></v>
-<v t="edream.110203113231.400"><vh>hasSelection</vh></v>
-</v>
-<v t="edream.110203113231.401"><vh>Outline menu...</vh>
-<v t="edream.110203113231.402"><vh>OnUpdateContractAll</vh></v>
-<v t="edream.110203113231.403"><vh>OnUpdateContractAllChildren</vh></v>
-<v t="edream.110203113231.404"><vh>OnUpdateContractChildren</vh></v>
-<v t="edream.110203113231.405"><vh>OnUpdateCutNode</vh></v>
-<v t="edream.110203113231.406"><vh>OnUpdateDeleteNode</vh></v>
-<v t="edream.110203113231.407"><vh>OnUpdateDemote</vh></v>
-<v t="edream.110203113231.408"><vh>OnUpdateExpandAll</vh></v>
-<v t="edream.110203113231.409"><vh>OnUpdateExpandAllChildren</vh></v>
-<v t="edream.110203113231.410"><vh>OnUpdateExpandChildren</vh></v>
-<v t="edream.110203113231.411"><vh>OnUpdateGoBack</vh></v>
-<v t="edream.110203113231.412"><vh>OnUpdateGoNext</vh></v>
-<v t="edream.110203113231.413"><vh>OnUpdateGoNextVisible</vh></v>
-<v t="edream.110203113231.414"><vh>OnUpdateGoPrevVisible</vh></v>
-<v t="edream.110203113231.415"><vh>OnUpdateGoToNextChanged</vh></v>
-<v t="edream.110203113231.416"><vh>OnUpdateGoToNextMarked</vh></v>
-<v t="edream.110203113231.417"><vh>OnUpdateMark</vh></v>
-<v t="edream.110203113231.418"><vh>OnUpdateMarkChangedItems</vh></v>
-<v t="edream.110203113231.419"><vh>OnUpdateMarkChangedRoots</vh></v>
-<v t="edream.110203113231.420"><vh>OnUpdateMarkSubheads</vh></v>
-<v t="edream.110203113231.421"><vh>OnUpdateMoveDown</vh></v>
-<v t="edream.110203113231.422"><vh>OnUpdateMoveLeft</vh></v>
-<v t="edream.110203113231.423"><vh>OnUpdateMoveRight</vh></v>
-<v t="edream.110203113231.424"><vh>OnUpdateMoveUp</vh></v>
-<v t="edream.110203113231.425"><vh>OnUpdatePasteNode</vh></v>
-<v t="edream.110203113231.426"><vh>OnUpdatePromote</vh></v>
-<v t="edream.110203113231.427"><vh>OnUpdateSortNode</vh></v>
-</v>
-</v>
-<v t="edream.110203113231.428"><vh>Menu command handlers...</vh>
-<v t="edream.110203113231.429"><vh>File Menu...</vh>
-<v t="edream.110203113231.430"><vh>OnNew</vh></v>
-<v t="edream.110203113231.431"><vh>OnOpen</vh></v>
-<v t="edream.110203113231.432"><vh>OnClose</vh></v>
-<v t="edream.110203113231.433"><vh>OnSave</vh></v>
-<v t="edream.110203113231.434"><vh>OnSaveAs</vh></v>
-<v t="edream.110203113231.435"><vh>OnSaveTo</vh></v>
-<v t="edream.110203113231.436"><vh>OnRevert</vh></v>
-<v t="edream.110203113231.437"><vh>OnPageSetup</vh></v>
-<v t="edream.110203113231.438"><vh>OnPrint</vh></v>
-<v t="edream.110203113231.439"><vh>OnTangleSubmenu</vh></v>
-<v t="edream.110203113231.440"><vh>OnUntangleSubmenu</vh></v>
-<v t="edream.110203113231.441"><vh>OnImportExportSubmenu</vh></v>
-<v t="edream.110203113231.442"><vh>OnQuit</vh></v>
-<v t="edream.110203113231.443"><vh>OnReadOutlineOnly</vh></v>
-<v t="edream.110203113231.444"><vh>readOutlineOnly</vh></v>
-<v t="edream.110203113231.445"><vh>OnReadAtFileNodes</vh></v>
-<v t="edream.110203113231.446"><vh>OnWriteOutlineOnly</vh></v>
-<v t="edream.110203113231.447"><vh>OnWriteAtFileNodes</vh></v>
-<v t="edream.110203113231.448"><vh>OnTangleAll</vh></v>
-<v t="edream.110203113231.449"><vh>OnTangleMarked</vh></v>
-<v t="edream.110203113231.450"><vh>OnTangle</vh></v>
-<v t="edream.110203113231.451"><vh>OnUntangleAll</vh></v>
-<v t="edream.110203113231.452"><vh>OnUntangleMarked</vh></v>
-<v t="edream.110203113231.453"><vh>OnUntangle</vh></v>
-<v t="edream.110203113231.454"><vh>OnImportFiles</vh></v>
-<v t="edream.110203113231.455"><vh>OnImportCWEBFiles</vh></v>
-<v t="edream.110203113231.456"><vh>OnImportNowebFiles</vh></v>
-<v t="edream.110203113231.457"><vh>OnImportMoreText</vh></v>
-<v t="edream.110203113231.458"><vh>OnFlattenOutline</vh></v>
-</v>
-<v t="edream.110203113231.459"><vh>Edit menu...</vh>
-<v t="edream.110203113231.460"><vh>OnUndo</vh></v>
-<v t="edream.110203113231.461"><vh>OnRedo</vh></v>
-<v t="edream.110203113231.462"><vh>OnCut</vh></v>
-<v t="edream.110203113231.463"><vh>OnCopy</vh></v>
-<v t="edream.110203113231.464"><vh>OnPaste</vh></v>
-<v t="edream.110203113231.465"><vh>OnDelete</vh></v>
-<v t="edream.110203113231.466"><vh>OnSelectAll</vh></v>
-<v t="edream.110203113231.467"><vh>OnEditHeadline</vh></v>
-<v t="edream.110203113231.468"><vh>OnFontPanel</vh></v>
-<v t="edream.110203113231.469"><vh>OnSyntaxColoring</vh></v>
-<v t="edream.110203113231.470"><vh>OnPreferences</vh></v>
-<v t="edream.110203113231.471"><vh>OnConvertBlanks</vh></v>
-<v t="edream.110203113231.472"><vh>OnExtractSection</vh></v>
-<v t="edream.110203113231.473"><vh>OnExtractNames</vh></v>
-<v t="edream.110203113231.474"><vh>OnExtract</vh></v>
-<v t="edream.110203113231.475"><vh>OnFindPanel</vh></v>
-<v t="edream.110203113231.476"><vh>OnFindNext</vh></v>
-<v t="edream.110203113231.477"><vh>OnFindPrevious</vh></v>
-<v t="edream.110203113231.478"><vh>OnReplace</vh></v>
-<v t="edream.110203113231.479"><vh>OnReplaceThenFind</vh></v>
-</v>
-<v t="edream.110203113231.480"><vh>Outline menu...</vh>
-<v t="edream.110203113231.481"><vh>Cut/Paste/Copy/Delete</vh>
-<v t="edream.110203113231.482"><vh>OnCutNode</vh></v>
-<v t="edream.110203113231.483"><vh>OnCopyNode</vh></v>
-<v t="edream.110203113231.484"><vh>OnPasteNode</vh></v>
-</v>
-<v t="edream.110203113231.485"><vh>Expand/Contract</vh>
-<v t="edream.110203113231.486"><vh>OnExpandAll</vh></v>
-<v t="edream.110203113231.487"><vh>OnExpandAllChildren</vh></v>
-<v t="edream.110203113231.488"><vh>OnExpandChildren</vh></v>
-<v t="edream.110203113231.489"><vh>OnContractAll</vh></v>
-<v t="edream.110203113231.490"><vh>OnContractAllChildren</vh></v>
-<v t="edream.110203113231.491"><vh>OnContractChildren</vh></v>
-<v t="edream.110203113231.492"><vh>OnExpandNextLevel</vh></v>
-<v t="edream.110203113231.493"><vh>OnExpandToLevel1</vh></v>
-<v t="edream.110203113231.494"><vh>OnExpandToLevel2</vh></v>
-<v t="edream.110203113231.495"><vh>OnExpandToLevel3</vh></v>
-<v t="edream.110203113231.496"><vh>OnExpandToLevel4</vh></v>
-<v t="edream.110203113231.497"><vh>OnExpandToLevel5</vh></v>
-<v t="edream.110203113231.498"><vh>OnExpandToLevel6</vh></v>
-<v t="edream.110203113231.499"><vh>OnExpandToLevel7</vh></v>
-<v t="edream.110203113231.500"><vh>OnExpandToLevel8</vh></v>
-<v t="edream.110203113231.501"><vh>OnExpandToLevel9</vh></v>
-</v>
-<v t="edream.110203113231.502"><vh>Insert/Delete/Clone</vh>
-<v t="edream.110203113231.503"><vh>OnDeleteNode</vh></v>
-<v t="edream.110203113231.504"><vh>OnInsertNode</vh></v>
-<v t="edream.110203113231.505"><vh>OnCloneNode</vh></v>
-</v>
-<v t="edream.110203113231.506"><vh>Mark/Goto</vh>
-<v t="edream.110203113231.507"><vh>OnGoPrevVisible</vh></v>
-<v t="edream.110203113231.508"><vh>OnGoNextVisible</vh></v>
-<v t="edream.110203113231.509"><vh>OnGoBack</vh></v>
-<v t="edream.110203113231.510"><vh>OnGoNext</vh></v>
-<v t="edream.110203113231.511"><vh>OnMark</vh></v>
-<v t="edream.110203113231.512"><vh>OnMarkSubheads</vh></v>
-<v t="edream.110203113231.513"><vh>OnMarkChangedItems</vh></v>
-<v t="edream.110203113231.514"><vh>OnMarkChangedRoots</vh></v>
-<v t="edream.110203113231.515"><vh>OnMarkAllAtFileNodesDirty</vh></v>
-<v t="edream.110203113231.516"><vh>OnMarkAtFileNodesDirty</vh></v>
-<v t="edream.110203113231.517"><vh>OnUnmarkAll</vh></v>
-<v t="edream.110203113231.518"><vh>OnGoToNextMarked</vh></v>
-<v t="edream.110203113231.519"><vh>OnGoToNextChanged</vh></v>
-</v>
-<v t="edream.110203113231.520"><vh>Move/Promote/Demote</vh>
-<v t="edream.110203113231.521"><vh>OnMoveDown</vh></v>
-<v t="edream.110203113231.522"><vh>OnMoveLeft</vh></v>
-<v t="edream.110203113231.523"><vh>OnMoveRight</vh></v>
-<v t="edream.110203113231.524"><vh>OnMoveUp</vh></v>
-<v t="edream.110203113231.525"><vh>OnPromote</vh></v>
-<v t="edream.110203113231.526"><vh>OnDemote</vh></v>
-</v>
-<v t="edream.110203113231.527"><vh>Sort</vh>
-<v t="edream.110203113231.528"><vh>OnSortNode</vh></v>
-</v>
-</v>
-<v t="edream.110203113231.529"><vh>Window menu...</vh>
-<v t="edream.110203113231.530"><vh>OnEqualSizedPanes</vh></v>
-<v t="edream.110203113231.531"><vh>OnToggleActivePane</vh></v>
-<v t="edream.110203113231.532"><vh>OnChangeDirection</vh></v>
-<v t="edream.110203113231.533"><vh>OnCascade</vh></v>
-<v t="edream.110203113231.534"><vh>OnMinimizeAll</vh></v>
-<v t="edream.110203113231.535"><vh>OnOpenPythonWindow</vh></v>
-<v t="edream.110203113231.536"><vh>OnRecentWindows</vh></v>
-</v>
-<v t="edream.110203113231.537"><vh>Help menu...</vh>
-<v t="edream.110203113231.538"><vh>OnAbout</vh></v>
-</v>
-</v>
-</v>
-<v t="edream.110203113231.539"><vh>wxLeoBody class</vh>
-<v t="edream.110203113231.540"><vh>Birth &amp; death</vh>
-<v t="edream.110203113231.541"><vh>wxLeoBody.__init__</vh></v>
-<v t="edream.110203113231.542"><vh>wxLeoBody.createControl</vh></v>
-</v>
-<v t="edream.110203113231.543"><vh>Bounding box...</vh></v>
-<v t="edream.110203113231.544"><vh>Config...</vh></v>
-<v t="edream.110203113231.545"><vh>Focus...</vh></v>
-<v t="edream.110203113231.546"><vh>Getting &amp; setting text...</vh></v>
-<v t="edream.110203113231.547"><vh>Indices</vh></v>
-<v t="edream.110203113231.548"><vh>Idle-time callback...</vh></v>
-<v t="edream.110203113231.549"><vh>Height &amp; width info...</vh></v>
-<v t="edream.110203113231.550"><vh>Selection &amp; insertion point...</vh></v>
-<v t="edream.110203113231.551"><vh>Tags... (not ready yet)</vh></v>
-<v t="edream.110203113231.552"><vh>Visibility &amp; scrolling...</vh></v>
-</v>
-<v t="edream.110203113231.553"><vh>wxLeoLog class</vh>
-<v t="edream.110203113231.554"><vh>leoLog.__init__</vh></v>
-<v t="edream.110203113231.555"><vh>leoLog.configure</vh></v>
-<v t="edream.110203113231.556"><vh>leoLog.configureBorder</vh></v>
-<v t="edream.110203113231.557"><vh>leoLog.createControl</vh></v>
-<v t="edream.110203113231.558"><vh>leoLog.setLogFontFromConfig</vh></v>
-<v t="edream.110203113231.559"><vh>wxLeoLog.put &amp; putnl</vh></v>
-</v>
-<v t="edream.110203113231.560"><vh>Find...</vh>
-<v t="edream.110203113231.561"><vh>wxFindFrame class</vh>
-<v t="edream.110203113231.562"><vh>&lt;&lt; FindPanel public globals &gt;&gt; (to be moved to Leo's core)</vh></v>
-<v t="edream.110203113231.563"><vh>FindFrame.__init__</vh>
-<v t="edream.110203113231.564"><vh>&lt;&lt; declare event handlers &gt;&gt;</vh></v>
-</v>
-<v t="edream.110203113231.565"><vh>Event handlers</vh>
-<v t="edream.110203113231.566"><vh>OnActivateFindFrame &amp; OnSetFocus</vh></v>
-<v t="edream.110203113231.567"><vh>OnCloseFindFrame</vh></v>
-<v t="edream.110203113231.568"><vh>OnChangeButton</vh></v>
-<v t="edream.110203113231.569"><vh>OnChangeAllButton</vh></v>
-<v t="edream.110203113231.570"><vh>OnChangeThenFindButton</vh></v>
-<v t="edream.110203113231.571"><vh>OnFindButton</vh></v>
-<v t="edream.110203113231.572"><vh>OnFindAllButton</vh></v>
-<v t="edream.110203113231.573"><vh>OnBatchCheckBox</vh></v>
-<v t="edream.110203113231.574"><vh>OnIgnoreCaseCheckBox</vh></v>
-<v t="edream.110203113231.575"><vh>OnMarkChangesCheckBox</vh></v>
-<v t="edream.110203113231.576"><vh>OnMarkFindsCheckBox</vh></v>
-<v t="edream.110203113231.577"><vh>OnPatternMatchCheckBox</vh></v>
-<v t="edream.110203113231.578"><vh>OnReverseCheckBox</vh></v>
-<v t="edream.110203113231.579"><vh>OnSearchBodyTextCheckBox</vh></v>
-<v t="edream.110203113231.580"><vh>OnSearchHeadlineCheckBox</vh></v>
-<v t="edream.110203113231.581"><vh>OnSuboutlineOnlyCheckBox</vh></v>
-<v t="edream.110203113231.582"><vh>OnWrapAroundCheckBox</vh></v>
-<v t="edream.110203113231.583"><vh>OnWholeWordCheckBox</vh></v>
-<v t="edream.110203113231.584"><vh>OnChangeText</vh></v>
-<v t="edream.110203113231.585"><vh>OnFindText</vh></v>
-</v>
-<v t="edream.110203113231.586"><vh>Interface with commander</vh></v>
-<v t="edream.110203113231.587"><vh>set_check_boxes</vh></v>
-</v>
-<v t="edream.110203113231.588"><vh>wxFindPanel class</vh>
-<v t="edream.110203113231.589"><vh>FindPanel.__init__</vh>
-<v t="edream.110203113231.590"><vh>&lt;&lt; Create the find text box &gt;&gt;</vh></v>
-<v t="edream.110203113231.591"><vh>&lt;&lt; Create the change text box &gt;&gt;</vh></v>
-<v t="edream.110203113231.592"><vh>&lt;&lt; Create all the find check boxes &gt;&gt;</vh>
-<v t="edream.110203113231.593"><vh>&lt;&lt; Create the first column of check boxes &gt;&gt;</vh></v>
-<v t="edream.110203113231.594"><vh>&lt;&lt; Create the second column of check boxes &gt;&gt;</vh></v>
-</v>
-<v t="edream.110203113231.595"><vh>&lt;&lt; Create all the find buttons &gt;&gt;</vh>
-<v t="edream.110203113231.596"><vh>&lt;&lt; Create the first row of buttons &gt;&gt;</vh></v>
-<v t="edream.110203113231.597"><vh>&lt;&lt; Create the second row of buttons &gt;&gt;</vh></v>
-</v>
-</v>
-</v>
-</v>
-<v t="edream.110203113231.598"><vh>wxLeoPrefs class</vh>
-<v t="edream.110203113231.599"><vh>wxLeoPrefs.__init__</vh>
-<v t="edream.110203113231.600"><vh>&lt;&lt; define event handlers for wxLeoPrefsFrame &gt;&gt;</vh></v>
-</v>
-<v t="edream.110203113231.601"><vh>initialize</vh></v>
-<v t="edream.110203113231.602"><vh>targetToLanguage (should be in Leo's core)</vh></v>
-<v t="edream.110203113231.603"><vh>languageToTarget (should be in Leo's core)</vh></v>
-<v t="edream.110203113231.604"><vh>Event handlers</vh>
-<v t="edream.110203113231.605"><vh>OnActivatePrefsFrame</vh></v>
-<v t="edream.110203113231.606"><vh>OnClosePrefsFrame</vh></v>
-<v t="edream.110203113231.607"><vh>OnPageWidthText</vh></v>
-<v t="edream.110203113231.608"><vh>OnDoneBatCheckBox</vh></v>
-<v t="edream.110203113231.609"><vh>OnUnBatCheckBox</vh></v>
-<v t="edream.110203113231.610"><vh>OnTangleDirectoryText</vh></v>
-<v t="edream.110203113231.611"><vh>OnHeaderCheckBox</vh></v>
-<v t="edream.110203113231.612"><vh>OnDocChunksCheckBox</vh></v>
-<v t="edream.110203113231.613"><vh>OnTargetLanguageRadioBox</vh></v>
-</v>
-<v t="edream.110203113231.614"><vh>PrefsPanel.__init__</vh>
-<v t="edream.110203113231.615"><vh>&lt;&lt; Create the Global Options static box &gt;&gt;</vh></v>
-<v t="edream.110203113231.616"><vh>&lt;&lt; Create the Default Tangle Options static box &gt;&gt;</vh></v>
-<v t="edream.110203113231.617"><vh>&lt;&lt; Create the Default Target Language radio buttons &gt;&gt;</vh></v>
-</v>
-</v>
-</v>
-</v>
 <v t="edream.110603185221"><vh>Python debugger code for study</vh>
 <v t="edream.110603185221.1"><vh>In python23\Lib</vh>
 <v t="edream.110603185221.2"><vh>bdb.py</vh>
@@ -1055,8 +547,9 @@
 <v t="edream.110603185221.185" a=""><vh>Debugger.__frame2fileline</vh></v>
 </v>
 </v>
+<v t="edream.110803170600"><vh>Count pages</vh></v>
 </v>
-<v t="edream.110203113231.618" a="EV"><vh>Plugins &amp; scripts</vh>
+<v t="edream.110203113231.618"><vh>Plugins &amp; scripts</vh>
 <v t="edream.110203113231.619"><vh>Contributed scripts</vh>
 <v t="edream.110203113231.620" tnodeList="edream.110203113231.620,edream.110203113231.621,edream.110203113231.622,edream.110203113231.623,edream.110203113231.624,edream.110203113231.625,edream.110203113231.626,edream.110203113231.627,edream.110203113231.628,edream.110203113231.629"><vh>@file ../scripts/foldersize_leo.py</vh>
 <v t="edream.110203113231.621"><vh>normalize</vh></v>
@@ -1578,6 +1071,388 @@
 <v t="edream.110203113231.999"><vh>getPlugin</vh></v>
 <v t="edream.110203113231.1000"><vh>getPluginVersion</vh></v>
 <v t="edream.110203113231.1001"><vh>getPluginFilenames</vh></v>
+</v>
+</v>
+</v>
+</v>
+<v t="edream.110203113231.233" a="E"><vh>wxPython plugin (alpha quality)</vh>
+<v t="edream.110203113231.234"><vh> Diary</vh>
+<v t="edream.111503110300"><vh>11/15/03  Leo becomes usuable (!)</vh></v>
+<v t="edream.111403093253"><vh>11/13 &amp; 11/14</vh></v>
+<v t="edream.110203113231.235"><vh>10/26 Code works with reorganized core</vh></v>
+<v t="edream.110203113231.236"><vh>10/13/03: Added icons (Windows only)</vh></v>
+<v t="edream.110203113231.237"><vh>10/12/03: Houston, we have ignition</vh></v>
+<v t="edream.110203113231.238"><vh>10/11/03: converted code using c2py, then hand converted code</vh></v>
+</v>
+<v t="edream.111403093253.1"><vh>Projects</vh>
+<v t="edream.110203113231.243"><vh>invoke c2py</vh></v>
+<v t="edream.111503111146"><vh>Finished or mostly finished</vh>
+<v t="edream.111303205442"><vh>(colorizing) (demo only)</vh>
+<v t="edream.111303204025" a=""><vh>Indices  (wxLeoBody)</vh>
+<v t="edream.111303204025.1"><vh>adjustIndex</vh></v>
+<v t="edream.111303204025.2"><vh>compareIndices</vh></v>
+<v t="edream.111303204025.3"><vh>convertRowColumnToIndex</vh></v>
+<v t="edream.111303204025.4"><vh>convertIndexToRowColumn</vh></v>
+<v t="edream.111303204025.5"><vh>getImageIndex</vh></v>
+<v t="edream.111403080609"><vh>maxWxIndex (internal use)</vh></v>
+</v>
+<v t="edream.111303204517" a=""><vh>Color tags (hacks for styles)</vh>
+<v t="edream.111403082513"><vh>tkColorToWxColor (internal use)</vh></v>
+<v t="edream.111303205611"><vh>tag_add</vh></v>
+<v t="edream.111303205611.1"><vh>tag_bind</vh></v>
+<v t="edream.111303205611.2"><vh>tag_configure (hack for wxStyles)</vh></v>
+<v t="edream.111303205611.3"><vh>tag_delete</vh></v>
+<v t="edream.111303205611.4"><vh>tag_remove</vh></v>
+</v>
+</v>
+</v>
+<v t="edream.111503111350"><vh>Unfinished</vh>
+<v t="edream.111303184347"><vh>(delete_range) doesn't work</vh>
+<v t="edream.111303103141.3" a=""><vh>delete_range</vh></v>
+</v>
+<v t="edream.111303100039" a=""><vh>Gui-dependent commands (to do)</vh>
+<v t="edream.111303100039.1"><vh>Edit Menu...</vh>
+<v t="edream.111303101257"><vh>abortEditLabelCommand</vh></v>
+<v t="edream.111303101257.1"><vh>endEditLabelCommand</vh></v>
+<v t="edream.111303100039.6"><vh>insertHeadlineTime</vh></v>
+</v>
+<v t="edream.111303100039.7"><vh>Window Menu</vh>
+<v t="edream.111303100039.8"><vh>cascade</vh></v>
+<v t="edream.111303100039.9"><vh>equalSizedPanes</vh></v>
+<v t="edream.111303100039.10"><vh>hideLogWindow</vh></v>
+<v t="edream.111303100039.11"><vh>minimizeAll</vh></v>
+<v t="edream.111303101709"><vh>toggleActivePane</vh></v>
+<v t="edream.111303100039.12"><vh>toggleSplitDirection</vh></v>
+</v>
+</v>
+</v>
+</v>
+<v t="edream.110203113231.242"><vh>Unused code</vh>
+<v t="edream.110203113231.257"><vh>updateJoinedHeadlines</vh></v>
+</v>
+<v t="edream.110203113231.302" a="V" tnodeList="edream.110203113231.302,edream.110203113231.303,edream.110203113231.259,edream.110203113231.305,edream.110203113231.307,edream.110203113231.308,edream.110203113231.309,edream.110203113231.310,edream.110203113231.311,edream.110203113231.312,edream.111303085447.1,edream.110203113231.317,edream.110203113231.314,edream.110203113231.315,edream.110203113231.316,edream.110203113231.322,edream.110203113231.323,edream.110203113231.324,edream.110203113231.325,edream.110203113231.326,edream.110203113231.327,edream.110203113231.328,edream.111403104835,edream.111303092328,edream.111303092328.1,edream.111303092328.2,edream.111303092328.3,edream.111303092328.4,edream.111303092328.5,edream.110203113231.333,edream.110203113231.320,edream.111403151611,edream.110203113231.343,edream.110203113231.344,edream.110203113231.336,edream.110203113231.337,edream.110203113231.319,edream.110203113231.340,edream.110203113231.341,edream.110203113231.342,edream.111303093843,edream.111303093843.1,edream.111303093953.2,edream.111303093953.3,edream.111303093953.4,edream.111303093953.5,edream.111303093953.6,edream.111303093953.7,edream.111303093953.9,edream.111303093953.10,edream.111303093953.12,edream.111303093953.13,edream.111303093953.14,edream.111303093953.15,edream.111303093953.16,edream.111303093953.18,edream.111303093953.19,edream.111303093953.20,edream.111303093953.21,edream.111303093953.22,edream.111303093953.23,edream.111303093953.25,edream.110203113231.346,edream.110203113231.347,edream.110203113231.348,edream.110203113231.539,edream.110203113231.541,edream.110203113231.542,edream.110203113231.543,edream.111403082513,edream.111303205611,edream.111303205611.1,edream.111303205611.2,edream.111303205611.3,edream.111303205611.4,edream.110203113231.544,edream.110203113231.545,edream.111303204025.1,edream.111303204025.2,edream.111303204025.3,edream.111303204025.4,edream.111303204025.5,edream.111403080609,edream.110203113231.548,edream.110203113231.549,edream.111303104912,edream.111303171218,edream.111303171218.1,edream.111303171238,edream.111303171238.1,edream.111303171238.2,edream.111303171238.3,edream.111303171238.4,edream.110203113231.552,edream.110203113231.349,edream.110203113231.266,edream.110203113231.351,edream.110203113231.260,edream.110203113231.261,edream.110203113231.262,edream.110203113231.265,edream.110203113231.264,edream.110203113231.263,edream.111403141810,edream.111503105816,edream.111303141147,edream.111503213533,edream.110203113231.269,edream.110203113231.270,edream.110203113231.273,edream.110203113231.275,edream.111303201144.6,edream.111303201144.7,edream.110203113231.280,edream.110203113231.281,edream.110203113231.283,edream.110203113231.284,edream.110203113231.286,edream.110203113231.287,edream.110203113231.288,edream.110203113231.289,edream.110203113231.290,edream.110203113231.291,edream.110203113231.292,edream.110203113231.293,edream.110203113231.379,edream.110203113231.380,edream.110203113231.381,edream.111303135410,edream.110203113231.382,edream.110203113231.294,edream.111403090242,edream.111403090242.1,edream.111403093559,edream.111403093559.1,edream.111303202917.1,edream.110203113231.295,edream.110203113231.296,edream.110203113231.297,edream.110203113231.298,edream.110203113231.299,edream.110203113231.300,edream.110203113231.301,edream.111303101257,edream.111303101257.1,edream.111303100039.6,edream.111303100039.8,edream.111303100039.9,edream.111303100039.10,edream.111303100039.11,edream.111303101709,edream.111303100039.12,edream.110203113231.384,edream.110203113231.553,edream.110203113231.554,edream.110203113231.555,edream.110203113231.556,edream.110203113231.557,edream.110203113231.558,edream.110203113231.559,edream.111303095242,edream.111303095242.3,edream.111303111942.1,edream.111303103141,edream.111303121150,edream.111303103141.1,edream.111303103141.2,edream.111303103141.3,edream.111303103141.4,edream.111303111942,edream.111303110018,edream.111303103457.2,edream.111603112846.1,edream.111303103254,edream.111303095242.6,edream.111303163727.2,edream.111303163727.1,edream.111303163727.3,edream.110203113231.598,edream.110203113231.599,edream.110203113231.600,edream.110203113231.601,edream.110203113231.602,edream.110203113231.603,edream.110203113231.605,edream.110203113231.606,edream.110203113231.607,edream.110203113231.608,edream.110203113231.609,edream.110203113231.610,edream.110203113231.611,edream.110203113231.612,edream.110203113231.613,edream.110203113231.614,edream.110203113231.615,edream.110203113231.616,edream.110203113231.617,edream.111503093140,edream.111503094014,edream.111503094322,edream.111503094014.1,edream.110203113231.561,edream.110203113231.563,edream.111503074302,edream.110203113231.564,edream.111503085739,edream.111503085739.1,edream.111403151611.1,edream.111503213733,edream.111503211508,edream.111403135745,edream.111503091617,edream.111503093522,edream.111503204508,edream.110203113231.588,edream.110203113231.589,edream.110203113231.590,edream.110203113231.591,edream.110203113231.592,edream.110203113231.593,edream.110203113231.594,edream.111503133933.2,edream.111503133933.3,edream.110203113231.595,edream.110203113231.596,edream.110203113231.597,edream.110203113231.304"><vh>@file __wx_gui.py</vh>
+<v t="edream.110203113231.259"><vh>&lt;&lt; constants for wx plugin &gt;&gt;</vh></v>
+<v t="edream.110203113231.303"><vh>&lt;&lt; imports for wx plugin &gt;&gt;</vh></v>
+<v t="edream.110203113231.304"><vh>&lt;&lt; set app.gui &gt;&gt;</vh></v>
+<v t="edream.110203113231.305"><vh>wxGui class</vh>
+<v t="edream.110203113231.307"><vh> wxGui.__init__</vh></v>
+<v t="edream.111303091300"><vh>app.gui.wx birth &amp; death</vh>
+<v t="edream.110203113231.308"><vh>createRootWindow &amp; allies</vh>
+<v t="edream.110203113231.309"><vh>setDefaultIcon</vh></v>
+<v t="edream.110203113231.310"><vh>setEncoding</vh></v>
+<v t="edream.110203113231.311"><vh>getDefaultConfigFont</vh></v>
+<v t="edream.110203113231.312"><vh>createGlobalWindows</vh></v>
+</v>
+<v t="edream.111303085447.1"><vh>destroySelf</vh></v>
+<v t="edream.110203113231.317"><vh>runMainLoop</vh></v>
+<v t="edream.110203113231.306"><vh>stubs</vh>
+<v t="edream.110203113231.314"><vh>finishCreate</vh></v>
+<v t="edream.110203113231.315"><vh>killGui</vh></v>
+<v t="edream.110203113231.316"><vh>recreateRootWindow</vh></v>
+</v>
+</v>
+<v t="edream.110203113231.321"><vh>app.gui wx dialogs</vh>
+<v t="edream.110203113231.322"><vh>runAboutLeoDialog</vh></v>
+<v t="edream.110203113231.323"><vh>runAskOkDialog</vh></v>
+<v t="edream.110203113231.324"><vh>runAskOkCancelNumberDialog TODO</vh></v>
+<v t="edream.110203113231.325"><vh>runAskYesNoDialog</vh></v>
+<v t="edream.110203113231.326"><vh>runAskYesNoCancelDialog</vh></v>
+<v t="edream.110203113231.327"><vh>runOpenFileDialog</vh></v>
+<v t="edream.110203113231.328"><vh>runSaveFileDialog</vh></v>
+<v t="edream.111403104835"><vh>getWildcardList</vh></v>
+</v>
+<v t="edream.111303091857"><vh>app.gui wx panels</vh>
+<v t="edream.111303092328"><vh>createColorPanel</vh></v>
+<v t="edream.111303092328.1"><vh>createComparePanel</vh></v>
+<v t="edream.111303092328.2"><vh>createFindPanel</vh></v>
+<v t="edream.111303092328.3"><vh>createFontPanel</vh></v>
+<v t="edream.111303092328.4"><vh>createLeoFrame</vh></v>
+<v t="edream.111303092328.5"><vh>createPrefsPanel</vh></v>
+<v t="edream.110203113231.333"><vh>destroyLeoFrame (used??)</vh></v>
+</v>
+<v t="edream.111303090930"><vh>app.gui.wx utils</vh>
+<v t="edream.110203113231.320"><vh>Clipboard</vh></v>
+<v t="edream.110203113231.339"><vh>Dialog</vh>
+<v t="edream.111403151611"><vh>bringToFront</vh></v>
+<v t="edream.110203113231.343"><vh>get_window_info</vh></v>
+<v t="edream.110203113231.344"><vh>center_dialog</vh></v>
+</v>
+<v t="edream.110203113231.335"><vh>Focus </vh>
+<v t="edream.110203113231.336"><vh>get_focus</vh></v>
+<v t="edream.110203113231.337"><vh>set_focus</vh></v>
+</v>
+<v t="edream.110203113231.318"><vh>Font</vh>
+<v t="edream.110203113231.319"><vh>getFontFromParams</vh></v>
+</v>
+<v t="edream.111303092854"><vh>Icons</vh>
+<v t="edream.110203113231.340"><vh>attachLeoIcon</vh>
+<v t="edream.110203113231.341"><vh>&lt;&lt; try to use the PIL and tkIcon packages to draw the icon &gt;&gt;</vh></v>
+</v>
+<v t="edream.110203113231.342"><vh>createLeoIcon</vh></v>
+</v>
+<v t="edream.110203113231.329"><vh>Idle time</vh>
+<v t="edream.111303093843"><vh>setIdleTimeHook</vh></v>
+<v t="edream.111303093843.1"><vh>setIdleTimeHookAfterDelay</vh></v>
+</v>
+<v t="edream.111303093953.1"><vh>Indices</vh>
+<v t="edream.111303093953.2"><vh>firstIndex</vh></v>
+<v t="edream.111303093953.3"><vh>lastIndex</vh></v>
+<v t="edream.111303093953.4"><vh>moveIndexBackward</vh></v>
+<v t="edream.111303093953.5"><vh>moveIndexForward</vh></v>
+<v t="edream.111303093953.6"><vh>compareIndices</vh></v>
+<v t="edream.111303093953.7"><vh>getindex</vh></v>
+</v>
+<v t="edream.111303093953.8"><vh>Insert Point</vh>
+<v t="edream.111303093953.9"><vh>getInsertPoint</vh></v>
+<v t="edream.111303093953.10"><vh>setInsertPoint</vh></v>
+</v>
+<v t="edream.111303093953.11"><vh>Selection</vh>
+<v t="edream.111303093953.12"><vh>getSelectionRange</vh></v>
+<v t="edream.111303093953.13"><vh>getTextSelection</vh></v>
+<v t="edream.111303093953.14"><vh>setSelectionRange</vh></v>
+<v t="edream.111303093953.15"><vh>setSelectionRangeWithLength</vh></v>
+<v t="edream.111303093953.16"><vh>setTextSelection</vh></v>
+</v>
+<v t="edream.111303093953.17"><vh>Text</vh>
+<v t="edream.111303093953.18"><vh>getAllText</vh></v>
+<v t="edream.111303093953.19"><vh>getCharAfterIndex</vh></v>
+<v t="edream.111303093953.20"><vh>getCharAtIndex</vh></v>
+<v t="edream.111303093953.21"><vh>getCharBeforeIndex</vh></v>
+<v t="edream.111303093953.22"><vh>getLineContainingIndex</vh></v>
+<v t="edream.111303093953.23"><vh>replaceSelectionRangeWithText</vh></v>
+</v>
+<v t="edream.111303093953.24"><vh>Visibility</vh>
+<v t="edream.111303093953.25"><vh>makeIndexVisible</vh></v>
+</v>
+</v>
+</v>
+<v t="edream.110203113231.346"><vh>wxLeoApp class</vh>
+<v t="edream.110203113231.347"><vh>OnInit</vh></v>
+<v t="edream.110203113231.348"><vh>OnExit</vh></v>
+</v>
+<v t="edream.110203113231.539"><vh>wxLeoBody class</vh>
+<v t="edream.110203113231.540"><vh>Birth &amp; death</vh>
+<v t="edream.110203113231.541"><vh>wxLeoBody.__init__</vh></v>
+<v t="edream.110203113231.542"><vh>wxLeoBody.createControl</vh></v>
+</v>
+<v t="edream.111303204836"><vh>Tk wrappers wxLeoBody TO DO</vh>
+<v t="edream.110203113231.543"><vh>Bounding box...</vh></v>
+<v t="edream.111303204517" a=""><vh>Color tags (hacks for styles)</vh>
+<v t="edream.111403082513"><vh>tkColorToWxColor (internal use)</vh></v>
+<v t="edream.111303205611"><vh>tag_add</vh></v>
+<v t="edream.111303205611.1"><vh>tag_bind</vh></v>
+<v t="edream.111303205611.2"><vh>tag_configure (hack for wxStyles)</vh></v>
+<v t="edream.111303205611.3"><vh>tag_delete</vh></v>
+<v t="edream.111303205611.4"><vh>tag_remove</vh></v>
+</v>
+<v t="edream.110203113231.544"><vh>Config... TO DO</vh></v>
+<v t="edream.110203113231.545"><vh>Focus...</vh></v>
+<v t="edream.111303204025" a=""><vh>Indices  (wxLeoBody)</vh>
+<v t="edream.111303204025.1"><vh>adjustIndex</vh></v>
+<v t="edream.111303204025.2"><vh>compareIndices</vh></v>
+<v t="edream.111303204025.3"><vh>convertRowColumnToIndex</vh></v>
+<v t="edream.111303204025.4"><vh>convertIndexToRowColumn</vh></v>
+<v t="edream.111303204025.5"><vh>getImageIndex</vh></v>
+<v t="edream.111403080609"><vh>maxWxIndex (internal use)</vh></v>
+</v>
+<v t="edream.110203113231.548"><vh>Idle-time callback... (not used?)</vh></v>
+<v t="edream.110203113231.549"><vh>Height &amp; width info...</vh></v>
+<v t="edream.111303104912"><vh>Menus bind LATER</vh></v>
+<v t="edream.111303171218"><vh>Insert point</vh></v>
+<v t="edream.111303171218.1"><vh>Selection</vh></v>
+<v t="edream.111303171238"><vh>Text</vh>
+<v t="edream.111303171238.1"><vh>delete... (untested)</vh></v>
+<v t="edream.111303171238.2"><vh>get... TO DO</vh></v>
+<v t="edream.111303171238.3"><vh>insert...</vh></v>
+<v t="edream.111303171238.4"><vh>setSelectionAreas</vh></v>
+</v>
+<v t="edream.110203113231.552"><vh>Visibility &amp; scrolling...</vh></v>
+</v>
+</v>
+<v t="edream.110203113231.349"><vh>wxLeoFrame class</vh>
+<v t="edream.110203113231.350"><vh>Birth &amp; death</vh>
+<v t="edream.110203113231.266"><vh>__init__</vh></v>
+<v t="edream.110203113231.351"><vh>__repr__</vh></v>
+<v t="edream.110203113231.260"><vh>finishCreate</vh>
+<v t="edream.110203113231.261"><vh>&lt;&lt; create the splitters &gt;&gt;</vh></v>
+<v t="edream.110203113231.262"><vh>&lt;&lt; create the tree &gt;&gt;</vh></v>
+<v t="edream.110203113231.263"><vh>&lt;&lt; declare event handlers for body &amp; tree &gt;&gt;</vh></v>
+<v t="edream.110203113231.264"><vh>&lt;&lt; declare event handlers for frame &gt;&gt;</vh></v>
+<v t="edream.110203113231.265"><vh>&lt;&lt; set the window icon &gt;&gt;</vh></v>
+</v>
+<v t="edream.111403141810"><vh>initialRatios</vh></v>
+<v t="edream.111503105816"><vh>injectCallbacks</vh></v>
+<v t="edream.111303141147"><vh>signOnWithVersion</vh></v>
+<v t="edream.111503213533"><vh>destroySelf</vh></v>
+</v>
+<v t="edream.110203113231.267"><vh>event handlers</vh>
+<v t="edream.110203113231.268"><vh>Frame events</vh>
+<v t="edream.110203113231.269"><vh>onActivate &amp; OnSetFocus</vh></v>
+<v t="edream.110203113231.270"><vh>onCloseLeoFrame</vh></v>
+<v t="edream.110203113231.273"><vh>onResize</vh></v>
+</v>
+<v t="edream.110203113231.274"><vh>Body events</vh>
+<v t="edream.110203113231.275"><vh>onBodyTextUpdated MORE WORK NEEDED</vh>
+<v t="edream.111303201144.6"><vh>&lt;&lt; recolor the body &gt;&gt;</vh></v>
+<v t="edream.111303201144.7"><vh>&lt;&lt; redraw the screen if necessary &gt;&gt;</vh></v>
+</v>
+</v>
+<v t="edream.110203113231.278"><vh>Tree events</vh>
+<v t="edream.110203113231.279"><vh>Expand/contract</vh>
+<v t="edream.110203113231.280"><vh>onTreeCollapsed &amp; onTreeExpanded</vh></v>
+<v t="edream.110203113231.281"><vh>onTreeCollapsing &amp; onTreeExpanding</vh></v>
+</v>
+<v t="edream.110203113231.282"><vh>Selecting</vh>
+<v t="edream.110203113231.283"><vh>onTreeChanged</vh></v>
+<v t="edream.110203113231.284"><vh>onTreeChanging</vh></v>
+</v>
+<v t="edream.110203113231.285"><vh>Editing labels</vh>
+<v t="edream.110203113231.286"><vh>onTreeBeginLabelEdit</vh></v>
+<v t="edream.110203113231.287"><vh>onTreeEndLabelEdit</vh></v>
+<v t="edream.110203113231.288"><vh>onTreeKeyDown</vh></v>
+</v>
+<v t="edream.110203113231.289"><vh>onTreeBeginDrag</vh></v>
+<v t="edream.110203113231.290"><vh>onTreeEndDrag</vh>
+<v t="edream.110203113231.291"><vh>&lt;&lt; Define onTreeEndDrag vars &gt;&gt;</vh></v>
+<v t="edream.110203113231.292"><vh>&lt;&lt; Insert src as the first child of dst &gt;&gt;</vh></v>
+<v t="edream.110203113231.293"><vh>&lt;&lt; Insert src after dst &gt;&gt;</vh></v>
+</v>
+</v>
+</v>
+<v t="edream.110203113231.379"><vh>wxFrame dummy routines: (to do: minor)</vh></v>
+<v t="edream.110203113231.378"><vh>Externally visible routines...</vh>
+<v t="edream.110203113231.380"><vh>deiconify</vh></v>
+<v t="edream.110203113231.381"><vh>getTitle</vh></v>
+<v t="edream.111303135410"><vh>setTitle</vh></v>
+<v t="edream.110203113231.382"><vh>select</vh></v>
+</v>
+<v t="edream.110203113231.294"><vh>Interface with the tree class (wxLeoFrame) (mostly done)</vh>
+<v t="edream.111403090242"><vh>Drawing  &amp; scrolling TO DO</vh></v>
+<v t="edream.111403090242.1"><vh>Editing TO DO</vh></v>
+<v t="edream.111403093559"><vh>Focus</vh></v>
+<v t="edream.111403093559.1"><vh>Fonts TO DO</vh></v>
+<v t="edream.111303202917.1"><vh>Syntax coloring</vh></v>
+<v t="edream.111303202917"><vh>Tree refresh</vh>
+<v t="edream.110203113231.295"><vh>beginUpdate</vh></v>
+<v t="edream.110203113231.296"><vh>endUpdate</vh></v>
+<v t="edream.110203113231.297"><vh>Getters</vh></v>
+<v t="edream.110203113231.298"><vh>redraw &amp; redraw_now</vh></v>
+<v t="edream.110203113231.299"><vh>redraw_node</vh></v>
+<v t="edream.110203113231.300"><vh>redraw_subtree</vh></v>
+<v t="edream.110203113231.301"><vh>Setters</vh></v>
+</v>
+</v>
+<v t="edream.111303100039" a=""><vh>Gui-dependent commands (to do)</vh>
+<v t="edream.111303100039.1"><vh>Edit Menu...</vh>
+<v t="edream.111303101257"><vh>abortEditLabelCommand</vh></v>
+<v t="edream.111303101257.1"><vh>endEditLabelCommand</vh></v>
+<v t="edream.111303100039.6"><vh>insertHeadlineTime</vh></v>
+</v>
+<v t="edream.111303100039.7"><vh>Window Menu</vh>
+<v t="edream.111303100039.8"><vh>cascade</vh></v>
+<v t="edream.111303100039.9"><vh>equalSizedPanes</vh></v>
+<v t="edream.111303100039.10"><vh>hideLogWindow</vh></v>
+<v t="edream.111303100039.11"><vh>minimizeAll</vh></v>
+<v t="edream.111303101709"><vh>toggleActivePane</vh></v>
+<v t="edream.111303100039.12"><vh>toggleSplitDirection</vh></v>
+</v>
+</v>
+<v t="edream.110203113231.384"><vh>updateAllMenus (wxFrame)</vh></v>
+</v>
+<v t="edream.110203113231.553"><vh>wxLeoLog class</vh>
+<v t="edream.110203113231.554"><vh>leoLog.__init__</vh></v>
+<v t="edream.110203113231.555"><vh>leoLog.configure</vh></v>
+<v t="edream.110203113231.556"><vh>leoLog.configureBorder</vh></v>
+<v t="edream.110203113231.557"><vh>leoLog.createControl</vh></v>
+<v t="edream.110203113231.558"><vh>leoLog.setLogFontFromConfig</vh></v>
+<v t="edream.110203113231.559"><vh>wxLeoLog.put &amp; putnl</vh></v>
+</v>
+<v t="edream.111303095242"><vh>wxLeoMenu class</vh>
+<v t="edream.111303095242.3"><vh>  wxLeoMenu.__init__</vh></v>
+<v t="edream.111303103457"><vh>wx menu bindings</vh>
+<v t="edream.111603104327"><vh>9 Routines with Tk names</vh>
+<v t="edream.111303111942.1"><vh>add_cascade</vh></v>
+<v t="edream.111303103141"><vh>add_command</vh></v>
+<v t="edream.111303121150"><vh>add_separator</vh></v>
+<v t="edream.111303103141.1"><vh>bind (wx has a different key model than tk)</vh></v>
+<v t="edream.111303103141.2"><vh>delete (not called?)</vh></v>
+<v t="edream.111303103141.3" a=""><vh>delete_range</vh></v>
+<v t="edream.111303103141.4"><vh>destroy (not called ?)</vh></v>
+<v t="edream.111303111942"><vh>insert_cascade</vh></v>
+<v t="edream.111303110018"><vh>new_menu</vh></v>
+</v>
+<v t="edream.111603112846"><vh>7 Routines with other names...</vh>
+<v t="edream.111303103457.2"><vh>createMenuBar</vh></v>
+<v t="edream.111603112846.1"><vh>createOpenWithMenuFromTable (not ready yet)</vh></v>
+<v t="edream.111303103254"><vh>defineMenuCallback</vh></v>
+<v t="edream.111303095242.6"><vh>defineOpenWithMenuCallback</vh></v>
+<v t="edream.111303163727.2"><vh>disableMenu</vh></v>
+<v t="edream.111303163727.1"><vh>enableMenu</vh></v>
+<v t="edream.111303163727.3"><vh>setMenuLabel</vh></v>
+</v>
+</v>
+</v>
+<v t="edream.110203113231.598"><vh>wxLeoPrefs class</vh>
+<v t="edream.110203113231.599"><vh>wxLeoPrefs.__init__</vh>
+<v t="edream.110203113231.600"><vh>&lt;&lt; define event handlers for wxLeoPrefsFrame &gt;&gt;</vh></v>
+</v>
+<v t="edream.110203113231.601"><vh>initialize</vh></v>
+<v t="edream.110203113231.602"><vh>targetToLanguage (should be in Leo's core)</vh></v>
+<v t="edream.110203113231.603"><vh>languageToTarget (should be in Leo's core)</vh></v>
+<v t="edream.110203113231.604"><vh>Event handlers</vh>
+<v t="edream.110203113231.605"><vh>OnActivatePrefsFrame</vh></v>
+<v t="edream.110203113231.606"><vh>OnClosePrefsFrame</vh></v>
+<v t="edream.110203113231.607"><vh>OnPageWidthText</vh></v>
+<v t="edream.110203113231.608"><vh>OnDoneBatCheckBox</vh></v>
+<v t="edream.110203113231.609"><vh>OnUnBatCheckBox</vh></v>
+<v t="edream.110203113231.610"><vh>OnTangleDirectoryText</vh></v>
+<v t="edream.110203113231.611"><vh>OnHeaderCheckBox</vh></v>
+<v t="edream.110203113231.612"><vh>OnDocChunksCheckBox</vh></v>
+<v t="edream.110203113231.613"><vh>OnTargetLanguageRadioBox</vh></v>
+</v>
+<v t="edream.110203113231.614"><vh>PrefsPanel.__init__</vh>
+<v t="edream.110203113231.615"><vh>&lt;&lt; Create the Global Options static box &gt;&gt;</vh></v>
+<v t="edream.110203113231.616"><vh>&lt;&lt; Create the Default Tangle Options static box &gt;&gt;</vh></v>
+<v t="edream.110203113231.617"><vh>&lt;&lt; Create the Default Target Language radio buttons &gt;&gt;</vh></v>
+</v>
+</v>
+<v t="edream.110203113231.560"><vh>Find...</vh>
+<v t="edream.111503093140"><vh>wxSearchWidget</vh>
+<v t="edream.111503094014"><vh>wxSearchWidget.__init__</vh></v>
+<v t="edream.111503094322"><vh>Insert point</vh></v>
+<v t="edream.111503094014.1"><vh>Selection</vh></v>
+</v>
+<v t="edream.110203113231.561"><vh>wxFindFrame class</vh>
+<v t="edream.110203113231.563"><vh>FindFrame.__init__</vh>
+<v t="edream.110203113231.564"><vh>&lt;&lt; define event handlers &gt;&gt;</vh>
+<v t="edream.111503085739"><vh>&lt;&lt; create event handlers for buttons &gt;&gt;</vh></v>
+<v t="edream.111503085739.1"><vh>&lt;&lt; create event handlers for check boxes and text &gt;&gt;</vh></v>
+</v>
+<v t="edream.111503074302"><vh>&lt;&lt; resize the frame to fit the panel &gt;&gt;</vh></v>
+</v>
+<v t="edream.111403151611.1"><vh>bringToFront</vh></v>
+<v t="edream.111503213733"><vh>destroySelf</vh></v>
+<v t="edream.111503211508"><vh>onCloseFindFrame</vh></v>
+<v t="edream.111403135745"><vh>set_ivars</vh></v>
+<v t="edream.111503091617"><vh>init_s_text</vh></v>
+<v t="edream.111503093522"><vh>gui_search</vh></v>
+<v t="edream.111503204508"><vh>init</vh></v>
+</v>
+<v t="edream.110203113231.588"><vh>wxFindPanel class</vh>
+<v t="edream.110203113231.589"><vh>FindPanel.__init__</vh>
+<v t="edream.110203113231.590"><vh>&lt;&lt; Create the find text box &gt;&gt;</vh></v>
+<v t="edream.110203113231.591"><vh>&lt;&lt; Create the change text box &gt;&gt;</vh></v>
+<v t="edream.110203113231.592"><vh>&lt;&lt; Create all the find check boxes &gt;&gt;</vh>
+<v t="edream.110203113231.593"><vh>&lt;&lt; Create the first column of widgets &gt;&gt;</vh></v>
+<v t="edream.110203113231.594"><vh>&lt;&lt; Create the second column of widgets &gt;&gt;</vh></v>
+<v t="edream.111503133933.2"><vh>&lt;&lt; Create the third column of widgets &gt;&gt;</vh></v>
+<v t="edream.111503133933.3"><vh>&lt;&lt; Create the fourth column of widgets &gt;&gt;</vh></v>
+</v>
+<v t="edream.110203113231.595"><vh>&lt;&lt; Create all the find buttons &gt;&gt;</vh>
+<v t="edream.110203113231.596"><vh>&lt;&lt; Create the first row of buttons &gt;&gt;</vh></v>
+<v t="edream.110203113231.597"><vh>&lt;&lt; Create the second row of buttons &gt;&gt;</vh></v>
+</v>
+</v>
 </v>
 </v>
 </v>
@@ -4882,7 +4757,20 @@ def runTest(frame, nb, log):
                           'Sorry', wxOK | wxICON_INFORMATION)
         dlg.ShowModal()
         dlg.Destroy()</t>
-<t tx="edream.110203113231.233"></t>
+<t tx="edream.110203113231.233">@ To do:
+	
+- The find logic doesn't properly show the found selection (or the correct body text).
+	- Remove traces.
+
+- Replace body widget with something better.
+
+- Update joined headlines when any headline changes.
+
+- Minor:
+	- (Maybe) Eliminate duplicate callbacks
+	- Finish all redirection utils.
+	- Finish dragging code.
+	- Handle exception when starting by double-clicking LeoPy.leo.</t>
 <t tx="edream.110203113231.234">@nocolor</t>
 <t tx="edream.110203113231.235"></t>
 <t tx="edream.110203113231.236">
@@ -4893,348 +4781,12 @@ def runTest(frame, nb, log):
 - Code draws the screen (after the file has been read in!)
 - Removed idle-time pollution: created onUpdateAllMenus.</t>
 <t tx="edream.110203113231.238"></t>
-<t tx="edream.110203113231.239">@nocolor
-
-There is still much to do:
-
-	- Handle exception when starting by double-clicking LeoPy.leo.
-
-	- Make Save commands work.
-		- Make dialogs functional.
-		- Handle crashes in prefs.
-	
-	- Fill in stubs (in wxLeoFrame class)
-	
-	- Clean up focus mess.
-
-	- Documentation.
-		How to interpret the base classes.
-		How the gui classes work.
-		What should be in the frame class.</t>
-<t tx="edream.110203113231.240">- Not all startup messages make it to the log pane...
-
-- Move most frame routines into commander class.
-	- Make the code view-independent by calling app.gui routines as needed.
-
-- Complete bodyChanged/headlineChanged handlers.
-
-- Remove references to c.top and Tk routines from Leo's core (except leoFrame.py)
-
-- Rewrite bodyChanged handler using Tk handler as a guide.
-
-** Debug all commands.</t>
-<t tx="edream.110203113231.241">1. Most commands should be commander routines, not frame routines.  The window commands are exceptions: they are almost completely gui-related.
-
-Example: The only part of the Save commands that are gui/view related are the dialogs, and the dialog code can easily be separated out.
-
-</t>
 <t tx="edream.110203113231.242"></t>
 <t tx="edream.110203113231.243"># Used 10/11/03 to convert old wxLeo code 
 
 if 0: # This script calls c2py on the current node and all nodes of its subtree.
 	import c2py
 	c2py.convertCurrentTree()</t>
-<t tx="edream.110203113231.244">def __init__ (self):
-	wxFrame.__init__(None,-1,"Leo",wxDefaultPosition,wxSize(550,600)),
-	mFileName(""),
-	mDefaultDirectory(""),
-	mOpenDirectory("")
-	# Link the new frame into the list of frames.
-	mIniting = true  # Lock out resize events.
-	long width = 600  # initial size
-	if  gLeoFrameList:  gLeoFrameList.mPrevFrame = self
-	self.mNextFrame = gLeoFrameList
-	self.mPrevFrame = None
-	gLeoFrameList = self
-	&lt;&lt; Initialize the private vars &gt;&gt;
-	&lt;&lt; Initialize the argument settings &gt;&gt;
-	self.createMenus()
-	&lt;&lt; Create the splitter windows &gt;&gt;
-	&lt;&lt; Create the accelerator table &gt;&gt;
-	&lt;&lt; Create the status bar &gt;&gt;
-	&lt;&lt; Set the window Icon &gt;&gt;
-	&lt;&lt; Set the caret blink rate &gt;&gt;
-	mCommands = Commands(self,mTreeCtrl,mBodyCtrl)
-	&lt;&lt; Add root node to the tree view &gt;&gt;
-	gActiveFrame = self
-	mIniting = false # allow resize events.
-	es("Leo Log Window...\n\n")
-</t>
-<t tx="edream.110203113231.245">self.textChanging = 0
-
-mCopying = 0
-mDraggedItem = 0L
-mReverting = false</t>
-<t tx="edream.110203113231.246">mOutputDocFlag = true
-mTangleBatchFlag = false
-mUntangleBatchFlag = false
-mUseHeaderFlag = true
-mPageWidth = 132
-mTabWidth = 4
-mPresentLanguage = c_language
-mTargetLanguage = c_language</t>
-<t tx="edream.110203113231.247">mSplitter1 = wxSplitterWindow(self,cSplitterWindow,
-	wxDefaultPosition,wxDefaultSize,
-	wxSP_BORDER | wxSP_3D,
-	"splitterWindow")
-	
-mSplitter2 = wxSplitterWindow(mSplitter1,-1,
-	wxDefaultPosition,wxDefaultSize,
-	wxSP_BORDER | wxSP_3D,"splitterWindow")
-
-mSplitter1.SetMinimumPaneSize(4)
-mSplitter2.SetMinimumPaneSize(4)
-mTreeCtrl = wxTreeCtrl(mSplitter2,cTreeCtrl,
-	wxDefaultPosition,wxDefaultSize,
-	wxTR_HAS_BUTTONS | wxTR_EDIT_LABELS,wxDefaultValidator,"treeCtrl")
-
-&lt;&lt; Set the image list &gt;&gt;
-mBodyCtrl = wxTextCtrl(mSplitter1,cBodyCtrl,"",
-	wxDefaultPosition,wxDefaultSize,wxTE_MULTILINE)
-mLogCtrl = wxTextCtrl(mSplitter2,cLogCtrl,"",
-	wxDefaultPosition,wxDefaultSize,wxTE_MULTILINE)
-# &lt;&lt; Set the body font &gt;&gt;
-if wx.wxPlatform == "__WXMSW__":  # This is a fixed-width font and works well.
-	# size,family,style,weight.
-	wxFont font(9,wxMODERN,wxNORMAL,wxNORMAL)
-else:
-	# size,family,style,weight.
-	# wxFont font(9,wxMODERN,wxNORMAL,wxNORMAL);
-	# Try to use lucidatypewriter.
-	wxFont font(12,wxFONTFAMILY_DEFAULT,wxFONTSTYLE_NORMAL,wxFONTWEIGHT_NORMAL,false,
-		"lucidatypewriter",wxFONTENCODING_ISO8859_1)
-	if 0 # none of these work
-		wxFont font(14,74,90,90,false,
-		"terminal",
-		# "-bitstream-terminal-medium-r-normal-*-*-140-*-*-c-*-iso8859-1",
-		# "-Bitstream-Terminal-Medium-R-Normal--18-140-100-100-C-*-ISO8859-1",
-		wxFONTENCODING_ISO8859_1)
-TRACEP("font_info",
-	es("face: "); es(font.GetFaceName().c_str()); ecs()
-	es("family: "); es(font.GetFamilyString().c_str()); enl()
-	es("size: "); eint(font.GetPointSize()); ecs()
-	es("style: "); es(font. GetStyleString().c_str()); ecs()
-	es("weight: "); es(font.GetWeightString().c_str()); enl()
-)
-mBodyCtrl.SetFont(font)
-# -- end -- &lt;&lt; Set the body font &gt;&gt;
-# Attach the controls to the splitter.
-mSplitter1.SplitHorizontally(mSplitter2,mBodyCtrl,0)
-mSplitter2.SplitVertically(mTreeCtrl,mLogCtrl,width/2)</t>
-<t tx="edream.110203113231.248"># Warning: the width and height must match the underlying .bmp files.
-
-# width: 20,height: 11,mask:TRUE,count:16
-
-if defined(__WXMSW__)or defined(__WXGTK__)
-	im = wxImageList(20,11,true,16)
-	wxBitmap box(20,11)
-	# Add 16 bitmaps to the image list.
-	for  int i = 0 ; i &lt; 16 ; ++ i:
-		if defined(__WXMSW__)
-			wxString s("box")
-			s &lt;&lt; i
-			box.LoadFile(s,wxBITMAP_TYPE_BMP_RESOURCE)
-		#elif defined(__WXGTK__)
-			wxString s("./Icons/box") # Assume we are launched from ./ directory.
-			if  gAppDirectory.Length()&gt; 0:
-				s = gAppDirectory + "/Icons/box"
-			if i &lt; 10: s &lt;&lt; "0"
-			s &lt;&lt; i
-			s &lt;&lt; ".bmp"
-			box.LoadFile(s,wxBITMAP_TYPE_BMP)
-		im.Add(box)
-	mTreeCtrl.SetImageList(im)</t>
-<t tx="edream.110203113231.249">if wx.wxPlatform == "__WXGTK__": # Windows version handles shortcuts properly
-	enum
-		# &lt;&lt; accelerator constants &gt;&gt;
-		alt = wxACCEL_ALT,
-		normal = wxACCEL_NORMAL,
-		ctrl = wxACCEL_CTRL,
-		shift = wxACCEL_SHIFT,
-		shift_alt =(wxACCEL_ALT | wxACCEL_SHIFT),
-		shift_ctrl =(wxACCEL_CTRL | wxACCEL_SHIFT),
-		# -- end -- &lt;&lt; accelerator constants &gt;&gt;
-		cFirstEntry: = -1,# So first real index starts at 0.
-		# &lt;&lt; accelerator indices &gt;&gt;(1 of 12)
-		cQuit,
-		# &lt;&lt; accelerator indices &gt;&gt;(2 of 12)
-		cNew,
-		# cOpen,cClose,cSave,cSaveAs,
-		# &lt;&lt; accelerator indices &gt;&gt;(3 of 12)
-		cTangleAll,cTangleMarked,cTangle,
-		# &lt;&lt; accelerator indices &gt;&gt;(4 of 12)
-		cUntangle,
-		# &lt;&lt; accelerator indices &gt;&gt;(5 of 12)
-		cImportFiles,
-		# &lt;&lt; accelerator indices &gt;&gt;(6 of 12)
-		cEditHeadline,
-		# &lt;&lt; accelerator indices &gt;&gt;(7 of 12)
-		cExtractSection,cExtractNames,cExtract,cConvertBlanks,
-		# &lt;&lt; accelerator indices &gt;&gt;(8 of 12)
-		cFindPanel,cFindNext,cFindPrev,cReplace,cReplaceThenFind,
-		# &lt;&lt; accelerator indices &gt;&gt;(9 of 12)
-		# cFontPanel,cSyntaxColoring,cPreferences,
-		# &lt;&lt; accelerator indices &gt;&gt;(10 of 12)
-		# cInsertNode,cCloneNode,
-		# &lt;&lt; accelerator indices &gt;&gt;(11 of 12)
-		if wx.wxPlatform == "__WXMSW__":
-			cGoPrevVisibleMenuItem,cGoNextVisibleMenuItem,
-		# &lt;&lt; accelerator indices &gt;&gt;(12 of 12)
-		# Conflicts with Extract command.
-		# cEqualSizedPanes,
-		cToggleActivePane,
-		# -- end -- &lt;&lt; accelerator indices &gt;&gt;
-		cAcceleratorEntries # one more than the largest index.
-assert(cQuit==0)
-wxAcceleratorEntry: entries [cAcceleratorEntries]
-# &lt;&lt; accelerator entries &gt;&gt;(1 of 12)
-entries[cQuit].	Set(ctrl,(int)'Q',cQuitMenuItem)
-# &lt;&lt; accelerator entries &gt;&gt;(2 of 12)
-entries[cNew].   Set(ctrl,(int)'N',cNewMenuItem)
-if 0 # Not needed,and might conflict with Outline menu
-entries[cOpen].  Set(ctrl,(int)'O',cOpenMenuItem)
-entries[cClose]. Set(ctrl,(int)'W',cCloseMenuItem)
-entries[cSave]. Set(ctrl,(int)'S',cSaveMenuItem)
-if 0 # Conflicts with Outline menu.
-entries[cSaveAs].Set(shift-ctrl,(int)'S',cSaveAsMenuItem)
-# &lt;&lt; accelerator entries &gt;&gt;(3 of 12)
-entries[cTangleAll].	Set(shift_ctrl,(int)'A',cTangleAllMenuItem)
-entries[cTangleMarked]. Set(shift_ctrl,(int)'M',cTangleMarkedMenuItem)
-entries[cTangle]. Set(shift_ctrl,(int)'T',cTangleMenuItem)
-# &lt;&lt; accelerator entries &gt;&gt;(4 of 12)
-entries[cUntangle].Set(shift_ctrl,(int)'U',cUntangleMenuItem)
-# &lt;&lt; accelerator entries &gt;&gt;(5 of 12)
-entries[cImportFiles].Set(shift_ctrl,(int)'F',cImportFilesMenuItem)
-# &lt;&lt; accelerator entries &gt;&gt;(6 of 12)
-entries[cEditHeadline].	Set(shift-ctrl,(int)'H',cEditHeadlineMenuItem)
-# &lt;&lt; accelerator entries &gt;&gt;(7 of 12)
-entries[cExtractSection].	Set(shift-ctrl,(int)'E',cExtractSectionMenuItem)
-entries[cExtractNames]. Set(shift-ctrl,(int)'N',cExtractNamesMenuItem)
-entries[cExtract]. Set(shift-ctrl,(int)'D',cExtractMenuItem)
-entries[cConvertBlanks]. Set(shift-ctrl,(int)'B',cConvertBlanksMenuItem)
-# &lt;&lt; accelerator entries &gt;&gt;(8 of 12)
-entries[cFindPanel].Set(ctrl, (int)'F',cFindPanelMenuItem)
-if 1 # shift F-keys don't seem to work on Linux
-	entries[cFindNext].	Set(normal,(int)WXK_F3,cFindNextMenuItem)
-	entries[cFindPrev]. Set(shift,(int)WXK_F4,cFindPreviousMenuItem)
-	entries[cReplace]. Set(normal,(int)WXK_F5,cReplaceMenuItem)
-  entries[cReplaceThenFind].Set(normal,(int)WXK_F6,cReplaceThenFindMenuItem)
-else:
-	entries[cFindNext]. Set(normal,(int)WXK_F3,cFindNextMenuItem)
-	entries[cFindPrev]. Set(shift,(int)WXK_F3,cFindPreviousMenuItem)
-	entries[cReplace]. Set(normal,(int)WXK_F4,cReplaceMenuItem)
-  entries[cReplaceThenFind].Set(shift,(int)WXK_F4,cReplaceThenFindMenuItem)
-# &lt;&lt; accelerator entries &gt;&gt;(9 of 12)
-if 0 # works now,and would conflict with other settings.
-	entries[cFontPanel].     Set(shift-alt,(int)'T',cFontPanelMenuItem)
-	entries[cSyntaxColoring].Set(shift-alt,(int)'S',cSyntaxColoringMenuItem)
-	entries[cPreferences]. Set(ctrl,(int)'Y',cPreferencesMenuItem)
-# &lt;&lt; accelerator entries &gt;&gt;(10 of 12)
-if 0 # Conflicts with Outline pane.
-entries[cInsertNode].Set(ctrl,     (int)'I',cInsertNodeMenuItem)
-entries[cCloneNode] .Set(shift_ctrl,(int)'I',cCloneNodeMenuItem)
-# &lt;&lt; accelerator entries &gt;&gt;(11 of 12)
-if wx.wxPlatform == "__WXMSW__":
-	# Without these wxTreeCtrl handles the up/down keys itself,wrongly.
-	entries[cGoPrevVisibleMenuItem].Set(normal,WXK_UP,  cGoPrevVisibleMenuItem)
-	entries[cGoNextVisibleMenuItem].Set(normal,WXK_DOWN,cGoNextVisibleMenuItem)
-# &lt;&lt; accelerator entries &gt;&gt;(12 of 12)
-# Show log works without accel
-# Conflicts with Extract command.
-# entries[cEqualSizedPanes].Set(ctrl,(int)'E',cEqualSizedPanesMenuItem);
-entries[cToggleActivePane].Set(ctrl,(int)'T',cToggleActivePaneMenuItem)
-# -- end -- &lt;&lt; accelerator entries &gt;&gt;
-wxAcceleratorTable accel(cAcceleratorEntries,entries)
-self.SetAcceleratorTable(accel)
-mBodyCtrl.SetAcceleratorTable(accel)
-mTreeCtrl.SetAcceleratorTable(accel)
-mSplitter1.SetAcceleratorTable(accel)
-</t>
-<t tx="edream.110203113231.250">CreateStatusBar(2)
-SetStatusText("")</t>
-<t tx="edream.110203113231.251">if wx.wxPlatform == "__WXMSW__":
-  self .SetIcon(wxIcon("LeoIcon"))
-</t>
-<t tx="edream.110203113231.252"># Blinking happens on Windows without a problem.  Furthermore,setting the rate here affects _all_ windows.
-
-if wx.wxPlatform == "__WXGTK__": # Doesn't seem to work.
-	caret = mBodyCtrl.GetCaret()
-	caret.SetBlinkTime(500)
-</t>
-<t tx="edream.110203113231.253">root = mTreeCtrl.AddRoot("untitled")
-t = tnode()
-v = vnode(mCommands,t)
-v.setTreeID(root)
-mCommands.mCurrentVnode = v
-mTreeCtrl.SetItemData(root,(wxTreeItemData *)v)
-
-# Set icons: it appears to be necessary to set all here.
-# Otherwise,we might take an exception...
-v.setIconVal(0)
-if defined(__WXMSW__)
-	# Workaround bug in wxTreectrl.
-	mTreeCtrl.SetItemImage(root,0,wxTreeItemIcon_Normal)
-	mTreeCtrl.SetItemImage(root,0,wxTreeItemIcon_Selected)
-#elif defined(__WXGTK__)
-	mTreeCtrl.SetItemImage(root,0,wxTreeItemIcon_Normal)
-	mTreeCtrl.SetItemImage(root,0,wxTreeItemIcon_Selected)
-	mTreeCtrl.SetItemImage(root,0,wxTreeItemIcon_Expanded)
-	mTreeCtrl.SetItemImage(root,0,wxTreeItemIcon_SelectedExpanded)
-</t>
-<t tx="edream.110203113231.254">def OpenWithFileName(self,fileName):
-	# If the file is already open just bring its window to the front.
-	frame = gLeoFrameList
-	while frame:
-		if frame.mFileName == fileName:
-			frame.Show()
-			gActiveFrame = frame
-			return frame
-		frame = frame.self.mNextFrame
-	# Don't take an exception if the file doesn't exist.
-	if not wx.wxFileExists(fileName):
-		alert("Can not open: " + fileName)
-		return None
-	try:
-		&lt;&lt; Set closeEmptyFrameFlag if the only open window is empty &gt;&gt;
-		frame = LeoFrame()
-		if 0 # Don't show frame until it has been fully opened.
-			frame.Show(true)
-		frame.self.mCommands.open(fileName)
-		frame.mFileName = fileName
-		# Automatically close an empty frame that was created on entry.
-		if 0 #// There is still something wrong here!
-		if  closeEmptyFrameFlag and closeFrame:
-			closeFrame.Close()
-		gActiveFrame = frame
-		return frame
-	except:(...)
-		alert("Error opening: " + fileName)
-		return None</t>
-<t tx="edream.110203113231.255">if 0: # not used at present.
-	closeFrame = gLeoFrameList
-	closeEmptyFrameFlag = (
-		# There is only one window open at present.
-		gNumberOfUntitledWindows == 1 and
-		# The window was opened on startup and has never been saved.
-		closeFrame and
-		closeFrame.self.mCommands.mFirstWindowAndNeverSaved and
-		# The window is empty.
-		not (closeFrame.self.mCommands. isChanged())</t>
-<t tx="edream.110203113231.256"># 	These must match the order of items in the wxRadioBox.
-# 	These are _not_ the same as vars in args.h.
-
-enum
-	c_target = 0,
-	cweb_target,
-	html_target,
-	java_target,
-	pascal_target,
-	perl_target,
-	perlpod_target,
-	plain_text_target,
-	python_target,
-	bad_last_target
-</t>
 <t tx="edream.110203113231.257"># This updates the text of joined _headlines_, not body text.
 
 if 0: # no longer used
@@ -5250,7 +4802,6 @@ if 0: # no longer used
 			self.tree.SetItemText(id,text)
 			v2 = v2.joinList()
 		guard -= 1</t>
-<t tx="edream.110203113231.258"></t>
 <t tx="edream.110203113231.259">cSplitterWidth = 600
 
 const_dict = {}
@@ -5274,23 +4825,27 @@ def const(name):
 <t tx="edream.110203113231.260">def finishCreate (self,c):
 	
 	frame = self
-	frame.c = frame.commands = c
+	frame.c = c
 	c.frame = frame
 	
+	# Init the wxFrame base class.  The leoFrame base class has already been inited.
 	wx.wxFrame.__init__(self, None, -1, self.title) # wx.wxNO_3D # hangs.
 	#self.outerPanel = wx.wxPanel(self,-1)
 	#self.iconPanel = wx.wxPanel(self.outerPanel, -1, "iconPanel")
 
 	self.CreateStatusBar()
-	self.createMenuBar()
 
 	&lt;&lt; create the splitters &gt;&gt;
 	&lt;&lt; create the tree &gt;&gt;
 	c.log  = frame.log = wxLeoLog(frame,self.splitter2)
 	c.body = frame.body = wxLeoBody(frame,self.splitter1)
+	frame.bodyCtrl = frame.body
 	# Attach the controls to the splitter.
 	self.splitter1.SplitHorizontally(self.splitter2,self.body.bodyCtrl,0)
 	self.splitter2.SplitVertically(self.tree,self.log.logCtrl,cSplitterWidth/2)
+	
+	self.menu = wxLeoMenu(frame)
+	self.menu.createMenuBar()
 	
 	&lt;&lt; set the window icon &gt;&gt;
 	&lt;&lt; declare event handlers for frame &gt;&gt;
@@ -5301,6 +4856,13 @@ def const(name):
 		self.wxFrame.Show(true)
 		if not app.root:
 			app.root = self.wxFrame
+			
+	self.colorizer = leoColor.colorizer(c)
+			
+	c.initVersion()
+	self.signOnWithVersion()
+	
+	self.injectCallbacks()
 
 	# Add the frame to the global window list.
 	app.windowList.append(self)
@@ -5366,12 +4928,18 @@ if 0: # Causes problems at present.  The screen isn't drawn properly.
 </t>
 <t tx="edream.110203113231.266">def __init__ (self,title):
 	
-	# trace("wxLeoFrame",title)
-	self.title = title
-	self.ratio = None
-	self.secondary_ratio = None
-	self.activeFrame = None
+	# Init the leoFrame base class.
+	# We will init the wxFrame base class in finishCreate.
+	leoFrame.leoFrame.__init__(self)
+	
 	self.c = None # set in finishCreate.
+	self.bodyCtrl = None # set in finishCreate
+	self.title = title
+	
+	self.lockout = 0 # Suppress further events
+	
+	# trace("wxLeoFrame",title)
+	self.activeFrame = None
 	self.quitting = false
 	self.updateCount = 0
 	self.treeIniting = false
@@ -5379,6 +4947,10 @@ if 0: # Causes problems at present.  The screen isn't drawn properly.
 	self.root_id = None
 	self.menuIdDict = {}
 	self.menuBar = None
+	self.ratio = 0.5
+	self.secondary_ratio = 0.5
+	self.startupWindow=false
+	self.use_coloring = false # set true to enable coloring
 	
 	# These vars have corresponding getters/setters.
 	self.mDragging = false
@@ -5401,108 +4973,14 @@ else:
 		if self.c:
 			self.c.checkAllFileDates()
 </t>
-<t tx="edream.110203113231.270">def destroyAllPanels (self):
-	trace() # Not used yet.  Later, this might be called from the app class.
-	self.Destroy()
-
-def onCloseLeoFrame(self,event):
+<t tx="edream.110203113231.270">def onCloseLeoFrame(self,event):
 
 	frame = self
-
-	if 1: # works.  It should be improved later...
-
-		# To do: use app.closeLeoWindow so we can use app's logic.
-		# We can't do this now because app.destroyWindow stupidly references frame.top.
-		# And there are subtle problems that must be resolved in app.destroyWindow.
-		app.windowList.remove(frame)
-		if not app.windowList:
-			if app.findFrame:
-				app.findFrame.Destroy()
-				app.findFrame = None
-		
-		if 0: # app should probably call a new frame.destroySelfAndIvars routine.
-
-			# Can't do this before self.Destroy because the menu updaters need the ivars.
-			# Can't do this after  self.Destroy because frame.clearAllIvars is gone.
-			# We need to disable window updaters before destroying ivars.
-			app.destroyAllWindowObjects(frame)
-			
-		self.Destroy() # Should be very last statement!
-
-	return ## not finished yet.
-
-	# Veto the close if the Frame has been changed and the user cancels.
-	if  self.c.isChanged():
-		veto = false
-		if not mReverting:
-			&lt;&lt; Prompt for change.  Set veto if the user cancels &gt;&gt;
-		if veto and event.CanVeto():
-			event.Veto()# veto the close.
-			return
-
-	app.windowList.remove(self)
-	if not app.windowList:
-		&lt;&lt; Close the permanent frames &gt;&gt;
-	# Clear the active form.  It will be set on the next activate event.
-	self.activeFrame = None
-	gCommands = None
-	# Set all vnodes to NULL so they are not destroyed.
-	if 0: #/// why shouldn't they be destroyed ??
-		tree = self.tree
-		v = self.c.rootVnode()
-		while v:
-			next = v.threadNext()
-			id = v.treeID()
-			assert(id)
-			tree.SetItemData(id,None)
-			v = next
-	self.Destroy()</t>
-<t tx="edream.110203113231.271"># Use the window title:  mFileName may not exist.
-title = self.GetTitle()
-if title and title[0] == '*':
-	title = title.Mid(1)
 	
-quitType = choose(self.quitting,"quitting","closing")
-message = 'Save changes to "%s" before %s?' % (title,quitType)
-dialog = wxMessageDialog(self,message,"LeoWX",wxYES_NO|wxCANCEL)
-answer = dialog.ShowModal()
-if answer == wx.wxID_YES:
-	# The user want's to save the file before closing.
-	if mFileName == "":
-		d = wxFileDialog(
-			None,"Save",
-			"",# default directory
-			title + ".leo",# default file
-			"*.leo",# wildcard
-			wxSAVE | wxOVERWRITE_PROMPT, # style of dialog.
-			wxDefaultPosition)
-
-		if d.ShowModal()== wxID_OK:
-			paths = d.GetPaths()
-			if paths.Count()== 1:
-				path = paths.Item(0)
-				mFileName = path
-				self.SetTitle(path)
-				self.c.save(path)
-			else: veto = true
-		else: veto = true
-	else: self.c.save(mFileName)
-elif answer == wx.wxID_NO:
-	pass # The user does not want to save the frame.
-elif answer == wx.wxID_CANCEL:
-	pass # The user want's to cancel the close.
-else:
-	veto = true</t>
-<t tx="edream.110203113231.272">if  gPrefsFrame:
-	gPrefsFrame.Destroy()
-	gPrefsFrame = None
-
-if app.findFrame:
-	app.findFrame.Destroy()
-	app.findFrame = None
-	
-if wx.wxPlatform == "__WXMSW__":
-	wxPythonFrame.destroy()</t>
+	# The app class does all the hard work now.
+	if not app.closeLeoWindow(frame):
+		if event.CanVeto():
+			event.Veto()</t>
 <t tx="edream.110203113231.273">def onResize(self,event):
 
 	if mIniting:
@@ -5528,60 +5006,40 @@ if wx.wxPlatform == "__WXMSW__":
 <t tx="edream.110203113231.274"></t>
 <t tx="edream.110203113231.275">def onBodyTextUpdated(self,event):
 
-	if self.c == None:  return
+	frame = self ; c = self.c
+	if not c:  return
 	v = self.c.currentVnode()
-	if v == None: return
+	if not v: return
+	if self.lockout &gt; 0: return
 	
-	s = self.body.bodyCtrl.GetValue()
-	return ## Not yet: sevaral calls below use tkinter or frame.top.
-	
-	# not yet: c.setChanged uses frame.top
-	&lt;&lt; Set the dirty bit and/or the file-changed mark if the text has changed &gt;&gt;
-	# not yet: ses tkinter...
-	v.setBodyStringOrPane(self,s)
-	v.setAncestorAtFileNodeDirty()
-	# Update the syntax colorer if needed.
-	self.c.updateSyntaxColorer(v)
-	&lt;&lt; Update icons &gt;&gt;</t>
-<t tx="edream.110203113231.276">if not v.isDirty() and s != v.bodyString():
+	# Similar to idle_body_key
+	self.lockout += 1
 
-	v.initDirtyBit()# Avoid calling setIcon.
-	if not self.c.isChanged():
-		self.c.setChanged(true)</t>
-<t tx="edream.110203113231.277"># It is very important to eliminate flicker here.
-val = v.computeIcon()
-repaint = false
-
-if not self.c.isChanged():
-	self.c.setChanged(true)
-	repaint = true
-
-if val &gt;= 0 and val != v.iconVal():
-	repaint = true
-	v.setIconWithVal(val)
-	# Update all joined nodes.
-	v2 = v.joinList()
-	while v2 and v2 != v:
-		v2.setIconWithVal(val)
-		v2 = v2.joinList()
-
-if repaint:
-	self.tree.Refresh()</t>
+	s = frame.body.bodyCtrl.GetValue()
+	v.t.setTnodeText(s)
+	v.t.insertSpot = c.body.getInsertionPoint()
+	&lt;&lt; recolor the body &gt;&gt;
+	if not c.changed:
+		c.setChanged(true)
+	&lt;&lt; redraw the screen if necessary &gt;&gt;
+	if 0: # ch, etc. are not defined.
+		doHook("bodykey2",c=c,v=v,ch=ch,oldSel=oldSel,undoType=undoType)
+		
+	self.lockout -= 1</t>
 <t tx="edream.110203113231.278"></t>
 <t tx="edream.110203113231.279"></t>
 <t tx="edream.110203113231.280">def onTreeCollapsed(self,event):
 	
 	"""Prepare to collapse the tree."""
-	
-	# trace()
+
 	pass # No need to redraw the tree.
 
 def onTreeExpanded (self,event):
 	
 	"""Redraw the tree when a tree collapses."""
 
-	if not self.drawing:
-		# trace()
+	if not self.lockout and not self.drawing:
+
 		self.redraw()</t>
 <t tx="edream.110203113231.281">def onTreeCollapsing(self,event):
 	
@@ -5589,7 +5047,7 @@ def onTreeExpanded (self,event):
 
 	tree = self.tree
 	id = event.GetItem()
-	if id.IsOk:
+	if id.IsOk and not self.lockout:
 		v = tree.GetItemData(id).GetData()
 		if v:
 			#trace(v)
@@ -5601,7 +5059,7 @@ def onTreeExpanding (self,event):
 	
 	tree = self.tree
 	id = event.GetItem()
-	if id.IsOk:
+	if id.IsOk and not self.lockout:
 		v = tree.GetItemData(id).GetData()
 		if v:
 			#trace(v)
@@ -5609,54 +5067,25 @@ def onTreeExpanding (self,event):
 <t tx="edream.110203113231.282"></t>
 <t tx="edream.110203113231.283">def onTreeChanged(self,event):
 
-	c = self.c ; tree = self.tree
+	frame = self ; c = self.c ; tree = self.tree
+	
+	if self.lockout &gt; 0: return 
  	new_id = event.GetItem()
-	if new_id.IsOk():
-		v = tree.GetItemData(new_id).GetData()
-		# trace(v)
-		if v:
-			c.selectVnode(v)
-			s = v.t.bodyString
-			s = toUnicode(s,"utf-8")
-			t = self.body.bodyCtrl
-			t.Clear()
-			t.WriteText(s)
-			c.updateSyntaxColorer(v)
-	return ##########
-	
-	if self.c.mInhibitOnTreeChanged: return
-	
-	# N.B. Either new_id or old_id might be 0, depending on circumstances.
-	new_id = event.GetItem()
-	trace("new item: ", new_id)
 	if not new_id.IsOk(): return
-	new_v =(self.tree.GetItemData(new_id))
-	if new_v == None: return
-	if 0: # no longer used
-		# old_id may not exist if we are activating the first node.
-		old_id = event.GetOldItem()
-		trace("old item: ", old_id)
-		old_v = None
-		if old_id.IsOk():
-			old_v =(self.tree.GetItemData(old_id))
-			if wx.wxPlatform == "__WXMSW__":
-				assert(old_v)
+	v = tree.GetItemData(new_id).GetData()
+	if not v: return
 
-	# Apparently in wxWindows this does _not_ fire the text changed event! But in wxGTK it does.
-	# We must prevent the update event handler from messing with the old text!
-	sDisableTextUpdates += 1
-	if 1:
-		# Clear the old text.
-		self.body.Clear()
-		# Put the text of the new node into the body pane.
-		new_v.t().loadBodyPaneFromTnode(self.body)
-		# Clear the undo stack.
-		self.body.DiscardEdits()
-	sDisableTextUpdates -= 1
-	# Update the Commander's idea of the current node.
-	self.c.mCurrentVnode = new_v
-	# Update the syntax colorer if needed.
-	self.c.updateSyntaxColorer(new_v)</t>
+	self.lockout += 1 # MUST prevent further events.
+	
+	c.selectVnode(v)
+	s = v.t.bodyString
+	s = toUnicode(s,"utf-8")  # No app.tkEncoding or similar yet.
+	t = self.body.bodyCtrl
+	t.Clear()
+	t.WriteText(s)
+	self.recolor(v)
+	
+	self.lockout -= 1</t>
 <t tx="edream.110203113231.284">def onTreeChanging(self,event):
 	
 	"""Event handler gets called whenever a new node gets selected"""
@@ -5680,7 +5109,6 @@ def onTreeEndLabelEdit(self,event):
 	s = event.GetLabel()
 	id = event.GetItem()
 	v = tree.GetItemData(id).GetData()
-	trace(id,s)
 
 	return # Not yet: c.setChanged uses frame.top.
 
@@ -5697,8 +5125,7 @@ def onTreeEndLabelEdit(self,event):
 		j = j.joinList()</t>
 <t tx="edream.110203113231.288">def onTreeKeyDown(self,event):
 	
-	trace()
-	pass # Probably we don't need to do anything until the end-edit event.</t>
+	pass # Don't do anything until the end-edit event.</t>
 <t tx="edream.110203113231.289">def onTreeBeginDrag(self,event):
 
 	trace() ; return
@@ -5773,39 +5200,17 @@ if not self.c.checkMoveWithParentWithWarning(src_v,parent_v,true):
 	return
 
 src_v.moveAfter(dst_v)</t>
-<t tx="edream.110203113231.294">if 1: # Most important...
+<t tx="edream.110203113231.294"># Others...
 
-	def drawIcon(self,v,x,y): trace(v) #  return self.tree.drawIcon(v,x,y)
+def expandAllAncestors(self,v):
+	trace() #  return self.tree.expandAllAncestors(v)
 	
-	def setTreeIniting(self,flag):
-		self.treeIniting = flag
-
-	# Scrolling... 
-	def scrollTo(self,v):  trace() #  return self.tree.scrollTo(v)
-	def idle_scrollTo(self,v):  trace(v) #  return self.tree.idle_scrollTo(v)
-
-# Coloring...
-def getColorizer(self):           trace() # return self.tree.colorizer
-def recolor_now(self,v):          trace() # return self.tree.recolor_now(v)
-def recolor_range(self,v,leading,trailing):  trace() #  return self.tree.recolor_range(v,leading,trailing)
-def recolor(self,v):              trace() #  return self.tree.recolor(v)
-def updateSyntaxColorer(self,v):  trace() #  return self.tree.colorizer.updateSyntaxColorer(v)
-
-# Focus...
-def focus_get(self): trace() #  return self.tree.canvas.focus_get()
-
-# Fonts...
-def getFont(self):      return self.tree.getFont()
-def setFont(self,font): return self.tree.setFont(font)
-
-# OnHeadlineClick
-# OnHeadlineRightClick
-def OnActivateHeadline(self,v): trace() #  return self.tree.OnActivate(v)
-
-# Others...
-def expandAllAncestors(self,v): trace() #  return self.tree.expandAllAncestors(v)
-def getEditTextDict(self,v):    trace() #  return self.tree.edit_text_dict.get(v)</t>
+def getEditTextDict(self,v):
+	pass # Allows Tk to recycle bindings.</t>
 <t tx="edream.110203113231.295">def beginUpdate (self):
+	
+	if self.updateCount == 0:
+		pass # self.Freeze() # Seems not to work...
 
 	self.updateCount += 1</t>
 <t tx="edream.110203113231.296">def endUpdate (self,flag=true):
@@ -5814,6 +5219,7 @@ def getEditTextDict(self,v):    trace() #  return self.tree.edit_text_dict.get(v
 
 	self.updateCount -= 1
 	if flag and self.updateCount == 0:
+		## self.Thaw()
 		self.redraw()</t>
 <t tx="edream.110203113231.297">def currentVnode(self):
 	return self.mCurrentVnode
@@ -5911,7 +5317,7 @@ if wx and 0: # Enable the plugin (only if wxPython has been imported)...
 	else:
 		s = "Can't install wxPython gui: previous gui installed"
 		print s ; es(s,color="red")</t>
-<t tx="edream.110203113231.303">import leoCommands,leoFind,leoFrame,leoGui,leoNodes,leoTree
+<t tx="edream.110203113231.303">import leoColor,leoCommands,leoFind,leoFrame,leoGui,leoMenu,leoNodes,leoTree
 import os,sys,traceback
 
 try:    from wxPython import wx
@@ -6005,12 +5411,9 @@ def setEncoding (self):
 	
 	"""Create the global windows for the application."""
 	
-	app.findFrame = leoFind.leoFind()
+	app.findFrame = wxFindFrame()
 	app.findFrame.top.withdraw()
 	app.globalWindows.append(app.findFrame)</t>
-<t tx="edream.110203113231.313">def destroy(self,widget):
-	
-	pass # wx code not ready yet.</t>
 <t tx="edream.110203113231.314">def finishCreate (self):
 
 	pass
@@ -6040,7 +5443,7 @@ def setEncoding (self):
 <t tx="edream.110203113231.318"></t>
 <t tx="edream.110203113231.319">def getFontFromParams(self,family,size,slant,weight):
 	
-	trace(app.config.defaultFont)
+	## trace(app.config.defaultFont)
 	
 	return app.config.defaultFont ##
 	
@@ -6059,117 +5462,120 @@ def setEncoding (self):
 		return app.config.defaultFont</t>
 <t tx="edream.110203113231.320">def replaceClipboardWith (self,s):
 
-	trace(s)
+	cb = wx.wxTheClipboard
+	if cb.Open():
+		cb.Clear()
+		cb.SetData(s)
+		cb.Flush()
+		cb.Close()
 	
 def getTextFromClibboard (self):
 	
-	trace()</t>
+	return None
+	
+	# This code doesn't work yet.
+	
+	cb = wx.wxTheClipboard ; data = None
+  	if cb.Open():
+		data = wx.wxDataObject()
+		cb.GetData(data)
+		data = data.GetDataHere()
+		cb.Close()
+	return data</t>
 <t tx="edream.110203113231.321"></t>
 <t tx="edream.110203113231.322">def runAboutLeoDialog(self,version,copyright,url,email):
 	
 	"""Create and run a wxPython About Leo dialog."""
 
-	trace(version,copyright,url,email)
+	message = "%s\n\n%s\n\n%s\n\n%s" % (
+		version.strip(),copyright.strip(),url.strip(),email.strip())
 	
-	wx.wxMessageBox(version,"About Leo",wx.wxCenter,self.root)</t>
+	wx.wxMessageBox(message,"About Leo",wx.wxCenter,self.root)</t>
 <t tx="edream.110203113231.323">def runAskOkDialog(self,title,message=None,text="Ok"):
 	
 	"""Create and run a wxPython askOK dialog ."""
 	
-	dialog = wxMessageDialog(self.root,message,"LeoWX",wxYES_NO)
-	answer = dialog.ShowModal()
-	trace(answer)
-	return choose(answer==wxYES,"yes","no")</t>
+	d = wx.wxMessageDialog(self.root,message,"wxLeo",wx.wxOK)
+	d.ShowModal()
+	return "ok"</t>
 <t tx="edream.110203113231.324">def runAskOkCancelNumberDialog(self,title,message):
+
 	"""Create and run a wxPython askOkCancelNumber dialog ."""
-	return 666
 
-</t>
+	trace()
+	return 666</t>
 <t tx="edream.110203113231.325">def runAskYesNoDialog(selftitle,message=None):
-	"""Create and run a wxPython askYesNo dialog."""
-	return "no"
 
-</t>
+	"""Create and run a wxPython askYesNo dialog."""
+	
+	d = wx.wxMessageDialog(self.root,message,"wxLeo",wx.wxYES_NO)
+	answer = d.ShowModal()
+
+	return choose(answer==wx.wxYES,"yes","no")</t>
 <t tx="edream.110203113231.326">def runAskYesNoCancelDialog(self,title,
 	message=None,yesMessage="Yes",noMessage="No",defaultButton="Yes"):
+
 	"""Create and run a wxPython askYesNoCancel dialog ."""
-	return "cancel"
 	
-</t>
+	d = wx.wxMessageDialog(self.root,message,"wxLeo",wx.wxYES_NO | wx.wxCANCEL)
+	answer = d.ShowModal()
+	
+	if answer == wx.wxID_YES:
+		return "yes"
+	elif answer == wx.wxID_NO:
+		return "no"
+	else:
+		assert(answer == wx.wxID_CANCEL)
+		return "cancel"</t>
 <t tx="edream.110203113231.327">def runOpenFileDialog(self,title,filetypes,defaultextension):
 
-	"""Create and run an Tkinter open file dialog ."""
+	"""Create and run a wxPython open file dialog ."""
+	
+	wildcard = self.getWildcardList(filetypes)
 
-	return tkFileDialog.askopenfilename(
-		title=title,
-		filetypes=filetypes,
-		defaultextension=defaultextension)
+	d = wx.wxFileDialog(
+		parent=None, message=title,
+		defaultDir="", defaultFile="",
+		wildcard=wildcard,
+		style= wx.wxOPEN | wx.wxCHANGE_DIR | wx.wxHIDE_READONLY)
 
+	val = d.ShowModal()
+	if val == wx.wxID_OK:
+		file = d.GetFilename()
+		return file
+	else:
+		return None 
 </t>
 <t tx="edream.110203113231.328">def runSaveFileDialog(self,initialfile,title,filetypes,defaultextension):
 
-	"""Create and run an Tkinter save file dialog ."""
+	"""Create and run a wxPython save file dialog ."""
 
-	return tkFileDialog.asksaveasfilename(
-		initialfile=initialfile,
-		title=title,
-		filetypes=filetypes,
-		defaultextension=defaultextension)</t>
-<t tx="edream.110203113231.329">def setIdleTimeHook (self,idleTimeHookHandler,*args,**keys):
-	
-	trace(idleTimeHookHandler)
-	
-def setIdleTimeHookAfterDelay (self,delay,idleTimeHookHandler,*args,**keys):
-	
-	trace(delay,idleTimeHookHandler)</t>
-<t tx="edream.110203113231.330"></t>
-<t tx="edream.110203113231.331">def newLeoFrame(self,title):
-	
-	"""Create a view frame for the Leo main window."""
+	wildcard = self.getWildcardList(filetypes)
 
-	return wxLeoFrame(title)</t>
-<t tx="edream.110203113231.332">def newColorFrame(self,commander):
-	"""Create a colorFrame."""
-	pass # To do
+	d = wx.wxFileDialog(
+		parent=None, message=title,
+		defaultDir="", defaultFile="",
+		wildcard=wildcard,
+		style= wx.wxSAVE | wx.wxCHANGE_DIR | wx.wxOVERWRITE_PROMPT)
 
-def newColorNameFrame(self,commander):
-	"""Create a colorNameFrame."""
-	pass # To do
-
-def newCompareFrame(self,commander):
-	"""Create a compareFrame."""
-	pass # To do
-
-def newFindFrame(self,commander):
-	"""Create a findFrame."""
-	pass # To do
-
-def newFontFrame(self,commander):
-	"""Create a fontFrame."""
-	pass # To do
-
-def newPrefsFrame(self,commander):
-	"""Create a prefsFrame."""
-	pass # To do</t>
+	val = d.ShowModal()
+	if val == wx.wxID_OK:
+		file = d.GetFilename()
+		return file
+	else:
+		return None</t>
+<t tx="edream.110203113231.329"></t>
 <t tx="edream.110203113231.333">def destroyLeoFrame (self,frame):
 
 	trace(frame.title)
 	frame.Close()</t>
-<t tx="edream.110203113231.334">def destroy (self,widget):
-	
-	trace()</t>
 <t tx="edream.110203113231.335"></t>
 <t tx="edream.110203113231.336">def get_focus(self,top):
 	
 	"""Returns the widget that has focus, or body if None."""
 
 	pass # wx code not ready yet.</t>
-<t tx="edream.110203113231.337">def set_focus(self,commands,widget):
-	
-	"""Set the focus of the widget in the given commander if it needs to be changed."""
-	
-	pass # wx code not ready yet.</t>
-<t tx="edream.110203113231.338">def force_focus(self,commands,widget):
+<t tx="edream.110203113231.337">def set_focus(self,c,widget):
 	
 	"""Set the focus of the widget in the given commander if it needs to be changed."""
 	
@@ -6181,6 +5587,8 @@ def newPrefsFrame(self,commander):
 	
 	Use tk's wm_iconbitmap function if available (tk 8.3.4 or greater).
 	Otherwise, try to use the Python Imaging Library and the tkIcon package."""
+	
+	trace(w)
 
 	if self.bitmap != None:
 		# We don't need PIL or tkicon: this is tk 8.3.4 or greater.
@@ -6248,76 +5656,16 @@ def createLeoIcon (self,icon):
 		return _tkicon.new(i.size, c, m)
 	except:
 		return None</t>
-<t tx="edream.110203113231.343"># WARNING: Call this routine _after_ creating a dialog.
-# (This routine inhibits the grid and pack geometry managers.)
-
-def get_window_info (self,top):
-	
-	top.update_idletasks() # Required to get proper info.
+<t tx="edream.110203113231.343">def get_window_info(self,window):
 
 	# Get the information about top and the screen.
-	geom = top.geometry() # geom = "WidthxHeight+XOffset+YOffset"
-	dim,x,y = string.split(geom,'+')
-	w,h = string.split(dim,'x')
-	w,h,x,y = int(w),int(h),int(x),int(y)
+	x,y = window.GetPosition()
+	w,h = window.GetSize()
 	
 	return w,h,x,y</t>
-<t tx="edream.110203113231.344"># Center the dialog on the screen.
-# WARNING: Call this routine _after_ creating a dialog.
-# (This routine inhibits the grid and pack geometry managers.)
-
-def center_dialog(self,top):
-
-	sw = top.winfo_screenwidth()
-	sh = top.winfo_screenheight()
-	w,h,x,y = get_window_info(top)
+<t tx="edream.110203113231.344">def center_dialog(window):
 	
-	# Set the new window coordinates, leaving w and h unchanged.
-	x = (sw - w)/2
-	y = (sh - h)/2
-	top.geometry("%dx%d%+d%+d" % (w,h,x,y))
-	
-	return w,h,x,y</t>
-<t tx="edream.110203113231.345"># Returns frames w and f.
-# Typically the caller would pack w into other frames, and pack content into f.
-
-def create_labeled_frame (self,parent,
-	caption=None,relief="groove",bd=2,padx=0,pady=0):
-	
-	Tk = Tkinter
-	# Create w, the master frame.
-	w = Tk.Frame(parent)
-	w.grid(sticky="news")
-	
-	# Configure w as a grid with 5 rows and columns.
-	# The middle of this grid will contain f, the expandable content area.
-	w.columnconfigure(1,minsize=bd)
-	w.columnconfigure(2,minsize=padx)
-	w.columnconfigure(3,weight=1)
-	w.columnconfigure(4,minsize=padx)
-	w.columnconfigure(5,minsize=bd)
-	
-	w.rowconfigure(1,minsize=bd)
-	w.rowconfigure(2,minsize=pady)
-	w.rowconfigure(3,weight=1)
-	w.rowconfigure(4,minsize=pady)
-	w.rowconfigure(5,minsize=bd)
-
-	# Create the border spanning all rows and columns.
-	border = Tk.Frame(w,bd=bd,relief=relief) # padx=padx,pady=pady)
-	border.grid(row=1,column=1,rowspan=5,columnspan=5,sticky="news")
-	
-	# Create the content frame, f, in the center of the grid.
-	f = Tk.Frame(w,bd=bd)
-	f.grid(row=3,column=3,sticky="news")
-	
-	# Add the caption.
-	if caption and len(caption) &gt; 0:
-		caption = Tk.Label(parent,text=caption,highlightthickness=0,bd=0)
-		caption.tkraise(w)
-		caption.grid(in_=w,row=0,column=2,rowspan=2,columnspan=3,padx=4,sticky="w")
-
-	return w,f</t>
+	window.Center()</t>
 <t tx="edream.110203113231.346">class wxLeoApp (wx.wxApp):
 	
 	@others
@@ -6335,7 +5683,7 @@ def create_labeled_frame (self,parent,
 	# trace()
 	return true
 </t>
-<t tx="edream.110203113231.349">class wxLeoFrame(wx.wxFrame):
+<t tx="edream.110203113231.349">class wxLeoFrame(wx.wxFrame,leoFrame.leoFrame):
 	
 	"""A class to create a wxPython from for the main Leo window."""
 
@@ -6344,436 +5692,28 @@ def create_labeled_frame (self,parent,
 <t tx="edream.110203113231.351">def __repr__ (self):
 	
 	return "wxLeoFrame: " + self.title</t>
-<t tx="edream.110203113231.352">def createMenuBar(self):
-	
-	self.menuBar = menuBar = wx.wxMenuBar()
-	self.menuShortcuts = []
-	
-	&lt;&lt; create the file menu &gt;&gt;
-	&lt;&lt; create the edit menu &gt;&gt;
-	&lt;&lt; create the outline menu &gt;&gt;
-	if 0: # c not created yet.
-		doHook("create-optional-menus",c=c)
-	&lt;&lt; create the window menu &gt;&gt;
-	&lt;&lt; create the help menu &gt;&gt;
-	
-	for menu,name in (
-		(fileMenu, "&amp;File"),
-		(editMenu, "&amp;Edit"),
-		(outlineMenu, "&amp;Outline"),
-		(windowMenu, "&amp;Window"),
-		(helpMenu, "&amp;Help")):
-	
-		menuBar.Append(menu,name)
-		
-	self.SetMenuBar(menuBar)  # attach the menu bar to the frame
-	
-	# app().menuWarningsGiven = true</t>
-<t tx="edream.110203113231.353">fileMenu = wx.wxMenu()
-
-&lt;&lt; create the top-level file entries &gt;&gt;
-&lt;&lt; create the recent files submenu &gt;&gt;
-fileMenu.AppendSeparator()
-&lt;&lt; create the read/write submenu &gt;&gt;
-&lt;&lt; create the tangle submenu &gt;&gt;
-&lt;&lt; create the untangle submenu &gt;&gt;
-&lt;&lt; create the import submenu &gt;&gt;
-&lt;&lt; create the export submenu &gt;&gt;
-fileMenu.AppendSeparator()
-
-# Create the last entries.
-exitTable = (("E&amp;xit","Ctrl-Q",self.OnQuit),)
-self.createMenuEntries(fileMenu,exitTable)</t>
-<t tx="edream.110203113231.354">@ leo.py will probably never have a Print command.  Instead, export text files that may be formatted and printed as desired.
-@c
-
-table = (
-	("&amp;New","Ctrl+N",self.OnNew),
-	("&amp;Open...","Ctrl+O",self.OnOpen))
-self.createMenuEntries(fileMenu,table)
-
-# Create a new menu rather than call OnOpenWith.
-openWithMenu = wx.wxMenu()
-
-table = (
-	("-",None,None),
-	("&amp;Close","Ctrl+W",self.OnClose),
-	("&amp;Save","Ctrl+S",self.OnSave),
-	("Save &amp;As","Shift+Ctrl+S",self.OnSaveAs),
-	("Save To",None,self.OnSaveTo),
-	("Re&amp;vert To Saved",None,self.OnRevert,self.OnUpdateRevert))
-
-self.createMenuEntries(fileMenu,table)</t>
-<t tx="edream.110203113231.355">recentFilesMenu = wx.wxMenu()
-
-self.recentFiles = app().config.getRecentFiles()
-
-if 0: # Not ready yet.
-	self.createRecentFilesMenuItems()
-	
-lab = "Recent &amp;Files..."
-fileMenu.AppendMenu(const(lab),lab,recentFilesMenu)</t>
-<t tx="edream.110203113231.356">readWriteMenu = wx.wxMenu()
-
-table = [
-		("&amp;Read Outline Only","Shift+Ctrl+R",self.OnReadOutlineOnly),
-		("Read @file &amp;Nodes",None,self.OnReadAtFileNodes),
-		("-",None,None),
-		#("Write &amp;Dirty @file Nodes","Shift+Ctrl+Q",self.OnWriteDirtyAtFileNodes),
-		#("Write &amp;Missing @file Nodes",None,self.OnWriteMissingAtFileNodes),
-		("Write &amp;Outline Only",None,self.OnWriteOutlineOnly),
-		("&amp;Write @file Nodes","Shift+Ctrl+W",self.OnWriteAtFileNodes)]
-
-self.createMenuEntries(readWriteMenu,table)
-
-lab = "&amp;Read/Write..."
-fileMenu.AppendMenu(const(lab),lab,readWriteMenu)</t>
-<t tx="edream.110203113231.357">tangleMenu = wx.wxMenu()
-
-table = (
-	("Tangle &amp;All","Shift+Ctrl+A",self.OnTangleAll),
-	("Tangle &amp;Marked","Shift+Ctrl+M",self.OnTangleMarked),
-	("&amp;Tangle","Shift+Ctrl+T",self.OnTangle))
-
-self.createMenuEntries(tangleMenu,table)
-
-lab = "&amp;Tangle..."
-fileMenu.AppendMenu(const(lab),lab,tangleMenu)</t>
-<t tx="edream.110203113231.358">untangleMenu = wx.wxMenu()
-
-table = (
-	("Untangle &amp;All",None,self.OnUntangleAll),
-	("Untangle &amp;Marked",None,self.OnUntangleMarked),
-	("&amp;Untangle","Shift+Ctrl+U",self.OnUntangle))
-	
-self.createMenuEntries(untangleMenu,table)
-
-lab = "&amp;Untangle..."
-fileMenu.AppendMenu(const(lab),lab,untangleMenu)</t>
-<t tx="edream.110203113231.359">importMenu = wx.wxMenu()
-
-table = (
-	#("Import To @&amp;file","Shift+Ctrl+F",self.OnImportAtFile),
-	#("Import To @&amp;root",None,self.OnImportAtRoot),
-	("Import &amp;CWEB Files",None,self.OnImportCWEBFiles),
-	("Import &amp;noweb Files",None,self.OnImportNowebFiles))
-	#("Import Flattened &amp;Outline",None,self.OnImportFlattenedOutline))
-
-self.createMenuEntries(importMenu,table)
-
-lab = "&amp;Import..."
-fileMenu.AppendMenu(const(lab),lab,importMenu)</t>
-<t tx="edream.110203113231.360">exportMenu = wx.wxMenu()
-
-table = (
-	#("Export &amp;Headlines",None,self.OnExportHeadlines),
-	#("Outline To &amp;CWEB",None,self.OnOutlineToCWEB),
-	#("Outline To &amp;Noweb",None,self.OnOutlineToNoweb),
-	("&amp;Flatten Outline",None,self.OnFlattenOutline),)
-	#("&amp;Remove Sentinels",None,self.OnRemoveSentinels),
-	#("&amp;Weave",None,self.OnWeave)]
-
-self.createMenuEntries(exportMenu,table)
-
-lab = "&amp;Export..."
-fileMenu.AppendMenu(const(lab),lab,exportMenu)</t>
-<t tx="edream.110203113231.361">editMenu = wx.wxMenu()
-
-&lt;&lt; create the first top-level edit entries &gt;&gt;
-&lt;&lt; create the edit body submenu &gt;&gt;
-&lt;&lt; create the edit headline submenu &gt;&gt;
-&lt;&lt; create the find submenu &gt;&gt;
-&lt;&lt; create the last top-level edit entries &gt;&gt;</t>
-<t tx="edream.110203113231.362">table = (
-	("Can't Undo","Ctrl+Z",self.OnUndo,self.OnUpdateUndo), # &amp;U reserved for Undo
-	("Can't Redo","Shift+Ctrl+Z",self.OnRedo,self.OnUpdateRedo), # &amp;R reserved for Redo
-	("-",None,None),
-	#("Cu&amp;t","Ctrl+X",self.OnCutFromMenu,self.OnUpdateCut), 
-	#("Cop&amp;y","Ctrl+C",self.OnCopyFromMenu,self.OnUpdateCopy),
-	#("&amp;Paste","Ctrl+V",self.OnPasteFromMenu,self.OnUpdatePaste),
-	#("&amp;Delete",None,self.OnDelete,self.OnUpdateDelete),
-	("Select &amp;All","Ctrl+A",self.OnSelectAll,self.OnUpdateSelectAll),
-	("-",None,None))
-
-self.createMenuEntries(editMenu,table)</t>
-<t tx="edream.110203113231.363">editBodyMenu = wx.wxMenu()
-
-table = (
-	("Extract &amp;Section","Shift+Ctrl+E",self.OnExtractSection,self.OnUpdateExtractSection),
-	("Extract &amp;Names","Shift+Ctrl+N",self.OnExtractNames,self.OnUpdateExtractNames),
-	("&amp;Extract","Shift+Ctrl+D",self.OnExtract,self.OnUpdateExtract))
-
-	#("-",None,None),
-	#("Convert All B&amp;lanks",None,self.OnConvertAllBlanks),
-	#("Convert All T&amp;abs",None,self.OnConvertAllTabs),
-	#("Convert &amp;Blanks","Shift+Ctrl+B",self.OnConvertBlanks),
-	#("Convert &amp;Tabs","Shift+Ctrl+J",self.OnConvertTabs),
-	#("Insert Body Time/&amp;Date","Shift+Ctrl+G",self.OnInsertBodyTime),
-	#("&amp;Reformat Paragraph","Shift+Ctrl+P",self.OnReformatParagraph),
-	#("-",None,None),
-	#("&amp;Indent","Ctrl+]",self.OnIndent),
-	#("&amp;Unindent","Ctrl+[",self.OnDedent),
-	#("&amp;Match Brackets","Ctrl+K",self.OnFindMatchingBracket))
-	
-self.createMenuEntries(editBodyMenu,table)
-
-lab = "Edit &amp;Body..."
-editMenu.AppendMenu(const(lab),lab,editBodyMenu)</t>
-<t tx="edream.110203113231.364">editHeadlineMenu = wx.wxMenu()
-
-table = (
-	("Edit &amp;Headline","Ctrl+H",self.OnEditHeadline),)
-
-	#("&amp;End Edit Headline","Escape",self.OnEndEditHeadline),
-	#("&amp;Abort Edit Headline","Shift-Escape",self.OnAbortEditHeadline),
-	#("Insert Headline Time/&amp;Date","Shift+Ctrl+H",self.OnInsertHeadlineTime))
-	
-	# 5/16/03 EKR: I dislike this command.
-	#("Toggle Angle Brackets","Ctrl+B",self.OnToggleAngleBrackets)
-	
-self.createMenuEntries(editHeadlineMenu,table)
-
-lab = "Edit &amp;Headline..."
-editMenu.AppendMenu(const(lab),lab,editHeadlineMenu)
-
-
-</t>
-<t tx="edream.110203113231.365">findMenu = wx.wxMenu()
-
-table = (
-	("&amp;Find Panel","Ctrl+F",self.OnFindPanel),
-	("-",None,None),
-	("Find &amp;Next","F3",self.OnFindNext,self.OnUpdateFind),
-	("Find &amp;Previous","F4",self.OnFindPrevious,self.OnUpdateFind),
-	("&amp;Replace","Ctrl+=",self.OnReplace,self.OnUpdateReplace),
-	("Replace, &amp;Then Find","Ctrl+-",self.OnReplaceThenFind,self.OnUpdateReplace))
-
-self.createMenuEntries(findMenu,table)
-
-lab = "&amp;Find..."
-editMenu.AppendMenu(const(lab),lab,findMenu)</t>
-<t tx="edream.110203113231.366">if 1:
-	label = "Toggle Invisibles"
-else:
-	label = choose(c.tree.colorizer.showInvisibles,"Hide In&amp;visibles","Show In&amp;visibles")
-
-table = (
-	#("&amp;Go To Line Number","Alt+G",self.OnGoToLineNumber),
-	#("&amp;Execute Script","Alt+Shift+E",self.OnExecuteScript),
-	("Set Fon&amp;t...","Shift+Alt+T",self.OnFontPanel),
-	#("Set &amp;Colors...","Shift+Alt+C",self.OnColorPanel),
-	#(label,"Alt+V",self.OnViewAllCharacters),
-	#("-",None,None),
-	("Prefere&amp;nces","Ctrl+Y",self.OnPreferences))
-
-self.createMenuEntries(editMenu,table)</t>
-<t tx="edream.110203113231.367">outlineMenu = wx.wxMenu()
-
-&lt;&lt; create top-level outline menu &gt;&gt;
-&lt;&lt; create expand/contract submenu &gt;&gt;
-&lt;&lt; create move submenu &gt;&gt;
-&lt;&lt; create mark submenu &gt;&gt;
-&lt;&lt; create goto submenu &gt;&gt;</t>
-<t tx="edream.110203113231.368">table = (
-	("C&amp;ut Node","Shift+Ctrl+X",self.OnCutNode,self.OnUpdateCutNode),
-	("C&amp;opy Node","Shift+Ctrl+C",self.OnCopyNode),
-	("&amp;Paste Node","Shift+Ctrl+V",self.OnPasteNode,self.OnUpdatePasteNode),
-	("&amp;Delete Node","Shift+Ctrl+BkSp",self.OnDeleteNode,self.OnUpdateDeleteNode),
-	("-",None,None),
-	("&amp;Insert Node","Ctrl+I",self.OnInsertNode),
-	("&amp;Clone Node","Ctrl+`",self.OnCloneNode))
-
-	# ("Sort Node",None,self.OnSortChildren,self.OnUpdateSortNode)
-	# ("Sort C&amp;hildren",None,self.OnSortChildren),
-	#("&amp;Sort Siblings","Alt-A",self.OnSortSiblings),
-	#("-",None,None))
-
-self.createMenuEntries(outlineMenu,table)</t>
-<t tx="edream.110203113231.369">expandMenu = wx.wxMenu()
-
-table = (
-	("&amp;Contract All","Alt+-",self.OnContractAll,self.OnUpdateContractAll),
-	# ("Contract &amp;Node","Alt+[",self.OnContractNode),
-	# ("Contract &amp;Parent","Alt+0",self.OnContractParent),
-	("-",None,None),
-	# ("Expand P&amp;rev Level","Alt+.",self.OnExpandPrevLevel),
-	# ("Expand N&amp;ext Level","Alt+=",self.OnExpandNextLevel),
-	# ("-",None,None),
-	("Expand To Level &amp;1","Alt+1",self.OnExpandToLevel1),
-	("Expand To Level &amp;2","Alt+2",self.OnExpandToLevel2),
-	("Expand To Level &amp;3","Alt+3",self.OnExpandToLevel3),
-	("Expand To Level &amp;4","Alt+4",self.OnExpandToLevel4),
-	("Expand To Level &amp;5","Alt+5",self.OnExpandToLevel5),
-	("Expand To Level &amp;6","Alt+6",self.OnExpandToLevel6),
-	("Expand To Level &amp;7","Alt+7",self.OnExpandToLevel7),
-	("Expand To Level &amp;8","Alt+8",self.OnExpandToLevel8),
-	# ("Expand To Level &amp;9","Alt+9",self.OnExpandToLevel9),
-	("-",None,None),
-	("Expand &amp;All","Alt+9",self.OnExpandAll,self.OnUpdateExpandAll))
-	#("Expand N&amp;ode","Alt+]",self.OnExpandNode))
-
-self.createMenuEntries(expandMenu,table)
-
-lab = "&amp;Expand/Contract..."
-outlineMenu.AppendMenu(const(lab),lab,expandMenu)
-
-if 0: # not used yet.  Maybe never.
-	wx.EVT_UPDATE_UI(cExpandAllChildrenMenuItem,self.OnUpdateExpandAllChildren)
-	wx.EVT_UPDATE_UI(cExpandChilrenMenuItem,self.OnUpdateExpandChildren)
-	wx.EVT_UPDATE_UI(cContractAllChildrenMenuItem,self.OnUpdateContractAllChildren)
-	wx.EVT_UPDATE_UI(cContractChilrenMenuItem,self.OnUpdateContractChildren)</t>
-<t tx="edream.110203113231.370">moveSelectMenu = wx.wxMenu()
-
-table = (
-	("Move &amp;Down", "Ctrl+D",self.OnMoveDown,self.OnUpdateMoveDown),
-	("Move &amp;Left", "Ctrl+L",self.OnMoveLeft,self.OnUpdateMoveLeft),
-	("Move &amp;Right","Ctrl+R",self.OnMoveRight,self.OnUpdateMoveRight),
-	("Move &amp;Up",   "Ctrl+U",self.OnMoveUp,self.OnUpdateMoveUp),
-	("-",None,None),
-	("&amp;Promote","Ctrl+{",self.OnPromote,self.OnUpdatePromote),
-	("&amp;Demote", "Ctrl+}",self.OnDemote,self.OnUpdateDemote))
-	
-self.createMenuEntries(moveSelectMenu,table)
-
-lab = "&amp;Move..."
-outlineMenu.AppendMenu(const(lab),lab,moveSelectMenu)</t>
-<t tx="edream.110203113231.371">markMenu = wx.wxMenu()
-
-table = (
-	("&amp;Mark","Ctrl-M",self.OnMark,self.OnUpdateMark),
-	("Mark &amp;Subheads","Alt+S",self.OnMarkSubheads,self.OnUpdateMarkSubheads),
-	("Mark Changed &amp;Items","Alt+C",self.OnMarkChangedItems,self.OnUpdateMarkChangedItems),
-	("Mark Changed &amp;Roots","Alt+R",self.OnMarkChangedRoots,self.OnUpdateMarkChangedRoots),
-	# ("Mark &amp;Clones","Alt+K",self.OnMarkClones),
-	("&amp;Unmark All","Alt+U",self.OnUnmarkAll))
-	
-self.createMenuEntries(markMenu,table)
-
-lab = "M&amp;ark/Unmark..."
-outlineMenu.AppendMenu(const(lab),lab,markMenu)</t>
-<t tx="edream.110203113231.372">gotoMenu = wx.wxMenu()
-
-table = (
-	#("Go Back",None,self.OnGoPrevVisitedNode), # Usually use buttons for this.
-	#("Go Forward",None,self.OnGoNextVisitedNode),
-	#("-",None,None),
-	("Go To Next &amp;Marked","Alt+M",self.OnGoToNextMarked,self.OnUpdateGoToNextMarked),
-	("Go To Next C&amp;hanged","Alt+D",self.OnGoToNextChanged,self.OnUpdateGoToNextChanged),
-	# ("Go To Next &amp;Clone","Alt+N",self.OnGoToNextClone),
-	("-",None,None),
-	#("Go To &amp;First Node","Alt+Shift+G",self.OnGoToFirstNode),
-	#("Go To &amp;Last Node","Alt+Shift+H",self.OnGoToLastNode),
-	#("Go To &amp;Parent","Alt+Shift+P",self.OnGoToParent),
-	#("Go To P&amp;rev Sibling","Alt+Shift+R",self.OnGoToPrevSibling),
-	#("Go To Next &amp;Sibling","Alt+Shift+S",self.OnGoToNextSibling),
-	#("-",None,None),
-	("Go To Prev V&amp;isible","Alt-UpArrow",self.OnGoPrevVisible,self.OnUpdateGoPrevVisible),
-	("Go To Next &amp;Visible","Alt-DnArrow",self.OnGoNextVisible,self.OnUpdateGoNextVisible),
-	("Go To Prev Node","Alt-Shift+UpArrow",self.OnGoBack,self.OnUpdateGoBack),
-	("Go To Next Node","Alt-Shift-DnArrow",self.OnGoNext,self.OnUpdateGoNext))
-	
-self.createMenuEntries(gotoMenu,table)
-
-lab = "&amp;Go To..."
-outlineMenu.AppendMenu(const(lab),lab,gotoMenu)</t>
-<t tx="edream.110203113231.373">windowMenu = wx.wxMenu()
-
-table = (
-	("&amp;Equal Sized Panes","Ctrl-E",self.OnEqualSizedPanes),
-	("Toggle &amp;Active Pane","Ctrl-T",self.OnToggleActivePane),
-	# ("Toggle &amp;Split Direction",None,self.OnToggleSplitDirection),
-	("-",None,None),
-	("Casca&amp;de",None,self.OnCascade),
-	("&amp;Minimize All",None,self.OnMinimizeAll))
-	
-	#("-",None,None),
-	#("Open &amp;Compare Window",None,self.OnOpenCompareWindow))
-
-self.createMenuEntries(windowMenu,table)</t>
-<t tx="edream.110203113231.374">helpMenu = wx.wxMenu()
-
-table = (
-	("&amp;About Leo...",None,self.OnAbout),)
-	#("Online &amp;Home Page",None,self.OnLeoHome),
-	#("-",None,None),
-	#("Open Online &amp;Tutorial",None,self.OnLeoTutorial))
-
-self.createMenuEntries(helpMenu,table)
-
-if 0: # not ready yet.
-
-	if wx.wxPlatform == '__WXMSW__':
-		table = (("Open &amp;Offline Tutorial",None,self.OnLeoHelp),)
-		self.createMenuEntries(helpMenu,table)
-	
-	table = (
-		("Open Leo&amp;Docs.leo",None,self.OnLeoDocumentation),
-		("-",None,None),
-		("Open Leo&amp;Config.leo",None,self.OnLeoConfig),
-		("Apply &amp;Settings",None,self.OnApplyConfig))
-
-	self.createMenuEntries(helpMenu,table)</t>
-<t tx="edream.110203113231.375">@ The old, non-user-configurable code bound shortcuts in createMenuBar.  The new user-configurable code binds shortcuts here.
-
-Centralized tables of shortscuts no longer exist as they did in createAccelerators.  To check for duplicates, (possibly arising from leoConfig.txt) we add entries to a central dictionary here, and report duplicates if an entry for a canonicalized shortcut already exists.
-@c
-
-def createMenuEntries (self,menu,table,openWith=0):
-	
-	for data in table:
-		if len(data) == 3:
-			label,accel,command = data ; update_command = None
-		else:
-			label,accel,command,update_command = data
-
-		if label == '-':
-			menu.AppendSeparator()
-		else:
-			def callback(event,command=command):
-				try: command(event)
-				except: print traceback.print_exc()
-	
-			id = const(label)
-			menu.Append(id,label,label)
-			wx.EVT_MENU(self,id,callback)
-			if update_command:
-				self.menuIdDict[label] = id,label,update_command
-				# We no longer pollute idle-time with this garbage
-				# wx.EVT_UPDATE_UI(self,id,update_command)</t>
-<t tx="edream.110203113231.376">if 0:# Notifications... We probably will never see these.
-	def onBodyChanged(self,*args,**keys): trace() #  return self.tree.onBodyChanged(*args,**keys)
-	def onHeadChanged(self,*args,**keys): trace() #  return self.tree.onHeadChanged(*args,**keys)
-	def OnHeadlineKey(self,v,event):      trace(v) #  return self.tree.OnHeadlineKey(v,event)
-	def idle_head_key(self,v):            trace(v) #  return self.tree.idle_head_key(v)
-	
-# Editing... These can remain do-nothings.
-def editLabel(self,v):           pass
-def editVnode(self):             pass
-def endEditLabel(self):          pass
-def setEditVnode(self,v):        trace() #  self.tree.editVnode = v
-def setNormalLabelState(self,v): pass</t>
-<t tx="edream.110203113231.377"># vnode callbacks: to be removed.
-if 0: # These will never be called, because the events are never generated.
-	def OnBoxClick(self,v):              trace() #  return self.tree.OnBoxClick(v)
-	def OnIconClick(self,v,event):       trace() #  return self.tree.OnIconClick(v,event)
-	def OnIconDoubleClick(self,v,event): trace() #  return self.tree.OnIconDoubleClick(v,event)
-	def OnIconRightClick(self,v,event):  trace() #  return self.tree.OnIconRightClick(v,event)
-	def OnDrag(self,v,event):            trace() #  return self.tree.OnDrag(v,event)
-	def OnEndDrag(self,v,event):         trace() #  return self.tree.OnEndDrag(v,event)
-	def OnPopup(self,v,event):           trace() #  return self.tree.OnPopup(v,event)</t>
 <t tx="edream.110203113231.378"></t>
-<t tx="edream.110203113231.379">def after_idle(*args):                        pass # trace()
+<t tx="edream.110203113231.379">def after_idle(*args):
+	pass
 
-def createOpenWithMenuFromTable (self,table): pass # trace()
-def getMenu (self,name):                      pass # trace(name)
-def resizePanesToRatio(self,ratio1,ratio2):   pass # trace(ratio1,ratio2)
-def setInitialWindowGeometry (self):          pass # trace()
-def setTopGeometry(self,geom):                pass # trace(geom)
-def updateRecentFiles(self,fileName):         pass # trace(fileName)
+def get_window_info (self):
+	"""Return the window information."""
+	return app.gui.get_window_info(self)
 
-def lift (self):   pass # trace()
-def update (self): pass # trace()
-def FindFocus(self): return self.body # Kludge.</t>
+def resizePanesToRatio(self,ratio1,ratio2):
+	pass
+
+def setInitialWindowGeometry (self):
+	pass
+
+def setTopGeometry(self,geom):
+	pass
+
+def lift (self):
+	self.Raise()
+
+def update (self):
+	pass</t>
 <t tx="edream.110203113231.380">def deiconify (self):
 
 	self.Iconize(false)</t>
@@ -6789,864 +5729,14 @@ def FindFocus(self): return self.body # Kludge.</t>
 		# trace("wxLeoFrame",v)
 		####  return self.tree.select(v,updateBeadList)
 </t>
-<t tx="edream.110203113231.383"></t>
 <t tx="edream.110203113231.384">def updateAllMenus(self,event):
 	
 	"""Called whenever any menu is pulled down."""
 	
-	for id,label,update_command in self.menuIdDict.values():
-
-		item = self.menuBar.FindItemById(id)
-		try:
-			self.updateMenuItem = item # optional param
-			val = update_command()
-			val = choose(val,1,0)
-			item.Enable(val)
-			# trace(id,bool(val),item.GetLabel())
-		except:
-			traceback.print_exc()
-			val = true</t>
-<t tx="edream.110203113231.385"></t>
-<t tx="edream.110203113231.386">def OnUpdateRevert(self):
+	# We define this routine to strip off the even param.
 	
-	return self.c.canRevert()
-</t>
-<t tx="edream.110203113231.387"></t>
-<t tx="edream.110203113231.388">def OnUpdateCopy(self):
-
-	w = self.FindFocus()
-	if w and w == self.body.bodyCtrl:
-		return self.body.bodyCtrl.CanCopy()
-	elif w and w == self.log:
-		return self.log.bodyCtrl.CanCopy()
-	else:
-		return false</t>
-<t tx="edream.110203113231.389">def OnUpdateCut(self):
-
-	w = self.FindFocus()
-	if w and w == self.body.bodyCtrl:
-		return self.body.bodyCtrl.CanCut()
-	elif w and w == self.log.logCtrl:
-		return self.log.logCtrl.CanCut()
-	else:
-		return false
-</t>
-<t tx="edream.110203113231.390">def OnUpdateDelete(self):
-	
-	return self.body.bodyCtrl.CanCut()</t>
-<t tx="edream.110203113231.391">def OnUpdateExtract(self):
-	
-	return true
-	
-	# c.canExtract calls tk routines.
-	# return self.c.canExtract()
-</t>
-<t tx="edream.110203113231.392">def OnUpdateExtractNames(self):
-	
-	return true
-	
-	# c.canExtractSectionNames calls tk routines.
-	# return self.c.canExtractSectionNames()</t>
-<t tx="edream.110203113231.393">def OnUpdateExtractSection(self):
-	
-	return true
-	
-	# c.canExtractSection calls tk routines.
-	# return self.c.canExtractSection()
-
-</t>
-<t tx="edream.110203113231.394">def OnUpdateFind(self):
-
-	return true
-
-	# return find_text.Length()&gt; 0
-</t>
-<t tx="edream.110203113231.395">def OnUpdatePaste(self):
-
-	if wx.wxPlatform == "__WXMSW__": # apparent bug.
-		return true
-	else:
-		w = self.FindFocus()
-		if w and w == self.body.bodyCtrl:
-			return self.body.bodyCtrl.CanPaste()
-		elif w and w == self.log.logCtrl:
-			return self.log.logCtrl.CanPaste()
-		else:
-			return false</t>
-<t tx="edream.110203113231.396">def OnUpdateRedo(self):
-
-	# The Tree view does not support redo.
-	if wx.wxPlatform == "__WXGTK__": # text control does not support undo/redo on wxGTK
-		return false
-	else:
-		return self.body.bodyCtrl.CanRedo()
-	
-</t>
-<t tx="edream.110203113231.397">def OnUpdateReplace(self):
-	
-	return true
-
-	# event.Enable(self.c.changeIsEnabled()</t>
-<t tx="edream.110203113231.398">def OnUpdateSelectAll(self):
-	
-	w = self.FindFocus()
-	return w and (w == self.body.bodyCtrl or w == self.log.logCtrl)
-</t>
-<t tx="edream.110203113231.399">def OnUpdateUndo(self):
-	
-	w = self.FindFocus()
-	enabled = true
-	
-	if 0: # not ready yet.
-		enabled = false
-		
-		# FindFocus seems to be a bit flakey,so use it only when absolutely needed.
-		if  w == self.tree:
-			enabled = self.c.canUndo()
-		else:
-			# Don't use FindFocus.
-			if wx.wxPlatform == "__WXGTK__": # text control does not support undo/redo on wxGTK
-				enabled = false
-			else:
-				enabled = self.body.bodyCtrl.CanUndo()
-
-	return enabled</t>
-<t tx="edream.110203113231.400">def hasSelection(self,void):
-
-	if self.body:
-		start,end = self.body.bodyCtrl.GetSelection()
-		return start != end
-	else:
-		return false</t>
-<t tx="edream.110203113231.401"></t>
-<t tx="edream.110203113231.402">def OnUpdateContractAll(self):
-
-	return self.c.canContractAllHeadlines()
-</t>
-<t tx="edream.110203113231.403">def OnUpdateContractAllChildren(self):
-	
-	return self.c.canContractAllSubheads()
-
-</t>
-<t tx="edream.110203113231.404">def OnUpdateContractChildren(self):
-	
-	return self.c.canContractSubheads()
-</t>
-<t tx="edream.110203113231.405">def OnUpdateCutNode(self):
-	
-	return self.c.canCutOutline()
-</t>
-<t tx="edream.110203113231.406">def OnUpdateDeleteNode(self):
-	
-	return self.c.canDeleteHeadline()
-</t>
-<t tx="edream.110203113231.407">def OnUpdateDemote(self):
-	
-	return self.c.canDemote()
-</t>
-<t tx="edream.110203113231.408">def OnUpdateExpandAll(self):
-	
-	return self.c.canExpandAllHeadlines()
-
-</t>
-<t tx="edream.110203113231.409">def OnUpdateExpandAllChildren(self):
-
-	return self.c.canExpandAllSubheads()
-</t>
-<t tx="edream.110203113231.410">def OnUpdateExpandChildren(self):
-
-	return self.c.canExpandAllSubheads()
-</t>
-<t tx="edream.110203113231.411">def OnUpdateGoBack(self):
-
-	return self.c.canSelectThreadBack()
-</t>
-<t tx="edream.110203113231.412">def OnUpdateGoNext(self):
-
-	return self.c.canSelectThreadNext()
-</t>
-<t tx="edream.110203113231.413">def OnUpdateGoNextVisible(self):
-
-	return self.c.canSelectVisNext()
-</t>
-<t tx="edream.110203113231.414">def OnUpdateGoPrevVisible(self):
-
-	return self.c.canSelectVisBack()
-</t>
-<t tx="edream.110203113231.415">def OnUpdateGoToNextChanged(self):
-
-	return self.c.canGoToNextDirtyHeadline()
-</t>
-<t tx="edream.110203113231.416">def OnUpdateGoToNextMarked(self):
-
-	return self.c.canGoToNextMarkedHeadline()
-</t>
-<t tx="edream.110203113231.417">def OnUpdateMark(self):
-	
-	v = self.c.currentVnode()
-	s = choose(v and v.isMarked(),"Unmark","Mark")
-	self.updateMenuItem.SetText(s)</t>
-<t tx="edream.110203113231.418">def OnUpdateMarkChangedItems(self):
-
-	return self.c.canMarkChangedHeadlines()
-</t>
-<t tx="edream.110203113231.419">def OnUpdateMarkChangedRoots(self):
-
-	return self.c.canMarkChangedRoots()
-</t>
-<t tx="edream.110203113231.420">def OnUpdateMarkSubheads(self):
-
-	v = self.c.currentVnode()
-	return v and v.hasChildren()
-</t>
-<t tx="edream.110203113231.421">def OnUpdateMoveDown(self):
-
-	return self.c.canMoveOutlineDown()
-</t>
-<t tx="edream.110203113231.422">def OnUpdateMoveLeft(self):
-
-	return self.c.canMoveOutlineLeft()
-</t>
-<t tx="edream.110203113231.423">def OnUpdateMoveRight(self):
-
-	return self.c.canMoveOutlineRight()
-</t>
-<t tx="edream.110203113231.424">def OnUpdateMoveUp(self):
-
-	return self.c.canMoveOutlineUp()
-</t>
-<t tx="edream.110203113231.425">def OnUpdatePasteNode(self):
-
-	return self.c.canPasteOutline()
-</t>
-<t tx="edream.110203113231.426">def OnUpdatePromote(self):
-
-	return self.c.canPromote()
-</t>
-<t tx="edream.110203113231.427">def OnUpdateSortNode(self):
-
-	return self.c.canSort()
-</t>
-<t tx="edream.110203113231.428"></t>
-<t tx="edream.110203113231.429"></t>
-<t tx="edream.110203113231.430">def OnNew(self,event):
-	
-	c,frame = app.gui.newLeoCommanderAndFrame(fileName=None)
-	doHook("new",old_c=self,new_c=c)
-
-	frame.setInitialWindowGeometry()
-	frame.deiconify()
-	frame.lift()
-	frame.resizePanesToRatio(frame.ratio,frame.secondary_ratio)
-	
-	c.beginUpdate()
-	t = leoNodes.tnode()
-	v = leoNodes.vnode(c,t)
-	v.initHeadString("NewHeadline")
-	v.moveToRoot()
-	c.editVnode(v)
-	c.endUpdate()
-	
-	set_focus(c,frame.body)</t>
-<t tx="edream.110203113231.431">def OnOpen(self,event):
-
-	# Create the Open dialog.
-	d = wx.wxFileDialog(
-		None,"Choose a Leo file",
-		"",# default directory
-		"",# default file
-		"*.leo",# wildcard
-		wx.wxOPEN | wx.wxMULTIPLE, # style of dialog.
-		wx.wxDefaultPosition)
-
-	if d.ShowModal()== wx.wxID_OK:
-		for path in d.GetPaths():
-			openWithFileName(path)</t>
-<t tx="edream.110203113231.432">def OnClose(self,event):
-
-	# Close the frame,giving the close handler a chance to veto.
-	self.Close()
-</t>
-<t tx="edream.110203113231.433"># Most of this code is common code.  Only the dialog stuff is unique to wx.
-
-def OnSave(self,event):
-	
-	c = self.commands
-
-	if c.mFileName:
-		c.fileCommands.save(c.mFileName)
-		c.setChanged(false)
-		return
-	else:
-		c.mFileName = ""
-
-	d = wx.wxFileDialog(None,"Save",
-		(""),        # default directory
-		c.mFileName, # default file
-		("*.leo"),   # wildcard
-		wx.wxSAVE | wx.wxOVERWRITE_PROMPT,
-		wx.wxDefaultPosition)
-		
-	# Tk allows the following params...
-		# filetypes=[("Leo files", "*.leo")],
-		# defaultextension=".leo")
-
-	if d.ShowModal()== wxID_OK:
-		fileName = d.GetPath()
-		if fileName &gt; 0:
-			c.mFileName = ensure_extension(fileName, ".leo")
-			self.title = c.mFileName
-			self.SetLabel(computeWindowTitle(c.mFileName))
-			c.fileCommands.save(c.mFileName)
-			self.updateRecentFiles(c.mFileName)</t>
-<t tx="edream.110203113231.434">def OnSaveAs(self,event):
-		
-	c = self.commands
-
-	# Make sure we never pass None to the ctor.
-	if not c.mFileName:
-		c.mFileName = ""
-		
-	d = wx.wxFileDialog(None,"Save As",
-		(""),      # default directory
-		c.mFileName, # default file
-		("*.leo"), # wildcard
-		wx.wxSAVE | wx.wxOVERWRITE_PROMPT,
-		wx.wxDefaultPosition)
-
-	if d.ShowModal()== wx.wxID_OK:
-		fileName = d.GetPath()
-		if fileName:
-			c.mFileName = ensure_extension(fileName, ".leo")
-			self.title = c.mFileName
-			self.SetLabel(computeWindowTitle(c.mFileName))
-			self.commands.fileCommands.saveAs(c.mFileName)
-			self.updateRecentFiles(c.mFileName)</t>
-<t tx="edream.110203113231.435">def OnSaveTo(self,event):
-
-	c = self.commands
-
-	# Make sure we never pass None to the ctor.
-	if not c.mFileName:
-		c.mFileName = ""
-		
-	d = wx.wxFileDialog(None,"Save To",
-		(""),        # default directory
-		c.mFileName, # default file
-		("*.leo"),   # wildcard
-		wx.wxSAVE | wx.wxOVERWRITE_PROMPT,
-		wx.wxDefaultPosition)
-
-	if d.ShowModal()== wx.wxID_OK:
-		fileName = d.GetPath()
-		if fileName:
-			fileName = ensure_extension(fileName, ".leo")
-			self.commands.fileCommands.saveTo(fileName)
-			self.updateRecentFiles(c.mFileName)</t>
-<t tx="edream.110203113231.436">def OnRevert(self,event):
-	
-	c = self.c ; fileName = c.mFileName
-
-	# Make sure the user wants to Revert.
-	prompt = "Revert to previous version of %s?" % fileName
-	answer = wx.wxMessageBox(prompt,"Revert to saved?", wx.wxYES_NO)
-	if answer == wx.wxNO: return
-	
-	# Kludge: rename this frame so OpenWithFileName won't think it is open.
-	c.mFileName = ""
-
-	# Create a new frame before deleting this frame.
-	frame = openWithFileName(fileName)
-
-	# Delete the form.
-	self.reverting = true  # Indicate that no prompt is needed.
-	self.Close()
-	self.reverting = false
-
-	# Bring the already-opened frame to the front.
-	frame.Show(false)
-	frame.Show(true)
-</t>
-<t tx="edream.110203113231.437">def OnPageSetup(self,event):
-	pass
-</t>
-<t tx="edream.110203113231.438">def OnPrint(self,event):
-	pass
-</t>
-<t tx="edream.110203113231.439">def OnTangleSubmenu(self,event):
-	pass</t>
-<t tx="edream.110203113231.440">def OnUntangleSubmenu(self,event):
-	pass</t>
-<t tx="edream.110203113231.441">def OnImportExportSubmenu(self,event):
-	pass</t>
-<t tx="edream.110203113231.442">def OnQuit(self,event):
-
-	self.quitting = true
-
-	# Closing all windows terminates Leo.  Stop if the user aborts.
-	while app.windowList:
-		w = app.windowList[0]
-		if not w.Close():
-			break # User cancelled a close.
-
-	self.quitting = false</t>
-<t tx="edream.110203113231.443">def OnReadOutlineOnly(self,event):
-
-	d = wxFileDialog(
-		None,"Choose a Leo file",
-		"",# default directory
-		"",# default file
-		"*.leo",# wildcard
-		wxOPEN | wxMULTIPLE, # style of dialog.
-		wxDefaultPosition)
-
-	if d.ShowModal()== wxID_OK:
-		paths = d.GetPaths(paths)
-		count = paths.Count()
-		for i in xrange(count):
-			self.readOutlineOnly(paths.Item(i))
-</t>
-<t tx="edream.110203113231.444">def readOutlineOnly(self,fileName):
-
-	# Don't take an exception if the file doesn't exist.
-	if not os.path.exists(fileName):
-		es("Can not open: " + fileName)
-		return
-	try:
-		frame = LeoFrame()
-		frame.self.c.readOutlineOnly(fileName)
-		frame.Show(true)
-		frame.c.fileName = fileName
-		self.activeFrame = frame
-	except:
-		es("Error opening: " + fileName)
-</t>
-<t tx="edream.110203113231.445">def OnReadAtFileNodes(self,event):
-	self.c.readAtFileNodes()
-</t>
-<t tx="edream.110203113231.446">def OnWriteOutlineOnly(self,event):
-	self.c.writeOutlineOnly()
-</t>
-<t tx="edream.110203113231.447">def OnWriteAtFileNodes(self,event):
-	self.c.writeAtFileNodes()
-</t>
-<t tx="edream.110203113231.448">def OnTangleAll(self,event):
-	self.c.tangleAll()
-</t>
-<t tx="edream.110203113231.449">def OnTangleMarked(self,event):
-	self.c.tangleMarked()
-</t>
-<t tx="edream.110203113231.450">def OnTangle(self,event):
-	self.c.tangle()
-</t>
-<t tx="edream.110203113231.451">def OnUntangleAll(self,event):
-	self.c.untangleAll()
-</t>
-<t tx="edream.110203113231.452">def OnUntangleMarked(self,event):
-	self.c.untangleMarked()
-</t>
-<t tx="edream.110203113231.453">def OnUntangle(self,event):
-	self.c.untangle()
-</t>
-<t tx="edream.110203113231.454">def OnImportFiles(self,event):
-
-	d = wxFileDialog(
-		None,"Import Files",
-		"",# default directory
-		"",# default file
-		"*.*",# wildcard
-		wxOPEN | wxMULTIPLE | wxFILE_MUST_EXIST, # style of dialog.
-		wxDefaultPosition)
-
-	if d.ShowModal()== wxID_OK:
-		paths = d.GetPaths(paths)
-		self.c.ImportFilesCommand(paths)
-</t>
-<t tx="edream.110203113231.455">def OnImportCWEBFiles(self,event):
-	
-	d = wxFileDialog(
-		None,"Import CWEB Files",
-		"",# default directory
-		"",# default file
-		"*.*",# wildcard
-		wxOPEN | wxMULTIPLE | wxFILE_MUST_EXIST, # style of dialog.
-		wxDefaultPosition)
-
-	if d.ShowModal()== wxID_OK:
-		paths = d.GetPaths(paths)
-		self.c.CWEBToOutlineCommand(paths)
-</t>
-<t tx="edream.110203113231.456">def OnImportNowebFiles(self,event):
-	pass
-</t>
-<t tx="edream.110203113231.457">def OnImportMoreText(self,event):
-
-	d = wxFileDialog(
-		None,"Import MORE Text",
-		"",# default directory
-		"",# default file
-		"*.*",# wildcard
-		wxOPEN | wxFILE_MUST_EXIST, # style of dialog.
-		wxDefaultPosition)
-
-	if d.ShowModal()== wxID_OK:
-		paths = d.GetPaths(paths)
-		self.c.importMoreText(paths)
-</t>
-<t tx="edream.110203113231.458">def OnFlattenOutline(self,event):
-
-	d = wxFileDialog(
-		None,"Flatten Outline",
-		"",# default directory
-		"flat.txt",# default file
-		"*.*",# wildcard
-		wxSAVE | wxOVERWRITE_PROMPT, # style of dialog.
-		wxDefaultPosition)
-
-	if d.ShowModal()== wxID_OK:
-		paths = d.GetPaths(paths)
-		self.c.flattenOutline(paths)
-</t>
-<t tx="edream.110203113231.459"></t>
-<t tx="edream.110203113231.460">def OnUndo(self,event):
-	
-	w = self.FindFocus()
-	# FindFocus seems to be a bit flakey,so use it only when absolutely needed.
-	if w == self.tree:
-		self.c.undo()
-	elif wx.wxPlatform != "__WXGTK__": # text control does not support undo/redo on wxGTK
-		if self.body and self.body.CanUndo():
-			self.body.Undo()
-</t>
-<t tx="edream.110203113231.461">def OnRedo(self,event):
-	
-	# The tree control does not support redo.
-	if wx.wxPlatform != "__WXGTK__": # text control does not support undo/redo on wxGTK
-		if  self.body and self.body.CanRedo():
-			self.body.Redo()</t>
-<t tx="edream.110203113231.462">def OnCut(self,event):
-	w = self.FindFocus()
-	if w and w == self.body:
-		self.body. Cut()
-	elif w and w == mLogCtrl:
-		mLogCtrl. Cut()
-</t>
-<t tx="edream.110203113231.463">def OnCopy(self,event):
-	w = self.FindFocus()
-	if w and w == self.body:
-		self.body. Copy()
-	elif w and w == mLogCtrl:
-		mLogCtrl. Copy()
-</t>
-<t tx="edream.110203113231.464">def OnPaste(self,event):
-	w = self.FindFocus()
-	if w and w == self.body:
-		self.body. Paste()
-	elif w and w == mLogCtrl:
-		mLogCtrl. Paste()
-</t>
-<t tx="edream.110203113231.465">def OnDelete(self,event):
-
-	if self.body:
-		start,end = self.body.GetSelection()
-		if start &lt; end:
-			self.body.Remove(start,end)
-		else:
-			self.body.Remove(end,start)
-</t>
-<t tx="edream.110203113231.466">def OnSelectAll(self,event):
-	w = self.FindFocus()
-	if w == self.body:
-		to = self.body.GetLastPosition()
-		self.body.SetSelection(0,to)
-	elif w == mLogCtrl:
-		to = mLogCtrl.GetLastPosition()
-		mLogCtrl.SetSelection(0,to)
-</t>
-<t tx="edream.110203113231.467">def OnEditHeadline(self,event):
-
-	if wx.wxPlatform != "__WXMSW__": # EditLabel is buggy.  Hitting a control key or tab will crash.
-		item = self.tree.GetSelection()
-		if item:
-			self.tree.EditLabel(item)</t>
-<t tx="edream.110203113231.468">def OnFontPanel(self,event):
-
-	data = None
-	data.SetInitialFont(self.body.GetFont())
-	data.SetColour(self.body.GetForegroundColour())
-	dialog = wxFontDialog(self,data)
-	if wx.wxPlatform != "__WXGTK__": # Causes problems on GTK+ version of wxWindows.
-		dialog.CentreOnScreen()
-	if dialog.ShowModal()!= wxID_OK: return
-	retData = dialog.GetFontData()
-	font = retData.GetChosenFont()
-	color = retData.GetColour()
-	# On Linux, SetFont apparently clears the text control's text string!
-	if wx.wxPlatform == "__WXGTK__":
-		contents = self.body.GetValue()
-		self.body.SetFont(font)
-		self.body.SetForegroundColour(color)
-		self.body.SetValue(contents)
-	else:
-		self.body.SetFont(font)
-		self.body.SetForegroundColour(color)
-	self.Refresh()
-	trace("font_info:face: %s, family: %s\nsize: %d, style: %s, weight: %s" %
-		(font.GetFaceName(), font.GetFamilyString(),
-		font.GetPointSize(), font.GetStyleString(), font.GetWeightString()))</t>
-<t tx="edream.110203113231.469">def OnSyntaxColoring(self,event):
-	pass
-</t>
-<t tx="edream.110203113231.470">def OnPreferences(self,event):
-
-	if gPrefsFrame == None:
-		gPrefsFrame = PrefsFrame()
-		gPrefsFrame.initialize()
-	gPrefsFrame.CenterOnScreen()
-	gPrefsFrame.Show(true)
-	gPrefsFrame.Raise()
-</t>
-<t tx="edream.110203113231.471">def OnConvertBlanks(self,event):
-	self.c.convertBlanks()
-</t>
-<t tx="edream.110203113231.472">def OnExtractSection(self,event):
-	self.c.extractSection()
-</t>
-<t tx="edream.110203113231.473">def OnExtractNames(self,event):
-	self.c.extractSectionNames()
-</t>
-<t tx="edream.110203113231.474">def OnExtract(self,event):
-	self.c.extract()
-</t>
-<t tx="edream.110203113231.475">def OnFindPanel(self,event):
-
-	# On windows,this activates the frame.
-	app.findFrame.Show()
-	app.findFrame.Raise()
-</t>
-<t tx="edream.110203113231.476">def OnFindNext(self,event):
-	self.c.doFindNextCommand()
-</t>
-<t tx="edream.110203113231.477">def OnFindPrevious(self,event):
-	self.c.doFindPreviousCommand()
-</t>
-<t tx="edream.110203113231.478">def OnReplace(self,event):
-	self.c.doChangeCommand()
-</t>
-<t tx="edream.110203113231.479">def OnReplaceThenFind(self,event):
-	self.c.doChangeThenFindCommand()
-</t>
-<t tx="edream.110203113231.480"></t>
-<t tx="edream.110203113231.481"></t>
-<t tx="edream.110203113231.482">def OnCutNode(self,event):
-	self.c.cutOutline()
-</t>
-<t tx="edream.110203113231.483">def OnCopyNode(self,event):
-	self.c.copyOutline()
-</t>
-<t tx="edream.110203113231.484">def OnPasteNode(self,event):
-	self.c.pasteOutline()
-</t>
-<t tx="edream.110203113231.485"></t>
-<t tx="edream.110203113231.486">def OnExpandAll(self,event):
-	self.c.expandAllHeadlines()
-</t>
-<t tx="edream.110203113231.487">def OnExpandAllChildren(self,event):
-	self.c.expandAllSubheads()
-</t>
-<t tx="edream.110203113231.488">def OnExpandChildren(self,event):
-	self.c.expandSubheads()
-</t>
-<t tx="edream.110203113231.489">def OnContractAll(self,event):
-	self.c.contractAllHeadlines()
-</t>
-<t tx="edream.110203113231.490">def OnContractAllChildren(self,event):
-	self.c.contractAllSubheads()
-</t>
-<t tx="edream.110203113231.491">def OnContractChildren(self,event):
-	self.c.contractSubheads()
-</t>
-<t tx="edream.110203113231.492">def OnExpandNextLevel(self,event):
-	self.c.expandNextLevel()
-</t>
-<t tx="edream.110203113231.493">def OnExpandToLevel1(self,event):
-	self.c.expandLevel1()
-</t>
-<t tx="edream.110203113231.494">def OnExpandToLevel2(self,event):
-	self.c.expandLevel2()
-</t>
-<t tx="edream.110203113231.495">def OnExpandToLevel3(self,event):
-	self.c.expandLevel3()
-</t>
-<t tx="edream.110203113231.496">def OnExpandToLevel4(self,event):
-	self.c.expandLevel4()
-</t>
-<t tx="edream.110203113231.497">def OnExpandToLevel5(self,event):
-	self.c.expandLevel5()
-</t>
-<t tx="edream.110203113231.498">def OnExpandToLevel6(self,event):
-	self.c.expandLevel6()
-</t>
-<t tx="edream.110203113231.499">def OnExpandToLevel7(self,event):
-	self.c.expandLevel7()
-</t>
-<t tx="edream.110203113231.500">def OnExpandToLevel8(self,event):
-	self.c.expandLevel8()
-</t>
-<t tx="edream.110203113231.501">def OnExpandToLevel9(self,event):
-	self.c.expandLevel9()
-</t>
-<t tx="edream.110203113231.502"></t>
-<t tx="edream.110203113231.503">def OnDeleteNode(self,event):
-	self.c.deleteHeadline()
-</t>
-<t tx="edream.110203113231.504">def OnInsertNode(self,event):
-	self.c.insertHeadline()
-</t>
-<t tx="edream.110203113231.505">def OnCloneNode(self,event):
-	self.c.clone()
-</t>
-<t tx="edream.110203113231.506"></t>
-<t tx="edream.110203113231.507">def OnGoPrevVisible(self,event):
-	self.c.moveOutlineUp()
-</t>
-<t tx="edream.110203113231.508">def OnGoNextVisible(self,event):
-	self.c.selectVisNext()
-</t>
-<t tx="edream.110203113231.509">def OnGoBack(self,event):
-	self.c.selectThreadBack()
-</t>
-<t tx="edream.110203113231.510">def OnGoNext(self,event):
-	self.c.selectThreadNext()
-</t>
-<t tx="edream.110203113231.511">def OnMark(self,event):
-	self.c.markHeadline()
-</t>
-<t tx="edream.110203113231.512">def OnMarkSubheads(self,event):
-	self.c.markSubheads()
-</t>
-<t tx="edream.110203113231.513">def OnMarkChangedItems(self,event):
-	self.c.markChangedHeadlines()
-</t>
-<t tx="edream.110203113231.514">def OnMarkChangedRoots(self,event):
-	self.c.markChangedRoots()
-</t>
-<t tx="edream.110203113231.515">def OnMarkAllAtFileNodesDirty(self,event):
-	self.c.markAllAtFileNodesDirty()
-</t>
-<t tx="edream.110203113231.516">def OnMarkAtFileNodesDirty(self,event):
-	self.c.markAtFileNodesDirty()
-</t>
-<t tx="edream.110203113231.517">def OnUnmarkAll(self,event):
-	self.c.unmarkAll()
-</t>
-<t tx="edream.110203113231.518">def OnGoToNextMarked(self,event):
-	self.c.goToNextMarkedHeadline()
-</t>
-<t tx="edream.110203113231.519">def OnGoToNextChanged(self,event):
-	self.c.goToNextDirtyHeadline()
-</t>
-<t tx="edream.110203113231.520"></t>
-<t tx="edream.110203113231.521">def OnMoveDown(self,event):
-	self.c.moveOutlineDown()
-</t>
-<t tx="edream.110203113231.522">def OnMoveLeft(self,event):
-	self.c.moveOutlineLeft()
-</t>
-<t tx="edream.110203113231.523">def OnMoveRight(self,event):
-	self.c.moveOutlineRight()
-</t>
-<t tx="edream.110203113231.524">def OnMoveUp(self,event):
-	self.c.moveOutlineUp()
-</t>
-<t tx="edream.110203113231.525">def OnPromote(self,event):
-	self.c.promote()
-</t>
-<t tx="edream.110203113231.526">def OnDemote(self,event):
-	self.c.demote()
-</t>
-<t tx="edream.110203113231.527"></t>
-<t tx="edream.110203113231.528">def OnSortNode(self,event):
-	self.c.sort()
-</t>
-<t tx="edream.110203113231.529"></t>
-<t tx="edream.110203113231.530">def OnEqualSizedPanes(self,event):
-	self.c.equalSizedPanes()
-</t>
-<t tx="edream.110203113231.531">def OnToggleActivePane(self,event):
-	w = self.FindFocus()
-	if w == None or w == self.tree:
-		self.body.SetFocus()
-	else:
-		self.tree.SetFocus()
-</t>
-<t tx="edream.110203113231.532">def OnChangeDirection(self,event):
-
-	mode = self.splitter1.GetSplitMode()
-	self.splitter1.Unsplit()# Hides the text control.
-	if  mode == wxSPLIT_VERTICAL:
-		self.splitter1.SplitHorizontally(self.tree,self.body,0)
-	else:
-		self.splitter1.SplitVertically(self.tree,self.body,0)
-	self.body.Show()
-	self.body.SetFocus()
-</t>
-<t tx="edream.110203113231.533">def OnCascade(self,event):
-	
-	p = wx.wxPoint(10,10)
-	for f in app.windowList:
-		f.Move(p)
-		p.x += 30
-		p.y += 30
-		if p.x &gt; 200:
-			p.x = 10
-			p.y = 40</t>
-<t tx="edream.110203113231.534">def OnMinimizeAll(self,event):
-
-	# trace(app.windowList)
-	for w in app.windowList:
-		w.Iconize(true)
-		
-	if app.findFrame:
-		app.findFrame.Iconize()
-	
-	if 0: # old code
-		if gPrefsFrame:
-			gPrefsFrame.Iconize()
-		if app.findFrame:
-			app.findFrame.Iconize()
-		if gPythonFrame:
-			gPythonFrame.Iconize()</t>
-<t tx="edream.110203113231.535">if wx.wxPlatform == "__WXMSW__":
-	
-	pass
-
-	#void LeoFrame::OnOpenPythonWindow(wxCommandEvent&amp; WXUNUSED(event))
-	#gPythonFrame = wxPythonFrame::create((char *)"leoc",(char *)"leo",(void(*)())initleoc)
-	#gPythonFrame.Show(true)</t>
-<t tx="edream.110203113231.536">def OnRecentWindows(self,event):
-	pass
-</t>
-<t tx="edream.110203113231.537"></t>
-<t tx="edream.110203113231.538">def OnAbout(self,event=None):
-	
-	version = "Leo Version 4.1, October 28, 2003"
-	copyright = url = email = None
-	
-	app.gui.runAboutLeoDialog(version,copyright,url,email)
-	return ######
-	
-	trace() # This should not be called in the new dialog scheme.
-	
-	message = u"\n\
-Leo Version 4.0, October 11, 2003\n\
-\n\
-Copyright © 2001 by Edward K. Ream\n\
-All Rights Reserved \n\
-Leo is distributed under the Python License"
-
-	wx.wxMessageBox(message,"About Leo",wx.wxCenter,self)</t>
-<t tx="edream.110203113231.539">class wxLeoBody:
+	self.menu.updateAllMenus()</t>
+<t tx="edream.110203113231.539">class wxLeoBody (leoFrame.leoBody):
 	
 	"""A class to create a wxPython body pane."""
 	
@@ -7654,78 +5744,44 @@ Leo is distributed under the Python License"
 <t tx="edream.110203113231.540"></t>
 <t tx="edream.110203113231.541">def __init__ (self,frame,parentFrame):
 
-	body = self
-	body.frame = frame
-	body.c = frame.commands
+	self.frame = frame
+	self.c = frame.c
+	self.styles = {} # For syntax coloring.
 
-	body.bodyCtrl = body.createControl(frame,parentFrame)
-	body.setBodyFontFromConfig()</t>
+	self.bodyCtrl = self.createControl(frame,parentFrame)
+	self.setBodyFontFromConfig()</t>
 <t tx="edream.110203113231.542">def createControl (self,frame,parentFrame):
 	
 	ctrl = wx.wxTextCtrl(parentFrame,
 		const("cBodyCtrl"), "",
 		wx.wxDefaultPosition, wx.wxDefaultSize,
-		wx.wxTE_MULTILINE)
+		wx.wxTE_RICH | wx.wxTE_RICH2 | wx.wxTE_MULTILINE)
 		
 	return ctrl</t>
-<t tx="edream.110203113231.543">def getBoundingBox (self,index):
+<t tx="edream.110203113231.543">def bbox (self,index):
 	
-	trace()
-</t>
+	return self.bodyCtrl.GetClientSizeTuple()  </t>
 <t tx="edream.110203113231.544">def setBodyFontFromConfig (self):
 	
 	pass # trace()</t>
 <t tx="edream.110203113231.545">def hasFocus (self):
 	
-	trace()
+	return self.bodyCtrl == self.bodyCtrl.FindFocus()
 
 def setFocus (self):
 	
-	pass
-</t>
-<t tx="edream.110203113231.546"># These routines replace most of the former insert/delete and index routines.
-
-def getAllText (self):                         trace()
-def getInsertLines (self):                     trace()
-def getSelectionAreas (self):                  trace()
-def getSelectionLines (self):                  trace()
-def setSelectionAreas (self,before,sel,after): trace() # A very powerful routine.</t>
-<t tx="edream.110203113231.547">def convertXYToIndex (self,x,y):
-	trace()
-
-def convertRowColumnToIndex (self,row,column):
-	trace()
-
-def getImageIndex (self,image):
-	trace()
+	self.bodyCtrl.SetFocus()
 </t>
 <t tx="edream.110203113231.548">def scheduleIdleTimeRoutine (self,function,*args,**keys):
 	trace()
 </t>
 <t tx="edream.110203113231.549">def getBodyPaneHeight (self):
-	trace()
+	return self.bodyCtrl.GetCharHeight()
 	
 def getBodyPaneWidth (self):
-	trace()
-</t>
-<t tx="edream.110203113231.550">def getInsertionPoint (self):
-	trace()
-	
-def getTextSelection (self):
-	trace()
-	
-def selectAllText (self):
-	trace()
-	
-def setInsertionPoint (self,index):
-	trace()
-	
-def setTextSelection (self,i,j):
-	trace()
-</t>
-<t tx="edream.110203113231.551"></t>
+	return self.bodyCtrl.GetCharWidth()</t>
 <t tx="edream.110203113231.552">def makeIndexVisible (self,index):
-	trace()
+	self.bodyCtrl.ShowPosition()
 	
 def setFirstVisibleIndex (self,index):
 	trace()
@@ -7739,7 +5795,7 @@ def scrollUp (self):
 def scrollDown (self):
 	trace()
 </t>
-<t tx="edream.110203113231.553">class wxLeoLog:
+<t tx="edream.110203113231.553">class wxLeoLog (leoFrame.leoLog):
 	
 	"""The base class for the log pane in Leo windows."""
 	
@@ -7777,50 +5833,30 @@ def put (self,s,color=None):
 
 	if self.logCtrl:
 		self.logCtrl.AppendText(s)
-	print s
 
 def putnl (self):
 
-	print
 	if self.logCtrl:
 		self.logCtrl.AppendText('\n')</t>
 <t tx="edream.110203113231.560"></t>
-<t tx="edream.110203113231.561">class wxFindFrame (wx.wxFrame):
-
-	&lt;&lt; FindPanel public globals &gt;&gt;
+<t tx="edream.110203113231.561">class wxFindFrame (wx.wxFrame,leoFind.leoFind):
 
 	@others</t>
-<t tx="edream.110203113231.562">reset_search_flag = None
-batch_flag = None
-wrap_flag = None
-whole_word_flag = None
-ignore_case_flag = None
-pattern_match_flag = None
-search_headline_flag = None
-search_body_flag = None
-suboutline_only_flag = None
-mark_changes_flag = None
-mark_finds_flag = None
-reverse_flag = None
-find_text = ""
-change_text = ""
-</t>
 <t tx="edream.110203113231.563">def __init__ (self):
 
-	# Init the base class
+	# Init the base classes
 	wx.wxFrame.__init__(self,None,-1,"Leo Find/Change",
 		wx.wxPoint(50,50), wx.wxDefaultSize,
 		wx.wxMINIMIZE_BOX | wx.wxTHICK_FRAME | wx.wxSYSTEM_MENU | wx.wxCAPTION)
 
+	leoFind.leoFind.__init__(self)
+	
+	self.dict = {} # For communication between panel and frame.
 	self.findPanel = wxFindPanel(self)
+	
+	self.s_text = wxSearchWidget() # wx.wxTextCtrl(self,-1) # Working text widget.
 
-	# Resize to fit the panel.
-	sizer = wx.wxBoxSizer(wx.wxVERTICAL)
-	sizer.Add(self.findPanel)
-	self.SetAutoLayout(true)# tell dialog to use sizer
-	self.SetSizer(sizer) # actually set the sizer
-	sizer.Fit(self)# set size to minimum size as calculated by the sizer
-	sizer.SetSizeHints(self)# set size hints to honour mininum size
+	&lt;&lt; resize the frame to fit the panel &gt;&gt;
 
 	# Set the window icon.
 	if wx.wxPlatform == '__WXMSW__':
@@ -7828,209 +5864,14 @@ change_text = ""
 
 	# Set the focus.
 	self.findPanel.findText.SetFocus()
-		
-	&lt;&lt; declare event handlers &gt;&gt;
-</t>
-<t tx="edream.110203113231.564">if wx.wxPlatform == "__WXMSW__": # Activate events exist only on windows.
-	pass ## wx.EVT_ACTIVATE(self.OnActivateFindFrame)
-else:
-	wx.EVT_SET_FOCUS(self.OnSetFocus)
 
-## wx.EVT_CLOSE(self.OnCloseFindFrame)
+	&lt;&lt; define event handlers &gt;&gt;
+</t>
+<t tx="edream.110203113231.564">wx.EVT_CLOSE(self,self.onCloseFindFrame)
 
-for name,command in (
-	("cChangeButton",self.OnChangeButton),
-	("cChangeAllButton",self.OnChangeAllButton),
-	("cChangeThenFindButton",self.OnChangeThenFindButton),
-	("cFindButton",self.OnFindButton),
-	("cFindAllButton",self.OnFindAllButton)):
-	
-	wx.EVT_BUTTON(self,const(name),command)
-	
-for name,command in (
-	("cBatchCheckBox",self.OnBatchCheckBox),
-	("cIgnoreCaseCheckBox",self.OnIgnoreCaseCheckBox),
-	("cMarkChangesCheckBox",self.OnMarkChangesCheckBox),
-	("cMarkFindsCheckBox",self.OnMarkFindsCheckBox),
-	("cPatternMatchCheckBox",self.OnPatternMatchCheckBox),
-	("cReverseCheckBox",self.OnReverseCheckBox),
-	("cSearchHeadlineCheckBox",self.OnSearchHeadlineCheckBox),
-	("cSearchBodyTextCheckBox",self.OnSearchBodyTextCheckBox),
-	("cSuboutlineOnlyCheckBox",self.OnSuboutlineOnlyCheckBox),
-	("cWrapAroundCheckBox",self.OnWrapAroundCheckBox),
-	("cWholeWordCheckBox",self.OnWholeWordCheckBox)):
-	
-	wx.EVT_CHECKBOX(self,const(name),command)
-	
-for name,command in (
-	("cFindTextCtrl",self.OnFindText),
-	("cChangeTextCtrl",self.OnChangeText)):
-	
-	wx.EVT_TEXT(self,const(name),command)
+&lt;&lt; create event handlers for buttons &gt;&gt;
 
-if 0:
-	wx.EVT_BUTTON(self,cChangeButton,self.OnChangeButton)
-	wx.EVT_BUTTON(self,cChangeAllButton,self.OnChangeAllButton)
-	wx.EVT_BUTTON(self,cChangeThenFindButton,self.OnChangeThenFindButton)
-	wx.EVT_BUTTON(self,cFindButton,self.OnFindButton)
-	wx.EVT_BUTTON(self,cFindAllButton,self.OnFindAllButton)
-	
-	wx.EVT_CHECKBOX(self,cBatchCheckBox,self.OnBatchCheckBox)
-	wx.EVT_CHECKBOX(self,cIgnoreCaseCheckBox,self.OnIgnoreCaseCheckBox)
-	wx.EVT_CHECKBOX(self,cMarkChangesCheckBox,self.OnMarkChangesCheckBox)
-	wx.EVT_CHECKBOX(cMarkFindsCheckBox,self.OnMarkFindsCheckBox)
-	wx.EVT_CHECKBOX(cPatternMatchCheckBox,self.OnPatternMatchCheckBox)
-	wx.EVT_CHECKBOX(cReverseCheckBox,self.OnReverseCheckBox)
-	wx.EVT_CHECKBOX(cSearchHeadlineCheckBox,self.OnSearchHeadlineCheckBox)
-	wx.EVT_CHECKBOX(cSearchBodyTextCheckBox,self.OnSearchBodyTextCheckBox)
-	wx.EVT_CHECKBOX(cSuboutlineOnlyCheckBox,self.OnSuboutlineOnlyCheckBox)
-	wx.EVT_CHECKBOX(cWrapAroundCheckBox,self.OnWrapAroundCheckBox)
-	wx.EVT_CHECKBOX(cWholeWordCheckBox,self.OnWholeWordCheckBox)
-	wx.EVT_TEXT(cFindTextCtrl,self.OnFindText)
-	wx.EVT_TEXT(cChangeTextCtrl,self.OnChangeText)</t>
-<t tx="edream.110203113231.565"></t>
-<t tx="edream.110203113231.566">if wx.wxPlatform == "__WXMSW__": # This event exists only on Windows.
-
-	def OnActivateFindFrame(self,event):
-		if event.GetActive():
-			self.set_check_boxes()
-			c = self.findPanel.self.findText
-			s = c.GetValue()
-			c.SetFocus()
-			c.SetSelection(0,s.Length())
-else:
-	def OnSetFocus(self,event):
-		self.set_check_boxes()
-		c = self.findPanel.self.findText
-		s = c.GetValue()
-		c.SetFocus()
-		c.SetSelection(0,s.Length())</t>
-<t tx="edream.110203113231.567">@ This is an event handler function called when the user has tried to close a frame or dialog box.
-
-It is called via the wxWindow::Close function,so that the application can also invoke the handler programmatically.
-You should check whether the application is forcing the deletion of the window using CanVeto.
-
-If CanVeto returns FALSE,it is not possible to skip window deletion; destroy the window using wxWindow::Destroy.
-If not,it is up to you whether you respond by destroying the window.
-
-If you don't destroy the window,you should call wxCloseEvent::Veto to let the calling code know that you did not destroy the window. This allows the wxWindow::Close function to return TRUE or FALSE depending on whether the close instruction was honoured or not.
-@c
-
-def OnCloseFindFrame(self,event):
-	
-	if event.CanVeto():
-		event.Veto()     # Did not destroy the window.
-		self.Show(false) # Just hide the window.
-	else:
-		self.Destroy()
-		app.findFrame = None
-</t>
-<t tx="edream.110203113231.568">def OnChangeButton(self,event):
-
-	if self.activeFrame:
-		self.activeFrame.c.doChangeButton()
-</t>
-<t tx="edream.110203113231.569">def OnChangeAllButton(self,event):
-	if self.activeFrame:
-		self.activeFrame.c.doChangeAllButton()
-</t>
-<t tx="edream.110203113231.570">def OnChangeThenFindButton(self,event):
-	if self.activeFrame:
-		self.activeFrame.c.doChangeThenFindButton()
-</t>
-<t tx="edream.110203113231.571">def OnFindButton(self,event):
-	# This is the default button,so make sure there is find text.
-	if  self.activeFrame and find_text.Length()&gt; 0:
-		self.activeFrame.c.doFindButton()
-</t>
-<t tx="edream.110203113231.572">def OnFindAllButton(self,event):
-	if self.activeFrame:
-		self.activeFrame.c.doFindAllButton()
-</t>
-<t tx="edream.110203113231.573">def OnBatchCheckBox(self,event):
-	box = event.GetEventObject()
-	batch_flag = box.GetValue()
-</t>
-<t tx="edream.110203113231.574">def OnIgnoreCaseCheckBox(self,event):
-	box = event.GetEventObject()
-	ignore_case_flag = box.GetValue()
-	if self.activeFrame:
-		self.activeFrame.c.setup(true)# reset the search.
-</t>
-<t tx="edream.110203113231.575">def OnMarkChangesCheckBox(self,event):
-	box = event.GetEventObject()
-	mark_changes_flag = box.GetValue()
-</t>
-<t tx="edream.110203113231.576">def OnMarkFindsCheckBox(self,event):
-	box = event.GetEventObject()
-	mark_finds_flag = box.GetValue()
-</t>
-<t tx="edream.110203113231.577">def OnPatternMatchCheckBox(self,event):
-	box = event.GetEventObject()
-	pattern_match_flag = box.GetValue()
-	if self.activeFrame:
-		self.activeFrame.c.setup(true)# reset the search.
-</t>
-<t tx="edream.110203113231.578">def OnReverseCheckBox(self,event):
-	box = event.GetEventObject()
-	reverse_flag = box.GetValue()
-</t>
-<t tx="edream.110203113231.579">def OnSearchBodyTextCheckBox(self,event):
-	box = event.GetEventObject()
-	search_body_flag = box.GetValue()
-	if self.activeFrame:
-		self.activeFrame.c.setup(true)# reset the search.
-</t>
-<t tx="edream.110203113231.580">def OnSearchHeadlineCheckBox(self,event):
-	box = event.GetEventObject()
-	search_headline_flag = box.GetValue()
-</t>
-<t tx="edream.110203113231.581">def OnSuboutlineOnlyCheckBox(self,event):
-	box = event.GetEventObject()
-	suboutline_only_flag = box.GetValue()
-</t>
-<t tx="edream.110203113231.582">def OnWrapAroundCheckBox(self,event):
-	box = event.GetEventObject()
-	wrap_flag = box.GetValue()
-</t>
-<t tx="edream.110203113231.583">def OnWholeWordCheckBox(self,event):
-	
-	box = event.GetEventObject()
-	whole_word_flag = box.GetValue()
-	if self.activeFrame:
-		self.activeFrame.c.setup(true)# reset the search.
-
-</t>
-<t tx="edream.110203113231.584">def OnChangeText(self,event):
-	text = event.GetEventObject()
-	change_text = text.GetValue()
-	if self.activeFrame:
-		self.activeFrame.c.setup(true)# reset the search.
-</t>
-<t tx="edream.110203113231.585">def OnFindText(self,event):
-	text = event.GetEventObject()
-	find_text = text.GetValue()
-	if self.activeFrame:
-		self.activeFrame.c.setup(true)# reset the search.
-</t>
-<t tx="edream.110203113231.586">def set_ivars (self, *args, **keys):
-	
-	pass # trace(*args,**keys)</t>
-<t tx="edream.110203113231.587">def set_check_boxes(self,void):
-
-	self.findPanel.mBatchCheckBox.SetValue(batch_flag)
-	self.findPanel.mWrapAroundCheckBox.SetValue(wrap_flag)
-	self.findPanel.mWholeWordCheckBox.SetValue(whole_word_flag)
-	self.findPanel.mIgnoreCaseCheckBox.SetValue(ignore_case_flag)
-	self.findPanel.mPatternMatchCheckBox.SetValue(pattern_match_flag)
-	self.findPanel.mSearchHeadlineCheckBox.SetValue(search_headline_flag)
-	self.findPanel.mSearchBodyTextCheckBox.SetValue(search_body_flag)
-	self.findPanel.mSuboutlineOnlyCheckBox.SetValue(suboutline_only_flag)
-	self.findPanel.mMarkChangesCheckBox.SetValue(mark_changes_flag)
-	self.findPanel.mMarkFindsCheckBox.SetValue(mark_finds_flag)
-	self.findPanel.mReverseCheckBox.SetValue(reverse_flag)
-	self.findPanel.findText.SetValue(find_text)
-	self.findPanel.changeText.SetValue(change_text)</t>
+&lt;&lt; create event handlers for check boxes and text &gt;&gt;</t>
 <t tx="edream.110203113231.588">class wxFindPanel (wx.wxPanel):
 
 	@others</t>
@@ -8038,6 +5879,7 @@ def OnCloseFindFrame(self,event):
 	 
 	# Init the base class.
 	wx.wxPanel.__init__(self,frame,-1)
+	self.frame = frame
 
 	topSizer = wx.wxBoxSizer(wx.wxVERTICAL)
 	topSizer.Add(0,10)
@@ -8063,16 +5905,19 @@ findSizer.Add(
 findSizer.Add(10,0) # Width.
 
 # Text.
+id = const("find_text")
 self.findText = wx.wxTextCtrl(self,
-	const("cFindTextCtrl"),"",
-	wx.wxDefaultPosition, wx.wxSize(300,60),
+	id,"",
+	wx.wxDefaultPosition, wx.wxSize(500,60),
 	wx.wxTE_PROCESS_TAB | wx.wxTE_MULTILINE,
 	wx.wxDefaultValidator,"")
 
 findSizer.Add(self.findText)
 findSizer.Add(5,0)# Width.
 topSizer.Add(findSizer)
-topSizer.Add(0,10)</t>
+topSizer.Add(0,10)
+
+self.frame.dict["find_text"] = self.findText,id</t>
 <t tx="edream.110203113231.591">changeSizer = wx.wxBoxSizer(wx.wxHORIZONTAL)
 changeSizer.Add(5,5)# Extra space.
 
@@ -8085,58 +5930,86 @@ changeSizer.Add(
 changeSizer.Add(10,0) # Width.
 
 # Text.
+id = const("change_text")
 self.changeText = wx.wxTextCtrl(self,
-	const("cChangeTextCtrl"),"",
-	wx.wxDefaultPosition, wx.wxSize(300,60),
+	id,"",
+	wx.wxDefaultPosition, wx.wxSize(500,60),
 	wx.wxTE_PROCESS_TAB | wx.wxTE_MULTILINE,
 	wx.wxDefaultValidator,"")
 
 changeSizer.Add(self.changeText)
 changeSizer.Add(5,0)# Width.
 topSizer.Add(changeSizer)
-topSizer.Add(0,10)</t>
+topSizer.Add(0,10)
+
+self.frame.dict["change_text"] = self.findText,id</t>
 <t tx="edream.110203113231.592">col1Sizer = wx.wxBoxSizer(wx.wxVERTICAL)
-&lt;&lt; Create the first column of check boxes &gt;&gt;
+&lt;&lt; Create the first column of widgets &gt;&gt;
 
 col2Sizer = wx.wxBoxSizer(wx.wxVERTICAL)
-&lt;&lt; Create the second column of check boxes &gt;&gt;
+&lt;&lt; Create the second column of widgets &gt;&gt;
 
-# Pack the two columns
-checkBoxSizer = wx.wxBoxSizer(wx.wxHORIZONTAL)
-checkBoxSizer.Add(col1Sizer)
-checkBoxSizer.Add(col2Sizer)
-topSizer.Add(checkBoxSizer)
+col3Sizer = wx.wxBoxSizer(wx.wxVERTICAL)
+&lt;&lt; Create the third column of widgets &gt;&gt;
+
+col4Sizer = wx.wxBoxSizer(wx.wxVERTICAL)
+&lt;&lt; Create the fourth column of widgets &gt;&gt;
+
+# Pack the columns
+columnSizer = wx.wxBoxSizer(wx.wxHORIZONTAL)
+columnSizer.Add(col1Sizer)
+columnSizer.Add(col2Sizer)
+columnSizer.Add(col3Sizer)
+columnSizer.Add(col4Sizer)
+
+topSizer.Add(columnSizer)
 topSizer.Add(0,10)</t>
-<t tx="edream.110203113231.593">for ivar,cname,label in (
-	("batchCheckBox","cBatchCheckBox","Batch"),
-	("wrapAroundCheckBox","cWrapAroundCheckBox","Wrap Around"),
-	("wholeWordCheckBox","cWholeWordCheckBox","Whole Word"),
-	("ignoreCaseCheckBox","cIgnoreCaseCheckBox","Ignore Case"),
-	("patternMatchCheckBox","cPatternMatchCheckBox","Pattern Match")
-	):
+<t tx="edream.110203113231.593"># The var names must match the names in leoFind class.
+table = (
+	("plain-search-flag","Plain Search",wx.wxRB_GROUP),
+	("pattern_match_flag","Pattern Match",0),
+	("script_search_flag","Script Search",0))
+
+for var,label,style in table:
 	
-	box = wx.wxCheckBox(
-		self,const(cname),label,
-		wx.wxDefaultPosition,(150,25),
-		0,wx.wxDefaultValidator,"")
+	id = const(var)
+	box = wx.wxRadioButton(self,id,label,
+		wx.wxDefaultPosition,(100,25),
+		style,wx.wxDefaultValidator,"group1")
 		
-	setattr(self,ivar,box)
-	col1Sizer.Add(box,0,wx.wxBORDER | wx.wxLEFT,50)</t>
-<t tx="edream.110203113231.594">for ivar,cname,label in (
-	("searchHeadlineCheckBox","cSearchHeadlineCheckBox","Search Headline Text"),
-	("searchBodyTextCheckBox","cSearchBodyTextCheckBox","Search Body Text"),
-	("suboutlineOnlyCheckBox","cSuboutlineOnlyCheckBox","Suboutline Only"),
-	("markChangesCheckBox","cMarkChangesCheckBox","Mark Changes"),
-	("markFindsCheckBox","cMarkFindsCheckBox","Mark Finds")
-	):
+	if style == wx.wxRB_GROUP:
+		box.SetValue(true) # The default entry.
+
+	col1Sizer.Add(box,0,wx.wxBORDER | wx.wxLEFT,60)
+	self.frame.dict[var] = box,id
 	
-	box = wx.wxCheckBox(
-		self,const(cname),label,
-		wx.wxDefaultPosition,(150,25),
+table = (("script_change_flag","Script Change"),)
+
+for var,label in table:
+	
+	id = const(var)
+	box = wx.wxCheckBox(self,id,label,
+		wx.wxDefaultPosition,(100,25),
 		0,wx.wxDefaultValidator,"")
 
-	setattr(self,ivar,box)
-	col2Sizer.Add(box)</t>
+	col1Sizer.Add(box,0,wx.wxBORDER | wx.wxLEFT,60)
+	self.frame.dict[var] = box,id</t>
+<t tx="edream.110203113231.594"># The var names must match the names in leoFind class.
+table = (
+	("whole_word_flag","Whole Word"),
+	("ignore_case_flag","Ignore Case"),
+	("wrap_flag","Wrap Around"),
+	("reverse_flag","Reverse"))
+
+for var,label in table:
+
+	id = const(var)
+	box = wx.wxCheckBox(self,id,label,
+		wx.wxDefaultPosition,(100,25),
+		0,wx.wxDefaultValidator,"")
+
+	col2Sizer.Add(box,0,wx.wxBORDER | wx.wxLEFT,20)
+	self.frame.dict[var] = box,id</t>
 <t tx="edream.110203113231.595"># The row sizers are a bit dim:  they should distribute the buttons automatically.
 
 row1Sizer = wx.wxBoxSizer(wx.wxHORIZONTAL)
@@ -8149,51 +6022,60 @@ row2Sizer = wx.wxBoxSizer(wx.wxHORIZONTAL)
 buttonSizer = wx.wxBoxSizer(wx.wxVERTICAL)
 buttonSizer.Add(row1Sizer)
 buttonSizer.Add(0,10)
+
 buttonSizer.Add(row2Sizer)
 topSizer.Add(buttonSizer)
 topSizer.Add(0,10)</t>
-<t tx="edream.110203113231.596">row1Sizer.Add(20,0)
+<t tx="edream.110203113231.596">row1Sizer.Add(90,0)
 
-for ivar,cname,label,size,adj in (
-	("findButton","cFindButton","Find",(80,25),None),
-	("reverseCheckBox","cReverseCheckBox","Reverse",(100,25),(24,0)),
-	("findAllButton","cFindAllButton","Find All",(80,25),None)):
-	
-	button = wx.wxButton(
-		self,const(cname),label,
-		wx.wxDefaultPosition,size,
-		0,wx.wxDefaultValidator,"")
-		
-	setattr(self,ivar,button)
-	row1Sizer.Add(button)
-	if adj:
-		row1Sizer.Add(adj)</t>
-<t tx="edream.110203113231.597">row2Sizer.Add(20,0)
+table = (
+	("findButton","Find",true),
+	("batch_flag","Show Context",false), # Old batch_flag now means Show Context.
+	("findAllButton","Find All",true))
 
-for ivar,cname,label,size,adj in (
-	("changeButton","cChangeButton","Change",(80,25),(24,0)),
-	("changeThenFindButton","cChangeThenFindButton","Change,Then Find",(122,25),(24,0)),
-	("changeAllButton","cChangeAllButton","Change All",(80,25),None)):
+for var,label,isButton in table:
 	
-	button = wx.wxButton(
-		self,const(cname),label,
-		wx.wxDefaultPosition,size,
-		0,wx.wxDefaultValidator,"")
+	id = const(var)
+	if isButton:
+		widget = button = wx.wxButton(self,id,label,
+			wx.wxDefaultPosition,(100,25),
+			0,wx.wxDefaultValidator,"")
+	else:
+		widget = box = wx.wxCheckBox(self,id,label,
+			wx.wxDefaultPosition,(100,25),
+			0,wx.wxDefaultValidator,"")
 		
-	setattr(self,ivar,button)
+		self.frame.dict[var] = box,id
+
+	row1Sizer.Add(widget)
+	row1Sizer.Add((25,0),)</t>
+<t tx="edream.110203113231.597">row2Sizer.Add(90,0)
+
+table = (
+	("changeButton","Change"),
+	("changeThenFindButton","Change,Then Find"),
+	("changeAllButton","Change All"))
+
+for var,label in table:
+
+	id = const(var)
+	button = wx.wxButton(self,id,label,
+		wx.wxDefaultPosition,(100,25),
+		0,wx.wxDefaultValidator,"")
+	
 	row2Sizer.Add(button)
-	if adj:
-		row2Sizer.Add(adj)</t>
+	row2Sizer.Add((25,0),)</t>
 <t tx="edream.110203113231.598">class wxLeoPrefs (wx.wxFrame):
 	@others
 </t>
-<t tx="edream.110203113231.599">def __init__():
+<t tx="edream.110203113231.599">def __init__(c):
 	
 	# Init the base frame.
 	wxFrame.__init__(None,-1,"Leo Preferences",
 		wx.wxPoint(50,50),wxDefaultSize,
 		wxMINIMIZE_BOX | wxTHICK_FRAME | wxSYSTEM_MENU | wxCAPTION)
 
+	self.c = c
 	mPrefsPanel = PrefsPanel(self)
 
 	# Resize to fit the panel.
@@ -8931,12 +6813,12 @@ Feedback on this plugin can be sent to Davide Salomoni (dsalomoni@yahoo.com).
 		(tag=="command2" and keywords.get("label")=="new")):
 
 		c = top()
-		importMenu = c.frame.getMenu('import')
+		importMenu = c.frame.menu.getMenu('import')
 		newEntries = (
 			("-", None, None),
 			("Import C&amp;isco Configuration", "Shift+Ctrl+I", importCiscoConfig))
 		
-		c.frame.createMenuEntries(importMenu, newEntries)</t>
+		c.frame.menu.createMenuEntries(importMenu, newEntries)</t>
 <t tx="edream.110203113231.672">def importCiscoConfig(event=None):
 	c = top(); current = c.currentVnode()
 	if current == None: return
@@ -10015,7 +7897,7 @@ if Tkinter and 1: # Register the handlers...
 	# It's so nice to be able to add ivars to classes at any time!
 	self.lt_nav_button = c.frame.addIconButton(
 		image=self.lt_nav_disabled_image,
-		command=c.frame.OnGoPrevVisitedNode)
+		command=c.goPrevVisitedNode)
 		
 	&lt;&lt; define callbacks &gt;&gt;
 
@@ -10027,7 +7909,7 @@ if Tkinter and 1: # Register the handlers...
 	
 	self.rt_nav_button = c.frame.addIconButton(
 		image=self.rt_nav_disabled_image,
-		command=c.frame.OnGoNextVisitedNode)
+		command=c.goNextVisitedNode)
 		
 	# Don't dim the button when it is inactive.
 	for b in (self.lt_nav_button,self.rt_nav_button):
@@ -10478,7 +8360,7 @@ elif 1: # Test table.
 else: # David McNab's table.
 	table = ("X&amp;Emacs", "Ctrl+E", ("os.spawnl","/usr/bin/gnuclient", None)),
 
-top().frame.createOpenWithMenuFromTable(table)</t>
+top().frame.menu.createOpenWithMenuFromTable(table)</t>
 <t tx="edream.110203113231.797">"""emacs handler"""
 
 from leoPlugins import *
@@ -10640,11 +8522,11 @@ if client and 0: # Register the handlers...
 	
 	"""Write a node and its children to Word"""
 
-	commands = top().frame.commands
+	c = top()
 	if vnode is None:
 		vnode = top().currentVnode()
 	#
-	dict = scanDirectives(commands,v=vnode)
+	dict = scanDirectives(c,v=vnode)
 	encoding = dict.get("encoding",None)
 	if encoding == None:
 		encoding = app().config.default_derived_file_encoding
@@ -10782,8 +8664,8 @@ Current limitations ...
 	else:
 		table = ( ("Open &amp;xterm",None,launchxTerm), ) 
 	
-	top().frame.createNewMenu("E&amp;xtensions","top")
-	top().frame.createMenuItemsFromTable("Extensions",table)
+	top().frame.menu.createNewMenu("E&amp;xtensions","top")
+	top().frame.menu.createMenuItemsFromTable("Extensions",table)
 </t>
 <t tx="edream.110203113231.818">def _getpath(c,v):
 	dict = scanDirectives(c,v)
@@ -10847,7 +8729,7 @@ from leoGlobals import *
 @others
 
 if 0: # Register the handlers...
-	registerHandler(("start1","menu1"), onMenu)
+	registerHandler("menu1", onMenu)
 	
 	__version__ = "1.2"
 	plugin_signon(__name__)</t>
@@ -10863,6 +8745,8 @@ The official name can be any name equivalent to the standard English menu names.
 	("&amp;Open",  "&amp;Ouvre"),
 @c
 def onMenu (tag,keywords):
+	trace(tag,keywords)
+	c = keywords.get("c")
 	table = (
 		("Open...","&amp;Ouvre"),
 		("OpenWith","O&amp;uvre Avec..."),
@@ -10872,7 +8756,7 @@ def onMenu (tag,keywords):
 		("Can't Undo", "French Can't Undo"),
 		("Can't Redo", "French Can't Redo"))
 	# Call the convenience routine to do the work.
-	app().setRealMenuNamesFromTable(table)
+	c.frame.menu.setRealMenuNamesFromTable(table)
 </t>
 <t tx="edream.110203113231.826">@first # -*- coding: utf-8 -*-
 @language python
@@ -10887,12 +8771,13 @@ from leoGlobals import *
 @others
 
 if 0: # Register the handlers...
-	registerHandler(("start1","menu1"), onMenu)
+	registerHandler("menu1", onMenu)
 	
 	__version__ = "1.4" # Set version for the plugin handler.
 	plugin_signon(__name__)
 </t>
 <t tx="edream.110203113231.827">def onMenu (tag,keywords):
+	c = keywords.get("c")
 	table = (
 		("File","&amp;Fichier"),
 			("New","&amp;Nouveau"),
@@ -11042,7 +8927,8 @@ if 0: # Register the handlers...
 			("Open LeoConfig.leo", "Ouvrir Leo&amp;Config.leo"),
 			("Apply Settings", "Appliquer les &amp;Réglages"))
 	# Call the convenience routine to do the work.
-	app().setRealMenuNamesFromTable(table)
+	c.frame.menu.setRealMenuNamesFromTable(table)
+
 </t>
 <t tx="edream.110203113231.828"></t>
 <t tx="edream.110203113231.829">"""Rebind up/down arrow keys"""
@@ -11324,7 +9210,7 @@ self.button.pack(side="bottom")</t>
 		items = [(p.name,p) for p in plugins if p.version]
 		if items:
 			items.sort()
-			c.pluginsMenu = pluginMenu = c.frame.createNewMenu("&amp;Plugins")
+			c.pluginsMenu = pluginMenu = c.frame.menu.createNewMenu("&amp;Plugins")
 			&lt;&lt; add items to the plugins menu &gt;&gt;
 			
 	sys.path = old_path
@@ -11333,7 +9219,7 @@ self.button.pack(side="bottom")</t>
 </t>
 <t tx="edream.110203113231.855">for name,p in items:
 	if p.hasconfig:
-		m = c.frame.createNewMenu(p.name, "&amp;Plugins")
+		m = c.frame.menu.createNewMenu(p.name, "&amp;Plugins")
 		table = [("About...", None, p.about),
 				 ("Properties...", None, p.properties)]
 		if p.othercmds:
@@ -11341,10 +9227,10 @@ self.button.pack(side="bottom")</t>
 			items = [(cmd,None,fn) for cmd,fn in p.othercmds.iteritems()]
 			items.sort()
 			table.extend(items)
-		c.frame.createMenuEntries(m, table)
+		c.frame.menu.createMenuEntries(m, table)
 	else:
 		table = ((p.name, None, p.about),)
-		c.frame.createMenuEntries(pluginMenu, table)</t>
+		c.frame.menu.createMenuEntries(pluginMenu, table)</t>
 <t tx="edream.110203113231.856">@ignore
 @language python
 
@@ -11548,7 +9434,7 @@ if 0: # Register the handlers...
 		dirs = [f for f in entries if os.path.isdir(f)]
 		&lt;&lt; Return if no scripts exist anywhere &gt;&gt;
 	
-		scriptsMenu = c.frame.createNewMenu("&amp;Scripts")
+		scriptsMenu = c.frame.menu.createNewMenu("&amp;Scripts")
 		table = []
 		&lt;&lt; Create top-level entries for every script in top_scripts &gt;&gt;
 		for dir in dirs:
@@ -11572,11 +9458,11 @@ for script in top_scripts:
 		executeScript(name)
 	table.append((name,None,doScript),)
 	
-c.frame.createMenuEntries(scriptsMenu, table)
+c.frame.menu.createMenuEntries(scriptsMenu, table)
 </t>
 <t tx="edream.110203113231.871"># Create the submenu.
 name = os.path.join("scripts",shortFileName(dir))
-menu = c.frame.createNewMenu(name,"&amp;Scripts")
+menu = c.frame.menu.createNewMenu(name,"&amp;Scripts")
 
 # Populate the submenu.
 table = []
@@ -11587,7 +9473,7 @@ for file in files:
 		executeScript(name)
 	table.append((name,None,doScript),)
 
-c.frame.createMenuEntries(menu, table)</t>
+c.frame.menu.createMenuEntries(menu, table)</t>
 <t tx="edream.110203113231.872"></t>
 <t tx="edream.110203113231.873">"""Synchronize @folder nodes with folders"""
 
@@ -12111,7 +9997,7 @@ Otherwise, section underlining is discouraged, since it is automatically generat
 def onIconDoubleClick(tag,keywords):
 
 	v = keywords.get("v")
-	commands = keywords.get("c")
+	c = keywords.get("c")
 	h = v.headString().strip()
 	if match_word(h,0,"@rst"):
 		fname = h[5:]
@@ -12129,7 +10015,7 @@ except:
 if docutils:
 	import StringIO
 	rstFile = StringIO.StringIO()
-	writeTreeAsRst(rstFile, fname, v, commands)
+	writeTreeAsRst(rstFile, fname, v, c)
 	rstText = rstFile.getvalue()
 	&lt;&lt; convert rST to HTML &gt;&gt;
 	htmlFile = file(fname,'w')
@@ -12149,15 +10035,15 @@ pub.set_reader('standalone', None, 'restructuredtext')
 pub.set_writer('html')
 output = pub.publish()</t>
 <t tx="edream.110203113231.907">rstFile = file(fname,'w')
-writeTreeAsRst(rstFile, fname, v, commands)
+writeTreeAsRst(rstFile, fname, v, c)
 rstFile.close()
 es('written: '+`fname`)</t>
-<t tx="edream.110203113231.908">def writeTreeAsRst(rstFile, fname, vnode, commands):
+<t tx="edream.110203113231.908">def writeTreeAsRst(rstFile, fname, vnode, c):
 	'Writes the tree under vnode to the file rstFile (fname is the filename)'
 	# we don't write a title, so the titlepage can be customized
 	# use '#' for title under/overline
 	# 3/7/03
-	dict = scanDirectives(commands,v=vnode)
+	dict = scanDirectives(c,v=vnode)
 	encoding = dict.get("encoding",None)
 	if encoding == None:
 		encoding = app().config.default_derived_file_encoding
@@ -12241,7 +10127,7 @@ if 0: # Register the handlers...
 def onIconDoubleClick(tag,keywords):
 
 	v = keywords.get("v")
-	commands = keywords.get("c")
+	c = keywords.get("c")
 	h = v.headString().strip()
 	if len(h)==0 or h[0]=='@':
 		return # Let other plugins handle these
@@ -12424,7 +10310,7 @@ if Tkinter and 0: # Register the handlers...
 
 def newExecuteScript(self,event=None,v=None):
 	
-	c = self.commands ; body = self.body ; s = None
+	c = self.c ; body = self.body ; s = None
 	if v == None:
 		v = c.currentVnode() 
 
@@ -12474,7 +10360,7 @@ def newExecuteScript(self,event=None,v=None):
 		es("newExecuteScript: empty script")</t>
 <t tx="edream.110203113231.928"># Same as frame.put except sends output to the end of the body text.
 def newPut (self,s):
-	c = self.frame.commands
+	c = self.frame.c
 	bodyCtrl = self.frame.body.bodyCtrl
 	if bodyCtrl:
 		bodyCtrl.insert("end",s)
@@ -12531,7 +10417,7 @@ local_language_code=en</t>
 
 from leoPlugins import *
 from leoGlobals import *
-import leoFind
+import leoTkinterFind
 
 try:    import Tkinter
 except: Tkinter = None
@@ -12558,7 +10444,7 @@ if Tkinter and 0: # Register the handlers...
 		registerHandler("bodykey2",onSelect) # For updating buttons.
 		registerHandler(("bodyclick2","bodydclick2","bodyrclick2"),onSelect) # These affect selection.
 		
-		__version__ = "0.3.0" # Partially modified to use app.gui reorg.
+		__version__ = "0.4.0" # EKR: 11/12/03: modified to use new leoTkinterFind class.
 		plugin_signon(__name__)</t>
 <t tx="edream.110203113231.934"></t>
 <t tx="edream.110203113231.935">def createSpellMenu(tag,keywords):
@@ -12734,7 +10620,7 @@ if self.local_dictionary:
 		print err
 		add_dicts = ""
 		return false</t>
-<t tx="edream.110203113231.948">class spellDialog (leoFind.leoFindBase):
+<t tx="edream.110203113231.948">class spellDialog (leoTkinterFind.leoTkinterFind):
 	
 	"""A class to create and manage Leo's Spell Check dialog."""
 	
@@ -12745,14 +10631,13 @@ if self.local_dictionary:
 	"""Ctor for the Leo Spelling dialog."""
 	
 	# Call the base ctor to create the dialog.
-	leoFind.leoFindBase.__init__(self,"Leo Spell Checking",resizeable=false)
-	
+	leoTkinterFind.leoTkinterFind.__init__(self,"Leo Spell Checking",resizeable=false)
+
 	self.local_dictionary_file = self.getLocalDictionary()
 	self.local_language_code = self.getLocalLanguageCode("en")
 	self.aspell = Aspell(self.local_dictionary_file,self.local_language_code)
 	&lt;&lt; set self.dictionary &gt;&gt;
 	
-	self.createFrame()
 	self.fillbox([])
 	
 	# State variables.
@@ -13603,12 +11488,12 @@ if Tkinter and 1: # Register the handlers...
 	keys = ("colorer","v")
 	colorer,v = [keywords.get(key) for key in keys]
 
-	c = colorer.commands
+	c = colorer.c
 	if not c or not v or not top(): return
 
 	# underline means hyperlinks
-	c.body.configureColor("http",underline=1) # EKR: 11/4/03
-	c.body.configureColor("https",underline=1) # EKR: 11/4/03
+	c.body.tag_configure("http",underline=1) # EKR: 11/4/03
+	c.body.tag_configure("https",underline=1) # EKR: 11/4/03
 	# trace()
 	dict = scanDirectives(c,v=v) # v arg is essential.
 	pluginsList = dict.get("pluginsList")
@@ -13631,7 +11516,7 @@ def colorWikiMarkup (tag,keywords):
 
 	global colorCount ; colorCount += 1
 	
-	c = colorer.commands
+	c = colorer.c
 	dict = scanDirectives(c,v=v) # v arg is essential.
 	pluginsList = dict.get("pluginsList")
 	
@@ -13810,14 +11695,14 @@ if n2 &gt; n &gt; j &gt; -1:
 		
 		editBodyMenuName = "Edit Body..."
 		wikiMenuName = "&amp;Wiki Tags..."
-		if c.frame.getMenu(wikiMenuName):
+		if c.frame.menu.getMenu(wikiMenuName):
 			return # wiki menu already created
 
-		editBodyMenu = c.frame.getMenu(editBodyMenuName)
+		editBodyMenu = c.frame.menu.getMenu(editBodyMenuName)
 		separator = (("-", None, None),)
-		c.frame.createMenuEntries(editBodyMenu, separator)
+		c.frame.menu.createMenuEntries(editBodyMenu, separator)
 		
-		wikiMenu = c.frame.createNewMenu(wikiMenuName, editBodyMenuName)
+		wikiMenu = c.frame.menu.createNewMenu(wikiMenuName, editBodyMenuName)
 		newEntries = (
 			("&amp;Bold", "Alt+Shift+B", doWikiBold),
 			("&amp;Italic", "Alt+Shift+I", doWikiItalic),
@@ -13826,7 +11711,7 @@ if n2 &gt; n &gt; j &gt; -1:
 			("Choose Co&amp;lor...", "Alt+Shift+L", doWikiChooseColor),
 			)
 		
-		c.frame.createMenuEntries(wikiMenu, newEntries)
+		c.frame.menu.createMenuEntries(wikiMenu, newEntries)
 
 </t>
 <t tx="edream.110403140857.21">def doWikiBold(event=None):
@@ -16055,5 +13940,1173 @@ def load_dict(self, dict, force=0, rpc_client=None):
 Changed several other plugins so they load only if app.gui.guiName == "tkinter".
 
 Converted all .ini files to @silentfile</t>
+<t tx="edream.110803170600">from leoGlobals import *
+import leoTest
+
+u = leoTest.testUtils()
+nodes = 0 ; lines = 0
+c = top()
+c.clearAllVisited()
+v = u.findNodeAnywhere(c,"Plugins &amp; scripts")
+after = v.nodeAfterTree()
+trace(v,after)
+while v and v != after:
+	if not v.t.isVisited():
+		v.t.setVisited()
+		nodes += 1
+		lines += len(splitLines(v.bodyString()))
+	v = v.threadNext()
+	
+pages = ((nodes * 10) + lines) / 50
+print "nodes,lines,pages",nodes,lines,pages
+es("nodes,lines,pages",nodes,lines,pages)</t>
+<t tx="edream.111303085447.1">def destroySelf(self):
+	
+	pass # Nothing more needs to be done once all windows have been destroyed.</t>
+<t tx="edream.111303090930"></t>
+<t tx="edream.111303091300"></t>
+<t tx="edream.111303091857"></t>
+<t tx="edream.111303092328">def createColorPanel(self,c):
+
+	"""Create Color panel."""
+
+	trace("not ready yet")</t>
+<t tx="edream.111303092328.1">def createComparePanel(self,c):
+
+	"""Create Compare panel."""
+
+	trace("not ready yet")</t>
+<t tx="edream.111303092328.2">def createFindPanel(self):
+
+	"""Create a hidden Find panel."""
+
+	return wxFindFrame()</t>
+<t tx="edream.111303092328.3">def createFontPanel(self,c):
+
+	"""Create a Font panel."""
+
+	trace("not ready yet")</t>
+<t tx="edream.111303092328.4">def createLeoFrame(self,title):
+	
+	"""Create a new Leo frame."""
+
+	return wxLeoFrame(title)</t>
+<t tx="edream.111303092328.5">def createPrefsPanel(self,c):
+
+	"""Create a Prefs panel."""
+
+	return wxLeoPrefs(c)</t>
+<t tx="edream.111303092854"></t>
+<t tx="edream.111303093843">def setIdleTimeHook (self,idleTimeHookHandler,*args,**keys):
+	
+	trace(idleTimeHookHandler)
+	
+</t>
+<t tx="edream.111303093843.1">def setIdleTimeHookAfterDelay (self,delay,idleTimeHookHandler,*args,**keys):
+	
+	trace(delay,idleTimeHookHandler)</t>
+<t tx="edream.111303093953.1"></t>
+<t tx="edream.111303093953.2">def firstIndex (self):
+
+	return 0</t>
+<t tx="edream.111303093953.3">def lastIndex (self):
+
+	return "end"</t>
+<t tx="edream.111303093953.4">def moveIndexBackward(self,index,n):
+
+	return index + n
+</t>
+<t tx="edream.111303093953.5">def moveIndexForward(self,index,n):
+
+	return index -n</t>
+<t tx="edream.111303093953.6">def compareIndices (self,t,n1,rel,n2):
+	
+	val = eval("%d $s %d" % (n1,rel,n2))
+	trace(val)
+	return val</t>
+<t tx="edream.111303093953.7">def getindex(self,text,index):
+	
+	"""Convert string index of the form line.col into a tuple of two ints."""
+	
+	val = tuple(map(int,string.split(text.index(index), ".")))
+	
+	trace(val)
+	
+	return val</t>
+<t tx="edream.111303093953.8"></t>
+<t tx="edream.111303093953.9">def getInsertPoint(self,t):
+
+	if t:
+		t.bodyCtrl.GetInsertionPoint()
+	else:
+		return 0</t>
+<t tx="edream.111303093953.10">def setInsertPoint (self,t,pos):
+
+	if t and pos: # s_text control doesn't exist.
+		trace(pos)
+		t.bodyCtrl.SetInsertionPoint(pos)</t>
+<t tx="edream.111303093953.11"></t>
+<t tx="edream.111303093953.12">def getSelectionRange (self,t):
+
+	return t.bodyCtrl.GetSelection()</t>
+<t tx="edream.111303093953.13">def getTextSelection (self,t):
+	
+	"""Return a tuple representing the selected range of t, a Tk.Text widget.
+	
+	Return a tuple giving the insertion point if no range of text is selected."""
+
+	# To get the current selection
+	sel = t.bodyCtrl.GetSelection()
+	if len(sel) == 2:
+		return sel
+	else:
+		# Return the insertion point if there is no selected text.
+		insert = t.bodyCtrl.GetInsertionPoint()
+		return insert,insert</t>
+<t tx="edream.111303093953.14">def setSelectionRange(self,t,n1,n2):
+
+	if t and n1 and n2:
+		trace(n1,n2)
+		t.bodyCtrl.SetSelection(n1,n2)</t>
+<t tx="edream.111303093953.15">def setSelectionRangeWithLength(self,t,start,length):
+	
+	t.bodyCtrl.SetSelection(n1,start+length)</t>
+<t tx="edream.111303093953.16">def setTextSelection (self,t,start,end):
+
+	if not start or not end:
+		return
+		
+	if start &gt; end:
+		start,end = end,start
+		
+	t.bodyCtrl.SetSelection(start,end)</t>
+<t tx="edream.111303093953.17"></t>
+<t tx="edream.111303093953.18">def getAllText (self,t):
+	
+	"""Return all the text of Tk.Text t converted to unicode."""
+	
+	s = t.get("1.0","end")
+	if s is None:
+		return u""
+	else:
+		return toUnicode(s,app.tkEncoding)</t>
+<t tx="edream.111303093953.19">def getCharAfterIndex (self,t,index):
+
+	ch = t.get(index + "+1c")
+	return toUnicode(ch,app.tkEncoding)</t>
+<t tx="edream.111303093953.20">def getCharAtIndex (self,t,index):
+	ch = t.get(index)
+	return toUnicode(ch,app.tkEncoding)</t>
+<t tx="edream.111303093953.21">def getCharBeforeIndex (self,t,index):
+
+	ch = t.get(index + "-1c")
+	return toUnicode(ch,app.tkEncoding)</t>
+<t tx="edream.111303093953.22">def getLineContainingIndex (self,t,index):
+
+	line = t.get(index + " linestart", index + " lineend")
+	return toUnicode(line,app.tkEncoding)</t>
+<t tx="edream.111303093953.23">def replaceSelectionRangeWithText (self,t,start,end,text):
+
+	t.delete(start,end)
+	t.insert(start,text)</t>
+<t tx="edream.111303093953.24"></t>
+<t tx="edream.111303093953.25">def makeIndexVisible(self,t,index):
+
+	if t and index:
+		t.bodyCtrl.ShowPosition(index)
+</t>
+<t tx="edream.111303095242">class wxLeoMenu (leoMenu.leoMenu):
+	
+	"""A class that represents a wxPython Leo window."""
+	
+	@others</t>
+<t tx="edream.111303095242.3">def __init__ (self,frame):
+	
+	# Init the base class.
+	leoMenu.leoMenu.__init__(self,frame)
+	
+	# Init the ivars.
+	self.c = frame.c
+	self.frame = frame
+	
+	self.menuDict = {}</t>
+<t tx="edream.111303095242.6">def defineOpenWithMenuCallback (self,command):
+		
+	# The first parameter must be event, and it must default to None.
+	def callback(event,command=command):
+		try: self.c.openWith(data=command)
+		except: print traceback.print_exc()
+
+	trace(`callback`)
+	return callback</t>
+<t tx="edream.111303100039"></t>
+<t tx="edream.111303100039.1"></t>
+<t tx="edream.111303100039.6">def insertHeadlineTime (self):
+	
+	es("insertHeadlineTime not ready yet")
+	return
+
+	frame = self ; c = frame.c ; v = c.currentVnode()
+	h = v.headString() # Remember the old value.
+
+	if v.edit_text():
+		sel1,sel2 = app.gui.getTextSelection(v.edit_text())
+		if sel1 and sel2 and sel1 != sel2: # 7/7/03
+			v.edit_text().delete(sel1,sel2)
+		v.edit_text().insert("insert",c.getTime(body=false))
+		frame.idle_head_key(v)
+
+	# A kludge to get around not knowing whether we are editing or not.
+	if h.strip() == v.headString().strip():
+		es("Edit headline to append date/time")</t>
+<t tx="edream.111303100039.7"></t>
+<t tx="edream.111303100039.8">def cascade(self):
+	
+	es("cascade not ready yet")
+	return
+
+	x,y,delta = 10,10,10
+	for frame in app.windowList:
+		top = frame.top
+		# Compute w,h
+		top.update_idletasks() # Required to get proper info.
+		geom = top.geometry() # geom = "WidthxHeight+XOffset+YOffset"
+		dim,junkx,junky = string.split(geom,'+')
+		w,h = string.split(dim,'x')
+		w,h = int(w),int(h)
+		# Set new x,y and old w,h
+		geom = "%dx%d%+d%+d" % (w,h,x,y)
+		frame.setTopGeometry(geom) # frame.top.geometry("%dx%d%+d%+d" % (w,h,x,y))
+		# Compute the new offsets.
+		x += 30 ; y += 30
+		if x &gt; 200:
+			x = 10 + delta ; y = 40 + delta
+			delta += 10
+</t>
+<t tx="edream.111303100039.9">def equalSizedPanes(self):
+	
+	es("equalSizedPanes not ready yet")
+	return
+
+	frame = self
+	frame.resizePanesToRatio(0.5,frame.secondary_ratio)
+</t>
+<t tx="edream.111303100039.10">def hideLogWindow (self):
+	
+	es("hideLogWindow not ready yet")
+	return
+	
+	frame = self
+	frame.divideLeoSplitter2(0.99, not frame.splitVerticalFlag)</t>
+<t tx="edream.111303100039.11">def minimizeAll(self):
+	
+	es("minimizeAll not ready yet")
+	return
+
+	self.minimize(app.findFrame)
+	self.minimize(app.pythonFrame)
+	for frame in app.windowList:
+		self.minimize(frame)
+	
+def minimize(self, frame):
+
+	if frame:
+		frame.Show(false)</t>
+<t tx="edream.111303100039.12"># The key invariant: self.splitVerticalFlag tells the alignment of the main splitter.
+def toggleSplitDirection(self):
+	
+	es("toggleSplitDirection not ready yet")
+	return
+
+	# Abbreviations.
+	frame = self
+	bar1 = self.bar1 ; bar2 = self.bar2
+	split1Pane1,split1Pane2 = self.split1Pane1,self.split1Pane2
+	split2Pane1,split2Pane2 = self.split2Pane1,self.split2Pane2
+	# Switch directions.
+	verticalFlag = self.splitVerticalFlag = not self.splitVerticalFlag
+	orientation = choose(verticalFlag,"vertical","horizontal")
+	app.config.setWindowPref("initial_splitter_orientation",orientation)
+	# Reconfigure the bars.
+	bar1.place_forget()
+	bar2.place_forget()
+	self.configureBar(bar1,verticalFlag)
+	self.configureBar(bar2,not verticalFlag)
+	# Make the initial placements again.
+	self.placeSplitter(bar1,split1Pane1,split1Pane2,verticalFlag)
+	self.placeSplitter(bar2,split2Pane1,split2Pane2,not verticalFlag)
+	# Adjust the log and body panes to give more room around the bars.
+	self.reconfigurePanes()
+	# Redraw with an appropriate ratio.
+	vflag,ratio,secondary_ratio = frame.initialRatios()
+	self.resizePanesToRatio(ratio,secondary_ratio)</t>
+<t tx="edream.111303101257">def abortEditLabelCommand (self):
+
+	es("abortEditLabelCommand not ready yet")
+	return
+	
+	c = self.c ; v = c.currentVnode ; tree = self.tree
+	# trace(v)
+	if self.revertHeadline and v.edit_text() and v == self.editVnode:
+		
+		# trace(`self.revertHeadline`)
+		v.edit_text().delete("1.0","end")
+		v.edit_text().insert("end",self.revertHeadline)
+		tree.idle_head_key(v) # Must be done immediately.
+		tree.revertHeadline = None
+		tree.select(v)
+		if v and len(v.t.joinList) &gt; 0:
+			# 3/26/03: changed redraw_now to force_redraw.
+			tree.force_redraw() # force a redraw of joined headlines.</t>
+<t tx="edream.111303101257.1">def endEditLabelCommand (self):
+	
+	es("endEditLabelCommand not ready yet")
+	return
+
+	c = self.c ; tree = self.tree ; v = self.editVnode
+
+	if v and v.edit_text():
+		tree.select(v)
+
+	if v: # Bug fix 10/9/02: also redraw ancestor headlines.
+		# 3/26/03: changed redraw_now to force_redraw.
+		tree.force_redraw() # force a redraw of joined headlines.
+
+	gui.set_focus(c,c.frame.bodyCtrl) # 10/14/02</t>
+<t tx="edream.111303101709">def toggleActivePane(self):
+	
+	# This can't work from the menu...
+	
+	es("toggleActivePane not ready yet")
+	return
+
+	if self.FindFocus() == self.body.bodyCtrl:
+		self.tree.SetFocus()
+	else:
+		self.body.bodyCtrl.SetFocus()</t>
+<t tx="edream.111303103141">def add_command (self,menu,**keys):
+	
+	label    = keys.get("label")
+	callback = keys.get("command")
+
+	if menu:
+		id = const(label)
+		menu.Append(id,label,label)
+		key = (menu,label),
+		self.menuDict[key] = id # Remember id 
+		# trace(label,callback)
+		wx.EVT_MENU(self.frame,id,callback)
+	else:
+		trace("no menu",label)
+
+</t>
+<t tx="edream.111303103141.1">def bind (self,bind_shortcut,callback):
+	
+	# trace(bind_shortcut,callback)
+	
+	pass</t>
+<t tx="edream.111303103141.2">def delete (self,menu,readItemName):
+	
+	trace(menu,readItemName)
+	
+	## return menu.delete(realItemName)
+</t>
+<t tx="edream.111303103141.3">def delete_range (self,menu,n1,n2):
+	
+	if not menu:
+		trace("no menu")
+		return
+		
+	# trace(n1,n2,menu.GetTitle())
+	
+	items = menu.GetMenuItems()
+	
+	if 0: # debugging
+		for item in items:
+			id = item.GetId()
+			item = menu.FindItemById(id)
+			trace(item.GetText())
+			
+	## Doesn't work:  a problem with wxPython.
+	
+	if len(items) &gt; n1 and len(items) &gt; n2:
+		i = n1
+		while i &lt;= n2:
+			id = items[i].GetId()
+			item = menu.FindItemById(id)
+			trace("deleting:",item.GetText())
+			menu.Delete(id)
+			i += 1</t>
+<t tx="edream.111303103141.4">def destroy (self,menu):
+	
+	trace()
+
+	## menu.destroy()</t>
+<t tx="edream.111303103254">def defineMenuCallback(self,command,name):
+		
+	# The first parameter must be event, and it must default to None.
+	def callback(event=None,self=self,command=command,label=name):
+		self.c.doCommand(command,label,event)
+
+	return callback</t>
+<t tx="edream.111303103457"></t>
+<t tx="edream.111303103457.2">def createMenuBar(self):
+	
+	self.menuBar = menuBar = wx.wxMenuBar()
+
+	self.createMenusFromTables()
+
+	self.frame.SetMenuBar(menuBar)</t>
+<t tx="edream.111303104912">def bind (self,*args,**keys):
+	
+	# The wx bind model is different from tk...
+	
+	pass
+</t>
+<t tx="edream.111303110018">def new_menu(self,parent,tearoff=0):
+	
+	return wx.wxMenu()</t>
+<t tx="edream.111303111942">def insert_cascade (self,parent,index,label,menu,underline):
+
+	if not parent:
+		self.menuBar.append(menu,label)</t>
+<t tx="edream.111303111942.1">def add_cascade (self,parent,label,menu,underline):
+
+	"""Create a menu with the given parent menu."""
+
+	if parent:
+		# Create a submenu of the parent menu.
+		id = const(label)
+		parent.AppendMenu(id,label,menu,label)
+	else:
+		# Create a top-level menu.
+		self.menuBar.Append(menu,label)</t>
+<t tx="edream.111303121150">def add_separator(self,menu):
+	
+	if menu:
+		menu.AppendSeparator()
+	else:
+		trace("null menu")</t>
+<t tx="edream.111303135410">def setTitle (self,title):
+
+	self.title = title
+	self.SetTitle(title) # Call the wx code.</t>
+<t tx="edream.111303141147">def signOnWithVersion (self):
+
+	c = self.c
+	color = app.config.getWindowPref("log_error_color")
+	signon = c.getSignOnLine()
+	n1,n2,n3,junk,junk=sys.version_info
+	
+	es("Leo Log Window...",color=color)
+	es(signon)
+	es("Python %d.%d.%d" % (n1,n2,n3))
+	enl()</t>
+<t tx="edream.111303163727.1">def enableMenu (self,menu,name,val):
+	
+	if not menu:
+		trace("no menu",name,val)
+		return
+	
+	realName = app.getRealMenuName(name)
+	realName = realName.replace("&amp;","")
+	id = menu.FindItem(realName)
+	if id:
+		item = menu.FindItemById(id)
+		val = choose(val,1,0)
+		item.Enable(val)
+	else:
+		trace("no item",name,val)</t>
+<t tx="edream.111303163727.2">def disableMenu (self,menu,name):
+	
+	if not menu:
+		trace("no menu",name)
+		return
+	
+	realName = app.getRealMenuName(name)
+	realName = realName.replace("&amp;","")
+	id = menu.FindItem(realName)
+	if id:
+		item = menu.FindItemById(id)
+		item.Enable(0)
+	else:
+		trace("no item",name,val)</t>
+<t tx="edream.111303163727.3">def setMenuLabel (self,menu,name,label,underline=-1):
+
+	if not menu:
+		trace("no menu",name)
+		return
+		
+	if type(name) == type(0):
+		# "name" is actually an index into the menu.
+		items = menu.GetMenuItems() # GetItemByPosition does not exist.
+		if items and len(items) &gt; name :
+			id = items[name].GetId()
+		else: id = None
+	else:
+		realName = app.getRealMenuName(name)
+		realName = realName.replace("&amp;","")
+		id = menu.FindItem(realName)
+
+	if id:
+		item = menu.FindItemById(id)
+		label = app.getRealMenuName(label)
+		label = label.replace("&amp;","")
+		# trace(name,label)
+		item.SetText(label)
+	else:
+		trace("no item",name,label)</t>
+<t tx="edream.111303171218"># Returning indices...
+def getBeforeInsertionPoint (self):
+	trace()
+	
+def getInsertionPoint (self):
+	return self.bodyCtrl.GetInsertionPoint()
+	
+# Returning chars...
+def getCharAtInsertPoint (self):
+	t = self.bodyCtrl
+	pos = t.GetInsertionPoint()
+	return t.GetRange(pos,pos+1)
+
+def getCharBeforeInsertPoint (self):
+	t = self.bodyCtrl
+	pos = t.GetInsertionPoint()
+	return t.GetRange(pos-1,pos)
+
+# Setting the insertion point...
+def setInsertionPoint (self,index):
+	self.bodyCtrl.SetInsertionPoint(index)
+
+def setInsertPointToEnd (self):
+	self.bodyCtrl.SetInsertionPointEnd()
+	
+def setInsertPointToStartOfLine (self,lineNumber):
+	trace()</t>
+<t tx="edream.111303171218.1">def deleteSelection (self):
+	t = self.bodyCtrl
+	t.Remove(t.GetSelection())
+
+def getTextSelection (self):
+	return self.bodyCtrl.GetSelection()
+	
+def hasTextSelection (self):
+	start,end = self.bodyCtrl.GetSelection()
+	return start != end
+
+def selectAllText (self):
+	self.bodyCtrl.SetSelection(-1,-1)
+
+def setTextSelection (self,sel):
+	self.bodyCtrl.SetSelection(sel)</t>
+<t tx="edream.111303171238"># These routines replace most of the former insert/delete and index routines.</t>
+<t tx="edream.111303171238.1">def deleteAllText(self):
+	self.bodyCtrl.Clear()
+	
+def deleteCharacter (self,index):
+	self.bodyCtrl.Remove(index,index+1)
+	
+def deleteLine (self,lineNumber): # zero based line number.
+	t = self.bodyCtrl
+	pos1 = t.XYToPosition(lineNumber)
+	n = t.GetLineLength(lineNumber)
+	t.Remove(pos1,pos1 + n)
+
+def deleteLines (self,lineNumber,numberOfLines): # zero based line number.
+	t = self.bodyCtrl
+	pos1 = t.XYToPosition(lineNumber)
+	pos2 = t.XYToPosition(lineNumber+numberOfLine-1)
+	n = t.GetLineLength(lineNumber+numberOfLine-1)
+	t.Remove(pos1,pos2 + n)
+
+def deleteRange (self,index1,index2):
+	self.bodyCtrl.Remove(index1,index2)</t>
+<t tx="edream.111303171238.2">def getAllText (self):
+	return self.bodyCtrl.GetValue()
+	
+def getCharAtIndex (self,index):
+	return self.bodyCtrl.GetRange(index,index+1)
+
+def getInsertLines (self):
+	trace()
+
+def getSelectionAreas (self):
+	trace()
+
+def getSelectionLines (self):
+	trace()
+	
+def getTextRange(self,n1,n2):
+	return self.bodyCtrl.GetRange(n1,n2)</t>
+<t tx="edream.111303171238.3">def insertAtEnd (self,s):
+
+	return self.bodyCtrl.AppendText(s)
+	
+def insertAtInsertPoint (self,s):
+	
+	self.bodyCtrl.WriteText(s)</t>
+<t tx="edream.111303171238.4">def setSelectionAreas (self,before,sel,after):
+
+	trace()</t>
+<t tx="edream.111303184347">@ The wxWindows menu code has problems:  changes do not take effect immediately.</t>
+<t tx="edream.111303201144.6">### self.scanForTabWidth(v)
+
+### incremental = undoType not in ("Cut","Paste") and not self.forceFullRecolorFlag
+c.recolor()
+###self.forceFullRecolorFlag = false</t>
+<t tx="edream.111303201144.7">redraw_flag = false
+
+c.beginUpdate()
+
+# Update dirty bits.
+if not v.isDirty() and v.setDirty(): # Sets all cloned and @file dirty bits
+	redraw_flag = true
+	
+# Update icons.
+val = v.computeIcon()
+if val != v.iconVal:
+	v.iconVal = val
+	redraw_flag = true
+
+c.endUpdate(redraw_flag) # redraw only if necessary</t>
+<t tx="edream.111303202917"></t>
+<t tx="edream.111303202917.1">def getColorizer(self):
+
+	return self.colorizer
+
+def recolor(self,v,incremental=false):
+
+	if self.use_coloring:
+		self.colorizer.colorize(v,incremental)
+
+def recolor_now(self,v,incremental=false):
+
+	if self.use_coloring:
+		self.colorizer.colorize(v,incremental)
+	
+def recolor_range(self,v,leading,trailing):
+
+	if self.use_coloring:
+		self.colorizer.recolor_range(v,leading,trailing)
+	
+def updateSyntaxColorer (self,v):
+
+	return self.colorizer.updateSyntaxColorer(v)</t>
+<t tx="edream.111303204025"></t>
+<t tx="edream.111303204025.1">def adjustIndex (self,index,offset):
+	
+	try:
+		column, row = index
+		return column, row + offset
+	except:
+		return index + offset</t>
+<t tx="edream.111303204025.2">def compareIndices(self,i,rel,j):
+	
+	try:
+		y1,x1 = i
+		y2,x2 = j
+		pos1 = self.bodyCtrl.XYToPosition(x1,y1)
+		pos2 = self.bodyCtrl.XYToPosition(x2,y2)
+	except:
+		pos1 = i
+		pos2 = j
+	
+	val = eval("%d %s %d" % (pos1,rel,pos2))
+	trace(i,j,rel,val)
+	return val</t>
+<t tx="edream.111303204025.3">def convertRowColumnToIndex (self,row,column):
+	
+	index = self.bodyCtrl.XYToPosition(column,row-1)
+	# trace(column,row,"-&gt;",index)
+	return index</t>
+<t tx="edream.111303204025.4">def convertIndexToRowColumn (self,index):
+	
+	x,y = self.bodyCtrl.PositionToXY(index)
+	# trace(index,"-&gt;",y+1,x)
+	return y+1,x</t>
+<t tx="edream.111303204025.5">def getImageIndex (self,image):
+	
+	trace(image)</t>
+<t tx="edream.111303204517"></t>
+<t tx="edream.111303204836"></t>
+<t tx="edream.111303205442">@ The colorizer isn't ready for prime time:
+	
+	- It's too slow when selecting long text
+	- The screen flashes too much
+	- The tkColorToWxColor routine needs much more work.
+	
+wxLeo should use wxStc rather than wxText!</t>
+<t tx="edream.111303205611">def tag_add (self,tagName,index1,index2):
+	
+	# trace(tagName,index1,index2)
+
+	style = self.styles.get(tagName)
+	if style:
+		self.bodyCtrl.SetStyle(index1,index2,style)</t>
+<t tx="edream.111303205611.1">def tag_bind (self,tagName,event,callback):
+	
+	# trace(tagName,event,callback)
+	pass
+</t>
+<t tx="edream.111303205611.2">def tag_configure (self,colorName,**keys):
+	
+	foreground = keys.get("foreground")
+	background = keys.get("background")
+
+	if foreground:
+		fcolor = self.tkColorToWxColor (foreground)
+		bcolor = self.tkColorToWxColor (background)
+		if fcolor and bcolor:
+			# trace(colorName,foreground,keys)
+			style = wx.wxTextAttr(fcolor,bcolor)
+			self.styles[colorName] = style
+		elif fcolor:
+			style = wx.wxTextAttr(fcolor)
+			self.styles[colorName] = style</t>
+<t tx="edream.111303205611.3">def tag_delete(self,tagName):
+
+	if tagName == "keyword": # A kludge.
+
+		# trace(tagName)
+		style = wx.wxTextAttr(wx.wxBLACK)
+		last = self.maxWxIndex()
+		
+		if 1: # This may cause the screen flash.
+			self.bodyCtrl.SetStyle(0,last,style)</t>
+<t tx="edream.111303205611.4">def tag_remove (self,tagName,index1,index2):
+	
+	trace(tagName,index1,index2)
+	pass
+</t>
+<t tx="edream.111403080609">def maxWxIndex (self):
+	
+	return self.bodyCtrl.GetLastPosition()</t>
+<t tx="edream.111403082513">def tkColorToWxColor (self, color):
+	
+	d = {
+		"red": wx.wxRED,
+		"blue": wx.wxBLUE,
+		"#00aa00": wx.wxGREEN,
+		"firebrick3": wx.wxRED }
+		
+	return d.get(color)</t>
+<t tx="edream.111403090242">def drawIcon(self,v,x,y):
+	trace(v) #  return self.tree.drawIcon(v,x,y)
+
+def setTreeIniting(self,flag):
+	self.treeIniting = flag
+
+# Scrolling... 
+def scrollTo(self,v):
+	trace() #  return self.tree.scrollTo(v)
+
+def idle_scrollTo(self,v):
+	trace(v) #  return self.tree.idle_scrollTo(v)
+
+</t>
+<t tx="edream.111403090242.1">def editLabel(self,v):
+	pass
+
+def editVnode(self):
+	pass
+
+def endEditLabel(self):
+	pass
+	
+def setEditVnode(self,v):
+	pass
+
+def setNormalLabelState(self,v):
+	pass
+
+def OnActivateHeadline(self,v):
+	trace() # This probably is never called.</t>
+<t tx="edream.111403093253">The new code now works with the new reorg.  This means that wxLeo is using all the code in Leo's core.
+
+In particular:
+
+- wxLeo creates all menus using the base leoMenu class.
+- wxLeo uses all commands in the Commands class.
+- wxLeoFrame contains only gui-dependent commands.
+
+The syntax colorer is working in demo mode.  Almost certainly wxLeo should use a better control than wxText.</t>
+<t tx="edream.111403093253.1"></t>
+<t tx="edream.111403093559">def focus_get(self):
+	
+	return self.FindFocus()</t>
+<t tx="edream.111403093559.1">def getFont(self):
+	trace() # return self.tree.getFont()
+
+def setFont(self,font):
+	trace() # return self.tree.setFont(font)</t>
+<t tx="edream.111403104835">def getWildcardList (self,filetypes):
+	
+	"""Create a wxWindows wildcard string for open/save dialogs."""
+
+	if not filetypes:
+		return "*.leo"
+
+	if 1: # Too bad: this is sooo wimpy.
+			a,b = filetypes[0] 
+			return b
+
+	else: # This _sometimes_ works: wxWindows is driving me crazy!
+
+		# wildcards = ["%s (%s)" % (a,b) for a,b in filetypes]
+		wildcards = ["%s" % (b) for a,b in filetypes]
+		wildcard = "|".join(wildcards)
+		trace(wildcard)
+		return wildcard</t>
+<t tx="edream.111403135745">def set_ivars (self,c):
+	
+	"""Init the commander ivars from the find panel."""
+	
+	trace()
+
+	# N.B.: separate c.ivars are much more convenient than a dict.
+	for key in self.intKeys:
+		key = key + "_flag"
+		data = self.dict.get(key)
+		if data:
+			box,id = data
+			val = box.GetValue()
+			#trace(key,val)
+			setattr(c,key,val)
+		else:
+			#trace("no data",key)
+			setattr(c,key,false)
+
+	fp = self.findPanel
+	c.find_text = fp.findText.GetValue()
+	c.change_text = fp.changeText.GetValue()</t>
+<t tx="edream.111403141810">def initialRatios (self):
+
+	config = app.config
+	s = config.getWindowPref("initial_splitter_orientation")
+	verticalFlag = s == None or (s != "h" and s != "horizontal")
+	
+	# Tweaked for tk.  Other tweaks may be best for wx.
+	if verticalFlag:
+		r = config.getFloatWindowPref("initial_vertical_ratio")
+		if r == None or r &lt; 0.0 or r &gt; 1.0: r = 0.5
+		r2 = config.getFloatWindowPref("initial_vertical_secondary_ratio")
+		if r2 == None or r2 &lt; 0.0 or r2 &gt; 1.0: r2 = 0.8
+	else:
+		r = config.getFloatWindowPref("initial_horizontal_ratio")
+		if r == None or r &lt; 0.0 or r &gt; 1.0: r = 0.3
+		r2 = config.getFloatWindowPref("initial_horizontal_secondary_ratio")
+		if r2 == None or r2 &lt; 0.0 or r2 &gt; 1.0: r2 = 0.8
+
+	return verticalFlag,r,r2</t>
+<t tx="edream.111403151611">def bringToFront (self,window):
+	
+	if window.IsIconized():
+		window.Maximize()
+	window.Raise()
+	window.Show(true)</t>
+<t tx="edream.111403151611.1">def bringToFront (self):
+	
+	app.gui.bringToFront(self)
+	self.c = top()
+	self.init(self.c)
+	self.findPanel.findText.SetFocus()
+	self.findPanel.findText.SetSelection(-1,-1)</t>
+<t tx="edream.111503074302">sizer = wx.wxBoxSizer(wx.wxVERTICAL)
+sizer.Add(self.findPanel)
+self.SetAutoLayout(true)# tell dialog to use sizer
+self.SetSizer(sizer) # actually set the sizer
+sizer.Fit(self)# set size to minimum size as calculated by the sizer
+sizer.SetSizeHints(self)# set size hints to honour mininum size</t>
+<t tx="edream.111503085739">for name,command in (
+	("changeButton",self.changeButton),
+	("changeAllButton",self.changeAllButton),
+	("changeThenFindButton",self.changeThenFindButton),
+	("findButton",self.findButton),
+	("findAllButton",self.findAllButton)):
+		
+	def eventHandler(event,command=command):
+		# trace(command)
+		command()
+
+	id = const_dict.get(name)
+	assert(id)
+	wx.EVT_BUTTON(self,id,eventHandler)</t>
+<t tx="edream.111503085739.1">textKeys = ["find_text","change_text"]
+keys = textKeys[:]
+for item in self.intKeys:
+	keys.append(item)
+
+for name in keys:
+
+	if name not in textKeys:
+		name += "_flag"
+
+	def eventHandler(event,self=self,name=name):
+		box = event.GetEventObject()
+		val = box.GetValue()
+		# trace(name,val)
+		setattr(self.c,name,val)
+
+	id = const_dict.get(name)
+	if id:
+		if name in textKeys:
+			wx.EVT_TEXT(self,id,eventHandler)
+		else:
+			wx.EVT_CHECKBOX(self,id,eventHandler)</t>
+<t tx="edream.111503091617">def init_s_text (self,s):
+	
+	c = self.c
+	t = self.s_text # the dummy widget
+
+	# Set the text for searching.
+	t.text = s
+	
+	# Set the insertion point.
+	if c.reverse_flag:
+		t.SetInsertionPointEnd()
+	else:
+		t.SetInsertionPoint(0)
+	return t</t>
+<t tx="edream.111503093140">class wxSearchWidget:
+
+	"""A dummy widget class to pass to Leo's core find code."""
+
+	@others</t>
+<t tx="edream.111503093522">def gui_search (self,t,find_text,index,
+	stopindex,backwards,regexp,nocase):
+		
+	trace(index,stopindex,backwards,regexp,nocase)
+	
+	s = t.text # t is the dummy text widget
+	
+	if index is None:
+		index = 0
+
+	pos = s.find(find_text,index)
+
+	if pos == -1:
+		pos = None
+	
+	return pos</t>
+<t tx="edream.111503094014">def __init__ (self):
+	
+	self.insertPoint = 0
+	self.selection = 0,0
+	self.bodyCtrl = self
+	self.body = self
+	self.text = None</t>
+<t tx="edream.111503094014.1"># Simulating wxWindows calls (upper case)
+def SetSelection(self,n1,n2):
+	self.selection = n1,n2
+	
+# Others...
+def deleteSelection (self):
+	self.selection = 0,0
+
+def getTextSelection (self):
+	return self.selection
+	
+def hasTextSelection (self):
+	start,end = self.selection
+	return start != end
+
+def selectAllText (self):
+	self.selection = 0,-1
+
+def setTextSelection (self,sel):
+	try:
+		start,end = sel
+		self.selection = start,end
+	except:
+		self.selection = sel,sel</t>
+<t tx="edream.111503094322"># Simulating wxWindows calls (upper case)
+def GetInsertionPoint (self):
+	return self.insertPoint
+
+def SetInsertionPoint (self,index):
+	self.insertPoint = index
+	
+def SetInsertionPointEND (self,index):
+	self.insertPoint = len(self.text)+1
+
+# Returning indices...
+def getBeforeInsertionPoint (self):
+	trace()
+
+# Returning chars...
+def getCharAtInsertPoint (self):
+	trace()
+
+def getCharBeforeInsertPoint (self):
+	trace()
+
+# Setting the insertion point...
+def setInsertPointToEnd (self):
+	self.insertPoint = -1
+	
+def setInsertPointToStartOfLine (self,lineNumber):
+	trace()</t>
+<t tx="edream.111503105816">def injectCallbacks(self):
+	
+	import leoNodes
+	
+	# Some callback is required.
+	def doNothingCallback(*args,**keys):
+		pass
+
+	for name in (
+		"OnBoxClick","OnDrag","OnEndDrag",
+		"OnHeadlineClick","OnHeadlineRightClick","OnHeadlineKey",
+		"OnHyperLinkControlClick","OnHyperLinkEnter","OnHyperLinkLeave",
+		"OnIconClick","OnIconDoubleClick","OnIconRightClick"):
+
+		# trace(f)
+		funcToMethod(doNothingCallback,leoNodes.vnode,name=name)</t>
+<t tx="edream.111503110300">At this point, Leo is useable.
+
+What I did:
+
+- Added use_coloring ivar to the wxLeoFrame class.  The body text is syntax colored only if this is true.
+	This is set to false at present because the default colors are very poor.
+    Also, coloring causes the body pane to scroll for large text.  These are minor problems...
+
+- Got find panel working.  This required creating dummy wxSearchWidget class.  Probably _all_ the search code should be in the base leoFind class, but that would making supporting regexp searches harder.
+
+- Simplified the event handlers in the find panel.  We can use tables to _create_ the event handlers.
+
+- Solved the problem with selecting new nodes: we must lock out further event handling once an event handler starts.  In particular, the syntax colorer generates a lot of other events.  This also prevents the outline from being marked dirty when a new node is selected.
+
+- Added code to insject do-nothing callbacks into vnode class.  This is required by the syntax colorer.
+
+Later:
+
+- Completed Find panel.
+
+- Made sure Leo prompts when closing a window.
+	- The new code is very simple: it just calls app.closeLeoWindow.
+		- Removed some gui dependencies from the app.finishQuit logic.
+		  (They are now in the app.tkinterGui.destroySelf routine.)
+
+- Implemented the wx gui dialog code.
+	- Only the number dialog remains...
+
+Very little remains to be done, and nothing big.</t>
+<t tx="edream.111503111146"></t>
+<t tx="edream.111503111350"></t>
+<t tx="edream.111503133933.2"># The var names must match the names in leoFind class.
+table = (
+	("Entire Outline","entire-outline",wx.wxRB_GROUP),
+	("Suboutline Only","suboutline_only_flag",0),  
+	("Node Only","node_only_flag",0),    
+	("Selection Only","selection-only",0))
+	
+for label,var,group in table:
+
+	if var: id = const(var)
+	else:   id = const("entire-outline")
+		
+	box = wx.wxRadioButton(self,id,label,
+		wx.wxDefaultPosition,(100,25),
+		group,wx.wxDefaultValidator,"group2")
+
+	col3Sizer.Add(box,0,wx.wxBORDER | wx.wxLEFT,20)
+	
+	self.frame.dict[var] = box,id</t>
+<t tx="edream.111503133933.3"># The var names must match the names in leoFind class.
+table = (
+	("search_headline_flag","Search Headline Text"),
+	("search_body_flag","Search Body Text"),
+	("mark_finds_flag","Mark Finds"),
+	("mark_changes_flag","Mark Changes"))
+
+for var,label in table:
+	
+	id = const(var)
+	box = wx.wxCheckBox(self,id,label,
+		wx.wxDefaultPosition,(100,25),
+		0,wx.wxDefaultValidator,"")
+
+	col4Sizer.Add(box,0,wx.wxBORDER | wx.wxLEFT,20)
+	self.frame.dict[var] = box,id</t>
+<t tx="edream.111503204508">def init (self,c):
+
+	"""Init the find panel from c.
+	
+	(The opposite of set_ivars)."""
+
+	# N.B.: separate c.ivars are much more convenient than a dict.
+	for key in self.intKeys:
+		key = key + "_flag"
+		val = getattr(c,key)
+		data = self.dict.get(key)
+		if data:
+			box,id = data
+			box.SetValue(val)
+			# trace(key,`val`)
+
+	self.findPanel.findText.SetValue(c.find_text)
+	self.findPanel.changeText.SetValue(c.change_text)</t>
+<t tx="edream.111503211508">def onCloseFindFrame (self,event):
+
+	if event.CanVeto():
+		event.Veto()
+		self.Hide()</t>
+<t tx="edream.111503213533">def destroySelf(self):
+	
+	self.Destroy()</t>
+<t tx="edream.111503213733">def destroySelf (self):
+	
+	self.Destroy()</t>
+<t tx="edream.111603104327"></t>
+<t tx="edream.111603112846"></t>
+<t tx="edream.111603112846.1">@ Entries in the table passed to createOpenWithMenuFromTable are
+tuples of the form (commandName,shortcut,data).
+
+- command is one of "os.system", "os.startfile", "os.spawnl", "os.spawnv" or "exec".
+- shortcut is a string describing a shortcut, just as for createMenuItemsFromTable.
+- data is a tuple of the form (command,arg,ext).
+
+Leo executes command(arg+path) where path is the full path to the temp file.
+If ext is not None, the temp file has the given extension.
+Otherwise, Leo computes an extension based on the @language directive in effect.
+@c
+
+def createOpenWithMenuFromTable (self,table):
+	
+	trace("Not ready yet")
+	
+	return ### Not ready yet
+
+	app.openWithTable = table # Override any previous table.
+	# Delete the previous entry.
+	parent = self.getMenu("File")
+	label=app.getRealMenuName("Open &amp;With...")
+	amp_index = label.find("&amp;")
+	label = label.replace("&amp;","")
+	try:
+		index = parent.index(label)
+		parent.delete(index)
+	except:
+		try:
+			index = parent.index("Open With...")
+			parent.delete(index)
+		except: return
+	# Create the "Open With..." menu.
+	openWithMenu = Tkinter.Menu(parent,tearoff=0)
+	self.setMenu("Open With...",openWithMenu)
+	parent.insert_cascade(index,label=label,menu=openWithMenu,underline=amp_index)
+	# Populate the "Open With..." menu.
+	shortcut_table = []
+	for triple in table:
+		if len(triple) == 3: # 6/22/03
+			shortcut_table.append(triple)
+		else:
+			es("createOpenWithMenuFromTable: invalid data",color="red")
+			return
+			
+	# for i in shortcut_table: print i
+	self.createMenuItemsFromTable("Open &amp;With...",shortcut_table,openWith=1)
+</t>
+<t tx="edream.111603130528">A number of changes made to accomodate the new reorg...</t>
 </tnodes>
 </leo_file>
