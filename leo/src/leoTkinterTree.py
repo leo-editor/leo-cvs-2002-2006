@@ -1483,7 +1483,8 @@ class leoTkinterTree (leoFrame.leoTree):
 			("&Tangle","Shift+Ctrl+T",c.tangle),
 			("&Untangle","Shift+Ctrl+U",c.untangle),
 			("-",None,None),
-			("Toggle Angle &Brackets","Ctrl+B",c.toggleAngleBrackets),
+			# 2/16/04: Remove shortcut for Toggle Angle Brackets command.
+			("Toggle Angle &Brackets",None,c.toggleAngleBrackets),
 			("-",None,None),
 			("Cut Node","Shift+Ctrl+X",c.cutOutline),
 			("Copy Node","Shift+Ctrl+C",c.copyOutline),
