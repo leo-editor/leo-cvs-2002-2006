@@ -97,6 +97,7 @@ class leoTkinterTree (leoFrame.leoTree):
 		self.iconimages = {} # Image cache set by getIconImage().
 		self.active = false # true if tree is active
 		self._editPosition = None
+		self._editWidget = None
 		self.lineyoffset = 0 # y offset for this headline.
 		self.disableRedraw = false # True: reschedule a redraw for later.
 		
@@ -590,17 +591,14 @@ class leoTkinterTree (leoFrame.leoTree):
 	
 		y += 2 # draw icon at y + 2
 	
-		# Always recompute icon.
+		# Always recompute v.iconVal.
+		# This is an important drawing optimization.
 		val = v.iconVal = v.computeIcon()
 		assert(0 <= val <= 15)
-		
-		# Compute the image name
-		imagename = "box"
-		if val < 10: imagename += "0"
-		imagename += str(val)
 	
-		# Get the image
-		image = self.getIconImage(imagename + ".GIF")
+		# Get the image.
+		imagename = "box%02d.GIF" % val
+		image = self.getIconImage(imagename)
 		id = self.canvas.create_image(x,y+self.lineyoffset,anchor="nw",image=image)
 		self.icon_id_dict[id] = p # Remember which vnode belongs to the icon.
 	
@@ -614,6 +612,7 @@ class leoTkinterTree (leoFrame.leoTree):
 		self.tagBindings.append((id,id3,"<3>"),)
 	
 		return 0,icon_width # dummy icon height,width
+	#@nonl
 	#@-node:drawIcon (tag_bind)
 	#@+node:drawNode & force_draw_node (good trace)
 	def drawNode(self,p,x,y):
@@ -688,26 +687,27 @@ class leoTkinterTree (leoFrame.leoTree):
 		
 		"""draw text for v at nominal coordinates x,y."""
 	
-		tree = self
+		tree = self ; c = self.c ; v = p.v
 		x += text_indent
-	
-		v = p.v
 	
 		t = Tkinter.Text(self.canvas,
 			font=self.font,bd=0,relief="flat",width=self.headWidth(v),height=1)
 	
-		self.edit_text_dict[v] = t # Remember which text widget belongs to v.
-		
+		# New in 4.2: entries a pairs (p,t) indexed by v.
+		# Remember which text widget belongs to v.
+		d = self.edit_text_dict
+		val = d.get(v,[])
+		val.append((p,t),)
+		d[v] = val
+		# g.trace("entry",d[p.v])
+	
 		# Remember the widget so deleteBindings can delete it.
 		self.widgets.append(t) # Fixes a _huge_ memory leak.
 	
 		t.insert("end", v.headString())
 		#@	<< configure the text depending on state >>
 		#@+node:<< configure the text depending on state >>
-		current = self.c.currentPosition()
-		# g.trace(p,current)
-		
-		if p and v and p.v == current.v: # To avoid unselecting when a node changes level.
+		if p and p == c.currentPosition():
 			if p == self.editPosition():
 				self.setNormalLabelState(p)
 			else:
@@ -1034,19 +1034,19 @@ class leoTkinterTree (leoFrame.leoTree):
 		# if not flag: print "yoffset fails:",h,v1
 		return h
 	
-	# Returns the visible height of the tree and all sibling trees, stopping at v1
+	# Returns the visible height of the tree and all sibling trees, stopping at p1
 	
-	def yoffsetTree(self,p,porv1):
+	def yoffsetTree(self,p,p1):
 	
 		h = 0
 		for p in p.siblings_iter():
 			# print "yoffsetTree:", p
-			if p == porv1:
+			if p == p1:
 				return h, true
 			h += self.line_height
 			if p.isExpanded() and p.hasChildren():
 				child = p.firstChild()
-				h2, flag = self.yoffsetTree(child,porv1)
+				h2, flag = self.yoffsetTree(child,p1)
 				h += h2
 				if flag: return h, true
 		
@@ -1206,6 +1206,7 @@ class leoTkinterTree (leoFrame.leoTree):
 			return self.icon_id_dict.get(id[0])
 		except:
 			return self.icon_id_dict.get(id)
+	#@nonl
 	#@-node:tree.findVnodeWithIconId
 	#@+node:tree.OnContinueDrag
 	def OnContinueDrag(self,p,event):
@@ -1395,15 +1396,17 @@ class leoTkinterTree (leoFrame.leoTree):
 	
 		c = self.c ; v = p.v
 	
-		if not v or not v.edit_text() or p != c.currentPosition():
+		if not p or not p.edit_text() or p != c.currentPosition():
 			return "break"
+			
+		edit_text = p.edit_text()
 	
 		if g.doHook("headkey1",c=c,v=v,ch=ch):
 			return "break" # The hook claims to have handled the event.
 	
 		#@	<< set s to the widget text >>
 		#@+node:<< set s to the widget text >>
-		s = v.edit_text().get("1.0","end")
+		s = edit_text.get("1.0","end")
 		s = g.toUnicode(s,g.app.tkEncoding) # 2/25/03
 		
 		if not s:
@@ -1427,7 +1430,7 @@ class leoTkinterTree (leoFrame.leoTree):
 			return "break"
 		if changed:
 			c.undoer.setUndoParams("Change Headline",p,newText=s,oldText=head)
-		index = v.edit_text().index("insert")
+		index = edit_text.index("insert")
 		if changed:
 			#@		<< update v and all nodes joined to v >>
 			#@+node:<< update v and all nodes joined to v >>
@@ -1440,9 +1443,9 @@ class leoTkinterTree (leoFrame.leoTree):
 				p.setDirty()
 				# Update v.
 				v.initHeadString(s)
-				v.edit_text().delete("1.0","end")
-				v.edit_text().insert("end",s)
-				v.edit_text().mark_set("insert",index)
+				edit_text.delete("1.0","end")
+				edit_text.insert("end",s)
+				edit_text.mark_set("insert",index)
 			c.endUpdate(false) # do not redraw now.
 			#@nonl
 			#@-node:<< update v and all nodes joined to v >>
@@ -1453,7 +1456,7 @@ class leoTkinterTree (leoFrame.leoTree):
 		if done:
 			self.setDisabledLabelState(p)
 		
-		v.edit_text().configure(width=self.headWidth(v))
+		edit_text.configure(width=self.headWidth(v))
 		#@nonl
 		#@-node:<< reconfigure v and all nodes joined to v >>
 		#@nl
@@ -1799,7 +1802,7 @@ class leoTkinterTree (leoFrame.leoTree):
 	#@+node:editLabel
 	def editLabel (self,p):
 		
-		"""Start editing v.edit_text."""
+		"""Start editing p.edit_text."""
 		
 		# g.trace(p)
 	
@@ -1810,7 +1813,7 @@ class leoTkinterTree (leoFrame.leoTree):
 		self.setEditPosition(p)
 	
 		# Start editing
-		if p and p.v.edit_text():
+		if p and p.edit_text():
 			self.setNormalLabelState(p)
 			self.frame.revertHeadline = p.headString()
 			self.setEditPosition(p)
@@ -1825,7 +1828,7 @@ class leoTkinterTree (leoFrame.leoTree):
 		
 		p = self.editPosition()
 	
-		if p and p.v.edit_text():
+		if p and p.edit_text():
 			self.setUnselectedLabelState(p)
 			self.setEditPosition(None)
 	
@@ -1881,11 +1884,12 @@ class leoTkinterTree (leoFrame.leoTree):
 			# Remember the old body text
 			old_body = body.get("1.0","end")
 			
-			# New in 4.1: Because of shared vnodes,
-			# we can't use an equality test between old and new here.
-			# Thus, we must ALWAYS unselect the previous node.
+			if old_p and old_p != p:
+				# g.trace("different node")
+				self.endEditLabel()
+				self.setUnselectedLabelState(old_p)
 			
-			if old_p and old_p.v.edit_text():
+			if old_p and old_p.edit_text():
 				old_p.v.t.scrollBarSpot = yview
 				old_p.v.t.insertSpot = insertSpot
 			#@nonl
@@ -1975,8 +1979,8 @@ class leoTkinterTree (leoFrame.leoTree):
 	#@+node:tree.set...LabelState
 	def setNormalLabelState (self,p): # selected, editing
 	
-		#g.trace(p)
-		if p.v and p.v.edit_text():
+		# g.trace(p)
+		if p and p.edit_text():
 			#@		<< set editing headline colors >>
 			#@+node:<< set editing headline colors >>
 			config = g.app.config
@@ -1987,28 +1991,28 @@ class leoTkinterTree (leoFrame.leoTree):
 			
 			if not fg or not bg:
 				fg,bg = "black","white"
-				
+			
 			try:
 				if selfg and selbg:
-					p.v.edit_text().configure(
+					p.edit_text().configure(
 						selectforeground=selfg,selectbackground=selbg,
 						state="normal",highlightthickness=1,fg=fg,bg=bg)
 				else:
-					p.v.edit_text().configure(
+					p.edit_text().configure(
 						state="normal",highlightthickness=1,fg=fg,bg=bg)
 			except:
 				g.es_exception()
 			#@nonl
 			#@-node:<< set editing headline colors >>
 			#@nl
-			p.v.edit_text().tag_remove("sel","1.0","end")
-			p.v.edit_text().tag_add("sel","1.0","end")
-			g.app.gui.set_focus(self.c,p.v.edit_text())
+			p.edit_text().tag_remove("sel","1.0","end")
+			p.edit_text().tag_add("sel","1.0","end")
+			g.app.gui.set_focus(self.c,p.edit_text())
 	
 	def setDisabledLabelState (self,p): # selected, disabled
 	
-		#g.trace(p)
-		if p.v and p.v.edit_text():
+		# g.trace(p,g.callerName(2),g.callerName(3))
+		if p and p.edit_text():
 			#@		<< set selected, disabled headline colors >>
 			#@+node:<< set selected, disabled headline colors >>
 			config = g.app.config
@@ -2019,7 +2023,7 @@ class leoTkinterTree (leoFrame.leoTree):
 				fg,bg = "black","gray80"
 			
 			try:
-				p.v.edit_text().configure(
+				p.edit_text().configure(
 					state="disabled",highlightthickness=0,fg=fg,bg=bg)
 			except:
 				g.es_exception()
@@ -2029,13 +2033,13 @@ class leoTkinterTree (leoFrame.leoTree):
 	
 	def setSelectedLabelState (self,p): # selected, not editing
 	
-		#g.trace(p)
+		# g.trace(p)
 		self.setDisabledLabelState(p)
 	
 	def setUnselectedLabelState (self,p): # not selected.
 	
-		#g.trace(p)
-		if p and p.v.edit_text():
+		# g.trace(p)
+		if p and p.edit_text():
 			#@		<< set unselected headline colors >>
 			#@+node:<< set unselected headline colors >>
 			config = g.app.config
@@ -2046,14 +2050,13 @@ class leoTkinterTree (leoFrame.leoTree):
 				fg,bg = "black","white"
 			
 			try:
-				p.v.edit_text().configure(
+				p.edit_text().configure(
 					state="disabled",highlightthickness=0,fg=fg,bg=bg)
 			except:
 				g.es_exception()
 			#@nonl
 			#@-node:<< set unselected headline colors >>
 			#@nl
-	#@nonl
 	#@-node:tree.set...LabelState
 	#@+node:tree.moveUpDown
 	def OnUpKey   (self,event=None): return self.moveUpDown("up")
