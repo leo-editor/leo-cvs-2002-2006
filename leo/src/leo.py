@@ -58,8 +58,9 @@ def run(fileName=None,*args,**keywords):
 	if app.killed: return # Support for app.forceShutdown.
 	# Create the default gui if needed.
 	if app.gui == None: app.createTkGui()
-	if not app.leoID: app.setLeoID() # Forces the user to set app.leoID.
-	app.nodeIndices = leoNodes.nodeIndices()
+	if app.use_gnx:
+		if not app.leoID: app.setLeoID() # Forces the user to set app.leoID.
+		app.nodeIndices = leoNodes.nodeIndices()
 	# Initialize tracing and statistics.
 	init_sherlock(args)
 	clear_stats()
