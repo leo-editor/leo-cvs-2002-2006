@@ -794,14 +794,24 @@ class leoTree:
 		
 		# This may be all that is needed to support Unicode !!
 		xml_encoding = app().config.xml_version_string
-		
 		if type(s) == types.UnicodeType:
-			s = s.encode(xml_encoding)
+			try:
+				# print `xml_encoding`
+				# Tk always uses utf-8 encoding.
+				#print `s`,"tk"
+				s = s.encode("utf-8") # result is a string.
+				#print `s`,"utf-8"
+				s = s.decode(xml_encoding) # result is unicode.
+				s = s.encode(xml_encoding) # result is a string.
+				#print `s`,`xml_encoding`
+			except: traceback.print_exc()
+	
 		if len(s) > 0 and s[-1]=='\n': s = s[:-1]
 		
 		body = v.bodyString()
 		if type(body) == types.UnicodeType:
-			body = body.encode(xml_encoding)
+			# vnode strings are encoded using the xml_encoding.
+			body = body.encode(xml_encoding) # result is a string.
 			
 		if s == body: return
 		
@@ -1044,11 +1054,18 @@ class leoTree:
 		
 		xml_encoding = app().config.xml_version_string
 		if type(s) == types.UnicodeType:
-			s = s.encode(xml_encoding)
+			try:
+				# Tk always uses utf-8 encoding.
+				s = s.encode("utf-8") # result is a string.
+				s = s.decode(xml_encoding) # result is unicode.
+				s = s.encode(xml_encoding) # result is a string.
+			except: traceback.print_exc()
+	
 		if not s: s = ""
 		
 		head = v.headString()
 		if type(head) == types.UnicodeType:
+			# vnode strings are encoded using the xml_encoding.
 			head = head.encode(xml_encoding)
 		
 		changed = s != head
@@ -1338,7 +1355,21 @@ class leoTree:
 		insertSpot = c.body.index("insert") # 9/21/02
 		# Replace body text
 		body.delete("1.0", "end")
-		body.insert("1.0", v.t.bodyString)
+		
+		if 1: # 10/2/02: new code
+			xml_encoding = app().config.xml_version_string
+			s = v.t.bodyString
+			if type(s) == types.UnicodeType:
+				try:
+					s = s.encode(xml_encoding) # result is a string.
+				except: traceback.print_exc()
+			try:
+				# Tk expects utf-8 encoding.
+				d = s.decode("utf-8") # result is unicode.
+				body.insert("1.0", d)
+			except: traceback.print_exc()
+		else:
+			body.insert("1.0", v.t.bodyString)
 		self.recolor_now(v)
 		# Unselect any previous selected but unedited label.
 		self.endEditLabel()

@@ -93,10 +93,10 @@ read_only = 1
 #	1: Leo writes nothing to this file.
 #	Syntax errors in this file set this file to read-only.
 
-xml_version_string = UTF-8
+xml_version_string = ISO-8859-1
 #	The version used at the start of .leo files.
 #	Default is UTF-8.  Better is ISO-8859-1.
-#	Even better may be ISO-8859-15, the same as ISO-8859-1,
+#	Even better (but less common?) may be ISO-8859-15, the same as ISO-8859-1,
 #	except that it includes the newly defined Euro symbol. 
 
 #	Use UTF-8 to write leo.py 2.x files.

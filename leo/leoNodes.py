@@ -1196,12 +1196,24 @@ class vnode:
 	def setHeadString(self, s):
 	
 		if not s: s = ""
+		
+		if type(s) == types.UnicodeType: # 10/1
+			xml_encoding = app().config.xml_version_string
+			s = s.encode(xml_encoding) # result is a string.
+		assert(type(s)==types.StringType)
+		
 		self.mHeadString = s
 		self.setDirty()
 	
 	def initHeadString (self, s):
 	
 		if not s: s = ""
+		
+		if type(s) == types.UnicodeType: # 10/1
+			xml_encoding = app().config.xml_version_string
+			s = s.encode(xml_encoding) # result is a string.
+		assert(type(s)==types.StringType)
+	
 		self.mHeadString = s
 	#@-body
 	#@-node:3::setHeadString & initHeadString
