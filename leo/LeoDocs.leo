@@ -2690,6 +2690,8 @@ tag argument                                              keys in keywords
 ---------    ---------       -----------                  -------------------
 "bodyclick1"   yes      before normal click in body       c,v,event (new)
 "bodyclick2"            after  normal click in body       c,v,event (new)
+"bodydclick1"  yes      before double click in body       c,v,event (new)
+"bodydclick2"           after  double click in body       c,v,event (new)
 "bodykey1"     yes      before body keystrokes            c,v,ch,oldSel,undoType
 "bodykey2"              after  body keystrokes            c,v,ch,oldSel,undoType
 "bodyrclick1"  yes      before right click in body        c,v,event (new)
