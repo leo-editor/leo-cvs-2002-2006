@@ -3767,12 +3767,16 @@ def getScript (c,p):
     
     try:
         script = None
-        if c.frame.body.hasTextSelection():
-            # Temporarily replace v's body text with just the selected text.
-            s = c.frame.body.getSelectedText()
-            p.v.setTnodeText(s) 
+        # 7/7/04: Allow p not to be the present position.
+        if p == c.currentPosition():
+            if c.frame.body.hasTextSelection():
+                # Temporarily replace v's body text with just the selected text.
+                s = c.frame.body.getSelectedText()
+                p.v.setTnodeText(s)
+            else:
+                s = c.frame.body.getAllText()
         else:
-            s = c.frame.body.getAllText()
+            s = p.bodyString()
     
         if s.strip():
             g.app.scriptDict["script1"]=s
