@@ -1827,9 +1827,10 @@ class leoTkinterTree (leoFrame.leoTree):
                 # g.trace(i,len(s),repr(s))
                 g.es("Truncating headline to one line",color="blue")
                 s = s[:i]
-            if len(s) > 250:
-                g.es("Truncating headline to 250 characters",color="blue")
-                s = s[:250]
+            limit = 1000
+            if len(s) > limit:
+                g.es("Truncating headline to %d characters" % (limit),color="blue")
+                s = s[:limit]
         
         s = g.toUnicode(s,g.app.tkEncoding)
         
