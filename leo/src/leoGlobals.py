@@ -2325,7 +2325,18 @@ def listToString(theList):
 #@-body
 #@-node:3::listToString
 #@-node:12::Lists...
-#@+node:13::Most common functions
+#@+node:13::makeDict
+#@+body
+# From the Python cookbook.
+
+def makeDict(**keys):
+	
+	"""Returns a Python dictionary from using the optional keyword arguments."""
+
+	return keys
+#@-body
+#@-node:13::makeDict
+#@+node:14::Most common functions
 #@+body
 # These are guaranteed always to exist for scripts.
 
@@ -2429,8 +2440,8 @@ def windows():
 	return app().windowList
 #@-body
 #@-node:6::windows
-#@-node:13::Most common functions
-#@+node:14::Scanning, selection & whitespace...
+#@-node:14::Most common functions
+#@+node:15::Scanning, selection & whitespace...
 #@+node:1::getindex
 #@+body
 def getindex(text, index):
@@ -3521,8 +3532,8 @@ def skip_leading_ws_with_indent(s,i,tab_width):
 #@-body
 #@-node:8::skip_leading_ws_with_indent
 #@-node:9::Whitespace...
-#@-node:14::Scanning, selection & whitespace...
-#@+node:15::Unicode utils...
+#@-node:15::Scanning, selection & whitespace...
+#@+node:16::Unicode utils...
 #@+node:1::isValidEncoding
 #@+body
 def isValidEncoding (encoding):
@@ -3651,7 +3662,7 @@ except:
 
 #@-body
 #@-node:4::getpreferredencoding from 2.3a2
-#@-node:15::Unicode utils...
+#@-node:16::Unicode utils...
 #@-others
 #@-body
 #@-node:0::@file leoGlobals.py

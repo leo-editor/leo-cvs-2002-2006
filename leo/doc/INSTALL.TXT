@@ -1,7 +1,7 @@
 System requirements for leo.py
 ------------------------------
 
-leo.py 3.12 requires Python 2.1 and tcl/tk 8.3 or above.
+leo.py requires Python 2.1 and tcl/tk 8.3 or above.
 
 	Download Python from http://python.org/ 
 	Download tcl/Tk from http://tcl.activestate.com/software/tcltk/

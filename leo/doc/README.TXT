@@ -4,6 +4,12 @@ leo.py is available at:  http://sourceforge.net/projects/leo/
 leo.py requires Python 2.1 or above and tcl/tk 8.3 or above.
 leo.py will work on Linux, Windows and MacOs X Jaguar.
 
+leo.py 3.12 beta 3                       July 15, 2003
+
+This version corrects some distribution problems and adds new scripts for linux.
+
+This version also contains makes some minor improvements.  See LeoDocs.leo for details.
+
 leo.py 3.12 beta 2                       July 13, 2003
 
 This version fixes many bugs and adds a few minor new features.  There are no known serious bugs in this version of Leo.  N.B. See the documentation 3.12 beta 1 for many more changes added since 3.11 final.
