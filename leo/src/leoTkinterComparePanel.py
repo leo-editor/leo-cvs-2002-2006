@@ -8,11 +8,12 @@ import leoGlobals as g
 from leoGlobals import true,false
 
 import leoCompare
+import leoTkinterDialog
 import Tkinter,tkFileDialog
 
 Tk = Tkinter
 
-class leoTkinterComparePanel (leoCompare.leoCompare):
+class leoTkinterComparePanel (leoCompare.leoCompare,leoTkinterDialog.leoTkinterDialog):
 	
 	"""A class that creates Leo's compare panel."""
 
@@ -23,6 +24,7 @@ class leoTkinterComparePanel (leoCompare.leoCompare):
 		
 		# Init the base class.
 		leoCompare.leoCompare.__init__ (self,c)
+		leoTkinterDialog.leoTkinterDialog.__init__(self,"Compare files and directories",resizeable=false)
 		self.c = c
 	
 		#@	<< init tkinter compare ivars >>
@@ -65,8 +67,8 @@ class leoTkinterComparePanel (leoCompare.leoCompare):
 		# The default file name in the "output file name" browsers.
 		self.defaultOutputFileName = "CompareResults.txt"
 		
+		self.createTopFrame()
 		self.createFrame()
-	#@nonl
 	#@-node:ekr.20031218072017.3840: tkinterComparePanel.__init__
 	#@+node:ekr.20031218072017.3842:finishCreate
 	# Initialize ivars from config parameters.
@@ -164,14 +166,11 @@ class leoTkinterComparePanel (leoCompare.leoCompare):
 	#@+node:ekr.20031218072017.3843:createFrame
 	def createFrame (self):
 	
-		gui = g.app.gui
-		self.top = top = Tk.Toplevel(g.app.root)
-		top.title("Leo Compare files and directories")
-		top.protocol("WM_DELETE_WINDOW", self.onClose)
+		gui = g.app.gui ; top = self.top
 	
 		#@	<< create the organizer frames >>
 		#@+node:ekr.20031218072017.3844:<< create the organizer frames >>
-		outer = Tk.Frame(top, bd=2,relief="groove")
+		outer = Tk.Frame(self.frame, bd=2,relief="groove")
 		outer.pack(pady=4)
 		
 		row1 = Tk.Frame(outer)
@@ -305,8 +304,8 @@ class leoTkinterComparePanel (leoCompare.leoCompare):
 		#@nl
 	
 		gui.center_dialog(top) # Do this _after_ building the dialog!
-		top.resizable(0,0)
 		self.finishCreate()
+		top.protocol("WM_DELETE_WINDOW", self.onClose)
 	#@nonl
 	#@-node:ekr.20031218072017.3843:createFrame
 	#@+node:ekr.20031218072017.3850:setIvarsFromWidgets

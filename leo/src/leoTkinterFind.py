@@ -15,7 +15,7 @@ class leoTkinterFind (leoFind.leoFind,leoTkinterDialog.leoTkinterDialog):
 	#@	@+others
 	#@+node:ekr.20031218072017.3898:Birth & death
 	#@+node:ekr.20031218072017.3899:__init__
-	def __init__(self,title="Leo Find/Change",resizeable=false):
+	def __init__(self,title="Find/Change",resizeable=false):
 		
 		# Init the base classes...
 	

@@ -6,10 +6,11 @@ import leoGlobals as g
 from leoGlobals import true,false
 
 import leoPrefs
-import string,Tkinter
-Tk = Tkinter
+import leoTkinterDialog
+import string
+import Tkinter as Tk
 
-class leoTkinterPrefs (leoPrefs.leoPrefs):
+class leoTkinterPrefs (leoPrefs.leoPrefs,leoTkinterDialog.leoTkinterDialog):
 
 	"""A class that creates Leo's preferenes panel."""
 
@@ -23,6 +24,10 @@ class leoTkinterPrefs (leoPrefs.leoPrefs):
 		# Init the base class
 		leoPrefs.leoPrefs.__init__(self,c)
 		
+		head,tail = g.os_path_split(c.frame.title)
+		leoTkinterDialog.leoTkinterDialog.__init__(self,"Prefs for " + tail,resizeable=false)
+		
+		self.createTopFrame() # Create the outer tkinter dialog frame.
 		self.createFrame()
 		self.setWidgets()
 	#@nonl
@@ -32,11 +37,9 @@ class leoTkinterPrefs (leoPrefs.leoPrefs):
 		
 		"""Create the tkinter Prefs panel."""
 	
-		c = self.c ; gui = g.app.gui
-		self.top = top = Tk.Toplevel()
+		c = self.c ; gui = g.app.gui ; top = self.top
 		c.frame.prefsPanel = self
 		head,tail = g.os_path_split(c.frame.title)
-		self.top.title("Prefs for " + tail)
 		
 		# Create the outer frame
 		outer = Tk.Frame(top,bd=2,relief="groove")
@@ -182,7 +185,6 @@ class leoTkinterPrefs (leoPrefs.leoPrefs):
 		#@-node:ekr.20031218072017.4129:<< Create the Ok, Cancel & Revert buttons >>
 		#@nl
 		gui.center_dialog(top) # Do this _after_ building the dialog!
-		top.resizable(0,0) # neither height or width is resizable.
 		self.top.protocol("WM_DELETE_WINDOW", self.onCancel)
 	#@nonl
 	#@-node:ekr.20031218072017.4125:createFrame
