@@ -884,12 +884,12 @@ def openForRead (self,filename,rb):
             file_to_read_from = shadow_filename 
             if os.path.exists(filename)and os.path.getsize(filename)<=2:
                 if verbosity >= 2:
-                g.es("Copy %s to %s without sentinels"%(shadow_filename,filename))
+                    g.es("Copy %s to %s without sentinels"%(shadow_filename,filename))
                 push_file(sourcefilename=shadow_filename,targetfilename=filename)
             else:
                 sq = sentinel_squasher()
                 if verbosity >= 2:
-                g.es("reading in shadow directory %s"% shadow_subdir,color="orange")
+                    g.es("reading in shadow directory %s"% shadow_subdir,color="orange")
                 sq.pull_source(sourcefile=shadow_filename,targetfile=filename)
         else:
             file_to_read_from = filename 
@@ -917,7 +917,7 @@ def openForWrite (self,filename,wb):
     if self.writing_to_shadow_directory:
         self.shadow_filename = shadow_filename 
         if verbosity >= 2: 
-        g.es("Using shadow file in folder %s" % shadow_subdir,color="orange")
+            g.es("Using shadow file in folder %s" % shadow_subdir,color="orange")
         file_to_use = os.path.join(dir,shadow_subdir,simplename)
     else:
         file_to_use = filename 
@@ -994,7 +994,7 @@ def replaceTargetFileIfDifferent (self):
             # to the existance of the shadow directory.
             if self.writing_to_shadow_directory:
                 if verbosity >= 2:
-                g.es("Updating file from shadow folder %s" % shadow_subdir,color='orange')
+                    g.es("Updating file from shadow folder %s" % shadow_subdir,color='orange')
                 push_file(self.shadow_filename,targetFileName)
 
     finally:
