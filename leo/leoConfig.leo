@@ -20,9 +20,9 @@
 <v t="T5"><vh>&lt;&lt; The "Recent Files" menu &gt;&gt;</vh></v>
 <v t="T6"><vh>&lt;&lt; Compare Panel settings &gt;&gt;</vh></v>
 <v t="T7"><vh>&lt;&lt; Find/Change Panel settings &gt;&gt;</vh></v>
-<v t="T8" a="V"><vh>&lt;&lt; Keyboard shortcuts settings &gt;&gt;</vh>
+<v t="T8" a="E"><vh>&lt;&lt; Keyboard shortcuts settings &gt;&gt;</vh>
 <v t="T9"><vh>&lt;&lt; About keyboard shortcuts &gt;&gt;</vh></v>
-<v t="T10"><vh>&lt;&lt; Alt and Shift-Alt&gt;&gt;</vh></v>
+<v t="T10" a="V"><vh>&lt;&lt; Alt and Shift-Alt&gt;&gt;</vh></v>
 <v t="T11"><vh>&lt;&lt; Control &gt;&gt;</vh></v>
 <v t="T12"><vh>&lt;&lt; Shift-Control &gt;&gt;</vh></v>
 <v t="T13"><vh>&lt;&lt; F-keys and others &gt;&gt;</vh></v>
@@ -440,26 +440,31 @@ ExpandAll         = Alt+9
 SortSiblings     = Alt-A
 MarkChangedItems = Alt+C
 GoToNextChanged  = Alt+D
-ExecuteScript    = Alt+E
+# Reserved         Alt+E  (Opens Edit Menu)
+# Reserved         Alt+F  (Opens File Menu)
 GoToLineNumber   = Alt+G
+# Reserved         Alt+H  (Opens Help Menu)
 MarkClones       = Alt+K
 GoToNextMarked   = Alt+M
 GoToNextCloned   = Alt+N
+# Reserved         Alt+O  (Opens Outline Menu)
 OpenPythonWindow = Alt+P
 MarkChangedRoots = Alt+R
 MarkSubheads     = Alt+S
 UnmarkAll        = Alt+U
 ShowInvisibles   = Alt+V
+# Reserved         Alt+W  (Opens Window Menu)
 
 # EKR: I set the following in customizeLeo.py
 # Idle           = Alt+Shift+I
 # Word           = Alt+Shift+W
 # WordPad        = Alt+Shift+T
 SetColors        = Alt+Shift+C
+ExecuteScript    = Alt+Shift+E
 SetFont          = Alt+Shift+F
 
-GoNextVisible    = Alt+DnArrow
-GoPrevVisible    = Alt+UpArrow
+GoToNextVisible  = Alt+DnArrow
+GoToPrevVisible  = Alt+UpArrow
 GoBack           = Alt+Shift+UpArrow
 GoNext           = Alt+Shift+DnArrow</t>
 <t tx="T11">CloneNode        = Ctrl+`

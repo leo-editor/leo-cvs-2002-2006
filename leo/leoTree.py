@@ -848,10 +848,11 @@ class leoTree:
 			#@-body
 			#@-node:1::<< replace body text by u >>
 
-		# Do nothing for control characters...
-		if (ch == None or len(ch) == 0):
-			if s == body: return "break"
-			if body == s[:-1]: return "break"
+		# Do nothing if nothing has changed.
+		if s == body: return "break"
+		# Do nothing for control characters.
+		if (ch == None or len(ch) == 0) and body == s[:-1]: return "break"
+		# print ch,len(body),len(s)
 		
 		#@<< set removeTrailing >>
 		#@+node:2::<< set removeTrailing >>
@@ -985,6 +986,7 @@ class leoTree:
 		# Call the post-key hook.
 		handleLeoHook("bodykey2",c=c,v=v,ch=ch,oldSel=oldSel,undoType=undoType)
 		return "break"
+	
 	#@-body
 	#@-node:5::tree.onBodyChanged, onBodyWillChange, OnBodyKey, idle_body_key
 	#@+node:6::tree.OnContinueDrag

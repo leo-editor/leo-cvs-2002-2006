@@ -543,26 +543,55 @@ def findReference(name,root):
 #@-body
 #@-node:4::findReference
 #@-node:2::Directives...
-#@+node:3::enableMenu & disableMenu & setMenuLabel
+#@+node:3::Menus...
+#@+node:1::canonicalizeMenuName
+#@+body
+def canonicalizeMenuName (name):
+	
+	name = name.lower() ; newname = ""
+	for ch in name:
+		if ch in string.letters:
+			newname = newname+ch
+	return newname
+
+#@-body
+#@-node:1::canonicalizeMenuName
+#@+node:2::enableMenu & disableMenu & setMenuLabel
 #@+body
 # 11/17/02: Fail gracefully if the item name does not exist.
 def enableMenu (menu,name,val):
+	state = choose(val,"normal","disabled")
 	try:
-		state = choose(val,"normal","disabled")
 		menu.entryconfig(name,state=state)
-	except: pass
+	except:
+		try:
+			realName = app().getRealMenuName(name)
+			realName = realName.replace("&","")
+			menu.entryconfig(realName,state=state)
+		except:
+			es_exception()
+			pass
 
 def disableMenu (menu,name):
 	try:
 		menu.entryconfig(name,state="disabled")
-	except: pass
+	except: 
+		try:
+			realName = app().getRealMenuName(name)
+			realName = realName.replace("&","")
+			menu.entryconfig(realName,state="disabled")
+		except: pass
 
-def setMenuLabel (menu,name,label):
+def setMenuLabel (menu,name,label,underline=-1):
 	try:
-		menu.entryconfig(name,label=label)
-	except: pass
+		menu.entryconfig(name,label=label,underline=underline)
+	except:
+		print "setMenuLabel menu,name,label:",menu,name,label
+		es_exception()
+		pass
 #@-body
-#@-node:3::enableMenu & disableMenu & setMenuLabel
+#@-node:2::enableMenu & disableMenu & setMenuLabel
+#@-node:3::Menus...
 #@+node:4::sortSequence
 #@+body
 #@+at

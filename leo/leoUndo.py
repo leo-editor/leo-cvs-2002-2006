@@ -68,27 +68,24 @@ class undoer:
 	#@+body
 	def __init__ (self,commands):
 		
-		self.commands = commands
+		u = self ; u.commands = commands
 		
 		# Ivars to transition to new undo scheme...
 		
-		self.debug = false # true: enable debugging code in new undo scheme.
-		self.debug_print = false # true: enable print statements in debug code.
-		self.new_undo = true # true: enable new debug code.
+		u.debug = false # true: enable debugging code in new undo scheme.
+		u.debug_print = false # true: enable print statements in debug code.
+		u.new_undo = true # true: enable new debug code.
 		
-		# Statistics comparing old and new ways (only if self.debug is on).
-		self.new_mem = 0
-		self.old_mem = 0
+		# Statistics comparing old and new ways (only if u.debug is on).
+		u.new_mem = 0
+		u.old_mem = 0
 		
 		# State ivars...
+		u.undoType = "Can't Undo"
+		u.undoing = false # True if executing an Undo command.
+		u.redoing = false # True if executing a Redo command.
 	
-		self.redoMenuLabel = "Can't Redo" # Set here to indicate initial menu entry.
-		self.undoMenuLabel = "Can't Undo" # Set here to indicate initial menu entry.
-		self.undoType = "Can't Undo"
-		self.undoing = false # True if executing an Undo command.
-		self.redoing = false # True if executing a Redo command.
-	
-		self.clearUndoState()
+		u.clearUndoState()
 	#@-body
 	#@+node:1::clearUndoState & clearIvars
 	#@+body
@@ -101,33 +98,37 @@ class undoer:
 
 	def clearUndoState (self):
 		
-		self.setRedoType("Can't Redo")
-		self.setUndoType("Can't Undo")
-		self.beads = [] # List of undo nodes.
-		self.bead = -1 # Index of the present bead: -1:len(beads)
-		self.clearIvars()
+		u = self
+		
+		u.redoMenuLabel = "Can't Redo" # Set here to indicate initial menu entry.
+		u.undoMenuLabel = "Can't Undo" # Set here to indicate initial menu entry.
+	
+		realLabel = app().getRealMenuName("Can't Redo")
+		u.realRedoMenuLabel = realLabel.replace("&","")
+	
+		realLabel = app().getRealMenuName("Can't Undo")
+		u.realUndoMenuLabel = realLabel.replace("&","")
+		
+		u.setRedoType("Can't Redo")
+		u.setUndoType("Can't Undo")
+		u.beads = [] # List of undo nodes.
+		u.bead = -1 # Index of the present bead: -1:len(beads)
+		u.clearIvars()
 		
 	def clearIvars (self):
 		
 		self.v = None # The node being operated upon for undo and redo.
 		for ivar in optionalIvars:
 			exec('self.%s = None' % ivar)
-		
-		if 0:
-			# Params describing the "before" state for undo.
-			self.oldParent = self.oldBack = self.oldN = None
-			self.sort = None # List of nodes before being sorted.
-			self.oldText = None
-			# Params describing the "after" state for redo.
-			self.parent = self.back = self.lastChild = self.n = None
-			self.select = None
-			self.newText = None
+	
 	#@-body
 	#@-node:1::clearUndoState & clearIvars
 	#@-node:3::undo.__init__
 	#@+node:4::State routines...
 	#@+node:1::canRedo & canUndo
 	#@+body
+	# Translation does not affect these routines.
+	
 	def canRedo (self):
 	
 		return self.redoMenuLabel != "Can't Redo"
@@ -135,15 +136,18 @@ class undoer:
 	def canUndo (self):
 	
 		return self.undoMenuLabel != "Can't Undo"
+	
 	#@-body
 	#@-node:1::canRedo & canUndo
 	#@+node:2::enableMenuItems
 	#@+body
 	def enableMenuItems (self):
 	
-		u = self ; c = u.commands ; menu = c.frame.menus.get("Edit")
+		u = self ; c = u.commands
+		menu = c.frame.getMenu("Edit")
 		enableMenu(menu,u.redoMenuLabel,u.canRedo())
 		enableMenu(menu,u.undoMenuLabel,u.canUndo())
+	
 	#@-body
 	#@-node:2::enableMenuItems
 	#@+node:3::getBead, peekBead, setBead
@@ -230,23 +234,37 @@ class undoer:
 	#@+body
 	# These routines update both the ivar and the menu label.
 	def setRedoType (self,type):
-	
-		u = self ; c = u.commands ; menu = c.frame.menus.get("Edit")
+		u = self ; c = u.commands
+		menu = c.frame.getMenu("Edit")
 		name = u.redoMenuName(type)
 		if name != u.redoMenuLabel:
 			# Update menu using old name.
-			setMenuLabel(menu,u.redoMenuLabel,name)
+			realLabel = app().getRealMenuName(name)
+			if realLabel == name:
+				underline=choose(match(name,0,"Can't"),-1,0)
+			else:
+				underline = realLabel.find("&")
+			realLabel = realLabel.replace("&","")
+			setMenuLabel(menu,u.realRedoMenuLabel,realLabel,underline=underline)
 			u.redoMenuLabel = name
+			u.realRedoMenuLabel = realLabel
 	
 	def setUndoType (self,type):
-	
-		u = self ; c = u.commands ; menu = c.frame.menus.get("Edit")
+		u = self ; c = u.commands
+		menu = c.frame.getMenu("Edit")
 		name = u.undoMenuName(type)
 		if name != u.undoMenuLabel:
 			# Update menu using old name.
-			setMenuLabel(menu,u.undoMenuLabel,name)
+			realLabel = app().getRealMenuName(name)
+			if realLabel == name:
+				underline=choose(match(name,0,"Can't"),-1,0)
+			else:
+				underline = realLabel.find("&")
+			realLabel = realLabel.replace("&","")
+			setMenuLabel(menu,u.realUndoMenuLabel,realLabel,underline=underline)
 			u.undoType = type
 			u.undoMenuLabel = name
+			u.realUndoMenuLabel = realLabel
 	#@-body
 	#@-node:5::setRedoType, setUndoType
 	#@+node:6::setUndoParams
@@ -439,6 +457,7 @@ class undoer:
 		# trace(`u.bead` + ":" + `len(u.beads)`)
 		u.setUndoTypes() # Recalculate the menu labels.
 		return d
+	
 	#@-body
 	#@-node:7::setUndoTypingParams
 	#@+node:8::setUndoTypes

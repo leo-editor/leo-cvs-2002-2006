@@ -508,6 +508,7 @@ class Commands:
 		c.updateBodyPane(head,line1,tail,"Can't Undo",oldSel,oldYview)
 		c.undoer.setUndoParams("Extract Section",v,select=current,oldTree=v_copy)
 		c.endUpdate()
+	
 	#@-body
 	#@-node:8::extractSection
 	#@+node:9::extractSectionNames

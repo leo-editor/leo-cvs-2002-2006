@@ -263,16 +263,27 @@ class LeoApp:
 			self.root.quit()
 	#@-body
 	#@-node:5::app.quit
-	#@+node:6::app.realMenuName
+	#@+node:6::app.get/setRealMenuName
 	#@+body
 	# Returns the translation of a menu name or an item name.
-	# Note: app().menus always contains the _untranslated_ menu names.
 	
-	def realMenuName (self, menuName):
+	def getRealMenuName (self,menuName):
 		
-		return self.realMenuNameDict.get(menuName,menuName)
+		cmn = canonicalizeMenuName(menuName)
+		return self.realMenuNameDict.get(cmn,menuName)
+		
+	def setRealMenuName (self,untrans,trans):
+		
+		cmn = canonicalizeMenuName(untrans)
+		self.realMenuNameDict[cmn] = trans
+	
+	def setRealMenuNamesFromTable (self,table):
+	
+		for untrans,trans in table:
+			self.setRealMenuName(untrans,trans)
+	
 	#@-body
-	#@-node:6::app.realMenuName
+	#@-node:6::app.get/setRealMenuName
 	#@+node:7::app.testDialogs
 	#@+body
 	def testDialogs (self):
