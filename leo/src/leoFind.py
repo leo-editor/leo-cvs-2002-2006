@@ -255,7 +255,7 @@ class leoFind:
         try:
             if self.c and self.c.suboutline_only_flag:
                 # g.trace(p)
-                self.onlyVnode = p
+                self.onlyVnode = p.copy() # Bug fix: 7/26/04
         except: pass
     #@nonl
     #@-node:EKR.20040503070514:handleUserClick
