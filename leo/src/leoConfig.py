@@ -507,7 +507,6 @@ class baseConfig:
 				
 			if isValidEncoding(encoding):
 				self.config_encoding = encoding
-				es("leoConfig.txt encoding: " + encoding, color="blue")
 			else:
 				es("bad config_encoding: " + encoding)
 				
