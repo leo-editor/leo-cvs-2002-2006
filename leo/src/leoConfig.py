@@ -589,10 +589,6 @@ class baseConfig:
             # New in 4.2
             self.trailing_body_newlines = self.initConfigParam(
                 "trailing_body_newlines",self.trailing_body_newlines)
-            
-            # TO BE REMOVED
-            g.app.use_gnx = self.initBooleanConfigParam(
-                "use_gnx",g.app.use_gnx)
                 
             self.use_plugins = self.initBooleanConfigParam(
                 "use_plugins",self.use_plugins)

@@ -880,12 +880,11 @@ class baseFileCommands:
                 attr,val = self.getUnknownAttribute("tnode")
                 if attr: attrDict[attr] = val
                 
-        if g.app.use_gnx:
-            # index might be Tnnn, nnn, or gnx.
-            theId,time,n = g.app.nodeIndices.scanGnx(index,0)
-            if time == None: # A pre-4.1 file index.
-                if index[0] == "T":
-                    index = index[1:]
+        # index might be Tnnn, nnn, or gnx.
+        theId,time,n = g.app.nodeIndices.scanGnx(index,0)
+        if time == None: # A pre-4.1 file index.
+            if index[0] == "T":
+                index = index[1:]
     
         index = self.canonicalTnodeIndex(index)
         t = self.tnodesDict.get(index)
@@ -910,6 +909,7 @@ class baseFileCommands:
         else:
             g.es("no tnode with index: %s.  The text will be discarded" % str(index))
         self.getTag("</t>")
+    #@nonl
     #@-node:ekr.20031218072017.1561:getTnode
     #@+node:ekr.20031218072017.2008:getTnodeList (4.0,4.2)
     def getTnodeList (self,s):
@@ -1324,38 +1324,15 @@ class baseFileCommands:
     
         nodeIndices.setTimestamp() # This call is fairly expensive.
     
-        if g.app.use_gnx:
-            #@        << assign missing gnx's, converting ints to gnx's >>
-            #@+node:ekr.20031218072017.1571:<< assign missing gnx's, converting ints to gnx's >>
-            # Always assign an (immutable) index, even if the tnode is empty.
-            
-            for p in c.allNodes_iter():
-                try: # Will fail for None or any pre 4.1 file index.
-                    theId,time,n = p.v.t.fileIndex
-                except TypeError:
-                    # Don't convert to string until the actual write.
-                    p.v.t.fileIndex = nodeIndices.getNewIndex()
-            #@nonl
-            #@-node:ekr.20031218072017.1571:<< assign missing gnx's, converting ints to gnx's >>
-            #@nl
-        else:
-            #@        << reassign all tnode indices >>
-            #@+node:ekr.20031218072017.1572:<< reassign all tnode indices >>
-            # Clear out all indices.
-            for p in c.allNodes_iter():
-                p.v.t.fileIndex = None
-                
-            # Recreate integer indices.
-            self.maxTnodeIndex = 0
-            
-            for p in c.allNodes_iter():
-                if p.v.t.fileIndex == None:
-                    self.maxTnodeIndex += 1
-                    p.v.t.fileIndex = self.maxTnodeIndex
-            #@nonl
-            #@-node:ekr.20031218072017.1572:<< reassign all tnode indices >>
-            #@nl
-            
+        # Assign missing gnx's, converting ints to gnx's.
+        # Always assign an (immutable) index, even if the tnode is empty.
+        for p in c.allNodes_iter():
+            try: # Will fail for None or any pre 4.1 file index.
+                theId,time,n = p.v.t.fileIndex
+            except TypeError:
+                # Don't convert to string until the actual write.
+                p.v.t.fileIndex = nodeIndices.getNewIndex()
+    
         if 0: # debugging:
             for p in c.allNodes_iter():
                 g.trace(p.v.t.fileIndex)
@@ -1734,11 +1711,8 @@ class baseFileCommands:
         self.put("<t")
         self.put(" tx=")
     
-        if g.app.use_gnx:
-            gnx = g.app.nodeIndices.toString(t.fileIndex)
-            self.put_in_dquotes(gnx)
-        else:
-            self.put_in_dquotes("T" + str(t.fileIndex))
+        gnx = g.app.nodeIndices.toString(t.fileIndex)
+        self.put_in_dquotes(gnx)
     
         if hasattr(t,"unknownAttributes"):
             self.putUnknownAttributes(t)
@@ -1766,17 +1740,14 @@ class baseFileCommands:
         if tnodeList:
             # g.trace("%4d" % len(tnodeList),v)
             fc.put(" tnodeList=") ; fc.put_dquote()
-            if g.app.use_gnx:
-                for t in tnodeList:
-                    try: # Will fail for None or any pre 4.1 file index.
-                        theId,time,n = t.fileIndex
-                    except:
-                        g.trace("assigning gnx for ",v,t)
-                        gnx = nodeIndices.getNewIndex()
-                        v.t.setFileIndex(gnx) # Don't convert to string until the actual write.
-                s = ','.join([nodeIndices.toString(t.fileIndex) for t in tnodeList])
-            else:
-                s = ','.join([str(t.fileIndex) for t in tnodeList])
+            for t in tnodeList:
+                try: # Will fail for None or any pre 4.1 file index.
+                    theId,time,n = t.fileIndex
+                except:
+                    g.trace("assigning gnx for ",v,t)
+                    gnx = nodeIndices.getNewIndex()
+                    v.t.setFileIndex(gnx) # Don't convert to string until the actual write.
+            s = ','.join([nodeIndices.toString(t.fileIndex) for t in tnodeList])
             fc.put(s) ; fc.put_dquote()
     #@nonl
     #@-node:ekr.20031218072017.2002:putTnodeList (4.0,4.2)
@@ -1863,12 +1834,9 @@ class baseFileCommands:
         #@    << Put tnode index >>
         #@+node:ekr.20031218072017.1864:<< Put tnode index >>
         if v.t.fileIndex:
-            if g.app.use_gnx:
-                gnx = g.app.nodeIndices.toString(v.t.fileIndex)
-                fc.put(" t=") ; fc.put_in_dquotes(gnx)
-            else:
-                fc.put(" t=") ; fc.put_in_dquotes("T" + str(v.t.fileIndex))
-                
+            gnx = g.app.nodeIndices.toString(v.t.fileIndex)
+            fc.put(" t=") ; fc.put_in_dquotes(gnx)
+        
             # g.trace(v.t)
             if forceWrite or self.usingClipboard:
                 v.t.setWriteBit() # 4.2: Indicate we wrote the body text.
