@@ -1330,7 +1330,7 @@ def is_nl(s,i):
 #@+at
 #  Return true if the body text contains the @ directive.
 # 
-# We no longer require that the directive appear befor e any @c directive or 
+# We no longer require that the directive appear befor any @c directive or 
 # section definition.
 
 #@-at
@@ -1340,12 +1340,16 @@ def is_special(s,i,directive):
 
 	# j = skip_line(s,i) ; trace(`s[i:j]` + " : " + `directive`)
 	assert (directive and directive [0] == '@' )
+
+	# 10/23/02: all directives except @others must start the line.
+	skip_flag = directive == "@others"
 	while i < len(s):
-		i = skip_ws_and_nl(s,i)
 		if match_word(s,i,directive):
 			return true, i
 		else:
 			i = skip_line(s,i)
+			if skip_flag:
+				i = skip_ws(s,i)
 	return false, -1
 #@-body
 #@-node:6::is_special
