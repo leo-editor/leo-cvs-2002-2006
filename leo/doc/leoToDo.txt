@@ -3,1125 +3,56 @@
 #@@nocolor
 
 #@+all
-#@+node:ekr.20050310110938:investigate htmlize script in test.leo
-#@-node:ekr.20050310110938:investigate htmlize script in test.leo
-#@+node:ekr.20050312111805:To do: a3
-#@+node:ekr.20050226063714:Improve Mac distribution
-#@+node:ekr.20050301165204:Post 1
-@killcolor
-http://sourceforge.net/forum/message.php?msg_id=3016680
-By: wordtech
-
-I'd suggest a some revisions to your approach. 
-
-1. Unless you're putting files over several directories, there's no reason to
-use PackageMaker. As far as I can tell, you're doing a large folder called "leo"
-and installing it in /. PackageMaker is for complex installations, i.e. a GUI
-front end in /Applications, the supporting files in /usr/local, and man pages
-in /usr/share/man, or something like that.
-
-In fact, people are advised not to move stuff installed by PackageMaker, but
-if they leave the default installation alone (in /), your launcher tool won't
-work. I thought this was a bug, because the launcher tool looks for ~/leo, until
-I saw your docs here.
-
-2. It isn't necessary to stuff everything into the app bundle with py2app. I
-used to maintain a nice Mac-native bundle of Leo that only wrapped your files,
-but left other stuff like Tcl/Tk out. (I removed it from my site because no
-one downloaded it.) I did a quick wrap of the new version and it seems to work
-fine. Although I don't have any interest in putting this on my site anymore,
-I'd be willing to provide a package for you to include at your Sourceforge site.
-
-(See http://www.wordtech-software.com/python-applet-tutorial.html for a description
-of my packaging method: it's a front-end to the older bundlebuilder method.
-Please contact me at my Sourceforge address if you have questions.)
-
-At a minimum, consider wrapping the /leo directory in a tar or zip file and
-advise people to move it to their home directory after they download it. That
-would make installation much smoother.
-#@nonl
-#@-node:ekr.20050301165204:Post 1
-#@+node:ekr.20050301165204.1:Post 2
-@killcolor
-http://sourceforge.net/forum/message.php?msg_id=3024408
-By: bowerymarc
-
-I saw a message in the bug tracker saying to post bugs here instead, so here
-it is:
-
-Tried to install Leo-4-3-a3.pkg.  Instructions for MacLeo say, you have to install
-Leo in your *home* directory (which by the way is rediculous - normally you
-install in the Applications directory on OSX.  In any case the facility exists
-to discover where an app is installed....)
-
-So I tried that.  Trouble is, it won't let me.  Why?  Perhaps because I have
-FileVault turned on, which turns your home directory into a crypto-fs type mount.
-Apparently its method of dealing with your home directory can't deal with that.
-#@nonl
-#@-node:ekr.20050301165204.1:Post 2
-#@-node:ekr.20050226063714:Improve Mac distribution
-#@-node:ekr.20050312111805:To do: a3
 #@+node:ekr.20050303103230:4.3b1 code complete
-#@+node:ekr.20040130073846:Use Python indices instead of Tk indices (Done except for leoFind!!)
-#@+node:ekr.20050313174347.1:Code notes
-@nocolor
+#@+node:ekr.20050315082746:Make sure NameErrors are reported with tracebacks in scripts
+#@+node:ekr.20050315082746.1:Report
+@killcolor
+http://sourceforge.net/forum/message.php?msg_id=3048149
+By: bwmulder
 
-- Apparently, the colorizer _already_ uses Python indices!
+Create a node with some code:
 
-- colorizer.tag calls colorizer.index to do all conversion, so it is completely index-neutral.
+x = 0
+import pdb; pdb.set_trace()
+y = 1
+z = z + 1
 
-- The edit body routines _already_ use Python indices!
-    - c.getBodyLines calls:
-        - body.getSelectionLines
-        - body.getAllText
-        - body.getYScrollPosition
-        - body.getTextSelection
-    - c.updateBodyPane calls:
-        - body.setSelectionAreas
-        - body.setYScrollPosition
-        - body.makeInsertPointVisible
+And then either use the "run_script" button from the plugin, or "execute script"
+from the menu. You get:
 
-    That is, these routines never _use_ Tk indices,
-    although they may pass them to and from body methods.
 
-Find code:
-    - The leoFind methods use the Tk wrappers to insulate the code from the Tk indices.
-    - leoFind.search calls gui_search, which is a thin wrapper around the Tk find search.
-        - This is a major simplification of the code, but it would have to be rewritten
-          to make the code really portable.
-        - In other words, we would use string.find or re.find instead of tk.find.
-            - The code can use Python indices, then convert to body(gui) indices
-            pretty much like the colorizer does:
+>> <string>(5)?()
 
-@color
-def index (self,i):
-    return self.body.convertRowColumnToIndex(self.line_index,i)
-@nocolor
+(Pdb) s
 
-        - The only difference is that we might have to compute the row and column indices
-          from the Python index, but that is easy!
+>> <string>(6)?()
+
+(Pdb) s
+NameError: "name 'z' is not defined"
+
+>> <string>(6)?()
+
+(Pdb) s
+NameError: "name 'z' is not defined"
+
+>> c:\bwm\svn_checkouts\oracle_ipf\trunk\python\other\leo_cvs\src\leocommands.py(
+
+1195)executeScript()
+-> exec script in d # Use {} to get a pristine environment!
+
+[Assuming that you have a DOS window in which you started leo.py].
+
+The debugger indicates some line numbers, but no source lines.
+
+When you remove the import line, you just get:
+
+exception executing script 
+NameError: name 'z' is not defined
 #@nonl
-#@-node:ekr.20050313174347.1:Code notes
-#@+node:ekr.20050313180723:g.convertPythonIndexToRowCol  & tests
-def convertPythonIndexToRowCol (s,i):
-    
-    '''Convert index i into string s into zero-based row/col indices.'''
-    
-    if s:
-        row = s.count('\n',0,i+1)
-        if row:
-            lastNl = s.rfind('\n',0,i+1)
-            return row,i-lastNl
-            # Should be equivalent.
-            # lines = g.splitLines(s[:i+1])
-            # col = len(lines[-1])
-        else:
-            return 0,min(i,len(s)-1)
-    else:
-        return 0,0
-#@nonl
-#@+node:ekr.20050313182408:bruteForceConvertPythonIndexToRowCol
-def bruteForceConvertPythonIndexToRowCol (s,i):
-        
-    lines = g.splitLines(s)
-    row,total = 0,0
-    for line in lines:
-        n = len(line)
-        if i < total + n:
-            break
-        else:
-            total += n
-            row += 1
-    return row, i-total
-#@nonl
-#@-node:ekr.20050313182408:bruteForceConvertPythonIndexToRowCol
-#@+node:ekr.20050313182408.1:test_g_convertPythonIndexToRowCol
-def test_g_convertPythonIndexToRowCol ():
-    
-    
-#@-node:ekr.20050313182408.1:test_g_convertPythonIndexToRowCol
-#@-node:ekr.20050313180723:g.convertPythonIndexToRowCol  & tests
-#@+node:ekr.20050313174347:Code that uses Tk indices (outside of Tkinter classes)
-#@+node:ekr.20050313174347.2:In leoTkinterBody
-#@+node:ekr.20031218072017.4006:Indices (leoTkinterBody)
-#@+node:ekr.20031218072017.4007:adjustIndex
-def adjustIndex (self,index,offset):
-    
-    t = self.bodyCtrl
-    return t.index("%s + %dc" % (t.index(index),offset))
-#@nonl
-#@-node:ekr.20031218072017.4007:adjustIndex
-#@+node:ekr.20031218072017.4008:compareIndices
-def compareIndices(self,i,rel,j):
-
-    return self.bodyCtrl.compare(i,rel,j)
-#@nonl
-#@-node:ekr.20031218072017.4008:compareIndices
-#@+node:ekr.20031218072017.4009:convertRowColumnToIndex
-def convertRowColumnToIndex (self,row,column):
-    
-    return self.bodyCtrl.index("%s.%s" % (row,column))
-#@nonl
-#@-node:ekr.20031218072017.4009:convertRowColumnToIndex
-#@+node:ekr.20031218072017.4010:convertIndexToRowColumn
-def convertIndexToRowColumn (self,index):
-    
-    index = self.bodyCtrl.index(index)
-    start, end = string.split(index,'.')
-    return int(start),int(end)
-#@nonl
-#@-node:ekr.20031218072017.4010:convertIndexToRowColumn
-#@+node:ekr.20031218072017.4011:getImageIndex
-def getImageIndex (self,image):
-    
-    return self.bodyCtrl.index(image)
-#@nonl
-#@-node:ekr.20031218072017.4011:getImageIndex
-#@+node:ekr.20031218072017.4012:tkIndex (internal use only)
-def tkIndex(self,index):
-    
-    """Returns the canonicalized Tk index."""
-    
-    if index == "start": index = "1.0"
-    
-    return self.bodyCtrl.index(index)
-#@nonl
-#@-node:ekr.20031218072017.4012:tkIndex (internal use only)
-#@-node:ekr.20031218072017.4006:Indices (leoTkinterBody)
-#@+node:ekr.20031218072017.4002:Color tags (Tk spelling)
-# Could have been replaced by the __getattr__ routine above...
-# 12/19/03: no: that would cause more problems.
-
-def tag_add (self,tagName,index1,index2):
-    self.bodyCtrl.tag_add(tagName,index1,index2)
-
-def tag_bind (self,tagName,event,callback):
-    self.bodyCtrl.tag_bind(tagName,event,callback)
-
-def tag_configure (self,colorName,**keys):
-    self.bodyCtrl.tag_configure(colorName,keys)
-
-def tag_delete(self,tagName):
-    self.bodyCtrl.tag_delete(tagName)
-
-def tag_remove (self,tagName,index1,index2):
-    return self.bodyCtrl.tag_remove(tagName,index1,index2)
-#@nonl
-#@-node:ekr.20031218072017.4002:Color tags (Tk spelling)
-#@-node:ekr.20050313174347.2:In leoTkinterBody
-#@+node:ekr.20050313174347.3:In colorizer...
-#@+node:ekr.20031218072017.1609:index & tag
-def index (self,i):
-    
-    return self.body.convertRowColumnToIndex(self.line_index,i)
-        
-def tag (self,name,i,j):
-
-    self.body.tag_add(name,self.index(i),self.index(j))
-#@nonl
-#@-node:ekr.20031218072017.1609:index & tag
-#@-node:ekr.20050313174347.3:In colorizer...
-#@+node:ekr.20050313174347.4:In commands...
-#@+node:ekr.20031218072017.2884:Edit Body submenu
-#@+node:ekr.20031218072017.1704:convertAllBlanks
-def convertAllBlanks (self):
-    
-    c = self ; body = c.frame.body ; v = current = c.currentVnode()
-    
-    if g.app.batchMode:
-        c.notValidInBatchMode("Convert All Blanks")
-        return
-    next = v.nodeAfterTree()
-    theDict = g.scanDirectives(c)
-    tabWidth  = theDict.get("tabwidth")
-    # Create copy for undo.
-    v_copy = c.undoer.saveTree(v)
-    oldText = body.getAllText()
-    oldSel = body.getTextSelection()
-    count = 0
-    while v and v != next:
-        if v == current:
-            if c.convertBlanks(setUndoParams=False):
-                count += 1 ; v.setDirty()
-        else:
-            changed = False ; result = []
-            text = v.t.bodyString
-            assert(g.isUnicode(text))
-            lines = string.split(text, '\n')
-            for line in lines:
-                s = g.optimizeLeadingWhitespace(line,tabWidth)
-                if s != line: changed = True
-                result.append(s)
-            if changed:
-                count += 1 ; v.setDirty()
-                result = string.join(result,'\n')
-                v.setTnodeText(result)
-        v = v.threadNext()
-    if count > 0:
-        newText = body.getAllText()
-        newSel = body.getTextSelection()
-        c.undoer.setUndoParams("Convert All Blanks",
-            current,select=current,oldTree=v_copy,
-            oldText=oldText,newText=newText,
-            oldSel=oldSel,newSel=newSel)
-    g.es("blanks converted to tabs in %d nodes" % count)
-#@nonl
-#@-node:ekr.20031218072017.1704:convertAllBlanks
-#@+node:ekr.20031218072017.1705:convertAllTabs
-def convertAllTabs (self):
-
-    c = self ; body = c.frame.body ; v = current = c.currentVnode()
-    
-    if g.app.batchMode:
-        c.notValidInBatchMode("Convert All Tabs")
-        return
-    next = v.nodeAfterTree()
-    theDict = g.scanDirectives(c)
-    tabWidth  = theDict.get("tabwidth")
-    # Create copy for undo.
-    v_copy = c.undoer.saveTree(v)
-    oldText = body.getAllText()
-    oldSel = body.getTextSelection()
-    count = 0
-    while v and v != next:
-        if v == current:
-            if self.convertTabs(setUndoParams=False):
-                count += 1 ; v.setDirty()
-        else:
-            result = [] ; changed = False
-            text = v.t.bodyString
-            assert(g.isUnicode(text))
-            lines = string.split(text, '\n')
-            for line in lines:
-                i,w = g.skip_leading_ws_with_indent(line,0,tabWidth)
-                s = g.computeLeadingWhitespace(w,-abs(tabWidth)) + line[i:] # use negative width.
-                if s != line: changed = True
-                result.append(s)
-            if changed:
-                count += 1 ; v.setDirty()
-                result = string.join(result,'\n')
-                v.setTnodeText(result)
-        v = v.threadNext()
-    if count > 0:
-        newText = body.getAllText()
-        newSel = body.getTextSelection() # 7/11/03
-        c.undoer.setUndoParams("Convert All Tabs",
-            current,select=current,oldTree=v_copy,
-            oldText=oldText,newText=newText,
-            oldSel=oldSel,newSel=newSel)
-    g.es("tabs converted to blanks in %d nodes" % count)
-#@nonl
-#@-node:ekr.20031218072017.1705:convertAllTabs
-#@+node:ekr.20031218072017.1821:convertBlanks
-def convertBlanks (self,setUndoParams=True):
-
-    c = self ; body = c.frame.body
-    
-    if g.app.batchMode:
-        c.notValidInBatchMode("Convert Blanks")
-        return False
-
-    head,lines,tail,oldSel,oldYview = c.getBodyLines(expandSelection=True)
-    result = [] ; changed = False
-
-    # Use the relative @tabwidth, not the global one.
-    theDict = g.scanDirectives(c)
-    tabWidth  = theDict.get("tabwidth")
-    if not tabWidth: return False
-
-    for line in lines:
-        s = g.optimizeLeadingWhitespace(line,tabWidth)
-        if s != line: changed = True
-        result.append(s)
-
-    if changed:
-        result = string.join(result,'\n')
-        undoType = g.choose(setUndoParams,"Convert Blanks",None)
-        c.updateBodyPane(head,result,tail,undoType,oldSel,oldYview) # Handles undo
-
-    return changed
-#@nonl
-#@-node:ekr.20031218072017.1821:convertBlanks
-#@+node:ekr.20031218072017.1822:convertTabs
-def convertTabs (self,setUndoParams=True):
-
-    c = self ; body = c.frame.body
-    
-    if g.app.batchMode:
-        c.notValidInBatchMode("Convert Tabs")
-        return False
-
-    head,lines,tail,oldSel,oldYview = self.getBodyLines(expandSelection=True)
-    result = [] ; changed = False
-    
-    # Use the relative @tabwidth, not the global one.
-    theDict = g.scanDirectives(c)
-    tabWidth  = theDict.get("tabwidth")
-    if not tabWidth: return False
-
-    for line in lines:
-        i,w = g.skip_leading_ws_with_indent(line,0,tabWidth)
-        s = g.computeLeadingWhitespace(w,-abs(tabWidth)) + line[i:] # use negative width.
-        if s != line: changed = True
-        result.append(s)
-
-    if changed:
-        result = string.join(result,'\n')
-        undoType = g.choose(setUndoParams,"Convert Tabs",None)
-        c.updateBodyPane(head,result,tail,undoType,oldSel,oldYview) # Handles undo
-        
-    return changed
-#@-node:ekr.20031218072017.1822:convertTabs
-#@+node:ekr.20031218072017.1823:createLastChildNode
-def createLastChildNode (self,parent,headline,body):
-    
-    c = self
-    if body and len(body) > 0:
-        body = string.rstrip(body)
-    if not body or len(body) == 0:
-        body = ""
-    v = parent.insertAsLastChild()
-    v.initHeadString(headline)
-    v.setTnodeText(body)
-    v.setDirty()
-    c.validateOutline()
-#@nonl
-#@-node:ekr.20031218072017.1823:createLastChildNode
-#@+node:ekr.20031218072017.1824:dedentBody
-def dedentBody (self):
-    
-    c = self ; p = c.currentPosition()
-    
-    if g.app.batchMode:
-        c.notValidInBatchMode("Unindent")
-        return
-
-    d = g.scanDirectives(c,p) # Support @tab_width directive properly.
-    tab_width = d.get("tabwidth",c.tab_width)
-    head,lines,tail,oldSel,oldYview = self.getBodyLines()
-    result = [] ; changed = False
-    for line in lines:
-        i, width = g.skip_leading_ws_with_indent(line,0,tab_width)
-        s = g.computeLeadingWhitespace(width-abs(tab_width),tab_width) + line[i:]
-        if s != line: changed = True
-        result.append(s)
-
-    if changed:
-        result = string.join(result,'\n')
-        c.updateBodyPane(head,result,tail,"Undent",oldSel,oldYview)
-#@nonl
-#@-node:ekr.20031218072017.1824:dedentBody
-#@+node:ekr.20031218072017.1706:extract
-def extract(self):
-    
-    c = self ; body = c.frame.body ; current = v = c.currentVnode()
-    
-    if g.app.batchMode:
-        c.notValidInBatchMode("Extract")
-        return
-    
-    head,lines,tail,oldSel,oldYview = self.getBodyLines()
-    if not lines: return
-    headline = lines[0] ; del lines[0]
-    junk, ws = g.skip_leading_ws_with_indent(headline,0,c.tab_width)
-    # Create copy for undo.
-    v_copy = c.undoer.saveTree(v)
-    oldText = body.getAllText()
-    oldSel = body.getTextSelection()
-    << Set headline for extract >>
-    # Remove leading whitespace from all body lines.
-    result = []
-    for line in lines:
-        # Remove the whitespace on the first line
-        line = g.removeLeadingWhitespace(line,ws,c.tab_width)
-        result.append(line)
-    # Create a new node from lines.
-    newBody = string.join(result,'\n') # 11/23/03
-    if head and len(head) > 0:
-        head = string.rstrip(head)
-    c.beginUpdate()
-    if 1: # update range...
-        c.createLastChildNode(v,headline,newBody) # 11/23/03
-        undoType =  "Can't Undo" # 12/8/02: None enables further undoes, but there are bugs now.
-        c.updateBodyPane(head,None,tail,undoType,oldSel,oldYview,setSel=False)
-        newText = body.getAllText()
-        newSel = body.getTextSelection() # 7/11/03
-        c.undoer.setUndoParams("Extract",
-            v,select=current,oldTree=v_copy,
-            oldText=oldText,newText=newText,
-            oldSel=oldSel,newSel=newSel)
-    c.endUpdate()
-#@nonl
-#@+node:ekr.20031218072017.1707:<< Set headline for extract >>
-headline = string.strip(headline)
-while len(headline) > 0 and headline[0] == '/':
-    headline = headline[1:]
-headline = string.strip(headline)
-#@nonl
-#@-node:ekr.20031218072017.1707:<< Set headline for extract >>
-#@-node:ekr.20031218072017.1706:extract
-#@+node:ekr.20031218072017.1708:extractSection
-def extractSection(self):
-
-    c = self ; body = c.frame.body ; current = v = c.currentVnode()
-    
-    if g.app.batchMode:
-        c.notValidInBatchMode("Extract Section")
-        return
-
-    head,lines,tail,oldSel,oldYview = self.getBodyLines()
-    if not lines: return
-    headline = lines[0] ; del lines[0]
-    junk, ws = g.skip_leading_ws_with_indent(headline,0,c.tab_width)
-    line1 = "\n" + headline
-    # Create copy for undo.
-    v_copy = c.undoer.saveTree(v)
-    oldText = body.getAllText()
-    oldSel = body.getTextSelection()
-    << Set headline for extractSection >>
-    # Remove leading whitespace from all body lines.
-    result = []
-    for line in lines:
-        # Remove the whitespace on the first line
-        line = g.removeLeadingWhitespace(line,ws,c.tab_width)
-        result.append(line)
-    # Create a new node from lines.
-    newBody = string.join(result,'\n')
-    if head and len(head) > 0:
-        head = string.rstrip(head)
-    c.beginUpdate()
-    if 1: # update range...
-        c.createLastChildNode(v,headline,newBody)
-        # g.trace(v)
-        undoType = None # Set undo params later.
-        c.updateBodyPane(head+line1,None,tail,undoType,oldSel,oldYview,setSel=False)
-        newText = body.getAllText()
-        newSel = body.getTextSelection()
-        c.undoer.setUndoParams("Extract Section",v,
-            select=current,oldTree=v_copy,
-            oldText=oldText,newText=newText,
-            oldSel=oldSel,newSel=newSel)
-    c.endUpdate()
-#@nonl
-#@+node:ekr.20031218072017.1709:<< Set headline for extractSection >>
-if 0: # I have no idea why this was being done.
-    while len(headline) > 0 and headline[0] == '/':
-        headline = headline[1:]
-
-headline = headline.strip()
-
-if len(headline) < 5:
-    oops = True
-else:
-    head1 = headline[0:2] == '<<'
-    head2 = headline[0:2] == '@<'
-    tail1 = headline[-2:] == '>>'
-    tail2 = headline[-2:] == '@>'
-    oops = not (head1 and tail1) and not (head2 and tail2)
-
-if oops:
-    g.es("Selected text should start with a section name",color="blue")
-    return
-#@nonl
-#@-node:ekr.20031218072017.1709:<< Set headline for extractSection >>
-#@-node:ekr.20031218072017.1708:extractSection
-#@+node:ekr.20031218072017.1710:extractSectionNames
-def extractSectionNames(self):
-
-    c = self ; body = c.frame.body ; current = v = c.currentVnode()
-    
-    if g.app.batchMode:
-        c.notValidInBatchMode("Extract Section Names")
-        return
-
-    head,lines,tail,oldSel,oldYview = self.getBodyLines()
-    if not lines: return
-    # Create copy for undo.
-    v_copy = c.undoer.saveTree(v)
-    # No change to body or selection of this node.
-    oldText = newText = body.getAllText()
-    i, j = oldSel = newSel = body.getTextSelection()
-    c.beginUpdate()
-    if 1: # update range...
-        found = False
-        for s in lines:
-            << Find the next section name >>
-            if name:
-                self.createLastChildNode(v,name,None)
-                found = True
-        c.selectVnode(v)
-        c.validateOutline()
-        if not found:
-            g.es("Selected text should contain one or more section names",color="blue")
-    c.endUpdate()
-    # No change to body or selection
-    c.undoer.setUndoParams("Extract Names",
-        v,select=current,oldTree=v_copy,
-        oldText=oldText,newText=newText,
-        oldSel=oldSel,newSel=newSel)
-    # Restore the selection.
-    body.setTextSelection(oldSel)
-    body.setFocus()
-#@nonl
-#@+node:ekr.20031218072017.1711:<< Find the next section name >>
-head1 = string.find(s,"<<")
-if head1 > -1:
-    head2 = string.find(s,">>",head1)
-else:
-    head1 = string.find(s,"@<")
-    if head1 > -1:
-        head2 = string.find(s,"@>",head1)
-        
-if head1 == -1 or head2 == -1 or head1 > head2:
-    name = None
-else:
-    name = s[head1:head2+2]
-#@nonl
-#@-node:ekr.20031218072017.1711:<< Find the next section name >>
-#@-node:ekr.20031218072017.1710:extractSectionNames
-#@+node:ekr.20031218072017.1825:findBoundParagraph
-def findBoundParagraph (self):
-    
-    c = self
-    head,ins,tail = c.frame.body.getInsertLines()
-
-    if not ins or ins.isspace() or ins[0] == '@':
-        return None,None,None,None # DTHEIN 18-JAN-2004
-        
-    head_lines = g.splitLines(head)
-    tail_lines = g.splitLines(tail)
-
-    if 0:
-        << trace head_lines, ins, tail_lines >>
-
-    # Scan backwards.
-    i = len(head_lines)
-    while i > 0:
-        i -= 1
-        line = head_lines[i]
-        if len(line) == 0 or line.isspace() or line[0] == '@':
-            i += 1 ; break
-
-    pre_para_lines = head_lines[:i]
-    para_head_lines = head_lines[i:]
-
-    # Scan forwards.
-    i = 0
-    trailingNL = False # DTHEIN 18-JAN-2004: properly capture terminating NL
-    while i < len(tail_lines):
-        line = tail_lines[i]
-        if len(line) == 0 or line.isspace() or line[0] == '@':
-            trailingNL = line.endswith(u'\n') or line.startswith(u'@') # DTHEIN 21-JAN-2004
-            break
-        i += 1
-        
-#	para_tail_lines = tail_lines[:i]
-    para_tail_lines = tail_lines[:i]
-    post_para_lines = tail_lines[i:]
-    
-    head = g.joinLines(pre_para_lines)
-    result = para_head_lines 
-    result.extend([ins])
-    result.extend(para_tail_lines)
-    tail = g.joinLines(post_para_lines)
-
-    # DTHEIN 18-JAN-2004: added trailingNL to return value list
-    return head,result,tail,trailingNL # string, list, string, bool
-#@nonl
-#@+node:ekr.20031218072017.1826:<< trace head_lines, ins, tail_lines >>
-if 0:
-    print ; print "head_lines"
-    for line in head_lines: print line
-    print ; print "ins", ins
-    print ; print "tail_lines"
-    for line in tail_lines: print line
-else:
-    g.es("head_lines: ",head_lines)
-    g.es("ins: ",ins)
-    g.es("tail_lines: ",tail_lines)
-#@nonl
-#@-node:ekr.20031218072017.1826:<< trace head_lines, ins, tail_lines >>
-#@-node:ekr.20031218072017.1825:findBoundParagraph
-#@+node:ekr.20031218072017.1827:findMatchingBracket
-def findMatchingBracket (self):
-    
-    c = self ; body = c.frame.body
-    
-    if g.app.batchMode:
-        c.notValidInBatchMode("Match Brackets")
-        return
-
-    brackets = "()[]{}<>"
-    ch1 = body.getCharBeforeInsertPoint()
-    ch2 = body.getCharAtInsertPoint()
-
-    # Prefer to match the character to the left of the cursor.
-    if ch1 in brackets:
-        ch = ch1 ; index = body.getBeforeInsertionPoint()
-    elif ch2 in brackets:
-        ch = ch2 ; index = body.getInsertionPoint()
-    else:
-        return
-    
-    index2 = self.findSingleMatchingBracket(ch,index)
-    if index2:
-        if body.compareIndices(index,"<=",index2):
-            adj_index = body.adjustIndex(index2,1)
-            body.setTextSelection(index,adj_index)
-        else:
-            adj_index = body.adjustIndex(index,1)
-            body.setTextSelection(index2,adj_index)
-        adj_index = body.adjustIndex(index2,1)
-        body.setInsertionPoint(adj_index)
-        body.makeIndexVisible(adj_index)
-    else:
-        g.es("unmatched '%s'",ch)
-#@nonl
-#@+node:ekr.20031218072017.1828:findMatchingBracket
-# To do: replace comments with blanks before scanning.
-# Test  unmatched())
-def findSingleMatchingBracket(self,ch,index):
-    
-    c = self ; body = c.frame.body
-    open_brackets  = "([{<" ; close_brackets = ")]}>"
-    brackets = open_brackets + close_brackets
-    matching_brackets = close_brackets + open_brackets
-    forward = ch in open_brackets
-    # Find the character matching the initial bracket.
-    for n in xrange(len(brackets)):
-        if ch == brackets[n]:
-            match_ch = matching_brackets[n]
-            break
-    level = 0
-    while 1:
-        if forward and body.compareIndices(index,">=","end"):
-            # g.trace("not found")
-            return None
-        ch2 = body.getCharAtIndex(index)
-        if ch2 == ch:
-            level += 1 #; g.trace(level,index)
-        if ch2 == match_ch:
-            level -= 1 #; g.trace(level,index)
-            if level <= 0:
-                return index
-        if not forward and body.compareIndices(index,"<=","1.0"):
-            # g.trace("not found")
-            return None
-        adj = g.choose(forward,1,-1)
-        index = body.adjustIndex(index,adj)
-    return 0 # unreachable: keeps pychecker happy.
-# Test  (
-# ([(x){y}]))
-# Test  ((x)(unmatched
-#@nonl
-#@-node:ekr.20031218072017.1828:findMatchingBracket
-#@-node:ekr.20031218072017.1827:findMatchingBracket
-#@+node:ekr.20031218072017.1829:getBodyLines
-def getBodyLines (self,expandSelection=False):
-
-    c = self ; body = c.frame.body
-    oldVview = body.getYScrollPosition()
-    oldSel   = body.getTextSelection()
-
-    if expandSelection: # 12/3/03
-        lines = body.getAllText()
-        head = tail = None
-    else:
-        # Note: lines is the entire line containing the insert point if no selection.
-        head,lines,tail = body.getSelectionLines()
-
-    lines = string.split(lines,'\n') # It would be better to use splitLines.
-
-    return head,lines,tail,oldSel,oldVview
-#@nonl
-#@-node:ekr.20031218072017.1829:getBodyLines
-#@+node:ekr.20031218072017.1830:indentBody
-def indentBody (self):
-
-    c = self ; p = c.currentPosition()
-    
-    if g.app.batchMode:
-        c.notValidInBatchMode("Indent")
-        return
-
-    d = g.scanDirectives(c,p) # Support @tab_width directive properly.
-    tab_width = d.get("tabwidth",c.tab_width)
-    head,lines,tail,oldSel,oldYview = self.getBodyLines()
-    result = [] ; changed = False
-    for line in lines:
-        i, width = g.skip_leading_ws_with_indent(line,0,tab_width)
-        s = g.computeLeadingWhitespace(width+abs(tab_width),tab_width) + line[i:]
-        if s != line: changed = True
-        result.append(s)
-    if changed:
-        result = string.join(result,'\n')
-        c.updateBodyPane(head,result,tail,"Indent",oldSel,oldYview)
-#@nonl
-#@-node:ekr.20031218072017.1830:indentBody
-#@+node:ekr.20031218072017.1831:insertBodyTime & allies
-def insertBodyTime (self):
-    
-    c = self ; v = c.currentVnode()
-    
-    if g.app.batchMode:
-        c.notValidInBatchMode("xxx")
-        return
-    
-    oldSel = c.frame.body.getTextSelection()
-    c.frame.body.deleteTextSelection() # Works if nothing is selected.
-    s = self.getTime(body=True)
-    c.frame.body.insertAtInsertPoint(s)
-    c.frame.body.onBodyChanged(v,"Typing",oldSel=oldSel)
-#@nonl
-#@+node:ekr.20031218072017.1832:getTime
-def getTime (self,body=True):
-
-    c = self
-    default_format =  "%m/%d/%Y %H:%M:%S" # E.g., 1/30/2003 8:31:55
-    
-    # Try to get the format string from leoConfig.txt.
-    if body:
-        format = c.config.getString("body_time_format_string")
-        gmt    = c.config.getString("body_gmt_time")
-    else:
-        format = c.config.getString("headline_time_format_string")
-        gmt     = c.config.getString("headline_gmt_time")
-
-    if format == None:
-        format = default_format
-
-    try:
-        import time
-        if gmt:
-            s = time.strftime(format,time.gmtime())
-        else:
-            s = time.strftime(format,time.localtime())
-    except (ImportError, NameError):
-        g.es("time.strftime not available on this platform",color="blue")
-        return ""
-    except:
-        g.es_exception() # Probably a bad format string in leoConfig.txt.
-        s = time.strftime(default_format,time.gmtime())
-    return s
-#@-node:ekr.20031218072017.1832:getTime
-#@-node:ekr.20031218072017.1831:insertBodyTime & allies
-#@+node:ekr.20050312114529:insert/removeComments
-#@+node:ekr.20050312114529.1:addComments
-def addComments (self):
-
-    c = self ; p = c.currentPosition()
-    
-    d = g.scanDirectives(c,p)
-    # d1 is the line delim.
-    d1,d2,d3 = d.get('delims')
-
-    head,lines,tail,oldSel,oldYview = self.getBodyLines()
-    result = []
-    if not lines:
-        g.es('No text selected',color='blue')
-        return
-    
-    if d1:
-        # Append the single-line comment delim in front of each line
-        for line in lines:
-            i = g.skip_ws(line,0)
-            result.append('%s%s %s' % (line[0:i],d1,line[i:]))
-    else:
-        n = len(lines)
-        for i in xrange(n):
-            line = lines[i]
-            if i not in (0,n-1):
-                result.append(line)
-            if i == 0:
-                j = g.skip_ws(line,0)
-                result.append('%s%s %s' % (line[0:j],d2,line[j:]))
-            if i == n-1:
-                j = len(line.rstrip())
-                result.append('%s %s' % (line[0:j],d3))
-
-    result = string.join(result,'\n')
-    c.updateBodyPane(head,result,tail,"Add Comments",oldSel,oldYview)
-#@nonl
-#@-node:ekr.20050312114529.1:addComments
-#@+node:ekr.20050312114529.2:deleteComments
-def deleteComments (self):
-
-    c = self ; p = c.currentPosition()
-    
-    d = g.scanDirectives(c,p)
-    # d1 is the line delim.
-    d1,d2,d3 = d.get('delims')
-
-    head,lines,tail,oldSel,oldYview = self.getBodyLines()
-    result = []
-    if not lines:
-        g.es('No text selected',color='blue')
-        return
-    
-    if d1:
-        # Append the single-line comment delim in front of each line
-        for line in lines:
-            i = g.skip_ws(line,0)
-            if g.match(line,i,d1):
-                j = g.skip_ws(line,i + len(d1))
-                result.append(line[0:i] + line[j:])
-            else:
-                result.append(line)
-    else:
-        n = len(lines)
-        for i in xrange(n):
-            line = lines[i]
-            if i not in (0,n-1):
-                result.append(line)
-            if i == 0:
-                j = g.skip_ws(line,0)
-                if g.match(line,j,d2):
-                    k = g.skip_ws(line,j + len(d2))
-                    result.append(line[0:j] + line[k:])
-                else:
-                    g.es("'%s' not found" % (d2),color='blue')
-                    return
-            if i == n-1:
-                if i == 0:
-                    line = result[0] ; result = []
-                s = line.rstrip()
-                if s.endswith(d3):
-                    result.append(s[:-len(d3)].rstrip())
-                else:
-                    g.es("'%s' not found" % (d3),color='blue')
-                    return
-
-    result = string.join(result,'\n')
-    c.updateBodyPane(head,result,tail,"Delete Comments",oldSel,oldYview)
-#@nonl
-#@-node:ekr.20050312114529.2:deleteComments
-#@-node:ekr.20050312114529:insert/removeComments
-#@+node:ekr.20031218072017.1833:reformatParagraph
-def reformatParagraph(self):
-
-    """Reformat a text paragraph in a Tk.Text widget
-
-Wraps the concatenated text to present page width setting. Leading tabs are
-sized to present tab width setting. First and second line of original text is
-used to determine leading whitespace in reformatted text. Hanging indentation
-is honored.
-
-Paragraph is bound by start of body, end of body, blank lines, and lines
-starting with "@". Paragraph is selected by position of current insertion
-cursor."""
-
-    c = self ; body = c.frame.body ; v = c.currentVnode()
-    
-    if g.app.batchMode:
-        c.notValidInBatchMode("xxx")
-        return
-
-    if body.hasTextSelection():
-        g.es("Text selection inhibits Reformat Paragraph",color="blue")
-        return
-
-    << compute vars for reformatParagraph >>
-    if lines:
-        << compute the leading whitespace >>
-        << compute the result of wrapping all lines >>
-        << update the body, selection & undo state >>
-#@nonl
-#@+node:ekr.20031218072017.1834:<< compute vars for reformatParagraph >>
-theDict = g.scanDirectives(c)
-pageWidth = theDict.get("pagewidth")
-tabWidth  = theDict.get("tabwidth")
-
-original = body.getAllText()
-oldSel   = body.getTextSelection()
-oldYview = body.getYScrollPosition()
-head,lines,tail,trailingNL = c.findBoundParagraph() # DTHEIN 18-JAN-2004: add trailingNL
-#@nonl
-#@-node:ekr.20031218072017.1834:<< compute vars for reformatParagraph >>
-#@+node:ekr.20031218072017.1835:<< compute the leading whitespace >>
-indents = [0,0] ; leading_ws = ["",""]
-
-for i in (0,1):
-    if i < len(lines):
-        # Use the original, non-optimized leading whitespace.
-        leading_ws[i] = ws = g.get_leading_ws(lines[i])
-        indents[i] = g.computeWidth(ws,tabWidth)
-        
-indents[1] = max(indents)
-if len(lines) == 1:
-    leading_ws[1] = leading_ws[0]
-#@-node:ekr.20031218072017.1835:<< compute the leading whitespace >>
-#@+node:ekr.20031218072017.1836:<< compute the result of wrapping all lines >>
-# Remember whether the last line ended with a newline.
-lastLine = lines[-1]
-if 0: # DTHEIN 18-JAN-2004: removed because findBoundParagraph now gives trailingNL
-    trailingNL = lastLine and lastLine[-1] == '\n'
-
-# Remove any trailing newlines for wraplines.
-lines = [line[:-1] for line in lines[:-1]]
-if lastLine and not trailingNL:
-    lastLine = lastLine[:-1]
-lines.extend([lastLine])
-
-# Wrap the lines, decreasing the page width by indent.
-result = g.wrap_lines(lines,
-    pageWidth-indents[1],
-    pageWidth-indents[0])
-
-# DTHEIN 	18-JAN-2004
-# prefix with the leading whitespace, if any
-paddedResult = []
-paddedResult.append(leading_ws[0] + result[0])
-for line in result[1:]:
-    paddedResult.append(leading_ws[1] + line)
-
-# Convert the result to a string.
-result = '\n'.join(paddedResult) # DTHEIN 	18-JAN-2004: use paddedResult
-if 0: # DTHEIN 18-JAN-2004:  No need to do this.
-    if trailingNL:
-        result += '\n'
-#@-node:ekr.20031218072017.1836:<< compute the result of wrapping all lines >>
-#@+node:ekr.20031218072017.1837:<< update the body, selection & undo state >>
-sel_start, sel_end = body.setSelectionAreas(head,result,tail)
-
-changed = original != head + result + tail
-undoType = g.choose(changed,"Reformat Paragraph",None)
-body.onBodyChanged(v,undoType,oldSel=oldSel,oldYview=oldYview)
-
-# Advance the selection to the next paragraph.
-newSel = sel_end, sel_end
-body.setTextSelection(newSel)
-body.makeIndexVisible(sel_end)
-
-c.recolor()
-#@nonl
-#@-node:ekr.20031218072017.1837:<< update the body, selection & undo state >>
-#@-node:ekr.20031218072017.1833:reformatParagraph
-#@+node:ekr.20031218072017.1838:updateBodyPane (handles undo)
-def updateBodyPane (self,head,middle,tail,undoType,oldSel,oldYview,setSel=True):
-    
-    c = self ; body = c.frame.body ; v = c.currentVnode()
-
-    # Update the text and notify the event handler.
-    body.setSelectionAreas(head,middle,tail)
-
-    if setSel:
-        body.setTextSelection(oldSel)
-
-    body.onBodyChanged(v,undoType,oldSel=oldSel,oldYview=oldYview)
-
-    # Update the changed mark and icon.
-    c.setChanged(True)
-    c.beginUpdate()
-    if not v.isDirty():
-        v.setDirty()
-    c.endUpdate()
-
-    # Scroll as necessary.
-    if oldYview:
-        body.setYScrollPosition(oldYview)
-    else:
-        body.makeInsertPointVisible()
-
-    body.setFocus()
-    c.recolor()
-#@nonl
-#@-node:ekr.20031218072017.1838:updateBodyPane (handles undo)
-#@-node:ekr.20031218072017.2884:Edit Body submenu
-#@-node:ekr.20050313174347.4:In commands...
-#@+node:ekr.20050313175009:In leoFind...
-#@+node:ekr.20031218072017.3077:search
-def search (self):
-
-    """Searches the present headline or body text for self.find_text and returns True if found.
-
-    self.whole_word, self.ignore_case, and self.pattern_match control the search."""
-    
-    __pychecker__ = '--no-implicitreturns' # Suppress bad warning.
-
-    c = self.c ; v = self.v ; t = self.s_ctrl ; gui = g.app.gui
-    assert(c and t and v)
-    if self.selection_only:
-        index,stopindex = self.selStart, self.selEnd
-        # g.trace(index,stopindex,v)
-        if index == stopindex:
-            return None, None
-    else:
-        index = gui.getInsertPoint(t)
-        stopindex = g.choose(self.reverse,gui.firstIndex(),gui.lastIndex())
-    while 1:
-        try:
-            pos = self.gui_search(t,self.find_text,index,
-                stopindex=stopindex,backwards=self.reverse,
-                regexp=self.pattern_match,nocase=self.ignore_case)
-        except:
-            g.es_exception(full=False)
-            self.errors += 1
-            return None, None
-        if not pos:
-            return None, None
-        if self.find_text == '\n':
-            # 2/3/04: A hack.  Time to get rid of gui indices!
-            newpos = gui.moveIndexToNextLine(t,pos)
-            # g.trace(pos,t.index(newpos))
-        else:
-            newpos = gui.moveIndexForward(t,pos,len(self.find_text))
-        if newpos is None:
-            return None, None
-        if self.reverse and gui.compareIndices(t,newpos,"==",index):
-            << search again after getting stuck going backward >>
-        << return if we are passed the wrap point >>
-        if self.whole_word:
-            index = t.index(g.choose(self.reverse,pos,newpos))
-            << continue if not whole word match >>
-        #g.trace("found:",pos,newpos,v)
-        gui.setTextSelection(t,pos,newpos)
-        return pos, newpos
-#@nonl
-#@+node:ekr.20031218072017.3078:<< search again after getting stuck going backward >>
-index = gui.moveIndexBackward(newpos,len(self.find_text))
-
-pos = self.gui_search(t,self.find_text,index,
-    stopindex=stopindex,backwards=self.reverse,
-    regexp=self.pattern_match,nocase=self.ignore_case)
-
-if not pos:
-    return None, None
-
-newpos = gui.moveIndexForward(t,pos,len(self.find_text))
-#@nonl
-#@-node:ekr.20031218072017.3078:<< search again after getting stuck going backward >>
-#@+node:ekr.20031218072017.3079:<< return if we are passed the wrap point >>
-if self.wrapping and self.wrapPos and self.wrapVnode and self.v == self.wrapVnode:
-
-    if self.reverse and gui.compareIndices(t,pos, "<", self.wrapPos):
-        # g.trace("wrap done")
-        return None, None
-
-    if not self.reverse and gui.compareIndices(t,newpos, ">", self.wrapPos):
-        return None, None
-#@nonl
-#@-node:ekr.20031218072017.3079:<< return if we are passed the wrap point >>
-#@+node:ekr.20031218072017.3080:<< continue if not whole word match >>
-# Set pos to None if word characters preceed or follow the selection.
-before = gui.getCharBeforeIndex(t,pos)
-first  = gui.getCharAtIndex    (t,pos)
-last   = gui.getCharBeforeIndex(t,newpos)
-after  = gui.getCharAtIndex    (t,newpos)
-
-#g.trace("before,first",before,first,g.is_c_id(before),g.is_c_id(first))
-#g.trace("after,last",  after,last,  g.is_c_id(after), g.is_c_id(last))
-
-if g.is_c_id(before) and g.is_c_id(first):
-    continue
-
-if g.is_c_id(after) and g.is_c_id(last):
-    continue
-#@nonl
-#@-node:ekr.20031218072017.3080:<< continue if not whole word match >>
-#@-node:ekr.20031218072017.3077:search
-#@-node:ekr.20050313175009:In leoFind...
-#@-node:ekr.20050313174347:Code that uses Tk indices (outside of Tkinter classes)
-#@-node:ekr.20040130073846:Use Python indices instead of Tk indices (Done except for leoFind!!)
+#@-node:ekr.20050315082746.1:Report
+#@-node:ekr.20050315082746:Make sure NameErrors are reported with tracebacks in scripts
+#@+node:ekr.20050314091755:Write unit tests for find/change commands
+#@-node:ekr.20050314091755:Write unit tests for find/change commands
 #@+node:ekr.20050104083128:(Drawing and uA's: needed for plugins)
 #@+node:ekr.20041228074125:Drawing...
 #@+node:ekr.20041228092223:Play with wiki markup
@@ -2642,7 +1573,1305 @@ by then maybe subprocess will be updated.
 #@nonl
 #@-node:ekr.20050302072742:iPython support (more powerful execute script)
 #@-node:ekr.20050211173540:Finish changes to c.executeScript & at.write
-#@+node:ekr.20050207063254.1:New features
+#@+node:ekr.20041228090344:Config improvements
+- Cancel should revert all settings.
+    (Revert doesn't work after a node changes:this is confusing and dangerous.)
+
+- Support generalized widget settings (see child node)
+
+- Copy expansion state when writing @settings trees.
+
+- Handle undo/redo properly.
+#@nonl
+#@+node:ekr.20050128092443:Add g.app.config.reloadAllSettings
+@killcolor
+
+> I...change the @settings node to
+@string server = mail.otherisp.net
+
+the script doesn't print  -mail.otherisp.net-
+until I restart Leo.
+
+I see.  Thanks for this clarification.  What you want to do is a) clear all the settings, b) reload all the settings files.
+
+There probably should be a g.app.config.reloadAllSettings method, but there isn't yet.
+
+You could simulate this in a script, but clearly this is a convenience method that would be good to have.  I'll do it for a2.
+
+Edward
+#@-node:ekr.20050128092443:Add g.app.config.reloadAllSettings
+#@+node:ekr.20050122091016:Minor
+- move findCorrespondingNode into leoNodes class.
+
+- Fix bug: findSettingsRoot doesn't work if no summary node.
+
+- findSettingsPostion should honor if-gui and if-platform nodes.
+#@nonl
+#@-node:ekr.20050122091016:Minor
+#@+node:ekr.20050122083704:Config improvements
+@killcolor
+
+- Allow searching while in config dialog.
+- Allow adding, deleting, rearranging nodes while in config dialog.
+- Allow adding, deleting, rearranging recent files.
+- Support @if-platform, @if-gui.
+- Document, test and use @ints, @strings
+- Support @fixedRecentFiles.
+#@nonl
+#@-node:ekr.20050122083704:Config improvements
+#@+node:ekr.20041123100100:support @fixed-recent-files in Leo's core
+The config classes do nothing special.
+
+The core must put fixed files first in the menu.
+#@nonl
+#@-node:ekr.20041123100100:support @fixed-recent-files in Leo's core
+#@+node:ekr.20041228100139:Support for general component settings
+@list name
+    - name specifies the component to configure.
+    - parser creates a list of name,kind,value tuples from the body.
+
+Leo's core would support one 'name' for:
+    each Tk widget,
+    each Pmw megawidget,
+    each megawidget component.
+
+Examples:
+    headline:
+        @list outline_canvas_settings
+    body:
+        height,int,1
+        text,string,my widget
+
+g.setGeneralTkSetting(widget,setting_name) would do the following:
+    - get the setting_name and the associated list of tuples/bunches from the config class.
+    - safely set the widget's setting using the settings list as is done in the prototype code.
+#@nonl
+#@-node:ekr.20041228100139:Support for general component settings
+#@+node:ekr.20050123155522:Redo settings dialog and Plugins Manager dialog in Tk
+# These should always be available.
+#@nonl
+#@-node:ekr.20050123155522:Redo settings dialog and Plugins Manager dialog in Tk
+#@-node:ekr.20041228090344:Config improvements
+#@+node:ekr.20050211080215:Docs
+#@+node:ekr.20050217080914:Rework 'Ultimate Scripting Tool' posting & put it on web site
+#@+node:ekr.20050217080914.1:@url http://mail.python.org/pipermail/python-list/2003-November/193740.html
+#@-node:ekr.20050217080914.1:@url http://mail.python.org/pipermail/python-list/2003-November/193740.html
+#@-node:ekr.20050217080914:Rework 'Ultimate Scripting Tool' posting & put it on web site
+#@+node:ekr.20050210103758:Create better download pages
+http://sourceforge.net/forum/message.php?msg_id=2928991
+By: jasonic
+
+Even Clicking on the hompage link download and and people face a huge list of
+files to choose from.
+
+http://sourceforge.net/project/showfiles.php?group_id=3458
+
+I suggest changing  the dedicated link on Leo homepage where it says
+
+"Download Leo[4.2 final]"
+
+Insead of linking directly to the sourceforge page, better to go to a small page
+with precise links for the correct packages needed for each OS. And include from
+there a link to an freshly updated Installatian page in the Users Guide. to
+http://prdownloads.sourceforge.net/leo/leosetup-4-2.exe?download
+#@nonl
+#@-node:ekr.20050210103758:Create better download pages
+#@+node:EKR.20040422132037.7:Problems with run script command on Mac x11
+@killcolor
+
+Jon Schull <jschull@softlock.com>  
+Date:  2003/12/30 Tue PM 05:50:51 EST 
+To:  edreamleo@charter.net 
+Subject:  Leo, Mac OS X 10.3, and VPython 
+             
+I've been evaluating leo or vpython programming on  Mac OS X 10.3, and 
+have some observations and a suggestion.
+
+Observations.
+        Leo runs under X11 as well as under OS X.
+        My X11 python configuration was created using the recipe at XXX 
+(which enables vpython).
+        The OS X configuration is vanilla MacPython from MacPython.org, along 
+with AquaTclTk batteries included XXX.
+        In both environments I can run leo under python leo.py and under idle.
+        Under OS X we get font smoothing, but we can't run visual python 
+programs (python crashes;  this is a known incompatibility with 
+MacPython.)
+    
+        Under X11 we can run visual python programs like this one
+            #box.py
+            from visual import *
+            box()
+            
+    And we can even run them under leo (under X11). HOWEVER, when the 
+visual python program is terminated, leo vanishes (leo and the vp 
+program apparently run in the same space)
+    
+    Under x11, we can keep leo alive by putting the vp program in its own 
+space:
+    
+        os.popen3('/sw/bin/python /Users/jis/box.py')
+    
+    However,  this doesn't let us see the output of stderr and stdout.  
+Those text streams are available...
+        
+        def do(cmd='ls'):
+            from os import popen3
+            pIn,pOut,pErr=0,1,2
+            popenResults=popen3(cmd)
+            print popenResults[pOut].read()
+            print popenResults[pErr].read()
+        
+        import os	
+        do('/sw/bin/python /Users/jis/box.py')
+        
+    ...but only when the vpython program terminates.
+    
+    Here's the good news:  if we execute our vp program with 
+/sw/bin/idle.py rather than with python, we get to see the program 
+output in real time (under idle, under X11).
+    
+        import os	
+        os.chdir('/sw/lib/python2.3/idlelib')
+        os.popen3('/sw/bin/python idle.py -r /Users/jis/box.py')
+        
+        #this runs as an executed script in leo, and produces a live idle 
+with real time ongoing output.
+    
+    Now, while idle is running, leo sits in suspended animation.  But when 
+the vpython program terminates, we are left in idle, and when idle is 
+terminated, leo becomes active again.
+    
+    It would be even better if leo were not suspended (using os.spawn, 
+perhaps) but the real point is that I would really really like leo's 
+"Execute script" command to execute code this way and spare me having 
+to  hard-write the path to box.py.  It ought to be possible to 
+eliminate os.chdir as well.
+
+------------------
+Jon Schull, Ph.D.
+Associate Professor
+Information Technology
+Rochester Institute of Technology
+schull@digitalgoods.com 585-738-6696
+#@-node:EKR.20040422132037.7:Problems with run script command on Mac x11
+#@+node:ekr.20050206210832.1:Put @nosent and similar abbreviations in glossary
+@killcolor
+
+http://sourceforge.net/forum/message.php?msg_id=2928991
+By: jasonic
+
+@nosent is an abbreviation for @file-nosentinels.
+Very hadny very cool but does not seem be much docs anywhere on this.
+#@-node:ekr.20050206210832.1:Put @nosent and similar abbreviations in glossary
+#@-node:ekr.20050211080215:Docs
+#@-node:ekr.20050303103230:4.3b1 code complete
+#@+node:ekr.20041228073219:4.3.n...
+#@+node:ekr.20040130073846:Use Python indices instead of Tk indices (Done except for leoFind!!)
+#@+node:ekr.20050313174347.1:Code notes
+@nocolor
+
+- Apparently, the colorizer _already_ uses Python indices!
+
+- colorizer.tag calls colorizer.index to do all conversion, so it is completely index-neutral.
+
+- The edit body routines _already_ use Python indices!
+    - c.getBodyLines calls:
+        - body.getSelectionLines
+        - body.getAllText
+        - body.getYScrollPosition
+        - body.getTextSelection
+    - c.updateBodyPane calls:
+        - body.setSelectionAreas
+        - body.setYScrollPosition
+        - body.makeInsertPointVisible
+
+    That is, these routines never _use_ Tk indices,
+    although they may pass them to and from body methods.
+
+Find code:
+    - The leoFind methods use the Tk wrappers to insulate the code from the Tk indices.
+    - leoFind.search calls gui_search, which is a thin wrapper around the Tk find search.
+        - This is a major simplification of the code, but it would have to be rewritten
+          to make the code really portable.
+        - In other words, we would use string.find or re.find instead of tk.find.
+            - The code can use Python indices, then convert to body(gui) indices
+            pretty much like the colorizer does:
+
+@color
+def index (self,i):
+    return self.body.convertRowColumnToIndex(self.line_index,i)
+@nocolor
+
+        - The only difference is that we might have to compute the row and column indices
+          from the Python index, but that is easy!
+#@nonl
+#@-node:ekr.20050313174347.1:Code notes
+#@+node:ekr.20050314140957:g.convertPythonIndexToRowCol  & test
+def convertPythonIndexToRowCol (s,i):
+    
+    '''Convert index i into string s into zero-based row/col indices.'''
+    
+    if not s or i == 0:
+        return 0,0
+    else:
+        i = min(i,len(s)-1)
+        # works regardless of what s[i] is
+        row = s.count('\n',0,i) # Don't include i
+        if row == 0:
+            return row,i
+        else:
+            prevNl = s.rfind('\n',0,i) # Don't include i
+            # assert prevNl > -1
+            return row,i-prevNl-1
+#@nonl
+#@+node:ekr.20050314140957.1:bruteForceConvertPythonIndexToRowCol
+def bruteForceConvertPythonIndexToRowCol (s,i):
+        
+    lines = g.splitLines(s)
+    row,total = 0,0
+    for line in lines:
+        n = len(line)
+        if i < total + n:
+            break
+        else:
+            total += n
+            row += 1
+    return row, i-total
+#@nonl
+#@-node:ekr.20050314140957.1:bruteForceConvertPythonIndexToRowCol
+#@+node:ekr.20050314140957.2:test_g_convertPythonIndexToRowCol
+def test_g_convertPythonIndexToRowCol ():
+    
+    s = '\nabc\n\npdq\nxy'
+
+    for i in xrange(len(s)+1): # Test one-too-large case.
+        try: ch = s[i]
+        except IndexError: ch = '**'
+        rowCol_1 = g.convertPythonIndexToRowCol(s,i)
+        rowCol_2 = g.bruteForceConvertPythonIndexToRowCol(s,i)
+        if g.app.unitTesting:
+            assert i == len(s) or rowCol_1 == rowCol_2
+        else:
+            print '%2d %4s %5s' % (i,repr(ch),rowCol_1==rowCol_2),
+            print rowCol_1,rowCol_2
+#@nonl
+#@-node:ekr.20050314140957.2:test_g_convertPythonIndexToRowCol
+#@-node:ekr.20050314140957:g.convertPythonIndexToRowCol  & test
+#@+node:ekr.20050315071727:g.convertRowColToPythonIndex & test
+def convertRowColToPythonIndex (s,row,col):
+    
+    lines = g.splitLines(s)
+
+    if row > len(lines) or col > len(lines[row]):
+        raise IndexError
+    
+    prev = 0
+    for line in lines[:row]:
+        prev += len(line)
+        
+    return prev + col
+#@nonl
+#@+node:ekr.20050315072239:test_g_convertPythonIndexToRowCol
+def test_g_convertRowColToPythonIndex ():
+
+    s = '\nabc\n\npdq\nxy'
+    lines = g.splitLines(s)
+    row = 0 ; prev = -1
+    for line in lines:
+        col = 0
+        for ch in line:
+            i = g.convertRowColToPythonIndex(s,row,col)
+            assert i == prev + 1,'i %d prev %d' % (i,prev)
+            if not g.app.unitTesting:
+                print '%4s %2d %2d %2d' % (repr(ch),row,col,i)
+            prev = i
+            col += 1
+        row += 1
+#@nonl
+#@-node:ekr.20050315072239:test_g_convertPythonIndexToRowCol
+#@-node:ekr.20050315071727:g.convertRowColToPythonIndex & test
+#@+node:ekr.20050313174347:Code that uses Tk indices (outside of Tkinter classes)
+#@+node:ekr.20050313174347.2:In leoTkinterBody
+#@+node:ekr.20031218072017.4006:Indices (leoTkinterBody)
+#@+node:ekr.20031218072017.4007:adjustIndex
+def adjustIndex (self,index,offset):
+    
+    t = self.bodyCtrl
+    return t.index("%s + %dc" % (t.index(index),offset))
+#@nonl
+#@-node:ekr.20031218072017.4007:adjustIndex
+#@+node:ekr.20031218072017.4008:compareIndices
+def compareIndices(self,i,rel,j):
+
+    return self.bodyCtrl.compare(i,rel,j)
+#@nonl
+#@-node:ekr.20031218072017.4008:compareIndices
+#@+node:ekr.20031218072017.4009:convertRowColumnToIndex
+def convertRowColumnToIndex (self,row,column):
+    
+    return self.bodyCtrl.index("%s.%s" % (row,column))
+#@nonl
+#@-node:ekr.20031218072017.4009:convertRowColumnToIndex
+#@+node:ekr.20031218072017.4010:convertIndexToRowColumn
+def convertIndexToRowColumn (self,index):
+    
+    index = self.bodyCtrl.index(index)
+    start, end = string.split(index,'.')
+    return int(start),int(end)
+#@nonl
+#@-node:ekr.20031218072017.4010:convertIndexToRowColumn
+#@+node:ekr.20031218072017.4011:getImageIndex
+def getImageIndex (self,image):
+    
+    return self.bodyCtrl.index(image)
+#@nonl
+#@-node:ekr.20031218072017.4011:getImageIndex
+#@+node:ekr.20031218072017.4012:tkIndex (internal use only)
+def tkIndex(self,index):
+    
+    """Returns the canonicalized Tk index."""
+    
+    if index == "start": index = "1.0"
+    
+    return self.bodyCtrl.index(index)
+#@nonl
+#@-node:ekr.20031218072017.4012:tkIndex (internal use only)
+#@-node:ekr.20031218072017.4006:Indices (leoTkinterBody)
+#@+node:ekr.20031218072017.4002:Color tags (Tk spelling)
+# Could have been replaced by the __getattr__ routine above...
+# 12/19/03: no: that would cause more problems.
+
+def tag_add (self,tagName,index1,index2):
+    self.bodyCtrl.tag_add(tagName,index1,index2)
+
+def tag_bind (self,tagName,event,callback):
+    self.bodyCtrl.tag_bind(tagName,event,callback)
+
+def tag_configure (self,colorName,**keys):
+    self.bodyCtrl.tag_configure(colorName,keys)
+
+def tag_delete(self,tagName):
+    self.bodyCtrl.tag_delete(tagName)
+
+def tag_remove (self,tagName,index1,index2):
+    return self.bodyCtrl.tag_remove(tagName,index1,index2)
+#@nonl
+#@-node:ekr.20031218072017.4002:Color tags (Tk spelling)
+#@-node:ekr.20050313174347.2:In leoTkinterBody
+#@+node:ekr.20050313174347.3:In colorizer...
+#@+node:ekr.20031218072017.1609:index & tag
+def index (self,i):
+    
+    return self.body.convertRowColumnToIndex(self.line_index,i)
+        
+def tag (self,name,i,j):
+
+    self.body.tag_add(name,self.index(i),self.index(j))
+#@nonl
+#@-node:ekr.20031218072017.1609:index & tag
+#@-node:ekr.20050313174347.3:In colorizer...
+#@+node:ekr.20050313174347.4:In commands...
+#@+node:ekr.20031218072017.2884:Edit Body submenu
+#@+node:ekr.20031218072017.1704:convertAllBlanks
+def convertAllBlanks (self):
+    
+    c = self ; body = c.frame.body ; v = current = c.currentVnode()
+    
+    if g.app.batchMode:
+        c.notValidInBatchMode("Convert All Blanks")
+        return
+    next = v.nodeAfterTree()
+    theDict = g.scanDirectives(c)
+    tabWidth  = theDict.get("tabwidth")
+    # Create copy for undo.
+    v_copy = c.undoer.saveTree(v)
+    oldText = body.getAllText()
+    oldSel = body.getTextSelection()
+    count = 0
+    while v and v != next:
+        if v == current:
+            if c.convertBlanks(setUndoParams=False):
+                count += 1 ; v.setDirty()
+        else:
+            changed = False ; result = []
+            text = v.t.bodyString
+            assert(g.isUnicode(text))
+            lines = string.split(text, '\n')
+            for line in lines:
+                s = g.optimizeLeadingWhitespace(line,tabWidth)
+                if s != line: changed = True
+                result.append(s)
+            if changed:
+                count += 1 ; v.setDirty()
+                result = string.join(result,'\n')
+                v.setTnodeText(result)
+        v = v.threadNext()
+    if count > 0:
+        newText = body.getAllText()
+        newSel = body.getTextSelection()
+        c.undoer.setUndoParams("Convert All Blanks",
+            current,select=current,oldTree=v_copy,
+            oldText=oldText,newText=newText,
+            oldSel=oldSel,newSel=newSel)
+    g.es("blanks converted to tabs in %d nodes" % count)
+#@nonl
+#@-node:ekr.20031218072017.1704:convertAllBlanks
+#@+node:ekr.20031218072017.1705:convertAllTabs
+def convertAllTabs (self):
+
+    c = self ; body = c.frame.body ; v = current = c.currentVnode()
+    
+    if g.app.batchMode:
+        c.notValidInBatchMode("Convert All Tabs")
+        return
+    next = v.nodeAfterTree()
+    theDict = g.scanDirectives(c)
+    tabWidth  = theDict.get("tabwidth")
+    # Create copy for undo.
+    v_copy = c.undoer.saveTree(v)
+    oldText = body.getAllText()
+    oldSel = body.getTextSelection()
+    count = 0
+    while v and v != next:
+        if v == current:
+            if self.convertTabs(setUndoParams=False):
+                count += 1 ; v.setDirty()
+        else:
+            result = [] ; changed = False
+            text = v.t.bodyString
+            assert(g.isUnicode(text))
+            lines = string.split(text, '\n')
+            for line in lines:
+                i,w = g.skip_leading_ws_with_indent(line,0,tabWidth)
+                s = g.computeLeadingWhitespace(w,-abs(tabWidth)) + line[i:] # use negative width.
+                if s != line: changed = True
+                result.append(s)
+            if changed:
+                count += 1 ; v.setDirty()
+                result = string.join(result,'\n')
+                v.setTnodeText(result)
+        v = v.threadNext()
+    if count > 0:
+        newText = body.getAllText()
+        newSel = body.getTextSelection() # 7/11/03
+        c.undoer.setUndoParams("Convert All Tabs",
+            current,select=current,oldTree=v_copy,
+            oldText=oldText,newText=newText,
+            oldSel=oldSel,newSel=newSel)
+    g.es("tabs converted to blanks in %d nodes" % count)
+#@nonl
+#@-node:ekr.20031218072017.1705:convertAllTabs
+#@+node:ekr.20031218072017.1821:convertBlanks
+def convertBlanks (self,setUndoParams=True):
+
+    c = self ; body = c.frame.body
+    
+    if g.app.batchMode:
+        c.notValidInBatchMode("Convert Blanks")
+        return False
+
+    head,lines,tail,oldSel,oldYview = c.getBodyLines(expandSelection=True)
+    result = [] ; changed = False
+
+    # Use the relative @tabwidth, not the global one.
+    theDict = g.scanDirectives(c)
+    tabWidth  = theDict.get("tabwidth")
+    if not tabWidth: return False
+
+    for line in lines:
+        s = g.optimizeLeadingWhitespace(line,tabWidth)
+        if s != line: changed = True
+        result.append(s)
+
+    if changed:
+        result = string.join(result,'\n')
+        undoType = g.choose(setUndoParams,"Convert Blanks",None)
+        c.updateBodyPane(head,result,tail,undoType,oldSel,oldYview) # Handles undo
+
+    return changed
+#@nonl
+#@-node:ekr.20031218072017.1821:convertBlanks
+#@+node:ekr.20031218072017.1822:convertTabs
+def convertTabs (self,setUndoParams=True):
+
+    c = self ; body = c.frame.body
+    
+    if g.app.batchMode:
+        c.notValidInBatchMode("Convert Tabs")
+        return False
+
+    head,lines,tail,oldSel,oldYview = self.getBodyLines(expandSelection=True)
+    result = [] ; changed = False
+    
+    # Use the relative @tabwidth, not the global one.
+    theDict = g.scanDirectives(c)
+    tabWidth  = theDict.get("tabwidth")
+    if not tabWidth: return False
+
+    for line in lines:
+        i,w = g.skip_leading_ws_with_indent(line,0,tabWidth)
+        s = g.computeLeadingWhitespace(w,-abs(tabWidth)) + line[i:] # use negative width.
+        if s != line: changed = True
+        result.append(s)
+
+    if changed:
+        result = string.join(result,'\n')
+        undoType = g.choose(setUndoParams,"Convert Tabs",None)
+        c.updateBodyPane(head,result,tail,undoType,oldSel,oldYview) # Handles undo
+        
+    return changed
+#@-node:ekr.20031218072017.1822:convertTabs
+#@+node:ekr.20031218072017.1823:createLastChildNode
+def createLastChildNode (self,parent,headline,body):
+    
+    c = self
+    if body and len(body) > 0:
+        body = string.rstrip(body)
+    if not body or len(body) == 0:
+        body = ""
+    v = parent.insertAsLastChild()
+    v.initHeadString(headline)
+    v.setTnodeText(body)
+    v.setDirty()
+    c.validateOutline()
+#@nonl
+#@-node:ekr.20031218072017.1823:createLastChildNode
+#@+node:ekr.20031218072017.1824:dedentBody
+def dedentBody (self):
+    
+    c = self ; p = c.currentPosition()
+    
+    if g.app.batchMode:
+        c.notValidInBatchMode("Unindent")
+        return
+
+    d = g.scanDirectives(c,p) # Support @tab_width directive properly.
+    tab_width = d.get("tabwidth",c.tab_width)
+    head,lines,tail,oldSel,oldYview = self.getBodyLines()
+    result = [] ; changed = False
+    for line in lines:
+        i, width = g.skip_leading_ws_with_indent(line,0,tab_width)
+        s = g.computeLeadingWhitespace(width-abs(tab_width),tab_width) + line[i:]
+        if s != line: changed = True
+        result.append(s)
+
+    if changed:
+        result = string.join(result,'\n')
+        c.updateBodyPane(head,result,tail,"Undent",oldSel,oldYview)
+#@nonl
+#@-node:ekr.20031218072017.1824:dedentBody
+#@+node:ekr.20031218072017.1706:extract
+def extract(self):
+    
+    c = self ; body = c.frame.body ; current = v = c.currentVnode()
+    
+    if g.app.batchMode:
+        c.notValidInBatchMode("Extract")
+        return
+    
+    head,lines,tail,oldSel,oldYview = self.getBodyLines()
+    if not lines: return
+    headline = lines[0] ; del lines[0]
+    junk, ws = g.skip_leading_ws_with_indent(headline,0,c.tab_width)
+    # Create copy for undo.
+    v_copy = c.undoer.saveTree(v)
+    oldText = body.getAllText()
+    oldSel = body.getTextSelection()
+    << Set headline for extract >>
+    # Remove leading whitespace from all body lines.
+    result = []
+    for line in lines:
+        # Remove the whitespace on the first line
+        line = g.removeLeadingWhitespace(line,ws,c.tab_width)
+        result.append(line)
+    # Create a new node from lines.
+    newBody = string.join(result,'\n') # 11/23/03
+    if head and len(head) > 0:
+        head = string.rstrip(head)
+    c.beginUpdate()
+    if 1: # update range...
+        c.createLastChildNode(v,headline,newBody) # 11/23/03
+        undoType =  "Can't Undo" # 12/8/02: None enables further undoes, but there are bugs now.
+        c.updateBodyPane(head,None,tail,undoType,oldSel,oldYview,setSel=False)
+        newText = body.getAllText()
+        newSel = body.getTextSelection() # 7/11/03
+        c.undoer.setUndoParams("Extract",
+            v,select=current,oldTree=v_copy,
+            oldText=oldText,newText=newText,
+            oldSel=oldSel,newSel=newSel)
+    c.endUpdate()
+#@nonl
+#@+node:ekr.20031218072017.1707:<< Set headline for extract >>
+headline = string.strip(headline)
+while len(headline) > 0 and headline[0] == '/':
+    headline = headline[1:]
+headline = string.strip(headline)
+#@nonl
+#@-node:ekr.20031218072017.1707:<< Set headline for extract >>
+#@-node:ekr.20031218072017.1706:extract
+#@+node:ekr.20031218072017.1708:extractSection
+def extractSection(self):
+
+    c = self ; body = c.frame.body ; current = v = c.currentVnode()
+    
+    if g.app.batchMode:
+        c.notValidInBatchMode("Extract Section")
+        return
+
+    head,lines,tail,oldSel,oldYview = self.getBodyLines()
+    if not lines: return
+    headline = lines[0] ; del lines[0]
+    junk, ws = g.skip_leading_ws_with_indent(headline,0,c.tab_width)
+    line1 = "\n" + headline
+    # Create copy for undo.
+    v_copy = c.undoer.saveTree(v)
+    oldText = body.getAllText()
+    oldSel = body.getTextSelection()
+    << Set headline for extractSection >>
+    # Remove leading whitespace from all body lines.
+    result = []
+    for line in lines:
+        # Remove the whitespace on the first line
+        line = g.removeLeadingWhitespace(line,ws,c.tab_width)
+        result.append(line)
+    # Create a new node from lines.
+    newBody = string.join(result,'\n')
+    if head and len(head) > 0:
+        head = string.rstrip(head)
+    c.beginUpdate()
+    if 1: # update range...
+        c.createLastChildNode(v,headline,newBody)
+        # g.trace(v)
+        undoType = None # Set undo params later.
+        c.updateBodyPane(head+line1,None,tail,undoType,oldSel,oldYview,setSel=False)
+        newText = body.getAllText()
+        newSel = body.getTextSelection()
+        c.undoer.setUndoParams("Extract Section",v,
+            select=current,oldTree=v_copy,
+            oldText=oldText,newText=newText,
+            oldSel=oldSel,newSel=newSel)
+    c.endUpdate()
+#@nonl
+#@+node:ekr.20031218072017.1709:<< Set headline for extractSection >>
+if 0: # I have no idea why this was being done.
+    while len(headline) > 0 and headline[0] == '/':
+        headline = headline[1:]
+
+headline = headline.strip()
+
+if len(headline) < 5:
+    oops = True
+else:
+    head1 = headline[0:2] == '<<'
+    head2 = headline[0:2] == '@<'
+    tail1 = headline[-2:] == '>>'
+    tail2 = headline[-2:] == '@>'
+    oops = not (head1 and tail1) and not (head2 and tail2)
+
+if oops:
+    g.es("Selected text should start with a section name",color="blue")
+    return
+#@nonl
+#@-node:ekr.20031218072017.1709:<< Set headline for extractSection >>
+#@-node:ekr.20031218072017.1708:extractSection
+#@+node:ekr.20031218072017.1710:extractSectionNames
+def extractSectionNames(self):
+
+    c = self ; body = c.frame.body ; current = v = c.currentVnode()
+    
+    if g.app.batchMode:
+        c.notValidInBatchMode("Extract Section Names")
+        return
+
+    head,lines,tail,oldSel,oldYview = self.getBodyLines()
+    if not lines: return
+    # Create copy for undo.
+    v_copy = c.undoer.saveTree(v)
+    # No change to body or selection of this node.
+    oldText = newText = body.getAllText()
+    i, j = oldSel = newSel = body.getTextSelection()
+    c.beginUpdate()
+    if 1: # update range...
+        found = False
+        for s in lines:
+            << Find the next section name >>
+            if name:
+                self.createLastChildNode(v,name,None)
+                found = True
+        c.selectVnode(v)
+        c.validateOutline()
+        if not found:
+            g.es("Selected text should contain one or more section names",color="blue")
+    c.endUpdate()
+    # No change to body or selection
+    c.undoer.setUndoParams("Extract Names",
+        v,select=current,oldTree=v_copy,
+        oldText=oldText,newText=newText,
+        oldSel=oldSel,newSel=newSel)
+    # Restore the selection.
+    body.setTextSelection(oldSel)
+    body.setFocus()
+#@nonl
+#@+node:ekr.20031218072017.1711:<< Find the next section name >>
+head1 = string.find(s,"<<")
+if head1 > -1:
+    head2 = string.find(s,">>",head1)
+else:
+    head1 = string.find(s,"@<")
+    if head1 > -1:
+        head2 = string.find(s,"@>",head1)
+        
+if head1 == -1 or head2 == -1 or head1 > head2:
+    name = None
+else:
+    name = s[head1:head2+2]
+#@nonl
+#@-node:ekr.20031218072017.1711:<< Find the next section name >>
+#@-node:ekr.20031218072017.1710:extractSectionNames
+#@+node:ekr.20031218072017.1825:findBoundParagraph
+def findBoundParagraph (self):
+    
+    c = self
+    head,ins,tail = c.frame.body.getInsertLines()
+
+    if not ins or ins.isspace() or ins[0] == '@':
+        return None,None,None,None # DTHEIN 18-JAN-2004
+        
+    head_lines = g.splitLines(head)
+    tail_lines = g.splitLines(tail)
+
+    if 0:
+        << trace head_lines, ins, tail_lines >>
+
+    # Scan backwards.
+    i = len(head_lines)
+    while i > 0:
+        i -= 1
+        line = head_lines[i]
+        if len(line) == 0 or line.isspace() or line[0] == '@':
+            i += 1 ; break
+
+    pre_para_lines = head_lines[:i]
+    para_head_lines = head_lines[i:]
+
+    # Scan forwards.
+    i = 0
+    trailingNL = False # DTHEIN 18-JAN-2004: properly capture terminating NL
+    while i < len(tail_lines):
+        line = tail_lines[i]
+        if len(line) == 0 or line.isspace() or line[0] == '@':
+            trailingNL = line.endswith(u'\n') or line.startswith(u'@') # DTHEIN 21-JAN-2004
+            break
+        i += 1
+        
+#	para_tail_lines = tail_lines[:i]
+    para_tail_lines = tail_lines[:i]
+    post_para_lines = tail_lines[i:]
+    
+    head = g.joinLines(pre_para_lines)
+    result = para_head_lines 
+    result.extend([ins])
+    result.extend(para_tail_lines)
+    tail = g.joinLines(post_para_lines)
+
+    # DTHEIN 18-JAN-2004: added trailingNL to return value list
+    return head,result,tail,trailingNL # string, list, string, bool
+#@nonl
+#@+node:ekr.20031218072017.1826:<< trace head_lines, ins, tail_lines >>
+if 0:
+    print ; print "head_lines"
+    for line in head_lines: print line
+    print ; print "ins", ins
+    print ; print "tail_lines"
+    for line in tail_lines: print line
+else:
+    g.es("head_lines: ",head_lines)
+    g.es("ins: ",ins)
+    g.es("tail_lines: ",tail_lines)
+#@nonl
+#@-node:ekr.20031218072017.1826:<< trace head_lines, ins, tail_lines >>
+#@-node:ekr.20031218072017.1825:findBoundParagraph
+#@+node:ekr.20031218072017.1827:findMatchingBracket
+def findMatchingBracket (self):
+    
+    c = self ; body = c.frame.body
+    
+    if g.app.batchMode:
+        c.notValidInBatchMode("Match Brackets")
+        return
+
+    brackets = "()[]{}<>"
+    ch1 = body.getCharBeforeInsertPoint()
+    ch2 = body.getCharAtInsertPoint()
+
+    # Prefer to match the character to the left of the cursor.
+    if ch1 in brackets:
+        ch = ch1 ; index = body.getBeforeInsertionPoint()
+    elif ch2 in brackets:
+        ch = ch2 ; index = body.getInsertionPoint()
+    else:
+        return
+    
+    index2 = self.findSingleMatchingBracket(ch,index)
+    if index2:
+        if body.compareIndices(index,"<=",index2):
+            adj_index = body.adjustIndex(index2,1)
+            body.setTextSelection(index,adj_index)
+        else:
+            adj_index = body.adjustIndex(index,1)
+            body.setTextSelection(index2,adj_index)
+        adj_index = body.adjustIndex(index2,1)
+        body.setInsertionPoint(adj_index)
+        body.makeIndexVisible(adj_index)
+    else:
+        g.es("unmatched '%s'",ch)
+#@nonl
+#@+node:ekr.20031218072017.1828:findMatchingBracket
+# To do: replace comments with blanks before scanning.
+# Test  unmatched())
+def findSingleMatchingBracket(self,ch,index):
+    
+    c = self ; body = c.frame.body
+    open_brackets  = "([{<" ; close_brackets = ")]}>"
+    brackets = open_brackets + close_brackets
+    matching_brackets = close_brackets + open_brackets
+    forward = ch in open_brackets
+    # Find the character matching the initial bracket.
+    for n in xrange(len(brackets)):
+        if ch == brackets[n]:
+            match_ch = matching_brackets[n]
+            break
+    level = 0
+    while 1:
+        if forward and body.compareIndices(index,">=","end"):
+            # g.trace("not found")
+            return None
+        ch2 = body.getCharAtIndex(index)
+        if ch2 == ch:
+            level += 1 #; g.trace(level,index)
+        if ch2 == match_ch:
+            level -= 1 #; g.trace(level,index)
+            if level <= 0:
+                return index
+        if not forward and body.compareIndices(index,"<=","1.0"):
+            # g.trace("not found")
+            return None
+        adj = g.choose(forward,1,-1)
+        index = body.adjustIndex(index,adj)
+    return 0 # unreachable: keeps pychecker happy.
+# Test  (
+# ([(x){y}]))
+# Test  ((x)(unmatched
+#@nonl
+#@-node:ekr.20031218072017.1828:findMatchingBracket
+#@-node:ekr.20031218072017.1827:findMatchingBracket
+#@+node:ekr.20031218072017.1829:getBodyLines
+def getBodyLines (self,expandSelection=False):
+
+    c = self ; body = c.frame.body
+    oldVview = body.getYScrollPosition()
+    oldSel   = body.getTextSelection()
+
+    if expandSelection: # 12/3/03
+        lines = body.getAllText()
+        head = tail = None
+    else:
+        # Note: lines is the entire line containing the insert point if no selection.
+        head,lines,tail = body.getSelectionLines()
+
+    lines = string.split(lines,'\n') # It would be better to use splitLines.
+
+    return head,lines,tail,oldSel,oldVview
+#@nonl
+#@-node:ekr.20031218072017.1829:getBodyLines
+#@+node:ekr.20031218072017.1830:indentBody
+def indentBody (self):
+
+    c = self ; p = c.currentPosition()
+    
+    if g.app.batchMode:
+        c.notValidInBatchMode("Indent")
+        return
+
+    d = g.scanDirectives(c,p) # Support @tab_width directive properly.
+    tab_width = d.get("tabwidth",c.tab_width)
+    head,lines,tail,oldSel,oldYview = self.getBodyLines()
+    result = [] ; changed = False
+    for line in lines:
+        i, width = g.skip_leading_ws_with_indent(line,0,tab_width)
+        s = g.computeLeadingWhitespace(width+abs(tab_width),tab_width) + line[i:]
+        if s != line: changed = True
+        result.append(s)
+    if changed:
+        result = string.join(result,'\n')
+        c.updateBodyPane(head,result,tail,"Indent",oldSel,oldYview)
+#@nonl
+#@-node:ekr.20031218072017.1830:indentBody
+#@+node:ekr.20031218072017.1831:insertBodyTime & allies
+def insertBodyTime (self):
+    
+    c = self ; v = c.currentVnode()
+    
+    if g.app.batchMode:
+        c.notValidInBatchMode("xxx")
+        return
+    
+    oldSel = c.frame.body.getTextSelection()
+    c.frame.body.deleteTextSelection() # Works if nothing is selected.
+    s = self.getTime(body=True)
+    c.frame.body.insertAtInsertPoint(s)
+    c.frame.body.onBodyChanged(v,"Typing",oldSel=oldSel)
+#@nonl
+#@+node:ekr.20031218072017.1832:getTime
+def getTime (self,body=True):
+
+    c = self
+    default_format =  "%m/%d/%Y %H:%M:%S" # E.g., 1/30/2003 8:31:55
+    
+    # Try to get the format string from leoConfig.txt.
+    if body:
+        format = c.config.getString("body_time_format_string")
+        gmt    = c.config.getString("body_gmt_time")
+    else:
+        format = c.config.getString("headline_time_format_string")
+        gmt     = c.config.getString("headline_gmt_time")
+
+    if format == None:
+        format = default_format
+
+    try:
+        import time
+        if gmt:
+            s = time.strftime(format,time.gmtime())
+        else:
+            s = time.strftime(format,time.localtime())
+    except (ImportError, NameError):
+        g.es("time.strftime not available on this platform",color="blue")
+        return ""
+    except:
+        g.es_exception() # Probably a bad format string in leoConfig.txt.
+        s = time.strftime(default_format,time.gmtime())
+    return s
+#@-node:ekr.20031218072017.1832:getTime
+#@-node:ekr.20031218072017.1831:insertBodyTime & allies
+#@+node:ekr.20050312114529:insert/removeComments
+#@+node:ekr.20050312114529.1:addComments
+def addComments (self):
+
+    c = self ; p = c.currentPosition()
+    
+    d = g.scanDirectives(c,p)
+    # d1 is the line delim.
+    d1,d2,d3 = d.get('delims')
+
+    head,lines,tail,oldSel,oldYview = self.getBodyLines()
+    result = []
+    if not lines:
+        g.es('No text selected',color='blue')
+        return
+    
+    if d1:
+        # Append the single-line comment delim in front of each line
+        for line in lines:
+            i = g.skip_ws(line,0)
+            result.append('%s%s %s' % (line[0:i],d1,line[i:]))
+    else:
+        n = len(lines)
+        for i in xrange(n):
+            line = lines[i]
+            if i not in (0,n-1):
+                result.append(line)
+            if i == 0:
+                j = g.skip_ws(line,0)
+                result.append('%s%s %s' % (line[0:j],d2,line[j:]))
+            if i == n-1:
+                j = len(line.rstrip())
+                result.append('%s %s' % (line[0:j],d3))
+
+    result = string.join(result,'\n')
+    c.updateBodyPane(head,result,tail,"Add Comments",oldSel,oldYview)
+#@nonl
+#@-node:ekr.20050312114529.1:addComments
+#@+node:ekr.20050312114529.2:deleteComments
+def deleteComments (self):
+
+    c = self ; p = c.currentPosition()
+    
+    d = g.scanDirectives(c,p)
+    # d1 is the line delim.
+    d1,d2,d3 = d.get('delims')
+
+    head,lines,tail,oldSel,oldYview = self.getBodyLines()
+    result = []
+    if not lines:
+        g.es('No text selected',color='blue')
+        return
+    
+    if d1:
+        # Append the single-line comment delim in front of each line
+        for line in lines:
+            i = g.skip_ws(line,0)
+            if g.match(line,i,d1):
+                j = g.skip_ws(line,i + len(d1))
+                result.append(line[0:i] + line[j:])
+            else:
+                result.append(line)
+    else:
+        n = len(lines)
+        for i in xrange(n):
+            line = lines[i]
+            if i not in (0,n-1):
+                result.append(line)
+            if i == 0:
+                j = g.skip_ws(line,0)
+                if g.match(line,j,d2):
+                    k = g.skip_ws(line,j + len(d2))
+                    result.append(line[0:j] + line[k:])
+                else:
+                    g.es("'%s' not found" % (d2),color='blue')
+                    return
+            if i == n-1:
+                if i == 0:
+                    line = result[0] ; result = []
+                s = line.rstrip()
+                if s.endswith(d3):
+                    result.append(s[:-len(d3)].rstrip())
+                else:
+                    g.es("'%s' not found" % (d3),color='blue')
+                    return
+
+    result = string.join(result,'\n')
+    c.updateBodyPane(head,result,tail,"Delete Comments",oldSel,oldYview)
+#@nonl
+#@-node:ekr.20050312114529.2:deleteComments
+#@-node:ekr.20050312114529:insert/removeComments
+#@+node:ekr.20031218072017.1833:reformatParagraph
+def reformatParagraph(self):
+
+    """Reformat a text paragraph in a Tk.Text widget
+
+Wraps the concatenated text to present page width setting. Leading tabs are
+sized to present tab width setting. First and second line of original text is
+used to determine leading whitespace in reformatted text. Hanging indentation
+is honored.
+
+Paragraph is bound by start of body, end of body, blank lines, and lines
+starting with "@". Paragraph is selected by position of current insertion
+cursor."""
+
+    c = self ; body = c.frame.body ; v = c.currentVnode()
+    
+    if g.app.batchMode:
+        c.notValidInBatchMode("xxx")
+        return
+
+    if body.hasTextSelection():
+        g.es("Text selection inhibits Reformat Paragraph",color="blue")
+        return
+
+    << compute vars for reformatParagraph >>
+    if lines:
+        << compute the leading whitespace >>
+        << compute the result of wrapping all lines >>
+        << update the body, selection & undo state >>
+#@nonl
+#@+node:ekr.20031218072017.1834:<< compute vars for reformatParagraph >>
+theDict = g.scanDirectives(c)
+pageWidth = theDict.get("pagewidth")
+tabWidth  = theDict.get("tabwidth")
+
+original = body.getAllText()
+oldSel   = body.getTextSelection()
+oldYview = body.getYScrollPosition()
+head,lines,tail,trailingNL = c.findBoundParagraph() # DTHEIN 18-JAN-2004: add trailingNL
+#@nonl
+#@-node:ekr.20031218072017.1834:<< compute vars for reformatParagraph >>
+#@+node:ekr.20031218072017.1835:<< compute the leading whitespace >>
+indents = [0,0] ; leading_ws = ["",""]
+
+for i in (0,1):
+    if i < len(lines):
+        # Use the original, non-optimized leading whitespace.
+        leading_ws[i] = ws = g.get_leading_ws(lines[i])
+        indents[i] = g.computeWidth(ws,tabWidth)
+        
+indents[1] = max(indents)
+if len(lines) == 1:
+    leading_ws[1] = leading_ws[0]
+#@-node:ekr.20031218072017.1835:<< compute the leading whitespace >>
+#@+node:ekr.20031218072017.1836:<< compute the result of wrapping all lines >>
+# Remember whether the last line ended with a newline.
+lastLine = lines[-1]
+if 0: # DTHEIN 18-JAN-2004: removed because findBoundParagraph now gives trailingNL
+    trailingNL = lastLine and lastLine[-1] == '\n'
+
+# Remove any trailing newlines for wraplines.
+lines = [line[:-1] for line in lines[:-1]]
+if lastLine and not trailingNL:
+    lastLine = lastLine[:-1]
+lines.extend([lastLine])
+
+# Wrap the lines, decreasing the page width by indent.
+result = g.wrap_lines(lines,
+    pageWidth-indents[1],
+    pageWidth-indents[0])
+
+# DTHEIN 	18-JAN-2004
+# prefix with the leading whitespace, if any
+paddedResult = []
+paddedResult.append(leading_ws[0] + result[0])
+for line in result[1:]:
+    paddedResult.append(leading_ws[1] + line)
+
+# Convert the result to a string.
+result = '\n'.join(paddedResult) # DTHEIN 	18-JAN-2004: use paddedResult
+if 0: # DTHEIN 18-JAN-2004:  No need to do this.
+    if trailingNL:
+        result += '\n'
+#@-node:ekr.20031218072017.1836:<< compute the result of wrapping all lines >>
+#@+node:ekr.20031218072017.1837:<< update the body, selection & undo state >>
+sel_start, sel_end = body.setSelectionAreas(head,result,tail)
+
+changed = original != head + result + tail
+undoType = g.choose(changed,"Reformat Paragraph",None)
+body.onBodyChanged(v,undoType,oldSel=oldSel,oldYview=oldYview)
+
+# Advance the selection to the next paragraph.
+newSel = sel_end, sel_end
+body.setTextSelection(newSel)
+body.makeIndexVisible(sel_end)
+
+c.recolor()
+#@nonl
+#@-node:ekr.20031218072017.1837:<< update the body, selection & undo state >>
+#@-node:ekr.20031218072017.1833:reformatParagraph
+#@+node:ekr.20031218072017.1838:updateBodyPane (handles undo)
+def updateBodyPane (self,head,middle,tail,undoType,oldSel,oldYview,setSel=True):
+    
+    c = self ; body = c.frame.body ; v = c.currentVnode()
+
+    # Update the text and notify the event handler.
+    body.setSelectionAreas(head,middle,tail)
+
+    if setSel:
+        body.setTextSelection(oldSel)
+
+    body.onBodyChanged(v,undoType,oldSel=oldSel,oldYview=oldYview)
+
+    # Update the changed mark and icon.
+    c.setChanged(True)
+    c.beginUpdate()
+    if not v.isDirty():
+        v.setDirty()
+    c.endUpdate()
+
+    # Scroll as necessary.
+    if oldYview:
+        body.setYScrollPosition(oldYview)
+    else:
+        body.makeInsertPointVisible()
+
+    body.setFocus()
+    c.recolor()
+#@nonl
+#@-node:ekr.20031218072017.1838:updateBodyPane (handles undo)
+#@-node:ekr.20031218072017.2884:Edit Body submenu
+#@-node:ekr.20050313174347.4:In commands...
+#@+node:ekr.20050313175009:In leoFind...
+#@+node:ekr.20031218072017.3077:search
+def search (self):
+
+    """Searches the present headline or body text for self.find_text and returns True if found.
+
+    self.whole_word, self.ignore_case, and self.pattern_match control the search."""
+    
+    __pychecker__ = '--no-implicitreturns' # Suppress bad warning.
+
+    c = self.c ; v = self.v ; t = self.s_ctrl ; gui = g.app.gui
+    assert(c and t and v)
+    if self.selection_only:
+        index,stopindex = self.selStart, self.selEnd
+        # g.trace(index,stopindex,v)
+        if index == stopindex:
+            return None, None
+    else:
+        index = gui.getInsertPoint(t)
+        stopindex = g.choose(self.reverse,gui.firstIndex(),gui.lastIndex())
+    while 1:
+        try:
+            pos = self.gui_search(t,self.find_text,index,
+                stopindex=stopindex,backwards=self.reverse,
+                regexp=self.pattern_match,nocase=self.ignore_case)
+        except:
+            g.es_exception(full=False)
+            self.errors += 1
+            return None, None
+        if not pos:
+            return None, None
+        if self.find_text == '\n':
+            # 2/3/04: A hack.  Time to get rid of gui indices!
+            newpos = gui.moveIndexToNextLine(t,pos)
+            # g.trace(pos,t.index(newpos))
+        else:
+            newpos = gui.moveIndexForward(t,pos,len(self.find_text))
+        if newpos is None:
+            return None, None
+        if self.reverse and gui.compareIndices(t,newpos,"==",index):
+            << search again after getting stuck going backward >>
+        << return if we are passed the wrap point >>
+        if self.whole_word:
+            index = t.index(g.choose(self.reverse,pos,newpos))
+            << continue if not whole word match >>
+        #g.trace("found:",pos,newpos,v)
+        gui.setTextSelection(t,pos,newpos)
+        return pos, newpos
+#@nonl
+#@+node:ekr.20031218072017.3078:<< search again after getting stuck going backward >>
+index = gui.moveIndexBackward(newpos,len(self.find_text))
+
+pos = self.gui_search(t,self.find_text,index,
+    stopindex=stopindex,backwards=self.reverse,
+    regexp=self.pattern_match,nocase=self.ignore_case)
+
+if not pos:
+    return None, None
+
+newpos = gui.moveIndexForward(t,pos,len(self.find_text))
+#@nonl
+#@-node:ekr.20031218072017.3078:<< search again after getting stuck going backward >>
+#@+node:ekr.20031218072017.3079:<< return if we are passed the wrap point >>
+if self.wrapping and self.wrapPos and self.wrapVnode and self.v == self.wrapVnode:
+
+    if self.reverse and gui.compareIndices(t,pos, "<", self.wrapPos):
+        # g.trace("wrap done")
+        return None, None
+
+    if not self.reverse and gui.compareIndices(t,newpos, ">", self.wrapPos):
+        return None, None
+#@nonl
+#@-node:ekr.20031218072017.3079:<< return if we are passed the wrap point >>
+#@+node:ekr.20031218072017.3080:<< continue if not whole word match >>
+# Set pos to None if word characters preceed or follow the selection.
+before = gui.getCharBeforeIndex(t,pos)
+first  = gui.getCharAtIndex    (t,pos)
+last   = gui.getCharBeforeIndex(t,newpos)
+after  = gui.getCharAtIndex    (t,newpos)
+
+#g.trace("before,first",before,first,g.is_c_id(before),g.is_c_id(first))
+#g.trace("after,last",  after,last,  g.is_c_id(after), g.is_c_id(last))
+
+if g.is_c_id(before) and g.is_c_id(first):
+    continue
+
+if g.is_c_id(after) and g.is_c_id(last):
+    continue
+#@nonl
+#@-node:ekr.20031218072017.3080:<< continue if not whole word match >>
+#@-node:ekr.20031218072017.3077:search
+#@-node:ekr.20050313175009:In leoFind...
+#@-node:ekr.20050313174347:Code that uses Tk indices (outside of Tkinter classes)
+#@-node:ekr.20040130073846:Use Python indices instead of Tk indices (Done except for leoFind!!)
 #@+node:ekr.20050225070857:@path stuff
 #@+node:ekr.20050121081635:Request:  cumulative @path directives
 @killcolor
@@ -2844,224 +3073,10 @@ def getBaseDirectory(c=None):
 #@-node:ekr.20031218072017.1264:getBaseDirectory
 #@-node:ekr.20050222045210:Better @path conventions
 #@-node:ekr.20050225070857:@path stuff
-#@+node:ekr.20041228090344:Config improvements
-- Cancel should revert all settings.
-    (Revert doesn't work after a node changes:this is confusing and dangerous.)
-
-- Support generalized widget settings (see child node)
-
-- Copy expansion state when writing @settings trees.
-
-- Handle undo/redo properly.
-#@nonl
-#@+node:ekr.20050128092443:Add g.app.config.reloadAllSettings
-@killcolor
-
-> I...change the @settings node to
-@string server = mail.otherisp.net
-
-the script doesn't print  -mail.otherisp.net-
-until I restart Leo.
-
-I see.  Thanks for this clarification.  What you want to do is a) clear all the settings, b) reload all the settings files.
-
-There probably should be a g.app.config.reloadAllSettings method, but there isn't yet.
-
-You could simulate this in a script, but clearly this is a convenience method that would be good to have.  I'll do it for a2.
-
-Edward
-#@-node:ekr.20050128092443:Add g.app.config.reloadAllSettings
-#@+node:ekr.20050122091016:Minor
-- move findCorrespondingNode into leoNodes class.
-
-- Fix bug: findSettingsRoot doesn't work if no summary node.
-
-- findSettingsPostion should honor if-gui and if-platform nodes.
-#@nonl
-#@-node:ekr.20050122091016:Minor
-#@+node:ekr.20050122083704:Config improvements
-@killcolor
-
-- Allow searching while in config dialog.
-- Allow adding, deleting, rearranging nodes while in config dialog.
-- Allow adding, deleting, rearranging recent files.
-- Support @if-platform, @if-gui.
-- Document, test and use @ints, @strings
-- Support @fixedRecentFiles.
-#@nonl
-#@-node:ekr.20050122083704:Config improvements
-#@+node:ekr.20041123100100:support @fixed-recent-files in Leo's core
-The config classes do nothing special.
-
-The core must put fixed files first in the menu.
-#@nonl
-#@-node:ekr.20041123100100:support @fixed-recent-files in Leo's core
-#@+node:ekr.20041228100139:Support for general component settings
-@list name
-    - name specifies the component to configure.
-    - parser creates a list of name,kind,value tuples from the body.
-
-Leo's core would support one 'name' for:
-    each Tk widget,
-    each Pmw megawidget,
-    each megawidget component.
-
-Examples:
-    headline:
-        @list outline_canvas_settings
-    body:
-        height,int,1
-        text,string,my widget
-
-g.setGeneralTkSetting(widget,setting_name) would do the following:
-    - get the setting_name and the associated list of tuples/bunches from the config class.
-    - safely set the widget's setting using the settings list as is done in the prototype code.
-#@nonl
-#@-node:ekr.20041228100139:Support for general component settings
-#@+node:ekr.20050123155522:Redo settings dialog and Plugins Manager dialog in Tk
-# These should always be available.
-#@nonl
-#@-node:ekr.20050123155522:Redo settings dialog and Plugins Manager dialog in Tk
-#@-node:ekr.20041228090344:Config improvements
-#@+node:ekr.20050214072400.1:Request for comment region
-@killcolor
-https://sourceforge.net/forum/message.php?msg_id=2994708
-By: davidmcnab
-
-Would it be possible to slip a feature into 4.3 to allow 'comment/uncomment
-region'?
-
-Wouldn't need to be overly complex:
-
- - ok to ignore multiline (/*..*/) comments
-
- - for comment-region, just need to insert the prevailing comment-char into
-   column 1 of each selected line
-
- - for uncomment-region, just need to test if the first non-whitespace chars of
-   each selected line are comments, and if so, remove them
-#@nonl
-#@-node:ekr.20050214072400.1:Request for comment region
 #@+node:ekr.20041228092223.1:Used tabbed log for find dialog?
 #@+node:EKR.20040517090625.1:@url http://komodo.nique.net/~grayrest/leoUIproposal.txt
 #@-node:EKR.20040517090625.1:@url http://komodo.nique.net/~grayrest/leoUIproposal.txt
 #@-node:ekr.20041228092223.1:Used tabbed log for find dialog?
-#@-node:ekr.20050207063254.1:New features
-#@+node:ekr.20050211080215:Docs
-#@+node:ekr.20050217080914:Rework 'Ultimate Scripting Tool' posting & put it on web site
-#@+node:ekr.20050217080914.1:@url http://mail.python.org/pipermail/python-list/2003-November/193740.html
-#@-node:ekr.20050217080914.1:@url http://mail.python.org/pipermail/python-list/2003-November/193740.html
-#@-node:ekr.20050217080914:Rework 'Ultimate Scripting Tool' posting & put it on web site
-#@+node:ekr.20050210103758:Create better download pages
-http://sourceforge.net/forum/message.php?msg_id=2928991
-By: jasonic
-
-Even Clicking on the hompage link download and and people face a huge list of
-files to choose from.
-
-http://sourceforge.net/project/showfiles.php?group_id=3458
-
-I suggest changing  the dedicated link on Leo homepage where it says
-
-"Download Leo[4.2 final]"
-
-Insead of linking directly to the sourceforge page, better to go to a small page
-with precise links for the correct packages needed for each OS. And include from
-there a link to an freshly updated Installatian page in the Users Guide. to
-http://prdownloads.sourceforge.net/leo/leosetup-4-2.exe?download
-#@nonl
-#@-node:ekr.20050210103758:Create better download pages
-#@+node:EKR.20040422132037.7:Problems with run script command on Mac x11
-@killcolor
-
-Jon Schull <jschull@softlock.com>  
-Date:  2003/12/30 Tue PM 05:50:51 EST 
-To:  edreamleo@charter.net 
-Subject:  Leo, Mac OS X 10.3, and VPython 
-             
-I've been evaluating leo or vpython programming on  Mac OS X 10.3, and 
-have some observations and a suggestion.
-
-Observations.
-        Leo runs under X11 as well as under OS X.
-        My X11 python configuration was created using the recipe at XXX 
-(which enables vpython).
-        The OS X configuration is vanilla MacPython from MacPython.org, along 
-with AquaTclTk batteries included XXX.
-        In both environments I can run leo under python leo.py and under idle.
-        Under OS X we get font smoothing, but we can't run visual python 
-programs (python crashes;  this is a known incompatibility with 
-MacPython.)
-    
-        Under X11 we can run visual python programs like this one
-            #box.py
-            from visual import *
-            box()
-            
-    And we can even run them under leo (under X11). HOWEVER, when the 
-visual python program is terminated, leo vanishes (leo and the vp 
-program apparently run in the same space)
-    
-    Under x11, we can keep leo alive by putting the vp program in its own 
-space:
-    
-        os.popen3('/sw/bin/python /Users/jis/box.py')
-    
-    However,  this doesn't let us see the output of stderr and stdout.  
-Those text streams are available...
-        
-        def do(cmd='ls'):
-            from os import popen3
-            pIn,pOut,pErr=0,1,2
-            popenResults=popen3(cmd)
-            print popenResults[pOut].read()
-            print popenResults[pErr].read()
-        
-        import os	
-        do('/sw/bin/python /Users/jis/box.py')
-        
-    ...but only when the vpython program terminates.
-    
-    Here's the good news:  if we execute our vp program with 
-/sw/bin/idle.py rather than with python, we get to see the program 
-output in real time (under idle, under X11).
-    
-        import os	
-        os.chdir('/sw/lib/python2.3/idlelib')
-        os.popen3('/sw/bin/python idle.py -r /Users/jis/box.py')
-        
-        #this runs as an executed script in leo, and produces a live idle 
-with real time ongoing output.
-    
-    Now, while idle is running, leo sits in suspended animation.  But when 
-the vpython program terminates, we are left in idle, and when idle is 
-terminated, leo becomes active again.
-    
-    It would be even better if leo were not suspended (using os.spawn, 
-perhaps) but the real point is that I would really really like leo's 
-"Execute script" command to execute code this way and spare me having 
-to  hard-write the path to box.py.  It ought to be possible to 
-eliminate os.chdir as well.
-
-------------------
-Jon Schull, Ph.D.
-Associate Professor
-Information Technology
-Rochester Institute of Technology
-schull@digitalgoods.com 585-738-6696
-#@-node:EKR.20040422132037.7:Problems with run script command on Mac x11
-#@+node:ekr.20050206210832.1:Put @nosent and similar abbreviations in glossary
-@killcolor
-
-http://sourceforge.net/forum/message.php?msg_id=2928991
-By: jasonic
-
-@nosent is an abbreviation for @file-nosentinels.
-Very hadny very cool but does not seem be much docs anywhere on this.
-#@-node:ekr.20050206210832.1:Put @nosent and similar abbreviations in glossary
-#@-node:ekr.20050211080215:Docs
-#@-node:ekr.20050303103230:4.3b1 code complete
-#@+node:ekr.20041228073219:4.3.n...
 #@+node:ekr.20041231102453.1:Move emacs commands into core
 #@-node:ekr.20041231102453.1:Move emacs commands into core
 #@+node:ekr.20040919182750.1:4.3.1 better handling of whitespace

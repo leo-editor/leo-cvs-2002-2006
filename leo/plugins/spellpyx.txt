@@ -252,6 +252,7 @@ _what_
 _will_
 _within_
 _without_
+_you_
 aClass
 aDirectory
 aList
@@ -415,6 +416,7 @@ closing_delim
 cmd
 cmnd
 cmp
+cms
 codeLine
 codeList
 codeName
@@ -1103,6 +1105,7 @@ onSelect
 onStart
 onXXX
 on_idle
+oodb
 open1
 open2
 openDir

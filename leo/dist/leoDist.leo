@@ -1,14 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet ekr_stylesheet?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="1003" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="1023" clone_windows="0"/>
 <globals body_outline_ratio="0.428571428571">
-	<global_window_position top="44" left="233" height="778" width="875"/>
+	<global_window_position top="19" left="280" height="778" width="875"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
 <find_panel_settings/>
 <vnodes>
+<v t="ekr.20050315084904"><vh>Startup</vh>
+<v t="ekr.20050315084904.1" annotate="7d71002e"><vh>@settings</vh>
+<v t="ekr.20050315084904.2" a="E"><vh>@recentfiles </vh></v>
+</v>
+<v t="ekr.20050315084922"><vh>@button check spelling...</vh></v>
+</v>
 <v t="EKR.20040519091259" a="TV"><vh>Annoucnements</vh>
 <v t="EKR.20040519091259.1"><vh>Download statistics</vh></v>
 <v t="EKR.20040519091259.2"><vh>Quotes of the month</vh>
@@ -89,7 +95,7 @@
 <v t="EKR.20040519080201.2" tnodeList="EKR.20040519080201.2"><vh>@file-nosent c:\prog\leoCVS\.pycheckrc</vh></v>
 <v t="EKR.20040519080201.3"><vh>@url http://www.python.org/pypi?:action=submit_form</vh></v>
 </v>
-<v t="EKR.20040519090846" a="E"><vh>Distribution files (update for each release)</vh>
+<v t="EKR.20040519090846"><vh>Distribution files (update for each release)</vh>
 <v t="EKR.20040519090846.2"><vh>@silentfile ../doc/INSTALL.TXT</vh>
 <v t="EKR.20040519090846.3"><vh>System requirements</vh></v>
 <v t="EKR.20040519090846.4"><vh>Linux installation</vh></v>
@@ -138,7 +144,7 @@
 <v t="ekr.20050118104149.1"><vh>&lt;&lt; install config files &gt;&gt;</vh></v>
 <v t="ekr.20050118104149.2"><vh>&lt;&lt; uninstall config files &gt;&gt;</vh></v>
 </v>
-<v t="ekr.20050118104149.3" a="E"><vh>dist files</vh>
+<v t="ekr.20050118104149.3"><vh>dist files</vh>
 <v t="ekr.20050118104149.4"><vh>&lt;&lt; install dist files &gt;&gt;</vh></v>
 <v t="ekr.20050118104149.5"><vh>&lt;&lt; uninstall dist files &gt;&gt;</vh></v>
 </v>
@@ -177,7 +183,7 @@
 </v>
 <v t="ekr.20050118092706"><vh>@thin leo-4-3.nsi</vh></v>
 </v>
-<v t="ekr.20050118113631" a="E"><vh>Main distribution script</vh>
+<v t="ekr.20050118113631"><vh>Main distribution script</vh>
 <v t="EKR.20040519082027.28"><vh>&lt;&lt; setup info for createLeoDist.py &gt;&gt;</vh></v>
 <v t="EKR.20040519090846.10"><vh>@silentfile ../manifest.in</vh></v>
 <v t="ekr.20050117032444"><vh>@button Create Leo-4.3.zip</vh>
@@ -451,7 +457,7 @@ else: # Doesn't work
 suppressionRegexs = {}</t>
 <t tx="EKR.20040519080201.3"></t>
 <t tx="EKR.20040519082027.28">name="leo",
-version="4-3-a3", # No spaces here!
+version="4-3-a4", # No spaces here!
 author="Edward K. Ream",
 author_email="edreamleo@charter.net",
 url="http://webpages.charter.net/edreamleo/front.html",
@@ -3456,7 +3462,7 @@ WindowIcon off
 
 ; settings from HM NIS Edit Wizard
 Name "${PRODUCT_NAME} ${PRODUCT_VERSION}"
-OutFile "LeoSetup-4-3-a3.exe"
+OutFile "LeoSetup-4-3-a4.exe"
 LoadLanguageFile "${NSISDIR}\Contrib\Language files\English.nlf"
 InstallDir "$PROGRAMFILES\Leo"
 Icon "..\Icons\leo_inst.ico"
@@ -4013,10 +4019,9 @@ Leo: http://webpages.charter.net/edreamleo/front.html
 
 Leo 4.3 is the culmination of more than five months of work. This alpha 4
 focuses on plugins: all known plugins are now in leoPlugins.leo. Most plugins
-now work with the 4.3 code base. Warning: not all plugins have been tested
-thorougly.
+now work with the 4.3 code base.
 
-This alpha 4 release also adds the requently-requested Add Comments and Delete
+This alpha 4 release also adds the frequently-requested Add Comments and Delete
 Comments commands to Leo's Edit Body menu.
 
 The defining features of Leo 4.3:
@@ -4053,38 +4058,35 @@ Python Mega Widgets in the extensions directory.
 
 What people are saying about Leo
 --------------------------------
-"[Leo] should either replace or greatly augment the development tools
-that I use." -- Zak Greant
+"Word outlines are very useful. But Leo makes Word look like a clunky toy."
+--Joe Orr
 
-"Leo is a marriage of outlining and literate programming. Pure genius.
-The main reason I am impressed with this tool is that it doesn't
-affect your choice of tools. You can use whatever IDE for whatever
-language and switch back and forth between Leo and it." -- Austin
-King
+"Leo is an interactive editor for organizing text fragments hierarchically and
+sequentially into one or more files and hierarchical folders, without arbitrary
+limits on the number and size of text fragments and the depth of the
+hierarchy...Tangle is a tool for combining hierarchically and sequentially
+organized text fragments into text files, hierarchically grouped into folders,
+with hierarchical or sequential organization of text within the files, and
+without arbitrary limits on the size and number of files and the depth of the
+hierarchy of folders and text nesting within the files." -- Alex Abacus
 
-"Leo is the best IDE that I have had the pleasure to use. I have been
-using it now for about 2--3 months. It has totally changed not only
-the way that I program, but also the way that I store and organize all
-of the information that I need for the job that I do." -- Ian Mulvany
+"Leo reminds me a great deal of things I loved when I used Userland's Frontier
+(an outlining cms with a native oodb) - but Frontier wasn't hackable enough for
+me, and it wasn't oriented towards coding and literate programming, and you
+couldn't round-trip rendered pages (big Leo win). This is really a super tool -
+in a matter of days I've started to use it on all my projects and I still
+haven't figured out how I lived without it." -- John Sequeira
 
-"I only have one week of Leo experience but I already know it will be
-my default IDE/project manager...people complain about the lack of a
-project manager for the free/standard Python IDE's like Idle. Leo
-clearly solves that problem and in a way that commercial tools can't
-touch." -- Marshall Parsons
+"Leo is EXACTLY the kind of outliner I was looking for--fantastic job!"
+-- Steve Allen
 
-"I have been using Leo for about 3 weeks and I hardly use my other
-programming editor anymore...I find it easy and enjoyable to use. I
-plan to adopt it as my presentation tool for code reviews." -- Jim
-Vickroy
-
-"I'm absolutely astounded by the power of such a simple idea! It works
-great and I can immediately see the benefits of using Leo in place of
-the standard flat file editor." -- Tom Lee, &lt;tomlee@bigpond.net.au&gt;
-
-I think you're really showing what open source can do and your current
-trajectory puts you on track to kick Emacs into the dustbin of
-computing history. -- Dan Winkler
+"If you are like me, you have a kind of knowledge base with infos gathered over
+time. And you have projects, where you use some of those infos. Now, with
+conventional outliners you begin to double these infos, because you want to have
+the infos needed for the project with your project. With Leo you can do this
+too, but if you change text in one place IT IS UPDATED IN THE OTHER PLACE TOO!
+This is a feature I did not see with any other outliner (and I tried a few).
+Amazing! Leo directly supports the way I work!" -- F. Geiger
 
 More quotes at: http://webpages.charter.net/edreamleo/testimonials.html
 
@@ -4117,12 +4119,37 @@ CVS:      http://sourceforge.net/cvs/?group_id=3458
 Quotes:   http://webpages.charter.net/edreamleo/testimonials.html
 
 Edward K. Ream
-January 25, 2005
+March 15, 2005
 --------------------------------------------------------------------
 Edward K. Ream   email:  edreamleo@charter.net
 Leo: Literate Editor with Outlines
 Leo: http://webpages.charter.net/edreamleo/front.html
 --------------------------------------------------------------------
 </t>
+<t tx="ekr.20050315084904"></t>
+<t tx="ekr.20050315084904.1">@nocolor</t>
+<t tx="ekr.20050315084904.2">C:\prog\leoCVS\leo\doc\LeoDocs.leo
+C:\prog\leoCVS\leo\dist\leoDist.leo
+C:\prog\leoCVS\leo\test\test.leo</t>
+<t tx="ekr.20050315084922">import leoPlugins
+
+spellpyx = leoPlugins.getPluginModule("spellpyx")
+spellFrame = None
+createMenu = spellpyx is None
+keys = {'c':c}
+
+if not spellpyx:
+    spellpyx = leoPlugins.loadOnePlugin("spellpyx",verbose=True)
+    if spellpyx: spellpyx.onCreate('tag',keys)
+
+if spellpyx:
+    spellFrame = spellpyx.spellFrames.get(c)
+    if spellFrame:
+        if createMenu: spellFrame.createSpellMenu('tag',keys)
+        spellFrame.checkSpelling()
+
+if not spellpyx or not spellFrame:
+    # Ask to be removed.
+    g.app.scriptDict['removeMe'] = True</t>
 </tnodes>
 </leo_file>

@@ -1,37 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet ekr_stylesheet?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="6676" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="6681" clone_windows="0"/>
 <globals body_outline_ratio="0.521970705726">
-	<global_window_position top="137" left="172" height="663" width="911"/>
+	<global_window_position top="172" left="280" height="663" width="911"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
 <find_panel_settings/>
 <vnodes>
-<v t="ekr.20041121151002" annotate="7d71002e"><vh>@settings</vh>
-<v t="ekr.20041121151002.1"><vh>@recentfiles </vh></v>
-<v t="ekr.20041218110904"><vh>@page local options</vh>
-<v t="ekr.20041211044607"><vh>@int page_width = 80</vh></v>
-<v t="ekr.20041213075902"><vh>@font log font</vh></v>
-<v t="ekr.20041217042849"><vh>@font body font</vh></v>
-<v t="ekr.20041217132317"><vh>@strings[a,b,c] stringsTest = c</vh></v>
-<v t="ekr.20041217132338"><vh>@ints[1,2,3] intsTest = 3</vh></v>
-</v>
-<v t="ekr.20041217144914"><vh>@page colors</vh>
-<v t="ekr.20041217135841"><vh>@color outline_pane_background_color = None</vh></v>
-<v t="ekr.20041217142026"><vh>@color log_pane_background_color = None</vh></v>
-<v t="ekr.20041217143421"><vh>@color body_text_background_color = None</vh></v>
-<v t="ekr.20041218100259"><vh>@color headline_text_selected_background_color = #dbdbdb</vh></v>
-</v>
-<v t="ekr.20041218141525"><vh>@page Fonts</vh>
-<v t="ekr.20041218141525.1"><vh>@font log font</vh></v>
-<v t="ekr.20041218141525.2"><vh>@font body text font</vh></v>
-<v t="ekr.20041218141525.3"><vh>@font outline font</vh></v>
-</v>
-<v t="ekr.20050104095950"><vh>@shortcuts</vh></v>
-<v t="ekr.20050123143337"><vh>@bool redirect_execute_script_output_to_log_pane = None</vh></v>
-</v>
 <v t="EKR.20040623200709" annotate="7d71002e"><vh>@thin ../src/leoTest.py</vh></v>
 <v t="ekr.20040721153143" annotate="7d71002e"><vh>Gc/Profile/Timeit/Tracing scripts</vh>
 <v t="ekr.20040721113934"><vh>runProfile</vh></v>
@@ -1011,8 +988,42 @@
 <v t="ekr.20050219073752.1"><vh>Add a menu item after Open With</vh></v>
 </v>
 <v t="ekr.20050310082013"><vh>AutoIt script from e</vh></v>
+<v t="ekr.20050314104217"><vh>Develop g.convertPythonIndexToRowCol</vh>
+<v t="ekr.20050314103747"><vh>g.convertPythonIndexToRowCol  &amp; tests</vh>
+<v t="ekr.20050314103747.1"><vh>bruteForceConvertPythonIndexToRowCol</vh></v>
+<v t="ekr.20050314103747.2"><vh>test_g_convertPythonIndexToRowCol</vh></v>
+</v>
+</v>
+<v t="ekr.20050315072359"><vh>Develop g.convertRowColToPythonIndex</vh>
+<v t="ekr.20050315072359.1" a="E"><vh>g.convertRowColToPythonIndex &amp; test</vh>
+<v t="ekr.20050315072359.2"><vh>test_g_convertRowColToPythonIndex</vh></v>
+</v>
+</v>
 </v>
 <v t="ekr.20041001211817" annotate="7d71002e"><vh>Startup...</vh>
+<v t="ekr.20041121151002" annotate="7d71002e"><vh>@settings</vh>
+<v t="ekr.20041121151002.1"><vh>@recentfiles </vh></v>
+<v t="ekr.20041218110904"><vh>@page local options</vh>
+<v t="ekr.20041211044607"><vh>@int page_width = 80</vh></v>
+<v t="ekr.20041213075902"><vh>@font log font</vh></v>
+<v t="ekr.20041217042849"><vh>@font body font</vh></v>
+<v t="ekr.20041217132317"><vh>@strings[a,b,c] stringsTest = c</vh></v>
+<v t="ekr.20041217132338"><vh>@ints[1,2,3] intsTest = 3</vh></v>
+</v>
+<v t="ekr.20041217144914"><vh>@page colors</vh>
+<v t="ekr.20041217135841"><vh>@color outline_pane_background_color = None</vh></v>
+<v t="ekr.20041217142026"><vh>@color log_pane_background_color = None</vh></v>
+<v t="ekr.20041217143421"><vh>@color body_text_background_color = None</vh></v>
+<v t="ekr.20041218100259"><vh>@color headline_text_selected_background_color = #dbdbdb</vh></v>
+</v>
+<v t="ekr.20041218141525"><vh>@page Fonts</vh>
+<v t="ekr.20041218141525.1"><vh>@font log font</vh></v>
+<v t="ekr.20041218141525.2"><vh>@font body text font</vh></v>
+<v t="ekr.20041218141525.3"><vh>@font outline font</vh></v>
+</v>
+<v t="ekr.20050104095950"><vh>@shortcuts</vh></v>
+<v t="ekr.20050123143337"><vh>@bool redirect_execute_script_output_to_log_pane = None</vh></v>
+</v>
 <v t="ekr.20041001203411"><vh>@ plugin ___proto_atFile.py</vh></v>
 <v t="ekr.20041001203411.1"><vh>@ script hi</vh></v>
 <v t="ekr.20041113113555"><vh>@button check spelling...</vh></v>
@@ -1022,7 +1033,7 @@
 <v t="ekr.20041230143535"><vh>@ button help</vh></v>
 <v t="ekr.20050210180937"><vh>@button jython</vh></v>
 </v>
-<v t="EKR.20040619133116" annotate="7d71002e"><vh>Unit testing...</vh>
+<v t="EKR.20040619133116" a="TV" annotate="7d71002e"><vh>Unit testing...</vh>
 <v t="bwmulder.20050108100437.1"><vh>How to run unit tests</vh></v>
 <v t="ekr.20040723064143.1"><vh>To do...</vh>
 <v t="ekr.20040723064143.3"><vh>Test error recovery when reading descendentTnodeUa's</vh></v>
@@ -1610,7 +1621,7 @@
 </v>
 <v t="ekr.20040707081532.1"><vh>Do @test</vh></v>
 </v>
-<v t="ekr.20050120095423" a="TV" annotate="7d71002e"><vh>Unit testing for plugins</vh>
+<v t="ekr.20050120095423" annotate="7d71002e"><vh>Unit testing for plugins</vh>
 <v t="ekr.20050218015346"><vh>@suite run all plugin test routines</vh>
 <v t="ekr.20050218015346.11"><vh>&lt;&lt; class testRoutineTestCase &gt;&gt;</vh>
 <v t="ekr.20050218015346.12"><vh>__init__</vh></v>
@@ -2238,7 +2249,7 @@ print '
 print g.app.config.redirect_execute_script_output_to_log_pane</t>
 <t tx="EKR.20040627103732">@ignore</t>
 <t tx="EKR.20040627103801"></t>
-<t tx="EKR.20040627103902" lineYOffset="4b032e" icons="5d7100287d710128550577686572657102550a6265666f726549636f6e710355047870616471044b025504747970657105550466696c6571066806582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286805680668084afdffffff6806582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6802550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e"></t>
+<t tx="EKR.20040627103902" lineYOffset="4b032e" icons="5d7100287d7101285504747970657102550466696c65710355047870616471044b02550577686572657105550a6265666f726549636f6e71066803582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286802680368084afdffffff6803582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6805550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e"></t>
 <t tx="EKR.20040627121836">next = p.next()
 t = next.v.t
 v = next.v
@@ -2374,7 +2385,7 @@ for p in c.rootPosition().allNodes_iter():
 s = "%d nodes" % count
 print s ; g.es(s)</t>
 <t tx="ekr.20040312101720"></t>
-<t tx="ekr.20040317101155" lineYOffset="4b032e" icons="5d7100287d7101285504747970657102550466696c65710355047870616471044b02550577686572657105550a6265666f726549636f6e710668035834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286802680368084afdffffff68035834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6805550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">p.v.t.unknownAttributes = {}
+<t tx="ekr.20040317101155" lineYOffset="4b032e" icons="5d7100287d710128550577686572657102550a6265666f726549636f6e710355047870616471044b025504747970657105550466696c65710668065834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286805680668084afdffffff68065834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6802550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">p.v.t.unknownAttributes = {}
 a = p.v.t.unknownAttributes
 
 &lt;&lt; define event callbacks &gt;&gt;
@@ -13866,5 +13877,79 @@ Sleep(2700)
 
 ;careful you don't close the leo you are working from
 Send("!Fx")</t>
+<t tx="ekr.20050314103747">def convertPythonIndexToRowCol (s,i):
+    
+    '''Convert index i into string s into zero-based row/col indices.'''
+    
+    if not s or i == 0:
+        return 0,0
+    else:
+        i = min(i,len(s)-1)
+        # works regardless of what s[i] is
+        row = s.count('\n',0,i) # Don't include i
+        if row == 0:
+            return row,i
+        else:
+            prevNl = s.rfind('\n',0,i) # Don't include i
+            # assert prevNl &gt; -1
+            return row,i-prevNl-1</t>
+<t tx="ekr.20050314103747.1">def bruteForceConvertPythonIndexToRowCol (s,i):
+        
+    lines = g.splitLines(s)
+    row,total = 0,0
+    for line in lines:
+        n = len(line)
+        if i &lt; total + n:
+            break
+        else:
+            total += n
+            row += 1
+    return row, i-total</t>
+<t tx="ekr.20050314103747.2">def test_g_convertPythonIndexToRowCol ():
+    
+    s = '\nabc\n\npdq\nxy'
+    
+    for i in xrange(len(s)+1): # Test one-too-large case.
+        try: ch = s[i]
+        except IndexError: ch = '**'
+        rowCol_1 = convertPythonIndexToRowCol(s,i)
+        rowCol_2 = bruteForceConvertPythonIndexToRowCol(s,i)
+        print '%2d %4s %5s' % (i,repr(ch),rowCol_1==rowCol_2),
+        print rowCol_1,rowCol_2</t>
+<t tx="ekr.20050314104217">@others
+
+print '-' * 20
+test_g_convertPythonIndexToRowCol()</t>
+<t tx="ekr.20050315072359">@others
+
+print '-' * 20
+test_g_convertRowColToPythonIndex()</t>
+<t tx="ekr.20050315072359.1">def convertRowColToPythonIndex (s,row,col):
+    
+    lines = g.splitLines(s)
+
+    if row &gt; len(lines) or col &gt; len(lines[row]):
+        raise IndexError
+    
+    prev = 0
+    for line in lines[:row]:
+        prev += len(line)
+        
+    return prev + col</t>
+<t tx="ekr.20050315072359.2">def test_g_convertRowColToPythonIndex ():
+
+    s = '\nabc\n\npdq\nxy'
+    lines = g.splitLines(s)
+    row = 0 ; prev = -1
+    for line in lines:
+        col = 0
+        for ch in line:
+            i = convertRowColToPythonIndex(s,row,col)
+            assert i == prev + 1,'i %d prev %d' % (i,prev)
+            if not g.app.unitTesting:
+                print '%4s %2d %2d %2d' % (repr(ch),row,col,i)
+            prev = i
+            col += 1
+        row += 1</t>
 </tnodes>
 </leo_file>

@@ -1,25 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet ekr_stylesheet?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="7480" clone_windows="0"/>
-<globals body_outline_ratio="0.466285714286">
-	<global_window_position top="25" left="10" height="692" width="937"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="7547" clone_windows="0"/>
+<globals body_outline_ratio="0.472392638037">
+	<global_window_position top="39" left="372" height="815" width="775"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
 <find_panel_settings/>
 <vnodes>
 <v t="EKR.20040430162943"><vh>Notes</vh>
-<v t="ekr.20031218072017.329"
-marks="ekr.20031218072017.3774,ekr.20041005105605.214,"><vh>@thin ../doc/leoNotes.txt</vh></v>
+<v t="ekr.20031218072017.329"><vh>@thin ../doc/leoNotes.txt</vh></v>
 </v>
 <v t="EKR.20040519090151.3"><vh>Projects</vh>
 <v t="EKR.20040429143933"
-marks="ekr.20031218072017.3774,ekr.20031218072017.1729,ekr.20041005105605.212,ekr.20041005105605.19,ekr.20041005105605.143,ekr.20041005105605.163,ekr.20041005105605.212,ekr.20050104132018,ekr.20041005105605.212,ekr.20041005105605.163,ekr.20031218072017.1729,ekr.20041005105605.212,ekr.20050104132018,ekr.20031218072017.2297,ekr.20041221075743,ekr.20041221075743,ekr.20041221073427.1,ekr.20031218072017.2178,ekr.20031218072017.2178,ekr.20031218072017.2178,ekr.20041221075743,ekr.20041221073427.1,ekr.20041122162610,ekr.20031218072017.2864,ekr.20031218072017.2866,ekr.20031218072017.2178,ekr.20041221075743,ekr.20041221073427.1,ekr.20050127090442,ekr.20031218072017.2297,ekr.20040324061854.3,ekr.20040324061854.3,ekr.20050128081422,"><vh>@thin leoProjects.txt</vh></v>
+marks="ekr.20041122162610,ekr.20031218072017.2293,ekr.20031218072017.3069,"><vh>@thin leoProjects.txt</vh></v>
 </v>
 <v t="EKR.20040519090151.2"><vh>To do</vh>
-<v t="ekr.20040117181936"
-marks="ekr.20031218072017.2297,ekr.20050127090442,ekr.20050128081422,ekr.20031218072017.2297,"><vh>@thin ../doc/leoToDo.txt</vh></v>
+<v t="ekr.20040117181936"><vh>@thin ../doc/leoToDo.txt</vh></v>
 </v>
 <v t="ekr.20031218072017.2406" a="TV"><vh>Code</vh>
 <v t="ekr.20031218072017.2415"><vh> Scripts</vh>
@@ -33,13 +31,14 @@ marks="ekr.20031218072017.2297,ekr.20050127090442,ekr.20050128081422,ekr.2003121
 </v>
 <v t="ekr.20031218072017.2582"><vh> version &amp; signon stuff</vh>
 <v t="ekr.20040629121554"><vh>getBuildNumber</vh></v>
-<v t="ekr.20040629121554.1" a="M"><vh>getSignOnLine (Contains hard-coded version info)</vh></v>
-<v t="ekr.20040629121554.2" a="M"><vh>initVersion</vh></v>
+<v t="ekr.20040629121554.1"><vh>getSignOnLine (Contains hard-coded version info)</vh></v>
+<v t="ekr.20040629121554.2" a="M" labels="540801000032383634373033303061353332373632363536363666373236353230363336383631366536373635336132373061373033313061353636343635363632303639366536393734353636353732373336393666366532303238373336353663363632393361356337353330333033303631323032303230323036333230336432303733363536633636356337353330333033303631323032303230323036333265373636353732323033643230323232343532363537363639373336393666366533613230333132653332333233353230323432323230323332303433353635333230373537303634363137343635373332303734363836393733326530613730333230613733326571002e"><vh>initVersion</vh></v>
 <v t="ekr.20040629121554.3"><vh>signOnWithVersion</vh></v>
 </v>
 <v t="ekr.20050123202520"><vh> Startup...</vh>
 <v t="ekr.20050123202520.1"><vh>@button Settings...</vh></v>
-<v t="ekr.20041226080857"><vh>@button Check spelling...</vh></v>
+<v t="ekr.20041226080857"><vh>@button Spelling...</vh></v>
+<v t="ekr.20050130152155"><vh>@button Plugins...</vh></v>
 <v t="ekr.20041119040438"><vh>@settings</vh>
 <v t="ekr.20041119042418"><vh>@bool use_plugins = True</vh></v>
 <v t="ekr.20041122162610" a="M"><vh>@recent_files</vh></v>
@@ -49,27 +48,24 @@ marks="ekr.20031218072017.2297,ekr.20050127090442,ekr.20050128081422,ekr.2003121
 <v t="ekr.20031218072017.2604"><vh>Core classes...</vh>
 <v t="ekr.20031218072017.2605"><vh>@thin leo.py </vh></v>
 <v t="ekr.20031218072017.2608"><vh>@thin leoApp.py</vh></v>
-<v t="ekr.20041005105605.1"
-marks="ekr.20041005105605.19,ekr.20041005105605.143,ekr.20041005105605.163,ekr.20041005105605.212,ekr.20050104132018,"><vh>@thin leoAtFile.py</vh></v>
+<v t="ekr.20041005105605.1"><vh>@thin leoAtFile.py</vh></v>
 <v t="ekr.20031218072017.2794"><vh>@thin leoColor.py</vh></v>
 <v t="ekr.20031218072017.2810"
-marks="ekr.20040629121554.1,ekr.20040629121554.2,ekr.20031218072017.2864,ekr.20031218072017.2866,"><vh>@thin leoCommands.py</vh></v>
+marks="ekr.20040629121554.2,"><vh>@thin leoCommands.py</vh></v>
 <v t="ekr.20041117062700"><vh>@thin leoConfig.py</vh></v>
-<v t="ekr.20031218072017.3018"
-marks="ekr.20031218072017.2297,"><vh>@thin leoFileCommands.py</vh></v>
+<v t="ekr.20031218072017.3018"><vh>@thin leoFileCommands.py</vh></v>
 <v t="ekr.20031218072017.3093"><vh>@thin leoGlobals.py</vh></v>
 <v t="ekr.20031218072017.3206"><vh>@thin leoImport.py</vh></v>
-<v t="ekr.20031218072017.3749"
-marks="ekr.20031218072017.3774,ekr.20031218072017.1729,"><vh>@thin leoMenu.py</vh></v>
+<v t="ekr.20031218072017.3749"><vh>@thin leoMenu.py</vh></v>
 <v t="ekr.20031218072017.3320"><vh>@thin leoNodes.py</vh></v>
 <v t="ekr.20031218072017.3439"><vh>@thin leoPlugins.py</vh></v>
 <v t="ekr.20031218072017.3446"><vh>@thin leoTangle.py</vh></v>
-<v t="ekr.20031218072017.3603"
-marks="ekr.20040324061854.3,"><vh>@thin leoUndo.py</vh></v>
+<v t="ekr.20031218072017.3603"><vh>@thin leoUndo.py</vh></v>
 </v>
 <v t="ekr.20031218072017.3625"><vh>Gui Base classes</vh>
 <v t="ekr.20031218072017.3630"><vh>@thin leoCompare.py</vh></v>
-<v t="ekr.20031218072017.3052"><vh>@thin leoFind.py</vh></v>
+<v t="ekr.20031218072017.3052"
+marks="ekr.20031218072017.2293,ekr.20031218072017.3069,"><vh>@thin leoFind.py</vh></v>
 <v t="ekr.20031218072017.3655"><vh>@thin leoFrame.py</vh></v>
 <v t="ekr.20031218072017.3719"><vh>@thin leoGui.py</vh></v>
 <v t="ekr.20031218072017.3748"><vh>@thin leoKeys.py</vh></v>
@@ -78,8 +74,7 @@ marks="ekr.20040324061854.3,"><vh>@thin leoUndo.py</vh></v>
 <v t="ekr.20031218072017.3838"><vh>@thin leoTkinterComparePanel.py</vh></v>
 <v t="ekr.20031218072017.3858"><vh>@thin leoTkinterDialog.py</vh></v>
 <v t="ekr.20031218072017.3897"><vh>@thin leoTkinterFind.py</vh></v>
-<v t="ekr.20031218072017.3939"
-marks="ekr.20031218072017.2178,ekr.20041221075743,ekr.20041221073427.1,"><vh>@thin leoTkinterFrame.py</vh></v>
+<v t="ekr.20031218072017.3939"><vh>@thin leoTkinterFrame.py</vh></v>
 <v t="ekr.20031218072017.4047"><vh>@thin leoTkinterGui.py</vh></v>
 <v t="ekr.20031218072017.4099"><vh>@thin leoTkinterKeys.py</vh></v>
 <v t="ekr.20031218072017.4100"><vh>@thin leoTkinterMenu.py</vh></v>
@@ -91,7 +86,7 @@ marks="ekr.20031218072017.2178,ekr.20041221075743,ekr.20041221073427.1,"><vh>@th
 <t tx="EKR.20040430162943"></t>
 <t tx="EKR.20040519090151.2"></t>
 <t tx="EKR.20040519090151.3"></t>
-<t tx="ekr.20031218072017.2406">@language python
+<t tx="ekr.20031218072017.2406"> @language python
 @tabwidth -4
 @pagewidth 80
 
@@ -185,11 +180,10 @@ def findTopLevelNode(headline):
     return c.ver[10:-1] # Strip off "(dollar)Revision" and the trailing "$"</t>
 <t tx="ekr.20040629121554.1">def getSignOnLine (self):
     c = self
-    return "Leo 4.3 alpha 2, build %s, January 30, 2005" % c.getBuildNumber()
-</t>
+    return "Leo 4.3 alpha 4, build %s, March 15, 2005" % c.getBuildNumber()</t>
 <t tx="ekr.20040629121554.2">def initVersion (self):
     c = self
-    c.ver = "$Revision: 1.213 $" # CVS updates this.</t>
+    c.ver = "$Revision: 1.231 $" # CVS updates this.</t>
 <t tx="ekr.20040629121554.3">def signOnWithVersion (self):
 
     c = self
@@ -209,10 +203,8 @@ This tree contains settings unique to this outline.</t>
 
 Warning: Naive or hostile hooks may execute HOSTILE CODE contained in .leo files. See further warnings in LeoDocs.leo.
 </t>
-<t tx="ekr.20041122162610">C:\prog\leoCVS\leo\test\test.leo
-C:\prog\leoCVS\leo\plugins\leoPlugins.leo
-C:\prog\leoCVS\leo\src\LeoPy.leo
-/Users/edream/leoCVS/leo/src/LeoPy.leo</t>
+<t tx="ekr.20041122162610">c:\prog\leoCVS\leo\doc\LeoDocs.leo
+C:\prog\leoCVS\leo\src\LeoPy.leo</t>
 <t tx="ekr.20041211042119"></t>
 <t tx="ekr.20041226080857">import leoGlobals as g
 import leoPlugins
@@ -242,5 +234,13 @@ replaceBody=True
 
 c = g.top()
 leoConfig.settingsController(c,replaceBody)</t>
+<t tx="ekr.20050130152155">import leoGlobals as g
+c = g.top()
+name = "leoPlugins.leo"
+
+fileName = g.os_path_join(g.app.loadDir,"..","plugins",name)
+ok,frame = g.openWithFileName(fileName,c)
+if not ok:
+    g.es("not found: %s" % name)</t>
 </tnodes>
 </leo_file>

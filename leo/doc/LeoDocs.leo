@@ -3,7 +3,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="13327" clone_windows="0"/>
 <globals body_outline_ratio="0.616666666667">
-	<global_window_position top="48" left="237" height="900" width="1023"/>
+	<global_window_position top="-13" left="158" height="900" width="1023"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -20,7 +20,7 @@
 <v t="ekr.20041226081019"><vh>@button check spelling...</vh></v>
 <v t="edream.110203163054.6"><vh>Please use SourceForge to ask questions and make comments</vh></v>
 <v t="edream.110203163054.7"><vh>Acknowledgements</vh></v>
-<v t="edream.110203163054.8"><vh>What people are saying about Leo</vh>
+<v t="edream.110203163054.8" a="TV"><vh>What people are saying about Leo</vh>
 <v t="ekr.20050124153126.1"><vh>Leo is revolutionary</vh></v>
 <v t="ekr.20050124153126.2"><vh>Leo is a showcase Python/Tkinter application</vh></v>
 <v t="ekr.20050124153126.3"><vh>Leo is fun, even addicting</vh></v>
@@ -53,7 +53,7 @@
 <v t="edream.110203163054.62"><vh>Quick start</vh></v>
 </v>
 <v t="edream.110203163054.63" a="E"><vh>Latest versions</vh>
-<v t="ekr.20050313101229" a="ETV"><vh>4.3-a4</vh>
+<v t="ekr.20050313101229" a="E"><vh>4.3-a4</vh>
 <v t="ekr.20050313101229.2"><vh>Fixed bugs...</vh>
 <v t="ekr.20050313101229.69" a="E"><vh>Fix colorizer bug for initial @nocolor in @root nodes</vh></v>
 <v t="ekr.20050313101229.74" a="E"><vh>Fixed @wrap bug</vh></v>
@@ -16178,15 +16178,35 @@ She said: 'You'd need a bulldozer to start refactoring it.' That was my cue to w
 
 "Ed, you continue to push the envelope. The amazing thing is that the footprint isn't doubling every few months like it would be in another designer's hands. Adding features by removing constraints, hot refactoring while adding unit tests. Forget the book. I would pay to see the movie."</t>
 <t tx="ekr.20050124153126.10"></t>
-<t tx="ekr.20050124155449">"Word outlines are very useful. But Leo makes Word look like a clunky toy." -- Joe Orr
+<t tx="ekr.20050124155449">"Word outlines are very useful. But Leo makes Word look like a clunky toy."
+--Joe Orr
 
-"Leo is an interactive editor for organizing text fragments hierarchically and sequentially into one or more files and hierarchical folders, without arbitrary limits on the number and size of text fragments and the depth of the hierarchy...Tangle is a tool for combining hierarchically and sequentially organized text fragments into text files, hierarchically grouped into folders, with hierarchical or sequential organization of text within the files, and without arbitrary limits on the size and number of files and the depth of the hierarchy of folders and text nesting within the files." -- Alex Abacus
+"Leo is an interactive editor for organizing text fragments hierarchically and
+sequentially into one or more files and hierarchical folders, without arbitrary
+limits on the number and size of text fragments and the depth of the
+hierarchy...Tangle is a tool for combining hierarchically and sequentially
+organized text fragments into text files, hierarchically grouped into folders,
+with hierarchical or sequential organization of text within the files, and
+without arbitrary limits on the size and number of files and the depth of the
+hierarchy of folders and text nesting within the files." -- Alex Abacus
 
-"Leo reminds me a great deal of things I loved when I used Userland's Frontier (an outlining cms with a native oodb) - but Frontier wasn't hackable enough for me, and it wasn't oriented towards coding and literate programming, and you couldn't round-trip rendered pages (big Leo win). This is really a super tool - in a matter of days I've started to use it on all my projects and I still haven't figured out how I lived without it." -- John Sequeira
+"Leo reminds me a great deal of things I loved when I used Userland's Frontier
+(an outlining cms with a native oodb) - but Frontier wasn't hackable enough for
+me, and it wasn't oriented towards coding and literate programming, and you
+couldn't round-trip rendered pages (big Leo win). This is really a super tool -
+in a matter of days I've started to use it on all my projects and I still
+haven't figured out how I lived without it." -- John Sequeira
 
-"Leo is EXACTLY the kind of outliner I was looking for--fantastic job!" -- Steve Allen
+"Leo is EXACTLY the kind of outliner I was looking for--fantastic job!"
+-- Steve Allen
 
-"If you are like me, you have a kind of knowledge base with infos gathered over time. And you have projects, where you use some of those infos. Now, with conventional outliners you begin to double these infos, because you want to have the infos needed for the project with your project. With Leo you can do this too, but if you change text in one place IT IS UPDATED IN THE OTHER PLACE TOO! This is a feature I did not see with any other outliner (and I tried a few). Amazing! Leo directly supports the way I work!" -- F. Geiger
+"If you are like me, you have a kind of knowledge base with infos gathered over
+time. And you have projects, where you use some of those infos. Now, with
+conventional outliners you begin to double these infos, because you want to have
+the infos needed for the project with your project. With Leo you can do this
+too, but if you change text in one place IT IS UPDATED IN THE OTHER PLACE TOO!
+This is a feature I did not see with any other outliner (and I tried a few).
+Amazing! Leo directly supports the way I work!" -- F. Geiger
 </t>
 <t tx="ekr.20050124161300">"I am extremely impressed at how stable and useful Leo appears to be." -- Marcus A. Martin
 
