@@ -97,7 +97,7 @@ class leoImportCommands:
 		# 9/9/02: E.K.Ream.  Allow upper case, add cxx.
 		# Note: we should _not_ import header files using this code.
 		appendFileFlag = string.lower(ext) not in [
-			".c", ".cpp", ".cxx", ".java", ".pas", ".py", ".php"]
+			".c", ".cpp", ".cxx", ".java", ".pas", ".py", ".pyw", ".php"]
 		
 		#@<< Read file into s >>
 		#@+node:1::<< Read file into s >>
@@ -132,7 +132,7 @@ class leoImportCommands:
 			self.scanJavaText(s,v,true) #outer level
 		elif ext == ".pas":
 			self.scanPascalText(s,v)
-		elif ext == ".py":
+		elif ext in (".py", ".pyw"):
 			self.scanPythonText(s,v)
 		elif ext == ".php":
 			self.scanPHPText(s,v) # 08-SEP-2002 DTHEIN
