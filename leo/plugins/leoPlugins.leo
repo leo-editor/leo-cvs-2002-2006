@@ -987,7 +987,7 @@
 <v t="edream.120103084310"><vh>(Load plugins only from plugins menu)</vh>
 <v t="edream.120103084310.1"><vh>Report</vh></v>
 </v>
-<v t="edream.110203113231.618"><vh>Plugins &amp; scripts</vh>
+<v t="edream.110203113231.618" a="E"><vh>Plugins &amp; scripts</vh>
 <v t="edream.031217101015"><vh>Contributed scripts</vh>
 <v t="edream.110203113231.619"><vh>From Bernhard Mulder</vh>
 <v t="edream.110203113231.620" tnodeList="edream.110203113231.620,edream.110203113231.621,edream.110203113231.622,edream.110203113231.623,edream.110203113231.624,edream.110203113231.625,edream.110203113231.626,edream.110203113231.627,edream.110203113231.628,edream.110203113231.629"><vh>@file ../scripts/foldersize_leo.py</vh>
@@ -1653,7 +1653,7 @@
 </v>
 <v t="ekr.20040201060959" tnodeList="ekr.20040201060959"><vh>@file status_line.py</vh></v>
 </v>
-<v t="ekr.20040205071616" a="TV"><vh>mnplugins.py</vh>
+<v t="ekr.20040205071616"><vh>mnplugins.py</vh>
 <v t="ekr.20040205071616.1"><vh>mnstamp</vh></v>
 <v t="ekr.20040205071616.2"><vh>mnOKstamp</vh></v>
 <v t="ekr.20040205071616.3"><vh>onStart</vh></v>
@@ -1665,7 +1665,7 @@
 <v t="ekr.20040205071616.9"><vh>insertUser</vh></v>
 <v t="ekr.20040205071616.10"><vh>create_UserMenu</vh></v>
 </v>
-<v t="edream.120603093808" a="M" tnodeList="edream.120603093808"><vh>@file pluginsManager.txt</vh></v>
+<v t="edream.120603093808" a="MTV" tnodeList="edream.120603093808"><vh>@file pluginsManager.txt</vh></v>
 </vnodes>
 <tnodes>
 <t tx="edream.031216103123">@nocolor
@@ -15687,6 +15687,9 @@ plugin_signon(__name__)</t>
 <t tx="edream.120603093808"># Leo enables only those plugins whose filenames appear here.
 # Leo loads plugins in the order they appear in this file.
 # File names may be indented as desired.
+
+# Debugging plugins...
+	# trace_keys.py
 
 # "official" plugins...
 	add_directives.py

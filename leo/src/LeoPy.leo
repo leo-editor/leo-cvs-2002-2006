@@ -1195,8 +1195,47 @@
 <v t="ekr.20040123102724.6"><vh>daliuslt</vh></v>
 </v>
 </v>
-<v t="ekr.20040124073502.2"><vh>To do later</vh>
-<v t="ekr.20031218072017.827"><vh> To do: 4.2</vh>
+<v t="ekr.20040124073502.2" a="TV"><vh>To do later</vh>
+<v t="ekr.20031218072017.827"><vh>4.2</vh>
+<v t="ekr.20031218072017.832"><vh>Small: first</vh>
+<v t="ekr.20031218072017.853"><vh>More intelligent untangling of clones</vh></v>
+<v t="ekr.20040106122602"><vh>Install Leo in the site-packages directory</vh></v>
+<v t="ekr.20031218072017.856"><vh>context menu in body panel</vh></v>
+<v t="ekr.20031218072017.852"><vh>Scroll improvement</vh></v>
+<v t="ekr.20031218072017.833"><vh>Use @file extension by default if no @language</vh></v>
+<v t="ekr.20031218072017.834"><vh>Secondary icons: use for marks?</vh></v>
+<v t="ekr.20031218072017.835"><vh>(Use pywin extensions to improve cut/paste between apps)</vh>
+<v t="ekr.20031218072017.836"><vh>updateEditMenu</vh>
+<v t="ekr.20040130164211"><vh>&lt;&lt; enable cut/paste &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20031218072017.837"><vh> tkinterGui.__init__</vh></v>
+<v t="ekr.20031218072017.838"><vh>tkBody.createBindings</vh></v>
+<v t="ekr.20031218072017.839"><vh>&lt;&lt; define editMenuTopTable &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.840"><vh>Cut/Copy/Paste body text</vh>
+<v t="ekr.20031218072017.841"><vh>frame.OnCut, OnCutFrom Menu</vh></v>
+<v t="ekr.20031218072017.842"><vh>frame.OnCopy, OnCopyFromMenu</vh></v>
+<v t="ekr.20031218072017.843"><vh>frame.OnPaste, OnPasteNode, OnPasteFromMenu</vh></v>
+</v>
+<v t="ekr.20031218072017.844"><vh>Clipboard (tkGui)</vh>
+<v t="ekr.20031218072017.845"><vh>replaceClipboardWith</vh></v>
+<v t="ekr.20031218072017.846"><vh>getTextFromClipboard</vh></v>
+</v>
+</v>
+<v t="ekr.20040106115311"><vh>Expanding the +- box</vh></v>
+<v t="ekr.20040115163454"><vh>@killcolor directive</vh></v>
+<v t="ekr.20040108153757"><vh>Make the find panel smaller</vh></v>
+<v t="ekr.20031218072017.859"><vh>Should mouse up cancel a drag?</vh></v>
+<v t="ekr.20040208095208"><vh>Mark Task &amp; Clone To Task commands</vh></v>
+</v>
+<v t="ekr.20040206075634"><vh>Urgent &amp; important</vh>
+<v t="ekr.20031218072017.828"><vh>Urgent: improve the config manager</vh>
+<v t="ekr.20040105080119"><vh>Search for settings in various places</vh></v>
+<v t="ekr.20040208112836"><vh>Specify shortcuts, ampersand bindings &amp; translations in the same place</vh></v>
+</v>
+<v t="ekr.20040206075935"><vh>Use jEdit files to drive syntax coloring</vh></v>
+<v t="ekr.20031218072017.830"><vh>Finish wx plugin &amp; improve how Leo uses indices</vh></v>
+<v t="ekr.20031218072017.858"><vh>Use Emacs style input to avoid difficult key combinations</vh></v>
+</v>
 <v t="ekr.20040105064959"><vh>Possible bugs: can wait</vh>
 <v t="ekr.20040115165036"><vh>bug in xml doc parts (hard to fix?)</vh>
 <v t="ekr.20040115165036.1"><vh>Demo XML comment bug</vh></v>
@@ -1227,93 +1266,30 @@
 </v>
 <v t="ekr.20040129133809.5"><vh>Expand/contract may not work after drag (works for me)</vh></v>
 </v>
-<v t="ekr.20040124074413"><vh>Major and important</vh>
-<v t="ekr.20031218072017.828"><vh>Urgent: improve the config manager</vh>
-<v t="ekr.20040105080119"><vh>Search for settings n various places</vh></v>
 </v>
+<v t="ekr.20031218072017.855"><vh>Other: 4.3?</vh>
 <v t="ekr.20031218072017.829"><vh>gui interface for plugins manager</vh></v>
-<v t="ekr.20031218072017.830"><vh>Finish wx plugin &amp; improve how Leo uses indices</vh></v>
-<v t="ekr.20040130073846"><vh>Use only Python indices</vh></v>
-<v t="ekr.20040130073846.1"><vh>Have all atFile write classes (except top?) have a common base class</vh></v>
-</v>
-<v t="ekr.20031218072017.832"><vh>Best minor improvements</vh>
-<v t="ekr.20031218072017.853"><vh>More intelligent untangling of clones</vh></v>
-<v t="ekr.20040106122602"><vh>Install Leo in the site-packages directory</vh></v>
-<v t="ekr.20031218072017.856"><vh>context menu in body panel</vh></v>
-<v t="ekr.20031218072017.852"><vh>Scroll improvement</vh></v>
-<v t="ekr.20031218072017.833"><vh>Use @file extension by default if no @language</vh></v>
-<v t="ekr.20031218072017.834"><vh>Secondary icons: use for marks?</vh></v>
-<v t="ekr.20031218072017.835"><vh>(Use pywin extensions to improve cut/paste between apps)</vh>
-<v t="ekr.20031218072017.836"><vh>updateEditMenu</vh>
-<v t="ekr.20040130164211"><vh>&lt;&lt; enable cut/paste &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20031218072017.837"><vh> tkinterGui.__init__</vh></v>
-<v t="ekr.20031218072017.838"><vh>tkBody.createBindings</vh></v>
-<v t="ekr.20031218072017.839"><vh>&lt;&lt; define editMenuTopTable &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.840"><vh>Cut/Copy/Paste body text</vh>
-<v t="ekr.20031218072017.841"><vh>frame.OnCut, OnCutFrom Menu</vh></v>
-<v t="ekr.20031218072017.842"><vh>frame.OnCopy, OnCopyFromMenu</vh></v>
-<v t="ekr.20031218072017.843"><vh>frame.OnPaste, OnPasteNode, OnPasteFromMenu</vh></v>
-</v>
-<v t="ekr.20031218072017.844"><vh>Clipboard (tkGui)</vh>
-<v t="ekr.20031218072017.845"><vh>replaceClipboardWith</vh></v>
-<v t="ekr.20031218072017.846"><vh>getTextFromClipboard</vh></v>
-</v>
-</v>
-<v t="ekr.20040106115311"><vh>Expanding the +- box</vh></v>
-</v>
-<v t="ekr.20040107090747"><vh>Add features</vh>
-<v t="ekr.20040105080119.4"><vh>put back"draw-outline-text-box" hook</vh></v>
-<v t="ekr.20040104200407"><vh>Add @language html when importing html files</vh></v>
-<v t="ekr.20040107090747.1"><vh>Add @nocolor when importing text files</vh></v>
-<v t="ekr.20040106145421"><vh>PHP syntax coloring</vh></v>
-<v t="ekr.20040117113539.1"><vh>Coloring for Shell Scripts (Davide)</vh>
-<v t="ekr.20040118101339.4"><vh>changes to add colorizer support to shell scripts</vh>
-<v t="ekr.20040118101339.5"><vh>&lt;&lt; define global data structures &gt;&gt; app</vh></v>
-<v t="ekr.20040118101339.6"><vh>&lt;&lt; Create the Target Language frame &gt;&gt; frame</vh></v>
-<v t="ekr.20040118101339.7"><vh>&lt;&lt; configure language-specific settings &gt;&gt; colorizer</vh></v>
-<v t="ekr.20040118101339.8"><vh>&lt;&lt; define colorizer keywords &gt;&gt; colorizer</vh>
-<v t="ekr.20040118101339.9"><vh>&lt;&lt; actionscript keywords &gt;&gt;</vh></v>
-<v t="ekr.20040118101339.10"><vh>&lt;&lt; c keywords &gt;&gt;</vh></v>
-<v t="ekr.20040118101339.11"><vh>&lt;&lt; elisp keywords&gt;&gt;</vh></v>
-<v t="ekr.20040118101339.12"><vh>&lt;&lt; html keywords &gt;&gt;</vh></v>
-<v t="ekr.20040118101339.13"><vh>&lt;&lt; java keywords &gt;&gt;</vh></v>
-<v t="ekr.20040118101339.14"><vh>&lt;&lt; latex keywords &gt;&gt;</vh></v>
-<v t="ekr.20040118101339.15"><vh>&lt;&lt; pascal keywords &gt;&gt;</vh></v>
-<v t="ekr.20040118101339.16"><vh>&lt;&lt; perl keywords &gt;&gt;</vh></v>
-<v t="ekr.20040118101339.17"><vh>&lt;&lt; php keywords &gt;&gt;</vh></v>
-<v t="ekr.20040118101339.18"><vh>&lt;&lt; python keywords &gt;&gt;</vh></v>
-<v t="ekr.20040118101339.19"><vh>&lt;&lt; rebol keywords &gt;&gt;</vh></v>
-<v t="ekr.20040118101339.20"><vh>&lt;&lt; tcl/tk keywords &gt;&gt;</vh></v>
-<v t="ekr.20040118101339.21"><vh>&lt;&lt; shell keywords &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20040118101339.22"><vh>&lt;&lt; handle single-line comment &gt;&gt;</vh></v>
-</v>
-</v>
-<v t="ekr.20040117111755"><vh>css support</vh></v>
-</v>
-</v>
+<v t="ekr.20040124074218.3"><vh>pyGtk plugin</vh></v>
 <v t="ekr.20031218072017.847"><vh>Cleanup</vh>
 <v t="ekr.20031218072017.862"><vh>Add option to nullFrame class</vh></v>
 <v t="ekr.20040124073801"><vh>Add nullConfig class?</vh></v>
 <v t="ekr.20031218072017.848"><vh>Cleanup Pychecker stuff</vh></v>
 <v t="ekr.20031218072017.849"><vh>Cleanup undo logic</vh></v>
 </v>
-<v t="ekr.20040124074218"><vh>Major &amp; important</vh>
-<v t="ekr.20040124074218.1"><vh>Convert to shared tnode scheme</vh></v>
-<v t="ekr.20040124074218.2"><vh>Use incremental draw to minimize number of widgets that get created</vh></v>
-<v t="ekr.20040124074218.3"><vh>pyGtk plugin</vh></v>
-<v t="ekr.20031218072017.858"><vh>Use Emacs style input to avoid difficult key combinations</vh></v>
 </v>
-<v t="ekr.20031218072017.855"><vh>Other</vh>
+<v t="ekr.20040206085827"><vh>5.0</vh>
+<v t="ekr.20040130073846.1"><vh>Have all atFile write classes (except top?) have a common base class</vh></v>
+<v t="ekr.20040130073846"><vh>Use only Python indices</vh>
 <v t="ekr.20040105120208.1"><vh>Use string.find or re.find instead of tk.find</vh></v>
-<v t="ekr.20040108153757"><vh>Make the find panel smaller</vh></v>
-<v t="ekr.20031218072017.857"><vh>Study SPE editor</vh></v>
-<v t="ekr.20031218072017.859"><vh>Should mouse up cancel a drag?</vh></v>
-<v t="ekr.20040115163454"><vh>@killcolor directive</vh></v>
+</v>
+<v t="ekr.20040124074218.1"><vh>Convert to shared tnode scheme</vh></v>
+<v t="ekr.20040124074218.2"><vh>Use incremental draw</vh></v>
 </v>
 </v>
 <v t="ekr.20040130171643"><vh> To do: 4.1 rc5</vh>
+<v t="ekr.20040104200407"><vh>Add @language html when importing html files</vh></v>
+<v t="ekr.20040105080119.4"><vh>put back"draw-outline-text-box" hook</vh></v>
+<v t="ekr.20040107090747.1"><vh>Add @nocolor when importing text files</vh></v>
 <v t="ekr.20040118101339.1"><vh>Plugins to add</vh>
 <v t="ekr.20040130185920.1"><vh>Add incremental search to search plugin</vh></v>
 <v t="ekr.20040125114744"><vh>Michael Dawson: Leo to docbook xml plugin</vh></v>
@@ -2619,7 +2595,7 @@
 <v t="ekr.20031218072017.1720"><vh>save</vh></v>
 </v>
 <v t="ekr.20031218072017.1721"><vh>(Fixed Shortcut Problems)</vh>
-<v t="ekr.20031218072017.1722"><vh>getShortcut</vh></v>
+<v t="ekr.20031218072017.1722"><vh>getShortcut (config)</vh></v>
 <v t="ekr.20031218072017.1723"><vh>createMenuEntries</vh>
 <v t="ekr.20031218072017.1724"><vh>&lt;&lt; set name to the label for doCommand &gt;&gt;</vh></v>
 <v t="ekr.20031218072017.1725"><vh>&lt;&lt; set accel to the shortcut for name &gt;&gt;</vh></v>
@@ -2958,6 +2934,7 @@
 <v t="ekr.20031218072017.1930"><vh>&lt;&lt; get recent files &gt;&gt;</vh></v>
 <v t="ekr.20031218072017.1422"><vh>&lt;&lt; convert find/change options to unicode &gt;&gt;</vh></v>
 <v t="ekr.20031218072017.1931"><vh>&lt;&lt; print options &gt;&gt;</vh></v>
+<v t="ekr.20040208104150"><vh>&lt;&lt; create rawKeysDict without ampersands &gt;&gt; (config)</vh></v>
 </v>
 <v t="ekr.20031218072017.1932"><vh>get...FromDict &amp; setDict</vh></v>
 <v t="ekr.20031218072017.1146"><vh>&lt;&lt; write recent files section &gt;&gt;</vh></v>
@@ -5709,41 +5686,6 @@
 <v t="ekr.20031218072017.3000"><vh>updateSyntaxColorer</vh></v>
 </v>
 </v>
-<v t="ekr.20031218072017.3001" tnodeList="ekr.20031218072017.3001,ekr.20031218072017.2404,ekr.20031218072017.3002,ekr.20031218072017.3003,ekr.20031218072017.3004,ekr.20031218072017.1932,ekr.20031218072017.3006,ekr.20031218072017.3007,ekr.20031218072017.3008,ekr.20031218072017.3009,ekr.20031218072017.3010,ekr.20031218072017.3011,ekr.20031218072017.2174,ekr.20031218072017.1722,ekr.20031218072017.3012,ekr.20031218072017.3013,ekr.20031218072017.3014,ekr.20031218072017.3015,ekr.20031218072017.3016,ekr.20031218072017.3017,ekr.20031218072017.1929,ekr.20031218072017.1421,ekr.20031218072017.1930,ekr.20031218072017.1422,ekr.20031218072017.1931,ekr.20031218072017.1145,ekr.20031218072017.1146,ekr.20031218072017.1420"><vh>@file leoConfig.py</vh>
-<v t="ekr.20031218072017.2404"><vh>&lt;&lt; define defaultsDict &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.3002"><vh>config.__init__</vh>
-<v t="ekr.20031218072017.3003"><vh>&lt;&lt; initialize constant ivars, lists &amp; dicts &gt;&gt; (leoConfig)</vh></v>
-<v t="ekr.20031218072017.3004"><vh>&lt;&lt; initialize ivars that may be set by config options &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20031218072017.3005"><vh>getters/setters</vh>
-<v t="ekr.20031218072017.1932"><vh>get...FromDict &amp; setDict</vh></v>
-<v t="ekr.20031218072017.3006"><vh>get/setColors</vh></v>
-<v t="ekr.20031218072017.3007"><vh>get/setComparePref</vh></v>
-<v t="ekr.20031218072017.3008"><vh>get/setFindPref</vh></v>
-<v t="ekr.20031218072017.3009"><vh>get/setPref</vh></v>
-<v t="ekr.20031218072017.3010"><vh>get/setRecentFiles</vh></v>
-<v t="ekr.20031218072017.3011"><vh>get/setWindowPrefs</vh></v>
-<v t="ekr.20031218072017.2174"><vh>config.getFontFromParams</vh></v>
-<v t="ekr.20031218072017.1722"><vh>getShortcut</vh></v>
-<v t="ekr.20031218072017.3012"><vh>init/Boolean/ConfigParam</vh></v>
-<v t="ekr.20031218072017.3013"><vh>setCommandsFindIvars</vh></v>
-<v t="ekr.20031218072017.3014"><vh>setCommandsIvars</vh>
-<v t="ekr.20031218072017.3015"><vh>&lt;&lt; set prefs ivars &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20031218072017.3016"><vh>setConfigFindIvars</vh></v>
-<v t="ekr.20031218072017.3017"><vh>c.setConfigIvars</vh></v>
-</v>
-<v t="ekr.20031218072017.1929"><vh>open</vh>
-<v t="ekr.20031218072017.1421"><vh>&lt;&lt; get config options &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.1930"><vh>&lt;&lt; get recent files &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.1422"><vh>&lt;&lt; convert find/change options to unicode &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.1931"><vh>&lt;&lt; print options &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20031218072017.1145"><vh>update (config)</vh>
-<v t="ekr.20031218072017.1146"><vh>&lt;&lt; write recent files section &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20031218072017.1420"><vh>update_section</vh></v>
-</v>
 <v t="ekr.20031218072017.3018" tnodeList="ekr.20031218072017.3018,ekr.20031218072017.3019,ekr.20031218072017.2004,ekr.20031218072017.1860,ekr.20031218072017.1861,ekr.20031218072017.1557,ekr.20031218072017.1558,ekr.20031218072017.1244,ekr.20031218072017.1245,ekr.20031218072017.3022,ekr.20031218072017.3023,ekr.20031218072017.3024,ekr.20031218072017.2064,ekr.20031218072017.2065,ekr.20031218072017.2306,ekr.20031218072017.1553,ekr.20031218072017.1554,ekr.20031218072017.1555,ekr.20031218072017.1556,ekr.20031218072017.1970,ekr.20031218072017.1559,ekr.20031218072017.3025,ekr.20031218072017.2062,ekr.20031218072017.2063,ekr.20031218072017.3026,ekr.20031218072017.1561,ekr.20031218072017.1564,ekr.20031218072017.1563,ekr.20031218072017.1562,ekr.20031218072017.1560,ekr.20031218072017.1566,ekr.20031218072017.1567,ekr.20031218072017.1568,ekr.20031218072017.2008,ekr.20031218072017.1565,ekr.20031218072017.1249,ekr.20031218072017.1468,ekr.20031218072017.3027,ekr.20031218072017.3028,ekr.20031218072017.2009,ekr.20031218072017.3029,ekr.20031218072017.3030,ekr.20031218072017.2298,ekr.20031218072017.2297,ekr.20031218072017.2298,ekr.20031218072017.2005,ekr.20031218072017.3031,ekr.20031218072017.1570,ekr.20031218072017.1571,ekr.20031218072017.1572,ekr.20031218072017.1470,ekr.20031218072017.1971,ekr.20031218072017.1972,ekr.20031218072017.3034,ekr.20031218072017.3035,ekr.20031218072017.3036,ekr.20031218072017.3037,ekr.20031218072017.3038,ekr.20031218072017.3039,ekr.20031218072017.3040,ekr.20031218072017.3041,ekr.20031218072017.1573,ekr.20031218072017.3042,ekr.20031218072017.2066,ekr.20031218072017.2067,ekr.20031218072017.2068,ekr.20031218072017.1246,ekr.20031218072017.1247,ekr.20031218072017.1248,ekr.20031218072017.1577,ekr.20031218072017.1578,ekr.20031218072017.2002,ekr.20031218072017.1575,ekr.20031218072017.1576,ekr.20031218072017.1863,ekr.20031218072017.1864,ekr.20031218072017.1865,ekr.20031218072017.1867,ekr.20031218072017.1866,ekr.20031218072017.1579,ekr.20031218072017.1720,ekr.20031218072017.3043,ekr.20031218072017.3044,ekr.20031218072017.3045,ekr.20031218072017.3046,ekr.20031218072017.3047,ekr.20031218072017.3048,ekr.20031218072017.3049,ekr.20031218072017.3048,ekr.20031218072017.3049,ekr.20031218072017.2012,ekr.20031218072017.1666,ekr.20031218072017.2013,ekr.20031218072017.3050,ekr.20031218072017.3051"><vh>@file leoFileCommands.py</vh>
 <v t="ekr.20031218072017.3019"><vh>leoFileCommands._init_</vh></v>
 <v t="ekr.20031218072017.3020"><vh>Reading</vh>
@@ -7077,109 +7019,6 @@
 </v>
 </v>
 <v t="ekr.20031218072017.3748" tnodeList="ekr.20031218072017.3748"><vh>@file leoKeys.py</vh></v>
-<v t="ekr.20031218072017.3749" tnodeList="ekr.20031218072017.3749,ekr.20031218072017.3750,ekr.20031218072017.3751,ekr.20031218072017.3752,ekr.20031218072017.3753,ekr.20031218072017.839,ekr.20031218072017.3754,ekr.20031218072017.3755,ekr.20031218072017.3756,ekr.20031218072017.3757,ekr.20031218072017.3758,ekr.20031218072017.3759,ekr.20031218072017.3760,ekr.20031218072017.3761,ekr.20031218072017.3762,ekr.20031218072017.3763,ekr.20031218072017.3764,ekr.20031218072017.3765,ekr.20031218072017.3766,ekr.20031218072017.3767,ekr.20031218072017.3768,ekr.20031218072017.3769,ekr.20031218072017.3770,ekr.20031218072017.3771,ekr.20031218072017.3772,ekr.20031218072017.3773,ekr.20031218072017.3774,ekr.20031218072017.3775,ekr.20031218072017.3777,ekr.20031218072017.3778,ekr.20031218072017.836,ekr.20040130164211,ekr.20031218072017.3779,ekr.20040131171020,ekr.20040131171020.1,ekr.20040131171020.2,ekr.20040131171020.3,ekr.20040131171020.4,ekr.20031218072017.3780,ekr.20031218072017.3782,ekr.20031218072017.3783,ekr.20031218072017.2098,ekr.20031218072017.2102,ekr.20031218072017.2099,ekr.20031218072017.2100,ekr.20031218072017.2101,ekr.20031218072017.2103,ekr.20031218072017.1723,ekr.20031218072017.1724,ekr.20031218072017.1725,ekr.20031218072017.1726,ekr.20031218072017.1727,ekr.20031218072017.1728,ekr.20031218072017.1729,ekr.20031218072017.3784,ekr.20031218072017.3785,ekr.20031218072017.3790,ekr.20031218072017.3791,ekr.20031218072017.3792,ekr.20031218072017.3793,ekr.20031218072017.3794,ekr.20031218072017.3795,ekr.20031218072017.3796,ekr.20031218072017.3786,ekr.20031218072017.3787,ekr.20031218072017.3788,ekr.20031218072017.3789,ekr.20031218072017.3797,ekr.20031218072017.3798,ekr.20031218072017.3799,ekr.20031218072017.3800,ekr.20031218072017.3801,ekr.20031218072017.3802,ekr.20031218072017.3803,ekr.20031218072017.3804,ekr.20031218072017.2078,ekr.20031218072017.3805,ekr.20031218072017.3806,ekr.20031218072017.3807,ekr.20031218072017.3809,ekr.20031218072017.3810,ekr.20031218072017.3811"><vh>@file leoMenu.py</vh>
-<v t="ekr.20031218072017.3750"><vh>class leoMenu</vh>
-<v t="ekr.20031218072017.3751"><vh> leoMenu.__init__</vh></v>
-<v t="ekr.20031218072017.3752"><vh>defineMenuTables</vh>
-<v t="ekr.20031218072017.3753"><vh>&lt;&lt; define edit menu tables &gt;&gt;</vh>
-<v t="ekr.20031218072017.839"><vh>&lt;&lt; define editMenuTopTable &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.3754"><vh>&lt;&lt; define editMenuEditBodyTable &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.3755"><vh>&lt;&lt; define editMenuEditHeadlineTable &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.3756"><vh>&lt;&lt; define editMenuFindMenuTable &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.3757"><vh>&lt;&lt; define editMenuTop2Table &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20031218072017.3758"><vh>&lt;&lt; define file menu tables &gt;&gt;</vh>
-<v t="ekr.20031218072017.3759"><vh>&lt;&lt; define fileMenuTopTable &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.3760"><vh>&lt;&lt; define fileMenuTop2Table &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.3761"><vh>&lt;&lt; define fileMenuReadWriteMenuTable &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.3762"><vh>&lt;&lt; define fileMenuTangleMenuTable &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.3763"><vh>&lt;&lt; define fileMenuUntangleMenuTable &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.3764"><vh>&lt;&lt; define fileMenuImportMenuTable &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.3765"><vh>&lt;&lt; define fileMenuExportMenuTable &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.3766"><vh>&lt;&lt; define fileMenuTop3MenuTable &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20031218072017.3767"><vh>&lt;&lt; define outline menu tables &gt;&gt;</vh>
-<v t="ekr.20031218072017.3768"><vh>&lt;&lt; define outlineMenuTopMenuTable &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.3769"><vh>&lt;&lt; define outlineMenuExpandContractMenuTable &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.3770"><vh>&lt;&lt; define outlineMenuMoveMenuTable &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.3771"><vh>&lt;&lt; define outlineMenuMarkMenuTable &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.3772"><vh>&lt;&lt; define outlineMenuGoToMenuTable &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20031218072017.3773"><vh>&lt;&lt; define window menu tables &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.3774"><vh>&lt;&lt; define help menu tables &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20031218072017.3775"><vh>oops</vh></v>
-<v t="ekr.20031218072017.3776"><vh>Gui-independent menu enablers</vh>
-<v t="ekr.20031218072017.3777"><vh>updateAllMenus</vh></v>
-<v t="ekr.20031218072017.3778"><vh>updateFileMenu</vh></v>
-<v t="ekr.20031218072017.836"><vh>updateEditMenu</vh>
-<v t="ekr.20040130164211"><vh>&lt;&lt; enable cut/paste &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20031218072017.3779"><vh>updateOutlineMenu</vh>
-<v t="ekr.20040131171020"><vh>&lt;&lt; enable top level outline menu &gt;&gt;</vh></v>
-<v t="ekr.20040131171020.1"><vh>&lt;&lt; enable expand/Contract submenu &gt;&gt;</vh></v>
-<v t="ekr.20040131171020.2"><vh>&lt;&lt; enable move submenu &gt;&gt;</vh></v>
-<v t="ekr.20040131171020.3"><vh>&lt;&lt; enable go to submenu &gt;&gt;</vh></v>
-<v t="ekr.20040131171020.4"><vh>&lt;&lt; enable mark submenu &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20031218072017.3780"><vh>hasSelection</vh></v>
-</v>
-<v t="ekr.20031218072017.3781"><vh>Gui-independent menu routines</vh>
-<v t="ekr.20031218072017.3782"><vh>get/setRealMenuName &amp; setRealMenuNamesFromTable (MOVED to leoMenu class)</vh></v>
-<v t="ekr.20031218072017.3783"><vh>canonicalizeMenuName &amp; cononicalizeTranslatedMenuName</vh></v>
-<v t="ekr.20031218072017.2098"><vh>canonicalizeShortcut</vh>
-<v t="ekr.20031218072017.2099"><vh>&lt;&lt; canonicalize the last field &gt;&gt;</vh>
-<v t="ekr.20031218072017.2100"><vh>&lt;&lt; define dict of Tk bind names &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.2101"><vh>&lt;&lt; define dict of special names &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20031218072017.2102"><vh>&lt;&lt; set the last field, preserving case &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.2103"><vh>&lt;&lt; synthesize the shortcuts from the information &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20031218072017.1723"><vh>createMenuEntries</vh>
-<v t="ekr.20031218072017.1724"><vh>&lt;&lt; set name to the label for doCommand &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.1725"><vh>&lt;&lt; set accel to the shortcut for name &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.1726"><vh>&lt;&lt; set bind_shortcut and menu_shortcut using accel &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.1727"><vh>&lt;&lt; define callback function &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.1728"><vh>&lt;&lt; set realLabel, amp_index and menu_shortcut &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.1729"><vh>&lt;&lt; handle bind_shorcut &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20031218072017.3784"><vh>createMenuItemsFromTable</vh></v>
-<v t="ekr.20031218072017.3785"><vh>createMenusFromTables</vh>
-<v t="ekr.20031218072017.3786"><vh>&lt;&lt; create the edit menu &gt;&gt;</vh>
-<v t="ekr.20031218072017.3787"><vh>&lt;&lt; create the edit body submenu &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.3788"><vh>&lt;&lt; create the edit headline submenu &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.3789"><vh>&lt;&lt; create the find submenu &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20031218072017.3790"><vh>&lt;&lt; create the file menu &gt;&gt;</vh>
-<v t="ekr.20031218072017.3791"><vh>&lt;&lt; create the recent files submenu &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.3792"><vh>&lt;&lt; create the read/write submenu &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.3793"><vh>&lt;&lt; create the tangle submenu &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.3794"><vh>&lt;&lt; create the untangle submenu &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.3795"><vh>&lt;&lt; create the import submenu &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.3796"><vh>&lt;&lt; create the export submenu &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20031218072017.3797"><vh>&lt;&lt; create the outline menu &gt;&gt;</vh>
-<v t="ekr.20031218072017.3798"><vh>&lt;&lt; create expand/contract submenu &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.3799"><vh>&lt;&lt; create move submenu &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.3800"><vh>&lt;&lt; create mark submenu &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.3801"><vh>&lt;&lt; create goto submenu &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20031218072017.3802"><vh>&lt;&lt; create the window menu &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.3803"><vh>&lt;&lt; create the help menu &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20031218072017.3804"><vh>createNewMenu</vh></v>
-<v t="ekr.20031218072017.2078"><vh>createRecentFilesMenuItems (leoMenu)</vh></v>
-<v t="ekr.20031218072017.3805"><vh>deleteMenu</vh></v>
-<v t="ekr.20031218072017.3806"><vh>deleteMenuItem</vh></v>
-<v t="ekr.20031218072017.3807"><vh>getMenu, setMenu, destroyMenu</vh></v>
-</v>
-<v t="ekr.20031218072017.3808"><vh>Must be overridden in menu subclasses</vh>
-<v t="ekr.20031218072017.3809"><vh>9 Routines with Tk spellings</vh></v>
-<v t="ekr.20031218072017.3810"><vh>7 Routines with new spellings</vh></v>
-</v>
-</v>
-<v t="ekr.20031218072017.3811"><vh>class nullMenu</vh></v>
-</v>
 <v t="ekr.20031218072017.3812" tnodeList="ekr.20031218072017.3812,ekr.20031218072017.3813,ekr.20031218072017.3815,ekr.20031218072017.3816,ekr.20031218072017.3817,ekr.20031218072017.3818,ekr.20031218072017.3819,ekr.20031218072017.3820"><vh>@file leoPrefs.py</vh>
 <v t="ekr.20031218072017.3813"><vh>&lt;&lt; define leoPrefs constants &gt;&gt;</vh></v>
 <v t="ekr.20031218072017.3814"><vh>Birth</vh>
@@ -7644,7 +7483,7 @@
 <v t="ekr.20031218072017.4114"><vh>7 Routines with other spellings</vh>
 <v t="ekr.20031218072017.4115"><vh>createMenuBar</vh></v>
 <v t="ekr.20031218072017.4116"><vh>createOpenWithMenuFromTable</vh></v>
-<v t="ekr.20031218072017.4117"><vh>defineMenuCallback</vh></v>
+<v t="ekr.20031218072017.4117"><vh>defineMenuCallback (tk)</vh></v>
 <v t="ekr.20031218072017.4118"><vh>defineOpenWithMenuCallback</vh></v>
 <v t="ekr.20031218072017.4119"><vh>disableMenu</vh></v>
 <v t="ekr.20031218072017.4120"><vh>enableMenu</vh></v>
@@ -7933,19 +7772,245 @@
 </v>
 </v>
 </v>
+<v t="ekr.20031218072017.3749" tnodeList="ekr.20031218072017.3749,ekr.20031218072017.3750,ekr.20031218072017.3751,ekr.20031218072017.3752,ekr.20031218072017.3753,ekr.20031218072017.839,ekr.20031218072017.3754,ekr.20031218072017.3755,ekr.20031218072017.3756,ekr.20031218072017.3757,ekr.20031218072017.3758,ekr.20031218072017.3759,ekr.20031218072017.3760,ekr.20031218072017.3761,ekr.20031218072017.3762,ekr.20031218072017.3763,ekr.20031218072017.3764,ekr.20031218072017.3765,ekr.20031218072017.3766,ekr.20031218072017.3767,ekr.20031218072017.3768,ekr.20031218072017.3769,ekr.20031218072017.3770,ekr.20031218072017.3771,ekr.20031218072017.3772,ekr.20031218072017.3773,ekr.20031218072017.3774,ekr.20031218072017.3775,ekr.20031218072017.3777,ekr.20031218072017.3778,ekr.20031218072017.836,ekr.20040130164211,ekr.20031218072017.3779,ekr.20040131171020,ekr.20040131171020.1,ekr.20040131171020.2,ekr.20040131171020.3,ekr.20040131171020.4,ekr.20031218072017.3780,ekr.20031218072017.3782,ekr.20031218072017.3783,ekr.20031218072017.2098,ekr.20031218072017.2102,ekr.20031218072017.2099,ekr.20031218072017.2100,ekr.20031218072017.2101,ekr.20031218072017.2103,ekr.20031218072017.1723,ekr.20031218072017.1724,ekr.20031218072017.1725,ekr.20031218072017.1726,ekr.20031218072017.1727,ekr.20031218072017.1728,ekr.20031218072017.1729,ekr.20031218072017.3784,ekr.20031218072017.3785,ekr.20031218072017.3790,ekr.20031218072017.3791,ekr.20031218072017.3792,ekr.20031218072017.3793,ekr.20031218072017.3794,ekr.20031218072017.3795,ekr.20031218072017.3796,ekr.20031218072017.3786,ekr.20031218072017.3787,ekr.20031218072017.3788,ekr.20031218072017.3789,ekr.20031218072017.3797,ekr.20031218072017.3798,ekr.20031218072017.3799,ekr.20031218072017.3800,ekr.20031218072017.3801,ekr.20031218072017.3802,ekr.20031218072017.3803,ekr.20031218072017.3804,ekr.20031218072017.2078,ekr.20031218072017.3805,ekr.20031218072017.3806,ekr.20031218072017.3807,ekr.20031218072017.3809,ekr.20031218072017.3810,ekr.20031218072017.3811"><vh>@file leoMenu.py</vh>
+<v t="ekr.20031218072017.3750"><vh>class leoMenu</vh>
+<v t="ekr.20031218072017.3751"><vh> leoMenu.__init__</vh></v>
+<v t="ekr.20031218072017.3752"><vh>defineMenuTables</vh>
+<v t="ekr.20031218072017.3753"><vh>&lt;&lt; define edit menu tables &gt;&gt;</vh>
+<v t="ekr.20031218072017.839"><vh>&lt;&lt; define editMenuTopTable &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.3754"><vh>&lt;&lt; define editMenuEditBodyTable &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.3755"><vh>&lt;&lt; define editMenuEditHeadlineTable &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.3756"><vh>&lt;&lt; define editMenuFindMenuTable &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.3757"><vh>&lt;&lt; define editMenuTop2Table &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20031218072017.3758"><vh>&lt;&lt; define file menu tables &gt;&gt;</vh>
+<v t="ekr.20031218072017.3759"><vh>&lt;&lt; define fileMenuTopTable &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.3760"><vh>&lt;&lt; define fileMenuTop2Table &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.3761"><vh>&lt;&lt; define fileMenuReadWriteMenuTable &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.3762"><vh>&lt;&lt; define fileMenuTangleMenuTable &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.3763"><vh>&lt;&lt; define fileMenuUntangleMenuTable &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.3764"><vh>&lt;&lt; define fileMenuImportMenuTable &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.3765"><vh>&lt;&lt; define fileMenuExportMenuTable &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.3766"><vh>&lt;&lt; define fileMenuTop3MenuTable &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20031218072017.3767" a="E"><vh>&lt;&lt; define outline menu tables &gt;&gt;</vh>
+<v t="ekr.20031218072017.3768"><vh>&lt;&lt; define outlineMenuTopMenuTable &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.3769"><vh>&lt;&lt; define outlineMenuExpandContractMenuTable &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.3770"><vh>&lt;&lt; define outlineMenuMoveMenuTable &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.3771"><vh>&lt;&lt; define outlineMenuMarkMenuTable &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.3772"><vh>&lt;&lt; define outlineMenuGoToMenuTable &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20031218072017.3773"><vh>&lt;&lt; define window menu tables &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.3774"><vh>&lt;&lt; define help menu tables &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20031218072017.3775"><vh>oops</vh></v>
+<v t="ekr.20031218072017.3776"><vh>Gui-independent menu enablers</vh>
+<v t="ekr.20031218072017.3777"><vh>updateAllMenus</vh></v>
+<v t="ekr.20031218072017.3778"><vh>updateFileMenu</vh></v>
+<v t="ekr.20031218072017.836"><vh>updateEditMenu</vh>
+<v t="ekr.20040130164211"><vh>&lt;&lt; enable cut/paste &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20031218072017.3779"><vh>updateOutlineMenu</vh>
+<v t="ekr.20040131171020"><vh>&lt;&lt; enable top level outline menu &gt;&gt;</vh></v>
+<v t="ekr.20040131171020.1"><vh>&lt;&lt; enable expand/Contract submenu &gt;&gt;</vh></v>
+<v t="ekr.20040131171020.2"><vh>&lt;&lt; enable move submenu &gt;&gt;</vh></v>
+<v t="ekr.20040131171020.3"><vh>&lt;&lt; enable go to submenu &gt;&gt;</vh></v>
+<v t="ekr.20040131171020.4"><vh>&lt;&lt; enable mark submenu &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20031218072017.3780"><vh>hasSelection</vh></v>
+</v>
+<v t="ekr.20031218072017.3781"><vh>Gui-independent menu routines</vh>
+<v t="ekr.20031218072017.3782"><vh>get/setRealMenuName &amp; setRealMenuNamesFromTable</vh></v>
+<v t="ekr.20031218072017.3783"><vh>canonicalizeMenuName &amp; cononicalizeTranslatedMenuName</vh></v>
+<v t="ekr.20031218072017.2098"><vh>canonicalizeShortcut</vh>
+<v t="ekr.20031218072017.2099"><vh>&lt;&lt; canonicalize the last field &gt;&gt;</vh>
+<v t="ekr.20031218072017.2100"><vh>&lt;&lt; define dict of Tk bind names &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.2101"><vh>&lt;&lt; define dict of special names &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20031218072017.2102"><vh>&lt;&lt; set the last field, preserving case &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.2103"><vh>&lt;&lt; synthesize the shortcuts from the information &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20031218072017.1723" a="E"><vh>createMenuEntries</vh>
+<v t="ekr.20031218072017.1724"><vh>&lt;&lt; set name to the label for doCommand &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.1725"><vh>&lt;&lt; set accel to the shortcut for name &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.1726"><vh>&lt;&lt; set bind_shortcut and menu_shortcut using accel &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.1727"><vh>&lt;&lt; define callback function &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.1728"><vh>&lt;&lt; set realLabel, amp_index and menu_shortcut &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.1729"><vh>&lt;&lt; handle bind_shorcut &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20031218072017.3784"><vh>createMenuItemsFromTable</vh></v>
+<v t="ekr.20031218072017.3785"><vh>createMenusFromTables</vh>
+<v t="ekr.20031218072017.3786"><vh>&lt;&lt; create the edit menu &gt;&gt;</vh>
+<v t="ekr.20031218072017.3787"><vh>&lt;&lt; create the edit body submenu &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.3788"><vh>&lt;&lt; create the edit headline submenu &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.3789"><vh>&lt;&lt; create the find submenu &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20031218072017.3790"><vh>&lt;&lt; create the file menu &gt;&gt;</vh>
+<v t="ekr.20031218072017.3791"><vh>&lt;&lt; create the recent files submenu &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.3792"><vh>&lt;&lt; create the read/write submenu &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.3793"><vh>&lt;&lt; create the tangle submenu &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.3794"><vh>&lt;&lt; create the untangle submenu &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.3795"><vh>&lt;&lt; create the import submenu &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.3796"><vh>&lt;&lt; create the export submenu &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20031218072017.3797"><vh>&lt;&lt; create the outline menu &gt;&gt;</vh>
+<v t="ekr.20031218072017.3798"><vh>&lt;&lt; create expand/contract submenu &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.3799"><vh>&lt;&lt; create move submenu &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.3800"><vh>&lt;&lt; create mark submenu &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.3801"><vh>&lt;&lt; create goto submenu &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20031218072017.3802"><vh>&lt;&lt; create the window menu &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.3803"><vh>&lt;&lt; create the help menu &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20031218072017.3804"><vh>createNewMenu</vh></v>
+<v t="ekr.20031218072017.2078"><vh>createRecentFilesMenuItems (leoMenu)</vh></v>
+<v t="ekr.20031218072017.3805"><vh>deleteMenu</vh></v>
+<v t="ekr.20031218072017.3806"><vh>deleteMenuItem</vh></v>
+<v t="ekr.20031218072017.3807"><vh>getMenu, setMenu, destroyMenu</vh></v>
+</v>
+<v t="ekr.20031218072017.3808"><vh>Must be overridden in menu subclasses</vh>
+<v t="ekr.20031218072017.3809"><vh>9 Routines with Tk spellings</vh></v>
+<v t="ekr.20031218072017.3810"><vh>7 Routines with new spellings</vh></v>
+</v>
+</v>
+<v t="ekr.20031218072017.3811"><vh>class nullMenu</vh></v>
+</v>
+<v t="ekr.20031218072017.3001" tnodeList="ekr.20031218072017.3001,ekr.20031218072017.2404,ekr.20031218072017.3002,ekr.20031218072017.3003,ekr.20031218072017.3004,ekr.20031218072017.1932,ekr.20031218072017.3006,ekr.20031218072017.3007,ekr.20031218072017.3008,ekr.20031218072017.3009,ekr.20031218072017.3010,ekr.20031218072017.3011,ekr.20031218072017.2174,ekr.20031218072017.1722,ekr.20031218072017.3012,ekr.20031218072017.3013,ekr.20031218072017.3014,ekr.20031218072017.3015,ekr.20031218072017.3016,ekr.20031218072017.3017,ekr.20031218072017.1929,ekr.20031218072017.1421,ekr.20031218072017.1930,ekr.20040208104150,ekr.20031218072017.1422,ekr.20031218072017.1931,ekr.20031218072017.1145,ekr.20031218072017.1146,ekr.20031218072017.1420"><vh>@file leoConfig.py</vh>
+<v t="ekr.20031218072017.2404"><vh>&lt;&lt; define defaultsDict &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.3002"><vh>config.__init__</vh>
+<v t="ekr.20031218072017.3003"><vh>&lt;&lt; initialize constant ivars, lists &amp; dicts &gt;&gt; (leoConfig)</vh></v>
+<v t="ekr.20031218072017.3004"><vh>&lt;&lt; initialize ivars that may be set by config options &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20031218072017.3005"><vh>getters/setters</vh>
+<v t="ekr.20031218072017.1932"><vh>get...FromDict &amp; setDict</vh></v>
+<v t="ekr.20031218072017.3006"><vh>get/setColors</vh></v>
+<v t="ekr.20031218072017.3007"><vh>get/setComparePref</vh></v>
+<v t="ekr.20031218072017.3008"><vh>get/setFindPref</vh></v>
+<v t="ekr.20031218072017.3009"><vh>get/setPref</vh></v>
+<v t="ekr.20031218072017.3010"><vh>get/setRecentFiles</vh></v>
+<v t="ekr.20031218072017.3011"><vh>get/setWindowPrefs</vh></v>
+<v t="ekr.20031218072017.2174"><vh>config.getFontFromParams</vh></v>
+<v t="ekr.20031218072017.1722"><vh>getShortcut (config)</vh></v>
+<v t="ekr.20031218072017.3012"><vh>init/Boolean/ConfigParam</vh></v>
+<v t="ekr.20031218072017.3013"><vh>setCommandsFindIvars</vh></v>
+<v t="ekr.20031218072017.3014"><vh>setCommandsIvars</vh>
+<v t="ekr.20031218072017.3015"><vh>&lt;&lt; set prefs ivars &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20031218072017.3016"><vh>setConfigFindIvars</vh></v>
+<v t="ekr.20031218072017.3017"><vh>c.setConfigIvars</vh></v>
+</v>
+<v t="ekr.20031218072017.1929"><vh>open</vh>
+<v t="ekr.20031218072017.1421"><vh>&lt;&lt; get config options &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.1930"><vh>&lt;&lt; get recent files &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.1422"><vh>&lt;&lt; convert find/change options to unicode &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.1931"><vh>&lt;&lt; print options &gt;&gt;</vh></v>
+<v t="ekr.20040208104150"><vh>&lt;&lt; create rawKeysDict without ampersands &gt;&gt; (config)</vh></v>
+</v>
+<v t="ekr.20031218072017.1145"><vh>update (config)</vh>
+<v t="ekr.20031218072017.1146"><vh>&lt;&lt; write recent files section &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20031218072017.1420"><vh>update_section</vh></v>
+</v>
 <v t="ekr.20040205063350"><vh>(Fix clone bug)</vh>
 <v t="ekr.20040205063350.1"><vh>Report</vh></v>
 </v>
-<v t="ekr.20040129080202" a="ETV"><vh>Mac/Linux  bugs</vh>
-<v t="ekr.20040206061812"><vh>"idle" bug</vh></v>
+<v t="ekr.20040206075634.1"><vh>Colorizing additions</vh>
+<v t="ekr.20040117111755"><vh>css support</vh></v>
+<v t="ekr.20040117113539.1"><vh>Coloring for Shell Scripts (Davide)</vh>
+<v t="ekr.20040118101339.4"><vh>changes to add colorizer support to shell scripts</vh>
+<v t="ekr.20040118101339.5"><vh>&lt;&lt; define global data structures &gt;&gt; app</vh></v>
+<v t="ekr.20040118101339.6"><vh>&lt;&lt; Create the Target Language frame &gt;&gt; frame</vh></v>
+<v t="ekr.20040118101339.7"><vh>&lt;&lt; configure language-specific settings &gt;&gt; colorizer</vh></v>
+<v t="ekr.20040118101339.8"><vh>&lt;&lt; define colorizer keywords &gt;&gt; colorizer</vh>
+<v t="ekr.20040118101339.9"><vh>&lt;&lt; actionscript keywords &gt;&gt;</vh></v>
+<v t="ekr.20040118101339.10"><vh>&lt;&lt; c keywords &gt;&gt;</vh></v>
+<v t="ekr.20040118101339.11"><vh>&lt;&lt; elisp keywords&gt;&gt;</vh></v>
+<v t="ekr.20040118101339.12"><vh>&lt;&lt; html keywords &gt;&gt;</vh></v>
+<v t="ekr.20040118101339.13"><vh>&lt;&lt; java keywords &gt;&gt;</vh></v>
+<v t="ekr.20040118101339.14"><vh>&lt;&lt; latex keywords &gt;&gt;</vh></v>
+<v t="ekr.20040118101339.15"><vh>&lt;&lt; pascal keywords &gt;&gt;</vh></v>
+<v t="ekr.20040118101339.16"><vh>&lt;&lt; perl keywords &gt;&gt;</vh></v>
+<v t="ekr.20040118101339.17"><vh>&lt;&lt; php keywords &gt;&gt;</vh></v>
+<v t="ekr.20040118101339.18"><vh>&lt;&lt; python keywords &gt;&gt;</vh></v>
+<v t="ekr.20040118101339.19"><vh>&lt;&lt; rebol keywords &gt;&gt;</vh></v>
+<v t="ekr.20040118101339.20"><vh>&lt;&lt; tcl/tk keywords &gt;&gt;</vh></v>
+<v t="ekr.20040118101339.21"><vh>&lt;&lt; shell keywords &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20040118101339.22"><vh>&lt;&lt; handle single-line comment &gt;&gt;</vh></v>
+</v>
+</v>
+<v t="ekr.20040106145421"><vh>PHP syntax coloring</vh></v>
+</v>
+<v t="ekr.20040129080202"><vh>Mac/Linux  bugs</vh>
 <v t="ekr.20040105080119.1"><vh>Linux bug: paste does not work in find panel</vh></v>
 <v t="ekr.20040105070616.2"><vh>Mac bugs</vh></v>
+<v t="ekr.20040206080140"><vh>Make sure find panel goes to background</vh></v>
 <v t="ekr.20040117112808.1"><vh>small bug in install script</vh></v>
 <v t="ekr.20040117112213"><vh>config problem on Linux</vh></v>
 <v t="ekr.20040115162445.1"><vh>Backspace problems on Linux</vh>
 <v t="ekr.20040115162445.2"><vh>Dave Hein: fix</vh></v>
 </v>
 <v t="ekr.20040104162835.18"><vh>Bug: vpython and mac</vh></v>
+<v t="ekr.20040207170503"><vh>double-paste in searchbox</vh></v>
+</v>
+<v t="ekr.20040207121229"><vh>(Keystrokes)</vh>
+<v t="ekr.20031218072017.838"><vh>tkBody.createBindings</vh></v>
+<v t="ekr.20031218072017.2177"><vh>&lt;&lt; create the toplevel frame &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.3973"><vh>frame.OnControlKeyUp/Down</vh></v>
+<v t="ekr.20031218072017.1330"><vh>onBodyKey</vh>
+<v t="ekr.20040105223536"><vh>handleStatusLineKey</vh>
+<v t="ekr.20040105223536.1"><vh>&lt;&lt; trace the key event &gt;&gt;</vh></v>
+</v>
+</v>
+<v t="ekr.20031218072017.1723"><vh>createMenuEntries</vh>
+<v t="ekr.20031218072017.1724"><vh>&lt;&lt; set name to the label for doCommand &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.1725"><vh>&lt;&lt; set accel to the shortcut for name &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.1726"><vh>&lt;&lt; set bind_shortcut and menu_shortcut using accel &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.1727"><vh>&lt;&lt; define callback function &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.1728"><vh>&lt;&lt; set realLabel, amp_index and menu_shortcut &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.1729"><vh>&lt;&lt; handle bind_shorcut &gt;&gt;</vh></v>
+</v>
+</v>
+<v t="ekr.20040208101427"><vh>Duplicate "h" shortcuts in Outline menu</vh>
+<v t="ekr.20040208101427.1"><vh>Report</vh></v>
+<v t="ekr.20040208104150"><vh>&lt;&lt; create rawKeysDict without ampersands &gt;&gt; (config)</vh></v>
+<v t="ekr.20031218072017.1722"><vh>getShortcut (config)</vh></v>
+<v t="ekr.20031218072017.3752"><vh>defineMenuTables</vh>
+<v t="ekr.20031218072017.3753"><vh>&lt;&lt; define edit menu tables &gt;&gt;</vh>
+<v t="ekr.20031218072017.839"><vh>&lt;&lt; define editMenuTopTable &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.3754"><vh>&lt;&lt; define editMenuEditBodyTable &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.3755"><vh>&lt;&lt; define editMenuEditHeadlineTable &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.3756"><vh>&lt;&lt; define editMenuFindMenuTable &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.3757"><vh>&lt;&lt; define editMenuTop2Table &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20031218072017.3758"><vh>&lt;&lt; define file menu tables &gt;&gt;</vh>
+<v t="ekr.20031218072017.3759"><vh>&lt;&lt; define fileMenuTopTable &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.3760"><vh>&lt;&lt; define fileMenuTop2Table &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.3761"><vh>&lt;&lt; define fileMenuReadWriteMenuTable &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.3762"><vh>&lt;&lt; define fileMenuTangleMenuTable &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.3763"><vh>&lt;&lt; define fileMenuUntangleMenuTable &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.3764"><vh>&lt;&lt; define fileMenuImportMenuTable &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.3765"><vh>&lt;&lt; define fileMenuExportMenuTable &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.3766"><vh>&lt;&lt; define fileMenuTop3MenuTable &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20031218072017.3767" a="E"><vh>&lt;&lt; define outline menu tables &gt;&gt;</vh>
+<v t="ekr.20031218072017.3768"><vh>&lt;&lt; define outlineMenuTopMenuTable &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.3769"><vh>&lt;&lt; define outlineMenuExpandContractMenuTable &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.3770"><vh>&lt;&lt; define outlineMenuMoveMenuTable &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.3771"><vh>&lt;&lt; define outlineMenuMarkMenuTable &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.3772"><vh>&lt;&lt; define outlineMenuGoToMenuTable &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20031218072017.3773"><vh>&lt;&lt; define window menu tables &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.3774"><vh>&lt;&lt; define help menu tables &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20031218072017.1723"><vh>createMenuEntries</vh>
+<v t="ekr.20031218072017.1724"><vh>&lt;&lt; set name to the label for doCommand &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.1725" a="M"><vh>&lt;&lt; set accel to the shortcut for name &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.1726"><vh>&lt;&lt; set bind_shortcut and menu_shortcut using accel &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.1727"><vh>&lt;&lt; define callback function &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.1728" a="M"><vh>&lt;&lt; set realLabel, amp_index and menu_shortcut &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.1729"><vh>&lt;&lt; handle bind_shorcut &gt;&gt;</vh></v>
+</v>
 </v>
 </vnodes>
 <tnodes>
@@ -16878,7 +16943,6 @@ delete
 select all
 
 It's better to let plugin customize the menu.  </t>
-<t tx="ekr.20031218072017.857">http://spe.pycs.net/</t>
 <t tx="ekr.20031218072017.858"></t>
 <t tx="ekr.20031218072017.859"></t>
 <t tx="ekr.20031218072017.862">- nullFrame class must have option to add nullUndoer (don't do this by default).
@@ -22957,6 +23021,8 @@ def onBodyChanged (self,v,undoType,oldSel=None,oldYview=None,newSel=None,oldText
 	c = self.c ; v = c.currentVnode()
 	ch = event.char 
 	oldSel = c.frame.body.getTextSelection()
+	
+	# trace(repr(ch))
 				
 	if 0: # won't work when menu keys are bound.
 		self.handleStatusLineKey(event)
@@ -28559,11 +28625,19 @@ commandName = None
 will clear any previous shortcut.</t>
 <t tx="ekr.20031218072017.1722">def getShortcut (self,name):
 	
-	val = self.keysDict.get(name)
-	
-	# 7/19/03: Return "None" if the setting is "None"
-	# This allows settings to disable a default shortcut.
-	return val</t>
+	if 1: # 2/8/04: allow &amp; in keys.
+		val = self.rawKeysDict.get(name.replace('&amp;',''))
+		if val:
+			rawKey,shortcut = val
+			return rawKey,shortcut
+		else:
+			return None,None
+	else:
+		val = self.keysDict.get(name)
+		
+		# 7/19/03: Return "None" if the setting is "None"
+		# This allows settings to disable a default shortcut.
+		return val</t>
 <t tx="ekr.20031218072017.1723">@ The old, non-user-configurable code bound shortcuts in createMenuBar.  The new user-configurable code binds shortcuts here.
 
 Centralized tables of shortscuts no longer exist as they did in createAccelerators.  To check for duplicates, (possibly arising from leoConfig.txt) we add entries to a central dictionary here, and report duplicates if an entry for a canonicalized shortcut already exists.
@@ -28599,7 +28673,7 @@ for ch in name:
 name = name2
 </t>
 <t tx="ekr.20031218072017.1725">config = app.config
-accel2 = config.getShortcut(name)
+rawKey,accel2 = config.getShortcut(name)
 
 # 7/19/03: Make sure "None" overrides the default shortcut.
 if accel2 == None or len(accel2) == 0:
@@ -28622,8 +28696,20 @@ if sys.platform not in ("darwin","freebsd4","freebsd5","linux1","linux2"):
 else:
 	callback = self.defineMenuCallback(command,name)</t>
 <t tx="ekr.20031218072017.1728">realLabel = self.getRealMenuName(label)
-amp_index = realLabel.find("&amp;")
+
+# 2/8/04: A bad hack:  this does not allow for translations!
+# We need a way of specifying shortcuts, &amp; bindings and translations all in the same place.
+if rawKey and rawKey != label:
+	amp_index = rawKey.find("&amp;") + 1
+else:
+	amp_index = realLabel.find("&amp;")
+
 realLabel = realLabel.replace("&amp;","")
+
+if 0: # trace
+	if realLabel.lower().startswith("sort"):
+		trace(label,realLabel,rawKey,bind_shortcut)
+
 if not menu_shortcut:
 	menu_shortcut = ""</t>
 <t tx="ekr.20031218072017.1729">if bind_shortcut in self.menuShortcuts:
@@ -31516,6 +31602,7 @@ Bill
 						val = toUnicode(val,self.config_encoding) # 10/31/03
 						dict[string.lower(opt)]= val
 				except: pass
+		&lt;&lt; create rawKeysDict without ampersands &gt;&gt;
 		&lt;&lt; convert find/change options to unicode &gt;&gt;
 		&lt;&lt; print options &gt;&gt;
 		cf.close()
@@ -31526,7 +31613,8 @@ Bill
 		es("Exception opening " + self.configFileName)
 		es_exception()
 		pass
-	self.config = None</t>
+	self.config = None
+</t>
 <t tx="ekr.20031218072017.1930">section = self.recentFilesSection
 
 if 0: # elegant, but may be a security hole.
@@ -34864,12 +34952,7 @@ frame.top.bind("&lt;Activate&gt;", frame.OnActivateLeoEvent) # Doesn't work on w
 frame.top.bind("&lt;Deactivate&gt;", frame.OnDeactivateLeoEvent) # Doesn't work on windows.
 
 frame.top.bind("&lt;Control-KeyPress&gt;",frame.OnControlKeyDown)
-frame.top.bind("&lt;Control-KeyRelease&gt;",frame.OnControlKeyUp)
-
-if 0: # 10/31/03: Trying to catch these events seems dubious.
-	# However, frame.controlKeyIsDown is not always in the correct state!
-	app.gui.root.bind("&lt;Control-KeyPress&gt;",frame.OnControlKeyDown)
-	app.gui.root.bind("&lt;Control-KeyRelease&gt;",frame.OnControlKeyUp)</t>
+frame.top.bind("&lt;Control-KeyRelease&gt;",frame.OnControlKeyUp)</t>
 <t tx="ekr.20031218072017.2178"># Create the outer frame.
 self.outerFrame = outerFrame = Tk.Frame(top)
 self.outerFrame.pack(expand=1,fill="both")
@@ -46584,7 +46667,7 @@ self.recentFiles = []
 self.compareDict = {}
 self.configDict = {} # 10/11/02: we use a dict even for ivars.
 self.findDict = {}
-self.keysDict = {}
+self.keysDict = {} ; self.rawKeysDict = {} # 2/8/04
 self.prefsDict = {}
 self.colorsDict = {}
 self.windowDict = {}
@@ -56747,13 +56830,15 @@ self.editMenuTop2Table = (
 	("-",None,None),
 	("&amp;Insert Node","Ctrl+I",c.insertHeadline),
 	("&amp;Clone Node","Ctrl+`",c.clone),
-	("Sort C&amp;hildren",None,c.sortChildren),
+	("Sort Childre&amp;n",None,c.sortChildren), # Conflicted with Hoist.
 	("&amp;Sort Siblings","Alt-A",c.sortSiblings),
 	("Chec&amp;k Outline",None,c.checkOutline),
 	("-",None,None),
 	("&amp;Hoist",None,c.hoist),
 	("D&amp;e-Hoist",None,f.c.dehoist),
-	("-",None,None))</t>
+	("-",None,None))
+	
+# Ampersand bindings:  c,d,e,h,i,k,n,o,p,s,u</t>
 <t tx="ekr.20031218072017.3769">self.outlineMenuExpandContractMenuTable = (
 	("&amp;Contract All","Alt+-",c.contractAllHeadlines),
 	("Contract &amp;Node","Alt+[",c.contractNode),
@@ -59535,6 +59620,7 @@ def OnCloseLeoEvent(self):
 def OnControlKeyUp (self,event=None):
 
 	self.controlKeyIsDown = false
+
 </t>
 <t tx="ekr.20031218072017.3974"># Handle the "visibility" event and attempt to attach the Leo icon.
 # This code must be executed whenever the window is redrawn.
@@ -62261,7 +62347,6 @@ http://www.librelogiciel.com/software/jaxml/action_Presentation
 - Jason</t>
 <t tx="ekr.20040107084614"></t>
 <t tx="ekr.20040107090240"></t>
-<t tx="ekr.20040107090747"></t>
 <t tx="ekr.20040107090747.1"></t>
 <t tx="ekr.20040107161709">http://sourceforge.net/forum/message.php?msg_id=2362014
 By: grayrest
@@ -64081,11 +64166,9 @@ Dalius</t>
 <t tx="ekr.20040124073502.2"></t>
 <t tx="ekr.20040124073801"></t>
 <t tx="ekr.20040124073929"></t>
-<t tx="ekr.20040124074218"></t>
 <t tx="ekr.20040124074218.1"></t>
-<t tx="ekr.20040124074218.2"></t>
+<t tx="ekr.20040124074218.2">Will minimize number of widgets that get created</t>
 <t tx="ekr.20040124074218.3"></t>
-<t tx="ekr.20040124074413"></t>
 <t tx="ekr.20040125095950">from leoGlobals import *
 
 def myCommand():
@@ -66170,16 +66253,6 @@ W2K, Linux (Slackware 9.1)
 Scott  
 
 </t>
-<t tx="ekr.20040206061812">@nocolor
-
-By: ejoy ( Zhang Le ) 
- RE: "idle" hook not work (mod_autosave)   
-2004-02-06 03:00  
-
- I tested it on an windows machine and it worked fine. However, on my FreeBSD 4.8 box it does not work. I am sure I have seen the "auto save enabled" message and can set the interval from plugin menu. No matter how I choose the interval (3 for example), no saving action is done.
-
-Does anyone have the same problem as me?  
-</t>
 <t tx="ekr.20040206072057">csharp_keywords = (
 	"abstract","as",
 	"base","bool","break","byte",
@@ -66204,5 +66277,91 @@ Does anyone have the same problem as me?
 <t tx="ekr.20040206073310">@nocolor
 
 2/6/04 Jeff Nowland: Added support for c#</t>
+<t tx="ekr.20040206075634"></t>
+<t tx="ekr.20040206075634.1"></t>
+<t tx="ekr.20040206075935"></t>
+<t tx="ekr.20040206080140"></t>
+<t tx="ekr.20040206085827"></t>
+<t tx="ekr.20040207121229"></t>
+<t tx="ekr.20040207170503">@nocolor
+
+By: dthein ( Dave Hein ) 
+ BUG: double-paste in searchbox.py plugin   
+2004-02-06 16:59  
+
+ Leo 4.1 rc4, build 1.76 , February 3, 2004
+Python 2.3.3, Tk 8.4.2, linux2
+
+When I Ctrl-C copy a string from a body and Ctlr-V paste it into the searchbox it gets pasted twice (e.g. the string "image" gets pasted as "imageimage").
+
+I'll try to track this down, but if anyone has a clue right away, please post the solution.
+
+--
+Dave Hein  
+</t>
+<t tx="ekr.20040208095208">@nocolor
+
+http://sourceforge.net/forum/message.php?msg_id=2415033
+By: nobody
+
+Ive been scanning Speed Reams Slash post and the Faq and saw an interesting
+usage pattern: Creating a node called a Task and adding cloned nodes to it that
+represent that task(I hope that explains it).  I can see myself using this idiom
+in the future.  Now my question is does the Task/clone idiom warrant special
+commands in Leo?  My basis:
+
+1. Do enough Leo users work with this idiom that making it easier to utilize
+would be desirable?  I guess a good rule of thumb might be, if the sequence
+of actions occur more frequently than the primitive commands like opening a
+file it should be considered.
+
+Maybe a way of doing it:
+
+1. A special mark node as Task command.
+2. A Add to lask marked task command, that clones a node and moves that node
+into the Task node.</t>
+<t tx="ekr.20040208101427"></t>
+<t tx="ekr.20040208101427.1">@nocolor
+http://sourceforge.net/forum/message.php?msg_id=2414271
+By: dthein
+
+Leo 4.1 rc4, build  1.76 , February 3, 2004
+Python 2.3.3, Tk 8.4.2, linux2
+
+If I click on menu Outline, and then on menu item Hoist, I get the expected
+result (node is hoisted).
+
+But if I Alt-O to dropdown the Outline menu, and then hit the H key, nothing
+happens (actually, something gets changed because the title bar of the window
+now shows an asterisk).
+
+This does work OK for de-hoist.  I can Alt-O and then hit the E key, and the
+outline is restored.</t>
+<t tx="ekr.20040208104150"># 2/8/04: New code.
+for key in self.keysDict.keys():
+	newKey = key.replace('&amp;','')
+	self.rawKeysDict[newKey] = key,self.keysDict[key]
+	
+if 0: #trace
+	keys = self.rawKeysDict.keys()
+	keys.sort()
+	for key in keys:
+		print self.rawKeysDict[key]</t>
+<t tx="ekr.20040208112836">@nocolor
+
+http://sourceforge.net/forum/message.php?msg_id=2415127
+By: edream
+
+I have just hacked the code to allow &amp; in entries in leoConfig.txt that describe
+shortcuts.
+
+This is a hack because it probably interacts poorly with the present mechanism
+that allows menu entries to be translated.  I haven't looked into this in detail:
+possibly everything works when menus are translated.  More likely things break.
+If so, not using &amp; in leoConfig.txt will probably "restore" things to their
+former not-very-good state.
+
+It appears that I shall have to revisit this whole gruesome topic when
+the configuration code gets rewritten.</t>
 </tnodes>
 </leo_file>

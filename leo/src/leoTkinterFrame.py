@@ -124,11 +124,6 @@ class leoTkinterFrame (leoFrame.leoFrame):
 		
 		frame.top.bind("<Control-KeyPress>",frame.OnControlKeyDown)
 		frame.top.bind("<Control-KeyRelease>",frame.OnControlKeyUp)
-		
-		if 0: # 10/31/03: Trying to catch these events seems dubious.
-			# However, frame.controlKeyIsDown is not always in the correct state!
-			app.gui.root.bind("<Control-KeyPress>",frame.OnControlKeyDown)
-			app.gui.root.bind("<Control-KeyRelease>",frame.OnControlKeyUp)
 		#@nonl
 		#@-node:<< create the toplevel frame >>
 		#@nl
@@ -836,6 +831,7 @@ class leoTkinterFrame (leoFrame.leoFrame):
 	def OnControlKeyUp (self,event=None):
 	
 		self.controlKeyIsDown = false
+	
 	#@-node:frame.OnControlKeyUp/Down
 	#@+node:frame.OnVisibility
 	# Handle the "visibility" event and attempt to attach the Leo icon.
@@ -1646,6 +1642,8 @@ class leoTkinterBody (leoFrame.leoBody):
 		c = self.c ; v = c.currentVnode()
 		ch = event.char 
 		oldSel = c.frame.body.getTextSelection()
+		
+		# trace(repr(ch))
 					
 		if 0: # won't work when menu keys are bound.
 			self.handleStatusLineKey(event)
