@@ -1288,32 +1288,48 @@ class nullFrame (leoFrame):
 	
 	"""A null frame class for tests and batch execution."""
 	
-	def __init__ (self,title):
-
+	#@	@+others
+	#@+node:__init__
+	def __init__ (self,title,useNullUndoer=false):
+	
 		leoFrame.__init__(self) # Init the base class.
 		assert(self.c is None)
 		self.title = title
-		
+		self.useNullUndoer = useNullUndoer
+	#@nonl
+	#@-node:__init__
+	#@+node:__getattr__ NOT USED
 	if 0: # This causes no end of problems.
-		
+	
 		def __getattr__(self,attr):
 			g.trace("nullFrame",attr)
 			return nullObject()
-
+	#@nonl
+	#@-node:__getattr__ NOT USED
+	#@+node:finishCreate
 	def finishCreate(self,c):
-
+	
 		self.c = c
 		# Create do-nothing component objects.
 		self.tree = nullTree(frame=self)
 		self.body = nullBody(frame=self,parentFrame=None)
 		self.log  = nullLog (frame=self,parentFrame=None)
 		self.menu = leoMenu.nullMenu(frame=self)
-		assert(c.undoer)
-		c.undoer = leoUndo.nullUndoer(c)
 		
+		assert(c.undoer)
+		if self.useNullUndoer:
+			c.undoer = leoUndo.nullUndoer(c)
+	#@nonl
+	#@-node:finishCreate
+	#@+node:oops
 	def oops(self):
+		
 		# g.trace("nullFrame:", g.callerName(2))
+	
 		pass # This is NOT an error.
+	#@nonl
+	#@-node:oops
+	#@-others
 #@nonl
 #@-node:class nullFrame
 #@+node:class nullLog
