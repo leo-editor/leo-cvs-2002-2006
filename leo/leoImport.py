@@ -75,6 +75,7 @@ class leoImportCommands:
 		self.fileName = None # The original file name, say x.cpp
 		self.methodName = None # x, as in < < x methods > > =
 		self.fileType = None # ".py", ".c", etc.
+		self.rootLine = "" # Empty or @root + self.fileName
 	
 		# Support of output_newline option
 		self.output_newline = getOutputNewline()
@@ -120,9 +121,11 @@ class leoImportCommands:
 			v.initHeadString("@file " + self.fileName)
 		else:
 			v.initHeadString(self.fileName)
+			
+		self.rootLine = choose(self.treeType=="@file","","@root "+self.fileName+'\n')
 	
 		if appendFileFlag:
-			v.setBodyStringOrPane("@ignore\n\n" + s)
+			v.setBodyStringOrPane("@ignore\n" + self.rootLine + s)
 		elif type == ".c" or type == ".cpp":
 			self.scanCText(s,v)
 		elif type == ".java":
@@ -397,7 +400,8 @@ class leoImportCommands:
 		c.undoer.setUndoParams("Import",v,select=current)
 		v.initHeadString(fileName)
 		if self.webType=="cweb":
-			v.setBodyStringOrPane("@ignore\n@language cweb")
+			v.setBodyStringOrPane("@ignore\n" + self.rootLine + "@language cweb")
+	
 		# Scan the file,creating one section for each function definition.
 		self.scanWebFile(path,v)
 		return v
@@ -991,10 +995,7 @@ class leoImportCommands:
 				if match_c_word(s,i,"def") or match(s,i,"class"):
 					isDef = match_c_word(s,i,"def")
 					if not decls_seen:
-						if self.treeType == "@file":
-							parent.appendStringToBody("@ignore\n@language python\n") # 7/29/02
-						else:
-							parent.appendStringToBody("@root " + self.fileName + "\n\n")
+						parent.appendStringToBody("@ignore\n" + self.rootLine + "@language python\n")
 						i = start = self.scanPythonDecls(s,start,parent,dont_indent_refs)
 						decls_seen = true
 						if self.treeType == "@file": # 7/29/02
@@ -1057,9 +1058,8 @@ class leoImportCommands:
 		if not s.startswith("<?php") \
 		or not (s.endswith("?>") or s.endswith("?>\n") or s.endswith("?>\r\n")):
 			es("File seems to be mixed HTML and PHP; importing as plain text file.")
-			parent.setBodyStringOrPane("@ignore\n\n" + s)
+			parent.setBodyStringOrPane("@ignore\n" + self.rootLine + s)
 			return
-		
 		#@-body
 		#@-node:1::<< Append file if not pure PHP >>
 
@@ -1268,7 +1268,7 @@ class leoImportCommands:
 		#@+body
 		c = self.commands
 		include_seen = method_seen = false
-		methodKind = choose(self.fileType=="c","functions","methods")
+		methodKind = choose(self.fileType==".c","functions","methods")
 		lparen = None   # Non-null if '(' seen at outer level.
 		scan_start = function_start = 0
 		name = None
@@ -1408,7 +1408,8 @@ class leoImportCommands:
 					body = self.undentBody(body)
 					prefix = choose(self.treeType == "@file","","@code\n\n")
 					self.createHeadline(parent,prefix + body,headline)
-					parent.appendStringToBody("@ignore\n@language c\n")
+					parent.appendStringToBody("@ignore\n" + self.rootLine + "@language c\n")
+					
 					# Append any previous text to the parent's body.
 					save_ip = i ; i = scan_start
 					while i < include_start and is_ws_or_nl(s,i):
@@ -1750,7 +1751,7 @@ class leoImportCommands:
 							i += 1
 						if i < function_start:
 							if outerFlag:
-								parent.appendStringToBody("@ignore\n@language java\n")
+								parent.appendStringToBody("@ignore\n" + self.rootLine + "@language java\n")
 							decl_headline = angleBrackets(" " + self.methodName + " declarations ")
 							# Append the headline to the parent's body.
 							parent.appendStringToBody(decl_leader + leader + decl_headline + "\n")
@@ -1961,7 +1962,7 @@ class leoImportCommands:
 						while i < start and is_ws_or_nl(s,i):
 							i += 1
 						if i < start:
-							parent.appendStringToBody("@ignore\n@language pascal\n")
+							parent.appendStringToBody("@ignore\n" + self.rootLine + "@language pascal\n")
 							headline = angleBrackets(self.methodName + " declarations ")
 							# Append the headline to the parent's body.
 							parent.appendStringToBody(headline + "\n")
